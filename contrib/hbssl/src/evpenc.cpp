@@ -45,9 +45,7 @@
  */
 
 #include "hbssl.h"
-
 #include "hbapiitm.hpp"
-
 #include <openssl/evp.h>
 
 static HB_GARBAGE_FUNC( EVP_ENCODE_CTX_release )
@@ -75,15 +73,14 @@ static const HB_GC_FUNCS s_gcEVP_ENCODE_CTX_funcs =
    hb_gcDummyMark
 };
 
-static HB_BOOL hb_EVP_ENCODE_CTX_is( int iParam )
+static bool hb_EVP_ENCODE_CTX_is(int iParam)
 {
-   return hb_parptrGC( &s_gcEVP_ENCODE_CTX_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gcEVP_ENCODE_CTX_funcs, iParam) != nullptr;
 }
 
-static EVP_ENCODE_CTX * hb_EVP_ENCODE_CTX_par( int iParam )
+static EVP_ENCODE_CTX * hb_EVP_ENCODE_CTX_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_ENCODE_CTX_funcs, iParam));
-
    return ph ? static_cast<EVP_ENCODE_CTX*>(*ph) : nullptr;
 }
 
@@ -107,29 +104,23 @@ HB_FUNC_TRANSLATE( HB_EVP_ENCODE_CTX_CREATE, EVP_ENCODE_CTX_NEW )
 
 HB_FUNC( EVP_ENCODEINIT )
 {
-   if( hb_EVP_ENCODE_CTX_is(1) )
-   {
+   if( hb_EVP_ENCODE_CTX_is(1) ) {
       EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          EVP_EncodeInit(ctx);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_ENCODEUPDATE )
 {
-   if( hb_EVP_ENCODE_CTX_is(1) )
-   {
+   if( hb_EVP_ENCODE_CTX_is(1) ) {
       EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          int size = 512;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
          int result;
@@ -142,138 +133,104 @@ HB_FUNC( EVP_ENCODEUPDATE )
 #endif
          hb_retni(result);
 
-         if( size > 0 )
-         {
-            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
-            {
+         if( size > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) ) {
                hb_xfree(buffer);
             }
-         }
-         else
-         {
+         } else {
             hb_xfree(buffer);
             hb_storc(nullptr, 2);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_ENCODEFINAL )
 {
-   if( hb_EVP_ENCODE_CTX_is(1) )
-   {
+   if( hb_EVP_ENCODE_CTX_is(1) ) {
       EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          int size = 512;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          EVP_EncodeFinal(ctx, buffer, &size);
 
-         if( size > 0 )
-         {
-            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
-            {
+         if( size > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) ) {
                hb_xfree(buffer);
             }
-         }
-         else
-         {
+         } else {
             hb_xfree(buffer);
             hb_storc(nullptr, 2);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_DECODEINIT )
 {
-   if( hb_EVP_ENCODE_CTX_is(1) )
-   {
+   if( hb_EVP_ENCODE_CTX_is(1) ) {
       EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          EVP_DecodeInit(ctx);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_DECODEUPDATE )
 {
-   if( hb_EVP_ENCODE_CTX_is(1) )
-   {
+   if( hb_EVP_ENCODE_CTX_is(1) ) {
       EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          int size = 512;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          EVP_DecodeUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)), static_cast<int>(hb_parclen(3)));
 
-         if( size > 0 )
-         {
-            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
-            {
+         if( size > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) ) {
                hb_xfree(buffer);
             }
-         }
-         else
-         {
+         } else {
             hb_xfree(buffer);
             hb_storc(nullptr, 2);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_DECODEFINAL )
 {
-   if( hb_EVP_ENCODE_CTX_is(1) )
-   {
+   if( hb_EVP_ENCODE_CTX_is(1) ) {
       EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          int size = 512;
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          EVP_DecodeFinal(ctx, buffer, &size);
 
-         if( size > 0 )
-         {
-            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) )
-            {
+         if( size > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), size, 2) ) {
                hb_xfree(buffer);
             }
-         }
-         else
-         {
+         } else {
             hb_xfree(buffer);
             hb_storc(nullptr, 2);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

@@ -45,17 +45,14 @@
  */
 
 #include "hbssl.h"
-
 #include <openssl/evp.h>
 
-char * hb_openssl_strdup( const char * pszText )
+char * hb_openssl_strdup(const char * pszText)
 {
    char * pszDup;
    size_t len = strlen(pszText) + 1;
-
    pszDup = static_cast<char*>(OPENSSL_malloc(len));
    memcpy(pszDup, pszText, len);
-
    return pszDup;
 }
 
@@ -78,12 +75,9 @@ HB_FUNC( EVP_PKEY_FREE )
 {
    EVP_PKEY * key = static_cast<EVP_PKEY*>(hb_parptr(1));
 
-   if( key )
-   {
+   if( key != nullptr ) {
       EVP_PKEY_free(key);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -91,10 +85,9 @@ HB_FUNC( EVP_PKEY_FREE )
 HB_FUNC( EVP_BYTESTOKEY )
 {
    const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
-   const EVP_MD *     md     = hb_EVP_MD_par(2);
+   const EVP_MD * md = hb_EVP_MD_par(2);
 
-   if( cipher && md && ( !HB_ISCHAR(3) || hb_parclen(3) == 8 ) )
-   {
+   if( cipher != nullptr && md != nullptr && (!HB_ISCHAR(3) || hb_parclen(3) == 8) ) {
       unsigned char key[EVP_MAX_KEY_LENGTH];
       unsigned char iv[EVP_MAX_IV_LENGTH];
 
@@ -109,9 +102,7 @@ HB_FUNC( EVP_BYTESTOKEY )
 
       hb_storc(reinterpret_cast<char*>(key), 6);
       hb_storc(reinterpret_cast<char*>(iv), 7);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

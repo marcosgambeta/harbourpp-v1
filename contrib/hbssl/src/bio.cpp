@@ -45,31 +45,31 @@
  */
 
 #include "hbssl.h"
-
 #include "hbapiitm.hpp"
 
 /* */
 
-typedef struct
+struct HB_BIO
 {
-   BIO *    bio;
-   void *   hStrRef;
-} HB_BIO, * PHB_BIO;
+   BIO * bio;
+   void * hStrRef;
+};
 
-static PHB_BIO PHB_BIO_create( BIO * bio, void * hStrRef )
+using PHB_BIO = HB_BIO *;
+
+static PHB_BIO PHB_BIO_create(BIO * bio, void * hStrRef)
 {
    PHB_BIO hb_bio = static_cast<PHB_BIO>(hb_xgrab(sizeof(HB_BIO)));
 
-   hb_bio->bio       = bio;
-   hb_bio->hStrRef   = hStrRef;
+   hb_bio->bio = bio;
+   hb_bio->hStrRef = hStrRef;
 
    return hb_bio;
 }
 
-static void PHB_BIO_free( PHB_BIO hb_bio )
+static void PHB_BIO_free(PHB_BIO hb_bio)
 {
-   if( hb_bio->hStrRef )
-   {
+   if( hb_bio->hStrRef ) {
       hb_itemFreeCRef(hb_bio->hStrRef);
    }
 
@@ -85,8 +85,7 @@ static HB_GARBAGE_FUNC( HB_BIO_Destructor )
    HB_BIO ** ptr = static_cast<HB_BIO**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( *ptr )
-   {
+   if( *ptr ) {
       PHB_BIO_free(*ptr);
 
       /* set pointer to nullptr to avoid multiple freeing */
@@ -100,40 +99,36 @@ static const HB_GC_FUNCS s_gcBIOFuncs =
    hb_gcDummyMark
 };
 
-BIO * hb_BIO_par( int iParam )
+BIO * hb_BIO_par(int iParam)
 {
    HB_BIO ** ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
-
-   return ptr ? ( *ptr )->bio : nullptr;
+   return ptr ? (*ptr)->bio : nullptr;
 }
 
-HB_BOOL hb_BIO_is( int iParam )
+HB_BOOL hb_BIO_is(int iParam)
 {
    HB_BIO ** ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
-
-   return ptr && ( *ptr )->bio;
+   return ptr && (*ptr)->bio;
 }
 
-static void hb_BIO_ret( BIO * bio, void * hStrRef )
+static void hb_BIO_ret(BIO * bio, void * hStrRef)
 {
    HB_BIO ** ptr = static_cast<HB_BIO**>(hb_gcAllocate(sizeof(HB_BIO*), &s_gcBIOFuncs));
-
    *ptr = PHB_BIO_create(bio, hStrRef);
-
    hb_retptrGC(static_cast<void*>(ptr));
 }
 
 /* */
 
-static HB_BOOL hb_BIO_METHOD_is( int iParam )
+static bool hb_BIO_METHOD_is(int iParam)
 {
    return HB_ISCHAR(iParam);
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-static const BIO_METHOD * hb_BIO_METHOD_par( int iParam )
+static const BIO_METHOD * hb_BIO_METHOD_par(int iParam)
 #else
-static BIO_METHOD * hb_BIO_METHOD_par( int iParam )
+static BIO_METHOD * hb_BIO_METHOD_par(int iParam)
 #endif
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -142,8 +137,7 @@ static BIO_METHOD * hb_BIO_METHOD_par( int iParam )
    BIO_METHOD * p;
 #endif
 
-   switch( hb_parni(iParam) )
-   {
+   switch( hb_parni(iParam) ) {
       case HB_BIO_METHOD_S_NULL:        p = BIO_s_null();       break;
 #ifndef OPENSSL_NO_FP_API
       case HB_BIO_METHOD_S_FILE:        p = BIO_s_file();       break;
@@ -176,35 +170,64 @@ static BIO_METHOD * hb_BIO_METHOD_par( int iParam )
 
 #if 0
 /* NOTE: Unused yet. Commented to avoid warning */
-static int hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
+static int hb_BIO_METHOD_ptr_to_id(const BIO_METHOD * p)
 {
    int n;
 
-   if(      p == BIO_s_null()       ) n = HB_BIO_METHOD_S_NULL;
+   if( p == BIO_s_null() ) {
+      n = HB_BIO_METHOD_S_NULL;
+   }
 #ifndef OPENSSL_NO_FP_API
-   else if( p == BIO_s_file()       ) n = HB_BIO_METHOD_S_FILE;
+   else if( p == BIO_s_file() ) {
+      n = HB_BIO_METHOD_S_FILE;
+   }
 #endif
-   else if( p == BIO_s_mem()        ) n = HB_BIO_METHOD_S_MEM;
-   else if( p == BIO_s_socket()     ) n = HB_BIO_METHOD_S_SOCKET;
-   else if( p == BIO_s_connect()    ) n = HB_BIO_METHOD_S_CONNECT;
-   else if( p == BIO_s_accept()     ) n = HB_BIO_METHOD_S_ACCEPT;
-   else if( p == BIO_s_fd()         ) n = HB_BIO_METHOD_S_FD;
+   else if( p == BIO_s_mem() ) {
+      n = HB_BIO_METHOD_S_MEM;
+   }
+   else if( p == BIO_s_socket() ) {
+      n = HB_BIO_METHOD_S_SOCKET;
+   }
+   else if( p == BIO_s_connect() ) {
+      n = HB_BIO_METHOD_S_CONNECT;
+   }
+   else if( p == BIO_s_accept() ) {
+      n = HB_BIO_METHOD_S_ACCEPT;
+   }
+   else if( p == BIO_s_fd() ) {
+      n = HB_BIO_METHOD_S_FD;
+   }
 #if 0 /* BIO_s_log() isn't exported via implibs on Windows at version 0.9.8k. [vszakats] */
 #ifndef OPENSSL_SYS_OS2
-   else if( p == BIO_s_log()        ) n = HB_BIO_METHOD_S_LOG;
+   else if( p == BIO_s_log() ) {
+      n = HB_BIO_METHOD_S_LOG;
+   }
 #endif
 #endif
-   else if( p == BIO_s_bio()        ) n = HB_BIO_METHOD_S_BIO;
+   else if( p == BIO_s_bio() ) {
+      n = HB_BIO_METHOD_S_BIO;
+   }
 #ifndef OPENSSL_NO_DGRAM
-   else if( p == BIO_s_datagram()   ) n = HB_BIO_METHOD_S_DATAGRAM;
+   else if( p == BIO_s_datagram() ) {
+      n = HB_BIO_METHOD_S_DATAGRAM;
+   }
 #endif
-   else if( p == BIO_f_null()       ) n = HB_BIO_METHOD_F_NULL;
-   else if( p == BIO_f_buffer()     ) n = HB_BIO_METHOD_F_BUFFER;
+   else if( p == BIO_f_null() ) {
+      n = HB_BIO_METHOD_F_NULL;
+   }
+   else if( p == BIO_f_buffer() ) {
+      n = HB_BIO_METHOD_F_BUFFER;
+   }
 #ifdef OPENSSL_SYS_VMS
-   else if( p == BIO_f_linebuffer() ) n = HB_BIO_METHOD_F_LINEBUFFER;
+   else if( p == BIO_f_linebuffer() ) {
+      n = HB_BIO_METHOD_F_LINEBUFFER;
+   }
 #endif
-   else if( p == BIO_f_nbio_test()  ) n = HB_BIO_METHOD_F_NBIO_TEST;
-   else                               n = HB_BIO_METHOD_UNSUPPORTED;
+   else if( p == BIO_f_nbio_test() ) {
+      n = HB_BIO_METHOD_F_NBIO_TEST;
+   } else {
+      n = HB_BIO_METHOD_UNSUPPORTED;
+   }
 
    return n;
 }
@@ -212,12 +235,9 @@ static int hb_BIO_METHOD_ptr_to_id( const BIO_METHOD * p )
 
 HB_FUNC( BIO_NEW )
 {
-   if( hb_BIO_METHOD_is(1) )
-   {
+   if( hb_BIO_METHOD_is(1) ) {
       hb_BIO_ret(BIO_new(hb_BIO_METHOD_par(1)), nullptr);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -226,16 +246,13 @@ HB_FUNC( BIO_SET )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio && hb_BIO_METHOD_is(2) )
-   {
+   if( bio != nullptr && hb_BIO_METHOD_is(2) ) {
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
       hb_retni(BIO_set(bio, hb_BIO_METHOD_par(2)));
 #else
       hb_retni(0);
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -244,12 +261,9 @@ HB_FUNC( BIO_CLEAR_FLAGS )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       BIO_clear_flags(bio, hb_parni(2));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -258,12 +272,9 @@ HB_FUNC( BIO_SET_FLAGS )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       BIO_set_flags(bio, hb_parni(2));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -272,12 +283,9 @@ HB_FUNC( BIO_GET_FLAGS )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_get_flags(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -286,16 +294,13 @@ HB_FUNC( BIO_TEST_FLAGS )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00908050L && !defined(HB_OPENSSL_OLD_OSX_)
       hb_retni(BIO_test_flags(bio, hb_parni(2)));
 #else
       hb_retni(0);
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -304,12 +309,9 @@ HB_FUNC( BIO_SET_FD )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_set_fd(bio, hb_parnl(2), hb_parnidef(3, BIO_NOCLOSE)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -318,12 +320,9 @@ HB_FUNC( BIO_GET_FD )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retnl(BIO_get_fd(bio, nullptr));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -332,12 +331,9 @@ HB_FUNC( BIO_GET_RETRY_REASON )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_get_retry_reason(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -346,12 +342,9 @@ HB_FUNC( BIO_SET_RETRY_SPECIAL )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       BIO_set_retry_special(bio);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -360,12 +353,9 @@ HB_FUNC( BIO_SET_RETRY_READ )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       BIO_set_retry_read(bio);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -374,12 +364,9 @@ HB_FUNC( BIO_SET_RETRY_WRITE )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       BIO_set_retry_write(bio);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -388,12 +375,9 @@ HB_FUNC( BIO_SHOULD_READ )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_should_read(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -402,12 +386,9 @@ HB_FUNC( BIO_SHOULD_WRITE )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_should_write(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -416,12 +397,9 @@ HB_FUNC( BIO_SHOULD_IO_SPECIAL )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_should_io_special(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -430,12 +408,9 @@ HB_FUNC( BIO_RETRY_TYPE )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_retry_type(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -444,12 +419,9 @@ HB_FUNC( BIO_SHOULD_RETRY )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_should_retry(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -458,12 +430,9 @@ HB_FUNC( BIO_CTRL_PENDING )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retnint(BIO_ctrl_pending(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -472,12 +441,9 @@ HB_FUNC( BIO_CTRL_WPENDING )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retnint(BIO_ctrl_wpending(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -486,12 +452,9 @@ HB_FUNC( BIO_FLUSH )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_flush(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -500,12 +463,9 @@ HB_FUNC( BIO_SEEK )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retnl(BIO_seek(bio, hb_parnl(2)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -514,12 +474,9 @@ HB_FUNC( BIO_TELL )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retnl(BIO_tell(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -528,12 +485,9 @@ HB_FUNC( BIO_RESET )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_reset(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -542,12 +496,9 @@ HB_FUNC( BIO_EOF )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_eof(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -556,12 +507,9 @@ HB_FUNC( BIO_SET_CLOSE )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_set_close(bio, hb_parnidef(2, BIO_NOCLOSE)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -570,24 +518,18 @@ HB_FUNC( BIO_GET_CLOSE )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_get_close(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( BIO_NEW_SOCKET )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_BIO_ret(BIO_new_socket(hb_parni(1), hb_parnidef(2, BIO_NOCLOSE)), nullptr);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -595,12 +537,9 @@ HB_FUNC( BIO_NEW_SOCKET )
 HB_FUNC( BIO_NEW_DGRAM )
 {
 #ifndef OPENSSL_NO_DGRAM
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_BIO_ret(BIO_new_dgram(hb_parni(1), hb_parnidef(2, BIO_NOCLOSE)), nullptr);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #else
@@ -610,24 +549,18 @@ HB_FUNC( BIO_NEW_DGRAM )
 
 HB_FUNC( BIO_NEW_FD )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_BIO_ret(BIO_new_fd(hb_parnl(1), hb_parnidef(2, BIO_NOCLOSE)), nullptr);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( BIO_NEW_FILE )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       hb_BIO_ret(BIO_new_file(hb_parc(1), hb_parcx(2)), nullptr);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -636,16 +569,13 @@ HB_FUNC( BIO_NEW_MEM_BUF )
 {
    PHB_ITEM pBuffer = hb_param(1, Harbour::Item::STRING);
 
-   if( pBuffer )
-   {
+   if( pBuffer ) {
       void * hStrRef;
       HB_SIZE nLen;
       const char * pszBuffer = hb_itemGetCRef(pBuffer, &hStrRef, &nLen);
 
       hb_BIO_ret(BIO_new_mem_buf(const_cast<char*>(pszBuffer), static_cast<int>(nLen)), hStrRef);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -654,29 +584,22 @@ HB_FUNC( BIO_READ )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
 
-      if( size > 0 )
-      {
+      if( size > 0 ) {
          char * buffer = static_cast<char*>(hb_xgrab(size + 1));
 
          hb_retni(size = BIO_read(bio, buffer, size));
 
-         if( !hb_storclen(buffer, size, 2) )
-         {
+         if( !hb_storclen(buffer, size, 2) ) {
             hb_xfree(buffer);
          }
-      }
-      else
-      {
+      } else {
          hb_retni(0);
          hb_storc(nullptr, 2);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -685,29 +608,22 @@ HB_FUNC( BIO_GETS )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
 
-      if( size > 0 )
-      {
+      if( size > 0 ) {
          char * buffer = static_cast<char*>(hb_xgrab(size + 1));
 
          hb_retni(size = BIO_gets(bio, buffer, size));
 
-         if( !hb_storclen(buffer, size, 2) )
-         {
+         if( !hb_storclen(buffer, size, 2) ) {
             hb_xfree(buffer);
          }
-      }
-      else
-      {
+      } else {
          hb_retni(0);
          hb_storc(nullptr, 2);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -716,23 +632,18 @@ HB_FUNC( BIO_WRITE )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       int size = static_cast<int>(hb_parclen(2));
 
-      if( HB_ISNUM(3) )
-      {
+      if( HB_ISNUM(3) ) {
          int towrite = hb_parni(3);
-         if( towrite >= 0 && towrite < size )
-         {
+         if( towrite >= 0 && towrite < size ) {
             size = towrite;
          }
       }
 
       hb_retni(BIO_write(bio, hb_parcx(2), size));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -741,12 +652,9 @@ HB_FUNC( BIO_PUTS )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_puts(bio, hb_parcx(2)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -755,14 +663,11 @@ HB_FUNC( BIO_FREE )
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcBIOFuncs, 1));
 
-   if( ph )
-   {
+   if( ph ) {
       BIO * bio = static_cast<BIO*>(*ph);
       *ph = nullptr;
       hb_retni(bio ? BIO_free(bio) : 0);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -774,34 +679,28 @@ HB_FUNC_TRANSLATE( BIO_FREE_ALL, BIO_FREE )  /* These wrappers don't allow to cr
 
 HB_FUNC( BIO_NEW_CONNECT )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10002000L && !defined(LIBRESSL_VERSION_NUMBER)
       hb_BIO_ret(BIO_new_connect(hb_parc(1)), nullptr);
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
       hb_BIO_ret(BIO_new_connect(const_cast<char*>(hb_parc(1))), nullptr);
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( BIO_NEW_ACCEPT )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10002000L && !defined(LIBRESSL_VERSION_NUMBER)
       hb_BIO_ret(BIO_new_accept(hb_parc(1)), nullptr);
 #else
       /* NOTE: Discarding 'const', OpenSSL will strdup() */
       hb_BIO_ret(BIO_new_accept(const_cast<char*>(hb_parc(1))), nullptr);
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -810,12 +709,9 @@ HB_FUNC( BIO_SET_CONN_HOSTNAME )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio && HB_ISCHAR(2) )
-   {
+   if( bio != nullptr && HB_ISCHAR(2) ) {
       hb_retnl(BIO_set_conn_hostname(bio, const_cast<char*>(hb_parc(2))));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -824,12 +720,9 @@ HB_FUNC( BIO_SET_CONN_PORT )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio && HB_ISCHAR(2) )
-   {
+   if( bio != nullptr && HB_ISCHAR(2) ) {
       hb_retnl(BIO_set_conn_port(bio, const_cast<char*>(hb_parc(2))));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -838,13 +731,10 @@ HB_FUNC( BIO_SET_CONN_INT_PORT )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio && HB_ISNUM(2) )
-   {
+   if( bio != nullptr && HB_ISNUM(2) ) {
       int port = hb_parni(2);
       hb_retnl(BIO_set_conn_port(bio, &port));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -853,24 +743,18 @@ HB_FUNC( BIO_SET_CONN_IP )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio && HB_ISCHAR(2) && hb_parclen(2) == 4 )
-   {
+   if( bio != nullptr && HB_ISCHAR(2) && hb_parclen(2) == 4 ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
       HB_SYMBOL_UNUSED(bio);  /* TODO: reimplement using BIO_set_conn_address() */
       hb_retnl(0);
 #else
-      if( hb_parclen(2) == 4 )
-      {
+      if( hb_parclen(2) == 4 ) {
          hb_retnl(BIO_set_conn_ip(bio, const_cast<char*>(hb_parc(2))));
-      }
-      else
-      {
+      } else {
          hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -879,12 +763,9 @@ HB_FUNC( BIO_GET_CONN_HOSTNAME )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retc(BIO_get_conn_hostname(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -893,12 +774,9 @@ HB_FUNC( BIO_GET_CONN_PORT )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retc(BIO_get_conn_port(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -907,8 +785,7 @@ HB_FUNC( BIO_GET_CONN_IP )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
       HB_SYMBOL_UNUSED(bio);  /* TODO: reimplement using BIO_get_conn_address() */
       hb_retc_null();
@@ -917,9 +794,7 @@ HB_FUNC( BIO_GET_CONN_IP )
 #else
       hb_retc(BIO_get_conn_ip(bio, 0));
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -929,8 +804,7 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
 #if OPENSSL_VERSION_NUMBER >= 0x10001000L  /* fixed here: https://rt.openssl.org/Ticket/Display.html?id=1989&user=guest&pass=guest */
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
 #if OPENSSL_VERSION_NUMBER == 0x1000206fL /* 1.0.2f */ || OPENSSL_VERSION_NUMBER == 0x1000112fL /* 1.0.1r */
       /* Fix for header regression */
       hb_retnl(BIO_ctrl(bio, BIO_C_GET_CONNECT, 3, nullptr));
@@ -940,9 +814,7 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
 #else
       hb_retnl(BIO_get_conn_int_port(bio));
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #else
@@ -954,12 +826,9 @@ HB_FUNC( BIO_SET_NBIO )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retnl(BIO_set_nbio(bio, hb_parni(2)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -968,12 +837,9 @@ HB_FUNC( BIO_DO_CONNECT )
 {
    BIO * bio = hb_BIO_par(1);
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       hb_retni(BIO_do_connect(bio));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -1019,7 +885,7 @@ int BIO_nread(BIO * bio, char ** buf, int num);
 int BIO_nwrite0(BIO * bio, char ** buf);
 int BIO_nwrite(BIO * bio, char ** buf, int num);
 
-BIO_METHOD *   BIO_s_mem(void);
+BIO_METHOD * BIO_s_mem(void);
 
 BIO_set_mem_eof_return(BIO * b, int v)
 long BIO_get_mem_data(BIO * b, char ** pp)

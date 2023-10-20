@@ -50,42 +50,40 @@ FUNCTION hb_SSL_new()
    STATIC s_onceControl
 
    /* initialize SSL library */
-   hb_threadOnce( @s_onceControl, {|| SSL_init(), ;
-                  RAND_seed( hb_randStr( 20 ) + hb_TToS( hb_DateTime() ) ) } )
+   hb_threadOnce(@s_onceControl, {||SSL_init(), RAND_seed(hb_randStr(20) + hb_TToS(hb_DateTime()))})
 
    /* create a new SSL structure for a connection */
-   RETURN SSL_new( SSL_CTX_new() )
+   RETURN SSL_new(SSL_CTX_new())
 
-/* hb_SSL_connect_socket( <pSocket>, [ <nTimeOut> ], [ @<cInfo> ] ) --> <lConnected> */
-FUNCTION hb_SSL_connect_socket( pSocket, nTimeout, cInfo )
+/* hb_SSL_connect_socket(<pSocket>, [ <nTimeOut> ], [ @<cInfo> ]) --> <lConnected> */
+FUNCTION hb_SSL_connect_socket(pSocket, nTimeout, cInfo)
 
    LOCAL nErr
    LOCAL ssl
 
    ssl := hb_SSL_new()
-   IF ! Empty( pSocket := hb_socketNewSSL_connect( @pSocket, ssl, nTimeout ) )
-      cInfo := "SSL connected with " + SSL_get_cipher( ssl ) + " encryption."
+   IF !Empty(pSocket := hb_socketNewSSL_connect(@pSocket, ssl, nTimeout))
+      cInfo := "SSL connected with " + SSL_get_cipher(ssl) + " encryption."
       RETURN .T.
    ENDIF
 
    nErr := ERR_get_error()
-   cInfo := hb_StrFormat( "SSL connection error [%d] %s", ;
-                          nErr, ERR_error_string( nErr ) )
+   cInfo := hb_StrFormat("SSL connection error [%d] %s", nErr, ERR_error_string(nErr))
    RETURN .F.
 
-/* hb_SSL_connect_inet( <pSocket>, [ <nTimeOut> ], [ @<cInfo> ] ) --> <lConnected> */
-FUNCTION hb_SSL_connect_inet( pInetSock, nTimeout, cInfo )
+/* hb_SSL_connect_inet(<pSocket>, [ <nTimeOut> ], [ @<cInfo> ]) --> <lConnected> */
+FUNCTION hb_SSL_connect_inet(pInetSock, nTimeout, cInfo)
 
-   LOCAL nResult, nErr
+   LOCAL nResult
+   LOCAL nErr
    LOCAL ssl
 
    ssl := hb_SSL_new()
-   IF ( nResult := hb_inetSSL_CONNECT( pInetSock, ssl, nTimeout ) ) == 1
-      cInfo := "SSL connected with " + SSL_get_cipher( ssl ) + " encryption."
+   IF (nResult := hb_inetSSL_CONNECT(pInetSock, ssl, nTimeout)) == 1
+      cInfo := "SSL connected with " + SSL_get_cipher(ssl) + " encryption."
       RETURN .T.
    ENDIF
 
    nErr := ERR_get_error()
-   cInfo := hb_StrFormat( "SSL connection error [%d:%d] %s", ;
-                          nResult, nErr, ERR_error_string( nErr ) )
+   cInfo := hb_StrFormat("SSL connection error [%d:%d] %s", nResult, nErr, ERR_error_string(nErr))
    RETURN .F.

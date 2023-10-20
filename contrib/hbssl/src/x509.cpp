@@ -57,22 +57,22 @@
 
 #include "hbssl.h"
 
-typedef struct
+struct HB_X509
 {
-   X509 *  pX509;
-   HB_BOOL fRelease;
-} HB_X509, * PHB_X509;
+   X509 * pX509;
+   bool fRelease;
+};
+
+using PHB_X509 = HB_X509 *;
 
 static HB_GARBAGE_FUNC( X509_release )
 {
    PHB_X509 ph = static_cast<PHB_X509>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && ph->pX509 )
-   {
+   if( ph && ph->pX509 ) {
       /* Destroy the object */
-      if( ph->fRelease )
-      {
+      if( ph->fRelease ) {
          X509_free(static_cast<X509*>(ph->pX509));
       }
 
@@ -87,58 +87,47 @@ static const HB_GC_FUNCS s_gcX509_funcs =
    hb_gcDummyMark
 };
 
-HB_BOOL hb_X509_is( int iParam )
+HB_BOOL hb_X509_is(int iParam)
 {
-   return hb_parptrGC( &s_gcX509_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gcX509_funcs, iParam) != nullptr;
 }
 
-X509 * hb_X509_par( int iParam )
+X509 * hb_X509_par(int iParam)
 {
    PHB_X509 ph = static_cast<PHB_X509>(hb_parptrGC(&s_gcX509_funcs, iParam));
-
    return ph ? ph->pX509 : nullptr;
 }
 
-void hb_X509_ret( X509 * x509, HB_BOOL fRelease )
+void hb_X509_ret(X509 * x509, HB_BOOL fRelease)
 {
    PHB_X509 ph = static_cast<PHB_X509>(hb_gcAllocate(sizeof(HB_X509), &s_gcX509_funcs));
-
-   ph->pX509    = x509;
+   ph->pX509 = x509;
    ph->fRelease = fRelease;
-
    hb_retptrGC(static_cast<void*>(ph));
 }
 
 HB_FUNC( X509_GET_SUBJECT_NAME )
 {
-   if( hb_X509_is(1) )
-   {
+   if( hb_X509_is(1) ) {
       X509 * x509 = hb_X509_par(1);
 
-      if( x509 )
-      {
+      if( x509 != nullptr ) {
          hb_retptr(X509_get_subject_name(x509));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( X509_GET_ISSUER_NAME )
 {
-   if( hb_X509_is(1) )
-   {
+   if( hb_X509_is(1) ) {
       X509 * x509 = hb_X509_par(1);
 
-      if( x509 )
-      {
+      if( x509 != nullptr ) {
          hb_retptr(X509_get_issuer_name(x509));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -146,16 +135,13 @@ HB_FUNC( X509_GET_ISSUER_NAME )
 HB_FUNC( X509_NAME_ONELINE )
 {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L || OPENSSL_VERSION_NUMBER >= 0x1000000FL /* NOTE: Compilation error when tried with 1.0.0beta5 */
-   X509_NAME * x509_name = ( X509_NAME * ) hb_parptr(1);
+   X509_NAME * x509_name = static_cast<X509_NAME*>(hb_parptr(1));
 
-   if( x509_name )
-   {
+   if( x509_name ) {
       char buffer[1024];
       X509_NAME_oneline(x509_name, buffer, sizeof(buffer));
       hb_retc(buffer);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #endif
@@ -163,17 +149,13 @@ HB_FUNC( X509_NAME_ONELINE )
 
 HB_FUNC( X509_GET_PUBKEY )
 {
-   if( hb_X509_is(1) )
-   {
+   if( hb_X509_is(1) ) {
       X509 * x509 = hb_X509_par(1);
 
-      if( x509 )
-      {
+      if( x509 != nullptr ) {
          hb_retptr(X509_get_pubkey(x509));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

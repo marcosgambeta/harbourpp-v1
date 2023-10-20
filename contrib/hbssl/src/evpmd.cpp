@@ -45,9 +45,7 @@
  */
 
 #include "hbssl.h"
-
 #include "hbapiitm.hpp"
-
 #include <openssl/evp.h>
 
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
@@ -87,34 +85,31 @@ static const HB_GC_FUNCS s_gcEVP_MD_CTX_funcs =
    hb_gcDummyMark
 };
 
-static HB_BOOL hb_EVP_MD_CTX_is( int iParam )
+static bool hb_EVP_MD_CTX_is(int iParam)
 {
-   return hb_parptrGC( &s_gcEVP_MD_CTX_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gcEVP_MD_CTX_funcs, iParam) != nullptr;
 }
 
-static EVP_MD_CTX * hb_EVP_MD_CTX_par( int iParam )
+static EVP_MD_CTX * hb_EVP_MD_CTX_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_MD_CTX_funcs, iParam));
-
    return ph ? static_cast<EVP_MD_CTX*>(*ph) : nullptr;
 }
 
-HB_BOOL hb_EVP_MD_is( int iParam )
+HB_BOOL hb_EVP_MD_is(int iParam)
 {
    return HB_ISCHAR(iParam) || HB_ISNUM(iParam);
 }
 
-const EVP_MD * hb_EVP_MD_par( int iParam )
+const EVP_MD * hb_EVP_MD_par(int iParam)
 {
    const EVP_MD * p;
 
-   if( HB_ISCHAR(iParam) )
-   {
+   if( HB_ISCHAR(iParam) ) {
       return EVP_get_digestbyname(hb_parc(iParam));
    }
 
-   switch( hb_parni(iParam) )
-   {
+   switch( hb_parni(iParam) ) {
       case HB_EVP_MD_MD_NULL:    p = EVP_md_null();   break;
 #if !defined(OPENSSL_NO_MD2) && OPENSSL_VERSION_NUMBER < 0x10000000L
       case HB_EVP_MD_MD2:        p = EVP_md2();       break;
@@ -158,7 +153,7 @@ const EVP_MD * hb_EVP_MD_par( int iParam )
    return p;
 }
 
-static int hb_EVP_MD_ptr_to_id( const EVP_MD * p )
+static int hb_EVP_MD_ptr_to_id(const EVP_MD * p)
 {
    int n;
 
@@ -206,24 +201,18 @@ static int hb_EVP_MD_ptr_to_id( const EVP_MD * p )
 
 HB_FUNC( EVP_GET_DIGESTBYNAME )
 {
-   if( HB_ISCHAR(1) )
-   {
+   if( HB_ISCHAR(1) ) {
       hb_retni(hb_EVP_MD_ptr_to_id(EVP_get_digestbyname(hb_parc(1))));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_GET_DIGESTBYNID )
 {
-   if( HB_ISNUM(1) )
-   {
+   if( HB_ISNUM(1) ) {
       hb_retni(hb_EVP_MD_ptr_to_id(EVP_get_digestbynid(hb_parni(1))));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -231,7 +220,6 @@ HB_FUNC( EVP_GET_DIGESTBYNID )
 HB_FUNC( EVP_MD_TYPE )
 {
    const EVP_MD * md = hb_EVP_MD_par(1);
-
    hb_retni(md ? EVP_MD_type(md) : 0);
 }
 
@@ -249,21 +237,18 @@ HB_FUNC( EVP_MD_NID )
 HB_FUNC( EVP_MD_PKEY_TYPE )
 {
    const EVP_MD * md = hb_EVP_MD_par(1);
-
    hb_retni(md ? EVP_MD_pkey_type(md) : 0);
 }
 
 HB_FUNC( EVP_MD_SIZE )
 {
    const EVP_MD * md = hb_EVP_MD_par(1);
-
    hb_retni(md ? EVP_MD_size(md) : 0);
 }
 
 HB_FUNC( EVP_MD_BLOCK_SIZE )
 {
    const EVP_MD * md = hb_EVP_MD_par(1);
-
    hb_retni(md ? EVP_MD_block_size(md) : 0);
 }
 
@@ -287,12 +272,10 @@ HB_FUNC_TRANSLATE( EVP_MD_CTX_CREATE, EVP_MD_CTX_NEW )
 
 HB_FUNC( EVP_MD_CTX_RESET )
 {
-   if( hb_EVP_MD_CTX_is(1) )
-   {
+   if( hb_EVP_MD_CTX_is(1) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if defined(LIBRESSL_VERSION_NUMBER)
          hb_retni(EVP_MD_CTX_cleanup(ctx));
 #elif OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -303,9 +286,7 @@ HB_FUNC( EVP_MD_CTX_RESET )
          hb_retni(0);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -315,57 +296,45 @@ HB_FUNC_TRANSLATE( EVP_MD_CTX_CLEANUP, EVP_MD_CTX_RESET )
 
 HB_FUNC( EVP_MD_CTX_MD )
 {
-   if( hb_EVP_MD_CTX_is(1) )
-   {
+   if( hb_EVP_MD_CTX_is(1) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          hb_retni(hb_EVP_MD_ptr_to_id(EVP_MD_CTX_md(ctx)));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_MD_CTX_COPY )
 {
-   if( hb_EVP_MD_CTX_is(1) && hb_EVP_MD_CTX_is(2) )
-   {
+   if( hb_EVP_MD_CTX_is(1) && hb_EVP_MD_CTX_is(2) ) {
       EVP_MD_CTX * ctx_out = hb_EVP_MD_CTX_par(1);
-      EVP_MD_CTX * ctx_in  = hb_EVP_MD_CTX_par(2);
+      EVP_MD_CTX * ctx_in = hb_EVP_MD_CTX_par(2);
 
-      if( ctx_out && ctx_in )
-      {
+      if( ctx_out != nullptr && ctx_in != nullptr ) {
          hb_retni(EVP_MD_CTX_copy(ctx_out, ctx_in));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_MD_CTX_COPY_EX )
 {
-   if( hb_EVP_MD_CTX_is(1) && hb_EVP_MD_CTX_is(2) )
-   {
+   if( hb_EVP_MD_CTX_is(1) && hb_EVP_MD_CTX_is(2) ) {
       EVP_MD_CTX * ctx_out = hb_EVP_MD_CTX_par(1);
-      EVP_MD_CTX * ctx_in  = hb_EVP_MD_CTX_par(2);
+      EVP_MD_CTX * ctx_in = hb_EVP_MD_CTX_par(2);
 
-      if( ctx_out && ctx_in )
-      {
+      if( ctx_out != nullptr && ctx_in != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_MD_CTX_copy_ex(ctx_out, ctx_in));
 #else
          hb_retni(0);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -374,12 +343,10 @@ HB_FUNC( EVP_DIGESTINIT )
 {
    const EVP_MD * md = hb_EVP_MD_par(2);
 
-   if( hb_EVP_MD_CTX_is(1) && md )
-   {
+   if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_DigestInit(ctx, md));
 #else
@@ -387,9 +354,7 @@ HB_FUNC( EVP_DIGESTINIT )
          hb_retni(1);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -398,33 +363,27 @@ HB_FUNC( EVP_DIGESTINIT_EX )
 {
    const EVP_MD * md = hb_EVP_MD_par(2);
 
-   if( hb_EVP_MD_CTX_is(1) && md )
-   {
+   if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_DigestInit_ex(ctx, md, static_cast<ENGINE*>(hb_parptr(3))));
 #else
          hb_retni(0);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_DIGESTUPDATE )
 {
-   if( hb_EVP_MD_CTX_is(1) )
-   {
+   if( hb_EVP_MD_CTX_is(1) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_DigestUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
@@ -432,23 +391,19 @@ HB_FUNC( EVP_DIGESTUPDATE )
          hb_retni(1);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_DIGESTFINAL )
 {
-   if( hb_EVP_MD_CTX_is(1) )
-   {
+   if( hb_EVP_MD_CTX_is(1) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(EVP_MAX_MD_SIZE + 1));
-         unsigned int    size   = 0;
+         unsigned int size = 0;
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_DigestFinal(ctx, buffer, &size));
@@ -457,57 +412,43 @@ HB_FUNC( EVP_DIGESTFINAL )
          hb_retni(1);
 #endif
 
-         if( size > 0 )
-         {
-            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) )
-            {
+         if( size > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) ) {
                hb_xfree(buffer);
             }
-         }
-         else
-         {
+         } else {
             hb_xfree(buffer);
             hb_storc(nullptr, 2);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_DIGESTFINAL_EX )
 {
-   if( hb_EVP_MD_CTX_is(1) )
-   {
+   if( hb_EVP_MD_CTX_is(1) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(EVP_MAX_MD_SIZE + 1));
-         unsigned int    size   = 0;
+         unsigned int size = 0;
 
          hb_retni(EVP_DigestFinal_ex(ctx, buffer, &size));
 
-         if( size > 0 )
-         {
-            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) )
-            {
+         if( size > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) ) {
                hb_xfree(buffer);
             }
-         }
-         else
-         {
+         } else {
             hb_xfree(buffer);
             hb_storc(nullptr, 2);
          }
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -516,17 +457,13 @@ HB_FUNC( EVP_SIGNINIT )
 {
    const EVP_MD * md = hb_EVP_MD_par(2);
 
-   if( hb_EVP_MD_CTX_is(1) && md )
-   {
+   if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          EVP_SignInit(ctx, md);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -535,33 +472,27 @@ HB_FUNC( EVP_SIGNINIT_EX )
 {
    const EVP_MD * md = hb_EVP_MD_par(2);
 
-   if( hb_EVP_MD_CTX_is(1) && md )
-   {
+   if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_SignInit_ex(ctx, md, static_cast<ENGINE*>(hb_parptr(3))));
 #else
          hb_retni(0);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_SIGNUPDATE )
 {
-   if( hb_EVP_MD_CTX_is(1) )
-   {
+   if( hb_EVP_MD_CTX_is(1) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_SignUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
@@ -569,42 +500,32 @@ HB_FUNC( EVP_SIGNUPDATE )
          hb_retni(1);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_SIGNFINAL )
 {
-   if( hb_EVP_MD_CTX_is(1) && hb_EVP_PKEY_is(3) )
-   {
+   if( hb_EVP_MD_CTX_is(1) && hb_EVP_PKEY_is(3) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(EVP_PKEY_size(hb_EVP_PKEY_par(3)) + 1));
-         unsigned int    size   = 0;
+         unsigned int size = 0;
 
          hb_retni(EVP_SignFinal(ctx, buffer, &size, hb_EVP_PKEY_par(3)));
 
-         if( size > 0 )
-         {
-            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) )
-            {
+         if( size > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), static_cast<HB_SIZE>(size), 2) ) {
                hb_xfree(buffer);
             }
-         }
-         else
-         {
+         } else {
             hb_xfree(buffer);
             hb_storc(nullptr, 2);
          }
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -613,12 +534,10 @@ HB_FUNC( EVP_VERIFYINIT )
 {
    const EVP_MD * md = hb_EVP_MD_par(2);
 
-   if( hb_EVP_MD_CTX_is(1) && md )
-   {
+   if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_VerifyInit(ctx, md));
 #else
@@ -626,9 +545,7 @@ HB_FUNC( EVP_VERIFYINIT )
          hb_retni(1);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -637,33 +554,27 @@ HB_FUNC( EVP_VERIFYINIT_EX )
 {
    const EVP_MD * md = hb_EVP_MD_par(2);
 
-   if( hb_EVP_MD_CTX_is(1) && md )
-   {
+   if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_VerifyInit_ex(ctx, md, static_cast<ENGINE*>(hb_parptr(3))));
 #else
          hb_retni(0);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_VERIFYUPDATE )
 {
-   if( hb_EVP_MD_CTX_is(1) )
-   {
+   if( hb_EVP_MD_CTX_is(1) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
          hb_retni(EVP_VerifyUpdate(ctx, hb_parcx(2), static_cast<size_t>(hb_parclen(2))));
 #else
@@ -671,26 +582,20 @@ HB_FUNC( EVP_VERIFYUPDATE )
          hb_retni(1);
 #endif
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_VERIFYFINAL )
 {
-   if( hb_EVP_MD_CTX_is(1) && hb_EVP_PKEY_is(3) )
-   {
+   if( hb_EVP_MD_CTX_is(1) && hb_EVP_PKEY_is(3) ) {
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
-      if( ctx )
-      {
+      if( ctx != nullptr ) {
          hb_retni(EVP_VerifyFinal(ctx, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(2)), static_cast<unsigned int>(hb_parclen(2)), hb_EVP_PKEY_par(3)));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

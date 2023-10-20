@@ -45,26 +45,24 @@
  */
 
 #include "hbssl.h"
-
 #include "hbapifs.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
 
-typedef enum
+enum HB_PEM_TYPES
 {
    hb_PEM_X509,
    hb_PEM_EVP_PKEY,
    hb_PEM_ANY
-} HB_PEM_TYPES;
+};
 
 /* Callback */
 
-static int hb_ssl_pem_password_cb( char * buf, int size, int rwflag, void * userdata )
+static int hb_ssl_pem_password_cb(char * buf, int size, int rwflag, void * userdata)
 {
    int retsize = 0;
 
-   if( size > 0 && userdata && hb_vmRequestReenter() )
-   {
+   if( size > 0 && userdata && hb_vmRequestReenter() ) {
       hb_vmPushEvalSym();
       hb_vmPush(static_cast<PHB_ITEM>(userdata));
       hb_vmPushLogical(rwflag);
@@ -74,10 +72,8 @@ static int hb_ssl_pem_password_cb( char * buf, int size, int rwflag, void * user
 
       retsize = static_cast<int>(hb_parclen(-1));
 
-      if( retsize > 0 )
-      {
-         if( retsize > size )
-         {
+      if( retsize > 0 ) {
+         if( retsize > size ) {
             retsize = size;
          }
 
@@ -102,46 +98,33 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
 {
    BIO * bio;
 
-   if( hb_BIO_is(1) )
-   {
+   if( hb_BIO_is(1) ) {
       bio = hb_BIO_par(1);
-   }
-   else if( HB_ISCHAR(1) )
-   {
+   } else if( HB_ISCHAR(1) ) {
       bio = BIO_new_file(hb_parc(1), "r");
-   }
-   else if( HB_ISNUM(1) )
-   {
+   } else if( HB_ISNUM(1) ) {
       bio = BIO_new_fd(hb_parni(1), BIO_NOCLOSE);
-   }
-   else
-   {
+   } else {
       bio = nullptr;
    }
 
-   if( bio )
-   {
+   if( bio != nullptr ) {
       PHB_ITEM pPassCallback = hb_param(2, Harbour::Item::EVALITEM);
       pem_password_cb * cb;
       void * cargo, * result;
 
-      if( pPassCallback )
-      {
+      if( pPassCallback != nullptr ) {
          cb = hb_ssl_pem_password_cb;
          cargo = pPassCallback;
-      }
-      else
-      {
+      } else {
          cb = nullptr;
          cargo = const_cast<char*>(hb_parc(2));  /* NOTE: Discarding 'const' qualifier, OpenSSL will memcpy() it */
       }
 
       result = (*func)(bio, nullptr, cb, cargo);
 
-      if( result )
-      {
-         switch( type )
-         {
+      if( result ) {
+         switch( type ) {
             case hb_PEM_X509:
                hb_X509_ret(static_cast<X509*>(result), true);
                break;
@@ -152,19 +135,14 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
                hb_retptr(nullptr);
                break;
          }
-      }
-      else
-      {
+      } else {
          hb_retptr(nullptr);
       }
 
-      if( !hb_BIO_is(1) )
-      {
+      if( !hb_BIO_is(1) ) {
          BIO_free(bio);
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

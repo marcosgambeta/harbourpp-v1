@@ -45,9 +45,7 @@
  */
 
 #include "hbssl.h"
-
 #include "hbapiitm.hpp"
-
 #include <openssl/evp.h>
 
 static HB_GARBAGE_FUNC( EVP_PKEY_release )
@@ -71,24 +69,21 @@ static const HB_GC_FUNCS s_gcEVP_PKEY_funcs =
    hb_gcDummyMark
 };
 
-HB_BOOL hb_EVP_PKEY_is( int iParam )
+HB_BOOL hb_EVP_PKEY_is(int iParam)
 {
-   return hb_parptrGC( &s_gcEVP_PKEY_funcs, iParam ) != nullptr;
+   return hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam) != nullptr;
 }
 
-EVP_PKEY * hb_EVP_PKEY_par( int iParam )
+EVP_PKEY * hb_EVP_PKEY_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam));
-
    return ph ? static_cast<EVP_PKEY*>(*ph) : nullptr;
 }
 
-void hb_EVP_PKEY_ret( EVP_PKEY * pkey )
+void hb_EVP_PKEY_ret(EVP_PKEY * pkey)
 {
    void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_PKEY*), &s_gcEVP_PKEY_funcs));
-
    *ph = pkey;
-
    hb_retptrGC(ph);
 }
 
@@ -104,52 +99,40 @@ HB_FUNC( EVP_PKEY_TYPE )
 
 HB_FUNC( EVP_PKEY_SIZE )
 {
-   if( hb_EVP_PKEY_is(1) )
-   {
+   if( hb_EVP_PKEY_is(1) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
 
-      if( pkey )
-      {
+      if( pkey != nullptr ) {
          hb_retni(EVP_PKEY_size(pkey));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_PKEY_BITS )
 {
-   if( hb_EVP_PKEY_is(1) )
-   {
+   if( hb_EVP_PKEY_is(1) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
 
-      if( pkey )
-      {
+      if( pkey != nullptr ) {
          hb_retni(EVP_PKEY_bits(pkey));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( EVP_PKEY_ASSIGN )
 {
-   if( hb_EVP_PKEY_is(1) )
-   {
+   if( hb_EVP_PKEY_is(1) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
 
-      if( pkey )
-      {
+      if( pkey != nullptr ) {
          /* QUESTION: Is hb_openssl_strdup() okay here? [vszakats] */
          hb_retni(EVP_PKEY_assign(pkey, hb_parni(2), hb_openssl_strdup(hb_parcx(3))));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -157,18 +140,14 @@ HB_FUNC( EVP_PKEY_ASSIGN )
 HB_FUNC( EVP_PKEY_ASSIGN_RSA )
 {
 #ifndef OPENSSL_NO_RSA
-   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
-   {
+   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      RSA *      key  = static_cast<RSA*>(hb_parptr(2));
+      RSA * key = static_cast<RSA*>(hb_parptr(2));
 
-      if( pkey && key )
-      {
+      if( pkey != nullptr && key != nullptr ) {
          hb_retni(EVP_PKEY_assign_RSA(pkey, key));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #else
@@ -179,18 +158,14 @@ HB_FUNC( EVP_PKEY_ASSIGN_RSA )
 HB_FUNC( EVP_PKEY_ASSIGN_DSA )
 {
 #ifndef OPENSSL_NO_DSA
-   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
-   {
+   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      DSA *      key  = static_cast<DSA*>(hb_parptr(2));
+      DSA * key = static_cast<DSA*>(hb_parptr(2));
 
-      if( pkey && key )
-      {
+      if( pkey != nullptr && key != nullptr ) {
          hb_retni(EVP_PKEY_assign_DSA(pkey, key));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #else
@@ -201,18 +176,14 @@ HB_FUNC( EVP_PKEY_ASSIGN_DSA )
 HB_FUNC( EVP_PKEY_ASSIGN_DH )
 {
 #ifndef OPENSSL_NO_RSA
-   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) )
-   {
+   if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      DH *       key  = static_cast<DH*>(hb_parptr(2));
+      DH * key = static_cast<DH*>(hb_parptr(2));
 
-      if( pkey && key )
-      {
+      if( pkey != nullptr && key != nullptr ) {
          hb_retni(EVP_PKEY_assign_DH(pkey, key));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 #else
@@ -227,9 +198,9 @@ int EVP_PKEY_set1_DSA(EVP_PKEY * pkey, DSA * key);
 int EVP_PKEY_set1_DH(EVP_PKEY * pkey, DH * key);
 int EVP_PKEY_set1_EC_KEY(EVP_PKEY * pkey, EC_KEY * key);
 
-RSA *    EVP_PKEY_get1_RSA(EVP_PKEY * pkey);
-DSA *    EVP_PKEY_get1_DSA(EVP_PKEY * pkey);
-DH *     EVP_PKEY_get1_DH(EVP_PKEY * pkey);
+RSA * EVP_PKEY_get1_RSA(EVP_PKEY * pkey);
+DSA * EVP_PKEY_get1_DSA(EVP_PKEY * pkey);
+DH * EVP_PKEY_get1_DH(EVP_PKEY * pkey);
 EC_KEY * EVP_PKEY_get1_EC_KEY(EVP_PKEY * pkey);
 
 /* These changed in 0.9.9 to something different, they weren't probably documented before. */

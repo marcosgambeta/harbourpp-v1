@@ -51,8 +51,7 @@ static HB_GARBAGE_FUNC( SSL_SESSION_release )
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       SSL_SESSION_free(static_cast<SSL_SESSION*>(*ph));
 
@@ -67,134 +66,106 @@ static const HB_GC_FUNCS s_gcSSL_SESSION_funcs =
    hb_gcDummyMark
 };
 
-HB_BOOL hb_SSL_SESSION_is( int iParam )
+HB_BOOL hb_SSL_SESSION_is(int iParam)
 {
    return hb_parptrGC( &s_gcSSL_SESSION_funcs, iParam ) != nullptr;
 }
 
-SSL_SESSION * hb_SSL_SESSION_par( int iParam )
+SSL_SESSION * hb_SSL_SESSION_par(int iParam)
 {
    void ** ph = static_cast<void**>(hb_parptrGC(&s_gcSSL_SESSION_funcs, iParam));
-
    return ph ? static_cast<SSL_SESSION*>(*ph) : nullptr;
 }
 
 HB_FUNC( SSL_SESSION_NEW )
 {
    void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_SESSION*), &s_gcSSL_SESSION_funcs));
-
    SSL_SESSION * session = SSL_SESSION_new();
-
    *ph = static_cast<void*>(session);
-
    hb_retptrGC(ph);
 }
 
 HB_FUNC( SSL_SESSION_CMP )
 {
-   if( hb_SSL_SESSION_is(1) && hb_SSL_SESSION_is(2) )
-   {
+   if( hb_SSL_SESSION_is(1) && hb_SSL_SESSION_is(2) ) {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
       SSL_SESSION * session1 = hb_SSL_SESSION_par(1);
       SSL_SESSION * session2 = hb_SSL_SESSION_par(2);
 
-      if( session1 && session2 )
-      {
+      if( session1 != nullptr && session2 != nullptr ) {
          hb_retni(SSL_SESSION_cmp(session1, session2));
       }
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( SSL_SESSION_SET_TIME )
 {
-   if( hb_SSL_SESSION_is(1) )
-   {
+   if( hb_SSL_SESSION_is(1) ) {
       SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
-      if( session )
-      {
+      if( session != nullptr ) {
          hb_retnl(SSL_SESSION_set_time(session, hb_parnl(2)));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( SSL_SESSION_SET_TIMEOUT )
 {
-   if( hb_SSL_SESSION_is(1) )
-   {
+   if( hb_SSL_SESSION_is(1) ) {
       SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
-      if( session )
-      {
+      if( session != nullptr ) {
          hb_retnl(SSL_SESSION_set_timeout(session, hb_parnl(2)));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( SSL_SESSION_GET_TIME )
 {
-   if( hb_SSL_SESSION_is(1) )
-   {
+   if( hb_SSL_SESSION_is(1) ) {
       SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
-      if( session )
-      {
+      if( session != nullptr ) {
          hb_retnl(SSL_SESSION_get_time(session));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( SSL_SESSION_GET_TIMEOUT )
 {
-   if( hb_SSL_SESSION_is(1) )
-   {
+   if( hb_SSL_SESSION_is(1) ) {
       SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
-      if( session )
-      {
+      if( session != nullptr ) {
          hb_retnl(SSL_SESSION_get_timeout(session));
       }
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
 
 HB_FUNC( SSL_SESSION_HASH )
 {
-   if( hb_SSL_SESSION_is(1) )
-   {
+   if( hb_SSL_SESSION_is(1) ) {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
       SSL_SESSION * session = hb_SSL_SESSION_par(1);
 
-      if( session )
-      {
+      if( session != nullptr ) {
          hb_retnl(SSL_SESSION_hash(session));
       }
 #endif
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+   }
 }
 
 #if 0
