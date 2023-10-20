@@ -52,30 +52,30 @@
 
 #include "hbbz2.ch"
 
-static void * hb_bz2Alloc( void * cargo, int nmemb, int size )
+static void * hb_bz2Alloc(void * cargo, int nmemb, int size)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( static_cast<HB_SIZE>(nmemb) * size ) : nullptr;
+   return (nmemb > 0 && size > 0) ? hb_xalloc(static_cast<HB_SIZE>(nmemb) * size) : nullptr;
 }
 
 static void hb_bz2Free(void * cargo, void * ptr)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   if( ptr )
+   if( ptr ) {
       hb_xfree(ptr);
+   }
 }
 
-static HB_SIZE hb_bz2CompressBound( HB_SIZE nLen )
+static HB_SIZE hb_bz2CompressBound(HB_SIZE nLen)
 {
    HB_SIZE nSize = nLen + nLen / 100 + 600;
 
    return nSize < nLen ? HB_SIZE_MAX - 1 : nSize;
 }
 
-static int hb_bz2Compress( const char * szSrc, HB_SIZE nSrc,
-                           char * szDst, HB_SIZE * pnDst, int iBlockSize )
+static int hb_bz2Compress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_SIZE * pnDst, int iBlockSize)
 {
    bz_stream stream;
    int       iResult;
@@ -95,20 +95,16 @@ static int hb_bz2Compress( const char * szSrc, HB_SIZE nSrc,
 #endif
 
    iResult = BZ2_bzCompressInit(&stream, iBlockSize, 0, 0);
-   if( iResult == BZ_OK )
-   {
-      do
-      {
+   if( iResult == BZ_OK ) {
+      do {
          iResult = BZ2_bzCompress(&stream, BZ_FINISH);
-      }
-      while( iResult == BZ_FINISH_OK );
+      } while( iResult == BZ_FINISH_OK );
 
-      if( iResult == BZ_STREAM_END )
-      {
+      if( iResult == BZ_STREAM_END ) {
 #if HB_SIZE_MAX <= UINT_MAX
          *pnDst = static_cast<HB_SIZE>(stream.total_out_lo32);
 #else
-         *pnDst = ( static_cast<HB_SIZE>(stream.total_out_hi32) << 32 ) | stream.total_out_lo32;
+         *pnDst = (static_cast<HB_SIZE>(stream.total_out_hi32) << 32) | stream.total_out_lo32;
 #endif
          iResult = BZ_OK;
       }
@@ -119,8 +115,7 @@ static int hb_bz2Compress( const char * szSrc, HB_SIZE nSrc,
    return iResult;
 }
 
-static HB_SIZE hb_bz2UncompressedSize( const char * szSrc, HB_SIZE nLen,
-                                       int * piResult )
+static HB_SIZE hb_bz2UncompressedSize(const char * szSrc, HB_SIZE nLen, int * piResult)
 {
    char      buffer[1024];
    bz_stream stream;
@@ -138,26 +133,23 @@ static HB_SIZE hb_bz2UncompressedSize( const char * szSrc, HB_SIZE nLen,
 #endif
 
    *piResult = BZ2_bzDecompressInit(&stream, 0, 0);
-   if( *piResult == BZ_OK )
-   {
-      do
-      {
+   if( *piResult == BZ_OK ) {
+      do {
          stream.next_out  = buffer;
          stream.avail_out = sizeof(buffer);
          *piResult        = BZ2_bzDecompress(&stream);
-      }
-      while( *piResult == BZ_OK );
+      } while( *piResult == BZ_OK );
 
-      if( *piResult == BZ_STREAM_END )
-      {
+      if( *piResult == BZ_STREAM_END ) {
          *piResult = BZ_OK;
 #if HB_SIZE_MAX <= UINT_MAX
-         if( stream.total_out_hi32 != 0 )
+         if( stream.total_out_hi32 != 0 ) {
             *piResult = BZ_MEM_ERROR;
-         else
+         } else {
             nDest = static_cast<HB_SIZE>(stream.total_out_lo32);
+         }
 #else
-         nDest = ( static_cast<HB_SIZE>(stream.total_out_hi32) << 32 ) | stream.total_out_lo32;
+         nDest = (static_cast<HB_SIZE>(stream.total_out_hi32) << 32) | stream.total_out_lo32;
 #endif
       }
       BZ2_bzDecompressEnd(&stream);
@@ -186,20 +178,16 @@ static int hb_bz2Uncompress(const char * szSrc, HB_SIZE nSrc, char * szDst, HB_S
 #endif
 
    iResult = BZ2_bzDecompressInit(&stream, 0, 0);
-   if( iResult == BZ_OK )
-   {
-      do
-      {
+   if( iResult == BZ_OK ) {
+      do {
          iResult = BZ2_bzDecompress(&stream);
-      }
-      while( iResult == BZ_OK );
+      } while( iResult == BZ_OK );
 
-      if( iResult == BZ_STREAM_END )
-      {
+      if( iResult == BZ_STREAM_END ) {
 #if HB_SIZE_MAX <= UINT_MAX
          *pnDst = static_cast<HB_SIZE>(stream.total_out_lo32);
 #else
-         *pnDst = ( static_cast<HB_SIZE>(stream.total_out_hi32) << 32 ) | stream.total_out_lo32;
+         *pnDst = (static_cast<HB_SIZE>(stream.total_out_hi32) << 32) | stream.total_out_lo32;
 #endif
          iResult = BZ_OK;
       }
@@ -215,153 +203,141 @@ HB_FUNC( HB_BZ2_VERSION )
    hb_retc(BZ2_bzlibVersion());
 }
 
-/* hb_bz2_CompressBound( <cData> | <nDataLen> ) --> <nMaxCompressLen> */
+/* hb_bz2_CompressBound(<cData> | <nDataLen>) --> <nMaxCompressLen> */
 HB_FUNC( HB_BZ2_COMPRESSBOUND )
 {
-   if( HB_ISCHAR(1) )
+   if( HB_ISCHAR(1) ) {
       hb_retnint(hb_bz2CompressBound(hb_parclen(1)));
-   else if( HB_ISNUM(1) )
+   } else if( HB_ISNUM(1) ) {
       hb_retnint(hb_bz2CompressBound(static_cast<HB_SIZE>(hb_parnint(1))));
-   else
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
-/* hb_bz2_UncompressLen( <cCompressedData>, [<@nResult>] )
+/* hb_bz2_UncompressLen(<cCompressedData>, [<@nResult>])
       --> <nUnCompressedDataLen> or -1 on error */
 HB_FUNC( HB_BZ2_UNCOMPRESSLEN )
 {
    const char * szData = hb_parc(1);
 
-   if( szData )
-   {
+   if( szData ) {
       HB_SIZE nLen    = hb_parclen(1);
       int     iResult = BZ_OK;
 
-      if( nLen )
+      if( nLen ) {
          nLen = hb_bz2UncompressedSize(szData, nLen, &iResult);
+      }
 
-      if( iResult == BZ_OK )
+      if( iResult == BZ_OK ) {
          hb_retnint(nLen);
-      else
+      } else {
          hb_retni(-1);
+      }
 
       hb_storni(iResult, 2);
-   }
-   else
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
-/* hb_bz2_Compress( <cData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>], [<nLevel>] )
+/* hb_bz2_Compress(<cData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>], [<nLevel>])
       --> <cCompressedData> or NIL on Error */
 HB_FUNC( HB_BZ2_COMPRESS )
 {
    const char * szData = hb_parc(1);
 
-   if( szData )
-   {
+   if( szData ) {
       HB_SIZE nLen = hb_parclen(1);
 
-      if( nLen )
-      {
+      if( nLen ) {
          PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
          HB_SIZE  nDstLen;
          char *   pDest;
          int      iResult;
 
-         if( pBuffer )
-         {
-            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
+         if( pBuffer ) {
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) ) {
                pDest = nullptr;
-         }
-         else
-         {
+            }
+         } else {
             nDstLen = HB_ISNUM(2) ? static_cast<HB_SIZE>(hb_parnint(2)) : static_cast<HB_SIZE>(hb_bz2CompressBound(nLen));
             pDest = static_cast<char*>(hb_xalloc(nDstLen + 1));
          }
 
-         if( pDest )
-         {
+         if( pDest ) {
             iResult = hb_bz2Compress(szData, nLen, pDest, &nDstLen, hb_parnidef(4, HB_BZ_COMPRESSION_DEFAULT));
-            if( !pBuffer )
-            {
-               if( iResult == BZ_OK )
+            if( !pBuffer ) {
+               if( iResult == BZ_OK ) {
                   hb_retclen_buffer(pDest, nDstLen);
-               else
+               } else {
                   hb_xfree(pDest);
-            }
-            else if( iResult == BZ_OK )
+               }
+            } else if( iResult == BZ_OK ) {
                hb_retclen(pDest, nDstLen);
-         }
-         else
+            }
+         } else {
             iResult = BZ_MEM_ERROR;
+         }
 
          hb_storni(iResult, 3);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
          hb_storni(BZ_OK, 3);
       }
-   }
-   else
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
-/* hb_bz2_Uncompress( <cCompressedData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>] )
+/* hb_bz2_Uncompress(<cCompressedData>, [<nDstBufLen>|<@cBuffer>], [<@nResult>])
       --> <cUnCompressedData> or NIL on Error */
 HB_FUNC( HB_BZ2_UNCOMPRESS )
 {
    PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
    const char * szData  = hb_parc(1);
 
-   if( szData )
-   {
+   if( szData ) {
       HB_SIZE nLen = hb_parclen(1);
 
-      if( nLen )
-      {
+      if( nLen ) {
          HB_SIZE nDstLen;
          char *  pDest   = nullptr;
          int     iResult = BZ_OK;
 
-         if( pBuffer )
-         {
-            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) )
+         if( pBuffer ) {
+            if( !hb_itemGetWriteCL(pBuffer, &pDest, &nDstLen) ) {
                iResult = BZ_MEM_ERROR;
-         }
-         else
-         {
+            }
+         } else {
             nDstLen = HB_ISNUM(2) ? static_cast<HB_SIZE>(hb_parnint(2)) : hb_bz2UncompressedSize(szData, nLen, &iResult);
-            if( iResult == BZ_OK )
-            {
+            if( iResult == BZ_OK ) {
                pDest = static_cast<char*>(hb_xalloc(nDstLen + 1));
-               if( !pDest )
+               if( !pDest ) {
                   iResult = BZ_MEM_ERROR;
+               }
             }
          }
 
-         if( iResult == BZ_OK )
-         {
+         if( iResult == BZ_OK ) {
             iResult = hb_bz2Uncompress(szData, nLen, pDest, &nDstLen);
 
-            if( !pBuffer )
-            {
-               if( iResult == BZ_OK )
+            if( !pBuffer ) {
+               if( iResult == BZ_OK ) {
                   hb_retclen_buffer(pDest, nDstLen);
-               else
+               } else {
                   hb_xfree(pDest);
-            }
-            else if( iResult == BZ_OK )
+               }
+            } else if( iResult == BZ_OK ) {
                hb_retclen(pDest, nDstLen);
+            }
          }
          hb_storni(iResult, 3);
-      }
-      else
-      {
+      } else {
          hb_retc_null();
          hb_storni(BZ_OK, 3);
       }
-   }
-   else
+   } else {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }

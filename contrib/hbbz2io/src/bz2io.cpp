@@ -59,63 +59,66 @@
 #define HB_BZ2_BUFSIZE        8192
 #define HB_BZ2_BLOCKSIZE      9
 
-typedef struct _HB_FILE
+struct _HB_FILE
 {
    const HB_FILE_FUNCS * pFuncs;
    PHB_FILE       pFile;
 
    HB_FOFFSET     seek_pos;
    HB_MAXINT      nTimeout;
-   HB_BOOL        fEof;
-   HB_BOOL        fInited;
+   HB_BOOL        fEof;    // TODO: HB_BOOL -> bool
+   HB_BOOL        fInited; // TODO: HB_BOOL -> bool
    int            iMode;
    int            iBlockSize;
 
    bz_stream      bz2;
    HB_BYTE        buffer[HB_BZ2_BUFSIZE];
-}
-HB_FILE;
+};
+
+using HB_FILE = _HB_FILE;
 
 #define _PHB_FILE     pFile->pFile
 
 static PHB_FILE s_filebz2New(PHB_FILE pFile, int iMode, int iBlockSize);
 
-static void * s_filebz2Alloc( void * cargo, int nmemb, int size )
+static void * s_filebz2Alloc(void * cargo, int nmemb, int size)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   return ( nmemb > 0 && size > 0 ) ? hb_xalloc( static_cast<HB_SIZE>(nmemb) * size ) : nullptr;
+   return (nmemb > 0 && size > 0) ? hb_xalloc(static_cast<HB_SIZE>(nmemb) * size) : nullptr;
 }
 
 static void s_filebz2Free(void * cargo, void * ptr)
 {
    HB_SYMBOL_UNUSED(cargo);
 
-   if( ptr )
+   if( ptr ) {
       hb_xfree(ptr);
+   }   
 }
 
-static HB_SIZE s_bz2_write( PHB_FILE pFile, HB_MAXINT nTimeout )
+static HB_SIZE s_bz2_write(PHB_FILE pFile, HB_MAXINT nTimeout)
 {
    HB_SIZE nWritten = 0, nSize = HB_BZ2_BUFSIZE - pFile->bz2.avail_out;
 
-   while( nWritten < nSize )
-   {
+   while( nWritten < nSize ) {
       HB_SIZE nWr = _PHB_FILE->pFuncs->Write(_PHB_FILE, pFile->buffer + nWritten, nSize - nWritten, nTimeout);
-      if( nWr == static_cast<HB_SIZE>(-1) )
+      if( nWr == static_cast<HB_SIZE>(-1) ) {
          return nWr;
-      else if( nWr == 0 )
+      } else if( nWr == 0 ) {
          break;
+      }
 
       nWritten += nWr;
-      if( nTimeout > 0 )
+      if( nTimeout > 0 ) {
          nTimeout = 0;
+      }
    }
 
-   if( nWritten > 0 )
-   {
-      if( nWritten < nSize )
+   if( nWritten > 0 ) {
+      if( nWritten < nSize ) {
          memmove(pFile->buffer, pFile->buffer + nWritten, nSize - nWritten);
+      }
       pFile->bz2.avail_out += static_cast<unsigned int>(nWritten);
       pFile->bz2.next_out -= nWritten;
    }
@@ -123,42 +126,44 @@ static HB_SIZE s_bz2_write( PHB_FILE pFile, HB_MAXINT nTimeout )
    return nWritten;
 }
 
-static void s_bz2_flush( PHB_FILE pFile, HB_BOOL fClose )
+static void s_bz2_flush(PHB_FILE pFile, bool fClose)
 {
    int err;
 
-   if( pFile->bz2.avail_out > 0 )
+   if( pFile->bz2.avail_out > 0 ) {
       err = BZ2_bzCompress(&pFile->bz2, fClose ? BZ_FINISH : BZ_FLUSH);
-   else if( pFile->bz2.avail_out < HB_BZ2_BUFSIZE )
+   } else if( pFile->bz2.avail_out < HB_BZ2_BUFSIZE ) {
       err = BZ_FLUSH_OK;
-   else
+   } else {
       err = BZ_STREAM_END;
-
-   while( pFile->bz2.avail_out < HB_BZ2_BUFSIZE )
-   {
-      HB_SIZE nWr = s_bz2_write(pFile, pFile->nTimeout);
-      if( nWr == 0 || nWr == static_cast<HB_SIZE>(-1) )
-         return;
-      if( err == BZ_FLUSH_OK || err == BZ_FINISH_OK )
-         err = BZ2_bzCompress(&pFile->bz2, fClose ? BZ_FINISH : BZ_FLUSH);
    }
 
-   if( err == BZ_STREAM_END || err == BZ_RUN_OK )
+   while( pFile->bz2.avail_out < HB_BZ2_BUFSIZE ) {
+      HB_SIZE nWr = s_bz2_write(pFile, pFile->nTimeout);
+      if( nWr == 0 || nWr == static_cast<HB_SIZE>(-1) ) {
+         return;
+      }
+      if( err == BZ_FLUSH_OK || err == BZ_FINISH_OK ) {
+         err = BZ2_bzCompress(&pFile->bz2, fClose ? BZ_FINISH : BZ_FLUSH);
+      }
+   }
+
+   if( err == BZ_STREAM_END || err == BZ_RUN_OK ) {
       hb_fsSetError(0);
-   else
+   } else {
       hb_fsSetError(HB_BZ2_ERROR_BASE - err);
+   }
 }
 
-static const char * s_bz2io_name( const char * pszFileName, int * piBlockSize )
+static const char * s_bz2io_name(const char * pszFileName, int * piBlockSize)
 {
-   if( HB_TOUPPER(pszFileName[0]) == 'B' && HB_TOUPPER(pszFileName[1]) == 'Z' )
-   {
-      if( pszFileName[2] == ':' )
+   if( HB_TOUPPER(pszFileName[0]) == 'B' && HB_TOUPPER(pszFileName[1]) == 'Z' ) {
+      if( pszFileName[2] == ':' ) {
          pszFileName += 3;
-      else if( pszFileName[2] >= '1' && pszFileName[2] <= '9'  && pszFileName[3] == ':' )
-      {
-         if( piBlockSize )
+      } else if( pszFileName[2] >= '1' && pszFileName[2] <= '9'  && pszFileName[3] == ':' ) {
+         if( piBlockSize ) {
             *piBlockSize = pszFileName[2] - '0';
+         }
          pszFileName += 4;
       }
    }
@@ -169,151 +174,152 @@ static const char * s_bz2io_name( const char * pszFileName, int * piBlockSize )
  * file methods
  */
 
-static HB_BOOL s_fileAccept( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char * pszFileName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return s_bz2io_name(pszFileName, nullptr) != pszFileName;
 }
 
-static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath )
+static HB_BOOL s_fileExists(PHB_FILE_FUNCS pFuncs, const char * pszFileName, char * pRetPath) // FileFunc
 {
    const char * pszName;
-   HB_BOOL fResult;
+   bool fResult;
 
    HB_SYMBOL_UNUSED(pFuncs);
 
    pszName = s_bz2io_name(pszFileName, nullptr);
-   if( pRetPath )
-   {
+   if( pRetPath ) {
       char * pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
       int iPref = static_cast<int>(pszName - pszFileName);
 
       fResult = hb_fileExists(pszName, pszNameBuf);
-      if( pRetPath != pszFileName )
+      if( pRetPath != pszFileName ) {
          memcpy(pRetPath, pszFileName, iPref);
+      }
       hb_strncpy(pRetPath + iPref, pszNameBuf, HB_PATH_MAX - 1 - iPref);
       hb_xfree(pszNameBuf);
-   }
-   else
+   } else {
       fResult = hb_fileExists(pszName, nullptr);
+   }
 
    return fResult;
 }
 
-static HB_BOOL s_fileDelete( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static HB_BOOL s_fileDelete(PHB_FILE_FUNCS pFuncs, const char * pszFileName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileDelete(s_bz2io_name(pszFileName, nullptr));
 }
 
-static HB_BOOL s_fileRename( PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName )
+static HB_BOOL s_fileRename(PHB_FILE_FUNCS pFuncs, const char * pszName, const char * pszNewName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileRename(s_bz2io_name(pszName, nullptr), s_bz2io_name(pszNewName, nullptr));
 }
 
-static HB_BOOL s_fileCopy( PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile )
+static HB_BOOL s_fileCopy(PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const char * pszDstFile) // FileFunc
 {
    int iSrcBlkSize = HB_BZ2_BLOCKSIZE,
        iDstBlkSize = HB_BZ2_BLOCKSIZE;
-   const char * pszSrc = s_bz2io_name(pszSrcFile, &iSrcBlkSize ), * pszDst = s_bz2io_name( pszDstFile, &iDstBlkSize);
+   const char * pszSrc = s_bz2io_name(pszSrcFile, &iSrcBlkSize ), * pszDst = s_bz2io_name(pszDstFile, &iDstBlkSize);
 
    HB_SYMBOL_UNUSED(pFuncs);
 
-   if( pszDst != pszDstFile && iSrcBlkSize == iDstBlkSize )
+   if( pszDst != pszDstFile && iSrcBlkSize == iDstBlkSize ) {
       return hb_fsCopy(pszSrc, pszDst);
-   else
+   } else {
       return hb_fsCopy(pszSrcFile, pszDstFile);
+   }
 }
 
-static HB_BOOL s_fileDirExists( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
+static HB_BOOL s_fileDirExists(PHB_FILE_FUNCS pFuncs, const char * pszDirName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileDirExists(s_bz2io_name(pszDirName, nullptr));
 }
 
-static HB_BOOL s_fileDirMake( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
+static HB_BOOL s_fileDirMake(PHB_FILE_FUNCS pFuncs, const char * pszDirName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileDirMake(s_bz2io_name(pszDirName, nullptr));
 }
 
-static HB_BOOL s_fileDirRemove( PHB_FILE_FUNCS pFuncs, const char * pszDirName )
+static HB_BOOL s_fileDirRemove(PHB_FILE_FUNCS pFuncs, const char * pszDirName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileDirRemove(s_bz2io_name(pszDirName, nullptr));
 }
 
-static double s_fileDirSpace( PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType )
+static double s_fileDirSpace(PHB_FILE_FUNCS pFuncs, const char * pszDirName, HB_USHORT uiType) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileDirSpace(s_bz2io_name(pszDirName, nullptr), uiType);
 }
 
-static PHB_ITEM s_fileDirectory( PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr )
+static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, const char * pszAttr) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileDirectory(s_bz2io_name(pszDirSpec, nullptr), pszAttr);
 }
 
-static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec)
+static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long * plJulian, long * plMillisec) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileTimeGet(s_bz2io_name(pszFileName, nullptr), plJulian, plMillisec);
 }
 
-static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec)
+static HB_BOOL s_fileTimeSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, long lJulian, long lMillisec) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileTimeSet(s_bz2io_name(pszFileName, nullptr), lJulian, lMillisec);
 }
 
-static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr)
+static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR * pnAttr) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileAttrGet(s_bz2io_name(pszFileName, nullptr), pnAttr);
 }
 
-static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr)
+static HB_BOOL s_fileAttrSet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB_FATTR nAttr) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileAttrSet(s_bz2io_name(pszFileName, nullptr), nAttr);
 }
 
-static HB_BOOL s_fileLink( PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName )
+static HB_BOOL s_fileLink(PHB_FILE_FUNCS pFuncs, const char * pszExisting, const char * pszNewName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileLink(s_bz2io_name(pszExisting, nullptr), s_bz2io_name(pszNewName, nullptr));
 }
 
-static HB_BOOL s_fileLinkSym( PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName )
+static HB_BOOL s_fileLinkSym(PHB_FILE_FUNCS pFuncs, const char * pszTarget, const char * pszNewName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileLinkSym(s_bz2io_name(pszTarget, nullptr), s_bz2io_name(pszNewName, nullptr));
 }
 
-static char * s_fileLinkRead( PHB_FILE_FUNCS pFuncs, const char * pszFileName )
+static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFuncs);
 
    return hb_fileLinkRead(s_bz2io_name(pszFileName, nullptr));
 }
 
-static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError )
+static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, const char * pszDefExt, HB_FATTR nExFlags, const char * pPaths, PHB_ITEM pError) // FileFunc
 {
    int iBlockSize = HB_BZ2_BLOCKSIZE;
    char * pszNameBuf = nullptr;
@@ -323,68 +329,67 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName, con
 
    HB_SYMBOL_UNUSED(pFuncs);
 
-   if( (nExFlags & FXO_COPYNAME) != 0 )
+   if( (nExFlags & FXO_COPYNAME) != 0 ) {
       pszName = pszNameBuf = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)), pszName, HB_PATH_MAX - 1);
+   }
 
    pFile = hb_fileExtOpen(pszName, pszDefExt, nExFlags, pPaths, pError);
 
-   if( (nExFlags & FXO_COPYNAME) != 0 )
-   {
-      if( pFile )
+   if( (nExFlags & FXO_COPYNAME) != 0 ) {
+      if( pFile ) {
          hb_strncpy(const_cast<char*>(pszFileName + iPref), pszNameBuf, HB_PATH_MAX - 1 - iPref);
+      }
       hb_xfree(pszNameBuf);
    }
 #if 0
-   if( !pFile && pError )
+   if( !pFile && pError ) {
       hb_errPutFileName(pError, pszFileName);
+   }
 #endif
 
    return s_filebz2New(pFile, nExFlags & (FO_READ | FO_WRITE | FO_READWRITE), iBlockSize);
 }
 
-static void s_fileClose( PHB_FILE pFile )
+static void s_fileClose(PHB_FILE pFile) // FileFunc
 {
-   if( pFile->iMode != FO_READ && pFile->fInited )
+   if( pFile->iMode != FO_READ && pFile->fInited ) {
       s_bz2_flush(pFile, true);
+   }
 
    _PHB_FILE->pFuncs->Close(_PHB_FILE);
 
-   if( pFile->fInited )
-   {
-      if( pFile->iMode == FO_READ )
+   if( pFile->fInited ) {
+      if( pFile->iMode == FO_READ ) {
          BZ2_bzDecompressEnd(&pFile->bz2);
-      else
+      }
+      else {
          BZ2_bzCompressEnd(&pFile->bz2);
+      }
    }
    hb_xfree(pFile);
 }
 
-static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
+static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType) // FileFunc
 {
    return _PHB_FILE->pFuncs->Lock(_PHB_FILE, nStart, nLen, iType);
 }
 
-static int s_fileLockTest( PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType )
+static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType) // FileFunc
 {
    return _PHB_FILE->pFuncs->LockTest(_PHB_FILE, nStart, nLen, iType);
 }
 
-static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+static HB_SIZE s_fileRead(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout) // FileFunc
 {
    HB_SIZE nResult = 0;
 
-   if( pFile->iMode != FO_WRITE )
-   {
-      if( pFile->fEof )
-      {
+   if( pFile->iMode != FO_WRITE ) {
+      if( pFile->fEof ) {
          hb_fsSetError(0);
          return 0;
-      }
-      else if( !pFile->fInited )
-      {
+      } else if( !pFile->fInited ) {
          int err = BZ2_bzDecompressInit(&pFile->bz2, 0, 0);
-         if( err != BZ_OK )
-         {
+         if( err != BZ_OK ) {
             hb_fsSetError(HB_BZ2_ERROR_BASE - err);
             return static_cast<HB_SIZE>(-1);
          }
@@ -393,72 +398,64 @@ static HB_SIZE s_fileRead( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_MAXI
       }
 
       hb_fsSetError(0);
-      if( nTimeout == -1 )
+      if( nTimeout == -1 ) {
          nTimeout = pFile->nTimeout;
+      }
 
       pFile->bz2.next_out = static_cast<char*>(buffer);
       pFile->bz2.avail_out = static_cast<unsigned int>(nSize);
       pFile->bz2.total_out_hi32 = pFile->bz2.total_out_lo32 = 0;
 
-      while( pFile->bz2.avail_out )
-      {
+      while( pFile->bz2.avail_out ) {
          int err = BZ2_bzDecompress(&pFile->bz2);
 
-         if( err != BZ_OK )
-         {
-            if( err == BZ_STREAM_END )
-            {
+         if( err != BZ_OK ) {
+            if( err == BZ_STREAM_END ) {
                BZ2_bzDecompressEnd(&pFile->bz2);
                pFile->fInited = false;
                pFile->fEof = true;
-            }
-            else
-            {
+            } else {
                hb_fsSetError(HB_BZ2_ERROR_BASE - err);
                nResult = static_cast<HB_SIZE>(-1);
             }
             break;
          }
-         if( pFile->bz2.avail_in == 0 )
-         {
+         if( pFile->bz2.avail_in == 0 ) {
             nResult = _PHB_FILE->pFuncs->Read(_PHB_FILE, pFile->buffer, HB_BZ2_BUFSIZE, pFile->bz2.avail_out ? nTimeout : 0);
-            if( nResult == 0 || nResult == static_cast<HB_SIZE>(- 1) )
+            if( nResult == 0 || nResult == static_cast<HB_SIZE>(- 1) ) {
                break;
+            }
             pFile->bz2.next_in = reinterpret_cast<char*>(pFile->buffer);
             pFile->bz2.avail_in = static_cast<unsigned int>(nResult);
          }
       }
-      if( pFile->bz2.total_out_lo32 != 0 || pFile->bz2.total_out_hi32 != 0 )
-      {
+      if( pFile->bz2.total_out_lo32 != 0 || pFile->bz2.total_out_hi32 != 0 ) {
 #if HB_SIZE_MAX <= UINT_MAX
          nResult = static_cast<HB_SIZE>(pFile->bz2.total_out_lo32);
 #else
-         nResult = ( static_cast<HB_SIZE>(pFile->bz2.total_out_hi32) << 32 ) | static_cast<HB_SIZE>(pFile->bz2.total_out_lo32);
+         nResult = (static_cast<HB_SIZE>(pFile->bz2.total_out_hi32) << 32) | static_cast<HB_SIZE>(pFile->bz2.total_out_lo32);
 #endif
       }
       pFile->seek_pos += hb_fileResult(nResult);
-   }
-   else
+   } else {
       hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
+   }
 
    return nResult;
 }
 
-static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout )
+static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_MAXINT nTimeout) // FileFunc
 {
    HB_SIZE nResult = 0;
 
-   if( pFile->iMode != FO_READ )
-   {
+   if( pFile->iMode != FO_READ ) {
       int err;
 
-      if( !pFile->fInited )
-      {
+      if( !pFile->fInited ) {
          pFile->bz2.next_out  = reinterpret_cast<char*>(pFile->buffer);
          pFile->bz2.avail_out = HB_BZ2_BUFSIZE;
          err = BZ2_bzCompressInit(&pFile->bz2, pFile->iBlockSize, 0, 0);
-         if( err != BZ_OK )
-         {
+         if( err != BZ_OK ) {
             hb_fsSetError(HB_BZ2_ERROR_BASE - err);
             return static_cast<HB_SIZE>(-1);
          }
@@ -467,66 +464,67 @@ static HB_SIZE s_fileWrite( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, 
       }
 
       hb_fsSetError(0);
-      if( nTimeout == -1 )
+      if( nTimeout == -1 ) {
          nTimeout = pFile->nTimeout;
+      }
 
       pFile->bz2.next_in  = static_cast<char*>(const_cast<void*>(buffer));
       pFile->bz2.avail_in = static_cast<unsigned int>(nSize);
 
-      while( pFile->bz2.avail_in )
-      {
-         if( pFile->bz2.avail_out == 0 )
-         {
+      while( pFile->bz2.avail_in ) {
+         if( pFile->bz2.avail_out == 0 ) {
             nResult = s_bz2_write(pFile, nTimeout);
-            if( nResult == 0 || nResult == static_cast<HB_SIZE>(- 1) )
+            if( nResult == 0 || nResult == static_cast<HB_SIZE>(- 1) ) {
                break;
+            }
          }
          err = BZ2_bzCompress(&pFile->bz2, BZ_RUN);
-         if( err != BZ_RUN_OK )
-         {
+         if( err != BZ_RUN_OK ) {
             hb_fsSetError(HB_BZ2_ERROR_BASE - err);
             nResult = static_cast<HB_SIZE>(-1);
             break;
          }
       }
-      if( nResult != static_cast<HB_SIZE>(- 1) )
+      if( nResult != static_cast<HB_SIZE>(- 1) ) {
          nResult = nSize - pFile->bz2.avail_in;
+      }
       pFile->seek_pos += hb_fileResult(nResult);
+   } else {
+      hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
    }
-   else
-      hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
 
    return nResult;
 }
 
-static HB_SIZE s_fileReadAt( PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileReadAt(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset) // FileFunc
 {
    HB_SIZE nResult = 0;
 
-   if( pFile->iMode != FO_WRITE && pFile->seek_pos == nOffset )
+   if( pFile->iMode != FO_WRITE && pFile->seek_pos == nOffset ) {
       nResult = pFile->pFuncs->Read(pFile, buffer, nSize, pFile->nTimeout);
-   else
+   } else {
       hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
+   }
 
    return nResult;
 }
 
-static HB_SIZE s_fileWriteAt( PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset )
+static HB_SIZE s_fileWriteAt(PHB_FILE pFile, const void * buffer, HB_SIZE nSize, HB_FOFFSET nOffset) // FileFunc
 {
    HB_SIZE nResult = 0;
 
-   if( pFile->iMode != FO_READ && pFile->seek_pos == nOffset )
+   if( pFile->iMode != FO_READ && pFile->seek_pos == nOffset ) {
       nResult = pFile->pFuncs->Write(pFile, buffer, nSize, pFile->nTimeout);
-   else
+   } else {
       hb_fsSetError(HB_FILE_ERR_UNSUPPORTED);
+   }
 
    return nResult;
 }
 
-static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
+static HB_BOOL s_fileTruncAt(PHB_FILE pFile, HB_FOFFSET nOffset) // FileFunc
 {
-   if( pFile->iMode != FO_READ && pFile->seek_pos == nOffset )
-   {
+   if( pFile->iMode != FO_READ && pFile->seek_pos == nOffset ) {
       hb_fsSetError(0);
       return true;
    }
@@ -534,17 +532,18 @@ static HB_BOOL s_fileTruncAt( PHB_FILE pFile, HB_FOFFSET nOffset )
    return false;
 }
 
-static HB_FOFFSET s_fileSeek( PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags )
+static HB_FOFFSET s_fileSeek(PHB_FILE pFile, HB_FOFFSET nOffset, HB_USHORT uiFlags) // FileFunc
 {
-   if( (uiFlags == FS_SET && nOffset == pFile->seek_pos) || (uiFlags == FS_RELATIVE && nOffset == 0) )
+   if( (uiFlags == FS_SET && nOffset == pFile->seek_pos) || (uiFlags == FS_RELATIVE && nOffset == 0) ) {
       hb_fsSetError(0);
-   else
+   } else {
       hb_fsSetError(25); /* 'Seek Error' */
+   }
 
    return pFile->seek_pos;
 }
 
-static HB_FOFFSET s_fileSize( PHB_FILE pFile )
+static HB_FOFFSET s_fileSize(PHB_FILE pFile) // FileFunc
 {
    HB_SYMBOL_UNUSED(pFile);
 
@@ -554,45 +553,42 @@ static HB_FOFFSET s_fileSize( PHB_FILE pFile )
    return 0;
 }
 
-static HB_BOOL s_fileEof( PHB_FILE pFile )
+static HB_BOOL s_fileEof(PHB_FILE pFile) // FileFunc
 {
    return pFile->iMode == FO_WRITE || pFile->fEof || _PHB_FILE->pFuncs->Eof(_PHB_FILE);
 }
 
-static void s_fileFlush( PHB_FILE pFile, HB_BOOL fDirty )
+static void s_fileFlush(PHB_FILE pFile, HB_BOOL fDirty) // FileFunc
 {
-   if( pFile->iMode != FO_READ && pFile->fInited )
-   {
+   if( pFile->iMode != FO_READ && pFile->fInited ) {
       #if 0
       s_bz2_flush(pFile, false);
       #endif
       _PHB_FILE->pFuncs->Flush(_PHB_FILE, fDirty);
-   }
-   else
+   } else {
       hb_fsSetError(0);
+   }
 }
 
-static void s_fileCommit( PHB_FILE pFile )
+static void s_fileCommit(PHB_FILE pFile) // FileFunc
 {
-   if( pFile->iMode != FO_READ && pFile->fInited )
-   {
+   if( pFile->iMode != FO_READ && pFile->fInited ) {
       pFile->pFuncs->Flush(pFile, true);
       _PHB_FILE->pFuncs->Commit(_PHB_FILE);
-   }
-   else
+   } else {
       hb_fsSetError(0);
+   }
 }
 
-static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
+static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue) // FileFunc
 {
-   switch( iIndex )
-   {
-      case HB_VF_TIMEOUT:
-      {
+   switch( iIndex ) {
+      case HB_VF_TIMEOUT: {
          HB_MAXINT nTimeout = pFile->nTimeout;
 
-         if( HB_IS_NUMERIC(pValue) )
+         if( HB_IS_NUMERIC(pValue) ) {
             pFile->nTimeout = hb_itemGetNInt(pValue);
+         }
          hb_itemPutNInt(pValue, nTimeout);
          return true;
       }
@@ -605,15 +601,14 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
          hb_itemPutNInt(pValue, _PHB_FILE->pFuncs->Handle(_PHB_FILE));
          return true;
 
-      case HB_VF_IONAME:
-      {
+      case HB_VF_IONAME: {
          const char * pszNext = nullptr;
 
-         if( _PHB_FILE->pFuncs->Configure( _PHB_FILE, iIndex, pValue ) )
-         {
+         if( _PHB_FILE->pFuncs->Configure(_PHB_FILE, iIndex, pValue) ) {
             pszNext = hb_itemGetCPtr(pValue);
-            if( *pszNext == '\0' )
+            if( *pszNext == '\0' ) {
                pszNext = nullptr;
+            }
          }
          hb_itemPutCPtr(pValue, hb_xstrcpy(nullptr, "BZ:", pszNext, nullptr));
          return true;
@@ -625,9 +620,9 @@ static HB_BOOL s_fileConfigure( PHB_FILE pFile, int iIndex, PHB_ITEM pValue )
    return _PHB_FILE->pFuncs->Configure(_PHB_FILE, iIndex, pValue);
 }
 
-static HB_FHANDLE s_fileHandle( PHB_FILE pFile )
+static HB_FHANDLE s_fileHandle(PHB_FILE pFile) // FileFunc
 {
-   return pFile ? _PHB_FILE->pFuncs->Handle( _PHB_FILE ) : FS_ERROR;
+   return pFile ? _PHB_FILE->pFuncs->Handle(_PHB_FILE) : FS_ERROR;
 }
 
 static const HB_FILE_FUNCS s_fileFuncs =
@@ -672,10 +667,9 @@ static const HB_FILE_FUNCS s_fileFuncs =
    s_fileHandle
 };
 
-static PHB_FILE s_filebz2New( PHB_FILE pFile, int iMode, int iBlockSize )
+static PHB_FILE s_filebz2New(PHB_FILE pFile, int iMode, int iBlockSize)
 {
-   if( pFile )
-   {
+   if( pFile ) {
       PHB_FILE pFileBZ2 = static_cast<PHB_FILE>(hb_xgrabz(sizeof(HB_FILE)));
 
       pFileBZ2->pFuncs = &s_fileFuncs;
@@ -695,7 +689,10 @@ static PHB_FILE s_filebz2New( PHB_FILE pFile, int iMode, int iBlockSize )
    return pFile;
 }
 
-HB_FUNC( HB_BZ2IO ) { ; }
+HB_FUNC( HB_BZ2IO )
+{
+;
+}
 
 HB_CALL_ON_STARTUP_BEGIN(_hb_file_bz2io_init_)
    hb_fileRegisterFull(&s_fileFuncs);
