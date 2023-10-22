@@ -367,13 +367,13 @@ static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken, YYSTYPE
     *      [ <HOUR> [ : <MIN> [ : <SEC> [ . <FRAQ> ] ] ] [AM|PP] ] }
     */
 
-   PHB_PP_TOKEN pYear, pMonth, pDay, pTime = nullptr;
+   PHB_PP_TOKEN pYear = pToken->pNext->pNext;
+   PHB_PP_TOKEN pMonth, pDay, pTime = nullptr;
    HB_MAXINT lYear = 0, lMonth = 0, lDay = 0;
-   long lDate = 0, lTime = 0;
    double dNumber;
    int iDec, iWidth, iType = 0;
+   long lDate = 0, lTime = 0;
 
-   pYear = pToken->pNext->pNext;
    if( pYear && HB_PP_TOKEN_TYPE(pYear->type) == HB_PP_TOKEN_NUMBER && pYear->pNext ) {
       if( (HB_PP_TOKEN_TYPE(pYear->pNext->type) == HB_PP_TOKEN_DIV || HB_PP_TOKEN_TYPE(pYear->pNext->type) == HB_PP_TOKEN_MINUS ) &&
           !hb_compStrToNum(pYear->value, pYear->len, &lYear, &dNumber, &iDec, &iWidth) ) {
@@ -468,7 +468,6 @@ extern int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL);
 int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
 {
    PHB_COMP_LEX pLex = HB_COMP_PARAM->pLex;
-   PHB_PP_TOKEN pToken;
 
    if( !HB_COMP_PARAM->fExit ) {
       if( pLex->iClose < 0 ) {
@@ -489,7 +488,7 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
       }
    }
 
-   pToken = hb_pp_tokenGet(pLex->pPP);
+   PHB_PP_TOKEN pToken = hb_pp_tokenGet(pLex->pPP);
 
    if( pLex->fEol ) {
       pLex->fEol = false;
@@ -1191,8 +1190,8 @@ int hb_comp_yylex(YYSTYPE * yylval_ptr, HB_COMP_DECL)
 
 void hb_compParserRun(HB_COMP_DECL)
 {
-   YYSTYPE yylval;
    int iToken;
+   YYSTYPE yylval;
 
    while( !HB_COMP_PARAM->fExit && HB_COMP_PARAM->iErrorCount == 0 ) {
       if( HB_COMP_PARAM->fSingleModule ) {

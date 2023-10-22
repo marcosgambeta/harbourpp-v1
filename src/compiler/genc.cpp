@@ -47,14 +47,12 @@ using PHB_GENC_FUNC = HB_GENC_FUNC_ *;
 
 static void hb_compDumpFindCFunc(HB_COMP_DECL)
 {
-   PHB_HINLINE pInline;
-
-   pInline = HB_COMP_PARAM->inlines.pFirst;
+   PHB_HINLINE pInline = HB_COMP_PARAM->inlines.pFirst;
    while( pInline ) {
       if( pInline->pCode && !pInline->szName ) {
          const char * pszCCode = reinterpret_cast<const char*>(pInline->pCode);
-         char         ch;
-         int          len;
+         char ch;
+         int len;
          while( (ch = *pszCCode++) != 0 ) {
             if( HB_ISFIRSTIDCHAR(ch) ) {
                if( ch == 'H' && strncmp(pszCCode, "B_FUNC_STATIC", 13) == 0 ) {
@@ -151,22 +149,16 @@ static void hb_compFuncUsed(HB_COMP_DECL, PHB_HSYMBOL pSym)
    }
 }
 
-void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C++ language output */
+void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ language output */
 {
    char szFileName[HB_PATH_MAX];
-   PHB_HSYMBOL pSym;
-   PHB_HFUNC pFunc;
-   PHB_HINLINE pInline;
-   FILE * yyc; /* file handle for C++ output */
-   bool fHasHbInline = false;
-
    hb_fsFNameMerge(szFileName, pFileName);
    if( !pFileName->szExtension ) {
       pFileName->szExtension = ".cpp";
    }
    hb_fsFNameMerge(szFileName, pFileName);
 
-   yyc = hb_fopen(szFileName, "w");
+   FILE * yyc = hb_fopen(szFileName, "w"); /* file handle for C++ output */
    if( !yyc ) {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return;
@@ -192,10 +184,14 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName)       /* generates the C
       hb_xfree(szHrb);
    }
 
-   pFunc = HB_COMP_PARAM->functions.pFirst;
+   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
    while( pFunc && ((pFunc->funFlags & HB_FUNF_FILE_DECL) != 0 || pFunc == HB_COMP_PARAM->pInitFunc || pFunc == HB_COMP_PARAM->pLineFunc) ) {
       pFunc = pFunc->pNext;
    }
+
+   PHB_HSYMBOL pSym;
+   PHB_HINLINE pInline;
+   bool fHasHbInline = false;
 
    if( pFunc ) {
       int iFuncSuffix;
@@ -431,7 +427,7 @@ static void hb_compGenCFunc(FILE * yyc, const char * cDecor, const char * szName
    while( cDecor[i] ) {
       if( cDecor[i] == '%' && cDecor[i + 1] == 's' ) {
          const char * tmp = szName;
-         char         c;
+         char c;
 
          while( (c = *tmp++) != 0 ) {
             if( HB_ISNEXTIDCHAR(c) ) {
@@ -508,7 +504,6 @@ static HB_GENC_FUNC(hb_p_and)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_AND,\n");
    return 1;
 }
@@ -517,7 +512,6 @@ static HB_GENC_FUNC(hb_p_arraypush)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_ARRAYPUSH,\n");
    return 1;
 }
@@ -526,7 +520,6 @@ static HB_GENC_FUNC(hb_p_arraypushref)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_ARRAYPUSHREF,\n");
    return 1;
 }
@@ -535,7 +528,6 @@ static HB_GENC_FUNC(hb_p_arraypop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_ARRAYPOP,\n");
    return 1;
 }
@@ -544,7 +536,6 @@ static HB_GENC_FUNC(hb_p_dec)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DEC,\n");
    return 1;
 }
@@ -563,7 +554,6 @@ static HB_GENC_FUNC(hb_p_divide)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DIVIDE,\n");
    return 1;
 }
@@ -584,7 +574,6 @@ static HB_GENC_FUNC(hb_p_duplicate)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DUPLICATE,\n");
    return 1;
 }
@@ -593,7 +582,6 @@ static HB_GENC_FUNC(hb_p_duplunref)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DUPLUNREF,\n");
    return 1;
 }
@@ -602,7 +590,6 @@ static HB_GENC_FUNC(hb_p_pushunref)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PUSHUNREF,\n");
    return 1;
 }
@@ -617,7 +604,6 @@ static HB_GENC_FUNC(hb_p_equal)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_EQUAL,\n");
    return 1;
 }
@@ -626,7 +612,6 @@ static HB_GENC_FUNC(hb_p_exactlyequal)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_EXACTLYEQUAL,\n");
    return 1;
 }
@@ -635,7 +620,6 @@ static HB_GENC_FUNC(hb_p_endblock)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_ENDBLOCK,\n");
    return 1;
 }
@@ -654,7 +638,6 @@ static HB_GENC_FUNC(hb_p_false)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_FALSE,\n");
    return 1;
 }
@@ -663,7 +646,6 @@ static HB_GENC_FUNC(hb_p_fortest)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_FORTEST,\n");
    return 1;
 }
@@ -682,7 +664,6 @@ static HB_GENC_FUNC(hb_p_funcptr)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_FUNCPTR,\n");
    return 1;
 }
@@ -723,7 +704,6 @@ static HB_GENC_FUNC(hb_p_greater)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_GREATER,\n");
    return 1;
 }
@@ -732,7 +712,6 @@ static HB_GENC_FUNC(hb_p_greaterequal)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_GREATEREQUAL,\n");
    return 1;
 }
@@ -741,7 +720,6 @@ static HB_GENC_FUNC(hb_p_inc)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_INC,\n");
    return 1;
 }
@@ -750,7 +728,6 @@ static HB_GENC_FUNC(hb_p_instring)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_INSTRING,\n");
    return 1;
 }
@@ -860,7 +837,6 @@ static HB_GENC_FUNC(hb_p_less)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_LESS,\n");
    return 1;
 }
@@ -869,7 +845,6 @@ static HB_GENC_FUNC(hb_p_lessequal)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_LESSEQUAL,\n");
    return 1;
 }
@@ -916,7 +891,6 @@ static HB_GENC_FUNC(hb_p_macropop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPOP, %u,\n", pFunc->pCode[nPCodePos + 1]);
    return 2;
 }
@@ -925,7 +899,6 @@ static HB_GENC_FUNC(hb_p_macropopaliased)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPOPALIASED, %u,\n", pFunc->pCode[nPCodePos + 1]);
    return 2;
 }
@@ -934,7 +907,6 @@ static HB_GENC_FUNC(hb_p_macropush)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPUSH, %u,\n", pFunc->pCode[nPCodePos + 1]);
    return 2;
 }
@@ -943,7 +915,6 @@ static HB_GENC_FUNC(hb_p_macropushref)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPUSHREF,\n");
    return 1;
 }
@@ -952,7 +923,6 @@ static HB_GENC_FUNC(hb_p_macrodo)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACRODO, %u, %u,\n", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
    return 3;
 }
@@ -961,7 +931,6 @@ static HB_GENC_FUNC(hb_p_macrofunc)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROFUNC, %u, %u,\n", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
    return 3;
 }
@@ -970,7 +939,6 @@ static HB_GENC_FUNC(hb_p_macrosend)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROSEND, %u, %u,\n", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
    return 3;
 }
@@ -979,7 +947,6 @@ static HB_GENC_FUNC(hb_p_macroarraygen)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROARRAYGEN, %u, %u,\n", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
    return 3;
 }
@@ -988,7 +955,6 @@ static HB_GENC_FUNC(hb_p_macropushlist)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPUSHLIST, %u,\n", pFunc->pCode[nPCodePos + 1]);
    return 2;
 }
@@ -997,7 +963,6 @@ static HB_GENC_FUNC(hb_p_macropushindex)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPUSHINDEX,\n");
    return 1;
 }
@@ -1006,7 +971,6 @@ static HB_GENC_FUNC(hb_p_macropushpare)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPUSHPARE, %u,\n", pFunc->pCode[nPCodePos + 1]);
    return 2;
 }
@@ -1015,7 +979,6 @@ static HB_GENC_FUNC(hb_p_macropushaliased)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROPUSHALIASED, %u,\n", pFunc->pCode[nPCodePos + 1]);
    return 2;
 }
@@ -1024,7 +987,6 @@ static HB_GENC_FUNC(hb_p_macrosymbol)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROSYMBOL,\n");
    return 1;
 }
@@ -1033,7 +995,6 @@ static HB_GENC_FUNC(hb_p_macrotext)
 {
    HB_SYMBOL_UNUSED(pFunc );
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MACROTEXT,\n");
    return 1;
 }
@@ -1052,7 +1013,6 @@ static HB_GENC_FUNC(hb_p_minus)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MINUS,\n");
    return 1;
 }
@@ -1084,7 +1044,6 @@ static HB_GENC_FUNC(hb_p_modulus)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MODULUS,\n");
    return 1;
 }
@@ -1093,7 +1052,6 @@ static HB_GENC_FUNC(hb_p_mult)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MULT,\n");
    return 1;
 }
@@ -1102,7 +1060,6 @@ static HB_GENC_FUNC(hb_p_negate)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_NEGATE,\n");
    return 1;
 }
@@ -1111,7 +1068,6 @@ static HB_GENC_FUNC(hb_p_not)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_NOT,\n");
    return 1;
 }
@@ -1120,7 +1076,6 @@ static HB_GENC_FUNC(hb_p_notequal)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_NOTEQUAL,\n");
    return 1;
 }
@@ -1129,7 +1084,6 @@ static HB_GENC_FUNC(hb_p_or)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_OR,\n");
    return 1;
 }
@@ -1148,7 +1102,6 @@ static HB_GENC_FUNC(hb_p_plus)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PLUS,\n");
    return 1;
 }
@@ -1157,7 +1110,6 @@ static HB_GENC_FUNC(hb_p_pop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_POP,\n");
    return 1;
 }
@@ -1166,7 +1118,6 @@ static HB_GENC_FUNC(hb_p_popalias)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_POPALIAS,\n");
    return 1;
 }
@@ -1267,7 +1218,6 @@ static HB_GENC_FUNC(hb_p_power)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_POWER,\n");
    return 1;
 }
@@ -1276,7 +1226,6 @@ static HB_GENC_FUNC(hb_p_pushalias)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PUSHALIAS,\n");
    return 1;
 }
@@ -1322,14 +1271,12 @@ static HB_GENC_FUNC(hb_p_pushblockshort)
    if( cargo->nEndBlockPos < nPCodePos ) {
       cargo->nEndBlockPos = nPCodePos + pFunc->pCode[nPCodePos + 1] - 1;
    }
-
    return 2;
 }
 
 static HB_GENC_FUNC(hb_p_pushblock)
 {
-   HB_USHORT wVar, w;
-   HB_SIZE   nStart = nPCodePos;
+   HB_SIZE nStart = nPCodePos;
 
    fprintf(cargo->yyc, "\tHB_P_PUSHBLOCK, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
    if( cargo->bVerbose ) {
@@ -1337,14 +1284,14 @@ static HB_GENC_FUNC(hb_p_pushblock)
    }
    fprintf(cargo->yyc, "\n");
 
-   w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]);
+   HB_USHORT w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]);
    fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 3], pFunc->pCode[nPCodePos + 4]);
    if( cargo->bVerbose ) {
       fprintf(cargo->yyc, "\t/* number of local parameters (%u) */", w);
    }
    fprintf(cargo->yyc, "\n");
 
-   wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
+   HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
    fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 5], pFunc->pCode[nPCodePos + 6]);
    if( cargo->bVerbose ) {
       fprintf(cargo->yyc, "\t/* number of local variables (%u) */", wVar);
@@ -1378,8 +1325,7 @@ static HB_GENC_FUNC(hb_p_pushblock)
 
 static HB_GENC_FUNC(hb_p_pushblocklarge)
 {
-   HB_USHORT wVar, w;
-   HB_SIZE   nStart = nPCodePos;
+   HB_SIZE nStart = nPCodePos;
 
    fprintf(cargo->yyc, "\tHB_P_PUSHBLOCKLARGE, %u, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2], pFunc->pCode[nPCodePos + 3]);
    if( cargo->bVerbose ) {
@@ -1387,14 +1333,14 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
    }
    fprintf(cargo->yyc, "\n");
 
-   w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]);
+   HB_USHORT w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]);
    fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 4], pFunc->pCode[nPCodePos + 5]);
    if( cargo->bVerbose ) {
       fprintf(cargo->yyc, "\t/* number of local parameters (%u) */", w);
    }
    fprintf(cargo->yyc, "\n");
 
-   wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
+   HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
    fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos + 6], pFunc->pCode[nPCodePos + 7]);
    if( cargo->bVerbose ) {
       fprintf(cargo->yyc, "\t/* number of local variables (%u) */", wVar);
@@ -1515,7 +1461,6 @@ static HB_GENC_FUNC(hb_p_pushlong)
       fprintf(cargo->yyc, "\t/* %li */", HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]));
    }
    fprintf(cargo->yyc, "\n");
-
    return 5;
 }
 
@@ -1539,7 +1484,6 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
 #endif
    }
    fprintf(cargo->yyc, "\n");
-
    return 9;
 }
 
@@ -1567,7 +1511,6 @@ static HB_GENC_FUNC(hb_p_pushnil)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PUSHNIL,\n");
    return 1;
 }
@@ -1576,7 +1519,6 @@ static HB_GENC_FUNC(hb_p_pushself)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PUSHSELF,\n");
    return 1;
 }
@@ -1717,7 +1659,6 @@ static HB_GENC_FUNC(hb_p_retvalue)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_RETVALUE,\n");
    return 1;
 }
@@ -1738,7 +1679,6 @@ static HB_GENC_FUNC(hb_p_pushovarref)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PUSHOVARREF,\n");
    return 1;
 }
@@ -1747,7 +1687,6 @@ static HB_GENC_FUNC(hb_p_seqblock)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_SEQBLOCK,\n");
    return 1;
 }
@@ -1783,7 +1722,6 @@ static HB_GENC_FUNC(hb_p_seqrecover)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_SEQRECOVER,\n");
    return 1;
 }
@@ -1849,7 +1787,6 @@ static HB_GENC_FUNC(hb_p_statics)
       fprintf(cargo->yyc, "\t/* symbol (_INITSTATICS), %u statics */", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]));
    }
    fprintf(cargo->yyc, "\n");
-
    return 5;
 }
 
@@ -1904,7 +1841,6 @@ static HB_GENC_FUNC(hb_p_swapalias)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_SWAPALIAS,\n");
    return 1;
 }
@@ -1913,7 +1849,6 @@ static HB_GENC_FUNC(hb_p_true)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_TRUE,\n");
    return 1;
 }
@@ -1922,7 +1857,6 @@ static HB_GENC_FUNC(hb_p_one)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_ONE,\n");
    return 1;
 }
@@ -1931,7 +1865,6 @@ static HB_GENC_FUNC(hb_p_zero)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_ZERO,\n");
    return 1;
 }
@@ -1940,7 +1873,6 @@ static HB_GENC_FUNC(hb_p_noop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_NOOP,\n");
    return 1;
 }
@@ -2111,7 +2043,6 @@ static HB_GENC_FUNC(hb_p_pluseqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PLUSEQPOP,\n");
    return 1;
 }
@@ -2120,7 +2051,6 @@ static HB_GENC_FUNC(hb_p_minuseqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MINUSEQPOP,\n");
    return 1;
 }
@@ -2129,7 +2059,6 @@ static HB_GENC_FUNC(hb_p_multeqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MULTEQPOP,\n");
    return 1;
 }
@@ -2138,7 +2067,6 @@ static HB_GENC_FUNC(hb_p_diveqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DIVEQPOP,\n");
    return 1;
 }
@@ -2147,7 +2075,6 @@ static HB_GENC_FUNC(hb_p_modeqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MODEQPOP,\n");
    return 1;
 }
@@ -2156,7 +2083,6 @@ static HB_GENC_FUNC(hb_p_expeqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_EXPEQPOP,\n");
    return 1;
 }
@@ -2165,7 +2091,6 @@ static HB_GENC_FUNC(hb_p_inceqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_INCEQPOP,\n");
    return 1;
 }
@@ -2174,7 +2099,6 @@ static HB_GENC_FUNC(hb_p_deceqpop)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DECEQPOP,\n");
    return 1;
 }
@@ -2183,7 +2107,6 @@ static HB_GENC_FUNC(hb_p_pluseq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PLUSEQ,\n");
    return 1;
 }
@@ -2192,7 +2115,6 @@ static HB_GENC_FUNC(hb_p_minuseq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MINUSEQ,\n");
    return 1;
 }
@@ -2201,7 +2123,6 @@ static HB_GENC_FUNC(hb_p_multeq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MULTEQ,\n");
    return 1;
 }
@@ -2210,7 +2131,6 @@ static HB_GENC_FUNC(hb_p_diveq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DIVEQ,\n");
    return 1;
 }
@@ -2219,7 +2139,6 @@ static HB_GENC_FUNC(hb_p_modeq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_MODEQ,\n");
    return 1;
 }
@@ -2228,7 +2147,6 @@ static HB_GENC_FUNC(hb_p_expeq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_EXPEQ,\n");
    return 1;
 }
@@ -2237,7 +2155,6 @@ static HB_GENC_FUNC(hb_p_inceq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_INCEQ,\n");
    return 1;
 }
@@ -2246,7 +2163,6 @@ static HB_GENC_FUNC(hb_p_deceq)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_DECEQ,\n");
    return 1;
 }
@@ -2255,7 +2171,6 @@ static HB_GENC_FUNC(hb_p_withobjectstart)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_WITHOBJECTSTART,\n");
    return 1;
 }
@@ -2274,7 +2189,6 @@ static HB_GENC_FUNC(hb_p_withobjectend)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_WITHOBJECTEND,\n");
    return 1;
 }
@@ -2313,7 +2227,6 @@ static HB_GENC_FUNC(hb_p_pushvparams)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PUSHVPARAMS,\n");
    return 1;
 }
@@ -2322,7 +2235,6 @@ static HB_GENC_FUNC(hb_p_pushaparams)
 {
    HB_SYMBOL_UNUSED(pFunc);
    HB_SYMBOL_UNUSED(nPCodePos);
-
    fprintf(cargo->yyc, "\tHB_P_PUSHAPARAMS,\n");
    return 1;
 }
@@ -2522,11 +2434,11 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
 static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc)
 {
    const PHB_GENC_FUNC * pFuncTable = s_verbose_table;
-   HB_GENC_INFO genc_info;
 
    /* Make sure that table is correct */
    assert(HB_P_LAST_PCODE == sizeof(s_verbose_table) / sizeof(PHB_GENC_FUNC));
 
+   HB_GENC_INFO genc_info;
    genc_info.HB_COMP_PARAM = HB_COMP_PARAM;
    genc_info.nEndBlockPos = 0;
    genc_info.bVerbose = (HB_COMP_PARAM->iGenCOutput == HB_COMPGENC_VERBOSE);
@@ -2544,12 +2456,10 @@ static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc)
 
 static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE * yyc)
 {
-   HB_SIZE nPCodePos = 0;
-   int     nChar;
-
    fprintf(yyc, "{\n\tstatic const HB_BYTE pcode[] =\n\t{\n\t\t");
 
-   nChar = 0;
+   HB_SIZE nPCodePos = 0;
+   int nChar = 0;
    while( nPCodePos < pFunc->nPCodePos ) {
       ++nChar;
 

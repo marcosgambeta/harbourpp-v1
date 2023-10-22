@@ -509,7 +509,6 @@ static const PHB_CODETRACE_FUNC s_codeTraceFuncTable[] =
 void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
    const PHB_CODETRACE_FUNC * pFuncTable = s_codeTraceFuncTable;
-   HB_CODETRACE_INFO code_info;
 
    if( !HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) || pFunc->nPCodePos < 2 ) {
       return;
@@ -517,6 +516,7 @@ void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
 
    assert(HB_P_LAST_PCODE == sizeof(s_codeTraceFuncTable) / sizeof(PHB_CODETRACE_FUNC));
 
+   HB_CODETRACE_INFO code_info;
    code_info.pnJumps = nullptr;
    code_info.nJumpPos = 0;
    code_info.nJumpSize = 0;

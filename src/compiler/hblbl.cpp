@@ -364,11 +364,12 @@ static const PHB_LABEL_FUNC s_GenLabelFuncTable[] =
 void hb_compGenLabelTable(PHB_HFUNC pFunc, PHB_LABEL_INFO label_info)
 {
    const PHB_LABEL_FUNC * pFuncTable = s_GenLabelFuncTable;
-   HB_SIZE nLabel = 0;
 
    assert(HB_P_LAST_PCODE == sizeof(s_GenLabelFuncTable) / sizeof(PHB_LABEL_FUNC));
 
    hb_compPCodeEval(pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>(pFuncTable), static_cast<void*>(label_info));
+
+   HB_SIZE nLabel = 0;
 
    for( HB_SIZE n = 0; n < pFunc->nPCodePos; ++n ) {
       if( label_info->pnLabels[n] ) {

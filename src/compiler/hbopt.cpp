@@ -1233,11 +1233,11 @@ static int hb_compPCodeTraceAssignedUnused(PHB_HFUNC pFunc, HB_SIZE nPos, HB_BYT
 
 static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
 {
-   HB_BYTE * pMap;
-   HB_SIZE nPos = 0, nLastPos = 0;
    HB_USHORT usLine = 0;
 
-   pMap = static_cast<HB_BYTE*>(hb_xgrab(pFunc->nPCodePos));
+   HB_BYTE * pMap = static_cast<HB_BYTE*>(hb_xgrab(pFunc->nPCodePos));
+
+   HB_SIZE nPos = 0, nLastPos = 0;
 
    while( nPos < pFunc->nPCodePos ) {
       HB_SHORT isLocal;
@@ -1431,10 +1431,7 @@ static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocal
 
 void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
 {
-   PHB_HFUNC     pFunc = HB_COMP_PARAM->functions.pLast;
-   PHB_OPT_LOCAL pLocals;
-   PHB_HVAR      pVar;
-   HB_USHORT     usLocalCount, usIndex;
+   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pLast;
 
    /* Many (perhaps ALL) functions of pcode trace optimization depends on pcodes.
       Please, check these functions if new pcode is added, or existing changed.
@@ -1443,8 +1440,8 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
 
    assert(HB_P_LAST_PCODE == 181);
 
-   usLocalCount = 0;
-   pVar = pFunc->pLocals;
+   HB_USHORT usLocalCount = 0;
+   PHB_HVAR pVar = pFunc->pLocals;
    while( pVar ) {
       pVar = pVar->pNext;
       usLocalCount++;
@@ -1468,11 +1465,11 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
    }
 
    /* Initial scan */
-   pLocals = static_cast<PHB_OPT_LOCAL>(hb_xgrabz(sizeof(HB_OPT_LOCAL) * usLocalCount));
+   PHB_OPT_LOCAL pLocals = static_cast<PHB_OPT_LOCAL>(hb_xgrabz(sizeof(HB_OPT_LOCAL) * usLocalCount));
    hb_compPCodeEnumScanLocals(pFunc, pLocals);
 
    /* Check */
-   usIndex = 0;
+   HB_USHORT usIndex = 0;
    pVar = pFunc->pLocals;
    while( pVar ) {
       /* Compiler and optimizer should have the same opinion about variable usage */
@@ -1541,10 +1538,8 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
       }
 
       if( fBool ) {
-         PHB_HVAR * ppVar;
-
          usIndex = usLocalCount = 0;
-         ppVar = & pFunc->pLocals;
+         PHB_HVAR * ppVar = & pFunc->pLocals;
          pVar = pFunc->pLocals;
          while( pVar ) {
             if( usLocalCount < pFunc->wParamCount || pLocals[usLocalCount].bFlags != 0 ) {

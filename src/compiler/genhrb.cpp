@@ -62,14 +62,10 @@ static HB_SIZE hb_compHrbSize(HB_COMP_DECL, HB_ULONG * pulSymbols, HB_ULONG * pu
 
 void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize)
 {
-   PHB_HFUNC pFunc;
-   PHB_HSYMBOL pSym;
    HB_ULONG ulSymbols, ulFunctions;
-   HB_SIZE nLen;
-   HB_BYTE * ptr;
-
    *pnSize = hb_compHrbSize(HB_COMP_PARAM, &ulSymbols, &ulFunctions);
    /* additional 0 byte is for passing buffer directly as string item */
+   HB_BYTE * ptr;
    ptr = *pBufPtr = static_cast<HB_BYTE*>(hb_xgrab(*pnSize + 1));
 
    /* signature */
@@ -83,7 +79,8 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize)
    HB_PUT_LE_UINT32(ptr, ulSymbols); /* number of symbols */
    ptr += 4;
    /* generate the symbol table */
-   pSym = HB_COMP_PARAM->symbols.pFirst;
+   PHB_HSYMBOL pSym = HB_COMP_PARAM->symbols.pFirst;
+   HB_SIZE nLen;
    while( pSym ) {
       nLen = strlen(pSym->szName) + 1;
       memcpy(ptr, pSym->szName, nLen);
@@ -112,7 +109,7 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize)
    HB_PUT_LE_UINT32(ptr, ulFunctions);  /* number of functions */
    ptr += 4;
    /* generate functions data */
-   pFunc = HB_COMP_PARAM->functions.pFirst;
+   PHB_HFUNC pFunc = HB_COMP_PARAM->functions.pFirst;
    while( pFunc ) {
       if( (pFunc->funFlags & HB_FUNF_FILE_DECL) == 0 ) {
          nLen = strlen(pFunc->szName) + 1;
@@ -129,17 +126,13 @@ void hb_compGenBufPortObj(HB_COMP_DECL, HB_BYTE ** pBufPtr, HB_SIZE * pnSize)
 
 void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
 {
-   char szFileName[HB_PATH_MAX];
-   HB_SIZE nSize;
-   HB_BYTE * pHrbBody;
-   FILE * yyc;
-
    if( !pFileName->szExtension ) {
       pFileName->szExtension = ".hrb";
    }
+   char szFileName[HB_PATH_MAX];
    hb_fsFNameMerge(szFileName, pFileName);
 
-   yyc = hb_fopen(szFileName, "wb");
+   FILE * yyc = hb_fopen(szFileName, "wb");
    if( !yyc ) {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return;
@@ -153,6 +146,8 @@ void hb_compGenPortObj(HB_COMP_DECL, PHB_FNAME pFileName)
       hb_compOutStd(HB_COMP_PARAM, buffer.data());
    }
 
+   HB_BYTE * pHrbBody;
+   HB_SIZE nSize;
    hb_compGenBufPortObj(HB_COMP_PARAM, &pHrbBody, &nSize);
 
    if( fwrite(pHrbBody, nSize, 1, yyc) != 1 ) {

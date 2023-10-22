@@ -327,8 +327,8 @@ static const PHB_FIX_FUNC s_fixlocals_table[] =
 void hb_compFixFuncPCode(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
    const PHB_FIX_FUNC * pFuncTable = s_fixlocals_table;
-   HB_FIX_INFO fix_info;
 
+   HB_FIX_INFO fix_info;
    fix_info.HB_COMP_PARAM = HB_COMP_PARAM;
 
    assert(HB_P_LAST_PCODE == sizeof(s_fixlocals_table) / sizeof(PHB_FIX_FUNC));

@@ -82,7 +82,6 @@ static const char * hb_compChkAddDefine(HB_COMP_DECL, const char * szSwitch, boo
    if( szSwPtr > szSwitch && *szSwitch != '=' ) {
       char * szDefine = hb_strndup(szSwitch, szSwPtr - szSwitch);
       char * szValue = nullptr;
-      PHB_PPDEFINE * pDefinePtr;
 
       if( nValue ) {
          szValue = szDefine + nValue;
@@ -92,7 +91,7 @@ static const char * hb_compChkAddDefine(HB_COMP_DECL, const char * szSwitch, boo
          szValue = s_szUndefineMarker;
       }
 
-      pDefinePtr = &HB_COMP_PARAM->ppdefines;
+      PHB_PPDEFINE * pDefinePtr = &HB_COMP_PARAM->ppdefines;
       while( *pDefinePtr != nullptr && strcmp((*pDefinePtr)->szName, szDefine) != 0 ) {
          pDefinePtr = &(*pDefinePtr)->pNext;
       }

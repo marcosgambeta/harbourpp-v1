@@ -232,7 +232,6 @@ PHB_EXPR hb_compWarnMeaningless(HB_COMP_DECL, PHB_EXPR pExpr)
 void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char * szVarName)
 {
    bool fError = HB_COMP_PARAM->fError;
-
    hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BLOCK, szVarName, nullptr);
    HB_COMP_PARAM->fError = fError; /* restore error flag for this line */
 }
@@ -240,7 +239,6 @@ void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char * szVarName)
 void hb_compErrorCodeblockWith(HB_COMP_DECL, const char * szMessage)
 {
    bool fError = HB_COMP_PARAM->fError;
-
    hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_WITHOBJECT_MACROBLOCK, szMessage, nullptr);
    HB_COMP_PARAM->fError = fError; /* restore error flag for this line */
 }
