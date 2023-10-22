@@ -38,7 +38,7 @@
  * in Frank Cringle's viewfax program;
  *      Copyright (C) 1990, 1995  Frank D. Cringle.
  */
-#include "fax3.h"
+#include "tif_fax3.h"
 #define	G3CODES
 #include "t4.h"
 #include <stdio.h>

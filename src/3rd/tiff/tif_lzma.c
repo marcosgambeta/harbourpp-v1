@@ -35,7 +35,7 @@
  * The codec is derived from ZLIB codec (tif_zip.c).
  */
 
-#include "predict.h"
+#include "tif_predict.h"
 #include "lzma.h"
 
 #include <stdio.h>

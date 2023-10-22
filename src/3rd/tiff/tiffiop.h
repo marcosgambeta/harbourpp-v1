@@ -47,7 +47,7 @@
 #ifdef HAVE_ASSERT_H
 # include <assert.h>
 #else
-# define assert(x) 
+# define assert(x)
 #endif
 
 #ifdef HAVE_SEARCH_H
@@ -59,7 +59,7 @@ extern void *lfind(const void *, const void *, size_t *, size_t,
 
 #include "tiffio.h"
 
-#include "dir.h"
+#include "tif_dir.h"
 
 #ifndef STRIP_SIZE_DEFAULT
 # define STRIP_SIZE_DEFAULT 8192

@@ -30,7 +30,7 @@
  * Auxiliary Support Routines.
  */
 #include "tiffiop.h"
-#include "predict.h"
+#include "tif_predict.h"
 #include <math.h>
 
 uint32

@@ -89,7 +89,7 @@
  * as noted in http://trac.osgeo.org/gdal/ticket/3894.   FrankW - Jan'11
  */
 
-#include "predict.h"
+#include "tif_predict.h"
 #include "zlib.h"
 
 #include <stdio.h>
