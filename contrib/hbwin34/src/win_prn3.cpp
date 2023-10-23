@@ -49,8 +49,23 @@
 
 static bool hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
 {
-   if( !SetDefaultPrinter(lpPrinterName) )
-   {
+   using DEFPRINTER = BOOL (WINAPI *)(LPCTSTR); /* stops warnings */
+
+   HMODULE hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
+   if( !hWinSpool ) {
+      return false;
+   }
+
+   DEFPRINTER fnSetDefaultPrinter = reinterpret_cast<DEFPRINTER>(HB_WINAPI_GETPROCADDRESST(hWinSpool, "SetDefaultPrinter"));
+
+   if( !fnSetDefaultPrinter ) {
+      FreeLibrary(hWinSpool);
+      return false;
+   }
+
+   BOOL bFlag = (*fnSetDefaultPrinter)(lpPrinterName);
+   FreeLibrary(hWinSpool);
+   if( !bFlag ) {
       return false;
    }
 
