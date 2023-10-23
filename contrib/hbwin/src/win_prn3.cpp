@@ -47,11 +47,26 @@
 #include "hbwapi.hpp"
 #include <winspool.h>
 
-static HB_BOOL hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
+static bool hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
 {
-   BOOL bFlag;
+   using DEFPRINTER = BOOL(WINAPI *)(LPCTSTR); /* stops warnings */
 
-   bFlag = SetDefaultPrinter(lpPrinterName);
+   HMODULE hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
+   if( !hWinSpool )
+   {
+      return false;
+   }
+
+   DEFPRINTER fnSetDefaultPrinter = reinterpret_cast<DEFPRINTER>(HB_WINAPI_GETPROCADDRESST(hWinSpool, "SetDefaultPrinter"));
+
+   if( !fnSetDefaultPrinter )
+   {
+      FreeLibrary(hWinSpool);
+      return false;
+   }
+
+   BOOL bFlag = (*fnSetDefaultPrinter)(lpPrinterName);
+   FreeLibrary(hWinSpool);
    if( !bFlag )
    {
       return false;
