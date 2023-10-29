@@ -3,24 +3,25 @@
 
 #include "simpleio.ch"
 
-REQUEST SDDODBC, SQLMIX
+REQUEST SDDODBC
+REQUEST SQLMIX
 
 PROCEDURE Main()
 
-#if defined( __HBSCRIPT__HBSHELL )
-   rddRegister( "SQLBASE" )
-   rddRegister( "SQLMIX" )
+#if defined(__HBSCRIPT__HBSHELL)
+   rddRegister("SQLBASE")
+   rddRegister("SQLMIX")
    hb_SDDODBC_Register()
 #endif
 
-   Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
+   Set(_SET_DATEFORMAT, "yyyy-mm-dd")
 
-   rddSetDefault( "SQLMIX" )
-   ? "Connect:", rddInfo( RDDI_CONNECT, { "ODBC", "DBQ=" + hb_DirBase() + "..\..\hbodbc\tests\test.mdb;Driver={Microsoft Access Driver (*.mdb)}" } )
-   ? "Use:", dbUseArea( .T., , "select * from test", "test" )
+   rddSetDefault("SQLMIX")
+   ? "Connect:", rddInfo(RDDI_CONNECT, {"ODBC", "DBQ=" + hb_DirBase() + "..\..\hbodbc\tests\test.mdb;Driver={Microsoft Access Driver (*.mdb)}"})
+   ? "Use:", dbUseArea(.T., , "select * from test", "test")
    ? "Alias:", Alias()
-   ? "DB struct:", hb_ValToExp( dbStruct() )
-   Inkey( 0 )
+   ? "DB struct:", hb_ValToExp(dbStruct())
+   Inkey(0)
    Browse()
 
    INDEX ON FIELD->SALARY TO salary
