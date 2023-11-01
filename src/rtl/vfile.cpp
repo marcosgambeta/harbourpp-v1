@@ -804,7 +804,7 @@ HB_FUNC( HB_VFCONFIG )
 
    if( pFile ) {
       if( HB_ISNUM(2) ) {
-         PHB_ITEM pValue = hb_itemNew(hb_param(3, Harbour::Item::ANY));
+         auto pValue = hb_itemNew(hb_param(3, Harbour::Item::ANY));
          hb_fileConfigure( pFile, hb_parni(2), pValue );
          hb_fsSetFError(hb_fsError());
          hb_itemReturnRelease(pValue);

@@ -522,7 +522,7 @@ static PHB_I18N_TRANS hb_i18n_param(int * piParam, bool fActive)
 static PHB_ITEM hb_i18n_newitem(PHB_I18N_TRANS pI18N)
 {
    PHB_I18N_TRANS * pI18NHolder;
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
 
    if( !pI18N ) {
       pI18N = hb_i18n_new();
@@ -899,7 +899,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
 
    PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, true);
    if( pI18N ) {
-      PHB_ITEM pOldForm = hb_itemNew(nullptr);
+      auto pOldForm = hb_itemNew(nullptr);
       PHB_ITEM pForm = hb_param(iParam, Harbour::Item::STRING | Harbour::Item::EVALITEM);
       bool fBase = hb_parl(iParam + 1);
 

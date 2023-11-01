@@ -280,7 +280,7 @@ HB_FUNC( HB_SETKEYGET )
 HB_FUNC( HB_SETKEYSAVE )
 {
    PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
-   PHB_ITEM pKeys, pKeyElements, pParam;
+   PHB_ITEM pKeys, pParam;
    PHB_SETKEY sk_list_tmp;
    HB_SIZE nItemCount, nItem;
 
@@ -292,7 +292,7 @@ HB_FUNC( HB_SETKEYSAVE )
    }
 
    pKeys = hb_itemArrayNew(nItemCount);
-   pKeyElements = hb_itemNew(nullptr);
+   auto pKeyElements = hb_itemNew(nullptr);
 
    for( nItem = 1, sk_list_tmp = sk_data->sk_list; nItem <= nItemCount; nItem++, sk_list_tmp = sk_list_tmp->next ) {
       hb_arrayNew(pKeyElements, 3);

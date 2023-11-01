@@ -943,7 +943,7 @@ void hb_dynCall(int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, in
 
          for( tmp = 0; tmp < iParams; ++tmp ) {
             if( pArg[tmp].bByRef ) {
-               PHB_ITEM pItem = hb_itemNew(nullptr);
+               auto pItem = hb_itemNew(nullptr);
 
                hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
                   hb_u64ret(pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,
@@ -1080,7 +1080,7 @@ void hb_dynCall(int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, in
 
          for( tmp = 0; tmp < iParams; ++tmp ) {
             if( pArg[tmp].bByRef ) {
-               PHB_ITEM pItem = hb_itemNew(nullptr);
+               auto pItem = hb_itemNew(nullptr);
 
                hb_itemParamStoreForward(static_cast<HB_USHORT>(iFirst + tmp),
                   hb_u32ret(pItem, pArg[tmp].iType, pArg[tmp].iEncoding, pArg[tmp].value,

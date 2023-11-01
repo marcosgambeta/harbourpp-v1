@@ -1145,8 +1145,8 @@ static HB_SIZE hb_deserializeHash( PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEP
 
    if( nLen ) {
 #if 0
-      PHB_ITEM pKey = hb_itemNew(nullptr);
-      PHB_ITEM pVal = hb_itemNew(nullptr);
+      auto pKey = hb_itemNew(nullptr);
+      auto pVal = hb_itemNew(nullptr);
 
       hb_hashPreallocate(pItem, nLen);
       while( nLen-- ) {
@@ -1412,7 +1412,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
       }
 
       case HB_SERIAL_HASHDEFVAL: {
-         PHB_ITEM pDefVal = hb_itemNew(nullptr);
+         auto pDefVal = hb_itemNew(nullptr);
          nOffset = hb_deserializeItem(pDefVal, cdpIn, cdpOut, pBuffer, nOffset, pRefList);
          nOffset = hb_deserializeItem(pItem, cdpIn, cdpOut, pBuffer, nOffset, pRefList);
          hb_hashSetDefault(pItem, pDefVal);

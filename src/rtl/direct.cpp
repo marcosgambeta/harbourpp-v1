@@ -134,7 +134,7 @@ PHB_ITEM hb_fsDirectory(const char * pszDirSpec, const char * pszAttributes, HB_
    /* Get the file list */
 
    if( (ffind = hb_fsFindFirst(pszDirSpec, ulMask)) != nullptr ) {
-      PHB_ITEM pSubarray = hb_itemNew(nullptr);
+      auto pSubarray = hb_itemNew(nullptr);
 
       do {
          char buffer[32];

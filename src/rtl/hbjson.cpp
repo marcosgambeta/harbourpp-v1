@@ -511,7 +511,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       hb_arrayNew(pValue, 0);
       szSource = _skipws(szSource + 1);
       if( *szSource != ']' ) {
-         PHB_ITEM pItem = hb_itemNew(nullptr);
+         auto pItem = hb_itemNew(nullptr);
 
          for( ;; ) {
             szSource = _hb_jsonDecode( szSource, pItem, cdp );
@@ -539,8 +539,8 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
       hb_hashNew(pValue);
       szSource = _skipws(szSource + 1);
       if( *szSource != '}' ) {
-         PHB_ITEM pItemKey = hb_itemNew(nullptr);
-         PHB_ITEM pItemValue = hb_itemNew(nullptr);
+         auto pItemKey = hb_itemNew(nullptr);
+         auto pItemValue = hb_itemNew(nullptr);
 
          for( ;; ) {
             /* Do we need to check if key does not exist yet? */
@@ -658,7 +658,7 @@ HB_FUNC( HB_JSONENCODE )
 
 HB_FUNC( HB_JSONDECODE )
 {
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
    HB_SIZE nSize = hb_jsonDecodeCP(hb_parc(1), pItem, _hb_jsonCdpPar(3));
 
    if( HB_ISBYREF(2) ) {
