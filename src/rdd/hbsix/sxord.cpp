@@ -618,7 +618,7 @@ HB_FUNC( SX_TAGUNIQUE )
 HB_FUNC( SX_WILDSEEK )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   const char * szPattern = hb_parc(1);
+   auto szPattern = hb_parc(1);
    bool fCont = hb_parl(2);
    bool fFound = false;
 

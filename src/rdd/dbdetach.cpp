@@ -92,7 +92,7 @@ HB_FUNC( HB_DBDETACH )
 HB_FUNC( HB_DBREQUEST )
 {
    if( HB_ISNIL(1) || HB_ISCHAR(1) ) {
-      const char * szAlias = hb_parc(1);
+      auto szAlias = hb_parc(1);
       bool fNewArea = hb_parl(2);
       PHB_ITEM pCargo = HB_ISBYREF(3) ? hb_itemNew(nullptr) : nullptr;
       HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;

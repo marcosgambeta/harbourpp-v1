@@ -3112,7 +3112,6 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
 
    RDDFUNCS * pSelfTable, * pSuperTable;
    HB_USHORT * puiCount, * puiSuperRddId, uiSize;
-   const char * szSuperRDD;
    PHB_ITEM pMethods;
 
    puiCount    = static_cast<HB_USHORT*>(hb_parptr(1));
@@ -3121,7 +3120,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
 #if 0
    uiRddID = hb_parni(4);
 #endif
-   szSuperRDD = hb_parc(5);
+   auto szSuperRDD = hb_parc(5);
    pMethods = hb_param(6, Harbour::Item::ARRAY);
    puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(7));
 

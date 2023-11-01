@@ -51,7 +51,7 @@
 
 HB_FUNC( SX_FNAMEPARSER )
 {
-   const char * szFileName = hb_parc(1);
+   auto szFileName = hb_parc(1);
 
    if( szFileName ) {
       char szPathBuf[HB_PATH_MAX];

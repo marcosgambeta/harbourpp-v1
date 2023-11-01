@@ -400,9 +400,8 @@ HB_FUNC( SX_SETTURBO )
 {
    LPRDDNODE pRDDNode;
    HB_USHORT uiRddID;
-   const char * szDriver;
 
-   szDriver = hb_parc(2);
+   auto szDriver = hb_parc(2);
    if( !szDriver ) { /* no VIA RDD parameter, use default */
       szDriver = hb_rddDefaultDrv(nullptr);
    }
@@ -450,7 +449,7 @@ HB_FUNC( _SXOPENINIT )
             pInfo->fReadonly = hb_parl(2);
          }
          if( HB_ISCHAR(4) ) {
-            const char * szAlias = hb_parc(1);
+            auto szAlias = hb_parc(1);
             if( szAlias && szAlias[0] ) {
                pInfo->atomAlias = hb_dynsymName(hb_dynsymGet(szAlias));
             } else {

@@ -53,7 +53,7 @@
 
 HB_FUNC( SX_SLIMFAST )
 {
-   const char * szExp = hb_parc(1);
+   auto szExp = hb_parc(1);
 
    if( szExp && *szExp ) {
       char * szDst, cQuote = 0, c;
@@ -84,7 +84,8 @@ HB_FUNC( SX_SLIMFAST )
 
 HB_FUNC( SX_WILDMATCH )
 {
-   const char * szPattern = hb_parc(1), * szValue = hb_parc(2);
+   auto szPattern = hb_parc(1);
+   auto szValue = hb_parc(2);
    bool fMatch = false;
 
    if( szPattern && szPattern[0] && szValue ) {

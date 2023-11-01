@@ -343,8 +343,8 @@ HB_FUNC( __DBSQL )
 
    if( pArea != nullptr ) {
       HB_BOOL fExport         = hb_parl(1);
-      const char * szFileName = hb_parc(2);
-      const char * szTable    = hb_parc(3);
+      auto szFileName         = hb_parc(2);
+      auto szTable            = hb_parc(3);
       PHB_ITEM pFields        = hb_param(4, Harbour::Item::ARRAY);
       PHB_ITEM pFor           = hb_param(5, Harbour::Item::BLOCK);
       PHB_ITEM pWhile         = hb_param(6, Harbour::Item::BLOCK);

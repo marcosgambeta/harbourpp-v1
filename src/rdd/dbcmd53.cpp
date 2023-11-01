@@ -367,7 +367,7 @@ HB_FUNC( DBFILEGET )
    if( pArea != nullptr ) {
       HB_USHORT uiFields, uiIndex;
       PHB_ITEM pMode;
-      const char * szField = hb_parc(1);
+      auto szField = hb_parc(1);
 
       if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
@@ -395,7 +395,7 @@ HB_FUNC( DBFILEPUT )
 
    if( pArea != nullptr ) {
       HB_USHORT uiFields, uiIndex;
-      const char * szField = hb_parc(1);
+      auto szField = hb_parc(1);
 
       if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);

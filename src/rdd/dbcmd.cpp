@@ -301,14 +301,14 @@ HB_FUNC( DBCREATE )
     * 6th is optional DELIMITED value used by some RDDs like DELIM
     */
 
-   const char * szFileName = hb_parc(1);
+   auto szFileName = hb_parc(1);
    PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
-   const char * szDriver = hb_parc(3);
+   auto szDriver = hb_parc(3);
    bool fKeepOpen = HB_ISLOG(4);
    bool fCurrArea = fKeepOpen && !hb_parl(4);
-   const char * szAlias = hb_parc(5);
+   auto szAlias = hb_parc(5);
    PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
-   const char * szCpId = hb_parc(7);
+   auto szCpId = hb_parc(7);
    HB_ULONG ulConnection = hb_parnl(8);
 
    /*
@@ -355,10 +355,10 @@ HB_FUNC( DBCREATE )
  */
 HB_FUNC( HB_DBCREATETEMP )
 {
-   const char * szAlias = hb_parc(1);
+   auto szAlias = hb_parc(1);
    PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
-   const char * szDriver = hb_parc(3);
-   const char * szCpId = hb_parc(4);
+   auto szDriver = hb_parc(3);
+   auto szCpId = hb_parc(4);
    HB_ULONG ulConnection = hb_parnl(5);
 
    /*
@@ -416,14 +416,14 @@ HB_FUNC( __DBOPENSDF )
     * 5th is alias - if not given then WA is open without alias
     */
 
-   const char * szFileName = hb_parc(1);
+   auto szFileName = hb_parc(1);
    PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
-   const char * szDriver = hb_parc(3);
+   auto szDriver = hb_parc(3);
    bool fKeepOpen = HB_ISLOG(4);
    bool fCurrArea = fKeepOpen && !hb_parl(4);
-   const char * szAlias = hb_parc(5);
+   auto szAlias = hb_parc(5);
    PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
-   const char * szCpId = hb_parc(7);
+   auto szCpId = hb_parc(7);
    HB_ULONG ulConnection = hb_parnl(8);
 
    if( !pStruct || hb_arrayLen(pStruct) == 0 || !szFileName || !szFileName[0] ) {
@@ -681,7 +681,7 @@ HB_FUNC( DBSEEK )
 
 HB_FUNC( DBSELECTAREA )
 {
-   const char * szAlias = hb_parc(1);
+   auto szAlias = hb_parc(1);
 
    if( szAlias ) {
       hb_rddSelectWorkAreaAlias(szAlias);
@@ -1540,7 +1540,7 @@ HB_FUNC( SELECT )
    if( hb_pcount() == 0 ) {
       hb_retni(hb_rddGetCurrentWorkAreaNumber());
    } else {
-      const char * szAlias = hb_parc(1);
+      auto szAlias = hb_parc(1);
       int iArea = 0;
 
       if( szAlias ) {
@@ -1962,9 +1962,8 @@ HB_FUNC( HB_RDDINFO )
    HB_USHORT  uiRddID;
    HB_ULONG   ulConnection;
    PHB_ITEM   pIndex;
-   const char * szDriver;
 
-   szDriver = hb_parc(3);
+   auto szDriver = hb_parc(3);
    if( !szDriver ) { /* no VIA RDD parameter, use default */
       szDriver = hb_rddDefaultDrv(nullptr);
    }
@@ -1987,7 +1986,7 @@ HB_FUNC( HB_DBDROP )
 {
    LPRDDNODE pRDDNode = nullptr;
    HB_ULONG ulConnection = hb_parnl(4);
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
 
    if( szName ) {
       const char * szDriver;
@@ -2012,7 +2011,7 @@ HB_FUNC( HB_DBEXISTS )
 {
    LPRDDNODE pRDDNode = nullptr;
    HB_ULONG ulConnection = hb_parnl(4);
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
 
    if( szName ) {
       const char * szDriver;
@@ -2036,7 +2035,7 @@ HB_FUNC( HB_DBRENAME )
 {
    LPRDDNODE pRDDNode = nullptr;
    HB_ULONG ulConnection = hb_parnl(5);
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
    PHB_ITEM pTable, pIndex, pNewName;
 
    if( szName ) {
@@ -2072,7 +2071,7 @@ HB_FUNC( HB_FIELDLEN )
 
    if( pArea != nullptr ) {
       HB_USHORT uiIndex;
-      const char * szField = hb_parc(1);
+      auto szField = hb_parc(1);
 
       if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
@@ -2100,7 +2099,7 @@ HB_FUNC( HB_FIELDDEC )
 
    if( pArea != nullptr ) {
       HB_USHORT uiIndex;
-      const char * szField = hb_parc(1);
+      auto szField = hb_parc(1);
 
       if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
@@ -2128,7 +2127,7 @@ HB_FUNC( HB_FIELDTYPE )
 
    if( pArea != nullptr ) {
       HB_USHORT uiIndex;
-      const char * szField = hb_parc(1);
+      auto szField = hb_parc(1);
 
       if( szField ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
@@ -2156,7 +2155,7 @@ HB_FUNC( HB_FIELDGET )
 
    if( pArea != nullptr ) {
       HB_USHORT uiField;
-      const char * szField = hb_parc(1);
+      auto szField = hb_parc(1);
 
       if( szField ) {
          uiField = hb_rddFieldIndex(pArea, szField);
@@ -2178,7 +2177,7 @@ HB_FUNC( HB_FIELDPUT )
 
    if( pArea != nullptr ) {
       HB_USHORT uiField;
-      const char * szField = hb_parc(1);
+      auto szField = hb_parc(1);
 
       if( szField ) {
          uiField = hb_rddFieldIndex(pArea, szField);

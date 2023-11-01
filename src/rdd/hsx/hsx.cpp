@@ -1810,7 +1810,7 @@ HB_FUNC( HS_KEYCOUNT )
    Sets up parameters for a subsequent hs_Next() call */
 HB_FUNC( HS_SET )
 {
-   const char * pStr = hb_parc(2);
+   auto pStr = hb_parc(2);
    int iRetVal = HSX_BADPARMS;
 
    if( pStr && hb_param(1, Harbour::Item::NUMERIC) ) {
@@ -1823,7 +1823,7 @@ HB_FUNC( HS_SET )
    Sets a WA RM filter using a HiPer-SEEK index */
 HB_FUNC( HS_FILTER )
 {
-   const char * szText = hb_parc(2);
+   auto szText = hb_parc(2);
    char * pBuff = nullptr;
    HB_SIZE nLen = hb_parclen(2);
    HB_ULONG ulRecords = 0;
@@ -1966,7 +1966,8 @@ HB_FUNC( HS_VERIFY )
       hb_retni(hb_hsxVerify(hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4)));
    } else {
       PHB_ITEM pExpr = hb_param(1, Harbour::Item::BLOCK);
-      const char * szSub = hb_parc(2), * szText = nullptr;
+      auto szSub = hb_parc(2);
+      const char * szText = nullptr;
       HB_SIZE nSub = hb_parclen(2), nLen = 0;
       bool fIgnoreCase = hb_parl(3);
 

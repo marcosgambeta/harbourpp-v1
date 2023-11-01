@@ -589,7 +589,8 @@ HB_BOOL hb_LZSSxDecompressFile(PHB_FILE pInput, PHB_FILE pOutput)
 HB_FUNC( SX_FCOMPRESS )
 {
    HB_BOOL fRet = false;
-   const char * szSource = hb_parc(1), * szDestin = hb_parc(2);
+   auto szSource = hb_parc(1);
+   auto szDestin = hb_parc(2);
 
    if( szSource && *szSource && szDestin && *szDestin ) {
       PHB_FILE pInput = hb_fileExtOpen(szSource, nullptr, FO_READ | FO_DENYNONE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
@@ -618,7 +619,8 @@ HB_FUNC( SX_FCOMPRESS )
 HB_FUNC( SX_FDECOMPRESS )
 {
    HB_BOOL fRet = false;
-   const char * szSource = hb_parc(1), * szDestin = hb_parc(2);
+   auto szSource = hb_parc(1);
+   auto szDestin = hb_parc(2);
 
    if( szSource && *szSource && szDestin && *szDestin ) {
       PHB_FILE pInput = hb_fileExtOpen(szSource, nullptr, FO_READ | FO_DENYNONE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
@@ -639,7 +641,7 @@ HB_FUNC( SX_FDECOMPRESS )
 
 HB_FUNC( _SX_STRCOMPRESS )
 {
-   const char * pStr = hb_parc(1);
+   auto pStr = hb_parc(1);
 
    if( pStr ) {
       HB_SIZE nLen = hb_parclen(1), nBuf, nDst;
@@ -665,7 +667,7 @@ HB_FUNC( _SX_STRCOMPRESS )
 HB_FUNC( _SX_STRDECOMPRESS )
 {
    HB_BOOL fOK = false;
-   const char * pStr = hb_parc(1);
+   auto pStr = hb_parc(1);
 
    if( pStr ) {
       HB_SIZE nLen = hb_parclen(1), nBuf;
