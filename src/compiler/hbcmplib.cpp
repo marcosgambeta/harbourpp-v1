@@ -198,7 +198,7 @@ HB_FUNC( HB_COMPILEBUF )
 
 HB_FUNC( HB_COMPILEFROMBUF )
 {
-   const char * szSource = hb_parc(1);
+   auto szSource = hb_parc(1);
 
    if( szSource ) {
       int argc;
