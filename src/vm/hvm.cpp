@@ -5181,7 +5181,7 @@ static void hb_vmMacroPushIndex(void)
       HB_SIZE n = 1;
 
       hb_vmArrayGen(nIndexes - 1);
-      PHB_ITEM pIndexArray = hb_itemNew(hb_stackItemFromTop(-1));
+      auto pIndexArray = hb_itemNew(hb_stackItemFromTop(-1));
       hb_stackPop();
 
       /* First index is still on stack.*/

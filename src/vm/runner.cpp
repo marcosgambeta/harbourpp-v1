@@ -765,7 +765,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
       HB_ULONG nPos;
       PHB_SYMB pSym;
       PHB_ITEM paList = hb_itemArrayNew(0);
-      PHB_ITEM pFuncName = hb_itemNew(nullptr);
+      auto pFuncName = hb_itemNew(nullptr);
       int iType = hb_parni(2);
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos ) {

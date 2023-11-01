@@ -193,7 +193,7 @@ PHB_ITEM hb_itemArrayNew(HB_SIZE nLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemArrayNew(%" HB_PFS "u)", nLen));
 #endif
 
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
    hb_arrayNew(pItem, nLen);
    return pItem;
 }
@@ -204,7 +204,7 @@ PHB_ITEM hb_itemArrayGet(PHB_ITEM pArray, HB_SIZE nIndex)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemArrayGet(%p, %" HB_PFS "u)", static_cast<void*>(pArray), nIndex));
 #endif
 
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
 
    if( pArray ) {
       hb_arrayGet(pArray, nIndex, pItem);

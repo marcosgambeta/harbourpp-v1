@@ -3904,7 +3904,7 @@ HB_FUNC( __CLASSNAME )
 HB_FUNC( __CLASSSEL )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   PHB_ITEM pReturn = hb_itemNew(nullptr);
+   auto pReturn = hb_itemNew(nullptr);
 
    if( uiClass && uiClass <= s_uiClasses ) {
       PCLASS pClass = s_pClasses[uiClass];
@@ -4866,7 +4866,7 @@ HB_FUNC( __OBJRESTOREIVARS )
 HB_FUNC( __CLSGETPROPERTIES )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   PHB_ITEM pReturn = hb_itemNew(nullptr);
+   auto pReturn = hb_itemNew(nullptr);
 
    if( uiClass && uiClass <= s_uiClasses ) {
       PCLASS pClass = s_pClasses[uiClass];
@@ -5117,7 +5117,7 @@ void hb_clsAssociate(HB_USHORT usClassH)
 HB_FUNC( __CLSVERIFY )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   PHB_ITEM pReturn = hb_itemNew(nullptr);
+   auto pReturn = hb_itemNew(nullptr);
 
    if( uiClass && uiClass <= s_uiClasses ) {
       PCLASS pClass = s_pClasses[uiClass];

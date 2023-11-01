@@ -1602,7 +1602,7 @@ PHB_ITEM hb_arrayFromStack(HB_USHORT uiLen)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pArray = hb_itemNew(nullptr);
+   auto pArray = hb_itemNew(nullptr);
 
    hb_arrayNew(pArray, uiLen);
 
@@ -1645,7 +1645,7 @@ PHB_ITEM hb_arrayBaseParams(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pArray = hb_itemNew(nullptr);
+   auto pArray = hb_itemNew(nullptr);
    HB_USHORT uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;
 
    hb_arrayNew(pArray, uiPCount);
@@ -1665,7 +1665,7 @@ PHB_ITEM hb_arraySelfParams(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pArray = hb_itemNew(nullptr);
+   auto pArray = hb_itemNew(nullptr);
    HB_USHORT uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;
 
    hb_arrayNew(pArray, uiPCount + 1);

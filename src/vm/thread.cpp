@@ -955,7 +955,7 @@ static HB_THREAD_STARTFUNC(hb_threadStartFunc)
 
 PHB_THREADSTATE hb_threadStateNew(void)
 {
-   PHB_ITEM pThItm = hb_itemNew(nullptr);
+   auto pThItm = hb_itemNew(nullptr);
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_gcAllocRaw(sizeof(HB_THREADSTATE), &s_gcThreadFuncs));
    memset(pThread, 0, sizeof(HB_THREADSTATE));
    hb_itemPutPtrRawGC(pThItm, pThread);
@@ -1677,7 +1677,7 @@ static PHB_ITEM hb_mutexParam(int iParam)
 
 PHB_ITEM hb_threadMutexCreate(void)
 {
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
    PHB_MUTEX pMutex = static_cast<PHB_MUTEX>(hb_gcAllocRaw(sizeof(HB_MUTEX), &s_gcMutexFuncs));
    memset(pMutex, 0, sizeof(HB_MUTEX));
    pItem = hb_itemPutPtrRawGC(pItem, pMutex);

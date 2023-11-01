@@ -157,7 +157,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
             if( !pLocal->item.asEnum.valuePtr ) {
                PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef(pLocal->item.asEnum.basePtr) : pLocal->item.asEnum.basePtr;
                if( HB_IS_ARRAY(pBase) ) {
-                  PHB_ITEM pItem = hb_itemNew(nullptr);
+                  auto pItem = hb_itemNew(nullptr);
                   hb_arrayGetItemRef(pBase, pLocal->item.asEnum.offset, pItem);
                   pLocal->item.asEnum.valuePtr = pItem;
                   pLocal = pItem;
