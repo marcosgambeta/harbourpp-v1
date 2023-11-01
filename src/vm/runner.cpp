@@ -616,7 +616,7 @@ HB_FUNC( HB_HRBRUN )
    HB_SIZE nLen = hb_parclen(nParam);
 
    if( nLen > 0 ) {
-      const char * fileOrBody = hb_parc(nParam);
+      auto fileOrBody = hb_parc(nParam);
       PHRB_BODY pHrbBody;
 
       if( hb_hrbCheckSig(fileOrBody, nLen) != 0 ) {
@@ -664,7 +664,7 @@ HB_FUNC( HB_HRBLOAD )
    HB_SIZE nLen = hb_parclen(nParam);
 
    if( nLen > 0 ) {
-      const char * fileOrBody = hb_parc(nParam);
+      auto fileOrBody = hb_parc(nParam);
       PHRB_BODY pHrbBody;
 
       if( hb_hrbCheckSig(fileOrBody, nLen) != 0 ) {
@@ -740,7 +740,7 @@ HB_FUNC( HB_HRBUNLOAD )
 HB_FUNC( HB_HRBGETFUNSYM )
 {
    PHRB_BODY pHrbBody = hb_hrbParam(1);
-   const char * szName = hb_parc(2);
+   auto szName = hb_parc(2);
 
    if( pHrbBody && szName ) {
       HB_ULONG nPos;

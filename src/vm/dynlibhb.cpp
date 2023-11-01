@@ -229,7 +229,7 @@ HB_FUNC( HB_LIBERROR )
  */
 HB_FUNC( HB_LIBGETFUNSYM )
 {
-   const char * szFuncName = hb_parc(2);
+   auto szFuncName = hb_parc(2);
 
    if( szFuncName ) {
       void * hDynLib = hb_libHandle(hb_param(1, Harbour::Item::ANY));

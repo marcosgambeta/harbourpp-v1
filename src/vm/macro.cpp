@@ -805,7 +805,7 @@ static void hb_macroBlock(const char * szString, PHB_ITEM pItem)
 
 HB_FUNC( HB_MACROBLOCK )
 {
-   const char * szMacro = hb_parc(1);
+   auto szMacro = hb_parc(1);
 
    if( szMacro ) {
       HB_STACK_TLS_PRELOAD
@@ -879,7 +879,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
 
 HB_FUNC( MEMVARBLOCK )
 {
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
 
    if( szName ) {
       char szVarName[HB_SYMBOL_NAME_LEN + 1];
@@ -902,7 +902,7 @@ HB_FUNC( MEMVARBLOCK )
 
 HB_FUNC( FIELDBLOCK )
 {
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
 
    if( szName ) {
       char szFieldName[HB_SYMBOL_NAME_LEN + 1];
@@ -941,7 +941,7 @@ HB_FUNC( FIELDBLOCK )
 
 HB_FUNC( FIELDWBLOCK )
 {
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
    int iWorkArea = hb_parni(2);
 
    if( szName && iWorkArea != 0 ) {

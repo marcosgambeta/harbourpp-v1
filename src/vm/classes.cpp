@@ -3101,7 +3101,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char * szMessage, HB_USHORT ui
 HB_FUNC( __CLSADDMSG )
 {
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   const char * szMessage = hb_parc(2);
+   auto szMessage = hb_parc(2);
 
    if( szMessage && uiClass && uiClass <= s_uiClasses ) {
       HB_USHORT nType     = static_cast<HB_USHORT>(hb_parni(4));
@@ -3344,7 +3344,7 @@ static HB_USHORT hb_clsNew(const char * szClassName, HB_USHORT uiDatas, PHB_ITEM
  */
 HB_FUNC( __CLSNEW )
 {
-   const char * szClassName = hb_parc(1);
+   auto szClassName = hb_parc(1);
 
    PHB_ITEM pDatas = hb_param(2, Harbour::Item::ANY);
 
@@ -3941,7 +3941,7 @@ HB_FUNC( __GETMESSAGE )
 HB_FUNC( __CLSPARENT )
 {
    HB_STACK_TLS_PRELOAD
-   const char * szParentName = hb_parc(2);
+   auto szParentName = hb_parc(2);
    hb_retl(szParentName && hb_clsIsParent(static_cast<HB_USHORT>(hb_parni(1)), szParentName));
 }
 
@@ -4592,7 +4592,7 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
    HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
-   const char * cMsg = hb_parc(2);
+   auto cMsg = hb_parc(2);
 
    hb_reta(2);
    if( uiClass && uiClass <= s_uiClasses && cMsg && *cMsg ) {
@@ -5041,7 +5041,7 @@ HB_FUNC( __OBJSETCLASS )
    PHB_ITEM pObject = hb_param(1, Harbour::Item::ARRAY);
 
    if( pObject && pObject->item.asArray.value->uiClass == 0 ) {
-      const char * szClass = hb_parc(2);
+      auto szClass = hb_parc(2);
 
       if( szClass ) {
          hb_objSetClass(pObject, szClass, hb_parc(3));

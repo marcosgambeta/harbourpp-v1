@@ -997,7 +997,7 @@ void hb_memvarRestoreFromArray(PHB_ITEM pArray)
 
 static const char * hb_memvarGetMask(int iParam)
 {
-   const char * pszMask = hb_parc(iParam);
+   auto pszMask = hb_parc(iParam);
 
    if( !pszMask || pszMask[0] == '*' ) {
       pszMask = "*";
@@ -1343,7 +1343,7 @@ HB_FUNC( __MVSAVE )
    /* Clipper also checks for the number of arguments here */
    if( hb_pcount() == 3 && HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISLOG(3) ) {
       PHB_FILE fhnd;
-      const char * pszFileName = hb_parc(1);
+      auto pszFileName = hb_parc(1);
       PHB_ITEM pError = nullptr;
 
       /* Create .mem file */
@@ -1421,7 +1421,7 @@ HB_FUNC( __MVRESTORE )
       }
 
       PHB_FILE fhnd;
-      const char * pszFileName = hb_parc(1);
+      auto pszFileName = hb_parc(1);
       PHB_ITEM pError = nullptr;
 
       /* Open .mem file */

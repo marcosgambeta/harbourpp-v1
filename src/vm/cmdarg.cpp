@@ -614,7 +614,7 @@ HB_FUNC( HB_ARGCHECK )
 
 HB_FUNC( HB_ARGSTRING )
 {
-   const char * pszName = hb_parc(1);
+   auto pszName = hb_parc(1);
 
    if( pszName ) {
       char * pszValue = hb_cmdargString(pszName);

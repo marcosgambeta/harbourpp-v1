@@ -674,7 +674,7 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
 {
    HB_STACK_TLS_PRELOAD
    HB_SYMCNT uiPos = 0;
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
 
    if( szName ) {
       PHB_DYNS pDynSym = hb_dynsymFindName(szName);
@@ -695,7 +695,7 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
 HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure pointer, given its name */
 {
    HB_STACK_TLS_PRELOAD
-   const char * szProc = hb_parc(1);
+   auto szProc = hb_parc(1);
    bool fResult = false;
 
    if( szProc ) {
@@ -711,7 +711,7 @@ HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure poi
 HB_FUNC( __DYNSISFUN ) /* returns .T. if a symbol has a function/procedure pointer, given its symbol index or name */
 {
    HB_STACK_TLS_PRELOAD
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
    PHB_DYNS pDynSym = szName ? hb_dynsymFindName(szName) : hb_dynsymGetByIndex(hb_parnl(1));
    hb_retl(pDynSym && hb_dynsymIsFunction(pDynSym));
 }
@@ -740,14 +740,14 @@ HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or proc
 HB_FUNC( __DYNSN2PTR )
 {
    HB_STACK_TLS_PRELOAD
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
    hb_retptr(szName ? hb_dynsymGet(szName) : nullptr);
 }
 
 HB_FUNC( __DYNSN2SYM )
 {
    HB_STACK_TLS_PRELOAD
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
 
    if( szName ) {
       hb_itemPutSymbol(hb_stackReturnItem(), hb_dynsymGet(szName)->pSymbol);
