@@ -65,7 +65,7 @@ HB_FUNC( HB_BASE64ENCODE )
       dst *= sizeof(char);
 
       if( dst > len ) {
-         const char * s = hb_parcx(1);
+         auto s = hb_parcx(1);
          char * t, * p;
          HB_SIZE lln = lin;
 
