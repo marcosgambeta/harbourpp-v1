@@ -150,7 +150,8 @@ HB_FUNC( __PP_INIT )
 
    if( pState ) {
       PHB_PP_STATE * pStatePtr;
-      const char * szPath = hb_parc(1), * szStdCh = hb_parc(2);
+      auto szPath = hb_parc(1);
+      auto szStdCh = hb_parc(2);
       bool fArchDefs = hb_parldef(3, true);
       PHB_ITEM ppItem;
 
@@ -214,7 +215,7 @@ HB_FUNC( __PP_ADDRULE )
    PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState ) {
-      const char * szText = hb_parc(2);
+      auto szText = hb_parc(2);
       HB_SIZE nLen = hb_parclen(2);
 
       if( szText ) {
