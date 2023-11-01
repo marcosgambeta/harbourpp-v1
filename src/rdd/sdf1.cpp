@@ -1063,7 +1063,7 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
 
    pFileName = hb_fsFNameSplit(pCreateInfo->abName);
    if( hb_setGetDefExtension() && !pFileName->szExtension ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pItem) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge(szFileName, pFileName);
@@ -1152,7 +1152,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
    pFileName = hb_fsFNameSplit(pOpenInfo->abName);
    /* Add default file name extension if necessary */
    if( hb_setGetDefExtension() && !pFileName->szExtension ) {
-      PHB_ITEM pFileExt = hb_itemNew(nullptr);
+      auto pFileExt = hb_itemNew(nullptr);
       if( SELF_INFO(&pArea->area, DBI_TABLEEXT, pFileExt) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pFileExt);
          hb_fsFNameMerge(szFileName, pFileName);

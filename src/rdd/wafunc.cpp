@@ -828,7 +828,7 @@ LPDBTRANSINFO hb_dbTransInfoGet(PHB_ITEM pItem)
 /* update counters for autoinc and rowver fields */
 HB_ERRCODE hb_dbTransCounters(LPDBTRANSINFO lpdbTransInfo)
 {
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
 
    for( HB_USHORT uiCount = 0; uiCount < lpdbTransInfo->uiItemCount; ++uiCount ) {
       LPDBTRANSITEM lpdbTransItem = &lpdbTransInfo->lpTransItems[uiCount];
@@ -893,7 +893,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
 
    if( uiFields == 0 ) {
       if( lpaDest ) {
-         PHB_ITEM pItem = hb_itemNew(nullptr);
+         auto pItem = hb_itemNew(nullptr);
          uiSize = 0;
          for( uiCount = 1; uiCount <= uiSizeSrc; ++uiCount ) {
             if( SELF_FIELDINFO(lpaSource, uiCount, DBS_NAME, pItem) != Harbour::SUCCESS ) {
@@ -963,8 +963,8 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
    }
 
    if( fAll && lpaDest ) {
-      PHB_ITEM pSrcItm = hb_itemNew(nullptr),
-               pDstItm = hb_itemNew(nullptr);
+      auto pSrcItm = hb_itemNew(nullptr);
+      auto pDstItm = hb_itemNew(nullptr);
       /*
        * if fAll is HB_TRUE here then it means that all fields are included
        * and they are on the same positions in both tables, so now check

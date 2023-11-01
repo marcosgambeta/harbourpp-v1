@@ -4589,7 +4589,8 @@ static bool hb_nsxOrdFindRec(LPTAGINFO pTag, HB_ULONG ulRecNo, bool fCont)
 static HB_ULONG hb_nsxOrdScopeEval(LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, void * pParam, PHB_ITEM pItemLo, PHB_ITEM pItemHi)
 {
    HB_ULONG ulCount = 0, ulLen = static_cast<HB_ULONG>(pTag->KeyLength);
-   PHB_ITEM pItemTop = hb_itemNew(nullptr), pItemBottom = hb_itemNew(nullptr);
+   auto pItemTop = hb_itemNew(nullptr);
+   auto pItemBottom = hb_itemNew(nullptr);
    bool fDescend = pTag->fUsrDescend;
 
    if( fDescend ) {
@@ -6084,7 +6085,7 @@ static HB_ERRCODE hb_nsxOpen(NSXAREAP pArea, LPDBOPENINFO pOpenInfo)
    HB_ERRCODE errCode;
 
    if( !pArea->dbfarea.bLockType ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       errCode = SELF_INFO(&pArea->dbfarea.area, DBI_LOCKSCHEME, pItem);
       if( errCode != Harbour::SUCCESS ) {
          hb_itemRelease(pItem);

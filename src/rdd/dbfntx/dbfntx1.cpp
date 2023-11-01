@@ -600,7 +600,7 @@ static HB_BYTE hb_ntxGetKeyType(LPTAGINFO pTag)
    HB_BYTE bType;
 
    if( pTag->nField ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       SELF_GETVALUE(&pTag->pIndex->pArea->dbfarea.area, pTag->nField, pItem);
       bType = hb_ntxItemType(pItem);
       hb_itemRelease(pItem);
@@ -4311,7 +4311,8 @@ static bool hb_ntxOrdFindRec(LPTAGINFO pTag, HB_ULONG ulRecNo, bool fCont)
 static HB_ULONG hb_ntxOrdScopeEval(LPTAGINFO pTag, HB_EVALSCOPE_FUNC pFunc, void * pParam, PHB_ITEM pItemLo, PHB_ITEM pItemHi)
 {
    HB_ULONG ulCount = 0, ulLen = static_cast<HB_ULONG>(pTag->KeyLength);
-   PHB_ITEM pItemTop = hb_itemNew(nullptr), pItemBottom = hb_itemNew(nullptr);
+   auto pItemTop = hb_itemNew(nullptr);
+   auto pItemBottom = hb_itemNew(nullptr);
 
    hb_ntxTagGetScope(pTag, 0, pItemTop);
    hb_ntxTagGetScope(pTag, 1, pItemBottom);

@@ -2788,7 +2788,8 @@ static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, bool * fU
        !pArea->fPositioned || !pArea->fShared || pArea->fFLocked || pArea->fRecordChanged ) {
       fLocked = true;
    } else {
-      PHB_ITEM pRecNo = hb_itemNew(nullptr), pResult = hb_itemNew(nullptr);
+      auto pRecNo = hb_itemNew(nullptr);
+      auto pResult = hb_itemNew(nullptr);
 
       errCode = SELF_RECINFO(&pArea->area, pRecNo, DBRI_LOCKED, pResult);
       fLocked = hb_itemGetL(pResult);
@@ -3617,7 +3618,7 @@ static HB_ERRCODE hb_fptOpenMemFile(FPTAREAP pArea, LPDBOPENINFO pOpenInfo)
    /* create file name */
    pFileName = hb_fsFNameSplit(pOpenInfo->abName);
    if( !pFileName->szExtension ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       if( SELF_INFO(&pArea->area, DBI_MEMOEXT, pItem) == Harbour::SUCCESS ) {
          pFileName->szExtension = hb_itemGetCPtr(pItem);
          hb_fsFNameMerge(szFileName, pFileName);

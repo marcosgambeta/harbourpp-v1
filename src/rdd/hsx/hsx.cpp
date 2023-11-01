@@ -1859,7 +1859,7 @@ HB_FUNC( HS_FILTER )
       }
    }
    if( iHandle >= 0 && nLen > 0 && szText ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( !pArea ) {

@@ -84,7 +84,7 @@ HB_FUNC( SX_ISFLOCKED )
    bool fLocked = false;
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_ISFLOCK, pItem);
       fLocked = hb_itemGetL(pItem);
       hb_itemRelease(pItem);
@@ -99,7 +99,7 @@ HB_FUNC( SX_ISREADONLY )
    bool fReadOnly = false;
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_ISREADONLY, pItem);
       fReadOnly = hb_itemGetL(pItem);
       hb_itemRelease(pItem);
@@ -114,7 +114,7 @@ HB_FUNC( SX_ISSHARED )
    bool fShared = false;
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_SHARED, pItem);
       fShared = hb_itemGetL(pItem);
       hb_itemRelease(pItem);
@@ -129,7 +129,7 @@ HB_FUNC( SX_IDTYPE )
    int iType = 0;
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       if( SELF_RECINFO(pArea, nullptr, DBRI_ENCRYPTED, pItem) == Harbour::SUCCESS ) {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
@@ -145,7 +145,7 @@ HB_FUNC( SX_TABLETYPE )
    int iType = 0;
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       if( SELF_INFO(pArea, DBI_ISENCRYPTED, pItem) == Harbour::SUCCESS ) {
          iType = hb_itemGetL(pItem) ? 2 : 1;
       }
@@ -160,7 +160,7 @@ HB_FUNC( SX_TABLENAME )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pList = hb_itemNew(nullptr);
+      auto pList = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_FULLPATH, pList);
       hb_itemReturnRelease(pList);
    } else {
@@ -199,7 +199,7 @@ HB_FUNC( SX_ROLLBACK )
    }
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       fResult = SELF_INFO(pArea, DBI_ROLLBACK, pItem) == Harbour::SUCCESS;
       if( fResult && fRollChild ) {
          hb_sxRollBackChild(pArea, pItem);
@@ -435,7 +435,7 @@ HB_FUNC( _SXOPENINIT )
 
    if( pArea != nullptr ) {
       LPDBOPENINFO pInfo = nullptr;
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
 
       if( SELF_INFO(pArea, DBI_OPENINFO, pItem) ) {
          pInfo = static_cast<LPDBOPENINFO>(hb_itemGetPtr(pItem));

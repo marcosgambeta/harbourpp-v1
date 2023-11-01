@@ -6631,7 +6631,7 @@ static HB_ERRCODE hb_cdxOpen(CDXAREAP pArea, LPDBOPENINFO pOpenInfo)
    HB_ERRCODE errCode = Harbour::SUCCESS;
 
    if( !pArea->dbfarea.bLockType ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       if( SELF_INFO(&pArea->dbfarea.area, DBI_LOCKSCHEME, pItem) != Harbour::SUCCESS ) {
          hb_itemRelease(pItem);
          return Harbour::FAILURE;

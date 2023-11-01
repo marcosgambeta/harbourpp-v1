@@ -3838,7 +3838,7 @@ static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
    pArea->uiSetHeader = DB_SETHEADER_APPENDSYNC;
 
    {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       if( SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TABLETYPE, 0, pItem) == Harbour::SUCCESS ) {
          pArea->bTableType = static_cast<HB_BYTE>(hb_itemGetNI(pItem));
       }

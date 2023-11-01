@@ -325,7 +325,7 @@ HB_FUNC( DBFIELDINFO )
       pType = hb_param(1, Harbour::Item::NUMERIC);
       uiIndex = static_cast<HB_FIELDNO>(hb_parni(2));
       if( pType && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex > 0 && uiIndex <= uiFields ) {
-         PHB_ITEM pInfo = hb_itemNew(hb_param(3, Harbour::Item::ANY));
+         auto pInfo = hb_itemNew(hb_param(3, Harbour::Item::ANY));
 
          SELF_FIELDINFO(pArea, uiIndex, static_cast<HB_USHORT>(hb_itemGetNI(pType)), pInfo);
          hb_itemReturnRelease(pInfo);

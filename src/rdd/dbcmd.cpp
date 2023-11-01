@@ -814,7 +814,7 @@ HB_FUNC( DBSTRUCT )
 HB_FUNC( DBTABLEEXT )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
    HB_ERRCODE errCode = Harbour::FAILURE;
 
    if( !pArea ) {
@@ -911,7 +911,7 @@ HB_FUNC( FCOUNT )
 
 HB_FUNC( FIELDGET )
 {
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_USHORT uiField = static_cast<HB_FIELDNO>(hb_parni(1));
 
@@ -1006,7 +1006,7 @@ HB_FUNC( HEADER )
    if( !pArea ) {
       hb_retni(0);
    } else {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_GETHEADERSIZE, pItem);
       hb_itemReturnRelease(pItem);
    }
@@ -1060,7 +1060,7 @@ HB_FUNC( LUPDATE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
 
       SELF_INFO(pArea, DBI_LASTUPDATE, pItem);
       hb_itemReturnRelease(pItem);
@@ -1511,7 +1511,7 @@ HB_FUNC( RECSIZE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
       SELF_INFO(pArea, DBI_GETRECSIZE, pItem);
       hb_itemReturnRelease(pItem);
    } else {
@@ -2080,7 +2080,7 @@ HB_FUNC( HB_FIELDLEN )
       }
 
       if( uiIndex > 0 ) {
-         PHB_ITEM pItem = hb_itemNew(nullptr);
+         auto pItem = hb_itemNew(nullptr);
 
          if( SELF_FIELDINFO(pArea, uiIndex, DBS_LEN, pItem) == Harbour::SUCCESS ) {
             hb_itemReturnRelease(pItem);
@@ -2108,7 +2108,7 @@ HB_FUNC( HB_FIELDDEC )
       }
 
       if( uiIndex > 0 ) {
-         PHB_ITEM pItem = hb_itemNew(nullptr);
+         auto pItem = hb_itemNew(nullptr);
 
          if( SELF_FIELDINFO(pArea, uiIndex, DBS_DEC, pItem) == Harbour::SUCCESS ) {
             hb_itemReturnRelease(pItem);
@@ -2136,7 +2136,7 @@ HB_FUNC( HB_FIELDTYPE )
       }
 
       if( uiIndex > 0 ) {
-         PHB_ITEM pItem = hb_itemNew(nullptr);
+         auto pItem = hb_itemNew(nullptr);
 
          if( SELF_FIELDINFO(pArea, uiIndex, DBS_TYPE, pItem) == Harbour::SUCCESS ) {
             hb_itemReturnRelease(pItem);
@@ -2164,7 +2164,7 @@ HB_FUNC( HB_FIELDGET )
       }
 
       if( uiField > 0 ) {
-         PHB_ITEM pItem = hb_itemNew(nullptr);
+         auto pItem = hb_itemNew(nullptr);
          SELF_GETVALUE(pArea, uiField, pItem);
          hb_itemReturnRelease(pItem);
       }
