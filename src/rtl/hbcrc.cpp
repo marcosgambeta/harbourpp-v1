@@ -235,7 +235,7 @@ HB_MAXUINT hb_crcct(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT po
 
 HB_FUNC( HB_CRC32 )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString ) {
       hb_retnint(hb_crc32(static_cast<HB_U32>(hb_parnl(2)), szString, hb_parclen(1)));
@@ -246,7 +246,7 @@ HB_FUNC( HB_CRC32 )
 
 HB_FUNC( HB_CRC16 )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString ) {
       hb_retnint(hb_crc16(static_cast<HB_U16>(hb_parnl(2)), szString, hb_parclen(1)));
@@ -257,7 +257,7 @@ HB_FUNC( HB_CRC16 )
 
 HB_FUNC( HB_CRC )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString ) {
       HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
@@ -272,7 +272,7 @@ HB_FUNC( HB_CRC )
 
 HB_FUNC( HB_CRCCT )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString ) {
       HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));

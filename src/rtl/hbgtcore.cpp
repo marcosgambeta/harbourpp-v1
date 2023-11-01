@@ -3860,7 +3860,7 @@ HB_FUNC( HB_GTSELECT )
 
 HB_FUNC( HB_GTEXISTS )
 {
-   const char * pszGtName = hb_parc(1);
+   auto pszGtName = hb_parc(1);
    hb_retl(pszGtName && hb_gt_FindEntry(pszGtName) >= -1);
 }
 

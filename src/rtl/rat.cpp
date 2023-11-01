@@ -58,8 +58,8 @@ HB_FUNC( RAT )
 
       if( nTo >= 0 ) {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         const char * pszSub = hb_parc(1);
-         const char * pszText = hb_parc(2);
+         auto pszSub = hb_parc(1);
+         auto pszText = hb_parc(2);
 
          do {
             if( pszText[nTo] == *pszSub && memcmp(pszSub, pszText + nTo, nSubLen) == 0 ) {
@@ -88,8 +88,8 @@ HB_FUNC( HB_RAT )
 
       if( nTo >= 0 ) {
          PHB_CODEPAGE cdp = hb_vmCDP();
-         const char * pszSub = hb_parc(1);
-         const char * pszText = hb_parc(2);
+         auto pszSub = hb_parc(1);
+         auto pszText = hb_parc(2);
          HB_ISIZ nStart = hb_parns(3);
          HB_ISIZ nFrom;
 

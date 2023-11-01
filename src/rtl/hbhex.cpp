@@ -49,7 +49,7 @@
 
 HB_FUNC( HB_HEXTONUM )
 {
-   const char * szHex = hb_parc(1);
+   auto szHex = hb_parc(1);
 
    if( szHex ) {
       HB_MAXUINT nNum = 0;
@@ -115,7 +115,8 @@ HB_FUNC( HB_NUMTOHEX )
 
 HB_FUNC( HB_STRTOHEX )
 {
-   const char * szStr = hb_parc(1), * szSep = "";
+   auto szStr = hb_parc(1);
+   const char * szSep = "";
    HB_SIZE nStr, nSep = 0;
 
    if( hb_pcount() > 1 ) {
@@ -153,7 +154,7 @@ HB_FUNC( HB_STRTOHEX )
 
 HB_FUNC( HB_HEXTOSTR )
 {
-   const char * szStr = hb_parc(1);
+   auto szStr = hb_parc(1);
    HB_SIZE nStr;
 
    if( !szStr ) {

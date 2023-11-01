@@ -75,7 +75,7 @@ static HB_SIZE utf8pos(const char * szUTF8, HB_SIZE nLen, HB_SIZE nUTF8Pos)
 
 HB_FUNC( HB_CDPSELECT )
 {
-   const char * id = hb_parc(1);
+   auto id = hb_parc(1);
 
    hb_retc(hb_cdpID());
 
@@ -86,7 +86,7 @@ HB_FUNC( HB_CDPSELECT )
 
 HB_FUNC( HB_CDPEXISTS )
 {
-   const char * id = hb_parc(1);
+   auto id = hb_parc(1);
 
    if( id ) {
       hb_retl(hb_cdpFind(id) != nullptr);
@@ -97,21 +97,21 @@ HB_FUNC( HB_CDPEXISTS )
 
 HB_FUNC( HB_CDPUNIID )
 {
-   const char * id = hb_parc(1);
+   auto id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
    hb_retc(cdp ? cdp->uniTable->uniID : nullptr);
 }
 
 HB_FUNC( HB_CDPINFO )
 {
-   const char * id = hb_parc(1);
+   auto id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
    hb_retc(cdp ? cdp->info : nullptr);
 }
 
 HB_FUNC( HB_CDPISCHARIDX )
 {
-   const char * id = hb_parc(1);
+   auto id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
    bool fResult = false;
 
@@ -168,8 +168,8 @@ HB_FUNC_TRANSLATE( __NATSORTVER, HB_CDPINFO )
 HB_FUNC( HB_TRANSLATE )
 {
    HB_SIZE nLen = hb_parclen(1);
-   const char * szIdIn = hb_parc(2);
-   const char * szIdOut = hb_parc(3);
+   auto szIdIn = hb_parc(2);
+   auto szIdOut = hb_parc(3);
 
    if( nLen && (szIdIn || szIdOut) ) {
       PHB_CODEPAGE cdpIn = szIdIn ? hb_cdpFindExt(szIdIn) : hb_vmCDP();
@@ -199,7 +199,7 @@ HB_FUNC( HB_UTF8CHR )
 
 HB_FUNC( HB_UTF8ASC )
 {
-   const char * pszString = hb_parc(1);
+   auto pszString = hb_parc(1);
 
    if( pszString ) {
       HB_SIZE nLen = hb_parclen(1);
@@ -228,7 +228,7 @@ HB_FUNC( HB_STRTOUTF8 )
    char * szDest = nullptr;
 
    if( nLen ) {
-      const char * szCP = hb_parc(2);
+      auto szCP = hb_parc(2);
       PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
       if( cdp ) {
@@ -236,7 +236,7 @@ HB_FUNC( HB_STRTOUTF8 )
             hb_itemReturn(hb_param(1, Harbour::Item::STRING));
             return;
          } else {
-            const char * szString = hb_parc(1);
+            auto szString = hb_parc(1);
             nDest = hb_cdpStrAsUTF8Len(cdp, szString, nLen, 0);
             szDest = static_cast<char*>(hb_xgrab(nDest + 1));
             hb_cdpStrToUTF8(cdp, szString, nLen, szDest, nDest + 1);
@@ -252,14 +252,14 @@ HB_FUNC( HB_STRTOUTF8 )
 
 HB_FUNC( HB_UTF8TOSTR )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString ) {
       HB_SIZE nLen = hb_parclen(1), nDest = 0;
       char * szDest = nullptr;
 
       if( nLen ) {
-         const char * szCP = hb_parc(2);
+         auto szCP = hb_parc(2);
          PHB_CODEPAGE cdp = szCP ? hb_cdpFindExt(szCP) : hb_vmCDP();
 
          if( cdp ) {
@@ -333,7 +333,7 @@ HB_FUNC( HB_UTF8RAT )
 
 HB_FUNC( HB_UTF8SUBSTR )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
    int iPCount = hb_pcount();
 
    if( szString && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))) ) {
@@ -366,7 +366,7 @@ HB_FUNC( HB_UTF8SUBSTR )
 
 HB_FUNC( HB_UTF8LEFT )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString && HB_ISNUM(2) ) {
       HB_ISIZ nLenReq = hb_parns(2);
@@ -389,7 +389,7 @@ HB_FUNC( HB_UTF8LEFT )
 
 HB_FUNC( HB_UTF8RIGHT )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString && HB_ISNUM(2) ) {
       HB_ISIZ nLenReq = hb_parns(2), nFrom;
@@ -416,7 +416,7 @@ HB_FUNC( HB_UTF8RIGHT )
 
 HB_FUNC( HB_UTF8PEEK )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString && HB_ISNUM(2) ) {
       HB_SIZE nPos = hb_parns(2);
@@ -476,8 +476,8 @@ HB_FUNC( HB_UTF8POKE )
 
 HB_FUNC( HB_UTF8STUFF )
 {
-   const char * szText = hb_parc(1);
-   const char * szIns = hb_parc(4);
+   auto szText = hb_parc(1);
+   auto szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
       HB_SIZE nLen = hb_parclen(1);
@@ -524,7 +524,7 @@ HB_FUNC( HB_UTF8STUFF )
 
 HB_FUNC( HB_UTF8LEN )
 {
-   const char * szText = hb_parc(1);
+   auto szText = hb_parc(1);
 
    if( szText ) {
       hb_retnint(hb_cdpUTF8StringLength(szText, hb_parclen(1)));

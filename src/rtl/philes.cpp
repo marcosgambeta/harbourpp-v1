@@ -55,7 +55,7 @@
 
 HB_FUNC( FOPEN )
 {
-   const char * szFile = hb_parc(1);
+   auto szFile = hb_parc(1);
 
    if( szFile ) {
       hb_retnint(static_cast<HB_NHANDLE>(hb_fsOpen(szFile, static_cast<HB_USHORT>(hb_parnidef(2, FO_READ | FO_COMPAT)))));
@@ -69,7 +69,7 @@ HB_FUNC( FOPEN )
 
 HB_FUNC( FCREATE )
 {
-   const char * szFile = hb_parc(1);
+   auto szFile = hb_parc(1);
 
    if( szFile ) {
       hb_retnint(static_cast<HB_NHANDLE>(hb_fsCreate(szFile, hb_parnidef(2, FC_NORMAL))));
@@ -82,7 +82,7 @@ HB_FUNC( FCREATE )
 
 HB_FUNC( HB_FCREATE )
 {
-   const char * szFile = hb_parc(1);
+   auto szFile = hb_parc(1);
 
    if( szFile ) {
       hb_retnint(static_cast<HB_NHANDLE>(hb_fsCreateEx(szFile, hb_parnidef(2, FC_NORMAL), static_cast<HB_USHORT>(hb_parnidef(3, FO_COMPAT)))));
@@ -166,7 +166,7 @@ HB_FUNC( FCLOSE )
 HB_FUNC( FERASE )
 {
    HB_ERRCODE uiError = 3;
-   const char * szFile = hb_parc(1);
+   auto szFile = hb_parc(1);
 
    if( szFile ) {
       hb_retni(hb_fsDelete(szFile) ? 0 : F_ERROR);
@@ -180,7 +180,8 @@ HB_FUNC( FERASE )
 HB_FUNC( FRENAME )
 {
    HB_ERRCODE uiError = 2;
-   const char * szFileOld = hb_parc(1), * szFileNew = hb_parc(2);
+   auto szFileOld = hb_parc(1);
+   auto szFileNew = hb_parc(2);
 
    if( szFileOld && szFileNew ) {
       hb_retni(hb_fsRename(szFileOld, szFileNew) ? 0 : F_ERROR);
@@ -521,7 +522,7 @@ HB_FUNC( HB_PREAD )
 HB_FUNC( HB_PWRITE )
 {
    HB_FHANDLE hPipe = hb_numToHandle(hb_parnintdef(1, FS_ERROR));
-   const char * data = hb_parc(2);
+   auto data = hb_parc(2);
 
    if( hPipe != FS_ERROR && data != nullptr ) {
       HB_SIZE nLen = hb_parclen(2);

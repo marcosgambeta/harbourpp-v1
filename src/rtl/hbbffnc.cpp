@@ -164,7 +164,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
  */
 static void hb_bf_initvect(HB_BYTE * vect)
 {
-   const char * pszVect = hb_parc(3);
+   auto pszVect = hb_parc(3);
    int iLen = static_cast<int>(hb_parclen(3));
 
    for( int i = 0; i < HB_BF_CIPHERBLOCK; ++i ) {

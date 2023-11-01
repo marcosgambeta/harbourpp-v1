@@ -82,7 +82,7 @@ HB_FUNC( CHR )
 /* converts a character value to an ASCII code */
 HB_FUNC( ASC )
 {
-   const char * szValue = hb_parc(1);
+   auto szValue = hb_parc(1);
 
    if( szValue ) {
       int iChar;

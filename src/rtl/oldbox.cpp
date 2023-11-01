@@ -56,7 +56,7 @@ HB_FUNC( __BOX )
    PHB_ITEM pLeft   = hb_param(2, Harbour::Item::NUMERIC);
    PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
-   const char * pszBox = hb_parc(5);
+   auto pszBox = hb_parc(5);
 
    if( pTop && pLeft && pBottom && pRight && pszBox ) {
       hb_gtBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox);

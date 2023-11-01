@@ -635,7 +635,7 @@ HB_SIZE hb_jsonDecode( const char * szSource, PHB_ITEM pValue )
 static PHB_CODEPAGE _hb_jsonCdpPar(int iParam)
 {
    if( hb_pcount() >= iParam ) {
-      const char * szCdp = hb_parc(iParam);
+      auto szCdp = hb_parc(iParam);
 
       if( szCdp ) {
          return hb_cdpFindExt(szCdp);

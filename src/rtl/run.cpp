@@ -60,7 +60,7 @@
 
 HB_FUNC( __RUN )
 {
-   const char * pszCommand = hb_parc(1);
+   auto pszCommand = hb_parc(1);
 
    if( pszCommand && hb_gtSuspend() == Harbour::SUCCESS ) {
 #if defined(HB_OS_WIN)

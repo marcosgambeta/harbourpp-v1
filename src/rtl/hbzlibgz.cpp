@@ -91,7 +91,8 @@ static gzFile hb_gzParam(int iParam)
 HB_FUNC( HB_GZOPEN )
 {
 #ifndef HB_NO_GZLIB
-   const char * cFile = hb_parc(1), * cMode = hb_parc(2);
+   auto cFile = hb_parc(1);
+   auto cMode = hb_parc(2);
 
    if( cFile && cMode ) {
       gzFile gz;
@@ -125,7 +126,7 @@ HB_FUNC( HB_GZOPEN )
 HB_FUNC( HB_GZDOPEN )
 {
 #ifndef HB_NO_GZLIB
-   const char * cMode = hb_parc(2);
+   auto cMode = hb_parc(2);
 
    if( HB_ISNUM(1) && cMode ) {
       gzFile gz;
@@ -219,7 +220,7 @@ HB_FUNC( HB_GZREAD )
 HB_FUNC( HB_GZWRITE )
 {
 #ifndef HB_NO_GZLIB
-   const char * szData = hb_parc(2);
+   auto szData = hb_parc(2);
 
    if( szData ) {
       gzFile gz = hb_gzParam(1);
@@ -274,7 +275,7 @@ HB_FUNC( HB_GZGETS )
 HB_FUNC( HB_GZPUTS )
 {
 #ifndef HB_NO_GZLIB
-   const char * szData = hb_parc(2);
+   auto szData = hb_parc(2);
 
    if( szData ) {
       gzFile gz = hb_gzParam(1);

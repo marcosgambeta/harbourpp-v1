@@ -74,7 +74,7 @@ HB_FUNC( HB_MD5ENCRYPT )
       if( nLen ) {
          const char * pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
-         const char * pszKey = hb_parc(2);
+         auto pszKey = hb_parc(2);
          int iLen = static_cast<int>(hb_parclen(2));
          char vect[16];
          HB_SIZE n;
@@ -107,7 +107,7 @@ HB_FUNC( HB_MD5DECRYPT )
       if( nLen ) {
          const char * pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
-         const char * pszKey = hb_parc(2);
+         auto pszKey = hb_parc(2);
          int iLen = static_cast<int>(hb_parclen(2));
          char vect[16];
          HB_SIZE n;

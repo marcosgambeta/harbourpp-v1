@@ -1670,8 +1670,8 @@ HB_FUNC( HB_SERIALIZE )
    PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
-      const char * pszCdpIn = hb_parc(3);
-      const char * pszCdpOut = hb_parc(4);
+      auto pszCdpIn = hb_parc(3);
+      auto pszCdpOut = hb_parc(4);
 
       PHB_CODEPAGE cdpIn = pszCdpIn ? hb_cdpFindExt(pszCdpIn) : hb_vmCDP();
       PHB_CODEPAGE cdpOut = pszCdpOut ? hb_cdpFindExt(pszCdpOut) : hb_vmCDP();
@@ -1695,9 +1695,9 @@ HB_FUNC( HB_DESERIALIZE )
    HB_SIZE nSize = hb_parclen(1);
 
    if( nSize ) {
-      const char * pBuffer = hb_parc(1);
-      const char * pszCdpIn = hb_parc(2);
-      const char * pszCdpOut = hb_parc(3);
+      auto pBuffer = hb_parc(1);
+      auto pszCdpIn = hb_parc(2);
+      auto pszCdpOut = hb_parc(3);
 
       PHB_CODEPAGE cdpIn = pszCdpIn ? hb_cdpFindExt(pszCdpIn) : hb_vmCDP();
       PHB_CODEPAGE cdpOut = pszCdpOut ? hb_cdpFindExt(pszCdpOut) : hb_vmCDP();

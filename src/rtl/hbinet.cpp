@@ -1015,7 +1015,7 @@ HB_FUNC( HB_INETSENDALL )
 
 HB_FUNC( HB_INETGETHOSTS )
 {
-   const char * szHost = hb_parc(1);
+   auto szHost = hb_parc(1);
 
    if( szHost ) {
       HB_INET_INITIALIZE();
@@ -1032,7 +1032,7 @@ HB_FUNC( HB_INETGETHOSTS )
 
 HB_FUNC( HB_INETGETALIAS )
 {
-   const char * szHost = hb_parc(1);
+   auto szHost = hb_parc(1);
 
    if( szHost ) {
       HB_INET_INITIALIZE();
@@ -1089,7 +1089,7 @@ HB_FUNC( HB_INETSERVER )
       hb_inetGetError(socket);
    } else {
       int iPort = hb_parni(1);
-      const char * szAddress = hb_parc(3);
+      auto szAddress = hb_parc(3);
       int iListen = hb_parnidef(4, 10);
 
       if( socket->remote ) {
@@ -1144,7 +1144,7 @@ HB_FUNC( HB_INETACCEPT )
 
 static void hb_inetConnectInternal(HB_BOOL fResolve)
 {
-   const char * szHost = hb_parc(1);
+   auto szHost = hb_parc(1);
    char * szAddr = nullptr;
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET(3);
    int iPort = hb_parni(2);
@@ -1283,7 +1283,7 @@ HB_FUNC( HB_INETDGRAM )
 HB_FUNC( HB_INETDGRAMSEND )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET(1);
-   const char * szAddress = hb_parc(2);
+   auto szAddress = hb_parc(2);
    int iPort = hb_parni(3);
    PHB_ITEM pBuffer = hb_param(4, Harbour::Item::STRING);
    int iLen;

@@ -57,7 +57,7 @@
 
 HB_FUNC( HB_RUN )
 {
-   const char * pszCommand = hb_parc(1);
+   auto pszCommand = hb_parc(1);
 
    if( pszCommand ) {
       int iResult = -1;

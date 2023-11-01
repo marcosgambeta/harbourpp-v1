@@ -100,7 +100,7 @@ HB_FUNC( RESTSCREEN )
    if( HB_ISCHAR(5) ) {
       int iTop, iLeft, iBottom, iRight;
       void * pBuffer = nullptr;
-      const char * pBufStr = hb_parc(5);
+      auto pBufStr = hb_parc(5);
       bool fNoCheck = false;
 
       hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );

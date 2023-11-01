@@ -393,7 +393,7 @@ HB_BOOL hb_md5file(const char * pszFileName, char * digest)
 
 HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
 {
-   const char * pszStr = hb_parc(1);
+   auto pszStr = hb_parc(1);
 
    if( pszStr ) {
       HB_SIZE nLen = hb_parclen(1);
@@ -422,7 +422,7 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
 
 HB_FUNC( HB_MD5FILE )  /* Considered insecure. Use SHA256 or higher instead. */
 {
-   const char * pszFileName = hb_parc(1);
+   auto pszFileName = hb_parc(1);
    char dststr[16];
 
    if( pszFileName && hb_md5file(pszFileName, dststr) ) {

@@ -351,7 +351,7 @@ static char * s_fileLinkRead(PHB_FILE_FUNCS pFuncs, const char * pszFileName)
    s_pushMethod(pIO, IOUSR_LINKREAD);
    hb_vmPushString(pszFileName, strlen(pszFileName));
    hb_vmDo(1);
-   const char * pszLink = hb_parc(-1);
+   auto pszLink = hb_parc(-1);
    return pszLink != nullptr ? hb_strdup(pszLink) : nullptr;
 }
 
@@ -628,7 +628,7 @@ using HB_FILE_FUNC = HB_BOOL (*)(PHB_FILE_FUNCS pFuncs, const char *);
 HB_FUNC( IOUSR_REGISTER )
 {
    PHB_ITEM pMthItm = hb_param(1, Harbour::Item::ARRAY);
-   const char * pszPrefix = hb_parc(2);
+   auto pszPrefix = hb_parc(2);
 
    if( pMthItm && pszPrefix && *pszPrefix ) {
       HB_SIZE nMethods = hb_arrayLen(pMthItm), nAt;

@@ -52,7 +52,7 @@
 
 HB_FUNC( HB_PROCESSOPEN )
 {
-   const char * szName = hb_parc(1);
+   auto szName = hb_parc(1);
    PHB_ITEM pStdIn  = hb_param(2, Harbour::Item::BYREF);
    PHB_ITEM pStdOut = hb_param(3, Harbour::Item::BYREF);
    PHB_ITEM pStdErr = hb_param(4, Harbour::Item::BYREF);
@@ -121,8 +121,8 @@ HB_FUNC( HB_PROCESSCLOSE )
 /* hb_processRun(<cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], [ <lDetach> ]) --> <nResult> */
 HB_FUNC( HB_PROCESSRUN )
 {
-   const char * szName = hb_parc(1);
-   const char * szStdIn = hb_parc(2);
+   auto szName = hb_parc(1);
+   auto szStdIn = hb_parc(2);
    PHB_ITEM pStdOut = hb_param(3, Harbour::Item::BYREF);
    PHB_ITEM pStdErr = hb_param(4, Harbour::Item::BYREF);
    bool fDetach = hb_parl(5);

@@ -157,8 +157,8 @@ static bool hb_copyfile( const char * pszSource, const char * pszDest )
 
 HB_FUNC( __COPYFILE )
 {
-   const char * szSource = hb_parc(1);
-   const char * szDest = hb_parc(2);
+   auto szSource = hb_parc(1);
+   auto szDest = hb_parc(2);
 
    if( szSource && szDest ) {
       if( !hb_copyfile( szSource, szDest ) ) {

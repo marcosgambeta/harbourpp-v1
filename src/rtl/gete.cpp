@@ -120,7 +120,7 @@ HB_FUNC( HB_GETENV )
 
 HB_FUNC( HB_SETENV )
 {
-   const char * pszName = hb_parc(1);
+   auto pszName = hb_parc(1);
    bool fResult = false;
 
    if( pszName ) {

@@ -187,7 +187,8 @@ static PHB_ITEM hb_tokenArray(const char * szLine, HB_SIZE nLen, const char * sz
 
 static HB_BOOL hb_tokenParam(int iParam, HB_SIZE nSkip, const char ** pszLine, HB_SIZE * pnLen, const char ** pszDelim, HB_SIZE * pnDelim, int * piFlags)
 {
-   const char * szLine = hb_parc(1), * szDelim = nullptr;
+   auto szLine = hb_parc(1);
+   const char * szDelim = nullptr;
    HB_SIZE nLen = hb_parclen(1), nDelim = 0;
    int iFlags = 0;
 

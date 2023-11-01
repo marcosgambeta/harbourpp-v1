@@ -621,7 +621,7 @@ HB_FUNC( HB_DISPOUTATBOX )
    if( nLen > 0 ) {
       int iRow = hb_parni(1);
       int iCol = hb_parni(2);
-      const char * pszString = hb_parc(3);
+      auto pszString = hb_parc(3);
 
       int iColor;
       if( HB_ISCHAR(4) ) {

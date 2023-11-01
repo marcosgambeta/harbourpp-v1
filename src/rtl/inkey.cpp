@@ -185,7 +185,7 @@ HB_FUNC_TRANSLATE( HB_SETLASTKEY, HB_KEYSETLAST )
 
 HB_FUNC( HB_KEYCODE )
 {
-   const char * szValue = hb_parc(1);
+   auto szValue = hb_parc(1);
    int iKey;
 
    if( szValue ) {

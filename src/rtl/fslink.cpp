@@ -311,8 +311,8 @@ HB_FUNC( HB_FLINK )
 {
    HB_ERRCODE uiError = 2;
    bool fResult = false;
-   const char * pszExisting = hb_parc(1);
-   const char * pszNewFile = hb_parc(2);
+   auto pszExisting = hb_parc(1);
+   auto pszNewFile = hb_parc(2);
 
    if( pszExisting && pszNewFile ) {
       fResult = hb_fsLink(pszExisting, pszNewFile);
@@ -326,8 +326,8 @@ HB_FUNC( HB_FLINKSYM )
 {
    HB_ERRCODE uiError = 2;
    bool fResult = false;
-   const char * pszTarget = hb_parc(1);
-   const char * pszNewFile = hb_parc(2);
+   auto pszTarget = hb_parc(1);
+   auto pszNewFile = hb_parc(2);
 
    if( pszTarget && pszNewFile ) {
       fResult = hb_fsLinkSym(pszTarget, pszNewFile);
@@ -341,7 +341,7 @@ HB_FUNC( HB_FLINKREAD )
 {
    HB_ERRCODE uiError = 2;
    char * pszResult = nullptr;
-   const char * pszFile = hb_parc(1);
+   auto pszFile = hb_parc(1);
 
    if( pszFile ) {
       pszResult = hb_fsLinkRead(pszFile);

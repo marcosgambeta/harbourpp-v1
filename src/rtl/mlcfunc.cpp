@@ -529,7 +529,7 @@ HB_FUNC( MPOSTOLC )
  */
 HB_FUNC( HB_MLEVAL )
 {
-   const char * pszString = hb_parc(1);
+   auto pszString = hb_parc(1);
    PHB_ITEM pBlock = hb_param(2, Harbour::Item::EVALITEM);
    HB_ISIZ nSize = hb_parnsdef(3, 79);
    HB_SIZE nRowPos = 0, nColPos = 0, nLines = 0;

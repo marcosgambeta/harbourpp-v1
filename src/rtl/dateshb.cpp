@@ -65,7 +65,7 @@ HB_FUNC( CTOD )
 HB_FUNC( HB_CTOD )
 {
    if( HB_ISCHAR(1) ) {
-      const char * szFormat = hb_parc(2);
+      auto szFormat = hb_parc(2);
 
       if( !szFormat ) {
          szFormat = hb_setGetDateFormat();
@@ -92,7 +92,7 @@ HB_FUNC( HB_DTOC )
    if( HB_ISDATETIME(1) ) {
       char szDate[9];
       char szFormatted[11];
-      const char * szFormat = hb_parc(2);
+      auto szFormat = hb_parc(2);
 
       if( !szFormat ) {
          szFormat = hb_setGetDateFormat();
@@ -212,7 +212,7 @@ HB_FUNC( HB_DTOT )
    long lDate, lTime, lDate2;
 
    if( hb_partdt(&lDate, &lTime, 1) ) {
-      const char * szTime = hb_parc(2);
+      auto szTime = hb_parc(2);
       if( szTime ) {
          hb_timeStampStrGetDT(szTime, &lDate2, &lTime);
       } else if( HB_ISNUM(2) ) {
@@ -236,7 +236,7 @@ HB_FUNC( HB_TTOD )
    if( hb_partdt(&lDate, &lTime, 1) ) {
       hb_retdl(lDate);
       if( HB_ISBYREF(2) ) {
-         const char * szTimeFormat = hb_parc(3);
+         auto szTimeFormat = hb_parc(3);
          if( szTimeFormat ) {
             char szBuffer[27];
             if( *szTimeFormat == '\0' ) {
@@ -389,8 +389,8 @@ HB_FUNC( HB_TTOC )
    long lDate, lTime;
 
    if( hb_partdt(&lDate, &lTime, 1) ) {
-      const char * szDateFormat = hb_parc(2);
-      const char * szTimeFormat = hb_parc(3);
+      auto szDateFormat = hb_parc(2);
+      auto szTimeFormat = hb_parc(3);
       char szBuffer[27];
 
       if( !szDateFormat ) {
@@ -408,12 +408,12 @@ HB_FUNC( HB_TTOC )
 
 HB_FUNC( HB_CTOT )
 {
-   const char * szDateTime = hb_parc(1);
+   auto szDateTime = hb_parc(1);
 
    if( szDateTime ) {
       long lDate, lTime;
-      const char * szDateFormat = hb_parc(2);
-      const char * szTimeFormat = hb_parc(3);
+      auto szDateFormat = hb_parc(2);
+      auto szTimeFormat = hb_parc(3);
 
       if( !szDateFormat ) {
          szDateFormat = hb_setGetDateFormat();
@@ -443,7 +443,7 @@ HB_FUNC( HB_TTOS )
 
 HB_FUNC( HB_STOT )
 {
-   const char * szDateTime = hb_parc(1);
+   auto szDateTime = hb_parc(1);
 
    if( szDateTime ) {
       long lDate, lTime;
@@ -535,7 +535,7 @@ HB_FUNC( HB_TSTOSTR )
 
 HB_FUNC( HB_STRTOTS )
 {
-   const char * szDateTime = hb_parc(1);
+   auto szDateTime = hb_parc(1);
 
    if( szDateTime ) {
       long lDate, lTime;

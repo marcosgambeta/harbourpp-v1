@@ -97,7 +97,7 @@ HB_FUNC( HB_UCODE )
  */
 HB_FUNC( HB_BCODE )
 {
-   const char * szText = hb_parc(1);
+   auto szText = hb_parc(1);
 
    if( szText ) {
       hb_retni(static_cast<HB_UCHAR>(szText[0]));
@@ -543,8 +543,8 @@ HB_FUNC( HB_BRAT )
       HB_ISIZ nTo = nLen - nSubLen;
 
       if( nTo >= 0 ) {
-         const char * pszSub = hb_parc(1);
-         const char * pszText = hb_parc(2);
+         auto pszSub = hb_parc(1);
+         auto pszText = hb_parc(2);
          HB_ISIZ nStart = hb_parns(3);
          HB_ISIZ nFrom;
 
@@ -582,8 +582,8 @@ HB_FUNC( HB_BRAT )
  */
 HB_FUNC( HB_BSTUFF )
 {
-   const char * szText = hb_parc(1);
-   const char * szIns = hb_parc(4);
+   auto szText = hb_parc(1);
+   auto szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
       HB_SIZE nLen = hb_parclen(1);
@@ -624,8 +624,8 @@ HB_FUNC( HB_BSTUFF )
  */
 HB_FUNC( HB_USTUFF )
 {
-   const char * szText = hb_parc(1);
-   const char * szIns = hb_parc(4);
+   auto szText = hb_parc(1);
+   auto szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();

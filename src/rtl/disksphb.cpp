@@ -193,7 +193,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
 HB_FUNC( HB_DISKSPACE )
 {
-   const char * pszPath = hb_parc(1);
+   auto pszPath = hb_parc(1);
    HB_USHORT uiType = static_cast<HB_USHORT>(hb_parnidef(2, HB_DISK_AVAIL));
 
 #ifdef HB_OS_HAS_DRIVE_LETTER

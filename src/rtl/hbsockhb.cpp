@@ -993,7 +993,7 @@ HB_FUNC( HB_SOCKETSEND )
 
    if( pSock ) {
       long lLen = static_cast<long>(hb_parclen(2));
-      const char * data = hb_parc(2);
+      auto data = hb_parc(2);
       HB_MAXINT timeout = hb_parnintdef(5, -1);
 
       if( HB_ISNUM(3) ) {
@@ -1306,7 +1306,7 @@ HB_FUNC( HB_SOCKETGETHOSTNAME )
 
 HB_FUNC( HB_SOCKETGETHOSTS )
 {
-   const char * szAddr = hb_parc(1);
+   auto szAddr = hb_parc(1);
 
    if( szAddr ) {
       PHB_ITEM pItem;
@@ -1327,7 +1327,7 @@ HB_FUNC( HB_SOCKETGETHOSTS )
 /* This function is not implemented at C level, yet [Mindaugas] */
 HB_FUNC( HB_SOCKETGETALIASES )
 {
-   const char * szAddr = hb_parc(1);
+   auto szAddr = hb_parc(1);
 
    if( szAddr ) {
       PHB_ITEM pItem;

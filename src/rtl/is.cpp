@@ -50,7 +50,7 @@
 
 HB_FUNC( ISALPHA )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
    hb_retl(szString && hb_strIsAlpha(szString));
 }
 
@@ -58,7 +58,7 @@ HB_FUNC( ISALPHA )
 
 HB_FUNC( ISDIGIT )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
    hb_retl(szString && hb_strIsDigit(szString));
 }
 
@@ -66,7 +66,7 @@ HB_FUNC( ISDIGIT )
 
 HB_FUNC( ISUPPER )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
    hb_retl(szString && hb_strIsUpper(szString));
 }
 
@@ -74,6 +74,6 @@ HB_FUNC( ISUPPER )
 
 HB_FUNC( ISLOWER )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
    hb_retl(szString && hb_strIsLower(szString));
 }

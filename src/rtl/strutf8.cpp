@@ -52,7 +52,7 @@ HB_FUNC( HB_STRISUTF8 )
    bool fUtf8 = false;
 
    if( nLen > 0 ) {
-      const char * szText = hb_parc(1);
+      auto szText = hb_parc(1);
 
       do {
          char c = *szText++;

@@ -58,7 +58,7 @@ static HB_SIZE hb_cdpItemLen(PHB_CODEPAGE cdp, PHB_ITEM pItem)
 
 static const char * s_hb_padGet(PHB_CODEPAGE cdp, HB_SIZE * pnPad)
 {
-   const char * szPad = hb_parc(3);
+   auto szPad = hb_parc(3);
 
    *pnPad = 1;
    if( szPad == nullptr ) {

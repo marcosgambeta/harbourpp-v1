@@ -53,7 +53,7 @@
 
 HB_FUNC( HB_UTF8TOSTRBOX )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString ) {
       HB_SIZE nLen = hb_parclen(1), nDest = 0;

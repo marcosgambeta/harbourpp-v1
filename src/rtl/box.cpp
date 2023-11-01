@@ -56,8 +56,8 @@ HB_FUNC( DISPBOX )
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight ) {
-      const char * pszBox   = hb_parc(5);
-      const char * pszColor = hb_parc(6);
+      auto pszBox   = hb_parc(5);
+      auto pszColor = hb_parc(6);
 
       if( pszBox ) {
          int iColor;
@@ -99,8 +99,8 @@ HB_FUNC( HB_DISPBOX )
    PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight ) {
-      const char * pszBox   = hb_parc(5);
-      const char * pszColor = hb_parc(6);
+      auto pszBox   = hb_parc(5);
+      auto pszColor = hb_parc(6);
       int          iColor   = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
 
       hb_gtDrawBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);

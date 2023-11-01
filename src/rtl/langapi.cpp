@@ -455,7 +455,7 @@ HB_FUNC( __HB_LANGSELECT )
 {
    hb_retc(hb_langID());
 
-   const char * szNewLang = hb_parc(1);
+   auto szNewLang = hb_parc(1);
    if( szNewLang ) {
       hb_langSelectID(szNewLang);
    }

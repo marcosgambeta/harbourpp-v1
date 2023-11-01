@@ -138,7 +138,7 @@ HB_FUNC( HB_VFISLOCAL )
 /* hb_vfExists(<cFileName>, [ @<cDestFileName> ]) --> <lOK> */
 HB_FUNC( HB_VFEXISTS )
 {
-   const char * pszFileName = hb_parc(1);
+   auto pszFileName = hb_parc(1);
    bool fResult = false;
    HB_ERRCODE uiError = 2;
 
@@ -162,7 +162,7 @@ HB_FUNC( HB_VFEXISTS )
 /* hb_vfErase( <cFileName> ) --> <nResult> */
 HB_FUNC( HB_VFERASE )
 {
-   const char * pszFile = hb_parc(1);
+   auto pszFile = hb_parc(1);
    HB_ERRCODE uiError = 3;
    int iResult = F_ERROR;
 
@@ -180,7 +180,8 @@ HB_FUNC( HB_VFERASE )
 /* hb_vfRename( <cFileSrc>, <cFileDst> ) --> <nResult> */
 HB_FUNC( HB_VFRENAME )
 {
-   const char * szFileOld = hb_parc(1), * szFileNew = hb_parc(2);
+   auto szFileOld = hb_parc(1);
+   auto szFileNew = hb_parc(2);
    HB_ERRCODE uiError = 2;
    int iResult = F_ERROR;
 
@@ -198,7 +199,8 @@ HB_FUNC( HB_VFRENAME )
 /* hb_vfCopyFile(<cFileSrc>, <cFileDst>) --> <nResult> */
 HB_FUNC( HB_VFCOPYFILE )
 {
-   const char * pszSource = hb_parc(1), * pszDestin = hb_parc(2);
+   auto pszSource = hb_parc(1);
+   auto pszDestin = hb_parc(2);
    HB_ERRCODE uiError = 2;
    int iResult = F_ERROR;
 
@@ -216,7 +218,8 @@ HB_FUNC( HB_VFCOPYFILE )
 /* hb_vfMoveFile(<cFileSrc>, <cFileDst>) --> <nResult> */
 HB_FUNC( HB_VFMOVEFILE )
 {
-   const char * pszSource = hb_parc(1), * pszDestin = hb_parc(2);
+   auto pszSource = hb_parc(1);
+   auto pszDestin = hb_parc(2);
    HB_ERRCODE uiError = 2;
    int iResult = F_ERROR;
 
@@ -234,7 +237,7 @@ HB_FUNC( HB_VFMOVEFILE )
 /* hb_vfDirExists(<cDirName>) --> <lExists> */
 HB_FUNC( HB_VFDIREXISTS )
 {
-   const char * pszDirName = hb_parc(1);
+   auto pszDirName = hb_parc(1);
    bool fResult = false;
    HB_ERRCODE uiError = 2;
 
@@ -250,7 +253,7 @@ HB_FUNC( HB_VFDIREXISTS )
 /* hb_vfDirMake( <cDirName> ) --> <nSuccess> */
 HB_FUNC( HB_VFDIRMAKE )
 {
-   const char * pszDirName = hb_parc(1);
+   auto pszDirName = hb_parc(1);
    HB_ERRCODE uiError = 2;
    int iResult = F_ERROR;
 
@@ -268,7 +271,7 @@ HB_FUNC( HB_VFDIRMAKE )
 /* hb_vfDirRemove( <cDirName> ) --> <nSuccess> */
 HB_FUNC( HB_VFDIRREMOVE )
 {
-   const char * pszDirName = hb_parc(1);
+   auto pszDirName = hb_parc(1);
    HB_ERRCODE uiError = 2;
    int iResult = F_ERROR;
 
@@ -373,7 +376,8 @@ HB_FUNC( HB_VFTIMESET )
 /* hb_vfLink(<cExistingFileName>, <cNewFileName>) --> <nSuccess> */
 HB_FUNC( HB_VFLINK )
 {
-   const char * pszExisting = hb_parc(1), * pszNewFile = hb_parc(2);
+   auto pszExisting = hb_parc(1);
+   auto pszNewFile = hb_parc(2);
    HB_ERRCODE uiError = 2;
    int iResult = F_ERROR;
 
@@ -391,7 +395,8 @@ HB_FUNC( HB_VFLINK )
 /* hb_vfLinkSym(<cTargetFileName>, <cNewFileName>) --> <nSuccess> */
 HB_FUNC( HB_VFLINKSYM )
 {
-   const char * pszTarget = hb_parc(1), * pszNewFile = hb_parc(2);
+   auto pszTarget = hb_parc(1);
+   auto pszNewFile = hb_parc(2);
    HB_ERRCODE uiError = 2;
    int iResult = F_ERROR;
 
@@ -409,7 +414,7 @@ HB_FUNC( HB_VFLINKSYM )
 /* hb_vfLinkRead(<cFileName>) --> <cDestFileName> | "" */
 HB_FUNC( HB_VFLINKREAD )
 {
-   const char * pszFile = hb_parc(1);
+   auto pszFile = hb_parc(1);
    char * pszResult = nullptr;
    HB_ERRCODE uiError = 2;
 
@@ -425,7 +430,7 @@ HB_FUNC( HB_VFLINKREAD )
 /* hb_vfOpen([@]<cFileName>, [ <nModeAttr> ]) --> <pHandle> | NIL */
 HB_FUNC( HB_VFOPEN )
 {
-   const char * pszFile = hb_parc(1);
+   auto pszFile = hb_parc(1);
 
    if( pszFile ) {
       char szName[HB_PATH_MAX];
@@ -685,7 +690,7 @@ HB_FUNC( HB_VFWRITEAT )
 
    if( pFile ) {
       HB_ERRCODE uiError = 0;
-      const char * pszData = hb_parc(2);
+      auto pszData = hb_parc(2);
 
       if( pszData ) {
          HB_SIZE nLen = hb_parclen(2);
@@ -745,7 +750,7 @@ HB_FUNC( HB_VFTRUNC )
 /* hb_vfSize(<pHandle> | <cFileName> [, <lUseDirEntry> ]) --> <nSize> */
 HB_FUNC( HB_VFSIZE )
 {
-   const char * pszFile = hb_parc(1);
+   auto pszFile = hb_parc(1);
 
    if( pszFile ) {
       hb_retnint(hb_fileSizeGet(pszFile, hb_parldef(2, true)));
@@ -828,7 +833,7 @@ HB_FUNC( HB_VFTEMPFILE )
 /* hb_vfLoad(<cFileName>, [ <nMaxSize> ]) --> <cFileBody> | NIL */
 HB_FUNC( HB_VFLOAD )
 {
-   const char * pszFileName = hb_parc(1);
+   auto pszFileName = hb_parc(1);
 
    if( pszFileName ) {
       HB_SIZE nSize;

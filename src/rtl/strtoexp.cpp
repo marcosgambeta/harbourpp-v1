@@ -48,7 +48,7 @@
 
 HB_FUNC( HB_STRTOEXP )
 {
-   const char * pszString = hb_parc(1);
+   auto pszString = hb_parc(1);
 
    if( pszString ) {
       HB_SIZE nLen = hb_parclen(1), nRet, n, nQ = 0;

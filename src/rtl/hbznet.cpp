@@ -647,7 +647,7 @@ HB_FUNC( HB_SOCKETNEWZNET )
       if( HB_ISHASH(2) ) {
          pSock = hb_sockexNew(sd, s_sockFilter.pszName, hb_param(2, Harbour::Item::ANY));
       } else {
-         const char * keydata = hb_parc(2);
+         auto keydata = hb_parc(2);
          int keylen = static_cast<int>(hb_parclen(2)),
              level = hb_parnidef(3, HB_ZLIB_COMPRESSION_DEFAULT),
              strategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);

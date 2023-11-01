@@ -102,7 +102,8 @@ HB_FUNC( HB_FCOPY )
 {
    HB_ERRCODE errCode = 2; /* file not found */
    bool fResult = false;
-   const char * pszSource = hb_parc(1), * pszDest = hb_parc(2);
+   auto pszSource = hb_parc(1);
+   auto pszDest = hb_parc(2);
 
    if( pszSource && pszDest ) {
       fResult = hb_fsCopy(pszSource, pszDest);
