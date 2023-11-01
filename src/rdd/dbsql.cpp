@@ -354,9 +354,9 @@ HB_FUNC( __DBSQL )
       HB_BOOL fAppend         = hb_parl(10);
       HB_BOOL fInsert         = hb_parl(11);
       HB_BOOL fRecno          = hb_parl(12);
-      const char * szSep      = hb_parcx(13);
-      const char * szDelim    = hb_parcx(14);
-      const char * szEsc      = hb_parcx(15);
+      auto szSep              = hb_parcx(13);
+      auto szDelim            = hb_parcx(14);
+      auto szEsc              = hb_parcx(15);
       HB_MAXINT llNext        = HB_VMLONG_MAX;
       HB_ERRCODE errCode;
       PHB_FILE pFile;
