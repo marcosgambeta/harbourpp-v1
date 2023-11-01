@@ -1799,7 +1799,7 @@ HB_FUNC( __DBGDELBREAK )
 HB_FUNC( __DBGISBREAK )
 {
    void * ptr = hb_parptr(1);
-   const char * szModule = hb_parc(2);
+   auto szModule = hb_parc(2);
 
    if( ptr && szModule ) {
       hb_retni(hb_dbgIsBreakPoint(static_cast<HB_DEBUGINFO*>(ptr), hb_dbgStripModuleName(szModule), hb_parni(3)));
@@ -1879,7 +1879,8 @@ HB_FUNC( __DBGMODULEMATCH )
    void * ptr = hb_parptr(1);
 
    if( ptr ) {
-      const char * szModule1 = hb_parc(2), * szModule2 = hb_parc(3);
+      auto szModule1 = hb_parc(2);
+      auto szModule2 = hb_parc(3);
 
       hb_retl(szModule1 && szModule2 && FILENAME_EQUAL(hb_dbgStripModuleName(szModule1), hb_dbgStripModuleName(szModule2)));
    }
