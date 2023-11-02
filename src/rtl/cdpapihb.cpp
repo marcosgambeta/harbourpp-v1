@@ -437,7 +437,7 @@ HB_FUNC( HB_UTF8POKE )
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      const char * szString = hb_itemGetCPtr(pText);
+      auto szString = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText), nPos;
 
       nPos = utf8pos(szString, nLen, hb_parns(2));

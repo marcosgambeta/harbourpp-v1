@@ -56,7 +56,7 @@ HB_FUNC( HB_STRSHRINK )
       HB_ISIZ nShrinkBy = hb_parnldef(2, 1);
 
       if( nShrinkBy > 0 ) {
-         const char * pszText = hb_itemGetCPtr(pText);
+         auto pszText = hb_itemGetCPtr(pText);
          HB_ISIZ nText = hb_itemGetCLen(pText);
          HB_ISIZ nLen;
          PHB_CODEPAGE cdp = hb_vmCDP();

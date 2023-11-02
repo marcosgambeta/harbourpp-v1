@@ -100,7 +100,7 @@ static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
 
       if( pFile != nullptr ) {
          HB_SIZE nSize = hb_itemGetCLen(pString);
-         const char * pData = hb_itemGetCPtr(pString);
+         auto pData = hb_itemGetCPtr(pString);
 
          while( nSize > 0 ) {
             HB_SIZE nWritten = hb_fileWrite(pFile, pData, nSize, 0);

@@ -53,7 +53,7 @@ HB_FUNC( HB_ASCIIUPPER )
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
-      const char * pszText = hb_itemGetCPtr(pText);
+      auto pszText = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText);
 
       for( HB_SIZE u = 0; u < nLen; u++ ) {
@@ -78,7 +78,7 @@ HB_FUNC( HB_ASCIILOWER )
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
-      const char * pszText = hb_itemGetCPtr(pText);
+      auto pszText = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText);
 
       for( HB_SIZE u = 0; u < nLen; u++ ) {

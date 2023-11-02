@@ -91,12 +91,12 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
 {
    BUFFERTYPE  buffer;
    PHB_ITEM    pItem;
-   const char  *pFmt, *pFmtEnd, *pFmtSave;
+   const char  *pFmtEnd, *pFmtSave;
    int         i, iParam, iParamNo, iWidth, iDec;
    HB_SIZE     nSize;
    HB_BOOL     fLeftAlign, fForceSign, fPadZero, fSpaceSign, fSign;
 
-   pFmt = hb_itemGetCPtr(pItemFormat);
+   auto pFmt = hb_itemGetCPtr(pItemFormat);
    nSize = hb_itemGetCLen(pItemFormat);
    pFmtEnd = pFmt + nSize;
 
@@ -425,7 +425,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
          }
 
          case 's': {
-            const char * pStr = hb_itemGetCPtr(pItem);
+            auto pStr = hb_itemGetCPtr(pItem);
 
             nSize = hb_itemGetCLen(pItem);
             if( iDec >= 0 ) {

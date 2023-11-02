@@ -86,7 +86,7 @@ HB_FUNC( HB_STRCDECODE )
       HB_SIZE nLen = hb_itemGetCLen(pText);
       HB_BOOL fCont = hb_parl(2);
       if( nLen > 0 ) {
-         const char * pszSrc = hb_itemGetCPtr(pText);
+         auto pszSrc = hb_itemGetCPtr(pText);
          char * pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
          HB_SIZE nDst = 0, n;
 

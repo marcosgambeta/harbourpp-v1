@@ -62,7 +62,7 @@ HB_FUNC( REPLICATE )
          if( nTimes == 1 ) {
             hb_itemReturn(pItem);
          } else if( static_cast<double>(nLen) * nTimes < HB_SIZE_MAX ) {
-            const char * szText = hb_itemGetCPtr(pItem);
+            auto szText = hb_itemGetCPtr(pItem);
             HB_SIZE nSize = nLen * nTimes;
             char * szResult, * szPtr;
 

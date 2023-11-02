@@ -61,7 +61,7 @@ HB_FUNC( SOUNDEX )
    szResult[SOUNDEX_LEN_MAX] = '\0';
 
    if( pString ) {
-      const char * pszString = hb_itemGetCPtr(pString);
+      auto pszString = hb_itemGetCPtr(pString);
       HB_SIZE nLen = hb_itemGetCLen(pString);
       HB_SIZE nPos = 0;
       HB_SIZE nResultPos = 0;

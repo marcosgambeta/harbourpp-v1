@@ -73,9 +73,9 @@ HB_FUNC( STRTRAN )
          if( nSeek && nSeek <= nText && nStart > 0 ) {
             auto pReplace = hb_param(3, Harbour::Item::STRING);
             HB_SIZE nReplace = hb_itemGetCLen(pReplace);
-            const char * szReplace = hb_itemGetCPtr(pReplace);
-            const char * szText = hb_itemGetCPtr(pText);
-            const char * szSeek = hb_itemGetCPtr(pSeek);
+            auto szReplace = hb_itemGetCPtr(pReplace);
+            auto szText = hb_itemGetCPtr(pText);
+            auto szSeek = hb_itemGetCPtr(pSeek);
             HB_SIZE nFound = 0;
             HB_SIZE nReplaced = 0;
             HB_SIZE nT = 0;

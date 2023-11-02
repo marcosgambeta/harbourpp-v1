@@ -59,7 +59,7 @@ HB_FUNC( SUBSTR )
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      const char * pszText = hb_itemGetCPtr(pText);
+      auto pszText = hb_itemGetCPtr(pText);
       HB_ISIZ nSize = hb_itemGetCLen(pText);
       HB_ISIZ nFrom = hb_parns(2);
       HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);

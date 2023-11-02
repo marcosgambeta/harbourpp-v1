@@ -143,7 +143,7 @@ HB_FUNC( HB_UPEEK )
 
    if( pText && HB_ISNUM(2) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      const char * szText = hb_itemGetCPtr(pText);
+      auto szText = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText);
       HB_SIZE nPos = hb_parns(2);
       HB_WCHAR wc = 0;
@@ -186,7 +186,7 @@ HB_FUNC( HB_UPOKE )
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      const char * szText = hb_itemGetCPtr(pText);
+      auto szText = hb_itemGetCPtr(pText);
       HB_SIZE nLen = hb_itemGetCLen(pText);
       HB_SIZE nPos = hb_parns(2);
 
@@ -248,7 +248,7 @@ HB_FUNC( HB_USUBSTR )
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      const char * pszText = hb_itemGetCPtr(pText);
+      auto pszText = hb_itemGetCPtr(pText);
       HB_ISIZ nSize = hb_itemGetCLen(pText);
       HB_ISIZ nFrom = hb_parns(2);
       HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
@@ -293,7 +293,7 @@ HB_FUNC( HB_BSUBSTR )
    int iPCount = hb_pcount();
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
-      const char * pszText = hb_itemGetCPtr(pText);
+      auto pszText = hb_itemGetCPtr(pText);
       HB_ISIZ nSize = hb_itemGetCLen(pText);
       HB_ISIZ nFrom = hb_parns(2);
       HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
@@ -436,7 +436,7 @@ HB_FUNC( HB_UAT )
 
    if( pText && pSub ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      const char * pszText = hb_itemGetCPtr(pText);
+      auto pszText = hb_itemGetCPtr(pText);
       HB_SIZE nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nFrom, nPos = 0;
@@ -488,7 +488,7 @@ HB_FUNC( HB_BAT )
    auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
-      const char * pszText = hb_itemGetCPtr(pText);
+      auto pszText = hb_itemGetCPtr(pText);
       HB_SIZE nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nFrom, nPos = 0;

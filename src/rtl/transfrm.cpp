@@ -81,7 +81,7 @@ HB_FUNC( TRANSFORM )
    } else if( pPic && hb_itemGetCLen(pPic) > 0 ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
       char szPicDate[11];
-      const char * szPic = hb_itemGetCPtr(pPic);
+      auto szPic = hb_itemGetCPtr(pPic);
       HB_SIZE nPicLen = hb_itemGetCLen(pPic);
       HB_SIZE nPicPos = 0;
       HB_USHORT uiPicFlags; /* Function flags */
@@ -184,7 +184,7 @@ HB_FUNC( TRANSFORM )
       /* --- Handle STRING values --- */
 
       if( HB_IS_STRING(pValue) ) {
-         const char * szExp = hb_itemGetCPtr(pValue);
+         auto szExp = hb_itemGetCPtr(pValue);
          HB_SIZE nExpLen = hb_itemGetCLen(pValue);
          HB_SIZE nExpPos = 0;
 

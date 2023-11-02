@@ -474,7 +474,7 @@ static PHB_I18N_TRANS hb_i18n_deserialize( PHB_ITEM pItem )
 
    if( pItem && HB_IS_STRING(pItem) ) {
       HB_SIZE nLen = hb_itemGetCLen(pItem);
-      const char * pBuffer = hb_itemGetCPtr(pItem);
+      auto pBuffer = hb_itemGetCPtr(pItem);
       if( nLen > HB_I18N_HEADER_SIZE && hb_i18n_headercheck(pBuffer, nLen) ) {
          pBuffer += HB_I18N_HEADER_SIZE;
          nLen -= HB_I18N_HEADER_SIZE;

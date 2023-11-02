@@ -54,7 +54,7 @@ static void hb_val(HB_BOOL fExt)
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
-      const char * szText = hb_itemGetCPtr(pText);
+      auto szText = hb_itemGetCPtr(pText);
       int iLen = static_cast<int>(hb_itemGetCLen(pText));
       HB_MAXINT lValue;
       double dValue;

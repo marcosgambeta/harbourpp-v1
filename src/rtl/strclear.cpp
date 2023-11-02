@@ -56,7 +56,7 @@ HB_FUNC( HB_STRCLEAR )
    hb_retl(false);
 
    if( pItem && HB_ISBYREF(1) ) {
-      const char * pszPtr = hb_itemGetCPtr(pItem);
+      auto pszPtr = hb_itemGetCPtr(pItem);
       char * pBuffer;
       HB_SIZE nSize;
       if( hb_itemGetWriteCL(pItem, &pBuffer, &nSize) ) {

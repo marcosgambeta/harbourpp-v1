@@ -129,13 +129,12 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
       HB_SIZE nSize = hb_itemGetCLen(pData);
 
       if( nSize >= 8 && (nSize & 0x07) == 0 ) {
-         const char * pszSource;
          char * pszData;
          bool fRaw = hb_parl(3);
          HB_SIZE nLen;
 
          pszData = static_cast<char*>(hb_xgrab(nSize + ( fRaw ? 1 : 0 )));
-         pszSource = hb_itemGetCPtr(pData);
+         auto pszSource = hb_itemGetCPtr(pData);
          for( nLen = 0; nLen < nSize; nLen += 8 ) {
             HB_U32 xl, xr;
             xl = HB_GET_BE_UINT32(&pszSource[nLen]);
@@ -200,7 +199,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
       HB_SIZE nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
-         const char * pszSource = hb_itemGetCPtr(pData);
+         auto pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
@@ -234,7 +233,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
       HB_SIZE nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
-         const char * pszSource = hb_itemGetCPtr(pData);
+         auto pszSource = hb_itemGetCPtr(pData);
          char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
