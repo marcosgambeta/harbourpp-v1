@@ -1156,7 +1156,7 @@ HB_FUNC( __MVGET )
       PHB_DYNS pDynVar = hb_memvarFindSymbol(pName->item.asString.value, pName->item.asString.length);
 
       if( pDynVar ) {
-         PHB_ITEM pValue = hb_stackAllocItem();
+         auto pValue = hb_stackAllocItem();
          hb_memvarGetValue(pValue, pDynVar->pSymbol);
          hb_itemReturnForward(pValue);
          hb_stackDec();
@@ -1169,7 +1169,7 @@ HB_FUNC( __MVGET )
          while( hb_errLaunch(pError) == E_RETRY ) {
             pDynVar = hb_memvarFindSymbol(hb_itemGetCPtr(pName), hb_itemGetCLen(pName));
             if( pDynVar ) {
-               PHB_ITEM pValue = hb_stackAllocItem();
+               auto pValue = hb_stackAllocItem();
                hb_memvarGetValue(pValue, pDynVar->pSymbol);
                hb_itemReturnForward(pValue);
                hb_stackDec();

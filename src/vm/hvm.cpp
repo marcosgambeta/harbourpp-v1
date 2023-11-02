@@ -1429,7 +1429,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_PLUSEQ: {
             PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-            PHB_ITEM pValue = hb_stackItemFromTop(-1);
+            auto pValue = hb_stackItemFromTop(-1);
             hb_vmPlus(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
             hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -1455,7 +1455,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_MINUSEQ: {
             PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-            PHB_ITEM pValue = hb_stackItemFromTop(-1);
+            auto pValue = hb_stackItemFromTop(-1);
             hb_vmMinus(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
             hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -1481,7 +1481,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_MULTEQ: {
             PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-            PHB_ITEM pValue = hb_stackItemFromTop(-1);
+            auto pValue = hb_stackItemFromTop(-1);
             hb_vmMult(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
             hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -1507,7 +1507,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_DIVEQ: {
             PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-            PHB_ITEM pValue = hb_stackItemFromTop(-1);
+            auto pValue = hb_stackItemFromTop(-1);
             hb_vmDivide(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
             hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -1533,7 +1533,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_MODEQ: {
             PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-            PHB_ITEM pValue = hb_stackItemFromTop(-1);
+            auto pValue = hb_stackItemFromTop(-1);
             hb_vmModulus(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
             hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -1559,7 +1559,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_EXPEQ: {
             PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-            PHB_ITEM pValue = hb_stackItemFromTop(-1);
+            auto pValue = hb_stackItemFromTop(-1);
             hb_vmPower(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
             hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -1583,10 +1583,10 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_INCEQ: {
-            PHB_ITEM pResult = hb_stackItemFromTop(-1);
+            auto pResult = hb_stackItemFromTop(-1);
             PHB_ITEM pValue = hb_itemUnRef(pResult);
             hb_vmInc(pValue);
-            PHB_ITEM pTemp = hb_stackAllocItem();
+            auto pTemp = hb_stackAllocItem();
             hb_itemCopy(pTemp, pValue);
             hb_itemMove(pResult, pTemp);
             hb_stackDec();
@@ -1606,10 +1606,10 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_DECEQ: {
-            PHB_ITEM pResult = hb_stackItemFromTop(-1);
+            auto pResult = hb_stackItemFromTop(-1);
             PHB_ITEM pValue = hb_itemUnRef(pResult);
             hb_vmDec(pValue);
-            PHB_ITEM pTemp = hb_stackAllocItem();
+            auto pTemp = hb_stackAllocItem();
             hb_itemCopy(pTemp, pValue);
             hb_itemMove(pResult, pTemp);
             hb_stackDec();
@@ -1956,7 +1956,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             /*
              * 2) recover data
              */
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             /* mark type as NIL - it's not real item */
             pItem->type = Harbour::Item::RECOVER;
             /* store the address of RECOVER or END opcode */
@@ -2051,7 +2051,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             /*
              * 2) recover data
              */
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             /* mark type as NIL - it's not real item */
             pItem->type = Harbour::Item::RECOVER;
             /* store the address of RECOVER or END opcode */
@@ -2191,7 +2191,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          /* Push */
 
          case HB_P_TRUE: {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::LOGICAL;
             pItem->item.asLogical.value = true;
             pCode++;
@@ -2199,7 +2199,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_FALSE: {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::LOGICAL;
             pItem->item.asLogical.value = false;
             pCode++;
@@ -2207,7 +2207,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_ONE: {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::INTEGER;
             pItem->item.asInteger.value = 1;
             pItem->item.asInteger.length = 10;
@@ -2219,7 +2219,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_ZERO: {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::INTEGER;
             pItem->item.asInteger.value = 0;
             pItem->item.asInteger.length = 10;
@@ -2239,7 +2239,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_PUSHBYTE: {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::INTEGER;
             pItem->item.asInteger.value = static_cast<signed char>(pCode[1]);
             pItem->item.asInteger.length = 10;
@@ -2251,7 +2251,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_PUSHINT: {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::INTEGER;
             pItem->item.asInteger.value = HB_PCODE_MKSHORT(&pCode[1]);
             pItem->item.asInteger.length = 10;
@@ -2336,7 +2336,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHDATE)"));
 #endif
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::DATE;
             pItem->item.asDateTime.julian = static_cast<long>(HB_PCODE_MKLONG(&pCode[1]));
             pItem->item.asDateTime.time = 0;
@@ -2348,7 +2348,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHTIMESTAMP)"));
 #endif
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             pItem->type = Harbour::Item::TIMESTAMP;
             pItem->item.asDateTime.julian = static_cast<long>(HB_PCODE_MKLONG(&pCode[1]));
             pItem->item.asDateTime.time = static_cast<long>(HB_PCODE_MKLONG(&pCode[5]));
@@ -2694,7 +2694,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_MACROPUSHREF: {
-            PHB_ITEM pMacro = hb_stackItemFromTop(-1);
+            auto pMacro = hb_stackItemFromTop(-1);
             hb_macroPushReference(pMacro);
             pCode++;
             break;
@@ -3134,7 +3134,7 @@ static void hb_vmNegate(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
 
    if( HB_IS_INTEGER(pItem) ) {
 #if -HB_VMINT_MAX > HB_VMINT_MIN
@@ -3668,7 +3668,7 @@ static void hb_vmFuncPtr(void)  /* pushes a function address pointer. Removes th
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
 
    if( HB_IS_SYMBOL(pItem) ) {
       /* do nothing - now we are using Harbour::Item::SYMBOL */
@@ -3693,8 +3693,8 @@ static void hb_vmExactlyEqual(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_NIL(pItem1) ) {
       /* pItem1 is NIL so this is safe */
@@ -3784,8 +3784,8 @@ static void hb_vmEqual(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_NIL(pItem1) ) {
       /* pItem1 is NIL so this is safe */
@@ -3861,8 +3861,8 @@ static void hb_vmNotEqual(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_NIL(pItem1) ) {
       /* pItem1 is NIL so this is safe */
@@ -3939,8 +3939,8 @@ static void hb_vmLess(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) ) {
       int i = hb_itemStrCmp(pItem1, pItem2, false);
@@ -3990,8 +3990,8 @@ static void hb_vmLessEqual(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) ) {
       int i = hb_itemStrCmp(pItem1, pItem2, false);
@@ -4041,8 +4041,8 @@ static void hb_vmGreater(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) ) {
       int i = hb_itemStrCmp(pItem1, pItem2, false);
@@ -4092,8 +4092,8 @@ static void hb_vmGreaterEqual(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) ) {
       int i = hb_itemStrCmp(pItem1, pItem2, false);
@@ -4143,8 +4143,8 @@ static void hb_vmInstring(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
 
    if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) ) {
       bool fResult = (hb_strAt(pItem1->item.asString.value, pItem1->item.asString.length, pItem2->item.asString.value, pItem2->item.asString.length) != 0);
@@ -4187,7 +4187,7 @@ static void hb_vmForTest(void)        /* Test to check the end point of the FOR 
    HB_STACK_TLS_PRELOAD
    bool fBack;
 
-   PHB_ITEM pStep = hb_stackItemFromTop(-1);
+   auto pStep = hb_stackItemFromTop(-1);
    if( HB_IS_NUMERIC(pStep) ) {
       fBack = HB_ITEM_GET_NUMDBLRAW(pStep) < 0.0;
       hb_stackDec();
@@ -4239,7 +4239,7 @@ static void hb_vmSeqBlock(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_BLOCK(pItem) ) {
       PHB_ITEM pBlock = hb_errorBlock();
       PHB_ITEM pBlockCopy = static_cast<PHB_ITEM>(hb_gcAllocRaw(sizeof(HB_ITEM), &s_gcSeqBlockFuncs));
@@ -4273,7 +4273,7 @@ static void hb_vmWithObjectStart(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    HB_ISIZ * pnWithObjectBase = static_cast<HB_ISIZ*>(hb_gcAllocRaw(sizeof(HB_ISIZ), &s_gcWithObjectFuncs));
    *pnWithObjectBase = hb_stackWithObjectOffset();
    pItem->type = Harbour::Item::POINTER;
@@ -4410,11 +4410,11 @@ static void hb_vmEnumStart(int nVars, int nDescend)
    for( int i = static_cast<int>(nVars) << 1; i > 0 && fStart; i -= 2 ) {
       PHB_ITEM pBase;
 
-      PHB_ITEM pValue = hb_stackItemFromTop(-i);
+      auto pValue = hb_stackItemFromTop(-i);
       /* create extended reference for enumerator destructor */
       hb_vmEnumReference(pValue);
       /* store the reference to control variable */
-      PHB_ITEM pEnumRef = hb_stackItemFromTop(-i + 1);
+      auto pEnumRef = hb_stackItemFromTop(-i + 1);
       hb_itemCopy(&(static_cast<PHB_ENUMREF>(pValue->item.asExtRef.value))->enumref, pEnumRef);
       /* the control variable */
       PHB_ITEM pEnum = hb_itemUnRefOnce(pEnumRef);
@@ -4491,7 +4491,7 @@ static void hb_vmEnumNext(void)
    int i;
 
    for( i = static_cast<int>(hb_stackItemFromTop(-1)->item.asInteger.value); i > 0; --i ) {
-      PHB_ITEM pEnumRef = hb_stackItemFromTop(-(i << 1));
+      auto pEnumRef = hb_stackItemFromTop(-(i << 1));
       PHB_ITEM pEnum = hb_itemUnRefOnce(pEnumRef);
       PHB_ITEM pBase = pEnum->item.asEnum.basePtr;
       if( HB_IS_BYREF(pBase) ) {
@@ -4556,7 +4556,7 @@ static void hb_vmEnumPrev(void)
    int i;
 
    for( i = hb_stackItemFromTop(-1)->item.asInteger.value; i > 0; --i ) {
-      PHB_ITEM pEnumRef = hb_stackItemFromTop(-(i << 1));
+      auto pEnumRef = hb_stackItemFromTop(-(i << 1));
       PHB_ITEM pEnum = hb_itemUnRefOnce(pEnumRef);
       PHB_ITEM pBase = pEnum->item.asEnum.basePtr;
       if( HB_IS_BYREF(pBase) ) {
@@ -4631,7 +4631,7 @@ static void hb_vmEnumEnd(void)
 static PHB_ITEM hb_vmSwitchGet(void)
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pSwitch = hb_stackItemFromTop(-1);
+   auto pSwitch = hb_stackItemFromTop(-1);
 
    if( !(HB_IS_NUMINT(pSwitch) || HB_IS_STRING(pSwitch)) ) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 3104, nullptr, "SWITCH", 1, pSwitch);
@@ -4723,7 +4723,7 @@ static void hb_vmNot(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
 
    if( HB_IS_LOGICAL(pItem) ) {
       pItem->type = Harbour::Item::LOGICAL;
@@ -4746,8 +4746,8 @@ static void hb_vmAnd(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) ) {
       pItem1->type = Harbour::Item::LOGICAL;
@@ -4774,8 +4774,8 @@ static void hb_vmOr(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem2 = hb_stackItemFromTop(-1);
-   PHB_ITEM pItem1 = hb_stackItemFromTop(-2);
+   auto pItem2 = hb_stackItemFromTop(-1);
+   auto pItem1 = hb_stackItemFromTop(-2);
 
    if( HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2) ) {
       pItem1->type = Harbour::Item::LOGICAL;
@@ -4807,8 +4807,8 @@ static void hb_vmArrayPush(void)
    HB_STACK_TLS_PRELOAD
    HB_SIZE nIndex;
 
-   PHB_ITEM pIndex = hb_stackItemFromTop(-1);
-   PHB_ITEM pArray = hb_stackItemFromTop(-2);
+   auto pIndex = hb_stackItemFromTop(-1);
+   auto pArray = hb_stackItemFromTop(-2);
 
    if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) ) {
       PHB_ITEM pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
@@ -4877,8 +4877,8 @@ static void hb_vmArrayPushRef(void)
    HB_STACK_TLS_PRELOAD
    HB_SIZE  nIndex;
 
-   PHB_ITEM pIndex = hb_stackItemFromTop(-1);
-   PHB_ITEM pRefer = hb_stackItemFromTop(-2);
+   auto pIndex = hb_stackItemFromTop(-1);
+   auto pRefer = hb_stackItemFromTop(-2);
    PHB_ITEM pArray = HB_IS_BYREF(pRefer) ? hb_itemUnRef(pRefer) : pRefer;
 
    if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) ) {
@@ -4959,9 +4959,9 @@ static void hb_vmArrayPop(void)
    HB_STACK_TLS_PRELOAD
    HB_SIZE  nIndex;
 
-   PHB_ITEM pValue = hb_stackItemFromTop(-3);
-   PHB_ITEM pArray = hb_stackItemFromTop(-2);
-   PHB_ITEM pIndex = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-3);
+   auto pArray = hb_stackItemFromTop(-2);
+   auto pIndex = hb_stackItemFromTop(-1);
 
    if( HB_IS_BYREF(pArray) ) {
       pArray = hb_itemUnRef(pArray);
@@ -5044,13 +5044,13 @@ static void hb_vmArrayGen(HB_SIZE nElements) /* generates an nElements Array and
    HB_STACK_TLS_PRELOAD
 
    /* create new array on HVM stack */
-   PHB_ITEM pArray = hb_stackAllocItem();
+   auto pArray = hb_stackAllocItem();
    hb_arrayNew(pArray, nElements);
 
    if( nElements ) {
       /* move items from HVM stack to created array */
       for( HB_SIZE nPos = 0; nPos < nElements; nPos++ ) {
-         PHB_ITEM pValue = hb_stackItemFromTop(static_cast<int>(nPos - nElements - 1));
+         auto pValue = hb_stackItemFromTop(static_cast<int>(nPos - nElements - 1));
          pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
          hb_itemMove(pArray->item.asArray.value->pItems + nPos, pValue);
       }
@@ -5074,7 +5074,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
    HB_STACK_TLS_PRELOAD
    HB_ISIZ  nElements;
 
-   PHB_ITEM pDim = hb_stackItemFromTop(static_cast<int>(-1 - uiDimension));
+   auto pDim = hb_stackItemFromTop(static_cast<int>(-1 - uiDimension));
 
    /* use the proper type of number of elements */
    if( HB_IS_INTEGER(pDim) ) {
@@ -5144,8 +5144,8 @@ static void hb_vmHashGen(HB_SIZE nElements) /* generates an nElements Hash and f
    nElements <<= 1;
    int iPos = - static_cast<int>(nElements);
    while( iPos ) {
-      PHB_ITEM pKey = hb_stackItemFromTop(iPos++);
-      PHB_ITEM pVal = hb_stackItemFromTop(iPos++);
+      auto pKey = hb_stackItemFromTop(iPos++);
+      auto pVal = hb_stackItemFromTop(iPos++);
       if( HB_IS_HASHKEY(pKey) ) {
          hb_hashAdd(pHash, pKey, pVal);
       } else {
@@ -5186,7 +5186,7 @@ static void hb_vmMacroPushIndex(void)
 
       /* First index is still on stack.*/
       do {
-         PHB_ITEM pArray = hb_stackItemFromTop(-2);
+         auto pArray = hb_stackItemFromTop(-2);
          if( HB_IS_BYREF(pArray) ) {
             hb_vmArrayPushRef();
          } else {
@@ -5223,7 +5223,7 @@ static void hb_vmMacroPushIndex(void)
 static HB_LONG hb_vmArgsJoin(HB_LONG lLevel, HB_USHORT uiArgSets)
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pArgs = hb_stackItemFromTop(lLevel) ;
+   auto pArgs = hb_stackItemFromTop(lLevel) ;
 
    HB_LONG lArgs = hb_itemGetNL(pArgs);
    if( HB_IS_COMPLEX(pArgs) ) {
@@ -5322,7 +5322,7 @@ static void hb_vmPushAParams(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pArray = hb_stackItemFromTop(-1);
+   auto pArray = hb_stackItemFromTop(-1);
    if( HB_IS_ARRAY(pArray) ) {
       HB_SIZE nLen = pArray->item.asArray.value->nLen;
 
@@ -5330,7 +5330,7 @@ static void hb_vmPushAParams(void)
          for( HB_SIZE nPos = 1; nPos < nLen; ++nPos ) {
             hb_vmPush(pArray->item.asArray.value->pItems + nPos);
          }
-         PHB_ITEM pCount = hb_stackAllocItem();
+         auto pCount = hb_stackAllocItem();
          hb_itemCopy(pCount, pArray->item.asArray.value->pItems);
          hb_itemMove(pArray, pCount);
          hb_itemPutNS(pCount, nLen);
@@ -5450,7 +5450,7 @@ static void hb_vmSwapAlias(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    PHB_ITEM pWorkArea = hb_stackItemFromTop(-2);
    hb_vmSelectWorkarea(pWorkArea, nullptr);
    hb_itemMove(pWorkArea, pItem);
@@ -6284,7 +6284,7 @@ void hb_vmPushLogical(HB_BOOL bValue)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::LOGICAL;
    pItem->item.asLogical.value = bValue;
 }
@@ -6332,7 +6332,7 @@ void hb_vmPushInteger(int iNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::INTEGER;
    pItem->item.asInteger.value = iNumber;
    pItem->item.asInteger.length = HB_INT_LENGTH(iNumber);
@@ -6346,7 +6346,7 @@ static void hb_vmPushIntegerConst(int iNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::INTEGER;
    pItem->item.asInteger.value = iNumber;
    pItem->item.asInteger.length = static_cast<HB_USHORT>(hb_vmCalcIntWidth(iNumber));
@@ -6359,7 +6359,7 @@ static void hb_vmPushLongConst(long lNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::LONG;
    pItem->item.asLong.value = static_cast<HB_MAXINT>(lNumber);
    pItem->item.asLong.length = static_cast<HB_USHORT>(hb_vmCalcIntWidth(lNumber));
@@ -6373,7 +6373,7 @@ void hb_vmPushLong(long lNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    HB_ITEM_PUT_LONGRAW(pItem, lNumber);
 }
 
@@ -6397,7 +6397,7 @@ static void hb_vmPushHBLong(HB_MAXINT nNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::LONG;
    pItem->item.asLong.value = nNumber;
    pItem->item.asLong.length = HB_LONG_LENGTH(nNumber);
@@ -6411,7 +6411,7 @@ static void hb_vmPushLongLongConst(HB_LONGLONG llNumber)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::LONG;
    pItem->item.asLong.value = static_cast<HB_MAXINT>(llNumber);
    pItem->item.asLong.length = static_cast<HB_USHORT>(hb_vmCalcIntWidth(llNumber));
@@ -6434,7 +6434,7 @@ void hb_vmPushDouble(double dNumber, int iDec)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::DOUBLE;
    pItem->item.asDouble.value = dNumber;
    pItem->item.asDouble.length = HB_DBL_LENGTH(dNumber);
@@ -6452,7 +6452,7 @@ static void hb_vmPushDoubleConst(double dNumber, int iWidth, int iDec)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::DOUBLE;
    pItem->item.asDouble.value = dNumber;
 
@@ -6476,7 +6476,7 @@ void hb_vmPushDate(long lDate)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::DATE;
    pItem->item.asDateTime.julian = lDate;
    pItem->item.asDateTime.time = 0;
@@ -6489,7 +6489,7 @@ void hb_vmPushTimeStamp(long lJulian, long lMilliSec)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::TIMESTAMP;
    pItem->item.asDateTime.julian = lJulian;
    pItem->item.asDateTime.time = lMilliSec;
@@ -6502,7 +6502,7 @@ void hb_vmPushPointer(void * pPointer)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::POINTER;
    pItem->item.asPointer.value = pPointer;
    pItem->item.asPointer.collect =
@@ -6516,7 +6516,7 @@ void hb_vmPushPointerGC(void * pPointer)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::POINTER;
    pItem->item.asPointer.value = pPointer;
    pItem->item.asPointer.collect = true;
@@ -6541,7 +6541,7 @@ void hb_vmPushStringPcode(const char * szText, HB_SIZE nLength)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::STRING;
    pItem->item.asString.allocated = 0;
    pItem->item.asString.length = nLength;
@@ -6555,7 +6555,7 @@ void hb_vmPushSymbol(PHB_SYMB pSym)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::SYMBOL;
    pItem->item.asSymbol.value = pSym;
    pItem->item.asSymbol.stackstate = nullptr;
@@ -6568,7 +6568,7 @@ void hb_vmPushDynSym(PHB_DYNS pDynSym)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::SYMBOL;
    pItem->item.asSymbol.value = pDynSym->pSymbol;
    pItem->item.asSymbol.stackstate = nullptr;
@@ -6581,7 +6581,7 @@ void hb_vmPushEvalSym(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::SYMBOL;
    pItem->item.asSymbol.value = &hb_symEval;
    pItem->item.asSymbol.stackstate = nullptr;
@@ -6608,7 +6608,7 @@ static void hb_vmPushBlock(const HB_BYTE * pCode, PHB_SYMB pSymbols, HB_SIZE nLe
       nLen -= uiLocals << 1;
    }
 
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
 
    pItem->item.asBlock.value =
       hb_codeblockNew(pCode + 4 + (uiLocals << 1),   /* pcode buffer         */
@@ -6641,7 +6641,7 @@ static void hb_vmPushBlockShort(const HB_BYTE * pCode, PHB_SYMB pSymbols, HB_SIZ
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
 
    pItem->item.asBlock.value =
       hb_codeblockNew(pCode,                       /* pcode buffer         */
@@ -6676,7 +6676,7 @@ static void hb_vmPushMacroBlock(const HB_BYTE * pCode, HB_SIZE nSize, HB_USHORT 
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->item.asBlock.value = hb_codeblockMacroNew(pCode, nSize);
    pItem->type = Harbour::Item::BLOCK;
    /* store the number of expected parameters
@@ -6698,7 +6698,7 @@ static void hb_vmPushAlias(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::INTEGER;
    pItem->item.asInteger.value = hb_rddGetCurrentWorkAreaNumber();
    pItem->item.asInteger.length = 10;
@@ -6716,7 +6716,7 @@ static void hb_vmPushAliasedField(PHB_SYMB pSym)
 
    HB_STACK_TLS_PRELOAD
    int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
-   PHB_ITEM pAlias = hb_stackItemFromTop(-1);
+   auto pAlias = hb_stackItemFromTop(-1);
 
    /*
     * NOTE: hb_vmSelectWorkarea() clears passed item
@@ -6741,7 +6741,7 @@ static void hb_vmPushAliasedVar(PHB_SYMB pSym)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pAlias = hb_stackItemFromTop(-1);
+   auto pAlias = hb_stackItemFromTop(-1);
 
    if( HB_IS_STRING(pAlias) ) {
       const char * szAlias = pAlias->item.asString.value;
@@ -6796,7 +6796,7 @@ static void hb_vmPushLocalByRef(int iLocal)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pTop = hb_stackAllocItem();
+   auto pTop = hb_stackAllocItem();
    /* we store its stack offset instead of a pointer to support a dynamic stack */
    if( iLocal >= 0 ) {
       PHB_ITEM pLocal = hb_stackLocalVariableAt(&iLocal);
@@ -6836,7 +6836,7 @@ static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pTop = hb_stackAllocItem();
+   auto pTop = hb_stackAllocItem();
    PHB_ITEM pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
 
    if( HB_IS_BYREF(pBase->item.asArray.value->pItems + uiStatic - 1) && !HB_IS_ENUM(pBase->item.asArray.value->pItems + uiStatic - 1) ) {
@@ -6859,7 +6859,7 @@ static void hb_vmPushVariable(PHB_SYMB pVarSymb)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
 
    /* First try if passed symbol is a name of field
     * in a current workarea - if it is not a field (Harbour::FAILURE)
@@ -6887,7 +6887,7 @@ static void hb_vmDuplicate(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    hb_itemCopy(hb_stackAllocItem(), pItem);
 }
 
@@ -6898,7 +6898,7 @@ static void hb_vmDuplUnRef(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    hb_itemCopy(hb_stackAllocItem(), pItem);
    if( HB_IS_BYREF(pItem) ) {
       hb_itemCopy(pItem, hb_itemUnRef(pItem));
@@ -6912,7 +6912,7 @@ static void hb_vmPushUnRef(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    hb_itemCopy(hb_stackAllocItem(), HB_IS_BYREF(pItem) ? hb_itemUnRef(pItem) : pItem);
 }
 
@@ -7000,7 +7000,7 @@ static void hb_vmPopAliasedVar(PHB_SYMB pSym)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pAlias = hb_stackItemFromTop(-1);
+   auto pAlias = hb_stackItemFromTop(-1);
 
    /*
     * "M", "MEMV" - "MEMVAR" and "FIEL" - "FIELD" are reserved aliases
@@ -7040,7 +7040,7 @@ static void hb_vmPopLocal(int iLocal)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pVal = hb_stackItemFromTop(-1);
+   auto pVal = hb_stackItemFromTop(-1);
 
    /* Remove MEMOFLAG if exists (assignment from field). */
    pVal->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
@@ -7068,7 +7068,7 @@ static void hb_vmPopStatic(HB_USHORT uiStatic)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pVal = hb_stackItemFromTop(-1);
+   auto pVal = hb_stackItemFromTop(-1);
    /* Remove MEMOFLAG if exists (assignment from field). */
    pVal->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
    PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->item.asArray.value->pItems + uiStatic - 1;
@@ -7926,7 +7926,7 @@ void hb_vmPushItemRef(PHB_ITEM pItem)
    pItmRef->memvar.type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
    pItmRef->memvar.item.asMemvar.value = pItmRef->value;
 
-   PHB_ITEM pRefer = hb_stackAllocItem();
+   auto pRefer = hb_stackAllocItem();
    pRefer->type = Harbour::Item::BYREF | Harbour::Item::EXTREF;
    pRefer->item.asExtRef.value = static_cast<void*>(pItmRef);
    pRefer->item.asExtRef.func = &s_ItmExtRef;
@@ -8396,7 +8396,7 @@ HB_BOOL hb_vmRequestReenter(void)
 
       hb_stackPushReturn();
 
-      PHB_ITEM pItem = hb_stackAllocItem();
+      auto pItem = hb_stackAllocItem();
       pItem->type = Harbour::Item::RECOVER;
       pItem->item.asRecover.recover = nullptr;
       pItem->item.asRecover.base    = iLocks;
@@ -8417,7 +8417,7 @@ void hb_vmRequestRestore(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( pItem->type != Harbour::Item::RECOVER ) {
       hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmRequestRestore", nullptr, nullptr);
    }
@@ -8497,7 +8497,7 @@ HB_BOOL hb_vmRequestReenterExt(void)
 #else
       hb_stackPushReturn();
 #endif
-      PHB_ITEM pItem = hb_stackAllocItem();
+      auto pItem = hb_stackAllocItem();
       pItem->type = Harbour::Item::RECOVER;
       pItem->item.asRecover.recover = nullptr;
       pItem->item.asRecover.base    = iLocks;
@@ -8700,7 +8700,7 @@ void hb_xvmSeqBegin(void)
    /* 1) clear the storage for value returned by BREAK statement */
    hb_stackAllocItem()->type = Harbour::Item::NIL;
    /* 2) recovery state */
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    /* mark type as NIL - it's not real item */
    pItem->type = Harbour::Item::RECOVER;
    /* address of RECOVER or END opcode - not used in C code */
@@ -8837,7 +8837,7 @@ void hb_xvmSeqAlways(void)
    /* 1) clear the storage for RETURN value */
    hb_stackAllocItem()->type = Harbour::Item::NIL;
    /* 2) recovery state */
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    /* mark type as NIL - it's not real item */
    pItem->type = Harbour::Item::RECOVER;
    /* address of RECOVER or END opcode - not used in C code */
@@ -9283,7 +9283,7 @@ void hb_xvmPushFuncSymbol(PHB_SYMB pSym)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::SYMBOL;
    pItem->item.asSymbol.value = pSym;
    pItem->item.asSymbol.stackstate = nullptr;
@@ -9590,8 +9590,8 @@ HB_BOOL hb_xvmMemvarAdd(PHB_SYMB pSymbol)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pVal1 = hb_stackItemFromTop(-2);
-   PHB_ITEM pVal2 = hb_stackItemFromTop(-1);
+   auto pVal1 = hb_stackItemFromTop(-2);
+   auto pVal2 = hb_stackItemFromTop(-1);
    if( HB_IS_STRING(pVal1) && HB_IS_STRING(pVal2) ) {
       PHB_ITEM pMemVar = hb_memvarGetItem(pSymbol);
       if( pMemVar ) {
@@ -9738,7 +9738,7 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
       pItem->type = Harbour::Item::LOGICAL;
@@ -9781,7 +9781,7 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL * pfValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
       hb_stackDec();
@@ -9837,7 +9837,7 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
       pItem->type = Harbour::Item::LOGICAL;
@@ -9880,7 +9880,7 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL * pfValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
       hb_stackDec();
@@ -9936,7 +9936,7 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
       pItem->type = Harbour::Item::LOGICAL;
@@ -9976,7 +9976,7 @@ HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL * pfValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
       hb_stackDec();
@@ -10029,7 +10029,7 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
       pItem->type = Harbour::Item::LOGICAL;
@@ -10069,7 +10069,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL * pfValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
       hb_stackDec();
@@ -10122,7 +10122,7 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
       pItem->type = Harbour::Item::LOGICAL;
@@ -10162,7 +10162,7 @@ HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL * pfValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
       hb_stackDec();
@@ -10215,7 +10215,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
       pItem->type = Harbour::Item::LOGICAL;
@@ -10255,7 +10255,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL * pfValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_stackItemFromTop(-1);
+   auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_INTEGER(pItem) ) {
       *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
       hb_stackDec();
@@ -10331,7 +10331,7 @@ HB_BOOL hb_xvmPlusEq(void)
 
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    hb_vmPlus(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
    hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -10373,7 +10373,7 @@ HB_BOOL hb_xvmMinusEq(void)
 
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    hb_vmMinus(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
    hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -10403,7 +10403,7 @@ HB_BOOL hb_xvmMultByInt(HB_LONG lValue)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    if( HB_IS_NUMERIC(pValue) ) {
       int iDec;
       double dValue = hb_itemGetNDDec(pValue, &iDec);
@@ -10445,7 +10445,7 @@ HB_BOOL hb_xvmMultEq(void)
 
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    hb_vmMult(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
    hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -10475,7 +10475,7 @@ HB_BOOL hb_xvmDivideByInt(HB_LONG lDivisor)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    if( HB_IS_NUMERIC(pValue) ) {
       if( lDivisor == 0 ) {
          hb_vmPushLong(lDivisor);
@@ -10513,7 +10513,7 @@ HB_BOOL hb_xvmModulusByInt(HB_LONG lDivisor)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    if( HB_IS_NUMERIC(pValue) ) {
       if( lDivisor == 0 ) {
          hb_vmPushLong(lDivisor);
@@ -10565,7 +10565,7 @@ HB_BOOL hb_xvmDivEq(void)
 
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    hb_vmDivide(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
    hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -10607,7 +10607,7 @@ HB_BOOL hb_xvmModEq(void)
 
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    hb_vmModulus(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
    hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -10649,7 +10649,7 @@ HB_BOOL hb_xvmExpEq(void)
 
    HB_STACK_TLS_PRELOAD
    PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
-   PHB_ITEM pValue = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-1);
    hb_vmPower(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
    hb_itemMove(hb_stackItemFromTop(-2), pValue);
@@ -10689,10 +10689,10 @@ HB_BOOL hb_xvmIncEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_stackItemFromTop(-1);
+   auto pResult = hb_stackItemFromTop(-1);
    PHB_ITEM pValue = hb_itemUnRef(pResult);
    hb_vmInc(pValue);
-   PHB_ITEM pTemp = hb_stackAllocItem();
+   auto pTemp = hb_stackAllocItem();
    hb_itemCopy(pTemp, pValue);
    hb_itemMove(pResult, pTemp);
    hb_stackDec();
@@ -10729,10 +10729,10 @@ HB_BOOL hb_xvmDecEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_stackItemFromTop(-1);
+   auto pResult = hb_stackItemFromTop(-1);
    PHB_ITEM pValue = hb_itemUnRef(pResult);
    hb_vmDec(pValue);
-   PHB_ITEM pTemp = hb_stackAllocItem();
+   auto pTemp = hb_stackAllocItem();
    hb_itemCopy(pTemp, pValue);
    hb_itemMove(pResult, pTemp);
    hb_stackDec();
@@ -10786,7 +10786,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pArray = hb_stackItemFromTop(-1);
+   auto pArray = hb_stackItemFromTop(-1);
 
    if( HB_IS_ARRAY(pArray) ) {
       if( HB_IS_OBJECT(pArray) && hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX) ) {
@@ -10797,7 +10797,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
       }
 
       if( HB_IS_VALID_INDEX(nIndex, pArray->item.asArray.value->nLen) ) {
-         PHB_ITEM pItem = hb_stackAllocItem();
+         auto pItem = hb_stackAllocItem();
          hb_itemCopy(pItem, pArray->item.asArray.value->pItems + nIndex - 1);
          hb_itemMove(pArray, pItem);
          hb_stackDec();
@@ -10815,7 +10815,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
       }
    } else if( HB_IS_HASH(pArray) ) {
       hb_vmPushNumInt(nIndex);
-      PHB_ITEM pIndex = hb_stackItemFromTop(-1);
+      auto pIndex = hb_stackItemFromTop(-1);
       PHB_ITEM pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
 
       if( pValue ) {
@@ -10845,8 +10845,8 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pValue = hb_stackItemFromTop(-2);
-   PHB_ITEM pArray = hb_stackItemFromTop(-1);
+   auto pValue = hb_stackItemFromTop(-2);
+   auto pArray = hb_stackItemFromTop(-1);
 
    if( HB_IS_BYREF(pArray) ) {
       pArray = hb_itemUnRef(pArray);
@@ -11439,7 +11439,7 @@ HB_FUNC( __DBGVMVARGLIST )
 #if 0
       PHB_ITEM pGlobals = hb_itemClone(&s_aGlobals);
 #else
-      PHB_ITEM pGlobals = hb_itemArrayNew(0);
+      auto pGlobals = hb_itemArrayNew(0);
 #endif
       hb_itemReturnRelease(pGlobals);
    } else {

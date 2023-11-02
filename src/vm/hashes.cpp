@@ -1054,7 +1054,7 @@ PHB_ITEM hb_hashGetKeys(PHB_ITEM pHash)
 #endif
 
    if( HB_IS_HASH(pHash) ) {
-      PHB_ITEM pKeys = hb_itemArrayNew(hb_hashLen(pHash)), pKey;
+      auto pKeys = hb_itemArrayNew(hb_hashLen(pHash)), pKey;
       HB_SIZE nPos = 0;
 
       while( (pKey = hb_hashGetKeyAt(pHash, ++nPos)) != nullptr ) {
@@ -1077,7 +1077,7 @@ PHB_ITEM hb_hashGetValues(PHB_ITEM pHash)
 #endif
 
    if( HB_IS_HASH(pHash) ) {
-      PHB_ITEM pValues = hb_itemArrayNew(hb_hashLen(pHash)), pVal;
+      auto pValues = hb_itemArrayNew(hb_hashLen(pHash)), pVal;
       HB_SIZE nPos = 0;
 
       while( (pVal = hb_hashGetValueAt(pHash, ++nPos)) != nullptr ) {

@@ -2020,7 +2020,7 @@ static void hb_thredMutexEventInit(PHB_MUTEX pMutex)
 {
    HB_CRITICAL_UNLOCK(pMutex->mutex);
    hb_vmLock();
-   PHB_ITEM pEvents = hb_itemArrayNew(0);
+   auto pEvents = hb_itemArrayNew(0);
    hb_vmUnlock();
    HB_CRITICAL_LOCK(pMutex->mutex);
    if( pMutex->events == nullptr ) {

@@ -687,7 +687,7 @@ HB_FUNC( HB_ACMDLINE )
 {
    if( s_argc > 1 ) {
       int iLen = s_argc - 1;
-      PHB_ITEM pArray = hb_itemArrayNew(iLen);
+      auto pArray = hb_itemArrayNew(iLen);
 
       for( int iPos = 1; iPos <= iLen; ++iPos ) {
          hb_arraySetCPtr(pArray, iPos, hb_cmdargDup(iPos));

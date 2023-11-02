@@ -4109,7 +4109,7 @@ HB_FUNC_STATIC( msgClassSel )
       HB_USHORT nParam = static_cast<HB_USHORT>(hb_parnidef(1, HB_MSGLISTALL));
       HB_USHORT nScope = static_cast<HB_USHORT>(hb_parni(2));
       bool lFull = hb_parl(3);
-      PHB_ITEM pReturn = hb_itemArrayNew(pClass->uiMethods);
+      auto pReturn = hb_itemArrayNew(pClass->uiMethods);
 
       do {
          if( pMethod->pMessage ) { /* Hash Entry used ? */
@@ -4193,7 +4193,7 @@ HB_FUNC_STATIC( msgEvalInline )
    hb_vmPushEvalSym();
 
    hb_vmPush(hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData));
-   PHB_ITEM pBlock = hb_stackItemFromTop(-1);    /* Push block */
+   auto pBlock = hb_stackItemFromTop(-1);    /* Push block */
    pBlock->item.asBlock.hclass = pStack->uiClass;
    pBlock->item.asBlock.method = pStack->uiMethod;
 
@@ -4717,7 +4717,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
    }
 
    nCount = 0;
-   PHB_ITEM pReturn = hb_itemArrayNew(nSize);
+   auto pReturn = hb_itemArrayNew(nSize);
    for( nIndex = 1; nIndex <= nLen && nCount < nSize; ++nIndex ) {
       pInfo = &pIndex[nIndex - 1];
       if( pInfo->pMethod ) {

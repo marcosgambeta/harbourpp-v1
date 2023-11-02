@@ -142,7 +142,7 @@ HB_FUNC( __DBGVMSTKGLIST )
    if( hb_vmInternalsEnabled() ) {
       HB_ISIZ nLen = hb_stackTopOffset();
 
-      PHB_ITEM pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
+      auto pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
 
       for( HB_ISIZ nPos = 0; nPos < nLen; ++nPos ) {
          AddToArray(hb_stackItem(nPos), pReturn, nPos + 1);
@@ -210,7 +210,7 @@ HB_FUNC( __DBGVMSTKLLIST )
       HB_ISIZ nPrevOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem;
 
       HB_ISIZ nLen = nBaseOffset - nPrevOffset - 3;
-      PHB_ITEM pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
+      auto pReturn = hb_itemArrayNew(nLen);           /* Create a transfer array  */
       for( HB_ISIZ n = 0; n < nLen; ++n ) {
          AddToArray(hb_stackItem(nPrevOffset + n), pReturn, n + 1);
       }
@@ -243,7 +243,7 @@ HB_FUNC( __DBGVMLOCALLIST )
          nLen = nPrevOffset = 0;
       }
 
-      PHB_ITEM pArray = hb_itemArrayNew(nLen);
+      auto pArray = hb_itemArrayNew(nLen);
       for( HB_ISIZ n = 1; n <= nLen; ++n ) {
          hb_itemCopyFromRef(hb_arrayGetItemPtr(pArray, n), hb_stackItem(nPrevOffset + n));
       }

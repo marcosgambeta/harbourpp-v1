@@ -265,7 +265,7 @@ HB_FUNC( HB_HPAIRAT )
             hb_itemCopy(pDstKey, pKey);
             hb_itemCopy(pDstVal, pValue);
          } else {
-            PHB_ITEM pResult = hb_itemArrayNew(2);
+            auto pResult = hb_itemArrayNew(2);
             hb_arraySet(pResult, 1, pKey);
             hb_arraySet(pResult, 2, pValue);
             hb_itemReturnRelease(pResult);

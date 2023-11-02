@@ -78,7 +78,7 @@ static void hb_arrayReleaseItems(PHB_BASEARRAY pBaseArray)
 void hb_arrayPushBase(PHB_BASEARRAY pBaseArray)
 {
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pItem = hb_stackAllocItem();
+   auto pItem = hb_stackAllocItem();
    pItem->type = Harbour::Item::ARRAY;
    pItem->item.asArray.value = pBaseArray;
    hb_gcRefInc(pBaseArray);
@@ -1629,7 +1629,7 @@ PHB_ITEM hb_arrayFromParams(int iLevel)
       uiPCount = 0;
    }
 
-   PHB_ITEM pArray = hb_itemArrayNew(uiPCount);
+   auto pArray = hb_itemArrayNew(uiPCount);
    for( HB_USHORT uiPos = 1; uiPos <= uiPCount; uiPos++ ) {
       hb_arraySet(pArray, uiPos, hb_stackItem(nBaseOffset + uiPos + 1));
    }

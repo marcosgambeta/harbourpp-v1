@@ -107,7 +107,7 @@ HB_BOOL hb_itemParamStore(HB_USHORT uiParam, PHB_ITEM pItem)
 
    if( hb_param(uiParam, Harbour::Item::BYREF) ) {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
+      auto pDest = hb_stackItemFromBase(uiParam);
 
       if( pItem != nullptr ) {
          hb_itemCopyToRef(pDest, pItem);
@@ -128,7 +128,7 @@ HB_BOOL hb_itemParamStoreForward(HB_USHORT uiParam, PHB_ITEM pItem)
 
    if( hb_param(uiParam, Harbour::Item::BYREF) ) {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
+      auto pDest = hb_stackItemFromBase(uiParam);
 
       if( pItem != nullptr ) {
          hb_itemMoveToRef(pDest, pItem);
@@ -149,7 +149,7 @@ HB_BOOL hb_itemParamStoreRelease(HB_USHORT uiParam, PHB_ITEM pItem)
 
    if( hb_param(uiParam, Harbour::Item::BYREF) ) {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pDest = hb_stackItemFromBase(uiParam);
+      auto pDest = hb_stackItemFromBase(uiParam);
 
       if( pItem != nullptr ) {
          hb_itemMoveToRef(pDest, pItem);
