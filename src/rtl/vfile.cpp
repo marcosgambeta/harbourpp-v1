@@ -563,7 +563,7 @@ HB_FUNC( HB_VFREAD )
    PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile ) {
-      PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+      auto pBuffer = hb_param(2, Harbour::Item::STRING);
       HB_ERRCODE uiError = 0;
       HB_SIZE nRead = 0;
       HB_SIZE nSize;
@@ -657,7 +657,7 @@ HB_FUNC( HB_VFREADAT )
    PHB_FILE pFile = hb_fileParam(1);
 
    if( pFile ) {
-      PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+      auto pBuffer = hb_param(2, Harbour::Item::STRING);
       HB_ERRCODE uiError = 0;
       HB_SIZE nRead = 0;
       HB_SIZE nSize;

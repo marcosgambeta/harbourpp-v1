@@ -71,8 +71,8 @@
 
 HB_FUNC( TRANSFORM )
 {
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY); /* Input parameter */
-   PHB_ITEM pPic = hb_param(2, Harbour::Item::STRING); /* Picture string */
+   auto pValue = hb_param(1, Harbour::Item::ANY); /* Input parameter */
+   auto pPic = hb_param(2, Harbour::Item::STRING); /* Picture string */
 
    bool bError = false;
 

@@ -63,7 +63,7 @@ HB_FUNC( DO )
    PHB_ITEM pSelf = nullptr;
 
    if( uiPCount > 0 ) {
-      PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+      auto pItem = hb_param(1, Harbour::Item::ANY);
 
       if( HB_IS_STRING(pItem) ) {
          PHB_DYNS pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));

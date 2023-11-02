@@ -180,7 +180,7 @@ HB_FUNC( HB_ISREGEX )
 
 HB_FUNC( HB_ATX )
 {
-   PHB_ITEM pString = hb_param(2, Harbour::Item::STRING);
+   auto pString = hb_param(2, Harbour::Item::STRING);
 
    if( pString ) {
       PHB_REGEX pRegEx = hb_regexGet(hb_param(1, Harbour::Item::ANY), !hb_parldef(3, true) ? HBREG_ICASE : 0);
@@ -233,7 +233,7 @@ static bool hb_regex(int iRequest)
    int i;
    bool fResult = false;
 
-   PHB_ITEM pString = hb_param(2, Harbour::Item::STRING);
+   auto pString = hb_param(2, Harbour::Item::STRING);
    if( !pString ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3014, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return false;

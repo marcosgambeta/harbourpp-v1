@@ -50,7 +50,7 @@
 
 HB_FUNC( ABS )
 {
-   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNumber ) {
       int iWidth;

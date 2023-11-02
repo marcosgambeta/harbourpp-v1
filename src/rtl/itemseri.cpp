@@ -1667,7 +1667,7 @@ PHB_ITEM hb_itemDeserialize( const char ** pBufferPtr, HB_SIZE * pnSize )
 
 HB_FUNC( HB_SERIALIZE )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
       auto pszCdpIn = hb_parc(3);
@@ -1691,7 +1691,7 @@ HB_FUNC( HB_SERIALIZE )
 
 HB_FUNC( HB_DESERIALIZE )
 {
-   PHB_ITEM pParam = hb_param(1, Harbour::Item::BYREF);
+   auto pParam = hb_param(1, Harbour::Item::BYREF);
    HB_SIZE nSize = hb_parclen(1);
 
    if( nSize ) {

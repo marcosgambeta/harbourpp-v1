@@ -50,7 +50,7 @@
 
 HB_FUNC( BIN2W )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
    HB_U16 uiResult = 0;
 
    if( pItem != nullptr ) {
@@ -65,7 +65,7 @@ HB_FUNC( BIN2W )
 
 HB_FUNC( BIN2I )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
    HB_I16 iResult = 0;
 
    if( pItem != nullptr ) {
@@ -80,7 +80,7 @@ HB_FUNC( BIN2I )
 
 HB_FUNC( BIN2L )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
    HB_I32 iResult = 0;
 
    if( pItem != nullptr ) {

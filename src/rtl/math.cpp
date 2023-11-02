@@ -561,7 +561,7 @@ HB_FUNC( HB_MATHERBLOCK )  /* ([<nNewErrorBlock>]) --> <nOldErrorBlock> */
 
    if( hb_pcount() > 0 ) {
       /* set new error block */
-      PHB_ITEM pNewErrorBlock = hb_param(1, Harbour::Item::EVALITEM);
+      auto pNewErrorBlock = hb_param(1, Harbour::Item::EVALITEM);
 
       if( pNewErrorBlock ) {
          if( pMathErr->block == nullptr ) {

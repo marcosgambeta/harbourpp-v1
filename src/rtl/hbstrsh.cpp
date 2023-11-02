@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_STRSHRINK )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_ISIZ nShrinkBy = hb_parnldef(2, 1);

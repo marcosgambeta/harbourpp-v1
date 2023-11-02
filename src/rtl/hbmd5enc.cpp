@@ -66,7 +66,7 @@ static void hb_md5_next_seed(char * vect, const char * pszKey, int iLen)
  */
 HB_FUNC( HB_MD5ENCRYPT )
 {
-   PHB_ITEM pData = hb_param(1, Harbour::Item::STRING);
+   auto pData = hb_param(1, Harbour::Item::STRING);
 
    if( pData && hb_parclen(2) > 0 ) {
       HB_SIZE nLen = hb_itemGetCLen(pData);
@@ -99,7 +99,7 @@ HB_FUNC( HB_MD5ENCRYPT )
  */
 HB_FUNC( HB_MD5DECRYPT )
 {
-   PHB_ITEM pData = hb_param(1, Harbour::Item::STRING);
+   auto pData = hb_param(1, Harbour::Item::STRING);
 
    if( pData && hb_parclen(2) > 0 ) {
       HB_SIZE nLen = hb_itemGetCLen(pData);

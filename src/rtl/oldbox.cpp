@@ -52,11 +52,11 @@
 
 HB_FUNC( __BOX )
 {
-   PHB_ITEM pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
-   auto pszBox = hb_parc(5);
+   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
+   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
+   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
+   auto pszBox  = hb_parc(5);
 
    if( pTop && pLeft && pBottom && pRight && pszBox ) {
       hb_gtBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox);
@@ -65,10 +65,10 @@ HB_FUNC( __BOX )
 
 HB_FUNC( __BOXD )
 {
-   PHB_ITEM pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
+   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
+   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
+   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight ) {
       hb_gtBoxD( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight) );
@@ -77,10 +77,10 @@ HB_FUNC( __BOXD )
 
 HB_FUNC( __BOXS )
 {
-   PHB_ITEM pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
+   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
+   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
+   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight ) {
       hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));

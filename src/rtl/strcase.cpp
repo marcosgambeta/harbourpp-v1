@@ -52,7 +52,7 @@
 /* converts string to lower case */
 HB_FUNC( LOWER )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE nLen = hb_itemGetCLen(pText);
@@ -66,7 +66,7 @@ HB_FUNC( LOWER )
 /* converts string to upper case */
 HB_FUNC( UPPER )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE nLen = hb_itemGetCLen(pText);

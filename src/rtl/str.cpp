@@ -51,7 +51,7 @@
 HB_FUNC( STR )
 {
    int iParams = hb_pcount();
-   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
    PHB_ITEM pWidth  = nullptr;
    PHB_ITEM pDec    = nullptr;
 

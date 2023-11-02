@@ -53,14 +53,14 @@
  */
 HB_FUNC( HB_STRREPLACE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY | (HB_ISNIL(3) ? Harbour::Item::HASH : Harbour::Item::NIL));
+   auto pText = hb_param(1, Harbour::Item::STRING);
+   auto pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY | (HB_ISNIL(3) ? Harbour::Item::HASH : Harbour::Item::NIL));
 
    if( pText && pSrc ) {
       HB_SIZE nText = hb_itemGetCLen(pText), nSrc = hb_itemSize(pSrc);
 
       if( nText > 0 && nSrc > 0 ) {
-         PHB_ITEM pDst = hb_param(3, Harbour::Item::STRING | Harbour::Item::ARRAY);
+         auto pDst = hb_param(3, Harbour::Item::STRING | Harbour::Item::ARRAY);
          const char * pszDst = pDst && HB_IS_STRING(pDst) ? hb_itemGetCPtr(pDst) : nullptr;
          const char * pszSrc = HB_IS_STRING(pSrc) ? hb_itemGetCPtr(pSrc) : nullptr;
          const char * pszText = hb_itemGetCPtr(pText);

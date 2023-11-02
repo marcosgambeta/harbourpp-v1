@@ -906,7 +906,7 @@ void hb_dynCall(int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, in
          }
 
          for( tmp = 0; tmp < iParams; ++tmp ) {
-            PHB_ITEM pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
+            auto pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
 
             if( piArgFlags ) {
                pArg[tmp].iType     = piArgFlags[tmp] & _MASK_CTYPE;
@@ -1007,7 +1007,7 @@ void hb_dynCall(int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, in
          }
 
          for( tmp = 0; tmp < iParams; ++tmp ) {
-            PHB_ITEM pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
+            auto pParam = hb_param(iFirst + tmp, Harbour::Item::ANY);
 
             HB_U32 r1;
             HB_U32 r2;

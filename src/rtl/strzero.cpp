@@ -53,9 +53,9 @@ HB_FUNC( STRZERO )
    int iParams = hb_pcount();
 
    if( iParams >= 1 && iParams <= 3 ) {
-      PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
-      PHB_ITEM pWidth  = nullptr;
-      PHB_ITEM pDec    = nullptr;
+      auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+      PHB_ITEM pWidth = nullptr;
+      PHB_ITEM pDec   = nullptr;
 
       if( iParams >= 2 ) {
          pWidth = hb_param(2, Harbour::Item::NUMERIC);

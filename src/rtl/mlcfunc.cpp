@@ -101,7 +101,7 @@ static void hb_mlGetEOLs(PHB_MLC_INFO pMLC, int iParam)
       pMLC->pEOLs[0].nLen = nLen;
       iEOLs = 1;
    } else if( HB_ISARRAY(iParam) ) {
-      PHB_ITEM pArray = hb_param(iParam, Harbour::Item::ARRAY);
+      auto pArray = hb_param(iParam, Harbour::Item::ARRAY);
       HB_SIZE nSize = hb_arrayLen(pArray), n;
 
       for( n = 1; n <= nSize; ++n ) {
@@ -530,7 +530,7 @@ HB_FUNC( MPOSTOLC )
 HB_FUNC( HB_MLEVAL )
 {
    auto pszString = hb_parc(1);
-   PHB_ITEM pBlock = hb_param(2, Harbour::Item::EVALITEM);
+   auto pBlock = hb_param(2, Harbour::Item::EVALITEM);
    HB_ISIZ nSize = hb_parnsdef(3, 79);
    HB_SIZE nRowPos = 0, nColPos = 0, nLines = 0;
 

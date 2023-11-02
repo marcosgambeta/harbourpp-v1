@@ -49,7 +49,7 @@
 
 HB_FUNC( TYPE )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr ) {
       hb_retc(hb_macroGetType(pItem));

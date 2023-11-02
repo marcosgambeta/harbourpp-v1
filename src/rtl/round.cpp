@@ -52,7 +52,7 @@
 
 HB_FUNC( INT )
 {
-   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNumber ) {
       if( HB_IS_NUMINT(pNumber) ) {
@@ -70,7 +70,7 @@ HB_FUNC( INT )
 
 HB_FUNC( ROUND )
 {
-   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNumber && HB_ISNUM(2) ) {
       int iDec = hb_parni(2);

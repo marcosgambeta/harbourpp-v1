@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_NTOS )
 {
-   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNumber ) {
       char * szResult = hb_itemStr(pNumber, nullptr, nullptr);
@@ -76,7 +76,7 @@ HB_FUNC( HB_NTOS )
 
 HB_FUNC( HB_NTOC )
 {
-   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNumber ) {
       char szBuffer[HB_MAX_DOUBLE_LENGTH];

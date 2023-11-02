@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_VALTOSTR )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
       HB_SIZE nLen;

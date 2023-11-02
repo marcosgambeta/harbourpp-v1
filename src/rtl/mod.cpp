@@ -61,8 +61,8 @@
 
 HB_FUNC( MOD )
 {
-   PHB_ITEM pNumber = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pBase   = hb_param(2, Harbour::Item::NUMERIC);
+   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+   auto pBase   = hb_param(2, Harbour::Item::NUMERIC);
 
    if( pNumber && pBase ) {
       double dNumber = hb_itemGetND(pNumber);

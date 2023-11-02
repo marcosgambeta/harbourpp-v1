@@ -79,8 +79,8 @@ static HB_SIZE s_strAtI(PHB_CODEPAGE cdp, const char * szSub, HB_SIZE nSubLen, c
 
 HB_FUNC( HB_ATI )
 {
-   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub  = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
       PHB_CODEPAGE cdp         = hb_vmCDP();

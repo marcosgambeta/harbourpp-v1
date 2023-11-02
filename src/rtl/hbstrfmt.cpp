@@ -465,7 +465,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
 
 HB_FUNC( HB_STRFORMAT )
 {
-   PHB_ITEM pFormat = hb_param(1, Harbour::Item::STRING);
+   auto pFormat = hb_param(1, Harbour::Item::STRING);
 
    if( pFormat ) {
       int        iParams = hb_pcount();

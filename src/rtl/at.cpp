@@ -54,8 +54,8 @@
 
 HB_FUNC( HB_AT )
 {
-   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub  = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
       PHB_CODEPAGE cdp         = hb_vmCDP();
@@ -113,8 +113,8 @@ HB_FUNC( HB_AT )
 
 HB_FUNC( AT )
 {
-   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub  = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
       HB_SIZE nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), hb_itemGetCLen(pText));

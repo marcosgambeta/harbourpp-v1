@@ -95,7 +95,7 @@ HB_FUNC( HB_FCREATE )
 
 HB_FUNC( FREAD )
 {
-   PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+   auto pBuffer = hb_param(2, Harbour::Item::STRING);
    HB_ERRCODE uiError = 0;
    HB_SIZE nRead = 0;
 
@@ -486,7 +486,7 @@ HB_FUNC( HB_FISDEVICE )
 HB_FUNC( HB_PREAD )
 {
    HB_FHANDLE hPipe = hb_numToHandle(hb_parnintdef(1, FS_ERROR));
-   PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+   auto pBuffer = hb_param(2, Harbour::Item::STRING);
    char * buffer;
    HB_SIZE nSize;
 

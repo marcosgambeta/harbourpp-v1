@@ -50,10 +50,10 @@
 
 HB_FUNC( DISPBOX )
 {
-   PHB_ITEM pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
+   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
+   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
+   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight ) {
       auto pszBox   = hb_parc(5);
@@ -93,10 +93,10 @@ HB_FUNC( DISPBOX )
 
 HB_FUNC( HB_DISPBOX )
 {
-   PHB_ITEM pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   PHB_ITEM pRight  = hb_param(4, Harbour::Item::NUMERIC);
+   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
+   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
+   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
 
    if( pTop && pLeft && pBottom && pRight ) {
       auto pszBox   = hb_parc(5);

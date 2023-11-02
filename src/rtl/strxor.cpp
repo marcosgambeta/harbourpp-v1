@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_STRXOR )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr ) {
       PHB_ITEM     pItem2;

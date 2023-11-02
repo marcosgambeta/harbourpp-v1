@@ -50,7 +50,7 @@
 
 HB_FUNC( GETENV )
 {
-   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
+   auto pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName && hb_pcount() == 1 ) {
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
@@ -90,7 +90,7 @@ HB_FUNC_TRANSLATE( GETE, GETENV )
 
 HB_FUNC( HB_GETENV )
 {
-   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
+   auto pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName ) {
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE

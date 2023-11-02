@@ -79,7 +79,7 @@ HB_FUNC( HB_BLOWFISHKEY )
 HB_FUNC( HB_BLOWFISHENCRYPT )
 {
    const HB_BLOWFISH * bf = hb_bf_keyparam();
-   PHB_ITEM pData = hb_param(2, Harbour::Item::STRING);
+   auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
       HB_SIZE nLen = hb_itemGetCLen(pData);
@@ -123,7 +123,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
 HB_FUNC( HB_BLOWFISHDECRYPT )
 {
    const HB_BLOWFISH * bf = hb_bf_keyparam();
-   PHB_ITEM pData = hb_param(2, Harbour::Item::STRING);
+   auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
       HB_SIZE nSize = hb_itemGetCLen(pData);
@@ -194,7 +194,7 @@ static void hb_bf_encode( const HB_BLOWFISH * bf, HB_BYTE * vect )
 HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
 {
    const HB_BLOWFISH * bf = hb_bf_keyparam();
-   PHB_ITEM pData = hb_param(2, Harbour::Item::STRING);
+   auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
       HB_SIZE nLen = hb_itemGetCLen(pData);
@@ -228,7 +228,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
 HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
 {
    const HB_BLOWFISH * bf = hb_bf_keyparam();
-   PHB_ITEM pData = hb_param(2, Harbour::Item::STRING);
+   auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
       HB_SIZE nLen = hb_itemGetCLen(pData);

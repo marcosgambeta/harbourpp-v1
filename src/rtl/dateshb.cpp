@@ -117,13 +117,13 @@ HB_FUNC( DTOS )
 
 HB_FUNC( HB_STOD )
 {
-   PHB_ITEM pDateString = hb_param(1, Harbour::Item::STRING);
+   auto pDateString = hb_param(1, Harbour::Item::STRING);
    hb_retds(hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr);
 }
 
 HB_FUNC( YEAR )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate ) {
       int iYear, iMonth, iDay;
@@ -136,7 +136,7 @@ HB_FUNC( YEAR )
 
 HB_FUNC( MONTH )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate ) {
       int iYear, iMonth, iDay;
@@ -149,7 +149,7 @@ HB_FUNC( MONTH )
 
 HB_FUNC( DAY )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate ) {
       int iYear, iMonth, iDay;
@@ -162,7 +162,7 @@ HB_FUNC( DAY )
 
 HB_FUNC( DOW )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate ) {
       hb_retnilen(hb_dateJulianDOW(hb_itemGetDL(pDate)), 3);
@@ -254,7 +254,7 @@ HB_FUNC( HB_TTOD )
 
 HB_FUNC( HB_TTON )
 {
-   PHB_ITEM pTime = hb_param(1, Harbour::Item::DATETIME);
+   auto pTime = hb_param(1, Harbour::Item::DATETIME);
 
    if( pTime ) {
       hb_retnd(hb_itemGetTD(pTime));
@@ -265,7 +265,7 @@ HB_FUNC( HB_TTON )
 
 HB_FUNC( HB_NTOT )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNum ) {
       hb_rettd(hb_itemGetND(pNum));
@@ -276,7 +276,7 @@ HB_FUNC( HB_NTOT )
 
 HB_FUNC( HB_NTOMSEC )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNum ) {
       hb_retnint(static_cast<HB_MAXINT>(hb_itemGetND(pNum) * HB_MILLISECS_PER_DAY));
@@ -287,7 +287,7 @@ HB_FUNC( HB_NTOMSEC )
 
 HB_FUNC( HB_NTOSEC )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNum ) {
       hb_retnd(hb_itemGetND(pNum) * HB_SECONDS_PER_DAY);
@@ -298,7 +298,7 @@ HB_FUNC( HB_NTOSEC )
 
 HB_FUNC( HB_NTOMIN )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNum ) {
       hb_retnd(hb_itemGetND(pNum) * HB_MINUTES_PER_DAY);
@@ -309,7 +309,7 @@ HB_FUNC( HB_NTOMIN )
 
 HB_FUNC( HB_NTOHOUR )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNum ) {
       hb_retnd(hb_itemGetND(pNum) * 24);
@@ -331,7 +331,7 @@ HB_FUNC( HB_TTOSEC )
 
 HB_FUNC( HB_SECTOT )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNum ) {
       hb_rettd(hb_itemGetND(pNum) / HB_SECONDS_PER_DAY);
@@ -342,7 +342,7 @@ HB_FUNC( HB_SECTOT )
 
 HB_FUNC( HB_MSECTOT )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNum ) {
       hb_rettd(hb_itemGetND(pNum) / HB_MILLISECS_PER_DAY);
@@ -550,7 +550,7 @@ HB_FUNC( HB_STRTOTS )
    hb_Week(<dDate>, [@<nYear>], [@<nDayOfWeek>]) --> <nWeek> */
 HB_FUNC( HB_WEEK )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate ) {
       int iYear, iWeek, iDay;

@@ -57,8 +57,8 @@
 
 HB_FUNC( STRTRAN )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pSeek = hb_param(2, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
+   auto pSeek = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSeek ) {
       HB_SIZE nStart, nCount;
@@ -71,7 +71,7 @@ HB_FUNC( STRTRAN )
          HB_SIZE nSeek = hb_itemGetCLen(pSeek);
 
          if( nSeek && nSeek <= nText && nStart > 0 ) {
-            PHB_ITEM pReplace = hb_param(3, Harbour::Item::STRING);
+            auto pReplace = hb_param(3, Harbour::Item::STRING);
             HB_SIZE nReplace = hb_itemGetCLen(pReplace);
             const char * szReplace = hb_itemGetCPtr(pReplace);
             const char * szText = hb_itemGetCPtr(pText);

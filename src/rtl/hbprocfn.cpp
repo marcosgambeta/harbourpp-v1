@@ -52,10 +52,10 @@
 
 HB_FUNC( HB_PROCESSOPEN )
 {
-   auto szName = hb_parc(1);
-   PHB_ITEM pStdIn  = hb_param(2, Harbour::Item::BYREF);
-   PHB_ITEM pStdOut = hb_param(3, Harbour::Item::BYREF);
-   PHB_ITEM pStdErr = hb_param(4, Harbour::Item::BYREF);
+   auto szName  = hb_parc(1);
+   auto pStdIn  = hb_param(2, Harbour::Item::BYREF);
+   auto pStdOut = hb_param(3, Harbour::Item::BYREF);
+   auto pStdErr = hb_param(4, Harbour::Item::BYREF);
 
    if( szName &&
        (pStdIn  || HB_ISNIL(2)) &&
@@ -121,10 +121,10 @@ HB_FUNC( HB_PROCESSCLOSE )
 /* hb_processRun(<cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], [ <lDetach> ]) --> <nResult> */
 HB_FUNC( HB_PROCESSRUN )
 {
-   auto szName = hb_parc(1);
+   auto szName  = hb_parc(1);
    auto szStdIn = hb_parc(2);
-   PHB_ITEM pStdOut = hb_param(3, Harbour::Item::BYREF);
-   PHB_ITEM pStdErr = hb_param(4, Harbour::Item::BYREF);
+   auto pStdOut = hb_param(3, Harbour::Item::BYREF);
+   auto pStdErr = hb_param(4, Harbour::Item::BYREF);
    bool fDetach = hb_parl(5);
 
    if( szName && (szStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) && (HB_ISLOG(5) || HB_ISNIL(5)) ) {

@@ -139,13 +139,13 @@ HB_FUNC( HB_ISHASHKEY )
 
 HB_FUNC( HB_ISEVALITEM )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
    hb_retl(pItem && HB_IS_EVALITEM(pItem));
 }
 
 HB_FUNC( HB_ISNULL )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
       if( HB_IS_STRING(pItem) ) {

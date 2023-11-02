@@ -50,7 +50,7 @@
 
 HB_FUNC( HB_ASCIIUPPER )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       const char * pszText = hb_itemGetCPtr(pText);
@@ -75,7 +75,7 @@ HB_FUNC( HB_ASCIIUPPER )
 
 HB_FUNC( HB_ASCIILOWER )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       const char * pszText = hb_itemGetCPtr(pText);

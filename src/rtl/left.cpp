@@ -54,7 +54,7 @@
 
 HB_FUNC( LEFT )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) ) {
       HB_ISIZ nLen = hb_parns(2);
@@ -81,8 +81,8 @@ HB_FUNC( LEFT )
 
 HB_FUNC( HB_LEFTEQ )
 {
-   PHB_ITEM pItem1 = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pItem2 = hb_param(2, Harbour::Item::STRING);
+   auto pItem1 = hb_param(1, Harbour::Item::STRING);
+   auto pItem2 = hb_param(2, Harbour::Item::STRING);
 
    if( pItem1 && pItem2 ) {
       hb_retl(hb_cdpcmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), false) == 0);
@@ -93,8 +93,8 @@ HB_FUNC( HB_LEFTEQ )
 
 HB_FUNC( HB_LEFTEQI )
 {
-   PHB_ITEM pItem1 = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pItem2 = hb_param(2, Harbour::Item::STRING);
+   auto pItem1 = hb_param(1, Harbour::Item::STRING);
+   auto pItem2 = hb_param(2, Harbour::Item::STRING);
 
    if( pItem1 && pItem2 ) {
       hb_retl(hb_cdpicmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), false) == 0);

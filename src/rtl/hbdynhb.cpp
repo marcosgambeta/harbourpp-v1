@@ -51,7 +51,7 @@
 
 HB_FUNC( HB_DYNCALL )
 {
-   PHB_ITEM pParam = hb_param(1, Harbour::Item::POINTER | Harbour::Item::ARRAY);
+   auto pParam = hb_param(1, Harbour::Item::POINTER | Harbour::Item::ARRAY);
    int * piArgFlags = nullptr;
    int iFuncFlags = HB_DYN_CALLCONV_CDECL;
 

@@ -835,8 +835,8 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
 
 HB_FUNC( HB_I18N_GETTEXT )
 {
-   PHB_ITEM pMsgID = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pContext = hb_param(2, Harbour::Item::STRING);
+   auto pMsgID = hb_param(1, Harbour::Item::STRING);
+   auto pContext = hb_param(2, Harbour::Item::STRING);
 
    if( pMsgID ) {
       pMsgID = hb_i18n_gettext(pMsgID, pContext);
@@ -851,9 +851,9 @@ HB_FUNC( HB_I18N_GETTEXT )
 
 HB_FUNC( HB_I18N_NGETTEXT )
 {
-   PHB_ITEM pNum = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pMsgID = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY);
-   PHB_ITEM pContext = hb_param(3, Harbour::Item::STRING);
+   auto pNum = hb_param(1, Harbour::Item::NUMERIC);
+   auto pMsgID = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY);
+   auto pContext = hb_param(3, Harbour::Item::STRING);
 
    if( !pNum ) {
       pMsgID = nullptr;
@@ -900,7 +900,7 @@ HB_FUNC( HB_I18N_PLURALFORM )
    PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, true);
    if( pI18N ) {
       auto pOldForm = hb_itemNew(nullptr);
-      PHB_ITEM pForm = hb_param(iParam, Harbour::Item::STRING | Harbour::Item::EVALITEM);
+      auto pForm = hb_param(iParam, Harbour::Item::STRING | Harbour::Item::EVALITEM);
       bool fBase = hb_parl(iParam + 1);
 
       if( hb_i18n_getpluralform(pI18N, pOldForm, fBase) ) {
@@ -921,7 +921,7 @@ HB_FUNC( HB_I18N_DESCRIPTION )
 
    PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, true);
    if( pI18N ) {
-      PHB_ITEM pNewDescript = hb_param(iParam, Harbour::Item::STRING);
+      auto pNewDescript = hb_param(iParam, Harbour::Item::STRING);
       hb_retc(hb_i18n_description(pI18N, nullptr));
       if( pNewDescript ) {
          hb_i18n_description(pI18N, pNewDescript);
@@ -937,9 +937,9 @@ HB_FUNC( HB_I18N_ADDTEXT )
 
    PHB_I18N_TRANS pI18N = hb_i18n_param(&iParam, false);
    if( pI18N ) {
-      PHB_ITEM pMsgID = hb_param(iParam, Harbour::Item::STRING);
-      PHB_ITEM pTrans = hb_param(iParam + 1, Harbour::Item::STRING | Harbour::Item::ARRAY);
-      PHB_ITEM pContext = hb_param(iParam + 2, Harbour::Item::STRING);
+      auto pMsgID = hb_param(iParam, Harbour::Item::STRING);
+      auto pTrans = hb_param(iParam + 1, Harbour::Item::STRING | Harbour::Item::ARRAY);
+      auto pContext = hb_param(iParam + 2, Harbour::Item::STRING);
 
       if( pMsgID && pTrans ) {
          if( HB_IS_ARRAY(pTrans) ) {
@@ -997,7 +997,7 @@ HB_FUNC( HB_I18N_SAVETABLE )
 
 HB_FUNC( HB_I18N_RESTORETABLE )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr ) {
       PHB_I18N_TRANS pI18N = hb_i18n_deserialize(pItem);
@@ -1021,7 +1021,7 @@ HB_FUNC( HB_I18N_CHECK )
 HB_FUNC( __I18N_HASHTABLE )
 {
    PHB_I18N_TRANS pI18N;
-   PHB_ITEM pTable = hb_param(1, Harbour::Item::HASH);
+   auto pTable = hb_param(1, Harbour::Item::HASH);
 
    if( pTable ) {
       pTable = hb_itemNew(pTable);

@@ -627,7 +627,7 @@ using HB_FILE_FUNC = HB_BOOL (*)(PHB_FILE_FUNCS pFuncs, const char *);
 /* IOUSR_Register(<aMethods>, <cPrefix>) */
 HB_FUNC( IOUSR_REGISTER )
 {
-   PHB_ITEM pMthItm = hb_param(1, Harbour::Item::ARRAY);
+   auto pMthItm = hb_param(1, Harbour::Item::ARRAY);
    auto pszPrefix = hb_parc(2);
 
    if( pMthItm && pszPrefix && *pszPrefix ) {

@@ -83,7 +83,7 @@ HB_FUNC( HB_BCHAR )
  */
 HB_FUNC( HB_UCODE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       hb_retni(hb_cdpTextGetU16(hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText)));
@@ -111,7 +111,7 @@ HB_FUNC( HB_BCODE )
  */
 HB_FUNC( HB_ULEN )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       hb_retns(hb_cdpTextLen(hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText)));
@@ -125,7 +125,7 @@ HB_FUNC( HB_ULEN )
  */
 HB_FUNC( HB_BLEN )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       hb_retns(hb_itemGetCLen(pText));
@@ -139,7 +139,7 @@ HB_FUNC( HB_BLEN )
  */
 HB_FUNC( HB_UPEEK )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
@@ -167,7 +167,7 @@ HB_FUNC( HB_UPEEK )
  */
 HB_FUNC( HB_BPEEK )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) ) {
       HB_SIZE nPos = hb_parns(2);
@@ -182,7 +182,7 @@ HB_FUNC( HB_BPEEK )
  */
 HB_FUNC( HB_UPOKE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
@@ -224,7 +224,7 @@ HB_FUNC( HB_UPOKE )
  */
 HB_FUNC( HB_BPOKE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
       HB_SIZE nPos = hb_parns(2), nLen;
@@ -243,7 +243,7 @@ HB_FUNC( HB_BPOKE )
  */
 HB_FUNC( HB_USUBSTR )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
    int iPCount = hb_pcount();
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
@@ -289,7 +289,7 @@ HB_FUNC( HB_USUBSTR )
  */
 HB_FUNC( HB_BSUBSTR )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
    int iPCount = hb_pcount();
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
@@ -334,7 +334,7 @@ HB_FUNC( HB_BSUBSTR )
  */
 HB_FUNC( HB_ULEFT )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) ) {
       HB_ISIZ nLen = hb_parns(2);
@@ -360,7 +360,7 @@ HB_FUNC( HB_ULEFT )
  */
 HB_FUNC( HB_BLEFT )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) ) {
       HB_ISIZ nLen = hb_parns(2);
@@ -383,7 +383,7 @@ HB_FUNC( HB_BLEFT )
  */
 HB_FUNC( HB_URIGHT )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
    HB_SIZE nText = hb_itemGetCLen(pText);
    HB_ISIZ nLen = hb_parns(2);
 
@@ -411,7 +411,7 @@ HB_FUNC( HB_URIGHT )
  */
 HB_FUNC( HB_BRIGHT )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
    HB_SIZE nText = hb_itemGetCLen(pText);
    HB_ISIZ nLen = hb_parns(2);
 
@@ -431,8 +431,8 @@ HB_FUNC( HB_BRIGHT )
  */
 HB_FUNC( HB_UAT )
 {
-   PHB_ITEM pSub = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
@@ -484,8 +484,8 @@ HB_FUNC( HB_UAT )
  */
 HB_FUNC( HB_BAT )
 {
-   PHB_ITEM pSub = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
       const char * pszText = hb_itemGetCPtr(pText);

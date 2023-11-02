@@ -105,7 +105,7 @@ static HB_TSD_NEW(s_errData, sizeof(HB_ERRDATA), nullptr, hb_errorDataRelease);
 
 static bool hb_errGetNumCode(int * piValue, const char * szOperation)
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::NUMERIC);
+   auto pItem = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pItem != nullptr ) {
       *piValue = hb_itemGetNI(pItem);
@@ -134,7 +134,7 @@ HB_FUNC_STATIC( CARGO )
 
 HB_FUNC_STATIC( _CARGO )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
       hb_errPutCargo(hb_stackSelfItem(), pItem);
@@ -150,7 +150,7 @@ HB_FUNC_STATIC( ARGS )
 
 HB_FUNC_STATIC( _ARGS )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ARRAY);
+   auto pItem = hb_param(1, Harbour::Item::ARRAY);
 
    if( pItem != nullptr ) {
       hb_errPutArgsArray(hb_stackSelfItem(), pItem);
@@ -229,7 +229,7 @@ HB_FUNC_STATIC( DESCRIPTION )
 
 HB_FUNC_STATIC( _DESCRIPTION )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_STRING(pItem) ) {
       hb_errPutDescription(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
@@ -245,7 +245,7 @@ HB_FUNC_STATIC( FILENAME )
 
 HB_FUNC_STATIC( _FILENAME )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_STRING(pItem) ) {
       hb_errPutFileName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
@@ -261,7 +261,7 @@ HB_FUNC_STATIC( OPERATION )
 
 HB_FUNC_STATIC( _OPERATION )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_STRING(pItem) ) {
       hb_errPutOperation(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
@@ -277,7 +277,7 @@ HB_FUNC_STATIC( SUBSYSTEM )
 
 HB_FUNC_STATIC( _SUBSYSTEM )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_STRING(pItem) ) {
       hb_errPutSubSystem(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
@@ -418,7 +418,7 @@ HB_FUNC( __ERRINHANDLER )
 
 HB_FUNC( ERRORBLOCK )
 {
-   PHB_ITEM pNewErrorBlock = hb_param(1, Harbour::Item::EVALITEM);
+   auto pNewErrorBlock = hb_param(1, Harbour::Item::EVALITEM);
    PHB_ITEM pErrorBlock = hb_errorBlock();
 
    hb_itemReturn(pErrorBlock);

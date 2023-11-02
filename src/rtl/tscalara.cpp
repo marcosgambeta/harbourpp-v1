@@ -54,7 +54,7 @@ HB_FUNC( HBARRAY )
    HB_FUNC_EXEC( __HBARRAY );
 
    if( hb_vmRequestQuery() == 0 ) {
-      PHB_ITEM pItem = hb_param(-1, Harbour::Item::ANY);
+      auto pItem = hb_param(-1, Harbour::Item::ANY);
 
       if( HB_IS_OBJECT(pItem) ) {
          hb_vmPushDynSym(hb_dynsymGetCase("NEW"));

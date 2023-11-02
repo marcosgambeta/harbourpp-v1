@@ -49,7 +49,7 @@
 
 HB_FUNC( EMPTY )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    switch( hb_itemType(pItem) ) {
       case Harbour::Item::ARRAY:

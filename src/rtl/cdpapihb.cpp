@@ -287,8 +287,8 @@ HB_FUNC( HB_UTF8TOSTR )
 
 HB_FUNC( HB_UTF8AT )
 {
-   PHB_ITEM pSub = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
       HB_SIZE nTextLength = hb_itemGetCLen(pText);
@@ -313,8 +313,8 @@ HB_FUNC( HB_UTF8AT )
 
 HB_FUNC( HB_UTF8RAT )
 {
-   PHB_ITEM pSub = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
       HB_SIZE nTextLength = hb_itemGetCLen(pText);
@@ -434,7 +434,7 @@ HB_FUNC( HB_UTF8PEEK )
 
 HB_FUNC( HB_UTF8POKE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
       const char * szString = hb_itemGetCPtr(pText);

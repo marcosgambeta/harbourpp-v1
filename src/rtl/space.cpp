@@ -52,7 +52,7 @@
 
 HB_FUNC( SPACE )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::NUMERIC);
+   auto pItem = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pItem != nullptr ) {
       HB_ISIZ nLen = hb_itemGetNS(pItem);

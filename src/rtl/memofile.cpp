@@ -89,7 +89,7 @@ HB_FUNC( MEMOREAD )
 static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
 {
    auto pszFileName = hb_parc(1);
-   PHB_ITEM pString   = hb_param(2, Harbour::Item::STRING);
+   auto pString   = hb_param(2, Harbour::Item::STRING);
    HB_BOOL bRetVal    = false;
 
    if( pszFileName && pString ) {

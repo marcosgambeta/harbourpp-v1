@@ -82,7 +82,7 @@ static char * hb_strHardCR(char * pszString, HB_SIZE nStringLen)
 
 HB_FUNC( HARDCR )
 {
-   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
+   auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString ) {
       char * pszBuffer = hb_itemGetC(pString);

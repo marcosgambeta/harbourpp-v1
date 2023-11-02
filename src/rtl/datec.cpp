@@ -77,7 +77,7 @@ const char * hb_dateCDOW(int iDay)
 
 HB_FUNC( CMONTH )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate ) {
       int iYear, iMonth, iDay;
@@ -91,7 +91,7 @@ HB_FUNC( CMONTH )
 
 HB_FUNC( CDOW )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate ) {
       long lDate = hb_itemGetDL(pDate);
@@ -111,7 +111,7 @@ HB_FUNC( CDOW )
 
 HB_FUNC( HB_CDAY )
 {
-   PHB_ITEM pDay = hb_param(1, Harbour::Item::NUMERIC);
+   auto pDay = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pDay ) {
       hb_retc_const(hb_dateCDOW(hb_itemGetNI(pDay)));

@@ -297,7 +297,7 @@ int hb_sockexRegister(const HB_SOCKET_FILTER * pFilter)
 
 static HB_BOOL s_socketaddrParam(int iParam, void ** pAddr, unsigned int * puiLen)
 {
-   PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY);
+   auto pItem = hb_param(iParam, Harbour::Item::ARRAY);
 
    if( pItem && hb_socketAddrFromItem(pAddr, puiLen, pItem) ) {
       return true;
@@ -1043,7 +1043,7 @@ HB_FUNC( HB_SOCKETRECV )
    PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock ) {
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
+      auto pItem = hb_param(2, Harbour::Item::STRING);
       char * pBuffer;
       HB_SIZE nLen;
 
@@ -1067,7 +1067,7 @@ HB_FUNC( HB_SOCKETRECVFROM )
    HB_SOCKET socket = hb_socketParam(1);
 
    if( socket != HB_NO_SOCKET ) {
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
+      auto pItem = hb_param(2, Harbour::Item::STRING);
       char * pBuffer;
       HB_SIZE nLen;
 
@@ -1365,7 +1365,7 @@ HB_FUNC( HB_SOCKETGETFD )
 
 HB_FUNC( HB_SOCKETSETFILTER )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::POINTER);
+   auto pItem = hb_param(1, Harbour::Item::POINTER);
 
    if( hb_sockexItemSetFilter(pItem, hb_parc(2), hb_param(3, Harbour::Item::ANY)) ) {
       hb_itemReturn(pItem);
@@ -1388,7 +1388,7 @@ HB_FUNC( HB_SOCKETREAD )
    PHB_SOCKEX pSock = hb_sockexParam(1);
 
    if( pSock ) {
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
+      auto pItem = hb_param(2, Harbour::Item::STRING);
       char * pBuffer;
       HB_SIZE nLen;
 

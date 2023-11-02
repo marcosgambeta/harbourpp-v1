@@ -88,7 +88,7 @@ HB_SIZE hb_strRTrimLen(const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace)
 
 HB_FUNC( LTRIM )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE nLen, nSrc;
@@ -113,7 +113,7 @@ HB_FUNC( LTRIM )
 
 HB_FUNC( RTRIM )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       const char * szText = hb_itemGetCPtr(pText);
@@ -141,7 +141,7 @@ HB_FUNC_TRANSLATE( TRIM, RTRIM )
 
 HB_FUNC( ALLTRIM )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE nLen, nSrc;

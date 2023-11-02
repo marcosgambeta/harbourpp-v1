@@ -161,7 +161,7 @@ HB_FUNC( HB_LPPCREATE )
 {
    HB_SOCKET sd;
 
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::POINTER);
+   auto pItem = hb_param(1, Harbour::Item::POINTER);
    if( !pItem || (sd = hb_socketItemGet(pItem)) == HB_NO_SOCKET ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
@@ -215,7 +215,7 @@ HB_FUNC( HB_LPPSEND )
       return;
    }
 
-   PHB_ITEM pData = hb_param(2, Harbour::Item::STRING);
+   auto pData = hb_param(2, Harbour::Item::STRING);
    hb_retl(hb_lppSend(pGC->pSocket, pData ? hb_itemGetCPtr(pData) : "", hb_itemGetCLen(pData), hb_parnintdef(3, -1)));
 }
 

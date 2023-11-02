@@ -81,7 +81,7 @@ static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
    HB_ISIZ nLen = hb_parns(2);
 
    if( nLen > 0 ) {
-      PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+      auto pItem = hb_param(1, Harbour::Item::ANY);
 
       if( pItem && HB_IS_STRING(pItem) && static_cast<HB_SIZE>(nLen) == hb_cdpItemLen(cdp, pItem) ) {
          hb_itemReturn(pItem);

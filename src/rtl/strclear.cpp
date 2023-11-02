@@ -49,7 +49,7 @@
 
 HB_FUNC( HB_STRCLEAR )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    /* NOTE: clear RETURN value before calling hb_itemGetWriteCL(),
             it's possible that it contains copy of passed item [druzus] */

@@ -54,7 +54,7 @@
  */
 HB_FUNC( HB_STRDECODESCAPE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE nLen = hb_itemGetCLen(pText);
@@ -80,7 +80,7 @@ HB_FUNC( HB_STRDECODESCAPE )
  */
 HB_FUNC( HB_STRCDECODE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE nLen = hb_itemGetCLen(pText);
