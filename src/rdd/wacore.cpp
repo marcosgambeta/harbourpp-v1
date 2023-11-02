@@ -720,9 +720,7 @@ PHB_ITEM hb_rddDetachedList(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddDetachedList()"));
 #endif
 
-   PHB_ITEM pArray;
-
-   pArray = hb_itemArrayNew(0);
+   auto pArray = hb_itemArrayNew(0);
    /* protect by critical section access to s_pDetachedAreas array */
    hb_threadEnterCriticalSectionGC(&s_waMtx);
    if( s_pDetachedAreas ) {

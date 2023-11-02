@@ -636,7 +636,7 @@ HB_FUNC( DBRLOCKLIST )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pList = hb_itemArrayNew(0);
+      auto pList = hb_itemArrayNew(0);
       SELF_INFO(pArea, DBI_GETLOCKARRAY, pList);
       hb_itemReturnRelease(pList);
    } else {
@@ -801,7 +801,7 @@ HB_FUNC( DBSKIP )
 
 HB_FUNC( DBSTRUCT )
 {
-   PHB_ITEM pStruct = hb_itemArrayNew(0);
+   auto pStruct = hb_itemArrayNew(0);
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {

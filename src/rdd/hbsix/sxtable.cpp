@@ -72,7 +72,7 @@ HB_FUNC( SX_GETLOCKS )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pList = hb_itemArrayNew(0);
+      auto pList = hb_itemArrayNew(0);
       SELF_INFO(pArea, DBI_GETLOCKARRAY, pList);
       hb_itemReturnRelease(pList);
    }
@@ -367,7 +367,7 @@ HB_FUNC( SX_MEMOPACK )
    bool fResult = false;
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_itemArrayNew(3);
+      auto pItem = hb_itemArrayNew(3);
       int iPCount = hb_pcount();
       for( int i = 1; i <= iPCount; ++i ) {
          hb_arraySet(pItem, i, hb_param(i, Harbour::Item::ANY));

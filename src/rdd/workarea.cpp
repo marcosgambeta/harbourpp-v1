@@ -2310,14 +2310,13 @@ PHB_ITEM hb_rddList(HB_USHORT uiType)
 #endif
 
    HB_USHORT uiCount, uiIndex, uiRdds;
-   PHB_ITEM pRddArray;
 
    for( uiCount = uiRdds = 0; uiCount < s_uiRddCount; ++uiCount ) {
       if( uiType == 0 || s_RddList[uiCount]->uiType == uiType ) {
          ++uiRdds;
       }
    }
-   pRddArray = hb_itemArrayNew(uiRdds);
+   auto pRddArray = hb_itemArrayNew(uiRdds);
    for( uiCount = uiIndex = 0; uiCount < s_uiRddCount && uiIndex < uiRdds; ++uiCount ) {
       LPRDDNODE pNode = s_RddList[uiCount];
       if( uiType == 0 || pNode->uiType == uiType ) {
