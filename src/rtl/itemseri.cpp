@@ -1530,7 +1530,8 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          /* find class handle */
          uiClass = hb_clsFindClass(hb_itemGetCPtr(pItem), nullptr);
          if( uiClass && hb_vmRequestReenter() ) {
-            PHB_ITEM pMsg = hb_stackAllocItem(), pVal = hb_stackAllocItem();
+            auto pMsg = hb_stackAllocItem();
+            auto pVal = hb_stackAllocItem();
 
             hb_clsAssociate( uiClass );
             hb_itemMove(pItem, hb_stackReturnItem());

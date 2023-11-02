@@ -470,7 +470,7 @@ static int hb_matherrblock(HB_MATH_EXCEPTION * pexc)
       PHB_ITEM pRetval = hb_itemPutNDLen(nullptr, pexc->retval, pexc->retvalwidth, pexc->retvaldec);
       PHB_ITEM pHandled = hb_itemPutL(nullptr, pexc->handled);
 
-      PHB_ITEM pArray = hb_itemArrayNew(2);
+      auto pArray = hb_itemArrayNew(2);
       hb_itemArrayPut(pArray, 1, pRetval);
       hb_itemArrayPut(pArray, 2, pHandled);
 

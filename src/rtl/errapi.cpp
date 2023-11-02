@@ -946,7 +946,7 @@ PHB_ITEM hb_errPutArgs(PHB_ITEM pError, HB_ULONG ulArgCount, ...)
    HB_TRACE(HB_TR_DEBUG, ("hb_errPutArgs(%p, %lu, ...)", pError, ulArgCount));
 #endif
 
-   PHB_ITEM pArray = hb_itemArrayNew(ulArgCount);
+   auto pArray = hb_itemArrayNew(ulArgCount);
 
    /* Build the array from the passed arguments. */
 
