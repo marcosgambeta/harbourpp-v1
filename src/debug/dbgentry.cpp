@@ -290,7 +290,7 @@ static PHB_ITEM hb_dbgSetArray(void)
 {
    int iSet, iPos;
 
-   PHB_ITEM pArray = hb_itemArrayNew(_SET_COUNT + HB_SET_COUNT);
+   auto pArray = hb_itemArrayNew(_SET_COUNT + HB_SET_COUNT);
    iPos = iSet = 1;
    while( iPos <= _SET_COUNT + HB_SET_COUNT ) {
       const char * szName = hb_dbgSetName(static_cast<HB_set_enum>(iSet));
@@ -312,7 +312,7 @@ static PHB_ITEM hb_dbgSetArray(void)
 
 static PHB_ITEM hb_dbgActivateBreakArray(HB_DEBUGINFO * info)
 {
-   PHB_ITEM pArray = hb_itemArrayNew(info->nBreakPoints);
+   auto pArray = hb_itemArrayNew(info->nBreakPoints);
 
    for( int i = 0; i < info->nBreakPoints; i++ ) {
       PHB_ITEM pBreak = hb_arrayGetItemPtr(pArray, i + 1);
@@ -331,7 +331,7 @@ static PHB_ITEM hb_dbgActivateBreakArray(HB_DEBUGINFO * info)
 static PHB_ITEM hb_dbgActivateWatchArray(HB_DEBUGINFO * info)
 {
    int j;
-   PHB_ITEM pArray = hb_itemArrayNew(info->nWatchPoints);
+   auto pArray = hb_itemArrayNew(info->nWatchPoints);
 
    for( int i = 0; i < info->nWatchPoints; i++ ) {
       PHB_ITEM pWatch = hb_arrayGetItemPtr(pArray, i + 1), xValue;
@@ -379,7 +379,7 @@ static PHB_ITEM hb_dbgActivateModuleArray(void)
 {
    HB_DBGCOMMON_LOCK();
 
-   PHB_ITEM pArray = hb_itemArrayNew(s_common.nModules);
+   auto pArray = hb_itemArrayNew(s_common.nModules);
 
    for( int i = 0; i < s_common.nModules; i++ ) {
       PHB_ITEM pModule = hb_arrayGetItemPtr(pArray, i + 1);
@@ -398,7 +398,7 @@ static PHB_ITEM hb_dbgActivateModuleArray(void)
 
 static PHB_ITEM hb_dbgActivateCallStackArray(HB_DEBUGINFO * info)
 {
-   PHB_ITEM aCallStack = hb_itemArrayNew(info->nCallStackLen);
+   auto aCallStack = hb_itemArrayNew(info->nCallStackLen);
 
    for( int i = 0; i < info->nCallStackLen; i++ ) {
       HB_CALLSTACKINFO * pEntry = &info->aCallStack[i];
@@ -1270,7 +1270,7 @@ static PHB_ITEM hb_dbgEvalResolve( HB_DEBUGINFO * info, HB_WATCHPOINT * watch )
 {
    int i;
    HB_CALLSTACKINFO * top = &info->aCallStack[info->nCallStackLen - 1];
-   PHB_ITEM aVars = hb_itemArrayNew(watch->nVars);
+   auto aVars = hb_itemArrayNew(watch->nVars);
    HB_VARINFO * scopes;
    HB_MODULEINFO * module = nullptr;
    int nProcLevel;
@@ -1425,7 +1425,7 @@ PHB_ITEM hb_dbgGetSourceFiles(void * handle)
 
    HB_DBGCOMMON_LOCK();
    HB_ISIZ nModules = hb_itemSize(s_common.pStopLines);
-   PHB_ITEM ret = hb_itemArrayNew(nModules);
+   auto ret = hb_itemArrayNew(nModules);
    for( HB_ISIZ i = 1; i <= nModules; i++ ) {
       hb_arraySet(ret, i, hb_arrayGetItemPtr(hb_arrayGetItemPtr(s_common.pStopLines, i), 1));
    }
