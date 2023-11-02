@@ -113,7 +113,7 @@ static bool set_logical(PHB_ITEM pItem, bool bDefault)
       if( HB_IS_LOGICAL(pItem) ) {
          bLogical = hb_itemGetL(pItem);
       } else if( HB_IS_STRING(pItem) ) {
-         const char * szString = hb_itemGetCPtr(pItem);
+         auto szString = hb_itemGetCPtr(pItem);
          HB_SIZE nLen = hb_itemGetCLen(pItem);
 
          if( nLen >= 2
