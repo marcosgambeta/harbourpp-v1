@@ -53,7 +53,7 @@
 
 HB_FUNC( EVAL )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::BLOCK);
+   auto pItem = hb_param(1, Harbour::Item::BLOCK);
 
    if( pItem != nullptr ) {
       int iPCount = hb_pcount();

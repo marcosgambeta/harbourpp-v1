@@ -86,7 +86,7 @@ PHB_ITEM hb_paramError(int iParam)
 {
    static HB_ITEM s_NIL;
 
-   PHB_ITEM pParam = hb_param(iParam, Harbour::Item::ANY);
+   auto pParam = hb_param(iParam, Harbour::Item::ANY);
 
    if( pParam == nullptr ) {
       hb_itemClear(&s_NIL);
@@ -128,7 +128,7 @@ HB_SIZE hb_parinfa(int iParamNum, HB_SIZE nArrayIndex)
    HB_TRACE(HB_TR_DEBUG, ("hb_parinfa(%d, %" HB_PFS "u)", iParamNum, nArrayIndex));
 #endif
 
-   PHB_ITEM pArray = hb_param(iParamNum, Harbour::Item::ARRAY);
+   auto pArray = hb_param(iParamNum, Harbour::Item::ARRAY);
 
    if( pArray ) {
       if( nArrayIndex == 0 ) {

@@ -61,8 +61,8 @@ HB_FUNC( HB_HASH )
    } else {
       PHB_ITEM pHash = hb_hashNew(nullptr);
       for( int iParam = 1; iParam <= iPCount; iParam += 2 ) {
-         PHB_ITEM pKey = hb_param(iParam, Harbour::Item::HASHKEY);
-         PHB_ITEM pValue = hb_param(iParam + 1, Harbour::Item::ANY);
+         auto pKey = hb_param(iParam, Harbour::Item::HASHKEY);
+         auto pValue = hb_param(iParam + 1, Harbour::Item::ANY);
          if( pKey ) {
             hb_hashAdd(pHash, pKey, pValue);
          } else {
@@ -76,8 +76,8 @@ HB_FUNC( HB_HASH )
 
 HB_FUNC( HB_HHASKEY )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( pHash && pKey ) {
       HB_SIZE nPos;
@@ -90,8 +90,8 @@ HB_FUNC( HB_HHASKEY )
 
 HB_FUNC( HB_HPOS )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( pHash && pKey ) {
       HB_SIZE nPos;
@@ -104,8 +104,8 @@ HB_FUNC( HB_HPOS )
 
 HB_FUNC( HB_HGET )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( pHash && pKey ) {
       PHB_ITEM pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
@@ -121,15 +121,15 @@ HB_FUNC( HB_HGET )
 
 HB_FUNC( HB_HGETDEF )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( pHash && pKey ) {
       PHB_ITEM pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
       if( pDest ) {
          hb_itemReturn(pDest);
       } else {
-         PHB_ITEM pDefault = hb_param(3, Harbour::Item::ANY);
+         auto pDefault = hb_param(3, Harbour::Item::ANY);
          if( pDefault ) {
             hb_itemReturn(pDefault);
          }
@@ -141,11 +141,11 @@ HB_FUNC( HB_HGETDEF )
 
 HB_FUNC( HB_HSETDEF )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( pHash && pKey ) {
-      PHB_ITEM pDefault = hb_param(3, Harbour::Item::ANY);
+      auto pDefault = hb_param(3, Harbour::Item::ANY);
       int iFlags = hb_hashGetFlags(pHash);
 
       if( (iFlags & HB_HASH_AUTOADD_ACCESS) == 0 ) {
@@ -171,8 +171,8 @@ HB_FUNC( HB_HSETDEF )
 
 HB_FUNC( HB_HGETREF )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( pHash && pKey ) {
       PHB_ITEM pDest = hb_hashGetItemPtr(pHash, pKey, HB_HASH_AUTOADD_ACCESS);
@@ -185,9 +185,9 @@ HB_FUNC( HB_HGETREF )
 
 HB_FUNC( HB_HSET )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
-   PHB_ITEM pValue = hb_param(3, Harbour::Item::ANY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pValue = hb_param(3, Harbour::Item::ANY);
 
    if( pHash && pKey && pValue ) {
       hb_hashAdd(pHash, pKey, pValue);
@@ -199,8 +199,8 @@ HB_FUNC( HB_HSET )
 
 HB_FUNC( HB_HDEL )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( pHash && pKey ) {
       hb_hashDel(pHash, pKey);
@@ -212,8 +212,8 @@ HB_FUNC( HB_HDEL )
 
 HB_FUNC( HB_HKEYAT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos = hb_param(2, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
    if( pHash && pPos ) {
       PHB_ITEM pKey = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
@@ -229,9 +229,9 @@ HB_FUNC( HB_HKEYAT )
 
 HB_FUNC( HB_HVALUEAT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pValue = hb_param(3, Harbour::Item::ANY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
+   auto pValue = hb_param(3, Harbour::Item::ANY);
 
    if( pHash && pPos ) {
       PHB_ITEM pItem = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
@@ -252,15 +252,15 @@ HB_FUNC( HB_HVALUEAT )
 
 HB_FUNC( HB_HPAIRAT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos = hb_param(2, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
    if( pHash && pPos ) {
       PHB_ITEM pKey = hb_hashGetKeyAt(pHash, hb_itemGetNS(pPos));
       PHB_ITEM pValue = hb_hashGetValueAt(pHash, hb_itemGetNS(pPos));
       if( pKey && pValue ) {
-         PHB_ITEM pDstKey = hb_param(3, Harbour::Item::BYREF);
-         PHB_ITEM pDstVal = hb_param(4, Harbour::Item::BYREF);
+         auto pDstKey = hb_param(3, Harbour::Item::BYREF);
+         auto pDstVal = hb_param(4, Harbour::Item::BYREF);
          if( pDstKey && pDstVal ) {
             hb_itemCopy(pDstKey, pKey);
             hb_itemCopy(pDstVal, pValue);
@@ -280,8 +280,8 @@ HB_FUNC( HB_HPAIRAT )
 
 HB_FUNC( HB_HDELAT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos = hb_param(2, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
    if( pHash && pPos ) {
       if( hb_hashDelAt(pHash, hb_itemGetNS(pPos)) ) {
@@ -296,7 +296,7 @@ HB_FUNC( HB_HDELAT )
 
 HB_FUNC( HB_HKEYS )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       hb_itemReturnRelease(hb_hashGetKeys(pHash));
@@ -307,7 +307,7 @@ HB_FUNC( HB_HKEYS )
 
 HB_FUNC( HB_HVALUES )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       hb_itemReturnRelease(hb_hashGetValues(pHash));
@@ -318,7 +318,7 @@ HB_FUNC( HB_HVALUES )
 
 HB_FUNC( HB_HCLEAR )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       hb_hashClear(pHash);
@@ -330,8 +330,8 @@ HB_FUNC( HB_HCLEAR )
 
 HB_FUNC( HB_HFILL )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pValue = hb_param(2, Harbour::Item::ANY);
 
    if( pHash && pValue ) {
       PHB_ITEM pDest;
@@ -349,7 +349,7 @@ HB_FUNC( HB_HFILL )
 
 HB_FUNC( HB_HCLONE )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       hb_hashCloneTo(hb_stackReturnItem(), pHash);
@@ -360,8 +360,8 @@ HB_FUNC( HB_HCLONE )
 
 HB_FUNC( HB_HCOPY )
 {
-   PHB_ITEM pSource = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pDest = hb_param(2, Harbour::Item::HASH);
+   auto pSource = hb_param(1, Harbour::Item::HASH);
+   auto pDest = hb_param(2, Harbour::Item::HASH);
 
    if( pSource && pDest ) {
       if( pSource != pDest ) {
@@ -392,12 +392,12 @@ HB_FUNC( HB_HCOPY )
 
 HB_FUNC( HB_HMERGE )
 {
-   PHB_ITEM pDest = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pSource = hb_param(2, Harbour::Item::HASH);
+   auto pDest = hb_param(1, Harbour::Item::HASH);
+   auto pSource = hb_param(2, Harbour::Item::HASH);
 
    if( pDest && pSource ) {
       if( pSource != pDest ) {
-         PHB_ITEM pAction = hb_param(3, Harbour::Item::EVALITEM | Harbour::Item::NUMERIC);
+         auto pAction = hb_param(3, Harbour::Item::EVALITEM | Harbour::Item::NUMERIC);
 
          if( pAction && HB_IS_EVALITEM(pAction) ) {
             HB_SIZE nLen = hb_hashLen(pSource), nPos = 0;
@@ -433,8 +433,8 @@ HB_FUNC( HB_HMERGE )
 
 HB_FUNC( HB_HEVAL )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pBlock = hb_param(2, Harbour::Item::EVALITEM);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pBlock = hb_param(2, Harbour::Item::EVALITEM);
 
    if( pHash && pBlock ) {
       HB_SIZE nLen = hb_hashLen(pHash);
@@ -469,8 +469,8 @@ HB_FUNC( HB_HEVAL )
 
 HB_FUNC( HB_HSCAN )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pValue = hb_param(2, Harbour::Item::ANY);
 
    if( pHash && pValue ) {
       bool fExact = hb_parl(5);
@@ -639,7 +639,7 @@ HB_FUNC( HB_HSCAN )
 
 HB_FUNC( HB_HSORT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       hb_hashSort(pHash);
@@ -651,10 +651,10 @@ HB_FUNC( HB_HSORT )
 
 HB_FUNC( HB_HCASEMATCH )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
-      PHB_ITEM pValue = hb_param(2, Harbour::Item::LOGICAL);
+      auto pValue = hb_param(2, Harbour::Item::LOGICAL);
       int iFlags = hb_hashGetFlags(pHash);
 
       hb_retl((iFlags & HB_HASH_IGNORECASE) == 0);
@@ -677,10 +677,10 @@ HB_FUNC( HB_HCASEMATCH )
 
 HB_FUNC( HB_HBINARY )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
-      PHB_ITEM pValue = hb_param(2, Harbour::Item::LOGICAL);
+      auto pValue = hb_param(2, Harbour::Item::LOGICAL);
       int iFlags = hb_hashGetFlags(pHash);
 
       hb_retl((iFlags & HB_HASH_BINARY) != 0);
@@ -703,10 +703,10 @@ HB_FUNC( HB_HBINARY )
 
 HB_FUNC( HB_HAUTOADD )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
-      PHB_ITEM pValue = hb_param(2, Harbour::Item::LOGICAL | Harbour::Item::NUMERIC);
+      auto pValue = hb_param(2, Harbour::Item::LOGICAL | Harbour::Item::NUMERIC);
       int iOldFlags = hb_hashGetFlags(pHash) & HB_HASH_AUTOADD_MASK;
 
       hb_retni(iOldFlags);
@@ -739,10 +739,10 @@ HB_FUNC( HB_HAUTOADD )
 
 HB_FUNC( HB_HKEEPORDER )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
-      PHB_ITEM pValue = hb_param(2, Harbour::Item::LOGICAL);
+      auto pValue = hb_param(2, Harbour::Item::LOGICAL);
       int iFlags = hb_hashGetFlags(pHash);
 
       hb_retl((iFlags & HB_HASH_KEEPORDER) != 0);
@@ -765,8 +765,8 @@ HB_FUNC( HB_HKEEPORDER )
 
 HB_FUNC( HB_HALLOCATE )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pValue = hb_param(2, Harbour::Item::NUMERIC);
 
    if( pHash && pValue ) {
       HB_ISIZ nMem = hb_itemGetNS(pValue);
@@ -780,7 +780,7 @@ HB_FUNC( HB_HALLOCATE )
 
 HB_FUNC( HB_HDEFAULT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       hb_itemReturn(hb_hashGetDefault(pHash));

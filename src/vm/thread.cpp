@@ -1060,7 +1060,7 @@ HB_FUNC( HB_THREADSTART )
    HB_ULONG ulAttr = 0;
    HB_ULONG ulStart = 1;
 
-   PHB_ITEM pStart = hb_param(ulStart, Harbour::Item::ANY);
+   auto pStart = hb_param(ulStart, Harbour::Item::ANY);
    while( pStart && HB_IS_NUMERIC(pStart) ) {
       ulAttr |= static_cast<HB_ULONG>(hb_itemGetNL(pStart));
       pStart = hb_param(++ulStart, Harbour::Item::ANY);
@@ -1371,7 +1371,7 @@ HB_FUNC( HB_THREADWAIT )
 
    PHB_THREADSTATE * pThreads = pAlloc;
    if( HB_ISARRAY(1) ) {
-      PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+      auto pArray = hb_param(1, Harbour::Item::ARRAY);
       int iLen = static_cast<int>(hb_arrayLen(pArray)), i;
 
       for( i = iThreads = 0; i < iLen; ++i ) {
@@ -1444,13 +1444,13 @@ HB_FUNC( HB_THREADTERMINATEALL )
  */
 HB_FUNC( HB_THREADONCE )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_ISBYREF(1) && (HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem)) ) {
       HB_STACK_TLS_PRELOAD
       bool fFirstCall = false;
       if( HB_IS_NIL(pItem) || !hb_itemGetL(pItem) ) {
-         PHB_ITEM pAction = hb_param(2, Harbour::Item::EVALITEM);
+         auto pAction = hb_param(2, Harbour::Item::EVALITEM);
 
 #if defined(HB_MT_VM)
          if( !s_pOnceMutex ) {
@@ -1493,8 +1493,8 @@ HB_FUNC( HB_THREADONCE )
  */
 HB_FUNC( HB_THREADONCEINIT )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(2, Harbour::Item::ANY);
 
    if( pItem && pValue && HB_ISBYREF(1) && !HB_ISBYREF(2) ) {
       HB_STACK_TLS_PRELOAD
@@ -1665,7 +1665,7 @@ static PHB_MUTEX hb_mutexPtr(PHB_ITEM pItem)
 
 static PHB_ITEM hb_mutexParam(int iParam)
 {
-   PHB_ITEM pItem = hb_param(iParam, Harbour::Item::POINTER);
+   auto pItem = hb_param(iParam, Harbour::Item::POINTER);
 
    if( hb_itemGetPtrGC(pItem, &s_gcMutexFuncs) ) {
       return pItem;
@@ -2475,7 +2475,7 @@ HB_FUNC( HB_MUTEXEVAL )
    PHB_ITEM pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
-      PHB_ITEM pEval = hb_param(2, Harbour::Item::EVALITEM);
+      auto pEval = hb_param(2, Harbour::Item::EVALITEM);
 
       if( pEval ) {
          HB_STACK_TLS_PRELOAD

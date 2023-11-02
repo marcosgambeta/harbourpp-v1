@@ -486,7 +486,7 @@ HB_FUNC( __SETCENTURY )
 {
    HB_STACK_TLS_PRELOAD
    bool old_century_setting = hb_setGetCentury();
-   PHB_ITEM pNewVal = hb_param(1, Harbour::Item::ANY);
+   auto pNewVal = hb_param(1, Harbour::Item::ANY);
 
    if( pNewVal ) {
       hb_setSetCentury(set_logical(pNewVal, old_century_setting));

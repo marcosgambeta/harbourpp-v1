@@ -357,7 +357,7 @@ HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE * pnStart, HB_SIZE * pnCount, PHB_
 
 HB_FUNC( ASORT )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray && !hb_arrayIsObject(pArray) ) {
       HB_SIZE nStart = hb_parns(2);

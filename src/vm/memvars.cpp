@@ -1012,7 +1012,7 @@ HB_FUNC( __MVPUBLIC )
 
    if( iCount ) {
       for( int i = 1; i <= iCount; i++ ) {
-         PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
+         auto pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar ) {
             if( HB_IS_ARRAY(pMemvar) ) {
@@ -1039,7 +1039,7 @@ HB_FUNC( __MVPRIVATE )
    if( iCount ) {
       hb_memvarResetPrivatesBase();
       for( int i = 1; i <= iCount; i++ ) {
-         PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
+         auto pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar ) {
             if( HB_IS_ARRAY(pMemvar) ) {
@@ -1066,7 +1066,7 @@ HB_FUNC( __MVXRELEASE )
 
    if( iCount ) {
       for( int i = 1; i <= iCount; i++ ) {
-         PHB_ITEM pMemvar = hb_param(i, Harbour::Item::ANY);
+         auto pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar ) {
             if( HB_IS_ARRAY(pMemvar) ) {
@@ -1103,7 +1103,7 @@ HB_FUNC( __MVSCOPE )
    int iMemvar = HB_MV_ERROR;
 
    if( hb_pcount() ) {
-      PHB_ITEM pVarName = hb_param(1, Harbour::Item::STRING);
+      auto pVarName = hb_param(1, Harbour::Item::STRING);
 
       if( pVarName ) {
          iMemvar = hb_memvarScope(pVarName->item.asString.value, pVarName->item.asString.length);
@@ -1149,7 +1149,7 @@ HB_FUNC( __MVEXIST )
 
 HB_FUNC( __MVGET )
 {
-   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
+   auto pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName ) {
       HB_STACK_TLS_PRELOAD
@@ -1189,7 +1189,7 @@ HB_FUNC( __MVGET )
 
 HB_FUNC( __MVGETDEF )
 {
-   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
+   auto pName = hb_param(1, Harbour::Item::STRING);
 
    if( pName ) {
       HB_STACK_TLS_PRELOAD
@@ -1207,7 +1207,7 @@ HB_FUNC( __MVGETDEF )
 
 HB_FUNC( __MVPUT )
 {
-   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
+   auto pName = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pValue = hb_paramError(2);
 
    if( pName ) {

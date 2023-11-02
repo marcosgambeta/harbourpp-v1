@@ -105,10 +105,10 @@ HB_FUNC( ARRAY )
 
 HB_FUNC( AADD )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
-      PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+      auto pValue = hb_param(2, Harbour::Item::ANY);
 
       if( pValue && hb_arrayAdd(pArray, pValue) ) {
          hb_itemReturn(pValue);
@@ -125,7 +125,7 @@ HB_FUNC( AADD )
 
 HB_FUNC( ASIZE )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray && HB_ISNUM(2) ) {
       HB_ISIZ nSize = hb_parns(2);
@@ -148,7 +148,7 @@ HB_FUNC( ASIZE )
 
 HB_FUNC( ATAIL )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       hb_arrayLast(pArray, hb_stackReturnItem());
@@ -157,7 +157,7 @@ HB_FUNC( ATAIL )
 
 HB_FUNC( AINS )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       HB_ISIZ nPos = hb_parns(2);
@@ -174,7 +174,7 @@ HB_FUNC( AINS )
 
 HB_FUNC( ADEL )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       HB_ISIZ nPos = hb_parns(2);
@@ -191,10 +191,10 @@ HB_FUNC( ADEL )
 
 HB_FUNC( AFILL )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
-      PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+      auto pValue = hb_param(2, Harbour::Item::ANY);
 
       hb_itemReturn(pArray); /* AFill() returns the array itself */
 
@@ -242,8 +242,8 @@ HB_FUNC( AFILL )
 
 HB_FUNC( ASCAN )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pValue = hb_param(2, Harbour::Item::ANY);
 
    if( pArray && pValue ) {
       HB_SIZE nStart = hb_parns(3);
@@ -258,8 +258,8 @@ HB_FUNC( ASCAN )
 /* Same as AScan() but has an additional parameter to force exact comparison. */
 HB_FUNC( HB_ASCAN )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pValue = hb_param(2, Harbour::Item::ANY);
 
    if( pArray && pValue ) {
       HB_SIZE nStart = hb_parns(3);
@@ -273,8 +273,8 @@ HB_FUNC( HB_ASCAN )
 
 HB_FUNC( HB_RASCAN )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pValue = hb_param(2, Harbour::Item::ANY);
 
    if( pArray && pValue ) {
       HB_SIZE nStart = hb_parns(3);
@@ -288,7 +288,7 @@ HB_FUNC( HB_RASCAN )
 
 HB_FUNC( HB_AINS )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       HB_ISIZ nPos = hb_parns(2);
@@ -316,7 +316,7 @@ HB_FUNC( HB_AINS )
 
 HB_FUNC( HB_ADEL )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       HB_ISIZ nPos = hb_parns(2);
@@ -340,8 +340,8 @@ HB_FUNC( HB_ADEL )
 
 HB_FUNC( AEVAL )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM pBlock = hb_param(2, Harbour::Item::BLOCK);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pBlock = hb_param(2, Harbour::Item::BLOCK);
 
    if( pArray && pBlock ) {
       HB_SIZE nStart = hb_parns(3);
@@ -357,8 +357,8 @@ HB_FUNC( AEVAL )
 
 HB_FUNC( ACOPY )
 {
-   PHB_ITEM pSrcArray = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM pDstArray = hb_param(2, Harbour::Item::ARRAY);
+   auto pSrcArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pDstArray = hb_param(2, Harbour::Item::ARRAY);
 
    if( pSrcArray && pDstArray ) {
       /* CA-Cl*pper works this way. */
@@ -378,7 +378,7 @@ HB_FUNC( ACOPY )
 
 HB_FUNC( ACLONE )
 {
-   PHB_ITEM pSrcArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pSrcArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pSrcArray && !hb_arrayIsObject(pSrcArray) ) {
       hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); /* AClone() returns the new array */

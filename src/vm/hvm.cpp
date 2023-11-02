@@ -11387,8 +11387,8 @@ HB_FUNC( __DBGVMVARSGET )
 HB_FUNC( __DBGVMVARSSET )
 {
    if( hb_vmInternalsEnabled() ) {
-      PHB_ITEM pStaticsBase = hb_param(1, Harbour::Item::ARRAY);
-      PHB_ITEM pItem = hb_param(3, Harbour::Item::ANY);
+      auto pStaticsBase = hb_param(1, Harbour::Item::ARRAY);
+      auto pItem = hb_param(3, Harbour::Item::ANY);
 
       if( pStaticsBase && pItem ) {
          hb_arraySet(pStaticsBase, hb_parni(2), pItem);
@@ -11459,7 +11459,7 @@ HB_FUNC( __DBGVMVARGSET )
 {
 #if 0
    if( hb_vmInternalsEnabled() ) {
-      PHB_ITEM pItem = hb_param(3, Harbour::Item::ANY);
+      auto pItem = hb_param(3, Harbour::Item::ANY);
       if( pItem != nullptr ) {
          hb_arraySet(&s_aGlobals, hb_parni(1) + hb_parni(2), pItem);
       }
@@ -11652,7 +11652,7 @@ HB_FUNC( __VMITEMID )
 {
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
       if( HB_IS_ARRAY(pItem) ) {
@@ -11671,7 +11671,7 @@ HB_FUNC( __VMITEMREFS )
 {
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
       if( HB_IS_ARRAY(pItem) ) {
@@ -11741,7 +11741,7 @@ HB_FUNC( HB_ARRAYTOPARAMS )
 {
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       hb_arrayLast(pArray, hb_stackReturnItem());

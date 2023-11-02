@@ -319,13 +319,13 @@ void hb_evalBlock(PHB_ITEM pCodeBlock, ...)
 
 HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
 {
-   PHB_ITEM pCodeBlock = hb_param(3, Harbour::Item::BLOCK);
+   auto pCodeBlock = hb_param(3, Harbour::Item::BLOCK);
 
    if( pCodeBlock ) {
       HB_MAXINT nStart = hb_parnint(1), nEnd;
       HB_MAXINT nStep = (hb_pcount() > 3) ? hb_parnint(4) : 1;
 
-      PHB_ITEM pEndBlock = hb_param(2, Harbour::Item::BLOCK);
+      auto pEndBlock = hb_param(2, Harbour::Item::BLOCK);
 
       if( pEndBlock ) {
          hb_evalBlock0(pEndBlock);
@@ -388,7 +388,7 @@ HB_FUNC( HB_EXECFROMARRAY )
 
    /* decode parameters */
    if( iPCount ) {
-      PHB_ITEM pParam = hb_param(1, Harbour::Item::ANY);
+      auto pParam = hb_param(1, Harbour::Item::ANY);
 
       if( iPCount == 1 ) {
          if( HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam) ) {
