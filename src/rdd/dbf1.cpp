@@ -565,9 +565,7 @@ static void hb_dbfTriggerSet(DBFAREAP pArea, PHB_ITEM pTrigger)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfTriggerSet(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pTrigger)));
 #endif
 
-   const char * szName;
-
-   szName = hb_itemGetCPtr(pTrigger);
+   auto szName = hb_itemGetCPtr(pTrigger);
    pArea->pTriggerSym = *szName ? hb_dynsymFindName(szName) : nullptr;
    if( pArea->pTriggerSym && !hb_dynsymIsFunction(pArea->pTriggerSym) ) {
       pArea->pTriggerSym = nullptr;
@@ -6036,12 +6034,12 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
 #endif
 
    char szFileName[HB_PATH_MAX];
-   const char * szFile, * szExt;
+   const char * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    bool fTable = false, fResult = false;
 
-   szFile = hb_itemGetCPtr(pItemIndex);
+   auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
       /* Try to delete index file */
       szFile = hb_itemGetCPtr(pItemTable);
@@ -6115,12 +6113,11 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
 #endif
 
    char szFileName[HB_PATH_MAX];
-   const char * szFile;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    bool fTable = false;
 
-   szFile = hb_itemGetCPtr(pItemIndex);
+   auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
       szFile = hb_itemGetCPtr(pItemTable);
       if( !szFile[0] ) {
@@ -6154,12 +6151,12 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
 #endif
 
    char szFileName[HB_PATH_MAX];
-   const char * szFile, * szExt;
+   const char * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    bool fTable = false, fResult = false;
 
-   szFile = hb_itemGetCPtr(pItemIndex);
+   auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
       /* Try to delete index file */
       szFile = hb_itemGetCPtr(pItemTable);
@@ -6343,7 +6340,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
          break;
 
       case RDDI_TABLEEXT: {
-         const char * szNew = hb_itemGetCPtr(pItem);
+         auto szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
          szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;

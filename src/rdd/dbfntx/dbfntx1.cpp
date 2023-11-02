@@ -3474,7 +3474,7 @@ static LPTAGINFO hb_ntxFindTag(NTXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagI
    }
    if( pIndex ) {
       if( hb_itemType(pTagItem) & Harbour::Item::STRING ) {
-         const char * szTag = hb_itemGetCPtr(pTagItem);
+         auto szTag = hb_itemGetCPtr(pTagItem);
          int iTag;
 
          if( fBag ) {
@@ -3971,12 +3971,11 @@ static bool hb_ntxOrdSkipWild(LPTAGINFO pTag, bool fForward, PHB_ITEM pWildItm)
 #endif
 
    NTXAREAP pArea = pTag->pIndex->pArea;
-   const char * szPattern;
    char * szFree = nullptr;
    bool fFound = false;
    int iFixed = 0;
 
-   szPattern = hb_itemGetCPtr(pWildItm);
+   auto szPattern = hb_itemGetCPtr(pWildItm);
 
    if( pTag->KeyType != 'C' || !szPattern || !*szPattern ) {
       if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ) {
@@ -5830,7 +5829,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    PHB_ITEM pResult, pKeyExp, pForExp = nullptr;
    int iLen, iDec, iTag, i;
    char szFileName[HB_PATH_MAX], szTagName[NTX_MAX_TAGNAME + 1];
-   const char * szKey, * szFor = nullptr;
+   const char * szFor = nullptr;
    LPNTXINDEX pIndex, * pIndexPtr;
    LPTAGINFO pTag = nullptr;
    LPDBFDATA pData;
@@ -5852,7 +5851,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       }
    }
 
-   szKey = hb_itemGetCPtr(pOrderInfo->abExpr);
+   auto szKey = hb_itemGetCPtr(pOrderInfo->abExpr);
    /* If we have a codeblock for the expression, use it */
    if( pOrderInfo->itmCobExpr ) {
       pKeyExp = hb_itemNew(pOrderInfo->itmCobExpr);
@@ -6419,7 +6418,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          case DBOI_CONDITION:
             pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pTag->ForExpr ? pTag->ForExpr : nullptr);
             if( hb_itemType(pInfo->itmNewVal) & Harbour::Item::STRING ) {
-               const char * szForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
+               auto szForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
                if( pTag->ForExpr ? strncmp(pTag->ForExpr, szForExpr, NTX_MAX_EXP) != 0 : *szForExpr ) {
                   PHB_ITEM pForItem = nullptr;
                   bool fOK = *szForExpr == 0;
@@ -7178,7 +7177,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_ORDBAGEXT:
       case RDDI_ORDEREXT:
       case RDDI_ORDSTRUCTEXT: {
-         const char * szNew = hb_itemGetCPtr(pItem);
+         auto szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
          szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;

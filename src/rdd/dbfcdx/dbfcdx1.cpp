@@ -444,10 +444,9 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
       case 'C': {
          HB_SIZE nDestLen = pTag->uiLen;
          char * pFree = nullptr, * pDest;
-         const char * pText;
          PHB_CODEPAGE cdpVM = hb_vmCDP();
 
-         pText = hb_itemGetCPtr(pItem);
+         auto pText = hb_itemGetCPtr(pItem);
          nLen = hb_itemGetCLen(pItem);
 
          if( cdpVM != pTag->pIndex->pArea->dbfarea.area.cdPage ) {
@@ -5158,7 +5157,6 @@ static bool hb_cdxDBOISkipWild(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB
 #endif
 
    bool fFound = false, fFirst = true;
-   const char * szPattern;
    char * szFree = nullptr;
    int iFixed = 0, iStop;
 
@@ -5166,7 +5164,7 @@ static bool hb_cdxDBOISkipWild(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB
       return false;
    }
 
-   szPattern = hb_itemGetCPtr(pWildItm);
+   auto szPattern = hb_itemGetCPtr(pWildItm);
 
    if( !pTag || pTag->uiType != 'C' || !szPattern || !*szPattern ) {
       if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) == Harbour::FAILURE ) {
@@ -7579,7 +7577,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
                pTag->pForItem = nullptr;
             }
             if( hb_itemGetCLen(pInfo->itmNewVal) > 0 ) {
-               const char * pForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
+               auto pForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
 
                if( SELF_COMPILE(&pArea->dbfarea.area, pForExpr) == Harbour::SUCCESS ) {
                   PHB_ITEM pForItem = pArea->dbfarea.area.valResult;
@@ -8176,7 +8174,7 @@ static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       case RDDI_ORDBAGEXT:
       case RDDI_ORDEREXT:
       case RDDI_ORDSTRUCTEXT: {
-         const char * szExt = hb_itemGetCPtr(pItem);
+         auto szExt = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
          szNewVal = szExt[0] == '.' && szExt[1] ? hb_strdup(szExt) : nullptr;

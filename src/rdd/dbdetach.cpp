@@ -63,7 +63,7 @@ HB_FUNC( HB_DBDETACH )
    if( !pAlias || HB_IS_NIL(pAlias) ) {
       pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    } else if( HB_IS_STRING(pAlias) ) {
-      const char * szAlias = hb_itemGetCPtr(pAlias);
+      auto szAlias = hb_itemGetCPtr(pAlias);
       hb_rddGetAliasNumber(szAlias, &iArea);
       if( iArea > 0 ) {
          pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));

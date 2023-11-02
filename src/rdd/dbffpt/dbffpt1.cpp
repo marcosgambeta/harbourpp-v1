@@ -4439,7 +4439,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
    switch( uiIndex ) {
       case RDDI_MEMOEXT: {
-         const char * szExt = hb_itemGetCPtr(pItem);
+         auto szExt = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
          szNewVal = szExt[0] == '.' && szExt[1] ? hb_strdup(szExt) : nullptr;

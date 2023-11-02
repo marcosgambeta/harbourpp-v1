@@ -1027,7 +1027,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       }
       case DBI_SETDELIMITER:
          if( hb_itemType(pItem) & Harbour::Item::STRING ) {
-            const char * szDelim = hb_itemGetCPtr(pItem);
+            auto szDelim = hb_itemGetCPtr(pItem);
 
             if( hb_stricmp(szDelim, "BLANK") == 0 ) {
                pArea->cDelim = '\0';
@@ -1072,7 +1072,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 
       case DBI_SEPARATOR: {
          char szSeparator[2];
-         const char * szNew = hb_itemGetCPtr(pItem);
+         auto szNew = hb_itemGetCPtr(pItem);
          szSeparator[0] = pArea->cSeparator;
          szSeparator[1]  = '\0';
          if( *szNew ) {
@@ -1601,7 +1601,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
 
       case RDDI_TABLEEXT: {
          LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
-         const char * szNew = hb_itemGetCPtr(pItem);
+         auto szNew = hb_itemGetCPtr(pItem);
          char * szNewVal;
 
          szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;

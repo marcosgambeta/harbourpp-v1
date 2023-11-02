@@ -640,7 +640,7 @@ HB_FUNC( SX_WILDSEEK )
             if( errCode == Harbour::SUCCESS ) {
                errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &Info);
                if( errCode == Harbour::SUCCESS ) {
-                  const char * szKey = hb_itemGetCPtr(Info.itmResult);
+                  auto szKey = hb_itemGetCPtr(Info.itmResult);
                   fFound = hb_strMatchWild(szKey, szPattern);
                }
             }
