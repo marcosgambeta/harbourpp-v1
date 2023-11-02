@@ -589,7 +589,7 @@ HB_FUNC( SX_SEEKLAST )
    HB_BOOL fFound = false;
 
    if( pArea && hb_pcount() > 0 ) {
-      PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
+      auto pKey = hb_param(1, Harbour::Item::ANY);
       bool bSoftSeek = hb_parl(2);
 
       if( SELF_SEEK(pArea, bSoftSeek, pKey, true) == Harbour::SUCCESS ) {

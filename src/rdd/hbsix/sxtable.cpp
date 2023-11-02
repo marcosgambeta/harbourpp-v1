@@ -217,7 +217,7 @@ HB_FUNC( SX_RLOCK )
    PHB_ITEM pResult = nullptr;
 
    if( pArea != nullptr ) {
-      PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
+      auto pRecords = hb_param(1, Harbour::Item::ARRAY);
       DBLOCKINFO dbLockInfo;
       dbLockInfo.fResult = false;
       dbLockInfo.uiMethod = DBLM_MULTIPLE;
@@ -248,7 +248,7 @@ HB_FUNC( SX_UNLOCK )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pRecords = hb_param(1, Harbour::Item::ARRAY);
+      auto pRecords = hb_param(1, Harbour::Item::ARRAY);
       if( pRecords ) {
          HB_SIZE nLen = hb_arrayLen(pRecords);
          for( HB_SIZE nPos = 1; nPos <= nLen; ++nPos ) {

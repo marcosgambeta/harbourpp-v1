@@ -58,13 +58,13 @@ HB_FUNC( AFIELDS )
 {
    HB_USHORT uiFields, uiCount;
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   PHB_ITEM pName = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM pType = hb_param(2, Harbour::Item::ARRAY);
-   PHB_ITEM pLen = hb_param(3, Harbour::Item::ARRAY);
-   PHB_ITEM pDec = hb_param(4, Harbour::Item::ARRAY);
+   auto pName = hb_param(1, Harbour::Item::ARRAY);
+   auto pType = hb_param(2, Harbour::Item::ARRAY);
+   auto pLen = hb_param(3, Harbour::Item::ARRAY);
+   auto pDec = hb_param(4, Harbour::Item::ARRAY);
 
 #ifdef DBS_FLAG
-   PHB_ITEM pFlags = hb_param(5, Harbour::Item::ARRAY);
+   auto pFlags = hb_param(5, Harbour::Item::ARRAY);
 #else
    PHB_ITEM pFlags = nullptr;
 #endif
@@ -302,12 +302,12 @@ HB_FUNC( DBCREATE )
     */
 
    auto szFileName = hb_parc(1);
-   PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
+   auto pStruct = hb_param(2, Harbour::Item::ARRAY);
    auto szDriver = hb_parc(3);
    bool fKeepOpen = HB_ISLOG(4);
    bool fCurrArea = fKeepOpen && !hb_parl(4);
    auto szAlias = hb_parc(5);
-   PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
+   auto pDelim = hb_param(6, Harbour::Item::ANY);
    auto szCpId = hb_parc(7);
    HB_ULONG ulConnection = hb_parnl(8);
 
@@ -356,7 +356,7 @@ HB_FUNC( DBCREATE )
 HB_FUNC( HB_DBCREATETEMP )
 {
    auto szAlias = hb_parc(1);
-   PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
+   auto pStruct = hb_param(2, Harbour::Item::ARRAY);
    auto szDriver = hb_parc(3);
    auto szCpId = hb_parc(4);
    HB_ULONG ulConnection = hb_parnl(5);
@@ -417,12 +417,12 @@ HB_FUNC( __DBOPENSDF )
     */
 
    auto szFileName = hb_parc(1);
-   PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
+   auto pStruct = hb_param(2, Harbour::Item::ARRAY);
    auto szDriver = hb_parc(3);
    bool fKeepOpen = HB_ISLOG(4);
    bool fCurrArea = fKeepOpen && !hb_parl(4);
    auto szAlias = hb_parc(5);
-   PHB_ITEM pDelim = hb_param(6, Harbour::Item::ANY);
+   auto pDelim = hb_param(6, Harbour::Item::ANY);
    auto szCpId = hb_parc(7);
    HB_ULONG ulConnection = hb_parnl(8);
 
@@ -498,7 +498,7 @@ HB_FUNC( DBGOTO )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+      auto pItem = hb_param(1, Harbour::Item::ANY);
       if( !pItem ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_NOVAR, nullptr, HB_ERR_FUNCNAME);
       } else {
@@ -554,7 +554,7 @@ HB_FUNC( __DBSETLOCATE )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pLocate = hb_param(1, Harbour::Item::BLOCK);
+      auto pLocate = hb_param(1, Harbour::Item::BLOCK);
       if( pLocate ) {
          DBSCOPEINFO pScopeInfo{};
          pScopeInfo.itmCobFor = pLocate;
@@ -583,7 +583,7 @@ HB_FUNC( __DBPACK )
        * Additional feature: __dbPack([<bBlock>, [<nEvery>])
        * Code Block to execute for every record.
        */
-      PHB_ITEM pBlock = hb_param(1, Harbour::Item::BLOCK);
+      auto pBlock = hb_param(1, Harbour::Item::BLOCK);
       if( pBlock ) {
          PHB_ITEM pEvery;
          hb_itemRelease(pArea->valResult);
@@ -661,7 +661,7 @@ HB_FUNC( DBSEEK )
 
    if( pArea != nullptr ) {
       if( !HB_ISNIL(1) ) {
-         PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
+         auto pKey = hb_param(1, Harbour::Item::ANY);
          bool bSoftSeek = HB_ISLOG(2) ? static_cast<HB_BOOL>(hb_parl(2)) : hb_setGetSoftSeek();
          bool bFindLast = hb_parl(3) /* HB_EXTENSION */;
          HB_BOOL fFound = false;
@@ -707,7 +707,7 @@ HB_FUNC( __DBSETFOUND )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pFound = hb_param(1, Harbour::Item::LOGICAL);
+      auto pFound = hb_param(1, Harbour::Item::LOGICAL);
       if( pFound ) {
          pArea->fFound = hb_itemGetL(pFound);
       }
@@ -719,11 +719,10 @@ HB_FUNC( DBSETFILTER )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pBlock, pText;
       DBFILTERINFO pFilterInfo;
 
-      pBlock = hb_param(1, Harbour::Item::BLOCK);
-      pText = hb_param(2, Harbour::Item::STRING);
+      auto pBlock = hb_param(1, Harbour::Item::BLOCK);
+      auto pText = hb_param(2, Harbour::Item::STRING);
       /* Cl*pper allows to set text filter without codeblock. In local
          RDDs it effectively does nothing and only dbFilter() returns it
          but RDDs with automatic filter optimization like CL53/DBFCDX /
@@ -962,7 +961,7 @@ HB_FUNC( FIELDPUT )
       HB_USHORT uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
 
       if( uiIndex > 0 ) {
-         PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
+         auto pItem = hb_param(2, Harbour::Item::ANY);
          if( pItem && !HB_IS_NIL(pItem) ) {
             if( SELF_PUTVALUE(pArea, uiIndex, pItem) == Harbour::SUCCESS ) {
                hb_itemReturn(pItem);
@@ -1718,9 +1717,9 @@ HB_FUNC( __DBARRANGE )
    if( pSrcArea && pDstArea && pSrcArea != pDstArea ) {
       DBSORTINFO dbSortInfo{};
       /* structure with fields copied copied from source WorkArea */
-      PHB_ITEM pStruct = hb_param(2, Harbour::Item::ARRAY);
+      auto pStruct = hb_param(2, Harbour::Item::ARRAY);
       /* array with sorted fields in source WorkArea */
-      PHB_ITEM pFields = hb_param(8, Harbour::Item::ARRAY);
+      auto pFields = hb_param(8, Harbour::Item::ARRAY);
 
       errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct);
       if( errCode == Harbour::SUCCESS ) {
@@ -1834,7 +1833,7 @@ HB_FUNC( __DBTRANS )
 
       if( pSrcArea && pDstArea ) {
          DBTRANSINFO dbTransInfo{};
-         PHB_ITEM pFields = hb_param(2, Harbour::Item::ARRAY);
+         auto pFields = hb_param(2, Harbour::Item::ARRAY);
 
          HB_ERRCODE errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields);
          if( errCode == Harbour::SUCCESS ) {
@@ -1961,7 +1960,6 @@ HB_FUNC( HB_RDDINFO )
    LPRDDNODE  pRDDNode;
    HB_USHORT  uiRddID;
    HB_ULONG   ulConnection;
-   PHB_ITEM   pIndex;
 
    auto szDriver = hb_parc(3);
    if( !szDriver ) { /* no VIA RDD parameter, use default */
@@ -1971,7 +1969,7 @@ HB_FUNC( HB_RDDINFO )
    ulConnection = hb_parnl(4);
 
    pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
-   pIndex = hb_param(1, Harbour::Item::NUMERIC);
+   auto pIndex = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pRDDNode && pIndex ) {
       PHB_ITEM pInfo = hb_itemParam(2);
@@ -2036,7 +2034,6 @@ HB_FUNC( HB_DBRENAME )
    LPRDDNODE pRDDNode = nullptr;
    HB_ULONG ulConnection = hb_parnl(5);
    auto szName = hb_parc(1);
-   PHB_ITEM pTable, pIndex, pNewName;
 
    if( szName ) {
       const char * szDriver;
@@ -2050,9 +2047,9 @@ HB_FUNC( HB_DBRENAME )
       }
    }
 
-   pTable = hb_param(1, Harbour::Item::STRING);
-   pIndex = hb_param(2, Harbour::Item::STRING);
-   pNewName = hb_param(3, Harbour::Item::STRING);
+   auto pTable = hb_param(1, Harbour::Item::STRING);
+   auto pIndex = hb_param(2, Harbour::Item::STRING);
+   auto pNewName = hb_param(3, Harbour::Item::STRING);
    if( pIndex && !pNewName ) {
       pNewName = pIndex;
       pIndex = nullptr;
@@ -2186,7 +2183,7 @@ HB_FUNC( HB_FIELDPUT )
       }
 
       if( uiField > 0 ) {
-         PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
+         auto pItem = hb_param(2, Harbour::Item::ANY);
          if( pItem ) {
             if( SELF_PUTVALUE(pArea, uiField, pItem) == Harbour::SUCCESS ) {
                hb_itemReturn(pItem);
@@ -2198,7 +2195,7 @@ HB_FUNC( HB_FIELDPUT )
 
 HB_FUNC( HB_WAEVAL )
 {
-   PHB_ITEM pBlock = hb_param(1, Harbour::Item::BLOCK);
+   auto pBlock = hb_param(1, Harbour::Item::BLOCK);
 
    if( pBlock ) {
       hb_rddEvalWA(pBlock);

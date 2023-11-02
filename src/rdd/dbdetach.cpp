@@ -55,8 +55,8 @@
  */
 HB_FUNC( HB_DBDETACH )
 {
-   PHB_ITEM pAlias = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pCargo = hb_param(2, Harbour::Item::ANY); /* Harbour::Item::BLOCK in Xbase++ */
+   auto pAlias = hb_param(1, Harbour::Item::ANY);
+   auto pCargo = hb_param(2, Harbour::Item::ANY); /* Harbour::Item::BLOCK in Xbase++ */
    AREAP pArea = nullptr;
    int iArea;
 

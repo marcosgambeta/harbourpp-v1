@@ -3112,7 +3112,6 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
 
    RDDFUNCS * pSelfTable, * pSuperTable;
    HB_USHORT * puiCount, * puiSuperRddId, uiSize;
-   PHB_ITEM pMethods;
 
    puiCount    = static_cast<HB_USHORT*>(hb_parptr(1));
    pSelfTable  = static_cast<RDDFUNCS*>(hb_parptr(2));
@@ -3121,7 +3120,7 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
    uiRddID = hb_parni(4);
 #endif
    auto szSuperRDD = hb_parc(5);
-   pMethods = hb_param(6, Harbour::Item::ARRAY);
+   auto pMethods = hb_param(6, Harbour::Item::ARRAY);
    puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(7));
 
    if( puiCount && pSelfTable && pSuperTable && pMethods ) {
@@ -4051,7 +4050,7 @@ HB_FUNC_UR_SUPER(ORDLSTADD)
 
    if( pArea != nullptr ) {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
+      auto pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo(pItem, &dbOrderInfo) ) {
          hb_retni(SUPER_ORDLSTADD(pArea, &dbOrderInfo));
@@ -4078,7 +4077,7 @@ HB_FUNC_UR_SUPER(ORDLSTDELETE)
 
    if( pArea != nullptr ) {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
+      auto pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo(pItem, &dbOrderInfo) ) {
          hb_retni(SUPER_ORDLSTDELETE(pArea, &dbOrderInfo));
@@ -4096,7 +4095,7 @@ HB_FUNC_UR_SUPER(ORDLSTFOCUS)
 
    if( pArea != nullptr ) {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
+      auto pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo(pItem, &dbOrderInfo) ) {
          hb_retni(SUPER_ORDLSTFOCUS(pArea, &dbOrderInfo));
@@ -4122,7 +4121,7 @@ HB_FUNC_UR_SUPER(ORDSETCOND)
    AREAP pArea = hb_usrGetAreaParam(2);
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::ANY);
+      auto pItem = hb_param(2, Harbour::Item::ANY);
 
       if( pItem && HB_IS_NIL(pItem) ) {
          hb_retni(SUPER_ORDSETCOND(pArea, nullptr));
@@ -4146,7 +4145,7 @@ HB_FUNC_UR_SUPER(ORDCREATE)
 
    if( pArea != nullptr ) {
       DBORDERCREATEINFO dbOrderCreateInfo;
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
+      auto pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderCreateInfo(pItem, &dbOrderCreateInfo) ) {
          hb_retni(SUPER_ORDCREATE(pArea, &dbOrderCreateInfo));
@@ -4164,7 +4163,7 @@ HB_FUNC_UR_SUPER(ORDDESTROY)
 
    if( pArea != nullptr ) {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
+      auto pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo(pItem, &dbOrderInfo) ) {
          hb_retni(SUPER_ORDDESTROY(pArea, &dbOrderInfo));
@@ -4182,7 +4181,7 @@ HB_FUNC_UR_SUPER(ORDINFO)
 
    if( pArea != nullptr ) {
       DBORDERINFO dbOrderInfo;
-      PHB_ITEM pItem = hb_param(3, Harbour::Item::ARRAY);
+      auto pItem = hb_param(3, Harbour::Item::ARRAY);
 
       if( hb_usrItemToOrderInfo(pItem, &dbOrderInfo) ) {
          hb_retni(SUPER_ORDINFO(pArea, static_cast<HB_USHORT>(hb_parni(2)), &dbOrderInfo));
@@ -4290,7 +4289,7 @@ HB_FUNC_UR_SUPER(ERROR)
    AREAP pArea = hb_usrGetAreaParam(2);
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::OBJECT);
+      auto pItem = hb_param(2, Harbour::Item::OBJECT);
 
       if( pItem != nullptr ) {
          pItem = hb_itemNew(pItem);
@@ -4308,7 +4307,7 @@ HB_FUNC_UR_SUPER(EVALBLOCK)
    AREAP pArea = hb_usrGetAreaParam(2);
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::BLOCK);
+      auto pItem = hb_param(2, Harbour::Item::BLOCK);
 
       if( pItem != nullptr ) {
          hb_retni(SUPER_EVALBLOCK(pArea, pItem));
@@ -4334,7 +4333,7 @@ HB_FUNC_UR_SUPER(LOCK)
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
-      PHB_ITEM pItem = hb_param(2, Harbour::Item::ARRAY);
+      auto pItem = hb_param(2, Harbour::Item::ARRAY);
 
       if( hb_usrItemToLockInfo(pItem, &dbLockInfo) ) {
          hb_retni(SUPER_LOCK(pArea, &dbLockInfo));

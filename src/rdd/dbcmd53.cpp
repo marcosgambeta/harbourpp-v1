@@ -271,9 +271,7 @@ HB_FUNC( DBINFO )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pIndex;
-
-      pIndex = hb_param(1, Harbour::Item::NUMERIC);
+      auto pIndex = hb_param(1, Harbour::Item::NUMERIC);
       if( pIndex ) {
          PHB_ITEM pInfo = hb_itemParam(2);
 
@@ -292,7 +290,7 @@ HB_FUNC( DBORDERINFO )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pType = hb_param(1, Harbour::Item::NUMERIC);
+      auto pType = hb_param(1, Harbour::Item::NUMERIC);
       if( pType ) {
          DBORDERINFO pOrderInfo;
 
@@ -320,9 +318,7 @@ HB_FUNC( DBFIELDINFO )
 
    if( pArea != nullptr ) {
       HB_USHORT uiFields, uiIndex;
-      PHB_ITEM pType;
-
-      pType = hb_param(1, Harbour::Item::NUMERIC);
+      auto pType = hb_param(1, Harbour::Item::NUMERIC);
       uiIndex = static_cast<HB_FIELDNO>(hb_parni(2));
       if( pType && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex > 0 && uiIndex <= uiFields ) {
          auto pInfo = hb_itemNew(hb_param(3, Harbour::Item::ANY));
@@ -342,10 +338,8 @@ HB_FUNC( DBRECORDINFO )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pType, pRecNo;
-
-      pType = hb_param(1, Harbour::Item::NUMERIC);
-      pRecNo = hb_param(2, Harbour::Item::ANY);
+      auto pType = hb_param(1, Harbour::Item::NUMERIC);
+      auto pRecNo = hb_param(2, Harbour::Item::ANY);
       if( pType ) {
          PHB_ITEM pInfo = hb_itemParam(3);
 
@@ -366,7 +360,6 @@ HB_FUNC( DBFILEGET )
 
    if( pArea != nullptr ) {
       HB_USHORT uiFields, uiIndex;
-      PHB_ITEM pMode;
       auto szField = hb_parc(1);
 
       if( szField ) {
@@ -375,7 +368,7 @@ HB_FUNC( DBFILEGET )
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
       }
 
-      pMode = hb_param(3, Harbour::Item::NUMERIC);
+      auto pMode = hb_param(3, Harbour::Item::NUMERIC);
       if( uiIndex > 0 && pMode && hb_parclen(2) > 0 && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex <= uiFields ) {
          hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_itemGetNI(pMode))) == Harbour::SUCCESS);
       } else {

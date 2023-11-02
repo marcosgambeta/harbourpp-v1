@@ -1940,7 +1940,7 @@ HB_FUNC( HS_VERIFY )
 {
    if( hb_param(1, Harbour::Item::NUMERIC) ) {
       int iHandle = hb_parni(1);
-      PHB_ITEM pExpr = hb_param(2, Harbour::Item::BLOCK);
+      auto pExpr = hb_param(2, Harbour::Item::BLOCK);
       const char * szText = nullptr;
       HB_SIZE nLen = 0;
       LPHSXINFO pHSX;
@@ -1965,7 +1965,7 @@ HB_FUNC( HS_VERIFY )
 
       hb_retni(hb_hsxVerify(hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4)));
    } else {
-      PHB_ITEM pExpr = hb_param(1, Harbour::Item::BLOCK);
+      auto pExpr = hb_param(1, Harbour::Item::BLOCK);
       auto szSub = hb_parc(2);
       const char * szText = nullptr;
       HB_SIZE nSub = hb_parclen(2), nLen = 0;

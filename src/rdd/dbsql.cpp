@@ -345,10 +345,10 @@ HB_FUNC( __DBSQL )
       HB_BOOL fExport         = hb_parl(1);
       auto szFileName         = hb_parc(2);
       auto szTable            = hb_parc(3);
-      PHB_ITEM pFields        = hb_param(4, Harbour::Item::ARRAY);
-      PHB_ITEM pFor           = hb_param(5, Harbour::Item::BLOCK);
-      PHB_ITEM pWhile         = hb_param(6, Harbour::Item::BLOCK);
-      PHB_ITEM pNext          = hb_param(7, Harbour::Item::NUMERIC);
+      auto pFields            = hb_param(4, Harbour::Item::ARRAY);
+      auto pFor               = hb_param(5, Harbour::Item::BLOCK);
+      auto pWhile             = hb_param(6, Harbour::Item::BLOCK);
+      auto pNext              = hb_param(7, Harbour::Item::NUMERIC);
       PHB_ITEM pRecord        = HB_ISNIL(8) ? nullptr : hb_param(8, Harbour::Item::ANY);
       HB_BOOL fRest           = pWhile != nullptr || hb_parl(9);
       HB_BOOL fAppend         = hb_parl(10);
