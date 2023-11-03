@@ -381,7 +381,7 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char * pszName, const ch
 
    hb_vmDo(5);
 
-   PHB_ITEM pFileItm = hb_stackReturnItem();
+   auto pFileItm = hb_stackReturnItem();
    if( !HB_IS_NIL(pFileItm) ) {
       pFile = s_fileNew(pIO, hb_itemNew(pFileItm));
    }

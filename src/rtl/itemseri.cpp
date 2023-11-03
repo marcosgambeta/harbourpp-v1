@@ -819,7 +819,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdp
             nOffset += 4;
          } else {
             int iHashFlags = hb_hashGetFlags(pItem);
-            PHB_ITEM pDefVal = hb_hashGetDefault(pItem);
+            auto pDefVal = hb_hashGetDefault(pItem);
 
             if( (iHashFlags & ~HB_HASH_RESORT) != HB_HASH_FLAG_DEFAULT ) {
                pBuffer[nOffset++] = HB_SERIAL_HASHFLAGS;

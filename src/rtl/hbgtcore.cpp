@@ -1914,7 +1914,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
          pOptions = hb_hashGetCItemPtr(pMessage, "BTN");
       }
       if( dDelay <= 0 ) {
-         PHB_ITEM pVal = hb_hashGetCItemPtr(pMessage, "TIM");
+         auto pVal = hb_hashGetCItemPtr(pMessage, "TIM");
          if( pVal && HB_IS_NUMERIC(pVal) ) {
            dDelay = hb_itemGetND(pVal);
          }

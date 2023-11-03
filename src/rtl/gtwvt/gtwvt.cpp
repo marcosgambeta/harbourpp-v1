@@ -371,7 +371,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->pMenu             = nullptr;
 
    {
-      PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+      auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
 
       pWVT->lpWindowTitle = HB_ITEMGETSTR(pItem, &pWVT->hWindowTitle, nullptr);
       hb_itemRelease(pItem);
@@ -2123,14 +2123,14 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
 
 #if defined(UNICODE)
                if( n > 0 ) {
-                  PHB_ITEM pItem = hb_itemPutStrLenU16(nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, n);
+                  auto pItem = hb_itemPutStrLenU16(nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, n);
                   hb_gt_winapi_setClipboard(CF_UNICODETEXT, pItem);
                   hb_itemRelease(pItem);
                }
                hb_xfree(sBuffer);
 #else
                if( n > 0 ) {
-                  PHB_ITEM pItem = hb_itemPutCLPtr(nullptr, sBuffer, n);
+                  auto pItem = hb_itemPutCLPtr(nullptr, sBuffer, n);
                   hb_gt_winapi_setClipboard(pWVT->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pItem);
                   hb_itemRelease(pItem);
                } else {

@@ -261,8 +261,8 @@ static long hb_i18n_pluralindex(int iForm, PHB_ITEM pNum)
 
 static void hb_i18n_setitem(PHB_ITEM pHash, const char * szKey, const char * szValue)
 {
-   PHB_ITEM pKey = hb_itemPutC(nullptr, szKey);
-   PHB_ITEM pValue = hb_itemPutC(nullptr, szValue);
+   auto pKey = hb_itemPutC(nullptr, szKey);
+   auto pValue = hb_itemPutC(nullptr, szValue);
    hb_hashAdd(pHash, pKey, pValue);
    hb_itemRelease(pKey);
    hb_itemRelease(pValue);
@@ -282,7 +282,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
       memcpy(&szMacro[4], hb_itemGetCPtr(pExp), nLen);
       szMacro[4 + nLen] = '}';
       szMacro[5 + nLen] = '\0';
-      PHB_ITEM pMacro = hb_itemPutCLPtr(nullptr, szMacro, nLen);
+      auto pMacro = hb_itemPutCLPtr(nullptr, szMacro, nLen);
       const char * szType = hb_macroGetType(pMacro);
       if( *szType == 'B' ) {
          hb_vmPush(pMacro);
@@ -308,7 +308,7 @@ static PHB_I18N_TRANS hb_i18n_new(void)
    pI18N->table = hb_hashNew(hb_itemNew(nullptr));
    pI18N->context_table = hb_hashNew(hb_itemNew(nullptr));
    pI18N->default_context = hb_hashNew(hb_itemNew(nullptr));
-   PHB_ITEM pKey = hb_itemPutCConst(nullptr, "CONTEXT");
+   auto pKey = hb_itemPutCConst(nullptr, "CONTEXT");
    hb_hashAdd(pI18N->table, pKey, pI18N->context_table);
    pKey = hb_itemPutC(pKey, nullptr);
    hb_hashAdd(pI18N->context_table, pKey, pI18N->default_context);
@@ -371,8 +371,8 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
    if( HB_IS_HASH(pTable) ) {
       PHB_ITEM pDefContext = nullptr;
 
-      PHB_ITEM pKey = hb_itemPutCConst(nullptr, "CONTEXT");
-      PHB_ITEM pContext = hb_hashGetItemPtr(pTable, pKey, 0);
+      auto pKey = hb_itemPutCConst(nullptr, "CONTEXT");
+      auto pContext = hb_hashGetItemPtr(pTable, pKey, 0);
       if( pContext ) {
          pKey = hb_itemPutC(pKey, nullptr);
          pDefContext = hb_hashGetItemPtr(pContext, pKey, 0);
@@ -386,7 +386,7 @@ static PHB_I18N_TRANS hb_i18n_initialize( PHB_ITEM pTable )
          pI18N->default_context = hb_itemNew(pDefContext);
 
          pKey = hb_itemPutCConst(pKey, "BASE_CODEPAGE");
-         PHB_ITEM pValue = hb_hashGetItemPtr(pTable, pKey, 0);
+         auto pValue = hb_hashGetItemPtr(pTable, pKey, 0);
          if( pValue ) {
             pI18N->base_cdpage = hb_cdpFind(hb_itemGetCPtr(pValue));
          }
@@ -442,8 +442,8 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       HB_PUT_LE_UINT32(&pI18Nbuffer[HB_I18N_SIZE_OFFSET], nSize);
       HB_PUT_LE_UINT32(&pI18Nbuffer[HB_I18N_CRC_OFFSET], ulCRC);
 
-      PHB_ITEM pKey = hb_itemPutCConst(nullptr, "DESCRIPTION");
-      PHB_ITEM pValue = hb_hashGetItemPtr(pI18N->table, pKey, 0);
+      auto pKey = hb_itemPutCConst(nullptr, "DESCRIPTION");
+      auto pValue = hb_hashGetItemPtr(pI18N->table, pKey, 0);
       if( pValue ) {
          hb_strncpy(&pI18Nbuffer[HB_I18N_TXT_OFFSET], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE);
       }
@@ -637,14 +637,14 @@ static const char * hb_i18n_setcodepage( PHB_I18N_TRANS pI18N, const char * szCd
          if( fTranslate && cdpage ) {
             HB_SIZE nHashLen = hb_hashLen(pI18N->context_table), ul;
             for( ul = 1; ul <= nHashLen; ++ul ) {
-               PHB_ITEM pContext = hb_hashGetValueAt(pI18N->context_table, ul);
+               auto pContext = hb_hashGetValueAt(pI18N->context_table, ul);
                HB_SIZE nCount = hb_hashLen(pContext);
 
                for( HB_SIZE u = 1; u <= nCount; ++u ) {
                   if( fBase ) {
                      hb_i18n_transitm(hb_hashGetKeyAt(pContext, u), cdpage, cdp);
                   } else {
-                     PHB_ITEM pResult = hb_hashGetValueAt(pContext, u);
+                     auto pResult = hb_hashGetValueAt(pContext, u);
                      if( HB_IS_STRING(pResult) ) {
                         hb_i18n_transitm(pResult, cdpage, cdp);
                      } else if( HB_IS_ARRAY(pResult) ) {
@@ -682,9 +682,9 @@ static const char * hb_i18n_setcodepage( PHB_I18N_TRANS pI18N, const char * szCd
 static const char * hb_i18n_description(PHB_I18N_TRANS pI18N, PHB_ITEM pItem)
 {
    if( pI18N ) {
-      PHB_ITEM pKey = hb_itemPutCConst(nullptr, "DESCRIPTION");
+      auto pKey = hb_itemPutCConst(nullptr, "DESCRIPTION");
 
-      PHB_ITEM pValue = hb_hashGetItemPtr(pI18N->table, pKey, 0);
+      auto pValue = hb_hashGetItemPtr(pI18N->table, pKey, 0);
       if( pItem != nullptr ) {
          if( HB_IS_STRING(pItem) ) {
             if( pValue ) {
