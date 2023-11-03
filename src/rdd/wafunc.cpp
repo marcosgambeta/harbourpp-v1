@@ -697,7 +697,6 @@ HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, co
 {
    char szDriverBuffer[HB_RDD_MAX_DRIVERNAME_LEN + 1];
    DBOPENINFO pInfo;
-   PHB_ITEM pItem;
    HB_USHORT uiPrevArea;
    AREAP pArea;
 
@@ -731,7 +730,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, co
    pInfo.ulConnection = ulConnection;
    pInfo.lpdbHeader = nullptr;
 
-   pItem = hb_itemPutL(nullptr, true);
+   auto pItem = hb_itemPutL(nullptr, true);
    HB_ERRCODE errCode = SELF_INFO(pArea, DBI_ISTEMPORARY, pItem);
    hb_itemRelease(pItem);
 

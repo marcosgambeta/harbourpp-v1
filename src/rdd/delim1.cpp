@@ -922,7 +922,7 @@ static HB_ERRCODE hb_delimTrans(DELIMAREAP pArea, LPDBTRANSINFO pTransInfo)
       } else if( pArea->area.rddID == pTransInfo->lpaDest->rddID ) {
          pTransInfo->uiFlags |= DBTF_PUTREC;
       } else {
-         PHB_ITEM pPutRec = hb_itemPutL(nullptr, false);
+         auto pPutRec = hb_itemPutL(nullptr, false);
          if( SELF_INFO(pTransInfo->lpaDest, DBI_CANPUTREC, pPutRec) != Harbour::SUCCESS ) {
             hb_itemRelease(pPutRec);
             return Harbour::FAILURE;

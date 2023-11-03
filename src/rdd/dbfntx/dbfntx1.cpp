@@ -579,10 +579,10 @@ static bool hb_ntxEvalCond(NTXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 static bool hb_ntxEvalSeekCond(LPTAGINFO pTag, PHB_ITEM pCondItem)
 {
    bool fRet;
-   PHB_ITEM pKeyVal, pKeyRec;
+   PHB_ITEM pKeyVal;
 
    pKeyVal = hb_ntxKeyGetItem(nullptr, pTag->CurKeyInfo, pTag, true);
-   pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKeyInfo->Xtra);
+   auto pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKeyInfo->Xtra);
 
    fRet = hb_itemGetL(hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec));
 

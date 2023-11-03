@@ -3767,7 +3767,7 @@ static HB_ERRCODE hb_fptPutValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const ch
          }
          hb_fileClose(pFile);
          if( errCode == Harbour::SUCCESS ) {
-            PHB_ITEM pItem = hb_itemPutCLPtr(nullptr, reinterpret_cast<char*>(pAlloc), ulSize);
+            auto pItem = hb_itemPutCLPtr(nullptr, reinterpret_cast<char*>(pAlloc), ulSize);
             errCode = hb_fptPutVarField(pArea, uiIndex, pItem);
             hb_itemRelease(pItem);
          }

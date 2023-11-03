@@ -768,7 +768,7 @@ HB_FUNC( DBFILTER )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pFilter = hb_itemPutC(nullptr, nullptr);
+      auto pFilter = hb_itemPutC(nullptr, nullptr);
       SELF_FILTERTEXT(pArea, pFilter);
       hb_itemReturnRelease(pFilter);
    } else {
@@ -1497,7 +1497,7 @@ HB_FUNC_TRANSLATE( RECCOUNT, LASTREC )
 HB_FUNC( RECNO )
 {
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   PHB_ITEM pRecNo = hb_itemPutNL(nullptr, 0);
+   auto pRecNo = hb_itemPutNL(nullptr, 0);
 
    if( pArea != nullptr ) {
       SELF_RECID(pArea, pRecNo);
@@ -1622,7 +1622,7 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pRelExpr = hb_itemPutC(nullptr, nullptr);
+      auto pRelExpr = hb_itemPutC(nullptr, nullptr);
       HB_USHORT uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
       SELF_RELTEXT(pArea, uiRelNo ? uiRelNo : 1, pRelExpr);
       hb_itemReturnRelease(pRelExpr);

@@ -800,10 +800,10 @@ static bool hb_nsxEvalCond(NSXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 static bool hb_nsxEvalSeekCond(LPTAGINFO pTag, PHB_ITEM pCondItem)
 {
    bool fRet;
-   PHB_ITEM pKeyVal, pKeyRec;
+   PHB_ITEM pKeyVal;
 
    pKeyVal = hb_nsxKeyGetItem(nullptr, pTag->CurKeyInfo, pTag, true);
-   pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKeyInfo->rec);
+   auto pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKeyInfo->rec);
 
    fRet = hb_itemGetL(hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec));
 
