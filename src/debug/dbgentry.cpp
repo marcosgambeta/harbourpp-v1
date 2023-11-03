@@ -1076,7 +1076,7 @@ static PHB_ITEM hb_dbgEval(HB_DEBUGINFO * info, HB_WATCHPOINT * watch, HB_BOOL *
 
 static PHB_ITEM hb_dbgEvalMacro(const char * szExpr, PHB_ITEM pItem)
 {
-   PHB_ITEM pStr = hb_itemPutC(nullptr, szExpr);
+   auto pStr = hb_itemPutC(nullptr, szExpr);
    const char * type = hb_macroGetType(pStr);
    hb_itemRelease(pStr);
    if( !strcmp(type, "U") || !strcmp(type, "UE") ) {
