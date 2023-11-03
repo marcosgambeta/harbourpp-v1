@@ -1081,7 +1081,7 @@ void hb_clsDoInit(void)
    for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_puiHandles)); ++i ) {
       PHB_DYNS pFuncSym = hb_dynsymFindName(s_pszFuncNames[i]);
       if( pFuncSym && hb_dynsymIsFunction(pFuncSym) ) {
-         PHB_ITEM pReturn = hb_stackReturnItem();
+         auto pReturn = hb_stackReturnItem();
          hb_itemSetNil(pReturn);
          hb_vmPushDynSym(pFuncSym);
          hb_vmPushNil();
@@ -1743,7 +1743,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       if( pStack ) {
          /* method of enumerator variable from FOR EACH statement
           */
-         PHB_ITEM pEnum = hb_itemUnRefOnce(pObject);
+         auto pEnum = hb_itemUnRefOnce(pObject);
 
          if( HB_IS_ENUM(pEnum) ) {
             /* Do actions here - we already have unreferenced pEnum so
@@ -1849,8 +1849,8 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
 #if defined(HB_HASH_MSG_ITEMS)
       else {
          if( hb_pcount() == 1 && pMessage->szName[0] == '_' ) { /* ASSIGN */
-            PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);
-            PHB_ITEM pDest = hb_hashGetItemPtr(pObject, pIndex, HB_HASH_AUTOADD_ASSIGN);
+            auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);
+            auto pDest = hb_hashGetItemPtr(pObject, pIndex, HB_HASH_AUTOADD_ASSIGN);
             hb_stackPop();
             if( pDest ) {
                auto pValue = hb_param(1, Harbour::Item::ANY);
@@ -1859,8 +1859,8 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
                return &s___msgVirtual;
             }
          } else if( hb_pcount() == 0 ) { /* ACCESS */
-            PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName);
-            PHB_ITEM pValue = hb_hashGetItemPtr(pObject, pIndex, HB_HASH_AUTOADD_ACCESS);
+            auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName);
+            auto pValue = hb_hashGetItemPtr(pObject, pIndex, HB_HASH_AUTOADD_ACCESS);
             hb_stackPop();
             if( pValue ) {
                hb_itemReturn(pValue);
@@ -1995,8 +1995,8 @@ HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pSt
 #if defined(HB_HASH_MSG_ITEMS)
    if( HB_IS_HASH(pObject) ) {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);
-      PHB_ITEM pValue = hb_hashGetItemRefPtr(pObject, pIndex);
+      auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);
+      auto pValue = hb_hashGetItemRefPtr(pObject, pIndex);
       hb_stackPop();
       if( pValue ) {
          hb_itemReturn(pValue);
@@ -3685,7 +3685,7 @@ HB_FUNC( __CLSINSTSUPER )
          hb_vmProc(0); /* Execute super class */
 
          if( hb_vmRequestQuery() == 0 ) {
-            PHB_ITEM pObject = hb_stackReturnItem();
+            auto pObject = hb_stackReturnItem();
 
             if( HB_IS_OBJECT(pObject) ) {
                uiClass = pObject->item.asArray.value->uiClass;
@@ -4927,7 +4927,7 @@ HB_FUNC( __CLSGETANCESTORS )
 
    if( uiClass && uiClass <= s_uiClasses ) {
       HB_STACK_TLS_PRELOAD
-      PHB_ITEM pReturn = hb_stackReturnItem();
+      auto pReturn = hb_stackReturnItem();
       PCLASS pClass = s_pClasses[uiClass];
       HB_SIZE nPos = 0;
 
@@ -5095,7 +5095,7 @@ void hb_clsAdd(HB_USHORT usClassH, const char * szMethodName, PHB_FUNC pFuncPtr)
     */
    PHB_SYMB pExecSym = hb_symbolNew("");
    pExecSym->value.pFunPtr = pFuncPtr;
-   PHB_ITEM pFuncItem = hb_itemPutSymbol(nullptr, pExecSym);
+   auto pFuncItem = hb_itemPutSymbol(nullptr, pExecSym);
 
    hb_clsAddMsg(usClassH, szMethodName, HB_OO_MSG_METHOD, 0, pFuncItem, nullptr);
 

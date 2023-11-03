@@ -1955,7 +1955,7 @@ void hb_itemMoveFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
 #endif
 
    if( HB_IS_BYREF(pSource) ) {
-      PHB_ITEM pUnRef = hb_itemUnRef(pSource);
+      auto pUnRef = hb_itemUnRef(pSource);
       if( pDest != pUnRef ) {
          /* pSource is not a reference to pDest - make copy */
          hb_itemCopy(pDest, pUnRef);
@@ -2110,7 +2110,7 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
    } else if( HB_IS_STRING(pSource) && pSource->item.asString.length == 1 ) {
       do {
          if( HB_IS_ENUM(pItem) && HB_IS_BYREF(pItem->item.asEnum.basePtr) && pItem->item.asEnum.offset >= 1 ) {
-            PHB_ITEM pBase = hb_itemUnRef(pItem->item.asEnum.basePtr);
+            auto pBase = hb_itemUnRef(pItem->item.asEnum.basePtr);
             if( HB_IS_STRING(pBase) && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length ) {
                hb_itemUnShareString(pBase);
                pBase->item.asString.value[pItem->item.asEnum.offset - 1] = pSource->item.asString.value[0];

@@ -2367,7 +2367,7 @@ HB_FUNC( HB_MUTEXCREATE )
 
 HB_FUNC( HB_MUTEXLOCK )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
@@ -2386,7 +2386,7 @@ HB_FUNC( HB_MUTEXLOCK )
 
 HB_FUNC( HB_MUTEXUNLOCK )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
@@ -2396,7 +2396,7 @@ HB_FUNC( HB_MUTEXUNLOCK )
 
 HB_FUNC( HB_MUTEXNOTIFY )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       hb_threadMutexNotify(pItem, hb_param(2, Harbour::Item::ANY), false);
@@ -2405,7 +2405,7 @@ HB_FUNC( HB_MUTEXNOTIFY )
 
 HB_FUNC( HB_MUTEXNOTIFYALL )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       hb_threadMutexNotify(pItem, hb_param(2, Harbour::Item::ANY), true);
@@ -2414,7 +2414,7 @@ HB_FUNC( HB_MUTEXNOTIFYALL )
 
 HB_FUNC( HB_MUTEXSUBSCRIBE )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
@@ -2443,7 +2443,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBE )
 
 HB_FUNC( HB_MUTEXSUBSCRIBENOW )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       HB_STACK_TLS_PRELOAD
@@ -2472,7 +2472,7 @@ HB_FUNC( HB_MUTEXSUBSCRIBENOW )
 
 HB_FUNC( HB_MUTEXEVAL )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       auto pEval = hb_param(2, Harbour::Item::EVALITEM);
@@ -2498,7 +2498,7 @@ HB_FUNC( HB_MUTEXEVAL )
 
 HB_FUNC( HB_MUTEXQUEUEINFO )
 {
-   PHB_ITEM pItem = hb_mutexParam(1);
+   auto pItem = hb_mutexParam(1);
 
    if( pItem != nullptr ) {
       PHB_MUTEX pMutex = hb_mutexPtr(pItem);

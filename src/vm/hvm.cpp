@@ -971,7 +971,7 @@ void hb_vmThreadQuit(void)
 
    PHB_THREADSTATE pState = static_cast<PHB_THREADSTATE>(hb_stackList());
    {
-      PHB_ITEM pReturn = hb_stackReturnItem();
+      auto pReturn = hb_stackReturnItem();
 
       if( HB_IS_BYREF(pReturn) ) {
          pReturn = hb_itemUnRef(pReturn);
@@ -1428,7 +1428,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_PLUSEQ: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             auto pValue = hb_stackItemFromTop(-1);
             hb_vmPlus(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
@@ -1439,7 +1439,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_PLUSEQPOP: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             hb_vmPlus(pResult, pResult, hb_stackItemFromTop(-1));
             hb_stackPop();
             hb_stackPop();
@@ -1454,7 +1454,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_MINUSEQ: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             auto pValue = hb_stackItemFromTop(-1);
             hb_vmMinus(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
@@ -1465,7 +1465,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MINUSEQPOP: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             hb_vmMinus(pResult, pResult, hb_stackItemFromTop(-1));
             hb_stackPop();
             hb_stackPop();
@@ -1480,7 +1480,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_MULTEQ: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             auto pValue = hb_stackItemFromTop(-1);
             hb_vmMult(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
@@ -1491,7 +1491,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MULTEQPOP: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             hb_vmMult(pResult, pResult, hb_stackItemFromTop(-1));
             hb_stackPop();
             hb_stackPop();
@@ -1506,7 +1506,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_DIVEQ: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             auto pValue = hb_stackItemFromTop(-1);
             hb_vmDivide(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
@@ -1517,7 +1517,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_DIVEQPOP: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             hb_vmDivide(pResult, pResult, hb_stackItemFromTop(-1));
             hb_stackPop();
             hb_stackPop();
@@ -1532,7 +1532,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_MODEQ: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             auto pValue = hb_stackItemFromTop(-1);
             hb_vmModulus(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
@@ -1543,7 +1543,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MODEQPOP: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             hb_vmModulus(pResult, pResult, hb_stackItemFromTop(-1));
             hb_stackPop();
             hb_stackPop();
@@ -1558,7 +1558,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
             break;
 
          case HB_P_EXPEQ: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             auto pValue = hb_stackItemFromTop(-1);
             hb_vmPower(pResult, pResult, pValue);
             hb_itemCopy(pValue, pResult);
@@ -1569,7 +1569,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_EXPEQPOP: {
-            PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+            auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
             hb_vmPower(pResult, pResult, hb_stackItemFromTop(-1));
             hb_stackPop();
             hb_stackPop();
@@ -1584,7 +1584,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_INCEQ: {
             auto pResult = hb_stackItemFromTop(-1);
-            PHB_ITEM pValue = hb_itemUnRef(pResult);
+            auto pValue = hb_itemUnRef(pResult);
             hb_vmInc(pValue);
             auto pTemp = hb_stackAllocItem();
             hb_itemCopy(pTemp, pValue);
@@ -1607,7 +1607,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
          case HB_P_DECEQ: {
             auto pResult = hb_stackItemFromTop(-1);
-            PHB_ITEM pValue = hb_itemUnRef(pResult);
+            auto pValue = hb_itemUnRef(pResult);
             hb_vmDec(pValue);
             auto pTemp = hb_stackAllocItem();
             hb_itemCopy(pTemp, pValue);
@@ -4417,7 +4417,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
       auto pEnumRef = hb_stackItemFromTop(-i + 1);
       hb_itemCopy(&(static_cast<PHB_ENUMREF>(pValue->item.asExtRef.value))->enumref, pEnumRef);
       /* the control variable */
-      PHB_ITEM pEnum = hb_itemUnRefOnce(pEnumRef);
+      auto pEnum = hb_itemUnRefOnce(pEnumRef);
       /* store the old value of control variable and clear it */
       hb_itemMove(&(static_cast<PHB_ENUMREF>(pValue->item.asExtRef.value))->oldvalue, pEnum);
 
@@ -4492,7 +4492,7 @@ static void hb_vmEnumNext(void)
 
    for( i = static_cast<int>(hb_stackItemFromTop(-1)->item.asInteger.value); i > 0; --i ) {
       auto pEnumRef = hb_stackItemFromTop(-(i << 1));
-      PHB_ITEM pEnum = hb_itemUnRefOnce(pEnumRef);
+      auto pEnum = hb_itemUnRefOnce(pEnumRef);
       PHB_ITEM pBase = pEnum->item.asEnum.basePtr;
       if( HB_IS_BYREF(pBase) ) {
          pBase = hb_itemUnRef(pBase);
@@ -4557,7 +4557,7 @@ static void hb_vmEnumPrev(void)
 
    for( i = hb_stackItemFromTop(-1)->item.asInteger.value; i > 0; --i ) {
       auto pEnumRef = hb_stackItemFromTop(-(i << 1));
-      PHB_ITEM pEnum = hb_itemUnRefOnce(pEnumRef);
+      auto pEnum = hb_itemUnRefOnce(pEnumRef);
       PHB_ITEM pBase = pEnum->item.asEnum.basePtr;
       if( HB_IS_BYREF(pBase) ) {
          pBase = hb_itemUnRef(pBase);
@@ -4811,7 +4811,7 @@ static void hb_vmArrayPush(void)
    auto pArray = hb_stackItemFromTop(-2);
 
    if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) ) {
-      PHB_ITEM pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
+      auto pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
       if( pValue ) {
          hb_itemCopy(pIndex, pValue);
          hb_itemMove(pArray, pIndex);
@@ -4882,7 +4882,7 @@ static void hb_vmArrayPushRef(void)
    PHB_ITEM pArray = HB_IS_BYREF(pRefer) ? hb_itemUnRef(pRefer) : pRefer;
 
    if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) ) {
-      PHB_ITEM pValue = hb_hashGetItemRefPtr(pArray, pIndex);
+      auto pValue = hb_hashGetItemRefPtr(pArray, pIndex);
       if( pValue ) {
          hb_itemCopy(pIndex, pValue);
          hb_itemMove(pRefer, pIndex);
@@ -4968,7 +4968,7 @@ static void hb_vmArrayPop(void)
    }
 
    if( HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex) ) {
-      PHB_ITEM pDest = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ASSIGN);
+      auto pDest = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ASSIGN);
       if( pDest ) {
          pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
          hb_itemMoveFromRef(pDest, pValue);
@@ -6212,7 +6212,7 @@ static void hb_vmTSVReference(PHB_ITEM pStatic)
    HB_TSD_INIT(&pTSVRef->threadData, sizeof(HB_ITEM), nullptr, hb_vmTSVarClean);
 
    /* Use hb_stackReturnItem() as temporary item holder */
-   PHB_ITEM pRefer = hb_stackReturnItem();
+   auto pRefer = hb_stackReturnItem();
    if( HB_IS_COMPLEX(pRefer) ) {
       hb_itemClear(pRefer);
    }
@@ -8082,7 +8082,7 @@ HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg)
    pMsgRef->object.type = Harbour::Item::NIL;
    hb_itemMove(&pMsgRef->object, pObject);
 
-   PHB_ITEM pRefer = hb_stackReturnItem();
+   auto pRefer = hb_stackReturnItem();
    if( HB_IS_COMPLEX(pRefer) ) {
       hb_itemClear(pRefer);
    }
@@ -10330,7 +10330,7 @@ HB_BOOL hb_xvmPlusEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    auto pValue = hb_stackItemFromTop(-1);
    hb_vmPlus(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
@@ -10346,7 +10346,7 @@ HB_BOOL hb_xvmPlusEqPop(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    hb_vmPlus(pResult, pResult, hb_stackItemFromTop(-1));
    hb_stackPop();
    hb_stackPop();
@@ -10372,7 +10372,7 @@ HB_BOOL hb_xvmMinusEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    auto pValue = hb_stackItemFromTop(-1);
    hb_vmMinus(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
@@ -10388,7 +10388,7 @@ HB_BOOL hb_xvmMinusEqPop(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    hb_vmMinus(pResult, pResult, hb_stackItemFromTop(-1));
    hb_stackPop();
    hb_stackPop();
@@ -10444,7 +10444,7 @@ HB_BOOL hb_xvmMultEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    auto pValue = hb_stackItemFromTop(-1);
    hb_vmMult(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
@@ -10460,7 +10460,7 @@ HB_BOOL hb_xvmMultEqPop(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    hb_vmMult(pResult, pResult, hb_stackItemFromTop(-1));
    hb_stackPop();
    hb_stackPop();
@@ -10564,7 +10564,7 @@ HB_BOOL hb_xvmDivEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    auto pValue = hb_stackItemFromTop(-1);
    hb_vmDivide(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
@@ -10580,7 +10580,7 @@ HB_BOOL hb_xvmDivEqPop(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    hb_vmDivide(pResult, pResult, hb_stackItemFromTop(-1));
    hb_stackPop();
    hb_stackPop();
@@ -10606,7 +10606,7 @@ HB_BOOL hb_xvmModEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    auto pValue = hb_stackItemFromTop(-1);
    hb_vmModulus(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
@@ -10622,7 +10622,7 @@ HB_BOOL hb_xvmModEqPop(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    hb_vmModulus(pResult, pResult, hb_stackItemFromTop(-1));
    hb_stackPop();
    hb_stackPop();
@@ -10648,7 +10648,7 @@ HB_BOOL hb_xvmExpEq(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    auto pValue = hb_stackItemFromTop(-1);
    hb_vmPower(pResult, pResult, pValue);
    hb_itemCopy(pValue, pResult);
@@ -10664,7 +10664,7 @@ HB_BOOL hb_xvmExpEqPop(void)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   PHB_ITEM pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
+   auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
    hb_vmPower(pResult, pResult, hb_stackItemFromTop(-1));
    hb_stackPop();
    hb_stackPop();
@@ -10690,7 +10690,7 @@ HB_BOOL hb_xvmIncEq(void)
 
    HB_STACK_TLS_PRELOAD
    auto pResult = hb_stackItemFromTop(-1);
-   PHB_ITEM pValue = hb_itemUnRef(pResult);
+   auto pValue = hb_itemUnRef(pResult);
    hb_vmInc(pValue);
    auto pTemp = hb_stackAllocItem();
    hb_itemCopy(pTemp, pValue);
@@ -10730,7 +10730,7 @@ HB_BOOL hb_xvmDecEq(void)
 
    HB_STACK_TLS_PRELOAD
    auto pResult = hb_stackItemFromTop(-1);
-   PHB_ITEM pValue = hb_itemUnRef(pResult);
+   auto pValue = hb_itemUnRef(pResult);
    hb_vmDec(pValue);
    auto pTemp = hb_stackAllocItem();
    hb_itemCopy(pTemp, pValue);
@@ -10816,7 +10816,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
    } else if( HB_IS_HASH(pArray) ) {
       hb_vmPushNumInt(nIndex);
       auto pIndex = hb_stackItemFromTop(-1);
-      PHB_ITEM pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
+      auto pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
 
       if( pValue ) {
          hb_itemCopy(pIndex, pValue);
@@ -10883,7 +10883,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
       }
    } else if( HB_IS_HASH(pArray) ) {
       hb_vmPushNumInt(nIndex);
-      PHB_ITEM pDest = hb_hashGetItemPtr(pArray, hb_stackItemFromTop(-1), HB_HASH_AUTOADD_ASSIGN);
+      auto pDest = hb_hashGetItemPtr(pArray, hb_stackItemFromTop(-1), HB_HASH_AUTOADD_ASSIGN);
       if( pDest ) {
          pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
          hb_itemMoveRef(pDest, pValue);
