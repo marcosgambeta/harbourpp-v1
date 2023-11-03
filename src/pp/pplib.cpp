@@ -153,11 +153,10 @@ HB_FUNC( __PP_INIT )
       auto szPath = hb_parc(1);
       auto szStdCh = hb_parc(2);
       bool fArchDefs = hb_parldef(3, true);
-      PHB_ITEM ppItem;
 
       pStatePtr = static_cast<PHB_PP_STATE*>(hb_gcAllocate(sizeof(PHB_PP_STATE), &s_gcPPFuncs));
       *pStatePtr = pState;
-      ppItem = hb_itemPutPtrGC(nullptr, static_cast<void*>(pStatePtr));
+      auto ppItem = hb_itemPutPtrGC(nullptr, static_cast<void*>(pStatePtr));
 
       hb_pp_init(pState, true, false, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr, hb_pp_CompilerSwitch);
 
