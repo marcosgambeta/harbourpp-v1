@@ -242,7 +242,7 @@ static int hb_compReadClpFile(HB_COMP_DECL, const char * szClpFile)
 
 static PHB_HSYMBOL hb_compSymbolAdd(HB_COMP_DECL, const char * szSymbolName, HB_USHORT * pwPos, HB_BOOL bFunction)
 {
-   PHB_HSYMBOL pSym = static_cast<PHB_HSYMBOL>(hb_xgrab(sizeof(HB_HSYMBOL)));
+   auto pSym = static_cast<PHB_HSYMBOL>(hb_xgrab(sizeof(HB_HSYMBOL)));
 
    pSym->szName = szSymbolName;
    pSym->cScope = 0;
@@ -405,7 +405,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
 
    hb_compCheckDuplVars(HB_COMP_PARAM, pFunc->pLocals, szVarName);
 
-   PHB_HVAR pVar = static_cast<PHB_HVAR>(hb_xgrab(sizeof(HB_HVAR)));
+   auto pVar = static_cast<PHB_HVAR>(hb_xgrab(sizeof(HB_HVAR)));
    pVar->szName = szVarName;
    pVar->szAlias = nullptr;
    pVar->uiFlags = 0;
@@ -891,7 +891,7 @@ void hb_compPushMacroText(HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_BO
             } else if( HB_SUPPORT_MACRODECL ) {
                HB_SIZE nPrefix = n - iSize - 1;
                if( nPrefix > 0 ) {
-                  char * pszPrefix = static_cast<char*>(hb_xgrab(nPrefix + 1));
+                  auto pszPrefix = static_cast<char*>(hb_xgrab(nPrefix + 1));
                   memcpy(pszPrefix, szText, nPrefix);
                   pszPrefix[nPrefix] = '\0';
                   hb_compGenPushString(pszPrefix, nPrefix + 1, HB_COMP_PARAM);
@@ -1445,13 +1445,12 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
       qsort(static_cast<void*>(pNOOPs), HB_COMP_PARAM->functions.pLast->nNOOPs, sizeof(HB_SIZE), hb_compSort_HB_SIZE);
 
       if( HB_COMP_PARAM->functions.pLast->nJumps ) {
-         HB_ISIZ * plSizes, * plShifts;
          HB_SIZE nSize;
 
          pJumps = HB_COMP_PARAM->functions.pLast->pJumps;
          nSize = sizeof(HB_ISIZ) * HB_COMP_PARAM->functions.pLast->nJumps;
-         plSizes = static_cast<HB_ISIZ*>(hb_xgrab(nSize));
-         plShifts = static_cast<HB_ISIZ*>(hb_xgrab(nSize));
+         auto plSizes = static_cast<HB_ISIZ*>(hb_xgrab(nSize));
+         auto plShifts = static_cast<HB_ISIZ*>(hb_xgrab(nSize));
 
          for( nJump = 0; nJump < HB_COMP_PARAM->functions.pLast->nJumps; nJump++ ) {
             plSizes[nJump] = plShifts[nJump] = 0;
@@ -1783,7 +1782,7 @@ static void hb_compFinalizeFunction(HB_COMP_DECL) /* fixes all last defined func
  */
 static PHB_HFUNC hb_compFunctionNew(HB_COMP_DECL, const char * szName, HB_SYMBOLSCOPE cScope)
 {
-   PHB_HFUNC pFunc = static_cast<PHB_HFUNC>(hb_xgrabz(sizeof(HB_HFUNC)));
+   auto pFunc = static_cast<PHB_HFUNC>(hb_xgrabz(sizeof(HB_HFUNC)));
 
    pFunc->szName         = szName;
    pFunc->cScope         = cScope;
@@ -1797,7 +1796,7 @@ static PHB_HFUNC hb_compFunctionNew(HB_COMP_DECL, const char * szName, HB_SYMBOL
 
 static PHB_HINLINE hb_compInlineNew(HB_COMP_DECL, const char * szName, int iLine)
 {
-   PHB_HINLINE pInline = static_cast<PHB_HINLINE>(hb_xgrab(sizeof(HB_HINLINE)));
+   auto pInline = static_cast<PHB_HINLINE>(hb_xgrab(sizeof(HB_HINLINE)));
 
    pInline->szName     = szName;
    pInline->pCode      = nullptr;
@@ -3217,7 +3216,8 @@ static void hb_compStaticDefThreadSet(HB_COMP_DECL)
 
       if( uiCount ) {
          HB_SIZE nSize = (static_cast<HB_SIZE>(uiCount) << 1) + 3;
-         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(nSize)), *ptr;
+         auto pBuffer = static_cast<HB_BYTE*>(hb_xgrab(nSize));
+         HB_BYTE * ptr;
          HB_USHORT uiVar = 0;
          pBuffer[0] = HB_P_THREADSTATICS;
          pBuffer[1] = HB_LOBYTE(uiCount);

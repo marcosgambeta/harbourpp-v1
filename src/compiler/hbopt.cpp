@@ -1235,7 +1235,7 @@ static void hb_compPCodeEnumAssignedUnused(HB_COMP_DECL, PHB_HFUNC pFunc, PHB_OP
 {
    HB_USHORT usLine = 0;
 
-   HB_BYTE * pMap = static_cast<HB_BYTE*>(hb_xgrab(pFunc->nPCodePos));
+   auto pMap = static_cast<HB_BYTE*>(hb_xgrab(pFunc->nPCodePos));
 
    HB_SIZE nPos = 0, nLastPos = 0;
 
@@ -1465,7 +1465,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
    }
 
    /* Initial scan */
-   PHB_OPT_LOCAL pLocals = static_cast<PHB_OPT_LOCAL>(hb_xgrabz(sizeof(HB_OPT_LOCAL) * usLocalCount));
+   auto pLocals = static_cast<PHB_OPT_LOCAL>(hb_xgrabz(sizeof(HB_OPT_LOCAL) * usLocalCount));
    hb_compPCodeEnumScanLocals(pFunc, pLocals);
 
    /* Check */

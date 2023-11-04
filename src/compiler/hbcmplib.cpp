@@ -143,7 +143,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int * pArgC, const char ***
       }
    }
 
-   const char ** argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * (argc + 1)));
+   auto argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * (argc + 1)));
    argc = 0;
    for( int i = iFirst; i <= iLast; ++i ) {
       pParam = hb_param(i, Harbour::Item::ARRAY | Harbour::Item::STRING);

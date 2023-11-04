@@ -48,7 +48,7 @@
 
 static PHB_I18NTABLE hb_compI18nCreate(void)
 {
-   PHB_I18NTABLE pI18n = static_cast<PHB_I18NTABLE>(hb_xgrab(sizeof(HB_I18NTABLE)));
+   auto pI18n = static_cast<PHB_I18NTABLE>(hb_xgrab(sizeof(HB_I18NTABLE)));
    pI18n->pString = nullptr;
    pI18n->uiCount = 0;
    pI18n->uiAllocated = 0;

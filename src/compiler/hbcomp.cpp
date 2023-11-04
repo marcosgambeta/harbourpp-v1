@@ -48,7 +48,7 @@
 
 static PHB_EXPR hb_compExprAlloc(HB_COMP_DECL)
 {
-   PHB_EXPRLST pExpItm = static_cast<PHB_EXPRLST>(hb_xgrab(sizeof(HB_EXPRLST)));
+   auto pExpItm = static_cast<PHB_EXPRLST>(hb_xgrab(sizeof(HB_EXPRLST)));
 
    pExpItm->pNext = HB_COMP_PARAM->pExprLst;
    HB_COMP_PARAM->pExprLst = pExpItm;
