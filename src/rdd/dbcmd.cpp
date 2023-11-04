@@ -928,7 +928,7 @@ HB_FUNC( FIELDNAME )
 
    if( pArea && uiIndex ) {
       if( SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex <= uiFields ) {
-         char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
+         auto szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
          szName[0] = '\0';
          SELF_FIELDNAME(pArea, uiIndex, szName);
          hb_retc_buffer(szName);
@@ -1133,10 +1133,9 @@ HB_FUNC( ORDCONDSET )
    AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      LPDBORDERCONDINFO lpdbOrdCondInfo;
       PHB_ITEM pItem;
 
-      lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
+      auto lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
       lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup(hb_parc(1)) : nullptr;
       pItem = hb_param(2, Harbour::Item::BLOCK);
       lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew(pItem) : nullptr;
@@ -1746,7 +1745,6 @@ HB_FUNC( __DBARRANGE )
          dbSortInfo.uiItemCount = pFields ? static_cast<HB_USHORT>(hb_arrayLen(pFields)) : 0;
          if( dbSortInfo.uiItemCount > 0 ) {
             HB_USHORT uiCount, uiDest;
-            char * szFieldLine;
             HB_SIZE nSize = 0;
 
             dbSortInfo.lpdbsItem = static_cast<LPDBSORTITEM>(hb_xgrab(dbSortInfo.uiItemCount * sizeof(DBSORTITEM)));
@@ -1756,7 +1754,7 @@ HB_FUNC( __DBARRANGE )
                   nSize = nLine;
                }
             }
-            szFieldLine = static_cast<char*>(hb_xgrab(nSize + 1));
+            auto szFieldLine = static_cast<char*>(hb_xgrab(nSize + 1));
             for( uiDest = 0, uiCount = 1; uiCount <= dbSortInfo.uiItemCount; ++uiCount ) {
                char * szPos;
                dbSortInfo.lpdbsItem[uiDest].uiFlags = 0;

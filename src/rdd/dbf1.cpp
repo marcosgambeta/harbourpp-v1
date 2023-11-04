@@ -2888,7 +2888,6 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
    HB_USHORT uiCount, uiLen;
    bool fRawBlob;
    DBFFIELD * pThisField;
-   HB_BYTE * pBuffer;
    PHB_FNAME pFileName;
    PHB_ITEM pItem = nullptr, pError;
    char szFileName[HB_PATH_MAX];
@@ -2984,7 +2983,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
 
    pArea->szDataFileName = hb_strdup(szFileName);
 
-   pBuffer = static_cast<HB_BYTE*>(hb_xgrabz(nSize + sizeof(DBFFIELD) + 1));
+   auto pBuffer = static_cast<HB_BYTE*>(hb_xgrabz(nSize + sizeof(DBFFIELD) + 1));
    pThisField = reinterpret_cast<DBFFIELD*>(pBuffer);
 
    pArea->fHasMemo = false;
@@ -3762,7 +3761,6 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
 
       case DBRI_RAWMEMOS:
       case DBRI_RAWDATA: {
-         HB_BYTE * pResult;
          HB_SIZE nLength;
 
          if( !pArea->fValidBuffer && !hb_dbfReadRecord(pArea) ) {
@@ -3770,7 +3768,7 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
             break;
          }
          nLength = uiInfoType == DBRI_RAWDATA ? pArea->uiRecordLen : 0;
-         pResult = static_cast<HB_BYTE*>(hb_xgrab(nLength + 1));
+         auto pResult = static_cast<HB_BYTE*>(hb_xgrab(nLength + 1));
          if( nLength ) {
             memcpy(pResult, pArea->pRecord, nLength);
          }
@@ -6289,9 +6287,7 @@ static HB_ERRCODE hb_dbfInit(LPRDDNODE pRDD)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfInit(%p)", static_cast<void*>(pRDD)));
 #endif
 
-   PHB_TSD pTSD;
-
-   pTSD = static_cast<PHB_TSD>(hb_xgrab(sizeof(HB_TSD)));
+   auto pTSD = static_cast<PHB_TSD>(hb_xgrab(sizeof(HB_TSD)));
    HB_TSD_INIT(pTSD, sizeof(DBFDATA), hb_dbfInitTSD, hb_dbfDestroyTSD);
    pRDD->lpvCargo = static_cast<void*>(pTSD);
 

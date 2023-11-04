@@ -204,7 +204,7 @@ static void hb_LZSSxExit(PHB_LZSSX_COMPR pCompr)
 
 static PHB_LZSSX_COMPR hb_LZSSxInit(PHB_FILE pInput, const HB_BYTE * pSrcBuf, HB_SIZE nSrcBuf, PHB_FILE pOutput, HB_BYTE * pDstBuf, HB_SIZE nDstBuf)
 {
-   PHB_LZSSX_COMPR pCompr = static_cast<PHB_LZSSX_COMPR>(hb_xgrab(sizeof(HB_LZSSX_COMPR)));
+   auto pCompr = static_cast<PHB_LZSSX_COMPR>(hb_xgrab(sizeof(HB_LZSSX_COMPR)));
 
    if( pInput != nullptr && nSrcBuf == 0 ) {
       nSrcBuf = LZSS_IOBUFLEN;
@@ -645,11 +645,10 @@ HB_FUNC( _SX_STRCOMPRESS )
 
    if( pStr ) {
       HB_SIZE nLen = hb_parclen(1), nBuf, nDst;
-      char * pBuf;
 
       /* this is for strict SIX compatibility - in general very bad idea */
       nBuf = nLen + 257;
-      pBuf = static_cast<char*>(hb_xgrab(nBuf));
+      auto pBuf = static_cast<char*>(hb_xgrab(nBuf));
       HB_PUT_LE_UINT32(pBuf, nLen);
       if( !hb_LZSSxCompressMem(pStr, nLen, pBuf + 4, nBuf - 4, &nDst) ) {
          /* It's not six compatible - it's a workaround for wrongly defined SIX behavior */

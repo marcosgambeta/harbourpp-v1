@@ -738,8 +738,7 @@ static bool hb_usrItemToOrderCreateInfo(PHB_ITEM pItem, LPDBORDERCREATEINFO pOrd
       PHB_ITEM pCond = hb_arrayGetItemPtr(pItem, UR_ORCR_CONDINFO);
 
       if( hb_arrayLen(pCond) > 0 ) {
-         LPDBORDERCONDINFO pOrderCondInfo;
-         pOrderCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
+         auto pOrderCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
          if( !hb_usrItemToOrderCondInfo(pCond, pOrderCondInfo) ) {
             hb_xfree(pOrderCondInfo);
             return false;
@@ -3539,7 +3538,7 @@ HB_FUNC_UR_SUPER(FIELDNAME)
    AREAP pArea = hb_usrGetAreaParam(3);
 
    if( pArea != nullptr ) {
-      char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
+      auto szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
 
       hb_retni(SUPER_FIELDNAME(pArea, static_cast<HB_USHORT>(hb_parni(2)), szName));
       hb_storc(szName, 3);
@@ -4109,7 +4108,7 @@ HB_FUNC_UR_SUPER(ORDSETCOND)
       if( pItem && HB_IS_NIL(pItem) ) {
          hb_retni(SUPER_ORDSETCOND(pArea, nullptr));
       } else {
-         LPDBORDERCONDINFO lpdbOrderCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
+         auto lpdbOrderCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
          if( hb_usrItemToOrderCondInfo(pItem, lpdbOrderCondInfo) ) {
             hb_usrOrderCondClone(lpdbOrderCondInfo);
             hb_retni(SUPER_ORDSETCOND(pArea, lpdbOrderCondInfo));

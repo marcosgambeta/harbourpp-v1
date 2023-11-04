@@ -357,9 +357,7 @@ static PHB_ITEM hb_ntxStrToNum(PHB_ITEM pItem, const char * szKeyVal, HB_USHORT 
  */
 static LPKEYINFO hb_ntxKeyNew(LPKEYINFO pKeyFrom, int keylen)
 {
-   LPKEYINFO pKey;
-
-   pKey = static_cast<LPKEYINFO>(hb_xgrab(sizeof(KEYINFO) + keylen));
+   auto pKey = static_cast<LPKEYINFO>(hb_xgrab(sizeof(KEYINFO) + keylen));
    if( pKeyFrom ) {
       memcpy(pKey->key, pKeyFrom->key, keylen + 1);
       pKey->Tag = pKeyFrom->Tag;
@@ -1360,9 +1358,7 @@ static LPTAGINFO hb_ntxTagNew(LPNTXINDEX pIndex,
                               bool fAscendKey, bool fUnique, bool fCustom,
                               bool fSortRec)
 {
-   LPTAGINFO pTag;
-
-   pTag = static_cast<LPTAGINFO>(hb_xgrabz(sizeof(TAGINFO)));
+   auto pTag = static_cast<LPTAGINFO>(hb_xgrabz(sizeof(TAGINFO)));
    pTag->TagName = hb_strndup(szTagName, NTX_MAX_TAGNAME);
    pTag->fTagName = fTagName;
    pTag->pIndex = pIndex;
@@ -1706,9 +1702,7 @@ static HB_ERRCODE hb_ntxTagHeaderSave( LPTAGINFO pTag )
  */
 static LPNTXINDEX hb_ntxIndexNew(NTXAREAP pArea)
 {
-   LPNTXINDEX pIndex;
-
-   pIndex = static_cast<LPNTXINDEX>(hb_xgrabz(sizeof(NTXINDEX)));
+   auto pIndex = static_cast<LPNTXINDEX>(hb_xgrabz(sizeof(NTXINDEX)));
 
    pIndex->DiskFile = nullptr;
    pIndex->pArea = pArea;
@@ -4677,7 +4671,6 @@ static void hb_ntxSortKeyAdd(LPNTXSORTINFO pSort, HB_ULONG ulRec, const char * p
 
 static LPNTXSORTINFO hb_ntxSortNew(LPTAGINFO pTag, HB_ULONG ulRecCount)
 {
-   LPNTXSORTINFO pSort;
    HB_BYTE * pBuf;
    int iLen = pTag->KeyLength;
    HB_ULONG ulSize, ulMax, ulMin;
@@ -4686,7 +4679,7 @@ static LPNTXSORTINFO hb_ntxSortNew(LPTAGINFO pTag, HB_ULONG ulRecCount)
       ulRecCount = 1;
    }
 
-   pSort = static_cast<LPNTXSORTINFO>(hb_xgrabz(sizeof(NTXSORTINFO)));
+   auto pSort = static_cast<LPNTXSORTINFO>(hb_xgrabz(sizeof(NTXSORTINFO)));
 
    ulMin = static_cast<HB_ULONG>(ceil(sqrt(static_cast<double>(ulRecCount))));
    ulMax = (static_cast<HB_ULONG>(ceil(sqrt(static_cast<double>(ulRecCount) / (iLen + 4))))) << 7;

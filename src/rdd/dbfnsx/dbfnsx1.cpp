@@ -492,9 +492,7 @@ static void hb_nsxCorruptError(LPNSXINDEX pIndex)
  */
 static LPKEYINFO hb_nsxKeyNew(int keylen)
 {
-   LPKEYINFO pKey;
-
-   pKey = static_cast<LPKEYINFO>(hb_xgrab(sizeof(KEYINFO) + keylen));
+   auto pKey = static_cast<LPKEYINFO>(hb_xgrab(sizeof(KEYINFO) + keylen));
    pKey->val[keylen] = '\0';
    pKey->page = pKey->rec = 0;
 
@@ -1576,9 +1574,7 @@ static LPTAGINFO hb_nsxTagNew(LPNSXINDEX pIndex, const char * szTagName,
                               const char * szForExpr, PHB_ITEM pForExpr,
                               bool fAscendKey, bool fUnique, bool fCustom)
 {
-   LPTAGINFO pTag;
-
-   pTag = static_cast<LPTAGINFO>(hb_xgrabz(sizeof(TAGINFO)));
+   auto pTag = static_cast<LPTAGINFO>(hb_xgrabz(sizeof(TAGINFO)));
    pTag->TagName = hb_strndup(szTagName, NSX_TAGNAME);
    pTag->pIndex = pIndex;
    if( szKeyExpr ) {
@@ -1863,9 +1859,7 @@ static HB_ERRCODE hb_nsxTagHeaderSave( LPTAGINFO pTag )
  */
 static LPNSXINDEX hb_nsxIndexNew(NSXAREAP pArea)
 {
-   LPNSXINDEX pIndex;
-
-   pIndex = static_cast<LPNSXINDEX>(hb_xgrabz(sizeof(NSXINDEX)));
+   auto pIndex = static_cast<LPNSXINDEX>(hb_xgrabz(sizeof(NSXINDEX)));
 
    pIndex->pFile = nullptr;
    pIndex->pArea = pArea;
@@ -4997,7 +4991,6 @@ static void hb_nsxSortKeyAdd(LPNSXSORTINFO pSort, HB_ULONG ulRec, const char * p
 
 static LPNSXSORTINFO hb_nsxSortNew(LPTAGINFO pTag, HB_ULONG ulRecCount)
 {
-   LPNSXSORTINFO pSort;
    HB_UCHAR * pBuf;
    int iLen = pTag->KeyLength;
    HB_ULONG ulSize, ulMax, ulMin;
@@ -5006,7 +4999,7 @@ static LPNSXSORTINFO hb_nsxSortNew(LPTAGINFO pTag, HB_ULONG ulRecCount)
       ulRecCount = 1;
    }
 
-   pSort = static_cast<LPNSXSORTINFO>(hb_xgrabz(sizeof(NSXSORTINFO)));
+   auto pSort = static_cast<LPNSXSORTINFO>(hb_xgrabz(sizeof(NSXSORTINFO)));
 
    ulMin = static_cast<HB_ULONG>(ceil(sqrt(static_cast<double>(ulRecCount))));
    ulMax = (static_cast<HB_ULONG>(ceil(sqrt(static_cast<double>(ulRecCount) / (iLen + 4))))) << 7;

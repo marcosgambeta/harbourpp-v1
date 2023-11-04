@@ -236,9 +236,7 @@ static void hb_cdxMakeSortTab(CDXAREAP pArea)
  */
 static LPCDXKEY hb_cdxKeyNew(HB_USHORT uiLen)
 {
-   LPCDXKEY pKey;
-
-   pKey = static_cast<LPCDXKEY>(hb_xgrabz(sizeof(CDXKEY) + uiLen));
+   auto pKey = static_cast<LPCDXKEY>(hb_xgrabz(sizeof(CDXKEY) + uiLen));
    pKey->len = uiLen;
 
    return pKey;
@@ -941,12 +939,10 @@ static HB_ULONG hb_cdxIndexGetAvailPage(LPCDXINDEX pIndex, bool fHeader)
 
       /* TODO: ### */
       if( fHeader ) {
-         HB_BYTE * byPageBuf;
-
          if( nSize < static_cast<HB_SIZE>(pIndex->uiPageLen) ) {
             nSize = pIndex->uiPageLen;
          }
-         byPageBuf = static_cast<HB_BYTE*>(hb_xgrabz(nSize));
+         auto byPageBuf = static_cast<HB_BYTE*>(hb_xgrabz(nSize));
 
          hb_cdxIndexLockFlush(pIndex);
          if( hb_fileWriteAt(pFile, byPageBuf, nSize, hb_cdxFilePageOffset(pIndex, ulPage)) != nSize ) {
@@ -1009,7 +1005,7 @@ static void hb_cdxIndexFlushAvailPage(LPCDXINDEX pIndex)
 
    ulPage = pIndex->freePage;
    if( pLst && pLst->fStat ) {
-      HB_BYTE * byPageBuf = static_cast<HB_BYTE*>(hb_xgrabz(pIndex->uiPageLen));
+      auto byPageBuf = static_cast<HB_BYTE*>(hb_xgrabz(pIndex->uiPageLen));
 
       do {
          HB_PUT_LE_UINT32(byPageBuf, pLst->nextPage);
@@ -1496,7 +1492,8 @@ static void hb_cdxPageCheckKeys(LPCDXPAGE pPage)
    if( pPage->iKeys > 1 ) {
       int K, iLen = pPage->TagParent->uiLen;
       HB_ULONG ulRec, ulRecPrev;
-      HB_BYTE * pbVal, * pbValPrev = static_cast<HB_BYTE*>(hb_xgrab(iLen));
+      HB_BYTE * pbVal;
+      auto pbValPrev = static_cast<HB_BYTE*>(hb_xgrab(iLen));
 
       pPage->bufKeyNum = 0;
       pbVal = hb_cdxPageGetKeyVal(pPage, 0);
@@ -1594,7 +1591,7 @@ static void hb_cdxPageCheckDupTrl(LPCDXPAGE pPage, HB_BYTE * pKeyBuf, int iKeys,
 static void hb_cdxPageLeafDecode(LPCDXPAGE pPage, HB_BYTE * pKeyBuf);
 static void hb_cdxPageCheckDupTrlRaw(LPCDXPAGE pPage)
 {
-   HB_BYTE * pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab(pPage->iKeys * ( pPage->TagParent->uiLen + 8 )));
+   auto pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab(pPage->iKeys * ( pPage->TagParent->uiLen + 8 )));
 
    hb_cdxPageLeafDecode(pPage, pKeyBuf);
    hb_cdxPageCheckDupTrl(pPage, pKeyBuf, pPage->iKeys, true);
@@ -1888,7 +1885,7 @@ static int hb_cdxPageLeafDelKey(LPCDXPAGE pPage)
    }
 #endif
    if( !pPage->pKeyBuf ) {
-      HB_BYTE * pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab(( pPage->iKeys ) * iLen));
+      auto pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab(( pPage->iKeys ) * iLen));
       hb_cdxPageLeafDecode(pPage, pKeyBuf);
       pPage->pKeyBuf = pKeyBuf;
    }
@@ -1989,7 +1986,7 @@ static int hb_cdxPageLeafAddKey(LPCDXPAGE pPage, LPCDXKEY pKey)
    }
 #endif
    if( !pPage->pKeyBuf ) {
-      HB_BYTE * pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab((pPage->iKeys + 1) * iLen));
+      auto pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab((pPage->iKeys + 1) * iLen));
       hb_cdxPageLeafDecode(pPage, pKeyBuf);
       pPage->pKeyBuf = pKeyBuf;
    } else {
@@ -2181,7 +2178,7 @@ static void hb_cdxPageLoad(LPCDXPAGE pPage)
       pPage->bufKeyNum  = 0;
 #if 0
       if( !pPage->pKeyBuf ) {
-         HB_BYTE * pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab((pPage->iKeys + 1) * ( pPage->TagParent->uiLen + 6 )));
+         auto pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab((pPage->iKeys + 1) * ( pPage->TagParent->uiLen + 6 )));
          hb_cdxPageLeafDecode(pPage, pKeyBuf);
          pPage->pKeyBuf = pKeyBuf;
       }
@@ -2609,9 +2606,8 @@ static int hb_cdxPageKeyLeafBalance(LPCDXPAGE pPage, int iChildRet)
                if( iBufSize >= iKeys + lpTmpPage->iKeys ) {
                   memmove(pKeyPool, pPtr, iKeys * iLen);
                } else {
-                  HB_BYTE * pTmp;
                   iBufSize = iKeys + lpTmpPage->iKeys;
-                  pTmp = static_cast<HB_BYTE*>(hb_xgrab(iBufSize * iLen));
+                  auto pTmp = static_cast<HB_BYTE*>(hb_xgrab(iBufSize * iLen));
                   memcpy(pTmp, pPtr, iKeys * iLen);
                   hb_xfree(pKeyPool);
                   pKeyPool = pTmp;
@@ -3500,10 +3496,9 @@ static void hb_cdxTagFree(LPCDXTAG pTag)
  */
 static LPCDXTAG hb_cdxTagNew(LPCDXINDEX pIndex, const char * szTagName, HB_ULONG TagHdr)
 {
-   LPCDXTAG pTag;
    char szName[CDX_MAXTAGNAMELEN + 1];
 
-   pTag = static_cast<LPCDXTAG>(hb_xgrab(sizeof(CDXTAG)));
+   auto pTag = static_cast<LPCDXTAG>(hb_xgrab(sizeof(CDXTAG)));
    memset(pTag, 0, sizeof(CDXTAG));
    hb_strncpyUpperTrim(szName, szTagName, sizeof(szName) - 1);
    pTag->szName = hb_strdup(szName);
@@ -3633,7 +3628,7 @@ static int hb_cdxPageSeekKey(LPCDXPAGE pPage, LPCDXKEY pKey, HB_ULONG ulKeyRec)
 
    if( fLeaf && !pPage->pKeyBuf && pPage->iKeys > 0 ) {
       int iLen = pPage->TagParent->uiLen + 8;
-      HB_BYTE * pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab(pPage->iKeys * iLen));
+      auto pKeyBuf = static_cast<HB_BYTE*>(hb_xgrab(pPage->iKeys * iLen));
       hb_cdxPageLeafDecode(pPage, pKeyBuf);
       pPage->pKeyBuf = pKeyBuf;
    }
@@ -4522,9 +4517,7 @@ static void hb_cdxIndexInit(LPCDXINDEX pIndex)
  */
 static LPCDXINDEX hb_cdxIndexNew(CDXAREAP pArea)
 {
-   LPCDXINDEX pIndex;
-
-   pIndex = static_cast<LPCDXINDEX>(hb_xgrab(sizeof(CDXINDEX)));
+   auto pIndex = static_cast<LPCDXINDEX>(hb_xgrab(sizeof(CDXINDEX)));
    memset(pIndex, 0, sizeof(CDXINDEX));
    pIndex->pArea = pArea;
    hb_cdxIndexInit(pIndex);
@@ -8604,7 +8597,6 @@ static void hb_cdxSortKeyAdd(LPCDXSORTINFO pSort, HB_ULONG ulRec, const HB_BYTE 
 
 static LPCDXSORTINFO hb_cdxSortNew(LPCDXTAG pTag, HB_ULONG ulRecCount)
 {
-   LPCDXSORTINFO pSort;
    HB_BYTE * pBuf;
    int iLen = pTag->uiLen;
    HB_ULONG ulSize, ulMax, ulMin;
@@ -8613,7 +8605,7 @@ static LPCDXSORTINFO hb_cdxSortNew(LPCDXTAG pTag, HB_ULONG ulRecCount)
       ulRecCount = 1;
    }
 
-   pSort = static_cast<LPCDXSORTINFO>(hb_xgrab(sizeof(CDXSORTINFO)));
+   auto pSort = static_cast<LPCDXSORTINFO>(hb_xgrab(sizeof(CDXSORTINFO)));
    memset(pSort, 0, sizeof(CDXSORTINFO));
    ulMax = ulMin = static_cast<HB_ULONG>(ceil(sqrt(static_cast<double>(ulRecCount))));
    ulSize = (1L << 20) / (iLen + 4);

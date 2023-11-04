@@ -1549,9 +1549,7 @@ static HB_ERRCODE hb_delimInit(LPRDDNODE pRDD)
    HB_TRACE(HB_TR_DEBUG, ("hb_delimInit(%p)", static_cast<void*>(pRDD)));
 #endif
 
-   PHB_TSD pTSD;
-
-   pTSD = static_cast<PHB_TSD>(hb_xgrab(sizeof(HB_TSD)));
+   auto pTSD = static_cast<PHB_TSD>(hb_xgrab(sizeof(HB_TSD)));
    HB_TSD_INIT(pTSD, sizeof(DELIMDATA), nullptr, nullptr);
    pRDD->lpvCargo = static_cast<void*>(pTSD);
 

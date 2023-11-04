@@ -2456,7 +2456,6 @@ int hb_rddRegister(const char * szDriver, HB_USHORT uiType)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddRegister(%s, %hu)", szDriver, uiType));
 #endif
 
-   LPRDDNODE pRddNewNode;
    PHB_DYNS pGetFuncTable;
    char szGetFuncTable[HB_RDD_MAX_DRIVERNAME_LEN + 14];
    HB_USHORT uiFunctions = 0;
@@ -2473,7 +2472,7 @@ int hb_rddRegister(const char * szDriver, HB_USHORT uiType)
    }
 
    /* Create a new RDD node */
-   pRddNewNode = static_cast<LPRDDNODE>(hb_xgrabz(sizeof(RDDNODE)));
+   auto pRddNewNode = static_cast<LPRDDNODE>(hb_xgrabz(sizeof(RDDNODE)));
 
    /* Fill the new RDD node */
    hb_strncpy(pRddNewNode->szName, szDriver, sizeof(pRddNewNode->szName) - 1);

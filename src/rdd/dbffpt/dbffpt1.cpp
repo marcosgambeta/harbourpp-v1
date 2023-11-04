@@ -768,12 +768,11 @@ static HB_ERRCODE hb_fptWriteGCdata(FPTAREAP pArea, LPMEMOGCTABLE pGCtable)
          }
          if( pGCtable->ulDirPage && pGCtable->bChanged > 1 ) {
             FPTBLOCK fptBlock;
-            HB_BYTE * bPageBuf;
             HB_USHORT usItems = HB_MIN(pGCtable->usItems, pGCtable->usMaxItem);
 
             HB_PUT_BE_UINT32(fptBlock.type, FPTIT_FLEX_GC);
             HB_PUT_BE_UINT32(fptBlock.size, pGCtable->ulSize);
-            bPageBuf = static_cast<HB_BYTE*>(hb_xgrab(pGCtable->ulSize));
+            auto bPageBuf = static_cast<HB_BYTE*>(hb_xgrab(pGCtable->ulSize));
             memset(bPageBuf, 0xAD, pGCtable->ulSize);
             HB_PUT_LE_UINT16(bPageBuf, (static_cast<HB_USHORT>(usItems) << 2) + 3);
             j = pGCtable->usItems - usItems;
@@ -2097,10 +2096,9 @@ static HB_ERRCODE hb_fptCopyToRawFile(PHB_FILE pSrc, HB_FOFFSET from, PHB_FILE p
    if( size ) {
       HB_FOFFSET written = 0;
       HB_SIZE nBufSize;
-      HB_BYTE * pBuffer;
 
       nBufSize = static_cast<HB_SIZE>(HB_MIN(0x10000, size));
-      pBuffer = static_cast<HB_BYTE*>(hb_xgrab(nBufSize));
+      auto pBuffer = static_cast<HB_BYTE*>(hb_xgrab(nBufSize));
 
       do {
          HB_SIZE nRead = hb_fileReadAt(pSrc, pBuffer, static_cast<HB_SIZE>(HB_MIN(static_cast<HB_FOFFSET>(nBufSize), size - written)), from + written);
@@ -2126,10 +2124,9 @@ static HB_ERRCODE hb_fptCopyToFile(PHB_FILE pSrc, HB_FOFFSET from, PHB_FILE pDst
    if( size ) {
       HB_FOFFSET written = 0;
       HB_SIZE nBufSize;
-      HB_BYTE * pBuffer;
 
       nBufSize = static_cast<HB_SIZE>(HB_MIN(0x10000, size));
-      pBuffer = static_cast<HB_BYTE*>(hb_xgrab(nBufSize));
+      auto pBuffer = static_cast<HB_BYTE*>(hb_xgrab(nBufSize));
 
       do {
          HB_SIZE nRead = hb_fileReadAt(pSrc, pBuffer, static_cast<HB_SIZE>(HB_MIN(static_cast<HB_FOFFSET>(nBufSize), size - written)), from + written);
@@ -2512,7 +2509,7 @@ static HB_ERRCODE hb_fptWriteMemo(FPTAREAP pArea, HB_ULONG ulBlock, HB_ULONG ulS
          /* TODO: uiMode => BLOB_IMPORT_COMPRESS, BLOB_IMPORT_ENCRYPT */
          if( pFile != nullptr ) {
             HB_SIZE nWritten = 0, nBufSize = HB_MIN((1 << 16), ulLen);
-            HB_BYTE * bBuffer = static_cast<HB_BYTE*>(hb_xgrab(nBufSize));
+            auto bBuffer = static_cast<HB_BYTE*>(hb_xgrab(nBufSize));
 
             do {
                HB_SIZE nRead = hb_fileRead(pFile, bBuffer, HB_MIN(nBufSize, ulLen - nWritten), -1);
@@ -3753,12 +3750,11 @@ static HB_ERRCODE hb_fptPutValueFile(FPTAREAP pArea, HB_USHORT uiIndex, const ch
       if( pFile == nullptr ) {
          errCode = EDBF_OPEN_DBF;
       } else if( pField->uiType == Harbour::DB::Field::ANY ) {
-         HB_BYTE * pAlloc;
          HB_ULONG ulSize;
          HB_FOFFSET size = hb_fileSize(pFile);
 
          ulSize = static_cast<HB_ULONG>(HB_MIN(size, HB_VF_CHAR));
-         pAlloc = static_cast<HB_BYTE*>(hb_xgrab(ulSize + 1));
+         auto pAlloc = static_cast<HB_BYTE*>(hb_xgrab(ulSize + 1));
          if( hb_fileReadAt(pFile, pAlloc, ulSize, 0) != ulSize ) {
             errCode = EDBF_READ;
             hb_xfree(pAlloc);
