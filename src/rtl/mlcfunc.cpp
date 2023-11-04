@@ -544,7 +544,6 @@ HB_FUNC( HB_MLEVAL )
       PHB_CODEPAGE cdp = hb_vmCDP();
       PHB_ITEM pLineItem = nullptr, pSoftItem = nullptr;
       bool fSoftCR, fEOL;
-      char * pszLine;
 
       if( !HB_CDP_ISCHARIDX(cdp) ) {
          cdp = nullptr;
@@ -566,7 +565,7 @@ HB_FUNC( HB_MLEVAL )
          nTabSize = 1;
       }
 
-      pszLine = static_cast<char*>(hb_xgrab(nLineLength + 1));
+      auto pszLine = static_cast<char*>(hb_xgrab(nLineLength + 1));
 
       do {
          HB_SIZE nBlankCol = 0, nBlankPos = 0, nBlankDst = 0, nCol = 0, nDst = 0;

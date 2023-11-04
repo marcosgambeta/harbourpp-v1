@@ -253,9 +253,7 @@ static const HB_SOCKET_FILTER s_sockFilter =
 /* create new extended socket structure */
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
-   PHB_SOCKEX pSock;
-
-   pSock = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
+   auto pSock = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
    pSock->sd = sd;
    pSock->pFilter = &s_sockFilter;
 

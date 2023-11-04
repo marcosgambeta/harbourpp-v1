@@ -104,10 +104,9 @@ static bool hb_copyfile( const char * pszSource, const char * pszDest )
       }
 
       if( pDest != nullptr ) {
-         HB_UCHAR * buffer;
          HB_SIZE nRead;
 
-         buffer = static_cast<HB_UCHAR*>(hb_xgrab(BUFFER_SIZE));
+         auto buffer = static_cast<HB_UCHAR*>(hb_xgrab(BUFFER_SIZE));
          bRetVal = true;
 
          while( (nRead = hb_fileRead(pSource, buffer, BUFFER_SIZE, -1)) != 0 && nRead != static_cast<HB_SIZE>(FS_ERROR) ) {

@@ -1609,7 +1609,7 @@ char * hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn, PHB_CO
 
    hb_itemSerialRefListInit(&refList);
    HB_SIZE nSize = hb_itemSerialSize(pItem, iFlags, cdpIn, cdpOut, &refList, 0);
-   HB_UCHAR * pBuffer = static_cast<HB_UCHAR*>(hb_xgrab(nSize + 1));
+   auto pBuffer = static_cast<HB_UCHAR*>(hb_xgrab(nSize + 1));
    hb_itemSerialUnusedFree(&refList);
    hb_serializeItem(pItem, iFlags, cdpIn, cdpOut, pBuffer, 0, &refList);
    hb_itemSerialRefListFree(&refList);
@@ -1617,7 +1617,7 @@ char * hb_itemSerializeCP(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn, PHB_CO
    if( (iFlags & HB_SERIALIZE_COMPRESS) != 0 && nSize > 20 ) {
       HB_SIZE nDest = hb_zlibCompressBound(nSize);
       if( nDest > 0 ) {
-         char * pDest = static_cast<char*>(hb_xgrab(nDest));
+         auto pDest = static_cast<char*>(hb_xgrab(nDest));
          if( hb_zlibCompress(pDest, &nDest, reinterpret_cast<const char*>(pBuffer), nSize, HB_ZLIB_COMPRESSION_DEFAULT) == HB_ZLIB_RES_OK ) {
             if( nDest + 9 < nSize ) {
                pBuffer[0] = HB_SERIAL_ZCOMPRESS;

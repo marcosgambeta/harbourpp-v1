@@ -2094,7 +2094,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
                rect = hb_gt_wvt_GetColRowFromXYRect(pWVT, rect);
 
                HB_SIZE nSize = (rect.bottom - rect.top + 1) * (rect.right - rect.left + 1 + 2);
-               TCHAR * sBuffer = static_cast<TCHAR*>(hb_xgrab(nSize * sizeof(TCHAR) + 1));
+               auto sBuffer = static_cast<TCHAR*>(hb_xgrab(nSize * sizeof(TCHAR) + 1));
 
                HB_SIZE n;
                int row, col;

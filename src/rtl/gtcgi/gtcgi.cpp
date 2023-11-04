@@ -235,7 +235,7 @@ static void hb_gt_cgi_conPos(PHB_GTCGI pGTCGI, int iRow, int iCol)
    }
 
    if( iSpace > 0 ) {
-      char * buffer = static_cast<char*>(hb_xgrab(iSpace));
+      auto buffer = static_cast<char*>(hb_xgrab(iSpace));
       memset(buffer, ' ', iSpace);
       hb_gt_cgi_termOut(pGTCGI, buffer, iSpace);
       hb_xfree(buffer);
@@ -299,7 +299,7 @@ static void hb_gt_cgi_WriteConW(PHB_GT pGT, const HB_WCHAR * szTextW, HB_SIZE nL
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
    HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
-   char * buffer = static_cast<char*>(hb_xgrab(nSize));
+   auto buffer = static_cast<char*>(hb_xgrab(nSize));
    hb_cdpU16ToStr(cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize);
    hb_gt_cgi_conOut(pGT, buffer, nSize, nullptr, nullptr);
    hb_xfree(buffer);
@@ -315,7 +315,7 @@ static void hb_gt_cgi_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR * 
 {
    PHB_CODEPAGE cdpTerm = HB_GTSELF_TERMCP(pGT);
    HB_SIZE nSize = hb_cdpU16AsStrLen(cdpTerm, szTextW, nLength, 0);
-   char * buffer = static_cast<char*>(hb_xgrab(nSize));
+   auto buffer = static_cast<char*>(hb_xgrab(nSize));
    hb_cdpU16ToStr(cdpTerm, HB_CDP_ENDIAN_NATIVE, szTextW, nLength, buffer, nSize);
    hb_gt_cgi_conPos(HB_GTCGI_GET(pGT), iRow, iCol);
    hb_gt_cgi_conOut(pGT, buffer, nSize, nullptr, nullptr);

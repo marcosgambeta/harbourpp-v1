@@ -95,7 +95,7 @@
 static char ** hb_buildArgs(const char *pszFileName)
 {
    const char * src;
-   char ** argv, * dst, cQuote = 0, * pszFree = nullptr;
+   char * dst, cQuote = 0, * pszFree = nullptr;
    int argc = 0;
 
    while( HB_ISSPACE(*pszFileName) ) {
@@ -136,7 +136,7 @@ static char ** hb_buildArgs(const char *pszFileName)
       ++src;
    }
 
-   argv = static_cast<char**>(hb_xgrab((argc + 2) * sizeof(char*)));
+   auto argv = static_cast<char**>(hb_xgrab((argc + 2) * sizeof(char*)));
    argv[0] = dst;
    argv[argc + 1] = nullptr;
    argc = 0;

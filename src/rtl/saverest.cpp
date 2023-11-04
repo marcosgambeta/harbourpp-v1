@@ -90,7 +90,7 @@ HB_FUNC( SAVESCREEN )
    hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
    HB_SIZE nSize;
    hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
-   void * pBuffer = hb_xgrab(nSize + 1);
+   auto pBuffer = hb_xgrab(nSize + 1);
    hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
    hb_retclen_buffer(static_cast<char*>(pBuffer), nSize);
 }

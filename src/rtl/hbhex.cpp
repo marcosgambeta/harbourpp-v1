@@ -181,7 +181,7 @@ HB_FUNC( HB_HEXTOSTR )
       if( nDest ) {
          int iVal = 0x10;
 
-         char * szDest = static_cast<char*>(hb_xgrab(nDest + 1));
+         auto szDest = static_cast<char*>(hb_xgrab(nDest + 1));
 
          /* ul = 0; see above stop condition */
          do {

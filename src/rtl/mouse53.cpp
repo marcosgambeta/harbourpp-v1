@@ -127,7 +127,7 @@ HB_FUNC( MSAVESTATE )
    int iLen = hb_mouseStorageSize();
 
    if( iLen > 0 ) {
-      void * pBuffer = hb_xgrab(iLen + 1);
+      auto pBuffer = hb_xgrab(iLen + 1);
       hb_mouseSaveState( pBuffer );
       hb_retclen_buffer(static_cast<char*>(pBuffer), iLen);
    } else {

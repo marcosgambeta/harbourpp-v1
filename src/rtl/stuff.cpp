@@ -92,7 +92,7 @@ HB_FUNC( STUFF )
       }
 
       if( (nTot = nLen + nIns - nDel) > 0 ) {
-         char * szResult = static_cast<char*>(hb_xgrab(nTot + 1));
+         auto szResult = static_cast<char*>(hb_xgrab(nTot + 1));
          hb_xmemcpy(szResult, szText, nPos);
          hb_xmemcpy(szResult + nPos, szIns, nIns);
          hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));

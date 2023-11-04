@@ -58,7 +58,7 @@ HB_FUNC( SPACE )
       HB_ISIZ nLen = hb_itemGetNS(pItem);
 
       if( nLen > 0 ) {
-         char * szResult = static_cast<char*>(hb_xgrab(nLen + 1));
+         auto szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 
          /* NOTE: String overflow could never occur since a string can
                   be as large as ULONG_MAX, and the maximum length that

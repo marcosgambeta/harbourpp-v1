@@ -274,7 +274,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
    PHB_ITEM pBlock = nullptr;
 
    if( nLen > 0 ) {
-      char * szMacro = static_cast<char*>(hb_xgrab(nLen + 6));
+      auto szMacro = static_cast<char*>(hb_xgrab(nLen + 6));
       szMacro[0] = '{';
       szMacro[1] = '|';
       szMacro[2] = 'n';
@@ -303,7 +303,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
 
 static PHB_I18N_TRANS hb_i18n_new(void)
 {
-   PHB_I18N_TRANS pI18N = static_cast<PHB_I18N_TRANS>(hb_xgrabz(sizeof(HB_I18N_TRANS)));
+   auto pI18N = static_cast<PHB_I18N_TRANS>(hb_xgrabz(sizeof(HB_I18N_TRANS)));
    hb_atomic_set(&pI18N->iUsers, 1);
    pI18N->table = hb_hashNew(hb_itemNew(nullptr));
    pI18N->context_table = hb_hashNew(hb_itemNew(nullptr));

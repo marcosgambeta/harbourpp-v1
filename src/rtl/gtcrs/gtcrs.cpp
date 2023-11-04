@@ -1197,9 +1197,7 @@ static bool gt_outstr(InOutBase * ioBase, int fd, const char * str, int len)
    bool success;
 
    if( ioBase->out_transtbl != nullptr ) {
-      unsigned char * buf;
-
-      buf = static_cast<unsigned char*>(hb_xgrab(len));
+      auto buf = static_cast<unsigned char*>(hb_xgrab(len));
       for( int i = 0; i < len; ++i ) {
          unsigned char c = str[i];
          if( c != 9 && c != 10 && c != 13 && ioBase->out_transtbl[c] ) {
@@ -1712,7 +1710,7 @@ static InOutBase * create_ioBase(char * term, int infd, int outfd, int errfd, pi
    unsigned int i;
    char buf[256], * ptr, * crsterm = nullptr;
 
-   InOutBase * ioBase = static_cast<InOutBase*>(hb_xgrabz(sizeof(InOutBase)));
+   auto ioBase = static_cast<InOutBase*>(hb_xgrabz(sizeof(InOutBase)));
 
    if( !term || !*term ) {
       term = getenv("HB_TERM");

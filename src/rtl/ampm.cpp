@@ -49,7 +49,7 @@
 HB_FUNC( AMPM )
 {
    HB_SIZE nTimeLen = hb_parclen(1);
-   char * pszResult = static_cast<char*>(hb_xgrab(HB_MAX(nTimeLen, 2) + 3 + 1));
+   auto pszResult = static_cast<char*>(hb_xgrab(HB_MAX(nTimeLen, 2) + 3 + 1));
    int iHour = 0;
    bool bAM = false;
 

@@ -1813,7 +1813,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          iFlag = HB_GTSELF_SETFLAG(pGT, HB_GTI_COMPATBUFFER, 0);
          nSize = HB_GTSELF_RECTSIZE(pGT, 0, 0, iRow, iCol);
          if( nSize ) {
-            void * pBuffer = hb_xgrab(nSize + 1);
+            auto pBuffer = hb_xgrab(nSize + 1);
             HB_GTSELF_SAVE(pGT, 0, 0, iRow, iCol, pBuffer);
             hb_arraySetCLPtr(pInfo->pResult, 6, static_cast<char*>(pBuffer), nSize);
          }
@@ -1953,7 +1953,6 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
          void * pBuffer = nullptr;
          int iDspCount, iStyle, iRow, iCol, iTop, iLeft, iBottom, iRight, iPos;
          HB_UINT ulLines = 0, ulWidth = 0, ulCurrWidth = 0, ulMsg = 0, ulDst = 0, ulLast = 0, ulSpace1 = 0, ulSpace2 = 0, ulDefWidth, ulMaxWidth;
-         HB_WCHAR * szMsgDsp;
          int iFlag;
 
          ulMaxWidth = iCols - 4;
@@ -1961,7 +1960,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
          if( ulDefWidth == 0 ) {
             ulDefWidth = 1;
          }
-         szMsgDsp = static_cast<HB_WCHAR*>(hb_xgrab((nLen + (nLen / ulDefWidth) + 1) * sizeof(HB_WCHAR)));
+         auto szMsgDsp = static_cast<HB_WCHAR*>(hb_xgrab((nLen + (nLen / ulDefWidth) + 1) * sizeof(HB_WCHAR)));
 
          while( ulMsg < nLen ) {
             if( szMessageW[ulMsg] == '\n' ) {

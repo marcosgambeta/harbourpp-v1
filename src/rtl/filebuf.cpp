@@ -981,7 +981,7 @@ static const HB_FILE_FUNCS * s_fileposMethods(void)
 
 static PHB_FILE hb_fileposNew(PHB_FILE pFile)
 {
-   PHB_FILEPOS pFilePos = static_cast<PHB_FILEPOS>(hb_xgrabz(sizeof(HB_FILEPOS)));
+   auto pFilePos = static_cast<PHB_FILEPOS>(hb_xgrabz(sizeof(HB_FILEPOS)));
 
    pFilePos->pFuncs   = s_fileposMethods();
    pFilePos->pFile    = pFile;

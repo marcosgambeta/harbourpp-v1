@@ -3185,7 +3185,7 @@ HB_ERRCODE hb_fsCurDirBuff(int iDrive, char * pszBuffer, HB_SIZE nSize)
 #if defined(HB_OS_WIN)
    {
       DWORD dwSize = static_cast<DWORD>(nSize);
-      LPTSTR lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
+      auto lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
       lpBuffer[0] = TEXT('\0');
       hb_fsSetIOError((GetCurrentDirectory(dwSize, lpBuffer) != 0), 0);
       lpBuffer[dwSize - 1] = TEXT('\0');
@@ -3287,7 +3287,7 @@ HB_BOOL hb_fsGetCWD(char * pszBuffer, HB_SIZE nSize)
 #if defined(HB_OS_WIN)
    {
       DWORD dwSize = static_cast<DWORD>(nSize);
-      LPTSTR lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
+      auto lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
       lpBuffer[0] = TEXT('\0');
       fResult = GetCurrentDirectory(dwSize, lpBuffer) != 0;
       hb_fsSetIOError(fResult, 0);
@@ -3559,7 +3559,7 @@ char * hb_fsExtName(const char * pszFileName, const char * pDefExt, HB_FATTR nEx
    HB_PATHNAMES * pNextPath;
    bool fIsFile = false;
 
-   char * szPath = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
+   auto szPath = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
 
    PHB_FNAME pFilepath = hb_fsFNameSplit(pszFileName);
 

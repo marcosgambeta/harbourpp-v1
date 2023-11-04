@@ -215,7 +215,7 @@ HB_FUNC( FREADSTR )
 
       if( nToRead > 0 ) {
          HB_FHANDLE fhnd = hb_numToHandle(hb_parnint(1));
-         char * buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
+         auto buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
          HB_SIZE nRead;
 
          nRead = hb_fsReadLarge(fhnd, buffer, nToRead);
@@ -240,7 +240,7 @@ HB_FUNC( HB_FREADLEN )
 
    if( nToRead > 0 && HB_ISNUM(1) ) {
       HB_FHANDLE fhnd = hb_numToHandle(hb_parnint(1));
-      char * buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
+      auto buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
       HB_SIZE nRead;
 
       nRead = hb_fsReadLarge(fhnd, buffer, nToRead);

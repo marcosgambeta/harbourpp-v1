@@ -3455,11 +3455,9 @@ static bool hb_gt_xwc_AllocColor(PXWND_DEF wnd, XColor * pColor)
        */
       int     i, iClosestColor;
       double  dDiff, dDistance;
-      XColor *colorTable;
-      HB_BYTE *checkTable;
 
-      colorTable = static_cast<XColor*>(hb_xgrab(iCMapSize * sizeof(XColor)));
-      checkTable = static_cast<HB_BYTE*>(hb_xgrab(iCMapSize * sizeof(HB_BYTE)));
+      auto colorTable = static_cast<XColor*>(hb_xgrab(iCMapSize * sizeof(XColor)));
+      auto checkTable = static_cast<HB_BYTE*>(hb_xgrab(iCMapSize * sizeof(HB_BYTE)));
       for( i = 0; i < iCMapSize; i++ ) {
          colorTable[i].pixel = static_cast<HB_GT_PIXELTYPE>(i);
          checkTable[i]       = false;
@@ -4312,7 +4310,7 @@ static bool hb_gt_xwc_isUTF8(void)
 
 static PXWND_DEF hb_gt_xwc_CreateWndDef(PHB_GT pGT)
 {
-   PXWND_DEF wnd = static_cast<PXWND_DEF>(hb_xgrabz(sizeof(XWND_DEF)));
+   auto wnd = static_cast<PXWND_DEF>(hb_xgrabz(sizeof(XWND_DEF)));
 
    wnd->pGT = pGT;
    wnd->dpy = nullptr;

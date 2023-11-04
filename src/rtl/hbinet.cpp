@@ -758,7 +758,6 @@ static void s_inetRecvPattern(const char * const * patterns, int * patternsizes,
    auto pBufferSize         = hb_param(iParam + 2, Harbour::Item::NUMERIC);
 
    char cChar = '\0';
-   char * buffer;
    int iPaternFound = 0;
    int iTimeElapsed = 0;
    int iPos = 0;
@@ -783,7 +782,7 @@ static void s_inetRecvPattern(const char * const * patterns, int * patternsizes,
 
    socket->iError = HB_INET_ERR_OK;
 
-   buffer = static_cast<char*>(hb_xgrab(iBufferSize));
+   auto buffer = static_cast<char*>(hb_xgrab(iBufferSize));
    iAllocated = iBufferSize;
 
    do {

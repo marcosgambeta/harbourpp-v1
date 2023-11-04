@@ -379,7 +379,7 @@ HB_FUNC( QOUT )
          char buf[256];
 
          if( pPrnPos->col > static_cast<int>(sizeof(buf)) ) {
-            char * pBuf = static_cast<char*>(hb_xgrab(pPrnPos->col));
+            auto pBuf = static_cast<char*>(hb_xgrab(pPrnPos->col));
             memset(pBuf, ' ', pPrnPos->col);
             hb_fileWrite(pFile, pBuf, static_cast<HB_USHORT>(pPrnPos->col), -1);
             hb_xfree(pBuf);

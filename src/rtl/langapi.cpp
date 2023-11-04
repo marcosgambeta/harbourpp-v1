@@ -284,7 +284,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
       }
    }
 
-   char * buffer = static_cast<char*>(hb_xgrab(nSize));
+   auto buffer = static_cast<char*>(hb_xgrab(nSize));
    char * ptr    = buffer + sizeof(trans);
    for( int i = 0; i < HB_LANG_ITEM_MAX_; ++i ) {
       if( trans.pItemList[i] != nullptr ) {

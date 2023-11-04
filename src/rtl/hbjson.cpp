@@ -578,7 +578,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
 
 char * hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEPAGE cdp)
 {
-   PHB_JSON_ENCODE_CTX pCtx = static_cast<PHB_JSON_ENCODE_CTX>(hb_xgrab(sizeof(HB_JSON_ENCODE_CTX)));
+   auto pCtx = static_cast<PHB_JSON_ENCODE_CTX>(hb_xgrab(sizeof(HB_JSON_ENCODE_CTX)));
    pCtx->nAlloc = 16;
    pCtx->pHead = pCtx->pBuffer = static_cast<char*>(hb_xgrab(pCtx->nAlloc));
    pCtx->nAllocId = 8;

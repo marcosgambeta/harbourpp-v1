@@ -67,14 +67,12 @@ HB_FUNC( HB_ANSITOOEM )
       auto pszSrc = hb_itemGetCPtr(pString);
 
       int nWideLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
-      LPWSTR pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
-
-      char * pszDst;
+      auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
       MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);
 
       nLen = WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
-      pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
+      auto pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
 
       WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 
@@ -100,14 +98,12 @@ HB_FUNC( HB_OEMTOANSI )
       auto pszSrc = hb_itemGetCPtr(pString);
 
       int nWideLen = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
-      LPWSTR pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
-
-      char * pszDst;
+      auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
       MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);
 
       nLen = WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
-      pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
+      auto pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
 
       WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 

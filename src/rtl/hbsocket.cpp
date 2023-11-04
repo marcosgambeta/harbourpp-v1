@@ -3457,7 +3457,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
    if( sd != HB_NO_SOCKET ) {
       struct ifconf ifc;
       struct ifreq * pifr;
-      char * buf, * ptr;
+      char * ptr;
       const char * pLastName = nullptr;
       int len = 0, size, iLastName = 0, iLastFamily = 0, flags, family;
 
@@ -3473,7 +3473,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
          len = 0x8000;
       }
       len *= sizeof(struct ifreq);
-      buf = static_cast<char*>(hb_xgrab(len));
+      auto buf = static_cast<char*>(hb_xgrab(len));
 
       ifc.ifc_len = len;
       ifc.ifc_buf = static_cast<caddr_t>(buf);
@@ -3655,7 +3655,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
    sd = hb_socketOpen(af ? af : HB_SOCKET_AF_INET, HB_SOCKET_PT_DGRAM, 0);
    if( sd != HB_NO_SOCKET ) {
       DWORD dwBuffer = 0x8000 * sizeof(INTERFACE_INFO);
-      void * pBuffer = hb_xgrab(dwBuffer);
+      auto pBuffer = hb_xgrab(dwBuffer);
       LPINTERFACE_INFO pIfInfo = static_cast<LPINTERFACE_INFO>(pBuffer);
 
       if( WSAIoctl(sd, SIO_GET_INTERFACE_LIST, nullptr, 0, pIfInfo, dwBuffer, &dwBuffer, 0, 0) != SOCKET_ERROR ) {
@@ -3703,7 +3703,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
 
          if( pArray && hb_arrayLen(pArray) > 0 ) {
             ULONG ulBufLen = sizeof(IP_ADAPTER_INFO);
-            PIP_ADAPTER_INFO pAdapterInfo = static_cast<PIP_ADAPTER_INFO>(hb_xgrab(ulBufLen));
+            auto pAdapterInfo = static_cast<PIP_ADAPTER_INFO>(hb_xgrab(ulBufLen));
             DWORD dwResult = GetAdaptersInfo(pAdapterInfo, &ulBufLen);
             if( dwResult == ERROR_BUFFER_OVERFLOW ) {
                hb_xfree(pAdapterInfo);

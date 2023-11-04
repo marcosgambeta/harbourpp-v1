@@ -152,7 +152,6 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
 {
    HB_CDP_LOCK();
    if( uniTable->uniTrans == nullptr ) {
-      HB_UCHAR * uniTrans;
       HB_WCHAR wcMax = 0;
 
       for( int i = 0; i < 256; ++i ) {
@@ -161,7 +160,7 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
             wcMax = wc;
          }
       }
-      uniTrans = static_cast<HB_UCHAR*>(hb_xgrabz((wcMax + 1) * sizeof(HB_UCHAR)));
+      auto uniTrans = static_cast<HB_UCHAR*>(hb_xgrabz((wcMax + 1) * sizeof(HB_UCHAR)));
       for( int i = 0; i < 256; ++i ) {
          if( uniTable->uniCodes[i] ) {
             uniTrans[uniTable->uniCodes[i]] = static_cast<HB_UCHAR>(i);
@@ -1622,7 +1621,7 @@ HB_SIZE hb_cdpStrToU16(PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZE
 HB_WCHAR * hb_cdpnStrDupU16(PHB_CODEPAGE cdp, int iEndian, const char * pSrc, HB_SIZE nSrc, HB_SIZE * pnDst)
 {
    HB_SIZE nLen = hb_cdpStrAsU16Len(cdp, pSrc, nSrc, 0);
-   HB_WCHAR * pDst = static_cast<HB_WCHAR*>(hb_xgrab((nLen + 1) * sizeof(HB_WCHAR)));
+   auto pDst = static_cast<HB_WCHAR*>(hb_xgrab((nLen + 1) * sizeof(HB_WCHAR)));
 
    hb_cdpStrToU16(cdp, iEndian, pSrc, nSrc, pDst, nLen + 1);
    if( pnDst ) {
@@ -1939,7 +1938,7 @@ HB_SIZE hb_cdpnDup2Len(const char * pSrc, HB_SIZE nSrc, HB_SIZE nMax, PHB_CODEPA
 char * hb_cdpnDup(const char * pSrc, HB_SIZE * pnLen, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
 {
    HB_SIZE nDst = hb_cdpTransLen(pSrc, *pnLen, 0, cdpIn, cdpOut);
-   char * pDst = static_cast<char*>(hb_xgrab(nDst + 1));
+   auto pDst = static_cast<char*>(hb_xgrab(nDst + 1));
    hb_cdpTransTo(pSrc, *pnLen, pDst, nDst + 1, cdpIn, cdpOut);
    *pnLen = nDst;
    return pDst;
@@ -2003,7 +2002,7 @@ char * hb_cdpDupn(const char * pszSrc, HB_SIZE nLen, PHB_CODEPAGE cdpIn, PHB_COD
 char * hb_cdpnDupUpper(PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize)
 {
    HB_SIZE nSize = pnSize ? *pnSize : strlen(pszText);
-   char * pszDst = static_cast<char*>(hb_xgrab(nSize + 1));
+   auto pszDst = static_cast<char*>(hb_xgrab(nSize + 1));
 
    if( cdp != nullptr ) {
       if( HB_CDP_ISCUSTOM(cdp) && cdp->wcharUpper ) {
@@ -2042,7 +2041,7 @@ char * hb_cdpnDupUpper(PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize)
 char * hb_cdpnDupLower(PHB_CODEPAGE cdp, const char * pszText, HB_SIZE * pnSize)
 {
    HB_SIZE nSize = pnSize ? *pnSize : strlen(pszText);
-   char * pszDst = static_cast<char*>(hb_xgrab(nSize + 1));
+   auto pszDst = static_cast<char*>(hb_xgrab(nSize + 1));
 
    if( cdp != nullptr ) {
       if( HB_CDP_ISCUSTOM(cdp) && cdp->wcharLower ) {
@@ -2368,7 +2367,7 @@ static PHB_CODEPAGE hb_buildCodePage(const char * id, const char * info,
    const char * pup, * plo;
    HB_UCHAR ucUp, ucLo, ucUp2, ucLo2;
    HB_SIZE nSize, ul;
-   HB_UCHAR * buffer, * flags, * upper, * lower, * sort, * acc;
+   HB_UCHAR * flags, * upper, * lower, * sort, * acc;
    HB_UCHAR used[256];
    PHB_MULTICHAR multi;
 
@@ -2497,7 +2496,7 @@ static PHB_CODEPAGE hb_buildCodePage(const char * id, const char * info,
       nSize += iMulti * sizeof(HB_MULTICHAR);
    }
 
-   buffer = static_cast<HB_UCHAR*>(hb_xgrabz(nSize));
+   auto buffer = static_cast<HB_UCHAR*>(hb_xgrabz(nSize));
    PHB_CODEPAGE cdp = reinterpret_cast<PHB_CODEPAGE>(&buffer[ul]);
    cdp->buffer = buffer;
 
@@ -2953,7 +2952,7 @@ const char ** hb_cdpList(void)
       cdp = cdp->next;
    }
 
-   const char ** list = static_cast<const char**>(hb_xgrab((iCount + 1) * sizeof(char*)));
+   auto list = static_cast<const char**>(hb_xgrab((iCount + 1) * sizeof(char*)));
 
    cdp = s_cdpList;
    int iPos = 0;

@@ -85,7 +85,6 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
       HB_SIZE nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
-         char * pszData;
          bool fRaw = hb_parl(3);
          HB_SIZE nSize;
 
@@ -93,7 +92,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
           * otherwise ANSI X.923 padding is used
           */
          nSize = (fRaw ? ((nLen + 7) >> 3) : ((nLen >> 3) + 1)) << 3;
-         pszData = static_cast<char*>(hb_xgrab(nSize + 1));
+         auto pszData = static_cast<char*>(hb_xgrab(nSize + 1));
          memcpy(pszData, hb_itemGetCPtr(pData), nLen);
          memset(pszData + nLen, '\0', nSize - nLen);
          if( !fRaw ) {
@@ -129,11 +128,10 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
       HB_SIZE nSize = hb_itemGetCLen(pData);
 
       if( nSize >= 8 && (nSize & 0x07) == 0 ) {
-         char * pszData;
          bool fRaw = hb_parl(3);
          HB_SIZE nLen;
 
-         pszData = static_cast<char*>(hb_xgrab(nSize + ( fRaw ? 1 : 0 )));
+         auto pszData = static_cast<char*>(hb_xgrab(nSize + ( fRaw ? 1 : 0 )));
          auto pszSource = hb_itemGetCPtr(pData);
          for( nLen = 0; nLen < nSize; nLen += 8 ) {
             HB_U32 xl, xr;
@@ -200,7 +198,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
 
       if( nLen ) {
          auto pszSource = hb_itemGetCPtr(pData);
-         char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
+         auto pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
          hb_bf_initvect(vect);
@@ -234,7 +232,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
 
       if( nLen ) {
          auto pszSource = hb_itemGetCPtr(pData);
-         char * pszData = static_cast<char*>(hb_xgrab(nLen + 1));
+         auto pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
          hb_bf_initvect(vect);

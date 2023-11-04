@@ -457,7 +457,7 @@ HB_FUNC( HB_UTF8POKE )
             }
             hb_itemReturn(pText);
          } else {
-            char * szResult = static_cast<char*>(hb_xgrab(nLen - n2 + n + 1));
+            auto szResult = static_cast<char*>(hb_xgrab(nLen - n2 + n + 1));
             memcpy(szResult, szString, nPos);
             hb_cdpU16CharToUTF8(&szResult[nPos], uc);
             memcpy(szResult + nPos + n, szString + nPos + n2, nLen - nPos - n2);
@@ -508,7 +508,7 @@ HB_FUNC( HB_UTF8STUFF )
       }
 
       if( (nTot = nLen + nIns - nDel) > 0 ) {
-         char * szResult = static_cast<char*>(hb_xgrab(nTot + 1));
+         auto szResult = static_cast<char*>(hb_xgrab(nTot + 1));
 
          hb_xmemcpy(szResult, szText, nPos);
          hb_xmemcpy(szResult + nPos, szIns, nIns);

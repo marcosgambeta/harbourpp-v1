@@ -445,7 +445,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
       }
 
       if( level != HB_ZLIB_COMPRESSION_DISABLE && (fDecompressIn || fCompressOut) ) {
-         PHB_SOCKEX_Z pZ = static_cast<PHB_SOCKEX_Z>(hb_xgrabz(sizeof(HB_SOCKEX_Z)));
+         auto pZ = static_cast<PHB_SOCKEX_Z>(hb_xgrabz(sizeof(HB_SOCKEX_Z)));
 
          pSockNew = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
          pSockNew->sd = HB_NO_SOCKET;
