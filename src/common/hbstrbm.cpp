@@ -90,7 +90,7 @@ static void suffixes(const char * needle, HB_ISIZ m, HB_ISIZ * suff)
 static void preBmGs(const char * needle, HB_ISIZ m, HB_ISIZ bmGs[])
 {
    HB_ISIZ i, j;
-   HB_ISIZ * suff = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
+   auto suff = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
 
    suffixes(needle, m, suff);
 
@@ -122,9 +122,8 @@ HB_ISIZ hb_strAtTBM(const char * needle, HB_ISIZ m, const char * haystack, HB_IS
    HB_ISIZ r = 0;
    HB_ISIZ bcShift, j, shift, u, v, turboShift;
    HB_ISIZ bmBc[ASIZE];
-   HB_ISIZ * bmGs;
 
-   bmGs = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
+   auto bmGs = static_cast<HB_ISIZ*>(hb_xgrab(m * sizeof(HB_ISIZ)));
 
    /* Preprocessing */
    preBmGs(needle, m, bmGs);

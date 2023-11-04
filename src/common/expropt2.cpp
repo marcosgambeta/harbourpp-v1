@@ -74,8 +74,7 @@ static PHB_EXPR hb_compExprReducePlusStrings(PHB_EXPR pLeft, PHB_EXPR pRight, HB
       pLeft->nLength += pRight->nLength;
       pLeft->value.asString.string[pLeft->nLength] = '\0';
    } else {
-      char * szString;
-      szString = static_cast<char*>(hb_xgrab(pLeft->nLength + pRight->nLength + 1));
+      auto szString = static_cast<char*>(hb_xgrab(pLeft->nLength + pRight->nLength + 1));
       memcpy(szString, pLeft->value.asString.string, pLeft->nLength);
       memcpy(szString + pLeft->nLength, pRight->value.asString.string, pRight->nLength);
       pLeft->nLength += pRight->nLength;
@@ -103,7 +102,7 @@ static PHB_EXPR hb_compExprReduceMinusStrings(PHB_EXPR pLeft, PHB_EXPR pRight, H
       pLeft->nLength += pRight->nLength;
       pLeft->value.asString.string[pLeft->nLength] = '\0';
    } else {
-      char * szString = static_cast<char*>(hb_xgrab(pLeft->nLength + pRight->nLength + 1));
+      auto szString = static_cast<char*>(hb_xgrab(pLeft->nLength + pRight->nLength + 1));
       memcpy(szString, pLeft->value.asString.string, nLen);
       memcpy(szString + nLen, pRight->value.asString.string, pRight->nLength);
       memset(szString + nLen + pRight->nLength, ' ', pLeft->nLength - nLen);

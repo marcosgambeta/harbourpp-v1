@@ -165,7 +165,7 @@ char * hb_strdup(const char * pszText)
 #endif
 
    HB_SIZE nLen = strlen(pszText) + 1;
-   char * pszDup = static_cast<char*>(hb_xgrab(nLen));
+   auto pszDup = static_cast<char*>(hb_xgrab(nLen));
    memcpy(pszDup, pszText, nLen);
 
    return pszDup;
@@ -182,7 +182,7 @@ char * hb_strndup(const char * pszText, HB_SIZE nLen)
       ++nPos;
    }
 
-   char * pszDup = static_cast<char*>(hb_xgrab(nPos + 1));
+   auto pszDup = static_cast<char*>(hb_xgrab(nPos + 1));
    memcpy(pszDup, pszText, nPos);
    pszDup[nPos] = '\0';
 
@@ -219,7 +219,7 @@ char * hb_strduptrim(const char * pszText)
       --nLen;
    }
 
-   char * pszDup = static_cast<char*>(hb_xgrab(nLen + 1));
+   auto pszDup = static_cast<char*>(hb_xgrab(nLen + 1));
    memcpy(pszDup, pszText, nLen);
    pszDup[nLen] = '\0';
 
@@ -1184,7 +1184,7 @@ char * hb_strRemEscSeq(char * str, HB_SIZE * pnLen)
 
 char * hb_compEncodeString(int iMethod, const char * szText, HB_SIZE * pnLen)
 {
-   char * pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
+   auto pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
 
    memcpy(pBuffer, szText, *pnLen);
    pBuffer[*pnLen] = '\0';
@@ -1198,7 +1198,7 @@ char * hb_compEncodeString(int iMethod, const char * szText, HB_SIZE * pnLen)
 
 char * hb_compDecodeString(int iMethod, const char * szText, HB_SIZE * pnLen)
 {
-   char * pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
+   auto pBuffer = static_cast<char*>(hb_xgrab(*pnLen + 1));
 
    memcpy(pBuffer, szText, *pnLen);
    pBuffer[*pnLen] = '\0';

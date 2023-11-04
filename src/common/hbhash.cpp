@@ -48,7 +48,7 @@
 
 static PHB_HASH_ITEM hb_hashItemNew(HB_SIZE nKey, const void * pKey, const void * pValue)
 {
-   PHB_HASH_ITEM pItem = static_cast<PHB_HASH_ITEM>(hb_xgrab(sizeof(HB_HASH_ITEM)));
+   auto pItem = static_cast<PHB_HASH_ITEM>(hb_xgrab(sizeof(HB_HASH_ITEM)));
 
    pItem->key = nKey;
    pItem->KeyPtr = pKey;
@@ -78,7 +78,7 @@ static void hb_hashItemDelete(PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem)
  */
 PHB_HASH_TABLE hb_hashTableCreate(HB_SIZE nSize, PHB_HASH_FUNC pHashFunc, PHB_HASH_FUNC pDelete, PHB_HASH_FUNC pComp)
 {
-   PHB_HASH_TABLE pTable = static_cast<PHB_HASH_TABLE>(hb_xgrab(sizeof(HB_HASH_TABLE)));
+   auto pTable = static_cast<PHB_HASH_TABLE>(hb_xgrab(sizeof(HB_HASH_TABLE)));
 
    pTable->nTableSize = nSize;
    pTable->pKeyFunc = pHashFunc;

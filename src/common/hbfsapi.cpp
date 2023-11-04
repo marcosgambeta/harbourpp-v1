@@ -144,10 +144,8 @@ PHB_FNAME hb_fsFNameSplit(const char * pszFileName)
    HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit: Filename: |%s|", pszFileName));
 #endif
 
-   PHB_FNAME pFileName;
-
    /* Grab memory, set defaults */
-   pFileName = static_cast<PHB_FNAME>(hb_xgrab(sizeof(HB_FNAME)));
+   auto pFileName = static_cast<PHB_FNAME>(hb_xgrab(sizeof(HB_FNAME)));
 
    pFileName->szPath = pFileName->szName = pFileName->szExtension = pFileName->szDrive = nullptr;
 

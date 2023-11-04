@@ -81,10 +81,9 @@ void hb_mbntowccpy(wchar_t * dstW, const char * srcA, HB_SIZE nLen)
 wchar_t * hb_mbtowc(const char * srcA)
 {
    int length;
-   wchar_t *dstW;
 
    length = MultiByteToWideChar(CP_ACP, 0, srcA, -1, nullptr, 0);
-   dstW = static_cast<wchar_t*>(hb_xgrab(length * sizeof(wchar_t)));
+   auto dstW = static_cast<wchar_t*>(hb_xgrab(length * sizeof(wchar_t)));
    MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, length);
 
    return dstW;
@@ -93,10 +92,9 @@ wchar_t * hb_mbtowc(const char * srcA)
 char * hb_wctomb(const wchar_t * srcW)
 {
    int length;
-   char *dstA;
 
    length = WideCharToMultiByte(CP_ACP, 0, srcW, -1, nullptr, 0, nullptr, nullptr);
-   dstA = static_cast<char*>(hb_xgrab(length));
+   auto dstA = static_cast<char*>(hb_xgrab(length));
    WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, length, nullptr, nullptr);
 
    return dstA;
@@ -105,11 +103,10 @@ char * hb_wctomb(const wchar_t * srcW)
 wchar_t * hb_mbntowc(const char * srcA, HB_SIZE nLen)
 {
    int length;
-   wchar_t *dstW;
 
    nLen = hb_strnlen(srcA, nLen);
    length = MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), nullptr, 0);
-   dstW = static_cast<wchar_t*>(hb_xgrab((length + 1) * sizeof(wchar_t)));
+   auto dstW = static_cast<wchar_t*>(hb_xgrab((length + 1) * sizeof(wchar_t)));
    MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), dstW, length);
    dstW[length] = L'\0';
 
@@ -119,11 +116,10 @@ wchar_t * hb_mbntowc(const char * srcA, HB_SIZE nLen)
 char * hb_wcntomb(const wchar_t * srcW, HB_SIZE nLen)
 {
    int length;
-   char *dstA;
 
    nLen = hb_wcnlen(srcW, nLen);
    length = WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
-   dstA = static_cast<char*>(hb_xgrab(length + 1));
+   auto dstA = static_cast<char*>(hb_xgrab(length + 1));
    WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), dstA, length, nullptr, nullptr);
    dstA[length] = '\0';
 
