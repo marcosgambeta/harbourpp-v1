@@ -810,7 +810,7 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
                const char * pNewBuffer = hb_arrayGetCPtr(pEntry, 3);
                HB_ISIZ nLen = ((nMax - nMin) >> 3) + 1;
                HB_ISIZ k;
-               char * pBuffer = static_cast<char*>(hb_xgrabz(nLen + 1));
+               auto pBuffer = static_cast<char*>(hb_xgrabz(nLen + 1));
 
                /* the bitfields with line numbers should use
                 * 8bit alignment so it's safe to use byte copy
@@ -1110,7 +1110,7 @@ static int hb_dbgEvalSubstituteVar(HB_WATCHPOINT * watch, char * szWord, int nSt
 
    HB_SIZE n = strlen(watch->szExpr);
    j = hb_snprintf(buf, sizeof(buf), "__dbg[%d]", j + 1);
-   char * szExpr = static_cast<char*>(hb_xgrab(n - nLen + j + 1));
+   auto szExpr = static_cast<char*>(hb_xgrab(n - nLen + j + 1));
    memcpy(szExpr, watch->szExpr, nStart);
    memcpy(szExpr + nStart, buf, j);
    memcpy(szExpr + nStart + j, watch->szExpr + nStart + nLen, n - nLen - nStart);
@@ -1130,7 +1130,7 @@ static PHB_ITEM hb_dbgEvalMakeBlock(HB_WATCHPOINT * watch)
    int i = 0;
    PHB_ITEM pBlock;
    bool bAfterId = false;
-   char * szBlock, * szOrig = nullptr;
+   char * szOrig = nullptr;
    HB_ISIZ buffsize;
 
    watch->nVars = 0;
@@ -1246,7 +1246,7 @@ static PHB_ITEM hb_dbgEvalMakeBlock(HB_WATCHPOINT * watch)
 
    buffsize = 8 + strlen(watch->szExpr) + 1;
 
-   szBlock = static_cast<char*>(hb_xgrab(buffsize + 1));
+   auto szBlock = static_cast<char*>(hb_xgrab(buffsize + 1));
    hb_strncpy(szBlock, "{|__dbg|", buffsize);
    hb_strncat(szBlock, watch->szExpr, buffsize);
    hb_strncat(szBlock, "}", buffsize);
@@ -1271,7 +1271,6 @@ static PHB_ITEM hb_dbgEvalResolve( HB_DEBUGINFO * info, HB_WATCHPOINT * watch )
    int i;
    HB_CALLSTACKINFO * top = &info->aCallStack[info->nCallStackLen - 1];
    auto aVars = hb_itemArrayNew(watch->nVars);
-   HB_VARINFO * scopes;
    HB_MODULEINFO * module = nullptr;
    int nProcLevel;
 
@@ -1279,7 +1278,7 @@ static PHB_ITEM hb_dbgEvalResolve( HB_DEBUGINFO * info, HB_WATCHPOINT * watch )
       return aVars;
    }
 
-   scopes = static_cast<HB_VARINFO*>(hb_xgrab(watch->nVars * sizeof(HB_VARINFO)));
+   auto scopes = static_cast<HB_VARINFO*>(hb_xgrab(watch->nVars * sizeof(HB_VARINFO)));
    nProcLevel = hb_dbg_ProcLevel();
 
    HB_DBGCOMMON_LOCK();
