@@ -267,7 +267,7 @@ static bool hb_arraySortDO(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE * 
 
 static void hb_arraySortStart(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nStart, HB_SIZE nCount)
 {
-   HB_SIZE * pBuffer = static_cast<HB_SIZE*>(hb_xgrab(sizeof(HB_SIZE) * 2 * nCount));
+   auto pBuffer = static_cast<HB_SIZE*>(hb_xgrab(sizeof(HB_SIZE) * 2 * nCount));
    for( HB_SIZE nPos = 0; nPos < nCount; ++nPos ) {
       pBuffer[nPos] = nStart + nPos;
    }

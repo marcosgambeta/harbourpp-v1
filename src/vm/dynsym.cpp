@@ -109,7 +109,7 @@ static PHB_DYNS hb_dynsymInsert(PHB_SYMB pSymbol, HB_SYMCNT uiPos)
       memmove(&s_pDynItems[uiPos + 1], &s_pDynItems[uiPos], sizeof(DYNHB_ITEM) * (s_uiDynSymbols - uiPos - 1));
    }
 
-   PHB_DYNS pDynSym = static_cast<PHB_DYNS>(hb_xgrabz(sizeof(HB_DYNS)));
+   auto pDynSym = static_cast<PHB_DYNS>(hb_xgrabz(sizeof(HB_DYNS)));
    pDynSym->pSymbol  = pSymbol;
    pDynSym->uiSymNum = s_uiDynSymbols;
 
@@ -161,7 +161,7 @@ static PHB_SYMB hb_symbolAlloc(const char * szName)
 #endif
 
    int iLen = static_cast<int>(strlen(szName));
-   HB_SYM_HOLDER * pHolder = static_cast<HB_SYM_HOLDER*>(hb_xgrab(sizeof(HB_SYM_HOLDER) + iLen));
+   auto pHolder = static_cast<HB_SYM_HOLDER*>(hb_xgrab(sizeof(HB_SYM_HOLDER) + iLen));
    memcpy(pHolder->szName, szName, iLen + 1);
    pHolder->pNext = s_pAllocSyms;
    s_pAllocSyms = pHolder;

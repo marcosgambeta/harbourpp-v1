@@ -212,7 +212,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
 
 static void hb_hashResort(PHB_BASEHASH pBaseHash)
 {
-   PHB_HASHPAIR pPairs = static_cast<PHB_HASHPAIR>(hb_xgrab(pBaseHash->nLen * sizeof(HB_HASHPAIR)));
+   auto pPairs = static_cast<PHB_HASHPAIR>(hb_xgrab(pBaseHash->nLen * sizeof(HB_HASHPAIR)));
    for( HB_SIZE nPos = 0; nPos < pBaseHash->nLen; ++nPos ) {
       memcpy(pPairs + nPos, pBaseHash->pPairs + pBaseHash->pnPos[nPos], sizeof(HB_HASHPAIR));
       pBaseHash->pnPos[nPos] = nPos;

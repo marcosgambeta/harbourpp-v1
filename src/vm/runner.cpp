@@ -334,7 +334,7 @@ static PHRB_BODY hb_hrbLoad(const char * szHrbBody, HB_SIZE nBodySize, HB_USHORT
 
       nBodyOffset = nPos;
       ul = pHrbBody->ulSymbols * sizeof(HB_SYMB);
-      PHB_SYMB pSymRead = static_cast<PHB_SYMB>(hb_xgrab(nSize + ul)); /* Symbols read */
+      auto pSymRead = static_cast<PHB_SYMB>(hb_xgrab(nSize + ul)); /* Symbols read */
       char * buffer = (reinterpret_cast<char*>(pSymRead)) + ul;
       char ch;
 

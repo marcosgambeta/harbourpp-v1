@@ -454,7 +454,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
       }
 
       /* Create the new date format */
-      char * szNewFormat = static_cast<char*>(hb_xgrab(size + 1));
+      auto szNewFormat = static_cast<char*>(hb_xgrab(size + 1));
 
       {
          if( y_start > 0 ) {
@@ -1268,7 +1268,7 @@ void hb_setRelease(PHB_SET_STRUCT pSet)
 
 PHB_SET_STRUCT hb_setClone(PHB_SET_STRUCT pSrc)
 {
-   PHB_SET_STRUCT pSet = static_cast<PHB_SET_STRUCT>(hb_xgrab(sizeof(HB_SET_STRUCT)));
+   auto pSet = static_cast<PHB_SET_STRUCT>(hb_xgrab(sizeof(HB_SET_STRUCT)));
 
    memcpy(pSet, pSrc, sizeof(HB_SET_STRUCT));
 
@@ -1330,7 +1330,7 @@ int hb_setListenerAdd(HB_SET_LISTENER_CALLBACK * callback)
 {
    HB_STACK_TLS_PRELOAD
    PHB_SET_STRUCT pSet = hb_stackSetStruct();
-   PHB_SET_LISTENER p_sl = static_cast<PHB_SET_LISTENER>(hb_xgrab(sizeof(HB_SET_LISTENER)));
+   auto p_sl = static_cast<PHB_SET_LISTENER>(hb_xgrab(sizeof(HB_SET_LISTENER)));
 
    if( !pSet->hb_set_listener ) {
       pSet->hb_set_listener = hb_xgrabz(sizeof(HB_SET_LISTENER_LST));
@@ -2908,7 +2908,7 @@ HB_WCHAR * hb_osStrU16Encode(const char * pszName)
       if( cdp ) {
          HB_SIZE nLen = strlen(pszName);
          HB_SIZE nSize = hb_cdpStrAsU16Len(cdp, pszName, nLen, 0);
-         HB_WCHAR * pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab((nSize + 1) * sizeof(HB_WCHAR)));
+         auto pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab((nSize + 1) * sizeof(HB_WCHAR)));
          hb_cdpStrToU16(cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1);
          return pszBufferW;
       }
@@ -2924,7 +2924,7 @@ HB_WCHAR * hb_osStrU16EncodeN(const char * pszName, HB_SIZE nLen)
       if( cdp ) {
          nLen = hb_strnlen(pszName, nLen);
          HB_SIZE nSize = hb_cdpStrAsU16Len(cdp, pszName, nLen, 0);
-         HB_WCHAR * pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab((nSize + 1) * sizeof(HB_WCHAR)));
+         auto pszBufferW = static_cast<HB_WCHAR*>(hb_xgrab((nSize + 1) * sizeof(HB_WCHAR)));
          hb_cdpStrToU16(cdp, HB_CDP_ENDIAN_NATIVE, pszName, nLen, pszBufferW, nSize + 1);
          return pszBufferW;
       }
@@ -2954,7 +2954,7 @@ char * hb_osStrU16Decode(const HB_WCHAR * pszNameW)
       if( cdp ) {
          HB_SIZE nLen = hb_wstrlen(pszNameW);
          HB_SIZE nSize = hb_cdpU16AsStrLen(cdp, pszNameW, nLen, 0);
-         char * pszBuffer = static_cast<char*>(hb_xgrab(nSize + 1));
+         auto pszBuffer = static_cast<char*>(hb_xgrab(nSize + 1));
          hb_cdpU16ToStr(cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, nLen, pszBuffer, nSize + 1);
          return pszBuffer;
       }

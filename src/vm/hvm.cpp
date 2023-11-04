@@ -307,7 +307,7 @@ static void hb_breakBlockRelease(void)
 
 static void hb_vmAddModuleFunction(PHB_FUNC_LIST * pLstPtr, HB_INIT_FUNC pFunc, void * cargo)
 {
-   PHB_FUNC_LIST pLst = static_cast<PHB_FUNC_LIST>(hb_xgrab(sizeof(HB_FUNC_LIST)));
+   auto pLst = static_cast<PHB_FUNC_LIST>(hb_xgrab(sizeof(HB_FUNC_LIST)));
 
    pLst->pFunc = pFunc;
    pLst->cargo = cargo;
@@ -4380,7 +4380,7 @@ static void hb_vmEnumReference(PHB_ITEM pBase)
       hb_vmEnumRefMark
    };
 
-   PHB_ENUMREF pEnumExtRef = static_cast<PHB_ENUMREF>(hb_xgrab(sizeof(HB_ENUMREF)));
+   auto pEnumExtRef = static_cast<PHB_ENUMREF>(hb_xgrab(sizeof(HB_ENUMREF)));
    pEnumExtRef->oldvalue.type = Harbour::Item::NIL;
    pEnumExtRef->enumref.type = Harbour::Item::NIL;
    hb_itemRawCpy(&pEnumExtRef->basevalue, pBase);
@@ -6206,7 +6206,7 @@ static void hb_vmTSVReference(PHB_ITEM pStatic)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_TSVREF pTSVRef = static_cast<PHB_TSVREF>(hb_xgrab(sizeof(HB_TSVREF)));
+   auto pTSVRef = static_cast<PHB_TSVREF>(hb_xgrab(sizeof(HB_TSVREF)));
 
    pTSVRef->source.type = Harbour::Item::NIL;
    HB_TSD_INIT(&pTSVRef->threadData, sizeof(HB_ITEM), nullptr, hb_vmTSVarClean);
@@ -7916,7 +7916,7 @@ void hb_vmPushItemRef(PHB_ITEM pItem)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITMREF pItmRef = static_cast<PHB_ITMREF>(hb_xgrab(sizeof(HB_ITMREF)));
+   auto pItmRef = static_cast<PHB_ITMREF>(hb_xgrab(sizeof(HB_ITMREF)));
 
    pItmRef->value = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
    pItmRef->value->type = Harbour::Item::BYREF | Harbour::Item::EXTREF;
@@ -8075,7 +8075,7 @@ HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_MSGREF pMsgRef = static_cast<PHB_MSGREF>(hb_xgrab(sizeof(HB_MSGREF)));
+   auto pMsgRef = static_cast<PHB_MSGREF>(hb_xgrab(sizeof(HB_MSGREF)));
    pMsgRef->access = pAccMsg;
    pMsgRef->assign = pMessage;
    pMsgRef->value.type = Harbour::Item::NIL | Harbour::Item::DEFAULT;
@@ -8226,7 +8226,7 @@ static void hb_vmMsgIndexReference(PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM p
       hb_vmMsgIdxRefMark
    };
 
-   PHB_MSGIDXREF pMsgIdxRef = static_cast<PHB_MSGIDXREF>(hb_xgrab(sizeof(HB_MSGIDXREF)));
+   auto pMsgIdxRef = static_cast<PHB_MSGIDXREF>(hb_xgrab(sizeof(HB_MSGIDXREF)));
    pMsgIdxRef->value.type = Harbour::Item::NIL | Harbour::Item::DEFAULT;
    pMsgIdxRef->object.type = Harbour::Item::NIL;
    pMsgIdxRef->index.type = Harbour::Item::NIL;

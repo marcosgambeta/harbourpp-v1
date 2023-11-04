@@ -441,7 +441,7 @@ char * hb_itemGetC(PHB_ITEM pItem)
 #endif
 
    if( pItem && HB_IS_STRING(pItem) ) {
-      char * szResult = static_cast<char*>(hb_xgrab(pItem->item.asString.length + 1));
+      auto szResult = static_cast<char*>(hb_xgrab(pItem->item.asString.length + 1));
       hb_xmemcpy(szResult, pItem->item.asString.value, pItem->item.asString.length);
       szResult[pItem->item.asString.length] = '\0';
 
@@ -2155,7 +2155,7 @@ PHB_ITEM hb_itemReSizeString(PHB_ITEM pItem, HB_SIZE nSize)
 #endif
 
    if( pItem->item.asString.allocated == 0 ) {
-      char * szText = static_cast<char*>(hb_xgrab(nSize + 1));
+      auto szText = static_cast<char*>(hb_xgrab(nSize + 1));
       hb_xmemcpy(szText, pItem->item.asString.value, pItem->item.asString.length);
       szText[nSize] = '\0';
       pItem->item.asString.value     = szText;

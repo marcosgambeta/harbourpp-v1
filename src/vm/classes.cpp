@@ -2075,7 +2075,7 @@ static void hb_objSuperDestructorCall(PHB_ITEM pObject, PCLASS pClass)
    PMETHOD pMethod = pClass->pMethods;
    HB_SIZE nLimit = hb_clsMthNum(pClass);
 
-   char * pcClasses = static_cast<char*>(hb_xgrabz(static_cast<HB_SIZE>(s_uiClasses) + 1));
+   auto pcClasses = static_cast<char*>(hb_xgrabz(static_cast<HB_SIZE>(s_uiClasses) + 1));
 
    do {
       if( pMethod->pMessage ) {
@@ -3163,7 +3163,7 @@ static HB_USHORT hb_clsNew(const char * szClassName, HB_USHORT uiDatas, PHB_ITEM
    HB_USHORT uiSuper  = static_cast<HB_USHORT>(pSuperArray ? hb_arrayLen(pSuperArray) : 0);
    pClassFunc = hb_vmGetRealFuncSym(pClassFunc);
 
-   PCLASS pNewCls = static_cast<PCLASS>(hb_xgrabz(sizeof(CLASS)));
+   auto pNewCls = static_cast<PCLASS>(hb_xgrabz(sizeof(CLASS)));
 
    HB_CLASS_LOCK();
 

@@ -283,7 +283,7 @@ static char * hb_macroTextSubst(const char * szString, HB_SIZE * pnStringLen)
    /* initial length of the string and the result buffer (it can contain null bytes) */
    nResBufLen = nResStrLen = *pnStringLen;
    /* initial buffer for return value */
-   char * szResult = static_cast<char*>(hb_xgrab(nResBufLen + 1));
+   auto szResult = static_cast<char*>(hb_xgrab(nResBufLen + 1));
 
    /* copy the input string with trailing zero byte
     */
@@ -583,7 +583,7 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
       /* grab memory for "alias->var"
        */
       HB_SIZE nLen = pAlias->item.asString.length + pVar->item.asString.length + 2;
-      char * szString = static_cast<char*>(hb_xgrab(nLen + 1));
+      auto szString = static_cast<char*>(hb_xgrab(nLen + 1));
 
       memcpy(szString, pAlias->item.asString.value, pAlias->item.asString.length);
       szString[pAlias->item.asString.length]     = '-';
@@ -762,8 +762,7 @@ PHB_MACRO hb_macroCompile(const char * szString)
    HB_TRACE(HB_TR_DEBUG, ("hb_macroCompile(%s)", szString));
 #endif
 
-   PHB_MACRO pMacro;
-   pMacro = static_cast<PHB_MACRO>(hb_xgrab(sizeof(HB_MACRO)));
+   auto pMacro = static_cast<PHB_MACRO>(hb_xgrab(sizeof(HB_MACRO)));
    pMacro->mode      = HB_MODE_MACRO;
    pMacro->supported = hb_macroFlags() | HB_SM_ISUSERCP();
    pMacro->Flags     = HB_MACRO_GEN_PUSH | HB_MACRO_GEN_LIST | HB_MACRO_GEN_PARE;
@@ -1684,7 +1683,7 @@ void hb_macroCodeBlockStart(HB_COMP_DECL)
    HB_TRACE(HB_TR_DEBUG, ("hb_macroCodeBlockStart(%p)", static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
-   PHB_PCODE_INFO pCB = static_cast<PHB_PCODE_INFO>(hb_xgrab(sizeof(HB_PCODE_INFO)));
+   auto pCB = static_cast<PHB_PCODE_INFO>(hb_xgrab(sizeof(HB_PCODE_INFO)));
 
    pCB->pCode = static_cast<HB_BYTE*>(hb_xgrab(HB_PCODE_SIZE));
    pCB->nPCodeSize = HB_PCODE_SIZE;

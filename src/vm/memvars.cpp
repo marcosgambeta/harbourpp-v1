@@ -90,7 +90,7 @@ static PHB_ITEM hb_memvarValueNew(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarValueNew()"));
 #endif
 
-   PHB_ITEM pMemvar = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
+   auto pMemvar = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
    pMemvar->type = Harbour::Item::NIL;
    return pMemvar;
 }
@@ -1467,7 +1467,7 @@ HB_FUNC( __MVRESTORE )
             switch( uiType ) {
                case 'C': {
                   uiWidth += uiDec * 256;
-                  HB_BYTE * pbyString = static_cast<HB_BYTE*>(hb_xgrab(uiWidth));
+                  auto pbyString = static_cast<HB_BYTE*>(hb_xgrab(uiWidth));
 
                   if( hb_fileRead(fhnd, pbyString, uiWidth, -1) == static_cast<HB_SIZE>(uiWidth) ) {
                      pItem = hb_itemPutCLPtr(pItem, reinterpret_cast<char*>(pbyString), uiWidth - 1);

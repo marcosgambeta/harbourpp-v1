@@ -248,7 +248,7 @@ static void hb_taskUnlink(PHB_TASKINFO * pList, PHB_TASKINFO pTask)
 
 static PHB_TASKMTX hb_taskMutexNew(void)
 {
-   PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>(hb_xgrab(sizeof(HB_TASKMTX)));
+   auto pMutex = static_cast<PHB_TASKMTX>(hb_xgrab(sizeof(HB_TASKMTX)));
    pMutex->count = 0;
    pMutex->task = nullptr;
    pMutex->lockers = nullptr;
@@ -259,7 +259,7 @@ static PHB_TASKMTX hb_taskMutexNew(void)
 
 static PHB_TASKCOND hb_taskCondNew(void)
 {
-   PHB_TASKCOND pCond = static_cast<PHB_TASKCOND>(hb_xgrab(sizeof(HB_TASKCOND)));
+   auto pCond = static_cast<PHB_TASKCOND>(hb_xgrab(sizeof(HB_TASKCOND)));
    pCond->waiters = nullptr;
    pCond->mutex = nullptr;
    pCond->next = s_condList;
@@ -453,7 +453,7 @@ static PHB_TASKINFO hb_taskNew(long stack_size)
       stack_size = HB_TASK_STACK_MIN;
    }
 
-   PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>(hb_xgrabz(sizeof(HB_TASKINFO)));
+   auto pTask = static_cast<PHB_TASKINFO>(hb_xgrabz(sizeof(HB_TASKINFO)));
    pTask->stack = static_cast<char*>(hb_xgrab(stack_size));
 
    HB_PTRUINT new_size = static_cast<HB_PTRUINT>(pTask->stack) + stack_size;
