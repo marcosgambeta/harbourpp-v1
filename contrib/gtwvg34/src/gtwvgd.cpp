@@ -1990,7 +1990,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
          case WM_CLOSE:  /* Clicked 'X' on system menu */
             if( pWVT->CloseMode == 0 ) {
-               PHB_ITEM pEvParams = hb_itemNew(nullptr);
+               auto pEvParams = hb_itemNew(nullptr);
                if( hb_gt_wvt_FireEvent(pWVT, HB_GTE_CLOSE, pEvParams) == 0 ) {
 #if 1
                   hb_gt_wvt_AddCharToInputQueue(pWVT, HB_K_CLOSE);
@@ -2014,7 +2014,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
          /* Pritpal Bedi - 2008-06-06 */
          case WM_ACTIVATE: {
-            PHB_ITEM pEvParams = hb_itemNew(nullptr);
+            auto pEvParams = hb_itemNew(nullptr);
             hb_gt_wvt_FireEvent(pWVT, (LOWORD(wParam) == WA_INACTIVE ? HB_GTE_KILLFOCUS : HB_GTE_SETFOCUS), pEvParams);
             return 0;
          }

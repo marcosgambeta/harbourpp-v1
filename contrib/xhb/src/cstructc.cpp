@@ -919,7 +919,7 @@ static PHB_ITEM StructureToArray(HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM 
    HB_UINT       uiOffset, uiMemberSize;
    HB_BYTE       cShift;
 #if 0
-   PHB_ITEM pRet = hb_itemNew(nullptr);
+   auto pRet = hb_itemNew(nullptr);
 #endif
    PHB_BASEARRAY pBaseVar;
 

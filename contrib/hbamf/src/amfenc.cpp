@@ -265,7 +265,7 @@ static int amf3_add_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
    int      result = 0;
 
    if( context->use_refs ) {
-      PHB_ITEM pKey = hb_itemNew(nullptr);
+      auto pKey = hb_itemNew(nullptr);
 
       _ref_realItemPtr(pKey, pItem);
       if( !HB_IS_POINTER(pKey) && !HB_IS_DATETIME(pKey) ) {
@@ -319,7 +319,7 @@ static int amf3_add_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
 static int amf3_get_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
 {
    if( context->use_refs ) {
-      PHB_ITEM pKey = hb_itemNew(nullptr);
+      auto pKey = hb_itemNew(nullptr);
       HB_SIZE nPos;
       PHB_ITEM pVal;
 
@@ -740,7 +740,6 @@ static PHB_ITEM class_def_from_class(/* amfContext * context, */ PHB_ITEM pItem)
    HB_USHORT uiClass;
    PHB_ITEM  pClass;
    PHB_ITEM  pKey;
-   PHB_ITEM  pValue;
 
    /* get Harbour's class id/handle */
    uiClass = hb_objGetClass(pItem);
@@ -757,7 +756,7 @@ static PHB_ITEM class_def_from_class(/* amfContext * context, */ PHB_ITEM pItem)
    pClass = hb_hashNew(nullptr);
 
    pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
-   pValue = hb_itemNew(nullptr);
+   auto pValue = hb_itemNew(nullptr);
    if( !hb_hashAdd(pClass, pKey, pValue) ) {
       hb_itemRelease(pKey);
       hb_itemRelease(pValue);
@@ -813,7 +812,7 @@ static bool amf3_encode_object(amfContext * context, PHB_ITEM pItem)
 
    /* serialize emulated ActionScript dynamic object */
    if( strcmp(hb_clsName(hb_objGetClass(pItem)), "AMF_OBJ") == 0 ) {
-      PHB_ITEM pAnonHash = hb_itemNew(nullptr);
+      auto pAnonHash = hb_itemNew(nullptr);
 
       if( amf3_serialize_class_def(context, nullptr) == 0 ) {
          hb_itemRelease(pAnonHash);
@@ -838,7 +837,7 @@ static bool amf3_encode_object(amfContext * context, PHB_ITEM pItem)
 
    if( hb_hashGetCItemPos(pClass, "EXTERNALIZABLE_CLASS_DEF") != 0 ) {
       PHB_ITEM pStr;
-      PHB_ITEM pRetCopy = hb_itemNew(nullptr);
+      auto pRetCopy = hb_itemNew(nullptr);
       PHB_ITEM pObject;
 
       if( pItem == hb_stackReturnItem() ) {
@@ -932,7 +931,7 @@ static bool amf3_serialize_object(amfContext * context, PHB_ITEM pItem)
    int result;
 
    if( strcmp(hb_clsName(hb_objGetClass(pItem)), "AMF_RAW") == 0 ) {
-      PHB_ITEM pStr = hb_itemNew(nullptr);
+      auto pStr = hb_itemNew(nullptr);
       hb_arrayGet(pItem, 1, pStr);
       context->position--;
       result = amf3_encode_byte_array(context, pStr) != 0;
@@ -957,7 +956,7 @@ static bool amf3_serialize_object(amfContext * context, PHB_ITEM pItem)
 
 static void amf3_conversion_out(amfContext * context, PHB_ITEM pItem)
 {
-   PHB_ITEM pRetCopy      = hb_itemNew(nullptr);
+   auto pRetCopy = hb_itemNew(nullptr);
    PHB_ITEM pOuterContext = hb_itemPutPtr(nullptr, context);
    PHB_SYMB pSym = hb_itemGetSymbol(context->conv_function);
 
@@ -1301,7 +1300,7 @@ HB_FUNC( AMF3_FROMWA )
                   }
                }
             } else {
-               PHB_ITEM pValue = hb_itemNew(nullptr);
+               auto pValue = hb_itemNew(nullptr);
 
                writeByte(context, OBJECT_TYPE);
 #if 0

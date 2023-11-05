@@ -556,7 +556,7 @@ static UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wPa
 
    if( msg == WM_INITDIALOG ) {
       CHOOSEFONT * cf = reinterpret_cast<CHOOSEFONT*>(lParam);
-      PHB_ITEM pBlock = hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData));
+      auto pBlock = hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData));
       SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
       binit = true;
    }
@@ -861,7 +861,7 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   PHB_ITEM pBlock = hb_itemNew(hb_param(2, Harbour::Item::EVALITEM));
+   auto pBlock = hb_itemNew(hb_param(2, Harbour::Item::EVALITEM));
 
    SetProp(hWnd, TEXT("BLOCKCALLBACK"), pBlock);
 

@@ -1161,7 +1161,7 @@ void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch * pdispVal, HB_USHORT uiClas
       if( hb_vmRequestReenter() )
       {
          PHB_SYMB pClassFunc;
-         PHB_ITEM pObject, pPtrGC;
+         PHB_ITEM pPtrGC;
 
          pClassFunc = hb_clsFuncSym(uiClass);
          if( !pClassFunc )
@@ -1173,7 +1173,7 @@ void hb_oleDispatchToItem(PHB_ITEM pItem, IDispatch * pdispVal, HB_USHORT uiClas
          hb_vmPushNil();
          hb_vmDo(0);
 
-         pObject = hb_itemNew(hb_stackReturnItem());
+         auto pObject = hb_itemNew(hb_stackReturnItem());
 
          pPtrGC = hb_oleItemPut(nullptr, pdispVal);
          /* Item is one more copy of the object */

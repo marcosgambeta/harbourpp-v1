@@ -320,7 +320,7 @@ HB_FUNC( BM_DBGETFILTERARRAY )
 
          if( SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS )
          {
-            PHB_ITEM pItem = hb_itemNew(nullptr);
+            auto pItem = hb_itemNew(nullptr);
             HB_ULONG ul;
 
             for( ul = 0; ul < ulItems; ul++ )

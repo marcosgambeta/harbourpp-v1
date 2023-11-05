@@ -154,7 +154,7 @@ HB_FUNC( FSIZE )
 
       if( uiIndex > 0 )
       {
-         PHB_ITEM pItem = hb_itemNew(nullptr);
+         auto pItem = hb_itemNew(nullptr);
 
          if( SELF_FIELDINFO(pArea, uiIndex, DBS_LEN, pItem) == Harbour::SUCCESS )
          {

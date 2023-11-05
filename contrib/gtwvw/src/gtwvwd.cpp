@@ -8835,7 +8835,7 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
 
    if( (pcd->byCtrlClass == WVW_CONTROL_SCROLLBAR || pcd->byCtrlClass == WVW_CONTROL_PUSHBUTTON ||
         pcd->byCtrlClass == WVW_CONTROL_COMBOBOX || pcd->byCtrlClass == WVW_CONTROL_EDITBOX) && pcd->phiCodeBlock ) {
-      PHB_ITEM phiWinNum, phiXBid, phiXBmsg, phiXBpos;
+      PHB_ITEM phiXBmsg, phiXBpos;
       PHB_ITEM pReturn;
 
       if( pcd->bBusy ) {
@@ -8847,10 +8847,10 @@ static void RunControlBlock(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT
       pcd->bBusy = TRUE;
       pcd->uiBusy++;
 
-      phiWinNum = hb_itemNew(nullptr);
+      auto phiWinNum = hb_itemNew(nullptr);
       hb_itemPutNI(phiWinNum, static_cast<int>(usWinNum));
 
-      phiXBid = hb_itemNew(nullptr);
+      auto phiXBid = hb_itemNew(nullptr);
       hb_itemPutNI(phiXBid, static_cast<int>(pcd->uiCtrlid));
 
       if( pcd->byCtrlClass == WVW_CONTROL_SCROLLBAR ) {
@@ -9726,7 +9726,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 
    if( iKey != 0 ) {
       PHB_ITEM pCodeblock;
-      PHB_ITEM hiKey = hb_itemNew(nullptr);
+      auto hiKey = hb_itemNew(nullptr);
       PHB_ITEM pReturn;
       BOOL     bCodeExec = FALSE;
 

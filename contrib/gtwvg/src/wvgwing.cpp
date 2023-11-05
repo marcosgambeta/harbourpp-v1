@@ -466,7 +466,7 @@ HB_FUNC( WVG_STATUSBARREFRESH )
 HB_FUNC( WVG_GETNMHDRINFO )
 {
    LPNMHDR lpnmh = reinterpret_cast<LPNMHDR>(wvg_parlparam(1));
-   PHB_ITEM pEvParams = hb_itemNew(nullptr);
+   auto pEvParams = hb_itemNew(nullptr);
    hb_arrayNew(pEvParams, 3);
    hb_arraySetNI(pEvParams, 1, lpnmh->code);
    hb_arraySetNInt(pEvParams, 2, static_cast<HB_PTRUINT>(lpnmh->idFrom));
@@ -481,7 +481,7 @@ HB_FUNC( WVG_GETNMMOUSEINFO )
 {
    LPNMMOUSE nmm = reinterpret_cast<LPNMMOUSE>(wvg_parlparam(1));
    NMHDR nmh = nmm->hdr;
-   PHB_ITEM pEvParams = hb_itemNew(nullptr);
+   auto pEvParams = hb_itemNew(nullptr);
    hb_arrayNew(pEvParams, 4);
    hb_arraySetNI(pEvParams, 1, nmh.code);
    hb_arraySetNInt(pEvParams, 2, static_cast<HB_PTRUINT>(nmh.idFrom));
@@ -497,7 +497,7 @@ HB_FUNC( WVG_GETNMTREEVIEWINFO )
 {
    LPNMTREEVIEW pnmtv = reinterpret_cast<LPNMTREEVIEW>(wvg_parlparam(1));
    NMHDR nmh = pnmtv->hdr;
-   PHB_ITEM pEvParams = hb_itemNew(nullptr);
+   auto pEvParams = hb_itemNew(nullptr);
    hb_arrayNew(pEvParams, 4);
    hb_arraySetNI(pEvParams, 1, nmh.code);
    hb_arraySetNInt(pEvParams, 2, static_cast<HB_PTRUINT>(nmh.idFrom));
@@ -609,7 +609,7 @@ HB_FUNC( WVG_TREEVIEW_SHOWEXPANDED )
 
 PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
 {
-   PHB_ITEM aFont = hb_itemNew(nullptr);
+   auto aFont = hb_itemNew(nullptr);
 
    hb_arrayNew(aFont, 15);
 
@@ -658,7 +658,7 @@ BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 
    if( msg == WM_INITDIALOG ) {
       CHOOSEFONT * cf = reinterpret_cast<CHOOSEFONT*>(lParam);
-      PHB_ITEM pBlock = static_cast<PHB_ITEM>(hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData)));
+      auto pBlock = static_cast<PHB_ITEM>(hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData))); // TODO: unnecessary cast
       SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
       binit = true;
    }
@@ -757,7 +757,7 @@ HB_FUNC( WVG_CHOOSEFONT )
 
    if( ChooseFont(&cf) ) {
       PHB_ITEM aFont = wvg_logfontTOarray(&lf, false);
-      PHB_ITEM aInfo = hb_itemNew(nullptr);
+      auto aInfo = hb_itemNew(nullptr);
 
       hb_arrayNew(aInfo, 4);
       hb_arraySetNI(aInfo, 1, cf.iPointSize);
@@ -980,7 +980,7 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   PHB_ITEM pBlock = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
+   auto pBlock = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
 
    SetProp(hWnd, TEXT("BLOCKCALLBACK"), pBlock);
 

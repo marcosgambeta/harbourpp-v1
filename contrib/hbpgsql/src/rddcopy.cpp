@@ -286,7 +286,6 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_ULONG        uiRecCount = 0;
       HB_BOOL         bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
       HB_BOOL         bEof = false;
-      PHB_ITEM        pItem;
       HB_USHORT       uiFieldCopy = 0;
       HB_USHORT       uiIter;
       pgCopyContext * context;
@@ -296,7 +295,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       PGresult *      pgResult;
       HB_BOOL         bFail    = false;
 
-      pItem = hb_itemNew(nullptr);
+      auto pItem = hb_itemNew(nullptr);
 
       context = static_cast<pgCopyContext*>(hb_xgrabz(sizeof(pgCopyContext)));
 

@@ -160,7 +160,6 @@ HB_FUNC( DBF2TEXT )
    HB_ISIZ   nSepLen;
    HB_USHORT uiFields = 0;
    HB_USHORT ui;
-   PHB_ITEM  pTmp;
    HB_BOOL   bWriteSep = false;
 
    HB_BOOL bEof = true;
@@ -181,8 +180,8 @@ HB_FUNC( DBF2TEXT )
    if( cdp && cdp == hb_vmCDP() ) {
       cdp = nullptr;
    }
-   
-   pTmp = hb_itemNew(nullptr);
+
+   auto pTmp = hb_itemNew(nullptr);
 
    if( !cDelim ) {
       cDelim = "\"";

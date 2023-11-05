@@ -399,7 +399,6 @@ static MXML_STATUS mxml_attribute_write(MXML_OUTPUT * out, PHBXML_ATTRIBUTE pAtt
 
 static PHB_ITEM mxml_node_new(PHB_ITEM pDoc)
 {
-   PHB_ITEM pNode;
    PHB_DYNS pExecSym;
 
    pExecSym = hb_dynsymGetCase("TXMLNODE");
@@ -409,7 +408,7 @@ static PHB_ITEM mxml_node_new(PHB_ITEM pDoc)
 
    /* The node is in the return */
    hb_objSendMsg(hb_param(-1, Harbour::Item::ANY), "NEW", 0);
-   pNode = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pNode = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
    /* Sets also current node line begin value, if the node is from a document */
    if( pDoc != nullptr ) {
@@ -429,18 +428,16 @@ static PHB_ITEM mxml_node_new(PHB_ITEM pDoc)
  */
 static void mxml_node_unlink(PHB_ITEM pNode)
 {
-   PHB_ITEM pPrev, pNext, pParent, pNil;
-
-   pNil = hb_itemNew(nullptr);
+   auto pNil = hb_itemNew(nullptr);
 
    hb_objSendMsg(pNode, "OPREV", 0);
-   pPrev = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pPrev = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
    hb_objSendMsg(pNode, "ONEXT", 0);
-   pNext = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pNext = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
    hb_objSendMsg(pNode, "OPARENT", 0);
-   pParent = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pParent = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
    /* Detaching from previous */
    if( !HB_IS_NIL(pPrev) ) {
@@ -478,12 +475,9 @@ HB_FUNC( HBXML_NODE_UNLINK )
 
 static void mxml_node_insert_before(PHB_ITEM pTg, PHB_ITEM pNode)
 {
-   PHB_ITEM pParent;
-   PHB_ITEM pPrev;
-
    /* Move tg->prev into node->prev */
    hb_objSendMsg(pTg, "OPREV", 0);
-   pPrev = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pPrev = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
    hb_objSendMsg(pNode, "_OPREV", 1, hb_param(-1, Harbour::Item::ANY));
 
    /* if the previous is not null, and if his next was tg, we must update to node */
@@ -503,7 +497,7 @@ static void mxml_node_insert_before(PHB_ITEM pTg, PHB_ITEM pNode)
 
    /* pNode->parent is the same as tg */
    hb_objSendMsg(pTg, "OPARENT", 0);
-   pParent = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pParent = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
    hb_objSendMsg(pNode, "_OPARENT", 1, pParent);
 
    /* if the parent is not null, and if it's child was tg, we must update to node */
@@ -549,11 +543,9 @@ HB_FUNC( HBXML_NODE_INSERT_AFTER )
  */
 static void mxml_node_insert_below(PHB_ITEM pTg, PHB_ITEM pNode)
 {
-   PHB_ITEM pChild;
-
    /* Move tg->child into node->child */
    hb_objSendMsg(pTg, "OCHILD", 0);
-   pChild = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pChild = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
    hb_objSendMsg(pNode, "_OCHILD", 1, pChild);
 
    /* Parent of pNode is now TG */
@@ -577,14 +569,12 @@ HB_FUNC( HBXML_NODE_INSERT_BELOW )
 /* Adds a node to the bottom of the children list of tg. */
 static void mxml_node_add_below(PHB_ITEM pTg, PHB_ITEM pNode)
 {
-   PHB_ITEM pChild;
-
    /* Parent of pNode is now TG */
    hb_objSendMsg(pNode, "_OPARENT", 1, pTg);
 
    /* Get the TG child */
    hb_objSendMsg(pTg, "OCHILD", 0);
-   pChild = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pChild = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
    if( !HB_IS_NIL(pChild) ) {
       /* Scanning up to the last child */
@@ -592,7 +582,7 @@ static void mxml_node_add_below(PHB_ITEM pTg, PHB_ITEM pNode)
          hb_objSendMsg(pChild, "ONEXT", 0);
          if( HB_IS_NIL(hb_param(-1, Harbour::Item::ANY)) ) {
             break;
-         }   
+         }
          hb_itemMove(pChild, hb_param(-1, Harbour::Item::ANY));
       }
       /* linking the child with pnode */
@@ -651,11 +641,10 @@ HB_FUNC( HBXML_NODE_CLONE )
 static PHB_ITEM mxml_node_clone_tree(PHB_ITEM pTg)
 {
    PHB_ITEM pClone = mxml_node_clone(pTg);
-   PHB_ITEM pNode;
 
    /* Get the TG child */
    hb_objSendMsg(pTg, "OCHILD", 0);
-   pNode = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pNode = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
    while( !HB_IS_NIL(pNode) ) {
       PHB_ITEM pSubTree;
@@ -872,12 +861,10 @@ static MXML_STATUS mxml_node_read_attributes(MXML_REFIL * ref, PHB_ITEM pNode, P
 {
    HBXML_ATTRIBUTE hbAttr;
    PHB_ITEM        attributes;
-   PHB_ITEM        hbName;
-   PHB_ITEM        hbValue;
    MXML_STATUS     ret;
 
-   hbName     = hb_itemNew(nullptr);
-   hbValue    = hb_itemNew(nullptr);
+   auto hbName     = hb_itemNew(nullptr);
+   auto hbValue    = hb_itemNew(nullptr);
    attributes = hb_hashNew(nullptr);
 
    hbAttr.pName  = hbName;
@@ -1412,7 +1399,7 @@ static MXML_STATUS mxml_node_read(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc
    /* We cannot have errors here; we would have been already returned */
 
    if( iStatus == -1 ) { /* ARE WE DONE ? */
-      PHB_ITEM child_node, data_node = nullptr;
+      PHB_ITEM data_node = nullptr;
 
       /* Time to close current node. We must verify:
          1) If the closing tag is coherent with the opened tag name.
@@ -1431,7 +1418,7 @@ static MXML_STATUS mxml_node_read(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc
 
       /* checking for data nodes */
       hb_objSendMsg(pNode, "OCHILD", 0);
-      child_node = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+      auto child_node = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
       while( !HB_IS_NIL(child_node) ) {
          hb_objSendMsg(child_node, "NTYPE", 0);
@@ -1497,11 +1484,10 @@ static void mxml_node_file_indent(MXML_OUTPUT * out, int depth, int style)
 
 static MXML_STATUS mxml_node_write(MXML_OUTPUT * out, PHB_ITEM pNode, int style)
 {
-   PHB_ITEM pChild, pItem;
    int      depth = 0;
 
-   pChild = hb_itemNew(nullptr);
-   pItem  = hb_itemNew(nullptr);
+   auto pChild = hb_itemNew(nullptr);
+   auto pItem  = hb_itemNew(nullptr);
 
    if( style & MXML_STYLE_NONEWLINE ) {
       style &= ~MXML_STYLE_INDENT;
@@ -2073,7 +2059,6 @@ HB_FUNC( HBXML_DATAREAD )
    PHB_ITEM   pParam = hb_param(2, Harbour::Item::ANY);
    PHB_ITEM   pDoc   = hb_param(1, Harbour::Item::OBJECT);
    int        iStyle = hb_parni(3);
-   PHB_ITEM   pRoot;
    MXML_REFIL refil;
    char       buffer[512], * buf;
    HB_SIZE    nLen;
@@ -2092,7 +2077,7 @@ HB_FUNC( HBXML_DATAREAD )
 
    /* Now we can get the root node */
    hb_objSendMsg(pDoc, "OROOT", 0);
-   pRoot = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
+   auto pRoot = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
    hb_retni(mxml_node_read(&refil, pRoot, pDoc, iStyle));
    hb_itemRelease(pRoot);
 }

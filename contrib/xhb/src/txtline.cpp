@@ -207,7 +207,6 @@ HB_FUNC( HB_READLINE )
    HB_SIZE       nStartOffset;
    HB_SIZE       nEndOffset, nTextLen;
    HB_ISIZ       nEnd;
-   PHB_ITEM      pOpt;
    HB_BOOL       bAlloc_Term1 = false;
 
    if( !HB_ISCHAR(1) ) {
@@ -222,7 +221,7 @@ HB_FUNC( HB_READLINE )
 
    if( !( HB_ISARRAY(2) || HB_ISCHAR(2) ) ) {
       if( !hb_setGetCPtr(HB_SET_EOL) ) {
-         PHB_ITEM pEOL = hb_itemNew(nullptr);
+         auto pEOL = hb_itemNew(nullptr);
          hb_itemPutC(pEOL, hb_conNewLine());
          hb_setSetItem(HB_SET_EOL, pEOL);
          hb_itemRelease(pEOL);
@@ -232,9 +231,9 @@ HB_FUNC( HB_READLINE )
       bAlloc_Term1 = true;
    } else {
       pTerm1 = hb_param(2, Harbour::Item::ANY);
-   }   
+   }
 
-   pOpt = hb_itemNew(nullptr);
+   auto pOpt = hb_itemNew(nullptr);
 
    if( HB_IS_ARRAY(pTerm1) ) {
       HB_SIZE i;

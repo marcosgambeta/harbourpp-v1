@@ -472,7 +472,7 @@ static HB_ERRCODE sqlbaseGoCold(SQLBASEAREAP pArea)
 static HB_ERRCODE sqlbaseGoHot(SQLBASEAREAP pArea)
 {
    PHB_ITEM pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
    for( HB_USHORT us = 1; us <= pArea->area.uiFieldCount; us++ ) {
       if( SELF_GETVALUE(&pArea->area, us, pItem) == Harbour::SUCCESS ) {
          hb_arraySetForward(pArray, us, pItem);

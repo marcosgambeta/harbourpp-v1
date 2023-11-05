@@ -59,7 +59,7 @@ HB_FUNC( DBFSIZE )
    AREAP pArea;
 
    if( (pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer())) != nullptr ) {
-      PHB_ITEM pSize = hb_itemNew(nullptr);
+      auto pSize = hb_itemNew(nullptr);
 
       if( SELF_INFO(pArea, DBI_GETHEADERSIZE, pSize) == Harbour::SUCCESS ) {
          llSize = hb_itemGetNL(pSize) + 1;

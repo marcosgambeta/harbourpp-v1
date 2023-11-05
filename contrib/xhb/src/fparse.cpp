@@ -75,7 +75,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
       HB_ISIZ nLen = strlen(szText);
 
       if( nLen > 0 ) {
-         PHB_ITEM pTemp      = hb_itemNew(nullptr);
+         auto pTemp = hb_itemNew(nullptr);
          HB_ISIZ  i          = 0;
          int      word_count = 0;
          /* booked enough memory */
@@ -294,7 +294,6 @@ HB_FUNC( FPARSE )
    PHB_ITEM pSrc   = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pDelim = hb_param(2, Harbour::Item::STRING);
    PHB_ITEM pArray;
-   PHB_ITEM pItem;
    char *   string;
    int      iToken, iCharCount = 0;
    HB_BYTE  nByte;
@@ -324,7 +323,7 @@ HB_FUNC( FPARSE )
 
    /* the main array */
    pArray = hb_itemArrayNew(0);
-   pItem  = hb_itemNew(nullptr);
+   auto pItem  = hb_itemNew(nullptr);
 
    /* book memory for line to read */
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));
@@ -368,7 +367,6 @@ HB_FUNC( FPARSEEX )
    PHB_ITEM pSrc   = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pDelim = hb_param(2, Harbour::Item::STRING);
    PHB_ITEM pArray;
-   PHB_ITEM pSubArray;
    char *   string;
    int      iCharCount = 0;
    HB_BYTE  nByte;
@@ -398,7 +396,7 @@ HB_FUNC( FPARSEEX )
 
    /* the main array */
    pArray    = hb_itemArrayNew(0);
-   pSubArray = hb_itemNew(nullptr);
+   auto pSubArray = hb_itemNew(nullptr);
 
    /* book memory for line to read */
    string = static_cast<char*>(hb_xgrab(MAX_READ + 1));

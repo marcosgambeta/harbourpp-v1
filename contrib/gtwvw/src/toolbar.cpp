@@ -309,8 +309,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    RECT       rc;
    RECT       rcRect{};
 
-   PHB_ITEM aXY = hb_itemNew(nullptr);
-   PHB_ITEM temp;
+   auto aXY = hb_itemNew(nullptr);
 
    hWndTB = pWindowData->hToolBar;
    if( hWndTB == nullptr || iButton < 0 || !SendMessage(hWndTB, TB_GETRECT, static_cast<WPARAM>(iButton), reinterpret_cast<LPARAM>(&rc)) ) {
@@ -318,7 +317,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
       return;
    }
 
-   temp = hb_itemNew(nullptr);
+   auto temp = hb_itemNew(nullptr);
 
    hb_arrayNew(aXY, 4);
 

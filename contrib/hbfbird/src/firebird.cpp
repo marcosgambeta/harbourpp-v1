@@ -312,7 +312,6 @@ HB_FUNC( FBQUERY )
 
       PHB_ITEM qry_handle;
       PHB_ITEM aNew;
-      PHB_ITEM aTemp;
 
       if( HB_ISPOINTER(4) ) {
          trans = reinterpret_cast<isc_tr_handle>(hb_parptr(4));
@@ -362,7 +361,7 @@ HB_FUNC( FBQUERY )
 
       num_cols = sqlda->sqld;
       aNew     = hb_itemArrayNew(num_cols);
-      aTemp    = hb_itemNew(nullptr);
+      auto aTemp = hb_itemNew(nullptr);
 
       int i;
 

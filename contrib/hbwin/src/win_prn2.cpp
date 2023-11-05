@@ -90,7 +90,7 @@ HB_FUNC( WIN_PRINTEREXISTS )
 
             if( EnumPrinters(_ENUMPRN_FLAGS_, nullptr, 5, reinterpret_cast<LPBYTE>(pPrinterEnum), dwNeeded, &dwNeeded, &dwReturned) )
             {
-               PHB_ITEM pTemp = hb_itemNew(nullptr);
+               auto pTemp = hb_itemNew(nullptr);
 
                for( DWORD i = 0; !bResult && i < dwReturned; ++i, ++pPrinterEnum )
                {
@@ -144,7 +144,7 @@ static void hb_GetDefaultPrinter(PHB_ITEM pPrinterName)
 
 HB_FUNC( WIN_PRINTERGETDEFAULT )
 {
-   PHB_ITEM pPrinterName = hb_itemNew(nullptr);
+   auto pPrinterName = hb_itemNew(nullptr);
 
    hb_GetDefaultPrinter(pPrinterName);
 
@@ -284,7 +284,7 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
             const char * pszPortNameFind = hb_parc(1);
             HB_BOOL bSubStr = hb_parl(2);
             HB_BOOL bFound = false;
-            PHB_ITEM pTemp = hb_itemNew(nullptr);
+            auto pTemp = hb_itemNew(nullptr);
 
             for( DWORD i = 0; i < dwReturned && !bFound; ++i, ++pPrinterEnum )
             {
@@ -494,7 +494,7 @@ HB_FUNC( WIN_PRINTERLIST )
 
       if( EnumPrinters(_ENUMPRN_FLAGS_, nullptr, 5, reinterpret_cast<LPBYTE>(pPrinterEnum), dwNeeded, &dwNeeded, &dwReturned) )
       {
-         PHB_ITEM pTempItem = hb_itemNew(nullptr);
+         auto pTempItem = hb_itemNew(nullptr);
 
          for( DWORD i = 0; i < dwReturned; ++i, ++pPrinterEnum )
          {

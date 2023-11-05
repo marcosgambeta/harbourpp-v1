@@ -1976,7 +1976,7 @@ HB_FUNC( HB_MXMLGETATTRSARRAY )
    if( node && mxmlGetType(node) == MXML_ELEMENT )
    {
       PHB_ITEM pAttrs = hb_itemArrayNew(0);
-      PHB_ITEM pAttr = hb_itemNew(nullptr);
+      auto pAttr = hb_itemNew(nullptr);
       int i, count;
       const char *name, *value;
 

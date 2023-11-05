@@ -408,7 +408,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    PHB_ITEM pItemEof = hb_itemArrayNew(uiFields);
-   PHB_ITEM pItem = hb_itemNew(nullptr);
+   auto pItem = hb_itemNew(nullptr);
 
 #if 0
    HB_TRACE(HB_TR_ALWAYS, ("fieldcount=%d", iNameLen));

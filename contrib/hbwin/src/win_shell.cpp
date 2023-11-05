@@ -255,7 +255,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
       {
          if( pArray )
          {
-            PHB_ITEM pTempItem = hb_itemNew(nullptr);
+            auto pTempItem = hb_itemNew(nullptr);
             LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
             HB_BOOL bIsWin9x = hb_iswin9x();
 

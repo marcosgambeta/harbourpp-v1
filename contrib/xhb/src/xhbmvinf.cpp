@@ -55,7 +55,7 @@ HB_FUNC( __MVSYMBOLINFO )
    pArray = hb_memvarSaveInArray(HB_MV_PUBLIC | HB_MV_PRIVATE, true);
    if( pArray ) {
       HB_SIZE nLen = hb_arrayLen(pArray), n;
-      PHB_ITEM pValue = hb_itemNew(nullptr);
+      auto pValue = hb_itemNew(nullptr);
 
       for( n = 1; n <= nLen; ++n ) {
          PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, n);

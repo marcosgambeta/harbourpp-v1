@@ -150,7 +150,7 @@ HB_FUNC( WVT_CHOOSEFONT )
    cf.nSizeMax       = 0;
 
    if( ChooseFont(&cf) ) {
-      PHB_ITEM ary = hb_itemNew(nullptr);
+      auto ary = hb_itemNew(nullptr);
       hb_arrayNew(ary, 9);
 
       PointSize = -MulDiv(lf.lfHeight, 72, GetDeviceCaps(_s->hdc, LOGPIXELSY));
@@ -167,7 +167,7 @@ HB_FUNC( WVT_CHOOSEFONT )
 
       hb_itemReturnRelease(ary);
    } else {
-      PHB_ITEM ary = hb_itemNew(nullptr);
+      auto ary = hb_itemNew(nullptr);
       hb_arrayNew(ary, 9);
 
       HB_ARRAYSETSTR(ary, 1, nullptr);

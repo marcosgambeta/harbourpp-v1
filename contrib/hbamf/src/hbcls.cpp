@@ -58,7 +58,7 @@ HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass)
    /* as far as i know, there is no exported Harbour C level api for this */
 
    if( uiClass && pSymbol ) {
-      PHB_ITEM pRetCopy = hb_itemNew(nullptr);
+      auto pRetCopy = hb_itemNew(nullptr);
 
       hb_itemMove(pRetCopy, hb_stackReturnItem());
 
