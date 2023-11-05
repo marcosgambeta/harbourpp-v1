@@ -150,7 +150,7 @@ HB_FUNC( WIN_OSISTSCLIENT )
 
 HB_FUNC( WIN_OSVERSIONINFO )
 {
-   PHB_ITEM pArray = hb_itemArrayNew(5);
+   auto pArray = hb_itemArrayNew(5);
 
    int iMajor = 4;
    int iMinor = 0;

@@ -190,7 +190,7 @@ HB_FUNC( HGETVAAPOS )
 
    if( pHash ) {
       HB_SIZE  n, nLen = hb_hashLen(pHash);
-      PHB_ITEM pArray = hb_itemArrayNew(nLen);
+      auto pArray = hb_itemArrayNew(nLen);
 
       for( n = 1; n <= nLen; ++n ) {
          hb_arraySetNS(pArray, n, n);

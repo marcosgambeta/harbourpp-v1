@@ -73,7 +73,6 @@ HB_FUNC( INDEXNAMES )
    if( pArea != nullptr )
    {
       DBORDERINFO pOrderInfo;
-      PHB_ITEM    pArray;
       int         iSize, i;
 
       memset(&pOrderInfo, 0, sizeof(pOrderInfo));
@@ -81,7 +80,7 @@ HB_FUNC( INDEXNAMES )
       SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
       iSize = hb_itemGetNI(pOrderInfo.itmResult);
 
-      pArray = hb_itemArrayNew(iSize);
+      auto pArray = hb_itemArrayNew(iSize);
       for( i = 1; i <= iSize; ++i )
       {
          pOrderInfo.itmOrder  = hb_itemPutNI(pOrderInfo.itmOrder, i);

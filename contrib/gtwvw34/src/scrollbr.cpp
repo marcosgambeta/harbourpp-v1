@@ -363,7 +363,7 @@ HB_FUNC( WVW_XBINFO )
       si.fMask = SIF_ALL;
 
       if( GetScrollInfo(hWnd, SB_CTL, &si) ) {
-         PHB_ITEM aInfo = hb_itemArrayNew(5);
+         auto aInfo = hb_itemArrayNew(5);
          hb_arraySetNI(aInfo, 1, si.nMin);
          hb_arraySetNI(aInfo, 2, si.nMax);
          hb_arraySetNInt(aInfo, 3, si.nPage);

@@ -54,7 +54,7 @@ HB_FUNC( __HB_XML_CDPU16MAP )
 
    if( cdp )
    {
-      PHB_ITEM pMap = hb_itemArrayNew(UCHAR_MAX + 1);
+      auto pMap = hb_itemArrayNew(UCHAR_MAX + 1);
 
       /* FIXME: uses hb_cdpGetU16() which cannot be used
                 with CPs using multibyte encoding. */

@@ -360,7 +360,7 @@ HB_FUNC( WVG_GETNMHDRINFO )
 {
    LPNMHDR lpnmh = static_cast<LPNMHDR>(hbwapi_par_raw_HANDLE(1));
 
-   PHB_ITEM pEvParams = hb_itemArrayNew(3);
+   auto pEvParams = hb_itemArrayNew(3);
 
    hb_arraySetNI(pEvParams, 1, lpnmh->code);
    hb_arraySetNInt(pEvParams, 2, static_cast<HB_PTRUINT>(lpnmh->idFrom));
@@ -377,7 +377,7 @@ HB_FUNC( WVG_GETNMMOUSEINFO )
    LPNMMOUSE nmm = static_cast<LPNMMOUSE>(hbwapi_par_raw_HANDLE(1));
    NMHDR nmh = nmm->hdr;
 
-   PHB_ITEM pEvParams = hb_itemArrayNew(4);
+   auto pEvParams = hb_itemArrayNew(4);
 
    hb_arraySetNI(pEvParams, 1, nmh.code);
    hb_arraySetNInt(pEvParams, 2, static_cast<HB_PTRUINT>(nmh.idFrom));
@@ -395,7 +395,7 @@ HB_FUNC( WVG_GETNMTREEVIEWINFO )
    LPNMTREEVIEW pnmtv = static_cast<LPNMTREEVIEW>(hbwapi_par_raw_HANDLE(1));
    NMHDR nmh = pnmtv->hdr;
 
-   PHB_ITEM pEvParams = hb_itemArrayNew(4);
+   auto pEvParams = hb_itemArrayNew(4);
 
    hb_arraySetNI(pEvParams, 1, nmh.code);
    hb_arraySetNInt(pEvParams, 2, static_cast<HB_PTRUINT>(nmh.idFrom));
@@ -526,7 +526,7 @@ HB_FUNC( WVG_TREEVIEW_SHOWEXPANDED )
 
 static PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf)
 {
-   PHB_ITEM aFont = hb_itemArrayNew(15);
+   auto aFont = hb_itemArrayNew(15);
 
    HB_ARRAYSETSTR(aFont, 1, lf->lfFaceName);
    hb_arraySetNL(aFont, 2, lf->lfHeight);
@@ -652,7 +652,7 @@ HB_FUNC( WVG_CHOOSEFONT )
 
    if( ChooseFont(&cf) ) {
       PHB_ITEM aFont = wvg_logfontTOarray(&lf);
-      PHB_ITEM aInfo = hb_itemArrayNew(4);
+      auto aInfo = hb_itemArrayNew(4);
 
       hb_arraySetNI(aInfo, 1, cf.iPointSize);
       hb_arraySetNInt(aInfo, 2, cf.rgbColors);

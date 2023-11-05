@@ -66,7 +66,7 @@ HB_FUNC( _FT_TEMPFIL )
    iflags = 0;
    cPath  = hb_parcx(1);
 
-   PHB_ITEM pArray = hb_itemArrayNew(3);
+   auto pArray = hb_itemArrayNew(3);
 
    hb_arraySetNI(pArray, 1, nax);
    hb_arraySetC(pArray, 2, cPath);

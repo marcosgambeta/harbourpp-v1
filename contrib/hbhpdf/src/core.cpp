@@ -525,7 +525,7 @@ HB_FUNC( HPDF_PAGE_GETGMODE )
 HB_FUNC( HPDF_PAGE_GETCURRENTPOS )
 {
    HPDF_Point pt;
-   PHB_ITEM   info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
 
    HPDF_Page_GetCurrentPos2(static_cast<HPDF_Page>(hb_parptr(1)), &pt);
 
@@ -539,7 +539,7 @@ HB_FUNC( HPDF_PAGE_GETCURRENTPOS )
 HB_FUNC( HPDF_PAGE_GETCURRENTTEXTPOS )
 {
    HPDF_Point pt;
-   PHB_ITEM   info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
 
    HPDF_Page_GetCurrentTextPos2(static_cast<HPDF_Page>(hb_parptr(1)), &pt);
 
@@ -565,7 +565,7 @@ HB_FUNC( HPDF_PAGE_GETCURRENTFONTSIZE )
 HB_FUNC( HPDF_PAGE_GETTRANSMATRIX )
 {
    HPDF_TransMatrix matrix;
-   PHB_ITEM         info = hb_itemArrayNew(6);
+   auto info = hb_itemArrayNew(6);
 
    matrix = HPDF_Page_GetTransMatrix(static_cast<HPDF_Page>(hb_parptr(1)));
 
@@ -607,7 +607,7 @@ HB_FUNC( HPDF_PAGE_GETMITERLIMIT )
 HB_FUNC( HPDF_PAGE_GETDASH )
 {
    HPDF_DashMode dash;
-   PHB_ITEM      info = hb_itemArrayNew(10);
+   auto info = hb_itemArrayNew(10);
 
    dash = HPDF_Page_GetDash(static_cast<HPDF_Page>(hb_parptr(1)));
 
@@ -671,7 +671,7 @@ HB_FUNC( HPDF_PAGE_GETTEXTRISE )
 HB_FUNC( HPDF_PAGE_GETRGBFILL )
 {
    HPDF_RGBColor rgb;
-   PHB_ITEM      info = hb_itemArrayNew(3);
+   auto info = hb_itemArrayNew(3);
 
    rgb = HPDF_Page_GetRGBFill(static_cast<HPDF_Page>(hb_parptr(1)));
 
@@ -686,7 +686,7 @@ HB_FUNC( HPDF_PAGE_GETRGBFILL )
 HB_FUNC( HPDF_PAGE_GETRGBSTROKE )
 {
    HPDF_RGBColor rgb;
-   PHB_ITEM      info = hb_itemArrayNew(3);
+   auto info = hb_itemArrayNew(3);
 
    rgb = HPDF_Page_GetRGBStroke(static_cast<HPDF_Page>(hb_parptr(1)));
 
@@ -701,7 +701,7 @@ HB_FUNC( HPDF_PAGE_GETRGBSTROKE )
 HB_FUNC( HPDF_PAGE_GETCMYKFILL )
 {
    HPDF_CMYKColor cmyk;
-   PHB_ITEM       info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    cmyk = HPDF_Page_GetCMYKFill(static_cast<HPDF_Page>(hb_parptr(1)));
 
@@ -717,7 +717,7 @@ HB_FUNC( HPDF_PAGE_GETCMYKFILL )
 HB_FUNC( HPDF_PAGE_GETCMYKSTROKE )
 {
    HPDF_CMYKColor cmyk;
-   PHB_ITEM       info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    cmyk = HPDF_Page_GetCMYKStroke(static_cast<HPDF_Page>(hb_parptr(1)));
 
@@ -757,7 +757,7 @@ HB_FUNC( HPDF_PAGE_GETFILLINGCOLORSPACE )
 HB_FUNC( HPDF_PAGE_GETTEXTMATRIX )
 {
    HPDF_TransMatrix matrix;
-   PHB_ITEM         info = hb_itemArrayNew(6);
+   auto info = hb_itemArrayNew(6);
 
    matrix = HPDF_Page_GetTextMatrix(static_cast<HPDF_Page>(hb_parptr(1)));
 
@@ -1192,7 +1192,7 @@ HB_FUNC( HPDF_FONT_GETUNICODEWIDTH )
 HB_FUNC( HPDF_FONT_GETBBOX )
 {
    HPDF_Box rc;
-   PHB_ITEM info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    rc = HPDF_Font_GetBBox(static_cast<HPDF_Font>(hb_parptr(1)));
 
@@ -1232,7 +1232,7 @@ HB_FUNC( HPDF_FONT_GETCAPHEIGHT )
 HB_FUNC( HPDF_FONT_TEXTWIDTH )
 {
    HPDF_TextWidth tw;
-   PHB_ITEM       info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    tw = HPDF_Font_TextWidth(static_cast<HPDF_Font>(hb_parptr(1)), reinterpret_cast<const HPDF_BYTE*>(hb_parc(2)), hb_parni(3));
 

@@ -471,7 +471,7 @@ static HB_ERRCODE sqlbaseGoCold(SQLBASEAREAP pArea)
 
 static HB_ERRCODE sqlbaseGoHot(SQLBASEAREAP pArea)
 {
-   PHB_ITEM pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
+   auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
    auto pItem = hb_itemNew(nullptr);
    for( HB_USHORT us = 1; us <= pArea->area.uiFieldCount; us++ ) {
       if( SELF_GETVALUE(&pArea->area, us, pItem) == Harbour::SUCCESS ) {
@@ -637,7 +637,7 @@ static HB_ERRCODE sqlbaseCreate(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
       pArea->pSDD = &s_sddNull;
    }
 
-   PHB_ITEM pItemEof = hb_itemArrayNew(pArea->area.uiFieldCount);
+   auto pItemEof = hb_itemArrayNew(pArea->area.uiFieldCount);
 
    PHB_ITEM pItem;
 

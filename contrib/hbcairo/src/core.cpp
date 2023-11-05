@@ -336,10 +336,8 @@ HB_FUNC( CAIRO_PATH_ITERATOR_GET_POINTS )
    if( pIterator && pIterator->ppPath && (pPath = *(pIterator->ppPath)) != nullptr ) {
       if( pIterator->iPos < pPath->num_data && pIterator->iPos != -1 ) {
          cairo_path_data_t * pData;
-         PHB_ITEM pArray;
-
          pData = pPath->data + pIterator->iPos;
-         pArray = hb_itemArrayNew(pData->header.length - 1);
+         auto pArray = hb_itemArrayNew(pData->header.length - 1);
          for( int i = 1; i < pData->header.length; i++ ) {
             PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, i);
             hb_arrayNew(pItem, 2);

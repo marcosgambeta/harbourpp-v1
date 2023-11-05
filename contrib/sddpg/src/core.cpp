@@ -242,7 +242,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
    HB_USHORT uiFields = static_cast<HB_USHORT>(PQnfields(pResult));
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
-   PHB_ITEM pItemEof = hb_itemArrayNew(uiFields);
+   auto pItemEof = hb_itemArrayNew(uiFields);
    auto pItem = hb_itemNew(nullptr);
 
    bool bError = false;

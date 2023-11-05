@@ -328,7 +328,8 @@ HB_FUNC( WAPI_QUERYDOSDEVICE )
    hbwapi_SetLastError(GetLastError());
    if( dwResult )
    {
-      PHB_ITEM pArray = hb_itemArrayNew(0), pItem = nullptr;
+      auto pArray = hb_itemArrayNew(0);
+      PHB_ITEM pItem = nullptr;
       DWORD dwPos, dwStart;
 
       dwPos = dwStart = 0;

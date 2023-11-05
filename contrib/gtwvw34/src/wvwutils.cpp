@@ -294,7 +294,7 @@ HB_FUNC( WVW_IMAGELIST_ADDMASKED )
 
 HB_FUNC( WVW_GETBITMAPSIZE )
 {
-   PHB_ITEM aMetr = hb_itemArrayNew(3);
+   auto aMetr = hb_itemArrayNew(3);
    BITMAP   bm;
 
    GetObject(hbwapi_par_raw_HBITMAP(1), sizeof(bm), static_cast<LPVOID>(&bm));
@@ -509,7 +509,7 @@ HB_FUNC( WVW_SELECTFONT )
 
    /* Display the CHOOSEFONT common-dialog box. */
    if( ChooseFont(&cf) ) {
-      PHB_ITEM aMetr = hb_itemArrayNew(9);
+      auto aMetr = hb_itemArrayNew(9);
 
       /* Create a logical font based on the user's selection and
          return a handle identifying that font. */
@@ -721,7 +721,7 @@ HB_FUNC( WVW_GETPAINTRECT )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   PHB_ITEM info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
    RECT     rc{};
 
    if( wvw_win ) {
@@ -883,7 +883,7 @@ HB_FUNC( WVW_CHOOSEFONT )
    PWVW_GLO wvw     = hb_gt_wvw();
    PWVW_WIN wvw_top = hb_gt_wvw_win_top();
 
-   PHB_ITEM aRet = hb_itemArrayNew(8);
+   auto aRet = hb_itemArrayNew(8);
 
    LOGFONT lf{};
    int     iPointSize = 0;
@@ -1264,7 +1264,7 @@ HB_FUNC( WVW_SAVESCREEN )
       HBITMAP  hBmp, oldBmp;
       POINT    xy;
       int      iWidth, iHeight;
-      PHB_ITEM info = hb_itemArrayNew(3);
+      auto info = hb_itemArrayNew(3);
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
@@ -1504,7 +1504,7 @@ HB_FUNC( WVW_GETXYFROMROWCOL )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   PHB_ITEM aRet = hb_itemArrayNew(2);
+   auto aRet = hb_itemArrayNew(2);
    POINT    xy{};
 
    if( wvw_win ) {
@@ -1525,7 +1525,7 @@ HB_FUNC( WVW_GETROWCOLFROMXY )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   PHB_ITEM aRet = hb_itemArrayNew(2);
+   auto aRet = hb_itemArrayNew(2);
    POINT    xy{};
 
    if( wvw_win ) {
@@ -1542,7 +1542,7 @@ HB_FUNC( WVW_GETFONTINFO )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   PHB_ITEM aRet = hb_itemArrayNew(7);
+   auto aRet = hb_itemArrayNew(7);
 
    if( wvw_win ) {
       HB_ARRAYSETSTR(aRet, 1, wvw_win->fontFace);

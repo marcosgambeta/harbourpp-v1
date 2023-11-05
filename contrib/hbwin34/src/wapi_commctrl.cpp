@@ -380,7 +380,7 @@ HB_FUNC( WAPI_TABCTRL_GETITEMCOUNT )
 
 HB_FUNC( WAPI_TABCTRL_GETITEMRECT )
 {
-   PHB_ITEM aRect = hb_itemArrayNew(4);
+   auto aRect = hb_itemArrayNew(4);
    RECT rc;
 
    hbwapi_ret_L(TabCtrl_GetItemRect(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), &rc));

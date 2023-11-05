@@ -480,7 +480,7 @@ HB_FUNC( WIN_PRINTDATARAW )
 
 HB_FUNC( WIN_PRINTERLIST )
 {
-   PHB_ITEM pPrinterArray = hb_itemArrayNew(0);
+   auto pPrinterArray = hb_itemArrayNew(0);
 
    HB_BOOL bPrinterNamesOnly = !hb_parl(1);
    HB_BOOL bLocalPrintersOnly = hb_parl(2);

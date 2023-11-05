@@ -618,7 +618,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
       RECT rc;
 
       if( hWnd && iButton >= 0 && SendMessage(hWnd, TB_GETRECT, static_cast<WPARAM>(iButton), reinterpret_cast<LPARAM>(&rc)) ) {
-         PHB_ITEM aXY = hb_itemArrayNew(4);
+         auto aXY = hb_itemArrayNew(4);
          RECT rcRect = hb_gt_wvw_GetColRowFromXYRect(wvw_win, rc);
          hb_arraySetNL(aXY, 1, HB_MAX(0, rcRect.top));
          hb_arraySetNL(aXY, 2, rcRect.left);

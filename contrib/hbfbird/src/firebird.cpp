@@ -310,9 +310,6 @@ HB_FUNC( FBQUERY )
       unsigned short dialect = static_cast<unsigned short>(hb_parnidef(3, SQL_DIALECT_V5));
       int num_cols;
 
-      PHB_ITEM qry_handle;
-      PHB_ITEM aNew;
-
       if( HB_ISPOINTER(4) ) {
          trans = reinterpret_cast<isc_tr_handle>(hb_parptr(4));
       } else if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) ) {
@@ -360,7 +357,7 @@ HB_FUNC( FBQUERY )
       }
 
       num_cols = sqlda->sqld;
-      aNew     = hb_itemArrayNew(num_cols);
+      auto aNew = hb_itemArrayNew(num_cols);
       auto aTemp = hb_itemNew(nullptr);
 
       int i;
@@ -419,7 +416,7 @@ HB_FUNC( FBQUERY )
          }
       }
 
-      qry_handle = hb_itemArrayNew(6);
+      auto qry_handle = hb_itemArrayNew(6);
 
       hb_arraySetPtr(qry_handle, 1, reinterpret_cast<void*>(stmt));
       hb_arraySetPtr(qry_handle, 2, reinterpret_cast<void*>(reinterpret_cast<HB_PTRUINT>(sqlda)));
@@ -677,7 +674,7 @@ HB_FUNC( FBGETBLOB )
       blob_stat = isc_get_segment(status, &blob_handle, reinterpret_cast<unsigned short*>(&blob_seg_len), sizeof(blob_segment), blob_segment);
 
       if( blob_stat == 0 || status[1] == isc_segment ) {
-         PHB_ITEM aNew = hb_itemArrayNew(0);
+         auto aNew = hb_itemArrayNew(0);
 
          while( blob_stat == 0 || status[1] == isc_segment ) {
             char     p[1024];

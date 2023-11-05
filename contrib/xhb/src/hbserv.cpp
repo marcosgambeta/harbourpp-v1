@@ -152,13 +152,13 @@ static void s_signalHandler(int sig, siginfo_t * info, void * v)
       pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
       uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
       if( uiMask & uiSig ) {
-         PHB_ITEM pExecArray, pRet;
+         PHB_ITEM pRet;
          int iRet;
 
          /* we don't unlock the mutex now, even if it is
             a little dangerous. But we are in a signal hander...
             for now just 2 parameters */
-         pExecArray = hb_itemArrayNew(3);
+         auto pExecArray = hb_itemArrayNew(3);
          hb_arraySet(pExecArray, 1, hb_arrayGetItemPtr(pFunction, 2));
          hb_arraySetNI(pExecArray, 2, uiSig);
 
@@ -399,13 +399,13 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
       pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
       uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
       if( (uiMask & uiSig) == uiSig ) {
-         PHB_ITEM pExecArray, pRet;
+         PHB_ITEM pRet;
          int      iRet;
 
          /* we don't unlock the mutex now, even if it is
             a little dangerous. But we are in a signal hander...
             for now just 2 parameters */
-         pExecArray = hb_itemArrayNew(3);
+         auto pExecArray = hb_itemArrayNew(3);
          hb_arraySetForward(pExecArray, 1, hb_arrayGetItemPtr(pFunction, 2));
          hb_arraySetNI(pExecArray, 2, uiSig);
 
@@ -795,14 +795,14 @@ HB_FUNC( HB_SERVICELOOP )
 HB_FUNC( HB_PUSHSIGNALHANDLER )
 {
    int      iMask = hb_parni(1);
-   PHB_ITEM pFunc = hb_param(2, Harbour::Item::ANY), pHandEntry;
+   PHB_ITEM pFunc = hb_param(2, Harbour::Item::ANY);
 
    if( pFunc == nullptr || iMask == 0 || (!HB_IS_POINTER(pFunc) && !HB_IS_STRING(pFunc) && !HB_IS_BLOCK(pFunc)) ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, "Wrong parameter count/type", nullptr, 2, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY));
       return;
    }
 
-   pHandEntry = hb_itemArrayNew(2);
+   auto pHandEntry = hb_itemArrayNew(2);
    hb_arraySetNI(pHandEntry, 1, iMask);
    hb_arraySet(pHandEntry, 2, pFunc);
 

@@ -1079,13 +1079,12 @@ HB_FUNC( GDIMAGEGETCLIP ) /* original: void gdImageGetClip(gdImagePtr im, int *x
    if( hb_isGdImage(1) )
    {
       int      x1, y1, x2, y2;
-      PHB_ITEM pClipArray;
 
       /* Get clipping rectangle */
       gdImageGetClip(hb_parGdImage(1), &x1, &y1, &x2, &y2);
 
       /* Return clipping rectangle value in an array */
-      pClipArray = hb_itemArrayNew(4);
+      auto pClipArray = hb_itemArrayNew(4);
       hb_itemPutNI(hb_arrayGetItemPtr(pClipArray, 1), x1);
       hb_itemPutNI(hb_arrayGetItemPtr(pClipArray, 2), y1);
       hb_itemPutNI(hb_arrayGetItemPtr(pClipArray, 3), x2);
@@ -1500,7 +1499,7 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       if( !err )
       {
          /* Save in array the correct text rectangle dimensions */
-         PHB_ITEM pArray = hb_itemArrayNew(8);
+         auto pArray = hb_itemArrayNew(8);
          for( int i = 0; i < 8; i++ )
          {
             hb_itemPutNI(hb_arrayGetItemPtr(pArray, i + 1), aRect[i]);

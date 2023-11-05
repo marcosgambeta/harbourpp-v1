@@ -306,7 +306,7 @@ HB_FUNC( MYSQL_FETCH_ROW )
 
    if( mresult ) {
       unsigned int num_fields = mysql_num_fields(mresult);
-      PHB_ITEM aRow = hb_itemArrayNew(num_fields);
+      auto aRow = hb_itemArrayNew(num_fields);
       MYSQL_ROW mrow = mysql_fetch_row(mresult);
 
       if( mrow ) {
@@ -357,7 +357,7 @@ HB_FUNC( MYSQL_FETCH_FIELD )
 
    if( mresult ) {
       /* NOTE: field structure of MySQL has 8 members as of MySQL 3.22.x */
-      PHB_ITEM aField = hb_itemArrayNew(8);
+      auto aField = hb_itemArrayNew(8);
       MYSQL_FIELD * mfield = mysql_fetch_field(mresult);
 
       if( mfield ) {
@@ -475,7 +475,7 @@ HB_FUNC( MYSQL_LIST_DBS )
    if( mysql ) {
       MYSQL_RES * mresult = mysql_list_dbs(mysql, nullptr);
       HB_SIZE nr = static_cast<HB_SIZE>(mysql_num_rows(mresult));
-      PHB_ITEM aDBs = hb_itemArrayNew(nr);
+      auto aDBs = hb_itemArrayNew(nr);
 
       for( HB_SIZE i = 0; i < nr; ++i ) {
          MYSQL_ROW mrow = mysql_fetch_row(mresult);
@@ -500,7 +500,7 @@ HB_FUNC( MYSQL_LIST_TABLES )
       const char * cWild = hb_parc(2);
       MYSQL_RES * mresult = mysql_list_tables(mysql, cWild);
       long nr = static_cast<long>(mysql_num_rows(mresult));
-      PHB_ITEM aTables = hb_itemArrayNew(nr);
+      auto aTables = hb_itemArrayNew(nr);
 
       for( long i = 0; i < nr; ++i ) {
          MYSQL_ROW mrow = mysql_fetch_row(mresult);

@@ -368,7 +368,7 @@ HB_FUNC( ADSMGGETUSERNAMES )
                           pastUserInfo,
                           &usArrayLen,
                           &usStructSize ) == AE_SUCCESS ) {
-      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
+      auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
@@ -473,7 +473,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
                            astOpenTableInfo,
                            &usArrayLen,
                            &usStructSize ) == AE_SUCCESS ) {
-      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
+      auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenTableInfo[ulCount - 1].aucTableName) );
@@ -507,7 +507,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
                            astOpenTableInfo,
                            &usArrayLen,
                            &usStructSize ) == AE_SUCCESS ) {
-      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
+      auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
@@ -546,7 +546,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
                             astOpenIndexInfo,
                             &usArrayLen,
                             &usStructSize ) == AE_SUCCESS ) {
-      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
+      auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          hb_arraySetC( pArray, static_cast<HB_ULONG>(ulCount), reinterpret_cast<char*>(astOpenIndexInfo[ulCount - 1].aucIndexName) );
@@ -581,7 +581,7 @@ HB_FUNC( ADSMGGETLOCKS )
                       astRecordInfo,
                       &usArrayLen,
                       &usStructSize ) == AE_SUCCESS ) {
-      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
+      auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          hb_arraySetNL(pArray, static_cast<HB_ULONG>(ulCount), astRecordInfo[ulCount - 1].ulRecordNumber);
@@ -610,7 +610,7 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
    ADS_MGMT_THREAD_ACTIVITY * astWorkerThreadActivity = static_cast<ADS_MGMT_THREAD_ACTIVITY*>(hb_xgrab(sizeof(ADS_MGMT_THREAD_ACTIVITY) * usArrayLen));
 
    if( AdsMgGetWorkerThreadActivity( s_hMgmtHandle, astWorkerThreadActivity, &usArrayLen, &usStructSize ) == AE_SUCCESS ) {
-      PHB_ITEM pArray = hb_itemArrayNew(usArrayLen);
+      auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
          PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);

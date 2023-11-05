@@ -956,7 +956,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
       if( PQresultStatus(res) == PGRES_TUPLES_OK )
       {
          int      nFields = PQnfields(res), i;
-         PHB_ITEM pResult = hb_itemArrayNew(nFields);
+         auto pResult = hb_itemArrayNew(nFields);
 
          for( i = 0; i < nFields; i++ )
          {
@@ -1098,7 +1098,7 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
          int nRows = PQntuples(res);
          int nCols = PQnfields(res);
 
-         PHB_ITEM pResult = hb_itemArrayNew(nRows);
+         auto pResult = hb_itemArrayNew(nRows);
 
          for( int nRow = 0; nRow < nRows; nRow++ )
          {

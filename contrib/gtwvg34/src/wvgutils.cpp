@@ -75,7 +75,7 @@ HB_FUNC( WVT_CHOOSEFONT )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      PHB_ITEM ary = hb_itemArrayNew(9);
+      auto ary = hb_itemArrayNew(9);
 
       LONG PointSize = 0;
       COLORREF Colors = 0;
@@ -375,7 +375,7 @@ HB_FUNC( WVT_GETPAINTRECT )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      PHB_ITEM info = hb_itemArrayNew(4);
+      auto info = hb_itemArrayNew(4);
 
       hb_arraySetNI(info, 1, _s->rowStart);
       hb_arraySetNI(info, 2, _s->colStart);
@@ -438,7 +438,7 @@ HB_FUNC( WVT_SETMOUSEMOVE )
 
 HB_FUNC( WVT_GETXYFROMROWCOL )
 {
-   PHB_ITEM info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
    POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
    hb_arraySetNL(info, 1, xy.x);
@@ -452,7 +452,7 @@ HB_FUNC( WVT_GETFONTINFO )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      PHB_ITEM info = hb_itemArrayNew(7);
+      auto info = hb_itemArrayNew(7);
 
       HB_ARRAYSETSTR(info, 1, _s->fontFace);
       hb_arraySetNL(info, 2, _s->fontHeight);
@@ -596,7 +596,7 @@ HB_FUNC( WVT_CLIENTTOSCREEN )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      PHB_ITEM info = hb_itemArrayNew(2);
+      auto info = hb_itemArrayNew(2);
       POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
 
       ClientToScreen(_s->hWnd, &xy);

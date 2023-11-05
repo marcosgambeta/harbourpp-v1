@@ -263,7 +263,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
    uiFields = pSqlda->sqld;
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
-   PHB_ITEM pItemEof = hb_itemArrayNew(uiFields);
+   auto pItemEof = hb_itemArrayNew(uiFields);
 
    HB_USHORT uiCount;
    XSQLVAR * pVar;
@@ -442,7 +442,7 @@ static HB_ERRCODE fbGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
       if( lErr == 0 ) {
          PHB_ITEM pItem = nullptr;
 
-         PHB_ITEM pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
+         auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
          for( ui = 0; ui < pArea->area.uiFieldCount; ui++ ) {
             pVar = pSDDData->pSqlda->sqlvar + ui;
 

@@ -428,7 +428,7 @@ HB_FUNC( WVT_GETPAINTRECT )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   PHB_ITEM info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    hb_arraySetNI(info, 1, _s->rowStart);
    hb_arraySetNI(info, 2, _s->colStart);
@@ -537,7 +537,7 @@ HB_FUNC( WVT_SETMOUSEMOVE )
 
 HB_FUNC( WVT_GETXYFROMROWCOL )
 {
-   PHB_ITEM info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
    POINT    xy{};
 
    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -552,7 +552,7 @@ HB_FUNC( WVT_GETFONTINFO )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   PHB_ITEM info = hb_itemArrayNew(7);
+   auto info = hb_itemArrayNew(7);
 
    HB_ARRAYSETSTR(info, 1, _s->fontFace);
    hb_arraySetNL(info, 2, _s->fontHeight);
@@ -712,7 +712,7 @@ HB_FUNC( WVT_CLIENTTOSCREEN )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   PHB_ITEM info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
    POINT    xy{};
 
    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -728,7 +728,7 @@ HB_FUNC( WVT_CLIENTTOSCREEN )
 HB_FUNC( WVT_GETCURSORPOS )
 {
    POINT    xy{};
-   PHB_ITEM info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
 
    GetCursorPos(&xy);
 
@@ -1157,7 +1157,7 @@ HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT * rc)
 
 PHB_ITEM wvt_Rect2Array(RECT * rc)
 {
-   PHB_ITEM aRect = hb_itemArrayNew(4);
+   auto aRect = hb_itemArrayNew(4);
 
    hb_arraySetNL(aRect, 1, rc->left);
    hb_arraySetNL(aRect, 2, rc->top);
@@ -1179,7 +1179,7 @@ HB_BOOL wvt_Array2Point(PHB_ITEM aPoint, POINT * pt)
 
 PHB_ITEM wvt_Point2Array(POINT * pt)
 {
-   PHB_ITEM aPoint = hb_itemArrayNew(2);
+   auto aPoint = hb_itemArrayNew(2);
 
    hb_arraySetNL(aPoint, 1, pt->x);
    hb_arraySetNL(aPoint, 2, pt->y);
@@ -1199,7 +1199,7 @@ HB_BOOL wvt_Array2Size(PHB_ITEM aSize, SIZE * siz)
 
 PHB_ITEM wvt_Size2Array(SIZE * siz)
 {
-   PHB_ITEM aSize = hb_itemArrayNew(2);
+   auto aSize = hb_itemArrayNew(2);
 
    hb_arraySetNL(aSize, 1, siz->cx);
    hb_arraySetNL(aSize, 2, siz->cy);

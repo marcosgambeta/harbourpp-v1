@@ -349,7 +349,7 @@ HB_FUNC( WVG_LOADIMAGE )
 HB_FUNC( WVG_GETCLIENTRECT )
 {
    RECT     rc{};
-   PHB_ITEM info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    GetClientRect(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &rc);
 
@@ -412,7 +412,7 @@ HB_FUNC( WVG_DRAWTEXT )
 HB_FUNC( WVG_GETWINDOWRECT )
 {
    RECT     rc;
-   PHB_ITEM info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    GetWindowRect(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &rc);
 
@@ -1132,7 +1132,7 @@ HB_FUNC( WVG_SENDTOOLBARMESSAGE )
       case TB_GETINSERTMARK:
          break;
       case TB_GETCOLORSCHEME: {
-         PHB_ITEM info = hb_itemArrayNew(2);
+         auto info = hb_itemArrayNew(2);
          COLORSCHEME colorScheme;
 
          colorScheme.dwSize = sizeof(COLORSCHEME);

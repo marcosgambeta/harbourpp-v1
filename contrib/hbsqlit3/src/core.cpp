@@ -258,8 +258,8 @@ static int callback(void * Cargo, int argc, char ** argv, char ** azColName)
    PHB_ITEM pCallback = static_cast<PHB_ITEM>(Cargo);
 
    if( pCallback && hb_vmRequestReenter() ) {
-      PHB_ITEM pArrayValue = hb_itemArrayNew(argc);
-      PHB_ITEM pArrayColName = hb_itemArrayNew(argc);
+      auto pArrayValue = hb_itemArrayNew(argc);
+      auto pArrayColName = hb_itemArrayNew(argc);
 
       for( int i = 0; i < argc; i++ ) {
          hb_arraySetStrUTF8(pArrayValue, i + 1, static_cast<const char*>(argv[i] ? argv[i] : "NULL"));
@@ -1385,7 +1385,7 @@ HB_FUNC( SQLITE3_GET_TABLE )
 
    if( pHbSqlite3 && pHbSqlite3->db ) {
       void * hSQLText;
-      PHB_ITEM pResultList = hb_itemArrayNew(0);
+      auto pResultList = hb_itemArrayNew(0);
       int iRow, iCol;
       char * pszErrMsg = nullptr;
       char ** pResult;
@@ -1394,7 +1394,7 @@ HB_FUNC( SQLITE3_GET_TABLE )
          int k = 0;
 
          for( int i = 0; i < iRow + 1; i++ ) {
-            PHB_ITEM pArray = hb_itemArrayNew(iCol);
+            auto pArray = hb_itemArrayNew(iCol);
 
             for( int j = 1; j <= iCol; j++, k++ ) {
                hb_arraySetStrUTF8(pArray, j, static_cast<const char*>(pResult[k]));
@@ -1460,7 +1460,7 @@ HB_FUNC( SQLITE3_TABLE_COLUMN_METADATA )
              &iNotNull,
              &iPrimaryKey,
              &iAutoinc ) == SQLITE_OK ) {
-         PHB_ITEM pArray = hb_itemArrayNew(5);
+         auto pArray = hb_itemArrayNew(5);
 
          hb_arraySetStrUTF8(pArray, 1, pzDataType);
          hb_arraySetStrUTF8(pArray, 2, pzCollSeq);

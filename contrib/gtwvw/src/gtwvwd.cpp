@@ -7712,7 +7712,7 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[usWinNum];
-   PHB_ITEM   paXY        = hb_itemArrayNew(2);
+   auto paXY = hb_itemArrayNew(2);
    POINT      xy{};
    USHORT     usTop  = static_cast<USHORT>(hb_parni(2)),
               usLeft = static_cast<USHORT>(hb_parni(3));
@@ -7812,7 +7812,7 @@ HB_FUNC( WVW_SETMOUSEMOVE )
 HB_FUNC( WVW_GETXYFROMROWCOL )
 {
    UINT     usWinNum = WVW_WHICH_WINDOW;
-   PHB_ITEM paXY     = hb_itemArrayNew(2);
+   auto paXY = hb_itemArrayNew(2);
    POINT    xy{};
 
    xy = hb_gt_wvwGetXYFromColRow(s_pWvwData->s_pWindows[usWinNum], static_cast<USHORT>(hb_parni(3)), static_cast<USHORT>(hb_parni(2)));
@@ -7829,7 +7829,7 @@ HB_FUNC( WVW_GETXYFROMROWCOL )
 HB_FUNC( WVW_GETROWCOLFROMXY )
 {
    UINT     usWinNum = WVW_WHICH_WINDOW;
-   PHB_ITEM paRowCol = hb_itemArrayNew(2);
+   auto paRowCol = hb_itemArrayNew(2);
    POINT    RowCol;
 
    RowCol = hb_gt_wvwGetColRowFromXY(s_pWvwData->s_pWindows[usWinNum], static_cast<USHORT>(hb_parni(2)), static_cast<USHORT>(hb_parni(3)));
@@ -7843,7 +7843,7 @@ HB_FUNC( WVW_GETROWCOLFROMXY )
 HB_FUNC( WVW_GETFONTINFO )
 {
    UINT     usWinNum = WVW_WHICH_WINDOW;
-   PHB_ITEM info     = hb_itemArrayNew(7);
+   auto info = hb_itemArrayNew(7);
 
    hb_arraySetC(info, 1, s_pWvwData->s_pWindows[usWinNum]->fontFace);
    hb_arraySetNL(info, 2, s_pWvwData->s_pWindows[usWinNum]->fontHeight);
@@ -7858,7 +7858,7 @@ HB_FUNC( WVW_GETFONTINFO )
 
 HB_FUNC( WVW_GETPALETTE )
 {
-   PHB_ITEM info = hb_itemArrayNew(16);
+   auto info = hb_itemArrayNew(16);
 
    for( int i = 0; i < 16; i++ ) {
       hb_arraySetNL(info, i + 1, _COLORS[i]);

@@ -108,7 +108,7 @@ static int hb_woy( long lDate, HB_BOOL fISO )
 
 HB_FUNC( AMONTHS )
 {
-   PHB_ITEM pReturn = hb_itemArrayNew(12);  /* Create array */
+   auto pReturn = hb_itemArrayNew(12);  /* Create array */
    int      i;
 
    for( i = 0; i < 12; ++i )
@@ -119,7 +119,7 @@ HB_FUNC( AMONTHS )
 
 HB_FUNC( ADAYS )
 {
-   PHB_ITEM pReturn = hb_itemArrayNew(7);  /* Create array */
+   auto pReturn = hb_itemArrayNew(7);  /* Create array */
    int      i;
 
    for( i = 0; i < 7; ++i )

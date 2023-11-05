@@ -241,7 +241,8 @@ HB_FUNC_STATIC( ERRORINIT )
    PHB_ITEM pError = hb_stackSelfItem();
 
    if( s_nErrObjSize != 0 ) {
-      PHB_ITEM pStack = hb_itemArrayNew(0), pItem = nullptr;
+      auto pStack = hb_itemArrayNew(0);
+      PHB_ITEM pItem = nullptr;
       char szProcName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
       char szProcFile[HB_PATH_MAX];
       HB_USHORT uiProcLine;

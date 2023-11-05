@@ -304,7 +304,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
    HB_USHORT uiFields = static_cast<HB_USHORT>(OCI_GetColumnCount(rs));
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
-   PHB_ITEM pItemEof = hb_itemArrayNew(uiFields);
+   auto pItemEof = hb_itemArrayNew(uiFields);
    pItem = hb_itemNew(nullptr);
 
 #if 0
@@ -498,7 +498,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
          break;
       }
 
-      PHB_ITEM pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
+      auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
 
       PHB_ITEM  pItem = nullptr;
 

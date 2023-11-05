@@ -2651,7 +2651,7 @@ HB_FUNC( WVT_SAVESCREEN )
       HBITMAP  hBmp, oldBmp;
       POINT    xy;
       int      iTop, iLeft, iBottom, iRight, iWidth, iHeight;
-      PHB_ITEM info = hb_itemArrayNew(3);
+      auto info = hb_itemArrayNew(3);
 
       xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
       iTop  = xy.y;

@@ -530,7 +530,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
 
 static int CALLBACK FontEnumCallBack(LOGFONT * lplf, TEXTMETRIC * lpntm, DWORD dwFontType, LPVOID pArray)
 {
-   PHB_ITEM pSubItems = hb_itemArrayNew(4);
+   auto pSubItems = hb_itemArrayNew(4);
 
    HB_ARRAYSETSTR(pSubItems, 1, lplf->lfFaceName);
    hb_arraySetL(pSubItems, 2, (lplf->lfPitchAndFamily & FIXED_PITCH) != 0);
@@ -547,7 +547,7 @@ HB_FUNC( WIN_ENUMFONTS )
 {
    HDC hDC = hbwapi_par_HDC(1);
    bool fNullDC = !hDC;
-   PHB_ITEM pArray = hb_itemArrayNew(0);
+   auto pArray = hb_itemArrayNew(0);
 
    if( fNullDC )
    {
@@ -566,7 +566,7 @@ HB_FUNC( WIN_ENUMFONTS )
 
 HB_FUNC( WIN_ENUMFONTFAMILIES )
 {
-   PHB_ITEM pArray = hb_itemArrayNew(0);
+   auto pArray = hb_itemArrayNew(0);
    HDC hDC = hbwapi_par_HDC(1);
    bool fNullDC = !hDC;
 

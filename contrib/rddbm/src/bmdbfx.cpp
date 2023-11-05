@@ -311,7 +311,7 @@ HB_FUNC( BM_DBGETFILTERARRAY )
    if( pArea != nullptr )
    {
       PBM_FILTER pBM = BM_GETFILTER(pArea);
-      PHB_ITEM pArray = hb_itemArrayNew(0);
+      auto pArray = hb_itemArrayNew(0);
 
       if( pBM && pArea->dbfi.fOptimized )
       {

@@ -1219,7 +1219,7 @@ HB_FUNC( WAPI_REDRAWWINDOW )
 
 HB_FUNC( WAPI_GETICONINFO )  /* TODO: added support to return hash instead of array. See wapi_GetTextMetrics() */
 {
-   PHB_ITEM aInfo = hb_itemArrayNew(5);
+   auto aInfo = hb_itemArrayNew(5);
    ICONINFO ii{};
 /* MSDN doc says it's in icon.lib, but I could not find such lib in wce msvcarm/mingwarm. */
    BOOL bResult = GetIconInfo(hbwapi_par_raw_HICON(1), &ii);

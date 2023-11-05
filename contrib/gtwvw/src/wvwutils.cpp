@@ -260,7 +260,7 @@ HB_FUNC( WIN_LOADIMAGE )
 HB_FUNC( WIN_GETCLIENTRECT )
 {
    RECT     rc{};
-   PHB_ITEM info = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    GetClientRect(reinterpret_cast<HWND>(HB_PARHANDLE(1)), &rc);
 
@@ -657,7 +657,7 @@ HB_FUNC( IMAGELIST_ADDMASKED )
 HB_FUNC( GETBITMAPSIZE )
 {
    BITMAP   bitmap;
-   PHB_ITEM aMetr = hb_itemArrayNew(3);
+   auto aMetr = hb_itemArrayNew(3);
 
    GetObject(reinterpret_cast<HBITMAP>(HB_PARHANDLE(1)), sizeof(BITMAP), static_cast<LPVOID>(&bitmap));
 
@@ -671,7 +671,7 @@ HB_FUNC( GETBITMAPSIZE )
 HB_FUNC( GETICONSIZE )
 {
    ICONINFO iinfo;
-   PHB_ITEM aMetr = hb_itemArrayNew(2);
+   auto aMetr = hb_itemArrayNew(2);
 
    GetIconInfo(reinterpret_cast<HICON>(HB_PARHANDLE(1)), &iinfo);
 
@@ -995,7 +995,7 @@ HB_FUNC( SELECTFONT )
    HFONT      hfont;
    PHB_ITEM   pObj = HB_ISNIL(1) ? nullptr : hb_param(1, Harbour::Item::OBJECT);
    /* PHB_ITEM temp1; */
-   PHB_ITEM aMetr = hb_itemArrayNew(9);
+   auto aMetr = hb_itemArrayNew(9);
 
    cf.lStructSize    = sizeof(CHOOSEFONT);
    cf.hwndOwner      = static_cast<HWND>(nullptr);
@@ -1325,7 +1325,7 @@ HB_FUNC( WVW_GETPAINTRECT )
 
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    RECT       rPaintRect  = pWindowData->rPaintPending;
-   PHB_ITEM   info        = hb_itemArrayNew(4);
+   auto info = hb_itemArrayNew(4);
 
    hb_arraySetNI(info, 1, rPaintRect.top);
    hb_arraySetNI(info, 2, rPaintRect.left);
@@ -1969,7 +1969,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
 HB_FUNC( WVW_GETCURSORPOS )
 {
    POINT    xy{};
-   PHB_ITEM info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
 
    GetCursorPos(&xy);
 
@@ -2218,7 +2218,7 @@ HB_FUNC( WVW_SAVESCREEN )
    HBITMAP  hBmp, oldBmp;
    POINT    xy{};
    int      iTop, iLeft, iBottom, iRight, iWidth, iHeight;
-   PHB_ITEM info = hb_itemArrayNew(3);
+   auto info = hb_itemArrayNew(3);
 
    USHORT usTop    = static_cast<USHORT>(hb_parni(2)),
           usLeft   = static_cast<USHORT>(hb_parni(3)),

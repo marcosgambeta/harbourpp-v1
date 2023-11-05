@@ -307,7 +307,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
 
 static void hb_gt_wvt_FireMenuEvent(PHB_GTWVT pWVT, int iMode, int menuIndex)
 {
-   PHB_ITEM pEvParams = hb_itemArrayNew(2);
+   auto pEvParams = hb_itemArrayNew(2);
 
    hb_arraySetNI(pEvParams, 1, iMode);
    hb_arraySetNI(pEvParams, 2, menuIndex);
@@ -397,7 +397,7 @@ static int hb_gt_wvt_key_ansi_to_oem(int c)
 
 static int hb_gt_wvt_SizeChanged(PHB_GTWVT pWVT)
 {
-   PHB_ITEM pEvParams = hb_itemArrayNew(4);
+   auto pEvParams = hb_itemArrayNew(4);
    RECT rc;
 
    GetClientRect(pWVT->hWnd, &rc);
@@ -503,7 +503,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
    }
 
    if( keyCode != 0 ) {
-      PHB_ITEM pEvParams = hb_itemArrayNew(6);
+      auto pEvParams = hb_itemArrayNew(6);
 
       hb_arraySetNL(pEvParams, 1, message);
       hb_arraySetNI(pEvParams, 2, keyCode);
@@ -831,7 +831,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
          case WM_CREATE:
             return 0;
          case WM_SETFOCUS: {
-            PHB_ITEM pEvParams = hb_itemArrayNew(3);
+            auto pEvParams = hb_itemArrayNew(3);
 
             hbwapi_arraySet_HANDLE(pEvParams, 1, hWnd);
             hbwapi_arraySet_HANDLE(pEvParams, 2, reinterpret_cast<HWND>(wParam));
@@ -841,7 +841,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
             return 0;
          }
          case WM_KILLFOCUS: {
-            PHB_ITEM pEvParams = hb_itemArrayNew(3);
+            auto pEvParams = hb_itemArrayNew(3);
 
             hbwapi_arraySet_HANDLE(pEvParams, 1, hWnd);
             hbwapi_arraySet_HANDLE(pEvParams, 2, reinterpret_cast<HWND>(wParam));
@@ -920,7 +920,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
             hb_gt_wvt_FireMenuEvent(pWVT, 2, static_cast<int>(wParam));
             return 0;
          case WM_MOUSEHOVER: {
-            PHB_ITEM pEvParams = hb_itemArrayNew(6);
+            auto pEvParams = hb_itemArrayNew(6);
 
             hb_arraySetNI(pEvParams, 1, message);
             hb_arraySetNI(pEvParams, 2, 0);
@@ -931,7 +931,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
             return 0;
          }
          case WM_MOUSELEAVE: {
-            PHB_ITEM pEvParams = hb_itemArrayNew(2);
+            auto pEvParams = hb_itemArrayNew(2);
 
             hb_arraySetNI(pEvParams, 1, message);
             hb_arraySetNI(pEvParams, 2, 0);
@@ -948,7 +948,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
                   hb_gt_wvt_FireMenuEvent(pWVT, 0, static_cast<int>(LOWORD(wParam)));
                }
             } else {
-               PHB_ITEM pEvParams = hb_itemArrayNew(3);
+               auto pEvParams = hb_itemArrayNew(3);
 
                hb_arraySetNI(pEvParams, 1, HIWORD(wParam));  /* Notification Code */
                hb_arraySetNI(pEvParams, 2, LOWORD(wParam));  /* Control identifier */
@@ -958,7 +958,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
             }
             return 0;
          case WM_NOTIFY: {
-            PHB_ITEM pEvParams = hb_itemArrayNew(2);
+            auto pEvParams = hb_itemArrayNew(2);
 
             hb_arraySetNI(pEvParams, 1, static_cast<int>(wParam));
             hbwapi_arraySet_HANDLE(pEvParams, 2, reinterpret_cast<NMHDR *>(lParam));
@@ -984,7 +984,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
          case WM_CTLCOLORSCROLLBAR:
          case WM_CTLCOLORSTATIC: {
             LRESULT nResult;
-            PHB_ITEM pEvParams = hb_itemArrayNew(2);
+            auto pEvParams = hb_itemArrayNew(2);
 
             hbwapi_arraySet_HANDLE(pEvParams, 1, reinterpret_cast<HDC>(wParam));
             hbwapi_arraySet_HANDLE(pEvParams, 2, reinterpret_cast<HWND>(lParam));
@@ -998,7 +998,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
             }
          }
          case WM_HSCROLL: {
-            PHB_ITEM pEvParams = hb_itemArrayNew(3);
+            auto pEvParams = hb_itemArrayNew(3);
 
             hb_arraySetNL(pEvParams, 1, static_cast<long>(LOWORD(wParam)));
             hb_arraySetNL(pEvParams, 2, static_cast<long>(HIWORD(wParam)));
@@ -1008,7 +1008,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
             return 0;
          }
          case WM_VSCROLL: {
-            PHB_ITEM pEvParams = hb_itemArrayNew(3);
+            auto pEvParams = hb_itemArrayNew(3);
 
             hb_arraySetNL(pEvParams, 1, static_cast<long>(LOWORD(wParam)));
             hb_arraySetNL(pEvParams, 2, static_cast<long>(HIWORD(wParam)));

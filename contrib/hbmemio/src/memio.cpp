@@ -372,7 +372,6 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory(const char * pszDirSpec, const char *
 {
    PHB_MEMFS_DIRENTRY pDirEn = nullptr;
    char *   pszFree = nullptr;
-   PHB_ITEM pDirArray;
    HB_SIZE  nLen;
    HB_ULONG ulCount, ul;
 
@@ -390,14 +389,14 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory(const char * pszDirSpec, const char *
          else
          {
             pszDirSpec = pszFree = hb_xstrcpy(nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr);
-         }   
+         }
       }
    }
    else
    {
       pszDirSpec = HB_OS_ALLFILE_MASK;
    }
-   
+
    HB_MEMFSMT_LOCK();
    ulCount = s_fs.ulInodeCount;
    nLen = 0;
@@ -416,7 +415,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory(const char * pszDirSpec, const char *
    }
    HB_MEMFSMT_UNLOCK();
 
-   pDirArray = hb_itemArrayNew(nLen);
+   auto pDirArray = hb_itemArrayNew(nLen);
    for( ul = 0; static_cast<HB_SIZE>(ul) < nLen; ul++ )
    {
       PHB_ITEM pSubarray = hb_arrayGetItemPtr(pDirArray, ul + 1);

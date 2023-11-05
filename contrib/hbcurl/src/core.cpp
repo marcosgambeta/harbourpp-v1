@@ -2180,7 +2180,6 @@ HB_FUNC( CURL_EASY_GETINFO )
          case HB_CURL_INFO_TYPE_SLIST:
             if( ret_slist )
             {
-               PHB_ITEM pArray;
                int      nCount;
                struct curl_slist * walk_ret_slist;
 
@@ -2191,7 +2190,7 @@ HB_FUNC( CURL_EASY_GETINFO )
                }
 
                /* Fill */
-               pArray = hb_itemArrayNew(nCount);
+               auto pArray = hb_itemArrayNew(nCount);
                for( walk_ret_slist = ret_slist, nCount = 1; walk_ret_slist->next; )
                {
                   hb_arraySetC(pArray, nCount++, walk_ret_slist->data);
@@ -2277,7 +2276,7 @@ HB_FUNC( CURL_VERSION_INFO )
 
    if( data )
    {
-      PHB_ITEM pArray = hb_itemArrayNew(13);
+      auto pArray = hb_itemArrayNew(13);
 
       hb_arraySetC(  pArray, 1, data->version );                      /* LIBCURL_VERSION */
       hb_arraySetNI( pArray, 2, data->version_num );                  /* LIBCURL_VERSION_NUM */

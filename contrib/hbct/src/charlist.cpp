@@ -58,7 +58,7 @@ void ct_charlist(int iMode)
 
    if( iMode == CT_CHARLIST_CHARHIST ) {
       HB_SIZE asCharCnt[UCHAR_MAX];
-      PHB_ITEM pArray = hb_itemArrayNew(HB_SIZEOFARRAY(asCharCnt));
+      auto pArray = hb_itemArrayNew(HB_SIZEOFARRAY(asCharCnt));
 
       for( sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt ) {
          asCharCnt[sCnt] = 0;

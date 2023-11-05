@@ -984,7 +984,6 @@ HB_FUNC( EVP_SEALINIT )
             unsigned char * iv = ivl > 0 ? static_cast<unsigned char*>(hb_xgrab(ivl + 1)) : nullptr;
 
             EVP_PKEY ** pubk = static_cast<EVP_PKEY**>(hb_xgrab(sizeof(EVP_PKEY*) * npubk + 1));
-            PHB_ITEM    pPKEY;
             int         tmp;
 
             for( tmp = 0; tmp < npubk; tmp++ ) {
@@ -995,7 +994,7 @@ HB_FUNC( EVP_SEALINIT )
 
             hb_retni(EVP_SealInit(ctx, static_cast<HB_SSL_CONST EVP_CIPHER*>(cipher), ek, ekl, iv, pubk, npubk));
 
-            pPKEY = hb_itemArrayNew(npubk);
+            auto pPKEY = hb_itemArrayNew(npubk);
 
             for( tmp = 0; tmp < npubk; tmp++ ) {
                hb_arraySetCLPtr(pPKEY, tmp + 1, reinterpret_cast<char*>(ek[tmp]), ekl[tmp]);

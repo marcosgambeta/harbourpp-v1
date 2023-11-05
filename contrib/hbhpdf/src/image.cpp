@@ -112,7 +112,7 @@ HB_FUNC( HPDF_LOADJPEGIMAGEFROMMEM )
 HB_FUNC( HPDF_IMAGE_GETSIZE )
 {
    HPDF_Point pt;
-   PHB_ITEM   info = hb_itemArrayNew(2);
+   auto info = hb_itemArrayNew(2);
 
    pt = HPDF_Image_GetSize(static_cast<HPDF_Image>(hb_parptr(1)));
 

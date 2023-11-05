@@ -93,12 +93,11 @@ HB_FUNC( WCE_SIMREADPHONEBOOKENTRY ) /* hSim, nLocation, nPos, @aEntry */
    HSIM hSim = static_cast<HSIM>(hb_parptr(1));
    DWORD dwIndex = static_cast<DWORD>(hb_parnl(3));
    SIMPHONEBOOKENTRY PhoneEntry;
-   PHB_ITEM pArray;
 
    PhoneEntry.cbSize = sizeof(SIMPHONEBOOKENTRY);
    hb_retnl(SimReadPhonebookEntry(hSim, static_cast<DWORD>(hb_parnl(2)) /* dwLocation */, dwIndex, &PhoneEntry));
 
-   pArray = hb_itemArrayNew(5);
+   auto pArray = hb_itemArrayNew(5);
 
    HB_ARRAYSETSTR(pArray, 1, PhoneEntry.lpszAddress);
    HB_ARRAYSETSTR(pArray, 2, PhoneEntry.lpszText);

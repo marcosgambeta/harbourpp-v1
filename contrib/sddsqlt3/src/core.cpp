@@ -397,7 +397,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
    PHB_ITEM pName = nullptr;
    errCode = 0;
    bool bError = false;
-   PHB_ITEM pItemEof = hb_itemArrayNew(uiFields);
+   auto pItemEof = hb_itemArrayNew(uiFields);
    for( HB_USHORT uiIndex = 0; uiIndex < uiFields; ++uiIndex ) {
       DBFIELDINFO dbFieldInfo{};
 #ifdef HB_SQLT3_FIELDNAME_STRICT
@@ -533,7 +533,7 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
    sqlite3_stmt * st = (static_cast<SDDDATA*>(pArea->pSDDData))->pStmt;
 
    while( ulRecNo > pArea->ulRecCount && !pArea->fFetched ) {
-      PHB_ITEM pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
+      auto pArray = hb_itemArrayNew(pArea->area.uiFieldCount);
 
       for( HB_USHORT ui = 0; ui < pArea->area.uiFieldCount; ++ui ) {
          PHB_ITEM pItem = nullptr;

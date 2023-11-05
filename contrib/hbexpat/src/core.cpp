@@ -363,7 +363,7 @@ static int XMLCALL hb_expat_UnknownEncodingHandler( void * userdata, const XML_C
       {
          auto pEncData = hb_itemNew(hb_expat->pVar[_VAR_xEncodingHandlerData]);
          PHB_ITEM pPar1    = hb_itemPutStrUTF8(nullptr, name);
-         PHB_ITEM pPar2    = hb_itemArrayNew(HB_SIZEOFARRAY(info->map));
+         auto pPar2 = hb_itemArrayNew(HB_SIZEOFARRAY(info->map));
 
          hb_evalBlock(hb_expat->pVar[_VAR_bUnknownEncodingHandler], pEncData, pPar1, pPar2, nullptr);
 

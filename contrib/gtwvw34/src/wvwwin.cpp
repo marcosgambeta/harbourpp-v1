@@ -818,7 +818,7 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
 {
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   PHB_ITEM aXY = hb_itemArrayNew(2);
+   auto aXY = hb_itemArrayNew(2);
    POINT    xy{};
 
    if( wvw_win ) {

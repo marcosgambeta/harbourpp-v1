@@ -2178,10 +2178,9 @@ HB_FUNC( ADSDIRECTORY )
 #else
    SIGNED32   sHandle = 0;
 #endif
-   PHB_ITEM   pitmDir;
    ADSHANDLE  hConnect = HB_ADS_PARCONNECTION(2);
 
-   pitmDir = hb_itemArrayNew(0);
+   auto pitmDir = hb_itemArrayNew(0);
 
    ulRetVal = AdsFindFirstTable( hConnect,
                                  reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))),

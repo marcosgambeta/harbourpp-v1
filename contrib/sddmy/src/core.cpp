@@ -227,7 +227,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
    HB_USHORT uiFields = static_cast<HB_USHORT>(mysql_num_fields(pSDDData->pResult));
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
-   PHB_ITEM pItemEof = hb_itemArrayNew(uiFields);
+   auto pItemEof = hb_itemArrayNew(uiFields);
 
    MYSQL_FIELD * pMyField;
    PHB_ITEM pItem;

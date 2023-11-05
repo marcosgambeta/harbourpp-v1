@@ -128,7 +128,7 @@ HB_FUNC( CAIRO_GET_DASH )
       double dOffset;
       cairo_get_dash(pCairo, pDashes, &dOffset);
       hb_stornd(dOffset, 3);
-      PHB_ITEM pItem = hb_itemArrayNew(static_cast<HB_SIZE>(iCount));
+      auto pItem = hb_itemArrayNew(static_cast<HB_SIZE>(iCount));
       for( int i = 0; i < iCount; i++ ) {
          hb_arraySetND(pItem, static_cast<HB_SIZE>(i) + 1, pDashes[i]);
       }

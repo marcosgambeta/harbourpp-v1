@@ -293,7 +293,6 @@ HB_FUNC( FPARSE )
    FILE *   inFile;
    PHB_ITEM pSrc   = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pDelim = hb_param(2, Harbour::Item::STRING);
-   PHB_ITEM pArray;
    char *   string;
    int      iToken, iCharCount = 0;
    HB_BYTE  nByte;
@@ -322,7 +321,7 @@ HB_FUNC( FPARSE )
    nByte = pDelim ? static_cast<HB_BYTE>(hb_itemGetCPtr(pDelim)[0]) : static_cast<HB_BYTE>(',');
 
    /* the main array */
-   pArray = hb_itemArrayNew(0);
+   auto pArray = hb_itemArrayNew(0);
    auto pItem  = hb_itemNew(nullptr);
 
    /* book memory for line to read */
@@ -366,7 +365,6 @@ HB_FUNC( FPARSEEX )
    FILE *   inFile;
    PHB_ITEM pSrc   = hb_param(1, Harbour::Item::STRING);
    PHB_ITEM pDelim = hb_param(2, Harbour::Item::STRING);
-   PHB_ITEM pArray;
    char *   string;
    int      iCharCount = 0;
    HB_BYTE  nByte;
@@ -395,7 +393,7 @@ HB_FUNC( FPARSEEX )
    nByte = pDelim ? static_cast<HB_BYTE>(hb_itemGetCPtr(pDelim)[0]) : static_cast<HB_BYTE>(',');
 
    /* the main array */
-   pArray    = hb_itemArrayNew(0);
+   auto pArray = hb_itemArrayNew(0);
    auto pSubArray = hb_itemNew(nullptr);
 
    /* book memory for line to read */
@@ -566,11 +564,10 @@ HB_FUNC( FCHARCOUNT )
 
 HB_FUNC( FPARSELINE )
 {
-   PHB_ITEM     pArray;
    HB_ISIZ      nWords = 0;
    const char * szText;
 
-   pArray = hb_itemArrayNew(0);
+   auto pArray = hb_itemArrayNew(0);
    szText = hb_parc(1);
 
    if( szText ) {
