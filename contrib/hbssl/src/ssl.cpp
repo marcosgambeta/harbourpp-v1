@@ -582,7 +582,7 @@ HB_FUNC( SSL_READ )
       SSL * ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
-         PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
+         auto pItem = hb_param(2, Harbour::Item::STRING);
          char * pBuffer;
          HB_SIZE nLen;
          int nRead = 0;
@@ -612,7 +612,7 @@ HB_FUNC( SSL_PEEK )
       SSL * ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
-         PHB_ITEM pItem = hb_param(2, Harbour::Item::STRING);
+         auto pItem = hb_param(2, Harbour::Item::STRING);
          char * pBuffer;
          HB_SIZE nLen;
          int nRead = 0;
@@ -655,7 +655,7 @@ HB_FUNC( SSL_WRITE )
       SSL * ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
-         PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+         auto pBuffer = hb_param(2, Harbour::Item::STRING);
          HB_SIZE  nLen = hb_itemGetCLen(pBuffer);
 
          if( HB_ISNUM(3) ) {
@@ -1640,7 +1640,7 @@ HB_FUNC( SSL_SET_MSG_CALLBACK )
 
       if( hb_ssl != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-         PHB_ITEM pCallback = hb_param(2, Harbour::Item::EVALITEM);
+         auto pCallback = hb_param(2, Harbour::Item::EVALITEM);
 
          if( hb_ssl->pCallbackArg ) {
             SSL_set_msg_callback_arg(hb_ssl->ssl, nullptr);

@@ -143,9 +143,9 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
 
 HB_FUNC( DBF2TEXT )
 {
-   PHB_ITEM pWhile  = hb_param(1, Harbour::Item::BLOCK);
-   PHB_ITEM pFor    = hb_param(2, Harbour::Item::BLOCK);
-   PHB_ITEM pFields = hb_param(3, Harbour::Item::ARRAY);
+   auto pWhile = hb_param(1, Harbour::Item::BLOCK);
+   auto pFor = hb_param(2, Harbour::Item::BLOCK);
+   auto pFields = hb_param(3, Harbour::Item::ARRAY);
 
    const char * cDelim = hb_parc(4);
    HB_FHANDLE   handle = static_cast<HB_FHANDLE>(hb_parnint(5));

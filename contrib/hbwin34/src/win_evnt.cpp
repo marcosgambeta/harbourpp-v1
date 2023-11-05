@@ -67,7 +67,7 @@ HB_FUNC( WIN_REPORTEVENT )
       LPCTSTR * lpStrings = nullptr;
       void ** hStrings = nullptr;
 
-      PHB_ITEM pStrings = hb_param(6, Harbour::Item::ARRAY);
+      auto pStrings = hb_param(6, Harbour::Item::ARRAY);
 
       if( pStrings && (wNumStrings = static_cast<WORD>(hb_arrayLen(pStrings))) > 0 )
       {

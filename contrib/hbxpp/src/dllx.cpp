@@ -102,7 +102,7 @@ HB_FUNC_TRANSLATE( DLLUNLOAD, HB_LIBFREE )
 
 HB_FUNC( DLLCALL )
 {
-   PHB_ITEM pLibrary       = hb_param(1, Harbour::Item::ANY);
+   auto pLibrary = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pLibraryHandle = nullptr;
    HB_BOOL  bFreeLibrary   = false;
 
@@ -147,7 +147,7 @@ HB_FUNC( DLLCALL )
 
 HB_FUNC( DLLPREPARECALL )
 {
-   PHB_ITEM pLibrary       = hb_param(1, Harbour::Item::ANY);
+   auto pLibrary = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM pLibraryHandle = nullptr;
    HB_BOOL  bFreeLibrary   = false;
    const char * pszErrorText;

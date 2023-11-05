@@ -190,8 +190,6 @@ HB_FUNC( WIN_SERVICESTOP )
 
 HB_FUNC( WIN_SERVICESTART )
 {
-   PHB_ITEM pEntryFunc;
-
    SERVICE_TABLE_ENTRY lpServiceTable[2];
 
    HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), s_lpServiceName, HB_SIZEOFARRAY(s_lpServiceName));
@@ -202,7 +200,7 @@ HB_FUNC( WIN_SERVICESTART )
       s_pHarbourEntryFunc = nullptr;
    }
 
-   pEntryFunc = hb_param(2, Harbour::Item::EVALITEM);
+   auto pEntryFunc = hb_param(2, Harbour::Item::EVALITEM);
 
    if( pEntryFunc )
    {

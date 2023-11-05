@@ -193,7 +193,7 @@ HB_FUNC( SQL_SPRINTF )
    const char * cItmFrm;
    char *       cRes;
    int          argc    = hb_pcount() - 1;
-   PHB_ITEM     pItmFrm = hb_param(1, Harbour::Item::STRING);
+   auto pItmFrm = hb_param(1, Harbour::Item::STRING);
 
    if( !pItmFrm || ( cItmFrm = hb_itemGetCPtr(pItmFrm) ) == nullptr )
    {

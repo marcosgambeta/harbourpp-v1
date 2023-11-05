@@ -632,7 +632,7 @@ HB_FUNC( GDIMAGEPOLYGON ) /* original: void gdImagePolygon(gdImagePtr im, gdPoin
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      PHB_ITEM pPoints     = hb_param(2, Harbour::Item::ARRAY);
+      auto pPoints = hb_param(2, Harbour::Item::ARRAY);
       int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
       int      color       = hb_parni(3);
 
@@ -672,7 +672,7 @@ HB_FUNC( GDIMAGEOPENPOLYGON ) /* original: void gdImageOpenPolygon(gdImagePtr im
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      PHB_ITEM pPoints     = hb_param(2, Harbour::Item::ARRAY);
+      auto pPoints = hb_param(2, Harbour::Item::ARRAY);
       int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
       int      color       = hb_parni(3);
 
@@ -732,7 +732,7 @@ HB_FUNC( GDIMAGEFILLEDPOLYGON ) /* original: void gdImageFilledPolygon(gdImagePt
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      PHB_ITEM pPoints     = hb_param(2, Harbour::Item::ARRAY);
+      auto pPoints = hb_param(2, Harbour::Item::ARRAY);
       int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
       int      color       = hb_parni(3);
 
@@ -982,7 +982,7 @@ HB_FUNC( GDIMAGESETSTYLE ) /* original: void gdImageSetStyle(gdImagePtr im, int 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      PHB_ITEM pStyles     = hb_param(2, Harbour::Item::ARRAY);
+      auto pStyles = hb_param(2, Harbour::Item::ARRAY);
       int      styleLength = static_cast<int>(hb_arrayLen(pStyles));
 
       /* Max numbery of Styles */
@@ -1438,7 +1438,7 @@ HB_FUNC( GDIMAGESTRINGFTEX )
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      PHB_ITEM     pRect    = hb_param(2, Harbour::Item::ARRAY);
+      auto pRect = hb_param(2, Harbour::Item::ARRAY);
       int          fgcolor  = hb_parni(3); /* foreground color */
       const char * fontname = hb_parc(4);
       double       ptsize   = hb_parnd(5); /* point size */

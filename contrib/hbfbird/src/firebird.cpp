@@ -438,7 +438,7 @@ HB_FUNC( FBQUERY )
 
 HB_FUNC( FBFETCH )
 {
-   PHB_ITEM aParam = hb_param(1, Harbour::Item::ARRAY);
+   auto aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
       isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
@@ -455,7 +455,7 @@ HB_FUNC( FBFETCH )
 
 HB_FUNC( FBFREE )
 {
-   PHB_ITEM aParam = hb_param(1, Harbour::Item::ARRAY);
+   auto aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
       isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
@@ -486,7 +486,7 @@ HB_FUNC( FBFREE )
 
 HB_FUNC( FBGETDATA )
 {
-   PHB_ITEM aParam = hb_param(1, Harbour::Item::ARRAY);
+   auto aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
       XSQLVAR *        var;

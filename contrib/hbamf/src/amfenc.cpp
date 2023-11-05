@@ -1120,9 +1120,9 @@ static void context_release(amfContext * context, amfContext * outer_context)
 
 HB_FUNC( AMF3_FROMWA )
 {
-   PHB_ITEM     pWhile        = hb_param(1, Harbour::Item::BLOCK);
-   PHB_ITEM     pFor          = hb_param(2, Harbour::Item::BLOCK);
-   PHB_ITEM     pFields       = hb_param(3, Harbour::Item::ARRAY);
+   auto pWhile = hb_param(1, Harbour::Item::BLOCK);
+   auto pFor = hb_param(2, Harbour::Item::BLOCK);
+   auto pFields = hb_param(3, Harbour::Item::ARRAY);
    HB_ULONG     nCount        = hb_parnldef(4, 0);
    bool         str_rtrim     = hb_parldef(5, true);
    HB_USHORT    nPkg          = static_cast<HB_USHORT>(hb_parnidef(6, 0));
@@ -1355,8 +1355,8 @@ HB_FUNC( AMF3_FROMWA )
 
 HB_FUNC( AMF3_ENCODE )
 {
-   PHB_ITEM pItem    = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pFuncSym = hb_param(2, Harbour::Item::SYMBOL);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
+   auto pFuncSym = hb_param(2, Harbour::Item::SYMBOL);
    bool     lBA      = hb_parldef(3, false);
    bool     lRetval;
 

@@ -692,7 +692,7 @@ static const char * s_findFileMimeType( PHB_FILE fileIn )
 
 HB_FUNC( TIP_MIMETYPE )
 {
-   PHB_ITEM pData = hb_param(1, Harbour::Item::STRING);
+   auto pData = hb_param(1, Harbour::Item::STRING);
 
    if( pData )
    {
@@ -732,7 +732,7 @@ HB_FUNC( TIP_FILENAMEMIMETYPE )
 
 HB_FUNC( TIP_FILEMIMETYPE )
 {
-   PHB_ITEM pFile = hb_param(1, Harbour::Item::STRING | Harbour::Item::POINTER | Harbour::Item::NUMERIC);
+   auto pFile = hb_param(1, Harbour::Item::STRING | Harbour::Item::POINTER | Harbour::Item::NUMERIC);
 
    if( pFile )
    {

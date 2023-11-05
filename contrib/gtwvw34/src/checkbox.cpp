@@ -208,7 +208,7 @@ HB_FUNC( WVW_CXSETCODEBLOCK )
 
    if( wvw ) {
       PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
-      PHB_ITEM pBlock = hb_param(3, Harbour::Item::EVALITEM);
+      auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
       bool fOldSetting = wvw->fRecurseCBlock;
 
       if( pBlock && wvw_ctl && !wvw_ctl->fBusy ) {

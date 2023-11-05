@@ -179,7 +179,7 @@ HB_FUNC_STATIC( PROCNAME )
 
 HB_FUNC_STATIC( _PROCNAME )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_STRING(pItem) ) {
       hb_errPutProcName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
@@ -195,7 +195,7 @@ HB_FUNC_STATIC( PROCLINE )
 
 HB_FUNC_STATIC( _PROCLINE )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_NUMERIC(pItem) ) {
       hb_errPutProcLine(hb_stackSelfItem(), static_cast<HB_UINT>(hb_itemGetNI(pItem)));
@@ -211,7 +211,7 @@ HB_FUNC_STATIC( MODULENAME )
 
 HB_FUNC_STATIC( _MODULENAME )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_STRING(pItem) ) {
       hb_errPutModuleName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
@@ -227,7 +227,7 @@ HB_FUNC_STATIC( AASTACK )
 
 HB_FUNC_STATIC( _AASTACK )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem && HB_IS_ARRAY(pItem) ) {
       hb_errPutCallStack(hb_stackSelfItem(), pItem);

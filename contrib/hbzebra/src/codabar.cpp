@@ -176,7 +176,7 @@ PHB_ZEBRA hb_zebra_create_codabar(const char * szCode, HB_SIZE nLen, int iFlags)
 
 HB_FUNC( HB_ZEBRA_CREATE_CODABAR )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr )
    {

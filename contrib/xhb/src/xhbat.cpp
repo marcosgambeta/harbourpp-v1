@@ -130,7 +130,8 @@ static HB_SIZE hb_AtSkipStrings(const char * szSub, HB_SIZE nSubLen, const char 
 
 HB_FUNC( ATSKIPSTRINGS ) /* cFind, cWhere, nStart */
 {
-   PHB_ITEM pFind = hb_param(1, Harbour::Item::STRING), pWhere = hb_param(2, Harbour::Item::STRING);
+   auto pFind = hb_param(1, Harbour::Item::STRING);
+   auto pWhere = hb_param(2, Harbour::Item::STRING);
 
    if( pFind && pWhere ) {
       HB_SIZE nStart = hb_parns(3);
@@ -156,12 +157,12 @@ HB_FUNC( ATSKIPSTRINGS ) /* cFind, cWhere, nStart */
 /* Case insensitive At() function */
 HB_FUNC( ATI )
 {
-   PHB_ITEM pSub  = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pText = hb_param(2, Harbour::Item::STRING);
+   auto pSub = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
-      PHB_ITEM pStart = hb_param(3, Harbour::Item::NUMERIC);
-      PHB_ITEM pEnd   = hb_param(4, Harbour::Item::NUMERIC);
+      auto pStart = hb_param(3, Harbour::Item::NUMERIC);
+      auto pEnd = hb_param(4, Harbour::Item::NUMERIC);
       HB_ISIZ  nLen   = hb_itemGetCLen(pText);
       HB_ISIZ  nStart = pStart ? hb_itemGetNS(pStart) : 1;
       HB_ISIZ  nEnd   = pEnd ? hb_itemGetNS(pEnd) : nLen;

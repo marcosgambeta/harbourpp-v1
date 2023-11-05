@@ -62,8 +62,8 @@
 
 HB_FUNC( HB_POINTER2STRING )
 {
-   PHB_ITEM pPointer = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pLen     = hb_param(2, Harbour::Item::NUMERIC);
+   auto pPointer = hb_param(1, Harbour::Item::ANY);
+   auto pLen = hb_param(2, Harbour::Item::NUMERIC);
 
    if( HB_IS_POINTER(pPointer) && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
@@ -78,7 +78,7 @@ HB_FUNC( HB_POINTER2STRING )
 
 HB_FUNC( HB_STRING2POINTER )
 {
-   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
+   auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString ) {
       hb_retptr(static_cast<void*>(hb_itemGetCPtr(pString)));
@@ -119,7 +119,7 @@ HB_FUNC( XHB__KEYBOARD )
    } else if( HB_ISCHAR(1) ) {
       hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
    } else if( HB_ISARRAY(1) ) {
-      PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+      auto pArray = hb_param(1, Harbour::Item::ARRAY);
       HB_SIZE  nIndex;
       HB_SIZE  nElements = hb_arrayLen(pArray);
 
@@ -164,7 +164,7 @@ HB_FUNC( HB_GETLEN8 )
 
 HB_FUNC( HB_DESERIALBEGIN )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr ) {
       hb_itemReturn(pItem);
@@ -193,7 +193,7 @@ HB_FUNC( CURDIRX )
 {
    HB_ERRCODE uiErrorOld = hb_fsError();
    char *     pbyBuffer  = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
-   PHB_ITEM   pDrv       = hb_param(1, Harbour::Item::STRING);
+   auto pDrv = hb_param(1, Harbour::Item::STRING);
    int        iCurDrv    = hb_fsCurDrv();
    int        iDrv;
 
@@ -221,14 +221,14 @@ HB_FUNC_TRANSLATE( CSTR, HB_CSTR )
 
 HB_FUNC( HB_ARRAYID )  /* for debugging: returns the array's "address" so dual references to same array can be seen */
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    hb_retptr(pArray ? hb_arrayId(pArray) : nullptr);
 }
 
 HB_FUNC( HB_HASHID )  /* for debugging: returns the array's "address" so dual references to same array can be seen */
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    hb_retptr(pHash ? hb_hashId(pHash) : nullptr);
 }

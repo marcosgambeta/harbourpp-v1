@@ -68,7 +68,7 @@ static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char * pszKey, long v)
 
 POINT * hbwapi_par_POINT(POINT * p, int iParam, HB_BOOL bMandatory)
 {
-   PHB_ITEM pStru = hb_param(iParam, Harbour::Item::ANY);
+   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
    memset(p, 0, sizeof(POINT));
 
@@ -96,7 +96,7 @@ POINT * hbwapi_par_POINT(POINT * p, int iParam, HB_BOOL bMandatory)
 
 void hbwapi_stor_POINT(POINT * p, int iParam)
 {
-   PHB_ITEM pStru = hb_param(iParam, Harbour::Item::ANY);
+   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
    if( pStru && HB_IS_HASH(pStru) )
    {
@@ -112,7 +112,7 @@ void hbwapi_stor_POINT(POINT * p, int iParam)
 
 RECT * hbwapi_par_RECT(RECT * p, int iParam, HB_BOOL bMandatory)
 {
-   PHB_ITEM pStru = hb_param(iParam, Harbour::Item::ANY);
+   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
    memset(p, 0, sizeof(RECT));
 
@@ -144,7 +144,7 @@ RECT * hbwapi_par_RECT(RECT * p, int iParam, HB_BOOL bMandatory)
 
 void hbwapi_stor_RECT(RECT * p, int iParam)
 {
-   PHB_ITEM pStru = hb_param(iParam, Harbour::Item::ANY);
+   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
    if( pStru && HB_IS_HASH(pStru) )
    {
@@ -164,7 +164,7 @@ void hbwapi_stor_RECT(RECT * p, int iParam)
 
 LOGFONT * hbwapi_par_LOGFONT(LOGFONT * p, int iParam, HB_BOOL bMandatory)
 {
-   PHB_ITEM pStru = hb_param(iParam, Harbour::Item::ANY);
+   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
    void * hfFaceName;
    LPCTSTR pfFaceName;
@@ -242,7 +242,7 @@ LOGFONT * hbwapi_par_LOGFONT(LOGFONT * p, int iParam, HB_BOOL bMandatory)
 
 DOCINFO * hbwapi_par_DOCINFO(DOCINFO * p, int iParam, HB_BOOL bMandatory, void *** ph)
 {
-   PHB_ITEM pStru = hb_param(iParam, Harbour::Item::ANY);
+   auto pStru = hb_param(iParam, Harbour::Item::ANY);
    void ** h = static_cast<void**>(hb_xgrabz(3 * sizeof(void*)));
 
    *ph = h;
@@ -317,7 +317,7 @@ HB_FUNC( __WAPI_DEVMODE_NEW )
 HB_FUNC( __WAPI_DEVMODE_SET )
 {
    PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
-   PHB_ITEM pStru = hb_param(2, Harbour::Item::ANY);
+   auto pStru = hb_param(2, Harbour::Item::ANY);
 
    if( pDevMode && pStru && HB_IS_HASH(pStru) )
    {
@@ -378,7 +378,7 @@ HB_FUNC( __WAPI_DEVMODE_SET )
 HB_FUNC( __WAPI_DEVMODE_GET )
 {
    PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
-   PHB_ITEM pStru = hb_param(2, Harbour::Item::ANY);
+   auto pStru = hb_param(2, Harbour::Item::ANY);
 
    if( pDevMode && pStru && HB_IS_HASH(pStru) )
    {
@@ -678,7 +678,7 @@ HB_FUNC( WAPI_EXTTEXTOUT )
       HB_SIZE nDataLen;
       LPCTSTR lpData = HB_PARSTR(6, &hData, &nDataLen);
       RECT rect;
-      PHB_ITEM pFontWidths = hb_param(7, Harbour::Item::ARRAY);
+      auto pFontWidths = hb_param(7, Harbour::Item::ARRAY);
       INT * lpFontWidths;
 
       if( pFontWidths )

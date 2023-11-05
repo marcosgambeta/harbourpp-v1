@@ -152,7 +152,7 @@ typedef struct
 
 static LPTSTR s_StringList(int iParam)
 {
-   PHB_ITEM pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
+   auto pItem = hb_param(iParam, Harbour::Item::ARRAY | Harbour::Item::STRING);
    LPTSTR lpStr = nullptr;
 
    if( pItem )
@@ -251,7 +251,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
    if( (fop.fFlags & FOF_WANTMAPPINGHANDLE) != 0 )
    {
       HANDLETOMAPPINGS * hm = static_cast<HANDLETOMAPPINGS*>(fop.hNameMappings);
-      PHB_ITEM pArray = hb_param(7, Harbour::Item::ARRAY);
+      auto pArray = hb_param(7, Harbour::Item::ARRAY);
 
       /* Process hNameMappings */
       if( hm )

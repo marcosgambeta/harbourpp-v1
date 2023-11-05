@@ -356,7 +356,7 @@ HB_FUNC( CAIRO_PATH_ITERATOR_GET_POINTS )
 HB_FUNC( CAIRO_PATH_ITERATOR_SET_POINTS )
 {
    PHB_CAIRO_PATH_ITERATOR pIterator = static_cast<PHB_CAIRO_PATH_ITERATOR>(hb_parptrGC(&s_gcIteratorFuncs, 1));
-   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+   auto pArray = hb_param(2, Harbour::Item::ARRAY);
    cairo_path_t * pPath;
 
    if( pIterator && pIterator->ppPath && (pPath = *(pIterator->ppPath)) != nullptr && pArray ) {

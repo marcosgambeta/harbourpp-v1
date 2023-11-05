@@ -50,7 +50,7 @@
 
 HB_FUNC( BIN2U )
 {
-   PHB_ITEM pItem    = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
    HB_U32   uiResult = 0;
 
    if( pItem != nullptr )

@@ -291,8 +291,8 @@ static HB_BOOL file_read(FILE * stream, char * string, int * iCharCount)
 HB_FUNC( FPARSE )
 {
    FILE *   inFile;
-   PHB_ITEM pSrc   = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pDelim = hb_param(2, Harbour::Item::STRING);
+   auto pSrc = hb_param(1, Harbour::Item::STRING);
+   auto pDelim = hb_param(2, Harbour::Item::STRING);
    char *   string;
    int      iToken, iCharCount = 0;
    HB_BYTE  nByte;
@@ -363,8 +363,8 @@ HB_FUNC( FPARSE )
 HB_FUNC( FPARSEEX )
 {
    FILE *   inFile;
-   PHB_ITEM pSrc   = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM pDelim = hb_param(2, Harbour::Item::STRING);
+   auto pSrc = hb_param(1, Harbour::Item::STRING);
+   auto pDelim = hb_param(2, Harbour::Item::STRING);
    char *   string;
    int      iCharCount = 0;
    HB_BYTE  nByte;
@@ -423,7 +423,7 @@ HB_FUNC( FPARSEEX )
 HB_FUNC( FWORDCOUNT )
 {
    FILE *   inFile;
-   PHB_ITEM pSrc = hb_param(1, Harbour::Item::STRING);
+   auto pSrc = hb_param(1, Harbour::Item::STRING);
    char *   string;
    int      iCharCount = 0;
    HB_BYTE  nByte      = ' ';
@@ -477,7 +477,7 @@ HB_FUNC( FWORDCOUNT )
 HB_FUNC( FLINECOUNT )
 {
    FILE *   inFile;
-   PHB_ITEM pSrc       = hb_param(1, Harbour::Item::STRING);
+   auto pSrc = hb_param(1, Harbour::Item::STRING);
    HB_SIZE  nLineCount = 0;
    int      ch;
 
@@ -518,7 +518,7 @@ HB_FUNC( FLINECOUNT )
 HB_FUNC( FCHARCOUNT )
 {
    FILE *   inFile;
-   PHB_ITEM pSrc    = hb_param(1, Harbour::Item::STRING);
+   auto pSrc = hb_param(1, Harbour::Item::STRING);
    HB_SIZE  nResult = 0;
    int      ch;
 

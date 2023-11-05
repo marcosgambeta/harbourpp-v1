@@ -421,7 +421,7 @@ HB_FUNC( XDL_DIFF )
       }
       else if( HB_ISBLOCK(5) || HB_ISSYMBOL(5) )
       {
-         PHB_ITEM pCallback = hb_param(5, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+         auto pCallback = hb_param(5, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;
@@ -493,7 +493,7 @@ HB_FUNC( XDL_BDIFF )
       }
       else if( HB_ISBLOCK(4) || HB_ISSYMBOL(4) )
       {
-         PHB_ITEM pCallback = hb_param(4, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+         auto pCallback = hb_param(4, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;
@@ -531,7 +531,7 @@ HB_FUNC( XDL_RABDIFF )
       }
       else if( HB_ISBLOCK(3) || HB_ISSYMBOL(3) )
       {
-         PHB_ITEM pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+         auto pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;
@@ -565,7 +565,7 @@ HB_FUNC( XDL_BPATCH )
       }
       else if( HB_ISBLOCK(3) || HB_ISSYMBOL(3) )
       {
-         PHB_ITEM pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+         auto pCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
          ecb.priv = static_cast<void*>(pCallback);
          ecb.outf = xdlt_outb;

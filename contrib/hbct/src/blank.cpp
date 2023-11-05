@@ -51,7 +51,7 @@
 
 HB_FUNC( BLANK )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
    HB_BOOL bRef = HB_ISBYREF(1);
    HB_BOOL bRet = !ct_getref();
 
@@ -81,7 +81,7 @@ HB_FUNC( BLANK )
          hb_retnl(0);
       }
    } else if( HB_IS_STRING(pItem) ) {
-      PHB_ITEM pMode = hb_param(2, Harbour::Item::LOGICAL);
+      auto pMode = hb_param(2, Harbour::Item::LOGICAL);
 
       if( pMode && hb_itemGetL(pMode) ) {
          HB_SIZE nLen = hb_itemGetCLen(pItem);

@@ -412,7 +412,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
 
 HB_FUNC( HB_ZEBRA_CREATE_CODE128 )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr )
    {

@@ -865,8 +865,6 @@ HB_FUNC( WIN_OLESERVERINIT )
          lpOleClsId = hb_parstr_u16(1, HB_CDP_ENDIAN_NATIVE, &hOleClsId, nullptr);
          if( CLSIDFromString(const_cast<LPOLESTR>(lpOleClsId), &s_IID_IHbOleServer) == S_OK )
          {
-            PHB_ITEM pAction;
-
             s_fHashClone = false;
             if( s_pMsgHash )
             {
@@ -874,7 +872,7 @@ HB_FUNC( WIN_OLESERVERINIT )
                s_pMsgHash = nullptr;
             }
 
-            pAction = hb_param(3, Harbour::Item::HASH | Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+            auto pAction = hb_param(3, Harbour::Item::HASH | Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
             if( !pAction && HB_ISOBJECT(3) )
             {
                pAction = hb_param(3, Harbour::Item::OBJECT);

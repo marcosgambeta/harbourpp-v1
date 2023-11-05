@@ -187,9 +187,9 @@ HB_FUNC( SETFDATI )
       if( HB_ISTIMESTAMP(1) ) {
          hb_partdt(&lJulian, &lMillisec, 1);
       } else {
-         PHB_ITEM pDate, pTime;
+         PHB_ITEM pTime;
 
-         pDate = hb_param(2, Harbour::Item::DATE);
+         auto pDate = hb_param(2, Harbour::Item::DATE);
          if( pDate ) {
             pTime = hb_param(3, Harbour::Item::STRING);
          } else {

@@ -85,7 +85,7 @@ HB_FUNC( WIN_SENDMESSAGE )
 HB_FUNC( WIN_SENDDLGITEMMESSAGE )
 {
    char * cText;
-   PHB_ITEM pText = hb_param(5, Harbour::Item::STRING);
+   auto pText = hb_param(5, Harbour::Item::STRING);
 
    if( pText ) {
       cText = static_cast<char*>(hb_xgrab(hb_itemGetCLen(pText) + 1));
@@ -627,7 +627,7 @@ HB_FUNC( ADDTOOLTIPEX ) /* changed by MAG */
  */
 HB_FUNC( CREATEIMAGELIST )
 {
-   PHB_ITEM   pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
    UINT       flags  = HB_ISNIL(5) ? ILC_COLOR : hb_parni(5);
    HIMAGELIST himl;
    ULONG      ulLen = hb_arrayLen(pArray);
@@ -1065,7 +1065,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
 
    HWND hWndCtrl = reinterpret_cast<HWND>(HB_PARHANDLE(2));
    /* HWND hToolTip = ( HWND ) hb_parnl(5) ; */
-   PHB_ITEM   pArray   = hb_param(3, Harbour::Item::ARRAY);
+   auto pArray = hb_param(3, Harbour::Item::ARRAY);
    int        iButtons = hb_parni(4);
    TBBUTTON * tb       = static_cast<struct _TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
    PHB_ITEM   pTemp;
@@ -2007,7 +2007,7 @@ HB_FUNC( WVW_UPDATEWINDOW )
 
 HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 {
-   PHB_ITEM   pFirst = hb_param(3, Harbour::Item::ANY);
+   auto pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    WVW_DATA * p    = hb_getWvwData();
@@ -2104,7 +2104,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
 HB_FUNC( WVW_CREATEDIALOGMODAL )
 {
-   PHB_ITEM   pFirst = hb_param(3, Harbour::Item::ANY);
+   auto pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    WVW_DATA * p = hb_getWvwData();

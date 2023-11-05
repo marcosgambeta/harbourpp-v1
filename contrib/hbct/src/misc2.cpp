@@ -49,7 +49,7 @@
 
 HB_FUNC( COMPLEMENT )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+   auto pItem = hb_param(1, Harbour::Item::ANY);
 
    if( pItem != nullptr ) {
       if( HB_IS_STRING(pItem) ) {

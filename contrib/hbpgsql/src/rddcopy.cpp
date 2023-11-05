@@ -276,9 +276,9 @@ HB_FUNC( HB_PQCOPYFROMWA )
       static const char * sc_szDelim = ",";
 
       const char *    szTable   = hb_parcx(2);
-      PHB_ITEM        pWhile    = hb_param(3, Harbour::Item::EVALITEM);
-      PHB_ITEM        pFor      = hb_param(4, Harbour::Item::EVALITEM);
-      PHB_ITEM        pFields   = hb_param(5, Harbour::Item::ARRAY);
+      auto pWhile = hb_param(3, Harbour::Item::EVALITEM);
+      auto pFor = hb_param(4, Harbour::Item::EVALITEM);
+      auto pFields = hb_param(5, Harbour::Item::ARRAY);
       HB_ULONG        nCount    = hb_parnldef(6, 0);
       HB_BOOL         str_rtrim = hb_parldef(7, true);
       HB_ULONG        nBufLen   = hb_parnldef(8, 1);

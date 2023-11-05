@@ -883,7 +883,7 @@ HB_FUNC( WIN_OLESERVERINIT )
                s_pMsgHash = nullptr;
             }
 
-            PHB_ITEM pAction = hb_param(3, Harbour::Item::HASH | Harbour::Item::EVALITEM);
+            auto pAction = hb_param(3, Harbour::Item::HASH | Harbour::Item::EVALITEM);
             if( !pAction && HB_ISOBJECT(3) )
             {
                pAction = hb_param(3, Harbour::Item::OBJECT);

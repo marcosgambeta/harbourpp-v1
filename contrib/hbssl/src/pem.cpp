@@ -109,7 +109,7 @@ static void hb_PEM_read_bio( PEM_READ_BIO * func, HB_PEM_TYPES type )
    }
 
    if( bio != nullptr ) {
-      PHB_ITEM pPassCallback = hb_param(2, Harbour::Item::EVALITEM);
+      auto pPassCallback = hb_param(2, Harbour::Item::EVALITEM);
       pem_password_cb * cb;
       void * cargo, * result;
 

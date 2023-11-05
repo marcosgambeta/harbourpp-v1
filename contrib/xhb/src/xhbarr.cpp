@@ -54,7 +54,7 @@
  */
 HB_FUNC( ASPLICE )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       HB_SIZE  nStart, nRemove, nIndex;
@@ -149,8 +149,8 @@ HB_FUNC_TRANSLATE( AREMOVE, ASPLICE )
 /* AMerge(<aTarget>, <aSource> [, <nPos>]) --> aTarget */
 HB_FUNC( AMERGE )
 {
-   PHB_ITEM pArray1 = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM pArray2 = hb_param(2, Harbour::Item::ARRAY);
+   auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
 
    if( pArray1 && pArray2 ) {
       HB_SIZE nLen = hb_arrayLen(pArray1);
@@ -186,7 +186,7 @@ HB_FUNC( AMERGE )
 
 HB_FUNC( XHB_ADEL )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       HB_ISIZ nPos = hb_parns(2);
@@ -209,7 +209,7 @@ HB_FUNC( XHB_ADEL )
 
 HB_FUNC( XHB_AINS )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       HB_ISIZ nPos = hb_parns(2);

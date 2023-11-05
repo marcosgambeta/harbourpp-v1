@@ -367,9 +367,9 @@ HB_FUNC( HB_BACKGROUNDRESET )
 /* add a new background task and return its handle */
 HB_FUNC( HB_BACKGROUNDADD )
 {
-   PHB_ITEM pBlock    = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pMillisec = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pActive   = hb_param(3, Harbour::Item::LOGICAL);
+   auto pBlock = hb_param(1, Harbour::Item::ANY);
+   auto pMillisec = hb_param(2, Harbour::Item::NUMERIC);
+   auto pActive = hb_param(3, Harbour::Item::LOGICAL);
 
    if( HB_IS_BLOCK(pBlock) || HB_IS_ARRAY(pBlock) ) {
       hb_retnl(hb_backgroundAddFunc(pBlock, (pMillisec == nullptr ? 0 : hb_itemGetNI(pMillisec)), (pActive == nullptr ? HB_TRUE : hb_itemGetL(pActive))));

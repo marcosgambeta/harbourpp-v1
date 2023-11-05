@@ -1294,7 +1294,7 @@ HB_FUNC( HB_ODBCSTOD )
 
 HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec) */
 {
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::NUMERIC);
+   auto pValue = hb_param(1, Harbour::Item::NUMERIC);
    int iLen = hb_parni(2);
    int iDec = hb_parni(3);
 

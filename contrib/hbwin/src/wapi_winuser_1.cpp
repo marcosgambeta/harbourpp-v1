@@ -685,7 +685,7 @@ HB_FUNC( WAPI_GETMENUDEFAULTITEM )
 HB_FUNC( WAPI_CREATEACCELERATORTABLE )
 {
    HACCEL hAccel = nullptr;
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
    int iEntries = pArray ? static_cast<int>(hb_arrayLen(pArray)) : 0;
 
    if( iEntries > 0 )

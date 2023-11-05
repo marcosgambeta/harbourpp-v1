@@ -227,7 +227,7 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
    WVW_DATA *     pData        = hb_getWvwData();
    UINT           uiPBid       = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd          = GetControlData(usWinNum, WVW_CONTROL_PUSHBUTTON, nullptr, uiPBid);
-   PHB_ITEM       phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
+   auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    BOOL           bOldSetting  = pData->s_bRecurseCBlock;
 
    if( !phiCodeBlock || pcd == nullptr || pcd->bBusy ) {
@@ -638,7 +638,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
 
    UINT uiCBid        = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
-   PHB_ITEM       phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
+   auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    WVW_DATA *     pData        = hb_getWvwData();
    BOOL bOldSetting = pData->s_bRecurseCBlock;
 

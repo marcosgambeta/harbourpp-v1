@@ -89,9 +89,9 @@ HB_FUNC( WIN_MAPISENDMAIL )
 
       if( MAPISendMail )
       {
-         PHB_ITEM pFrom     = hb_param(8, HB_IT_ARRAY);
-         PHB_ITEM pRecpList = hb_param(9, HB_IT_ARRAY);
-         PHB_ITEM pFileList = hb_param(10, HB_IT_ARRAY);
+         auto pFrom = hb_param(8, HB_IT_ARRAY);
+         auto pRecpList = hb_param(9, HB_IT_ARRAY);
+         auto pFileList = hb_param(10, HB_IT_ARRAY);
 
          HB_SIZE nRecpCount = pRecpList ? hb_arrayLen(pRecpList) : 0;
          HB_SIZE nFileCount = pFileList ? hb_arrayLen(pFileList) : 0;

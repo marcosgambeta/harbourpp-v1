@@ -76,7 +76,7 @@ HB_FUNC( CUPSGETDESTS )
 
 HB_FUNC( CUPSPRINTFILE )
 {
-   PHB_ITEM pOptions = hb_param(4, Harbour::Item::HASH | Harbour::Item::ARRAY);
+   auto pOptions = hb_param(4, Harbour::Item::HASH | Harbour::Item::ARRAY);
 
    int num_options         = 0;
    cups_option_t * options = nullptr;

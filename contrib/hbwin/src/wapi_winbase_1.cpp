@@ -84,7 +84,7 @@ HB_FUNC( WAPI_WAITFORSINGLEOBJECTEX )
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
 {
-   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+   auto pArray = hb_param(2, Harbour::Item::ARRAY);
    DWORD nCount = pArray ? static_cast<DWORD>(hb_arrayLen(pArray)) : 0;
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
@@ -112,7 +112,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
 
 HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
 {
-   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+   auto pArray = hb_param(2, Harbour::Item::ARRAY);
    DWORD nCount = pArray ? static_cast<DWORD>(hb_arrayLen(pArray)) : 0;
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )

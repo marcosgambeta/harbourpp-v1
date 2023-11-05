@@ -2667,7 +2667,7 @@ HB_FUNC( __OLEVARIANTGETTYPE )
 HB_FUNC( __OLEVARIANTNEW )
 {
    int iType = hb_parni(1);
-   PHB_ITEM pInit = hb_param(2, Harbour::Item::ANY);
+   auto pInit = hb_param(2, Harbour::Item::ANY);
    IDispatch * pDisp;
    VARIANT variant;
 

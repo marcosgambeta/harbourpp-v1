@@ -1478,7 +1478,7 @@ HB_FUNC( MXMLSAVEFILE )
 HB_FUNC( MXMLSAVESTRING )
 {
    mxml_node_t * node = mxml_node_param(1);
-   PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+   auto pBuffer = hb_param(2, Harbour::Item::STRING);
 
    if( node )
    {
@@ -1582,7 +1582,7 @@ static void error_cb(const char * pszErrorMsg)
 
 HB_FUNC( MXMLSETERRORCALLBACK )
 {
-   PHB_ITEM pError = hb_param(1, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+   auto pError = hb_param(1, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
    if( pError )
    {
@@ -1910,8 +1910,8 @@ static char * custom_save_cb(mxml_node_t * node)
 
 HB_FUNC( MXMLSETCUSTOMHANDLERS )
 {
-   PHB_ITEM pLoad = hb_param(1, Harbour::Item::BLOCK | Harbour::Item::SYMBOL),
-            pSave = hb_param(2, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+   auto pLoad = hb_param(1, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+   auto pSave = hb_param(2, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
    if( pLoad && pSave )
    {

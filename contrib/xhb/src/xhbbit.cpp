@@ -54,8 +54,8 @@
 
 static void s_xhb_bitOper(int iOper)
 {
-   PHB_ITEM pItem1 = hb_param(1, Harbour::Item::ANY),
-            pItem2 = hb_param(2, Harbour::Item::ANY);
+   auto pItem1 = hb_param(1, Harbour::Item::ANY);
+   auto pItem2 = hb_param(2, Harbour::Item::ANY);
    HB_SIZE nLen1 = hb_itemGetCLen(pItem1),
            nLen2 = hb_itemGetCLen(pItem2);
 

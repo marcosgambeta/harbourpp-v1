@@ -563,7 +563,7 @@ HB_FUNC( NETIO_RPCFILTER )
       conn->rpcFunc = hb_itemGetSymbol(hb_param(2, Harbour::Item::SYMBOL));
       if( !conn->rpcFunc )
       {
-         PHB_ITEM pHash = hb_param(2, Harbour::Item::HASH);
+         auto pHash = hb_param(2, Harbour::Item::HASH);
          if( pHash )
          {
             conn->rpcFilter = hb_itemNew(pHash);
@@ -1932,7 +1932,7 @@ HB_FUNC( NETIO_SRVSENDITEM )
 {
    PHB_CONSRV conn = s_consrvParam(1);
    int iStreamID = hb_parni(2);
-   PHB_ITEM pItem = hb_param(3, Harbour::Item::ANY);
+   auto pItem = hb_param(3, Harbour::Item::ANY);
    bool fResult = false;
 
    if( conn && conn->sock && !conn->stop && conn->mutex && iStreamID && pItem )

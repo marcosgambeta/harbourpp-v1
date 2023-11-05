@@ -211,7 +211,7 @@ void hb_OutDebug(const char * szMsg, HB_SIZE nMsgLen)
 
 HB_FUNC( HB_OUTDEBUGNAME )
 {
-   PHB_ITEM pName = hb_param(1, Harbour::Item::STRING);
+   auto pName = hb_param(1, Harbour::Item::STRING);
 
    hb_retl(hb_OutDebugName(pName));
 }

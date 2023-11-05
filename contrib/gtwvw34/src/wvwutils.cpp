@@ -263,7 +263,7 @@ wvw_CreateImageList(array, cx, cy, nGrow, flags)
 */
 HB_FUNC( WVW_CREATEIMAGELIST )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
       int ulLen = static_cast<int>(hb_arrayLen(pArray));
@@ -1125,7 +1125,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
       }
 
       if( iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)) ) {
-         PHB_ITEM pFirst    = hb_param(3, Harbour::Item::ANY);
+         auto pFirst = hb_param(3, Harbour::Item::ANY);
          PHB_ITEM pFunc     = nullptr;
          HWND     hDlg      = nullptr;
          int      iType     = 0;
@@ -1205,7 +1205,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
       }
 
       if( iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal)) ) {
-         PHB_ITEM pFirst    = hb_param(3, Harbour::Item::ANY);
+         auto pFirst = hb_param(3, Harbour::Item::ANY);
          int      iResource = hb_parni(4);
          INT_PTR  iResult   = 0;
          HWND     hParent   = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : wvw_zer->hWnd;

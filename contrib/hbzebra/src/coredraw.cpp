@@ -137,7 +137,7 @@ HB_FUNC( HB_ZEBRA_DRAW )
 
    if( pZebra )
    {
-      PHB_ITEM pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
+      auto pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
       if( pDrawBlock )
       {
          hb_retni(hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni(7)));

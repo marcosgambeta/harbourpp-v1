@@ -54,7 +54,7 @@
 
 HB_FUNC( XHB_RTRIM )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE      nLen, nSrc;
@@ -83,7 +83,7 @@ HB_FUNC_TRANSLATE( XHB_TRIM, XHB_RTRIM )
 
 HB_FUNC( XHB_ALLTRIM )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
       HB_SIZE      nLen, nSrc;

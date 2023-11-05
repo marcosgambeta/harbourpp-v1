@@ -567,7 +567,7 @@ HB_FUNC( BIO_NEW_FILE )
 
 HB_FUNC( BIO_NEW_MEM_BUF )
 {
-   PHB_ITEM pBuffer = hb_param(1, Harbour::Item::STRING);
+   auto pBuffer = hb_param(1, Harbour::Item::STRING);
 
    if( pBuffer ) {
       void * hStrRef;

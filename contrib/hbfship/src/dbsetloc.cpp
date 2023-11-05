@@ -55,7 +55,7 @@ HB_FUNC( DBSETLOCATE )
 
    if( pArea != nullptr )
    {
-      PHB_ITEM pLocate = hb_param(1, Harbour::Item::BLOCK);
+      auto pLocate = hb_param(1, Harbour::Item::BLOCK);
       if( pLocate )
       {
          DBSCOPEINFO pScopeInfo;

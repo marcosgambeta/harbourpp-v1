@@ -250,10 +250,10 @@ static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
 
 HB_FUNC( HB_SIZEOFCSTRUCTURE )
 {
-   PHB_ITEM aDef = hb_param(1, Harbour::Item::ARRAY);
+   auto aDef = hb_param(1, Harbour::Item::ARRAY);
 
    if( aDef ) {
-      PHB_ITEM pAlign = hb_param(2, Harbour::Item::INTEGER);
+      auto pAlign = hb_param(2, Harbour::Item::INTEGER);
       HB_UINT  uiAlign;
 
       if( pAlign ) {
@@ -888,9 +888,9 @@ static HB_BYTE * ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign,
 
 HB_FUNC( HB_ARRAYTOSTRUCTURE )
 {
-   PHB_ITEM aVar   = hb_param(1, Harbour::Item::ARRAY);
-   PHB_ITEM aDef   = hb_param(2, Harbour::Item::ARRAY);
-   PHB_ITEM pAlign = hb_param(3, Harbour::Item::INTEGER);
+   auto aVar = hb_param(1, Harbour::Item::ARRAY);
+   auto aDef = hb_param(2, Harbour::Item::ARRAY);
+   auto pAlign = hb_param(3, Harbour::Item::INTEGER);
 
    if( aVar && aDef ) {
       HB_UINT   uiSize;
@@ -1222,11 +1222,11 @@ static PHB_ITEM StructureToArray(HB_BYTE * Buffer, HB_SIZE nBufferLen, PHB_ITEM 
 
 HB_FUNC( HB_STRUCTURETOARRAY )
 {
-   PHB_ITEM Structure = hb_param(1, Harbour::Item::STRING);
-   PHB_ITEM aDef      = hb_param(2, Harbour::Item::ARRAY);
-   PHB_ITEM pAlign    = hb_param(3, Harbour::Item::INTEGER);
-   PHB_ITEM pAdopt    = hb_param(4, Harbour::Item::LOGICAL);
-   PHB_ITEM pRet      = hb_param(5, Harbour::Item::ARRAY);
+   auto Structure = hb_param(1, Harbour::Item::STRING);
+   auto aDef = hb_param(2, Harbour::Item::ARRAY);
+   auto pAlign = hb_param(3, Harbour::Item::INTEGER);
+   auto pAdopt = hb_param(4, Harbour::Item::LOGICAL);
+   auto pRet = hb_param(5, Harbour::Item::ARRAY);
 
    if( Structure && aDef ) {
       HB_BYTE * Buffer = reinterpret_cast<HB_BYTE*>(Structure->item.asString.value);
@@ -1253,8 +1253,8 @@ HB_FUNC( HB_STRUCTURETOARRAY )
 
 HB_FUNC( HB_POINTER2STRING )
 {
-   PHB_ITEM pPointer = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pLen     = hb_param(2, Harbour::Item::NUMERIC);
+   auto pPointer = hb_param(1, Harbour::Item::ANY);
+   auto pLen = hb_param(2, Harbour::Item::NUMERIC);
 
    if( HB_IS_POINTER(pPointer) && pLen ) {
       hb_retclen(static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
@@ -1281,7 +1281,7 @@ HB_FUNC( HB_STRING2POINTER )
 HB_FUNC( __CSTR_COPYTO )
 {
    static PHB_DYNS s_pVALUE = nullptr;
-   PHB_ITEM        pTarget  = hb_param(1, Harbour::Item::ANY);
+   auto pTarget = hb_param(1, Harbour::Item::ANY);
    PHB_ITEM        pStructure;
    void *          pPointer;
 

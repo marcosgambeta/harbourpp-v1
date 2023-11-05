@@ -282,7 +282,7 @@ static AREAP hb_bmGetCurrentWorkArea(void)
 
 static PHB_ITEM hb_bmGetArrayParam( int iParam )
 {
-   PHB_ITEM pArray = hb_param(iParam, Harbour::Item::ARRAY);
+   auto pArray = hb_param(iParam, Harbour::Item::ARRAY);
 
    if( !pArray )
       hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);

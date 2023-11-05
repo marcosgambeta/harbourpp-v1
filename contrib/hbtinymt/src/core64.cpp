@@ -81,7 +81,7 @@ HB_FUNC( TINYMT64_INIT )
 /* Syntax: HB_TINYMT64_INIT_BY_ARRAY( { <nVector1>, <nVector2>, <nVector3> }, [<nSeed>], [<nKeyLength>] ) -> <lSuccess> */
 HB_FUNC( TINYMT64_INIT_BY_ARRAY )
 {
-   PHB_ITEM pArray = hb_param(1, Harbour::Item::ARRAY);
+   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray && hb_arrayLen(pArray) == 3 )
    {

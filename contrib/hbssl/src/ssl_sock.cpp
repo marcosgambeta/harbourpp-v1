@@ -573,7 +573,7 @@ static void s_sslSocketNew(HB_BOOL fServer)
       }
 
       if( pSock ) {
-         PHB_ITEM pSockItm = hb_param(1, Harbour::Item::POINTER);
+         auto pSockItm = hb_param(1, Harbour::Item::POINTER);
 
          if( HB_ISBYREF(1) && hb_sockexItemReplace(pSockItm, pSock) ) {
             hb_itemReturn(pSockItm);

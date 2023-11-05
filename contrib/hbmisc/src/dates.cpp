@@ -130,7 +130,7 @@ HB_FUNC( ADAYS )
 
 HB_FUNC( ISLEAPYEAR )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate )
    {
@@ -145,7 +145,7 @@ HB_FUNC( ISLEAPYEAR )
 
 HB_FUNC( HBMISC_DAYSINMONTH )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    if( pDate )
    {
@@ -160,7 +160,7 @@ HB_FUNC( HBMISC_DAYSINMONTH )
 
 HB_FUNC( WOY )
 {
-   PHB_ITEM pDate = hb_param(1, Harbour::Item::DATETIME);
+   auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
    hb_retni(pDate == nullptr ? 0 : hb_woy(hb_itemGetDL(pDate), hb_parldef(2, true)));
 }

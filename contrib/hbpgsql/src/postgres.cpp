@@ -252,7 +252,7 @@ HB_FUNC( PQLIBVERSION )
 
 HB_FUNC( PQCONNECTDBPARAMS )
 {
-   PHB_ITEM pParam = hb_param(1, Harbour::Item::HASH);
+   auto pParam = hb_param(1, Harbour::Item::HASH);
    int len;
 
    if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
@@ -307,7 +307,7 @@ HB_FUNC( PQSETDBLOGIN )
 
 HB_FUNC( PQCONNECTSTARTPARAMS )
 {
-   PHB_ITEM pParam = hb_param(1, Harbour::Item::HASH);
+   auto pParam = hb_param(1, Harbour::Item::HASH);
    int len;
 
    if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
@@ -406,7 +406,7 @@ HB_FUNC( PQRESETPOLL )
 
 HB_FUNC( PQPINGPARAMS )
 {
-   PHB_ITEM pParam = hb_param(1, Harbour::Item::HASH);
+   auto pParam = hb_param(1, Harbour::Item::HASH);
    int len;
 
    if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
@@ -813,7 +813,7 @@ HB_FUNC( PQEXEC )
 HB_FUNC( PQEXECPARAMS )
 {
    PGconn * conn   = hb_PGconn_par(1);
-   PHB_ITEM aParam = hb_param(3, Harbour::Item::ARRAY);
+   auto aParam = hb_param(3, Harbour::Item::ARRAY);
 
    if( conn && aParam )
    {
@@ -1695,7 +1695,7 @@ HB_FUNC( PQEXECPREPARED )
 
    if( conn )
    {
-      PHB_ITEM aParam = hb_param(3, Harbour::Item::ARRAY);
+      auto aParam = hb_param(3, Harbour::Item::ARRAY);
       HB_SIZE  n      = hb_arrayLen(aParam);
 
       const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));

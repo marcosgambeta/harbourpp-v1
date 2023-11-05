@@ -378,8 +378,8 @@ void nxs_make_scramble(HB_ISIZ * scramble, const unsigned char * key, HB_SIZE ke
  */
 HB_FUNC( HB_CRYPT )
 {
-   PHB_ITEM pSource = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pKey    = hb_param(2, Harbour::Item::ANY);
+   auto pSource = hb_param(1, Harbour::Item::ANY);
+   auto pKey = hb_param(2, Harbour::Item::ANY);
 
    unsigned char * cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
 
@@ -395,8 +395,8 @@ HB_FUNC( HB_CRYPT )
  */
 HB_FUNC( HB_DECRYPT )
 {
-   PHB_ITEM pSource = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pKey    = hb_param(2, Harbour::Item::ANY);
+   auto pSource = hb_param(1, Harbour::Item::ANY);
+   auto pKey = hb_param(2, Harbour::Item::ANY);
 
    unsigned char * cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
 

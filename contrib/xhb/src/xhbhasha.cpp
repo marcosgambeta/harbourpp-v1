@@ -80,8 +80,8 @@ static HB_BOOL s_isHashAA(PHB_ITEM pHash)
 /* haAGetKeyAt(<hValue>, <nPos>) --> <value> */
 HB_FUNC( HAAGETKEYAT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos  = hb_param(2, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
    if( !pHash || !pPos ) {
       s_errRT_hashArg();
@@ -100,8 +100,8 @@ HB_FUNC( HAAGETKEYAT )
 /* haAGetValueAt(<hValue>, <nPos>) --> <value> */
 HB_FUNC( HAAGETVALUEAT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos  = hb_param(2, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
    if( !pHash || !pPos ) {
       s_errRT_hashArg();
@@ -120,9 +120,9 @@ HB_FUNC( HAAGETVALUEAT )
 /* haASetValueAt(<hValue>, <nPos>, <value>) --> NIL */
 HB_FUNC( HAASETVALUEAT )
 {
-   PHB_ITEM pHash  = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos   = hb_param(2, Harbour::Item::NUMERIC);
-   PHB_ITEM pValue = hb_param(3, Harbour::Item::ANY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
+   auto pValue = hb_param(3, Harbour::Item::ANY);
 
    if( !pHash || !pPos || !pValue ) {
       s_errRT_hashArg();
@@ -141,8 +141,8 @@ HB_FUNC( HAASETVALUEAT )
 /* haADelAt(<hValue>, <nPos>) --> NIL */
 HB_FUNC( HAADELAT )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pPos  = hb_param(2, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pPos = hb_param(2, Harbour::Item::NUMERIC);
 
    if( !pHash || !pPos ) {
       s_errRT_hashArg();
@@ -156,8 +156,8 @@ HB_FUNC( HAADELAT )
 /* haAGetPos(<hValue>, <xKey>) --> <nPos> */
 HB_FUNC( HAAGETPOS )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pKey  = hb_param(2, Harbour::Item::HASHKEY);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pKey = hb_param(2, Harbour::Item::HASHKEY);
 
    if( !pHash || !pKey ) {
       s_errRT_hashArg();
@@ -173,7 +173,7 @@ HB_FUNC( HAAGETPOS )
 /* haAGetRealPos(<hValue>, <nPos>) --> <nRealPos> */
 HB_FUNC( HAAGETREALPOS )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       HB_SIZE nPos = hb_parns(2);
@@ -186,7 +186,7 @@ HB_FUNC( HAAGETREALPOS )
 /* HGetVAAPos(<hValue>) --> <aOrder> */
 HB_FUNC( HGETVAAPOS )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       HB_SIZE  n, nLen = hb_hashLen(pHash);
@@ -204,8 +204,8 @@ HB_FUNC( HGETVAAPOS )
 /* HSetAACompatibility(<hValue>, <lAACompat>) --> <lDone> */
 HB_FUNC( HSETAACOMPATIBILITY )
 {
-   PHB_ITEM pHash  = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pValue = hb_param(2, Harbour::Item::LOGICAL);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pValue = hb_param(2, Harbour::Item::LOGICAL);
 
    if( pHash && pValue && hb_hashLen(pHash) == 0 ) {
       if( hb_itemGetL(pValue) ) {
@@ -222,7 +222,7 @@ HB_FUNC( HSETAACOMPATIBILITY )
 /* HGetAACompatibility(<hValue>) --> <lAACompat> */
 HB_FUNC( HGETAACOMPATIBILITY )
 {
-   PHB_ITEM pHash = hb_param(1, Harbour::Item::HASH);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
 
    if( pHash ) {
       hb_retl(s_isHashAA(pHash));

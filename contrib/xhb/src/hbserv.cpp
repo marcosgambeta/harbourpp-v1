@@ -795,7 +795,7 @@ HB_FUNC( HB_SERVICELOOP )
 HB_FUNC( HB_PUSHSIGNALHANDLER )
 {
    int      iMask = hb_parni(1);
-   PHB_ITEM pFunc = hb_param(2, Harbour::Item::ANY);
+   auto pFunc = hb_param(2, Harbour::Item::ANY);
 
    if( pFunc == nullptr || iMask == 0 || (!HB_IS_POINTER(pFunc) && !HB_IS_STRING(pFunc) && !HB_IS_BLOCK(pFunc)) ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, "Wrong parameter count/type", nullptr, 2, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY));

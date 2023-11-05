@@ -89,7 +89,7 @@ static const char * hb_inetErrStrSSL(PHB_ZNETSTREAM pStream, int iError)
 
 static void hb_inetStartSSL(HB_BOOL fServer)
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::POINTER);
+   auto pItem = hb_param(1, Harbour::Item::POINTER);
    HB_SOCKET sd = hb_znetInetFD(pItem, true);
 
    if( sd != HB_NO_SOCKET ) {

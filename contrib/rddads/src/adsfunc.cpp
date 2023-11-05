@@ -637,8 +637,8 @@ HB_FUNC( ADSGETRECORDCOUNT )
 /* 2nd parameter: unsupported Bag Name. */
 HB_FUNC( ADSKEYNO )
 {
-   PHB_ITEM pxOrder = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
+   auto pxOrder = hb_param(1, Harbour::Item::ANY);
+   auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
    if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || HB_IS_NIL(pxOrder)) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
@@ -682,8 +682,8 @@ HB_FUNC( ADSKEYNO )
 /* 2nd parameter: unsupported Bag Name. */
 HB_FUNC( ADSKEYCOUNT )
 {
-   PHB_ITEM pxOrder = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
+   auto pxOrder = hb_param(1, Harbour::Item::ANY);
+   auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
    if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || HB_IS_NIL(pxOrder)) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
@@ -1456,7 +1456,7 @@ HB_FUNC( ADSREGCALLBACK )
             NOT make any Advantage Client Engine calls. If it does,
             it is possible to get error code 6619 "Communication Layer is busy". */
 
-   PHB_ITEM pCallBack = hb_param(1, Harbour::Item::EVALITEM);
+   auto pCallBack = hb_param(1, Harbour::Item::EVALITEM);
 
    if( pCallBack ) {
       hb_ads_setCallBack( pCallBack );
@@ -1976,7 +1976,7 @@ HB_FUNC( ADSDDSETDATABASEPROPERTY )
    UNSIGNED32 ulRetVal;
    UNSIGNED16 ulBuffer;
    UNSIGNED16 ulProperty = static_cast<UNSIGNED16>(hb_parni(1));
-   PHB_ITEM pParam = hb_param(2, Harbour::Item::ANY);
+   auto pParam = hb_param(2, Harbour::Item::ANY);
    ADSHANDLE hConnect = HB_ADS_PARCONNECTION(3);
 
    switch( ulProperty ) {

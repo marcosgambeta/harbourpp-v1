@@ -109,7 +109,7 @@ HB_FUNC( SETUNHANDLEDEXCEPTIONFILTER )
 {
 #if defined(HB_OS_WIN)
    LPTOP_LEVEL_EXCEPTION_FILTER pDefaultHandler = nullptr;
-   PHB_ITEM pFuncItm = hb_param(1, Harbour::Item::ANY);
+   auto pFuncItm = hb_param(1, Harbour::Item::ANY);
    PHB_SYMB pFuncSym = s_pFuncSymbol;
 
    if( pFuncItm && HB_IS_SYMBOL(pFuncItm) ) {

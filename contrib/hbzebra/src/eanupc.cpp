@@ -396,7 +396,7 @@ PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
 
 HB_FUNC( HB_ZEBRA_CREATE_EAN13 )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr )
    {
@@ -410,7 +410,7 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN13 )
 
 HB_FUNC( HB_ZEBRA_CREATE_EAN8 )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr )
    {
@@ -424,7 +424,7 @@ HB_FUNC( HB_ZEBRA_CREATE_EAN8 )
 
 HB_FUNC( HB_ZEBRA_CREATE_UPCA )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr )
    {
@@ -438,7 +438,7 @@ HB_FUNC( HB_ZEBRA_CREATE_UPCA )
 
 HB_FUNC( HB_ZEBRA_CREATE_UPCE )
 {
-   PHB_ITEM pItem = hb_param(1, Harbour::Item::STRING);
+   auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem != nullptr )
    {

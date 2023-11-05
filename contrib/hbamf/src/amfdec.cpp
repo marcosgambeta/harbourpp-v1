@@ -1175,9 +1175,9 @@ HB_FUNC( AMF3_DECODE )
    PHB_ITEM pItem = hb_stackReturnItem();
 
 #if defined(_DEBUG)
-   PHB_ITEM pDebugBlock = hb_param(2, Harbour::Item::BLOCK);
+   auto pDebugBlock = hb_param(2, Harbour::Item::BLOCK);
 #endif
-   PHB_ITEM pFuncSym = hb_param(2, Harbour::Item::SYMBOL);
+   auto pFuncSym = hb_param(2, Harbour::Item::SYMBOL);
 
    amfContext * context;
 

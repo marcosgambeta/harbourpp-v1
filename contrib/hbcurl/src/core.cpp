@@ -1091,7 +1091,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 #endif
             case HB_CURLOPT_HTTPPOST:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                if( pArray )
                {
@@ -1122,7 +1122,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                break;
             case HB_CURLOPT_HTTPHEADER:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPHEADER, nullptr);
                hb_curl_slist_free(&hb_curl->pHTTPHEADER);
@@ -1144,7 +1144,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 #if LIBCURL_VERSION_NUM >= 0x070A03
             case HB_CURLOPT_HTTP200ALIASES:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr);
                hb_curl_slist_free(&hb_curl->pHTTP200ALIASES);
@@ -1209,7 +1209,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                break;
             case HB_CURLOPT_MAIL_RCPT:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr);
                hb_curl_slist_free(&hb_curl->pMAIL_RCPT);
@@ -1250,7 +1250,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                break;
             case HB_CURLOPT_QUOTE:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_QUOTE, nullptr);
                hb_curl_slist_free(&hb_curl->pQUOTE);
@@ -1271,7 +1271,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             break;
             case HB_CURLOPT_POSTQUOTE:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_POSTQUOTE, nullptr);
                hb_curl_slist_free(&hb_curl->pPOSTQUOTE);
@@ -1292,7 +1292,7 @@ HB_FUNC( CURL_EASY_SETOPT )
             break;
             case HB_CURLOPT_PREQUOTE:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_PREQUOTE, nullptr);
                hb_curl_slist_free(&hb_curl->pPREQUOTE);
@@ -1530,7 +1530,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 #if LIBCURL_VERSION_NUM >= 0x071503
             case HB_CURLOPT_RESOLVE:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_RESOLVE, nullptr);
                hb_curl_slist_free(&hb_curl->pRESOLVE);
@@ -1697,7 +1697,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 
             case HB_CURLOPT_TELNETOPTIONS:
             {
-               PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+               auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
                curl_easy_setopt(hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr);
                hb_curl_slist_free(&hb_curl->pTELNETOPTIONS);
@@ -1725,7 +1725,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 
             case HB_CURLOPT_PROGRESSBLOCK:
             {
-               PHB_ITEM pProgressCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+               auto pProgressCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
                if( hb_curl->pProgressCallback )
                {
@@ -1853,7 +1853,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 
             case HB_CURLOPT_DEBUGBLOCK:
             {
-               PHB_ITEM pDebugCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+               auto pDebugCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
                if( hb_curl->pDebugCallback )
                {

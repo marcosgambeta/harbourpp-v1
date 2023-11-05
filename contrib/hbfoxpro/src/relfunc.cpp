@@ -52,7 +52,7 @@ HB_FUNC( BETWEEN )
    HB_BOOL fResult = false;
    if( hb_pcount() == 3 )
    {
-      PHB_ITEM pItem = hb_param(1, Harbour::Item::ANY);
+      auto pItem = hb_param(1, Harbour::Item::ANY);
       int iResult1, iResult2;
 
       if( hb_itemCompare(pItem, hb_param(2, Harbour::Item::ANY), false, &iResult1) &&
@@ -69,7 +69,7 @@ HB_FUNC( INLIST )
 
    if( iPCount > 1 )
    {
-      PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+      auto pValue = hb_param(1, Harbour::Item::ANY);
       int iParam;
 
       for( iParam = 2; iParam <= iPCount; ++iParam )

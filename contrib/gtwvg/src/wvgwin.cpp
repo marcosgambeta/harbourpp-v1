@@ -117,7 +117,7 @@ HB_FUNC( WVG_SENDMESSAGE )
 
 HB_FUNC( WVG_SENDDLGITEMMESSAGE )
 {
-   PHB_ITEM pText = hb_param(5, Harbour::Item::STRING);
+   auto pText = hb_param(5, Harbour::Item::STRING);
    char *   cText = nullptr;
    HB_ISIZ  iLen  = 0;
 
@@ -482,7 +482,7 @@ HB_FUNC( WVG_DESTROYWINDOW )
 HB_FUNC( WVG_CLIENTTOSCREEN )
 {
    POINT    Point;
-   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+   auto pArray = hb_param(2, Harbour::Item::ARRAY);
 
    if( wvt_Array2Point(pArray, &Point) ) {
       if( ClientToScreen(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &Point) ) {
@@ -499,7 +499,7 @@ HB_FUNC( WVG_CLIENTTOSCREEN )
 HB_FUNC( WVG_SCREENTOCLIENT )
 {
    POINT    Point;
-   PHB_ITEM pArray = hb_param(2, Harbour::Item::ARRAY);
+   auto pArray = hb_param(2, Harbour::Item::ARRAY);
 
    if( wvt_Array2Point(pArray, &Point) ) {
       if( ScreenToClient(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), &Point) > 0 ) {

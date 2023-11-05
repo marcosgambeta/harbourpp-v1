@@ -53,8 +53,8 @@
 
 HB_FUNC( HSETPARTITION )
 {
-   PHB_ITEM pHash   = hb_param(1, Harbour::Item::HASH);
-   PHB_ITEM pLevel  = hb_param(3, Harbour::Item::NUMERIC);
+   auto pHash = hb_param(1, Harbour::Item::HASH);
+   auto pLevel = hb_param(3, Harbour::Item::NUMERIC);
    HB_UINT  uiLevel = pLevel ? hb_itemGetNI(pLevel) : 1;
 
    if( !pHash ) {

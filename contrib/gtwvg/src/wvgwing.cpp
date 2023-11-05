@@ -783,7 +783,7 @@ HB_FUNC( WVG_FONTCREATE )
 {
    LOGFONT lf{};
 
-   PHB_ITEM aFont = hb_param(1, Harbour::Item::ARRAY);
+   auto aFont = hb_param(1, Harbour::Item::ARRAY);
    if( aFont ) {
       HB_ITEMCOPYSTR(hb_arrayGetItemPtr(aFont, 1), lf.lfFaceName, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
       lf.lfHeight         = static_cast<LONG>(hb_arrayGetNL(aFont, 2));

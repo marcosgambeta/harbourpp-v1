@@ -1571,13 +1571,11 @@ void hb_gt_wvt_PaintGObjects(PHB_GTWVT pWVT, RECT * uRect)
 
          if( gObj->iObjType == GOBJ_OBJTYPE_OBJECT ) {
             if( hb_vmRequestReenter() ) {
-               PHB_ITEM pArray;
-
                hb_vmPushEvalSym();
                hb_vmPush(gObj->bBlock);
                hb_vmSend(0);
 
-               pArray = hb_param(-1, Harbour::Item::ARRAY);
+               auto pArray = hb_param(-1, Harbour::Item::ARRAY);
 
                if( pArray && hb_arrayLen(pArray) >= 3 ) {
                   iObjType = gObj->iData;

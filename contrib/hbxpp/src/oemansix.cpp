@@ -53,7 +53,7 @@
 
 HB_FUNC( CONVTOOEMCP )
 {
-   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
+   auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
 #if defined(HB_OS_WIN)
@@ -85,7 +85,7 @@ HB_FUNC( CONVTOOEMCP )
 
 HB_FUNC( CONVTOANSICP )
 {
-   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
+   auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString )
 #if defined(HB_OS_WIN)

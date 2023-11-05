@@ -52,7 +52,7 @@
 
 HB_FUNC( STRPEEK )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) )
    {
@@ -70,7 +70,7 @@ HB_FUNC( STRPEEK )
 
 HB_FUNC( STRPOKE )
 {
-   PHB_ITEM pText = hb_param(1, Harbour::Item::STRING);
+   auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) )
    {

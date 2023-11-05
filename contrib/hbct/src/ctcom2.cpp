@@ -185,7 +185,7 @@ HB_FUNC( XMOCHECK )
  */
 HB_FUNC( ZEROINSERT )
 {
-   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
+   auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString ) {
       const char * szText;
@@ -258,7 +258,7 @@ HB_FUNC( ZEROINSERT )
  */
 HB_FUNC( ZEROREMOVE )
 {
-   PHB_ITEM pString = hb_param(1, Harbour::Item::STRING);
+   auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString ) {
       const char * szText;

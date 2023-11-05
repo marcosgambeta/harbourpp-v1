@@ -61,7 +61,7 @@ HB_FUNC( XHB_HASHERROR )
          PHB_ITEM pDest  = hb_hashGetItemPtr(hb_stackSelfItem(), pIndex, HB_HASH_AUTOADD_ASSIGN);
          hb_stackPop();
          if( pDest ) {
-            PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+            auto pValue = hb_param(1, Harbour::Item::ANY);
             hb_itemCopyFromRef(pDest, pValue);
             hb_itemReturn(pValue);
             return;
@@ -87,7 +87,7 @@ HB_FUNC( XHB_HASHERROR )
 HB_FUNC( XHB_INCLUDE )
 {
    PHB_ITEM pSelf = hb_stackSelfItem();
-   PHB_ITEM pKey  = hb_param(1, Harbour::Item::ANY);
+   auto pKey = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_ARRAY(pSelf) ) {
       hb_retl(hb_arrayScan(pSelf, pKey, nullptr, nullptr, true) != 0);
@@ -104,7 +104,7 @@ HB_FUNC( XHB_INCLUDE )
 HB_FUNC( XHB_EEQUAL )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc     = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -127,7 +127,7 @@ HB_FUNC( XHB_EEQUAL )
 HB_FUNC( XHB_EQUAL )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc     = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -150,7 +150,7 @@ HB_FUNC( XHB_EQUAL )
 HB_FUNC( XHB_NOTEQUAL )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc     = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -173,7 +173,7 @@ HB_FUNC( XHB_NOTEQUAL )
 HB_FUNC( XHB_LESS )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc     = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -194,7 +194,7 @@ HB_FUNC( XHB_LESS )
 HB_FUNC( XHB_LESSEQ )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc     = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -215,7 +215,7 @@ HB_FUNC( XHB_LESSEQ )
 HB_FUNC( XHB_GREATER )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc     = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -236,7 +236,7 @@ HB_FUNC( XHB_GREATER )
 HB_FUNC( XHB_GREATEREQ )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc     = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -264,10 +264,10 @@ HB_FUNC( XHB_GREATEREQ )
 HB_FUNC( XHB_INDEX )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pIndex = hb_param(1, Harbour::Item::ANY);
+   auto pIndex = hb_param(1, Harbour::Item::ANY);
 
    if( hb_pcount() == 2 ) { /* ASSIGN */
-      PHB_ITEM pValue = hb_param(2, Harbour::Item::ANY);
+      auto pValue = hb_param(2, Harbour::Item::ANY);
       if( HB_IS_NUMERIC(pIndex) ) {
          HB_SIZE nIndex = hb_itemGetNS(pIndex);
          if( HB_IS_ARRAY(pSelf) ) {
@@ -332,7 +332,7 @@ HB_FUNC( XHB_INDEX )
 HB_FUNC( XHB_PLUS )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -358,7 +358,7 @@ HB_FUNC( XHB_PLUS )
 HB_FUNC( XHB_MINUS )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -418,7 +418,7 @@ HB_FUNC( XHB_DEC )
 HB_FUNC( XHB_MULT )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -445,7 +445,7 @@ HB_FUNC( XHB_MULT )
 HB_FUNC( XHB_DIV )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -480,7 +480,7 @@ HB_FUNC( XHB_DIV )
 HB_FUNC( XHB_MOD )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);
@@ -516,7 +516,7 @@ HB_FUNC( XHB_MOD )
 HB_FUNC( XHB_POW )
 {
    PHB_ITEM pSelf  = hb_stackSelfItem();
-   PHB_ITEM pValue = hb_param(1, Harbour::Item::ANY);
+   auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
       HB_UCHAR uc = static_cast<HB_UCHAR>(hb_itemGetCPtr(pValue)[0]);

@@ -655,7 +655,7 @@ HB_FUNC( HB_UNZIPFILEOPEN )
 /* hb_unzipFileRead( hUnzip, @cBuf [, nLen ] ) --> nRead */
 HB_FUNC( HB_UNZIPFILEREAD )
 {
-   PHB_ITEM pBuffer = hb_param(2, Harbour::Item::STRING);
+   auto pBuffer = hb_param(2, Harbour::Item::STRING);
    char *   buffer;
    HB_SIZE  nSize;
 

@@ -678,7 +678,7 @@ return .T. if successful
 HB_FUNC( WVW_EBSETCODEBLOCK )
 {
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
-   PHB_ITEM pBlock = hb_param(3, Harbour::Item::EVALITEM);
+   auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
 
    if( pBlock && wvw_ctl && !wvw_ctl->fBusy ) {
       PWVW_GLO wvw = hb_gt_wvw();

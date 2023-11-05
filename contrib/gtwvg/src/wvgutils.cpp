@@ -760,7 +760,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   PHB_ITEM pFirst = hb_param(3, Harbour::Item::ANY);
+   auto pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM pFunc  = nullptr;
    PHB_DYNS pExecSym;
    HWND     hDlg  = 0;
@@ -863,7 +863,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   PHB_ITEM   pFirst = hb_param(3, Harbour::Item::ANY);
+   auto pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    int        iIndex;

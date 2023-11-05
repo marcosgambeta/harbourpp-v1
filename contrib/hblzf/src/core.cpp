@@ -94,7 +94,7 @@ HB_FUNC( HB_LZF_OPTIMIZED_FOR_SPEED )
 /* Return a string compressed with LZF */
 HB_FUNC( HB_LZF_COMPRESS )
 {
-   PHB_ITEM pArg = hb_param(1, Harbour::Item::STRING);
+   auto pArg = hb_param(1, Harbour::Item::STRING);
 
    if( pArg )
    {
@@ -156,7 +156,7 @@ HB_FUNC( HB_LZF_COMPRESS )
 /* Return a string decompressed with LZF */
 HB_FUNC( HB_LZF_DECOMPRESS )
 {
-   PHB_ITEM pArg = hb_param(1, Harbour::Item::STRING);
+   auto pArg = hb_param(1, Harbour::Item::STRING);
 
    if( pArg )
    {

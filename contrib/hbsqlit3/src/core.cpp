@@ -425,7 +425,7 @@ static void func(sqlite3_context * ctx, int argc, sqlite3_value ** argv)
       }
       hb_vmSend(static_cast<HB_USHORT>(argc) + 1);
 
-      PHB_ITEM pResult = hb_param(-1, Harbour::Item::ANY);
+      auto pResult = hb_param(-1, Harbour::Item::ANY);
 
       switch( hb_itemType(pResult) ) {
          case Harbour::Item::NIL:

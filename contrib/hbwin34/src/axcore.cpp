@@ -607,7 +607,7 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
 
    if( pDisp )
    {
-      PHB_ITEM pItemBlock = hb_param(2, Harbour::Item::EVALITEM | Harbour::Item::HASH);
+      auto pItemBlock = hb_param(2, Harbour::Item::EVALITEM | Harbour::Item::HASH);
 
       if( pItemBlock )
       {

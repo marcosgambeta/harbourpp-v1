@@ -181,10 +181,10 @@ HB_FUNC( __FOX_SEEK )
    {
       if( !HB_ISNIL(1) )
       {
-         PHB_ITEM pKey = hb_param(1, Harbour::Item::ANY);
+         auto pKey = hb_param(1, Harbour::Item::ANY);
          HB_BOOL fSoftSeek = HB_ISLOG(2) ? static_cast<HB_BOOL>(hb_parl(2)) : hb_setGetSoftSeek();
          HB_BOOL fFindLast = hb_parl(3), fFound = false;
-         PHB_ITEM pTag = hb_param(5, Harbour::Item::NUMERIC | Harbour::Item::STRING);
+         auto pTag = hb_param(5, Harbour::Item::NUMERIC | Harbour::Item::STRING);
          HB_ERRCODE errCode = Harbour::SUCCESS;
 
          if( pTag )
