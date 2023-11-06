@@ -68,7 +68,7 @@ HB_FUNC( SAYDOWN )
       iMaxCol = hb_gtMaxCol();
 
       if( iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol ) {
-         const char * szText = hb_parc(1);
+         auto szText = hb_parc(1);
          HB_SIZE nTextLen = hb_parclen(1);
 
          HB_WCHAR wc;
@@ -360,7 +360,7 @@ HB_FUNC( STRSCREEN )  /* TODO: Unicode support */
    }
 
    if( nLen ) {
-      const char * szText = hb_parc(1);
+      auto szText = hb_parc(1);
       int iRow, iCol, iMaxRow, iMaxCol;
 
       hb_gtGetPos(&iRow, &iCol);

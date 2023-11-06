@@ -77,7 +77,7 @@ HB_FUNC( SCREENMIX )
    HB_SIZE nLen = hb_parclen(1);
 
    if( nLen ) {
-      const char * szText = hb_parc(1);
+      auto szText = hb_parc(1);
       const char * szAttr;
       HB_SIZE nAttr = hb_parclen(2);
       int iRow, iCol;
@@ -135,7 +135,7 @@ HB_FUNC( SAYSCREEN )
    HB_SIZE nLen = hb_parclen(1);
 
    if( nLen ) {
-      const char * szText = hb_parc(1);
+      auto szText = hb_parc(1);
       int iRow, iCol;
 
       hb_gtGetPos(&iRow, &iCol);

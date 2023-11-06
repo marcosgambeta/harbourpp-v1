@@ -100,7 +100,7 @@ HB_FUNC( CTODOW )
 
    if( nLen ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      const char * szParam = hb_parc(1);
+      auto szParam = hb_parc(1);
 
       for( iDow = 7; iDow > 0; iDow-- ) {
          const char * szDow = hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + iDow - 1);
@@ -120,7 +120,7 @@ HB_FUNC( CTOMONTH )
 
    if( nLen ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      const char * szParam = hb_parc(1);
+      auto szParam = hb_parc(1);
       for( iMonth = 12; iMonth > 0; iMonth-- ) {
          const char * szMonth = hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1);
          if( hb_cdpicmp(szMonth, strlen(szMonth), szParam, nLen, cdp, false) == 0 ) {

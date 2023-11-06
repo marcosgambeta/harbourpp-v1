@@ -51,7 +51,7 @@
 
 static int hb_ctComCharParam(int iParam)
 {
-   const char * pszParam = hb_parc(iParam);
+   auto pszParam = hb_parc(iParam);
 
    if( pszParam ) {
       if( hb_parclen(iParam) > 0 ) {
@@ -446,7 +446,7 @@ HB_FUNC( COM_READ )
  */
 HB_FUNC( COM_SEND )
 {
-   const char * data = hb_parc(2);
+   auto data = hb_parc(2);
    long lLen = 0;
    char buffer;
 
@@ -510,7 +510,7 @@ HB_FUNC( COM_SETIRQ )
 HB_FUNC( COM_DEVNAME )
 {
    int iPort = hb_parni(1);
-   const char * szDevName = hb_parc(2);
+   auto szDevName = hb_parc(2);
    char buffer[HB_COM_DEV_NAME_MAX];
 
    hb_retc(hb_comGetDevice(iPort, buffer, sizeof(buffer)));

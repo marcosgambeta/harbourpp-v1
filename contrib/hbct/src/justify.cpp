@@ -57,7 +57,7 @@ static void do_justify(int iSwitch)
    int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
       char cJustChar;
       const char * pc;

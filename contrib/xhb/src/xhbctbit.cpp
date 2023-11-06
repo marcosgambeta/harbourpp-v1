@@ -75,7 +75,7 @@ static HB_ULONG hb_hextonum(const char * cHex)
 
 static HB_LONG __getparam(int iParam)
 {
-   const char * szHexNum = hb_parc(iParam);
+   auto szHexNum = hb_parc(iParam);
 
    if( szHexNum ) {
       return static_cast<HB_LONG>(hb_hextonum(szHexNum));

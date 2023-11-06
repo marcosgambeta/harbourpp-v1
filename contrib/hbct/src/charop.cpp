@@ -157,7 +157,7 @@ void ct_charop(int iMode)
          case CT_CHAROP_CHARADD:
 
             if( HB_ISCHAR(2) ) {
-               const char * pucString2 = hb_parc(2);
+               auto pucString2 = hb_parc(2);
                HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
@@ -178,7 +178,7 @@ void ct_charop(int iMode)
          case CT_CHAROP_CHARSUB:
 
             if( HB_ISCHAR(2) ) {
-               const char * pucString2 = hb_parc(2);
+               auto pucString2 = hb_parc(2);
                HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
@@ -199,7 +199,7 @@ void ct_charop(int iMode)
          case CT_CHAROP_CHARAND:
 
             if( HB_ISCHAR(2) ) {
-               const char * pucString2 = hb_parc(2);
+               auto pucString2 = hb_parc(2);
                HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
@@ -220,7 +220,7 @@ void ct_charop(int iMode)
          case CT_CHAROP_CHAROR:
 
             if( HB_ISCHAR(2) ) {
-               const char * pucString2 = hb_parc(2);
+               auto pucString2 = hb_parc(2);
                HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
@@ -241,7 +241,7 @@ void ct_charop(int iMode)
          case CT_CHAROP_CHARXOR:
 
             if( HB_ISCHAR(2) ) {
-               const char * pucString2 = hb_parc(2);
+               auto pucString2 = hb_parc(2);
                HB_SIZE sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {

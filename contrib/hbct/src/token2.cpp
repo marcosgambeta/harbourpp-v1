@@ -268,7 +268,7 @@ static int sTokSave(TOKEN_ENVIRONMENT sTokenEnvironment, int iParam)
 HB_FUNC( TOKENINIT )
 {
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
       const char * pcSeparatorStr;
       HB_SIZE sSeparatorStrLen;
@@ -392,7 +392,7 @@ HB_FUNC( TOKENINIT )
 HB_FUNC( TOKENNEXT )
 {
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
 
       TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(3, false);

@@ -58,7 +58,7 @@ static AREAP s_foxAreaPointer(int iParam)
    }
    else
    {
-      const char * szAlias = hb_parc(iParam);
+      auto szAlias = hb_parc(iParam);
       int iArea;
 
       if( szAlias )

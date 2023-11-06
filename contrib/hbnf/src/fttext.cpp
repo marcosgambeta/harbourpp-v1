@@ -638,7 +638,7 @@ HB_FUNC( FT_FOFFSET )
 HB_FUNC( FT_FUSE )
 {
    PFT_TEXT ft_text = ( PFT_TEXT ) hb_stackGetTSD(&s_ft_text);
-   const char * pszFileName = hb_parc(1);
+   auto pszFileName = hb_parc(1);
 
    ft_text->error[ft_text->area] = 0;
    if( ft_text->handles[ft_text->area] != nullptr )
@@ -965,7 +965,7 @@ HB_FUNC( FT_FWRITELN )
 
    if( ft_text->handles[ft_text->area] )
    {
-      const char * theData  = hb_parc(1);
+      auto theData = hb_parc(1);
       HB_ISIZ      iDataLen = hb_parclen(1);
       HB_BOOL      bInsert  = hb_parl(2);
 

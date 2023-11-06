@@ -12,7 +12,7 @@ HB_FUNC( GT_ASCPOS )
 {
    if( HB_ISCHAR(1) && HB_ISNUM(2) )
    {
-      const char * s = hb_parc(1);
+      auto s = hb_parc(1);
       HB_SIZE      p = hb_parns(2);
 
       p--;                             /* decrement p to adjust for c strings */

@@ -163,9 +163,9 @@ static MYSQL_RES * hb_MYSQL_RES_par( int iParam )
 
 HB_FUNC( MYSQL_REAL_CONNECT ) /* MYSQL * mysql_real_connect( MYSQL *, char * host, char * user, char * password, char * db, uint port, char *, uint flags ) */
 {
-   const char * szHost = hb_parc(1);
-   const char * szUser = hb_parc(2);
-   const char * szPass = hb_parc(3);
+   auto szHost = hb_parc(1);
+   auto szUser = hb_parc(2);
+   auto szPass = hb_parc(3);
 
 #if MYSQL_VERSION_ID > 32200
    MYSQL *      mysql;
@@ -516,7 +516,7 @@ HB_FUNC( MYSQL_LIST_TABLES ) /* MYSQL_RES * mysql_list_tables(MYSQL *, char * wi
 
    if( mysql )
    {
-      const char * cWild   = hb_parc(2);
+      auto cWild = hb_parc(2);
       MYSQL_RES *  mresult = mysql_list_tables(mysql, cWild);
       long         nr      = static_cast<long>(mysql_num_rows(mresult));
       auto aTables = hb_itemArrayNew(nr);

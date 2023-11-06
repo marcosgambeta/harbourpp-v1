@@ -51,7 +51,7 @@ HB_FUNC( MAXLINE )
    HB_ISIZ nLength = 0;
 
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       const char * pBuffer;
       HB_ISIZ nStrLen = hb_parclen(1);
 

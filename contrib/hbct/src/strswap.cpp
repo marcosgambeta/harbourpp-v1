@@ -54,8 +54,8 @@ HB_FUNC( STRSWAP )
    /* param check */
    if( (sStrLen1 = hb_parclen(1)) > 0 && (sStrLen2 = hb_parclen(2)) > 0 ) {
       /* get parameters */
-      const char * pcString1 = hb_parc(1);
-      const char * pcString2 = hb_parc(2);
+      auto pcString1 = hb_parc(1);
+      auto pcString2 = hb_parc(2);
       char * pcRet1 = nullptr, * pcRet2 = nullptr;
       int iChange1, iChange2;
       HB_SIZE sIndex, sCmpLen;

@@ -616,11 +616,10 @@ HB_FUNC( __AXREGISTERHANDLER )  /* ( pDisp, bHandler [, cIID] ) --> pSink */
          HRESULT lOleError;
          IID rriid;
          void * hCLSID;
-         const char * szIID;
 
          hb_oleInit();
 
-         szIID = hb_parc(3);
+         auto szIID = hb_parc(3);
          if( szIID && szIID[0] == '{' )
          {
             const wchar_t * wCLSID = hb_parstr_u16(3, HB_CDP_ENDIAN_NATIVE, &hCLSID, nullptr);

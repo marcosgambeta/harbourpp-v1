@@ -95,7 +95,7 @@ static PHB_FFIND _hb_fileStart(HB_BOOL fNext, HB_BOOL fAny)
    PHB_FFDATA pFFData = HB_GET_FFDATA();
 
    if( hb_pcount() > 0 ) {
-      const char * szFile = hb_parc(1);
+      auto szFile = hb_parc(1);
 
       if( pFFData->ffind ) {
          hb_fsFindClose(pFFData->ffind);
@@ -178,7 +178,7 @@ HB_FUNC( SETFATTR )
 
 HB_FUNC( SETFDATI )
 {
-   const char * szFile = hb_parc(1);
+   auto szFile = hb_parc(1);
    HB_BOOL fResult = false;
 
    if( szFile && *szFile ) {
@@ -213,7 +213,7 @@ HB_FUNC( SETFDATI )
 
 HB_FUNC( FILEDELETE )
 {
-   const char * pszDirSpec = hb_parc(1);
+   auto pszDirSpec = hb_parc(1);
    HB_BOOL fResult = false;
 
    if( pszDirSpec ) {

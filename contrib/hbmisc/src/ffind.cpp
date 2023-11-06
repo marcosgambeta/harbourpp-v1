@@ -76,7 +76,7 @@ static PHB_FFIND PHB_FFIND_par( int iParam )
 
 HB_FUNC( FILEFINDFIRST )
 {
-   const char * pszFileName = hb_parc(1);
+   auto pszFileName = hb_parc(1);
 
    if( pszFileName && HB_ISBYREF(2) )
    {

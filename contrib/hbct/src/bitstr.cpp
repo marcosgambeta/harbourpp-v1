@@ -56,7 +56,8 @@ HB_FUNC( CTOBIT )
       HB_SIZE nPattern = hb_parclen(2);
 
       if( nPattern >= 1 && nPattern <= 16 ) {
-         const char * pszString = hb_parc(1), * pszPattern = hb_parc(2);
+         auto pszString = hb_parc(1);
+         auto pszPattern = hb_parc(2);
 
          for( HB_SIZE n = 0; n < nString; ++n ) {
             char c = pszString[n];
@@ -81,7 +82,7 @@ HB_FUNC( BITTOC )
    HB_SIZE nPattern = hb_parclen(2);
 
    if( nPattern >= 1 && nPattern <= 16 ) {
-      const char * pszPattern = hb_parc(2);
+      auto pszPattern = hb_parc(2);
       char szBuffer[16];
       char * pszResult = &szBuffer[sizeof(szBuffer)];
       int iValue, iLen = 0;

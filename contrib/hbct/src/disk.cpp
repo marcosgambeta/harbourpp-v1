@@ -70,7 +70,7 @@ HB_FUNC( DIRMAKE )
 HB_FUNC( DIRNAME )
 {
    char * pbyBuffer = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
-   const char * pszDrive = hb_parc(1);
+   auto pszDrive = hb_parc(1);
    int iDrive = 0;
 
    if( pszDrive ) {

@@ -54,7 +54,7 @@
 
 HB_FUNC( CTON )
 {
-   const char * szNumber = hb_parc(1);
+   auto szNumber = hb_parc(1);
    int iBase = hb_parnidef(2, 10);
 
    if( szNumber && iBase >= 2 && iBase <= 36 ) {
@@ -147,7 +147,7 @@ HB_FUNC( NTOC )
          if( iLen == 0 ) {
             iLen = sizeof(szBuffer) - i;
          } else {
-            const char * szPad = hb_parc(4);
+            auto szPad = hb_parc(4);
             char cPad = szPad ? szPad[0] : static_cast<char>(hb_parnidef(4, ' '));
 
             while( i > 0 ) {

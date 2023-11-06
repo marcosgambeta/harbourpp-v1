@@ -99,7 +99,7 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
 
       if( nLen )
       {
-         const char * pszData = hb_parc(1);
+         auto pszData = hb_parc(1);
          char *       pszRet;
          HB_ISIZ      nPos    = 0;
          HB_ISIZ      nPosRet = 0;
@@ -204,7 +204,7 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
 
       if( nLen )
       {
-         const char * pszData = hb_parc(1);
+         auto pszData = hb_parc(1);
          char *       pszRet;
          HB_ISIZ      nPos    = 0;
          HB_ISIZ      nPosRet = 0;

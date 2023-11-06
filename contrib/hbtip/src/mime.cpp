@@ -711,7 +711,7 @@ HB_FUNC( TIP_MIMETYPE )
 
 HB_FUNC( TIP_FILENAMEMIMETYPE )
 {
-   const char * fname = hb_parc(1);
+   auto fname = hb_parc(1);
 
    if( fname )
    {

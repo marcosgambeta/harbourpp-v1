@@ -1173,12 +1173,12 @@ static void s_netio_init(void * cargo)
 HB_FUNC( NETIO_DECODE )
 {
    char server[NETIO_SERVERNAME_MAX];
-   const char * pszFullName = hb_parc(1);
+   auto pszFullName = hb_parc(1);
    const char * pszFile;
-   const char * pszServer = hb_parc(2);
+   auto pszServer = hb_parc(2);
    int iPort = hb_parni(3);
    int iTimeOut = hb_parni(4);
-   const char * pszPasswd = hb_parc(5);
+   auto pszPasswd = hb_parc(5);
    int iPassLen = static_cast<int>(hb_parclen(5));
    int iLevel = hb_parnidef(6, HB_ZLIB_COMPRESSION_DISABLE);
    int iStrategy = hb_parnidef(7, HB_ZLIB_STRATEGY_DEFAULT);
@@ -1225,8 +1225,8 @@ HB_FUNC( NETIO_DECODE )
  */
 HB_FUNC( NETIO_CONNECT )
 {
-   const char * pszServer = hb_parc(1);
-   const char * pszPasswd = hb_parc(4);
+   auto pszServer = hb_parc(1);
+   auto pszPasswd = hb_parc(4);
    int iPort = hb_parni(2);
    int iTimeOut = hb_parni(3);
    int iPassLen = static_cast<int>(hb_parclen(4));
@@ -1301,8 +1301,8 @@ static PHB_CONCLI s_connParam(int iParam)
  */
 HB_FUNC( NETIO_GETCONNECTION )
 {
-   const char * pszServer = hb_parc(1);
-   const char * pszPasswd = hb_parc(4);
+   auto pszServer = hb_parc(1);
+   auto pszPasswd = hb_parc(4);
    int iPort = hb_parni(2);
    int iTimeOut = hb_parni(3);
    int iPassLen = static_cast<int>(hb_parclen(4));
@@ -1329,7 +1329,7 @@ HB_FUNC( NETIO_GETCONNECTION )
  */
 HB_FUNC( NETIO_DISCONNECT )
 {
-   const char * pszServer = hb_parc(1);
+   auto pszServer = hb_parc(1);
    char * pszIpAddres;
    int iPort = hb_parni(2);
    bool fDisconnected = false;
@@ -1377,7 +1377,7 @@ HB_FUNC( NETIO_SETPATH )
    {
       if( s_fileConLock(conn) )
       {
-         const char * pszNewPath = hb_parc(2);
+         auto pszNewPath = hb_parc(2);
          char * pszSetPath = nullptr, * pszOldPath = nullptr;
 
          if( pszNewPath && *pszNewPath )
@@ -1456,7 +1456,7 @@ static HB_BOOL s_netio_procexec(int iMsg, int iType)
    {
       ++iParam;
    }
-   const char * pszProcName = hb_parc(iParam);
+   auto pszProcName = hb_parc(iParam);
    if( pszProcName )
    {
       if( !conn )
@@ -1644,7 +1644,7 @@ static PHB_CONCLI s_netio_getConn(void)
 
    if( !conn )
    {
-      const char * pszServer = hb_parc(2);
+      auto pszServer = hb_parc(2);
       int iPort = hb_parni(3);
 
       s_fileGetConnParam(&pszServer, &iPort, nullptr, nullptr, nullptr);

@@ -52,7 +52,7 @@
 /* helper function for the list function */
 void ct_charlist(int iMode)
 {
-   const char * pcString = hb_parc(1);
+   auto pcString = hb_parc(1);
    HB_SIZE sStrLen = hb_parclen(1);
    HB_SIZE sCnt;
 

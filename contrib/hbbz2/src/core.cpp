@@ -219,7 +219,7 @@ HB_FUNC( HB_BZ2_COMPRESSBOUND )
       --> <nUnCompressedDataLen> or -1 on error */
 HB_FUNC( HB_BZ2_UNCOMPRESSLEN )
 {
-   const char * szData = hb_parc(1);
+   auto szData = hb_parc(1);
 
    if( szData ) {
       HB_SIZE nLen    = hb_parclen(1);
@@ -245,7 +245,7 @@ HB_FUNC( HB_BZ2_UNCOMPRESSLEN )
       --> <cCompressedData> or NIL on Error */
 HB_FUNC( HB_BZ2_COMPRESS )
 {
-   const char * szData = hb_parc(1);
+   auto szData = hb_parc(1);
 
    if( szData ) {
       HB_SIZE nLen = hb_parclen(1);
@@ -295,7 +295,7 @@ HB_FUNC( HB_BZ2_COMPRESS )
 HB_FUNC( HB_BZ2_UNCOMPRESS )
 {
    PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
-   const char * szData  = hb_parc(1);
+   auto szData = hb_parc(1);
 
    if( szData ) {
       HB_SIZE nLen = hb_parclen(1);

@@ -62,9 +62,9 @@ static void do_charonly(int iSwitch)
 {
    /* param check */
    if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
-      const char * pcString = hb_parc(2);
+      auto pcString = hb_parc(2);
       HB_SIZE sStrLen = hb_parclen(2);
-      const char * pcOnlySet = hb_parc(1);
+      auto pcOnlySet = hb_parc(1);
       HB_SIZE sOnlySetLen = hb_parclen(1);
       char * pcRet;
       HB_SIZE sRetStrLen = 0;

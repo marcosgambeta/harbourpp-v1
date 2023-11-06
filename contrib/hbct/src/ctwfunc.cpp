@@ -209,7 +209,7 @@ HB_FUNC( WBOX )
    };                         /* 15 WB_FULL */
 
    HB_WCHAR szBoxBuf[10], wc;
-   const char * pszBoxFrame = hb_parc(1);
+   auto pszBoxFrame = hb_parc(1);
    int iColor;
 
    if( pszBoxFrame ) {

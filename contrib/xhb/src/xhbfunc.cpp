@@ -153,7 +153,7 @@ HB_FUNC( HB_CREATELEN8 )
 
 HB_FUNC( HB_GETLEN8 )
 {
-   const char * buffer = hb_parc(1);
+   auto buffer = hb_parc(1);
 
    if( buffer && hb_parclen(1) >= 8 ) {
       hb_retnint(HB_GET_LE_UINT64(buffer));

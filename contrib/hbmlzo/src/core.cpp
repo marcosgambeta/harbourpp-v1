@@ -256,7 +256,7 @@ HB_FUNC( LZO_VERSION_DATE )
 
 HB_FUNC( LZO_ADLER32 )
 {
-   const char * src = hb_parc(1);
+   auto src = hb_parc(1);
 
    if( src )
       hb_retnint(static_cast<HB_MAXINT>(hb_adler32(1, src, hb_parclen(1))));

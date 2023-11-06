@@ -50,9 +50,9 @@
 HB_FUNC( ATADJUST )
 {
    if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISNUM(3) ) {
-      const char * pcStringToMatch = hb_parc(1);
+      auto pcStringToMatch = hb_parc(1);
       HB_SIZE sStrToMatchLen = hb_parclen(1);
-      const char * pcString = hb_parc(2);
+      auto pcString = hb_parc(2);
       HB_SIZE sStrLen = hb_parclen(2);
       HB_SIZE sAdjustPosition = hb_parns(3);
 

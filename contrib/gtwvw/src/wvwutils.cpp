@@ -736,7 +736,7 @@ HB_FUNC( LOADBITMAPEX )
 
 HB_FUNC( OPENIMAGE )
 {
-   const char * cFileName = hb_parc(1);
+   auto cFileName = hb_parc(1);
    BOOL         lString   = HB_ISNIL(2) ? 0 : hb_parl(2);
    int          iFileSize;
    FILE *       fp;

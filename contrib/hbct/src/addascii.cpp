@@ -53,7 +53,7 @@ HB_FUNC( ADDASCII )
    int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    if( HB_ISCHAR(1) ) {
-      const char * pcSource = hb_parc(1);
+      auto pcSource = hb_parc(1);
       HB_SIZE sLen = hb_parclen(1);
       char * pcResult;
       HB_SIZE sPos = hb_parnsdef(3, sLen);

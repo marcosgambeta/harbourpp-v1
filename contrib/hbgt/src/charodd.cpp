@@ -12,7 +12,7 @@ HB_FUNC( GT_CHARODD )
 {
    if( HB_ISCHAR(1) )
    {
-      const char * s1 = hb_parc(1);
+      auto s1 = hb_parc(1);
       char *       s2;
       HB_ISIZ      len = hb_parclen(1);
       HB_ISIZ      i;

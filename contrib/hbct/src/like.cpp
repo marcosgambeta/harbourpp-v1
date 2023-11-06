@@ -48,8 +48,8 @@
 
 HB_FUNC( LIKE )
 {
-   const char * szPattern = hb_parc(1);
-   const char * szString  = hb_parc(2);
+   auto szPattern = hb_parc(1);
+   auto szString = hb_parc(2);
 
    hb_retl(szPattern && szString && hb_strMatchWildExact(szString, szPattern));
 }

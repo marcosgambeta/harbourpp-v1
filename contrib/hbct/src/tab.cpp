@@ -50,7 +50,7 @@
 HB_FUNC( TABEXPAND )
 {
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet;
       HB_SIZE sRetLen;
@@ -187,7 +187,7 @@ HB_FUNC( TABEXPAND )
 HB_FUNC( TABPACK )
 {
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet;
       HB_SIZE sRetLen;

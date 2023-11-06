@@ -116,7 +116,7 @@ HB_FUNC( GT_ISFLAG )
 
       if( Bit > 0 && Bit <= ( hb_parclen(1) * 8 ) )
       {
-         const char * FlagString = hb_parc(1);
+         auto FlagString = hb_parc(1);
 
          unsigned BitPointer  = Bit % 8;
          unsigned BytePointer = static_cast<unsigned>(Bit / 8);

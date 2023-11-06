@@ -144,7 +144,7 @@ HB_FUNC( NETPRINTER )
 HB_FUNC( NETDISK )
 {
 #if defined(HB_OS_WIN)
-   const char * pszDrive = hb_parc(1);
+   auto pszDrive = hb_parc(1);
 
    if( pszDrive ) {
       char szDrive[3];

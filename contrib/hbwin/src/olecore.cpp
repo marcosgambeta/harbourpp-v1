@@ -1909,7 +1909,7 @@ HB_FUNC( __OLEISDISP )
 HB_FUNC( WIN_OLECLASSEXISTS ) /* (cOleName | cCLSID) */
 {
    bool fExists = false;
-   const char * cOleName = hb_parc(1);
+   auto cOleName = hb_parc(1);
 
    if( cOleName )
    {
@@ -1933,8 +1933,8 @@ HB_FUNC( __OLECREATEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
 {
    GUID         ClassID, iid = IID_IDispatch;
    IDispatch *  pDisp = nullptr;
-   const char * cOleName = hb_parc(1);
-   const char * cID = hb_parc(2);
+   auto cOleName = hb_parc(1);
+   auto cID = hb_parc(2);
    HRESULT      lOleError;
 
    hb_oleInit();
@@ -1994,8 +1994,8 @@ HB_FUNC( __OLEGETACTIVEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
    IID          ClassID, iid = IID_IDispatch;
    IDispatch *  pDisp = nullptr;
    IUnknown *   pUnk = nullptr;
-   const char * cOleName = hb_parc(1);
-   const char * cID = hb_parc(2);
+   auto cOleName = hb_parc(1);
+   auto cID = hb_parc(2);
    HRESULT      lOleError;
 
    hb_oleInit();

@@ -132,7 +132,7 @@ HB_FUNC( FT_RESTATT )
 
       if( iTop <= iBottom && iLeft <= iRight )
       {
-         const char * pAttrib = hb_parc(5);
+         auto pAttrib = hb_parc(5);
 
          hb_gtDispBegin();
 

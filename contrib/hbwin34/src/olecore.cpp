@@ -1906,7 +1906,7 @@ HB_FUNC( __OLEISDISP )
 HB_FUNC( WIN_OLECLASSEXISTS ) /* ( cOleName | cCLSID ) */
 {
    bool fExists = false;
-   const char * cOleName = hb_parc(1);
+   auto cOleName = hb_parc(1);
 
    if( cOleName )
    {
@@ -1929,7 +1929,7 @@ HB_FUNC( WIN_OLECLASSEXISTS ) /* ( cOleName | cCLSID ) */
 HB_FUNC( __OLECREATEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
 {
    IDispatch *  pDisp = nullptr;
-   const char * cOleName = hb_parc(1);
+   auto cOleName = hb_parc(1);
    HRESULT      lOleError;
 
    hb_oleInit();
@@ -1937,7 +1937,7 @@ HB_FUNC( __OLECREATEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
    if( cOleName )
    {
       GUID         ClassID, iid = IID_IDispatch;
-      const char * cID = hb_parc(2);
+      auto cID = hb_parc(2);
 
       wchar_t * cCLSID = AnsiToWide(cOleName);
 
@@ -1989,7 +1989,7 @@ HB_FUNC( __OLECREATEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
 HB_FUNC( __OLEGETACTIVEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
 {
    IDispatch *  pDisp = nullptr;
-   const char * cOleName = hb_parc(1);
+   auto cOleName = hb_parc(1);
    HRESULT      lOleError;
 
    hb_oleInit();
@@ -1998,7 +1998,7 @@ HB_FUNC( __OLEGETACTIVEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
    {
       IID          ClassID, iid = IID_IDispatch;
       IUnknown *   pUnk = nullptr;
-      const char * cID = hb_parc(2);
+      auto cID = hb_parc(2);
 
       BSTR wCLSID = static_cast<BSTR>(AnsiToWide(cOleName));
 

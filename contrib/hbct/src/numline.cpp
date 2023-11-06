@@ -53,7 +53,7 @@ HB_FUNC( NUMLINE )
 
    if( HB_ISCHAR(1) ) {
       HB_ISIZ nStrLen = hb_parclen(1);
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       HB_ISIZ nLineLength = hb_parnsdef(2, 80);
 
       while( nStrLen > 0 ) {

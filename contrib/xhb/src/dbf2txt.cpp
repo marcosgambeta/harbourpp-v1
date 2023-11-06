@@ -147,9 +147,9 @@ HB_FUNC( DBF2TEXT )
    auto pFor = hb_param(2, Harbour::Item::BLOCK);
    auto pFields = hb_param(3, Harbour::Item::ARRAY);
 
-   const char * cDelim = hb_parc(4);
+   auto cDelim = hb_parc(4);
    HB_FHANDLE   handle = static_cast<HB_FHANDLE>(hb_parnint(5));
-   const char * cSep   = hb_parc(6);
+   auto cSep = hb_parc(6);
    int          nCount = hb_parni(7);
    PHB_CODEPAGE cdp    = hb_cdpFind(hb_parcx(8));
 

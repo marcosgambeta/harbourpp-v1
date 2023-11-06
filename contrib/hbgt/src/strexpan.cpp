@@ -12,7 +12,7 @@ HB_FUNC( GT_STREXPAND )
 {
    if( HB_ISCHAR(1) && ( HB_ISNUM(2) || hb_pcount() < 2 ) && ( HB_ISCHAR(3) || hb_pcount() < 3 ) )
    {
-      const char * in = hb_parc(1);
+      auto in = hb_parc(1);
       char *       out;
       int          nIns   = hb_parnidef(2, 1);
       const char * insert = " ";

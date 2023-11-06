@@ -59,7 +59,7 @@ HB_FUNC( CHARSPREAD )
       if( nSize < 0 || static_cast<HB_SIZE>(nSize) <= nLen ) {
          hb_itemReturn(hb_param(1, Harbour::Item::ANY));
       } else {
-         const char * szText = hb_parc(1);
+         auto szText = hb_parc(1);
          char cDelim = ' ';
          HB_ISIZ nTokens = 0;
          HB_SIZE nPos;

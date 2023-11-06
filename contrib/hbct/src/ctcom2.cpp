@@ -79,7 +79,7 @@ HB_FUNC( COM_DOSCON )
 HB_FUNC( COM_CRC )
 {
    HB_MAXUINT crc = hb_parnint(2);
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString ) {
       HB_MAXUINT nPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
@@ -116,13 +116,12 @@ static char s_xmoblock_sum(const char * szData, HB_SIZE nLen)
  */
 HB_FUNC( XMOBLOCK )
 {
-   const char * szData;
    HB_SIZE nLen, nSize;
    char * pszBlock;
    int iBlock;
    HB_BOOL fCRC;
 
-   szData = hb_parc(1);
+   auto szData = hb_parc(1);
    nLen = hb_parclen(1);
    iBlock = hb_parni(2);
    fCRC = hb_parl(3);
@@ -161,7 +160,7 @@ HB_FUNC( XMOCHECK )
    int iResult = -1;
 
    if( nLen >= 132 ) {
-      const char * szBlock = hb_parc(1);
+      auto szBlock = hb_parc(1);
       HB_BOOL fCRC = hb_parl(2);
       HB_SIZE nSize;
 

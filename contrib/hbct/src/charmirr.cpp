@@ -54,7 +54,8 @@ HB_FUNC( CHARMIRR )
 
    /* param check */
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1), * pc1;
+      auto pcString = hb_parc(1);
+      const char * pc1;
       HB_SIZE sStrLen = hb_parclen(1);
       char * pcRet, * pc2;
       int iDontMirrorSpaces = hb_parldef(2, 0);

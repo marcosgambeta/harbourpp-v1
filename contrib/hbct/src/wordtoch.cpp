@@ -57,9 +57,9 @@ HB_FUNC( WORDTOCHAR )
    /* param check */
    if( (sSearchLen = hb_parclen(1)) / 2 > 0 && (sStrLen = hb_parclen(2)) / 2 > 0 && (sReplaceLen = hb_parclen(3)) > 0 ) {
       /* get parameters */
-      const char * pcSearch = hb_parc(1);
-      const char * pcString = hb_parc(2);
-      const char * pcReplace = hb_parc(3);
+      auto pcSearch = hb_parc(1);
+      auto pcString = hb_parc(2);
+      auto pcReplace = hb_parc(3);
       char * pcRet;
       HB_SIZE sRetIndex, sIndex;
       int iNoReplace;

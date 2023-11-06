@@ -232,7 +232,7 @@ static HB_FATTR hb_translateExtAttr(const char * szFileName, HB_FATTR ulExtAttr)
 /* hb_zipOpen( cFileName, [iMode = HB_ZIP_CREATE], [@cGlobalComment] ) --> hZip */
 HB_FUNC( HB_ZIPOPEN )
 {
-   const char * szFileName = hb_parc(1);
+   auto szFileName = hb_parc(1);
 
    if( szFileName )
    {
@@ -288,7 +288,7 @@ HB_FUNC( HB_ZIPCLOSE )
                      [cPassword, ulFileCRC32], [cComment], [lUnicode] ) --> nError */
 HB_FUNC( HB_ZIPFILECREATE )
 {
-   const char * szZipName = hb_parc(2);
+   auto szZipName = hb_parc(2);
 
    if( szZipName )
    {
@@ -373,7 +373,7 @@ HB_FUNC( HB_ZIPFILECREATE )
 /* hb_zipFileWrite( hZip, cData [, nLen ] ) --> nError */
 HB_FUNC( HB_ZIPFILEWRITE )
 {
-   const char * pData = hb_parc(2);
+   auto pData = hb_parc(2);
 
    if( pData )
    {
@@ -414,7 +414,7 @@ HB_FUNC( HB_ZIPFILECLOSE )
 /* hb_unzipOpen( cFileName ) --> hUnzip */
 HB_FUNC( HB_UNZIPOPEN )
 {
-   const char * szFileName = hb_parc(1);
+   auto szFileName = hb_parc(1);
 
    if( szFileName )
    {
@@ -772,7 +772,7 @@ static HB_BOOL hb_zipGetFileInfo( const char * pszFileName, HB_U32 * pulCRC, HB_
 /* hb_zipFileCRC32(cFileName) --> nCRC */
 HB_FUNC( HB_ZIPFILECRC32 )
 {
-   const char * szFileName = hb_parc(1);
+   auto szFileName = hb_parc(1);
 
    if( szFileName )
    {
@@ -791,7 +791,7 @@ HB_FUNC( HB_ZIPFILECRC32 )
 
 static int hb_zipStoreFile( zipFile hZip, int iParamFileName, int iParamZipName, const char * szPassword, int iParamComment, HB_BOOL fUnicode )
 {
-   const char * szFileName = hb_parc(iParamFileName);
+   auto szFileName = hb_parc(iParamFileName);
    PHB_FILE     pFile;
    HB_SIZE      nLen;
    HB_FATTR     ulExtAttr;
@@ -1779,8 +1779,8 @@ static int hb_zipDeleteFile( const char * szZipFile, const char * szFileMask )
 /* hb_zipDeleteFile( cZipFile, cFileMask ) --> nError */
 HB_FUNC( HB_ZIPDELETEFILE )
 {
-   const char * szZipFile  = hb_parc(1);
-   const char * szFileMask = hb_parc(2);
+   auto szZipFile = hb_parc(1);
+   auto szFileMask = hb_parc(2);
 
    if( szZipFile && szFileMask )
    {

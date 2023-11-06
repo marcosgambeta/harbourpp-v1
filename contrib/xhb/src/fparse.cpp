@@ -565,13 +565,12 @@ HB_FUNC( FCHARCOUNT )
 HB_FUNC( FPARSELINE )
 {
    HB_ISIZ      nWords = 0;
-   const char * szText;
 
    auto pArray = hb_itemArrayNew(0);
-   szText = hb_parc(1);
+   auto szText = hb_parc(1);
 
    if( szText ) {
-      const char * szDelim = hb_parc(2);
+      auto szDelim = hb_parc(2);
       int          iWords  = 0;
       hb_ParseLine(pArray, szText, szDelim ? static_cast<unsigned char>(*szDelim) : ',', &iWords);
       nWords = iWords;

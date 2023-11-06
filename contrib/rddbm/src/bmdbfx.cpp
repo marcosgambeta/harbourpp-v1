@@ -69,7 +69,7 @@ HB_FUNC( BM_DBSEEKWILD )
 
    if( pArea != nullptr )
    {
-      const char * szPattern = hb_parc(1);
+      auto szPattern = hb_parc(1);
 
       if( szPattern )
       {

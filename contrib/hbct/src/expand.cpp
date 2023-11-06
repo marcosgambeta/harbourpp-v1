@@ -51,7 +51,7 @@ HB_FUNC( EXPAND )
    HB_SIZE nLen = hb_parclen(1);
 
    if( nLen > 0 ) {
-      const char * szText = hb_parc(1);
+      auto szText = hb_parc(1);
       if( nLen == 1 ) {
          hb_retclen(szText, 1);
       } else {

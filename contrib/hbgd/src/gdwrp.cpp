@@ -1440,12 +1440,12 @@ HB_FUNC( GDIMAGESTRINGFTEX )
 
       auto pRect = hb_param(2, Harbour::Item::ARRAY);
       int          fgcolor  = hb_parni(3); /* foreground color */
-      const char * fontname = hb_parc(4);
+      auto fontname = hb_parc(4);
       double       ptsize   = hb_parnd(5); /* point size */
       double       angle    = hb_parnd(6); /* angle value in radians */
       int          x        = hb_parni(7);
       int          y        = hb_parni(8);
-      const char * string   = hb_parc(9);
+      auto string = hb_parc(9);
 
       gdFTStringExtra extra;
       int flags = 0; /* Extended flags */
@@ -1527,7 +1527,7 @@ HB_FUNC( GDIMAGESTRINGFTCIRCLE ) /* char *gdImageStringFTCircle(gdImagePtr im, i
       double       radius      = hb_parnd(4);
       double       textRadius  = hb_parnd(5);
       double       fillPortion = hb_parnd(6);
-      const char * fontname    = hb_parc(7);
+      auto fontname = hb_parc(7);
       double       points      = hb_parnd(8);
       const char * top         = hb_parcx(9);
       const char * bottom      = hb_parcx(10);

@@ -495,7 +495,7 @@ HB_FUNC( WVW_TBADDBUTTON )
    if( wvw_win ) {
       int iCommand = hb_parni(2);
       HB_UINT uiBitmap = static_cast<HB_UINT>(hb_parni(3));
-      const char * szBitmap = hb_parc(3);
+      auto szBitmap = hb_parc(3);
       int iBitmapType = hb_parni(5);
       bool fMap3Dcolors = hb_parl(6);
       bool fDropdown = hb_parl(7);

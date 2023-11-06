@@ -96,7 +96,7 @@ HB_FUNC( CHARSORT )
       PCT_CHARSORT charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
       /* get parameters */
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
 
       char *  pcRet;
       HB_SIZE sStrLen     = hb_parclen(1);

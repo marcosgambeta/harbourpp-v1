@@ -365,7 +365,7 @@ HB_FUNC( FI_LOADFROMMEMORY )
    if( HB_ISNUM(1) && HB_ISCHAR(2) && HB_ISNUM(3) )
    {
       FREE_IMAGE_FORMAT fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
-      const char * szImage = hb_parc(2);
+      auto szImage = hb_parc(2);
       int flags = hb_parni(3);
 
       FIMEMORY * stream = FreeImage_OpenMemory(reinterpret_cast<BYTE*>(const_cast<char*>(szImage)), static_cast<DWORD>(hb_parclen(2)));
@@ -389,7 +389,7 @@ HB_FUNC( FI_LOAD )
    if( HB_ISNUM(1) && HB_ISCHAR(2) && HB_ISNUM(3) )
    {
       FREE_IMAGE_FORMAT fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
-      const char * filename = hb_parc(2);
+      auto filename = hb_parc(2);
       int flags = hb_parni(3);
 
       FIBITMAP * dib = FreeImage_Load(fif, filename, flags);
@@ -415,7 +415,7 @@ HB_FUNC( FI_SAVE )
    {
       FREE_IMAGE_FORMAT fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
       FIBITMAP * dib = hb_FIBITMAP_par(2);
-      const char * filename = hb_parc(3);
+      auto filename = hb_parc(3);
       int flags = hb_parni(4);
 
       hb_fi_retl(FreeImage_Save(fif, dib, filename, flags));
@@ -473,7 +473,7 @@ HB_FUNC( FI_OPENMULTIBITMAP )
    if( HB_ISNUM(1) && HB_ISCHAR(2) && HB_ISLOG(3) && HB_ISLOG(4) )
    {
       FREE_IMAGE_FORMAT fif = static_cast<FREE_IMAGE_FORMAT>(hb_parni(1));
-      const char * filename = hb_parc(2);
+      auto filename = hb_parc(2);
 
       BOOL create_new = hb_fi_parl(3);
       BOOL read_only = hb_fi_parl(4);
@@ -632,7 +632,7 @@ HB_FUNC( FI_GETFILETYPE )
 {
    if( HB_ISCHAR(1) )
    {
-      const char * filename = hb_parc(1);
+      auto filename = hb_parc(1);
       int size = static_cast<int>(hb_parclen(1));
 
       hb_retni(FreeImage_GetFileType(filename, size));

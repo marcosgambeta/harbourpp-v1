@@ -174,7 +174,7 @@ static int hbwin_bitmapIsSupported(HDC hDC, int iType, const void * pImgBuf, HB_
 
 HB_FUNC( WIN_BITMAPISSUPPORTED )
 {
-   const char * pImgBuf = hb_parc(2);
+   auto pImgBuf = hb_parc(2);
    HB_SIZE nSize = hb_parclen(2);
 
    hb_retni(hbwin_bitmapIsSupported(hbwapi_par_HDC(1), hbwin_bitmapType(pImgBuf, nSize), pImgBuf, nSize));

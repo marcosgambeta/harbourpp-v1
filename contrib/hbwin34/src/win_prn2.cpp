@@ -74,7 +74,7 @@ HB_FUNC( WIN_PRINTEREXISTS )
 
    if( HB_ISCHAR(1) )
    {
-      const char * pszPrinterName = hb_parc(1);
+      auto pszPrinterName = hb_parc(1);
 
       /* Don't bother with test if '\' in string */
       if( !strchr(pszPrinterName, HB_OS_PATH_LIST_SEP_CHR) && !hb_IsLegacyDevice(pszPrinterName) )
@@ -254,7 +254,7 @@ HB_FUNC( WIN_PRINTERPORTTONAME )
 
          if( EnumPrinters(_ENUMPRN_FLAGS_, nullptr, 5, reinterpret_cast<LPBYTE>(pPrinterEnum), dwNeeded, &dwNeeded, &dwReturned) )
          {
-            const char * pszPortNameFind = hb_parc(1);
+            auto pszPortNameFind = hb_parc(1);
             bool bSubStr = hb_parl(2);
             bool bFound = false;
             auto pTemp = hb_itemNew(nullptr);
@@ -294,7 +294,7 @@ HB_FUNC( WIN_PRINTFILERAW )
 
    if( HB_ISCHAR(1) && HB_ISCHAR(2) )
    {
-      const char * pszFileName = hb_parc(2);
+      auto pszFileName = hb_parc(2);
 
       HANDLE hPrinter;
       void * hDeviceName;

@@ -618,8 +618,8 @@ HB_FUNC( NETIO_LISTEN )
    static bool s_fInit = true;
 
    int iPort = hb_parnidef(1, NETIO_DEFAULT_PORT);
-   const char * szAddress = hb_parc(2);
-   const char * szRootPath = hb_parc(3);
+   auto szAddress = hb_parc(2);
+   auto szRootPath = hb_parc(3);
    HB_BOOL fRPC = hb_parl(4);
    void * pSockAddr;
    unsigned uiLen;

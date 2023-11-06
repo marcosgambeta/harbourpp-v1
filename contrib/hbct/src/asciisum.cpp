@@ -50,7 +50,7 @@
 HB_FUNC( ASCIISUM )
 {
    if( HB_ISCHAR(1) ) {
-      const char * pcString = hb_parc(1);
+      auto pcString = hb_parc(1);
       HB_SIZE sStrSize = hb_parclen(1);
       HB_MAXUINT ulResult = 0;
       for( HB_SIZE sPos = 0; sPos < sStrSize; sPos++ ) {

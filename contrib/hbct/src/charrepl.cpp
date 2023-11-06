@@ -57,10 +57,10 @@ HB_FUNC( CHARREPL )
    /* param check */
    if( (sSearchLen = hb_parclen(1)) > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) > 0 ) {
       /* get parameters */
-      const char * pcSearch = hb_parc(1);
-      const char * pcString = hb_parc(2);
+      auto pcSearch = hb_parc(1);
+      auto pcString = hb_parc(2);
       HB_SIZE sStrLen = hb_parclen(2);
-      const char * pcReplace = hb_parc(3);
+      auto pcReplace = hb_parc(3);
       int iMode = hb_parldef(4, 0);
       char * pcRet;
 

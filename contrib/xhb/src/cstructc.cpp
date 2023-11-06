@@ -1269,7 +1269,7 @@ HB_FUNC( HB_POINTER2STRING )
 
 HB_FUNC( HB_STRING2POINTER )
 {
-   const char * pszString = hb_parc(1);
+   auto pszString = hb_parc(1);
 
    if( pszString ) {
       hb_retptr(const_cast<char*>(pszString));

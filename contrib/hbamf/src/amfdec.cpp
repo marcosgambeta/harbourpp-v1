@@ -1181,7 +1181,7 @@ HB_FUNC( AMF3_DECODE )
 
    amfContext * context;
 
-   const char * szBuffer = hb_parc(1);
+   auto szBuffer = hb_parc(1);
 
    if( !szBuffer ) {
       return;

@@ -90,7 +90,7 @@
 
 HB_FUNC( ISALNUM )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString != nullptr ) {
       hb_retl(HB_ISALNUM(static_cast<HB_BYTE>(*szString)));
@@ -106,7 +106,7 @@ HB_FUNC( ISALNUM )
 
 HB_FUNC( ISSPACE )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    if( szString != nullptr ) {
       hb_retl(HB_ISSPACE(static_cast<HB_BYTE>(*szString)));
@@ -121,7 +121,7 @@ HB_FUNC( ISSPACE )
 
 HB_FUNC( ISXDIGIT )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    hb_retl(szString && HB_ISXDIGIT(static_cast<HB_BYTE>(*szString)));
 }
@@ -132,7 +132,7 @@ HB_FUNC( ISXDIGIT )
 
 HB_FUNC( ISCNTRL )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    hb_retl(szString && iscntrl(static_cast<HB_BYTE>(*szString)));
 }
@@ -143,7 +143,7 @@ HB_FUNC( ISCNTRL )
 
 HB_FUNC( ISGRAPH )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    hb_retl(szString && isgraph(static_cast<HB_BYTE>(*szString)));
 }
@@ -155,7 +155,7 @@ HB_FUNC( ISGRAPH )
 
 HB_FUNC( ISPRINT )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    hb_retl(szString && isprint(static_cast<HB_BYTE>(*szString)));
 }
@@ -167,7 +167,7 @@ HB_FUNC( ISPRINT )
 
 HB_FUNC( ISPUNCT )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    hb_retl(szString && ispunct(static_cast<HB_BYTE>(*szString)));
 }
@@ -178,7 +178,7 @@ HB_FUNC( ISPUNCT )
 
 HB_FUNC( ISASCII )
 {
-   const char * szString = hb_parc(1);
+   auto szString = hb_parc(1);
 
    hb_retl(szString && isascii(static_cast<HB_BYTE>(*szString)));
 }

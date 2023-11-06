@@ -1272,7 +1272,7 @@ HB_FUNC( HB_ODBCSTOD )
 {
    if( hb_parclen(1) >= 10 )
    {
-      const char * szSqlDate = hb_parc(1);  /* YYYY-MM-DD */
+      auto szSqlDate = hb_parc(1);  /* YYYY-MM-DD */
       char         szHrbDate[9];            /* YYYYMMDD */
 
       szHrbDate[0] = szSqlDate[0];

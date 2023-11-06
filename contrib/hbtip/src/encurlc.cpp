@@ -50,7 +50,7 @@
 
 HB_FUNC( TIP_URLENCODE )
 {
-   const char * pszData = hb_parc(1);
+   auto pszData = hb_parc(1);
 
    if( pszData )
    {
@@ -109,7 +109,7 @@ HB_FUNC( TIP_URLENCODE )
 
 HB_FUNC( TIP_URLDECODE )
 {
-   const char * pszData = hb_parc(1);
+   auto pszData = hb_parc(1);
 
    if( pszData )
    {

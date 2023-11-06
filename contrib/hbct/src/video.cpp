@@ -57,7 +57,6 @@ HB_FUNC( CHARPIX )
 
 HB_FUNC( VGAPALETTE )
 {
-   const char * color_string;
    char red, green, blue;
    int attr;
 
@@ -67,7 +66,7 @@ HB_FUNC( VGAPALETTE )
       return;
    }
 
-   color_string = hb_parc(1);
+   auto color_string = hb_parc(1);
    if( color_string ) {
       attr = hb_gtColorToN(color_string);
    } else if( HB_ISNUM(1) ) {

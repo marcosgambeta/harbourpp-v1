@@ -79,7 +79,7 @@ HB_FUNC( STRTOKEN )
 /* debug function to dump the ASCII values of an entire string */
 HB_FUNC( STRDUMP )
 {
-   const char * szText = hb_parc(1);
+   auto szText = hb_parc(1);
    HB_ISIZ      i, nLength = hb_parclen(1);
 
    for( i = 0; i < nLength; i++ )
@@ -91,7 +91,7 @@ HB_FUNC( ROT13 )
 {
    if( HB_ISCHAR(1) )
    {
-      const char * szText = hb_parc(1);
+      auto szText = hb_parc(1);
       HB_SIZE      i, nLen = hb_parclen(1);
       char *       szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 

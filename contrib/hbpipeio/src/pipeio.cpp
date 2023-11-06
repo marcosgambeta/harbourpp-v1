@@ -349,7 +349,7 @@ HB_FUNC( HB_VFFROMPIPES )
          --> <pHandle> | NIL */
 HB_FUNC( HB_VFOPENPROCESS )
 {
-   const char * pszCommand = hb_parc(1);
+   auto pszCommand = hb_parc(1);
    HB_FATTR nMode = hb_parnldef(2, FO_READ);
    HB_MAXINT timeout = hb_parnintdef(3, -1);
    HB_BOOL fDetach = hb_parl(4);

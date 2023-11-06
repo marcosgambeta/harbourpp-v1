@@ -430,7 +430,7 @@ HB_FUNC( SETATLIKE )
          cResult = ct_getatlikechar();
          hb_storclen(&cResult, 1, 2);
       } else {
-         const char * pcNewChar = hb_parc(2);
+         auto pcNewChar = hb_parc(2);
 
          if( hb_parclen(2) > 0 ) {
             ct_setatlikechar(*pcNewChar);
