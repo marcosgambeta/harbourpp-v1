@@ -67,7 +67,7 @@ HB_FUNC( STRFORMAT )
 
    if( nParNum >= 1 )
    {
-      const char * pszMask  = hb_parcx(1);
+      auto pszMask = hb_parcx(1);
       HB_SIZE      nMaskLen = hb_parclen(1);
       HB_SIZE      nMaskPos;
       int          nPos;

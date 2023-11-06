@@ -9,7 +9,7 @@
 
 HB_FUNC( GT_ASCIISUM )
 {
-   const char * str = hb_parcx(1);
+   auto str = hb_parcx(1);
    HB_ISIZ      len = hb_parclen(1);
    HB_ISIZ      i;
    HB_MAXUINT   ascSum = 0;

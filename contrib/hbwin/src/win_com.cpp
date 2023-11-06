@@ -210,7 +210,7 @@ HB_FUNC( WIN_COMWRITE )
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
    {
-      const char * lpBuffer = hb_parcx(2);
+      auto lpBuffer = hb_parcx(2);
       DWORD dwNumberofBytesToWrite = static_cast<DWORD>(hb_parclen(2));
       DWORD dwNumberofBytesWritten;
 

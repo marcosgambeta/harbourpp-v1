@@ -117,13 +117,13 @@ HB_FUNC( FBCREATEDB )
       ISC_STATUS    status[20];
       char          create_db[1024];
 
-      const char *   db_name = hb_parcx(1);
-      const char *   user    = hb_parcx(2);
-      const char *   pass    = hb_parcx(3);
+      auto db_name = hb_parcx(1);
+      auto user = hb_parcx(2);
+      auto pass = hb_parcx(3);
       int            page    = hb_parni(4);
-      const char *   charset = hb_parcx(5);
+      auto charset = hb_parcx(5);
       unsigned short dialect = static_cast<unsigned short>(hb_parni(6));
-      const char *   collate = hb_parcx(7);
+      auto collate = hb_parcx(7);
 
       hb_snprintf(create_db, sizeof(create_db),
                   "CREATE DATABASE '%s' USER '%s' PASSWORD '%s' PAGE_SIZE = %i DEFAULT CHARACTER SET %s%s%s",
@@ -260,7 +260,7 @@ HB_FUNC( FBEXECUTE )
 
    if( db ) {
       isc_tr_handle  trans    = static_cast<isc_tr_handle>(0);
-      const char *   exec_str = hb_parcx(2);
+      auto exec_str = hb_parcx(2);
       ISC_STATUS     status[20];
       ISC_STATUS     status_rollback[20];
       unsigned short dialect = static_cast<unsigned short>(hb_parni(3));

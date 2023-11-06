@@ -57,7 +57,7 @@ HB_FUNC( BUBBLEBABBLEENCODE )
    static const char * s_szConsonants = "bcdfghklmnprstvzx";
    static const char * s_szVowels     = "aeiouy";
 
-   const char * pszInput  = hb_parcx(1);
+   auto pszInput  = hb_parcx(1);
    HB_ISIZ      nInputLen = hb_parclen(1);
    char *       pszResult = static_cast<char*>(hb_xgrab(nInputLen * 3 + 6));
 

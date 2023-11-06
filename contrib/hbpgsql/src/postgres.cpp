@@ -1181,7 +1181,7 @@ HB_FUNC( PQCMDTUPLES )
 
 HB_FUNC( PQESCAPESTRING )
 {
-   const char * source = hb_parcx(1);
+   auto source = hb_parcx(1);
    HB_SIZE      size   = strlen(source);
    char *       dest   = static_cast<char*>(hb_xgrab(size * 2 + 1));
 

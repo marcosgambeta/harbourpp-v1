@@ -108,7 +108,7 @@ HB_CALL_ON_STARTUP_END( _hb_mlzo_init_ )
 
 HB_FUNC( HB_LZO1X_1_COMPRESS )
 {
-   const char * src = hb_parcx(1);
+   auto src = hb_parcx(1);
 
    if( src )
    {
@@ -167,7 +167,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
 
 HB_FUNC( HB_LZO1X_DECOMPRESS )
 {
-   const char * src = hb_parcx(1);
+   auto src = hb_parcx(1);
 
    if( src )
    {
@@ -202,7 +202,7 @@ HB_FUNC( HB_LZO1X_DECOMPRESS )
 
 HB_FUNC( HB_LZO1X_DECOMPRESS_SAFE )
 {
-   const char * src = hb_parcx(1);
+   auto src = hb_parcx(1);
 
    if( src )
    {

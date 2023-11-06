@@ -168,7 +168,7 @@ static HB_ISIZ hb_tabexpand(const char * szString, char * szRet, HB_ISIZ nEnd, H
 
 HB_FUNC( HB_TABEXPAND )
 {
-   const char * szText    = hb_parcx(1);
+   auto szText = hb_parcx(1);
    HB_ISIZ      nStrLen   = hb_parclen(1);
    HB_SIZE      nTabLen   = hb_parns(2);
    HB_SIZE      nTabCount = 0;
@@ -197,7 +197,7 @@ HB_FUNC( HB_TABEXPAND )
 HB_FUNC( HB_READLINE )
 {
    PHB_ITEM      pTerm1;
-   const char *  szText = hb_parcx(1);
+   auto szText = hb_parcx(1);
    const char ** pTerm;
    HB_SIZE *     pnTermSizes;
    HB_SIZE       nTabLen, nTerms;

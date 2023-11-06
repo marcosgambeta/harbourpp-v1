@@ -1529,8 +1529,8 @@ HB_FUNC( GDIMAGESTRINGFTCIRCLE ) /* char *gdImageStringFTCircle(gdImagePtr im, i
       double       fillPortion = hb_parnd(6);
       auto fontname = hb_parc(7);
       double       points      = hb_parnd(8);
-      const char * top         = hb_parcx(9);
-      const char * bottom      = hb_parcx(10);
+      auto top = hb_parcx(9);
+      auto bottom = hb_parcx(10);
       int          fgcolor     = hb_parni(11); /* foreground color */
 
       /* Write string */

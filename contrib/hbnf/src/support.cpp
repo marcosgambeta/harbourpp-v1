@@ -60,11 +60,10 @@ HB_FUNC( _FT_TEMPFIL )
 {
    int nax;
    int iflags;
-   const char * cPath;
 
    nax    = 0;
    iflags = 0;
-   cPath  = hb_parcx(1);
+   auto cPath  = hb_parcx(1);
 
    auto pArray = hb_itemArrayNew(3);
 

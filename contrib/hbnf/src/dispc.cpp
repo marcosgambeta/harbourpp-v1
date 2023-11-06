@@ -615,7 +615,7 @@ HB_FUNC( _FT_DFINIT )
       }
       else
       {
-         const char * pszKeys = hb_parcx(9);
+         auto pszKeys = hb_parcx(9);
          dispc->keytype = K_STRING;
          dispc->kcount  = hb_parclen(9);
          if( dispc->kcount > 24 )

@@ -7589,7 +7589,6 @@ HB_FUNC( WVW_SETCLIPBOARD )
 {
    LPTSTR       lptstrCopy;
    HGLOBAL      hglbCopy;
-   const char * cText;
    int          nLen;
 
    if( !IsClipboardFormatAvailable(CF_TEXT) ) {
@@ -7612,7 +7611,7 @@ HB_FUNC( WVW_SETCLIPBOARD )
 
    /* Get text from PRG
     */
-   cText = hb_parcx(1);
+   auto cText = hb_parcx(1);
    nLen  = hb_parclen(1);
 
    /* Allocate a global memory object for the text.

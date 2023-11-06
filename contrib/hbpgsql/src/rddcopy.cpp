@@ -275,7 +275,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
       static const char * sc_szEsc   = "\"";
       static const char * sc_szDelim = ",";
 
-      const char *    szTable   = hb_parcx(2);
+      auto szTable = hb_parcx(2);
       auto pWhile = hb_param(3, Harbour::Item::EVALITEM);
       auto pFor = hb_param(4, Harbour::Item::EVALITEM);
       auto pFields = hb_param(5, Harbour::Item::ARRAY);

@@ -50,12 +50,12 @@
 HB_FUNC( STRDEL )
 {
    if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
-      const char * szText = hb_parcx(1);
+      auto szText = hb_parcx(1);
       HB_SIZE      nText  = hb_parclen(1);
       HB_SIZE      nDel   = hb_parclen(2);
 
       if( nDel > 0 && nText > 0 ) {
-         const char * szDel    = hb_parcx(2);
+         auto szDel = hb_parcx(2);
          HB_SIZE      nPosTxt  = 0;
          HB_SIZE      nResult  = 0;
          HB_SIZE      nPosDel  = 0;

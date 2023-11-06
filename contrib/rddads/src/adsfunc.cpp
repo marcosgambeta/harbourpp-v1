@@ -568,8 +568,8 @@ HB_FUNC( ADSSETEXACT )
 
 HB_FUNC( ADSBLOB2FILE )
 {
-   const char * szFileName  = hb_parcx(1);
-   const char * szFieldName = hb_parcx(2);
+   auto szFileName = hb_parcx(1);
+   auto szFieldName = hb_parcx(2);
 
    if( *szFileName && *szFieldName ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -586,8 +586,8 @@ HB_FUNC( ADSBLOB2FILE )
 
 HB_FUNC( ADSFILE2BLOB )
 {
-   const char * szFileName  = hb_parcx(1);
-   const char * szFieldName = hb_parcx(2);
+   auto szFileName = hb_parcx(1);
+   auto szFieldName = hb_parcx(2);
 
    if( *szFileName && *szFieldName ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -1042,7 +1042,7 @@ HB_FUNC( ADSGETFILTER )
 
 HB_FUNC( ADSENABLEENCRYPTION )
 {
-   const char * pucPassword = hb_parcx(1);
+   auto pucPassword = hb_parcx(1);
 
    if( *pucPassword ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
@@ -2233,8 +2233,8 @@ HB_FUNC( ADSDELETEFILE )
 HB_FUNC( ADSSTMTSETTABLEPASSWORD )
 {
 #if ADS_LIB_VERSION >= 600
-   const char * pucTableName = hb_parcx(1);
-   const char * pucPassword = hb_parcx(2);
+   auto pucTableName = hb_parcx(1);
+   auto pucPassword = hb_parcx(2);
 
    if( *pucTableName && *pucPassword ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();

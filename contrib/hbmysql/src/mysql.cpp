@@ -612,7 +612,7 @@ HB_FUNC( MYSQL_REAL_ESCAPE_STRING ) /* unsigned long STDCALL mysql_real_escape_s
 
    if( mysql )
    {
-      const char *  from   = hb_parcx(2);
+      auto from = hb_parcx(2);
       unsigned long nSize  = static_cast<unsigned long>(hb_parclen(2));
       char *        buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_real_escape_string(mysql, buffer, from, nSize);
@@ -626,7 +626,7 @@ HB_FUNC( MYSQL_REAL_ESCAPE_STRING ) /* unsigned long STDCALL mysql_real_escape_s
 
 HB_FUNC( MYSQL_ESCAPE_STRING )
 {
-   const char *  from   = hb_parcx(1);
+   auto from = hb_parcx(1);
    unsigned long nSize  = static_cast<unsigned long>(hb_parclen(1));
    char *        buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
 
