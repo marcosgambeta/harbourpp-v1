@@ -55,7 +55,6 @@ HB_FUNC( ADDASCII )
    if( HB_ISCHAR(1) ) {
       auto pcSource = hb_parc(1);
       HB_SIZE sLen = hb_parclen(1);
-      char * pcResult;
       HB_SIZE sPos = hb_parnsdef(3, sLen);
       HB_LONG lValue;
       int iCarryOver;
@@ -77,7 +76,7 @@ HB_FUNC( ADDASCII )
          return;
       }
 
-      pcResult = static_cast<char*>(hb_xgrab(sLen + 1));
+      auto pcResult = static_cast<char*>(hb_xgrab(sLen + 1));
       hb_xmemcpy(pcResult, pcSource, sLen);
 
       lValue = hb_parnl(2);

@@ -70,7 +70,7 @@ static PHB_GOBJS hb_wvg_ObjectNew(PHB_GTWVT pWVT)
 {
    if( pWVT ) {
       int iHandle = pWVT->gObjs ? pWVT->gObjs->iHandle : 0;
-      HB_GOBJS * gObj = static_cast<HB_GOBJS *>(hb_xgrabz(sizeof(HB_GOBJS)));
+      auto gObj = static_cast<HB_GOBJS *>(hb_xgrabz(sizeof(HB_GOBJS)));
 
       ++iHandle;
 

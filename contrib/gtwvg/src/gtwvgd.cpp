@@ -1190,7 +1190,6 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
 #if !defined(UNICODE)
                PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pWVT->pGT), cdpBox = HB_GTSELF_BOXCP(pWVT->pGT);
 #endif
-               TCHAR * sBuffer;
                HB_SIZE nSize;
                int     irow, icol, j, top, left, bottom, right;
                RECT    rect{};
@@ -1209,7 +1208,7 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
                bottom = colrowRC.bottom;
 
                nSize = (bottom - top + 1) * (right - left + 1 + 2);
-               sBuffer = static_cast<TCHAR*>(hb_xgrab(nSize * sizeof(TCHAR) + 1));
+               auto sBuffer = static_cast<TCHAR*>(hb_xgrab(nSize * sizeof(TCHAR) + 1));
 
                for( j = 0, irow = top; irow <= bottom; irow++ ) {
                   for( icol = left; icol <= right; icol++ ) {

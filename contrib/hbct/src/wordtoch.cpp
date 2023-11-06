@@ -60,11 +60,10 @@ HB_FUNC( WORDTOCHAR )
       auto pcSearch = hb_parc(1);
       auto pcString = hb_parc(2);
       auto pcReplace = hb_parc(3);
-      char * pcRet;
       HB_SIZE sRetIndex, sIndex;
       int iNoReplace;
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
       sRetIndex = 0;
       sIndex = 0;
       iNoReplace = 0;

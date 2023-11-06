@@ -54,14 +54,13 @@ static void STAItm(PHB_ITEM pItmPar)
 {
    HB_UINT      i, ulItmPar = static_cast<HB_UINT>(hb_itemGetCLen(pItmPar));
    const char * cItmPar = hb_itemGetCPtr(pItmPar), * c;
-   char *       cRes;
 
    for( i = 3, c = cItmPar; *c; c++ )
    {
       if( *c == '\'' )
          i++;                 /* Count ' Tokens */
    }
-   cRes = static_cast<char*>(hb_xgrab(ulItmPar + i * sizeof(char)));
+   auto cRes = static_cast<char*>(hb_xgrab(ulItmPar + i * sizeof(char)));
    i    = 0; c = cItmPar; cRes[i++] = '\'';
    while( *c )
    {
@@ -215,13 +214,13 @@ HB_FUNC( SQL_SPRINTF )
 
       HB_UINT ulResPos = 0, ulMaxBuf = DK_INCBUF, ulMaxRes = DK_INCRES;
 
-      char * cIntMod, * cBuffer, * cParFrm;
+      char * cIntMod;
       int    p, iErrorPar = 0;
 
       cIntMod = nullptr;
       cRes    = static_cast<char*>(hb_xgrab(ulMaxRes));
-      cBuffer = static_cast<char*>(hb_xgrab(ulMaxBuf));
-      cParFrm = static_cast<char*>(hb_xgrab(ulItmFrm + sizeof(char)));
+      auto cBuffer = static_cast<char*>(hb_xgrab(ulMaxBuf));
+      auto cParFrm = static_cast<char*>(hb_xgrab(ulItmFrm + sizeof(char)));
 
       for( p = 0; p < argc;  /* Not p++ by support index & indirect arguments */ )
       {

@@ -730,7 +730,7 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
       if( iButtons > 0 ) {
          HWND hWndCtrl = hbwapi_par_raw_HWND(2);
 
-         TBBUTTON * tb = static_cast<TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
+         auto tb = static_cast<TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
          void ** hStr = static_cast<void**>(hb_xgrab(iButtons * sizeof(void*)));
 
          int iOldHeight = wvw_win->iTBHeight;

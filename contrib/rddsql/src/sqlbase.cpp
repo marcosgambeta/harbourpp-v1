@@ -647,7 +647,7 @@ static HB_ERRCODE sqlbaseCreate(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
 
       switch( pField->uiType ) {
          case Harbour::DB::Field::STRING: {
-            char * pStr = static_cast<char*>(hb_xgrab(pField->uiLen + 1));
+            auto pStr = static_cast<char*>(hb_xgrab(pField->uiLen + 1));
             memset(pStr, ' ', pField->uiLen);
             pStr[pField->uiLen] = '\0';
             pItem = hb_itemPutCL(nullptr, pStr, pField->uiLen);

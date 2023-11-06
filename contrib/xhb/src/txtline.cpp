@@ -184,9 +184,8 @@ HB_FUNC( HB_TABEXPAND )
       hb_retc(szText);
    } else {
       HB_ISIZ nSize;
-      char * szRet;
       nSize = nStrLen + nTabCount * ( nTabLen - 1 );
-      szRet = static_cast<char*>(hb_xgrab(nSize + 1));
+      auto szRet = static_cast<char*>(hb_xgrab(nSize + 1));
       memset(szRet, ' ', nSize);
       nStrLen = hb_tabexpand(szText, szRet, nStrLen, nTabLen);
       hb_retclen_buffer(szRet, nStrLen);

@@ -122,7 +122,7 @@ HB_FUNC( EVP_ENCODEUPDATE )
 
       if( ctx != nullptr ) {
          int size = 512;
-         unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
+         auto buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
          int result;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
@@ -154,7 +154,7 @@ HB_FUNC( EVP_ENCODEFINAL )
 
       if( ctx != nullptr ) {
          int size = 512;
-         unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
+         auto buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          EVP_EncodeFinal(ctx, buffer, &size);
 
@@ -192,7 +192,7 @@ HB_FUNC( EVP_DECODEUPDATE )
 
       if( ctx != nullptr ) {
          int size = 512;
-         unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
+         auto buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          EVP_DecodeUpdate(ctx, buffer, &size, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(3)), static_cast<int>(hb_parclen(3)));
 
@@ -217,7 +217,7 @@ HB_FUNC( EVP_DECODEFINAL )
 
       if( ctx != nullptr ) {
          int size = 512;
-         unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
+         auto buffer = static_cast<unsigned char*>(hb_xgrab(size + 1));
 
          EVP_DecodeFinal(ctx, buffer, &size);
 

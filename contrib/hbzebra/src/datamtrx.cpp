@@ -182,7 +182,6 @@ static void _reed_solomon_encode( unsigned char * pData, int iDataLen, unsigned 
 
 static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SIZE * pSize )
 {
-   int * pPoly, * pExp, * pLog;
    int i, j, iBits, iMod, iPoly, iECLen, iIndex, iBlocks;
 
    /* Init Galois field. Parameters: iPoly */
@@ -195,8 +194,8 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
    }
 
    iMod = (1 << iBits) - 1;
-   pExp = static_cast<int*>(hb_xgrab(sizeof(int) * iMod));          /* exponent function */
-   pLog = static_cast<int*>(hb_xgrab(sizeof(int) * (iMod + 1)));  /* logarithm function */
+   auto pExp = static_cast<int*>(hb_xgrab(sizeof(int) * iMod));          /* exponent function */
+   auto pLog = static_cast<int*>(hb_xgrab(sizeof(int) * (iMod + 1)));  /* logarithm function */
    j = 1;
    for( i = 0; i < iMod; i++ )
    {
@@ -213,7 +212,7 @@ static void _datamatrix_reed_solomon( unsigned char * pData, const DATAMATRIX_SI
    iECLen = pSize->iBlockErrorSize;
    iIndex = 1;
 
-   pPoly = static_cast<int*>(hb_xgrab(sizeof(int) * (iECLen + 1)));
+   auto pPoly = static_cast<int*>(hb_xgrab(sizeof(int) * (iECLen + 1)));
    pPoly[0] = 1;
    for( i = 1; i <= iECLen; i++ )
    {
@@ -338,14 +337,13 @@ static void _datamatrix_place_d( int * pArr, int iPRow, int iPCol, int iIndex )
 
 static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, const DATAMATRIX_SIZE * pSize )
 {
-   int * pArr;
    int i, iR, iC, iPRow, iPCol;
 
    /* Calculate placement size without L-patterns and clock tracks */
    iPRow = pSize->iRow - 2 * (pSize->iRow / pSize->iRegionRow);
    iPCol = pSize->iCol - 2 * (pSize->iCol / pSize->iRegionCol);
 
-   pArr = static_cast<int*>(hb_xgrab(sizeof(int) * iPCol * iPRow));
+   auto pArr = static_cast<int*>(hb_xgrab(sizeof(int) * iPCol * iPRow));
    hb_xmemset(pArr, 0, sizeof(int) * iPCol * iPRow);
 
    /* Generate placement index array */
@@ -427,7 +425,6 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
 {
    PHB_ZEBRA pZebra;
    const DATAMATRIX_SIZE * pSize;
-   unsigned char * pCW;
    int        i, j, iDataCount, iErrorSize, iLen = static_cast<int>(nLen);
 
    pZebra = hb_zebra_create();
@@ -439,7 +436,7 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
       return pZebra;
    }
 
-   pCW = static_cast<unsigned char*>(hb_xgrab(sizeof(char) * iLen * 2));
+   auto pCW = static_cast<unsigned char*>(hb_xgrab(sizeof(char) * iLen * 2));
    iDataCount = _datamatrix_encode(szCode, iLen, pCW);
 
    if( iDataCount > 3116 )

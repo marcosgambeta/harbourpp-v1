@@ -59,7 +59,7 @@ HB_FUNC( STRDEL )
          HB_SIZE      nPosTxt  = 0;
          HB_SIZE      nResult  = 0;
          HB_SIZE      nPosDel  = 0;
-         char *       szResult = static_cast<char*>(hb_xgrab(nText + 1));
+         auto szResult = static_cast<char*>(hb_xgrab(nText + 1));
 
          for(; ( nPosDel < nText && nPosDel < nDel ); nPosDel++ ) {
             if( szDel[nPosDel] != ' ' ) {

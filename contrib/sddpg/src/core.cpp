@@ -363,7 +363,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
             case Harbour::DB::Field::STRING: {
-               char * pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
+               auto pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
                hb_itemPutCL(pItem, pStr, dbFieldInfo.uiLen);

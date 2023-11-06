@@ -171,7 +171,7 @@ HB_FUNC( WIN_SETDLGITEMTEXT )
 HB_FUNC( WIN_GETDLGITEMTEXT )
 {
    USHORT iLen  = static_cast<USHORT>(SendMessage(static_cast<HWND>(GetDlgItem(reinterpret_cast<HWND>(HB_PARHANDLE(1)), hb_parni(2))), static_cast<UINT>(WM_GETTEXTLENGTH), static_cast<WPARAM>(0), static_cast<LPARAM>(0))) + 1;
-   char * cText = static_cast<char*>(hb_xgrab(iLen + 1));
+   auto cText = static_cast<char*>(hb_xgrab(iLen + 1));
 
    GetDlgItemText(reinterpret_cast<HWND>(HB_PARHANDLE(1)), hb_parni(2), static_cast<LPTSTR>(cText), iLen);
 
@@ -1067,7 +1067,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
    /* HWND hToolTip = ( HWND ) hb_parnl(5) ; */
    auto pArray = hb_param(3, Harbour::Item::ARRAY);
    int        iButtons = hb_parni(4);
-   TBBUTTON * tb       = static_cast<struct _TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
+   auto tb = static_cast<struct _TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
    PHB_ITEM   pTemp;
    /* BOOL bSystem; */
 

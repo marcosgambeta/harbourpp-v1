@@ -539,7 +539,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
             case Harbour::DB::Field::STRING: {
-               char * pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
+               auto pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
                hb_itemPutCL(pItem, pStr, dbFieldInfo.uiLen);
@@ -679,7 +679,7 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                   iLen = 0;
                   if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_BINARY, buffer, 0, &iLen)) ) {
                      if( iLen >= 0 ) {
-                        char * val = static_cast<char*>(hb_xgrab(iLen + 1));
+                        auto val = static_cast<char*>(hb_xgrab(iLen + 1));
                         if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_BINARY, val, iLen + 1, &iLen)) ) {
                            pItem = hb_itemPutCLPtr(pItem, val, static_cast<HB_SIZE>(iLen));
                         } else {
@@ -697,7 +697,7 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                   iLen = 0;
                   if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, iTargetType, buffer, 0, &iLen)) ) {
                      if( iLen >= 0 ) {
-                        O_HB_CHAR * val = static_cast<O_HB_CHAR*>(hb_xgrab(iLen + sizeof(O_HB_CHAR)));
+                        auto val = static_cast<O_HB_CHAR*>(hb_xgrab(iLen + sizeof(O_HB_CHAR)));
                         if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, iTargetType, val, iLen + sizeof(O_HB_CHAR), &iLen)) ) {
 #if defined(UNICODE)
                            iLen >>= 1;

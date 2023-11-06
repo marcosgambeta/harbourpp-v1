@@ -314,7 +314,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
             case Harbour::DB::Field::STRING: {
-               char * pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
+               auto pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
                pItem = hb_itemPutCL(nullptr, pStr, dbFieldInfo.uiLen);
@@ -460,7 +460,7 @@ static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       case Harbour::DB::Field::STRING: {
 #if 0
          /* Expand strings to field length */
-         char * pStr = static_cast<char*>(hb_xgrab(pField->uiLen + 1));
+         auto pStr = static_cast<char*>(hb_xgrab(pField->uiLen + 1));
          memcpy(pStr, pValue, nLen);
 
          if( static_cast<HB_SIZE>(pField->uiLen) > nLen ) {

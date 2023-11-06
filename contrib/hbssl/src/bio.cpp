@@ -59,7 +59,7 @@ using PHB_BIO = HB_BIO *;
 
 static PHB_BIO PHB_BIO_create(BIO * bio, void * hStrRef)
 {
-   PHB_BIO hb_bio = static_cast<PHB_BIO>(hb_xgrab(sizeof(HB_BIO)));
+   auto hb_bio = static_cast<PHB_BIO>(hb_xgrab(sizeof(HB_BIO)));
 
    hb_bio->bio = bio;
    hb_bio->hStrRef = hStrRef;
@@ -588,7 +588,7 @@ HB_FUNC( BIO_READ )
       int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
 
       if( size > 0 ) {
-         char * buffer = static_cast<char*>(hb_xgrab(size + 1));
+         auto buffer = static_cast<char*>(hb_xgrab(size + 1));
 
          hb_retni(size = BIO_read(bio, buffer, size));
 
@@ -612,7 +612,7 @@ HB_FUNC( BIO_GETS )
       int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
 
       if( size > 0 ) {
-         char * buffer = static_cast<char*>(hb_xgrab(size + 1));
+         auto buffer = static_cast<char*>(hb_xgrab(size + 1));
 
          hb_retni(size = BIO_gets(bio, buffer, size));
 

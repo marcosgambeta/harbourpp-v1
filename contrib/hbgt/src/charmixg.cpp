@@ -16,10 +16,9 @@ HB_FUNC( GT_CHARMIX )
       auto s2 = hb_parc(2);
       HB_ISIZ      l1 = hb_parclen(1);
       HB_ISIZ      l2 = hb_parclen(2);
-      char *       s3;
       HB_ISIZ      i, pos3 = 0;
 
-      s3 = static_cast<char*>(hb_xgrab(l1 + l2 + 1));  /* grab us some memory to work with */
+      auto s3 = static_cast<char*>(hb_xgrab(l1 + l2 + 1));  /* grab us some memory to work with */
 
       for( i = 0; i < l1; i++ )
       {

@@ -445,7 +445,7 @@ static IPicture * s_FindPictureHandle(PWVW_GLO wvw, const char * szFileName, int
 
 static void s_AddPictureHandle(PWVW_GLO wvw, const char * szFileName, IPicture * pPicture, int iWidth, int iHeight)
 {
-   WVW_IPIC * pphNew = static_cast<WVW_IPIC*>(hb_xgrabz(sizeof(WVW_IPIC)));
+   auto pphNew = static_cast<WVW_IPIC*>(hb_xgrabz(sizeof(WVW_IPIC)));
 
    hb_strncpy(pphNew->szFilename, szFileName, sizeof(pphNew->szFilename) - 1);
    pphNew->pPicture = pPicture;

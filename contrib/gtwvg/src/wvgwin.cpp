@@ -213,7 +213,7 @@ HB_FUNC( WVG_SETDLGITEMTEXT )
 HB_FUNC( WVG_GETDLGITEMTEXT )
 {
    int    iLen  = static_cast<int>(SendMessage(GetDlgItem(reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1))), hb_parni(2)), WM_GETTEXTLENGTH, 0, 0)) + 1;
-   LPTSTR cText = static_cast<LPTSTR>(hb_xgrab(iLen * sizeof(TCHAR)));
+   auto cText = static_cast<LPTSTR>(hb_xgrab(iLen * sizeof(TCHAR)));
    UINT   iResult;
 
    /*
@@ -1290,7 +1290,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          break;
       case CB_GETLBTEXT: {
          HB_ISIZ iSize = SendMessage(hCB, CB_GETLBTEXTLEN, static_cast<WPARAM>(hb_parnint(3)), 0);
-         LPTSTR  text  = static_cast<LPTSTR>(hb_xgrab(iSize + 1));
+         auto text = static_cast<LPTSTR>(hb_xgrab(iSize + 1));
          SendMessage(hCB, CB_GETLBTEXT, iSize, reinterpret_cast<LPARAM>(text));
          HB_RETSTR(text);
          hb_xfree(text);

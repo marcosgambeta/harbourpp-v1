@@ -390,7 +390,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
             case Harbour::DB::Field::STRING: {
-               char * pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
+               auto pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
                hb_itemPutCLPtr(pItem, pStr, dbFieldInfo.uiLen);
@@ -508,7 +508,7 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
          switch( pField->uiType ) {
             case Harbour::DB::Field::STRING:
                if( OCI_IsNull(rs, ui) ) {
-                  char * pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(pField->uiLen) + 1));
+                  auto pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(pField->uiLen) + 1));
                   memset(pStr, ' ', pField->uiLen);
                   pStr[pField->uiLen] = '\0';
                   pItem = hb_itemPutCLPtr(pItem, pStr, pField->uiLen);

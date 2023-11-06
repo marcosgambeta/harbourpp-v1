@@ -264,11 +264,10 @@ void hb_ssl_socketClose(PHB_SSLSTREAM pStream)
 
 PHB_SSLSTREAM hb_ssl_socketNew(HB_SOCKET sd, SSL * ssl, HB_BOOL fServer, HB_MAXINT timeout, PHB_ITEM pSSL, int * piResult)
 {
-   PHB_SSLSTREAM pStream;
    HB_MAXUINT timer;
    int iResult;
 
-   pStream = static_cast<HB_SSLSTREAM*>(hb_xgrabz(sizeof(HB_SSLSTREAM)));
+   auto pStream = static_cast<HB_SSLSTREAM*>(hb_xgrabz(sizeof(HB_SSLSTREAM)));
 
    pStream->ssl = ssl;
    pStream->pSSL = pSSL ? hb_itemNew(pSSL) : nullptr;

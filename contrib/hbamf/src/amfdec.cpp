@@ -1179,15 +1179,13 @@ HB_FUNC( AMF3_DECODE )
 #endif
    auto pFuncSym = hb_param(2, Harbour::Item::SYMBOL);
 
-   amfContext * context;
-
    auto szBuffer = hb_parc(1);
 
    if( !szBuffer ) {
       return;
    }
 
-   context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
+   auto context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
    memset(context, 0, sizeof(amfContext));
 
    context->cBuf          = szBuffer;

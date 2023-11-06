@@ -57,7 +57,7 @@ HB_FUNC( CHARMIRR )
       auto pcString = hb_parc(1);
       const char * pc1;
       HB_SIZE sStrLen = hb_parclen(1);
-      char * pcRet, * pc2;
+      char * pc2;
       int iDontMirrorSpaces = hb_parldef(2, 0);
 
       if( sStrLen == 0 ) {
@@ -75,7 +75,7 @@ HB_FUNC( CHARMIRR )
          return;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
 
       pc1 = pcString + sStrLen - 1;
       if( iDontMirrorSpaces ) {

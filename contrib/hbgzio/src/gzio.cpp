@@ -186,7 +186,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    pszName = s_gzio_name(pszFileName, nullptr);
    if( pRetPath )
    {
-      char * pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
+      auto pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
       int iPref = static_cast<int>(pszName - pszFileName);
 
       fResult = hb_fileExists(pszName, pszNameBuf);
@@ -672,7 +672,7 @@ static PHB_FILE s_filegzipNew( PHB_FILE pFile, int iMode, int iLevel )
 {
    if( pFile )
    {
-      PHB_FILE pFileGZ = static_cast<PHB_FILE>(hb_xgrabz(sizeof(HB_FILE)));
+      auto pFileGZ = static_cast<PHB_FILE>(hb_xgrabz(sizeof(HB_FILE)));
 
       pFileGZ->pFuncs = &s_fileFuncs;
       pFileGZ->pFile = pFile;

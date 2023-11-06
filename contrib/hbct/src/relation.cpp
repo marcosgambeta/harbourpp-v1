@@ -129,7 +129,6 @@ HB_FUNC( CHARRELREP )
       HB_SIZE sStrLen2 = hb_parclen(4);
       auto pcReplace = hb_parc(5);
       HB_SIZE sReplaceLen = hb_parclen(5);
-      char * pcRet;
       const char * pc1, * pc2;
       HB_SIZE sOffset1, sOffset2;
       HB_SIZE sMatchStrLen;
@@ -144,7 +143,7 @@ HB_FUNC( CHARRELREP )
          return;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen2 + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen2 + 1));
       hb_xmemcpy(pcRet, pcString2, sStrLen2);
 
       sOffset1 = 0;

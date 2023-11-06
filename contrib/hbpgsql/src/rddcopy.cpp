@@ -288,7 +288,6 @@ HB_FUNC( HB_PQCOPYFROMWA )
       HB_BOOL         bEof = false;
       HB_USHORT       uiFieldCopy = 0;
       HB_USHORT       uiIter;
-      pgCopyContext * context;
       char *          szInit;
       char *          szFields = nullptr;
       char *          szTmp;
@@ -297,7 +296,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
 
       auto pItem = hb_itemNew(nullptr);
 
-      context = static_cast<pgCopyContext*>(hb_xgrabz(sizeof(pgCopyContext)));
+      auto context = static_cast<pgCopyContext*>(hb_xgrabz(sizeof(pgCopyContext)));
 
       context->buffer     = static_cast<char*>(hb_xgrab(sizeof(char) * nBufLen * 1400));
       context->position   = 0;

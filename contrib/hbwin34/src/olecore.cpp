@@ -431,7 +431,7 @@ PHB_ITEM hb_oleItemPutVariant(PHB_ITEM pItem, VARIANT * pVariant, HB_BOOL fMove)
 static wchar_t * AnsiToWide(const char * szString)
 {
    int iLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szString, -1, nullptr, 0);
-   wchar_t * szWide = static_cast<wchar_t*>(hb_xgrab(iLen * sizeof(wchar_t)));
+   auto szWide = static_cast<wchar_t*>(hb_xgrab(iLen * sizeof(wchar_t)));
    MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szString, -1, szWide, iLen);
    return szWide;
 }
@@ -1446,7 +1446,7 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClass
                {
                   if( iDims > 1 || !hb_oleSafeArrayToString(pItem, pSafeArray) )
                   {
-                     long * plIndex = static_cast<long*>(hb_xgrab(iDims * sizeof(long)));
+                     auto plIndex = static_cast<long*>(hb_xgrab(iDims * sizeof(long)));
                      hb_oleSafeArrayToItem(pItem, pSafeArray, iDims, 1, plIndex, static_cast<VARTYPE>(V_VT(pVariant) & ~(VT_ARRAY | VT_BYREF)), uiClass);
                      hb_xfree(plIndex);
                   }

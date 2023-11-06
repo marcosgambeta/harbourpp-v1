@@ -86,14 +86,13 @@ HB_FUNC( XHB_SAVESCREEN )
 {
    int     iTop, iLeft, iBottom, iRight;
    HB_SIZE nSize;
-   void *  pBuffer;
    HB_BOOL fNoCheck = hb_parl(5);
 
    hb_getScreenRange(&iTop, &iBottom, fNoCheck, true);
    hb_getScreenRange(&iLeft, &iRight, fNoCheck, false);
 
    hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
-   pBuffer = hb_xgrab(nSize + 1);
+   auto pBuffer = hb_xgrab(nSize + 1);
 
    hb_gtSave(iTop, iLeft, iBottom, iRight, pBuffer);
    hb_retclen_buffer(static_cast<char*>(pBuffer), nSize);

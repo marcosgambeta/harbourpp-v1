@@ -381,7 +381,7 @@ HB_FUNC( HB_CRYPT )
    auto pSource = hb_param(1, Harbour::Item::ANY);
    auto pKey = hb_param(2, Harbour::Item::ANY);
 
-   unsigned char * cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
+   auto cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
 
    nxs_crypt(reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pSource)), hb_itemGetCLen(pSource),
              reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pKey)), hb_itemGetCLen(pKey), cRes);
@@ -398,7 +398,7 @@ HB_FUNC( HB_DECRYPT )
    auto pSource = hb_param(1, Harbour::Item::ANY);
    auto pKey = hb_param(2, Harbour::Item::ANY);
 
-   unsigned char * cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
+   auto cRes = static_cast<unsigned char*>(hb_xgrab(hb_itemGetCLen(pSource) + 8));
 
    nxs_decrypt(reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pSource)), hb_itemGetCLen(pSource),
                reinterpret_cast<const unsigned char*>(hb_itemGetCPtr(pKey)), hb_itemGetCLen(pKey), cRes);

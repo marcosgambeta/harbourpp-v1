@@ -649,7 +649,6 @@ static int hb_ctw_CreateWindow(PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom,
    HB_TRACE(HB_TR_DEBUG, ("hb_ctw_CreateWindow(%p,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pCTW), iTop, iLeft, iBottom, iRight, static_cast<int>(fClear), iColor, static_cast<int>(fVisible)));
 #endif
 
-   PHB_CT_WND pWnd;
    HB_BYTE bAttr;
    HB_USHORT usChar;
    int iRow, iCol, iHeight, iWidth, iTmp;
@@ -721,7 +720,7 @@ static int hb_ctw_CreateWindow(PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom,
       iCol = iRight;
    }
 
-   pWnd = static_cast<PHB_CT_WND>(hb_xgrab(sizeof(HB_CT_WND)));
+   auto pWnd = static_cast<PHB_CT_WND>(hb_xgrab(sizeof(HB_CT_WND)));
    memset(pWnd, 0, sizeof(HB_CT_WND));
 
    pWnd->fHidden = !fVisible;
@@ -1196,7 +1195,7 @@ static PHB_GTCTW hb_ctw_base(void)
       if( HB_GTCTW_GET(pGT) ) {
          return HB_GTCTW_GET(pGT);
       } else {
-         PHB_GTCTW pCTW = static_cast<PHB_GTCTW>(hb_xgrab(sizeof(HB_GTCTW)));
+         auto pCTW = static_cast<PHB_GTCTW>(hb_xgrab(sizeof(HB_GTCTW)));
 
          memset(pCTW, 0, sizeof(HB_GTCTW));
          HB_GTLOCAL(pGT) = pCTW;

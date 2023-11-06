@@ -189,7 +189,7 @@ HB_FUNC( WVG_LBGETTEXT )
    HWND hWnd = hbwapi_par_raw_HWND(1);
    int iIndex = hb_parni(2);
    int iLen = ListBox_GetTextLen(hWnd, iIndex);
-   LPTSTR szText = static_cast<LPTSTR>(hb_xgrab((iLen + 1) * sizeof(TCHAR)));
+   auto szText = static_cast<LPTSTR>(hb_xgrab((iLen + 1) * sizeof(TCHAR)));
 
    ( void ) ListBox_GetText(hWnd, iIndex, szText); // TODO: C++ cast
 
@@ -554,7 +554,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          break;
       case CB_GETLBTEXT: {
          HB_ISIZ iSize = SendMessage(hCB, CB_GETLBTEXTLEN, static_cast<WPARAM>(hb_parnint(3)), 0);
-         LPTSTR text = static_cast<LPTSTR>(hb_xgrab((iSize + 1) * sizeof(TCHAR)));
+         auto text = static_cast<LPTSTR>(hb_xgrab((iSize + 1) * sizeof(TCHAR)));
          SendMessage(hCB, CB_GETLBTEXT, iSize, reinterpret_cast<LPARAM>(text));
          HB_RETSTRLEN(text, iSize);
          hb_xfree(text);

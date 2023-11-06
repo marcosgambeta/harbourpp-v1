@@ -2111,12 +2111,11 @@ HB_FUNC( WVT_DRAWSCROLLBUTTON )
    int iBottom = (_s->PTEXTSIZE.y * (hb_parni(3) + 1)) - 1 + hb_parvni(5, 3);
    int iRight  = (_s->PTEXTSIZE.x * (hb_parni(4) + 1)) - 1 + hb_parvni(5, 4);
 
-   POINT * Point;
    POINT   xy{};
    int     iHeight, iOff;
    bool    bDepressed = hb_parl(7);
 
-   Point = static_cast<POINT*>(hb_xgrab(3 * sizeof(POINT)));
+   auto Point = static_cast<POINT*>(hb_xgrab(3 * sizeof(POINT)));
    iOff  = 6;
 
    iHeight = iBottom - iTop + 1;

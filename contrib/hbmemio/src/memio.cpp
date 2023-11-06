@@ -198,7 +198,7 @@ static HB_ULONG memfsInodeFind(const char * szName, HB_ULONG * pulPos)
 
 static PHB_MEMFS_INODE memfsInodeAlloc(const char * szName)
 {
-   PHB_MEMFS_INODE pInode = static_cast<PHB_MEMFS_INODE>(hb_xgrab(sizeof(HB_MEMFS_INODE)));
+   auto pInode = static_cast<PHB_MEMFS_INODE>(hb_xgrab(sizeof(HB_MEMFS_INODE)));
    HB_ULONG ulInode = 0;
 
    pInode->llSize = 0;
@@ -242,7 +242,7 @@ static void memfsInodeFree(PHB_MEMFS_INODE pInode)
 
 static PHB_MEMFS_FILE memfsFileAlloc(PHB_MEMFS_INODE pInode)
 {
-   PHB_MEMFS_FILE pFile = static_cast<PHB_MEMFS_FILE>(hb_xgrab(sizeof(HB_MEMFS_FILE)));
+   auto pFile = static_cast<PHB_MEMFS_FILE>(hb_xgrab(sizeof(HB_MEMFS_FILE)));
 
    pFile->pInode = pInode;
    pFile->llPos = 0;
@@ -1196,7 +1196,7 @@ static const HB_FILE_FUNCS s_fileFuncs =
 
 static PHB_FILE s_fileNew(HB_FHANDLE hFile)
 {
-   PHB_FILE pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
+   auto pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
 
    pFile->pFuncs = &s_fileFuncs;
    pFile->hFile = hFile;

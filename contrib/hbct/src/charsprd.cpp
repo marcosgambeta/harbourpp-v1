@@ -84,14 +84,13 @@ HB_FUNC( CHARSPREAD )
          } else {
             HB_ISIZ iRepl, iRest, iFirst;
             HB_SIZE nDst, nRest;
-            char * szDest;
 
             nRest = static_cast<HB_SIZE>(nSize) - nLen;
             iRepl = nRest / nTokens;
             iRest = nRest % nTokens;
             iFirst = (iRest + 1) >> 1;
             iRest >>= 1;
-            szDest = static_cast<char*>(hb_xgrab(nSize + 1));
+            auto szDest = static_cast<char*>(hb_xgrab(nSize + 1));
             for( nDst = nPos = 0; nPos < nLen; ++nPos ) {
                szDest[nDst++] = szText[nPos];
                if( szText[nPos] == cDelim ) {

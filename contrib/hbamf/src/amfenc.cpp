@@ -1037,9 +1037,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
 
 static amfContext * context_setup(PHB_ITEM pFuncSym, bool use_refs, bool str_rtrim, amfContext * outer_context)
 {
-   amfContext * context;
-
-   context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
+   auto context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
    memset(context, 0, sizeof(amfContext));
 
    context->cBuf = static_cast<char*>(hb_xgrab(sizeof(char) * 8));
@@ -1249,7 +1247,7 @@ HB_FUNC( AMF3_FROMWA )
          if( bNoFieldPassed ) {
             hb_arrayNew(pFieldNames, uiFields);
             for( uiIter = 1; uiIter <= uiFields; uiIter++ ) {
-               char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
+               auto szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
                pField      = hb_itemNew(nullptr);
                szName[0] = '\0';
                SELF_FIELDNAME(pArea, uiIter, szName);
@@ -1260,7 +1258,7 @@ HB_FUNC( AMF3_FROMWA )
          } else {
             hb_arrayNew(pFieldNames, uiFieldCopy);
             for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ ) {
-               char * szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
+               auto szName = static_cast<char*>(hb_xgrab(pArea->uiMaxFieldNameLength + 1));
                pField      = hb_itemNew(nullptr);
                szName[0] = '\0';
                SELF_FIELDNAME(pArea, static_cast<HB_USHORT>(hb_itemGetNI(hb_arrayGetItemPtr(pFields, uiIter))), szName);
@@ -1360,13 +1358,11 @@ HB_FUNC( AMF3_ENCODE )
    bool     lBA      = hb_parldef(3, false);
    bool     lRetval;
 
-   amfContext * context;
-
    if( !pItem ) {
       return;
    }
 
-   context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
+   auto context = static_cast<amfContext*>(hb_xgrab(sizeof(amfContext)));
    memset(context, 0, sizeof(amfContext));
 
    context->cBuf = static_cast<char*>(hb_xgrab(sizeof(char) * 8));

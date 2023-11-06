@@ -89,7 +89,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
-      HANDLE * handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
+      auto handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
       DWORD dwResult;
 
       for( DWORD nPos = 0; nPos < nCount; ++nPos )
@@ -117,7 +117,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
 
    if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
    {
-      HANDLE * handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
+      auto handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
       DWORD dwResult;
 
       for( DWORD nPos = 0; nPos < nCount; ++nPos )
@@ -284,7 +284,7 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 
    if( nLen )
    {
-      LPTSTR buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
+      auto buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
 
       nLen = GetSystemDirectory(buffer, nLen);
       hbwapi_SetLastError(GetLastError());
@@ -306,7 +306,7 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 
    if( nLen )
    {
-      LPTSTR buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
+      auto buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
 
       nLen = GetWindowsDirectory(buffer, nLen);
       hbwapi_SetLastError(GetLastError());

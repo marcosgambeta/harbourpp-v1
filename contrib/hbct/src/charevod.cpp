@@ -61,7 +61,6 @@ static void do_charevod(int iSwitch)
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
       HB_SIZE sLen = hb_parclen(1);
-      char * pcResult;
       HB_SIZE sPos, sResultPos;
 
       if( sLen == 0 ) {
@@ -79,7 +78,7 @@ static void do_charevod(int iSwitch)
          return;
       }
 
-      pcResult = static_cast<char*>(hb_xgrab((sLen + 1) / 2));
+      auto pcResult = static_cast<char*>(hb_xgrab((sLen + 1) / 2));
 
       if( iSwitch == DO_CHAREVOD_CHAREVEN ) {
          sPos = 1;

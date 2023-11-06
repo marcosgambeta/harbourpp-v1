@@ -52,7 +52,6 @@ HB_FUNC( TABEXPAND )
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
-      char * pcRet;
       HB_SIZE sRetLen;
       HB_SIZE sTabWidth = 0;
       char cFill, cTab, cCR;
@@ -114,7 +113,7 @@ HB_FUNC( TABEXPAND )
          hb_retclen(pcString, sStrLen);
          return;
       }
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + (sTabCnt * (sTabWidth - 1))));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + (sTabCnt * (sTabWidth - 1))));
 
       /* now copy the string */
       sIndex = 0;
@@ -189,7 +188,6 @@ HB_FUNC( TABPACK )
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
-      char * pcRet;
       HB_SIZE sRetLen;
       HB_SIZE sTabWidth = 0;
       char cFill, cTab, cCR;
@@ -242,7 +240,7 @@ HB_FUNC( TABPACK )
       }
       /* estimate maximum return length by assuming that there's
          nothing to pack */
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
 
       /* now copy the string */
       sIndex = 0;

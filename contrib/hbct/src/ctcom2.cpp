@@ -117,7 +117,6 @@ static char s_xmoblock_sum(const char * szData, HB_SIZE nLen)
 HB_FUNC( XMOBLOCK )
 {
    HB_SIZE nLen, nSize;
-   char * pszBlock;
    int iBlock;
    HB_BOOL fCRC;
 
@@ -131,7 +130,7 @@ HB_FUNC( XMOBLOCK )
    if( nLen > nSize ) {
       nLen = nSize;
    }
-   pszBlock = static_cast<char*>(hb_xgrab(nSize + (fCRC ? 6 : 5)));
+   auto pszBlock = static_cast<char*>(hb_xgrab(nSize + (fCRC ? 6 : 5)));
    pszBlock[0] = nSize == 128 ? 1 : 2;
    pszBlock[1] = static_cast<char>(iBlock);
    pszBlock[2] = static_cast<char>(0xFF - iBlock);
@@ -209,7 +208,7 @@ HB_FUNC( ZEROINSERT )
       }
       if( nBits ) {
          HB_SIZE nDest = nLen + ((nBits + 7) >> 3);
-         char * pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
+         auto pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
          unsigned char c = 0;
          int j;
 
@@ -325,7 +324,7 @@ HB_FUNC( ZEROREMOVE )
       {
          hb_retc_null();
       } else if( nBits ) {
-         char * pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
+         auto pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
 
          j = 8;
          l = 0;

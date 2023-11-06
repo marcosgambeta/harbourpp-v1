@@ -227,7 +227,7 @@ static char * hb_curl_strdup(const char * s)
 static void * hb_curl_calloc(size_t nelem, size_t elsize)
 {
    size_t size = nelem * elsize;
-   void * ptr  = hb_xgrab(size);
+   auto ptr = hb_xgrab(size);
 
    memset(ptr, '\0', size);
 
@@ -604,7 +604,7 @@ static PHB_CURL PHB_CURL_create(CURL * from)
 
    if( curl )
    {
-      PHB_CURL hb_curl = static_cast<PHB_CURL>(hb_xgrab(sizeof(HB_CURL)));
+      auto hb_curl = static_cast<PHB_CURL>(hb_xgrab(sizeof(HB_CURL)));
 
       memset(hb_curl, 0, sizeof(HB_CURL));
       hb_curl->curl = curl;
@@ -804,14 +804,13 @@ HB_FUNC( CURL_EASY_RECV )
       if( hb_curl )
       {
          size_t size = static_cast<size_t>(hb_parclen(2));
-         void * buffer;
 
          if( size < 1024 )
          {
             size = 1024;
          }
 
-         buffer = hb_xgrab(size + 1);
+         auto buffer = hb_xgrab(size + 1);
 
          res = curl_easy_recv(hb_curl->curl, buffer, size, &size);
 

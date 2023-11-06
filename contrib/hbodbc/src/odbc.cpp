@@ -904,14 +904,12 @@ HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @
 #else
       SQLINTEGER nNumPtr = static_cast<SQLINTEGER>(hb_parnl(7));
 #endif
-      char * buffer;
-
       if( iLen <= 0 )
       {
          iLen = 64;
       }
 
-      buffer      = static_cast<char*>(hb_xgrab(iLen));
+      auto buffer = static_cast<char*>(hb_xgrab(iLen));
       buffer[0] = '\0';
 
 #if ODBCVER >= 0x0300

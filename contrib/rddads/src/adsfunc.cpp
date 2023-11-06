@@ -74,14 +74,12 @@ char * hb_adsOemToAnsi( const char * pszSrc, HB_SIZE nLen )
    if( hb_ads_bOEM ) {
 #if defined(HB_OS_WIN)
       int nWideLen = MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast<int>(nLen), nullptr, 0 );
-      LPWSTR pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
-
-      char * pszDst;
+      auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
       MultiByteToWideChar( CP_OEMCP, MB_PRECOMPOSED, pszSrc, static_cast<int>(nLen), pszWide, nWideLen );
 
       nLen = WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
-      pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
+      auto pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
 
       WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, pszDst, static_cast<int>(nLen), nullptr, nullptr);
 
@@ -101,14 +99,12 @@ char * hb_adsAnsiToOem( const char * pszSrc, HB_SIZE nLen )
    if( hb_ads_bOEM ) {
 #if defined(HB_OS_WIN)
       int nWideLen = MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast<int>(nLen), nullptr, 0 );
-      LPWSTR pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
-
-      char * pszDst;
+      auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
       MultiByteToWideChar( CP_ACP, MB_PRECOMPOSED, pszSrc, static_cast<int>(nLen), pszWide, nWideLen );
 
       nLen = WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
-      pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
+      auto pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
 
       WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, pszDst, static_cast<int>(nLen), nullptr, nullptr);
 
@@ -921,7 +917,7 @@ HB_FUNC( ADSGETAOFNOOPT )
       UNSIGNED32 ulRetVal = AdsGetAOFOptLevel( pArea->hTable, &pusOptLevel, pucNonOpt, &usLen );
 
       if( usLen > HARBOUR_MAX_RDD_FILTER_LENGTH ) {
-         UNSIGNED8 * pucNonOpt2 = static_cast<UNSIGNED8*>(hb_xgrab(usLen + 1));
+         auto pucNonOpt2 = static_cast<UNSIGNED8*>(hb_xgrab(usLen + 1));
 
          hb_retc(AdsGetAOFOptLevel(pArea->hTable, &pusOptLevel, pucNonOpt2, &usLen) == AE_SUCCESS ? reinterpret_cast<char*>(pucNonOpt2) : nullptr);
 

@@ -190,7 +190,7 @@ HB_FUNC( WVW_EBCREATE )
 
       if( bFromOEM ) {
          ULONG  ulLen        = static_cast<ULONG>(strlen(lpszText));
-         LPTSTR lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
+         auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
          OemToChar(lpszText, lpszTextANSI);
          lpszText = lpszTextANSI;
       }
@@ -479,7 +479,6 @@ HB_FUNC( WVW_EBGETTEXT )
    BOOL       bSoftBreak = HB_ISLOG(3) ? hb_parl(3) : FALSE;
    USHORT     usLen;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   LPTSTR     lpszTextANSI;
    BOOL       bToOEM = (pWindowData->CodePage == OEM_CHARSET);
 
    if( pcd == nullptr ) {
@@ -493,13 +492,13 @@ HB_FUNC( WVW_EBGETTEXT )
 
    usLen = static_cast<USHORT>(SendMessage(static_cast<HWND>(pcd->hWndCtrl), WM_GETTEXTLENGTH, 0, 0)) + 1;
 
-   lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(usLen));
+   auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(usLen));
 
    SendMessage(static_cast<HWND>(pcd->hWndCtrl), WM_GETTEXT, usLen, reinterpret_cast<LPARAM>(lpszTextANSI));
 
    if( bToOEM ) {
       ULONG  ulLen    = static_cast<ULONG>(strlen(lpszTextANSI));
-      LPTSTR lpszText = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
+      auto lpszText = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
       CharToOem(lpszTextANSI, lpszText);
       hb_retc(lpszText);
       hb_xfree(lpszText);
@@ -531,7 +530,7 @@ HB_FUNC( WVW_EBSETTEXT )
 
    if( bFromOEM ) {
       ULONG  ulLen        = static_cast<ULONG>(strlen(lpszText));
-      LPTSTR lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
+      auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
       OemToChar(lpszText, lpszTextANSI);
       lpszText = lpszTextANSI;
    }

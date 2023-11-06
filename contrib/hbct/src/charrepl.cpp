@@ -62,7 +62,6 @@ HB_FUNC( CHARREPL )
       HB_SIZE sStrLen = hb_parclen(2);
       auto pcReplace = hb_parc(3);
       int iMode = hb_parldef(4, 0);
-      char * pcRet;
 
       /* if sStrLen == 0, we can return immediately */
       if( sStrLen == 0 ) {
@@ -74,7 +73,7 @@ HB_FUNC( CHARREPL )
          return;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy(pcRet, pcString, sStrLen);
 
       for( HB_SIZE sIndex = 0; sIndex < sSearchLen; sIndex++ ) {

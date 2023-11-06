@@ -107,7 +107,7 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char * cDe
       }
       /* a "D" field */
       case Harbour::Item::DATE: {
-         char * szDate = static_cast<char*>(hb_xgrab(9));
+         auto szDate = static_cast<char*>(hb_xgrab(9));
 
          hb_itemGetDS(pValue, szDate);
          hb_fsWriteLarge(handle, szDate, strlen(szDate));

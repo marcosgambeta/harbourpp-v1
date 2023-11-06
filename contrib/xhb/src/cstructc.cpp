@@ -274,7 +274,6 @@ static HB_BYTE * ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign,
    PHB_BASEARRAY pBaseDef = aDef->item.asArray.value;
    HB_SIZE       nLen     = pBaseDef->nLen;
    HB_SIZE       nIndex;
-   HB_BYTE *     Buffer;
    HB_UINT       uiOffset = 0, uiMemberSize;
    HB_BYTE       cShift;
 
@@ -284,7 +283,7 @@ static HB_BYTE * ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign,
    printf("Size: %i\n", *puiSize);
    #endif
 
-   Buffer = static_cast<HB_BYTE*>(hb_xgrab(*puiSize + 1));
+   auto Buffer = static_cast<HB_BYTE*>(hb_xgrab(*puiSize + 1));
 
    for( nIndex = 0; nIndex < nLen; nIndex++ ) {
       #if 0

@@ -69,7 +69,7 @@ HB_FUNC( DIRMAKE )
 
 HB_FUNC( DIRNAME )
 {
-   char * pbyBuffer = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
+   auto pbyBuffer = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
    auto pszDrive = hb_parc(1);
    int iDrive = 0;
 
@@ -94,7 +94,7 @@ HB_FUNC( DRIVETYPE )
 {
 #if defined(HB_OS_WIN)
    HB_SIZE nSize = hb_parclen(1) + 2;  /* allow space for '\0' & ":\" */
-   char * pszDrive = static_cast<char*>(hb_xgrab(nSize + 1));
+   auto pszDrive = static_cast<char*>(hb_xgrab(nSize + 1));
    LPCTSTR lpDrive;
    LPTSTR lpFree;
    UINT uiType;

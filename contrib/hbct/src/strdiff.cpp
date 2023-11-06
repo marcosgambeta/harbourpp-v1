@@ -69,7 +69,6 @@ HB_FUNC( STRDIFF )
       int          iReplace, iDelete, iInsert;
       int          iAtLike = ct_getatlike();
       char         cAtLike = ct_getatlikechar();
-      int *        piPenalty;
       HB_SIZE      sRowCnt, sColCnt;
 
       if( HB_ISCHAR(1) ) {
@@ -106,7 +105,7 @@ HB_FUNC( STRDIFF )
       iDelete = hb_parnidef(4, 6);
       iInsert = hb_parnidef(5, 1);
 
-      piPenalty = static_cast<int*>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int)));
+      auto piPenalty = static_cast<int*>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int)));
 
       MATRIXELEMENT(0, 0) = 0;
       for( sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++ ) {

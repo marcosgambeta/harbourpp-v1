@@ -22,7 +22,7 @@ typedef struct
 
 PHB_IRMMAP hb_irmMapAlloc( HB_ULONG ulSize )
 {
-   PHB_IRMMAP pMap = static_cast<PHB_IRMMAP>(hb_xgrab(sizeof(HB_IRMMAP)));
+   auto pMap = static_cast<PHB_IRMMAP>(hb_xgrab(sizeof(HB_IRMMAP)));
 
    if( ulSize == 0 )
       ulSize = 256;
@@ -191,10 +191,9 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
       if( (!strcmp(szOper, "&") || !strcmp(szOper, "|")) && (ulLen = static_cast<HB_ULONG>(hb_arrayLen(pItem))) > 1 )
       {
          HB_ULONG     ul, ul2;
-         PHB_IRMMAP * pMapArray;
 
          --ulLen;
-         pMapArray = static_cast<PHB_IRMMAP*>(hb_xgrab(sizeof(PHB_IRMMAP) * ulLen));
+         auto pMapArray = static_cast<PHB_IRMMAP*>(hb_xgrab(sizeof(PHB_IRMMAP) * ulLen));
          for( ul = 0; ul < ulLen; ++ul )
             pMapArray[ul] = hb_irmExecute(hb_arrayGetItemPtr(pItem, ul + 2));
          ulSize = ( pMapArray[0]->ulSize + 7 ) >> 3;

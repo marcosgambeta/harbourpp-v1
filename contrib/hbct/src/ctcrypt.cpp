@@ -60,7 +60,7 @@ HB_FUNC( CRYPT )
       const HB_BYTE * pbyString = reinterpret_cast<const HB_BYTE*>(hb_parc(1));
       HB_SIZE nStringLen = hb_parclen(1);
 
-      HB_BYTE * pbyResult = static_cast<HB_BYTE*>(hb_xgrab(nStringLen + 1));
+      auto pbyResult = static_cast<HB_BYTE*>(hb_xgrab(nStringLen + 1));
 
       HB_USHORT uiCount2 =
          ((static_cast<HB_USHORT>(pbyCrypt[nCryptPos] + static_cast<HB_USHORT>(pbyCrypt[nCryptPos + 1] * 256))) &

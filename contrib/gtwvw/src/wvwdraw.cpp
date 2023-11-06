@@ -270,7 +270,6 @@ HB_FUNC( WVW_DRAWSCROLLBUTTON )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    APP_DATA * s_sApp      = hb_gt_wvwGetAppData();
    int        iTop, iLeft, iBottom, iRight;
-   POINT *    Point;
    POINT      xy{};
    int        iHeight, iOff;
    BOOL       bDepressed = HB_ISNIL(8) ? FALSE : hb_parl(8);
@@ -295,7 +294,7 @@ HB_FUNC( WVW_DRAWSCROLLBUTTON )
    iBottom = xy.y - 1 + hb_parvni(6, 3);
    iRight  = xy.x - 1 + hb_parvni(6, 4);
 
-   Point = static_cast<POINT*>(hb_xgrab(3 * sizeof(POINT)));
+   auto Point = static_cast<POINT*>(hb_xgrab(3 * sizeof(POINT)));
    iOff  = 6;
 
    iHeight = iBottom - iTop + 1;

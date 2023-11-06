@@ -78,11 +78,10 @@ static void do_charone(int iSwitch)
       switch( iSwitch ) {
          case DO_CHARONE_CHARONE:
             if( sStrLen > 1 ) {
-               char * pcRet;
                HB_SIZE sRetStrLen = 0;
                char cCurrent = *pcString;
 
-               pcRet = static_cast<char*>(hb_xgrab(sStrLen));
+               auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
                /* copy first char */
                pcRet[sRetStrLen++] = cCurrent;
                for( const char * pcSub = pcString + 1; pcSub < pcString + sStrLen; pcSub++ ) {
@@ -103,12 +102,11 @@ static void do_charone(int iSwitch)
 
          case DO_CHARONE_WORDONE:
             if( sStrLen > 3 && (pcDeleteSet == nullptr || sDeleteSetLen >= 2) ) {
-               char * pcRet;
                HB_SIZE sRetStrLen = 0;
                char cCurrent1 = pcString[0];
                char cCurrent2 = pcString[1];
 
-               pcRet = static_cast<char*>(hb_xgrab(sStrLen));
+               auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
                /* copy first double char */
                pcRet[sRetStrLen++] = cCurrent1;
                pcRet[sRetStrLen++] = cCurrent2;

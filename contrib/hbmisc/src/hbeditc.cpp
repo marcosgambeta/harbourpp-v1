@@ -179,7 +179,7 @@ static void New( PHB_EDITOR pEd, int tab, HB_ISIZ ll, HB_ISIZ bufferSize )
 /* Creates new editor and returns index into internal editors table */
 HB_FUNC( ED_NEW )
 {
-   PHB_EDITOR pEd = static_cast<PHB_EDITOR>(hb_xgrab(sizeof(HB_EDITOR)));
+   auto pEd = static_cast<PHB_EDITOR>(hb_xgrab(sizeof(HB_EDITOR)));
 
    HB_ISIZ ll;
    int     tab = hb_parni(2);
@@ -671,14 +671,13 @@ HB_FUNC( ED_GETTEXT )
    if( pEd )
    {
       HB_ISIZ dl;
-      char *  buffer;
       char *  help;
 
       char mietka = static_cast<char>(hb_parni(2));
 
       dl = strlen(pEd->begin) + 3;
 
-      buffer = static_cast<char*>(hb_xgrab(dl + 3));
+      auto buffer = static_cast<char*>(hb_xgrab(dl + 3));
 
       hb_strncpy(buffer, pEd->begin, dl - 1);
 

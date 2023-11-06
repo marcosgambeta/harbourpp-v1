@@ -61,7 +61,6 @@ static char * hb_fsReadLine(HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const c
    HB_ISIZ nPosTerm = 0, nPos, nPosition;
    int     nTries;
    HB_ISIZ nRead = 0, nOffset, nSize;
-   char *  pBuff;
 
    *pbFound = HB_FALSE;
    *pbEOF   = HB_FALSE;
@@ -73,7 +72,7 @@ static char * hb_fsReadLine(HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const c
       *plBuffLen = READING_BLOCK;
    }
 
-   pBuff = static_cast<char*>(hb_xgrab(*plBuffLen + 1));
+   auto pBuff = static_cast<char*>(hb_xgrab(*plBuffLen + 1));
 
    do {
       if( nTries > 0 ) {

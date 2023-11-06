@@ -115,7 +115,7 @@ HB_FUNC( WIN_ANSITOWIDE )
    HB_SIZE nLen = hb_parclen(1);
    LPCSTR lpSrcMB = hb_parcx(1);
    DWORD dwLength = MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), nullptr, 0);
-   LPWSTR lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
+   auto lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
 
    MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), lpDstWide, dwLength + 1);
 
@@ -127,7 +127,7 @@ HB_FUNC( WIN_WIDETOANSI )
    HB_SIZE nLen = hb_parclen(1);
    LPCWSTR lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
    DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
-   LPSTR lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
+   auto lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
 
    WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), lpDstMB, dwLength + 1, nullptr, nullptr);
 

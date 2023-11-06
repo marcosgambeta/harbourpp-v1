@@ -203,7 +203,6 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
 {
    PHB_ZEBRA  pZebra;
    int        i, j, k, csum, iCodeSet, iCodeLen, iLen = static_cast<int>(nLen);
-   int *      pCode;
 
    HB_SYMBOL_UNUSED(iFlags);
 
@@ -237,7 +236,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
    pZebra->szCode[j] = '\0';
 
    /* generate code set switch characters */
-   pCode = static_cast<int*>(hb_xgrab(sizeof(int) * iLen * 2));
+   auto pCode = static_cast<int*>(hb_xgrab(sizeof(int) * iLen * 2));
    iCodeSet = CODESET_B; /* to pacify MSVC warning only. It will be assigned later */
    iCodeLen = 0;
    /* determine the first optimal codeset */

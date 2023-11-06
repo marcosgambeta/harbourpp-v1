@@ -676,7 +676,7 @@ HB_FUNC( SQLITE3_OPEN )
 
    if( hb_fsFileExists(pszdbName) || hb_parl(2) ) {
       if( sqlite3_open(pszdbName, &db) == SQLITE_OK ) {
-         HB_SQLITE3 * hbsqlite3 = static_cast<HB_SQLITE3*>(hb_xgrabz(sizeof(HB_SQLITE3)));
+         auto hbsqlite3 = static_cast<HB_SQLITE3*>(hb_xgrabz(sizeof(HB_SQLITE3)));
          hbsqlite3->db = db;
          hb_sqlite3_ret(hbsqlite3, HB_SQLITE3_DB);
       } else {
@@ -704,7 +704,7 @@ HB_FUNC( SQLITE3_OPEN_V2 )
    const char * pszdbName = hb_fsNameConv(hb_parcx(1), &pszFree);
 
    if( sqlite3_open_v2(pszdbName, &db, hb_parni(2), nullptr) == SQLITE_OK ) {
-      HB_SQLITE3 * hbsqlite3 = static_cast<HB_SQLITE3*>(hb_xgrabz(sizeof(HB_SQLITE3)));
+      auto hbsqlite3 = static_cast<HB_SQLITE3*>(hb_xgrabz(sizeof(HB_SQLITE3)));
       hbsqlite3->db = db;
       hb_sqlite3_ret(hbsqlite3, HB_SQLITE3_DB);
    } else {
@@ -1643,7 +1643,7 @@ HB_FUNC( SQLITE3_BLOB_READ )
          iLen = sqlite3_blob_bytes(pBlob);
       }
 
-      char * buffer = static_cast<char*>(hb_xgrab(iLen + 1));
+      auto buffer = static_cast<char*>(hb_xgrab(iLen + 1));
 
       if( SQLITE_OK == sqlite3_blob_read(pBlob, static_cast<void*>(buffer), iLen, hb_parni(3)) ) {
          hb_retclen_buffer(buffer, iLen);
@@ -1777,7 +1777,7 @@ HB_FUNC( SQLITE3_FILE_TO_BUFF )
    if( handle != FS_ERROR ) {
       HB_SIZE nSize = hb_fsSeek(handle, 0, FS_END);
       hb_fsSeek(handle, 0, FS_SET);
-      char * buffer = static_cast<char*>(hb_xgrab(nSize + 1));
+      auto buffer = static_cast<char*>(hb_xgrab(nSize + 1));
       nSize = hb_fsReadLarge(handle, buffer, nSize);
       buffer[nSize] = '\0';
       hb_fsClose(handle);

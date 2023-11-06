@@ -57,7 +57,7 @@ HB_FUNC( WAPI_GETUSERNAMEEX )
    EXTENDED_NAME_FORMAT nFormat = static_cast<EXTENDED_NAME_FORMAT>(hb_parnl(1));
    ULONG nLen = 256 + 1;
    DWORD dwError;
-   LPTSTR pBuffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
+   auto pBuffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
    SetLastError(ERROR_SUCCESS);  /* This API call fails to reset the error code on success */
    bool fResult = GetUserNameEx(nFormat, pBuffer, &nLen);
    hbwapi_SetLastError(dwError = GetLastError());

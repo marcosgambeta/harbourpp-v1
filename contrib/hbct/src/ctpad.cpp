@@ -57,7 +57,7 @@ static void do_pad(int iSwitch)
    if( HB_ISCHAR(1) && HB_ISNUM(2) ) {
       auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
-      char * pcRet, * pc;
+      char * pc;
       HB_ISIZ nRetLen;
       HB_SIZE sRetLen;
       char cFill;
@@ -87,7 +87,7 @@ static void do_pad(int iSwitch)
          cFill = 0x20;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sRetLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sRetLen + 1));
 
       if( iSwitch == DO_PAD_PADLEFT ) {
          if( sRetLen > sStrLen ) {

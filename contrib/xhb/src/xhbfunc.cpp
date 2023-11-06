@@ -192,7 +192,7 @@ HB_FUNC( HB_F_EOF )
 HB_FUNC( CURDIRX )
 {
    HB_ERRCODE uiErrorOld = hb_fsError();
-   char *     pbyBuffer  = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
+   auto pbyBuffer  = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
    auto pDrv = hb_param(1, Harbour::Item::STRING);
    int        iCurDrv    = hb_fsCurDrv();
    int        iDrv;

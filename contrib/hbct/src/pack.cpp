@@ -52,7 +52,7 @@ HB_FUNC( CHARPACK )
    const HB_UCHAR * in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
 
    if( hb_parni(2) == 0 ) {
-      HB_UCHAR * out = static_cast<HB_UCHAR*>(hb_xgrab(len * 3 + 2));
+      auto out = static_cast<HB_UCHAR*>(hb_xgrab(len * 3 + 2));
       HB_SIZE n_in = 0, n_out = 0;
 
       out[n_out++] = 158;
@@ -98,7 +98,6 @@ HB_FUNC( CHARUNPACK )
    const HB_UCHAR * in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
 
    if( hb_parni(2) == 0 ) {
-      HB_UCHAR * out;
       HB_SIZE out_len = 0;
       HB_SIZE buf_size = 32768;
 
@@ -106,7 +105,7 @@ HB_FUNC( CHARUNPACK )
          hb_retclen(reinterpret_cast<const char*>(in), len);
          return;
       }
-      out = static_cast<HB_UCHAR*>(hb_xgrab(buf_size));
+      auto out = static_cast<HB_UCHAR*>(hb_xgrab(buf_size));
       for( HB_SIZE i = 2; i <= len - 3; i += 3 ) {
          if( in[i] != 0 ) {
             hb_xfree(out);

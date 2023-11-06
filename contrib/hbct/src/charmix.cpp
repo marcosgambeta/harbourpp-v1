@@ -53,7 +53,6 @@ HB_FUNC( CHARMIX )
    if( HB_ISCHAR(1) ) {
       auto pcString1 = hb_parc(1);
       const char * pcString2;
-      char * pcResult;
       HB_SIZE sLen1 = hb_parclen(1);
       HB_SIZE sLen2, sPos2, sResultPos;
 
@@ -87,7 +86,7 @@ HB_FUNC( CHARMIX )
          sLen2 = 1;
       }
 
-      pcResult = static_cast<char*>(hb_xgrab(sLen1 * 2 + 1));
+      auto pcResult = static_cast<char*>(hb_xgrab(sLen1 * 2 + 1));
       sPos2 = sResultPos = 0;
       for( HB_SIZE sPos1 = 0; sPos1 < sLen1; ) {
          pcResult[sResultPos++] = pcString1[sPos1++];

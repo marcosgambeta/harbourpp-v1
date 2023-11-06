@@ -614,7 +614,7 @@ HB_FUNC( MYSQL_REAL_ESCAPE_STRING ) /* unsigned long STDCALL mysql_real_escape_s
    {
       auto from = hb_parcx(2);
       unsigned long nSize  = static_cast<unsigned long>(hb_parclen(2));
-      char *        buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
+      auto buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_real_escape_string(mysql, buffer, from, nSize);
       hb_retclen_buffer(static_cast<char*>(buffer), nSize);
    }
@@ -628,7 +628,7 @@ HB_FUNC( MYSQL_ESCAPE_STRING )
 {
    auto from = hb_parcx(1);
    unsigned long nSize  = static_cast<unsigned long>(hb_parclen(1));
-   char *        buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
+   auto buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
 
    nSize = mysql_escape_string(buffer, from, nSize);
    hb_retclen_buffer(static_cast<char*>(buffer), nSize);
@@ -663,7 +663,7 @@ HB_FUNC( MYSQL_ESCAPE_STRING_FROM_FILE )
 
    if( from )
    {
-      char * buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
+      auto buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_escape_string(buffer, from, nSize);
       hb_retclen_buffer(buffer, nSize);
       hb_xfree(from);

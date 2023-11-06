@@ -69,7 +69,7 @@ static void do_replace(int iSwitch)
    if( HB_ISCHAR(1) && (hb_parclen(2) > 0 || HB_ISNUM(2)) ) {
       auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
-      char * pcRet, * pc;
+      char * pc;
       char cSearch, cReplace;
 
       if( sStrLen == 0 ) {
@@ -95,7 +95,7 @@ static void do_replace(int iSwitch)
          cSearch = 0x20;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy(pcRet, pcString, sStrLen);
 
       if( iSwitch != DO_REPLACE_REPLRIGHT ) {

@@ -420,7 +420,7 @@ static HB_FILE_FUNCS s_fileFuncs =
 
 static PHB_FILE s_fileNew(int port, HB_MAXINT timeout, HB_BOOL fRead, HB_BOOL fWrite)
 {
-   PHB_FILE pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
+   auto pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
 
    pFile->pFuncs  = &s_fileFuncs;
    pFile->port    = port;

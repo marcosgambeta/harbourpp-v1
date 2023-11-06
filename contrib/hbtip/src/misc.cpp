@@ -100,7 +100,6 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
       if( nLen )
       {
          auto pszData = hb_parc(1);
-         char *       pszRet;
          HB_ISIZ      nPos    = 0;
          HB_ISIZ      nPosRet = 0;
 
@@ -108,9 +107,9 @@ HB_FUNC( TIP_HTMLSPECIALCHARS )
          {
             nLen--;
          }
-         
+
          /* Giving maximum final length possible */
-         pszRet = static_cast<char*>(hb_xgrab(nLen * 6 + 1));
+         auto pszRet = static_cast<char*>(hb_xgrab(nLen * 6 + 1));
 
          while( nPos < nLen )
          {
@@ -205,7 +204,6 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
       if( nLen )
       {
          auto pszData = hb_parc(1);
-         char *       pszRet;
          HB_ISIZ      nPos    = 0;
          HB_ISIZ      nPosRet = 0;
 
@@ -213,9 +211,9 @@ HB_FUNC( TIP_JSONSPECIALCHARS )
          {
             nLen--;
          }
-         
+
          /* Giving maximum final length possible */
-         pszRet = static_cast<char*>(hb_xgrab(nLen * 2 + 1));
+         auto pszRet = static_cast<char*>(hb_xgrab(nLen * 2 + 1));
 
          while( nPos < nLen )
          {

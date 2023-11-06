@@ -218,7 +218,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
       return Harbour::FAILURE;
    }
 
-   XSQLDA ISC_FAR * pSqlda = static_cast<XSQLDA*>(hb_xgrab(XSQLDA_LENGTH(1)));
+   auto pSqlda = static_cast<XSQLDA*>(hb_xgrab(XSQLDA_LENGTH(1)));
    pSqlda->sqln = 1;
    pSqlda->version = 1;
 
@@ -287,7 +287,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
             dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen = pVar->sqllen;
             pVar->sqldata = static_cast<char*>(hb_xgrab(sizeof(char) * pVar->sqllen + 2));
-            char * pStr  = static_cast<char*>(memset(hb_xgrab(dbFieldInfo.uiLen), ' ', dbFieldInfo.uiLen));
+            auto pStr  = static_cast<char*>(memset(hb_xgrab(dbFieldInfo.uiLen), ' ', dbFieldInfo.uiLen));
             pItem = hb_itemPutCL(nullptr, pStr, dbFieldInfo.uiLen);
             hb_xfree(pStr);
             break;
@@ -298,7 +298,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
             dbFieldInfo.uiLen = pVar->sqllen;
             /* pVar->sqltype = SQL_TEXT;  Coercing */
             pVar->sqldata = static_cast<char*>(hb_xgrab(sizeof(char) * pVar->sqllen + 2));
-            char * pStr = static_cast<char*>(memset(hb_xgrab(dbFieldInfo.uiLen), ' ', dbFieldInfo.uiLen));
+            auto pStr = static_cast<char*>(memset(hb_xgrab(dbFieldInfo.uiLen), ' ', dbFieldInfo.uiLen));
             pItem = hb_itemPutCL(nullptr, pStr, dbFieldInfo.uiLen);
             hb_xfree(pStr);
             break;

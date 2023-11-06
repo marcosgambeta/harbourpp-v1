@@ -61,7 +61,7 @@ static void do_justify(int iSwitch)
       HB_SIZE sStrLen = hb_parclen(1);
       char cJustChar;
       const char * pc;
-      char * pcRet, * pcw;
+      char * pcw;
       HB_SIZE sJustOffset;
 
       if( sStrLen == 0 ) {
@@ -81,7 +81,7 @@ static void do_justify(int iSwitch)
          cJustChar = 0x20;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
 
       switch( iSwitch ) {
          case DO_JUSTIFY_JUSTLEFT:

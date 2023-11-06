@@ -794,7 +794,7 @@ HB_FUNC( WAPI_TREEVIEW_GETITEMPARTRECT )
 /* BOOL TreeView_GetItemRect(HWND hwndTV, HTREEITEM hitem, LPRECT prc, BOOL fItemRect); */
 HB_FUNC( WAPI_TREEVIEW_GETITEMRECT )
 {
-   LPRECT prc = static_cast<LPRECT>(hb_xgrabz(sizeof(RECT)));
+   auto prc = static_cast<LPRECT>(hb_xgrabz(sizeof(RECT)));
 
    hbwapi_ret_L(TreeView_GetItemRect(hbwapi_par_raw_HWND(1), static_cast<HTREEITEM>(hbwapi_par_raw_HANDLE(2)), prc, hbwapi_par_BOOL(4)));
 

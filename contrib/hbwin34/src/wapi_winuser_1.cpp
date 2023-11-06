@@ -786,7 +786,7 @@ HB_FUNC( WAPI_CREATEACCELERATORTABLE )
 
    if( iEntries > 0 )
    {
-      LPACCEL lpAccel = static_cast<LPACCEL>(hb_xgrab(sizeof(ACCEL) * iEntries));
+      auto lpAccel = static_cast<LPACCEL>(hb_xgrab(sizeof(ACCEL) * iEntries));
 
       for( int i = 0; i < iEntries; ++i )
       {
@@ -918,7 +918,7 @@ HB_FUNC( WAPI_GETWINDOWTEXT )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
    int nLen = GetWindowTextLength(hWnd);
-   LPTSTR szText = static_cast<TCHAR*>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
+   auto szText = static_cast<TCHAR*>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
    nLen = GetWindowText(hWnd, szText, nLen + 1);
    hbwapi_SetLastError(GetLastError());
    HB_RETSTRLEN(szText, nLen);

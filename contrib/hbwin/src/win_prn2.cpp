@@ -159,7 +159,7 @@ static HB_BOOL hb_GetJobs(HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdwJ
    GetPrinter(hPrinter, 2, nullptr, 0, &dwNeeded);
    if( dwNeeded )
    {
-      PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
+      auto pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
       DWORD dwUsed = 0;
 
       if( GetPrinter(hPrinter, 2, reinterpret_cast<LPBYTE>(pPrinterInfo), dwNeeded, &dwUsed) )
@@ -169,7 +169,7 @@ static HB_BOOL hb_GetJobs(HANDLE hPrinter, JOB_INFO_2 ** ppJobInfo, DWORD * pdwJ
          EnumJobs(hPrinter, 0, pPrinterInfo->cJobs, 2, nullptr, 0, &dwNeeded, &dwReturned);
          if( dwNeeded )
          {
-            JOB_INFO_2 * pJobInfo = static_cast<JOB_INFO_2*>(hb_xgrabz(dwNeeded));
+            auto pJobInfo = static_cast<JOB_INFO_2*>(hb_xgrabz(dwNeeded));
 
             if( EnumJobs(hPrinter, 0, dwReturned, 2, reinterpret_cast<LPBYTE>(pJobInfo), dwNeeded, &dwUsed, &dwReturned) )
             {
@@ -213,7 +213,7 @@ HB_FUNC( WIN_PRINTERSTATUS )
          GetPrinter(hPrinter, 2, nullptr, 0, &dwNeeded);
          if( dwNeeded )
          {
-            PRINTER_INFO_2 * pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
+            auto pPrinterInfo = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
 
             if( GetPrinter(hPrinter, 2, reinterpret_cast<LPBYTE>(pPrinterInfo), dwNeeded, &dwNeeded) )
             {
@@ -343,7 +343,7 @@ HB_FUNC( WIN_PRINTFILERAW )
                PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr);
                if( pFile != nullptr )
                {
-                  HB_BYTE * pbyBuffer = static_cast<HB_BYTE*>(hb_xgrab(HB_PRINT_BUFFER_SIZE));
+                  auto pbyBuffer = static_cast<HB_BYTE*>(hb_xgrab(HB_PRINT_BUFFER_SIZE));
                   HB_SIZE nRead;
 
                   nResult = 1;
@@ -518,7 +518,7 @@ HB_FUNC( WIN_PRINTERLIST )
                         HB_ARRAYSETSTR(pTempItem, HB_WINPRN_NAME, pPrinterEnum->pPrinterName);
 
                         {
-                           PRINTER_INFO_2 * pPrinterInfo2 = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
+                           auto pPrinterInfo2 = static_cast<PRINTER_INFO_2*>(hb_xgrabz(dwNeeded));
 
                            if( GetPrinter(hPrinter, 2, reinterpret_cast<LPBYTE>(pPrinterInfo2), dwNeeded, &dwNeeded) )
                            {

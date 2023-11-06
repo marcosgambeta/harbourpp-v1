@@ -59,7 +59,7 @@ HB_FUNC( BUBBLEBABBLEENCODE )
 
    auto pszInput  = hb_parcx(1);
    HB_ISIZ      nInputLen = hb_parclen(1);
-   char *       pszResult = static_cast<char*>(hb_xgrab(nInputLen * 3 + 6));
+   auto pszResult = static_cast<char*>(hb_xgrab(nInputLen * 3 + 6));
 
    HB_ISIZ nPos = 0;
    HB_ISIZ i;

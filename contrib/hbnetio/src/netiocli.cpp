@@ -276,7 +276,7 @@ static PHB_SRVDATA s_fileFindSrvData(PHB_CONCLI conn, int iStreamID, int iType)
 
 static int s_fileNewSrvData(PHB_CONCLI conn, int iType)
 {
-   PHB_SRVDATA pSrvData = static_cast<PHB_SRVDATA>(hb_xgrabz(sizeof(HB_SRVDATA)));
+   auto pSrvData = static_cast<PHB_SRVDATA>(hb_xgrabz(sizeof(HB_SRVDATA)));
    pSrvData->id = s_fileGenSrvDataID(conn);
    pSrvData->type = iType;
 
@@ -334,7 +334,7 @@ static HB_BOOL s_fileCloseSrvData(PHB_CONCLI conn, int iStreamID)
 
 static HB_BOOL s_fileRecvSrvData(PHB_CONCLI conn, long len, int iStreamID, int iType)
 {
-   char * buffer = static_cast<char*>(hb_xgrab(len));
+   auto buffer = static_cast<char*>(hb_xgrab(len));
    bool fResult = false;
 
    if( s_fileRecvAll(conn, buffer, len) == len )
@@ -615,7 +615,7 @@ static void s_fileConFree(PHB_CONCLI conn)
 static PHB_CONCLI s_fileConNew(HB_SOCKET sd, const char * pszServer, int iPort, int iTimeOut, const char * pszPasswd, int iPassLen, int iLevel, int iStrategy)
 {
    int iLen = static_cast<int>(strlen(pszServer));
-   PHB_CONCLI conn = static_cast<PHB_CONCLI>(hb_xgrab(sizeof(HB_CONCLI) + iLen));
+   auto conn = static_cast<PHB_CONCLI>(hb_xgrab(sizeof(HB_CONCLI) + iLen));
    hb_atomic_set(&conn->used, 1);
    hb_atomic_set(&conn->usrcount, 0);
    conn->mutex = hb_threadMutexCreate();
@@ -1900,7 +1900,7 @@ static PHB_ITEM s_fileDirectory(PHB_FILE_FUNCS pFuncs, const char * pszDirSpec, 
 
             if( nResult > 0 )
             {
-               char * buffer = static_cast<char*>(hb_xgrab(nResult));
+               auto buffer = static_cast<char*>(hb_xgrab(nResult));
                const char * data = buffer;
 
                nRecv = s_fileRecvAll(conn, buffer, static_cast<long>(nResult));
@@ -2021,7 +2021,7 @@ static HB_BOOL s_fileRename(PHB_FILE_FUNCS pFuncs, const char * pszFileName, con
          HB_BYTE msgbuf[NETIO_MSGLEN];
          HB_U16 len1 = static_cast<HB_U16>(strlen(pszFileName));
          HB_U16 len2 = static_cast<HB_U16>(strlen(pszNewName));
-         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
+         auto pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszFileName, len1);
          memcpy(pBuffer + len1, pszNewName, len2);
@@ -2061,7 +2061,7 @@ static HB_BOOL s_fileCopy(PHB_FILE_FUNCS pFuncs, const char * pszSrcFile, const 
          HB_BYTE msgbuf[NETIO_MSGLEN];
          HB_U16 len1 = static_cast<HB_U16>(strlen(pszSource));
          HB_U16 len2 = static_cast<HB_U16>(strlen(pszDstFile));
-         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
+         auto pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszSource, len1);
          memcpy(pBuffer + len1, pszDstFile, len2);
@@ -2215,7 +2215,7 @@ static HB_BOOL s_fileLink(PHB_FILE_FUNCS pFuncs, const char * pszExisting, const
          HB_BYTE msgbuf[NETIO_MSGLEN];
          HB_U16 len1 = static_cast<HB_U16>(strlen(pszExisting));
          HB_U16 len2 = static_cast<HB_U16>(strlen(pszNewName));
-         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
+         auto pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszExisting, len1);
          memcpy(pBuffer + len1, pszNewName, len2);
@@ -2253,7 +2253,7 @@ static HB_BOOL s_fileLinkSym(PHB_FILE_FUNCS pFuncs, const char * pszTarget, cons
          HB_BYTE msgbuf[NETIO_MSGLEN];
          HB_U16 len1 = static_cast<HB_U16>(strlen(pszTarget));
          HB_U16 len2 = static_cast<HB_U16>(strlen(pszNewName));
-         HB_BYTE * pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
+         auto pBuffer = static_cast<HB_BYTE*>(hb_xgrab(len1 + len2));
 
          memcpy(pBuffer, pszTarget, len1);
          memcpy(pBuffer + len1, pszNewName, len2);
@@ -2734,7 +2734,7 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
          fResult = HB_GET_LE_UINT32(&msgbuf[8]) != 0;
          if( nResult > 0 )
          {
-            char * buffer = static_cast<char*>(hb_xgrab(nResult));
+            auto buffer = static_cast<char*>(hb_xgrab(nResult));
             const char * data = buffer;
 
             nRecv = s_fileRecvAll(pFile->conn, buffer, static_cast<long>(nResult));

@@ -64,7 +64,6 @@ static void do_charswap(int iSwitch)
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
       HB_SIZE sStrLen = hb_parclen(1);
-      char * pcRet;
       HB_SIZE sRetIndex = 0;
       int iShift, iMod;
       const char * pcSub;
@@ -87,7 +86,7 @@ static void do_charswap(int iSwitch)
          iShift = 2;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
 
       for( pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift ) {
          switch( iSwitch ) {

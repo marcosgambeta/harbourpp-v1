@@ -728,7 +728,7 @@ HB_FUNC( XML_PARSERCREATE )
 
    if( parser )
    {
-      PHB_EXPAT hb_expat = static_cast<PHB_EXPAT>(hb_xgrabz(sizeof(HB_EXPAT)));
+      auto hb_expat = static_cast<PHB_EXPAT>(hb_xgrabz(sizeof(HB_EXPAT)));
 
       hb_expat->parser = parser;
 

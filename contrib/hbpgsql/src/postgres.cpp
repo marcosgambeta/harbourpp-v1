@@ -258,8 +258,8 @@ HB_FUNC( PQCONNECTDBPARAMS )
    if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
    {
 #if PG_VERSION_NUM >= 90000
-      const char ** paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
-      const char ** paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      auto paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      auto paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
 
       for( int pos = 0; pos < len; ++pos )
       {
@@ -313,8 +313,8 @@ HB_FUNC( PQCONNECTSTARTPARAMS )
    if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
    {
 #if PG_VERSION_NUM >= 90000
-      const char ** paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
-      const char ** paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      auto paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      auto paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
 
       for( int pos = 0; pos < len; ++pos )
       {
@@ -412,8 +412,8 @@ HB_FUNC( PQPINGPARAMS )
    if( pParam && (len = static_cast<int>(hb_hashLen(pParam))) > 0 )
    {
 #if PG_VERSION_NUM >= 90100
-      const char ** paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
-      const char ** paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      auto paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
+      auto paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
 
       for( int pos = 0; pos < len; ++pos )
       {
@@ -825,7 +825,7 @@ HB_FUNC( PQEXECPARAMS )
       }
       else
       {
-         const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
+         auto paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
 
          for( int i = 0; i < n; ++i )
          {
@@ -1183,7 +1183,7 @@ HB_FUNC( PQESCAPESTRING )
 {
    auto source = hb_parcx(1);
    HB_SIZE      size   = strlen(source);
-   char *       dest   = static_cast<char*>(hb_xgrab(size * 2 + 1));
+   auto dest = static_cast<char*>(hb_xgrab(size * 2 + 1));
 
    PQescapeString(dest, source, static_cast<size_t>(size));
 
@@ -1698,7 +1698,7 @@ HB_FUNC( PQEXECPREPARED )
       auto aParam = hb_param(3, Harbour::Item::ARRAY);
       HB_SIZE  n      = hb_arrayLen(aParam);
 
-      const char ** paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
+      auto paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
 
       for( HB_SIZE i = 0; i < n; ++i )
       {

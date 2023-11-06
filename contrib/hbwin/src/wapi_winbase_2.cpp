@@ -158,7 +158,7 @@ HB_FUNC( WAPI_OUTPUTDEBUGSTRING )
 HB_FUNC( WAPI_QUERYDOSDEVICE )
 {
    void * hDeviceName;
-   LPTSTR lpTargetPath = static_cast<LPTSTR>(hb_xgrab(TARGET_PATH_BUFFER_SIZE * sizeof(TCHAR)));
+   auto lpTargetPath = static_cast<LPTSTR>(hb_xgrab(TARGET_PATH_BUFFER_SIZE * sizeof(TCHAR)));
    DWORD dwResult;
 
    dwResult = QueryDosDevice(HB_PARSTR(1, &hDeviceName, nullptr), lpTargetPath, TARGET_PATH_BUFFER_SIZE);

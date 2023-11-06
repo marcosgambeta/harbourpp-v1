@@ -316,7 +316,7 @@ static void hb_mixTagPrintNode(PMIXTAG pTag, PMIXNODE pNode, int iLevel)
 static PMIXNODE hb_mixTagCreateNode(PMIXTAG pTag, HB_BOOL fLeaf)
 {
    HB_SIZE nSize = (fLeaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + MIX_NODE_ORDER * pTag->uiTotalLen;
-   PMIXNODE pNode = static_cast<PMIXNODE>(hb_xgrabz(nSize));
+   auto pNode = static_cast<PMIXNODE>(hb_xgrabz(nSize));
 
    pNode->Leaf = fLeaf ? 1 : 0;
 
@@ -685,7 +685,7 @@ static PMIXTAG hb_mixTagCreate(const char * szTagName, PHB_ITEM pKeyExpr, PHB_IT
    HB_LONG lStep = 0;
    PHB_ITEM pItem, pEvalItem = nullptr;
 
-   PMIXTAG pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
+   auto pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
 
    pTag->pArea = pArea;
 

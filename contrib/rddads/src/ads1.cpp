@@ -2127,7 +2127,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 #if ADS_LIB_VERSION >= 600
             u32RetVal = AdsGetFieldRaw(pArea->hTable, ADSFIELD(uiIndex), pBuffer, &u32Length);
             if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == Harbour::DB::Field::VARLENGTH ) {
-               UNSIGNED8 * pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
+               auto pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
                u32RetVal = AdsGetFieldRaw(pArea->hTable, ADSFIELD(uiIndex), pucBuf, &u32Length);
                if( u32RetVal == AE_SUCCESS ) {
                   hb_itemPutCLPtr(pItem, reinterpret_cast<char*>(pucBuf), u32Length);
@@ -2143,7 +2143,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
                hb_adsOemAnsiFree(pBufOem);
                break;
             } else if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == Harbour::DB::Field::VARLENGTH ) {
-               UNSIGNED8 * pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
+               auto pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
                u32RetVal = AdsGetField(pArea->hTable, ADSFIELD(uiIndex), pucBuf, &u32Length, ADS_NONE);
                if( u32RetVal == AE_SUCCESS ) {
                   char * pBufOem = hb_adsAnsiToOem(static_cast<char*>(pucBuf), u32Length);
@@ -2161,7 +2161,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          else {
             u32RetVal = AdsGetField(pArea->hTable, ADSFIELD(uiIndex), pBuffer, &u32Length, ADS_NONE);
             if( u32RetVal == AE_INSUFFICIENT_BUFFER && pField->uiType == Harbour::DB::Field::VARLENGTH ) {
-               UNSIGNED8 * pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
+               auto pucBuf = static_cast<UNSIGNED8*>(hb_xgrab(u32Length));
                u32RetVal = AdsGetField(pArea->hTable, ADSFIELD(uiIndex), pucBuf, &u32Length, ADS_NONE);
                if( u32RetVal == AE_SUCCESS ) {
                   hb_itemPutCLPtr(pItem, reinterpret_cast<char*>(pucBuf), u32Length);
@@ -2350,7 +2350,7 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
             }
 #if ADS_LIB_VERSION >= 1000
             else if((pField->uiFlags & HB_FF_UNICODE) != 0 ) {
-               HB_WCHAR * pwBuffer = static_cast<HB_WCHAR*>(hb_xgrab(++u32Length * sizeof(HB_WCHAR)));
+               auto pwBuffer = static_cast<HB_WCHAR*>(hb_xgrab(++u32Length * sizeof(HB_WCHAR)));
                u32RetVal = AdsGetStringW(pArea->hTable, ADSFIELD(uiIndex), static_cast<WCHAR*>(pwBuffer), &u32Length, ADS_NONE);
                if( u32RetVal != AE_SUCCESS ) {
                   hb_itemPutC(pItem, nullptr);
@@ -2901,7 +2901,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
 
    ADSHANDLE hTable, hConnection;
    UNSIGNED32 uRetVal, u32Length, uiFldLen, uiLen;
-   UNSIGNED8 *ucfieldDefs, *ucfieldPtr;
+   UNSIGNED8 *ucfieldPtr;
    char szBuffer[MAX_STR_LEN + 1];
    HB_USHORT uiCount;
    LPFIELD pField;
@@ -2933,7 +2933,7 @@ static HB_ERRCODE adsCreate(ADSAREAP pArea, LPDBOPENINFO pCreateInfo)
       uiLen = 65135;
    }
 
-   ucfieldDefs = static_cast<UNSIGNED8*>(hb_xgrab(uiLen));
+   auto ucfieldDefs = static_cast<UNSIGNED8*>(hb_xgrab(uiLen));
    ucfieldDefs[0] = '\0';
    ucfieldPtr = ucfieldDefs;
 
@@ -3206,8 +3206,7 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
 
          if( u16Count ) {
-            UNSIGNED32 * puLocks;
-            puLocks = static_cast<UNSIGNED32*>(hb_xgrab((u16Count + 1) * sizeof(UNSIGNED32)));
+            auto puLocks = static_cast<UNSIGNED32*>(hb_xgrab((u16Count + 1) * sizeof(UNSIGNED32)));
             AdsGetAllLocks(pArea->hTable, puLocks, &u16Count);
 
             if( u16Count ) {
@@ -5129,9 +5128,7 @@ static void adsTSDRelease(void * cargo)
 
 static HB_ERRCODE adsInit(LPRDDNODE pRDD)
 {
-   PHB_TSD pTSD;
-
-   pTSD = static_cast<PHB_TSD>(hb_xgrab(sizeof(HB_TSD)));
+   auto pTSD = static_cast<PHB_TSD>(hb_xgrab(sizeof(HB_TSD)));
    HB_TSD_INIT(pTSD, sizeof(RDDADSDATA), nullptr, adsTSDRelease);
    pRDD->lpvCargo = static_cast<void*>(pTSD);
 
@@ -5662,7 +5659,7 @@ HB_FUNC( ADSCUSTOMIZEAOF )
       }
 
       if( u32NumRecs ) {
-         UNSIGNED32 * pu32Records = static_cast<UNSIGNED32*>(hb_xgrab(u32NumRecs * sizeof(UNSIGNED32)));
+         auto pu32Records = static_cast<UNSIGNED32*>(hb_xgrab(u32NumRecs * sizeof(UNSIGNED32)));
 
          if( HB_ISARRAY(1) ) {         /* convert array of recnos to C array */
             for( ulRecord = 0; ulRecord < u32NumRecs; ulRecord++ ) {

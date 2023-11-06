@@ -52,7 +52,6 @@ HB_FUNC( RANGEREM )
    if( (hb_parclen(1) > 0 || HB_ISNUM(1)) && (hb_parclen(2) > 0 || HB_ISNUM(2)) && HB_ISCHAR(3) ) {
       auto pcString = hb_parc(3);
       HB_SIZE sStrLen = hb_parclen(3);
-      char * pcRet;
       const unsigned char * pc;
       unsigned char ucChar1, ucChar2;
       HB_SIZE sRetIndex;
@@ -72,7 +71,7 @@ HB_FUNC( RANGEREM )
 
       iMode = (ucChar2 < ucChar1);
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       sRetIndex = 0;
       for( pc = reinterpret_cast<const unsigned char*>(pcString); pc < reinterpret_cast<const unsigned char*>(pcString) + sStrLen; pc++) {
          int iBool = ((*pc) >= ucChar1);
@@ -116,7 +115,6 @@ HB_FUNC( RANGEREPL )
    if( (hb_parclen(1) > 0 || HB_ISNUM(1)) && (hb_parclen(2) > 0 || HB_ISNUM(2)) && HB_ISCHAR(3) && (hb_parclen(4) > 0 || HB_ISNUM(4)) ) {
       auto pcString = hb_parc(3);
       HB_SIZE sStrLen = hb_parclen(3);
-      char * pcRet;
       const unsigned char * pc;
       unsigned char ucChar1, ucChar2, ucReplace;
       HB_SIZE sRetIndex;
@@ -142,7 +140,7 @@ HB_FUNC( RANGEREPL )
 
       iMode = (ucChar2 < ucChar1);
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       sRetIndex = 0;
       for( pc = reinterpret_cast<const unsigned char*>(pcString); pc < reinterpret_cast<const unsigned char*>(pcString) + sStrLen; pc++ ) {
          int iBool = ((*pc) >= ucChar1);

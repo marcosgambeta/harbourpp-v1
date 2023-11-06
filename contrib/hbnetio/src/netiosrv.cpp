@@ -358,7 +358,7 @@ static void s_consrvRet(PHB_CONSRV conn)
 
 static PHB_CONSRV s_consrvNew(PHB_SOCKEX sock, const char * szRootPath, HB_BOOL rpc)
 {
-   PHB_CONSRV conn = static_cast<PHB_CONSRV>(memset(hb_xgrab(sizeof(HB_CONSRV)), 0, sizeof(HB_CONSRV)));
+   auto conn = static_cast<PHB_CONSRV>(memset(hb_xgrab(sizeof(HB_CONSRV)), 0, sizeof(HB_CONSRV)));
 
    conn->sock = sock;
    conn->rpc = rpc;
@@ -1751,7 +1751,7 @@ HB_FUNC( NETIO_SERVER )
                                     }
                                     if( hb_threadMutexLock(conn->mutex) )
                                     {
-                                       PHB_CONSTREAM stream = static_cast<PHB_CONSTREAM>(hb_xgrab(sizeof(HB_CONSTREAM)));
+                                       auto stream = static_cast<PHB_CONSTREAM>(hb_xgrab(sizeof(HB_CONSTREAM)));
                                        stream->id = iStreamID;
                                        stream->type = iStreamType;
                                        stream->next = conn->streams;
@@ -1941,7 +1941,7 @@ HB_FUNC( NETIO_SRVSENDITEM )
 
       char * itmData = hb_itemSerialize(pItem, HB_SERIALIZE_NUMSIZE, &nLen);
       long lLen = static_cast<long>(nLen);
-      char * msg = static_cast<char*>(hb_xgrab(lLen + NETIO_MSGLEN));
+      auto msg = static_cast<char*>(hb_xgrab(lLen + NETIO_MSGLEN));
       HB_PUT_LE_UINT32(&msg[0], NETIO_SRVITEM);
       HB_PUT_LE_UINT32(&msg[4], iStreamID);
       HB_PUT_LE_UINT32(&msg[8], lLen);
@@ -1983,9 +1983,7 @@ HB_FUNC( NETIO_SRVSENDDATA )
 
    if( conn && conn->sock && !conn->stop && conn->mutex && iStreamID && lLen > 0 )
    {
-      char * msg;
-
-      msg = static_cast<char*>(hb_xgrab(lLen + NETIO_MSGLEN));
+      auto msg = static_cast<char*>(hb_xgrab(lLen + NETIO_MSGLEN));
       HB_PUT_LE_UINT32(&msg[0], NETIO_SRVDATA);
       HB_PUT_LE_UINT32(&msg[4], iStreamID);
       HB_PUT_LE_UINT32(&msg[8], lLen);

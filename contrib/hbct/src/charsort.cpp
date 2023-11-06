@@ -98,7 +98,6 @@ HB_FUNC( CHARSORT )
       /* get parameters */
       auto pcString = hb_parc(1);
 
-      char *  pcRet;
       HB_SIZE sStrLen     = hb_parclen(1);
       HB_SIZE sElementLen = hb_parnsdef(2, 1);
       HB_SIZE sIgnore     = hb_parnsdef(4, 0);
@@ -128,7 +127,7 @@ HB_FUNC( CHARSORT )
          return;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
       hb_xmemcpy(pcRet, pcString, sStrLen);
 
       if( iDescend ) {

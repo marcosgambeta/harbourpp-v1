@@ -8071,7 +8071,6 @@ IPicture * rr_LoadPicture(const char * filename, LONG * lwidth, LONG * lheight)
 static BITMAPINFO * PackedDibLoad(PTSTR szFileName)
 {
    BITMAPFILEHEADER bmfh;
-   BITMAPINFO *     pbmi;
    BOOL   bSuccess;
    DWORD  dwPackedDibSize, dwBytesRead;
    HANDLE hFile;
@@ -8091,7 +8090,7 @@ static BITMAPINFO * PackedDibLoad(PTSTR szFileName)
 
    dwPackedDibSize = bmfh.bfSize - sizeof(BITMAPFILEHEADER);
 
-   pbmi = static_cast<BITMAPINFO*>(hb_xgrab(dwPackedDibSize));
+   auto pbmi = static_cast<BITMAPINFO*>(hb_xgrab(dwPackedDibSize));
 
    bSuccess = ReadFile(hFile, pbmi, dwPackedDibSize, &dwBytesRead, nullptr);
    CloseHandle(hFile);
@@ -8204,7 +8203,7 @@ HBITMAP FindBitmapHandle(const char * szFileName, int * piWidth, int * piHeight)
 
 void AddBitmapHandle(const char * szFileName, HBITMAP hBitmap, int iWidth, int iHeight)
 {
-   BITMAP_HANDLE * pbhNew = static_cast<BITMAP_HANDLE*>(hb_xgrab(sizeof(BITMAP_HANDLE)));
+   auto pbhNew = static_cast<BITMAP_HANDLE*>(hb_xgrab(sizeof(BITMAP_HANDLE)));
 
    memset(pbhNew, 0, sizeof(BITMAP_HANDLE));
 
@@ -8242,7 +8241,7 @@ static IPicture * FindPictureHandle(const char * szFileName, int * piWidth, int 
 
 static void AddPictureHandle(const char * szFileName, IPicture * iPicture, int iWidth, int iHeight)
 {
-   PICTURE_HANDLE * pphNew = static_cast<PICTURE_HANDLE*>(hb_xgrab(sizeof(PICTURE_HANDLE)));
+   auto pphNew = static_cast<PICTURE_HANDLE*>(hb_xgrab(sizeof(PICTURE_HANDLE)));
 
    memset(pphNew, 0, sizeof(PICTURE_HANDLE));
    strcpy(pphNew->szFilename, szFileName);
@@ -8281,7 +8280,7 @@ static HBITMAP FindUserBitmapHandle(const char * szFileName, int * piWidth, int 
 
 static void AddUserBitmapHandle(const char * szFileName, HBITMAP hBitmap, int iWidth, int iHeight)
 {
-   BITMAP_HANDLE * pbhNew = static_cast<BITMAP_HANDLE*>(hb_xgrab(sizeof(BITMAP_HANDLE)));
+   auto pbhNew = static_cast<BITMAP_HANDLE*>(hb_xgrab(sizeof(BITMAP_HANDLE)));
 
    memset(pbhNew, 0, sizeof(BITMAP_HANDLE));
 
@@ -8727,7 +8726,7 @@ UINT LastControlId(UINT usWinNum, BYTE byCtrlClass)
 void AddControlHandle(UINT usWinNum, BYTE byCtrlClass, HWND hWndCtrl, UINT uiCtrlid, PHB_ITEM phiCodeBlock, RECT rCtrl, RECT rOffCtrl, byte bStyle)
 {
    WIN_DATA *     pWindowData = s_pWvwData->s_pWindows[usWinNum];
-   CONTROL_DATA * pcdNew      = static_cast<CONTROL_DATA*>(hb_xgrab(sizeof(CONTROL_DATA)));
+   auto pcdNew = static_cast<CONTROL_DATA*>(hb_xgrab(sizeof(CONTROL_DATA)));
 
    memset(pcdNew, 0, sizeof(CONTROL_DATA));
 

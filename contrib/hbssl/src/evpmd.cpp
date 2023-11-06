@@ -402,7 +402,7 @@ HB_FUNC( EVP_DIGESTFINAL )
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
-         unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(EVP_MAX_MD_SIZE + 1));
+         auto buffer = static_cast<unsigned char*>(hb_xgrab(EVP_MAX_MD_SIZE + 1));
          unsigned int size = 0;
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -433,7 +433,7 @@ HB_FUNC( EVP_DIGESTFINAL_EX )
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
-         unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(EVP_MAX_MD_SIZE + 1));
+         auto buffer = static_cast<unsigned char*>(hb_xgrab(EVP_MAX_MD_SIZE + 1));
          unsigned int size = 0;
 
          hb_retni(EVP_DigestFinal_ex(ctx, buffer, &size));
@@ -511,7 +511,7 @@ HB_FUNC( EVP_SIGNFINAL )
       EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
-         unsigned char * buffer = static_cast<unsigned char*>(hb_xgrab(EVP_PKEY_size(hb_EVP_PKEY_par(3)) + 1));
+         auto buffer = static_cast<unsigned char*>(hb_xgrab(EVP_PKEY_size(hb_EVP_PKEY_par(3)) + 1));
          unsigned int size = 0;
 
          hb_retni(EVP_SignFinal(ctx, buffer, &size, hb_EVP_PKEY_par(3)));

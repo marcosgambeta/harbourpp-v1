@@ -5521,7 +5521,7 @@ HBITMAP hb_gt_wvw_FindBitmapHandle(const char * szFileName, int * piWidth, int *
 
 void hb_gt_wvw_AddBitmapHandle(const char * szFileName, HBITMAP hBitmap, int iWidth, int iHeight)
 {
-   WVW_BMP * pbhNew = static_cast<WVW_BMP*>(hb_xgrabz(sizeof(WVW_BMP)));
+   auto pbhNew = static_cast<WVW_BMP*>(hb_xgrabz(sizeof(WVW_BMP)));
 
    hb_strncpy(pbhNew->szFilename, szFileName, sizeof(pbhNew->szFilename) - 1);
    pbhNew->hBitmap = hBitmap;
@@ -5560,7 +5560,7 @@ HBITMAP hb_gt_wvw_FindUserBitmapHandle(const char * szFileName, int * piWidth, i
 
 void hb_gt_wvw_AddUserBitmapHandle(const char * szFileName, HBITMAP hBitmap, int iWidth, int iHeight)
 {
-   WVW_BMP * pbhNew = static_cast<WVW_BMP*>(hb_xgrabz(sizeof(WVW_BMP)));
+   auto pbhNew = static_cast<WVW_BMP*>(hb_xgrabz(sizeof(WVW_BMP)));
 
    hb_strncpy(pbhNew->szFilename, szFileName, sizeof(pbhNew->szFilename) - 1);
    pbhNew->hBitmap = hBitmap;
@@ -5794,7 +5794,7 @@ int hb_gt_wvw_LastControlId(PWVW_WIN wvw_win, int nClass)
 void hb_gt_wvw_AddControlHandle(PWVW_WIN wvw_win, int nClass, HWND hWnd, int nId, PHB_ITEM pBlock, RECT rect, RECT offs, int nStyle)
 {
    if( wvw_win ) {
-      PWVW_CTL wvw_ctl = static_cast<PWVW_CTL>(hb_xgrabz(sizeof(WVW_CTL)));
+      auto wvw_ctl = static_cast<PWVW_CTL>(hb_xgrabz(sizeof(WVW_CTL)));
 
       wvw_ctl->nClass      = nClass;
       wvw_ctl->hWnd        = hWnd;

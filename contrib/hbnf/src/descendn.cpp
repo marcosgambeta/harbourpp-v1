@@ -50,7 +50,7 @@ HB_FUNC( FT_DESCEND )
    {
       HB_SIZE uiLen = hb_itemSize(iP);
 
-      char * pDescend = static_cast<char*>(hb_xgrab(uiLen));
+      auto pDescend = static_cast<char*>(hb_xgrab(uiLen));
 
       hb_itemCopyC(iP, pDescend, uiLen);
 

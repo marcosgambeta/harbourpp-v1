@@ -239,11 +239,10 @@ HB_FUNC( WIN_COMREAD )
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
    {
-      char * lpBuffer;
       DWORD dwNumberOfBytesToRead = static_cast<DWORD>(hb_parclen(2));
       DWORD dwNumberOfBytesRead;
 
-      lpBuffer = static_cast<char*>(hb_xgrab(dwNumberOfBytesToRead + 1));
+      auto lpBuffer = static_cast<char*>(hb_xgrab(dwNumberOfBytesToRead + 1));
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[iPort].dwError = 0;
       if( ReadFile(hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr) )
@@ -275,11 +274,10 @@ HB_FUNC( WIN_COMRECV )
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
    {
-      char * lpBuffer;
       DWORD dwNumberOfBytesToRead = static_cast<DWORD>(hb_parnl(2));
       DWORD dwNumberOfBytesRead;
 
-      lpBuffer = static_cast<char*>(hb_xgrab(dwNumberOfBytesToRead + 1));
+      auto lpBuffer = static_cast<char*>(hb_xgrab(dwNumberOfBytesToRead + 1));
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_READFILE;
       s_PortData[iPort].dwError = 0;
       if( ReadFile(hCommPort, lpBuffer, dwNumberOfBytesToRead, &dwNumberOfBytesRead, nullptr) )

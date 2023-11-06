@@ -386,7 +386,7 @@ HB_FUNC( WIN_SETDOCUMENTPROPERTIES )
 
          if( lSize > 0 )
          {
-            PDEVMODE pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
+            auto pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
 
             if( DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) == IDOK )
             {
@@ -501,7 +501,7 @@ HB_FUNC( WIN_GETDOCUMENTPROPERTIES )
 
       if( lSize > 0 )
       {
-         PDEVMODE pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
+         auto pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
 
          if( DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) == IDOK )
          {

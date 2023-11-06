@@ -287,7 +287,7 @@ static HB_FILE_FUNCS s_fileFuncs =
 static PHB_FILE s_fileNew( HB_FHANDLE hProcess, HB_FHANDLE hPipeRD,
                            HB_FHANDLE hPipeWR, HB_MAXINT timeout )
 {
-   PHB_FILE pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
+   auto pFile = static_cast<PHB_FILE>(hb_xgrab(sizeof(HB_FILE)));
 
    pFile->pFuncs  = &s_fileFuncs;
    pFile->hProcess = hProcess;

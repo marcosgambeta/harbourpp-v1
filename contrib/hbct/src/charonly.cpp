@@ -66,7 +66,6 @@ static void do_charonly(int iSwitch)
       HB_SIZE sStrLen = hb_parclen(2);
       auto pcOnlySet = hb_parc(1);
       HB_SIZE sOnlySetLen = hb_parclen(1);
-      char * pcRet;
       HB_SIZE sRetStrLen = 0;
       int iShift;
 
@@ -99,7 +98,7 @@ static void do_charonly(int iSwitch)
          iShift = 1;
       }
 
-      pcRet = static_cast<char*>(hb_xgrab(sStrLen));
+      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
 
       for( const char * pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift ) {
          const char * pc = ct_at_exact_forward(pcOnlySet, sOnlySetLen, pcSub, iShift, nullptr);

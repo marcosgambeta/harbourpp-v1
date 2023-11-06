@@ -207,7 +207,7 @@ static PHB_ITEM hb_gdFontItemNew( gdFontPtr font )
 
 static void * LoadImageFromHandle( HB_FHANDLE fhandle, int sz )
 {
-   void * iptr = hb_xgrab(sz);
+   auto iptr = hb_xgrab(sz);
 
    hb_fsReadLarge(fhandle, iptr, static_cast<HB_SIZE>(sz));
 
@@ -637,7 +637,7 @@ HB_FUNC( GDIMAGEPOLYGON ) /* original: void gdImagePolygon(gdImagePtr im, gdPoin
       int      color       = hb_parni(3);
 
       /* Max Points of polygon */
-      gdPoint * points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
+      auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
       for( int i = 0; i < pointsTotal; i++ )
       {
@@ -677,7 +677,7 @@ HB_FUNC( GDIMAGEOPENPOLYGON ) /* original: void gdImageOpenPolygon(gdImagePtr im
       int      color       = hb_parni(3);
 
       /* Max Points of polygon */
-      gdPoint * points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
+      auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
       for( int i = 0; i < pointsTotal; i++ )
       {
@@ -737,7 +737,7 @@ HB_FUNC( GDIMAGEFILLEDPOLYGON ) /* original: void gdImageFilledPolygon(gdImagePt
       int      color       = hb_parni(3);
 
       /* Max Points of polygon */
-      gdPoint * points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
+      auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
       for( int i = 0; i < pointsTotal; i++ )
       {
@@ -986,7 +986,7 @@ HB_FUNC( GDIMAGESETSTYLE ) /* original: void gdImageSetStyle(gdImagePtr im, int 
       int      styleLength = static_cast<int>(hb_arrayLen(pStyles));
 
       /* Max numbery of Styles */
-      int * styles = static_cast<int*>(hb_xgrab(sizeof(int) * styleLength));
+      auto styles = static_cast<int*>(hb_xgrab(sizeof(int) * styleLength));
 
       for( int i = 0; i < styleLength; i++ )
       {

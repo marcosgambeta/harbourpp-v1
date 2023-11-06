@@ -24,13 +24,12 @@ HB_FUNC( GT_NEWFLAG )
 
    if( FlagCount > 0 )
    {
-      char *   FlagString;
       unsigned ByteCount = static_cast<unsigned>((FlagCount / 8) + 1);
       unsigned Byte;
 
       if( !( FlagCount % 8 ) )
          --ByteCount;
-      FlagString = static_cast<char*>(hb_xgrab(ByteCount));
+      auto FlagString = static_cast<char*>(hb_xgrab(ByteCount));
       for( Byte = 0; Byte < ByteCount; Byte++ )
          FlagString[Byte] = 0;
       hb_retclen(FlagString, ByteCount);

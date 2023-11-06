@@ -159,7 +159,7 @@ HB_FUNC( FILESTR )
          HB_FOFFSET nFileSize = hb_fsSeekLarge(hFile, 0, FS_END);
          HB_FOFFSET nPos = hb_fsSeekLarge(hFile, static_cast<HB_FOFFSET>(hb_parnint(3)), FS_SET);
          HB_ISIZ nLength;
-         char * pcResult, * pCtrlZ;
+         char * pCtrlZ;
          HB_BOOL bCtrlZ = hb_parl(4);
 
          if( HB_ISNUM(2) ) {
@@ -171,7 +171,7 @@ HB_FUNC( FILESTR )
             nLength = static_cast<HB_ISIZ>(nFileSize - nPos);
          }
 
-         pcResult = static_cast<char*>(hb_xgrab(nLength + 1));
+         auto pcResult = static_cast<char*>(hb_xgrab(nLength + 1));
          if( nLength > 0 ) {
             nLength = hb_fsReadLarge(hFile, pcResult, static_cast<HB_SIZE>(nLength));
          }
@@ -196,11 +196,10 @@ HB_FUNC( FILESTR )
 HB_FUNC( SCREENFILE )
 {
    if( HB_ISCHAR(1) ) {
-      char * pBuffer;
       HB_SIZE nSize;
 
       hb_gtRectSize(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize);
-      pBuffer = static_cast<char*>(hb_xgrab(nSize));
+      auto pBuffer = static_cast<char*>(hb_xgrab(nSize));
 
       hb_gtSave(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer);
 
@@ -217,7 +216,6 @@ HB_FUNC( FILESCREEN )
       HB_FHANDLE hFile = hb_fsOpen(hb_parc(1), FO_READ);
 
       if( hFile != FS_ERROR ) {
-         char * pBuffer;
          HB_SIZE nSize;
          HB_SIZE nLength;
 
@@ -226,7 +224,7 @@ HB_FUNC( FILESCREEN )
          }
 
          hb_gtRectSize(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), &nSize);
-         pBuffer = static_cast<char*>(hb_xgrab(nSize));
+         auto pBuffer = static_cast<char*>(hb_xgrab(nSize));
 
          nLength = hb_fsReadLarge(hFile, pBuffer, nSize);
          hb_gtRest(0, 0, hb_gtMaxRow(), hb_gtMaxCol(), pBuffer);

@@ -118,12 +118,10 @@ static HB_USHORT s_uiBackgroundMaxTask = 0;
 
 HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive)
 {
-   PHB_BACKGROUNDTASK pBkgTask;
-
    /* store a copy of passed codeblock
     */
 
-   pBkgTask = static_cast<PHB_BACKGROUNDTASK>(hb_xgrab(sizeof(HB_BACKGROUNDTASK)));
+   auto pBkgTask = static_cast<PHB_BACKGROUNDTASK>(hb_xgrab(sizeof(HB_BACKGROUNDTASK)));
 
    pBkgTask->pTask    = hb_itemNew(pBlock);
    pBkgTask->dSeconds = hb_dateSeconds();

@@ -190,7 +190,7 @@ static HB_BOOL s_fileExists(PHB_FILE_FUNCS pFuncs, const char * pszFileName, cha
 
    pszName = s_bz2io_name(pszFileName, nullptr);
    if( pRetPath ) {
-      char * pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
+      auto pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
       int iPref = static_cast<int>(pszName - pszFileName);
 
       fResult = hb_fileExists(pszName, pszNameBuf);
@@ -670,7 +670,7 @@ static const HB_FILE_FUNCS s_fileFuncs =
 static PHB_FILE s_filebz2New(PHB_FILE pFile, int iMode, int iBlockSize)
 {
    if( pFile ) {
-      PHB_FILE pFileBZ2 = static_cast<PHB_FILE>(hb_xgrabz(sizeof(HB_FILE)));
+      auto pFileBZ2 = static_cast<PHB_FILE>(hb_xgrabz(sizeof(HB_FILE)));
 
       pFileBZ2->pFuncs = &s_fileFuncs;
       pFileBZ2->pFile = pFile;

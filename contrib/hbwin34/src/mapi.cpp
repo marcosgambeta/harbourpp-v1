@@ -98,7 +98,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
 
          int iString = 0;
 
-         void ** hString = static_cast<void**>(hb_xgrab((4 + 2 + (2 * nRecpCount) + (2 * nFileCount)) * sizeof(void*)));
+         auto hString = static_cast<void**>(hb_xgrab((4 + 2 + (2 * nRecpCount) + (2 * nFileCount)) * sizeof(void*)));
 
          MapiMessage note{};
          note.lpszSubject      = const_cast<LPSTR>(HB_PARSTR(1, &hString[iString++], nullptr));

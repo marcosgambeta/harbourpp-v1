@@ -162,11 +162,10 @@ static HB_ERRCODE hb_adsUpdateAreaFlags( ADSXAREAP pArea )
 
 static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USHORT uiLen)
 {
-   PMIXKEY pKey;
    double  dbl;
    HB_BYTE buf[8];
 
-   pKey = static_cast<PMIXKEY>(hb_xgrab(sizeof(HB_ULONG) + uiLen));
+   auto pKey = static_cast<PMIXKEY>(hb_xgrab(sizeof(HB_ULONG) + uiLen));
    pKey->rec = ulRecNo;
 
    switch( bType ) {
@@ -373,7 +372,6 @@ static int mixCompareKey( PMIXTAG pTag, HB_ULONG ulKeyPos, PMIXKEY pKey, HB_USHO
 static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem, PHB_ITEM pWhileItem,
                              HB_BYTE bType, HB_USHORT uiLen, ADSXAREAP pArea )
 {
-   PMIXTAG             pTag;
    PMIXKEY             pKey;
    LPDBORDERCONDINFO   pOrdCondInfo = pArea->adsarea.area.lpdbOrdCondInfo;
    ADSHANDLE           hOrder;
@@ -382,7 +380,7 @@ static PMIXTAG mixTagCreate( const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM
    PHB_ITEM            pItem, pEvalItem = nullptr;
 
 
-   pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
+   auto pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
 
    pTag->szName = static_cast<char*>(hb_xgrab(MIX_MAXTAGNAMELEN + 1));
    hb_strncpyUpperTrim( pTag->szName, szTagName, MIX_MAXTAGNAMELEN );
@@ -554,7 +552,6 @@ static PMIXTAG mixFindTag( ADSXAREAP pArea, PHB_ITEM pOrder )
 
 static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
 {
-   PMIXUPDATE pUpdate;
    PMIXTAG    pTag;
    int        iTag;
 
@@ -569,7 +566,7 @@ static PMIXUPDATE mixUpdateCreate( ADSXAREAP pArea )
       iTag++;
    }
 
-   pUpdate = static_cast<PMIXUPDATE>(hb_xgrab(sizeof(MIXUPDATE) * iTag));
+   auto pUpdate = static_cast<PMIXUPDATE>(hb_xgrab(sizeof(MIXUPDATE) * iTag));
    pTag = pArea->pTagList;
    iTag = 0;
    while( pTag ) {
