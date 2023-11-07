@@ -86,7 +86,7 @@ static int s_pp_openFile(void * cargo, char * szFileName, HB_BOOL fBefore, HB_BO
             auto pFileItem = hb_hashGetCItemPtr(pIncItem, szFileName);
 
             if( pFileItem ) {
-               HB_SIZE nLen = hb_itemGetCLen(pFileItem);
+               auto nLen = hb_itemGetCLen(pFileItem);
                if( nLen ) {
                   *pBufPtr = hb_itemGetCPtr(pFileItem);
                   *pnLen = nLen;
