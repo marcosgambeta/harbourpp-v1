@@ -192,7 +192,7 @@ HB_FUNC( HB_IDLEADD )
 HB_FUNC( HB_IDLEDEL )
 {
    PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackTestTSD(&s_idleData));
-   void * pID = hb_parptr(1);
+   auto pID = hb_parptr(1);
 
    if( pID && pIdleData && pIdleData->pIdleTasks ) {
       int iTask = 0;
