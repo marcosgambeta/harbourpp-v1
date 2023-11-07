@@ -2533,10 +2533,9 @@ HB_FUNC( __OLEGETNAMEID )
 static void hb_oleInvokeCall(WORD wFlags)
 {
    HB_USHORT uiOffset = 0;
-   PHB_ITEM pObject;
    IDispatch * pDisp;
 
-   pObject = hb_stackSelfItem();
+   auto pObject = hb_stackSelfItem();
    if( HB_IS_NIL(pObject) )
    {
       pObject = hb_param(++uiOffset, Harbour::Item::ANY);

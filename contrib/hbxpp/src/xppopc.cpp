@@ -58,7 +58,7 @@
 
 HB_FUNC( XPP_INDEX )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pIndex = hb_param(1, Harbour::Item::ANY);
 
    if( hb_pcount() == 2 ) /* ASSIGN */
@@ -137,7 +137,7 @@ HB_FUNC( XPP_INDEX )
 
 HB_FUNC( XPP_INCLUDE )
 {
-   PHB_ITEM pSelf = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pKey = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_ARRAY(pSelf) )

@@ -1281,7 +1281,6 @@ HB_FUNC( __CSTR_COPYTO )
 {
    static PHB_DYNS s_pVALUE = nullptr;
    auto pTarget = hb_param(1, Harbour::Item::ANY);
-   PHB_ITEM        pStructure;
    void *          pPointer;
 
    if( s_pVALUE == nullptr ) {
@@ -1303,7 +1302,7 @@ HB_FUNC( __CSTR_COPYTO )
       return;
    }
 
-   pStructure = hb_stackSelfItem();
+   auto pStructure = hb_stackSelfItem();
    hb_vmPushDynSym(s_pVALUE);
    hb_vmPush(pStructure);
    hb_vmSend(0);

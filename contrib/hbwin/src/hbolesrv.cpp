@@ -476,7 +476,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
       {
          if( pParams->cArgs == 1 && hb_dynsymIsMemvar(pDynSym) )
          {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
 
             hb_oleVariantToItemEx(pItem, &pParams->rgvarg[0], uiClass);
             hb_memvarSetValue(hb_dynsymSymbol(pDynSym), pItem);
@@ -492,7 +492,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
       {
          if( pVarResult )
          {
-            PHB_ITEM pItem = hb_stackAllocItem();
+            auto pItem = hb_stackAllocItem();
             hb_memvarGet(pItem, hb_dynsymSymbol(pDynSym));
             hb_oleItemToVariantEx(pVarResult, pItem, s_objItemToVariant);
             hb_stackPop();

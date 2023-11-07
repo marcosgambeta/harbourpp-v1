@@ -126,7 +126,7 @@ static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR * lpszArgv)
 
             for( DWORD i = 1; i < dwArgc; ++i )
             {
-               PHB_ITEM pItem = hb_stackAllocItem();
+               auto pItem = hb_stackAllocItem();
 
                HB_ITEMPUTSTR(pItem, lpszArgv[i]);
                if( hb_cmdargIsInternal(hb_itemGetCPtr(pItem), nullptr) )

@@ -86,7 +86,7 @@ HB_FUNC( XHB_HASHERROR )
 
 HB_FUNC( XHB_INCLUDE )
 {
-   PHB_ITEM pSelf = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pKey = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_ARRAY(pSelf) ) {
@@ -103,7 +103,7 @@ HB_FUNC( XHB_INCLUDE )
 
 HB_FUNC( XHB_EEQUAL )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -126,7 +126,7 @@ HB_FUNC( XHB_EEQUAL )
 
 HB_FUNC( XHB_EQUAL )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -149,7 +149,7 @@ HB_FUNC( XHB_EQUAL )
 
 HB_FUNC( XHB_NOTEQUAL )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -172,7 +172,7 @@ HB_FUNC( XHB_NOTEQUAL )
 
 HB_FUNC( XHB_LESS )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -193,7 +193,7 @@ HB_FUNC( XHB_LESS )
 
 HB_FUNC( XHB_LESSEQ )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -214,7 +214,7 @@ HB_FUNC( XHB_LESSEQ )
 
 HB_FUNC( XHB_GREATER )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -235,7 +235,7 @@ HB_FUNC( XHB_GREATER )
 
 HB_FUNC( XHB_GREATEREQ )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -263,7 +263,7 @@ HB_FUNC( XHB_GREATEREQ )
 
 HB_FUNC( XHB_INDEX )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pIndex = hb_param(1, Harbour::Item::ANY);
 
    if( hb_pcount() == 2 ) { /* ASSIGN */
@@ -331,7 +331,7 @@ HB_FUNC( XHB_INDEX )
 
 HB_FUNC( XHB_PLUS )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -357,7 +357,7 @@ HB_FUNC( XHB_PLUS )
 
 HB_FUNC( XHB_MINUS )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -383,7 +383,7 @@ HB_FUNC( XHB_MINUS )
 
 HB_FUNC( XHB_INC )
 {
-   PHB_ITEM pSelf = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
 
    if( HB_IS_NUMERIC(pSelf) ) {
       hb_retnd(hb_itemGetND(pSelf) + 1);
@@ -400,7 +400,7 @@ HB_FUNC( XHB_INC )
 
 HB_FUNC( XHB_DEC )
 {
-   PHB_ITEM pSelf = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
 
    if( HB_IS_NUMERIC(pSelf) ) {
       hb_retnd(hb_itemGetND(pSelf) - 1);
@@ -417,7 +417,7 @@ HB_FUNC( XHB_DEC )
 
 HB_FUNC( XHB_MULT )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -444,7 +444,7 @@ HB_FUNC( XHB_MULT )
 
 HB_FUNC( XHB_DIV )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -479,7 +479,7 @@ HB_FUNC( XHB_DIV )
 
 HB_FUNC( XHB_MOD )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {
@@ -515,7 +515,7 @@ HB_FUNC( XHB_MOD )
 
 HB_FUNC( XHB_POW )
 {
-   PHB_ITEM pSelf  = hb_stackSelfItem();
+   auto pSelf = hb_stackSelfItem();
    auto pValue = hb_param(1, Harbour::Item::ANY);
 
    if( HB_IS_NUMERIC(pSelf) && hb_itemGetCLen(pValue) == 1 ) {

@@ -238,7 +238,7 @@ HB_FUNC_STATIC( _AASTACK )
 
 HB_FUNC_STATIC( ERRORINIT )
 {
-   PHB_ITEM pError = hb_stackSelfItem();
+   auto pError = hb_stackSelfItem();
 
    if( s_nErrObjSize != 0 ) {
       auto pStack = hb_itemArrayNew(0);
