@@ -1685,7 +1685,7 @@ HB_FUNC( __DBGSETENTRY )
 
 HB_FUNC( __DBGSETGO )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgSetGo(ptr);
@@ -1694,7 +1694,7 @@ HB_FUNC( __DBGSETGO )
 
 HB_FUNC( __DBGSETTRACE )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgSetTrace(ptr);
@@ -1703,7 +1703,7 @@ HB_FUNC( __DBGSETTRACE )
 
 HB_FUNC( __DBGSETCBTRACE )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgSetCBTrace(ptr, hb_parl(2));
@@ -1712,7 +1712,7 @@ HB_FUNC( __DBGSETCBTRACE )
 
 HB_FUNC( __DBGSETNEXTROUTINE )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgSetNextRoutine(ptr);
@@ -1721,7 +1721,7 @@ HB_FUNC( __DBGSETNEXTROUTINE )
 
 HB_FUNC( __DBGSETQUIT )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgSetQuit(ptr);
@@ -1730,7 +1730,7 @@ HB_FUNC( __DBGSETQUIT )
 
 HB_FUNC( __DBGSETTOCURSOR )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgSetToCursor(ptr, hb_parc(2), hb_parni(3));
@@ -1739,7 +1739,7 @@ HB_FUNC( __DBGSETTOCURSOR )
 
 HB_FUNC( __DBGGETEXPRVALUE )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       PHB_ITEM pItem;
@@ -1761,7 +1761,7 @@ HB_FUNC( __DBGGETEXPRVALUE )
 
 HB_FUNC( __DBGGETSOURCEFILES )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_itemReturnRelease(hb_dbgGetSourceFiles(ptr));
@@ -1770,7 +1770,7 @@ HB_FUNC( __DBGGETSOURCEFILES )
 
 HB_FUNC( __DBGISVALIDSTOPLINE )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_retl(hb_dbgIsValidStopLine(ptr, hb_parc(2), hb_parni(3)));
@@ -1779,7 +1779,7 @@ HB_FUNC( __DBGISVALIDSTOPLINE )
 
 HB_FUNC( __DBGADDBREAK )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgAddBreak(ptr, hb_parc(2), hb_parni(3), hb_parc(4));
@@ -1788,7 +1788,7 @@ HB_FUNC( __DBGADDBREAK )
 
 HB_FUNC( __DBGDELBREAK )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgDelBreak(ptr, hb_parni(2));
@@ -1797,7 +1797,7 @@ HB_FUNC( __DBGDELBREAK )
 
 HB_FUNC( __DBGISBREAK )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
    auto szModule = hb_parc(2);
 
    if( ptr && szModule ) {
@@ -1807,7 +1807,7 @@ HB_FUNC( __DBGISBREAK )
 
 HB_FUNC( __DBGGETBREAKPOINTS )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_itemReturnRelease(hb_dbgActivateBreakArray(static_cast<HB_DEBUGINFO*>(ptr)));
@@ -1816,7 +1816,7 @@ HB_FUNC( __DBGGETBREAKPOINTS )
 
 HB_FUNC( __DBGADDWATCH )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgAddWatch(ptr, hb_parc(2), hb_parl(3));
@@ -1825,7 +1825,7 @@ HB_FUNC( __DBGADDWATCH )
 
 HB_FUNC( __DBGDELWATCH )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgDelWatch(ptr, hb_parni(2));
@@ -1834,7 +1834,7 @@ HB_FUNC( __DBGDELWATCH )
 
 HB_FUNC( __DBGSETWATCH )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_dbgSetWatch(ptr, hb_parni(2), hb_parc(3), hb_parl(4));
@@ -1843,7 +1843,7 @@ HB_FUNC( __DBGSETWATCH )
 
 HB_FUNC( __DBGCNTWATCH )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_retni(hb_dbgCountWatch(ptr));
@@ -1852,7 +1852,7 @@ HB_FUNC( __DBGCNTWATCH )
 
 HB_FUNC( __DBGGETWATCHPOINTS )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_itemReturnRelease(hb_dbgActivateWatchArray(static_cast<HB_DEBUGINFO*>(ptr)));
@@ -1866,7 +1866,7 @@ HB_FUNC( __DBGGETSETS )
 
 HB_FUNC( __DBGGETMODULENAME )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       hb_retc(hb_dbgGetModuleName(ptr, hb_parc(2)));
@@ -1875,7 +1875,7 @@ HB_FUNC( __DBGGETMODULENAME )
 
 HB_FUNC( __DBGMODULEMATCH )
 {
-   void * ptr = hb_parptr(1);
+   auto ptr = hb_parptr(1);
 
    if( ptr ) {
       auto szModule1 = hb_parc(2);
