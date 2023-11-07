@@ -89,7 +89,7 @@ static char set_char(PHB_ITEM pItem, char oldChar)
 
    if( HB_IS_STRING(pItem) ) {
       /* Only replace if string has at least one character. */
-      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      auto nLen = hb_itemGetCLen(pItem);
       if( nLen > 0 ) {
          newChar = *hb_itemGetCPtr(pItem);
       }
@@ -114,7 +114,7 @@ static bool set_logical(PHB_ITEM pItem, bool bDefault)
          bLogical = hb_itemGetL(pItem);
       } else if( HB_IS_STRING(pItem) ) {
          auto szString = hb_itemGetCPtr(pItem);
-         HB_SIZE nLen = hb_itemGetCLen(pItem);
+         auto nLen = hb_itemGetCLen(pItem);
 
          if( nLen >= 2
              && (static_cast<HB_UCHAR>(szString[0]) == 'O' || static_cast<HB_UCHAR>(szString[0]) == 'o')
