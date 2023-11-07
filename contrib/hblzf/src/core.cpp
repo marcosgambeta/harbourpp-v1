@@ -98,7 +98,7 @@ HB_FUNC( HB_LZF_COMPRESS )
 
    if( pArg )
    {
-      HB_SIZE in_len = hb_itemGetCLen(pArg);
+      auto in_len = hb_itemGetCLen(pArg);
 
       if( in_len )
       {
@@ -160,7 +160,7 @@ HB_FUNC( HB_LZF_DECOMPRESS )
 
    if( pArg )
    {
-      HB_SIZE in_len = hb_itemGetCLen(pArg);
+      auto in_len = hb_itemGetCLen(pArg);
 
       if( in_len )
       {

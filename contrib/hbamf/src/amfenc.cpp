@@ -298,7 +298,7 @@ static int amf3_add_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
    }
 
    if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr ) {
-      HB_SIZE str_len = hb_itemGetCLen(pItem);
+      auto str_len = hb_itemGetCLen(pItem);
       if( str_len > 3 && str_len < 32 ) { /* do this only for mid-sized strings */
          if( !context->use_refs ) {
             result = static_cast<int>(context->strstr_count);
@@ -344,7 +344,7 @@ static int amf3_get_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
    }
 
    if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr ) {
-      HB_SIZE str_len = hb_itemGetCLen(pItem);
+      auto str_len = hb_itemGetCLen(pItem);
       if( str_len > 3 && str_len < 32 ) { /* do this only for mid-sized strings */
          PHB_ITEM pStrIdx = hb_hashGetItemPtr(context->strstr_ref, pItem, 0);
          if( pStrIdx ) {
@@ -384,7 +384,7 @@ static int amf3_encode_reference(amfContext * context, PHB_ITEM pHash, PHB_ITEM 
 static bool amf3_serialize_string(amfContext * context, PHB_ITEM pItem)
 {
    int     result;
-   HB_SIZE len = hb_itemGetCLen(pItem);
+   auto len = hb_itemGetCLen(pItem);
 
    if( len == 0 ) {
       return writeByte(context, EMPTY_STRING_TYPE);

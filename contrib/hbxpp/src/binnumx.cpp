@@ -55,7 +55,7 @@ HB_FUNC( BIN2U )
 
    if( pItem != nullptr )
    {
-      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      auto nLen = hb_itemGetCLen(pItem);
       if( nLen )
       {
          const char * pszString = hb_itemGetCPtr(pItem);

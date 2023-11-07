@@ -565,7 +565,7 @@ static PHB_ITEM class_def_from_classname(/* amfContext * context, */ PHB_ITEM pC
    PHB_ITEM  pClass;
    PHB_ITEM  pKey;
    char *    pszBuffer = hb_itemGetC(pClassName);
-   HB_SIZE   nLen      = hb_itemGetCLen(pClassName);
+   auto nLen = hb_itemGetCLen(pClassName);
 
    hb_strUpper(pszBuffer, nLen);
 

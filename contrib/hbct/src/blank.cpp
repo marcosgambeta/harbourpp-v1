@@ -84,7 +84,7 @@ HB_FUNC( BLANK )
       auto pMode = hb_param(2, Harbour::Item::LOGICAL);
 
       if( pMode && hb_itemGetL(pMode) ) {
-         HB_SIZE nLen = hb_itemGetCLen(pItem);
+         auto nLen = hb_itemGetCLen(pItem);
          auto szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 
          if( nLen > 0 ) {

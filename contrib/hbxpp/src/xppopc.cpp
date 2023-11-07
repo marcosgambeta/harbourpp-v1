@@ -77,7 +77,7 @@ HB_FUNC( XPP_INDEX )
          }
          else if( HB_IS_STRING(pSelf) )
          {
-            HB_SIZE nLen = hb_itemGetCLen(pSelf);
+            auto nLen = hb_itemGetCLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
             {
                char cValue = HB_IS_STRING(pValue) ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
@@ -117,7 +117,7 @@ HB_FUNC( XPP_INDEX )
          }
          else if( HB_IS_STRING(pSelf) )
          {
-            HB_SIZE nLen = hb_itemGetCLen(pSelf);
+            auto nLen = hb_itemGetCLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
                hb_retclen(hb_itemGetCPtr(pSelf) + nIndex - 1, 1);
             else

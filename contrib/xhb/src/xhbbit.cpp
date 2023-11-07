@@ -56,8 +56,8 @@ static void s_xhb_bitOper(int iOper)
 {
    auto pItem1 = hb_param(1, Harbour::Item::ANY);
    auto pItem2 = hb_param(2, Harbour::Item::ANY);
-   HB_SIZE nLen1 = hb_itemGetCLen(pItem1),
-           nLen2 = hb_itemGetCLen(pItem2);
+   auto nLen1 = hb_itemGetCLen(pItem1);
+   auto nLen2 = hb_itemGetCLen(pItem2);
 
    if( pItem1 && pItem2 ) {
       if( HB_IS_NUMERIC(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) ) {

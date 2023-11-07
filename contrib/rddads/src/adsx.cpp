@@ -170,7 +170,7 @@ static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USH
 
    switch( bType ) {
       case 'C': {
-         HB_SIZE nLen = hb_itemGetCLen(pItem);
+         auto nLen = hb_itemGetCLen(pItem);
          if( nLen > static_cast<HB_SIZE>(uiLen) ) {
             nLen = uiLen;
          }
@@ -720,7 +720,7 @@ static HB_ERRCODE adsxSeek( ADSXAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, H
    pMixKey = mixKeyNew( pKey, bFindLast ? static_cast<HB_ULONG>(-1) : 0, pArea->pTagCurrent->bType, uiLen );
 
    if( pArea->pTagCurrent->bType == 'C' ) {
-      HB_SIZE nLen = hb_itemGetCLen(pKey);
+      auto nLen = hb_itemGetCLen(pKey);
       if( nLen < static_cast<HB_SIZE>(uiLen) ) {
          uiLen = static_cast<HB_USHORT>(nLen);
       }

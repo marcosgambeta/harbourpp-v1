@@ -656,7 +656,7 @@ HB_FUNC( SSL_WRITE )
 
       if( ssl != nullptr ) {
          auto pBuffer = hb_param(2, Harbour::Item::STRING);
-         HB_SIZE  nLen = hb_itemGetCLen(pBuffer);
+         auto nLen = hb_itemGetCLen(pBuffer);
 
          if( HB_ISNUM(3) ) {
             HB_SIZE nWrite = static_cast<HB_SIZE>(hb_parnl(3));

@@ -187,12 +187,12 @@ HB_FUNC( ZEROINSERT )
 
    if( pString ) {
       const char * szText;
-      HB_SIZE nLen, nBits, n;
+      HB_SIZE nBits, n;
       unsigned int uiVal;
       int i;
 
       szText = hb_itemGetCPtr(pString);
-      nLen = hb_itemGetCLen(pString);
+      auto nLen = hb_itemGetCLen(pString);
       uiVal = 0;
       nBits = 0;
       /* NOTE: trailing zero accessed intentionally */
@@ -260,12 +260,12 @@ HB_FUNC( ZEROREMOVE )
 
    if( pString ) {
       const char * szText;
-      HB_SIZE nLen, nDest, nBits, n;
+      HB_SIZE nDest, nBits, n;
       int i, j, l;
       unsigned char ucVal;
 
       szText = hb_itemGetCPtr(pString);
-      nLen = hb_itemGetCLen(pString);
+      auto nLen = hb_itemGetCLen(pString);
       j = 8;
       l = 0;
       ucVal = 0;

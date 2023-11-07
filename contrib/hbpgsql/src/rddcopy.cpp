@@ -137,7 +137,7 @@ static HB_BOOL exportBufSqlVar(pgCopyContext * context, PHB_ITEM pValue, const c
       case Harbour::Item::STRING:
       case Harbour::Item::MEMO:
       {
-         HB_SIZE      nLen  = hb_itemGetCLen(pValue);
+         auto nLen = hb_itemGetCLen(pValue);
          HB_SIZE      nCnt  = 0;
          const char * szVal = hb_itemGetCPtr(pValue);
 
