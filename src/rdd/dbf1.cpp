@@ -667,10 +667,9 @@ static bool hb_dbfPasswordSet(DBFAREAP pArea, PHB_ITEM pPasswd, bool fRaw)
 #endif
 
    char pKeyBuffer[8];
-   HB_SIZE nLen;
    bool fKeySet = false, fSet;
 
-   nLen = hb_itemGetCLen(pPasswd);
+   auto nLen = hb_itemGetCLen(pPasswd);
 
    fSet = !pArea->fHasMemo && HB_IS_STRING(pPasswd) && (!fRaw || nLen == 8);
    if( fSet ) {
@@ -3779,12 +3778,11 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
                    pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::IMAGE ||
                    pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::BLOB ||
                    pArea->area.lpFields[uiFields].uiType == Harbour::DB::Field::OLE ) {
-                  HB_SIZE nLen;
                   errResult = SELF_GETVALUE(&pArea->area, uiFields + 1, pInfo);
                   if( errResult != Harbour::SUCCESS ) {
                      break;
                   }
-                  nLen = hb_itemGetCLen(pInfo);
+                  auto nLen = hb_itemGetCLen(pInfo);
                   if( nLen > 0 ) {
                      pResult = static_cast<HB_BYTE*>(hb_xrealloc(pResult, nLength + nLen + 1));
                      memcpy(pResult + nLength, hb_itemGetCPtr(pInfo), nLen);

@@ -132,7 +132,7 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
    switch( hb_itemType(pValue) ) {
       case Harbour::Item::STRING:
       case Harbour::Item::MEMO: {
-         HB_SIZE nLen = hb_itemGetCLen(pValue);
+         auto nLen = hb_itemGetCLen(pValue);
          HB_SIZE nCnt = 0;
          auto szVal = hb_itemGetCPtr(pValue);
 

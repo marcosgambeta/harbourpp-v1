@@ -3187,7 +3187,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
                }
             }
          } else if( HB_IS_STRING(pItem) ) {
-            HB_SIZE nLen = hb_itemGetCLen(pItem);
+            auto nLen = hb_itemGetCLen(pItem);
 
             pBlock = reinterpret_cast<const HB_BYTE*>(hb_itemGetCPtr(pItem));
             if( nLen > HB_VF_CHAR ) {

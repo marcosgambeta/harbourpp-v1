@@ -7069,7 +7069,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
          uiLen = 1;
          break;
       case 'C': {
-         HB_SIZE nLen = hb_itemGetCLen(pResult);
+         auto nLen = hb_itemGetCLen(pResult);
          if( nLen > USHRT_MAX ) {
             nLen = USHRT_MAX;
          }
