@@ -69,7 +69,7 @@ HB_FUNC( HB_MD5ENCRYPT )
    auto pData = hb_param(1, Harbour::Item::STRING);
 
    if( pData && hb_parclen(2) > 0 ) {
-      HB_SIZE nLen = hb_itemGetCLen(pData);
+      auto nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
          auto pszSource = hb_itemGetCPtr(pData);
@@ -102,7 +102,7 @@ HB_FUNC( HB_MD5DECRYPT )
    auto pData = hb_param(1, Harbour::Item::STRING);
 
    if( pData && hb_parclen(2) > 0 ) {
-      HB_SIZE nLen = hb_itemGetCLen(pData);
+      auto nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
          auto pszSource = hb_itemGetCPtr(pData);

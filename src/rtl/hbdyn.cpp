@@ -197,7 +197,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
 
       case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
       case HB_DYN_CTYPE_STRUCTURE: {
-         HB_SIZE nLen = hb_itemGetCLen(pParam);
+         auto nLen = hb_itemGetCLen(pParam);
          pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = true;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
@@ -228,7 +228,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
                break;
             }
             default: {
-               HB_SIZE nLen = hb_itemGetCLen(pParam);
+               auto nLen = hb_itemGetCLen(pParam);
                pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = true;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
@@ -569,7 +569,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2
 
       case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
       case HB_DYN_CTYPE_STRUCTURE: {
-         HB_SIZE nLen = hb_itemGetCLen(pParam);
+         auto nLen = hb_itemGetCLen(pParam);
          pArg->hString = hb_xgrab(nLen + sizeof(char));
          pArg->bRawBuffer = true;
          memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);
@@ -600,7 +600,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 * r1, HB_U32 * r2
                break;
             }
             default: {
-               HB_SIZE nLen = hb_itemGetCLen(pParam);
+               auto nLen = hb_itemGetCLen(pParam);
                pArg->hString = hb_xgrab(nLen + sizeof(char));
                pArg->bRawBuffer = true;
                memcpy(static_cast<char*>(pArg->hString), hb_itemGetCPtr(pParam), nLen);

@@ -68,7 +68,7 @@ HB_FUNC( DESCEND )
 
    if( pItem != nullptr ) {
       if( HB_IS_STRING(pItem) ) {
-         HB_SIZE nLen = hb_itemGetCLen(pItem);
+         auto nLen = hb_itemGetCLen(pItem);
 
          if( nLen > 0 ) {
             auto szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));

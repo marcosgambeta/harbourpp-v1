@@ -270,7 +270,7 @@ static void hb_i18n_setitem(PHB_ITEM pHash, const char * szKey, const char * szV
 
 static PHB_ITEM hb_i18n_pluralexp_compile( PHB_ITEM pExp )
 {
-   HB_SIZE nLen = hb_itemGetCLen(pExp);
+   auto nLen = hb_itemGetCLen(pExp);
    PHB_ITEM pBlock = nullptr;
 
    if( nLen > 0 ) {
@@ -473,7 +473,7 @@ static PHB_I18N_TRANS hb_i18n_deserialize( PHB_ITEM pItem )
    PHB_I18N_TRANS pI18N = nullptr;
 
    if( pItem && HB_IS_STRING(pItem) ) {
-      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      auto nLen = hb_itemGetCLen(pItem);
       auto pBuffer = hb_itemGetCPtr(pItem);
       if( nLen > HB_I18N_HEADER_SIZE && hb_i18n_headercheck(pBuffer, nLen) ) {
          pBuffer += HB_I18N_HEADER_SIZE;
@@ -612,7 +612,7 @@ static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBa
 
 static void hb_i18n_transitm(PHB_ITEM pText, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
 {
-   HB_SIZE nLen = hb_itemGetCLen(pText);
+   auto nLen = hb_itemGetCLen(pText);
 
    if( nLen > 0 ) {
       char * szValue = hb_cdpnDup(hb_itemGetCPtr(pText), &nLen, cdpIn, cdpOut);

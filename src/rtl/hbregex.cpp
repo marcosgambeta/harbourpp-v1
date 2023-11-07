@@ -186,7 +186,7 @@ HB_FUNC( HB_ATX )
       PHB_REGEX pRegEx = hb_regexGet(hb_param(1, Harbour::Item::ANY), !hb_parldef(3, true) ? HBREG_ICASE : 0);
 
       if( pRegEx ) {
-         HB_SIZE nLen = hb_itemGetCLen(pString);
+         auto nLen = hb_itemGetCLen(pString);
          HB_SIZE nStart = hb_parns(4);
          HB_SIZE nEnd = hb_parnsdef(5, nLen);
 
@@ -244,7 +244,7 @@ static bool hb_regex(int iRequest)
    }
 
    auto pszString = hb_itemGetCPtr(pString);
-   HB_SIZE nLen   = hb_itemGetCLen(pString);
+   auto nLen = hb_itemGetCLen(pString);
    int iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ? REGEX_MAX_GROUPS : 1;
    int iMatches = hb_regexec(pRegEx, pszString, nLen, iMaxMatch, aMatches);
    if( iMatches > 0 ) {

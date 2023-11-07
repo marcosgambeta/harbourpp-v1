@@ -54,14 +54,14 @@ HB_FUNC( HB_STRXOR )
 
    if( pItem != nullptr ) {
       PHB_ITEM     pItem2;
-      HB_SIZE      nLen1, n;
+      HB_SIZE      n;
       char *       pRet;
 
       auto pStr1 = hb_itemGetCPtr(pItem);
-      nLen1 = hb_itemGetCLen(pItem);
+      auto nLen1 = hb_itemGetCLen(pItem);
 
       if( (pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr ) {
-         HB_SIZE nLen2 = hb_itemGetCLen(pItem2);
+         auto nLen2 = hb_itemGetCLen(pItem2);
          if( nLen2 ) {
             auto pStr2 = hb_itemGetCPtr(pItem2);
             HB_SIZE n2;

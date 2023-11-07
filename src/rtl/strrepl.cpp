@@ -57,7 +57,8 @@ HB_FUNC( HB_STRREPLACE )
    auto pSrc = hb_param(2, Harbour::Item::STRING | Harbour::Item::ARRAY | (HB_ISNIL(3) ? Harbour::Item::HASH : Harbour::Item::NIL));
 
    if( pText && pSrc ) {
-      HB_SIZE nText = hb_itemGetCLen(pText), nSrc = hb_itemSize(pSrc);
+      auto nText = hb_itemGetCLen(pText);
+      HB_SIZE nSrc = hb_itemSize(pSrc);
 
       if( nText > 0 && nSrc > 0 ) {
          auto pDst = hb_param(3, Harbour::Item::STRING | Harbour::Item::ARRAY);

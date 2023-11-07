@@ -67,12 +67,12 @@ HB_FUNC( STRTRAN )
       nCount = hb_parnsdef(5, -1);
 
       if( nStart && nCount ) {
-         HB_SIZE nText = hb_itemGetCLen(pText);
-         HB_SIZE nSeek = hb_itemGetCLen(pSeek);
+         auto nText = hb_itemGetCLen(pText);
+         auto nSeek = hb_itemGetCLen(pSeek);
 
          if( nSeek && nSeek <= nText && nStart > 0 ) {
             auto pReplace = hb_param(3, Harbour::Item::STRING);
-            HB_SIZE nReplace = hb_itemGetCLen(pReplace);
+            auto nReplace = hb_itemGetCLen(pReplace);
             auto szReplace = hb_itemGetCPtr(pReplace);
             auto szText = hb_itemGetCPtr(pText);
             auto szSeek = hb_itemGetCPtr(pSeek);

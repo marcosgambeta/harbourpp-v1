@@ -291,7 +291,7 @@ HB_FUNC( HB_UTF8AT )
    auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
-      HB_SIZE nTextLength = hb_itemGetCLen(pText);
+      auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parnsdef(3, 1);
       HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
 
@@ -317,7 +317,7 @@ HB_FUNC( HB_UTF8RAT )
    auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
-      HB_SIZE nTextLength = hb_itemGetCLen(pText);
+      auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parnsdef(3, 1);
       HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
 
@@ -438,7 +438,8 @@ HB_FUNC( HB_UTF8POKE )
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
       auto szString = hb_itemGetCPtr(pText);
-      HB_SIZE nLen = hb_itemGetCLen(pText), nPos;
+      auto nLen = hb_itemGetCLen(pText);
+      HB_SIZE nPos;
 
       nPos = utf8pos(szString, nLen, hb_parns(2));
       if( nPos ) {

@@ -60,7 +60,7 @@ HB_FUNC( HB_AT )
    if( pText && pSub ) {
       PHB_CODEPAGE cdp         = hb_vmCDP();
       auto pszText             = hb_itemGetCPtr(pText);
-      HB_SIZE      nTextLength = hb_itemGetCLen(pText);
+      auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE      nStart      = hb_parns(3);
       HB_SIZE      nFrom, nPos = 0;
 

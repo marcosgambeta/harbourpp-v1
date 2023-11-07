@@ -55,7 +55,7 @@ HB_FUNC( REPLICATE )
    auto pItem = hb_param(1, Harbour::Item::STRING);
 
    if( pItem && HB_ISNUM(2) ) {
-      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      auto nLen = hb_itemGetCLen(pItem);
       HB_ISIZ nTimes = hb_parns(2);
 
       if( nLen > 0 && nTimes > 0 ) {

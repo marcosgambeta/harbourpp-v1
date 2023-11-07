@@ -82,7 +82,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT )
    auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
-      HB_SIZE nLen = hb_itemGetCLen(pData);
+      auto nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
          bool fRaw = hb_parl(3);
@@ -125,7 +125,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
    auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
-      HB_SIZE nSize = hb_itemGetCLen(pData);
+      auto nSize = hb_itemGetCLen(pData);
 
       if( nSize >= 8 && (nSize & 0x07) == 0 ) {
          bool fRaw = hb_parl(3);
@@ -194,7 +194,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
    auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
-      HB_SIZE nLen = hb_itemGetCLen(pData);
+      auto nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
          auto pszSource = hb_itemGetCPtr(pData);
@@ -228,7 +228,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
    auto pData = hb_param(2, Harbour::Item::STRING);
 
    if( bf && pData ) {
-      HB_SIZE nLen = hb_itemGetCLen(pData);
+      auto nLen = hb_itemGetCLen(pData);
 
       if( nLen ) {
          auto pszSource = hb_itemGetCPtr(pData);

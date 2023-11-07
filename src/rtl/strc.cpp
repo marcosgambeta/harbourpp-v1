@@ -57,7 +57,7 @@ HB_FUNC( HB_STRDECODESCAPE )
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
-      HB_SIZE nLen = hb_itemGetCLen(pText);
+      auto nLen = hb_itemGetCLen(pText);
       if( nLen > 0 ) {
          auto str = static_cast<char*>(hb_xgrab(nLen + 1));
          hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
@@ -83,7 +83,7 @@ HB_FUNC( HB_STRCDECODE )
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText ) {
-      HB_SIZE nLen = hb_itemGetCLen(pText);
+      auto nLen = hb_itemGetCLen(pText);
       HB_BOOL fCont = hb_parl(2);
       if( nLen > 0 ) {
          auto pszSrc = hb_itemGetCPtr(pText);

@@ -54,7 +54,7 @@ HB_FUNC( BIN2W )
    HB_U16 uiResult = 0;
 
    if( pItem != nullptr ) {
-      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      auto nLen = hb_itemGetCLen(pItem);
       if( nLen ) {
          auto pszString = hb_itemGetCPtr(pItem);
          uiResult = HB_GET_LE_INT16(pszString);
@@ -69,7 +69,7 @@ HB_FUNC( BIN2I )
    HB_I16 iResult = 0;
 
    if( pItem != nullptr ) {
-      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      auto nLen = hb_itemGetCLen(pItem);
       if( nLen ) {
          auto pszString = hb_itemGetCPtr(pItem);
          iResult = HB_GET_LE_UINT16(pszString);
@@ -84,7 +84,7 @@ HB_FUNC( BIN2L )
    HB_I32 iResult = 0;
 
    if( pItem != nullptr ) {
-      HB_SIZE nLen = hb_itemGetCLen(pItem);
+      auto nLen = hb_itemGetCLen(pItem);
       if( nLen ) {
          auto pszString = hb_itemGetCPtr(pItem);
          if( nLen >= 3 ) {

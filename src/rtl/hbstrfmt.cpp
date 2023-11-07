@@ -93,11 +93,10 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
    PHB_ITEM    pItem;
    const char  *pFmtEnd, *pFmtSave;
    int         i, iParam, iParamNo, iWidth, iDec;
-   HB_SIZE     nSize;
    HB_BOOL     fLeftAlign, fForceSign, fPadZero, fSpaceSign, fSign;
 
    auto pFmt = hb_itemGetCPtr(pItemFormat);
-   nSize = hb_itemGetCLen(pItemFormat);
+   auto nSize = hb_itemGetCLen(pItemFormat);
    pFmtEnd = pFmt + nSize;
 
    buffer.nMax = nSize + 16;

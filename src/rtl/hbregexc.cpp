@@ -128,7 +128,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
             fArgError = false;
          }
       } else if( HB_IS_STRING(pRegExItm) ) {
-         HB_SIZE nLen = hb_itemGetCLen(pRegExItm);
+         auto nLen = hb_itemGetCLen(pRegExItm);
          auto szRegEx = hb_itemGetCPtr(pRegExItm);
          if( nLen > 0 ) {
             fArgError = false;

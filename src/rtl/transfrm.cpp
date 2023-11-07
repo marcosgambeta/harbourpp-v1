@@ -82,7 +82,7 @@ HB_FUNC( TRANSFORM )
       PHB_CODEPAGE cdp = hb_vmCDP();
       char szPicDate[11];
       auto szPic = hb_itemGetCPtr(pPic);
-      HB_SIZE nPicLen = hb_itemGetCLen(pPic);
+      auto nPicLen = hb_itemGetCLen(pPic);
       HB_SIZE nPicPos = 0;
       HB_USHORT uiPicFlags; /* Function flags */
 
@@ -185,7 +185,7 @@ HB_FUNC( TRANSFORM )
 
       if( HB_IS_STRING(pValue) ) {
          auto szExp = hb_itemGetCPtr(pValue);
-         HB_SIZE nExpLen = hb_itemGetCLen(pValue);
+         auto nExpLen = hb_itemGetCLen(pValue);
          HB_SIZE nExpPos = 0;
 
          /* Grab enough */

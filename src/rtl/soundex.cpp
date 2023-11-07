@@ -62,7 +62,7 @@ HB_FUNC( SOUNDEX )
 
    if( pString ) {
       auto pszString = hb_itemGetCPtr(pString);
-      HB_SIZE nLen = hb_itemGetCLen(pString);
+      auto nLen = hb_itemGetCLen(pString);
       HB_SIZE nPos = 0;
       HB_SIZE nResultPos = 0;
       char cCharPrev = '0';

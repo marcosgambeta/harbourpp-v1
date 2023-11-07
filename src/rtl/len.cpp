@@ -60,7 +60,7 @@ HB_FUNC( LEN )
 
    if( pItem != nullptr ) {
       if( HB_IS_STRING(pItem) ) {
-         HB_SIZE nLen = hb_itemGetCLen(pItem);
+         auto nLen = hb_itemGetCLen(pItem);
          PHB_CODEPAGE cdp = hb_vmCDP();
          if( HB_CDP_ISCHARIDX(cdp) ) {
             nLen = hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen);

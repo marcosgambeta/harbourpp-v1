@@ -80,7 +80,7 @@ HB_FUNC( MEMOTRAN )
    auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString ) {
-      HB_SIZE nLen = hb_itemGetCLen(pString);
+      auto nLen = hb_itemGetCLen(pString);
       auto pszResult = static_cast<char*>(hb_xgrab(nLen + 1));
       const char * pszRepl;
       char cHardCR = ';';

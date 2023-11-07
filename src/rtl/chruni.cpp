@@ -144,7 +144,7 @@ HB_FUNC( HB_UPEEK )
    if( pText && HB_ISNUM(2) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
       auto szText = hb_itemGetCPtr(pText);
-      HB_SIZE nLen = hb_itemGetCLen(pText);
+      auto nLen = hb_itemGetCLen(pText);
       HB_SIZE nPos = hb_parns(2);
       HB_WCHAR wc = 0;
 
@@ -187,7 +187,7 @@ HB_FUNC( HB_UPOKE )
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
       auto szText = hb_itemGetCPtr(pText);
-      HB_SIZE nLen = hb_itemGetCLen(pText);
+      auto nLen = hb_itemGetCLen(pText);
       HB_SIZE nPos = hb_parns(2);
 
       if( nPos > 0 && nPos <= nLen ) {
@@ -341,7 +341,7 @@ HB_FUNC( HB_ULEFT )
       if( nLen <= 0 ) {
          hb_retc_null();
       } else {
-         HB_SIZE nText = hb_itemGetCLen(pText);
+         auto nText = hb_itemGetCLen(pText);
          if( static_cast<HB_SIZE>(nLen) < nText ) {
             nLen = hb_cdpTextPos(hb_vmCDP(), hb_itemGetCPtr(pText), nText, nLen);
          }
@@ -367,7 +367,7 @@ HB_FUNC( HB_BLEFT )
       if( nLen <= 0 ) {
          hb_retc_null();
       } else {
-         HB_SIZE nText = hb_itemGetCLen(pText);
+         auto nText = hb_itemGetCLen(pText);
          if( static_cast<HB_SIZE>(nLen) >= nText ) {
             hb_itemReturn(pText);
          } else {
@@ -384,7 +384,7 @@ HB_FUNC( HB_BLEFT )
 HB_FUNC( HB_URIGHT )
 {
    auto pText = hb_param(1, Harbour::Item::STRING);
-   HB_SIZE nText = hb_itemGetCLen(pText);
+   auto nText = hb_itemGetCLen(pText);
    HB_ISIZ nLen = hb_parns(2);
 
    if( nLen > 0 && nText > 0 ) {
@@ -412,7 +412,7 @@ HB_FUNC( HB_URIGHT )
 HB_FUNC( HB_BRIGHT )
 {
    auto pText = hb_param(1, Harbour::Item::STRING);
-   HB_SIZE nText = hb_itemGetCLen(pText);
+   auto nText = hb_itemGetCLen(pText);
    HB_ISIZ nLen = hb_parns(2);
 
    if( nLen > 0 && nText > 0 ) {
@@ -437,7 +437,7 @@ HB_FUNC( HB_UAT )
    if( pText && pSub ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
       auto pszText = hb_itemGetCPtr(pText);
-      HB_SIZE nTextLength = hb_itemGetCLen(pText);
+      auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nFrom, nPos = 0;
 
@@ -489,7 +489,7 @@ HB_FUNC( HB_BAT )
 
    if( pText && pSub ) {
       auto pszText = hb_itemGetCPtr(pText);
-      HB_SIZE nTextLength = hb_itemGetCLen(pText);
+      auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parns(3);
       HB_SIZE nFrom, nPos = 0;
 

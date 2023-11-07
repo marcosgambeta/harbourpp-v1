@@ -54,7 +54,7 @@ HB_FUNC( HB_ASCIIUPPER )
 
    if( pText ) {
       auto pszText = hb_itemGetCPtr(pText);
-      HB_SIZE nLen = hb_itemGetCLen(pText);
+      auto nLen = hb_itemGetCLen(pText);
 
       for( HB_SIZE u = 0; u < nLen; u++ ) {
          if( HB_ISLOWER(pszText[u]) ) {
@@ -79,7 +79,7 @@ HB_FUNC( HB_ASCIILOWER )
 
    if( pText ) {
       auto pszText = hb_itemGetCPtr(pText);
-      HB_SIZE nLen = hb_itemGetCLen(pText);
+      auto nLen = hb_itemGetCLen(pText);
 
       for( HB_SIZE u = 0; u < nLen; u++ ) {
          if( HB_ISUPPER(pszText[u]) ) {

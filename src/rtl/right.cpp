@@ -61,7 +61,7 @@ HB_FUNC( RIGHT )
       if( nLen <= 0 ) {
          hb_retc_null();
       } else {
-         HB_SIZE nText = hb_itemGetCLen(pText);
+         auto nText = hb_itemGetCLen(pText);
          if( static_cast<HB_SIZE>(nLen) < nText ) {
             PHB_CODEPAGE cdp = hb_vmCDP();
             if( HB_CDP_ISCHARIDX(cdp) ) {
