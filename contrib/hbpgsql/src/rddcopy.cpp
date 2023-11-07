@@ -139,7 +139,7 @@ static HB_BOOL exportBufSqlVar(pgCopyContext * context, PHB_ITEM pValue, const c
       {
          auto nLen = hb_itemGetCLen(pValue);
          HB_SIZE      nCnt  = 0;
-         const char * szVal = hb_itemGetCPtr(pValue);
+         auto szVal = hb_itemGetCPtr(pValue);
 
          if( !addStrToContext( context, szQuote ) )
             return false;

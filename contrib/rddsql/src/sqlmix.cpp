@@ -1634,7 +1634,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
                pTag->pForItem = nullptr;
             }
             if( hb_itemGetCLen(pOrderInfo->itmNewVal) > 0 ) {
-               const char * pForExpr = hb_itemGetCPtr(pOrderInfo->itmNewVal);
+               auto pForExpr = hb_itemGetCPtr(pOrderInfo->itmNewVal);
 
                if( SELF_COMPILE(&pArea->sqlarea.area, pForExpr) == Harbour::SUCCESS ) {
                   PHB_ITEM pForItem = pArea->sqlarea.area.valResult;

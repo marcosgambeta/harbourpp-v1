@@ -4728,7 +4728,7 @@ static HB_ERRCODE adsSetFilter(ADSAREAP pArea, LPDBFILTERINFO pFilterInfo)
       UNSIGNED16 bValidExpr = 0;
       UNSIGNED16 usResolve = ADS_RESOLVE_DYNAMIC ;  /*ADS_RESOLVE_IMMEDIATE ;get this from a SETting*/
       UNSIGNED32 u32RetVal = AE_INVALID_EXPRESSION;
-      const char * pucFilter = hb_itemGetCPtr(pFilterInfo->abFilterText);
+      auto pucFilter = hb_itemGetCPtr(pFilterInfo->abFilterText);
 
       if( *pucFilter ) {
          AdsIsExprValid(pArea->hTable, reinterpret_cast<UNSIGNED8*>(const_cast<char*>(pucFilter)), &bValidExpr);
@@ -4991,13 +4991,12 @@ static HB_ERRCODE adsDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemInd
 #endif
 
    char szFileName[HB_PATH_MAX];
-   const char * szFile;
    const char * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    bool fTable = false, fResult = false;
 
-   szFile = hb_itemGetCPtr(pItemIndex);
+   auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
       /* Try to delete index file */
       szFile = hb_itemGetCPtr(pItemTable);
@@ -5074,12 +5073,11 @@ static HB_ERRCODE adsExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
 #endif
 
    char szFileName[HB_PATH_MAX];
-   const char * szFile;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
    bool fTable = false;
 
-   szFile = hb_itemGetCPtr(pItemIndex);
+   auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
       szFile = hb_itemGetCPtr(pItemTable);
       if( !szFile[0] ) {

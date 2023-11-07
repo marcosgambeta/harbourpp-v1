@@ -53,7 +53,8 @@
 static void STAItm(PHB_ITEM pItmPar)
 {
    HB_UINT      i, ulItmPar = static_cast<HB_UINT>(hb_itemGetCLen(pItmPar));
-   const char * cItmPar = hb_itemGetCPtr(pItmPar), * c;
+   auto cItmPar = hb_itemGetCPtr(pItmPar);
+   const char * c;
 
    for( i = 3, c = cItmPar; *c; c++ )
    {

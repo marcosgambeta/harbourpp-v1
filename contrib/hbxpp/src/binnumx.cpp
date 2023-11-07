@@ -58,7 +58,7 @@ HB_FUNC( BIN2U )
       auto nLen = hb_itemGetCLen(pItem);
       if( nLen )
       {
-         const char * pszString = hb_itemGetCPtr(pItem);
+         auto pszString = hb_itemGetCPtr(pItem);
          if( nLen >= 3 )
             uiResult = HB_GET_LE_UINT32(pszString);
          else

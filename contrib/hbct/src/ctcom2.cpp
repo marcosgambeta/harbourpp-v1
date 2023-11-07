@@ -186,12 +186,11 @@ HB_FUNC( ZEROINSERT )
    auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString ) {
-      const char * szText;
       HB_SIZE nBits, n;
       unsigned int uiVal;
       int i;
 
-      szText = hb_itemGetCPtr(pString);
+      auto szText = hb_itemGetCPtr(pString);
       auto nLen = hb_itemGetCLen(pString);
       uiVal = 0;
       nBits = 0;
@@ -259,12 +258,11 @@ HB_FUNC( ZEROREMOVE )
    auto pString = hb_param(1, Harbour::Item::STRING);
 
    if( pString ) {
-      const char * szText;
       HB_SIZE nDest, nBits, n;
       int i, j, l;
       unsigned char ucVal;
 
-      szText = hb_itemGetCPtr(pString);
+      auto szText = hb_itemGetCPtr(pString);
       auto nLen = hb_itemGetCLen(pString);
       j = 8;
       l = 0;

@@ -377,7 +377,7 @@ static MXML_STATUS mxml_attribute_read(MXML_REFIL * ref, PHB_ITEM pDoc, PHB_ITEM
 
 static MXML_STATUS mxml_attribute_write(MXML_OUTPUT * out, PHBXML_ATTRIBUTE pAttr, int style)
 {
-   const char * name = hb_itemGetCPtr(pAttr->pName);
+   auto name = hb_itemGetCPtr(pAttr->pName);
 
    mxml_output_string_len(out, name, hb_itemGetCLen(pAttr->pName));
    mxml_output_char(out, '=');

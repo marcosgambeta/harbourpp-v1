@@ -103,7 +103,7 @@ HB_FUNC( HB_LZF_COMPRESS )
       if( in_len )
       {
          PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
-         const char * in_data = hb_itemGetCPtr(pArg);
+         auto in_data = hb_itemGetCPtr(pArg);
          char *       out_data;
          HB_SIZE      out_len;
 
@@ -165,7 +165,7 @@ HB_FUNC( HB_LZF_DECOMPRESS )
       if( in_len )
       {
          PHB_ITEM     pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
-         const char * in_data = hb_itemGetCPtr(pArg);
+         auto in_data = hb_itemGetCPtr(pArg);
          char *       buffer;
          HB_SIZE      buffer_size;
 

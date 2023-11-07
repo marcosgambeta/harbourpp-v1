@@ -741,7 +741,7 @@ HB_FUNC( TIP_FILEMIMETYPE )
 
       if( HB_IS_STRING(pFile) )
       {
-         const char * fname = hb_itemGetCPtr(pFile);
+         auto fname = hb_itemGetCPtr(pFile);
 
          PHB_FNAME pFileName = hb_fsFNameSplit(fname);
          PHB_FILE fileIn;

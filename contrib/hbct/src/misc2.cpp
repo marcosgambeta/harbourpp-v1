@@ -56,7 +56,7 @@ HB_FUNC( COMPLEMENT )
          auto nLen = hb_itemGetCLen(pItem);
 
          if( nLen > 0 ) {
-            const char * szSrc = hb_itemGetCPtr(pItem);
+            auto szSrc = hb_itemGetCPtr(pItem);
             auto szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));
 
             for( HB_SIZE nPos = 0; nPos < nLen; nPos++ ) {
