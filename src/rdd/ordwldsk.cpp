@@ -58,7 +58,7 @@
 
 HB_FUNC( ORDWILDSEEK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto szPattern = hb_parc(1);

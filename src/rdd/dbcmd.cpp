@@ -57,7 +57,7 @@
 HB_FUNC( AFIELDS )
 {
    HB_USHORT uiFields, uiCount;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    auto pName = hb_param(1, Harbour::Item::ARRAY);
    auto pType = hb_param(2, Harbour::Item::ARRAY);
    auto pLen = hb_param(3, Harbour::Item::ARRAY);
@@ -153,7 +153,7 @@ HB_FUNC( AFIELDS )
 
 HB_FUNC( ALIAS )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
+   auto pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
 
    if( pArea != nullptr ) {
       char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
@@ -168,7 +168,7 @@ HB_FUNC( ALIAS )
 
 HB_FUNC( DBEVAL )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBEVALINFO pEvalInfo{};
@@ -216,7 +216,7 @@ HB_FUNC( DBEVAL )
 
 HB_FUNC( DBF )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
@@ -232,7 +232,7 @@ HB_FUNC( DBF )
 HB_FUNC( BOF )
 {
    HB_BOOL bBof = true;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_BOF(pArea, &bBof);
@@ -244,7 +244,7 @@ HB_FUNC( BOF )
 /* dbAppend([<lUnLockAll>=.T.]) --> <lSuccess> */
 HB_FUNC( DBAPPEND )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       bool bUnLockAll = hb_parldef(1, true);
@@ -270,7 +270,7 @@ HB_FUNC( DBCLOSEAREA )
 
 HB_FUNC( DBCOMMIT )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_FLUSH(pArea);
@@ -462,7 +462,7 @@ HB_FUNC( __DBOPENSDF )
 
 HB_FUNC( DBDELETE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_DELETE(pArea);
@@ -473,7 +473,7 @@ HB_FUNC( DBDELETE )
 
 HB_FUNC( DBRECALL )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_RECALL(pArea);
@@ -484,7 +484,7 @@ HB_FUNC( DBRECALL )
 
 HB_FUNC( DBGOBOTTOM )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_GOBOTTOM(pArea);
@@ -495,7 +495,7 @@ HB_FUNC( DBGOBOTTOM )
 
 HB_FUNC( DBGOTO )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pItem = hb_param(1, Harbour::Item::ANY);
@@ -511,7 +511,7 @@ HB_FUNC( DBGOTO )
 
 HB_FUNC( DBGOTOP )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_GOTOP(pArea);
@@ -522,7 +522,7 @@ HB_FUNC( DBGOTOP )
 
 HB_FUNC( __DBLOCATE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBSCOPEINFO dbScopeInfo;
@@ -551,7 +551,7 @@ HB_FUNC( __DBLOCATE )
 
 HB_FUNC( __DBSETLOCATE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pLocate = hb_param(1, Harbour::Item::BLOCK);
@@ -565,7 +565,7 @@ HB_FUNC( __DBSETLOCATE )
 
 HB_FUNC( __DBCONTINUE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_LOCATE(pArea, true);
@@ -576,7 +576,7 @@ HB_FUNC( __DBCONTINUE )
 
 HB_FUNC( __DBPACK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       /*
@@ -613,7 +613,7 @@ HB_FUNC( __DBPACK )
 
 HB_FUNC( DBRLOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
@@ -633,7 +633,7 @@ HB_FUNC( DBRLOCK )
 
 HB_FUNC( DBRLOCKLIST )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pList = hb_itemArrayNew(0);
@@ -646,7 +646,7 @@ HB_FUNC( DBRLOCKLIST )
 
 HB_FUNC( DBRUNLOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_UNLOCK(pArea, hb_param(1, Harbour::Item::ANY));
@@ -657,7 +657,7 @@ HB_FUNC( DBRUNLOCK )
 
 HB_FUNC( DBSEEK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       if( !HB_ISNIL(1) ) {
@@ -704,7 +704,7 @@ HB_FUNC( DBSELECTAREA )
 
 HB_FUNC( __DBSETFOUND )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pFound = hb_param(1, Harbour::Item::LOGICAL);
@@ -716,7 +716,7 @@ HB_FUNC( __DBSETFOUND )
 
 HB_FUNC( DBSETFILTER )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBFILTERINFO pFilterInfo;
@@ -754,7 +754,7 @@ HB_FUNC( DBSETFILTER )
 
 HB_FUNC( DBCLEARFILTER )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_CLEARFILTER(pArea);
@@ -765,7 +765,7 @@ HB_FUNC( DBCLEARFILTER )
 
 HB_FUNC( DBFILTER )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pFilter = hb_itemPutC(nullptr, nullptr);
@@ -779,7 +779,7 @@ HB_FUNC( DBFILTER )
 /* Harbour extension to retrieve filter codeblock */
 HB_FUNC( HB_DBGETFILTER )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       hb_itemReturn(pArea->dbfi.itmCobExpr);
@@ -790,7 +790,7 @@ HB_FUNC( HB_DBGETFILTER )
 
 HB_FUNC( DBSKIP )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_SKIP(pArea, hb_parnldef(1, 1));
@@ -802,7 +802,7 @@ HB_FUNC( DBSKIP )
 HB_FUNC( DBSTRUCT )
 {
    auto pStruct = hb_itemArrayNew(0);
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       hb_tblStructure( pArea, pStruct, DBS_ALEN );
@@ -812,7 +812,7 @@ HB_FUNC( DBSTRUCT )
 
 HB_FUNC( DBTABLEEXT )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    auto pItem = hb_itemNew(nullptr);
    HB_ERRCODE errCode = Harbour::FAILURE;
 
@@ -839,7 +839,7 @@ HB_FUNC( DBTABLEEXT )
 
 HB_FUNC( DBUNLOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_UNLOCK(pArea, nullptr);
@@ -866,7 +866,7 @@ HB_FUNC( DBUSEAREA )
 
 HB_FUNC( __DBZAP )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_ZAP(pArea);
@@ -878,7 +878,7 @@ HB_FUNC( __DBZAP )
 HB_FUNC( DELETED )
 {
    HB_BOOL bDeleted = false;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_DELETED(pArea, &bDeleted);
@@ -889,7 +889,7 @@ HB_FUNC( DELETED )
 HB_FUNC( EOF )
 {
    HB_BOOL bEof = true;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_EOF(pArea, &bEof);
@@ -900,7 +900,7 @@ HB_FUNC( EOF )
 HB_FUNC( FCOUNT )
 {
    HB_USHORT uiFields = 0;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_FIELDCOUNT(pArea, &uiFields);
@@ -911,7 +911,7 @@ HB_FUNC( FCOUNT )
 HB_FUNC( FIELDGET )
 {
    auto pItem = hb_itemNew(nullptr);
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_USHORT uiField = static_cast<HB_FIELDNO>(hb_parni(1));
 
    if( pArea && uiField ) {
@@ -923,7 +923,7 @@ HB_FUNC( FIELDGET )
 
 HB_FUNC( FIELDNAME )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    HB_USHORT uiFields, uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
 
    if( pArea && uiIndex ) {
@@ -944,7 +944,7 @@ HB_FUNC( FIELDNAME )
 
 HB_FUNC( FIELDPOS )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea && hb_parclen(1) > 0 ) {
       hb_retni(hb_rddFieldIndex(pArea, hb_parc(1)));
@@ -955,7 +955,7 @@ HB_FUNC( FIELDPOS )
 
 HB_FUNC( FIELDPUT )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_USHORT uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
@@ -973,7 +973,7 @@ HB_FUNC( FIELDPUT )
 
 HB_FUNC( FLOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
@@ -990,7 +990,7 @@ HB_FUNC( FLOCK )
 HB_FUNC( FOUND )
 {
    HB_BOOL bFound = false;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_FOUND(pArea, &bFound);
@@ -1000,7 +1000,7 @@ HB_FUNC( FOUND )
 
 HB_FUNC( HEADER )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( !pArea ) {
       hb_retni(0);
@@ -1013,7 +1013,7 @@ HB_FUNC( HEADER )
 
 HB_FUNC( INDEXORD )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pInfo{};
@@ -1029,7 +1029,7 @@ HB_FUNC( INDEXORD )
 HB_FUNC( LASTREC )
 {
    HB_ULONG ulRecCount = 0;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_RECCOUNT(pArea, &ulRecCount);
@@ -1040,7 +1040,7 @@ HB_FUNC( LASTREC )
 
 HB_FUNC( LOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
@@ -1056,7 +1056,7 @@ HB_FUNC( LOCK )
 
 HB_FUNC( LUPDATE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemNew(nullptr);
@@ -1080,7 +1080,7 @@ HB_FUNC( NETERR )
 HB_FUNC( ORDBAGEXT )
 {
    DBORDERINFO pInfo{};
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
    if( !pArea ) {
@@ -1102,7 +1102,7 @@ HB_FUNC( ORDBAGEXT )
 
 HB_FUNC( ORDBAGNAME )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
@@ -1130,7 +1130,7 @@ HB_FUNC( ORDBAGNAME )
 
 HB_FUNC( ORDCONDSET )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem;
@@ -1201,7 +1201,7 @@ HB_FUNC( ORDCONDSET )
 
 HB_FUNC( ORDCREATE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERCREATEINFO dbOrderInfo;
@@ -1239,7 +1239,7 @@ HB_FUNC( ORDCREATE )
 
 HB_FUNC( ORDBAGCLEAR )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
@@ -1252,7 +1252,7 @@ HB_FUNC( ORDBAGCLEAR )
 
 HB_FUNC( ORDDESTROY )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
@@ -1266,7 +1266,7 @@ HB_FUNC( ORDDESTROY )
 
 HB_FUNC( ORDFOR )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo;
@@ -1297,7 +1297,7 @@ HB_FUNC( ORDFOR )
 
 HB_FUNC( ORDKEY )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
@@ -1325,7 +1325,7 @@ HB_FUNC( ORDKEY )
 
 HB_FUNC( ORDLISTADD )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
@@ -1361,7 +1361,7 @@ HB_FUNC( ORDLISTADD )
 
 HB_FUNC( ORDLISTCLEAR )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_ORDLSTCLEAR(pArea);
@@ -1372,7 +1372,7 @@ HB_FUNC( ORDLISTCLEAR )
 
 HB_FUNC( ORDLISTREBUILD )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_ORDLSTREBUILD(pArea);
@@ -1383,7 +1383,7 @@ HB_FUNC( ORDLISTREBUILD )
 
 HB_FUNC( ORDNAME )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
@@ -1412,7 +1412,7 @@ HB_FUNC( ORDNAME )
 
 HB_FUNC( ORDNUMBER )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
@@ -1432,7 +1432,7 @@ HB_FUNC( ORDNUMBER )
 
 HB_FUNC( ORDSETFOCUS )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pInfo{};
@@ -1453,7 +1453,7 @@ HB_FUNC( RDDLIST )
 
 HB_FUNC( RDDNAME )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       char szRddName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
@@ -1495,7 +1495,7 @@ HB_FUNC_TRANSLATE( RECCOUNT, LASTREC )
 
 HB_FUNC( RECNO )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    auto pRecNo = hb_itemPutNL(nullptr, 0);
 
    if( pArea != nullptr ) {
@@ -1506,7 +1506,7 @@ HB_FUNC( RECNO )
 
 HB_FUNC( RECSIZE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemNew(nullptr);
@@ -1519,7 +1519,7 @@ HB_FUNC( RECSIZE )
 
 HB_FUNC( RLOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBLOCKINFO dbLockInfo;
@@ -1584,7 +1584,7 @@ HB_FUNC( DBSETDRIVER )
 
 HB_FUNC( ORDSCOPE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pInfo{};
@@ -1618,7 +1618,7 @@ HB_FUNC( ORDSCOPE )
 
 HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pRelExpr = hb_itemPutC(nullptr, nullptr);
@@ -1633,7 +1633,7 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 HB_FUNC( DBRSELECT )  /* (<nRelation>) --> nWorkArea */
 {
    HB_USHORT uiWorkArea = 0, uiRelation = static_cast<HB_USHORT>(hb_parni(1));
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       /* undocumented CA-Cl*pper behavior:
@@ -1648,7 +1648,7 @@ HB_FUNC( DBRSELECT )  /* (<nRelation>) --> nWorkArea */
 
 HB_FUNC( DBCLEARRELATION )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       SELF_CLEARREL(pArea);
@@ -1657,7 +1657,7 @@ HB_FUNC( DBCLEARRELATION )
 
 HB_FUNC( DBSETRELATION )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBRELINFO dbRelations;
@@ -1707,10 +1707,9 @@ HB_FUNC( DBSETRELATION )
 HB_FUNC( __DBARRANGE )
 {
    HB_ERRCODE errCode = Harbour::FAILURE;
-   AREAP pSrcArea, pDstArea;
 
-   pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   pDstArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
+   auto pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pDstArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
 
    /* TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea */
    if( pSrcArea && pDstArea && pSrcArea != pDstArea ) {
@@ -1821,13 +1820,12 @@ HB_FUNC( __DBTRANS )
 {
    if( HB_ISNUM(1) ) {
       HB_AREANO uiSrcArea, uiDstArea;
-      AREAP pSrcArea, pDstArea;
 
       uiSrcArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
-      pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+      auto pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
       uiDstArea = static_cast<HB_AREANO>(hb_parni(1));
       hb_rddSelectWorkAreaNumber(uiDstArea);
-      pDstArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+      auto pDstArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( pSrcArea && pDstArea ) {
          DBTRANSINFO dbTransInfo{};
@@ -1892,7 +1890,7 @@ HB_FUNC( __DBTRANS )
            [<xDelimiter>]) --> <lSuccess> */
 HB_FUNC( __DBAPP )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       hb_retl(Harbour::SUCCESS == hb_rddTransRecords(pArea,
@@ -1921,7 +1919,7 @@ HB_FUNC( __DBAPP )
              [<xDelimiter>]) --> <lSuccess> */
 HB_FUNC( __DBCOPY )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       hb_retl(Harbour::SUCCESS == hb_rddTransRecords(pArea,
@@ -2062,7 +2060,7 @@ HB_FUNC( HB_DBRENAME )
 
 HB_FUNC( HB_FIELDLEN )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_USHORT uiIndex;
@@ -2090,7 +2088,7 @@ HB_FUNC( HB_FIELDLEN )
 
 HB_FUNC( HB_FIELDDEC )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_USHORT uiIndex;
@@ -2118,7 +2116,7 @@ HB_FUNC( HB_FIELDDEC )
 
 HB_FUNC( HB_FIELDTYPE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_USHORT uiIndex;
@@ -2146,7 +2144,7 @@ HB_FUNC( HB_FIELDTYPE )
 
 HB_FUNC( HB_FIELDGET )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_USHORT uiField;
@@ -2168,7 +2166,7 @@ HB_FUNC( HB_FIELDGET )
 
 HB_FUNC( HB_FIELDPUT )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_USHORT uiField;
@@ -2206,7 +2204,7 @@ HB_FUNC( HB_WAEVAL )
 
 HB_FUNC( __DBSKIPPER )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_LONG lSkipped = 0;

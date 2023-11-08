@@ -62,7 +62,7 @@ static bool hb_sxSemName(char * szFileName)
       szFileName[HB_PATH_MAX - 1] = '\0';
       fResult = true;
    } else {
-      AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+      auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( pArea != nullptr ) {
          DBORDERINFO pOrderInfo{};

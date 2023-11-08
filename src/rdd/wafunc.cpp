@@ -102,7 +102,7 @@ void * hb_rddNewAreaNode( LPRDDNODE pRddNode, HB_USHORT uiRddID )
 
    AREAP pArea;
 
-   if( pRddNode->uiAreaSize == 0 ) { /* Calculate the size of WorkArea */ 
+   if( pRddNode->uiAreaSize == 0 ) { /* Calculate the size of WorkArea */
       HB_USHORT uiSize;
 
       pArea = static_cast<AREAP>(hb_xgrabz(sizeof(AREA)));
@@ -436,9 +436,7 @@ HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddFieldGet(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));
 #endif
 
-   AREAP pArea;
-
-   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    if( pArea != nullptr ) {
       HB_USHORT uiField = 1;
       LPFIELD pField = pArea->lpFields;
@@ -464,9 +462,7 @@ HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddFieldPut(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pFieldSymbol)));
 #endif
 
-   AREAP pArea;
-
-   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    if( pArea != nullptr ) {
       HB_USHORT uiField = 1;
       LPFIELD pField = pArea->lpFields;
@@ -555,7 +551,6 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
                             PHB_ITEM pStruct, PHB_ITEM pDelim )
 {
    DBOPENINFO pInfo;
-   AREAP pArea;
 
    /* uiArea = 0 in hb_rddInsertAreaNode() means chose first
     * available free area, otherwise we should close table in
@@ -598,7 +593,7 @@ HB_ERRCODE hb_rddOpenTable( const char * szFileName, const char * szDriver,
       return Harbour::FAILURE;
    }
 
-   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    /* Fill pInfo structure */
    pInfo.uiArea = pArea->uiArea;
@@ -637,7 +632,6 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
    DBOPENINFO pInfo;
    HB_ERRCODE errCode;
    HB_USHORT uiPrevArea;
-   AREAP pArea;
 
    if( !szFileName ) {
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
@@ -660,7 +654,7 @@ HB_ERRCODE hb_rddCreateTable( const char * szFileName, const char * szDriver,
       hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return Harbour::FAILURE;
    }
-   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    /* Fill pInfo structure */
    pInfo.uiArea = pArea->uiArea;
@@ -698,7 +692,6 @@ HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, co
    char szDriverBuffer[HB_RDD_MAX_DRIVERNAME_LEN + 1];
    DBOPENINFO pInfo;
    HB_USHORT uiPrevArea;
-   AREAP pArea;
 
    uiPrevArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
@@ -718,7 +711,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char * szDriver, const char * szAlias, co
       hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return Harbour::FAILURE;
    }
-   pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    /* Fill pInfo structure */
    pInfo.uiArea = pArea->uiArea;

@@ -558,7 +558,7 @@ static LPHSXINFO hb_hsxGetPointer(int iHandle)
 
 static int hb_hsxCompile( const char * szExpr, PHB_ITEM * pExpr )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    *pExpr = nullptr;
    if( pArea != nullptr ) {
@@ -618,7 +618,7 @@ static int hb_hsxEval(int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fDe
       pStr = hb_itemGetCPtr(pItem);
       nLen = hb_itemGetCLen(pItem);
       if( fDeleted ) {
-         AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+         auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
          if( !pArea ) {
             *fDeleted = HB_FALSE;
          } else if( SELF_DELETED(pArea, fDeleted) == Harbour::FAILURE ) {
@@ -1548,7 +1548,7 @@ static int hb_hsxIndex(const char * szFile, PHB_ITEM pExpr, int iKeySize, int iM
 {
    int iRetVal = HSX_SUCCESS, iHandle;
    HB_ULONG ulRecNo = 0, ulRecCount = 0, ulNewRec, ulRec;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( !pArea ) {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "HS_INDEX");
@@ -1600,7 +1600,7 @@ static int hb_hsxIndex(const char * szFile, PHB_ITEM pExpr, int iKeySize, int iM
 
 static int hb_hsxFilter(int iHandle, const char * pSeek, HB_SIZE nSeek, PHB_ITEM pVerify, int iVerifyType)
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    LPHSXINFO pHSX = hb_hsxGetPointer(iHandle);
    HB_BOOL fDestroyExpr = false, fValid;
    int iResult = HSX_SUCCESS;
@@ -1860,7 +1860,7 @@ HB_FUNC( HS_FILTER )
    }
    if( iHandle >= 0 && nLen > 0 && szText ) {
       auto pItem = hb_itemNew(nullptr);
-      AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+      auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
       if( !pArea ) {
          hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, "HS_FILTER");

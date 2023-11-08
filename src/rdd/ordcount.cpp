@@ -57,7 +57,7 @@
 
 HB_FUNC( ORDCOUNT )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};

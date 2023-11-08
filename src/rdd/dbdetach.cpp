@@ -96,7 +96,6 @@ HB_FUNC( HB_DBREQUEST )
       bool fNewArea = hb_parl(2);
       PHB_ITEM pCargo = HB_ISBYREF(3) ? hb_itemNew(nullptr) : nullptr;
       HB_ULONG ulMilliSec = HB_THREAD_INFINITE_WAIT;
-      AREAP pArea;
 
       if( HB_ISNUM(4) ) {
          double dTimeOut = hb_parnd(4);
@@ -105,7 +104,7 @@ HB_FUNC( HB_DBREQUEST )
          ulMilliSec = 0;
       }
 
-      pArea = hb_rddRequestArea(szAlias, pCargo, fNewArea, ulMilliSec);
+      auto pArea = hb_rddRequestArea(szAlias, pCargo, fNewArea, ulMilliSec);
       if( pArea != nullptr ) {
          hb_rddSelectWorkAreaNumber(pArea->uiArea);
       }

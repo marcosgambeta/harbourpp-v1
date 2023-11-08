@@ -69,7 +69,7 @@
 
 HB_FUNC( SX_GETLOCKS )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pList = hb_itemArrayNew(0);
@@ -80,7 +80,7 @@ HB_FUNC( SX_GETLOCKS )
 
 HB_FUNC( SX_ISFLOCKED )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    bool fLocked = false;
 
    if( pArea != nullptr ) {
@@ -95,7 +95,7 @@ HB_FUNC( SX_ISFLOCKED )
 
 HB_FUNC( SX_ISREADONLY )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    bool fReadOnly = false;
 
    if( pArea != nullptr ) {
@@ -110,7 +110,7 @@ HB_FUNC( SX_ISREADONLY )
 
 HB_FUNC( SX_ISSHARED )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    bool fShared = false;
 
    if( pArea != nullptr ) {
@@ -125,7 +125,7 @@ HB_FUNC( SX_ISSHARED )
 
 HB_FUNC( SX_IDTYPE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    int iType = 0;
 
    if( pArea != nullptr ) {
@@ -141,7 +141,7 @@ HB_FUNC( SX_IDTYPE )
 
 HB_FUNC( SX_TABLETYPE )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    int iType = 0;
 
    if( pArea != nullptr ) {
@@ -157,7 +157,7 @@ HB_FUNC( SX_TABLETYPE )
 
 HB_FUNC( SX_TABLENAME )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pList = hb_itemNew(nullptr);
@@ -212,7 +212,7 @@ HB_FUNC( SX_ROLLBACK )
 
 HB_FUNC( SX_RLOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    bool fResult = false;
    PHB_ITEM pResult = nullptr;
 
@@ -245,7 +245,7 @@ HB_FUNC( SX_RLOCK )
 
 HB_FUNC( SX_UNLOCK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       auto pRecords = hb_param(1, Harbour::Item::ARRAY);
@@ -268,7 +268,7 @@ HB_FUNC( SX_SETPASS )
 
    if( iPCount == 1 ) {
       if( HB_ISCHAR(1) ) {
-         AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+         auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
          if( pArea != nullptr ) {
             pItem = hb_itemParam(1);
             if( SELF_INFO(pArea, DBI_PASSWORD, pItem) == Harbour::SUCCESS ) {
@@ -301,7 +301,7 @@ HB_FUNC( SX_SETPASS )
             hb_itemRelease(pItem);
          }
       } else if( iPCount == 2 && HB_ISNUM(1) && HB_ISCHAR(2) ) {
-         AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+         auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
          if( pArea != nullptr ) {
             /* Undocumented SIX3 extension */
             switch( hb_parni(1) ) {
@@ -332,7 +332,7 @@ HB_FUNC( SX_SETPASS )
 
 HB_FUNC( SX_DBFENCRYPT )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    bool fResult = false;
 
    if( pArea != nullptr ) {
@@ -348,7 +348,7 @@ HB_FUNC( SX_DBFENCRYPT )
 
 HB_FUNC( SX_DBFDECRYPT )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    bool fResult = false;
 
    if( pArea != nullptr ) {
@@ -363,7 +363,7 @@ HB_FUNC( SX_DBFDECRYPT )
 
 HB_FUNC( SX_MEMOPACK )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    bool fResult = false;
 
    if( pArea != nullptr ) {
@@ -380,7 +380,7 @@ HB_FUNC( SX_MEMOPACK )
 
 HB_FUNC( SX_TURBOAREA )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);

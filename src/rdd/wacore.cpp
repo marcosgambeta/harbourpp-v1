@@ -194,7 +194,6 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
    PHB_STACKRDD pRddInfo;
    LPRDDNODE pRddNode;
    HB_USHORT uiRddID;
-   AREAP pArea;
 
    pRddInfo = hb_stackRDD();
    if( pRddInfo->uiCurrArea && pRddInfo->pCurrArea ) {
@@ -212,7 +211,7 @@ HB_USHORT hb_rddInsertAreaNode( const char * szDriver )
       }
    }
 
-   pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
+   auto pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
    if( !pArea ) {
       return 0;
    }
@@ -233,10 +232,9 @@ void hb_rddReleaseCurrentArea(void)
 #endif
 
    PHB_STACKRDD pRddInfo;
-   AREAP pArea;
 
    pRddInfo = hb_stackRDD();
-   pArea = static_cast<AREAP>(pRddInfo->pCurrArea);
+   auto pArea = static_cast<AREAP>(pRddInfo->pCurrArea);
    if( !pArea ) {
       return;
    }
@@ -333,7 +331,7 @@ HB_ERRCODE hb_rddIterateWorkAreas(WACALLBACK pCallBack, void * cargo)
 
    pRddInfo = hb_stackRDD();
    for( HB_USHORT uiIndex = 1; uiIndex < pRddInfo->uiWaMax; uiIndex++ ) {
-      AREAP pArea = static_cast<AREAP>(pRddInfo->waList[uiIndex]);
+      auto pArea = static_cast<AREAP>(pRddInfo->waList[uiIndex]);
       errCode = pCallBack(pArea, cargo);
       if( errCode != Harbour::SUCCESS ) {
          break;
