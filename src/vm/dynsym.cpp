@@ -666,7 +666,7 @@ HB_FUNC( __DYNSCOUNT ) /* How much symbols do we have: dsCount = __dynsymCount()
 HB_FUNC( __DYNSGETNAME ) /* Get name of symbol: cSymbol = __dynsymGetName(dsIndex) */
 {
    HB_STACK_TLS_PRELOAD
-   PHB_DYNS pDynSym = hb_dynsymGetByIndex(hb_parnl(1));
+   auto pDynSym = hb_dynsymGetByIndex(hb_parnl(1));
    hb_retc(pDynSym ? pDynSym->pSymbol->szName : nullptr);
 }
 
@@ -677,7 +677,7 @@ HB_FUNC( __DYNSGETINDEX ) /* Gimme index number of symbol: dsIndex = __dynsymGet
    auto szName = hb_parc(1);
 
    if( szName ) {
-      PHB_DYNS pDynSym = hb_dynsymFindName(szName);
+      auto pDynSym = hb_dynsymFindName(szName);
       if( pDynSym ) {
          HB_DYNSYM_LOCK();
          if( hb_dynsymPos(pDynSym->pSymbol->szName, &uiPos) ) {
@@ -699,7 +699,7 @@ HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure poi
    bool fResult = false;
 
    if( szProc ) {
-      PHB_DYNS pDynSym = hb_dynsymFindName(szProc);
+      auto pDynSym = hb_dynsymFindName(szProc);
       if( pDynSym ) {
          fResult = hb_dynsymIsFunction(pDynSym);
       }
@@ -720,7 +720,7 @@ HB_FUNC( __DYNSGETPRF ) /* profiler: It returns an array with a function or proc
 {
    HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
-   PHB_DYNS pDynSym = hb_dynsymGetByIndex(hb_parnl(1));
+   auto pDynSym = hb_dynsymGetByIndex(hb_parnl(1));
 #endif
 
    hb_reta(2);

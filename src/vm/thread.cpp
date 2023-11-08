@@ -1072,7 +1072,7 @@ HB_FUNC( HB_THREADSTART )
    if( pStart ) {
       if( HB_IS_STRING(pStart) ) {
          szFuncName = hb_itemGetCPtr(pStart);
-         PHB_DYNS pDynSym = hb_dynsymFindName(szFuncName);
+         auto pDynSym = hb_dynsymFindName(szFuncName);
          if( pDynSym ) {
             pSymbol = pDynSym->pSymbol;
          }

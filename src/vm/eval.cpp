@@ -109,7 +109,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
       PHB_SYMB pSymbol = nullptr;
 
       if( HB_IS_STRING(pItem) ) {
-         PHB_DYNS pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+         auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
          if( pDynSym ) {
             pSymbol = pDynSym->pSymbol;
@@ -190,7 +190,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
       PHB_SYMB pSymbol = nullptr;
 
       if( HB_IS_STRING(pItem) ) {
-         PHB_DYNS pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+         auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
          if( pDynSym ) {
             pSymbol = pDynSym->pSymbol;
@@ -251,7 +251,7 @@ PHB_ITEM hb_itemDoC(const char * szFunc, HB_ULONG ulPCount, ...)
    PHB_ITEM pResult = nullptr;
 
    if( szFunc ) {
-      PHB_DYNS pDynSym = hb_dynsymFindName(szFunc);
+      auto pDynSym = hb_dynsymFindName(szFunc);
 
       if( pDynSym ) {
          if( hb_vmRequestReenter() ) {

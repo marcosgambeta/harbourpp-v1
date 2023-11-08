@@ -92,7 +92,7 @@ HB_FUNC( PROCFILE )
    if( HB_ISSYMBOL(1) ) {
       pSym = hb_itemGetSymbol(hb_param(1, Harbour::Item::SYMBOL));
    } else if( HB_ISCHAR(1) ) {
-      PHB_DYNS pDynSym = hb_dynsymFindName(hb_parc(1));
+      auto pDynSym = hb_dynsymFindName(hb_parc(1));
 
       if( pDynSym ) {
          pSym = pDynSym->pSymbol;

@@ -8524,7 +8524,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
       PHB_SYMB pSymbol = nullptr;
 
       if( HB_IS_STRING(pItem) ) {
-         PHB_DYNS pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+         auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
          if( pDynSym ) {
             pSymbol = pDynSym->pSymbol;

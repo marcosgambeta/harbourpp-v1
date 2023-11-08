@@ -1079,7 +1079,7 @@ void hb_clsDoInit(void)
    HB_STACK_TLS_PRELOAD
 
    for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_puiHandles)); ++i ) {
-      PHB_DYNS pFuncSym = hb_dynsymFindName(s_pszFuncNames[i]);
+      auto pFuncSym = hb_dynsymFindName(s_pszFuncNames[i]);
       if( pFuncSym && hb_dynsymIsFunction(pFuncSym) ) {
          auto pReturn = hb_stackReturnItem();
          hb_itemSetNil(pReturn);
@@ -1232,7 +1232,7 @@ HB_BOOL hb_clsIsParent(HB_USHORT uiClass, const char * szParentName)
       if( strcmp(pClass->szName, szParentName) == 0 ) {
          return true;
       } else {
-         PHB_DYNS pMsg = hb_dynsymFindName(szParentName);
+         auto pMsg = hb_dynsymFindName(szParentName);
 
          if( pMsg ) {
             return hb_clsGetParent(pClass, pMsg) != 0;
@@ -1471,7 +1471,7 @@ const char * hb_objGetRealClsName(PHB_ITEM pObject, const char * szName)
 
    HB_USHORT uiClass = hb_objGetClassH(pObject);
    if( uiClass && uiClass <= s_uiClasses ) {
-      PHB_DYNS pMsg = hb_dynsymFindName(szName);
+      auto pMsg = hb_dynsymFindName(szName);
 
       if( pMsg ) {
          PMETHOD pMethod = hb_clsFindMsg(s_pClasses[uiClass], pMsg);
@@ -2223,7 +2223,7 @@ HB_BOOL hb_objHasMsg(PHB_ITEM pObject, const char * szString)
    HB_TRACE(HB_TR_DEBUG, ("hb_objHasMsg(%p, %s)", static_cast<void*>(pObject), szString));
 #endif
 
-   PHB_DYNS pDynSym = hb_dynsymFindName(szString);
+   auto pDynSym = hb_dynsymFindName(szString);
    if( pDynSym ) {
       return hb_objGetMethod(pObject, pDynSym->pSymbol, nullptr) != nullptr;
    } else {
@@ -2438,7 +2438,7 @@ static PHB_SYMB hb_objGetFuncSym(PHB_ITEM pItem)
       if( HB_IS_SYMBOL(pItem) ) {
          return pItem->item.asSymbol.value;
       } else if( HB_IS_STRING(pItem) ) {
-         PHB_DYNS pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
+         auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
 
          if( pDynSym && pDynSym->pSymbol->value.pFunPtr ) {
             return pDynSym->pSymbol;
@@ -3407,7 +3407,7 @@ HB_FUNC( __CLSDELMSG )
    auto pString = hb_param(2, Harbour::Item::STRING);
 
    if( uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked ) {
-      PHB_DYNS pMsg = hb_dynsymFindName(pString->item.asString.value);
+      auto pMsg = hb_dynsymFindName(pString->item.asString.value);
 
       if( pMsg ) {
          hb_clsFreeMsg(s_pClasses[uiClass], pMsg);
@@ -3504,7 +3504,7 @@ HB_FUNC( __CLSMODMSG )
    auto pString = hb_param(2, Harbour::Item::STRING);
 
    if( uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked ) {
-      PHB_DYNS pMsg = hb_dynsymFindName(pString->item.asString.value);
+      auto pMsg = hb_dynsymFindName(pString->item.asString.value);
 
       if( pMsg ) {
          PCLASS  pClass  = s_pClasses[uiClass];
@@ -3669,7 +3669,7 @@ HB_FUNC( __CLSINSTSUPER )
       if( HB_IS_SYMBOL(pItem) ) {
          pClassFuncSym = hb_itemGetSymbol(pItem);
       } else if( HB_IS_STRING(pItem) ) {
-         PHB_DYNS pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
+         auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
          if( pDynSym ) {
             pClassFuncSym = pDynSym->pSymbol;
          }
@@ -4596,7 +4596,7 @@ HB_FUNC( __GETMSGPRF ) /* profiler: returns a method called and consumed times *
 
    hb_reta(2);
    if( uiClass && uiClass <= s_uiClasses && cMsg && *cMsg ) {
-      PHB_DYNS pMsg = hb_dynsymFindName(cMsg);
+      auto pMsg = hb_dynsymFindName(cMsg);
 
       if( pMsg ) {
          PMETHOD pMethod = hb_clsFindMsg(s_pClasses[uiClass], pMsg);
@@ -4761,7 +4761,6 @@ static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
             if( pszClass ) {
                nLen = pszClass - pszMethod;
                if( nLen ) {
-                  PHB_DYNS pParentSym;
                   char szClassName[HB_SYMBOL_NAME_LEN + 1];
 
                   if( nLen > HB_SYMBOL_NAME_LEN ) {
@@ -4769,7 +4768,7 @@ static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
                   }
                   memcpy(szClassName, pszMethod, nLen);
                   szClassName[nLen] = '\0';
-                  pParentSym = hb_dynsymFindName(szClassName);
+                  auto pParentSym = hb_dynsymFindName(szClassName);
                   uiSuper = pParentSym == nullptr ? 0 : hb_clsGetParent(s_pClasses[uiClass], pParentSym);
                }
                pVarSym = hb_dynsymFindName(pszClass + 1);
