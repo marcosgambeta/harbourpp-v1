@@ -288,7 +288,7 @@ HB_FUNC( SX_SETSCOPE )
       DBORDERINFO Info;
 
       if( hb_sxOrdParam(&Info) ) {
-         int iScope = hb_parni(1);
+         auto iScope = hb_parni(1);
          Info.itmResult = hb_itemNew(nullptr);
          if( !HB_ISNIL(2) ) {
             Info.itmNewVal = hb_param(2, Harbour::Item::ANY);

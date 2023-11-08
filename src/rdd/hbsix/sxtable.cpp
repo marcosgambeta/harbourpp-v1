@@ -427,7 +427,7 @@ HB_FUNC( SX_SETTURBO )
 HB_FUNC( _SXOPENINIT )
 {
    AREAP pArea = nullptr;
-   int iArea = hb_parni(1);
+   auto iArea = hb_parni(1);
 
    if( iArea ) {
       pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(iArea));

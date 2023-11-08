@@ -1939,7 +1939,7 @@ HB_FUNC( HS_NEXT )
 HB_FUNC( HS_VERIFY )
 {
    if( hb_param(1, Harbour::Item::NUMERIC) ) {
-      int iHandle = hb_parni(1);
+      auto iHandle = hb_parni(1);
       auto pExpr = hb_param(2, Harbour::Item::BLOCK);
       const char * szText = nullptr;
       HB_SIZE nLen = 0;

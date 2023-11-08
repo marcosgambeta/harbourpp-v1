@@ -686,7 +686,7 @@ HB_FUNC( DBSELECTAREA )
    if( szAlias ) {
       hb_rddSelectWorkAreaAlias(szAlias);
    } else {
-      int iNewArea = hb_parni(1);
+      auto iNewArea = hb_parni(1);
 
       /*
        * NOTE: iNewArea >= HB_RDD_MAX_AREA_NUM used intentionally
@@ -1589,7 +1589,7 @@ HB_FUNC( ORDSCOPE )
    if( pArea != nullptr ) {
       DBORDERINFO pInfo{};
       HB_USHORT uiAction;
-      int iScope = hb_parni(1);
+      auto iScope = hb_parni(1);
 
       pInfo.itmResult = hb_itemNew(nullptr);
       if( iScope == 2 ) {
