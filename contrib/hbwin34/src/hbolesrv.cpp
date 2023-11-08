@@ -337,7 +337,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch * lpThis, REFIID riid, 
             }
             else if( HB_IS_OBJECT(pAction) )
             {
-               PHB_DYNS pDynSym = hb_dynsymFindName(szName);
+               auto pDynSym = hb_dynsymFindName(szName);
 
                if( pDynSym && hb_objHasMessage(pAction, pDynSym) )
                {
@@ -347,7 +347,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch * lpThis, REFIID riid, 
          }
          else
          {
-            PHB_DYNS pDynSym = hb_dynsymFindName(szName);
+            auto pDynSym = hb_dynsymFindName(szName);
 
             if( pDynSym && (hb_dynsymIsFunction(pDynSym) || hb_dynsymIsMemvar(pDynSym)) )
             {

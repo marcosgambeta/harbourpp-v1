@@ -1136,7 +1136,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
             pFunc = hb_itemNew(pFirst);
             iType = 2;
          } else if( HB_IS_STRING(pFirst) ) {
-            PHB_DYNS pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
+            auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
             if( pExecSym ) {
                pFunc = static_cast<PHB_ITEM>(pExecSym);
             }
@@ -1214,7 +1214,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
             wvw->a.pFuncModal[iIndex] = hb_itemNew(pFirst);
             wvw->a.iTypeModal[iIndex] = 2;
          } else if( HB_IS_STRING(pFirst) ) {
-            PHB_DYNS pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
+            auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
             wvw->a.pFuncModal[iIndex] = pExecSym ? static_cast<PHB_ITEM>(pExecSym) : nullptr;
             wvw->a.iTypeModal[iIndex] = 1;
          }
