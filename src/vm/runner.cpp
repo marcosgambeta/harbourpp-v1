@@ -766,7 +766,7 @@ HB_FUNC( HB_HRBGETFUNLIST )
       PHB_SYMB pSym;
       auto paList = hb_itemArrayNew(0);
       auto pFuncName = hb_itemNew(nullptr);
-      int iType = hb_parni(2);
+      auto iType = hb_parni(2);
 
       for( nPos = 0, pSym = pHrbBody->pSymRead; nPos < pHrbBody->ulSymbols; ++pSym, ++nPos ) {
          if( pSym->value.pFunPtr != nullptr && (pSym->scope.value & HB_FS_INITEXIT) == 0 ) {

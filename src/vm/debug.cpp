@@ -302,7 +302,7 @@ HB_FUNC( __DBGVMVARLGET )
 {
    if( hb_vmInternalsEnabled() ) {
       int iLevel = hb_parni(1) + 1;
-      int iLocal = hb_parni(2);
+      auto iLocal = hb_parni(2);
       PHB_ITEM pLocal = hb_dbg_vmVarLGet(iLevel, iLocal);
 
       if( pLocal ) {
@@ -317,7 +317,7 @@ HB_FUNC( __DBGVMVARLSET )
 {
    if( hb_vmInternalsEnabled() ) {
       int iLevel = hb_parni(1) + 1;
-      int iLocal = hb_parni(2);
+      auto iLocal = hb_parni(2);
 
       HB_ISIZ nBaseOffset = hb_stackBaseOffset();
       while( iLevel-- > 0 && nBaseOffset > 1 ) {
