@@ -317,7 +317,7 @@ HB_ERRCODE hb_rddGetAliasNumber(const char * szAlias, int * iArea)
    } else if( fOneLetter && c == 'M' ) {
       *iArea = HB_RDD_MAX_AREA_NUM;
    } else {
-      PHB_DYNS pSymAlias = hb_dynsymFindName(szAlias);
+      auto pSymAlias = hb_dynsymFindName(szAlias);
 
       *iArea = pSymAlias ? static_cast<int>(hb_dynsymAreaHandle(pSymAlias)) : 0;
       if( *iArea == 0 ) {

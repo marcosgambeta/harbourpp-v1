@@ -2456,7 +2456,6 @@ int hb_rddRegister(const char * szDriver, HB_USHORT uiType)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddRegister(%s, %hu)", szDriver, uiType));
 #endif
 
-   PHB_DYNS pGetFuncTable;
    char szGetFuncTable[HB_RDD_MAX_DRIVERNAME_LEN + 14];
    HB_USHORT uiFunctions = 0;
    int iResult;
@@ -2466,7 +2465,7 @@ int hb_rddRegister(const char * szDriver, HB_USHORT uiType)
    }
 
    hb_snprintf(szGetFuncTable, sizeof(szGetFuncTable), "%s_GETFUNCTABLE", szDriver);
-   pGetFuncTable = hb_dynsymFindName(szGetFuncTable);
+   auto pGetFuncTable = hb_dynsymFindName(szGetFuncTable);
    if( !pGetFuncTable ) {
       return 2;              /* Not valid RDD */
    }
