@@ -65,7 +65,7 @@
  */
 HB_FUNC( BM_DBSEEKWILD )
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr )
    {
@@ -267,7 +267,7 @@ static HB_BOOL hb_bmCheckRecordFilter(AREAP pArea, HB_ULONG ulRecNo)
 
 static AREAP hb_bmGetCurrentWorkArea(void)
 {
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( !pArea )
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);

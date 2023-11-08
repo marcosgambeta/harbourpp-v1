@@ -948,7 +948,7 @@ HB_FUNC( ADSISRECORDINAOF )
 HB_FUNC( ADSISRECORDVALID )
 {
    bool bReturn = false;
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       HB_BOOL fEof = true;

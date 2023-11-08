@@ -262,7 +262,7 @@ static HB_BOOL exportBufSqlVar(pgCopyContext * context, PHB_ITEM pValue, const c
 HB_FUNC( HB_PQCOPYFROMWA )
 {
 #if PG_VERSION_NUM >= 80000
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PGconn * pConn = hb_PGconn_par(1);
 
    if( pConn == nullptr )

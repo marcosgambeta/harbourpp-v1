@@ -223,7 +223,7 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
                (!strcmp(szOper, ">=") && (hb_arrayLen(pItem) == 4)) ||
                (!strcmp(szOper, "<=<=") && (hb_arrayLen(pItem) == 5)) )
       {
-         AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+         auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
          if( pArea != nullptr )
          {
             DBORDERINFO dboi;

@@ -153,7 +153,7 @@ HB_FUNC( DBF2TEXT )
    int          nCount = hb_parni(7);
    PHB_CODEPAGE cdp    = hb_cdpFind(hb_parcx(8));
 
-   AREAP pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    /* Export DBF content to text file */
 
