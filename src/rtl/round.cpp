@@ -73,7 +73,7 @@ HB_FUNC( ROUND )
    auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pNumber && HB_ISNUM(2) ) {
-      int iDec = hb_parni(2);
+      auto iDec = hb_parni(2);
 
 #ifdef HB_CLP_STRICT
       /* In CA-Cl*pper Round() always returns double item, what in some

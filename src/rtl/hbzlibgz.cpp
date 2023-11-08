@@ -242,7 +242,7 @@ HB_FUNC( HB_GZWRITE )
 HB_FUNC( HB_GZGETS )
 {
 #ifndef HB_NO_GZLIB
-   int iLen = hb_parni(2);
+   auto iLen = hb_parni(2);
 
    if( iLen > 0 ) {
       gzFile gz = hb_gzParam(1);

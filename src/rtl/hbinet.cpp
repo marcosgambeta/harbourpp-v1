@@ -1087,7 +1087,7 @@ HB_FUNC( HB_INETSERVER )
    if( socket->sd == HB_NO_SOCKET ) {
       hb_inetGetError(socket);
    } else {
-      int iPort = hb_parni(1);
+      auto iPort = hb_parni(1);
       auto szAddress = hb_parc(3);
       int iListen = hb_parnidef(4, 10);
 
@@ -1146,7 +1146,7 @@ static void hb_inetConnectInternal(HB_BOOL fResolve)
    auto szHost = hb_parc(1);
    char * szAddr = nullptr;
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET(3);
-   int iPort = hb_parni(2);
+   auto iPort = hb_parni(2);
 
    if( szHost == nullptr || iPort == 0 || (socket == nullptr && !HB_ISNIL(3)) ) {
       hb_inetErrRT();
@@ -1216,7 +1216,7 @@ HB_FUNC( HB_INETDGRAMBIND )
 {
    PHB_SOCKET_STRUCT socket;
    PHB_ITEM pSocket = nullptr;
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    const char * szAddress;
 
    /* Parameter error checking */
@@ -1283,7 +1283,7 @@ HB_FUNC( HB_INETDGRAMSEND )
 {
    PHB_SOCKET_STRUCT socket = HB_PARSOCKET(1);
    auto szAddress = hb_parc(2);
-   int iPort = hb_parni(3);
+   auto iPort = hb_parni(3);
    auto pBuffer = hb_param(4, Harbour::Item::STRING);
    int iLen;
    const char * szBuffer;
@@ -1305,7 +1305,7 @@ HB_FUNC( HB_INETDGRAMSEND )
          szBuffer = hb_itemGetCPtr(pBuffer);
          iLen = static_cast<int>(hb_itemGetCLen(pBuffer));
          if( HB_ISNUM(5) ) {
-            int iMaxLen = hb_parni(5);
+            auto iMaxLen = hb_parni(5);
             if( iMaxLen < iLen ) {
                iLen = HB_MAX(iMaxLen, 0);
             }

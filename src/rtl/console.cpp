@@ -619,8 +619,8 @@ HB_FUNC( HB_DISPOUTATBOX )
    HB_SIZE nLen = hb_parclen(3);
 
    if( nLen > 0 ) {
-      int iRow = hb_parni(1);
-      int iCol = hb_parni(2);
+      auto iRow = hb_parni(1);
+      auto iCol = hb_parni(2);
       auto pszString = hb_parc(3);
 
       int iColor;

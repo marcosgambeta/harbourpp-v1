@@ -55,21 +55,19 @@ HB_FUNC( SCROLL )
    int iMaxRow = hb_gtMaxRow();
    int iMaxCol = hb_gtMaxCol();
 
-   int iTop;
-   int iLeft;
    int iBottom;
    int iRight;
 
    /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 
-   iTop = hb_parni(1); /* Defaults to zero on bad type */
+   auto iTop = hb_parni(1); /* Defaults to zero on bad type */
    if( iTop < 0 ) {
       iTop = 0;
    } else if( iTop > iMaxRow ) {
       iTop = iMaxRow;
    }
 
-   iLeft = hb_parni(2); /* Defaults to zero on bad type */
+   auto iLeft = hb_parni(2); /* Defaults to zero on bad type */
    if( iLeft < 0 ) {
       iLeft = 0;
    } else if( iLeft > iMaxCol ) {
@@ -106,8 +104,6 @@ HB_FUNC( HB_SCROLL )
    int iMaxRow = hb_gtMaxRow();
    int iMaxCol = hb_gtMaxCol();
 
-   int iTop;
-   int iLeft;
    int iBottom;
    int iRight;
    int iColor;
@@ -115,14 +111,14 @@ HB_FUNC( HB_SCROLL )
 
    /* Enforce limits of (0,0) to (MaxRow(),MaxCol()) */
 
-   iTop = hb_parni(1); /* Defaults to zero on bad type */
+   auto iTop = hb_parni(1); /* Defaults to zero on bad type */
    if( iTop < 0 ) {
       iTop = 0;
    } else if( iTop > iMaxRow ) {
       iTop = iMaxRow;
    }
 
-   iLeft = hb_parni(2); /* Defaults to zero on bad type */
+   auto iLeft = hb_parni(2); /* Defaults to zero on bad type */
    if( iLeft < 0 ) {
       iLeft = 0;
    } else if( iLeft > iMaxCol ) {

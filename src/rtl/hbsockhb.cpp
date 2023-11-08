@@ -885,7 +885,7 @@ HB_FUNC( HB_SOCKETOPEN )
    HB_SOCKET socket;
    int iDomain = hb_parnidef(1, HB_SOCKET_AF_INET);
    int iType = hb_parnidef(2, HB_SOCKET_PT_STREAM);
-   int iProtocol = hb_parni(3);
+   auto iProtocol = hb_parni(3);
 
    s_socket_init();
    if( (socket = hb_socketOpen(iDomain, iType, iProtocol)) != HB_NO_SOCKET ) {
