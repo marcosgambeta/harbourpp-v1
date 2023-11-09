@@ -108,7 +108,7 @@ static void AddToArray(PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos)
 #endif
 
    if( HB_IS_SYMBOL(pItem) ) { /* Symbol is pushed as text */
-      PHB_ITEM pArrayItem = hb_arrayGetItemPtr(pReturn, nPos);
+      auto pArrayItem = hb_arrayGetItemPtr(pReturn, nPos);
 
       if( pArrayItem ) {
          HB_SIZE nLen = strlen(pItem->item.asSymbol.value->szName) + 2;

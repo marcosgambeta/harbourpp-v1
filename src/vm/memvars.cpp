@@ -953,7 +953,7 @@ PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy)
    if( MVInfo.nCount > 0 ) {
       pArray = hb_itemArrayNew(MVInfo.nCount);
       do {
-         PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, MVInfo.nCount);
+         auto pItem = hb_arrayGetItemPtr(pArray, MVInfo.nCount);
          if( pItem != nullptr ) {
             PHB_DYNS pDynSymbol = MVInfo.pDyns[--MVInfo.nCount];
             PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSymbol);
@@ -981,7 +981,7 @@ void hb_memvarRestoreFromArray(PHB_ITEM pArray)
 {
    HB_SIZE nCount = hb_arrayLen(pArray);
    for( HB_SIZE nPos = 1; nPos <= nCount; ++nPos ) {
-      PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nPos);
+      auto pItem = hb_arrayGetItemPtr(pArray, nPos);
       PHB_DYNS pDynSym = hb_arrayGetSymbol(pItem, 1)->pDynSym;
       PHB_ITEM pMemvar = hb_arrayGetItemPtr(pItem, 2)->item.asMemvar.value;
       hb_memvarValueIncRef(pMemvar);

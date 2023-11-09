@@ -1059,7 +1059,7 @@ PHB_ITEM hb_hashGetKeys(PHB_ITEM pHash)
       HB_SIZE nPos = 0;
 
       while( (pKey = hb_hashGetKeyAt(pHash, ++nPos)) != nullptr ) {
-         PHB_ITEM pDest = hb_arrayGetItemPtr(pKeys, nPos);
+         auto pDest = hb_arrayGetItemPtr(pKeys, nPos);
          if( !pDest ) {
             break;
          }
@@ -1083,7 +1083,7 @@ PHB_ITEM hb_hashGetValues(PHB_ITEM pHash)
       HB_SIZE nPos = 0;
 
       while( (pVal = hb_hashGetValueAt(pHash, ++nPos)) != nullptr ) {
-         PHB_ITEM pDest = hb_arrayGetItemPtr(pValues, nPos);
+         auto pDest = hb_arrayGetItemPtr(pValues, nPos);
          if( !pDest ) {
             break;
          }

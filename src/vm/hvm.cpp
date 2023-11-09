@@ -7194,7 +7194,7 @@ static void hb_vmStaticsClear(void)
             HB_SIZE nLen = hb_arrayLen(pStatics);
 
             for( HB_SIZE ul = 1; ul <= nLen; ++ul ) {
-               PHB_ITEM pItem = hb_arrayGetItemPtr(pStatics, ul);
+               auto pItem = hb_arrayGetItemPtr(pStatics, ul);
                if( pItem && HB_IS_COMPLEX(pItem) ) {
                   hb_itemClear(pItem);
                }

@@ -1443,7 +1443,7 @@ PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol)
       }
 
       if( pFuncSym == &s___msgEvalInline ) {
-         PHB_ITEM pItem = hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData);
+         auto pItem = hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData);
          return pItem ? pItem->item.asBlock.value->pDefSymb : nullptr;
       }
 /*
@@ -4117,7 +4117,7 @@ HB_FUNC_STATIC( msgClassSel )
                 (nParam == HB_MSGLISTPURE && hb_methodType(pMethod) != HB_OO_MSG_CLASSDATA) ) {
                if( nScope == 0 || (pMethod->uiScope & nScope) != 0 ) {
                   if( lFull ) {
-                     PHB_ITEM pItem = hb_arrayGetItemPtr(pReturn, ++nPos);
+                     auto pItem = hb_arrayGetItemPtr(pReturn, ++nPos);
                      if( pItem != nullptr ) {
                         hb_arrayNew(pItem, 4);
                         hb_arraySetC(pItem, HB_OO_DATA_SYMBOL, pMethod->pMessage->pSymbol->szName);
@@ -4722,7 +4722,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
       pInfo = &pIndex[nIndex - 1];
       if( pInfo->pMethod ) {
          const char * pszVar = pInfo->pMethod->pMessage->pSymbol->szName;
-         PHB_ITEM pValue = hb_arrayGetItemPtr(pReturn, ++nCount);
+         auto pValue = hb_arrayGetItemPtr(pReturn, ++nCount);
 
          hb_arrayNew(pValue, 2);
          if( pInfo->uiClass != pClass->uiClass ) {
@@ -4753,7 +4753,7 @@ static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
       while( (pValue = hb_arrayGetItemPtr(pArray, ++nPos)) != nullptr ) {
          const char * pszMethod = hb_arrayGetCPtr(pValue, 1);
          PHB_DYNS pVarSym = hb_dynsymFind(pszMethod);
-         PHB_ITEM pNewVal = hb_arrayGetItemPtr(pValue, 2);
+         auto pNewVal = hb_arrayGetItemPtr(pValue, 2);
          HB_USHORT uiSuper = uiClass;
 
          if( !pVarSym ) {

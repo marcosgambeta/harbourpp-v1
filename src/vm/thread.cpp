@@ -885,7 +885,7 @@ HB_CARGO_FUNC(hb_threadStartVM)
 
    HB_ULONG ulPCount = static_cast<HB_ULONG>(hb_arrayLen(pThread->pParams));
    if( ulPCount > 0 ) {
-      PHB_ITEM pStart = hb_arrayGetItemPtr(pThread->pParams, 1);
+      auto pStart = hb_arrayGetItemPtr(pThread->pParams, 1);
 
       if( HB_IS_BLOCK(pStart) ) {
          hb_vmPushEvalSym();
@@ -1003,7 +1003,7 @@ PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
          /* detach LOCAL variables passed by reference */
          HB_SIZE nPCount = hb_arrayLen(pParams);
          for( HB_SIZE nParam = 1; nParam <= nPCount; ++nParam ) {
-            PHB_ITEM pParam = hb_arrayGetItemPtr(pParams, nParam);
+            auto pParam = hb_arrayGetItemPtr(pParams, nParam);
             if( HB_IS_BYREF(pParam) ) {
                hb_memvarDetachLocal(pParam);
             }
@@ -1114,7 +1114,7 @@ HB_FUNC( HB_THREADSTART )
       if( HB_IS_STRING(pStart) && pSymbol ) {
          hb_itemPutSymbol(hb_arrayGetItemPtr(pParams, 1), pSymbol);
       } else {
-         PHB_ITEM pParam = hb_arrayGetItemPtr(pParams, 1);
+         auto pParam = hb_arrayGetItemPtr(pParams, 1);
          if( HB_IS_BYREF(pParam) ) {
             hb_itemCopy(pParam, hb_itemUnRef(pParam));
          }
