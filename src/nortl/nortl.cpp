@@ -270,7 +270,7 @@ static char * hb_memToStr(char * szBuffer, void * pMem, HB_SIZE nSize)
    }
 
    iPrintable = 0;
-   for( int i = 0; i < iSize; ++i ) {
+   for( auto i = 0; i < iSize; ++i ) {
       if( (byMem[i] & 0x7f) >= 0x20 ) {
          iPrintable++;
       }
@@ -278,7 +278,7 @@ static char * hb_memToStr(char * szBuffer, void * pMem, HB_SIZE nSize)
 
    if( (iPrintable * 100) / iSize > 70 ) { /* more then 70% printable chars */
       /* format as string of original chars */
-      for( int i = 0; i < iSize; ++i ) {
+      for( auto i = 0; i < iSize; ++i ) {
          if( (byMem[i] & 0x7f) >= 0x20 ) {
             *pDest++ = byMem[i];
          } else {
@@ -287,7 +287,7 @@ static char * hb_memToStr(char * szBuffer, void * pMem, HB_SIZE nSize)
       }
    } else {
       /* format as hex */
-      for( int i = 0; i < iSize; ++i ) {
+      for( auto i = 0; i < iSize; ++i ) {
          int iLo = byMem[i] & 0x0f, iHi = byMem[i] >> 4;
          *pDest++ = '\\';
          *pDest++ = static_cast<char>(iHi <= 9 ? '0' + iHi : 'A' - 10 + iHi);
@@ -321,7 +321,7 @@ void hb_xexit(void)
 
       hb_conOutErr(hb_conNewLine(), 0);
 
-      for( int i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock ) {
+      for( auto i = 1, pMemBlock = s_pMemBlocks; pMemBlock; ++i, pMemBlock = pMemBlock->pNextBlock ) {
          HB_TRACE(HB_TR_ERROR, ("Block %i %p (size %" HB_PFS "u) \"%s\"", i,
             static_cast<char*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize,
             hb_memToStr(szBuffer, static_cast<char*>(pMemBlock) + HB_MEMINFO_SIZE, pMemBlock->nSize)));
