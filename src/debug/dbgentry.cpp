@@ -314,7 +314,7 @@ static PHB_ITEM hb_dbgActivateBreakArray(HB_DEBUGINFO * info)
 {
    auto pArray = hb_itemArrayNew(info->nBreakPoints);
 
-   for( int i = 0; i < info->nBreakPoints; i++ ) {
+   for( auto i = 0; i < info->nBreakPoints; i++ ) {
       PHB_ITEM pBreak = hb_arrayGetItemPtr(pArray, i + 1);
 
       hb_arrayNew(pBreak, HB_DBG_BP_LEN);
@@ -333,7 +333,7 @@ static PHB_ITEM hb_dbgActivateWatchArray(HB_DEBUGINFO * info)
    int j;
    auto pArray = hb_itemArrayNew(info->nWatchPoints);
 
-   for( int i = 0; i < info->nWatchPoints; i++ ) {
+   for( auto i = 0; i < info->nWatchPoints; i++ ) {
       PHB_ITEM pWatch = hb_arrayGetItemPtr(pArray, i + 1), xValue;
       HB_BOOL fValid;
 
@@ -358,7 +358,7 @@ static PHB_ITEM hb_dbgActivateWatchArray(HB_DEBUGINFO * info)
 static PHB_ITEM hb_dbgActivateVarArray(PHB_ITEM pArray, int nVars, HB_VARINFO * aVars)
 {
    hb_arrayNew(pArray, nVars);
-   for( int i = 0; i < nVars; i++ ) {
+   for( auto i = 0; i < nVars; i++ ) {
       PHB_ITEM aVar = hb_arrayGetItemPtr(pArray, i + 1);
 
       hb_arrayNew(aVar, HB_DBG_VAR_LEN);
@@ -381,7 +381,7 @@ static PHB_ITEM hb_dbgActivateModuleArray(void)
 
    auto pArray = hb_itemArrayNew(s_common.nModules);
 
-   for( int i = 0; i < s_common.nModules; i++ ) {
+   for( auto i = 0; i < s_common.nModules; i++ ) {
       PHB_ITEM pModule = hb_arrayGetItemPtr(pArray, i + 1);
 
       hb_arrayNew(pModule, HB_DBG_MOD_LEN);
@@ -400,7 +400,7 @@ static PHB_ITEM hb_dbgActivateCallStackArray(HB_DEBUGINFO * info)
 {
    auto aCallStack = hb_itemArrayNew(info->nCallStackLen);
 
-   for( int i = 0; i < info->nCallStackLen; i++ ) {
+   for( auto i = 0; i < info->nCallStackLen; i++ ) {
       HB_CALLSTACKINFO * pEntry = &info->aCallStack[i];
       PHB_ITEM aEntry;
 
@@ -894,7 +894,7 @@ static void hb_dbgClearWatch( HB_WATCHPOINT * pWatch )
    }
 
    if( pWatch->nVars ) {
-      for( int i = 0; i < pWatch->nVars; i++ ) {
+      for( auto i = 0; i < pWatch->nVars; i++ ) {
          hb_xfree(pWatch->aVars[i]);
       }
 
@@ -937,7 +937,7 @@ void hb_dbgDelWatch(void * handle, int nWatch)
       hb_dbgClearWatch( pWatch );
       ARRAY_DEL(HB_WATCHPOINT, info->aWatch, info->nWatchPoints, nWatch);
 
-      for( int i = 0; i < info->nTracePoints; i++ ) {
+      for( auto i = 0; i < info->nTracePoints; i++ ) {
          HB_TRACEPOINT * pTrace = &info->aTrace[i];
 
          if( pTrace->nIndex == nWatch ) {
@@ -1056,7 +1056,7 @@ static PHB_ITEM hb_dbgEval(HB_DEBUGINFO * info, HB_WATCHPOINT * watch, HB_BOOL *
 
       info->bInside = bInside;
 
-      for( int i = 0; i < watch->nVars; i++ ) {
+      for( auto i = 0; i < watch->nVars; i++ ) {
          PHB_ITEM xOldValue = hb_arrayGetItemPtr(aVars, i + 1);
          PHB_ITEM xNewValue = hb_arrayGetItemPtr(aNewVars, i + 1);
 
@@ -1444,7 +1444,7 @@ static int hb_dbgIsBreakPoint(HB_DEBUGINFO * info, const char * szModule, int nL
 {
    /* szModule has stripped path here */
 
-   for( int i = 0; i < info->nBreakPoints; i++ ) {
+   for( auto i = 0; i < info->nBreakPoints; i++ ) {
       HB_BREAKPOINT * point = &info->aBreak[i];
 
       if( point->nLine == nLine && point->szModule && FILENAME_EQUAL(szModule, point->szModule) ) {
@@ -1611,7 +1611,7 @@ void hb_dbgSetWatch(void * handle, int nWatch, const char * szExpr, HB_BOOL bTra
       hb_dbgClearWatch( pWatch );
       pWatch->szExpr = hb_strdup(szExpr);
       pWatch->pBlock = nullptr;
-      for( int i = 0; i < info->nTracePoints; i++ ) {
+      for( auto i = 0; i < info->nTracePoints; i++ ) {
          HB_TRACEPOINT * pTrace = &info->aTrace[i];
 
          if( pTrace->nIndex == nWatch ) {
