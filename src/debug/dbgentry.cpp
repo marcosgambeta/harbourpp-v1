@@ -791,7 +791,7 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
 
       for( i = 1; i <= nItemLen; i++ ) {
          auto pEntry = hb_arrayGetItemPtr(pItem, i);
-         const char * szModule = hb_arrayGetCPtr(pEntry, 1);
+         auto szModule = hb_arrayGetCPtr(pEntry, 1);
          bool bFound = false;
 
          szModule = hb_dbgStripModuleName(szModule);
@@ -806,8 +806,8 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
                HB_ISIZ nNewLen = hb_arrayGetCLen(pEntry, 3);
                HB_ISIZ nMin = HB_MIN(nNewMin, nOrigMin);
                HB_ISIZ nMax = HB_MAX(nNewMin + ( nNewLen << 3 ) - 1, nOrigMin + ( nOrigLen << 3 ) - 1);
-               const char * pOrigBuffer = hb_arrayGetCPtr(pLines, 3);
-               const char * pNewBuffer = hb_arrayGetCPtr(pEntry, 3);
+               auto pOrigBuffer = hb_arrayGetCPtr(pLines, 3);
+               auto pNewBuffer = hb_arrayGetCPtr(pEntry, 3);
                HB_ISIZ nLen = ((nMax - nMin) >> 3) + 1;
                HB_ISIZ k;
                auto pBuffer = static_cast<char*>(hb_xgrabz(nLen + 1));
@@ -838,7 +838,7 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
    nLinesLen = hb_itemSize(s_common.pStopLines);
    for( i = 1; i <= nLinesLen; i++ ) {
       auto pEntry = hb_arrayGetItemPtr(s_common.pStopLines, i);
-      const char * szModule = hb_arrayGetCPtr(pEntry, 1);
+      auto szModule = hb_arrayGetCPtr(pEntry, 1);
 
       if( szModule ) {
          const char * szName = hb_dbgStripModuleName(szModule);
