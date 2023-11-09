@@ -66,7 +66,7 @@ HB_FUNC( __XHELP )
       /* CA-Cl*pper respects references so hb_stackItemFromBase() is
        * used instead of hb_param() [druzus]
        */
-      for( int iParam = 1; iParam <= iPCount; iParam++ ) {
+      for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
          hb_vmPush(hb_stackItemFromBase(iParam));
       }
 

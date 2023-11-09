@@ -164,7 +164,7 @@ static void hb_bf_initvect(HB_BYTE * vect)
    auto pszVect = hb_parc(3);
    int iLen = static_cast<int>(hb_parclen(3));
 
-   for( int i = 0; i < HB_BF_CIPHERBLOCK; ++i ) {
+   for( auto i = 0; i < HB_BF_CIPHERBLOCK; ++i ) {
       vect[i] = static_cast<HB_BYTE>(i);
       if( iLen > 0 ) {
          vect[i] ^= static_cast<HB_BYTE>(pszVect[i % iLen]);

@@ -512,7 +512,7 @@ static void set_signals(void)
 
    /* Ignore SIGPIPEs so they don't kill us. */
    signal(SIGPIPE, SIG_IGN);
-   for( int i = 0; sigs[i]; ++i ) {
+   for( auto i = 0; sigs[i]; ++i ) {
       set_sig_handler(sigs[i]);
    }
 }
@@ -659,7 +659,7 @@ static int add_efds(PHB_GTTRM pTerm, int fd, int mode, int (* eventFunc)(int, in
    }
 #endif
 
-   for( int i = 0; i < pTerm->efds_no && !pefd; i++ ) {
+   for( auto i = 0; i < pTerm->efds_no && !pefd; i++ ) {
       if( pTerm->event_fds[i]->fd == fd ) {
          pefd = pTerm->event_fds[i];
       }
@@ -693,7 +693,7 @@ static void del_efds(PHB_GTTRM pTerm, int fd)
 {
    int n = -1;
 
-   for( int i = 0; i < pTerm->efds_no && n == -1; i++ ) {
+   for( auto i = 0; i < pTerm->efds_no && n == -1; i++ ) {
       if( pTerm->event_fds[i]->fd == fd ) {
          n = i;
       }
@@ -712,7 +712,7 @@ static void del_efds(PHB_GTTRM pTerm, int fd)
 static void del_all_efds(PHB_GTTRM pTerm)
 {
    if( pTerm->event_fds != nullptr ) {
-      for( int i = 0; i < pTerm->efds_no; i++ ) {
+      for( auto i = 0; i < pTerm->efds_no; i++ ) {
          hb_xfree(pTerm->event_fds[i]);
       }
 
@@ -1034,7 +1034,7 @@ static int read_bufch( PHB_GTTRM pTerm, int fd )
       n = hb_fsRead(fd, buf, STDIN_BUFLEN - pTerm->stdin_inbuf);
 #endif
 
-      for( int i = 0; i < n; i++ ) {
+      for( auto i = 0; i < n; i++ ) {
          pTerm->stdin_buf[pTerm->stdin_ptr_r++] = buf[i];
          if( pTerm->stdin_ptr_r == STDIN_BUFLEN ) {
             pTerm->stdin_ptr_r = 0;
@@ -2290,7 +2290,7 @@ static void hb_gt_trm_SetKeyTrans(PHB_GTTRM pTerm)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_SetKeyTrans(%p,%p,%p)", static_cast<void*>(pTerm), static_cast<void*>(cdpTerm), static_cast<void*>(cdpHost)));
 #endif
 
-   for( int i = 0; i < 256; ++i ) {
+   for( auto i = 0; i < 256; ++i ) {
       pTerm->keyTransTbl[i] = static_cast<unsigned char>(hb_cdpTranslateChar(i, cdpTerm, cdpHost));
    }
 }
@@ -2304,7 +2304,7 @@ static void hb_gt_trm_SetDispTrans(PHB_GTTRM pTerm, int box)
    memset(pTerm->chrattr, 0, sizeof(pTerm->chrattr));
    memset(pTerm->boxattr, 0, sizeof(pTerm->boxattr));
 
-   for( int i = 0; i < 256; i++ ) {
+   for( auto i = 0; i < 256; i++ ) {
       int ch = pTerm->charmap[i] & 0xffff;
       int mode = !pTerm->fUTF8 ? (pTerm->charmap[i] >> 16) & 0xff : 1;
 
@@ -2336,7 +2336,7 @@ static void hb_gt_trm_SetDispTrans(PHB_GTTRM pTerm, int box)
    }
 
    if( cdpHost && cdpTerm ) {
-      for( int i = 0; i < 256; ++i ) {
+      for( auto i = 0; i < 256; ++i ) {
          if( hb_cdpIsAlpha(cdpHost, i) ) {
             unsigned char uc = static_cast<unsigned char>(hb_cdpTranslateDispChar(i, cdpHost, cdpTerm));
 

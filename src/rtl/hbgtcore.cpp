@@ -566,7 +566,7 @@ static void hb_gt_def_ColorsToString(PHB_GT pGT, int * pColors, int iColorCount,
          pszColorString[iPos++] = ',';
       }
 
-      for( int j = 0; j <= 1; j++ ) {
+      for( auto j = 0; j <= 1; j++ ) {
          if( (pColors[iColorIndex] & (j ? 0x8000 : 0x0800)) == 0 ) {
             if( nColor == 7 ) {
                pszColorString[iPos++] = 'W';
@@ -2338,7 +2338,7 @@ static void hb_gt_def_GetSize(PHB_GT pGT, int * piRows, int  * piCols)
 
 static void hb_gt_def_SemiCold(PHB_GT pGT)
 {
-   for( int i = 0; i < pGT->iHeight; ++i ) {
+   for( auto i = 0; i < pGT->iHeight; ++i ) {
       pGT->pLines[i] = false;
    }
    pGT->fRefresh = false;
@@ -2433,10 +2433,10 @@ static void hb_gt_def_RedrawDiff(PHB_GT pGT)
       int r, s;
       long lIndex;
 
-      for( int i = 0; i < pGT->iHeight; ++i ) {
+      for( auto i = 0; i < pGT->iHeight; ++i ) {
          if( pGT->pLines[i] ) {
             lIndex = static_cast<long>(i) * pGT->iWidth;
-            for( int l = 0; l < pGT->iWidth; ++l, ++lIndex ) {
+            for( auto l = 0; l < pGT->iWidth; ++l, ++lIndex ) {
                if( pGT->prevBuffer[lIndex].uiValue != pGT->screenBuffer[lIndex].uiValue ) {
                   pGT->prevBuffer[lIndex].uiValue = pGT->screenBuffer[lIndex].uiValue;
                   s = r = l;
@@ -3517,7 +3517,7 @@ static const char * hb_gt_FindDefault(void)
 {
    char szFuncName[15 + HB_GT_NAME_MAX_];
 
-   for( int iPos = 0; iPos < s_iGtCount; iPos++ ) {
+   for( auto iPos = 0; iPos < s_iGtCount; iPos++ ) {
       hb_snprintf(szFuncName, sizeof(szFuncName), "HB_GT_%s_DEFAULT", s_gtInit[iPos]->id);
       if( hb_dynsymFind(szFuncName) ) {
          return s_gtInit[iPos]->id;
@@ -3867,7 +3867,7 @@ HB_FUNC( HB_GTLIST )
 {
    hb_reta(s_iGtCount + 1);
    hb_storvc("NUL", -1, 1);
-   for( int iPos = 0; iPos < s_iGtCount; ++iPos ) {
+   for( auto iPos = 0; iPos < s_iGtCount; ++iPos ) {
       hb_storvc(s_gtInit[iPos]->id, -1, iPos + 2);
    }
 }

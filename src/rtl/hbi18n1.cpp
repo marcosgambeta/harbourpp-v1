@@ -170,13 +170,13 @@ static PHB_I18N_TRANS hb_i18n_table(void)
 
 static int hb_i18n_pluralformfind(const char * szLang)
 {
-   for( int i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i ) {
+   for( auto i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i ) {
       if( hb_stricmp(szLang, s_plural_forms[i].szLangID) == 0 ) {
          return s_plural_forms[i].iForm;
       }
    }
    if( strlen(szLang) > 2 ) {
-      for( int i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i ) {
+      for( auto i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i ) {
          if( hb_strnicmp(szLang, s_plural_forms[i].szLangID, 2) == 0 ) {
             return s_plural_forms[i].iForm;
          }
@@ -187,7 +187,7 @@ static int hb_i18n_pluralformfind(const char * szLang)
 
 static const char * hb_i18n_pluralformid(int iForm)
 {
-   for( int i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i ) {
+   for( auto i = 0; i < static_cast<int>(HB_PLURAL_FOMRS_COUNT); ++i ) {
       if( s_plural_forms[i].iForm == iForm ) {
          return s_plural_forms[i].szLangID;
       }

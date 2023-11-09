@@ -119,7 +119,7 @@ static _HB_INLINE_ HB_U8 arc4_getbyte(void);
 
 static _HB_INLINE_ void arc4_init(void)
 {
-   for( int n = 0; n < 256; ++n ) {
+   for( auto n = 0; n < 256; ++n ) {
       rs.s[n] = static_cast<HB_U8>(n);
    }
 
@@ -129,7 +129,7 @@ static _HB_INLINE_ void arc4_init(void)
 static _HB_INLINE_ void arc4_addrandom(const HB_U8 * dat, int datlen)
 {
    rs.i--;
-   for( int n = 0; n < 256; ++n ) {
+   for( auto n = 0; n < 256; ++n ) {
       HB_U8 si;
       rs.i         = (rs.i + 1);
       si           = rs.s[rs.i];
@@ -323,7 +323,7 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
    HB_U8 entropy[64];
    int   i, nybbles;
 
-   for( int bytes = 0; bytes < ADD_ENTROPY; ) {
+   for( auto bytes = 0; bytes < ADD_ENTROPY; ) {
       int fd = open("/proc/sys/kernel/random/uuid", O_RDONLY, 0);
       int n;
 
@@ -375,7 +375,7 @@ static int arc4_seed_urandom(void)
    /* This is adapted from Tor's crypto_seed_rng() */
    static const char * filenames[] = {"/dev/srandom", "/dev/urandom", "/dev/random", nullptr};
 
-   for( int i = 0; filenames[i]; ++i ) {
+   for( auto i = 0; filenames[i]; ++i ) {
       HB_U8 buf[ADD_ENTROPY];
       HB_SIZE n;
 
@@ -502,7 +502,7 @@ static void arc4_stir(void)
     *
     * We add another sect to the cargo cult, and choose 12*256.
     */
-   for( int i = 0; i < 12 * 256; i++ ) {
+   for( auto i = 0; i < 12 * 256; i++ ) {
       ( void ) arc4_getbyte(); // TODO: C++ cast
    }
 
@@ -570,7 +570,7 @@ void arc4random_addrandom(const unsigned char * dat, int datlen)
       arc4_stir();
    }
 
-   for( int j = 0; j < datlen; j += 256 ) {
+   for( auto j = 0; j < datlen; j += 256 ) {
       /*
        * arc4_addrandom() ignores all but the first 256 bytes of
        * its input.  We want to make sure to look at ALL the

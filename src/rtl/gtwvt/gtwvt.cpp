@@ -1312,14 +1312,14 @@ static HBITMAP hb_gt_wvt_DefineBoxChar(PHB_GTWVT pWVT, HB_USHORT usCh)
 #if defined(UNICODE)
 static void hb_gt_wvt_ResetBoxCharBitmaps(PHB_GTWVT pWVT)
 {
-   for( int i = 1; i <= pWVT->boxCount; i++ ) {
+   for( auto i = 1; i <= pWVT->boxCount; i++ ) {
       DeleteObject(pWVT->boxImage[i]);
    }
 
    memset(pWVT->boxImage, 0, sizeof(pWVT->boxImage));
    pWVT->boxCount = 0;
 
-   for( int i = 0; i < HB_BOXCH_TRANS_COUNT; ++i ) {
+   for( auto i = 0; i < HB_BOXCH_TRANS_COUNT; ++i ) {
       pWVT->boxIndex[i] = HB_BOXCH_TRANS_MAX;
    }
 }
@@ -1808,7 +1808,7 @@ static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT, HFONT hFont)
 
    /* pWVT->FixedSize[] is used by ExtTextOut() to emulate
       fixed font when a proportional font is used */
-   for( int n = 0; n < pWVT->COLS; n++ ) {
+   for( auto n = 0; n < pWVT->COLS; n++ ) {
       pWVT->FixedSize[n] = pWVT->PTEXTSIZE.x;
    }
 
@@ -3937,13 +3937,13 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
                pInfo->pResult = hb_itemNew(nullptr);
             }
             hb_arrayNew(pInfo->pResult, 16);
-            for( int i = 0; i < 16; i++ ) {
+            for( auto i = 0; i < 16; i++ ) {
                hb_arraySetNL(pInfo->pResult, i + 1, pWVT->COLORS[i]);
             }
 
             if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY ) {
                if( hb_arrayLen(pInfo->pNewVal) == 16 ) {
-                  for( int i = 0; i < 16; i++ ) {
+                  for( auto i = 0; i < 16; i++ ) {
                      pWVT->COLORS[i] = hb_arrayGetNL(pInfo->pNewVal, i + 1);
                   }
 

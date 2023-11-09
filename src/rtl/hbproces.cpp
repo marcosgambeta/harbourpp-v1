@@ -233,7 +233,7 @@ static int hb_fsProcessExec(const char * pszFileName, HB_FHANDLE hStdin, HB_FHAN
             if( iMaxFD < 3 ) {
                iMaxFD = 1024;
             }
-            for( int i = 3; i < iMaxFD; ++i ) {
+            for( auto i = 3; i < iMaxFD; ++i ) {
                hb_fsClose(i);
             }
          }
@@ -469,7 +469,7 @@ HB_FHANDLE hb_fsProcessOpen(const char * pszFileName, HB_FHANDLE * phStdin, HB_F
             if( iMaxFD < 3 ) {
                iMaxFD = 1024;
             }
-            for( int i = 3; i < iMaxFD; ++i ) {
+            for( auto i = 3; i < iMaxFD; ++i ) {
                hb_fsClose(i);
             }
          }

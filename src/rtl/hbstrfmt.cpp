@@ -472,7 +472,7 @@ HB_FUNC( HB_STRFORMAT )
 
       if( iParams > 1 ) {
          pItemArray = static_cast<PHB_ITEM*>(hb_xgrab((iParams - 1) * sizeof(PHB_ITEM)));
-         for( int i = 1; i < iParams; i++ ) {
+         for( auto i = 1; i < iParams; i++ ) {
             pItemArray[i - 1] = hb_param(i + 1, Harbour::Item::ANY);
          }
       }

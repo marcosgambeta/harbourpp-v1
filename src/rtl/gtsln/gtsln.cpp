@@ -129,7 +129,7 @@ static void sigwinch_handler(int iSig)
 
 static void hb_sln_colorTrans(void)
 {
-   for( int i = 0; i < 256; i++ ) {
+   for( auto i = 0; i < 256; i++ ) {
       int fg = (i & 0x0F);
       /*
        * bit 7 is a blinking attribute - not used when console is not in
@@ -338,7 +338,7 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
    PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pGT);
 
    /* build a conversion chars table */
-   for( int i = 0; i < 256; i++ ) {
+   for( auto i = 0; i < 256; i++ ) {
       if( i < 32 ) {
          /* under Unix control-chars are not visible in a general meaning */
          HB_SLN_BUILD_RAWCHAR(s_outputTab[i], '.', 0);
@@ -361,7 +361,7 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
    memcpy(s_outboxTab, s_outputTab, sizeof(s_outputTab));
 
    if( cdpHost ) {
-      for( int i = 0; i < 256; ++i ) {
+      for( auto i = 0; i < 256; ++i ) {
          if( hb_cdpIsAlpha(cdpHost, i) ) {
 #ifdef HB_SLN_UNICODE
             int iDst = hb_cdpGetU16Ctrl(hb_cdpGetU16(cdpHost, static_cast<HB_UCHAR>(i)));
@@ -383,7 +383,7 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
    PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
    const char * p;
 
-   for( int i = 0; i < 256; i++ ) {
+   for( auto i = 0; i < 256; i++ ) {
       hb_sln_inputTab[i] = static_cast<unsigned char>(hb_cdpTranslateChar(i, cdpTerm, cdpHost));
    }
 
@@ -401,7 +401,7 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
       hb_sln_convKDeadKeys[0] = static_cast<unsigned char>(len);
 
       len <<= 1;
-      for( int i = 0; i < len; i += 2 ) {
+      for( auto i = 0; i < len; i += 2 ) {
          int ch = static_cast<unsigned char>(p[i + 1]);
          hb_sln_convKDeadKeys[i + 1] = static_cast<unsigned char>(p[i]);
          hb_sln_convKDeadKeys[i + 2] = ch;

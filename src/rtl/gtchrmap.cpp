@@ -62,7 +62,7 @@ const char * hb_gt_szCharMapFileDefault = "/etc/harbour/hb-charmap.def";
 
 static void chrmap_init(int * piTransTbl)
 {
-   for( int i = 0; i < 256; ++i ) {
+   for( auto i = 0; i < 256; ++i ) {
       piTransTbl[i] = HB_CHRMAP(i < 128 ? 1 : 0, i);
    }
 
@@ -71,7 +71,7 @@ static void chrmap_init(int * piTransTbl)
 
 static void chrmap_dotctrl(int * piTransTbl)
 {
-   for( int i = 0; i < 32; ++i ) {
+   for( auto i = 0; i < 32; ++i ) {
       piTransTbl[i] = piTransTbl[i + 128] = HB_CHRMAP(1, '.');
    }
 }
@@ -439,7 +439,7 @@ int main(int argc, char ** argv)
       return 1;
    }
 
-   for( int i = 0; i < 256; ++i ) {
+   for( auto i = 0; i < 256; ++i ) {
       printf("%3d -> %3d : %d\n", i, piTransTbl[i] & 0xff, piTransTbl[i] >> 16);
    }
 

@@ -375,7 +375,7 @@ int hb_gt_sln_ReadKey(PHB_GT pGT, int iEventMask)
          return ch;
       }
       if( ch < 256 ) { /* is this needed ??? */
-         for( int i = 0; i < static_cast<int>(hb_sln_convKDeadKeys[0]); i++ ) {
+         for( auto i = 0; i < static_cast<int>(hb_sln_convKDeadKeys[0]); i++ ) {
             if( static_cast<int>(hb_sln_convKDeadKeys[2 * i + 1]) == static_cast<int>(ch) ) {
                return static_cast<int>(hb_sln_convKDeadKeys[2 * i + 2]);
             }

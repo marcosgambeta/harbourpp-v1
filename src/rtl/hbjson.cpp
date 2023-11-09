@@ -404,7 +404,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                case 'u': {
                   HB_WCHAR wc = 0;
 
-                  for( int i = 0; i < 4; i++ ) {
+                  for( auto i = 0; i < 4; i++ ) {
                      char c = *++szSource;
                      wc <<= 4;
                      if( c >= '0' && c <= '9' ) {

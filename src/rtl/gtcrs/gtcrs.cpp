@@ -260,14 +260,14 @@ static void set_signals(void)
    int sigs[] = { SIGINT, SIGQUIT, SIGTSTP, SIGWINCH, SIGCHLD, 0 };
 
    s_SignalFlag = false;
-   for( int i = 1; i < MAX_SIGNO; ++i ) {
+   for( auto i = 1; i < MAX_SIGNO; ++i ) {
       s_SignalTable[i] = false;
    }
 
    /* Ignore SIGPIPEs so they don't kill us. */
    signal(SIGPIPE, SIG_IGN);
 
-   for( int i = 0; sigs[i]; ++i ) {
+   for( auto i = 0; sigs[i]; ++i ) {
       set_sig_handler(sigs[i]);
    }
 }
@@ -326,7 +326,7 @@ static void sig_handler(int signo)
 static void set_signals(void)
 {
    s_SignalFlag = false;
-   for( int i = 1; i < MAX_SIGNO; ++i ) {
+   for( auto i = 1; i < MAX_SIGNO; ++i ) {
       s_SignalTable[i] = false;
       set_sig_handler(i);
    }
@@ -386,7 +386,7 @@ static int add_efds(InOutBase * ioBase, int fd, int mode, int (* eventFunc)(int,
       return -1;
    }
 
-   for( int i = 0; i < ioBase->efds_no && !pefd; i++ ) {
+   for( auto i = 0; i < ioBase->efds_no && !pefd; i++ ) {
       if( ioBase->event_fds[i]->fd == fd ) {
          pefd = ioBase->event_fds[i];
       }
@@ -419,7 +419,7 @@ static void del_efds(InOutBase * ioBase, int fd)
 {
    int n = -1;
 
-   for( int i = 0; i < ioBase->efds_no && n == -1; i++ ) {
+   for( auto i = 0; i < ioBase->efds_no && n == -1; i++ ) {
       if( ioBase->event_fds[i]->fd == fd ) {
          n = i;
       }
@@ -437,7 +437,7 @@ static void del_efds(InOutBase * ioBase, int fd)
 static void del_all_efds(InOutBase * ioBase)
 {
    if( ioBase->event_fds != nullptr ) {
-      for( int i = 0; i < ioBase->efds_no; i++ ) {
+      for( auto i = 0; i < ioBase->efds_no; i++ ) {
          hb_xfree(ioBase->event_fds[i]);
       }
 
@@ -747,7 +747,7 @@ static int read_bufch(InOutBase * ioBase, int fd)
 
       n = read(fd, buf, STDIN_BUFLEN - ioBase->stdin_inbuf);
 
-      for( int i = 0; i < n; i++ ) {
+      for( auto i = 0; i < n; i++ ) {
          ioBase->stdin_buf[ioBase->stdin_ptr_r++] = buf[i];
          if( ioBase->stdin_ptr_r == STDIN_BUFLEN ) {
             ioBase->stdin_ptr_r = 0;
@@ -1198,7 +1198,7 @@ static bool gt_outstr(InOutBase * ioBase, int fd, const char * str, int len)
 
    if( ioBase->out_transtbl != nullptr ) {
       auto buf = static_cast<unsigned char*>(hb_xgrab(len));
-      for( int i = 0; i < len; ++i ) {
+      for( auto i = 0; i < len; ++i ) {
          unsigned char c = str[i];
          if( c != 9 && c != 10 && c != 13 && ioBase->out_transtbl[c] ) {
             buf[i] = ioBase->out_transtbl[c];
@@ -1635,7 +1635,7 @@ static void setKeyTrans(InOutBase * ioBase, PHB_CODEPAGE cdpTerm, PHB_CODEPAGE c
          ioBase->in_transtbl = static_cast<unsigned char*>(hb_xgrab(256));
       }
 
-      for( int i = 0; i < 256; ++i ) {
+      for( auto i = 0; i < 256; ++i ) {
          ioBase->in_transtbl[i] = hb_cdpTranslateChar(i, cdpTerm, cdpHost);
       }
    } else if( ioBase->in_transtbl != nullptr ) {
@@ -1648,7 +1648,7 @@ static void setDispTrans(InOutBase * ioBase, PHB_CODEPAGE cdpHost, PHB_CODEPAGE 
 {
    int aSet = (cdpHost && cdpTerm);
 
-   for( int i = 0; i < 256; i++ ) {
+   for( auto i = 0; i < 256; i++ ) {
       chtype ch = ioBase->charmap[i] & 0xffff;
       switch( (ioBase->charmap[i] >> 16) & 0xff ) {
          case 1:
@@ -1685,7 +1685,7 @@ static void setDispTrans(InOutBase * ioBase, PHB_CODEPAGE cdpHost, PHB_CODEPAGE 
       }
    }
    if( aSet ) {
-      for( int i = 0; i < 256; ++i ) {
+      for( auto i = 0; i < 256; ++i ) {
          if( hb_cdpIsAlpha(cdpHost, i) ) {
             unsigned char uc = static_cast<unsigned char>(hb_cdpTranslateDispChar(i, cdpHost, cdpTerm));
 
@@ -2131,7 +2131,7 @@ static int del_ioBase(int iNO_ioBase)
       if( s_iActive_ioBase == iNO_ioBase ) {
          s_iActive_ioBase = -1;
          s_ioBase = nullptr;
-         for( int i = 0; i < s_iSize_ioBaseTab && !s_ioBase; ++i ) {
+         for( auto i = 0; i < s_iSize_ioBaseTab && !s_ioBase; ++i ) {
             if( s_ioBaseTab[i] ) {
                set_active_ioBase(i);
             }
@@ -2145,7 +2145,7 @@ static int del_ioBase(int iNO_ioBase)
 static void del_all_ioBase(void)
 {
    if( s_ioBaseTab ) {
-      for( int i = 0; i < s_iSize_ioBaseTab; ++i ) {
+      for( auto i = 0; i < s_iSize_ioBaseTab; ++i ) {
          if( s_ioBaseTab[i] ) {
             destroy_ioBase(s_ioBaseTab[i]);
          }

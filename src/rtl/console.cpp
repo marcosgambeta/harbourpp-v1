@@ -304,7 +304,7 @@ HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
 {
    int iPCount = hb_pcount();
 
-   for( int iParam = 1; iParam <= iPCount; iParam++ ) {
+   for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
       HB_SIZE nLen;
       HB_BOOL fFree;
 
@@ -325,7 +325,7 @@ HB_FUNC( OUTERR ) /* writes a list of values to the standard error device */
 {
    int iPCount = hb_pcount();
 
-   for( int iParam = 1; iParam <= iPCount; iParam++ ) {
+   for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
       HB_SIZE nLen;
       HB_BOOL fFree;
 
@@ -346,7 +346,7 @@ HB_FUNC( QQOUT ) /* writes a list of values to the current device (screen or pri
 {
    int iPCount = hb_pcount();
 
-   for( int iParam = 1; iParam <= iPCount; iParam++ ) {
+   for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
       HB_SIZE nLen;
       HB_BOOL fFree;
 

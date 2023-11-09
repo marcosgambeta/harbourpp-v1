@@ -242,7 +242,7 @@ static PHB_LANG_BASE hb_langFindBase( const char * pszID )
    PHB_LANG_BASE pBase = nullptr;
 
    if( pszID ) {
-      for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ ) {
+      for( auto iPos = 0; iPos < HB_LANG_MAX_; iPos++ ) {
          if( s_langList[iPos].lang != nullptr ) {
             if( hb_stricmp(s_langList[iPos].lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID], pszID) == 0 ) {
                return &s_langList[iPos];
@@ -265,7 +265,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
    HB_LANG_TRANS trans{};
    HB_SIZE nSize = sizeof(trans);
 
-   for( int i = 0; i < HB_LANG_ITEM_MAX_; ++i ) {
+   for( auto i = 0; i < HB_LANG_ITEM_MAX_; ++i ) {
       char * pszTrans;
 
       if( i == HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ) {
@@ -286,7 +286,7 @@ static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPA
 
    auto buffer = static_cast<char*>(hb_xgrab(nSize));
    char * ptr    = buffer + sizeof(trans);
-   for( int i = 0; i < HB_LANG_ITEM_MAX_; ++i ) {
+   for( auto i = 0; i < HB_LANG_ITEM_MAX_; ++i ) {
       if( trans.pItemList[i] != nullptr ) {
          HB_SIZE nLen = strlen(trans.pItemList[i]) + 1;
          memcpy(ptr, trans.pItemList[i], nLen);
@@ -316,7 +316,7 @@ void hb_langReleaseAll(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_langReleaseAll()"));
 #endif
 
-   for( int iPos = 0; iPos < HB_LANG_MAX_; iPos++ ) {
+   for( auto iPos = 0; iPos < HB_LANG_MAX_; iPos++ ) {
       hb_langRelease(&s_langList[iPos]);
    }
 }

@@ -200,7 +200,7 @@ HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * p
          double d = hb_random_num();
          double x;
 
-         for( int i = 0; i < 6; i++ ) {
+         for( auto i = 0; i < 6; i++ ) {
             d = d * 36;
             int n = static_cast<int>(d);
             d = modf(d, &x);

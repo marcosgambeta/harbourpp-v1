@@ -229,8 +229,8 @@ static void hb_md5accinit(HB_U32 accum[])
 
 static void hb_md5val(HB_U32 accum[], char * md5val)
 {
-   for( int i = 0; i < 4; i++ ) {
-      for( int n = 0; n < 4; n++ ) {
+   for( auto i = 0; i < 4; i++ ) {
+      for( auto n = 0; n < 4; n++ ) {
          *md5val++ = static_cast<char>((accum[i] >> (n << 3)) & 0xFF);
       }
    }

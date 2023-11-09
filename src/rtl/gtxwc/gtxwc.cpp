@@ -2268,7 +2268,7 @@ static bool hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, HB_USHORT usCh, XWC_CharTrans
 
 static void hb_gt_xwc_ResetCharTrans(PXWND_DEF wnd)
 {
-   for( int i = 0; i <= wnd->boxCount; i++ ) {
+   for( auto i = 0; i <= wnd->boxCount; i++ ) {
       switch( wnd->boxTrans[i].type ) {
          case CH_IMG:
             XDestroyImage(wnd->boxTrans[i].u.img);
@@ -2299,7 +2299,7 @@ static void hb_gt_xwc_ResetCharTrans(PXWND_DEF wnd)
    wnd->boxTrans[0].size = 0;
    wnd->boxTrans[0].inverse = false;
 
-   for( int i = 0; i < HB_BOXCH_TRANS_COUNT; ++i ) {
+   for( auto i = 0; i < HB_BOXCH_TRANS_COUNT; ++i ) {
       wnd->boxIndex[i] = HB_BOXCH_TRANS_MAX;
    }
 }
@@ -3526,7 +3526,7 @@ static bool hb_gt_xwc_setPalette(PXWND_DEF wnd)
 
    /* Set standard colors */
    wnd->colorsmap = DefaultColormap(wnd->dpy, DefaultScreen(wnd->dpy));
-   for( int i = 0; i < 16; i++ ) {
+   for( auto i = 0; i < 16; i++ ) {
       if( !wnd->colors[i].set ) {
          if( wnd->colors[i].pixel ) {
             XFreeColors(wnd->dpy, wnd->colorsmap, &wnd->colors[i].pixel, 1, 0);
@@ -4107,7 +4107,7 @@ static void hb_gt_xwc_ProcessMessages(PXWND_DEF wnd, bool fSync)
          XSync(wnd->dpy, False);
       }
 
-      for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(event_types)); ++i ) {
+      for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(event_types)); ++i ) {
          if( event_types[i] == 0 ?
             XCheckWindowEvent(wnd->dpy, wnd->window, XWC_STD_MASK, &evt) : XCheckTypedWindowEvent(wnd->dpy, wnd->window, event_types[i], &evt) ) {
             hb_gt_xwc_WndProc(wnd, &evt);
@@ -4353,7 +4353,7 @@ static PXWND_DEF hb_gt_xwc_CreateWndDef(PHB_GT pGT)
    wnd->keyModifiers.bAltGr = false;
    wnd->keyModifiers.bShift = false;
 
-   for( int i = 0; i < 16; i++ ) {
+   for( auto i = 0; i < 16; i++ ) {
       wnd->colors[i].value = s_rgb_values[i];
    }
 

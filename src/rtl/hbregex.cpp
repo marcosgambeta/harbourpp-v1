@@ -108,7 +108,7 @@ static int hb_regexec(PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, int
                            szString, static_cast<int>(nLen), 0 /* startoffset */,
                            pRegEx->iEFlags, aMatches, HB_REGMATCH_SIZE(iMatches));
    if( iResult == 0 ) {
-      for( int i = 0; i < iMatches; i++ ) {
+      for( auto i = 0; i < iMatches; i++ ) {
          if( HB_REGMATCH_EO(aMatches, i) != HB_REGMATCH_UNSET ) {
             iResult = i + 1;
          }
@@ -122,12 +122,12 @@ static int hb_regexec(PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, int
       szBuffer = hb_strndup(szString, nLen);
       szString = szBuffer;
    }
-   for( int i = 0; i < iMatches; i++ ) {
+   for( auto i = 0; i < iMatches; i++ ) {
       HB_REGMATCH_EO(aMatches, i) = HB_REGMATCH_UNSET;
    }
    int iResult = regexec(&pRegEx->reg, szString, iMatches, aMatches, pRegEx->iEFlags);
    if( iResult == 0 ) {
-      for( int i = 0; i < iMatches; i++ ) {
+      for( auto i = 0; i < iMatches; i++ ) {
          if( HB_REGMATCH_EO(aMatches, i) != HB_REGMATCH_UNSET ) {
             iResult = i + 1;
          }

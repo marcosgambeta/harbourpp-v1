@@ -154,14 +154,14 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
    if( uniTable->uniTrans == nullptr ) {
       HB_WCHAR wcMax = 0;
 
-      for( int i = 0; i < 256; ++i ) {
+      for( auto i = 0; i < 256; ++i ) {
          HB_WCHAR wc = uniTable->uniCodes[i];
          if( wc > wcMax ) {
             wcMax = wc;
          }
       }
       auto uniTrans = static_cast<HB_UCHAR*>(hb_xgrabz((wcMax + 1) * sizeof(HB_UCHAR)));
-      for( int i = 0; i < 256; ++i ) {
+      for( auto i = 0; i < 256; ++i ) {
          if( uniTable->uniCodes[i] ) {
             uniTrans[uniTable->uniCodes[i]] = static_cast<HB_UCHAR>(i);
          }
@@ -173,7 +173,7 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
       if( s_rev_ctrl == nullptr ) {
          wcMax = HB_MAX_CTRL_CODE;
          s_rev_ctrl = static_cast<HB_UCHAR*>(hb_xgrabz((wcMax + 1) * sizeof(HB_UCHAR)));
-         for( int i = 0; i < 32; ++i ) {
+         for( auto i = 0; i < 32; ++i ) {
             s_rev_ctrl[s_uniCtrls[i]] = static_cast<HB_UCHAR>(i);
          }
       }
@@ -403,7 +403,7 @@ static HB_BOOL hb_cdpMulti_get(PHB_CODEPAGE cdp, const char * pSrc, HB_SIZE nLen
       else if( (cdp->flags[uc] & HB_CDP_MULTI1) != 0 && *pnIndex < nLen ) {
          HB_UCHAR uc2 = static_cast<HB_UCHAR>(pSrc[*pnIndex + 1]);
          if( (cdp->flags[uc2] & HB_CDP_MULTI2) != 0 ) {
-            for( int i = 0; i < cdp->nMulti; ++i ) {
+            for( auto i = 0; i < cdp->nMulti; ++i ) {
                if( uc2 == cdp->multi[i].cLast[0] || uc2 == cdp->multi[i].cLast[1] ) {
                   if( uc == cdp->multi[i].cFirst[0] ) {
                      if( cdp->multi[i].wcUp ) {
@@ -439,7 +439,7 @@ static HB_BOOL hb_cdpMulti_put(PHB_CODEPAGE cdp, char * pDst, HB_SIZE nLen, HB_S
       } else if( wc == 0 ) {
          pDst[(*pnIndex)++] = 0;
       } else {
-         for( int i = 0; i < cdp->nMulti; ++i ) {
+         for( auto i = 0; i < cdp->nMulti; ++i ) {
             if( wc == cdp->multi[i].wcUp ) {
                pDst[(*pnIndex)++] = cdp->multi[i].cFirst[0];
                if( *pnIndex < nLen ) {
@@ -467,7 +467,7 @@ static int hb_cdpMulti_len(PHB_CODEPAGE cdp, HB_WCHAR wc)
    int n = 1;
 
    if( wc ) {
-      for( int i = 0; i < cdp->nMulti; ++i ) {
+      for( auto i = 0; i < cdp->nMulti; ++i ) {
          if( wc == cdp->multi[i].wcUp || wc == cdp->multi[i].wcLo ) {
             ++n;
             break;
@@ -2757,7 +2757,7 @@ static PHB_CODEPAGE * hb_cdpFindPos(const char * id)
       s_en_codepage.flags = flags = static_cast<HB_UCHAR*>(s_en_buffer);
       s_en_codepage.upper = upper = static_cast<HB_UCHAR*>(s_en_buffer) + 0x100;
       s_en_codepage.lower = lower = static_cast<HB_UCHAR*>(s_en_buffer) + 0x200;
-      for( int i = 0; i < 0x100; ++i ) {
+      for( auto i = 0; i < 0x100; ++i ) {
          if( HB_ISDIGIT(i) ) {
             flags[i] |= HB_CDP_DIGIT;
          }

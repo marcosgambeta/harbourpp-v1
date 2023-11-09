@@ -192,7 +192,7 @@ static int hb_mlEol(PHB_MLC_INFO pMLC)
    HB_SIZE nLen = pMLC->nLen - pMLC->nOffset;
    PHB_EOL_INFO pEOLs = pMLC->pEOLs;
 
-   for( int i = 0; i < pMLC->iEOLs; ++i ) {
+   for( auto i = 0; i < pMLC->iEOLs; ++i ) {
       if( pszString[0] == pEOLs[i].szEOL[0] &&
           ( pEOLs[i].nLen == 1 ||
             ( nLen >= pEOLs[i].nLen &&

@@ -617,7 +617,7 @@ static bool hb_gt_win_SetPalette(bool bSet, COLORREF * colors)
    return hb_gt_win_SetPalette_Vista(bSet, colors);
 #else
    if( !bSet ) {
-      for( int tmp = 0; tmp < 16; ++tmp ) {
+      for( auto tmp = 0; tmp < 16; ++tmp ) {
          colors[tmp] = s_colorsDef[tmp];
       }
    }
@@ -1813,13 +1813,13 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             hb_gt_win_SetPalette(false, colors);
 
             hb_arrayNew(pInfo->pResult, 16);
-            for( int i = 0; i < 16; i++ ) {
+            for( auto i = 0; i < 16; i++ ) {
                hb_arraySetNL(pInfo->pResult, i + 1, colors[i]);
             }
 
             if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY ) {
                if( hb_arrayLen(pInfo->pNewVal) == 16 ) {
-                  for( int i = 0; i < 16; i++ ) {
+                  for( auto i = 0; i < 16; i++ ) {
                      colors[i] = hb_arrayGetNL(pInfo->pNewVal, i + 1);
                   }
 
