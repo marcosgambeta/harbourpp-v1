@@ -315,7 +315,7 @@ HB_FUNC( HB_PQCOPYFROMWA )
 
          for( uiIter = 1; uiIter <= uiFieldCopy; uiIter++ )
          {
-            const char * szFieldName = hb_arrayGetCPtr(pFields, uiIter);
+            auto szFieldName = hb_arrayGetCPtr(pFields, uiIter);
             if( szFieldName )
             {
                int iPos = hb_rddFieldIndex(pArea, szFieldName);

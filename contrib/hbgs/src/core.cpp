@@ -77,7 +77,7 @@ HB_FUNC( HB_GS )
 
       for( pos = 1; pos < gsargc; ++pos )
       {
-         const char * pszParam = hb_arrayGetCPtr(pParam, pos);
+         auto pszParam = hb_arrayGetCPtr(pParam, pos);
          gsargv[pos] = const_cast<char*>(pszParam ? pszParam : "");
       }
 

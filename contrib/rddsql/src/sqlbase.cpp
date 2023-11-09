@@ -925,7 +925,7 @@ static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          PSDDNODE pNode = nullptr;
          HB_ULONG ul;
 
-         const char * pStr = hb_arrayGetCPtr(pItem, 1);
+         auto pStr = hb_arrayGetCPtr(pItem, 1);
          if( pStr ) {
             pNode = s_pSdd;
             while( pNode ) {

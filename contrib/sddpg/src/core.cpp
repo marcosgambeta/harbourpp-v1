@@ -158,7 +158,7 @@ static HB_USHORT hb_errRT_PostgreSQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubC
 
 static HB_ERRCODE pgsqlConnect(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 {
-   const char * pszHost = hb_arrayGetCPtr(pItem, 2);
+   auto pszHost = hb_arrayGetCPtr(pItem, 2);
    PGconn * pConn;
    if( pszHost && (strncmp(pszHost, "postgresql://", 13) == 0 || strchr(pszHost, '=')) ) {
       pConn = PQconnectdb(pszHost);

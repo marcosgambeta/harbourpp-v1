@@ -225,7 +225,7 @@ HB_FUNC( DBF2TEXT )
             HB_USHORT uiItter;
 
             for( uiItter = 1; uiItter <= uiFieldCopy; uiItter++ ) {
-               const char * szFieldName = hb_arrayGetCPtr(pFields, uiItter);
+               auto szFieldName = hb_arrayGetCPtr(pFields, uiItter);
                if( szFieldName ) {
                   int iPos = hb_rddFieldIndex(pArea, szFieldName);
 

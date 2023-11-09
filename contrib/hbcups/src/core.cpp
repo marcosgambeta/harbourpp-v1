@@ -100,7 +100,7 @@ HB_FUNC( CUPSPRINTFILE )
       {
          for( tmp = 1; tmp <= hb_arrayLen(pOptions); ++tmp )
          {
-            const char * pszOption = hb_arrayGetCPtr(pOptions, tmp);
+            auto pszOption = hb_arrayGetCPtr(pOptions, tmp);
 
             if( pszOption )
                num_options = cupsParseOptions(pszOption, num_options, &options);
