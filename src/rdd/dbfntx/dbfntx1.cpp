@@ -7349,13 +7349,10 @@ HB_FUNC_TRANSLATE( DBFNTX, _DBF )
 
 HB_FUNC_STATIC( DBFNTX_GETFUNCTABLE )
 {
-   RDDFUNCS * pTable;
-   HB_USHORT * puiCount, uiRddId, * puiSuperRddId;
-
-   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-   puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
+   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
    if( pTable ) {
       if( puiCount ) {

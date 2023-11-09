@@ -3092,30 +3092,25 @@ HB_FUNC( USRRDD_GETFUNCTABLE )
    HB_TRACE(HB_TR_DEBUG, ("USRRDD_GETFUNCTABLE()"));
 #endif
 
-   RDDFUNCS * pSelfTable, * pSuperTable;
-   HB_USHORT * puiCount, * puiSuperRddId, uiSize;
-
-   puiCount    = static_cast<HB_USHORT*>(hb_parptr(1));
-   pSelfTable  = static_cast<RDDFUNCS*>(hb_parptr(2));
-   pSuperTable = static_cast<RDDFUNCS*>(hb_parptr(3));
+   auto puiCount    = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pSelfTable  = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto pSuperTable = static_cast<RDDFUNCS*>(hb_parptr(3));
 #if 0
    uiRddID = hb_parni(4);
 #endif
    auto szSuperRDD = hb_parc(5);
    auto pMethods = hb_param(6, Harbour::Item::ARRAY);
-   puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(7));
+   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(7));
 
    if( puiCount && pSelfTable && pSuperTable && pMethods ) {
       HB_RDD_FUNCTABLE funcTable;
-      DBENTRYP_V * pFunction;
-      const DBENTRYP_V * pUsrFunction, * pRddFunction;
 
       *puiCount = RDDFUNCSCOUNT;
-      uiSize = static_cast<HB_USHORT>(hb_arrayLen(pMethods));
+      auto uiSize = static_cast<HB_USHORT>(hb_arrayLen(pMethods));
 
-      pUsrFunction = usrFuncTable.funcentries;
-      pRddFunction = rddFuncTable.funcentries;
-      pFunction    = funcTable.funcentries;
+      const DBENTRYP_V * pUsrFunction = usrFuncTable.funcentries;
+      const DBENTRYP_V * pRddFunction = rddFuncTable.funcentries;
+      DBENTRYP_V * pFunction = funcTable.funcentries;
 
       for( HB_USHORT uiCount = 1; uiCount <= RDDFUNCSCOUNT; ++uiCount ) {
          *pFunction = *pRddFunction;

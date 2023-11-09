@@ -6607,12 +6607,9 @@ HB_FUNC( _DBF )
 
 HB_FUNC_STATIC( DBF_GETFUNCTABLE )
 {
-   RDDFUNCS * pTable;
-   HB_USHORT * puiCount, uiRddId;
-
-   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("DBF_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));

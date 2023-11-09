@@ -9234,13 +9234,10 @@ static const RDDFUNCS cdxTable =
 
 HB_FUNC_STATIC( _GETFUNCTABLE )
 {
-   RDDFUNCS * pTable;
-   HB_USHORT * puiCount, uiRddId, * puiSuperRddId;
-
-   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-   puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
+   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, (HB_CDXRDD "_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));

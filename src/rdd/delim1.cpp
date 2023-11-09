@@ -1741,11 +1741,8 @@ HB_FUNC( DELIM )
 
 HB_FUNC_STATIC( DELIM_GETFUNCTABLE )
 {
-   RDDFUNCS * pTable;
-   HB_USHORT * puiCount;
-
-   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
 
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("DELIM_GETFUNCTABLE(%p, %p)", static_cast<void*>(puiCount), static_cast<void*>(pTable)));
