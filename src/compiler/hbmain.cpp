@@ -117,7 +117,7 @@ int hb_compMainExt(int argc, const char * const argv[], HB_BYTE ** pBufPtr, HB_S
       iStatus = hb_compCompile(HB_COMP_PARAM, "{SOURCE}", szSource, iStartLine);
    } else {
       /* Process all files passed via the command-line. */
-      for( int i = 1; i < argc && !HB_COMP_PARAM->fExit; i++ ) {
+      for( auto i = 1; i < argc && !HB_COMP_PARAM->fExit; i++ ) {
 #if 0
          HB_TRACE(HB_TR_DEBUG, ("main LOOP(%i,%s)", i, argv[i]));
 #endif
@@ -1294,7 +1294,7 @@ static void hb_compOptimizeJumps(HB_COMP_DECL)
    hb_compOptimizePCode(HB_COMP_PARAM, HB_COMP_PARAM->functions.pLast);
    hb_compCodeTraceMarkDead(HB_COMP_PARAM, HB_COMP_PARAM->functions.pLast);
 
-   for( int iPass = 0; iPass < 4 && !HB_COMP_PARAM->fExit; ++iPass ) {
+   for( auto iPass = 0; iPass < 4 && !HB_COMP_PARAM->fExit; ++iPass ) {
       HB_ISIZ nOffset;
 
       if( iPass == 3 && fLineStrip ) {

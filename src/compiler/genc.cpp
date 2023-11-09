@@ -244,7 +244,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
       {
          int iLen = static_cast<int>(strlen(szFileName));
 
-         for( int i = 0; i < iLen; i++ ) {
+         for( auto i = 0; i < iLen; i++ ) {
             char c = szFileName[i];
             if( !HB_ISNEXTIDCHAR(c) ) {
                szFileName[i] = '_';
@@ -1376,7 +1376,7 @@ static HB_GENC_FUNC(hb_p_pushdouble)
 {
    fprintf(cargo->yyc, "\tHB_P_PUSHDOUBLE,");
    ++nPCodePos;
-   for( int i = 0; i < static_cast<int>(sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE)); ++i ) {
+   for( auto i = 0; i < static_cast<int>(sizeof(double) + sizeof(HB_BYTE) + sizeof(HB_BYTE)); ++i ) {
       fprintf(cargo->yyc, " %u,", static_cast<HB_UCHAR>(pFunc->pCode[nPCodePos + i]));
    }
    if( cargo->bVerbose ) {
