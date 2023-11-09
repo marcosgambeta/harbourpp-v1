@@ -288,7 +288,6 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 
    for( HB_USHORT uiCount = 0; uiCount < uiItems; uiCount++ ) {
       HB_USHORT uiLen, uiDec;
-      const char * szType;
       int iData;
 
       dbFieldInfo.uiTypeExtended = 0;
@@ -305,7 +304,7 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
       }
       uiDec = static_cast<HB_USHORT>(iData);
       dbFieldInfo.uiDec = 0;
-      szType = hb_arrayGetCPtr(pFieldDesc, DBS_TYPE);
+      auto szType = hb_arrayGetCPtr(pFieldDesc, DBS_TYPE);
       iData = HB_TOUPPER(*szType);
 #ifdef DBS_FLAG
       dbFieldInfo.uiFlags = hb_arrayGetNI(pFieldDesc, DBS_FLAG);

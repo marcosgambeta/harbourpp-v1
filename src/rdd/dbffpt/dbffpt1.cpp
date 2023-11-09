@@ -4203,7 +4203,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
          if( HB_IS_ARRAY(pItem) ) {
             HB_ULONG ulBlock = hb_arrayGetNL(pItem, 1);
-            const char * szFile = hb_arrayGetCPtr(pItem, 2);
+            auto szFile = hb_arrayGetCPtr(pItem, 2);
 
             if( ulBlock && szFile && *szFile ) {
                errCode = hb_fptGetVarFile(pArea, ulBlock, szFile, static_cast<HB_USHORT>(hb_arrayGetNI(pItem, 3)), FPT_DIRECT_TRANS(pArea));
