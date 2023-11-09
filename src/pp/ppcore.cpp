@@ -1583,7 +1583,7 @@ static void hb_pp_ruleListSetStd(PHB_PP_RULE pRule)
 static void hb_pp_ruleSetId(PHB_PP_STATE pState, PHB_PP_TOKEN pMatch, HB_BYTE id)
 {
    if( HB_PP_TOKEN_ISMATCH(pMatch) ) {
-      for( int i = 0; i < HB_PP_HASHID_MAX; ++i ) {
+      for( auto i = 0; i < HB_PP_HASHID_MAX; ++i ) {
          pState->pMap[i] |= id;
       }
    } else {
