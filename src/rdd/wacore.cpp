@@ -561,7 +561,6 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
 #endif
 
    AREAP * pHolder;
-   PHB_ITEM pDetachedArea;
    HB_SIZE nPos;
    int iArea;
 
@@ -604,7 +603,7 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
       nPos = hb_arrayLen(s_pDetachedAreas) + 1;
       hb_arraySize(s_pDetachedAreas, nPos);
    }
-   pDetachedArea = hb_arrayGetItemPtr(s_pDetachedAreas, nPos);
+   auto pDetachedArea = hb_arrayGetItemPtr(s_pDetachedAreas, nPos);
    hb_arrayNew(pDetachedArea, 2);
    if( pCargo ) {
       hb_arraySet(pDetachedArea, 2, pCargo);
@@ -666,7 +665,7 @@ AREAP hb_rddRequestArea(const char * szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea,
             }
          }
          if( nPos <= nLen ) {
-            PHB_ITEM pArray = hb_arrayGetItemPtr(s_pDetachedAreas, nPos);
+            auto pArray = hb_arrayGetItemPtr(s_pDetachedAreas, nPos);
             AREAP * pDetachedArea = static_cast<AREAP*>(hb_arrayGetPtrGC(pArray, 1, &s_gcWAFuncs));
 
             pArea = *pDetachedArea;

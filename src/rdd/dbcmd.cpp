@@ -330,7 +330,7 @@ HB_FUNC( DBCREATE )
    HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
-      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
+      auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
@@ -380,7 +380,7 @@ HB_FUNC( HB_DBCREATETEMP )
    HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
-      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
+      auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||
@@ -434,7 +434,7 @@ HB_FUNC( __DBOPENSDF )
    HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
-      PHB_ITEM pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
+      auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
       /* Validate items types of fields */
       if( hb_arrayLen(pFieldDesc) < 4 ||

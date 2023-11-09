@@ -288,12 +288,11 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
 
    for( HB_USHORT uiCount = 0; uiCount < uiItems; uiCount++ ) {
       HB_USHORT uiLen, uiDec;
-      PHB_ITEM pFieldDesc;
       const char * szType;
       int iData;
 
       dbFieldInfo.uiTypeExtended = 0;
-      pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
+      auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
       dbFieldInfo.atomName = hb_arrayGetCPtr(pFieldDesc, DBS_NAME);
       iData = hb_arrayGetNI(pFieldDesc, DBS_LEN);
       if( iData < 0 ) {

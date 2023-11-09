@@ -4249,7 +4249,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          HB_ULONG ulBlock = 0;
 
          if( HB_IS_ARRAY(pItem) ) {
-            PHB_ITEM pValue = hb_arrayGetItemPtr(pItem, 2);
+            auto pValue = hb_arrayGetItemPtr(pItem, 2);
             ulBlock = hb_arrayGetNL(pItem, 1);
             if( pValue ) {
                if( hb_fptFileLockEx(pArea, true) ) {

@@ -4788,8 +4788,8 @@ static int hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue
 {
    for( HB_USHORT uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; ++uiCount ) {
       HB_USHORT uiFlags = pSortRec->pSortInfo->lpdbsItem[uiCount].uiFlags;
-      PHB_ITEM pItem1 = hb_arrayGetItemPtr(pValue1, uiCount + 1);
-      PHB_ITEM pItem2 = hb_arrayGetItemPtr(pValue2, uiCount + 1);
+      auto pItem1 = hb_arrayGetItemPtr(pValue1, uiCount + 1);
+      auto pItem2 = hb_arrayGetItemPtr(pValue2, uiCount + 1);
       int i = 0;
 
       if( uiFlags & SF_DOUBLE ) {
@@ -4967,7 +4967,7 @@ static HB_ERRCODE hb_dbfSortReadRec(LPDBSORTREC pSortRec, PHB_ITEM pValue)
    }
 
    for( HB_SHORT uiCount = 0; uiCount < pSortRec->pSortInfo->uiItemCount; uiCount++ ) {
-      PHB_ITEM pItem = hb_arrayGetItemPtr(pValue, uiCount + 1);
+      auto pItem = hb_arrayGetItemPtr(pValue, uiCount + 1);
       HB_USHORT uiField = pSortRec->pSortInfo->lpdbsItem[uiCount].uiField;
       if( SELF_GETVALUE(pArea, uiField, pItem) != Harbour::SUCCESS ) {
          return Harbour::FAILURE;

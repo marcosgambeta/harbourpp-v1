@@ -88,14 +88,14 @@ static LPUSRRDDNODE * s_pUsrRddNodes = nullptr;
 
 static bool hb_usrIsMethod(PHB_ITEM pMethods, HB_USHORT uiMethod)
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr(pMethods, uiMethod);
+   auto pItem = hb_arrayGetItemPtr(pMethods, uiMethod);
 
    return pItem && HB_IS_EVALITEM(pItem);
 }
 
 static bool hb_usrPushMethod(PHB_ITEM pMethods, HB_USHORT uiMethod)
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr(pMethods, uiMethod);
+   auto pItem = hb_arrayGetItemPtr(pMethods, uiMethod);
 
    if( pItem != nullptr ) {
       if( HB_IS_SYMBOL(pItem) ) {
@@ -161,7 +161,7 @@ static AREAP hb_usrGetAreaPointer(int iArea)
 
 static PHB_ITEM hb_usrArrayGet(PHB_ITEM pArray, HB_SIZE nPos, HB_TYPE uiType)
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nPos);
+   auto pItem = hb_arrayGetItemPtr(pArray, nPos);
 
    if( pItem && (hb_itemType(pItem) & uiType) != 0 ) {
       return pItem;
@@ -172,7 +172,7 @@ static PHB_ITEM hb_usrArrayGet(PHB_ITEM pArray, HB_SIZE nPos, HB_TYPE uiType)
 
 static const char * hb_usrArrayGetCPtr(PHB_ITEM pArray, HB_SIZE nPos)
 {
-   PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nPos);
+   auto pItem = hb_arrayGetItemPtr(pArray, nPos);
 
    if( pItem && HB_IS_STRING(pItem) ) {
       return hb_itemGetCPtr(pItem);
@@ -447,7 +447,7 @@ static bool hb_usrItemToTransInfo(PHB_ITEM pItem, LPDBTRANSINFO pTransInfo)
 {
    if( pItem && hb_arrayLen(pItem) == UR_TI_SIZE ) {
       HB_USHORT uiItemCount = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_TI_ITEMCOUNT));
-      PHB_ITEM pItems = hb_arrayGetItemPtr(pItem, UR_TI_ITEMS);
+      auto pItems = hb_arrayGetItemPtr(pItem, UR_TI_ITEMS);
 
       if( hb_arrayLen(pItems) == static_cast<HB_SIZE>(uiItemCount) && hb_usrItemToScopeInfo(hb_arrayGetItemPtr(pItem, UR_TI_SCOPE), &pTransInfo->dbsci) ) {
          pTransInfo->lpaSource   = hb_usrGetAreaPointer(hb_arrayGetNI(pItem, UR_TI_SRCAREA));
@@ -460,7 +460,7 @@ static bool hb_usrItemToTransInfo(PHB_ITEM pItem, LPDBTRANSINFO pTransInfo)
             pTransInfo->lpTransItems = pTransItem = static_cast<LPDBTRANSITEM>(hb_xgrab(uiItemCount * sizeof(DBTRANSITEM)));
 
             for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pTransItem ) {
-               PHB_ITEM pItm = hb_arrayGetItemPtr(pItems, uiCount);
+               auto pItm = hb_arrayGetItemPtr(pItems, uiCount);
                pTransItem->uiSource = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_TITEM_SOURCE));
                pTransItem->uiDest   = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_TITEM_DESTIN));
             }
@@ -489,12 +489,12 @@ static PHB_ITEM hb_usrSortInfoToItem(LPDBSORTINFO pSortInfo)
    hb_itemMove(hb_arrayGetItemPtr(pItem, UR_SRI_TRANSINFO), pTrans);
    hb_itemPutNI(hb_arrayGetItemPtr(pItem, UR_SRI_ITEMCOUNT), pSortInfo->uiItemCount);
    if( pSortInfo->uiItemCount ) {
-      PHB_ITEM pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
+      auto pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
       LPDBSORTITEM pSortItem = pSortInfo->lpdbsItem;
 
       hb_arrayNew(pItems, pSortInfo->uiItemCount);
       for( HB_USHORT uiCount = 1; uiCount <= pSortInfo->uiItemCount; ++uiCount, ++pSortItem ) {
-         PHB_ITEM pItm = hb_arrayGetItemPtr(pItems, uiCount);
+         auto pItm = hb_arrayGetItemPtr(pItems, uiCount);
          hb_arrayNew(pItm, UR_SITEM_SIZE);
          hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_SITEM_FIELD), pSortItem->uiField);
          hb_itemPutNI(hb_arrayGetItemPtr(pItm, UR_SITEM_FLAGS), pSortItem->uiFlags);
@@ -509,7 +509,7 @@ static bool hb_usrItemToSortInfo(PHB_ITEM pItem, LPDBSORTINFO pSortInfo)
 {
    if( pItem && hb_arrayLen(pItem) == UR_SRI_SIZE ) {
       HB_USHORT uiItemCount = static_cast<HB_USHORT>(hb_arrayGetNI(pItem, UR_SRI_ITEMCOUNT));
-      PHB_ITEM pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
+      auto pItems = hb_arrayGetItemPtr(pItem, UR_SRI_ITEMS);
 
       if( hb_arrayLen(pItems) == static_cast<HB_SIZE>(uiItemCount) && hb_usrItemToTransInfo(hb_arrayGetItemPtr(pItem, UR_SRI_TRANSINFO), &pSortInfo->dbtri) ) {
          pSortInfo->uiItemCount = uiItemCount;
@@ -519,7 +519,7 @@ static bool hb_usrItemToSortInfo(PHB_ITEM pItem, LPDBSORTINFO pSortInfo)
             pSortInfo->lpdbsItem = pSortItem = static_cast<LPDBSORTITEM>(hb_xgrab(uiItemCount * sizeof(DBSORTITEM)));
 
             for( HB_USHORT uiCount = 1; uiCount <= uiItemCount; ++uiCount, ++pSortItem ) {
-               PHB_ITEM pItm = hb_arrayGetItemPtr(pItems, uiCount);
+               auto pItm = hb_arrayGetItemPtr(pItems, uiCount);
                pSortItem->uiField = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_SITEM_FIELD));
                pSortItem->uiFlags = static_cast<HB_USHORT>(hb_arrayGetNI(pItm, UR_SITEM_FLAGS));
             }
@@ -735,7 +735,7 @@ static PHB_ITEM hb_usrOrderCreateInfoToItem(LPDBORDERCREATEINFO pOrderCreateInfo
 static bool hb_usrItemToOrderCreateInfo(PHB_ITEM pItem, LPDBORDERCREATEINFO pOrderCreateInfo)
 {
    if( pItem && hb_arrayLen(pItem) == UR_ORCR_SIZE ) {
-      PHB_ITEM pCond = hb_arrayGetItemPtr(pItem, UR_ORCR_CONDINFO);
+      auto pCond = hb_arrayGetItemPtr(pItem, UR_ORCR_CONDINFO);
 
       if( hb_arrayLen(pCond) > 0 ) {
          auto pOrderCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
@@ -2092,7 +2092,7 @@ static HB_ERRCODE hb_usrOrderListAdd(AREAP pArea, LPDBORDERINFO pOrderInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrOrderListAdd(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
 #endif
 
-   PHB_ITEM pItem, pResult;
+   PHB_ITEM pItem;
 
    if( !hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_ORDLSTADD) ) {
       return SUPER_ORDLSTADD(pArea, pOrderInfo);
@@ -2104,7 +2104,7 @@ static HB_ERRCODE hb_usrOrderListAdd(AREAP pArea, LPDBORDERINFO pOrderInfo)
    hb_vmPush(pItem);
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
+   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && !HB_IS_NIL(pResult) ) {
       if( pOrderInfo->itmResult ) {
          hb_itemCopy(pOrderInfo->itmResult, pResult);
@@ -2139,7 +2139,7 @@ static HB_ERRCODE hb_usrOrderListDelete(AREAP pArea, LPDBORDERINFO pOrderInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrOrderListDelete(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
 #endif
 
-   PHB_ITEM pItem, pResult;
+   PHB_ITEM pItem;
 
    if( !hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_ORDLSTDELETE) ) {
       return SUPER_ORDLSTDELETE(pArea, pOrderInfo);
@@ -2151,7 +2151,7 @@ static HB_ERRCODE hb_usrOrderListDelete(AREAP pArea, LPDBORDERINFO pOrderInfo)
    hb_vmPush(pItem);
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
+   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && !HB_IS_NIL(pResult) ) {
       if( pOrderInfo->itmResult ) {
          hb_itemCopy(pOrderInfo->itmResult, pResult);
@@ -2170,7 +2170,7 @@ static HB_ERRCODE hb_usrOrderListFocus(AREAP pArea, LPDBORDERINFO pOrderInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrOrderListFocus(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
 #endif
 
-   PHB_ITEM pItem, pResult;
+   PHB_ITEM pItem;
 
    if( !hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_ORDLSTFOCUS) ) {
       return SUPER_ORDLSTFOCUS(pArea, pOrderInfo);
@@ -2182,7 +2182,7 @@ static HB_ERRCODE hb_usrOrderListFocus(AREAP pArea, LPDBORDERINFO pOrderInfo)
    hb_vmPush(pItem);
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
+   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && !HB_IS_NIL(pResult) ) {
       if( pOrderInfo->itmResult ) {
          hb_itemCopy(pOrderInfo->itmResult, pResult);
@@ -2263,7 +2263,7 @@ static HB_ERRCODE hb_usrOrderDestroy(AREAP pArea, LPDBORDERINFO pOrderInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_usrOrderDestroy(%p,%p)", static_cast<void*>(pArea), static_cast<void*>(pOrderInfo)));
 #endif
 
-   PHB_ITEM pItem, pResult;
+   PHB_ITEM pItem;
 
    if( !hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_ORDDESTROY) ) {
       return SUPER_ORDDESTROY(pArea, pOrderInfo);
@@ -2275,7 +2275,7 @@ static HB_ERRCODE hb_usrOrderDestroy(AREAP pArea, LPDBORDERINFO pOrderInfo)
    hb_vmPush(pItem);
    hb_vmDo(2);
 
-   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
+   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && !HB_IS_NIL(pResult) ) {
       if( pOrderInfo->itmResult ) {
          hb_itemCopy(pOrderInfo->itmResult, pResult);
@@ -2294,7 +2294,7 @@ static HB_ERRCODE hb_usrOrderInfo(AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
    HB_TRACE(HB_TR_DEBUG, ("hb_usrOrderInfo(%p,%hu,%p)", static_cast<void*>(pArea), uiIndex, static_cast<void*>(pOrderInfo)));
 #endif
 
-   PHB_ITEM pItem, pResult;
+   PHB_ITEM pItem;
 
    if( !hb_usrPushMethod(SELF_USRNODE(pArea)->pMethods, UR_ORDINFO) ) {
       return SUPER_ORDINFO(pArea, uiIndex, pOrderInfo);
@@ -2307,7 +2307,7 @@ static HB_ERRCODE hb_usrOrderInfo(AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
    hb_vmPush(pItem);
    hb_vmDo(3);
 
-   pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
+   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
    if( pResult && !HB_IS_NIL(pResult) ) {
       if( pOrderInfo->itmResult ) {
          hb_itemCopy(pOrderInfo->itmResult, pResult);
