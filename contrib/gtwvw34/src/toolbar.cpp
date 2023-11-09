@@ -739,7 +739,7 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
          SendMessage(hWndCtrl, TB_BUTTONSTRUCTSIZE, sizeof(TBBUTTON), 0);
 
          for( auto nCount = 0; nCount < iButtons; ++nCount ) {
-            PHB_ITEM pTemp = hb_arrayGetItemPtr(pArray, nCount + 1);
+            auto pTemp = hb_arrayGetItemPtr(pArray, nCount + 1);
 
             tb[nCount].idCommand = hb_arrayGetNI(pTemp, 2);
             tb[nCount].fsState   = static_cast<BYTE>(hb_arrayGetNI(pTemp, 3));

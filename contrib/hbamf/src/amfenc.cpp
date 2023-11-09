@@ -602,10 +602,9 @@ static bool amf3_encode_array(amfContext * context, PHB_ITEM pItem)
    }
 
    for( i = 1; i <= static_cast<int>(item_len); i++ ) {
-      PHB_ITEM pArrayItem;
       int result;
 
-      pArrayItem = hb_arrayGetItemPtr(pItem, i);
+      auto pArrayItem = hb_arrayGetItemPtr(pItem, i);
       if( !pArrayItem ) {
          return false;
       }

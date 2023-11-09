@@ -418,7 +418,7 @@ HB_MEMFS_EXPORT PHB_ITEM hb_memfsDirectory(const char * pszDirSpec, const char *
    auto pDirArray = hb_itemArrayNew(nLen);
    for( ul = 0; static_cast<HB_SIZE>(ul) < nLen; ul++ )
    {
-      PHB_ITEM pSubarray = hb_arrayGetItemPtr(pDirArray, ul + 1);
+      auto pSubarray = hb_arrayGetItemPtr(pDirArray, ul + 1);
 
       hb_arrayNew(pSubarray, F_LEN);
       hb_arraySetCPtr(pSubarray, F_NAME, pDirEn[ul].szName);

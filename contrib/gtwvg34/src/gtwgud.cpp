@@ -1224,9 +1224,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       case HB_GTI_SETFONT:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY ) {
-            PHB_ITEM pSome;
-
-            pSome = hb_arrayGetItemPtr(pInfo->pNewVal, 1);
+            auto pSome = hb_arrayGetItemPtr(pInfo->pNewVal, 1);
             if( hb_itemType(pSome) & Harbour::Item::STRING ) {
                hb_strncpy(pWVT->fontFace, hb_itemGetCPtr(pSome), sizeof(pWVT->fontFace) - 1);
             }
@@ -1752,9 +1750,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       case HB_GTI_PRESPARAMS:
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY ) {
             if( hb_arrayLen(pInfo->pNewVal) == HB_GTI_PP_SIZE ) {
-               PHB_ITEM pSome;
-
-               pSome = hb_arrayGetItemPtr(pInfo->pNewVal, HB_GTI_PP_EXSTYLE);
+               auto pSome = hb_arrayGetItemPtr(pInfo->pNewVal, HB_GTI_PP_EXSTYLE);
                if( hb_itemType(pSome) & Harbour::Item::NUMERIC ) {
                   pWVT->pPP->exStyle = static_cast<DWORD>(hb_itemGetNInt(pSome));
                }

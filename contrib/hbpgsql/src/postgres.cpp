@@ -965,8 +965,6 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
             int  length  = 0;
             int  decimal = 0;
 
-            PHB_ITEM pField;
-
             switch( PQftype(res, i) )
             {
                case BITOID:
@@ -1064,7 +1062,7 @@ HB_FUNC( PQMETADATA )  /* not a direct wrapper */
                   break;
             }
 
-            pField = hb_arrayGetItemPtr(pResult, i + 1);
+            auto pField = hb_arrayGetItemPtr(pResult, i + 1);
             hb_arrayNew(pField, HBPG_META_LEN_);
             hb_arraySetC(pField, HBPG_META_FIELDNAME, PQfname(res, i));
             hb_arraySetC(pField, HBPG_META_FIELDTYPE, buf);
@@ -1102,7 +1100,7 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
 
          for( auto nRow = 0; nRow < nRows; nRow++ )
          {
-            PHB_ITEM pRow = hb_arrayGetItemPtr(pResult, nRow + 1);
+            auto pRow = hb_arrayGetItemPtr(pResult, nRow + 1);
             hb_arrayNew(pRow, nCols);
             for( auto nCol = 0; nCol < nCols; nCol++ )
             {

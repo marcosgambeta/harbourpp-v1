@@ -124,7 +124,7 @@ HB_FUNC( XHB__KEYBOARD )
       HB_SIZE  nElements = hb_arrayLen(pArray);
 
       for( nIndex = 1; nIndex <= nElements; nIndex++ ) {
-         PHB_ITEM pItem = hb_arrayGetItemPtr(pArray, nIndex);
+         auto pItem = hb_arrayGetItemPtr(pArray, nIndex);
 
          if( HB_IS_NUMBER(pItem) ) {
             hb_inkeyPut(hb_itemGetNI(pItem));

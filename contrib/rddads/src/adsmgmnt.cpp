@@ -371,7 +371,7 @@ HB_FUNC( ADSMGGETUSERNAMES )
       auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
-         PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
+         auto pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
          hb_arrayNew(pArrayItm, 6);
 
          hb_arraySetC(pArrayItm, 1, reinterpret_cast<char*>(pastUserInfo[ulCount - 1].aucUserName));
@@ -510,7 +510,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
       auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
-         PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
+         auto pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
          hb_arrayNew(pArrayItm, 2);
 
          hb_arraySetC(pArrayItm, 1, reinterpret_cast<char*>(astOpenTableInfo[ulCount - 1].aucTableName));
@@ -613,7 +613,7 @@ HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
       auto pArray = hb_itemArrayNew(usArrayLen);
 
       for( UNSIGNED16 ulCount = 1; ulCount <= usArrayLen; ulCount++ ) {
-         PHB_ITEM pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
+         auto pArrayItm = hb_arrayGetItemPtr(pArray, ulCount);
          hb_arrayNew(pArrayItm, 6);
 
          hb_arraySetNL(pArrayItm, 1, astWorkerThreadActivity[ulCount - 1].ulThreadNumber);

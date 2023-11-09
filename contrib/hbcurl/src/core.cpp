@@ -1099,7 +1099,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   for( nPos = 0; nPos < nLen; ++nPos )
                   {
-                     PHB_ITEM pSubArray = hb_arrayGetItemPtr(pArray, nPos + 1);
+                     auto pSubArray = hb_arrayGetItemPtr(pArray, nPos + 1);
 
                      curl_formadd(&hb_curl->pHTTPPOST_First,
                                   &hb_curl->pHTTPPOST_Last,
@@ -2308,7 +2308,6 @@ HB_FUNC( CURL_VERSION_INFO )
       hb_arraySetC(  pArray, 13, nullptr );
 #endif
       {
-         PHB_ITEM pProtocols;
          int      nCount = 0;
          const char * const * prot = data->protocols;
 
@@ -2317,7 +2316,7 @@ HB_FUNC( CURL_VERSION_INFO )
             nCount++;
          }
 
-         pProtocols = hb_arrayGetItemPtr(pArray, 8);
+         auto pProtocols = hb_arrayGetItemPtr(pArray, 8);
          hb_arrayNew(pProtocols, nCount);
 
          for( prot = data->protocols, nCount = 1; *prot; prot++ )

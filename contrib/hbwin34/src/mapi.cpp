@@ -140,7 +140,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
          }
 
          for( HB_SIZE i = 0; i < nRecpCount; ++i ) {
-            PHB_ITEM pItem = hb_arrayGetItemPtr(pRecpList, i + 1);
+            auto pItem = hb_arrayGetItemPtr(pRecpList, i + 1);
 
             if( HB_IS_ARRAY(pItem) && hb_arrayLen(pItem) >= 2 ) {
                if( hb_arrayGetCLen(pItem, 1) > 0 ) {
@@ -171,7 +171,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
          }
 
          for( HB_SIZE i = 0; i < nFileCount; ++i ) {
-            PHB_ITEM pItem = hb_arrayGetItemPtr(pFileList, i + 1);
+            auto pItem = hb_arrayGetItemPtr(pFileList, i + 1);
 
             if( HB_IS_ARRAY(pItem) &&
                 hb_arrayLen(pItem) >= 1 &&

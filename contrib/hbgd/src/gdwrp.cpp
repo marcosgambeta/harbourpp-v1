@@ -641,7 +641,7 @@ HB_FUNC( GDIMAGEPOLYGON ) /* original: void gdImagePolygon(gdImagePtr im, gdPoin
 
       for( auto i = 0; i < pointsTotal; i++ )
       {
-         PHB_ITEM pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
+         auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
          if( HB_IS_ARRAY(pPoint) )
          {
             points[i].x = hb_arrayGetNI(pPoint, 1);
@@ -681,7 +681,7 @@ HB_FUNC( GDIMAGEOPENPOLYGON ) /* original: void gdImageOpenPolygon(gdImagePtr im
 
       for( auto i = 0; i < pointsTotal; i++ )
       {
-         PHB_ITEM pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
+         auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
          if( HB_IS_ARRAY(pPoint) )
          {
             points[i].x = hb_arrayGetNI(pPoint, 1);
@@ -741,7 +741,7 @@ HB_FUNC( GDIMAGEFILLEDPOLYGON ) /* original: void gdImageFilledPolygon(gdImagePt
 
       for( auto i = 0; i < pointsTotal; i++ )
       {
-         PHB_ITEM pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
+         auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
          if( HB_IS_ARRAY(pPoint) )
          {
             points[i].x = hb_arrayGetNI(pPoint, 1);

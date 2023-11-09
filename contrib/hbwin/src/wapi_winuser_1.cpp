@@ -694,7 +694,7 @@ HB_FUNC( WAPI_CREATEACCELERATORTABLE )
 
       for( auto i = 0; i < iEntries; ++i )
       {
-         PHB_ITEM pAccItem = hb_arrayGetItemPtr(pArray, i + 1);
+         auto pAccItem = hb_arrayGetItemPtr(pArray, i + 1);
 
          lpAccel[i].fVirt = static_cast<BYTE>(hb_arrayGetNI(pAccItem, 1));
          lpAccel[i].key   = static_cast<WORD>(hb_arrayGetNI(pAccItem, 2));

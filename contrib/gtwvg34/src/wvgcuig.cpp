@@ -1562,7 +1562,7 @@ wvg_Object(GOBJ_OBJTYPE_GRIDVERT, {|| { nTop, nBottom, aCols, nCols, aPxlOff } }
 */
 static void hb_wvg_GridVert(PHB_GTWVT pWVT, PHB_ITEM pArray, RECT * uRect)
 {
-   PHB_ITEM pCols = hb_arrayGetItemPtr(pArray, 3);
+   auto pCols = hb_arrayGetItemPtr(pArray, 3);
    HB_ISIZ iTabs = hb_arrayLen(pCols);
 
    if( iTabs > 0 ) {

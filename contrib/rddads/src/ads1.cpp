@@ -1477,12 +1477,11 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
 
    for( uiCount = 0; uiCount < uiItems; uiCount++ ) {
       HB_USHORT uiLen, uiDec;
-      PHB_ITEM pFieldDesc;
       const char * szFieldType;
       int iData, iNameLen;
 
       dbFieldInfo.uiTypeExtended = 0;
-      pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
+      auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
       dbFieldInfo.atomName = hb_arrayGetCPtr(pFieldDesc, DBS_NAME);
       iData = hb_arrayGetNI(pFieldDesc, DBS_LEN);
       if( iData < 0 ) {

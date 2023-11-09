@@ -1709,7 +1709,7 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
 #endif
 
          for( i = 1; i <= iLen; ++i ) {
-            PHB_ITEM pItem = hb_arrayGetItemPtr(pButtons, i);
+            auto pItem = hb_arrayGetItemPtr(pButtons, i);
 
             if( HB_IS_STRING(pItem) ) {
                hb_gt_qtc_itemGetQString(pItem, &qStr);

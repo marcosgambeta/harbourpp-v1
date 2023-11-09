@@ -144,7 +144,7 @@ static HB_USHORT hb_errRT_MySQLDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, 
 
 static HB_ERRCODE mysqlConnect(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 {
-   PHB_ITEM pItemUnixSocket = hb_arrayGetItemPtr(pItem, 7);
+   auto pItemUnixSocket = hb_arrayGetItemPtr(pItem, 7);
 
    MYSQL * pMySql = mysql_init(nullptr);
    if( !mysql_real_connect(pMySql,

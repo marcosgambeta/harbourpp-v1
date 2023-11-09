@@ -146,13 +146,11 @@ static void s_signalHandler(int sig, siginfo_t * info, void * v)
    uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(sig), 0));
 
    while( nPos > 0 ) {
-      PHB_ITEM pFunction;
       HB_UINT  uiMask;
 
-      pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
+      auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
       uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
       if( uiMask & uiSig ) {
-         PHB_ITEM pRet;
          int iRet;
 
          /* we don't unlock the mutex now, even if it is
@@ -164,7 +162,7 @@ static void s_signalHandler(int sig, siginfo_t * info, void * v)
 
          /* the third parameter is an array: */
 
-         pRet = hb_arrayGetItemPtr(pExecArray, 3);
+         auto pRet = hb_arrayGetItemPtr(pExecArray, 3);
          #if defined(HB_OS_BSD)
          hb_arrayNew(pRet, info ? 6 : 1);
          #else
@@ -393,13 +391,11 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
    uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(type), static_cast<HB_UINT>(sig)));
 
    while( nPos > 0 ) {
-      PHB_ITEM pFunction;
       HB_UINT  uiMask;
 
-      pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
+      auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
       uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
       if( (uiMask & uiSig) == uiSig ) {
-         PHB_ITEM pRet;
          int      iRet;
 
          /* we don't unlock the mutex now, even if it is
@@ -418,7 +414,7 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
           * 6: UID of the riser
           */
 
-         pRet = hb_arrayGetItemPtr(pExecArray, 3);
+         auto pRet = hb_arrayGetItemPtr(pExecArray, 3);
          hb_arrayNew(pRet, 6);
 
          hb_arraySetNI(pRet, HB_SERVICE_OSSIGNAL, type);
@@ -430,7 +426,7 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
             hb_arraySetPtr(pRet, HB_SERVICE_ADDRESS, static_cast<void*>(exc->ExceptionAddress));
          } else {
             hb_arraySetPtr(pRet, HB_SERVICE_ADDRESS, nullptr);
-         }   
+         }
 
          /* TODO: */
          hb_arraySetNI(pRet, HB_SERVICE_PROCESS, GetCurrentThreadId());
