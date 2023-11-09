@@ -140,7 +140,7 @@ HB_ERRCODE hb_rddGetTempAlias(char * szAliasTmp)
 {
    int iArea;
 
-   for( int i = 1; i < 1000; i++ ) {
+   for( auto i = 1; i < 1000; i++ ) {
       hb_snprintf(szAliasTmp, 11, "__HBTMP%03i", i);
       if( hb_rddGetAliasNumber(szAliasTmp, &iArea) != Harbour::SUCCESS ) {
          return Harbour::SUCCESS;

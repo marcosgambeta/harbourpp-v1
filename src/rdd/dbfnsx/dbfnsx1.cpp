@@ -1184,7 +1184,7 @@ static void hb_nsxDiscardBuffers(LPNSXINDEX pIndex)
 {
    pIndex->ulPages = pIndex->ulPageLast = 0;
    pIndex->pChanged = pIndex->pFirst = pIndex->pLast = nullptr;
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       pIndex->lpTags[i]->RootBlock = 0;
       pIndex->lpTags[i]->stackLevel = 0;
       pIndex->lpTags[i]->CurKeyOffset = 0;
@@ -1648,7 +1648,7 @@ static void hb_nsxTagDelete(LPTAGINFO pTag)
 {
    LPNSXINDEX pIndex = pTag->pIndex;
 
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       if( pTag == pIndex->lpTags[i] ) {
          while( ++i < pIndex->iTags ) {
             pIndex->lpTags[i - 1] = pIndex->lpTags[i];
@@ -1765,7 +1765,7 @@ static void hb_nsxIndexTagDel(LPNSXINDEX pIndex, const char * szTagName)
    int iTags = HB_GET_LE_UINT16(pIndex->HeaderBuff.TagCount);
    LPNSXTAGITEM pTagItem = pIndex->HeaderBuff.TagList;
 
-   for( int i = 0; i < iTags; pTagItem++, i++ ) {
+   for( auto i = 0; i < iTags; pTagItem++, i++ ) {
       if( !hb_strnicmp(reinterpret_cast<const char*>(pTagItem->TagName), szTagName, NSX_TAGNAME) ) {
          memmove(pTagItem, pTagItem + 1, (iTags - i) * sizeof(NSXTAGITEM));
          memset(pTagItem + iTags - 1, 0, sizeof(NSXTAGITEM));
@@ -1785,7 +1785,7 @@ static HB_ULONG hb_nsxIndexTagFind(LPNSXROOTHEADER lpNSX, const char * szTagName
    int iTags = HB_GET_LE_UINT16(lpNSX->TagCount);
    LPNSXTAGITEM pTagItem = lpNSX->TagList;
 
-   for( int i = 0; i < iTags; pTagItem++, i++ ) {
+   for( auto i = 0; i < iTags; pTagItem++, i++ ) {
       if( !hb_strnicmp(reinterpret_cast<const char*>(pTagItem->TagName), szTagName, NSX_TAGNAME) ) {
          return HB_GET_LE_UINT32(pTagItem->TagOffset);
       }
@@ -1873,7 +1873,7 @@ static void hb_nsxIndexFree(LPNSXINDEX pIndex)
 {
    hb_nsxFreePageBuffer(pIndex);
    if( pIndex->iTags ) {
-      for( int i = 0; i < pIndex->iTags; i++ ) {
+      for( auto i = 0; i < pIndex->iTags; i++ ) {
          hb_nsxTagFree(pIndex->lpTags[i]);
       }
       hb_xfree(pIndex->lpTags);
@@ -1997,7 +1997,7 @@ static HB_ERRCODE hb_nsxIndexHeaderRead(LPNSXINDEX pIndex)
          pIndex->Version = ulVersion;
          pIndex->NextAvail = ulNext;
          pIndex->FileSize = ulFileSize;
-         for( int i = 0; i < pIndex->iTags; i++ ) {
+         for( auto i = 0; i < pIndex->iTags; i++ ) {
             pIndex->lpTags[i]->HeadBlock = hb_nsxIndexTagFind(&pIndex->HeaderBuff, pIndex->lpTags[i]->TagName);
             if( !pIndex->lpTags[i]->HeadBlock ) {
                pIndex->lpTags[i]->RootBlock = 0;
@@ -2026,7 +2026,7 @@ static void hb_nsxIndexFlush(LPNSXINDEX pIndex)
       }
    }
 
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       if( pIndex->lpTags[i]->HdrChanged ) {
          hb_nsxTagHeaderSave( pIndex->lpTags[i] );
       }
@@ -2114,7 +2114,7 @@ static bool hb_nsxIndexUnLockRead(LPNSXINDEX pIndex)
    bool fOK;
 
 #ifdef HB_NSX_DEBUG
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       hb_nsxTagCheckBuffers(pIndex->lpTags[i]);
    }
 #endif
@@ -2145,7 +2145,7 @@ static bool hb_nsxIndexUnLockWrite(LPNSXINDEX pIndex)
    bool fOK;
 
 #ifdef HB_NSX_DEBUG
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       hb_nsxTagCheckBuffers(pIndex->lpTags[i]);
    }
 #endif
@@ -3619,7 +3619,7 @@ static LPNSXINDEX hb_nsxFindBag(NSXAREAP pArea, const char * szBagName)
  */
 static int hb_nsxFindTagByName(LPNSXINDEX pIndex, const char * szTag)
 {
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       if( !hb_strnicmp(pIndex->lpTags[i]->TagName, szTag, NSX_TAGNAME) ) {
          return i + 1;
       }
@@ -5598,7 +5598,7 @@ static HB_ERRCODE hb_nsxReIndex(LPNSXINDEX pIndex)
       errCode = Harbour::SUCCESS;
       hb_nsxIndexTrunc(pIndex);
 
-      for( int i = 0; i < pIndex->iTags; i++ ) {
+      for( auto i = 0; i < pIndex->iTags; i++ ) {
          LPTAGINFO pTag = pIndex->lpTags[i];
          pTag->HeadBlock = pTag->RootBlock = pTag->keyCount = 0;
          pTag->HdrChanged = true;
@@ -5912,7 +5912,7 @@ static HB_ERRCODE hb_nsxGoCold(NSXAREAP pArea)
             }
 
             while( pIndex ) {
-               for( int i = 0; i < pIndex->iTags; i++ ) {
+               for( auto i = 0; i < pIndex->iTags; i++ ) {
                   pTag = pIndex->lpTags[i];
                   if( pIndex->fReadonly || pTag->Custom || !pTag->HeadBlock || (fAppend && pTag->ChgOnly) ) {
                      continue;
@@ -6001,7 +6001,7 @@ static HB_ERRCODE hb_nsxGoHot(NSXAREAP pArea)
 
          while( pIndex ) {
             if( !pIndex->fReadonly ) {
-               for( int i = 0; i < pIndex->iTags; i++ ) {
+               for( auto i = 0; i < pIndex->iTags; i++ ) {
                   pTag = pIndex->lpTags[i];
                   if( !pTag->Custom ) {
                      pTag->HotKeyInfo = hb_nsxEvalKey(pTag->HotKeyInfo, pTag);

@@ -976,7 +976,7 @@ static void hb_ntxDiscardBuffers(LPNTXINDEX pIndex)
    pIndex->ulPages = pIndex->ulPageLast = 0;
    pIndex->pChanged = pIndex->pFirst = pIndex->pLast = nullptr;
    if( pIndex->Compound ) {
-      for( int i = 0; i < pIndex->iTags; i++ ) {
+      for( auto i = 0; i < pIndex->iTags; i++ ) {
          pIndex->lpTags[i]->RootBlock  = 0;
          pIndex->lpTags[i]->stackLevel = 0;
       }
@@ -1437,7 +1437,7 @@ static void hb_ntxTagDelete(LPTAGINFO pTag)
 {
    LPNTXINDEX pIndex = pTag->pIndex;
 
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       if( pTag == pIndex->lpTags[i] ) {
          while( ++i < pIndex->iTags ) {
             pIndex->lpTags[i - 1] = pIndex->lpTags[i];
@@ -1580,7 +1580,7 @@ static void hb_ntxIndexTagDel(LPNTXINDEX pIndex, const char * szTagName)
    int iTags = HB_GET_LE_UINT16(lpCTX->ntags);
    LPCTXTAGITEM pTagItem = lpCTX->tags;
 
-   for( int i = 0; i < iTags; pTagItem++, i++ ) {
+   for( auto i = 0; i < iTags; pTagItem++, i++ ) {
       if( !hb_strnicmp(reinterpret_cast<const char*>(pTagItem->tag_name), szTagName, NTX_MAX_TAGNAME) ) {
          memmove(pTagItem, pTagItem + 1, (iTags - i) * sizeof(CTXTAGITEM));
          memset(pTagItem + iTags - 1, 0, sizeof(CTXTAGITEM));
@@ -1600,7 +1600,7 @@ static HB_ULONG hb_ntxIndexTagFind(LPCTXHEADER lpCTX, const char * szTagName)
    int iTags = HB_GET_LE_UINT16(lpCTX->ntags);
    LPCTXTAGITEM pTagItem = lpCTX->tags;
 
-   for( int i = 0; i < iTags; pTagItem++, i++ ) {
+   for( auto i = 0; i < iTags; pTagItem++, i++ ) {
       if( !hb_strnicmp(reinterpret_cast<const char*>(pTagItem->tag_name), szTagName, NTX_MAX_TAGNAME) ) {
          return HB_GET_LE_UINT32(pTagItem->tag_header);
       }
@@ -1716,7 +1716,7 @@ static void hb_ntxIndexFree(LPNTXINDEX pIndex)
 {
    hb_ntxFreePageBuffer(pIndex);
    if( pIndex->iTags ) {
-      for( int i = 0; i < pIndex->iTags; i++ ) {
+      for( auto i = 0; i < pIndex->iTags; i++ ) {
          hb_ntxTagFree(pIndex->lpTags[i]);
       }
       hb_xfree(pIndex->lpTags);
@@ -1866,7 +1866,7 @@ static HB_ERRCODE hb_ntxIndexHeaderRead(LPNTXINDEX pIndex)
          pIndex->Version = ulVersion;
          pIndex->NextAvail = ulNext;
          pIndex->Compound = true;
-         for( int i = 1; i < pIndex->iTags; i++ ) {
+         for( auto i = 1; i < pIndex->iTags; i++ ) {
             pIndex->lpTags[i]->HeadBlock = hb_ntxIndexTagFind(lpCTX, pIndex->lpTags[i]->TagName);
             if( !pIndex->lpTags[i]->HeadBlock ) {
                pIndex->lpTags[i]->RootBlock = 0;
@@ -1921,7 +1921,7 @@ static void hb_ntxIndexFlush(LPNTXINDEX pIndex)
    }
 
    if( pIndex->Compound ) {
-      for( int i = 0; i < pIndex->iTags; i++ ) {
+      for( auto i = 0; i < pIndex->iTags; i++ ) {
          if( pIndex->lpTags[i]->HdrChanged ) {
             hb_ntxTagHeaderSave( pIndex->lpTags[i] );
          }
@@ -2014,7 +2014,7 @@ static bool hb_ntxIndexUnLockRead(LPNTXINDEX pIndex)
    bool fOK;
 
 #ifdef HB_NTX_DEBUG
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       hb_ntxTagCheckBuffers(pIndex->lpTags[i]);
    }
 #endif
@@ -2045,7 +2045,7 @@ static bool hb_ntxIndexUnLockWrite(LPNTXINDEX pIndex)
    bool fOK;
 
 #ifdef HB_NTX_DEBUG
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       hb_ntxTagCheckBuffers(pIndex->lpTags[i]);
    }
 #endif
@@ -3427,7 +3427,7 @@ static LPNTXINDEX hb_ntxFindBag(NTXAREAP pArea, const char * szBagName)
  */
 static int hb_ntxFindTagByName(LPNTXINDEX pIndex, const char * szTag)
 {
-   for( int i = 0; i < pIndex->iTags; i++ ) {
+   for( auto i = 0; i < pIndex->iTags; i++ ) {
       if( !hb_strnicmp(pIndex->lpTags[i]->TagName, szTag, NTX_MAX_TAGNAME) ) {
          return i + 1;
       }
@@ -5203,7 +5203,7 @@ static HB_ERRCODE hb_ntxReIndex(LPNTXINDEX pIndex)
       errCode = Harbour::SUCCESS;
       hb_ntxIndexTrunc(pIndex);
 
-      for( int i = 0; i < pIndex->iTags; i++ ) {
+      for( auto i = 0; i < pIndex->iTags; i++ ) {
          LPTAGINFO pTag = pIndex->lpTags[i];
          pTag->HeadBlock = pTag->RootBlock = pTag->keyCount = 0;
          pTag->HdrChanged = true;
@@ -5633,7 +5633,7 @@ static HB_ERRCODE hb_ntxGoHot(NTXAREAP pArea)
 
          while( pIndex ) {
             if( !pIndex->fReadonly ) {
-               for( int i = 0; i < pIndex->iTags; i++ ) {
+               for( auto i = 0; i < pIndex->iTags; i++ ) {
                   pTag = pIndex->lpTags[i];
                   if( !pTag->Custom ) {
                      pTag->HotKeyInfo = hb_ntxEvalKey(pTag->HotKeyInfo, pTag);

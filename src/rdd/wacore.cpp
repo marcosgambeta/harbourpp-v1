@@ -382,7 +382,7 @@ const char * hb_rddDefaultDrv(const char * szDriver)
       const char * szDrvTable[] = { "DBFNTX", "DBFCDX", "DBFFPT", "DBF" };
 
       pRddInfo->szDefaultRDD = "";
-      for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(szDrvTable)); ++i ) {
+      for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(szDrvTable)); ++i ) {
          if( hb_rddFindNode(szDrvTable[i], nullptr) ) {
             pRddInfo->szDefaultRDD = szDrvTable[i];
             break;
@@ -420,7 +420,7 @@ const char * hb_rddFindDrv(const char * szDriver, const char * szFileName)
          const char * szDrvTable[] = { "DBFNTX", "DBFCDX", "DBFFPT", "DBF" };
 
          pRddInfo->szDefaultRDD = "";
-         for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(szDrvTable)); ++i ) {
+         for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(szDrvTable)); ++i ) {
             pRddNode = hb_rddFindNode(szDrvTable[i], nullptr);
             if( pRddNode ) {
                pRddInfo->szDefaultRDD = szDrvTable[i];

@@ -369,7 +369,7 @@ HB_FUNC( SX_MEMOPACK )
    if( pArea != nullptr ) {
       auto pItem = hb_itemArrayNew(3);
       int iPCount = hb_pcount();
-      for( int i = 1; i <= iPCount; ++i ) {
+      for( auto i = 1; i <= iPCount; ++i ) {
          hb_arraySet(pItem, i, hb_param(i, Harbour::Item::ANY));
       }
       fResult = SELF_INFO(pArea, DBI_MEMOPACK, pItem) == Harbour::SUCCESS;

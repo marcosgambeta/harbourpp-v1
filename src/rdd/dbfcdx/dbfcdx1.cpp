@@ -1498,7 +1498,7 @@ static void hb_cdxPageCheckKeys(LPCDXPAGE pPage)
       pPage->bufKeyNum = 0;
       pbVal = hb_cdxPageGetKeyVal(pPage, 0);
       ulRec = hb_cdxPageGetKeyRec(pPage, 0);
-      for( int i = 1; i < pPage->iKeys; i++ ) {
+      for( auto i = 1; i < pPage->iKeys; i++ ) {
          memcpy(pbValPrev, pbVal, iLen);
          ulRecPrev = ulRec;
          pbVal = hb_cdxPageGetKeyVal(pPage, i);
@@ -1529,7 +1529,7 @@ static void hb_cdxPageCheckDupTrl(LPCDXPAGE pPage, HB_BYTE * pKeyBuf, int iKeys,
    HB_BYTE bTrail = pPage->TagParent->bTrail;
    bool bErr = false;
 
-   for( int iKey = 0; iKey < iKeys; iKey++ ) {
+   for( auto iKey = 0; iKey < iKeys; iKey++ ) {
       iPos = iKey * iLen;
       iTrl = iDup = 0;
       while( iTrl < iNum && pKeyBuf[iPos + iNum - iTrl - 1] == bTrail ) {
@@ -1629,7 +1629,7 @@ static void hb_cdxSetLeafRecord(HB_BYTE * pDst, HB_ULONG ulRec, int iDup, int iT
    iFrom = (iTCbits + iDCbits + 7) >> 3;
    iBits = ((iTrl << iDCbits) | iDup) << ((iFrom << 3) - iTCbits - iDCbits);
    iFrom = iReq - iFrom;
-   for( int i = 0; i < iReq; i++, ulRec >>= 8 ) {
+   for( auto i = 0; i < iReq; i++, ulRec >>= 8 ) {
       pDst[i] = static_cast<HB_BYTE>(ulRec & 0xff);
       if( i >= iFrom ) {
          pDst[i] |= static_cast<HB_BYTE>(iBits & 0xff);
@@ -1665,7 +1665,7 @@ static void hb_cdxPageLeafEncode(LPCDXPAGE pPage, HB_BYTE * pKeyBuf, int iKeys)
    pRecPos = hb_cdxPageExtKeyPool(pPage);
    pKeyPos = reinterpret_cast<HB_BYTE*>(&pPage->node.extNode) + pPage->TagParent->pIndex->uiPageLen;
    pSrc = &pKeyBuf[0];
-   for( int iKey = 0; iKey < iKeys; iKey++, pSrc += iLen, pRecPos += iReq ) {
+   for( auto iKey = 0; iKey < iKeys; iKey++, pSrc += iLen, pRecPos += iReq ) {
       int iTrl, iDup, iTmp;
       HB_ULONG ulRec;
 
@@ -1749,7 +1749,7 @@ static void hb_cdxPageLeafDecode(LPCDXPAGE pPage, HB_BYTE * pKeyBuf)
    pRec = hb_cdxPageExtKeyPool(pPage);
    pSrc = reinterpret_cast<HB_BYTE*>(&pPage->node.extNode) + pPage->TagParent->pIndex->uiPageLen;
    iReq = pPage->ReqByte;
-   for( int iKey = 0; iKey < pPage->iKeys; iKey++, pRec += iReq ) {
+   for( auto iKey = 0; iKey < pPage->iKeys; iKey++, pRec += iReq ) {
       int iTmp, iDup, iTrl, iNew;
       HB_ULONG ulRec;
       HB_BYTE * pTmp;
@@ -1836,7 +1836,7 @@ static void hb_cdxPageCalcLeafSpace(LPCDXPAGE pPage, HB_BYTE * pKeyBuf, int iKey
 #endif
    /* clear duplicate counter in 1st key */
    HB_PUT_LE_UINT16(&pKeyBuf[iNum + 4], 0);
-   for( int iKey = 0; iKey < iKeys; iKey++ ) {
+   for( auto iKey = 0; iKey < iKeys; iKey++ ) {
       HB_BYTE * bPtr = &pKeyBuf[iKey * iLen + iNum];
       ulRec = HB_GET_LE_UINT32(bPtr);
       iSize = ReqByte + iNum - HB_GET_LE_UINT16(&bPtr[4]) - HB_GET_LE_UINT16(&bPtr[6]);
@@ -4378,7 +4378,7 @@ static void hb_cdxIndexCreateStruct(LPCDXINDEX pIndex, char * szTagName)
 static void hb_cdxIndexFreePages(LPCDXPAGE pPage)
 {
    if( (pPage->PageType & CDX_NODE_LEAF) == 0 ) {
-      for( int iKey = 0; iKey < pPage->iKeys; iKey++ ) {
+      for( auto iKey = 0; iKey < pPage->iKeys; iKey++ ) {
          LPCDXPAGE pChildPage = hb_cdxPageNew(pPage->TagParent, nullptr, hb_cdxPageGetKeyPage(pPage, iKey));
          if( pChildPage ) {
             hb_cdxIndexFreePages(pChildPage);

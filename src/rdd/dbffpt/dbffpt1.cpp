@@ -382,7 +382,7 @@ static void hb_fptSortGCitems(LPMEMOGCTABLE pGCtable)
 
       fMoved = false;
       j = l;
-      for( int i = 0; i < j; i++ ) {
+      for( auto i = 0; i < j; i++ ) {
          if( pGCtable->pGCitems[i].ulSize > pGCtable->pGCitems[i + 1].ulSize ) {
             HB_ULONG ulOffset, ulSize;
             bool fChanged;
@@ -473,7 +473,7 @@ static HB_ERRCODE hb_fptWriteGCitems(FPTAREAP pArea, LPMEMOGCTABLE pGCtable, HB_
    }
 #endif
 
-   for( int i = 0; i < pGCtable->usItems; i++ ) {
+   for( auto i = 0; i < pGCtable->usItems; i++ ) {
       if( pGCtable->pGCitems[i].fChanged ) {
          if( (pArea->uiMemoVersion == DB_MEMOVER_FLEX || pArea->uiMemoVersion == DB_MEMOVER_CLIP) &&
              /* TODO: check what FLEX/CL53 exactly does in such situations */
@@ -529,7 +529,7 @@ static HB_ERRCODE hb_fptGCfreeBlock(FPTAREAP pArea, LPMEMOGCTABLE pGCtable, HB_U
    } else {
       HB_BOOL fChanged = false;
 
-      for( int i = 0; i < pGCtable->usItems; i++ ) {
+      for( auto i = 0; i < pGCtable->usItems; i++ ) {
          if( pGCtable->pGCitems[i].ulOffset + pGCtable->pGCitems[i].ulSize == ulOffset ) {
             ulOffset = pGCtable->pGCitems[i].ulOffset;
             ulSize   = pGCtable->pGCitems[i].ulSize += ulSize;
@@ -592,7 +592,7 @@ static HB_ERRCODE hb_fptGCgetFreeBlock(FPTAREAP pArea, LPMEMOGCTABLE pGCtable, H
       ulSize = (ulByteSize + pArea->ulMemoBlockSize - 1) / pArea->ulMemoBlockSize;
    }
 
-   for( int i = 0; i < pGCtable->usItems; i++ ) {
+   for( auto i = 0; i < pGCtable->usItems; i++ ) {
       if( pGCtable->pGCitems[i].ulSize >= ulSize ) {
          *ulOffset = pGCtable->pGCitems[i].ulOffset;
          pGCtable->pGCitems[i].ulOffset += ulSize;
