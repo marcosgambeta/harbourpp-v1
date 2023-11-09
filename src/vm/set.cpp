@@ -426,7 +426,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
       y_start = y_stop = -1;
       char * szDateFormat = pSet->HB_SET_DATEFORMAT;
       int size = static_cast<int>(strlen(szDateFormat));
-      for( int count = 0; count < size; count++ ) {
+      for( auto count = 0; count < size; count++ ) {
          int digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[count]));
          if( digit == 'Y' ) {
             if( y_start == -1 ) {

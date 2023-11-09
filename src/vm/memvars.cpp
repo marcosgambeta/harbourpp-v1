@@ -1011,7 +1011,7 @@ HB_FUNC( __MVPUBLIC )
    int iCount = hb_pcount();
 
    if( iCount ) {
-      for( int i = 1; i <= iCount; i++ ) {
+      for( auto i = 1; i <= iCount; i++ ) {
          auto pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar ) {
@@ -1038,7 +1038,7 @@ HB_FUNC( __MVPRIVATE )
 
    if( iCount ) {
       hb_memvarResetPrivatesBase();
-      for( int i = 1; i <= iCount; i++ ) {
+      for( auto i = 1; i <= iCount; i++ ) {
          auto pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar ) {
@@ -1065,7 +1065,7 @@ HB_FUNC( __MVXRELEASE )
    int iCount = hb_pcount();
 
    if( iCount ) {
-      for( int i = 1; i <= iCount; i++ ) {
+      for( auto i = 1; i <= iCount; i++ ) {
          auto pMemvar = hb_param(i, Harbour::Item::ANY);
 
          if( pMemvar ) {

@@ -93,7 +93,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 
       if( argc > 0 ) {
          argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * argc));
-         for( int i = 0; i < argc; ++i ) {
+         for( auto i = 0; i < argc; ++i ) {
             argv[i] = hb_arrayGetCPtr(pArgs, i + 1);
          }
       }
@@ -198,7 +198,7 @@ HB_FUNC( HB_LIBLOAD )
 
    if( iPCount > 1 ) {
       pArgs = hb_itemArrayNew(iPCount - 1);
-      for( int i = 2; i <= iPCount; ++i ) {
+      for( auto i = 2; i <= iPCount; ++i ) {
          hb_arraySet(pArgs, i, hb_param(i, Harbour::Item::ANY));
       }
    }

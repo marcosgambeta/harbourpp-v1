@@ -80,7 +80,7 @@ HB_FUNC( ARRAY )
    if( iPCount > 0 ) {
       bool bError = false;
 
-      for( int iParam = 1; iParam <= iPCount; iParam++ ) {
+      for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
          if( !HB_ISNUM(iParam) ) {
             bError = true;
             break;

@@ -1078,7 +1078,7 @@ void hb_clsDoInit(void)
 
    HB_STACK_TLS_PRELOAD
 
-   for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_puiHandles)); ++i ) {
+   for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_puiHandles)); ++i ) {
       auto pFuncSym = hb_dynsymFindName(s_pszFuncNames[i]);
       if( pFuncSym && hb_dynsymIsFunction(pFuncSym) ) {
          auto pReturn = hb_stackReturnItem();

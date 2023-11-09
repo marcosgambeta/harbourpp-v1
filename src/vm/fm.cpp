@@ -385,7 +385,7 @@ static PHB_MSPACE hb_mspace_alloc(void)
       return &s_mspool[0];
    } else {
       int imin = 0;
-      for( int i = 1; i < HB_MSPACE_COUNT; ++i ) {
+      for( auto i = 1; i < HB_MSPACE_COUNT; ++i ) {
          if( s_mspool[i].count < s_mspool[imin].count ) {
             imin = i;
          }
@@ -413,7 +413,7 @@ static void * hb_mspace_update(void * pAlloc, int iCount)
 static void hb_mspace_cleanup(void)
 {
    s_gm = nullptr;
-   for( int i = 0; i < HB_MSPACE_COUNT; ++i ) {
+   for( auto i = 0; i < HB_MSPACE_COUNT; ++i ) {
       if( s_mspool[i].ms ) {
          destroy_mspace(s_mspool[i].ms);
          s_mspool[i].ms = nullptr;

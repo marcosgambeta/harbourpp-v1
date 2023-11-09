@@ -394,7 +394,7 @@ int hb_cmdargPushArgs(void)
 {
    int iArgCount = 0;
 
-   for( int i = 1; i < s_argc; i++ ) {
+   for( auto i = 1; i < s_argc; i++ ) {
       /* Filter out any parameters beginning with //, like //INFO */
       if( !hb_cmdargIsInternal(s_argv[i], nullptr) ) {
 #if defined(HB_OS_WIN)
@@ -448,7 +448,7 @@ static char * hb_cmdargGet(const char * pszName, bool bRetValue)
 
    /* Check the command-line first */
 
-   for( int i = 1; i < s_argc; i++ ) {
+   for( auto i = 1; i < s_argc; i++ ) {
       if( hb_cmdargIsInternal(s_argv[i], &iPrefixLen) && hb_strnicmp(s_argv[i] + iPrefixLen, pszName, strlen(pszName)) == 0 ) {
          if( bRetValue ) {
 #if defined(HB_OS_WIN)
@@ -689,7 +689,7 @@ HB_FUNC( HB_ACMDLINE )
       int iLen = s_argc - 1;
       auto pArray = hb_itemArrayNew(iLen);
 
-      for( int iPos = 1; iPos <= iLen; ++iPos ) {
+      for( auto iPos = 1; iPos <= iLen; ++iPos ) {
          hb_arraySetCPtr(pArray, iPos, hb_cmdargDup(iPos));
       }
 

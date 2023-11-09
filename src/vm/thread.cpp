@@ -2484,7 +2484,7 @@ HB_FUNC( HB_MUTEXEVAL )
          if( hb_threadMutexLock(pItem) ) {
             hb_vmPushEvalSym();
             hb_vmPush(pEval);
-            for( int iParam = 3; iParam <= iPCount; iParam++ ) {
+            for( auto iParam = 3; iParam <= iPCount; iParam++ ) {
                hb_vmPush(hb_stackItemFromBase(iParam));
             }
             hb_vmSend(static_cast<HB_USHORT>(iPCount - 2));

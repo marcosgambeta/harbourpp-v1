@@ -7410,7 +7410,7 @@ void hb_vmInitSymbolGroup(void * hNewDynLib, int argc, const char * argv[])
                         if( scope == HB_FS_INIT && (strcmp((pLastSymbols->pModuleSymbols + ui)->szName, "CLIPINIT$") == 0 ? fClipInit : !fClipInit) ) {
                            hb_vmPushSymbol(pLastSymbols->pModuleSymbols + ui);
                            hb_vmPushNil();
-                           for( int i = 0; i < argc; ++i ) {
+                           for( auto i = 0; i < argc; ++i ) {
                               hb_vmPushString(argv[i], strlen(argv[i]));
                            }
                            hb_vmProc(static_cast<HB_USHORT>(argc));

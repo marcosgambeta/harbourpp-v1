@@ -213,7 +213,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
       {
          hb_strncat(errmsg, "    CS:EIP:", errmsglen);
          unsigned char * pc = reinterpret_cast<unsigned char*>(pCtx->Eip);
-         for( int i = 0; i < 16; i++ ) {
+         for( auto i = 0; i < 16; i++ ) {
             /* FIXME: Unsafe function. */
             if( IsBadReadPtr(pc, 1) ) {
                break;
@@ -223,7 +223,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
          }
          hb_strncat(errmsg, "\n    SS:ESP:", errmsglen);
          unsigned int * sc = reinterpret_cast<unsigned int*>(pCtx->Esp);
-         for( int i = 0; i < 16; i++ ) {
+         for( auto i = 0; i < 16; i++ ) {
             /* FIXME: Unsafe function. */
             if( IsBadReadPtr(sc, 4) ) {
                break;
@@ -238,7 +238,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
          unsigned int * ebp = reinterpret_cast<unsigned int*>(pCtx->Ebp);
          /* FIXME: Unsafe function. */
          if( !IsBadWritePtr(ebp, 8) ) {
-            for( int i = 0; i < 20; i++ ) {
+            for( auto i = 0; i < 20; i++ ) {
                /* FIXME: Unsafe function. */
                if( reinterpret_cast<unsigned int>(ebp) % 4 != 0 || IsBadWritePtr(ebp, 40) || reinterpret_cast<unsigned int>(ebp) >= ebp[0] ) {
                   break;
@@ -361,7 +361,7 @@ void hb_vmSetExceptionHandler(void)
 
          /* Ignore SIGPIPEs so they don't kill us. */
          signal(SIGPIPE, SIG_IGN);
-         for( int i = 0; sigs[i]; ++i ) {
+         for( auto i = 0; sigs[i]; ++i ) {
             sigaction(sigs[i], 0, &act);
             act.sa_sigaction = hb_signalExceptionHandler;
             act.sa_flags = SA_ONSTACK | SA_SIGINFO | SA_RESETHAND;

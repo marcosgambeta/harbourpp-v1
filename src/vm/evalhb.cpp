@@ -64,7 +64,7 @@ HB_FUNC( EVAL )
        * because we need to pass the references too.
        * hb_param() is dereferencing the passed parameters
        */
-      for( int iParam = 2; iParam <= iPCount; iParam++ ) {
+      for( auto iParam = 2; iParam <= iPCount; iParam++ ) {
          hb_vmPush(hb_stackItemFromBase(iParam));
       }
 

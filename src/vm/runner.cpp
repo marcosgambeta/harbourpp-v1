@@ -209,7 +209,7 @@ static void hb_hrbInit(PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams)
                   if( strcmp(pHrbBody->pSymRead[ul].szName, "CLIPINIT$") ? !fClipInit : fClipInit ) {
                      hb_vmPushSymbol(pHrbBody->pSymRead + ul);
                      hb_vmPushNil();
-                     for( int i = 0; i < iPCount; i++ ) {
+                     for( auto i = 0; i < iPCount; i++ ) {
                         hb_vmPush(pParams[i]);
                      }
                      hb_vmProc(static_cast<HB_USHORT>(iPCount));
@@ -547,7 +547,7 @@ static void hb_hrbDo(PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams)
       hb_vmPushSymbol(&pHrbBody->pSymRead[pHrbBody->lSymStart]);
       hb_vmPushNil();
 
-      for( int i = 0; i < iPCount; i++ ) {
+      for( auto i = 0; i < iPCount; i++ ) {
          hb_vmPush(pParams[i]);
       }
 
@@ -631,7 +631,7 @@ HB_FUNC( HB_HRBRUN )
 
          if( iPCount > 0 ) {
             pParams = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
-            for( int i = 0; i < iPCount; i++ ) {
+            for( auto i = 0; i < iPCount; i++ ) {
                pParams[i] = hb_stackItemFromBase(i + 1 + nParam);
             }
          }
@@ -679,7 +679,7 @@ HB_FUNC( HB_HRBLOAD )
 
          if( iPCount > 0 ) {
             pParams = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
-            for( int i = 0; i < iPCount; i++ ) {
+            for( auto i = 0; i < iPCount; i++ ) {
                pParams[i] = hb_stackItemFromBase(i + 1 + nParam);
             }
          }
@@ -706,7 +706,7 @@ HB_FUNC( HB_HRBDO )
 
       if( iPCount > 0 ) {
          pParams = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM) * iPCount));
-         for( int i = 0; i < iPCount; i++ ) {
+         for( auto i = 0; i < iPCount; i++ ) {
             pParams[i] = hb_stackItemFromBase(i + 2);
          }
       }
