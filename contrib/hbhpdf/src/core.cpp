@@ -833,7 +833,7 @@ HB_FUNC( HPDF_PAGE_SETDASH )
    HPDF_DashMode dash;
    int nPtns = hb_parni(3);
 
-   for( int i = 0; i < nPtns; i++ )
+   for( auto i = 0; i < nPtns; i++ )
    {
       dash.ptn[i] = static_cast<HPDF_UINT16>(hb_parvni(2, i + 1));
    }

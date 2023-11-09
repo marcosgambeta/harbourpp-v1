@@ -276,7 +276,7 @@ HB_FUNC( WVW_XREPOSWINDOW )
       hb_gt_wvw_SetCentreWindow(hb_gt_wvw_win_top(), true, true);
 
       /* reposition all subwindows */
-      for( int i = 1; i < wvw->iNumWindows; i++ ) {
+      for( auto i = 1; i < wvw->iNumWindows; i++ ) {
          PWVW_WIN wvw_win = hb_gt_wvw_win(i);
 
          if( wvw_win ) {

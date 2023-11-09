@@ -129,7 +129,7 @@ static void chattr( PFT_DISPC dispc, int x, int y, int len, int attr )
       vmem++;
    }
 
-   for( int i = 0; i <= len; i++, vmem += dispc->iCellSize ) /* write the new attribute value */
+   for( auto i = 0; i <= len; i++, vmem += dispc->iCellSize ) /* write the new attribute value */
    {
       *vmem = static_cast<char>(attr);
    }

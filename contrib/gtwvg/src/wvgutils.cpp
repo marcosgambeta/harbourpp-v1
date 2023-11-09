@@ -194,7 +194,7 @@ HB_FUNC( WVT_CHOOSECOLOR )
    CHOOSECOLOR cc;
    COLORREF    crCustClr[16];
 
-   for( int i = 0; i < 16; i++ ) {
+   for( auto i = 0; i < 16; i++ ) {
       crCustClr[i] = (HB_ISARRAY(2) ? static_cast<COLORREF>(hb_parvnl(2, i + 1)) : GetSysColor(COLOR_BTNFACE));
    }
 
@@ -990,7 +990,7 @@ HB_FUNC( WVT__MAKEDLGTEMPLATE )
       p    += nchar;
    }
 
-   for( int i = 1; i <= nItems; i++ ) {
+   for( auto i = 1; i <= nItems; i++ ) {
       /* make sure each item starts on a DWORD boundary */
       p = lpwAlign(p);
 

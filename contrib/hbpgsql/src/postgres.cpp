@@ -261,7 +261,7 @@ HB_FUNC( PQCONNECTDBPARAMS )
       auto paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
       auto paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
 
-      for( int pos = 0; pos < len; ++pos )
+      for( auto pos = 0; pos < len; ++pos )
       {
          paramKeyValues[pos] = hb_itemGetCPtr(hb_hashGetKeyAt(pParam, pos + 1));
          paramValValues[pos] = hb_itemGetCPtr(hb_hashGetValueAt(pParam, pos + 1));
@@ -316,7 +316,7 @@ HB_FUNC( PQCONNECTSTARTPARAMS )
       auto paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
       auto paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
 
-      for( int pos = 0; pos < len; ++pos )
+      for( auto pos = 0; pos < len; ++pos )
       {
          paramKeyValues[pos] = hb_itemGetCPtr(hb_hashGetKeyAt(pParam, pos + 1));
          paramValValues[pos] = hb_itemGetCPtr(hb_hashGetValueAt(pParam, pos + 1));
@@ -415,7 +415,7 @@ HB_FUNC( PQPINGPARAMS )
       auto paramKeyValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
       auto paramValValues = static_cast<const char**>(hb_xgrab(sizeof(char*) * len));
 
-      for( int pos = 0; pos < len; ++pos )
+      for( auto pos = 0; pos < len; ++pos )
       {
          paramKeyValues[pos] = hb_itemGetCPtr(hb_hashGetKeyAt(pParam, pos + 1));
          paramValValues[pos] = hb_itemGetCPtr(hb_hashGetValueAt(pParam, pos + 1));
@@ -827,7 +827,7 @@ HB_FUNC( PQEXECPARAMS )
       {
          auto paramvalues = static_cast<const char**>(hb_xgrab(sizeof(char*) * n));
 
-         for( int i = 0; i < n; ++i )
+         for( auto i = 0; i < n; ++i )
          {
             paramvalues[i] = hb_arrayGetCPtr(aParam, i + 1);
          }
@@ -1100,11 +1100,11 @@ HB_FUNC( PQRESULT2ARRAY )  /* not a direct wrapper */
 
          auto pResult = hb_itemArrayNew(nRows);
 
-         for( int nRow = 0; nRow < nRows; nRow++ )
+         for( auto nRow = 0; nRow < nRows; nRow++ )
          {
             PHB_ITEM pRow = hb_arrayGetItemPtr(pResult, nRow + 1);
             hb_arrayNew(pRow, nCols);
-            for( int nCol = 0; nCol < nCols; nCol++ )
+            for( auto nCol = 0; nCol < nCols; nCol++ )
             {
                hb_arraySetC(pRow, nCol + 1, PQgetvalue(res, nRow, nCol));
             }

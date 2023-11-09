@@ -1609,7 +1609,7 @@ HB_FUNC( WVW_CHOOSECOLOR )
    COLORREF    crCustClr[16];
    WVW_DATA *  p = hb_getWvwData();
 
-   for( int i = 0; i < 16; i++ ) {
+   for( auto i = 0; i < 16; i++ ) {
       crCustClr[i] = HB_ISARRAY(2) ? static_cast<COLORREF>(hb_parvnl(2, i + 1) ) : GetSysColor(COLOR_BTNFACE);
    }
 
@@ -1919,7 +1919,7 @@ HB_FUNC( WVW__MAKEDLGTEMPLATE )
       p    += nchar;
    }
 
-   for( int i = 1; i <= nItems; i++ ) {
+   for( auto i = 1; i <= nItems; i++ ) {
 
       p = lpwAlign(p);
 

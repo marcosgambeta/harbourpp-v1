@@ -344,7 +344,7 @@ HB_FUNC( WVW_CBCREATE )
                /* ignore failure */
             }
          } else {
-            for( int i = 1; i <= iNumElement; i++ ) {
+            for( auto i = 1; i <= iNumElement; i++ ) {
                void * hText;
 
                if( SendMessage(hWnd, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARASTR(5, i, &hText, nullptr))) < 0 ) {

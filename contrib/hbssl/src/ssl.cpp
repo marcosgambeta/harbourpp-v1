@@ -1488,7 +1488,7 @@ HB_FUNC( SSL_GET_CIPHERS )
          if( len > 0 ) {
             auto pArray = hb_itemArrayNew(len);
 
-            for( int tmp = 0; tmp < len; tmp++ ) {
+            for( auto tmp = 0; tmp < len; tmp++ ) {
                hb_arraySetPtr(pArray, tmp + 1, HB_UNCONST(sk_SSL_CIPHER_value(stack, tmp)));
             }
 
@@ -1514,7 +1514,7 @@ HB_FUNC( SSL_GET_CLIENT_CA_LIST )
          if( len > 0 ) {
             auto pArray = hb_itemArrayNew(len);
 
-            for( int tmp = 0; tmp < len; tmp++ ) {
+            for( auto tmp = 0; tmp < len; tmp++ ) {
                hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
             }
 
@@ -1537,7 +1537,7 @@ HB_FUNC( SSL_LOAD_CLIENT_CA_FILE )
       if( len > 0 ) {
          auto pArray = hb_itemArrayNew(len);
 
-         for( int tmp = 0; tmp < len; tmp++ ) {
+         for( auto tmp = 0; tmp < len; tmp++ ) {
             hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
          }
 

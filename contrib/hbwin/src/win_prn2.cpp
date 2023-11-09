@@ -58,7 +58,7 @@ static HB_BOOL hb_IsLegacyDevice(const char * pszPrinterName)
 {
    static const char * s_pszPrnDev[] = { "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "com1", "com2", "com3", "com4", nullptr };
 
-   for( int i = 0; s_pszPrnDev[i]; ++i )
+   for( auto i = 0; s_pszPrnDev[i]; ++i )
    {
       if( hb_strnicmp(pszPrinterName, s_pszPrnDev[i], strlen(s_pszPrnDev[i])) == 0 )
       {

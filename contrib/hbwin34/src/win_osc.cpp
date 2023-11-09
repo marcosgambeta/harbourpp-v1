@@ -163,7 +163,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
 
    static const HB_ISWINVER s_vers[] = {{10, 0}, {6, 3}, {6, 2}, {6, 1}, {6, 0}, {5, 2}, {5, 1}, {5, 0}};
 
-   for( int pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos )
+   for( auto pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos )
    {
       if( hb_iswinver(s_vers[pos].iMajor, s_vers[pos].iMinor, 0, (pos == 0)) )
       {
@@ -181,7 +181,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
 
    if( hb_iswin2k() )
    {
-      for( int tmp = 5; tmp > 0; --tmp )
+      for( auto tmp = 5; tmp > 0; --tmp )
       {
          if( hb_iswinsp(tmp, true) )
          {

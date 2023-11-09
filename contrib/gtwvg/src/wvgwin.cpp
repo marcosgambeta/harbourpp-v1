@@ -553,7 +553,7 @@ HB_FUNC( WVG_CHOOSECOLOR )
    CHOOSECOLOR cc;
    COLORREF    crCustClr[16];
 
-   for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); i++ ) {
+   for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); i++ ) {
       crCustClr[i] = (HB_ISARRAY(2) ? static_cast<COLORREF>(hb_parvnl(2, i + 1)) : GetSysColor(COLOR_BTNFACE));
    }
 

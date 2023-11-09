@@ -421,7 +421,7 @@ HB_FUNC( WLIST )
          pszWindows[iFrom++] = 0;
       }
 
-      for( int i = 0; i < iWindows; ++i ) {
+      for( auto i = 0; i < iWindows; ++i ) {
          pszWindows[iFrom + i] = static_cast<char>(piStack[i]);
       }
 

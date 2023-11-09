@@ -95,7 +95,7 @@ HB_FUNC( WVW_APPENDMENU )
       iLen = hb_parclen(4);
       if( iLen > 0 && iLen < 256 ) {
          lpszCaption = hb_parcx(4);
-         for( int i = 0; i < iLen; i++ ) {
+         for( auto i = 0; i < iLen; i++ ) {
             ucBuf[i] = (*lpszCaption == '~') ? '&' : *lpszCaption;
             lpszCaption++;
          }

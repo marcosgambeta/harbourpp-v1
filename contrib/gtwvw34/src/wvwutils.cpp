@@ -270,7 +270,7 @@ HB_FUNC( WVW_CREATEIMAGELIST )
 
       HIMAGELIST himl = ImageList_Create(hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parnidef(5, ILC_COLOR)), ulLen, hb_parni(4));
 
-      for( int ul = 1; ul <= ulLen; ++ul ) {
+      for( auto ul = 1; ul <= ulLen; ++ul ) {
          HBITMAP hbmp = static_cast<HBITMAP>(hbwapi_arrayGet_HANDLE(pArray, ul));
          ImageList_Add(himl, hbmp, nullptr);
          DeleteObject(hbmp);

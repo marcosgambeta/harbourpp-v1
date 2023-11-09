@@ -773,7 +773,7 @@ static SAFEARRAY * hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims
    }
    else
    {
-      for( int iDim = 0; iDim < iDims; ++iDim )
+      for( auto iDim = 0; iDim < iDims; ++iDim )
       {
          sabound[iDim].lLbound = 0;
          sabound[iDim].cElements = plSize[iDim];
@@ -1843,7 +1843,7 @@ static HRESULT GetNamedParams(IDispatch * pDisp, OLECHAR * szMethodName, PHB_ITE
    *puiNamedArgs = static_cast<UINT>(iArgs);
 
    lOleError = HB_VTBL(pDisp)->GetIDsOfNames(HB_THIS_(pDisp) HB_ID_REF(IID_NULL), pNames, iArgs + 1, LOCALE_USER_DEFAULT, pDispIds);
-   for( int iArg = 0; iArg < iArgs; ++iArg )
+   for( auto iArg = 0; iArg < iArgs; ++iArg )
    {
       hb_strfree(phStrings[iArg]);
    }

@@ -261,7 +261,7 @@ static int callback(void * Cargo, int argc, char ** argv, char ** azColName)
       auto pArrayValue = hb_itemArrayNew(argc);
       auto pArrayColName = hb_itemArrayNew(argc);
 
-      for( int i = 0; i < argc; i++ ) {
+      for( auto i = 0; i < argc; i++ ) {
          hb_arraySetStrUTF8(pArrayValue, i + 1, static_cast<const char*>(argv[i] ? argv[i] : "NULL"));
          hb_arraySetStrUTF8(pArrayColName, i + 1, static_cast<const char*>(azColName[i]));
       }
@@ -391,7 +391,7 @@ static void func(sqlite3_context * ctx, int argc, sqlite3_value ** argv)
       hb_vmPushInteger(argc);
 
       if( argc > 0 ) {
-         for( int i = 0; i < argc; i++ ) {
+         for( auto i = 0; i < argc; i++ ) {
             switch( sqlite3_value_type(argv[i]) ) {
                case SQLITE_NULL:
                   hb_vmPushNil();
@@ -1393,10 +1393,10 @@ HB_FUNC( SQLITE3_GET_TABLE )
       if( sqlite3_get_table(pHbSqlite3->db, hb_parstr_utf8(2, &hSQLText, nullptr), &pResult, &iRow, &iCol, &pszErrMsg) == SQLITE_OK ) {
          int k = 0;
 
-         for( int i = 0; i < iRow + 1; i++ ) {
+         for( auto i = 0; i < iRow + 1; i++ ) {
             auto pArray = hb_itemArrayNew(iCol);
 
-            for( int j = 1; j <= iCol; j++, k++ ) {
+            for( auto j = 1; j <= iCol; j++, k++ ) {
                hb_arraySetStrUTF8(pArray, j, static_cast<const char*>(pResult[k]));
             }
 

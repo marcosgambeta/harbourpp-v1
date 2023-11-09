@@ -57,7 +57,7 @@ static struct
 
 static void hb_wincom_init(void)
 {
-   for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_PortData)); i++ )
+   for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_PortData)); i++ )
    {
       s_PortData[i].hPort = INVALID_HANDLE_VALUE;
    }

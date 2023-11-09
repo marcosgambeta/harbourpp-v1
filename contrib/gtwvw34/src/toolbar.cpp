@@ -738,7 +738,7 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
          SetWindowLong(hWndCtrl, GWL_STYLE, GetWindowLong( hWndCtrl, GWL_STYLE ) | TBSTYLE_TOOLTIPS | TBSTYLE_FLAT);
          SendMessage(hWndCtrl, TB_BUTTONSTRUCTSIZE, sizeof(TBBUTTON), 0);
 
-         for( int nCount = 0; nCount < iButtons; ++nCount ) {
+         for( auto nCount = 0; nCount < iButtons; ++nCount ) {
             PHB_ITEM pTemp = hb_arrayGetItemPtr(pArray, nCount + 1);
 
             tb[nCount].idCommand = hb_arrayGetNI(pTemp, 2);
@@ -759,7 +759,7 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
 
          hb_xfree(tb);
 
-         for( int nCount = 0; nCount < iButtons; ++nCount ) {
+         for( auto nCount = 0; nCount < iButtons; ++nCount ) {
             hb_strfree(hStr[nCount]);
          }
 

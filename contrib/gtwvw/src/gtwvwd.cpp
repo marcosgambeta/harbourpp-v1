@@ -2244,7 +2244,7 @@ static void hb_gt_wvwResetWindowSize(WIN_DATA * pWindowData, HWND hWnd)
       pWindowData->FixedFont = TRUE;
    }
 
-   for( int n = 0; n < pWindowData->COLS; n++ ) { /* pWindowData->FixedSize[] is used by ExtTextOut() to emulate fixed font when a proportional font is used */
+   for( auto n = 0; n < pWindowData->COLS; n++ ) { /* pWindowData->FixedSize[] is used by ExtTextOut() to emulate fixed font when a proportional font is used */
       pWindowData->FixedSize[n] = pWindowData->PTEXTSIZE.x;
    }
 
@@ -3645,7 +3645,7 @@ DWORD hb_gt_wvwProcessMessages(WIN_DATA * pWindowData)
 
       bProcessed = FALSE;
 
-      for( int iIndex = 0; iIndex < WVW_DLGML_MAX; iIndex++ ) {
+      for( auto iIndex = 0; iIndex < WVW_DLGML_MAX; iIndex++ ) {
          if( s_pWvwData->s_sApp->hDlgModeless[iIndex] != 0 ) {
             if( IsDialogMessage(s_pWvwData->s_sApp->hDlgModeless[iIndex], &msg) ) {
                bProcessed = TRUE;
@@ -7859,7 +7859,7 @@ HB_FUNC( WVW_GETPALETTE )
 {
    auto info = hb_itemArrayNew(16);
 
-   for( int i = 0; i < 16; i++ ) {
+   for( auto i = 0; i < 16; i++ ) {
       hb_arraySetNL(info, i + 1, _COLORS[i]);
    }
 
@@ -7871,7 +7871,7 @@ HB_FUNC( WVW_GETPALETTE )
 /*                                                                   */
 HB_FUNC( WVW_SETPALETTE )
 {
-   for( int i = 0; i < 16; i++ ) {
+   for( auto i = 0; i < 16; i++ ) {
       _COLORS[i] = hb_parvnl(1, i + 1);
    }
 }

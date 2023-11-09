@@ -125,7 +125,7 @@ static int _datamatrix_encode( const char * szCode, int iLen, unsigned char * pC
 {
    int iPos = 0;
 
-   for( int i = 0; i < iLen; i++ )
+   for( auto i = 0; i < iLen; i++ )
    {
       if( _datamatrix_isdigit( szCode[i] ) && i < iLen - 1 && _datamatrix_isdigit( szCode[i + 1] ) )
       {

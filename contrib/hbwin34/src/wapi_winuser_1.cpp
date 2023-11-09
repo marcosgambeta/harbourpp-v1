@@ -788,7 +788,7 @@ HB_FUNC( WAPI_CREATEACCELERATORTABLE )
    {
       auto lpAccel = static_cast<LPACCEL>(hb_xgrab(sizeof(ACCEL) * iEntries));
 
-      for( int i = 0; i < iEntries; ++i )
+      for( auto i = 0; i < iEntries; ++i )
       {
          PHB_ITEM pAccItem = hb_arrayGetItemPtr(pArray, i + 1);
 

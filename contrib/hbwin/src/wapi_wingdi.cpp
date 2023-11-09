@@ -275,7 +275,7 @@ void hbwapi_strfree_DOCINFO(void ** h)
 {
    if( h )
    {
-      for( int i = 0; i < 3; ++i )
+      for( auto i = 0; i < 3; ++i )
       {
          hb_strfree(h[i]);
       }

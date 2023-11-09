@@ -176,7 +176,7 @@ HB_FUNC( WVW_SBADDPART )
 
    ptArray[numOfParts - 1] = rSB.right;
    if( !lResetParts ) {
-      for( int n = 0; n < numOfParts - 1; n++ ) {
+      for( auto n = 0; n < numOfParts - 1; n++ ) {
          ptArray[n] -= (usWidth + WVW_SPACE_BETWEEN_PARTS);
       }
    }
@@ -237,7 +237,7 @@ HB_FUNC( WVW_SBREFRESH )
    GetClientRect(hWndSB, &rSB);
    iDiff = rSB.right - ptArray[numOfParts - 1];
 
-   for( int n = 0; n <= numOfParts - 1; n++ ) {
+   for( auto n = 0; n <= numOfParts - 1; n++ ) {
       ptArray[n] += iDiff;
    }
 

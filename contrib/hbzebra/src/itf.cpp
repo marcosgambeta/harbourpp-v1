@@ -52,7 +52,7 @@ static char _itf_checksum( const char * szCode )
 {
    int sum = 0;
 
-   for( int i = 0; szCode[i]; i++ )
+   for( auto i = 0; szCode[i]; i++ )
    {
       sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
    }

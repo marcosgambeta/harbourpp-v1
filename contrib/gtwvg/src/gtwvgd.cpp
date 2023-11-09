@@ -260,7 +260,7 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
    pWVT->pSymWVT_MOUSE     = nullptr;
    pWVT->pSymWVT_TIMER     = nullptr;
    pWVT->pSymWVT_KEY       = nullptr;
-   for( int iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(pWVT->pFunc)); iIndex++ ) {
+   for( auto iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(pWVT->pFunc)); iIndex++ ) {
       if( pWVT->pFunc[iIndex] != nullptr && pWVT->iType[iIndex] == 2 ) {
          hb_itemRelease(static_cast<PHB_ITEM>(pWVT->pFunc[iIndex]));
          pWVT->pFunc[iIndex] = nullptr;
@@ -845,7 +845,7 @@ static bool hb_gt_wvt_FitSize(PHB_GTWVT pWVT)
             pWVT->PTEXTSIZE.y = tm.tmHeight;
 
             pWVT->FixedFont = !pWVT->Win9X && pWVT->fontWidth >= 0 && (tm.tmPitchAndFamily & TMPF_FIXED_PITCH) == 0 && (pWVT->PTEXTSIZE.x == tm.tmMaxCharWidth);
-            for( int n = 0; n < pWVT->COLS; n++ ) {
+            for( auto n = 0; n < pWVT->COLS; n++ ) {
                pWVT->FixedSize[n] = pWVT->PTEXTSIZE.x;
             }
 
@@ -994,7 +994,7 @@ static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT)
 
    /* pWVT->FixedSize[] is used by ExtTextOut() to emulate
       fixed font when a proportional font is used */
-   for( int n = 0; n < pWVT->COLS; n++ ) {
+   for( auto n = 0; n < pWVT->COLS; n++ ) {
       pWVT->FixedSize[n] = pWVT->PTEXTSIZE.x;
    }
 
@@ -2200,7 +2200,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
 
 static bool hb_gt_wvt_IsDialogMessage(PHB_GTWVT pWVT, LPMSG lpMsg)     /* Proprietary to GTWVG */
 {
-   for( int iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(pWVT->hDlgModeless)); iIndex++ ) {
+   for( auto iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(pWVT->hDlgModeless)); iIndex++ ) {
       if( pWVT->hDlgModeless[iIndex] != 0 ) {
          if( IsDialogMessage(pWVT->hDlgModeless[iIndex], lpMsg) ) {
             return true;
@@ -4034,20 +4034,20 @@ static void hb_wvt_gtReleaseGuiData(void)
    DeleteObject(static_cast<HBRUSH>(s_guiData->solidBrush));
    DeleteObject(static_cast<HBRUSH>(s_guiData->whiteBrush));
 
-   for( int i = 0; i < WVT_PICTURES_MAX; i++ ) {
+   for( auto i = 0; i < WVT_PICTURES_MAX; i++ ) {
       if( s_guiData->pPicture[i] ) {
          HB_VTBL(s_guiData->pPicture[i])->Release(HB_THIS(s_guiData->pPicture[i]));
          s_guiData->pPicture[i] = nullptr;
       }
    }
-   for( int i = 0; i < WVT_FONTS_MAX; i++ ) {
+   for( auto i = 0; i < WVT_FONTS_MAX; i++ ) {
       if( s_guiData->hUserFonts[i] ) {
          DeleteObject(s_guiData->hUserFonts[i]);
          s_guiData->hUserFonts[i] = nullptr;
       }
    }
 
-   for( int i = 0; i < WVT_PENS_MAX; i++ ) {
+   for( auto i = 0; i < WVT_PENS_MAX; i++ ) {
       if( s_guiData->hUserPens[i] ) {
          DeleteObject(s_guiData->hUserPens[i]);
          s_guiData->hUserPens[i] = nullptr;
@@ -4118,7 +4118,7 @@ static void hb_wvt_gtExitGui(PHB_GTWVT pWVT)
    if( hMenu ) {
       DestroyMenu(hMenu);
    }
-   for( int i = 0; i < WVT_DLGML_MAX; i++ ) {
+   for( auto i = 0; i < WVT_DLGML_MAX; i++ ) {
       if( pWVT->hDlgModeless[i] ) {
          SendMessage(pWVT->hDlgModeless[i], WM_CLOSE, 0, 0);
          pWVT->hDlgModeless[i] = nullptr;

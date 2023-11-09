@@ -268,7 +268,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->inCDP = hb_vmCDP();
 #else
    {
-      for( int i = 0; i < 256; ++i ) {
+      for( auto i = 0; i < 256; ++i ) {
          pWVT->chrTransTbl[i] = pWVT->keyTransTbl[i] = static_cast<HB_BYTE>(i);
       }
    }

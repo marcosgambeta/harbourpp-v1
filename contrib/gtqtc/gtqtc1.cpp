@@ -1281,14 +1281,14 @@ static QBitmap * hb_gt_qtc_getBoxChar(PHB_GTQTC pQTC, HB_USHORT * puc16)
 
 static void hb_gt_qtc_resetBoxCharBitmaps(PHB_GTQTC pQTC)
 {
-   for( int i = 1; i <= pQTC->boxCount; i++ ) {
+   for( auto i = 1; i <= pQTC->boxCount; i++ ) {
       delete pQTC->boxImage[i];
    }
 
    memset(pQTC->boxImage, 0, sizeof(pQTC->boxImage));
    pQTC->boxCount = 0;
 
-   for( int i = 0; i < HB_BOXCH_TRANS_COUNT; ++i ) {
+   for( auto i = 0; i < HB_BOXCH_TRANS_COUNT; ++i ) {
       pQTC->boxIndex[i] = HB_BOXCH_TRANS_MAX;
    }
 }
@@ -3468,7 +3468,7 @@ void QTConsole::inputMethodEvent(QInputMethodEvent * evt)
    QString qStr = evt->commitString();
 
    if( qStr.size() > 0 ) {
-      for( int i = 0; i < qStr.size(); ++i ) {
+      for( auto i = 0; i < qStr.size(); ++i ) {
          HB_WCHAR wc = qStr[i].unicode();
          hb_gt_qtc_addKeyToInputQueue(pQTC, HB_INKEY_NEW_UNICODE(wc));
       }
@@ -3502,7 +3502,7 @@ void QTConsole::keyPressEvent(QKeyEvent * evt)
             iFlags &= ~(HB_KF_CTRL | HB_KF_ALT);
          }
 
-         for( int i = 0; i < iSize; ++i ) {
+         for( auto i = 0; i < iSize; ++i ) {
             wc = qStr[i].unicode();
             hb_gt_qtc_addKeyToInputQueue(pQTC, wc < 127 && (iFlags & (HB_KF_CTRL | HB_KF_ALT) ) ? HB_INKEY_NEW_KEY(wc, iFlags) : HB_INKEY_NEW_UNICODEF(wc, iFlags));
          }

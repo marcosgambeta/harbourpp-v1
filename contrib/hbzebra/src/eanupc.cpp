@@ -55,7 +55,7 @@ static char _ean13_checksum( const char * szCode )
 {
    int sum = 0;
 
-   for( int i = 0; i < 12; i++ )
+   for( auto i = 0; i < 12; i++ )
    {
       sum += (szCode[i] - '0') * ((i & 1) ? 3 : 1);
    }
@@ -66,7 +66,7 @@ static char _ean8_checksum( const char * szCode )
 {
    int sum = 0;
 
-   for( int i = 0; i < 7; i++ )
+   for( auto i = 0; i < 7; i++ )
    {
       sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
    }
@@ -77,7 +77,7 @@ static char _upca_checksum( const char * szCode )
 {
    int sum = 0;
 
-   for( int i = 0; i < 11; i++ )
+   for( auto i = 0; i < 11; i++ )
    {
       sum += (szCode[i] - '0') * ((i & 1) ? 1 : 3);
    }

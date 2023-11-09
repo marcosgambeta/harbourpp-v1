@@ -129,7 +129,7 @@ HB_FUNC( CAIRO_GET_DASH )
       cairo_get_dash(pCairo, pDashes, &dOffset);
       hb_stornd(dOffset, 3);
       auto pItem = hb_itemArrayNew(static_cast<HB_SIZE>(iCount));
-      for( int i = 0; i < iCount; i++ ) {
+      for( auto i = 0; i < iCount; i++ ) {
          hb_arraySetND(pItem, static_cast<HB_SIZE>(i) + 1, pDashes[i]);
       }
       hb_xfree(pDashes);
@@ -225,7 +225,7 @@ HB_FUNC( CAIRO_SET_DASH )
             pDashes = static_cast<double*>(hb_xgrab(iCount * sizeof(double)));
          }
 
-         for( int i = 0; i < iCount; i++ ) {
+         for( auto i = 0; i < iCount; i++ ) {
             pDashes[i] = hb_arrayGetND(pItem, static_cast<HB_SIZE>(i) + 1);
          }
          cairo_set_dash(pCairo, pDashes, iCount, hb_parnd(3));

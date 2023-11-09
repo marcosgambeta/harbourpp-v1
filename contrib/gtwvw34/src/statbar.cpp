@@ -170,7 +170,7 @@ HB_FUNC( WVW_SBADDPART )
 
       piArray[iNumOfParts - 1] = rSB.right;
       if( !fResetParts ) {
-         for( int n = 0; n < iNumOfParts - 1; n++ ) {
+         for( auto n = 0; n < iNumOfParts - 1; n++ ) {
             piArray[n] -= iWidth + WVW_SPACE_BETWEEN_PARTS;
          }
       }
@@ -229,7 +229,7 @@ HB_FUNC( WVW_SBREFRESH )
          GetClientRect(hWnd, &rSB);
          int iDiff = rSB.right - piArray[iNumOfParts - 1];
 
-         for( int n = 0; n <= iNumOfParts - 1; n++ ) {
+         for( auto n = 0; n <= iNumOfParts - 1; n++ ) {
             piArray[n] += iDiff;
          }
 

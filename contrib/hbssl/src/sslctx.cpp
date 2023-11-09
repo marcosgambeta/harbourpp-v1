@@ -617,7 +617,7 @@ HB_FUNC( SSL_CTX_GET_CLIENT_CA_LIST )
          if( len > 0 ) {
             auto pArray = hb_itemArrayNew(sk_X509_NAME_num(stack));
 
-            for( int tmp = 0; tmp < len; tmp++ ) {
+            for( auto tmp = 0; tmp < len; tmp++ ) {
                hb_arraySetPtr(pArray, tmp + 1, sk_X509_NAME_value(stack, tmp));
             }
 

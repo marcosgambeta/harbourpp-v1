@@ -1494,12 +1494,12 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                pInfo->pResult = hb_itemNew(nullptr);
             }
             hb_arrayNew(pInfo->pResult, 16);
-            for( int i = 0; i < 16; i++ ) {
+            for( auto i = 0; i < 16; i++ ) {
                hb_itemPutNInt(hb_arrayGetItemPtr(pInfo->pResult, i + 1), s_COLORS[i]);
             }
 
             if( hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY && hb_arrayLen(pInfo->pNewVal) == 16 ) {
-               for( int i = 0; i < 16; i++ ) {
+               for( auto i = 0; i < 16; i++ ) {
                   s_COLORS[i] = static_cast<COLORREF>(hb_arrayGetNL(pInfo->pNewVal, i + 1));
                }
             }
@@ -2081,7 +2081,7 @@ void hb_gt_wvw_ResetWindowSize(PWVW_WIN wvw_win, HWND hWnd)
       wvw_win->FixedFont = true;
    }
 
-   for( int n = 0; n < wvw_win->COLS; n++ ) { /* wvw_win->FixedSize[] is used by ExtTextOut() to emulate */                            /*          fixed font when a proportional font is used */
+   for( auto n = 0; n < wvw_win->COLS; n++ ) { /* wvw_win->FixedSize[] is used by ExtTextOut() to emulate */                            /*          fixed font when a proportional font is used */
       wvw_win->FixedSize[n] = wvw_win->PTEXTSIZE.x;
    }
 
@@ -3400,7 +3400,7 @@ WPARAM hb_gt_wvw_ProcessMessages(PWVW_WIN wvw_win)
       }
 
       fProcessed = false;
-      for( int iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++ ) {
+      for( auto iIndex = 0; iIndex < static_cast<int>(HB_SIZEOFARRAY(s_wvw->a.hDlgModeless)); iIndex++ ) {
          if( s_wvw->a.hDlgModeless[iIndex] != 0 ) {
             if( IsDialogMessage(s_wvw->a.hDlgModeless[iIndex], &msg) ) {
                fProcessed = true;

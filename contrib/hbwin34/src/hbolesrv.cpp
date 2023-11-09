@@ -757,7 +757,7 @@ STDAPI DllRegisterServer(void)
    HRESULT hr = S_OK;
    HKEY hKey;
 
-   for( int i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_regTable)); ++i )
+   for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(s_regTable)); ++i )
    {
       long err;
 

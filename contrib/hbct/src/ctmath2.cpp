@@ -204,7 +204,7 @@ HB_FUNC( FACT )
       if( iInput >= 0 && iInput < 22 ) {
          double dResult = 1.0;
 
-         for( int i = 1; i <= iInput; i++ ) {
+         for( auto i = 1; i <= iInput; i++ ) {
             dResult *= static_cast<double>(i);
          }
          hb_retnd(dResult);

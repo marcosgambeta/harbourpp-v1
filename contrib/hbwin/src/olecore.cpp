@@ -772,7 +772,7 @@ static SAFEARRAY * hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims
    }
    else
    {
-      for( int iDim = 0; iDim < iDims; ++iDim )
+      for( auto iDim = 0; iDim < iDims; ++iDim )
       {
          sabound[iDim].lLbound = 0;
          sabound[iDim].cElements = plSize[iDim];

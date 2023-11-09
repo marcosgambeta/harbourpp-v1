@@ -118,7 +118,7 @@ void ct_charop(int iMode)
 
             if( iRLL != 0 ) {
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
-                  for( int iRLLCnt = 0; iRLLCnt < iRLL; iRLLCnt++ ) {
+                  for( auto iRLLCnt = 0; iRLLCnt < iRLL; iRLLCnt++ ) {
                      if( pucResult[sPos] & 0x80 ) { /* most left bit set -> roll over */
                         pucResult[sPos] <<= 1;
                         pucResult[sPos] |= 0x01;
@@ -139,7 +139,7 @@ void ct_charop(int iMode)
 
             if( iRLR != 0 ) {
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
-                  for( int iRLRCnt = 0; iRLRCnt < iRLR; iRLRCnt++ ) {
+                  for( auto iRLRCnt = 0; iRLRCnt < iRLR; iRLRCnt++ ) {
                      if( pucResult[sPos] & 0x01 ) { /* most right bit set -> roll over */
                         pucResult[sPos] >>= 1;
                         pucResult[sPos] |= 0x80;

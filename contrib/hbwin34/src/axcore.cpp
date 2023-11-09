@@ -440,7 +440,7 @@ static HRESULT _get_default_sink(IDispatch * iDisp, const char * szEvent, IID * 
             hr = HB_VTBL(iTI)->GetTypeAttr(HB_THIS_(iTI) & pTypeAttr);
             if( hr == S_OK )
             {
-               for( int i = 0; i < pTypeAttr->cImplTypes; i++ )
+               for( auto i = 0; i < pTypeAttr->cImplTypes; i++ )
                {
                   hr = HB_VTBL(iTI)->GetImplTypeFlags(HB_THIS_(iTI) i, &iFlags);
                   if( hr == S_OK && (iFlags & IMPLTYPEFLAG_FDEFAULT) && (iFlags & IMPLTYPEFLAG_FSOURCE) )
@@ -488,7 +488,7 @@ static HRESULT _get_default_sink(IDispatch * iDisp, const char * szEvent, IID * 
       if( hr == S_OK )
       {
          int iCount = HB_VTBL(iTL)->GetTypeInfoCount(HB_THIS(iTL));
-         for( int i = 0; i < iCount; i++ )
+         for( auto i = 0; i < iCount; i++ )
          {
             hr = HB_VTBL(iTL)->GetTypeInfo(HB_THIS_(iTL) i, &iTI);
             if( hr == S_OK )
@@ -498,7 +498,7 @@ static HRESULT _get_default_sink(IDispatch * iDisp, const char * szEvent, IID * 
                {
                   if( pTypeAttr->typekind == TKIND_COCLASS )
                   {
-                     for( int j = 0; j < pTypeAttr->cImplTypes; j++ )
+                     for( auto j = 0; j < pTypeAttr->cImplTypes; j++ )
                      {
                         if( szEvent )
                         {

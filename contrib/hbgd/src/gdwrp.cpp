@@ -639,7 +639,7 @@ HB_FUNC( GDIMAGEPOLYGON ) /* original: void gdImagePolygon(gdImagePtr im, gdPoin
       /* Max Points of polygon */
       auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
-      for( int i = 0; i < pointsTotal; i++ )
+      for( auto i = 0; i < pointsTotal; i++ )
       {
          PHB_ITEM pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
          if( HB_IS_ARRAY(pPoint) )
@@ -679,7 +679,7 @@ HB_FUNC( GDIMAGEOPENPOLYGON ) /* original: void gdImageOpenPolygon(gdImagePtr im
       /* Max Points of polygon */
       auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
-      for( int i = 0; i < pointsTotal; i++ )
+      for( auto i = 0; i < pointsTotal; i++ )
       {
          PHB_ITEM pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
          if( HB_IS_ARRAY(pPoint) )
@@ -739,7 +739,7 @@ HB_FUNC( GDIMAGEFILLEDPOLYGON ) /* original: void gdImageFilledPolygon(gdImagePt
       /* Max Points of polygon */
       auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
 
-      for( int i = 0; i < pointsTotal; i++ )
+      for( auto i = 0; i < pointsTotal; i++ )
       {
          PHB_ITEM pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
          if( HB_IS_ARRAY(pPoint) )
@@ -988,7 +988,7 @@ HB_FUNC( GDIMAGESETSTYLE ) /* original: void gdImageSetStyle(gdImagePtr im, int 
       /* Max numbery of Styles */
       auto styles = static_cast<int*>(hb_xgrab(sizeof(int) * styleLength));
 
-      for( int i = 0; i < styleLength; i++ )
+      for( auto i = 0; i < styleLength; i++ )
       {
          styles[i] = hb_arrayGetNI(pStyles, i + 1);
       }
@@ -1459,7 +1459,7 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       char * err;
 
       /* Retrieve rectangle array */
-      for( int i = 0; i < 8; i++ )
+      for( auto i = 0; i < 8; i++ )
       {
          aRect[i] = hb_arrayGetNI(pRect, i + 1);
       }
@@ -1500,7 +1500,7 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       {
          /* Save in array the correct text rectangle dimensions */
          auto pArray = hb_itemArrayNew(8);
-         for( int i = 0; i < 8; i++ )
+         for( auto i = 0; i < 8; i++ )
          {
             hb_itemPutNI(hb_arrayGetItemPtr(pArray, i + 1), aRect[i]);
          }

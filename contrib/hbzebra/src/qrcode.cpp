@@ -355,7 +355,7 @@ static int _qr_check_version_table(void)
    int iL;
    unsigned int uiSumD, uiSumE;
 
-   for( int iV = 1; iV <= 40; iV++ )
+   for( auto iV = 1; iV <= 40; iV++ )
    {
       const QRVERSION * pQRVersion = &s_version[iV - 1];
 
@@ -435,7 +435,7 @@ static int _qr_format_crc( int iLevel, int iMask )
    iRev |= ((iMask & 1) ? 16 : 0) | ((iMask & 2) ? 8 : 0) | ((iMask & 4) ? 4 : 0); /* reverse bits */
 
    iValue = iRev;
-   for( int i = 0; i < 5; i++ )
+   for( auto i = 0; i < 5; i++ )
    {
       if( iValue & 1 )
       {
@@ -1243,7 +1243,7 @@ static int _qr_mask( PHB_BITBUFFER pBits, int iVersion )
 {
    int iPenaltyMin = 0, iMaskMin = 0;
 
-   for( int i = 0; i < 8; i++ )
+   for( auto i = 0; i < 8; i++ )
    {
       int iPenalty;
 
@@ -1325,7 +1325,7 @@ static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLev
    /* _qr_fixed() test code */
    for( i = 0; i < iLen; i++ )
    {
-      for( int j = 0; j < iLen; j++ )
+      for( auto j = 0; j < iLen; j++ )
       {
          hb_bitbuffer_set(pBits, i * iLen + j, _qr_fixed(iVersion, i, j));
       }

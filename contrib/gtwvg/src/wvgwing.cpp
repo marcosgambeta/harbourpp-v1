@@ -401,7 +401,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
          RECT rc{};
          GetClientRect(hWndSB, &rc);
          int width = static_cast<int>(rc.right / (iParts + 1));
-         for( int n = 0; n < iParts; n++ ) {
+         for( auto n = 0; n < iParts; n++ ) {
             ptArray[n] = (width * (n + 1));
          }
          ptArray[iParts] = -1;

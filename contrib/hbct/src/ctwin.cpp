@@ -634,7 +634,7 @@ static int hb_ctw_MaxWindow(PHB_GTCTW pCTW)
 
    int iMaxHandle = 0;
 
-   for( int i = 0; i < pCTW->iOpenWindows; ++i ) {
+   for( auto i = 0; i < pCTW->iOpenWindows; ++i ) {
       if( iMaxHandle < pCTW->windowStack[i] ) {
          iMaxHandle = pCTW->windowStack[i];
       }
@@ -840,7 +840,7 @@ static int hb_ctw_CloseAllWindows(PHB_GTCTW pCTW)
 #endif
 
    if( pCTW->iOpenWindows > 0 ) {
-      for( int i = 0; i < pCTW->iOpenWindows; ++i ) {
+      for( auto i = 0; i < pCTW->iOpenWindows; ++i ) {
          int iWindow = pCTW->windowStack[i];
          PHB_CT_WND pWnd = pCTW->windows[iWindow];
          pCTW->windowStack[i] = 0;
@@ -2318,7 +2318,7 @@ static void hb_ctw_gt_RedrawDiff(PHB_GT pGT)
       long lIndex;
       HB_U32 uiValue;
 
-      for( int i = 0; i < pGT->iHeight; ++i ) {
+      for( auto i = 0; i < pGT->iHeight; ++i ) {
          if( pGT->pLines[i] ) {
             lIndex = static_cast<long>(i) * pGT->iWidth;
             for( l = 0; l < pGT->iWidth; ++l, ++lIndex ) {

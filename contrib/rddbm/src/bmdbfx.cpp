@@ -214,7 +214,7 @@ static void hb_bmSetRdd(HB_USHORT uiRddId)
 
 static const RDDFUNCS * hb_bmGetRdd(HB_USHORT uiRddId)
 {
-   for( int i = 0; i < s_iRddCount; ++i ) {
+   for( auto i = 0; i < s_iRddCount; ++i ) {
       if( hb_rddIsDerivedFrom(uiRddId, s_uiRdds[i]) ) {
          return &(hb_rddGetNode(s_uiRdds[i])->pSuperTable);
       }

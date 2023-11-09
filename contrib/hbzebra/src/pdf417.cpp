@@ -836,7 +836,7 @@ static int _pdf417_encode_text( const char * szCode, int iLen, int * pCW, int iP
 
    iSubMode = SUBMODE_UPPER;
    i1 = i2 = -1;
-   for( int i = 0; i < iLen; i++ )
+   for( auto i = 0; i < iLen; i++ )
    {
 #if 0
       HB_TRACE(HB_TR_DEBUG, ("submode=%d char=%c", iSubMode, szCode[i]));

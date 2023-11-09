@@ -1980,7 +1980,7 @@ HB_FUNC( WVW_DRAWGRIDHORZ )
 
    SelectObject(pWindowData->hdc, s_sApp->gridPen);
 
-   for( int i = 0; i < iRows; i++ ) {
+   for( auto i = 0; i < iRows; i++ ) {
       y = ((usAtRow) * hb_wvw_LineHeight(pWindowData));
 
       y += pWindowData->usTBHeight;
@@ -2047,7 +2047,7 @@ HB_FUNC( WVW_DRAWGRIDVERT )
 
    SelectObject(pWindowData->hdc, s_sApp->gridPen);
 
-   for( int i = 1; i <= iTabs; i++ ) {
+   for( auto i = 1; i <= iTabs; i++ ) {
       usCol = static_cast<USHORT>(hb_parvni(4, i));
       if( hb_gt_wvw_GetMainCoordMode() ) {
          usCol -= pWindowData->usColOfs;
@@ -2219,7 +2219,7 @@ HB_FUNC( WVW_DRAWSTATUSBAR )
 
    iNext = 0;
 
-   for( int i = 0; i < iPanels; i++ ) {
+   for( auto i = 0; i < iPanels; i++ ) {
       usTop    = static_cast<USHORT>(hb_parvni(3, iNext + 1));
       usLeft   = static_cast<USHORT>(hb_parvni(3, iNext + 2));
       usBottom = static_cast<USHORT>(hb_parvni(3, iNext + 3));
