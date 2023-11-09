@@ -90,7 +90,7 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
    cdp->upper = upper = static_cast<HB_UCHAR*>(cdp->buffer) + 0x100;
    cdp->lower = lower = static_cast<HB_UCHAR*>(cdp->buffer) + 0x200;
 
-   for( int i = 0; i < 0x100; ++i ) {
+   for( auto i = 0; i < 0x100; ++i ) {
       flags[i] = 0;
       if( HB_ISDIGIT(i) ) {
          flags[i] |= HB_CDP_DIGIT;
