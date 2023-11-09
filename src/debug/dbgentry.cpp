@@ -294,7 +294,7 @@ static PHB_ITEM hb_dbgSetArray(void)
    iPos = iSet = 1;
    while( iPos <= _SET_COUNT + HB_SET_COUNT ) {
       const char * szName = hb_dbgSetName(static_cast<HB_set_enum>(iSet));
-      PHB_ITEM pSet = hb_arrayGetItemPtr(pArray, iPos++);
+      auto pSet = hb_arrayGetItemPtr(pArray, iPos++);
 
       hb_arrayNew(pSet, HB_DBG_SET_LEN);
       hb_arraySetNI(pSet, HB_DBG_SET_POS, iSet);
@@ -315,7 +315,7 @@ static PHB_ITEM hb_dbgActivateBreakArray(HB_DEBUGINFO * info)
    auto pArray = hb_itemArrayNew(info->nBreakPoints);
 
    for( auto i = 0; i < info->nBreakPoints; i++ ) {
-      PHB_ITEM pBreak = hb_arrayGetItemPtr(pArray, i + 1);
+      auto pBreak = hb_arrayGetItemPtr(pArray, i + 1);
 
       hb_arrayNew(pBreak, HB_DBG_BP_LEN);
       if( !info->aBreak[i].szFunction ) {
@@ -334,7 +334,8 @@ static PHB_ITEM hb_dbgActivateWatchArray(HB_DEBUGINFO * info)
    auto pArray = hb_itemArrayNew(info->nWatchPoints);
 
    for( auto i = 0; i < info->nWatchPoints; i++ ) {
-      PHB_ITEM pWatch = hb_arrayGetItemPtr(pArray, i + 1), xValue;
+      auto pWatch = hb_arrayGetItemPtr(pArray, i + 1);
+      PHB_ITEM xValue;
       HB_BOOL fValid;
 
       for( j = 0; j < info->nTracePoints; j++ ) {
@@ -359,7 +360,7 @@ static PHB_ITEM hb_dbgActivateVarArray(PHB_ITEM pArray, int nVars, HB_VARINFO * 
 {
    hb_arrayNew(pArray, nVars);
    for( auto i = 0; i < nVars; i++ ) {
-      PHB_ITEM aVar = hb_arrayGetItemPtr(pArray, i + 1);
+      auto aVar = hb_arrayGetItemPtr(pArray, i + 1);
 
       hb_arrayNew(aVar, HB_DBG_VAR_LEN);
 
@@ -382,7 +383,7 @@ static PHB_ITEM hb_dbgActivateModuleArray(void)
    auto pArray = hb_itemArrayNew(s_common.nModules);
 
    for( auto i = 0; i < s_common.nModules; i++ ) {
-      PHB_ITEM pModule = hb_arrayGetItemPtr(pArray, i + 1);
+      auto pModule = hb_arrayGetItemPtr(pArray, i + 1);
 
       hb_arrayNew(pModule, HB_DBG_MOD_LEN);
       hb_arraySetC(pModule, HB_DBG_MOD_NAME, s_common.aModules[i].szModule);
@@ -402,9 +403,8 @@ static PHB_ITEM hb_dbgActivateCallStackArray(HB_DEBUGINFO * info)
 
    for( auto i = 0; i < info->nCallStackLen; i++ ) {
       HB_CALLSTACKINFO * pEntry = &info->aCallStack[i];
-      PHB_ITEM aEntry;
 
-      aEntry = hb_arrayGetItemPtr(aCallStack, info->nCallStackLen - i);
+      auto aEntry = hb_arrayGetItemPtr(aCallStack, info->nCallStackLen - i);
       hb_arrayNew(aEntry, HB_DBG_CS_LEN);
 
       hb_arraySetC(aEntry, HB_DBG_CS_MODULE, pEntry->szModule);
@@ -790,13 +790,13 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
       nLinesLen = hb_itemSize(s_common.pStopLines);
 
       for( i = 1; i <= nItemLen; i++ ) {
-         PHB_ITEM pEntry = hb_arrayGetItemPtr(pItem, i);
+         auto pEntry = hb_arrayGetItemPtr(pItem, i);
          const char * szModule = hb_arrayGetCPtr(pEntry, 1);
          bool bFound = false;
 
          szModule = hb_dbgStripModuleName(szModule);
          for( j = 1; j <= nLinesLen; j++ ) {
-            PHB_ITEM pLines = hb_arrayGetItemPtr(s_common.pStopLines, j);
+            auto pLines = hb_arrayGetItemPtr(s_common.pStopLines, j);
 
             if( FILENAME_EQUAL(hb_arrayGetCPtr(pLines, 1), szModule) ) {
                /* Merge stopline info */
@@ -837,7 +837,7 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
    }
    nLinesLen = hb_itemSize(s_common.pStopLines);
    for( i = 1; i <= nLinesLen; i++ ) {
-      PHB_ITEM pEntry = hb_arrayGetItemPtr(s_common.pStopLines, i);
+      auto pEntry = hb_arrayGetItemPtr(s_common.pStopLines, i);
       const char * szModule = hb_arrayGetCPtr(pEntry, 1);
 
       if( szModule ) {
@@ -1057,8 +1057,8 @@ static PHB_ITEM hb_dbgEval(HB_DEBUGINFO * info, HB_WATCHPOINT * watch, HB_BOOL *
       info->bInside = bInside;
 
       for( auto i = 0; i < watch->nVars; i++ ) {
-         PHB_ITEM xOldValue = hb_arrayGetItemPtr(aVars, i + 1);
-         PHB_ITEM xNewValue = hb_arrayGetItemPtr(aNewVars, i + 1);
+         auto xOldValue = hb_arrayGetItemPtr(aVars, i + 1);
+         auto xNewValue = hb_arrayGetItemPtr(aNewVars, i + 1);
 
          if( !hb_dbgEqual(xOldValue, xNewValue) ) {
             hb_dbgVarSet(&watch->aScopes[i], xNewValue);
@@ -1471,7 +1471,7 @@ HB_BOOL hb_dbgIsValidStopLine(void * handle, const char * szModule, int nLine)
       HB_DBGCOMMON_LOCK();
       nModules = hb_itemSize(s_common.pStopLines);
       for( HB_ISIZ i = 1; i <= nModules; i++ ) {
-         PHB_ITEM pEntry = hb_arrayGetItemPtr(s_common.pStopLines, i);
+         auto pEntry = hb_arrayGetItemPtr(s_common.pStopLines, i);
 
          if( FILENAME_EQUAL(hb_arrayGetCPtr(pEntry, 1), szModule) ) {
             int nMin = hb_arrayGetNL(pEntry, 2);
