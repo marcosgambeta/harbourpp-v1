@@ -3403,7 +3403,7 @@ static HB_SIZE hb_socketArrayFindInetAddr(const char * szAddr, PHB_ITEM pArray, 
    HB_SIZE nLen = hb_arrayLen(pArray);
 
    for( ; nPos <= nLen; ++nPos ) {
-      PHB_ITEM pIfItem = hb_arrayGetItemPtr(pArray, nPos);
+      auto pIfItem = hb_arrayGetItemPtr(pArray, nPos);
 
       if( strcmp(hb_arrayGetCPtr(pIfItem, HB_SOCKET_IFINFO_ADDR), szAddr) == 0 ) {
          return nPos;
@@ -3720,7 +3720,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
                      HB_SIZE nPos = 0;
 
                      while( (nPos = hb_socketArrayFindInetAddr(pIpAddress->IpAddress.String, pArray, nPos + 1)) != 0 ) {
-                        PHB_ITEM pIfItem = hb_arrayGetItemPtr(pArray, nPos);
+                        auto pIfItem = hb_arrayGetItemPtr(pArray, nPos);
                         if( !hb_arrayGetCPtr(pIfItem, HB_SOCKET_IFINFO_HWADDR)[0] ) {
                            char hwaddr[3 * MAX_ADAPTER_ADDRESS_LENGTH];
                            UINT count, size = 0;

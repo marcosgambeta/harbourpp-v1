@@ -276,7 +276,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
          _hb_jsonCtxAdd(pCtx, "[", 1);
 
          for( HB_SIZE nIndex = 1; nIndex <= nLen; nIndex++ ) {
-            PHB_ITEM pItem = hb_arrayGetItemPtr(pValue, nIndex);
+            auto pItem = hb_arrayGetItemPtr(pValue, nIndex);
 
             if( nIndex > 1 ) {
                _hb_jsonCtxAdd(pCtx, ",", 1);

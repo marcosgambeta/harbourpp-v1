@@ -313,7 +313,7 @@ HB_FUNC( HB_SETKEYSAVE )
          nItemCount = hb_arrayLen(pParam);
 
          for( nItem = 1; nItem <= nItemCount; nItem++ ) {
-            PHB_ITEM itmKeyElements = hb_arrayGetItemPtr(pParam, nItem);
+            auto itmKeyElements = hb_arrayGetItemPtr(pParam, nItem);
 
             sk_add(&sk_data->sk_list, false, hb_arrayGetNI(itmKeyElements, 1), hb_arrayGetItemPtr(itmKeyElements, 2), hb_arrayGetItemPtr(itmKeyElements, 3));
          }

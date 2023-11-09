@@ -1183,7 +1183,7 @@ HB_FOFFSET hb_fileSizeGet(const char * pszFileName, HB_BOOL bUseDirEntry)
          PHB_ITEM pDir = hb_fileDirectory(pszFileName, "HS");
 
          if( pDir ) {
-            PHB_ITEM pEntry = hb_arrayGetItemPtr(pDir, 1);
+            auto pEntry = hb_arrayGetItemPtr(pDir, 1);
 
             if( pEntry ) {
                nSize = hb_arrayGetNInt(pEntry, F_SIZE);

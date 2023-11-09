@@ -638,7 +638,7 @@ HB_FUNC( IOUSR_REGISTER )
       }
 
       for( nAt = 1; nAt <= nMethods; ++nAt ) {
-         PHB_ITEM pSymItm = hb_arrayGetItemPtr(pMthItm, nAt);
+         auto pSymItm = hb_arrayGetItemPtr(pMthItm, nAt);
 
          if( !HB_IS_NIL(pSymItm) && !HB_IS_SYMBOL(pSymItm) ) {
             break;
