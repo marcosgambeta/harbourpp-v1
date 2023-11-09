@@ -450,7 +450,7 @@ char * hb_verPlatform(void)
       /* Add service pack/other info */
 
       if( hb_iswin2k() ) {
-         for( int tmp = 5; tmp > 0; --tmp ) {
+         for( auto tmp = 5; tmp > 0; --tmp ) {
             if( hb_iswinsp(tmp, true) ) {
                char szServicePack[8];
                hb_snprintf(szServicePack, sizeof(szServicePack), " SP%u", tmp);

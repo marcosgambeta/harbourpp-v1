@@ -305,7 +305,7 @@ static v_param * va_arg_get(int iArg, v_paramlst * plst, int iType)
 
 static void va_arg_fill(v_paramlst * plst, va_list va)
 {
-   for( int iArg = 0; iArg < plst->maxarg; ++iArg ) {
+   for( auto iArg = 0; iArg < plst->maxarg; ++iArg ) {
       switch( plst->arglst[iArg].id ) {
          case v_x_uint:      plst->arglst[iArg].value.as_x_uint = va_arg(va, _x_uint);           break;
          case v_x_long:      plst->arglst[iArg].value.as_x_long = va_arg(va, _x_long);           break;
