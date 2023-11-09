@@ -4751,7 +4751,7 @@ static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
 
       nPos = 0;
       while( (pValue = hb_arrayGetItemPtr(pArray, ++nPos)) != nullptr ) {
-         const char * pszMethod = hb_arrayGetCPtr(pValue, 1);
+         auto pszMethod = hb_arrayGetCPtr(pValue, 1);
          PHB_DYNS pVarSym = hb_dynsymFind(pszMethod);
          auto pNewVal = hb_arrayGetItemPtr(pValue, 2);
          HB_USHORT uiSuper = uiClass;
