@@ -44,8 +44,8 @@
 sqlite3.c
 
 # ORIGIN http://www.sqlite.org/
-# VER    3.43.2
-# URL    https://www.sqlite.org/2023/sqlite-amalgamation-3430200.zip
+# VER    3.44.0
+# URL    https://www.sqlite.org/2023/sqlite-amalgamation-3440000.zip
 # DIFF   sqlite3.diff ( ignored - using original source code )
 #
 # MAP    sqlite3.c
