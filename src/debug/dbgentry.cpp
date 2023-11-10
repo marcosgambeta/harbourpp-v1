@@ -1642,7 +1642,7 @@ static PHB_ITEM hb_dbgVarGet(HB_VARINFO * scope)
       case 'S':
          return hb_dbg_vmVarSGet(scope->frame.ptr, scope->nIndex);
       case 'M': {
-         PHB_DYNS pDyn = hb_dynsymFind(scope->szName);
+         auto pDyn = hb_dynsymFind(scope->szName);
          if( pDyn != nullptr ) {
             PHB_ITEM pItem = hb_memvarGetValueBySym(pDyn);
             if( !pItem ) {
