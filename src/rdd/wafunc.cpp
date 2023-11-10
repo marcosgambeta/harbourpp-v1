@@ -202,14 +202,13 @@ HB_USHORT hb_rddFieldIndex(AREAP pArea, const char * szName)
 
       if( nLen <= HB_SYMBOL_NAME_LEN ) {
          char szFieldName[HB_SYMBOL_NAME_LEN + 1];
-         PHB_DYNS pDynSym;
 
          szFieldName[nLen] = '\0';
          while( nLen-- ) {
             szFieldName[nLen] = HB_TOUPPER(szName[nLen]);
          }
 
-         pDynSym = hb_dynsymFind(szFieldName);
+         auto pDynSym = hb_dynsymFind(szFieldName);
          if( pDynSym ) {
             LPFIELD pField = pArea->lpFields;
             HB_USHORT uiCount = 0;
