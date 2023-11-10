@@ -3335,7 +3335,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       case HB_GTI_MAXIMIZED:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bMaximized);
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL ) {
-            if( hb_itemGetL(pInfo->pNewVal) != pWVT->bMaximized && !pWVT->bFullScreen ) {
+            if( static_cast<bool>(hb_itemGetL(pInfo->pNewVal)) != pWVT->bMaximized && !pWVT->bFullScreen ) {
                if( !pWVT->hWnd ) {
                   pWVT->bMaximized = hb_itemGetL(pInfo->pNewVal);
                } else if( pWVT->bMaximized ) {
@@ -3352,7 +3352,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       case HB_GTI_ISFULLSCREEN:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bFullScreen);
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL ) {
-            if( hb_itemGetL(pInfo->pNewVal) != pWVT->bFullScreen ) {
+            if( static_cast<bool>(hb_itemGetL(pInfo->pNewVal)) != pWVT->bFullScreen ) {
                if( pWVT->hWnd ) {
                   hb_gt_wvt_FullScreen(pGT);
                } else {
