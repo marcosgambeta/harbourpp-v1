@@ -194,8 +194,8 @@ HB_FUNC( WIN_DRAWBITMAP )
              [vszakats] */
    if( hbwin_bitmapIsSupported(hDC, iType, pbmfh, nSize) == 0 )
    {
-      int iWidth  = hb_parni(7);
-      int iHeight = hb_parni(8);
+      auto iWidth  = hb_parni(7);
+      auto iHeight = hb_parni(8);
 
       if( iType == HB_WIN_BITMAP_BMP )
       {

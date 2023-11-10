@@ -408,7 +408,7 @@ HB_FUNC( SETATLIKE )
    /* set new mode if first parameter is CT_SETATLIKE_EXACT (==0)
       or CT_SETATLIKE_WILDCARD (==1) */
    if( HB_ISNUM(1) ) {
-      int iNewMode = hb_parni(1);
+      auto iNewMode = hb_parni(1);
 
       if( iNewMode == CT_SETATLIKE_EXACT || iNewMode == CT_SETATLIKE_WILDCARD ) {
          ct_setatlike(iNewMode);

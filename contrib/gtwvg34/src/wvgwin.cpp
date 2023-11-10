@@ -187,7 +187,7 @@ HB_FUNC( WVG_TREEVIEW_ISEXPANDED )
 HB_FUNC( WVG_LBGETTEXT )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   int iIndex = hb_parni(2);
+   auto iIndex = hb_parni(2);
    int iLen = ListBox_GetTextLen(hWnd, iIndex);
    auto szText = static_cast<LPTSTR>(hb_xgrab((iLen + 1) * sizeof(TCHAR)));
 

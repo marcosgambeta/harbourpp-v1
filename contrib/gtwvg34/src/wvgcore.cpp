@@ -1148,11 +1148,11 @@ HB_FUNC( WVT_DRAWLINE )
       int iBottom = hb_parvni(11, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
       int iRight  = hb_parvni(11, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      int      iOrient = hb_parni(5);
-      int      iFormat = hb_parni(6);
-      int      iAlign  = hb_parni(7);
-      int      iStyle  = hb_parni(8);
-      int      iThick  = hb_parni(9);
+      auto iOrient = hb_parni(5);
+      auto iFormat = hb_parni(6);
+      auto iAlign  = hb_parni(7);
+      auto iStyle  = hb_parni(8);
+      auto iThick  = hb_parni(9);
       COLORREF cr      = hbwapi_par_COLORREF(10);
 
       int iOffset;
@@ -1329,7 +1329,6 @@ HB_FUNC( WVT_DRAWLINEEX )
       if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)) ) {
          POINT xy;
          int iTop, iLeft, iBottom, iRight, iOffset;
-         int iOrient, iFormat, iAlign;
          int x, y;
          HPEN hPen;
 
@@ -1342,9 +1341,9 @@ HB_FUNC( WVT_DRAWLINEEX )
          iRight = xy.x - 1 + hb_parvni(9, 4);
 
          /* Resolve Parameters */
-         iOrient = hb_parni(5);
-         iFormat = hb_parni(6);
-         iAlign  = hb_parni(7);
+         auto iOrient = hb_parni(5);
+         auto iFormat = hb_parni(6);
+         auto iAlign  = hb_parni(7);
 
          x = iLeft;
          y = iTop;
@@ -1565,8 +1564,8 @@ HB_FUNC( WVT_DRAWROUNDRECT )
       int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
       int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      int iHt = hb_parni(6);
-      int iWd = hb_parni(7);
+      auto iHt = hb_parni(6);
+      auto iWd = hb_parni(7);
 
       SelectObject(_s->hdc, _s->currentBrush);
       SelectObject(_s->hdc, _s->currentPen);
@@ -1661,8 +1660,8 @@ HB_FUNC( WVT_DRAWGRIDHORZ )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      int iAtRow = hb_parni(1);
-      int iRows  = hb_parni(4);
+      auto iAtRow = hb_parni(1);
+      auto iRows  = hb_parni(4);
       int i, y;
 
       int iLeft  = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
@@ -1705,7 +1704,7 @@ HB_FUNC( WVT_DRAWGRIDVERT )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      int iTabs = hb_parni(4);
+      auto iTabs = hb_parni(4);
 
       if( iTabs ) {
          int i, x;
@@ -1763,7 +1762,7 @@ HB_FUNC( WVT_DRAWBUTTON )
       HBRUSH   hBrush;
 
       bool     bImage    = HB_ISNUM(6) || HB_ISCHAR(6);
-      int      iFormat   = hb_parni(7);
+      auto iFormat = hb_parni(7);
       COLORREF textColor = hbwapi_par_COLORREF_def(8, _s->COLORS[0]);
       COLORREF bkColor   = hbwapi_par_COLORREF_def(9, _s->COLORS[7]);
 
@@ -1888,7 +1887,7 @@ HB_FUNC( WVT_DRAWSTATUSBAR )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      int   iPanels = hb_parni(1);
+      auto iPanels = hb_parni(1);
       int   i, iNext;
       int   iTop, iLeft, iBottom, iRight;
       POINT xy;
@@ -2388,8 +2387,8 @@ HB_FUNC( WVT_DRAWPROGRESSBAR )
       int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
       int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      int iPercent   = hb_parni(6);
-      int iDirection = hb_parni(11);
+      auto iPercent   = hb_parni(6);
+      auto iDirection = hb_parni(11);
 
       int iBarUpto;
       RECT rc = { 0, 0, 0, 0 };

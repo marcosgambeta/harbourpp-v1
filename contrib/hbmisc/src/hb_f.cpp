@@ -353,7 +353,7 @@ HB_FUNC( HB_FSELECT )
 
    if( HB_ISNUM(1) )
    {
-      int area = hb_parni(1);
+      auto area = hb_parni(1);
 
       if( area >= 1 && area <= TEXT_WORKAREAS )
          ft_text->area = area - 1;

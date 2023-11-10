@@ -831,7 +831,7 @@ HB_FUNC( HPDF_PAGE_SETMITERLIMIT )
 HB_FUNC( HPDF_PAGE_SETDASH )
 {
    HPDF_DashMode dash;
-   int nPtns = hb_parni(3);
+   auto nPtns = hb_parni(3);
 
    for( auto i = 0; i < nPtns; i++ )
    {

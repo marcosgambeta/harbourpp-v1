@@ -182,7 +182,7 @@ HB_FUNC( ED_NEW )
    auto pEd = static_cast<PHB_EDITOR>(hb_xgrab(sizeof(HB_EDITOR)));
 
    HB_ISIZ ll;
-   int     tab = hb_parni(2);
+   auto tab = hb_parni(2);
    HB_ISIZ bufferSize;
 
    ll = hb_parns(1);
@@ -507,16 +507,14 @@ HB_FUNC( ED_CONFIG )
       int     nwys;
       HB_ISIZ j;
 
-      int top, left, bottom, right;
-      int nRow, nCol;
       int i;
 
-      top    = hb_parni(2);
-      left   = hb_parni(3);
-      bottom = hb_parni(4);
-      right  = hb_parni(5);
-      nRow   = hb_parni(6);
-      nCol   = hb_parni(7);
+      auto top    = hb_parni(2);
+      auto left   = hb_parni(3);
+      auto bottom = hb_parni(4);
+      auto right  = hb_parni(5);
+      auto nRow   = hb_parni(6);
+      auto nCol   = hb_parni(7);
 
       szer = pEd->right - pEd->left + 1;
       wys  = pEd->bottom - pEd->top + 1;

@@ -294,7 +294,7 @@ HB_FUNC( WVT_SETTOOLTIPTITLE )
       if( HB_ISCHAR(2) ) {
          void * hText;
 
-         int iIcon = hb_parni(1);
+         auto iIcon = hb_parni(1);
          if( iIcon > 3 ) {
             iIcon = 0;
          }
@@ -814,7 +814,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
          PHB_ITEM pFunc = nullptr;
          PHB_DYNS pExecSym;
          int iType = 0;
-         int iResource = hb_parni(4);
+         auto iResource = hb_parni(4);
 
          if( HB_IS_EVALITEM(pFirst) ) {
             /* pFunc is pointing to stored code block (later) */
@@ -900,7 +900,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
          auto pFirst = hb_param(3, Harbour::Item::ANY);
          PHB_ITEM pFunc = nullptr;
          PHB_DYNS pExecSym;
-         int iResource = hb_parni(4);
+         auto iResource = hb_parni(4);
          HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : _s->hWnd;
 
          if( HB_IS_EVALITEM(pFirst) ) {

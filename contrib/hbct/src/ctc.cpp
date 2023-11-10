@@ -192,7 +192,7 @@ HB_FUNC( CSETARGERR )
    hb_retni(ct_getargerrormode());
 
    if( HB_ISNUM(1) ) {
-      int iNewMode = hb_parni(1);
+      auto iNewMode = hb_parni(1);
 
       if(    iNewMode == CT_ARGERR_WHOCARES
           || iNewMode == CT_ARGERR_WARNING

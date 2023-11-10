@@ -229,7 +229,7 @@ HB_FUNC( CLEARBIT )
       int i = 1;
 
       while( --iPCount ) {
-         int iBit = hb_parni(++i);
+         auto iBit = hb_parni(++i);
          if( iBit < 1 || iBit > 64 ) {
             break;
          }
@@ -253,7 +253,7 @@ HB_FUNC( SETBIT )
       int i = 1;
 
       while( --iPCount ) {
-         int iBit = hb_parni(++i);
+         auto iBit = hb_parni(++i);
          if( iBit < 1 || iBit > 64 ) {
             break;
          }
@@ -273,7 +273,7 @@ HB_FUNC( ISBIT )
    HB_MAXINT lValue;
 
    if( ct_numParam(1, &lValue) ) {
-      int iBit = hb_parni(2);
+      auto iBit = hb_parni(2);
 
       if( iBit ) {
          --iBit;

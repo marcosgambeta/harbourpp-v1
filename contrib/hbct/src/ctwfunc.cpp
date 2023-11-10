@@ -93,7 +93,7 @@ HB_FUNC( SETCLEARB )
    HB_USHORT usNew;
 
    if( HB_ISNUM(1) ) {
-      int iChar = hb_parni(1);
+      auto iChar = hb_parni(1);
       PHB_CODEPAGE cdp = hb_vmCDP();
       if( !HB_CDP_ISCHARUNI(cdp) ) {
          iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
@@ -221,7 +221,7 @@ HB_FUNC( WBOX )
       }
       szBoxBuf[nSize] = 0;
    } else {
-      int iFrame = hb_parni(1);
+      auto iFrame = hb_parni(1);
 
       if( iFrame < 0 || iFrame > 15 ) {
          iFrame = 0;
@@ -334,7 +334,7 @@ HB_FUNC( WMOVE )
 HB_FUNC( CTWLASTKEY )
 {
    if( HB_ISNUM(1) ) {
-      int iNewKey = hb_parni(1);
+      auto iNewKey = hb_parni(1);
       hb_retni(hb_ctwLastKey(&iNewKey));
    } else {
       hb_retni(hb_ctwLastKey(nullptr));

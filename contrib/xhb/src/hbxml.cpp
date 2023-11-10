@@ -2058,7 +2058,7 @@ HB_FUNC( HBXML_DATAREAD )
 {
    auto pParam = hb_param(2, Harbour::Item::ANY);
    auto pDoc = hb_param(1, Harbour::Item::OBJECT);
-   int        iStyle = hb_parni(3);
+   auto iStyle = hb_parni(3);
    MXML_REFIL refil;
    char       buffer[512], * buf;
    HB_SIZE    nLen;

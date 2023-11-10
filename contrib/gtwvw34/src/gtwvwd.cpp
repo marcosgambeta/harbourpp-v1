@@ -6251,7 +6251,7 @@ HB_FUNC( WVW_ADDROWS )
    PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_win ) {
-      int     iRows = hb_parni(2);
+      auto iRows = hb_parni(2);
       int     height, width;
       HB_SIZE nNumChars;
 
@@ -6414,10 +6414,10 @@ HB_FUNC( WVW_KEYBOARD )
 
 void hb_gt_wvw_GetCoord(PWVW_WIN wvw_win, int iBase, int iOffs, int * piTop, int * piLeft, int * piBottom, int * piRight)
 {
-   int iTop    = hb_parni(iBase);
-   int iLeft   = hb_parni(iBase + 1);
-   int iBottom = hb_parni(iBase + 2);
-   int iRight  = hb_parni(iBase + 3);
+   auto iTop    = hb_parni(iBase);
+   auto iLeft   = hb_parni(iBase + 1);
+   auto iBottom = hb_parni(iBase + 2);
+   auto iRight  = hb_parni(iBase + 3);
 
    int iOffTop;
    int iOffLeft;

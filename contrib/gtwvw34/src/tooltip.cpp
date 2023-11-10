@@ -88,10 +88,10 @@ HB_FUNC( WVW_SETTOOLTIP )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win && wvw_win->fToolTipActive ) {
-      int iTop    = hb_parni(2);
-      int iLeft   = hb_parni(3);
-      int iBottom = hb_parni(4);
-      int iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
@@ -227,7 +227,7 @@ HB_FUNC( WVW_SETTOOLTIPTITLE )
    if( wvw_win && HB_ISCHAR(3) ) {
       void * hText;
 
-      int iIcon = hb_parni(2);
+      auto iIcon = hb_parni(2);
       if( iIcon > 3 ) {
          iIcon = 0;
       }

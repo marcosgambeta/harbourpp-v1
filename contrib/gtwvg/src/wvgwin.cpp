@@ -314,7 +314,7 @@ HB_FUNC( WVG_LOADIMAGE )
    HANDLE  hImage = 0;
    void *  hBuffer;
    LPCTSTR lpBuffer = HB_PARSTR(1, &hBuffer, nullptr);
-   int     iSource  = hb_parni(2);
+   auto iSource = hb_parni(2);
 
    switch( iSource ) {
       case 0:   /* Image from resource by numeric id */
@@ -532,8 +532,8 @@ HB_FUNC( WVG_TRACKPOPUPMENU )
 {
    HMENU hMenu  = reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1)));
    UINT  uFlags = hb_parnldef(2, TPM_CENTERALIGN | TPM_RETURNCMD);
-   int   x      = hb_parni(3);
-   int   y      = hb_parni(4);
+   auto x = hb_parni(3);
+   auto y = hb_parni(4);
    HWND  hWnd   = HB_ISNUM(5) ? reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))) : GetActiveWindow();
 
    POINT xy{};

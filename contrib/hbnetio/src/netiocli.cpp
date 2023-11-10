@@ -1176,8 +1176,8 @@ HB_FUNC( NETIO_DECODE )
    auto pszFullName = hb_parc(1);
    const char * pszFile;
    auto pszServer = hb_parc(2);
-   int iPort = hb_parni(3);
-   int iTimeOut = hb_parni(4);
+   auto iPort = hb_parni(3);
+   auto iTimeOut = hb_parni(4);
    auto pszPasswd = hb_parc(5);
    int iPassLen = static_cast<int>(hb_parclen(5));
    int iLevel = hb_parnidef(6, HB_ZLIB_COMPRESSION_DISABLE);
@@ -1227,8 +1227,8 @@ HB_FUNC( NETIO_CONNECT )
 {
    auto pszServer = hb_parc(1);
    auto pszPasswd = hb_parc(4);
-   int iPort = hb_parni(2);
-   int iTimeOut = hb_parni(3);
+   auto iPort = hb_parni(2);
+   auto iTimeOut = hb_parni(3);
    int iPassLen = static_cast<int>(hb_parclen(4));
    int iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
    int iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
@@ -1303,8 +1303,8 @@ HB_FUNC( NETIO_GETCONNECTION )
 {
    auto pszServer = hb_parc(1);
    auto pszPasswd = hb_parc(4);
-   int iPort = hb_parni(2);
-   int iTimeOut = hb_parni(3);
+   auto iPort = hb_parni(2);
+   auto iTimeOut = hb_parni(3);
    int iPassLen = static_cast<int>(hb_parclen(4));
    int iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
    int iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
@@ -1331,7 +1331,7 @@ HB_FUNC( NETIO_DISCONNECT )
 {
    auto pszServer = hb_parc(1);
    char * pszIpAddres;
-   int iPort = hb_parni(2);
+   auto iPort = hb_parni(2);
    bool fDisconnected = false;
 
    s_fileGetConnParam(&pszServer, &iPort, nullptr, nullptr, nullptr);
@@ -1645,7 +1645,7 @@ static PHB_CONCLI s_netio_getConn(void)
    if( !conn )
    {
       auto pszServer = hb_parc(2);
-      int iPort = hb_parni(3);
+      auto iPort = hb_parni(3);
 
       s_fileGetConnParam(&pszServer, &iPort, nullptr, nullptr, nullptr);
       char * pszIpAddres = hb_socketResolveAddr(pszServer, HB_SOCKET_AF_INET);
@@ -1666,7 +1666,7 @@ static PHB_CONCLI s_netio_getConn(void)
  */
 HB_FUNC( NETIO_CLOSESTREAM )
 {
-   int iStreamID = hb_parni(1);
+   auto iStreamID = hb_parni(1);
    bool fResult = false;
 
    if( iStreamID )
@@ -1702,7 +1702,7 @@ HB_FUNC( NETIO_CLOSESTREAM )
  */
 HB_FUNC( NETIO_GETDATA )
 {
-   int iStreamID = hb_parni(1);
+   auto iStreamID = hb_parni(1);
 
    if( iStreamID )
    {

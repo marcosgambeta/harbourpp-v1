@@ -148,9 +148,9 @@ HB_FUNC( WIN_TEXTOUT )
 
       if( nLen > 0 )
       {
-         int iRow = hb_parni(2);
-         int iCol = hb_parni(3);
-         int iWidth = hb_parni(6);  /* defaults to 0 */
+         auto iRow = hb_parni(2);
+         auto iCol = hb_parni(3);
+         auto iWidth = hb_parni(6);  /* defaults to 0 */
 
          if( HB_ISNUM(7) )
          {
@@ -274,7 +274,7 @@ HB_FUNC( WIN_CREATEFONT )
    {
       int iHeight;
       int iWidth;
-      int iWeight = hb_parni(6);
+      auto iWeight = hb_parni(6);
 
       void * hfFaceName;
       LPCTSTR pfFaceName;
@@ -701,12 +701,12 @@ HB_FUNC( WIN_LINETO )
 HB_FUNC( WIN_RECTANGLE )
 {
    HDC hDC     = hbwapi_par_HDC(1);
-   int x1      = hb_parni(2);
-   int y1      = hb_parni(3);
-   int x2      = hb_parni(4);
-   int y2      = hb_parni(5);
-   int iWidth  = hb_parni(6);
-   int iHeight = hb_parni(7);
+   auto x1      = hb_parni(2);
+   auto y1      = hb_parni(3);
+   auto x2      = hb_parni(4);
+   auto y2      = hb_parni(5);
+   auto iWidth  = hb_parni(6);
+   auto iHeight = hb_parni(7);
 
    if( iWidth && iHeight )
    {

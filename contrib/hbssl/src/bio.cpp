@@ -636,7 +636,7 @@ HB_FUNC( BIO_WRITE )
       int size = static_cast<int>(hb_parclen(2));
 
       if( HB_ISNUM(3) ) {
-         int towrite = hb_parni(3);
+         auto towrite = hb_parni(3);
          if( towrite >= 0 && towrite < size ) {
             size = towrite;
          }
@@ -732,7 +732,7 @@ HB_FUNC( BIO_SET_CONN_INT_PORT )
    BIO * bio = hb_BIO_par(1);
 
    if( bio != nullptr && HB_ISNUM(2) ) {
-      int port = hb_parni(2);
+      auto port = hb_parni(2);
       hb_retnl(BIO_set_conn_port(bio, &port));
    } else {
       hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

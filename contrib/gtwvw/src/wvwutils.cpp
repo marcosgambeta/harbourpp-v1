@@ -238,7 +238,7 @@ HB_FUNC( WIN_LOADICON )
 HB_FUNC( WIN_LOADIMAGE )
 {
    HBITMAP hImage  = nullptr;
-   int     iSource = hb_parni(2);
+   auto iSource = hb_parni(2);
 
    switch( iSource ) {
       case 0:
@@ -1066,7 +1066,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
    HWND hWndCtrl = reinterpret_cast<HWND>(HB_PARHANDLE(2));
    /* HWND hToolTip = ( HWND ) hb_parnl(5) ; */
    auto pArray = hb_param(3, Harbour::Item::ARRAY);
-   int        iButtons = hb_parni(4);
+   auto iButtons = hb_parni(4);
    auto tb = static_cast<struct _TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
    PHB_ITEM   pTemp;
    /* BOOL bSystem; */
@@ -1125,7 +1125,7 @@ HB_FUNC( SETBITMAPRESOURCEID )
    UINT        uiBitmap    = static_cast<UINT>(hb_parni(4));
    HWND        hWndToolbar = pWindowData->hToolBar;
    int         iNewBitmap;
-   int         iBitmapType = hb_parni(2);
+   auto iBitmapType = hb_parni(2);
    int         iOffset;
 
    switch( iBitmapType ) {
@@ -1339,7 +1339,7 @@ HB_FUNC( WVW_SETPOINTER )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   int        iCursor     = hb_parni(2);
+   auto iCursor = hb_parni(2);
    HCURSOR    hCursor;
 
    switch( iCursor ) {
@@ -1794,7 +1794,7 @@ HB_FUNC( WVW_DLGSETICON )
 
 HB_FUNC( WVW_SETPEN )
 {
-   int        iPenWidth, iPenStyle;
+   int        iPenWidth;
    COLORREF   crColor;
    HPEN       hPen;
    WVW_DATA * p = hb_getWvwData();
@@ -1803,7 +1803,7 @@ HB_FUNC( WVW_SETPEN )
       hb_retl(false);
    }
 
-   iPenStyle = hb_parni(1);
+   auto iPenStyle = hb_parni(1);
    iPenWidth = HB_ISNIL(2) ? 0 : hb_parni(2);
    crColor   = HB_ISNIL(3) ? RGB(0, 0, 0) : static_cast<COLORREF>(hb_parnl(3));
 
@@ -2014,7 +2014,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
    HWND       hDlg = nullptr;
    int        iIndex;
    int        iType     = 0;
-   int        iResource = hb_parni(4);
+   auto iResource = hb_parni(4);
 
    /* check if we still have room for a new dialog */
 
@@ -2109,7 +2109,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
    PHB_DYNS   pExecSym;
    WVW_DATA * p = hb_getWvwData();
    int        iIndex;
-   int        iResource = hb_parni(4);
+   auto iResource = hb_parni(4);
    int        iResult   = 0;
    HWND       hParent   = HB_ISNIL(5) ? p->s_pWindows[0]->hWnd : reinterpret_cast<HWND>(HB_PARHANDLE(5));
 

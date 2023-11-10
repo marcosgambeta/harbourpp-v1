@@ -145,7 +145,7 @@ HB_FUNC( WVG_CLEARGUIOBJECTS )
 HB_FUNC( WVG_SETGOBJSTATE )
 {
    PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
-   int iHandle = hb_parni(1);
+   auto iHandle = hb_parni(1);
    int iOState = 0;
 
    if( pWVT && iHandle && pWVT->gObjs ) {
@@ -156,7 +156,7 @@ HB_FUNC( WVG_SETGOBJSTATE )
             iOState = gObj->iState;
 
             if( HB_ISNUM(2) ) {
-               int iState = hb_parni(2);
+               auto iState = hb_parni(2);
                if( iOState != iState && iState >= GOBJ_OBJSTATE_ENABLED && iState <= GOBJ_OBJSTATE_HILIGHTED ) {
                   gObj->iState = iState;
                   hb_wvg_RefreshRect(pWVT, gObj);
@@ -176,7 +176,7 @@ wvg_SetGObjData(hObj, nGobjDataType, xData, xData1) --> lSuccess
 HB_FUNC( WVG_SETGOBJDATA )
 {
    PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
-   int iHandle = hb_parni(1);
+   auto iHandle = hb_parni(1);
    bool bSuccess = false;
 
    if( pWVT && iHandle ) {
@@ -184,7 +184,7 @@ HB_FUNC( WVG_SETGOBJDATA )
 
       while( gObj ) {
          if( iHandle == gObj->iHandle ) {
-            int iDataType = hb_parni(2);
+            auto iDataType = hb_parni(2);
 
             bSuccess = true;
 
@@ -1416,7 +1416,7 @@ HB_FUNC( WVG_IMAGE )
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    if( pWVT && gObj ) {
-      int iSource = hb_parni(6);
+      auto iSource = hb_parni(6);
       IPicture * pPicture = nullptr;
 
       switch( iSource ) {

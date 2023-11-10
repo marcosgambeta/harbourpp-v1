@@ -94,7 +94,7 @@ int ct_getprecision(void)
 
 HB_FUNC( SETPREC )
 {
-   int iPrec = hb_parni(1);
+   auto iPrec = hb_parni(1);
 
    if( iPrec >= 1 && iPrec <= 16 ) {
       ct_setprecision(iPrec);

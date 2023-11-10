@@ -67,14 +67,14 @@ static void hb_wincom_init(void)
 
 HB_FUNC( WIN_COMOPEN )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) )
    {
       DWORD dwBaudRate = static_cast<DWORD>(hb_parnl(2));
-      int iParity = hb_parni(3);
-      int iByteSize = hb_parni(4);
-      int iStopBits = hb_parni(5);
+      auto iParity = hb_parni(3);
+      auto iByteSize = hb_parni(4);
+      auto iStopBits = hb_parni(5);
 
       HANDLE hCommPort;
       DCB NewDCB;
@@ -168,7 +168,7 @@ HB_FUNC( WIN_COMOPEN )
 
 HB_FUNC( WIN_COMCLOSE )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -196,7 +196,7 @@ HB_FUNC( WIN_COMCLOSE )
 
 HB_FUNC( WIN_COMWRITE )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -225,7 +225,7 @@ HB_FUNC( WIN_COMWRITE )
 
 HB_FUNC( WIN_COMREAD )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -260,7 +260,7 @@ HB_FUNC( WIN_COMREAD )
 
 HB_FUNC( WIN_COMRECV )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -292,7 +292,7 @@ HB_FUNC( WIN_COMRECV )
 
 HB_FUNC( WIN_COMSTATUS )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -330,7 +330,7 @@ HB_FUNC( WIN_COMSTATUS )
 
 HB_FUNC( WIN_COMPURGE )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -356,7 +356,7 @@ HB_FUNC( WIN_COMPURGE )
 
 HB_FUNC( WIN_COMQUEUESTATUS )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -404,7 +404,7 @@ HB_FUNC( WIN_COMQUEUESTATUS )
 
 HB_FUNC( WIN_COMSETRTS )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -434,7 +434,7 @@ HB_FUNC( WIN_COMSETRTS )
 
 HB_FUNC( WIN_COMSETDTR )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -461,13 +461,13 @@ HB_FUNC( WIN_COMSETDTR )
 
 HB_FUNC( WIN_COMRTSFLOW )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
    {
       DCB CurDCB;
-      int iRtsControl = hb_parni(2);
+      auto iRtsControl = hb_parni(2);
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_GETCOMMSTATE;
       s_PortData[iPort].dwError = 0;
@@ -520,13 +520,13 @@ HB_FUNC( WIN_COMRTSFLOW )
 
 HB_FUNC( WIN_COMDTRFLOW )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
    {
       DCB CurDCB;
-      int DtrControl = hb_parni(2);
+      auto DtrControl = hb_parni(2);
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_GETCOMMSTATE;
       s_PortData[iPort].dwError = 0;
@@ -579,7 +579,7 @@ HB_FUNC( WIN_COMDTRFLOW )
 
 HB_FUNC( WIN_COMXONXOFFFLOW )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -682,7 +682,7 @@ static int hb_win_ComSetTimeouts(HANDLE hCommPort, LPCOMMTIMEOUTS Timeouts, DWOR
 
 HB_FUNC( WIN_COMSETTIMEOUTS )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
@@ -727,7 +727,7 @@ HB_FUNC( WIN_COMSETTIMEOUTS )
 
 HB_FUNC( WIN_COMSETQUEUESIZE )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE && HB_ISNUM(2) && HB_ISNUM(3) )
@@ -752,14 +752,14 @@ HB_FUNC( WIN_COMSETQUEUESIZE )
 
 HB_FUNC( WIN_COMISVALID )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    hb_retl(iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)));
 }
 
 HB_FUNC( WIN_COMERRORCLEAR )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) )
    {
@@ -774,7 +774,7 @@ HB_FUNC( WIN_COMERRORCLEAR )
 
 HB_FUNC( WIN_COMERROR )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) )
    {
@@ -788,7 +788,7 @@ HB_FUNC( WIN_COMERROR )
 
 HB_FUNC( WIN_COMFUNCLAST )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) )
    {
@@ -802,7 +802,7 @@ HB_FUNC( WIN_COMFUNCLAST )
 
 HB_FUNC( WIN_COMDEBUGDCB )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )

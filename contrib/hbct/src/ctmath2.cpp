@@ -199,7 +199,7 @@ HB_FUNC( LOG10 )
 HB_FUNC( FACT )
 {
    if( HB_ISNUM(1) ) {
-      int iInput = hb_parni(1);
+      auto iInput = hb_parni(1);
 
       if( iInput >= 0 && iInput < 22 ) {
          double dResult = 1.0;

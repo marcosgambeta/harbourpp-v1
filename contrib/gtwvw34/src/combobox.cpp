@@ -267,9 +267,9 @@ HB_FUNC( WVW_CBCREATE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iWidth  = hb_parni(4);
-      int iTop    = hb_parni(2);
-      int iLeft   = hb_parni(3);
+      auto iWidth  = hb_parni(4);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
       int iBottom = iTop;
       int iRight  = iLeft + iWidth - 1;
 
@@ -394,7 +394,7 @@ HB_FUNC( WVW_CBDESTROY )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int nCtrlId = hb_parni(2);
+      auto nCtrlId = hb_parni(2);
       PWVW_CTL wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
@@ -576,7 +576,7 @@ NOTE: the better name to this function should be wvw_cbSetCurSel()
 HB_FUNC( WVW_CBSETINDEX )
 {
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
-   int iIndex = hb_parni(3);
+   auto iIndex = hb_parni(3);
    hb_retl((wvw_ctl && iIndex >= 0) ? SendMessage(wvw_ctl->hWnd, CB_SETCURSEL, static_cast<WPARAM>(iIndex), 0) == iIndex : false);
 }
 

@@ -246,7 +246,7 @@ HB_FUNC( ADSSETFILETYPE )
    hb_retni(hb_ads_iFileType);
 
    if( hb_pcount() > 0 ) {
-      int fileType = hb_parni(1);
+      auto fileType = hb_parni(1);
 
 #if ADS_LIB_VERSION >= 900
       if( fileType >= ADS_NTX && fileType <= ADS_VFP )
@@ -473,7 +473,7 @@ HB_FUNC( ADSSETCHARTYPE )
    hb_retni(hb_ads_iCharType);
 
    if( hb_pcount() > 0 ) {
-      int charType = hb_parni(1);
+      auto charType = hb_parni(1);
 
 #if ADS_LIB_VERSION >= 900
       if( charType >= ADS_ANSI && charType <= ADS_MAX_CHAR_SETS )

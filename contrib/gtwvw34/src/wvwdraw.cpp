@@ -691,9 +691,9 @@ HB_FUNC( WVW_DRAWBOXGET )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iRow = hb_parni(2);
-      int iCol = hb_parni(3);
-      int iLen = hb_parni(4);
+      auto iRow = hb_parni(2);
+      auto iCol = hb_parni(3);
+      auto iLen = hb_parni(4);
 
       int iOffTop    = hb_parvni(5, 1);
       int iOffLeft   = hb_parvni(5, 2);
@@ -764,9 +764,9 @@ HB_FUNC( WVW_DRAWBOXGET_XP )  /* Not in WVT */
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iRow = hb_parni(2);
-      int iCol = hb_parni(3);
-      int iLen = hb_parni(4);
+      auto iRow = hb_parni(2);
+      auto iCol = hb_parni(3);
+      auto iLen = hb_parni(4);
 
       int iOffTop    = hb_parvni(5, 1);
       int iOffLeft   = hb_parvni(5, 2);
@@ -824,10 +824,10 @@ HB_FUNC( WVW_DRAWBOXRAISED )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       bool fTight = hb_parl(6);
 
@@ -881,10 +881,10 @@ HB_FUNC( WVW_DRAWBOXRECESSED )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       bool fTight = hb_parl(6);
 
@@ -1044,10 +1044,10 @@ HB_FUNC( WVW_DRAWIMAGE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       POINT xy;
       int   iBottomNew = 0, iRightNew = 0;
@@ -1177,10 +1177,10 @@ HB_FUNC( WVW_DRAWIMAGE_RESOURCE )  /* Not in WVT */
       }
 
       if( pPicture ) {
-         int iTop    = hb_parni(2),
-             iLeft   = hb_parni(3),
-             iBottom = hb_parni(4),
-             iRight  = hb_parni(5);
+         auto iTop    = hb_parni(2);
+         auto iLeft   = hb_parni(3);
+         auto iBottom = hb_parni(4);
+         auto iRight  = hb_parni(5);
 
          bool fActBottom = !HB_ISNUM(4);
          bool fActRight  = !HB_ISNUM(5);
@@ -1256,8 +1256,8 @@ HB_FUNC( WVW_DRAWLABEL )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iRow = hb_parni(2),
-          iCol = hb_parni(3);
+      auto iRow = hb_parni(2);
+      auto iCol = hb_parni(3);
 
       HFONT   hFont;
       LOGFONT lf{};
@@ -1329,8 +1329,8 @@ HB_FUNC( WVW_DRAWLABELEX )
    int iSlot = hb_parni(8) - 1;
 
    if( wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserFonts)) && wvw->a.hUserFonts[iSlot] ) {
-      int iTop  = hb_parni(2);
-      int iLeft = hb_parni(3);
+      auto iTop  = hb_parni(2);
+      auto iLeft = hb_parni(3);
 
       HB_SIZE nLen;
       void *  hText;
@@ -1372,10 +1372,10 @@ HB_FUNC( WVW_DRAWLABELOBJ )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(12, 1);
       int iOffLeft   = hb_parvni(12, 2);
@@ -1385,7 +1385,7 @@ HB_FUNC( WVW_DRAWLABELOBJ )
       POINT xy;
       int   x, y;
       RECT  rc;
-      int   oldTextAlign, iAlignHorz, iAlignVert, iAlignH = 0, iAlignV;
+      int   oldTextAlign, iAlignH = 0, iAlignV;
       UINT  uiOptions;
       SIZE  sz{};
 
@@ -1409,8 +1409,8 @@ HB_FUNC( WVW_DRAWLABELOBJ )
       iBottom = xy.y - wvw_win->iLineSpacing - 1 + 1 + iOffBottom;
       iRight  = xy.x - 1 + 1 + iOffRight;
 
-      iAlignHorz = hb_parni(7);
-      iAlignVert = hb_parni(8);
+      auto iAlignHorz = hb_parni(7);
+      auto iAlignVert = hb_parni(8);
 
       GetTextExtentPoint32(hDC, szText, static_cast<int>(nLen), &sz);
 
@@ -1475,10 +1475,10 @@ HB_FUNC( WVW_DRAWOUTLINE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       HPEN  hPen = 0, hOldPen = 0;
       POINT xy;
@@ -1529,10 +1529,10 @@ HB_FUNC( WVW_DRAWOUTLINEEX )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iSlot = hb_parni(6) - 1;
 
@@ -1570,10 +1570,10 @@ HB_FUNC( WVW_DRAWLINE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(12, 1);
       int iOffLeft   = hb_parvni(12, 2);
@@ -1585,11 +1585,11 @@ HB_FUNC( WVW_DRAWLINE )
       POINT xy;
       HPEN  hPen, hOldPen;
 
-      int iOrient = hb_parni(6);
-      int iFormat = hb_parni(7);
-      int iAlign  = hb_parni(8);
-      int iStyle  = hb_parni(9);
-      int iThick  = hb_parni(10);
+      auto iOrient = hb_parni(6);
+      auto iFormat = hb_parni(7);
+      auto iAlign  = hb_parni(8);
+      auto iStyle  = hb_parni(9);
+      auto iThick  = hb_parni(10);
 
       HDC hDC = wvw_win->hdc;
 
@@ -1714,10 +1714,10 @@ HB_FUNC( WVW_DRAWLINEEX )
    int iSlot = hb_parni(9) - 1;
 
    if( wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens)) ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       HPEN hPen = wvw->a.hUserPens[iSlot];
 
@@ -1725,9 +1725,9 @@ HB_FUNC( WVW_DRAWLINEEX )
       int   iOffset;
       int   x, y;
 
-      int iOrient = hb_parni(6);
-      int iFormat = hb_parni(7);
-      int iAlign  = hb_parni(8);
+      auto iOrient = hb_parni(6);
+      auto iFormat = hb_parni(7);
+      auto iAlign  = hb_parni(8);
 
       HDC hDC = wvw_win->hdc;
 
@@ -1844,10 +1844,10 @@ HB_FUNC( WVW_DRAWELLIPSE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -1886,10 +1886,10 @@ HB_FUNC( WVW_DRAWRECTANGLE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -1934,10 +1934,10 @@ HB_FUNC( WVW_DRAWROUNDRECT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -1975,10 +1975,10 @@ HB_FUNC( WVW_DRAWFOCUSRECT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -2018,10 +2018,10 @@ HB_FUNC( WVW_DRAWCOLORRECT )
       HBRUSH hBrush = CreateSolidBrush(hbwapi_par_COLORREF(7));
 
       if( hBrush ) {
-         int iTop    = hb_parni(2),
-             iLeft   = hb_parni(3),
-             iBottom = hb_parni(4),
-             iRight  = hb_parni(5);
+         auto iTop    = hb_parni(2);
+         auto iLeft   = hb_parni(3);
+         auto iBottom = hb_parni(4);
+         auto iRight  = hb_parni(5);
 
          int iOffTop    = hb_parvni(6, 1);
          int iOffLeft   = hb_parvni(6, 2);
@@ -2061,11 +2061,11 @@ HB_FUNC( WVW_DRAWGRIDHORZ )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iAtRow = hb_parni(2);
-      int iLeft  = hb_parni(3);
-      int iRight = hb_parni(4);
+      auto iAtRow = hb_parni(2);
+      auto iLeft  = hb_parni(3);
+      auto iRight = hb_parni(4);
 
-      int iRows = hb_parni(5);
+      auto iRows = hb_parni(5);
 
       HDC hDC = wvw_win->hdc;
 
@@ -2103,11 +2103,11 @@ HB_FUNC( WVW_DRAWGRIDVERT )
    PWVW_GLO wvw     = hb_gt_wvw();
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
-   int iTabs = hb_parni(5);
+   auto iTabs = hb_parni(5);
 
    if( wvw && wvw_win && iTabs > 0 ) {
-      int iTop    = hb_parni(2);
-      int iBottom = hb_parni(3);
+      auto iTop    = hb_parni(2);
+      auto iBottom = hb_parni(3);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -2161,10 +2161,10 @@ HB_FUNC( WVW_DRAWBUTTON )
    PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_win && wvw_zer ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       POINT    xy;
       RECT     rc;
@@ -2173,7 +2173,7 @@ HB_FUNC( WVW_DRAWBUTTON )
       HBRUSH   hBrush;
 
       bool fImage  = HB_ISNUM(7) || HB_ISCHAR(7);
-      int     iFormat = hb_parni(8);
+      auto iFormat = hb_parni(8);
 
       HDC hDC = wvw_win->hdc;
 
@@ -2295,7 +2295,7 @@ HB_FUNC( WVW_DRAWSTATUSBAR )
       int iBottom;
       int iRight;
 
-      int   iPanels = hb_parni(2);
+      auto iPanels = hb_parni(2);
       int   iNext = 0;
       POINT xy;
 
@@ -2377,10 +2377,10 @@ HB_FUNC( WVW_DRAWPICTURE )
    int iSlot = hb_parni(6) - 1;
 
    if( wvw && wvw_win && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture)) && wvw->a.pPicture[iSlot] ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffLeft, iOffTop, iOffRight, iOffBottom;
 
@@ -2423,10 +2423,10 @@ HB_FUNC( WVW_DRAWTOOLBUTTONSTATE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -2434,7 +2434,7 @@ HB_FUNC( WVW_DRAWTOOLBUTTONSTATE )
       int iOffRight  = hb_parvni(6, 4);
 
       POINT xy;
-      int   iState = hb_parni(7);
+      auto iState = hb_parni(7);
 
       HDC hDC = wvw_win->hdc;
 
@@ -2518,10 +2518,10 @@ HB_FUNC( WVW_DRAWSCROLLBUTTON )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -2618,17 +2618,18 @@ HB_FUNC( WVW_DRAWSCROLLTHUMBVERT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
       int iOffBottom = hb_parvni(6, 3);
       int iOffRight  = hb_parvni(6, 4);
 
-      int iTabTop = hb_parni(7), iTabLft, iTabBtm, iTabRgt;
+      auto iTabTop = hb_parni(7);
+      int iTabLft, iTabBtm, iTabRgt;
 
       POINT xy;
 
@@ -2676,17 +2677,18 @@ HB_FUNC( WVW_DRAWSCROLLTHUMBHORZ )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
       int iOffBottom = hb_parvni(6, 3);
       int iOffRight  = hb_parvni(6, 4);
 
-      int iThumbLeft = hb_parni(7), iThumbRight;
+      auto iThumbLeft = hb_parni(7);
+      int iThumbRight;
 
       POINT xy;
 
@@ -2733,10 +2735,10 @@ HB_FUNC( WVW_DRAWSHADEDRECT )
       bool fResult = false;
 
       {
-         int iTop    = hb_parni(2),
-             iLeft   = hb_parni(3),
-             iBottom = hb_parni(4),
-             iRight  = hb_parni(5);
+         auto iTop    = hb_parni(2);
+         auto iLeft   = hb_parni(3);
+         auto iBottom = hb_parni(4);
+         auto iRight  = hb_parni(5);
 
          int iOffTop    = hb_parvni(6, 1);
          int iOffLeft   = hb_parvni(6, 2);
@@ -2795,10 +2797,10 @@ HB_FUNC( WVW_DRAWTEXTBOX )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
@@ -2874,18 +2876,18 @@ HB_FUNC( WVW_DRAWPROGRESSBAR )
    PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_win && wvw_zer ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(6, 1);
       int iOffLeft   = hb_parvni(6, 2);
       int iOffBottom = hb_parvni(6, 3);
       int iOffRight  = hb_parvni(6, 4);
 
-      int iPercent   = hb_parni(7);
-      int iDirection = hb_parni(12);
+      auto iPercent   = hb_parni(7);
+      auto iDirection = hb_parni(12);
 
       RECT  rc;
       POINT xy;

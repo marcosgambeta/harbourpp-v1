@@ -203,8 +203,10 @@ HB_FUNC( WVG_PREPAREBITMAPFROMFILE )
    BITMAPINFO * pPackedDib = fMap3Dcolors ? nullptr : PackedDibLoad(hb_parcx(1) /* szFileName */);
 
    if( pPackedDib || fMap3Dcolors ) {
-      int iWidth, iExpWidth = hb_parni(2);
-      int iHeight, iExpHeight = hb_parni(3);
+      int iWidth;
+      auto iExpWidth = hb_parni(2);
+      int iHeight;
+      auto iExpHeight = hb_parni(3);
       HWND hCtrl = hbwapi_par_raw_HWND(5);
 
       HDC hdc = GetDC(hCtrl);

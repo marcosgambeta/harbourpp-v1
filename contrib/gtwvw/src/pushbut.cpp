@@ -734,8 +734,8 @@ HB_FUNC( WVW_CBSETINDEX )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT uiCBid        = hb_parni(2);
-   int  iIndex        = hb_parni(3);
+   UINT uiCBid = hb_parni(2);
+   auto iIndex = hb_parni(3);
    CONTROL_DATA * pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
    BOOL retval;
 

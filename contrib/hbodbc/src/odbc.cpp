@@ -1293,8 +1293,8 @@ HB_FUNC( HB_ODBCSTOD )
 HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec) */
 {
    auto pValue = hb_param(1, Harbour::Item::NUMERIC);
-   int iLen = hb_parni(2);
-   int iDec = hb_parni(3);
+   auto iLen = hb_parni(2);
+   auto iDec = hb_parni(3);
 
    if( pValue != nullptr && HB_IS_NUMINT(pValue) && iDec == 0 )
    {

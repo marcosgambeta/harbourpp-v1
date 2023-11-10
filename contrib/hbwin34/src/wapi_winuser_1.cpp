@@ -927,7 +927,7 @@ HB_FUNC( WAPI_GETWINDOWTEXT )
 
 HB_FUNC( WAPI_SETWINDOWLONGPTR )
 {
-   int iIndex = hb_parni(2);
+   auto iIndex = hb_parni(2);
    LONG_PTR nRetVal;
 
    switch( iIndex )
@@ -964,7 +964,7 @@ HB_FUNC( WAPI_SETWINDOWLONGPTR )
 
 HB_FUNC( WAPI_GETWINDOWLONGPTR )
 {
-   int iIndex = hb_parni(2);
+   auto iIndex = hb_parni(2);
    LONG_PTR nRetVal = GetWindowLongPtr(hbwapi_par_raw_HWND(1), iIndex);
    hbwapi_SetLastError(GetLastError());
 

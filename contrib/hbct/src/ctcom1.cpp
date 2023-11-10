@@ -225,7 +225,8 @@ HB_FUNC( COM_BREAK )
  */
 HB_FUNC( COM_HARD )
 {
-   int iPort = hb_parni(1), iFlow, iMask;
+   auto iPort = hb_parni(1);
+   int iFlow, iMask;
    HB_BOOL fResult = false;
 
    if( hb_comFlowControl(iPort, &iFlow, -1) != -1 ) {
@@ -247,7 +248,8 @@ HB_FUNC( COM_HARD )
  */
 HB_FUNC( COM_SOFT )
 {
-   int iPort = hb_parni(1), iFlow, iMask;
+   auto iPort = hb_parni(1);
+   int iFlow, iMask;
    HB_BOOL fResult = false;
 
    if( hb_comFlowControl(iPort, &iFlow, -1) != -1 ) {
@@ -274,7 +276,8 @@ HB_FUNC( COM_SOFT )
 HB_FUNC( COM_SOFT_R )
 {
    HB_BOOL fResult = false;
-   int iPort = hb_parni(1), iMode;
+   auto iPort = hb_parni(1);
+   int iMode;
 
    if( HB_ISLOG(2) ) {
       hb_comFlowSet(iPort, HB_COM_FL_SOFT | (hb_parl(2) ? HB_COM_FL_OOFF : HB_COM_FL_OON));
@@ -368,11 +371,11 @@ HB_FUNC( COM_SKEY )
  */
 HB_FUNC( COM_INIT )
 {
-   int iPort = hb_parni(1),
-       iBaud = hb_parnidef(2, 300),
-       iParity = hb_parcx(3)[0],
-       iSize = hb_parnidef(4, 8),
-       iStop = hb_parnidef(5, 1);
+   auto iPort = hb_parni(1);
+   int iBaud = hb_parnidef(2, 300);
+   int iParity = hb_parcx(3)[0];
+   int iSize = hb_parnidef(4, 8);
+   int iStop = hb_parnidef(5, 1);
 
    hb_retl(hb_comInit(iPort, iBaud, iParity, iSize, iStop) != -1);
 }
@@ -381,7 +384,7 @@ HB_FUNC( COM_INIT )
  */
 HB_FUNC( COM_OPEN )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    /* TODO: add support for <nBufferIn> */
    /* TODO: add support for <nBufferOut> */
@@ -394,7 +397,7 @@ HB_FUNC( COM_OPEN )
  */
 HB_FUNC( COM_CLOSE )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    hb_comFlush(iPort, HB_COM_IOFLUSH);
    hb_retl(hb_comClose(iPort) != -1);
@@ -407,7 +410,7 @@ HB_FUNC( COM_READ )
    char buffer[1024];
    char * data;
    long lLen, lRecv;
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
 
    /* TODO: add support for <lNoDelete> */
 
@@ -509,7 +512,7 @@ HB_FUNC( COM_SETIRQ )
  */
 HB_FUNC( COM_DEVNAME )
 {
-   int iPort = hb_parni(1);
+   auto iPort = hb_parni(1);
    auto szDevName = hb_parc(2);
    char buffer[HB_COM_DEV_NAME_MAX];
 

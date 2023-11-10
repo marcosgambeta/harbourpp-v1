@@ -234,8 +234,8 @@ HB_FUNC( CLEARSLOW )  /* TODO: Unicode support */
    int iMaxRow = hb_gtMaxRow();
    int iMaxCol = hb_gtMaxCol();
    long lDelay = hb_parnl(1);
-   int iTop    = hb_parni(2);
-   int iLeft   = hb_parni(3);
+   auto iTop    = hb_parni(2);
+   auto iLeft   = hb_parni(3);
    int iBottom = hb_parnidef(4, iMaxRow);
    int iRight  = hb_parnidef(5, iMaxCol);
    HB_UCHAR ucChar;
@@ -393,12 +393,11 @@ HB_FUNC( STRSCREEN )  /* TODO: Unicode support */
 
 HB_FUNC( __HBCT_DSPTIME )  /* Helper function for ShowTime() */
 {
-   int iRow, iCol;
-   int iColor, iLen;
+   int iColor;
    char szTime[10];
 
-   iRow = hb_parni(1);
-   iCol = hb_parni(2);
+   auto iRow = hb_parni(1);
+   auto iCol = hb_parni(2);
    if( HB_ISNUM(4) ) {
       iColor = hb_parni(4);
    } else if( HB_ISCHAR(4) ) {
@@ -411,7 +410,7 @@ HB_FUNC( __HBCT_DSPTIME )  /* Helper function for ShowTime() */
    }
 
    hb_dateTimeStr(szTime);
-   iLen = 8;
+   auto iLen = 8;
 
    if( hb_parl(3) ) {
       iLen -= 3;

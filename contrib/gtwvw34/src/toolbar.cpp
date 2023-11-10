@@ -493,10 +493,10 @@ HB_FUNC( WVW_TBADDBUTTON )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iCommand = hb_parni(2);
+      auto iCommand = hb_parni(2);
       HB_UINT uiBitmap = static_cast<HB_UINT>(hb_parni(3));
       auto szBitmap = hb_parc(3);
-      int iBitmapType = hb_parni(5);
+      auto iBitmapType = hb_parni(5);
       bool fMap3Dcolors = hb_parl(6);
       bool fDropdown = hb_parl(7);
 

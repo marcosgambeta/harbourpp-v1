@@ -392,7 +392,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
       return;
    }
 
-   int iMode = hb_parni(2);
+   auto iMode = hb_parni(2);
 
    switch( iMode ) {
       case 0: {
@@ -859,7 +859,7 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
    TBBUTTON tbb;
    bool bSuccess;
    HWND hWndTB = hbwapi_par_raw_HWND(1);
-   int iCommand = hb_parni(4);
+   auto iCommand = hb_parni(4);
 
    switch( hb_parni(5) ) {
       case 1: { /* button from image */

@@ -361,12 +361,10 @@ HB_FUNC( WVT_SETTOOLTIPTITLE )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   int iIcon;
-
    if( HB_ISCHAR(2) ) {
       void * hText;
 
-      iIcon = hb_parni(1);
+      auto iIcon = hb_parni(1);
       if( iIcon > 3 ) {
          iIcon = 0;
       }
@@ -442,7 +440,7 @@ HB_FUNC( WVT_SETPOINTER )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   int     iCursor = hb_parni(1);
+   auto iCursor = hb_parni(1);
    HCURSOR hCursor;
 
    switch( iCursor ) {
@@ -766,7 +764,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
    HWND     hDlg  = 0;
    int      iType = 0;
    int      iIndex;
-   int      iResource = hb_parni(4);
+   auto iResource = hb_parni(4);
 
    /* check if we still have room for a new dialog */
    for( iIndex = 0; iIndex < WVT_DLGML_MAX; iIndex++ ) {
@@ -867,7 +865,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
    PHB_ITEM   pFunc  = nullptr;
    PHB_DYNS   pExecSym;
    int        iIndex;
-   int        iResource = hb_parni(4);
+   auto iResource = hb_parni(4);
    HB_PTRDIFF iResult   = 0;
    HWND       hParent   = HB_ISNUM(5) ? reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))) : _s->hWnd;
 

@@ -99,7 +99,7 @@ HB_FUNC( SETFONT )
 {
    auto font = hb_parcx(1);
    unsigned len = static_cast<unsigned>(hb_parclen(1));
-   int area = hb_parni(2);
+   auto area = hb_parni(2);
    int offset = 0;
    int count = 256;
    int height = 16;

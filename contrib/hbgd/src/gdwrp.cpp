@@ -477,8 +477,8 @@ HB_FUNC( GDIMAGECREATE ) /* gdImagePtr gdImageCreate(sx, sy) */
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
-      int sx = hb_parni(1);
-      int sy = hb_parni(2);
+      auto sx = hb_parni(1);
+      auto sy = hb_parni(2);
 
       hb_retGdImage(gdImageCreate(sx, sy));
    }
@@ -495,8 +495,8 @@ HB_FUNC( GDIMAGECREATETRUECOLOR )                        /* gdImageCreateTrueCol
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) )
    {
-      int sx = hb_parni(1);
-      int sy = hb_parni(2);
+      auto sx = hb_parni(1);
+      auto sy = hb_parni(2);
 
       hb_retGdImage(gdImageCreateTrueColor(sx, sy));
    }
@@ -574,9 +574,9 @@ HB_FUNC( GDIMAGESETPIXEL ) /* void gdImageSetPixel(gdImagePtr im, int x, int y, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x     = hb_parni(2);
-      int y     = hb_parni(3);
-      int color = hb_parni(4);
+      auto x = hb_parni(2);
+      auto y = hb_parni(3);
+      auto color = hb_parni(4);
 
       gdImageSetPixel(im, x, y, color);
    }
@@ -592,11 +592,11 @@ HB_FUNC( GDIMAGELINE ) /* void gdImageLine(gdImagePtr im, int x1, int y1, int x2
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x1    = hb_parni(2);
-      int y1    = hb_parni(3);
-      int x2    = hb_parni(4);
-      int y2    = hb_parni(5);
-      int color = hb_parni(6);
+      auto x1    = hb_parni(2);
+      auto y1    = hb_parni(3);
+      auto x2    = hb_parni(4);
+      auto y2    = hb_parni(5);
+      auto color = hb_parni(6);
 
       gdImageLine(im, x1, y1, x2, y2, color);
    }
@@ -612,11 +612,11 @@ HB_FUNC( GDIMAGEDASHEDLINE ) /* void gdImageDashedLine(gdImagePtr im, int x1, in
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x1    = hb_parni(2);
-      int y1    = hb_parni(3);
-      int x2    = hb_parni(4);
-      int y2    = hb_parni(5);
-      int color = hb_parni(6);
+      auto x1    = hb_parni(2);
+      auto y1    = hb_parni(3);
+      auto x2    = hb_parni(4);
+      auto y2    = hb_parni(5);
+      auto color = hb_parni(6);
 
       gdImageDashedLine(im, x1, y1, x2, y2, color);
    }
@@ -634,7 +634,7 @@ HB_FUNC( GDIMAGEPOLYGON ) /* original: void gdImagePolygon(gdImagePtr im, gdPoin
 
       auto pPoints = hb_param(2, Harbour::Item::ARRAY);
       int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
-      int      color       = hb_parni(3);
+      auto color = hb_parni(3);
 
       /* Max Points of polygon */
       auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
@@ -674,7 +674,7 @@ HB_FUNC( GDIMAGEOPENPOLYGON ) /* original: void gdImageOpenPolygon(gdImagePtr im
 
       auto pPoints = hb_param(2, Harbour::Item::ARRAY);
       int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
-      int      color       = hb_parni(3);
+      auto color = hb_parni(3);
 
       /* Max Points of polygon */
       auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
@@ -712,11 +712,11 @@ HB_FUNC( GDIMAGERECTANGLE ) /* void gdImageRectangle(gdImagePtr im, int x1, int 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x1    = hb_parni(2);
-      int y1    = hb_parni(3);
-      int x2    = hb_parni(4);
-      int y2    = hb_parni(5);
-      int color = hb_parni(6);
+      auto x1    = hb_parni(2);
+      auto y1    = hb_parni(3);
+      auto x2    = hb_parni(4);
+      auto y2    = hb_parni(5);
+      auto color = hb_parni(6);
 
       gdImageRectangle(im, x1, y1, x2, y2, color);
    }
@@ -734,7 +734,7 @@ HB_FUNC( GDIMAGEFILLEDPOLYGON ) /* original: void gdImageFilledPolygon(gdImagePt
 
       auto pPoints = hb_param(2, Harbour::Item::ARRAY);
       int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
-      int      color       = hb_parni(3);
+      auto color = hb_parni(3);
 
       /* Max Points of polygon */
       auto points = static_cast<gdPoint*>(hb_xgrab(sizeof(gdPoint) * pointsTotal));
@@ -771,11 +771,11 @@ HB_FUNC( GDIMAGEFILLEDRECTANGLE ) /* void gdImageFilledRectangle(gdImagePtr im, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x1    = hb_parni(2);
-      int y1    = hb_parni(3);
-      int x2    = hb_parni(4);
-      int y2    = hb_parni(5);
-      int color = hb_parni(6);
+      auto x1    = hb_parni(2);
+      auto y1    = hb_parni(3);
+      auto x2    = hb_parni(4);
+      auto y2    = hb_parni(5);
+      auto color = hb_parni(6);
 
       gdImageFilledRectangle(im, x1, y1, x2, y2, color);
    }
@@ -791,13 +791,13 @@ HB_FUNC( GDIMAGEARC ) /* void gdImageArc(gdImagePtr im, int cx, int cy, int w, i
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int cx    = hb_parni(2);
-      int cy    = hb_parni(3);
-      int w     = hb_parni(4); /* width and height */
-      int h     = hb_parni(5);
-      int s     = hb_parni(6); /* starting and ending degree */
-      int e     = hb_parni(7);
-      int color = hb_parni(8);
+      auto cx    = hb_parni(2);
+      auto cy    = hb_parni(3);
+      auto w     = hb_parni(4); /* width and height */
+      auto h     = hb_parni(5);
+      auto s     = hb_parni(6); /* starting and ending degree */
+      auto e     = hb_parni(7);
+      auto color = hb_parni(8);
 
       gdImageArc(im, cx, cy, w, h, s, e, color);
    }
@@ -813,13 +813,13 @@ HB_FUNC( GDIMAGEFILLEDARC ) /* void gdImageFilledArc(gdImagePtr im, int cx, int 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int cx    = hb_parni(2);
-      int cy    = hb_parni(3);
-      int w     = hb_parni(4); /* width and height */
-      int h     = hb_parni(5);
-      int s     = hb_parni(6); /* starting and ending degree */
-      int e     = hb_parni(7);
-      int color = hb_parni(8);
+      auto cx    = hb_parni(2);
+      auto cy    = hb_parni(3);
+      auto w     = hb_parni(4); /* width and height */
+      auto h     = hb_parni(5);
+      auto s     = hb_parni(6); /* starting and ending degree */
+      auto e     = hb_parni(7);
+      auto color = hb_parni(8);
       int style = hb_parnidef(9, gdNoFill);
 
       gdImageFilledArc(im, cx, cy, w, h, s, e, color, style);
@@ -836,11 +836,11 @@ HB_FUNC( GDIMAGEFILLEDELLIPSE ) /* void gdImageFilledEllipse(gdImagePtr im, int 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int cx    = hb_parni(2);
-      int cy    = hb_parni(3);
-      int w     = hb_parni(4);
-      int h     = hb_parni(5);
-      int color = hb_parni(6);
+      auto cx    = hb_parni(2);
+      auto cy    = hb_parni(3);
+      auto w     = hb_parni(4);
+      auto h     = hb_parni(5);
+      auto color = hb_parni(6);
 
       gdImageFilledEllipse(im, cx, cy, w, h, color);
    }
@@ -856,10 +856,10 @@ HB_FUNC( GDIMAGEFILLTOBORDER ) /* void gdImageFillToBorder(gdImagePtr im, int x,
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x      = hb_parni(2);
-      int y      = hb_parni(3);
-      int border = hb_parni(4);
-      int color  = hb_parni(5);
+      auto x      = hb_parni(2);
+      auto y      = hb_parni(3);
+      auto border = hb_parni(4);
+      auto color  = hb_parni(5);
 
       gdImageFillToBorder(im, x, y, border, color);
    }
@@ -879,11 +879,11 @@ HB_FUNC( GDIMAGEELLIPSE ) /* void gdImageEllipse(gdImagePtr im, int cx, int cy, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int cx    = hb_parni(2);
-      int cy    = hb_parni(3);
-      int w     = hb_parni(4);
-      int h     = hb_parni(5);
-      int color = hb_parni(6);
+      auto cx    = hb_parni(2);
+      auto cy    = hb_parni(3);
+      auto w     = hb_parni(4);
+      auto h     = hb_parni(5);
+      auto color = hb_parni(6);
 
       gdImageEllipse(im, cx, cy, w, h, color);
    }
@@ -901,9 +901,9 @@ HB_FUNC( GDIMAGEFILL ) /* void gdImageFill(gdImagePtr im, int x, int y, int colo
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x     = hb_parni(2);
-      int y     = hb_parni(3);
-      int color = hb_parni(4);
+      auto x     = hb_parni(2);
+      auto y     = hb_parni(3);
+      auto color = hb_parni(4);
 
       gdImageFill(im, x, y, color);
    }
@@ -919,7 +919,7 @@ HB_FUNC( GDIMAGESETANTIALIASED ) /* void gdImageSetAntiAliased(gdImagePtr im, in
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color = hb_parni(2);
+      auto color = hb_parni(2);
 
       gdImageSetAntiAliased(im, color);
    }
@@ -935,8 +935,8 @@ HB_FUNC( GDIMAGESETANTIALIASEDDONTBLEND ) /* void gdImageSetAntiAliasedDontBlend
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color      = hb_parni(2);
-      int dont_blend = hb_parni(3);
+      auto color      = hb_parni(2);
+      auto dont_blend = hb_parni(3);
 
       gdImageSetAntiAliasedDontBlend(im, color, dont_blend);
    }
@@ -1010,7 +1010,7 @@ HB_FUNC( GDIMAGESETTHICKNESS ) /* void gdImageSetThickness(gdImagePtr im, int th
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int thickness = hb_parni(2);
+      auto thickness = hb_parni(2);
 
       /* Return previous */
       hb_retni(im->thick);
@@ -1061,10 +1061,10 @@ HB_FUNC( GDIMAGESETCLIP ) /* void gdImageSetClip(gdImagePtr im, int x1, int y1, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x1 = hb_parni(2);
-      int y1 = hb_parni(3);
-      int x2 = hb_parni(4);
-      int y2 = hb_parni(5);
+      auto x1 = hb_parni(2);
+      auto y1 = hb_parni(3);
+      auto x2 = hb_parni(4);
+      auto y2 = hb_parni(5);
 
       gdImageSetClip(im, x1, y1, x2, y2);
    }
@@ -1119,7 +1119,7 @@ HB_FUNC( GDIMAGEALPHA ) /* int gdImageAlpha(gdImagePtr im, int color) */
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color = hb_parni(2);
+      auto color = hb_parni(2);
 
       hb_retni(gdImageAlpha(im, color));
    }
@@ -1135,7 +1135,7 @@ HB_FUNC( GDIMAGERED ) /* int gdImageRed(gdImagePtr im, int color) */
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color = hb_parni(2);
+      auto color = hb_parni(2);
 
       hb_retni(gdImageRed(im, color));
    }
@@ -1151,7 +1151,7 @@ HB_FUNC( GDIMAGEGREEN ) /* int gdImageGreen(gdImagePtr im, int color) */
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color = hb_parni(2);
+      auto color = hb_parni(2);
 
       hb_retni(gdImageGreen(im, color));
    }
@@ -1167,7 +1167,7 @@ HB_FUNC( GDIMAGEBLUE ) /* int gdImageBlue(gdImagePtr im, int color) */
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color = hb_parni(2);
+      auto color = hb_parni(2);
 
       hb_retni(gdImageBlue(im, color));
    }
@@ -1209,8 +1209,8 @@ HB_FUNC( GDIMAGEGETPIXEL ) /* int gdImageGetPixel(gdImagePtr im, int x, int y) *
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x = hb_parni(2);
-      int y = hb_parni(3);
+      auto x = hb_parni(2);
+      auto y = hb_parni(3);
 
       /* Get Color of a pixel */
       hb_retni(gdImageGetPixel(im, x, y));
@@ -1227,8 +1227,8 @@ HB_FUNC( GDIMAGEBOUNDSSAFE ) /* int gdImageBoundsSafe(gdImagePtr im, int x, int 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x = hb_parni(2);
-      int y = hb_parni(3);
+      auto x = hb_parni(2);
+      auto y = hb_parni(3);
 
       /* Get if pixel in Clipping region */
       hb_retl(gdImageBoundsSafe(im, x, y) != 0);
@@ -1282,7 +1282,7 @@ HB_FUNC( GDIMAGETRUECOLORTOPALETTE ) /* void gdImageTrueColorToPalette (gdImageP
       gdImagePtr im = hb_parGdImage(1);
 
       int ditherFlag   = hb_parl(2) ? 1 : 0;
-      int colorsWanted = hb_parni(3);
+      auto colorsWanted = hb_parni(3);
 
       /* Converts a truecolor image to a palette-based image */
       gdImageTrueColorToPalette(im, ditherFlag, colorsWanted);
@@ -1300,7 +1300,7 @@ HB_FUNC( GDIMAGECREATEPALETTEFROMTRUECOLOR ) /* gdImagePtr gdImageCreatePaletteF
       gdImagePtr im = hb_parGdImage(1);
 
       int ditherFlag   = hb_parl(2) ? 1 : 0;
-      int colorsWanted = hb_parni(3);
+      auto colorsWanted = hb_parni(3);
 
       /* Converts a truecolor image to a palette-based image and return the image */
       hb_retGdImage(gdImageCreatePaletteFromTrueColor(im, ditherFlag, colorsWanted));
@@ -1317,8 +1317,8 @@ HB_FUNC( GDIMAGEPALETTEPIXEL ) /* int gdImagePalettePixel(gdImagePtr im, int x, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x = hb_parni(2);
-      int y = hb_parni(3);
+      auto x = hb_parni(2);
+      auto y = hb_parni(3);
 
       /* Get Color of a pixel */
       hb_retni(gdImagePalettePixel(im, x, y));
@@ -1335,8 +1335,8 @@ HB_FUNC( GDIMAGETRUECOLORPIXEL ) /* int gdImageTrueColorPixel(gdImagePtr im, int
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int x = hb_parni(2);
-      int y = hb_parni(3);
+      auto x = hb_parni(2);
+      auto y = hb_parni(3);
 
       /* Get Color of a pixel */
       hb_retni(gdImageTrueColorPixel(im, x, y));
@@ -1393,9 +1393,9 @@ HB_FUNC( GDIMAGESTRING ) /* void gdImageChar(gdImagePtr im, gdFontPtr font, int 
       gdImagePtr im   = hb_parGdImage(1);
       gdFontPtr  font = hb_parGdFont(2);
 
-      int x     = hb_parni(3);
-      int y     = hb_parni(4);
-      int color = hb_parni(6);
+      auto x     = hb_parni(3);
+      auto y     = hb_parni(4);
+      auto color = hb_parni(6);
 
       /* Write string */
       gdImageString(im, font, x, y, reinterpret_cast<unsigned char*>(const_cast<char*>(hb_parc(5))), color);
@@ -1415,9 +1415,9 @@ HB_FUNC( GDIMAGESTRINGUP ) /* void gdImageCharUp(gdImagePtr im, gdFontPtr font, 
       gdImagePtr im   = hb_parGdImage(1);
       gdFontPtr  font = hb_parGdFont(2);
 
-      int x     = hb_parni(3);
-      int y     = hb_parni(4);
-      int color = hb_parni(6);
+      auto x     = hb_parni(3);
+      auto y     = hb_parni(4);
+      auto color = hb_parni(6);
 
       /* Write string */
       gdImageStringUp(im, font, x, y, reinterpret_cast<unsigned char*>(const_cast<char*>(hb_parc(5))), color);
@@ -1439,12 +1439,12 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       gdImagePtr im = hb_parGdImage(1);
 
       auto pRect = hb_param(2, Harbour::Item::ARRAY);
-      int          fgcolor  = hb_parni(3); /* foreground color */
+      auto fgcolor = hb_parni(3); /* foreground color */
       auto fontname = hb_parc(4);
       double       ptsize   = hb_parnd(5); /* point size */
       double       angle    = hb_parnd(6); /* angle value in radians */
-      int          x        = hb_parni(7);
-      int          y        = hb_parni(8);
+      auto x = hb_parni(7);
+      auto y = hb_parni(8);
       auto string = hb_parc(9);
 
       gdFTStringExtra extra;
@@ -1522,8 +1522,8 @@ HB_FUNC( GDIMAGESTRINGFTCIRCLE ) /* char *gdImageStringFTCircle(gdImagePtr im, i
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int          cx          = hb_parni(2);
-      int          cy          = hb_parni(3);
+      auto cx = hb_parni(2);
+      auto cy = hb_parni(3);
       double       radius      = hb_parnd(4);
       double       textRadius  = hb_parnd(5);
       double       fillPortion = hb_parnd(6);
@@ -1531,7 +1531,7 @@ HB_FUNC( GDIMAGESTRINGFTCIRCLE ) /* char *gdImageStringFTCircle(gdImagePtr im, i
       double       points      = hb_parnd(8);
       auto top = hb_parcx(9);
       auto bottom = hb_parcx(10);
-      int          fgcolor     = hb_parni(11); /* foreground color */
+      auto fgcolor = hb_parni(11); /* foreground color */
 
       /* Write string */
       hb_retc(gdImageStringFTCircle(im, cx, cy, radius, textRadius, fillPortion,
@@ -1589,9 +1589,9 @@ HB_FUNC( GDIMAGECOLORALLOCATE ) /* int gdImageColorAllocate(gdImagePtr im, int r
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
 
       /* return color */
       hb_retni(gdImageColorAllocate(im, r, g, b));
@@ -1608,7 +1608,7 @@ HB_FUNC( GDIMAGECOLORDEALLOCATE ) /* void gdImageColorDeallocate(gdImagePtr im, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color = hb_parni(2);
+      auto color = hb_parni(2);
 
       gdImageColorDeallocate(im, color);
    }
@@ -1624,10 +1624,10 @@ HB_FUNC( GDIMAGECOLORALLOCATEALPHA ) /* int gdImageColorAllocateAlpha(gdImagePtr
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
-      int a = hb_parni(5); /* alpha */
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
+      auto a = hb_parni(5); /* alpha */
 
       /* return color */
       hb_retni(gdImageColorAllocateAlpha(im, r, g, b, a));
@@ -1644,9 +1644,9 @@ HB_FUNC( GDIMAGECOLORCLOSEST ) /* int gdImageColorClosest(gdImagePtr im, int r, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
 
       /* return color */
       hb_retni(gdImageColorClosest(im, r, g, b));
@@ -1663,10 +1663,10 @@ HB_FUNC( GDIMAGECOLORCLOSESTALPHA ) /* int gdImageColorClosestAlpha(gdImagePtr i
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
-      int a = hb_parni(5); /* alpha */
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
+      auto a = hb_parni(5); /* alpha */
 
       /* return color */
       hb_retni(gdImageColorClosestAlpha(im, r, g, b, a));
@@ -1683,9 +1683,9 @@ HB_FUNC( GDIMAGECOLORCLOSESTHWB ) /* gdImageColorClosestHWB(gdImagePtr im, int r
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
 
       /* return color */
       hb_retni(gdImageColorClosestHWB(im, r, g, b));
@@ -1702,9 +1702,9 @@ HB_FUNC( GDIMAGECOLOREXACT ) /* int gdImageColorExact(gdImagePtr im, int r, int 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
 
       /* return color */
       hb_retni(gdImageColorExact(im, r, g, b));
@@ -1721,9 +1721,9 @@ HB_FUNC( GDIMAGECOLORRESOLVE ) /* int gdImageColorResolve(gdImagePtr im, int r, 
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
 
       /* return color */
       hb_retni(gdImageColorResolve(im, r, g, b));
@@ -1740,10 +1740,10 @@ HB_FUNC( GDIMAGECOLORRESOLVEALPHA ) /* int gdImageColorResolveAlpha(gdImagePtr i
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int r = hb_parni(2); /* RGB */
-      int g = hb_parni(3);
-      int b = hb_parni(4);
-      int a = hb_parni(5); /* alpha */
+      auto r = hb_parni(2); /* RGB */
+      auto g = hb_parni(3);
+      auto b = hb_parni(4);
+      auto a = hb_parni(5); /* alpha */
 
       /* return color */
       hb_retni(gdImageColorResolveAlpha(im, r, g, b, a));
@@ -1760,7 +1760,7 @@ HB_FUNC( GDIMAGECOLORTRANSPARENT ) /* void gdImageColorTransparent(gdImagePtr im
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int color = hb_parni(2);
+      auto color = hb_parni(2);
 
       /* Set transparent color (to define no transparent color set -1) */
       gdImageColorTransparent(im, color);
@@ -1775,9 +1775,9 @@ HB_FUNC( GDTRUECOLOR ) /* int gdTrueColor(int red, int green, int blue) */
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      int r = hb_parni(1); /* RGB */
-      int g = hb_parni(2);
-      int b = hb_parni(3);
+      auto r = hb_parni(1); /* RGB */
+      auto g = hb_parni(2);
+      auto b = hb_parni(3);
 
       /* return color */
       hb_retni(gdTrueColor(r, g, b));
@@ -1792,10 +1792,10 @@ HB_FUNC( GDTRUECOLORALPHA ) /* int gdTrueColorAlpha(int red, int green, int blue
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) )
    {
-      int r = hb_parni(1); /* RGB */
-      int g = hb_parni(2);
-      int b = hb_parni(3);
-      int a = hb_parni(4); /* alpha */
+      auto r = hb_parni(1); /* RGB */
+      auto g = hb_parni(2);
+      auto b = hb_parni(3);
+      auto a = hb_parni(4); /* alpha */
 
       /* return color */
       hb_retni(gdTrueColorAlpha(r, g, b, a));
@@ -1815,12 +1815,12 @@ HB_FUNC( GDIMAGECOPY ) /* void gdImageCopy(gdImagePtr dst, gdImagePtr src, int d
       gdImagePtr dst = hb_parGdImage(1);
       gdImagePtr src = hb_parGdImage(2);
 
-      int dstX = hb_parni(3);
-      int dstY = hb_parni(4);
-      int srcX = hb_parni(5);
-      int srcY = hb_parni(6);
-      int w    = hb_parni(7);
-      int h    = hb_parni(8);
+      auto dstX = hb_parni(3);
+      auto dstY = hb_parni(4);
+      auto srcX = hb_parni(5);
+      auto srcY = hb_parni(6);
+      auto w    = hb_parni(7);
+      auto h    = hb_parni(8);
 
       gdImageCopy(dst, src, dstX, dstY, srcX, srcY, w, h);
    }
@@ -1837,14 +1837,14 @@ HB_FUNC( GDIMAGECOPYRESIZED ) /* void gdImageCopyResized(gdImagePtr dst, gdImage
       gdImagePtr dst = hb_parGdImage(1);
       gdImagePtr src = hb_parGdImage(2);
 
-      int dstX = hb_parni(3);
-      int dstY = hb_parni(4);
-      int srcX = hb_parni(5);
-      int srcY = hb_parni(6);
-      int dstW = hb_parni(7);
-      int dstH = hb_parni(8);
-      int srcW = hb_parni(9);
-      int srcH = hb_parni(10);
+      auto dstX = hb_parni(3);
+      auto dstY = hb_parni(4);
+      auto srcX = hb_parni(5);
+      auto srcY = hb_parni(6);
+      auto dstW = hb_parni(7);
+      auto dstH = hb_parni(8);
+      auto srcW = hb_parni(9);
+      auto srcH = hb_parni(10);
 
       gdImageCopyResized(dst, src, dstX, dstY, srcX, srcY, dstW, dstH, srcW, srcH);
    }
@@ -1861,14 +1861,14 @@ HB_FUNC( GDIMAGECOPYRESAMPLED ) /* void gdImageCopyResampled(gdImagePtr dst, gdI
       gdImagePtr dst = hb_parGdImage(1);
       gdImagePtr src = hb_parGdImage(2);
 
-      int dstX = hb_parni(3);
-      int dstY = hb_parni(4);
-      int srcX = hb_parni(5);
-      int srcY = hb_parni(6);
-      int dstW = hb_parni(7);
-      int dstH = hb_parni(8);
-      int srcW = hb_parni(9);
-      int srcH = hb_parni(10);
+      auto dstX = hb_parni(3);
+      auto dstY = hb_parni(4);
+      auto srcX = hb_parni(5);
+      auto srcY = hb_parni(6);
+      auto dstW = hb_parni(7);
+      auto dstH = hb_parni(8);
+      auto srcW = hb_parni(9);
+      auto srcH = hb_parni(10);
 
       gdImageCopyResampled(dst, src, dstX, dstY, srcX, srcY, dstW, dstH, srcW, srcH);
    }
@@ -1887,11 +1887,11 @@ HB_FUNC( GDIMAGECOPYROTATED ) /* void gdImageCopyRotated(gdImagePtr dst, gdImage
 
       double dstX  = hb_parnd(3);
       double dstY  = hb_parnd(4);
-      int    srcX  = hb_parni(5);
-      int    srcY  = hb_parni(6);
-      int    srcW  = hb_parni(7);
-      int    srcH  = hb_parni(8);
-      int    angle = hb_parni(9);
+      auto srcX    = hb_parni(5);
+      auto srcY    = hb_parni(6);
+      auto srcW    = hb_parni(7);
+      auto srcH    = hb_parni(8);
+      auto angle   = hb_parni(9);
 
       /* Perform rotation */
       gdImageCopyRotated(dst, src, dstX, dstY, srcX, srcY, srcW, srcH, angle);
@@ -1909,13 +1909,13 @@ HB_FUNC( GDIMAGECOPYMERGE ) /* void gdImageCopyMerge(gdImagePtr dst, gdImagePtr 
       gdImagePtr dst = hb_parGdImage(1);
       gdImagePtr src = hb_parGdImage(2);
 
-      int dstX = hb_parni(3);
-      int dstY = hb_parni(4);
-      int srcX = hb_parni(5);
-      int srcY = hb_parni(6);
-      int w    = hb_parni(7);
-      int h    = hb_parni(8);
-      int pct  = hb_parni(9);
+      auto dstX = hb_parni(3);
+      auto dstY = hb_parni(4);
+      auto srcX = hb_parni(5);
+      auto srcY = hb_parni(6);
+      auto w    = hb_parni(7);
+      auto h    = hb_parni(8);
+      auto pct  = hb_parni(9);
 
       gdImageCopyMerge(dst, src, dstX, dstY, srcX, srcY, w, h, pct);
    }
@@ -1932,13 +1932,13 @@ HB_FUNC( GDIMAGECOPYMERGEGRAY ) /* void gdImageCopyMergeGray(gdImagePtr dst, gdI
       gdImagePtr dst = hb_parGdImage(1);
       gdImagePtr src = hb_parGdImage(2);
 
-      int dstX = hb_parni(3);
-      int dstY = hb_parni(4);
-      int srcX = hb_parni(5);
-      int srcY = hb_parni(6);
-      int w    = hb_parni(7);
-      int h    = hb_parni(8);
-      int pct  = hb_parni(9);
+      auto dstX = hb_parni(3);
+      auto dstY = hb_parni(4);
+      auto srcX = hb_parni(5);
+      auto srcY = hb_parni(6);
+      auto w    = hb_parni(7);
+      auto h    = hb_parni(8);
+      auto pct  = hb_parni(9);
 
       gdImageCopyMergeGray(dst, src, dstX, dstY, srcX, srcY, w, h, pct);
    }
@@ -1969,7 +1969,7 @@ HB_FUNC( GDIMAGESQUARETOCIRCLE ) /* void gdImageSquareToCircle(gdImagePtr im, in
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int radius = hb_parni(2);
+      auto radius = hb_parni(2);
 
       hb_retGdImage(gdImageSquareToCircle(im, radius));
    }
@@ -1985,7 +1985,7 @@ HB_FUNC( GDIMAGESHARPEN ) /* void gdImageSharpen(gdImagePtr im, int pct) */
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int pct = hb_parni(2);
+      auto pct = hb_parni(2);
 
       gdImageSharpen(im, pct);
    }
@@ -2055,8 +2055,8 @@ HB_FUNC( GDIMAGEGIFANIMBEGIN )
    {
       gdImagePtr im = hb_parGdImage(1);
 
-      int GlobalCM = hb_parni(3); /* global color map */
-      int Loops    = hb_parni(4);
+      auto GlobalCM = hb_parni(3); /* global color map */
+      auto Loops    = hb_parni(4);
 
       int    size;
       void * iptr = gdImageGifAnimBeginPtr(im, &size, GlobalCM, Loops);
@@ -2088,11 +2088,11 @@ HB_FUNC( GDIMAGEGIFANIMADD )
       gdImagePtr im     = hb_parGdImage(1);
       gdImagePtr previm = hb_parGdImage(8);
 
-      int LocalCM  = hb_parni(3);
-      int LeftOfs  = hb_parni(4);
-      int TopOfs   = hb_parni(5);
-      int Delay    = hb_parni(6);
-      int Disposal = hb_parni(7);
+      auto LocalCM  = hb_parni(3);
+      auto LeftOfs  = hb_parni(4);
+      auto TopOfs   = hb_parni(5);
+      auto Delay    = hb_parni(6);
+      auto Disposal = hb_parni(7);
 
       int    size;
       void * iptr = gdImageGifAnimAddPtr(im, &size, LocalCM, LeftOfs, TopOfs, Delay, Disposal, previm);

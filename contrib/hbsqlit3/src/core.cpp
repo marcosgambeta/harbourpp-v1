@@ -273,7 +273,7 @@ static int callback(void * Cargo, int argc, char ** argv, char ** azColName)
       hb_vmPush(pArrayColName);
       hb_vmSend(3);
 
-      int iRes = hb_parni(-1);
+      auto iRes = hb_parni(-1);
 
       hb_itemRelease(pArrayValue);
       hb_itemRelease(pArrayColName);
@@ -305,7 +305,7 @@ static int authorizer(void * Cargo, int iAction, const char * sName1, const char
       hb_vmPush(pItem4);
 
       hb_vmSend(5);
-      int iRes = hb_parni(-1);
+      auto iRes = hb_parni(-1);
 
       hb_itemRelease(pItem1);
       hb_itemRelease(pItem2);
@@ -329,7 +329,7 @@ static int busy_handler(void * Cargo, int iNumberOfTimes)
       hb_vmPush(pCallback);
       hb_vmPushInteger(iNumberOfTimes);
       hb_vmSend(1);
-      int iRes = hb_parni(-1);
+      auto iRes = hb_parni(-1);
       hb_vmRequestRestore();
       return iRes;
    }
@@ -345,7 +345,7 @@ static int progress_handler(void * Cargo)
       hb_vmPushEvalSym();
       hb_vmPush(pCallback);
       hb_vmSend(0);
-      int iRes = hb_parni(-1);
+      auto iRes = hb_parni(-1);
       hb_vmRequestRestore();
       return iRes;
    }
@@ -361,7 +361,7 @@ static int hook_commit(void * Cargo)
       hb_vmPushEvalSym();
       hb_vmPush(pCallback);
       hb_vmSend(0);
-      int iRes = hb_parni(-1);
+      auto iRes = hb_parni(-1);
       hb_vmRequestRestore();
       return iRes;
    }
@@ -1637,7 +1637,7 @@ HB_FUNC( SQLITE3_BLOB_READ )
    sqlite3_blob * pBlob = static_cast<sqlite3_blob*>(hb_parptr(1));
 
    if( pBlob != nullptr ) {
-      int iLen = hb_parni(2);
+      auto iLen = hb_parni(2);
 
       if( iLen == 0 ) {
          iLen = sqlite3_blob_bytes(pBlob);
@@ -1664,7 +1664,7 @@ HB_FUNC( SQLITE3_BLOB_WRITE )
    sqlite3_blob * pBlob = static_cast<sqlite3_blob*>(hb_parptr(1));
 
    if( pBlob != nullptr ) {
-      int iLen = hb_parni(3);
+      auto iLen = hb_parni(3);
 
       if( iLen == 0 ) {
          iLen = static_cast<int>(hb_parcsiz(2)) - 1;

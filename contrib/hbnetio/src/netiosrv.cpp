@@ -1931,7 +1931,7 @@ HB_FUNC( NETIO_SERVEDCONNECTION )
 HB_FUNC( NETIO_SRVSENDITEM )
 {
    PHB_CONSRV conn = s_consrvParam(1);
-   int iStreamID = hb_parni(2);
+   auto iStreamID = hb_parni(2);
    auto pItem = hb_param(3, Harbour::Item::ANY);
    bool fResult = false;
 
@@ -1977,7 +1977,7 @@ HB_FUNC( NETIO_SRVSENDITEM )
 HB_FUNC( NETIO_SRVSENDDATA )
 {
    PHB_CONSRV conn = s_consrvParam(1);
-   int iStreamID = hb_parni(2);
+   auto iStreamID = hb_parni(2);
    long lLen = static_cast<long>(hb_parclen(3));
    bool fResult = false;
 
@@ -2019,7 +2019,8 @@ HB_FUNC( NETIO_SRVSENDDATA )
 HB_FUNC( NETIO_SRVSTATUS )
 {
    PHB_CONSRV conn = s_consrvParam(1);
-   int iStreamID = hb_parni(2), iSrvInfo = 0;
+   auto iStreamID = hb_parni(2);
+   int iSrvInfo = 0;
    int iStatus = NETIO_SRVSTAT_RUNNING;
 
    if( iStreamID < 0 )

@@ -170,8 +170,8 @@ HB_FUNC( WVW_XBCREATE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop  = hb_parni(3);
-      int iLeft = hb_parni(4);
+      auto iTop  = hb_parni(3);
+      auto iLeft = hb_parni(4);
       int iBottom;
       int iRight;
 
@@ -278,7 +278,7 @@ HB_FUNC( WVW_XBDESTROY )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int nCtrlId = hb_parni(2);
+      auto nCtrlId = hb_parni(2);
       PWVW_CTL wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 

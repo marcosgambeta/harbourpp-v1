@@ -91,7 +91,7 @@ HB_FUNC( TIMEOFDAY )
    if( hb_pcount() == 0 ) {
       hb_dateTimeStr(szResult);
    } else {
-      int iSeconds = hb_parni(1);
+      auto iSeconds = hb_parni(1);
       iSeconds %= 3600 * 24;
       hb_snprintf(szResult, sizeof(szResult), "%02d:%02d:%02d", iSeconds / 3600, (iSeconds % 3600) / 60, iSeconds % 60);
    }
@@ -101,8 +101,8 @@ HB_FUNC( TIMEOFDAY )
 
 HB_FUNC( HMS2D )
 {
-   int    iHour = hb_parni(1);
-   int    iMin  = hb_parni(2);
+   auto iHour = hb_parni(1);
+   auto iMin  = hb_parni(2);
    double dSec  = hb_parnd(3);
 
    hb_retnd(hb_timeEncode(iHour, iMin, static_cast<int>(dSec), static_cast<int>((static_cast<double>(dSec - static_cast<double>(static_cast<int>(dSec)))) * 1000)));

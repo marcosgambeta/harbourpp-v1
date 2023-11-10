@@ -7545,10 +7545,8 @@ HB_FUNC( WVW_GETTITLE )
 
 HB_FUNC( WVW_GETRGBCOLOR )
 {
-   int iColor;
-
    if( !HB_ISNIL(1) ) {
-      iColor = hb_parni(1);
+      auto iColor = hb_parni(1);
       if( iColor >= 0 && iColor < 16 ) { /* Test bound error */
          hb_retnl(_COLORS[iColor]);
       }

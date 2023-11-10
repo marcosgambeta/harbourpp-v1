@@ -85,10 +85,10 @@ HB_FUNC( WVW_GBCREATE )
    HWND hWnd = nullptr;
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = HB_ISARRAY(9) ? hb_parvni(9, 1) : -1;
       int iOffLeft   = HB_ISARRAY(9) ? hb_parvni(9, 2) : -1;
@@ -124,10 +124,10 @@ HB_FUNC( WVW_RBCREATE )
    HWND hWnd = nullptr;
 
    if( wvw_win && HB_ISEVALITEM(8) ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
       int iOffLeft   = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
@@ -534,7 +534,7 @@ HB_FUNC( WVW_SETBITMAPRESOURCEID )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iBitmapType = hb_parni(2);
+      auto iBitmapType = hb_parni(2);
 
       if( iBitmapType == 0 ) {
          TBADDBITMAP tbab;
@@ -574,8 +574,8 @@ HB_FUNC( WVW_DRAWBITMAP )
    DWORD   dwraster = static_cast<DWORD>(hb_parnldef(3, SRCCOPY));
    HBITMAP hBitmap  = hbwapi_par_raw_HBITMAP(2);
    BITMAP  bm;
-   int     nWidthDest  = hb_parni(6);
-   int     nHeightDest = hb_parni(7);
+   auto nWidthDest  = hb_parni(6);
+   auto nHeightDest = hb_parni(7);
 
    SelectObject(hDCmem, hBitmap);
    GetObject(hBitmap, sizeof(bm), static_cast<LPVOID>(&bm));
@@ -962,8 +962,8 @@ HB_FUNC( WVW_SETMOUSEPOS )
    if( wvw_win ) {
       POINT xy;
 
-      int iRow = hb_parni(2);
-      int iCol = hb_parni(3);
+      auto iRow = hb_parni(2);
+      auto iCol = hb_parni(3);
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iRow, &iCol, nullptr, nullptr);
 
@@ -999,10 +999,10 @@ HB_FUNC( WVW_FILLRECTANGLE )
    PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int iOffTop    = hb_parvni(9, 1);
       int iOffLeft   = hb_parvni(9, 2);
@@ -1129,7 +1129,7 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
          PHB_ITEM pFunc     = nullptr;
          HWND     hDlg      = nullptr;
          int      iType     = 0;
-         int      iResource = hb_parni(4);
+         auto iResource = hb_parni(4);
 
          if( HB_IS_EVALITEM(pFirst) ) {
             /* pFunc is pointing to stored code block (later) */
@@ -1206,7 +1206,7 @@ HB_FUNC( WVW_CREATEDIALOGMODAL )
 
       if( iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModal)) ) {
          auto pFirst = hb_param(3, Harbour::Item::ANY);
-         int      iResource = hb_parni(4);
+         auto iResource = hb_parni(4);
          INT_PTR  iResult   = 0;
          HWND     hParent   = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : wvw_zer->hWnd;
 
@@ -1256,10 +1256,10 @@ HB_FUNC( WVW_SAVESCREEN )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       HBITMAP  hBmp, oldBmp;
       POINT    xy;
@@ -1304,10 +1304,10 @@ HB_FUNC( WVW_RESTSCREEN )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2),
-          iLeft   = hb_parni(3),
-          iBottom = hb_parni(4),
-          iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       POINT xy;
       int   iWidth, iHeight;

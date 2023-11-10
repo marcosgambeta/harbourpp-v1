@@ -610,7 +610,7 @@ HB_FUNC( MXMLGETTEXT )
 
    if( node )
    {
-      int whitespace = hb_parni(2);
+      auto whitespace = hb_parni(2);
 
       hb_retstr_utf8(mxmlGetText(node, &whitespace));
       hb_storni(whitespace, 2);

@@ -682,7 +682,7 @@ HB_FUNC( FT_FSELECT )
 
    if( HB_ISNUM(1) )
    {
-      int newArea = hb_parni(1);
+      auto newArea = hb_parni(1);
 
       if( newArea <= TEXT_WORKAREAS )
       {

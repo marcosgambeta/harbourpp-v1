@@ -127,7 +127,7 @@ HB_FUNC( HB_SSL_STATIC )
 
 HB_FUNC( OPENSSL_VERSION )
 {
-   int value = hb_parni(1);
+   auto value = hb_parni(1);
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
    switch( value ) {

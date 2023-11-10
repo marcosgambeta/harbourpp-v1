@@ -181,7 +181,7 @@ HB_FUNC( WVW_DRAWTOOLBUTTONSTATE )
    APP_DATA * s_sApp      = hb_gt_wvwGetAppData();
    POINT      xy{};
    int        iTop, iLeft, iBottom, iRight;
-   int        iState = hb_parni(7);
+   auto iState = hb_parni(7);
 
    USHORT usTop    = static_cast<USHORT>(hb_parni(2)),
           usLeft   = static_cast<USHORT>(hb_parni(3)),
@@ -673,7 +673,7 @@ HB_FUNC( WVW_DRAWPROGRESSBAR )
    int  iLeft;
    int  iBottom;
    int  iRight;
-   int  iPercent, iBarUpto, iDirection;
+   int  iBarUpto, iDirection;
    BOOL bVertical, bImage;
 
    COLORREF crBarColor;
@@ -697,7 +697,7 @@ HB_FUNC( WVW_DRAWPROGRESSBAR )
    iBottom = xy.y - 1 + hb_parvni(6, 3);
    iRight  = xy.x - 1 + hb_parvni(6, 4);
 
-   iPercent   = hb_parni(7);
+   auto iPercent = hb_parni(7);
    bImage     = HB_ISNIL(10) ? FALSE : TRUE;
    bVertical  = HB_ISNIL(11) ? FALSE : hb_parl(11);
    iDirection = HB_ISNIL(12) ? 0 : hb_parni(12);
@@ -1955,7 +1955,7 @@ HB_FUNC( WVW_DRAWGRIDHORZ )
 {
    UINT       usWinNum = WVW_WHICH_WINDOW;
    USHORT     usAtRow  = static_cast<USHORT>(hb_parni(2));
-   int        iRows    = hb_parni(5);
+   auto iRows = hb_parni(5);
    int        y;
    int        iLeft, iRight;
    WIN_DATA * pWindowData;
@@ -2010,7 +2010,7 @@ HB_FUNC( WVW_DRAWGRIDVERT )
    int        iTop, iBottom, x;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    int        iCharHeight, iCharWidth;
-   int        iTabs = hb_parni(5);
+   auto iTabs = hb_parni(5);
    WIN_DATA * pWindowData;
    USHORT     usTop, usBottom, usCol;
    APP_DATA * s_sApp = hb_gt_wvwGetAppData();
@@ -2208,7 +2208,7 @@ HB_FUNC( WVW_DRAWSTATUSBAR )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    APP_DATA * s_sApp      = hb_gt_wvwGetAppData();
-   int        iPanels     = hb_parni(2);
+   auto iPanels = hb_parni(2);
    int        iNext;
    int        iTop, iLeft, iBottom, iRight;
    POINT      xy{};

@@ -403,7 +403,7 @@ HB_FUNC( WVW_TBINDEX2CMD )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    HWND       hWndTB      = pWindowData->hToolBar;
-   int        iIndex      = hb_parni(2);
+   auto iIndex = hb_parni(2);
    int        iCmd        = IndexToCommand(hWndTB, iIndex);
 
    hb_retni(static_cast<int>(iCmd > 0 ? iCmd : -1));
@@ -418,7 +418,7 @@ HB_FUNC( WVW_TBCMD2INDEX )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    HWND       hWndTB      = pWindowData->hToolBar;
-   int        iCmd        = hb_parni(2);
+   auto iCmd = hb_parni(2);
 
    hb_retni(CommandToIndex(hWndTB, iCmd));
 }

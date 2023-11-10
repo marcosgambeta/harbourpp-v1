@@ -117,12 +117,11 @@ static char s_xmoblock_sum(const char * szData, HB_SIZE nLen)
 HB_FUNC( XMOBLOCK )
 {
    HB_SIZE nLen, nSize;
-   int iBlock;
    HB_BOOL fCRC;
 
    auto szData = hb_parc(1);
    nLen = hb_parclen(1);
-   iBlock = hb_parni(2);
+   auto iBlock = hb_parni(2);
    fCRC = hb_parl(3);
    nSize = hb_parni(4) == 2 ? 1024 : 128;
 

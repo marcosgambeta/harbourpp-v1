@@ -306,7 +306,7 @@ HB_FUNC( ISLEAP )
 
 HB_FUNC( DAYSTOMONTH )
 {
-   int iMonth = hb_parni(1);
+   auto iMonth = hb_parni(1);
    HB_BOOL bLeap = hb_parl(2);
 
    hb_retni(ct_daystomonth(iMonth, bLeap));
@@ -314,7 +314,7 @@ HB_FUNC( DAYSTOMONTH )
 
 HB_FUNC( DAYSINMONTH )
 {
-   int iMonth = hb_parni(1);
+   auto iMonth = hb_parni(1);
    HB_BOOL bLeap = hb_parl(2);
 
    hb_retni(ct_daysinmonth(iMonth, bLeap));

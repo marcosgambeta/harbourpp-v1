@@ -790,7 +790,7 @@ HB_FUNC( HB_SERVICELOOP )
 
 HB_FUNC( HB_PUSHSIGNALHANDLER )
 {
-   int      iMask = hb_parni(1);
+   auto iMask = hb_parni(1);
    auto pFunc = hb_param(2, Harbour::Item::ANY);
 
    if( pFunc == nullptr || iMask == 0 || (!HB_IS_POINTER(pFunc) && !HB_IS_STRING(pFunc) && !HB_IS_BLOCK(pFunc)) ) {
@@ -853,8 +853,8 @@ HB_FUNC( HB_SIGNALDESC )
 {
 #if defined(HB_OS_UNIX)
 
-   int iSig    = hb_parni(1);
-   int iSubSig = hb_parni(2);
+   auto iSig = hb_parni(1);
+   auto iSubSig = hb_parni(2);
 
    switch( iSig ) {
       case SIGSEGV: switch( iSubSig ) {
@@ -932,7 +932,7 @@ HB_FUNC( HB_SIGNALDESC )
 
 #elif defined(HB_OS_WIN)
 
-   int iSig    = hb_parni(1);
+   auto iSig = hb_parni(1);
 
    if( iSig == 0 ) { /* exception */
       DWORD dwSubSig = static_cast<DWORD>(hb_parnl(2));

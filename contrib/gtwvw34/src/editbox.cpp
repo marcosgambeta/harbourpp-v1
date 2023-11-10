@@ -464,10 +464,10 @@ HB_FUNC( WVW_EBCREATE )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      int iTop    = hb_parni(2);
-      int iLeft   = hb_parni(3);
-      int iBottom = hb_parni(4);
-      int iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       int nEBType = hb_parl(8) ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE;
 
@@ -571,7 +571,7 @@ HB_FUNC( WVW_EBDESTROY )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int nCtrlId = hb_parni(2);
+      auto nCtrlId = hb_parni(2);
       PWVW_CTL wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 

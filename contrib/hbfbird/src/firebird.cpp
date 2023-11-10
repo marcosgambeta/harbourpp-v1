@@ -120,7 +120,7 @@ HB_FUNC( FBCREATEDB )
       auto db_name = hb_parcx(1);
       auto user = hb_parcx(2);
       auto pass = hb_parcx(3);
-      int            page    = hb_parni(4);
+      auto page = hb_parni(4);
       auto charset = hb_parcx(5);
       unsigned short dialect = static_cast<unsigned short>(hb_parni(6));
       auto collate = hb_parcx(7);

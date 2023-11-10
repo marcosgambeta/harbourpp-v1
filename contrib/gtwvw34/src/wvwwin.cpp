@@ -100,7 +100,7 @@ HB_FUNC( WVW_NOPENWINDOW )
 
       PWVW_WIN wvw_par;
 
-      int iRow1, iCol1, iRow2, iCol2;
+      int iRow2, iCol2;
       int nWin;
 
       HWND hWndParent;
@@ -155,8 +155,8 @@ HB_FUNC( WVW_NOPENWINDOW )
          hb_itemRelease(pItem);
       }
 
-      iRow1 = hb_parni(2);
-      iCol1 = hb_parni(3);
+      auto iRow1 = hb_parni(2);
+      auto iCol1 = hb_parni(3);
       iRow2 = hb_parnidef(4, wvw_par->ROWS - 1);
       iCol2 = hb_parnidef(5, wvw_par->COLS - 1);
 
@@ -307,7 +307,7 @@ HB_FUNC( WVW_NSETCURWINDOW )
       hb_retni(wvw->iCurWindow);
 
       if( HB_ISNUM(1) ) {
-         int nWin = hb_parni(1);
+         auto nWin = hb_parni(1);
 
          if( nWin >= 0 && nWin < wvw->iNumWindows ) {
             hb_gt_wvw_SetCurWindow(nWin);
@@ -793,10 +793,10 @@ HB_FUNC( WVW_INVALIDATERECT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iTop    = hb_parni(2);
-      int iLeft   = hb_parni(3);
-      int iBottom = hb_parni(4);
-      int iRight  = hb_parni(5);
+      auto iTop    = hb_parni(2);
+      auto iLeft   = hb_parni(3);
+      auto iBottom = hb_parni(4);
+      auto iRight  = hb_parni(5);
 
       RECT  rc;
       POINT xy;
@@ -822,8 +822,8 @@ HB_FUNC( WVW_CLIENTTOSCREEN )
    POINT    xy{};
 
    if( wvw_win ) {
-      int iTop  = hb_parni(2);
-      int iLeft = hb_parni(3);
+      auto iTop  = hb_parni(2);
+      auto iLeft = hb_parni(3);
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, nullptr, nullptr);
 
