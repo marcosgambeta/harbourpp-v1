@@ -1711,7 +1711,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          pInfo->pResult = hb_itemPutL(pInfo->pResult, hb_gt_win_IsFullScreen());
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL ) {
             bool fNewValue = hb_itemGetL(pInfo->pNewVal);
-            if( hb_itemGetL(pInfo->pResult) != fNewValue ) {
+            if( static_cast<bool>(hb_itemGetL(pInfo->pResult)) != fNewValue ) {
                hb_gt_win_FullScreen(fNewValue);
             }
          }
