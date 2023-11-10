@@ -796,7 +796,7 @@ static void hb_ntxTagSetScope(LPTAGINFO pTag, HB_USHORT nScope, PHB_ITEM pItem)
 
       pScope = fTop ? &pTag->top : &pTag->bottom;
 
-      pScope->scopeKey = hb_ntxKeyPutItem(pScope->scopeKey, pScopeVal, (fTop == pTag->AscendKey) ? NTX_IGNORE_REC_NUM : NTX_MAX_REC_NUM, pTag, true, &pScope->scopeKeyLen);
+      pScope->scopeKey = hb_ntxKeyPutItem(pScope->scopeKey, pScopeVal, (fTop == static_cast<bool>(pTag->AscendKey)) ? NTX_IGNORE_REC_NUM : NTX_MAX_REC_NUM, pTag, true, &pScope->scopeKeyLen);
 
       if( pScope->scopeItem == nullptr ) {
          pScope->scopeItem = hb_itemNew(nullptr);
@@ -6120,7 +6120,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    if( !fLocked && !hb_ntxIndexLockWrite(pIndex, fCompound) ) {
       errCode = Harbour::FAILURE;
    } else {
-      if( pIndex->Compound != fCompound ) {
+      if( static_cast<bool>(pIndex->Compound) != fCompound ) {
          pIndex->Compound = fCompound;
          if( fCompound ) {
             if( !pIndex->HeaderBuff ) {
