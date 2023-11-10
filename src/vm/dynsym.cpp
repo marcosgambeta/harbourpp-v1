@@ -430,7 +430,7 @@ PHB_SYMB hb_dynsymFindSymbol(const char * szName)
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymFindSymbol(%s)", szName));
 #endif
 
-   PHB_DYNS pDynSym = hb_dynsymFind(szName);
+   auto pDynSym = hb_dynsymFind(szName);
    return pDynSym ? pDynSym->pSymbol : nullptr;
 }
 

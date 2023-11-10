@@ -408,7 +408,7 @@ static void hb_vmDoModuleQuitFunctions(void)
  */
 static void hb_vmDoInitHVM(void)
 {
-   PHB_DYNS pDynSym = hb_dynsymFind("__HBVMINIT");
+   auto pDynSym = hb_dynsymFind("__HBVMINIT");
 
    if( pDynSym && pDynSym->pSymbol->value.pFunPtr ) {
       hb_vmPushSymbol(pDynSym->pSymbol);
@@ -420,7 +420,7 @@ static void hb_vmDoInitHVM(void)
 /* call __SetHelpK() if HELP() function is linked */
 static void hb_vmDoInitHelp(void)
 {
-   PHB_DYNS pDynSym = hb_dynsymFind("HELP");
+   auto pDynSym = hb_dynsymFind("HELP");
 
    if( pDynSym && pDynSym->pSymbol->value.pFunPtr ) {
       pDynSym = hb_dynsymFind("__SETHELPK");
@@ -1187,7 +1187,7 @@ void hb_vmInit(HB_BOOL bStartMainProc)
    /* This is undocumented CA-Cl*pper, if there's a function called _APPMAIN()
       it will be executed first. [vszakats] */
    {
-      PHB_DYNS pDynSym = hb_dynsymFind("_APPMAIN");
+      auto pDynSym = hb_dynsymFind("_APPMAIN");
 
       if( pDynSym && pDynSym->pSymbol->value.pFunPtr ) {
          s_pSymStart = pDynSym->pSymbol;
@@ -7579,7 +7579,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
 
       if( fPublic ) {
          if( fDynLib && HB_VM_ISFUNC(pSymbol) ) {
-            PHB_DYNS pDynSym = hb_dynsymFind(pSymbol->szName);
+            auto pDynSym = hb_dynsymFind(pSymbol->szName);
 
             if( pDynSym ) {
                if( fOverLoad && (pSymbol->scope.value & HB_FS_LOCAL) != 0 ) {

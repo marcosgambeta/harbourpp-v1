@@ -4752,7 +4752,7 @@ static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
       nPos = 0;
       while( (pValue = hb_arrayGetItemPtr(pArray, ++nPos)) != nullptr ) {
          auto pszMethod = hb_arrayGetCPtr(pValue, 1);
-         PHB_DYNS pVarSym = hb_dynsymFind(pszMethod);
+         auto pVarSym = hb_dynsymFind(pszMethod);
          auto pNewVal = hb_arrayGetItemPtr(pValue, 2);
          HB_USHORT uiSuper = uiClass;
 
@@ -5127,7 +5127,7 @@ HB_FUNC( __CLSVERIFY )
       hb_arrayNew(pReturn, pClass->uiMethods);
       do {
          if( pMethod->pMessage ) {
-            PHB_DYNS pDynSym = hb_dynsymFind(pMethod->pMessage->pSymbol->szName);
+            auto pDynSym = hb_dynsymFind(pMethod->pMessage->pSymbol->szName);
 
             if( pMethod->pMessage != pDynSym || hb_clsFindMsg(pClass, pDynSym) != pMethod ) {
                hb_arraySetC(pReturn, ++nPos, pMethod->pMessage->pSymbol->szName);

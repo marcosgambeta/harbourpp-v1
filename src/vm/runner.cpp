@@ -263,7 +263,7 @@ static void hb_hrbUnLoad(PHRB_BODY pHrbBody)
    if( pHrbBody->pDynFunc ) {
       for( HB_ULONG ul = 0; ul < pHrbBody->ulFuncs; ul++ ) {
          if( pHrbBody->pDynFunc[ul].szName && pHrbBody->pDynFunc[ul].pcodeFunc.pCode ) {
-            PHB_DYNS pDyn = hb_dynsymFind(pHrbBody->pDynFunc[ul].szName);
+            auto pDyn = hb_dynsymFind(pHrbBody->pDynFunc[ul].szName);
             if( pDyn && pDyn->pSymbol->value.pCodeFunc == &pHrbBody->pDynFunc[ul].pcodeFunc ) {
                pDyn->pSymbol->value.pCodeFunc = nullptr;
             }

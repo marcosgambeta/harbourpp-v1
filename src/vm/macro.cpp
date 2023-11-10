@@ -889,7 +889,7 @@ HB_FUNC( MEMVARBLOCK )
       hb_strncpyUpperTrim(szVarName, szName, sizeof(szVarName) - 1);
 
       if( *szVarName ) {
-         PHB_DYNS pVarSym = hb_dynsymFind(szVarName);
+         auto pVarSym = hb_dynsymFind(szVarName);
 
          if( pVarSym && hb_dynsymIsMemvar(pVarSym) ) {
             HB_STACK_TLS_PRELOAD
@@ -929,7 +929,7 @@ HB_FUNC( FIELDBLOCK )
           * will register big number of completely unnecessary
           * symbols. [druzus]
           */
-         PHB_DYNS pFieldSym = hb_dynsymFind(szFieldName);
+         auto pFieldSym = hb_dynsymFind(szFieldName);
          if( pFieldSym ) {
             HB_STACK_TLS_PRELOAD
             hb_macroSetGetBlock(pFieldSym, hb_stackReturnItem(), 0, false);
@@ -952,7 +952,7 @@ HB_FUNC( FIELDWBLOCK )
       hb_strncpyUpperTrim(szFieldName, szName, sizeof(szFieldName) - 1);
 
       if( *szFieldName ) {
-         PHB_DYNS pFieldSym = hb_dynsymFind(szFieldName);
+         auto pFieldSym = hb_dynsymFind(szFieldName);
          if( pFieldSym ) {
             HB_STACK_TLS_PRELOAD
             hb_macroSetGetBlock(pFieldSym, hb_stackReturnItem(), iWorkArea, false);
