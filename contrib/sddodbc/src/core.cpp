@@ -240,7 +240,7 @@ static HB_ERRCODE odbcConnect(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 
          if( SQL_SUCCEEDED(SQLDriverConnect(hConnect,
                                             nullptr,
-                                            static_cast<SQLTCHAR*>(const_cast<O_HB_CHAR*>(pchConStr)),
+                                            reinterpret_cast<SQLTCHAR*>(const_cast<O_HB_CHAR*>(pchConStr)),
                                             static_cast<SQLSMALLINT>(nConnLen),
                                             cBuffer,
                                             HB_SIZEOFARRAY(cBuffer),
@@ -320,7 +320,7 @@ static HB_ERRCODE odbcExecute(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 
    const O_HB_CHAR * pchStatement = O_HB_ITEMGETSTR(pItem, &hStatement, &nStatementLen);
    SQLRETURN result = SQLExecDirect(hStmt,
-      static_cast<SQLTCHAR*>(const_cast<O_HB_CHAR*>(pchStatement)),
+      reinterpret_cast<SQLTCHAR*>(const_cast<O_HB_CHAR*>(pchStatement)),
       static_cast<SQLINTEGER>(nStatementLen));
    hb_strfree(hStatement);
 
@@ -375,7 +375,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
    }
 
    O_HB_CHAR * pchQuery = O_HB_CHARDUP(pArea->szQuery);
-   SQLRETURN result = SQLExecDirect(hStmt, static_cast<SQLTCHAR*>(const_cast<O_HB_CHAR*>(pchQuery)), static_cast<SQLINTEGER>(O_HB_STRLEN(pchQuery)));
+   SQLRETURN result = SQLExecDirect(hStmt, reinterpret_cast<SQLTCHAR*>(const_cast<O_HB_CHAR*>(pchQuery)), static_cast<SQLINTEGER>(O_HB_STRLEN(pchQuery)));
    hb_xfree(pchQuery);
 
    if( !SQL_SUCCEEDED(result) ) {
@@ -440,7 +440,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
 
       char * pszName;
       DBFIELDINFO dbFieldInfo{};
-      dbFieldInfo.atomName = pszName = O_HB_OSSTRDUP(static_cast<O_HB_CHAR*>(cName));
+      dbFieldInfo.atomName = pszName = O_HB_OSSTRDUP(reinterpret_cast<O_HB_CHAR*>(cName));
 
       /*
          We do mapping of many SQL types to one Harbour field type here, so, we need store
