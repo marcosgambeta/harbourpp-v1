@@ -158,7 +158,8 @@ HB_FUNC( WIN_TEXTOUT )
          }
 
          if( iWidth < 0 && nLen < 1024 ) {
-            int n = static_cast<int>(nLen), aFixed[1024];
+            auto n = static_cast<int>(nLen);
+            int aFixed[1024];
 
             iWidth = -iWidth;
 

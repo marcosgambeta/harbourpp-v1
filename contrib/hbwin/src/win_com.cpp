@@ -67,7 +67,7 @@ HB_FUNC( WIN_COMOPEN )
    auto iPort = hb_parni(1);
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) ) {
-      DWORD dwBaudRate = static_cast<DWORD>(hb_parnl(2));
+      auto dwBaudRate = static_cast<DWORD>(hb_parnl(2));
       auto iParity = hb_parni(3);
       auto iByteSize = hb_parni(4);
       auto iStopBits = hb_parni(5);
@@ -197,7 +197,7 @@ HB_FUNC( WIN_COMWRITE )
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE ) {
       auto lpBuffer = hb_parcx(2);
-      DWORD dwNumberofBytesToWrite = static_cast<DWORD>(hb_parclen(2));
+      auto dwNumberofBytesToWrite = static_cast<DWORD>(hb_parclen(2));
       DWORD dwNumberofBytesWritten;
 
       s_PortData[iPort].iFunction = HB_WIN_COM_FUN_WRITEFILE;
@@ -219,7 +219,7 @@ HB_FUNC( WIN_COMREAD )
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE ) {
-      DWORD dwNumberOfBytesToRead = static_cast<DWORD>(hb_parclen(2));
+      auto dwNumberOfBytesToRead = static_cast<DWORD>(hb_parclen(2));
       DWORD dwNumberOfBytesRead;
 
       auto lpBuffer = static_cast<char*>(hb_xgrab(dwNumberOfBytesToRead + 1));
@@ -247,7 +247,7 @@ HB_FUNC( WIN_COMRECV )
    HANDLE hCommPort;
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE ) {
-      DWORD dwNumberOfBytesToRead = static_cast<DWORD>(hb_parnl(2));
+      auto dwNumberOfBytesToRead = static_cast<DWORD>(hb_parnl(2));
       DWORD dwNumberOfBytesRead;
 
       auto lpBuffer = static_cast<char*>(hb_xgrab(dwNumberOfBytesToRead + 1));

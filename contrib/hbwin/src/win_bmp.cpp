@@ -90,7 +90,7 @@ HB_FUNC( WIN_BITMAPTYPE )
 HB_FUNC( WIN_LOADBITMAPFILE )
 {
    HB_SIZE nSize;
-   char * pBuffer = reinterpret_cast<char*>(hb_fileLoad(hb_parcx(1), HB_MAX_BMP_SIZE, &nSize));
+   auto pBuffer = reinterpret_cast<char*>(hb_fileLoad(hb_parcx(1), HB_MAX_BMP_SIZE, &nSize));
 
    if( pBuffer ) {
       /* FIXME: No check is done on read data from disk which is a large security hole
@@ -160,7 +160,7 @@ HB_FUNC( WIN_DRAWBITMAP )
    BYTE * pBits = nullptr;
    HDC hDC = hbwapi_par_HDC(1);
    HB_SIZE nSize = hb_parclen(2);
-   BITMAPFILEHEADER * pbmfh = reinterpret_cast<BITMAPFILEHEADER*>(const_cast<char*>(hb_parc(2)));
+   auto pbmfh = reinterpret_cast<BITMAPFILEHEADER*>(const_cast<char*>(hb_parc(2)));
    int iType = hbwin_bitmapType(pbmfh, nSize);
 
    /* FIXME: No check is done on 2nd parameter which is a large security hole

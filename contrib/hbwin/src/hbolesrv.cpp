@@ -220,7 +220,7 @@ static ULONG STDMETHODCALLTYPE AddRef(IDispatch * lpThis)
 
 static ULONG STDMETHODCALLTYPE Release(IDispatch * lpThis)
 {
-   IHbOleServer * pHbOleServer = reinterpret_cast<IHbOleServer*>(lpThis);
+   auto pHbOleServer = reinterpret_cast<IHbOleServer*>(lpThis);
 
    if( --pHbOleServer->count == 0 ) {
       if( pHbOleServer->pAction ) {
@@ -490,7 +490,7 @@ static ULONG STDMETHODCALLTYPE classRelease(IClassFactory * lpThis)
 static HRESULT s_createHbOleObject(REFIID riid, void ** ppvObj, PHB_ITEM pAction, HB_BOOL fGuids)
 {
    HRESULT hr;
-   IHbOleServer * thisobj = static_cast<IHbOleServer*>(hb_xalloc(sizeof(IHbOleServer)));
+   auto thisobj = static_cast<IHbOleServer*>(hb_xalloc(sizeof(IHbOleServer)));
 
    if( !thisobj ) {
       if( pAction ) {

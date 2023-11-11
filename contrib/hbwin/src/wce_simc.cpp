@@ -90,8 +90,8 @@ HB_FUNC( WCE_SIMPHONEBOOKSTATUS ) /* hSim, nLocation, @nTotal, @nUsed */
 HB_FUNC( WCE_SIMREADPHONEBOOKENTRY ) /* hSim, nLocation, nPos, @aEntry */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
-   HSIM hSim = static_cast<HSIM>(hb_parptr(1));
-   DWORD dwIndex = static_cast<DWORD>(hb_parnl(3));
+   auto hSim = static_cast<HSIM>(hb_parptr(1));
+   auto dwIndex = static_cast<DWORD>(hb_parnl(3));
    SIMPHONEBOOKENTRY PhoneEntry;
 
    PhoneEntry.cbSize = sizeof(SIMPHONEBOOKENTRY);

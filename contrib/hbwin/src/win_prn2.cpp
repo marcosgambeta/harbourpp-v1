@@ -373,7 +373,7 @@ HB_FUNC( WIN_PRINTDATARAW )
 
          if( StartDocPrinter(hPrinter, 1, reinterpret_cast<LPBYTE>(&DocInfo)) != 0 ) {
             if( StartPagePrinter(hPrinter) != 0 ) {
-               HB_BYTE * pbData = reinterpret_cast<HB_BYTE*>(const_cast<char*>(hb_parc(2)));
+               auto pbData = reinterpret_cast<HB_BYTE*>(const_cast<char*>(hb_parc(2)));
                HB_SIZE nLen = hb_parclen(2);
 
                nResult = 0;

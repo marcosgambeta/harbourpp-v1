@@ -182,8 +182,6 @@ HB_FUNC( WIN_SERVICESTOP )
 
 HB_FUNC( WIN_SERVICESTART )
 {
-   HB_BOOL bRetVal;
-
    SERVICE_TABLE_ENTRY lpServiceTable[2];
 
    HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), s_lpServiceName, HB_SIZEOFARRAY(s_lpServiceName));
@@ -216,7 +214,7 @@ HB_FUNC( WIN_SERVICESTART )
    lpServiceTable[1].lpServiceName = nullptr;
    lpServiceTable[1].lpServiceProc = nullptr;
 
-   bRetVal = static_cast<HB_BOOL>(StartServiceCtrlDispatcher(lpServiceTable));
+   auto bRetVal = static_cast<HB_BOOL>(StartServiceCtrlDispatcher(lpServiceTable));
    hbwapi_SetLastError(GetLastError());
    hb_retl(bRetVal);
 }

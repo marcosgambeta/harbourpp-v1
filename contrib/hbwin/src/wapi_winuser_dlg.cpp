@@ -121,7 +121,7 @@ HB_FUNC( WAPI_SETDLGITEMTEXT )
 HB_FUNC( WAPI_GETDLGITEMTEXT )
 {
    HWND    nItem    = GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2));
-   int     nSize    = static_cast<int>(SendMessage(nItem, WM_GETTEXTLENGTH, 0, 0));
+   auto nSize = static_cast<int>(SendMessage(nItem, WM_GETTEXTLENGTH, 0, 0));
    auto lpResult = static_cast<TCHAR*>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
 
    UINT nResult = GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, nSize + 1);

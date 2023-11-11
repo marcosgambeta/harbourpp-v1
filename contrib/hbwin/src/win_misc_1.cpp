@@ -118,7 +118,7 @@ HB_FUNC( WIN_ANSITOWIDE )
 HB_FUNC( WIN_WIDETOANSI )
 {
    HB_SIZE nLen = hb_parclen(1);
-   LPCWSTR lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
+   auto lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
    DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
    auto lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
 
@@ -185,7 +185,7 @@ HB_FUNC( WIN_HIWORD )
 
 HB_FUNC( WIN_SYSREFRESH )
 {
-   DWORD dwMsec = static_cast<DWORD>(hb_parnl(1));
+   auto dwMsec = static_cast<DWORD>(hb_parnl(1));
 
    HANDLE hDummyEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 

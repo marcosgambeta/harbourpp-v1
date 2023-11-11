@@ -199,7 +199,7 @@ HB_FUNC( WAPI_ENABLESCROLLBAR )
 /* BOOL GetScrollBarInfo(HWND hwnd, LONG idObject, PSCROLLBARINFO psbi); */
 HB_FUNC( WAPI_GETSCROLLBARINFO )
 {
-   PSCROLLBARINFO sbi = static_cast<PSCROLLBARINFO>(hbwapi_par_STRUCT(3));
+   auto sbi = static_cast<PSCROLLBARINFO>(hbwapi_par_STRUCT(3));
    BOOL bSuccess;
 
    memset(&sbi, 0, sizeof(SCROLLBARINFO));
@@ -220,7 +220,7 @@ HB_FUNC( WAPI_GETSCROLLBARINFO )
 /* BOOL GetScrollInfo(HWND hwnd, int fnBar, LPSCROLLINFO lpsi); */
 HB_FUNC( WAPI_GETSCROLLINFO )
 {
-   LPSCROLLINFO si = reinterpret_cast<LPSCROLLINFO>(const_cast<char*>(hbwapi_par_raw_STRUCT(3)));
+   auto si = reinterpret_cast<LPSCROLLINFO>(const_cast<char*>(hbwapi_par_raw_STRUCT(3)));
    BOOL         bSuccess;
 
    bSuccess = GetScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), si);
@@ -288,7 +288,7 @@ HB_FUNC( WAPI_SCROLLWINDOWEX )
 /* int SetScrollInfo(HWND hwnd, int fnBar, LPCSCROLLINFO lpsi, BOOL fRedraw); */
 HB_FUNC( WAPI_SETSCROLLINFO )
 {
-   LPSCROLLINFO si = reinterpret_cast<LPSCROLLINFO>(const_cast<char*>(hbwapi_par_raw_STRUCT(3)));
+   auto si = reinterpret_cast<LPSCROLLINFO>(const_cast<char*>(hbwapi_par_raw_STRUCT(3)));
 
    hbwapi_ret_NI(SetScrollInfo(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), si, HB_ISLOG(4) ? hbwapi_par_BOOL(4) : TRUE));
 }
