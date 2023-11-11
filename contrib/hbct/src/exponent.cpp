@@ -73,9 +73,7 @@ HB_FUNC( MANTISSA )
 
 #else
 
-   double dValue;
-
-   dValue = hb_parnd(1);
+   auto dValue = hb_parnd(1);
 
    if( dValue == 0.0 ) {
       hb_retnd(0.0);
@@ -122,9 +120,8 @@ HB_FUNC( EXPONENT )
 #else
 
    int iExponent = 0;
-   double dValue;
 
-   dValue = hb_parnd(1);
+   auto dValue = hb_parnd(1);
 
    if( dValue == 0.0 ) {
       hb_retni(0);

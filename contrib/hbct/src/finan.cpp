@@ -58,9 +58,9 @@
 HB_FUNC( FV )
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      double dPayment = hb_parnd(1);
-      double dRate = hb_parnd(2);
-      double dTime = hb_parnd(3);
+      auto dPayment = hb_parnd(1);
+      auto dRate = hb_parnd(2);
+      auto dTime = hb_parnd(3);
       double dResult;
 
       if( dRate == 0.0 ) {
@@ -100,9 +100,9 @@ HB_FUNC( FV )
 HB_FUNC( PV )
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      double dPayment = hb_parnd(1);
-      double dRate = hb_parnd(2);
-      double dTime = hb_parnd(3);
+      auto dPayment = hb_parnd(1);
+      auto dRate = hb_parnd(2);
+      auto dTime = hb_parnd(3);
       double dResult;
 
       if( dRate == 0.0 ) {
@@ -142,9 +142,9 @@ HB_FUNC( PV )
 HB_FUNC( PAYMENT )
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      double dCapital = hb_parnd(1);
-      double dRate = hb_parnd(2);
-      double dTime = hb_parnd(3);
+      auto dCapital = hb_parnd(1);
+      auto dRate = hb_parnd(2);
+      auto dTime = hb_parnd(3);
       double dResult;
 
       if( dRate == 0.0 ) {
@@ -184,9 +184,9 @@ HB_FUNC( PAYMENT )
 HB_FUNC( PERIODS )
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      double dCapital = hb_parnd(1);
-      double dPayment = hb_parnd(2);
-      double dRate = hb_parnd(3);
+      auto dCapital = hb_parnd(1);
+      auto dPayment = hb_parnd(2);
+      auto dRate = hb_parnd(3);
       double dResult;
 
       if( dPayment <= dCapital * dRate ) {
@@ -239,9 +239,9 @@ HB_FUNC( PERIODS )
 HB_FUNC( RATE )
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      double dCapital = hb_parnd(1);
-      double dPayment = hb_parnd(2);
-      double dTime = hb_parnd(3);
+      auto dCapital = hb_parnd(1);
+      auto dPayment = hb_parnd(2);
+      auto dTime = hb_parnd(3);
       double dEpsilon = 0.00001;        /* minimal to consider 2 numbers as equal */
       double dScale = 1.0;      /* fractional step */
       double j = 1.0;           /* index */

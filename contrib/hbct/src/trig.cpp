@@ -74,7 +74,8 @@ HB_FUNC( SIN )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = sin(dArg);
@@ -107,7 +108,8 @@ HB_FUNC( COS )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = cos(dArg);
@@ -140,7 +142,8 @@ HB_FUNC( TAN )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = tan(dArg);
@@ -173,7 +176,8 @@ HB_FUNC( COT )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = tan(dArg);
@@ -203,7 +207,8 @@ HB_FUNC( ASIN )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = asin(dArg);
@@ -236,7 +241,8 @@ HB_FUNC( ACOS )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = acos(dArg);
@@ -269,7 +275,8 @@ HB_FUNC( ATAN )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = atan(dArg);
@@ -309,8 +316,8 @@ HB_FUNC( ATN2 )
 {
    if( HB_ISNUM(1) && HB_ISNUM(2) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dY = hb_parnd(1);
-      double dX = hb_parnd(2);
+      auto dY = hb_parnd(1);
+      auto dX = hb_parnd(2);
       double dResult;
 
       hb_mathResetError(&hb_exc);
@@ -355,7 +362,8 @@ HB_FUNC( SINH )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = sinh(dArg);
@@ -394,7 +402,8 @@ HB_FUNC( COSH )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = cosh(dArg);
@@ -429,7 +438,8 @@ HB_FUNC( TANH )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = tanh(dArg);
@@ -467,7 +477,7 @@ HB_FUNC( TANH )
 HB_FUNC( RTOD )
 {
    if( HB_ISNUM(1) ) {
-      double dInput = hb_parnd(1);
+      auto dInput = hb_parnd(1);
       double dResult = (180.0 / CT_PI) * dInput;
 
       hb_retnd(dResult);
@@ -490,7 +500,7 @@ HB_FUNC( RTOD )
 HB_FUNC( DTOR )
 {
    if( HB_ISNUM(1) ) {
-      double dInput = hb_parnd(1);
+      auto dInput = hb_parnd(1);
       double dResult = (CT_PI / 180.0) * dInput;
 
       hb_retnd(dResult);

@@ -56,7 +56,7 @@
 HB_FUNC( CELSIUS )
 {
    if( HB_ISNUM(1) ) {
-      double dInput = hb_parnd(1);
+      auto dInput = hb_parnd(1);
       double dResult;
 
       dResult = (5.0 / 9.0) * (dInput - 32.0);
@@ -80,7 +80,7 @@ HB_FUNC( CELSIUS )
 HB_FUNC( FAHRENHEIT )
 {
    if( HB_ISNUM(1) ) {
-      double dInput = hb_parnd(1);
+      auto dInput = hb_parnd(1);
       double dResult;
 
       dResult = ((9.0 / 5.0) * dInput) + 32.0;

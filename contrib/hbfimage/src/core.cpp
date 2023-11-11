@@ -1392,7 +1392,7 @@ HB_FUNC( FI_ROTATECLASSIC )
    if( hb_FIBITMAP_is(1) && HB_ISNUM(2) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par(1);
-      double angle = hb_parnd(2);
+      auto angle = hb_parnd(2);
 
       // hb_FIBITMAP_ret(FreeImage_RotateClassic(dib, angle), true); NOTE: DEPRECATED (3.13) and REMOVED (3.18)
       hb_FIBITMAP_ret(FreeImage_Rotate(dib, angle), true);
@@ -1409,11 +1409,11 @@ HB_FUNC( FI_ROTATEEX )
    if( hb_FIBITMAP_is(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) && HB_ISNUM(5) && HB_ISNUM(6) && HB_ISLOG(7) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par(1);
-      double angle = hb_parnd(2);
-      double x_shift = hb_parnd(3);
-      double y_shift = hb_parnd(4);
-      double x_origin = hb_parnd(5);
-      double y_origin = hb_parnd(6);
+      auto angle = hb_parnd(2);
+      auto x_shift = hb_parnd(3);
+      auto y_shift = hb_parnd(4);
+      auto x_origin = hb_parnd(5);
+      auto y_origin = hb_parnd(6);
       BOOL use_mask = hb_fi_parl(7);
 
       hb_FIBITMAP_ret(FreeImage_RotateEx(dib, angle, x_shift, y_shift, x_origin, y_origin, use_mask), true);
@@ -1480,7 +1480,7 @@ HB_FUNC( FI_ADJUSTGAMMA )
    if( hb_FIBITMAP_is(1) && HB_ISNUM(2) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par(1);
-      double gamma = hb_parnd(2);
+      auto gamma = hb_parnd(2);
 
       hb_fi_retl(FreeImage_AdjustGamma(dib, gamma));
    }
@@ -1496,7 +1496,7 @@ HB_FUNC( FI_ADJUSTBRIGHTNESS )
    if( hb_FIBITMAP_is(1) && HB_ISNUM(2) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par(1);
-      double percentage = hb_parnd(2);
+      auto percentage = hb_parnd(2);
 
       hb_fi_retl(FreeImage_AdjustBrightness(dib, percentage));
    }
@@ -1512,7 +1512,7 @@ HB_FUNC( FI_ADJUSTCONTRAST )
    if( hb_FIBITMAP_is(1) && HB_ISNUM(2) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par(1);
-      double percentage = hb_parnd(2);
+      auto percentage = hb_parnd(2);
 
       hb_fi_retl(FreeImage_AdjustContrast(dib, percentage));
    }

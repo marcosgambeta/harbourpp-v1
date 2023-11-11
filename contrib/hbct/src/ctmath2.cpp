@@ -59,7 +59,8 @@ HB_FUNC( FLOOR )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = floor(dArg);
@@ -93,7 +94,8 @@ HB_FUNC( CEILING )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = ceil(dArg);
@@ -125,7 +127,7 @@ HB_FUNC( CEILING )
 HB_FUNC( SIGN )
 {
    if( HB_ISNUM(1) ) {
-      double dInput = hb_parnd(1);
+      auto dInput = hb_parnd(1);
       int iResult;
 
       if( dInput == 0.00 ) {
@@ -157,7 +159,8 @@ HB_FUNC( LOG10 )
 {
    if( HB_ISNUM(1) ) {
       HB_MATH_EXCEPTION hb_exc;
-      double dResult, dArg = hb_parnd(1);
+      double dResult;
+      auto dArg = hb_parnd(1);
 
       hb_mathResetError(&hb_exc);
       dResult = log10(dArg);

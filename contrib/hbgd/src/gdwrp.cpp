@@ -1441,8 +1441,8 @@ HB_FUNC( GDIMAGESTRINGFTEX )
       auto pRect = hb_param(2, Harbour::Item::ARRAY);
       auto fgcolor = hb_parni(3); /* foreground color */
       auto fontname = hb_parc(4);
-      double       ptsize   = hb_parnd(5); /* point size */
-      double       angle    = hb_parnd(6); /* angle value in radians */
+      auto ptsize = hb_parnd(5); /* point size */
+      auto angle = hb_parnd(6); /* angle value in radians */
       auto x = hb_parni(7);
       auto y = hb_parni(8);
       auto string = hb_parc(9);
@@ -1524,11 +1524,11 @@ HB_FUNC( GDIMAGESTRINGFTCIRCLE ) /* char *gdImageStringFTCircle(gdImagePtr im, i
 
       auto cx = hb_parni(2);
       auto cy = hb_parni(3);
-      double       radius      = hb_parnd(4);
-      double       textRadius  = hb_parnd(5);
-      double       fillPortion = hb_parnd(6);
+      auto radius = hb_parnd(4);
+      auto textRadius = hb_parnd(5);
+      auto fillPortion = hb_parnd(6);
       auto fontname = hb_parc(7);
-      double       points      = hb_parnd(8);
+      auto points = hb_parnd(8);
       auto top = hb_parcx(9);
       auto bottom = hb_parcx(10);
       auto fgcolor = hb_parni(11); /* foreground color */
@@ -1885,13 +1885,13 @@ HB_FUNC( GDIMAGECOPYROTATED ) /* void gdImageCopyRotated(gdImagePtr dst, gdImage
       gdImagePtr dst = hb_parGdImage(1);
       gdImagePtr src = hb_parGdImage(2);
 
-      double dstX  = hb_parnd(3);
-      double dstY  = hb_parnd(4);
-      auto srcX    = hb_parni(5);
-      auto srcY    = hb_parni(6);
-      auto srcW    = hb_parni(7);
-      auto srcH    = hb_parni(8);
-      auto angle   = hb_parni(9);
+      auto dstX = hb_parnd(3);
+      auto dstY = hb_parnd(4);
+      auto srcX = hb_parni(5);
+      auto srcY = hb_parni(6);
+      auto srcW = hb_parni(7);
+      auto srcH = hb_parni(8);
+      auto angle = hb_parni(9);
 
       /* Perform rotation */
       gdImageCopyRotated(dst, src, dstX, dstY, srcX, srcY, srcW, srcH, angle);

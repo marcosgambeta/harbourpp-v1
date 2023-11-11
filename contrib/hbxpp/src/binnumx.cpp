@@ -89,7 +89,7 @@ HB_FUNC( W2BIN )
 HB_FUNC( F2BIN )
 {
    char   buf[sizeof(double)];
-   double d = hb_parnd(1);
+   auto d = hb_parnd(1);
 
    HB_PUT_LE_DOUBLE(buf, d);
    hb_retclen(buf, sizeof(buf));
