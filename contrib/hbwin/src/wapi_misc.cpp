@@ -54,8 +54,7 @@ HB_SIZE hbwapi_tstrlen(const TCHAR * pText)
 
    HB_SIZE nLen = 0;
 
-   while( pText[nLen] != TEXT('\0') )
-   {
+   while( pText[nLen] != TEXT('\0') ) {
       ++nLen;
    }
 
@@ -86,14 +85,12 @@ TCHAR * hbwapi_tstrncat(TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen)
 
    pDest[nLen] = TEXT('\0');
 
-   while( nLen && *pDest )
-   {
+   while( nLen && *pDest ) {
       pDest++;
       nLen--;
    }
 
-   while( nLen && (*pDest++ = *pSource++) != TEXT('\0') )
-   {
+   while( nLen && (*pDest++ = *pSource++) != TEXT('\0') ) {
       nLen--;
    }
 
@@ -104,10 +101,8 @@ static TCHAR * hbwapi_FileNameAtSystemDir(const TCHAR * pFileName)
 {
    UINT nLen = GetSystemDirectory(nullptr, 0);
 
-   if( nLen )
-   {
-      if( pFileName )
-      {
+   if( nLen ) {
+      if( pFileName ) {
          nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
       }
 
@@ -115,16 +110,13 @@ static TCHAR * hbwapi_FileNameAtSystemDir(const TCHAR * pFileName)
 
       GetSystemDirectory(buffer, nLen);
 
-      if( pFileName )
-      {
+      if( pFileName ) {
          hbwapi_tstrncat(buffer, TEXT("\\"), nLen - 1);
          hbwapi_tstrncat(buffer, pFileName, nLen - 1);
       }
 
       return buffer;
-   }
-   else
-   {
+   } else {
       return hbwapi_tstrdup(pFileName);
    }
 }

@@ -231,14 +231,11 @@ HB_FUNC( WAPI_IMAGELIST_GETICONSIZE )
    int cx;
    int cy;
 
-   if( ImageList_GetIconSize(hbwapi_par_raw_HIMAGELIST(1), &cx, &cy) )
-   {
+   if( ImageList_GetIconSize(hbwapi_par_raw_HIMAGELIST(1), &cx, &cy) ) {
       hb_storni(cx, 2);
       hb_storni(cy, 3);
       hb_retl(true);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }
@@ -258,12 +255,9 @@ HB_FUNC( WAPI_IMAGELIST_GETIMAGEINFO )
 {
    IMAGEINFO ii;
 
-   if( ImageList_GetImageInfo(hbwapi_par_raw_HIMAGELIST(1), hbwapi_par_INT(2), &ii) )
-   {
+   if( ImageList_GetImageInfo(hbwapi_par_raw_HIMAGELIST(1), hbwapi_par_INT(2), &ii) ) {
       hb_retclen(reinterpret_cast<char*>(&ii), sizeof(ii));
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }
@@ -275,12 +269,9 @@ HB_FUNC( WAPI_IMAGELIST_LOADIMAGE )
 {
    LPCTSTR image;
 
-   if( HB_ISCHAR(2) )
-   {
+   if( HB_ISCHAR(2) ) {
       image = reinterpret_cast<LPCTSTR>(hb_parc(2));
-   }
-   else
-   {
+   } else {
       image = static_cast<LPCTSTR>(MAKEINTRESOURCE(hbwapi_par_INT(2)));
    }
 
@@ -559,8 +550,7 @@ TabCtrl_AdjustRect(hwnd, bLarger, prc)
 */
 HB_FUNC( WAPI_TABCTRL_ADJUSTRECT )
 {
-   if( HB_ISARRAY(3) )
-   {
+   if( HB_ISARRAY(3) ) {
       RECT rc;
 
       rc.left   = hb_parvnl(3, 1);

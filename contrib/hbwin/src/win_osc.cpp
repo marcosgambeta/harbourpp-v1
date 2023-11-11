@@ -155,8 +155,7 @@ HB_FUNC( WIN_OSVERSIONINFO )
    int iMajor = 4;
    int iMinor = 0;
 
-   typedef struct
-   {
+   typedef struct {
       int iMajor;
       int iMinor;
    } HB_ISWINVER;
@@ -171,10 +170,8 @@ HB_FUNC( WIN_OSVERSIONINFO )
       { 5, 1 },
       { 5, 0 } };
 
-   for( auto pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos )
-   {
-      if( hb_iswinver(s_vers[pos].iMajor, s_vers[pos].iMinor, 0, (pos == 0)) )
-      {
+   for( auto pos = 0; pos < static_cast<int>(HB_SIZEOFARRAY(s_vers)); ++pos ) {
+      if( hb_iswinver(s_vers[pos].iMajor, s_vers[pos].iMinor, 0, (pos == 0)) ) {
          iMajor = s_vers[pos].iMajor;
          iMinor = s_vers[pos].iMinor;
          break;
@@ -187,12 +184,9 @@ HB_FUNC( WIN_OSVERSIONINFO )
    hb_arraySetNL(pArray, 4, hb_iswinnt() ? VER_PLATFORM_WIN32_NT : VER_PLATFORM_WIN32_WINDOWS);
    hb_arraySetC(pArray, 5, nullptr);
 
-   if( hb_iswin2k() )
-   {
-      for( auto tmp = 5; tmp > 0; --tmp )
-      {
-         if( hb_iswinsp(tmp, true) )
-         {
+   if( hb_iswin2k() ) {
+      for( auto tmp = 5; tmp > 0; --tmp ) {
+         if( hb_iswinsp(tmp, true) ) {
             char szServicePack[8];
             hb_snprintf(szServicePack, sizeof(szServicePack), "SP%u", tmp);
             hb_arraySetC(pArray, 5, szServicePack);

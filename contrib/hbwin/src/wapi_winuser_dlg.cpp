@@ -57,18 +57,14 @@ static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam,
 {
    PHB_SYMB pSymbol;
 
-   if( message == WM_INITDIALOG && lParam )
-   {
+   if( message == WM_INITDIALOG && lParam ) {
       pSymbol = reinterpret_cast<PHB_SYMB>(lParam);
       SetWindowLongPtr(hDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pSymbol));
-   }
-   else
-   {
+   } else {
       pSymbol = reinterpret_cast<PHB_SYMB>(GetWindowLongPtr(hDlg, GWLP_USERDATA));
    }
 
-   if( pSymbol )
-   {
+   if( pSymbol ) {
       hb_vmPushSymbol(pSymbol);
       hb_vmPushNil();
       hb_vmPushPointer(hDlg);
@@ -76,14 +72,11 @@ static BOOL CALLBACK wapi_DialogFuncProc(HWND hDlg, UINT message, WPARAM wParam,
       hb_vmPushNumInt(wParam);
       hb_vmPushNumInt(lParam);
 
-      if( message == WM_COMMAND )
-      {
+      if( message == WM_COMMAND ) {
          hb_vmPushInteger(static_cast<int>(HIWORD(wParam)));
          hb_vmPushInteger(static_cast<int>(LOWORD(wParam)));
          hb_vmDo(6);
-      }
-      else
-      {
+      } else {
          hb_vmDo(4);
       }
    }

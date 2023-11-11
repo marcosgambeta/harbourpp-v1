@@ -50,8 +50,7 @@ static HB_GARBAGE_FUNC(hbwapi_mutex_release)
 {
    void ** ph = static_cast<void**>(Cargo);
 
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       CloseHandle(static_cast<HANDLE>(*ph));
       *ph = nullptr;
    }
@@ -65,15 +64,12 @@ static const HB_GC_FUNCS s_gc_hbwapi_mutex_funcs =
 
 static void hbwapi_mutex_ret(HANDLE hMutex)
 {
-   if( hMutex )
-   {
+   if( hMutex ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HANDLE*), &s_gc_hbwapi_mutex_funcs));
 
       *ph = hMutex;
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }
@@ -120,14 +116,11 @@ HB_FUNC( WAPI_RELEASEMUTEX )
 {
    HANDLE hMutex = hbwapi_mutex_par(1);
 
-   if( hMutex )
-   {
+   if( hMutex ) {
       BOOL bResult = ReleaseMutex(hMutex);
       hbwapi_SetLastError(GetLastError());
       hbwapi_ret_L(bResult);
-   }
-   else
-   {
+   } else {
       hb_retl(false);
    }
 }

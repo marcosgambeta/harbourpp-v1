@@ -72,25 +72,20 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
    HB_BYTE colorspace = 0;
    HB_BYTE bpc = 0;
 
-   if( piHeight )
-   {
+   if( piHeight ) {
       *piHeight = static_cast<int>(height);
    }
-   if( piWidth )
-   {
+   if( piWidth ) {
       *piWidth = static_cast<int>(width);
    }
-   if( piColorSpace )
-   {
+   if( piColorSpace ) {
       *piColorSpace = static_cast<int>(colorspace);
    }
-   if( piBPC )
-   {
+   if( piBPC ) {
       *piBPC = static_cast<int>(bpc);
    }
 
-   if( nPos >= nBufferSize )
-   {
+   if( nPos >= nBufferSize ) {
       return _JPEG_RET_OVERRUN;
    }
 
@@ -98,25 +93,21 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
    nPos += 2;
 
    /* SOI marker */
-   if( tag != 0xFFD8 )
-   {
+   if( tag != 0xFFD8 ) {
       return _JPEG_RET_INVALID;
    }
 
-   for( ;; )
-   {
+   for( ;; ) {
       HB_U16 size;
 
-      if( nPos >= nBufferSize )
-      {
+      if( nPos >= nBufferSize ) {
          return _JPEG_RET_OVERRUN;
       }
 
       tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
       nPos += 2;
 
-      if( nPos >= nBufferSize )
-      {
+      if( nPos >= nBufferSize ) {
          return _JPEG_RET_OVERRUN;
       }
 
@@ -124,69 +115,56 @@ static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * 
       nPos += 2;
 
       /* SOF markers */
-      if( tag == 0xFFC0 || tag == 0xFFC1 || tag == 0xFFC2 || tag == 0xFFC9 )
-      {
-         if( nPos >= nBufferSize )
-         {
+      if( tag == 0xFFC0 || tag == 0xFFC1 || tag == 0xFFC2 || tag == 0xFFC9 ) {
+         if( nPos >= nBufferSize ) {
             return _JPEG_RET_OVERRUN;
          }
 
          colorspace = *(buffer + nPos); nPos += 1;
 
-         if( nPos >= nBufferSize )
-         {
+         if( nPos >= nBufferSize ) {
             return _JPEG_RET_OVERRUN;
          }
 
          height = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
          nPos += 2;
 
-         if( nPos >= nBufferSize )
-         {
+         if( nPos >= nBufferSize ) {
             return _JPEG_RET_OVERRUN;
          }
 
          width = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
          nPos += 2;
 
-         if( nPos >= nBufferSize )
-         {
+         if( nPos >= nBufferSize ) {
             return _JPEG_RET_OVERRUN;
          }
 
          bpc = *(buffer + nPos);
 
          break;
-      }
-      else if( (tag | 0x00FF) != 0xFFFF ) /* lost marker */
-      {
+      } else if( (tag | 0x00FF) != 0xFFFF ) { /* lost marker */
          return _JPEG_RET_UNSUPPORTED;
       }
 
       nPos += size - 2;
 
-      if( nPos >= nBufferSize )
-      {
+      if( nPos >= nBufferSize ) {
          return _JPEG_RET_OVERRUN;
       }
    }
 
-   if( piHeight )
-   {
+   if( piHeight ) {
       *piHeight = static_cast<int>(height);
    }
-   if( piWidth )
-   {
+   if( piWidth ) {
       *piWidth = static_cast<int>(width);
    }
-   if( piBPC )
-   {
+   if( piBPC ) {
       *piBPC = static_cast<int>(bpc);
    }
-   if( piColorSpace )
-   {
-      switch( colorspace )
-      {
+   if( piColorSpace ) {
+      switch( colorspace ) {
          case 1: *piColorSpace = _JPEG_CS_GRAY; break;
          case 3: *piColorSpace = _JPEG_CS_RGB; break;
          case 4: *piColorSpace = _JPEG_CS_CMYK; break;
@@ -221,8 +199,7 @@ static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 le
    HB_PNG_READ * hb_png_read_data = static_cast<HB_PNG_READ*>(png_get_io_ptr(png_ptr));
    png_uint_32 pos;
 
-   for( pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen; )
-   {
+   for( pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen; ) {
       data[pos++] = hb_png_read_data->buffer[hb_png_read_data->nPos++];
    }
 
@@ -238,44 +215,36 @@ static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * p
    HB_PNG_READ hb_png_read_data;
    int iResult;
 
-   if( piHeight )
-   {
+   if( piHeight ) {
       *piHeight = 0;
    }
-   if( piWidth )
-   {
+   if( piWidth ) {
       *piWidth = 0;
    }
-   if( piColorSpace )
-   {
+   if( piColorSpace ) {
       *piColorSpace = 0;
    }
-   if( piBPC )
-   {
+   if( piBPC ) {
       *piBPC = 0;
    }
 
-   if( nBufferSize < sizeof(header) )
-   {
+   if( nBufferSize < sizeof(header) ) {
       return _PNG_RET_ERR_INVALID1;
    }
 
    memcpy(header, buffer, sizeof(header));
 
-   if( png_sig_cmp(header, static_cast<png_size_t>(0), sizeof(header)) )
-   {
+   if( png_sig_cmp(header, static_cast<png_size_t>(0), sizeof(header)) ) {
       return _PNG_RET_ERR_INVALID2;
    }
 
    png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
-   if( !png_ptr )
-   {
+   if( !png_ptr ) {
       return _PNG_RET_ERR_INIT1;
    }
 
    info_ptr = png_create_info_struct(png_ptr);
-   if( !info_ptr )
-   {
+   if( !info_ptr ) {
       png_destroy_read_struct(&png_ptr, static_cast<png_infopp>(nullptr), static_cast<png_infopp>(nullptr));
       return _PNG_RET_ERR_INIT2;
    }
@@ -290,8 +259,7 @@ static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * p
 
    png_read_info(png_ptr, info_ptr);
 
-   if( hb_png_read_data.bOk )
-   {
+   if( hb_png_read_data.bOk ) {
       png_uint_32 width;
       png_uint_32 height;
       int bit_depth;
@@ -299,27 +267,21 @@ static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * p
 
       png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr);
 
-      if( piHeight )
-      {
+      if( piHeight ) {
          *piHeight = static_cast<int>(height);
       }
-      if( piWidth )
-      {
+      if( piWidth ) {
          *piWidth = static_cast<int>(width);
       }
-      if( piBPC )
-      {
+      if( piBPC ) {
          *piBPC = bit_depth;
       }
-      if( piColorSpace )
-      {
+      if( piColorSpace ) {
          *piColorSpace = color_type;
       }
 
       iResult = _PNG_RET_OK;
-   }
-   else
-   {
+   } else {
       iResult = _PNG_RET_ERR_READ;
    }
 
@@ -341,32 +303,25 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
    int iWidth = 0;
    HB_BOOL bRetVal = false;
 
-   if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) )
-   {
+   if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) ) {
       BITMAPFILEHEADER * pbmfh = static_cast<BITMAPFILEHEADER*>(const_cast<void*>(buffer));
       BITMAPINFO * pbmi = reinterpret_cast<BITMAPINFO*>(pbmfh + 1);
 
       /* Remember there are 2 types of BitMap File */
-      if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) )
-      {
+      if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) ) {
          iWidth = (reinterpret_cast<BITMAPCOREHEADER*>(pbmi))->bcWidth;
          iHeight = (reinterpret_cast<BITMAPCOREHEADER*>(pbmi))->bcHeight;
-      }
-      else
-      {
+      } else {
          iWidth = pbmi->bmiHeader.biWidth;
          iHeight = abs(pbmi->bmiHeader.biHeight);
       }
 
       bRetVal = true;
-   }
-   else if( iType == HB_WIN_BITMAP_JPEG )
-   {
+   } else if( iType == HB_WIN_BITMAP_JPEG ) {
       bRetVal = (hb_jpeg_get_param(static_cast<const HB_BYTE*>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) == _JPEG_RET_OK);
    }
 #if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
-   else if( iType == HB_WIN_BITMAP_PNG )
-   {
+   else if( iType == HB_WIN_BITMAP_PNG ) {
       bRetVal = (hb_png_get_param(static_cast<const HB_BYTE*>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) == _PNG_RET_OK);
    }
 #endif

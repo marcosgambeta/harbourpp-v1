@@ -55,44 +55,44 @@ CREATE CLASS win_oleAuto
    VAR __hSink
    VAR __cargo
 
-   METHOD __enumStart( enum, lDescend )
-   METHOD __enumSkip( enum, lDescend )
+   METHOD __enumStart(enum, lDescend)
+   METHOD __enumSkip(enum, lDescend)
    METHOD __enumStop()
 
-   METHOD __OpIndex( xIndex, xValue ) OPERATOR "[]"
+   METHOD __OpIndex(xIndex, xValue) OPERATOR "[]"
 
    ERROR HANDLER __OnError()
 
 ENDCLASS
 
 
-METHOD __enumStart( enum, lDescend ) CLASS win_oleAuto
+METHOD __enumStart(enum, lDescend) CLASS win_oleAuto
 
    LOCAL hObjEnum
 
-   IF ! Empty( hObjEnum := __oleEnumCreate( ::__hObj, lDescend ) )
-      IF ! Empty( ::__hObjEnum )
+   IF !Empty(hObjEnum := __oleEnumCreate(::__hObj, lDescend))
+      IF !Empty(::__hObjEnum)
          /* small hack - clone the object array for nested FOR EACH calls */
-         Self := __objClone( Self )
+         Self := __objClone(Self)
       ENDIF
       ::__hObjEnum := hObjEnum
       /* set base value for enumerator */
-      ( @enum ):__enumBase( Self )
-      RETURN ::__enumSkip( @enum, lDescend )
+      (@enum):__enumBase(Self)
+      RETURN ::__enumSkip(@enum, lDescend)
    ENDIF
 
    RETURN .F.
 
 
-METHOD __enumSkip( enum, lDescend ) CLASS win_oleAuto
+METHOD __enumSkip(enum, lDescend) CLASS win_oleAuto
 
    LOCAL lContinue, xValue
 
-   HB_SYMBOL_UNUSED( lDescend )
+   HB_SYMBOL_UNUSED(lDescend)
 
-   xValue := __oleEnumNext( ::__hObjEnum, @lContinue, ::classH )
+   xValue := __oleEnumNext(::__hObjEnum, @lContinue, ::classH)
    /* set enumerator value */
-   ( @enum ):__enumValue( xValue )
+   (@enum):__enumValue(xValue)
 
    RETURN lContinue
 
@@ -106,11 +106,11 @@ METHOD PROCEDURE __enumStop() CLASS win_oleAuto
 
 /* OLE functions */
 
-FUNCTION win_oleGetActiveObject( ... )
+FUNCTION win_oleGetActiveObject(...)
 
    LOCAL oOle, hOle
 
-   IF ! Empty( hOle := __oleGetActiveObject( ... ) )
+   IF !Empty(hOle := __oleGetActiveObject(...))
       oOle := win_oleAuto()
       oOle:__hObj := hOle
    ENDIF
@@ -118,11 +118,11 @@ FUNCTION win_oleGetActiveObject( ... )
    RETURN oOle
 
 
-FUNCTION win_oleCreateObject( ... )
+FUNCTION win_oleCreateObject(...)
 
    LOCAL oOle, hOle
 
-   IF ! Empty( hOle := __oleCreateObject( ... ) )
+   IF !Empty(hOle := __oleCreateObject(...))
       oOle := win_oleAuto()
       oOle:__hObj := hOle
    ENDIF

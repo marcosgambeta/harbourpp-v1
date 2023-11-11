@@ -53,11 +53,11 @@ CREATE CLASS win_BMP
    EXPORTED:
 
    METHOD New()
-   METHOD LoadFile( cFileName, aDimXY )
+   METHOD LoadFile(cFileName, aDimXY)
    METHOD Create()
    METHOD Destroy()
-   METHOD IsSupported( oPrn, /* @ */ nError )
-   METHOD Draw( oPrn, aRectangle, /* @ */ nError )
+   METHOD IsSupported(oPrn, /* @ */ nError)
+   METHOD Draw(oPrn, aRectangle, /* @ */ nError)
 
    VAR Type     INIT 0                  // Type BitMap: 1 == BM, 2 == JPEG, 3 == PNG
    VAR DimXY    INIT { 0, 0 }           // Image Dimensions X Y pixels
@@ -75,18 +75,18 @@ ENDCLASS
 METHOD New() CLASS win_BMP
    RETURN Self
 
-METHOD LoadFile( cFileName, aDimXY ) CLASS win_BMP
+METHOD LoadFile(cFileName, aDimXY) CLASS win_BMP
 
    ::FileName := cFileName
-   ::Bitmap := win_LoadBitmapFile( ::FileName )
-   IF Empty( ::Bitmap )
+   ::Bitmap := win_LoadBitmapFile(::FileName)
+   IF Empty(::Bitmap)
       ::Type := 0
       ::DimXY := { 0, 0 }
    ELSE
-      ::Type := win_bitmapType( ::Bitmap )
-      IF HB_ISARRAY( aDimXY )
+      ::Type := win_bitmapType(::Bitmap)
+      IF HB_ISARRAY(aDimXY)
          ::DimXY := aDimXY
-      ELSEIF ! win_bitmapDimensions( ::Bitmap, @::DimXY[ 1 ], @::DimXY[ 2 ] )
+      ELSEIF !win_bitmapDimensions(::Bitmap, @::DimXY[1], @::DimXY[2])
          ::DimXY := { 1, 1 } // Driver may use the original dimensions
       ENDIF
    ENDIF
@@ -99,13 +99,13 @@ METHOD Create() CLASS win_BMP  // Compatibility function for Alaska Xbase++
 METHOD Destroy() CLASS win_BMP  // Compatibility function for Alaska Xbase++
    RETURN NIL
 
-METHOD IsSupported( oPrn, /* @ */ nError ) CLASS win_BMP
-   RETURN ( nError := win_bitmapIsSupported( oPrn:hPrinterDc, ::Bitmap ) ) == 0
+METHOD IsSupported(oPrn, /* @ */ nError) CLASS win_BMP
+   RETURN (nError := win_bitmapIsSupported(oPrn:hPrinterDc, ::Bitmap)) == 0
 
-METHOD Draw( oPrn, aRectangle, /* @ */ nError ) CLASS win_BMP // Pass a win_Prn object reference and rectangle array
+METHOD Draw(oPrn, aRectangle, /* @ */ nError) CLASS win_BMP // Pass a win_Prn object reference and rectangle array
 
-   IF HB_ISARRAY( aRectangle )
+   IF HB_ISARRAY(aRectangle)
       ::Rect := aRectangle
    ENDIF
 
-   RETURN iif( ::IsSupported( oPrn, @nError ), oPrn:DrawBitMap( Self ), .F. )
+   RETURN iif(::IsSupported(oPrn, @nError), oPrn:DrawBitMap(Self), .F.)

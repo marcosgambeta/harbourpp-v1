@@ -51,8 +51,7 @@ static HB_GARBAGE_FUNC(s_gc_HDC_release)
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       DeleteDC(static_cast<HDC>(*ph));
 
@@ -69,16 +68,13 @@ static const HB_GC_FUNCS s_gc_HDC_funcs =
 
 void hbwapi_ret_HDC(HDC p)
 {
-   if( p )
-   {
+   if( p ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HDC*), &s_gc_HDC_funcs));
 
       *ph = p;
 
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }
@@ -95,8 +91,7 @@ static HB_GARBAGE_FUNC(s_gc_HPEN_release)
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       DeleteObject(static_cast<HPEN>(*ph));
 
@@ -113,16 +108,13 @@ static const HB_GC_FUNCS s_gc_HPEN_funcs =
 
 void hbwapi_ret_HPEN(HPEN p)
 {
-   if( p )
-   {
+   if( p ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HPEN*), &s_gc_HPEN_funcs));
 
       *ph = p;
 
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }
@@ -139,8 +131,7 @@ static HB_GARBAGE_FUNC(s_gc_HBRUSH_release)
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       DeleteObject(static_cast<HBRUSH>(*ph));
 
@@ -157,16 +148,13 @@ static const HB_GC_FUNCS s_gc_HBRUSH_funcs =
 
 void hbwapi_ret_HBRUSH(HBRUSH p)
 {
-   if( p )
-   {
+   if( p ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HBRUSH*), &s_gc_HBRUSH_funcs));
 
       *ph = p;
 
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }
@@ -183,8 +171,7 @@ static HB_GARBAGE_FUNC(s_gc_HFONT_release)
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       DeleteObject(static_cast<HFONT>(*ph));
 
@@ -201,16 +188,13 @@ static const HB_GC_FUNCS s_gc_HFONT_funcs =
 
 void hbwapi_ret_HFONT(HFONT p)
 {
-   if( p )
-   {
+   if( p ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HFONT*), &s_gc_HFONT_funcs));
 
       *ph = p;
 
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }
@@ -227,8 +211,7 @@ static HB_GARBAGE_FUNC(s_gc_PDEVMODE_release)
    void ** ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   if( ph && *ph ) {
       /* Destroy the object */
       hb_xfree(*ph);
 
@@ -245,16 +228,13 @@ static const HB_GC_FUNCS s_gc_PDEVMODE_funcs =
 
 void hbwapi_ret_PDEVMODE(PDEVMODE p)
 {
-   if( p )
-   {
+   if( p ) {
       void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PDEVMODE*), &s_gc_PDEVMODE_funcs));
 
       *ph = p;
 
       hb_retptrGC(ph);
-   }
-   else
-   {
+   } else {
       hb_retptr(nullptr);
    }
 }

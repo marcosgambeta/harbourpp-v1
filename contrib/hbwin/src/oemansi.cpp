@@ -53,8 +53,7 @@ HB_FUNC( WIN_ANSITOOEM )
 {
    auto pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
-   {
+   if( pString ) {
       int nLen = static_cast<int>(hb_itemGetCLen(pString));
       auto pszSrc = hb_itemGetCPtr(pString);
 
@@ -70,9 +69,7 @@ HB_FUNC( WIN_ANSITOOEM )
 
       hb_xfree(pszWide);
       hb_retclen_buffer(pszDst, nLen);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }
@@ -81,8 +78,7 @@ HB_FUNC( WIN_OEMTOANSI )
 {
    auto pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
-   {
+   if( pString ) {
       int nLen = static_cast<int>(hb_itemGetCLen(pString));
       auto pszSrc = hb_itemGetCPtr(pString);
 
@@ -98,9 +94,7 @@ HB_FUNC( WIN_OEMTOANSI )
 
       hb_xfree(pszWide);
       hb_retclen_buffer(pszDst, nLen);
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 }

@@ -87,13 +87,11 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
    auto pArray = hb_param(2, Harbour::Item::ARRAY);
    DWORD nCount = pArray ? static_cast<DWORD>(hb_arrayLen(pArray)) : 0;
 
-   if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
-   {
+   if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS ) {
       auto handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
       DWORD dwResult;
 
-      for( DWORD nPos = 0; nPos < nCount; ++nPos )
-      {
+      for( DWORD nPos = 0; nPos < nCount; ++nPos ) {
          handles[nPos] = hb_arrayGetPtr(pArray, nPos + 1);
       }
 
@@ -103,9 +101,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTS )
       hb_retnl(dwResult);
 
       hb_xfree(handles);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -115,13 +111,11 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
    auto pArray = hb_param(2, Harbour::Item::ARRAY);
    DWORD nCount = pArray ? static_cast<DWORD>(hb_arrayLen(pArray)) : 0;
 
-   if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS )
-   {
+   if( nCount > 0 && nCount <= MAXIMUM_WAIT_OBJECTS ) {
       auto handles = static_cast<HANDLE*>(hb_xgrab(nCount * sizeof(HANDLE)));
       DWORD dwResult;
 
-      for( DWORD nPos = 0; nPos < nCount; ++nPos )
-      {
+      for( DWORD nPos = 0; nPos < nCount; ++nPos ) {
          handles[nPos] = hb_arrayGetPtr(pArray, nPos + 1);
       }
 
@@ -131,9 +125,7 @@ HB_FUNC( WAPI_WAITFORMULTIPLEOBJECTSEX )
       hb_retnl(dwResult);
 
       hb_xfree(handles);
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 1001, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }
@@ -222,44 +214,34 @@ static void s_getPathName(_HB_GETPATHNAME getPathName)
    DWORD length = 0;
    LPCTSTR lpszLongPath = HB_PARSTR(1, &hLongPath, nullptr);
 
-   if( lpszLongPath )
-   {
-      if( HB_ISBYREF(2) )
-      {
+   if( lpszLongPath ) {
+      if( HB_ISBYREF(2) ) {
          TCHAR buffer[HB_PATH_MAX];
          DWORD cchBuffer = static_cast<DWORD>(HB_SIZEOFARRAY(buffer));
          LPTSTR lpszShortPath = buffer;
          HB_BOOL fSize = HB_ISNUM(3);
 
-         if( fSize )    /* the size of buffer is limited by user */
-         {
+         if( fSize ) {  /* the size of buffer is limited by user */
             cchBuffer = static_cast<DWORD>(hb_parnl(3));
-            if( cchBuffer == 0 )
-            {
+            if( cchBuffer == 0 ) {
                lpszShortPath = nullptr;
-            }
-            else if( cchBuffer > static_cast<DWORD>(HB_SIZEOFARRAY(buffer)) )
-            {
+            } else if( cchBuffer > static_cast<DWORD>(HB_SIZEOFARRAY(buffer)) ) {
                lpszShortPath = static_cast<LPTSTR>(hb_xgrab(cchBuffer * sizeof(TCHAR)));
             }
          }
 
          length = getPathName(lpszLongPath, lpszShortPath, cchBuffer);
-         if( !fSize && length > cchBuffer )  /* default buffer size was too small */
-         {
+         if( !fSize && length > cchBuffer ) { /* default buffer size was too small */
             cchBuffer = length;
             lpszShortPath = static_cast<LPTSTR>(hb_xgrab(cchBuffer * sizeof(TCHAR)));
             length = getPathName(lpszLongPath, lpszShortPath, cchBuffer);
          }
          hbwapi_SetLastError(GetLastError());
          HB_STORSTRLEN(lpszShortPath, length > cchBuffer ? 0 : length, 2);
-         if( lpszShortPath && lpszShortPath != buffer )
-         {
+         if( lpszShortPath && lpszShortPath != buffer ) {
             hb_xfree(lpszShortPath);
          }
-      }
-      else if( getPathName )
-      {
+      } else if( getPathName ) {
          length = getPathName(lpszLongPath, nullptr, 0);
          hbwapi_SetLastError(GetLastError());
       }
@@ -282,8 +264,7 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
 {
    UINT nLen = GetSystemDirectory(nullptr, 0);
 
-   if( nLen )
-   {
+   if( nLen ) {
       auto buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
 
       nLen = GetSystemDirectory(buffer, nLen);
@@ -292,9 +273,7 @@ HB_FUNC( WAPI_GETSYSTEMDIRECTORY )
       HB_RETSTRLEN(buffer, nLen);
 
       hb_xfree(buffer);
-   }
-   else
-   {
+   } else {
       hbwapi_SetLastError(GetLastError());
       hb_retc_null();
    }
@@ -304,8 +283,7 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
 {
    UINT nLen = GetWindowsDirectory(nullptr, 0);
 
-   if( nLen )
-   {
+   if( nLen ) {
       auto buffer = static_cast<LPTSTR>(hb_xgrab((nLen + 1) * sizeof(TCHAR)));
 
       nLen = GetWindowsDirectory(buffer, nLen);
@@ -314,9 +292,7 @@ HB_FUNC( WAPI_GETWINDOWSDIRECTORY )
       HB_RETSTRLEN(buffer, nLen);
 
       hb_xfree(buffer);
-   }
-   else
-   {
+   } else {
       hbwapi_SetLastError(GetLastError());
       hb_retc_null();
    }
@@ -327,8 +303,7 @@ HB_FUNC( WAPI_QUERYPERFORMANCECOUNTER )
    LARGE_INTEGER counter;
    BOOL result = QueryPerformanceCounter(&counter);
 
-   if( result )
-   {
+   if( result ) {
       hb_stornint(HBWAPI_GET_LARGEUINT(counter), 1);
    }
    hb_retl(result != 0);
@@ -339,8 +314,7 @@ HB_FUNC( WAPI_QUERYPERFORMANCEFREQUENCY )
    LARGE_INTEGER frequency;
    BOOL result = QueryPerformanceFrequency(&frequency);
 
-   if( result )
-   {
+   if( result ) {
       hb_stornint(HBWAPI_GET_LARGEUINT(frequency), 1);
    }
    hb_retl(result != 0);
@@ -363,13 +337,11 @@ HB_FUNC( WAPI_GETVOLUMEINFORMATION )
    dwVolNameSize = dwFSNameSize = 0;
    lpVolNameBuf = lpFSNameBuf = nullptr;
    lpRootPath = HB_PARSTR(1, &hRootPath, nullptr);
-   if( HB_ISBYREF(2) )
-   {
+   if( HB_ISBYREF(2) ) {
       dwVolNameSize = MAX_PATH + 1;
       lpVolNameBuf = static_cast<LPTSTR>(hb_xgrab(MAX_PATH + 1));
    }
-   if( HB_ISBYREF(6) )
-   {
+   if( HB_ISBYREF(6) ) {
       dwFSNameSize = MAX_PATH + 1;
       lpFSNameBuf = static_cast<LPTSTR>(hb_xgrab(MAX_PATH + 1));
    }
@@ -384,16 +356,14 @@ HB_FUNC( WAPI_GETVOLUMEINFORMATION )
                                   dwFSNameSize);      /* FileSystemSize */
    hb_strfree(hRootPath);
 
-   if( lpVolNameBuf )
-   {
+   if( lpVolNameBuf ) {
       HB_STORSTR(lpVolNameBuf, 2);
       hb_xfree(lpVolNameBuf);
    }
    hb_stornint(dwSerialNumber, 3);
    hb_stornint(dwMaxFileNameLen, 4);
    hb_stornint(dwFileSystemFlags, 5);
-   if( lpFSNameBuf )
-   {
+   if( lpFSNameBuf ) {
       HB_STORSTR(lpFSNameBuf, 6);
       hb_xfree(lpFSNameBuf);
    }

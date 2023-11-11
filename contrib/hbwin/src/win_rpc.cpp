@@ -60,14 +60,11 @@ HB_FUNC( WIN_UUIDCREATESTRING )
 
    UuidToString(&uuid, reinterpret_cast<short unsigned int**>(&tszUuid));
 
-   if( tszUuid != nullptr )
-   {
+   if( tszUuid != nullptr ) {
       HB_RETSTR(tszUuid);
 
       RpcStringFree(reinterpret_cast<short unsigned int**>(&tszUuid));
-   }
-   else
-   {
+   } else {
       hb_retc_null();
    }
 
