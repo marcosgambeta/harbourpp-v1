@@ -86,7 +86,6 @@
 HB_FUNC( WIN_SHELLNOTIFYICON )
 {
    NOTIFYICONDATA tnid{};
-
    tnid.cbSize = sizeof(tnid);
    tnid.hWnd = hbwapi_par_raw_HWND(1);
    tnid.uID = hbwapi_par_UINT(2);
@@ -127,22 +126,25 @@ HB_FUNC( WIN_SHELLNOTIFYICON )
 #  include <_mingw.h>
 #  if !defined(__MINGW64_VERSION_MAJOR)
 
-typedef struct _SHNAMEMAPPING
+struct _SHNAMEMAPPING
 {
    LPTSTR pszOldPath;
    LPTSTR pszNewPath;
    int    cchOldPath;
    int    cchNewPath;
-} SHNAMEMAPPING, * LPSHNAMEMAPPING;
+};
+
+using SHNAMEMAPPING = _SHNAMEMAPPING;
+using LPSHNAMEMAPPING = _SHNAMEMAPPING *;
 
 #endif   /* End MinGW-w64 detection */
 #endif   /* End MinGW detection */
 
-typedef struct
+struct HANDLETOMAPPINGS
 {
    UINT            uNumberOfMappings;
    LPSHNAMEMAPPING lpSHNameMapping;
-} HANDLETOMAPPINGS;
+};
 
 static LPTSTR s_StringList(int iParam)
 {
@@ -196,8 +198,6 @@ static LPTSTR s_StringList(int iParam)
                        [<aNameMappings>], [<cProgressTitle>]) -> <nResult> */
 HB_FUNC( WIN_SHFILEOPERATION )
 {
-   int iRetVal;
-
    SHFILEOPSTRUCT fop;
 
    void * hProgressTitle;
@@ -211,7 +211,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
    fop.hNameMappings         = nullptr;
    fop.lpszProgressTitle     = HB_PARSTR(8, &hProgressTitle, nullptr);
 
-   iRetVal = SHFileOperation(&fop);
+   int iRetVal = SHFileOperation(&fop);
    hbwapi_SetLastError(GetLastError());
 
    hb_storl(fop.fAnyOperationsAborted, 6);
@@ -235,22 +235,15 @@ HB_FUNC( WIN_SHFILEOPERATION )
          if( pArray ) {
             auto pTempItem = hb_itemNew(nullptr);
             LPSHNAMEMAPPING pmap = hm->lpSHNameMapping;
-            HB_BOOL bIsWin9x = hb_iswin9x();
 
             hb_arraySize(pArray, hm->uNumberOfMappings);
 
             for( UINT tmp = 0; tmp < hm->uNumberOfMappings; ++tmp ) {
                hb_arrayNew(pTempItem, 2);
 
-               if( bIsWin9x ) {
-                  /* always returns non-UNICODE on Win9x systems */
-                  hb_arraySetCL(pTempItem, 1, reinterpret_cast<char*>(pmap[tmp].pszOldPath), pmap[tmp].cchOldPath);
-                  hb_arraySetCL(pTempItem, 2, reinterpret_cast<char*>(pmap[tmp].pszNewPath), pmap[tmp].cchNewPath);
-               } else {
-                  /* always returns UNICODE on NT and upper systems */
-                  HB_ARRAYSETSTRLEN(pTempItem, 1, static_cast<LPTSTR>(pmap[tmp].pszOldPath), pmap[tmp].cchOldPath);
-                  HB_ARRAYSETSTRLEN(pTempItem, 2, static_cast<LPTSTR>(pmap[tmp].pszNewPath), pmap[tmp].cchNewPath);
-               }
+               /* always returns UNICODE on NT and upper systems */
+               HB_ARRAYSETSTRLEN(pTempItem, 1, static_cast<LPTSTR>(pmap[tmp].pszOldPath), pmap[tmp].cchOldPath);
+               HB_ARRAYSETSTRLEN(pTempItem, 2, static_cast<LPTSTR>(pmap[tmp].pszNewPath), pmap[tmp].cchNewPath);
 
                hb_arraySetForward(pArray, static_cast<HB_SIZE>(tmp + 1), pTempItem);
             }
