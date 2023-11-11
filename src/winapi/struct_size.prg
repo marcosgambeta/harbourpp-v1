@@ -76,7 +76,7 @@ RETURN
 
 HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
 {
-  PHB_ITEM self = hb_stackSelfItem();
+  auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new SIZE());
   hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
   hb_itemReturn(self);

@@ -124,7 +124,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_MEMORYSTATUSEX_NEW )
 {
   auto obj = new MEMORYSTATUSEX();
   obj->dwLength = sizeof(MEMORYSTATUSEX);
-  PHB_ITEM self = hb_stackSelfItem();
+  auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", obj);
   hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
   hb_itemReturn(self);
