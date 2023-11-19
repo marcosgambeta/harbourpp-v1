@@ -76,7 +76,7 @@
 #ifdef HB_QT_SOUND
   #include <QtGui/QSound>
 #endif
-#elif QT_VERSION <= 0x051A00
+#elif QT_VERSION <= 0x052000
 #include <QtGui/QScreen>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
@@ -94,7 +94,7 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QAction>
+#include <QtGui/QAction>
 #ifdef HB_QT_SOUND
   #include <QtMultimedia/QSound>
 #endif
