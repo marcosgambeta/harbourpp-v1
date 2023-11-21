@@ -215,7 +215,7 @@ HB_FUNC( __PP_ADDRULE )
 
    if( pState ) {
       auto szText = hb_parc(2);
-      HB_SIZE nLen = hb_parclen(2);
+      auto nLen = hb_parclen(2);
 
       if( szText ) {
          while( nLen && (szText[0] == ' ' || szText[0] == '\t') ) {
@@ -251,7 +251,7 @@ HB_FUNC( __PP_PROCESS )
    PHB_PP_STATE pState = hb_pp_Param(1);
 
    if( pState ) {
-      HB_SIZE nLen = hb_parclen(2);
+      auto nLen = hb_parclen(2);
 
       if( nLen ) {
          char * szText = hb_pp_parseLine(pState, hb_parc(2), &nLen);

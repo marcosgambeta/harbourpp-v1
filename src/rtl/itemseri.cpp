@@ -1693,7 +1693,7 @@ HB_FUNC( HB_SERIALIZE )
 HB_FUNC( HB_DESERIALIZE )
 {
    auto pParam = hb_param(1, Harbour::Item::BYREF);
-   HB_SIZE nSize = hb_parclen(1);
+   auto nSize = hb_parclen(1);
 
    if( nSize ) {
       auto pBuffer = hb_parc(1);

@@ -613,7 +613,7 @@ HB_FUNC( HB_HRBRUN )
       nParam++;
    }
 
-   HB_SIZE nLen = hb_parclen(nParam);
+   auto nLen = hb_parclen(nParam);
 
    if( nLen > 0 ) {
       auto fileOrBody = hb_parc(nParam);
@@ -661,7 +661,7 @@ HB_FUNC( HB_HRBLOAD )
       nParam++;
    }
 
-   HB_SIZE nLen = hb_parclen(nParam);
+   auto nLen = hb_parclen(nParam);
 
    if( nLen > 0 ) {
       auto fileOrBody = hb_parc(nParam);

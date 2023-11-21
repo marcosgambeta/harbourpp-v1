@@ -151,7 +151,7 @@ static int hb_regexec(PHB_REGEX pRegEx, const char * szString, HB_SIZE nLen, int
 
 HB_FUNC( HB_REGEXCOMP )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
 
    if( nLen == 0 ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

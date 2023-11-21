@@ -189,7 +189,8 @@ static HB_BOOL hb_tokenParam(int iParam, HB_SIZE nSkip, const char ** pszLine, H
 {
    auto szLine = hb_parc(1);
    const char * szDelim = nullptr;
-   HB_SIZE nLen = hb_parclen(1), nDelim = 0;
+   auto nLen = hb_parclen(1);
+   HB_SIZE nDelim = 0;
    int iFlags = 0;
 
    if( nLen ) {

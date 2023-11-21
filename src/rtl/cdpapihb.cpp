@@ -167,7 +167,7 @@ HB_FUNC_TRANSLATE( __NATSORTVER, HB_CDPINFO )
  */
 HB_FUNC( HB_TRANSLATE )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    auto szIdIn = hb_parc(2);
    auto szIdOut = hb_parc(3);
 
@@ -202,7 +202,7 @@ HB_FUNC( HB_UTF8ASC )
    auto pszString = hb_parc(1);
 
    if( pszString ) {
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
       HB_WCHAR wc = 0;
       int n = 0;
 
@@ -224,7 +224,8 @@ HB_FUNC( HB_UTF8ASC )
 
 HB_FUNC( HB_STRTOUTF8 )
 {
-   HB_SIZE nLen = hb_parclen(1), nDest = 0;
+   auto nLen = hb_parclen(1);
+   HB_SIZE nDest = 0;
    char * szDest = nullptr;
 
    if( nLen ) {
@@ -255,7 +256,8 @@ HB_FUNC( HB_UTF8TOSTR )
    auto szString = hb_parc(1);
 
    if( szString ) {
-      HB_SIZE nLen = hb_parclen(1), nDest = 0;
+      auto nLen = hb_parclen(1);
+      HB_SIZE nDest = 0;
       char * szDest = nullptr;
 
       if( nLen ) {
@@ -338,7 +340,8 @@ HB_FUNC( HB_UTF8SUBSTR )
 
    if( szString && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))) ) {
       char * szDest = nullptr;
-      HB_SIZE nLen = hb_parclen(1), nDest = 0;
+      auto nLen = hb_parclen(1);
+      HB_SIZE nDest = 0;
       HB_ISIZ nFrom = hb_parns(2);
       HB_ISIZ nCount = iPCount < 3 ? static_cast<HB_ISIZ>(nLen) : hb_parns(3);
 
@@ -393,7 +396,8 @@ HB_FUNC( HB_UTF8RIGHT )
 
    if( szString && HB_ISNUM(2) ) {
       HB_ISIZ nLenReq = hb_parns(2), nFrom;
-      HB_SIZE nLen = hb_parclen(1), nDest = 0;
+      auto nLen = hb_parclen(1);
+      HB_SIZE nDest = 0;
       char * szDest = nullptr;
 
       if( nLen && nLenReq > 0 ) {
@@ -420,7 +424,7 @@ HB_FUNC( HB_UTF8PEEK )
 
    if( szString && HB_ISNUM(2) ) {
       HB_SIZE nPos = hb_parns(2);
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
 
       if( nPos > 0 && nPos <= nLen ) {
          hb_retnint(hb_cdpUTF8StringPeek(szString, nLen, nPos - 1));
@@ -481,10 +485,10 @@ HB_FUNC( HB_UTF8STUFF )
    auto szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
       HB_SIZE nPos = hb_parns(2);
       HB_SIZE nDel = hb_parns(3);
-      HB_SIZE nIns = hb_parclen(4);
+      auto nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( nPos ) {

@@ -535,11 +535,11 @@ HB_FUNC( HB_BAT )
  */
 HB_FUNC( HB_BRAT )
 {
-   HB_SIZE nSubLen = hb_parclen(1);
+   auto nSubLen = hb_parclen(1);
    HB_SIZE nPos = 0;
 
    if( nSubLen ) {
-      HB_SIZE nLen = hb_parclen(2);
+      auto nLen = hb_parclen(2);
       HB_ISIZ nTo = nLen - nSubLen;
 
       if( nTo >= 0 ) {
@@ -586,10 +586,10 @@ HB_FUNC( HB_BSTUFF )
    auto szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
       HB_SIZE nPos = hb_parns(2);
       HB_SIZE nDel = hb_parns(3);
-      HB_SIZE nIns = hb_parclen(4);
+      auto nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( nPos ) {
@@ -629,10 +629,10 @@ HB_FUNC( HB_USTUFF )
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
       HB_SIZE nPos = hb_parns(2);
       HB_SIZE nDel = hb_parns(3);
-      HB_SIZE nIns = hb_parclen(4);
+      auto nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( nPos ) {

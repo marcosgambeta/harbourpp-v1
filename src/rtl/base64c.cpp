@@ -49,7 +49,7 @@
 
 HB_FUNC( HB_BASE64ENCODE )
 {
-   HB_SIZE len = hb_parclen(1);
+   auto len = hb_parclen(1);
 
    if( len > 0 ) {
       HB_SIZE lin = hb_parns(2);

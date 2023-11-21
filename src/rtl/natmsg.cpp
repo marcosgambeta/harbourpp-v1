@@ -79,7 +79,7 @@ static const char * hb_nationGetMsg(int iMsg)
 
 HB_FUNC( __NATISAFFIRM )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    HB_BOOL fIS = false;
 
    if( nLen > 0 ) {
@@ -104,7 +104,7 @@ HB_FUNC( __NATISAFFIRM )
 
 HB_FUNC( __NATISNEGATIVE )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    HB_BOOL fIS = false;
 
    if( nLen > 0 ) {

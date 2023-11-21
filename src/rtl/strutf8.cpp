@@ -48,7 +48,7 @@
 
 HB_FUNC( HB_STRISUTF8 )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    bool fUtf8 = false;
 
    if( nLen > 0 ) {

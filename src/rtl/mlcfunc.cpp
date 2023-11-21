@@ -537,7 +537,7 @@ HB_FUNC( HB_MLEVAL )
    if( pszString && pBlock && nSize > 0 ) {
       HB_SIZE nOffset = 0;
       HB_SIZE nLineLength = nSize;
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
       HB_SIZE nTabSize = hb_parnsdef(4, 4);
       HB_SIZE nPos = hb_parns(6) - 1;
       bool fWordWrap = hb_parldef(5, true);

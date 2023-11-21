@@ -117,7 +117,7 @@ HB_FUNC( HB_STRTOHEX )
 {
    auto szStr = hb_parc(1);
    const char * szSep = "";
-   HB_SIZE nStr, nSep = 0;
+   HB_SIZE nSep = 0;
 
    if( hb_pcount() > 1 ) {
       szSep = hb_parc(2);
@@ -129,7 +129,7 @@ HB_FUNC( HB_STRTOHEX )
       return;
    }
 
-   nStr = hb_parclen(1);
+   auto nStr = hb_parclen(1);
    if( nStr ) {
       HB_SIZE nDest = (nStr << 1) + (nStr - 1) * nSep;
       char * szDest, * szPtr;
@@ -155,14 +155,13 @@ HB_FUNC( HB_STRTOHEX )
 HB_FUNC( HB_HEXTOSTR )
 {
    auto szStr = hb_parc(1);
-   HB_SIZE nStr;
 
    if( !szStr ) {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
    }
 
-   nStr = hb_parclen(1);
+   auto nStr = hb_parclen(1);
    if( nStr > 1 ) {
       HB_SIZE nDest, ul;
       const char * szPtr;

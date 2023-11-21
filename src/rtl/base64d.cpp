@@ -115,7 +115,7 @@ static HB_SIZE base64_decode_block(const char * code_in, const HB_SIZE length_in
 
 HB_FUNC( HB_BASE64DECODE )
 {
-   HB_SIZE nSrcLen = hb_parclen(1);
+   auto nSrcLen = hb_parclen(1);
 
    if( nSrcLen > 0 ) {
       HB_SIZE nDstLen = (((nSrcLen * 3) / 4) + 1) * sizeof(char);

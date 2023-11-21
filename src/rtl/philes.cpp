@@ -127,7 +127,7 @@ HB_FUNC( FWRITE )
    HB_ERRCODE uiError = 0;
 
    if( HB_ISNUM(1) && HB_ISCHAR(2) ) {
-      HB_SIZE nLen = hb_parclen(2);
+      auto nLen = hb_parclen(2);
 
       if( HB_ISNUM(3) ) {
          HB_SIZE nWrite = hb_parns(3);
@@ -525,7 +525,7 @@ HB_FUNC( HB_PWRITE )
    auto data = hb_parc(2);
 
    if( hPipe != FS_ERROR && data != nullptr ) {
-      HB_SIZE nLen = hb_parclen(2);
+      auto nLen = hb_parclen(2);
 
       if( HB_ISNUM(3) ) {
          HB_SIZE nWrite = hb_parns(3);

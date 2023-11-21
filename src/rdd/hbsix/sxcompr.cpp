@@ -644,7 +644,8 @@ HB_FUNC( _SX_STRCOMPRESS )
    auto pStr = hb_parc(1);
 
    if( pStr ) {
-      HB_SIZE nLen = hb_parclen(1), nBuf, nDst;
+      auto nLen = hb_parclen(1);
+      HB_SIZE nBuf, nDst;
 
       /* this is for strict SIX compatibility - in general very bad idea */
       nBuf = nLen + 257;
@@ -669,7 +670,8 @@ HB_FUNC( _SX_STRDECOMPRESS )
    auto pStr = hb_parc(1);
 
    if( pStr ) {
-      HB_SIZE nLen = hb_parclen(1), nBuf;
+      auto nLen = hb_parclen(1);
+      HB_SIZE nBuf;
 
       if( nLen >= 4 ) {
          nBuf = HB_GET_LE_UINT32(pStr);

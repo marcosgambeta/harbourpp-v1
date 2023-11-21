@@ -57,7 +57,7 @@ HB_FUNC( HB_SHA224 )
    #if HB_SIZE_MAX > UINT_MAX
    {
       auto buffer = hb_parcx(1);
-      HB_SIZE nCount = hb_parclen(1);
+      auto nCount = hb_parclen(1);
       HB_SIZE nDone = 0;
 
       while( nCount ) {
@@ -99,7 +99,7 @@ HB_FUNC( HB_SHA256 )
    #if HB_SIZE_MAX > UINT_MAX
    {
       auto buffer = hb_parcx(1);
-      HB_SIZE nCount = hb_parclen(1);
+      auto nCount = hb_parclen(1);
       HB_SIZE nDone = 0;
 
       while( nCount ) {
@@ -141,7 +141,7 @@ HB_FUNC( HB_SHA384 )
    #if HB_SIZE_MAX > UINT_MAX
    {
       auto buffer = hb_parcx(1);
-      HB_SIZE nCount = hb_parclen(1);
+      auto nCount = hb_parclen(1);
       HB_SIZE nDone = 0;
 
       while( nCount ) {
@@ -183,7 +183,7 @@ HB_FUNC( HB_SHA512 )
    #if HB_SIZE_MAX > UINT_MAX
    {
       auto buffer = hb_parcx(1);
-      HB_SIZE nCount = hb_parclen(1);
+      auto nCount = hb_parclen(1);
       HB_SIZE nDone = 0;
 
       while( nCount ) {

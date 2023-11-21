@@ -1825,7 +1825,7 @@ HB_FUNC( HS_FILTER )
 {
    auto szText = hb_parc(2);
    char * pBuff = nullptr;
-   HB_SIZE nLen = hb_parclen(2);
+   auto nLen = hb_parclen(2);
    HB_ULONG ulRecords = 0;
    int iHandle = -1, iResult = HSX_BADPARMS;
    bool fNew = false, fToken = true;
@@ -1968,7 +1968,8 @@ HB_FUNC( HS_VERIFY )
       auto pExpr = hb_param(1, Harbour::Item::BLOCK);
       auto szSub = hb_parc(2);
       const char * szText = nullptr;
-      HB_SIZE nSub = hb_parclen(2), nLen = 0;
+      auto nSub = hb_parclen(2);
+      HB_SIZE nLen = 0;
       bool fIgnoreCase = hb_parl(3);
 
       if( nSub ) {

@@ -627,7 +627,7 @@ HB_FUNC( HB_VFWRITE )
       HB_ERRCODE uiError = 0;
 
       if( HB_ISCHAR(2) ) {
-         HB_SIZE nLen = hb_parclen(2);
+         auto nLen = hb_parclen(2);
 
          if( HB_ISNUM(3) ) {
             HB_SIZE nWrite = hb_parns(3);
@@ -693,7 +693,7 @@ HB_FUNC( HB_VFWRITEAT )
       auto pszData = hb_parc(2);
 
       if( pszData ) {
-         HB_SIZE nLen = hb_parclen(2);
+         auto nLen = hb_parclen(2);
 
          if( HB_ISNUM(3) ) {
             HB_SIZE nWrite = hb_parns(3);

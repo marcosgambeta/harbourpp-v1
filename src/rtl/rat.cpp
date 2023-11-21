@@ -50,7 +50,7 @@
 
 HB_FUNC( RAT )
 {
-   HB_SIZE nSubLen = hb_parclen(1);
+   auto nSubLen = hb_parclen(1);
    HB_SIZE nPos = 0;
 
    if( nSubLen ) {
@@ -79,11 +79,11 @@ HB_FUNC( RAT )
 
 HB_FUNC( HB_RAT )
 {
-   HB_SIZE nSubLen = hb_parclen(1);
+   auto nSubLen = hb_parclen(1);
    HB_SIZE nPos = 0;
 
    if( nSubLen ) {
-      HB_SIZE nLen = hb_parclen(2);
+      auto nLen = hb_parclen(2);
       HB_ISIZ nTo = nLen - nSubLen;
 
       if( nTo >= 0 ) {

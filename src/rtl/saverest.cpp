@@ -106,7 +106,7 @@ HB_FUNC( RESTSCREEN )
       hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
       hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
 
-      HB_SIZE nLen = hb_parclen(5);
+      auto nLen = hb_parclen(5);
       HB_SIZE nSize;
       hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
       if( nLen < nSize ) {

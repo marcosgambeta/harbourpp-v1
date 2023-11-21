@@ -51,7 +51,8 @@ HB_FUNC( HB_STRTOEXP )
    auto pszString = hb_parc(1);
 
    if( pszString ) {
-      HB_SIZE nLen = hb_parclen(1), nRet, n, nQ = 0;
+      auto nLen = hb_parclen(1);
+      HB_SIZE nRet, n, nQ = 0;
       int iType = 0;
       char ch, * pDst, * pszResult;
 

@@ -616,7 +616,7 @@ HB_FUNC( HB_DISPOUTAT )
    so we can use it to draw graphical elements. */
 HB_FUNC( HB_DISPOUTATBOX )
 {
-   HB_SIZE nLen = hb_parclen(3);
+   auto nLen = hb_parclen(3);
 
    if( nLen > 0 ) {
       auto iRow = hb_parni(1);

@@ -396,7 +396,7 @@ HB_FUNC( HB_MD5 )  /* Considered insecure. Use SHA256 or higher instead. */
    auto pszStr = hb_parc(1);
 
    if( pszStr ) {
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
       char dststr[16];
 
       hb_md5(pszStr, nLen, dststr);

@@ -56,10 +56,10 @@ HB_FUNC( STUFF )
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
       PHB_CODEPAGE cdp = hb_vmCDP();
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
       HB_SIZE nPos = hb_parns(2);
       HB_SIZE nDel = hb_parns(3);
-      HB_SIZE nIns = hb_parclen(4);
+      auto nIns = hb_parclen(4);
       HB_SIZE nTot;
 
       if( HB_CDP_ISCHARIDX(cdp) ) {

@@ -160,7 +160,7 @@ HB_FUNC( SX_ENCRYPT )
 {
    if( hb_pcount() > 0 ) {
       char keyBuf[8];
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
 
       if( nLen > 0 && _hb_sxGetKey(hb_param(2, Harbour::Item::ANY), keyBuf) ) {
          auto pDst = static_cast<char*>(hb_xgrab(nLen + 1));
@@ -177,7 +177,7 @@ HB_FUNC( SX_DECRYPT )
 {
    if( hb_pcount() > 0 ) {
       char keyBuf[8];
-      HB_SIZE nLen = hb_parclen(1);
+      auto nLen = hb_parclen(1);
 
       if( nLen > 0 && _hb_sxGetKey(hb_param(2, Harbour::Item::ANY), keyBuf) ) {
          auto pDst = static_cast<char*>(hb_xgrab(nLen + 1));
