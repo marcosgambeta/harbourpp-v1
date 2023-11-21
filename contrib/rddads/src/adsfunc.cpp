@@ -343,7 +343,7 @@ HB_FUNC( ADSUNLOCKRECORD )
 
 HB_FUNC( ADSGETMEMODATATYPE )
 {
-   UNSIGNED8 * pszFieldName = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1)));
+   auto pszFieldName = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(1)));
 
    if( !pszFieldName ) {
       pszFieldName = ADSFIELD( hb_parni(1) );
@@ -2084,7 +2084,7 @@ HB_FUNC( ADSDDGETUSERPROPERTY )
 HB_FUNC( ADSTESTLOGIN )
 {
 #if ADS_LIB_VERSION >= 600
-   UNSIGNED8 * pucUserName = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3)));
+   auto pucUserName = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parc(3)));
    ADSHANDLE adsTestHandle = 0;
 
    if( AdsConnect60(reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_parcx(1))) /* pucServerPath */,

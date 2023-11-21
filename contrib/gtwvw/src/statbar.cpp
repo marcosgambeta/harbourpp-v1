@@ -153,7 +153,7 @@ HB_FUNC( WVW_SBADDPART )
       HDC  hDCSB = GetDC(hWndSB);
       SIZE size{};
 
-      HFONT hFont    = reinterpret_cast<HFONT>(SendMessage(hWndSB, WM_GETFONT, static_cast<WPARAM>(0), static_cast<LPARAM>(0)));
+      auto hFont = reinterpret_cast<HFONT>(SendMessage(hWndSB, WM_GETFONT, static_cast<WPARAM>(0), static_cast<LPARAM>(0)));
       HFONT hOldFont = static_cast<HFONT>(SelectObject(hDCSB, hFont));
 
       if( GetTextExtentPoint32(hDCSB, hb_parcx(2), hb_parclen(2) + 1, &size) ) {
@@ -484,8 +484,6 @@ HB_FUNC( WVW_XBCREATE )
       RECT rXB{};
       RECT rOffXB{};
 
-      WNDPROC OldProc;
-
       rXB.top       = usTop;     rXB.left = usLeft;
       rXB.bottom    = usBottom; rXB.right = usRight;
       rOffXB.top    = iOffTop;     rOffXB.left = iOffLeft;
@@ -496,7 +494,7 @@ HB_FUNC( WVW_XBCREATE )
 
       AddControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, uiXBid, static_cast<PHB_ITEM>(hb_param(6, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(iStyle));
 
-      OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndXB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwXBProc)));
+      auto OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndXB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwXBProc)));
 
       StoreControlProc(usWinNum, WVW_CONTROL_SCROLLBAR, hWndXB, OldProc);
 

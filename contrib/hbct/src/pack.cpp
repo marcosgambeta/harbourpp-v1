@@ -49,7 +49,7 @@
 HB_FUNC( CHARPACK )
 {
    auto len = hb_parclen(1);
-   const HB_UCHAR * in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
+   auto in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
 
    if( hb_parni(2) == 0 ) {
       auto out = static_cast<HB_UCHAR*>(hb_xgrab(len * 3 + 2));
@@ -95,7 +95,7 @@ static HB_UCHAR * buf_append(HB_UCHAR * buf, HB_SIZE * buf_size, HB_SIZE count, 
 HB_FUNC( CHARUNPACK )
 {
    auto len = hb_parclen(1);
-   const HB_UCHAR * in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
+   auto in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
 
    if( hb_parni(2) == 0 ) {
       HB_SIZE out_len = 0;

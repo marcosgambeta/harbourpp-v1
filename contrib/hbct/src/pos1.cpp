@@ -62,7 +62,7 @@ static void do_pos1(int iSwitch)
          ( iSwitch == DO_POS1_POSRANGE && /* In addition, PosRange() needs .. */
            HB_ISCHAR(2) &&              /* .. string as 2nd .. */
            HB_ISCHAR(3) ) ) ) {         /* .. and 3rd param */
-      const unsigned char * pcString, * puc;
+      const unsigned char * puc;
       unsigned char ucChar1 = ' ', ucChar2 = ' ';
       int iMode;
       HB_SIZE sIgnore;
@@ -86,7 +86,7 @@ static void do_pos1(int iSwitch)
          iParamShift += 2;
       }
 
-      pcString = reinterpret_cast<const unsigned char*>(hb_parc(iParamShift + 1));
+      auto pcString = reinterpret_cast<const unsigned char*>(hb_parc(iParamShift + 1));
       auto sStrLen = hb_parclen(iParamShift + 1);
 
       iMode = hb_parldef(iParamShift + 2, 0);

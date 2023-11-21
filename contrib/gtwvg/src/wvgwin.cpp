@@ -530,7 +530,7 @@ HB_FUNC( WVG_NOT )
 
 HB_FUNC( WVG_TRACKPOPUPMENU )
 {
-   HMENU hMenu  = reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hMenu  = reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1)));
    UINT  uFlags = hb_parnldef(2, TPM_CENTERALIGN | TPM_RETURNCMD);
    auto x = hb_parni(3);
    auto y = hb_parni(4);
@@ -594,7 +594,7 @@ HB_FUNC( WVG_SLEEP )
 
 HB_FUNC( WVG_SETMENU )
 {
-   HWND hWnd = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hWnd = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
 
    #if 1
    bool    bSet;
@@ -639,7 +639,7 @@ HB_FUNC( WVG_APPENDMENU )
       hb_retl(AppendMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)), static_cast<HB_PTRUINT>(hb_parnint(3)), HB_PARSTR(4, &hBuffer, nullptr)));
       hb_strfree(hBuffer);
    } else { /* It is a SEPARATOR or Submenu */
-      LPCTSTR lpszCaption = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(4)));
+      auto lpszCaption = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(4)));
       hb_retl(AppendMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)), static_cast<HB_PTRUINT>(hb_parnint(3)), static_cast<LPCTSTR>(lpszCaption)));
    }
 }
@@ -654,7 +654,7 @@ HB_FUNC( WVG_INSERTMENU )
                          flags, static_cast<HB_PTRUINT>(hb_parnint(4)), HB_PARSTR(5, &hBuffer, nullptr)));
       hb_strfree(hBuffer);
    } else { /* It is a SEPARATOR or Submenu */
-      LPCTSTR lpszCaption = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(5)));
+      auto lpszCaption = reinterpret_cast<LPCTSTR>(static_cast<HB_PTRUINT>(hb_parnint(5)));
       hb_retl(InsertMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), static_cast<UINT>(hb_parni(2)),
                          flags, static_cast<HB_PTRUINT>(hb_parnint(4)), static_cast<LPCTSTR>(lpszCaption)));
    }
@@ -790,8 +790,8 @@ HB_FUNC( WVG_GETMESSAGETEXT )
 
 HB_FUNC( WVG_SETWNDPROC )
 {
-   HWND    hWnd    = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
-   WNDPROC wndProc = reinterpret_cast<WNDPROC>(static_cast<HB_PTRUINT>(hb_parnint(2)));
+   auto hWnd = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto wndProc = reinterpret_cast<WNDPROC>(static_cast<HB_PTRUINT>(hb_parnint(2)));
    WNDPROC oldProc;
 
 #if (defined(_MSC_VER) && (_MSC_VER <= 1200)) && !defined(HB_ARCH_64BIT)

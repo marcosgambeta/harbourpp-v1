@@ -245,7 +245,7 @@ HB_FUNC( WVG_SETLAYEREDWINDOWATTRIBUTES )
    HINSTANCE h = GetModuleHandle(TEXT("user32.dll"));
 
    if( h ) {
-      wvtSetLayeredWindowAttributes pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes")));
+      auto pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes")));
 
       if( pfnLayered ) {
          HWND hWnd = hbwapi_par_raw_HWND(1);

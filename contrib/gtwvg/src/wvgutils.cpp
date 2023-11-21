@@ -1041,7 +1041,7 @@ HB_FUNC( WVT__MAKEDLGTEMPLATE )
  */
 LPWORD lpwAlign(LPWORD lpIn)
 {
-   HB_PTRUINT ul = reinterpret_cast<HB_PTRUINT>(lpIn);
+   auto ul = reinterpret_cast<HB_PTRUINT>(lpIn);
 
    ul  += 3;
    ul >>= 2;

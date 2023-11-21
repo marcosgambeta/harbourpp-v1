@@ -128,7 +128,7 @@ static int s_MessageBoxTimeout(IN HWND hWnd, IN LPCTSTR lpText, IN LPCTSTR lpCap
                                             IN LPCTSTR lpText, IN LPCTSTR lpCaption,
                                             IN UINT uType, IN WORD wLanguageId,
                                             IN DWORD dwMilliseconds);
-   static _HB_MSGBOXTOUT s_pMessageBoxTimeout = reinterpret_cast<_HB_MSGBOXTOUT>(-1);
+   static auto s_pMessageBoxTimeout = reinterpret_cast<_HB_MSGBOXTOUT>(-1);
 
    if( s_pMessageBoxTimeout == reinterpret_cast<_HB_MSGBOXTOUT>(-1) )
    {

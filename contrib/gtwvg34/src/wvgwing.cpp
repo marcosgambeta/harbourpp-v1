@@ -557,7 +557,7 @@ static UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wPa
    PHB_ITEM block;
 
    if( msg == WM_INITDIALOG ) {
-      CHOOSEFONT * cf = reinterpret_cast<CHOOSEFONT*>(lParam);
+      auto cf = reinterpret_cast<CHOOSEFONT*>(lParam);
       auto pBlock = hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData));
       SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
       binit = true;

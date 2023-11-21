@@ -345,7 +345,7 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
    if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) )
    {
       const BITMAPFILEHEADER * pbmfh = static_cast<const BITMAPFILEHEADER*>(buffer);
-      const BITMAPINFO * pbmi = reinterpret_cast<const BITMAPINFO*>(pbmfh + 1);
+      auto pbmi = reinterpret_cast<const BITMAPINFO*>(pbmfh + 1);
 
       /* Remember there are 2 types of BitMap File */
       if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) )

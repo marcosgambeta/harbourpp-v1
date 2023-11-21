@@ -249,7 +249,7 @@ static ULONG STDMETHODCALLTYPE AddRef(IDispatch * lpThis)
 
 static ULONG STDMETHODCALLTYPE Release(IDispatch * lpThis)
 {
-   IHbOleServer * pHbOleServer = reinterpret_cast<IHbOleServer*>(lpThis);
+   auto pHbOleServer = reinterpret_cast<IHbOleServer*>(lpThis);
 
    if( --pHbOleServer->count == 0 )
    {

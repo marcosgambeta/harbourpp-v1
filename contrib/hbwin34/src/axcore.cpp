@@ -102,15 +102,13 @@ HB_BOOL hb_oleAxInit(void)
 
    if( s_hLib == nullptr )
    {
-      PHB_AX_WININIT pAtlAxWinInit;
-
       s_hLib = hbwapi_LoadLibrarySystem(TEXT("atl.dll"));
       if( reinterpret_cast<HB_PTRUINT>(s_hLib) <= 32 )
       {
          s_hLib = nullptr;
          return false;
       }
-      pAtlAxWinInit      = reinterpret_cast<PHB_AX_WININIT>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(s_hLib, "AtlAxWinInit")));
+      auto pAtlAxWinInit      = reinterpret_cast<PHB_AX_WININIT>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(s_hLib, "AtlAxWinInit")));
       s_pAtlAxGetControl = reinterpret_cast<PHB_AX_GETCTRL>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(s_hLib, "AtlAxGetControl")));
 
       if( pAtlAxWinInit )
@@ -273,7 +271,7 @@ static ULONG STDMETHODCALLTYPE AddRef(IDispatch * lpThis)
 
 static ULONG STDMETHODCALLTYPE Release(IDispatch * lpThis)
 {
-   ISink * pSink = reinterpret_cast<ISink*>(lpThis);
+   auto pSink = reinterpret_cast<ISink*>(lpThis);
 
    if( --pSink->count == 0 )
    {

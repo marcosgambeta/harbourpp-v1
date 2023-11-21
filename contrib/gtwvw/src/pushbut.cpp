@@ -483,7 +483,6 @@ HB_FUNC( WVW_CBCREATE )
    if( hWndCB ) {
       RECT rXB{};
       RECT rOffXB{};
-      WNDPROC OldProc;
       TCHAR   szDefault[] = TEXT("empty");
 
       SendMessage(static_cast<HWND>(hWndCB), WM_SETREDRAW, static_cast<WPARAM>(TRUE), static_cast<LPARAM>(0));
@@ -520,7 +519,7 @@ HB_FUNC( WVW_CBCREATE )
 
       AddControlHandle(usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, uiCBid, static_cast<PHB_ITEM>(hb_param(6, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(bKbdType));
 
-      OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndCB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwCBProc)));
+      auto OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndCB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwCBProc)));
 
       StoreControlProc(usWinNum, WVW_CONTROL_COMBOBOX, hWndCB, OldProc);
 

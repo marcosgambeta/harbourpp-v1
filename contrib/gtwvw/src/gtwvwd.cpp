@@ -2502,7 +2502,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             }
          } else if( iId <= WVW_ID_MAX_PUSHBUTTON ) {
             if( bTopMost || s_pWvwData->s_bAllowNonTop ) {
-               HWND hWndCtrl = reinterpret_cast<HWND>(lParam);
+               auto hWndCtrl = reinterpret_cast<HWND>(lParam);
                UINT uiPBid;
                byte bStyle;
 
@@ -2541,7 +2541,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                case CBN_KILLFOCUS:
 
                   if( (iEvent == CBN_KILLFOCUS) || bTopMost || s_pWvwData->s_bAllowNonTop ) {
-                     HWND hWndCtrl = reinterpret_cast<HWND>(lParam);
+                     auto hWndCtrl = reinterpret_cast<HWND>(lParam);
                      UINT uiCBid;
                      byte bStyle;
 
@@ -2586,7 +2586,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                case EN_CHANGE:
 
                   if( (iEvent == EN_KILLFOCUS) || bTopMost || s_pWvwData->s_bAllowNonTop ) {
-                     HWND hWndCtrl = reinterpret_cast<HWND>(lParam);
+                     auto hWndCtrl = reinterpret_cast<HWND>(lParam);
                      UINT uiEBid;
                      byte bStyle;
 
@@ -3331,7 +3331,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
       case WM_HSCROLL:
       case WM_VSCROLL: {
-         HWND hWndCtrl = reinterpret_cast<HWND>(lParam);
+         auto hWndCtrl = reinterpret_cast<HWND>(lParam);
          UINT uiXBid;
          byte bStyle;
          BOOL bTopMost = (s_pWvwData->s_usNumWindows == usWinNum + 1);
@@ -3433,8 +3433,6 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
       case WM_DRAWITEM:
          if( pWindowData->bSBPaint ) {
-            LPDRAWITEMSTRUCT lpDIS;
-            PTSTR ptStr;
             RECT  rectCorner;
             /* long             lSBColorForeground, lSBColorBackground; */
 
@@ -3443,9 +3441,9 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
             pWindowData->bSBPaint = FALSE;
 
-            lpDIS = reinterpret_cast<LPDRAWITEMSTRUCT>(lParam);
+            auto lpDIS = reinterpret_cast<LPDRAWITEMSTRUCT>(lParam);
 
-            ptStr      = reinterpret_cast<PTSTR>(lpDIS->itemData);
+            auto ptStr = reinterpret_cast<PTSTR>(lpDIS->itemData);
             rectCorner = lpDIS->rcItem;
 
             if( pWindowData->cSBColorForeground ) {
@@ -7952,9 +7950,7 @@ HB_FUNC( WVW_SETGUI )
 
 LPWORD lpwAlign(LPWORD lpIn)
 {
-   ULONG ul;
-
-   ul   = reinterpret_cast<ULONG>(lpIn);
+   auto ul = reinterpret_cast<ULONG>(lpIn);
    ul  += 3;
    ul >>= 2;
    ul <<= 2;

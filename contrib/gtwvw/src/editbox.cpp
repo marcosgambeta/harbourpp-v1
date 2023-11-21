@@ -184,7 +184,6 @@ HB_FUNC( WVW_EBCREATE )
    if( hWndEB ) {
       RECT    rXB{};
       RECT    rOffXB{};
-      WNDPROC OldProc;
       /* USHORT i; */
       BOOL bFromOEM = (pWindowData->CodePage == OEM_CHARSET);
 
@@ -212,7 +211,7 @@ HB_FUNC( WVW_EBCREATE )
 
       AddControlHandle(usWinNum, WVW_CONTROL_EDITBOX, hWndEB, uiEBid, static_cast<PHB_ITEM>(hb_param(7, Harbour::Item::BLOCK)), rXB, rOffXB, static_cast<byte>(bEBType));
 
-      OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndEB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwEBProc)));
+      auto OldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWndEB, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvwEBProc)));
 
       StoreControlProc(usWinNum, WVW_CONTROL_EDITBOX, hWndEB, OldProc);
 
@@ -710,7 +709,7 @@ HB_FUNC( WVW_STCREATE )
 
 HB_FUNC( WVW_STSETTEXT )
 {
-   HWND hWndCB = reinterpret_cast<HWND>(HB_PARHANDLE(2));
+   auto hWndCB = reinterpret_cast<HWND>(HB_PARHANDLE(2));
 
    if( hWndCB ) {
 

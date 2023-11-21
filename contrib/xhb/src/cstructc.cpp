@@ -1228,7 +1228,7 @@ HB_FUNC( HB_STRUCTURETOARRAY )
    auto pRet = hb_param(5, Harbour::Item::ARRAY);
 
    if( Structure && aDef ) {
-      HB_BYTE * Buffer = reinterpret_cast<HB_BYTE*>(Structure->item.asString.value);
+      auto Buffer = reinterpret_cast<HB_BYTE*>(Structure->item.asString.value);
       HB_UINT   uiAlign;
       HB_BOOL   bAdopt;
 

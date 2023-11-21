@@ -2319,7 +2319,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             }
          } else if( iId <= WVW_ID_MAX_PUSHBUTTON ) {
             if( fTopMost || s_wvw->fAllowNonTop ) {
-               HWND hCtrlWnd = reinterpret_cast<HWND>(lParam);
+               auto hCtrlWnd = reinterpret_cast<HWND>(lParam);
                int  nCtrlId  = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_PUSHBUTTON, hCtrlWnd, nullptr);
 
                if( nCtrlId != 0 ) {
@@ -2353,7 +2353,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                case CBN_KILLFOCUS:
 
                   if( iEvent == CBN_KILLFOCUS || fTopMost || s_wvw->fAllowNonTop ) {
-                     HWND hCtrlWnd = reinterpret_cast<HWND>(lParam);
+                     auto hCtrlWnd = reinterpret_cast<HWND>(lParam);
                      int  nCtrlId  = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_COMBOBOX, hCtrlWnd, nullptr);
 
                      if( nCtrlId != 0 ) {
@@ -2393,7 +2393,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                case EN_CHANGE:
 
                   if( iEvent == EN_KILLFOCUS || fTopMost || s_wvw->fAllowNonTop ) {
-                     HWND hCtrlWnd = reinterpret_cast<HWND>(lParam);
+                     auto hCtrlWnd = reinterpret_cast<HWND>(lParam);
                      int  nCtrlId  = hb_gt_wvw_FindControlId(wvw_win, WVW_CONTROL_EDITBOX, hCtrlWnd, nullptr);
 
                      if( nCtrlId != 0 ) {
@@ -3114,7 +3114,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
       case WM_HSCROLL:
       case WM_VSCROLL: {
-         HWND    hCtrlWnd = reinterpret_cast<HWND>(lParam);
+         auto hCtrlWnd = reinterpret_cast<HWND>(lParam);
          int     nCtrlId;
          bool    fTopMost = (s_wvw->iNumWindows == nWin + 1);
 
@@ -3208,8 +3208,6 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
       case WM_DRAWITEM:
 
          if( wvw_win->fSBPaint ) {
-            LPDRAWITEMSTRUCT lpDIS;
-            PTSTR ptStr;
             RECT  rectCorner;
 
             size_t  stLen;
@@ -3217,9 +3215,9 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
             wvw_win->fSBPaint = false;
 
-            lpDIS = reinterpret_cast<LPDRAWITEMSTRUCT>(lParam);
+            auto lpDIS = reinterpret_cast<LPDRAWITEMSTRUCT>(lParam);
 
-            ptStr      = reinterpret_cast<PTSTR>(lpDIS->itemData);
+            auto ptStr      = reinterpret_cast<PTSTR>(lpDIS->itemData);
             rectCorner = lpDIS->rcItem;
 
             if( wvw_win->cSBColorForeground ) {

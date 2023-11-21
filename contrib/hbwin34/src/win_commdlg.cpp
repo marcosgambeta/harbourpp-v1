@@ -68,7 +68,7 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
 
    if( msg == WM_INITDIALOG )
    {
-      CHOOSECOLOR * cc = reinterpret_cast<CHOOSECOLOR*>(lParam);
+      auto cc = reinterpret_cast<CHOOSECOLOR*>(lParam);
       SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(reinterpret_cast<PHB_ITEM>(cc->lCustData)));
       fInit = true;
    }

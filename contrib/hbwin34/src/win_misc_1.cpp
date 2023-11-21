@@ -148,7 +148,7 @@ HB_FUNC( WIN_ANSITOWIDE )
 HB_FUNC( WIN_WIDETOANSI )
 {
    auto nLen = hb_parclen(1);
-   LPCWSTR lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
+   auto lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
    DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
    auto lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
    WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), lpDstMB, dwLength + 1, nullptr, nullptr);

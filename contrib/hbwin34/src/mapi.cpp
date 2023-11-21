@@ -85,7 +85,7 @@ HB_FUNC( WIN_MAPISENDMAIL )
 #endif
             )) >= reinterpret_cast<HINSTANCE>(32) )
    {
-      LPMAPISENDMAIL MAPISendMail = reinterpret_cast<LPMAPISENDMAIL>(HB_WINAPI_GETPROCADDRESS(hMapiDll, "MAPISendMail"));
+      auto MAPISendMail = reinterpret_cast<LPMAPISENDMAIL>(HB_WINAPI_GETPROCADDRESS(hMapiDll, "MAPISendMail"));
 
       if( MAPISendMail )
       {

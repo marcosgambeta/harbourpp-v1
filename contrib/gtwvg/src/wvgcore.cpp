@@ -2529,7 +2529,7 @@ HB_FUNC( WVT_LOADPICTURE )
 
 HB_FUNC( WVT_DESTROYPICTURE )
 {
-   IPicture * iPicture = reinterpret_cast<IPicture*>(static_cast<HB_PTRUINT>(hb_parnl(1)));
+   auto iPicture = reinterpret_cast<IPicture*>(static_cast<HB_PTRUINT>(hb_parnl(1)));
    hb_retl(hb_wvt_gtDestroyPicture(iPicture));
 }
 

@@ -224,7 +224,7 @@ HB_FUNC( WAPI_SENDDLGITEMMESSAGE )  /* NOTE: unsafe function, may corrupt memory
    aligned on a DWORD (4 byte) boundary. */
 static LPWORD s_AlignOnDWORD(LPWORD p)
 {
-   HB_PTRUINT ul = reinterpret_cast<HB_PTRUINT>(p);
+   auto ul = reinterpret_cast<HB_PTRUINT>(p);
 
    ul  += 3;
    ul >>= 2;

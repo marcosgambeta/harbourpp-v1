@@ -1304,7 +1304,7 @@ HB_FUNC( NETIO_SERVER )
 
                         if( size > 0 )
                         {
-                           const char * data = reinterpret_cast<const char*>(msg);
+                           auto data = reinterpret_cast<const char*>(msg);
                            HB_SIZE nSize = size;
 
                            pValue = hb_itemDeserialize(&data, &nSize);
@@ -1674,7 +1674,7 @@ HB_FUNC( NETIO_SERVER )
                   }
                   else
                   {
-                     const char * data = reinterpret_cast<const char*>(msg);
+                     auto data = reinterpret_cast<const char*>(msg);
                      size2 = static_cast<long>(hb_strnlen(data, size)) + 1;
                      if( size2 > size )
                      {

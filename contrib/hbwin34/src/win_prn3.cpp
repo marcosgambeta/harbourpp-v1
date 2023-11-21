@@ -56,7 +56,7 @@ static bool hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
       return false;
    }
 
-   DEFPRINTER fnSetDefaultPrinter = reinterpret_cast<DEFPRINTER>(HB_WINAPI_GETPROCADDRESST(hWinSpool, "SetDefaultPrinter"));
+   auto fnSetDefaultPrinter = reinterpret_cast<DEFPRINTER>(HB_WINAPI_GETPROCADDRESST(hWinSpool, "SetDefaultPrinter"));
 
    if( !fnSetDefaultPrinter ) {
       FreeLibrary(hWinSpool);

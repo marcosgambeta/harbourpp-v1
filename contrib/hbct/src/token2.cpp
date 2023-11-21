@@ -237,7 +237,7 @@ static TOKEN_ENVIRONMENT sTokGet(int iParam, HB_BOOL fReadOnly)
 
          auto nLen = hb_parclen(iParam);
          if( nLen >= sizeof(TOKEN_POSITION) * 2 ) {
-            TOKEN_ENVIRONMENT env = reinterpret_cast<TOKEN_ENVIRONMENT>(const_cast<char*>(hb_parc(iParam)));
+            auto env = reinterpret_cast<TOKEN_ENVIRONMENT>(const_cast<char*>(hb_parc(iParam)));
 
             if( sTokEnvGetSize(env) == nLen ) {
                return fReadOnly ? env : static_cast<TOKEN_ENVIRONMENT>(hb_xmemdup(env, nLen + 1));

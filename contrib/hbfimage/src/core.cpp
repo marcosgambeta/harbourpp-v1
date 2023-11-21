@@ -1065,7 +1065,7 @@ HB_FUNC( FI_SETBACKGROUNDCOLOR )
    if( hb_FIBITMAP_is(1) && HB_ISCHAR(2) && hb_parclen(2) >= sizeof(RGBQUAD) )
    {
       FIBITMAP * dib = hb_FIBITMAP_par(1);
-      RGBQUAD * bkcolor = reinterpret_cast<RGBQUAD*>(const_cast<char*>(hb_itemGetCPtr(hb_param(2, Harbour::Item::STRING))));
+      auto bkcolor = reinterpret_cast<RGBQUAD*>(const_cast<char*>(hb_itemGetCPtr(hb_param(2, Harbour::Item::STRING))));
 
       hb_fi_retl(FreeImage_SetBackgroundColor(dib, bkcolor));
    }

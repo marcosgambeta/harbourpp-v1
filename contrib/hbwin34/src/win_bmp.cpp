@@ -95,7 +95,7 @@ HB_FUNC( WIN_BITMAPTYPE )
 HB_FUNC( WIN_LOADBITMAPFILE )
 {
    HB_SIZE nSize;
-   char * pBuffer = reinterpret_cast<char*>(hb_fileLoad(hb_parcx(1), HB_MAX_BMP_SIZE, &nSize));
+   auto pBuffer = reinterpret_cast<char*>(hb_fileLoad(hb_parcx(1), HB_MAX_BMP_SIZE, &nSize));
 
    if( pBuffer )
    {
@@ -183,7 +183,7 @@ HB_FUNC( WIN_DRAWBITMAP )
 {
    HDC hDC = hbwapi_par_HDC(1);
    auto nSize = hb_parclen(2);
-   const BITMAPFILEHEADER * pbmfh = reinterpret_cast<const BITMAPFILEHEADER*>(hb_parc(2));
+   auto pbmfh = reinterpret_cast<const BITMAPFILEHEADER*>(hb_parc(2));
    int iType = hbwin_bitmapType(pbmfh, nSize);
 
    /* FIXME: No check is done on 2nd parameter which is a large security hole

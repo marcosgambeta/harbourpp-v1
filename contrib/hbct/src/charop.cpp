@@ -61,7 +61,7 @@ void ct_charop(int iMode)
    if( HB_ISCHAR(1) ) {
       auto sStrLen = hb_parclen(1);
       HB_SIZE sPos;
-      const unsigned char * pucString = reinterpret_cast<const unsigned char *>(hb_parc(1));
+      auto pucString = reinterpret_cast<const unsigned char *>(hb_parc(1));
 
       if( sStrLen == 0 ) {
          if( iNoRet ) {

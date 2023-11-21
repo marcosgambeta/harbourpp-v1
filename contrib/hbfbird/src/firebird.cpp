@@ -222,7 +222,7 @@ HB_FUNC( FBSTARTTRANSACTION )
 
 HB_FUNC( FBCOMMIT )
 {
-   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(hb_parptr(1));
+   auto trans = reinterpret_cast<isc_tr_handle>(hb_parptr(1));
 
    if( trans ) {
       ISC_STATUS_ARRAY status;
@@ -239,7 +239,7 @@ HB_FUNC( FBCOMMIT )
 
 HB_FUNC( FBROLLBACK )
 {
-   isc_tr_handle trans = reinterpret_cast<isc_tr_handle>(hb_parptr(1));
+   auto trans = reinterpret_cast<isc_tr_handle>(hb_parptr(1));
 
    if( trans ) {
       ISC_STATUS_ARRAY status;
@@ -441,7 +441,7 @@ HB_FUNC( FBFETCH )
    auto aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
-      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
+      auto stmt = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
       XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
       ISC_STATUS_ARRAY status;
       unsigned short   dialect = static_cast<unsigned short>(hb_itemGetNI(hb_itemArrayGet(aParam, 5)));
@@ -458,9 +458,9 @@ HB_FUNC( FBFREE )
    auto aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
-      isc_stmt_handle  stmt  = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
+      auto  stmt = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
       XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
-      isc_tr_handle    trans = reinterpret_cast<isc_tr_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 3)));
+      auto trans = reinterpret_cast<isc_tr_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 3)));
       ISC_STATUS_ARRAY status;
 
       if( isc_dsql_free_statement(status, &stmt, DSQL_drop) ) {
@@ -554,7 +554,7 @@ HB_FUNC( FBGETDATA )
 
             case SQL_BLOB:
             {
-               ISC_QUAD * blob_id = reinterpret_cast<ISC_QUAD*>(var->sqldata);
+               auto blob_id = reinterpret_cast<ISC_QUAD*>(var->sqldata);
                hb_retptr(static_cast<void*>(blob_id));
                break;
             }

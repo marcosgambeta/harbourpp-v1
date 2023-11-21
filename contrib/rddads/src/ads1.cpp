@@ -609,7 +609,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
                if( HB_IS_STRING(pItem) ) {
                   UNSIGNED16 u16DataType = ADS_STRINGKEY ;
                   UNSIGNED16 ucLen = static_cast<UNSIGNED16>(hb_itemGetCLen(pItem));
-                  UNSIGNED8 * pucScope = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem)));
+                  auto pucScope = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem)));
 #if defined(ADS_USE_OEM_TRANSLATION) && ADS_LIB_VERSION < 600
                   UNSIGNED8 * pszKeyFree = nullptr;
 #endif
@@ -3879,9 +3879,8 @@ static HB_ERRCODE adsSetRel(ADSAREAP pArea, LPDBRELINFO lpdbRelations)
 #endif
 
    UNSIGNED32 u32RetVal = static_cast<UNSIGNED32>(~AE_SUCCESS);
-   UNSIGNED8 * szExp;
 
-   szExp = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(lpdbRelations->abKey)));
+   auto szExp = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(lpdbRelations->abKey)));
    if( *szExp && adsGetRddType(lpdbRelations->lpaChild->rddID) >= 0 ) {
       ADSHANDLE hIndex = (reinterpret_cast<ADSAREAP>(lpdbRelations->lpaChild))->hOrdCurrent;
 

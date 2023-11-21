@@ -556,7 +556,7 @@ HB_FUNC( SETPARENT )
 
 HB_FUNC( BRINGTOTOP1 )
 {
-   HWND hWnd = reinterpret_cast<HWND>(HB_PARHANDLE(1));
+   auto hWnd = reinterpret_cast<HWND>(HB_PARHANDLE(1));
 
 #if 0
    DWORD ForegroundThreadID;
@@ -1063,7 +1063,7 @@ HB_FUNC( TOOLBARADDBUTTONS )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-   HWND hWndCtrl = reinterpret_cast<HWND>(HB_PARHANDLE(2));
+   auto hWndCtrl = reinterpret_cast<HWND>(HB_PARHANDLE(2));
    /* HWND hToolTip = ( HWND ) hb_parnl(5) ; */
    auto pArray = hb_param(3, Harbour::Item::ARRAY);
    auto iButtons = hb_parni(4);
@@ -1121,7 +1121,7 @@ HB_FUNC( SETBITMAPRESOURCEID )
    UINT        usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA *  pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    TBADDBITMAP tbab;
-   HBITMAP     hBitmap     = reinterpret_cast<HBITMAP>(HB_PARHANDLE(3));
+   auto hBitmap = reinterpret_cast<HBITMAP>(HB_PARHANDLE(3));
    UINT        uiBitmap    = static_cast<UINT>(hb_parni(4));
    HWND        hWndToolbar = pWindowData->hToolBar;
    int         iNewBitmap;
@@ -1172,10 +1172,10 @@ HB_FUNC( LOADICON )
 
 HB_FUNC( DRAWBITMAP )
 {
-   HDC     hDC      = reinterpret_cast<HDC>(HB_PARHANDLE(1));
+   auto hDC = reinterpret_cast<HDC>(HB_PARHANDLE(1));
    HDC     hDCmem   = CreateCompatibleDC(hDC);
    DWORD   dwraster = HB_ISNIL(3) ? SRCCOPY : hb_parnl(3);
-   HBITMAP hBitmap  = reinterpret_cast<HBITMAP>(HB_PARHANDLE(2));
+   auto hBitmap = reinterpret_cast<HBITMAP>(HB_PARHANDLE(2));
    BITMAP  bitmap;
    int     nWidthDest  = (hb_pcount() >= 5 && !HB_ISNIL(6)) ? hb_parni(6) : 0;
    int     nHeightDest = (hb_pcount() >= 6 && !HB_ISNIL(7)) ? hb_parni(7) : 0;
@@ -1193,7 +1193,7 @@ HB_FUNC( DRAWBITMAP )
 
 HB_FUNC( WINDOW2BITMAP )
 {
-   HWND    hWnd   = reinterpret_cast<HWND>(HB_PARHANDLE(1));
+   auto hWnd = reinterpret_cast<HWND>(HB_PARHANDLE(1));
    BOOL    lFull  = HB_ISNIL(2) ? 0 : static_cast<BOOL>(hb_parl(2));
    HDC     hDC    = lFull ? GetWindowDC(hWnd) : GetDC(hWnd);
    HDC     hDCmem = CreateCompatibleDC(hDC);

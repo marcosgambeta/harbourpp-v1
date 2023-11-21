@@ -385,7 +385,7 @@ HB_FUNC( WVG_PREPAREBITMAPFROMRESOURCENAME )
 
 HB_FUNC( WVG_STATUSBARCREATEPANEL )
 {
-   HWND hWndSB = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hWndSB = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
 
    if( hWndSB == nullptr || !IsWindow(hWndSB) ) {
       hb_retl(false);
@@ -428,7 +428,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
 
 HB_FUNC( WVG_STATUSBARSETTEXT )
 {
-   HWND hWndSB = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hWndSB = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
 
    if( hWndSB && IsWindow(hWndSB) ) {
       int    iPart = hb_parnidef(2, 1);
@@ -465,7 +465,7 @@ HB_FUNC( WVG_STATUSBARREFRESH )
  */
 HB_FUNC( WVG_GETNMHDRINFO )
 {
-   LPNMHDR lpnmh = reinterpret_cast<LPNMHDR>(wvg_parlparam(1));
+   auto lpnmh = reinterpret_cast<LPNMHDR>(wvg_parlparam(1));
    auto pEvParams = hb_itemNew(nullptr);
    hb_arrayNew(pEvParams, 3);
    hb_arraySetNI(pEvParams, 1, lpnmh->code);
@@ -479,7 +479,7 @@ HB_FUNC( WVG_GETNMHDRINFO )
  */
 HB_FUNC( WVG_GETNMMOUSEINFO )
 {
-   LPNMMOUSE nmm = reinterpret_cast<LPNMMOUSE>(wvg_parlparam(1));
+   auto nmm = reinterpret_cast<LPNMMOUSE>(wvg_parlparam(1));
    NMHDR nmh = nmm->hdr;
    auto pEvParams = hb_itemNew(nullptr);
    hb_arrayNew(pEvParams, 4);
@@ -495,7 +495,7 @@ HB_FUNC( WVG_GETNMMOUSEINFO )
  */
 HB_FUNC( WVG_GETNMTREEVIEWINFO )
 {
-   LPNMTREEVIEW pnmtv = reinterpret_cast<LPNMTREEVIEW>(wvg_parlparam(1));
+   auto pnmtv = reinterpret_cast<LPNMTREEVIEW>(wvg_parlparam(1));
    NMHDR nmh = pnmtv->hdr;
    auto pEvParams = hb_itemNew(nullptr);
    hb_arrayNew(pEvParams, 4);
@@ -511,7 +511,7 @@ HB_FUNC( WVG_GETNMTREEVIEWINFO )
  */
 HB_FUNC( WVG_TREEVIEW_GETSELECTIONINFO )
 {
-   LPNMTREEVIEW pnmtv = reinterpret_cast<LPNMTREEVIEW>(wvg_parlparam(2));
+   auto pnmtv = reinterpret_cast<LPNMTREEVIEW>(wvg_parlparam(2));
    HTREEITEM hSelected = pnmtv->itemNew.hItem;
 
    if( hSelected != nullptr ) {
@@ -657,7 +657,7 @@ BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
    bool binit = false;
 
    if( msg == WM_INITDIALOG ) {
-      CHOOSEFONT * cf = reinterpret_cast<CHOOSEFONT*>(lParam);
+      auto cf = reinterpret_cast<CHOOSEFONT*>(lParam);
       auto pBlock = static_cast<PHB_ITEM>(hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData))); // TODO: unnecessary cast
       SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
       binit = true;
@@ -987,7 +987,7 @@ HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 #if (defined(_MSC_VER) && (_MSC_VER <= 1200)) && !defined(HB_ARCH_64BIT)
    WNDPROC oldProc = static_cast<WNDPROC>(SetWindowLong(hWnd, GWL_WNDPROC, static_cast<long>(ControlWindowProcedure)));
 #else
-   WNDPROC oldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<HB_PTRUINT>(ControlWindowProcedure)));
+   auto oldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<HB_PTRUINT>(ControlWindowProcedure)));
 #endif
 
    hb_retnint(reinterpret_cast<HB_PTRUINT>(oldProc));

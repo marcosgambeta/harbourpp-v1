@@ -409,7 +409,7 @@ HB_FUNC( WIN_PRINTDATARAW )
          {
             if( StartPagePrinter(hPrinter) != 0 )
             {
-               const HB_BYTE * pbData = reinterpret_cast<const HB_BYTE*>(hb_parc(2));
+               auto pbData = reinterpret_cast<const HB_BYTE*>(hb_parc(2));
                auto nLen = hb_parclen(2);
 
                nResult = 0;
