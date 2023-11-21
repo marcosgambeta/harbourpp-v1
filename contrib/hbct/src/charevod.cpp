@@ -60,7 +60,7 @@ static void do_charevod(int iSwitch)
 {
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sLen = hb_parclen(1);
+      auto sLen = hb_parclen(1);
       HB_SIZE sPos, sResultPos;
 
       if( sLen == 0 ) {

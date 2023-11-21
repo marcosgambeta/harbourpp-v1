@@ -53,7 +53,7 @@ HB_FUNC( CHARMIX )
    if( HB_ISCHAR(1) ) {
       auto pcString1 = hb_parc(1);
       const char * pcString2;
-      HB_SIZE sLen1 = hb_parclen(1);
+      auto sLen1 = hb_parclen(1);
       HB_SIZE sLen2, sPos2, sResultPos;
 
       if( sLen1 == 0 ) {

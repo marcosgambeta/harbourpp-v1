@@ -63,9 +63,9 @@ static void do_charonly(int iSwitch)
    /* param check */
    if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
       auto pcString = hb_parc(2);
-      HB_SIZE sStrLen = hb_parclen(2);
+      auto sStrLen = hb_parclen(2);
       auto pcOnlySet = hb_parc(1);
-      HB_SIZE sOnlySetLen = hb_parclen(1);
+      auto sOnlySetLen = hb_parclen(1);
       HB_SIZE sRetStrLen = 0;
       int iShift;
 

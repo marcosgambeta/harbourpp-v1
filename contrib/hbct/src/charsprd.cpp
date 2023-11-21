@@ -49,7 +49,7 @@
 
 HB_FUNC( CHARSPREAD )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
 
    if( nLen == 0 ) {
       hb_retc_null();

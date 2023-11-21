@@ -51,13 +51,13 @@ HB_FUNC( CHARRELA )
 {
    if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4) ) {
       auto pcStringToMatch1 = hb_parc(1);
-      HB_SIZE sStrToMatchLen1 = hb_parclen(1);
+      auto sStrToMatchLen1 = hb_parclen(1);
       auto pcString1 = hb_parc(2);
-      HB_SIZE sStrLen1 = hb_parclen(2);
+      auto sStrLen1 = hb_parclen(2);
       auto pcStringToMatch2 = hb_parc(3);
-      HB_SIZE sStrToMatchLen2 = hb_parclen(3);
+      auto sStrToMatchLen2 = hb_parclen(3);
       auto pcString2 = hb_parc(4);
-      HB_SIZE sStrLen2 = hb_parclen(4);
+      auto sStrLen2 = hb_parclen(4);
 
       const char * pc1, * pc2;
       HB_SIZE sOffset1, sOffset2;
@@ -120,15 +120,15 @@ HB_FUNC( CHARRELREP )
 
    if( HB_ISCHAR(1) && HB_ISCHAR(2) && HB_ISCHAR(3) && HB_ISCHAR(4) && HB_ISCHAR(5) ) {
       auto pcStringToMatch1 = hb_parc(1);
-      HB_SIZE sStrToMatchLen1 = hb_parclen(1);
+      auto sStrToMatchLen1 = hb_parclen(1);
       auto pcString1 = hb_parc(2);
-      HB_SIZE sStrLen1 = hb_parclen(2);
+      auto sStrLen1 = hb_parclen(2);
       auto pcStringToMatch2 = hb_parc(3);
-      HB_SIZE sStrToMatchLen2 = hb_parclen(3);
+      auto sStrToMatchLen2 = hb_parclen(3);
       auto pcString2 = hb_parc(4);
-      HB_SIZE sStrLen2 = hb_parclen(4);
+      auto sStrLen2 = hb_parclen(4);
       auto pcReplace = hb_parc(5);
-      HB_SIZE sReplaceLen = hb_parclen(5);
+      auto sReplaceLen = hb_parclen(5);
       const char * pc1, * pc2;
       HB_SIZE sOffset1, sOffset2;
       HB_SIZE sMatchStrLen;

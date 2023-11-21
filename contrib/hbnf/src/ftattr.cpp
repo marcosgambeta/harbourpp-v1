@@ -102,7 +102,7 @@ HB_FUNC( FT_SAVEATT )
 
 HB_FUNC( FT_RESTATT )
 {
-   HB_SIZE nLen = hb_parclen(5);
+   auto nLen = hb_parclen(5);
 
    if( nLen )
    {

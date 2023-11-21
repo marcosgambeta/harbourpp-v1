@@ -63,7 +63,6 @@ static void do_pos1(int iSwitch)
            HB_ISCHAR(2) &&              /* .. string as 2nd .. */
            HB_ISCHAR(3) ) ) ) {         /* .. and 3rd param */
       const unsigned char * pcString, * puc;
-      HB_SIZE sStrLen;
       unsigned char ucChar1 = ' ', ucChar2 = ' ';
       int iMode;
       HB_SIZE sIgnore;
@@ -88,7 +87,7 @@ static void do_pos1(int iSwitch)
       }
 
       pcString = reinterpret_cast<const unsigned char*>(hb_parc(iParamShift + 1));
-      sStrLen = hb_parclen(iParamShift + 1);
+      auto sStrLen = hb_parclen(iParamShift + 1);
 
       iMode = hb_parldef(iParamShift + 2, 0);
       sIgnore = hb_parnsdef(iParamShift + 3, 0);

@@ -53,7 +53,7 @@
 void ct_charlist(int iMode)
 {
    auto pcString = hb_parc(1);
-   HB_SIZE sStrLen = hb_parclen(1);
+   auto sStrLen = hb_parclen(1);
    HB_SIZE sCnt;
 
    if( iMode == CT_CHARLIST_CHARHIST ) {

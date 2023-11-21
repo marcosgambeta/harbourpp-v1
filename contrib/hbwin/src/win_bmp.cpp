@@ -149,7 +149,7 @@ static int hbwin_bitmapIsSupported(HDC hDC, int iType, const void * pImgBuf, HB_
 HB_FUNC( WIN_BITMAPISSUPPORTED )
 {
    auto pImgBuf = hb_parc(2);
-   HB_SIZE nSize = hb_parclen(2);
+   auto nSize = hb_parclen(2);
 
    hb_retni(hbwin_bitmapIsSupported(hbwapi_par_HDC(1), hbwin_bitmapType(pImgBuf, nSize), pImgBuf, nSize));
 }
@@ -159,7 +159,7 @@ HB_FUNC( WIN_DRAWBITMAP )
    BITMAPINFO * pbmi = nullptr;
    BYTE * pBits = nullptr;
    HDC hDC = hbwapi_par_HDC(1);
-   HB_SIZE nSize = hb_parclen(2);
+   auto nSize = hb_parclen(2);
    auto pbmfh = reinterpret_cast<BITMAPFILEHEADER*>(const_cast<char*>(hb_parc(2)));
    int iType = hbwin_bitmapType(pbmfh, nSize);
 

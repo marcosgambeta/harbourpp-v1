@@ -231,13 +231,11 @@ static TOKEN_ENVIRONMENT sTokGet(int iParam, HB_BOOL fReadOnly)
 {
    if( iParam < 0 || (iParam > 0 && HB_ISCHAR(iParam)) ) {
       if( iParam < 0 || fReadOnly || HB_ISBYREF(iParam) ) {
-         HB_SIZE nLen;
-
          if( iParam < 0 ) {
             iParam = -iParam;
          }
 
-         nLen = hb_parclen(iParam);
+         auto nLen = hb_parclen(iParam);
          if( nLen >= sizeof(TOKEN_POSITION) * 2 ) {
             TOKEN_ENVIRONMENT env = reinterpret_cast<TOKEN_ENVIRONMENT>(const_cast<char*>(hb_parc(iParam)));
 
@@ -269,9 +267,8 @@ HB_FUNC( TOKENINIT )
 {
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       const char * pcSeparatorStr;
-      HB_SIZE sSeparatorStrLen;
       HB_SIZE nSkip;
       const char * pcSubStr, * pc;
       HB_SIZE sSubStrLen;
@@ -279,7 +276,7 @@ HB_FUNC( TOKENINIT )
       TOKEN_POSITION sTokenPosition;
 
       /* separator string */
-      sSeparatorStrLen = hb_parclen(2);
+      auto sSeparatorStrLen = hb_parclen(2);
       if( sSeparatorStrLen > 0 ) {
          pcSeparatorStr = hb_parc(2);
       } else {
@@ -393,7 +390,7 @@ HB_FUNC( TOKENNEXT )
 {
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
 
       TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(3, false);
       TOKEN_POSITION * psTokenPosition;

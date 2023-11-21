@@ -199,12 +199,12 @@ HB_FUNC( HB_READLINE )
    auto szText = hb_parcx(1);
    const char ** pTerm;
    HB_SIZE *     pnTermSizes;
-   HB_SIZE       nTabLen, nTerms;
+   HB_SIZE       nTerms;
    HB_SIZE       nLineSize = hb_parni(3);
    HB_BOOL       bWrap = hb_parl(5);
    HB_BOOL       bFound, bEOF;
    HB_SIZE       nStartOffset;
-   HB_SIZE       nEndOffset, nTextLen;
+   HB_SIZE       nEndOffset;
    HB_ISIZ       nEnd;
    HB_BOOL       bAlloc_Term1 = false;
 
@@ -213,8 +213,8 @@ HB_FUNC( HB_READLINE )
       return;
    }
 
-   nTextLen = hb_parclen(1);
-   nTabLen  = hb_parclen(4);
+   auto nTextLen = hb_parclen(1);
+   auto nTabLen  = hb_parclen(4);
 
    nStartOffset = hb_parns(6);
 

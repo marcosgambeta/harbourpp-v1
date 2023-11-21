@@ -54,7 +54,7 @@ HB_FUNC( ADDASCII )
 
    if( HB_ISCHAR(1) ) {
       auto pcSource = hb_parc(1);
-      HB_SIZE sLen = hb_parclen(1);
+      auto sLen = hb_parclen(1);
       HB_SIZE sPos = hb_parnsdef(3, sLen);
       HB_LONG lValue;
       int iCarryOver;

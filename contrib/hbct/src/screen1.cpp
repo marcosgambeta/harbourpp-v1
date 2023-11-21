@@ -74,12 +74,12 @@ HB_FUNC( SCREENATTR )
 
 HB_FUNC( SCREENMIX )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
 
    if( nLen ) {
       auto szText = hb_parc(1);
       const char * szAttr;
-      HB_SIZE nAttr = hb_parclen(2);
+      auto nAttr = hb_parclen(2);
       int iRow, iCol;
 
       if( nAttr == 0 ) {
@@ -132,7 +132,7 @@ HB_FUNC( SCREENMIX )
 
 HB_FUNC( SAYSCREEN )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
 
    if( nLen ) {
       auto szText = hb_parc(1);

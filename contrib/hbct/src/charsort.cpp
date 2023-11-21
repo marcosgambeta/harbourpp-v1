@@ -98,7 +98,7 @@ HB_FUNC( CHARSORT )
       /* get parameters */
       auto pcString = hb_parc(1);
 
-      HB_SIZE sStrLen     = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sElementLen = hb_parnsdef(2, 1);
       HB_SIZE sIgnore     = hb_parnsdef(4, 0);
       HB_SIZE sSortLen    = hb_parnsdef(6, sStrLen - sIgnore);

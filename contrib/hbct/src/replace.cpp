@@ -68,7 +68,7 @@ static void do_replace(int iSwitch)
    /* param check */
    if( HB_ISCHAR(1) && (hb_parclen(2) > 0 || HB_ISNUM(2)) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       char * pc;
       char cSearch, cReplace;
 

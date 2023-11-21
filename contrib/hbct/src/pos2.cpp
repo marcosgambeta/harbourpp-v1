@@ -54,7 +54,7 @@ HB_FUNC( POSCHAR )
    if( hb_parclen(1) > 0 ) {
       if( hb_parclen(2) > 0 || HB_ISNUM(2) ) {
          auto pcString = hb_parc(1);
-         HB_SIZE sStrLen = hb_parclen(1);
+         auto sStrLen = hb_parclen(1);
          char cReplace;
          HB_SIZE sPosition;
 
@@ -123,7 +123,7 @@ HB_FUNC( POSDEL )
 {
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sStartPos;
       HB_SIZE sDelLen = hb_parnsdef(3, 1);
 
@@ -175,7 +175,7 @@ HB_FUNC( POSINS )
    if( HB_ISCHAR(1) )
    {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sInsLen;
 
       if( (sInsLen = hb_parclen(2)) > 0 ) {
@@ -245,7 +245,7 @@ HB_FUNC( POSREPL )
 
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sReplLen;
 
       if( (sReplLen = hb_parclen(2)) > 0 ) {

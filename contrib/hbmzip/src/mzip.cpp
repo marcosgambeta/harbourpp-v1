@@ -380,7 +380,7 @@ HB_FUNC( HB_ZIPFILEWRITE )
       zipFile hZip = hb_zipfileParam(1);
       if( hZip )
       {
-         HB_SIZE nLen = hb_parclen(2);
+         auto nLen = hb_parclen(2);
 
          if( HB_ISNUM(3) )
          {

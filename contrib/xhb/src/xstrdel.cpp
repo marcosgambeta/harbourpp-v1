@@ -51,8 +51,8 @@ HB_FUNC( STRDEL )
 {
    if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
       auto szText = hb_parcx(1);
-      HB_SIZE      nText  = hb_parclen(1);
-      HB_SIZE      nDel   = hb_parclen(2);
+      auto nText  = hb_parclen(1);
+      auto nDel   = hb_parclen(2);
 
       if( nDel > 0 && nText > 0 ) {
          auto szDel = hb_parcx(2);

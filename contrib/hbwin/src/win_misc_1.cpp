@@ -105,7 +105,7 @@ HB_FUNC( WIN_GETCOMMANDLINEPARAM )
 
 HB_FUNC( WIN_ANSITOWIDE )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    LPCSTR lpSrcMB = hb_parcx(1);
    DWORD dwLength = MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), nullptr, 0);
    auto lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
@@ -117,7 +117,7 @@ HB_FUNC( WIN_ANSITOWIDE )
 
 HB_FUNC( WIN_WIDETOANSI )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    auto lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
    DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
    auto lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));

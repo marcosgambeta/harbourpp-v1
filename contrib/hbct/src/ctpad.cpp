@@ -56,7 +56,7 @@ static void do_pad(int iSwitch)
 {
    if( HB_ISCHAR(1) && HB_ISNUM(2) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       char * pc;
       HB_ISIZ nRetLen;
       HB_SIZE sRetLen;

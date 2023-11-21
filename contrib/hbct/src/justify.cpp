@@ -58,7 +58,7 @@ static void do_justify(int iSwitch)
 
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       char cJustChar;
       const char * pc;
       char * pcw;

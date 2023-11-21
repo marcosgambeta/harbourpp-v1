@@ -49,11 +49,11 @@
 
 HB_FUNC( CTOBIT )
 {
-   HB_SIZE nString = hb_parclen(1);
+   auto nString = hb_parclen(1);
    int iResult = 0;
 
    if( nString > 0 ) {
-      HB_SIZE nPattern = hb_parclen(2);
+      auto nPattern = hb_parclen(2);
 
       if( nPattern >= 1 && nPattern <= 16 ) {
          auto pszString = hb_parc(1);
@@ -79,7 +79,7 @@ HB_FUNC( CTOBIT )
 
 HB_FUNC( BITTOC )
 {
-   HB_SIZE nPattern = hb_parclen(2);
+   auto nPattern = hb_parclen(2);
 
    if( nPattern >= 1 && nPattern <= 16 ) {
       auto pszPattern = hb_parc(2);

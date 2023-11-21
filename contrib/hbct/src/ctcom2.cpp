@@ -54,7 +54,7 @@
  */
 HB_FUNC( COM_DOSCON )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
 
    if( nLen > 0 ) {
       if( HB_ISNUM(2) || HB_ISNUM(3) ) {
@@ -116,11 +116,11 @@ static char s_xmoblock_sum(const char * szData, HB_SIZE nLen)
  */
 HB_FUNC( XMOBLOCK )
 {
-   HB_SIZE nLen, nSize;
+   HB_SIZE nSize;
    HB_BOOL fCRC;
 
    auto szData = hb_parc(1);
-   nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    auto iBlock = hb_parni(2);
    fCRC = hb_parl(3);
    nSize = hb_parni(4) == 2 ? 1024 : 128;
@@ -154,7 +154,7 @@ HB_FUNC( XMOBLOCK )
  */
 HB_FUNC( XMOCHECK )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
    int iResult = -1;
 
    if( nLen >= 132 ) {

@@ -59,7 +59,7 @@ HB_FUNC( CHARREPL )
       /* get parameters */
       auto pcSearch = hb_parc(1);
       auto pcString = hb_parc(2);
-      HB_SIZE sStrLen = hb_parclen(2);
+      auto sStrLen = hb_parclen(2);
       auto pcReplace = hb_parc(3);
       int iMode = hb_parldef(4, 0);
 

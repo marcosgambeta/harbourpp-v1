@@ -295,7 +295,7 @@ static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * p
 HB_FUNC( WIN_BITMAPDIMENSIONS )
 {
    const void * buffer = hb_parc(1);
-   HB_SIZE nSize = hb_parclen(1);
+   auto nSize = hb_parclen(1);
 
    int iType = hbwin_bitmapType(buffer, nSize);
 

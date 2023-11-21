@@ -57,7 +57,7 @@ static void do_count(int iSwitch)
    /* param check */
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sRetVal;
       const char * pc;
       char cSearch;

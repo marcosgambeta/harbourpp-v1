@@ -51,9 +51,9 @@ HB_FUNC( POSDIFF )
 {
    if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
       auto pcString1 = hb_parc(1);
-      HB_SIZE sStrLen1 = hb_parclen(1);
+      auto sStrLen1 = hb_parclen(1);
       auto pcString2 = hb_parc(2);
-      HB_SIZE sStrLen2 = hb_parclen(2);
+      auto sStrLen2 = hb_parclen(2);
       const char * pc1, * pc2;
       HB_SIZE sIgnore = hb_parnsdef(3, 0);
 
@@ -107,9 +107,9 @@ HB_FUNC( POSEQUAL )
 {
    if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
       auto pcString1 = hb_parc(1);
-      HB_SIZE sStrLen1 = hb_parclen(1);
+      auto sStrLen1 = hb_parclen(1);
       auto pcString2 = hb_parc(2);
-      HB_SIZE sStrLen2 = hb_parclen(2);
+      auto sStrLen2 = hb_parclen(2);
       const char * pc1, * pc2;
       HB_SIZE sIgnore = hb_parnsdef(4, 0);
       HB_SIZE sCompare, sCompareCnt, sRet = 0;

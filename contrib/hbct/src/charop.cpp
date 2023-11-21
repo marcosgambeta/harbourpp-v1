@@ -59,7 +59,7 @@ void ct_charop(int iMode)
    int iNoRet = ct_getref() && HB_ISBYREF(1);
 
    if( HB_ISCHAR(1) ) {
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sPos;
       const unsigned char * pucString = reinterpret_cast<const unsigned char *>(hb_parc(1));
 
@@ -157,7 +157,7 @@ void ct_charop(int iMode)
 
             if( HB_ISCHAR(2) ) {
                auto pucString2 = hb_parc(2);
-               HB_SIZE sStrLen2 = hb_parclen(2);
+               auto sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
                   pucResult[sPos] = static_cast<char>(pucString[sPos] + pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
@@ -178,7 +178,7 @@ void ct_charop(int iMode)
 
             if( HB_ISCHAR(2) ) {
                auto pucString2 = hb_parc(2);
-               HB_SIZE sStrLen2 = hb_parclen(2);
+               auto sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
                   pucResult[sPos] = static_cast<char>(pucString[sPos] - pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
@@ -199,7 +199,7 @@ void ct_charop(int iMode)
 
             if( HB_ISCHAR(2) ) {
                auto pucString2 = hb_parc(2);
-               HB_SIZE sStrLen2 = hb_parclen(2);
+               auto sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
                   pucResult[sPos] = static_cast<char>(pucString[sPos] & pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
@@ -220,7 +220,7 @@ void ct_charop(int iMode)
 
             if( HB_ISCHAR(2) ) {
                auto pucString2 = hb_parc(2);
-               HB_SIZE sStrLen2 = hb_parclen(2);
+               auto sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
                   pucResult[sPos] = static_cast<char>(pucString[sPos] | pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);
@@ -241,7 +241,7 @@ void ct_charop(int iMode)
 
             if( HB_ISCHAR(2) ) {
                auto pucString2 = hb_parc(2);
-               HB_SIZE sStrLen2 = hb_parclen(2);
+               auto sStrLen2 = hb_parclen(2);
 
                for( sPos = 0; sPos < sStrLen; ++sPos ) {
                   pucResult[sPos] = static_cast<char>(pucString[sPos] ^ pucString2[sStrLen2 ? (sPos % sStrLen2) : 0]);

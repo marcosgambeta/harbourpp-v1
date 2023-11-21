@@ -51,9 +51,9 @@ HB_FUNC( NUMAT )
 {
    if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
       auto pcStringToMatch = hb_parc(1);
-      HB_SIZE sStrToMatchLen = hb_parclen(1);
+      auto sStrToMatchLen = hb_parclen(1);
       auto pcString = hb_parc(2);
-      HB_SIZE sStrLen = hb_parclen(2);
+      auto sStrLen = hb_parclen(2);
       int iMultiPass = ct_getatmupa();
       int iAtLike = ct_getatlike();
       char cAtLike = ct_getatlikechar();

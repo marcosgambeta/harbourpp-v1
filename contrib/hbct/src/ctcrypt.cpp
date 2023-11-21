@@ -51,14 +51,14 @@
 
 HB_FUNC( CRYPT )
 {
-   HB_SIZE nCryptLen = hb_parclen(2);
+   auto nCryptLen = hb_parclen(2);
 
    if( nCryptLen >= 2 ) {
       const HB_BYTE * pbyCrypt = reinterpret_cast<const HB_BYTE*>(hb_parc(2));
       HB_SIZE nCryptPos = 0;
 
       const HB_BYTE * pbyString = reinterpret_cast<const HB_BYTE*>(hb_parc(1));
-      HB_SIZE nStringLen = hb_parclen(1);
+      auto nStringLen = hb_parclen(1);
 
       auto pbyResult = static_cast<HB_BYTE*>(hb_xgrab(nStringLen + 1));
 

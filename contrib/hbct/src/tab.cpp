@@ -51,7 +51,7 @@ HB_FUNC( TABEXPAND )
 {
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sRetLen;
       HB_SIZE sTabWidth = 0;
       char cFill, cTab, cCR;
@@ -187,12 +187,11 @@ HB_FUNC( TABPACK )
 {
    if( HB_ISCHAR(1) ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       HB_SIZE sRetLen;
       HB_SIZE sTabWidth = 0;
       char cFill, cTab, cCR;
       const char * pcNewLine;
-      HB_SIZE sNewLineLen;
       int iIgnore141;
       HB_SIZE sIndex, sTabIndex, sFillCount;
 
@@ -211,7 +210,7 @@ HB_FUNC( TABPACK )
          cFill = 0x20;
       }
 
-      sNewLineLen = hb_parclen(4);
+      auto sNewLineLen = hb_parclen(4);
       if( sNewLineLen > 0 ) {
          pcNewLine = hb_parc(4);
       } else {

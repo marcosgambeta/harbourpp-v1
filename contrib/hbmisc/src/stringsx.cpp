@@ -92,7 +92,8 @@ HB_FUNC( ROT13 )
    if( HB_ISCHAR(1) )
    {
       auto szText = hb_parc(1);
-      HB_SIZE      i, nLen = hb_parclen(1);
+      HB_SIZE      i;
+      auto nLen = hb_parclen(1);
       auto szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 
       for( i = 0; i < nLen; i++ )

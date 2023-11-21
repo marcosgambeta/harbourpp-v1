@@ -51,7 +51,7 @@
 
 HB_FUNC( SAYDOWN )
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
 
    if( nLen ) {
       int iRow, iCol, iMaxRow, iMaxCol;
@@ -69,7 +69,7 @@ HB_FUNC( SAYDOWN )
 
       if( iRow >= 0 && iCol >= 0 && iRow <= iMaxRow && iCol <= iMaxCol ) {
          auto szText = hb_parc(1);
-         HB_SIZE nTextLen = hb_parclen(1);
+         auto nTextLen = hb_parclen(1);
 
          HB_WCHAR wc;
          PHB_CODEPAGE cdp = hb_gtHostCP();
@@ -353,7 +353,7 @@ HB_FUNC( SCREENSTR )  /* TODO: Unicode support */
 
 HB_FUNC( STRSCREEN )  /* TODO: Unicode support */
 {
-   HB_SIZE nLen = hb_parclen(1);
+   auto nLen = hb_parclen(1);
 
    if( nLen & 1 ) {
       nLen--;

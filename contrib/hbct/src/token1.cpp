@@ -109,9 +109,8 @@ static void do_token1(int iSwitch)
 
    if( iParamCheck ) {
       auto pcString = hb_parc(1);
-      HB_SIZE sStrLen = hb_parclen(1);
+      auto sStrLen = hb_parclen(1);
       const char * pcSeparatorStr;
-      HB_SIZE sSeparatorStrLen;
       HB_SIZE nTokenCounter;
       HB_SIZE nSkip;
       const char * pcSubStr;
@@ -122,7 +121,7 @@ static void do_token1(int iSwitch)
       const char * pc;
 
       /* separator string */
-      sSeparatorStrLen = hb_parclen(2);
+      auto sSeparatorStrLen = hb_parclen(2);
       if( sSeparatorStrLen != 0 ) {
          pcSeparatorStr = hb_parc(2);
       } else {
