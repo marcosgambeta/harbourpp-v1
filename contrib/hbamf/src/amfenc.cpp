@@ -738,7 +738,6 @@ static PHB_ITEM class_def_from_class(/* amfContext * context, */ PHB_ITEM pItem)
 {
    HB_USHORT uiClass;
    PHB_ITEM  pClass;
-   PHB_ITEM  pKey;
 
    /* get Harbour's class id/handle */
    uiClass = hb_objGetClass(pItem);
@@ -754,7 +753,7 @@ static PHB_ITEM class_def_from_class(/* amfContext * context, */ PHB_ITEM pItem)
 
    pClass = hb_hashNew(nullptr);
 
-   pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
+   auto pKey = hb_itemPutC(nullptr, "CLASS_DEF");
    auto pValue = hb_itemNew(nullptr);
    if( !hb_hashAdd(pClass, pKey, pValue) ) {
       hb_itemRelease(pKey);
@@ -956,7 +955,7 @@ static bool amf3_serialize_object(amfContext * context, PHB_ITEM pItem)
 static void amf3_conversion_out(amfContext * context, PHB_ITEM pItem)
 {
    auto pRetCopy = hb_itemNew(nullptr);
-   PHB_ITEM pOuterContext = hb_itemPutPtr(nullptr, context);
+   auto pOuterContext = hb_itemPutPtr(nullptr, context);
    PHB_SYMB pSym = hb_itemGetSymbol(context->conv_function);
 
    if( pItem == hb_stackReturnItem() ) {
@@ -1225,7 +1224,7 @@ HB_FUNC( AMF3_FROMWA )
                int iPos = hb_rddFieldIndex(pArea, szFieldName);
 
                if( iPos ) {
-                  PHB_ITEM pFieldNum = hb_itemPutNI(nullptr, iPos);
+                  auto pFieldNum = hb_itemPutNI(nullptr, iPos);
                   hb_itemArrayPut(pFields, uiIter, pFieldNum);
                   hb_itemRelease(pFieldNum);
                   continue;

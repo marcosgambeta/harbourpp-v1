@@ -309,7 +309,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
 
    if( iKey != 0 ) {
       bool fCodeExec = false;
-      PHB_ITEM pKey = hb_itemPutNI(nullptr, iKey);
+      auto pKey = hb_itemPutNI(nullptr, iKey);
       PHB_ITEM pCodeblock = hb_itemDoC("SETKEY", 1, pKey);
       if( HB_IS_EVALITEM(pCodeblock) ) {
          SetFocus(hWndParent);

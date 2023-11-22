@@ -55,8 +55,8 @@
 
 static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char * pszKey, long v)
 {
-   PHB_ITEM pKey = hb_itemPutC(nullptr, pszKey);
-   PHB_ITEM pValue = hb_itemPutNL(nullptr, v);
+   auto pKey = hb_itemPutC(nullptr, pszKey);
+   auto pValue = hb_itemPutNL(nullptr, v);
 
    hb_hashAdd(pHash, pKey, pValue);
 
@@ -66,8 +66,8 @@ static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char * pszKey, long v)
 
 static void s_hb_hashSetCItemC(PHB_ITEM pHash, const char * pszKey, const TCHAR * v, HB_SIZE l)
 {
-   PHB_ITEM pKey = hb_itemPutC(nullptr, pszKey);
-   PHB_ITEM pValue = HB_ITEMPUTSTRLEN(nullptr, v, l);
+   auto pKey = hb_itemPutC(nullptr, pszKey);
+   auto pValue = HB_ITEMPUTSTRLEN(nullptr, v, l);
 
    hb_hashAdd(pHash, pKey, pValue);
 

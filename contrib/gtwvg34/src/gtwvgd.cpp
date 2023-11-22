@@ -393,7 +393,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->CloseMode         = 0;
 
    {
-      PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+      auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
       pWVT->lpWindowTitle = HB_ITEMGETSTR(pItem, &pWVT->hWindowTitle, nullptr);
       hb_itemRelease(pItem);
    }
@@ -438,7 +438,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
 
    if( pWVT->pGT->pNotifierBlock || pWVT->pNotifierGUI ) {
       if( hb_vmRequestReenter() ) {
-         PHB_ITEM pEvent = hb_itemPutNI(nullptr, nEvent);
+         auto pEvent = hb_itemPutNI(nullptr, nEvent);
 
          if( pWVT->pGT->pNotifierBlock ) {
             PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
@@ -629,7 +629,7 @@ static void hb_gt_wvt_AddCharToInputQueue(PHB_GTWVT pWVT, int iKey)
    }
    /* Fire event to be trapped by the application */
    {
-      PHB_ITEM pEvParams = hb_itemPutNI(nullptr, iKey);
+      auto pEvParams = hb_itemPutNI(nullptr, iKey);
       hb_gt_wvt_FireEvent(pWVT, HB_GTE_KEYBOARD, pEvParams);
    }
 }
@@ -1224,14 +1224,14 @@ static void hb_gt_wvt_MouseEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LP
 
 #if defined(UNICODE)
                if( j > 0 ) {
-                  PHB_ITEM pItem = hb_itemPutStrLenU16(nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, j);
+                  auto pItem = hb_itemPutStrLenU16(nullptr, HB_CDP_ENDIAN_NATIVE, sBuffer, j);
                   hb_gt_winapi_setClipboard(CF_UNICODETEXT, pItem);
                   hb_itemRelease(pItem);
                }
                hb_xfree(sBuffer);
 #else
                if( j > 0 ) {
-                  PHB_ITEM pItem = hb_itemPutCLPtr(nullptr, sBuffer, j);
+                  auto pItem = hb_itemPutCLPtr(nullptr, sBuffer, j);
                   hb_gt_winapi_setClipboard(pWVT->CodePage == OEM_CHARSET ? CF_OEMTEXT : CF_TEXT, pItem);
                   hb_itemRelease(pItem);
                } else {

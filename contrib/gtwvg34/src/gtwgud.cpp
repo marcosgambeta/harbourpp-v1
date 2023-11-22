@@ -245,7 +245,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->bClosable         = true;
 
    {
-      PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+      auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
       pWVT->lpWindowTitle = HB_ITEMGETSTR(pItem, &pWVT->hWindowTitle, nullptr);
       hb_itemRelease(pItem);
    }
@@ -286,7 +286,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
 
    if( pWVT->pGT->pNotifierBlock ) {
       if( hb_vmRequestReenter() ) {
-         PHB_ITEM pEvent = hb_itemPutNI(nullptr, nEvent);
+         auto pEvent = hb_itemPutNI(nullptr, nEvent);
          PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
 
          if( HB_IS_POINTER(pResult) ) {
@@ -341,7 +341,7 @@ static void hb_gt_wvt_AddCharToInputQueue(PHB_GTWVT pWVT, int iKey)
    #if 0
    /* Fire event to be trapped by the application */
    {
-      PHB_ITEM pEvParams = hb_itemPutNI(nullptr, iKey);
+      auto pEvParams = hb_itemPutNI(nullptr, iKey);
       hb_gt_wvt_FireEvent(pWVT, HB_GTE_KEYBOARD, pEvParams);
    }
    #endif
@@ -897,7 +897,7 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
             }
             break;
          case WM_TIMER: {
-            PHB_ITEM pEvParams = hb_itemPutNI(nullptr, static_cast<int>(wParam));
+            auto pEvParams = hb_itemPutNI(nullptr, static_cast<int>(wParam));
             hb_gt_wvt_FireEvent(pWVT, HB_GTE_TIMER, pEvParams);
             return 0;
          }

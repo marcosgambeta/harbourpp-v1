@@ -76,9 +76,9 @@ static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
    if( (pBlock = static_cast<PHB_ITEM>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter() )
    {
       PHB_ITEM pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
-      PHB_ITEM pMsg = hb_itemPutNInt(nullptr, msg);
-      PHB_ITEM pLPa = hb_itemPutNInt(nullptr, wParam);
-      PHB_ITEM pWPa = hb_itemPutNInt(nullptr, lParam);
+      auto pMsg = hb_itemPutNInt(nullptr, msg);
+      auto pLPa = hb_itemPutNInt(nullptr, wParam);
+      auto pWPa = hb_itemPutNInt(nullptr, lParam);
 
       hb_evalBlock(pBlock, pWnd, pMsg, pLPa, pWPa);
 

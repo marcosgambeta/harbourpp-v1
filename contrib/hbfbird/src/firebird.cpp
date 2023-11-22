@@ -677,11 +677,10 @@ HB_FUNC( FBGETBLOB )
 
          while( blob_stat == 0 || status[1] == isc_segment ) {
             char     p[1024];
-            PHB_ITEM temp;
 
             hb_snprintf(p, sizeof(p), "%*.*s", blob_seg_len, blob_seg_len, blob_segment);
 
-            temp = hb_itemPutC(nullptr, p);
+            auto temp = hb_itemPutC(nullptr, p);
             hb_arrayAdd(aNew, temp);
             hb_itemRelease(temp);
 

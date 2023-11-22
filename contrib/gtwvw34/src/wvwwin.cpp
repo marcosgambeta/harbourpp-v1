@@ -150,7 +150,7 @@ HB_FUNC( WVW_NOPENWINDOW )
             return;
          }
       } else {
-         PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+         auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
          szWinName = HB_ITEMGETSTR(pItem, &hWinName, nullptr);
          hb_itemRelease(pItem);
       }

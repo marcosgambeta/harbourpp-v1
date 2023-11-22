@@ -562,7 +562,6 @@ static PHB_ITEM class_def_from_classname(/* amfContext * context, */ PHB_ITEM pC
 {
    HB_USHORT uiClass;
    PHB_ITEM  pClass;
-   PHB_ITEM  pKey;
    char *    pszBuffer = hb_itemGetC(pClassName);
    auto nLen = hb_itemGetCLen(pClassName);
 
@@ -582,7 +581,7 @@ static PHB_ITEM class_def_from_classname(/* amfContext * context, */ PHB_ITEM pC
 
    pClass = hb_hashNew(nullptr);
 
-   pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
+   auto pKey   = hb_itemPutC(nullptr, "CLASS_DEF");
    auto pValue = hb_itemNew(nullptr);
    if( !hb_hashAdd(pClass, pKey, pValue) ) {
       hb_itemRelease(pKey);

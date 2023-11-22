@@ -289,10 +289,10 @@ static int authorizer(void * Cargo, int iAction, const char * sName1, const char
    auto pCallback = static_cast<PHB_ITEM>(Cargo);
 
    if( pCallback && hb_vmRequestReenter() ) {
-      PHB_ITEM pItem1 = hb_itemPutStrUTF8(nullptr, sName1);
-      PHB_ITEM pItem2 = hb_itemPutStrUTF8(nullptr, sName2);
-      PHB_ITEM pItem3 = hb_itemPutStrUTF8(nullptr, sName3);
-      PHB_ITEM pItem4 = hb_itemPutStrUTF8(nullptr, sName4);
+      auto pItem1 = hb_itemPutStrUTF8(nullptr, sName1);
+      auto pItem2 = hb_itemPutStrUTF8(nullptr, sName2);
+      auto pItem3 = hb_itemPutStrUTF8(nullptr, sName3);
+      auto pItem4 = hb_itemPutStrUTF8(nullptr, sName4);
 
       hb_vmPushEvalSym();
       hb_vmPush(pCallback);

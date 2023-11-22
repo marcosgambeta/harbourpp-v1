@@ -350,7 +350,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
    auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
-   PHB_ITEM pItem = hb_itemPutC(nullptr, pArea->szQuery);
+   auto pItem = hb_itemPutC(nullptr, pArea->szQuery);
    void * hQuery;
    HB_SIZE nQueryLen;
    const char * pszQuery = S_HB_ITEMGETSTR(pItem, &hQuery, &nQueryLen);

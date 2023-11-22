@@ -242,7 +242,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->bClosable         = true;
 
    {
-      PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+      auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
       pWVT->lpWindowTitle = HB_ITEMGETSTR(pItem, &pWVT->hWindowTitle, nullptr);
       hb_itemRelease(pItem);
    }
@@ -283,7 +283,7 @@ static int hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
 
    if( pWVT->pGT->pNotifierBlock ) {
       if( hb_vmRequestReenter() ) {
-         PHB_ITEM pEvent = hb_itemPutNI(nullptr, nEvent);
+         auto pEvent = hb_itemPutNI(nullptr, nEvent);
 
          nResult = hb_itemGetNI(hb_vmEvalBlockV(static_cast<PHB_ITEM>(pWVT->pGT->pNotifierBlock), 2, pEvent, pParams));
 

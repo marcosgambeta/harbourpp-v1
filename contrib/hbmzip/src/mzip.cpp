@@ -1243,7 +1243,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
 
       if( fUnicode )
       {
-         PHB_ITEM pTemp = hb_itemPutStrUTF8(nullptr, szNameRaw);
+         auto pTemp = hb_itemPutStrUTF8(nullptr, szNameRaw);
 
          szName = hb_strdup(hb_itemGetCPtr(pTemp));
 

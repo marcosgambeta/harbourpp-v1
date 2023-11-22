@@ -1416,9 +1416,9 @@ UNSIGNED32 WINAPI hb_adsShowCallback( UNSIGNED16 usPercentDone )
    PHB_ITEM pCallBack = hb_ads_getCallBack();
 
    if( pCallBack ) {
-      PHB_ITEM pPercentDone = hb_itemPutNI(nullptr, usPercentDone);
+      auto pPercentDone = hb_itemPutNI(nullptr, usPercentDone);
 #if ADS_LIB_VERSION >= 610
-      PHB_ITEM pCallbackID = hb_itemPutNL(nullptr, ulCallbackID);
+      auto pCallbackID = hb_itemPutNL(nullptr, ulCallbackID);
       bool fResult = hb_itemGetL(hb_vmEvalBlockV(pCallBack, 2, pPercentDone, pCallbackID));
       hb_itemRelease(pCallbackID);
 #else
@@ -2186,7 +2186,7 @@ HB_FUNC( ADSDIRECTORY )
 
    if( ulRetVal == AE_SUCCESS || ulRetVal == AE_NO_FILE_FOUND ) {
       while( ulRetVal == AE_SUCCESS ) {
-         PHB_ITEM pitmFileName = hb_itemPutCL(nullptr, reinterpret_cast<const char*>(ucFileName), usFileNameLen);
+         auto pitmFileName = hb_itemPutCL(nullptr, reinterpret_cast<const char*>(ucFileName), usFileNameLen);
          hb_arrayAddForward( pitmDir, pitmFileName );
 
          usFileNameLen = sizeof(ucFileName);

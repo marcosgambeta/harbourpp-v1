@@ -317,7 +317,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch * lpThis, REFIID riid, 
 
                if( nPos == 0 )
                {
-                  PHB_ITEM pKey = hb_itemPutC(hb_stackAllocItem(), szName);
+                  auto pKey = hb_itemPutC(hb_stackAllocItem(), szName);
                   if( hb_hashAdd(s_pMsgHash, pKey, nullptr) )
                   {
                      hb_hashScan(s_pMsgHash, pKey, &nPos);
@@ -415,7 +415,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
 
          if( (reinterpret_cast<IHbOleServer*>(lpThis))->fGuids )
          {
-            PHB_ITEM pKey = hb_itemPutNL(hb_stackAllocItem(), static_cast<long>(dispid));
+            auto pKey = hb_itemPutNL(hb_stackAllocItem(), static_cast<long>(dispid));
             pItem = hb_hashGetItemPtr(pAction, pKey, 0);
             hb_stackPop();
          }

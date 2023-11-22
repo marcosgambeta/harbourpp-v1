@@ -359,7 +359,7 @@ static void hb_gt_wvw_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    }
 
    {
-      PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+      auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
       void *   hWindowTitle;
 
       hb_gt_wvwSetWindowTitle(0, HB_ITEMGETSTR(pItem, &hWindowTitle, nullptr));
@@ -6709,7 +6709,7 @@ HB_FUNC( WVW_NOPENWINDOW )
       pFileName   = nullptr;
       lpszWinName = HB_PARSTR(1, &hWinName, nullptr);
    } else {
-      PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+      auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
 
       lpszWinName = HB_ITEMGETSTR(pItem, &hWinName, nullptr);
       hb_itemRelease(pItem);

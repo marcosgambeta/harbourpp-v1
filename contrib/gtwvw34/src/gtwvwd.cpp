@@ -262,7 +262,7 @@ static void hb_gt_wvw_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    }
 
    {
-      PHB_ITEM pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
+      auto pItem = hb_itemPutCPtr(nullptr, hb_cmdargBaseProgName());
       void *   hWindowTitle;
 
       hb_gt_wvw_SetWindowTitle(s_wvw->pWin[0], HB_ITEMGETSTR(pItem, &hWindowTitle, nullptr));
@@ -1703,9 +1703,9 @@ BOOL CALLBACK hb_gt_wvw_DlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPA
 #if 0
             if( HB_IS_EVALITEM(pFunc) ) {
                PHB_ITEM hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
-               PHB_ITEM himessage = hb_itemPutNInt(nullptr, message);
-               PHB_ITEM hiwParam  = hb_itemPutNInt(nullptr, wParam);
-               PHB_ITEM hilParam  = hb_itemPutNInt(nullptr, lParam);
+               auto himessage = hb_itemPutNInt(nullptr, message);
+               auto hiwParam  = hb_itemPutNInt(nullptr, wParam);
+               auto hilParam  = hb_itemPutNInt(nullptr, lParam);
 
                PHB_ITEM pReturn = hb_itemDo(pFunc, 4, hihDlg, himessage, hiwParam, hilParam);
 
@@ -1818,9 +1818,9 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
 #if 0
             if( HB_IS_EVALITEM(pFunc) ) {
                PHB_ITEM hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
-               PHB_ITEM himessage = hb_itemPutNInt(nullptr, message);
-               PHB_ITEM hiwParam  = hb_itemPutNInt(nullptr, wParam);
-               PHB_ITEM hilParam  = hb_itemPutNInt(nullptr, lParam);
+               auto himessage = hb_itemPutNInt(nullptr, message);
+               auto hiwParam  = hb_itemPutNInt(nullptr, wParam);
+               auto hilParam  = hb_itemPutNInt(nullptr, lParam);
 
                PHB_ITEM pReturn = hb_itemDo(pFunc, 4, hihDlg, himessage, hiwParam, hilParam);
 
@@ -5889,7 +5889,7 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
    while( wvw_ctl && (wvw_ctl->nClass != nClass || wvw_ctl->hWnd != hWnd) ) {
       wvw_ctl = wvw_ctl->pNext;
    }
-   
+
    if( wvw_ctl == nullptr ) {
       return;
    }
@@ -5898,7 +5898,6 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
         wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON ||
         wvw_ctl->nClass == WVW_CONTROL_COMBOBOX ||
         wvw_ctl->nClass == WVW_CONTROL_EDITBOX) && wvw_ctl->pBlock ) {
-      PHB_ITEM pWinId, pCtlId;
       PHB_ITEM pReturn;
 
       if( wvw_ctl->fBusy ) {
@@ -5910,12 +5909,12 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
       wvw_ctl->fBusy = true;
       wvw_ctl->nBusy++;
 
-      pWinId = hb_itemPutNI(nullptr, wvw_win->nWinId);
-      pCtlId = hb_itemPutNI(nullptr, wvw_ctl->nId);
+      auto pWinId = hb_itemPutNI(nullptr, wvw_win->nWinId);
+      auto pCtlId = hb_itemPutNI(nullptr, wvw_ctl->nId);
 
       if( wvw_ctl->nClass == WVW_CONTROL_SCROLLBAR ) {
-         PHB_ITEM pMsg = hb_itemPutNI(nullptr, static_cast<int>(LOWORD(wParam)));
-         PHB_ITEM pPos = hb_itemPutNI(nullptr, static_cast<int>(HIWORD(wParam)));
+         auto pMsg = hb_itemPutNI(nullptr, static_cast<int>(LOWORD(wParam)));
+         auto pPos = hb_itemPutNI(nullptr, static_cast<int>(HIWORD(wParam)));
 
          pReturn = hb_itemDo(wvw_ctl->pBlock, 4, pWinId, pCtlId, pMsg, pPos);
          hb_itemRelease(pReturn);
@@ -5929,8 +5928,6 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
             case CBN_SELCHANGE:
             case CBN_SETFOCUS:
             case CBN_KILLFOCUS: {
-               PHB_ITEM pEvent, pIndex;
-
                auto iCurSel = static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
                if( iCurSel == CB_ERR ) {
                   break;
@@ -5951,8 +5948,8 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
 #endif
 
                /* now execute the codeblock */
-               pEvent = hb_itemPutNI(nullptr, iEventType);
-               pIndex = hb_itemPutNI(nullptr, iCurSel);
+               auto pEvent = hb_itemPutNI(nullptr, iEventType);
+               auto pIndex = hb_itemPutNI(nullptr, iCurSel);
 
                pReturn = hb_itemDo(wvw_ctl->pBlock, 4, pWinId, pCtlId, pEvent, pIndex);
 
@@ -5969,7 +5966,7 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
             case EN_KILLFOCUS:
             case EN_CHANGE: {
                /* now execute the codeblock */
-               PHB_ITEM pEvent = hb_itemPutNI(nullptr, iEventType);
+               auto pEvent = hb_itemPutNI(nullptr, iEventType);
 
                pReturn = hb_itemDo(wvw_ctl->pBlock, 3, pWinId, pCtlId, pEvent);
 

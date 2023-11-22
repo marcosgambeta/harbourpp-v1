@@ -283,7 +283,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
       return Harbour::FAILURE;
    }
 
-   PHB_ITEM pItem = hb_itemPutC(nullptr, pArea->szQuery);
+   auto pItem = hb_itemPutC(nullptr, pArea->szQuery);
    void * hQuery;
 
    if( !OCI_ExecuteStmt(st, M_HB_ITEMGETSTR(pItem, &hQuery, nullptr)) ) {

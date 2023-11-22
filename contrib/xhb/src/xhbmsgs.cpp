@@ -57,7 +57,7 @@ HB_FUNC( XHB_HASHERROR )
 
    if( iPCount == 1 ) {
       if( szMessage[0] == '_' ) { /* ASSIGN */
-         PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), szMessage + 1);
+         auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), szMessage + 1);
          PHB_ITEM pDest  = hb_hashGetItemPtr(hb_stackSelfItem(), pIndex, HB_HASH_AUTOADD_ASSIGN);
          hb_stackPop();
          if( pDest ) {
@@ -68,7 +68,7 @@ HB_FUNC( XHB_HASHERROR )
          }
       }
    } else if( iPCount == 0 ) { /* ACCESS */
-      PHB_ITEM pIndex = hb_itemPutCConst(hb_stackAllocItem(), szMessage);
+      auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), szMessage);
       PHB_ITEM pValue = hb_hashGetItemPtr(hb_stackSelfItem(), pIndex, HB_HASH_AUTOADD_ACCESS);
       hb_stackPop();
       if( pValue ) {

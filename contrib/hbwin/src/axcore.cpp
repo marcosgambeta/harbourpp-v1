@@ -308,7 +308,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch * lpThis, DISPID dispid, REFII
 
    pAction = (reinterpret_cast<ISink*>(lpThis))->pItemHandler;
    if( pAction ) {
-      PHB_ITEM pKey = hb_itemPutNL(hb_stackAllocItem(), static_cast<long>(dispid));
+      auto pKey = hb_itemPutNL(hb_stackAllocItem(), static_cast<long>(dispid));
 
       if( pAction && HB_IS_HASH(pAction) ) {
          pAction = hb_hashGetItemPtr(pAction, pKey, 0);
