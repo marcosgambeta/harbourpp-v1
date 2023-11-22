@@ -62,9 +62,9 @@ HB_FUNC( TINYMT64_INIT )
 {
    if( hb_pcount() >= 3 && HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) )
    {
-      PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+      auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
-      HB_U64 seed = static_cast<HB_U64>(hb_parnintdef(4, 1));
+      auto seed = static_cast<HB_U64>(hb_parnintdef(4, 1));
 
       tinymtData->tinymt.mat1 = hb_parnl(1);
       tinymtData->tinymt.mat2 = hb_parnl(2);
@@ -85,7 +85,7 @@ HB_FUNC( TINYMT64_INIT_BY_ARRAY )
 
    if( pArray && hb_arrayLen(pArray) == 3 )
    {
-      PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+      auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
       HB_U64 seed_array[5];
 
@@ -105,42 +105,42 @@ HB_FUNC( TINYMT64_INIT_BY_ARRAY )
 
 HB_FUNC( TINYMT64_GENERATE_UINT64 )
 {
-   PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+   auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
    hb_retnint(tinymt64_generate_uint64(&tinymtData->tinymt));
 }
 
 HB_FUNC( TINYMT64_GENERATE_DOUBLE )
 {
-   PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+   auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
    hb_retnd(tinymt64_generate_double(&tinymtData->tinymt));
 }
 
 HB_FUNC( TINYMT64_GENERATE_DOUBLE01 )
 {
-   PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+   auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
    hb_retnd(tinymt64_generate_double01(&tinymtData->tinymt));
 }
 
 HB_FUNC( TINYMT64_GENERATE_DOUBLE12 )
 {
-   PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+   auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
    hb_retnd(tinymt64_generate_double12(&tinymtData->tinymt));
 }
 
 HB_FUNC( TINYMT64_GENERATE_DOUBLEOC )
 {
-   PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+   auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
    hb_retnd(tinymt64_generate_doubleOC(&tinymtData->tinymt));
 }
 
 HB_FUNC( TINYMT64_GENERATE_DOUBLEOO )
 {
-   PHB_TINYMTDATA tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
+   auto tinymtData = static_cast<PHB_TINYMTDATA>(hb_stackGetTSD(&s_tinymtData));
 
    hb_retnd(tinymt64_generate_doubleOO(&tinymtData->tinymt));
 }

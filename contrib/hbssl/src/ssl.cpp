@@ -186,7 +186,7 @@ using PHB_SSL = _HB_SSL *;
 
 static HB_GARBAGE_FUNC( PHB_SSL_release )
 {
-   PHB_SSL hb_ssl = static_cast<PHB_SSL>(Cargo);
+   auto hb_ssl = static_cast<PHB_SSL>(Cargo);
 
    if( hb_ssl != nullptr ) {
       /* Destroy the object */
@@ -204,7 +204,7 @@ static HB_GARBAGE_FUNC( PHB_SSL_release )
 
 static HB_GARBAGE_FUNC( PHB_SSL_mark )
 {
-   PHB_SSL hb_ssl = static_cast<PHB_SSL>(Cargo);
+   auto hb_ssl = static_cast<PHB_SSL>(Cargo);
 
    if( hb_ssl != nullptr ) {
       if( hb_ssl->pCallbackArg ) {
@@ -221,25 +221,25 @@ static const HB_GC_FUNCS s_gcSSL_funcs =
 
 HB_BOOL hb_SSL_is(int iParam)
 {
-   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
+   auto hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
    return hb_ssl && hb_ssl->ssl;
 }
 
 static PHB_SSL hb_SSL_par_raw(int iParam)
 {
-   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
+   auto hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
    return hb_ssl;
 }
 
 SSL * hb_SSL_par(int iParam)
 {
-   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
+   auto hb_ssl = static_cast<PHB_SSL>(hb_parptrGC(&s_gcSSL_funcs, iParam));
    return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
 SSL * hb_SSL_itemGet(PHB_ITEM pItem)
 {
-   PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_itemGetPtrGC(pItem, &s_gcSSL_funcs));
+   auto hb_ssl = static_cast<PHB_SSL>(hb_itemGetPtrGC(pItem, &s_gcSSL_funcs));
    return hb_ssl ? hb_ssl->ssl : nullptr;
 }
 
@@ -249,7 +249,7 @@ HB_FUNC( SSL_NEW )
       SSL_CTX * ctx = hb_SSL_CTX_par(1);
 
       if( ctx != nullptr ) {
-         PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
+         auto hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
 
          memset(hb_ssl, 0, sizeof(HB_SSL));
          hb_ssl->ssl = SSL_new(ctx);
@@ -267,7 +267,7 @@ HB_FUNC( SSL_DUP )
       SSL * ssl_par = hb_SSL_par(1);
 
       if( ssl_par != nullptr ) {
-         PHB_SSL hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
+         auto hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
          memset(hb_ssl, 0, sizeof(HB_SSL));
          hb_ssl->ssl = SSL_dup(ssl_par);
          hb_retptrGC(hb_ssl);
@@ -659,7 +659,7 @@ HB_FUNC( SSL_WRITE )
          auto nLen = hb_itemGetCLen(pBuffer);
 
          if( HB_ISNUM(3) ) {
-            HB_SIZE nWrite = static_cast<HB_SIZE>(hb_parnl(3));
+            auto nWrite = static_cast<HB_SIZE>(hb_parnl(3));
             if( nWrite < nLen ) {
                nLen = nWrite;
             }

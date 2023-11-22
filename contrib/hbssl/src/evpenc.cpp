@@ -50,7 +50,7 @@
 
 static HB_GARBAGE_FUNC( EVP_ENCODE_CTX_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -80,19 +80,18 @@ static bool hb_EVP_ENCODE_CTX_is(int iParam)
 
 static EVP_ENCODE_CTX * hb_EVP_ENCODE_CTX_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_ENCODE_CTX_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_ENCODE_CTX_funcs, iParam));
    return ph ? static_cast<EVP_ENCODE_CTX*>(*ph) : nullptr;
 }
 
 HB_FUNC( EVP_ENCODE_CTX_NEW )
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_ENCODE_CTX*), &s_gcEVP_ENCODE_CTX_funcs));
-   EVP_ENCODE_CTX * ctx;
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_ENCODE_CTX*), &s_gcEVP_ENCODE_CTX_funcs));
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
-   ctx = EVP_ENCODE_CTX_new();
+   auto ctx = EVP_ENCODE_CTX_new();
 #else
-   ctx = static_cast<EVP_ENCODE_CTX*>(hb_xgrabz(sizeof(EVP_ENCODE_CTX)));
+   auto ctx = static_cast<EVP_ENCODE_CTX*>(hb_xgrabz(sizeof(EVP_ENCODE_CTX)));
 #endif
 
    *ph = ctx;

@@ -82,7 +82,7 @@ static void PHB_BIO_free(PHB_BIO hb_bio)
 static HB_GARBAGE_FUNC( HB_BIO_Destructor )
 {
    /* Retrieve image pointer holder */
-   HB_BIO ** ptr = static_cast<HB_BIO**>(Cargo);
+   auto ptr = static_cast<HB_BIO**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr ) {
@@ -101,19 +101,19 @@ static const HB_GC_FUNCS s_gcBIOFuncs =
 
 BIO * hb_BIO_par(int iParam)
 {
-   HB_BIO ** ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
+   auto ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
    return ptr ? (*ptr)->bio : nullptr;
 }
 
 HB_BOOL hb_BIO_is(int iParam)
 {
-   HB_BIO ** ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
+   auto ptr = static_cast<HB_BIO**>(hb_parptrGC(&s_gcBIOFuncs, iParam));
    return ptr && (*ptr)->bio;
 }
 
 static void hb_BIO_ret(BIO * bio, void * hStrRef)
 {
-   HB_BIO ** ptr = static_cast<HB_BIO**>(hb_gcAllocate(sizeof(HB_BIO*), &s_gcBIOFuncs));
+   auto ptr = static_cast<HB_BIO**>(hb_gcAllocate(sizeof(HB_BIO*), &s_gcBIOFuncs));
    *ptr = PHB_BIO_create(bio, hStrRef);
    hb_retptrGC(static_cast<void*>(ptr));
 }
@@ -633,7 +633,7 @@ HB_FUNC( BIO_WRITE )
    BIO * bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
-      int size = static_cast<int>(hb_parclen(2));
+      auto size = static_cast<int>(hb_parclen(2));
 
       if( HB_ISNUM(3) ) {
          auto towrite = hb_parni(3);
@@ -661,10 +661,10 @@ HB_FUNC( BIO_PUTS )
 
 HB_FUNC( BIO_FREE )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcBIOFuncs, 1));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcBIOFuncs, 1));
 
    if( ph ) {
-      BIO * bio = static_cast<BIO*>(*ph);
+      auto bio = static_cast<BIO*>(*ph);
       *ph = nullptr;
       hb_retni(bio ? BIO_free(bio) : 0);
    } else {

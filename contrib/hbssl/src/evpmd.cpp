@@ -60,7 +60,7 @@ HB_FUNC( OPENSSL_ADD_ALL_DIGESTS )
 
 static HB_GARBAGE_FUNC( EVP_MD_CTX_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -92,7 +92,7 @@ static bool hb_EVP_MD_CTX_is(int iParam)
 
 static EVP_MD_CTX * hb_EVP_MD_CTX_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_MD_CTX_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_MD_CTX_funcs, iParam));
    return ph ? static_cast<EVP_MD_CTX*>(*ph) : nullptr;
 }
 
@@ -254,13 +254,12 @@ HB_FUNC( EVP_MD_BLOCK_SIZE )
 
 HB_FUNC( EVP_MD_CTX_NEW )
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_MD_CTX*), &s_gcEVP_MD_CTX_funcs));
-   EVP_MD_CTX * ctx;
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_MD_CTX*), &s_gcEVP_MD_CTX_funcs));
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L && !defined(LIBRESSL_VERSION_NUMBER)
-   ctx = EVP_MD_CTX_new();
+   auto ctx = EVP_MD_CTX_new();
 #else
-   ctx = static_cast<EVP_MD_CTX*>(hb_xgrabz(sizeof(EVP_MD_CTX)));
+   auto ctx = static_cast<EVP_MD_CTX*>(hb_xgrabz(sizeof(EVP_MD_CTX)));
 #endif
 
    *ph = ctx;

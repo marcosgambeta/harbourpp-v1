@@ -108,7 +108,7 @@ static int _version_made_by( HB_BOOL fUnicode )
 
 static HB_GARBAGE_FUNC( hb_zipfile_destructor )
 {
-   zipFile * phZip = static_cast<zipFile*>(Cargo);
+   auto phZip = static_cast<zipFile*>(Cargo);
 
    if( *phZip )
    {
@@ -125,7 +125,7 @@ static const HB_GC_FUNCS s_gcZipFileFuncs =
 
 static zipFile hb_zipfileParam( int iParam )
 {
-   zipFile * phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, iParam));
+   auto phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, iParam));
 
    if( phZip && *phZip )
    {
@@ -138,7 +138,7 @@ static zipFile hb_zipfileParam( int iParam )
 
 static HB_GARBAGE_FUNC( hb_unzipfile_destructor )
 {
-   unzFile * phUnzip = static_cast<unzFile*>(Cargo);
+   auto phUnzip = static_cast<unzFile*>(Cargo);
 
    if( *phUnzip )
    {
@@ -155,7 +155,7 @@ static const HB_GC_FUNCS s_gcUnZipFileFuncs =
 
 static unzFile hb_unzipfileParam( int iParam )
 {
-   unzFile * phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, iParam));
+   auto phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, iParam));
 
    if( phUnzip && *phUnzip )
    {
@@ -196,9 +196,7 @@ static PHB_FILE hb_fileHandleParam( int iParam, HB_BOOL * pfFree )
 
 static HB_FATTR hb_translateExtAttr(const char * szFileName, HB_FATTR ulExtAttr)
 {
-   int iLen;
-
-   iLen = static_cast<int>(strlen(szFileName));
+   auto iLen = static_cast<int>(strlen(szFileName));
    if( (iLen > 4 && (hb_stricmp(szFileName + iLen - 4, ".exe") == 0 ||
                      hb_stricmp(szFileName + iLen - 4, ".com") == 0 ||
                      hb_stricmp(szFileName + iLen - 4, ".bat") == 0 ||
@@ -247,7 +245,7 @@ HB_FUNC( HB_ZIPOPEN )
 
       if( hZip )
       {
-         zipFile * phZip = static_cast<zipFile*>(hb_gcAllocate(sizeof(zipFile), &s_gcZipFileFuncs));
+         auto phZip = static_cast<zipFile*>(hb_gcAllocate(sizeof(zipFile), &s_gcZipFileFuncs));
 
          *phZip = hZip;
          hb_retptrGC(phZip);
@@ -267,7 +265,7 @@ HB_FUNC( HB_ZIPOPEN )
 /* hb_zipClose( hZip, [cGlobalComment] ) --> nError */
 HB_FUNC( HB_ZIPCLOSE )
 {
-   zipFile * phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, 1));
+   auto phZip = static_cast<zipFile*>(hb_parptrGC(&s_gcZipFileFuncs, 1));
 
    if( phZip && *phZip )
    {
@@ -428,7 +426,7 @@ HB_FUNC( HB_UNZIPOPEN )
 
       if( hUnzip )
       {
-         unzFile * phUnzip = static_cast<unzFile*>(hb_gcAllocate(sizeof(unzFile), &s_gcUnZipFileFuncs));
+         auto phUnzip = static_cast<unzFile*>(hb_gcAllocate(sizeof(unzFile), &s_gcUnZipFileFuncs));
 
          *phUnzip = hUnzip;
          hb_retptrGC(phUnzip);
@@ -443,7 +441,7 @@ HB_FUNC( HB_UNZIPOPEN )
 /* hb_unzipClose( hUnzip ) --> nError */
 HB_FUNC( HB_UNZIPCLOSE )
 {
-   unzFile * phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, 1));
+   auto phUnzip = static_cast<unzFile*>(hb_parptrGC(&s_gcUnZipFileFuncs, 1));
 
    if( phUnzip && *phUnzip )
    {

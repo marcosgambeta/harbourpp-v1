@@ -50,7 +50,7 @@
 
 static HB_GARBAGE_FUNC( EVP_PKEY_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -76,13 +76,13 @@ HB_BOOL hb_EVP_PKEY_is(int iParam)
 
 EVP_PKEY * hb_EVP_PKEY_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_PKEY_funcs, iParam));
    return ph ? static_cast<EVP_PKEY*>(*ph) : nullptr;
 }
 
 void hb_EVP_PKEY_ret(EVP_PKEY * pkey)
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_PKEY*), &s_gcEVP_PKEY_funcs));
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_PKEY*), &s_gcEVP_PKEY_funcs));
    *ph = pkey;
    hb_retptrGC(ph);
 }
@@ -142,7 +142,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_RSA )
 #ifndef OPENSSL_NO_RSA
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      RSA * key = static_cast<RSA*>(hb_parptr(2));
+      auto key = static_cast<RSA*>(hb_parptr(2));
 
       if( pkey != nullptr && key != nullptr ) {
          hb_retni(EVP_PKEY_assign_RSA(pkey, key));
@@ -160,7 +160,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_DSA )
 #ifndef OPENSSL_NO_DSA
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      DSA * key = static_cast<DSA*>(hb_parptr(2));
+      auto key = static_cast<DSA*>(hb_parptr(2));
 
       if( pkey != nullptr && key != nullptr ) {
          hb_retni(EVP_PKEY_assign_DSA(pkey, key));
@@ -178,7 +178,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_DH )
 #ifndef OPENSSL_NO_RSA
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
       EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
-      DH * key = static_cast<DH*>(hb_parptr(2));
+      auto key = static_cast<DH*>(hb_parptr(2));
 
       if( pkey != nullptr && key != nullptr ) {
          hb_retni(EVP_PKEY_assign_DH(pkey, key));

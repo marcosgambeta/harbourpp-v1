@@ -55,7 +55,7 @@ HB_FUNC( OPENSSL_ADD_ALL_CIPHERS )
 
 static HB_GARBAGE_FUNC( EVP_CIPHER_CTX_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -87,7 +87,7 @@ static bool hb_EVP_CIPHER_CTX_is(int iParam)
 
 static EVP_CIPHER_CTX * hb_EVP_CIPHER_CTX_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_CIPHER_CTX_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_CIPHER_CTX_funcs, iParam));
    return ph ? static_cast<EVP_CIPHER_CTX*>(*ph) : nullptr;
 }
 
@@ -471,13 +471,12 @@ HB_FUNC( EVP_CIPHER_TYPE )
 
 HB_FUNC( EVP_CIPHER_CTX_NEW )
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_CIPHER_CTX*), &s_gcEVP_CIPHER_CTX_funcs));
-   EVP_CIPHER_CTX * ctx;
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_CIPHER_CTX*), &s_gcEVP_CIPHER_CTX_funcs));
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-   ctx = EVP_CIPHER_CTX_new();
+   auto ctx = EVP_CIPHER_CTX_new();
 #else
-   ctx = static_cast<EVP_CIPHER_CTX*>(hb_xgrab(sizeof(EVP_CIPHER_CTX)));
+   auto ctx = static_cast<EVP_CIPHER_CTX*>(hb_xgrab(sizeof(EVP_CIPHER_CTX)));
    EVP_CIPHER_CTX_init(ctx);
 #endif
 
@@ -1082,7 +1081,7 @@ HB_FUNC( EVP_OPENINIT )
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
       EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
-      EVP_PKEY * priv = static_cast<EVP_PKEY*>(hb_parptr(5));
+      auto priv = static_cast<EVP_PKEY*>(hb_parptr(5));
 
       if( ctx != nullptr && priv != nullptr ) {
          hb_retni(EVP_OpenInit(ctx,

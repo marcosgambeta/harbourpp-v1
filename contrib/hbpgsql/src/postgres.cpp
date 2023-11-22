@@ -52,7 +52,7 @@
 
 static HB_GARBAGE_FUNC( PGconn_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -75,7 +75,7 @@ void hb_PGconn_ret(PGconn * p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate( sizeof(PGconn*), &s_gcPGconnFuncs));
+      auto ph = static_cast<void**>(hb_gcAllocate( sizeof(PGconn*), &s_gcPGconnFuncs));
 
       *ph = p;
 
@@ -89,14 +89,14 @@ void hb_PGconn_ret(PGconn * p)
 
 PGconn * hb_PGconn_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGconnFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcPGconnFuncs, iParam));
 
    return ph ? static_cast<PGconn*>(*ph) : nullptr;
 }
 
 static HB_GARBAGE_FUNC( PGresult_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -119,7 +119,7 @@ void hb_PGresult_ret(PGresult * p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PGresult*), &s_gcPGresultFuncs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(PGresult*), &s_gcPGresultFuncs));
 
       *ph = p;
 
@@ -133,7 +133,7 @@ void hb_PGresult_ret(PGresult * p)
 
 PGresult * hb_PGresult_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGresultFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcPGresultFuncs, iParam));
 
    return ph ? static_cast<PGresult*>(*ph) : nullptr;
 }
@@ -142,7 +142,7 @@ PGresult * hb_PGresult_par(int iParam)
 
 static HB_GARBAGE_FUNC( PGcancel_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -165,7 +165,7 @@ static void hb_PGcancel_ret(PGcancel * p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate( sizeof(PGcancel*), &s_gcPGcancelFuncs));
+      auto ph = static_cast<void**>(hb_gcAllocate( sizeof(PGcancel*), &s_gcPGcancelFuncs));
 
       *ph = p;
 
@@ -179,7 +179,7 @@ static void hb_PGcancel_ret(PGcancel * p)
 
 static PGcancel * hb_PGcancel_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPGcancelFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcPGcancelFuncs, iParam));
 
    return ph ? static_cast<PGcancel*>(*ph) : nullptr;
 }
@@ -190,7 +190,7 @@ static PGcancel * hb_PGcancel_par(int iParam)
 
 static HB_GARBAGE_FUNC( FILE_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -213,7 +213,7 @@ static void hb_FILE_ret( FILE * p )
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(FILE*), &s_gcFILEFuncs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(FILE*), &s_gcFILEFuncs));
 
       *ph = p;
 
@@ -227,7 +227,7 @@ static void hb_FILE_ret( FILE * p )
 
 static FILE * hb_FILE_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcFILEFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcFILEFuncs, iParam));
 
    return ph ? static_cast<FILE*>(*ph) : nullptr;
 }
@@ -817,7 +817,7 @@ HB_FUNC( PQEXECPARAMS )
 
    if( conn && aParam )
    {
-      int n = static_cast<int>(hb_arrayLen(aParam));
+      auto n = static_cast<int>(hb_arrayLen(aParam));
 
       if( ! n )
       {
@@ -1192,7 +1192,7 @@ HB_FUNC( PQESCAPEBYTEA )  /* deprecated */
 {
    if( HB_ISCHAR(1) )
    {
-      size_t from_length = static_cast<size_t>(hb_parclen(1));
+      auto from_length = static_cast<size_t>(hb_parclen(1));
       size_t to_length   = from_length * 5 + 1;
       unsigned char * to = PQescapeBytea(reinterpret_cast<const unsigned char*>(hb_parc(1)), from_length, &to_length);
       hb_retclen(reinterpret_cast<char*>(to), static_cast<HB_SIZE>(to_length));

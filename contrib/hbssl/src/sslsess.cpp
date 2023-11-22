@@ -48,7 +48,7 @@
 
 static HB_GARBAGE_FUNC( SSL_SESSION_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph ) {
@@ -73,13 +73,13 @@ HB_BOOL hb_SSL_SESSION_is(int iParam)
 
 SSL_SESSION * hb_SSL_SESSION_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcSSL_SESSION_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcSSL_SESSION_funcs, iParam));
    return ph ? static_cast<SSL_SESSION*>(*ph) : nullptr;
 }
 
 HB_FUNC( SSL_SESSION_NEW )
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_SESSION*), &s_gcSSL_SESSION_funcs));
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_SESSION*), &s_gcSSL_SESSION_funcs));
    SSL_SESSION * session = SSL_SESSION_new();
    *ph = static_cast<void*>(session);
    hb_retptrGC(ph);

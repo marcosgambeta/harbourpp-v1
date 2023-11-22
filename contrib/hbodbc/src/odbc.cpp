@@ -143,7 +143,7 @@ using PHB_SQLHENV = HB_SQLHENV *;
 
 static HB_GARBAGE_FUNC(hb_SQLHENV_Destructor)
 {
-   PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(Cargo);
+   auto pHEnv = static_cast<PHB_SQLHENV>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHEnv->hEnv )
@@ -167,7 +167,7 @@ static const HB_GC_FUNCS s_gcSQLHENVFuncs =
 
 static void hb_SQLHENV_stor(SQLHENV hEnv, int iParam)
 {
-   PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(hb_gcAllocate(sizeof(HB_SQLHENV), &s_gcSQLHENVFuncs));
+   auto pHEnv = static_cast<PHB_SQLHENV>(hb_gcAllocate(sizeof(HB_SQLHENV), &s_gcSQLHENVFuncs));
 
    pHEnv->hEnv = hEnv;
 
@@ -176,7 +176,7 @@ static void hb_SQLHENV_stor(SQLHENV hEnv, int iParam)
 
 static SQLHENV hb_SQLHENV_par(int iParam)
 {
-   PHB_SQLHENV pHEnv = static_cast<PHB_SQLHENV>(hb_parptrGC(&s_gcSQLHENVFuncs, iParam));
+   auto pHEnv = static_cast<PHB_SQLHENV>(hb_parptrGC(&s_gcSQLHENVFuncs, iParam));
 
    return pHEnv ? pHEnv->hEnv : nullptr;
 }
@@ -195,7 +195,7 @@ using PHB_SQLHDBC = HB_SQLHDBC *;
 static HB_GARBAGE_FUNC(hb_SQLHDBC_Destructor)
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHDBC pHDbc = static_cast<PHB_SQLHDBC>(Cargo);
+   auto pHDbc = static_cast<PHB_SQLHDBC>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHDbc->hDbc )
@@ -221,7 +221,7 @@ static HB_GARBAGE_FUNC(hb_SQLHDBC_Destructor)
 static HB_GARBAGE_FUNC(hb_SQLHDBC_Mark)
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHDBC pHDbc = static_cast<PHB_SQLHDBC>(Cargo);
+   auto pHDbc = static_cast<PHB_SQLHDBC>(Cargo);
 
    if( pHDbc->pHEnvItm )
    {
@@ -238,7 +238,7 @@ static const HB_GC_FUNCS s_gcSQLHDBCFuncs =
 
 static void hb_SQLHDBC_stor(PHB_ITEM pHEnvItm, SQLHDBC hDbc, int iParam)
 {
-   PHB_SQLHDBC pHDbc = static_cast<PHB_SQLHDBC>(hb_gcAllocate(sizeof(HB_SQLHDBC), &s_gcSQLHDBCFuncs));
+   auto pHDbc = static_cast<PHB_SQLHDBC>(hb_gcAllocate(sizeof(HB_SQLHDBC), &s_gcSQLHDBCFuncs));
 
    pHDbc->hDbc = hDbc;
    pHDbc->conn_counter = 1;
@@ -295,7 +295,7 @@ using PHB_SQLHSTMT = HB_SQLHSTMT *;
 static HB_GARBAGE_FUNC(hb_SQLHSTMT_Destructor)
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHSTMT pHStmt = static_cast<PHB_SQLHSTMT>(Cargo);
+   auto pHStmt = static_cast<PHB_SQLHSTMT>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( pHStmt->hStmt )
@@ -325,7 +325,7 @@ static HB_GARBAGE_FUNC(hb_SQLHSTMT_Destructor)
 static HB_GARBAGE_FUNC(hb_SQLHSTMT_Mark)
 {
    /* Retrieve image pointer holder */
-   PHB_SQLHSTMT pHStmt = static_cast<PHB_SQLHSTMT>(Cargo);
+   auto pHStmt = static_cast<PHB_SQLHSTMT>(Cargo);
 
    if( pHStmt->pHDbcItm )
    {
@@ -341,7 +341,7 @@ static const HB_GC_FUNCS s_gcSQLHSTMTFuncs =
 
 static void hb_SQLHSTMT_stor(PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam)
 {
-   PHB_SQLHSTMT pHStmt = static_cast<PHB_SQLHSTMT>(hb_gcAllocate(sizeof(HB_SQLHSTMT), &s_gcSQLHSTMTFuncs));
+   auto pHStmt = static_cast<PHB_SQLHSTMT>(hb_gcAllocate(sizeof(HB_SQLHSTMT), &s_gcSQLHSTMTFuncs));
 
    pHStmt->hStmt = hStmt;
    pHStmt->conn_counter = 0;
@@ -367,7 +367,7 @@ static void hb_SQLHSTMT_stor(PHB_ITEM pHDbcItm, SQLHSTMT hStmt, int iParam)
 
 static SQLHSTMT hb_SQLHSTMT_par(int iParam)
 {
-   PHB_SQLHSTMT pHStmt = static_cast<PHB_SQLHSTMT>(hb_parptrGC(&s_gcSQLHSTMTFuncs, iParam));
+   auto pHStmt = static_cast<PHB_SQLHSTMT>(hb_parptrGC(&s_gcSQLHSTMTFuncs, iParam));
 
    return (pHStmt && pHStmt->hStmt && hb_SQLHDBC_check(pHStmt->pHDbcItm, pHStmt->conn_counter)) ? pHStmt->hStmt : nullptr;
 }
@@ -425,7 +425,7 @@ HB_FUNC( SQLDRIVERCONNECT )  /* hDbc, @cConnectString --> nRetCode */
       SQLRETURN   ret;
       void *      hConnStr;
       HB_SIZE     nConnStr;
-      SQLTCHAR *  cConnStr = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(2, &hConnStr, &nConnStr)));
+      auto cConnStr = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(2, &hConnStr, &nConnStr)));
       SQLTCHAR    buffer[1024];
 
       buffer[0] = '\0';
@@ -465,9 +465,9 @@ HB_FUNC( SQLCONNECT )  /* hDbc, cDSN, cUseName, cPassword --> nRetCode */
       void *     hUser;
       void *     hPass;
       HB_SIZE    nDSN, nUser, nPass;
-      SQLTCHAR * cDSN  = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(2, &hDSN, &nDSN)));
-      SQLTCHAR * cUser = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(3, &hUser, &nUser)));
-      SQLTCHAR * cPass = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(4, &hPass, &nPass)));
+      auto cDSN  = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(2, &hDSN, &nDSN)));
+      auto cUser = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(3, &hUser, &nUser)));
+      auto cPass = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(4, &hPass, &nPass)));
 
       ret = SQLConnect(hDbc, cDSN, static_cast<SQLSMALLINT>(nDSN), cUser, static_cast<SQLSMALLINT>(nUser), cPass, static_cast<SQLSMALLINT>(nPass));
 
@@ -550,7 +550,7 @@ HB_FUNC( SQLEXECDIRECT )  /* hStmt, cStatement --> nRetCode */
    {
       void *     hStatement;
       HB_SIZE    nStatement;
-      SQLTCHAR * cStatement = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(2, &hStatement, &nStatement)));
+      auto cStatement = static_cast<SQLTCHAR*>(HB_UNCONST(O_HB_PARSTRDEF(2, &hStatement, &nStatement)));
 
       hb_retni(SQLExecDirect(hStmt, cStatement, static_cast<SQLINTEGER>(nStatement)));
       hb_strfree(hStatement);
@@ -599,8 +599,8 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 
    if( hStmt )
    {
-      SQLUSMALLINT uiField = static_cast<SQLUSMALLINT>(hb_parni(2));
-      SQLSMALLINT  iType   = static_cast<SQLSMALLINT>(hb_parnidef(3, SQL_BINARY));
+      auto uiField = static_cast<SQLUSMALLINT>(hb_parni(2));
+      auto iType = static_cast<SQLSMALLINT>(hb_parnidef(3, SQL_BINARY));
       SQLLEN       nLen    = 0;
       SQLRETURN    res     = SQL_ERROR;
 
@@ -625,7 +625,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             {
                if( nLen > 0 )
                {
-                  SQLLEN nMaxLen = static_cast<SQLLEN>(hb_parnint(4));
+                  auto nMaxLen = static_cast<SQLLEN>(hb_parnint(4));
 
 #if defined(UNICODE)
                   nMaxLen <<= 1;
@@ -671,7 +671,7 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             {
                if( nLen > 0 )
                {
-                  SQLLEN nMaxLen = static_cast<SQLLEN>(hb_parnint(4));
+                  auto nMaxLen = static_cast<SQLLEN>(hb_parnint(4));
 
                   if( nMaxLen > 0 && nMaxLen < nLen )
                   {
@@ -849,10 +849,10 @@ HB_FUNC( SQLDESCRIBECOL )  /* hStmt, nCol, @cName, nLen, @nBufferLen, @nDataType
 
    if( hStmt )
    {
-      SQLSMALLINT iLen      = static_cast<SQLSMALLINT>(hb_parni(4));
+      auto iLen = static_cast<SQLSMALLINT>(hb_parni(4));
       SQLSMALLINT iBufLen   = static_cast<SQLUSMALLINT>(hb_parni(5));
       SQLSMALLINT iDataType = static_cast<SQLUSMALLINT>(hb_parni(6));
-      SQLULEN     nColSize  = static_cast<SQLULEN>(hb_parnint(7));
+      auto nColSize = static_cast<SQLULEN>(hb_parnint(7));
       SQLSMALLINT iDecimals = static_cast<SQLUSMALLINT>(hb_parni(8));
       SQLSMALLINT iNullable = static_cast<SQLUSMALLINT>(hb_parni(9));
       SQLTCHAR *  buffer;
@@ -896,13 +896,13 @@ HB_FUNC( SQLCOLATTRIBUTE )  /* hStmt, nCol, nField, @cName, nLen, @nBufferLen, @
 
    if( hStmt )
    {
-      SQLSMALLINT iLen    = static_cast<SQLSMALLINT>(hb_parni(5));
+      auto iLen = static_cast<SQLSMALLINT>(hb_parni(5));
       SQLSMALLINT iBufLen = static_cast<SQLUSMALLINT>(hb_parni(6));
 
 #if ODBCVER >= 0x0300
-      SQLLEN nNumPtr = static_cast<SQLLEN>(hb_parnint(7));
+      auto nNumPtr = static_cast<SQLLEN>(hb_parnint(7));
 #else
-      SQLINTEGER nNumPtr = static_cast<SQLINTEGER>(hb_parnl(7));
+      auto nNumPtr = static_cast<SQLINTEGER>(hb_parnl(7));
 #endif
       if( iLen <= 0 )
       {
@@ -981,7 +981,7 @@ HB_FUNC( SQLERROR )  /* hEnv, hDbc, hStmt, @cErrorClass, @nType, @cErrorMsg */
 HB_FUNC( SQLGETDIAGREC )  /* nHandleType, hHandle, nRecNumber, @cSQLState, @nError, @cErrorMsg */
 {
 #if ODBCVER >= 0x0300
-   SQLSMALLINT iHandleType = static_cast<SQLSMALLINT>(hb_parni(1));
+   auto iHandleType = static_cast<SQLSMALLINT>(hb_parni(1));
    SQLHANDLE   hHandle;
 
    switch( iHandleType )
@@ -1041,7 +1041,7 @@ HB_FUNC( SQLROWCOUNT )
 
    if( hStmt )
    {
-      SQLLEN iRowCountPtr = static_cast<SQLLEN>(hb_parnint(2));
+      auto iRowCountPtr = static_cast<SQLLEN>(hb_parnint(2));
 
       hb_retni(SQLRowCount(hStmt, static_cast<SQLLEN*>(&iRowCountPtr)));
 

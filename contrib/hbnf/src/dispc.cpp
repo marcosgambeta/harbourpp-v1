@@ -541,7 +541,7 @@ static void filebot( PFT_DISPC dispc )
 
 HB_FUNC( _FT_DFINIT )
 {
-   PFT_DISPC dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
+   auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
    int     rval;
    HB_ISIZ j;
@@ -679,7 +679,7 @@ HB_FUNC( _FT_DFINIT )
 
 HB_FUNC( _FT_DFCLOS )
 {
-   PFT_DISPC dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
+   auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
    if( dispc->bIsAllocated )
    {
@@ -700,7 +700,7 @@ HB_FUNC( _FT_DFCLOS )
 
 HB_FUNC( FT_DISPFILE )
 {
-   PFT_DISPC dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
+   auto dispc = static_cast<PFT_DISPC>(hb_stackGetTSD(&s_dispc));
 
    int     i;
    char    rval[2];

@@ -60,7 +60,7 @@
 
 static HB_GARBAGE_FUNC( SSL_CTX_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph ) {
@@ -85,13 +85,13 @@ HB_BOOL hb_SSL_CTX_is(int iParam)
 
 SSL_CTX * hb_SSL_CTX_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcSSL_CTX_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcSSL_CTX_funcs, iParam));
    return ph ? static_cast<SSL_CTX*>(*ph) : nullptr;
 }
 
 SSL_CTX * hb_SSL_CTX_itemGet(PHB_ITEM pItem)
 {
-   void ** ph = static_cast<void**>(hb_itemGetPtrGC(pItem, &s_gcSSL_CTX_funcs));
+   auto ph = static_cast<void**>(hb_itemGetPtrGC(pItem, &s_gcSSL_CTX_funcs));
    return ph ? static_cast<SSL_CTX*>(*ph) : nullptr;
 }
 
@@ -128,7 +128,7 @@ const SSL_METHOD * hb_ssl_method_id_to_ptr(int n)
 
 HB_FUNC( SSL_CTX_NEW )
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_CTX*), &s_gcSSL_CTX_funcs));
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_CTX*), &s_gcSSL_CTX_funcs));
 
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
    SSL_CTX * ctx = SSL_CTX_new(static_cast<SSL_METHOD*>(hb_ssl_method_id_to_ptr(hb_parnidef(1, HB_SSL_CTX_NEW_METHOD_DEFAULT))));

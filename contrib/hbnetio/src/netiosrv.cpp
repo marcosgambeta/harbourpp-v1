@@ -303,7 +303,7 @@ static void s_consrv_close(PHB_CONSRV conn)
 
 static HB_GARBAGE_FUNC(s_consrv_destructor)
 {
-   PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(Cargo);
+   auto conn_ptr = static_cast<PHB_CONSRV*>(Cargo);
 
    if( *conn_ptr )
    {
@@ -315,7 +315,7 @@ static HB_GARBAGE_FUNC(s_consrv_destructor)
 
 static HB_GARBAGE_FUNC(s_consrv_mark)
 {
-   PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(Cargo);
+   auto conn_ptr = static_cast<PHB_CONSRV*>(Cargo);
 
    if( *conn_ptr && (*conn_ptr)->rpcFilter )
    {
@@ -331,7 +331,7 @@ static const HB_GC_FUNCS s_gcConSrvFuncs =
 
 static PHB_CONSRV s_consrvParam(int iParam)
 {
-   PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(hb_parptrGC(&s_gcConSrvFuncs, iParam));
+   auto conn_ptr = static_cast<PHB_CONSRV*>(hb_parptrGC(&s_gcConSrvFuncs, iParam));
 
    if( conn_ptr && *conn_ptr )
    {
@@ -346,7 +346,7 @@ static void s_consrvRet(PHB_CONSRV conn)
 {
    if( conn )
    {
-      PHB_CONSRV * conn_ptr = static_cast<PHB_CONSRV*>(hb_gcAllocate(sizeof(PHB_CONSRV), &s_gcConSrvFuncs));
+      auto conn_ptr = static_cast<PHB_CONSRV*>(hb_gcAllocate(sizeof(PHB_CONSRV), &s_gcConSrvFuncs));
       *conn_ptr = conn;
       hb_retptrGC(conn_ptr);
    }
@@ -374,7 +374,7 @@ static PHB_CONSRV s_consrvNew(PHB_SOCKEX sock, const char * szRootPath, HB_BOOL 
 
 static HB_BOOL s_srvRecvAll(PHB_CONSRV conn, void * buffer, long len)
 {
-   HB_BYTE * ptr = static_cast<HB_BYTE*>(buffer);
+   auto ptr = static_cast<HB_BYTE*>(buffer);
    long lRead = 0, l;
    HB_MAXINT timeout = conn->timeout;
    HB_MAXUINT timer = hb_timerInit(timeout);
@@ -398,7 +398,7 @@ static HB_BOOL s_srvRecvAll(PHB_CONSRV conn, void * buffer, long len)
 
 static HB_BOOL s_srvSendAll(PHB_CONSRV conn, void * buffer, long len)
 {
-   HB_BYTE * ptr = static_cast<HB_BYTE*>(buffer);
+   auto ptr = static_cast<HB_BYTE*>(buffer);
    long lSent = 0;
 
    if( !conn->mutex || hb_threadMutexLock(conn->mutex) )
@@ -437,7 +437,7 @@ static HB_BOOL s_srvSendAll(PHB_CONSRV conn, void * buffer, long len)
 
 static HB_GARBAGE_FUNC(s_listensd_destructor)
 {
-   PHB_LISTENSD * lsd_ptr = static_cast<PHB_LISTENSD*>(Cargo);
+   auto lsd_ptr = static_cast<PHB_LISTENSD*>(Cargo);
 
    if( *lsd_ptr )
    {
@@ -460,7 +460,7 @@ static const HB_GC_FUNCS s_gcListensdFuncs =
 
 static PHB_LISTENSD s_listenParam(int iParam, HB_BOOL fError)
 {
-   PHB_LISTENSD * lsd_ptr = static_cast<PHB_LISTENSD*>(hb_parptrGC(&s_gcListensdFuncs, iParam));
+   auto lsd_ptr = static_cast<PHB_LISTENSD*>(hb_parptrGC(&s_gcListensdFuncs, iParam));
 
    if( lsd_ptr && *lsd_ptr )
    {
@@ -471,7 +471,7 @@ static PHB_LISTENSD s_listenParam(int iParam, HB_BOOL fError)
    {
       hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
-   
+
    return nullptr;
 }
 
@@ -479,10 +479,7 @@ static void s_listenRet(HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc)
 {
    if( sd != HB_NO_SOCKET )
    {
-      PHB_LISTENSD lsd, * lsd_ptr;
-      int iLen;
-
-      lsd = static_cast<PHB_LISTENSD>(memset(hb_xgrab(sizeof(HB_LISTENSD)), 0, sizeof(HB_LISTENSD)));
+      auto lsd = static_cast<PHB_LISTENSD>(memset(hb_xgrab(sizeof(HB_LISTENSD)), 0, sizeof(HB_LISTENSD)));
       lsd->sd = sd;
       lsd->rpc = rpc;
       if( szRootPath )
@@ -493,7 +490,7 @@ static void s_listenRet(HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc)
       {
          hb_fsBaseDirBuff(lsd->rootPath);
       }
-      iLen = static_cast<int>(strlen(lsd->rootPath));
+      auto iLen = static_cast<int>(strlen(lsd->rootPath));
       if( iLen > 0 )
       {
          if( !s_isDirSep(lsd->rootPath[iLen - 1]) )
@@ -505,14 +502,14 @@ static void s_listenRet(HB_SOCKET sd, const char * szRootPath, HB_BOOL rpc)
             lsd->rootPath[iLen] = HB_OS_PATH_DELIM_CHR;
          }
       }
-      lsd_ptr = static_cast<PHB_LISTENSD*>(hb_gcAllocate(sizeof(PHB_LISTENSD), &s_gcListensdFuncs));
+      auto lsd_ptr = static_cast<PHB_LISTENSD*>(hb_gcAllocate(sizeof(PHB_LISTENSD), &s_gcListensdFuncs));
       *lsd_ptr = lsd;
       hb_retptrGC(lsd_ptr);
    }
    else
    {
       hb_ret();
-   }   
+   }
 }
 
 
@@ -661,7 +658,8 @@ HB_FUNC( NETIO_ACCEPT )
    {
       HB_MAXINT timeout = hb_parnintdef(2, -1);
       HB_SOCKET connsd;
-      int iLevel, iStrategy, keylen = static_cast<int>(hb_parclen(3));
+      int iLevel, iStrategy;
+      auto keylen = static_cast<int>(hb_parclen(3));
 
       if( keylen > NETIO_PASSWD_MAX )
       {
@@ -715,7 +713,8 @@ HB_FUNC( NETIO_COMPRESS )
 
    if( conn && conn->sock && !conn->stop )
    {
-      int iLevel, iStrategy, keylen = static_cast<int>(hb_parclen(2));
+      int iLevel, iStrategy;
+      auto keylen = static_cast<int>(hb_parclen(2));
       PHB_SOCKEX sock;
 
       if( keylen > NETIO_PASSWD_MAX )
@@ -901,7 +900,7 @@ HB_FUNC( NETIO_SERVER )
                      }
                      else
                      {
-                        HB_MAXINT nSize = static_cast<HB_MAXINT>(hb_fileDirSpace(pszName, uiFlags));
+                        auto nSize = static_cast<HB_MAXINT>(hb_fileDirSpace(pszName, uiFlags));
                         errFsCode = hb_fsError();
                         HB_PUT_LE_UINT32(&msg[0], uiMsg);
                         HB_PUT_LE_UINT64(&msg[4], nSize);
@@ -1940,7 +1939,7 @@ HB_FUNC( NETIO_SRVSENDITEM )
       HB_SIZE nLen;
 
       char * itmData = hb_itemSerialize(pItem, HB_SERIALIZE_NUMSIZE, &nLen);
-      long lLen = static_cast<long>(nLen);
+      auto lLen = static_cast<long>(nLen);
       auto msg = static_cast<char*>(hb_xgrab(lLen + NETIO_MSGLEN));
       HB_PUT_LE_UINT32(&msg[0], NETIO_SRVITEM);
       HB_PUT_LE_UINT32(&msg[4], iStreamID);
@@ -1978,7 +1977,7 @@ HB_FUNC( NETIO_SRVSENDDATA )
 {
    PHB_CONSRV conn = s_consrvParam(1);
    auto iStreamID = hb_parni(2);
-   long lLen = static_cast<long>(hb_parclen(3));
+   auto lLen = static_cast<long>(hb_parclen(3));
    bool fResult = false;
 
    if( conn && conn->sock && !conn->stop && conn->mutex && iStreamID && lLen > 0 )
