@@ -1296,7 +1296,7 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClass
          if( V_VT(pVariant) & VT_ARRAY ) {
             SAFEARRAY * pSafeArray = (V_VT(pVariant) & VT_BYREF) ? *V_ARRAYREF(pVariant) : V_ARRAY(pVariant);
             if( pSafeArray ) {
-               int iDims = static_cast<int>(SafeArrayGetDim(pSafeArray));
+               auto iDims = static_cast<int>(SafeArrayGetDim(pSafeArray));
 
                if( iDims >= 1 ) {
                   if( iDims > 1 || !hb_oleSafeArrayToString(pItem, pSafeArray) ) {

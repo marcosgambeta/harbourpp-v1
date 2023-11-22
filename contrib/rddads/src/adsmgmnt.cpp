@@ -359,7 +359,7 @@ HB_FUNC( ADSMGGETCONFIGINFO )
 /* Return array of connected users */
 HB_FUNC( ADSMGGETUSERNAMES )
 {
-   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(2, 2000)); /* needed for array memory allocation; caller can set with 2nd arg */
+   auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(2, 2000)); /* needed for array memory allocation; caller can set with 2nd arg */
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_USER_INFO);
    auto pastUserInfo = static_cast<ADS_MGMT_USER_INFO*>(hb_xgrab(sizeof(ADS_MGMT_USER_INFO) * usArrayLen));
 
@@ -463,7 +463,7 @@ HB_FUNC( ADSMGGETLOCKOWNER )
          info, see AdsMgGetOpenTables2(). */
 HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
 {
-   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
+   auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_TABLE_INFO);
    auto astOpenTableInfo = static_cast<ADS_MGMT_TABLE_INFO*>(hb_xgrab(sizeof(ADS_MGMT_TABLE_INFO) * usArrayLen));
 
@@ -497,7 +497,7 @@ HB_FUNC( ADSMGGETOPENTABLES ) /* nMaxNumberOfFilesToReturn, cUserName, nConnecti
 
 HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnection */
 {
-   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
+   auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_TABLE_INFO);
    auto astOpenTableInfo = static_cast<ADS_MGMT_TABLE_INFO*>(hb_xgrab(sizeof(ADS_MGMT_TABLE_INFO) * usArrayLen));
 
@@ -535,7 +535,7 @@ HB_FUNC( ADSMGGETOPENTABLES2 ) /* nMaxNumberOfFilesToReturn, cUserName, nConnect
 
 HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserName, nConnection */
 {
-   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
+   auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 300));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_INDEX_INFO);
    auto astOpenIndexInfo = static_cast<ADS_MGMT_INDEX_INFO*>(hb_xgrab(sizeof(ADS_MGMT_INDEX_INFO) * usArrayLen));
 
@@ -570,7 +570,7 @@ HB_FUNC( ADSMGGETOPENINDEXES ) /* nMaxNumberOfFilesToReturn, cTableName, cUserNa
 
 HB_FUNC( ADSMGGETLOCKS )
 {
-   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
+   auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_RECORD_INFO);
    auto astRecordInfo = static_cast<ADS_MGMT_RECORD_INFO*>(hb_xgrab(sizeof(ADS_MGMT_RECORD_INFO) * usArrayLen));
 
@@ -605,7 +605,7 @@ HB_FUNC( ADSMGGETLOCKS )
 
 HB_FUNC( ADSMGGETWORKERTHREADACTIVITY )
 {
-   UNSIGNED16 usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
+   auto usArrayLen = static_cast<UNSIGNED16>(hb_parnidef(1, 2000));
    UNSIGNED16 usStructSize = sizeof(ADS_MGMT_THREAD_ACTIVITY);
    auto astWorkerThreadActivity = static_cast<ADS_MGMT_THREAD_ACTIVITY*>(hb_xgrab(sizeof(ADS_MGMT_THREAD_ACTIVITY) * usArrayLen));
 

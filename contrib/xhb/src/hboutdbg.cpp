@@ -83,7 +83,7 @@ static void debugInit(void)
    char      szDebugName[128];
 
    if( !s_iUseDebugName ) {
-      int iRand = static_cast<int>(hb_random_num() * 1000000);
+      auto iRand = static_cast<int>(hb_random_num() * 1000000);
       pFileName = hb_fsFNameSplit(hb_cmdargARGVN(0));
       hb_snprintf( szDebugName, sizeof(szDebugName) - 1, "/tmp/%s%d_dbg", pFileName->szName, iRand );
    } else {

@@ -68,7 +68,7 @@ HB_FUNC( WAPI_FORMATMESSAGE )
    LPTSTR lpBuffer = nullptr;
    HB_SIZE nSize = 0;
 
-   DWORD dwFlags = static_cast<DWORD>(hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM));
+   auto dwFlags = static_cast<DWORD>(hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM));
 
    if( HB_ISBYREF(5) )
    {

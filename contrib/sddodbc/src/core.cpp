@@ -282,7 +282,7 @@ static HB_ERRCODE odbcConnect(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 
 static HB_ERRCODE odbcDisconnect(SQLDDCONNECTION * pConnection)
 {
-   SDDCONN * pSDDConn = static_cast<SDDCONN*>(pConnection->pSDDConn);
+   auto pSDDConn = static_cast<SDDCONN*>(pConnection->pSDDConn);
 
    SQLDisconnect(pSDDConn->hConn);
 #if ODBCVER >= 0x0300
@@ -298,7 +298,7 @@ static HB_ERRCODE odbcDisconnect(SQLDDCONNECTION * pConnection)
 
 static HB_ERRCODE odbcExecute(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 {
-   SDDCONN * pSDDConn = static_cast<SDDCONN*>(pConnection->pSDDConn);
+   auto pSDDConn = static_cast<SDDCONN*>(pConnection->pSDDConn);
    SQLHSTMT hStmt;
    char * szError;
    HB_ERRCODE errCode;
@@ -353,10 +353,10 @@ static HB_ERRCODE odbcExecute(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 
 static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
 {
-   SDDCONN * pSDDConn = static_cast<SDDCONN*>(pArea->pConnection->pSDDConn);
+   auto pSDDConn = static_cast<SDDCONN*>(pArea->pConnection->pSDDConn);
 
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    SQLHSTMT hStmt;
    char * szError;
@@ -404,7 +404,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
       return Harbour::FAILURE;
    }
 
-   HB_USHORT uiFields = static_cast<HB_USHORT>(iNameLen);
+   auto uiFields = static_cast<HB_USHORT>(iNameLen);
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    auto pItemEof = hb_itemArrayNew(uiFields);
@@ -630,7 +630,7 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
 
 static HB_ERRCODE odbcClose(SQLBASEAREAP pArea)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    if( pSDDData ) {
       if( pSDDData->hStmt ) {

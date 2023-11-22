@@ -141,7 +141,7 @@ typedef struct
 
 static void hb_adsThreadRelease( void * cargo )
 {
-   PHB_ADSDATA pAdsData = static_cast<PHB_ADSDATA>(cargo);
+   auto pAdsData = static_cast<PHB_ADSDATA>(cargo);
 
    if( pAdsData->hConnect ) {
       AdsDisconnect( pAdsData->hConnect );
@@ -649,7 +649,7 @@ HB_FUNC( ADSKEYNO )
          if( pxOrder == nullptr || HB_IS_NIL(pxOrder) ) { /* didn't pass it in; use current */
             hIndex = pArea->hOrdCurrent;
          } else if( HB_IS_NUMBER(pxOrder) ) {
-            UNSIGNED8 ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
+            auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
 
             if( ordNum > 0 ) { /* otherwise leave hIndex at 0 */
                AdsGetIndexHandleByOrder( pArea->hTable, ordNum, &hIndex );
@@ -694,7 +694,7 @@ HB_FUNC( ADSKEYCOUNT )
          if( pxOrder == nullptr || HB_IS_NIL(pxOrder) ) { /* didn't pass it in; use current */
             hIndex = pArea->hOrdCurrent;
          } else if( HB_IS_NUMBER(pxOrder) ) {
-            UNSIGNED8 ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
+            auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
 
             if( ordNum > 0 ) { /* otherwise leave hIndex at 0 */
                AdsGetIndexHandleByOrder( pArea->hTable, ordNum, &hIndex );
@@ -1549,7 +1549,7 @@ HB_FUNC( ADSGETHANDLETYPE )             /* DD, admin, table */
 /* nLastErr := AdsGetLastError([@cLastErr]) */
 HB_FUNC( ADSGETLASTERROR )
 {
-   UNSIGNED32 ulLastErr = static_cast<UNSIGNED32>(~AE_SUCCESS);
+   auto ulLastErr = static_cast<UNSIGNED32>(~AE_SUCCESS);
    UNSIGNED8  aucError[ADS_MAX_ERROR_LEN + 1];
    UNSIGNED16 usLength = ADS_MAX_ERROR_LEN + 1;
 
@@ -1902,7 +1902,7 @@ HB_FUNC( ADSDDDELETEUSER )
 HB_FUNC( ADSDDGETDATABASEPROPERTY )
 {
 #if ADS_LIB_VERSION >= 600
-   UNSIGNED16 ulProperty = static_cast<UNSIGNED16>(hb_parni(1));
+   auto ulProperty = static_cast<UNSIGNED16>(hb_parni(1));
    ADSHANDLE hConnect = HB_ADS_PARCONNECTION(2);
 
    switch( ulProperty ) {
@@ -1971,7 +1971,7 @@ HB_FUNC( ADSDDSETDATABASEPROPERTY )
 {
    UNSIGNED32 ulRetVal;
    UNSIGNED16 ulBuffer;
-   UNSIGNED16 ulProperty = static_cast<UNSIGNED16>(hb_parni(1));
+   auto ulProperty = static_cast<UNSIGNED16>(hb_parni(1));
    auto pParam = hb_param(2, Harbour::Item::ANY);
    ADSHANDLE hConnect = HB_ADS_PARCONNECTION(3);
 

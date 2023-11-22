@@ -673,7 +673,7 @@ HB_FUNC( HBXML_NODE_CLONE_TREE )
 /* reads a data node */
 static void mxml_node_read_data(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc, int iStyle)
 {
-   char *   buf        = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
+   auto buf = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
    int      iAllocated = MXML_ALLOC_BLOCK;
    int      iPos       = 0;
    int      chr;
@@ -786,12 +786,11 @@ static void mxml_node_read_data(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc, 
 static MXML_STATUS mxml_node_read_name(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc)
 {
    PHB_ITEM pItem;
-   char *   buf;
    int      iAllocated;
    int      iPos = 0;
    int      iStatus = 0;
 
-   buf        = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
+   auto buf = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
    iAllocated = MXML_ALLOC_BLOCK;
 
    while( iStatus < 2 ) {
@@ -892,7 +891,7 @@ static MXML_STATUS mxml_node_read_attributes(MXML_REFIL * ref, PHB_ITEM pNode, P
 
 static void mxml_node_read_directive(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc)
 {
-   char * buf  = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
+   auto buf = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
 
    if( mxml_node_read_name(ref, pNode, doc) == MXML_STATUS_OK ) {
       int iAllocated = MXML_ALLOC_BLOCK;
@@ -912,7 +911,7 @@ static void mxml_node_read_directive(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM 
 
          if( chr == MXML_LINE_TERMINATOR ) {
             hbxml_doc_new_line(doc);
-         }   
+         }
 
          chr = mxml_refil_getc(ref);
       }
@@ -938,17 +937,16 @@ static void mxml_node_read_directive(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM 
 static void mxml_node_read_pi(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc)
 {
    int    iPos = 0, iAllocated;
-   char * buf;
    int    iStatus = 0;
 
    /* let's read the xml PI instruction */
    if( mxml_node_read_name(ref, pNode, doc) != MXML_STATUS_OK ) {
       return;
-   }   
+   }
 
    /* and then we'll put all the "data" into the data member, up to ?> */
 
-   buf        = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
+   auto buf = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
    iAllocated = MXML_ALLOC_BLOCK;
 
    while( iStatus < 2 ) {
@@ -1008,7 +1006,6 @@ static void mxml_node_read_pi(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc)
 
 static void mxml_node_read_tag(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc, int style)
 {
-   char     chr;
    PHB_ITEM pItem;
 
    pItem = hb_itemPutNI(nullptr, MXML_TYPE_TAG);
@@ -1018,12 +1015,12 @@ static void mxml_node_read_tag(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc, i
    if( mxml_node_read_name(ref, pNode, doc) == MXML_STATUS_OK ) {
       if( mxml_node_read_attributes(ref, pNode, doc, style) != MXML_STATUS_OK ) {
          return;
-      }   
+      }
    }
 
    /* if the list of attributes terminates with a '/', the last '>' is
       left unread. This means the current node is complete. */
-   chr = static_cast<char>(mxml_refil_getc(ref) );
+   auto chr = static_cast<char>(mxml_refil_getc(ref));
    if( ref->status == MXML_STATUS_OK && chr != '>' ) {
       mxml_refil_ungetc(ref, chr);
       /* recurse */
@@ -1040,7 +1037,6 @@ static void mxml_node_read_tag(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc, i
 static void mxml_node_read_comment(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc)
 {
    int      iPos = 0, iAllocated;
-   char *   buf;
    int      iStatus = 0;
    PHB_ITEM pItem;
 
@@ -1049,7 +1045,7 @@ static void mxml_node_read_comment(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM do
 
    /* we'll put all the comment into the data member, up to -> */
 
-   buf        = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
+   auto buf = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
    iAllocated = MXML_ALLOC_BLOCK;
 
    while( iStatus < 3 ) {
@@ -1195,7 +1191,7 @@ static void mxml_node_read_cdata(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM pDoc
    } else {
       int iPos = 0, iAllocated = MXML_ALLOC_BLOCK;
 
-      char * buf = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
+      auto buf = static_cast<char*>(MXML_ALLOCATOR(MXML_ALLOC_BLOCK));
 
       iStatus = 0;
 
@@ -1266,14 +1262,13 @@ static void mxml_node_read_cdata(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM pDoc
 /* checking closing tag */
 static int mxml_node_read_closing(MXML_REFIL * ref, PHB_ITEM pNode, PHB_ITEM doc)
 {
-   char *  buf;
    HB_ISIZ iPos = 0;
    int     chr;
    HB_ISIZ iLen;
 
    hb_objSendMsg(pNode, "CNAME", 0);
    iLen = hb_parclen(-1) + 1;
-   buf  = static_cast<char*>(MXML_ALLOCATOR(iLen));
+   auto buf = static_cast<char*>(MXML_ALLOCATOR(iLen));
 
    chr = mxml_refil_getc(ref);
    while( chr != MXML_EOF && chr != '>' && chr != ' ' && iPos < iLen ) {
@@ -1716,7 +1711,7 @@ static void mxml_output_destroy(MXML_OUTPUT * out)
 
 static MXML_STATUS mxml_output_char(MXML_OUTPUT * out, int c)
 {
-   char chr = static_cast<char>(c);
+   auto chr = static_cast<char>(c);
 
    out->output_func(out, &chr, 1);
    return out->status;
@@ -1908,7 +1903,7 @@ void mxml_refil_ungetc(MXML_REFIL * ref, int chr)
 /* Useful "fill" function that reads from a file handle */
 static void mxml_refill_from_handle_func(MXML_REFIL * ref)
 {
-   HB_FHANDLE fh = static_cast<HB_FHANDLE>(ref->u.hFile);
+   auto fh = static_cast<HB_FHANDLE>(ref->u.hFile);
    HB_ISIZ    len;
 
    len = hb_fsReadLarge(fh, ref->buffer, ref->bufsize);
@@ -1962,7 +1957,7 @@ static MXML_STATUS mxml_sgs_append_char(MXML_SGS * sgs, char c)
    sgs->buffer[sgs->length++] = c;
 
    if( sgs->length >= sgs->allocated ) {
-      char * buf = static_cast<char*>(MXML_REALLOCATOR(sgs->buffer, sgs->allocated + MXML_ALLOC_BLOCK));
+      auto buf = static_cast<char*>(MXML_REALLOCATOR(sgs->buffer, sgs->allocated + MXML_ALLOC_BLOCK));
 
       if( buf == nullptr ) {
          return MXML_STATUS_ERROR;
@@ -1980,7 +1975,7 @@ static MXML_STATUS mxml_sgs_append_string_len(MXML_SGS * sgs, const char * s, HB
    if( slen > 0 ) {
       if( sgs->length + slen >= sgs->allocated ) {
          HB_ISIZ blklen = ( ( sgs->length + slen ) / MXML_ALLOC_BLOCK + 1 ) * MXML_ALLOC_BLOCK;
-         char * buf = static_cast<char*>(MXML_REALLOCATOR(sgs->buffer, blklen));
+         auto buf = static_cast<char*>(MXML_REALLOCATOR(sgs->buffer, blklen));
 
          if( buf == nullptr ) {
             return MXML_STATUS_ERROR;

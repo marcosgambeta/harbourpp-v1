@@ -89,7 +89,7 @@ typedef struct
 
 static void hb_oleDataInit(void * cargo)
 {
-   PHB_OLEDATA pOleData = static_cast<PHB_OLEDATA>(cargo);
+   auto pOleData = static_cast<PHB_OLEDATA>(cargo);
 
    /* default settings: */
    pOleData->fNullDate = false;
@@ -103,7 +103,7 @@ static void hb_oleDataInit(void * cargo)
 
 static void hb_oleDataRelease(void * cargo)
 {
-   PHB_OLEDATA pOleData = static_cast<PHB_OLEDATA>(cargo);
+   auto pOleData = static_cast<PHB_OLEDATA>(cargo);
 
    if( pOleData->iInit )
    {
@@ -169,7 +169,7 @@ static void hb_olecore_init(void * cargo)
 
 static HB_GARBAGE_FUNC(hb_ole_destructor)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(Cargo);
+   auto pOle = static_cast<HB_OLE*>(Cargo);
    IDispatch * pDisp = pOle->pDisp;
 
    if( pDisp )
@@ -193,7 +193,7 @@ static HB_GARBAGE_FUNC(hb_ole_destructor)
 
 static HB_GARBAGE_FUNC(hb_ole_mark)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(Cargo);
+   auto pOle = static_cast<HB_OLE*>(Cargo);
 
    if( pOle->pCallBack && *pOle->pCallBack )
    {
@@ -209,7 +209,7 @@ static const HB_GC_FUNCS s_gcOleFuncs =
 
 static HB_GARBAGE_FUNC(hb_oleenum_destructor)
 {
-   IEnumVARIANT** ppEnum = static_cast<IEnumVARIANT**>(Cargo);
+   auto ppEnum = static_cast<IEnumVARIANT**>(Cargo);
    IEnumVARIANT*  pEnum = *ppEnum;
 
    if( pEnum )
@@ -227,7 +227,7 @@ static const HB_GC_FUNCS s_gcOleenumFuncs =
 
 static HB_GARBAGE_FUNC(hb_olevariant_destructor)
 {
-   VARIANT * pVariant = static_cast<VARIANT*>(Cargo);
+   auto pVariant = static_cast<VARIANT*>(Cargo);
 
    VariantClear(pVariant);
 }
@@ -268,8 +268,8 @@ static void hb_oleExcepDescription(EXCEPINFO * pExcep, char ** pszDescription, c
 
    if( pExcep->bstrSource )
    {
-      int iLen, iStrLen;
-      iStrLen = static_cast<int>(SysStringLen(pExcep->bstrSource));
+      int iLen;
+      auto iStrLen = static_cast<int>(SysStringLen(pExcep->bstrSource));
       iLen = WideCharToMultiByte(CP_ACP, 0, pExcep->bstrSource, iStrLen, nullptr, 0, nullptr, nullptr);
       *pszSource = static_cast<char*>(hb_xgrab((iLen + 1) * sizeof(char)));
       WideCharToMultiByte(CP_ACP, 0, pExcep->bstrSource, iStrLen, * pszSource, iLen + 1, nullptr, nullptr);
@@ -284,8 +284,8 @@ static void hb_oleExcepDescription(EXCEPINFO * pExcep, char ** pszDescription, c
 
    if( pExcep->bstrDescription )
    {
-      int iLen, iStrLen;
-      iStrLen = static_cast<int>(SysStringLen(pExcep->bstrDescription));
+      int iLen;
+      auto iStrLen = static_cast<int>(SysStringLen(pExcep->bstrDescription));
       iLen = WideCharToMultiByte(CP_ACP, 0, pExcep->bstrDescription, iStrLen, nullptr, 0, nullptr, nullptr);
       *pszDescription = static_cast<char*>(hb_xgrab((iLen + 14 + 1) * sizeof(char)));
       WideCharToMultiByte(CP_ACP, 0, pExcep->bstrDescription, iStrLen, * pszDescription, iLen + 1, nullptr, nullptr);
@@ -310,7 +310,7 @@ static void hb_oleExcepDescription(EXCEPINFO * pExcep, char ** pszDescription, c
 
 IDispatch * hb_oleParam(int iParam)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(hb_parptrGC(&s_gcOleFuncs, iParam));
+   auto pOle = static_cast<HB_OLE*>(hb_parptrGC(&s_gcOleFuncs, iParam));
 
    if( pOle && pOle->pDisp )
    {
@@ -323,14 +323,14 @@ IDispatch * hb_oleParam(int iParam)
 
 IDispatch * hb_oleItemGet(PHB_ITEM pItem)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
+   auto pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
    return pOle ? pOle->pDisp : nullptr;
 }
 
 PHB_ITEM hb_oleItemPut(PHB_ITEM pItem, IDispatch * pDisp)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(hb_gcAllocate(sizeof(HB_OLE), &s_gcOleFuncs));
+   auto pOle = static_cast<HB_OLE*>(hb_gcAllocate(sizeof(HB_OLE), &s_gcOleFuncs));
 
    pOle->pDisp = pDisp;
    pOle->pCallBack = nullptr;
@@ -341,14 +341,14 @@ PHB_ITEM hb_oleItemPut(PHB_ITEM pItem, IDispatch * pDisp)
 
 PHB_ITEM hb_oleItemGetCallBack(PHB_ITEM pItem)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
+   auto pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
    return pOle && pOle->pCallBack ? *pOle->pCallBack : nullptr;
 }
 
 void hb_oleItemSetCallBack(PHB_ITEM pItem, PHB_ITEM * pCallBack)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
+   auto pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
    if( pOle )
    {
@@ -369,7 +369,7 @@ void hb_oleItemSetCallBack(PHB_ITEM pItem, PHB_ITEM * pCallBack)
 
 void hb_oleItemSetDestructor(PHB_ITEM pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void * cargo)
 {
-   HB_OLE * pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
+   auto pOle = static_cast<HB_OLE*>(hb_itemGetPtrGC(pItem, &s_gcOleFuncs));
 
    if( pOle )
    {
@@ -380,7 +380,7 @@ void hb_oleItemSetDestructor(PHB_ITEM pItem, HB_OLE_DESTRUCTOR_FUNC pFunc, void 
 
 static IEnumVARIANT * hb_oleenumParam(int iParam)
 {
-   IEnumVARIANT ** ppEnum = static_cast<IEnumVARIANT**>(hb_parptrGC(&s_gcOleenumFuncs, iParam));
+   auto ppEnum = static_cast<IEnumVARIANT**>(hb_parptrGC(&s_gcOleenumFuncs, iParam));
 
    if( ppEnum && *ppEnum )
    {
@@ -393,7 +393,7 @@ static IEnumVARIANT * hb_oleenumParam(int iParam)
 
 static VARIANT * hb_oleVariantParam(int iParam)
 {
-   VARIANT * pVariant = static_cast<VARIANT*>(hb_parptrGC(&s_gcVariantFuncs, iParam));
+   auto pVariant = static_cast<VARIANT*>(hb_parptrGC(&s_gcVariantFuncs, iParam));
 
    if( !pVariant )
    {
@@ -410,7 +410,7 @@ VARIANT * hb_oleItemGetVariant(PHB_ITEM pItem)
 
 PHB_ITEM hb_oleItemPutVariant(PHB_ITEM pItem, VARIANT * pVariant, HB_BOOL fMove)
 {
-   VARIANT * pDestVariant = static_cast<VARIANT*>(hb_gcAllocate(sizeof(VARIANT), &s_gcVariantFuncs));
+   auto pDestVariant = static_cast<VARIANT*>(hb_gcAllocate(sizeof(VARIANT), &s_gcVariantFuncs));
 
    if( fMove )
    {
@@ -444,7 +444,7 @@ static void AnsiToWideBuffer(const char * szString, wchar_t * szWide, int iLen)
 
 static BSTR hb_oleItemToString(PHB_ITEM pItem)
 {
-   UINT uiStrLen = static_cast<UINT>(hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_NATIVE, nullptr, UINT_MAX));
+   auto uiStrLen = static_cast<UINT>(hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_NATIVE, nullptr, UINT_MAX));
    BSTR strVal = SysAllocStringLen(nullptr, uiStrLen);
 
    hb_itemCopyStrU16(pItem, HB_CDP_ENDIAN_NATIVE, strVal, uiStrLen + 1);
@@ -548,7 +548,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY * pSafeArray, VARTYPE vt, PHB_ITEM 
 {
    const char * pStr;
    void * pData;
-   UINT uiPos, cElements;
+   UINT uiPos;
 
    if( pItem == nullptr || HB_IS_NIL(pItem) )
    {
@@ -570,7 +570,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY * pSafeArray, VARTYPE vt, PHB_ITEM 
       return false;
    }
 
-   cElements = static_cast<UINT>(plSize[iDim - 1]);
+   auto cElements = static_cast<UINT>(plSize[iDim - 1]);
    if( uiPos < cElements )
    {
       cElements = uiPos;
@@ -1440,7 +1440,7 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT * pVariant, HB_USHORT uiClass
             SAFEARRAY * pSafeArray = (V_VT(pVariant) & VT_BYREF) ? *V_ARRAYREF(pVariant) : V_ARRAY(pVariant);
             if( pSafeArray )
             {
-               int iDims = static_cast<int>(SafeArrayGetDim(pSafeArray));
+               auto iDims = static_cast<int>(SafeArrayGetDim(pSafeArray));
 
                if( iDims >= 1 )
                {
@@ -1748,9 +1748,8 @@ HB_BOOL hb_oleDispInvoke(PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPP
 static void GetParams(DISPPARAMS * dispparam, HB_UINT uiOffset, HB_BOOL fUseRef, UINT uiNamedArgs, PHB_ITEM * pNamedArgs, DISPID * pDispIds)
 {
    VARIANTARG * pArgs = nullptr;
-   UINT         uiArgCount;
 
-   uiArgCount = static_cast<UINT>(hb_pcount());
+   auto uiArgCount = static_cast<UINT>(hb_pcount());
    if( uiOffset > uiArgCount )
    {
       uiArgCount = 0;
@@ -1790,7 +1789,7 @@ static void GetParams(DISPPARAMS * dispparam, HB_UINT uiOffset, HB_BOOL fUseRef,
       for( uiArg = 0; uiArg < uiArgCount; uiArg++ )
       {
          VARIANT * pVariant = &pArgs[uiArg + uiNamedArgs];
-         int iParam = static_cast<int>(uiOffset + uiArgCount - uiArg);
+         auto iParam = static_cast<int>(uiOffset + uiArgCount - uiArg);
 
          VariantInit(pVariant);
          if( fUseRef && HB_ISBYREF(iParam) )
@@ -1863,7 +1862,7 @@ static void PutParams(DISPPARAMS * dispparam, HB_UINT uiOffset, HB_USHORT uiClas
 
    for( UINT uiArg = dispparam->cNamedArgs; uiArg < dispparam->cArgs; uiArg++ )
    {
-      HB_USHORT uiParam = static_cast<HB_USHORT>(uiOffset + dispparam->cArgs - uiArg);
+      auto uiParam = static_cast<HB_USHORT>(uiOffset + dispparam->cArgs - uiArg);
 
       if( HB_ISBYREF(uiParam) )
       {
@@ -2000,7 +1999,7 @@ HB_FUNC( __OLEGETACTIVEOBJECT ) /* (cOleName | cCLSID  [, cIID ]) */
       IUnknown *   pUnk = nullptr;
       auto cID = hb_parc(2);
 
-      BSTR wCLSID = static_cast<BSTR>(AnsiToWide(cOleName));
+      auto wCLSID = static_cast<BSTR>(AnsiToWide(cOleName));
 
       if( cOleName[0] == '{' )
       {
@@ -2109,11 +2108,9 @@ HB_FUNC( __OLEENUMCREATE ) /* (__hObj) */
 
       if( lOleError == S_OK )
       {
-         IEnumVARIANT ** ppEnum;
-
          hb_oleSetError(S_OK);
 
-         ppEnum  = static_cast<IEnumVARIANT**>(hb_gcAllocate(sizeof(IEnumVARIANT*), &s_gcOleenumFuncs));
+         auto ppEnum  = static_cast<IEnumVARIANT**>(hb_gcAllocate(sizeof(IEnumVARIANT*), &s_gcOleenumFuncs));
          *ppEnum = pEnum;
          hb_retptrGC(ppEnum);
          return;

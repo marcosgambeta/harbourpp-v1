@@ -191,7 +191,7 @@ HB_FUNC( WIN_SYSREFRESH )
 
    if( hDummyEvent )
    {
-      DWORD dwMsec = static_cast<DWORD>(hb_parnl(1));
+      auto dwMsec = static_cast<DWORD>(hb_parnl(1));
 
       /* Begin the operation and continue until it is complete
          or until the user clicks the mouse or presses a key. */

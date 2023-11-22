@@ -198,10 +198,10 @@ HB_FUNC( NUMROLX )
 {
    if( HB_ISNUM(2) || HB_ISCHAR(2) ) {
       HB_LONG   lNum1, lNumBak, lPattern, lTestRol;
-      HB_USHORT usBytes, usFor, usNum2;
+      HB_USHORT usBytes, usFor;
 
       lNum1  = __getparam(2);                /* Number to do ROL */
-      usNum2 = static_cast<HB_USHORT>(__getparam(3));  /* Iterations */
+      auto usNum2 = static_cast<HB_USHORT>(__getparam(3));  /* Iterations */
 
       sizeofbits(&usBytes, &lPattern, &lTestRol);
 

@@ -82,7 +82,7 @@ static void s_xhb_bitOper(int iOper)
          if( (nLen1 | nLen2) != 0 ) {
             auto pStr1 = hb_itemGetCPtr(pItem1);
             auto pStr2 = hb_itemGetCPtr(pItem2);
-            char * pRet = static_cast<char*>(hb_xmemdup(pStr1, nLen1 + 1));
+            auto pRet = static_cast<char*>(hb_xmemdup(pStr1, nLen1 + 1));
             HB_SIZE n1, n2;
 
             switch( iOper ) {
@@ -121,7 +121,7 @@ static void s_xhb_bitOper(int iOper)
       if( HB_IS_STRING(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) ) {
          if( nLen1 ) {
             auto pStr = hb_itemGetCPtr(pItem1);
-            char * pRet = static_cast<char*>(hb_xmemdup(pStr, nLen1 + 1));
+            auto pRet = static_cast<char*>(hb_xmemdup(pStr, nLen1 + 1));
             char cVal = nLen2 == 1 ? hb_itemGetCPtr(pItem2)[0] : static_cast<char>(hb_itemGetNI(pItem2));
 
             nLen2 = nLen1;

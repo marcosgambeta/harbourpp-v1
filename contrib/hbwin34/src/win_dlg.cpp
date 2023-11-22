@@ -66,7 +66,7 @@ HB_FUNC( WIN_PRINTDLGDC )
    {
       if( pd.hDevNames )
       {
-         LPDEVNAMES lpdn = static_cast<LPDEVNAMES>(GlobalLock(pd.hDevNames));
+         auto lpdn = static_cast<LPDEVNAMES>(GlobalLock(pd.hDevNames));
          if( lpdn )
          {
             HB_STORSTR(reinterpret_cast<LPCTSTR>(lpdn) + lpdn->wDeviceOffset, 1);

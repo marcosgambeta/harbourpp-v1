@@ -163,18 +163,18 @@ HB_FUNC( WIN_REGQUERYVALUEEX )
 HB_FUNC( WIN_REGSETVALUEEX )
 {
    void * hKey;
-   DWORD dwType = static_cast<DWORD>(hb_parnl(4));
+   auto dwType = static_cast<DWORD>(hb_parnl(4));
    LPCTSTR lpKey = HB_PARSTRDEF(2, &hKey, nullptr);
 
    if( dwType == REG_DWORD )
    {
-      DWORD nSpace = static_cast<DWORD>(hb_parnl(5));
+      auto nSpace = static_cast<DWORD>(hb_parnl(5));
       hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType, reinterpret_cast<const BYTE*>(&nSpace), sizeof(DWORD)) == ERROR_SUCCESS);
    }
 #if defined(REG_QWORD)
    else if( dwType == REG_QWORD )
    {
-      HB_U64 nSpace = static_cast<HB_U64>(hb_parnint(5));
+      auto nSpace = static_cast<HB_U64>(hb_parnint(5));
       hb_retl(RegSetValueEx(static_cast<HKEY>(hb_parptr(1)), lpKey, 0, dwType, reinterpret_cast<const BYTE*>(&nSpace), sizeof(HB_U64)) == ERROR_SUCCESS);
    }
 #endif

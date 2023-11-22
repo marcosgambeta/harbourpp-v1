@@ -1414,9 +1414,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
       case DBOI_RELKEYPOS:
          if( pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) ) {
-            HB_ULONG ulPos;
-
-            ulPos = static_cast<HB_ULONG>(hb_itemGetND(pOrderInfo->itmNewVal) * static_cast<double>(pTag->ulRecCount));
+            auto ulPos = static_cast<HB_ULONG>(hb_itemGetND(pOrderInfo->itmNewVal) * static_cast<double>(pTag->ulRecCount));
 
             if( ulPos > 0 && ulPos <= pTag->ulRecCount ) {
                SELF_GOTO(&pArea->adsarea.area, pTag->pKeys[ulPos - 1]->rec);
@@ -1619,13 +1617,10 @@ static RDDFUNCS adsxTable = { nullptr,
 
 static void adsxRegisterRDD( HB_USHORT * pusRddId, const char * szRddName )
 {
-   RDDFUNCS * pTable;
-   HB_USHORT * puiCount, * puiSuperRddId, uiRddId;
-
-   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-   puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
+   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
    if( pTable ) {
       HB_ERRCODE errCode;

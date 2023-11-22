@@ -50,7 +50,7 @@
 
 static HB_GARBAGE_FUNC(s_gc_HDC_release)
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -73,7 +73,7 @@ void hbwapi_ret_HDC(HDC p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HDC), &s_gc_HDC_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(HDC), &s_gc_HDC_funcs));
 
       *ph = p;
 
@@ -92,14 +92,14 @@ HB_BOOL hbwapi_is_HDC(int iParam)
 
 HDC hbwapi_par_HDC(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HDC_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gc_HDC_funcs, iParam));
 
    return ph ? static_cast<HDC>(*ph) : static_cast<HDC>(__hbwapi_par_handle(iParam));
 }
 
 static HB_GARBAGE_FUNC(s_gc_HPEN_release)
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -122,7 +122,7 @@ void hbwapi_ret_HPEN(HPEN p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HPEN), &s_gc_HPEN_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(HPEN), &s_gc_HPEN_funcs));
 
       *ph = p;
 
@@ -141,14 +141,14 @@ HB_BOOL hbwapi_is_HPEN(int iParam)
 
 HPEN hbwapi_par_HPEN(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HPEN_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gc_HPEN_funcs, iParam));
 
    return ph ? static_cast<HPEN>(*ph) : static_cast<HPEN>(__hbwapi_par_handle(iParam));
 }
 
 static HB_GARBAGE_FUNC(s_gc_HBRUSH_release)
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -171,7 +171,7 @@ void hbwapi_ret_HBRUSH(HBRUSH p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HBRUSH), &s_gc_HBRUSH_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(HBRUSH), &s_gc_HBRUSH_funcs));
 
       *ph = p;
 
@@ -190,14 +190,14 @@ HB_BOOL hbwapi_is_HBRUSH(int iParam)
 
 HBRUSH hbwapi_par_HBRUSH(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HBRUSH_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gc_HBRUSH_funcs, iParam));
 
    return ph ? static_cast<HBRUSH>(*ph) : static_cast<HBRUSH>(__hbwapi_par_handle(iParam));
 }
 
 static HB_GARBAGE_FUNC(s_gc_HFONT_release)
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -220,7 +220,7 @@ void hbwapi_ret_HFONT(HFONT p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HFONT), &s_gc_HFONT_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(HFONT), &s_gc_HFONT_funcs));
 
       *ph = p;
 
@@ -239,14 +239,14 @@ HB_BOOL hbwapi_is_HFONT(int iParam)
 
 HFONT hbwapi_par_HFONT(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_HFONT_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gc_HFONT_funcs, iParam));
 
    return ph ? static_cast<HFONT>(*ph) : static_cast<HFONT>(__hbwapi_par_handle(iParam));
 }
 
 static HB_GARBAGE_FUNC(s_gc_PDEVMODE_release)
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -269,7 +269,7 @@ void hbwapi_ret_PDEVMODE(PDEVMODE p)
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PDEVMODE), &s_gc_PDEVMODE_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(PDEVMODE), &s_gc_PDEVMODE_funcs));
 
       *ph = p;
 
@@ -288,7 +288,7 @@ HB_BOOL hbwapi_is_PDEVMODE(int iParam)
 
 PDEVMODE hbwapi_par_PDEVMODE(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gc_PDEVMODE_funcs, iParam));
 
    return ph ? static_cast<PDEVMODE>(*ph) : nullptr;
 }

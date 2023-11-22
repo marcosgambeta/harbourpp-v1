@@ -169,7 +169,7 @@ void hb_bitbuffer_cat_int_rev( PHB_BITBUFFER pBitBuffer, int iValue, int iLen )
 
 static HB_GARBAGE_FUNC( hb_zebra_destructor )
 {
-   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(Cargo);
+   auto ppZebra = static_cast<PHB_ZEBRA*>(Cargo);
 
    if( *ppZebra )
    {
@@ -186,14 +186,14 @@ static const HB_GC_FUNCS s_gcZebraFuncs =
 
 PHB_ZEBRA hb_zebraItemGet(PHB_ITEM pItem)
 {
-   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
+   auto ppZebra = static_cast<PHB_ZEBRA*>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 
    return ppZebra ? *ppZebra : nullptr;
 }
 
 PHB_ITEM hb_zebraItemPut(PHB_ITEM pItem, PHB_ZEBRA pZebra)
 {
-   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_gcAllocate(sizeof(PHB_ZEBRA), &s_gcZebraFuncs));
+   auto ppZebra = static_cast<PHB_ZEBRA*>(hb_gcAllocate(sizeof(PHB_ZEBRA), &s_gcZebraFuncs));
 
    *ppZebra = pZebra;
    return hb_itemPutPtrGC(pItem, ppZebra);
@@ -201,7 +201,7 @@ PHB_ITEM hb_zebraItemPut(PHB_ITEM pItem, PHB_ZEBRA pZebra)
 
 void hb_zebraItemClear(PHB_ITEM pItem)
 {
-   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
+   auto ppZebra = static_cast<PHB_ZEBRA*>(hb_itemGetPtrGC(pItem, &s_gcZebraFuncs));
 
    if( ppZebra )
    {
@@ -211,7 +211,7 @@ void hb_zebraItemClear(PHB_ITEM pItem)
 
 PHB_ZEBRA hb_zebra_param( int iParam )
 {
-   PHB_ZEBRA * ppZebra = static_cast<PHB_ZEBRA*>(hb_parptrGC(&s_gcZebraFuncs, iParam));
+   auto ppZebra = static_cast<PHB_ZEBRA*>(hb_parptrGC(&s_gcZebraFuncs, iParam));
 
    if( ppZebra && *ppZebra )
    {

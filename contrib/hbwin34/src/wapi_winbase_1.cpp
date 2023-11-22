@@ -141,7 +141,7 @@ HB_FUNC( WAPI_SETPROCESSWORKINGSETSIZE )
 
 HB_FUNC( WAPI_SETLASTERROR )
 {
-   DWORD dwLastError = static_cast<DWORD>(hb_parnl(1));
+   auto dwLastError = static_cast<DWORD>(hb_parnl(1));
    SetLastError(dwLastError);
    hbwapi_SetLastError(dwLastError);
 }
@@ -212,7 +212,7 @@ static void s_getPathName(_HB_GETPATHNAME getPathName)
       if( HB_ISBYREF(2) )
       {
          TCHAR buffer[HB_PATH_MAX];
-         DWORD cchBuffer = static_cast<DWORD>(HB_SIZEOFARRAY(buffer));
+         auto cchBuffer = static_cast<DWORD>(HB_SIZEOFARRAY(buffer));
          LPTSTR lpszShortPath = buffer;
          bool fSize = HB_ISNUM(3);
 

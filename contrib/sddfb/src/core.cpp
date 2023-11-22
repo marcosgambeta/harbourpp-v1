@@ -137,16 +137,15 @@ static HB_USHORT hb_errRT_FirebirdDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCod
 static HB_ERRCODE fbConnect(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 {
    ISC_STATUS_ARRAY status;
-   isc_db_handle hDb = static_cast<isc_db_handle>(0);
+   auto hDb = static_cast<isc_db_handle>(0);
    char parambuf[520];
    int i;
-   unsigned int ul;
 
    i = 0;
    parambuf[i++] = isc_dpb_version1;
 
    parambuf[i++] = isc_dpb_user_name;
-   ul = static_cast<unsigned int>(hb_arrayGetCLen(pItem, 3));
+   auto ul = static_cast<unsigned int>(hb_arrayGetCLen(pItem, 3));
    if( ul > 255 ) {
       ul = 255;
    }
@@ -193,11 +192,11 @@ static HB_ERRCODE fbExecute(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
 static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
 {
    isc_db_handle * phDb = &(static_cast<SDDCONN*>(pArea->pConnection->pSDDConn))->hDb;
-   isc_tr_handle hTrans = static_cast<isc_tr_handle>(0);
-   isc_stmt_handle hStmt = static_cast<isc_stmt_handle>(0);
+   auto hTrans = static_cast<isc_tr_handle>(0);
+   auto hStmt = static_cast<isc_stmt_handle>(0);
 
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    ISC_STATUS_ARRAY status{};
 
@@ -402,7 +401,7 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
 
 static HB_ERRCODE fbClose(SQLBASEAREAP pArea)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
    ISC_STATUS_ARRAY status;
 
    if( pSDDData ) {
@@ -425,7 +424,7 @@ static HB_ERRCODE fbClose(SQLBASEAREAP pArea)
 
 static HB_ERRCODE fbGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    ISC_STATUS lErr;
    ISC_STATUS_ARRAY status;

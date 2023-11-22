@@ -608,7 +608,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
             case ADS_STRING:
                if( HB_IS_STRING(pItem) ) {
                   UNSIGNED16 u16DataType = ADS_STRINGKEY ;
-                  UNSIGNED16 ucLen = static_cast<UNSIGNED16>(hb_itemGetCLen(pItem));
+                  auto ucLen = static_cast<UNSIGNED16>(hb_itemGetCLen(pItem));
                   auto pucScope = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem)));
 #if defined(ADS_USE_OEM_TRANSLATION) && ADS_LIB_VERSION < 600
                   UNSIGNED8 * pszKeyFree = nullptr;
@@ -1467,18 +1467,18 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
    HB_TRACE(HB_TR_DEBUG, ("adsCreateFields(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pStruct)));
 #endif
 
-   HB_USHORT uiItems, uiCount;
+   HB_USHORT uiCount;
    HB_ERRCODE errCode = Harbour::SUCCESS;
    DBFIELDINFO dbFieldInfo{};
    const char * szType;
 
-   uiItems = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+   auto uiItems = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
    SELF_SETFIELDEXTENT(&pArea->area, uiItems);
 
    for( uiCount = 0; uiCount < uiItems; uiCount++ ) {
-      HB_USHORT uiLen, uiDec;
+      HB_USHORT uiLen;
       const char * szFieldType;
-      int iData, iNameLen;
+      int iData;
 
       dbFieldInfo.uiTypeExtended = 0;
       auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiCount + 1);
@@ -1492,10 +1492,10 @@ static HB_ERRCODE adsCreateFields(ADSAREAP pArea, PHB_ITEM pStruct)
       if( iData < 0 ) {
          iData = 0;
       }
-      uiDec = static_cast<HB_USHORT>(iData);
+      auto uiDec = static_cast<HB_USHORT>(iData);
       dbFieldInfo.uiDec = 0;
       szFieldType = szType = hb_arrayGetCPtr(pFieldDesc, DBS_TYPE);
-      iNameLen = static_cast<int>(strlen(szFieldType));
+      auto iNameLen = static_cast<int>(strlen(szFieldType));
       iData = HB_TOUPPER(szFieldType[0]);
 #ifdef DBS_FLAG
       dbFieldInfo.uiFlags = hb_arrayGetNI(pFieldDesc, DBS_FLAG);
@@ -2062,7 +2062,8 @@ static HB_ERRCODE adsGetRec(ADSAREAP pArea, HB_BYTE ** pBuffer)
    HB_TRACE(HB_TR_DEBUG, ("adsGetRec(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBuffer)));
 #endif
 
-   UNSIGNED32 u32Len = static_cast<UNSIGNED32>(pArea->ulRecordLen), u32Result;
+   auto u32Len = static_cast<UNSIGNED32>(pArea->ulRecordLen);
+   UNSIGNED32 u32Result;
 
    /* resolve any pending relations */
    if( pArea->lpdbPendingRel ) {
@@ -2472,7 +2473,8 @@ static HB_ERRCODE adsPutRec(ADSAREAP pArea, const HB_BYTE * pBuffer)
    HB_TRACE(HB_TR_DEBUG, ("adsGetRec(%p, %p)", static_cast<void*>(pArea), static_cast<const void*>(pBuffer)));
 #endif
 
-   UNSIGNED32 u32Len = static_cast<UNSIGNED32>(pArea->ulRecordLen), u32Result;
+   auto u32Len = static_cast<UNSIGNED32>(pArea->ulRecordLen);
+   UNSIGNED32 u32Result;
 
    /* resolve any pending relations */
    if( pArea->lpdbPendingRel ) {
@@ -3878,7 +3880,7 @@ static HB_ERRCODE adsSetRel(ADSAREAP pArea, LPDBRELINFO lpdbRelations)
    HB_TRACE(HB_TR_DEBUG, ("adsSetRel(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(lpdbRelations)));
 #endif
 
-   UNSIGNED32 u32RetVal = static_cast<UNSIGNED32>(~AE_SUCCESS);
+   auto u32RetVal = static_cast<UNSIGNED32>(~AE_SUCCESS);
 
    auto szExp = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(lpdbRelations->abKey)));
    if( *szExp && adsGetRddType(lpdbRelations->lpaChild->rddID) >= 0 ) {
@@ -4846,9 +4848,8 @@ static HB_ERRCODE adsLock(ADSAREAP pArea, LPDBLOCKINFO pLockInfo)
 #endif
 
    HB_USHORT uiAction;
-   HB_ULONG ulRecNo;
 
-   ulRecNo = static_cast<HB_ULONG>(hb_itemGetNL(pLockInfo->itmRecID));
+   auto ulRecNo = static_cast<HB_ULONG>(hb_itemGetNL(pLockInfo->itmRecID));
 
    switch( pLockInfo->uiMethod ) {
       case DBLM_EXCLUSIVE:
@@ -5115,7 +5116,7 @@ static HB_ERRCODE adsRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItemI
 
 static void adsTSDRelease(void * cargo)
 {
-   LPRDDADSDATA pData = static_cast<LPRDDADSDATA>(cargo);
+   auto pData = static_cast<LPRDDADSDATA>(cargo);
 
    if( pData->szQuery ) {
       hb_xfree(pData->szQuery);
@@ -5460,13 +5461,10 @@ static const RDDFUNCS adsTable = { ( DBENTRYP_BP ) adsBof,
 
 static void adsRegisterRDD(HB_USHORT * pusRddId)
 {
-   RDDFUNCS * pTable;
-   HB_USHORT * puiCount, * puiSuperRddId, uiRddId;
-
-   puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-   puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
+   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
    if( pTable ) {
       HB_ERRCODE errCode;
@@ -5598,7 +5596,7 @@ HB_CALL_ON_STARTUP_END(_hb_ads_rdd_init_)
 
 ADSAREAP hb_adsGetWorkAreaPointer(void)
 {
-   ADSAREAP pArea = static_cast<ADSAREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<ADSAREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
       if( adsGetRddType(pArea->area.rddID) >= 0 ) {
@@ -5635,7 +5633,7 @@ HB_FUNC( ADSCUSTOMIZEAOF )
    ADSAREAP   pArea;
    HB_ULONG   ulRecord = 0;
    UNSIGNED32 u32NumRecs = 0;
-   UNSIGNED32 u32RetVal = static_cast<UNSIGNED32>(~AE_SUCCESS);   /* initialize to something other than success */
+   auto u32RetVal = static_cast<UNSIGNED32>(~AE_SUCCESS);   /* initialize to something other than success */
    UNSIGNED16 u16Option = ADS_AOF_ADD_RECORD;
 
    pArea = hb_adsGetWorkAreaPointer();

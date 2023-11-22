@@ -66,7 +66,7 @@ typedef struct
 
 static HB_GARBAGE_FUNC( _DLLUnload )
 {
-   PHB_DLLEXEC xec = static_cast<PHB_DLLEXEC>(Cargo);
+   auto xec = static_cast<PHB_DLLEXEC>(Cargo);
 
    if( xec->pLibraryHandle )
    {
@@ -81,7 +81,7 @@ static HB_GARBAGE_FUNC( _DLLUnload )
 
 static HB_GARBAGE_FUNC( _DLLMark )
 {
-   PHB_DLLEXEC xec = static_cast<PHB_DLLEXEC>(Cargo);
+   auto xec = static_cast<PHB_DLLEXEC>(Cargo);
 
    if( xec->pLibraryHandle )
       hb_gcMark(xec->pLibraryHandle);
@@ -172,7 +172,6 @@ HB_FUNC( DLLPREPARECALL )
       {
          auto iXPPFlags = hb_parni(2);
          int iFuncFlags = 0;
-         PHB_DLLEXEC xec;
 
          if( (iXPPFlags & DLL_CDECL) != 0 )
             iFuncFlags |= HB_DYN_CALLCONV_CDECL;
@@ -184,7 +183,7 @@ HB_FUNC( DLLPREPARECALL )
          if( !bFreeLibrary )
             hb_gcRefInc(pLibraryHandle);
 
-         xec = static_cast<PHB_DLLEXEC>(hb_gcAllocate(sizeof(HB_DLLEXEC), &s_gcDllFuncs));
+         auto xec = static_cast<PHB_DLLEXEC>(hb_gcAllocate(sizeof(HB_DLLEXEC), &s_gcDllFuncs));
          xec->pLibraryHandle = pLibraryHandle;
          xec->iFuncFlags     = iFuncFlags;
          xec->pFunctionPtr   = pFunctionPtr;
@@ -204,7 +203,7 @@ HB_FUNC( DLLPREPARECALL )
 
 HB_FUNC( DLLEXECUTECALL )
 {
-   PHB_DLLEXEC xec = static_cast<PHB_DLLEXEC>(hb_parptrGC(&s_gcDllFuncs, 1));
+   auto xec = static_cast<PHB_DLLEXEC>(hb_parptrGC(&s_gcDllFuncs, 1));
 
    if( xec && xec->pLibraryHandle && xec->pFunctionPtr )
       hb_dynCall(xec->iFuncFlags, xec->pFunctionPtr, hb_pcount(), 2, nullptr);

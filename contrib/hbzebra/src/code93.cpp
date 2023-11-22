@@ -123,7 +123,8 @@ static int _code93_charno( char ch )
 PHB_ZEBRA hb_zebra_create_code93(const char * szCode, HB_SIZE nLen, int iFlags)
 {
    PHB_ZEBRA  pZebra;
-   int        k, i, j, iLen = static_cast<int>(nLen);
+   int        k, i, j;
+   auto iLen = static_cast<int>(nLen);
    int        csum, ksum;
 
    HB_SYMBOL_UNUSED(iFlags);

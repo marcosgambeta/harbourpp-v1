@@ -126,7 +126,6 @@ static S_TUPLE s_sigTable[] =
 
 static void s_signalHandler(int sig, siginfo_t * info, void * v)
 {
-   HB_UINT  uiSig;
    HB_SIZE  nPos;
 
    HB_SYMBOL_UNUSED(v);
@@ -143,13 +142,11 @@ static void s_signalHandler(int sig, siginfo_t * info, void * v)
    bSignalEnabled = false;
    nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
-   uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(sig), 0));
+   auto uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(sig), 0));
 
    while( nPos > 0 ) {
-      HB_UINT  uiMask;
-
       auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-      uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
+      auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
       if( uiMask & uiSig ) {
          int iRet;
 
@@ -374,7 +371,6 @@ static S_TUPLE s_sigTable[] = {
 static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
 {
    HB_SIZE  nPos;
-   HB_UINT  uiSig;
 
    /* let's find the right signal handler. */
    hb_threadEnterCriticalSectionGC(&s_ServiceMutex);
@@ -388,13 +384,11 @@ static LONG s_signalHandler(int type, int sig, PEXCEPTION_RECORD exc)
    bSignalEnabled = false;
    nPos = hb_arrayLen(sp_hooks);
    /* subsig not necessary */
-   uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(type), static_cast<HB_UINT>(sig)));
+   auto uiSig = static_cast<HB_UINT>(s_translateSignal(static_cast<HB_UINT>(type), static_cast<HB_UINT>(sig)));
 
    while( nPos > 0 ) {
-      HB_UINT  uiMask;
-
       auto pFunction = hb_arrayGetItemPtr(sp_hooks, nPos);
-      uiMask    = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
+      auto uiMask = static_cast<HB_UINT>(hb_arrayGetNI(pFunction, 1));
       if( (uiMask & uiSig) == uiSig ) {
          int      iRet;
 
@@ -935,7 +929,7 @@ HB_FUNC( HB_SIGNALDESC )
    auto iSig = hb_parni(1);
 
    if( iSig == 0 ) { /* exception */
-      DWORD dwSubSig = static_cast<DWORD>(hb_parnl(2));
+      auto dwSubSig = static_cast<DWORD>(hb_parnl(2));
 
       switch( dwSubSig ) {
          case EXCEPTION_ACCESS_VIOLATION:

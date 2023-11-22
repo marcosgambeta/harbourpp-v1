@@ -148,7 +148,7 @@ HB_FUNC( DBF2TEXT )
    auto pFields = hb_param(3, Harbour::Item::ARRAY);
 
    auto cDelim = hb_parc(4);
-   HB_FHANDLE   handle = static_cast<HB_FHANDLE>(hb_parnint(5));
+   auto handle = static_cast<HB_FHANDLE>(hb_parnint(5));
    auto cSep = hb_parc(6);
    auto nCount = hb_parni(7);
    PHB_CODEPAGE cdp    = hb_cdpFind(hb_parcx(8));
@@ -221,7 +221,7 @@ HB_FUNC( DBF2TEXT )
             }
          /* Only requested fields are exported here */
          } else {
-            HB_USHORT uiFieldCopy = static_cast<HB_USHORT>(hb_arrayLen(pFields));
+            auto uiFieldCopy = static_cast<HB_USHORT>(hb_arrayLen(pFields));
             HB_USHORT uiItter;
 
             for( uiItter = 1; uiItter <= uiFieldCopy; uiItter++ ) {

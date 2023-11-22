@@ -219,7 +219,7 @@ typedef struct
 
 static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 length)
 {
-   HB_PNG_READ * hb_png_read_data = static_cast<HB_PNG_READ*>(png_get_io_ptr(png_ptr));
+   auto hb_png_read_data = static_cast<HB_PNG_READ*>(png_get_io_ptr(png_ptr));
    png_uint_32 pos;
 
    for( pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen; )
@@ -344,7 +344,7 @@ HB_FUNC( WIN_BITMAPDIMENSIONS )
 
    if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) )
    {
-      const BITMAPFILEHEADER * pbmfh = static_cast<const BITMAPFILEHEADER*>(buffer);
+      auto pbmfh = static_cast<const BITMAPFILEHEADER*>(buffer);
       auto pbmi = reinterpret_cast<const BITMAPINFO*>(pbmfh + 1);
 
       /* Remember there are 2 types of BitMap File */

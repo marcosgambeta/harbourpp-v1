@@ -52,7 +52,7 @@
 
 static HB_ERRCODE s_waList(AREAP pArea, void * Cargo)
 {
-   PHB_ITEM pArray = static_cast<PHB_ITEM>(Cargo);
+   auto pArray = static_cast<PHB_ITEM>(Cargo);
    HB_SIZE  nLen   = hb_arrayLen(pArray) + 1;
 
    hb_arraySize(pArray, nLen);

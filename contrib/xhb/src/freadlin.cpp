@@ -145,7 +145,7 @@ static char * hb_fsReadLine(HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const c
 HB_FUNC( HB_FREADLINE )
 {
    PHB_ITEM      pTerm1;
-   HB_FHANDLE    hFileHandle = static_cast<HB_FHANDLE>(hb_parnint(1));
+   auto hFileHandle = static_cast<HB_FHANDLE>(hb_parnint(1));
    const char ** Term;
    char *        pBuffer;
    HB_ISIZ *     pnTermSizes;

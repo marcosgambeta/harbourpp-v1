@@ -83,7 +83,7 @@ typedef struct
 
 static HB_GARBAGE_FUNC( hb_mmf_destructor )
 {
-   PHB_MMF_HOLDER pStructHolder = static_cast<PHB_MMF_HOLDER>(Cargo);
+   auto pStructHolder = static_cast<PHB_MMF_HOLDER>(Cargo);
 
    if( pStructHolder->hb_mmf )
    {
@@ -107,8 +107,6 @@ static const HB_GC_FUNCS s_gc_xdiffFuncs =
 
 static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
 {
-   PHB_MMF_HOLDER pStructHolder;
-
    if( pItem != nullptr )
    {
       if( HB_IS_COMPLEX(pItem) )
@@ -117,7 +115,7 @@ static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
    else
       pItem = hb_itemNew(pItem);
 
-   pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_gcAllocate(sizeof(HB_MMF_HOLDER), &s_gc_xdiffFuncs));
+   auto pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_gcAllocate(sizeof(HB_MMF_HOLDER), &s_gc_xdiffFuncs));
    pStructHolder->hb_mmf = ( HB_MMF * ) pMemAddr;
    pStructHolder->type = iType;
 
@@ -126,7 +124,7 @@ static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
 
 static void * hb_mmf_itemGet(PHB_ITEM pItem, int iType, HB_BOOL fError)
 {
-   PHB_MMF_HOLDER pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs));
+   auto pStructHolder = static_cast<PHB_MMF_HOLDER>(hb_itemGetPtrGC(pItem, &s_gc_xdiffFuncs));
    int iError = 0;
 
    HB_SYMBOL_UNUSED(iError);
@@ -275,7 +273,7 @@ HB_FUNC( XDL_WRITE_MMFILE )
    {
       if( HB_ISCHAR(2) )
       {
-         long lSize = static_cast<long>(hb_parclen(2));
+         auto lSize = static_cast<long>(hb_parclen(2));
 
          if( hb_pcount() > 2 )
             lSize = hb_parnldef(3, lSize);
@@ -368,7 +366,7 @@ static int xdlt_outf( void * priv, mmbuffer_t * mb, int nbuf )
 
 static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
 {
-   PHB_ITEM pCallback = static_cast<PHB_ITEM>(priv);
+   auto pCallback = static_cast<PHB_ITEM>(priv);
 
    if( pCallback && hb_vmRequestReenter() )
    {

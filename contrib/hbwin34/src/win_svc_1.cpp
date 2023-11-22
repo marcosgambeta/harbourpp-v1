@@ -226,7 +226,7 @@ HB_FUNC( WIN_SERVICESTART )
    lpServiceTable[1].lpServiceName = nullptr;
    lpServiceTable[1].lpServiceProc = nullptr;
 
-   bool bRetVal = static_cast<bool>(StartServiceCtrlDispatcher(lpServiceTable));
+   auto bRetVal = static_cast<bool>(StartServiceCtrlDispatcher(lpServiceTable));
    hbwapi_SetLastError(GetLastError());
    hb_retl(bRetVal);
 }

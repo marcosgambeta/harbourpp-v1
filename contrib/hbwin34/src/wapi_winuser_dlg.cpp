@@ -154,9 +154,9 @@ HB_FUNC( WAPI_SETDLGITEMTEXT )
 /* Retrieves the title or text associated with a control in a dialog box. */
 HB_FUNC( WAPI_GETDLGITEMTEXT )
 {
-   HB_SIZE nSize = static_cast<HB_SIZE>(SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)), WM_GETTEXTLENGTH, 0, 0));
+   auto nSize = static_cast<HB_SIZE>(SendMessage(GetDlgItem(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2)), WM_GETTEXTLENGTH, 0, 0));
    auto lpResult = static_cast<TCHAR*>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
-   HB_SIZE nResult = static_cast<HB_SIZE>(GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, static_cast<int>(nSize + 1)));
+   auto nResult = static_cast<HB_SIZE>(GetDlgItemText(hbwapi_par_raw_HWND(1), hbwapi_par_INT(2), lpResult, static_cast<int>(nSize + 1)));
    hbwapi_SetLastError(GetLastError());
    HB_RETSTRLEN(lpResult, nResult);
    hb_xfree(lpResult);
@@ -243,7 +243,7 @@ HB_FUNC( __WAPI_DLGTEMPLATE_RAW_NEW )
       1 for DLG template
       11 for item properties */
 
-   WORD    nItems = static_cast<WORD>(hb_parvni(1, 4));
+   auto nItems = static_cast<WORD>(hb_parvni(1, 4));
    DWORD   lStyle = hb_parvnl(1, 3);
    HB_SIZE nchar;
 

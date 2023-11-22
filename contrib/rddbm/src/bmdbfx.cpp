@@ -375,7 +375,7 @@ HB_FUNC( BM_DBSETFILTERARRAYADD )
 
          if( pBM ) {
             for( HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos-- ) {
-               HB_ULONG ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
+               auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
                BM_SETREC(pBM, ulRec);
             }
             hb_bmResetFilterOpt(pArea);
@@ -396,7 +396,7 @@ HB_FUNC( BM_DBSETFILTERARRAYDEL )
 
          if( pBM ) {
             for( HB_SIZE nPos = hb_arrayLen(pArray); nPos; nPos-- ) {
-               HB_ULONG ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
+               auto ulRec = static_cast<HB_ULONG>(hb_arrayGetNL(pArray, nPos));
                BM_CLRREC(pBM, ulRec);
             }
             hb_bmResetFilterOpt(pArea);

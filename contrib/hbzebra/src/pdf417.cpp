@@ -1403,7 +1403,8 @@ static void _pdf417_reed_solomon( int * pCW, int iLen, int iLevel )
 PHB_ZEBRA hb_zebra_create_pdf417(const char * szCode, HB_SIZE nLen, int iFlags, int iColCount)
 {
    PHB_ZEBRA  pZebra;
-   int        i, j, iLevel, iRowCount, iDataCount, iCount, iLen = static_cast<int>(nLen);
+   int        i, j, iLevel, iRowCount, iDataCount, iCount;
+   auto iLen = static_cast<int>(nLen);
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_PDF417;

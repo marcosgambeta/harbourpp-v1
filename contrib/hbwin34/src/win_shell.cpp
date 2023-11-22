@@ -250,7 +250,7 @@ HB_FUNC( WIN_SHFILEOPERATION )
 
    if( (fop.fFlags & FOF_WANTMAPPINGHANDLE) != 0 )
    {
-      HANDLETOMAPPINGS * hm = static_cast<HANDLETOMAPPINGS*>(fop.hNameMappings);
+      auto hm = static_cast<HANDLETOMAPPINGS*>(fop.hNameMappings);
       auto pArray = hb_param(7, Harbour::Item::ARRAY);
 
       /* Process hNameMappings */

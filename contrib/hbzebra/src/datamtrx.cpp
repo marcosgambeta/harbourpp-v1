@@ -425,7 +425,8 @@ PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFl
 {
    PHB_ZEBRA pZebra;
    const DATAMATRIX_SIZE * pSize;
-   int        i, j, iDataCount, iErrorSize, iLen = static_cast<int>(nLen);
+   int        i, j, iDataCount, iErrorSize;
+   auto iLen = static_cast<int>(nLen);
 
    pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_DATAMATRIX;

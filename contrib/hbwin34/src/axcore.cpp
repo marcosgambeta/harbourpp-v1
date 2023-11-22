@@ -581,7 +581,7 @@ static HRESULT _get_default_sink(IDispatch * iDisp, const char * szEvent, IID * 
 
 static void hb_sink_destruct(void * cargo)
 {
-   ISink * pSink = static_cast<ISink*>(cargo);
+   auto pSink = static_cast<ISink*>(cargo);
 
    if( pSink->pConnectionPoint )
    {

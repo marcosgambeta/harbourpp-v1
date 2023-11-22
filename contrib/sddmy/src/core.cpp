@@ -212,7 +212,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
    MYSQL * pMySql = (static_cast<SDDCONN*>(pArea->pConnection->pSDDConn))->pMySql;
 
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    if( mysql_real_query(pMySql, pArea->szQuery, static_cast<unsigned long>(strlen(pArea->szQuery))) ) {
       hb_errRT_MySQLDD(EG_OPEN, ESQLDD_INVALIDQUERY, static_cast<const char*>(mysql_error(pMySql)), pArea->szQuery, mysql_errno(pMySql));
@@ -224,7 +224,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
       return Harbour::FAILURE;
    }
 
-   HB_USHORT uiFields = static_cast<HB_USHORT>(mysql_num_fields(pSDDData->pResult));
+   auto uiFields = static_cast<HB_USHORT>(mysql_num_fields(pSDDData->pResult));
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    auto pItemEof = hb_itemArrayNew(uiFields);
@@ -400,7 +400,7 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
 
 static HB_ERRCODE mysqlClose(SQLBASEAREAP pArea)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    if( pSDDData ) {
       if( pSDDData->pResult ) {
@@ -415,7 +415,7 @@ static HB_ERRCODE mysqlClose(SQLBASEAREAP pArea)
 
 static HB_ERRCODE mysqlGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    if( ulRecNo == 0 || ulRecNo > pArea->ulRecCount ) {
       pArea->pRecord = pArea->pRow[0];
@@ -439,7 +439,7 @@ static HB_ERRCODE mysqlGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
 static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    bool bError = false;
    uiIndex--;

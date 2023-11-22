@@ -271,7 +271,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
    OCI_Statement * st = OCI_StatementCreate((static_cast<SDDCONN*>(pArea->pConnection->pSDDConn))->pConn);
 
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    char * szError;
    HB_ERRCODE errCode;
@@ -301,7 +301,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
 
    OCI_Resultset * rs = OCI_GetResultset(st);
 
-   HB_USHORT uiFields = static_cast<HB_USHORT>(OCI_GetColumnCount(rs));
+   auto uiFields = static_cast<HB_USHORT>(OCI_GetColumnCount(rs));
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    auto pItemEof = hb_itemArrayNew(uiFields);
@@ -474,7 +474,7 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
 
 static HB_ERRCODE ocilibClose(SQLBASEAREAP pArea)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    if( pSDDData ) {
       if( pSDDData->pStmt ) {

@@ -348,7 +348,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
    sqlite3 * pDb = (static_cast<SDDCONN*>(pArea->pConnection->pSDDConn))->pDb;
 
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    PHB_ITEM pItem = hb_itemPutC(nullptr, pArea->szQuery);
    void * hQuery;
@@ -391,7 +391,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
       return Harbour::FAILURE;
    }
 
-   HB_USHORT uiFields = static_cast<HB_USHORT>(sqlite3_column_count(st));
+   auto uiFields = static_cast<HB_USHORT>(sqlite3_column_count(st));
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    PHB_ITEM pName = nullptr;
@@ -515,7 +515,7 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
 
 static HB_ERRCODE sqlite3Close(SQLBASEAREAP pArea)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    if( pSDDData ) {
       if( pSDDData->pStmt ) {
@@ -575,7 +575,7 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
             case Harbour::DB::Field::DATE:
                if( sqlite3_column_bytes(st, ui) >= 10 ) {
                   char szDate[9];
-                  const char * pValue = static_cast<const char*>(sqlite3_column_text(st, ui));
+                  auto pValue = static_cast<const char*>(sqlite3_column_text(st, ui));
                   szDate[0] = pValue[0];
                   szDate[1] = pValue[1];
                   szDate[2] = pValue[2];
@@ -594,7 +594,7 @@ static HB_ERRCODE sqlite3GoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
             case Harbour::DB::Field::TIMESTAMP:
                if( sqlite3_column_bytes(st, ui) >= 10 ) {
                   long lDate, lTime;
-                  const char * pValue = static_cast<const char*>(sqlite3_column_text(st, ui));
+                  auto pValue = static_cast<const char*>(sqlite3_column_text(st, ui));
                   hb_timeStampStrGetDT(pValue, &lDate, &lTime);
                   pItem = hb_itemPutTDT(nullptr, lDate, lTime);
                   break;

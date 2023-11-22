@@ -1951,10 +1951,10 @@ HB_FUNC_TRANSLATE(SQLMIX, SQLBASE)
 
 HB_FUNC_STATIC( SQLMIX_GETFUNCTABLE )
 {
-   HB_USHORT * puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   RDDFUNCS * pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   HB_USHORT uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-   HB_USHORT * puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
+   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
+   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
+   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
 
    if( pTable ) {
       if( puiCount ) {

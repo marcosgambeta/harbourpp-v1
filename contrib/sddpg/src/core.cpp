@@ -222,7 +222,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
    PGconn * pConn = (static_cast<SDDCONN*>(pArea->pConnection->pSDDConn))->pConn;
 
    pArea->pSDDData = memset(hb_xgrab(sizeof(SDDDATA)), 0, sizeof(SDDDATA));
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    PGresult * pResult = PQexec(pConn, pArea->szQuery);
    if( !pResult ) {
@@ -239,7 +239,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
 
    pSDDData->pResult = pResult;
 
-   HB_USHORT uiFields = static_cast<HB_USHORT>(PQnfields(pResult));
+   auto uiFields = static_cast<HB_USHORT>(PQnfields(pResult));
    SELF_SETFIELDEXTENT(&pArea->area, uiFields);
 
    auto pItemEof = hb_itemArrayNew(uiFields);
@@ -443,7 +443,7 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
 
 static HB_ERRCODE pgsqlClose(SQLBASEAREAP pArea)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    if( pSDDData ) {
       if( pSDDData->pResult ) {
@@ -458,7 +458,7 @@ static HB_ERRCODE pgsqlClose(SQLBASEAREAP pArea)
 
 static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
-   SDDDATA * pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
+   auto pSDDData = static_cast<SDDDATA*>(pArea->pSDDData);
 
    bool bError = false;
    uiIndex--;
@@ -471,7 +471,7 @@ static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
    }
 
    char * pValue = PQgetvalue(pSDDData->pResult, pArea->ulRecNo - 1, uiIndex);
-   HB_SIZE nLen = static_cast<HB_SIZE>(PQgetlength(pSDDData->pResult, pArea->ulRecNo - 1, uiIndex));
+   auto nLen = static_cast<HB_SIZE>(PQgetlength(pSDDData->pResult, pArea->ulRecNo - 1, uiIndex));
 
 #if 0
    HB_TRACE(HB_TR_ALWAYS, ("fieldget recno=%d index=%d value=%s len=%d", dbFieldInfo.atomName, PQftype(pResult, static_cast<int>(uiCount)), pArea->ulRecNo, uiIndex, pValue, nLen));
