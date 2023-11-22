@@ -74,9 +74,7 @@ HB_FUNC( COMPLEMENT )
          hb_retnint(-hb_itemGetNInt(pItem));
       } else if( HB_IS_NUMERIC(pItem) ) {
          int iWidth, iDec;
-         double dValue;
-
-         dValue = hb_itemGetND(pItem);
+         auto dValue = hb_itemGetND(pItem);
          hb_itemGetNLen(pItem, &iWidth, &iDec);
          hb_retndlen(-dValue, iWidth, iDec);
       } else if( HB_IS_LOGICAL(pItem) ) {

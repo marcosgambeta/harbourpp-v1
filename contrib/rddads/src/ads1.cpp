@@ -633,8 +633,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
 
             case ADS_NUMERIC:
                if( HB_IS_NUMERIC(pItem) ) {
-                  double dTemp;
-                  dTemp = hb_itemGetND(pItem);
+                  auto dTemp = hb_itemGetND(pItem);
                   AdsSetScope(hOrder, nScope, reinterpret_cast<UNSIGNED8*>(&dTemp), static_cast<UNSIGNED16>(sizeof(dTemp)), ADS_DOUBLEKEY);
                }
                break;

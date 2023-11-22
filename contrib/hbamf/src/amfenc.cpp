@@ -134,7 +134,7 @@ static bool amfX_encode_double(amfContext * context, double value)
 
 static bool amfX_write_double(amfContext * context, PHB_ITEM pItem)
 {
-   double d = hb_itemGetND(pItem);
+   auto d = hb_itemGetND(pItem);
 
    if( !writeByte(context, DOUBLE_TYPE) ) {
       return false;
