@@ -5264,7 +5264,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          break;
 
       case RDDI_INDEXPAGESIZE: {
-         int iPageSize = hb_itemGetNI(pItem);
+         auto iPageSize = hb_itemGetNI(pItem);
 
          hb_itemPutNI(pItem, adsIndexPageSize(adsGetFileType(pRDD->rddID)));
 

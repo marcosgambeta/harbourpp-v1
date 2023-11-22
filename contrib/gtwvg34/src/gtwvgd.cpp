@@ -3325,7 +3325,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_PALETTE:
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC ) {
-            int iIndex = hb_itemGetNI(pInfo->pNewVal);
+            auto iIndex = hb_itemGetNI(pInfo->pNewVal);
 
             if( iIndex >= 0 && iIndex < 16 ) {
                pInfo->pResult = hb_itemPutNL(pInfo->pResult, pWVT->COLORS[iIndex]);
@@ -3417,7 +3417,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
 
       case HB_GTI_SPEC: {
-         int iMessage = hb_itemGetNI(pInfo->pNewVal);
+         auto iMessage = hb_itemGetNI(pInfo->pNewVal);
          switch( iMessage ) {
             case HB_GTS_WINDOWHANDLE:
                if( pWVT->hWnd ) {

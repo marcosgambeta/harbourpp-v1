@@ -1612,7 +1612,7 @@ static BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_PALETTE:
          if( hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC ) {
-            int iIndex = hb_itemGetNI(pInfo->pNewVal);
+            auto iIndex = hb_itemGetNI(pInfo->pNewVal);
 
             if( iIndex > 0 && iIndex <= 16 ) {
                pInfo->pResult = hb_itemPutNL(pInfo->pResult, _COLORS[iIndex - 1]);

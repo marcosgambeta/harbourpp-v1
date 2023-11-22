@@ -1561,7 +1561,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
 
       case HB_GTI_SPEC: {
-         int iMessage = hb_itemGetNI(pInfo->pNewVal);
+         auto iMessage = hb_itemGetNI(pInfo->pNewVal);
          switch( iMessage ) {
             case HB_GTS_WINDOWHANDLE:
                if( pWVT->hWnd ) {

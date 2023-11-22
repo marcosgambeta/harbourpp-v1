@@ -58,7 +58,7 @@ HB_FUNC( KBDSTAT )
    hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
 
    if( gtInfo.pResult ) {
-      int iState = hb_itemGetNI(gtInfo.pResult);
+      auto iState = hb_itemGetNI(gtInfo.pResult);
 
       hb_itemRelease(gtInfo.pResult);
       if( iState & HB_GTI_KBD_SHIFT ) {

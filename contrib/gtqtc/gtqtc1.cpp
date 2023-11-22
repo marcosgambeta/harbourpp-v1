@@ -2403,7 +2403,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             if( iVal >= 0 && iVal < 16 ) {
                pInfo->pResult = hb_itemPutNI(pInfo->pResult, QTC_RGB2NUM(pQTC->colors[iVal]));
                if( pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2) ) {
-                  int iColor = hb_itemGetNI(pInfo->pNewVal2);
+                  auto iColor = hb_itemGetNI(pInfo->pNewVal2);
                   QRgb rgb = QTC_NUM2RGB(iColor);
                   if( rgb != pQTC->colors[iVal] ) {
                      pQTC->colors[iVal] = rgb;
