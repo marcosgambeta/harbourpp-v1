@@ -213,7 +213,7 @@ static bool amf3_write_int(amfContext * context, PHB_ITEM pItem)
 #if 0
 static bool amf3_encode_float(amfContext * context, PHB_ITEM pItem)
 {
-   float n = static_cast<float>(hb_itemGetND(pItem));
+   auto n = static_cast<float>(hb_itemGetND(pItem));
 
    return amfX_encode_double(context, static_cast<double>(n));
 }
@@ -1122,7 +1122,7 @@ HB_FUNC( AMF3_FROMWA )
    auto pFields = hb_param(3, Harbour::Item::ARRAY);
    HB_ULONG     nCount        = hb_parnldef(4, 0);
    bool         str_rtrim     = hb_parldef(5, true);
-   HB_USHORT    nPkg          = static_cast<HB_USHORT>(hb_parnidef(6, 0));
+   auto nPkg = static_cast<HB_USHORT>(hb_parnidef(6, 0));
    amfContext * outer_context = static_cast<amfContext*>(hb_parptr(7));
 
    DBORDERINFO  pInfo;
@@ -1132,7 +1132,7 @@ HB_FUNC( AMF3_FROMWA )
    HB_ULONG     uiRecNo        = 0;
    bool         bNoFieldPassed = (pFields == nullptr || hb_arrayLen(pFields) == 0);
    HB_BOOL      bEof  = false;
-   AREAP        pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    PHB_ITEM     pItem;
    HB_USHORT    uiFieldCopy = 0;      /* GCC knows better (warns) */
    HB_USHORT    uiIter;

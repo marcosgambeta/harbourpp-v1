@@ -175,9 +175,8 @@ static void s_DrawTransparentBitmap(HDC hDC, HBITMAP hBitmap, int xStart, int yS
    BITMAP   bm;
    COLORREF cColor;
    HBITMAP  bmAndBack, bmAndObject, bmAndMem;
-   HBITMAP  bmBackOld, bmObjectOld, bmMemOld;
    HDC      hdcMem, hdcBack, hdcObject, hdcTemp;
-   HBITMAP  bmStretch, bmStretchOld;
+   HBITMAP  bmStretch;
    POINT    ptSize;
    COLORREF cTransparentColor;
 
@@ -194,7 +193,7 @@ static void s_DrawTransparentBitmap(HDC hDC, HBITMAP hBitmap, int xStart, int yS
 
    bmStretch    = CreateCompatibleBitmap(hDC, iDestWidth, iDestHeight);
    hdcTemp      = CreateCompatibleDC(hDC);
-   bmStretchOld = static_cast<HBITMAP>(SelectObject(hdcTemp, bmStretch));
+   auto bmStretchOld = static_cast<HBITMAP>(SelectObject(hdcTemp, bmStretch));
 
    StretchBlt(hdcTemp, 0, 0, iDestWidth, iDestHeight, hdcCopy, 0, 0, ptSize.x, ptSize.y, SRCCOPY);
 
@@ -208,9 +207,9 @@ static void s_DrawTransparentBitmap(HDC hDC, HBITMAP hBitmap, int xStart, int yS
 
    bmAndMem = CreateCompatibleBitmap(hDC, iDestWidth, iDestHeight);
 
-   bmBackOld   = static_cast<HBITMAP>(SelectObject(hdcBack, bmAndBack));
-   bmObjectOld = static_cast<HBITMAP>(SelectObject(hdcObject, bmAndObject));
-   bmMemOld    = static_cast<HBITMAP>(SelectObject(hdcMem, bmAndMem));
+   auto bmBackOld   = static_cast<HBITMAP>(SelectObject(hdcBack, bmAndBack));
+   auto bmObjectOld = static_cast<HBITMAP>(SelectObject(hdcObject, bmAndObject));
+   auto bmMemOld    = static_cast<HBITMAP>(SelectObject(hdcMem, bmAndMem));
 
    SetMapMode(hdcTemp, GetMapMode(hDC));
 
@@ -533,7 +532,7 @@ static IPicture * hb_gt_wvw_rr_LoadPicture(const char * filename, int * piWidth,
    PHB_FILE fhnd = hb_fileExtOpen(filename, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr);
 
    if( fhnd ) {
-      DWORD   nFileSize = static_cast<DWORD>(hb_fileSize(fhnd));
+      auto nFileSize = static_cast<DWORD>(hb_fileSize(fhnd));
       HGLOBAL hGlobal   = GlobalAlloc(GMEM_MOVEABLE, nFileSize + 4096);
 
       if( hGlobal ) {
@@ -1289,7 +1288,7 @@ HB_FUNC( WVW_DRAWLABEL )
       if( hFont ) {
          HDC hDC = wvw_win->hdc;
 
-         HFONT    oldFont      = static_cast<HFONT>(SelectObject(hDC, hFont));
+         auto oldFont = static_cast<HFONT>(SelectObject(hDC, hFont));
          int      oldTextAlign = SetTextAlign(hDC, hb_parnidef(5, TA_LEFT));
          COLORREF oldBkColor   = SetBkColor(hDC, hbwapi_par_COLORREF_def(8, wvw_win->background));
          COLORREF oldTextColor = SetTextColor(hDC, hbwapi_par_COLORREF_def(7, wvw_win->foreground));
@@ -1341,7 +1340,7 @@ HB_FUNC( WVW_DRAWLABELEX )
       int      oldTextAlign = SetTextAlign(hDC, hb_parnidef(5, TA_LEFT));
       COLORREF oldTextColor = SetTextColor(hDC, hbwapi_par_COLORREF_def(6, wvw_win->foreground));
       COLORREF oldBkColor   = SetBkColor(hDC, hbwapi_par_COLORREF_def(7, wvw_win->background));
-      HFONT    oldFont      = static_cast<HFONT>(SelectObject(hDC, wvw->a.hUserFonts[iSlot]));
+      auto oldFont = static_cast<HFONT>(SelectObject(hDC, wvw->a.hUserFonts[iSlot]));
 
       POINT xy;
 
@@ -1393,7 +1392,7 @@ HB_FUNC( WVW_DRAWLABELOBJ )
 
       COLORREF oldTextColor = SetTextColor(hDC, hbwapi_par_COLORREF_def(9, wvw_win->foreground));
       COLORREF oldBkColor   = SetBkColor(hDC, hbwapi_par_COLORREF_def(10, wvw_win->background));
-      HFONT    oldFont      = static_cast<HFONT>(SelectObject(hDC, hbwapi_par_raw_HFONT(11)));
+      auto oldFont = static_cast<HFONT>(SelectObject(hDC, hbwapi_par_raw_HFONT(11)));
 
       HB_SIZE nLen;
       void *  hText;
@@ -1583,7 +1582,7 @@ HB_FUNC( WVW_DRAWLINE )
       int   iOffset;
       int   x, y;
       POINT xy;
-      HPEN  hPen, hOldPen;
+      HPEN  hPen;
 
       auto iOrient = hb_parni(6);
       auto iFormat = hb_parni(7);
@@ -1641,7 +1640,7 @@ HB_FUNC( WVW_DRAWLINE )
       }
 
       hPen    = CreatePen(iStyle, iThick, hbwapi_par_COLORREF(11));
-      hOldPen = static_cast<HPEN>(SelectObject(hDC, hPen));
+      auto hOldPen = static_cast<HPEN>(SelectObject(hDC, hPen));
 
       switch( iFormat ) {
          case 0:               /* Raised */
@@ -2818,7 +2817,7 @@ HB_FUNC( WVW_DRAWTEXTBOX )
       COLORREF oldTextColor = SetTextColor(hDC, hbwapi_par_COLORREF_def(10, wvw_win->foreground));
       COLORREF oldBkColor   = SetBkColor(hDC, hbwapi_par_COLORREF_def(11, wvw_win->background));
       int      oldBkMode    = SetBkMode(hDC, hb_parnidef(12, OPAQUE));
-      HFONT    oldFont      = static_cast<HFONT>(SelectObject(hDC, hbwapi_par_raw_HFONT(13)));
+      auto oldFont = static_cast<HFONT>(SelectObject(hDC, hbwapi_par_raw_HFONT(13)));
 
       HB_SIZE nLen;
       void *  hText;

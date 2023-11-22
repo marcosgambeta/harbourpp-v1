@@ -73,7 +73,7 @@ static HB_ISIZ GetLineLength(PHB_EDITOR pEd, HB_ISIZ off, HB_ISIZ * wsk);
 
 static HB_GARBAGE_FUNC( PHB_EDITOR_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -99,7 +99,7 @@ static void PHB_EDITOR_ret( PHB_EDITOR p )
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_EDITOR*), &s_gcPHB_EDITOR_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_EDITOR*), &s_gcPHB_EDITOR_funcs));
 
       *ph = p;
 
@@ -111,7 +111,7 @@ static void PHB_EDITOR_ret( PHB_EDITOR p )
 
 static PHB_EDITOR PHB_EDITOR_par( int iParam )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPHB_EDITOR_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcPHB_EDITOR_funcs, iParam));
 
    return ph ? static_cast<PHB_EDITOR>(*ph) : nullptr;
 }
@@ -671,7 +671,7 @@ HB_FUNC( ED_GETTEXT )
       HB_ISIZ dl;
       char *  help;
 
-      char mietka = static_cast<char>(hb_parni(2));
+      auto mietka = static_cast<char>(hb_parni(2));
 
       dl = strlen(pEd->begin) + 3;
 

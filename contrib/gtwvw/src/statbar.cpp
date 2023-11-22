@@ -154,7 +154,7 @@ HB_FUNC( WVW_SBADDPART )
       SIZE size{};
 
       auto hFont = reinterpret_cast<HFONT>(SendMessage(hWndSB, WM_GETFONT, static_cast<WPARAM>(0), static_cast<LPARAM>(0)));
-      HFONT hOldFont = static_cast<HFONT>(SelectObject(hDCSB, hFont));
+      auto hOldFont = static_cast<HFONT>(SelectObject(hDCSB, hFont));
 
       if( GetTextExtentPoint32(hDCSB, hb_parcx(2), hb_parclen(2) + 1, &size) ) {
          usWidth = static_cast<USHORT>(size.cx);
@@ -301,7 +301,7 @@ HB_FUNC( WVW_SBGETPARTS )
 {
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   int        numOfParts  = static_cast<int>(SendMessage(pWindowData->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0));
+   auto numOfParts  = static_cast<int>(SendMessage(pWindowData->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0));
 
    hb_retni(numOfParts);
 }
@@ -408,12 +408,12 @@ HB_FUNC( WVW_XBCREATE )
    POINT      xy{};
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
-   int        iStyle = static_cast<int>(!HB_ISNUM(2) ? -1 : hb_parni(2));
+   auto iStyle = static_cast<int>(!HB_ISNUM(2) ? -1 : hb_parni(2));
    UINT       uiXBid;
-   USHORT     usTop  = static_cast<USHORT>(hb_parni(3)),
-              usLeft = static_cast<USHORT>(hb_parni(4)),
-              usBottom,
-              usRight;
+   auto usTop = static_cast<USHORT>(hb_parni(3));
+   auto usLeft = static_cast<USHORT>(hb_parni(4));
+   USHORT usBottom;
+   USHORT usRight;
 
    if( iStyle < SBS_HORZ || iStyle > SBS_VERT || !HB_ISBLOCK(6) ) {
       hb_retnl(0);
@@ -511,7 +511,7 @@ HB_FUNC( WVW_XBDESTROY )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   UINT           uiXBid      = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
    CONTROL_DATA * pcdPrev     = nullptr;
 
@@ -553,7 +553,7 @@ HB_FUNC( WVW_XBUPDATE )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT       uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    byte       bStyle;
    HWND       hWndXB = FindControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle);
    int        iPos   = static_cast<int>(HB_ISNIL(3) ? 0 : hb_parni(3));
@@ -600,7 +600,7 @@ HB_FUNC( WVW_XBINFO )
    PHB_ITEM   aInfo;
    SCROLLINFO si;
 
-   UINT uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    byte bStyle;
    HWND hWndXB = FindControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle);
 
@@ -643,8 +643,8 @@ HB_FUNC( WVW_XBENABLE )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT uiXBid  = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
-   UINT uiFlags = static_cast<UINT>(HB_ISNIL(3) ? 0 : hb_parni(3));
+   auto uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiFlags = static_cast<UINT>(HB_ISNIL(3) ? 0 : hb_parni(3));
    byte bStyle;
    HWND hWndXB = uiXBid == 0 ? nullptr : FindControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle);
 
@@ -666,8 +666,8 @@ HB_FUNC( WVW_XBENABLE )
 HB_FUNC( WVW_XBSHOW )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
-   UINT uiXBid   = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
-   BOOL bShow    = static_cast<BOOL>(HB_ISLOG(3) ? hb_parl(3) : TRUE);
+   auto uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto bShow = static_cast<BOOL>(HB_ISLOG(3) ? hb_parl(3) : TRUE);
    byte bStyle;
    HWND hWndXB = uiXBid == 0 ? nullptr : FindControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle);
 

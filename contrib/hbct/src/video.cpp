@@ -57,7 +57,6 @@ HB_FUNC( CHARPIX )
 
 HB_FUNC( VGAPALETTE )
 {
-   char red, green, blue;
    int attr;
 
    if( hb_pcount() < 4 ) {
@@ -81,9 +80,9 @@ HB_FUNC( VGAPALETTE )
       return;
    }
 
-   red = static_cast<char>(hb_parni(2));
-   green = static_cast<char>(hb_parni(3));
-   blue = static_cast<char>(hb_parni(4));
+   auto red = static_cast<char>(hb_parni(2));
+   auto green = static_cast<char>(hb_parni(3));
+   auto blue = static_cast<char>(hb_parni(4));
 
    HB_SYMBOL_UNUSED(blue);
    HB_SYMBOL_UNUSED(green);
@@ -98,7 +97,7 @@ HB_FUNC( VIDEOTYPE )
 HB_FUNC( SETFONT )
 {
    auto font = hb_parcx(1);
-   unsigned len = static_cast<unsigned>(hb_parclen(1));
+   auto len = static_cast<unsigned>(hb_parclen(1));
    auto area = hb_parni(2);
    int offset = 0;
    int count = 256;

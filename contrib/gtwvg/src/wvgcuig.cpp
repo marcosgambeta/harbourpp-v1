@@ -638,8 +638,6 @@ HB_FUNC( WVG_LABELEX )
 
 static void hb_wvg_Label(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop)
 {
-   HFONT hOldFont;
-
    if( gObj->crRGBBk != static_cast<COLORREF>(0) ) {
       SetBkColor(pWVT->hdc, gObj->crRGBBk);
       SetBkMode(pWVT->hdc, OPAQUE);
@@ -650,7 +648,7 @@ static void hb_wvg_Label(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop)
    SetTextColor(pWVT->hdc, gObj->crRGBText);
    SetTextAlign(pWVT->hdc, gObj->iAlign);
 
-   hOldFont = static_cast<HFONT>(SelectObject(pWVT->hdc, gObj->hFont));
+   auto hOldFont = static_cast<HFONT>(SelectObject(pWVT->hdc, gObj->hFont));
 
    ExtTextOut(pWVT->hdc, iLeft, iTop, 0, nullptr, gObj->lpText, lstrlen(gObj->lpText), nullptr);
 
@@ -717,7 +715,6 @@ HB_FUNC( WVG_LABELEX2 )
 
 static void hb_wvg_LabelEx2(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
-   HFONT hOldFont;
    int   x, y, iAlignV, iAlignH;
    SIZE  sz{};
    RECT  rect{};
@@ -725,7 +722,7 @@ static void hb_wvg_LabelEx2(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
    SetBkColor(pWVT->hdc, gObj->crRGBBk);
    SetTextColor(pWVT->hdc, gObj->crRGBText);
 
-   hOldFont = static_cast<HFONT>(SelectObject(pWVT->hdc, gObj->hFont));
+   auto hOldFont = static_cast<HFONT>(SelectObject(pWVT->hdc, gObj->hFont));
 
    x = iLeft;
 
@@ -915,7 +912,7 @@ HB_FUNC( WVG_LINEEX )
 static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
    HDC  hdc = pWVT->hdc;
-   HPEN hPen, hOldPen;
+   HPEN hPen;
 
    int iOffset;
    int x = iLeft;
@@ -956,7 +953,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
    }
 
    hPen    = gObj->hPen;
-   hOldPen = static_cast<HPEN>(SelectObject(hdc, gObj->hPen));
+   auto hOldPen = static_cast<HPEN>(SelectObject(hdc, gObj->hPen));
 
    switch( gObj->iFormat ) {
       case 0:  /* Raised */
@@ -1040,8 +1037,8 @@ HB_FUNC( WVG_ELLIPSE )
 
 static void hb_wvg_Ellipse(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
-   HBRUSH hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
-   HPEN   hPen   = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
+   auto hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
+   auto hPen = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
 
    Ellipse(pWVT->hdc, iLeft, iTop, iRight, iBottom);
 
@@ -1078,8 +1075,8 @@ HB_FUNC( WVG_RECTANGLE )
 
 static void hb_wvg_Rectangle(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
-   HBRUSH hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
-   HPEN   hPen   = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
+   auto hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
+   auto hPen = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
 
    Rectangle(pWVT->hdc, iLeft, iTop, iRight, iBottom);
 
@@ -1119,8 +1116,8 @@ HB_FUNC( WVG_ROUNDRECT )
 
 static void hb_wvg_RoundRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int iRight, int iBottom)
 {
-   HBRUSH hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
-   HPEN   hPen   = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
+   auto hBrush = static_cast<HBRUSH>(SelectObject(pWVT->hdc, gObj->hBrush));
+   auto hPen = static_cast<HPEN>(SelectObject(pWVT->hdc, gObj->hPen));
 
    RoundRect(pWVT->hdc, iLeft, iTop, iRight, iBottom, gObj->iWidth, gObj->iHeight);
 

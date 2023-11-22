@@ -128,7 +128,7 @@ HB_FUNC( NTOC )
    }
 
    if( iBase >= 2 && iBase <= 36 && ct_numParam(1, &nValue) ) {
-      HB_MAXUINT uValue = static_cast<HB_MAXUINT>(nValue);
+      auto uValue = static_cast<HB_MAXUINT>(nValue);
       int i;
 
       i = iLen == 0 ? static_cast<int>(sizeof(szBuffer)) : iLen;

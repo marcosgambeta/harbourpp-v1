@@ -73,7 +73,7 @@
 
 static HB_GARBAGE_FUNC( MYSQL_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -96,7 +96,7 @@ static void hb_MYSQL_ret( MYSQL * p )
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(MYSQL*), &s_gcMYSQLFuncs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(MYSQL*), &s_gcMYSQLFuncs));
 
       *ph = p;
 
@@ -110,14 +110,14 @@ static void hb_MYSQL_ret( MYSQL * p )
 
 static MYSQL * hb_MYSQL_par( int iParam )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcMYSQLFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcMYSQLFuncs, iParam));
 
    return ph ? static_cast<MYSQL*>(*ph) : nullptr;
 }
 
 static HB_GARBAGE_FUNC( MYSQL_RES_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -140,7 +140,7 @@ static void hb_MYSQL_RES_ret( MYSQL_RES * p )
 {
    if( p )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(MYSQL_RES*), &s_gcMYSQL_RESFuncs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(MYSQL_RES*), &s_gcMYSQL_RESFuncs));
 
       *ph = p;
 
@@ -154,7 +154,7 @@ static void hb_MYSQL_RES_ret( MYSQL_RES * p )
 
 static MYSQL_RES * hb_MYSQL_RES_par( int iParam )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcMYSQL_RESFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcMYSQL_RESFuncs, iParam));
 
    return ph ? static_cast<MYSQL_RES*>(*ph) : nullptr;
 }
@@ -169,8 +169,8 @@ HB_FUNC( MYSQL_REAL_CONNECT ) /* MYSQL * mysql_real_connect( MYSQL *, char * hos
 
 #if MYSQL_VERSION_ID > 32200
    MYSQL *      mysql;
-   unsigned int port  = static_cast<unsigned int>(hb_parnidef(4, MYSQL_PORT));
-   unsigned int flags = static_cast<unsigned int>(hb_parnidef(5, 0));
+   auto port  = static_cast<unsigned int>(hb_parnidef(4, MYSQL_PORT));
+   auto flags = static_cast<unsigned int>(hb_parnidef(5, 0));
 
    if( (mysql = mysql_init(static_cast<MYSQL*>(nullptr))) != nullptr )
    {
@@ -492,7 +492,7 @@ HB_FUNC( MYSQL_LIST_DBS ) /* MYSQL_RES * mysql_list_dbs(MYSQL *, char * wild); *
    if( mysql )
    {
       MYSQL_RES * mresult = mysql_list_dbs(mysql, nullptr);
-      HB_SIZE     nr      = static_cast<HB_SIZE>(mysql_num_rows(mresult));
+      auto nr = static_cast<HB_SIZE>(mysql_num_rows(mresult));
       auto aDBs = hb_itemArrayNew(nr);
 
       for( HB_SIZE i = 0; i < nr; ++i )
@@ -518,7 +518,7 @@ HB_FUNC( MYSQL_LIST_TABLES ) /* MYSQL_RES * mysql_list_tables(MYSQL *, char * wi
    {
       auto cWild = hb_parc(2);
       MYSQL_RES *  mresult = mysql_list_tables(mysql, cWild);
-      long         nr      = static_cast<long>(mysql_num_rows(mresult));
+      auto nr = static_cast<long>(mysql_num_rows(mresult));
       auto aTables = hb_itemArrayNew(nr);
 
       for( long i = 0; i < nr; ++i )
@@ -613,7 +613,7 @@ HB_FUNC( MYSQL_REAL_ESCAPE_STRING ) /* unsigned long STDCALL mysql_real_escape_s
    if( mysql )
    {
       auto from = hb_parcx(2);
-      unsigned long nSize  = static_cast<unsigned long>(hb_parclen(2));
+      auto nSize = static_cast<unsigned long>(hb_parclen(2));
       auto buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
       nSize = mysql_real_escape_string(mysql, buffer, from, nSize);
       hb_retclen_buffer(static_cast<char*>(buffer), nSize);
@@ -627,7 +627,7 @@ HB_FUNC( MYSQL_REAL_ESCAPE_STRING ) /* unsigned long STDCALL mysql_real_escape_s
 HB_FUNC( MYSQL_ESCAPE_STRING )
 {
    auto from = hb_parcx(1);
-   unsigned long nSize  = static_cast<unsigned long>(hb_parclen(1));
+   auto nSize = static_cast<unsigned long>(hb_parclen(1));
    auto buffer = static_cast<char*>(hb_xgrab(nSize * 2 + 1));
 
    nSize = mysql_escape_string(buffer, from, nSize);

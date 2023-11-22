@@ -61,7 +61,7 @@ using PCT_STR = CT_STR *;
 
 static void s_ct_str_init(void * cargo)
 {
-   PCT_STR ct_str = static_cast<PCT_STR>(cargo);
+   auto ct_str = static_cast<PCT_STR>(cargo);
 
    ct_str->iRefSwitch = 0;
    ct_str->iAtMupaSwitch = 0;
@@ -285,7 +285,7 @@ void ct_setref(int iNewSwitch)
    HB_TRACE(HB_TR_DEBUG, ("ct_setref(%i)", iNewSwitch));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    ct_str->iRefSwitch = iNewSwitch;
 }
@@ -296,7 +296,7 @@ int ct_getref(void)
    HB_TRACE(HB_TR_DEBUG, ("ct_getref()"));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    return ct_str->iRefSwitch;
 }
@@ -324,7 +324,7 @@ void ct_setatmupa(int iNewSwitch)
    HB_TRACE(HB_TR_DEBUG, ("ct_setatmupa(%i)", iNewSwitch));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    ct_str->iAtMupaSwitch = iNewSwitch;
 }
@@ -335,7 +335,7 @@ int ct_getatmupa(void)
    HB_TRACE(HB_TR_DEBUG, ("ct_getatmupa()"));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    return ct_str->iAtMupaSwitch;
 }
@@ -363,7 +363,7 @@ void ct_setatlike(int iNewMode)
    HB_TRACE(HB_TR_DEBUG, ("ct_setatlike(%i)", iNewMode));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    ct_str->iAtLikeMode = iNewMode;
 }
@@ -374,7 +374,7 @@ int ct_getatlike(void)
    HB_TRACE(HB_TR_DEBUG, ("ct_getatlike()"));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    return ct_str->iAtLikeMode;
 }
@@ -385,7 +385,7 @@ void ct_setatlikechar(char cNewChar)
    HB_TRACE(HB_TR_DEBUG, ("ct_setatlikechar(\'%c\')", cNewChar));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    ct_str->cAtLikeChar = cNewChar;
 }
@@ -396,7 +396,7 @@ char ct_getatlikechar(void)
    HB_TRACE(HB_TR_DEBUG, ("ct_getatlikechar()"));
 #endif
 
-   PCT_STR ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
+   auto ct_str = static_cast<PCT_STR>(hb_stackGetTSD(&s_ct_str));
 
    return ct_str->cAtLikeChar;
 }

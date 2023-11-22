@@ -122,7 +122,7 @@ HB_FUNC( HB_LZO1X_1_COMPRESS )
       else
       {
          lzo_uint  dst_len;
-         lzo_voidp wrkmem = static_cast<lzo_voidp>(hb_xalloc(LZO1X_1_MEM_COMPRESS));
+         auto wrkmem = static_cast<lzo_voidp>(hb_xalloc(LZO1X_1_MEM_COMPRESS));
          int       r;
 
          if( wrkmem == nullptr )

@@ -335,10 +335,10 @@ HB_FUNC( WVW_GBCREATE )
    int  iOffTop, iOffLeft, iOffBottom, iOffRight;
    /* int   iStyle; */
    UINT   uiPBid;
-   USHORT usTop         = static_cast<USHORT>(hb_parni(2)),
-          usLeft        = static_cast<USHORT>(hb_parni(3)),
-          usBottom      = static_cast<USHORT>(hb_parni(4)),
-          usRight       = static_cast<USHORT>(hb_parni(5));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   auto usBottom = static_cast<USHORT>(hb_parni(4));
+   auto usRight = static_cast<USHORT>(hb_parni(5));
    LPCTSTR lpszCaption  = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
    char *  szBitmap     = HB_ISCHAR(7) ? const_cast<char*>(hb_parcx(7)) : nullptr;
    UINT    uiBitmap     = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
@@ -367,10 +367,10 @@ HB_FUNC( WVW_RBCREATE )
    int  iOffTop, iOffLeft, iOffBottom, iOffRight;
    /* int   iStyle; */
    UINT   uiPBid;
-   USHORT usTop         = static_cast<USHORT>(hb_parni(2)),
-          usLeft        = static_cast<USHORT>(hb_parni(3)),
-          usBottom      = static_cast<USHORT>(hb_parni(4)),
-          usRight       = static_cast<USHORT>(hb_parni(5));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   auto usBottom = static_cast<USHORT>(hb_parni(4));
+   auto usRight = static_cast<USHORT>(hb_parni(5));
    LPCTSTR lpszCaption  = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
    char *  szBitmap     = HB_ISCHAR(7) ? const_cast<char*>(hb_parcx(7)) : nullptr;
    UINT    uiBitmap     = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
@@ -485,8 +485,8 @@ HB_FUNC( WVW_CXVISIBLE )
 HB_FUNC( WVW_XBVISIBLE )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
-   UINT uiXBid   = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
-   BOOL bShow    = static_cast<BOOL>(HB_ISLOG(3) ? hb_parl(3) : TRUE);
+   auto uiXBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto bShow = static_cast<BOOL>(HB_ISLOG(3) ? hb_parl(3) : TRUE);
    byte bStyle;
    HWND hWndXB = uiXBid == 0 ? nullptr : FindControlHandle(usWinNum, WVW_CONTROL_SCROLLBAR, uiXBid, &bStyle);
 
@@ -822,7 +822,6 @@ HB_FUNC( OPENBITMAP )
 {
    BITMAPFILEHEADER bmfh;
    BITMAPINFOHEADER bmih;
-   LPBITMAPINFO     lpbmi;
    DWORD   dwRead;
    LPVOID  lpvBits;
    HGLOBAL hmem1, hmem2;
@@ -845,7 +844,7 @@ HB_FUNC( OPENBITMAP )
    /* Allocate memory for the BITMAPINFO structure. */
 
    hmem1 = GlobalAlloc(GHND, sizeof(BITMAPINFOHEADER) + ((1 << bmih.biBitCount) * sizeof(RGBQUAD)));
-   lpbmi = static_cast<LPBITMAPINFO>(GlobalLock(hmem1));
+   auto lpbmi = static_cast<LPBITMAPINFO>(GlobalLock(hmem1));
 
    /*  Load BITMAPINFOHEADER into the BITMAPINFO  structure. */
    lpbmi->bmiHeader.biSize   = bmih.biSize;
@@ -1122,7 +1121,7 @@ HB_FUNC( SETBITMAPRESOURCEID )
    WIN_DATA *  pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    TBADDBITMAP tbab;
    auto hBitmap = reinterpret_cast<HBITMAP>(HB_PARHANDLE(3));
-   UINT        uiBitmap    = static_cast<UINT>(hb_parni(4));
+   auto uiBitmap = static_cast<UINT>(hb_parni(4));
    HWND        hWndToolbar = pWindowData->hToolBar;
    int         iNewBitmap;
    auto iBitmapType = hb_parni(2);
@@ -1640,8 +1639,8 @@ HB_FUNC( WVW_SETMOUSEPOS )
    POINT      xy{};
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   USHORT     usRow       = static_cast<USHORT>(hb_parni(2)),
-              usCol = static_cast<USHORT>(hb_parni(3));
+   auto usRow = static_cast<USHORT>(hb_parni(2));
+   auto usCol = static_cast<USHORT>(hb_parni(3));
 
    if( hb_gt_wvw_GetMainCoordMode() ) {
       hb_wvw_HBFUNCPrologue(usWinNum, &usRow, &usCol, nullptr, nullptr);
@@ -1678,10 +1677,10 @@ HB_FUNC( WVW_FILLRECTANGLE )
    POINT      xy{};
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
-   USHORT     usTop    = static_cast<USHORT>(hb_parni(2)),
-              usLeft   = static_cast<USHORT>(hb_parni(3)),
-              usBottom = static_cast<USHORT>(hb_parni(4)),
-              usRight  = static_cast<USHORT>(hb_parni(5));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   auto usBottom = static_cast<USHORT>(hb_parni(4));
+   auto usRight = static_cast<USHORT>(hb_parni(5));
    COLORREF crRGBcolor = HB_ISNIL(6) ? 0 : hb_parnl(6);
    BOOL     bTight     = HB_ISNIL(7) ? FALSE : hb_parl(7);
    BOOL     bUseBrush  = HB_ISNIL(8) ? FALSE : hb_parl(8);
@@ -1876,7 +1875,7 @@ HB_FUNC( WVW_SETBRUSH )
 HB_FUNC( WVW__MAKEDLGTEMPLATE )
 {
    WORD * p, * pdlgtemplate;
-   WORD   nItems = static_cast<WORD>(hb_parvni(1, 4));
+   auto nItems = static_cast<WORD>(hb_parvni(1, 4));
    int    nchar;
    DWORD  lStyle;
 
@@ -2215,15 +2214,15 @@ HB_FUNC( WVW_SAVESCREEN )
    UINT       usWinNum    = WVW_WHICH_WINDOW;
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
-   HBITMAP  hBmp, oldBmp;
+   HBITMAP  hBmp;
    POINT    xy{};
    int      iTop, iLeft, iBottom, iRight, iWidth, iHeight;
    auto info = hb_itemArrayNew(3);
 
-   USHORT usTop    = static_cast<USHORT>(hb_parni(2)),
-          usLeft   = static_cast<USHORT>(hb_parni(3)),
-          usBottom = static_cast<USHORT>(hb_parni(4)),
-          usRight  = static_cast<USHORT>(hb_parni(5));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   auto usBottom = static_cast<USHORT>(hb_parni(4));
+   auto usRight = static_cast<USHORT>(hb_parni(5));
 
    if( hb_gt_wvw_GetMainCoordMode() ) {
       hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -2242,7 +2241,7 @@ HB_FUNC( WVW_SAVESCREEN )
 
    hBmp = CreateCompatibleBitmap(pWindowData->hdc, iWidth, iHeight);
 
-   oldBmp = static_cast<HBITMAP>(SelectObject(pWindowData->hCompDC, hBmp));
+   auto oldBmp = static_cast<HBITMAP>(SelectObject(pWindowData->hCompDC, hBmp));
    BitBlt(pWindowData->hCompDC, 0, 0, iWidth, iHeight, pWindowData->hdc, iLeft, iTop, SRCCOPY);
    SelectObject(pWindowData->hCompDC, oldBmp);
 
@@ -2269,14 +2268,12 @@ HB_FUNC( WVW_RESTSCREEN )
    POINT      xy{};
    int        iTop, iLeft, iBottom, iRight, iWidth, iHeight;
 
-   HBITMAP hBmp;
-
    BOOL   bResult = FALSE;
    BOOL   bDoNotDestroyBMP = HB_ISNIL(7) ? FALSE : hb_parl(7);
-   USHORT usTop    = static_cast<USHORT>(hb_parni(2)),
-          usLeft   = static_cast<USHORT>(hb_parni(3)),
-          usBottom = static_cast<USHORT>(hb_parni(4)),
-          usRight  = static_cast<USHORT>(hb_parni(5));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   auto usBottom = static_cast<USHORT>(hb_parni(4));
+   auto usRight = static_cast<USHORT>(hb_parni(5));
 
    if( hb_gt_wvw_GetMainCoordMode() ) {
       hb_wvw_HBFUNCPrologue(usWinNum, &usTop, &usLeft, &usBottom, &usRight);
@@ -2293,7 +2290,7 @@ HB_FUNC( WVW_RESTSCREEN )
    iWidth  = iRight - iLeft + 1;
    iHeight = iBottom - iTop + 1;
 
-   hBmp = static_cast<HBITMAP>(SelectObject(pWindowData->hCompDC, reinterpret_cast<HBITMAP>(hb_parvnl(6, 3))));
+   auto hBmp = static_cast<HBITMAP>(SelectObject(pWindowData->hCompDC, reinterpret_cast<HBITMAP>(hb_parvnl(6, 3))));
    if( hBmp ) {
       if( (iWidth == hb_parvni(6, 1) ) && (iHeight == hb_parvni(6, 2)) ) {
          if( BitBlt(pWindowData->hdc, iLeft, iTop, iWidth, iHeight, pWindowData->hCompDC, 0, 0, SRCCOPY) ) {

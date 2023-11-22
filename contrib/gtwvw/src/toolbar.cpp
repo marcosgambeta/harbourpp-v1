@@ -63,13 +63,13 @@ HB_FUNC( WVW_TBCREATE )
    WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    HWND       hWndParent  = pWindowData->hWnd;
    HWND       hWndTB;
-   int        iMaxTextRows = static_cast<int>(HB_ISNIL(2) ? 0 : (hb_parl(2) ? 1 : 0));
+   auto iMaxTextRows = static_cast<int>(HB_ISNIL(2) ? 0 : (hb_parl(2) ? 1 : 0));
 /*   DWORD dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_FLAT | TBSTYLE_TOOLTIPS : hb_parni(3)); */
-   DWORD dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE : hb_parnl(3));
+   auto dwStyle = static_cast<DWORD>(HB_ISNIL(3) ? TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE : hb_parnl(3));
 
-   int iSystemBitmap = static_cast<int>(HB_ISNIL(4) ? 1 : hb_parni(4));
-   int iImageWidth   = static_cast<int>(iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1);
-   int iImageHeight  = static_cast<int>(iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1);
+   auto iSystemBitmap = static_cast<int>(HB_ISNIL(4) ? 1 : hb_parni(4));
+   auto iImageWidth = static_cast<int>(iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1);
+   auto iImageHeight = static_cast<int>(iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1);
    TBADDBITMAP tbab{};
 
    InitCommonControls();

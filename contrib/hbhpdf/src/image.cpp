@@ -143,7 +143,7 @@ HB_FUNC( HPDF_IMAGE_GETBITSPERCOMPONENT )
 /* HPDF_Image_GetColorSpace( hImage ) --> nColorSpace */
 HB_FUNC( HPDF_IMAGE_GETCOLORSPACE )
 {
-   HPDF_Image image = static_cast<HPDF_Image>(hb_parptr(1));
+   auto image = static_cast<HPDF_Image>(hb_parptr(1));
 
    if( image )
    {

@@ -320,7 +320,7 @@ HB_FUNC( WVT_SETTOOLTIPWIDTH )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   int iTipWidth = static_cast<int>(SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
+   auto iTipWidth = static_cast<int>(SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
 
    if( HB_ISNUM(1) ) {
       SendMessage(_s->hWndTT, TTM_SETMAXTIPWIDTH, 0, static_cast<LPARAM>(static_cast<HB_PTRUINT>(hb_parnint(1))));
@@ -333,7 +333,7 @@ HB_FUNC( WVT_SETTOOLTIPBKCOLOR )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   COLORREF cr = static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPBKCOLOR, 0, 0));
+   auto cr = static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPBKCOLOR, 0, 0));
 
    if( HB_ISNUM(1) ) {
       SendMessage(_s->hWndTT, TTM_SETTIPBKCOLOR, static_cast<WPARAM>(static_cast<COLORREF>(hb_parnl(1))), 0);
@@ -346,7 +346,7 @@ HB_FUNC( WVT_SETTOOLTIPTEXTCOLOR )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   COLORREF cr = static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0));
+   auto cr = static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0));
 
    if( HB_ISNUM(1) ) {
       SendMessage(_s->hWndTT, TTM_SETTIPTEXTCOLOR, static_cast<WPARAM>(static_cast<COLORREF>(hb_parnl(1))), 0);
@@ -574,15 +574,14 @@ HB_FUNC( WVT_SETMENU )
    RECT wi{};
    RECT ci{};
    RECT rc{};
-   int  height, width;
 
    SetMenu(_s->hWnd, reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))));
 
    GetWindowRect(_s->hWnd, &wi);
    GetClientRect(_s->hWnd, &ci);
 
-   height = static_cast<int>(_s->PTEXTSIZE.y * _s->ROWS);
-   width  = static_cast<int>(_s->PTEXTSIZE.x * _s->COLS);
+   auto height = static_cast<int>(_s->PTEXTSIZE.y * _s->ROWS);
+   auto width  = static_cast<int>(_s->PTEXTSIZE.x * _s->COLS);
 
    width  += static_cast<int>(wi.right - wi.left - ci.right);
    height += static_cast<int>(wi.bottom - wi.top - ci.bottom);
@@ -935,7 +934,7 @@ HB_FUNC( WVT_CREATEDIALOGMODAL )
 HB_FUNC( WVT__MAKEDLGTEMPLATE )
 {
    WORD * p, * pdlgtemplate;
-   WORD   nItems = static_cast<WORD>(hb_parvni(1, 4));
+   auto nItems = static_cast<WORD>(hb_parvni(1, 4));
    int    nchar;
    DWORD  lStyle;
 

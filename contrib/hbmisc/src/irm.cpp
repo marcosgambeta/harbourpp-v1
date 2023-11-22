@@ -136,7 +136,7 @@ HB_ULONG hb_irmMapCount( PHB_IRMMAP pMap )
 
 static HB_GARBAGE_FUNC( hb_irmMapDestroy )
 {
-   PHB_IRMMAP * ppMap = static_cast<PHB_IRMMAP*>(Cargo);
+   auto ppMap = static_cast<PHB_IRMMAP*>(Cargo);
 
    hb_irmMapFree(*ppMap);
 }
@@ -151,7 +151,7 @@ static const HB_GC_FUNCS s_irmMapFuncs =
 
 static PHB_IRMMAP hb_irmMapParam( int iParam )
 {
-   PHB_IRMMAP * ppMap = static_cast<PHB_IRMMAP*>(hb_parptrGC(&s_irmMapFuncs, iParam));
+   auto ppMap = static_cast<PHB_IRMMAP*>(hb_parptrGC(&s_irmMapFuncs, iParam));
 
    if( ppMap && *ppMap )
       return *ppMap;
@@ -283,7 +283,7 @@ HB_FUNC( IRMEXECUTE )
 
    if( pMap )
    {
-      PHB_IRMMAP * ppMap = static_cast<PHB_IRMMAP*>(hb_gcAllocate(sizeof(PHB_IRMMAP), &s_irmMapFuncs));
+      auto ppMap = static_cast<PHB_IRMMAP*>(hb_gcAllocate(sizeof(PHB_IRMMAP), &s_irmMapFuncs));
       *ppMap = pMap;
       hb_retptrGC(ppMap);
    }

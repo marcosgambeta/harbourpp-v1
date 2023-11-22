@@ -266,12 +266,12 @@ HB_FUNC( WVW_CREATEIMAGELIST )
    auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
    if( pArray ) {
-      int ulLen = static_cast<int>(hb_arrayLen(pArray));
+      auto ulLen = static_cast<int>(hb_arrayLen(pArray));
 
       HIMAGELIST himl = ImageList_Create(hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parnidef(5, ILC_COLOR)), ulLen, hb_parni(4));
 
       for( auto ul = 1; ul <= ulLen; ++ul ) {
-         HBITMAP hbmp = static_cast<HBITMAP>(hbwapi_arrayGet_HANDLE(pArray, ul));
+         auto hbmp = static_cast<HBITMAP>(hbwapi_arrayGet_HANDLE(pArray, ul));
          ImageList_Add(himl, hbmp, nullptr);
          DeleteObject(hbmp);
       }
@@ -311,7 +311,7 @@ HB_FUNC( WVW_OPENIMAGE )
    HGLOBAL hG = nullptr;
 
    if( hb_parl(2) /* lString */ ) {
-      SIZE_T nFileSize = static_cast<SIZE_T>(hb_parclen(1));
+      auto nFileSize = static_cast<SIZE_T>(hb_parclen(1));
       hG = GlobalAlloc(GPTR, nFileSize);
       if( hG ) {
          memcpy(hG, hb_parcx(1), nFileSize);
@@ -319,7 +319,7 @@ HB_FUNC( WVW_OPENIMAGE )
    } else {
       PHB_FILE fhnd = hb_fileExtOpen(hb_parcx(1), nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_SHARELOCK, nullptr, nullptr);
       if( fhnd ) {
-         SIZE_T nFileSize = static_cast<SIZE_T>(hb_fileSize(fhnd));
+         auto nFileSize = static_cast<SIZE_T>(hb_fileSize(fhnd));
          hG = GlobalAlloc(GPTR, nFileSize);
          if( hG ) {
             hb_fileReadAt(fhnd, hG, nFileSize, 0);
@@ -376,7 +376,7 @@ HB_FUNC( WVW_OPENBITMAP )
       if( hmem1 ) {
          HGLOBAL hmem2;
 
-         LPBITMAPINFO lpbmi = static_cast<LPBITMAPINFO>(GlobalLock(hmem1));
+         auto lpbmi = static_cast<LPBITMAPINFO>(GlobalLock(hmem1));
 
          /* Load BITMAPINFOHEADER into the BITMAPINFO  structure. */
          lpbmi->bmiHeader.biSize   = bmih.biSize;
@@ -571,7 +571,7 @@ HB_FUNC( WVW_DRAWBITMAP )
 {
    HDC     hDC      = hbwapi_par_raw_HDC(1);
    HDC     hDCmem   = CreateCompatibleDC(hDC);
-   DWORD   dwraster = static_cast<DWORD>(hb_parnldef(3, SRCCOPY));
+   auto dwraster = static_cast<DWORD>(hb_parnldef(3, SRCCOPY));
    HBITMAP hBitmap  = hbwapi_par_raw_HBITMAP(2);
    BITMAP  bm;
    auto nWidthDest  = hb_parni(6);
@@ -1261,7 +1261,7 @@ HB_FUNC( WVW_SAVESCREEN )
       auto iBottom = hb_parni(4);
       auto iRight  = hb_parni(5);
 
-      HBITMAP  hBmp, oldBmp;
+      HBITMAP  hBmp;
       POINT    xy;
       int      iWidth, iHeight;
       auto info = hb_itemArrayNew(3);
@@ -1281,7 +1281,7 @@ HB_FUNC( WVW_SAVESCREEN )
 
       hBmp = CreateCompatibleBitmap(wvw_win->hdc, iWidth, iHeight);
 
-      oldBmp = static_cast<HBITMAP>(SelectObject(wvw_win->hCompDC, hBmp));
+      auto oldBmp = static_cast<HBITMAP>(SelectObject(wvw_win->hCompDC, hBmp));
       BitBlt(wvw_win->hCompDC, 0, 0, iWidth, iHeight, wvw_win->hdc, iLeft, iTop, SRCCOPY);
       SelectObject(wvw_win->hCompDC, oldBmp);
 
@@ -1312,8 +1312,6 @@ HB_FUNC( WVW_RESTSCREEN )
       POINT xy;
       int   iWidth, iHeight;
 
-      HBITMAP hBmp;
-
       bool fResult = false;
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
@@ -1329,7 +1327,7 @@ HB_FUNC( WVW_RESTSCREEN )
       iWidth  = iRight - iLeft + 1;
       iHeight = iBottom - iTop + 1;
 
-      hBmp = static_cast<HBITMAP>(SelectObject(wvw_win->hCompDC, static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(6, 3))));
+      auto hBmp = static_cast<HBITMAP>(SelectObject(wvw_win->hCompDC, static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(6, 3))));
       if( hBmp ) {
          if( iWidth == hb_parvni(6, 1) && iHeight == hb_parvni(6, 2) ) {
             if( BitBlt(wvw_win->hdc, iLeft, iTop, iWidth, iHeight, wvw_win->hCompDC, 0, 0, SRCCOPY) ) {

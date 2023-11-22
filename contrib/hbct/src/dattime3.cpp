@@ -73,7 +73,7 @@ using PCT_DATE = CT_DATE *;
 
 static void s_ct_date_init(void * cargo)
 {
-   PCT_DATE ct_date = static_cast<PCT_DATE>(cargo);
+   auto ct_date = static_cast<PCT_DATE>(cargo);
 
    ct_date->dTimeSet     = 0;
    ct_date->dTimeCounter = 0;
@@ -83,7 +83,7 @@ static HB_TSD_NEW(s_ct_date, sizeof(CT_DATE), s_ct_date_init, nullptr);
 
 HB_FUNC( WAITPERIOD )
 {
-   PCT_DATE ct_date = static_cast<PCT_DATE>(hb_stackGetTSD(&s_ct_date));
+   auto ct_date = static_cast<PCT_DATE>(hb_stackGetTSD(&s_ct_date));
 
    double d = hb_dateSeconds();
 

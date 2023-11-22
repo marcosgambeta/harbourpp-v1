@@ -187,7 +187,7 @@ static HB_BOOL s_fileExists( PHB_FILE_FUNCS pFuncs, const char * pszFileName, ch
    if( pRetPath )
    {
       auto pszNameBuf = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
-      int iPref = static_cast<int>(pszName - pszFileName);
+      auto iPref = static_cast<int>(pszName - pszFileName);
 
       fResult = hb_fileExists(pszName, pszNameBuf);
       if( pRetPath != pszFileName )
@@ -321,7 +321,7 @@ static PHB_FILE s_fileOpen( PHB_FILE_FUNCS pFuncs, const char * pszFileName,
    int iLevel = Z_DEFAULT_COMPRESSION;
    char * pszNameBuf = nullptr;
    const char * pszName = s_gzio_name(pszFileName, &iLevel);
-   int iPref = static_cast<int>(pszName - pszFileName);
+   auto iPref = static_cast<int>(pszName - pszFileName);
    PHB_FILE pFile;
 
    HB_SYMBOL_UNUSED(pFuncs);

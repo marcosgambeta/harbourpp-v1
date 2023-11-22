@@ -350,7 +350,7 @@ HB_FUNC( WVW_CBCREATE )
                if( SendMessage(hWnd, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARASTR(5, i, &hText, nullptr))) < 0 ) {
                   /* ignore failure */
                } else {
-                  HB_SIZE nLen = static_cast<HB_SIZE>(SendMessage(hWnd, CB_GETLBTEXTLEN, i - 1, 0));
+                  auto nLen = static_cast<HB_SIZE>(SendMessage(hWnd, CB_GETLBTEXTLEN, i - 1, 0));
                   if( nLen != static_cast<HB_SIZE>(CB_ERR) && nLen > nMaxWidth ) {
                      nMaxWidth = nLen;
                   }
@@ -628,8 +628,8 @@ HB_FUNC( WVW_CBGETCURTEXT )
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_COMBOBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl ) {
-      int iCurSel = static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
-      HB_SIZE nTextLen = static_cast<HB_SIZE>(SendMessage(wvw_ctl->hWnd, CB_GETLBTEXTLEN, static_cast<WPARAM>(iCurSel), 0));
+      auto iCurSel = static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
+      auto nTextLen = static_cast<HB_SIZE>(SendMessage(wvw_ctl->hWnd, CB_GETLBTEXTLEN, static_cast<WPARAM>(iCurSel), 0));
       if( nTextLen == static_cast<HB_SIZE>(CB_ERR) ) {
          hb_retc_null();
       } else {

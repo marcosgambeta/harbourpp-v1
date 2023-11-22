@@ -59,7 +59,6 @@ static void do_pad(int iSwitch)
       auto sStrLen = hb_parclen(1);
       char * pc;
       HB_ISIZ nRetLen;
-      HB_SIZE sRetLen;
       char cFill;
 
       nRetLen = hb_parns(2);
@@ -77,7 +76,7 @@ static void do_pad(int iSwitch)
          hb_retc_null();
          return;
       }
-      sRetLen = static_cast<HB_SIZE>(nRetLen);
+      auto sRetLen = static_cast<HB_SIZE>(nRetLen);
 
       if( hb_parclen(3) > 0 ) {
          cFill = *(hb_parc(3));

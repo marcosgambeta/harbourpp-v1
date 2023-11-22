@@ -150,7 +150,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
       case WM_CHAR: {
          bool    bCtrl     = GetKeyState(VK_CONTROL) & 0x8000;
          int     iScanCode = HB_LOBYTE(HIWORD(lParam));
-         int     c         = static_cast<int>(wParam);
+         auto c = static_cast<int>(wParam);
 
          if( bCtrl && iScanCode == 28 ) {
             iKey = K_CTRL_RETURN;
@@ -471,7 +471,7 @@ HB_FUNC( WVW_EBCREATE )
 
       int nEBType = hb_parl(8) ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE;
 
-      DWORD dwStyle = static_cast<DWORD>(hb_parnl(9));
+      auto dwStyle = static_cast<DWORD>(hb_parnl(9));
       int iMaxChar = hb_parni(10) > 0 ? hb_parni(10) : 0;
 
       if( wvw_win->hEBfont == nullptr ) {
@@ -801,7 +801,7 @@ HB_FUNC( WVW_EBGETTEXT )
          SendMessage(wvw_ctl->hWnd, EM_FMTLINES, static_cast<WPARAM>(TRUE), 0);
       }
 
-      HB_SIZE nLen = static_cast<HB_SIZE>(SendMessage(wvw_ctl->hWnd, WM_GETTEXTLENGTH, 0, 0));
+      auto nLen = static_cast<HB_SIZE>(SendMessage(wvw_ctl->hWnd, WM_GETTEXTLENGTH, 0, 0));
       TCHAR * szText = new TCHAR[nLen + 1];
       SendMessage(wvw_ctl->hWnd, WM_GETTEXT, static_cast<WPARAM>(nLen + 1), reinterpret_cast<LPARAM>(szText));
       HB_RETSTRLEN(szText, nLen);
@@ -869,8 +869,8 @@ HB_FUNC( WVW_EBSETSEL )
    PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_EDITBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl ) {
-      DWORD dwStart = static_cast<DWORD>(hb_parnl(3));
-      DWORD dwEnd = static_cast<DWORD>(hb_parnl(4));
+      auto dwStart = static_cast<DWORD>(hb_parnl(3));
+      auto dwEnd = static_cast<DWORD>(hb_parnl(4));
       SendMessage(wvw_ctl->hWnd, EM_SETSEL, static_cast<WPARAM>(dwStart), static_cast<LPARAM>(dwEnd));
       hb_retl(true);
    } else {

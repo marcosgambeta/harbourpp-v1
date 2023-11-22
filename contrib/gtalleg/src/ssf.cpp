@@ -82,16 +82,14 @@ void ssfSetFontSize(ssfFont * sfont, unsigned short fsize)
 
 unsigned short ssfDrawChar(AL_BITMAP * dst, ssfFont * sfont, char c, int x, int y, int color)
 {
-   HB_BYTE  p;
    int      i, j, thick;
    ssfGlyph charGlyph;
    ssfFrame charFrame;
    int      points[8];
-   float    fScale;
 
-   p         = static_cast<HB_BYTE>(c);
+   auto p = static_cast<HB_BYTE>(c);
    charGlyph = *sfont->chars[p];
-   fScale    = static_cast<float>((static_cast<float>(sfont->fsize) / static_cast<float>(65535)));
+   auto fScale    = static_cast<float>((static_cast<float>(sfont->fsize) / static_cast<float>(65535)));
 
    for( i = 0; i < charGlyph.num; i++ ) {
       charFrame = charGlyph.frames[i];

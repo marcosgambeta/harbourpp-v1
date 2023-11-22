@@ -48,7 +48,7 @@
 
 static HB_GARBAGE_FUNC( PHB_FFIND_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -69,7 +69,7 @@ static const HB_GC_FUNCS s_gcPHB_FFIND_funcs =
 
 static PHB_FFIND PHB_FFIND_par( int iParam )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcPHB_FFIND_funcs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcPHB_FFIND_funcs, iParam));
 
    return ph ? static_cast<PHB_FFIND>(*ph) : nullptr;
 }
@@ -80,7 +80,7 @@ HB_FUNC( FILEFINDFIRST )
 
    if( pszFileName && HB_ISBYREF(2) )
    {
-      void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_FFIND), &s_gcPHB_FFIND_funcs));
+      auto ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_FFIND), &s_gcPHB_FFIND_funcs));
 
       PHB_FFIND ffind = hb_fsFindFirst(pszFileName, hb_parnldef(3, HB_FA_ALL));
 

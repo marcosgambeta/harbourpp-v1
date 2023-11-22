@@ -72,7 +72,7 @@ using PCT_TOKEN = CT_TOKEN *;
 
 static void s_ct_token_init(void * cargo)
 {
-   PCT_TOKEN ct_token = static_cast<PCT_TOKEN>(cargo);
+   auto ct_token = static_cast<PCT_TOKEN>(cargo);
 
    ct_token->iPreSeparator  = -1;
    ct_token->iPostSeparator = -1;
@@ -90,7 +90,7 @@ static HB_TSD_NEW(s_ct_token, sizeof(CT_TOKEN), s_ct_token_init, nullptr);
 /* helper function for the token function group I */
 static void do_token1(int iSwitch)
 {
-   PCT_TOKEN ct_token = static_cast<PCT_TOKEN>(hb_stackGetTSD(&s_ct_token));
+   auto ct_token = static_cast<PCT_TOKEN>(hb_stackGetTSD(&s_ct_token));
 
    int iParamCheck = 0;
    int iNoRef = ct_getref() && HB_ISBYREF(1);
@@ -434,7 +434,7 @@ HB_FUNC( TOKENUPPER )
 
 HB_FUNC( TOKENSEP )
 {
-   PCT_TOKEN ct_token = static_cast<PCT_TOKEN>(hb_stackGetTSD(&s_ct_token));
+   auto ct_token = static_cast<PCT_TOKEN>(hb_stackGetTSD(&s_ct_token));
 
    char cRet;
 

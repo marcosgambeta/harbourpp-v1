@@ -1266,7 +1266,7 @@ HB_FUNC( WVG_SENDCBMESSAGE )
          hb_retnint(SendMessage(hCB, CB_GETDROPPEDWIDTH, 0, 0));
          break;
       case CB_GETEDITSEL: {
-         DWORD    range = static_cast<DWORD>(SendMessage(hCB, CB_GETEDITSEL, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(nullptr)));
+         auto range = static_cast<DWORD>(SendMessage(hCB, CB_GETEDITSEL, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(nullptr)));
          auto pRng = hb_itemNew(nullptr);
 
          hb_arrayNew(pRng, 2);

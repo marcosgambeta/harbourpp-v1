@@ -287,11 +287,10 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
          case 0: {
             int ptArray[WIN_STATUSBAR_MAX_PARTS];
             RECT rc = { 0, 0, 0, 0 };
-            int width;
-            int iParts = static_cast<int>(SendMessage(hWndSB, SB_GETPARTS, static_cast<WPARAM>(HB_SIZEOFARRAY(ptArray)) - 1, reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray))));
+            auto iParts = static_cast<int>(SendMessage(hWndSB, SB_GETPARTS, static_cast<WPARAM>(HB_SIZEOFARRAY(ptArray)) - 1, reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray))));
 
             GetClientRect(hWndSB, &rc);
-            width = static_cast<int>(rc.right / (iParts + 1));
+            auto width = static_cast<int>(rc.right / (iParts + 1));
             for( auto n = 0; n < iParts; n++ ) {
                ptArray[n] = width * (n + 1);
             }
@@ -323,7 +322,7 @@ HB_FUNC( WVG_STATUSBARSETTEXT )
 
    if( hWndSB && IsWindow(hWndSB) ) {
       int iPart = LOBYTE(hb_parnidef(2, 1) - 1);
-      int iFlags = static_cast<int>(HIWORD(SendMessage(hWndSB, SB_GETTEXTLENGTH, static_cast<WPARAM>(iPart), 0)));
+      auto iFlags = static_cast<int>(HIWORD(SendMessage(hWndSB, SB_GETTEXTLENGTH, static_cast<WPARAM>(iPart), 0)));
       void * hCaption;
 
       SendMessage(hWndSB, SB_SETTEXT, static_cast<WPARAM>(iPart) | iFlags, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr)));
@@ -360,7 +359,7 @@ wvg_GetNMHdrInfo(nlParam)
 */
 HB_FUNC( WVG_GETNMHDRINFO )
 {
-   LPNMHDR lpnmh = static_cast<LPNMHDR>(hbwapi_par_raw_HANDLE(1));
+   auto lpnmh = static_cast<LPNMHDR>(hbwapi_par_raw_HANDLE(1));
 
    auto pEvParams = hb_itemArrayNew(3);
 
@@ -376,7 +375,7 @@ wvg_GetNMMouseInfo(nlParam)
 */
 HB_FUNC( WVG_GETNMMOUSEINFO )
 {
-   LPNMMOUSE nmm = static_cast<LPNMMOUSE>(hbwapi_par_raw_HANDLE(1));
+   auto nmm = static_cast<LPNMMOUSE>(hbwapi_par_raw_HANDLE(1));
    NMHDR nmh = nmm->hdr;
 
    auto pEvParams = hb_itemArrayNew(4);
@@ -394,7 +393,7 @@ wvg_GetNMTreeViewInfo(nlParam)
 */
 HB_FUNC( WVG_GETNMTREEVIEWINFO )
 {
-   LPNMTREEVIEW pnmtv = static_cast<LPNMTREEVIEW>(hbwapi_par_raw_HANDLE(1));
+   auto pnmtv = static_cast<LPNMTREEVIEW>(hbwapi_par_raw_HANDLE(1));
    NMHDR nmh = pnmtv->hdr;
 
    auto pEvParams = hb_itemArrayNew(4);
@@ -412,7 +411,7 @@ wvg_TreeView_GetSelectionInfo(::hWnd, nlParam, @cParent, @cText, @hParentOfSelec
 */
 HB_FUNC( WVG_TREEVIEW_GETSELECTIONINFO )
 {
-   LPNMTREEVIEW pnmtv = static_cast<LPNMTREEVIEW>(hbwapi_par_raw_HANDLE(2));
+   auto pnmtv = static_cast<LPNMTREEVIEW>(hbwapi_par_raw_HANDLE(2));
    HTREEITEM hSelected = pnmtv->itemNew.hItem;
 
    if( hSelected != nullptr ) {
@@ -554,7 +553,6 @@ static UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wPa
 {
    UINT_PTR bret = 0;
    bool binit = false;
-   PHB_ITEM block;
 
    if( msg == WM_INITDIALOG ) {
       auto cf = reinterpret_cast<CHOOSEFONT*>(lParam);
@@ -563,7 +561,7 @@ static UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wPa
       binit = true;
    }
 
-   block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
+   auto block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
 
    if( block ) {
       hb_vmPushEvalSym();
@@ -763,7 +761,7 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
    switch( hb_parni(5) ) {
       case 1: { /* button from image */
          void * hCaption;
-         int iNewString = static_cast<int>(SendMessage(hWndTB, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr))));  /* set string */
+         auto iNewString = static_cast<int>(SendMessage(hWndTB, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr))));  /* set string */
          hb_strfree(hCaption);
 
          if( hb_parl(6) ) {
@@ -838,7 +836,7 @@ HB_FUNC( WVG_BEGINMOUSETRACKING )
 
 LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   PHB_ITEM pBlock = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("BLOCKCALLBACK")));
+   auto pBlock = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("BLOCKCALLBACK")));
 
    if( pBlock ) {
       if( HB_IS_POINTER(pBlock) ) {
@@ -877,7 +875,7 @@ HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 HB_FUNC( WVG_RELEASEWINDOWPROCBLOCK )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   PHB_ITEM pBlock = static_cast<PHB_ITEM>(RemoveProp(hWnd, TEXT("BLOCKCALLBACK")));
+   auto pBlock = static_cast<PHB_ITEM>(RemoveProp(hWnd, TEXT("BLOCKCALLBACK")));
 
    if( pBlock ) {
       hb_itemRelease(pBlock);

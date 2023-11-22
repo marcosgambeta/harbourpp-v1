@@ -120,7 +120,7 @@ HB_FUNC( RELATION )
    if( pArea != nullptr )
    {
       PHB_ITEM pRelExpr = hb_itemPutC(nullptr, nullptr);
-      HB_USHORT uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
+      auto uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
       SELF_RELTEXT(pArea, uiRelNo ? uiRelNo : 1, pRelExpr);
       hb_itemReturnRelease(pRelExpr);
    }

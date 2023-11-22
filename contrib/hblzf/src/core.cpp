@@ -59,7 +59,7 @@
 
 static HB_SIZE hb_lzf_compressbound( HB_SIZE nLen )
 {
-   HB_SIZE nBuffSize = static_cast<HB_SIZE>(nLen * 1.04 + 1);
+   auto nBuffSize = static_cast<HB_SIZE>(nLen * 1.04 + 1);
 
    return ( nBuffSize >= 32 ) ? nBuffSize : 32;
 }

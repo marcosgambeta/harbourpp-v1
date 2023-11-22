@@ -86,7 +86,7 @@
 static HB_GARBAGE_FUNC( hb_gdImage_Destructor )
 {
    /* Retrieve image pointer holder */
-   gdImagePtr * ptr = static_cast<gdImagePtr*>(Cargo);
+   auto ptr = static_cast<gdImagePtr*>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
@@ -109,7 +109,7 @@ static const HB_GC_FUNCS s_gcGDimageFuncs =
    passed or gdImage was freed before */
 static gdImagePtr hb_parGdImage( int iParam )
 {
-   gdImagePtr * ptr = static_cast<gdImagePtr*>(hb_parptrGC(&s_gcGDimageFuncs, iParam));
+   auto ptr = static_cast<gdImagePtr*>(hb_parptrGC(&s_gcGDimageFuncs, iParam));
 
    return ptr ? *ptr : nullptr;
 }
@@ -122,7 +122,7 @@ static void * hb_isGdImage( int iParam )
 /* Function create in HVM stack return value item with gdImage pointer */
 static void hb_retGdImage( gdImagePtr im )
 {
-   gdImagePtr * ptr = static_cast<gdImagePtr*>(hb_gcAllocate(sizeof(gdImagePtr), &s_gcGDimageFuncs));
+   auto ptr = static_cast<gdImagePtr*>(hb_gcAllocate(sizeof(gdImagePtr), &s_gcGDimageFuncs));
 
    *ptr = im;
 
@@ -133,7 +133,7 @@ static void hb_retGdImage( gdImagePtr im )
 /* Function returns PHB_ITEM with gdImage pointer */
 static PHB_ITEM hb_gdImageItemNew( gdImagePtr im )
 {
-   gdImagePtr * ptr = static_cast<gdImagePtr*>(hb_gcAllocate( sizeof(gdImagePtr), &s_gcGDimageFuncs));
+   auto ptr = static_cast<gdImagePtr*>(hb_gcAllocate( sizeof(gdImagePtr), &s_gcGDimageFuncs));
 
    *ptr = im;
 
@@ -147,7 +147,7 @@ static PHB_ITEM hb_gdImageItemNew( gdImagePtr im )
 static HB_GARBAGE_FUNC( hb_gdFont_Destructor )
 {
    /* Retrieve Font pointer holder */
-   gdFontPtr * ptr = static_cast<gdFontPtr*>(Cargo);
+   auto ptr = static_cast<gdFontPtr*>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( *ptr )
@@ -173,7 +173,7 @@ static const HB_GC_FUNCS s_gcGDfontFuncs =
    passed or gdFont was freed before */
 static gdFontPtr hb_parGdFont( int iParam )
 {
-   gdFontPtr * ptr = static_cast<gdFontPtr*>(hb_parptrGC(&s_gcGDfontFuncs, iParam));
+   auto ptr = static_cast<gdFontPtr*>(hb_parptrGC(&s_gcGDfontFuncs, iParam));
 
    return ptr ? *ptr : nullptr;
 }
@@ -186,7 +186,7 @@ static void * hb_isGdFont( int iParam )
 /* Function create in HVM stack return value item with gdFont pointer */
 static void hb_retGdFont( gdFontPtr font )
 {
-   gdFontPtr * ptr = static_cast<gdFontPtr*>(hb_gcAllocate(sizeof(gdFontPtr), &s_gcGDfontFuncs));
+   auto ptr = static_cast<gdFontPtr*>(hb_gcAllocate(sizeof(gdFontPtr), &s_gcGDfontFuncs));
 
    *ptr = font;
 
@@ -197,7 +197,7 @@ static void hb_retGdFont( gdFontPtr font )
 /* Function returns PHB_ITEM with gdFont pointer */
 static PHB_ITEM hb_gdFontItemNew( gdFontPtr font )
 {
-   gdFontPtr * ptr = static_cast<gdFontPtr*>(hb_gcAllocate(sizeof(gdFontPtr), &s_gcGDfontFuncs));
+   auto ptr = static_cast<gdFontPtr*>(hb_gcAllocate(sizeof(gdFontPtr), &s_gcGDfontFuncs));
 
    *ptr = font;
 
@@ -633,7 +633,7 @@ HB_FUNC( GDIMAGEPOLYGON ) /* original: void gdImagePolygon(gdImagePtr im, gdPoin
       gdImagePtr im = hb_parGdImage(1);
 
       auto pPoints = hb_param(2, Harbour::Item::ARRAY);
-      int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
+      auto pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
       auto color = hb_parni(3);
 
       /* Max Points of polygon */
@@ -673,7 +673,7 @@ HB_FUNC( GDIMAGEOPENPOLYGON ) /* original: void gdImageOpenPolygon(gdImagePtr im
       gdImagePtr im = hb_parGdImage(1);
 
       auto pPoints = hb_param(2, Harbour::Item::ARRAY);
-      int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
+      auto pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
       auto color = hb_parni(3);
 
       /* Max Points of polygon */
@@ -733,7 +733,7 @@ HB_FUNC( GDIMAGEFILLEDPOLYGON ) /* original: void gdImageFilledPolygon(gdImagePt
       gdImagePtr im = hb_parGdImage(1);
 
       auto pPoints = hb_param(2, Harbour::Item::ARRAY);
-      int      pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
+      auto pointsTotal = static_cast<int>(hb_arrayLen(pPoints));
       auto color = hb_parni(3);
 
       /* Max Points of polygon */
@@ -983,7 +983,7 @@ HB_FUNC( GDIMAGESETSTYLE ) /* original: void gdImageSetStyle(gdImagePtr im, int 
       gdImagePtr im = hb_parGdImage(1);
 
       auto pStyles = hb_param(2, Harbour::Item::ARRAY);
-      int      styleLength = static_cast<int>(hb_arrayLen(pStyles));
+      auto styleLength = static_cast<int>(hb_arrayLen(pStyles));
 
       /* Max numbery of Styles */
       auto styles = static_cast<int*>(hb_xgrab(sizeof(int) * styleLength));

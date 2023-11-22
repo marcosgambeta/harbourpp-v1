@@ -120,7 +120,7 @@ HB_FUNC( TABEXPAND )
       sRetLen = 0;
       sLineIndex = 0;
       while( sTabCnt > 0 ) {
-         char cChar = static_cast<char>(*(pcString + sIndex));
+         auto cChar = static_cast<char>(*(pcString + sIndex));
 
          if( cChar == cTab ) {
             /* tab character */
@@ -248,7 +248,7 @@ HB_FUNC( TABPACK )
       sFillCount = 0;
 
       while( sIndex < sStrLen ) {
-         char cChar = static_cast<char>(*(pcString + sIndex));
+         auto cChar = static_cast<char>(*(pcString + sIndex));
 
          if( cChar == cFill ) {
             if( sTabIndex == sTabWidth - 1 ) {

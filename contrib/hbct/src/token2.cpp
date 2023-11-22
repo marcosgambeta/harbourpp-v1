@@ -73,7 +73,7 @@ using TOKEN_ENVIRONMENT = TOKEN_POSITION *;
 /* alloc new token environment */
 static TOKEN_ENVIRONMENT sTokEnvNew(void)
 {
-   TOKEN_ENVIRONMENT env = static_cast<TOKEN_ENVIRONMENT>(hb_xalloc(sizeof(TOKEN_POSITION) * (2 + TOKEN_ENVIRONMENT_STEP) + 1));
+   auto env = static_cast<TOKEN_ENVIRONMENT>(hb_xalloc(sizeof(TOKEN_POSITION) * (2 + TOKEN_ENVIRONMENT_STEP) + 1));
 
    if( env == nullptr ) {
       return nullptr;
@@ -205,7 +205,7 @@ static const char sc_spcSeparatorStr[] =
 
 static void s_token_exit(void * cargo)
 {
-   TOKEN_ENVIRONMENT * penv = static_cast<TOKEN_ENVIRONMENT*>(cargo);
+   auto penv = static_cast<TOKEN_ENVIRONMENT*>(cargo);
 
    if( *penv ) {
       sTokEnvDel(*penv);
@@ -217,7 +217,7 @@ static HB_TSD_NEW(s_token, sizeof(TOKEN_ENVIRONMENT*), nullptr, s_token_exit);
 
 static void sTokSet(TOKEN_ENVIRONMENT env)
 {
-   TOKEN_ENVIRONMENT * penv = static_cast<TOKEN_ENVIRONMENT*>(hb_stackGetTSD(&s_token));
+   auto penv = static_cast<TOKEN_ENVIRONMENT*>(hb_stackGetTSD(&s_token));
 
    if( *penv != env ) {
       if( *penv ) {

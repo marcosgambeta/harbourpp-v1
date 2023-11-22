@@ -51,7 +51,7 @@
 /* --- cairo_pattern_t * support --- */
 static HB_GARBAGE_FUNC(hb_cairo_pattern_destructor)
 {
-   cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(Cargo);
+   auto ppPattern = static_cast<cairo_pattern_t**>(Cargo);
 
    if( *ppPattern ) {
       cairo_pattern_destroy(*ppPattern);
@@ -67,14 +67,14 @@ static const HB_GC_FUNCS s_gcPatternFuncs =
 
 cairo_pattern_t * hb_cairoPatternItemGet(PHB_ITEM pItem)
 {
-   cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_itemGetPtrGC(pItem, &s_gcPatternFuncs));
+   auto ppPattern = static_cast<cairo_pattern_t**>(hb_itemGetPtrGC(pItem, &s_gcPatternFuncs));
 
    return ppPattern ? *ppPattern : nullptr;
 }
 
 PHB_ITEM hb_cairoPatternItemPut(PHB_ITEM pItem, cairo_pattern_t * pPattern)
 {
-   cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_gcAllocate(sizeof(cairo_pattern_t*), &s_gcPatternFuncs));
+   auto ppPattern = static_cast<cairo_pattern_t**>(hb_gcAllocate(sizeof(cairo_pattern_t*), &s_gcPatternFuncs));
 
    *ppPattern = pPattern;
    return hb_itemPutPtrGC(pItem, ppPattern);
@@ -82,7 +82,7 @@ PHB_ITEM hb_cairoPatternItemPut(PHB_ITEM pItem, cairo_pattern_t * pPattern)
 
 cairo_pattern_t * hb_cairo_pattern_param(int iParam)
 {
-   cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_parptrGC(&s_gcPatternFuncs, iParam));
+   auto ppPattern = static_cast<cairo_pattern_t**>(hb_parptrGC(&s_gcPatternFuncs, iParam));
 
    if( ppPattern && *ppPattern ) {
       return *ppPattern;
@@ -99,7 +99,7 @@ void hb_cairo_pattern_ret(cairo_pattern_t * pPattern)
 
 HB_FUNC( CAIRO_PATTERN_DESTROY )
 {
-   cairo_pattern_t ** ppPattern = static_cast<cairo_pattern_t**>(hb_parptrGC(&s_gcPatternFuncs, 1));
+   auto ppPattern = static_cast<cairo_pattern_t**>(hb_parptrGC(&s_gcPatternFuncs, 1));
 
    if( ppPattern && *ppPattern ) {
       cairo_pattern_destroy(*ppPattern);

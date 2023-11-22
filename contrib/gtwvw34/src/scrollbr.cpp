@@ -76,7 +76,7 @@ static LRESULT CALLBACK hb_gt_wvw_XBProc(HWND hWnd, UINT message, WPARAM wParam,
 
    PWVW_WIN wvw_win = wvw->pWin[nWin];
 
-   int nCtrlId = static_cast<int>(GetWindowLong(hWnd, GWL_ID));
+   auto nCtrlId = static_cast<int>(GetWindowLong(hWnd, GWL_ID));
    if( nCtrlId == 0 ) {
       hb_errInternal(10010, "ScrollBar: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr);
       return DefWindowProc(hWnd, message, wParam, lParam);

@@ -110,7 +110,7 @@ IPicture * hb_wvt_gtLoadPicture(const char * pszFileName)
    if( pszFileName ) {
       PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
       if( pFile ) {
-         HB_SIZE nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
+         auto nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
 
          if( nFileSize < (32 * 1024 * 1024) ) {
             HGLOBAL hGlobal = GlobalAlloc(GPTR, static_cast<DWORD>(nFileSize));
@@ -289,7 +289,7 @@ static bool hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, const char *
       PHB_FILE pFile = hb_fileExtOpen(pszImage, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
 
       if( pFile ) {
-         HB_SIZE nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
+         auto nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
 
          if( nFileSize < (32 * 1024 * 1024) ) {
             HGLOBAL hGlobal = GlobalAlloc(GPTR, static_cast<DWORD>(nFileSize));
@@ -854,7 +854,6 @@ HB_FUNC( WVT_DRAWLABEL )
          LPCTSTR text = HB_PARSTR(3, &hText, &nLen);
          COLORREF fgClr = hb_wvt_FgColorParam(_s, 6);
          COLORREF bgClr = hb_wvt_BgColorParam(_s, 7);
-         HFONT hOldFont;
 
          POINT xy;
 
@@ -865,19 +864,17 @@ HB_FUNC( WVT_DRAWLABEL )
          SetBkColor(_s->hdc, bgClr);
          SetTextColor(_s->hdc, fgClr);
          SetTextAlign(_s->hdc, hb_parnidef(4, TA_LEFT));
-         hOldFont = static_cast<HFONT>(SelectObject(_s->hdc, hFont));
+         auto hOldFont = static_cast<HFONT>(SelectObject(_s->hdc, hFont));
 
          ExtTextOut(_s->hdc, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
 
          SelectObject(_s->hdc, hOldFont);
          #if defined(__SETGUI__)
          if( _s->bGui ) {
-            HFONT hOldFontGui;
-
             SetBkColor(_s->hGuiDC, bgClr);
             SetTextColor(_s->hGuiDC, fgClr);
             SetTextAlign(_s->hGuiDC, hb_parnidef(4, TA_LEFT));
-            hOldFontGui = static_cast<HFONT>(SelectObject(_s->hGuiDC, hFont));
+            auto hOldFontGui = static_cast<HFONT>(SelectObject(_s->hGuiDC, hFont));
 
             ExtTextOut(_s->hGuiDC, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
             SelectObject(_s->hGuiDC, hOldFontGui);
@@ -1156,7 +1153,7 @@ HB_FUNC( WVT_DRAWLINE )
       COLORREF cr      = hbwapi_par_COLORREF(10);
 
       int iOffset;
-      HPEN hPen, hOldPen, hOldPenGUI;
+      HPEN hPen, hOldPenGUI;
 
       int x = iLeft;
       int y = iTop;
@@ -1196,7 +1193,7 @@ HB_FUNC( WVT_DRAWLINE )
       }
 
       hPen = CreatePen(iStyle, iThick, cr);
-      hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
+      auto hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
       hOldPenGUI = _s->bGui ? static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen)) : 0;
 
       switch( iFormat ) {
@@ -2647,7 +2644,7 @@ HB_FUNC( WVT_SAVESCREEN )
 
    if( _s ) {
       HDC      hCompDC;
-      HBITMAP  hBmp, oldBmp;
+      HBITMAP  hBmp;
       POINT    xy;
       int      iTop, iLeft, iBottom, iRight, iWidth, iHeight;
       auto info = hb_itemArrayNew(3);
@@ -2666,7 +2663,7 @@ HB_FUNC( WVT_SAVESCREEN )
       hBmp = CreateCompatibleBitmap(_s->hdc, iWidth, iHeight);
 
       hCompDC = CreateCompatibleDC(_s->hdc);
-      oldBmp  = static_cast<HBITMAP>(SelectObject(hCompDC, hBmp));
+      auto oldBmp  = static_cast<HBITMAP>(SelectObject(hCompDC, hBmp));
       BitBlt(hCompDC, 0, 0, iWidth, iHeight, _s->hdc, iLeft, iTop, SRCCOPY);
       SelectObject(hCompDC, oldBmp);
       DeleteDC(hCompDC);
@@ -2690,7 +2687,7 @@ HB_FUNC( WVT_RESTSCREEN )
       bool bResult = false;
 
       HDC hCompDC = CreateCompatibleDC(_s->hdc);
-      HBITMAP hBmp = static_cast<HBITMAP>(SelectObject(hCompDC, static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(5, 3))));
+      auto hBmp = static_cast<HBITMAP>(SelectObject(hCompDC, static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(5, 3))));
 
       if( hBmp ) {
          POINT xy;

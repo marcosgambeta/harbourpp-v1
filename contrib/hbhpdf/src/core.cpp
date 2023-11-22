@@ -46,7 +46,7 @@
 
 static HB_GARBAGE_FUNC( hb_HPDF_Doc_release )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph )
@@ -67,7 +67,7 @@ static const HB_GC_FUNCS s_gcHPDF_DocFuncs =
 
 HPDF_Doc hb_HPDF_Doc_par( int iParam )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcHPDF_DocFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcHPDF_DocFuncs, iParam));
 
    return ph ? ( HPDF_Doc ) * ph : nullptr; /* TODO: C++ cast */
 }
@@ -77,7 +77,7 @@ HPDF_Doc hb_HPDF_Doc_par( int iParam )
 /* HPDF_New() --> hDoc */
 HB_FUNC( HPDF_NEW )
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(HPDF_Doc), &s_gcHPDF_DocFuncs));
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(HPDF_Doc), &s_gcHPDF_DocFuncs));
 
    *ph = static_cast<void*>(HPDF_New(nullptr, nullptr));
 
@@ -87,7 +87,7 @@ HB_FUNC( HPDF_NEW )
 /* HPDF_Free( hDoc ) --> NIL */
 HB_FUNC( HPDF_FREE )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcHPDF_DocFuncs, 1));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcHPDF_DocFuncs, 1));
 
    if( ph && *ph )
    {
@@ -147,7 +147,7 @@ HB_FUNC( HPDF_GETSTREAMSIZE )
  */
 HB_FUNC( HPDF_READFROMSTREAM )
 {
-   HPDF_UINT32 size = static_cast<HPDF_UINT32>(hb_parclen(2));
+   auto size = static_cast<HPDF_UINT32>(hb_parclen(2));
 
    if( size < 1024 )
    {
@@ -1408,7 +1408,7 @@ HB_FUNC( HPDF_VERSION_TEXT )
 HB_FUNC( HPDF_GETCONTENTS )
 {
 #if HB_HPDF_VERS(2, 2, 0)
-   HPDF_UINT32 size = static_cast<HPDF_UINT32>(hb_parclen(2));
+   auto size = static_cast<HPDF_UINT32>(hb_parclen(2));
 
    if( size < 1024 )
    {

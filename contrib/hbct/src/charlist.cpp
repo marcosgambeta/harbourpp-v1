@@ -83,7 +83,7 @@ void ct_charlist(int iMode)
          memset(acMark, 0, sizeof(acMark));
 
          for( sCnt = 0; sCnt < sStrLen; ++sCnt ) {
-            HB_UCHAR uc = static_cast<HB_UCHAR>(pcString[sCnt]);
+            auto uc = static_cast<HB_UCHAR>(pcString[sCnt]);
 
             if( acMark[uc] == 0 ) {
                acCharCnt[sRetStrLen++] = uc;

@@ -51,7 +51,7 @@
 
 static HB_GARBAGE_FUNC( magic_gc_close )
 {
-   void ** ph = static_cast<void**>(Cargo);
+   auto ph = static_cast<void**>(Cargo);
 
    if( ph && *ph )
    {
@@ -67,14 +67,14 @@ static const HB_GC_FUNCS s_gcmagic_gcfuncs = {
 
 static magic_t magic_par( int iParam )
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcmagic_gcfuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcmagic_gcfuncs, iParam));
 
    return ph ? ( magic_t ) *ph : nullptr;
 }
 
 HB_FUNC( MAGIC_OPEN )
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(magic_t), &s_gcmagic_gcfuncs));
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(magic_t), &s_gcmagic_gcfuncs));
 
    *ph = magic_open(hb_parnidef(1, MAGIC_NONE));
    hb_retptrGC(ph);

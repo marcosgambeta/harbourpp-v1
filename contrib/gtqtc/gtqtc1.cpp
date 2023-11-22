@@ -3433,7 +3433,7 @@ void QTConsole::mouseReleaseEvent(QMouseEvent * evt)
 bool QTConsole::event(QEvent * evt)
 {
    if( evt->type() == QEvent::KeyPress ) {
-      QKeyEvent * kevt = static_cast<QKeyEvent*>(evt);
+      auto kevt = static_cast<QKeyEvent*>(evt);
       if( kevt->key() == Qt::Key_Tab ) {
          keyPressEvent(kevt);
          return true;

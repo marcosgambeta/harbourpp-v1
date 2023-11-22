@@ -85,7 +85,7 @@ struct HB_ERROR_CB_VAR
 
 static void hb_cbs_var_init(void * cargo)
 {
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(cargo);
+   auto pCbs = static_cast<HB_CBS_VAR *>(cargo);
 
    pCbs->type_cb = nullptr;
    pCbs->save_cb = nullptr;
@@ -94,7 +94,7 @@ static void hb_cbs_var_init(void * cargo)
 
 static void hb_custom_cbs_var_init(void * cargo)
 {
-   HB_CUSTOM_CBS_VAR * pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(cargo);
+   auto pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(cargo);
 
    pCCbs->load_cb = nullptr;
    pCCbs->save_cb = nullptr;
@@ -102,7 +102,7 @@ static void hb_custom_cbs_var_init(void * cargo)
 
 static void hb_custom_cbs_var_release(void * cargo)
 {
-   HB_CUSTOM_CBS_VAR * pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(cargo);
+   auto pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(cargo);
 
    if( pCCbs->load_cb )
    {
@@ -116,14 +116,14 @@ static void hb_custom_cbs_var_release(void * cargo)
 
 static void hb_error_cb_var_init(void * cargo)
 {
-   HB_ERROR_CB_VAR * pError_cb = static_cast<HB_ERROR_CB_VAR *>(cargo);
+   auto pError_cb = static_cast<HB_ERROR_CB_VAR *>(cargo);
 
    pError_cb->error_cb = nullptr;
 }
 
 static void hb_error_cb_var_release(void * cargo)
 {
-   HB_ERROR_CB_VAR * pError_cb = static_cast<HB_ERROR_CB_VAR *>(cargo);
+   auto pError_cb = static_cast<HB_ERROR_CB_VAR *>(cargo);
 
    if( pError_cb->error_cb )
    {
@@ -160,7 +160,7 @@ static void hbmxml_release(mxml_node_t * node)
 
 static HB_GARBAGE_FUNC(hbmxml_nodeDestructor)
 {
-   HBMXML_NODE * pHbnode = static_cast<HBMXML_NODE *>(Cargo);
+   auto pHbnode = static_cast<HBMXML_NODE *>(Cargo);
 
    if( pHbnode->node )
    {
@@ -177,14 +177,14 @@ static const HB_GC_FUNCS s_gc_mxml_nodeFuncs =
 
 static mxml_node_t * mxml_node_param(int iParam)
 {
-   HBMXML_NODE * pHbnode = static_cast<HBMXML_NODE*>(hb_parptrGC(&s_gc_mxml_nodeFuncs, iParam));
+   auto pHbnode = static_cast<HBMXML_NODE*>(hb_parptrGC(&s_gc_mxml_nodeFuncs, iParam));
 
    return (pHbnode && pHbnode->node) ? pHbnode->node : nullptr;
 }
 
 static HBMXML_NODE * mxml_node_new(mxml_node_t * node, int iNew)
 {
-   HBMXML_NODE * pHbnode = static_cast<HBMXML_NODE*>(hb_gcAllocate(sizeof(HBMXML_NODE), &s_gc_mxml_nodeFuncs));
+   auto pHbnode = static_cast<HBMXML_NODE*>(hb_gcAllocate(sizeof(HBMXML_NODE), &s_gc_mxml_nodeFuncs));
 
    pHbnode->node = node;
    if( iNew == 0 )
@@ -212,7 +212,7 @@ static void mxml_node_ret(mxml_node_t * node, int iNew)
 
 static HB_GARBAGE_FUNC(hbmxml_indexDestructor)
 {
-   mxml_index_t ** ppMxml_index = static_cast<mxml_index_t **>(Cargo);
+   auto ppMxml_index = static_cast<mxml_index_t **>(Cargo);
 
    if( *ppMxml_index )
    {
@@ -229,14 +229,14 @@ static const HB_GC_FUNCS s_gc_mxml_indexFuncs =
 
 static mxml_index_t * mxml_index_param(int iParam)
 {
-   mxml_index_t ** ppMxml_index = static_cast<mxml_index_t **>(hb_parptrGC(&s_gc_mxml_indexFuncs, iParam));
+   auto ppMxml_index = static_cast<mxml_index_t **>(hb_parptrGC(&s_gc_mxml_indexFuncs, iParam));
 
    return (ppMxml_index && *ppMxml_index) ? *ppMxml_index : nullptr;
 }
 
 static mxml_index_t ** mxml_index_new(mxml_index_t * index)
 {
-   mxml_index_t ** ppMxml_index = static_cast<mxml_index_t **>(hb_gcAllocate(sizeof(mxml_index_t*), &s_gc_mxml_indexFuncs));
+   auto ppMxml_index = static_cast<mxml_index_t **>(hb_gcAllocate(sizeof(mxml_index_t*), &s_gc_mxml_indexFuncs));
 
    *ppMxml_index = index;
 
@@ -645,7 +645,7 @@ HB_FUNC( MXMLGETUSERDATA )
 
    if( node )
    {
-      PHB_ITEM pItem = static_cast<PHB_ITEM>(mxmlGetUserData(node));
+      auto pItem = static_cast<PHB_ITEM>(mxmlGetUserData(node));
 
       if( pItem != nullptr )
       {
@@ -700,7 +700,7 @@ HB_FUNC( MXMLINDEXFIND )
 
 HB_FUNC( MXMLINDEXDELETE )
 {
-   mxml_index_t ** ppIndex = static_cast<mxml_index_t **>(hb_parptrGC(&s_gc_mxml_indexFuncs, 1));
+   auto ppIndex = static_cast<mxml_index_t **>(hb_parptrGC(&s_gc_mxml_indexFuncs, 1));
 
    if( ppIndex && *ppIndex )
    {
@@ -774,7 +774,7 @@ HB_FUNC( MXMLINDEXRESET )
 
 static mxml_type_t type_cb(mxml_node_t * node)
 {
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackTestTSD(&s_cbs_var));
+   auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackTestTSD(&s_cbs_var));
 
    if( pCbs != nullptr )
    {
@@ -805,7 +805,7 @@ HB_FUNC( MXMLLOADFILE )
    mxml_node_t * node_top;
    mxml_node_t * node;
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
+   auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
    FILE * file;
 
    if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
@@ -864,7 +864,7 @@ HB_FUNC( MXMLLOADSTRING )
    mxml_node_t * node_top;
    mxml_node_t * node;
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
+   auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
    if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
    {
@@ -1127,7 +1127,7 @@ HB_FUNC( MXMLREMOVE )
 
 HB_FUNC( MXMLDELETE )
 {
-   HBMXML_NODE * pHbnode = static_cast<HBMXML_NODE *>(hb_parptrGC(&s_gc_mxml_nodeFuncs, 1));
+   auto pHbnode = static_cast<HBMXML_NODE *>(hb_parptrGC(&s_gc_mxml_nodeFuncs, 1));
 
    if( pHbnode && pHbnode->node )
    {
@@ -1179,7 +1179,7 @@ HB_FUNC( MXMLRETAIN )
 
 static void sax_cb(mxml_node_t * node, mxml_sax_event_t event, void * data)
 {
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackTestTSD(&s_cbs_var));
+   auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackTestTSD(&s_cbs_var));
 
    if( node != nullptr && pCbs != nullptr )
    {
@@ -1219,7 +1219,7 @@ HB_FUNC( MXMLSAXLOADFILE )
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
    mxml_sax_cb_t cb_sax = MXML_NO_CALLBACK;
    PHB_ITEM pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
+   auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
    FILE * file;
 
    if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
@@ -1288,7 +1288,7 @@ HB_FUNC( MXMLSAXLOADSTRING )
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
    mxml_sax_cb_t cb_sax = MXML_NO_CALLBACK;
    PHB_ITEM pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
+   auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
    const char * s;
 
    if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
@@ -1348,7 +1348,7 @@ HB_FUNC( MXMLSAXLOADSTRING )
 
 static const char * save_cb(mxml_node_t * node, int where)
 {
-   HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackTestTSD(&s_cbs_var));
+   auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackTestTSD(&s_cbs_var));
 
    if( node != nullptr && pCbs != nullptr )
    {
@@ -1389,7 +1389,7 @@ HB_FUNC( MXMLSAVEALLOCSTRING )
    if( node )
    {
       mxml_save_cb_t cb = MXML_NO_CALLBACK;
-      HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
+      auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
       char buffer[8192];
       int  bytes;
 
@@ -1417,7 +1417,7 @@ HB_FUNC( MXMLSAVEALLOCSTRING )
       }
       else
       {
-         char * s = static_cast<char*>(hb_xalloc(bytes + 1));
+         auto s = static_cast<char*>(hb_xalloc(bytes + 1));
 
          if( s == nullptr )
          {
@@ -1445,7 +1445,7 @@ HB_FUNC( MXMLSAVEFILE )
       FILE * file;
 
       mxml_save_cb_t cb = MXML_NO_CALLBACK;
-      HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
+      auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
       if( HB_ISBLOCK(3) || HB_ISSYMBOL(3) )
       {
@@ -1483,7 +1483,7 @@ HB_FUNC( MXMLSAVESTRING )
    if( node )
    {
       mxml_save_cb_t cb = MXML_NO_CALLBACK;
-      HB_CBS_VAR * pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
+      auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
       if( pBuffer && HB_ISBYREF(2) && hb_parcsiz(2) > 0 )
       {
@@ -1562,7 +1562,7 @@ HB_FUNC( MXMLSETELEMENT )
 
 static void error_cb(const char * pszErrorMsg)
 {
-   HB_ERROR_CB_VAR * pError_cb = static_cast<HB_ERROR_CB_VAR *>(hb_stackTestTSD(&s_error_cb_var));
+   auto pError_cb = static_cast<HB_ERROR_CB_VAR *>(hb_stackTestTSD(&s_error_cb_var));
 
    if( pError_cb != nullptr )
    {
@@ -1586,7 +1586,7 @@ HB_FUNC( MXMLSETERRORCALLBACK )
 
    if( pError )
    {
-      HB_ERROR_CB_VAR * pError_cb = static_cast<HB_ERROR_CB_VAR *>(hb_stackGetTSD(&s_error_cb_var));
+      auto pError_cb = static_cast<HB_ERROR_CB_VAR *>(hb_stackGetTSD(&s_error_cb_var));
 
       if( pError_cb->error_cb )
       {
@@ -1598,7 +1598,7 @@ HB_FUNC( MXMLSETERRORCALLBACK )
    }
    else
    {
-      HB_ERROR_CB_VAR * pError_cb = static_cast<HB_ERROR_CB_VAR *>(hb_stackTestTSD(&s_error_cb_var));
+      auto pError_cb = static_cast<HB_ERROR_CB_VAR *>(hb_stackTestTSD(&s_error_cb_var));
 
       if( pError_cb && pError_cb->error_cb )
       {
@@ -1752,7 +1752,7 @@ HB_FUNC( MXMLGETCUSTOM )
 
    if( node )
    {
-      PHB_ITEM pItem = static_cast<PHB_ITEM>(const_cast<void*>(mxmlGetCustom(node)));
+      auto pItem = static_cast<PHB_ITEM>(const_cast<void*>(mxmlGetCustom(node)));
 
       if( pItem != nullptr )
       {
@@ -1769,7 +1769,7 @@ HB_FUNC( MXMLGETCUSTOM )
 
 static void custom_destroy_cb(void * Cargo)
 {
-   PHB_ITEM pItem = static_cast<PHB_ITEM>(Cargo);
+   auto pItem = static_cast<PHB_ITEM>(Cargo);
 
    if( pItem != nullptr )
    {
@@ -1847,7 +1847,7 @@ HB_FUNC( MXMLSETCUSTOM )
 
 static int custom_load_cb(mxml_node_t * node, const char * data)
 {
-   HB_CUSTOM_CBS_VAR * pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackTestTSD(&s_custom_cbs_var));
+   auto pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackTestTSD(&s_custom_cbs_var));
 
    if( node != nullptr && pCCbs != nullptr && data != nullptr )
    {
@@ -1877,7 +1877,7 @@ static int custom_load_cb(mxml_node_t * node, const char * data)
 
 static char * custom_save_cb(mxml_node_t * node)
 {
-   HB_CUSTOM_CBS_VAR * pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackTestTSD(&s_custom_cbs_var));
+   auto pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackTestTSD(&s_custom_cbs_var));
 
    if( node != nullptr && pCCbs != nullptr )
    {
@@ -1915,7 +1915,7 @@ HB_FUNC( MXMLSETCUSTOMHANDLERS )
 
    if( pLoad && pSave )
    {
-      HB_CUSTOM_CBS_VAR * pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackGetTSD(&s_custom_cbs_var));
+      auto pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackGetTSD(&s_custom_cbs_var));
 
       if( pCCbs->load_cb )
       {
@@ -1933,7 +1933,7 @@ HB_FUNC( MXMLSETCUSTOMHANDLERS )
    }
    else
    {
-      HB_CUSTOM_CBS_VAR * pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackTestTSD(&s_custom_cbs_var));
+      auto pCCbs = static_cast<HB_CUSTOM_CBS_VAR *>(hb_stackTestTSD(&s_custom_cbs_var));
 
       if( pCCbs )
       {

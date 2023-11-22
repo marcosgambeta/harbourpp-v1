@@ -640,7 +640,7 @@ static bool hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LPAR
       case WM_CHAR: {
          bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
          int iScanCode = HIWORD(lParam) & 0xFF;
-         int c = static_cast<int>(wParam);
+         auto c = static_cast<int>(wParam);
 
          if( !pWVT->IgnoreWM_SYSCHAR ) {
             if( bCtrl && iScanCode == 28 ) { /* K_CTRL_RETURN */

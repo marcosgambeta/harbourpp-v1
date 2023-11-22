@@ -106,7 +106,7 @@ static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char * szBitmap, HB_UI
 
    HB_STRNCPY(szBuffer, pszLabel, HB_SIZEOFARRAY(szBuffer) - 1);
 
-   int iNewString = static_cast<int>(SendMessage(hWndToolbar, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(szBuffer)));
+   auto iNewString = static_cast<int>(SendMessage(hWndToolbar, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(szBuffer)));
 
    tbb.iBitmap   = iNewBitmap;
    tbb.idCommand = iCommand;
@@ -211,9 +211,8 @@ static void hb_gt_wvw_TBMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WP
 
       case WM_RBUTTONUP:
          if( wvw_win->hPopup ) {
-            int nPopupRet;
             GetCursorPos(&xy);
-            nPopupRet = static_cast<int>(TrackPopupMenu(wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr));
+            auto nPopupRet = static_cast<int>(TrackPopupMenu(wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr));
             if( nPopupRet ) {
                hb_gt_wvw_AddCharToInputQueue(nPopupRet);
             }
@@ -494,7 +493,7 @@ HB_FUNC( WVW_TBADDBUTTON )
 
    if( wvw_win ) {
       auto iCommand = hb_parni(2);
-      HB_UINT uiBitmap = static_cast<HB_UINT>(hb_parni(3));
+      auto uiBitmap = static_cast<HB_UINT>(hb_parni(3));
       auto szBitmap = hb_parc(3);
       auto iBitmapType = hb_parni(5);
       bool fMap3Dcolors = hb_parl(6);
@@ -725,13 +724,13 @@ HB_FUNC( WVW_TOOLBARADDBUTTONS )
 
    if( wvw_win && HB_ISARRAY(3) ) {
       auto pArray = hb_param(3, Harbour::Item::ARRAY);
-      int iButtons = static_cast<int>(hb_arrayLen(pArray));
+      auto iButtons = static_cast<int>(hb_arrayLen(pArray));
 
       if( iButtons > 0 ) {
          HWND hWndCtrl = hbwapi_par_raw_HWND(2);
 
          auto tb = static_cast<TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
-         void ** hStr = static_cast<void**>(hb_xgrab(iButtons * sizeof(void*)));
+         auto hStr = static_cast<void**>(hb_xgrab(iButtons * sizeof(void*)));
 
          int iOldHeight = wvw_win->iTBHeight;
 

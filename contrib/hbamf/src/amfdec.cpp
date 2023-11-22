@@ -379,7 +379,6 @@ static bool amf3_deserialize_array(amfContext * context, PHB_ITEM pItem, bool co
    int *    header_p = &header;
    PHB_ITEM pRefItem;
    PHB_ITEM pHash = context->obj_ref;
-   int      array_len;
    bool  mixed; /* if the result will be a Hash with both numbers and strings as keys */
    const char * byte_ref;
 
@@ -407,7 +406,7 @@ static bool amf3_deserialize_array(amfContext * context, PHB_ITEM pItem, bool co
       return true;
    }
 
-   array_len = static_cast<int>(header >> 1);
+   auto array_len = static_cast<int>(header >> 1);
    /* Original Python comment was:
       Cannot use array_len to create a list of known
       length, see ticket #46
@@ -633,7 +632,6 @@ static bool amf3_decode_class_def(amfContext * context, PHB_ITEM pClass, int hea
    PHB_ITEM pKey;
    PHB_ITEM pValue;
    PHB_ITEM pAttrs;
-   int      static_attr_len;
    int      i;
 
    if( !amf3_deserialize_string(context, pStrAlias) ) {
@@ -706,7 +704,7 @@ static bool amf3_decode_class_def(amfContext * context, PHB_ITEM pClass, int hea
    hb_itemRelease(pValue);
 
    /* Decode static attr names */
-   static_attr_len = static_cast<int>(header >> 4);
+   auto static_attr_len = static_cast<int>(header >> 4);
    pAttrs = hb_itemNew(nullptr);
    hb_arrayNew(pAttrs, static_attr_len);
 

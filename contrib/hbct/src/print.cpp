@@ -51,7 +51,7 @@
 
 HB_FUNC( PRINTSTAT )
 {
-   HB_USHORT uiPort = static_cast<HB_USHORT>(hb_parnidef(1, 1));
+   auto uiPort = static_cast<HB_USHORT>(hb_parnidef(1, 1));
    int Status = 0;
 
    HB_SYMBOL_UNUSED(uiPort);

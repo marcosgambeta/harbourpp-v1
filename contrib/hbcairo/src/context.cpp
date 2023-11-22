@@ -218,7 +218,7 @@ HB_FUNC( CAIRO_SET_DASH )
       PHB_ITEM pItem;
 
       if( (pItem = hb_param(2, Harbour::Item::ARRAY)) != nullptr ) {
-         int iCount = static_cast<int>(hb_arrayLen(pItem));
+         auto iCount = static_cast<int>(hb_arrayLen(pItem));
          double * pDashes = nullptr;
 
          if( iCount ) {

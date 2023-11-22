@@ -134,7 +134,7 @@ HB_FUNC( WVW_SBADDPART )
    if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr ) {
       int piArray[WVW_MAX_STATUS_PARTS];
       int iNumOfParts;
-      WORD displayFlags = static_cast<WORD>(hb_parnl(4));
+      auto displayFlags = static_cast<WORD>(hb_parnl(4));
       bool fResetParts = hb_parl(5);
       int iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
 
@@ -184,7 +184,7 @@ HB_FUNC( WVW_SBADDPART )
          void * hName;
          LPCTSTR szName = HB_PARSTR(6, &hName, nullptr);
 
-         HICON hIcon = static_cast<HICON>(LoadImage(0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE));
+         auto hIcon = static_cast<HICON>(LoadImage(0, szName, IMAGE_ICON, cx, cy, LR_LOADFROMFILE | LR_LOADMAP3DCOLORS | LR_LOADTRANSPARENT | LR_DEFAULTSIZE));
          if( hIcon == nullptr ) {
             hIcon = static_cast<HICON>(LoadImage(GetModuleHandle(nullptr), szName, IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_DEFAULTSIZE));
          }
@@ -223,7 +223,7 @@ HB_FUNC( WVW_SBREFRESH )
 
    if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr ) {
       int piArray[WVW_MAX_STATUS_PARTS];
-      int iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
+      auto iNumOfParts = static_cast<int>(SendMessage(hWnd, SB_GETPARTS, HB_SIZEOFARRAY(piArray), reinterpret_cast<LPARAM>(static_cast<LPINT>(piArray))));
       if( iNumOfParts > 0 ) {
          RECT rSB{};
          GetClientRect(hWnd, &rSB);

@@ -397,10 +397,10 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
    switch( iMode ) {
       case 0: {
          int  ptArray[WIN_STATUSBAR_MAX_PARTS];
-         int iParts = static_cast<int>(SendMessage(hWndSB, SB_GETPARTS, static_cast<WPARAM>(WIN_STATUSBAR_MAX_PARTS), reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray))));
+         auto iParts = static_cast<int>(SendMessage(hWndSB, SB_GETPARTS, static_cast<WPARAM>(WIN_STATUSBAR_MAX_PARTS), reinterpret_cast<LPARAM>(static_cast<LPINT>(ptArray))));
          RECT rc{};
          GetClientRect(hWndSB, &rc);
-         int width = static_cast<int>(rc.right / (iParts + 1));
+         auto width = static_cast<int>(rc.right / (iParts + 1));
          for( auto n = 0; n < iParts; n++ ) {
             ptArray[n] = (width * (n + 1));
          }
@@ -435,7 +435,7 @@ HB_FUNC( WVG_STATUSBARSETTEXT )
       TCHAR  szText[1024];
       void * hCaption;
       iPart -= 1;           /* Zero based */
-      int iFlags = static_cast<int>(HIWORD(SendMessage(hWndSB, SB_GETTEXT, static_cast<WPARAM>(iPart), reinterpret_cast<LPARAM>(szText))));
+      auto iFlags = static_cast<int>(HIWORD(SendMessage(hWndSB, SB_GETTEXT, static_cast<WPARAM>(iPart), reinterpret_cast<LPARAM>(szText))));
       SendMessage(hWndSB, SB_SETTEXT, static_cast<WPARAM>(iPart) | iFlags, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr)));
       hb_strfree(hCaption);
    }
@@ -444,7 +444,7 @@ HB_FUNC( WVG_STATUSBARSETTEXT )
 HB_FUNC( WVG_STATUSBARREFRESH )
 {
    #if 0
-   HWND hWndSB = static_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hWndSB = static_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
 
    if( hWndSB && IsWindow(hWndSB) ) {
       int ptArray[WIN_STATUSBAR_MAX_PARTS];
@@ -663,7 +663,7 @@ BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
       binit = true;
    }
 
-   PHB_ITEM block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
+   auto block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
 
    if( block ) {
       hb_vmPushEvalSym();
@@ -865,7 +865,7 @@ HB_FUNC( WVG_ADDTOOLBARBUTTON )
       case 1: { /* button from image */
          /* set string */
          void * hCaption;
-         int iNewString = static_cast<int>(SendMessage(hWndTB, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr))));
+         auto iNewString = static_cast<int>(SendMessage(hWndTB, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr))));
          hb_strfree(hCaption);
 
          if( hb_parl(6) ) {
@@ -956,7 +956,7 @@ HB_FUNC( WVG_BEGINMOUSETRACKING )
 
 LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   PHB_ITEM pBlock = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("BLOCKCALLBACK")));
+   auto pBlock = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("BLOCKCALLBACK")));
 
    if( pBlock ) {
       if( hb_itemType(pBlock) == Harbour::Item::POINTER ) {
@@ -971,7 +971,7 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
       hb_vmPushNumInt(static_cast<HB_PTRUINT>(wParam));
       hb_vmPushNumInt(static_cast<HB_PTRUINT>(lParam));
       hb_vmDo(4);
-      long lRet = static_cast<long>(hb_parnint(-1));
+      auto lRet = static_cast<long>(hb_parnint(-1));
       return lRet;
    }
    return DefWindowProc(hwnd, msg, wParam, lParam);
@@ -985,7 +985,7 @@ HB_FUNC( WVG_SETWINDOWPROCBLOCK )
    SetProp(hWnd, TEXT("BLOCKCALLBACK"), pBlock);
 
 #if (defined(_MSC_VER) && (_MSC_VER <= 1200)) && !defined(HB_ARCH_64BIT)
-   WNDPROC oldProc = static_cast<WNDPROC>(SetWindowLong(hWnd, GWL_WNDPROC, static_cast<long>(ControlWindowProcedure)));
+   auto oldProc = static_cast<WNDPROC>(SetWindowLong(hWnd, GWL_WNDPROC, static_cast<long>(ControlWindowProcedure)));
 #else
    auto oldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<HB_PTRUINT>(ControlWindowProcedure)));
 #endif
@@ -996,7 +996,7 @@ HB_FUNC( WVG_SETWINDOWPROCBLOCK )
 HB_FUNC( WVG_RELEASEWINDOWPROCBLOCK )
 {
    HWND hWnd = hbwapi_par_raw_HWND(1);
-   PHB_ITEM pBlock = static_cast<PHB_ITEM>(RemoveProp(hWnd, TEXT("BLOCKCALLBACK")));
+   auto pBlock = static_cast<PHB_ITEM>(RemoveProp(hWnd, TEXT("BLOCKCALLBACK")));
 
    if( pBlock ) {
       hb_itemRelease(pBlock);

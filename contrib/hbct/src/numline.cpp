@@ -57,7 +57,7 @@ HB_FUNC( NUMLINE )
       HB_ISIZ nLineLength = hb_parnsdef(2, 80);
 
       while( nStrLen > 0 ) {
-         const char * pBuffer = static_cast<const char*>(memchr(pcString, HB_CHAR_LF, nStrLen));
+         auto pBuffer = static_cast<const char*>(memchr(pcString, HB_CHAR_LF, nStrLen));
 
          if( !pBuffer || (pBuffer - pcString) > nLineLength) {
             pBuffer = pcString + nLineLength;

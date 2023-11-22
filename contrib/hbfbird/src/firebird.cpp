@@ -67,7 +67,7 @@
 
 static HB_GARBAGE_FUNC(FB_db_handle_release)
 {
-   isc_db_handle * ph = static_cast<isc_db_handle*>(Cargo);
+   auto ph = static_cast<isc_db_handle*>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( ph && *ph ) {
@@ -90,7 +90,7 @@ static const HB_GC_FUNCS s_gcFB_db_handleFuncs =
 static void hb_FB_db_handle_ret(isc_db_handle p)
 {
    if( p ) {
-      isc_db_handle * ph = static_cast<isc_db_handle*>(hb_gcAllocate(sizeof(isc_db_handle), &s_gcFB_db_handleFuncs));
+      auto ph = static_cast<isc_db_handle*>(hb_gcAllocate(sizeof(isc_db_handle), &s_gcFB_db_handleFuncs));
 
       *ph = p;
 
@@ -102,7 +102,7 @@ static void hb_FB_db_handle_ret(isc_db_handle p)
 
 static isc_db_handle hb_FB_db_handle_par(int iParam)
 {
-   isc_db_handle * ph = static_cast<isc_db_handle*>(hb_parptrGC(&s_gcFB_db_handleFuncs, iParam));
+   auto ph = static_cast<isc_db_handle*>(hb_parptrGC(&s_gcFB_db_handleFuncs, iParam));
 
    return ph ? *ph : 0;
 }
@@ -112,8 +112,8 @@ static isc_db_handle hb_FB_db_handle_par(int iParam)
 HB_FUNC( FBCREATEDB )
 {
    if( hb_pcount() >= 6 ) {
-      isc_db_handle newdb = static_cast<isc_db_handle>(0);
-      isc_tr_handle trans = static_cast<isc_tr_handle>(0);
+      auto newdb = static_cast<isc_db_handle>(0);
+      auto trans = static_cast<isc_tr_handle>(0);
       ISC_STATUS    status[20];
       char          create_db[1024];
 
@@ -122,7 +122,7 @@ HB_FUNC( FBCREATEDB )
       auto pass = hb_parcx(3);
       auto page = hb_parni(4);
       auto charset = hb_parcx(5);
-      unsigned short dialect = static_cast<unsigned short>(hb_parni(6));
+      auto dialect = static_cast<unsigned short>(hb_parni(6));
       auto collate = hb_parcx(7);
 
       hb_snprintf(create_db, sizeof(create_db),
@@ -142,18 +142,17 @@ HB_FUNC( FBCREATEDB )
 HB_FUNC( FBCONNECT )
 {
    ISC_STATUS_ARRAY status;
-   isc_db_handle    db         = static_cast<isc_db_handle>(0);
+   auto db = static_cast<isc_db_handle>(0);
    const char *     db_connect = hb_parcx(1);
    const char *     user       = hb_parcx(2);
    const char *     passwd     = hb_parcx(3);
    char  dpb[128];
    short i = 0;
-   int   len;
 
    /* FIXME: Possible buffer overflow. Use hb_snprintf(). */
    dpb[i++] = isc_dpb_version1;
    dpb[i++] = isc_dpb_user_name;
-   len        = static_cast<int>(strlen(user));
+   auto len = static_cast<int>(strlen(user));
    if( len > static_cast<int>(sizeof(dpb) - i - 4) ) {
       len = static_cast<int>(sizeof(dpb) - i - 4);
    }
@@ -207,7 +206,7 @@ HB_FUNC( FBSTARTTRANSACTION )
    isc_db_handle db = hb_FB_db_handle_par(1);
 
    if( db ) {
-      isc_tr_handle    trans = static_cast<isc_tr_handle>(0);
+      auto trans = static_cast<isc_tr_handle>(0);
       ISC_STATUS_ARRAY status;
 
       if( isc_start_transaction(status, &trans, 1, &db, 0, nullptr) ) {
@@ -259,11 +258,11 @@ HB_FUNC( FBEXECUTE )
    isc_db_handle db = hb_FB_db_handle_par(1);
 
    if( db ) {
-      isc_tr_handle  trans    = static_cast<isc_tr_handle>(0);
+      auto trans = static_cast<isc_tr_handle>(0);
       auto exec_str = hb_parcx(2);
       ISC_STATUS     status[20];
       ISC_STATUS     status_rollback[20];
-      unsigned short dialect = static_cast<unsigned short>(hb_parni(3));
+      auto dialect = static_cast<unsigned short>(hb_parni(3));
 
       if( HB_ISPOINTER(4) ) {
          trans = reinterpret_cast<isc_tr_handle>(hb_parptr(4));
@@ -301,13 +300,13 @@ HB_FUNC( FBQUERY )
    isc_db_handle db = hb_FB_db_handle_par(1);
 
    if( db ) {
-      isc_tr_handle    trans = static_cast<isc_tr_handle>(0);
+      auto trans = static_cast<isc_tr_handle>(0);
       ISC_STATUS_ARRAY status;
       XSQLDA *         sqlda;
-      isc_stmt_handle  stmt = static_cast<isc_stmt_handle>(0);
+      auto stmt = static_cast<isc_stmt_handle>(0);
       XSQLVAR *        var;
 
-      unsigned short dialect = static_cast<unsigned short>(hb_parnidef(3, SQL_DIALECT_V5));
+      auto dialect = static_cast<unsigned short>(hb_parnidef(3, SQL_DIALECT_V5));
       int num_cols;
 
       if( HB_ISPOINTER(4) ) {
@@ -442,9 +441,9 @@ HB_FUNC( FBFETCH )
 
    if( aParam ) {
       auto stmt = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
-      XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
+      auto sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
       ISC_STATUS_ARRAY status;
-      unsigned short   dialect = static_cast<unsigned short>(hb_itemGetNI(hb_itemArrayGet(aParam, 5)));
+      auto dialect = static_cast<unsigned short>(hb_itemGetNI(hb_itemArrayGet(aParam, 5)));
 
       /* FIXME */
       hb_retnl(isc_dsql_fetch(status, &stmt, dialect, sqlda) == 100 ? -1 : isc_sqlcode(status));
@@ -458,8 +457,8 @@ HB_FUNC( FBFREE )
    auto aParam = hb_param(1, Harbour::Item::ARRAY);
 
    if( aParam ) {
-      auto  stmt = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
-      XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
+      auto stmt = reinterpret_cast<isc_stmt_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 1)));
+      auto sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
       auto trans = reinterpret_cast<isc_tr_handle>(hb_itemGetPtr(hb_itemArrayGet(aParam, 3)));
       ISC_STATUS_ARRAY status;
 
@@ -490,7 +489,7 @@ HB_FUNC( FBGETDATA )
 
    if( aParam ) {
       XSQLVAR *        var;
-      XSQLDA *         sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
+      auto sqlda = static_cast<XSQLDA*>(hb_itemGetPtr(hb_itemArrayGet(aParam, 2)));
       ISC_STATUS_ARRAY status;
 
       int pos = hb_parni(2) - 1;
@@ -649,11 +648,11 @@ HB_FUNC( FBGETBLOB )
 
    if( db ) {
       ISC_STATUS_ARRAY status;
-      isc_tr_handle    trans       = static_cast<isc_tr_handle>(0);
-      isc_blob_handle  blob_handle = static_cast<isc_blob_handle>(0);
+      auto trans = static_cast<isc_tr_handle>(0);
+      auto blob_handle = static_cast<isc_blob_handle>(0);
       short      blob_seg_len;
       char       blob_segment[512];
-      ISC_QUAD * blob_id = static_cast<ISC_QUAD*>(hb_parptr(2));
+      auto blob_id = static_cast<ISC_QUAD*>(hb_parptr(2));
       ISC_STATUS blob_stat;
 
       if( HB_ISPOINTER(3) ) {

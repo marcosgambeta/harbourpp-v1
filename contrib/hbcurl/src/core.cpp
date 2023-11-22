@@ -136,7 +136,7 @@ using PHB_CURL = _HB_CURL *;
 static HB_HASH_FUNC(hb_curl_HashKey)    /* HB_SIZE func(const void * Value, const void * Cargo) */
 {
    HB_SIZE ulSum = 0;
-   const char * szName = static_cast<const char *>(Value);
+   auto szName = static_cast<const char *>(Value);
 
    while( *szName )
    {
@@ -169,14 +169,12 @@ static const char * hb_curl_StrHashNew(PHB_CURL hb_curl, const char * szValue)
 {
    if( szValue )
    {
-      char * szHash;
-
       if( !hb_curl->pHash )
       {
          hb_curl->pHash = hb_hashTableCreate(HB_CURL_HASH_TABLE_SIZE, hb_curl_HashKey, hb_curl_HashDel, hb_curl_HashCmp);
       ?
 
-      szHash = static_cast<char*>(hb_hashTableFind(hb_curl->pHash, szValue));
+      auto szHash = static_cast<char*>(hb_hashTableFind(hb_curl->pHash, szValue));
       if( !szHash )
       {
          szHash = hb_strdup(szValue);
@@ -268,12 +266,10 @@ static size_t hb_curl_read_dummy_callback(void * buffer, size_t size, size_t nme
 
 static size_t hb_curl_read_file_callback(void * buffer, size_t size, size_t nmemb, void * Cargo)
 {
-   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
+   auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
-      size_t ret;
-
       if( hb_curl->ul_handle == FS_ERROR )
       {
          hb_curl->ul_handle = hb_fsOpen(hb_curl->ul_name, FO_READ);
@@ -284,7 +280,7 @@ static size_t hb_curl_read_file_callback(void * buffer, size_t size, size_t nmem
          }
       }
 
-      ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
+      auto ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
 
       return hb_fsError() ? CURL_READFUNC_ABORT : ret;
    }
@@ -294,18 +290,16 @@ static size_t hb_curl_read_file_callback(void * buffer, size_t size, size_t nmem
 
 static size_t hb_curl_read_fhandle_callback(void * buffer, size_t size, size_t nmemb, void * Cargo)
 {
-   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
+   auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
-      size_t ret;
-
       if( hb_curl->ul_handle == FS_ERROR )
       {
          return static_cast<size_t>(-1);
       }
 
-      ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
+      auto ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
 
       return hb_fsError() ? CURL_READFUNC_ABORT : ret;
    }
@@ -315,7 +309,7 @@ static size_t hb_curl_read_fhandle_callback(void * buffer, size_t size, size_t n
 
 static size_t hb_curl_read_buff_callback(void * buffer, size_t size, size_t nmemb, void * Cargo)
 {
-   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
+   auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -339,7 +333,7 @@ static size_t hb_curl_read_buff_callback(void * buffer, size_t size, size_t nmem
 
 static size_t hb_curl_write_file_callback(void * buffer, size_t size, size_t nmemb, void * Cargo)
 {
-   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
+   auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -361,7 +355,7 @@ static size_t hb_curl_write_file_callback(void * buffer, size_t size, size_t nme
 
 static size_t hb_curl_write_fhandle_callback(void * buffer, size_t size, size_t nmemb, void * Cargo)
 {
-   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
+   auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -381,7 +375,7 @@ static size_t hb_curl_write_fhandle_callback(void * buffer, size_t size, size_t 
 
 static size_t hb_curl_write_buff_callback(void * buffer, size_t size, size_t nmemb, void * Cargo)
 {
-   PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
+   auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
    if( hb_curl )
    {
@@ -434,7 +428,7 @@ static int hb_curl_debug_callback(CURL * handle, curl_infotype type, char * data
 
    if( Cargo )
    {
-      PHB_CURL hb_curl = static_cast<PHB_CURL>(Cargo);
+      auto hb_curl = static_cast<PHB_CURL>(Cargo);
       if( hb_curl->pDebugCallback && hb_vmRequestReenter() )
       {
          hb_vmPushEvalSym();
@@ -619,7 +613,7 @@ static PHB_CURL PHB_CURL_create(CURL * from)
 
 static HB_GARBAGE_FUNC(PHB_CURL_release)
 {
-   PHB_CURL * hb_curl_ptr = static_cast<PHB_CURL*>(Cargo);
+   auto hb_curl_ptr = static_cast<PHB_CURL*>(Cargo);
 
    /* Check if pointer is not nullptr to avoid multiple freeing */
    if( hb_curl_ptr && *hb_curl_ptr )
@@ -632,7 +626,7 @@ static HB_GARBAGE_FUNC(PHB_CURL_release)
 
 static HB_GARBAGE_FUNC(PHB_CURL_mark)
 {
-   PHB_CURL * hb_curl_ptr = static_cast<PHB_CURL*>(Cargo);
+   auto hb_curl_ptr = static_cast<PHB_CURL*>(Cargo);
 
    if( hb_curl_ptr && *hb_curl_ptr )
    {
@@ -659,7 +653,7 @@ static const HB_GC_FUNCS s_gcCURLFuncs =
 
 static void PHB_CURL_ret(PHB_CURL from)
 {
-   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_CURL), &s_gcCURLFuncs));
+   auto ph = static_cast<void**>(hb_gcAllocate(sizeof(PHB_CURL), &s_gcCURLFuncs));
 
    *ph = PHB_CURL_create(from);
 
@@ -673,7 +667,7 @@ static void * PHB_CURL_is(int iParam)
 
 static PHB_CURL PHB_CURL_par(int iParam)
 {
-   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcCURLFuncs, iParam));
+   auto ph = static_cast<void**>(hb_parptrGC(&s_gcCURLFuncs, iParam));
 
    return ph ? static_cast<PHB_CURL>(*ph) : nullptr;
 }
@@ -702,7 +696,7 @@ HB_FUNC( CURL_EASY_CLEANUP )
 {
    if( PHB_CURL_is(1) )
    {
-      void ** ph = static_cast<void**>(hb_parptrGC(&s_gcCURLFuncs, 1));
+      auto ph = static_cast<void**>(hb_parptrGC(&s_gcCURLFuncs, 1));
 
       if( ph && *ph )
       {
@@ -771,7 +765,7 @@ HB_FUNC( CURL_EASY_SEND )
 {
    if( PHB_CURL_is(1) )
    {
-      CURLcode res = static_cast<CURLcode>(HB_CURLE_ERROR);
+      auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 #if LIBCURL_VERSION_NUM >= 0x071202
       PHB_CURL hb_curl = PHB_CURL_par(1);
 
@@ -797,13 +791,13 @@ HB_FUNC( CURL_EASY_RECV )
 {
    if( PHB_CURL_is(1) )
    {
-      CURLcode res = static_cast<CURLcode>(HB_CURLE_ERROR);
+      auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 #if LIBCURL_VERSION_NUM >= 0x071202
       PHB_CURL hb_curl = PHB_CURL_par(1);
 
       if( hb_curl )
       {
-         size_t size = static_cast<size_t>(hb_parclen(2));
+         auto size = static_cast<size_t>(hb_parclen(2));
 
          if( size < 1024 )
          {
@@ -833,7 +827,7 @@ HB_FUNC( CURL_EASY_SETOPT )
    if( PHB_CURL_is(1) && HB_ISNUM(2) )
    {
       PHB_CURL hb_curl = PHB_CURL_par(1);
-      CURLcode res     = static_cast<CURLcode>(HB_CURLE_ERROR);
+      auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 
       if( hb_curl )
       {
@@ -1928,7 +1922,7 @@ HB_FUNC( CURL_EASY_GETINFO )
    if( PHB_CURL_is(1) && HB_ISNUM(2) )
    {
       PHB_CURL hb_curl = PHB_CURL_par(1);
-      CURLcode res     = static_cast<CURLcode>(HB_CURLE_ERROR);
+      auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 
       int type = HB_CURL_INFO_TYPE_INVALID;
 

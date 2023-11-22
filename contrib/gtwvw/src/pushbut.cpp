@@ -94,10 +94,10 @@ HB_FUNC( WVW_PBCREATE )
    int  iOffTop, iOffLeft, iOffBottom, iOffRight;
    /* int   iStyle; */
    UINT   uiPBid;
-   USHORT usTop         = static_cast<USHORT>(hb_parni(2)),
-          usLeft        = static_cast<USHORT>(hb_parni(3)),
-          usBottom      = static_cast<USHORT>(hb_parni(4)),
-          usRight       = static_cast<USHORT>(hb_parni(5));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   auto usBottom = static_cast<USHORT>(hb_parni(4));
+   auto usRight = static_cast<USHORT>(hb_parni(5));
    LPCTSTR lpszCaption  = HB_ISCHAR(6) ? hb_parcx(6) : nullptr;
    char *  szBitmap     = HB_ISCHAR(7) ? const_cast<char*>(hb_parcx(7)) : nullptr;
    UINT    uiBitmap     = HB_ISNUM(7) ? static_cast<UINT>(hb_parni(7)) : 0;
@@ -129,7 +129,7 @@ HB_FUNC( WVW_PBDESTROY )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   UINT           uiPBid      = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
    CONTROL_DATA * pcdPrev     = nullptr;
 
@@ -225,7 +225,7 @@ HB_FUNC( WVW_PBSETCODEBLOCK )
 {
    UINT usWinNum               = WVW_WHICH_WINDOW;
    WVW_DATA *     pData        = hb_getWvwData();
-   UINT           uiPBid       = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd          = GetControlData(usWinNum, WVW_CONTROL_PUSHBUTTON, nullptr, uiPBid);
    auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    BOOL           bOldSetting  = pData->s_bRecurseCBlock;
@@ -282,8 +282,8 @@ HB_FUNC( WVW_PBSETSTYLE )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT  uiPBid       = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
-   ULONG ulStyle      = static_cast<ULONG>(HB_ISNIL(3) ? 0 : hb_parni(3));
+   auto uiPBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto ulStyle = static_cast<ULONG>(HB_ISNIL(3) ? 0 : hb_parni(3));
    CONTROL_DATA * pcd = GetControlData(usWinNum, WVW_CONTROL_PUSHBUTTON, nullptr, uiPBid);
 
    if( pcd->hWndCtrl ) {
@@ -414,13 +414,13 @@ HB_FUNC( WVW_CBCREATE )
    int   iOffTop, iOffLeft, iOffBottom, iOffRight;
 
    UINT   uiCBid;
-   USHORT usWidth      = static_cast<USHORT>(hb_parni(4));
-   USHORT usTop        = static_cast<USHORT>(hb_parni(2)),
-          usLeft       = static_cast<USHORT>(hb_parni(3)),
-          usBottom     = usTop,
-          usRight      = usLeft + usWidth - 1;
-   USHORT usNumElement = static_cast<USHORT>(HB_ISARRAY(5) ? hb_arrayLen(hb_param(5, Harbour::Item::ARRAY)) : 0);
-   USHORT usListLines  = static_cast<USHORT>(HB_ISNUM(7) ? hb_parni(7) : 3);
+   auto usWidth = static_cast<USHORT>(hb_parni(4));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   USHORT usBottom = usTop;
+   USHORT usRight = usLeft + usWidth - 1;
+   auto usNumElement = static_cast<USHORT>(HB_ISARRAY(5) ? hb_arrayLen(hb_param(5, Harbour::Item::ARRAY)) : 0);
+   auto usListLines = static_cast<USHORT>(HB_ISNUM(7) ? hb_parni(7) : 3);
    BYTE   byCharHeight = hb_wvw_LineHeight(pWindowData);
 
    /* in the future combobox type might be selectable by 8th parameter */
@@ -539,9 +539,9 @@ HB_FUNC( WVW_CBDESTROY )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   UINT           uiCBid      = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiCBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = static_cast<CONTROL_DATA*>(nullptr);
+   auto pcdPrev = static_cast<CONTROL_DATA*>(nullptr);
 
    while( pcd ) {
       if( pcd->byCtrlClass == WVW_CONTROL_COMBOBOX && pcd->uiCtrlid == uiCBid ) {
@@ -635,7 +635,7 @@ HB_FUNC( WVW_CBSETCODEBLOCK )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT uiCBid        = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiCBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd = GetControlData(usWinNum, WVW_CONTROL_COMBOBOX, nullptr, uiCBid);
    auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
    WVW_DATA *     pData        = hb_getWvwData();

@@ -138,7 +138,7 @@ IPicture * hb_wvt_gtLoadPictureFromResource(LPCTSTR resource, LPCTSTR section)
       IStream * iStream   = nullptr;
       HGLOBAL   mem       = LoadResource(GetModuleHandle(nullptr), res);
       void *    data      = LockResource(mem);
-      LONG      nFileSize = static_cast<LONG>(SizeofResource(GetModuleHandle(nullptr), res));
+      auto nFileSize = static_cast<LONG>(SizeofResource(GetModuleHandle(nullptr), res));
       HGLOBAL   hGlobal   = GlobalAlloc(GMEM_MOVEABLE, nFileSize);
       LPVOID    pvData    = GlobalLock(hGlobal);
       memcpy(pvData, data, nFileSize);
@@ -363,7 +363,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
    int      iIndex, iType;
    long int lReturn = 0;
    PHB_ITEM pFunc   = nullptr;
-   int      iFirst  = static_cast<int>(lParam);
+   auto iFirst = static_cast<int>(lParam);
 
    if( iFirst > 0 && iFirst <= WVT_DLGMD_MAX ) {
       _s->hDlgModal[iFirst - 1] = hDlg;
@@ -784,7 +784,6 @@ HB_FUNC( WVT_SETPEN )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   COLORREF crColor;
    HPEN     hPen;
 
    if( !HB_ISNUM(1) ) {
@@ -793,7 +792,7 @@ HB_FUNC( WVT_SETPEN )
 
    auto iPenStyle = hb_parni(1);
    auto iPenWidth = hb_parni(2);
-   crColor   = static_cast<COLORREF>(hb_parnldef(3, RGB(0, 0, 0)));
+   auto crColor = static_cast<COLORREF>(hb_parnldef(3, RGB(0, 0, 0)));
 
    hPen = CreatePen(iPenStyle, iPenWidth, crColor);
 
@@ -1091,8 +1090,7 @@ HB_FUNC( WVT_DRAWLINE )
    int iRight  = (_s->PTEXTSIZE.x * (hb_parni(4) + 1)) - 1 + hb_parvni(11, 4);
 
    int      x, y, iOffset;
-   COLORREF cr;
-   HPEN     hPen, hOldPen, hOldPenGUI;
+   HPEN     hPen, hOldPenGUI;
 
    /*   Resolve Parameters   */
    auto iOrient = hb_parni(5);
@@ -1100,7 +1098,7 @@ HB_FUNC( WVT_DRAWLINE )
    auto iAlign  = hb_parni(7);
    auto iStyle  = hb_parni(8);
    auto iThick  = hb_parni(9);
-   cr      = static_cast<COLORREF>(hb_parnl(10));
+   auto cr = static_cast<COLORREF>(hb_parnl(10));
 
    x = iLeft;
    y = iTop;
@@ -1140,7 +1138,7 @@ HB_FUNC( WVT_DRAWLINE )
    }
 
    hPen       = CreatePen(iStyle, iThick, cr);
-   hOldPen    = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
+   auto hOldPen    = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
    hOldPenGUI = _s->bGui ? static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen)) : 0;
 
    switch( iFormat ) {
@@ -1487,8 +1485,8 @@ HB_FUNC( WVT_DRAWBUTTON )
    bool  bText     = HB_ISCHAR(5);
    bool  bImage    = (HB_ISNUM(6) || HB_ISCHAR(6));
    auto iFormat = hb_parni(7);
-   COLORREF textColor = static_cast<COLORREF>(hb_parnldef(8, _s->COLORS[0]));
-   COLORREF bkColor   = static_cast<COLORREF>(hb_parnldef(9, _s->COLORS[7]));
+   auto textColor = static_cast<COLORREF>(hb_parnldef(8, _s->COLORS[0]));
+   auto bkColor   = static_cast<COLORREF>(hb_parnldef(9, _s->COLORS[7]));
 
    /* auto iImageAt = hb_parni(10); */
 
@@ -2622,13 +2620,12 @@ HB_FUNC( WVT_LOADPEN )
 {
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   COLORREF crColor;
    HPEN     hPen;
    int      iSlot = hb_parni(1) - 1;
 
    auto iPenStyle = hb_parni(2);
    auto iPenWidth = hb_parni(3);
-   crColor   = static_cast<COLORREF>(hb_parnldef(4, RGB(0, 0, 0)));
+   auto crColor = static_cast<COLORREF>(hb_parnldef(4, RGB(0, 0, 0)));
 
    hPen = CreatePen(iPenStyle, iPenWidth, crColor);
 
@@ -2650,7 +2647,7 @@ HB_FUNC( WVT_SAVESCREEN )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    HDC      hCompDC;
-   HBITMAP  hBmp, oldBmp;
+   HBITMAP  hBmp;
    POINT    xy{};
    int      iTop, iLeft, iBottom, iRight, iWidth, iHeight;
    auto info = hb_itemArrayNew(3);
@@ -2669,7 +2666,7 @@ HB_FUNC( WVT_SAVESCREEN )
    hBmp = CreateCompatibleBitmap(_s->hdc, iWidth, iHeight);
 
    hCompDC = CreateCompatibleDC(_s->hdc);
-   oldBmp  = static_cast<HBITMAP>(SelectObject(hCompDC, hBmp));
+   auto oldBmp  = static_cast<HBITMAP>(SelectObject(hCompDC, hBmp));
    BitBlt(hCompDC, 0, 0, iWidth, iHeight, _s->hdc, iLeft, iTop, SRCCOPY);
    SelectObject(hCompDC, oldBmp);
    DeleteDC(hCompDC);
@@ -2688,7 +2685,6 @@ HB_FUNC( WVT_RESTSCREEN )
 
    POINT   xy{};
    int     iTop, iLeft, iBottom, iRight, iWidth, iHeight;
-   HBITMAP hBmp;
    HDC     hCompDC;
 
    bool bResult = false;
@@ -2706,7 +2702,7 @@ HB_FUNC( WVT_RESTSCREEN )
    iHeight = iBottom - iTop + 1;
 
    hCompDC = CreateCompatibleDC(_s->hdc);
-   hBmp    = static_cast<HBITMAP>(SelectObject(hCompDC, reinterpret_cast<HBITMAP>(static_cast<HB_PTRUINT>(hb_parvnint(5, 3)))));
+   auto hBmp = static_cast<HBITMAP>(SelectObject(hCompDC, reinterpret_cast<HBITMAP>(static_cast<HB_PTRUINT>(hb_parvnint(5, 3)))));
    if( hBmp ) {
       if( (iWidth == hb_parvni(5, 1)) && (iHeight == hb_parvni(5, 2)) ) {
          if( BitBlt(_s->hdc, iLeft, iTop, iWidth, iHeight, hCompDC, 0, 0, SRCCOPY) ) {

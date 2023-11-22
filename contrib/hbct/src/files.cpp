@@ -76,7 +76,7 @@ using PHB_FFDATA = HB_FFDATA *;
 
 static void hb_fileFindRelease(void * cargo)
 {
-   PHB_FFDATA pFFData = static_cast<PHB_FFDATA>(cargo);
+   auto pFFData = static_cast<PHB_FFDATA>(cargo);
 
    if( pFFData->ffind ) {
       hb_fsFindClose(pFFData->ffind);
@@ -103,9 +103,7 @@ static PHB_FFIND _hb_fileStart(HB_BOOL fNext, HB_BOOL fAny)
       }
 
       if( szFile ) {
-         HB_FATTR ulAttr;
-
-         ulAttr = static_cast<HB_FATTR>(hb_parnldef(2, fAny ? HB_FA_ANY : HB_FA_ALL));
+         auto ulAttr = static_cast<HB_FATTR>(hb_parnldef(2, fAny ? HB_FA_ANY : HB_FA_ALL));
          pFFData->ulAttr = hb_parl(3) ? ulAttr : 0;
          pFFData->ffind  = hb_fsFindFirst(szFile, ulAttr);
          while( pFFData->ffind && pFFData->ulAttr && HB_FF_ATTR(pFFData->ffind) != pFFData->ulAttr ) {

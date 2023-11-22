@@ -289,9 +289,9 @@ HB_FUNC( UNTEXTWIN )
    int iTop, iLeft, iBottom, iRight;
 
    if( hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight) ) {
-      HB_USHORT usRepl, usInit, usEnd;
+      HB_USHORT usInit, usEnd;
 
-      usRepl = static_cast<HB_USHORT>(hb_ctGetClearChar(5));
+      auto usRepl = static_cast<HB_USHORT>(hb_ctGetClearChar(5));
 
       if( HB_ISNUM(6) ) {
          usInit = static_cast<HB_USHORT>(hb_parni(6));
@@ -336,10 +336,10 @@ HB_FUNC( CHARWIN )
    int iTop, iLeft, iBottom, iRight;
 
    if( hb_ctGetWinCord(&iTop, &iLeft, &iBottom, &iRight) ) {
-      HB_USHORT usNewChar, usOldChar = 0;
+      HB_USHORT usOldChar = 0;
       HB_BOOL fAll = false;
 
-      usNewChar = static_cast<HB_USHORT>(hb_ctGetClearChar(5));
+      auto usNewChar = static_cast<HB_USHORT>(hb_ctGetClearChar(5));
 
       if( HB_ISNUM(6) ) {
          usOldChar = static_cast<HB_USHORT>(hb_parni(6));

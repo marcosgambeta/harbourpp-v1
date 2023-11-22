@@ -105,7 +105,7 @@ HB_FUNC( WVW_NOPENWINDOW )
 
       HWND hWndParent;
 
-      DWORD     dwStyle    = static_cast<DWORD>(hb_parnldef(6, WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN));
+      auto dwStyle = static_cast<DWORD>(hb_parnldef(6, WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN));
       int       iParentWin = hb_gt_wvw_nWin_N(7);
 
       if( wvw->iNumWindows <= 0 ) {

@@ -182,7 +182,7 @@ HB_FUNC( NUMROL )
 
    if( ct_numParam(1, &lValue) && lValue == (lValue & 0xffff) && ct_numParam(2, &lShift) && lShift == (lShift & 0xffff) ) {
       if( hb_parl(3) ) {
-         HB_USHORT us = static_cast<HB_USHORT>((lValue & 0xff) << (lShift & 0x07));
+         auto us = static_cast<HB_USHORT>((lValue & 0xff) << (lShift & 0x07));
 
          lValue = (lValue & 0xff00) | (us & 0xff) | (us >> 8);
       } else {
@@ -202,7 +202,7 @@ HB_FUNC( NUMMIRR )
 
    if( ct_numParam(1, &lValue) && lValue == (lValue & 0xffff) ) {
       HB_USHORT usBits = hb_parl(2) ? 8 : 16;
-      HB_USHORT usResult = static_cast<HB_USHORT>(lValue >> usBits);
+      auto usResult = static_cast<HB_USHORT>(lValue >> usBits);
 
       do {
          usResult <<= 1;

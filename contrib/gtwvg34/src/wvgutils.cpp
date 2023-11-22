@@ -476,15 +476,14 @@ HB_FUNC( WVT_SETMENU )
       RECT wi = { 0, 0, 0, 0 };
       RECT ci = { 0, 0, 0, 0 };
       RECT rc = { 0, 0, 0, 0 };
-      int height, width;
 
       SetMenu(_s->hWnd, hbwapi_par_raw_HMENU(1));
 
       GetWindowRect(_s->hWnd, &wi);
       GetClientRect(_s->hWnd, &ci);
 
-      height = static_cast<int>(_s->PTEXTSIZE.y * _s->ROWS);
-      width  = static_cast<int>(_s->PTEXTSIZE.x * _s->COLS);
+      auto height = static_cast<int>(_s->PTEXTSIZE.y * _s->ROWS);
+      auto width  = static_cast<int>(_s->PTEXTSIZE.x * _s->COLS);
 
       width  += static_cast<int>(wi.right - wi.left - ci.right);
       height += static_cast<int>(wi.bottom - wi.top - ci.bottom);
@@ -706,7 +705,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wP
    if( _s ) {
       int iIndex, iType;
       PHB_ITEM pFunc = nullptr;
-      int iFirst = static_cast<int>(lParam);
+      auto iFirst = static_cast<int>(lParam);
 
       if( iFirst > 0 && iFirst <= static_cast<int>(HB_SIZEOFARRAY(_s->hDlgModal)) ) {
          _s->hDlgModal[iFirst - 1] = hDlg;

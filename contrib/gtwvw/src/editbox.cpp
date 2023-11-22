@@ -102,18 +102,18 @@ HB_FUNC( WVW_EBCREATE )
    int        iTop, iLeft, iBottom, iRight;
    int        iOffTop, iOffLeft, iOffBottom, iOffRight;
    UINT       uiEBid;
-   USHORT     usTop    = static_cast<USHORT>(hb_parni(2)),
-              usLeft   = static_cast<USHORT>(hb_parni(3)),
-              usBottom = static_cast<USHORT>(hb_parni(4)),
-              usRight  = static_cast<USHORT>(hb_parni(5));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   auto usBottom = static_cast<USHORT>(hb_parni(4));
+   auto usRight = static_cast<USHORT>(hb_parni(5));
    LPTSTR lpszText     = const_cast<LPTSTR>(hb_parcx(6));
 
    BOOL bMultiline = HB_ISLOG(8) ? hb_parl(8) : FALSE;
-   BYTE bEBType    = static_cast<BYTE>(bMultiline ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE);
+   auto bEBType = static_cast<BYTE>(bMultiline ? WVW_EB_MULTILINE : WVW_EB_SINGLELINE);
 
-   DWORD dwMoreStyle = static_cast<DWORD>(HB_ISNUM(9) ? hb_parnl(9) : 0);
+   auto dwMoreStyle = static_cast<DWORD>(HB_ISNUM(9) ? hb_parnl(9) : 0);
 
-   USHORT usMaxChar = static_cast<USHORT>(HB_ISNUM(10) && hb_parni(10) > 0 ? hb_parni(10) : 0);
+   auto usMaxChar = static_cast<USHORT>(HB_ISNUM(10) && hb_parni(10) > 0 ? hb_parni(10) : 0);
 
    DWORD      dwStyle;
    WVW_DATA * pData = hb_getWvwData();
@@ -188,7 +188,7 @@ HB_FUNC( WVW_EBCREATE )
       BOOL bFromOEM = (pWindowData->CodePage == OEM_CHARSET);
 
       if( bFromOEM ) {
-         ULONG  ulLen        = static_cast<ULONG>(strlen(lpszText));
+         auto ulLen = static_cast<ULONG>(strlen(lpszText));
          auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
          OemToChar(lpszText, lpszTextANSI);
          lpszText = lpszTextANSI;
@@ -230,9 +230,9 @@ HB_FUNC( WVW_EBDESTROY )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
    WIN_DATA *     pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
-   UINT           uiEBid      = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiEBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd         = pWindowData->pcdCtrlList;
-   CONTROL_DATA * pcdPrev     = static_cast<CONTROL_DATA*>(nullptr);
+   auto pcdPrev = static_cast<CONTROL_DATA*>(nullptr);
 
    while( pcd ) {
       if( pcd->byCtrlClass == WVW_CONTROL_EDITBOX && pcd->uiCtrlid == uiEBid ) {
@@ -332,7 +332,7 @@ HB_FUNC( WVW_EBEDITABLE )
    HWND hWndEB = FindControlHandle(usWinNum, WVW_CONTROL_EDITBOX, uiCtrlId, &bStyle);
 
    if( hWndEB ) {
-      DWORD dwStyle = static_cast<DWORD>(GetWindowLong(hWndEB, GWL_STYLE));
+      auto dwStyle = static_cast<DWORD>(GetWindowLong(hWndEB, GWL_STYLE));
 
       hb_retl(!((dwStyle & ES_READONLY) == ES_READONLY));
 
@@ -353,7 +353,7 @@ HB_FUNC( WVW_EBSETCODEBLOCK )
 {
    UINT usWinNum = WVW_WHICH_WINDOW;
 
-   UINT uiEBid                 = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
+   auto uiEBid = static_cast<UINT>(HB_ISNIL(2) ? 0 : hb_parni(2));
    CONTROL_DATA * pcd          = GetControlData(usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid);
    WVW_DATA *     pData        = hb_getWvwData();
    auto phiCodeBlock = hb_param(3, Harbour::Item::BLOCK);
@@ -496,7 +496,7 @@ HB_FUNC( WVW_EBGETTEXT )
    SendMessage(static_cast<HWND>(pcd->hWndCtrl), WM_GETTEXT, usLen, reinterpret_cast<LPARAM>(lpszTextANSI));
 
    if( bToOEM ) {
-      ULONG  ulLen    = static_cast<ULONG>(strlen(lpszTextANSI));
+      auto ulLen = static_cast<ULONG>(strlen(lpszTextANSI));
       auto lpszText = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
       CharToOem(lpszTextANSI, lpszText);
       hb_retc(lpszText);
@@ -528,7 +528,7 @@ HB_FUNC( WVW_EBSETTEXT )
    }
 
    if( bFromOEM ) {
-      ULONG  ulLen        = static_cast<ULONG>(strlen(lpszText));
+      auto ulLen = static_cast<ULONG>(strlen(lpszText));
       auto lpszTextANSI = static_cast<LPTSTR>(hb_xgrab(ulLen + 1));
       OemToChar(lpszText, lpszTextANSI);
       lpszText = lpszTextANSI;
@@ -587,8 +587,8 @@ HB_FUNC( WVW_EBSETSEL )
    UINT usWinNum          = WVW_WHICH_WINDOW;
    UINT uiEBid            = hb_parni(2);
    CONTROL_DATA * pcd     = GetControlData(usWinNum, WVW_CONTROL_EDITBOX, nullptr, uiEBid);
-   DWORD          dwStart = static_cast<DWORD>(HB_ISNUM(3) ? hb_parnl(3) : 0);
-   DWORD          dwEnd   = static_cast<DWORD>(HB_ISNUM(4) ? hb_parnl(4) : 0);
+   auto dwStart = static_cast<DWORD>(HB_ISNUM(3) ? hb_parnl(3) : 0);
+   auto dwEnd = static_cast<DWORD>(HB_ISNUM(4) ? hb_parnl(4) : 0);
 
    if( pcd == nullptr ) {
       hb_retl(false);
@@ -622,11 +622,11 @@ HB_FUNC( WVW_STCREATE )
    BOOL  bBorder   = hb_parnl(7);
    ULONG ulExStyle = 0 | (bBorder ? WS_EX_CLIENTEDGE : 0);
 
-   USHORT usWidth  = static_cast<USHORT>(hb_parni(4));
-   USHORT usTop    = static_cast<USHORT>(hb_parni(2)),
-          usLeft   = static_cast<USHORT>(hb_parni(3)),
-          usBottom = HB_ISNUM(11) ? static_cast<USHORT>(hb_parni(11)) : usTop,
-          usRight  = HB_ISNUM(12) ? static_cast<USHORT>(hb_parni(12)) : usLeft + usWidth - 1;
+   auto usWidth = static_cast<USHORT>(hb_parni(4));
+   auto usTop = static_cast<USHORT>(hb_parni(2));
+   auto usLeft = static_cast<USHORT>(hb_parni(3));
+   USHORT usBottom = HB_ISNUM(11) ? static_cast<USHORT>(hb_parni(11)) : usTop;
+   USHORT usRight  = HB_ISNUM(12) ? static_cast<USHORT>(hb_parni(12)) : usLeft + usWidth - 1;
    /* char * sText = hb_parc(5); */
 
    int   iStyle = (bBorder ? WS_BORDER : 0);

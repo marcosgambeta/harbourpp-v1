@@ -74,7 +74,7 @@ HB_FUNC( DIRNAME )
    int iDrive = 0;
 
    if( pszDrive ) {
-      HB_UCHAR uc = static_cast<HB_UCHAR>(*pszDrive);
+      auto uc = static_cast<HB_UCHAR>(*pszDrive);
       /* some network drivers (f.e. NETX from Novell NetWare) allow
        * to create drives after 'Z' letter.
        */

@@ -66,7 +66,7 @@ typedef struct
 
 static void s_fttext_init_init( void * cargo )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(cargo);
+   auto ft_text = static_cast<PFT_TEXT>(cargo);
 
    ft_text->area = 0;
 }
@@ -75,7 +75,7 @@ static HB_TSD_NEW(s_fttext, sizeof(FT_TEXT), s_fttext_init_init, nullptr);
 
 HB_FUNC( HB_FUSE )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    if( HB_ISCHAR(1) )
    {
@@ -102,7 +102,7 @@ HB_FUNC( HB_FUSE )
 
 HB_FUNC( HB_FRECNO )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_retnl(ft_text->recno[ft_text->area]);
 }
@@ -190,7 +190,7 @@ static long hb_hbfskip( PFT_TEXT ft_text, char * buffer, HB_SIZE bufsize, int re
 
 HB_FUNC( HB_FSKIP )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    auto buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
@@ -201,7 +201,7 @@ HB_FUNC( HB_FSKIP )
 
 HB_FUNC( HB_FREADLN )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    auto buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
@@ -227,7 +227,7 @@ HB_FUNC( HB_FREADLN )
 
 HB_FUNC( HB_FATEOF )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_retl(ft_text->isEof[ft_text->area]);
 }
@@ -238,7 +238,7 @@ HB_FUNC_TRANSLATE( HB_FEOF, HB_FATEOF )
 
 HB_FUNC( HB_FGOTO )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    auto buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 
@@ -270,7 +270,7 @@ HB_FUNC( HB_FGOTO )
 
 HB_FUNC( HB_FGOBOTTOM )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    if( ft_text->last_rec[ft_text->area] != 0 )
    {
@@ -318,7 +318,7 @@ HB_FUNC( HB_FGOBOTTOM )
 
 HB_FUNC( HB_FGOTOP )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    ft_text->offset[ft_text->area] = 0;
    ft_text->recno[ft_text->area] = 1;
@@ -327,7 +327,7 @@ HB_FUNC( HB_FGOTOP )
 
 HB_FUNC( HB_FLASTREC )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    long       old_rec;
    HB_FOFFSET old_offset;
@@ -347,7 +347,7 @@ HB_FUNC( HB_FLASTREC )
 
 HB_FUNC( HB_FSELECT )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_retni(ft_text->area + 1);
 
@@ -362,7 +362,7 @@ HB_FUNC( HB_FSELECT )
 
 HB_FUNC( HB_FINFO )  /* used for debugging */
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    hb_reta(6);
    hb_storvni(ft_text->area + 1, -1, 1);
@@ -390,7 +390,7 @@ HB_FUNC( HB_FINFO )  /* used for debugging */
  */
 HB_FUNC( HB_FREADANDSKIP )
 {
-   PFT_TEXT ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
+   auto ft_text = static_cast<PFT_TEXT>(hb_stackGetTSD(&s_fttext));
 
    auto buffer = static_cast<char*>(hb_xgrab(_B_SIZE));
 

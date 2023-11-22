@@ -149,7 +149,7 @@ HB_FUNC( DMY )
 
    if( iMonth >= 1 && iMonth <= 12 ) {
       const char * szMonth = hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1);
-      int iMonLen = static_cast<int>(strlen(szMonth));
+      auto iMonLen = static_cast<int>(strlen(szMonth));
       int iLen = 0, iBufLen = iMonLen + 10;
       auto szMDY = static_cast<char*>(hb_xgrab(iBufLen));
 
@@ -200,7 +200,7 @@ HB_FUNC( MDY )
 
    if( iMonth >= 1 && iMonth <= 12 ) {
       const char * szMonth = hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1);
-      int iLen = static_cast<int>(strlen(szMonth));
+      auto iLen = static_cast<int>(strlen(szMonth));
       int iBufLen = iLen + 9;
       auto szMDY = static_cast<char*>(hb_xgrab(iBufLen));
 

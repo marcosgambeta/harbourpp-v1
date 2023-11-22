@@ -931,8 +931,7 @@ static void hb_gt_wvt_Maximize(PHB_GTWVT pWVT)
 static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT)
 {
    HDC        hdc;
-   HFONT      hFont, hOldFont;
-   int        height, width;
+   HFONT      hFont;
    RECT       wi, ci;
    TEXTMETRIC tm;
    RECT       rcWorkArea;
@@ -963,7 +962,7 @@ static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT)
 #endif
 
    hdc      = GetDC(pWVT->hWnd);
-   hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
+   auto hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
    GetTextMetrics(hdc, &tm);
    SetTextCharacterExtra(hdc, 0);  /* Do not add extra char spacing even if bold */
    SelectObject(hdc, hOldFont);
@@ -987,13 +986,13 @@ static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT)
    for( n = 0; n < pWVT->COLS; n++ ) {
       pWVT->FixedSize[n] = pWVT->PTEXTSIZE.x;
    }
-   
+
    /* Resize the window to get the specified number of rows and columns */
    GetWindowRect(pWVT->hWnd, &wi);
    GetClientRect(pWVT->hWnd, &ci);
 
-   height = static_cast<int>(pWVT->PTEXTSIZE.y * pWVT->ROWS);
-   width  = static_cast<int>(pWVT->PTEXTSIZE.x * pWVT->COLS);
+   auto height = static_cast<int>(pWVT->PTEXTSIZE.y * pWVT->ROWS);
+   auto width  = static_cast<int>(pWVT->PTEXTSIZE.x * pWVT->COLS);
 
    width  += static_cast<int>(wi.right - wi.left - ci.right);
    height += static_cast<int>(wi.bottom - wi.top - ci.bottom);
@@ -1482,7 +1481,7 @@ static bool hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LPAR
       case WM_CHAR: {
          bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
          int iScanCode = HIWORD(lParam) & 0xFF;
-         int c = static_cast<int>(wParam);
+         auto c = static_cast<int>(wParam);
 
          if( !pWVT->IgnoreWM_SYSCHAR ) {
             if( bCtrl && iScanCode == 28 ) { /* K_CTRL_RETURN */
@@ -2200,8 +2199,6 @@ static WPARAM hb_gt_wvt_ProcessMessages(PHB_GTWVT pWVT)
 static bool hb_gt_wvt_ValidWindowSize(HWND hWnd, int rows, int cols, HFONT hFont, int iWidth)
 {
    HDC        hdc;
-   HFONT      hOldFont;
-   int        width, height, maxWidth, maxHeight;
    TEXTMETRIC tm;
    RECT       rcWorkArea;
 
@@ -2209,17 +2206,17 @@ static bool hb_gt_wvt_ValidWindowSize(HWND hWnd, int rows, int cols, HFONT hFont
       return false;
    }
 
-   maxWidth  = static_cast<int>(rcWorkArea.right - rcWorkArea.left);
-   maxHeight = static_cast<int>(rcWorkArea.bottom - rcWorkArea.top);
+   auto maxWidth  = static_cast<int>(rcWorkArea.right - rcWorkArea.left);
+   auto maxHeight = static_cast<int>(rcWorkArea.bottom - rcWorkArea.top);
 
    hdc       = GetDC(hWnd);
-   hOldFont  = static_cast<HFONT>(SelectObject(hdc, hFont));
+   auto hOldFont  = static_cast<HFONT>(SelectObject(hdc, hFont));
    GetTextMetrics(hdc, &tm);
    SelectObject(hdc, hOldFont);  /* Put old font back */
    ReleaseDC(hWnd, hdc);
 
-   width     = static_cast<int>((iWidth < 0 ? -iWidth : tm.tmAveCharWidth) * cols);  /* Total pixel width this setting would take */
-   height    = static_cast<int>(tm.tmHeight * rows);  /* Total pixel height this setting would take */
+   auto width = static_cast<int>((iWidth < 0 ? -iWidth : tm.tmAveCharWidth) * cols);  /* Total pixel width this setting would take */
+   auto height = static_cast<int>(tm.tmHeight * rows);  /* Total pixel height this setting would take */
 
    return (width <= maxWidth) && (height <= maxHeight);
 }
@@ -2848,7 +2845,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
                   TEXTMETRIC tm;
                   HWND       hDesk    = GetDesktopWindow();
                   HDC        hdc      = GetDC(hDesk);
-                  HFONT      hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
+                  auto hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
 
                   SetTextCharacterExtra(hdc, 0);
                   GetTextMetrics(hdc, &tm);
