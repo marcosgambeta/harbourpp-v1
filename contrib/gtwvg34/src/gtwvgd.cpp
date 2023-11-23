@@ -441,7 +441,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
          auto pEvent = hb_itemPutNI(nullptr, nEvent);
 
          if( pWVT->pGT->pNotifierBlock ) {
-            PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
+            auto pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
 
             if( HB_IS_POINTER(pResult) ) {
                nResult = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pResult));
@@ -451,7 +451,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
          }
 
          if( pWVT->pNotifierGUI ) {
-            PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pNotifierGUI, 2, pEvent, pParams);
+            auto pResult = hb_vmEvalBlockV(pWVT->pNotifierGUI, 2, pEvent, pParams);
 
             if( HB_IS_POINTER(pResult) ) {
                nResult = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pResult));

@@ -186,7 +186,7 @@ static PMIXKEY hb_mixKeyEval(PMIXKEY pKey, PMIXTAG pTag)
       iCurrArea = 0;
    }
 
-   PHB_ITEM pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
+   auto pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
 
    pKey = hb_mixKeyPutItem(pKey, pItem, pArea->sqlarea.ulRecNo, pTag);
 
@@ -1038,7 +1038,7 @@ static HB_BOOL hb_mixCheckRecordFilter(SQLMIXAREAP pArea, HB_ULONG ulRecNo)
       }
 
       if( !lResult && pArea->sqlarea.area.dbfi.itmCobExpr ) {
-         PHB_ITEM pResult = hb_vmEvalBlock(pArea->sqlarea.area.dbfi.itmCobExpr);
+         auto pResult = hb_vmEvalBlock(pArea->sqlarea.area.dbfi.itmCobExpr);
          lResult = HB_IS_LOGICAL(pResult) && !hb_itemGetL(pResult);
       }
    }

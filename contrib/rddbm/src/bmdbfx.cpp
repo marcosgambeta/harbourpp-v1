@@ -249,7 +249,7 @@ static HB_BOOL hb_bmCheckRecordFilter(AREAP pArea, HB_ULONG ulRecNo)
          }
 
          if( !lResult && pArea->dbfi.itmCobExpr ) {
-            PHB_ITEM pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
+            auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
             lResult = HB_IS_LOGICAL(pResult) && !hb_itemGetL(pResult);
          }
       }
@@ -419,7 +419,7 @@ static HB_BOOL hb_bmEvalFilter(AREAP pArea, HB_BOOL fUpdate)
    }
 
    if( pArea->dbfi.itmCobExpr ) {
-      PHB_ITEM pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
+      auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
       fResult = !HB_IS_LOGICAL(pResult) || hb_itemGetL(pResult);
    }
    if( fResult && hb_setGetDeleted() ) {

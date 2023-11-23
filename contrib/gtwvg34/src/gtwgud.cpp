@@ -287,7 +287,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
    if( pWVT->pGT->pNotifierBlock ) {
       if( hb_vmRequestReenter() ) {
          auto pEvent = hb_itemPutNI(nullptr, nEvent);
-         PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
+         auto pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
 
          if( HB_IS_POINTER(pResult) ) {
             nResult = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pResult));

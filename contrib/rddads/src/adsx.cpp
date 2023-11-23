@@ -204,7 +204,6 @@ static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USH
 
 static PMIXKEY mixKeyEval( PMIXTAG pTag, ADSXAREAP pArea )
 {
-   PHB_ITEM     pItem;
    PMIXKEY      pKey;
    int          iCurrArea = hb_rddGetCurrentWorkAreaNumber();
    PHB_CODEPAGE pCodepage = hb_cdpSelect( pArea->adsarea.area.cdPage );
@@ -215,7 +214,7 @@ static PMIXKEY mixKeyEval( PMIXTAG pTag, ADSXAREAP pArea )
       iCurrArea = 0;
    }
 
-   pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
+   auto pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
 
    pKey = mixKeyNew(pItem, pArea->adsarea.ulRecNo, pTag->bType, pTag->uiLen);
 
@@ -1366,10 +1365,9 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_KEYVAL: {
-         PHB_ITEM pItem;
          PHB_CODEPAGE pCodepage = hb_cdpSelect( pArea->adsarea.area.cdPage );
 
-         pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
+         auto pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
          hb_cdpSelect( pCodepage );
          if( !pOrderInfo->itmResult ) {
             pOrderInfo->itmResult = hb_itemNew(nullptr);

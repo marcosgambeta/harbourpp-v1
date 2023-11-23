@@ -955,7 +955,7 @@ HB_FUNC( ADSISRECORDVALID )
 
       if( SELF_EOF(pArea, &fEof) == Harbour::SUCCESS && !fEof ) {
          if( pArea->dbfi.itmCobExpr ) {
-            PHB_ITEM pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
+            auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
 
             bReturn = HB_IS_LOGICAL(pResult) && hb_itemGetL(pResult);
          } else {

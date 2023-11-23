@@ -1363,7 +1363,7 @@ static HB_ERRCODE adsSkipFilter(ADSAREAP pArea, HB_LONG lUpDown)
     */
    if( pArea->area.dbfi.itmCobExpr != nullptr && !pArea->area.dbfi.fOptimized ) {
       while( !pArea->area.fBof && !pArea->area.fEof ) {
-         PHB_ITEM pResult = hb_vmEvalBlock(pArea->area.dbfi.itmCobExpr);
+         auto pResult = hb_vmEvalBlock(pArea->area.dbfi.itmCobExpr);
          if( !HB_IS_LOGICAL(pResult) || hb_itemGetL(pResult) ) {
             break;
          }
