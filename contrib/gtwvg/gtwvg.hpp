@@ -271,7 +271,7 @@ struct HB_GTWVT
 #if !defined(UNICODE)
    int      boxCodePage;                    /* Code page to use for display draw line characters */
 #endif
-   bool     Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
+   //bool     Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */ DEPRECATED
    bool     AltF4Close;                     /* Can use Alt+F4 to close application */
    bool     CentreWindow;                   /* True if window is to be Reset into centre of window */
 

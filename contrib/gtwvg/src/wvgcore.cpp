@@ -183,13 +183,13 @@ IPicture * hb_wvt_gtLoadPicture(LPCTSTR image)
 
 HB_BOOL hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture * iPicture, HB_BOOL bDoNotScale)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    LONG    lWidth, lHeight;
    int     xe, ye;
    HRGN    hrgn1;
    POINT   lpp{};
-   bool bResult = false;
+   auto bResult = false;
    HDC     hdc     = _s->hdc;
 
    if( iPicture ) {
@@ -244,7 +244,7 @@ HB_BOOL hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture * iPicture
 
 HB_BOOL hb_wvt_gtDestroyPicture(IPicture * iPicture)
 {
-   bool bResult = false;
+   auto bResult = false;
 
    if( iPicture ) {
       HB_VTBL(iPicture)->Release(HB_THIS(iPicture));
@@ -254,9 +254,9 @@ HB_BOOL hb_wvt_gtDestroyPicture(IPicture * iPicture)
    return bResult;
 }
 
-POINT  hb_wvt_gtGetXYFromColRow(int col, int row)
+POINT hb_wvt_gtGetXYFromColRow(int col, int row)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy;
 
@@ -272,7 +272,7 @@ POINT  hb_wvt_gtGetXYFromColRow(int col, int row)
 
 BOOL CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int      iIndex, iType;
    long int lReturn = 0;
@@ -358,7 +358,7 @@ BOOL CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
 
 BOOL CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int      iIndex, iType;
    long int lReturn = 0;
@@ -459,7 +459,7 @@ HB_BOOL hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage,
    int     xe, ye;
    HRGN    hrgn1;
    POINT   lpp{};
-   bool bResult = false;
+   auto bResult = false;
 
    hFile = CreateFile(lpImage, GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
@@ -526,7 +526,7 @@ HB_BOOL hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, LPCTSTR lpImage,
 
 static void hb_wvt_DrawBoxRaised(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penWhiteDim);
    MoveToEx(hdc, iLeft, iTop, nullptr);             /* Top Inner */
@@ -555,7 +555,7 @@ static void hb_wvt_DrawBoxRaised(HDC hdc, int iTop, int iLeft, int iBottom, int 
 
 static void hb_wvt_DrawBoxRecessed(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penWhiteDim);
    MoveToEx(hdc, iRight, iTop, nullptr);            /* Right Inner */
@@ -599,7 +599,7 @@ static void hb_wvt_DrawOutline(HDC hdc, int iTop, int iLeft, int iBottom, int iR
 
 static void hb_wvt_DrawBoxGet(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penBlack);
    MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Top Inner */
@@ -616,7 +616,7 @@ static void hb_wvt_DrawBoxGet(HDC hdc, int iTop, int iLeft, int iBottom, int iRi
 
 static void hb_wvt_DrawBoxGroup(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penDarkGray);
 
@@ -649,7 +649,7 @@ static void hb_wvt_DrawBoxGroup(HDC hdc, int iTop, int iLeft, int iBottom, int i
 
 static void hb_wvt_DrawBoxGroupRaised(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penWhite);
 
@@ -682,7 +682,7 @@ static void hb_wvt_DrawBoxGroupRaised(HDC hdc, int iTop, int iLeft, int iBottom,
 
 static void hb_wvt_DrawToolButtonFlat(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penGray);
 
@@ -701,7 +701,7 @@ static void hb_wvt_DrawToolButtonFlat(HDC hdc, int iTop, int iLeft, int iBottom,
 
 static void hb_wvt_DrawToolButtonUp(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penBlack);
 
@@ -722,7 +722,7 @@ static void hb_wvt_DrawToolButtonUp(HDC hdc, int iTop, int iLeft, int iBottom, i
 
 static void hb_wvt_DrawToolButtonDown(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SelectObject(hdc, _s->pGUI->penWhite);
 
@@ -743,7 +743,7 @@ static void hb_wvt_DrawToolButtonDown(HDC hdc, int iTop, int iLeft, int iBottom,
 
 static COLORREF hb_wvt_BgColorParam(int iParam)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    COLORREF color;
 
@@ -762,7 +762,7 @@ static COLORREF hb_wvt_BgColorParam(int iParam)
 
 static COLORREF hb_wvt_FgColorParam(int iParam)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    COLORREF color;
 
@@ -782,7 +782,7 @@ static COLORREF hb_wvt_FgColorParam(int iParam)
 /* wvt_SetPen( nPenStyle, nWidth, nColor ) */
 HB_FUNC( WVT_SETPEN )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    HPEN     hPen;
 
@@ -811,7 +811,7 @@ HB_FUNC( WVT_SETPEN )
 /* wvt_SetBrush( nStyle, nColor, [nHatch] ) */
 HB_FUNC( WVT_SETBRUSH )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    HBRUSH   hBrush;
    LOGBRUSH lb{};
@@ -839,7 +839,7 @@ HB_FUNC( WVT_SETBRUSH )
 /* wvt_DrawBoxGet(nRow, nCol, nWidth) */
 HB_FUNC( WVT_DRAWBOXGET )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
    POINT yz{};
@@ -858,7 +858,7 @@ HB_FUNC( WVT_DRAWBOXGET )
 /* wvt_DrawBoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVT_DRAWBOXRAISED )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -876,7 +876,7 @@ HB_FUNC( WVT_DRAWBOXRAISED )
 /* wvt_DrawBoxRecessed( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVT_DRAWBOXRECESSED )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -894,7 +894,7 @@ HB_FUNC( WVT_DRAWBOXRECESSED )
 /* wvt_DrawBoxGroup( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVT_DRAWBOXGROUP )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -912,7 +912,7 @@ HB_FUNC( WVT_DRAWBOXGROUP )
 /* wvt_DrawBoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVT_DRAWBOXGROUPRAISED )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -930,7 +930,7 @@ HB_FUNC( WVT_DRAWBOXGROUPRAISED )
 /* wvt_DrawImage( nTop, nLeft, nBottom, nRight, cImage/nPictureSlot, aPxlOff, lDoNotScale ) */
 HB_FUNC( WVT_DRAWIMAGE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
    int   iLeft, iTop, iRight, iBottom;
@@ -967,7 +967,7 @@ HB_FUNC( WVT_DRAWIMAGE )
  */
 HB_FUNC( WVT_DRAWLABEL )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT   xy{};
    HFONT   hFont, hOldFont, hOldFontGui;
@@ -1032,7 +1032,7 @@ HB_FUNC( WVT_DRAWLABEL )
    wvt_DrawOutline( nTop, nLeft, nBottom, nRight, nThick, nShape, nRGBColor, aPxlOff ) */
 HB_FUNC( WVT_DRAWOUTLINE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    HPEN  hPen, hOldPen, hOldPenGUI;
    POINT xy{};
@@ -1082,7 +1082,7 @@ HB_FUNC( WVT_DRAWOUTLINE )
    wvt_DrawLine( nTop, nLeft, nBottom, nRight, nOrient, nFormat, nAlign, nStyle, nThick, nColor, aPxlOff ) */
 HB_FUNC( WVT_DRAWLINE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(11, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(11, 2);
@@ -1258,7 +1258,7 @@ HB_FUNC( WVT_DRAWLINE )
  */
 HB_FUNC( WVT_DRAWELLIPSE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -1279,7 +1279,7 @@ HB_FUNC( WVT_DRAWELLIPSE )
 /* wvt_DrawRectangle( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVT_DRAWRECTANGLE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -1300,7 +1300,7 @@ HB_FUNC( WVT_DRAWRECTANGLE )
 /* wvt_DrawRoundRect( nTop, nLeft, nBottom, nRight, aPxlOff, nRoundHeight, nRoundWidth ) */
 HB_FUNC( WVT_DRAWROUNDRECT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -1324,7 +1324,7 @@ HB_FUNC( WVT_DRAWROUNDRECT )
 /* wvt_DrawFocusRect( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVT_DRAWFOCUSRECT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int  iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int  iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -1350,7 +1350,7 @@ HB_FUNC( WVT_DRAWFOCUSRECT )
  */
 HB_FUNC( WVT_DRAWCOLORRECT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int    iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int    iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -1383,7 +1383,7 @@ HB_FUNC( WVT_DRAWCOLORRECT )
  */
 HB_FUNC( WVT_DRAWGRIDHORZ )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto iAtRow = hb_parni(1);
    auto iRows  = hb_parni(4);
@@ -1428,7 +1428,7 @@ HB_FUNC( WVT_DRAWGRIDHORZ )
    aPxlOff[1] and aPxlOff[3] used */
 HB_FUNC( WVT_DRAWGRIDVERT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop, iBottom, x, i, iCharHeight, iCharWidth;
    auto iTabs = hb_parni(4);
@@ -1471,7 +1471,7 @@ HB_FUNC( WVT_DRAWGRIDVERT )
                   nFormat, nTextColor, nBkColor, nImageAt, aPxlOff ) */
 HB_FUNC( WVT_DRAWBUTTON )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    SIZE     sz{};
    POINT    xy{};
@@ -1605,7 +1605,7 @@ HB_FUNC( WVT_DRAWBUTTON )
 /* wvt_DrawStatusBar( nNumPanels, aTLBRofPanels ) */
 HB_FUNC( WVT_DRAWSTATUSBAR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto iPanels = hb_parni(1);
    int   i, iNext;
@@ -1671,7 +1671,7 @@ HB_FUNC( WVT_DRAWSTATUSBAR )
    nSlot <= 20  aAdj == {0,0,-2,-2} To Adjust the pixels for {Top,Left,Bottom,Right} */
 HB_FUNC( WVT_DRAWPICTURE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
    int   iTop, iLeft, iBottom, iRight;
@@ -1718,7 +1718,7 @@ HB_FUNC( WVT_DRAWPICTUREEX )
  */
 HB_FUNC( WVT_DRAWLABELEX )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
    int   iSlot = hb_parni(7) - 1;
@@ -1760,7 +1760,7 @@ HB_FUNC( WVT_DRAWLABELEX )
  */
 HB_FUNC( WVT_DRAWLINEEX )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
    int   iTop, iLeft, iBottom, iRight, iOffset;
@@ -1932,7 +1932,7 @@ HB_FUNC( WVT_DRAWLINEEX )
  */
 HB_FUNC( WVT_DRAWOUTLINEEX )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
    int   iTop, iLeft, iBottom, iRight;
@@ -1964,7 +1964,7 @@ HB_FUNC( WVT_DRAWOUTLINEEX )
  */
 HB_FUNC( WVT_DRAWLABELOBJ )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
    RECT  rect{};
@@ -2055,7 +2055,7 @@ HB_FUNC( WVT_DRAWLABELOBJ )
  */
 HB_FUNC( WVT_DRAWTOOLBUTTONSTATE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -2098,7 +2098,7 @@ HB_FUNC( WVT_DRAWTOOLBUTTONSTATE )
  */
 HB_FUNC( WVT_DRAWSCROLLBUTTON )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -2190,7 +2190,7 @@ HB_FUNC( WVT_DRAWSCROLLBUTTON )
 /* wvt_DrawScrollThumbVert( nTop, nLeft, nBottom, nRight, aPxlOff, nThumbPos ) */
 HB_FUNC( WVT_DRAWSCROLLTHUMBVERT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -2240,7 +2240,7 @@ HB_FUNC( WVT_DRAWSCROLLTHUMBVERT )
 /* wvt_DrawScrollThumbHorz( nTop, nLeft, nBottom, nRight, aPxlOff, nThumbPos ) */
 HB_FUNC( WVT_DRAWSCROLLTHUMBHORZ )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -2291,9 +2291,9 @@ HB_FUNC( WVT_DRAWSCROLLTHUMBHORZ )
  */
 HB_FUNC( WVT_DRAWSHADEDRECT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
-   bool bGF = false;
+   auto bGF = false;
 
    TRIVERTEX     vert[2];
    GRADIENT_RECT gRect{};
@@ -2338,7 +2338,7 @@ HB_FUNC( WVT_DRAWSHADEDRECT )
                     nBackMode, hFont ) */
 HB_FUNC( WVT_DRAWTEXTBOX )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -2397,7 +2397,7 @@ HB_FUNC( WVT_DRAWTEXTBOX )
                         nBackColor, nBarColor, cImage, lVertical, nDirection ) */
 HB_FUNC( WVT_DRAWPROGRESSBAR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int      iTop    = (_s->PTEXTSIZE.y * hb_parni(1)) + hb_parvni(5, 1);
    int      iLeft   = (_s->PTEXTSIZE.x * hb_parni(2)) + hb_parvni(5, 2);
@@ -2479,7 +2479,7 @@ HB_FUNC( WVT_DRAWPROGRESSBAR )
                   lStrikeout, nCharSet, nQuality, nEscapement) */
 HB_FUNC( WVT_CREATEFONT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    LOGFONT logfont;     /* = {0,0,0}; */
    void *  hText = nullptr;
@@ -2507,9 +2507,9 @@ HB_FUNC( WVT_CREATEFONT )
 /* wvt_LoadPicture( nSlot, cFilePic ) */
 HB_FUNC( WVT_LOADPICTURE )
 {
-   bool bResult = false;
+   auto bResult = false;
 
-   PHB_GTWVT  _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    void *     hImage;
    IPicture * iPicture = hb_wvt_gtLoadPicture(HB_PARSTR(2, &hImage, nullptr));
    int        iSlot    = hb_parni(1) - 1;
@@ -2545,9 +2545,9 @@ HB_FUNC( WVT_LOADPICTUREEX )
 
 HB_FUNC( WVT_LOADPICTUREFROMRESOURCE )
 {
-   bool bResult = false;
+   auto bResult = false;
 
-   PHB_GTWVT  _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    void *     hResource;
    void *     hSection;
    IPicture * iPicture = hb_wvt_gtLoadPictureFromResource(HB_PARSTR(2, &hResource, nullptr), HB_PARSTR(3, &hSection, nullptr));
@@ -2582,7 +2582,7 @@ HB_FUNC( WVT_LOADPICTUREFROMRESOURCEEX )
                 nCharSet, nQuality, nEscapement) */
 HB_FUNC( WVT_LOADFONT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    LOGFONT logfont;     /* = {0}; */
    int     iSlot = hb_parni(1) - 1;
@@ -2618,7 +2618,7 @@ HB_FUNC( WVT_LOADFONT )
 /* wvt_LoadPen( nSlot, nStyle, nWidth, nRGBColor ) */
 HB_FUNC( WVT_LOADPEN )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    HPEN     hPen;
    int      iSlot = hb_parni(1) - 1;
@@ -2644,64 +2644,54 @@ HB_FUNC( WVT_LOADPEN )
 /* wvt_SaveScreen( nTop, nLeft, nBottom, nRight ) --> aSrc */
 HB_FUNC( WVT_SAVESCREEN )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
-   HDC      hCompDC;
-   HBITMAP  hBmp;
-   POINT    xy{};
-   int      iTop, iLeft, iBottom, iRight, iWidth, iHeight;
-   auto info = hb_itemArrayNew(3);
-
-   xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-   iTop  = xy.y;
-   iLeft = xy.x;
+   POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+   int iTop  = xy.y;
+   int iLeft = xy.x;
 
    xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-   iBottom = xy.y - 1;
-   iRight  = xy.x - 1;
+   int iBottom = xy.y - 1;
+   int iRight  = xy.x - 1;
 
-   iWidth  = iRight - iLeft + 1;
-   iHeight = iBottom - iTop + 1;
+   int iWidth  = iRight - iLeft + 1;
+   int iHeight = iBottom - iTop + 1;
 
-   hBmp = CreateCompatibleBitmap(_s->hdc, iWidth, iHeight);
+   auto hBmp = CreateCompatibleBitmap(_s->hdc, iWidth, iHeight);
 
-   hCompDC = CreateCompatibleDC(_s->hdc);
+   auto hCompDC = CreateCompatibleDC(_s->hdc);
    auto oldBmp  = static_cast<HBITMAP>(SelectObject(hCompDC, hBmp));
    BitBlt(hCompDC, 0, 0, iWidth, iHeight, _s->hdc, iLeft, iTop, SRCCOPY);
    SelectObject(hCompDC, oldBmp);
    DeleteDC(hCompDC);
 
+   auto info = hb_itemArrayNew(3);
    hb_arraySetNI(info, 1, iWidth);
    hb_arraySetNI(info, 2, iHeight);
    hb_arraySetNInt(info, 3, reinterpret_cast<HB_PTRUINT>(hBmp));
-
    hb_itemReturnRelease(info);
 }
 
 /* wvt_RestScreen( nTop, nLeft, nBottom, nRight, aScr, lDoNotDestroyBMP ) */
 HB_FUNC( WVT_RESTSCREEN )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
-   POINT   xy{};
-   int     iTop, iLeft, iBottom, iRight, iWidth, iHeight;
-   HDC     hCompDC;
-
-   bool bResult = false;
+   auto bResult = false;
    bool bDoNotDestroyBMP = hb_parl(6);
 
-   xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-   iTop  = xy.y;
-   iLeft = xy.x;
+   POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+   int iTop  = xy.y;
+   int iLeft = xy.x;
 
-   xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-   iBottom = xy.y - 1;
-   iRight  = xy.x - 1;
+   xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+   int iBottom = xy.y - 1;
+   int iRight  = xy.x - 1;
 
-   iWidth  = iRight - iLeft + 1;
-   iHeight = iBottom - iTop + 1;
+   int iWidth  = iRight - iLeft + 1;
+   int iHeight = iBottom - iTop + 1;
 
-   hCompDC = CreateCompatibleDC(_s->hdc);
+   auto hCompDC = CreateCompatibleDC(_s->hdc);
    auto hBmp = static_cast<HBITMAP>(SelectObject(hCompDC, reinterpret_cast<HBITMAP>(static_cast<HB_PTRUINT>(hb_parvnint(5, 3)))));
    if( hBmp ) {
       if( (iWidth == hb_parvni(5, 1)) && (iHeight == hb_parvni(5, 2)) ) {

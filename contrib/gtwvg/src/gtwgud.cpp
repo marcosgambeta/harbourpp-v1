@@ -137,7 +137,7 @@ static PHB_GTWVT hb_gt_wvt_Find(HWND hWnd)
 
 static bool hb_gt_wvt_Alloc(PHB_GTWVT pWVT)
 {
-   bool fOK = false;
+   auto fOK = false;
 
    HB_WVT_LOCK();
 
@@ -198,9 +198,7 @@ static void hb_gt_wvt_Free(PHB_GTWVT pWVT)
 
 static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
 {
-   PHB_GTWVT pWVT;
-
-   pWVT = new HB_GTWVT();
+   auto pWVT = new HB_GTWVT();
    pWVT->pGT = pGT;
 
    if( !hb_gt_wvt_Alloc(pWVT) ) {
@@ -234,7 +232,7 @@ static PHB_GTWVT hb_gt_wvt_New(PHB_GT pGT, HINSTANCE hInstance, int iCmdShow)
    pWVT->CentreWindow      = true;      /* Default is to always display window in centre of screen */
    pWVT->CodePage          = OEM_CHARSET;  /* GetACP(); - set code page to default system */
 
-   pWVT->Win9X             = hb_iswin9x();
+   //pWVT->Win9X             = hb_iswin9x(); DEPRECATED
 
    pWVT->IgnoreWM_SYSCHAR  = false;
 
@@ -739,7 +737,7 @@ static bool hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, LPAR
 
 static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   PHB_GTWVT pWVT = hb_gt_wvt_Find(hWnd);
+   auto pWVT = hb_gt_wvt_Find(hWnd);
 
    if( pWVT ) {
       switch( message ) {
@@ -978,7 +976,7 @@ static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT)
    if( pWVT->pPP->bConfigured ) {
       PHB_GT pGTp = hb_gt_ItemBase(pWVT->pPP->pParentGT);
       if( pGTp ) {
-         PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+         auto pWVTp = HB_GTWVT_GET(pGTp);
          hWndParent = pWVTp->hWnd;
          hb_gt_BaseFree(pGTp);
 
@@ -1024,7 +1022,7 @@ static HWND hb_gt_wvt_CreateWindow(PHB_GTWVT pWVT)
 static bool hb_gt_wvt_CreateConsoleWindow(PHB_GTWVT pWVT)
 {
    if( !pWVT->hWnd ) {
-      RECT rc = {0, 0, 0, 0};
+      RECT rc{};
 
       pWVT->hWnd = hb_gt_wvt_CreateWindow(pWVT);
       if( !pWVT->hWnd ) {
@@ -1055,14 +1053,13 @@ static void hb_gt_wvt_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
    HANDLE    hInstance;
    int       iCmdShow;
-   PHB_GTWVT pWVT;
 
    if( !hb_winmainArgGet(&hInstance, nullptr, &iCmdShow) ) {
       hInstance = GetModuleHandle(nullptr);
       iCmdShow = 1;
    }
 
-   pWVT = hb_gt_wvt_New(pGT, static_cast<HINSTANCE>(hInstance), iCmdShow);
+   auto pWVT = hb_gt_wvt_New(pGT, static_cast<HINSTANCE>(hInstance), iCmdShow);
    if( !pWVT ) {
       hb_errInternal(10001, "Maximum number of WGU windows reached, cannot create another one", nullptr, nullptr);
    }
@@ -1088,9 +1085,7 @@ static void hb_gt_wvt_Exit(PHB_GT pGT) // FuncTable
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Exit(%p)", static_cast<void*>(pGT)));
 #endif
 
-   PHB_GTWVT pWVT;
-
-   pWVT = HB_GTWVT_GET(pGT);
+   auto pWVT = HB_GTWVT_GET(pGT);
    HB_GTSUPER_EXIT(pGT);
 
    if( pWVT ) {
@@ -1106,19 +1101,16 @@ static int hb_gt_wvt_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_ReadKey(%p,%d)", static_cast<void*>(pGT), iEventMask));
 #endif
 
-   PHB_GTWVT pWVT;
-   int  c = 0;
-   bool fKey;
-
    HB_SYMBOL_UNUSED(iEventMask);  /* we ignore the event mask! */
 
-   pWVT = HB_GTWVT_GET(pGT);
+   auto pWVT = HB_GTWVT_GET(pGT);
 
    if( pWVT->hWnd ) { /* Is the window already open? */
       hb_gt_wvt_ProcessMessages(pWVT);
    }
 
-   fKey = hb_gt_wvt_GetCharFromInputQueue(pWVT, &c);
+   auto c = 0;
+   bool fKey = hb_gt_wvt_GetCharFromInputQueue(pWVT, &c);
 
    return fKey ? c : 0;
 }
@@ -1141,10 +1133,9 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_Info(%p,%d,%p)", static_cast<void*>(pGT), iType, static_cast<void*>(pInfo)));
 #endif
 
-   PHB_GTWVT pWVT;
    int iVal;
 
-   pWVT = HB_GTWVT_GET(pGT);
+   auto pWVT = HB_GTWVT_GET(pGT);
 
    switch( iType ) {
       case HB_GTI_ISSCREENPOS:
@@ -1769,7 +1760,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       case HB_GTI_ENABLE: {
          PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
          if( pGTp ) {
-            PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+            auto pWVTp = HB_GTWVT_GET(pGTp);
             EnableWindow(pWVTp->hWnd, TRUE);
             hb_gt_BaseFree(pGTp);
          }
@@ -1778,7 +1769,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       case HB_GTI_DISABLE: {
          PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
          if( pGTp ) {
-            PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+            auto pWVTp = HB_GTWVT_GET(pGTp);
             EnableWindow(pWVTp->hWnd, FALSE);
             hb_gt_BaseFree(pGTp);
          }
@@ -1787,7 +1778,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       case HB_GTI_SETFOCUS: {
          PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
          if( pGTp ) {
-            PHB_GTWVT pWVTp = HB_GTWVT_GET(pGTp);
+            auto pWVTp = HB_GTWVT_GET(pGTp);
             SetFocus(pWVTp->hWnd);
             hb_gt_BaseFree(pGTp);
          }

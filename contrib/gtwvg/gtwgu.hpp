@@ -201,7 +201,7 @@ struct HB_GTWVT
    LPCTSTR  lpWindowTitle;
 
    int      CodePage;                       /* Code page to use for display characters */
-   bool     Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
+   //bool     Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */ DEPRECATED
    bool     CentreWindow;                   /* True if window is to be Reset into centre of window */
 
    bool     IgnoreWM_SYSCHAR;

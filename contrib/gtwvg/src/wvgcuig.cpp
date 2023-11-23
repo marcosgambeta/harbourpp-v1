@@ -106,7 +106,7 @@ static void hb_wvg_RestFromBuffer(PHB_GTWVT pWVT, int iLeft, int iTop, int iRigh
 /* wvg_ClearGUIObjects() --> NIL */
 HB_FUNC( WVG_CLEARGUIOBJECTS )
 {
-   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
 
    if( pWVT->gObjs ) {
       PHB_GOBJS gObj;
@@ -149,9 +149,9 @@ HB_FUNC( WVG_CLEARGUIOBJECTS )
 
 HB_FUNC( WVG_SETGOBJSTATE )
 {
-   PHB_GTWVT pWVT    = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    auto iHandle = hb_parni(1);
-   int       iOState = 0;
+   auto iOState = 0;
 
    if( iHandle && pWVT->gObjs ) {
       PHB_GOBJS gObj = pWVT->gObjs;
@@ -178,9 +178,9 @@ HB_FUNC( WVG_SETGOBJSTATE )
 /* wvg_SetGObjData( hObj, nGobjDataType, xData, xData1 ) --> lSuccess */
 HB_FUNC( WVG_SETGOBJDATA )
 {
-   PHB_GTWVT pWVT     = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    auto iHandle = hb_parni(1);
-   bool      bSuccess = false;
+   auto bSuccess = false;
 
    if( iHandle ) {
       PHB_GOBJS gObj = pWVT->gObjs;
@@ -293,7 +293,7 @@ HB_FUNC( WVG_SETGOBJDATA )
 /* wvg_BoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVG_BOXRAISED )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_BOXRAISED;
@@ -345,7 +345,7 @@ static void hb_wvg_BoxRaised(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, in
 /* wvg_BoxRecessed( nTop, nLeft, nBottom, nRight, aPxlOff ) --> NIL */
 HB_FUNC( WVG_BOXRECESSED )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_BOXRECESSED;
@@ -397,7 +397,7 @@ static void hb_wvg_BoxRecessed(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, 
 /* wvt_BoxGet(nRow, nCol, nWidth) --> NIL */
 HB_FUNC( WVG_BOXGET )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_BOXGET;
@@ -438,7 +438,7 @@ static void hb_wvg_BoxGet(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, int i
 /* wvg_BoxGroup( nTop, nLeft, nBottom, nRight, aPxlOff ) --> NIL */
 HB_FUNC( WVG_BOXGROUP )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_BOXGROUP;
@@ -495,7 +495,7 @@ static void hb_wvg_BoxGroup(PHB_GTWVT pWVT, int iLeft, int iTop, int iRight, int
 /* wvg_BoxRaised( nTop, nLeft, nBottom, nRight, aPxlOff ) --> NIL */
 HB_FUNC( WVG_BOXGROUPRAISED )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_BOXGROUPRAISED;
@@ -554,7 +554,7 @@ static void hb_wvg_BoxGroupRaised(PHB_GTWVT pWVT, int iLeft, int iTop, int iRigh
               lUnderline, lStrikeOut ) */
 HB_FUNC( WVG_LABEL )
 {
-   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    LOGFONT   lf;
    HFONT     hFont;
    void *    hText = nullptr;
@@ -608,7 +608,7 @@ HB_FUNC( WVG_LABEL )
 /* wvg_LabelEx( nRow, nCol, aPxlOff, cLabel, nAlign, nTextColor, nBkColor, nSlotFont ) */
 HB_FUNC( WVG_LABELEX )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_LABEL;
@@ -662,7 +662,7 @@ static void hb_wvg_Label(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop)
                 lUnderline, lStrikeOut) */
 HB_FUNC( WVG_LABELEX2 )
 {
-   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    LOGFONT   lf;
    HFONT     hFont;
    void *    hText = nullptr;
@@ -765,7 +765,7 @@ static void hb_wvg_LabelEx2(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop,
    wvg_Outline( nTop, nLeft, nBottom, nRight, aPxlOff, nThick, nShape, nRGBColor ) */
 HB_FUNC( WVG_OUTLINE )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_OUTLINE;
@@ -799,7 +799,7 @@ HB_FUNC( WVG_OUTLINE )
 /* wvg_OutlineEx( nTop, nLeft, nBottom, nRight, aPxlOff, nSlotPen ) */
 HB_FUNC( WVG_OUTLINEEX )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_OUTLINEEX;
@@ -849,7 +849,7 @@ static void hb_wvg_Outline(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
    wvg_Line( nTop, nLeft, nBottom, nRight, aPxlOff, nOrient, nFormat, nAlign, nStyle, nThick, nColor ) */
 HB_FUNC( WVG_LINE )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_LINE;
@@ -883,7 +883,7 @@ HB_FUNC( WVG_LINE )
    wvg_LineEx( nTop, nLeft, nBottom, nRight, aPxlOff, nOrient, nFormat, nAlign, nSlotPen ) */
 HB_FUNC( WVG_LINEEX )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_LINE;
@@ -1011,7 +1011,7 @@ static void hb_wvg_Line(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, int
    wvg_Ellipse( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVG_ELLIPSE )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_ELLIPSE;
@@ -1049,7 +1049,7 @@ static void hb_wvg_Ellipse(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
 /* wvg_Rectangle( nTop, nLeft, nBottom, nRight, aPxlOff ) */
 HB_FUNC( WVG_RECTANGLE )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_RECTANGLE;
@@ -1087,7 +1087,7 @@ static void hb_wvg_Rectangle(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop
 /* wvg_RoundRect( nTop, nLeft, nBottom, nRight, aPxlOff, nRoundHeight, nRoundWidth ) */
 HB_FUNC( WVG_ROUNDRECT )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_ROUNDRECT;
@@ -1131,7 +1131,7 @@ HB_FUNC( WVG_COLORRECT )
    HBRUSH hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnint(6)));
 
    if( hBrush ) {
-      PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+      auto pWVT = hb_wvt_gtGetWVT();
       HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
       gObj->iObjType = GOBJ_OBJTYPE_COLORRECT;
@@ -1165,7 +1165,7 @@ static void hb_wvg_ColorRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop
 /* wvg_ShadedRect( nTop, nLeft, nBottom, nRight, aPxlOff, nHorVert, aRGBb, aRGBe ) */
 HB_FUNC( WVG_SHADEDRECT )
 {
-   PHB_GTWVT pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
 
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
@@ -1224,9 +1224,9 @@ static void hb_wvg_ShadedRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTo
                 nAlignHorz, nAlignVert, nTextColor, nBackColor, hFont ) */
 HB_FUNC( WVG_TEXTBOX )
 {
-   PHB_GTWVT  pWVT    = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj    = hb_wvg_ObjectNew(pWVT);
-   int        iAlignH = 0;
+   auto iAlignH = 0;
 
    gObj->iObjType = GOBJ_OBJTYPE_TEXTBOX;
 
@@ -1289,7 +1289,7 @@ static void hb_wvg_TextBox(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop, 
 HB_FUNC( WVG_PICTURE )
 {
    if( HB_ISNUM(6) && hb_parni(6) <= WVT_PICTURES_MAX ) {
-      PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+      auto pWVT = hb_wvt_gtGetWVT();
       HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
       gObj->iObjType = GOBJ_OBJTYPE_PICTURE;
@@ -1318,7 +1318,7 @@ HB_FUNC( WVG_PICTURE )
 HB_FUNC( WVG_PICTUREEX )
 {
    if( HB_ISNUM(6) ) {
-      PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+      auto pWVT = hb_wvt_gtGetWVT();
       HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
       gObj->iObjType = GOBJ_OBJTYPE_PICTURE;
@@ -1347,7 +1347,7 @@ HB_FUNC( WVG_PICTUREEX )
 /* wvg_Image( nTop, nLeft, nBottom, nRight, aPxlOff, nImageSource, cImage/nPictureSlot, cSection, lDoNotScale ) */
 HB_FUNC( WVG_IMAGE )
 {
-   PHB_GTWVT  pWVT     = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    auto iSource = hb_parni(6);
    IPicture * iPicture = nullptr;
 
@@ -1472,7 +1472,7 @@ static void hb_wvg_RenderPicture(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int 
  */
 HB_FUNC( WVG_OBJECT )
 {
-   PHB_GTWVT  pWVT = hb_wvt_gtGetWVT();
+   auto pWVT = hb_wvt_gtGetWVT();
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    gObj->iObjType = GOBJ_OBJTYPE_OBJECT;

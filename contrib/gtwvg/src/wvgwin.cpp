@@ -754,20 +754,23 @@ HB_FUNC( WVG_MAKELPARAM )
 
 HB_FUNC( WVG_CREATEWINDOWEX )
 {
-   HWND   hWnd;
    void * hClassName;
    void * hWinName;
 
-   hWnd = CreateWindowEx(static_cast<DWORD>(hb_parnint(1)),
-                         HB_PARSTR(2, &hClassName, nullptr),
-                         HB_PARSTR(3, &hWinName, nullptr),
-                         static_cast<DWORD>(hb_parnint(4)),
-                         hb_parni(5), hb_parni(6),
-                         hb_parni(7), hb_parni(8),
-                         reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(9))),
-                         HB_ISNUM(10) ? reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(10))) : nullptr,
-                         HB_ISNUM(11) ? reinterpret_cast<HINSTANCE>(static_cast<HB_PTRUINT>(hb_parnint(11))) : static_cast<HINSTANCE>(wvg_hInstance()),
-                         nullptr);
+   auto hWnd = CreateWindowEx(
+      static_cast<DWORD>(hb_parnint(1)),
+      HB_PARSTR(2, &hClassName, nullptr),
+      HB_PARSTR(3, &hWinName, nullptr),
+      static_cast<DWORD>(hb_parnint(4)),
+      hb_parni(5),
+      hb_parni(6),
+      hb_parni(7),
+      hb_parni(8),
+      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(9))),
+      HB_ISNUM(10) ? reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(10))) : nullptr,
+      HB_ISNUM(11) ? reinterpret_cast<HINSTANCE>(static_cast<HB_PTRUINT>(hb_parnint(11))) : static_cast<HINSTANCE>(wvg_hInstance()),
+      nullptr);
+
    hb_strfree(hClassName);
    hb_strfree(hWinName);
 

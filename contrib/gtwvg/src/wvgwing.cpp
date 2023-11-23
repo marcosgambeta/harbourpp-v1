@@ -288,11 +288,11 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
                   }
 
                   if( iExpWidth != iWidth || iExpHeight != iHeight ) {
-                     HDC hdcSource = CreateCompatibleDC(hdc);
+                     auto hdcSource = CreateCompatibleDC(hdc);
                      SelectObject(hdcSource, hBitmap);
 
-                     HDC hdcTarget = CreateCompatibleDC(hdc);
-                     HBITMAP hBitmap2 = CreateCompatibleBitmap(hdcSource, iExpWidth, iExpHeight);
+                     auto hdcTarget = CreateCompatibleDC(hdc);
+                     auto hBitmap2 = CreateCompatibleBitmap(hdcSource, iExpWidth, iExpHeight);
                      SelectObject(hdcTarget, hBitmap2);
 
                      /*
@@ -361,24 +361,24 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
 HB_FUNC( WVG_PREPAREBITMAPFROMFILE )
 {
    void *  hText;
-   HBITMAP hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
-                            reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 0);
+   auto hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
+      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 0);
    hb_strfree(hText);
    hb_retptr(static_cast<void*>(hBitmap));
 }
 
 HB_FUNC( WVG_PREPAREBITMAPFROMRESOURCEID )
 {
-   HBITMAP hBitmap = hPrepareBitmap(nullptr, hb_parni(1), hb_parni(2), hb_parni(3), hb_parl(4),
-                            reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 2);
+   auto hBitmap = hPrepareBitmap(nullptr, hb_parni(1), hb_parni(2), hb_parni(3), hb_parl(4),
+      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 2);
    hb_retptr(static_cast<void*>(hBitmap));
 }
 
 HB_FUNC( WVG_PREPAREBITMAPFROMRESOURCENAME )
 {
    void *  hText;
-   HBITMAP hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
-                            reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 1);
+   auto hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
+      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 1);
    hb_strfree(hText);
    hb_retptr(static_cast<void*>(hBitmap));
 }
@@ -653,8 +653,8 @@ PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
 
 BOOL CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   bool bret = false;
-   bool binit = false;
+   auto bret = false;
+   auto binit = false;
 
    if( msg == WM_INITDIALOG ) {
       auto cf = reinterpret_cast<CHOOSEFONT*>(lParam);
@@ -705,7 +705,7 @@ HB_FUNC( WVG_CHOOSEFONT )
       hb_strfree(hText);
    }
    if( HB_ISNUM(4) && hb_parnl(4) ) {
-      HDC hdc = GetDC(hWnd);
+      auto hdc = GetDC(hWnd);
       PointSize = -MulDiv(static_cast<LONG>(hb_parnl(4)), GetDeviceCaps(hdc, LOGPIXELSY), 72);
       ReleaseDC(hWnd, hdc);
    }
@@ -1008,7 +1008,7 @@ HB_FUNC( WVG_RELEASEWINDOWPROCBLOCK )
  */
 HB_FUNC( WVG_CREATETOOLTIPWINDOW )
 {
-   HWND hwndTip = CreateWindowEx(
+   auto hwndTip = CreateWindowEx(
       0,
       TOOLTIPS_CLASS,
       0,

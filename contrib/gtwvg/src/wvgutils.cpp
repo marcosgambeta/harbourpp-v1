@@ -109,7 +109,7 @@ HB_FUNC( WVT_UTILS )
  */
 HB_FUNC( WVT_CHOOSEFONT )
 {
-   PHB_GTWVT  _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    CHOOSEFONT cf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
    LOGFONT    lf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
    LONG       PointSize = 0;
@@ -189,7 +189,7 @@ HB_FUNC( WVT_CHOOSEFONT )
  */
 HB_FUNC( WVT_CHOOSECOLOR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    CHOOSECOLOR cc;
    COLORREF    crCustClr[16];
@@ -216,7 +216,7 @@ HB_FUNC( WVT_CHOOSECOLOR )
  */
 HB_FUNC( WVT_MESSAGEBOX )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    void * hTitle;
    void * hMsg;
@@ -232,7 +232,7 @@ HB_FUNC( WVT_MESSAGEBOX )
 
 HB_FUNC( WVT_SETTOOLTIPACTIVE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    bool bActive = _s->bToolTipActive;
 
@@ -248,7 +248,7 @@ HB_FUNC( WVT_SETTOOLTIPACTIVE )
  */
 HB_FUNC( WVT_SETTOOLTIP )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT    xy{};
    int      iTop, iLeft, iBottom, iRight;
@@ -287,7 +287,7 @@ HB_FUNC( WVT_SETTOOLTIP )
 
 HB_FUNC( WVT_SETTOOLTIPTEXT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    TOOLINFO ti{};
    ti.cbSize = sizeof(TOOLINFO);
@@ -304,7 +304,7 @@ HB_FUNC( WVT_SETTOOLTIPTEXT )
 
 HB_FUNC( WVT_SETTOOLTIPMARGIN )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    RECT rc{};
 
@@ -318,7 +318,7 @@ HB_FUNC( WVT_SETTOOLTIPMARGIN )
 
 HB_FUNC( WVT_SETTOOLTIPWIDTH )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto iTipWidth = static_cast<int>(SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0));
 
@@ -331,7 +331,7 @@ HB_FUNC( WVT_SETTOOLTIPWIDTH )
 
 HB_FUNC( WVT_SETTOOLTIPBKCOLOR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto cr = static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPBKCOLOR, 0, 0));
 
@@ -344,7 +344,7 @@ HB_FUNC( WVT_SETTOOLTIPBKCOLOR )
 
 HB_FUNC( WVT_SETTOOLTIPTEXTCOLOR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto cr = static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0));
 
@@ -359,7 +359,7 @@ HB_FUNC( WVT_SETTOOLTIPTEXTCOLOR )
 
 HB_FUNC( WVT_SETTOOLTIPTITLE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    if( HB_ISCHAR(2) ) {
       void * hText;
@@ -378,25 +378,25 @@ HB_FUNC( WVT_SETTOOLTIPTITLE )
 
 HB_FUNC( WVT_GETTOOLTIPWIDTH )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    hb_retni(static_cast<int>(SendMessage(_s->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
 }
 
 HB_FUNC( WVT_GETTOOLTIPBKCOLOR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    hb_retnl(static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPBKCOLOR, 0, 0)));
 }
 
 HB_FUNC( WVT_GETTOOLTIPTEXTCOLOR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    hb_retnl(static_cast<COLORREF>(SendMessage(_s->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0)));
 }
 
 HB_FUNC( WVT_SETGUI )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    bool bGui = _s->bGui;
 
@@ -409,7 +409,7 @@ HB_FUNC( WVT_SETGUI )
 
 HB_FUNC( WVT_SETMOUSEPOS )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    POINT xy{};
 
@@ -424,7 +424,7 @@ HB_FUNC( WVT_SETMOUSEPOS )
 
 HB_FUNC( WVT_GETPAINTRECT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto info = hb_itemArrayNew(4);
 
@@ -438,7 +438,7 @@ HB_FUNC( WVT_GETPAINTRECT )
 
 HB_FUNC( WVT_SETPOINTER )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto iCursor = hb_parni(1);
    HCURSOR hCursor;
@@ -522,7 +522,7 @@ HB_FUNC( WVT_SETPOINTER )
 
 HB_FUNC( WVT_SETMOUSEMOVE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    bool bMouseMove = _s->MouseMove;
 
@@ -548,7 +548,7 @@ HB_FUNC( WVT_GETXYFROMROWCOL )
 
 HB_FUNC( WVT_GETFONTINFO )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto info = hb_itemArrayNew(7);
 
@@ -569,7 +569,7 @@ HB_FUNC( WVT_GETFONTINFO )
 
 HB_FUNC( WVT_SETMENU )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    RECT wi{};
    RECT ci{};
@@ -595,7 +595,7 @@ HB_FUNC( WVT_SETMENU )
 
 HB_FUNC( WVT_SETPOPUPMENU )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    HMENU hPopup = _s->hPopup;
 
@@ -634,13 +634,13 @@ HB_FUNC( WVT_ENABLEMENUITEM )
 
 HB_FUNC( WVT_GETLASTMENUEVENT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    hb_retni(_s->LastMenuEvent);
 }
 
 HB_FUNC( WVT_SETLASTMENUEVENT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iEvent = _s->LastMenuEvent;
 
@@ -653,7 +653,7 @@ HB_FUNC( WVT_SETLASTMENUEVENT )
 
 HB_FUNC( WVT_SETMENUKEYEVENT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    int iOldEvent = _s->MenuKeyEvent;
 
@@ -666,13 +666,13 @@ HB_FUNC( WVT_SETMENUKEYEVENT )
 
 HB_FUNC( WVT_DRAWMENUBAR )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    DrawMenuBar(_s->hWnd);
 }
 
 HB_FUNC( WVT_ENABLESHORTCUTS )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    bool bWas = _s->EnableShortCuts;
 
@@ -685,7 +685,7 @@ HB_FUNC( WVT_ENABLESHORTCUTS )
 
 HB_FUNC( WVT_INVALIDATERECT )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    RECT  rc{};
    POINT xy{};
@@ -707,7 +707,7 @@ HB_FUNC( WVT_ISLBUTTONPRESSED )
 
 HB_FUNC( WVT_CLIENTTOSCREEN )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto info = hb_itemArrayNew(2);
    POINT    xy{};
@@ -737,7 +737,7 @@ HB_FUNC( WVT_GETCURSORPOS )
 
 HB_FUNC( WVT_TRACKPOPUPMENU )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    POINT xy{};
    GetCursorPos(&xy);
    hb_retnl(TrackPopupMenu(reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(1))), TPM_CENTERALIGN | TPM_RETURNCMD, xy.x, xy.y, 0, _s->hWnd, nullptr));
@@ -745,7 +745,7 @@ HB_FUNC( WVT_TRACKPOPUPMENU )
 
 HB_FUNC( WVT_GETMENU )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
    hb_retnint(reinterpret_cast<HB_PTRUINT>(GetMenu(_s->hWnd)));
 }
 
@@ -755,7 +755,7 @@ HB_FUNC( WVT_GETMENU )
 
 HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM pFunc  = nullptr;
@@ -858,7 +858,7 @@ HB_FUNC( WVT_CREATEDIALOGDYNAMIC )
 
 HB_FUNC( WVT_CREATEDIALOGMODAL )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    auto pFirst = hb_param(3, Harbour::Item::ANY);
    PHB_ITEM   pFunc  = nullptr;
@@ -1124,7 +1124,7 @@ HB_FUNC( WVT_DLGSETICON )
 
 HB_FUNC( WVT_GETFONTHANDLE )
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+   auto _s = hb_wvt_gtGetWVT();
 
    HFONT hFont = 0;
    int   iSlot = hb_parni(1) - 1;
