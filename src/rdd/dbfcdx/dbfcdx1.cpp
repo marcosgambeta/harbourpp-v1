@@ -3738,7 +3738,7 @@ static bool hb_cdxCheckRecordFilter(CDXAREAP pArea, HB_ULONG ulRecNo)
       }
 
       if( !lResult && pArea->dbfarea.area.dbfi.itmCobExpr ) {
-         PHB_ITEM pResult = hb_vmEvalBlock(pArea->dbfarea.area.dbfi.itmCobExpr);
+         auto pResult = hb_vmEvalBlock(pArea->dbfarea.area.dbfi.itmCobExpr);
          lResult = HB_IS_LOGICAL(pResult) && !hb_itemGetL(pResult);
       }
    }

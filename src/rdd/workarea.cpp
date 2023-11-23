@@ -1835,7 +1835,6 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
    HB_TRACE(HB_TR_DEBUG, ("hb_waEvalBlock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBlock)));
 #endif
 
-   PHB_ITEM pItem;
    int iCurrArea, iUsedArea;
 
    iCurrArea = hb_rddGetCurrentWorkAreaNumber();
@@ -1844,7 +1843,7 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
       hb_rddSelectWorkAreaNumber(iUsedArea);
    }
 
-   pItem = hb_vmEvalBlockOrMacro(pBlock);
+   auto pItem = hb_vmEvalBlockOrMacro(pBlock);
 
    if( static_cast<AREAP>(hb_rddGetWorkAreaPointer(iUsedArea)) != pArea ) {
       return Harbour::FAILURE;

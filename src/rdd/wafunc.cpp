@@ -1175,10 +1175,8 @@ HB_ERRCODE hb_rddCloseAllParentRelations(AREAP pArea)
 
 static HB_ERRCODE hb_rddEvalWABlock(AREAP pArea, void * pBlock)
 {
-   PHB_ITEM pItem;
-
    hb_rddSelectWorkAreaNumber(pArea->uiArea);
-   pItem = hb_vmEvalBlockOrMacro(static_cast<PHB_ITEM>(pBlock));
+   auto pItem = hb_vmEvalBlockOrMacro(static_cast<PHB_ITEM>(pBlock));
 
    if( hb_vmRequestQuery() != 0 || (HB_IS_LOGICAL(pItem) && !hb_itemGetL(pItem)) ) {
       return Harbour::FAILURE;

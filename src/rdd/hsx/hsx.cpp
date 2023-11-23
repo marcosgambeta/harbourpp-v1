@@ -604,7 +604,6 @@ static int hb_hsxEval(int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fDe
       }
    } else {
       int iArea = 0;
-      PHB_ITEM pItem;
 
       if( pHSX->iArea != 0 ) {
          iArea = hb_rddGetCurrentWorkAreaNumber();
@@ -614,7 +613,7 @@ static int hb_hsxEval(int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fDe
             iArea = 0;
          }
       }
-      pItem = hb_vmEvalBlockOrMacro(pExpr);
+      auto pItem = hb_vmEvalBlockOrMacro(pExpr);
       pStr = hb_itemGetCPtr(pItem);
       nLen = hb_itemGetCLen(pItem);
       if( fDeleted ) {
