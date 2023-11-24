@@ -55,7 +55,8 @@
 
 static bool hb_strMatchWildRaw(const char * szString, const char * szPattern, bool fExact, bool fCase, bool fFile)
 {
-   bool fMatch = true, fAny = false;
+   auto fMatch = true;
+   auto fAny = false;
    HB_SIZE pnBufPosP[HB_MAX_WILDPATTERN], pnBufPosV[HB_MAX_WILDPATTERN], nBufSize = HB_MAX_WILDPATTERN;
    HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV, nSize, nLen, nAny, nPosP, nPosV;
 
@@ -111,7 +112,8 @@ static bool hb_strMatchWildRaw(const char * szString, const char * szPattern, bo
 
 static bool hb_strMatchWildCDP(const char * szString, const char * szPattern, bool fExact, bool fCase, bool fFile, PHB_CODEPAGE cdp)
 {
-   bool fMatch = true, fAny = false;
+   auto fMatch = true;
+   auto fAny = false;
    HB_SIZE pnBufPosP[HB_MAX_WILDPATTERN], pnBufPosV[HB_MAX_WILDPATTERN], nBufSize = HB_MAX_WILDPATTERN;
    HB_SIZE * nAnyPosP = pnBufPosP, * nAnyPosV = pnBufPosV, nSize, nLen, nAny, nPosP, nPosV;
 

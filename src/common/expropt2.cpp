@@ -474,7 +474,7 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
          pSelf = pRight;
          HB_COMP_EXPR_FREE(pLeft);
       } else {
-         bool fReduce = true;
+         auto fReduce = true;
 
          /* Do not reduce strings with the macro operator '&'
           */
@@ -715,7 +715,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
          pSelf = pRight;
          HB_COMP_EXPR_FREE(pLeft);
       } else {
-         bool fReduce = true;
+         auto fReduce = true;
 
          /* Do not reduce strings with the macro operator '&'
           */
@@ -1668,7 +1668,7 @@ HB_BOOL hb_compExprReduceAT(PHB_EXPR pSelf, HB_COMP_DECL)
 
 HB_BOOL hb_compExprReduceCHR(PHB_EXPR pSelf, HB_COMP_DECL)
 {
-   bool fDoOpt = false;
+   auto fDoOpt = false;
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pArg = pParms->value.asList.pExprList;
 
@@ -1770,7 +1770,8 @@ HB_BOOL hb_compExprReduceEMPTY(PHB_EXPR pSelf, HB_COMP_DECL)
 {
    PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
    PHB_EXPR pArg = pParms->value.asList.pExprList;
-   bool fReduced = true, fResult = false;
+   auto fReduced = true;
+   auto fResult = false;
 
    switch( pArg->ExprType ) {
       case HB_ET_STRING:
@@ -1981,7 +1982,7 @@ HB_BOOL hb_compExprReduceUPPER(PHB_EXPR pSelf, HB_COMP_DECL)
 
    if( pArg->ExprType == HB_ET_STRING ) {
       HB_SIZE nLen = pArg->nLength;
-      bool fLower = false;
+      auto fLower = false;
 
       if( nLen ) {
          const char * szValue = pArg->value.asString.string;

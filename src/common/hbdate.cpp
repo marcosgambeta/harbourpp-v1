@@ -491,10 +491,9 @@ HB_BOOL hb_timeStrGet(const char * szTime, int * piHour, int * piMinutes, int * 
 #endif
 
    int iHour, iMinutes, iSeconds, iMSec, iBlocks;
-   bool fValid;
 
    iHour = iMinutes = iSeconds = iMSec = iBlocks = 0;
-   fValid = false;
+   auto fValid = false;
 
    if( szTime ) {
       while( HB_ISSPACE(*szTime) ) {
@@ -707,10 +706,9 @@ HB_BOOL hb_timeStampStrGet(const char * szDateTime, int * piYear, int * piMonth,
 #endif
 
    int iYear, iMonth, iDay;
-   bool fValid;
 
    iYear = iMonth = iDay = 0;
-   fValid = false;
+   auto fValid = false;
 
    if( szDateTime ) {
       while( HB_ISSPACE(*szDateTime) ) {

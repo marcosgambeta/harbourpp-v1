@@ -555,7 +555,10 @@ static bool hb_str2number(bool fPCode, const char * szNum, HB_SIZE nLen, HB_MAXI
    HB_TRACE(HB_TR_DEBUG, ("hb_str2number(%d, %p, %" HB_PFS "u, %p, %p, %p, %p)", static_cast<int>(fPCode), static_cast<const void*>(szNum), nLen, static_cast<void*>(lVal), static_cast<void*>(dVal), static_cast<void*>(piDec), static_cast<void*>(piWidth)));
 #endif
 
-   bool fDbl = false, fDec = false, fNeg, fHex = false;
+   auto fDbl = false;
+   auto fDec = false;
+   bool fNeg;
+   auto fHex = false;
    int iLen, iPos = 0;
    int c, iWidth, iDec = 0, iDecR = 0;
 
@@ -764,7 +767,7 @@ char * hb_numToStr(char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber)
 #endif
 
    int iPos = static_cast<int>(nSize);
-   bool fNeg = false;
+   auto fNeg = false;
 
    szBuf[--iPos] = '\0';
    if( lNumber < 0 ) {

@@ -157,7 +157,7 @@ const char * hb_verCPU(void)
 
 static bool s_win_iswow64(void)
 {
-   bool bRetVal = false;
+   auto bRetVal = false;
 
    #if defined(HB_OS_WIN) && !defined(HB_OS_WIN_64)
    BOOL bIsWow64 = FALSE;
@@ -251,20 +251,20 @@ const char * hb_verPlatformMacro(void)
 
 #if defined(HB_OS_WIN)
 
-static bool s_fWinVerInit = false;
+static auto s_fWinVerInit = false;
 
-static bool    s_fWin10    = false;
-static bool    s_fWin81    = false;
-static bool    s_fWin8     = false;
-static bool    s_fWin7     = false;
-static bool    s_fWinVista = false;
-static bool    s_fWin2K3   = false;
-static bool    s_fWin2K    = false;
+static auto    s_fWin10    = false;
+static auto    s_fWin81    = false;
+static auto    s_fWin8     = false;
+static auto    s_fWin7     = false;
+static auto    s_fWinVista = false;
+static auto    s_fWin2K3   = false;
+static auto    s_fWin2K    = false;
 static int     s_iWinNT    = 0;
 static int     s_iWin9x    = 0;
 static int     s_iWine     = 0;
 
-static bool s_fVerInfoInit = true;
+static auto s_fVerInfoInit = true;
 
 static bool s_hb_winVerifyVersionInit(void)
 {
