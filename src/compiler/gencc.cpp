@@ -142,7 +142,7 @@ static int hb_gencc_checkJumpCondAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE 
 {
    if( HB_GENC_GETLABEL(nPCodePos + 1) == 0 ) {
       HB_ISIZ nOffset = 0;
-      bool fNot = false;
+      auto fNot = false;
       int iSize = 0;
 
       switch( pFunc->pCode[nPCodePos + 1] ) {
@@ -1520,9 +1520,9 @@ static HB_GENC_FUNC(hb_p_switch)
    HB_USHORT usCases = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
    HB_SIZE nStart = nPCodePos;
    HB_SIZE nNewPos;
-   bool fNum = false;
-   bool fStr = false;
-   bool fDefault = false;
+   auto fNum = false;
+   auto fStr = false;
+   auto fDefault = false;
 
    HB_GENC_LABEL();
 

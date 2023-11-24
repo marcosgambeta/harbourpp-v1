@@ -101,7 +101,7 @@ static void hb_pp_hb_inLine(void * cargo, char * szFunc, char * pBuffer, HB_SIZE
 static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * piValue, HB_BOOL fSet)
 {
    HB_COMP_DECL = static_cast<PHB_COMP>(cargo);
-   bool fError = false;
+   auto fError = false;
 
    int iValue = *piValue;
 

@@ -429,7 +429,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char * szVarName, PHB_VARTYPE pVarTy
       pVar->iUsed = HB_VU_INITIALIZED;
    }
 
-   bool bFreeVar = true;
+   auto bFreeVar = true;
 
    if( HB_COMP_PARAM->iVarScope & HB_VSCOMP_MEMVAR ) {
       PHB_HSYMBOL pSym;
@@ -646,9 +646,9 @@ PHB_HVAR hb_compVariableFind(HB_COMP_DECL, const char * szVarName, int * piPos, 
              ? HB_COMP_PARAM->pDeclFunc : nullptr;
 
    PHB_HFUNC pOutBlock = nullptr;
-   bool fStatic = false;
-   bool fBlock = false;
-   bool fGlobal = false;
+   auto fStatic = false;
+   auto fBlock = false;
+   auto fGlobal = false;
    PHB_HVAR pVar = nullptr;
    int iLevel = 0;
 
@@ -840,7 +840,7 @@ void hb_compPushMacroVar(HB_COMP_DECL, const char * szVarName)
 void hb_compPushMacroText(HB_COMP_DECL, const char * szText, HB_SIZE nLen, HB_BOOL fMacro)
 {
    int iEarlyEvalPass = HB_COMP_PARAM->functions.pLast->iEarlyEvalPass;
-   bool fFound = false;
+   auto fFound = false;
    HB_SIZE n = 0;
    int iParts = 0;
 
@@ -1976,7 +1976,7 @@ static void hb_compUpdateFunctionNames(HB_COMP_DECL)
       while( pFunc ) {
          if( (pFunc->cScope & (HB_FS_STATIC | HB_FS_INITEXIT)) != 0 ) {
             PHB_HSYMBOL pSym = HB_COMP_PARAM->symbols.pFirst, pFuncSym = nullptr;
-            bool fExists = false;
+            auto fExists = false;
 
             while( pSym ) {
                if( pSym->iFunc ) {
@@ -3864,7 +3864,7 @@ static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffe
 
    char buffer[HB_PATH_MAX * 2 + 80];
    PHB_FNAME pFileName = nullptr;
-   bool fGenCode = true;
+   auto fGenCode = true;
 
    HB_COMP_SWITCHES switches;
    hb_compSaveSwitches(HB_COMP_PARAM, &switches);
@@ -3884,7 +3884,7 @@ static int hb_compCompile(HB_COMP_DECL, const char * szPrg, const char * szBuffe
    PHB_MODULE pModule = HB_COMP_PARAM->modules;
    while( iStatus == EXIT_SUCCESS && !HB_COMP_PARAM->fExit && (pModule || szBuffer) ) {
       char szFileName[HB_PATH_MAX];     /* filename to parse */
-      bool fSkip = false;
+      auto fSkip = false;
 
       /* Clear and reinitialize preprocessor state */
       hb_pp_reset(HB_COMP_PARAM->pLex->pPP);

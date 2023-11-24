@@ -191,7 +191,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
 
    PHB_HSYMBOL pSym;
    PHB_HINLINE pInline;
-   bool fHasHbInline = false;
+   auto fHasHbInline = false;
 
    if( pFunc ) {
       int iFuncSuffix;

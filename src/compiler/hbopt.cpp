@@ -275,7 +275,9 @@ static HB_OPT_FUNC(hb_p_duplicate)
             HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 2];
             HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr), nLastOffset = 0;
             HB_SIZE nNewPos = nPCodePos + 1 + nOffset;
-            bool fNot = false, fOK = true, fRepeat = true;
+            auto fNot = false;
+            auto fOK = true;
+            auto fRepeat = true;
 
             do {
                if( pFunc->pCode[nNewPos] == HB_P_DUPLICATE ) {
@@ -420,7 +422,7 @@ static HB_OPT_FUNC(hb_p_jumpfar)
    if( nOffset == 4 ) {
       hb_compNOOPfill(pFunc, nPCodePos, 4, false, false);
    } else {
-      bool fLine = false;
+      auto fLine = false;
 
       if( pFunc->pCode[nNewPos] == HB_P_LINE ) {
          fLine = true;
@@ -461,7 +463,7 @@ static HB_OPT_FUNC(hb_p_jumpfalsefar)
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr);
    HB_SIZE nNewPos = nPCodePos + nOffset;
-   bool fLine = false;
+   auto fLine = false;
 
    HB_SYMBOL_UNUSED(cargo);
 
@@ -495,7 +497,7 @@ static HB_OPT_FUNC(hb_p_jumptruefar)
    HB_BYTE * pAddr = &pFunc->pCode[nPCodePos + 1];
    HB_ISIZ nOffset = HB_PCODE_MKINT24(pAddr);
    HB_SIZE nNewPos = nPCodePos + nOffset;
-   bool fLine = false;
+   auto fLine = false;
 
    HB_SYMBOL_UNUSED(cargo);
 
@@ -945,7 +947,7 @@ static void hb_compPCodeEnumScanLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
 {
    HB_SIZE nPos = 0, nLastPos = 0;
    HB_SHORT isVar = 0;
-   bool fWasJump = false;
+   auto fWasJump = false;
 
    while( nPos < pFunc->nPCodePos ) {
       if( hb_compIsJump(pFunc->pCode[nPos]) ) {
@@ -1528,7 +1530,7 @@ void hb_compPCodeTraceOptimizer(HB_COMP_DECL)
 
    /* Delete unused */
    if( HB_COMP_ISSUPPORTED(HB_COMPFLAG_OPTJUMP) && !HB_COMP_PARAM->fDebugInfo ) {
-      bool fBool = false;
+      auto fBool = false;
 
       for( usIndex = pFunc->wParamCount; usIndex < usLocalCount; usIndex++ ) {
          if( pLocals[usIndex].bFlags == 0 ) {
