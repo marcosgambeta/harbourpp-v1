@@ -514,7 +514,7 @@ void  hb_fsSetError(HB_ERRCODE uiError)
 
 static int     s_iFileCase = HB_SET_CASE_MIXED;
 static int     s_iDirCase  = HB_SET_CASE_MIXED;
-static bool    s_fFnTrim   = false;
+static auto    s_fFnTrim   = false;
 static char    s_cDirSep   = HB_OS_PATH_DELIM_CHR;
 
 const char * hb_fsNameConv(const char * szFileName, char ** pszFree)
