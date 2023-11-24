@@ -70,9 +70,9 @@ char * hb_dateFormat(const char * szDate, char * szFormattedDate, const char * s
    }
 
    if( szDate && strlen(szDate) == 8 ) { /* A valid date is always 8 characters */
-      bool used_d = false;
-      bool used_m = false;
-      bool used_y = false;
+      auto used_d = false;
+      auto used_m = false;
+      auto used_y = false;
       format_count = 0;
       const char * szPtr = szDateFormat;
 

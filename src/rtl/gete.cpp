@@ -121,7 +121,7 @@ HB_FUNC( HB_GETENV )
 HB_FUNC( HB_SETENV )
 {
    auto pszName = hb_parc(1);
-   bool fResult = false;
+   auto fResult = false;
 
    if( pszName ) {
       fResult = hb_setenv(pszName, hb_parc(2));

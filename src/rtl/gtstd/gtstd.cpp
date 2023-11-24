@@ -127,7 +127,7 @@ using PHB_GTSTD = HB_GTSTD *;
 
 #if defined(HB_HAS_TERMIOS)
 
-static volatile bool s_fRestTTY = false;
+static volatile auto s_fRestTTY = false;
 
 #if defined(SIGTTOU)
 static void sig_handler(int iSigNo)

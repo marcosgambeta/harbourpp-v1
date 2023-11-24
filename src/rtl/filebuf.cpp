@@ -225,8 +225,8 @@ static void hb_fileDeleteLock(PHB_FILE pFile, HB_UINT uiPos)
 static bool hb_fileSetLock(PHB_FILE pFile, bool * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
    HB_UINT uiPos = hb_fileFindOffset(pFile, nStart);
-   bool fLJoin = false;
-   bool fRJoin = false;
+   auto fLJoin = false;
+   auto fRJoin = false;
    if( uiPos < pFile->uiLocks ) {
       PHB_FLOCK pLock = &pFile->pLocks[uiPos];
       HB_FOFFSET nEnd = nStart + nLen;
@@ -265,7 +265,7 @@ static bool hb_fileSetLock(PHB_FILE pFile, bool * pfLockFS, HB_FOFFSET nStart, H
 
 static bool hb_fileUnlock(PHB_FILE pFile, bool * pfLockFS, HB_FOFFSET nStart, HB_FOFFSET nLen)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    HB_UINT uiPos = hb_fileFindOffset(pFile, nStart);
    if( uiPos < pFile->uiLocks ) {
@@ -417,7 +417,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char * pszFileName, c
 {
    PHB_FILE pFile = nullptr;
 #if defined(HB_OS_UNIX)
-   bool fSeek = false;
+   auto fSeek = false;
 #  if defined(HB_USE_LARGEFILE64)
    struct stat64 statbuf;
 #  else
@@ -631,8 +631,8 @@ static void s_fileClose(PHB_FILE pFile)
 
 static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, int iType)
 {
-   bool fResult = false;
-   bool fLockFS = false;
+   auto fResult = false;
+   auto fLockFS = false;
 
    hb_vmUnlock();
    if( (iType & FL_MASK) == FL_UNLOCK ) {
@@ -1018,7 +1018,7 @@ static int s_fileFindDrv(const char * pszFileName)
 
 HB_BOOL hb_fileRegisterFull(const HB_FILE_FUNCS * pFuncs)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    hb_vmUnlock();
    hb_threadEnterCriticalSection(&s_lockMtx);

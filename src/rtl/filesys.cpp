@@ -269,7 +269,7 @@
    } while(false)
 #endif
 
-static bool s_fUseWaitLocks = true;
+static auto s_fUseWaitLocks = true;
 
 #if defined(HB_OS_WIN) && defined(HB_OS_HAS_DRIVE_LETTER)
 
@@ -1114,7 +1114,7 @@ HB_SIZE hb_fsPipeIsData(HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT n
 #if defined(HB_OS_WIN)
 {
    HB_MAXUINT timer = hb_timerInit(nTimeOut);
-   bool fResult = false;
+   auto fResult = false;
    DWORD dwAvail;
 
    do {
@@ -1198,7 +1198,7 @@ HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSiz
 
    if( GetNamedPipeHandleState( hPipe, &dwMode, nullptr, nullptr, nullptr, nullptr, 0 ) ) {
       HB_MAXUINT timer = hb_timerInit(nTimeOut);
-      bool fResult = false;
+      auto fResult = false;
 
       if( (dwMode & PIPE_NOWAIT) == 0 ) {
          DWORD dwNewMode = dwMode | PIPE_NOWAIT;
@@ -1453,7 +1453,7 @@ HB_BOOL hb_fsGetFileTime(const char * pszFileName, long * plJulian, long * plMil
    HB_TRACE(HB_TR_DEBUG, ("hb_fsGetFileTime(%s, %p, %p)", pszFileName, static_cast<void*>(plJulian), static_cast<void*>(plMillisec)));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
    *plJulian = *plMillisec = 0;
 
    hb_vmUnlock();
@@ -1540,7 +1540,7 @@ HB_BOOL hb_fsGetAttr(const char * pszFileName, HB_FATTR * pnAttr)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsGetAttr(%s, %p)", pszFileName, static_cast<void*>(pnAttr)));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
    hb_vmUnlock();
 
@@ -1609,7 +1609,7 @@ HB_BOOL hb_fsSetFileTime(const char * pszFileName, long lJulian, long lMillisec)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsSetFileTime(%s, %ld, %ld)", pszFileName, lJulian, lMillisec));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
    int iYear, iMonth, iDay;
    int iHour, iMinute, iSecond, iMSec;
 
@@ -1737,7 +1737,7 @@ HB_BOOL hb_fsSetAttr(const char * pszFileName, HB_FATTR nAttr)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsSetAttr(%s, %u)", pszFileName, nAttr));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
    hb_vmUnlock();
 
@@ -2320,7 +2320,7 @@ HB_BOOL hb_fsTruncAt(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsTruncAt(%p, %" PFHL "i)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nOffset));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
    hb_vmUnlock();
 
@@ -2405,7 +2405,7 @@ void hb_fsCommit(HB_FHANDLE hFileHandle)
     */
    {
       int dup_handle;
-      bool fResult = false;
+      auto fResult = false;
 
       dup_handle = dup(hFileHandle);
       if( dup_handle != -1 ) {
@@ -2426,7 +2426,7 @@ HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, H
    HB_TRACE(HB_TR_DEBUG, ("hb_fsLock(%p, %lu, %lu, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), ulStart, ulLength, uiMode));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
    hb_vmUnlock();
 
@@ -2571,7 +2571,7 @@ HB_BOOL hb_fsLockLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nL
    HB_TRACE(HB_TR_DEBUG, ("hb_fsLockLarge(%p, %" PFHL "u, %" PFHL "i, %hu)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle)), nStart, nLength, uiMode));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -2886,7 +2886,7 @@ HB_BOOL hb_fsDelete(const char * pszFileName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsDelete(%s)", pszFileName));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -2934,7 +2934,7 @@ HB_BOOL hb_fsRename(const char * pOldName, const char * pNewName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsRename(%s, %s)", pOldName, pNewName));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -2990,7 +2990,7 @@ HB_BOOL hb_fsMkDir(const char * pszDirName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsMkDir(%s)", pszDirName));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -3042,7 +3042,7 @@ HB_BOOL hb_fsChDir(const char * pszDirName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsChDir(%s)", pszDirName));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -3093,7 +3093,7 @@ HB_BOOL hb_fsRmDir(const char * pszDirName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsRmDir(%s)", pszDirName));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -3278,7 +3278,7 @@ HB_BOOL hb_fsGetCWD(char * pszBuffer, HB_SIZE nSize)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsGetCWD(%p,%" HB_PFS "u)", static_cast<void*>(pszBuffer), nSize));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
    pszBuffer[0] = '\0';
 
@@ -3344,7 +3344,7 @@ HB_BOOL hb_fsSetCWD(const char * pszDirName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsSetCWD(%s)", pszDirName));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
    {
@@ -3526,7 +3526,7 @@ HB_BOOL hb_fsIsDevice( HB_FHANDLE hFileHandle )
    HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDevice(%p)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFileHandle))));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
    hb_vmUnlock();
 
@@ -3557,7 +3557,7 @@ HB_BOOL hb_fsIsDevice( HB_FHANDLE hFileHandle )
 char * hb_fsExtName(const char * pszFileName, const char * pDefExt, HB_FATTR nExFlags, const char * pPaths)
 {
    HB_PATHNAMES * pNextPath;
-   bool fIsFile = false;
+   auto fIsFile = false;
 
    auto szPath = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
 
@@ -3737,7 +3737,7 @@ HB_FHANDLE hb_fsExtOpen(const char * pszFileName, const char * pDefExt, HB_FATTR
 
 HB_BOOL hb_fsEof( HB_FHANDLE hFileHandle )
 {
-   bool fResult = false;
+   auto fResult = false;
 
    hb_vmUnlock();
 

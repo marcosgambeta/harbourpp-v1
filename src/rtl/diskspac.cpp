@@ -73,7 +73,7 @@
 HB_FUNC( DISKSPACE )
 {
    double dSpace = 0.0;
-   bool bError = false;
+   auto bError = false;
 
 #if defined(HB_OS_WIN)
    {

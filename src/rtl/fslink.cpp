@@ -60,7 +60,7 @@
 
 HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( pszExisting && pszNewFile ) {
       hb_vmUnlock();
@@ -115,7 +115,7 @@ HB_BOOL hb_fsLink(const char * pszExisting, const char * pszNewFile)
 
 HB_BOOL hb_fsLinkSym(const char * pszTarget, const char * pszNewFile)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( pszTarget && pszNewFile ) {
       hb_vmUnlock();
@@ -310,7 +310,7 @@ char * hb_fsLinkRead(const char * pszFile)
 HB_FUNC( HB_FLINK )
 {
    HB_ERRCODE uiError = 2;
-   bool fResult = false;
+   auto fResult = false;
    auto pszExisting = hb_parc(1);
    auto pszNewFile = hb_parc(2);
 
@@ -325,7 +325,7 @@ HB_FUNC( HB_FLINK )
 HB_FUNC( HB_FLINKSYM )
 {
    HB_ERRCODE uiError = 2;
-   bool fResult = false;
+   auto fResult = false;
    auto pszTarget = hb_parc(1);
    auto pszNewFile = hb_parc(2);
 

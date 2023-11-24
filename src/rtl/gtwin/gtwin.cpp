@@ -195,7 +195,7 @@ static CONSOLE_SCREEN_BUFFER_INFO s_csbi, s_origCsbi; /* active screen mode */
 static DWORD         s_dwNumRead;   /* Ok to use DWORD here, because this is specific... */
 static DWORD         s_dwNumIndex;  /* ...to the Windows API, which defines DWORD, etc.  */
 static INPUT_RECORD  s_irBuffer[INPUT_BUFFER_LEN];
-static bool          s_fAltIsDown = false;
+static auto          s_fAltIsDown = false;
 static int           s_iAltVal = 0;
 
 static int           s_mouse_buttons;
@@ -547,14 +547,14 @@ static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
 
 static bool hb_gt_win_SetPalette_Vista(bool bSet, COLORREF * colors)
 {
-   static bool s_fChecked = false;
+   static auto s_fChecked = false;
 
    using P_SETCONSOLESCREENBUFFERINFOEX = BOOL (WINAPI *)(HANDLE, PCONSOLE_SCREEN_BUFFER_INFOEX);
    using P_GETCONSOLESCREENBUFFERINFOEX = BOOL (WINAPI *)(HANDLE, PCONSOLE_SCREEN_BUFFER_INFOEX);
    static P_GETCONSOLESCREENBUFFERINFOEX s_pGetConsoleScreenBufferInfoEx = nullptr;
    static P_SETCONSOLESCREENBUFFERINFOEX s_pSetConsoleScreenBufferInfoEx = nullptr;
 
-   bool bDone = false;
+   auto bDone = false;
    int tmp;
 
    if( !s_fChecked ) {
@@ -637,7 +637,7 @@ static HWND hb_getConsoleWindowHandle(void)
 
 static bool hb_gt_win_SetCloseButton(bool bSet, bool bClosable)
 {
-   bool bOldClosable = true;
+   auto bOldClosable = true;
 
    HWND hWnd = hb_getConsoleWindowHandle();
 
@@ -651,7 +651,7 @@ static bool hb_gt_win_SetCloseButton(bool bSet, bool bClosable)
 #if defined(HB_GTWIN_USE_SETCONSOLEMENUCLOSE)
             using P_SETCONSOLEMENUCLOSE = BOOL (WINAPI *)(BOOL);
 
-            static bool s_fChecked = false;
+            static auto s_fChecked = false;
             static P_SETCONSOLEMENUCLOSE s_pSetConsoleMenuClose = nullptr;
 
             if( !s_fChecked ) {
@@ -839,7 +839,7 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_win_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRows, iCols));
 #endif
 
-   bool fRet = false;
+   auto fRet = false;
 
    if( s_HOutput != INVALID_HANDLE_VALUE && iRows > 0 && iCols > 0 ) {
       COORD coBuf = GetLargestConsoleWindowSize(s_HOutput);
@@ -1182,7 +1182,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
    /* Only process one keyboard event at a time. */
    if( iKey == 0 && s_dwNumIndex < s_dwNumRead ) {
       INPUT_RECORD * pInRec = &s_irBuffer[s_dwNumIndex];
-      bool fPop = true;
+      auto fPop = true;
 
       if( pInRec->EventType == KEY_EVENT ) {
          /* Save the keyboard state and ASCII, scan, key code */
@@ -1938,7 +1938,7 @@ static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int iButton)
 {
    HB_SYMBOL_UNUSED(pGT);
 
-   bool fReturn = false;
+   auto fReturn = false;
 
    if( iButton == 0 ) { /* TODO: switch */
       fReturn = (GetKeyState(VK_LBUTTON) & 0x8000) != 0;

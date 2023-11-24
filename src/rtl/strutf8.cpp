@@ -49,7 +49,7 @@
 HB_FUNC( HB_STRISUTF8 )
 {
    auto nLen = hb_parclen(1);
-   bool fUtf8 = false;
+   auto fUtf8 = false;
 
    if( nLen > 0 ) {
       auto szText = hb_parc(1);

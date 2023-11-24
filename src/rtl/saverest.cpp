@@ -85,7 +85,7 @@ static void hb_getScreenRange(int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BOO
 HB_FUNC( SAVESCREEN )
 {
    int iTop, iLeft, iBottom, iRight;
-   bool fNoCheck = false;
+   auto fNoCheck = false;
    hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
    hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
    HB_SIZE nSize;
@@ -101,7 +101,7 @@ HB_FUNC( RESTSCREEN )
       int iTop, iLeft, iBottom, iRight;
       void * pBuffer = nullptr;
       auto pBufStr = hb_parc(5);
-      bool fNoCheck = false;
+      auto fNoCheck = false;
 
       hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
       hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );

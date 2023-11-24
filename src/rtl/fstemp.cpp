@@ -97,7 +97,7 @@
 #if !defined(HB_OS_WIN)
 static bool fsGetTempDirByCase(char * pszName, const char * pszTempDir, bool fTrans)
 {
-   bool fOK = false;
+   auto fOK = false;
 
    if( pszTempDir && *pszTempDir != '\0' ) {
       char * pTmp;
@@ -226,7 +226,7 @@ HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * p
 
 static bool hb_fsTempName(char * pszBuffer, const char * pszDir, const char * pszPrefix)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    pszBuffer[0] = '\0';
 

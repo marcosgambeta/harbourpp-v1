@@ -231,7 +231,7 @@ static bool hb_regex(int iRequest)
    HB_REGMATCH aMatches[HB_REGMATCH_SIZE( REGEX_MAX_GROUPS )];
    PHB_ITEM pRetArray, pMatch;
    int i;
-   bool fResult = false;
+   auto fResult = false;
 
    auto pString = hb_param(2, Harbour::Item::STRING);
    if( !pString ) {

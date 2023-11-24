@@ -113,7 +113,7 @@ HB_FUNC( HB_CDPISCHARIDX )
 {
    auto id = hb_parc(1);
    PHB_CODEPAGE cdp = id ? hb_cdpFindExt(id) : hb_vmCDP();
-   bool fResult = false;
+   auto fResult = false;
 
    if( cdp ) {
       fResult = HB_CDP_ISCHARIDX(cdp);

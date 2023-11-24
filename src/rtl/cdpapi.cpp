@@ -2362,7 +2362,6 @@ static PHB_CODEPAGE hb_buildCodePage(const char * id, const char * info,
                                      unsigned int nCaseSort,
                                      bool fUtf8)
 {
-   bool lSort, fError;
    int iMulti, iAcc, iAccUp, iAccLo, iSortUp, iSortLo, i;
    const char * pup, * plo;
    HB_UCHAR ucUp, ucLo, ucUp2, ucLo2;
@@ -2374,7 +2373,8 @@ static PHB_CODEPAGE hb_buildCodePage(const char * id, const char * info,
    memset(used, '\0', sizeof(used));
 
    iMulti = iAcc = iSortUp = iSortLo = 0;
-   fError = lSort = false;
+   auto lSort = false;
+   auto fError = false;
 
    ucUp2 = ucLo2 = 0;
    pup = pszUpper;

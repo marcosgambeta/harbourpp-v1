@@ -88,7 +88,7 @@ double hb_fsDiskSpace( const char * pszPath, HB_USHORT uiType )
 
       {
          UINT uiErrMode = SetErrorMode( SEM_FAILCRITICALERRORS );
-         bool fResult = false;
+         auto fResult = false;
 
          {
 #if defined(_MSC_VER) || (defined(__GNUC__))

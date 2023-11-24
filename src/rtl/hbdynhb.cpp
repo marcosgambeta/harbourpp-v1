@@ -56,7 +56,7 @@ HB_FUNC( HB_DYNCALL )
    int iFuncFlags = HB_DYN_CALLCONV_CDECL;
 
    PHB_ITEM pLibraryHandle = nullptr;
-   bool bFreeLibrary = false;
+   auto bFreeLibrary = false;
    void * pFunctionPtr = nullptr;
 
    if( pParam ) {

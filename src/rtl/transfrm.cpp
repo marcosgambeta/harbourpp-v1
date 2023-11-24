@@ -74,7 +74,7 @@ HB_FUNC( TRANSFORM )
    auto pValue = hb_param(1, Harbour::Item::ANY); /* Input parameter */
    auto pPic = hb_param(2, Harbour::Item::STRING); /* Picture string */
 
-   bool bError = false;
+   auto bError = false;
 
    if( pValue == nullptr ) {
       bError = true;
@@ -101,7 +101,7 @@ HB_FUNC( TRANSFORM )
       /* If an "@" char is at the first pos, we have picture function */
 
       if( *szPic == '@' ) {
-         bool bDone = false;
+         auto bDone = false;
 
          /* Skip the "@" char */
 
@@ -299,7 +299,7 @@ HB_FUNC( TRANSFORM )
             }
 
             if( uiPicFlags & PF_EXCHANG ) {
-               bool bFound = false;
+               auto bFound = false;
 
                while( nExpPos < nResultPos ) {
                   if( szResult[nExpPos] == ',' ) {
@@ -758,8 +758,8 @@ HB_FUNC( TRANSFORM )
       /* --- Handle LOGICAL values --- */
 
       else if( HB_IS_LOGICAL(pValue) ) {
-         bool bDone = false;
-         bool bExit = false;
+         auto bDone = false;
+         auto bExit = false;
          char cPic;
 
          if( uiPicFlags & ( PF_DATE | PF_BRITISH ) ) {

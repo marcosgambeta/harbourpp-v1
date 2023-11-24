@@ -139,7 +139,7 @@ HB_FUNC( HB_VFISLOCAL )
 HB_FUNC( HB_VFEXISTS )
 {
    auto pszFileName = hb_parc(1);
-   bool fResult = false;
+   auto fResult = false;
    HB_ERRCODE uiError = 2;
 
    if( pszFileName ) {
@@ -238,7 +238,7 @@ HB_FUNC( HB_VFMOVEFILE )
 HB_FUNC( HB_VFDIREXISTS )
 {
    auto pszDirName = hb_parc(1);
-   bool fResult = false;
+   auto fResult = false;
    HB_ERRCODE uiError = 2;
 
    if( pszDirName ) {
@@ -504,7 +504,7 @@ HB_FUNC( HB_VFLOCK )
 
    if( pFile ) {
       HB_ERRCODE uiError = 0;
-      bool fResult = false;
+      auto fResult = false;
 
       if( HB_ISNUM(2) && HB_ISNUM(3) ) {
          fResult = hb_fileLock(pFile,
@@ -525,7 +525,7 @@ HB_FUNC( HB_VFUNLOCK )
 
    if( pFile ) {
       HB_ERRCODE uiError = 0;
-      bool fResult = false;
+      auto fResult = false;
 
       if( HB_ISNUM(2) && HB_ISNUM(3) ) {
          fResult = hb_fileLock(pFile,

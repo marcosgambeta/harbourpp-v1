@@ -317,7 +317,7 @@ HB_FHANDLE hb_fsProcessOpen(const char * pszFileName, HB_FHANDLE * phStdin, HB_F
               hPipeOut[2] = { FS_ERROR, FS_ERROR },
               hPipeErr[2] = { FS_ERROR, FS_ERROR };
    HB_FHANDLE hResult = FS_ERROR;
-   bool fError = false;
+   auto fError = false;
 
    if( phStdin != nullptr ) {
       fError = !hb_fsPipeCreate(hPipeIn);
@@ -616,7 +616,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 
 #if defined(HB_OS_WIN)
 {
-   bool fError = true;
+   auto fError = true;
    DWORD dwResult;
    HANDLE hProc = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess));
 
@@ -682,7 +682,7 @@ HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsProcessClose(%p, %d)", reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hProcess)), fGentle));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
 #if defined(HB_OS_WIN)
 {

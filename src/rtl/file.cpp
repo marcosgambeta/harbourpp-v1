@@ -69,7 +69,7 @@ HB_BOOL hb_fsIsDirectory(const char * pszFileName)
    HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDirectory(%s)", pszFileName));
 #endif
 
-   bool bResult = false;
+   auto bResult = false;
    char * pszFree = nullptr;
 
    int iLen = static_cast<int>(strlen(pszFileName));

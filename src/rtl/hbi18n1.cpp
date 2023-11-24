@@ -535,7 +535,7 @@ static PHB_ITEM hb_i18n_newitem(PHB_I18N_TRANS pI18N)
 
 static bool hb_i18n_getpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, bool fBase)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( pI18N ) {
       if( pOldForm ) {
@@ -565,7 +565,7 @@ static bool hb_i18n_getpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, bool 
 
 static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBase)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( pI18N && pForm ) {
       if( HB_IS_EVALITEM(pForm) ) {

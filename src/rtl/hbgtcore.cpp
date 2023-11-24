@@ -401,7 +401,7 @@ static const char * hb_gt_def_ColorDecode( const char * szColorString, int * piC
 
    char c;
    int nColor = 0, iCount = 0;
-   bool bFore = true;
+   auto bFore = true;
 
    while( (c = *szColorString++) != 0 ) {
       switch( c ) {
@@ -932,9 +932,9 @@ static void hb_gt_def_WriteW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLengt
 static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
 {
    int iLen = 0;
-   bool bDisp = false;
-   bool bBell = false;
-   bool bNewLine = false;
+   auto bDisp = false;
+   auto bBell = false;
+   auto bNewLine = false;
    HB_WCHAR szString[WRITECON_BUFFER_SIZE];
    PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
    HB_SIZE nIndex = 0;
@@ -1067,9 +1067,9 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char * szText, HB_SIZE nLength)
 static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR * szText, HB_SIZE nLength)
 {
    int iLen = 0;
-   bool bDisp = false;
-   bool bBell = false;
-   bool bNewLine = false;
+   auto bDisp = false;
+   auto bBell = false;
+   auto bNewLine = false;
    HB_WCHAR szString[WRITECON_BUFFER_SIZE];
    HB_SIZE nIndex = 0;
 
@@ -1926,7 +1926,8 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
       HB_SIZE nLen;
       void * hMessage;
       const HB_WCHAR * szMessageW = hb_itemGetStrU16(pMessage, HB_CDP_ENDIAN_NATIVE, &hMessage, &nLen);
-      bool fScreen = false, fKeyBoard = false;
+      auto fScreen = false;
+      auto fKeyBoard = false;
       PHB_CODEPAGE cdp = HB_GTSELF_HOSTCP(pGT);
       char szKey[HB_MAX_CHAR_LEN];
       HB_SIZE nChar;
@@ -3680,7 +3681,7 @@ void * hb_gtSwap(void * hGT)
 
 HB_BOOL hb_gtReload(const char * szGtName, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( szGtName && hb_gt_FindEntry(szGtName) >= -1 ) {
       hb_gtRelease(nullptr);

@@ -80,7 +80,7 @@
 HB_FUNC_EXTERN( ERRORNEW );
 
 static PHB_ITEM s_pError = nullptr;
-static bool s_fErrInit = false;
+static auto s_fErrInit = false;
 
 static HB_SYMB s_symErrorNew = {"ERRORNEW", { HB_FS_PUBLIC | HB_FS_LOCAL }, { HB_FUNCNAME( ERRORNEW ) }, nullptr};
 static HB_SYMB s_symmsgInit = {"INIT", { HB_FS_MESSAGE }, { nullptr }, nullptr};
@@ -587,7 +587,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
          }
          uiAction = E_BREAK;
       } else if( pResult ) {
-         bool bFailure = false;
+         auto bFailure = false;
 
          /* If the error block didn't return a logical value, */
          /* or the canSubstitute flag has been set, consider it as a failure */

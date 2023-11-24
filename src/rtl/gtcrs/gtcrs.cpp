@@ -57,12 +57,12 @@ static HB_GT_FUNCS SuperTable;
 
 static volatile bool s_SignalTable[MAX_SIGNO];
 #if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
-static volatile bool s_SignalFlag = false;
+static volatile auto s_SignalFlag = false;
 /* this variable should be global and checked in main VM loop */
-static volatile bool s_BreakFlag = false;
-static volatile bool s_InetrruptFlag = false;
+static volatile auto s_BreakFlag = false;
+static volatile auto s_InetrruptFlag = false;
 #endif
-static volatile bool s_WinSizeChangeFlag = false;
+static volatile auto s_WinSizeChangeFlag = false;
 
 static int s_iStdIn, s_iStdOut, s_iStdErr;
 
@@ -2225,7 +2225,7 @@ void HB_GT_FUNC(gt_SetDebugKey(int iDebug))
 
 HB_BOOL HB_GT_FUNC(gt_GetSignalFlag(int iSig))
 {
-   bool bRetVal = false;
+   auto bRetVal = false;
 
    if( iSig > 0 && iSig < MAX_SIGNO && s_SignalTable[iSig] ) {
       bRetVal = true;
@@ -2564,7 +2564,7 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
 
    HB_SYMBOL_UNUSED(pGT);
 
-   bool ret = false;
+   auto ret = false;
 
    if( s_ioBase->mouse_type != 0 ) {
       int mask;

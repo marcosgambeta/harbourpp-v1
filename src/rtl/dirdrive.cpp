@@ -90,7 +90,7 @@ HB_FUNC_TRANSLATE( DIRREMOVE, HB_DIRDELETE )
 
 HB_FUNC( ISDISK )
 {
-   bool fResult = false;
+   auto fResult = false;
    auto szDrive = hb_parc(1);
 
    if( szDrive ) {
@@ -105,7 +105,7 @@ HB_FUNC( ISDISK )
 
 HB_FUNC( DISKCHANGE )
 {
-   bool fResult = false;
+   auto fResult = false;
    auto szDrive = hb_parc(1);
 
    if( szDrive ) {

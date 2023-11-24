@@ -51,7 +51,7 @@
 
 HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
 {
-   bool fResult = false;
+   auto fResult = false;
    PHB_FILE pSrcFile;
 
    if( (pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr ) {
@@ -101,7 +101,7 @@ HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
 HB_FUNC( HB_FCOPY )
 {
    HB_ERRCODE errCode = 2; /* file not found */
-   bool fResult = false;
+   auto fResult = false;
    auto pszSource = hb_parc(1);
    auto pszDest = hb_parc(2);
 

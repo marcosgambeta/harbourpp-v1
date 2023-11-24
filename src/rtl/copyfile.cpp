@@ -66,7 +66,7 @@ static bool hb_copyfile( const char * pszSource, const char * pszDest )
    HB_TRACE(HB_TR_DEBUG, ("hb_copyfile(%s, %s)", pszSource, pszDest));
 #endif
 
-   bool bRetVal = false;
+   auto bRetVal = false;
    PHB_FILE pSource;
    PHB_ITEM pError = nullptr;
 

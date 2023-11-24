@@ -399,10 +399,10 @@ using PHB_GTTRM = _HB_GTTRM *;
 
 /* static variables use by signal handler */
 #if defined(HB_OS_UNIX)
-   static volatile bool s_WinSizeChangeFlag = false;
+   static volatile auto s_WinSizeChangeFlag = false;
 #endif
 #if defined(HB_OS_UNIX) && defined(SA_NOCLDSTOP)
-   static volatile bool s_fRestTTY = false;
+   static volatile auto s_fRestTTY = false;
 #endif
 
 /* save old hilit tracking & enable mouse tracking */
@@ -2170,7 +2170,7 @@ static void hb_gt_trm_AnsiExit(PHB_GTTRM pTerm)
  */
 static bool hb_trm_Param(const char * pszParam, int * piValue)
 {
-   bool fResult = false;
+   auto fResult = false;
    char * pszGtTrmParams = hb_cmdargString("GTTRM");
 
    if( pszGtTrmParams ) {
@@ -2196,7 +2196,7 @@ static bool hb_trm_Param(const char * pszParam, int * piValue)
 
 static bool hb_trm_isUTF8(PHB_GTTRM pTerm)
 {
-   bool fUTF8 = false;
+   auto fUTF8 = false;
    char * szLang;
 
    if( pTerm->fPosAnswer ) {
@@ -3402,7 +3402,7 @@ static HB_BOOL hb_gt_trm_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_mouse_ButtonState(%p,%i)", static_cast<void*>(pGT), iButton));
 #endif
 
-   bool ret = false;
+   auto ret = false;
 
    PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
    if( pTerm->mouse_type != MOUSE_NONE ) {

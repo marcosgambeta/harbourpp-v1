@@ -60,7 +60,7 @@
 static int s_iMouseRow = 0;
 static int s_iMouseCol = 0;
 
-static bool    s_bMousePresent = false;
+static auto    s_bMousePresent = false;
 static int     s_iMouseButtons = -1;
 
 static HB_USHORT s_usMouseState = 0;

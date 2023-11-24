@@ -182,7 +182,7 @@ static PHB_GTWVT hb_gt_wvt_Find(HWND hWnd)
 
 static bool hb_gt_wvt_Alloc(PHB_GTWVT pWVT)
 {
-   bool fOK = false;
+   auto fOK = false;
 
    HB_WVT_LOCK();
 
@@ -3171,7 +3171,7 @@ static HB_BOOL hb_gt_wvt_SetMode(PHB_GT pGT, int iRow, int iCol) // FuncTable
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_wvt_SetMode(%p,%d,%d)", static_cast<void*>(pGT), iRow, iCol));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
 
    PHB_GTWVT pWVT = HB_GTWVT_GET(pGT);
 

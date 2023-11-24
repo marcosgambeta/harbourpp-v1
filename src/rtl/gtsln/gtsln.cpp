@@ -56,7 +56,9 @@ static HB_GT_FUNCS SuperTable;
 #define HB_GTID_PTR  (&s_GtId)
 
 static HB_FHANDLE s_hStdIn, s_hStdOut, s_hStdErr;
-static bool s_fStdInTTY = false, s_fStdOutTTY = false, s_fStdErrTTY = false;
+static auto s_fStdInTTY = false;
+static auto s_fStdOutTTY = false;
+static auto s_fStdErrTTY = false;
 
 /* does terminal works in Unicode (UTF-8) mode? */
 bool hb_sln_Is_Unicode = false;
@@ -98,12 +100,12 @@ static SLsmg_Char_Type s_outboxTab[256];
 /* to convert input characters */
 unsigned char hb_sln_inputTab[256];
 
-static bool s_fActive = false;
+static auto s_fActive = false;
 
 static int s_iCursorStyle = SC_NORMAL;
 
 /* indicate if we are currently running a command from system */
-static bool s_bSuspended = false;
+static auto s_bSuspended = false;
 
 /* the name of an environment variable containing a definition of nation chars.*/
 /* A definition is a list of pairs of chars. The first char in each pair is  */
@@ -535,7 +537,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr))));
 #endif
 
-   bool gt_Inited = false;
+   auto gt_Inited = false;
 
    /* stdin && stdout && stderr */
    s_hStdIn  = hFilenoStdin;

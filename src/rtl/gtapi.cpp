@@ -576,7 +576,7 @@ HB_BOOL hb_gtIsColor(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_gtIsColor()"));
 #endif
 
-   bool fColor = true;
+   auto fColor = true;
 
    PHB_GT pGT = hb_gt_Base();
    if( pGT != nullptr ) {

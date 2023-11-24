@@ -445,7 +445,7 @@ static const char * _hb_jsonDecode( const char * szSource, PHB_ITEM pValue, PHB_
                JSON syntax definition. This is allowed behaviour [Mindaugas] */
       HB_MAXINT nValue = 0;
       double dblValue = 0;
-      bool fDbl = false;
+      auto fDbl = false;
       int iDec = 0;
 
       bool fNeg = *szSource == '-';

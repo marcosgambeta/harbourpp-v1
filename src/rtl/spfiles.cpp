@@ -124,7 +124,7 @@ HB_BOOL hb_spFileExists(const char * pszFileName, char * pszRetPath)
 
    PHB_FNAME pFilepath = hb_fsFNameSplit(pszFileName);
 
-   bool bIsFile = false;
+   auto bIsFile = false;
 
    if( pFilepath->szPath ) {
       hb_fsFNameMerge(pszPath, pFilepath);

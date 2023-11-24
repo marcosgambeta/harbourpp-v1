@@ -123,7 +123,7 @@ static char * s_sOutBuf;
 
 #if defined(HB_HAS_TERMIOS)
 
-static volatile bool s_fRestTTY = false;
+static volatile auto s_fRestTTY = false;
 static struct termios s_saved_TIO, s_curr_TIO;
 
 #if defined(SIGTTOU)
@@ -236,7 +236,7 @@ static void hb_gt_pca_AnsiGetCurPos(int * iRow, int * iCol)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_pca_AnsiGetCurPos(%p, %p)", static_cast<void*>(iRow), static_cast<void*>(iCol)));
 #endif
 
-   static bool s_fIsAnswer = true;
+   static auto s_fIsAnswer = true;
 
    if( s_fIsAnswer && s_bStdinConsole && s_bStdoutConsole ) {
       char rdbuf[64];
