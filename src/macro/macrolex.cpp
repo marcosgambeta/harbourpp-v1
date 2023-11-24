@@ -118,7 +118,7 @@ static void hb_lexIdentCopy(PHB_MACRO_LEX pLex)
 
 static int hb_lexTimestampGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
 {
-   bool fOK = false;
+   auto fOK = false;
    char * dst = pLex->pDst;
 
    pLex->quote = false;
@@ -142,7 +142,7 @@ static int hb_lexTimestampGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_
 
 static int hb_lexDateGet(YYSTYPE * yylval_ptr, PHB_MACRO pMacro, PHB_MACRO_LEX pLex)
 {
-   bool fOK = false;
+   auto fOK = false;
    char * dst = pLex->pDst;
    int iYear, iMonth, iDay;
 
