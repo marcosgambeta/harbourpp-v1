@@ -696,7 +696,7 @@ HB_FUNC( HB_ISFUNCTION ) /* returns .T. if a symbol has a function/procedure poi
 {
    HB_STACK_TLS_PRELOAD
    auto szProc = hb_parc(1);
-   bool fResult = false;
+   auto fResult = false;
 
    if( szProc ) {
       auto pDynSym = hb_dynsymFindName(szProc);

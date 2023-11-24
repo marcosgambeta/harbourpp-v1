@@ -3158,7 +3158,7 @@ static HB_USHORT hb_clsNew(const char * szClassName, HB_USHORT uiDatas, PHB_ITEM
    PMETHOD pMethod;
    HB_USHORT uiSuperCls;
    HB_USHORT * puiClassData = nullptr, uiClassDataSize = 0;
-   bool fClsMutex = false;
+   auto fClsMutex = false;
 
    HB_USHORT uiSuper  = static_cast<HB_USHORT>(pSuperArray ? hb_arrayLen(pSuperArray) : 0);
    pClassFunc = hb_vmGetRealFuncSym(pClassFunc);
@@ -3745,7 +3745,7 @@ HB_FUNC( __CLSASSOCTYPE )
    HB_STACK_TLS_PRELOAD
    HB_USHORT uiClass = static_cast<HB_USHORT>(hb_parni(1));
    auto pType = hb_param(2, Harbour::Item::ANY);
-   bool fResult = false;
+   auto fResult = false;
 
    if( uiClass && uiClass <= s_uiClasses && pType ) {
       HB_TYPE nType = hb_clsGetItemType(pType, Harbour::Item::ANY);
@@ -4159,7 +4159,7 @@ HB_FUNC_STATIC( msgClass )
  */
 HB_FUNC_STATIC( msgClassParent )
 {
-   bool fHasParent = false;
+   auto fHasParent = false;
    PHB_ITEM pItem;
 
    HB_USHORT uiClass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
@@ -5000,7 +5000,7 @@ HB_FUNC( __CLSLOCKDEF )
 {
    HB_STACK_TLS_PRELOAD
    auto pClsItm = hb_param(1, Harbour::Item::BYREF);
-   bool fLocked = false;
+   auto fLocked = false;
 
    if( pClsItm && HB_IS_NIL(pClsItm) ) {
       if( !s_pClassMtx || hb_threadMutexLock(s_pClassMtx) ) {

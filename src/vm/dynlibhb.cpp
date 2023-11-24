@@ -144,7 +144,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 
 HB_BOOL hb_libFree(PHB_ITEM pDynLib)
 {
-   bool fResult = false;
+   auto fResult = false;
    void ** pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
 
    if( pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols() ) {

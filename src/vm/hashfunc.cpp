@@ -474,7 +474,7 @@ HB_FUNC( HB_HSCAN )
 
    if( pHash && pValue ) {
       bool fExact = hb_parl(5);
-      bool fFound = false;
+      auto fFound = false;
       HB_SIZE nLen = hb_hashLen(pHash);
 
       HB_SIZE nStart = hb_parns(3);

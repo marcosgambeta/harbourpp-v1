@@ -164,7 +164,7 @@ static bool hb_macroCheckParam(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_macroCheckParam(%p)", static_cast<void*>(pItem)));
 #endif
 
-   bool bValid = true;
+   auto bValid = true;
 
    if( !HB_IS_STRING(pItem) ) {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 1065, nullptr, "&", 1, pItem);

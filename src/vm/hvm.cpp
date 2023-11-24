@@ -204,7 +204,7 @@ static PHB_DYNS s_pDynsDbgEntry = nullptr;   /* Cached __DBGENTRY symbol */
 static HB_DBGENTRY_FUNC s_pFunDbgEntry;   /* C level debugger entry */
 #endif
 
-static bool s_fInternalsEnabled = true;
+static auto s_fInternalsEnabled = true;
 
 #if defined(HB_MT_VM)
 static int volatile hb_vmThreadRequest = 0;
@@ -225,11 +225,11 @@ static HB_CRITICAL_NEW(s_atInitMtx);
 #ifndef HB_NO_PROFILER
 static HB_ULONG hb_ulOpcodesCalls[HB_P_LAST_PCODE]; /* array to profile opcodes calls */
 static HB_ULONG hb_ulOpcodesTime[HB_P_LAST_PCODE];  /* array to profile opcodes consumed time */
-static bool hb_bProfiler = false;                   /* profiler status is off */
+static auto hb_bProfiler = false;                   /* profiler status is off */
 #endif
 
 #if defined(HB_PRG_TRACE)
-static bool hb_bTracePrgCalls = false; /* prg tracing is off */
+static auto hb_bTracePrgCalls = false; /* prg tracing is off */
 #  define HB_TRACE_PRG(_TRMSG_) if( hb_bTracePrgCalls ) HB_TRACE(HB_TR_ALWAYS, _TRMSG_)
 #else
 #  define HB_TRACE_PRG(_TRMSG_)
@@ -243,15 +243,15 @@ HB_SYMB hb_symEval = { "EVAL",  { HB_FS_PUBLIC }, { hb_vmDoBlock }, nullptr }; /
 static HB_SYMB  s_symBreak = { "BREAK", { HB_FS_PUBLIC }, { HB_FUNCNAME( BREAK ) }, nullptr }; /* symbol to generate break */
 static PHB_ITEM s_breakBlock = nullptr;
 
-static bool     s_fHVMActive = false;  /* is HVM ready for PCODE executing */
-static bool     s_fDoExitProc = true;  /* execute EXIT procedures */
+static auto s_fHVMActive = false;  /* is HVM ready for PCODE executing */
+static auto s_fDoExitProc = true;  /* execute EXIT procedures */
 static int      s_nErrorLevel = 0;     /* application exit status */
 static PHB_SYMB s_pSymStart = nullptr;    /* start symbol of the application. MAIN() is not required */
 
 static PHB_SYMBOLS s_pSymbols = nullptr;  /* to hold a linked list of all different modules symbol tables */
 static HB_ULONG    s_ulFreeSymbols = 0;/* number of free module symbols */
 static void *      s_hDynLibID = nullptr; /* unique identifier to mark symbol tables loaded from dynamic libraries */
-static bool        s_fCloneSym = false;/* clone registered symbol tables */
+static auto s_fCloneSym = false;/* clone registered symbol tables */
 
 #ifndef HB_GUI
 bool s_fKeyPool = true;
@@ -1352,7 +1352,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   bool bCanRecover = false;
+   auto bCanRecover = false;
    bool bDynCode = pSymbols == nullptr || (pSymbols->scope.value & HB_FS_DYNCODE) != 0;
 
 #ifndef HB_NO_PROFILER
@@ -4397,7 +4397,7 @@ static void hb_vmEnumReference(PHB_ITEM pBase)
 static void hb_vmEnumStart(int nVars, int nDescend)
 {
    HB_STACK_TLS_PRELOAD
-   bool fStart = true;
+   auto fStart = true;
 
 #if 0
    pItem = hb_itemUnRef(hb_stackItemFromTop(-(static_cast<int>(nVars) << 1)));
@@ -4653,7 +4653,7 @@ static const HB_BYTE * hb_vmSwitch(const HB_BYTE * pCode, HB_USHORT casesCnt)
    PHB_ITEM pSwitch = hb_vmSwitchGet();
 
    if( pSwitch ) {
-      bool fFound = false;
+      auto fFound = false;
 
       while( !fFound && casesCnt-- ) {
          switch( pCode[0] ) {
@@ -7360,7 +7360,7 @@ void hb_vmInitSymbolGroup(void * hNewDynLib, int argc, const char * argv[])
    if( s_hDynLibID ) {
       PHB_SYMBOLS pLastSymbols = s_pSymbols;
       void * hDynLib = s_hDynLibID;
-      bool fFound = false;
+      auto fFound = false;
       HB_USHORT ui;
 
       s_hDynLibID = nullptr;
@@ -7396,7 +7396,7 @@ void hb_vmInitSymbolGroup(void * hNewDynLib, int argc, const char * argv[])
       hb_vmDoModuleLibFunctions(&s_InitFunctions, hNewDynLib);
 
       if( fFound ) {
-         bool fClipInit = true;
+         auto fClipInit = true;
 
          do {
             pLastSymbols = s_pSymbols;
@@ -7437,7 +7437,7 @@ void hb_vmExitSymbolGroup(void * hDynLib)
 
    if( hDynLib ) {
       PHB_SYMBOLS pLastSymbols = s_pSymbols;
-      bool fFound = false;
+      auto fFound = false;
 
       while( pLastSymbols ) {
          if( pLastSymbols->hDynLib == hDynLib ) {
@@ -7479,7 +7479,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
 #endif
 
    bool fRecycled;
-   bool fInitStatics = false;
+   auto fInitStatics = false;
    HB_USHORT ui;
 
    PHB_SYMBOLS pNewSymbols = s_ulFreeSymbols == 0 ? nullptr : hb_vmFindFreeModule(pModuleSymbols, uiSymbols, szModuleName, ulID);
@@ -8518,7 +8518,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM * pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmTryEval(%p, %p, %lu)", static_cast<void*>(pResult), static_cast<void*>(pItem), ulPCount));
 #endif
 
-   bool fResult = false;
+   auto fResult = false;
    *pResult = nullptr;
    if( s_fHVMActive ) {
       PHB_SYMB pSymbol = nullptr;

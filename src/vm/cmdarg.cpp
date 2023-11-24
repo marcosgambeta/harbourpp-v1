@@ -80,7 +80,7 @@ static LPSTR * s_lpArgVStr = nullptr;
 static HANDLE s_hInstance = 0;
 static HANDLE s_hPrevInstance = 0;
 static int s_iCmdShow = 0;
-static bool s_WinMainParam = false;
+static auto s_WinMainParam = false;
 
 #define HB_WINARG_ALLOC(n)  HeapAlloc(GetProcessHeap(), 0, (n))
 #define HB_WINARG_FREE(p)   HeapFree(GetProcessHeap(), 0, (p))
@@ -118,7 +118,7 @@ void hb_winmainArgVBuild(void)
       LPCTSTR lpSrc = lpCmdLine;
       lpArg = nullptr;
       iArgC = 0;
-      bool fQuoted = false;
+      auto fQuoted = false;
 
       while( *lpSrc != 0 ) {
          if( *lpSrc == TEXT('"') ) {
@@ -323,7 +323,7 @@ void hb_cmdargUpdate(void)
       /* NOTE: try to create absolute path from s_argv[0] if necessary */
       {
          PHB_FNAME pFName = hb_fsFNameSplit(s_argv[0]);
-         bool fInPath = false;
+         auto fInPath = false;
 
          if( !pFName->szPath ) {
             char * pszPATH = hb_getenv("PATH");

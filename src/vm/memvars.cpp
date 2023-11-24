@@ -860,7 +860,7 @@ static HB_ISIZ hb_memvarCount(int iScope, int iLevel)
  */
 static HB_DYNS_FUNC(hb_memvarFindPublicByPos)
 {
-   bool bCont = true;
+   auto bCont = true;
 
    if( hb_memvarScopeGet(pDynSymbol) == HB_MV_PUBLIC ) {
       struct mv_PUBLIC_var_info * pStruPub = static_cast<struct mv_PUBLIC_var_info*>(Cargo);
@@ -1441,7 +1441,7 @@ HB_FUNC( __MVRESTORE )
       if( fhnd != nullptr ) {
 #ifdef HB_CLP_STRICT
          const char * pszMask = "*";
-         bool bIncludeMask = true;
+         auto bIncludeMask = true;
 #else
          const char * pszMask = hb_memvarGetMask(3);
          bool bIncludeMask = hb_parldef(4, true);

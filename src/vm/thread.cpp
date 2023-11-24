@@ -120,7 +120,7 @@
 #if !defined(HB_MT_VM)
    /* nothing */
 #else
-   static volatile bool s_fThreadInit = false;
+   static volatile auto s_fThreadInit = false;
 
    static PHB_ITEM s_pOnceMutex = nullptr;
 
@@ -372,7 +372,7 @@ static bool _hb_thread_cond_broadcast(HB_COND_T * cond)
 static bool _hb_thread_cond_wait(HB_COND_T * cond, HB_RAWCRITICAL_T * critical, HB_ULONG ulMillisec)
 {
    PHB_WAIT_LIST pWaiting = _hb_thread_wait_list();
-   bool fResult = false;
+   auto fResult = false;
 
    if( pWaiting ) {
       _hb_thread_wait_add(cond, pWaiting);
@@ -881,7 +881,7 @@ static const HB_GC_FUNCS s_gcThreadFuncs =
 HB_CARGO_FUNC(hb_threadStartVM)
 {
    PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(cargo);
-   bool fSend = false;
+   auto fSend = false;
 
    HB_ULONG ulPCount = static_cast<HB_ULONG>(hb_arrayLen(pThread->pParams));
    if( ulPCount > 0 ) {
@@ -1305,7 +1305,7 @@ HB_FUNC( HB_THREADJOIN )
 
    if( pThread ) {
       HB_STACK_TLS_PRELOAD
-      bool fResult = false;
+      auto fResult = false;
 
       if( pThread->th_h ) {
          hb_vmUnlock();
@@ -1332,7 +1332,7 @@ HB_FUNC( HB_THREADDETACH )
 
    if( pThread ) {
       HB_STACK_TLS_PRELOAD
-      bool fResult = false;
+      auto fResult = false;
 
       if( pThread->th_h && hb_threadDetach(pThread->th_h) ) {
          pThread->th_h = 0;
@@ -1348,7 +1348,7 @@ HB_FUNC( HB_THREADQUITREQUEST )
 
    if( pThread ) {
       HB_STACK_TLS_PRELOAD
-      bool fResult = false;
+      auto fResult = false;
 
 #if defined(HB_MT_VM)
       if( pThread->fActive ) {
@@ -1448,7 +1448,7 @@ HB_FUNC( HB_THREADONCE )
 
    if( pItem && HB_ISBYREF(1) && (HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem)) ) {
       HB_STACK_TLS_PRELOAD
-      bool fFirstCall = false;
+      auto fFirstCall = false;
       if( HB_IS_NIL(pItem) || !hb_itemGetL(pItem) ) {
          auto pAction = hb_param(2, Harbour::Item::EVALITEM);
 
@@ -1498,7 +1498,7 @@ HB_FUNC( HB_THREADONCEINIT )
 
    if( pItem && pValue && HB_ISBYREF(1) && !HB_ISBYREF(2) ) {
       HB_STACK_TLS_PRELOAD
-      bool fInitialized = false;
+      auto fInitialized = false;
 
       if( HB_IS_NIL(pItem) && !HB_IS_NIL(pValue) ) {
 #if defined(HB_MT_VM)
@@ -1730,7 +1730,7 @@ void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
 HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM pItemSync)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItemMtx), pSyncMutex = nullptr;
-   bool fResult = false;
+   auto fResult = false;
 
    if( pMutex ) {
       if( pItemSync ) {
@@ -1852,7 +1852,7 @@ HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM 
 HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
-   bool fResult = false;
+   auto fResult = false;
 
    if( pMutex ) {
 #if !defined(HB_MT_VM)
@@ -1884,7 +1884,7 @@ HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
 HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
-   bool fResult = false;
+   auto fResult = false;
 
    if( pMutex ) {
 #if !defined(HB_MT_VM)
@@ -1943,7 +1943,7 @@ HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
 HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
 {
    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
-   bool fResult = false;
+   auto fResult = false;
 
    if( pMutex ) {
 #if !defined(HB_MT_VM)

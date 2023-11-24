@@ -78,7 +78,7 @@ HB_FUNC( ARRAY )
    int iPCount = hb_pcount();
 
    if( iPCount > 0 ) {
-      bool bError = false;
+      auto bError = false;
 
       for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
          if( !HB_ISNUM(iParam) ) {

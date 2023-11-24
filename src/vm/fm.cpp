@@ -229,7 +229,7 @@
 #endif
 
 #ifdef HB_FM_NEED_INIT
-static bool s_fInitedFM = false;
+static auto s_fInitedFM = false;
 #endif
 
 #ifndef HB_MEMFILER
@@ -279,7 +279,7 @@ using PHB_MEMINFO = HB_MEMINFO *;
  */
 #define HB_TRACE_FM  HB_TRACE_STEALTH
 
-static bool s_fStatistic = false;
+static auto s_fStatistic = false;
 
 static HB_ISIZ s_nMemoryBlocks      = 0; /* memory blocks used */
 static HB_ISIZ s_nMemoryMaxBlocks   = 0; /* maximum number of used memory blocks */

@@ -108,7 +108,7 @@
 #     elif !defined(_HB_STACK_LOCAL_MACROS_)
          HB_TLS_KEY hb_stack_key;
 #     endif
-      static volatile bool s_fInited = false;
+      static volatile auto s_fInited = false;
 #     define hb_stack_alloc()    do { if( !s_fInited ) { \
                                          hb_tls_init(hb_stack_key); \
                                          s_fInited = true; } \

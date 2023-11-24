@@ -269,7 +269,7 @@ static void open_handle(PHB_SET_STRUCT pSet, const char * file_name, bool fAppen
    const char * def_ext;
    char * szFileName = nullptr;
    char ** set_value;
-   bool fPipe = false;
+   auto fPipe = false;
 
    switch( set_specifier ) {
       case HB_SET_ALTFILE:
@@ -1398,7 +1398,7 @@ int hb_setListenerRemove(int listener)
 HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
 {
    HB_STACK_TLS_PRELOAD
-   bool fResult = false;
+   auto fResult = false;
 
    if( pItem != nullptr ) {
       PHB_SET_STRUCT pSet = hb_stackSetStruct();
@@ -1943,7 +1943,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
 
 HB_BOOL hb_setSetItem2(HB_set_enum set_specifier, PHB_ITEM pItem1, PHB_ITEM pItem2)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( pItem1 ) {
       switch( set_specifier ) {

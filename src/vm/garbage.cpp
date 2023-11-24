@@ -155,7 +155,7 @@ static PHB_GARBAGE s_pLockedBlock = nullptr;
 static PHB_GARBAGE s_pDeletedBlock = nullptr;
 
 /* marks if block releasing is requested during garbage collecting */
-static bool volatile s_bCollecting = false;
+static auto volatile s_bCollecting = false;
 
 /* flag for used/unused blocks - the meaning of the HB_GC_USED_FLAG bit
  * is reversed on every collecting attempt

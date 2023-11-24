@@ -2279,7 +2279,7 @@ void hb_itemCloneTo(PHB_ITEM pDest, PHB_ITEM pSource)
 /* Check whether two items are exactly equal */
 HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( HB_IS_NUMERIC(pItem1) ) {
       if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) ) {
@@ -2318,7 +2318,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
  */
 HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, int * piResult)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( HB_IS_NUMERIC(pItem1) ) {
       if( HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2) ) {
