@@ -490,7 +490,7 @@ static void hb_hsxHashStr(const char * pStr, HB_SIZE nLen, HB_BYTE * pKey, int i
 
 static int hb_hsxStrCmp(const char * pSub, HB_SIZE nSub, const char * pStr, HB_SIZE nLen, bool fNoCase, int iFilter)
 {
-   bool fResult = false;
+   auto fResult = false;
    HB_UCHAR c1, c2;
 
    if( nSub == 0 ) {
@@ -1827,7 +1827,8 @@ HB_FUNC( HS_FILTER )
    auto nLen = hb_parclen(2);
    HB_ULONG ulRecords = 0;
    int iHandle = -1, iResult = HSX_BADPARMS;
-   bool fNew = false, fToken = true;
+   auto fNew = false;
+   auto fToken = true;
 
    if( hb_parclen(1) > 0 ) {
       if( nLen > 0 ) {

@@ -2079,7 +2079,7 @@ static bool hb_ntxIndexUnLockWrite(LPNTXINDEX pIndex)
  */
 static bool hb_ntxTagLockRead(LPTAGINFO pTag)
 {
-   bool fOK = false;
+   auto fOK = false;
 
    if( hb_ntxIndexLockRead(pTag->pIndex) ) {
       fOK = hb_ntxTagHeaderCheck(pTag);
@@ -2096,7 +2096,7 @@ static bool hb_ntxTagLockRead(LPTAGINFO pTag)
  */
 static bool hb_ntxTagLockWrite(LPTAGINFO pTag)
 {
-   bool fOK = false;
+   auto fOK = false;
 
    if( hb_ntxIndexLockWrite(pTag->pIndex, true) ) {
       fOK = hb_ntxTagHeaderCheck(pTag);
@@ -2414,7 +2414,10 @@ static bool hb_ntxTagKeyFind(LPTAGINFO pTag, LPKEYINFO pKey, HB_USHORT uiLen)
    LPPAGEINFO pPage = nullptr;
    HB_ULONG ulPage = 0, ulRecNo = 0;
    int iKey;
-   bool fStop = false, fNext = false, fPrev = false, fOut = false;
+   auto fStop = false;
+   auto fNext = false;
+   auto fPrev = false;
+   auto fOut = false;
 
    if( pKey->Tag == NTX_MAX_REC_NUM ) {        /* for key add */
       if( pTag->fSortRec ) {
@@ -2713,7 +2716,8 @@ static bool hb_ntxTagKeyAdd(LPTAGINFO pTag, LPKEYINFO pKey)
    int iLevel, iKey;
    LPPAGEINFO pPage = nullptr;
    LPKEYINFO pNewKey = nullptr;
-   bool fFound, fBottom = false;
+   bool fFound;
+   auto fBottom = false;
 
    if( pTag->UniqueKey ) {
       HB_ULONG ulRecNo = pKey->Xtra;
@@ -3245,7 +3249,7 @@ static bool hb_ntxCurKeyRefresh( LPTAGINFO pTag )
       return false;
    } else if( pTag->stackLevel == 0 || pTag->CurKeyInfo->Xtra != pArea->dbfarea.ulRecNo ) {
       HB_BYTE buf[NTX_MAX_KEY];
-      bool fBuf = false;
+      auto fBuf = false;
       LPKEYINFO pKey = nullptr;
       /* Try to find previous if it's key for the same record */
       if( pTag->CurKeyInfo->Xtra == pArea->dbfarea.ulRecNo ) {
@@ -3727,7 +3731,8 @@ static void hb_ntxOrdSetRelKeyPos(LPTAGINFO pTag, double dPos)
       NTXAREAP pArea = pTag->pIndex->pArea;
       double dStart = 0.0, dStop = 1.0, dFact = 0.0000000000001;
       bool fOK = true, fFilter = pArea->dbfarea.area.dbfi.fFilter;
-      bool fForward = true, fTop = false;
+      auto fForward = true;
+      auto fTop = false;
 
       hb_ntxTagRefreshScope(pTag);
 
@@ -3887,7 +3892,7 @@ static bool hb_ntxOrdSkipEval(LPTAGINFO pTag, bool fForward, PHB_ITEM pEval)
 #endif
 
    NTXAREAP pArea = pTag->pIndex->pArea;
-   bool fFound = false;
+   auto fFound = false;
 
    if( (hb_itemType(pEval) & Harbour::Item::BLOCK) == 0 ) {
       if( SELF_SKIP(&pArea->dbfarea.area, fForward ? 1 : -1) != Harbour::SUCCESS ) {
@@ -3966,7 +3971,7 @@ static bool hb_ntxOrdSkipWild(LPTAGINFO pTag, bool fForward, PHB_ITEM pWildItm)
 
    NTXAREAP pArea = pTag->pIndex->pArea;
    char * szFree = nullptr;
-   bool fFound = false;
+   auto fFound = false;
    int iFixed = 0;
 
    auto szPattern = hb_itemGetCPtr(pWildItm);
@@ -4096,7 +4101,7 @@ static bool hb_ntxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, PHB_ITEM pRegExItm
 #endif
 
    NTXAREAP pArea = pTag->pIndex->pArea;
-   bool fFound = false;
+   auto fFound = false;
    PHB_REGEX pRegEx;
 
    if( pTag->KeyType != 'C' || (pRegEx = hb_regexGet(pRegExItm, 0)) == nullptr ) {
@@ -4176,7 +4181,7 @@ static bool hb_ntxOrdSkipRegEx(LPTAGINFO pTag, bool fForward, PHB_ITEM pRegExItm
 static bool hb_ntxOrdKeyAdd(LPTAGINFO pTag, PHB_ITEM pItem)
 {
    NTXAREAP pArea = pTag->pIndex->pArea;
-   bool fResult = false;
+   auto fResult = false;
    LPKEYINFO pKey;
 
    if( pArea->dbfarea.lpdbPendingRel ) {
@@ -4217,7 +4222,7 @@ static bool hb_ntxOrdKeyAdd(LPTAGINFO pTag, PHB_ITEM pItem)
 static bool hb_ntxOrdKeyDel(LPTAGINFO pTag, PHB_ITEM pItem)
 {
    NTXAREAP pArea = pTag->pIndex->pArea;
-   bool fResult = false;
+   auto fResult = false;
    LPKEYINFO pKey = nullptr;
 
    if( pArea->dbfarea.lpdbPendingRel ) {
@@ -4264,7 +4269,7 @@ static bool hb_ntxOrdKeyDel(LPTAGINFO pTag, PHB_ITEM pItem)
 static bool hb_ntxOrdFindRec(LPTAGINFO pTag, HB_ULONG ulRecNo, bool fCont)
 {
    NTXAREAP pArea = pTag->pIndex->pArea;
-   bool fFound = false;
+   auto fFound = false;
 
    if( pTag && ulRecNo ) {
       if( pArea->dbfarea.lpdbPendingRel && pArea->dbfarea.lpdbPendingRel->isScoped ) {
@@ -4971,7 +4976,8 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
    } else {
       LPTAGINFO pSaveTag = pArea->lpCurTag;
       HB_ULONG ulStartRec = 0, ulNextCount = 0;
-      bool fDirectRead, fUseFilter = false;
+      bool fDirectRead;
+      auto fUseFilter = false;
       HB_BYTE * pSaveRecBuff = pArea->dbfarea.pRecord;
       char szBuffer[NTX_MAX_KEY];
       int iRecBuff = 0, iRecBufSize, iRec;
@@ -5528,7 +5534,8 @@ static HB_ERRCODE hb_ntxGoCold(NTXAREAP pArea)
             LPNTXINDEX pIndex = pArea->lpIndexes;
             LPTAGINFO pTag;
             LPKEYINFO pKey;
-            bool fAdd, fDel, fLck = false;
+            bool fAdd, fDel;
+            auto fLck = false;
             int i;
 
             /* The pending relation may move the record pointer so we should
@@ -5827,9 +5834,12 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
    LPTAGINFO pTag = nullptr;
    LPDBFDATA pData;
    HB_ULONG ulRecNo;
-   bool fProd, fCompound, fTagName, fBagName, fLocked = false,
-        fAscend = true, fCustom = false, fTemporary = false,
-        fExclusive = false;
+   bool fProd, fCompound, fTagName, fBagName;
+   auto fLocked = false;
+   auto fAscend = true;
+   auto fCustom = false;
+   auto fTemporary = false;
+   auto fExclusive = false;
    HB_BYTE bType;
 
    HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);

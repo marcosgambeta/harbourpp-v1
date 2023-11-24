@@ -86,7 +86,7 @@ HB_FUNC( SX_WILDMATCH )
 {
    auto szPattern = hb_parc(1);
    auto szValue = hb_parc(2);
-   bool fMatch = false;
+   auto fMatch = false;
 
    if( szPattern && szPattern[0] && szValue ) {
       fMatch = hb_strMatchWild(szValue, szPattern);

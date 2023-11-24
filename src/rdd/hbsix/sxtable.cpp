@@ -81,7 +81,7 @@ HB_FUNC( SX_GETLOCKS )
 HB_FUNC( SX_ISFLOCKED )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   bool fLocked = false;
+   auto fLocked = false;
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemNew(nullptr);
@@ -96,7 +96,7 @@ HB_FUNC( SX_ISFLOCKED )
 HB_FUNC( SX_ISREADONLY )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   bool fReadOnly = false;
+   auto fReadOnly = false;
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemNew(nullptr);
@@ -111,7 +111,7 @@ HB_FUNC( SX_ISREADONLY )
 HB_FUNC( SX_ISSHARED )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   bool fShared = false;
+   auto fShared = false;
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemNew(nullptr);
@@ -183,7 +183,8 @@ static void hb_sxRollBackChild(AREAP pArea, PHB_ITEM pItem)
 
 HB_FUNC( SX_ROLLBACK )
 {
-   bool fResult = false, fRollChild = false;
+   auto fResult = false;
+   auto fRollChild = false;
    int iArea = 0;
    AREAP pArea;
 
@@ -213,7 +214,7 @@ HB_FUNC( SX_ROLLBACK )
 HB_FUNC( SX_RLOCK )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   bool fResult = false;
+   auto fResult = false;
    PHB_ITEM pResult = nullptr;
 
    if( pArea != nullptr ) {
@@ -263,7 +264,7 @@ HB_FUNC( SX_UNLOCK )
 HB_FUNC( SX_SETPASS )
 {
    int iPCount = hb_pcount();
-   bool fResult = false;
+   auto fResult = false;
    PHB_ITEM pItem;
 
    if( iPCount == 1 ) {
@@ -333,7 +334,7 @@ HB_FUNC( SX_SETPASS )
 HB_FUNC( SX_DBFENCRYPT )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   bool fResult = false;
+   auto fResult = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
@@ -349,7 +350,7 @@ HB_FUNC( SX_DBFENCRYPT )
 HB_FUNC( SX_DBFDECRYPT )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   bool fResult = false;
+   auto fResult = false;
 
    if( pArea != nullptr ) {
       PHB_ITEM pItem = hb_itemParam(1);
@@ -364,7 +365,7 @@ HB_FUNC( SX_DBFDECRYPT )
 HB_FUNC( SX_MEMOPACK )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   bool fResult = false;
+   auto fResult = false;
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemArrayNew(3);

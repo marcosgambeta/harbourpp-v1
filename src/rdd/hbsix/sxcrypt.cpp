@@ -127,7 +127,7 @@ void hb_sxDeCrypt(const char * pSrc, char * pDst, const char * pKeyVal, HB_SIZE 
 
 static bool _hb_sxGetKey(PHB_ITEM pKeyItem, char * pKeyVal)
 {
-   bool fResult = false;
+   auto fResult = false;
    PHB_ITEM pItem = nullptr;
 
    if( !( hb_itemType(pKeyItem) & Harbour::Item::STRING ) ) {

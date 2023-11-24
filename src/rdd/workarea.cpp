@@ -864,7 +864,7 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       }
       case DBI_SCOPEDRELATION: {
          int iRelNo = hb_itemGetNI(pItem);
-         bool fScoped = false;
+         auto fScoped = false;
 
          if( iRelNo > 0 ) {
             LPDBRELINFO lpdbRelations = pArea->lpdbRelations;

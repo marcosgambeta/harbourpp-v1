@@ -123,7 +123,7 @@ static HB_ERRCODE hb_dbfErrorRT(DBFAREAP pArea,
 static HB_MAXINT hb_dbfRowVerGet(DBFAREAP pArea, HB_USHORT uiField, HB_MAXINT * pValue)
 {
    DBFFIELD dbField;
-   bool fLck = false;
+   auto fLck = false;
 
    *pValue = 0;
    if( pArea->fShared && !pArea->fFLocked && !pArea->fHeaderLocked ) {
@@ -250,7 +250,7 @@ static int hb_dbfNextValueStep(DBFAREAP pArea, HB_USHORT uiField, int iStep)
 
 void hb_dbfTransCheckCounters(LPDBTRANSINFO lpdbTransInfo)
 {
-   bool fCopyCtr = true;
+   auto fCopyCtr = true;
    HB_USHORT uiCount, uiDest;
    DBFAREAP pArea = reinterpret_cast<DBFAREAP>(lpdbTransInfo->lpaDest);
 
@@ -522,7 +522,7 @@ static bool hb_dbfTriggerDo(DBFAREAP pArea, int iEvent, int iField, PHB_ITEM pIt
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfTriggerDo(%p,%d,%d,%p)", static_cast<void*>(pArea), iEvent, iField, pItem));
 #endif
 
-   bool fResult = true;
+   auto fResult = true;
 
    if( hb_vmRequestQuery() == 0 ) {
       if( hb_vmRequestReenter() ) {
@@ -5944,7 +5944,7 @@ static HB_ERRCODE hb_dbfWriteDBHeader(DBFAREAP pArea)
 #endif
 
    int iYear, iMonth, iDay;
-   bool fLck = false;
+   auto fLck = false;
    HB_ERRCODE errCode;
 
    if( pArea->fReadonly ) {
@@ -6033,7 +6033,8 @@ static HB_ERRCODE hb_dbfDrop(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pItem
    const char * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
-   bool fTable = false, fResult = false;
+   auto fTable = false;
+   auto fResult = false;
 
    auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
@@ -6111,7 +6112,7 @@ static HB_ERRCODE hb_dbfExists(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
    char szFileName[HB_PATH_MAX];
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
-   bool fTable = false;
+   auto fTable = false;
 
    auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
@@ -6150,7 +6151,8 @@ static HB_ERRCODE hb_dbfRename(LPRDDNODE pRDD, PHB_ITEM pItemTable, PHB_ITEM pIt
    const char * szExt;
    PHB_ITEM pFileExt = nullptr;
    PHB_FNAME pFileName;
-   bool fTable = false, fResult = false;
+   auto fTable = false;
+   auto fResult = false;
 
    auto szFile = hb_itemGetCPtr(pItemIndex);
    if( !szFile[0] ) {
@@ -6412,7 +6414,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       }
       case RDDI_TRIGGER: {
          char * szTrigger = pData->szTrigger;
-         bool fFree = false;
+         auto fFree = false;
 
          if( HB_IS_STRING(pItem) ) {
             fFree = true;
@@ -6450,7 +6452,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
       case RDDI_PASSWORD: {
          char * szPasswd = pData->szPasswd;
-         bool fFree = false;
+         auto fFree = false;
 
          if( HB_IS_STRING(pItem) ) {
             fFree = true;

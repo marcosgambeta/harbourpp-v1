@@ -55,7 +55,7 @@
 static bool hb_sxSemName(char * szFileName)
 {
    auto szName = hb_parc(1);
-   bool fResult = false;
+   auto fResult = false;
 
    if( szName && szName[0] ) {
       hb_cdpnDup2Lower(hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX);

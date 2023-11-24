@@ -370,7 +370,7 @@ static HB_ERRCODE hb_fptPutRootBlock(FPTAREAP pArea, HB_ULONG ulBlock)
  */
 static void hb_fptSortGCitems(LPMEMOGCTABLE pGCtable)
 {
-   bool fMoved = true;
+   auto fMoved = true;
    int l;
 
    /* this table should be already quite good sorted so this simple
@@ -579,7 +579,7 @@ static HB_ERRCODE hb_fptGCfreeBlock(FPTAREAP pArea, LPMEMOGCTABLE pGCtable, HB_U
  */
 static HB_ERRCODE hb_fptGCgetFreeBlock(FPTAREAP pArea, LPMEMOGCTABLE pGCtable, HB_ULONG * ulOffset, HB_ULONG ulByteSize, bool fRaw)
 {
-   bool fAlloc = false;
+   auto fAlloc = false;
    HB_ULONG ulSize;
 
    if( pArea->bMemoType == DB_MEMO_SMT || fRaw ) {
@@ -2825,7 +2825,7 @@ static HB_ERRCODE hb_fptGetVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
    LPFIELD pField;
    HB_ERRCODE errCode;
    HB_BYTE * pFieldBuf;
-   bool fUnLock = false;
+   auto fUnLock = false;
 
    pField = pArea->area.lpFields + uiIndex - 1;
 

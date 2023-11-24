@@ -64,7 +64,8 @@ HB_FUNC( ORDWILDSEEK )
       auto szPattern = hb_parc(1);
 
       if( szPattern ) {
-         bool fCont = hb_parl(2), fBack = hb_parl(3), fFound = false;
+         bool fCont = hb_parl(2), fBack = hb_parl(3);
+         auto fFound = false;
          DBORDERINFO OrderInfo{};
          HB_ERRCODE errCode = Harbour::SUCCESS;
 
