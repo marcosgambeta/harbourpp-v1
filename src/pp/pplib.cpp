@@ -111,7 +111,7 @@ static const HB_GC_FUNCS s_gcPPFuncs =
 
 static void hb_pp_StdRules(PHB_ITEM ppItem)
 {
-   static bool s_fInit = true;
+   static auto s_fInit = true;
    static PHB_DYNS s_pDynSym;
 
    if( s_fInit ) {

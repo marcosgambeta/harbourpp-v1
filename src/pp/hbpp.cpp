@@ -608,7 +608,8 @@ int main(int argc, char * argv[])
 {
    char * szFile = nullptr, * szRuleFile = nullptr, * szVerFile = nullptr;
    char * szStdCh = nullptr, * szLogFile = nullptr, * szInclude;
-   bool fWrite = false, fChgLog = false;
+   auto fWrite = false;
+   auto fChgLog = false;
    char * szChangeLogID = nullptr, * szLastEntry = nullptr;
    int iResult = 0, iQuiet = 0, i;
    HB_MAXINT nRevID = 0;
