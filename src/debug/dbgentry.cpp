@@ -792,7 +792,7 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
       for( i = 1; i <= nItemLen; i++ ) {
          auto pEntry = hb_arrayGetItemPtr(pItem, i);
          auto szModule = hb_arrayGetCPtr(pEntry, 1);
-         bool bFound = false;
+         auto bFound = false;
 
          szModule = hb_dbgStripModuleName(szModule);
          for( j = 1; j <= nLinesLen; j++ ) {
@@ -1129,7 +1129,7 @@ static PHB_ITEM hb_dbgEvalMakeBlock(HB_WATCHPOINT * watch)
 {
    int i = 0;
    PHB_ITEM pBlock;
-   bool bAfterId = false;
+   auto bAfterId = false;
    char * szOrig = nullptr;
    HB_ISIZ buffsize;
 
@@ -1456,7 +1456,7 @@ static int hb_dbgIsBreakPoint(HB_DEBUGINFO * info, const char * szModule, int nL
 
 HB_BOOL hb_dbgIsValidStopLine(void * handle, const char * szModule, int nLine)
 {
-   bool fResult = false;
+   auto fResult = false;
 
    if( szModule ) {
       HB_ISIZ nModules;
