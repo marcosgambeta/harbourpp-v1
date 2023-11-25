@@ -614,7 +614,7 @@ HB_FUNC( WVT_SETPEN )
 
    if( _s ) {
       if( HB_ISNUM(1) ) {
-         HPEN hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
+         auto hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
 
          if( hPen ) {
             if( _s->currentPen ) {
@@ -1152,7 +1152,7 @@ HB_FUNC( WVT_DRAWLINE )
       COLORREF cr      = hbwapi_par_COLORREF(10);
 
       int iOffset;
-      HPEN hPen, hOldPenGUI;
+      HPEN hOldPenGUI;
 
       int x = iLeft;
       int y = iTop;
@@ -1191,7 +1191,7 @@ HB_FUNC( WVT_DRAWLINE )
             break;
       }
 
-      hPen = CreatePen(iStyle, iThick, cr);
+      auto hPen = CreatePen(iStyle, iThick, cr);
       auto hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
       hOldPenGUI = _s->bGui ? static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen)) : 0;
 
@@ -2615,7 +2615,7 @@ HB_FUNC( WVT_LOADPEN )
       int iSlot = hb_parni(1) - 1;
 
       if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)) ) {
-         HPEN hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
+         auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
 
          if( hPen ) {
             if( _s->pGUI->hUserPens[iSlot] ) {

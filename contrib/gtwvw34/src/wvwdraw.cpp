@@ -592,7 +592,7 @@ HB_FUNC( WVW_SETPEN )
    PWVW_GLO wvw = hb_gt_wvw();
 
    if( wvw && HB_ISNUM(1) ) {
-      HPEN hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
+      auto hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
 
       if( hPen ) {
          if( wvw->a.currentPen ) {
@@ -617,7 +617,7 @@ HB_FUNC( WVW_SETGRIDPEN )
    PWVW_GLO wvw = hb_gt_wvw();
 
    if( wvw && HB_ISNUM(1) ) {
-      HPEN hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
+      auto hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
 
       if( hPen ) {
          if( wvw->a.gridPen ) {
@@ -1581,7 +1581,6 @@ HB_FUNC( WVW_DRAWLINE )
       int   iOffset;
       int   x, y;
       POINT xy;
-      HPEN  hPen;
 
       auto iOrient = hb_parni(6);
       auto iFormat = hb_parni(7);
@@ -1638,7 +1637,7 @@ HB_FUNC( WVW_DRAWLINE )
             break;
       }
 
-      hPen    = CreatePen(iStyle, iThick, hbwapi_par_COLORREF(11));
+      auto hPen = CreatePen(iStyle, iThick, hbwapi_par_COLORREF(11));
       auto hOldPen = static_cast<HPEN>(SelectObject(hDC, hPen));
 
       switch( iFormat ) {

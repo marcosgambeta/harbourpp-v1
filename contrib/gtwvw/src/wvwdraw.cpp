@@ -1568,7 +1568,6 @@ HB_FUNC( WVW_DRAWLINE )
    int      iOrient, iFormat, iAlign, iStyle, iThick;
    int      x, y;
    COLORREF cr;
-   HPEN     hPen;
    auto usTop = static_cast<USHORT>(hb_parni(2));
    auto usLeft = static_cast<USHORT>(hb_parni(3));
    auto usBottom = static_cast<USHORT>(hb_parni(4));
@@ -1643,7 +1642,7 @@ HB_FUNC( WVW_DRAWLINE )
          break;
    }
 
-   hPen    = CreatePen(iStyle, iThick, cr);
+   auto hPen = CreatePen(iStyle, iThick, cr);
    auto hOldPen = static_cast<HPEN>(SelectObject(pWindowData->hdc, hPen));
 
    switch( iFormat ) {

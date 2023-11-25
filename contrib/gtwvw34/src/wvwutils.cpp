@@ -854,7 +854,7 @@ HB_FUNC( WVW_LOADPEN )
    int iSlot = hb_parni(1) - 1;
 
    if( wvw && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserPens)) ) {
-      HPEN hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
+      auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
 
       if( hPen ) {
          if( wvw->a.hUserPens[iSlot] ) {

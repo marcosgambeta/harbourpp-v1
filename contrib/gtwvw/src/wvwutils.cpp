@@ -1488,14 +1488,13 @@ HB_FUNC( WVW_LOADPEN )
    WVW_DATA * p = hb_getWvwData();
    int        iPenWidth, iPenStyle;
    COLORREF   crColor;
-   HPEN       hPen;
    int        iSlot = hb_parni(1) - 1;
 
    iPenStyle = HB_ISNIL(2) ? 0 : hb_parni(2);
    iPenWidth = HB_ISNIL(3) ? 0 : hb_parni(3);
    crColor   = HB_ISNIL(4) ? RGB(0, 0, 0) : static_cast<COLORREF>(hb_parnl(4));
 
-   hPen = CreatePen(iPenStyle, iPenWidth, crColor);
+   auto hPen = CreatePen(iPenStyle, iPenWidth, crColor);
 
    if( hPen ) {
       if( p->s_sApp->hUserPens[iSlot] ) {
@@ -1795,7 +1794,6 @@ HB_FUNC( WVW_SETPEN )
 {
    int        iPenWidth;
    COLORREF   crColor;
-   HPEN       hPen;
    WVW_DATA * p = hb_getWvwData();
 
    if( HB_ISNIL(1) ) {
@@ -1806,7 +1804,7 @@ HB_FUNC( WVW_SETPEN )
    iPenWidth = HB_ISNIL(2) ? 0 : hb_parni(2);
    crColor   = HB_ISNIL(3) ? RGB(0, 0, 0) : static_cast<COLORREF>(hb_parnl(3));
 
-   hPen = CreatePen(iPenStyle, iPenWidth, crColor);
+   auto hPen = CreatePen(iPenStyle, iPenWidth, crColor);
 
    if( hPen ) {
       /* 20040923, was:

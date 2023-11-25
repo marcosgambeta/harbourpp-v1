@@ -784,8 +784,6 @@ HB_FUNC( WVT_SETPEN )
 {
    auto _s = hb_wvt_gtGetWVT();
 
-   HPEN     hPen;
-
    if( !HB_ISNUM(1) ) {
       hb_retl(false);
    }
@@ -794,7 +792,7 @@ HB_FUNC( WVT_SETPEN )
    auto iPenWidth = hb_parni(2);
    auto crColor = static_cast<COLORREF>(hb_parnldef(3, RGB(0, 0, 0)));
 
-   hPen = CreatePen(iPenStyle, iPenWidth, crColor);
+   auto hPen = CreatePen(iPenStyle, iPenWidth, crColor);
 
    if( hPen ) {
       if( _s->currentPen ) {
@@ -1089,7 +1087,7 @@ HB_FUNC( WVT_DRAWLINE )
    int iRight  = (_s->PTEXTSIZE.x * (hb_parni(4) + 1)) - 1 + hb_parvni(11, 4);
 
    int      x, y, iOffset;
-   HPEN     hPen, hOldPenGUI;
+   HPEN     hOldPenGUI;
 
    /*   Resolve Parameters   */
    auto iOrient = hb_parni(5);
@@ -1136,8 +1134,8 @@ HB_FUNC( WVT_DRAWLINE )
          break;
    }
 
-   hPen       = CreatePen(iStyle, iThick, cr);
-   auto hOldPen    = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
+   auto hPen = CreatePen(iStyle, iThick, cr);
+   auto hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
    hOldPenGUI = _s->bGui ? static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen)) : 0;
 
    switch( iFormat ) {
@@ -2617,14 +2615,13 @@ HB_FUNC( WVT_LOADPEN )
 {
    auto _s = hb_wvt_gtGetWVT();
 
-   HPEN     hPen;
    int      iSlot = hb_parni(1) - 1;
 
    auto iPenStyle = hb_parni(2);
    auto iPenWidth = hb_parni(3);
    auto crColor = static_cast<COLORREF>(hb_parnldef(4, RGB(0, 0, 0)));
 
-   hPen = CreatePen(iPenStyle, iPenWidth, crColor);
+   auto hPen = CreatePen(iPenStyle, iPenWidth, crColor);
 
    if( hPen ) {
       if( _s->pGUI->hUserPens[iSlot] ) {
