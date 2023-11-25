@@ -74,9 +74,9 @@ static int hb_pp_writeTokenCount(PHB_PP_TOKEN pToken)
 static void hb_pp_writeToken(FILE * fout, PHB_PP_TOKEN pToken, const char * szName, int iToken, bool fLast)
 {
    while( pToken ) {
-      int iOptional = hb_pp_writeTokenCount(pToken->pMTokens), i;
+      int iOptional = hb_pp_writeTokenCount(pToken->pMTokens);
 
-      i = static_cast<int>(strlen(szName));
+      auto i = static_cast<int>(strlen(szName));
       if( pToken->pNext ) {
          fprintf(fout, "   { %s +%2d", szName, iToken + iOptional + 1);
       } else {

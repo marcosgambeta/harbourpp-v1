@@ -4788,7 +4788,7 @@ void hb_pp_setStdBase(PHB_PP_STATE pState)
 void hb_pp_initDynDefines(PHB_PP_STATE pState, HB_BOOL fArchDefs)
 {
    char szResult[65];
-   int iYear, iMonth, iDay, i;
+   int iYear, iMonth, iDay;
    long lDate, lTime;
 
    if( fArchDefs ) {
@@ -4848,7 +4848,7 @@ void hb_pp_initDynDefines(PHB_PP_STATE pState, HB_BOOL fArchDefs)
    szResult[1] = '"';
    hb_timeStampGet(&lDate, &lTime);
    hb_timeStampStr(szResult + 2, lDate, lTime);
-   i = static_cast<int>(strlen(szResult));
+   auto i = static_cast<int>(strlen(szResult));
    szResult[i++] = '"';
    szResult[i] = '\0';
    hb_pp_addDefine(pState, "__TIMESTAMP__", szResult);
