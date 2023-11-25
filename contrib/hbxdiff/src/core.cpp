@@ -370,17 +370,14 @@ static int xdlt_outb( void * priv, mmbuffer_t * mb, int nbuf )
 
    if( pCallback && hb_vmRequestReenter() )
    {
-      int iResult;
-      int i;
-
       hb_vmPushEvalSym();
       hb_vmPush(pCallback);
 
-      for( i = 0; i < nbuf; i++ )
+      for( auto i = 0; i < nbuf; i++ )
          hb_vmPushString(static_cast<const char*>(mb[i].ptr), mb[i].size);
 
       hb_vmSend(static_cast<HB_USHORT>(nbuf));
-      iResult = hb_parnidef(-1, 0);
+      auto iResult = hb_parnidef(-1, 0);
 
       hb_vmRequestRestore();
 
@@ -440,7 +437,7 @@ HB_FUNC( XDL_PATCH )
    {
       if( HB_ISNUM(4) && HB_ISNUM(5) )
       {
-         int        mode = hb_parnidef(3, XDL_PATCH_NORMAL);
+         auto mode = hb_parnidef(3, XDL_PATCH_NORMAL);
          xdemitcb_t ecb;
          xdemitcb_t rjecb;
 

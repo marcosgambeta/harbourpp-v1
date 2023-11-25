@@ -2747,7 +2747,7 @@ HB_FUNC( WVW_DRAWSHADEDRECT )
          TRIVERTEX     vert[2];
          GRADIENT_RECT gRect;
 
-         int   iMode = hb_parnidef(7, GRADIENT_FILL_RECT_H);
+         auto iMode = hb_parnidef(7, GRADIENT_FILL_RECT_H);
          POINT xy;
 
          hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);

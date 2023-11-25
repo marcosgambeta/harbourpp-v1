@@ -372,10 +372,10 @@ HB_FUNC( COM_SKEY )
 HB_FUNC( COM_INIT )
 {
    auto iPort = hb_parni(1);
-   int iBaud = hb_parnidef(2, 300);
+   auto iBaud = hb_parnidef(2, 300);
    int iParity = hb_parcx(3)[0];
-   int iSize = hb_parnidef(4, 8);
-   int iStop = hb_parnidef(5, 1);
+   auto iSize = hb_parnidef(4, 8);
+   auto iStop = hb_parnidef(5, 1);
 
    hb_retl(hb_comInit(iPort, iBaud, iParity, iSize, iStop) != -1);
 }

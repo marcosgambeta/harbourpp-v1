@@ -820,7 +820,7 @@ HB_FUNC( GDIMAGEFILLEDARC ) /* void gdImageFilledArc(gdImagePtr im, int cx, int 
       auto s     = hb_parni(6); /* starting and ending degree */
       auto e     = hb_parni(7);
       auto color = hb_parni(8);
-      int style = hb_parnidef(9, gdNoFill);
+      auto style = hb_parnidef(9, gdNoFill);
 
       gdImageFilledArc(im, cx, cy, w, h, s, e, color, style);
    }

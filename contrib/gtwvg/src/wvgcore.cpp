@@ -2303,7 +2303,7 @@ HB_FUNC( WVT_DRAWSHADEDRECT )
    int iBottom = (_s->PTEXTSIZE.y * (hb_parni(3) + 1)) - 1 + hb_parvni(5, 3);
    int iRight  = (_s->PTEXTSIZE.x * (hb_parni(4) + 1)) - 1 + hb_parvni(5, 4);
 
-   int iMode = hb_parnidef(6, GRADIENT_FILL_RECT_H);
+   auto iMode = hb_parnidef(6, GRADIENT_FILL_RECT_H);
 
    vert[0].x     = iLeft;
    vert[0].y     = iTop;

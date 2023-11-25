@@ -26,7 +26,7 @@
 
 HB_FUNC( FT_N2COLOR )
 {
-   int iColor = hb_parnidef(1, -1);
+   auto iColor = hb_parnidef(1, -1);
 
    if( iColor >= 0x00 && iColor <= 0xff )
    {

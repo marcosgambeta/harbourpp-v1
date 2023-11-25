@@ -374,7 +374,7 @@ HB_FUNC( WVW_TBCREATE )
    if( wvw && wvw_win && wvw_win->hToolBar == nullptr ) {
       DWORD dwStyle = hb_parnidef(3, TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE);
 
-      int iSystemBitmap = hb_parnidef(4, 1);
+      auto iSystemBitmap = hb_parnidef(4, 1);
       int iImageWidth   = iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1;
       int iImageHeight  = iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1;
 
@@ -582,7 +582,7 @@ HB_FUNC( WVW_TBDELBUTTON )
    bool fResult = false;
 
    if( wvw_win ) {
-      int iButton = hb_parnidef(2, -1);
+      auto iButton = hb_parnidef(2, -1);
       HWND hWnd = wvw_win->hToolBar;
 
       if( hWnd && iButton >= 0 ) {
@@ -612,7 +612,7 @@ HB_FUNC( WVW_TBGETBUTTONRECT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iButton = hb_parnidef(2, -1);
+      auto iButton = hb_parnidef(2, -1);
       HWND hWnd = wvw_win->hToolBar;
       RECT rc;
 
@@ -642,7 +642,7 @@ HB_FUNC( WVW_TBENABLEBUTTON )
    bool fResult = false;
 
    if( wvw_win ) {
-      int iButton = hb_parnidef(2, -1);
+      auto iButton = hb_parnidef(2, -1);
       HWND hWnd = wvw_win->hToolBar;
 
       if( hWnd && iButton >= 0 ) {

@@ -57,10 +57,10 @@ HB_FUNC( FT_REVATTR )
 {
    auto iTop    = hb_parni(1);   /* Defaults to zero on bad type */
    auto iLeft   = hb_parni(2);   /* Defaults to zero on bad type */
-   int iMaxRow = hb_gtMaxRow();
-   int iMaxCol = hb_gtMaxCol();
-   int iBottom = hb_parnidef(3, iMaxRow);
-   int iRight  = hb_parnidef(4, iMaxCol);
+   int iMaxRow  = hb_gtMaxRow();
+   int iMaxCol  = hb_gtMaxCol();
+   auto iBottom = hb_parnidef(3, iMaxRow);
+   auto iRight  = hb_parnidef(4, iMaxCol);
 
    if( iTop < 0 )
    {

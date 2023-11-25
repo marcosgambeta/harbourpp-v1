@@ -236,8 +236,8 @@ HB_FUNC( CLEARSLOW )  /* TODO: Unicode support */
    long lDelay = hb_parnl(1);
    auto iTop    = hb_parni(2);
    auto iLeft   = hb_parni(3);
-   int iBottom = hb_parnidef(4, iMaxRow);
-   int iRight  = hb_parnidef(5, iMaxCol);
+   auto iBottom = hb_parnidef(4, iMaxRow);
+   auto iRight  = hb_parnidef(5, iMaxCol);
    HB_UCHAR ucChar;
 
    if( HB_ISNUM(6) ) {

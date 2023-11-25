@@ -807,7 +807,7 @@ HB_FUNC( WIN_COMDEBUGDCB )
 
    if( iPort >= 0 && iPort < static_cast<int>(HB_SIZEOFARRAY(s_PortData)) && (hCommPort = s_PortData[iPort].hPort) != INVALID_HANDLE_VALUE )
    {
-      int iDebugLevel = hb_parnidef(2, HB_WIN_COM_DBGBASIC);
+      auto iDebugLevel = hb_parnidef(2, HB_WIN_COM_DBGBASIC);
       DCB CurDCB;
       COMMTIMEOUTS CurCOMMTIMEOUTS;
       COMMPROP CurCOMMPROP;

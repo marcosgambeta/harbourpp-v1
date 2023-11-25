@@ -872,7 +872,7 @@ HB_FUNC( FT_FINSERT )
 
    if( ft_text->handles[ft_text->area] )
    {
-      int     no_lines = hb_parnidef(1, 1);
+      auto no_lines = hb_parnidef(1, 1);
       HB_ISIZ no_bytes = no_lines * 2;
 
       if( _ins_buff( ft_text, no_bytes ) == 0 )
@@ -899,7 +899,7 @@ HB_FUNC( FT_FAPPEND )
 
    if( ft_text->handles[ft_text->area] )
    {
-      int     no_lines = hb_parnidef(1, 1);
+      auto no_lines = hb_parnidef(1, 1);
       HB_ISIZ iRead;
       HB_ISIZ iByteCount;
 

@@ -180,7 +180,7 @@ HB_FUNC( WVW_XBCREATE )
       int iOffBottom;
       int iOffRight;
 
-      int iStyle = hb_parnidef(2, -1);
+      auto iStyle = hb_parnidef(2, -1);
 
       if( iStyle < SBS_HORZ || iStyle > SBS_VERT || !HB_ISEVALITEM(6) ) {
          hb_retni(0);

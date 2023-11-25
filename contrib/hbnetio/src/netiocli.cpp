@@ -1180,8 +1180,8 @@ HB_FUNC( NETIO_DECODE )
    auto iTimeOut = hb_parni(4);
    auto pszPasswd = hb_parc(5);
    auto iPassLen = static_cast<int>(hb_parclen(5));
-   int iLevel = hb_parnidef(6, HB_ZLIB_COMPRESSION_DISABLE);
-   int iStrategy = hb_parnidef(7, HB_ZLIB_STRATEGY_DEFAULT);
+   auto iLevel = hb_parnidef(6, HB_ZLIB_COMPRESSION_DISABLE);
+   auto iStrategy = hb_parnidef(7, HB_ZLIB_STRATEGY_DEFAULT);
 
    s_fileGetConnParam(&pszServer, &iPort, &iTimeOut, &pszPasswd, &iPassLen);
 
@@ -1230,8 +1230,8 @@ HB_FUNC( NETIO_CONNECT )
    auto iPort = hb_parni(2);
    auto iTimeOut = hb_parni(3);
    auto iPassLen = static_cast<int>(hb_parclen(4));
-   int iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
-   int iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
+   auto iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
+   auto iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
 
    if( iPassLen > NETIO_PASSWD_MAX )
    {
@@ -1306,8 +1306,8 @@ HB_FUNC( NETIO_GETCONNECTION )
    auto iPort = hb_parni(2);
    auto iTimeOut = hb_parni(3);
    auto iPassLen = static_cast<int>(hb_parclen(4));
-   int iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
-   int iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
+   auto iLevel = hb_parnidef(5, HB_ZLIB_COMPRESSION_DISABLE);
+   auto iStrategy = hb_parnidef(6, HB_ZLIB_STRATEGY_DEFAULT);
 
    if( iPassLen > NETIO_PASSWD_MAX )
    {

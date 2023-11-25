@@ -285,7 +285,7 @@ static void mxmlAddRef(mxml_node_t * parent, int where, mxml_node_t * child, mxm
 HB_FUNC( MXMLADD )
 {
    mxml_node_t * parent = mxml_node_param(1);
-   int where = hb_parnidef(2, MXML_ADD_BEFORE);
+   auto where = hb_parnidef(2, MXML_ADD_BEFORE);
    mxml_node_t * child = mxml_node_param(3);
    mxml_node_t * node = mxml_node_param(4);
 
@@ -782,15 +782,13 @@ static mxml_type_t type_cb(mxml_node_t * node)
 
       if( pCallback && hb_vmRequestReenter() )
       {
-         int iResult;
-
          hb_vmPushEvalSym();
          hb_vmPush(pCallback);
          mxml_node_push(node, 0);
 
          hb_vmSend(1);
 
-         iResult = hb_parnidef(-1, MXML_TEXT);
+         auto iResult = hb_parnidef(-1, MXML_TEXT);
 
          hb_vmRequestRestore();
          return static_cast<mxml_type_t>(iResult);
@@ -1855,8 +1853,6 @@ static int custom_load_cb(mxml_node_t * node, const char * data)
 
       if( pCallback && hb_vmRequestReenter() )
       {
-         int iResult;
-
          hb_vmPushEvalSym();
          hb_vmPush(pCallback);
          mxml_node_push(node, 0);
@@ -1864,7 +1860,7 @@ static int custom_load_cb(mxml_node_t * node, const char * data)
 
          hb_vmSend(2);
 
-         iResult = hb_parnidef(-1, 1);
+         auto iResult = hb_parnidef(-1, 1);
 
          hb_vmRequestRestore();
          return iResult;

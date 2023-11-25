@@ -294,8 +294,8 @@ HB_FUNC( HB_ZIPFILECREATE )
 
       if( hZip )
       {
-         int   iMethod = hb_parnidef(7, Z_DEFLATED);
-         int   iLevel  = hb_parnidef(8, Z_DEFAULT_COMPRESSION);
+         auto iMethod = hb_parnidef(7, Z_DEFLATED);
+         auto iLevel = hb_parnidef(8, Z_DEFAULT_COMPRESSION);
          long  lJulian, lMillisec;
          int   iYear, iMonth, iDay, iHour, iMinute, iSecond, iMSec;
          uLong flags = 0;

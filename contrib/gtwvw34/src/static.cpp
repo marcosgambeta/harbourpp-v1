@@ -59,8 +59,8 @@ HB_FUNC( WVW_STCREATE )
       auto iWidth  = hb_parni(4);
       auto iTop    = hb_parni(2);
       auto iLeft   = hb_parni(3);
-      int iBottom = hb_parnidef(11, iTop);
-      int iRight  = hb_parnidef(12, iLeft + iWidth - 1);
+      auto iBottom = hb_parnidef(11, iTop);
+      auto iRight  = hb_parnidef(12, iLeft + iWidth - 1);
       auto iBox    = hb_parni(10);
       HFONT hFont = nullptr;
 

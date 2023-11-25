@@ -378,7 +378,7 @@ HB_FUNC( HBCT_MAXCOL ) /* Return the maximum screen/window column number (zero o
  */
 HB_FUNC( WALIAS )
 {
-   int iWindow = hb_parnidef(1, -1);
+   auto iWindow = hb_parnidef(1, -1);
 
    /* 255 is original CT3 limit,
     * Harbour CTWIN does not have such internal limits

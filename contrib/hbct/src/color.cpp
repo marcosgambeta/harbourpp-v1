@@ -77,7 +77,7 @@ HB_FUNC( COLORTON )
 
 HB_FUNC( NTOCOLOR )
 {
-   int iColor = hb_parnidef(1, -1);
+   auto iColor = hb_parnidef(1, -1);
 
    if( iColor >= 0x00 && iColor <= 0xff ) {
       char szColorString[10];

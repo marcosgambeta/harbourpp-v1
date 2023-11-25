@@ -85,9 +85,9 @@ HB_FUNC( BITTOC )
       auto pszPattern = hb_parc(2);
       char szBuffer[16];
       char * pszResult = &szBuffer[sizeof(szBuffer)];
-      int iValue, iLen = 0;
+      auto iLen = 0;
 
-      iValue = hb_parnidef(1, -1);
+      auto iValue = hb_parnidef(1, -1);
       if( iValue > 0xFFFF || iValue < 0 ) {
          iValue = 0;
       }

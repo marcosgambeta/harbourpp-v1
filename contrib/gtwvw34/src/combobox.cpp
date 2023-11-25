@@ -286,7 +286,7 @@ HB_FUNC( WVW_CBCREATE )
 
       int iOffTop    = hb_parvni(10, 1);
       int iOffLeft   = hb_parvni(10, 2);
-      int iOffBottom = hb_parnidef(7, 3);  /* nListLines */
+      auto iOffBottom = hb_parnidef(7, 3);  /* nListLines */
       int iOffRight  = hb_parvni(10, 4);
 
       RECT rXB;

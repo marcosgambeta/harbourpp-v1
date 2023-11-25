@@ -614,7 +614,7 @@ HB_FUNC( NETIO_LISTEN )
 {
    static bool s_fInit = true;
 
-   int iPort = hb_parnidef(1, NETIO_DEFAULT_PORT);
+   auto iPort = hb_parnidef(1, NETIO_DEFAULT_PORT);
    auto szAddress = hb_parc(2);
    auto szRootPath = hb_parc(3);
    HB_BOOL fRPC = hb_parl(4);
@@ -658,15 +658,14 @@ HB_FUNC( NETIO_ACCEPT )
    {
       HB_MAXINT timeout = hb_parnintdef(2, -1);
       HB_SOCKET connsd;
-      int iLevel, iStrategy;
       auto keylen = static_cast<int>(hb_parclen(3));
 
       if( keylen > NETIO_PASSWD_MAX )
       {
          keylen = NETIO_PASSWD_MAX;
       }
-      iLevel = hb_parnidef(4, keylen ? HB_ZLIB_COMPRESSION_DEFAULT : HB_ZLIB_COMPRESSION_DISABLE);
-      iStrategy = hb_parnidef(5, HB_ZLIB_STRATEGY_DEFAULT);
+      auto iLevel = hb_parnidef(4, keylen ? HB_ZLIB_COMPRESSION_DEFAULT : HB_ZLIB_COMPRESSION_DISABLE);
+      auto iStrategy = hb_parnidef(5, HB_ZLIB_STRATEGY_DEFAULT);
 
       do
       {
@@ -713,7 +712,6 @@ HB_FUNC( NETIO_COMPRESS )
 
    if( conn && conn->sock && !conn->stop )
    {
-      int iLevel, iStrategy;
       auto keylen = static_cast<int>(hb_parclen(2));
       PHB_SOCKEX sock;
 
@@ -722,8 +720,8 @@ HB_FUNC( NETIO_COMPRESS )
          keylen = NETIO_PASSWD_MAX;
       }
 
-      iLevel = hb_parnidef(3, keylen ? HB_ZLIB_COMPRESSION_DEFAULT : HB_ZLIB_COMPRESSION_DISABLE);
-      iStrategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
+      auto iLevel = hb_parnidef(3, keylen ? HB_ZLIB_COMPRESSION_DEFAULT : HB_ZLIB_COMPRESSION_DISABLE);
+      auto iStrategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
 
       if( iLevel == HB_ZLIB_COMPRESSION_DISABLE )
       {

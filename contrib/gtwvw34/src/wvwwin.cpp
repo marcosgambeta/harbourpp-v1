@@ -100,7 +100,6 @@ HB_FUNC( WVW_NOPENWINDOW )
 
       PWVW_WIN wvw_par;
 
-      int iRow2, iCol2;
       int nWin;
 
       HWND hWndParent;
@@ -157,8 +156,8 @@ HB_FUNC( WVW_NOPENWINDOW )
 
       auto iRow1 = hb_parni(2);
       auto iCol1 = hb_parni(3);
-      iRow2 = hb_parnidef(4, wvw_par->ROWS - 1);
-      iCol2 = hb_parnidef(5, wvw_par->COLS - 1);
+      auto iRow2 = hb_parnidef(4, wvw_par->ROWS - 1);
+      auto iCol2 = hb_parnidef(5, wvw_par->COLS - 1);
 
       nWin = hb_gt_wvw_OpenWindow(szWinName, iRow1, iCol1, iRow2, iCol2, dwStyle, hWndParent);
 

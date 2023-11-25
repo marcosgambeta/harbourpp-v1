@@ -251,7 +251,7 @@ HB_FUNC( WVW_SBSETTEXT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iPart = hb_parnidef(2, 1);
+      auto iPart = hb_parnidef(2, 1);
 
       void * hText;
 
@@ -288,7 +288,7 @@ HB_FUNC( WVW_SBGETTEXT )
    PWVW_WIN wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
-      int iPart = hb_parnidef(2, 1);
+      auto iPart = hb_parnidef(2, 1);
       WORD nLen = LOWORD(SendMessage(wvw_win->hStatusBar, SB_GETTEXTLENGTH, static_cast<WPARAM>(iPart), 0));
       TCHAR * szText = new TCHAR[nLen + 1];
       SendMessage(wvw_win->hStatusBar, SB_GETTEXT, static_cast<WPARAM>(iPart), reinterpret_cast<LPARAM>(szText));

@@ -55,7 +55,7 @@
 HB_FUNC( CTON )
 {
    auto szNumber = hb_parc(1);
-   int iBase = hb_parnidef(2, 10);
+   auto iBase = hb_parnidef(2, 10);
 
    if( szNumber && iBase >= 2 && iBase <= 36 ) {
       HB_MAXUINT nValue = 0, nMax;
@@ -120,7 +120,7 @@ HB_FUNC( NTOC )
 {
    char szBuffer[256], * pszResult = nullptr;
    HB_MAXINT nValue = 0;
-   int iBase = hb_parnidef(2, 10);
+   auto iBase = hb_parnidef(2, 10);
    auto iLen = hb_parni(3);
 
    if( iLen < 0 || iLen > static_cast<int>(sizeof(szBuffer)) ) {

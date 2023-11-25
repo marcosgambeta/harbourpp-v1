@@ -431,7 +431,7 @@ HB_FUNC( WVG_STATUSBARSETTEXT )
    auto hWndSB = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
 
    if( hWndSB && IsWindow(hWndSB) ) {
-      int    iPart = hb_parnidef(2, 1);
+      auto iPart = hb_parnidef(2, 1);
       TCHAR  szText[1024];
       void * hCaption;
       iPart -= 1;           /* Zero based */

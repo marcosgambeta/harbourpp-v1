@@ -1361,10 +1361,10 @@ HB_FUNC( WVW_SETFONT )
    if( wvw_win ) {
       void *  hFontFace = nullptr;
       LPCTSTR fontFace  = HB_ISCHAR(2) ? HB_PARSTR(2, &hFontFace, nullptr) : wvw_win->fontFace;
-      int     height    = hb_parnidef(3, wvw_win->fontHeight);
-      int     width     = hb_parnidef(4, wvw_win->fontWidth);
-      int     Bold      = hb_parnidef(5, wvw_win->fontWeight);
-      int     Quality   = hb_parnidef(6, wvw_win->fontQuality);
+      auto height = hb_parnidef(3, wvw_win->fontHeight);
+      auto width = hb_parnidef(4, wvw_win->fontWidth);
+      auto Bold = hb_parnidef(5, wvw_win->fontWeight);
+      auto Quality = hb_parnidef(6, wvw_win->fontQuality);
 
       HFONT hFont = hb_gt_wvw_GetFont(fontFace, height, width, Bold, Quality, wvw_win->CodePage);
 

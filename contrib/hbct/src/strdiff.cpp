@@ -66,7 +66,6 @@ HB_FUNC( STRDIFF )
       /* get parameters */
       const char * pcStr1, * pcStr2;
       HB_SIZE      sStrLen1, sStrLen2;
-      int          iReplace, iDelete, iInsert;
       int          iAtLike = ct_getatlike();
       char         cAtLike = ct_getatlikechar();
       HB_SIZE      sRowCnt, sColCnt;
@@ -101,9 +100,9 @@ HB_FUNC( STRDIFF )
       }
 
       /* get penalty points */
-      iReplace = hb_parnidef(3, 3);
-      iDelete = hb_parnidef(4, 6);
-      iInsert = hb_parnidef(5, 1);
+      auto iReplace = hb_parnidef(3, 3);
+      auto iDelete = hb_parnidef(4, 6);
+      auto iInsert = hb_parnidef(5, 1);
 
       auto piPenalty = static_cast<int*>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int)));
 
