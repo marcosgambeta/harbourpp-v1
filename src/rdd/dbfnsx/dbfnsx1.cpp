@@ -1820,7 +1820,6 @@ static HB_ERRCODE hb_nsxTagHeaderSave( LPTAGINFO pTag )
 
    if( pIndex->Update ) {
       HB_USHORT type = hb_nsxKeyTypeRaw(pTag->KeyType);
-      int iLen;
 
       memset(( HB_BYTE * ) &Header + NSX_TAGHEAD_HEADSIZE, 0, sizeof(Header) - NSX_TAGHEAD_HEADSIZE);
 
@@ -1829,7 +1828,7 @@ static HB_ERRCODE hb_nsxTagHeaderSave( LPTAGINFO pTag )
       Header.Unique[0]  = pTag->UniqueKey ? 1 : 0;
       Header.Descend[0] = pTag->AscendKey ? 0 : 1;
 
-      iLen = static_cast<int>(strlen(pTag->KeyExpr));
+      auto iLen = static_cast<int>(strlen(pTag->KeyExpr));
       if( iLen > NSX_MAXEXPLEN ) {
          iLen = NSX_MAXEXPLEN;
       }

@@ -338,9 +338,8 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
 
    PHB_ITEM pError;
    const char * szName;
-   int iArea;
 
-   iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
+   auto iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
    if( iArea ) {
       hb_rddSelectWorkAreaNumber(iArea);
       return Harbour::SUCCESS;
