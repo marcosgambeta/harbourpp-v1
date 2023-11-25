@@ -262,7 +262,7 @@ static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, lo
 {
    PHB_IOUSR pIO = s_getUsrIO(pFuncs);
 
-   int iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+   auto iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushNil();
    hb_vmPushNil();
 
@@ -298,7 +298,7 @@ static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char * pszFileName, HB
 {
    PHB_IOUSR pIO = s_getUsrIO(pFuncs);
 
-   int iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+   auto iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    hb_vmPushNil();
 
    s_pushMethod(pIO, IOUSR_ATTRGET);
@@ -425,7 +425,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void * data, HB_SIZE nSize, HB_MAXINT 
 {
    PHB_IOUSR pIO = s_getUsrIO(pFile->pFuncs);
 
-   int iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+   auto iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    memset(data, 0, nSize);
    hb_vmPushString(static_cast<const char*>(data), nSize);
 
@@ -465,7 +465,7 @@ static HB_SIZE s_fileReadAt(PHB_FILE pFile, void * buffer, HB_SIZE nSize, HB_FOF
 {
    PHB_IOUSR pIO = s_getUsrIO(pFile->pFuncs);
 
-   int iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
+   auto iOffset = static_cast<int>(hb_stackTopOffset() - hb_stackBaseOffset());
    memset(buffer, 0, nSize);
    hb_vmPushString(static_cast<const char*>(buffer), nSize);
 

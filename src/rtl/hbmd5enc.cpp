@@ -75,14 +75,14 @@ HB_FUNC( HB_MD5ENCRYPT )
          auto pszSource = hb_itemGetCPtr(pData);
          auto pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          auto pszKey = hb_parc(2);
-         int iLen = static_cast<int>(hb_parclen(2));
+         auto iLen = static_cast<int>(hb_parclen(2));
          char vect[16];
          HB_SIZE n;
 
          hb_md5_init_seed(vect, pszKey, iLen);
 
          for( n = 0; n < nLen; ++n ) {
-            int i = static_cast<int>(n & 0x0F);
+            auto i = static_cast<int>(n & 0x0F);
             if( i == 0 ) {
                hb_md5_next_seed(vect, pszKey, iLen);
             }
@@ -108,14 +108,14 @@ HB_FUNC( HB_MD5DECRYPT )
          auto pszSource = hb_itemGetCPtr(pData);
          auto pszData = static_cast<char*>(hb_xgrab(nLen + 1));
          auto pszKey = hb_parc(2);
-         int iLen = static_cast<int>(hb_parclen(2));
+         auto iLen = static_cast<int>(hb_parclen(2));
          char vect[16];
          HB_SIZE n;
 
          hb_md5_init_seed(vect, pszKey, iLen);
 
          for( n = 0; n < nLen; ++n ) {
-            int i = static_cast<int>(n & 0x0F);
+            auto i = static_cast<int>(n & 0x0F);
             if( i == 0 ) {
                hb_md5_next_seed(vect, pszKey, iLen);
             }

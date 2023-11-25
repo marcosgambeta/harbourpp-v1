@@ -202,7 +202,7 @@ HB_FHANDLE hb_fsCreateTempEx(char * pszName, const char * pszDir, const char * p
 
          for( auto i = 0; i < 6; i++ ) {
             d = d * 36;
-            int n = static_cast<int>(d);
+            auto n = static_cast<int>(d);
             d = modf(d, &x);
             pszName[iLen++] = static_cast<char>(n + (n > 9 ? 'a' - 10 : '0'));
          }
@@ -391,7 +391,7 @@ HB_ERRCODE hb_fsTempDir(char * pszTempDir)
 #endif
 
    if( nResult == 0 && pszTempDir[0] != '\0' ) {
-      int len = static_cast<int>(strlen(pszTempDir));
+      auto len = static_cast<int>(strlen(pszTempDir));
       if( pszTempDir[len - 1] != HB_OS_PATH_DELIM_CHR && len < HB_PATH_MAX - 1 ) {
          pszTempDir[len] = HB_OS_PATH_DELIM_CHR;
          pszTempDir[len + 1] = '\0';

@@ -105,7 +105,7 @@ HB_FUNC( HB_NUMTOHEX )
 
    ret[iLen] = '\0';
    do {
-      int iDigit = static_cast<int>(nNum & 0x0F);
+      auto iDigit = static_cast<int>(nNum & 0x0F);
       ret[--iLen] = static_cast<char>(iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ));
       nNum >>= 4;
    } while( fDefaultLen ? nNum != 0 : iLen != 0 );

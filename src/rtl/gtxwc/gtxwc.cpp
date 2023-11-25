@@ -4294,7 +4294,7 @@ static bool hb_gt_xwc_isUTF8(void)
    const char * szLang = setlocale(LC_CTYPE, nullptr);
 
    if( szLang ) {
-      int i = static_cast<int>(strlen(szLang));
+      auto i = static_cast<int>(strlen(szLang));
 
       if( i > 5 ) {
          fUTF8 = hb_stricmp(szLang + i - 5, ".UTF8") || hb_stricmp(szLang + i - 6, ".UTF-8");

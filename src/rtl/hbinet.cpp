@@ -843,7 +843,7 @@ static void s_inetRecvPattern(const char * const * patterns, int * patternsizes,
 
 HB_FUNC( HB_INETRECVLINE )
 {
-   int iEolLen = static_cast<int>(strlen(s_inetCRLF));
+   auto iEolLen = static_cast<int>(strlen(s_inetCRLF));
 
    s_inetRecvPattern(&s_inetCRLF, &iEolLen, 1, 2);
 }
@@ -861,7 +861,8 @@ HB_FUNC( HB_INETRECVENDBLOCK )
    int iLen;
 
    if( pProto && HB_IS_ARRAY(pProto) ) {
-      int iPatternsMax = static_cast<int>(hb_arrayLen(pProto)), i;
+      auto iPatternsMax = static_cast<int>(hb_arrayLen(pProto));
+      int i;
 
       for( i = 1; i <= iPatternsMax; i++ ) {
          iLen = static_cast<int>(hb_arrayGetCLen(pProto, i));

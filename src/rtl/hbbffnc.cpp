@@ -61,7 +61,7 @@ static const HB_BLOWFISH * hb_bf_keyparam(void)
  */
 HB_FUNC( HB_BLOWFISHKEY )
 {
-   int iLen = static_cast<int>(hb_parclen(1));
+   auto iLen = static_cast<int>(hb_parclen(1));
 
    if( iLen ) {
       HB_BLOWFISH bf;
@@ -162,7 +162,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT )
 static void hb_bf_initvect(HB_BYTE * vect)
 {
    auto pszVect = hb_parc(3);
-   int iLen = static_cast<int>(hb_parclen(3));
+   auto iLen = static_cast<int>(hb_parclen(3));
 
    for( auto i = 0; i < HB_BF_CIPHERBLOCK; ++i ) {
       vect[i] = static_cast<HB_BYTE>(i);
@@ -204,7 +204,7 @@ HB_FUNC( HB_BLOWFISHENCRYPT_CFB )
          hb_bf_initvect(vect);
 
          for( HB_SIZE n = 0; n < nLen; ++n ) {
-            int i = static_cast<int>(n & (HB_BF_CIPHERBLOCK - 1));
+            auto i = static_cast<int>(n & (HB_BF_CIPHERBLOCK - 1));
             if( i == 0 ) {
                hb_bf_encode( bf, vect );
             }
@@ -238,7 +238,7 @@ HB_FUNC( HB_BLOWFISHDECRYPT_CFB )
          hb_bf_initvect(vect);
 
          for( HB_SIZE n = 0; n < nLen; ++n ) {
-            int i = static_cast<int>(n & (HB_BF_CIPHERBLOCK - 1));
+            auto i = static_cast<int>(n & (HB_BF_CIPHERBLOCK - 1));
             if( i == 0 ) {
                hb_bf_encode(bf, vect);
             }

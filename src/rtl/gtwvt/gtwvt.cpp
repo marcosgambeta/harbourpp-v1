@@ -1818,8 +1818,8 @@ static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT, HFONT hFont)
    RECT ci;
    GetClientRect(pWVT->hWnd, &ci);
 
-   int height = static_cast<int>(pWVT->PTEXTSIZE.y * pWVT->ROWS);
-   int width  = static_cast<int>(pWVT->PTEXTSIZE.x * pWVT->COLS);
+   auto height = static_cast<int>(pWVT->PTEXTSIZE.y * pWVT->ROWS);
+   auto width  = static_cast<int>(pWVT->PTEXTSIZE.x * pWVT->COLS);
 
    width  += static_cast<int>(wi.right - wi.left - ci.right);
    height += static_cast<int>(wi.bottom - wi.top - ci.bottom);

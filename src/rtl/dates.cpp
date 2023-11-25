@@ -64,7 +64,7 @@ char * hb_dateFormat(const char * szDate, char * szFormattedDate, const char * s
    /*
     * Determine the maximum size of the formatted date string
     */
-   int size = static_cast<int>(strlen(szDateFormat));
+   auto size = static_cast<int>(strlen(szDateFormat));
    if( size > 10 ) {
       size = 10;
    }
@@ -240,7 +240,7 @@ static int hb_dateUnformatRaw(const char * szDate, const char * szDateFormat, lo
       if( !szDateFormat ) {
          szDateFormat = hb_setGetDateFormat();
       }
-      int size = static_cast<int>(strlen(szDateFormat));
+      auto size = static_cast<int>(strlen(szDateFormat));
 
       for( count = used = 0; count < size && used < 3; count++ ) {
          switch( szDateFormat[count] ) {
@@ -361,7 +361,7 @@ char * hb_timeFormat(char * szBuffer, const char * szTimeFormat, long lMilliSec)
    hb_timeDecode(lMilliSec, &iHour, &iMinutes, &iSeconds, &iMSec);
    char * szTimeBuffer = szBuffer;
 
-   int size = static_cast<int>(hb_strnlen(szTimeFormat, 16));
+   auto size = static_cast<int>(hb_strnlen(szTimeFormat, 16));
    iPM = i12 = 0;
    for( i = 0; i < size; ++i ) {
       if( HB_TOUPPER(szTimeFormat[i]) == 'P' ) {
@@ -500,7 +500,7 @@ long hb_timeUnformat(const char * szTime, const char * szTimeFormat)
       szTimeFormat = hb_setGetTimeFormat();
    }
 
-   int size = static_cast<int>(hb_strnlen(szTime, hb_strnlen(szTimeFormat, 16)));
+   auto size = static_cast<int>(hb_strnlen(szTime, hb_strnlen(szTimeFormat, 16)));
    iHour = iMinutes = iSeconds = iMSec = iPM = -1;
    int prec = 0;
    for( i = count = 0; i < size && szTime[count]; ++i ) {

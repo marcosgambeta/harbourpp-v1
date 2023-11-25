@@ -81,7 +81,7 @@ static void hb_itemHexStr(PHB_ITEM pItem, char * pStr, HB_BOOL fUpper)
 
    pStr[iLen] = '\0';
    do {
-      int iDigit = static_cast<int>(nValue & 0x0F);
+      auto iDigit = static_cast<int>(nValue & 0x0F);
       pStr[--iLen] = static_cast<char>(iDigit + (iDigit < 10 ? '0' : (fUpper ? 'A' : 'a') - 10));
       nValue >>= 4;
    } while( iLen );
