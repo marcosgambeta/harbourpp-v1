@@ -883,8 +883,8 @@ HB_FUNC( HB_SOCKETGETPEERNAME )
 HB_FUNC( HB_SOCKETOPEN )
 {
    HB_SOCKET socket;
-   int iDomain = hb_parnidef(1, HB_SOCKET_AF_INET);
-   int iType = hb_parnidef(2, HB_SOCKET_PT_STREAM);
+   auto iDomain = hb_parnidef(1, HB_SOCKET_AF_INET);
+   auto iType = hb_parnidef(2, HB_SOCKET_PT_STREAM);
    auto iProtocol = hb_parni(3);
 
    s_socket_init();

@@ -55,8 +55,8 @@
 HB_FUNC( HB_INETCOMPRESS )
 {
    auto pItem = hb_param(1, Harbour::Item::POINTER);
-   int iLevel = hb_parnidef(2, HB_ZLIB_COMPRESSION_DEFAULT),
-       iStrategy = hb_parnidef(3, HB_ZLIB_STRATEGY_DEFAULT);
+   auto iLevel = hb_parnidef(2, HB_ZLIB_COMPRESSION_DEFAULT);
+   auto iStrategy = hb_parnidef(3, HB_ZLIB_STRATEGY_DEFAULT);
 
    if( iLevel == HB_ZLIB_COMPRESSION_DISABLE ) {
       hb_znetInetInitialize(pItem, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);

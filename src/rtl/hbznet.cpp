@@ -649,8 +649,8 @@ HB_FUNC( HB_SOCKETNEWZNET )
       } else {
          auto keydata = hb_parc(2);
          auto keylen = static_cast<int>(hb_parclen(2));
-         int level = hb_parnidef(3, HB_ZLIB_COMPRESSION_DEFAULT);
-         int strategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
+         auto level = hb_parnidef(3, HB_ZLIB_COMPRESSION_DEFAULT);
+         auto strategy = hb_parnidef(4, HB_ZLIB_STRATEGY_DEFAULT);
 
          pSock = hb_sockexNewZNet(sd, keydata, keylen, level, strategy);
       }

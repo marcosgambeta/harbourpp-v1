@@ -267,7 +267,7 @@ HB_FUNC( SX_CLRSCOPE )
       DBORDERINFO Info;
 
       if( hb_sxOrdParam(&Info) ) {
-         int iScope = hb_parnidef(1, 2);
+         auto iScope = hb_parnidef(1, 2);
          Info.itmResult = hb_itemNew(nullptr);
          if( iScope ) {
             SELF_ORDINFO(pArea, DBOI_SCOPEBOTTOMCLEAR, &Info);

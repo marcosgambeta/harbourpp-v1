@@ -1090,7 +1090,7 @@ HB_FUNC( HB_INETSERVER )
    } else {
       auto iPort = hb_parni(1);
       auto szAddress = hb_parc(3);
-      int iListen = hb_parnidef(4, 10);
+      auto iListen = hb_parnidef(4, 10);
 
       if( socket->remote ) {
          hb_xfree(socket->remote);
