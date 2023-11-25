@@ -242,7 +242,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
       hb_strncpyUpper(szFileName, pFileName->szName, sizeof(szFileName) - 1);
       /* replace non ID characters in name of local symbol table by '_' */
       {
-         int iLen = static_cast<int>(strlen(szFileName));
+         auto iLen = static_cast<int>(strlen(szFileName));
 
          for( auto i = 0; i < iLen; i++ ) {
             char c = szFileName[i];
@@ -1425,7 +1425,7 @@ static HB_GENC_FUNC(hb_p_pushlocal)
 {
    fprintf(cargo->yyc, "\tHB_P_PUSHLOCAL, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
    if( cargo->bVerbose ) {
-      int iVar = static_cast<int>(HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
+      auto iVar = static_cast<int>(HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
       hb_compGenCLocalName(pFunc, iVar, nPCodePos, cargo);
    }
    fprintf(cargo->yyc, "\n");
@@ -1447,7 +1447,7 @@ static HB_GENC_FUNC(hb_p_pushlocalref)
 {
    fprintf(cargo->yyc, "\tHB_P_PUSHLOCALREF, %u, %u,", pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 2]);
    if( cargo->bVerbose ) {
-      int iVar = static_cast<int>(HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
+      auto iVar = static_cast<int>(HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
       hb_compGenCLocalName(pFunc, iVar, nPCodePos, cargo);
    }
    fprintf(cargo->yyc, "\n");

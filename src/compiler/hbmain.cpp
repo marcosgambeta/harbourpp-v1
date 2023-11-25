@@ -2046,9 +2046,8 @@ void hb_compFunctionAdd(HB_COMP_DECL, const char * szFunName, HB_SYMBOLSCOPE cSc
 
    if( cScope & (HB_FS_INIT | HB_FS_EXIT) ) {
       char szNewName[HB_SYMBOL_NAME_LEN + 1];
-      int iLen;
 
-      iLen = static_cast<int>(strlen(szFunName));
+      auto iLen = static_cast<int>(strlen(szFunName));
       if( iLen >= HB_SYMBOL_NAME_LEN ) {
          iLen = HB_SYMBOL_NAME_LEN - 1;
       }
@@ -2490,7 +2489,7 @@ void hb_compGenMessage(const char * szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
 void hb_compGenMessageData(const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL) /* generates an underscore-symbol name for a data assignment */
 {
    char szResult[HB_SYMBOL_NAME_LEN + 1];
-   int iLen = static_cast<int>(strlen(szMsg));
+   auto iLen = static_cast<int>(strlen(szMsg));
 
    if( iLen >= HB_SYMBOL_NAME_LEN ) {
       iLen = HB_SYMBOL_NAME_LEN - 1;
@@ -2728,7 +2727,7 @@ void hb_compGenPopAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, co
 {
    if( bPushAliasValue ) {
       if( szAlias ) {
-         int iLen = static_cast<int>(strlen(szAlias));
+         auto iLen = static_cast<int>(strlen(szAlias));
          if( szAlias[0] == 'M' && (iLen == 1 || (iLen >= 4 && iLen <= 6 && memcmp(szAlias, "MEMVAR", iLen) == 0)) ) {
             /* M->variable or MEMV[A[R]]->variable */
             hb_compGenVarPCode(HB_P_POPMEMVAR, szVarName, HB_COMP_PARAM);
@@ -2760,7 +2759,7 @@ void hb_compGenPushAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, c
 {
    if( bPushAliasValue ) {
       if( szAlias ) {
-         int iLen = static_cast<int>(strlen(szAlias));
+         auto iLen = static_cast<int>(strlen(szAlias));
          /* myalias->var
           * FIELD->var
           * MEMVAR->var
