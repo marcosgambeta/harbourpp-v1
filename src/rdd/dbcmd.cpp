@@ -56,7 +56,7 @@
 /* The 5th parameter is Harbour extension */
 HB_FUNC( AFIELDS )
 {
-   HB_USHORT uiFields, uiCount;
+   HB_USHORT uiFields;
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
    auto pName = hb_param(1, Harbour::Item::ARRAY);
    auto pType = hb_param(2, Harbour::Item::ARRAY);
@@ -79,60 +79,60 @@ HB_FUNC( AFIELDS )
    }
 
    if( pName ) {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pName));
+      auto uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pName));
       if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
    if( pType ) {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pType));
+      auto uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pType));
       if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
    if( pLen ) {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pLen));
+      auto uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pLen));
       if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
    if( pDec ) {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pDec));
+      auto uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pDec));
       if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
 
    if( pFlags ) {
-      HB_USHORT uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pFlags));
+      auto uiArrayLen = static_cast<HB_USHORT>(hb_arrayLen(pFlags));
       if( uiArrayLen < uiFields ) {
          uiFields = uiArrayLen;
       }
    }
 
    if( pName ) {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+      for( HB_USHORT uiCount = 1; uiCount <= uiFields; ++uiCount ) {
          if( SELF_FIELDINFO(pArea, uiCount, DBS_NAME, hb_arrayGetItemPtr(pName, uiCount)) != Harbour::SUCCESS ) {
             return;
          }
       }
    }
    if( pType ) {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+      for( HB_USHORT uiCount = 1; uiCount <= uiFields; ++uiCount ) {
          if( SELF_FIELDINFO(pArea, uiCount, DBS_TYPE, hb_arrayGetItemPtr(pType, uiCount)) != Harbour::SUCCESS ) {
             return;
          }
       }
    }
    if( pLen ) {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+      for( HB_USHORT uiCount = 1; uiCount <= uiFields; ++uiCount ) {
          if( SELF_FIELDINFO(pArea, uiCount, DBS_LEN, hb_arrayGetItemPtr(pLen, uiCount)) != Harbour::SUCCESS ) {
             return;
          }
       }
    }
    if( pDec ) {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+      for( HB_USHORT uiCount = 1; uiCount <= uiFields; ++uiCount ) {
          if( SELF_FIELDINFO(pArea, uiCount, DBS_DEC, hb_arrayGetItemPtr(pDec, uiCount)) != Harbour::SUCCESS ) {
             return;
          }
@@ -140,10 +140,10 @@ HB_FUNC( AFIELDS )
    }
 #ifdef DBS_FLAG
    if( pFlags ) {
-      for( uiCount = 1; uiCount <= uiFields; ++uiCount ) {
+      for( HB_USHORT uiCount = 1; uiCount <= uiFields; ++uiCount ) {
          if( SELF_FIELDINFO(pArea, uiCount, DBS_FLAG, hb_arrayGetItemPtr(pFlags, uiCount)) != Harbour::SUCCESS ) {
             return;
-         }   
+         }
       }
    }
 #endif
@@ -231,13 +231,13 @@ HB_FUNC( DBF )
 
 HB_FUNC( BOF )
 {
-   HB_BOOL bBof = true;
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   HB_BOOL bBof = true;
    if( pArea != nullptr ) {
       SELF_BOF(pArea, &bBof);
    }
-   
+
    hb_retl(bBof);
 }
 
@@ -276,7 +276,7 @@ HB_FUNC( DBCOMMIT )
       SELF_FLUSH(pArea);
    } else {
       hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
-   }   
+   }
 }
 
 HB_FUNC( DBCOMMITALL )
@@ -327,7 +327,7 @@ HB_FUNC( DBCREATE )
       return;
    }
 
-   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+   auto uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
       auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
@@ -377,7 +377,7 @@ HB_FUNC( HB_DBCREATETEMP )
       return;
    }
 
-   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+   auto uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
       auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
@@ -431,7 +431,7 @@ HB_FUNC( __DBOPENSDF )
       return;
    }
 
-   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
+   auto uiLen = static_cast<HB_USHORT>(hb_arrayLen(pStruct));
 
    for( HB_USHORT uiSize = 1; uiSize <= uiLen; ++uiSize ) {
       auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
@@ -585,11 +585,10 @@ HB_FUNC( __DBPACK )
        */
       auto pBlock = hb_param(1, Harbour::Item::BLOCK);
       if( pBlock ) {
-         PHB_ITEM pEvery;
          hb_itemRelease(pArea->valResult);
          pArea->valResult = hb_itemArrayNew(2);
          hb_arraySet(pArea->valResult, 1, pBlock);
-         pEvery = hb_param(2, Harbour::Item::NUMERIC);
+         auto pEvery = hb_param(2, Harbour::Item::NUMERIC);
          if( pEvery ) {
             hb_arraySet(pArea->valResult, 2, pEvery);
          } else {
@@ -683,7 +682,7 @@ HB_FUNC( DBSELECTAREA )
 {
    auto szAlias = hb_parc(1);
 
-   if( szAlias ) {
+   if( szAlias != nullptr ) {
       hb_rddSelectWorkAreaAlias(szAlias);
    } else {
       auto iNewArea = hb_parni(1);
@@ -817,9 +816,8 @@ HB_FUNC( DBTABLEEXT )
    HB_ERRCODE errCode = Harbour::FAILURE;
 
    if( !pArea ) {
-      LPRDDNODE pRddNode;
       HB_USHORT uiRddID;
-      pRddNode = hb_rddFindNode( hb_rddDefaultDrv(nullptr), &uiRddID );
+      auto pRddNode = hb_rddFindNode(hb_rddDefaultDrv(nullptr), &uiRddID);
       if( pRddNode ) {
          pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
          if( pArea != nullptr ) {
@@ -877,9 +875,9 @@ HB_FUNC( __DBZAP )
 
 HB_FUNC( DELETED )
 {
-   HB_BOOL bDeleted = false;
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   HB_BOOL bDeleted = false;
    if( pArea != nullptr ) {
       SELF_DELETED(pArea, &bDeleted);
    }
@@ -888,9 +886,9 @@ HB_FUNC( DELETED )
 
 HB_FUNC( EOF )
 {
-   HB_BOOL bEof = true;
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   HB_BOOL bEof = true;
    if( pArea != nullptr ) {
       SELF_EOF(pArea, &bEof);
    }
@@ -899,9 +897,9 @@ HB_FUNC( EOF )
 
 HB_FUNC( FCOUNT )
 {
-   HB_USHORT uiFields = 0;
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   HB_USHORT uiFields = 0;
    if( pArea != nullptr ) {
       SELF_FIELDCOUNT(pArea, &uiFields);
    }
@@ -912,7 +910,7 @@ HB_FUNC( FIELDGET )
 {
    auto pItem = hb_itemNew(nullptr);
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_USHORT uiField = static_cast<HB_FIELDNO>(hb_parni(1));
+   HB_USHORT uiField = static_cast<HB_FIELDNO>(hb_parni(1)); // TODO: cast != type
 
    if( pArea && uiField ) {
       SELF_GETVALUE(pArea, uiField, pItem);
@@ -924,7 +922,7 @@ HB_FUNC( FIELDGET )
 HB_FUNC( FIELDNAME )
 {
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-   HB_USHORT uiFields, uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
+   HB_USHORT uiFields, uiIndex = static_cast<HB_FIELDNO>(hb_parni(1)); // TODO: cast != type
 
    if( pArea && uiIndex ) {
       if( SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS && uiIndex <= uiFields ) {
@@ -958,7 +956,7 @@ HB_FUNC( FIELDPUT )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_USHORT uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
+      HB_USHORT uiIndex = static_cast<HB_FIELDNO>(hb_parni(1)); // TODO: cast != type
 
       if( uiIndex > 0 ) {
          auto pItem = hb_param(2, Harbour::Item::ANY);
@@ -989,9 +987,9 @@ HB_FUNC( FLOCK )
 
 HB_FUNC( FOUND )
 {
-   HB_BOOL bFound = false;
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   HB_BOOL bFound = false;
    if( pArea != nullptr ) {
       SELF_FOUND(pArea, &bFound);
    }
@@ -1028,9 +1026,9 @@ HB_FUNC( INDEXORD )
 
 HB_FUNC( LASTREC )
 {
-   HB_ULONG ulRecCount = 0;
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   HB_ULONG ulRecCount = 0;
    if( pArea != nullptr ) {
       SELF_RECCOUNT(pArea, &ulRecCount);
    }
@@ -1060,7 +1058,6 @@ HB_FUNC( LUPDATE )
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemNew(nullptr);
-
       SELF_INFO(pArea, DBI_LASTUPDATE, pItem);
       hb_itemReturnRelease(pItem);
    } else {
@@ -1079,14 +1076,13 @@ HB_FUNC( NETERR )
 
 HB_FUNC( ORDBAGEXT )
 {
-   DBORDERINFO pInfo{};
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   DBORDERINFO pInfo{};
    pInfo.itmResult = hb_itemPutC(nullptr, nullptr);
    if( !pArea ) {
-      LPRDDNODE pRddNode;
       HB_USHORT uiRddID;
-      pRddNode = hb_rddFindNode( hb_rddDefaultDrv(nullptr), &uiRddID );
+      auto pRddNode = hb_rddFindNode(hb_rddDefaultDrv(nullptr), &uiRddID);
       if( pRddNode ) {
          pArea = static_cast<AREAP>(hb_rddNewAreaNode( pRddNode, uiRddID ));
          if( pArea != nullptr ) {
@@ -1106,7 +1102,6 @@ HB_FUNC( ORDBAGNAME )
 
    if( pArea != nullptr ) {
       DBORDERINFO pOrderInfo{};
-
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
       if( pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder) ) {
          if( HB_IS_NIL(pOrderInfo.itmOrder) ) {
@@ -1133,11 +1128,9 @@ HB_FUNC( ORDCONDSET )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      PHB_ITEM pItem;
-
       auto lpdbOrdCondInfo = static_cast<LPDBORDERCONDINFO>(hb_xgrab(sizeof(DBORDERCONDINFO)));
       lpdbOrdCondInfo->abFor = hb_parclen(1) > 0 ? hb_strdup(hb_parc(1)) : nullptr;
-      pItem = hb_param(2, Harbour::Item::BLOCK);
+      auto pItem = hb_param(2, Harbour::Item::BLOCK);
       lpdbOrdCondInfo->itmCobFor = pItem ? hb_itemNew(pItem) : nullptr;
 
       lpdbOrdCondInfo->fAll = hb_parldef(3, true);
@@ -1205,8 +1198,6 @@ HB_FUNC( ORDCREATE )
 
    if( pArea != nullptr ) {
       DBORDERCREATEINFO dbOrderInfo;
-      DBCONSTRAINTINFO dbConstrInfo;
-
       dbOrderInfo.lpdbOrdCondInfo = pArea->lpdbOrdCondInfo;
       dbOrderInfo.abBagName = hb_parcx(1);
       dbOrderInfo.atomBagName = hb_parcx(2);
@@ -1221,6 +1212,7 @@ HB_FUNC( ORDCREATE )
       }
       dbOrderInfo.itmCobExpr = hb_param(4, Harbour::Item::BLOCK);
 
+      DBCONSTRAINTINFO dbConstrInfo;
       dbConstrInfo.abConstrName = hb_parc(6);
       dbConstrInfo.abTargetName = hb_parc(7);
       dbConstrInfo.itmRelationKey = hb_param(8, Harbour::Item::ARRAY);
@@ -1457,7 +1449,6 @@ HB_FUNC( RDDNAME )
 
    if( pArea != nullptr ) {
       char szRddName[HB_RDD_MAX_DRIVERNAME_LEN + 1];
-
       SELF_SYSNAME(pArea, szRddName);
       hb_retc(szRddName);
    } else {
@@ -1467,7 +1458,7 @@ HB_FUNC( RDDNAME )
 
 HB_FUNC( RDDREGISTER )
 {
-   HB_USHORT uiLen = static_cast<HB_USHORT>(hb_parclen(1));
+   auto uiLen = static_cast<HB_USHORT>(hb_parclen(1));
 
    if( uiLen > 0 ) {
       char szDriver[HB_RDD_MAX_DRIVERNAME_LEN + 1];
@@ -1539,9 +1530,9 @@ HB_FUNC( SELECT )
       hb_retni(hb_rddGetCurrentWorkAreaNumber());
    } else {
       auto szAlias = hb_parc(1);
-      int iArea = 0;
+      auto iArea = 0;
 
-      if( szAlias ) {
+      if( szAlias != nullptr ) {
 #if defined(HB_CLP_STRICT) || 1
          /*
           * I do not like this Clipper behavior, in some constructions
@@ -1587,10 +1578,9 @@ HB_FUNC( ORDSCOPE )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBORDERINFO pInfo{};
       HB_USHORT uiAction;
       auto iScope = hb_parni(1);
-
+      DBORDERINFO pInfo{};
       pInfo.itmResult = hb_itemNew(nullptr);
       if( iScope == 2 ) {
          if( hb_pcount() > 1 && !HB_ISNIL(2) ) {
@@ -1622,7 +1612,7 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 
    if( pArea != nullptr ) {
       auto pRelExpr = hb_itemPutC(nullptr, nullptr);
-      HB_USHORT uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
+      auto uiRelNo = static_cast<HB_USHORT>(hb_parni(1));
       SELF_RELTEXT(pArea, uiRelNo ? uiRelNo : 1, pRelExpr);
       hb_itemReturnRelease(pRelExpr);
    } else {
@@ -1632,9 +1622,10 @@ HB_FUNC( DBRELATION )  /* (<nRelation>) --> cLinkExp */
 
 HB_FUNC( DBRSELECT )  /* (<nRelation>) --> nWorkArea */
 {
-   HB_USHORT uiWorkArea = 0, uiRelation = static_cast<HB_USHORT>(hb_parni(1));
+   auto uiRelation = static_cast<HB_USHORT>(hb_parni(1));
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
+   HB_USHORT uiWorkArea = 0;
    if( pArea != nullptr ) {
       /* undocumented CA-Cl*pper behavior:
        * When parameter is missing, wrong or 0 then 1 is used as
@@ -1660,14 +1651,12 @@ HB_FUNC( DBSETRELATION )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      DBRELINFO dbRelations;
-      AREAP pChildArea;
-      HB_AREANO uiChildArea;
-
       if( hb_pcount() < 2 || hb_param(1, Harbour::Item::NUMERIC | Harbour::Item::STRING) == nullptr || !( HB_ISNIL(4) || HB_ISLOG(4) ) ) {
          hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
          return;
       }
+
+      HB_AREANO uiChildArea;
 
       if( HB_ISNUM(1) ) {
          uiChildArea = static_cast<HB_AREANO>(hb_parni(1));
@@ -1682,13 +1671,14 @@ HB_FUNC( DBSETRELATION )
          hb_rddSelectWorkAreaNumber(iArea);
       }
 
-      pChildArea = uiChildArea ? static_cast<AREAP>(hb_rddGetWorkAreaPointer(uiChildArea)) : nullptr;
+      AREAP pChildArea = uiChildArea ? static_cast<AREAP>(hb_rddGetWorkAreaPointer(uiChildArea)) : nullptr;
 
       if( !pChildArea ) {
          hb_errRT_BASE(EG_NOALIAS, EDBCMD_NOALIAS, nullptr, nullptr, 0);
          return;
       }
 
+      DBRELINFO dbRelations;
       dbRelations.itmCobExpr = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
       dbRelations.abKey = hb_itemNew(hb_param(3, Harbour::Item::STRING));
       dbRelations.isScoped = hb_parl(4);
@@ -1721,8 +1711,6 @@ HB_FUNC( __DBARRANGE )
 
       errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct);
       if( errCode == Harbour::SUCCESS ) {
-         PHB_ITEM pTransItm;
-
          dbSortInfo.dbtri.dbsci.itmCobFor   = hb_param(3, Harbour::Item::BLOCK);
          dbSortInfo.dbtri.dbsci.lpstrFor    = nullptr;
          dbSortInfo.dbtri.dbsci.itmCobWhile = hb_param(4, Harbour::Item::BLOCK);
@@ -1759,7 +1747,7 @@ HB_FUNC( __DBARRANGE )
                dbSortInfo.lpdbsItem[uiDest].uiFlags = 0;
                hb_strncpyUpper(szFieldLine, hb_arrayGetCPtr(pFields, uiCount), hb_arrayGetCLen(pFields, uiCount));
                szPos = strchr(szFieldLine, '/');
-               if( szPos ) {
+               if( szPos != nullptr ) {
                   *szPos++ = 0;
                   /* It's not Cl*pper compatible, Cl*pper checks only
                      for /D flag and ignores any /A flags [druzus] */
@@ -1788,7 +1776,7 @@ HB_FUNC( __DBARRANGE )
             hb_xfree(szFieldLine);
          }
 
-         pTransItm = hb_dbTransInfoPut(nullptr, &dbSortInfo.dbtri);
+         PHB_ITEM pTransItm = hb_dbTransInfoPut(nullptr, &dbSortInfo.dbtri);
          errCode = SELF_INFO(dbSortInfo.dbtri.lpaDest, DBI_TRANSREC, pTransItm);
          if( errCode == Harbour::SUCCESS ) {
             errCode = dbSortInfo.dbtri.uiItemCount == 0 ? Harbour::FAILURE :
@@ -1819,11 +1807,9 @@ HB_FUNC( __DBARRANGE )
 HB_FUNC( __DBTRANS )
 {
    if( HB_ISNUM(1) ) {
-      HB_AREANO uiSrcArea, uiDstArea;
-
-      uiSrcArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
+      auto uiSrcArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
       auto pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
-      uiDstArea = static_cast<HB_AREANO>(hb_parni(1));
+      auto uiDstArea = static_cast<HB_AREANO>(hb_parni(1));
       hb_rddSelectWorkAreaNumber(uiDstArea);
       auto pDstArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -1833,8 +1819,6 @@ HB_FUNC( __DBTRANS )
 
          HB_ERRCODE errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbTransInfo, nullptr, pFields);
          if( errCode == Harbour::SUCCESS ) {
-            PHB_ITEM pTransItm;
-
             hb_rddSelectWorkAreaNumber(dbTransInfo.lpaSource->uiArea);
 
             dbTransInfo.dbsci.itmCobFor   = hb_param(3, Harbour::Item::BLOCK);
@@ -1852,7 +1836,7 @@ HB_FUNC( __DBTRANS )
             dbTransInfo.dbsci.fOptimized        = false;
             dbTransInfo.dbsci.fIncludeDeleted   = true;
 
-            pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
+            PHB_ITEM pTransItm = hb_dbTransInfoPut(nullptr, &dbTransInfo);
             errCode = SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
             if( errCode == Harbour::SUCCESS ) {
                errCode = dbTransInfo.uiItemCount == 0 ? Harbour::FAILURE : SELF_TRANS(dbTransInfo.lpaSource, &dbTransInfo);
@@ -1953,18 +1937,15 @@ HB_FUNC( HB_RDDGETTEMPALIAS )
 
 HB_FUNC( HB_RDDINFO )
 {
-   LPRDDNODE  pRDDNode;
-   HB_USHORT  uiRddID;
-   HB_ULONG   ulConnection;
-
    auto szDriver = hb_parc(3);
    if( !szDriver ) { /* no VIA RDD parameter, use default */
       szDriver = hb_rddDefaultDrv(nullptr);
    }
 
-   ulConnection = hb_parnl(4);
+   HB_ULONG ulConnection = hb_parnl(4);
 
-   pRDDNode = hb_rddFindNode( szDriver, &uiRddID );  /* find the RDDNODE */
+   HB_USHORT uiRddID;
+   auto pRDDNode = hb_rddFindNode(szDriver, &uiRddID);  /* find the RDDNODE */
    auto pIndex = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pRDDNode && pIndex ) {
@@ -1982,14 +1963,12 @@ HB_FUNC( HB_DBDROP )
    HB_ULONG ulConnection = hb_parnl(4);
    auto szName = hb_parc(1);
 
-   if( szName ) {
-      const char * szDriver;
-
+   if( szName != nullptr ) {
       if( !szName[0] ) {
          szName = hb_parc(2);
       }
-      szDriver = hb_rddFindDrv(hb_parc(3), szName);
-      if( szDriver ) {
+      auto szDriver = hb_rddFindDrv(hb_parc(3), szName);
+      if( szDriver != nullptr ) {
          pRDDNode = hb_rddFindNode(szDriver, nullptr);  /* find the RDDNODE */
       }
    }
@@ -2007,14 +1986,12 @@ HB_FUNC( HB_DBEXISTS )
    HB_ULONG ulConnection = hb_parnl(4);
    auto szName = hb_parc(1);
 
-   if( szName ) {
-      const char * szDriver;
-
+   if( szName != nullptr ) {
       if( !szName[0] ) {
          szName = hb_parc(2);
       }
-      szDriver = hb_rddFindDrv(hb_parc(3), szName);
-      if( szDriver ) {
+      auto szDriver = hb_rddFindDrv(hb_parc(3), szName);
+      if( szDriver != nullptr ) {
          pRDDNode = hb_rddFindNode(szDriver, nullptr);  /* find the RDDNODE */
       }
    }
@@ -2031,14 +2008,12 @@ HB_FUNC( HB_DBRENAME )
    HB_ULONG ulConnection = hb_parnl(5);
    auto szName = hb_parc(1);
 
-   if( szName ) {
-      const char * szDriver;
-
+   if( szName != nullptr ) {
       if( !szName[0] ) {
          szName = hb_parc(2);
       }
-      szDriver = hb_rddFindDrv(hb_parc(4), szName);
-      if( szDriver ) {
+      auto szDriver = hb_rddFindDrv(hb_parc(4), szName);
+      if( szDriver != nullptr ) {
          pRDDNode = hb_rddFindNode(szDriver, nullptr);  /* find the RDDNODE */
       }
    }
@@ -2063,10 +2038,10 @@ HB_FUNC( HB_FIELDLEN )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_USHORT uiIndex;
       auto szField = hb_parc(1);
 
-      if( szField ) {
+      HB_USHORT uiIndex;
+      if( szField != nullptr ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
       } else {
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
@@ -2091,10 +2066,10 @@ HB_FUNC( HB_FIELDDEC )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_USHORT uiIndex;
       auto szField = hb_parc(1);
 
-      if( szField ) {
+      HB_USHORT uiIndex;
+      if( szField != nullptr ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
       } else {
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
@@ -2119,10 +2094,10 @@ HB_FUNC( HB_FIELDTYPE )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_USHORT uiIndex;
       auto szField = hb_parc(1);
 
-      if( szField ) {
+      HB_USHORT uiIndex;
+      if( szField != nullptr ) {
          uiIndex = hb_rddFieldIndex(pArea, szField);
       } else {
          uiIndex = static_cast<HB_FIELDNO>(hb_parni(1));
@@ -2147,10 +2122,10 @@ HB_FUNC( HB_FIELDGET )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_USHORT uiField;
       auto szField = hb_parc(1);
 
-      if( szField ) {
+      HB_USHORT uiField;
+      if( szField != nullptr ) {
          uiField = hb_rddFieldIndex(pArea, szField);
       } else {
          uiField = static_cast<HB_FIELDNO>(hb_parni(1));
@@ -2169,10 +2144,10 @@ HB_FUNC( HB_FIELDPUT )
    auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
    if( pArea != nullptr ) {
-      HB_USHORT uiField;
       auto szField = hb_parc(1);
 
-      if( szField ) {
+      HB_USHORT uiField;
+      if( szField != nullptr ) {
          uiField = hb_rddFieldIndex(pArea, szField);
       } else {
          uiField = static_cast<HB_FIELDNO>(hb_parni(1));
