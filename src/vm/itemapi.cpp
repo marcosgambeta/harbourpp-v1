@@ -2612,7 +2612,7 @@ HB_BOOL hb_itemStrBuf(char * szResult, PHB_ITEM pNumber, int iSize, int iDec)
          /* now try to round the results and set 0 in places over defined
             precision, the same is done by Clipper */
          if( iPos >= 0 ) {
-            int iZer, iLast;
+            int iZer;
 
             if( iFirst < 0 ) {
                iZer = 0;
@@ -2621,7 +2621,7 @@ HB_BOOL hb_itemStrBuf(char * szResult, PHB_ITEM pNumber, int iSize, int iDec)
             }
 
             dFract = modf(dFract * doBase, &dDig);
-            iLast = static_cast<int>(dDig + 0.01);
+            auto iLast = static_cast<int>(dDig + 0.01);
 
             /* hack for x.xxxx4999999999, f.e. 8.995 ~FL 8.994999999999999218.. */
             if( iLast == 4 && iZer < 0 ) {

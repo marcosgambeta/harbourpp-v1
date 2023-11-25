@@ -221,7 +221,7 @@ static const char * is_devicename(const char * szFileName)
             }
          }
       }
-      int iLen = static_cast<int>(strlen(szFileName + iSkip));
+      auto iLen = static_cast<int>(strlen(szFileName + iSkip));
       if( iLen >= 3 && iLen <= 4 ) {
          int iFrom, iTo;
 
@@ -425,7 +425,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
       /* Convert to upper case and determine where year is */
       y_start = y_stop = -1;
       char * szDateFormat = pSet->HB_SET_DATEFORMAT;
-      int size = static_cast<int>(strlen(szDateFormat));
+      auto size = static_cast<int>(strlen(szDateFormat));
       for( auto count = 0; count < size; count++ ) {
          int digit = HB_TOUPPER(static_cast<HB_UCHAR>(szDateFormat[count]));
          if( digit == 'Y' ) {
@@ -465,7 +465,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
          if( new_century_setting ) {
             hb_strncat(szNewFormat, "YY", size);
          }
-         int format_len = static_cast<int>(strlen(szDateFormat));
+         auto format_len = static_cast<int>(strlen(szDateFormat));
          if( y_stop < format_len ) {
             hb_strncat(szNewFormat, szDateFormat + y_stop, size);
          }

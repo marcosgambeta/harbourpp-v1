@@ -160,7 +160,7 @@ static PHB_SYMB hb_symbolAlloc(const char * szName)
    HB_TRACE(HB_TR_DEBUG, ("hb_symbolAlloc(%s)", szName));
 #endif
 
-   int iLen = static_cast<int>(strlen(szName));
+   auto iLen = static_cast<int>(strlen(szName));
    auto pHolder = static_cast<HB_SYM_HOLDER*>(hb_xgrab(sizeof(HB_SYM_HOLDER) + iLen));
    memcpy(pHolder->szName, szName, iLen + 1);
    pHolder->pNext = s_pAllocSyms;

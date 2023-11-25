@@ -1407,7 +1407,7 @@ void hb_macroGenMessageData(const char * szMsg, HB_BOOL bIsObject, HB_COMP_DECL)
 #endif
 
    char szResult[HB_SYMBOL_NAME_LEN + 1];
-   int iLen = static_cast<int>(strlen(szMsg));
+   auto iLen = static_cast<int>(strlen(szMsg));
    if( iLen > HB_SYMBOL_NAME_LEN - 1 ) {
       iLen = HB_SYMBOL_NAME_LEN - 1;
    }
@@ -1447,7 +1447,7 @@ void hb_macroGenPopAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, c
 
    if( bPushAliasValue ) {
       if( szAlias ) {
-         int iLen = static_cast<int>(strlen(szAlias));
+         auto iLen = static_cast<int>(strlen(szAlias));
 
          if( szAlias[0] == 'M' && (iLen == 1 || (iLen >= 4 && iLen <= 6 && strncmp(szAlias, "MEMVAR", iLen) == 0)) ) {
             /* M-> or MEMV-> or MEMVA-> or MEMVAR-> variable */
@@ -1521,7 +1521,7 @@ void hb_macroGenPushAliasedVar(const char * szVarName, HB_BOOL bPushAliasValue, 
           * FIELD->var
           * MEMVAR->var
           */
-         int iLen = static_cast<int>(strlen(szAlias));
+         auto iLen = static_cast<int>(strlen(szAlias));
 
          if( szAlias[0] == 'M' && (iLen == 1 || (iLen >= 4 && iLen <= 6 && strncmp(szAlias, "MEMVAR", iLen) == 0)) ) {
             /* M-> or MEMV-> or MEMVA-> or MEMVAR-> variable */

@@ -8343,7 +8343,7 @@ void hb_vmRequestCancel(void)
       hb_conOutErr("Cancelled at: ", 0);
 
       while( hb_procinfo(iLevel++, buffer, &uiLine, file) ) {
-         int l = static_cast<int>(strlen(buffer));
+         auto l = static_cast<int>(strlen(buffer));
          hb_snprintf(buffer + l, sizeof(buffer) - l, " (%hu)%s%s", uiLine, *file ? HB_I_(" in ") : "", file);
          hb_conOutErr(buffer, 0);
          hb_conOutErr(hb_conNewLine(), 0);
@@ -8427,7 +8427,7 @@ void hb_vmRequestRestore(void)
    if( uiAction & HB_VMSTACK_REQUESTED ) {
       hb_vmThreadQuit();
    } else {
-      int iCount = static_cast<int>(pItem->item.asRecover.base);
+      auto iCount = static_cast<int>(pItem->item.asRecover.base);
 #else
    {
 #endif

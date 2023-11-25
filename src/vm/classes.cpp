@@ -3117,7 +3117,7 @@ HB_FUNC( __CLSADDMSG )
       } else if( nType == HB_OO_MSG_PROPERTY || nType == HB_OO_MSG_CLASSPROPERTY ) {
          auto pType = hb_param(7, Harbour::Item::ANY);
          char szAssign[HB_SYMBOL_NAME_LEN + 1];
-         int iLen = static_cast<int>(hb_parclen(2));
+         auto iLen = static_cast<int>(hb_parclen(2));
          if( iLen >= HB_SYMBOL_NAME_LEN ) {
             iLen = HB_SYMBOL_NAME_LEN - 1;
          }
