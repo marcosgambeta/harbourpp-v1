@@ -2561,7 +2561,6 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             }
          } else if( updateRect.right > ixbeyond ) {
             LOGBRUSH lb{};
-            HBRUSH   hBrush;
 
             COLORREF bkColor = s_COLORS[wvw_win->screenBuffer[0].c.bColor >> 4];
 
@@ -2574,7 +2573,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
             lb.lbColor = bkColor;
             lb.lbHatch = 0;
 
-            hBrush = CreateBrushIndirect(&lb);
+            auto hBrush = CreateBrushIndirect(&lb);
 
             FillRect(hdc, &rcRect, hBrush);
 
@@ -2603,7 +2602,6 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                a small window */
             } else if( updateRect.bottom > iybeyond ) {
                LOGBRUSH lb{};
-               HBRUSH   hBrush;
 
                COLORREF bkColor = s_COLORS[wvw_win->screenBuffer[0].c.bColor >> 4];
 
@@ -2616,7 +2614,7 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
                lb.lbColor = bkColor;
                lb.lbHatch = 0;
 
-               hBrush = CreateBrushIndirect(&lb);
+               auto hBrush = CreateBrushIndirect(&lb);
 
                FillRect(hdc, &rcRect, hBrush);
 
@@ -5057,7 +5055,6 @@ static void hb_gt_wvwFillLineSpace(PWVW_WIN wvw_win, HDC hdc, int startCol, int 
 {
    RECT     rc;
    LOGBRUSH lb{};
-   HBRUSH   hBrush;
 
    int      byColorIndex = wvw_win->iLSpaceColor < 0 ? ((iColor & 0x00F0) >> 4) : wvw_win->iLSpaceColor;
    COLORREF bkColor      = s_COLORS[byColorIndex];
@@ -5072,7 +5069,7 @@ static void hb_gt_wvwFillLineSpace(PWVW_WIN wvw_win, HDC hdc, int startCol, int 
    lb.lbColor = bkColor;
    lb.lbHatch = 0;
 
-   hBrush = CreateBrushIndirect(&lb);
+   auto hBrush = CreateBrushIndirect(&lb);
 
    rc.bottom = rc.top;
    rc.top   -= wvw_win->iLineSpacing / 2;

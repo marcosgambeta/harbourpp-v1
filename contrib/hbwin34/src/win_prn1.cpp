@@ -672,7 +672,7 @@ HB_FUNC( WIN_FILLRECT )
 
    if( hDC != nullptr )
    {
-      HBRUSH hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
+      auto hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
 
       RECT rc;
       rc.left   = hb_parnl(2);

@@ -1188,7 +1188,7 @@ HB_FUNC( WVG_COLORRECT )
    HB_GOBJS * gObj = hb_wvg_ObjectNew(pWVT);
 
    if( pWVT && gObj ) {
-      HBRUSH hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
+      auto hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
 
       if( hBrush ) {
          gObj->iObjType = GOBJ_OBJTYPE_COLORRECT;

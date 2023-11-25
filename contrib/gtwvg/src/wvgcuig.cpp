@@ -1128,7 +1128,7 @@ static void hb_wvg_RoundRect(PHB_GTWVT pWVT, PHB_GOBJS gObj, int iLeft, int iTop
 /* wvg_ColorRect( nTop, nLeft, nBottom, nRight, aPxlOff, nRGB ) */
 HB_FUNC( WVG_COLORRECT )
 {
-   HBRUSH hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnint(6)));
+   auto hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnint(6)));
 
    if( hBrush ) {
       auto pWVT = hb_wvt_gtGetWVT();

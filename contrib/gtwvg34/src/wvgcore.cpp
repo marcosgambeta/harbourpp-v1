@@ -640,14 +640,13 @@ HB_FUNC( WVT_SETBRUSH )
 
    if( _s ) {
       if( HB_ISNUM(1) ) {
-         HBRUSH hBrush;
          LOGBRUSH lb{};
 
          lb.lbStyle = hb_parnl(1);
          lb.lbColor = hbwapi_par_COLORREF(2);
          lb.lbHatch = hb_parnl(3);
 
-         hBrush = CreateBrushIndirect(&lb);
+         auto hBrush = CreateBrushIndirect(&lb);
 
          if( hBrush ) {
             if( _s->currentBrush ) {
@@ -1617,7 +1616,7 @@ HB_FUNC( WVT_DRAWCOLORRECT )
    PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
    if( _s ) {
-      HBRUSH hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
+      auto hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
 
       if( hBrush ) {
          int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
@@ -1756,7 +1755,6 @@ HB_FUNC( WVT_DRAWBUTTON )
       int   iTextHeight;
 
       LOGBRUSH lb;
-      HBRUSH   hBrush;
 
       bool     bImage    = HB_ISNUM(6) || HB_ISCHAR(6);
       auto iFormat = hb_parni(7);
@@ -1773,7 +1771,7 @@ HB_FUNC( WVT_DRAWBUTTON )
       lb.lbStyle = BS_SOLID;
       lb.lbColor = bkColor;
       lb.lbHatch = 0;
-      hBrush = CreateBrushIndirect(&lb);
+      auto hBrush = CreateBrushIndirect(&lb);
       rc.left   = iLeft;
       rc.top    = iTop;
       rc.right  = iRight + 1;
@@ -2428,13 +2426,12 @@ HB_FUNC( WVT_DRAWPROGRESSBAR )
          }
          #endif
       } else {
-         HBRUSH hBrush;
          LOGBRUSH lb = { 0, 0, 0 };
 
          lb.lbStyle = BS_SOLID;
          lb.lbColor = hbwapi_par_COLORREF_def(8, _s->COLORS[0]);
          lb.lbHatch = 0;
-         hBrush = CreateBrushIndirect(&lb);
+         auto hBrush = CreateBrushIndirect(&lb);
          rc.bottom++;
          rc.right++;
 

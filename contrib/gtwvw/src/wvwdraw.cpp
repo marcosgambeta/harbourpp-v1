@@ -1910,7 +1910,6 @@ HB_FUNC( WVW_DRAWCOLORRECT )
    int    iOffTop, iOffLeft, iOffBottom, iOffRight;
    RECT   rc{};
    POINT  xy{};
-   HBRUSH hBrush;
 
    iOffTop    = !HB_ISNIL(6) ? hb_parvni(6, 1) : 0;
    iOffLeft   = !HB_ISNIL(6) ? hb_parvni(6, 2) : 0;
@@ -1932,7 +1931,7 @@ HB_FUNC( WVW_DRAWCOLORRECT )
    rc.bottom = xy.y - 1 + iOffBottom;
    rc.right  = xy.x - 1 + iOffRight;
 
-   hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(7)));
+   auto hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(7)));
 
    if( hBrush ) {
       hb_retl(FillRect(pWindowData->hdc, &rc, hBrush));
@@ -2075,7 +2074,6 @@ HB_FUNC( WVW_DRAWBUTTON )
    int   iImageWidth, iImageHeight;
    COLORREF /* oldBkColor, */ oldTextColor;
    LOGBRUSH   lb{};
-   HBRUSH     hBrush;
    IPicture * iPicture;
 
    BOOL bText   = HB_ISCHAR(6);
@@ -2114,7 +2112,7 @@ HB_FUNC( WVW_DRAWBUTTON )
    lb.lbColor = bkColor;
    lb.lbHatch = 0;
 
-   hBrush = CreateBrushIndirect(&lb);
+   auto hBrush = CreateBrushIndirect(&lb);
 
    rc.left   = iLeft;
    rc.top    = iTop;

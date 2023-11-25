@@ -1838,7 +1838,6 @@ HB_FUNC( WVW_SETPEN )
 
 HB_FUNC( WVW_SETBRUSH )
 {
-   HBRUSH     hBrush;
    LOGBRUSH   lb{};
    WVW_DATA * p  = hb_getWvwData();
 
@@ -1850,7 +1849,7 @@ HB_FUNC( WVW_SETBRUSH )
    lb.lbColor = HB_ISNIL(2) ? RGB(0, 0, 0) : static_cast<COLORREF>(hb_parnl(2));
    lb.lbHatch = HB_ISNIL(3) ? 0 : hb_parnl(3);
 
-   hBrush = CreateBrushIndirect(&lb);
+   auto hBrush = CreateBrushIndirect(&lb);
 
    if( hBrush ) {
       /* 20040923,was:

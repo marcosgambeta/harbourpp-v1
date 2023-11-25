@@ -813,7 +813,6 @@ HB_FUNC( WVT_SETBRUSH )
 {
    auto _s = hb_wvt_gtGetWVT();
 
-   HBRUSH   hBrush;
    LOGBRUSH lb{};
 
    if( !HB_ISNUM(1) ) {
@@ -823,7 +822,7 @@ HB_FUNC( WVT_SETBRUSH )
    lb.lbStyle = hb_parnl(1);
    lb.lbColor = static_cast<COLORREF>(hb_parnldef(2, RGB(0, 0, 0)));
    lb.lbHatch = hb_parnl(3);
-   hBrush = CreateBrushIndirect(&lb);
+   auto hBrush = CreateBrushIndirect(&lb);
    if( hBrush ) {
       if( _s->currentBrush ) {
          DeleteObject(_s->currentBrush);
@@ -1357,9 +1356,8 @@ HB_FUNC( WVT_DRAWCOLORRECT )
    int    iBottom = (_s->PTEXTSIZE.y * (hb_parni(3) + 1)) - 1 + hb_parvni(5, 3);
    int    iRight  = (_s->PTEXTSIZE.x * (hb_parni(4) + 1)) - 1 + hb_parvni(5, 4);
    RECT   rc{};
-   HBRUSH hBrush;
 
-   hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(6)));
+   auto hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(6)));
 
    if( hBrush ) {
       rc.left   = iLeft;
@@ -1480,7 +1478,6 @@ HB_FUNC( WVT_DRAWBUTTON )
    int      iAlign;
    int      iTextHeight /*, iTextWidth */;
    LOGBRUSH lb{};
-   HBRUSH   hBrush;
 
    bool  bText     = HB_ISCHAR(5);
    bool  bImage    = (HB_ISNUM(6) || HB_ISCHAR(6));
@@ -1500,7 +1497,7 @@ HB_FUNC( WVT_DRAWBUTTON )
    lb.lbStyle = BS_SOLID;
    lb.lbColor = bkColor;
    lb.lbHatch = 0;
-   hBrush = CreateBrushIndirect(&lb);
+   auto hBrush = CreateBrushIndirect(&lb);
    rc.left   = iLeft;
    rc.top    = iTop;
    rc.right  = iRight + 1;

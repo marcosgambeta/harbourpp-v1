@@ -587,7 +587,7 @@ HB_FUNC( WIN_FILLRECT )
    HB_BOOL fResult = false;
 
    if( hDC ) {
-      HBRUSH hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(6)));
+      auto hBrush = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(6)));
       RECT rct;
 
       rct.left   = hb_parnl(2);

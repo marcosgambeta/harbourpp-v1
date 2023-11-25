@@ -645,7 +645,6 @@ HB_FUNC( WVW_SETBRUSH )
    PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_zer && HB_ISNUM(1) ) {
-      HBRUSH   hBrush;
       LOGBRUSH lb{};
 
       lb.lbStyle = hbwapi_par_UINT(1);
@@ -660,7 +659,7 @@ HB_FUNC( WVW_SETBRUSH )
             lb.lbHatch = reinterpret_cast<ULONG_PTR>(hb_parptr(3));
       }
 
-      hBrush = CreateBrushIndirect(&lb);
+      auto hBrush = CreateBrushIndirect(&lb);
 
       if( hBrush ) {
          if( wvw->a.currentBrush ) {
@@ -2014,7 +2013,7 @@ HB_FUNC( WVW_DRAWCOLORRECT )
    PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_win && wvw_zer ) {
-      HBRUSH hBrush = CreateSolidBrush(hbwapi_par_COLORREF(7));
+      auto hBrush = CreateSolidBrush(hbwapi_par_COLORREF(7));
 
       if( hBrush ) {
          auto iTop    = hb_parni(2);
@@ -2169,7 +2168,6 @@ HB_FUNC( WVW_DRAWBUTTON )
       RECT     rc;
       int      iTextHeight;
       LOGBRUSH lb{};
-      HBRUSH   hBrush;
 
       bool fImage  = HB_ISNUM(7) || HB_ISCHAR(7);
       auto iFormat = hb_parni(8);
@@ -2190,7 +2188,7 @@ HB_FUNC( WVW_DRAWBUTTON )
       lb.lbColor = hbwapi_par_COLORREF_def(10, hb_gt_wvw_GetColorData(7));
       lb.lbHatch = 0;
 
-      hBrush = CreateBrushIndirect(&lb);
+      auto hBrush = CreateBrushIndirect(&lb);
 
       rc.left   = iLeft;
       rc.top    = iTop;
@@ -2930,14 +2928,13 @@ HB_FUNC( WVW_DRAWPROGRESSBAR )
       if( HB_ISCHAR(10) ) {
          hb_gt_wvw_DrawImage(wvw_win->hWnd, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(10), false);
       } else {
-         HBRUSH   hBrush;
          LOGBRUSH lb{};
 
          lb.lbStyle = BS_SOLID;
          lb.lbColor = hbwapi_par_COLORREF_def(9, hb_gt_wvw_GetColorData(0));
          lb.lbHatch = 0;
 
-         hBrush = CreateBrushIndirect(&lb);
+         auto hBrush = CreateBrushIndirect(&lb);
 
          rc.bottom++;
          rc.right++;

@@ -707,7 +707,7 @@ WAPI_CREATESOLIDBRUSH(nColor) -> HBRUSH
 */
 HB_FUNC( WAPI_CREATESOLIDBRUSH )
 {
-   HBRUSH h = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(1)));
+   auto h = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(1)));
 
    hbwapi_ret_HBRUSH(h);
 }
