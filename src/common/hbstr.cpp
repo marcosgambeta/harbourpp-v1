@@ -454,7 +454,7 @@ double hb_numRound(double dNum, int iDec)
     * in rounding
     */
    {
-      int iDecR, iPrec;
+      int iPrec;
       bool fNeg;
 
       if( dNum < 0 ) {
@@ -464,7 +464,7 @@ double hb_numRound(double dNum, int iDec)
          fNeg = false;
       }
 
-      iDecR = static_cast<int>(log10(dNum));
+      auto iDecR = static_cast<int>(log10(dNum));
       iPrec = iDecR + iDec;
 
       if( iPrec < -1 ) {
@@ -559,10 +559,10 @@ static bool hb_str2number(bool fPCode, const char * szNum, HB_SIZE nLen, HB_MAXI
    auto fDec = false;
    bool fNeg;
    auto fHex = false;
-   int iLen, iPos = 0;
+   int iPos = 0;
    int c, iWidth, iDec = 0, iDecR = 0;
 
-   iLen = static_cast<int>(nLen);
+   auto iLen = static_cast<int>(nLen);
 
    while( iPos < iLen && HB_ISSPACE(szNum[iPos]) ) {
       iPos++;
@@ -603,10 +603,9 @@ static bool hb_str2number(bool fPCode, const char * szNum, HB_SIZE nLen, HB_MAXI
       }
    } else {
       HB_MAXINT lLimV;
-      int iLimC;
 
       lLimV = HB_VMLONG_MAX / 10;
-      iLimC = static_cast<int>(HB_VMLONG_MAX % 10);
+      auto iLimC = static_cast<int>(HB_VMLONG_MAX % 10);
 
       iWidth = iPos;
 
@@ -766,7 +765,7 @@ char * hb_numToStr(char * szBuf, HB_SIZE nSize, HB_MAXINT lNumber)
    HB_TRACE(HB_TR_DEBUG, ("hb_numToStr(%p, %" HB_PFS "u, %" PFHL "i)", static_cast<void*>(szBuf), nSize, lNumber));
 #endif
 
-   int iPos = static_cast<int>(nSize);
+   auto iPos = static_cast<int>(nSize);
    auto fNeg = false;
 
    szBuf[--iPos] = '\0';
@@ -807,11 +806,11 @@ char * hb_dblToStr(char * szBuf, HB_SIZE nSize, double dNumber, int iMaxDec)
 #endif
 
    double dInt, dFract, dDig, doBase = 10.0;
-   int iLen, iPos, iPrec;
+   int iPos, iPrec;
    char * szResult;
    bool fFirst;
 
-   iLen = static_cast<int>(nSize - 1);
+   auto iLen = static_cast<int>(nSize - 1);
    if( iLen <= 0 ) {
       return nullptr;
    }

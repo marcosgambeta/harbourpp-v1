@@ -169,7 +169,7 @@ const char * hb_compGetFuncID(const char * szFuncName, HB_FUNC_ID * pFunID, int 
    }
 
    if( i < 0 && s_funcId[uiFirst].iMinLen ) {
-      int iLen = static_cast<int>(strlen(szFuncName));
+      auto iLen = static_cast<int>(strlen(szFuncName));
 
       if( iLen >= s_funcId[uiFirst].iMinLen ) {
          i = strncmp(szFuncName, s_funcId[uiFirst].szFuncName, iLen);
