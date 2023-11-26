@@ -46,8 +46,8 @@
 
 HB_FUNC( WVW_SETMENU )
 {
-   UINT       usWinNum = WVW_WHICH_WINDOW;
-   WIN_DATA * pWinData = hb_gt_wvw_GetWindowsData(usWinNum);
+   auto usWinNum = WVW_WHICH_WINDOW;
+   auto pWinData = hb_gt_wvw_GetWindowsData(usWinNum);
 
    SetMenu(pWinData->hWnd, reinterpret_cast<HMENU>(HB_PARHANDLE(2)));
 
@@ -56,8 +56,8 @@ HB_FUNC( WVW_SETMENU )
 
 HB_FUNC( WVW_SETPOPUPMENU )
 {
-   UINT       usWinNum = WVW_WHICH_WINDOW;
-   WIN_DATA * pWinData = hb_gt_wvw_GetWindowsData(usWinNum);
+   auto usWinNum = WVW_WHICH_WINDOW;
+   auto pWinData = hb_gt_wvw_GetWindowsData(usWinNum);
    HMENU      hPopup   = pWinData->hPopup;
 
    pWinData->hPopup = reinterpret_cast<HMENU>(HB_PARHANDLE(2));
@@ -128,21 +128,21 @@ HB_FUNC( WVW_ENABLEMENUITEM )
 
 HB_FUNC( WVW_GETLASTMENUEVENT )
 {
-   UINT usWinNum = WVW_WHICH_WINDOW;
+   auto usWinNum = WVW_WHICH_WINDOW;
 
    hb_retni(hb_gt_wvwGetLastMenuEvent(usWinNum));
 }
 
 HB_FUNC( WVW_SETLASTMENUEVENT )
 {
-   UINT usWinNum = WVW_WHICH_WINDOW;
+   auto usWinNum = WVW_WHICH_WINDOW;
 
    hb_retni(hb_gt_wvwSetLastMenuEvent(usWinNum, hb_parni(2)));
 }
 
 HB_FUNC( WVW_SETMENUKEYEVENT )
 {
-   UINT usWinNum = WVW_WHICH_WINDOW;
+   auto usWinNum = WVW_WHICH_WINDOW;
    int  iEvent   = 0;
 
    if( HB_ISNUM(2) ) {
@@ -216,8 +216,8 @@ HB_FUNC( WVW_MENUITEM_SETBITMAPS )
 
 HB_FUNC( WVW_DRAWMENUBAR )
 {
-   UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
+   auto usWinNum = WVW_WHICH_WINDOW;
+   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
    DrawMenuBar(pWindowData->hWnd);
 }
@@ -230,8 +230,8 @@ HB_FUNC( WVW_ENDMENU )
 /* wvw_GetMenu([nWinNum]) */
 HB_FUNC( WVW_GETMENU )
 {
-   UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
+   auto usWinNum = WVW_WHICH_WINDOW;
+   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
 
    HB_RETHANDLE(GetMenu(pWindowData->hWnd));
 }
@@ -239,8 +239,8 @@ HB_FUNC( WVW_GETMENU )
 /* wvw_TrackPopupMenu([nWinNum], n) */
 HB_FUNC( WVW_TRACKPOPUPMENU )
 {
-   UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
+   auto usWinNum = WVW_WHICH_WINDOW;
+   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    POINT      xy{};
 
    GetCursorPos(&xy);
@@ -268,9 +268,9 @@ HB_FUNC( WIN_SETMENU )
  */
 HB_FUNC( WVW_NOSYSMENU )
 {
-   UINT       usWinNum     = WVW_WHICH_WINDOW;
+   auto usWinNum = WVW_WHICH_WINDOW;
    BOOL       lRemoveClose = HB_ISNIL(2) ? FALSE : hb_parl(2);
-   WIN_DATA * pWindowData  = hb_gt_wvw_GetWindowsData(usWinNum);
+   auto pWindowData  = hb_gt_wvw_GetWindowsData(usWinNum);
    HMENU      hMenu        = GetSystemMenu(pWindowData->hWnd, FALSE);
 
    if( hMenu ) {
@@ -294,8 +294,8 @@ HB_FUNC( WVW_NOSYSMENU )
  */
 HB_FUNC( WVW_GETSYSTEMMENU )
 {
-   UINT       usWinNum    = WVW_WHICH_WINDOW;
-   WIN_DATA * pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
+   auto usWinNum = WVW_WHICH_WINDOW;
+   auto pWindowData = hb_gt_wvw_GetWindowsData(usWinNum);
    BOOL       lReset      = HB_ISNIL(2) ? FALSE : hb_parl(2);
 
    hb_retnl(reinterpret_cast<ULONG>(GetSystemMenu(pWindowData->hWnd, lReset)));
