@@ -91,7 +91,7 @@ static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char * szBitmap, HB_UI
    }
 
    if( iBitmapType == 0 ) {
-      HBITMAP hBitmap = hb_gt_wvw_PrepareBitmap(szBitmap, uiBitmap, wvw_win->iTBImgWidth, wvw_win->iTBImgHeight, fMap3Dcolors, hWndToolbar);
+      auto hBitmap = hb_gt_wvw_PrepareBitmap(szBitmap, uiBitmap, wvw_win->iTBImgWidth, wvw_win->iTBImgHeight, fMap3Dcolors, hWndToolbar);
 
       if( !hBitmap ) {
          return false;
@@ -161,7 +161,7 @@ static void hb_gt_wvw_TBMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WP
    HB_SYMBOL_UNUSED(hWnd);
    HB_SYMBOL_UNUSED(wParam);
 
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( message == WM_MOUSEMOVE || message == WM_NCMOUSEMOVE ) {
       if( !wvw_win->MouseMove ) {
@@ -282,7 +282,7 @@ static void hb_gt_wvw_TBMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WP
 static LRESULT CALLBACK hb_gt_wvw_TBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
    HWND hWndParent = GetParent(hWnd);
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw == nullptr || hWndParent == nullptr ) {
       hb_errInternal(10012, "ToolBar: Parent window is missing", nullptr, nullptr);
@@ -331,7 +331,7 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc(HWND hWnd, UINT message, WPARAM wParam,
          int iTop = rTB.bottom - 3;
          int iRight = rTB.right;
 
-         HDC hdc = GetDC(hWnd);
+         auto hdc = GetDC(hWnd);
 
          HGDIOBJ hOldObj = SelectObject(hdc, wvw->a.penWhite);
 
@@ -368,8 +368,8 @@ nImageWidth/Height are in effect only if nSystemBitmap==0
 */
 HB_FUNC( WVW_TBCREATE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win && wvw_win->hToolBar == nullptr ) {
       DWORD dwStyle = hb_parnidef(3, TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE);
@@ -489,7 +489,7 @@ lMap3Dcolors: defaults to .F.
 */
 HB_FUNC( WVW_TBADDBUTTON )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iCommand = hb_parni(2);
@@ -561,7 +561,7 @@ returns number of buttons in toolbar on window nWinNum
 */
 HB_FUNC( WVW_TBBUTTONCOUNT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       HWND hWnd = wvw_win->hToolBar;
@@ -577,9 +577,9 @@ NOTE: button separator is indexed and deleteable too
 */
 HB_FUNC( WVW_TBDELBUTTON )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
-   bool fResult = false;
+   auto fResult = false;
 
    if( wvw_win ) {
       auto iButton = hb_parnidef(2, -1);
@@ -609,7 +609,7 @@ return an array {nRowStart, nColStart, nRowStop, nColStop}
 */
 HB_FUNC( WVW_TBGETBUTTONRECT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iButton = hb_parnidef(2, -1);
@@ -637,9 +637,9 @@ returns .T. if successful
 */
 HB_FUNC( WVW_TBENABLEBUTTON )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
-   bool fResult = false;
+   auto fResult = false;
 
    if( wvw_win ) {
       auto iButton = hb_parnidef(2, -1);
@@ -672,7 +672,7 @@ destroy toolbar for window nWinNum
 */
 HB_FUNC( WVW_TBDESTROY )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win && wvw_win->hToolBar ) {
       DestroyWindow(wvw_win->hToolBar);
@@ -690,7 +690,7 @@ returns -1 if the button does not exist
 */
 HB_FUNC( WVW_TBINDEX2CMD )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       int iCmd = hb_gt_wvw_IndexToCommand(wvw_win->hToolBar, hb_parni(2));
@@ -711,7 +711,7 @@ returns -1 if the button does not exist
 */
 HB_FUNC( WVW_TBCMD2INDEX )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retni(hb_gt_wvw_CommandToIndex(wvw_win->hToolBar, hb_parni(2)));
@@ -720,7 +720,7 @@ HB_FUNC( WVW_TBCMD2INDEX )
 
 HB_FUNC( WVW_TOOLBARADDBUTTONS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win && HB_ISARRAY(3) ) {
       auto pArray = hb_param(3, Harbour::Item::ARRAY);

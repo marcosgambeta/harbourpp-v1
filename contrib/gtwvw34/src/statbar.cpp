@@ -60,8 +60,8 @@ returns 0 if failed, eg. if there is already a status bar for this window
 */
 HB_FUNC( WVW_SBCREATE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win && wvw_win->hStatusBar == nullptr ) {
       HWND hWnd = CreateStatusWindow(WS_CHILD | WS_VISIBLE | WS_BORDER | SBT_TOOLTIPS, nullptr, wvw_win->hWnd, WVW_ID_BASE_STATUSBAR + wvw_win->nWinId);
@@ -98,7 +98,7 @@ destroy status bar for window nWinNum
 */
 HB_FUNC( WVW_SBDESTROY )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win && wvw_win->hStatusBar != nullptr ) {
       if( wvw_win->hSBfont ) {
@@ -128,7 +128,7 @@ returns 0 if failed
 */
 HB_FUNC( WVW_SBADDPART )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
    HWND hWnd;
 
    if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr ) {
@@ -139,7 +139,7 @@ HB_FUNC( WVW_SBADDPART )
       int iWidth = hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : hb_parni(3);
 
       if( HB_ISCHAR(2) ) {
-         HDC hDCSB = GetDC(hWnd);
+         auto hDCSB = GetDC(hWnd);
 
          HB_SIZE nLen;
          void * hText;
@@ -218,7 +218,7 @@ returns 0 if failed
 */
 HB_FUNC( WVW_SBREFRESH )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
    HWND hWnd;
 
    if( wvw_win && (hWnd = wvw_win->hStatusBar) != nullptr ) {
@@ -248,7 +248,7 @@ Set Text of status bar's part #npart
 */
 HB_FUNC( WVW_SBSETTEXT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iPart = hb_parnidef(2, 1);
@@ -285,7 +285,7 @@ Get Text of status bar's part #npart
 */
 HB_FUNC( WVW_SBGETTEXT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iPart = hb_parnidef(2, 1);
@@ -303,7 +303,7 @@ Get number of parts in statusbar of window nWinNum
 */
 HB_FUNC( WVW_SBGETPARTS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retni(static_cast<int>(SendMessage(wvw_win->hStatusBar, SB_GETPARTS, WVW_MAX_STATUS_PARTS, 0)));
@@ -316,11 +316,11 @@ wvw_sbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
 */
 HB_FUNC( WVW_SBSETFONT )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      bool fResult = true;
+      auto fResult = true;
 
       wvw->lfSB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
       wvw->lfSB.lfWidth          = hb_parnldef(4, wvw->lfSB.lfWidth);
@@ -341,7 +341,7 @@ HB_FUNC( WVW_SBSETFONT )
 
       if( wvw_win->hSBfont ) {
          HFONT hOldFont = wvw_win->hSBfont;
-         HFONT hFont = CreateFontIndirect(&wvw->lfSB);
+         auto hFont = CreateFontIndirect(&wvw->lfSB);
          if( hFont ) {
             wvw_win->hSBfont = hFont;
             DeleteObject(hOldFont);

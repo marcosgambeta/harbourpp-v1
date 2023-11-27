@@ -90,7 +90,7 @@ returns 0 if failed
 */
 HB_FUNC( WVW_PBCREATE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    HWND hWnd = nullptr;
 
@@ -131,11 +131,11 @@ destroy button nPBid for window nWinNum
 */
 HB_FUNC( WVW_PBDESTROY )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto nCtrlId = hb_parni(2);
-      PWVW_CTL wvw_ctl = wvw_win->ctlList;
+      auto wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl ) {
@@ -170,7 +170,7 @@ set the focus to button nButtonId in window nWinNum
 */
 HB_FUNC( WVW_PBSETFOCUS )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
    hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
@@ -180,7 +180,7 @@ returns .T. if the focus is on button nPBid in window nWinNum
 */
 HB_FUNC( WVW_PBISFOCUSED )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
    hb_retl(hWnd && GetFocus() == hWnd);
 }
 
@@ -193,9 +193,9 @@ return previous state of the button (.T.: enabled .F.: disabled)
 */
 HB_FUNC( WVW_PBENABLE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
 
    if( hWnd ) {
       bool fEnable = hb_parldef(3, true);
@@ -217,8 +217,8 @@ return .T. if successful
 */
 HB_FUNC( WVW_PBSETCODEBLOCK )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+   auto wvw = hb_gt_wvw();
+   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
    auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
 
    if( pBlock && wvw_ctl && !wvw_ctl->fBusy ) {
@@ -258,7 +258,7 @@ this function always return .T.
 */
 HB_FUNC( WVW_PBSETSTYLE )
 {
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
 
    if( wvw_ctl && wvw_ctl->hWnd ) {
       SendMessage(wvw_ctl->hWnd, BM_SETSTYLE, static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(TRUE));
@@ -275,11 +275,11 @@ this will initialize font for ALL pushbuttons in window nWinNum
 */
 HB_FUNC( WVW_PBSETFONT )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      bool fResult = true;
+      auto fResult = true;
 
       wvw->lfPB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
       wvw->lfPB.lfWidth          = hb_parnldef(4, wvw->lfPB.lfWidth);
@@ -300,9 +300,9 @@ HB_FUNC( WVW_PBSETFONT )
 
       if( wvw_win->hPBfont ) {
          HFONT hOldFont = wvw_win->hPBfont;
-         HFONT hFont = CreateFontIndirect(&wvw->lfPB);
+         auto hFont = CreateFontIndirect(&wvw->lfPB);
          if( hFont ) {
-            PWVW_CTL wvw_ctl = wvw_win->ctlList;
+            auto wvw_ctl = wvw_win->ctlList;
 
             while( wvw_ctl ) {
                if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont ) {
@@ -327,6 +327,6 @@ HB_FUNC( WVW_PBSETFONT )
 
 HB_FUNC( WVW_PBVISIBLE )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
    hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

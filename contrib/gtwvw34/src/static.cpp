@@ -51,8 +51,8 @@
 
 HB_FUNC( WVW_STCREATE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
       bool fBorder = hb_parl(7);
@@ -144,11 +144,11 @@ HB_FUNC( WVW_STCREATE )
 
 HB_FUNC( WVW_STSETFONT )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
-      bool fResult = true;
+      auto fResult = true;
 
       wvw->lfST.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
       wvw->lfST.lfWidth          = hb_parnldef(4, wvw->lfST.lfWidth);
@@ -169,9 +169,9 @@ HB_FUNC( WVW_STSETFONT )
 
       if( wvw_win->hSTfont ) {
          HFONT hOldFont = wvw_win->hSTfont;
-         HFONT hFont = CreateFontIndirect(&wvw->lfST);
+         auto hFont = CreateFontIndirect(&wvw->lfST);
          if( hFont ) {
-            PWVW_CTL wvw_ctl = wvw_win->ctlList;
+            auto wvw_ctl = wvw_win->ctlList;
 
             while( wvw_ctl ) {
                if( wvw_ctl->nClass == WVW_CONTROL_STATIC && reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont ) {

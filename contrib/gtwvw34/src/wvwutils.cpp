@@ -80,7 +80,7 @@ Additions to GTWVW developed by SOLUCIONES PERCEPTIVAS
 
 HB_FUNC( WVW_GBCREATE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    HWND hWnd = nullptr;
 
@@ -119,7 +119,7 @@ BS_TEXT | BS_GROUPBOX | WS_OVERLAPPED | WS_GROUP
 
 HB_FUNC( WVW_RBCREATE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    HWND hWnd = nullptr;
 
@@ -154,9 +154,9 @@ HB_FUNC( WVW_RBCREATE )
 
 HB_FUNC( WVW_SETCONTROLTEXT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
 
    if( hWnd ) {
       void * hText;
@@ -172,14 +172,14 @@ HB_FUNC( WVW_SETCONTROLTEXT )
 HB_FUNC( WVW_MOUSE_COL )
 {
    if( hb_gt_wvw_GetMainCoordMode() ) {
-      PWVW_WIN wvw_top = hb_gt_wvw_win_top();
+      auto wvw_top = hb_gt_wvw_win_top();
 
       if( wvw_top ) {
          hb_retni(hb_gt_wvw_GetMouseX(wvw_top) + hb_gt_wvw_ColOfs(wvw_top));
          return;
       }
    } else {
-      PWVW_WIN wvw_win = hb_gt_wvw_win_cur();
+      auto wvw_win = hb_gt_wvw_win_cur();
 
       if( wvw_win ) {
          hb_retni(hb_gt_wvw_GetMouseX(wvw_win));
@@ -193,14 +193,14 @@ HB_FUNC( WVW_MOUSE_COL )
 HB_FUNC( WVW_MOUSE_ROW )
 {
    if( hb_gt_wvw_GetMainCoordMode() ) {
-      PWVW_WIN wvw_top = hb_gt_wvw_win_top();
+      auto wvw_top = hb_gt_wvw_win_top();
 
       if( wvw_top ) {
          hb_retni(hb_gt_wvw_GetMouseY(wvw_top) + hb_gt_wvw_RowOfs(wvw_top));
          return;
       }
    } else {
-      PWVW_WIN wvw_win = hb_gt_wvw_win_cur();
+      auto wvw_win = hb_gt_wvw_win_cur();
 
       if( wvw_win ) {
          hb_retni(hb_gt_wvw_GetMouseY(wvw_win));
@@ -213,8 +213,8 @@ HB_FUNC( WVW_MOUSE_ROW )
 
 HB_FUNC( WVW_ADDTOOLTIPEX )  /* changed by MAG */
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
       int iStyle = TTS_ALWAYSTIP;
@@ -453,8 +453,8 @@ wvw_CreateFont(cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline,
 */
 HB_FUNC( WVW_CREATEFONT )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_top = hb_gt_wvw_win_top();
+   auto wvw = hb_gt_wvw();
+   auto wvw_top = hb_gt_wvw_win_top();
 
    if( wvw && wvw_top ) {
       LOGFONT lf{};
@@ -513,7 +513,7 @@ HB_FUNC( WVW_SELECTFONT )
 
       /* Create a logical font based on the user's selection and
          return a handle identifying that font. */
-      HFONT hfont = CreateFontIndirect(cf.lpLogFont);
+      auto hfont = CreateFontIndirect(cf.lpLogFont);
 
       hbwapi_arraySet_HANDLE(aMetr, 1, hfont);
       HB_ARRAYSETSTR(aMetr, 2, lf.lfFaceName);
@@ -531,7 +531,7 @@ HB_FUNC( WVW_SELECTFONT )
 
 HB_FUNC( WVW_SETBITMAPRESOURCEID )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iBitmapType = hb_parni(2);
@@ -637,7 +637,7 @@ wvw_SetMaxBMCache(50) :: allows up to 50 bitmap stored in the cache
 */
 HB_FUNC( WVW_SETMAXBMCACHE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retni(wvw->a.iMaxBMcache);
@@ -656,7 +656,7 @@ Returns current number of user-bitmap cache.
 */
 HB_FUNC( WVW_NUMBMCACHE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    hb_retni(wvw ? wvw->a.iBMcache : 0);
 }
@@ -677,8 +677,8 @@ returns .T. if successful
 /* 2004-06-02: WARNING: WVT is slightly different */
 HB_FUNC( WVW_SETTIMER )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw->a.pSymWVW_TIMER && wvw_win ) {
       SetTimer(wvw_win->hWnd, WVW_ID_BASE_TIMER + wvw_win->nWinId, hbwapi_par_UINT(2), nullptr);
@@ -696,8 +696,8 @@ returns .T. if successful
 */
 HB_FUNC( WVW_KILLTIMER )  /* 2004-06-02: WARNING: WVT is slightly different */
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw->a.pSymWVW_TIMER && wvw_win ) {
       KillTimer(wvw_win->hWnd, WVW_ID_BASE_TIMER + wvw_win->nWinId);
@@ -719,7 +719,7 @@ in these cases, no paint request is pending
 */
 HB_FUNC( WVW_GETPAINTRECT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    auto info = hb_itemArrayNew(4);
    RECT     rc{};
@@ -738,7 +738,7 @@ HB_FUNC( WVW_GETPAINTRECT )
 
 HB_FUNC( WVW_SETPOINTER )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       HCURSOR hCursor;
@@ -772,12 +772,12 @@ wvw_LoadPicture(nSlot, cFilePic)
 */
 HB_FUNC( WVW_LOADPICTURE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    int        iSlot    = hb_parni(1) - 1;
-   IPicture * pPicture = hb_gt_wvw_LoadPicture(hb_parcx(2));
+   auto pPicture = hb_gt_wvw_LoadPicture(hb_parcx(2));
 
-   bool fResult = false;
+   auto fResult = false;
 
    if( wvw && pPicture && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.pPicture)) ) {
       if( wvw->a.pPicture[iSlot] ) {
@@ -798,14 +798,13 @@ wvw_LoadFont(nSlotFont, cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline
 */
 HB_FUNC( WVW_LOADFONT )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_top = hb_gt_wvw_win_top();
+   auto wvw = hb_gt_wvw();
+   auto wvw_top = hb_gt_wvw_win_top();
 
    int iSlot = hb_parni(1) - 1;
 
    if( wvw && wvw_top && iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hUserFonts)) ) {
       LOGFONT lf;
-      HFONT   hFont;
 
       lf.lfEscapement     = hb_parnl(11) * 10;
       lf.lfOrientation    = 0;
@@ -828,7 +827,7 @@ HB_FUNC( WVW_LOADFONT )
          HB_STRNCPY(lf.lfFaceName, wvw_top->fontFace, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
       }
 
-      hFont = CreateFontIndirect(&lf);
+      auto hFont = CreateFontIndirect(&lf);
       if( hFont ) {
          if( wvw->a.hUserFonts[iSlot] ) {
             DeleteObject(wvw->a.hUserFonts[iSlot]);
@@ -849,7 +848,7 @@ wvw_LoadPen(nSlot, nStyle, nWidth, nRGBColor)
 */
 HB_FUNC( WVW_LOADPEN )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    int iSlot = hb_parni(1) - 1;
 
@@ -880,13 +879,13 @@ wvw_ChooseFont(cFontName, nHeight, nWidth, nWeight, nQuality, lItalic, lUnderlin
 */
 HB_FUNC( WVW_CHOOSEFONT )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_top = hb_gt_wvw_win_top();
+   auto wvw = hb_gt_wvw();
+   auto wvw_top = hb_gt_wvw_win_top();
 
    auto aRet = hb_itemArrayNew(8);
 
    LOGFONT lf{};
-   int     iPointSize = 0;
+   auto iPointSize = 0;
 
    if( wvw && wvw_top ) {
       CHOOSEFONT cf{};
@@ -957,7 +956,7 @@ NOTE: consider using 'standard' SetMouse() instead:
 */
 HB_FUNC( WVW_SETMOUSEPOS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       POINT xy;
@@ -994,9 +993,9 @@ none in GTWVT
 */
 HB_FUNC( WVW_FILLRECTANGLE )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
+   auto wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_win ) {
       auto iTop    = hb_parni(2);
@@ -1111,8 +1110,8 @@ original work by Pritpal Bedi in wvtutils.c
 */
 HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
+   auto wvw = hb_gt_wvw();
+   auto wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_zer ) {
       int iIndex;
@@ -1126,9 +1125,9 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
       if( iIndex < static_cast<int>(HB_SIZEOFARRAY(wvw->a.hDlgModeless)) ) {
          auto pFirst = hb_param(3, Harbour::Item::ANY);
-         PHB_ITEM pFunc     = nullptr;
-         HWND     hDlg      = nullptr;
-         int      iType     = 0;
+         PHB_ITEM pFunc = nullptr;
+         HWND hDlg = nullptr;
+         auto iType = 0;
          auto iResource = hb_parni(4);
 
          if( HB_IS_EVALITEM(pFirst) ) {
@@ -1191,8 +1190,8 @@ HB_FUNC( WVW_CREATEDIALOGDYNAMIC )
 
 HB_FUNC( WVW_CREATEDIALOGMODAL )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_zer = hb_gt_wvw_win(0);
+   auto wvw = hb_gt_wvw();
+   auto wvw_zer = hb_gt_wvw_win(0);
 
    if( wvw && wvw_zer ) {
       int iIndex;
@@ -1253,7 +1252,7 @@ TODO: reconsider, is it really needed? is it better to be handled by application
 */
 HB_FUNC( WVW_SAVESCREEN )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iTop    = hb_parni(2);
@@ -1301,7 +1300,7 @@ TODO: reconsider, is it really needed? is it better to be handled by application
 */
 HB_FUNC( WVW_RESTSCREEN )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iTop    = hb_parni(2);
@@ -1312,7 +1311,7 @@ HB_FUNC( WVW_RESTSCREEN )
       POINT xy;
       int   iWidth, iHeight;
 
-      bool fResult = false;
+      auto fResult = false;
 
       hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
@@ -1354,9 +1353,9 @@ HB_FUNC( WVW_RESTSCREEN )
 
 HB_FUNC( WVW_SETFONT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
-   bool fResult = false;
+   auto fResult = false;
 
    if( wvw_win ) {
       void *  hFontFace = nullptr;
@@ -1366,7 +1365,7 @@ HB_FUNC( WVW_SETFONT )
       auto Bold = hb_parnidef(5, wvw_win->fontWeight);
       auto Quality = hb_parnidef(6, wvw_win->fontQuality);
 
-      HFONT hFont = hb_gt_wvw_GetFont(fontFace, height, width, Bold, Quality, wvw_win->CodePage);
+      auto hFont = hb_gt_wvw_GetFont(fontFace, height, width, Bold, Quality, wvw_win->CodePage);
 
       /* make sure the font could actually be created */
       if( hFont ) {
@@ -1415,7 +1414,7 @@ HB_FUNC( WVW_SETFONT )
 
 HB_FUNC( WVW_SETICON )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       void * hName;
@@ -1434,16 +1433,16 @@ HB_FUNC( WVW_SETICON )
 
 HB_FUNC( WVW_GETWINDOWHANDLE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    hbwapi_ret_raw_HANDLE(wvw_win ? wvw_win->hWnd : nullptr);
 }
 
 HB_FUNC( WVW_GETCTRLHANDLE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
-   int iStyle = 0;
+   auto iStyle = 0;
 
    hbwapi_ret_raw_HWND(hb_gt_wvw_FindControlHandle(wvw_win, hb_parni(2), hb_parni(3), &iStyle));
 
@@ -1452,7 +1451,7 @@ HB_FUNC( WVW_GETCTRLHANDLE )
 
 HB_FUNC( WVW_SETCODEPAGE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retni(hb_gt_wvw_SetCodePage(wvw_win, hb_parni(2)));
@@ -1466,7 +1465,7 @@ wvw_CenterWindow(nWinNum, lCenter, lPaint)  (nWinNum==0==MAIN)
 */
 HB_FUNC( WVW_CENTERWINDOW )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retl(wvw_win->CentreWindow);
@@ -1485,7 +1484,7 @@ HB_FUNC( WVW_CENTERWINDOW )
 
 HB_FUNC( WVW_SETMOUSEMOVE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retl(wvw_win->MouseMove);
@@ -1500,7 +1499,7 @@ HB_FUNC( WVW_SETMOUSEMOVE )
 
 HB_FUNC( WVW_GETXYFROMROWCOL )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    auto aRet = hb_itemArrayNew(2);
    POINT    xy{};
@@ -1521,7 +1520,7 @@ return an array {nRow, nCol}
 */
 HB_FUNC( WVW_GETROWCOLFROMXY )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    auto aRet = hb_itemArrayNew(2);
    POINT    xy{};
@@ -1538,7 +1537,7 @@ HB_FUNC( WVW_GETROWCOLFROMXY )
 
 HB_FUNC( WVW_GETFONTINFO )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    auto aRet = hb_itemArrayNew(7);
 
@@ -1572,8 +1571,8 @@ see also: wvw_Restore(), wvw_MaxMaxRow(), wvw_MaxMaxCol()
 */
 HB_FUNC( WVW_MAXIMIZE )
 {
-   PWVW_GLO wvw     = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
       if( wvw->a.pSymWVW_SIZE ) {
@@ -1595,7 +1594,7 @@ see also: wvw_Maximize(), wvw_MaxMaxRow(), wvw_MaxMaxCol()
 */
 HB_FUNC( WVW_RESTORE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       ShowWindow(wvw_win->hWnd, SW_RESTORE);

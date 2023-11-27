@@ -82,8 +82,8 @@ Initial ProgressPos is 0
 */
 HB_FUNC( WVW_PGCREATE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
       auto iTop    = hb_parni(2);
@@ -180,11 +180,11 @@ This function has no return value.
 */
 HB_FUNC( WVW_PGDESTROY )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto nCtrlId = hb_parni(2);
-      PWVW_CTL wvw_ctl = wvw_win->ctlList;
+      auto wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl ) {
@@ -224,7 +224,7 @@ returns .T. if operation considered successful
 */
 HB_FUNC( WVW_PGSETRANGE )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
    auto iMin = hb_parni(3);
    auto iMax = hb_parni(4);
 
@@ -246,7 +246,7 @@ returns .T. if operation considered successful
 */
 HB_FUNC( WVW_PGSETPOS )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
    if( hWnd ) {
       auto iPos = hb_parni(3);
@@ -271,7 +271,7 @@ returns 0 if operation failed
 */
 HB_FUNC( WVW_PGGETPOS )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
    if( hWnd ) {
       hb_retni(static_cast<int>(SendMessage(hWnd, PBM_GETPOS, 0, 0)));

@@ -60,7 +60,7 @@ wvw_SetToolTopActive([nWinNum], [lToggle])
 HB_FUNC( WVW_SETTOOLTIPACTIVE )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retl(wvw_win->fToolTipActive);
@@ -85,7 +85,7 @@ wvw_SetToolTip([nWinNum], nTop, nLeft, nBottom, nRight, cToolText)
 HB_FUNC( WVW_SETTOOLTIP )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win && wvw_win->fToolTipActive ) {
       auto iTop    = hb_parni(2);
@@ -130,7 +130,7 @@ HB_FUNC( WVW_SETTOOLTIP )
 HB_FUNC( WVW_SETTOOLTIPTEXT )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       TOOLINFO ti;
@@ -151,7 +151,7 @@ HB_FUNC( WVW_SETTOOLTIPTEXT )
 HB_FUNC( WVW_SETTOOLTIPMARGIN )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       RECT rc;
@@ -168,7 +168,7 @@ HB_FUNC( WVW_SETTOOLTIPMARGIN )
 HB_FUNC( WVW_SETTOOLTIPWIDTH )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retni(static_cast<int>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
@@ -186,7 +186,7 @@ HB_FUNC( WVW_SETTOOLTIPWIDTH )
 HB_FUNC( WVW_SETTOOLTIPBKCOLOR )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPBKCOLOR, 0, 0));
@@ -204,7 +204,7 @@ HB_FUNC( WVW_SETTOOLTIPBKCOLOR )
 HB_FUNC( WVW_SETTOOLTIPTEXTCOLOR )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0));
@@ -222,7 +222,7 @@ HB_FUNC( WVW_SETTOOLTIPTEXTCOLOR )
 HB_FUNC( WVW_SETTOOLTIPTITLE )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win && HB_ISCHAR(3) ) {
       void * hText;
@@ -241,7 +241,7 @@ HB_FUNC( WVW_SETTOOLTIPTITLE )
 HB_FUNC( WVW_GETTOOLTIPWIDTH )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retni(static_cast<int>(SendMessage(wvw_win->hWndTT, TTM_GETMAXTIPWIDTH, 0, 0)));
@@ -254,7 +254,7 @@ HB_FUNC( WVW_GETTOOLTIPWIDTH )
 HB_FUNC( WVW_GETTOOLTIPBKCOLOR )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPBKCOLOR, 0, 0));
@@ -267,7 +267,7 @@ HB_FUNC( WVW_GETTOOLTIPBKCOLOR )
 HB_FUNC( WVW_GETTOOLTIPTEXTCOLOR )
 {
 #if _WIN32_IE > 0x400
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hbwapi_ret_COLORREF(SendMessage(wvw_win->hWndTT, TTM_GETTIPTEXTCOLOR, 0, 0));

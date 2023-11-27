@@ -88,7 +88,7 @@ returns 0 if failed
 */
 HB_FUNC( WVW_CXCREATE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    HWND hWnd = nullptr;
 
@@ -129,11 +129,11 @@ destroy checkbox nCXid for window nWinNum
 */
 HB_FUNC( WVW_CXDESTROY )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto nCtrlId = hb_parni(2);
-      PWVW_CTL wvw_ctl = wvw_win->ctlList;
+      auto wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl ) {
@@ -168,7 +168,7 @@ set the focus to checkbox nButtonId in window nWinNum
 */
 HB_FUNC( WVW_CXSETFOCUS )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
    hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
@@ -181,8 +181,8 @@ return previous state of the checkbox (.T.: enabled .F.: disabled)
 */
 HB_FUNC( WVW_CXENABLE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   HWND hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
+   auto wvw_win = hb_gt_wvw_win_par();
+   auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
 
    if( hWnd ) {
       bool fEnable = hb_parldef(3, true);
@@ -204,10 +204,10 @@ return .T. if successful
 */
 HB_FUNC( WVW_CXSETCODEBLOCK )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
-      PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+      auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
       auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
       bool fOldSetting = wvw->fRecurseCBlock;
 
@@ -242,7 +242,7 @@ this function always returns .T.
 */
 HB_FUNC( WVW_CXSETCHECK )
 {
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl && wvw_ctl->hWnd ) {
       SendMessage(wvw_ctl->hWnd, BM_SETCHECK, static_cast<WPARAM>(hb_parnidef(3, BST_CHECKED)), 0);
@@ -260,7 +260,7 @@ returns check-state of checkbox nCXid
 */
 HB_FUNC( WVW_CXGETCHECK )
 {
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
 
    if( wvw_ctl && wvw_ctl->hWnd ) {
       hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, BM_GETCHECK, 0, 0)));
@@ -274,8 +274,8 @@ wvw_cxSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, lItalic,
 */
 HB_FUNC( WVW_CXSETFONT )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
       wvw->lfCX.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
@@ -297,10 +297,10 @@ HB_FUNC( WVW_CXSETFONT )
 
       if( wvw_win->hCXfont ) {
          HFONT hOldFont = wvw_win->hCXfont;
-         HFONT hFont = CreateFontIndirect(&wvw->lfCX);
+         auto hFont = CreateFontIndirect(&wvw->lfCX);
          if( hFont ) {
 #if 0
-            PWVW_CTL wvw_ctl = wvw_win->ctlList;
+            auto wvw_ctl = wvw_win->ctlList;
 
             while( wvw_ctl ) {
                if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && static_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont ) {
@@ -324,8 +324,8 @@ HB_FUNC( WVW_CXSETFONT )
 
 HB_FUNC( WVW_CXSTATUSFONT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
-   PWVW_CTL wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+   auto wvw_win = hb_gt_wvw_win_par();
+   auto wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
 
    if( wvw_ctl && wvw_ctl->hWnd ) {
       SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>((hb_parldef(3, true) /* fFocus */ ? wvw_win->hCXfont : wvw_win->hPBfont)), static_cast<LPARAM>(TRUE));
@@ -336,6 +336,6 @@ HB_FUNC( WVW_CXSTATUSFONT )
 
 HB_FUNC( WVW_CXVISIBLE )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
    hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

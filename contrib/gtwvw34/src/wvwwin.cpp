@@ -92,7 +92,7 @@ returns 0 if failed
 */
 HB_FUNC( WVW_NOPENWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       LPCTSTR szWinName;
@@ -105,7 +105,7 @@ HB_FUNC( WVW_NOPENWINDOW )
       HWND hWndParent;
 
       auto dwStyle = static_cast<DWORD>(hb_parnldef(6, WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN));
-      int       iParentWin = hb_gt_wvw_nWin_N(7);
+      auto iParentWin = hb_gt_wvw_nWin_N(7);
 
       if( wvw->iNumWindows <= 0 ) {
          hb_retni(0);
@@ -164,7 +164,7 @@ HB_FUNC( WVW_NOPENWINDOW )
       hb_strfree(hWinName);
 
       if( nWin > 0 ) {
-         PWVW_WIN wvw_win = hb_gt_wvw_win(nWin);
+         auto wvw_win = hb_gt_wvw_win(nWin);
 
          RECT wi{}, rcWorkArea{};
 
@@ -203,11 +203,9 @@ returns .T. if successful
 */
 HB_FUNC( WVW_LCLOSEWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
-      PWVW_WIN wvw_top;
-
       if( wvw->iNumWindows <= 1 ) {
          hb_errRT_TERM(EG_BOUND, 10005, "No more window to close", HB_ERR_FUNCNAME, 0, 0);
          hb_retl(false);
@@ -216,7 +214,7 @@ HB_FUNC( WVW_LCLOSEWINDOW )
 
       hb_gt_wvw_CloseWindow();
 
-      wvw_top = hb_gt_wvw_win_top();
+      auto wvw_top = hb_gt_wvw_win_top();
 
       if( wvw_top ) {
          if( !hb_gt_wvw_GetMainCoordMode() ) {
@@ -238,7 +236,7 @@ HB_FUNC( WVW_LCLOSEWINDOW )
 
 HB_FUNC( WVW_GET_HND_WINDOW )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    hbwapi_ret_raw_HANDLE(wvw_win ? wvw_win->hWnd : nullptr);
 }
@@ -249,7 +247,7 @@ returns number of windows opened (including main window)
 */
 HB_FUNC( WVW_NNUMWINDOWS )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    hb_retni(wvw ? wvw->iNumWindows : 0);
 }
@@ -266,7 +264,7 @@ else
 */
 HB_FUNC( WVW_XREPOSWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       bool fAnchored = hb_parldef(1, true);
@@ -276,7 +274,7 @@ HB_FUNC( WVW_XREPOSWINDOW )
 
       /* reposition all subwindows */
       for( auto i = 1; i < wvw->iNumWindows; i++ ) {
-         PWVW_WIN wvw_win = hb_gt_wvw_win(i);
+         auto wvw_win = hb_gt_wvw_win(i);
 
          if( wvw_win ) {
             if( fAnchored ) {
@@ -300,7 +298,7 @@ notes: makes sense only if !wvw->fMainCoordMode
 */
 HB_FUNC( WVW_NSETCURWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retni(wvw->iCurWindow);
@@ -326,7 +324,7 @@ nWinNum defaults to current window
 */
 HB_FUNC( WVW_NROWOFS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    hb_retni(wvw_win ? hb_gt_wvw_RowOfs(wvw_win) : 0);
 }
@@ -338,7 +336,7 @@ nWinNum defaults to topmost window
 */
 HB_FUNC( WVW_NCOLOFS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    hb_retni(wvw_win ? hb_gt_wvw_ColOfs(wvw_win) : 0);
 }
@@ -349,7 +347,7 @@ returns maximum possible MaxRow() in current screen setting for font used by win
 */
 HB_FUNC( WVW_MAXMAXROW )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       int iMaxRows;
@@ -369,7 +367,7 @@ returns maximum possible MaxCol() in current screen setting for font used by win
 */
 HB_FUNC( WVW_MAXMAXCOL )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       int iMaxCols;
@@ -391,7 +389,7 @@ and on the right of MaxCol() to nRightPixels
 */
 HB_FUNC( WVW_UNREACHEDBR )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    int iCols, iRows;
 
@@ -418,7 +416,7 @@ then assigns wvw->fMainCoordMode := lMainCoord (if supplied)
 */
 HB_FUNC( WVW_SETMAINCOORD )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(hb_gt_wvw_GetMainCoordMode());
@@ -449,7 +447,7 @@ NOTES: nPaintRefresh must be >= 50
 */
 HB_FUNC( WVW_SETPAINTREFRESH )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retni(wvw->iPaintRefresh);
@@ -458,9 +456,8 @@ HB_FUNC( WVW_SETPAINTREFRESH )
          wvw->iPaintRefresh = hb_parni(1);
 
          if( wvw->a.pSymWVW_PAINT ) {
-            int i;
-            for( i = 0; i < wvw->iNumWindows; i++ ) {
-               PWVW_WIN wvw_win = hb_gt_wvw_win(i);
+            for( auto i = 0; i < wvw->iNumWindows; i++ ) {
+               auto wvw_win = hb_gt_wvw_win(i);
 
                if( wvw_win ) {
                   if( wvw->iPaintRefresh > 0 ) {
@@ -486,13 +483,13 @@ return old setting of wvw->fVertCaret
 */
 HB_FUNC( WVW_SETVERTCARET )  /* TODO: do you want to make it window selective? */
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->fVertCaret);
 
       if( HB_ISLOG(1) ) {
-         PWVW_WIN wvw_win = hb_gt_wvw_win_top();
+         auto wvw_win = hb_gt_wvw_win_top();
 
          wvw->fVertCaret = hb_parl(1);
 
@@ -516,7 +513,7 @@ NOTES:
 */
 HB_FUNC( WVW_SETDEFCENTREWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->fDevCentreWindow);
@@ -538,7 +535,7 @@ NOTES:
 */
 HB_FUNC( WVW_SETDEFHCENTREWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->fDevHCentreWindow);
@@ -560,7 +557,7 @@ NOTES:
 */
 HB_FUNC( WVW_SETDEFVCENTREWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->fDevVCentreWindow);
@@ -585,7 +582,7 @@ NOTES:
 */
 HB_FUNC( WVW_SETDEFLINESPACING )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retni(wvw->iDefLineSpacing);
@@ -611,7 +608,7 @@ NOTES:
 */
 HB_FUNC( WVW_SETDEFLSPACECOLOR )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retni(wvw->iDefLSpaceColor);
@@ -637,7 +634,7 @@ NOTES:
 */
 HB_FUNC( WVW_SETLSPACECOLOR )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       int iOldValue = wvw_win->iLSpaceColor;
@@ -672,7 +669,7 @@ IMPORTANT NOTE: KILLFOCUS event will always be executed in all condition
 */
 HB_FUNC( WVW_ALLOWNONTOPEVENT )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->fAllowNonTop);
@@ -700,7 +697,7 @@ NOTE: if you are using wvw->fRecurseCBlock == .T. make sure your
 */
 HB_FUNC( WVW_RECURSECBLOCK )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->fRecurseCBlock);
@@ -722,7 +719,7 @@ return old setting of s_bNOSTARTUPWINDOW
 */
 HB_FUNC( WVW_NOSTARTUPSUBWINDOW )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->fNOSTARTUPSUBWINDOW);
@@ -742,7 +739,7 @@ wvw_SetWindowCentre(nWinNum,   (0==MAIN)
 */
 HB_FUNC( WVW_SETWINDOWCENTRE )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_gt_wvw_SetCentreWindow(wvw_win, hb_parl(2), hb_parl(3));
@@ -756,7 +753,7 @@ returns old setting of EnableShortCuts
 */
 HB_FUNC( WVW_ENABLESHORTCUTS )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       hb_retl(wvw_win->EnableShortCuts);
@@ -769,7 +766,7 @@ HB_FUNC( WVW_ENABLESHORTCUTS )
 
 HB_FUNC( WVW_SETALTF4CLOSE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw ) {
       hb_retl(wvw->a.AltF4Close);
@@ -789,7 +786,7 @@ HB_FUNC( WVW_PROCESSMESSAGES )
 
 HB_FUNC( WVW_INVALIDATERECT )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto iTop    = hb_parni(2);
@@ -815,7 +812,7 @@ HB_FUNC( WVW_INVALIDATERECT )
 
 HB_FUNC( WVW_CLIENTTOSCREEN )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    auto aXY = hb_itemArrayNew(2);
    POINT    xy{};

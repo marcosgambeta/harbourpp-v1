@@ -52,7 +52,7 @@
 static LRESULT CALLBACK hb_gt_wvw_XBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
    HWND hWndParent = GetParent(hWnd);
-   PWVW_GLO wvw = hb_gt_wvw();
+   auto wvw = hb_gt_wvw();
 
    if( wvw == nullptr || hWndParent == nullptr ) {
       return DefWindowProc(hWnd, message, wParam, lParam);
@@ -166,8 +166,8 @@ Initial ScrollPos is 0
 */
 HB_FUNC( WVW_XBCREATE )
 {
-   PWVW_GLO wvw = hb_gt_wvw();
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw = hb_gt_wvw();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw && wvw_win ) {
       auto iTop  = hb_parni(3);
@@ -275,11 +275,11 @@ destroy scrollbar nXBid for window nWinNum
 */
 HB_FUNC( WVW_XBDESTROY )
 {
-   PWVW_WIN wvw_win = hb_gt_wvw_win_par();
+   auto wvw_win = hb_gt_wvw_win_par();
 
    if( wvw_win ) {
       auto nCtrlId = hb_parni(2);
-      PWVW_CTL wvw_ctl = wvw_win->ctlList;
+      auto wvw_ctl = wvw_win->ctlList;
       PWVW_CTL wvw_ctlPrev = nullptr;
 
       while( wvw_ctl ) {
@@ -319,7 +319,7 @@ returns -1 if update failed.
 */
 HB_FUNC( WVW_XBUPDATE )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
 
    if( hWnd ) {
       UINT fMask = SIF_DISABLENOSCROLL;
@@ -355,7 +355,7 @@ return an empty array {} if invalid parameter passed.
 */
 HB_FUNC( WVW_XBINFO )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
 
    if( hWnd ) {
       SCROLLINFO si{};
@@ -388,7 +388,7 @@ returns .T. if successful
 */
 HB_FUNC( WVW_XBENABLE )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
    UINT uiFlags = hbwapi_par_UINT(3);
    hb_retl(hWnd && uiFlags <= ESB_DISABLE_BOTH && EnableScrollBar(hWnd, SB_CTL, uiFlags));
 }
@@ -403,6 +403,6 @@ returns .T. if successful
 */
 HB_FUNC( WVW_XBVISIBLE )
 {
-   HWND hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
    hb_retl(hWnd && ShowScrollBar(hWnd, SB_CTL, static_cast<BOOL>(hb_parldef(3, true))));
 }
