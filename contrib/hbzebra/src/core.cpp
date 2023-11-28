@@ -76,12 +76,12 @@ unsigned char * hb_bitbuffer_buffer( PHB_BITBUFFER pBitBuffer )
    return pBitBuffer->pBuffer;
 }
 
-HB_BOOL hb_bitbuffer_get( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos )
+bool hb_bitbuffer_get( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos )
 {
    return nPos > pBitBuffer->nLen ? false : ((pBitBuffer->pBuffer[nPos >> 3] >> (nPos & 7)) & 1);
 }
 
-void hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, HB_BOOL fValue )
+void hb_bitbuffer_set( PHB_BITBUFFER pBitBuffer, HB_SIZE nPos, bool fValue )
 {
    if( pBitBuffer->nAlloc * 8 <= nPos )
    {

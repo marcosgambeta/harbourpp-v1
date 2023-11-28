@@ -74,7 +74,7 @@ static int _code11_charno( char ch )
    return -1;
 }
 
-static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLast )
+static void _code11_add( PHB_BITBUFFER pBits, char code, int iFlags, bool fLast )
 {
    int i;
 

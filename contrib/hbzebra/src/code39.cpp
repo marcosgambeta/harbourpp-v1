@@ -118,7 +118,7 @@ static int _code39_charno( char ch )
    return -1;
 }
 
-static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLast )
+static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, bool fLast )
 {
    int i, cnt = 0;
 

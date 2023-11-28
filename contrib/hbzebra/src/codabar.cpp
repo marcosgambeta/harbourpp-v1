@@ -87,7 +87,7 @@ static int _codabar_charno(char ch)
    return -1;
 }
 
-static void _codabar_add(PHB_BITBUFFER pBits, char code, int iFlags, HB_BOOL fLast)
+static void _codabar_add(PHB_BITBUFFER pBits, char code, int iFlags, bool fLast)
 {
    int i;
 

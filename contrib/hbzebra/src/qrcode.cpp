@@ -1067,13 +1067,13 @@ static void _qr_draw( PHB_BITBUFFER pBits, PHB_BITBUFFER pCWBits, int iVersion )
 static int _qr_penalty( PHB_BITBUFFER pBits, int iVersion )
 {
    int i, j, k, iPenalty = 0, iLen = _qr_versionlength(iVersion);
-   HB_BOOL bBit;
+   bool bBit;
 
    /* 1. Same color modules in row/column */
    for( i = 0; i < iLen; i++ )
    {
       /* Row */
-      HB_BOOL bBitLast = hb_bitbuffer_get(pBits, i * iLen);
+      bool bBitLast = hb_bitbuffer_get(pBits, i * iLen);
       k = 1;
       for( j = 1; j < iLen; j++ )
       {
