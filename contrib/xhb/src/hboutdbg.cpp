@@ -71,10 +71,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-static int  s_iDebugFd = 0;
+static auto s_iDebugFd = 0;
 static char s_szDebugName[128];
-static int  s_iUseDebugName = 0;
-static int  s_iXtermPid     = 0;
+static auto s_iUseDebugName = 0;
+static auto s_iXtermPid = 0;
 
 static void debugInit(void)
 {

@@ -59,12 +59,11 @@ static char * hb_fsReadLine(HB_FHANDLE hFileHandle, HB_ISIZ * plBuffLen, const c
 #endif
 
    HB_ISIZ nPosTerm = 0, nPos, nPosition;
-   int     nTries;
    HB_ISIZ nRead = 0, nOffset, nSize;
 
    *pbFound = HB_FALSE;
    *pbEOF   = HB_FALSE;
-   nTries   = 0;
+   auto nTries = 0;
    nOffset  = 0;
    nSize    = *plBuffLen;
 

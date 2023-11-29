@@ -77,7 +77,7 @@ static void hb_ParseLine(PHB_ITEM pReturn, const char * szText, int iDelimiter, 
       if( nLen > 0 ) {
          auto pTemp = hb_itemNew(nullptr);
          HB_ISIZ  i          = 0;
-         int      word_count = 0;
+         auto word_count = 0;
          /* booked enough memory */
          auto szResult = static_cast<char*>(hb_xgrab(nLen + 1));
 
@@ -216,7 +216,8 @@ static char ** hb_tokensplit(const char * string, HB_BYTE delimiter, int iCharCo
    char * bufptr;
    char ** token_list;
    char    last_char  = '\0';
-   int     word_count = 0, word_nbr;
+   auto word_count = 0;
+   int word_nbr;
 
    auto buffer = static_cast<char*>(hb_xgrab(iCharCount + 1));
 
@@ -263,7 +264,7 @@ static char ** hb_tokensplit(const char * string, HB_BYTE delimiter, int iCharCo
 
 static HB_BOOL file_read(FILE * stream, char * string, int * iCharCount)
 {
-   int cnbr = 0;
+   auto cnbr = 0;
 
    memset(string, ' ', MAX_READ);
 
@@ -293,7 +294,8 @@ HB_FUNC( FPARSE )
    FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
    auto pDelim = hb_param(2, Harbour::Item::STRING);
-   int      iToken, iCharCount = 0;
+   int      iToken;
+   auto iCharCount = 0;
    HB_BYTE  nByte;
 
    /* file parameter correctly passed */
@@ -329,7 +331,7 @@ HB_FUNC( FPARSE )
    /* read the file until EOF */
    while( file_read(inFile, string, &iCharCount) ) {
       /* parse the read line */
-      int iWord = 0;
+      auto iWord = 0;
 
       char ** tokens = hb_tokensplit(string, nByte, iCharCount, &iWord);
 
@@ -364,7 +366,7 @@ HB_FUNC( FPARSEEX )
    FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
    auto pDelim = hb_param(2, Harbour::Item::STRING);
-   int      iCharCount = 0;
+   auto iCharCount = 0;
    HB_BYTE  nByte;
 
    /* file parameter correctly passed */
@@ -400,7 +402,7 @@ HB_FUNC( FPARSEEX )
    /* read the file until EOF */
    while( file_read(inFile, string, &iCharCount) ) {
       /* parse the read line */
-      int iWord = 0;
+      auto iWord = 0;
       hb_arrayNew(pSubArray, 0);
 
       hb_ParseLine(pSubArray, string, nByte, &iWord);
@@ -422,7 +424,7 @@ HB_FUNC( FWORDCOUNT )
 {
    FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
-   int      iCharCount = 0;
+   auto iCharCount = 0;
    HB_BYTE  nByte      = ' ';
    HB_SIZE  nWordCount = 0;
 
@@ -451,7 +453,7 @@ HB_FUNC( FWORDCOUNT )
 
    /* read the file until EOF */
    while( file_read(inFile, string, &iCharCount) ) {
-      int iWord = 0;
+      auto iWord = 0;
 
       char ** tokens = hb_tokensplit(string, nByte, iCharCount, &iWord);
 
@@ -568,7 +570,7 @@ HB_FUNC( FPARSELINE )
 
    if( szText ) {
       auto szDelim = hb_parc(2);
-      int          iWords  = 0;
+      auto iWords = 0;
       hb_ParseLine(pArray, szText, szDelim ? static_cast<unsigned char>(*szDelim) : ',', &iWords);
       nWords = iWords;
    }

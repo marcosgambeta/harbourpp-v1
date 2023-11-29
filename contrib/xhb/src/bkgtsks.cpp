@@ -135,7 +135,7 @@ HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive)
       pBkgTask->ulTaskID = ++s_ulBackgroundID;
       if( pBkgTask->ulTaskID == 0 ) { /* the counter reach maximum value */
          /* find unique task ID and set the counter for next */
-         int iTask = 0;
+         auto iTask = 0;
          while( iTask < s_uiBackgroundMaxTask ) {
             if( s_pBackgroundTasks[iTask]->ulTaskID == pBkgTask->ulTaskID ) {
                pBkgTask->ulTaskID++;
@@ -246,14 +246,13 @@ void hb_backgroundShutDown(void)
 /* caller have to free return ITEM by hb_itemRelease() if it's not nullptr */
 PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID)
 {
-   int iTask;
    PHB_BACKGROUNDTASK pBkgTask;
    PHB_ITEM pItem   = nullptr;
    HB_BOOL  bOldSet = s_bEnabled;
 
    s_bEnabled = false;
 
-   iTask = 0;
+   auto iTask = 0;
    while( iTask < s_uiBackgroundMaxTask ) {
       pBkgTask = s_pBackgroundTasks[iTask];
 
@@ -284,10 +283,9 @@ PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID)
 /* Find a task */
 PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID)
 {
-   int iTask;
    PHB_BACKGROUNDTASK pBkgTask;
 
-   iTask = 0;
+   auto iTask = 0;
    while( iTask < s_uiBackgroundMaxTask ) {
       pBkgTask = s_pBackgroundTasks[iTask];
 
@@ -320,7 +318,7 @@ HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive)
 int hb_backgroundTime(HB_ULONG ulID, int nMillisec)
 {
    PHB_BACKGROUNDTASK pBkgTask;
-   int nOldState = 0;
+   auto nOldState = 0;
 
    pBkgTask = hb_backgroundFind(ulID);
 
@@ -408,7 +406,7 @@ HB_FUNC( HB_BACKGROUNDACTIVE )
 /* Set milliseconds after which a task will be executed */
 HB_FUNC( HB_BACKGROUNDTIME )
 {
-   int nOldMillisec = 0;
+   auto nOldMillisec = 0;
 
    if( s_pBackgroundTasks && HB_ISNUM(1) ) {
       /* TODO: access to pointers from harbour code */

@@ -77,7 +77,7 @@ static void s_signalHandlersInit(void);
 
 static PHB_ITEM sp_hooks       = nullptr;
 static HB_BOOL  bSignalEnabled = true;
-static int      sb_isService   = 0;
+static auto sb_isService = 0;
 
 /* There is a service mutex in multithreading */
 static HB_CRITICAL_NEW(s_ServiceMutex);
@@ -626,7 +626,7 @@ static void s_serviceSetDflSig(void)
 
 static int s_translateSignal(HB_UINT sig, HB_UINT subsig)
 {
-   int i = 0;
+   auto i = 0;
 
    while( s_sigTable[i].sig != 0 || s_sigTable[i].subsig != 0 || s_sigTable[i].translated != 0 ) {
       if( s_sigTable[i].sig == sig && ( s_sigTable[i].subsig == subsig || s_sigTable[i].subsig == 0 ) ) {

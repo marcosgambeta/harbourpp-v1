@@ -246,7 +246,7 @@ HB_FUNC_STATIC( ERRORINIT )
       char szProcName[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
       char szProcFile[HB_PATH_MAX];
       HB_USHORT uiProcLine;
-      int iLevel = 0;
+      auto iLevel = 0;
 
       /* start with 1 instead of 0 to skip this method */
       while( hb_procinfo(++iLevel, szProcName, &uiProcLine, szProcFile) ) {
