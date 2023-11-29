@@ -280,7 +280,7 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
    char szFileName[HB_PATH_MAX];
    hb_fsFNameMerge(szFileName, &FileName);
 
-   FILE * file = hb_fopen(szFileName, "w");
+   auto file = hb_fopen(szFileName, "w");
 
    if( !file ) {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);

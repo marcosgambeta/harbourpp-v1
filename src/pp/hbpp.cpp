@@ -257,9 +257,7 @@ static int hb_pp_preprocesfile(PHB_PP_STATE pState, const char * szRuleFile, con
    }
 
    if( szRuleFile ) {
-      FILE * foutr;
-
-      foutr = hb_fopen(szRuleFile, "w");
+      auto foutr = hb_fopen(szRuleFile, "w");
       if( !foutr ) {
          perror(szRuleFile);
          iResult = 1;
@@ -308,9 +306,8 @@ static char * hb_pp_escapeString(char * szString)
 static int hb_pp_generateVerInfo(char * szVerFile, HB_MAXINT nRevID, char * szChangeLogID, char * szLastEntry)
 {
    int iResult = 0;
-   FILE * fout;
 
-   fout = hb_fopen(szVerFile, "w");
+   auto fout = hb_fopen(szVerFile, "w");
    if( !fout ) {
       perror(szVerFile);
       iResult = 1;
@@ -408,7 +405,6 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char * pszFileName, i
 {
    char * pszFree = nullptr;
    int iResult = 0;
-   FILE * file_in;
 
    char szToCheck[HB_PATH_MAX];
    PHB_FNAME pFileName = hb_fsFNameSplit(pszFileName);
@@ -453,7 +449,7 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char * pszFileName, i
 
    hb_xfree(pFileName);
 
-   file_in = hb_fopen(pszFileName, "r");
+   auto file_in = hb_fopen(pszFileName, "r");
    if( !file_in ) {
       if( iQuiet < 2 ) {
          perror(pszFileName);

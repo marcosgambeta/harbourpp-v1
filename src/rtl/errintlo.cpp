@@ -79,7 +79,7 @@ void hb_errInternalRaw(HB_ERRCODE errCode, const char * szText, const char * szP
       szFile = "hb_out.log";
    }
 
-   FILE * hLog = hb_fopen(szFile, "a+");
+   auto hLog = hb_fopen(szFile, "a+");
    if( hLog ) {
       int iYear, iMonth, iDay;
       hb_dateToday(&iYear, &iMonth, &iDay);

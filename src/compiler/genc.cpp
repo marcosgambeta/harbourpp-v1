@@ -158,7 +158,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
    }
    hb_fsFNameMerge(szFileName, pFileName);
 
-   FILE * yyc = hb_fopen(szFileName, "w"); /* file handle for C++ output */
+   auto yyc = hb_fopen(szFileName, "w"); /* file handle for C++ output */
    if( !yyc ) {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
       return;

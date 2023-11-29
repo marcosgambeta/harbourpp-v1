@@ -184,7 +184,7 @@ static int hb_compReadClpFile(HB_COMP_DECL, const char * szClpFile)
       hb_xfree(pFileName);
    }
 
-   FILE * inFile = hb_fopen(szClpFile, "r");
+   auto inFile = hb_fopen(szClpFile, "r");
    char buffer[HB_PATH_MAX + 80];
    if( !inFile ) {
       /* TODO: Clipper compatible error */
@@ -3779,11 +3779,10 @@ static void hb_compGenIncluded(HB_COMP_DECL)
          }
       } else if( (HB_COMP_PARAM->iTraceInclude & 0xff) == 2 ) {
          char szFileName[HB_PATH_MAX];
-         FILE * file;
 
          FileName.szExtension = ".d";
          hb_fsFNameMerge(szFileName, &FileName);
-         file = hb_fopen(szFileName, "w");
+         auto file = hb_fopen(szFileName, "w");
          if( file ) {
             if( szDestFile[0] ) {
                fprintf(file, "%s:", szDestFile);

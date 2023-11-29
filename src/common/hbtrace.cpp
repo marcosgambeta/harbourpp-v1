@@ -130,7 +130,7 @@ const char * hb_tracemode(const char * szNewMode)
 HB_BOOL hb_tracefile(const char * szFile)
 {
    if( szFile && *szFile ) {
-      FILE * fp = hb_fopen(szFile, s_mode);
+      auto fp = hb_fopen(szFile, s_mode);
 
       if( fp ) {
          if( s_fp != nullptr && s_fp != stderr ) {
