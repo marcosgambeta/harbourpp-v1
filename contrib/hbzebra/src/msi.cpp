@@ -67,11 +67,10 @@ static char _msi_checksum( const char * szCode )
 
 PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
 {
-   PHB_ZEBRA  pZebra;
    int        i, j, iN, iW;
    auto iLen = static_cast<int>(nLen);
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_MSI;
 
    for( i = 0; i < iLen; i++ )

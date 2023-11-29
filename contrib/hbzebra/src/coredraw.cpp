@@ -133,7 +133,7 @@ int hb_zebra_draw_codeblock( PHB_ZEBRA pZebra, PHB_ITEM pDrawBlock, double dX, d
 
 HB_FUNC( HB_ZEBRA_DRAW )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param(1);
+   auto pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {

@@ -1335,12 +1335,11 @@ static void _qr_draw_version_format( PHB_BITBUFFER pBits, int iVersion, int iLev
 
 PHB_ZEBRA hb_zebra_create_qrcode( const char * szCode, HB_SIZE nLen, int iFlags )
 {
-   PHB_ZEBRA       pZebra;
    PHB_BITBUFFER   pData, pFinal;
    unsigned char * pECC;
    int             iVersion, iLevel, iMask;
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_QRCODE;
 
    if( nLen > 7089 )

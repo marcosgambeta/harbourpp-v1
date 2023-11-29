@@ -127,13 +127,12 @@ static char _upce_checksum( const char * szCode )
 
 PHB_ZEBRA hb_zebra_create_ean13(const char * szCode, HB_SIZE nLen, int iFlags)
 {
-   PHB_ZEBRA pZebra;
    int       i;
    auto iLen = static_cast<int>(nLen);
 
    HB_SYMBOL_UNUSED(iFlags);
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_EAN13;
 
    if( iLen != 12 && iLen != 13 )
@@ -201,13 +200,12 @@ PHB_ZEBRA hb_zebra_create_ean13(const char * szCode, HB_SIZE nLen, int iFlags)
 
 PHB_ZEBRA hb_zebra_create_ean8(const char * szCode, HB_SIZE nLen, int iFlags)
 {
-   PHB_ZEBRA  pZebra;
    int        i;
    auto iLen = static_cast<int>(nLen);
 
    HB_SYMBOL_UNUSED(iFlags);
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_EAN8;
 
    if( iLen != 7 && iLen != 8 )
@@ -267,13 +265,12 @@ PHB_ZEBRA hb_zebra_create_ean8(const char * szCode, HB_SIZE nLen, int iFlags)
 
 PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
 {
-   PHB_ZEBRA  pZebra;
    int        i;
    auto iLen = static_cast<int>(nLen);
 
    HB_SYMBOL_UNUSED(iFlags);
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_UPCA;
 
    if( iLen != 11 && iLen != 12 )
@@ -333,14 +330,13 @@ PHB_ZEBRA hb_zebra_create_upca( const char * szCode, HB_SIZE nLen, int iFlags )
 
 PHB_ZEBRA hb_zebra_create_upce( const char * szCode, HB_SIZE nLen, int iFlags )
 {
-   PHB_ZEBRA  pZebra;
    int        i;
    auto iLen = static_cast<int>(nLen);
    char       sumcode;
 
    HB_SYMBOL_UNUSED(iFlags);
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_UPCE;
 
    if( iLen != 6 && iLen != 7 )

@@ -168,12 +168,11 @@ static void _code39_add( PHB_BITBUFFER pBits, char code, int iFlags, bool fLast 
 
 PHB_ZEBRA hb_zebra_create_code39(const char * szCode, HB_SIZE nLen, int iFlags)
 {
-   PHB_ZEBRA  pZebra;
    int        i;
    auto iLen = static_cast<int>(nLen);
    int        csum;
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_CODE39;
 
    for( i = 0; i < iLen; i++ )

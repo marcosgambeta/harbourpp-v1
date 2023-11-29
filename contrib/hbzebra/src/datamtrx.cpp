@@ -423,12 +423,11 @@ static void _datamatrix_do_placement( PHB_BITBUFFER pBits, unsigned char * pCW, 
 
 PHB_ZEBRA hb_zebra_create_datamatrix( const char * szCode, HB_SIZE nLen, int iFlags )
 {
-   PHB_ZEBRA pZebra;
    const DATAMATRIX_SIZE * pSize;
    int        i, j, iDataCount, iErrorSize;
    auto iLen = static_cast<int>(nLen);
 
-   pZebra = hb_zebra_create();
+   auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_DATAMATRIX;
 
    if( iLen > 3116 )

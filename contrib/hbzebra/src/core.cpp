@@ -252,7 +252,7 @@ void hb_zebra_destroy( PHB_ZEBRA pZebra )
 
 HB_FUNC( HB_ZEBRA_DESTROY )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param(1);
+   auto pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {
@@ -263,7 +263,7 @@ HB_FUNC( HB_ZEBRA_DESTROY )
 
 HB_FUNC( HB_ZEBRA_GETERROR )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param(1);
+   auto pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {
@@ -273,7 +273,7 @@ HB_FUNC( HB_ZEBRA_GETERROR )
 
 HB_FUNC( HB_ZEBRA_GETCODE )
 {
-   PHB_ZEBRA pZebra = hb_zebra_param(1);
+   auto pZebra = hb_zebra_param(1);
 
    if( pZebra )
    {
