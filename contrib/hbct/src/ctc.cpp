@@ -61,12 +61,11 @@ HB_USHORT ct_error(HB_USHORT uiSeverity, HB_ERRCODE errGenCode, HB_ERRCODE errSu
 #endif
 
    HB_USHORT uiAction;
-   PHB_ITEM pError;
 
    PHB_ITEM pArray;
    va_list va;
 
-   pError = hb_errRT_New(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
+   auto pError = hb_errRT_New(uiSeverity, CT_SUBSYSTEM, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
 
    /* Build the array from the passed arguments. */
    if( ulArgCount == 0 ) {

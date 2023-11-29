@@ -181,7 +181,7 @@ static const HB_FILE_FUNCS * s_fileMethods(void);
 
 static void hb_errRT_NETIO(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode, const char * szDescription, const char * szOperation)
 {
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, "NETIO", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
+   auto pError = hb_errRT_New(ES_ERROR, "NETIO", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
    hb_errLaunch(pError);
    hb_itemRelease(pError);
 }

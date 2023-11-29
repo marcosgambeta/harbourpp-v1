@@ -67,9 +67,7 @@ static PHB_AX_GETCTRL s_pAtlAxGetControl = nullptr;
 
 static void hb_errRT_OLE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, HB_ERRCODE errOsCode, const char * szDescription, const char * szOperation)
 {
-   PHB_ITEM pError;
-
-   pError = hb_errRT_New(ES_ERROR, "WINOLE", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
+   auto pError = hb_errRT_New(ES_ERROR, "WINOLE", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
 
    if( hb_pcount() != 0 )
    {

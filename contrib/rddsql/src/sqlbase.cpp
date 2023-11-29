@@ -103,7 +103,7 @@ static HB_ERRCODE hb_errRT_SQLBASE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
    HB_ERRCODE iRet = Harbour::FAILURE;
 
    if( hb_vmRequestQuery() == 0 ) {
-      PHB_ITEM pError = hb_errRT_New(ES_ERROR, "SQLBASE", errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE);
+      auto pError = hb_errRT_New(ES_ERROR, "SQLBASE", errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE);
       iRet = hb_errLaunch(pError);
       hb_itemRelease(pError);
    }

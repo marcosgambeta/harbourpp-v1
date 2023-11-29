@@ -127,7 +127,7 @@ HB_CALL_ON_STARTUP_END(_hb_firebirddd_init_)
 /* --- */
 static HB_USHORT hb_errRT_FirebirdDD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation, HB_ERRCODE errOsCode)
 {
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, "SDDFB", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
+   auto pError = hb_errRT_New(ES_ERROR, "SDDFB", errGenCode, errSubCode, szDescription, szOperation, errOsCode, EF_NONE);
    HB_USHORT uiAction = hb_errLaunch(pError);
    hb_itemRelease(pError);
    return uiAction;
