@@ -336,7 +336,6 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaSymbol(%p)", static_cast<void*>(pSymAlias)));
 #endif
 
-   PHB_ITEM pError;
    const char * szName;
 
    auto iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
@@ -365,7 +364,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
     * (user created error handler can open a missing database)
     */
 
-   pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, pSymAlias->szName, 0, EF_CANRETRY);
+   auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, pSymAlias->szName, 0, EF_CANRETRY);
    HB_ERRCODE errCode = Harbour::FAILURE;
 
    do {
@@ -402,7 +401,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias(const char * szAlias)
        * generate an error with retry possibility
        * (user created error handler can open a missing database)
        */
-      PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, szAlias, 0, EF_CANRETRY);
+      auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, szAlias, 0, EF_CANRETRY);
 
       do {
          if( hb_errLaunch(pError) != E_RETRY ) {
@@ -493,9 +492,7 @@ HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
        * generate an error with retry possibility
        * (user created error handler can make this field accessible)
        */
-      PHB_ITEM pError;
-
-      pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
+      auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
       hb_itemClear(pItem);
 
       while( hb_errLaunch(pError) == E_RETRY ) {
@@ -527,7 +524,7 @@ HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
        * generate an error with retry possibility
        * (user created error handler can make this field accessible)
        */
-      PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
+      auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
 
       while( hb_errLaunch(pError) == E_RETRY ) {
          errCode = hb_rddFieldPut(pItem, pFieldSymbol);

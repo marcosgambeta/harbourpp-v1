@@ -87,7 +87,7 @@ static PHB_IOUSR s_ioUsrs[HB_FILE_TYPE_MAX];
 
 static void s_errRT_IOUSR(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription)
 {
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, "IOUSR", errGenCode, errSubCode, szDescription, HB_ERR_FUNCNAME, 0, EF_NONE);
+   auto pError = hb_errRT_New(ES_ERROR, "IOUSR", errGenCode, errSubCode, szDescription, HB_ERR_FUNCNAME, 0, EF_NONE);
    PHB_ITEM pArray = hb_arrayBaseParams();
    if( pArray ) {
       hb_errPutArgsArray(pError, pArray);

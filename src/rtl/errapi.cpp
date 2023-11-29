@@ -1063,7 +1063,7 @@ HB_USHORT hb_errRT_BASE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char
    /* I replaced EF_CANRETRY with EF_NONE for Clipper compatibility
     * If it's wrong and I missed something please fix me, Druzus.
     */
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE /* EF_CANRETRY */);
+   auto pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE /* EF_CANRETRY */);
 
    PHB_ITEM pArray;
 
@@ -1108,7 +1108,7 @@ HB_USHORT hb_errRT_BASE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char
 
 HB_USHORT hb_errRT_BASE_Ext1(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags, HB_ULONG ulArgCount, ...)
 {
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
+   auto pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
 
    PHB_ITEM pArray;
 
@@ -1237,7 +1237,7 @@ void hb_errRT_BASE_SubstR(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const ch
 
 HB_USHORT hb_errRT_TERM(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags)
 {
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_TERMINAL, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
+   auto pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_TERMINAL, errGenCode, errSubCode, szDescription, szOperation, errOsCode, uiFlags);
    HB_USHORT uiAction = hb_errLaunch(pError);
    hb_errRelease(pError);
    return uiAction;
@@ -1245,7 +1245,7 @@ HB_USHORT hb_errRT_TERM(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char
 
 HB_USHORT hb_errRT_DBCMD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation)
 {
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_DBCMD, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE);
+   auto pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_DBCMD, errGenCode, errSubCode, szDescription, szOperation, 0, EF_NONE);
    HB_USHORT uiAction = hb_errLaunch(pError);
    hb_errRelease(pError);
    return uiAction;
@@ -1253,7 +1253,7 @@ HB_USHORT hb_errRT_DBCMD(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const cha
 
 HB_USHORT hb_errRT_DBCMD_Ext(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char * szDescription, const char * szOperation, HB_USHORT uiFlags)
 {
-   PHB_ITEM pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_DBCMD, errGenCode, errSubCode, szDescription, szOperation, 0, uiFlags);
+   auto pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_DBCMD, errGenCode, errSubCode, szDescription, szOperation, 0, uiFlags);
    HB_USHORT uiAction = hb_errLaunch(pError);
    hb_itemRelease(pError);
    return uiAction;

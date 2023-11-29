@@ -6867,7 +6867,7 @@ static void hb_vmPushVariable(PHB_SYMB pVarSymb)
     */
    if( hb_rddFieldGet(pItem, pVarSymb) != Harbour::SUCCESS && hb_memvarGet(pItem, pVarSymb) != Harbour::SUCCESS ) {
 
-      PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pVarSymb->szName, 0, EF_CANRETRY);
+      auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pVarSymb->szName, 0, EF_CANRETRY);
       hb_itemClear(pItem);
 
       while( hb_errLaunch(pError) == E_RETRY ) {

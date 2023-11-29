@@ -54,7 +54,6 @@ static void s_pp_msg(void * cargo, int iErrorFmt, int iLine, const char * szModu
    /* ignore all warning messages and errors when break or quit request */
    if( cPrefix != 'W' && hb_vmRequestQuery() == 0 ) {
       char szMsgBuf[512], szLine[512];
-      PHB_ITEM pError;
 
       hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szText, szPar1, szPar2);
       if( !szModule || *szModule == 0 || strcmp(szModule, "{SOURCE}.prg") == 0 ) {
@@ -62,7 +61,7 @@ static void s_pp_msg(void * cargo, int iErrorFmt, int iLine, const char * szModu
       } else {
          hb_snprintf(szLine, sizeof(szLine), iErrorFmt == HB_ERRORFMT_CLIPPER ? "%s(%i)" : "%s:%i", szModule, iLine);
       }
-      pError = hb_errRT_New(ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>(iValue), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE);
+      auto pError = hb_errRT_New(ES_ERROR, "COMPILER", 1001, static_cast<HB_ERRCODE>(iValue), szMsgBuf, szLine, 0 /*OsCode*/, EF_NONE);
       hb_errLaunch(pError);
       hb_errRelease(pError);
    }

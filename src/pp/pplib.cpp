@@ -64,9 +64,8 @@ static void hb_pp_ErrorMessage(void * cargo, const char * const szMsgTable[], ch
    /* ignore all warning messages and errors when break or quit request */
    if( cPrefix != 'W' && hb_vmRequestQuery() == 0 ) {
       char szMsgBuf[1024];
-      PHB_ITEM pError;
       hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[iCode - 1], szParam1, szParam2);
-      pError = hb_errRT_New(ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>(iCode), szMsgBuf, nullptr, 0, EF_NONE | EF_CANDEFAULT);
+      auto pError = hb_errRT_New(ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>(iCode), szMsgBuf, nullptr, 0, EF_NONE | EF_CANDEFAULT);
       hb_errLaunch(pError);
       hb_errRelease(pError);
    }

@@ -404,7 +404,7 @@ void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
       /* Generate an error with retry possibility
        * (user created error handler can create this variable)
        */
-      PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
+      auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
       hb_itemClear(pItem);
 
       while( hb_errLaunch(pError) == E_RETRY ) {
@@ -444,7 +444,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
          /* Generate an error with retry possibility
           * (user created error handler can make this variable accessible)
           */
-         PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
+         auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
          hb_itemClear(pItem);
 
          while( hb_errLaunch(pError) == E_RETRY ) {
@@ -1164,7 +1164,7 @@ HB_FUNC( __MVGET )
          /* Generate an error with retry possibility
           * (user created error handler can create this variable)
           */
-         PHB_ITEM pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pName->item.asString.value, 0, EF_CANRETRY);
+         auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pName->item.asString.value, 0, EF_CANRETRY);
 
          while( hb_errLaunch(pError) == E_RETRY ) {
             pDynVar = hb_memvarFindSymbol(hb_itemGetCPtr(pName), hb_itemGetCLen(pName));
