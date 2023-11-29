@@ -804,7 +804,6 @@ HB_FUNC( MXMLLOADFILE )
    mxml_node_t * node;
    mxml_load_cb_t cb = MXML_NO_CALLBACK;
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
-   FILE * file;
 
    if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
    {
@@ -840,7 +839,7 @@ HB_FUNC( MXMLLOADFILE )
       }
    }
 
-   file = hb_fopen(hb_parc(2), "rb");
+   auto file = hb_fopen(hb_parc(2), "rb");
    if( file )
    {
       node = mxmlLoadFile(node_top, file, cb);
@@ -1218,7 +1217,6 @@ HB_FUNC( MXMLSAXLOADFILE )
    mxml_sax_cb_t cb_sax = MXML_NO_CALLBACK;
    PHB_ITEM pData = (hb_pcount() > 4) ? hb_param(5, Harbour::Item::ANY) : nullptr;
    auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
-   FILE * file;
 
    if( HB_ISNIL(1) || (HB_ISNUM(1) && hb_parni(1) == MXML_NO_PARENT) )
    {
@@ -1260,7 +1258,7 @@ HB_FUNC( MXMLSAXLOADFILE )
       cb_sax = sax_cb;
    }
 
-   file = hb_fopen(hb_parc(2), "rb");
+   auto file = hb_fopen(hb_parc(2), "rb");
    if( file )
    {
       node = mxmlSAXLoadFile(node_top, file, cb, cb_sax, pData);
@@ -1440,8 +1438,6 @@ HB_FUNC( MXMLSAVEFILE )
 
    if( node && HB_ISCHAR(2) )
    {
-      FILE * file;
-
       mxml_save_cb_t cb = MXML_NO_CALLBACK;
       auto pCbs = static_cast<HB_CBS_VAR *>(hb_stackGetTSD(&s_cbs_var));
 
@@ -1451,7 +1447,7 @@ HB_FUNC( MXMLSAVEFILE )
          cb = save_cb;
       }
 
-      file = hb_fopen(hb_parc(2), "wb");
+      auto file = hb_fopen(hb_parc(2), "wb");
       if( file )
       {
          hb_retni(mxmlSaveFile(node, file, cb));

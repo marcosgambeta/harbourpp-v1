@@ -291,7 +291,6 @@ static HB_BOOL file_read(FILE * stream, char * string, int * iCharCount)
 
 HB_FUNC( FPARSE )
 {
-   FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
    auto pDelim = hb_param(2, Harbour::Item::STRING);
    int      iToken;
@@ -310,7 +309,7 @@ HB_FUNC( FPARSE )
    }
 
    /* open file for read */
-   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
+   auto inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return empty array on failure */
    if( !inFile ) {
@@ -363,7 +362,6 @@ HB_FUNC( FPARSE )
 
 HB_FUNC( FPARSEEX )
 {
-   FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
    auto pDelim = hb_param(2, Harbour::Item::STRING);
    auto iCharCount = 0;
@@ -381,7 +379,7 @@ HB_FUNC( FPARSEEX )
    }
 
    /* open file for read */
-   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
+   auto inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return empty array on failure */
    if( !inFile ) {
@@ -422,7 +420,6 @@ HB_FUNC( FPARSEEX )
 
 HB_FUNC( FWORDCOUNT )
 {
-   FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
    auto iCharCount = 0;
    HB_BYTE  nByte      = ' ';
@@ -440,7 +437,7 @@ HB_FUNC( FWORDCOUNT )
    }
 
    /* open file for read */
-   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
+   auto inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return 0 on failure */
    if( !inFile ) {
@@ -475,7 +472,6 @@ HB_FUNC( FWORDCOUNT )
 
 HB_FUNC( FLINECOUNT )
 {
-   FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
    HB_SIZE  nLineCount = 0;
    int      ch;
@@ -492,7 +488,7 @@ HB_FUNC( FLINECOUNT )
    }
 
    /* open file for read */
-   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
+   auto inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return 0 on failure */
    if( !inFile ) {
@@ -516,7 +512,6 @@ HB_FUNC( FLINECOUNT )
 
 HB_FUNC( FCHARCOUNT )
 {
-   FILE *   inFile;
    auto pSrc = hb_param(1, Harbour::Item::STRING);
    HB_SIZE  nResult = 0;
    int      ch;
@@ -533,7 +528,7 @@ HB_FUNC( FCHARCOUNT )
    }
 
    /* open file for read */
-   inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
+   auto inFile = hb_fopen(hb_itemGetCPtr(pSrc), "r");
 
    /* return 0 on failure */
    if( !inFile ) {

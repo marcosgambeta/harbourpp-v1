@@ -1714,7 +1714,7 @@ HB_FUNC( SQLITE3_ENABLE_SHARED_CACHE )
 static void SQL3ProfileLog(void * sFile, const char * sProfileMsg, sqlite3_uint64 uint64)
 {
    if( sProfileMsg ) {
-      FILE * hFile = hb_fopen(sFile ? static_cast<const char*>(sFile) : "hbsq3_pr.log", "a");
+      auto hFile = hb_fopen(sFile ? static_cast<const char*>(sFile) : "hbsq3_pr.log", "a");
 
       if( hFile ) {
          fprintf(hFile, "%s - %" PFLL "u\n", sProfileMsg, uint64);
@@ -1728,7 +1728,7 @@ static void SQL3ProfileLog(void * sFile, const char * sProfileMsg, sqlite3_uint6
 static void SQL3TraceLog(void * sFile, const char * sTraceMsg)
 {
    if( sTraceMsg ) {
-      FILE * hFile = hb_fopen(sFile ? static_cast<const char*>(sFile) : "hbsq3_tr.log", "a");
+      auto hFile = hb_fopen(sFile ? static_cast<const char*>(sFile) : "hbsq3_tr.log", "a");
 
       if( hFile ) {
          fprintf(hFile, "%s\n", sTraceMsg);
