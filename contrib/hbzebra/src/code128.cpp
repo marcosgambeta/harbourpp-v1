@@ -170,29 +170,18 @@ static const unsigned short s_code[] = {
 
 static int _code128_charno( char ch, int iCodeSet )
 {
-   if( iCodeSet == CODESET_A )
-   {
-      if( ch >= ' ' && ch <= '_' )
-      {
+   if( iCodeSet == CODESET_A ) {
+      if( ch >= ' ' && ch <= '_' ) {
          return ch - ' ';
-      }
-      else if( static_cast<unsigned char>(ch) <= 31 )
-      {
+      } else if( static_cast<unsigned char>(ch) <= 31 ) {
          return ch + 64;
-      }
-      else
-      {
+      } else {
          return -1;
       }
-   }
-   else if( iCodeSet == CODESET_B )
-   {
-      if( ch >= ' ' && static_cast<unsigned char>(ch) <= 127 )
-      {
+   } else if( iCodeSet == CODESET_B ) {
+      if( ch >= ' ' && static_cast<unsigned char>(ch) <= 127 ) {
          return ch - ' ';
-      }
-      else
-      {
+      } else {
          return -1;
       }
    }
@@ -210,15 +199,12 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
    pZebra->iType = HB_ZEBRA_TYPE_CODE128;
 
    j = 0;
-   for( i = 0; i < iLen; i++ )
-   {
-      if( static_cast<unsigned char>(szCode[i]) >= 128 )
-      {
+   for( i = 0; i < iLen; i++ ) {
+      if( static_cast<unsigned char>(szCode[i]) >= 128 ) {
          pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
          return pZebra;
       }
-      if( szCode[i] >= ' ' && szCode[i] <= 126 )
-      {
+      if( szCode[i] >= ' ' && szCode[i] <= 126 ) {
          j++;
       }
    }
@@ -226,10 +212,8 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
    /* make print string */
    pZebra->szCode = static_cast<char*>(hb_xgrab(j + 1));
    j = 0;
-   for( i = 0; i < iLen; i++ )
-   {
-      if( szCode[i] >= 32 && szCode[i] <= 126 )
-      {
+   for( i = 0; i < iLen; i++ ) {
+      if( szCode[i] >= 32 && szCode[i] <= 126 ) {
          pZebra->szCode[j++] = szCode[i];
       }
    }
@@ -240,23 +224,18 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
    iCodeSet = CODESET_B; /* to pacify MSVC warning only. It will be assigned later */
    iCodeLen = 0;
    /* determine the first optimal codeset */
-   for( i = 0; i < iLen; i++ )
-   {
-      if( _code128_charno( szCode[i], CODESET_A ) == -1 )
-      {
+   for( i = 0; i < iLen; i++ ) {
+      if( _code128_charno( szCode[i], CODESET_A ) == -1 ) {
          iCodeSet = CODESET_B;
          pCode[iCodeLen++] = START_B;
          break;
-      }
-      else if( _code128_charno( szCode[i], CODESET_B ) == -1 )
-      {
+      } else if( _code128_charno( szCode[i], CODESET_B ) == -1 ) {
          iCodeSet = CODESET_A;
          pCode[iCodeLen++] = START_A;
          break;
       }
    }
-   if( iCodeLen == 0 )
-   {
+   if( iCodeLen == 0 ) {
       iCodeSet = CODESET_B;
       pCode[iCodeLen++] = START_B;
    }
@@ -264,32 +243,22 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
    /* encode source data */
    /* Warning: digit optimizer works in optimal way with this encoder code. Be careful
       if you'll change encoder code, digit optimizer can require adjustment also [Mindaugas] */
-   for( i = 0; i < iLen; i++ )
-   {
+   for( i = 0; i < iLen; i++ ) {
       int iCode = _code128_charno(szCode[i], iCodeSet);
 
-      if( iCode != -1 )
-      {
+      if( iCode != -1 ) {
          pCode[iCodeLen++] = iCode;
-      }
-      else
-      {
+      } else {
          /* We should generate codeset switch instead of shift for the last character.
             This will help digit optimizer to do its job [Mindaugas] */
-         if( i + 1 < iLen && _code128_charno( szCode[i + 1], iCodeSet == CODESET_A ? CODESET_B : CODESET_A ) == -1 )
-         {
+         if( i + 1 < iLen && _code128_charno( szCode[i + 1], iCodeSet == CODESET_A ? CODESET_B : CODESET_A ) == -1 ) {
             pCode[iCodeLen++] = SHIFT_AB;
             pCode[iCodeLen++] = _code128_charno(szCode[i], iCodeSet == CODESET_A ? CODESET_B : CODESET_A);
-         }
-         else
-         {
-            if( iCodeSet == CODESET_A )
-            {
+         } else {
+            if( iCodeSet == CODESET_A ) {
                iCodeSet = CODESET_B;
                pCode[iCodeLen++] = SELECT_B;
-            }
-            else
-            {
+            } else {
                iCodeSet = CODESET_A;
                pCode[iCodeLen++] = SELECT_A;
             }
@@ -300,59 +269,44 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
 
    /* optimize digits */
    iCodeSet = pCode[0] == START_A ? CODESET_A : CODESET_B;
-   for( i = 1; i < iCodeLen; i++ )
-   {
-      if( iCodeSet == CODESET_A && pCode[i] == SELECT_B )
-      {
+   for( i = 1; i < iCodeLen; i++ ) {
+      if( iCodeSet == CODESET_A && pCode[i] == SELECT_B ) {
          iCodeSet = CODESET_B;
-      }
-      else if( iCodeSet == CODESET_B && pCode[i] == SELECT_A )
-      {
+      } else if( iCodeSet == CODESET_B && pCode[i] == SELECT_A ) {
          iCodeSet = CODESET_A;
       }
 
-      if( 16 <= pCode[i] && pCode[i] <= 25 )
-      {
-         for( j = i + 1; j < iCodeLen && 16 <= pCode[j] && pCode[j] <= 25; j++ )
-         {
+      if( 16 <= pCode[i] && pCode[i] <= 25 ) {
+         for( j = i + 1; j < iCodeLen && 16 <= pCode[j] && pCode[j] <= 25; j++ ) {
             ;
          }
 
-         if( j - i == 2 && i == 1 && j == iCodeLen )
-         {
+         if( j - i == 2 && i == 1 && j == iCodeLen ) {
             /* [StartB] 1 2  -->  [StartC] [12] */
             pCode[0] = START_C;
             pCode[1] = ( pCode[1] - 16 ) * 10 + pCode[2] - 16;
             iCodeLen = 2;
             break;
-         }
-         else if( (j - i >= 4 && (i == 1 || j == iCodeLen || pCode[j] == SELECT_A || pCode[j] == SELECT_B)) || j - i >= 6 )
-         {
-            if( i == 1 )
-            {
+         } else if( (j - i >= 4 && (i == 1 || j == iCodeLen || pCode[j] == SELECT_A || pCode[j] == SELECT_B)) || j - i >= 6 ) {
+            if( i == 1 ) {
                /* [StartN] 1 2 3 4  -->  [StartC] [12] [34] */
                /* [StartN] 1 2 3 4 5  -->  [StartC] [12] [34] [CodeN] 5 */
                /* [StartN] 1 2 3 4 X ... -->  [StartC] [12] [34] [CodeN] X ... */
                /* [StartN] 1 2 3 4 5 X ... -->  [StartC] [12] [34] [CodeN] 5 X ... */
                pCode[0] = START_C;
-               for( k = 1; k < j - 1; k += 2 )
-               {
+               for( k = 1; k < j - 1; k += 2 ) {
                   pCode[i++] = ( pCode[k] - 16 ) * 10 + pCode[k + 1] - 16;
                }
 
-               if( k < iCodeLen )
-               {
+               if( k < iCodeLen ) {
                   j = i;
                   pCode[i++] = iCodeSet == CODESET_A ? SELECT_A : SELECT_B;
-                  for( ; k < iCodeLen; k++ )
-                  {
+                  for( ; k < iCodeLen; k++ ) {
                      pCode[i++] = pCode[k];
                   }
                }
                iCodeLen = i;
-            }
-            else
-            {
+            } else {
                /* ... X 1 2 3 4  -->  ... X [CodeC] [12] [34] */
                /* ... X 1 2 3 4 [CodeN] ... -->  ... X [CodeC] [12] [34] [CodeN] ... */
                /* ... X 1 2 3 4 5  -->  ... X 1 [CodeC] [23] [45] */
@@ -360,8 +314,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
                /* ... X 1 2 3 4 5 6 Y ...  -->  ... X [CodeC] [12] [34] [56] [CodeN] Y ... */
                /* ... X 1 2 3 4 5 6 7 Y ...  -->  ... X 1 [CodeC] [23] [45] [67] [CodeN] Y ... */
 
-               if( (j - i) & 1 )
-               {
+               if( (j - i) & 1 ) {
                   /* digit count is odd */
                   i++;
                }
@@ -369,20 +322,16 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
                pCode[i + 1] = ( pCode[i] - 16 ) * 10 + pCode[i + 1] - 16;
                pCode[i] = SELECT_C;
                i += 2;
-               for( k = i; k < j; k += 2 )
-               {
+               for( k = i; k < j; k += 2 ) {
                   pCode[i++] = ( pCode[k] - 16 ) * 10 + pCode[k + 1] - 16;
                }
                j = i;
-               if( k < iCodeLen )
-               {
-                  if( pCode[k] != SELECT_A && pCode[k] != SELECT_B )
-                  {
+               if( k < iCodeLen ) {
+                  if( pCode[k] != SELECT_A && pCode[k] != SELECT_B ) {
                      pCode[i++] = iCodeSet == CODESET_A ? SELECT_A : SELECT_B;
                   }
 
-                  for( ; k < iCodeLen; k++ )
-                  {
+                  for( ; k < iCodeLen; k++ ) {
                      pCode[i++] = pCode[k];
                   }
                }
@@ -395,8 +344,7 @@ PHB_ZEBRA hb_zebra_create_code128(const char * szCode, HB_SIZE nLen, int iFlags)
 
    pZebra->pBits = hb_bitbuffer_create();
    csum = pCode[0];
-   for( i = 0; i < iCodeLen; i++ )
-   {
+   for( i = 0; i < iCodeLen; i++ ) {
       hb_bitbuffer_cat_int(pZebra->pBits, s_code[pCode[i]], 11);
       csum += i * pCode[i];
    }
@@ -413,12 +361,9 @@ HB_FUNC( HB_ZEBRA_CREATE_CODE128 )
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       hb_zebra_ret(hb_zebra_create_code128(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

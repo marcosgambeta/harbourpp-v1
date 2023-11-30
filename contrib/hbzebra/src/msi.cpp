@@ -51,11 +51,9 @@ static char _msi_checksum( const char * szCode )
    int j = 1, sum = 0;
 
    /* Luhn algorithm */
-   for( int i = static_cast<int>(strlen(szCode)) - 1; i >= 0; i-- )
-   {
+   for( int i = static_cast<int>(strlen(szCode)) - 1; i >= 0; i-- ) {
       int k = (szCode[i] - '0') * (j ? 2 : 1);
-      if( k > 9 )
-      {
+      if( k > 9 ) {
          k -= 9;
       }
       sum += k;
@@ -73,10 +71,8 @@ PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
    auto pZebra = hb_zebra_create();
    pZebra->iType = HB_ZEBRA_TYPE_MSI;
 
-   for( i = 0; i < iLen; i++ )
-   {
-      if( szCode[i] < '0' || szCode[i] > '9' )
-      {
+   for( i = 0; i < iLen; i++ ) {
+      if( szCode[i] < '0' || szCode[i] > '9' ) {
          pZebra->iError = HB_ZEBRA_ERROR_INVALIDCODE;
          return pZebra;
       }
@@ -89,18 +85,13 @@ PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
 
    pZebra->pBits = hb_bitbuffer_create();
 
-   if( iFlags & HB_ZEBRA_FLAG_WIDE2_5 )
-   {
+   if( iFlags & HB_ZEBRA_FLAG_WIDE2_5 ) {
       iN = 2;
       iW = 5;
-   }
-   else if( iFlags & HB_ZEBRA_FLAG_WIDE3 )
-   {
+   } else if( iFlags & HB_ZEBRA_FLAG_WIDE3 ) {
       iN = 1;
       iW = 3;
-   }
-   else
-   {
+   } else {
       iN = 1;
       iW = 2;
    }
@@ -108,37 +99,27 @@ PHB_ZEBRA hb_zebra_create_msi( const char * szCode, HB_SIZE nLen, int iFlags )
    /* start */
    hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
    hb_bitbuffer_cat_int(pZebra->pBits,  0, iN);
-   for( i = 0; i < iLen; i++ )
-   {
+   for( i = 0; i < iLen; i++ ) {
       char code = szCode[i] - '0';
-      for( j = 0; j < 4; j++ )
-      {
-         if( code & 8 )
-         {
+      for( j = 0; j < 4; j++ ) {
+         if( code & 8 ) {
             hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
             hb_bitbuffer_cat_int(pZebra->pBits,  0, iN);
-         }
-         else
-         {
+         } else {
             hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
             hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
          }
          code <<= 1;
       }
    }
-   if( iFlags & HB_ZEBRA_FLAG_CHECKSUM )
-   {
+   if( iFlags & HB_ZEBRA_FLAG_CHECKSUM ) {
       char code = _msi_checksum(szCode);
       code -= '0';
-      for( j = 0; j < 4; j++ )
-      {
-         if( code & 8 )
-         {
+      for( j = 0; j < 4; j++ ) {
+         if( code & 8 ) {
             hb_bitbuffer_cat_int(pZebra->pBits, 31, iW);
             hb_bitbuffer_cat_int(pZebra->pBits,  0, iN);
-         }
-         else
-         {
+         } else {
             hb_bitbuffer_cat_int(pZebra->pBits, 3, iN);
             hb_bitbuffer_cat_int(pZebra->pBits, 0, iW);
          }
@@ -156,12 +137,9 @@ HB_FUNC( HB_ZEBRA_CREATE_MSI )
 {
    auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem != nullptr )
-   {
+   if( pItem != nullptr ) {
       hb_zebra_ret(hb_zebra_create_msi(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), hb_parni(2)));
-   }
-   else
-   {
+   } else {
       hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
 }

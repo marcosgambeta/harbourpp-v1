@@ -59,8 +59,7 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
 
    HB_SYMBOL_UNUSED(iFlags);
 
-   if( pZebra->iError != 0 )
-   {
+   if( pZebra->iError != 0 ) {
       return HB_ZEBRA_ERROR_INVALIDZEBRA;
    }
 
@@ -69,13 +68,10 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
    dLast = dX;
    nCount = 0;
    i = 0;
-   for( HB_SIZE n = 0; n < nLen; n++ )
-   {
+   for( HB_SIZE n = 0; n < nLen; n++ ) {
       bool fBit = hb_bitbuffer_get(pZebra->pBits, n);
-      if( fBit != fLastBit )
-      {
-         if( fLastBit && pCallback )
-         {
+      if( fBit != fLastBit ) {
+         if( fLastBit && pCallback ) {
             pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
          }
 
@@ -84,12 +80,9 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
          fLastBit = fBit;
       }
       nCount++;
-      if( ++i == iCol )
-      {
-         if( nCount )
-         {
-            if( fBit && pCallback )
-            {
+      if( ++i == iCol ) {
+         if( nCount ) {
+            if( fBit && pCallback ) {
                pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
             }
             nCount = 0;
@@ -97,14 +90,12 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
          i = 0;
          dY += dHeight;
          dLast = dX;
-         if( n + 1 < nLen )
-         {
+         if( n + 1 < nLen ) {
             fLastBit = hb_bitbuffer_get(pZebra->pBits, n + 1);
          }
       }
    }
-   if( fLastBit && nCount && pCallback )
-   {
+   if( fLastBit && nCount && pCallback ) {
       pCallback(cargo, dLast, dY, dWidth * nCount, dHeight);
    }
 
@@ -113,8 +104,7 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
 
 static void hb_zebra_draw_codeblock_callback( void * pDrawBlock, double dX, double dY, double dWidth, double dHeight )
 {
-   if( pDrawBlock && HB_IS_BLOCK(pDrawBlock) && hb_vmRequestReenter() )
-   {
+   if( pDrawBlock && HB_IS_BLOCK(pDrawBlock) && hb_vmRequestReenter() ) {
       hb_vmPushEvalSym();
       hb_vmPush(static_cast<PHB_ITEM>(pDrawBlock));
       hb_vmPushDouble(dX, HB_DEFAULT_DECIMALS);
@@ -135,15 +125,11 @@ HB_FUNC( HB_ZEBRA_DRAW )
 {
    auto pZebra = hb_zebra_param(1);
 
-   if( pZebra )
-   {
+   if( pZebra ) {
       auto pDrawBlock = hb_param(2, Harbour::Item::BLOCK);
-      if( pDrawBlock )
-      {
+      if( pDrawBlock ) {
          hb_retni(hb_zebra_draw_codeblock(pZebra, pDrawBlock, hb_parnd(3), hb_parnd(4), hb_parnd(5), hb_parnd(6), hb_parni(7)));
-      }
-      else
-      {
+      } else {
          hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       }
    }
