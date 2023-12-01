@@ -627,7 +627,7 @@ HB_FUNC( SQLITE3_TEMP_DIRECTORY )
    #ifdef SQLITE3_DYNLIB
    {
       char * pszFree;
-      const char * pszDirName = hb_fsNameConv(hb_parcx(1), &pszFree);
+      auto pszDirName = hb_fsNameConv(hb_parcx(1), &pszFree);
 
       if( hb_fsIsDirectory(pszDirName) ) {
          bResult = true;
@@ -670,7 +670,7 @@ HB_FUNC( SQLITE3_OPEN )
 {
    sqlite3 * db;
    char * pszFree;
-   const char * pszdbName = hb_fsNameConv(hb_parcx(1), &pszFree);
+   auto pszdbName = hb_fsNameConv(hb_parcx(1), &pszFree);
 
    if( hb_fsFileExists(pszdbName) || hb_parl(2) ) {
       if( sqlite3_open(pszdbName, &db) == SQLITE_OK ) {
@@ -699,7 +699,7 @@ HB_FUNC( SQLITE3_OPEN_V2 )
 #if SQLITE_VERSION_NUMBER >= 3005000
    sqlite3 * db;
    char * pszFree;
-   const char * pszdbName = hb_fsNameConv(hb_parcx(1), &pszFree);
+   auto pszdbName = hb_fsNameConv(hb_parcx(1), &pszFree);
 
    if( sqlite3_open_v2(pszdbName, &db, hb_parni(2), nullptr) == SQLITE_OK ) {
       auto hbsqlite3 = static_cast<HB_SQLITE3*>(hb_xgrabz(sizeof(HB_SQLITE3)));

@@ -1350,7 +1350,7 @@ static int hb_unzipExtractCurrentFile( unzFile hUnzip, const char * szFileName, 
       struct tm      st;
 
       char *       pszFree;
-      const char * szNameOS = hb_fsNameConv(szName, &pszFree);
+      auto szNameOS = hb_fsNameConv(szName, &pszFree);
 
       HB_FATTR ulAttr = ufi.external_fa;
 

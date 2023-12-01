@@ -121,7 +121,7 @@ HB_FUNC( HPDF_FREEDOCALL )
 HB_FUNC( HPDF_SAVETOFILE )
 {
    char *       pszFree;
-   const char * pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
+   auto pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
 
    hb_retnl(static_cast<long>(HPDF_SaveToFile(hb_HPDF_Doc_par(1), pszFileName)));
 
