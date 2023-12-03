@@ -779,6 +779,11 @@ PHB_EXPR hb_compExprReduceNegate(PHB_EXPR pSelf, HB_COMP_DECL)
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pExpr;
    }
+   /* TODO: add checking of incompatible types
+      else
+      {
+      }
+    */
 
    return pSelf;
 }
@@ -1486,6 +1491,11 @@ PHB_EXPR hb_compExprReduceAnd(PHB_EXPR pSelf, HB_COMP_DECL)
          pSelf->value.asLogical = false;
       }
    }
+   /* TODO: add checking of incompatible types
+      else
+      {
+      }
+    */
    return pSelf;
 }
 
@@ -1536,6 +1546,37 @@ PHB_EXPR hb_compExprReduceOr(PHB_EXPR pSelf, HB_COMP_DECL)
          pSelf = pLeft;
       }
    }
+   /* TODO: add checking of incompatible types
+      else
+      {
+      }
+    */
+   return pSelf;
+}
+
+PHB_EXPR hb_compExprReduceNot(PHB_EXPR pSelf, HB_COMP_DECL)
+{
+   PHB_EXPR pExpr = pSelf->value.asOperator.pLeft;
+
+   if( pExpr->ExprType == HB_ET_LOGICAL ) {
+      pExpr->value.asLogical = !pExpr->value.asLogical;
+      HB_COMP_EXPR_CLEAR(pSelf);  /* suppress deletion of operator components */
+      pSelf = pExpr;
+   } else if( pExpr->ExprType == HB_EO_NOT && HB_SUPPORT_EXTOPT ) {
+      /* NOTE: This will not generate a runtime error if incompatible
+       * data type is used
+       */
+      pExpr->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+      pExpr = pExpr->value.asOperator.pLeft;
+      HB_COMP_EXPR_FREE(pSelf);
+      pSelf = pExpr;
+   }
+   /* TODO: add checking of incompatible types
+      else
+      {
+      }
+    */
+
    return pSelf;
 }
 
