@@ -246,7 +246,7 @@ SSL * hb_SSL_itemGet(PHB_ITEM pItem)
 HB_FUNC( SSL_NEW )
 {
    if( hb_SSL_CTX_is(1) ) {
-      SSL_CTX * ctx = hb_SSL_CTX_par(1);
+      auto ctx = hb_SSL_CTX_par(1);
 
       if( ctx != nullptr ) {
          auto hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
@@ -264,7 +264,7 @@ HB_FUNC( SSL_NEW )
 HB_FUNC( SSL_DUP )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl_par = hb_SSL_par(1);
+      auto ssl_par = hb_SSL_par(1);
 
       if( ssl_par != nullptr ) {
          auto hb_ssl = static_cast<PHB_SSL>(hb_gcAllocate(sizeof(HB_SSL), &s_gcSSL_funcs));
@@ -280,7 +280,7 @@ HB_FUNC( SSL_DUP )
 HB_FUNC( SSL_ACCEPT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_accept(ssl));
@@ -293,7 +293,7 @@ HB_FUNC( SSL_ACCEPT )
 HB_FUNC( SSL_CLEAR )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_clear(ssl);
@@ -309,7 +309,7 @@ HB_FUNC_TRANSLATE( SSL_STATE, SSL_GET_STATE )
 HB_FUNC( SSL_STATE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_state(ssl));
@@ -323,7 +323,7 @@ HB_FUNC( SSL_STATE )
 HB_FUNC( SSL_PENDING )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_pending(ssl));
@@ -335,11 +335,11 @@ HB_FUNC( SSL_PENDING )
 
 HB_FUNC( SSL_SET_BIO )
 {
-   BIO * rbio = hb_BIO_par(2);
-   BIO * wbio = hb_BIO_par(3);
+   auto rbio = hb_BIO_par(2);
+   auto wbio = hb_BIO_par(3);
 
    if( hb_SSL_is(1) && rbio && wbio ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_bio(ssl, rbio, wbio);
@@ -352,7 +352,7 @@ HB_FUNC( SSL_SET_BIO )
 HB_FUNC( SSL_GET_RBIO )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retptr(SSL_get_rbio(ssl));
@@ -365,7 +365,7 @@ HB_FUNC( SSL_GET_RBIO )
 HB_FUNC( SSL_GET_WBIO )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retptr(SSL_get_wbio(ssl));
@@ -378,7 +378,7 @@ HB_FUNC( SSL_GET_WBIO )
 HB_FUNC( SSL_CONNECT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_connect(ssl));
@@ -391,7 +391,7 @@ HB_FUNC( SSL_CONNECT )
 HB_FUNC( SSL_SHUTDOWN )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_shutdown(ssl));
@@ -404,7 +404,7 @@ HB_FUNC( SSL_SHUTDOWN )
 HB_FUNC( SSL_VERSION )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_version(ssl));
@@ -417,7 +417,7 @@ HB_FUNC( SSL_VERSION )
 HB_FUNC( SSL_GET_VERSION )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_get_version(ssl));
@@ -430,7 +430,7 @@ HB_FUNC( SSL_GET_VERSION )
 HB_FUNC( SSL_GET_CIPHER )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_get_cipher(ssl));
@@ -443,7 +443,7 @@ HB_FUNC( SSL_GET_CIPHER )
 HB_FUNC( SSL_DO_HANDSHAKE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_do_handshake(ssl));
@@ -456,7 +456,7 @@ HB_FUNC( SSL_DO_HANDSHAKE )
 HB_FUNC( SSL_RENEGOTIATE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_renegotiate(ssl));
@@ -469,7 +469,7 @@ HB_FUNC( SSL_RENEGOTIATE )
 HB_FUNC( SSL_TOTAL_RENEGOTIATIONS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_total_renegotiations(ssl));
@@ -484,7 +484,7 @@ HB_FUNC( SSL_SET_FD )
    int iSD;
 
    if( hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1 ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_set_fd(ssl, iSD));
@@ -499,7 +499,7 @@ HB_FUNC( SSL_SET_RFD )
    int iSD;
 
    if( hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1 ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_set_rfd(ssl, iSD));
@@ -514,7 +514,7 @@ HB_FUNC( SSL_SET_WFD )
    int iSD;
 
    if( hb_SSL_is(1) && (iSD = hb_parnidef(2, -1)) != -1 ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_set_wfd(ssl, iSD));
@@ -527,7 +527,7 @@ HB_FUNC( SSL_SET_WFD )
 HB_FUNC( SSL_WANT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_want(ssl));
@@ -540,7 +540,7 @@ HB_FUNC( SSL_WANT )
 HB_FUNC( SSL_WANT_NOTHING )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_want_nothing(ssl));
@@ -553,7 +553,7 @@ HB_FUNC( SSL_WANT_NOTHING )
 HB_FUNC( SSL_WANT_X509_LOOKUP )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_want_x509_lookup(ssl));
@@ -566,7 +566,7 @@ HB_FUNC( SSL_WANT_X509_LOOKUP )
 HB_FUNC( SSL_WANT_READ )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_want_read(ssl));
@@ -579,13 +579,13 @@ HB_FUNC( SSL_WANT_READ )
 HB_FUNC( SSL_READ )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          auto pItem = hb_param(2, Harbour::Item::STRING);
          char * pBuffer;
          HB_SIZE nLen;
-         int nRead = 0;
+         auto nRead = 0;
 
          if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen) ) {
             if( HB_ISNUM(3) ) {
@@ -609,13 +609,13 @@ HB_FUNC( SSL_READ )
 HB_FUNC( SSL_PEEK )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          auto pItem = hb_param(2, Harbour::Item::STRING);
          char * pBuffer;
          HB_SIZE nLen;
-         int nRead = 0;
+         auto nRead = 0;
 
          if( pItem && HB_ISBYREF(2) && hb_itemGetWriteCL(pItem, &pBuffer, &nLen) ) {
             if( HB_ISNUM(3) ) {
@@ -639,7 +639,7 @@ HB_FUNC( SSL_PEEK )
 HB_FUNC( SSL_WANT_WRITE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_want_write(ssl));
@@ -652,7 +652,7 @@ HB_FUNC( SSL_WANT_WRITE )
 HB_FUNC( SSL_WRITE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          auto pBuffer = hb_param(2, Harbour::Item::STRING);
@@ -675,7 +675,7 @@ HB_FUNC( SSL_WRITE )
 HB_FUNC( SSL_SET_SSL_METHOD )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
@@ -692,7 +692,7 @@ HB_FUNC( SSL_SET_SSL_METHOD )
 HB_FUNC( SSL_GET_SSL_METHOD )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
@@ -734,7 +734,7 @@ HB_FUNC( SSL_GET_SSL_METHOD )
 HB_FUNC( SSL_GET_CURRENT_CIPHER )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retptr(HB_UNCONST(SSL_get_current_cipher(ssl)));
@@ -747,10 +747,10 @@ HB_FUNC( SSL_GET_CURRENT_CIPHER )
 HB_FUNC( SSL_GET_CIPHER_BITS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
-         int alg_bits = 0;
+         auto alg_bits = 0;
 
          hb_retni(SSL_get_cipher_bits(ssl, &alg_bits));
 
@@ -764,7 +764,7 @@ HB_FUNC( SSL_GET_CIPHER_BITS )
 HB_FUNC( SSL_GET_CIPHER_LIST )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_get_cipher_list(ssl, hb_parni(2)));
@@ -777,7 +777,7 @@ HB_FUNC( SSL_GET_CIPHER_LIST )
 HB_FUNC( SSL_SET_CIPHER_LIST )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr && hb_parclen(2) <= 255 ) {
          hb_retni(SSL_set_cipher_list(ssl, hb_parcx(2)));
@@ -790,7 +790,7 @@ HB_FUNC( SSL_SET_CIPHER_LIST )
 HB_FUNC( SSL_GET_CIPHER_NAME )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_get_cipher_name(ssl));
@@ -803,7 +803,7 @@ HB_FUNC( SSL_GET_CIPHER_NAME )
 HB_FUNC( SSL_GET_CIPHER_VERSION )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_get_cipher_version(ssl));
@@ -816,8 +816,8 @@ HB_FUNC( SSL_GET_CIPHER_VERSION )
 HB_FUNC( SSL_COPY_SESSION_ID )
 {
    if( hb_SSL_is(1) && hb_SSL_is(2) ) {
-      SSL * ssl1 = hb_SSL_par(1);
-      SSL * ssl2 = hb_SSL_par(2);
+      auto ssl1 = hb_SSL_par(1);
+      auto ssl2 = hb_SSL_par(2);
 
       if( ssl1 != nullptr && ssl2 != nullptr ) {
          SSL_copy_session_id(ssl1, ssl2);
@@ -830,7 +830,7 @@ HB_FUNC( SSL_COPY_SESSION_ID )
 HB_FUNC( SSL_GET_SHARED_CIPHERS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          char buffer[128 + 1]; /* See: CVE-2006-3738 */
@@ -848,7 +848,7 @@ HB_FUNC( SSL_SET_TLSEXT_HOST_NAME )
 {
    if( hb_SSL_is(1) ) {
 #if defined(SSL_CTRL_SET_TLSEXT_HOSTNAME)
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_set_tlsext_host_name(ssl, const_cast<char*>(hb_parc(2))));
@@ -882,7 +882,7 @@ HB_FUNC( SSL_ALERT_TYPE_STRING_LONG )
 HB_FUNC( SSL_RSTATE_STRING )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_rstate_string(ssl));
@@ -895,7 +895,7 @@ HB_FUNC( SSL_RSTATE_STRING )
 HB_FUNC( SSL_RSTATE_STRING_LONG )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_rstate_string(ssl));
@@ -908,7 +908,7 @@ HB_FUNC( SSL_RSTATE_STRING_LONG )
 HB_FUNC( SSL_STATE_STRING )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_rstate_string(ssl));
@@ -921,7 +921,7 @@ HB_FUNC( SSL_STATE_STRING )
 HB_FUNC( SSL_STATE_STRING_LONG )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_rstate_string(ssl));
@@ -936,7 +936,7 @@ HB_FUNC( SSL_STATE_STRING_LONG )
 HB_FUNC( SSL_GET_PSK_IDENTITY_HINT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_get_psk_identity_hint(ssl));
@@ -949,7 +949,7 @@ HB_FUNC( SSL_GET_PSK_IDENTITY_HINT )
 HB_FUNC( SSL_GET_PSK_IDENTITY )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retc(SSL_get_psk_identity(ssl));
@@ -964,7 +964,7 @@ HB_FUNC( SSL_GET_PSK_IDENTITY )
 HB_FUNC( SSL_CHECK_PRIVATE_KEY )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_check_private_key(ssl));
@@ -977,7 +977,7 @@ HB_FUNC( SSL_CHECK_PRIVATE_KEY )
 HB_FUNC( SSL_GET_ERROR )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_error(ssl, hb_parni(2)));
@@ -990,7 +990,7 @@ HB_FUNC( SSL_GET_ERROR )
 HB_FUNC( SSL_GET_FD )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_fd(ssl));
@@ -1003,7 +1003,7 @@ HB_FUNC( SSL_GET_FD )
 HB_FUNC( SSL_GET_RFD )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_rfd(ssl));
@@ -1016,7 +1016,7 @@ HB_FUNC( SSL_GET_RFD )
 HB_FUNC( SSL_GET_WFD )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_wfd(ssl));
@@ -1029,7 +1029,7 @@ HB_FUNC( SSL_GET_WFD )
 HB_FUNC( SSL_GET_QUIET_SHUTDOWN )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_quiet_shutdown(ssl));
@@ -1042,7 +1042,7 @@ HB_FUNC( SSL_GET_QUIET_SHUTDOWN )
 HB_FUNC( SSL_GET_SHUTDOWN )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_shutdown(ssl));
@@ -1058,7 +1058,7 @@ HB_FUNC( SSL_GET_READ_AHEAD )
 #if defined(__BORLANDC__) /* FIXME: SSL_get_read_ahead is an unresolved external when trying to link with BCC */
       hb_retni(0);
 #else
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_read_ahead(ssl));
@@ -1072,7 +1072,7 @@ HB_FUNC( SSL_GET_READ_AHEAD )
 HB_FUNC( SSL_GET_STATE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_state(ssl));
@@ -1085,7 +1085,7 @@ HB_FUNC( SSL_GET_STATE )
 HB_FUNC( SSL_GET_VERIFY_MODE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_get_verify_mode(ssl));
@@ -1098,7 +1098,7 @@ HB_FUNC( SSL_GET_VERIFY_MODE )
 HB_FUNC( SSL_IN_ACCEPT_INIT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_in_accept_init(ssl));
@@ -1111,7 +1111,7 @@ HB_FUNC( SSL_IN_ACCEPT_INIT )
 HB_FUNC( SSL_IN_BEFORE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_in_before(ssl));
@@ -1124,7 +1124,7 @@ HB_FUNC( SSL_IN_BEFORE )
 HB_FUNC( SSL_IN_CONNECT_INIT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_in_connect_init(ssl));
@@ -1137,7 +1137,7 @@ HB_FUNC( SSL_IN_CONNECT_INIT )
 HB_FUNC( SSL_IN_INIT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_in_init(ssl));
@@ -1150,7 +1150,7 @@ HB_FUNC( SSL_IN_INIT )
 HB_FUNC( SSL_IS_INIT_FINISHED )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_is_init_finished(ssl));
@@ -1163,7 +1163,7 @@ HB_FUNC( SSL_IS_INIT_FINISHED )
 HB_FUNC( SSL_NUM_RENEGOTIATIONS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_num_renegotiations(ssl));
@@ -1176,7 +1176,7 @@ HB_FUNC( SSL_NUM_RENEGOTIATIONS )
 HB_FUNC( SSL_CLEAR_NUM_RENEGOTIATIONS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_clear_num_renegotiations(ssl));
@@ -1189,7 +1189,7 @@ HB_FUNC( SSL_CLEAR_NUM_RENEGOTIATIONS )
 HB_FUNC( SSL_GET_DEFAULT_TIMEOUT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_get_default_timeout(ssl));
@@ -1202,7 +1202,7 @@ HB_FUNC( SSL_GET_DEFAULT_TIMEOUT )
 HB_FUNC( SSL_GET_VERIFY_RESULT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_get_verify_result(ssl));
@@ -1215,7 +1215,7 @@ HB_FUNC( SSL_GET_VERIFY_RESULT )
 HB_FUNC( SSL_SESSION_REUSED )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_session_reused(ssl));
@@ -1228,7 +1228,7 @@ HB_FUNC( SSL_SESSION_REUSED )
 HB_FUNC( SSL_SET_ACCEPT_STATE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_accept_state(ssl);
@@ -1241,7 +1241,7 @@ HB_FUNC( SSL_SET_ACCEPT_STATE )
 HB_FUNC( SSL_SET_CONNECT_STATE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_connect_state(ssl);
@@ -1254,7 +1254,7 @@ HB_FUNC( SSL_SET_CONNECT_STATE )
 HB_FUNC( SSL_GET_OPTIONS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_get_options(ssl));
@@ -1267,7 +1267,7 @@ HB_FUNC( SSL_GET_OPTIONS )
 HB_FUNC( SSL_SET_OPTIONS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_options(ssl, static_cast<unsigned long>(hb_parnl(2)));
@@ -1280,7 +1280,7 @@ HB_FUNC( SSL_SET_OPTIONS )
 HB_FUNC( SSL_SET_VERIFY )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_verify(ssl, hb_parni(2), nullptr);
@@ -1293,7 +1293,7 @@ HB_FUNC( SSL_SET_VERIFY )
 HB_FUNC( SSL_SET_QUIET_SHUTDOWN )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_quiet_shutdown(ssl, hb_parni(2));
@@ -1306,7 +1306,7 @@ HB_FUNC( SSL_SET_QUIET_SHUTDOWN )
 HB_FUNC( SSL_SET_READ_AHEAD )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_read_ahead(ssl, hb_parni(2) /* yes */);
@@ -1319,7 +1319,7 @@ HB_FUNC( SSL_SET_READ_AHEAD )
 HB_FUNC( SSL_SET_SHUTDOWN )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_shutdown(ssl, hb_parni(2) /* mode */);
@@ -1332,7 +1332,7 @@ HB_FUNC( SSL_SET_SHUTDOWN )
 HB_FUNC( SSL_SET_VERIFY_RESULT )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_verify_result(ssl, hb_parnl(2) /* arg */);
@@ -1345,7 +1345,7 @@ HB_FUNC( SSL_SET_VERIFY_RESULT )
 HB_FUNC( SSL_SET_MODE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_mode(ssl, hb_parnl(2));
@@ -1358,7 +1358,7 @@ HB_FUNC( SSL_SET_MODE )
 HB_FUNC( SSL_GET_MODE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retnl(SSL_get_mode(ssl));
@@ -1372,7 +1372,7 @@ HB_FUNC( SSL_SET_MTU )
 {
    if( hb_SSL_is(1) ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00908000L && !defined(HB_OPENSSL_OLD_OSX_)
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          SSL_set_mtu(ssl, hb_parnl(2));
@@ -1386,7 +1386,7 @@ HB_FUNC( SSL_SET_MTU )
 HB_FUNC( SSL_GET_CERTIFICATE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_X509_ret(SSL_get_certificate(ssl), false);
@@ -1399,7 +1399,7 @@ HB_FUNC( SSL_GET_CERTIFICATE )
 HB_FUNC( SSL_GET_PEER_CERTIFICATE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_X509_ret(SSL_get_peer_certificate(ssl), true);
@@ -1412,8 +1412,8 @@ HB_FUNC( SSL_GET_PEER_CERTIFICATE )
 HB_FUNC( SSL_USE_CERTIFICATE )
 {
    if( hb_SSL_is(1) && hb_X509_is(2) ) {
-      SSL * ssl = hb_SSL_par(1);
-      X509 * x509 = hb_X509_par(2);
+      auto ssl = hb_SSL_par(1);
+      auto x509 = hb_X509_par(2);
 
       if( ssl != nullptr && x509 != nullptr ) {
          hb_retni(SSL_use_certificate(ssl, x509));
@@ -1426,8 +1426,8 @@ HB_FUNC( SSL_USE_CERTIFICATE )
 HB_FUNC( SSL_ADD_CLIENT_CA )
 {
    if( hb_SSL_is(1) && hb_X509_is(2) ) {
-      SSL * ssl = hb_SSL_par(1);
-      X509 * x509 = hb_X509_par(2);
+      auto ssl = hb_SSL_par(1);
+      auto x509 = hb_X509_par(2);
 
       if( ssl != nullptr && x509 != nullptr ) {
          hb_retni(SSL_add_client_CA(ssl, x509));
@@ -1440,7 +1440,7 @@ HB_FUNC( SSL_ADD_CLIENT_CA )
 HB_FUNC( SSL_USE_CERTIFICATE_FILE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_use_certificate_file(ssl, hb_parc(2), hb_parni(3)));
@@ -1453,7 +1453,7 @@ HB_FUNC( SSL_USE_CERTIFICATE_FILE )
 HB_FUNC( SSL_USE_PRIVATEKEY_FILE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_use_PrivateKey_file(ssl, hb_parc(2), hb_parni(3)));
@@ -1466,7 +1466,7 @@ HB_FUNC( SSL_USE_PRIVATEKEY_FILE )
 HB_FUNC( SSL_USE_RSAPRIVATEKEY_FILE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_use_RSAPrivateKey_file(ssl, hb_parc(2), hb_parni(3)));
@@ -1479,7 +1479,7 @@ HB_FUNC( SSL_USE_RSAPRIVATEKEY_FILE )
 HB_FUNC( SSL_GET_CIPHERS )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          STACK_OF(SSL_CIPHER) * stack = SSL_get_ciphers(ssl);
@@ -1505,7 +1505,7 @@ HB_FUNC( SSL_GET_CIPHERS )
 HB_FUNC( SSL_GET_CLIENT_CA_LIST )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          STACK_OF(X509_NAME) * stack = SSL_get_client_CA_list(ssl);
@@ -1553,7 +1553,7 @@ HB_FUNC( SSL_LOAD_CLIENT_CA_FILE )
 HB_FUNC( SSL_USE_RSAPRIVATEKEY_ASN1 )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
@@ -1573,7 +1573,7 @@ HB_FUNC( SSL_USE_RSAPRIVATEKEY_ASN1 )
 HB_FUNC( SSL_USE_PRIVATEKEY_ASN1 )
 {
    if( hb_SSL_is(2) ) {
-      SSL * ssl = hb_SSL_par(2);
+      auto ssl = hb_SSL_par(2);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_use_PrivateKey_ASN1(hb_parni(1), ssl, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parc(3)), static_cast<int>(hb_parclen(3))));
@@ -1586,7 +1586,7 @@ HB_FUNC( SSL_USE_PRIVATEKEY_ASN1 )
 HB_FUNC( SSL_USE_CERTIFICATE_ASN1 )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          hb_retni(SSL_use_certificate_ASN1(ssl, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parc(2)), static_cast<int>(hb_parclen(2))));
@@ -1599,7 +1599,7 @@ HB_FUNC( SSL_USE_CERTIFICATE_ASN1 )
 HB_FUNC( SSL_USE_PRIVATEKEY )
 {
    if( hb_SSL_is(1) && hb_EVP_PKEY_is(2) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          /* QUESTION: It's unclear whether we should pass a copy here,

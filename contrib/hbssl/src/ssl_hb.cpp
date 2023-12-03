@@ -51,15 +51,15 @@
 HB_FUNC( HB_SSL_READ_ALL )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl != nullptr ) {
          auto iMax = hb_parnidef(3, INT_MAX);
          auto iTimeout = hb_parnidef(4, -1);
          auto iBufferSize = hb_parnidef(5, 80);
 
-         int iPos = 0;
-         int iAllocated = 0;
+         auto iPos = 0;
+         auto iAllocated = 0;
          char * retval = nullptr;
 
          for( ;; ) {
@@ -117,7 +117,7 @@ HB_FUNC( HB_SSL_READ_ALL )
 HB_FUNC( HB_SSL_READ_LINE )
 {
    if( hb_SSL_is(1) ) {
-      SSL * ssl = hb_SSL_par(1);
+      auto ssl = hb_SSL_par(1);
 
       if( ssl ) {
          auto iMax = hb_parnidef(3, INT_MAX);

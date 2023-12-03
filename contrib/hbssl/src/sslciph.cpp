@@ -60,7 +60,7 @@ HB_FUNC( SSL_CIPHER_DESCRIPTION )
 HB_FUNC( SSL_CIPHER_GET_BITS )
 {
    if( HB_ISPOINTER(1) ) {
-      int alg_bits = 0;
+      auto alg_bits = 0;
       hb_retni(hb_parptr(1) ? SSL_CIPHER_get_bits(static_cast<SSL_CIPHER*>(hb_parptr(1)), &alg_bits) : 0);
       hb_storni(alg_bits, 2);
    } else {

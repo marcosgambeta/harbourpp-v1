@@ -367,7 +367,8 @@ static SSL * s_SSL_itemGet(PHB_ITEM pItem, PHB_ITEM * pSSL, bool * pfFree)
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
    PHB_SOCKEX pSock;
-   bool fServer = false, fFree = false;
+   auto fServer = false;
+   auto fFree = false;
    HB_MAXINT timeout = -1;
    PHB_ITEM pSSL = nullptr;
    SSL * ssl = nullptr;
@@ -541,7 +542,7 @@ PHB_SOCKEX hb_sockexNewSSL(HB_SOCKET sd, SSL * ssl, HB_BOOL fServer, HB_MAXINT t
    PHB_SOCKEX pSock = nullptr;
 
    if( sd != HB_NO_SOCKET && ssl ) {
-      PHB_SSLSTREAM pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, pSSL, nullptr);
+      auto pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, pSSL, nullptr);
       if( pStream ) {
          pSock = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
          pSock->sd = sd;
@@ -561,7 +562,7 @@ static void s_sslSocketNew(HB_BOOL fServer)
 
    if( sd != HB_NO_SOCKET ) {
       PHB_SOCKEX pSock = nullptr;
-      SSL * ssl = hb_SSL_par(2);
+      auto ssl = hb_SSL_par(2);
 
       if( ssl ) {
          pSock = hb_sockexNewSSL(sd, ssl, fServer, hb_parnintdef(3, - 1), hb_param(2, Harbour::Item::ANY));

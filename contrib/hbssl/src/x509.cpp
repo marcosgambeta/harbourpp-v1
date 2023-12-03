@@ -109,7 +109,7 @@ void hb_X509_ret(X509 * x509, HB_BOOL fRelease)
 HB_FUNC( X509_GET_SUBJECT_NAME )
 {
    if( hb_X509_is(1) ) {
-      X509 * x509 = hb_X509_par(1);
+      auto x509 = hb_X509_par(1);
 
       if( x509 != nullptr ) {
          hb_retptr(X509_get_subject_name(x509));
@@ -122,7 +122,7 @@ HB_FUNC( X509_GET_SUBJECT_NAME )
 HB_FUNC( X509_GET_ISSUER_NAME )
 {
    if( hb_X509_is(1) ) {
-      X509 * x509 = hb_X509_par(1);
+      auto x509 = hb_X509_par(1);
 
       if( x509 != nullptr ) {
          hb_retptr(X509_get_issuer_name(x509));
@@ -150,7 +150,7 @@ HB_FUNC( X509_NAME_ONELINE )
 HB_FUNC( X509_GET_PUBKEY )
 {
    if( hb_X509_is(1) ) {
-      X509 * x509 = hb_X509_par(1);
+      auto x509 = hb_X509_par(1);
 
       if( x509 != nullptr ) {
          hb_retptr(X509_get_pubkey(x509));

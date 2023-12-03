@@ -219,13 +219,13 @@ HB_FUNC( EVP_GET_DIGESTBYNID )
 
 HB_FUNC( EVP_MD_TYPE )
 {
-   const EVP_MD * md = hb_EVP_MD_par(1);
+   auto md = hb_EVP_MD_par(1);
    hb_retni(md ? EVP_MD_type(md) : 0);
 }
 
 HB_FUNC( EVP_MD_NID )
 {
-   const EVP_MD * md = hb_EVP_MD_par(1);
+   auto md = hb_EVP_MD_par(1);
 
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
    hb_retni(md ? EVP_MD_nid(md) : 0);
@@ -236,19 +236,19 @@ HB_FUNC( EVP_MD_NID )
 
 HB_FUNC( EVP_MD_PKEY_TYPE )
 {
-   const EVP_MD * md = hb_EVP_MD_par(1);
+   auto md = hb_EVP_MD_par(1);
    hb_retni(md ? EVP_MD_pkey_type(md) : 0);
 }
 
 HB_FUNC( EVP_MD_SIZE )
 {
-   const EVP_MD * md = hb_EVP_MD_par(1);
+   auto md = hb_EVP_MD_par(1);
    hb_retni(md ? EVP_MD_size(md) : 0);
 }
 
 HB_FUNC( EVP_MD_BLOCK_SIZE )
 {
-   const EVP_MD * md = hb_EVP_MD_par(1);
+   auto md = hb_EVP_MD_par(1);
    hb_retni(md ? EVP_MD_block_size(md) : 0);
 }
 
@@ -272,7 +272,7 @@ HB_FUNC_TRANSLATE( EVP_MD_CTX_CREATE, EVP_MD_CTX_NEW )
 HB_FUNC( EVP_MD_CTX_RESET )
 {
    if( hb_EVP_MD_CTX_is(1) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if defined(LIBRESSL_VERSION_NUMBER)
@@ -296,7 +296,7 @@ HB_FUNC_TRANSLATE( EVP_MD_CTX_CLEANUP, EVP_MD_CTX_RESET )
 HB_FUNC( EVP_MD_CTX_MD )
 {
    if( hb_EVP_MD_CTX_is(1) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(hb_EVP_MD_ptr_to_id(EVP_MD_CTX_md(ctx)));
@@ -309,8 +309,8 @@ HB_FUNC( EVP_MD_CTX_MD )
 HB_FUNC( EVP_MD_CTX_COPY )
 {
    if( hb_EVP_MD_CTX_is(1) && hb_EVP_MD_CTX_is(2) ) {
-      EVP_MD_CTX * ctx_out = hb_EVP_MD_CTX_par(1);
-      EVP_MD_CTX * ctx_in = hb_EVP_MD_CTX_par(2);
+      auto ctx_out = hb_EVP_MD_CTX_par(1);
+      auto ctx_in = hb_EVP_MD_CTX_par(2);
 
       if( ctx_out != nullptr && ctx_in != nullptr ) {
          hb_retni(EVP_MD_CTX_copy(ctx_out, ctx_in));
@@ -323,8 +323,8 @@ HB_FUNC( EVP_MD_CTX_COPY )
 HB_FUNC( EVP_MD_CTX_COPY_EX )
 {
    if( hb_EVP_MD_CTX_is(1) && hb_EVP_MD_CTX_is(2) ) {
-      EVP_MD_CTX * ctx_out = hb_EVP_MD_CTX_par(1);
-      EVP_MD_CTX * ctx_in = hb_EVP_MD_CTX_par(2);
+      auto ctx_out = hb_EVP_MD_CTX_par(1);
+      auto ctx_in = hb_EVP_MD_CTX_par(2);
 
       if( ctx_out != nullptr && ctx_in != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -340,10 +340,10 @@ HB_FUNC( EVP_MD_CTX_COPY_EX )
 
 HB_FUNC( EVP_DIGESTINIT )
 {
-   const EVP_MD * md = hb_EVP_MD_par(2);
+   auto md = hb_EVP_MD_par(2);
 
    if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -360,10 +360,10 @@ HB_FUNC( EVP_DIGESTINIT )
 
 HB_FUNC( EVP_DIGESTINIT_EX )
 {
-   const EVP_MD * md = hb_EVP_MD_par(2);
+   auto md = hb_EVP_MD_par(2);
 
    if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -380,7 +380,7 @@ HB_FUNC( EVP_DIGESTINIT_EX )
 HB_FUNC( EVP_DIGESTUPDATE )
 {
    if( hb_EVP_MD_CTX_is(1) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -398,7 +398,7 @@ HB_FUNC( EVP_DIGESTUPDATE )
 HB_FUNC( EVP_DIGESTFINAL )
 {
    if( hb_EVP_MD_CTX_is(1) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
          auto buffer = static_cast<unsigned char*>(hb_xgrab(EVP_MAX_MD_SIZE + 1));
@@ -428,7 +428,7 @@ HB_FUNC( EVP_DIGESTFINAL )
 HB_FUNC( EVP_DIGESTFINAL_EX )
 {
    if( hb_EVP_MD_CTX_is(1) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -454,10 +454,10 @@ HB_FUNC( EVP_DIGESTFINAL_EX )
 
 HB_FUNC( EVP_SIGNINIT )
 {
-   const EVP_MD * md = hb_EVP_MD_par(2);
+   auto md = hb_EVP_MD_par(2);
 
    if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
          EVP_SignInit(ctx, md);
@@ -469,10 +469,10 @@ HB_FUNC( EVP_SIGNINIT )
 
 HB_FUNC( EVP_SIGNINIT_EX )
 {
-   const EVP_MD * md = hb_EVP_MD_par(2);
+   auto md = hb_EVP_MD_par(2);
 
    if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -489,7 +489,7 @@ HB_FUNC( EVP_SIGNINIT_EX )
 HB_FUNC( EVP_SIGNUPDATE )
 {
    if( hb_EVP_MD_CTX_is(1) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -507,7 +507,7 @@ HB_FUNC( EVP_SIGNUPDATE )
 HB_FUNC( EVP_SIGNFINAL )
 {
    if( hb_EVP_MD_CTX_is(1) && hb_EVP_PKEY_is(3) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
          auto buffer = static_cast<unsigned char*>(hb_xgrab(EVP_PKEY_size(hb_EVP_PKEY_par(3)) + 1));
@@ -531,10 +531,10 @@ HB_FUNC( EVP_SIGNFINAL )
 
 HB_FUNC( EVP_VERIFYINIT )
 {
-   const EVP_MD * md = hb_EVP_MD_par(2);
+   auto md = hb_EVP_MD_par(2);
 
    if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -551,10 +551,10 @@ HB_FUNC( EVP_VERIFYINIT )
 
 HB_FUNC( EVP_VERIFYINIT_EX )
 {
-   const EVP_MD * md = hb_EVP_MD_par(2);
+   auto md = hb_EVP_MD_par(2);
 
    if( hb_EVP_MD_CTX_is(1) && md != nullptr ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -571,7 +571,7 @@ HB_FUNC( EVP_VERIFYINIT_EX )
 HB_FUNC( EVP_VERIFYUPDATE )
 {
    if( hb_EVP_MD_CTX_is(1) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -589,7 +589,7 @@ HB_FUNC( EVP_VERIFYUPDATE )
 HB_FUNC( EVP_VERIFYFINAL )
 {
    if( hb_EVP_MD_CTX_is(1) && hb_EVP_PKEY_is(3) ) {
-      EVP_MD_CTX * ctx = hb_EVP_MD_CTX_par(1);
+      auto ctx = hb_EVP_MD_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(EVP_VerifyFinal(ctx, reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(2)), static_cast<unsigned int>(hb_parclen(2)), hb_EVP_PKEY_par(3)));

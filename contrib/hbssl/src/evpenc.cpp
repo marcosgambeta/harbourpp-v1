@@ -104,7 +104,7 @@ HB_FUNC_TRANSLATE( HB_EVP_ENCODE_CTX_CREATE, EVP_ENCODE_CTX_NEW )
 HB_FUNC( EVP_ENCODEINIT )
 {
    if( hb_EVP_ENCODE_CTX_is(1) ) {
-      EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
+      auto ctx = hb_EVP_ENCODE_CTX_par(1);
 
       if( ctx != nullptr ) {
          EVP_EncodeInit(ctx);
@@ -117,7 +117,7 @@ HB_FUNC( EVP_ENCODEINIT )
 HB_FUNC( EVP_ENCODEUPDATE )
 {
    if( hb_EVP_ENCODE_CTX_is(1) ) {
-      EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
+      auto ctx = hb_EVP_ENCODE_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = 512;
@@ -149,7 +149,7 @@ HB_FUNC( EVP_ENCODEUPDATE )
 HB_FUNC( EVP_ENCODEFINAL )
 {
    if( hb_EVP_ENCODE_CTX_is(1) ) {
-      EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
+      auto ctx = hb_EVP_ENCODE_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = 512;
@@ -174,7 +174,7 @@ HB_FUNC( EVP_ENCODEFINAL )
 HB_FUNC( EVP_DECODEINIT )
 {
    if( hb_EVP_ENCODE_CTX_is(1) ) {
-      EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
+      auto ctx = hb_EVP_ENCODE_CTX_par(1);
 
       if( ctx != nullptr ) {
          EVP_DecodeInit(ctx);
@@ -187,7 +187,7 @@ HB_FUNC( EVP_DECODEINIT )
 HB_FUNC( EVP_DECODEUPDATE )
 {
    if( hb_EVP_ENCODE_CTX_is(1) ) {
-      EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
+      auto ctx = hb_EVP_ENCODE_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = 512;
@@ -212,7 +212,7 @@ HB_FUNC( EVP_DECODEUPDATE )
 HB_FUNC( EVP_DECODEFINAL )
 {
    if( hb_EVP_ENCODE_CTX_is(1) ) {
-      EVP_ENCODE_CTX * ctx = hb_EVP_ENCODE_CTX_par(1);
+      auto ctx = hb_EVP_ENCODE_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = 512;

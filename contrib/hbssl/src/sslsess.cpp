@@ -80,7 +80,7 @@ SSL_SESSION * hb_SSL_SESSION_par(int iParam)
 HB_FUNC( SSL_SESSION_NEW )
 {
    auto ph = static_cast<void**>(hb_gcAllocate(sizeof(SSL_SESSION*), &s_gcSSL_SESSION_funcs));
-   SSL_SESSION * session = SSL_SESSION_new();
+   auto session = SSL_SESSION_new();
    *ph = static_cast<void*>(session);
    hb_retptrGC(ph);
 }
@@ -89,8 +89,8 @@ HB_FUNC( SSL_SESSION_CMP )
 {
    if( hb_SSL_SESSION_is(1) && hb_SSL_SESSION_is(2) ) {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      SSL_SESSION * session1 = hb_SSL_SESSION_par(1);
-      SSL_SESSION * session2 = hb_SSL_SESSION_par(2);
+      auto session1 = hb_SSL_SESSION_par(1);
+      auto session2 = hb_SSL_SESSION_par(2);
 
       if( session1 != nullptr && session2 != nullptr ) {
          hb_retni(SSL_SESSION_cmp(session1, session2));
@@ -104,7 +104,7 @@ HB_FUNC( SSL_SESSION_CMP )
 HB_FUNC( SSL_SESSION_SET_TIME )
 {
    if( hb_SSL_SESSION_is(1) ) {
-      SSL_SESSION * session = hb_SSL_SESSION_par(1);
+      auto session = hb_SSL_SESSION_par(1);
 
       if( session != nullptr ) {
          hb_retnl(SSL_SESSION_set_time(session, hb_parnl(2)));
@@ -117,7 +117,7 @@ HB_FUNC( SSL_SESSION_SET_TIME )
 HB_FUNC( SSL_SESSION_SET_TIMEOUT )
 {
    if( hb_SSL_SESSION_is(1) ) {
-      SSL_SESSION * session = hb_SSL_SESSION_par(1);
+      auto session = hb_SSL_SESSION_par(1);
 
       if( session != nullptr ) {
          hb_retnl(SSL_SESSION_set_timeout(session, hb_parnl(2)));
@@ -130,7 +130,7 @@ HB_FUNC( SSL_SESSION_SET_TIMEOUT )
 HB_FUNC( SSL_SESSION_GET_TIME )
 {
    if( hb_SSL_SESSION_is(1) ) {
-      SSL_SESSION * session = hb_SSL_SESSION_par(1);
+      auto session = hb_SSL_SESSION_par(1);
 
       if( session != nullptr ) {
          hb_retnl(SSL_SESSION_get_time(session));
@@ -143,7 +143,7 @@ HB_FUNC( SSL_SESSION_GET_TIME )
 HB_FUNC( SSL_SESSION_GET_TIMEOUT )
 {
    if( hb_SSL_SESSION_is(1) ) {
-      SSL_SESSION * session = hb_SSL_SESSION_par(1);
+      auto session = hb_SSL_SESSION_par(1);
 
       if( session != nullptr ) {
          hb_retnl(SSL_SESSION_get_timeout(session));
@@ -157,7 +157,7 @@ HB_FUNC( SSL_SESSION_HASH )
 {
    if( hb_SSL_SESSION_is(1) ) {
 #if OPENSSL_VERSION_NUMBER < 0x10000000L
-      SSL_SESSION * session = hb_SSL_SESSION_par(1);
+      auto session = hb_SSL_SESSION_par(1);
 
       if( session != nullptr ) {
          hb_retnl(SSL_SESSION_hash(session));

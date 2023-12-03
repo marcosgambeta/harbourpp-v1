@@ -100,7 +100,7 @@ HB_FUNC( EVP_PKEY_TYPE )
 HB_FUNC( EVP_PKEY_SIZE )
 {
    if( hb_EVP_PKEY_is(1) ) {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      auto pkey = hb_EVP_PKEY_par(1);
 
       if( pkey != nullptr ) {
          hb_retni(EVP_PKEY_size(pkey));
@@ -113,7 +113,7 @@ HB_FUNC( EVP_PKEY_SIZE )
 HB_FUNC( EVP_PKEY_BITS )
 {
    if( hb_EVP_PKEY_is(1) ) {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      auto pkey = hb_EVP_PKEY_par(1);
 
       if( pkey != nullptr ) {
          hb_retni(EVP_PKEY_bits(pkey));
@@ -126,7 +126,7 @@ HB_FUNC( EVP_PKEY_BITS )
 HB_FUNC( EVP_PKEY_ASSIGN )
 {
    if( hb_EVP_PKEY_is(1) ) {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      auto pkey = hb_EVP_PKEY_par(1);
 
       if( pkey != nullptr ) {
          /* QUESTION: Is hb_openssl_strdup() okay here? [vszakats] */
@@ -141,7 +141,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_RSA )
 {
 #ifndef OPENSSL_NO_RSA
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      auto pkey = hb_EVP_PKEY_par(1);
       auto key = static_cast<RSA*>(hb_parptr(2));
 
       if( pkey != nullptr && key != nullptr ) {
@@ -159,7 +159,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_DSA )
 {
 #ifndef OPENSSL_NO_DSA
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      auto pkey = hb_EVP_PKEY_par(1);
       auto key = static_cast<DSA*>(hb_parptr(2));
 
       if( pkey != nullptr && key != nullptr ) {
@@ -177,7 +177,7 @@ HB_FUNC( EVP_PKEY_ASSIGN_DH )
 {
 #ifndef OPENSSL_NO_RSA
    if( hb_EVP_PKEY_is(1) && HB_ISPOINTER(2) ) {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par(1);
+      auto pkey = hb_EVP_PKEY_par(1);
       auto key = static_cast<DH*>(hb_parptr(2));
 
       if( pkey != nullptr && key != nullptr ) {

@@ -423,37 +423,37 @@ HB_FUNC( EVP_GET_CIPHERBYNID )
 
 HB_FUNC( EVP_CIPHER_NID )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   auto cipher = hb_EVP_CIPHER_par(1);
    hb_retni(cipher ? EVP_CIPHER_nid(cipher) : 0);
 }
 
 HB_FUNC( EVP_CIPHER_BLOCK_SIZE )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   auto cipher = hb_EVP_CIPHER_par(1);
    hb_retni(cipher ? EVP_CIPHER_block_size(cipher) : 0);
 }
 
 HB_FUNC( EVP_CIPHER_KEY_LENGTH )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   auto cipher = hb_EVP_CIPHER_par(1);
    hb_retni(cipher ? EVP_CIPHER_key_length(cipher) : 0);
 }
 
 HB_FUNC( EVP_CIPHER_IV_LENGTH )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   auto cipher = hb_EVP_CIPHER_par(1);
    hb_retni(cipher ? EVP_CIPHER_iv_length(cipher) : 0);
 }
 
 HB_FUNC( EVP_CIPHER_FLAGS )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   auto cipher = hb_EVP_CIPHER_par(1);
    hb_retnint(cipher ? EVP_CIPHER_flags(cipher) : 0);
 }
 
 HB_FUNC( EVP_CIPHER_MODE )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   auto cipher = hb_EVP_CIPHER_par(1);
 
 #if OPENSSL_VERSION_NUMBER < 0x00906040L
    /* fix for typo in macro definition in openssl/evp.h */
@@ -465,7 +465,7 @@ HB_FUNC( EVP_CIPHER_MODE )
 
 HB_FUNC( EVP_CIPHER_TYPE )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
+   auto cipher = hb_EVP_CIPHER_par(1);
    hb_retni(cipher ? EVP_CIPHER_type(cipher) : 0);
 }
 
@@ -490,7 +490,7 @@ HB_FUNC_TRANSLATE( HB_EVP_CIPHER_CTX_CREATE, EVP_CIPHER_CTX_NEW )
 HB_FUNC( EVP_CIPHER_CTX_RESET )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
@@ -510,7 +510,7 @@ HB_FUNC_TRANSLATE( EVP_CIPHER_CTX_CLEANUP, EVP_CIPHER_CTX_RESET )
 HB_FUNC( EVP_CIPHER_CTX_SET_PADDING )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -527,7 +527,7 @@ HB_FUNC( EVP_CIPHER_CTX_SET_PADDING )
 HB_FUNC( EVP_CIPHER_CTX_KEY_LENGTH )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(EVP_CIPHER_CTX_key_length(ctx));
@@ -540,7 +540,7 @@ HB_FUNC( EVP_CIPHER_CTX_KEY_LENGTH )
 HB_FUNC( EVP_CIPHER_CTX_SET_KEY_LENGTH )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(EVP_CIPHER_CTX_set_key_length(ctx, hb_parni(2)));
@@ -553,7 +553,7 @@ HB_FUNC( EVP_CIPHER_CTX_SET_KEY_LENGTH )
 HB_FUNC( EVP_CIPHER_CTX_CTRL )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          /* NOTE: 4th param doesn't have a 'const' qualifier. This is a setter
@@ -569,7 +569,7 @@ HB_FUNC( EVP_CIPHER_CTX_CTRL )
 HB_FUNC( EVP_CIPHER_CTX_CIPHER )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(hb_EVP_CIPHER_ptr_to_id(EVP_CIPHER_CTX_cipher(ctx)));
@@ -581,10 +581,10 @@ HB_FUNC( EVP_CIPHER_CTX_CIPHER )
 
 HB_FUNC( EVP_ENCRYPTINIT )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(EVP_EncryptInit(ctx,
@@ -599,10 +599,10 @@ HB_FUNC( EVP_ENCRYPTINIT )
 
 HB_FUNC( EVP_ENCRYPTINIT_EX )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -623,7 +623,7 @@ HB_FUNC( EVP_ENCRYPTINIT_EX )
 HB_FUNC( EVP_ENCRYPTUPDATE )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
@@ -652,7 +652,7 @@ HB_FUNC( EVP_ENCRYPTUPDATE )
 HB_FUNC( EVP_ENCRYPTFINAL )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = EVP_CIPHER_CTX_block_size(ctx);
@@ -677,7 +677,7 @@ HB_FUNC( EVP_ENCRYPTFINAL )
 HB_FUNC( EVP_ENCRYPTFINAL_EX )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -706,10 +706,10 @@ HB_FUNC( EVP_ENCRYPTFINAL_EX )
 
 HB_FUNC( EVP_DECRYPTINIT )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(EVP_DecryptInit(ctx,
@@ -724,10 +724,10 @@ HB_FUNC( EVP_DECRYPTINIT )
 
 HB_FUNC( EVP_DECRYPTINIT_EX )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -748,7 +748,7 @@ HB_FUNC( EVP_DECRYPTINIT_EX )
 HB_FUNC( EVP_DECRYPTUPDATE )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx);
@@ -777,7 +777,7 @@ HB_FUNC( EVP_DECRYPTUPDATE )
 HB_FUNC( EVP_DECRYPTFINAL )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = EVP_CIPHER_CTX_block_size(ctx);
@@ -802,7 +802,7 @@ HB_FUNC( EVP_DECRYPTFINAL )
 HB_FUNC( EVP_DECRYPTFINAL_EX )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -831,10 +831,10 @@ HB_FUNC( EVP_DECRYPTFINAL_EX )
 
 HB_FUNC( EVP_CIPHERINIT )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          hb_retni(EVP_CipherInit(ctx,
@@ -850,10 +850,10 @@ HB_FUNC( EVP_CIPHERINIT )
 
 HB_FUNC( EVP_CIPHERINIT_EX )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -875,7 +875,7 @@ HB_FUNC( EVP_CIPHERINIT_EX )
 HB_FUNC( EVP_CIPHERUPDATE )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
@@ -904,7 +904,7 @@ HB_FUNC( EVP_CIPHERUPDATE )
 HB_FUNC( EVP_CIPHERFINAL )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = EVP_CIPHER_CTX_block_size(ctx);
@@ -929,7 +929,7 @@ HB_FUNC( EVP_CIPHERFINAL )
 HB_FUNC( EVP_CIPHERFINAL_EX )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
@@ -958,13 +958,13 @@ HB_FUNC( EVP_CIPHERFINAL_EX )
 
 HB_FUNC( EVP_SEALINIT )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
-         int npubk = 0;
+         auto npubk = 0;
          PHB_ITEM pArray = nullptr;
          EVP_PKEY * pkey1 = nullptr;
 
@@ -1023,7 +1023,7 @@ HB_FUNC( EVP_SEALINIT )
 HB_FUNC( EVP_SEALUPDATE )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
@@ -1048,7 +1048,7 @@ HB_FUNC( EVP_SEALUPDATE )
 HB_FUNC( EVP_SEALFINAL )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = EVP_CIPHER_CTX_block_size(ctx);
@@ -1077,10 +1077,10 @@ HB_FUNC( EVP_SEALFINAL )
 
 HB_FUNC( EVP_OPENINIT )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(2);
+   auto cipher = hb_EVP_CIPHER_par(2);
 
    if( hb_EVP_CIPHER_CTX_is(1) && cipher ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
       auto priv = static_cast<EVP_PKEY*>(hb_parptr(5));
 
       if( ctx != nullptr && priv != nullptr ) {
@@ -1099,7 +1099,7 @@ HB_FUNC( EVP_OPENINIT )
 HB_FUNC( EVP_OPENUPDATE )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = static_cast<int>(hb_parclen(3)) + EVP_CIPHER_CTX_block_size(ctx) - 1;
@@ -1124,7 +1124,7 @@ HB_FUNC( EVP_OPENUPDATE )
 HB_FUNC( EVP_OPENFINAL )
 {
    if( hb_EVP_CIPHER_CTX_is(1) ) {
-      EVP_CIPHER_CTX * ctx = hb_EVP_CIPHER_CTX_par(1);
+      auto ctx = hb_EVP_CIPHER_CTX_par(1);
 
       if( ctx != nullptr ) {
          int size = EVP_CIPHER_CTX_block_size(ctx);

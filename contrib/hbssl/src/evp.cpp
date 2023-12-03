@@ -83,8 +83,8 @@ HB_FUNC( EVP_PKEY_FREE )
 
 HB_FUNC( EVP_BYTESTOKEY )
 {
-   const EVP_CIPHER * cipher = hb_EVP_CIPHER_par(1);
-   const EVP_MD * md = hb_EVP_MD_par(2);
+   auto cipher = hb_EVP_CIPHER_par(1);
+   auto md = hb_EVP_MD_par(2);
 
    if( cipher != nullptr && md != nullptr && (!HB_ISCHAR(3) || hb_parclen(3) == 8) ) {
       unsigned char key[EVP_MAX_KEY_LENGTH];

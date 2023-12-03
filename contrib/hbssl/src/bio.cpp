@@ -244,7 +244,7 @@ HB_FUNC( BIO_NEW )
 
 HB_FUNC( BIO_SET )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr && hb_BIO_METHOD_is(2) ) {
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
@@ -259,7 +259,7 @@ HB_FUNC( BIO_SET )
 
 HB_FUNC( BIO_CLEAR_FLAGS )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       BIO_clear_flags(bio, hb_parni(2));
@@ -270,7 +270,7 @@ HB_FUNC( BIO_CLEAR_FLAGS )
 
 HB_FUNC( BIO_SET_FLAGS )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       BIO_set_flags(bio, hb_parni(2));
@@ -281,7 +281,7 @@ HB_FUNC( BIO_SET_FLAGS )
 
 HB_FUNC( BIO_GET_FLAGS )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_get_flags(bio));
@@ -292,7 +292,7 @@ HB_FUNC( BIO_GET_FLAGS )
 
 HB_FUNC( BIO_TEST_FLAGS )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x00908050L && !defined(HB_OPENSSL_OLD_OSX_)
@@ -307,7 +307,7 @@ HB_FUNC( BIO_TEST_FLAGS )
 
 HB_FUNC( BIO_SET_FD )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_set_fd(bio, hb_parnl(2), hb_parnidef(3, BIO_NOCLOSE)));
@@ -318,7 +318,7 @@ HB_FUNC( BIO_SET_FD )
 
 HB_FUNC( BIO_GET_FD )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retnl(BIO_get_fd(bio, nullptr));
@@ -329,7 +329,7 @@ HB_FUNC( BIO_GET_FD )
 
 HB_FUNC( BIO_GET_RETRY_REASON )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_get_retry_reason(bio));
@@ -340,7 +340,7 @@ HB_FUNC( BIO_GET_RETRY_REASON )
 
 HB_FUNC( BIO_SET_RETRY_SPECIAL )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       BIO_set_retry_special(bio);
@@ -351,7 +351,7 @@ HB_FUNC( BIO_SET_RETRY_SPECIAL )
 
 HB_FUNC( BIO_SET_RETRY_READ )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       BIO_set_retry_read(bio);
@@ -362,7 +362,7 @@ HB_FUNC( BIO_SET_RETRY_READ )
 
 HB_FUNC( BIO_SET_RETRY_WRITE )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       BIO_set_retry_write(bio);
@@ -373,7 +373,7 @@ HB_FUNC( BIO_SET_RETRY_WRITE )
 
 HB_FUNC( BIO_SHOULD_READ )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_should_read(bio));
@@ -384,7 +384,7 @@ HB_FUNC( BIO_SHOULD_READ )
 
 HB_FUNC( BIO_SHOULD_WRITE )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_should_write(bio));
@@ -395,7 +395,7 @@ HB_FUNC( BIO_SHOULD_WRITE )
 
 HB_FUNC( BIO_SHOULD_IO_SPECIAL )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_should_io_special(bio));
@@ -406,7 +406,7 @@ HB_FUNC( BIO_SHOULD_IO_SPECIAL )
 
 HB_FUNC( BIO_RETRY_TYPE )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_retry_type(bio));
@@ -417,7 +417,7 @@ HB_FUNC( BIO_RETRY_TYPE )
 
 HB_FUNC( BIO_SHOULD_RETRY )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_should_retry(bio));
@@ -428,7 +428,7 @@ HB_FUNC( BIO_SHOULD_RETRY )
 
 HB_FUNC( BIO_CTRL_PENDING )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retnint(BIO_ctrl_pending(bio));
@@ -439,7 +439,7 @@ HB_FUNC( BIO_CTRL_PENDING )
 
 HB_FUNC( BIO_CTRL_WPENDING )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retnint(BIO_ctrl_wpending(bio));
@@ -450,7 +450,7 @@ HB_FUNC( BIO_CTRL_WPENDING )
 
 HB_FUNC( BIO_FLUSH )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_flush(bio));
@@ -461,7 +461,7 @@ HB_FUNC( BIO_FLUSH )
 
 HB_FUNC( BIO_SEEK )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retnl(BIO_seek(bio, hb_parnl(2)));
@@ -472,7 +472,7 @@ HB_FUNC( BIO_SEEK )
 
 HB_FUNC( BIO_TELL )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retnl(BIO_tell(bio));
@@ -483,7 +483,7 @@ HB_FUNC( BIO_TELL )
 
 HB_FUNC( BIO_RESET )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_reset(bio));
@@ -494,7 +494,7 @@ HB_FUNC( BIO_RESET )
 
 HB_FUNC( BIO_EOF )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_eof(bio));
@@ -505,7 +505,7 @@ HB_FUNC( BIO_EOF )
 
 HB_FUNC( BIO_SET_CLOSE )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_set_close(bio, hb_parnidef(2, BIO_NOCLOSE)));
@@ -516,7 +516,7 @@ HB_FUNC( BIO_SET_CLOSE )
 
 HB_FUNC( BIO_GET_CLOSE )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_get_close(bio));
@@ -582,7 +582,7 @@ HB_FUNC( BIO_NEW_MEM_BUF )
 
 HB_FUNC( BIO_READ )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
@@ -606,7 +606,7 @@ HB_FUNC( BIO_READ )
 
 HB_FUNC( BIO_GETS )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       int size = HB_ISNUM(3) ? hb_parni(3) : static_cast<int>(hb_parclen(2));
@@ -630,7 +630,7 @@ HB_FUNC( BIO_GETS )
 
 HB_FUNC( BIO_WRITE )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       auto size = static_cast<int>(hb_parclen(2));
@@ -650,7 +650,7 @@ HB_FUNC( BIO_WRITE )
 
 HB_FUNC( BIO_PUTS )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_puts(bio, hb_parcx(2)));
@@ -707,7 +707,7 @@ HB_FUNC( BIO_NEW_ACCEPT )
 
 HB_FUNC( BIO_SET_CONN_HOSTNAME )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr && HB_ISCHAR(2) ) {
       hb_retnl(BIO_set_conn_hostname(bio, const_cast<char*>(hb_parc(2))));
@@ -718,7 +718,7 @@ HB_FUNC( BIO_SET_CONN_HOSTNAME )
 
 HB_FUNC( BIO_SET_CONN_PORT )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr && HB_ISCHAR(2) ) {
       hb_retnl(BIO_set_conn_port(bio, const_cast<char*>(hb_parc(2))));
@@ -729,7 +729,7 @@ HB_FUNC( BIO_SET_CONN_PORT )
 
 HB_FUNC( BIO_SET_CONN_INT_PORT )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr && HB_ISNUM(2) ) {
       auto port = hb_parni(2);
@@ -741,7 +741,7 @@ HB_FUNC( BIO_SET_CONN_INT_PORT )
 
 HB_FUNC( BIO_SET_CONN_IP )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr && HB_ISCHAR(2) && hb_parclen(2) == 4 ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -761,7 +761,7 @@ HB_FUNC( BIO_SET_CONN_IP )
 
 HB_FUNC( BIO_GET_CONN_HOSTNAME )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retc(BIO_get_conn_hostname(bio));
@@ -772,7 +772,7 @@ HB_FUNC( BIO_GET_CONN_HOSTNAME )
 
 HB_FUNC( BIO_GET_CONN_PORT )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retc(BIO_get_conn_port(bio));
@@ -783,7 +783,7 @@ HB_FUNC( BIO_GET_CONN_PORT )
 
 HB_FUNC( BIO_GET_CONN_IP )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -802,7 +802,7 @@ HB_FUNC( BIO_GET_CONN_IP )
 HB_FUNC( BIO_GET_CONN_INT_PORT )
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10001000L  /* fixed here: https://rt.openssl.org/Ticket/Display.html?id=1989&user=guest&pass=guest */
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
 #if OPENSSL_VERSION_NUMBER == 0x1000206fL /* 1.0.2f */ || OPENSSL_VERSION_NUMBER == 0x1000112fL /* 1.0.1r */
@@ -824,7 +824,7 @@ HB_FUNC( BIO_GET_CONN_INT_PORT )
 
 HB_FUNC( BIO_SET_NBIO )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retnl(BIO_set_nbio(bio, hb_parni(2)));
@@ -835,7 +835,7 @@ HB_FUNC( BIO_SET_NBIO )
 
 HB_FUNC( BIO_DO_CONNECT )
 {
-   BIO * bio = hb_BIO_par(1);
+   auto bio = hb_BIO_par(1);
 
    if( bio != nullptr ) {
       hb_retni(BIO_do_connect(bio));

@@ -60,7 +60,7 @@ enum HB_PEM_TYPES
 
 static int hb_ssl_pem_password_cb(char * buf, int size, int rwflag, void * userdata)
 {
-   int retsize = 0;
+   auto retsize = 0;
 
    if( size > 0 && userdata && hb_vmRequestReenter() ) {
       hb_vmPushEvalSym();

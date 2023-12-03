@@ -95,11 +95,11 @@ static void hb_inetStartSSL(HB_BOOL fServer)
    if( sd != HB_NO_SOCKET ) {
       if( hb_SSL_is(2) ) {
          int iResult = -2;
-         SSL * ssl = hb_SSL_par(2);
+         auto ssl = hb_SSL_par(2);
 
          if( ssl != nullptr ) {
             HB_MAXINT timeout = HB_ISNUM(3) ? hb_parnint(3) : hb_znetInetTimeout(pItem, false);
-            PHB_SSLSTREAM pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult);
+            auto pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult);
             if( pStream != nullptr ) {
                if( !hb_znetInetInitialize(pItem, reinterpret_cast<PHB_ZNETSTREAM>(pStream),
                                           hb_inetReadSSL, hb_inetWriteSSL,
