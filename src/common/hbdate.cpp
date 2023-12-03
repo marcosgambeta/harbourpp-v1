@@ -535,24 +535,28 @@ HB_BOOL hb_timeStrGet(const char * szTime, int * piHour, int * piMinutes, int * 
                }
             }
          }
-         while( HB_ISSPACE(*szTime) ) {
+         if( iBlocks > 0 && (szTime[0] == 'Z' || szTime[0] == 'z') ) {
             ++szTime;
-         }
-         if( (szTime[0] == 'p' || szTime[0] == 'P') && (szTime[1] == 'm' || szTime[1] == 'M') ) {
-            ++iBlocks;
-            szTime += 2;
-            if( iHour == 0 ) {
-               iHour = 24;    /* wrong time */
-            } else if( iHour != 12 ) {
-               iHour += 12;
+         } else {
+            while( HB_ISSPACE(*szTime) ) {
+               ++szTime;
             }
-         } else if( (szTime[0] == 'a' || szTime[0] == 'A') && (szTime[1] == 'm' || szTime[1] == 'M') ) {
-            ++iBlocks;
-            szTime += 2;
-            if( iHour == 0 ) {
-               iHour = 24;    /* wrong time */
-            } else if( iHour == 12 ) {
-               iHour = 0;
+            if( (szTime[0] == 'p' || szTime[0] == 'P' ) && (szTime[1] == 'm' || szTime[1] == 'M') ) {
+               ++iBlocks;
+               szTime += 2;
+               if( iHour == 0 ) {
+                  iHour = 24;    /* wrong time */
+               } else if( iHour != 12 ) {
+                  iHour += 12;
+               }
+            } else if( (szTime[0] == 'a' || szTime[0] == 'A' ) && (szTime[1] == 'm' || szTime[1] == 'M') ) {
+               ++iBlocks;
+               szTime += 2;
+               if( iHour == 0 ) {
+                  iHour = 24;    /* wrong time */
+               } else if( iHour == 12 ) {
+                  iHour = 0;
+               }
             }
          }
          while( HB_ISSPACE(*szTime) ) {
