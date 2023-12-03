@@ -65,39 +65,39 @@
 #include <QtGui/QMouseEvent>
 #include <QtCore/QTimer>
 
-#if QT_VERSION <= 0x040900
-#include <QtGui/QApplication>
-#include <QtGui/QMainWindow>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QWidget>
-#include <QtGui/QMessageBox>
-#include <QtGui/QAbstractButton>
-#include <QtGui/QAction>
-#ifdef HB_QT_SOUND
-  #include <QtGui/QSound>
-#endif
-#elif QT_VERSION <= 0x052000
-#include <QtGui/QScreen>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QDesktopWidget>
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QAction>
-#ifdef HB_QT_SOUND
-  #include <QtMultimedia/QSound>
-#endif
+#if QT_VERSION >= 0x060000
+   #include <QtGui/QAction>
+   #include <QtWidgets/QAbstractButton>
+   #include <QtWidgets/QApplication>
+   #include <QtWidgets/QMainWindow>
+   #include <QtWidgets/QMessageBox>
+   #include <QtWidgets/QWidget>
+   #ifdef HB_QT_SOUND
+      #include <QtMultimedia/QSound>
+   #endif
+#elif QT_VERSION >= 0x050000
+   #include <QtGui/QScreen>
+   #include <QtWidgets/QAbstractButton>
+   #include <QtWidgets/QAction>
+   #include <QtWidgets/QApplication>
+   #include <QtWidgets/QDesktopWidget>
+   #include <QtWidgets/QMainWindow>
+   #include <QtWidgets/QMessageBox>
+   #include <QtWidgets/QWidget>
+   #ifdef HB_QT_SOUND
+      #include <QtMultimedia/QSound>
+   #endif
 #else
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QAbstractButton>
-#include <QtGui/QAction>
-#ifdef HB_QT_SOUND
-  #include <QtMultimedia/QSound>
-#endif
+   #include <QtGui/QAbstractButton>
+   #include <QtGui/QAction>
+   #include <QtGui/QApplication>
+   #include <QtGui/QDesktopWidget>
+   #include <QtGui/QMainWindow>
+   #include <QtGui/QMessageBox>
+   #include <QtGui/QWidget>
+   #ifdef HB_QT_SOUND
+      #include <QtGui/QSound>
+   #endif
 #endif
 
 #include "hbapi.hpp"
@@ -382,7 +382,7 @@ public:
    void setFontSize(int iFH, int iFW);
    void setImageSize();
    void copySelection();
-   void repaintChars(const QRect & rect);
+   void repaintChars(const QRect & rx);
 
 protected:
    void inputMethodEvent(QInputMethodEvent * evt);
@@ -403,18 +403,18 @@ protected:
 
 class QTCWindow : public QMainWindow
 {
-    Q_OBJECT
+   Q_OBJECT
 
 public:
-    QTCWindow(PHB_GTQTC pQTC);
-    virtual ~QTCWindow();
+   QTCWindow(PHB_GTQTC pQTC);
+   virtual ~QTCWindow();
 
-    QTConsole * qConsole;
-    void setWindowSize();
-    void setResizing();
+   QTConsole * qConsole;
+   void setWindowSize();
+   void setResizing();
 
 protected:
-    void closeEvent(QCloseEvent * evt);
+   void closeEvent(QCloseEvent * evt);
 };
 
 #endif /* HB_QTC_H_ */
