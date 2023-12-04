@@ -49,8 +49,8 @@
 
 /* NOTE: This file is also used by C code. */
 
-#define HB_SSL_CTX_NEW_METHOD_UNKNOWN                       ( -2 )
-#define HB_SSL_CTX_NEW_METHOD_DEFAULT                       ( -1 )
+#define HB_SSL_CTX_NEW_METHOD_UNKNOWN                       (-2)
+#define HB_SSL_CTX_NEW_METHOD_DEFAULT                       (-1)
 #define HB_SSL_CTX_NEW_METHOD_SSLV2                         0
 #define HB_SSL_CTX_NEW_METHOD_SSLV2_SERVER                  1
 #define HB_SSL_CTX_NEW_METHOD_SSLV2_CLIENT                  2
@@ -188,7 +188,7 @@
 #define HB_RSA_X931_PADDING                                 5
 #define HB_RSA_PKCS1_PSS_PADDING                            6
 
-#define HB_EVP_MD_UNSUPPORTED                               ( -1 )
+#define HB_EVP_MD_UNSUPPORTED                               (-1)
 #define HB_EVP_MD_MD_NULL                                   0
 #define HB_EVP_MD_MD2                                       1
 #define HB_EVP_MD_MD4                                       2
@@ -205,7 +205,7 @@
 #define HB_EVP_MD_MDC2                                      13
 #define HB_EVP_MD_RIPEMD160                                 14
 
-#define HB_EVP_CIPHER_UNSUPPORTED                           ( -1 )
+#define HB_EVP_CIPHER_UNSUPPORTED                           (-1)
 #define HB_EVP_CIPHER_ENC_NULL                              0
 #define HB_EVP_CIPHER_DES_ECB                               1
 #define HB_EVP_CIPHER_DES_EDE                               2
@@ -334,7 +334,7 @@
 #define HB_EVP_PKEY_X448                                    1035
 #define HB_EVP_PKEY_ED448                                   1088
 
-#define HB_BIO_METHOD_UNSUPPORTED                           ( -1 )
+#define HB_BIO_METHOD_UNSUPPORTED                           (-1)
 #define HB_BIO_METHOD_S_NULL                                0
 #define HB_BIO_METHOD_S_FILE                                1
 #define HB_BIO_METHOD_S_MEM                                 2

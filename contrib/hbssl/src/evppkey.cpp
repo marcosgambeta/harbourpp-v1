@@ -90,16 +90,15 @@ void hb_EVP_PKEY_ret(EVP_PKEY * pkey)
 
 static HB_GARBAGE_FUNC( EVP_PKEY_CTX_release )
 {
-   void ** ph = ( void ** ) Cargo;
+   void ** ph = static_cast<void**>(Cargo);
 
-   /* Check if pointer is not NULL to avoid multiple freeing */
-   if( ph && *ph )
-   {
+   /* Check if pointer is not nullptr to avoid multiple freeing */
+   if( ph && *ph ) {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-      EVP_PKEY_CTX_free( ( EVP_PKEY_CTX * ) *ph );
+      EVP_PKEY_CTX_free(static_cast<EVP_PKEY_CTX*>(*ph));
 #endif
-      /* set pointer to NULL just in case */
-      *ph = NULL;
+      /* set pointer to nullptr just in case */
+      *ph = nullptr;
    }
 }
 
@@ -110,27 +109,24 @@ static const HB_GC_FUNCS s_gcEVP_PKEY_CTX_funcs =
 };
 
 #if 0
-static HB_BOOL hb_EVP_PKEY_CTX_is( int iParam )
+static HB_BOOL hb_EVP_PKEY_CTX_is(int iParam)
 {
-   return hb_parptrGC( &s_gcEVP_PKEY_CTX_funcs, iParam ) != NULL;
+   return hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam ) != nullptr;
 }
 #endif
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-static EVP_PKEY_CTX * hb_EVP_PKEY_CTX_par( int iParam )
+static EVP_PKEY_CTX * hb_EVP_PKEY_CTX_par(int iParam)
 {
-   void ** ph = ( void ** ) hb_parptrGC( &s_gcEVP_PKEY_CTX_funcs, iParam );
-
-   return ph ? ( EVP_PKEY_CTX * ) *ph : NULL;
+   void ** ph = static_cast<void**>(hb_parptrGC(&s_gcEVP_PKEY_CTX_funcs, iParam));
+   return ph ? static_cast<EVP_PKEY_CTX*>(*ph) : nullptr;
 }
 
-static void hb_EVP_PKEY_CTX_ret( EVP_PKEY_CTX * pkey )
+static void hb_EVP_PKEY_CTX_ret(EVP_PKEY_CTX * pkey)
 {
-   void ** ph = ( void ** ) hb_gcAllocate( sizeof( EVP_PKEY_CTX * ), &s_gcEVP_PKEY_CTX_funcs );
-
+   void ** ph = static_cast<void**>(hb_gcAllocate(sizeof(EVP_PKEY_CTX*), &s_gcEVP_PKEY_CTX_funcs));
    *ph = pkey;
-
-   hb_retptrGC( ph );
+   hb_retptrGC(ph);
 }
 #endif
 
@@ -146,19 +142,18 @@ HB_FUNC( EVP_PKEY_TYPE )
 
 HB_FUNC( EVP_PKEY_BASE_ID )
 {
-   if( hb_EVP_PKEY_is( 1 ) )
-   {
-      EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
+   if( hb_EVP_PKEY_is(1) ) {
+      auto pkey = hb_EVP_PKEY_par(1);
 
-      if( pkey )
+      if( pkey != nullptr )
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-         hb_retni( EVP_PKEY_base_id( pkey ) );
+         hb_retni(EVP_PKEY_base_id(pkey));
 #else
-         hb_retni( EVP_PKEY_type( hb_parni( 1 ) ) );
+         hb_retni(EVP_PKEY_type(hb_parni(1)));
 #endif
+   } else {
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
    }
-   else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
 HB_FUNC( EVP_PKEY_SIZE )
@@ -258,202 +253,192 @@ HB_FUNC( EVP_PKEY_ASSIGN_DH )
 HB_FUNC( EVP_PKEY_CTX_NEW )
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-   EVP_PKEY * pkey = hb_EVP_PKEY_par( 1 );
+   auto pkey = hb_EVP_PKEY_par(1);
 
-   if( pkey )
-   {
-      hb_EVP_PKEY_CTX_ret( EVP_PKEY_CTX_new( pkey, ( ENGINE * ) hb_parptr( 2 ) ) );
+   if( pkey != nullptr ) {
+      hb_EVP_PKEY_CTX_ret(EVP_PKEY_CTX_new(pkey, static_cast<ENGINE*>(hb_parptr(2))));
    }
 #else
-   if( hb_RSA_is( 1 ) )
-   {
-      hb_itemReturn( hb_param( 1, HB_IT_POINTER ) );
+   if( hb_RSA_is(1) ) {
+      hb_itemReturn(hb_param(1, Harbour::Item::POINTER));
    }
 #endif
-   else
-      hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   else {
+      hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 HB_FUNC( EVP_PKEY_ENCRYPT_INIT )
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-   EVP_PKEY_CTX * ctx = hb_EVP_PKEY_CTX_par( 1 );
+   auto ctx = hb_EVP_PKEY_CTX_par(1);
 
-   if( ctx )
-   {
-      hb_retni( EVP_PKEY_encrypt_init( ctx ) );
+   if( ctx != nullptr ) {
+      hb_retni(EVP_PKEY_encrypt_init(ctx));
    }
 #else
-   if( hb_RSA_is( 1 ) )
-   {
-      hb_retni( 1 );
+   if( hb_RSA_is(1) ) {
+      hb_retni(1);
    }
 #endif
-   else
-      hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   else {
+      hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-   #define HB_RSA_KEY_ISPRIVATE( rsa )    ( RSA_get0_d( rsa ) != NULL )
+   #define HB_RSA_KEY_ISPRIVATE(rsa)    (RSA_get0_d(rsa) != nullptr)
 #else
-   #define HB_RSA_KEY_ISPRIVATE( rsa )    ( ( rsa )->d != NULL )
+   #define HB_RSA_KEY_ISPRIVATE(rsa)    ((rsa)->d != nullptr)
 #endif
-
 
 HB_FUNC( EVP_PKEY_ENCRYPT )
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-   EVP_PKEY_CTX * ctx = hb_EVP_PKEY_CTX_par( 1 );
+   auto ctx = hb_EVP_PKEY_CTX_par(1);
 
-   if( ctx )
-   {
-      const unsigned char * in = ( const unsigned char * ) hb_parcx( 3 );
-      size_t inlen = ( size_t ) hb_parclen( 3 ), outlen = 0;
-      unsigned char * buffer = NULL;
-      int ret;
+   if( ctx != nullptr ) {
+      auto in = reinterpret_cast<const unsigned char*>(hb_parcx(3));
+      size_t inlen = static_cast<size_t>(hb_parclen(3)), outlen = 0;
+      unsigned char * buffer = nullptr;
 
-      ret = EVP_PKEY_encrypt( ctx, NULL, &outlen, in, inlen );
-      if( ret > 0 )
-      {
-         buffer = ( unsigned char * ) hb_xgrab( outlen + 1 );
+      int ret = EVP_PKEY_encrypt(ctx, nullptr, &outlen, in, inlen);
+      if( ret > 0 ) {
+         buffer = static_cast<unsigned char*>(hb_xgrab(outlen + 1));
 
-         ret = EVP_PKEY_encrypt( ctx, buffer, &outlen, in, inlen );
-         if( ret > 0 )
-         {
-            if( ! hb_storclen_buffer( ( char * ) buffer, outlen, 2 ) )
+         ret = EVP_PKEY_encrypt(ctx, buffer, &outlen, in, inlen);
+         if( ret > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), outlen, 2) ) {
                ret = 0;
+            }
          }
       }
-      if( ret <= 0 )
-      {
-         if( buffer )
-            hb_xfree( buffer );
-         hb_storc( NULL, 2 );
+      if( ret <= 0 ) {
+         if( buffer ) {
+            hb_xfree(buffer);
+         }
+         hb_storc(nullptr, 2);
       }
-      hb_retni( ret );
+      hb_retni(ret);
    }
 #else
-   if( hb_RSA_is( 1 ) )
-   {
-      RSA * rsa = hb_RSA_par( 1 );
-      const unsigned char * from = ( const unsigned char * ) hb_parcx( 3 );
-      int flen = ( int ) hb_parclen( 3 );
-      unsigned char * buffer;
+   if( hb_RSA_is(1) ) {
+      auto rsa = hb_RSA_par(1);
+      auto from = static_cast<const unsigned char*>(hb_parcx(3));
+      auto flen = static_cast<int>(hb_parclen(3));
+      auto buffer = static_cast<unsigned char*>(hb_xgrab(RSA_size(rsa) + 1));
+
       int ret;
 
-      buffer = ( unsigned char * ) hb_xgrab( RSA_size( rsa ) + 1 );
-
-      if( HB_RSA_KEY_ISPRIVATE( rsa ) )
+      if( HB_RSA_KEY_ISPRIVATE(rsa) ) {
          /* private key */
-         ret = RSA_private_encrypt( flen, HB_UNCONST( from ), buffer, rsa, RSA_PKCS1_PADDING );
-      else
+         ret = RSA_private_encrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, RSA_PKCS1_PADDING);
+      } else {
          /* public key */
-         ret = RSA_public_encrypt( flen, HB_UNCONST( from ), buffer, rsa, RSA_PKCS1_PADDING );
+         ret = RSA_public_encrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, RSA_PKCS1_PADDING);
+      }
 
-      if( ret > 0 )
-      {
-         if( ! hb_storclen_buffer( ( char * ) buffer, ret, 2 ) )
+      if( ret > 0 ) {
+         if( !hb_storclen_buffer(static_cast<char*>(buffer), ret, 2) ) {
             ret = 0;
+         }
       }
-      if( ret <= 0 )
-      {
-         if( buffer )
-            hb_xfree( buffer );
-         hb_storc( NULL, 2 );
+      if( ret <= 0 ) {
+         if( buffer ) {
+            hb_xfree(buffer);
+         }
+         hb_storc(nullptr, 2);
       }
-      hb_retni( ret );
+      hb_retni(ret);
    }
 #endif
-   else
-      hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   else {
+      hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 HB_FUNC( EVP_PKEY_DECRYPT_INIT )
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-   EVP_PKEY_CTX * ctx = hb_EVP_PKEY_CTX_par( 1 );
+   auto ctx = hb_EVP_PKEY_CTX_par(1);
 
-   if( ctx )
-   {
-      hb_retni( EVP_PKEY_decrypt_init( ctx ) );
+   if( ctx != nullptr ) {
+      hb_retni(EVP_PKEY_decrypt_init(ctx));
    }
 #else
-   if( hb_RSA_is( 1 ) )
-   {
-      hb_retni( 1 );
+   if( hb_RSA_is(1) ) {
+      hb_retni(1);
    }
 #endif
-   else
-      hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   else {
+      hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 HB_FUNC( EVP_PKEY_DECRYPT )
 {
 #if OPENSSL_VERSION_NUMBER >= 0x10000000L
-   EVP_PKEY_CTX * ctx = hb_EVP_PKEY_CTX_par( 1 );
+   auto ctx = hb_EVP_PKEY_CTX_par(1);
 
-   if( ctx )
-   {
-      const unsigned char * in = ( const unsigned char * ) hb_parcx( 3 );
-      size_t inlen = ( size_t ) hb_parclen( 3 ), outlen = 0;
-      unsigned char * buffer = NULL;
-      int ret;
+   if( ctx != nullptr ) {
+      auto in = reinterpret_cast<const unsigned char*>(hb_parcx(3));
+      size_t inlen = static_cast<size_t>(hb_parclen(3)), outlen = 0;
+      unsigned char * buffer = nullptr;
 
-      ret = EVP_PKEY_decrypt( ctx, NULL, &outlen, in, inlen );
-      if( ret > 0 )
-      {
-         buffer = ( unsigned char * ) hb_xgrab( outlen + 1 );
+      int ret = EVP_PKEY_decrypt(ctx, nullptr, &outlen, in, inlen);
+      if( ret > 0 ) {
+         buffer = static_cast<unsigned char*>(hb_xgrab(outlen + 1));
 
-         ret = EVP_PKEY_decrypt( ctx, buffer, &outlen, in, inlen );
-         if( ret > 0 )
-         {
-            if( ! hb_storclen_buffer( ( char * ) buffer, outlen, 2 ) )
+         ret = EVP_PKEY_decrypt(ctx, buffer, &outlen, in, inlen);
+         if( ret > 0 ) {
+            if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), outlen, 2) ) {
                ret = 0;
+            }
          }
       }
-      if( ret <= 0 )
-      {
-         if( buffer )
-            hb_xfree( buffer );
-         hb_storc( NULL, 2 );
+      if( ret <= 0 ) {
+         if( buffer ) {
+            hb_xfree(buffer);
+         }
+         hb_storc(nullptr, 2);
       }
-      hb_retni( ret );
+      hb_retni(ret);
    }
 #else
-   if( hb_RSA_is( 1 ) )
-   {
-      RSA * rsa = hb_RSA_par( 1 );
-      const unsigned char * from = ( const unsigned char * ) hb_parcx( 3 );
-      int flen = ( int ) hb_parclen( 3 );
-      unsigned char * buffer;
+   if( hb_RSA_is(1) ) {
+      auto rsa = hb_RSA_par(1);
+      auto from = static_cast<const unsigned char*>(hb_parcx(3));
+      auto flen = static_cast<int>(hb_parclen(3));
       int ret;
 
-      buffer = ( unsigned char * ) hb_xgrab( RSA_size( rsa ) + 1 );
+      auto buffer = static_cast<unsigned char*>(hb_xgrab(RSA_size(rsa) + 1));
 
-      if( HB_RSA_KEY_ISPRIVATE( rsa ) )
+      if( HB_RSA_KEY_ISPRIVATE(rsa) ) {
          /* private key */
-         ret = RSA_private_decrypt( flen, HB_UNCONST( from ), buffer, rsa, RSA_PKCS1_PADDING );
-      else
+         ret = RSA_private_decrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, RSA_PKCS1_PADDING);
+      } else {
          /* public key */
-         ret = RSA_public_decrypt( flen, HB_UNCONST( from ), buffer, rsa, RSA_PKCS1_PADDING );
+         ret = RSA_public_decrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, RSA_PKCS1_PADDING);
+      }
 
-      if( ret > 0 )
-      {
-         buffer = ( unsigned char * ) hb_xrealloc( buffer, ret + 1 );
-         if( ! hb_storclen_buffer( ( char * ) buffer, ret, 2 ) )
+      if( ret > 0 ) {
+         buffer = static_cast<unsigned char*>(hb_xrealloc(buffer, ret + 1));
+         if( !hb_storclen_buffer(static_cast<char*>(buffer), ret, 2) ) {
             ret = 0;
+         }
       }
-      if( ret <= 0 )
-      {
-         if( buffer )
-            hb_xfree( buffer );
-         hb_storc( NULL, 2 );
+      if( ret <= 0 ) {
+         if( buffer ) {
+            hb_xfree(buffer);
+         }
+         hb_storc(nullptr, 2);
       }
-      hb_retni( ret );
+      hb_retni(ret);
    }
 #endif
-   else
-      hb_errRT_BASE( EG_NOFUNC, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
+   else {
+      hb_errRT_BASE(EG_NOFUNC, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+   }
 }
 
 #if 0
