@@ -58,6 +58,7 @@ src\evpmd.cpp
 src\evppkey.cpp
 src\pem.cpp
 src\rand.cpp
+src\rsa.cpp
 src\ssl.cpp
 src\sslciph.cpp
 src\sslctx.cpp
