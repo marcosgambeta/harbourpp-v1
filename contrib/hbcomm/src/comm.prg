@@ -119,7 +119,7 @@ FUNCTION ISWORKING( nPort )
 /* Fetch <nCount> chars into <cData> */
 FUNCTION INCHR( nPort, nCount, /* @ */ cData )
 
-   cData := iif( HB_ISNUMERIC( nCount ), Space( nCount ), "" )
+   cData := iif(HB_ISNUMERIC( nCount ), Space( nCount ), "")
 
    RETURN hb_comRecv( nPort, @cData, nCount )
 

@@ -86,9 +86,9 @@ ENDCLASS
 
 METHOD New( oUrl, xTrace, oCredentials, cClientHost ) CLASS TIPClientSMTP
 
-   ::super:new( oUrl, iif( hb_defaultValue( xTrace, .F. ), "smtp", xTrace ), oCredentials )
+   ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "smtp", xTrace), oCredentials )
 
-   ::nDefaultPort := iif( ::oUrl:cProto == "smtps", 465, 25 )
+   ::nDefaultPort := iif(::oUrl:cProto == "smtps", 465, 25)
    ::nConnTimeout := 50000
    ::nAccessMode := TIP_WO  // a write only
    ::cClientHost := cClientHost
@@ -113,7 +113,7 @@ METHOD Open( cUrl, lSSL ) CLASS TIPClientSMTP
       ::lAuthPlain := .T.
    ENDIF
 
-   ::inetSendAll( ::SocketCon, "HELO " + iif( Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "HELO " + iif(Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
 
    DO WHILE .T.
       IF !( lOk := ::GetOk() ) .OR. ::cReply == NIL .OR. ;
@@ -144,7 +144,7 @@ METHOD OpenSecure( cUrl, lSSL ) CLASS TIPClientSMTP
       ::lAuthPlain := .T.
    ENDIF
 
-   ::inetSendAll( ::SocketCon, "EHLO " + iif( Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "EHLO " + iif(Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
 
    lOk := ::DetectSecurity()
 
@@ -170,7 +170,7 @@ METHOD StartTLS() CLASS TIPClientSMTP
    IF ::GetOk() .AND. ::lHasSSL
       ::EnableSSL( .T. )
       __tip_SSLConnectFD( ::ssl, ::SocketCon )
-      ::inetSendAll( ::SocketCon, "EHLO " + iif( Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost ) + ::cCRLF )
+      ::inetSendAll( ::SocketCon, "EHLO " + iif(Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
       RETURN ::DetectSecurity()
    ENDIF
 

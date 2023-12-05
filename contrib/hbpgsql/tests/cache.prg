@@ -189,7 +189,7 @@ FUNCTION SQLFetch( lFetchAll )
 
          y := nPos
 
-         DO WHILE nPos <= iif( lFetchAll, oQuery:LastRec(), y )
+         DO WHILE nPos <= iif(lFetchAll, oQuery:LastRec(), y)
             oRow := oQuery:GetRow( nPos )
             dbAppend()
 
@@ -365,7 +365,7 @@ FUNCTION SQLPrepare( cQuery, ... )
             x := "'" + hb_DToC( x, "yyyy-mm-dd" ) + "'"
 
          CASE HB_ISLOGICAL( x )
-            x := iif( x, "'t'", "'f'" )
+            x := iif(x, "'t'", "'f'")
 
          CASE HB_ISSTRING( x )
             x := SToQ( RTrim( x ) )
@@ -425,14 +425,14 @@ FUNCTION QuickQuery( cQuery )
       IF PQlastrec( pQuery ) != 0
          IF PQfcount( pQuery ) == 1 .AND. PQlastrec( pQuery ) == 1
             temp := PQgetvalue( pQuery, 1, 1 )
-            result := iif( temp == NIL, "", temp )
+            result := iif(temp == NIL, "", temp)
          ELSE
             result := {}
             FOR x := 1 TO PQlastrec( pQuery )
                aTemp := {}
                FOR y := 1 TO PQfcount( pQuery )
                   temp := PQgetvalue( pQuery, x, y )
-                  AAdd( aTemp, iif( temp == NIL, "", temp ) )
+                  AAdd( aTemp, iif(temp == NIL, "", temp) )
                NEXT
                AAdd( result, aTemp )
             NEXT

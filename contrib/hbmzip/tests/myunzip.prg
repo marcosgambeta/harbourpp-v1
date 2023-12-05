@@ -101,7 +101,7 @@ PROCEDURE Main( ... )
       nErr := hb_unzipFileFirst( hUnzip )
       DO WHILE nErr == 0
          hb_unzipFileInfo( hUnzip, @cFile, @dDate, @cTime, , , , @nSize, @nCompSize, @lCrypted, @cComment )
-         ? PadR( cFile + iif( lCrypted, "*", "" ), 30 ), DToC( dDate ), cTime, nSize, nCompSize
+         ? PadR( cFile + iif(lCrypted, "*", ""), 30 ), DToC( dDate ), cTime, nSize, nCompSize
          IF ! Empty( cComment )
             ? "comment:", cComment
          ENDIF

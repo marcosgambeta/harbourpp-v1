@@ -33,7 +33,7 @@ STATIC s_aComboList := {}
       , , s_nCB_Kbd ); ;
       AAdd( s_aComboList, { __nCBid__, <"var"> } ); ;
       __temp__ := wvw_cbFindString( , __nCBid__, <var> ); ;
-      iif( __temp__ >= 0, wvw_cbSetIndex( , __nCBid__, __temp__ ), NIL ); ;
+      iif(__temp__ >= 0, wvw_cbSetIndex( , __nCBid__, __temp__ ), NIL); ;
       SetPos( <row>, <col> ); ;
       AAdd( GetList, _GET_( <var>, <"var">, Replicate( "X", <nWidth> ),, ) ) ; ;
       ATail( GetList ):cargo := __nCBid__; ;

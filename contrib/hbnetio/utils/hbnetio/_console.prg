@@ -89,19 +89,19 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
       @ nSavedRow, Col() GET cCommand PICTURE "@S" + hb_ntos( MaxCol() - Col() + 1 ) COLOR hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD )
 
-      SetCursor( iif( ReadInsert(), SC_INSERT, SC_NORMAL ) )
+      SetCursor( iif(ReadInsert(), SC_INSERT, SC_NORMAL) )
 
       bKeyIns   := SetKey( K_INS, ;
-         {|| SetCursor( iif( ReadInsert( ! ReadInsert() ), ;
-                          SC_NORMAL, SC_INSERT ) ) } )
+         {|| SetCursor( iif(ReadInsert( ! ReadInsert() ), ;
+                          SC_NORMAL, SC_INSERT) ) } )
       bKeyUp    := SetKey( K_UP, ;
-         {|| iif( nHistIndex > 1, ;
-                  cCommand := PadR( aHistory[ --nHistIndex ], Len( cCommand ) ), ), ;
+         {|| iif(nHistIndex > 1, ;
+                  cCommand := PadR( aHistory[ --nHistIndex ], Len( cCommand ) ), NIL), ;
                   ManageCursor( cCommand ) } )
       bKeyDown  := SetKey( K_DOWN, ;
-         {|| cCommand := PadR( iif( nHistIndex < Len( aHistory ), ;
+         {|| cCommand := PadR( iif(nHistIndex < Len( aHistory ), ;
              aHistory[ ++nHistIndex ], ;
-             ( nHistIndex := Len( aHistory ) + 1, "" ) ), Len( cCommand ) ), ;
+             ( nHistIndex := Len( aHistory ) + 1, "" )), Len( cCommand ) ), ;
                   ManageCursor( cCommand ) } )
       bKeyPaste := SetKey( K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) } )
 
@@ -193,13 +193,13 @@ STATIC PROCEDURE ShowHelp( hCommands )
    LOCAL n, c, m
 
    m := 8
-   hb_HEval( hCommands, {| k, l | m := Max( m, Len( k + iif( Empty( l[ 1 ] ), "", " " + l[ 1 ] ) ) ) } )
+   hb_HEval( hCommands, {| k, l | m := Max( m, Len( k + iif(Empty( l[ 1 ] ), "", " " + l[ 1 ]) ) ) } )
 
    AAdd( aTexts, "Commands:" )
 
    /* Processing commands */
    FOR EACH n IN hCommands
-      AAdd( aTexts, " " + PadR( n:__enumKey() + iif( Empty( n[ 1 ] ), "", " " + n[ 1 ] ), m ) + " - " + n[ 2 ] )
+      AAdd( aTexts, " " + PadR( n:__enumKey() + iif(Empty( n[ 1 ] ), "", " " + n[ 1 ]), m ) + " - " + n[ 2 ] )
    NEXT
    AAdd( aTexts, "" )
 
@@ -245,12 +245,12 @@ STATIC FUNCTION hbnetiocon_GetHidden()
 
    nSavedRow := Row()
 
-   AAdd( GetList, hb_Get():New( Row(), Col(), {| v | iif( PCount() == 0, cPassword, cPassword := v ) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ) )
+   AAdd( GetList, hb_Get():New( Row(), Col(), {| v | iif(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ) )
    ATail( GetList ):hideInput( .T. )
    ATail( GetList ):postBlock := {|| ! Empty( cPassword ) }
    ATail( GetList ):display()
 
-   SetCursor( iif( ReadInsert(), SC_INSERT, SC_NORMAL ) )
+   SetCursor( iif(ReadInsert(), SC_INSERT, SC_NORMAL) )
    bKeyPaste := SetKey( K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) } )
 
    READ

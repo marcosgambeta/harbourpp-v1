@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    ? "LZF API version is", ;
       hb_ntos( hb_lzf_version() ) + " (0x" + hb_NumToHex( hb_lzf_version() ) + ")"
-   ? "LibLZF optimized for", iif( hb_lzf_optimized_for_speed(), "speed.", "compression." )
+   ? "LibLZF optimized for", iif(hb_lzf_optimized_for_speed(), "speed.", "compression.")
 
    ? "--- test 1 ---"
    /*
@@ -25,7 +25,7 @@ PROCEDURE Main()
       ? "Lenght of a string is", hb_ntos( Len( cStr ) )
       ? "Lenght of a compressed string is", hb_ntos( Len( str_compressed ) )
    ELSE
-      ? "hb_lzf_compress() returns", iif( nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR" )
+      ? "hb_lzf_compress() returns", iif(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
 
    ? "--- test 2 ---"
@@ -37,7 +37,7 @@ PROCEDURE Main()
       ? "Lenght of a string is", hb_ntos( Len( cStr ) )
       ? "Lenght of a compressed string is", hb_ntos( Len( str_compressed ) )
    ELSE
-      ? "hb_lzf_compress() returns", iif( nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR" )
+      ? "hb_lzf_compress() returns", iif(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
 
    ? "--- test 3 ---"
@@ -50,9 +50,9 @@ PROCEDURE Main()
       ? "Lenght of a string is", hb_ntos( Len( cStr ) )
       ? "Lenght of a compressed string is", hb_ntos( Len( str_compressed ) )
 
-      ? iif( hb_base64Encode( str_compressed ) == b64_expected_result, "OK!", "not OK!" )
+      ? iif(hb_base64Encode( str_compressed ) == b64_expected_result, "OK!", "not OK!")
    ELSE
-      ? "hb_lzf_compress() returns", iif( nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR" )
+      ? "hb_lzf_compress() returns", iif(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
 
    ? "--- test 4 ---"
@@ -66,9 +66,9 @@ PROCEDURE Main()
       ? "Lenght of a string is", hb_ntos( Len( cStr ) )
       ? "Lenght of a compressed string is", hb_ntos( Len( str_compressed ) )
 
-      ? iif( hb_base64Encode( str_compressed ) == b64_expected_result, "OK!", "not OK!" )
+      ? iif(hb_base64Encode( str_compressed ) == b64_expected_result, "OK!", "not OK!")
    ELSE
-      ? "hb_lzf_compress() returns", iif( nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR" )
+      ? "hb_lzf_compress() returns", iif(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
 
    ? "--- test 5 ---"
@@ -79,7 +79,7 @@ PROCEDURE Main()
       ? "Lenght of a string is", hb_ntos( Len( cStr ) )
       ? "Lenght of a compressed string is", hb_ntos( Len( str_compressed ) )
    ELSE
-      ? "hb_lzf_compress() returns", iif( nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR" )
+      ? "hb_lzf_compress() returns", iif(nResult == HB_LZF_BUF_ERROR, "LZF_BUF_ERROR", "LZF_MEM_ERROR")
    ENDIF
 
    ? "--- test 6 ---"
@@ -88,7 +88,7 @@ PROCEDURE Main()
    IF nResult == HB_LZF_DATA_CORRUPTED
       ? "LZF decompression failed, compressed data corrupted"
    ELSE
-      ? iif( cStr == str_decompressed, "OK!", "not OK!" )
+      ? iif(cStr == str_decompressed, "OK!", "not OK!")
    ENDIF
 
    ? "--- test 7 ---"
@@ -100,7 +100,7 @@ PROCEDURE Main()
    IF nResult == HB_LZF_DATA_CORRUPTED
       ? "LZF decompression failed, compressed data corrupted!"
    ELSE
-      ? iif( cStr == str_decompressed, "OK!", "not OK!" )
+      ? iif(cStr == str_decompressed, "OK!", "not OK!")
    ENDIF
 
    ? "--- test 8 ---"
@@ -113,7 +113,7 @@ PROCEDURE Main()
    IF nResult == HB_LZF_DATA_CORRUPTED
       ? "LZF decompression failed, compressed data corrupted!"
    ELSE
-      ? iif( cStr == str_decompressed, "OK!", "not OK!" )
+      ? iif(cStr == str_decompressed, "OK!", "not OK!")
    ENDIF
 
    ? "--- test 9 ---"
@@ -125,9 +125,9 @@ PROCEDURE Main()
 
    IF nResult != HB_LZF_OK
       ? "hb_lzf_decompress() returns", ;
-         iif( nResult == HB_LZF_MEM_ERROR, "HB_LZF_MEM_ERROR", hb_ntos( nResult ) )
+         iif(nResult == HB_LZF_MEM_ERROR, "HB_LZF_MEM_ERROR", hb_ntos( nResult ))
    ELSE
-      ? iif( cStr == str_decompressed, "OK!", "not OK!" )
+      ? iif(cStr == str_decompressed, "OK!", "not OK!")
    ENDIF
 
    RETURN

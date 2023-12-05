@@ -110,9 +110,9 @@ METHOD WvgProgressBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
    ::ClassName := "msctls_progress32"
    ::ObjType   := objTypeStatic
    ::Style     += WIN_WS_CHILD + WIN_WS_GROUP + ;
-      iif( ::lMarquee, PBS_MARQUEE, 0 ) + ;
-      iif( ::lVertical, PBS_VERTICAL, 0 ) + ;
-      iif( ::lSmooth, PBS_SMOOTH, 0 ) + WIN_WS_EX_CLIENTEDGE
+      iif(::lMarquee, PBS_MARQUEE, 0) + ;
+      iif(::lVertical, PBS_VERTICAL, 0) + ;
+      iif(::lSmooth, PBS_SMOOTH, 0) + WIN_WS_EX_CLIENTEDGE
 
    ::wvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 

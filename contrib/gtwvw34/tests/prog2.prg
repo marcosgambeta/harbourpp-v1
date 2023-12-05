@@ -285,7 +285,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
 
    cmsg := AllTrim( cmsg )
    nNumLines := MLCount( cmsg, ( nright - nleft ) - 1 )
-   nWidth := iif( nNumLines < 2, Len( cmsg ), nRight - nLeft - 1 )
+   nWidth := iif(nNumLines < 2, Len( cmsg ), nRight - nLeft - 1)
    nTopLine := nBotLine - nNumLines - 1
    IF nTopLine < 0            // too many lines to display
       nNumLines += nTopLine

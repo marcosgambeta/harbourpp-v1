@@ -102,9 +102,9 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
       aButtons_ := { aButtons_ }
    ENDIF
 
-   nLinesRqd := Len( aText_ ) + iif( Len( aText_ ) == 0, 4, 5 )
+   nLinesRqd := Len( aText_ ) + iif(Len( aText_ ) == 0, 4, 5)
    nTopReq   := Int( ( maxRow - nLinesRqd ) / 2 )
-   nTop      := iif( nTop == NIL, nTopReq, iif( nTop >  nTopReq, nTop, nTopReq ) )
+   nTop      := iif(nTop == NIL, nTopReq, iif(nTop >  nTopReq, nTop, nTopReq))
    nBottom   := nTop + nLinesRqd - 1   // 1 for shadow
 
    // check for columns
@@ -122,7 +122,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    nColRqd   := 0
    AEval( { nColCap, nColTxt, nColBut }, {| e | nColRqd := Max( nColRqd, e ) } )
 
-   nLeft     := iif( maxCol > nColRqd, Int( ( maxCol - nColRqd ) / 2 ), 0 )
+   nLeft     := iif(maxCol > nColRqd, Int( ( maxCol - nColRqd ) / 2 ), 0)
    nRight    := nLeft + nColRqd
 
    aTrg_ := Array( Len( aButtons_ ) )
@@ -137,7 +137,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    nLeft   := 0
    nBottom := nTop + nLinesRqd - 1
    nRight  := nLeft + nColRqd
-   nBtnRow := nTop + 1 + Len( aText_ ) + iif( Len( aText_ ) == 0, 1, 2 )
+   nBtnRow := nTop + 1 + Len( aText_ ) + iif(Len( aText_ ) == 0, 1, 2)
 
    nBtnCol_  := Array( Len( aButtons_ ) )
 
@@ -272,7 +272,7 @@ FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
    hb_default( @lCenter     , .F. )
    hb_default( @lNoTitleBar , .F. )
 
-   aPos := iif( lCenter, { -1, -1 }, iif( nRow == NIL, { nT, nL }, { nRow, nCol } ) )
+   aPos := iif(lCenter, { -1, -1 }, iif(nRow == NIL, { nT, nL }, { nRow, nCol }))
 
    oCrt := WvgCrt():new( ,, aPos, { nB - nT, nR - nL },, ! lHidden )
    oCrt:lModal := lModal

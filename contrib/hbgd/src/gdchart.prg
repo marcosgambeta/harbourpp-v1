@@ -333,7 +333,7 @@ METHOD VerticalBarChart() CLASS GDChart
          nMax := Max( nMax, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMaxLabel := Max( nMaxLabel, Len( iif( cLabel != NIL, cLabel, "" ) ) )
+      nMaxLabel := Max( nMaxLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
       nTot      += hElement[ "VALUE" ]
    NEXT
 
@@ -525,7 +525,7 @@ METHOD HorizontalBarChart() CLASS GDChart
          nMax := Max( nMax, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMaxLabel := Max( nMaxLabel, Len( iif( cLabel != NIL, cLabel, "" ) ) )
+      nMaxLabel := Max( nMaxLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
       nTot      += hElement[ "VALUE" ]
    NEXT
 
@@ -721,7 +721,7 @@ METHOD LineChart() CLASS GDChart
          nMax := Max( nMax, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMaxLabel := Max( nMaxLabel, Len( iif( cLabel != NIL, cLabel, "" ) ) )
+      nMaxLabel := Max( nMaxLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
    NEXT
 
    // Before sum of values to determine percentual
@@ -734,7 +734,7 @@ METHOD LineChart() CLASS GDChart
          nMin := Min( nMin, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMinLabel := Max( nMinLabel, Len( iif( cLabel != NIL, cLabel, "" ) ) )
+      nMinLabel := Max( nMinLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
    NEXT
 
    IF ! HB_ISNUMERIC( nLeftLabelSpace )
@@ -775,7 +775,7 @@ METHOD LineChart() CLASS GDChart
       nSize := nWidth
    ENDIF
 
-   nTotRange := nMaxValue + iif( nMinValue < 0, Abs( nMinValue ), 0 )
+   nTotRange := nMaxValue + iif(nMinValue < 0, Abs( nMinValue ), 0)
 
    nCeiling := 0
 
@@ -786,9 +786,9 @@ METHOD LineChart() CLASS GDChart
    nCeiling := 10 ^ nCeiling
 
    nMaxValue := Ceiling( nMaxValue / nCeiling ) * nCeiling
-   nMinValue := iif( nMinValue < 0, -Ceiling( Abs( nMinValue ) / nCeiling ) * nCeiling, Ceiling( nMinValue / nCeiling ) * nCeiling )
+   nMinValue := iif(nMinValue < 0, -Ceiling( Abs( nMinValue ) / nCeiling ) * nCeiling, Ceiling( nMinValue / nCeiling ) * nCeiling)
 
-   nTotRange := nMaxValue + iif( nMinValue < 0, Abs( nMinValue ), 0 )
+   nTotRange := nMaxValue + iif(nMinValue < 0, Abs( nMinValue ), 0)
 
    IF lShowGrid
       ::Rectangle( x, ::Height() - ( y + nHeight ), x + nWidth, ::Height() - y, .F., colorp )
@@ -945,4 +945,4 @@ METHOD CloneDataFrom( oSrc )
 
 
 STATIC FUNCTION __HGetValue( hHash, cKey )
-   RETURN iif( HB_ISHASH( hHash ), hb_HGetDef( hHash, cKey ), NIL )
+   RETURN iif(HB_ISHASH( hHash ), hb_HGetDef( hHash, cKey ), NIL)

@@ -361,7 +361,7 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
    AAdd( aDlg[  8 ], nH )
    AAdd( aDlg[  9 ], cnId )
    AAdd( aDlg[ 10 ], cnDlgClass )
-   AAdd( aDlg[ 11 ], iif( HB_ISSTRING( cText ) .OR. HB_ISNUMERIC( cText ), cText, "" ) )
+   AAdd( aDlg[ 11 ], iif(HB_ISSTRING( cText ) .OR. HB_ISNUMERIC( cText ), cText, "") )
    AAdd( aDlg[ 12 ], 0 )
 
    RETURN aDlg
@@ -374,7 +374,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
       cbDlgProc := Upper( cbDlgProc )
    ENDIF
 
-   nDlgMode := iif( HB_ISSTRING( acnDlg ), 0, iif( HB_ISNUMERIC( acnDlg ), 1, 2 ) )
+   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC( acnDlg ), 1, 2))
 
    IF HB_ISARRAY( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -408,7 +408,7 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
       cbDlgProc := Upper( cbDlgProc )
    ENDIF
 
-   nDlgMode := iif( HB_ISSTRING( acnDlg ), 0, iif( HB_ISNUMERIC( acnDlg ), 1, 2 ) )
+   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC( acnDlg ), 1, 2))
 
    IF HB_ISARRAY( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -777,18 +777,18 @@ FUNCTION wvg_SetWindowPosToTop( hWnd )
 
 FUNCTION wvg_SetWindowSize( hWnd, w, h, lPaint )
    RETURN wapi_SetWindowPos( hWnd,, 0, 0, w, h, ;
-      iif( hb_defaultValue( lPaint, .F. ),, ;
-      hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOMOVE, WIN_SWP_NOACTIVATE ) ) )
+      iif(hb_defaultValue( lPaint, .F. ),, ;
+      hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOMOVE, WIN_SWP_NOACTIVATE )) )
 
 FUNCTION wvg_SetWindowPosition( hWnd, x, y, lPaint )
    RETURN wapi_SetWindowPos( hWnd,, x, y, 0, 0, ;
-      iif( hb_defaultValue( lPaint, .F. ),, ;
-      hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOMOVE, WIN_SWP_NOACTIVATE ) ) )
+      iif(hb_defaultValue( lPaint, .F. ),, ;
+      hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOMOVE, WIN_SWP_NOACTIVATE )) )
 
 FUNCTION wvg_SetWindowPosAndSize( hWnd, x, y, w, h, lPaint )
    RETURN wapi_SetWindowPos( hWnd,, x, y, w, h, ;
-      iif( hb_defaultValue( lPaint, .F. ),, ;
-      hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOACTIVATE, WIN_SWP_FRAMECHANGED ) ) )
+      iif(hb_defaultValue( lPaint, .F. ),, ;
+      hb_bitOr( WIN_SWP_NOREDRAW, WIN_SWP_NOZORDER, WIN_SWP_NOACTIVATE, WIN_SWP_FRAMECHANGED )) )
 
 PROCEDURE wvg_ForceWindowToTop( hWnd )
 
@@ -850,9 +850,9 @@ FUNCTION wvg_LoadImage( ncImage, nSource, nBmpOrIcon, nWidth, nHeight )
 
    hb_defaultValue( @nBmpOrIcon, WIN_IMAGE_BITMAP )
 
-   RETURN iif( hb_defaultValue( nSource, 0 ) == 2, ;
+   RETURN iif(hb_defaultValue( nSource, 0 ) == 2, ;
       wapi_LoadImage( , ncImage, nBmpOrIcon, nWidth, nHeight, WIN_LR_LOADFROMFILE + WIN_LR_DEFAULTSIZE ), ;
-      wapi_LoadImage( wapi_GetModuleHandle(), ncImage, nBmpOrIcon, nWidth, nHeight, WIN_LR_DEFAULTSIZE ) )
+      wapi_LoadImage( wapi_GetModuleHandle(), ncImage, nBmpOrIcon, nWidth, nHeight, WIN_LR_DEFAULTSIZE ))
 
 FUNCTION wvg_TrackPopupMenu( hMenu, nFlags, x, y, hWnd )
 
@@ -890,7 +890,7 @@ FUNCTION wvt_GetMenu()
 
    LOCAL hWnd := wvg_hWnd()
 
-   RETURN iif( Empty( hWnd ),, wapi_GetMenu( hWnd ) )
+   RETURN iif(Empty( hWnd ),, wapi_GetMenu( hWnd ))
 
 FUNCTION wvg_ChooseColor( nColor, aColor, nFlags, hWnd )
    RETURN win_ChooseColor( hWnd,, nColor, ;
@@ -912,18 +912,18 @@ FUNCTION wvt_ChooseColor( nColor, aColor, nFlags )
 FUNCTION wvg_PrepareBitmapFromResource( xNameOrID, nExpWidth, nExpHeight, lMap3Dcolors )
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), xNameOrID, WIN_IMAGE_BITMAP, ;
       nExpWidth, nExpHeight, ;
-      iif( hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR ) )
+      iif(hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
 
 #ifdef HB_LEGACY_LEVEL5
 
 FUNCTION wvg_PrepareBitmapFromResourceId( nID, nExpWidth, nExpHeight, lMap3Dcolors )
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), nID, WIN_IMAGE_BITMAP, ;
       nExpWidth, nExpHeight, ;
-      iif( hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR ) )
+      iif(hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
 
 FUNCTION wvg_PrepareBitmapFromResourceName( cName, nExpWidth, nExpHeight, lMap3Dcolors )
    RETURN wapi_LoadImage( wapi_GetModuleHandle(), cName, WIN_IMAGE_BITMAP, ;
       nExpWidth, nExpHeight, ;
-      iif( hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR ) )
+      iif(hb_defaultValue( lMap3Dcolors, .F. ), WIN_LR_LOADMAP3DCOLORS, WIN_LR_DEFAULTCOLOR) )
 
 #endif

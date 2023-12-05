@@ -19,7 +19,7 @@ PROCEDURE Main( cPar1 )
          @ 2, 0 TO MaxRow(), MaxCol()
 
          IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn ) ) > 0
-            PrnTest( aPrn[ nPrn ], cBMPFile, iif( HB_ISSTRING( cPar1 ) .AND. Lower( cPar1 ) == "ask", .T., ) )
+            PrnTest( aPrn[ nPrn ], cBMPFile, iif(HB_ISSTRING( cPar1 ) .AND. Lower( cPar1 ) == "ask", .T., NIL) )
          ENDIF
       ENDDO
    ENDIF
@@ -77,9 +77,9 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
                IF oPrinter:FontName == aFonts[ x ][ HB_WINFONT_NAME ]  // Make sure Windows didn't pick a different font
                   oPrinter:TextOut( aFonts[ x ][ HB_WINFONT_NAME ] )
                   oPrinter:SetPos( nColFixed )
-                  oPrinter:TextOut( iif( aFonts[ x ][ HB_WINFONT_FIXED ], "Yes", "No" ) )
+                  oPrinter:TextOut( iif(aFonts[ x ][ HB_WINFONT_FIXED ], "Yes", "No") )
                   oPrinter:SetPos( nColTTF )
-                  oPrinter:TextOut( iif( aFonts[ x ][ HB_WINFONT_TRUETYPE ], "Yes", "No" ) )
+                  oPrinter:TextOut( iif(aFonts[ x ][ HB_WINFONT_TRUETYPE ], "Yes", "No") )
                   oPrinter:SetPos( nColCharSet )
                   oPrinter:TextOut( hb_ntos( aFonts[ x ][ HB_WINFONT_CHARSET ] ) )
                   oPrinter:SetPos( oPrinter:LeftMargin, oPrinter:PosY + ( oPrinter:CharHeight * 2 ) )

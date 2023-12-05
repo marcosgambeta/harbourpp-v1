@@ -111,7 +111,7 @@ PROCEDURE Main()
    oTree:create()
    oTree:setColorBG( RGB( 120, 15, 240 ) )
    oTree:setColorFG( RGB( 15, 240, 120 ) )
-   oTree:itemSelected := {| oItem | iif( oItem != NIL, wvg_MessageBox( , oItem:caption ), NIL ) }
+   oTree:itemSelected := {| oItem | iif(oItem != NIL, wvg_MessageBox( , oItem:caption ), NIL) }
 
    oItem1 := oTree:rootItem:addItem( "First level A" )
 
@@ -150,7 +150,7 @@ PROCEDURE Main()
    oAddr:bufferLength := 500
    oAddr:border       := .T.
    cNavigate          := "http://www.harbour.vouch.info"
-   oAddr:dataLink     := {| x | iif( x == NIL, cNavigate, cNavigate := x ) }
+   oAddr:dataLink     := {| x | iif(x == NIL, cNavigate, cNavigate := x) }
    oAddr:setColorFG( RGB( 0, 0, 255   ) )
    oAddr:setColorBG( RGB( 0, 255, 255 ) )
    oAddr:create( oDA, , { 120, oTBar:currentSize()[2] }, { 500, 20 }, , .T. )
@@ -174,7 +174,7 @@ PROCEDURE Main()
    oRadio  := WvgRadioButton():new( oStatic2, , { 10, 10 }, { 100, 15 } )
    oRadio:caption   := "Com 1"
    oRadio:selection := .T.
-   oRadio:selected  := {| m1, m2, obj | m1 := m1, m2 := m2, wvg_MessageBox( , obj:caption + iif( obj:selection, "< S >", "< N >" ) ) }
+   oRadio:selected  := {| m1, m2, obj | m1 := m1, m2 := m2, wvg_MessageBox( , obj:caption + iif(obj:selection, "< S >", "< N >") ) }
    oRadio:create()
 
    oRadio  := WvgRadioButton():new( oStatic2, , { 10, 35 }, { 100, 15 } )
@@ -184,7 +184,7 @@ PROCEDURE Main()
    oCheck  := WvgCheckBox():New( oStatic2, , { 10, 70 }, { 100, 15 }, , .T. )
    oCheck:caption   := "Checkbox A"
    oCheck:create()
-   oCheck:selected  := {| m1, m2, o | m1 := m1, m2 := m2, wvg_MessageBox( , iif( o:getData(), "I am selected", "I am not selected" ) ) }
+   oCheck:selected  := {| m1, m2, o | m1 := m1, m2 := m2, wvg_MessageBox( , iif(o:getData(), "I am selected", "I am not selected") ) }
 
    // Create first 3State button, passing the position to :create()
    oXbp    := Wvg3State():new()
@@ -206,7 +206,7 @@ PROCEDURE Main()
    oXbp:autoTab        := .T.
    oXbp:bufferLength   := 20
    // Data code block containing assignment to LOCAL variable
-   oXbp:dataLink       := {| x | iif( x == NIL, cVarA, cVarA := x ) }
+   oXbp:dataLink       := {| x | iif(x == NIL, cVarA, cVarA := x) }
    oXbp:create( oStatic2, , { 10, 170 }, { 150, 20 } )
    oXbp:setData()
    // Assign the value of the edit buffer to a LOCAL variable when the input focus is lost
@@ -216,7 +216,7 @@ PROCEDURE Main()
    oXbp                := WvgSLE():new( , , { 10, 200 }, { 150, 20 } )
    oXbp:tabStop        := .T.
    oXbp:bufferLength   := 15
-   oXbp:dataLink       := {| x | iif( x == NIL, cVarB, cVarB := x ) }
+   oXbp:dataLink       := {| x | iif(x == NIL, cVarB, cVarB := x) }
    oXbp:create( oStatic2 )
    oXbp:setData()
    oXbp:killInputFocus := {| x, y, oSLE | x := x, y := y, oSLE:getData(), oPanel:caption := "cVarB =" + cVarB }
@@ -228,17 +228,17 @@ PROCEDURE Main()
    oMLE    := WvgMLE():new()
    oMLE:wordWrap := .F.
    oMLE:border   := .T.
-   oMLE:dataLink := {| x | iif( x == NIL, cText, cText := x ) }
+   oMLE:dataLink := {| x | iif(x == NIL, cText, cText := x) }
    oMLE:create( oStatic2, , { 180, 10 }, { 310, 250 } )
    // Copy text from LOCAL variable into edit buffer via :dataLink
    oMLE:setData()
 
    // --------------------------- Misc Config ------------------------\\
-   oTBar:buttonClick := {| oBtn | iif( oBtn:caption == "Hide"   , oStatic:hide(), NIL ), ;
-      iif( oBtn:caption == "Show"   , oStatic:show(), NIL ), ;
-      iif( oBtn:caption == "Tools"  , oStatic2:show():toFront(), NIL ), ;
-      iif( oBtn:caption == "FontDlg", ExeFontDialog( oCrt ), NIL ), ;
-      iif( oBtn:caption $ "Hide,Show", oCrt:sendMessage( WM_SIZE, 0, 0 ), NIL ), ;
+   oTBar:buttonClick := {| oBtn | iif(oBtn:caption == "Hide"   , oStatic:hide(), NIL), ;
+      iif(oBtn:caption == "Show"   , oStatic:show(), NIL), ;
+      iif(oBtn:caption == "Tools"  , oStatic2:show():toFront(), NIL), ;
+      iif(oBtn:caption == "FontDlg", ExeFontDialog( oCrt ), NIL), ;
+      iif(oBtn:caption $ "Hide,Show", oCrt:sendMessage( WM_SIZE, 0, 0 ), NIL), ;
       oPanel2:caption := "Button [ " + oBtn:caption + " ] clicked!" }
 
    oCrt:resize := {|| ResizeDialogXbp( oCrt, oTBar, oSBar, oStatic, oCom, oTree, oAddr ) }
@@ -313,8 +313,8 @@ STATIC FUNCTION ActiveXBuildMenuXbp( oCrt, oStatic, oStatic2 )
 
    oSubMenu       := WvgMenu():new( oMenuBar ):create()
    oSubMenu:title := "F~eatures"
-   oSubMenu:addItem( { "~Hide or Show Left Panel" , {|| iif( oStatic:isVisible, ;
-      oStatic:hide(), oStatic:show() ), oCrt:sendMessage( WM_SIZE, 0, 0 ) } } )
+   oSubMenu:addItem( { "~Hide or Show Left Panel" , {|| iif(oStatic:isVisible, ;
+      oStatic:hide(), oStatic:show()), oCrt:sendMessage( WM_SIZE, 0, 0 ) } } )
    oSubMenu:addItem( { "~Show My Panel" , {|| oStatic2:show():toFront() } } )
    oSubMenu:addItem()
    oSubMenu:addItem( { "~Font Dialog"   , {|| ExeFontDialog( oCrt ) } } )

@@ -907,7 +907,7 @@ FUNCTION lastdayomtest()
          c := .F.
       ELSE
 
-         iif( Empty( dDate ), dDate := Val( cMth ), dDate )
+         iif(Empty( dDate ), dDate := Val( cMth ), dDate)
 
          @ 12, 10 SAY "The number of days in the month is " + ;
             hb_ntos( LastDayOM( dDate ) )

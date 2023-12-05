@@ -86,7 +86,7 @@ PROCEDURE Main()
          WSelect( i )
       ELSEIF k == K_INS
          lFlag := ! lFlag
-         SetCursor( iif( lFlag, 3, 1 ) )
+         SetCursor( iif(lFlag, 3, 1) )
       ELSEIF k == K_DEL
          SetCursor( SC_NONE )
       ELSEIF k == K_LEFT
@@ -109,7 +109,7 @@ STATIC PROCEDURE dspcord()
 
    WSelect( 0 )
    @ MaxRow(), 0 SAY PadR( "WPOS(" + hb_ntos( r ) + "," + hb_ntos( c ) + ")" + ;
-      iif( MPresent(), "MPOS(" + hb_ntos( mr ) + "," + hb_ntos( mc ) + ")", "" ), MaxCol() + 1 )
+      iif(MPresent(), "MPOS(" + hb_ntos( mr ) + "," + hb_ntos( mc ) + ")", ""), MaxCol() + 1 )
    WSelect( w )
 
    RETURN

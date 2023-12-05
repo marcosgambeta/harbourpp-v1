@@ -29,7 +29,7 @@ PROCEDURE DrawFlake( lOpenPoly )
    nSideLen := 1500
    nOrder := 7
 
-   cImageName := iif( lOpenPoly, "flakeo.png", "flake.png" )
+   cImageName := iif(lOpenPoly, "flakeo.png", "flake.png")
 
    gdImage := gdImageCreate( 1900, 2100 )
    gdImageColorAllocate( gdImage, 0, 0, 0 )

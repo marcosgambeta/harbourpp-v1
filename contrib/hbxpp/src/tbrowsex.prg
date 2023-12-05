@@ -80,9 +80,9 @@ METHOD viewArea() CLASS xpp_TBrowse
    nFrozenWidth -= nWidth
 
    RETURN { ;
-      ::n_Top + ::nHeadHeight + iif( ::lHeadSep, 1, 0 ), ;
+      ::n_Top + ::nHeadHeight + iif(::lHeadSep, 1, 0), ;
       ::n_Left, ;
-      ::n_Bottom - ::nFootHeight - iif( ::lFootSep, 1, 0 ), ;
+      ::n_Bottom - ::nFootHeight - iif(::lFootSep, 1, 0), ;
       ::n_Right, ;
       nFrozenWidth }
 
@@ -96,7 +96,7 @@ METHOD firstScrCol() CLASS xpp_TBrowse
 
 #if 0
    // FIXME
-   RETURN iif( ::leftVisible == 0, 0, ::aColData[ ::leftVisible ][ _TBCI_COLPOS ] )
+   RETURN iif(::leftVisible == 0, 0, ::aColData[ ::leftVisible ][ _TBCI_COLPOS ])
 #endif
    RETURN 0
 

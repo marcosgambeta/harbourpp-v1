@@ -196,7 +196,7 @@ METHOD DrawSingleBar( pcode ) CLASS GDBar
 
       FOR i := 1 TO ::res
          ::Line( ::positionX + i, ::positionY, ::positionX + i, ::positionY + ::maxHeight, ;
-            iif( SubStr( pcode, j, 1 ) $ "0", ::BackColor, ::FillColor  ) )
+            iif(SubStr( pcode, j, 1 ) $ "0", ::BackColor, ::FillColor) )
       NEXT
 
       ::NextX()
@@ -220,8 +220,8 @@ METHOD DrawSingleI25( pcode ) CLASS GDBar
 
    FOR j := 1 TO Len( pcode )
 
-      imgBar := iif( j % 2 == 0, ::FillColor, ::BackColor )
-      imgWid := iif( SubStr( pcode, j, 1 ) == "0", widthSlimBar, widthFatBar )
+      imgBar := iif(j % 2 == 0, ::FillColor, ::BackColor)
+      imgWid := iif(SubStr( pcode, j, 1 ) == "0", widthSlimBar, widthFatBar)
 
       end_y := ::maxHeight
 
@@ -296,7 +296,7 @@ METHOD CheckValInArray( cChar ) CLASS GDBar
 
    LOCAL nPos := AScan( ::keys, {| x | SubStr( x, 1, 1 ) == cChar } )
 
-   RETURN iif( nPos > 0, nPos, NIL )
+   RETURN iif(nPos > 0, nPos, NIL)
 
 METHOD Finish( image_style, quality, nFG ) CLASS GDBar
 

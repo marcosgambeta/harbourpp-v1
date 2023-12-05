@@ -144,8 +144,8 @@ FUNCTION UWLabelNew( cText, cID, cStyle )
 
 METHOD Paint() CLASS UWLabel
 
-   UWrite( '<div' + iif( ::cID != NIL, ' id="' + ::cID + '"', "" ) + ;
-      iif( ::cStyle != NIL, ' style="' + ::cStyle + '"', "" ) + '>' + ;
+   UWrite( '<div' + iif(::cID != NIL, ' id="' + ::cID + '"', "") + ;
+      iif(::cStyle != NIL, ' style="' + ::cStyle + '"', "") + '>' + ;
       UHtmlEncode( ::cText ) + '</span>' )
 
    RETURN Self
@@ -211,8 +211,8 @@ FUNCTION UWInputNew( cName, cValue, cID, cStyle )
 
 METHOD Paint() CLASS UWInput
 
-   UWrite( '<input type="text" name="' + iif( ::cName != NIL, ::cName, "" ) + ;
-      '" value="' + iif( ::cValue != NIL, UHtmlEncode( ::cValue ), "" ) + '">' )
+   UWrite( '<input type="text" name="' + iif(::cName != NIL, ::cName, "") + ;
+      '" value="' + iif(::cValue != NIL, UHtmlEncode( ::cValue ), "") + '">' )
 
    RETURN Self
 
@@ -237,8 +237,8 @@ FUNCTION UWPasswordNew( cName )
 
 METHOD Paint() CLASS UWPassword
 
-   UWrite( '<input type="password" name="' + iif( ::cName != NIL, ::cName, "" ) + ;
-      '" value="' + iif( ::cValue != NIL, ::cValue, "" ) + '">' )
+   UWrite( '<input type="password" name="' + iif(::cName != NIL, ::cName, "") + ;
+      '" value="' + iif(::cValue != NIL, ::cValue, "") + '">' )
 
    RETURN Self
 
@@ -264,8 +264,8 @@ FUNCTION UWSubmitNew( cName, cValue )
 
 METHOD Paint() CLASS UWSubmit
 
-   UWrite( '<input type="submit" name="' + iif( ::cName != NIL, ::cName, "" ) + ;
-      '" value="' + iif( ::cValue != NIL, UHtmlEncode( ::cValue ), "" ) + '">' )
+   UWrite( '<input type="submit" name="' + iif(::cName != NIL, ::cName, "") + ;
+      '" value="' + iif(::cValue != NIL, UHtmlEncode( ::cValue ), "") + '">' )
 
    RETURN Self
 
@@ -404,15 +404,15 @@ METHOD Output() CLASS UWBrowse
       IF nI > 0
          cUrl := Left( cUrl, nI - 1 )
       ENDIF
-      cUrl += iif( "?" $ cUrl, "&", "?" ) + "_pos="
+      cUrl += iif("?" $ cUrl, "&", "?") + "_pos="
       cRet := '<br />' + cRet
       IF ! Eof()
          cI := cUrl + hb_ntos( ::nPos + ::nPageSize )
-         cRet := '<a href="' + iif( lValidate, UUrlChecksum( cI ), cI ) + '">&gt;&gt;</a>' + cRet
+         cRet := '<a href="' + iif(lValidate, UUrlChecksum( cI ), cI) + '">&gt;&gt;</a>' + cRet
       ENDIF
       IF ::nPos > 0
          cI := cUrl + hb_ntos( Max( 0, ::nPos - ::nPageSize ) )
-         cRet := '<a href="' + iif( lValidate, UUrlChecksum( cI ), cI ) + '">&lt;&lt;</a>&nbsp;&nbsp;' + cRet
+         cRet := '<a href="' + iif(lValidate, UUrlChecksum( cI ), cI) + '">&lt;&lt;</a>&nbsp;&nbsp;' + cRet
       ENDIF
    ENDIF
 
@@ -435,7 +435,7 @@ FUNCTION UWOptionNew()
 
 METHOD Add( cTitle, cCode, lRaw ) CLASS UWOption
 
-   AAdd( ::aOption, { iif( Empty( lRaw ), UHtmlEncode( cTitle ), cTitle ), cCode } )
+   AAdd( ::aOption, { iif(Empty( lRaw ), UHtmlEncode( cTitle ), cTitle), cCode } )
 
    RETURN Self
 
@@ -443,7 +443,7 @@ METHOD Output() CLASS UWOption
 
    LOCAL cRet := ""
 
-   AEval( ::aOption, {| X | cRet += hb_StrFormat( '<option value="%s"%s>%s</option>', UHtmlEncode( X[ 2 ] ), iif( X[ 2 ] == ::cValue, " selected", "" ), X[ 1 ] ) } )
+   AEval( ::aOption, {| X | cRet += hb_StrFormat( '<option value="%s"%s>%s</option>', UHtmlEncode( X[ 2 ] ), iif(X[ 2 ] == ::cValue, " selected", ""), X[ 1 ] ) } )
 
    RETURN cRet
 
@@ -575,7 +575,7 @@ STATIC FUNCTION uhttpd_join( cSeparator, aData )
       CASE "C"
       CASE "M" ; cRet += aData[ nI ]; EXIT
       CASE "N" ; cRet += hb_ntos( aData[ nI ] ); EXIT
-      CASE "D" ; cRet += iif( Empty( aData[ nI ] ), "", DToC( aData[ nI ] ) ); EXIT
+      CASE "D" ; cRet += iif(Empty( aData[ nI ] ), "", DToC( aData[ nI ] )); EXIT
       ENDSWITCH
    NEXT
 

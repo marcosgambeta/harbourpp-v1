@@ -96,7 +96,7 @@ PROCEDURE Main( cURL, cFile )
 
    ? "Connecting to", oURL:cProto + "://" + oURL:cServer
    IF oClient:Open()
-      ? "Connection status:", iif( Empty( oClient:cReply ), "<connected>", oClient:cReply )
+      ? "Connection status:", iif(Empty( oClient:cReply ), "<connected>", oClient:cReply)
 
       IF HB_ISSTRING( cFile ) .AND. hb_LeftEq( cFile, "+" )
          cFile := SubStr( cFile, 2 )
@@ -132,7 +132,7 @@ PROCEDURE Main( cURL, cFile )
       ENDIF
 
       oClient:Close()
-      ? "Done:", iif( Empty( oClient:cReply ), "(no goodbye message)", oClient:cReply )
+      ? "Done:", iif(Empty( oClient:cReply ), "(no goodbye message)", oClient:cReply)
    ELSE
       ? "Could not open URI", cURL
       IF ! Empty( oClient:cReply )

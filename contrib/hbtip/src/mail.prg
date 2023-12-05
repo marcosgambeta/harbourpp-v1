@@ -116,7 +116,7 @@ METHOD New( cBody, xEncoder ) CLASS TIPMail
 
 METHOD SetEncoder( xEncoder ) CLASS TIPMail
 
-   ::oEncoder := iif( HB_ISSTRING( xEncoder ), tip_GetEncoder( xEncoder ), xEncoder )
+   ::oEncoder := iif(HB_ISSTRING( xEncoder ), tip_GetEncoder( xEncoder ), xEncoder)
 
    IF HB_ISOBJECT( ::oEncoder )
       ::hHeaders[ "Content-Transfer-Encoding" ] := ::oEncoder:cName
@@ -138,7 +138,7 @@ METHOD SetBody( cBody ) CLASS TIPMail
    RETURN .T.
 
 METHOD GetBody() CLASS TIPMail
-   RETURN iif( HB_ISOBJECT( ::oEncoder ), ::oEncoder:Decode( ::cBody ), ::cBody )
+   RETURN iif(HB_ISOBJECT( ::oEncoder ), ::oEncoder:Decode( ::cBody ), ::cBody)
 
 METHOD GetFieldPart( cPart ) CLASS TIPMail
 
@@ -305,7 +305,7 @@ METHOD ToString() CLASS TIPMail
    // Body
    IF ::cBody != NIL .AND. ! ::cBody == ""
       IF Empty( ::aAttachments )
-         cRet += ::cBody + iif( ::lBodyEncoded, "", e"\r\n" )
+         cRet += ::cBody + iif(::lBodyEncoded, "", e"\r\n")
       ELSE
          // if there are attachments, the body of the message has to be treated as an attachment. [GD]
          cRet += ;
@@ -451,11 +451,11 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
             jump to it immediatly, this saves thousands of EOL test and makes splitting of a string fast
           */
          nPos := ;
-            iif( Empty( cSubBoundary ), ;
-            iif( Empty( cBoundary ), ;
+            iif(Empty( cSubBoundary ), ;
+            iif(Empty( cBoundary ), ;
             nLinePos + 2, ;
-            hb_At( "--" + cBoundary, cMail, nPos ) ), ;
-            hb_At( "--" + cSubBoundary, cMail, nPos ) )
+            hb_At( "--" + cBoundary, cMail, nPos )), ;
+            hb_At( "--" + cSubBoundary, cMail, nPos ))
       ENDIF
    ENDDO
 
@@ -518,7 +518,7 @@ METHOD setHeader( cSubject, cFrom, xTo, xCC ) CLASS TIPMail
          i := AllTrim( i )
          cName := tip_GetNameEmail( i )
          cAddr := tip_GetRawEmail( i )
-         cTo += iif( cName == cAddr, cAddr, LTrim( WordEncodeQ( cName, ::cCharset ) ) + " <" + cAddr + ">" )
+         cTo += iif(cName == cAddr, cAddr, LTrim( WordEncodeQ( cName, ::cCharset ) ) + " <" + cAddr + ">")
       ENDIF
    NEXT
 
@@ -538,7 +538,7 @@ METHOD setHeader( cSubject, cFrom, xTo, xCC ) CLASS TIPMail
             i := AllTrim( i )
             cName := tip_GetNameEmail( i )
             cAddr := tip_GetRawEmail( i )
-            cCC += iif( cName == cAddr, cAddr, LTrim( WordEncodeQ( cName, ::cCharset ) ) + " <" + cAddr + ">" )
+            cCC += iif(cName == cAddr, cAddr, LTrim( WordEncodeQ( cName, ::cCharset ) ) + " <" + cAddr + ">")
          ENDIF
       NEXT
 
@@ -639,7 +639,7 @@ STATIC FUNCTION WordEncodeQ( cData, cCharset )
       NEXT
    ENDIF
 
-   RETURN iif( lToEncode, "=?" + cCharset + "?Q?" + cString + "?=", cData )
+   RETURN iif(lToEncode, "=?" + cCharset + "?Q?" + cString + "?=", cData)
 
 FUNCTION tip_GetRawEmail( cAddress )
 

@@ -84,8 +84,8 @@ PROCEDURE Main( ... )
       OutHTML "</td></tr>"
       OutHTML "<tr><td align='center'>"
       OutHTML "<img src='test_out.exe?img=" + cPhoto + ;
-         iif( nWidth != NIL, "&width="  + hb_ntos( nWidth ), "" ) + ;
-         iif( nHeight != NIL, "&height=" + hb_ntos( nHeight ), "" ) + ;
+         iif(nWidth != NIL, "&width="  + hb_ntos( nWidth ), "") + ;
+         iif(nHeight != NIL, "&height=" + hb_ntos( nHeight ), "") + ;
          "'>" + "<br />"
       OutHTML "</td></tr>"
       OutHTML "<tr><td align='center'>"

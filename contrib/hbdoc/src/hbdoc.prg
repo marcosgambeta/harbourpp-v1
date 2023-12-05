@@ -80,9 +80,9 @@ REQUEST HB_CODEPAGE_UTF8EX
 
 #define BASE_DIR        ".." + hb_ps() + ".." + hb_ps()
 
-#define OnOrOff( b )    iif( b, "excluded", "included" )
-#define YesOrNo( b )    iif( b, "yes", "no" )
-#define IsDefault( b )  iif( b, "; default", "" )
+#define OnOrOff( b )    iif(b, "excluded", "included")
+#define YesOrNo( b )    iif(b, "yes", "no")
+#define IsDefault( b )  iif(b, "; default", "")
 
 #define TPL_START            1
 #define TPL_END              2
@@ -186,7 +186,7 @@ PROCEDURE Main( ... )
                   AAdd( s_hSwitches[ "format" ], SubStr( cArgName, 2 ) )
                ENDIF
             ELSE
-               ShowHelp( "Unrecognized option:" + cArgName + iif( Len( arg ) > 0, "=" + arg, "" ) )
+               ShowHelp( "Unrecognized option:" + cArgName + iif(Len( arg ) > 0, "=" + arg, "") )
                RETURN
             ENDIF
          ENDCASE
@@ -476,7 +476,7 @@ STATIC FUNCTION NewLineVoodoo( cSectionIn )
          IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() )
             cSection += hb_eol()
          ENDIF
-         cSection += iif( lPreformatted, cLine, AllTrim( cLine ) )
+         cSection += iif(lPreformatted, cLine, AllTrim( cLine ))
       ELSE
          cSection += " " + AllTrim( cLine )
       ENDIF
@@ -504,7 +504,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
    LOCAL idxSubCategory := -1
    LOCAL item
 
-   LOCAL cSourceFile := StrTran( ".." + hb_ps() + cFile, iif( hb_ps() == "\", "/", "\" ), hb_ps() )
+   LOCAL cSourceFile := StrTran( ".." + hb_ps() + cFile, iif(hb_ps() == "\", "/", "\"), hb_ps() )
 
    LOCAL o
 
@@ -587,7 +587,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField( "SUBCATEGORY" )
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. iif( HB_ISSTRING( c ), Lower( c ) == Lower( cSection ), Lower( c[ 1 ] ) == Lower( cSection ) ) } ) ) == 0
+               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. iif(HB_ISSTRING( c ), Lower( c ) == Lower( cSection ), Lower( c[ 1 ] ) == Lower( cSection )) } ) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
@@ -601,11 +601,11 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
          CASE ! o:IsConstraint( cSectionName, cSection )
 
-            cSource := cSectionName + " is '" + iif( Len( cSection ) <= 20, cSection, Left( StrTran( cSection, hb_eol() ), 20 ) + "..." ) + "', should be one of: "
+            cSource := cSectionName + " is '" + iif(Len( cSection ) <= 20, cSection, Left( StrTran( cSection, hb_eol() ), 20 ) + "...") + "', should be one of: "
 #if 0
             cSource := hb_HKeyAt( hsTemplate, idx ) + " should be one of: "
 #endif
-            AEval( sc_hConstraint[ cSectionName ], {| c, n | cSource += iif( n == 1, "", "," ) + c } )
+            AEval( sc_hConstraint[ cSectionName ], {| c, n | cSource += iif(n == 1, "", ",") + c } )
             AddErrorCondition( cFile, cSource )
 
          ENDCASE
@@ -741,7 +741,7 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
    OTHERWISE
       DO CASE
       CASE nMode == 1 ; OutStd( Space( nIndent ) + xLine + hb_eol() )
-      CASE nMode == 2 ; OutStd( iif( n > 1, ", ", "" ) + xLine )
+      CASE nMode == 2 ; OutStd( iif(n > 1, ", ", "") + xLine )
       OTHERWISE       ; OutStd( "(" + hb_ntos( nMode ) + ") " + xLine + hb_eol() )
       ENDCASE
    ENDCASE
@@ -799,9 +799,9 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
 
    CASE aArgs[ 2 ] == "Templates"
       aHelp := { ;
-         iif( Len( aArgs ) >= 3, aArgs[ 3 ] + " template is:", "Defined templates are:" ), ;
+         iif(Len( aArgs ) >= 3, aArgs[ 3 ] + " template is:", "Defined templates are:"), ;
          "", ;
-         {|| ShowTemplatesHelp( iif( Len( aArgs ) >= 3, aArgs[ 3 ], NIL ), s_hSwitches[ "DELIMITER" ] ) } }
+         {|| ShowTemplatesHelp( iif(Len( aArgs ) >= 3, aArgs[ 3 ], NIL), s_hSwitches[ "DELIMITER" ] ) } }
 
    CASE aArgs[ 2 ] == "Compliance"
       aHelp := { ;
@@ -846,7 +846,7 @@ STATIC FUNCTION Join( aVar, cDelimiter )
 
    LOCAL cResult := ""
 
-   AEval( aVar, {| c, n | cResult += iif( n > 1, cDelimiter, "" ) + c } )
+   AEval( aVar, {| c, n | cResult += iif(n > 1, cDelimiter, "") + c } )
 
    RETURN cResult
 
@@ -871,7 +871,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
 
    IF nWidth == 0 .OR. lRaw
       idx := 99999
-      AEval( aText, {| c | iif( Empty( c ), , idx := Min( idx, Len( c ) - Len( LTrim( c ) ) ) ) } )
+      AEval( aText, {| c | iif(Empty( c ), , idx := Min( idx, Len( c ) - Len( LTrim( c ) ) )) } )
       AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr( c, idx + 1 ) } )
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
@@ -921,7 +921,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                   idx := nWidth
                ENDIF
 
-               cResult += Space( nLeftMargin ) + Left( cLine, idx - iif( SubStr( cLine, idx, 1 ) == " ", 1, 0 ) ) + hb_eol()
+               cResult += Space( nLeftMargin ) + Left( cLine, idx - iif(SubStr( cLine, idx, 1 ) == " ", 1, 0) ) + hb_eol()
                cLine := LTrim( SubStr( cLine, idx + 1 ) )
             ENDDO
 
@@ -999,7 +999,7 @@ METHOD New( cTemplate ) CLASS Entry
    FOR EACH item IN sc_hFields
       key := item:__enumKey()
       idx := item:__enumIndex()
-      ::fld[ key ] := iif( key == "TEMPLATE", cTemplate, iif( ::_group[ idx ] == TPL_REQUIRED,, "" ) )
+      ::fld[ key ] := iif(key == "TEMPLATE", cTemplate, iif(::_group[ idx ] == TPL_REQUIRED,, ""))
    NEXT
 
    RETURN self
@@ -1063,9 +1063,9 @@ METHOD IsOutput( cField ) CLASS Entry
    RETURN hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OUTPUT ) != 0
 
 METHOD SubcategoryIndex( cCategory, cSubcategory ) CLASS Entry
-   RETURN iif( cCategory $ sc_hConstraint[ "categories" ], ;
+   RETURN iif(cCategory $ sc_hConstraint[ "categories" ], ;
       hb_AScan( sc_hConstraint[ "categories" ][ cCategory ][ 1 ], cSubcategory, , , .T. ), ;
-      0 )
+      0)
 
 FUNCTION FieldIDList()
    RETURN hb_HKeys( sc_hFields )
@@ -1244,11 +1244,11 @@ STATIC PROCEDURE ShowTemplatesHelp( cTemplate, cDelimiter )
          FOR idx := 1 TO Len( sc_hFields )
             fldkey := hb_HKeyAt( sc_hFields, idx )
             IF o:_group[ idx ] != 0
-               ShowSubHelp( iif( idx == 1, "/", " " ) + "*  " + cDelimiter + fldkey + cDelimiter, 1, 0 )
+               ShowSubHelp( iif(idx == 1, "/", " ") + "*  " + cDelimiter + fldkey + cDelimiter, 1, 0 )
                IF fldkey == "TEMPLATE"
                   ShowSubHelp( " *      " + o:fld[ "TEMPLATE" ], 1, 0 )
                ELSEIF o:_group[ idx ] != TPL_START .AND. o:_group[ idx ] != TPL_END .AND. .T.
-                  ShowSubHelp( " *      " + iif( o:IsRequired( fldkey ), "<required>", "<optional>" ), 1, 0 )
+                  ShowSubHelp( " *      " + iif(o:IsRequired( fldkey ), "<required>", "<optional>"), 1, 0 )
                ENDIF
             ENDIF
          NEXT

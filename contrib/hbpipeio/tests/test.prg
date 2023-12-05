@@ -52,8 +52,8 @@ PROCEDURE Main()
 
       hb_vfErase( "data.gz" )
       ? "write data.gz " + hb_ntos( hb_BLen( cResult ) ) + " -> " + ;
-        iif( hb_BLen( cResult ) > 0 .AND. hb_memoWrit( "data.gz", cResult ), ;
-             "OK", "ERROR" )
+        iif(hb_BLen( cResult ) > 0 .AND. hb_memoWrit( "data.gz", cResult ), ;
+             "OK", "ERROR")
       /* check if we can decode data compressed by GZIP */
       IF hb_ZUncompress( cResult ) == cData
          ? "OK, GZIP output decompressed correctly and muches the source"

@@ -19,7 +19,7 @@ PROCEDURE Main( cPar1 )
          @ 2, 0 TO MaxRow(), MaxCol()
          nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn )
          IF nPrn != 0
-            PrnTest( aPrn[ nPrn ], cBMPFile, iif( HB_ISSTRING( cPar1 ) .AND. Lower( cPar1 ) == "ask", .T., NIL ) )
+            PrnTest( aPrn[ nPrn ], cBMPFile, iif(HB_ISSTRING( cPar1 ) .AND. Lower( cPar1 ) == "ask", .T., NIL) )
          ENDIF
       ENDDO
    ENDIF
@@ -79,9 +79,9 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
                IF oPrinter:FontName == aFonts[ x, 1 ]  // Make sure Windows didn't pick a different font
                   oPrinter:TextOut( aFonts[ x, 1 ] )
                   oPrinter:SetPos( nColFixed )
-                  oPrinter:TextOut( iif( aFonts[ x, 2 ], "Yes", "No" ) )
+                  oPrinter:TextOut( iif(aFonts[ x, 2 ], "Yes", "No") )
                   oPrinter:SetPos( nColTTF )
-                  oPrinter:TextOut( iif( aFonts[ x, 3 ], "Yes", "No" ) )
+                  oPrinter:TextOut( iif(aFonts[ x, 3 ], "Yes", "No") )
                   oPrinter:SetPos( nColCharSet )
                   oPrinter:TextOut( hb_ntos( aFonts[ x, 4 ] ) )
                   oPrinter:SetPos( oPrinter:LeftMargin, oPrinter:PosY + ( oPrinter:CharHeight * 2 ) )

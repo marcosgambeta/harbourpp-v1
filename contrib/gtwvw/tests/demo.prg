@@ -702,7 +702,7 @@ STATIC FUNCTION RefreshHXB( oBrowse, nWinNum, XBid )
    nMin := 1
    nMax := oBrowse:ColCount
    nPage := oBrowse:RightVisible - oBrowse:LeftVisible + 1
-   nPos := iif( oBrowse:RightVisible == oBrowse:ColCount, nMax, oBrowse:LeftVisible )
+   nPos := iif(oBrowse:RightVisible == oBrowse:ColCount, nMax, oBrowse:LeftVisible)
 
    wvw_xbUpdate( nWinNum, XBid, nPos, nPage, nMin, nMax )
 
@@ -853,7 +853,7 @@ FUNCTION CreateToolbar( nWinNum )
 
    IF ! ldefault
       nSysBitmap := Alert( "Select toolbar button size", { "Small", "Big" } )
-      nSysBitmap := iif( nSysBitmap == 0, 1, nSysBitmap )
+      nSysBitmap := iif(nSysBitmap == 0, 1, nSysBitmap)
       lDisplayText := Alert( "Display text in toolbar?", { "Yes", "No" } ) == 1
    ENDIF
 

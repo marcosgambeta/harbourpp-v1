@@ -114,7 +114,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       bOut := hb_HGetDef( t_hParams, "output", {| cMsg | OutStd( cMsg ) } )
       IF lFailed
          Eval( bOut, ;
-            PadR( iif( lFailed, "!", " " ), TEST_RESULT_COL1_WIDTH ) + " " + ;
+            PadR( iif(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH ) + " " + ;
             PadR( ProcName( 1 ) + "(" + hb_ntos( ProcLine( 1 ) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
             RTrim( cBlock ) + ;
             hb_eol() + ;
@@ -124,7 +124,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
             hb_eol() )
       ELSE
          Eval( bOut, ;
-            PadR( iif( lFailed, "!", " " ), TEST_RESULT_COL1_WIDTH ) + " " + ;
+            PadR( iif(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH ) + " " + ;
             PadR( ProcName( 1 ) + "(" + hb_ntos( ProcLine( 1 ) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
             PadR( cBlock, TEST_RESULT_COL3_WIDTH ) + " -> " + ;
             PadR( XToStr( xResult, .F. ), TEST_RESULT_COL4_WIDTH ) + " | " + ;
@@ -206,12 +206,12 @@ STATIC FUNCTION XToStr( xValue, lInString )
 
    SWITCH ValType( xValue )
    CASE "N" ; RETURN hb_ntos( xValue )
-   CASE "D" ; RETURN iif( lInString, "0d" + iif( Empty( xValue ), "00000000", DToS( xValue ) ), 'hb_SToD( "' + DToS( xValue ) + '" )' )
+   CASE "D" ; RETURN iif(lInString, "0d" + iif(Empty( xValue ), "00000000", DToS( xValue )), 'hb_SToD( "' + DToS( xValue ) + '" )')
    CASE "U" ; RETURN "NIL"
    CASE "C"
    CASE "M"
       xValue := __StrToExp( xValue )
-      RETURN iif( lInString, xValue, '"' + xValue + '"' )
+      RETURN iif(lInString, xValue, '"' + xValue + '"')
    CASE "A"
    CASE "H"
    CASE "O"

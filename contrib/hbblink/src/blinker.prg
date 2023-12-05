@@ -128,7 +128,7 @@ FUNCTION BliErrPrmBas()
 
 /* INCOMPATIBLE: Will return pointer instead of numeric. */
 FUNCTION BliLibLib( cLib )
-   RETURN iif( s_lLibOverrides, hb_hrbLoad( HB_HRB_BIND_OVERLOAD, cLib ), hb_hrbLoad( cLib ) )
+   RETURN iif(s_lLibOverrides, hb_hrbLoad( HB_HRB_BIND_OVERLOAD, cLib ), hb_hrbLoad( cLib ))
 
 /* INCOMPATIBLE: Will return array instead of numeric. */
 FUNCTION BliFunHan( pLib, cFunction )

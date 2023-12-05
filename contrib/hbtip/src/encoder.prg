@@ -70,10 +70,10 @@ METHOD New( cMode ) CLASS TIPEncoder
    RETURN Self
 
 METHOD Encode( cData ) CLASS TIPEncoder
-   RETURN iif( ::cName == MODE_PASSTHROUGH, cData, tip_GetEncoder( ::cName ):Encode( cData ) )
+   RETURN iif(::cName == MODE_PASSTHROUGH, cData, tip_GetEncoder( ::cName ):Encode( cData ))
 
 METHOD Decode( cData ) CLASS TIPEncoder
-   RETURN iif( ::cName == MODE_PASSTHROUGH, cData, tip_GetEncoder( ::cName ):Decode( cData ) )
+   RETURN iif(::cName == MODE_PASSTHROUGH, cData, tip_GetEncoder( ::cName ):Decode( cData ))
 
 FUNCTION tip_GetEncoder( cMode )
 

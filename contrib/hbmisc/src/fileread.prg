@@ -241,7 +241,7 @@ METHOD ErrorMsg( cText ) CLASS TFileRead
       ELSE
          nTemp := ::nLastOp + 1
       ENDIF
-      cMessage := iif( Empty( cText ), "", cText ) + "Error " + hb_ntos( ::nError ) + " " + sc_cAction[ nTemp ] + " " + ::cFile
+      cMessage := iif(Empty( cText ), "", cText) + "Error " + hb_ntos( ::nError ) + " " + sc_cAction[ nTemp ] + " " + ::cFile
    ENDIF
 
    RETURN cMessage

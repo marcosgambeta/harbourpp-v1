@@ -69,7 +69,7 @@ PROCEDURE Main()
 
    FOR i := 1 TO 10
       oRow         := oTable + "tr"
-      oRow:bgColor := iif( RecNo() % 2 == 0, "lightgrey", "white" )
+      oRow:bgColor := iif(RecNo() % 2 == 0, "lightgrey", "white")
 
       FOR j := 1 TO FCount()
          oCell      := oRow + "td"

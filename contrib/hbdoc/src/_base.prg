@@ -105,7 +105,7 @@ METHOD New( cDir, cFilename, cTitle, cExtension, cLang, nType ) CLASS TPLGenerat
    ::cOutFileName := ;
       ::cDir + hb_ps() + ;
       ::cFilename + ;
-      iif( Lower( ::cLang ) == "en", "", "." + ::cLang ) + ;
+      iif(Lower( ::cLang ) == "en", "", "." + ::cLang) + ;
       ::cExtension
 
    RETURN Self

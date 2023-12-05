@@ -81,9 +81,9 @@ PROCEDURE Main( ... )
 
    oRef := HBFormatCode():New( aParams, hb_FNameMerge( hb_DirBase(), "hbformat.ini" ) )
    IF oRef:nErr > 0
-      OutStd( hb_StrFormat( iif( oRef:nLineErr == 0, ;
+      OutStd( hb_StrFormat( iif(oRef:nLineErr == 0, ;
          I_( "Initialization error %1$d in parameter: %2$s" ), ;
-         I_( "Initialization error %1$d on line %3$d: %2$s" ) ), oRef:nErr, oRef:cLineErr, oRef:nLineErr ) + hb_eol() )
+         I_( "Initialization error %1$d on line %3$d: %2$s" )), oRef:nErr, oRef:cLineErr, oRef:nLineErr ) + hb_eol() )
    ENDIF
 
    oRef:bCallBack := {| a, i | FCallBack( a, i ) }
@@ -138,7 +138,7 @@ STATIC PROCEDURE DirEval( cInitDir, cMask, lRecur, bCode )
    LOCAL file
 
    cInitDir := hb_DirSepAdd( cInitDir )
-   cMask := iif( cMask == NIL, hb_osFileMask(), cMask )
+   cMask := iif(cMask == NIL, hb_osFileMask(), cMask)
 
    FOR EACH file IN hb_vfDirectory( cInitDir + cMask, "HSD" )
       IF "D" $ file[ F_ATTR ]

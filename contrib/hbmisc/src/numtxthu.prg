@@ -71,7 +71,7 @@ FUNCTION NumToTxtHU( nValue )
          tmp1--
       ENDDO
 
-      cRetVal += " egész " + NumToTxtRaw( tmp * ( 10 ^ tmp1 ) ) + iif( tmp1 >= 1 .AND. tmp1 <= Len( aTort ), " " + aTort[ tmp1 ], "" )
+      cRetVal += " egész " + NumToTxtRaw( tmp * ( 10 ^ tmp1 ) ) + iif(tmp1 >= 1 .AND. tmp1 <= Len( aTort ), " " + aTort[ tmp1 ], "")
    ENDIF
 
    RETURN hb_UTF8ToStr( cRetVal )
@@ -104,9 +104,9 @@ STATIC FUNCTION NumToTxtRaw( nValue )
          aDigit[ tmp + 2 ] != 0
 
          cValue += ;
-            iif( Empty( cValue ), "", "-" ) + ;
-            iif( aDigit[ tmp ] != 0, aEgyes[ aDigit[ tmp ] + 1 ] + "száz", "" ) + ;
-            iif( aDigit[ tmp + 2 ] == 0, aTizes1[ aDigit[ tmp + 1 ] + 1 ], aTizes2[ aDigit[ tmp + 1 ] + 1 ] ) + ;
+            iif(Empty( cValue ), "", "-") + ;
+            iif(aDigit[ tmp ] != 0, aEgyes[ aDigit[ tmp ] + 1 ] + "száz", "") + ;
+            iif(aDigit[ tmp + 2 ] == 0, aTizes1[ aDigit[ tmp + 1 ] + 1 ], aTizes2[ aDigit[ tmp + 1 ] + 1 ]) + ;
             aEgyes[ aDigit[ tmp + 2 ] + 1 ] + ;
             aEgesz[ ( Int( ( nLen - tmp ) / 3 ) ) + 1 ]
       ENDIF

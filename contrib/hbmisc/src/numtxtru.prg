@@ -502,7 +502,7 @@ STATIC FUNCTION MnyToStrRaw( nValue, aMsg, aCur, nMode )
          cRetVal := NumToStrRaw( nValue, aMsg, aCur[ 1 ] )
       ENDIF
    ELSE
-      cRetVal := iif( nValue < 100, StrZero( nValue, 2 ), hb_ntos( nValue ) )
+      cRetVal := iif(nValue < 100, StrZero( nValue, 2 ), hb_ntos( nValue ))
    ENDIF
 
    IF ! lShort
@@ -577,7 +577,7 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
                cTemp += "10**" + hb_ntos( nTri * 3 ) + " "
             ENDIF
          ENDIF
-         cTemp := TriToStr( nTemp, aMsg, iif( nTri == 0, nGender, iif( nTri == 1, 2, 1 ) ), lOrd, @lLast, nTri ) + cTemp
+         cTemp := TriToStr( nTemp, aMsg, iif(nTri == 0, nGender, iif(nTri == 1, 2, 1)), lOrd, @lLast, nTri ) + cTemp
          IF ! Empty( cRetVal )
             cRetVal := " " + cRetVal
          ENDIF
@@ -648,11 +648,11 @@ STATIC FUNCTION TriToStr( nValue, aMsg, nGender, lOrd, lLast, nTri )
                nIdx := NTSR_CNT
                lLast := .F.
             ELSE
-               nIdx := iif( nValue + 1 <= Len( aMsg[ nGender ] ), nGender, NTSR_MALE )
+               nIdx := iif(nValue + 1 <= Len( aMsg[ nGender ] ), nGender, NTSR_MALE)
             ENDIF
          ENDIF
       ELSE
-         nIdx := iif( nValue + 1 <= Len( aMsg[ nGender ] ), nGender, NTSR_MALE )
+         nIdx := iif(nValue + 1 <= Len( aMsg[ nGender ] ), nGender, NTSR_MALE)
       ENDIF
       cTemp := aMsg[ nIdx, nValue + 1 ]
       IF nIdx == NTSR_CNT
@@ -668,11 +668,11 @@ STATIC FUNCTION OrdToGender( cValue, aMsg, nGender )
    LOCAL nTemp := Len( cValue ) - Len( aMsg[ NTSR_ORDG, 1 ] )
 
    IF nGender == NTSR_FEMA
-      cValue := Left( cValue, nTemp ) + iif( SubStr( cValue, nTemp + 1 ) == aMsg[ NTSR_ORDG, 1 ], ;
-         aMsg[ NTSR_ORDG, 2 ], aMsg[ NTSR_ORDG, 3 ] )
+      cValue := Left( cValue, nTemp ) + iif(SubStr( cValue, nTemp + 1 ) == aMsg[ NTSR_ORDG, 1 ], ;
+         aMsg[ NTSR_ORDG, 2 ], aMsg[ NTSR_ORDG, 3 ])
    ELSEIF nGender == NTSR_MIDD
-      cValue := Left( cValue, nTemp ) + iif( SubStr( cValue, nTemp + 1 ) == aMsg[ NTSR_ORDG, 1 ], ;
-         aMsg[ NTSR_ORDG, 4 ], aMsg[ NTSR_ORDG, 5 ] )
+      cValue := Left( cValue, nTemp ) + iif(SubStr( cValue, nTemp + 1 ) == aMsg[ NTSR_ORDG, 1 ], ;
+         aMsg[ NTSR_ORDG, 4 ], aMsg[ NTSR_ORDG, 5 ])
    ENDIF
 
    RETURN cValue

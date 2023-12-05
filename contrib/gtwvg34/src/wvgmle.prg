@@ -89,7 +89,7 @@ CREATE CLASS WvgMLE INHERIT WvgWindow, WvgDataRef
    METHOD pos()                                 VIRTUAL
 
    VAR    sl_undo                               INIT .T.
-   ACCESS undo                                  INLINE iif( ::sl_undo, NIL, NIL )
+   ACCESS undo                                  INLINE iif(::sl_undo, NIL, NIL)
    ASSIGN undo( lUndo )                         INLINE ::sl_undo := lUndo
 
    METHOD setEditable()                         VIRTUAL
@@ -248,7 +248,7 @@ METHOD WvgMLE:changed( lChanged )
    LOCAL lChg := ::sendMessage( EM_GETMODIFY, 0, 0 )
 
    IF HB_ISLOGICAL( lChanged )
-      ::sendMessage( EM_SETMODIFY, iif( lChanged, 0, 1 ), 0 )
+      ::sendMessage( EM_SETMODIFY, iif(lChanged, 0, 1), 0 )
    ENDIF
 
    RETURN lChg

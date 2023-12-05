@@ -26,7 +26,7 @@ METHOD new( nRow, nCol, cTitle, cChars, nSmooth ) CLASS Twirler
    ::n_Row := nRow
    ::n_Col := nCol
    ::n_Smooth := nSmooth
-   ::c_Chars := iif( Empty( cChars ), "|/-\", cChars )
+   ::c_Chars := iif(Empty( cChars ), "|/-\", cChars)
    ::c_Title := cTitle
    IF Empty( ::c_Title )
       ::c_Title := ""

@@ -275,7 +275,7 @@ METHOD start( xAction, ... ) CLASS Thread
                RETURN NIL
             }, ... )
 
-      ::threadID := iif( ::pThreadID == NIL, 0, hb_threadID( ::pThreadID ) )
+      ::threadID := iif(::pThreadID == NIL, 0, hb_threadID( ::pThreadID ))
    ENDIF
 
    RETURN .T.
@@ -286,8 +286,8 @@ METHOD synchronize( nTimeOut ) CLASS Thread
 
    IF hb_threadSelf() != pThreadID
       RETURN hb_threadWait( pThreadID, ;
-         iif( HB_ISNUMERIC( nTimeOut ) .AND. nTimeOut != 0, ;
-         nTimeOut / 100, ) )
+         iif(HB_ISNUMERIC( nTimeOut ) .AND. nTimeOut != 0, ;
+         nTimeOut / 100, NIL) )
    ENDIF
 
    RETURN .F.
@@ -300,5 +300,5 @@ METHOD threadID() CLASS Thread
 
    LOCAL pThreadID := ::pThreadID
 
-   RETURN iif( pThreadID == NIL, 0, hb_threadID( pThreadID ) )
+   RETURN iif(pThreadID == NIL, 0, hb_threadID( pThreadID ))
 #endif

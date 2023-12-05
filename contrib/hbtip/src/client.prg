@@ -170,8 +170,8 @@ METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClient
 
    DO CASE
    CASE HB_ISSTRING( xTrace ) .OR. hb_defaultValue( xTrace, .F. )
-      oLog := TIPLog():New( iif( HB_ISSTRING( xTrace ), xTrace, NIL ) )
-      ::bTrace := {| cMsg | iif( PCount() > 0, oLog:Add( cMsg ), oLog:Close() ) }
+      oLog := TIPLog():New( iif(HB_ISSTRING( xTrace ), xTrace, NIL) )
+      ::bTrace := {| cMsg | iif(PCount() > 0, oLog:Add( cMsg ), oLog:Close()) }
    CASE HB_ISEVALITEM( xTrace )
       ::bTrace := xTrace
    ENDCASE
@@ -237,7 +237,7 @@ METHOD Open( cUrl ) CLASS TIPClient
       ::oUrl := TUrl():New( cUrl )
    ENDIF
 
-   nPort := iif( ::oUrl:nPort == -1, ::nDefaultPort, ::oUrl:nPort )
+   nPort := iif(::oUrl:nPort == -1, ::nDefaultPort, ::oUrl:nPort)
 
    ::SocketCon := hb_inetCreate()
 
@@ -580,7 +580,7 @@ METHOD inetSendAll( SocketCon, cData, nLen ) CLASS TIPClient
          ? "SSL_write()", cData
 #endif
          nRet := SSL_write( ::ssl, cData, nLen )
-         ::nSSLError := iif( nRet < 0, nRet, 0 )
+         ::nSSLError := iif(nRet < 0, nRet, 0)
       ELSE
          nRet := 0
       ENDIF
@@ -614,7 +614,7 @@ METHOD inetRecv( SocketCon, cStr1, len ) CLASS TIPClient
          ? "SSL_read()"
 #endif
          nRet := SSL_read( ::ssl, @cStr1, len )
-         ::nSSLError := iif( nRet < 0, nRet, 0 )
+         ::nSSLError := iif(nRet < 0, nRet, 0)
       ELSE
          nRet := 0
       ENDIF
@@ -623,7 +623,7 @@ METHOD inetRecv( SocketCon, cStr1, len ) CLASS TIPClient
    ENDIF
 
    IF HB_ISEVALITEM( ::bTrace )
-      ::Log( SocketCon, "", len, iif( nRet >= 0, cStr1, nRet ) )
+      ::Log( SocketCon, "", len, iif(nRet >= 0, cStr1, nRet) )
    ENDIF
 
    RETURN nRet
@@ -641,7 +641,7 @@ METHOD inetRecvLine( SocketCon, nRet, size ) CLASS TIPClient
          IF nRet == 0 .OR. cRet == ""
             cRet := NIL
          ENDIF
-         ::nSSLError := iif( nRet < 0, nRet, 0 )
+         ::nSSLError := iif(nRet < 0, nRet, 0)
       ELSE
          cRet := ""
          nRet := 0
@@ -669,7 +669,7 @@ METHOD inetRecvAll( SocketCon, cRet, size ) CLASS TIPClient
          IF nRet == 0 .OR. cRet == ""
             cRet := NIL
          ENDIF
-         ::nSSLError := iif( nRet < 0, nRet, 0 )
+         ::nSSLError := iif(nRet < 0, nRet, 0)
       ELSE
          cRet := ""
          nRet := 0
@@ -679,7 +679,7 @@ METHOD inetRecvAll( SocketCon, cRet, size ) CLASS TIPClient
    ENDIF
 
    IF HB_ISEVALITEM( ::bTrace )
-      ::Log( SocketCon, "", size, iif( nRet >= 0, cRet, nRet ) )
+      ::Log( SocketCon, "", size, iif(nRet >= 0, cRet, nRet) )
    ENDIF
 
    RETURN nRet
@@ -690,7 +690,7 @@ METHOD inetErrorCode( SocketCon ) CLASS TIPClient
 
    IF ::lSSL
       IF ::lHasSSL
-         nRet := iif( ::nSSLError == 0, 0, SSL_get_error( ::ssl, ::nSSLError ) )
+         nRet := iif(::nSSLError == 0, 0, SSL_get_error( ::ssl, ::nSSLError ))
       ELSE
          nRet := 0
       ENDIF

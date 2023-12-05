@@ -58,8 +58,8 @@
 /* Class WvtLabel */
 CREATE CLASS WvtLabel INHERIT WvtObject
 
-   ACCESS TEXT                                    INLINE iif( ::cText == NIL, "", ::cText )
-   ASSIGN TEXT( cTxt )                            INLINE ::cText := iif( cTxt == NIL, "", cTxt )
+   ACCESS TEXT                                    INLINE iif(::cText == NIL, "", ::cText)
+   ASSIGN TEXT( cTxt )                            INLINE ::cText := iif(cTxt == NIL, "", cTxt)
 
    METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
    METHOD create( lConfg )

@@ -44,6 +44,6 @@ PROCEDURE Main( cURL, cMask )
       ENDIF
    ENDIF
 
-   ErrorLevel( iif( lRetVal, 0, 1 ) )
+   ErrorLevel( iif(lRetVal, 0, 1) )
 
    RETURN

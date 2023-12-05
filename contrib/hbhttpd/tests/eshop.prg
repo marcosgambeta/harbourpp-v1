@@ -106,7 +106,7 @@ PROCEDURE Main()
          "LogError"            => {| m | oLogError:Add( m + hb_eol() ) }, ;
          "Trace"               => {| ... | QOut( ... ) }, ;
          "Port"                => nPort, ;
-         "Idle"                => {| o | iif( hb_FileExists( ".uhttpd.stop" ), ( FErase( ".uhttpd.stop" ), o:Stop() ), NIL ) }, ;
+         "Idle"                => {| o | iif(hb_FileExists( ".uhttpd.stop" ), ( FErase( ".uhttpd.stop" ), o:Stop() ), NIL) }, ;
          "PrivateKeyFilename"  => "private.key", ;
          "CertificateFilename" => "certificate.crt", ;
          "SSL"                 => .T., ;

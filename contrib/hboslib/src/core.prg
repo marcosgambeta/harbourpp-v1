@@ -75,10 +75,10 @@ FUNCTION OL_IsOS2Win()
    RETURN hb_gtInfo( HB_GTI_ISFULLSCREEN )
 
 FUNCTION OL_OsVerMaj()
-   RETURN iif( hb_osIsWin9x(), 7, 5 )
+   RETURN iif(hb_osIsWin9x(), 7, 5)
 
 FUNCTION OL_OsVerMin()
-   RETURN iif( hb_osIsWin9x(), 1, 0 )
+   RETURN iif(hb_osIsWin9x(), 1, 0)
 
 FUNCTION OL_WinCBCopy()
    RETURN hb_gtInfo( HB_GTI_CLIPBOARDDATA )

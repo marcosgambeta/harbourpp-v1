@@ -984,7 +984,7 @@ STATIC FUNCTION ArrayToString( aArray )
    LOCAL cElem
 
    FOR EACH cElem IN aArray
-      cString += iif( '"' $ cElem, "'" + cElem + "'", '"' + cElem + '"' ) + iif( cElem:__enumIndex() < nLen, ",", "" )
+      cString += iif('"' $ cElem, "'" + cElem + "'", '"' + cElem + '"') + iif(cElem:__enumIndex() < nLen, ",", "")
    NEXT
 
    RETURN cString

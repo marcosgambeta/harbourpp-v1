@@ -107,7 +107,7 @@ PROCEDURE Main()
    ? "Blat Error String: ", oBlat:BlatErrorString()
 
    ?
-   ? iif( nRet == 0, "mail sent correctly!", "mail NOT sent" )
+   ? iif(nRet == 0, "mail sent correctly!", "mail NOT sent")
    ?
 
    RETURN

@@ -62,9 +62,9 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
       cHost := TUrl():New( cHost ):cServer
    ENDCASE
 
-   hb_default( @nPort, iif( lSTARTTLS, 587, 465 ) )
+   hb_default( @nPort, iif(lSTARTTLS, 587, 465) )
 
-   ? "Host:", cHost, hb_ntos( nPort ), iif( lSTARTTLS, "(STARTTLS)", "" )
+   ? "Host:", cHost, hb_ntos( nPort ), iif(lSTARTTLS, "(STARTTLS)", "")
 
    ? tip_MailSend( ;
       cHost, ;

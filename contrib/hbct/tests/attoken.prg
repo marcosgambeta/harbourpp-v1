@@ -74,7 +74,7 @@ PROCEDURE Main()
    FOR ni := 1 TO NumToken( cStr, ".!", 1 )
       ? '    Token #' + hb_ntos( ni ) + '("' + Token( cStr, ".!", ni, 1 ) + '")'
       ? "          starts at pos " + Str( npos := AtToken( cStr, ".!", ni, 1 ), 3 ) + ;
-         " and is " + iif( SubStr( cStr, npos, 1 ) $ ".!", "", "not " ) + "an empty token."
+         " and is " + iif(SubStr( cStr, npos, 1 ) $ ".!", "", "not ") + "an empty token."
    NEXT
 
    ?

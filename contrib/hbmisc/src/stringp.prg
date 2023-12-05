@@ -78,12 +78,12 @@ FUNCTION ToChar( xTxt, cSeparator, lDebug )
 
    SWITCH ValType( xTxt )
    CASE "C"
-   CASE "M" ; RETURN iif( lDebug, '"' + xTxt + '"', xTxt )
+   CASE "M" ; RETURN iif(lDebug, '"' + xTxt + '"', xTxt)
    CASE "N" ; RETURN hb_ntos( xTxt )
-   CASE "U" ; RETURN iif( lDebug, "NIL", "" )
+   CASE "U" ; RETURN iif(lDebug, "NIL", "")
    CASE "D" ; RETURN hb_DToC( xTxt, "yyyy-mm-dd" )
-   CASE "L" ; RETURN iif( lDebug, iif( xTxt, ".T.", ".F." ), iif( xTxt, "True", "False" ) )
-   CASE "B" ; RETURN iif( lDebug, "Block", Eval( xTxt ) )
+   CASE "L" ; RETURN iif(lDebug, iif(xTxt, ".T.", ".F."), iif(xTxt, "True", "False"))
+   CASE "B" ; RETURN iif(lDebug, "Block", Eval( xTxt ))
 
    CASE "A"
       cOut := ""

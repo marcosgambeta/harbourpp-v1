@@ -100,7 +100,7 @@ METHOD New( aRow, aFStruct, cTableName ) CLASS TMySQLRow
 
 METHOD FieldGet( cnField ) CLASS TMySQLRow
 
-   LOCAL nNum := iif( HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField )
+   LOCAL nNum := iif(HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField)
 
    IF nNum > 0 .AND. nNum <= Len( ::aRow )
 
@@ -116,7 +116,7 @@ METHOD FieldGet( cnField ) CLASS TMySQLRow
 
 METHOD FieldPut( cnField, Value ) CLASS TMySQLRow
 
-   LOCAL nNum := iif( HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField )
+   LOCAL nNum := iif(HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField)
 
    IF nNum > 0 .AND. nNum <= Len( ::aRow )
 
@@ -150,10 +150,10 @@ METHOD FieldPos( cFieldName ) CLASS TMySQLRow
 
 // Returns name of field N
 METHOD FieldName( nNum ) CLASS TMySQLRow
-   RETURN iif( nNum >= 1 .AND. nNum <= Len( ::aFieldStruct ), ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ], "" )
+   RETURN iif(nNum >= 1 .AND. nNum <= Len( ::aFieldStruct ), ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ], "")
 
 METHOD FieldLen( nNum ) CLASS TMySQLRow
-   RETURN iif( nNum >= 1 .AND. nNum <= Len( ::aFieldStruct ), ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ], 0 )
+   RETURN iif(nNum >= 1 .AND. nNum <= Len( ::aFieldStruct ), ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ], 0)
 
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
@@ -523,7 +523,7 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
       ENDIF
    ENDIF
 
-   RETURN iif( ::aRow == NIL, NIL, oRow )
+   RETURN iif(::aRow == NIL, NIL, oRow)
 
 // Free result handle and associated resources
 METHOD Destroy() CLASS TMySQLQuery
@@ -1293,7 +1293,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
    LOCAL i
 
    // returns NOT NULL if extended structure has DBS_NOTNULL field to true
-   LOCAL cNN := {| aArr | iif( Len( aArr ) > DBS_DEC, iif( aArr[ DBS_NOTNULL ], " NOT NULL ", "" ), "" ) }
+   LOCAL cNN := {| aArr | iif(Len( aArr ) > DBS_DEC, iif(aArr[ DBS_NOTNULL ], " NOT NULL ", ""), "") }
 
    ::cCreateQuery := "CREATE TABLE " + Lower( cTable ) + " ("
 
@@ -1301,7 +1301,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
 
       SWITCH aStruct[ i ][ DBS_TYPE ]
       CASE "C"
-         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " char(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[ i ] ) + iif( aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "" ) + ","
+         ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " char(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[ i ] ) + iif(aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + ","
          EXIT
 
       CASE "M"
@@ -1311,7 +1311,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
       CASE "N"
 #if 0
          IF aStruct[ i ][ DBS_DEC ] == 0
-            ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " int(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[ i ] ) + iif( aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "" ) + iif( aStruct[ i ][ DBS_NAME ] == cAuto, " auto_increment ", "" ) + ","
+            ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " int(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")" + Eval( cNN, aStruct[ i ] ) + iif(aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + iif(aStruct[ i ][ DBS_NAME ] == cAuto, " auto_increment ", "") + ","
          ELSE
             ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " real(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + "," + hb_ntos( aStruct[ i ][ DBS_DEC ] ) + ")" + Eval( cNN, aStruct[ i ] ) + ","
          ENDIF
@@ -1329,7 +1329,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
             OTHERWISE
                ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " bigint(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + ")"
             ENDCASE
-            ::cCreateQuery += Eval( cNN, aStruct[ i ] ) + iif( aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "" ) + iif( aStruct[ i ][ DBS_NAME ] == cAuto, " auto_increment ", "" ) + ","
+            ::cCreateQuery += Eval( cNN, aStruct[ i ] ) + iif(aStruct[ i ][ DBS_NAME ] == cPrimaryKey, " NOT NULL ", "") + iif(aStruct[ i ][ DBS_NAME ] == cAuto, " auto_increment ", "") + ","
          ELSE
             ::cCreateQuery += aStruct[ i ][ DBS_NAME ] + " real(" + hb_ntos( aStruct[ i ][ DBS_LEN ] ) + "," + hb_ntos( aStruct[ i ][ DBS_DEC ] ) + ")" + Eval( cNN, aStruct[ i ] ) + ","
          ENDIF
@@ -1472,7 +1472,7 @@ METHOD Error() CLASS TMySQLServer
 
    ::lError := .F.
 
-   RETURN iif( Empty( ::nSocket ), "No connection to server", mysql_error( ::nSocket ) )
+   RETURN iif(Empty( ::nSocket ), "No connection to server", mysql_error( ::nSocket ))
 
 METHOD ListDBs() CLASS TMySQLServer
    RETURN mysql_list_dbs( ::nSocket )
@@ -1580,7 +1580,7 @@ STATIC FUNCTION ClipValue2SQL( Value )
       ENDIF
 
    CASE "L"
-      RETURN iif( Value, "1", "0" )
+      RETURN iif(Value, "1", "0")
 
    CASE "U"
       RETURN "NULL"

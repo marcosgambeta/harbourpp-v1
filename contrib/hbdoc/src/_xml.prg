@@ -144,7 +144,7 @@ METHOD PROCEDURE WriteEntry( cCaption, cContent, lPreformatted ) CLASS GenerateX
       ENDIF
 
       ::cFile += ;
-         Replicate( Chr( 9 ), ::Depth ) + "<" + cCaption + iif( lPreformatted, ' preformatted="yes"', "" ) + ">" + ;
+         Replicate( Chr( 9 ), ::Depth ) + "<" + cCaption + iif(lPreformatted, ' preformatted="yes"', "") + ">" + ;
          hb_StrReplace( cContent, { ;
             "&" => "&amp;", ;
             '"' => "&quot;", ;

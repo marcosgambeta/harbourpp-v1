@@ -146,7 +146,7 @@ METHOD WvtStatusBar:Update( nPanel, cText, cColor )
    IF nPanel >= 1 .AND. nPanel <= Len( ::aPanels )
       oPanel        := ::aPanels[ nPanel ]
       oPanel:Text   := cText
-      oPanel:cColor := iif( cColor == NIL, "N/W", cColor )
+      oPanel:cColor := iif(cColor == NIL, "N/W", cColor)
       oPanel:Refresh()
    ENDIF
 
