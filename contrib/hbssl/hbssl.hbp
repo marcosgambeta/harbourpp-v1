@@ -1,20 +1,23 @@
 # Keep them at top
+# v3
 -depimplibs=openssl:../bin/libcrypto-3.dll
 -depimplibs=openssl:../bin/libssl-3.dll
 -depimplibs=openssl:../bin/libcrypto-3-x64.dll
 -depimplibs=openssl:../bin/libssl-3-x64.dll
--depimplibs=openssl:../out32dll/libeay32.dll
--depimplibs=openssl:../out32dll/ssleay32.dll
--depimplibs=openssl:../dll/libeay32.dll
--depimplibs=openssl:../dll/ssleay32.dll
--depimplibs=openssl:../libeay32.dll
--depimplibs=openssl:../ssleay32.dll
+# v1.1
 -depimplibs=openssl:../bin/libcrypto-1_1.dll
 -depimplibs=openssl:../bin/libssl-1_1.dll
 -depimplibs=openssl:../bin/libcrypto-1_1-x64.dll
 -depimplibs=openssl:../bin/libssl-1_1-x64.dll
 -depimplibs=openssl:../libcrypto-1_1.dll
 -depimplibs=openssl:../libssl-1_1.dll
+# older versions
+-depimplibs=openssl:../out32dll/libeay32.dll
+-depimplibs=openssl:../out32dll/ssleay32.dll
+-depimplibs=openssl:../dll/libeay32.dll
+-depimplibs=openssl:../dll/ssleay32.dll
+-depimplibs=openssl:../libeay32.dll
+-depimplibs=openssl:../ssleay32.dll
 
 hbssl.hbm
 
