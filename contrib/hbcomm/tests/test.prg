@@ -28,7 +28,7 @@ PROCEDURE Main()
       nOption := Inkey( 0 )
       ?? Chr( nOption )
 
-      SWITCH Upper( Chr( nOption ) )
+      SWITCH Upper(Chr( nOption ))
       CASE "O" ; FConnect() ; EXIT
       CASE "C" ; FDisconnect() ; EXIT
       CASE "S" ; FSend() ; EXIT

@@ -80,7 +80,7 @@ FUNCTION type_cb( node )
       cType := mxmlGetElement( node )
    ENDIF
 
-   SWITCH Lower( cType )
+   SWITCH Lower(cType)
    CASE "note"
    CASE "to"
    CASE "from"

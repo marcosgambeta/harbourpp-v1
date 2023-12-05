@@ -68,7 +68,7 @@ PROCEDURE Main()
    ? "SERVER DATE:",     net:Date()
    ? "SERVER TIME:",     net:Time()
    ? "SERVER DATETIME:", net:hb_DateTime()
-   ? net:Upper( "hello world !!!" )
+   ? net:Upper("hello world !!!")
    ?
 
    /* close the connection to the server */

@@ -635,7 +635,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
       CASE "!"
          IF IsAlpha( CB ) .OR. CB == " "
             IF CM == "!"
-               OutBuffer += Upper( CB )
+               OutBuffer += Upper(CB)
             ELSE
                OutBuffer += CB
             ENDIF

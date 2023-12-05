@@ -259,7 +259,7 @@ METHOD HeadersToString() CLASS TIPMail
    ENDIF
 
    FOR EACH i IN ::hHeaders
-      SWITCH Lower( cElem := i:__enumKey() )
+      SWITCH Lower(cElem := i:__enumKey())
       CASE "return-path"
       CASE "delivered-to"
       CASE "date"
@@ -361,7 +361,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
          cLastField != NIL
 
          cValue := LTrim( SubStr( cMail, nPos, nLinePos - nPos ) )
-         IF Lower( cLastField ) == "received"
+         IF Lower(cLastField) == "received"
             ::aReceived[ Len( ::aReceived ) ] += " " + cValue
          ELSE
             ::hHeaders[ cLastField ] += " " + cValue
@@ -370,7 +370,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
          nSplitPos := hb_At( ":", cMail, nPos )
          cLastField := SubStr( cMail, nPos, nSplitPos - nPos )
          cValue := LTrim( SubStr( cMail, nSplitPos + 1, nLinePos - nSplitPos - 1 ) )
-         IF Lower( cLastField ) == "received"
+         IF Lower(cLastField) == "received"
             AAdd( ::aReceived, cValue )
          ELSE
             ::hHeaders[ cLastField ] := cValue
@@ -592,7 +592,7 @@ METHOD getFileName() CLASS TIPMail
    RETURN StrTran( ::getFieldOption( "Content-Type", "name" ), '"' )
 
 METHOD isMultiPart() CLASS TIPMail
-   RETURN "multipart/" $ Lower( ::GetFieldPart( "Content-Type" ) )
+   RETURN "multipart/" $ Lower(::GetFieldPart( "Content-Type" ))
 
 METHOD getMultiParts( aParts ) CLASS TIPMail
 

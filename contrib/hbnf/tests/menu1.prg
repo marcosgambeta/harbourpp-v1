@@ -26,7 +26,7 @@ PROCEDURE Main( cCmdLine )
 
    cCmdLine := iif(cCmdLine == NIL, "", cCmdLine)
 
-   lColor := iif("MONO" $ Upper( cCmdLine ), .F., IsColor())
+   lColor := iif("MONO" $ Upper(cCmdLine), .F., IsColor())
 
    // Border, Box, Bar, Current, Unselected
    aColors := iif(lColor, { "W+/G", "N/G", "N/G", "N/W", "N+/G" }, ;
@@ -81,8 +81,8 @@ PROCEDURE Main( cCmdLine )
    nDosCol := Col()
    SetColor( "w/n" )
    CLS
-   NoSnow( "NOSNOW" $ Upper( cCmdLine ) )
-   IF "VGA" $ Upper( cCmdLine )
+   NoSnow( "NOSNOW" $ Upper(cCmdLine) )
+   IF "VGA" $ Upper(cCmdLine)
       SetMode( 50, 80 )
    ENDIF
    nMaxRow := MaxRow()
@@ -112,7 +112,7 @@ PROCEDURE Main( cCmdLine )
    SetColor( "W/N" )
    SetCursor( SC_NORMAL )
    SetBlink( .T. )
-   IF "VGA" $ Upper( cCmdLine )
+   IF "VGA" $ Upper(cCmdLine)
       SetMode( 25, 80 )
    ENDIF
    RESTORE SCREEN FROM sDosScrn

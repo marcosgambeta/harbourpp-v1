@@ -261,17 +261,17 @@ METHOD ReadHeaders( lClear ) CLASS TIPClientHTTP
 
       DO CASE
       // RFC 2068 forces to discard content length on chunked encoding
-      CASE Lower( aHead[ 1 ] ) == "content-length" .AND. ! ::bChunked
+      CASE Lower(aHead[ 1 ]) == "content-length" .AND. ! ::bChunked
          cLine := SubStr( cLine, 16 )
          ::nLength := Val( cLine )
 
       // as above
-      CASE Lower( aHead[ 1 ] ) == "transfer-encoding"
-         IF "chunked" $ Lower( cLine )
+      CASE Lower(aHead[ 1 ]) == "transfer-encoding"
+         IF "chunked" $ Lower(cLine)
             ::bChunked := .T.
             ::nLength := -1
          ENDIF
-      CASE Lower( aHead[ 1 ] ) == "set-cookie"
+      CASE Lower(aHead[ 1 ]) == "set-cookie"
          ::setCookie( aHead[ 2 ] )
       ENDCASE
 
@@ -392,7 +392,7 @@ METHOD PROCEDURE setCookie( cLine ) CLASS TIPClientHTTP
             cName := AllTrim( aElements[ 1 ] )
             cValue := AllTrim( aElements[ 2 ] )
          ELSE
-            SWITCH Upper( AllTrim( aElements[ 1 ] ) )
+            SWITCH Upper(AllTrim( aElements[ 1 ] ))
 #if 0
             CASE "EXPIRES"
                EXIT
@@ -440,9 +440,9 @@ METHOD getcookies( cHost, cPath ) CLASS TIPClientHTTP
 
    // tail matching the domain
    z := Len( cHost )
-   cHost := Upper( cHost )
+   cHost := Upper(cHost)
    FOR EACH x IN hb_HKeys( ::hCookies )
-      IF Upper( Right( x, z ) ) == cHost .AND. ( Len( x ) == z .OR. SubStr( x, -z, 1 ) == "." )
+      IF Upper(Right( x, z )) == cHost .AND. ( Len( x ) == z .OR. SubStr( x, -z, 1 ) == "." )
          AAdd( aDomKeys, x )
       ENDIF
    NEXT

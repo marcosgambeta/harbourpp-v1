@@ -370,7 +370,7 @@ FUNCTION ctodowtest()
       IF nKey == K_ESC
          c := .F.
       ELSE
-         @ 11, 10 SAY "The day number is " + Str( CToDoW( Upper( AllTrim( cDow ) ) ) )
+         @ 11, 10 SAY "The day number is " + Str( CToDoW( Upper(AllTrim( cDow )) ) )
 
          SET CURSOR OFF
          Inkey( 0 )
@@ -466,7 +466,7 @@ FUNCTION dInMonthtest()
       SET ESCAPE OFF
       SET CONFIRM ON
 
-      cMonth := Upper( RTrim( cMonth ) )
+      cMonth := Upper(RTrim( cMonth ))
       nMonth := Val( cMonth )
 
       DO CASE

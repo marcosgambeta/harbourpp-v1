@@ -134,7 +134,7 @@ FUNCTION type_cb( node )
       cType := mxmlGetElement( node )
    ENDIF
 
-   SWITCH Lower( cType )
+   SWITCH Lower(cType)
    CASE "custom"               /* don't forget */
    CASE "hash"
       nResult := MXML_CUSTOM

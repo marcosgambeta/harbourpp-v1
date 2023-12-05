@@ -175,7 +175,7 @@ PROCEDURE Main()
       oRecord := oTable:GetBlankRow()
 
       FOR i := 1 TO oTable:FCount()
-         cField := Lower( oTable:FieldName( i ) )
+         cField := Lower(oTable:FieldName( i ))
          cTypeDB := Left( hb_FieldType( FieldPos( cField ) ), 1 )
          cTypePG := oRecord:FieldType( i )
          cValue := FieldGet( FieldPos( cField ) )

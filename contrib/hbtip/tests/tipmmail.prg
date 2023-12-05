@@ -23,7 +23,7 @@ PROCEDURE Main( ... )
 
    FOR i := 1 TO PCount()
 
-      SWITCH Lower( cData := hb_PValue( i ) )
+      SWITCH Lower(cData := hb_PValue( i ))
       CASE "-h"
          Usage()
          RETURN

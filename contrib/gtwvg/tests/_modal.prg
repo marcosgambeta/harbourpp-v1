@@ -127,7 +127,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
 
    aTrg_ := Array( Len( aButtons_ ) )
    FOR i := 1 TO Len( aButtons_ )
-      aTrg_[i] := Upper( SubStr( aButtons_[i], 1, 1 ) )
+      aTrg_[i] := Upper(SubStr( aButtons_[i], 1, 1 ))
    NEXT
 
    // Create a new Window
@@ -224,7 +224,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
          sel--
       CASE nKey == K_RIGHT .OR. nKey == K_UP
          sel++
-      CASE ( nTrg := hb_AScan( aTrg_, Upper( hb_keyChar( nKey ) ), , , .T. ) ) > 0
+      CASE ( nTrg := hb_AScan( aTrg_, Upper(hb_keyChar( nKey )), , , .T. ) ) > 0
          sel := nTrg
          lGo := .F.
       OTHERWISE
@@ -285,10 +285,10 @@ FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
    IF HB_ISNUMERIC( xIcon )
       hb_gtInfo( HB_GTI_ICONRES, xIcon )
    ELSE
-      IF ".ico" $ Lower( xIcon )
+      IF ".ico" $ Lower(xIcon)
          hb_gtInfo( HB_GTI_ICONFILE, xIcon )
       ELSE
-         IF ".bmp" $ Lower( xIcon )
+         IF ".bmp" $ Lower(xIcon)
             xIcon := "VW_DFT"
          ENDIF
          hb_gtInfo( HB_GTI_ICONRES, xIcon )

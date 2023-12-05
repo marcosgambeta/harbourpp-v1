@@ -117,7 +117,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
 
    aTrg_ := Array( Len( aButtons_ ) )
    FOR i := 1 TO Len( aButtons_ )
-      aTrg_[ i ] := Upper( Left( aButtons_[ i ], 1 ) )
+      aTrg_[ i ] := Upper(Left( aButtons_[ i ], 1 ))
    NEXT
 
    // Create a new Window
@@ -217,7 +217,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
          --sel
       CASE nKeyStd == K_RIGHT .OR. nKeyStd == K_UP
          ++sel
-      CASE ( nTrg := hb_AScan( aTrg_, Upper( hb_keyChar( nKey ) ), , , .T. ) ) > 0
+      CASE ( nTrg := hb_AScan( aTrg_, Upper(hb_keyChar( nKey )), , , .T. ) ) > 0
          sel := nTrg
          lGo := .F.
       CASE SetKey( nKey ) != NIL
@@ -271,7 +271,7 @@ STATIC FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHi
       hb_gtInfo( HB_GTI_ICONRES, xIcon )
    ELSE
       hb_default( @xIcon, "VW_DFT" )
-      IF ".bmp" $ Lower( xIcon )
+      IF ".bmp" $ Lower(xIcon)
          xIcon := "VW_DFT"
       ENDIF
       hb_gtInfo( HB_GTI_ICONRES, xIcon )

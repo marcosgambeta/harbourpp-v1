@@ -20,8 +20,8 @@ PROCEDURE Main( delay )
    LOCAL thrd
 
    IF ! Empty(delay)
-      s_lDelayCli := "C" $ Upper( delay )
-      s_lDelaySrv := "S" $ Upper( delay )
+      s_lDelayCli := "C" $ Upper(delay)
+      s_lDelaySrv := "S" $ Upper(delay)
    ENDIF
 
    /* initialize SSL library */

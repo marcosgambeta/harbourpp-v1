@@ -235,8 +235,8 @@ STATIC FUNCTION AR_CREATEFIELDS( nWA, aStruct )
    UR_SUPER_SETFIELDEXTENT( nWA, Len( aStruct ) )
 
    FOR EACH aFieldStruct IN aStruct
-      aFieldStruct[ DBS_NAME ] := Upper( aFieldStruct[ DBS_NAME ] )
-      aFieldStruct[ DBS_TYPE ] := Upper( aFieldStruct[ DBS_TYPE ] )
+      aFieldStruct[ DBS_NAME ] := Upper(aFieldStruct[ DBS_NAME ])
+      aFieldStruct[ DBS_TYPE ] := Upper(aFieldStruct[ DBS_TYPE ])
 
       aField := Array( UR_FI_SIZE )
       aField[ UR_FI_NAME ]    := aFieldStruct[ DBS_NAME ]
@@ -265,7 +265,7 @@ STATIC FUNCTION AR_CREATE( nWA, aOpenInfo )
    aDBFData := aWAData[ WADATA_DATABASE ]
 
    /* setting in uppercase chars to avoid differences */
-   cFullName := Upper( aOpenInfo[ UR_OI_NAME ] )
+   cFullName := Upper(aOpenInfo[ UR_OI_NAME ])
 
    /* When there is no ALIAS we will create new one using file name */
    IF aOpenInfo[ UR_OI_ALIAS ] == NIL
@@ -315,7 +315,7 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, aOpenInfo: %2$s", nWA, hb_ValToExp( aOpenInfo ) ) )
 
-   cFullName := Upper( aOpenInfo[ UR_OI_NAME ] )
+   cFullName := Upper(aOpenInfo[ UR_OI_NAME ])
 
    IF Right( cFullName, 1 ) == "."
       cFullName := Left( cFullName, Len( cFullName ) - 1 )
@@ -1182,7 +1182,7 @@ STATIC FUNCTION AR_ORDLSTFOCUS( nWA, aOrderInfo )
       aWAData[ WADATA_INDEX ] := iif(xIndex >= 1 .AND. xIndex <= Len( aIndexes ), Int( xIndex ), 0)
       EXIT
    CASE "C"
-      xIndex := Upper( xIndex )
+      xIndex := Upper(xIndex)
       aWAData[ WADATA_INDEX ] := AScan( aIndexes, {| x | x[ INDEX_TAG ] == xIndex } )
       EXIT
    ENDSWITCH
@@ -1238,7 +1238,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    IF Empty(aOrderCreate[ UR_ORCR_TAGNAME ])
       aOrderCreate[ UR_ORCR_TAGNAME ] := aOrderCreate[ UR_ORCR_BAGNAME ]
    ENDIF
-   cIndex := aOrderCreate[ UR_ORCR_TAGNAME ] := Upper( aOrderCreate[ UR_ORCR_TAGNAME ] )
+   cIndex := aOrderCreate[ UR_ORCR_TAGNAME ] := Upper(aOrderCreate[ UR_ORCR_TAGNAME ])
    aIndex := AR_INDEXINIT()
    aIndex[ INDEX_TAG ]  := cIndex
    aIndex[ INDEX_ORCR ] := aOrderCreate
@@ -1308,7 +1308,7 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
 
    SWITCH ValType( aOrderInfo[ UR_ORI_TAG ] )
    CASE "C"
-      nIndex := Upper( aOrderInfo[ UR_ORI_TAG ] )
+      nIndex := Upper(aOrderInfo[ UR_ORI_TAG ])
       nIndex := AScan( aIndexes, {| x | x[ INDEX_TAG ] == nIndex } )
       EXIT
    CASE "N"
@@ -1534,7 +1534,7 @@ FUNCTION hb_EraseArrayRdd( cFullName )
 
       IF hRDDData != NIL
          IF HB_ISSTRING( cFullName )
-            cFullName := Upper( cFullName )
+            cFullName := Upper(cFullName)
             /* First search if memory dbf exists */
             IF cFullName $ hRDDData
 
@@ -1613,7 +1613,7 @@ FUNCTION hb_FileArrayRdd( cFullName )
 
       IF hRDDData != NIL
          IF HB_ISSTRING( cFullName )
-            cFullName := Upper( cFullName )
+            cFullName := Upper(cFullName)
             /* First search if memory dbf exists */
             IF cFullName $ hRDDData
                nReturn := HB_SUCCESS

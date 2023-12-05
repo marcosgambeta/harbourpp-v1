@@ -55,7 +55,7 @@ PROCEDURE Main( cMode )
 
    hb_default( @cMode, "S" ) /* NOTE: Must be the default action */
 
-   SWITCH Upper( cMode )
+   SWITCH Upper(cMode)
    CASE "I"
 
       IF win_serviceInstall( _SERVICE_NAME, "Harbour Windows Test Service" )

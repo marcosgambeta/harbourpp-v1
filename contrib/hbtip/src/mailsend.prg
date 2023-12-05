@@ -249,7 +249,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    ENDIF
 
    /* If the string is an existing HTML filename, load it. */
-   SWITCH Lower( hb_FNameExt( cBody ) )
+   SWITCH Lower(hb_FNameExt( cBody ))
    CASE ".htm"
    CASE ".html"
       IF hb_vfExists( cBody )

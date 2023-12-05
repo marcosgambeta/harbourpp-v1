@@ -50,7 +50,7 @@
 
 PROCEDURE Main( cMode )
 
-   SWITCH Lower( hb_defaultValue( cMode, "" )
+   SWITCH Lower(hb_defaultValue( cMode, "" ))
    CASE "-install"
 
       IF win_serviceInstall( _SERVICE_NAME, ;

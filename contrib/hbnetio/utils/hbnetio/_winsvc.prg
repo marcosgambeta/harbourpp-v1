@@ -34,7 +34,7 @@ PROCEDURE WinMain( ... )
       cMode := ""
    ENDIF
 
-   SWITCH Lower( cMode )
+   SWITCH Lower(cMode)
    CASE "-i"
    CASE "-install"
 

@@ -113,7 +113,7 @@ METHOD SetData( aData ) CLASS GDChart
 METHOD AddDef( cDefKey, xDefVal ) CLASS GDChart
 
    IF HB_ISSTRING( cDefKey )
-      ::hDefs[ Upper( cDefKey ) ] := xDefVal
+      ::hDefs[ Upper(cDefKey) ] := xDefVal
    ENDIF
 
    RETURN Self

@@ -38,7 +38,7 @@ PROCEDURE Main()
       ? "q) Quit"
       ? ">", ""
 
-      ?? cOption := Lower( hb_keyChar( Inkey( 0 ) ) )
+      ?? cOption := Lower(hb_keyChar( Inkey( 0 ) ))
 
       DO CASE
       CASE cOption == "1" ; Exm_MSExcel()

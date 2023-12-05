@@ -77,7 +77,7 @@ PROCEDURE Main( ... )
    hb_ADel( aWild, 1, .T. )
 
    FOR tmp := 1 TO Len( aWild ) - 1
-      IF Lower( aWild[ tmp ] ) == "--pass"
+      IF Lower(aWild[ tmp ]) == "--pass"
          cPassword := aWild[ tmp + 1 ]
          aWild[ tmp ] := ""
          aWild[ tmp + 1 ] := ""

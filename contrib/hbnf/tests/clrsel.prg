@@ -15,14 +15,14 @@ PROCEDURE Main( cVidMode )
 
    __defaultNIL( @cVidMode, "" )
 
-   NoSnow( ( "NOSNOW" $ Upper( cVidMode ) ) )
-   IF "VGA" $ Upper( cVidMode )
+   NoSnow( ( "NOSNOW" $ Upper(cVidMode) ) )
+   IF "VGA" $ Upper(cVidMode)
       SetMode( 50, 80 )
    ENDIF
-   IF "EGA" $ Upper( cVidMode )
+   IF "EGA" $ Upper(cVidMode)
       SetMode( 43, 80 )
    ENDIF
-   lColour := iif("MONO" $ Upper( cVidMode ), .F., IsColor())
+   lColour := iif("MONO" $ Upper(cVidMode), .F., IsColor())
 
    SET SCOREBOARD OFF
    SetCursor( SC_NONE )

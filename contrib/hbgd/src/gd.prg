@@ -134,7 +134,7 @@ FUNCTION gdImageFromFile( cFile )
    IF hb_FileExists( cFile )
       hb_FNameSplit( cFile, @cPath, @cName, @cExt, @cDrive )
 
-      SWITCH Lower( cExt )
+      SWITCH Lower(cExt)
       CASE ".jpg"
       CASE ".jpeg"
          hFile[ "file"  ] := cFile

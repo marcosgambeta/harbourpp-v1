@@ -618,7 +618,7 @@ STATIC FUNCTION ProcessConnection( oServer )
                USetStatusCode( 501 ) /* Not implemented */
             ELSE
                IF server[ "SERVER_PROTOCOL" ] == "HTTP/1.1"
-                  IF Lower( server[ "HTTP_CONNECTION" ] ) == "close"
+                  IF Lower(server[ "HTTP_CONNECTION" ]) == "close"
                      UAddHeader( "Connection", "close" )
                   ELSE
                      UAddHeader( "Connection", "keep-alive" )
@@ -658,7 +658,7 @@ STATIC FUNCTION ProcessConnection( oServer )
 
          oServer:LogAccess()
 
-         IF Lower( UGetHeader( "Connection" ) ) == "close" .OR. server[ "SERVER_PROTOCOL" ] == "HTTP/1.0"
+         IF Lower(UGetHeader( "Connection" )) == "close" .OR. server[ "SERVER_PROTOCOL" ] == "HTTP/1.0"
             EXIT
          ENDIF
       ENDDO
@@ -775,7 +775,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
          EXIT
       ELSEIF ( nJ := At( ":", aRequest[ nI ] ) ) > 0
          cI := AllTrim( SubStr( aRequest[ nI ], nJ + 1 ) )
-         SWITCH Upper( Left( aRequest[ nI ], nJ - 1 ) )
+         SWITCH Upper(Left( aRequest[ nI ], nJ - 1 ))
          CASE "COOKIE"
             server[ "HTTP_COOKIE" ] := cI
             IF ( nK := At( ";", cI ) ) == 0
@@ -784,7 +784,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
             cI := Left( cI, nK )
             IF ( nK := At( "=", cI ) ) > 0
                /* cookie names are case insensitive, uppercase it */
-               cookie[ Upper( Left( cI, nK - 1 ) ) ] := SubStr( cI, nK + 1 )
+               cookie[ Upper(Left( cI, nK - 1 )) ] := SubStr( cI, nK + 1 )
             ENDIF
             EXIT
          CASE "CONTENT-LENGTH"
@@ -794,7 +794,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
             server[ "CONTENT_TYPE" ] := cI
             EXIT
          OTHERWISE
-            server[ "HTTP_" + StrTran( Upper( Left( aRequest[ nI ], nJ - 1 ) ), "-", "_" ) ] := cI
+            server[ "HTTP_" + StrTran( Upper(Left( aRequest[ nI ], nJ - 1 )), "-", "_" ) ] := cI
             EXIT
          ENDSWITCH
       ENDIF
@@ -817,8 +817,8 @@ STATIC PROCEDURE ParseRequestBody( cRequest )
 
    IF hb_HHasKey( server, "CONTENT_TYPE" ) .AND. ;
          Left( server[ "CONTENT_TYPE" ], 33 ) == "application/x-www-form-urlencoded"
-      IF ( nI := At( "CHARSET=", Upper( server[ "CONTENT_TYPE" ] ) ) ) > 0
-         cEncoding := Upper( SubStr( server[ "CONTENT_TYPE" ], nI + 8 ) )
+      IF ( nI := At( "CHARSET=", Upper(server[ "CONTENT_TYPE" ]) ) ) > 0
+         cEncoding := Upper(SubStr( server[ "CONTENT_TYPE" ], nI + 8 ))
       ENDIF
       IF ! cRequest == ""
          IF cEncoding == "UTF-8"
@@ -1137,7 +1137,7 @@ FUNCTION UGetHeader( cType )
 
    LOCAL nI
 
-   IF ( nI := AScan( t_aHeader, {| x | Upper( x[ 1 ] ) == Upper( cType ) } ) ) > 0
+   IF ( nI := AScan( t_aHeader, {| x | Upper(x[ 1 ]) == Upper(cType) } ) ) > 0
       RETURN t_aHeader[ nI ][ 2 ]
    ENDIF
 
@@ -1147,7 +1147,7 @@ PROCEDURE UAddHeader( cType, cValue )
 
    LOCAL nI
 
-   IF ( nI := AScan( t_aHeader, {| x | Upper( x[ 1 ] ) == Upper( cType ) } ) ) > 0
+   IF ( nI := AScan( t_aHeader, {| x | Upper(x[ 1 ]) == Upper(cType) } ) ) > 0
       t_aHeader[ nI ][ 2 ] := cValue
    ELSE
       AAdd( t_aHeader, { cType, cValue } )
@@ -1321,8 +1321,8 @@ FUNCTION UUrlDecode( cString )
       IF nI == 0
          EXIT
       ENDIF
-      IF Upper( SubStr( cString, nI + 1, 1 ) ) $ "0123456789ABCDEF" .AND. ;
-            Upper( SubStr( cString, nI + 2, 1 ) ) $ "0123456789ABCDEF"
+      IF Upper(SubStr( cString, nI + 1, 1 )) $ "0123456789ABCDEF" .AND. ;
+            Upper(SubStr( cString, nI + 2, 1 )) $ "0123456789ABCDEF"
          cString := Stuff( cString, nI, 3, hb_HexToStr( SubStr( cString, nI + 1, 2 ) ) )
       ENDIF
       nI++
@@ -1380,7 +1380,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
          USetStatusCode( 412 )
       ELSE
          IF ( nI := RAt( ".", cFileName ) ) > 0
-            SWITCH Lower( SubStr( cFileName, nI + 1 ) )
+            SWITCH Lower(SubStr( cFileName, nI + 1 ))
             CASE "css";                                 cI := "text/css";  EXIT
             CASE "htm";   CASE "html";                  cI := "text/html";  EXIT
             CASE "txt";   CASE "text";  CASE "asc"

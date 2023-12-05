@@ -204,7 +204,7 @@ METHOD TableExists( cTable ) CLASS TFbServer
    LOCAL result := .F.
    LOCAL qry
 
-   cQuery := 'select rdb$relation_name from rdb$relations where rdb$relation_name = "' + Upper( cTable ) + '"'
+   cQuery := 'select rdb$relation_name from rdb$relations where rdb$relation_name = "' + Upper(cTable) + '"'
 
    qry := FBQuery( ::db, cQuery, ::dialect )
 
@@ -256,7 +256,7 @@ METHOD TableStruct( cTable ) CLASS TFbServer
    cQuery += '  rdb$relation_fields a, rdb$fields b '
    cQuery += 'where '
    cQuery += '  a.rdb$field_source = b.rdb$field_name '
-   cQuery += '  and a.rdb$relation_name = "' + Upper( ctable ) + '" '
+   cQuery += '  and a.rdb$relation_name = "' + Upper(ctable) + '" '
    cQuery += 'order by '
    cQuery += '  a.rdb$field_position '
 
@@ -621,7 +621,7 @@ METHOD FieldPos( cField ) CLASS TFbQuery
    LOCAL result := 0
 
    IF ! ::lError
-      result := AScan( ::aStruct, {| x | x[ 1 ] == RTrim( Upper( cField ) ) } )
+      result := AScan( ::aStruct, {| x | x[ 1 ] == RTrim( Upper(cField) ) } )
    ENDIF
 
    RETURN result
@@ -856,7 +856,7 @@ METHOD FieldName( nField ) CLASS TFbRow
    RETURN result
 
 METHOD FieldPos( cField ) CLASS TFbRow
-   RETURN AScan( ::aStruct, {| x | x[ 1 ] == RTrim( Upper( cField ) ) } )
+   RETURN AScan( ::aStruct, {| x | x[ 1 ] == RTrim( Upper(cField) ) } )
 
 METHOD FieldType( nField ) CLASS TFbRow
 

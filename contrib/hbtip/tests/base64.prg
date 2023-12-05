@@ -21,7 +21,7 @@ PROCEDURE Main( ... )
    /* Parameter parsing */
    FOR EACH cData IN hb_AParams()
 
-      SWITCH Lower( cData )
+      SWITCH Lower(cData)
       CASE "-h"
          lHelp := .T.
          EXIT

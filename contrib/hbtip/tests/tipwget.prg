@@ -68,7 +68,7 @@ PROCEDURE Main( cURL, cFile )
       RETURN
    ENDIF
 
-   SWITCH Lower( oURL:cProto )
+   SWITCH Lower(oURL:cProto)
    CASE "ftp"
       oClient := TIPClientFTP():New( oURL )
       EXIT

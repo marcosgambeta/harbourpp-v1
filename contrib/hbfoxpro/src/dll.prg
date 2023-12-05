@@ -71,12 +71,12 @@ FUNCTION fox___DynCall( cCommand, ... )
       "STRING"  => HB_DYN_CTYPE_CHAR_PTR, ;
       "OBJECT"  => HB_DYN_CTYPE_VOID_PTR }
 
-   IF nPos <= Len( aCommand ) .AND. Upper( aCommand[ nPos ] ) == "DECLARE"
+   IF nPos <= Len( aCommand ) .AND. Upper(aCommand[ nPos ]) == "DECLARE"
       ++nPos
    ENDIF
 
-   IF nPos <= Len( aCommand ) .AND. Upper( aCommand[ nPos ] ) $ aType
-      nFuncFlags := hb_bitOr( nFuncFlags, aType[ Upper( aCommand[ nPos ] ) ] )
+   IF nPos <= Len( aCommand ) .AND. Upper(aCommand[ nPos ]) $ aType
+      nFuncFlags := hb_bitOr( nFuncFlags, aType[ Upper(aCommand[ nPos ]) ] )
       ++nPos
    ELSE
       RETURN NIL
@@ -89,7 +89,7 @@ FUNCTION fox___DynCall( cCommand, ... )
       RETURN NIL
    ENDIF
 
-   IF nPos <= Len( aCommand ) .AND. Upper( aCommand[ nPos ] ) == "IN"
+   IF nPos <= Len( aCommand ) .AND. Upper(aCommand[ nPos ]) == "IN"
       ++nPos
    ELSE
       RETURN NIL
@@ -102,15 +102,15 @@ FUNCTION fox___DynCall( cCommand, ... )
       RETURN NIL
    ENDIF
 
-   IF nPos <= Len( aCommand ) .AND. Upper( aCommand[ nPos ] ) == "AS"
+   IF nPos <= Len( aCommand ) .AND. Upper(aCommand[ nPos ]) == "AS"
       nPos += 2
    ENDIF
 
    aParam := { cFunction, cLibrary, nFuncFlags }
 
    DO WHILE nPos <= Len( aCommand )
-      IF Upper( Upper( aCommand[ nPos ] ) ) $ aType
-         AAdd( aParam, hb_bitOr( HB_DYN_ENC_RAW, aType[ Upper( aCommand[ nPos ] ) ] ) )
+      IF Upper(Upper(aCommand[ nPos ])) $ aType
+         AAdd( aParam, hb_bitOr( HB_DYN_ENC_RAW, aType[ Upper(aCommand[ nPos ]) ] ) )
          ++nPos
       ENDIF
       IF nPos <= Len( aCommand ) .AND. aCommand[ nPos ] == "@"

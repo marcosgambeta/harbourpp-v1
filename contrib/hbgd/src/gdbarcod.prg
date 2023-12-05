@@ -431,8 +431,8 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
    ::settext( cText )
 
    IF ! Empty(cModeCode)
-      IF HB_ISSTRING( cModeCode ) .AND. Upper( cModeCode ) $ "ABC"
-         cModeCode := Upper( cModeCode )
+      IF HB_ISSTRING( cModeCode ) .AND. Upper(cModeCode) $ "ABC"
+         cModeCode := Upper(cModeCode)
       ELSE
          ::DrawError( "Code 128 Modes are A, B or C character values." )
          lError := .T.
@@ -593,7 +593,7 @@ METHOD GenCodei25() CLASS GDBarCode
 
    IF ! lError
 
-      bc_string := Upper( ::text )
+      bc_string := Upper(::text)
 
       // Encode itemId to I25 barcode standard.
 

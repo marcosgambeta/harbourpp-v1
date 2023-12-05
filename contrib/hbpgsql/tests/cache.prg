@@ -60,7 +60,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
 FUNCTION SQLApplyUpdates()
 
-   LOCAL cAlias := Upper( Alias() )
+   LOCAL cAlias := Upper(Alias())
    LOCAL i, x
    LOCAL oQuery
    LOCAL oRow
@@ -167,7 +167,7 @@ FUNCTION SQLFetch( lFetchAll )
 
    LOCAL oQuery
    LOCAL oRow
-   LOCAL cAlias := Upper( Alias() )
+   LOCAL cAlias := Upper(Alias())
    LOCAL i, x, y
    LOCAL nPos
    LOCAL lEof := .F.
@@ -226,7 +226,7 @@ FUNCTION SQLOpen( cAlias, cQuery, xFetch, cOrder )
    LOCAL lFetch
 
    oServer := SQLCurrentServer()
-   cAlias := Upper( cAlias )
+   cAlias := Upper(cAlias)
 
    /* Search by query in temporary area */
    IF ( x := AScan( t_aTableTemp, {| aVal | aVal[ DB_ALIAS ] == cAlias } ) ) > 0

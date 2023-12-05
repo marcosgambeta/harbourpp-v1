@@ -526,11 +526,11 @@ STATIC FUNCTION GetLangMsg( cLang )
 
    LOCAL aMsg
 
-   IF cLang == NIL .OR. Lower( cLang ) == "ru"
+   IF cLang == NIL .OR. Lower(cLang) == "ru"
       aMsg := sc_aRus
-   ELSEIF Lower( cLang ) == "uk"
+   ELSEIF Lower(cLang) == "uk"
       aMsg := sc_aUkr
-   ELSEIF Lower( cLang ) == "be"
+   ELSEIF Lower(cLang) == "be"
       aMsg := sc_aBel
    ENDIF
 

@@ -144,9 +144,9 @@ METHOD FieldPut( cnField, Value ) CLASS TMySQLRow
 // Given a field name returns it's position
 METHOD FieldPos( cFieldName ) CLASS TMySQLRow
 
-   LOCAL cUpperName := Upper( cFieldName )
+   LOCAL cUpperName := Upper(cFieldName)
 
-   RETURN AScan( ::aFieldStruct, {| aItem | Upper( aItem[ MYSQL_FS_NAME ] ) == cUpperName } )
+   RETURN AScan( ::aFieldStruct, {| aItem | Upper(aItem[ MYSQL_FS_NAME ]) == cUpperName } )
 
 // Returns name of field N
 METHOD FieldName( nNum ) CLASS TMySQLRow
@@ -546,14 +546,14 @@ METHOD FieldPos( cFieldName ) CLASS TMySQLQuery
 
    LOCAL cUpperName, nPos
 
-   cUpperName := Upper( cFieldName )
+   cUpperName := Upper(cFieldName)
 
-   nPos := AScan( ::aFieldStruct, {| aItem | Upper( aItem[ MYSQL_FS_NAME ] ) == cUpperName } )
+   nPos := AScan( ::aFieldStruct, {| aItem | Upper(aItem[ MYSQL_FS_NAME ]) == cUpperName } )
 
 #if 0
    nPos := 0
    DO WHILE ++nPos <= Len( ::aFieldStruct )
-      IF Upper( ::aFieldStruct[ nPos ][ MYSQL_FS_NAME ] ) == cUpperName
+      IF Upper(::aFieldStruct[ nPos ][ MYSQL_FS_NAME ]) == cUpperName
          EXIT
       ENDIF
    ENDDO
@@ -695,7 +695,7 @@ METHOD New( nSocket, cQuery, cTableName ) CLASS TMySQLTable
 
    ::super:New( nSocket, AllTrim( cQuery ) )
 
-   ::cTable := Lower( cTableName )
+   ::cTable := Lower(cTableName)
    ::aOldValue := {}
 
    FOR i := 1 TO ::nNumFields
@@ -1275,7 +1275,7 @@ METHOD SelectDB( cDBName ) CLASS TMySQLServer
 
 METHOD CreateDatabase( cDataBase ) CLASS TMySQLServer
 
-   LOCAL cCreateQuery := "CREATE DATABASE " + Lower( cDatabase )
+   LOCAL cCreateQuery := "CREATE DATABASE " + Lower(cDatabase)
 
    IF mysql_query( ::nSocket, cCreateQuery ) == 0
       RETURN .T.
@@ -1295,7 +1295,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
    // returns NOT NULL if extended structure has DBS_NOTNULL field to true
    LOCAL cNN := {| aArr | iif(Len( aArr ) > DBS_DEC, iif(aArr[ DBS_NOTNULL ], " NOT NULL ", ""), "") }
 
-   ::cCreateQuery := "CREATE TABLE " + Lower( cTable ) + " ("
+   ::cCreateQuery := "CREATE TABLE " + Lower(cTable) + " ("
 
    FOR i := 1 TO Len( aStruct )
 
@@ -1383,7 +1383,7 @@ METHOD CreateIndex( cName, cTable, aFNames, lUnique ) CLASS TMySQLServer
       cCreateQuery += "INDEX "
    ENDIF
 
-   cCreateQuery += cName + " ON " + Lower( cTable ) + " ("
+   cCreateQuery += cName + " ON " + Lower(cTable) + " ("
 
    FOR i := 1 TO Len( aFNames )
       cCreateQuery += aFNames[ i ] + ","
@@ -1401,7 +1401,7 @@ METHOD CreateIndex( cName, cTable, aFNames, lUnique ) CLASS TMySQLServer
 
 METHOD DeleteIndex( cName, cTable ) CLASS TMySQLServer
 
-   LOCAL cDropQuery := "DROP INDEX " + cName + " FROM " + Lower( cTable )
+   LOCAL cDropQuery := "DROP INDEX " + cName + " FROM " + Lower(cTable)
 
    IF mysql_query( ::nSocket, cDropQuery ) == 0
       RETURN .T.
@@ -1412,7 +1412,7 @@ METHOD DeleteIndex( cName, cTable ) CLASS TMySQLServer
 
 METHOD DeleteTable( cTable ) CLASS TMySQLServer
 
-   LOCAL cDropQuery := "DROP TABLE " + Lower( cTable )
+   LOCAL cDropQuery := "DROP TABLE " + Lower(cTable)
 
    IF mysql_query( ::nSocket, cDropQuery ) == 0
       RETURN .T.
@@ -1423,7 +1423,7 @@ METHOD DeleteTable( cTable ) CLASS TMySQLServer
 
 METHOD DeleteDatabase( cDataBase ) CLASS TMySQLServer
 
-   LOCAL cDropQuery := "DROP DATABASE " + Lower( cDataBase )
+   LOCAL cDropQuery := "DROP DATABASE " + Lower(cDataBase)
 
    IF mysql_query( ::nSocket, cDropQuery ) == 0
       RETURN .T.
@@ -1438,7 +1438,7 @@ METHOD Query( cQuery ) CLASS TMySQLServer
 
    hb_default( @cQuery, "" )
 
-   cUpperQuery := Upper( AllTrim( cQuery ) )
+   cUpperQuery := Upper(AllTrim( cQuery ))
    i := 1
    nNumTables := 1
 

@@ -137,32 +137,32 @@ PROCEDURE netiosrv_Main( lUI, ... )
 
    FOR EACH cParam IN { ... }
       DO CASE
-      CASE Lower( cParam ) == "-a"
+      CASE Lower(cParam) == "-a"
          /* Ignore */
-      CASE Lower( Left( cParam, 5 ) ) == "-noui"
+      CASE Lower(Left( cParam, 5 )) == "-noui"
          lUI := .F.
-      CASE Lower( Left( cParam, 6 ) ) == "-port="
+      CASE Lower(Left( cParam, 6 )) == "-port="
          netiosrv[ _NETIOSRV_nPort ] := Val( SubStr( cParam, 7 ) )
-      CASE Lower( Left( cParam, 7 ) ) == "-iface="
+      CASE Lower(Left( cParam, 7 )) == "-iface="
          netiosrv[ _NETIOSRV_cIFAddr ] := SubStr( cParam, 8 )
-      CASE Lower( Left( cParam, 9 ) ) == "-rootdir="
+      CASE Lower(Left( cParam, 9 )) == "-rootdir="
          netiosrv[ _NETIOSRV_cRootDir ] := SubStr( cParam, 10 )
-      CASE Lower( Left( cParam, 6 ) ) == "-pass="
+      CASE Lower(Left( cParam, 6 )) == "-pass="
          cPassword := SubStr( cParam, 7 )
          hb_StrClear( @cParam )
-      CASE Lower( Left( cParam, 11 ) ) == "-adminport="
+      CASE Lower(Left( cParam, 11 )) == "-adminport="
          netiomgm[ _NETIOSRV_nPort ] := Val( SubStr( cParam, 12 ) )
-      CASE Lower( Left( cParam, 12 ) ) == "-adminiface="
+      CASE Lower(Left( cParam, 12 )) == "-adminiface="
          netiomgm[ _NETIOSRV_cIFAddr ] := SubStr( cParam, 13 )
-      CASE Lower( Left( cParam, 11 ) ) == "-adminpass="
+      CASE Lower(Left( cParam, 11 )) == "-adminpass="
          cPasswordManagement := SubStr( cParam, 12 )
          hb_StrClear( @cParam )
-      CASE Lower( Left( cParam, 5 ) ) == "-rpc="
+      CASE Lower(Left( cParam, 5 )) == "-rpc="
          netiosrv[ _NETIOSRV_cRPCFFileName ] := SubStr( cParam, 6 )
 
          hb_FNameSplit( netiosrv[ _NETIOSRV_cRPCFFileName ], NIL, NIL, @cExt )
 
-         cExt := Lower( cExt )
+         cExt := Lower(cExt)
 
          SWITCH cExt
          CASE ".prg"
@@ -192,14 +192,14 @@ PROCEDURE netiosrv_Main( lUI, ... )
             netiosrv[ _NETIOSRV_cRPCFFileName ] := NIL
             netiosrv[ _NETIOSRV_hRPCFHRB ] := NIL
          ENDIF
-      CASE Lower( cParam ) == "-rpc"
+      CASE Lower(cParam) == "-rpc"
          netiosrv[ _NETIOSRV_lRPC ] := .T.
-      CASE Lower( cParam ) == "--version"
+      CASE Lower(cParam) == "--version"
          RETURN
-      CASE Lower( cParam ) == "-?" .OR. ;
-           Lower( cParam ) == "-h" .OR. ;
-           Lower( cParam ) == "-help" .OR. ;
-           Lower( cParam ) == "--help"
+      CASE Lower(cParam) == "-?" .OR. ;
+           Lower(cParam) == "-h" .OR. ;
+           Lower(cParam) == "-help" .OR. ;
+           Lower(cParam) == "--help"
          HB_Usage()
          RETURN
       OTHERWISE
@@ -607,7 +607,7 @@ STATIC FUNCTION netiomgm_rpc_stop( netiosrv, cIPPort )
 
    IF HB_ISSTRING( cIPPort )
 
-      cIPPort := Lower( cIPPort )
+      cIPPort := Lower(cIPPort)
 
       hb_mutexLock( netiosrv[ _NETIOSRV_mtxConnection ] )
 
@@ -638,7 +638,7 @@ STATIC FUNCTION netiomgm_rpc_clientinfo( netiosrv, netiomgm, cIPPort )
 
    IF HB_ISSTRING( cIPPort )
 
-      cIPPort := Lower( cIPPort )
+      cIPPort := Lower(cIPPort)
 
       lDone := .F.
 

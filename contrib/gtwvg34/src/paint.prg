@@ -371,7 +371,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
    LOCAL hDlg, xTemplate, nDlgMode
 
    IF HB_ISSTRING( cbDlgProc )
-      cbDlgProc := Upper( cbDlgProc )
+      cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
    nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC( acnDlg ), 1, 2))
@@ -405,7 +405,7 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
    LOCAL nResult, xTemplate, nDlgMode
 
    IF HB_ISSTRING( cbDlgProc )
-      cbDlgProc := Upper( cbDlgProc )
+      cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
    nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC( acnDlg ), 1, 2))
@@ -587,7 +587,7 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
       ELSE
          s := cColor
       ENDIF
-      s := Upper( s )
+      s := Upper(s)
       lEnh := "*" $ s .OR. "+" $ s
       IF lEnh
          s := hb_StrReplace( s, "*+" )

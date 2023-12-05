@@ -165,7 +165,7 @@ PROCEDURE Main( ... )
 
          DO CASE
          CASE cArgName == "-source" ; s_hSwitches[ "basedir" ] := hb_DirSepAdd( arg )
-         CASE cArgName == "-lang" ; s_hSwitches[ "lang" ] := Lower( arg )
+         CASE cArgName == "-lang" ; s_hSwitches[ "lang" ] := Lower(arg)
          CASE cArgName == "-format"
             IF arg == "" .OR. ! arg $ s_generators
                ShowHelp( "Unrecognized format option '" + arg + "'" )
@@ -217,7 +217,7 @@ PROCEDURE Main( ... )
 
    FOR EACH cFormat IN s_hSwitches[ "format" ]
 
-      IF HB_ISEVALITEM( generatorClass := hb_HGetDef( s_generators, Lower( cFormat ) ) )
+      IF HB_ISEVALITEM( generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ) )
 
          OutStd( "Output as", cFormat + hb_eol() )
 
@@ -427,7 +427,7 @@ STATIC FUNCTION ProcessDocDir( cDir, cComponent, aContent )
       nOldContentLen := Len( aContent )
 
       FOR EACH hEntry IN aEntry
-         IF Lower( hEntry[ "_LANG" ] ) == s_hSwitches[ "lang" ]
+         IF Lower(hEntry[ "_LANG" ]) == s_hSwitches[ "lang" ]
             ProcessBlock( hEntry, aContent )
          ENDIF
       NEXT
@@ -587,15 +587,15 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField( "SUBCATEGORY" )
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. iif(HB_ISSTRING( c ), Lower( c ) == Lower( cSection ), Lower( c[ 1 ] ) == Lower( cSection )) } ) ) == 0
+               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. iif(HB_ISSTRING( c ), Lower(c) == Lower(cSection), Lower(c[ 1 ]) == Lower(cSection)) } ) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 
          CASE o:IsField( "RETURNS" ) .AND. cSectionName == "RETURNS" .AND. ( ;
                Empty(cSection) .OR. ;
-               Lower( cSection ) == "nil" .OR. ;
-               Lower( cSection ) == "none" .OR. ;
-               Lower( cSection ) == "none." )
+               Lower(cSection) == "nil" .OR. ;
+               Lower(cSection) == "none" .OR. ;
+               Lower(cSection) == "none." )
 
             AddErrorCondition( cFile, "'" + o:fld[ "NAME" ] + "' is identified as template " + hEntry[ "TEMPLATE" ] + " but has no RETURNS value (" + cSection + ")" )
 
@@ -629,10 +629,10 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          lAccepted := .F.
 #endif
       CASE hEntry[ "TEMPLATE" ] == "Function" .AND. ( ;
-         Empty(o:fld[ "RETURNS"] ) .OR. ;
-         Lower( o:fld[ "RETURNS" ] ) == "nil" .OR. ;
-         Lower( o:fld[ "RETURNS" ] ) == "none" .OR. ;
-         Lower( o:fld[ "RETURNS" ] ) == "none." )
+         Empty(o:fld[ "RETURNS" ]) .OR. ;
+         Lower(o:fld[ "RETURNS" ]) == "nil" .OR. ;
+         Lower(o:fld[ "RETURNS" ]) == "none" .OR. ;
+         Lower(o:fld[ "RETURNS" ]) == "none." )
 
          AddErrorCondition( cFile, "'" + o:fld[ "NAME" ] + "' is identified as template " + hEntry[ "TEMPLATE" ] + " but has no RETURNS value (" + o:fld[ "RETURNS" ] + ")" )
 #if 0
@@ -643,7 +643,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
    IF lAccepted
 
-      IF !( Lower( hEntry[ "CATEGORY" ] ) == "document" )
+      IF !( Lower(hEntry[ "CATEGORY" ]) == "document" )
          cSectionName := Parse( o:fld[ "NAME" ], "(" )
          IF ! cSectionName $ s_hSwitches[ "hHBX" ]
             AddErrorCondition( cFile, "Not found in HBX: " + cSectionName + " " + cComponent )
@@ -891,27 +891,27 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                   DO CASE
                   CASE ! SubStr( cLine, idx, 1 ) $ " ,;.!?"
                      /* do nothing */
-                  CASE Upper( SubStr( cLine, idx, 3 ) ) == ".T." .OR. Upper( SubStr( cLine, idx, 3 ) ) == ".F."
+                  CASE Upper(SubStr( cLine, idx, 3 )) == ".T." .OR. Upper(SubStr( cLine, idx, 3 )) == ".F."
                      idx--
-                  CASE Upper( SubStr( cLine, idx - 2, 3 ) ) == ".T." .OR. Upper( SubStr( cLine, idx - 1, 3 ) ) == ".F."
+                  CASE Upper(SubStr( cLine, idx - 2, 3 )) == ".T." .OR. Upper(SubStr( cLine, idx - 1, 3 )) == ".F."
                      idx -= 3
-                  CASE Upper( SubStr( cLine, idx, 5 ) ) == ".AND." .OR. Upper( SubStr( cLine, idx, 5 ) ) == ".NOT."
+                  CASE Upper(SubStr( cLine, idx, 5 )) == ".AND." .OR. Upper(SubStr( cLine, idx, 5 )) == ".NOT."
                      idx--
-                  CASE Upper( SubStr( cLine, idx - 4, 5 ) ) == ".AND." .OR. Upper( SubStr( cLine, idx - 4, 5 ) ) == ".NOT."
+                  CASE Upper(SubStr( cLine, idx - 4, 5 )) == ".AND." .OR. Upper(SubStr( cLine, idx - 4, 5 )) == ".NOT."
                      idx -= 5
-                  CASE Upper( SubStr( cLine, idx, 4 ) ) == ".OR."
+                  CASE Upper(SubStr( cLine, idx, 4 )) == ".OR."
                      idx--
-                  CASE Upper( SubStr( cLine, idx - 3, 4 ) ) == ".OR."
+                  CASE Upper(SubStr( cLine, idx - 3, 4 )) == ".OR."
                      idx -= 4
-                  CASE Upper( SubStr( cLine, idx - 1, 4 ) ) == "i.e."
+                  CASE Upper(SubStr( cLine, idx - 1, 4 )) == "i.e."
                      idx -= 2
-                  CASE Upper( SubStr( cLine, idx - 3, 4 ) ) == "i.e."
+                  CASE Upper(SubStr( cLine, idx - 3, 4 )) == "i.e."
                      idx -= 4
-                  CASE Upper( SubStr( cLine, idx - 1, 4 ) ) == "e.g."
+                  CASE Upper(SubStr( cLine, idx - 1, 4 )) == "e.g."
                      idx -= 2
-                  CASE Upper( SubStr( cLine, idx - 3, 4 ) ) == "e.g."
+                  CASE Upper(SubStr( cLine, idx - 3, 4 )) == "e.g."
                      idx -= 4
-                  CASE Upper( SubStr( cLine, idx - 1, 2 ) ) == "*."
+                  CASE Upper(SubStr( cLine, idx - 1, 2 )) == "*."
                      idx -= 2
                   OTHERWISE
                      EXIT
@@ -943,7 +943,7 @@ STATIC FUNCTION Filename( cFile )
    LOCAL cResult := ""
    LOCAL idx, tmp
 
-   cFile := Lower( cFile )
+   cFile := Lower(cFile)
 
    FOR idx := 1 TO Len( cFile )
       tmp := SubStr( cFile, idx, 1 )

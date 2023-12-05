@@ -103,7 +103,7 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
       CASE HB_ISNUMERIC( ::caption )
          ::style += BS_BITMAP
       CASE HB_ISSTRING( ::caption )
-         SWITCH Lower( hb_FNameExt( ::caption ) )
+         SWITCH Lower(hb_FNameExt( ::caption ))
          CASE ".ico"
             ::style += BS_ICON
             EXIT
@@ -229,7 +229,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
    DO CASE
    CASE HB_ISSTRING( xCaption )
 
-      SWITCH Lower( hb_FNameExt( ::caption ) )
+      SWITCH Lower(hb_FNameExt( ::caption ))
       CASE ".ico"
          ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( ::caption, nLoadFromDiskFile, WIN_IMAGE_ICON ) )
          EXIT

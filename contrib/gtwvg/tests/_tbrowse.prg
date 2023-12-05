@@ -403,7 +403,7 @@ STATIC FUNCTION BrwBuildSLE( oCrt, oBrw )
    oXbp:create( , , { -16, -1 }, { -1, -10 } )
    oXbp:setColorFG( "N"  )
    oXbp:setColorBG( "BG+"  )
-   oXbp:returnPressed := {| m1, m2, o | m1 := m1, m2 := m2, BrwShowColumn( oBrw, Upper( RTrim( o:getData() ) ) ) }
+   oXbp:returnPressed := {| m1, m2, o | m1 := m1, m2 := m2, BrwShowColumn( oBrw, Upper(RTrim( o:getData() )) ) }
    oXbp:tooltipText := "Type in a field name and press ENTER"
 
    RETURN oXbp

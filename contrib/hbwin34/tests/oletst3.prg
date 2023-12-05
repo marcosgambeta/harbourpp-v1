@@ -16,7 +16,7 @@ PROCEDURE Main()
       ? oObject:MyMethod( "Hello", 123, .T., ;
          { hb_DateTime(), 123.45, { Date(), 2, 3 } } )
       ? oObject:Property1
-      oObject:Property1 := "!!! >>>" + Upper( oObject:Property1 ) + "<<< !!!"
+      oObject:Property1 := "!!! >>>" + Upper(oObject:Property1) + "<<< !!!"
       ? oObject:Property1
    RECOVER
       ? "Cannot access 'MyOleServer' OLE server."

@@ -96,10 +96,10 @@ FUNCTION tip_MailAssemble( ;
 
    /* Attempt to convert to selected charset if it's supported
       by Harbour (and linked to app). */
-   IF Upper( cCharset ) == "UTF-8"
+   IF Upper(cCharset) == "UTF-8"
       cCharsetCP := "UTF8"
-   ELSEIF hb_cdpExists( Lower( cCharset ) )
-      cCharsetCP := hb_cdpUniID( Lower( cCharset ) )
+   ELSEIF hb_cdpExists( Lower(cCharset) )
+      cCharsetCP := hb_cdpUniID( Lower(cCharset) )
    ENDIF
 
    cContentType := iif(lBodyHTML, "text/html", "text/plain") + "; charset=" + cCharset

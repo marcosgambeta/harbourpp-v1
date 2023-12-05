@@ -24,7 +24,7 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
    hb_default( @cTo      , "to@example.com" )
    hb_default( @cHost    , "localhost" )
 
-   cHost := Lower( cHost )
+   cHost := Lower(cHost)
 
    /* SMTPS works with SSL/TLS on port 465 and with STARTTLS
       on port 587. STARTTLS mode is fully automatic and requires

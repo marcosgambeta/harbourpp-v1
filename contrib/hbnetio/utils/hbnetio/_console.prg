@@ -138,7 +138,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
       aCommand := hb_ATokens( cCommand, " " )
       IF ! Empty(aCommand)
-         IF ( nPos := hb_HPos( hCommands, Lower( aCommand[ 1 ] ) ) ) > 0
+         IF ( nPos := hb_HPos( hCommands, Lower(aCommand[ 1 ]) ) ) > 0
             Eval( hb_HValueAt( hCommands, nPos )[ 3 ], cCommand )
          ELSE
             IF Left( cCommand, Len( netcliID ) + 1 ) == netcliID + "."
@@ -171,13 +171,13 @@ STATIC PROCEDURE ManageCursor( cCommand )
 /* Complete the command-line, based on the first characters that the user typed. [vailtom] */
 STATIC PROCEDURE CompleteCmd( cCommand, hCommands )
 
-   LOCAL s := Lower( AllTrim( cCommand ) )
+   LOCAL s := Lower(AllTrim( cCommand ))
    LOCAL n
 
    /* We need at least one character to search */
    IF Len( s ) > 1
       FOR EACH n IN hCommands
-         IF s == Lower( Left( n:__enumKey(), Len( s ) ) )
+         IF s == Lower(Left( n:__enumKey(), Len( s ) ))
             cCommand := PadR( n:__enumKey(), Len( cCommand ) )
             ManageCursor( cCommand )
             RETURN

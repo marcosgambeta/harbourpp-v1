@@ -115,7 +115,7 @@ METHOD SetAddress( cUrl ) CLASS TUrl
       RETURN .F.
    ENDIF
 
-   ::cProto := Lower( aMatch[ 2 ] )
+   ::cProto := Lower(aMatch[ 2 ])
    cServer := aMatch[ 3 ]
    cPath := aMatch[ 4 ]
    ::cQuery := aMatch[ 5 ]
@@ -142,7 +142,7 @@ METHOD BuildAddress() CLASS TUrl
    LOCAL cRet := ""
 
    IF ::cProto != NIL
-      ::cProto := Lower( ::cProto )
+      ::cProto := Lower(::cProto)
    ENDIF
 
    IF ! Empty(::cProto) .AND. ! ::cServer == ""

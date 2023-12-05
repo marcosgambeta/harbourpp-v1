@@ -616,7 +616,7 @@ FUNCTION type_cb( hNode )
       cType := mxmlGetElement( hNode )
    ENDIF
 
-   SWITCH Lower( cType )
+   SWITCH Lower(cType)
    CASE "integer" ;  RETURN MXML_INTEGER
    CASE "opaque"  ;  RETURN MXML_OPAQUE
    CASE "real"    ;  RETURN MXML_REAL
@@ -644,7 +644,7 @@ FUNCTION whitespace_cb( hNode, nWhere )
     * These are just common HTML elements...
     */
 
-   cName := Lower( mxmlGetElement( hNode ) )
+   cName := Lower(mxmlGetElement( hNode ))
 
    IF cName == "html" .OR. cName == "head" .OR. cName == "body" .OR. ;
       cName == "pre" .OR. cName == "p" .OR. ;

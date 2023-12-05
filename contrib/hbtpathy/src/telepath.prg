@@ -445,7 +445,7 @@ FUNCTION tp_waitfor( ... ) /* nPort, nTimeout, acList|cString..., lIgnorecase */
 
       FOR x := 1 TO Len( acList )
          IF lIgnorecase
-            nAt := At( Upper( acList[ x ] ), Upper( t_aPorts[ nPort, TPFP_INBUF ] ) )
+            nAt := At( Upper(acList[ x ]), Upper(t_aPorts[ nPort, TPFP_INBUF ]) )
          ELSE
             nAt := At( acList[ x ], t_aPorts[ nPort, TPFP_INBUF ] )
          ENDIF

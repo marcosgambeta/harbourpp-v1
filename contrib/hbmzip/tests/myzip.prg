@@ -81,19 +81,19 @@ PROCEDURE Main( ... )
    hb_ADel( aWild, 1, .T. )
 
    FOR tmp := Len( aWild ) - 1 TO 1 STEP -1
-      IF Lower( aWild[ tmp ] ) == "--pass"
+      IF Lower(aWild[ tmp ]) == "--pass"
          IF Empty(cPassword)
             cPassword := aWild[ tmp + 1 ]
          ENDIF
          aWild[ tmp ] := ""
          aWild[ tmp + 1 ] := ""
-      ELSEIF Lower( aWild[ tmp ] ) == "--comment"
+      ELSEIF Lower(aWild[ tmp ]) == "--comment"
          IF Empty(cComment)
             cComment := aWild[ tmp + 1 ]
          ENDIF
          aWild[ tmp ] := ""
          aWild[ tmp + 1 ] := ""
-      ELSEIF Lower( aWild[ tmp ] ) == "--unicode"
+      ELSEIF Lower(aWild[ tmp ]) == "--unicode"
          /* skip */
       ENDIF
    NEXT

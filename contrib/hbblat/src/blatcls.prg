@@ -599,8 +599,8 @@ METHOD PROCEDURE Check() CLASS HBBlat
 
       // cDSN
       IF HB_ISSTRING( ::cDSN )
-         IF "n" $ Lower( ::cDSN ) .OR. "s" $ Lower( ::cDSN ) .OR. ;
-            "f" $ Lower( ::cDSN ) .OR. "d" $ Lower( ::cDSN )
+         IF "n" $ Lower(::cDSN) .OR. "s" $ Lower(::cDSN) .OR. ;
+            "f" $ Lower(::cDSN) .OR. "d" $ Lower(::cDSN)
             ::cCommand += " -dsn " + ::cDSN
          ELSE
             ::nError := BLAT_ERR_WRONG_DSN

@@ -234,7 +234,7 @@ METHOD AddEntry( oEntry ) CLASS GenerateHTML
    FOR EACH item IN FieldIDList()
       IF item == "NAME"
          cEntry := oEntry:fld[ "NAME" ]
-         IF "(" $ cEntry .OR. Upper( cEntry ) == cEntry  // guess if it's code
+         IF "(" $ cEntry .OR. Upper(cEntry) == cEntry  // guess if it's code
             ::OpenTagInline( "h4" ):OpenTagInline( "code" ):AppendInline( cEntry ):CloseTagInline( "code" ):CloseTag( "h4" )
          ELSE
             ::OpenTagInline( "h4" ):AppendInline( cEntry ):CloseTag( "h4" )
@@ -594,7 +594,7 @@ METHOD RecreateStyleDocument( cStyleFile ) CLASS GenerateHTML
    RETURN Self
 
 STATIC FUNCTION SymbolToHTMLID( cID )
-   RETURN Lower( hb_StrReplace( cID, { ;
+   RETURN Lower(hb_StrReplace( cID, { ;
      "%" => "pct", ;
      "_" => "-", ;
-     " " => "-" } ) )
+     " " => "-" } ))

@@ -307,7 +307,7 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    IF HB_ISNUMERIC( ::icon )
       hb_gtInfo( HB_GTI_ICONRES, ::icon )
-   ELSEIF ".ico" $ Lower( ::icon )
+   ELSEIF ".ico" $ Lower(::icon)
       hb_gtInfo( HB_GTI_ICONFILE, ::icon )
    ELSE
       hb_gtInfo( HB_GTI_ICONRES, ::icon )

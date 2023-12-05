@@ -101,7 +101,7 @@ METHOD New() CLASS TIPCgi
    ::cCgiHeader := ""
    ::cHtmlPage := ""
 
-   IF "POST" $ Upper( GetEnv( "REQUEST_METHOD" ) )
+   IF "POST" $ Upper(GetEnv( "REQUEST_METHOD" ))
       nLen := Val( GetEnv( "CONTENT_LENGTH" ) )
       cTemp := Space( nLen )
       IF ( nRead := FRead( hb_GetStdIn(), @cTemp, nLen ) ) != nLen

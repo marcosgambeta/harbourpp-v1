@@ -23,7 +23,7 @@ PROCEDURE Main()
          /* execute some functions on the server side and display
           * the results.
           */
-         ? oObject:Upper( "hello world !!!" )
+         ? oObject:Upper("hello world !!!")
          ? "SERVER DATE:",     oObject:Date()
          ? "SERVER TIME:",     oObject:Time()
          ? "SERVER DATETIME:", oObject:hb_DateTime()

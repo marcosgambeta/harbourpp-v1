@@ -205,14 +205,14 @@ PROCEDURE Main()
    HBTEST NumToken( "This is good. See you! How do you do?", ".!?" ) IS 3
    HBTEST NumToken( "one,,three,four,,six", ",", 1 ) IS  6
 
-   HBTEST TokenLower( "Hello, World, here I am!" )         IS "hello, world, here i am!"
-   HBTEST TokenLower( "Hello, World, here I am!",, 3 )     IS "hello, world, here I am!"
-   HBTEST TokenLower( "Hello, World, here I am!", ",", 3 ) IS "hello, World, here I am!"
-   HBTEST TokenLower( "Hello, World, here I am!", " W" )   IS "hello, World, here i am!"
-   HBTEST TokenUpper( "Hello, world, here I am!" )         IS "Hello, World, Here I Am!"
-   HBTEST TokenUpper( "Hello, world, here I am!",, 3 )     IS "Hello, World, Here I am!"
-   HBTEST TokenUpper( "Hello, world, here I am!", ",", 3 ) IS "Hello, world, here I am!"
-   HBTEST TokenUpper( "Hello, world, here I am!", " w" )   IS "Hello, wOrld, Here I Am!"
+   HBTEST TokenLower("Hello, World, here I am!")         IS "hello, world, here i am!"
+   HBTEST TokenLower("Hello, World, here I am!",, 3)     IS "hello, world, here I am!"
+   HBTEST TokenLower("Hello, World, here I am!", ",", 3) IS "hello, World, here I am!"
+   HBTEST TokenLower("Hello, World, here I am!", " W")   IS "hello, World, here i am!"
+   HBTEST TokenUpper("Hello, world, here I am!")         IS "Hello, World, Here I Am!"
+   HBTEST TokenUpper("Hello, world, here I am!",, 3)     IS "Hello, World, Here I am!"
+   HBTEST TokenUpper("Hello, world, here I am!", ",", 3) IS "Hello, world, here I am!"
+   HBTEST TokenUpper("Hello, world, here I am!", " w")   IS "Hello, wOrld, Here I Am!"
 
    HBTEST Sin( 0.0 ) IS 0.0
    HBTEST Round( Sin( Pi() / 4 ), 4 ) IS Round( Sqrt( 1 / 2 ), 4 )
