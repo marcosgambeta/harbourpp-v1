@@ -22,8 +22,8 @@ PROCEDURE Main( ... )
    LOCAL cText
 #endif
 
-   IF Empty( aParams )
-      IF ! Empty( cQuery )
+   IF Empty(aParams)
+      IF ! Empty(cQuery)
          hParams := GetVars( cQuery )
       ENDIF
    ELSE
@@ -31,7 +31,7 @@ PROCEDURE Main( ... )
    ENDIF
 
    // Gestione parametri
-   IF ! Empty( hParams )
+   IF ! Empty(hParams)
       FOR EACH cPar IN hParams:Keys
 
          DO CASE

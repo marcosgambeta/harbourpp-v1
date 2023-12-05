@@ -64,7 +64,7 @@ PROCEDURE Main( ... )
 #endif
    aParams := hb_AParams()
 
-   IF Empty( aParams ) .OR. Left( cFileName := ATail( aParams ), 1 ) $ "@-"
+   IF Empty(aParams) .OR. Left( cFileName := ATail( aParams ), 1 ) $ "@-"
       About()
       RETURN
    ENDIF
@@ -118,7 +118,7 @@ STATIC PROCEDURE Reformat( oRef, cFileName )
 
    LOCAL aFile
 
-   IF ! Empty( aFile := oRef:File2Array( cFileName ) )
+   IF ! Empty(aFile := oRef:File2Array( cFileName ))
       OutStd( hb_StrFormat( I_( "Reformatting %1$s (%2$d lines)" ), cFileName, Len( aFile ) ) + hb_eol() )
       OutStd( "<" )
       IF oRef:Reformat( aFile )

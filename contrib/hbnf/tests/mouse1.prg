@@ -33,7 +33,7 @@ PROCEDURE Main( nRow, nCol )
       RETURN
    ENDIF
 
-   IF Empty( ft_MInit() )
+   IF Empty(ft_MInit())
       @ MaxRow(), 0 SAY "Mouse driver is not installed!"
       SetMode( nSaveRow, nSaveCol )
       RETURN

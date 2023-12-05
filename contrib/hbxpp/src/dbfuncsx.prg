@@ -72,7 +72,7 @@ FUNCTION xpp_dbUseArea( lNewArea, cDriver, cName, xcAlias, lShared, lReadonly )
 
       hb_default( @xcAlias, "" )
 
-      IF Empty( xcAlias )
+      IF Empty(xcAlias)
          xcAlias := cName
       ENDIF
 

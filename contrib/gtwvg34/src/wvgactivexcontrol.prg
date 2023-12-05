@@ -129,7 +129,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
    ::license    := cLicense
    ::hContainer := ::oParent:getHWND()
 
-   IF Empty( ::hContainer ) .OR. ! HB_ISSTRING( ::CLSID )
+   IF Empty(::hContainer) .OR. ! HB_ISSTRING( ::CLSID )
       RETURN NIL
    ENDIF
 
@@ -141,19 +141,19 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
    hWnd := wapi_CreateWindowEx( ::exStyle, "AtlAxWin", ::CLSID, ::style, ::aPos[ 1 ], ::aPos[ 2 ], ;
       ::aSize[ 1 ], ::aSize[ 2 ], ::hContainer )
-   IF Empty( hWnd )
+   IF Empty(hWnd)
       RETURN NIL
    ENDIF
    ::hWnd := ::pWnd := hWnd
 
    hObj := __axGetControl( ::hWnd )
-   IF Empty( hObj )
+   IF Empty(hObj)
       RETURN NIL
    ENDIF
    ::oOLE:__hObj := hObj
    __axDoVerb( ::hWnd, -4 )
 
-   IF ! Empty( ::hEvents )
+   IF ! Empty(::hEvents)
       ::oOle:__hSink := __axRegisterHandler( ::oOle:__hObj, {| nEvent, ... | ::execEvent( nEvent, ... ) } )
    ENDIF
 
@@ -224,7 +224,7 @@ METHOD WvgActiveXControl:OnError()
 
 METHOD PROCEDURE WvgActiveXControl:Destroy()
 
-   IF ! Empty( ::oOLE:__hObj )
+   IF ! Empty(::oOLE:__hObj)
       IF wapi_IsWindow( ::hWnd )
          wapi_DestroyWindow( ::hWnd )
       ENDIF

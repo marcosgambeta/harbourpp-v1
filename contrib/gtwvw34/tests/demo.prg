@@ -102,7 +102,7 @@ PROCEDURE Main()
       ldebug( "Cannot setDefaultWindowSize()" )
    ENDIF
 
-   IF ! Empty( wvw_sbCreate() ) .AND. ;
+   IF ! Empty(wvw_sbCreate()) .AND. ;
       wvw_sbAddPart( , "99:99:99" ) > 0
       wvw_SetTimer( , 1000 )
    ENDIF
@@ -867,7 +867,7 @@ STATIC PROCEDURE CreateToolbar( nWinNum )
       lDisplayText := Alert( "Display text in toolbar?", { "Yes", "No" } ) == 1
    ENDIF
 
-   IF Empty( wvw_tbCreate( nWinNum, lDisplayText, , nSysBitmap ) )
+   IF Empty(wvw_tbCreate( nWinNum, lDisplayText, , nSysBitmap ))
       lboxmessage( "FAILED create toolbar" )
       RETURN
    ENDIF
@@ -1145,7 +1145,7 @@ STATIC PROCEDURE MyError( e )
       "Call trace:" + hb_eol() + ;
       hb_eol()
 
-   DO WHILE ! Empty( ProcName( ++i ) )
+   DO WHILE ! Empty(ProcName( ++i ))
       cErr += RTrim( ProcName( i ) ) + "(" + hb_ntos( ProcLine( i ) ) + ")" + hb_eol()
    ENDDO
 
@@ -1273,7 +1273,7 @@ METHOD New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWi
    hb_default( @nCol2, nCol1 + Max( 10, Len( cCaption ) + 2 ) - 1 )
 
 #if 0  // TODO
-   ::nId := iif(Empty( s_amouseobjlist ), 1, ATail( s_amouseobjlist ):nGetId() + 1)
+   ::nId := iif(Empty(s_amouseobjlist), 1, ATail( s_amouseobjlist ):nGetId() + 1)
    ::nHotKey := NIL
 #endif
    ::nWinId := hb_defaultValue( nWinId, wvw_nNumWindows() - 1 )  // 2004-03-03
@@ -1489,7 +1489,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
          ENDIF
       ENDIF
 
-      IF ! Empty( ::cCaption )
+      IF ! Empty(::cCaption)
          wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
@@ -1513,7 +1513,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
          nLabelColor := WIN_RGB( 255, 0, 0 )
       ENDIF
 
-      IF ! Empty( ::cCaption )
+      IF ! Empty(::cCaption)
          wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF

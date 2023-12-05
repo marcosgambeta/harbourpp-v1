@@ -104,7 +104,7 @@ STATIC FUNCTION NumToTxtRaw( nValue )
          aDigit[ tmp + 2 ] != 0
 
          cValue += ;
-            iif(Empty( cValue ), "", "-") + ;
+            iif(Empty(cValue), "", "-") + ;
             iif(aDigit[ tmp ] != 0, aEgyes[ aDigit[ tmp ] + 1 ] + "száz", "") + ;
             iif(aDigit[ tmp + 2 ] == 0, aTizes1[ aDigit[ tmp + 1 ] + 1 ], aTizes2[ aDigit[ tmp + 1 ] + 1 ]) + ;
             aEgyes[ aDigit[ tmp + 2 ] + 1 ] + ;

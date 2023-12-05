@@ -53,7 +53,7 @@ PROCEDURE Main()
 
    ? "Simple BLAT Command interface"
    ? "Paramenters: ", cCmd
-   IF Empty( cCmd )
+   IF Empty(cCmd)
       ? "Try with -? option"
    ELSE
       ? "Sending parameters to blat"

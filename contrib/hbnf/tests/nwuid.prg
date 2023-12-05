@@ -9,7 +9,7 @@ PROCEDURE Main()
 
    FOR x := 1 TO 100
       cUid := ft_NWUID( x )
-      IF ! Empty( cUid )
+      IF ! Empty(cUid)
          ? Str( x, 3 ) + Space( 3 ) + cUid
       ENDIF
    NEXT

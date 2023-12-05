@@ -80,7 +80,7 @@ FUNCTION hb_GetZipComment( cFileName )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
    ENDIF
 
-   IF Empty( hUnzip := hb_unzipOpen( cFileName ) )
+   IF Empty(hUnzip := hb_unzipOpen( cFileName ))
       cComment := ""
    ELSE
       hb_unzipGlobalInfo( hUnzip,, @cComment )
@@ -98,7 +98,7 @@ FUNCTION hb_GetFileCount( cFileName )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
    ENDIF
 
-   IF Empty( hUnzip := hb_unzipOpen( cFileName ) )
+   IF Empty(hUnzip := hb_unzipOpen( cFileName ))
       nEntries := 0
    ELSE
       hb_unzipGlobalInfo( hUnzip, @nEntries )
@@ -116,7 +116,7 @@ FUNCTION hb_ZipWithPassword( cFileName )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
    ENDIF
 
-   IF ! Empty( hUnzip := hb_unzipOpen( cFileName ) )
+   IF ! Empty(hUnzip := hb_unzipOpen( cFileName ))
 
       IF hb_unzipFileFirst( hUnzip ) == 0
          hb_unzipFileInfo( hUnzip,,,,,,,,, @lCrypted )
@@ -149,7 +149,7 @@ FUNCTION hb_GetFilesInZip( cFileName, lVerbose )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
    ENDIF
 
-   IF ! Empty( hUnzip := hb_unzipOpen( cFileName ) )
+   IF ! Empty(hUnzip := hb_unzipOpen( cFileName ))
 
       hb_default( @lVerbose, .F. )
 
@@ -273,7 +273,7 @@ FUNCTION hb_ZipFile( ;
       FErase( cFileName )
    ENDIF
 
-   IF ! Empty( hZip := hb_zipOpen( cFileName, iif(! lOverwrite .AND. hb_FileExists( cFileName ), HB_ZIP_OPEN_ADDINZIP, NIL) ) )
+   IF ! Empty(hZip := hb_zipOpen( cFileName, iif(! lOverwrite .AND. hb_FileExists( cFileName ), HB_ZIP_OPEN_ADDINZIP, NIL) ))
 
       IF HB_ISSTRING( acFiles )
          acFiles := { acFiles }
@@ -343,7 +343,7 @@ FUNCTION hb_ZipFile( ;
             hb_FNameSplit( cFileToZip, @cPath, @cName, @cExt, @cDrive )
             IF lWithPath
                IF ! lWithDrive
-                  IF ! Empty( cDrive ) .AND. hb_LeftEq( cPath, cDrive += hb_osDriveSeparator() )
+                  IF ! Empty(cDrive) .AND. hb_LeftEq( cPath, cDrive += hb_osDriveSeparator() )
                      cPath := SubStr( cPath, Len( cDrive ) + 1 )
                   ENDIF
                   DO WHILE Left( cPath, 1 ) $ "\/"
@@ -354,7 +354,7 @@ FUNCTION hb_ZipFile( ;
                cPath := NIL
             ENDIF
             hb_zipFileCreate( hZip, hb_FNameMerge( cPath, cName, cExt ), ;
-               tTime,,,,, nLevel, cPassword, iif(Empty( cPassword ), NIL, hb_zipFileCRC32( cFileToZip )), NIL )
+               tTime,,,,, nLevel, cPassword, iif(Empty(cPassword), NIL, hb_zipFileCRC32( cFileToZip )), NIL )
 
             DO WHILE ( nLen := FRead( hHandle, @cBuffer, hb_BLen( cBuffer ) ) ) > 0
 
@@ -405,7 +405,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
       lRetVal := .F.
    ENDIF
 
-   IF Empty( cPassword )
+   IF Empty(cPassword)
       cPassword := NIL
    ENDIF
 
@@ -413,7 +413,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
    ENDIF
 
-   IF Empty( hUnzip := hb_unzipOpen( cFileName ) )
+   IF Empty(hUnzip := hb_unzipOpen( cFileName ))
       lRetVal := .F.
    ELSE
       IF HB_ISNUMERIC( acFiles ) .OR. ;
@@ -421,7 +421,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
          acFiles := { acFiles }
       ENDIF
 
-      IF Empty( cPath )
+      IF Empty(cPath)
          cPath := hb_FNameDir( cFileName )
       ENDIF
 
@@ -436,7 +436,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
          IF hb_unzipFileInfo( hUnzip, @cZipName, @dDate, @cTime,,,, @nSize ) == 0
 
             /* NOTE: As opposed to original hbziparch we don't do a second match without path. */
-            lExtract := Empty( acFiles ) .OR. ;
+            lExtract := Empty(acFiles) .OR. ;
                AScan( acFiles, nPos ) > 0 .OR. ;
                AScan( acFiles, {| cMask | hb_FileMatch( cZipName, cMask ) } ) > 0
 

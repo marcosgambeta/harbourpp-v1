@@ -146,7 +146,7 @@ METHOD WvgMenuBar:create( oParent, aPresParams, lVisible )
 
    ::hMenu := wapi_CreateMenu()
 
-   IF ! Empty( ::hMenu )
+   IF ! Empty(::hMenu)
       /* TODO: check for if the parent already has a menu
                we need to destroy that first */
       /* finally set the menu */
@@ -183,7 +183,7 @@ METHOD WvgMenuBar:configure( oParent, aPresParams, lVisible )
 
 METHOD WvgMenuBar:destroy()
 
-   IF ! Empty( ::hMenu )
+   IF ! Empty(::hMenu)
       ::DelAllItems()
 
       IF ! wapi_DestroyMenu( ::hMenu )
@@ -330,10 +330,10 @@ METHOD WvgMenuBar:findMenuItemById( nId )
 
    LOCAL x, aResult := {}
 
-   IF ! Empty( nId )
+   IF ! Empty(nId)
       x := ::numItems()
 
-      DO WHILE x > 0 .AND. Empty( aResult )
+      DO WHILE x > 0 .AND. Empty(aResult)
          IF ::aMenuItems[ x ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
             aResult := ::aMenuItems[ x ][ WVT_MENU_MENUOBJ ]:findMenuItemById( nId )
 
@@ -351,10 +351,10 @@ METHOD WvgMenuBar:findMenuPosById( nId )
 
    LOCAL x, nPos
 
-   IF ! Empty( nId )
+   IF ! Empty(nId)
       x := ::numItems()
 
-      DO WHILE x > 0 .AND. Empty( nPos )
+      DO WHILE x > 0 .AND. Empty(nPos)
          IF ::aMenuItems[ x ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
             nPos := ::aMenuItems[ x ][ WVT_MENU_MENUOBJ ]:findMenuPosById( nId )
 
@@ -374,7 +374,7 @@ METHOD WvgMenuBar:checkItem( nItemNum, lCheck )
 
    __defaultNIL( @lCheck, .T. )
 
-   IF ! Empty( ::hMenu ) .AND. HB_ISNUMERIC( nItemNum )
+   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC(nItemNum)
       nRet := wapi_CheckMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + iif(lCheck, WIN_MF_CHECKED, WIN_MF_UNCHECKED) )
    ENDIF
 
@@ -382,7 +382,7 @@ METHOD WvgMenuBar:checkItem( nItemNum, lCheck )
 
 METHOD WvgMenuBar:enableItem( nItemNum )
 
-   IF ! Empty( ::hMenu ) .AND. HB_ISNUMERIC( nItemNum )
+   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC( nItemNum )
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_ENABLED )
    ENDIF
 
@@ -390,7 +390,7 @@ METHOD WvgMenuBar:enableItem( nItemNum )
 
 METHOD WvgMenuBar:disableItem( nItemNum )
 
-   IF ! Empty( ::hMenu ) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum > 0
+   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum > 0
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_GRAYED )
    ENDIF
 

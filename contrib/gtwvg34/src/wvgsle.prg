@@ -189,7 +189,7 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
       IF HB_ISNUMERIC( ::clr_FG )
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
-      IF Empty( ::hBrushBG )
+      IF Empty(::hBrushBG)
          RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
       ELSE
          wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )

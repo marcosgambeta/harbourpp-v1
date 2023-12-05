@@ -237,7 +237,7 @@ METHOD start( xAction, ... ) CLASS Thread
                   nTime := hb_MilliSeconds()
 
                   BEGIN SEQUENCE
-                     IF ! Empty( xAction ) .AND. ValType( xAction ) $ "CBS"
+                     IF ! Empty(xAction) .AND. ValType( xAction ) $ "CBS"
                         ::result := Do( xAction, ... )
                      ELSE
                         ::result := ::execute( ... )

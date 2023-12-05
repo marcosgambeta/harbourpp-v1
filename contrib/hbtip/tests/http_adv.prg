@@ -11,7 +11,7 @@ PROCEDURE Main( cURL )
 
    LOCAL oHTTP, oURL, i
 
-   IF Empty( oURL := TUrl():New( cURL ) )
+   IF Empty(oURL := TUrl():New( cURL ))
       ? "Invalid URL", cURL
       RETURN
    ENDIF

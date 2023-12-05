@@ -174,13 +174,13 @@ METHOD WvtDialog:New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFon
    __defaultNIL( @nFontBold    , fnt_[ 4 ] )
    __defaultNIL( @nFontQuality , fnt_[ 5 ] )
 
-   IF Empty( cFont )
+   IF Empty(cFont)
       cFont := fnt_[ 1 ]
    ENDIF
-   IF Empty( nFontHeight )
+   IF Empty(nFontHeight)
       nFontHeight := fnt_[ 2 ]
    ENDIF
-   IF Empty( nFontWidth )
+   IF Empty(nFontWidth)
       nFontWidth := fnt_[ 3 ]
    ENDIF
 
@@ -310,7 +310,7 @@ METHOD PROCEDURE WvtDialog:Destroy()
    SetColor( ::cOldColor )
    SetCursor( ::nOldCursor )
 
-   IF ::oldMenuHandle != NIL .AND. ! Empty( ::oldMenuHandle )
+   IF ::oldMenuHandle != NIL .AND. ! Empty(::oldMenuHandle)
       wvt_SetMenu( ::oldMenuHandle )
    ENDIF
    SetKey( wvt_SetMenuKeyEvent(), ::oldMenuBlock )
@@ -526,7 +526,7 @@ METHOD WvtDialog:Inkey()
 
       IF ! ::lEventHandled
          IF ::nCurObj > 0
-            IF ! Empty( ::aDialogKeys )
+            IF ! Empty(::aDialogKeys)
                IF ( n := AScan( ::aDialogKeys, {| e_ | e_[ 1 ] == ::nKey } ) ) > 0
                   Eval( ::aDialogKeys[ n ][ 2 ], Self, ::oCurObj )
                ENDIF
@@ -651,7 +651,7 @@ METHOD WvtDialog:ActivateMenu()
 
    IF nMenu != 0
       IF HB_ISOBJECT( ::oMenu )
-         IF ! Empty( aMenuItem := ::oMenu:FindMenuItemById( nMenu ) )
+         IF ! Empty(aMenuItem := ::oMenu:FindMenuItemById( nMenu ))
             IF HB_ISEVALITEM( aMenuItem[ WVT_MENU_ACTION ] )
                Eval( aMenuItem[ WVT_MENU_ACTION ] )
             ENDIF

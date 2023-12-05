@@ -368,9 +368,9 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
    // After :Create() Messages
    SWITCH nActiveX
    CASE 1
-      hb_gtInfo( HB_GTI_WINTITLE, iif(Empty( xParam ), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      hb_gtInfo( HB_GTI_WINTITLE, iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
       oCom:AddressBar := .T.
-      oCom:Navigate( iif(Empty( xParam ), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      oCom:Navigate( iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
       EXIT
 
    CASE 4

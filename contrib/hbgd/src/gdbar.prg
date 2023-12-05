@@ -121,7 +121,7 @@ METHOD CreateBar( sx, sy, filename, cColor ) CLASS GDBar
    ::positionY := 0
    ::imWidth   := sx
 
-   IF ! Empty( filename )
+   IF ! Empty(filename)
       ::filename := filename
    ENDIF
 
@@ -304,7 +304,7 @@ METHOD Finish( image_style, quality, nFG ) CLASS GDBar
    hb_default( @quality    , 95 )
    hb_default( @nFG        , { 255, 255, 255 } )
 
-   IF Empty( ::filename ) .OR. ::filename == NIL
+   IF Empty(::filename) .OR. ::filename == NIL
 
       // Output std handle == 1
 

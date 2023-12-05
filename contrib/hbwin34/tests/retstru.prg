@@ -42,7 +42,7 @@ PROCEDURE Main()
    ? hb_ValToExp( xy )
 
    i := wapi_LoadIcon( , 32512 )
-   ? ! Empty( i )
+   ? ! Empty(i)
    ? wapi_GetLastError()
 
    ? wapi_GetIconInfo( i, @ii )

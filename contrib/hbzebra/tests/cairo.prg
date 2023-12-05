@@ -68,7 +68,7 @@ PROCEDURE DrawBarcode( hCairo, nY, nLineWidth, cType, cCode, nFlags )
    ENDSWITCH
    IF hZebra != NIL
       IF hb_zebra_geterror( hZebra ) == 0
-         IF Empty( nLineHeight )
+         IF Empty(nLineHeight)
             nLineHeight := 16
          ENDIF
          cairo_move_to( hCairo, 40, nY + 13 )

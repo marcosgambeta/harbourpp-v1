@@ -370,9 +370,9 @@ STATIC FUNCTION ExeActiveX( nActiveX, oCom, xParam )
 
    // After :CREATE() Messages
    IF nActiveX == 1
-      hb_gtInfo( HB_GTI_WINTITLE, iif(Empty( xParam ), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      hb_gtInfo( HB_GTI_WINTITLE, iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
       oCom:AddressBar := .T.
-      oCom:Navigate( iif(Empty( xParam ), hb_Version( HB_VERSION_URL_BASE ), xParam) )
+      oCom:Navigate( iif(Empty(xParam), hb_Version( HB_VERSION_URL_BASE ), xParam) )
 
    ELSEIF nActiveX == 4
       ConfigureRMChart( oCom )

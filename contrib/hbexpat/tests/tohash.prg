@@ -32,7 +32,7 @@ PROCEDURE Main( cFileName )
    hb_XML_ExpatVersionInfo( @v1, @v2, @v3 )
    ? hb_ntos( v1 ) + "." + hb_ntos( v2 ) + "." + hb_ntos( v3 )
 
-   IF Empty( p )
+   IF Empty(p)
       ? "Couldn't allocate memory for parser"
       ErrorLevel( -1 )
       RETURN
@@ -90,7 +90,7 @@ STATIC FUNCTION DUMPATTR( hAttr )
 
    LOCAL s := "", cValue
 
-   IF ! Empty( hAttr )
+   IF ! Empty(hAttr)
       s += " ("
       FOR EACH cValue IN hAttr
          s += cValue:__enumKey() + "='" + cValue + "' "
@@ -109,7 +109,7 @@ STATIC FUNCTION cb_unknownencoding( xEData, cEncoding, aMap )
 
    HB_SYMBOL_UNUSED( xEData )
 
-   IF ! Empty( aMyMap := hb_XML_get_unicode_table( cEncoding ) )
+   IF ! Empty(aMyMap := hb_XML_get_unicode_table( cEncoding ))
       ACopy( aMyMap, aMap )
       RETURN HB_XML_STATUS_OK
    ENDIF
@@ -155,7 +155,7 @@ STATIC PROCEDURE cb_data( aUserData, cData )
    aUserData[ _D_aNode ][ _N_xValue ] += cData
 
    /* Still not perfect. In unlucky case, it can strip valid whitespace */
-   IF Empty( aUserData[ _D_aNode ][ _N_xValue ] )
+   IF Empty(aUserData[ _D_aNode ][ _N_xValue ])
       aUserData[ _D_aNode ][ _N_xValue ] := AllTrim( aUserData[ _D_aNode ][ _N_xValue ] )
    ENDIF
 

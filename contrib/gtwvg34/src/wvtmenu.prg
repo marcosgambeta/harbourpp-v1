@@ -83,7 +83,7 @@ METHOD wvtMenu:Create( cCaption )
 
    ::aItems := {}
 
-   IF Empty( ::hMenu := wapi_CreateMenu() )
+   IF Empty(::hMenu := wapi_CreateMenu())
 #if 0
       Throw( ErrorNew( "wvtMenu", 1000, "wvtMenu:Init()", "Create Menu Error", { cCaption, cCaption } ) )
 #endif
@@ -94,7 +94,7 @@ METHOD wvtMenu:Create( cCaption )
 
 METHOD wvtMenu:Destroy()
 
-   IF ! Empty( ::hMenu )
+   IF ! Empty(::hMenu)
       ::DelAllItems()
 
       IF ! wapi_DestroyMenu( ::hMenu )
@@ -111,9 +111,9 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
 
    LOCAL aItem
 
-   IF ! Empty( ::hMenu ) .AND. ( ! Empty( cCaption ) .OR. ! Empty( bAction ) )
+   IF ! Empty(::hMenu) .AND. ( ! Empty(cCaption) .OR. ! Empty(bAction) )
       IF HB_ISOBJECT( bAction )
-         cCaption := iif(Empty( cCaption ), bAction:Caption, cCaption)
+         cCaption := iif(Empty(cCaption), bAction:Caption, cCaption)
          aItem := { WIN_MF_POPUP, bAction:hMenu, cCaption, bAction }   /* bAction is a wvtMenu object reference */
       ELSEIF HB_ISEVALITEM( bAction )
          aItem := { WIN_MF_STRING, ::MenuItemId++, cCaption, bAction } /* bAction is a code block to execute */
@@ -172,7 +172,7 @@ METHOD wvtMenu:DelItem( nItemNum )
 
 METHOD wvtMenu:EnableItem( nItemNum )
 
-   IF ! Empty( ::hMenu ) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1
+   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_ENABLED )
    ENDIF
 
@@ -180,7 +180,7 @@ METHOD wvtMenu:EnableItem( nItemNum )
 
 METHOD wvtMenu:DisableItem( nItemNum )
 
-   IF ! Empty( ::hMenu ) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1
+   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_GRAYED )
    ENDIF
 
@@ -203,9 +203,9 @@ METHOD wvtMenu:FindMenuItemById( nId )
 
    LOCAL x, aResult := {}
 
-   IF ! Empty( nId )
+   IF ! Empty(nId)
       x := ::NumItems()
-      DO WHILE x > 0 .AND. Empty( aResult )
+      DO WHILE x > 0 .AND. Empty(aResult)
          IF ::aItems[ x ][ WVT_MENU_TYPE ] == WIN_MF_POPUP
             aResult := ::aItems[ x ][ WVT_MENU_MENUOBJ ]:FindMenuItemById( nId )
          ELSEIF ::aItems[ x ][ WVT_MENU_IDENTIFIER ] == nId

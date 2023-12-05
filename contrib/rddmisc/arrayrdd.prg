@@ -539,7 +539,7 @@ STATIC FUNCTION AR_GOTOP( nWA )
       IF nIndex == 0
          aWAData[ WADATA_RECNO ] := 1
       ELSEIF aWAData[ WADATA_WAORDINFO ][ nIndex ][ WAOI_SCOPE_0 ] == NIL
-         IF Empty( aIndexes[ nIndex ][ INDEX_RECORDS ] )
+         IF Empty(aIndexes[ nIndex ][ INDEX_RECORDS ])
             aWAData[ WADATA_ORDRECNO ] := 0
             nResult := AR_GOTO( nWA, 0 )
          ELSE
@@ -581,7 +581,7 @@ STATIC FUNCTION AR_GOBOTTOM( nWA )
       IF nIndex == 0
          aWAData[ WADATA_RECNO ] := Len( aRecords )
       ELSEIF aWAData[ WADATA_WAORDINFO ][ nIndex ][ WAOI_SCOPE_1 ] == NIL
-         IF Empty( aIndexes[ nIndex ][ INDEX_RECORDS ] )
+         IF Empty(aIndexes[ nIndex ][ INDEX_RECORDS ])
             aWAData[ WADATA_ORDRECNO ] := 0
             nResult := AR_GOTO( nWA, 0 )
          ELSE
@@ -689,7 +689,7 @@ STATIC FUNCTION AR_SKIPRAW( nWA, nRecords )
          nIni := SeekScope( aIndexes[ nIndex ], aWAData[ WADATA_WAORDINFO ][ nIndex ], .F. )
          nIni--
       ENDIF
-      IF nIni == -1 .OR. Empty( aIndexes[ nIndex ][ INDEX_RECORDS ] )
+      IF nIni == -1 .OR. Empty(aIndexes[ nIndex ][ INDEX_RECORDS ])
          nResult := AR_GOTO( nWA, 0 )
          aWAData[ WADATA_ORDRECNO ] := 0
       ELSEIF nRecords < 0 .AND. -nRecords >= nRec
@@ -953,7 +953,7 @@ STATIC FUNCTION AR_UNLOCK( nWA, nRec )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nRec: %2$d", nWA, nRec ) )
 
-   IF ! Empty( aRecords )
+   IF ! Empty(aRecords)
       IF nRec == NIL            /* Unlock All */
          FOR EACH nRec IN aRecords
             aRecInfo[ nRec ][ RECDATA_LOCKED ] := 0
@@ -1154,11 +1154,11 @@ STATIC FUNCTION AR_ORDLSTADD( nWA, aOrderInfo )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, aOrderInfo: %2$s", nWA, hb_ValToExp( aOrderInfo ) ) )
 
-   IF Empty( aIndexes )
+   IF Empty(aIndexes)
       aWAData[ WADATA_INDEX ] := 0
    ELSE
       aWAData[ WADATA_INDEX ] := 1
-      IF Empty( aWAData[ WADATA_WAORDINFO ] )
+      IF Empty(aWAData[ WADATA_WAORDINFO ])
          AEval( aWAData[ WADATA_WAORDINFO ] := Array( Len( aIndexes ) ), {| x, y | HB_SYMBOL_UNUSED( x ), aWAData[ WADATA_WAORDINFO ][ y ] := AR_WAOIINIT() } )
       ENDIF
 
@@ -1235,7 +1235,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    nContNext := 1
    nContStep := 0
 
-   IF Empty( aOrderCreate[ UR_ORCR_TAGNAME ] )
+   IF Empty(aOrderCreate[ UR_ORCR_TAGNAME ])
       aOrderCreate[ UR_ORCR_TAGNAME ] := aOrderCreate[ UR_ORCR_BAGNAME ]
    ENDIF
    cIndex := aOrderCreate[ UR_ORCR_TAGNAME ] := Upper( aOrderCreate[ UR_ORCR_TAGNAME ] )
@@ -1302,7 +1302,7 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nMsg: %2$s, aOrderInfo: %3$s", nWA, hb_ValToExp( nMsg ), hb_ValToExp( aOrderInfo ) ) )
 
-   IF Empty( aOrderInfo[ UR_ORI_TAG ] )
+   IF Empty(aOrderInfo[ UR_ORI_TAG ])
       aOrderInfo[ UR_ORI_TAG ] := aOrderInfo[ UR_ORI_BAG ]
    ENDIF
 
@@ -1320,14 +1320,14 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
 
    SWITCH nMsg
    CASE DBOI_EXPRESSION
-      IF nIndex < 1 .OR. Empty( aIndexes ) .OR. nIndex > Len( aIndexes[ nIndex ] )
+      IF nIndex < 1 .OR. Empty(aIndexes) .OR. nIndex > Len( aIndexes[ nIndex ] )
          aOrderInfo[ UR_ORI_RESULT ] := ""
       ELSE
          aOrderInfo[ UR_ORI_RESULT ] := aIndexes[ nIndex ][ INDEX_ORCR ][ UR_ORCR_CKEY ]
       ENDIF
       EXIT
    CASE DBOI_POSITION
-      IF nIndex < 1 .OR. Empty( aIndexes ) .OR. nIndex > Len( aIndexes[ nIndex ] ) .OR. Empty( aIndexes[ nIndex ][ INDEX_RECORDS ] ) .OR. aWAData[ WADATA_ORDRECNO ] == 0
+      IF nIndex < 1 .OR. Empty(aIndexes) .OR. nIndex > Len( aIndexes[ nIndex ] ) .OR. Empty(aIndexes[ nIndex ][ INDEX_RECORDS ]) .OR. aWAData[ WADATA_ORDRECNO ] == 0
          aOrderInfo[ UR_ORI_RESULT ] := 0
       ELSE
          IF aIndexes[ nIndex ][ INDEX_RECORDS ][ aWAData[ WADATA_ORDRECNO ] ][ INDEXKEY_RECORD ] != aWAData[ WADATA_RECNO ]
@@ -1353,7 +1353,7 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
       aOrderInfo[ UR_ORI_RESULT ] := ""
       EXIT
    CASE DBOI_KEYCOUNT
-      IF nIndex >= 1 .AND. ! Empty( aWAData[ WADATA_DATABASE ][ DATABASE_RECORDS ] )
+      IF nIndex >= 1 .AND. ! Empty(aWAData[ WADATA_DATABASE ][ DATABASE_RECORDS ])
          IF aWAData[ WADATA_WAORDINFO ][ nIndex ][ WAOI_SCOPE_0 ] == NIL
             nPos := 0
          ELSE
@@ -2009,7 +2009,7 @@ STATIC FUNCTION Seek( xSeek, lSoft, lLast, aIndexInfo, nRec )
          nPos := 1
       ENDIF
       IF nRec != NIL
-         IF nIni <= nEnd .AND. ! Empty( aIndex ) .AND. aIndex[ nPos ] != NIL .AND. nRec != aIndex[ nPos ][ INDEXKEY_RECORD ]
+         IF nIni <= nEnd .AND. ! Empty(aIndex) .AND. aIndex[ nPos ] != NIL .AND. nRec != aIndex[ nPos ][ INDEXKEY_RECORD ]
             nEnd := Len( aIndex )
             FOR nPos := nIni TO nEnd
                IF aIndex[ nPos ] == NIL .OR. ! LEFTEQUAL( xSeek, aIndex[ nPos ][ INDEXKEY_KEY ] )

@@ -379,7 +379,7 @@ FUNCTION SwpRunCmd( cCommand, nMem, cRunPath, cTempPath )
    HB_SYMBOL_UNUSED( cRunPath )
    HB_SYMBOL_UNUSED( cTempPath )
 
-   IF ! HB_ISSTRING( cCommand ) .OR. Empty( cCommand )
+   IF ! HB_ISSTRING( cCommand ) .OR. Empty(cCommand)
 #if defined( __PLATFORM__UNIX )
       cCommand := GetEnv( "SHELL" )
 #else

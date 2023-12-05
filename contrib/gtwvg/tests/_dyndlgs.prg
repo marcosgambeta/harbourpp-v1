@@ -188,7 +188,7 @@ FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
    CASE WM_INITDIALOG
       wvg_SetTimer( hDlg, 5001, 1000 ) // 1 sec
 
-      IF Empty( aHFonts := SetFonts() )
+      IF Empty(aHFonts := SetFonts())
          IF ( hFont := wvt_CreateFont( "Times New Roman", 18 ) ) != 0
             SetFonts( hFont )
          ENDIF
@@ -198,10 +198,10 @@ FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
          wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_MLE ), WM_SETFONT, ahFonts[1], 0 )
       ENDIF
 
-      IF Empty( SetIcons() )
+      IF Empty(SetIcons())
          SetIcons( wvg_LoadIcon( "resources\vr_1.ico" ) )
       ENDIF
-      IF ! Empty( SetIcons() )
+      IF ! Empty(SetIcons())
          wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, IMAGE_ICON, SetIcons()[1] )
       ENDIF
 

@@ -64,7 +64,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
    netclictx := Eval( netclictrl[ "init" ], hConIO, { ;
       "--netio.addr=" + cIP + ":" + hb_ntos( nPort ), ;
       "--netio.pass=" + cPassword } )
-   IF ! Empty( netclictx )
+   IF ! Empty(netclictx)
       netcliID := netclictrl[ "id" ]
    ENDIF
 
@@ -122,11 +122,11 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
       cCommand := AllTrim( cCommand )
 
-      IF Empty( cCommand )
+      IF Empty(cCommand)
          LOOP
       ENDIF
 
-      IF Empty( aHistory ) .OR. ! ATail( aHistory ) == cCommand
+      IF Empty(aHistory) .OR. ! ATail( aHistory ) == cCommand
          IF Len( aHistory ) < 64
             AAdd( aHistory, cCommand )
          ELSE
@@ -137,7 +137,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
       nHistIndex := Len( aHistory ) + 1
 
       aCommand := hb_ATokens( cCommand, " " )
-      IF ! Empty( aCommand )
+      IF ! Empty(aCommand)
          IF ( nPos := hb_HPos( hCommands, Lower( aCommand[ 1 ] ) ) ) > 0
             Eval( hb_HValueAt( hCommands, nPos )[ 3 ], cCommand )
          ELSE
@@ -162,7 +162,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 STATIC PROCEDURE ManageCursor( cCommand )
 
    hb_keyPut( K_HOME )
-   IF ! Empty( cCommand )
+   IF ! Empty(cCommand)
       hb_keyPut( K_END )
    ENDIF
 
@@ -193,13 +193,13 @@ STATIC PROCEDURE ShowHelp( hCommands )
    LOCAL n, c, m
 
    m := 8
-   hb_HEval( hCommands, {| k, l | m := Max( m, Len( k + iif(Empty( l[ 1 ] ), "", " " + l[ 1 ]) ) ) } )
+   hb_HEval( hCommands, {| k, l | m := Max( m, Len( k + iif(Empty(l[ 1 ]), "", " " + l[ 1 ]) ) ) } )
 
    AAdd( aTexts, "Commands:" )
 
    /* Processing commands */
    FOR EACH n IN hCommands
-      AAdd( aTexts, " " + PadR( n:__enumKey() + iif(Empty( n[ 1 ] ), "", " " + n[ 1 ]), m ) + " - " + n[ 2 ] )
+      AAdd( aTexts, " " + PadR( n:__enumKey() + iif(Empty(n[ 1 ]), "", " " + n[ 1 ]), m ) + " - " + n[ 2 ] )
    NEXT
    AAdd( aTexts, "" )
 
@@ -247,7 +247,7 @@ STATIC FUNCTION hbnetiocon_GetHidden()
 
    AAdd( GetList, hb_Get():New( Row(), Col(), {| v | iif(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ) )
    ATail( GetList ):hideInput( .T. )
-   ATail( GetList ):postBlock := {|| ! Empty( cPassword ) }
+   ATail( GetList ):postBlock := {|| ! Empty(cPassword) }
    ATail( GetList ):display()
 
    SetCursor( iif(ReadInsert(), SC_INSERT, SC_NORMAL) )

@@ -14,7 +14,7 @@ PROCEDURE Main()
 
    oObject := win_oleCreateObject( "MyOleTimeServer" )
 
-   IF ! Empty( oObject )
+   IF ! Empty(oObject)
       ? "DATE:", oObject:Date()
       ? "TIME:", oObject:Time()
       ? "DATTIME:", oObject:datetime()

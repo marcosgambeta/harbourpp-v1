@@ -8,7 +8,7 @@ PROCEDURE Main()
    LOCAL cFileName := Space( 256 )
    LOCAL GetList := {}
 
-   IF Empty( aPrn := win_printerList() )
+   IF Empty(aPrn := win_printerList())
       Alert( "No printers installed - Cannot continue" )
    ELSE
       DO WHILE nPrn > 0
@@ -21,7 +21,7 @@ PROCEDURE Main()
 
          IF ( nPrn := AChoice( 3, 1, MaxRow() - 1, MaxCol() - 1, aPrn, .T.,, nPrn ) ) > 0
 
-            IF Empty( cFileName )
+            IF Empty(cFileName)
                Alert( "win_PrintDataRaw() returned: " + ;
                   hb_ntos( win_PrintDataRaw( aPrn[ nPrn ], "Hello World!" + hb_BChar( 12 ), cDocName ) ) )
             ELSE

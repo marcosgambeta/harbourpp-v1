@@ -10,7 +10,7 @@ PROCEDURE Main()
 
    CLS
 
-   IF Empty( aPrn )
+   IF Empty(aPrn)
       Alert( "No printers installed - Cannot continue" )
    ELSE
       DO WHILE nPrn != 0
@@ -32,7 +32,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cFileName )
 
    LOCAL lDelete
 
-   IF Empty( cFileName )
+   IF Empty(cFileName)
       hb_MemoWrit( cFileName := hb_FNameExtSet( __FILE__, ".prn" ), "Hello World!" + Chr( 12 ) )
       lDelete := .T.
    ELSE

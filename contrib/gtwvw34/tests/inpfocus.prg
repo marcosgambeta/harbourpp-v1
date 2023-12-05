@@ -66,7 +66,7 @@ STATIC FUNCTION CreateToolbar( nWinNum )
 
    wvw_tbDestroy( nWinNum )   // just in case
 
-   IF Empty( wvw_tbCreate( nWinNum, lDisplayText, , nSysBitmap ) )
+   IF Empty(wvw_tbCreate( nWinNum, lDisplayText, , nSysBitmap ))
       wvw_MessageBox( nWinNum, "FAILED to create toolbar", "Error", WIN_MB_OK + WIN_MB_ICONEXCLAMATION )
       RETURN .F.
    ENDIF
@@ -82,7 +82,7 @@ STATIC FUNCTION CreateStatusbar( nWinNum )
 
    wvw_sbDestroy( nWinNum )  // just in case
 
-   IF Empty( wvw_sbCreate( nWinNum ) )
+   IF Empty(wvw_sbCreate( nWinNum ))
       wvw_MessageBox( nWinNum, "FAILED to create statusbar", "Error", WIN_MB_OK + WIN_MB_ICONEXCLAMATION )
       RETURN .F.
    ENDIF

@@ -161,7 +161,7 @@ METHOD WvgToolBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::SetWindowProcCallback()
 #endif
 
-   IF ! Empty( ::hWnd )
+   IF ! Empty(::hWnd)
       ::SendToolbarMessage( TB_BUTTONSTRUCTSIZE )
       ::hImageList := wapi_ImageList_Create( ::imageWidth, ::imageHeight, ILC_COLOR32 + ILC_MASK, 0, 1 )
       ::SendToolbarMessage( TB_SETIMAGELIST, ::hImageList )
@@ -237,7 +237,7 @@ METHOD PROCEDURE WvgToolBar:destroy()
       ENDIF
    NEXT
 
-   IF ! Empty( ::hImageList )
+   IF ! Empty(::hImageList)
       wapi_ImageList_Destroy( ::hImageList )
    ENDIF
 
@@ -298,7 +298,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 
    ENDSWITCH
 
-   IF ! Empty( pBitmap )
+   IF ! Empty(pBitmap)
       /* oBtn:image := pBitmap */
 
       IF HB_ISNUMERIC( nMapRGB )

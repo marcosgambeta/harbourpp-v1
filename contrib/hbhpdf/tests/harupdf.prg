@@ -50,7 +50,7 @@ PROCEDURE Main( cFileToSave )
 
    CLS
 
-   IF Empty( cFileToSave )
+   IF Empty(cFileToSave)
       cFileToSave := "myharu.pdf"
    ENDIF
 

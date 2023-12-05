@@ -176,7 +176,7 @@ METHOD WvgFont:createFont()
 
    aFont := wvg_FontCreate( ::aFontInfo )
 
-   IF Empty( aFont[ 1 ] )
+   IF Empty(aFont[ 1 ])
       RETURN NIL
    ENDIF
 

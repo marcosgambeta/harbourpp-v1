@@ -54,7 +54,7 @@ PROCEDURE Main( cPortName )
    LOCAL lCTSHold, lDSRHold, lDCDHold, lXoffHold, lXoffSent, nInQueue, nOutQueue
    LOCAL nResult
 
-   IF Empty( cPortName )
+   IF Empty(cPortName)
       ? "Usage : winport portname"
       RETURN
    ENDIF

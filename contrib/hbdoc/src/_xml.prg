@@ -137,7 +137,7 @@ METHOD Generate() CLASS GenerateXML
 
 METHOD PROCEDURE WriteEntry( cCaption, cContent, lPreformatted ) CLASS GenerateXML
 
-   IF ! Empty( cContent )
+   IF ! Empty(cContent)
 
       IF hb_eol() $ cContent
          cContent := hb_eol() + cContent

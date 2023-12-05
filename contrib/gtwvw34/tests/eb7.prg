@@ -863,15 +863,15 @@ STATIC FUNCTION GetNumMask( Text, mcvaltype )
 
 STATIC FUNCTION IsBadDate( cBuffer )
 
-   IF Empty( cBuffer )
+   IF Empty(cBuffer)
       RETURN .F.
    ENDIF
 
-   IF Empty( hb_StrReplace( cBuffer, "/-." ) )
+   IF Empty(hb_StrReplace( cBuffer, "/-." ))
       RETURN .F.
    ENDIF
 
-   IF Empty( CToD( cBuffer ) )
+   IF Empty(CToD( cBuffer ))
       MyMessageBox( , "'" + cBuffer + "' is not a valid DATE" )
       RETURN .T.
    ENDIF

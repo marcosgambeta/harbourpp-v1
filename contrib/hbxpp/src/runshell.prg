@@ -57,7 +57,7 @@ FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
 #else
       cProgram := GetEnv( "COMSPEC" )
 #endif
-      IF Empty( cProgram )
+      IF Empty(cProgram)
 #if defined( __PLATFORM__WINDOWS )
          IF hb_osIsWinNT()
             cProgram := "cmd.exe"

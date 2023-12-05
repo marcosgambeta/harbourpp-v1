@@ -19,7 +19,7 @@ REQUEST HB_MT
 PROCEDURE Main( delay )
    LOCAL thrd
 
-   IF ! Empty( delay )
+   IF ! Empty(delay)
       s_lDelayCli := "C" $ Upper( delay )
       s_lDelaySrv := "S" $ Upper( delay )
    ENDIF
@@ -30,7 +30,7 @@ PROCEDURE Main( delay )
 
    /* start server thread */
    thrd := hb_threadStart( @Server() )
-   IF Empty( thrd )
+   IF Empty(thrd)
       ? "Cannot start thread."
       RETURN
    ENDIF
@@ -65,7 +65,7 @@ STATIC FUNCTION Client()
    hb_inetTimeout( sock, 5000 )
 
    ? "CLIENT: connecting..."
-   IF Empty( hb_inetConnectIP( "127.0.0.1", N_PORT, sock ) )
+   IF Empty(hb_inetConnectIP( "127.0.0.1", N_PORT, sock ))
       ? "CLIENT: cannot connect to server."
    ELSE
       ? "CLIENT: connected to the server."
@@ -87,7 +87,7 @@ STATIC FUNCTION Client()
          DispCertInfo( ssl, "CLIENT: " )
 
          hb_inetSendAll( sock, hb_TSToStr( hb_DateTime() ) + EOL )
-         DO WHILE ! Empty( cLine := hb_inetRecvLine( sock ) )
+         DO WHILE ! Empty(cLine := hb_inetRecvLine( sock ))
             ? "CLIENT: RECV:", hb_ValToExp( cLine )
          ENDDO
       ENDIF
@@ -106,7 +106,7 @@ STATIC FUNCTION Server()
    ssl := SSL_new( ssl_ctx )
 
    ? "SERVER: create listen socket..."
-   IF Empty( sockSrv := hb_inetServer( N_PORT ) )
+   IF Empty(sockSrv := hb_inetServer( N_PORT ))
       ? "SERVER: cannot create listen socket."
    ELSE
 
@@ -114,7 +114,7 @@ STATIC FUNCTION Server()
       hb_inetTimeout( sockSrv, 100 )
       s_lReady := .T.
       DO WHILE ! s_lStop
-         IF ! Empty( sockConn := hb_inetAccept( sockSrv ) )
+         IF ! Empty(sockConn := hb_inetAccept( sockSrv ))
             ? "SERVER: accepted new connection."
             hb_inetTimeout( sockConn, 3000 )
 
@@ -191,7 +191,7 @@ STATIC FUNCTION LoadCertificates( ssl_ctx, cCertFile, cKeyFile )
 STATIC FUNCTION DispCertInfo( ssl, cWho )
    LOCAL cert
 
-   IF ! Empty( cert := SSL_get_peer_certificate( ssl ) )
+   IF ! Empty(cert := SSL_get_peer_certificate( ssl ))
       ? cWho + "Server certificates:"
       ? cWho + "Subject:", X509_name_oneline( X509_get_subject_name( cert ), 0, 0 )
       ? cWho + "Issuer:", X509_name_oneline( X509_get_issuer_name( cert ), 0, 0 )

@@ -348,7 +348,7 @@ METHOD Close() CLASS TIPClient
 
    LOCAL nRet
 
-   IF Empty( ::SocketCon )
+   IF Empty(::SocketCon)
       nRet := -1
    ELSE
       nRet := hb_inetClose( ::SocketCon )
@@ -710,7 +710,7 @@ METHOD inetErrorDesc( SocketCon ) CLASS TIPClient
 
    hb_default( @SocketCon, ::SocketCon )
 
-   IF ! Empty( SocketCon )
+   IF ! Empty(SocketCon)
       IF ::lSSL
          IF ::lHasSSL .AND. ::nSSLError != 0
             RETURN ERR_error_string( SSL_get_error( ::ssl, ::nSSLError ) )

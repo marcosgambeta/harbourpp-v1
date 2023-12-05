@@ -51,12 +51,12 @@ STATIC FUNCTION asXML( xml )
    LOCAL node, subnode
 
    node := mxmlFindElement( xml, xml, "note", NIL, NIL, MXML_DESCEND )
-   IF Empty( node )
+   IF Empty(node)
       RETURN ""
    ENDIF
 
    subnode := mxmlGetFirstChild( node )
-   DO WHILE ! Empty( subnode := mxmlGetNextSibling( subnode ) )
+   DO WHILE ! Empty(subnode := mxmlGetNextSibling( subnode ))
       IF mxmlGetType( subnode ) == MXML_ELEMENT
          IF mxmlGetElement( subnode ) == "body"
             c := mxmlGetOpaque( subnode )
@@ -76,7 +76,7 @@ FUNCTION type_cb( node )
 
    /* You can lookup attributes and/or use the element name, hierarchy, etc... */
 
-   IF Empty( cType := mxmlElementGetAttr( node, "type" ) )
+   IF Empty(cType := mxmlElementGetAttr( node, "type" ))
       cType := mxmlGetElement( node )
    ENDIF
 

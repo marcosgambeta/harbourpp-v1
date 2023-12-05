@@ -53,7 +53,7 @@ FUNCTION hb_magic_simple( cFileName, nFlags )
    hb_default( @nFlags, MAGIC_MIME_TYPE )
 
    hMagic := magic_open( nFlags )
-   IF Empty( hMagic ) .OR.;
+   IF Empty(hMagic) .OR.;
       magic_load( hMagic ) != 0
       RETURN ""
    ENDIF

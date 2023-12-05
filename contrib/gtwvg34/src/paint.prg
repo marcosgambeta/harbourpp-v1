@@ -73,7 +73,7 @@ FUNCTION WvtPaintObjects()
       FOR EACH blk IN aBlocks
          lExe := .T.
 
-         IF blk[ 3 ] != NIL .AND. ! Empty( blk[ 3 ] )
+         IF blk[ 3 ] != NIL .AND. ! Empty(blk[ 3 ])
             /* Check parameters against tlbr_ depending upon the
                type of object and attributes contained in aAttr */
             DO CASE
@@ -384,7 +384,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
 
    hDlg := wvt_CreateDialogDynamic( xTemplate, lOnTop, cbDlgProc, nDlgMode )
 
-   IF ! Empty( hDlg )
+   IF ! Empty(hDlg)
       IF ncIcon != NIL
          wvt_DlgSetIcon( hDlg, ncIcon )
       ENDIF
@@ -453,7 +453,7 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
       xRet := {}
-      IF ! Empty( aTmp := hb_ATokens( cRet, Chr( 0 ) ) )
+      IF ! Empty(aTmp := hb_ATokens( cRet, Chr( 0 ) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len( aTmp )
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
@@ -494,7 +494,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
       xRet := {}
-      IF ! Empty( aTmp := hb_ATokens( cRet, Chr( 0 ) ) )
+      IF ! Empty(aTmp := hb_ATokens( cRet, Chr( 0 ) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len( aTmp )
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
@@ -669,7 +669,7 @@ PROCEDURE wvt_SetTimer( nTimerID, nMiliSeconds )
 
    LOCAL hWnd := hb_gtInfo( HB_GTI_WINHANDLE )
 
-   IF ! Empty( hWnd )
+   IF ! Empty(hWnd)
       wapi_SetTimer( hWnd, nTimerID, nMiliSeconds )
    ENDIF
 
@@ -679,7 +679,7 @@ PROCEDURE wvt_KillTimer( nTimerID )
 
    LOCAL hWnd := hb_gtInfo( HB_GTI_WINHANDLE )
 
-   IF ! Empty( hWnd )
+   IF ! Empty(hWnd)
       wapi_KillTimer( hWnd, nTimerID )
    ENDIF
 
@@ -737,7 +737,7 @@ FUNCTION wvg_GetClientRect( hWnd )
    RETURN rc
 
 FUNCTION wvg_SetTimer( ... )
-   RETURN ! Empty( wapi_SetTimer( ... ) )
+   RETURN ! Empty(wapi_SetTimer( ... ))
 
 FUNCTION wvg_InvalidateRect( w, r, e )
    RETURN wapi_InvalidateRect( w, r, hb_defaultValue( e, .T. ) )
@@ -808,7 +808,7 @@ FUNCTION wvt_MessageBox( ... )
 
    LOCAL hWnd := wvg_hWnd()
 
-   IF Empty( hWnd )
+   IF Empty(hWnd)
       RETURN 0
    ENDIF
 
@@ -821,11 +821,11 @@ FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
 
    IF HB_ISNUMERIC( ncIcon )
       hIcon := wapi_LoadIcon( wapi_GetModuleHandle(), ncIcon )
-   ELSEIF Empty( hIcon := wapi_LoadImage( , ncIcon, WIN_IMAGE_ICON,,, WIN_LR_LOADFROMFILE ) )
+   ELSEIF Empty(hIcon := wapi_LoadImage( , ncIcon, WIN_IMAGE_ICON,,, WIN_LR_LOADFROMFILE ))
       hIcon := wapi_LoadImage( wapi_GetModuleHandle(), ncIcon, WIN_IMAGE_ICON )
    ENDIF
 
-   IF ! Empty( hIcon )
+   IF ! Empty(hIcon)
       wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_SMALL, hIcon )  /* Titlebar icon */
       wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_BIG  , hIcon )  /* Tasklist icon */
    ENDIF
@@ -875,7 +875,7 @@ FUNCTION wvt_TrackPopupMenu( hMenu )
    LOCAL hWnd := wvg_hWnd()
    LOCAL xy
 
-   IF Empty( hWnd )
+   IF Empty(hWnd)
       RETURN 0
    ENDIF
 
@@ -890,7 +890,7 @@ FUNCTION wvt_GetMenu()
 
    LOCAL hWnd := wvg_hWnd()
 
-   RETURN iif(Empty( hWnd ),, wapi_GetMenu( hWnd ))
+   RETURN iif(Empty(hWnd),, wapi_GetMenu( hWnd ))
 
 FUNCTION wvg_ChooseColor( nColor, aColor, nFlags, hWnd )
    RETURN win_ChooseColor( hWnd,, nColor, ;
@@ -901,7 +901,7 @@ FUNCTION wvt_ChooseColor( nColor, aColor, nFlags )
 
    LOCAL hWnd := wvg_hWnd()
 
-   IF Empty( hWnd )
+   IF Empty(hWnd)
       RETURN -1
    ENDIF
 

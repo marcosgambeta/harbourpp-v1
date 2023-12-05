@@ -81,11 +81,11 @@ METHOD noMessage( ... ) CLASS amf_Obj
 METHOD msgNotFound( cMessage, ... ) CLASS amf_Obj
 
    IF PCount() == 1 .AND. !( hb_BLeft( cMessage, 1 ) == "_" )
-      IF ! Empty( ::hCachedData ) .AND. hb_HHasKey( ::hCachedData, cMessage )
+      IF ! Empty(::hCachedData) .AND. hb_HHasKey( ::hCachedData, cMessage )
          RETURN ::hCachedData[ cMessage ]
       ENDIF
    ELSEIF PCount() > 1 .AND. hb_BLeft( cMessage, 1 ) == "_"
-      IF Empty( ::hCachedData )
+      IF Empty(::hCachedData)
          ::hCachedData := { => }
       ENDIF
       RETURN ::hCachedData[ hb_BSubStr( cMessage, 2 ) ] := hb_PValue( 2 )

@@ -96,7 +96,7 @@ PROCEDURE Main( cLang )
       @ 2, 5 TO 24, 66
       nChoice := AChoice( 3, 7, 23, 65, farr,,, nChoice )
 
-      IF Empty( nChoice )
+      IF Empty(nChoice)
          RETURN
       ENDIF
 
@@ -907,7 +907,7 @@ FUNCTION lastdayomtest()
          c := .F.
       ELSE
 
-         iif(Empty( dDate ), dDate := Val( cMth ), dDate)
+         iif(Empty(dDate), dDate := Val( cMth ), dDate)
 
          @ 12, 10 SAY "The number of days in the month is " + ;
             hb_ntos( LastDayOM( dDate ) )

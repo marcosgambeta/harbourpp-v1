@@ -91,7 +91,7 @@ METHOD Open( cUrl ) CLASS TIPClientPOP
       RETURN .F.
    ENDIF
 
-   IF Empty( ::oUrl:cUserid ) .OR. Empty( ::oUrl:cPassword )
+   IF Empty(::oUrl:cUserid) .OR. Empty(::oUrl:cPassword)
       RETURN .F.
    ENDIF
 
@@ -116,7 +116,7 @@ METHOD OpenDigest( cUrl ) CLASS TIPClientPOP
       RETURN .F.
    ENDIF
 
-   IF Empty( ::oUrl:cUserid ) .OR. Empty( ::oUrl:cPassword )
+   IF Empty(::oUrl:cUserid) .OR. Empty(::oUrl:cPassword)
       RETURN .F.
    ENDIF
 
@@ -298,7 +298,7 @@ METHOD UIDL( nMsgId ) CLASS TIPClientPOP
       RETURN NIL
    ENDIF
 
-   IF Empty( nMsgId )
+   IF Empty(nMsgId)
       cRet := ""
       DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
          cStr := ::inetRecvLine( ::SocketCon, @nPos, 256 )
@@ -345,7 +345,7 @@ METHOD GetOk() CLASS TIPClientPOP
 METHOD Read( nLen ) CLASS TIPClientPOP
 
    /* Decide what to read */
-   IF Empty( ::oUrl:cFile )
+   IF Empty(::oUrl:cFile)
       RETURN ::List()  /* return NIL or string */
    ELSEIF Val( ::oUrl:cFile ) < 0
       RETURN ::Delete( -Val( ::oUrl:cFile ) ) .AND. ::Quit()  /* return logical */
@@ -419,7 +419,7 @@ METHOD getBody( nMsgId ) CLASS TIPClientPOP
 
    LOCAL xRet, n, n1, i, nBoundary, cBoundary, aMsg
 
-   IF Empty( aMsg := ::getMessageRaw( nMsgId, .T. ) )
+   IF Empty(aMsg := ::getMessageRaw( nMsgId, .T. ))
       RETURN NIL
    ENDIF
 
@@ -429,14 +429,14 @@ METHOD getBody( nMsgId ) CLASS TIPClientPOP
       cBoundary := AllTrim( StrTran( SubStr( aMsg[ nBoundary ], n1 + 1 ), '"' ) )
    ENDIF
 
-   IF ! Empty( cBoundary )
+   IF ! Empty(cBoundary)
       IF ( n := AScan( aMsg, {| cLine | cBoundary $ cLine }, nBoundary + 1 ) ) > 0 .AND. ;
          ( n1 := AScan( aMsg, {| cLine | cBoundary $ cLine }, n + 1 ) ) > 0  // This must not happen, but
          FOR i := n + 3 TO n1 - 1
             xRet += aMsg[ i ] + ::cCRLF
          NEXT
       ENDIF
-   ELSEIF ( n := AScan( aMsg, {| cLine | Empty( cLine ) } ) ) > 0
+   ELSEIF ( n := AScan( aMsg, {| cLine | Empty(cLine) } ) ) > 0
       FOR i := n + 1 TO Len( aMsg )
          xRet += aMsg[ i ] + ::cCRLF
       NEXT

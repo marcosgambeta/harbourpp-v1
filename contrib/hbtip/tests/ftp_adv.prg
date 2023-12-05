@@ -8,7 +8,7 @@ PROCEDURE Main( cURL )
 
    LOCAL oFTP, oURL, aFile
 
-   IF Empty( oURL := TUrl():New( cURL ) )
+   IF Empty(oURL := TUrl():New( cURL ))
       ? "Invalid URL", cURL
       RETURN
    ENDIF
@@ -36,7 +36,7 @@ PROCEDURE Main( cURL )
       NEXT
       IF oFTP:CWD( oURL:cPath )
          ? "CWD success"
-         IF ! Empty( oURL:cFile )
+         IF ! Empty(oURL:cFile)
             ? "Deleting", oURL:cPath
             IF oFTP:Dele( oURL:cFile )
                ? "DELE success"

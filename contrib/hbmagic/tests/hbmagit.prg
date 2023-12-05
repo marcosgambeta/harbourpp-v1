@@ -96,7 +96,7 @@ PROCEDURE Main()
       "/vwKgNl52nW6CC3Xn2+zVY5GaInRGo2mCI07D1+jMUJYczdtU72rb3wD2wEd8GQCAAA=" )
 
    hMagic := magic_open()
-   IF Empty( hMagic ) .OR. magic_load( hMagic ) != 0
+   IF Empty(hMagic) .OR. magic_load( hMagic ) != 0
       OutStd( "magic_open()/magic_load() failed" + hb_eol() )
       QUIT
    ENDIF

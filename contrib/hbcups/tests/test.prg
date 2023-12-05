@@ -7,7 +7,7 @@ PROCEDURE Main( cFile )
 
    hb_default( @cFile, __FILE__ )
 
-   IF Empty( cupsGetDefault() )
+   IF Empty(cupsGetDefault())
       ? "No default printer configured"
    ELSE
       ? "Default printer:", cupsGetDefault()
@@ -20,7 +20,7 @@ PROCEDURE Main( cFile )
       ? i:__enumIndex(), i
    NEXT
 
-   IF Empty( cupsGetDefault() )
+   IF Empty(cupsGetDefault())
       WAIT
       CLS
       aPrinter := cupsGetDests()

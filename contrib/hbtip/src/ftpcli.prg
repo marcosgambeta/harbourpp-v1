@@ -170,7 +170,7 @@ METHOD GetReply() CLASS TIPClientFTP
    ENDIF
 
    // now, if the reply has a "-" as fourth character, we need to proceed...
-   DO WHILE ! Empty( cRep ) .AND. SubStr( cRep, 4, 1 ) == "-"
+   DO WHILE ! Empty(cRep) .AND. SubStr( cRep, 4, 1 ) == "-"
       cRep := ::cReply := hb_defaultValue( ::inetRecvLine( ::SocketCon, @nLen, 128 ), "" )
    ENDDO
 
@@ -192,7 +192,7 @@ METHOD ScanLength() CLASS TIPClientFTP
 
    LOCAL aBytes := hb_regex( ::RegBytes, ::cReply )
 
-   IF ! Empty( aBytes )
+   IF ! Empty(aBytes)
       ::nLength := Val( aBytes[ 2 ] )
    ENDIF
 
@@ -221,7 +221,7 @@ METHOD TransferStart() CLASS TIPClientFTP
       ENDIF
    ELSE
       ::SocketCon := hb_inetAccept( ::SocketPortServer )
-      IF Empty( ::SocketCon )
+      IF Empty(::SocketCon)
          ::bInitialized := .F.
          ::SocketCon := ::SocketControl
          ::GetReply()
@@ -250,7 +250,7 @@ METHOD Pasv() CLASS TIPClientFTP
       RETURN .F.
    ENDIF
 
-   IF Empty( aRep := hb_regex( ::RegPasv, ::cReply ) )
+   IF Empty(aRep := hb_regex( ::RegPasv, ::cReply ))
       RETURN .F.
    ENDIF
 
@@ -406,7 +406,7 @@ METHOD List( cSpec ) CLASS TIPClientFTP
 
    hb_default( @cSpec, "" )
 
-   IF ! Empty( cSpec )
+   IF ! Empty(cSpec)
       cSpec := " " + cSpec
    ENDIF
 
@@ -493,12 +493,12 @@ METHOD Read( nLen ) CLASS TIPClientFTP
 
    IF ! ::bInitialized
 
-      IF ! Empty( ::oUrl:cPath ) .AND. ! ::CWD( ::oUrl:cPath )
+      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          ::bEof := .T.  // no data for this transaction
          RETURN NIL
       ENDIF
 
-      IF Empty( ::oUrl:cFile )
+      IF Empty(::oUrl:cFile)
          RETURN ::List()
       ENDIF
 
@@ -523,11 +523,11 @@ METHOD Write( cData, nLen ) CLASS TIPClientFTP
 
    IF ! ::bInitialized
 
-      IF Empty( ::oUrl:cFile )
+      IF Empty(::oUrl:cFile)
          RETURN -1
       ENDIF
 
-      IF ! Empty( ::oUrl:cPath ) .AND. ! ::CWD( ::oUrl:cPath )
+      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          RETURN -1
       ENDIF
 
@@ -594,11 +594,11 @@ METHOD UploadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
 
    IF ! ::bInitialized
 
-      IF Empty( ::oUrl:cFile )
+      IF Empty(::oUrl:cFile)
          RETURN .F.
       ENDIF
 
-      IF ! Empty( ::oUrl:cPath ) .AND. ! ::CWD( ::oUrl:cPath )
+      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          RETURN .F.
       ENDIF
 
@@ -623,7 +623,7 @@ METHOD DownloadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
 
    IF ! ::bInitialized
 
-      IF ! Empty( ::oUrl:cPath ) .AND. ! ::CWD( ::oUrl:cPath )
+      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          ::bEof := .T.  // no data for this transaction
          RETURN .F.
       ENDIF
@@ -676,7 +676,7 @@ METHOD ListFiles( cFileSpec ) CLASS TIPClientFTP
 
    LOCAL cList := ::list( cFileSpec )
 
-   IF Empty( cList )
+   IF Empty(cList)
       RETURN {}
    ENDIF
 
@@ -684,7 +684,7 @@ METHOD ListFiles( cFileSpec ) CLASS TIPClientFTP
 
    FOR EACH cEntry IN aList DESCEND
 
-      IF Empty( cEntry )
+      IF Empty(cEntry)
          hb_ADel( aList, cEntry:__enumIndex(), .T. )
       ELSE
          aFile  := Array( F_LEN + 3 )

@@ -99,7 +99,7 @@ PROCEDURE Main()
       ENDSWITCH
    NEXT
 
-   IF Empty( cTable ) .OR. cFile == ""
+   IF Empty(cTable) .OR. cFile == ""
       help()
       RETURN
    ENDIF
@@ -192,7 +192,7 @@ PROCEDURE Main()
                CASE cTypePG == "N" .AND. cTypeDB == "L" ; cValue := iif(cValue, 1, 0)
                CASE cTypePG == "D" .AND. cTypeDB $ "CQ" ; cValue := CToD( cValue )
                CASE cTypePG == "D" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := hb_SToD( hb_ntos( cValue ) )
-               CASE cTypePG == "L" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := ! Empty( cValue )
+               CASE cTypePG == "L" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := ! Empty(cValue)
                CASE cTypePG == "L" .AND. cTypeDB $ "CQ" ; cValue := AllTrim( cValue ) $ "YySs1"
                ENDCASE
             ENDIF

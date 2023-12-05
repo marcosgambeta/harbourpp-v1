@@ -21,7 +21,7 @@ PROCEDURE Main( cFileName )
    hb_XML_ExpatVersionInfo( @v1, @v2, @v3 )
    ? hb_ntos( v1 ) + "." + hb_ntos( v2 ) + "." + hb_ntos( v3 )
 
-   IF Empty( p )
+   IF Empty(p)
       ? "Couldn't allocate memory for parser"
       ErrorLevel( -1 )
       RETURN
@@ -52,7 +52,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttr )
 
    ? Replicate( "  ", aUserData[ 1 ] ), cElement
 
-   IF ! Empty( aAttr )
+   IF ! Empty(aAttr)
       FOR EACH aItem IN aAttr
          ?? "", aItem[ HB_XML_ATTR_cName ] + "='" + aItem[ HB_XML_ATTR_cValue ] + "'"
       NEXT
@@ -75,7 +75,7 @@ STATIC PROCEDURE cb_data( aUserData, cData )
 
    HB_SYMBOL_UNUSED( aUserData )
 
-   IF ! Empty( cData )
+   IF ! Empty(cData)
       ?? "", "'" + cData + "'"
    ENDIF
 

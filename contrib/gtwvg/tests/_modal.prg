@@ -111,7 +111,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    // place 2 spaces before and after the buttons
    nColCap   := Len( cCaption ) + 7  // " - " + "  " + cCaption + "  "
    nColTxt   := 0
-   IF ! Empty( aText_ )
+   IF ! Empty(aText_)
       AEval( aText_, {| e | nColTxt := Max( nColTxt, Len( e ) ) } )
    ENDIF
    nColTxt   += 6                   // for two spaces at both sides
@@ -158,7 +158,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    wvg_BoxRaised( nTop, nLeft, nBottom, nRight )
 
    SetColor( pal_[DLG_CLR_TEXT] )
-   IF ! Empty( aText_ )
+   IF ! Empty(aText_)
       FOR i := 1 TO Len( aText_ )
          @ nTop + 1 + i, nLeft SAY PadC( aText_[i], nRight - nLeft + 1 )
       NEXT

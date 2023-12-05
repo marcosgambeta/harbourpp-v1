@@ -138,7 +138,7 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::setPosAndSize()
 
    /* Build SLE and ListBox Part - May not be available for all Windows Versions - How to handle then ? */
-   IF ! Empty( ::aInfo := wvg_SendCBMessage( ::hWnd, CB_GETCOMBOBOXINFO ) )
+   IF ! Empty(::aInfo := wvg_SendCBMessage( ::hWnd, CB_GETCOMBOBOXINFO ))
       ::oSLE := WvgSLE():new()
       ::oSLE:oParent := Self
       ::oSLE:hWnd := ::aInfo[ 5 ]
@@ -233,7 +233,7 @@ METHOD WvgComboBox:handleEvent( nMessage, aNM )
       IF HB_ISNUMERIC( ::clr_FG )
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
-      IF Empty( ::hBrushBG )
+      IF Empty(::hBrushBG)
          RETURN wvg_GetCurrentBrush( aNM[ 1 ] )
       ELSE
          wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )

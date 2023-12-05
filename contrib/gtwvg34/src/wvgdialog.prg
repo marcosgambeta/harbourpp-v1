@@ -121,7 +121,7 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    hb_gtInfo( HB_GTI_CLOSABLE, ::closable  )
    hb_gtInfo( HB_GTI_WINTITLE, ::title     )
 
-   IF ! Empty( ::icon )
+   IF ! Empty(::icon)
       IF HB_ISNUMERIC( ::icon )
          hb_gtInfo( HB_GTI_ICONRES, ::icon )
 
@@ -140,7 +140,7 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
 
    oW := WvgDrawingArea():new( Self ):create( , , { 0, 0 }, ::currentSize(), , .F. )
-   IF Empty( oW:hWnd )
+   IF Empty(oW:hWnd)
       ::drawingArea := Self
    ELSE
       ::drawingArea := oW
@@ -164,7 +164,7 @@ METHOD WvgDialog:destroy()
 
    AEval( ::aChildren, {| o | o:destroy() } )
 
-   IF ! Empty( ::hBrushBG )
+   IF ! Empty(::hBrushBG)
       wvg_DeleteObject( ::hBrushBG )
    ENDIF
 

@@ -206,7 +206,7 @@ METHOD StandardFields() CLASS TIPClientHTTP
 
    // send cookies
    cCookies := ::getCookies()
-   IF ! Empty( cCookies )
+   IF ! Empty(cCookies)
       ::inetSendAll( ::SocketCon, "Cookie: " + cCookies + ::cCRLF )
    ENDIF
 
@@ -232,7 +232,7 @@ METHOD ReadHeaders( lClear ) CLASS TIPClientHTTP
    aVersion := hb_regex( "^HTTP/(.)\.(.) ([0-9][0-9][0-9]) +(.*)$", cLine )
    ::cReply := cLine
 
-   IF Empty( aVersion )
+   IF Empty(aVersion)
       ::nVersion := 0
       ::nSubversion := 9
       ::nReplyCode := 0
@@ -246,7 +246,7 @@ METHOD ReadHeaders( lClear ) CLASS TIPClientHTTP
 
    ::nLength := -1
    ::bChunked := .F.
-   IF hb_defaultValue( lClear, .F. ) .AND. ! Empty( ::hHeaders )
+   IF hb_defaultValue( lClear, .F. ) .AND. ! Empty(::hHeaders)
       ::hHeaders := { => }
    ENDIF
    cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
@@ -407,7 +407,7 @@ METHOD PROCEDURE setCookie( cLine ) CLASS TIPClientHTTP
          ENDIF
       ENDIF
    NEXT
-   IF ! Empty( cName )
+   IF ! Empty(cName)
       // cookies are stored in hashes as host.path.name
       // check if we have a host hash yet
       IF ! cHost $ ::hCookies
@@ -505,7 +505,7 @@ METHOD PostMultiPart( xPostData, cQuery ) CLASS TIPClientHTTP
    LOCAL hFile, cBuffer, nRead
 
    DO CASE
-   CASE Empty( xPostData )
+   CASE Empty(xPostData)
    CASE HB_ISHASH( xPostData )
       FOR EACH item IN xPostData
          cData += ;
@@ -531,7 +531,7 @@ METHOD PostMultiPart( xPostData, cQuery ) CLASS TIPClientHTTP
       cFile := hb_defaultValue( aAttachment[ 2 ], "" )
 
       cType := aAttachment[ 3 ]
-      IF ! HB_ISSTRING( cType ) .OR. Empty( cType )
+      IF ! HB_ISSTRING( cType ) .OR. Empty(cType)
          cType := "text/html"
       ENDIF
 

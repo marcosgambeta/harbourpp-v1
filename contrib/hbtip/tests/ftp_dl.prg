@@ -10,7 +10,7 @@ PROCEDURE Main( cURL, ... )
    LOCAL oFTP, oURL
 
    /* fetch files to transfer */
-   IF ! Empty( aFiles := { ... } )
+   IF ! Empty(aFiles := { ... })
 
       hb_default( @cURL, "ftp://user:pass@ftp.example.com" )
 

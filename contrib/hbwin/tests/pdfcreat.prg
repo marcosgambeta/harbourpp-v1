@@ -20,7 +20,7 @@ PROCEDURE Main()
 
    LOCAL oPC, nTime, cDefaultPrinter, cFilename, oPrinter, nEvent := 0
 
-   IF Empty( oPC := win_oleCreateObject( "PDFCreator.clsPDFCreator" ) )
+   IF Empty(oPC := win_oleCreateObject( "PDFCreator.clsPDFCreator" ))
       ? "Unable to create PDFCreator COM object"
       RETURN
    ENDIF

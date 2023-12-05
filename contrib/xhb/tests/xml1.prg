@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    cString := MemoRead( cFile )
 
-   IF Empty( cString )
+   IF Empty(cString)
       WAIT "xml file unavailable"
       RETURN
    ENDIF

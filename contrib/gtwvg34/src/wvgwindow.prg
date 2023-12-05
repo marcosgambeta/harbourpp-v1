@@ -287,7 +287,7 @@ METHOD WvgWindow:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::aPresParams := aPresParams
    ::visible     := lVisible
 
-   IF Empty( ::oParent )
+   IF Empty(::oParent)
       IF ! ::ClassName() $ "WVGCRT,WVGDIALOG"
          ::oParent := WvgSetAppWindow()
       ENDIF
@@ -310,7 +310,7 @@ METHOD WvgWindow:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
 
 METHOD PROCEDURE WvgWindow:destroy()
 
-   IF ! Empty( ::oParent )
+   IF ! Empty(::oParent)
       ::oParent:removeChild( Self )
    ENDIF
 
@@ -328,7 +328,7 @@ METHOD PROCEDURE WvgWindow:destroy()
       wapi_DestroyWindow( ::hWnd )
    ENDIF
 
-   IF ! Empty( ::hBrushBG )
+   IF ! Empty(::hBrushBG)
       wvg_DeleteObject( ::hBrushBG )
    ENDIF
 
@@ -449,7 +449,7 @@ METHOD WvgWindow:setColorBG( nRGB )
    ENDIF
    IF HB_ISNUMERIC( nRGB )
       hBrush := wvg_CreateBrush( WIN_BS_SOLID, nRGB, 0 )
-      IF ! Empty( hBrush )
+      IF ! Empty(hBrush)
          ::clr_BG := nRGB
          ::hBrushBG := hBrush
 
@@ -589,7 +589,7 @@ METHOD WvgWindow:setFontCompoundName( cFont )
 
    cOldFont := ::fnt_COMMPOUNDNAME
 
-   IF ! Empty( cFont )
+   IF ! Empty(cFont)
 
       IF ( n := AScan( aAttr, {| e | e $ cFont } ) ) > 0
          cAttr := aAttr[ n ]

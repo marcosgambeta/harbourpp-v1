@@ -43,7 +43,7 @@ PROCEDURE Main( cFileArg )
     * Check arguments...
     */
 
-   IF Empty( cFileArg )
+   IF Empty(cFileArg)
       OutErr( hb_StrFormat( "Usage: %1$s filename.xml", hb_ProgName() ) + hb_eol() )
       ErrorLevel( 1 )
       QUIT
@@ -52,7 +52,7 @@ PROCEDURE Main( cFileArg )
    /* Test the basic functionality */
 
    hTree := mxmlNewElement( MXML_NO_PARENT, "element" )
-   IF Empty( hTree )
+   IF Empty(hTree)
       OutErr( "ERROR: No parent node in basic test!" + hb_eol() )
       QUIT
    ENDIF
@@ -92,7 +92,7 @@ PROCEDURE Main( cFileArg )
    mxmlLoadString( hTree, "<group>opaque opaque opaque</group>", MXML_OPAQUE_CALLBACK )
    mxmlLoadString( hTree, "<foo><bar><one><two>value<two>value2</two></two></one></bar></foo>", MXML_OPAQUE_CALLBACK )
 
-   IF Empty( hNode := mxmlGetFirstChild( hTree ) )
+   IF Empty(hNode := mxmlGetFirstChild( hTree ))
       OutErr( "ERROR: No first child in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -125,7 +125,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    hNode := mxmlGetNextSibling( hNode )
-   IF Empty( hNode )
+   IF Empty(hNode)
       OutErr( "ERROR: No second child node in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -149,7 +149,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    hNode := mxmlGetNextSibling( hNode )
-   IF Empty( hNode )
+   IF Empty(hNode)
       OutErr( "ERROR: No third child node in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -182,7 +182,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    hNode := mxmlGetNextSibling( hNode )
-   IF Empty( hNode )
+   IF Empty(hNode)
       OutErr( "ERROR: No fourth child node in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -206,7 +206,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    cStr := mxmlGetText( hNode, @nNum )
-   IF nNum != 1 .OR. Empty( cStr ) .OR. !( cStr == "text" )
+   IF nNum != 1 .OR. Empty(cStr) .OR. !( cStr == "text" )
       OutErr( hb_StrFormat( "ERROR: Fourth child value is %d, '%s', expected 1, 'text'!", ;
          nNum, cStr ) + hb_eol() )
 
@@ -216,7 +216,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    FOR i := 0 TO 3
-      IF Empty( hNode := mxmlGetNextSibling( hNode ) )
+      IF Empty(hNode := mxmlGetNextSibling( hNode ))
          OutErr( hb_StrFormat( "ERROR: No group #%d child node in basic test!", i ) + hb_eol() )
 
          mxmlDelete( hTree )
@@ -244,7 +244,7 @@ PROCEDURE Main( cFileArg )
     */
 
    hNode := mxmlFindPath( hTree, "*/two" )
-   IF Empty( hNode )
+   IF Empty(hNode)
       OutErr( "ERROR: Unable to find value for '*/two'." + hb_eol() )
 
       mxmlDelete( hTree )
@@ -259,7 +259,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    hNode := mxmlFindPath( hTree, "foo/*/two" )
-   IF Empty( hNode )
+   IF Empty(hNode)
       OutErr( "ERROR: Unable to find value for 'foo/*/two'." + hb_eol() )
 
       mxmlDelete( hTree )
@@ -274,7 +274,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    hNode := mxmlFindPath( hTree, "foo/bar/one/two" )
-   IF Empty( hNode )
+   IF Empty(hNode)
       OutErr( "ERROR: Unable to find value for 'foo/bar/one/two'." + hb_eol() )
 
       mxmlDelete( hTree )
@@ -293,7 +293,7 @@ PROCEDURE Main( cFileArg )
     */
 
    hInd := mxmlIndexNew( hTree )
-   IF Empty( hInd )
+   IF Empty(hInd)
       OutErr( "ERROR: Unable to create index of all nodes!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -311,7 +311,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    mxmlIndexReset( hInd )
-   IF Empty( mxmlIndexFind( hInd, "group" ) )
+   IF Empty(mxmlIndexFind( hInd, "group" ))
       OutErr( "ERROR: mxmlIndexFind for 'group' failed!" + hb_eol() )
 
       mxmlIndexDelete( hInd )
@@ -323,7 +323,7 @@ PROCEDURE Main( cFileArg )
    mxmlIndexDelete( hInd )
 
    hInd := mxmlIndexNew( hTree, "group" )
-   IF Empty( hInd )
+   IF Empty(hInd)
       OutErr( "ERROR: Unable to create index of groups!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -342,7 +342,7 @@ PROCEDURE Main( cFileArg )
 
    mxmlIndexReset( hInd )
 
-   IF Empty( mxmlIndexEnum( hInd ) )
+   IF Empty(mxmlIndexEnum( hInd ))
       OutErr( "ERROR: mxmlIndexEnum failed!" + hb_eol() )
 
       mxmlIndexDelete( hInd )
@@ -354,7 +354,7 @@ PROCEDURE Main( cFileArg )
    mxmlIndexDelete( hInd )
 
    hInd := mxmlIndexNew( hTree,, "type" )
-   IF Empty( hInd )
+   IF Empty(hInd)
       OutErr( "ERROR: Unable to create index of type attributes!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -372,7 +372,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    mxmlIndexReset( hInd )
-   IF Empty( mxmlIndexFind( hInd,, "string" ) )
+   IF Empty(mxmlIndexFind( hInd,, "string" ))
       OutErr( "ERROR: mxmlIndexFind for 'string' failed!" + hb_eol() )
 
       mxmlIndexDelete( hInd )
@@ -384,7 +384,7 @@ PROCEDURE Main( cFileArg )
    mxmlIndexDelete( hInd )
 
    hInd := mxmlIndexNew( hTree, "group", "type" )
-   IF Empty( hInd )
+   IF Empty(hInd)
       OutErr( "ERROR: Unable to create index of elements and attributes!" + hb_eol() )
 
       mxmlDelete( hTree )
@@ -402,7 +402,7 @@ PROCEDURE Main( cFileArg )
    ENDIF
 
    mxmlIndexReset( hInd )
-   IF Empty( mxmlIndexFind( hInd, "group", "string" ) )
+   IF Empty(mxmlIndexFind( hInd, "group", "string" ))
       OutErr( "ERROR: mxmlIndexFind for 'string' failed!" + hb_eol() )
 
       mxmlIndexDelete( hInd )
@@ -418,7 +418,7 @@ PROCEDURE Main( cFileArg )
     */
 
    FOR i := 0 TO 8
-      IF ! Empty( mxmlGetFirstChild( hTree ) )
+      IF ! Empty(mxmlGetFirstChild( hTree ))
          mxmlDelete( mxmlGetFirstChild( hTree ) )
       ELSE
          OutErr( hb_StrFormat( "ERROR: Child pointer prematurely NULL on child #%d", i ) + hb_eol() )
@@ -429,14 +429,14 @@ PROCEDURE Main( cFileArg )
       ENDIF
    NEXT
 
-   IF ! Empty( mxmlGetFirstChild( hTree ) )
+   IF ! Empty(mxmlGetFirstChild( hTree ))
       OutErr( "ERROR: Child pointer not NULL after deleting all children!" + hb_eol() )
 
       ErrorLevel( 1 )
       QUIT
    ENDIF
 
-   IF ! Empty( mxmlGetLastChild( hTree ) )
+   IF ! Empty(mxmlGetLastChild( hTree ))
       OutErr( "ERROR: Last child pointer not NULL after deleting all children!" + hb_eol() )
 
       ErrorLevel( 1 )
@@ -458,7 +458,7 @@ PROCEDURE Main( cFileArg )
       hTree := mxmlLoadFile( NIL, cFileArg, @type_cb() )
    ENDIF
 
-   IF Empty( hTree )
+   IF Empty(hTree)
       OutErr( "Unable to read XML file!" + hb_eol() )
       ErrorLevel( 1 )
       QUIT
@@ -471,7 +471,7 @@ PROCEDURE Main( cFileArg )
        * properly... XXX: this doesn't test for the mxmlWalkNext() _binding_
        */
 
-      IF Empty( hNode := mxmlFindElement( hTree, hTree, "choice",,, MXML_DESCEND ) )
+      IF Empty(hNode := mxmlFindElement( hTree, hTree, "choice",,, MXML_DESCEND ))
          OutErr( "Unable to find first <choice> element in XML tree!" + hb_eol() )
 
          mxmlDelete( hTree )
@@ -479,7 +479,7 @@ PROCEDURE Main( cFileArg )
          QUIT
       ENDIF
 
-      IF Empty( mxmlFindElement( hNode, hTree, "choice",,, MXML_NO_DESCEND ) )
+      IF Empty(mxmlFindElement( hNode, hTree, "choice",,, MXML_NO_DESCEND ))
          OutErr( "Unable to find second <choice> element in XML tree!" + hb_eol() )
 
          mxmlDelete( hTree )
@@ -612,7 +612,7 @@ FUNCTION type_cb( hNode )
     * You can lookup attributes and/or use the element name, hierarchy, etc...
     */
 
-   IF Empty( cType := mxmlElementGetAttr( hNode, "type" ) )
+   IF Empty(cType := mxmlElementGetAttr( hNode, "type" ))
       cType := mxmlGetElement( hNode )
    ENDIF
 
@@ -686,7 +686,7 @@ FUNCTION whitespace_cb( hNode, nWhere )
          ( ( cName == "choice" .OR. cName == "option" ) .AND. nWhere == MXML_WS_BEFORE_CLOSE )
       nLevel := -1
       hParent := mxmlGetParent( hNode )
-      DO WHILE ! Empty( hParent )
+      DO WHILE ! Empty(hParent)
          nLevel++
          hParent := mxmlGetParent( hParent )
       ENDDO
@@ -703,7 +703,7 @@ FUNCTION whitespace_cb( hNode, nWhere )
          nWhere == MXML_WS_AFTER_OPEN )
 
       RETURN hb_eol()
-   ELSEIF nWhere == MXML_WS_AFTER_OPEN .AND. Empty( mxmlGetFirstChild( hNode ) )
+   ELSEIF nWhere == MXML_WS_AFTER_OPEN .AND. Empty(mxmlGetFirstChild( hNode ))
       RETURN hb_eol()
    ENDIF
 

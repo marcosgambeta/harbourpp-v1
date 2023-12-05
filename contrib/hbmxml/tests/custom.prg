@@ -17,7 +17,7 @@ PROCEDURE Main()
    tree := mxmlLoadFile( tree, "cust.xml", @type_cb() )
 
    node := mxmlFindElement( tree, tree, "hash", NIL, NIL, MXML_DESCEND )
-   IF Empty( node )
+   IF Empty(node)
       OutErr( "Unable to find <hash> element in XML tree!" )
       mxmlDelete( tree )
 
@@ -101,7 +101,7 @@ FUNCTION whitespace_cb( node, where )
          where == MXML_WS_BEFORE_CLOSE )
 
       parent := mxmlGetParent( node )
-      DO WHILE ! Empty( parent )
+      DO WHILE ! Empty(parent)
          nLevel++
          parent := mxmlGetParent( parent )
       ENDDO
@@ -119,7 +119,7 @@ FUNCTION whitespace_cb( node, where )
          where == MXML_WS_AFTER_OPEN )
       RETURN hb_eol()
 
-   ELSEIF where == MXML_WS_AFTER_OPEN .AND. Empty( mxmlGetFirstChild( node ) )
+   ELSEIF where == MXML_WS_AFTER_OPEN .AND. Empty(mxmlGetFirstChild( node ))
       RETURN hb_eol()
    ENDIF
 
@@ -130,7 +130,7 @@ FUNCTION type_cb( node )
    LOCAL nResult
    LOCAL cType
 
-   IF Empty( cType := mxmlElementGetAttr( node, "type" ) )
+   IF Empty(cType := mxmlElementGetAttr( node, "type" ))
       cType := mxmlGetElement( node )
    ENDIF
 

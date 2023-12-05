@@ -215,10 +215,10 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock( ... )
 
    LOCAL a_ := hb_AParams()
 
-   IF ! Empty( a_ ) .AND. HB_ISEVALITEM( a_[ 1 ] )
+   IF ! Empty(a_) .AND. HB_ISEVALITEM( a_[ 1 ] )
       ::sb_notifier := a_[ 1 ]
 
-   ELSEIF ! Empty( a_ ) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_ISNUMERIC( a_[ 1 ] ) .AND. HB_ISARRAY( a_[ 2 ] )
+   ELSEIF ! Empty(a_) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_ISNUMERIC( a_[ 1 ] ) .AND. HB_ISARRAY( a_[ 2 ] )
       Eval( ::sb_notifier, a_[ 1 ], a_[ 2 ], Self )
 
    ENDIF
@@ -353,7 +353,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       DO CASE
       CASE xParams[ 1 ] == 0                             /* menu selected */
          IF HB_ISOBJECT( ::oMenu )
-            IF ! Empty( aMenuItem := ::oMenu:FindMenuItemById( xParams[ 2 ] ) )
+            IF ! Empty(aMenuItem := ::oMenu:FindMenuItemById( xParams[ 2 ] ))
                DO CASE
                CASE HB_ISEVALITEM( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
@@ -446,7 +446,7 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
    SWITCH nMessage
 
    CASE WIN_WM_ERASEBKGND
-      IF ::objType == objTypeDA .AND. ! Empty( ::hBrushBG )
+      IF ::objType == objTypeDA .AND. ! Empty(::hBrushBG)
          ::handleEvent( HB_GTE_CTLCOLOR, { wvg_n2p( nwParam ), wvg_n2p( nlParam ) } )
       ENDIF
       EXIT
@@ -456,9 +456,9 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
       nNotifctn := wapi_HIWORD( nwParam )
       hWndCtrl  := wvg_n2p( nlParam )
 
-      IF Empty( hWndCtrl )                   /* It is menu */
+      IF Empty(hWndCtrl)                   /* It is menu */
          IF HB_ISOBJECT( ::oMenu )
-            IF ! Empty( aMenuItem := ::oMenu:FindMenuItemById( nCtrlID ) )
+            IF ! Empty(aMenuItem := ::oMenu:FindMenuItemById( nCtrlID ))
                DO CASE
                CASE HB_ISEVALITEM( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )

@@ -55,7 +55,7 @@ THREAD STATIC t_hParams := { => }
 
 PROCEDURE hbtest_Setup( cName, xValue )
 
-   IF HB_ISSTRING( cName ) .AND. ! Empty( cName )
+   IF HB_ISSTRING( cName ) .AND. ! Empty(cName)
       IF PCount() > 1
          t_hParams[ cName ] := xValue
       ELSEIF cName $ t_hParams
@@ -160,10 +160,10 @@ STATIC FUNCTION ErrorMessage( oError )
    IF HB_ISSTRING( oError:description )
       cMessage += oError:description + " "
    ENDIF
-   IF ! Empty( oError:operation )
+   IF ! Empty(oError:operation)
       cMessage += "(" + oError:operation + ") "
    ENDIF
-   IF ! Empty( oError:filename )
+   IF ! Empty(oError:filename)
       cMessage += "<" + oError:filename + "> "
    ENDIF
    IF HB_ISNUMERIC( oError:osCode )
@@ -206,7 +206,7 @@ STATIC FUNCTION XToStr( xValue, lInString )
 
    SWITCH ValType( xValue )
    CASE "N" ; RETURN hb_ntos( xValue )
-   CASE "D" ; RETURN iif(lInString, "0d" + iif(Empty( xValue ), "00000000", DToS( xValue )), 'hb_SToD( "' + DToS( xValue ) + '" )')
+   CASE "D" ; RETURN iif(lInString, "0d" + iif(Empty(xValue), "00000000", DToS( xValue )), 'hb_SToD( "' + DToS( xValue ) + '" )')
    CASE "U" ; RETURN "NIL"
    CASE "C"
    CASE "M"

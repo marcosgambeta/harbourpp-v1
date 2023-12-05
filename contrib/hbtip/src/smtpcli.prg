@@ -113,7 +113,7 @@ METHOD Open( cUrl, lSSL ) CLASS TIPClientSMTP
       ::lAuthPlain := .T.
    ENDIF
 
-   ::inetSendAll( ::SocketCon, "HELO " + iif(Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "HELO " + iif(Empty(::cClientHost), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
 
    DO WHILE .T.
       IF !( lOk := ::GetOk() ) .OR. ::cReply == NIL .OR. ;
@@ -144,7 +144,7 @@ METHOD OpenSecure( cUrl, lSSL ) CLASS TIPClientSMTP
       ::lAuthPlain := .T.
    ENDIF
 
-   ::inetSendAll( ::SocketCon, "EHLO " + iif(Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "EHLO " + iif(Empty(::cClientHost), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
 
    lOk := ::DetectSecurity()
 
@@ -170,7 +170,7 @@ METHOD StartTLS() CLASS TIPClientSMTP
    IF ::GetOk() .AND. ::lHasSSL
       ::EnableSSL( .T. )
       __tip_SSLConnectFD( ::ssl, ::SocketCon )
-      ::inetSendAll( ::SocketCon, "EHLO " + iif(Empty( ::cClientHost ), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
+      ::inetSendAll( ::SocketCon, "EHLO " + iif(Empty(::cClientHost), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
       RETURN ::DetectSecurity()
    ENDIF
 
@@ -273,7 +273,7 @@ METHOD Write( cData, nLen, bCommit ) CLASS TIPClientSMTP
 
    IF ! ::bInitialized
 
-      IF Empty( ::oUrl:cFile )  // GD user id not needed if we did not auth
+      IF Empty(::oUrl:cFile)  // GD user id not needed if we did not auth
          RETURN -1
       ENDIF
 

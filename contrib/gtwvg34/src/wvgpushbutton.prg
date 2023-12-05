@@ -183,7 +183,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
       IF HB_ISNUMERIC( ::clr_FG )
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
-      IF ! Empty( ::hBrushBG )
+      IF ! Empty(::hBrushBG)
          wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )
          RETURN ::hBrushBG
       ENDIF
@@ -248,7 +248,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
       IF HB_ISCHAR( xCaption[ 1 ] )
          ::sendMessage( WIN_WM_SETTEXT, 0, xCaption[ 1 ] )
       ENDIF
-      IF ! Empty( xCaption[ 2 ] )
+      IF ! Empty(xCaption[ 2 ])
          SWITCH xCaption[ 2 ]
          CASE WVG_IMAGE_ICONFILE
             ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( xCaption[ 3 ], nLoadFromDiskFile, WIN_IMAGE_ICON ) )

@@ -13,7 +13,7 @@
 
 PROCEDURE Main()
 
-   IF Empty( win_LoadResource( IDD_DIALOG1, WIN_RT_DIALOG ) )
+   IF Empty(win_LoadResource( IDD_DIALOG1, WIN_RT_DIALOG ))
       wapi_MessageBox( , "Resources not linked. Use 'hbmk2 dlg.hbp' to link resources at build time." )
    ELSE
       wapi_DialogBoxParam( , IDD_DIALOG1,, @DialogFunc() )

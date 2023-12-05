@@ -105,7 +105,7 @@ STATIC FUNCTION _HSX_GOCOLD( nWA )
    IF ( nResult := UR_SUPER_GOCOLD( nWA ) ) == HB_SUCCESS
       aWData := USRRDD_AREADATA( nWA )
       IF aWData[ 1 ]
-         IF ! Empty( aWData[ 2 ] )
+         IF ! Empty(aWData[ 2 ])
             nRecNo := RecNo()
             /* update HSX indexes */
             FOR EACH nHSX IN aWData[ 2 ]

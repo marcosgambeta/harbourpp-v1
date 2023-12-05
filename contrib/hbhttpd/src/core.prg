@@ -134,7 +134,7 @@ METHOD Run( hConfig ) CLASS UHttpd
    ::hmtxLog     := hb_mutexCreate()
    ::hmtxSession := hb_mutexCreate()
 
-   IF Empty( ::hListen := hb_socketOpen() )
+   IF Empty(::hListen := hb_socketOpen())
       ::cError := "Socket create error: " + hb_socketErrorString()
       RETURN .F.
    ENDIF
@@ -160,7 +160,7 @@ METHOD Run( hConfig ) CLASS UHttpd
    ::hSession := { => }
 
    DO WHILE .T.
-      IF Empty( hSocket := hb_socketAccept( ::hListen,, 1000 ) )
+      IF Empty(hSocket := hb_socketAccept( ::hListen,, 1000 ))
          IF hb_socketGetError() == HB_SOCKET_ERR_TIMEOUT
             Eval( ::hConfig[ "Idle" ], Self )
             IF ::lStop
@@ -238,7 +238,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
    hb_HKeepOrder( aFilter, .F. )
    aDeny := {}
    FOR EACH cExpr IN hb_ATokens( cFilter, " " )
-      IF ! Empty( cExpr )
+      IF ! Empty(cExpr)
          IF lDeny := ( Left( cExpr, 1 ) == "!" )
             cExpr := SubStr( cExpr, 2 )
          ENDIF
@@ -445,12 +445,12 @@ STATIC FUNCTION ProcessConnection( oServer )
          because request handler script can ruin variable value */
       aServer := { => }
       aServer[ "HTTPS" ] := oServer:hConfig[ "SSL" ]
-      IF ! Empty( aI := hb_socketGetPeerName( hSocket ) )
+      IF ! Empty(aI := hb_socketGetPeerName( hSocket ))
          aServer[ "REMOTE_ADDR" ] := aI[ 2 ]
          aServer[ "REMOTE_HOST" ] := aServer[ "REMOTE_ADDR" ] // no reverse DNS
          aServer[ "REMOTE_PORT" ] := aI[ 3 ]
       ENDIF
-      IF ! Empty( aI := hb_socketGetSockName( hSocket ) )
+      IF ! Empty(aI := hb_socketGetSockName( hSocket ))
          aServer[ "SERVER_ADDR" ] := aI[ 2 ]
          aServer[ "SERVER_PORT" ] := aI[ 3 ]
       ENDIF
@@ -929,7 +929,7 @@ STATIC FUNCTION HttpDateUnformat( cDate, tDate )
          "Oct", "Nov", "Dec" }, SubStr( cDate, 9, 3 ) )
       IF nMonth > 0
          tI := hb_SToT( SubStr( cDate, 13, 4 ) + PadL( nMonth, 2, "0" ) + SubStr( cDate, 6, 2 ) + StrTran( SubStr( cDate, 18, 8 ), ":" ) )
-         IF ! Empty( tI )
+         IF ! Empty(tI)
             tDate := tI + hb_UTCOffset() / ( 3600 * 24 )
             RETURN .T.
          ENDIF
@@ -965,13 +965,13 @@ STATIC FUNCTION GetErrorDesc( oErr )
    cRet := "ERRORLOG ============================================================" + hb_eol() + ;
       "Error: " + oErr:subsystem + "/" + ErrDescCode( oErr:genCode ) + "(" + hb_ntos( oErr:genCode ) + ") " + ;
       hb_ntos( oErr:subcode ) + hb_eol()
-   IF ! Empty( oErr:filename );      cRet += "File: " + oErr:filename + hb_eol()
+   IF ! Empty(oErr:filename);      cRet += "File: " + oErr:filename + hb_eol()
    ENDIF
-   IF ! Empty( oErr:description );   cRet += "Description: " + oErr:description + hb_eol()
+   IF ! Empty(oErr:description);   cRet += "Description: " + oErr:description + hb_eol()
    ENDIF
-   IF ! Empty( oErr:operation );     cRet += "Operation: " + oErr:operation + hb_eol()
+   IF ! Empty(oErr:operation);     cRet += "Operation: " + oErr:operation + hb_eol()
    ENDIF
-   IF ! Empty( oErr:osCode );        cRet += "OS error: " + hb_ntos( oErr:osCode ) + hb_eol()
+   IF ! Empty(oErr:osCode);        cRet += "OS error: " + hb_ntos( oErr:osCode ) + hb_eol()
    ENDIF
    IF HB_ISARRAY( oErr:args )
       cRet += "Arguments:" + hb_eol()
@@ -982,11 +982,11 @@ STATIC FUNCTION GetErrorDesc( oErr )
    cRet += "Stack:" + hb_eol()
    nI := 2
 #if 0
-   DO WHILE ! Empty( ProcName( ++nI ) )
+   DO WHILE ! Empty(ProcName( ++nI ))
       cRet += "    " + ProcName( nI ) + "(" + hb_ntos( ProcLine( nI ) ) + ")" + hb_eol()
    ENDDO
 #else
-   DO WHILE ! Empty( ProcName( ++nI ) )
+   DO WHILE ! Empty(ProcName( ++nI ))
       cI := "    " + ProcName( nI ) + "(" + hb_ntos( ProcLine( nI ) ) + ")"
       cI := PadR( cI, Max( 32, Len( cI ) + 1 ) )
       cI += "("
@@ -1043,7 +1043,7 @@ STATIC FUNCTION GetErrorDesc( oErr )
                dbSelectArea( nI )
                cRet += Str( nI, 6 ) + " " + rddName() + " " + PadR( Alias(), 15 ) + ;
                   Str( RecNo() ) + "/" + Str( LastRec() ) + ;
-                  iif(Empty( ordSetFocus() ), "", " Index " + ordSetFocus() + "(" + hb_ntos( ordNumber() ) + ")") + hb_eol()
+                  iif(Empty(ordSetFocus()), "", " Index " + ordSetFocus() + "(" + hb_ntos( ordNumber() ) + ")") + hb_eol()
                dbCloseArea()
             ENDIF
          RECOVER
@@ -1076,7 +1076,7 @@ STATIC FUNCTION cvt2str( xI, lLong )
    LOCAL cValtype, cI, xJ
 
    cValtype := ValType( xI )
-   lLong := ! Empty( lLong )
+   lLong := ! Empty(lLong)
    IF cValtype == "U"
       RETURN iif(lLong, "[U]:NIL", "NIL")
    ELSEIF cValtype == "N"
@@ -1499,7 +1499,7 @@ PROCEDURE UProcInfo()
    UWrite( '<h2>Capabilities</h2>' )
    UWrite( '<table border=1 cellspacing=0>' )
    cI := ""
-   AEval( rddList(), {| X | cI += iif(Empty( cI ), "", ", ") + X } )
+   AEval( rddList(), {| X | cI += iif(Empty(cI), "", ", ") + X } )
    UWrite( '<tr><td>RDD</td><td>' + UHtmlEncode( cI ) + '</td></tr>' )
    UWrite( '</table>' )
 
@@ -1510,14 +1510,14 @@ PROCEDURE UProcInfo()
    AEval( ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( server[ X ] ) ) + '</td></tr>' ) } )
    UWrite( '</table>' )
 
-   IF ! Empty( get )
+   IF ! Empty(get)
       UWrite( '<h3>get</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
       AEval( ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( get[ X ] ) ) + '</td></tr>' ) } )
       UWrite( '</table>' )
    ENDIF
 
-   IF ! Empty( post )
+   IF ! Empty(post)
       UWrite( '<h3>post</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
       AEval( ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( post[ X ] ) ) + '</td></tr>' ) } )
@@ -1587,7 +1587,7 @@ STATIC FUNCTION parse_data( aData, aCode, hConfig )
 
          CASE "if"
             xValue := iif(hb_HHasKey( aData, aInstr[ 2 ] ), aData[ aInstr[ 2 ] ], NIL)
-            IF ! Empty( xValue )
+            IF ! Empty(xValue)
                cRet += parse_data( aData, aInstr[ 3 ], hConfig )
             ELSE
                cRet += parse_data( aData, aInstr[ 4 ], hConfig )

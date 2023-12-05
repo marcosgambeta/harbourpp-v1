@@ -92,7 +92,7 @@ METHOD WvtLabel:Create( lConfg )
 
    ::hFont := wvt_CreateFont( ::cFont, ::nFontHeight, ::nFontWidth, ::nFontWeight, ::lItalic, ;
       ::lUnderline, ::lStrikeout, ::nCharSet, ::nFontQuality, ::nAngle )
-   IF ! Empty( ::hFont )
+   IF ! Empty(::hFont)
       IF ! lConfg
          ::bPaint := {|| wvt_DrawLabelObj( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
             ::Text, ::nAlignHorz, ::nAlignVert, ::nTextColor, ::nBackColor, ::hFont ) }
@@ -144,7 +144,7 @@ METHOD WvtLabel:Configure()
    ::nTextColorHoverOff := ::nTextColor
    ::nBackColorHoverOff := ::nBackColor
 
-   IF ! Empty( ::hFont )
+   IF ! Empty(::hFont)
       wvg_DeleteObject( ::hFont )
    ENDIF
 

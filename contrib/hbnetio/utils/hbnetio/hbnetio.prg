@@ -187,7 +187,7 @@ PROCEDURE netiosrv_Main( lUI, ... )
             EXIT
          ENDSWITCH
 
-         netiosrv[ _NETIOSRV_lRPC ] := ! Empty( netiosrv[ _NETIOSRV_hRPCFHRB ] ) .AND. ! Empty( hb_hrbGetFunSym( netiosrv[ _NETIOSRV_hRPCFHRB ], _RPC_FILTER ) )
+         netiosrv[ _NETIOSRV_lRPC ] := ! Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]) .AND. ! Empty(hb_hrbGetFunSym( netiosrv[ _NETIOSRV_hRPCFHRB ], _RPC_FILTER ))
          IF ! netiosrv[ _NETIOSRV_lRPC ]
             netiosrv[ _NETIOSRV_cRPCFFileName ] := NIL
             netiosrv[ _NETIOSRV_hRPCFHRB ] := NIL
@@ -217,21 +217,21 @@ PROCEDURE netiosrv_Main( lUI, ... )
       netiosrv[ _NETIOSRV_nPort ], ;
       netiosrv[ _NETIOSRV_cIFAddr ], ;
       netiosrv[ _NETIOSRV_cRootDir ], ;
-      iif(Empty( netiosrv[ _NETIOSRV_hRPCFHRB ] ), netiosrv[ _NETIOSRV_lRPC ], hb_hrbGetFunSym( netiosrv[ _NETIOSRV_hRPCFHRB ], _RPC_FILTER )), ;
+      iif(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), netiosrv[ _NETIOSRV_lRPC ], hb_hrbGetFunSym( netiosrv[ _NETIOSRV_hRPCFHRB ], _RPC_FILTER )), ;
       cPassword, ;
       NIL, ;
       NIL, ;
       {| pConnectionSocket | netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, .F. ) } )
 
-   netiosrv[ _NETIOSRV_lEncryption ] := ! Empty( cPassword )
+   netiosrv[ _NETIOSRV_lEncryption ] := ! Empty(cPassword)
    cPassword := NIL
 
-   IF Empty( netiosrv[ _NETIOSRV_pListenSocket ] )
+   IF Empty(netiosrv[ _NETIOSRV_pListenSocket ])
       netiosrv_LogEvent( "Cannot start server." )
    ELSE
       netiosrv_LogEvent( "Ready to accept connections." )
 
-      IF ! Empty( cPasswordManagement )
+      IF ! Empty(cPasswordManagement)
 
          netiomgm[ _NETIOSRV_pListenSocket ] := netio_MTServer( ;
             netiomgm[ _NETIOSRV_nPort ], ;
@@ -268,7 +268,7 @@ PROCEDURE netiosrv_Main( lUI, ... )
             NIL, ;
             {| pConnectionSocket | netiosrv_callback( netiomgm, netiomgm, pConnectionSocket, .T. ) } )
 
-         IF Empty( netiomgm[ _NETIOSRV_pListenSocket ] )
+         IF Empty(netiomgm[ _NETIOSRV_pListenSocket ])
             netiosrv_LogEvent( "Warning: Cannot start server management." )
          ELSE
             IF lUI
@@ -280,7 +280,7 @@ PROCEDURE netiosrv_Main( lUI, ... )
       ShowConfig( netiosrv, netiomgm )
 
       /* Wait until embedded management console connects */
-      IF ! Empty( netiomgm[ _NETIOSRV_pListenSocket ] )
+      IF ! Empty(netiomgm[ _NETIOSRV_pListenSocket ])
          hb_idleSleep( 2 )
          netiomgm[ _NETIOSRV_lShowConn ] := .T.
       ENDIF
@@ -293,7 +293,7 @@ PROCEDURE netiosrv_Main( lUI, ... )
       netio_ServerStop( netiosrv[ _NETIOSRV_pListenSocket ] )
       netiosrv[ _NETIOSRV_pListenSocket ] := NIL
 
-      IF ! Empty( netiomgm[ _NETIOSRV_pListenSocket ] )
+      IF ! Empty(netiomgm[ _NETIOSRV_pListenSocket ])
          netio_ServerStop( netiomgm[ _NETIOSRV_pListenSocket ] )
          netiomgm[ _NETIOSRV_pListenSocket ] := NIL
       ENDIF
@@ -367,9 +367,9 @@ STATIC FUNCTION netiosrv_config( netiosrv, netiomgm )
       hb_StrFormat( "Root filesystem: %1$s", netiosrv[ _NETIOSRV_cRootDir ] ), ;
       hb_StrFormat( "RPC support: %1$s", iif(netiosrv[ _NETIOSRV_lRPC ], "enabled", "disabled") ), ;
       hb_StrFormat( "Encryption: %1$s", iif(netiosrv[ _NETIOSRV_lEncryption ], "enabled", "disabled") ), ;
-      hb_StrFormat( "RPC filter module: %1$s", iif(Empty( netiosrv[ _NETIOSRV_hRPCFHRB ] ), iif(netiosrv[ _NETIOSRV_lRPC ], "not set (WARNING: unsafe open server)", "not set"), netiosrv[ _NETIOSRV_cRPCFFileName ] )) }
+      hb_StrFormat( "RPC filter module: %1$s", iif(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), iif(netiosrv[ _NETIOSRV_lRPC ], "not set (WARNING: unsafe open server)", "not set"), netiosrv[ _NETIOSRV_cRPCFFileName ] )) }
 
-   IF ! Empty( netiomgm[ _NETIOSRV_pListenSocket ] )
+   IF ! Empty(netiomgm[ _NETIOSRV_pListenSocket ])
       AAdd( aArray, hb_StrFormat( "Management iface: %1$s:%2$d", netiomgm[ _NETIOSRV_cIFAddr ], netiomgm[ _NETIOSRV_nPort ] ) )
    ENDIF
 
@@ -423,7 +423,7 @@ STATIC FUNCTION netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, lManag
       lBlocked := .F.
 
       /* Handle positive filter */
-      IF ! Empty( netiosrv[ _NETIOSRV_hAllow ] )
+      IF ! Empty(netiosrv[ _NETIOSRV_hAllow ])
          hb_mutexLock( netiosrv[ _NETIOSRV_mtxFilters ] )
          IF ! cAddressPeer $ netiosrv[ _NETIOSRV_hAllow ]
             IF hb_HScan( netiosrv[ _NETIOSRV_hAllow ], {| tmp | hb_WildMatch( tmp, cAddressPeer ) } ) == 0
@@ -440,7 +440,7 @@ STATIC FUNCTION netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, lManag
       ENDIF
 
       /* Handle negative filter */
-      IF ! Empty( netiosrv[ _NETIOSRV_hBlock ] )
+      IF ! Empty(netiosrv[ _NETIOSRV_hBlock ])
          hb_mutexLock( netiosrv[ _NETIOSRV_mtxFilters ] )
          IF cAddressPeer $ netiosrv[ _NETIOSRV_hBlock ]
             lBlocked := .T.

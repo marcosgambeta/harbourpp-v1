@@ -135,7 +135,7 @@ METHOD New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWi
    hb_default( @lDraw, .T. )
    hb_default( @nWinId, wvw_nNumWindows() - 1 )  // 20040303
 
-   // TODO: ::nId := iif(Empty( s_amouseobjlist ), 1, s_amouseobjlist[ Len( s_amouseobjlist ) ]:nGetId() + 1)
+   // TODO: ::nId := iif(Empty(s_amouseobjlist), 1, s_amouseobjlist[ Len( s_amouseobjlist ) ]:nGetId() + 1)
    // TODO: ::nHotKey := NIL
    ::nWinId := nWinId  // 20040303
 
@@ -350,7 +350,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
          ENDIF
       ENDIF
 
-      IF ! Empty( ::cCaption )
+      IF ! Empty(::cCaption)
          wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
@@ -374,7 +374,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
          nLabelColor := RGB( 255, 0, 0 )
       ENDIF
 
-      IF ! Empty( ::cCaption )
+      IF ! Empty(::cCaption)
          wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF

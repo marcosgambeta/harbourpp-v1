@@ -33,7 +33,7 @@ PROCEDURE Main()
    rddSetDefault( "DBFCDX" )
 
    pSockSrv := netio_MTServer( DBPORT,,, /* RPC */ .T., DBPASSWD )
-   IF Empty( pSockSrv )
+   IF Empty(pSockSrv)
       ? "Cannot start NETIO server !!!"
       WAIT "Press any key to exit..."
       QUIT
@@ -64,11 +64,11 @@ PROCEDURE Main()
    nSec := Seconds() + 3
    WHILE Seconds() < nSec
       xData := netio_GetData( nStream1 )
-      IF ! Empty( xData )
+      IF ! Empty(xData)
          ? hb_ValToExp( xData )
       ENDIF
       xData := netio_GetData( nStream2 )
-      IF ! Empty( xData )
+      IF ! Empty(xData)
          ?? "", hb_ValToExp( xData )
       ENDIF
    ENDDO

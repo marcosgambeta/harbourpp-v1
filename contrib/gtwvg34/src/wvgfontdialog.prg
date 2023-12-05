@@ -188,7 +188,7 @@ METHOD WvgFontDialog:wndProc( hWnd, nMessage, nwParam, nlParam )
    CASE nMessage == WIN_WM_INITDIALOG
       ::hWnd := hWnd
 
-      IF ! Empty( ::title )
+      IF ! Empty(::title)
          wapi_SetWindowText( ::hWnd, ::title )
       ENDIF
       IF ! ::buttonCancel

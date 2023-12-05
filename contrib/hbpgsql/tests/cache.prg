@@ -236,7 +236,7 @@ FUNCTION SQLOpen( cAlias, cQuery, xFetch, cOrder )
 
    IF cQuery == NIL
       cQuery := "SELECT * FROM " + cAlias
-      IF ! Empty( cOrder )
+      IF ! Empty(cOrder)
          cQuery += " ORDER BY " + cOrder
       ENDIF
    ENDIF
@@ -355,7 +355,7 @@ FUNCTION SQLPrepare( cQuery, ... )
          x := hb_PValue( i )
 
          DO CASE
-         CASE x != NIL .AND. Empty( x )
+         CASE x != NIL .AND. Empty(x)
             x := "null"
 
          CASE HB_ISNUMERIC( x )

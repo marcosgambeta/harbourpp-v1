@@ -220,7 +220,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
       ENDIF
       aFile[ i ] := RTrim( aFile[ i ] )
 
-      IF Empty( aFile[ i ] )
+      IF Empty(aFile[ i ])
          aFile[ i ] := ""
          lContinue  := .F.
          LOOP
@@ -228,7 +228,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
       IF lComment
          IF ( nPos := hb_At( "*/", aFile[ i ] ) ) > 0
             lComment := .F.
-            IF ! Empty( cToken1 := SubStr( aFile[ i ], nPos + 2 ) )
+            IF ! Empty(cToken1 := SubStr( aFile[ i ], nPos + 2 ))
                aFile[ i ] := Left( aFile[ i ], nPos + 1 )
                nLen := rf_AINS( aFile, i + 1, cToken1 )
                iDelta++
@@ -358,7 +358,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
                      IF nState > 0
                         nState := RF_STATE_CODE
                      ENDIF
-                     IF ( nContrState := AScan( ::aContr, {| a | a[ 1 ] == cToken1 .AND. ( Empty( a[ 2 ] ) .OR. a[ 2 ] == cToken2 ) } ) ) > 0
+                     IF ( nContrState := AScan( ::aContr, {| a | a[ 1 ] == cToken1 .AND. ( Empty(a[ 2 ]) .OR. a[ 2 ] == cToken2 ) } ) ) > 0
                         IF Len( aDeep ) < ++nDeep
                            AAdd( aDeep, NIL )
                         ENDIF
@@ -410,7 +410,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
                            ( nState == RF_STATE_FUNC .AND. ::nLineFnc == 1 ) .OR. ;
                            ( nState == RF_STATE_VAR  .AND. ::nLineVar == 1 ) .OR. ;
                            ( nState == RF_STATE_CODE .AND. ::nLineCode == 1 )
-                           IF ! Empty( aFile[ nPos ] )
+                           IF ! Empty(aFile[ nPos ])
                               nLen := rf_AINS( aFile, nPos + 1, "" )
                               iDelta++
                               i++
@@ -418,7 +418,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
                               nPos--
                            ENDIF
                         ENDIF
-                        DO WHILE nPos > 1 .AND. Empty( aFile[ nPos ] )
+                        DO WHILE nPos > 1 .AND. Empty(aFile[ nPos ])
                            rf_ADEL( aFile, nPos )
                            iDelta--
                            i--
@@ -793,7 +793,7 @@ METHOD SetOption( cLine, i, aIni ) CLASS HBFormatCode
       cToken1 := Upper( RTrim( Left( cLine, nPos - 1 ) ) )
       cToken2 := LTrim( SubStr( cLine, nPos + 1 ) )
       IF __objHasMsg( Self, cToken1 )
-         IF Empty( cToken2 )
+         IF Empty(cToken2)
             xRes := ""
          ELSEIF IsDigit( cToken2 ) .OR. ( hb_LeftEq( cToken2, "-" ) .AND. IsDigit( LTrim( SubStr( cToken2, 2 ) ) ) )
             xRes := Val( cToken2 )
@@ -877,7 +877,7 @@ METHOD Array2Source( aSource ) CLASS HBFormatCode
       IF aSource[ i ] == NIL
          EXIT
       ENDIF
-      IF i < nLen .OR. ! Empty( aSource[ i ] )
+      IF i < nLen .OR. ! Empty(aSource[ i ])
          cSource += RTrim( aSource[ i ] ) + ::cEol
       ENDIF
    NEXT

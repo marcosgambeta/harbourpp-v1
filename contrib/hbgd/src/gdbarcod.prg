@@ -430,7 +430,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
    ::settext( cText )
 
-   IF ! Empty( cModeCode )
+   IF ! Empty(cModeCode)
       IF HB_ISSTRING( cModeCode ) .AND. Upper( cModeCode ) $ "ABC"
          cModeCode := Upper( cModeCode )
       ELSE
@@ -471,7 +471,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
    IF ! lError
 
-      IF Empty( cModeCode )
+      IF Empty(cModeCode)
 
          IF Str( Val( ::text ), Len( ::text ) ) == ::text
             lTypeCodeC :=  .T.

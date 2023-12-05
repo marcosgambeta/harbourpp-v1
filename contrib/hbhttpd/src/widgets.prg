@@ -339,7 +339,7 @@ FUNCTION UWBrowseNew()
 
 METHOD AddColumn( nID, cTitle, cField, lRaw ) CLASS UWBrowse
 
-   AAdd( ::aColumns, { nID, cTitle, cField, ! Empty( lRaw ) } )
+   AAdd( ::aColumns, { nID, cTitle, cField, ! Empty(lRaw) } )
 
    RETURN Self
 
@@ -435,7 +435,7 @@ FUNCTION UWOptionNew()
 
 METHOD Add( cTitle, cCode, lRaw ) CLASS UWOption
 
-   AAdd( ::aOption, { iif(Empty( lRaw ), UHtmlEncode( cTitle ), cTitle), cCode } )
+   AAdd( ::aOption, { iif(Empty(lRaw), UHtmlEncode( cTitle ), cTitle), cCode } )
 
    RETURN Self
 
@@ -575,7 +575,7 @@ STATIC FUNCTION uhttpd_join( cSeparator, aData )
       CASE "C"
       CASE "M" ; cRet += aData[ nI ]; EXIT
       CASE "N" ; cRet += hb_ntos( aData[ nI ] ); EXIT
-      CASE "D" ; cRet += iif(Empty( aData[ nI ] ), "", DToC( aData[ nI ] )); EXIT
+      CASE "D" ; cRet += iif(Empty(aData[ nI ]), "", DToC( aData[ nI ] )); EXIT
       ENDSWITCH
    NEXT
 

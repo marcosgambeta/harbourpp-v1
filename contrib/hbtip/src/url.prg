@@ -111,7 +111,7 @@ METHOD SetAddress( cUrl ) CLASS TUrl
    ENDIF
 
    // Top-level URL parsing. May fail.
-   IF Empty( aMatch := hb_regex( ::cREuri, cUrl ) )
+   IF Empty(aMatch := hb_regex( ::cREuri, cUrl ))
       RETURN .F.
    ENDIF
 
@@ -145,7 +145,7 @@ METHOD BuildAddress() CLASS TUrl
       ::cProto := Lower( ::cProto )
    ENDIF
 
-   IF ! Empty( ::cProto ) .AND. ! ::cServer == ""
+   IF ! Empty(::cProto) .AND. ! ::cServer == ""
       cRet := ::cProto + "://"
    ENDIF
 

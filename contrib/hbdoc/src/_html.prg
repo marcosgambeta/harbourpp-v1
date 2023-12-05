@@ -263,7 +263,7 @@ METHOD PROCEDURE WriteEntry( cField, cContent, lPreformatted ) CLASS GenerateHTM
    LOCAL cLine
    LOCAL lCode, lTable, lTablePrev, cHeaderClass
 
-   IF ! Empty( cContent )
+   IF ! Empty(cContent)
 
       cTagClass := hb_HGetDef( s_class, cField, "d-it" )
 
@@ -483,23 +483,23 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
                tmp++
                cChar := cNext
             CASE ! lPR .AND. cChar == "*" .AND. ! lIT .AND. ;
-                 iif(lEM, ! Empty( cPrev ) .AND. Empty( cNext ), Empty( cPrev ) .AND. ! Empty( cNext ))
+                 iif(lEM, ! Empty(cPrev) .AND. Empty(cNext), Empty(cPrev) .AND. ! Empty(cNext))
                lEM := ! lEM
                IF lEM
                   nEM := Len( cOut ) + 1
                ENDIF
                cChar := iif(lEM, "<strong>", "</strong>")
             CASE ! lPR .AND. cChar == "_" .AND. ! lEM .AND. ;
-                 ( ( ! lIT .AND. Empty( cPrev ) .AND. ! Empty( cNext ) ) .OR. ;
-                   (   lIT .AND. ! Empty( cPrev ) .AND. Empty( cNext ) ) )
+                 ( ( ! lIT .AND. Empty(cPrev) .AND. ! Empty(cNext) ) .OR. ;
+                   (   lIT .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
                lIT := ! lIT
                IF lIT
                   nIT := Len( cOut ) + 1
                ENDIF
                cChar := iif(lIT, "<i>", "</i>")
             CASE cChar == "`" .AND. ;
-                 ( ( ! lPR .AND. Empty( cPrev ) .AND. ! Empty( cNext ) ) .OR. ;
-                   (   lPR .AND. ! Empty( cPrev ) .AND. Empty( cNext ) ) )
+                 ( ( ! lPR .AND. Empty(cPrev) .AND. ! Empty(cNext) ) .OR. ;
+                   (   lPR .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
                lPR := ! lPR
                IF lPR
                   nPR := Len( cOut ) + 1
@@ -560,7 +560,7 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
       ENDIF
 
       FOR EACH idx IN hb_ATokens( hb_defaultValue( cFormat, "" ), "," ) DESCEND
-         IF ! Empty( idx )
+         IF ! Empty(idx)
             cText := "<" + idx + ">" + cText + "</" + idx + ">"
          ENDIF
       NEXT

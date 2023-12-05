@@ -217,7 +217,7 @@ METHOD MakePrimaryKeyWhere() CLASS TMySQLRow
       IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
          hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG ) == MULTIPLE_KEY_FLAG
 
-         IF ! Empty( cWhere )
+         IF ! Empty(cWhere)
             cWhere += " AND "
          ENDIF
 
@@ -232,7 +232,7 @@ METHOD MakePrimaryKeyWhere() CLASS TMySQLRow
       ENDIF
    NEXT
 
-   IF ! Empty( cWhere )
+   IF ! Empty(cWhere)
       cWhere := " WHERE " + cWhere
    ENDIF
 
@@ -319,7 +319,7 @@ METHOD New( nSocket, cQuery ) CLASS TMySQLQuery
    IF mysql_query( nSocket, cQuery ) == 0
 
       // save result set
-      IF ! Empty( ::nResultHandle := mysql_store_result( nSocket ) )
+      IF ! Empty(::nResultHandle := mysql_store_result( nSocket ))
 
          ::nNumRows := mysql_num_rows( ::nResultHandle )
          ::nNumFields := mysql_num_fields( ::nResultHandle )
@@ -387,7 +387,7 @@ METHOD Skip( nRows ) CLASS TMySQLQuery
    // NOTE: MySQL row count starts from 0
    hb_default( @nRows, 1 )
 
-   ::lBof := Empty( ::LastRec() )
+   ::lBof := Empty(::LastRec())
 
    IF nRows == 0
       // No move
@@ -433,7 +433,7 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
 
    IF ::nResultHandle != NIL
 
-      ::lBof := ( Empty( ::LastRec() ) )
+      ::lBof := ( Empty(::LastRec()) )
 
       IF nRow < 1 .OR. nRow > ::LastRec()  // Out of range
          // Equal to Clipper behaviour
@@ -487,7 +487,7 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
                EXIT
 
             CASE MYSQL_TYPE_DATE
-               IF Empty( ::aRow[ i ] )
+               IF Empty(::aRow[ i ])
                   ::aRow[ i ] := hb_SToD()
                ELSE
                   // Date format YYYY-MM-DD
@@ -1156,7 +1156,7 @@ METHOD MakePrimaryKeyWhere() CLASS TMySQLTable
       IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
          hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG ) == MULTIPLE_KEY_FLAG
 
-         IF ! Empty( cWhere )
+         IF ! Empty(cWhere)
             cWhere += " AND "
          ENDIF
 
@@ -1164,7 +1164,7 @@ METHOD MakePrimaryKeyWhere() CLASS TMySQLTable
       ENDIF
    NEXT
 
-   IF ! Empty( cWhere )
+   IF ! Empty(cWhere)
       cWhere := " WHERE " + cWhere
    ENDIF
 
@@ -1221,7 +1221,7 @@ METHOD New( cServer, cUser, cPassword, nPort, nFlags ) CLASS TMySQLServer
    ::nSocket := mysql_real_connect( cServer, cUser, cPassword, nPort, nFlags )
    ::lError := .F.
 
-   IF Empty( ::nSocket )
+   IF Empty(::nSocket)
       ::lError := .T.
    ENDIF
 
@@ -1442,14 +1442,14 @@ METHOD Query( cQuery ) CLASS TMySQLServer
    i := 1
    nNumTables := 1
 
-   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "FROM" ) .AND. ! Empty( cToken )
+   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "FROM" ) .AND. ! Empty(cToken)
    ENDDO
 
    // first token after "FROM" is a table name
    // NOTE: SubSelects ?
    cTableName := hb_tokenGet( cUpperQuery, i++, " " )
 
-   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "WHERE" ) .AND. ! Empty( cToken )
+   DO WHILE !( ( cToken := hb_tokenGet( cUpperQuery, i++, " " ) ) == "WHERE" ) .AND. ! Empty(cToken)
       // do we have more than one table referenced ?
       IF cToken == "," .OR. cToken == "JOIN"
          nNumTables++
@@ -1472,7 +1472,7 @@ METHOD Error() CLASS TMySQLServer
 
    ::lError := .F.
 
-   RETURN iif(Empty( ::nSocket ), "No connection to server", mysql_error( ::nSocket ))
+   RETURN iif(Empty(::nSocket), "No connection to server", mysql_error( ::nSocket ))
 
 METHOD ListDBs() CLASS TMySQLServer
    RETURN mysql_list_dbs( ::nSocket )
@@ -1495,7 +1495,7 @@ METHOD TableStruct( cTable ) CLASS TMySQLServer
    aStruct := {}
    nRes := mysql_list_fields( ::nSocket, cTable )
 
-   IF ! Empty( nRes )
+   IF ! Empty(nRes)
       FOR i := 1 TO mysql_num_fields( nRes )
 
          aField := mysql_fetch_field( nRes )
@@ -1564,7 +1564,7 @@ STATIC FUNCTION ClipValue2SQL( Value )
       RETURN hb_ntos( Value )
 
    CASE "D"
-      IF Empty( Value )
+      IF Empty(Value)
          RETURN "''"
       ELSE
          /* MySQL dates are like YYYY-MM-DD */
@@ -1573,7 +1573,7 @@ STATIC FUNCTION ClipValue2SQL( Value )
 
    CASE "C"
    CASE "M"
-      IF Empty( Value )
+      IF Empty(Value)
          RETURN "''"
       ELSE
          RETURN "'" + mysql_escape_string( value ) + "'"

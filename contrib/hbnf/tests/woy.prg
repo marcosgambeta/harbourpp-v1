@@ -15,7 +15,7 @@ PROCEDURE Main()
       @ 2, 24 GET dDate
       READ
 
-      IF Empty( dDate )
+      IF Empty(dDate)
          EXIT
       ENDIF
 

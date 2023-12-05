@@ -32,7 +32,7 @@ PROCEDURE path_debug( hCairo, nTolerance )
 
    cairo_save( hCairo )
 
-   IF Empty( nTolerance )
+   IF Empty(nTolerance)
       hPath := cairo_copy_path( hCairo )
    ELSE
       cairo_save( hCairo )

@@ -225,7 +225,7 @@ FUNCTION myerrhandler( oerr )
       ? "    Error handler can substitute return value, so please"
       ACCEPT "    type in return value <Return for default>: " TO cInput
 
-      IF Empty( cInput )
+      IF Empty(cInput)
          ? "    You have chosen the default return value. Ok, this should "
          ? "    be now problem, since the last digit of err:subCode indicates"
          ? "    the type of the return value:"

@@ -872,7 +872,7 @@ METHOD WvgCrt:resize( xParam )
       ::sl_resize := xParam
       RETURN NIL
    ENDIF
-   IF Empty( xParam )
+   IF Empty(xParam)
       ::sendMessage( WIN_WM_SIZE, 0, 0 )
    ENDIF
 

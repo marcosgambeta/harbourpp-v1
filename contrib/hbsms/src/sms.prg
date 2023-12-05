@@ -74,7 +74,7 @@ FUNCTION sms_Send( cPort, cPhoneNo, cText, lNotification, cPIN )
    LOCAL smsctx
    LOCAL nRetVal
 
-   IF ! Empty( smsctx := smsctx_New( cPort ) )
+   IF ! Empty(smsctx := smsctx_New( cPort ))
       smsctx_PIN( smsctx, cPIN )
       nRetVal := smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
       smsctx_Close( smsctx )
@@ -89,7 +89,7 @@ FUNCTION sms_ReceiveAll( cPort, cPIN )
    LOCAL smsctx
    LOCAL aRetVal
 
-   IF ! Empty( smsctx := smsctx_New( cPort ) )
+   IF ! Empty(smsctx := smsctx_New( cPort ))
       smsctx_PIN( smsctx, cPIN )
       aRetVal := smsctx_Receive( smsctx )
       smsctx_Close( smsctx )
@@ -164,7 +164,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
       port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr( 13 ) )
       IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK"
 
-         IF ! Empty( smsctx[ _SMSCTX_cPIN ] )
+         IF ! Empty(smsctx[ _SMSCTX_cPIN ])
             port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CPIN="' + smsctx[ _SMSCTX_cPIN ] + '"' + Chr( 13 ) )
             IF !( StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK" )
                RETURN -5
@@ -261,7 +261,7 @@ STATIC FUNCTION IsOK( cString )
 
    LOCAL tmp := GetLines( cString )
 
-   RETURN ! Empty( tmp ) .AND. ATail( tmp ) == "OK"
+   RETURN ! Empty(tmp) .AND. ATail( tmp ) == "OK"
 
 STATIC FUNCTION GetLines( cString )
 

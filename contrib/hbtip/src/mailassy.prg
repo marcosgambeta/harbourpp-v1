@@ -77,10 +77,10 @@ FUNCTION tip_MailAssemble( ;
    LOCAL cCharsetCP
    LOCAL tmp
 
-   IF Empty( cFrom ) .OR. ! HB_ISSTRING( cFrom )
+   IF Empty(cFrom) .OR. ! HB_ISSTRING( cFrom )
       RETURN ""
    ENDIF
-   IF Empty( xTo ) .OR. ( ! HB_ISSTRING( xTo ) .AND. ! HB_ISARRAY( xTo ) )
+   IF Empty(xTo) .OR. ( ! HB_ISSTRING( xTo ) .AND. ! HB_ISARRAY( xTo ) )
       RETURN ""
    ENDIF
 
@@ -110,7 +110,7 @@ FUNCTION tip_MailAssemble( ;
    ENDIF
 
    /* Convert input to the CP of the email */
-   IF ! Empty( cCharsetCP )
+   IF ! Empty(cCharsetCP)
       xTo := s_TransCP( xTo, cCharsetCP )
       xCC := s_TransCP( xCC, cCharsetCP )
       cFrom := s_TransCP( cFrom, cCharsetCP )
@@ -121,7 +121,7 @@ FUNCTION tip_MailAssemble( ;
    oMail := TIPMail():New()
    oMail:SetEncoder( cEncoding )
    oMail:SetCharset( cCharset )
-   IF Empty( aFiles )
+   IF Empty(aFiles)
       oMail:hHeaders[ "Content-Type" ] := cContentType
       oMail:SetBody( cBody )
    ELSE
@@ -199,7 +199,7 @@ FUNCTION tip_MailAssemble( ;
 
    oMail:SetHeader( cSubject, cFrom, xTo, xCC )
    oMail:hHeaders[ "Date" ] := tip_TimeStamp()
-   IF ! Empty( cReplyTo )
+   IF ! Empty(cReplyTo)
       oMail:hHeaders[ "Reply-to" ] := cReplyTo
    ENDIF
    IF lRead
@@ -215,7 +215,7 @@ STATIC FUNCTION s_TransCP( xData, cCP )
 
    LOCAL tmp
 
-   IF ! Empty( cCP )
+   IF ! Empty(cCP)
       DO CASE
       CASE HB_ISSTRING( xData )
          RETURN hb_Translate( xData,, cCP )

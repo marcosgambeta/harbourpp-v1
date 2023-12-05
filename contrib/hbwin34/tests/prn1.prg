@@ -7,7 +7,7 @@ PROCEDURE Main( cPar1 )
    LOCAL cBMPFile := Space( 256 )
    LOCAL GetList := {}
 
-   IF Empty( aPrn := win_printerList() )
+   IF Empty(aPrn := win_printerList())
       Alert( "No printers installed - Cannot continue" )
    ELSE
       DO WHILE nPrn > 0
@@ -139,7 +139,7 @@ STATIC PROCEDURE PrintBitmap( oPrn, cBitFile )
 
    LOCAL oBMP
 
-   IF ! Empty( cBitFile )
+   IF ! Empty(cBitFile)
       IF hb_vfExists( cBitFile )
          oBMP := win_BMP():New()
          IF oBmp:loadFile( cBitFile )

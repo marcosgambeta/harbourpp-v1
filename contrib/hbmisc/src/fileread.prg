@@ -105,7 +105,7 @@ METHOD ReadLine() CLASS TFileRead
          // have enough characters to discriminate between the three types
          // of end of line conditions that the class recognizes (see below).
          cLine := FReadStr( ::nHan, ::nReadSize )
-         IF Empty( cLine )
+         IF Empty(cLine)
             // There was nothing more to be read. Why? (Error or EOF.)
             ::nError := FError()
             IF ::nError == 0
@@ -210,7 +210,7 @@ METHOD MoreToRead() CLASS TFileRead
    // Returns .T. if there is more to be read from either the file or the
    // readahead buffer. Only when both are exhausted is there no more to read.
 
-   RETURN ! ::lEOF .OR. ! Empty( ::cBuffer )
+   RETURN ! ::lEOF .OR. ! Empty(::cBuffer)
 
 METHOD Error() CLASS TFileRead
 
@@ -241,7 +241,7 @@ METHOD ErrorMsg( cText ) CLASS TFileRead
       ELSE
          nTemp := ::nLastOp + 1
       ENDIF
-      cMessage := iif(Empty( cText ), "", cText) + "Error " + hb_ntos( ::nError ) + " " + sc_cAction[ nTemp ] + " " + ::cFile
+      cMessage := iif(Empty(cText), "", cText) + "Error " + hb_ntos( ::nError ) + " " + sc_cAction[ nTemp ] + " " + ::cFile
    ENDIF
 
    RETURN cMessage

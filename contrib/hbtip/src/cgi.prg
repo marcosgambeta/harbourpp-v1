@@ -114,7 +114,7 @@ METHOD New() CLASS TIPCgi
             ENDIF
          NEXT
       ENDIF
-   ELSEIF ! Empty( cTemp := GetEnv( "QUERY_STRING" ) )
+   ELSEIF ! Empty(cTemp := GetEnv( "QUERY_STRING" ))
       FOR EACH item IN hb_ATokens( cTemp, "&" )
          IF Len( aVar := hb_ATokens( item, "=" ) ) == 2
             ::hGets[ AllTrim( tip_URLDecode( aVar[ 1 ] ) ) ] := tip_URLDecode( aVar[ 2 ] )
@@ -122,7 +122,7 @@ METHOD New() CLASS TIPCgi
       NEXT
    ENDIF
 
-   IF ! Empty( cTemp := GetEnv( "HTTP_COOKIE" ) )
+   IF ! Empty(cTemp := GetEnv( "HTTP_COOKIE" ))
       FOR EACH item IN hb_ATokens( cTemp, ";" )
          IF Len( aVar := hb_ATokens( item, "=" ) ) == 2
             ::hCookies[ AllTrim( tip_URLDecode( aVar[ 1 ] ) ) ] := tip_URLDecode( aVar[ 2 ] )
@@ -134,7 +134,7 @@ METHOD New() CLASS TIPCgi
 
 METHOD Header( cValue ) CLASS TIPCgi
 
-   IF HB_ISSTRING( cValue ) .AND. ! Empty( cValue )
+   IF HB_ISSTRING( cValue ) .AND. ! Empty(cValue)
       ::cCgiHeader += cValue + _CRLF
    ELSE
       ::cCgiHeader += "Content-Type: text/html" + _CRLF
@@ -144,7 +144,7 @@ METHOD Header( cValue ) CLASS TIPCgi
 
 METHOD Redirect( cUrl ) CLASS TIPCgi
 
-   IF HB_ISSTRING( cUrl ) .AND. ! Empty( cUrl )
+   IF HB_ISSTRING( cUrl ) .AND. ! Empty(cUrl)
       ::cCgiHeader += "Location: " + cUrl + _CRLF
    ENDIF
 
@@ -176,7 +176,7 @@ METHOD Flush() CLASS TIPCgi
    ::cCgiHeader := ""
    ::cHtmlPage := ""
 
-   IF ! Empty( ::cSID )
+   IF ! Empty(::cSID)
 
       cFile := hb_DirSepAdd( ::cSessionSavePath ) + "SESSIONID_" + ::cSID
 
@@ -203,7 +203,7 @@ METHOD StartSession( cSID ) CLASS TIPCgi
    LOCAL nFileSize
    LOCAL cBuffer
 
-   IF ! HB_ISSTRING( cSID ) .OR. Empty( cSID )
+   IF ! HB_ISSTRING( cSID ) .OR. Empty(cSID)
       DO CASE
       CASE hb_HGetRef( ::hGets, "SESSIONID", @cSID )
       CASE hb_HGetRef( ::hPosts, "SESSIONID", @cSID )
@@ -215,7 +215,7 @@ METHOD StartSession( cSID ) CLASS TIPCgi
       ::cSessionSavePath := hb_DirTemp()
    ENDIF
 
-   IF ! Empty( cSID )
+   IF ! Empty(cSID)
 
       ::cSID := cSID
 
@@ -257,13 +257,13 @@ METHOD DestroySession( cID ) CLASS TIPCgi
    LOCAL cSID
    LOCAL lOk
 
-   IF HB_ISSTRING( cID ) .AND. ! Empty( cID )
+   IF HB_ISSTRING( cID ) .AND. ! Empty(cID)
       cSID := cID
    ELSE
       cSID := ::cSID
    ENDIF
 
-   IF ! Empty( cSID )
+   IF ! Empty(cSID)
 
       ::hSession := { => }
 
@@ -300,7 +300,7 @@ METHOD PROCEDURE ErrHandler( xError ) CLASS TIPCgi
    ENDCASE
 
    nCalls := 0
-   DO WHILE ! Empty( ProcName( ++nCalls ) )
+   DO WHILE ! Empty(ProcName( ++nCalls ))
       cErrMsg += "<tr><td>PROC/LINE:</td><td>" + ProcName( nCalls ) + "/" + hb_ntos( ProcLine( nCalls ) ) + "</td></tr>"
    ENDDO
 
@@ -347,7 +347,7 @@ STATIC FUNCTION HtmlTag( xVal, cKey, cDefault )
 
    LOCAL cVal
 
-   IF HB_ISHASH( xVal ) .AND. ! Empty( cKey ) .AND. cKey $ xVal
+   IF HB_ISHASH( xVal ) .AND. ! Empty(cKey) .AND. cKey $ xVal
       cVal := xVal[ cKey ]
       hb_HDel( xVal, cKey )
    ELSE
@@ -369,7 +369,7 @@ STATIC FUNCTION HtmlOption( xVal, cKey, cPre, cPost, lScan )
    LOCAL cVal := ""
 
    IF HB_ISHASH( xVal )
-      IF Empty( cKey )
+      IF Empty(cKey)
          cVal := xVal
       ELSEIF cKey $ xVal
          cVal := xVal[ cKey ]

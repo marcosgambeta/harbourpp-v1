@@ -57,7 +57,7 @@ FUNCTION EditorNew( nTop, nLeft, nBottom, nRight, nLength, ;
    hb_default( @nLength, 80 )
 
    pEdit := ed_New( nLength, 4, nSize, nEscape )
-   IF ! Empty( pEdit )
+   IF ! Empty(pEdit)
 
       __defaultNIL( @cFrame, HB_B_DOUBLE_UNI )
       __defaultNIL( @cColor, "W/N,W+/N,W+/R,GR+/N,G+/N" )
@@ -444,11 +444,11 @@ STATIC FUNCTION EditorSave( oEdit )
    LOCAL nHandle, cFile
 
    cFile := EditorCargo( oEdit )
-   IF Empty( cFile )
+   IF Empty(cFile)
       cFile := "testfile.txt"     // GetFileName( 10, 10 )
    ENDIF
 
-   IF Empty( cFile )
+   IF Empty(cFile)
       RETURN .F.
    ENDIF
 

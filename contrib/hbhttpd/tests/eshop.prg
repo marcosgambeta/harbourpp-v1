@@ -144,7 +144,7 @@ STATIC FUNCTION proc_login()
       ordSetFocus( "user" )
       cUser := PadR( hb_HGetDef( post, "user", "" ), 16 )
       USessionStart()
-      IF ! Empty( cUser ) .AND. dbSeek( cUser, .F. ) .AND. ! Deleted() .AND. ;
+      IF ! Empty(cUser) .AND. dbSeek( cUser, .F. ) .AND. ! Deleted() .AND. ;
             PadR( hb_HGetDef( post, "password", "" ), 16 ) == FIELD->PASSWORD
          session[ "user" ] := cUser
          URedirect( "main" )
@@ -309,16 +309,16 @@ STATIC FUNCTION proc_account_edit()
       cName := hb_HGetDef( post, "name", "" )
       cPassword1 := hb_HGetDef( post, "password1", "" )
       cPassword2 := hb_HGetDef( post, "password2", "" )
-      IF Empty( cName )
+      IF Empty(cName)
          session[ "formdata_account/edit" ] := { "name" => cName }
          URedirect( "?err=1" )
-      ELSEIF ( ! Empty( cPassword1 ) .OR. ! Empty( cPassword2 ) ) .AND. ! ( cPassword1 == cPassword2 )
+      ELSEIF ( ! Empty(cPassword1) .OR. ! Empty(cPassword2) ) .AND. ! ( cPassword1 == cPassword2 )
          session[ "formdata_account/edit" ] := { "name" => cName }
          URedirect( "?err=2" )
       ELSE
          FLock()
          FIELD->NAME := cName
-         IF ! Empty( cPassword1 )
+         IF ! Empty(cPassword1)
             FIELD->PASSWORD := cPassword1
          ENDIF
          dbUnlock()
@@ -360,7 +360,7 @@ STATIC FUNCTION proc_register()
       cPassword1 := hb_HGetDef( post, "password1", "" )
       cPassword2 := hb_HGetDef( post, "password2", "" )
 
-      IF Empty( cUser ) .OR. Empty( cName ) .OR. Empty( cPassword1 ) .OR. Empty( cPassword2 )
+      IF Empty(cUser) .OR. Empty(cName) .OR. Empty(cPassword1) .OR. Empty(cPassword2)
          session[ "formdata_register" ] := { "user" => cUser, "name" => cName }
          URedirect( "?err=1" )
       ELSEIF ! cPassword1 == cPassword2

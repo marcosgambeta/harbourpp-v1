@@ -124,7 +124,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
    /* if GetList is empty, then READ session is already ended
       this should not be happening! */
 
-   IF Empty( GetList )
+   IF Empty(GetList)
       MyAlert( "Bad practice: you left an active combobox, but READ already ended" )
       RETURN  // ignore this event
    ENDIF
@@ -236,7 +236,7 @@ STATIC PROCEDURE CBreader( oGet )
 
    CASE nKeyStd == K_LBUTTONDOWN .OR. nKeyStd == K_LDBLCLK
       // is there any GET object hit?
-      IF Empty( HitTest( oGetList:aGetList, MRow(), MCol() ) )
+      IF Empty(HitTest( oGetList:aGetList, MRow(), MCol() ))
          oGet:exitState := GE_NOEXIT
       ELSE
          oGet:exitState := GE_MOUSEHIT

@@ -69,7 +69,7 @@ PROCEDURE Main( ... )
    ENDIF
 
    hb_FNameSplit( aWild[ 1 ], @cPath, @cFileName, @cExt )
-   IF Empty( cExt )
+   IF Empty(cExt)
       cExt := ".zip"
    ENDIF
    cFileName := hb_FNameMerge( cPath, cFileName, cExt )
@@ -88,11 +88,11 @@ PROCEDURE Main( ... )
 
    hUnzip := hb_unzipOpen( cFileName )
 
-   IF ! Empty( hUnzip )
+   IF ! Empty(hUnzip)
       ? "Archive file:", cFileName
       hb_unzipGlobalInfo( hUnzip, @nSize, @cComment )
       ? "Number of entries:", nSize
-      IF ! Empty( cComment )
+      IF ! Empty(cComment)
          ? "global comment:", cComment
       ENDIF
       ? ""
@@ -102,7 +102,7 @@ PROCEDURE Main( ... )
       DO WHILE nErr == 0
          hb_unzipFileInfo( hUnzip, @cFile, @dDate, @cTime, , , , @nSize, @nCompSize, @lCrypted, @cComment )
          ? PadR( cFile + iif(lCrypted, "*", ""), 30 ), DToC( dDate ), cTime, nSize, nCompSize
-         IF ! Empty( cComment )
+         IF ! Empty(cComment)
             ? "comment:", cComment
          ENDIF
 

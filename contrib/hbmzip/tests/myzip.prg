@@ -73,7 +73,7 @@ PROCEDURE Main( ... )
    ENDIF
 
    hb_FNameSplit( aWild[ 1 ], @cPath, @cFileName, @cExt )
-   IF Empty( cExt )
+   IF Empty(cExt)
       cExt := ".zip"
    ENDIF
    cZipName := hb_FNameMerge( cPath, cFileName, cExt )
@@ -82,13 +82,13 @@ PROCEDURE Main( ... )
 
    FOR tmp := Len( aWild ) - 1 TO 1 STEP -1
       IF Lower( aWild[ tmp ] ) == "--pass"
-         IF Empty( cPassword )
+         IF Empty(cPassword)
             cPassword := aWild[ tmp + 1 ]
          ENDIF
          aWild[ tmp ] := ""
          aWild[ tmp + 1 ] := ""
       ELSEIF Lower( aWild[ tmp ] ) == "--comment"
-         IF Empty( cComment )
+         IF Empty(cComment)
             cComment := aWild[ tmp + 1 ]
          ENDIF
          aWild[ tmp ] := ""
@@ -99,10 +99,10 @@ PROCEDURE Main( ... )
    NEXT
 
    hZip := hb_zipOpen( cZipName )
-   IF ! Empty( hZip )
+   IF ! Empty(hZip)
       ? "Archive file:", cZipName
       FOR EACH cWild IN aWild
-         IF ! Empty( cWild )
+         IF ! Empty(cWild)
             hb_FNameSplit( cWild, @cPath, @cFileName, @cExt )
             aDir := hb_DirScan( cPath, cFileName + cExt )
             FOR EACH aFile IN aDir

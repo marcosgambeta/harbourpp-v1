@@ -71,7 +71,7 @@ FUNCTION tp_baud( nPort, nNewBaud )
 
    hb_default( @nNewBaud, 0 )
 
-   IF ! isport( nPort ) .OR. Empty( t_aPorts[ nPort, TPFP_NAME ] )
+   IF ! isport( nPort ) .OR. Empty(t_aPorts[ nPort, TPFP_NAME ])
       RETURN TE_NOPORT
    ENDIF
 
@@ -138,7 +138,7 @@ FUNCTION tp_reopen( nPort, nInSize, nOutSize )
 
    LOCAL nBaud, nData, cParity, nStop, cPortName
 
-   IF ! isport( nPort ) .OR. Empty( t_aPorts[ nPort, TPFP_NAME ] )
+   IF ! isport( nPort ) .OR. Empty(t_aPorts[ nPort, TPFP_NAME ])
       RETURN TE_NOPORT
    ENDIF
 

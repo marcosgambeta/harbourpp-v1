@@ -853,7 +853,7 @@ STATIC FUNCTION IsBadDate( cBuffer ) // , cPicFunc )
 
    LOCAL cBuffer2
 
-   IF Empty( cBuffer )
+   IF Empty(cBuffer)
       RETURN .F.
    ENDIF
 
@@ -867,11 +867,11 @@ STATIC FUNCTION IsBadDate( cBuffer ) // , cPicFunc )
    cBuffer2 := StrTran( cBuffer2, "-" )
    cBuffer2 := StrTran( cBuffer2, "." )
 
-   IF Empty( cBuffer2 )
+   IF Empty(cBuffer2)
       RETURN .F.
    ENDIF
 
-   IF Empty( CToD( cBuffer ) )
+   IF Empty(CToD( cBuffer ))
       MyMessageBox( NIL, "'" + cBuffer + "' is not a valid DATE" )
       RETURN .T.
    ENDIF

@@ -58,12 +58,12 @@ PROCEDURE Main( cURL, cFile )
 
    ? "Harbour - TIP (class based internet client protocol) test"
 
-   IF ! HB_ISSTRING( cURL ) .OR. Empty( cURL )
+   IF ! HB_ISSTRING( cURL ) .OR. Empty(cURL)
       ? hb_StrFormat( "Usage: %1$s <URI> [dumpToOrFromFileName]", hb_ProgName() )
       RETURN
    ENDIF
 
-   IF Empty( oURL := TUrl():New( cURL ) )
+   IF Empty(oURL := TUrl():New( cURL ))
       ? "Invalid URL", cURL
       RETURN
    ENDIF
@@ -86,7 +86,7 @@ PROCEDURE Main( cURL, cFile )
       EXIT
    ENDSWITCH
 
-   IF Empty( oClient )
+   IF Empty(oClient)
       ? "Invalid URL", cURL
       RETURN
    ENDIF
@@ -96,7 +96,7 @@ PROCEDURE Main( cURL, cFile )
 
    ? "Connecting to", oURL:cProto + "://" + oURL:cServer
    IF oClient:Open()
-      ? "Connection status:", iif(Empty( oClient:cReply ), "<connected>", oClient:cReply)
+      ? "Connection status:", iif(Empty(oClient:cReply), "<connected>", oClient:cReply)
 
       IF HB_ISSTRING( cFile ) .AND. hb_LeftEq( cFile, "+" )
          cFile := SubStr( cFile, 2 )
@@ -132,10 +132,10 @@ PROCEDURE Main( cURL, cFile )
       ENDIF
 
       oClient:Close()
-      ? "Done:", iif(Empty( oClient:cReply ), "(no goodbye message)", oClient:cReply)
+      ? "Done:", iif(Empty(oClient:cReply), "(no goodbye message)", oClient:cReply)
    ELSE
       ? "Could not open URI", cURL
-      IF ! Empty( oClient:cReply )
+      IF ! Empty(oClient:cReply)
          ? oClient:cReply
       ENDIF
    ENDIF

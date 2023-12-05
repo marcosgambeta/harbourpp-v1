@@ -470,7 +470,7 @@ FUNCTION DateToTxtRU( dDate, cLang, lWord )
    LOCAL aMsg := GetLangMsg( cLang )
    LOCAL cRetVal, nTemp
 
-   IF ! Empty( dDate )
+   IF ! Empty(dDate)
       nTemp := Day( dDate )
       IF lWord != NIL
          cRetVal := NumToStrRaw( nTemp, aMsg, NTSR_MIDD, .T. )
@@ -578,7 +578,7 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
             ENDIF
          ENDIF
          cTemp := TriToStr( nTemp, aMsg, iif(nTri == 0, nGender, iif(nTri == 1, 2, 1)), lOrd, @lLast, nTri ) + cTemp
-         IF ! Empty( cRetVal )
+         IF ! Empty(cRetVal)
             cRetVal := " " + cRetVal
          ENDIF
          cRetVal := cTemp + cRetVal

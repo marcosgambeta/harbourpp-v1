@@ -460,7 +460,7 @@ METHOD MatchCriteria( oFound ) CLASS THtmlIteratorScan
    IF ::cData != NIL
       xData := oFound:getText( " " )
       /* NOTE: != changed to ! == */
-      IF Empty( xData ) .OR. ! AllTrim( ::cData ) == AllTrim( xData )
+      IF Empty(xData) .OR. ! AllTrim( ::cData ) == AllTrim( xData )
          RETURN .F.
       ENDIF
    ENDIF
@@ -503,7 +503,7 @@ METHOD MatchCriteria( oFound ) CLASS THtmlIteratorRegex
 
    IF ::cData != NIL
       xData := oFound:getText( " " )
-      IF Empty( xData ) .OR. ! hb_regexHas( AllTrim( ::cData ), AllTrim( xData ) )
+      IF Empty(xData) .OR. ! hb_regexHas( AllTrim( ::cData ), AllTrim( xData ) )
          RETURN .F.
       ENDIF
    ENDIF
@@ -964,7 +964,7 @@ METHOD firstNode( lRoot ) CLASS THtmlNode
       RETURN ::parent:htmlContent[ 1 ]
    ENDIF
 
-   RETURN iif(Empty( ::htmlContent ), NIL, ::htmlContent[ 1 ])
+   RETURN iif(Empty(::htmlContent), NIL, ::htmlContent[ 1 ])
 
 // returns last node in subtree (.F.) or last node of entire tree (.T.)
 METHOD lastNode( lRoot ) CLASS THtmlNode
@@ -987,7 +987,7 @@ METHOD nextNode() CLASS THtmlNode
    ENDIF
 
    /* NOTE: != changed to ! == */
-   IF ! ::htmlTagName == "_text_" .AND. ! Empty( ::htmlContent )
+   IF ! ::htmlTagName == "_text_" .AND. ! Empty(::htmlContent)
       RETURN ::htmlContent[ 1 ]
    ENDIF
 
@@ -1412,7 +1412,7 @@ METHOD noAttribute( cName, aValue ) CLASS THtmlNode
       RETURN ::findNodesByTagName( hb_StrShrink( cName ), ATail( aValue ) )
    ENDIF
 
-   IF ! Empty( aValue )
+   IF ! Empty(aValue)
       RETURN ::setAttribute( cName, aValue[ 1 ] )
    ENDIF
 
@@ -4234,7 +4234,7 @@ FUNCTION ANSIToHtml( cAnsiText )
       nEnd  := parser:p_pos
       cText := SubStr( parser:p_str, nStart, nEnd - nStart )
 
-      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty( cChr ) .AND. parser:p_pos != 0
+      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty(cChr) .AND. parser:p_pos != 0
       ENDDO
 
       SWITCH cChr
@@ -4378,7 +4378,7 @@ FUNCTION tip_StrToHtml( cAnsiText )
       nEnd  := parser:p_pos
       cText := SubStr( parser:p_str, nStart, nEnd - nStart )
 
-      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty( cChr ) .AND. parser:p_pos != 0
+      DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty(cChr) .AND. parser:p_pos != 0
       ENDDO
 
       SWITCH cChr

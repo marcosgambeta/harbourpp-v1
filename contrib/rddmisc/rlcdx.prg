@@ -98,7 +98,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
       ENDIF
 
       xRecID := aLockInfo[ UR_LI_RECORD ]
-      IF Empty( xRecID )
+      IF Empty(xRecID)
          xRecID := RecNo()
       ENDIF
 

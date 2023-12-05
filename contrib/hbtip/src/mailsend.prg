@@ -101,10 +101,10 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    LOCAL oPop
 
    /* consider any empty values invalid */
-   IF Empty( cServer )
+   IF Empty(cServer)
       cServer := NIL
    ENDIF
-   IF Empty( nPort )
+   IF Empty(nPort)
       nPort := NIL
    ENDIF
 
@@ -122,11 +122,11 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    DO CASE
    CASE HB_ISARRAY( xTo )
       FOR tmp := Len( xTo ) TO 1 STEP -1
-         IF Empty( xTo[ tmp ] )
+         IF Empty(xTo[ tmp ])
             hb_ADel( xTo, tmp, .T. )
          ENDIF
       NEXT
-      IF Empty( xTo )
+      IF Empty(xTo)
          RETURN .F.
       ENDIF
       cTo := ""
@@ -144,7 +144,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    DO CASE
    CASE HB_ISARRAY( xCC )
       FOR tmp := Len( xCC ) TO 1 STEP -1
-         IF Empty( xCC[ tmp ] )
+         IF Empty(xCC[ tmp ])
             hb_ADel( xCC, tmp, .T. )
          ENDIF
       NEXT
@@ -163,7 +163,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    DO CASE
    CASE HB_ISARRAY( xBCC )
       FOR tmp := Len( xBCC ) TO 1 STEP -1
-         IF Empty( xBCC[ tmp ] )
+         IF Empty(xBCC[ tmp ])
             hb_ADel( xBCC, tmp, .T. )
          ENDIF
       NEXT
@@ -198,7 +198,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    ENDIF
 
    BEGIN SEQUENCE WITH __BreakBlock()
-      oUrl := TUrl():New( iif(lSSL, "smtps://", "smtp://") + cUser + iif(Empty( cSMTPPass ), "", ":" + cSMTPPass) + "@" + cServer )
+      oUrl := TUrl():New( iif(lSSL, "smtps://", "smtp://") + cUser + iif(Empty(cSMTPPass), "", ":" + cSMTPPass) + "@" + cServer )
    RECOVER
       RETURN .F.
    END SEQUENCE
@@ -208,8 +208,8 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
 
    oUrl:cFile := ;
       cTo + ;
-      iif(Empty( cCC ), "", "," + cCC) + ;
-      iif(Empty( cBCC ), "", "," + cBCC)
+      iif(Empty(cCC), "", "," + cCC) + ;
+      iif(Empty(cBCC), "", "," + cBCC)
 
    BEGIN SEQUENCE WITH __BreakBlock()
       oInmail := TIPClientSMTP():New( oUrl, xTrace,, cClientHost )

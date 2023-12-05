@@ -189,8 +189,8 @@ STATIC FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
    CASE WIN_WM_INITDIALOG
       wvg_SetTimer( hDlg, 5001, 1000 ) // 1 sec
 
-      IF Empty( aHFonts := SetFonts() )
-         IF ! Empty( hFont := wvt_CreateFont( "Times New Roman", 18 ) )
+      IF Empty(aHFonts := SetFonts())
+         IF ! Empty(hFont := wvt_CreateFont( "Times New Roman", 18 ))
             SetFonts( hFont )
          ENDIF
       ENDIF
@@ -199,10 +199,10 @@ STATIC FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
          wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_MLE ), WIN_WM_SETFONT, ahFonts[ 1 ], 0 )
       ENDIF
 
-      IF Empty( SetIcons() )
+      IF Empty(SetIcons())
          SetIcons( wvg_LoadIcon( "vr_1.ico" ) )
       ENDIF
-      IF ! Empty( SetIcons() )
+      IF ! Empty(SetIcons())
          wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, WIN_IMAGE_ICON, SetIcons()[ 1 ] )
       ENDIF
 
@@ -210,7 +210,7 @@ STATIC FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
       IF t_hImage == NIL
          t_hImage := wvg_LoadImage( "vouch1.bmp", 2 )
       ENDIF
-      IF t_hImage != NIL .AND. ! Empty( t_hImage )
+      IF t_hImage != NIL .AND. ! Empty(t_hImage)
          wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_STA_IMAGE ), STM_SETIMAGE, WIN_IMAGE_BITMAP, t_hImage )
       ENDIF
 #endif

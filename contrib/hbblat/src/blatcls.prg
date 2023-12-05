@@ -637,7 +637,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       // Attachment and encoding options --------
 
       // Attach Binary Files
-      IF ! Empty( ::aAttachBinFiles )
+      IF ! Empty(::aAttachBinFiles)
          IF HB_ISSTRING( ::cAttachBinFiles )
             ::cAttachBinFiles += ","
          ELSE
@@ -650,7 +650,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // Attach Text Files
-      IF ! Empty( ::aAttachTextFiles )
+      IF ! Empty(::aAttachTextFiles)
          IF HB_ISSTRING( ::cAttachTextFiles )
             ::cAttachTextFiles += ","
          ELSE
@@ -663,7 +663,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // Attach INLINE Files
-      IF ! Empty( ::aAttachInlineFiles )
+      IF ! Empty(::aAttachInlineFiles)
          IF HB_ISSTRING( ::cAttachInlineFiles )
             ::cAttachInlineFiles += ","
          ELSE
@@ -676,7 +676,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // Attach Html Embedded Files
-      IF ! Empty( ::aHtmlEmbeddedFiles )
+      IF ! Empty(::aHtmlEmbeddedFiles)
          IF HB_ISSTRING( ::cHtmlEmbeddedFiles )
             ::cHtmlEmbeddedFiles += ","
          ELSE

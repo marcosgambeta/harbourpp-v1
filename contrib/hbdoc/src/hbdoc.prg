@@ -146,7 +146,7 @@ PROCEDURE Main( ... )
       "in hbextern"         => {}, ;
       "not in hbextern"     => {} }
 
-   IF Empty( aArgs ) .OR. ;
+   IF Empty(aArgs) .OR. ;
       aArgs[ 1 ] == "-h" .OR. ;
       aArgs[ 1 ] == "--help"
       ShowHelp( , aArgs )
@@ -154,7 +154,7 @@ PROCEDURE Main( ... )
    ENDIF
 
    FOR EACH arg IN aArgs
-      IF ! Empty( arg )
+      IF ! Empty(arg)
          IF ( idx := At( "=", arg ) ) == 0
             cArgName := arg
             arg := ""
@@ -300,7 +300,7 @@ PROCEDURE Main( ... )
                oDocument:BeginSection( item:__enumKey(), oDocument:cFilename )
 
                FOR idx := 1 TO Len( item[ 2 ] )
-                  IF ! Empty( item[ 2 ][ idx ] )
+                  IF ! Empty(item[ 2 ][ idx ])
                      ASort( item[ 2 ][ idx ], , , {| oL, oR | oL:fld[ "NAME" ] <= oR:fld[ "NAME" ] } )
                      IF Len( item[ 1 ][ idx ] ) > 0
                         IF oIndex != NIL
@@ -309,7 +309,7 @@ PROCEDURE Main( ... )
                         oDocument:BeginSection( item[ 1 ][ idx ], oDocument:cFilename )
                      ENDIF
                      FOR EACH item4 IN item[ 2 ][ idx ]
-                        IF ! Empty( item4 )
+                        IF ! Empty(item4)
                            IF !( Right( item4:_sourcefile, Len( "1stread.txt" ) ) == "1stread.txt" )
                               IF oIndex != NIL
                                  oIndex:AddReference( item4 )
@@ -418,7 +418,7 @@ STATIC FUNCTION ProcessDocDir( cDir, cComponent, aContent )
       AddErrorCondition( cDir, tmp )
    NEXT
 
-   IF ! Empty( aEntry )
+   IF ! Empty(aEntry)
 
 #if 1
       hb_MemoWrit( "_" + aEntry[ 1 ][ "_COMPONENT" ] + ".json", hb_jsonEncode( aEntry, .t. ) )
@@ -579,7 +579,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
             EXIT
 
-         CASE ! Empty( o:fld[ cSectionName ] )
+         CASE ! Empty(o:fld[ cSectionName ])
 
             AddErrorCondition( cFile, "Duplicate " + cSectionName, .T. )
             lAccepted := .F.
@@ -592,7 +592,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
             ENDIF
 
          CASE o:IsField( "RETURNS" ) .AND. cSectionName == "RETURNS" .AND. ( ;
-               Empty( cSection ) .OR. ;
+               Empty(cSection) .OR. ;
                Lower( cSection ) == "nil" .OR. ;
                Lower( cSection ) == "none" .OR. ;
                Lower( cSection ) == "none." )
@@ -629,7 +629,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          lAccepted := .F.
 #endif
       CASE hEntry[ "TEMPLATE" ] == "Function" .AND. ( ;
-         Empty( o:fld[ "RETURNS" ] ) .OR. ;
+         Empty(o:fld[ "RETURNS"] ) .OR. ;
          Lower( o:fld[ "RETURNS" ] ) == "nil" .OR. ;
          Lower( o:fld[ "RETURNS" ] ) == "none" .OR. ;
          Lower( o:fld[ "RETURNS" ] ) == "none." )
@@ -764,7 +764,7 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
    LOCAL aHelp
 
    DO CASE
-   CASE Empty( aArgs ) .OR. Len( aArgs ) <= 1 .OR. Empty( aArgs[ 1 ] )
+   CASE Empty(aArgs) .OR. Len( aArgs ) <= 1 .OR. Empty(aArgs[ 1 ])
       aHelp := { ;
          cExtraMessage, ;
          "Harbour++ Document Compiler (hbdoc) " + HBRawVersion(), ;
@@ -871,7 +871,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
 
    IF nWidth == 0 .OR. lRaw
       idx := 99999
-      AEval( aText, {| c | iif(Empty( c ), , idx := Min( idx, Len( c ) - Len( LTrim( c ) ) )) } )
+      AEval( aText, {| c | iif(Empty(c), , idx := Min( idx, Len( c ) - Len( LTrim( c ) ) )) } )
       AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr( c, idx + 1 ) } )
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
@@ -1039,7 +1039,7 @@ METHOD IsComplete( cIncompleteFieldsList ) CLASS Entry
 
    FOR idx := 1 TO Len( sc_hFields )
       key := hb_HKeyAt( sc_hFields, idx )
-      IF hb_bitAnd( ::_group[ idx ], TPL_REQUIRED ) != 0 .AND. Empty( ::fld[ key ] )
+      IF hb_bitAnd( ::_group[ idx ], TPL_REQUIRED ) != 0 .AND. Empty(::fld[ key ])
          cIncompleteFieldsList += "," + key
          lResult := .F.
       ENDIF
@@ -1219,7 +1219,7 @@ STATIC PROCEDURE ShowTemplatesHelp( cTemplate, cDelimiter )
    LOCAL idxTemplates, nFrom := 1, nTo := Len( sc_hTemplates )
    LOCAL idx, key, fldkey, o
 
-   IF ! Empty( cTemplate ) .AND. !( cTemplate == "Template" )
+   IF ! Empty(cTemplate) .AND. !( cTemplate == "Template" )
       nFrom := nTo := hb_HPos( sc_hTemplates, cTemplate )
       IF nFrom == 0
          ShowHelp( "Unrecognized template '" + cTemplate + "'" )
@@ -1314,7 +1314,7 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
          "^DYNAMIC ([a-zA-Z0-9_]*)$", ;
          "ANNOUNCE ([a-zA-Z0-9_]*)$" }
 
-         IF ! Empty( pRegex := hb_regexComp( cFilter, .T., .T. ) )
+         IF ! Empty(pRegex := hb_regexComp( cFilter, .T., .T. ))
             FOR EACH tmp IN hb_regexAll( pRegex, StrTran( cFile, Chr( 13 ) ),,,,, .T. )
                IF tmp[ 2 ] $ hAll
                   hAll[ tmp[ 2 ] ] += "," + cName

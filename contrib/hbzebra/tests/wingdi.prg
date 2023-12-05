@@ -18,7 +18,7 @@ PROCEDURE Main()
       "dmOrientation" => WIN_DMORIENT_PORTRAIT } )
 
    hDC := wapi_CreateDC( NIL, "Microsoft XPS Document Writer", NIL, pDEVMODE )
-   IF ! Empty( hDC )
+   IF ! Empty(hDC)
 
       wapi_SetMapMode( hDC, WIN_MM_TEXT )
 
@@ -108,7 +108,7 @@ PROCEDURE DrawBarcode( hDC, nY, nLineWidth, cType, cCode, nFlags )
 
    IF hZebra != NIL
       IF hb_zebra_geterror( hZebra ) == 0
-         IF Empty( nLineHeight )
+         IF Empty(nLineHeight)
             nLineHeight := 16
          ENDIF
          wapi_TextOut( hDC,  40 * _SCALE_, nY, cType )

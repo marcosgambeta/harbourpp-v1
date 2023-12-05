@@ -219,7 +219,7 @@ FUNCTION WvtSetObjects( aObject )
    LOCAL oObjects := AClone( t_aObjects )
 
    IF aObject != NIL
-      IF Empty( aObject )
+      IF Empty(aObject)
          t_aObjects := {}
       ELSE
          IF HB_ISARRAY( aObject[ 1 ] )
@@ -333,7 +333,7 @@ FUNCTION SetFonts( hFont )
 
    THREAD STATIC t_ahFonts := {}
 
-   IF ! Empty( hFont )
+   IF ! Empty(hFont)
       AAdd( t_ahFonts, hFont )
    ENDIF
 
@@ -343,7 +343,7 @@ FUNCTION SetIcons( hIcon )
 
    THREAD STATIC t_ahIcons := {}
 
-   IF ! Empty( hIcon )
+   IF ! Empty(hIcon)
       AAdd( t_ahIcons, hIcon )
    ENDIF
 

@@ -12,7 +12,7 @@
 PROCEDURE Main()
    LOCAL pFile, cData, cBuffer, cResult, nLen, nDone
 
-   IF Empty( pFile := hb_vfOpenProcess( "gzip", FO_READWRITE, 1000 ) )
+   IF Empty(pFile := hb_vfOpenProcess( "gzip", FO_READWRITE, 1000 ))
       ? "Cannot open file."
    ELSE
 

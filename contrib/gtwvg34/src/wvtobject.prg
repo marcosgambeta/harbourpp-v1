@@ -278,7 +278,7 @@ METHOD WvtObject:CreatePopup()
 
    LOCAL i, nID
 
-   IF ! Empty( ::aPopup ) .AND. ::hPopup == NIL
+   IF ! Empty(::aPopup) .AND. ::hPopup == NIL
       ::hPopup := wapi_CreatePopupMenu()
 
       FOR EACH i IN ::aPopup
