@@ -224,7 +224,7 @@ HB_FUNC( AFILL )
                return;
             }
          }
-         HB_SIZE nStart = static_cast<HB_SIZE>(lStart);
+         auto nStart = static_cast<HB_SIZE>(lStart);
          nCount = static_cast<HB_SIZE>(lCount);
          hb_arrayFill(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
       }

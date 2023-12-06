@@ -89,7 +89,7 @@ void hb_winmainArgVBuild(void)
 {
 
    /* NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH */
-   LPTSTR lpModuleName = static_cast<LPTSTR>(HB_WINARG_ALLOC((MAX_PATH + 1) * sizeof(TCHAR)));
+   auto lpModuleName = static_cast<LPTSTR>(HB_WINARG_ALLOC((MAX_PATH + 1) * sizeof(TCHAR)));
    HB_SIZE nModuleName = GetModuleFileName(nullptr, lpModuleName, MAX_PATH + 1);
    if( nModuleName ) {
       nModuleName++;

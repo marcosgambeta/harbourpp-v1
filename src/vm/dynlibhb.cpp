@@ -134,7 +134,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
    }
 
    if( hDynLib ) {
-      void ** pLibPtr = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcDynlibFuncs));
+      auto pLibPtr = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcDynlibFuncs));
       *pLibPtr = hDynLib;
       return hb_itemPutPtrGC(nullptr, pLibPtr);
    }
@@ -145,7 +145,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 HB_BOOL hb_libFree(PHB_ITEM pDynLib)
 {
    auto fResult = false;
-   void ** pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
+   auto pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
 
    if( pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols() ) {
       void * hDynLib = *pDynLibPtr;
@@ -169,7 +169,7 @@ HB_BOOL hb_libFree(PHB_ITEM pDynLib)
 
 void * hb_libHandle(PHB_ITEM pDynLib)
 {
-   void ** pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
+   auto pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
    return pDynLibPtr ? *pDynLibPtr : nullptr;
 }
 

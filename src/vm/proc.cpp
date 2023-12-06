@@ -101,11 +101,11 @@ HB_FUNC( PROCFILE )
       HB_ISIZ nOffset = hb_stackBaseProcOffset(hb_parni(1) + 1);
 
       if( nOffset > 0 ) {
-         PHB_ITEM pBase = hb_stackItem(nOffset);
+         auto pBase = hb_stackItem(nOffset);
 
          pSym = pBase->item.asSymbol.value;
          if( pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym ) {
-            PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
+            auto pSelf = hb_stackItem(nOffset + 1);
 
             if( HB_IS_BLOCK(pSelf) ) {
                pSym = pSelf->item.asBlock.value->pDefSymb;
@@ -134,8 +134,8 @@ char * hb_procname(int iLevel, char * szName, HB_BOOL fMethodName)
 
    szName[0] = '\0';
    if( nOffset > 0 ) {
-      PHB_ITEM pBase = hb_stackItem(nOffset);
-      PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
+      auto pBase = hb_stackItem(nOffset);
+      auto pSelf = hb_stackItem(nOffset + 1);
 
       if( fMethodName && nOffset > 0 && pBase->item.asSymbol.value == &hb_symEval && pBase->item.asSymbol.stackstate->uiClass ) {
          HB_ISIZ nPrevOffset = hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem;
@@ -184,8 +184,8 @@ HB_BOOL hb_procinfo(int iLevel, char * szName, HB_USHORT * puiLine, char * szFil
    HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel);
 
    if( nOffset > 0 ) {
-      PHB_ITEM pBase = hb_stackItem(nOffset);
-      PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
+      auto pBase = hb_stackItem(nOffset);
+      auto pSelf = hb_stackItem(nOffset + 1);
 
       PHB_SYMB pSym = pBase->item.asSymbol.value;
 

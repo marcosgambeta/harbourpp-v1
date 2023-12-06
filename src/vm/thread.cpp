@@ -289,7 +289,7 @@ void hb_threadReleaseCPU(void)
 #if defined(HB_MT_VM) && defined(HB_COND_HARBOUR_SUPPORT)
 static PHB_WAIT_LIST _hb_thread_wait_list(void)
 {
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
+   auto pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
 
    if( pThread ) {
       return &pThread->pWaitList;
@@ -802,7 +802,7 @@ HB_BOOL hb_threadDetach(HB_THREAD_HANDLE th_h)
 HB_THREAD_NO hb_threadNO(void)
 {
 #if defined(HB_MT_VM)
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
+   auto pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
    if( pThread ) {
       return pThread->th_no;
    }
@@ -818,7 +818,7 @@ HB_THREAD_NO hb_threadNO(void)
 
 static HB_GARBAGE_FUNC(hb_threadDestructor)
 {
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(Cargo);
+   auto pThread = static_cast<PHB_THREADSTATE>(Cargo);
 
    if( pThread->pParams ) {
       hb_itemRelease(pThread->pParams);
@@ -861,7 +861,7 @@ static HB_GARBAGE_FUNC(hb_threadDestructor)
 
 static HB_GARBAGE_FUNC(hb_threadMark)
 {
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(Cargo);
+   auto pThread = static_cast<PHB_THREADSTATE>(Cargo);
 
    if( pThread->pResult ) {
       hb_gcMark(pThread->pResult);
@@ -880,10 +880,10 @@ static const HB_GC_FUNCS s_gcThreadFuncs =
 #if defined(HB_MT_VM)
 HB_CARGO_FUNC(hb_threadStartVM)
 {
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(cargo);
+   auto pThread = static_cast<PHB_THREADSTATE>(cargo);
    auto fSend = false;
 
-   HB_ULONG ulPCount = static_cast<HB_ULONG>(hb_arrayLen(pThread->pParams));
+   auto ulPCount = static_cast<HB_ULONG>(hb_arrayLen(pThread->pParams));
    if( ulPCount > 0 ) {
       auto pStart = hb_arrayGetItemPtr(pThread->pParams, 1);
 
@@ -929,7 +929,7 @@ HB_CARGO_FUNC(hb_threadStartVM)
 
 static HB_THREAD_STARTFUNC(hb_threadStartFunc)
 {
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(Cargo);
+   auto pThread = static_cast<PHB_THREADSTATE>(Cargo);
 
    hb_vmThreadInit(static_cast<void*>(pThread));
 
@@ -956,7 +956,7 @@ static HB_THREAD_STARTFUNC(hb_threadStartFunc)
 PHB_THREADSTATE hb_threadStateNew(void)
 {
    auto pThItm = hb_itemNew(nullptr);
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_gcAllocRaw(sizeof(HB_THREADSTATE), &s_gcThreadFuncs));
+   auto pThread = static_cast<PHB_THREADSTATE>(hb_gcAllocRaw(sizeof(HB_THREADSTATE), &s_gcThreadFuncs));
    memset(pThread, 0, sizeof(HB_THREADSTATE));
    hb_itemPutPtrRawGC(pThItm, pThread);
 
@@ -1016,7 +1016,7 @@ PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
 
 static PHB_THREADSTATE hb_thParam(int iParam, int iPos)
 {
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_parvptrGC(&s_gcThreadFuncs, iParam, iPos));
+   auto pThread = static_cast<PHB_THREADSTATE>(hb_parvptrGC(&s_gcThreadFuncs, iParam, iPos));
 
    if( pThread ) {
       return pThread;
@@ -1151,7 +1151,7 @@ HB_FUNC( HB_THREADSTART )
 HB_FUNC( HB_THREADSELF )
 {
 #if defined(HB_MT_VM)
-   PHB_THREADSTATE pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
+   auto pThread = static_cast<PHB_THREADSTATE>(hb_vmThreadState());
    /* It's possible that pThread will be nullptr and this function will
     * return NIL. It may happen only in one case when this function is
     * executed by one of destructors of items stored in thread pointer
@@ -1618,7 +1618,7 @@ void hb_threadMutexUnsubscribeAll(void)
 
 static HB_GARBAGE_FUNC(hb_mutexDestructor)
 {
-   PHB_MUTEX pMutex = static_cast<PHB_MUTEX>(Cargo);
+   auto pMutex = static_cast<PHB_MUTEX>(Cargo);
 
 #if defined(HB_MT_VM)
    HB_CRITICAL_LOCK(s_mutexlst_mtx);
@@ -1646,7 +1646,7 @@ static HB_GARBAGE_FUNC(hb_mutexDestructor)
 
 static HB_GARBAGE_FUNC(hb_mutexMark)
 {
-   PHB_MUTEX pMutex = static_cast<PHB_MUTEX>(Cargo);
+   auto pMutex = static_cast<PHB_MUTEX>(Cargo);
 
    if( pMutex->events ) {
       hb_gcMark(pMutex->events);
@@ -1679,7 +1679,7 @@ static PHB_ITEM hb_mutexParam(int iParam)
 PHB_ITEM hb_threadMutexCreate(void)
 {
    auto pItem = hb_itemNew(nullptr);
-   PHB_MUTEX pMutex = static_cast<PHB_MUTEX>(hb_gcAllocRaw(sizeof(HB_MUTEX), &s_gcMutexFuncs));
+   auto pMutex = static_cast<PHB_MUTEX>(hb_gcAllocRaw(sizeof(HB_MUTEX), &s_gcMutexFuncs));
    memset(pMutex, 0, sizeof(HB_MUTEX));
    pItem = hb_itemPutPtrRawGC(pItem, pMutex);
 

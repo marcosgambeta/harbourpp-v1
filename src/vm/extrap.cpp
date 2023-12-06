@@ -212,7 +212,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
 
       {
          hb_strncat(errmsg, "    CS:EIP:", errmsglen);
-         unsigned char * pc = reinterpret_cast<unsigned char*>(pCtx->Eip);
+         auto pc = reinterpret_cast<unsigned char*>(pCtx->Eip);
          for( auto i = 0; i < 16; i++ ) {
             /* FIXME: Unsafe function. */
             if( IsBadReadPtr(pc, 1) ) {
@@ -222,7 +222,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
             hb_strncat(errmsg, buf, errmsglen);
          }
          hb_strncat(errmsg, "\n    SS:ESP:", errmsglen);
-         unsigned int * sc = reinterpret_cast<unsigned int*>(pCtx->Esp);
+         auto sc = reinterpret_cast<unsigned int*>(pCtx->Esp);
          for( auto i = 0; i < 16; i++ ) {
             /* FIXME: Unsafe function. */
             if( IsBadReadPtr(sc, 4) ) {
@@ -235,7 +235,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS * pExceptio
          hb_strncat(errmsg, "    C stack:\n", errmsglen);
          hb_strncat(errmsg, "    EIP:     EBP:       Frame: OldEBP, RetAddr, Params...\n", errmsglen);
          unsigned int eip = pCtx->Eip;
-         unsigned int * ebp = reinterpret_cast<unsigned int*>(pCtx->Ebp);
+         auto ebp = reinterpret_cast<unsigned int*>(pCtx->Ebp);
          /* FIXME: Unsafe function. */
          if( !IsBadWritePtr(ebp, 8) ) {
             for( auto i = 0; i < 20; i++ ) {

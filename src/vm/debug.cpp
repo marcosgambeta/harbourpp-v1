@@ -236,7 +236,7 @@ HB_FUNC( __DBGVMLOCALLIST )
 
       if( nBaseOffset > 1 ) {
          nPrevOffset = hb_stackItem(nBaseOffset - 1)->item.asSymbol.stackstate->nBaseItem;
-         PHB_ITEM pSymItm = hb_stackItem(nPrevOffset);
+         auto pSymItm = hb_stackItem(nPrevOffset);
          nPrevOffset += HB_MAX(pSymItm->item.asSymbol.paramdeclcnt, pSymItm->item.asSymbol.paramcnt) + 1;
          nLen = nBaseOffset - nPrevOffset - 2;
       } else {
@@ -279,7 +279,7 @@ PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
       }
 
       if( iLocal >= 0 ) {
-         PHB_ITEM pBase = hb_stackItem(nBaseOffset - 1);
+         auto pBase = hb_stackItem(nBaseOffset - 1);
 
          if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt && iLocal > pBase->item.asSymbol.paramdeclcnt ) {
             iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
@@ -333,7 +333,7 @@ HB_FUNC( __DBGVMVARLSET )
          }
 
          if( iLocal >= 0 ) {
-            PHB_ITEM pBase = hb_stackItem(nBaseOffset - 1);
+            auto pBase = hb_stackItem(nBaseOffset - 1);
 
             if( pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt && iLocal > pBase->item.asSymbol.paramdeclcnt ) {
                iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;

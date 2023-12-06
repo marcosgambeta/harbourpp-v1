@@ -364,7 +364,7 @@ static HB_MSPACE s_mspool[HB_MSPACE_COUNT];
 
 static mspace hb_mspace(void)
 {
-   PHB_MSPACE pm = static_cast<PHB_MSPACE>(hb_stackAllocator());
+   auto pm = static_cast<PHB_MSPACE>(hb_stackAllocator());
 
    if( pm ) {
       return pm->ms;
@@ -400,7 +400,7 @@ static PHB_MSPACE hb_mspace_alloc(void)
 
 static void * hb_mspace_update(void * pAlloc, int iCount)
 {
-   PHB_MSPACE pm = static_cast<PHB_MSPACE>(pAlloc);
+   auto pm = static_cast<PHB_MSPACE>(pAlloc);
 
    if( pm && pm->count > iCount ) {
       pAlloc = static_cast<void*>(hb_mspace_alloc());
@@ -462,7 +462,7 @@ void hb_xexit_thread(void)
 #if defined(hb_stack)
    HB_STACK_TLS_PRELOAD
 #endif
-   PHB_MSPACE pm = static_cast<PHB_MSPACE>(hb_stack.allocator);
+   auto pm = static_cast<PHB_MSPACE>(hb_stack.allocator);
 
    if( pm ) {
       hb_stack.allocator = nullptr;
@@ -545,7 +545,7 @@ void * hb_xalloc(HB_SIZE nSize)         /* allocates fixed memory, returns nullp
    }
 #endif
 
-   PHB_MEMINFO pMem = static_cast<PHB_MEMINFO>(malloc(HB_ALLOC_SIZE(nSize)));
+   auto pMem = static_cast<PHB_MEMINFO>(malloc(HB_ALLOC_SIZE(nSize)));
 
    if( !pMem ) {
       return pMem;
@@ -634,7 +634,7 @@ void * hb_xgrab(HB_SIZE nSize)         /* allocates fixed memory, exits on failu
    }
 #endif
 
-   PHB_MEMINFO pMem = static_cast<PHB_MEMINFO>(malloc(HB_ALLOC_SIZE(nSize)));
+   auto pMem = static_cast<PHB_MEMINFO>(malloc(HB_ALLOC_SIZE(nSize)));
 
    if( !pMem ) {
       hb_errInternal(HB_EI_XGRABALLOC, nullptr, nullptr, nullptr);
@@ -1093,7 +1093,7 @@ void hb_xinit(void) /* Initialize fixed memory subsystem */
 #ifdef HB_FM_STATISTICS
 static char * hb_mem2str(char * membuffer, void * pMem, HB_SIZE nSize)
 {
-   HB_BYTE * cMem = static_cast<HB_BYTE*>(pMem);
+   auto cMem = static_cast<HB_BYTE*>(pMem);
    HB_SIZE nIndex;
 
    HB_SIZE nPrintable = 0;

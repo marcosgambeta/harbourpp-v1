@@ -184,7 +184,7 @@ static bool hb_macroCheckParam(PHB_ITEM pItem)
  */
 static HB_ERROR_HANDLE(hb_macroErrorType)
 {
-   PHB_MACRO pMacro = static_cast<PHB_MACRO>(ErrorInfo->Cargo);
+   auto pMacro = static_cast<PHB_MACRO>(ErrorInfo->Cargo);
 
    /* copy error object for later diagnostic usage */
    if( !pMacro->pError ) {
@@ -275,7 +275,7 @@ static char * hb_macroTextSubst(const char * szString, HB_SIZE * pnStringLen)
    HB_SIZE nResBufLen;
    HB_SIZE nCharsLeft;
 
-   char * pHead = static_cast<char*>(const_cast<void*>(memchr(szString, '&', *pnStringLen)));
+   auto pHead = static_cast<char*>(const_cast<void*>(memchr(szString, '&', *pnStringLen)));
    if( pHead == nullptr ) {
       return const_cast<char*>(szString);  /* no more processing is required */
    }

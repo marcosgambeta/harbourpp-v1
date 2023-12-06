@@ -423,7 +423,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarGetRefer(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(pMemvarSymb)));
 #endif
 
-   PHB_DYNS pDyn = static_cast<PHB_DYNS>(pMemvarSymb->pDynSym);
+   auto pDyn = static_cast<PHB_DYNS>(pMemvarSymb->pDynSym);
    if( pDyn ) {
       PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDyn);
 
@@ -863,7 +863,7 @@ static HB_DYNS_FUNC(hb_memvarFindPublicByPos)
    auto bCont = true;
 
    if( hb_memvarScopeGet(pDynSymbol) == HB_MV_PUBLIC ) {
-      struct mv_PUBLIC_var_info * pStruPub = static_cast<struct mv_PUBLIC_var_info*>(Cargo);
+      auto pStruPub = static_cast<struct mv_PUBLIC_var_info*>(Cargo);
       if( pStruPub->iPos-- == 0 ) {
          pStruPub->bFound  = true;
          pStruPub->pDynSym = pDynSymbol;
@@ -922,7 +922,7 @@ static HB_DYNS_FUNC(hb_memvarCountVisible)
    PHB_ITEM pMemvar = hb_dynsymGetMemvar(pDynSymbol);
 
    if( pMemvar ) {
-      struct mv_memvarArray_info * pMVInfo = static_cast<struct mv_memvarArray_info*>(Cargo);
+      auto pMVInfo = static_cast<struct mv_memvarArray_info*>(Cargo);
       if( !pMVInfo->iScope || (hb_memvarScopeGet(pDynSymbol) & pMVInfo->iScope) != 0 ) {
          pMVInfo->pDyns[pMVInfo->nCount++] = pDynSymbol;
       }
@@ -1311,7 +1311,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
             HB_PUT_LE_DOUBLE(&buffer[HB_MEM_REC_LEN], dNumber);
             hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1);
          } else if( HB_IS_DATE(pMemvar) ) {
-            double dNumber = static_cast<double>(hb_itemGetDL(pMemvar));
+            auto dNumber = static_cast<double>(hb_itemGetDL(pMemvar));
             buffer[11] = 'D' + 128;
             buffer[16] = 1;
             buffer[17] = 0;
@@ -1451,18 +1451,16 @@ HB_FUNC( __MVRESTORE )
          PHB_ITEM pItem = nullptr;
 
          while( hb_fileRead(fhnd, buffer, HB_MEM_REC_LEN, -1) == HB_MEM_REC_LEN ) {
-            char * pszName;
-
             /* FoxPro does not add 128 to item type: 'N', 'C', 'D', 'L'
              * CA-Cl*pper respects it and read such files so we also should.
              */
-            HB_USHORT uiType = static_cast<HB_USHORT>(buffer[11] & 0x7f);
-            HB_USHORT uiWidth = static_cast<HB_USHORT>(buffer[16]);
-            HB_USHORT uiDec = static_cast<HB_USHORT>(buffer[17]);
+            auto uiType = static_cast<HB_USHORT>(buffer[11] & 0x7f);
+            auto uiWidth = static_cast<HB_USHORT>(buffer[16]);
+            auto uiDec = static_cast<HB_USHORT>(buffer[17]);
 
             /* protect against corrupted files */
             buffer[10] = '\0';
-            pszName = reinterpret_cast<char*>(buffer);
+            auto pszName = reinterpret_cast<char*>(buffer);
 
             switch( uiType ) {
                case 'C': {

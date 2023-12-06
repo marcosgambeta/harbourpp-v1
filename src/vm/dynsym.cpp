@@ -757,7 +757,7 @@ HB_FUNC( __DYNSN2SYM )
 HB_FUNC( __DYNSP2NAME )
 {
    HB_STACK_TLS_PRELOAD
-   PHB_DYNS pDynSym = static_cast<PHB_DYNS>(hb_parptr(1));
+   auto pDynSym = static_cast<PHB_DYNS>(hb_parptr(1));
    hb_retc(pDynSym != nullptr ? pDynSym->pSymbol->szName : nullptr);
 }
 

@@ -1202,7 +1202,7 @@ PHB_ITEM hb_itemPutNLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
    }
 
    if( iDec == 0 ) {
-      HB_MAXINT nNumber = static_cast<HB_MAXINT>(dNumber);
+      auto nNumber = static_cast<HB_MAXINT>(dNumber);
 
       if( static_cast<double>(nNumber) == dNumber ) {
          if( iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH ) {
@@ -2183,7 +2183,7 @@ PHB_ITEM hb_itemUnShareString(PHB_ITEM pItem)
 
    if( pItem->item.asString.allocated == 0 || hb_xRefCount(pItem->item.asString.value) > 1 ) {
       HB_SIZE nLen = pItem->item.asString.length + 1;
-      char * szText = static_cast<char*>(hb_xmemcpy(hb_xgrab(nLen), pItem->item.asString.value, nLen));
+      auto szText = static_cast<char*>(hb_xmemcpy(hb_xgrab(nLen), pItem->item.asString.value, nLen));
       if( pItem->item.asString.allocated ) {
          /* GCLOCK enter */
          hb_xRefFree(pItem->item.asString.value);
@@ -2883,7 +2883,7 @@ char * hb_itemString(PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq)
 
       case Harbour::Item::POINTER: {
          int size = (sizeof(void*) << 1) + 3; /* n bytes for address + 0x + \0 */
-         HB_PTRUINT addr = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pItem));
+         auto addr = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pItem));
 
          *nLen = size - 1;
          *bFreeReq = true;
@@ -2892,7 +2892,7 @@ char * hb_itemString(PHB_ITEM pItem, HB_SIZE * nLen, HB_BOOL * bFreeReq)
          buffer[1] = 'x';
          buffer[--size] = '\0';
          do {
-            HB_UCHAR uc = static_cast<HB_UCHAR>(addr & 0xf);
+            auto uc = static_cast<HB_UCHAR>(addr & 0xf);
             buffer[--size] = static_cast<char>(uc + (uc < 10 ? '0' : 'A' - 10));
             addr >>= 4;
          } while( size > 2 );

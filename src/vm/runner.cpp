@@ -565,7 +565,7 @@ static void hb_hrbDo(PHRB_BODY pHrbBody, int iPCount, PHB_ITEM * pParams)
 /* HRB module destructor */
 static HB_GARBAGE_FUNC(hb_hrb_Destructor)
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(Cargo);
+   auto pHrbPtr = static_cast<PHRB_BODY*>(Cargo);
 
    if( *pHrbPtr ) {
       hb_hrbUnLoad(*pHrbPtr);
@@ -581,14 +581,14 @@ static const HB_GC_FUNCS s_gcHrbFuncs =
 
 static PHRB_BODY hb_hrbParam(int iParam)
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC(&s_gcHrbFuncs, iParam));
+   auto pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC(&s_gcHrbFuncs, iParam));
 
    return pHrbPtr ? *pHrbPtr : nullptr;
 }
 
 static void hb_hrbReturn(PHRB_BODY pHrbBody)
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_gcAllocate(sizeof(PHRB_BODY), &s_gcHrbFuncs));
+   auto pHrbPtr = static_cast<PHRB_BODY*>(hb_gcAllocate(sizeof(PHRB_BODY), &s_gcHrbFuncs));
 
    *pHrbPtr = pHrbBody;
    hb_retptrGC(pHrbPtr);
@@ -723,7 +723,7 @@ HB_FUNC( HB_HRBDO )
 
 HB_FUNC( HB_HRBUNLOAD )
 {
-   PHRB_BODY * pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC(&s_gcHrbFuncs, 1));
+   auto pHrbPtr = static_cast<PHRB_BODY*>(hb_parptrGC(&s_gcHrbFuncs, 1));
 
    if( pHrbPtr ) {
       PHRB_BODY pHrbBody = *pHrbPtr;

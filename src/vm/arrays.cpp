@@ -87,7 +87,7 @@ void hb_arrayPushBase(PHB_BASEARRAY pBaseArray)
 /* This releases array when called from the garbage collector */
 static HB_GARBAGE_FUNC(hb_arrayGarbageRelease)
 {
-   PHB_BASEARRAY pBaseArray = static_cast<PHB_BASEARRAY>(Cargo);
+   auto pBaseArray = static_cast<PHB_BASEARRAY>(Cargo);
 
    if( pBaseArray->uiClass ) {
       /*
@@ -115,7 +115,7 @@ static HB_GARBAGE_FUNC(hb_arrayGarbageRelease)
 
 static HB_GARBAGE_FUNC(hb_arrayGarbageMark)
 {
-   PHB_BASEARRAY pBaseArray = static_cast<PHB_BASEARRAY>(Cargo);
+   auto pBaseArray = static_cast<PHB_BASEARRAY>(Cargo);
 
    if( pBaseArray->nLen ) {
       HB_SIZE nLen = pBaseArray->nLen;
@@ -161,7 +161,7 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) /* creates a new array */
       pItems = nullptr;
    }
 
-   PHB_BASEARRAY pBaseArray = static_cast<PHB_BASEARRAY>(hb_gcAllocRaw(sizeof(HB_BASEARRAY), &s_gcArrayFuncs));
+   auto pBaseArray = static_cast<PHB_BASEARRAY>(hb_gcAllocRaw(sizeof(HB_BASEARRAY), &s_gcArrayFuncs));
    pBaseArray->pItems     = pItems;
    pBaseArray->nLen       = nLen;
    pBaseArray->uiClass    = 0;
@@ -323,7 +323,7 @@ HB_BOOL hb_arrayAdd(PHB_ITEM pArray, PHB_ITEM pValue)
 #endif
 
    if( HB_IS_ARRAY(pArray) ) {
-      PHB_BASEARRAY pBaseArray = static_cast<PHB_BASEARRAY>(pArray->item.asArray.value);
+      auto pBaseArray = static_cast<PHB_BASEARRAY>(pArray->item.asArray.value);
 
       if( pBaseArray->nLen < HB_SIZE_MAX ) {
          hb_arraySize(pArray, pBaseArray->nLen + 1);
@@ -344,7 +344,7 @@ HB_BOOL hb_arrayAddForward(PHB_ITEM pArray, PHB_ITEM pValue)
 #endif
 
    if( HB_IS_ARRAY(pArray) ) {
-      PHB_BASEARRAY pBaseArray = static_cast<PHB_BASEARRAY>(pArray->item.asArray.value);
+      auto pBaseArray = static_cast<PHB_BASEARRAY>(pArray->item.asArray.value);
 
       if( pBaseArray->nLen < HB_SIZE_MAX ) {
          hb_arraySize(pArray, pBaseArray->nLen + 1);

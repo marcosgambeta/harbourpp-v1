@@ -64,7 +64,7 @@ static HB_GARBAGE_FUNC(hb_codeblockGarbageDelete)
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGarbageDelete(%p)", Cargo));
 #endif
 
-   PHB_CODEBLOCK pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
+   auto pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
 
    /* free space allocated for pcodes - if it was a macro-compiled codeblock */
    if( pCBlock->pCode && pCBlock->dynBuffer ) {
@@ -92,7 +92,7 @@ static HB_GARBAGE_FUNC(hb_codeblockGarbageMark)
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGarbageMark(%p)", Cargo));
 #endif
 
-   PHB_CODEBLOCK pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
+   auto pCBlock = static_cast<PHB_CODEBLOCK>(Cargo);
 
    if( pCBlock->uiLocals ) {
       PHB_ITEM pLocals = pCBlock->pLocals;
@@ -186,9 +186,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const
        * codeblock - all inner codeblocks use the local variables table
        * created during creation of the outermost codeblock
        */
-      PHB_ITEM pLocal;
-
-      pLocal = hb_stackSelfItem();
+      auto pLocal = hb_stackSelfItem();
       if( HB_IS_BLOCK(pLocal) ) {
          PHB_CODEBLOCK pOwner = pLocal->item.asBlock.value;
 
@@ -202,8 +200,8 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE * pBuffer, HB_USHORT uiLocals, const
       }
    }
 
-   PHB_ITEM pBase = hb_stackBaseItem();
-   PHB_CODEBLOCK pCBlock = static_cast<PHB_CODEBLOCK>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
+   auto pBase = hb_stackBaseItem();
+   auto pCBlock = static_cast<PHB_CODEBLOCK>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
 
    pCBlock->pCode     = pCode;
    pCBlock->dynBuffer = nLen != 0;
@@ -236,10 +234,10 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE * pBuffer, HB_SIZE nLen)
     * to be safe for automatic GC activation in hb_xgrab() without
     * calling hb_gcLock()/hb_gcUnlock(). [druzus]
     */
-   HB_BYTE * pCode = static_cast<HB_BYTE*>(memcpy(hb_xgrab(nLen), pBuffer, nLen));
+   auto pCode = static_cast<HB_BYTE*>(memcpy(hb_xgrab(nLen), pBuffer, nLen));
 
-   PHB_CODEBLOCK pCBlock = static_cast<PHB_CODEBLOCK>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
-   PHB_ITEM pBase = hb_stackBaseItem();
+   auto pCBlock = static_cast<PHB_CODEBLOCK>(hb_gcAllocRaw(sizeof(HB_CODEBLOCK), &s_gcCodeblockFuncs));
+   auto pBase = hb_stackBaseItem();
    /* Store the number of referenced local variables */
    pCBlock->pCode     = pCode;
    pCBlock->dynBuffer = true;

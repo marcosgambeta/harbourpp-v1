@@ -146,7 +146,7 @@ static PHB_SYMB s_dummy_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols,
 
 static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char * szModuleName, HB_ULONG ulID, HB_USHORT uiPcodeVer)
 {
-   HB_VM_PROCESS_SYMBOLS pProcessSymbols = reinterpret_cast<HB_VM_PROCESS_SYMBOLS>(hb_dllGetProcAddress("hb_vmProcessSymbols"));
+   auto pProcessSymbols = reinterpret_cast<HB_VM_PROCESS_SYMBOLS>(hb_dllGetProcAddress("hb_vmProcessSymbols"));
 
    if( pProcessSymbols ) {
       s_pProcessSymbols = pProcessSymbols;
@@ -171,7 +171,7 @@ static void s_dummy_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 
 static void s_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
 {
-   HB_VM_EXECUTE pExecute = reinterpret_cast<HB_VM_EXECUTE>(hb_dllGetProcAddress("hb_vmExecute"));
+   auto pExecute = reinterpret_cast<HB_VM_EXECUTE>(hb_dllGetProcAddress("hb_vmExecute"));
 
    if( pExecute ) {
       s_pExecute = pExecute;

@@ -340,7 +340,7 @@ static const HB_GC_FUNCS s_gcGripFuncs =
 PHB_ITEM hb_gcGripGet(PHB_ITEM pOrigin)
 {
    PHB_GARBAGE pAlloc = HB_GARBAGE_NEW(sizeof(HB_ITEM));
-   PHB_ITEM pItem = static_cast<PHB_ITEM>(HB_BLOCK_PTR(pAlloc));
+   auto pItem = static_cast<PHB_ITEM>(HB_BLOCK_PTR(pAlloc));
 
    pAlloc->pFuncs = &s_gcGripFuncs;
    pAlloc->locked = 1;

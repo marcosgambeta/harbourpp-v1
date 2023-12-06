@@ -484,7 +484,7 @@ HB_BOOL hb_vmThreadRegister(void * Cargo)
 void hb_vmThreadRelease(void * Cargo)
 {
 #if 0
-   PHB_THREADSTATE pState = static_cast<PHB_THREADSTATE>(Cargo);
+   auto pState = static_cast<PHB_THREADSTATE>(Cargo);
    PHB_ITEM pThItm = pState->pThItm;
    pState->pThItm = nullptr;
    if( pThItm ) {
@@ -911,7 +911,7 @@ void hb_vmThreadInit(void * Cargo)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadInit(%p)", Cargo));
 #endif
 
-   PHB_THREADSTATE pState = static_cast<PHB_THREADSTATE>(Cargo);
+   auto pState = static_cast<PHB_THREADSTATE>(Cargo);
    if( !pState ) {
       pState = hb_threadStateNew();
    }
@@ -969,7 +969,7 @@ void hb_vmThreadQuit(void)
    hb_stackSetQuitState(true);
    hb_stackSetActionRequest(0);
 
-   PHB_THREADSTATE pState = static_cast<PHB_THREADSTATE>(hb_stackList());
+   auto pState = static_cast<PHB_THREADSTATE>(hb_stackList());
    {
       auto pReturn = hb_stackReturnItem();
 
@@ -1005,7 +1005,7 @@ void hb_vmThreadQuitRequest(void * Cargo)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmThreadQuitRequest(%p)", Cargo));
 #endif
 
-   PHB_THREADSTATE pState = static_cast<PHB_THREADSTATE>(Cargo);
+   auto pState = static_cast<PHB_THREADSTATE>(Cargo);
 
    HB_VM_LOCK();
 
@@ -1372,7 +1372,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
    for( ;; ) {
 #ifndef HB_NO_PROFILER
       if( hb_bProfiler ) {
-         HB_ULONG ulActualClock = static_cast<HB_ULONG>(clock());
+         auto ulActualClock = static_cast<HB_ULONG>(clock());
 
          hb_ulOpcodesTime[ulLastOpcode] += (ulActualClock - ulPastClock);
          ulPastClock = ulActualClock;
@@ -2325,7 +2325,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_PUSHSTRHIDDEN: {
-            HB_SIZE nSize = static_cast<HB_SIZE>(HB_PCODE_MKUSHORT(&pCode[2]));
+            auto nSize = static_cast<HB_SIZE>(HB_PCODE_MKUSHORT(&pCode[2]));
             char * szText = hb_compDecodeString(pCode[1], reinterpret_cast<const char*>(pCode) + 4, &nSize);
             hb_itemPutCLPtr(hb_stackAllocItem(), szText, nSize);
             pCode += (4 + nSize);
@@ -2717,28 +2717,28 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          /* macro compiled opcodes - we are using symbol address here */
 
          case HB_P_MMESSAGE: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_vmPushSymbol(pDynSym->pSymbol);
             pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
          case HB_P_MPOPALIASEDFIELD: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_vmPopAliasedField(pDynSym->pSymbol);
             pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
          case HB_P_MPOPALIASEDVAR: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_vmPopAliasedVar(pDynSym->pSymbol);
             pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
          case HB_P_MPOPFIELD: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             /* Pops a value from the eval stack and uses it to set
              * a new value of the given field
              */
@@ -2752,7 +2752,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MPOPMEMVAR: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_memvarSetValue(pDynSym->pSymbol, hb_stackItemFromTop(-1));
             hb_stackPop();
 #if 0
@@ -2763,14 +2763,14 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MPUSHALIASEDFIELD: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_vmPushAliasedField(pDynSym->pSymbol);
             pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
          case HB_P_MPUSHALIASEDVAR: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_vmPushAliasedVar(pDynSym->pSymbol);
             pCode += sizeof(PHB_DYNS) + 1;
             break;
@@ -2809,7 +2809,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MPUSHFIELD: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             /* It pushes the current value of the given field onto the eval stack
              */
             hb_rddGetFieldValue(hb_stackAllocItem(), pDynSym->pSymbol);
@@ -2821,7 +2821,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MPUSHMEMVAR: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_memvarGetValue(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPushMemvar)"));
@@ -2831,7 +2831,7 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MPUSHMEMVARREF: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_memvarGetRefer(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(hb_vmMPushMemvarRef)"));
@@ -2841,14 +2841,14 @@ void hb_vmExecute(const HB_BYTE * pCode, PHB_SYMB pSymbols)
          }
 
          case HB_P_MPUSHSYM: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_vmPushSymbol(pDynSym->pSymbol);
             pCode += sizeof(PHB_DYNS) + 1;
             break;
          }
 
          case HB_P_MPUSHVARIABLE: {
-            PHB_DYNS pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
+            auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
             hb_vmPushVariable(pDynSym->pSymbol);
             pCode += sizeof(PHB_DYNS) + 1;
             break;
@@ -3140,12 +3140,12 @@ static void hb_vmNegate(void)
 #if -HB_VMINT_MAX > HB_VMINT_MIN
       if( pItem->item.asInteger.value < -HB_VMINT_MAX ) {
 #if HB_VMLONG_MAX > HB_VMINT_MAX
-         HB_MAXINT nValue = static_cast<HB_MAXINT>(pItem->item.asInteger.value);
+         auto nValue = static_cast<HB_MAXINT>(pItem->item.asInteger.value);
          pItem->type = Harbour::Item::LONG;
          pItem->item.asLong.value = -nValue;
          pItem->item.asLong.length = HB_LONG_EXPLENGTH(-nValue);
 #else
-         double dValue = static_cast<double>(pItem->item.asInteger.value);
+         auto dValue = static_cast<double>(pItem->item.asInteger.value);
          pItem->type = Harbour::Item::DOUBLE;
          pItem->item.asDouble.value = -dValue;
          pItem->item.asDouble.length = HB_DBL_LENGTH(-dValue);
@@ -3161,7 +3161,7 @@ static void hb_vmNegate(void)
    } else if( HB_IS_LONG(pItem) ) {
 #if -HB_VMLONG_MAX > HB_VMLONG_MIN
       if( pItem->item.asLong.value < -HB_VMLONG_MAX ) {
-         double dValue = static_cast<double>(pItem->item.asLong.value);
+         auto dValue = static_cast<double>(pItem->item.asLong.value);
          pItem->type = Harbour::Item::DOUBLE;
          pItem->item.asDouble.value = -dValue;
          pItem->item.asDouble.length = HB_DBL_LENGTH(-dValue);
@@ -4242,7 +4242,7 @@ static void hb_vmSeqBlock(void)
    auto pItem = hb_stackItemFromTop(-1);
    if( HB_IS_BLOCK(pItem) ) {
       PHB_ITEM pBlock = hb_errorBlock();
-      PHB_ITEM pBlockCopy = static_cast<PHB_ITEM>(hb_gcAllocRaw(sizeof(HB_ITEM), &s_gcSeqBlockFuncs));
+      auto pBlockCopy = static_cast<PHB_ITEM>(hb_gcAllocRaw(sizeof(HB_ITEM), &s_gcSeqBlockFuncs));
       hb_itemRawCpy(pBlockCopy, pBlock);
       hb_itemRawCpy(pBlock, pItem);
       pItem->type = Harbour::Item::POINTER;
@@ -4255,7 +4255,7 @@ static void hb_vmSeqBlock(void)
 static HB_GARBAGE_FUNC(hb_withObjectDestructor)
 {
    HB_STACK_TLS_PRELOAD
-   HB_ISIZ * pnWithObjectBase = static_cast<HB_ISIZ*>(Cargo);
+   auto pnWithObjectBase = static_cast<HB_ISIZ*>(Cargo);
    hb_stackWithObjectSetOffset(*pnWithObjectBase);
 }
 
@@ -4274,7 +4274,7 @@ static void hb_vmWithObjectStart(void)
    HB_STACK_TLS_PRELOAD
 
    auto pItem = hb_stackAllocItem();
-   HB_ISIZ * pnWithObjectBase = static_cast<HB_ISIZ*>(hb_gcAllocRaw(sizeof(HB_ISIZ), &s_gcWithObjectFuncs));
+   auto pnWithObjectBase = static_cast<HB_ISIZ*>(hb_gcAllocRaw(sizeof(HB_ISIZ), &s_gcWithObjectFuncs));
    *pnWithObjectBase = hb_stackWithObjectOffset();
    pItem->type = Harbour::Item::POINTER;
    pItem->item.asPointer.value = pnWithObjectBase;
@@ -5304,7 +5304,7 @@ static void hb_vmPushVParams(void)
    HB_STACK_TLS_PRELOAD
    int i = 0;
 
-   PHB_ITEM pBase = hb_stackBaseItem();
+   auto pBase = hb_stackBaseItem();
    int iFirst = pBase->item.asSymbol.paramdeclcnt;
    int iPCount = pBase->item.asSymbol.paramcnt;
    while( ++iFirst <= iPCount ) {
@@ -5558,7 +5558,7 @@ void hb_vmDo(HB_USHORT uiParams)
 
    HB_STACK_STATE sStackState;
    PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->item.asSymbol.value;
-   PHB_ITEM pSelf = hb_stackSelfItem();   /* NIL, OBJECT or BLOCK */
+   auto pSelf = hb_stackSelfItem();   /* NIL, OBJECT or BLOCK */
 
    if( !HB_IS_NIL(pSelf) ) { /* are we sending a message ? */
       PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
@@ -5646,7 +5646,7 @@ void hb_vmSend(HB_USHORT uiParams)
 
    HB_STACK_STATE sStackState;
    PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->item.asSymbol.value;
-   PHB_ITEM pSelf = hb_stackSelfItem();   /* NIL, OBJECT or BLOCK */
+   auto pSelf = hb_stackSelfItem();   /* NIL, OBJECT or BLOCK */
 
    PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
    if( pExecSym ) {
@@ -5741,12 +5741,12 @@ static HARBOUR hb_vmDoBlock(void)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pBlock = hb_stackSelfItem();
+   auto pBlock = hb_stackSelfItem();
    if( !HB_IS_BLOCK(pBlock) ) {
       hb_errInternal(HB_EI_VMNOTCBLOCK, nullptr, "hb_vmDoBlock()", nullptr);
    }
 
-   PHB_ITEM pBase = hb_stackBaseItem();
+   auto pBase = hb_stackBaseItem();
 
    /* set number of declared parameters */
    pBase->item.asSymbol.paramdeclcnt = pBlock->item.asBlock.paramcnt;
@@ -5829,7 +5829,7 @@ PHB_ITEM hb_vmEvalBlockOrMacro(PHB_ITEM pItem)
       hb_vmPush(pItem);
       hb_vmEval(0);
    } else {
-      PHB_MACRO pMacro = static_cast<PHB_MACRO>(hb_itemGetPtr(pItem));
+      auto pMacro = static_cast<PHB_MACRO>(hb_itemGetPtr(pItem));
       if( pMacro ) {
          hb_macroRun(pMacro);
          hb_stackPopReturn();
@@ -5846,7 +5846,7 @@ PHB_ITEM hb_vmEvalBlockOrMacro(PHB_ITEM pItem)
 void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
 {
    if( HB_IS_POINTER(pItem) ) {
-      PHB_MACRO pMacro = static_cast<PHB_MACRO>(hb_itemGetPtr(pItem));
+      auto pMacro = static_cast<PHB_MACRO>(hb_itemGetPtr(pItem));
       if( pMacro ) {
          hb_macroDelete(pMacro);
       }
@@ -6034,7 +6034,7 @@ static void hb_vmFrame(HB_USHORT usLocals, unsigned char ucParams)
    HB_STACK_TLS_PRELOAD
    int iTotal;
 
-   PHB_ITEM pBase = hb_stackBaseItem();
+   auto pBase = hb_stackBaseItem();
 
 #if 0
    /* This old code which clears additional parameters to make space for
@@ -6078,7 +6078,7 @@ static void hb_vmVFrame(HB_USHORT usLocals, unsigned char ucParams)
 
    HB_STACK_TLS_PRELOAD
 
-   PHB_ITEM pBase = hb_stackBaseItem();
+   auto pBase = hb_stackBaseItem();
 
    pBase->item.asSymbol.paramdeclcnt = ucParams;
 
@@ -6133,8 +6133,8 @@ using PHB_TSVREF = HB_TSVREF *;
  */
 static PHB_ITEM hb_vmTSVRefRead(PHB_ITEM pRefer)
 {
-   PHB_TSVREF pTSVRef = static_cast<PHB_TSVREF>(pRefer->item.asExtRef.value);
-   PHB_ITEM pItem = static_cast<PHB_ITEM>(hb_stackTestTSD(&pTSVRef->threadData));
+   auto pTSVRef = static_cast<PHB_TSVREF>(pRefer->item.asExtRef.value);
+   auto pItem = static_cast<PHB_ITEM>(hb_stackTestTSD(&pTSVRef->threadData));
 
    if( !pItem ) {
       pItem = static_cast<PHB_ITEM>(hb_stackGetTSD(&pTSVRef->threadData));
@@ -6145,7 +6145,7 @@ static PHB_ITEM hb_vmTSVRefRead(PHB_ITEM pRefer)
 
 static PHB_ITEM hb_vmTSVRefWrite(PHB_ITEM pRefer, PHB_ITEM pSource)
 {
-   PHB_TSVREF pTSVRef = static_cast<PHB_TSVREF>(pRefer->item.asExtRef.value);
+   auto pTSVRef = static_cast<PHB_TSVREF>(pRefer->item.asExtRef.value);
    HB_SYMBOL_UNUSED(pSource);
    return static_cast<PHB_ITEM>(hb_stackGetTSD(&pTSVRef->threadData));
 }
@@ -6173,7 +6173,7 @@ static void hb_vmTSVRefMark(void * value)
       hb_gcItemRef(&(static_cast<PHB_TSVREF>(value))->source);
    }
 
-   PHB_ITEM pItem = static_cast<PHB_ITEM>(hb_stackTestTSD(&(static_cast<PHB_TSVREF>(value))->threadData));
+   auto pItem = static_cast<PHB_ITEM>(hb_stackTestTSD(&(static_cast<PHB_TSVREF>(value))->threadData));
    if( pItem && HB_IS_GCITEM(pItem) ) {
       hb_gcItemRef(pItem);
    }
@@ -6837,7 +6837,7 @@ static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
    HB_STACK_TLS_PRELOAD
 
    auto pTop = hb_stackAllocItem();
-   PHB_ITEM pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
+   auto pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
 
    if( HB_IS_BYREF(pBase->item.asArray.value->pItems + uiStatic - 1) && !HB_IS_ENUM(pBase->item.asArray.value->pItems + uiStatic - 1) ) {
       hb_itemCopy(pTop, pBase->item.asArray.value->pItems + uiStatic - 1);
@@ -7497,7 +7497,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
          for( ui = 0; ui < uiSymbols; ui++ ) {
             nSize += strlen(pModuleSymbols[ui].szName) + 1;
          }
-         char * buffer = static_cast<char*>(memcpy(hb_xgrab(nSize), pModuleSymbols, nSymSize));
+         auto buffer = static_cast<char*>(memcpy(hb_xgrab(nSize), pModuleSymbols, nSymSize));
          pModuleSymbols = reinterpret_cast<PHB_SYMB>(buffer);
          for( ui = 0; ui < uiSymbols; ui++ ) {
             buffer += nSymSize;
@@ -7862,7 +7862,7 @@ static void hb_vmItemRefCopy(PHB_ITEM pDest)
 
 static void hb_vmItemRefClear(void * value)
 {
-   PHB_ITMREF pItmRef = static_cast<PHB_ITMREF>(value);
+   auto pItmRef = static_cast<PHB_ITMREF>(value);
 
 #if 1
    if( !HB_IS_MEMVAR(&pItmRef->memvar) ||
@@ -7952,7 +7952,7 @@ using PHB_MSGREF = HB_MSGREF *;
  */
 static PHB_ITEM hb_vmMsgRefRead(PHB_ITEM pRefer)
 {
-   PHB_MSGREF pMsgRef = static_cast<PHB_MSGREF>(pRefer->item.asExtRef.value);
+   auto pMsgRef = static_cast<PHB_MSGREF>(pRefer->item.asExtRef.value);
 
    if( hb_vmRequestQuery() == 0 ) {
       HB_STACK_TLS_PRELOAD
@@ -7980,7 +7980,7 @@ static PHB_ITEM hb_vmMsgRefRead(PHB_ITEM pRefer)
 
 static PHB_ITEM hb_vmMsgRefWrite(PHB_ITEM pRefer, PHB_ITEM pSource)
 {
-   PHB_MSGREF pMsgRef = static_cast<PHB_MSGREF>(pRefer->item.asExtRef.value);
+   auto pMsgRef = static_cast<PHB_MSGREF>(pRefer->item.asExtRef.value);
 
    if( hb_vmRequestQuery() == 0 ) {
       HB_STACK_TLS_PRELOAD
@@ -8001,7 +8001,7 @@ static PHB_ITEM hb_vmMsgRefWrite(PHB_ITEM pRefer, PHB_ITEM pSource)
 
 static void hb_vmMsgRefCopy(PHB_ITEM pDest)
 {
-   PHB_MSGREF pMsgRef = static_cast<PHB_MSGREF>(pDest->item.asExtRef.value);
+   auto pMsgRef = static_cast<PHB_MSGREF>(pDest->item.asExtRef.value);
 
    hb_xRefInc(pMsgRef);
 
@@ -8019,7 +8019,7 @@ static void hb_vmMsgRefCopy(PHB_ITEM pDest)
 
 static void hb_vmMsgRefClear(void * value)
 {
-   PHB_MSGREF pMsgRef = static_cast<PHB_MSGREF>(value);
+   auto pMsgRef = static_cast<PHB_MSGREF>(value);
 
    /* value were change by C code without calling RefWrite(),
     *  f.e. hb_stor*() function
@@ -8112,7 +8112,7 @@ using PHB_MSGIDXREF = HB_MSGIDXREF *;
  */
 static PHB_ITEM hb_vmMsgIdxRefRead(PHB_ITEM pRefer)
 {
-   PHB_MSGIDXREF pMsgIdxRef = static_cast<PHB_MSGIDXREF>(pRefer->item.asExtRef.value);
+   auto pMsgIdxRef = static_cast<PHB_MSGIDXREF>(pRefer->item.asExtRef.value);
 
    if( hb_vmRequestQuery() == 0 ) {
       HB_STACK_TLS_PRELOAD
@@ -8132,7 +8132,7 @@ static PHB_ITEM hb_vmMsgIdxRefRead(PHB_ITEM pRefer)
 
 static PHB_ITEM hb_vmMsgIdxRefWrite(PHB_ITEM pRefer, PHB_ITEM pSource)
 {
-   PHB_MSGIDXREF pMsgIdxRef = static_cast<PHB_MSGIDXREF>(pRefer->item.asExtRef.value);
+   auto pMsgIdxRef = static_cast<PHB_MSGIDXREF>(pRefer->item.asExtRef.value);
 
    if( hb_vmRequestQuery() == 0 ) {
       HB_STACK_TLS_PRELOAD
@@ -8151,7 +8151,7 @@ static PHB_ITEM hb_vmMsgIdxRefWrite(PHB_ITEM pRefer, PHB_ITEM pSource)
 
 static void hb_vmMsgIdxRefCopy(PHB_ITEM pDest)
 {
-   PHB_MSGIDXREF pMsgIdxRef = static_cast<PHB_MSGIDXREF>(pDest->item.asExtRef.value);
+   auto pMsgIdxRef = static_cast<PHB_MSGIDXREF>(pDest->item.asExtRef.value);
 
    hb_xRefInc(pMsgIdxRef);
 
@@ -8169,7 +8169,7 @@ static void hb_vmMsgIdxRefCopy(PHB_ITEM pDest)
 
 static void hb_vmMsgIdxRefClear(void * value)
 {
-   PHB_MSGIDXREF pMsgIdxRef = static_cast<PHB_MSGIDXREF>(value);
+   auto pMsgIdxRef = static_cast<PHB_MSGIDXREF>(value);
 
    /* value were change by C code without calling RefWrite(),
     *  f.e. hb_stor*() function
@@ -11602,7 +11602,7 @@ HB_FUNC( __QUITCANCEL )
       HB_ISIZ nRecoverBase = hb_stackGetRecoverBase();
 
       if( nRecoverBase ) {
-         PHB_ITEM pRecover = hb_stackItem(nRecoverBase + HB_RECOVER_STATE);
+         auto pRecover = hb_stackItem(nRecoverBase + HB_RECOVER_STATE);
 
 #if defined(_HB_RECOVER_DEBUG)
          if( pRecover->type != Harbour::Item::RECOVER ) {
@@ -11729,7 +11729,7 @@ HB_FUNC( __RECOVERERRORBLOCK )
    HB_ISIZ nRecoverBase = hb_stackGetRecoverBase();
 
    if( nRecoverBase > 0 && nRecoverBase < hb_stackTopOffset() ) {
-      PHB_ITEM pItem = hb_stackItem(nRecoverBase);
+      auto pItem = hb_stackItem(nRecoverBase);
 
       if( HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && pItem->item.asPointer.single && hb_gcFuncs(pItem->item.asPointer.value) == &s_gcSeqBlockFuncs ) {
          hb_itemReturn(static_cast<PHB_ITEM>(pItem->item.asPointer.value));

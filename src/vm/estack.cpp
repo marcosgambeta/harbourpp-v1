@@ -432,7 +432,7 @@ void hb_stackClearMemvars(HB_SYMCNT uiExcept)
    while( uiDynSym > 0 ) {
       if( uiDynSym-- != uiExcept ) {
          if( hb_stack.pDynH[uiDynSym].pMemvar ) {
-            PHB_ITEM pMemvar = static_cast<PHB_ITEM>(hb_stack.pDynH[uiDynSym].pMemvar);
+            auto pMemvar = static_cast<PHB_ITEM>(hb_stack.pDynH[uiDynSym].pMemvar);
             hb_stack.pDynH[uiDynSym].pMemvar = nullptr;
             hb_memvarValueDecRef(pMemvar);
          }
@@ -1318,7 +1318,7 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
       HB_SYMCNT uiDynSym = pStack->uiDynH;
 
       while( uiDynSym > 0 ) {
-         PHB_ITEM pMemvar = static_cast<PHB_ITEM>(pStack->pDynH[--uiDynSym].pMemvar);
+         auto pMemvar = static_cast<PHB_ITEM>(pStack->pDynH[--uiDynSym].pMemvar);
          if( pMemvar && HB_IS_GCITEM(pMemvar) ) {
             hb_gcItemRef(pMemvar);
          }
@@ -1336,7 +1336,7 @@ static void hb_stackIsTsdRef(PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc)
 
    while( iTSD ) {
       if( pStack->pTSD[iTSD].pTSD && pStack->pTSD[iTSD].pTSD->pCleanFunc == pCleanFunc ) {
-         PHB_ITEM pItem = static_cast<PHB_ITEM>(pStack->pTSD[iTSD].value);
+         auto pItem = static_cast<PHB_ITEM>(pStack->pTSD[iTSD].value);
          if( HB_IS_GCITEM(pItem) ) {
             hb_gcItemRef(pItem);
          }
@@ -1354,7 +1354,7 @@ void hb_stackIsStackRef(void * pStackId, PHB_TSD_FUNC pCleanFunc)
    HB_TRACE(HB_TR_DEBUG, ("hb_stackIsStackRef()"));
 #endif
 
-   PHB_STACK pStack = static_cast<PHB_STACK>(pStackId);
+   auto pStack = static_cast<PHB_STACK>(pStackId);
    HB_ISIZ nCount = pStack->pPos - pStack->pItems;
    while( nCount > 0 ) {
       PHB_ITEM pItem = pStack->pItems[--nCount];
@@ -1382,7 +1382,7 @@ void hb_stackUpdateAllocator(void * pStackId, PHB_ALLOCUPDT_FUNC pFunc, int iCou
 
 #if defined(HB_MT_VM)
    {
-      PHB_STACK pStack = static_cast<PHB_STACK>(pStackId);
+      auto pStack = static_cast<PHB_STACK>(pStackId);
 
       if( pStack->allocator ) {
          pStack->allocator = pFunc(pStack->allocator, iCount);

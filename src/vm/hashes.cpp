@@ -85,7 +85,7 @@ using PHB_BASEHASH = HB_BASEHASH *;
 /* This releases hash when called from the garbage collector */
 static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
 {
-   PHB_BASEHASH pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
+   auto pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
 
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_hashGarbageRelease(%p)", static_cast<void*>(pBaseHash)));
@@ -135,7 +135,7 @@ static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
 
 static HB_GARBAGE_FUNC(hb_hashGarbageMark)
 {
-   PHB_BASEHASH pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
+   auto pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
 
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_hashMarkGarbage(%p)", static_cast<void*>(pBaseHash)));
@@ -512,7 +512,7 @@ PHB_ITEM hb_hashNew(PHB_ITEM pItem)
       hb_itemClear(pItem);
    }
 
-   PHB_BASEHASH pBaseHash = static_cast<PHB_BASEHASH>(hb_gcAllocRaw(sizeof(HB_BASEHASH), &s_gcHashFuncs));
+   auto pBaseHash = static_cast<PHB_BASEHASH>(hb_gcAllocRaw(sizeof(HB_BASEHASH), &s_gcHashFuncs));
    pBaseHash->pPairs   = nullptr;
    pBaseHash->pnPos    = nullptr;
    pBaseHash->nSize    = 0;

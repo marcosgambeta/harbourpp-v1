@@ -655,7 +655,7 @@ void hb_taskSuspend(void)
 /* TODO: do not start task immediately */
 void hb_taskResume(void * pTaskPtr)
 {
-   PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
+   auto pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
 
    if( s_currTask != pTask ) {
       switch( pTask->state ) {
@@ -725,7 +725,7 @@ void * hb_taskCreate(void * (*start)(void *), void * cargo, long stack_size)
 /* destroy given task */
 void hb_taskDestroy(void * pTaskPtr)
 {
-   PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
+   auto pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
 
    if( pTask != s_mainTask ) {
       pTask->detached = true;
@@ -740,7 +740,7 @@ void hb_taskDestroy(void * pTaskPtr)
 /* wait for given task termination */
 int hb_taskJoin(void * pTaskPtr, unsigned long ulMilliSec, void ** pResult)
 {
-   PHB_TASKINFO pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
+   auto pTask = static_cast<PHB_TASKINFO>(pTaskPtr);
    int result = 0;
 
    if( pTask != s_mainTask && pTask != s_currTask ) {
@@ -845,7 +845,7 @@ int hb_taskLock(void ** pMutexPtr, unsigned long ulMilliSec)
 /* unlock given mutex */
 void hb_taskUnlock(void ** pMutexPtr)
 {
-   PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
+   auto pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
 
    if( pMutex && pMutex->task == s_currTask ) {
       if( --pMutex->count == 0 ) {
@@ -866,7 +866,7 @@ void hb_taskSignal(void ** pCondPtr)
       *pCondPtr = static_cast<void*>(hb_taskCondNew());
    }
 
-   PHB_TASKCOND pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
+   auto pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
 
    if( pCond->waiters ) {
       PHB_TASKINFO * pLockers = &pCond->mutex->lockers, pTask;
@@ -901,7 +901,7 @@ void hb_taskBroadcast(void ** pCondPtr)
       *pCondPtr = static_cast<void*>(hb_taskCondNew());
    }
 
-   PHB_TASKCOND pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
+   auto pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
 
    if( pCond->waiters ) {
       PHB_TASKINFO * pLockers = &pCond->mutex->lockers;
@@ -935,7 +935,7 @@ void hb_taskBroadcast(void ** pCondPtr)
 
 int hb_taskWait(void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec)
 {
-   PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
+   auto pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
 
    if( pMutex == nullptr ) {
       hb_errInternal(HB_EI_ERRUNRECOV, "TaskWait: no mutex", nullptr, nullptr);
@@ -949,7 +949,7 @@ int hb_taskWait(void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec)
       *pCondPtr = static_cast<void*>(hb_taskCondNew());
    }
 
-   PHB_TASKCOND pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
+   auto pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
 
    /* POSIX threads have such condition */
    if( pCond->waiters && pCond->mutex != pMutex ) {
@@ -1005,7 +1005,7 @@ int hb_taskWait(void ** pCondPtr, void ** pMutexPtr, unsigned long ulMilliSec)
 
 void hb_taskDestroyMutex(void ** pMutexPtr)
 {
-   PHB_TASKMTX pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
+   auto pMutex = static_cast<PHB_TASKMTX>(*pMutexPtr);
 
    if( pMutex ) {
       PHB_TASKMTX * pMutexLst = &s_mutexList;
@@ -1029,7 +1029,7 @@ void hb_taskDestroyMutex(void ** pMutexPtr)
 
 void hb_taskDestroyCond(void ** pCondPtr)
 {
-   PHB_TASKCOND pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
+   auto pCond = static_cast<PHB_TASKCOND>(*pCondPtr);
 
    if( pCond ) {
       PHB_TASKCOND * pCondLst = &s_condList;
