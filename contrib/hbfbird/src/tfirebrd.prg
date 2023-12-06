@@ -401,7 +401,7 @@ METHOD Append( oRow ) CLASS TFbServer
          ENDIF
       NEXT
 
-      cQuery := Left( cQuery, Len( cQuery ) - 1 ) +  ") VALUES ("
+      cQuery := Left(cQuery, Len( cQuery ) - 1) +  ") VALUES ("
 
       FOR i := 1 TO oRow:FCount()
          IF oRow:Changed( i )
@@ -409,7 +409,7 @@ METHOD Append( oRow ) CLASS TFbServer
          ENDIF
       NEXT
 
-      cQuery := Left( cQuery, Len( cQuery ) - 1  ) + ")"
+      cQuery := Left(cQuery, Len( cQuery ) - 1) + ")"
 
       result := ::Execute( cQuery )
    ENDIF
@@ -450,7 +450,7 @@ METHOD Update( oRow, cWhere ) CLASS TFbServer
       NEXT
 
       IF !( cWhere == "" )
-         cQuery := Left( cQuery, Len( cQuery ) - 1 ) + " WHERE " + cWhere
+         cQuery := Left(cQuery, Len( cQuery ) - 1) + " WHERE " + cWhere
 
          result := ::Execute( cQuery )
       ENDIF
@@ -702,7 +702,7 @@ METHOD FieldGet( nField ) CLASS TFbQuery
 
       ELSEIF cType == "D"
          IF result != NIL
-            result := hb_SToD( Left( result, 4 ) + SubStr( result, 5, 2 ) + SubStr( result, 7, 2 ) )
+            result := hb_SToD( Left(result, 4) + SubStr( result, 5, 2 ) + SubStr( result, 7, 2 ) )
          ELSE
             result := hb_SToD()
          ENDIF

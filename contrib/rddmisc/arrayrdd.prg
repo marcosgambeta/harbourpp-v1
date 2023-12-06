@@ -59,7 +59,7 @@
 
 #xtranslate Throw( <oErr> ) => ( Eval( ErrorBlock(), <oErr> ), Break( <oErr> ) )
 
-#define LEFTEQUAL( l, r )    iif(ValType( l ) $ "CM", Left( l, Len( r ) ) == r, l == r)
+#define LEFTEQUAL( l, r )    iif(ValType( l ) $ "CM", Left(l, Len( r )) == r, l == r)
 
 ANNOUNCE ARRAYRDD
 
@@ -317,8 +317,8 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
 
    cFullName := Upper(aOpenInfo[ UR_OI_NAME ])
 
-   IF Right( cFullName, 1 ) == "."
-      cFullName := Left( cFullName, Len( cFullName ) - 1 )
+   IF Right(cFullName, 1) == "."
+      cFullName := Left(cFullName, Len( cFullName ) - 1)
    ENDIF
 
    /* When there is no ALIAS we will create new one using file name */

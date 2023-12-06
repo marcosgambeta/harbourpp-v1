@@ -100,13 +100,13 @@ METHOD write( cSource ) CLASS TRtf
                nChar += Len( xAtt ) - 1
             ELSE
                // 3 attributes
-               xatt := Left( xAtt, 3 )
+               xatt := Left(xAtt, 3)
                IF ( i := AScan( attrib, {| e | e[ 1 ] == xAtt } ) ) > 0
                   FWrite( ::nHandle, attrib[ i ][ 2 ] )
                   nChar += Len( xAtt ) - 1
                ELSE
                   // 2 attributes
-                  xAtt := Left( xAtt, 2 )
+                  xAtt := Left(xAtt, 2)
                   IF ( i := AScan( attrib, {| e | e[ 1 ] == xAtt } ) ) > 0
                      FWrite( ::nHandle, attrib[ i ][ 2 ] )
                      nChar += Len( xAtt ) - 1

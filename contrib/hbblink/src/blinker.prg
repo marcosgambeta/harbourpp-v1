@@ -396,7 +396,7 @@ FUNCTION SwpSetEnv( cString )
 
    FOR EACH cPair IN hb_ATokens( cString, hb_BChar( 255 ) )
       IF ( tmp := At( "=", cPair ) ) > 0
-         hb_SetEnv( Left( cPair, tmp - 1 ), SubStr( cPair, tmp + 1 ) )
+         hb_SetEnv( Left(cPair, tmp - 1), SubStr( cPair, tmp + 1 ) )
       ENDIF
    NEXT
 

@@ -210,7 +210,7 @@ METHOD Retrieve( nId, nLen ) CLASS TIPClientPOP
 
       nRead := ::inetRecv( ::SocketCon, @cBuffer, hb_BLen( cBuffer ) )
 
-      cRet += hb_BLeft( cBuffer, nRead )
+      cRet += hb_BLeft(cBuffer, nRead)
 
       /* 2005-11-24 - <maurilio.longo@libero.it>
                       "- Len( cEOM )" to be sure to always find a full EOM,
@@ -219,7 +219,7 @@ METHOD Retrieve( nId, nLen ) CLASS TIPClientPOP
        */
       IF ( nPos := hb_BAt( cEOM, cRet, Max( nRetLen - hb_BLen( cEOM ), 1 ) ) ) > 0
          // Remove ".CRLF"
-         cRet := hb_BLeft( cRet, nPos + 1 )
+         cRet := hb_BLeft(cRet, nPos + 1)
          ::bEof := .T.
 
       ELSEIF HB_ISNUMERIC( nLen ) .AND. nLen < hb_BLen( cRet )  /* FIXME: might break UTF-8 chars */

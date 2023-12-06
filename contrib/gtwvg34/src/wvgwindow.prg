@@ -593,13 +593,13 @@ METHOD WvgWindow:setFontCompoundName( cFont )
 
       IF ( n := AScan( aAttr, {| e | e $ cFont } ) ) > 0
          cAttr := aAttr[ n ]
-         cFont := Left( cFont, At( cAttr, Lower(cFont) ) - 1 )
+         cFont := Left(cFont, At( cAttr, Lower(cFont) ) - 1)
       ELSE
          cAttr := "normal"
       ENDIF
 
       IF ( n := At( ".", cFont ) ) > 0
-         nPoint := Val( Left( cFont, n - 1 ) )
+         nPoint := Val( Left(cFont, n - 1) )
          cFont  := SubStr( cFont, n + 1 )
       ELSE
          nPoint := 0

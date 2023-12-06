@@ -4,8 +4,8 @@
 
 #require "hbgd"
 
-#command TurnRight( <x> ) => s_nAngle += Pi() / 3 * <x>
-#command TurnLeft( <x> )  => s_nAngle -= Pi() / 3 * <x>
+#command TurnRight(<x>) => s_nAngle += Pi() / 3 * <x>
+#command TurnLeft(<x>)  => s_nAngle -= Pi() / 3 * <x>
 
 #define IMAGES_OUT "imgs_out" + hb_ps()
 
@@ -93,23 +93,23 @@ PROCEDURE KochFlake( nOrder, nSideLen, lLeftFirst )
       KochFlake( nOrder - 1, nSideLen  / 3, lLeftFirst )
 
       IF lLeftFirst
-         TurnLeft( 1 )
+         TurnLeft(1)
       ELSE
-         TurnRight( 1 )
+         TurnRight(1)
       ENDIF
       KochFlake( nOrder - 1, nSideLen  / 3, lLeftFirst )
 
       IF lLeftFirst
-         TurnRight( 2 )
+         TurnRight(2)
       ELSE
-         TurnLeft( 2 )
+         TurnLeft(2)
       ENDIF
       KochFlake( nOrder - 1, nSideLen  / 3, lLeftFirst )
 
       IF lLeftFirst
-         TurnLeft( 1 )
+         TurnLeft(1)
       ELSE
-         TurnRight( 1 )
+         TurnRight(1)
       ENDIF
       KochFlake( nOrder - 1, nSideLen  / 3, lLeftFirst )
    ENDIF

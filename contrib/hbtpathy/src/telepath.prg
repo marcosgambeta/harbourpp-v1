@@ -337,7 +337,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
    ENDDO
 
    IF nFirst > 0
-      cRet := Left( t_aPorts[ nPort, TPFP_INBUF ], nFirst )
+      cRet := Left(t_aPorts[ nPort, TPFP_INBUF ], nFirst)
       t_aPorts[ nPort, TPFP_INBUF ] := SubStr( t_aPorts[ nPort, TPFP_INBUF ], nFirst + 1 )
    ENDIF
 

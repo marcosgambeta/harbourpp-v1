@@ -37,7 +37,7 @@ FUNCTION hb_udpds_Find( nPort, cName )
          DO WHILE nEnd > nTime
             cBuffer := Space( 2000 )
             nLen := hb_socketRecvFrom( hSocket, @cBuffer, , , @aAddr, nEnd - nTime )
-            IF hb_BLeft( cBuffer, hb_BLen( cName ) + 2 ) == hb_BChar( 6 ) + cName + hb_BChar( 0 ) .AND. ;
+            IF hb_BLeft(cBuffer, hb_BLen( cName ) + 2) == hb_BChar( 6 ) + cName + hb_BChar( 0 ) .AND. ;
                AScan( aRet, {| x | x[ 1 ] == aAddr[ 2 ] } ) == 0
                AAdd( aRet, { aAddr[ 2 ], hb_BSubStr( cBuffer, hb_BLen( cName ) + 3, nLen - hb_BLen( cName ) - 2 ) } )
             ENDIF
@@ -137,7 +137,7 @@ STATIC PROCEDURE UDPDS( hSocket, cName, cVersion )
           *   Broadcast request: ENQ, ServerName, NUL
           *   Server response: ACK, ServerName, NUL, Version
           */
-         IF hb_BLeft( cBuffer, nLen ) == hb_BChar( 5 ) + cName + hb_BChar( 0 )
+         IF hb_BLeft(cBuffer, nLen) == hb_BChar( 5 ) + cName + hb_BChar( 0 )
             BEGIN SEQUENCE WITH __BreakBlock()
                hb_socketSendTo( hSocket, hb_BChar( 6 ) + cName + hb_BChar( 0 ) + cVersion, , , aAddr )
             END SEQUENCE

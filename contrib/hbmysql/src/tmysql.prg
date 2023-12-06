@@ -491,7 +491,7 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
                   ::aRow[ i ] := hb_SToD()
                ELSE
                   // Date format YYYY-MM-DD
-                  ::aRow[ i ] := hb_SToD( Left( ::aRow[ i ], 4 ) + SubStr( ::aRow[ i ], 6, 2 ) + Right( ::aRow[ i ], 2 ) )
+                  ::aRow[ i ] := hb_SToD( Left(::aRow[ i ], 4) + SubStr( ::aRow[ i ], 6, 2 ) + Right(::aRow[ i ], 2) )
                ENDIF
                EXIT
 
@@ -755,12 +755,12 @@ METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
       NEXT
 
       // no Change
-      IF Right( cUpdateQuery, 4 ) == "SET "
+      IF Right(cUpdateQuery, 4) == "SET "
          RETURN ! ::lError
       ENDIF
 
       // remove last comma
-      cUpdateQuery := Left( cUpdateQuery, Len( cUpdateQuery ) - 1 )
+      cUpdateQuery := Left(cUpdateQuery, Len( cUpdateQuery ) - 1)
 
       IF lOldRecord
          // based in matching of ALL fields of old record
@@ -770,7 +770,7 @@ METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
             cWhere += ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::aOldValue[ nI ] ) + " AND "
          NEXT
          // remove last " AND "
-         cWhere := Left( cWhere, Len( cWhere ) - 5 )
+         cWhere := Left(cWhere, Len( cWhere ) - 5)
          cUpdateQuery += cWhere
 
       ELSE
@@ -802,7 +802,7 @@ METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
          NEXT
 
          // remove last comma
-         cUpdateQuery := Left( cUpdateQuery, Len( cUpdateQuery ) - 1 )
+         cUpdateQuery := Left(cUpdateQuery, Len( cUpdateQuery ) - 1)
 
          IF lOldRecord
             // based in matching of ALL fields of old record
@@ -812,7 +812,7 @@ METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
                cWhere += oRow:aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( oRow:aOriValue[ nI ] ) + " AND "
             NEXT
             // remove last " AND "
-            cWhere := Left( cWhere, Len( cWhere ) - 5 )
+            cWhere := Left(cWhere, Len( cWhere ) - 5)
             cUpdateQuery += cWhere
 
          ELSE
@@ -866,7 +866,7 @@ METHOD Delete( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
             cWhere += " AND "
          NEXT
          // remove last " AND "
-         cWhere := Left( cWhere, Len( cWhere ) - 5 )
+         cWhere := Left(cWhere, Len( cWhere ) - 5)
          cDeleteQuery += cWhere
       ELSE
          // MakePrimaryKeyWhere is based in fields part of a primary key
@@ -903,7 +903,7 @@ METHOD Delete( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
                cWhere += " AND "
             NEXT
             // remove last " AND "
-            cWhere := Left( cWhere, Len( cWhere ) - 5 )
+            cWhere := Left(cWhere, Len( cWhere ) - 5)
             cDeleteQuery += cWhere
 
          ELSE
@@ -944,7 +944,7 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
          ENDIF
       NEXT
       // remove last comma from list
-      cInsertQuery := Left( cInsertQuery, Len( cInsertQuery ) - 1 ) + ") VALUES ("
+      cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ") VALUES ("
 
       // field values
       FOR i := 1 TO ::nNumFields
@@ -954,7 +954,7 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
       NEXT
 
       // remove last comma from list of values and add closing parenthesis
-      cInsertQuery := Left( cInsertQuery, Len( cInsertQuery ) - 1 ) + ")"
+      cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ")"
 
       IF mysql_query( ::nSocket, cInsertQuery ) == 0
          ::lError := .F.
@@ -988,7 +988,7 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
             ENDIF
          NEXT
          // remove last comma from list
-         cInsertQuery := Left( cInsertQuery, Len( cInsertQuery ) - 1 ) + ") VALUES ("
+         cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ") VALUES ("
 
          // field values
          FOR i := 1 TO Len( oRow:aRow )
@@ -998,7 +998,7 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
          NEXT
 
          // remove last comma from list of values and add closing parenthesis
-         cInsertQuery := Left( cInsertQuery, Len( cInsertQuery ) - 1 ) + ")"
+         cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ")"
 
          IF mysql_query( ::nSocket, cInsertQuery ) == 0
             ::lError := .F.
@@ -1361,7 +1361,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
    ENDIF
 
    // remove last comma from list
-   ::cCreateQuery := Left( ::cCreateQuery, Len( ::cCreateQuery ) - 1 ) + ");"
+   ::cCreateQuery := Left(::cCreateQuery, Len( ::cCreateQuery ) - 1) + ");"
    IF mysql_query( ::nSocket, ::cCreateQuery ) == 0
       RETURN .T.
    ELSE
@@ -1390,7 +1390,7 @@ METHOD CreateIndex( cName, cTable, aFNames, lUnique ) CLASS TMySQLServer
    NEXT
 
    // remove last comma from list
-   cCreateQuery := Left( cCreateQuery, Len( cCreateQuery ) - 1 ) + ")"
+   cCreateQuery := Left(cCreateQuery, Len( cCreateQuery ) - 1) + ")"
 
    IF mysql_query( ::nSocket, cCreateQuery ) == 0
       RETURN .T.
@@ -1504,7 +1504,7 @@ METHOD TableStruct( cTable ) CLASS TMySQLServer
          // don't count indexes as real fields
          IF aField[ MSQL_FS_TYPE ] <= MSQL_LAST_REAL_TYPE
 
-            aSField[ DBS_NAME ] := Left( aField[ MSQL_FS_NAME ], 10 )
+            aSField[ DBS_NAME ] := Left(aField[ MSQL_FS_NAME ], 10)
             aSField[ DBS_DEC ] := 0
 
             SWITCH aField[ MSQL_FS_TYPE ]

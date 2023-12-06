@@ -89,7 +89,7 @@ FUNCTION whitespace_cb( node, where )
 
    name := mxmlGetElement( node )
 
-   IF Left( name, 4 ) == "?xml"
+   IF Left(name, 4) == "?xml"
       IF where == MXML_WS_AFTER_OPEN
          RETURN hb_eol()
       ELSE

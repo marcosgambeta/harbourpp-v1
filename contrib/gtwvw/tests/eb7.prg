@@ -563,7 +563,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    pFlag := .F. // x for clarity
    IF mcvaltype == "N"
       // RL 104
-      IF Left( AllTrim(InBuffer), 1 ) == "-" .AND. Val( InBuffer ) == 0
+      IF Left(AllTrim(InBuffer), 1) == "-" .AND. Val( InBuffer ) == 0
          NegativeZero := .T.
       ENDIF
 
@@ -577,7 +577,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
          NEXT
 
          // RL 89
-         IF Left( InBuffer, 1 ) == "." .OR. Left( InBuffer, 1 ) == ","
+         IF Left(InBuffer, 1) == "." .OR. Left(InBuffer, 1) == ","
             pFlag := .T.
          ENDIF
 
@@ -597,9 +597,9 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    OldChar := SubStr( InBuffer, icp + 1, 1 )
 
    IF Len( InBuffer ) < Len( Mask )
-      InBufferLeft := Left( InBuffer, icp )
+      InBufferLeft := Left(InBuffer, icp)
 
-      InBufferRight := Right( InBuffer, Len( InBuffer ) - icp )
+      InBufferRight := Right(InBuffer, Len( InBuffer ) - icp)
 
       IF CharMaskTekstOK( InBufferLeft + " " + InBufferRight, mcvaltype, Mask ) .AND. ;
          ! CharMaskTekstOK( InBufferLeft + InBufferRight, mcvaltype, Mask )
@@ -612,9 +612,9 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    IF Len( InBuffer ) > Len( Mask ) .AND. ;
          Len( Mask ) > 0
 
-      InBufferLeft := Left( InBuffer, icp )
+      InBufferLeft := Left(InBuffer, icp)
 
-      InBufferRight := Right( InBuffer, Len( InBuffer ) - icp - 1 )
+      InBufferRight := Right(InBuffer, Len( InBuffer ) - icp - 1)
 
       InBuffer := InBufferLeft + InBufferRight
    ENDIF
@@ -813,7 +813,7 @@ STATIC FUNCTION GetValFromText( Text, mcvaltype )
       ENDIF
    NEXT
 
-   IF Left( AllTrim(Text), 1 ) == "(" .OR.  Right( AllTrim(Text), 2 ) == "DB"
+   IF Left(AllTrim(Text), 1) == "(" .OR.  Right(AllTrim(Text), 2) == "DB"
       s := "-" + s
    ENDIF
 

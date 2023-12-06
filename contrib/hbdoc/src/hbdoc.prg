@@ -159,7 +159,7 @@ PROCEDURE Main( ... )
             cArgName := arg
             arg := ""
          ELSE
-            cArgName := Left( arg, idx - 1 )
+            cArgName := Left(arg, idx - 1)
             arg := SubStr( arg, idx + 1 )
          ENDIF
 
@@ -278,7 +278,7 @@ PROCEDURE Main( ... )
             oIndex := Eval( generatorClass ):NewIndex( cFormat, "harbour", "Harbour Reference Guide" )
 
             FOR EACH item IN aContent
-               IF Right( item:_sourcefile, Len( "1stread.txt" ) ) == "1stread.txt"
+               IF Right(item:_sourcefile, Len( "1stread.txt" )) == "1stread.txt"
                   IF oIndex != NIL
                      oIndex:AddEntry( item )
                   ENDIF
@@ -310,7 +310,7 @@ PROCEDURE Main( ... )
                      ENDIF
                      FOR EACH item4 IN item[ 2 ][ idx ]
                         IF ! Empty(item4)
-                           IF !( Right( item4:_sourcefile, Len( "1stread.txt" ) ) == "1stread.txt" )
+                           IF !( Right(item4:_sourcefile, Len( "1stread.txt" )) == "1stread.txt" )
                               IF oIndex != NIL
                                  oIndex:AddReference( item4 )
                               ENDIF
@@ -451,29 +451,29 @@ STATIC FUNCTION NewLineVoodoo( cSectionIn )
    FOR EACH cLine IN hb_ATokens( cSectionIn, .T. )
 
       IF Len( AllTrim(cLine) ) == 0
-         IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() )
+         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() )
             cSection += hb_eol()
          ENDIF
          nLastIndent := -1
       ELSEIF hb_LeftEq( AllTrim(cLine), "<table" ) .OR. AllTrim(cLine) == "<fixed>" .OR. hb_LeftEq( AllTrim(cLine), '```' )
-         IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() ) .OR. lPreformatted
+         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() ) .OR. lPreformatted
             cSection += hb_eol()
          ENDIF
          cSection += AllTrim(cLine)  // + hb_eol()
          lLastPreformatted := lPreformatted
          lPreformatted := .T.
       ELSEIF AllTrim(cLine) == "</table>" .OR. AllTrim(Line) == "</fixed>"
-         IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() ) .OR. lPreformatted
+         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() ) .OR. lPreformatted
             cSection += hb_eol()
          ENDIF
          cSection += AllTrim(cLine) + hb_eol()
          lPreformatted := lLastPreformatted
-      ELSEIF nLastIndent != ( Len( cLine ) - Len( LTrim(cLine) ) ) .OR. lPreformatted .OR. Right( cLine, Len( "</par>" ) ) == "</par>"
-         IF Right( cLine, Len( "</par>" ) ) == "</par>"
+      ELSEIF nLastIndent != ( Len( cLine ) - Len( LTrim(cLine) ) ) .OR. lPreformatted .OR. Right(cLine, Len( "</par>" )) == "</par>"
+         IF Right(cLine, Len( "</par>" )) == "</par>"
             cLine := hb_StrShrink( cLine, Len( "</par>" ) )
          ENDIF
          nLastIndent := Len( cLine ) - Len( LTrim(cLine) )
-         IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() )
+         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() )
             cSection += hb_eol()
          ENDIF
          cSection += iif(lPreformatted, cLine, AllTrim(cLine))
@@ -485,7 +485,7 @@ STATIC FUNCTION NewLineVoodoo( cSectionIn )
    IF hb_LeftEq( cSection, hb_eol() )
       cSection := SubStr( cSection, Len( hb_eol() ) + 1 )
    ENDIF
-   IF Right( cSection, Len( hb_eol() ) ) == hb_eol()
+   IF Right(cSection, Len( hb_eol() )) == hb_eol()
       cSection := hb_StrShrink( cSection, Len( hb_eol() ) )
    ENDIF
 
@@ -601,7 +601,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
          CASE ! o:IsConstraint( cSectionName, cSection )
 
-            cSource := cSectionName + " is '" + iif(Len( cSection ) <= 20, cSection, Left( StrTran( cSection, hb_eol() ), 20 ) + "...") + "', should be one of: "
+            cSource := cSectionName + " is '" + iif(Len( cSection ) <= 20, cSection, Left(StrTran( cSection, hb_eol() ), 20) + "...") + "', should be one of: "
 #if 0
             cSource := hb_HKeyAt( hsTemplate, idx ) + " should be one of: "
 #endif
@@ -833,7 +833,7 @@ FUNCTION Parse( /* @ */ cVar, xDelimiter )
    LOCAL idx
 
    IF ( idx := At( xDelimiter, cVar ) ) > 0
-      cResult := Left( cVar, idx - 1 )
+      cResult := Left(cVar, idx - 1)
       cVar := SubStr( cVar, idx + Len( xDelimiter ) )
    ELSE
       cResult := cVar
@@ -921,7 +921,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                   idx := nWidth
                ENDIF
 
-               cResult += Space( nLeftMargin ) + Left( cLine, idx - iif(SubStr( cLine, idx, 1 ) == " ", 1, 0) ) + hb_eol()
+               cResult += Space( nLeftMargin ) + Left(cLine, idx - iif(SubStr( cLine, idx, 1 ) == " ", 1, 0)) + hb_eol()
                cLine := LTrim(SubStr( cLine, idx + 1 ))
             ENDDO
 

@@ -86,11 +86,11 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
             EXIT
          CASE "N"
             cairo_move_to( hCairo, nDX + aWidth[ nI ] - 10, nY + 10 )
-            show_text_right( hCairo, Str( xValue ) )
+            show_text_right(hCairo, Str( xValue ))
             EXIT
          CASE "D"
             cairo_move_to( hCairo, nDX + 10, nY + 10 )
-            show_text_right( hCairo, DToC( xValue ) )
+            show_text_right(hCairo, DToC( xValue ))
             EXIT
          ENDSWITCH
          nDX += aWidth[ nI ]
@@ -112,7 +112,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
    RETURN
 
 
-STATIC PROCEDURE show_text_right( hCairo, cText )
+STATIC PROCEDURE show_text_right(hCairo, cText)
 
    cairo_rel_move_to( hCairo, - cairo_text_extents( hCairo, cText )[ 5 ], 0 )
    cairo_show_text( hCairo, cText )

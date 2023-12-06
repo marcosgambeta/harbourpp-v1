@@ -175,7 +175,7 @@ METHOD GetReply() CLASS TIPClientFTP
    ENDDO
 
    // 4 and 5 are error codes
-   RETURN ::inetErrorCode( ::SocketCon ) == 0 .AND. Val( Left( ::cReply, 1 ) ) < 4
+   RETURN ::inetErrorCode( ::SocketCon ) == 0 .AND. Val( Left(::cReply, 1) ) < 4
 
 METHOD Commit() CLASS TIPClientFTP
 
@@ -774,7 +774,7 @@ METHOD ListFiles( cFileSpec ) CLASS TIPClientFTP
             cTime  := SubStr( cEntry, nStart, nEnd - nStart )
             nStart := nEnd
 
-            aFile[ F_TIME ] := Left( TString( Secs( Left( cTime, 5 ) ) + iif(Right( cTime, 2 ) == "PM", 43200, 0) ), 5 )
+            aFile[ F_TIME ] := Left(TString( Secs( Left(cTime, 5) ) + iif(Right(cTime, 2) == "PM", 43200, 0) ), 5)
 
             // file size
             DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "

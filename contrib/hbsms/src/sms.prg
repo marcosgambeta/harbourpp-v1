@@ -183,7 +183,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
                IF !( ATail( tmp ) == "OK" )
                   RETURN -7
                ENDIF
-               IF !( Left( tmp[ 1 ], Len( "+CSMP: " ) ) == "+CSMP: " )
+               IF !( Left(tmp[ 1 ], Len( "+CSMP: " )) == "+CSMP: " )
                   RETURN -8
                ENDIF
                tmp := GetList( SubStr( tmp[ 1 ], Len( "+CSMP: " ) + 1 ) )
@@ -204,7 +204,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
             IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "> "
                port_send( smsctx[ _SMSCTX_xHnd ], StrTran( cText, Chr( 13 ) ) + Chr( 26 ) )
                tmp := StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
-               IF Left( tmp, Len( "+CMGS: " ) ) == "+CMGS: "
+               IF Left(tmp, Len( "+CMGS: " )) == "+CMGS: "
                   RETURN 0
                ELSE
                   RETURN -10
@@ -268,10 +268,10 @@ STATIC FUNCTION GetLines( cString )
    LOCAL aLine := {}
    LOCAL tmp
 
-   IF Left( cString, 2 ) == Chr( 13 ) + Chr( 10 )
+   IF Left(cString, 2) == Chr( 13 ) + Chr( 10 )
       cString := SubStr( cString, Len( Chr( 13 ) + Chr( 10 ) ) + 1 )
    ENDIF
-   IF Right( cString, 2 ) == Chr( 13 ) + Chr( 10 )
+   IF Right(cString, 2) == Chr( 13 ) + Chr( 10 )
       cString := hb_StrShrink( cString, Len( Chr( 13 ) + Chr( 10 ) ) )
    ENDIF
 

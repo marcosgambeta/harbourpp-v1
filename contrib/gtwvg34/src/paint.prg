@@ -580,7 +580,7 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
    IF HB_ISSTRING( cColor )
       IF ( n := At( "/", cColor ) ) > 0
          IF hb_defaultValue( nForeBack, 0 ) == 0
-            s := Left( cColor, n - 1 )
+            s := Left(cColor, n - 1)
          ELSE
             s := SubStr( cColor, n + 1 )
          ENDIF
@@ -748,7 +748,7 @@ FUNCTION wvg_GetMessageText( w, p1, p2 )
 
    wapi_SendMessage( w, p1, p2, @cText )
 
-   RETURN Left( cText, At( Chr( 0 ), cText + Chr( 0 ) ) - 1 )
+   RETURN Left(cText, At( Chr( 0 ), cText + Chr( 0 ) ) - 1)
 
 FUNCTION wvt_IsLButtonPressed()
    RETURN hb_bitAnd( wapi_GetKeyState( WIN_VK_LBUTTON ), 0x8000 ) != 0

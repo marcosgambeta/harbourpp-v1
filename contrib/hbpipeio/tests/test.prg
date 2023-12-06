@@ -38,7 +38,7 @@ PROCEDURE Main()
       ? "reading..."
       cBuffer := Space( 1000 )
       WHILE ( nLen := hb_vfRead( pFile, @cBuffer ) ) > 0
-         cResult += hb_BLeft( cBuffer, nLen )
+         cResult += hb_BLeft(cBuffer, nLen)
          ? "read: " + hb_ntos( nLen )
       ENDDO
       ? "total bytes read: " + hb_ntos( hb_BLen( cResult ) ) + ;

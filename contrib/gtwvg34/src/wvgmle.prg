@@ -285,7 +285,7 @@ METHOD WvgMLE:cutMarked()
 
    IF ( n := nE - nB ) > 0
       cText := ::getData()
-      ::setData( Left( cText, nB - 1 ) + SubStr( cText, nE ) )
+      ::setData( Left(cText, nB - 1) + SubStr( cText, nE ) )
    ENDIF
 
    RETURN n

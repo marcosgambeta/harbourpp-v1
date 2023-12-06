@@ -129,7 +129,7 @@ METHOD ReadLine() CLASS TFileRead
          // Yes. Is there anything in the line?
          IF nPos > 1
             // Yes, so return the contents.
-            cLine := Left( ::cBuffer, nPos - 1 )
+            cLine := Left(::cBuffer, nPos - 1)
          ELSE
             // No, so return an empty string.
             cLine := ""

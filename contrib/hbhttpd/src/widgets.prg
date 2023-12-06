@@ -396,13 +396,13 @@ METHOD Output() CLASS UWBrowse
          nI := At( "&_ucs=", cUrl )
       ENDIF
       IF ( lValidate := nI > 0 )
-         cUrl := Left( cUrl, nI - 1 )
+         cUrl := Left(cUrl, nI - 1)
       ENDIF
       IF ( nI := At( "?_pos=", cUrl ) ) == 0
          nI := At( "&_pos=", cUrl )
       ENDIF
       IF nI > 0
-         cUrl := Left( cUrl, nI - 1 )
+         cUrl := Left(cUrl, nI - 1)
       ENDIF
       cUrl += iif("?" $ cUrl, "&", "?") + "_pos="
       cRet := '<br />' + cRet
@@ -553,7 +553,7 @@ STATIC FUNCTION uhttpd_split( cSeparator, cString )
    LOCAL nI
 
    DO WHILE ( nI := At( cSeparator, cString ) ) > 0
-      AAdd( aRet, Left( cString, nI - 1 ) )
+      AAdd( aRet, Left(cString, nI - 1) )
       cString := SubStr( cString, nI + Len( cSeparator ) )
    ENDDO
    AAdd( aRet, cString )

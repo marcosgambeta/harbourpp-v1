@@ -139,7 +139,7 @@ METHOD new( cHtmlString ) CLASS THtmlDocument
 
    IF ! HB_ISSTRING( cHtmlString )
       ::root := THtmlNode():new( cEmptyHtmlDoc )
-   ELSEIF "<html" $ Lower(Left( cHtmlString, 4096 ))
+   ELSEIF "<html" $ Lower(Left(cHtmlString, 4096))
       ::root := THtmlNode():new( cHtmlString )
    ELSE
       ::root := THtmlNode():new( cEmptyHtmlDoc )
@@ -618,7 +618,7 @@ METHOD new( oParent, cTagName, cAttrib, cContent ) CLASS THtmlNode
       ::root        := oParent:root
       ::parent      := oParent
       IF HB_ISSTRING( cAttrib )
-         IF Right( cAttrib, 1 ) == "/"
+         IF Right(cAttrib, 1) == "/"
             ::htmlEndTagName := "/"
             ::htmlAttributes := hb_StrShrink( cAttrib )
          ELSE
@@ -713,7 +713,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
             nPos := Len( cText ) + 1
             DO WHILE nPos > 0 .AND. SubStr( cText, --nPos, 1 ) $ Chr( 9 ) + Chr( 10 ) + Chr( 13 )
             ENDDO
-            oThisTag:addNode( THtmlNode():new( oThisTag, "_text_", , Left( cText, nPos ) ) )
+            oThisTag:addNode( THtmlNode():new( oThisTag, "_text_", , Left(cText, nPos) ) )
          ELSE
             oThisTag:addNode( THtmlNode():new( oThisTag, "_text_", , cText ) )
          ENDIF
@@ -727,7 +727,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
       cTagName := StrTran( cTagName, ">" )
       cTagName := AllTrim(SubStr( cTagName, 2 ))
 
-      SWITCH Left( cTagName, 1 )
+      SWITCH Left(cTagName, 1)
       CASE "!"
          // comment or PI
          oThisTag:addNode( THtmlNode():new( oThisTag, cTagName, hb_StrShrink( cAttr ) ) )
@@ -1059,7 +1059,7 @@ METHOD toString( nIndent ) CLASS THtmlNode
       IF ::isInline() .OR. ::keepFormatting() .OR. ::isType( CM_HEADING ) .OR. ::isType( CM_HEAD )
          RETURN cHtml += iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
       ENDIF
-      IF ! Right( cHtml, Len( hb_eol() ) ) == hb_eol()
+      IF ! Right(cHtml, Len( hb_eol() )) == hb_eol()
          cHtml += hb_eol()
       ENDIF
       RETURN cHtml += cIndent + iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
@@ -1407,7 +1407,7 @@ METHOD noAttribute( cName, aValue ) CLASS THtmlNode
 
       RETURN oNode
 
-   ELSEIF Right( cName, 1 ) == "s" .AND. hb_StrShrink( cName ) $ t_hHT
+   ELSEIF Right(cName, 1) == "s" .AND. hb_StrShrink( cName ) $ t_hHT
       // message is the plural of a html tag -> oNode:forms -> Array of <FORM> tags
       RETURN ::findNodesByTagName( hb_StrShrink( cName ), ATail( aValue ) )
    ENDIF
@@ -1538,7 +1538,7 @@ METHOD popNode( cName ) CLASS THtmlNode
     */
    IF hb_AScan( { "tr", "th", "td" }, cName,,, .T. ) > 0
       endTag := "</" + cName + ">"
-      IF ! Right( ::toString(), 3 + Len( cName ) ) == endTag
+      IF ! Right(::toString(), 3 + Len( cName )) == endTag
          ::addNode( THtmlNode():new( Self, "/" + cName, ,  ) )
       ENDIF
    ENDIF
@@ -1552,7 +1552,7 @@ STATIC FUNCTION CutStr( cCut, cString )
    LOCAL cLeftPart, i
 
    IF ( i := At( cCut, cString ) ) > 0
-      cLeftPart := Left( cString, i - 1 )
+      cLeftPart := Left(cString, i - 1)
       cString   := SubStr( cString, i + Len( cCut ) )
    ELSE
       cLeftPart := cString

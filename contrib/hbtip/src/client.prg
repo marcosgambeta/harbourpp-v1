@@ -337,7 +337,7 @@ METHOD ReadHTTPProxyResponse( /* @ */ cResponse ) CLASS TIPClient
          RETURN .F.
       ENDIF
       cResponse += cBuffer
-      IF hb_BRight( cResponse, 4 ) == e"\r\n\r\n"
+      IF hb_BRight(cResponse, 4) == e"\r\n\r\n"
          EXIT
       ENDIF
    ENDDO
@@ -400,7 +400,7 @@ METHOD Read( nLen ) CLASS TIPClient
       cStr0 := ""
       DO WHILE ( ::nLastRead := ::inetRecv( ::SocketCon, @cStr1, RCV_BUF_SIZE ) ) > 0
          ::nRead += ::nLastRead
-         cStr0 += hb_BLeft( cStr1, ::nLastRead )
+         cStr0 += hb_BLeft(cStr1, ::nLastRead)
       ENDDO
       ::bEof := .T.
    ELSE
@@ -421,7 +421,7 @@ METHOD Read( nLen ) CLASS TIPClient
 
       IF ::nLastRead != nLen
          ::bEof := .T.
-         cStr0 := hb_BLeft( cStr0, ::nLastRead )
+         cStr0 := hb_BLeft(cStr0, ::nLastRead)
 #if 0
          RETURN NIL
 #endif

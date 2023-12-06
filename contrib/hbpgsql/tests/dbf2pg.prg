@@ -176,7 +176,7 @@ PROCEDURE Main()
 
       FOR i := 1 TO oTable:FCount()
          cField := Lower(oTable:FieldName( i ))
-         cTypeDB := Left( hb_FieldType( FieldPos( cField ) ), 1 )
+         cTypeDB := Left(hb_FieldType( FieldPos( cField ) ), 1)
          cTypePG := oRecord:FieldType( i )
          cValue := FieldGet( FieldPos( cField ) )
 
@@ -211,7 +211,7 @@ PROCEDURE Main()
 
       IF oTable:NetErr()
          ?
-         ? "Error Record:", RecNo(), Left( oTable:ErrorMsg(), 70 )
+         ? "Error Record:", RecNo(), Left(oTable:ErrorMsg(), 70)
          ?
          hb_vfWrite( hFile, "Error at record: " + hb_ntos( RecNo() ) + " Description: " + oTable:ErrorMsg() + hb_eol() )
       ELSE

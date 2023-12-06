@@ -264,7 +264,7 @@ METHOD EditField() CLASS TBrowseSQL
 
          /* NOTE: To do in a better way */
          IF ! ::oQuery:Update( ::oCurRow )
-            Alert( Left( ::oQuery:Error(), 60 ) )
+            Alert( Left(::oQuery:Error(), 60) )
          ENDIF
       ENDIF
 
@@ -287,7 +287,7 @@ METHOD EditField() CLASS TBrowseSQL
 
       /* NOTE: To do in a better way */
       IF ! ::oQuery:Update( ::oCurRow )
-         Alert( Left( ::oQuery:Error(), 60 ) )
+         Alert( Left(::oQuery:Error(), 60) )
       ENDIF
 
    endif

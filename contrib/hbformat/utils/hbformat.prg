@@ -64,7 +64,7 @@ PROCEDURE Main( ... )
 #endif
    aParams := hb_AParams()
 
-   IF Empty(aParams) .OR. Left( cFileName := ATail( aParams ), 1 ) $ "@-"
+   IF Empty(aParams) .OR. Left(cFileName := ATail( aParams ), 1) $ "@-"
       About()
       RETURN
    ENDIF

@@ -121,7 +121,7 @@ PROCEDURE Main( cURL, cFile )
             IF ( cData := oClient:Read() ) == ""
                ? "Error: file could not be retrieved", oClient:lastErrorMessage()
             ELSE
-               ? "First 80 characters:", hb_ValToExp( hb_BLeft( cData, 80 ) ) )
+               ? "First 80 characters:", hb_ValToExp( hb_BLeft(cData, 80) ) )
             ENDIF
          ELSEIF oClient:ReadToFile( cFile )
             ? "File", cFile, "written."

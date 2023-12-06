@@ -294,7 +294,7 @@ METHOD PROCEDURE ErrHandler( xError ) CLASS TIPCgi
          "<tr><td>CRITICAL ERROR:</td><td>" + xError:Description + "</td></tr>" + ;
          "<tr><td>OPERATION:</td><td>" + xError:Operation + "</td></tr>" + ;
          "<tr><td>OS ERROR:</td><td>" + hb_ntos( xError:OsCode ) + " IN " + xError:SubSystem + "/" + hb_ntos( xError:SubCode ) + "</td></tr>" + ;
-         "<tr><td>FILENAME:</td><td>" + Right( xError:FileName, 40 ) + "</td></tr>"
+         "<tr><td>FILENAME:</td><td>" + Right(xError:FileName, 40) + "</td></tr>"
    CASE HB_ISSTRING( xError )
       cErrMsg += "<tr><td>ERROR MESSAGE:</td><td>" + tip_HtmlSpecialChars( xError ) + "</td></tr>"
    ENDCASE

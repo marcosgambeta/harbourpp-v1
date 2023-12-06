@@ -67,7 +67,7 @@ PROCEDURE Main( ... )
    cData := ""
    cBuffer := Space( 1024 )
    DO WHILE ( nLen := FRead( nFileInput, @cBuffer, hb_BLen( cBuffer ) ) ) > 0
-      cData += hb_BLeft( cBuffer, nLen )
+      cData += hb_BLeft(cBuffer, nLen)
    ENDDO
    IF hFileInput != NIL
       hb_vfClose( hFileInput )

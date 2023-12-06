@@ -33,7 +33,7 @@ PROCEDURE Main()
    oPC:cStart( "/NoProcessingAtStartup" )
    oPC:_cOption( "UseAutosave", 1 )
    oPC:_cOption( "UseAutosaveDirectory", 1 )
-   oPC:_cOption( "AutosaveDirectory", Left( cFileName, RAt( hb_ps(), cFilename ) - 1 ) )
+   oPC:_cOption( "AutosaveDirectory", Left(cFileName, RAt( hb_ps(), cFilename ) - 1) )
    oPC:_cOption( "AutosaveFilename", "pdfcreat.pdf" )
    oPC:_cOption( "AutosaveFormat", 0 )
 

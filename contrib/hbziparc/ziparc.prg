@@ -346,7 +346,7 @@ FUNCTION hb_ZipFile( ;
                   IF ! Empty(cDrive) .AND. hb_LeftEq( cPath, cDrive += hb_osDriveSeparator() )
                      cPath := SubStr( cPath, Len( cDrive ) + 1 )
                   ENDIF
-                  DO WHILE Left( cPath, 1 ) $ "\/"
+                  DO WHILE Left(cPath, 1) $ "\/"
                      cPath := SubStr( cPath, 2 )
                   ENDDO
                ENDIF

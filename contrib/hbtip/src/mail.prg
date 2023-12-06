@@ -147,7 +147,7 @@ METHOD GetFieldPart( cPart ) CLASS TIPMail
 
    IF hb_HGetRef( ::hHeaders, cPart, @cEnc )
       IF ( nPos := At( ";", cEnc ) ) > 0
-         cEnc := Left( cEnc, nPos - 1 )
+         cEnc := Left(cEnc, nPos - 1)
       ENDIF
       RETURN cEnc
    ENDIF
@@ -658,7 +658,7 @@ FUNCTION tip_GetNameEmail( cAddress )
 
    IF ( tmp := At( "<", cAddress ) ) > 0 .AND. ;
       hb_At( ">", cAddress, tmp + 1 ) > 0
-      RETURN RTrim(Left( cAddress, tmp - 1 ))
+      RETURN RTrim(Left(cAddress, tmp - 1))
    ENDIF
 
    RETURN cAddress

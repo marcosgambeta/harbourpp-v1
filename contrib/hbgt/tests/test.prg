@@ -17,8 +17,8 @@ PROCEDURE Main()
    HBTEST gt_StrCSPN( "this is a test", "elnjpq" )                 IS 11
    HBTEST gt_StrDiff( "the cat", "the rat" )                       IS "rat"
    HBTEST gt_StrExpand( "Harbour", 2, "-" )                        IS "H--a--r--b--o--u--r"
-   HBTEST gt_StrLeft( "this is a test", "hsit " )                  IS 8
+   HBTEST gt_StrLeft("this is a test", "hsit ")                    IS 8
    HBTEST gt_StrPBRK( "this is a test", "sa " )                    IS "s is a test"
-   HBTEST gt_StrRight( "this is a test", "teas " )                 IS 8
+   HBTEST gt_StrRight("this is a test", "teas ")                   IS 8
 
    RETURN

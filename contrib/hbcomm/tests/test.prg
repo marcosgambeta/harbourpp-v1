@@ -91,7 +91,7 @@ STATIC PROCEDURE FReceive()
    IF nSize > 0
       cReceive := Space( nSize )
       INCHR( s_nHandle, nSize, @cReceive )
-      ? ">>", Left( cReceive, nSize )
+      ? ">>", Left(cReceive, nSize)
    ENDIF
 
    RETURN

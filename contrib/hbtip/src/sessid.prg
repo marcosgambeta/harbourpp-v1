@@ -56,7 +56,7 @@ FUNCTION tip_GenerateSID( cCRCKey )
    LOCAL cBaseKeys   := BASE_KEY_STRING
    LOCAL nLenKeys    := Len( cBaseKeys )
 
-   cCRCKey := Left( hb_defaultValue( cCRCKey, CRC_KEY_STRING ), 10 )  // Max Length must to be of 10 chars
+   cCRCKey := Left(hb_defaultValue( cCRCKey, CRC_KEY_STRING ), 10)  // Max Length must to be of 10 chars
 
    /* Let's generate the sequence */
    cSID := ""
@@ -81,7 +81,7 @@ FUNCTION tip_CheckSID( cSID, cCRCKey )
 
    LOCAL nSIDCRC, cSIDCRC, n, cTemp, nKey
 
-   cCRCKey := Left( hb_defaultValue( cCRCKey, CRC_KEY_STRING ), 10 )  // Max Length must to be of 10 chars
+   cCRCKey := Left(hb_defaultValue( cCRCKey, CRC_KEY_STRING ), 10)  // Max Length must to be of 10 chars
 
    /* Calculate the key */
    nKey := 0
@@ -98,7 +98,7 @@ FUNCTION tip_CheckSID( cSID, cCRCKey )
       cSIDCRC += SubStr( cCRCKey, Val( SubStr( cTemp, n, 1 ) ) + 1, 1 )
    NEXT
 
-   RETURN Right( cSID, 5 ) == cSIDCRC
+   RETURN Right(cSID, 5) == cSIDCRC
 
 FUNCTION tip_DateToGMT( tDate )
 

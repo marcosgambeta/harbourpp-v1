@@ -71,7 +71,7 @@ PROCEDURE Main( cInputFile )
 
       cOutput := hb_MemoRead( __FILE__ )
       IF ( tmp := RAt( "<<< */", cOutput ) ) > 0
-         cOutput := Left( cOutput, tmp - 1 ) + "<<< */" + hb_eol() + hb_eol()
+         cOutput := Left(cOutput, tmp - 1) + "<<< */" + hb_eol() + hb_eol()
       ENDIF
 
       cOutput += "FUNCTION hbtest_Table( cAlias, ... )" + hb_eol()

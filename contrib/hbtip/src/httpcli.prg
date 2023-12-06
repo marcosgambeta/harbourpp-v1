@@ -327,7 +327,7 @@ METHOD Read( nLen ) CLASS TIPClientHTTP
 
       // Remove the extensions
       IF ( nPos := At( ";", cLine ) ) > 0
-         cLine := Left( cLine, nPos - 1 )
+         cLine := Left(cLine, nPos - 1)
       ENDIF
 
       // Convert to length
@@ -442,7 +442,7 @@ METHOD getcookies( cHost, cPath ) CLASS TIPClientHTTP
    z := Len( cHost )
    cHost := Upper(cHost)
    FOR EACH x IN hb_HKeys( ::hCookies )
-      IF Upper(Right( x, z )) == cHost .AND. ( Len( x ) == z .OR. SubStr( x, -z, 1 ) == "." )
+      IF Upper(Right(x, z)) == cHost .AND. ( Len( x ) == z .OR. SubStr( x, -z, 1 ) == "." )
          AAdd( aDomKeys, x )
       ENDIF
    NEXT
@@ -452,7 +452,7 @@ METHOD getcookies( cHost, cPath ) CLASS TIPClientHTTP
    FOR EACH x IN ASort( aDomKeys,,, {| cX, cY | Len( cX ) > Len( cY ) } )  // more specific paths should be sent before lesser generic paths
       aPathKeys := {}
       FOR EACH cKey IN hb_HKeys( ::hCookies[ x ] )
-         IF cKey == "/" .OR. ( Len( cKey ) <= nPath .AND. Left( cKey, nPath ) == cKey )
+         IF cKey == "/" .OR. ( Len( cKey ) <= nPath .AND. Left(cKey, nPath) == cKey )
             AAdd( aPathKeys, cKey )
          ENDIF
       NEXT
@@ -545,7 +545,7 @@ METHOD PostMultiPart( xPostData, cQuery ) CLASS TIPClientHTTP
       IF ( hFile := hb_vfOpen( cFile, FO_READ ) ) != NIL
          cBuffer := Space( 65536 )
          DO WHILE ( nRead := hb_vfRead( hFile, @cBuffer, hb_Blen( cBuffer ) ) ) > 0
-            cData += hb_BLeft( cBuffer, nRead )
+            cData += hb_BLeft(cBuffer, nRead)
          ENDDO
          hb_vfClose( hFile )
       ENDIF

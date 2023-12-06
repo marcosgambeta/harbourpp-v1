@@ -565,7 +565,7 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
          ENDIF
       NEXT
 
-      DO WHILE Right( cText, Len( hb_eol() ) ) == hb_eol()
+      DO WHILE Right(cText, Len( hb_eol() )) == hb_eol()
          cText := hb_StrShrink( cText, Len( hb_eol() ) )
       ENDDO
 
