@@ -124,7 +124,7 @@ METHOD FieldPut( cnField, Value ) CLASS TMySQLRow
 
          // if it is a char field remove trailing spaces
          IF HB_ISSTRING( Value )
-            Value := RTrim( Value )
+            Value := RTrim(Value)
          ENDIF
 
          // Save starting value for this field
@@ -693,7 +693,7 @@ METHOD New( nSocket, cQuery, cTableName ) CLASS TMySQLTable
 
    LOCAL i
 
-   ::super:New( nSocket, AllTrim( cQuery ) )
+   ::super:New( nSocket, AllTrim(cQuery) )
 
    ::cTable := Lower(cTableName)
    ::aOldValue := {}
@@ -1094,7 +1094,7 @@ METHOD FieldPut( cnField, Value ) CLASS TMySQLTable
 
          // if it is a char field remove trailing spaces
          IF HB_ISSTRING( Value )
-            Value := RTrim( Value )
+            Value := RTrim(Value)
          ENDIF
 
          ::aRow[ nNum ] := Value
@@ -1438,7 +1438,7 @@ METHOD Query( cQuery ) CLASS TMySQLServer
 
    hb_default( @cQuery, "" )
 
-   cUpperQuery := Upper(AllTrim( cQuery ))
+   cUpperQuery := Upper(AllTrim(cQuery))
    i := 1
    nNumTables := 1
 

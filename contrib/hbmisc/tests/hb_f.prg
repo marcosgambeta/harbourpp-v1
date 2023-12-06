@@ -39,6 +39,6 @@ STATIC PROCEDURE my_goto( n_go )
    hb_FGoto( n_go )
    ?
    ? "after hb_FGoto( " + hb_ntos( n_go ) + " )"
-   ? "line " + hb_ntos( hb_FRecNo() ) + " is " + LTrim( hb_FReadLn() )
+   ? "line " + hb_ntos( hb_FRecNo() ) + " is " + LTrim(hb_FReadLn())
 
    RETURN

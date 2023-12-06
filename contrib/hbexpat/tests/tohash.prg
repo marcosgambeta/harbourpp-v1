@@ -95,7 +95,7 @@ STATIC FUNCTION DUMPATTR( hAttr )
       FOR EACH cValue IN hAttr
          s += cValue:__enumKey() + "='" + cValue + "' "
       NEXT
-      s := RTrim( s ) + ")"
+      s := RTrim(s) + ")"
    ENDIF
 
    RETURN s
@@ -156,7 +156,7 @@ STATIC PROCEDURE cb_data( aUserData, cData )
 
    /* Still not perfect. In unlucky case, it can strip valid whitespace */
    IF Empty(aUserData[ _D_aNode ][ _N_xValue ])
-      aUserData[ _D_aNode ][ _N_xValue ] := AllTrim( aUserData[ _D_aNode ][ _N_xValue ] )
+      aUserData[ _D_aNode ][ _N_xValue ] := AllTrim(aUserData[ _D_aNode ][ _N_xValue ])
    ENDIF
 
    RETURN

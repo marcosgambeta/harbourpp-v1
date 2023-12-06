@@ -621,7 +621,7 @@ METHOD FieldPos( cField ) CLASS TFbQuery
    LOCAL result := 0
 
    IF ! ::lError
-      result := AScan( ::aStruct, {| x | x[ 1 ] == RTrim( Upper(cField) ) } )
+      result := AScan( ::aStruct, {| x | x[ 1 ] == RTrim(Upper(cField)) } )
    ENDIF
 
    RETURN result
@@ -856,7 +856,7 @@ METHOD FieldName( nField ) CLASS TFbRow
    RETURN result
 
 METHOD FieldPos( cField ) CLASS TFbRow
-   RETURN AScan( ::aStruct, {| x | x[ 1 ] == RTrim( Upper(cField) ) } )
+   RETURN AScan( ::aStruct, {| x | x[ 1 ] == RTrim(Upper(cField)) } )
 
 METHOD FieldType( nField ) CLASS TFbRow
 
@@ -924,7 +924,7 @@ STATIC FUNCTION KeyField( aTables, db, dialect )
 
       IF HB_ISARRAY( qry )
          DO WHILE FBFetch( qry ) == 0
-            AAdd( aKeys, RTrim( FBGetData( qry, 1 ) ) )
+            AAdd( aKeys, RTrim(FBGetData( qry, 1 )) )
          ENDDO
 
          FBFree( qry )
@@ -1000,13 +1000,13 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
       FBFree( qry )
 
       FOR i := 1 TO Len( aStru )
-         cField := RTrim( aStru[ i ][ 7 ] )
+         cField := RTrim(aStru[ i ][ 7 ])
          nType := aStru[ i ][ 2 ]
          nSize := aStru[ i ][ 3 ]
          nDec := aStru[ i ][ 4 ] * -1
-         cTable := RTrim( aStru[ i ][ 5 ] )
+         cTable := RTrim(aStru[ i ][ 5 ])
 
-         nVal := AScan( aDomains, {| x | RTrim( x[ 1 ] ) == cTable .AND. RTrim( x[ 2 ] ) == cField } )
+         nVal := AScan( aDomains, {| x | RTrim(x[ 1 ]) == cTable .AND. RTrim(x[ 2 ]) == cField } )
 
          IF nVal != 0
             cDomain := aDomains[ nVal, 3 ]

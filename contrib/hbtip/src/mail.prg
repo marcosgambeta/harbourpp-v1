@@ -360,7 +360,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
       IF ( SubStr( cMail, nPos, 1 ) == " " .OR. SubStr( cMail, nPos, 1 ) == e"\t" ) .AND. ;
          cLastField != NIL
 
-         cValue := LTrim( SubStr( cMail, nPos, nLinePos - nPos ) )
+         cValue := LTrim(SubStr( cMail, nPos, nLinePos - nPos ))
          IF Lower(cLastField) == "received"
             ::aReceived[ Len( ::aReceived ) ] += " " + cValue
          ELSE
@@ -369,7 +369,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
       ELSE
          nSplitPos := hb_At( ":", cMail, nPos )
          cLastField := SubStr( cMail, nPos, nSplitPos - nPos )
-         cValue := LTrim( SubStr( cMail, nSplitPos + 1, nLinePos - nSplitPos - 1 ) )
+         cValue := LTrim(SubStr( cMail, nSplitPos + 1, nLinePos - nSplitPos - 1 ))
          IF Lower(cLastField) == "received"
             AAdd( ::aReceived, cValue )
          ELSE
@@ -507,7 +507,7 @@ METHOD setHeader( cSubject, cFrom, xTo, xCC ) CLASS TIPMail
    ENDCASE
 
    ::setFieldPart( "Subject", WordEncodeQ( hb_defaultValue( cSubject, "" ), ::cCharset ) )
-   ::setFieldPart( "From", LTrim( WordEncodeQ( tip_GetNameEmail( AllTrim( cFrom ) ), ::cCharset ) + " <" + tip_GetRawEmail( AllTrim( cFrom ) ) + ">" ) )
+   ::setFieldPart( "From", LTrim(WordEncodeQ( tip_GetNameEmail( AllTrim(cFrom) ), ::cCharset ) + " <" + tip_GetRawEmail( AllTrim(cFrom) ) + ">") )
 
    cTo := ""
    FOR EACH i IN aTo
@@ -515,10 +515,10 @@ METHOD setHeader( cSubject, cFrom, xTo, xCC ) CLASS TIPMail
          IF ! Empty(cTo)
             cTo += "," + e"\r\n" + " "
          ENDIF
-         i := AllTrim( i )
+         i := AllTrim(i)
          cName := tip_GetNameEmail( i )
          cAddr := tip_GetRawEmail( i )
-         cTo += iif(cName == cAddr, cAddr, LTrim( WordEncodeQ( cName, ::cCharset ) ) + " <" + cAddr + ">")
+         cTo += iif(cName == cAddr, cAddr, LTrim(WordEncodeQ( cName, ::cCharset )) + " <" + cAddr + ">")
       ENDIF
    NEXT
 
@@ -535,10 +535,10 @@ METHOD setHeader( cSubject, cFrom, xTo, xCC ) CLASS TIPMail
             IF ! Empty(cCC)
                cCC += "," + e"\r\n" + " "
             ENDIF
-            i := AllTrim( i )
+            i := AllTrim(i)
             cName := tip_GetNameEmail( i )
             cAddr := tip_GetRawEmail( i )
-            cCC += iif(cName == cAddr, cAddr, LTrim( WordEncodeQ( cName, ::cCharset ) ) + " <" + cAddr + ">")
+            cCC += iif(cName == cAddr, cAddr, LTrim(WordEncodeQ( cName, ::cCharset )) + " <" + cAddr + ">")
          ENDIF
       NEXT
 
@@ -647,7 +647,7 @@ FUNCTION tip_GetRawEmail( cAddress )
 
    IF ( tmp := At( "<", cAddress ) ) > 0 .AND. ;
       ( tmp1 := hb_At( ">", cAddress, tmp + 1 ) ) > 0
-      RETURN AllTrim( SubStr( cAddress, tmp + 1, tmp1 - tmp - 1 ) )
+      RETURN AllTrim(SubStr( cAddress, tmp + 1, tmp1 - tmp - 1 ))
    ENDIF
 
    RETURN cAddress
@@ -658,7 +658,7 @@ FUNCTION tip_GetNameEmail( cAddress )
 
    IF ( tmp := At( "<", cAddress ) ) > 0 .AND. ;
       hb_At( ">", cAddress, tmp + 1 ) > 0
-      RETURN RTrim( Left( cAddress, tmp - 1 ) )
+      RETURN RTrim(Left( cAddress, tmp - 1 ))
    ENDIF
 
    RETURN cAddress

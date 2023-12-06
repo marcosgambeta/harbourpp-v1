@@ -426,7 +426,7 @@ METHOD getBody( nMsgId ) CLASS TIPClientPOP
    xRet := ""
 
    IF ( nBoundary := AScan( aMsg, {| cLine | n1 := hb_AtI( "boundary=", cLine ), n1 > 0 } ) ) > 0
-      cBoundary := AllTrim( StrTran( SubStr( aMsg[ nBoundary ], n1 + 1 ), '"' ) )
+      cBoundary := AllTrim(StrTran( SubStr( aMsg[ nBoundary ], n1 + 1 ), '"' ))
    ENDIF
 
    IF ! Empty(cBoundary)

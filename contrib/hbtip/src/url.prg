@@ -199,8 +199,8 @@ METHOD AddGetForm( xPostData ) CLASS TUrl
    CASE HB_ISHASH( xPostData )
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim( hb_CStr( item:__enumKey() ) ) ) + "=" + ;
-            tip_URLEncode( AllTrim( hb_CStr( item ) ) )
+            tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + "=" + ;
+            tip_URLEncode( AllTrim(hb_CStr( item )) )
          IF ! item:__enumIsLast()
             cData += "&"
          ENDIF
@@ -208,8 +208,8 @@ METHOD AddGetForm( xPostData ) CLASS TUrl
    CASE HB_ISARRAY( xPostData )
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim( hb_CStr( item:__enumIndex() ) ) ) + "=" + ;
-            tip_URLEncode( AllTrim( hb_CStr( item ) ) )
+            tip_URLEncode( AllTrim(hb_CStr( item:__enumIndex() )) ) + "=" + ;
+            tip_URLEncode( AllTrim(hb_CStr( item )) )
          IF ! item:__enumIsLast()
             cData += "&"
          ENDIF

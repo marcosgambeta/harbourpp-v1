@@ -1146,7 +1146,7 @@ STATIC PROCEDURE MyError( e )
       hb_eol()
 
    DO WHILE ! Empty(ProcName( ++i ))
-      cErr += RTrim( ProcName( i ) ) + "(" + hb_ntos( ProcLine( i ) ) + ")" + hb_eol()
+      cErr += RTrim(ProcName( i )) + "(" + hb_ntos( ProcLine( i ) ) + ")" + hb_eol()
    ENDDO
 
    // ? cErr  // Calls quit

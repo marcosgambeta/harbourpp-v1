@@ -48,7 +48,7 @@ FUNCTION IsBin( cString )
 
    LOCAL nX
 
-   cString := AllTrim( cString )
+   cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
       IF ! SubStr( cString, nX, 1 ) $ "01"
          RETURN .F.
@@ -61,7 +61,7 @@ FUNCTION IsOctal( cString )
 
    LOCAL nX
 
-   cString := AllTrim( cString )
+   cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
       IF ! SubStr( cString, nX, 1 ) $ "01234567"
          RETURN .F.
@@ -74,7 +74,7 @@ FUNCTION IsDec( cString )
 
    LOCAL nX
 
-   cString := AllTrim( cString )
+   cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
       IF ! SubStr( cString, nX, 1 ) $ "0123456789"
          RETURN .F.
@@ -87,7 +87,7 @@ FUNCTION IsHexa( cString )
 
    LOCAL nX
 
-   cString := AllTrim( cString )
+   cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
       IF ! SubStr( cString, nX, 1 ) $ "0123456789ABCDEF"
          RETURN .F.
@@ -138,7 +138,7 @@ FUNCTION DecToHexa( nNumber )
 FUNCTION BinToDec( cString )
 
    LOCAL nNumber := 0, nX
-   LOCAL cNewString := AllTrim( cString )
+   LOCAL cNewString := AllTrim(cString)
    LOCAL nLen := Len( cNewString )
 
    FOR nX := 1 TO nLen
@@ -150,7 +150,7 @@ FUNCTION BinToDec( cString )
 FUNCTION OctalToDec( cString )
 
    LOCAL nNumber := 0, nX
-   LOCAL cNewString := AllTrim( cString )
+   LOCAL cNewString := AllTrim(cString)
    LOCAL nLen := Len( cNewString )
 
    FOR nX := 1 TO nLen
@@ -162,7 +162,7 @@ FUNCTION OctalToDec( cString )
 FUNCTION HexaToDec( cString )
 
    LOCAL nNumber := 0, nX
-   LOCAL cNewString := AllTrim( cString )
+   LOCAL cNewString := AllTrim(cString)
    LOCAL nLen := Len( cNewString )
 
    FOR nX := 1 TO nLen

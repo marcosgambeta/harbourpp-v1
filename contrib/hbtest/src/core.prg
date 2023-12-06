@@ -116,7 +116,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
          Eval( bOut, ;
             PadR( iif(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH ) + " " + ;
             PadR( ProcName( 1 ) + "(" + hb_ntos( ProcLine( 1 ) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
-            RTrim( cBlock ) + ;
+            RTrim(cBlock) + ;
             hb_eol() + ;
             Space( 5 ) + "  Result: " + XToStr( xResult, .F. ) + ;
             hb_eol() + ;

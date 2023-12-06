@@ -120,7 +120,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 
       QQOut( hb_eol() )
 
-      cCommand := AllTrim( cCommand )
+      cCommand := AllTrim(cCommand)
 
       IF Empty(cCommand)
          LOOP
@@ -171,7 +171,7 @@ STATIC PROCEDURE ManageCursor( cCommand )
 /* Complete the command-line, based on the first characters that the user typed. [vailtom] */
 STATIC PROCEDURE CompleteCmd( cCommand, hCommands )
 
-   LOCAL s := Lower(AllTrim( cCommand ))
+   LOCAL s := Lower(AllTrim(cCommand))
    LOCAL n
 
    /* We need at least one character to search */
@@ -261,4 +261,4 @@ STATIC FUNCTION hbnetiocon_GetHidden()
 
    QQOut( hb_eol() )
 
-   RETURN AllTrim( cPassword )
+   RETURN AllTrim(cPassword)

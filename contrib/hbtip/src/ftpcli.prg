@@ -558,7 +558,7 @@ METHOD MGet( cSpec, cLocalPath ) CLASS TIPClientFTP
 
    IF ( cStr := ::ReadAuxPort() ) != NIL
       FOR EACH cFile IN hb_ATokens( cStr, .T. )
-         cFile := RTrim( cFile )
+         cFile := RTrim(cFile)
          IF ! cFile == ""
             ::Downloadfile( cLocalPath + cFile, cFile )
          ENDIF

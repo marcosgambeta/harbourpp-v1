@@ -373,7 +373,7 @@ METHOD Output() CLASS UWBrowse
             xI := Eval( xField )
          ENDCASE
          SWITCH ValType( xI )
-         CASE "C"  ; xI := RTrim( xI ); EXIT
+         CASE "C"  ; xI := RTrim(xI); EXIT
          CASE "N"  ; xI := Str( xI ); EXIT
          CASE "D"  ; xI := DToC( xI ); EXIT
          OTHERWISE ; xI := "ValType()==" + ValType( xI )

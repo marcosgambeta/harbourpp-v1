@@ -82,7 +82,7 @@ PROCEDURE Main()
       SWITCH hb_PValue( i )
       CASE "-h" ; cHostName := hb_PValue( ++i ) ; EXIT
       CASE "-d" ; cDatabase := hb_PValue( ++i ) ; EXIT
-      CASE "-t" ; cTable := AllTrim( hb_PValue( ++i ) ) ; EXIT
+      CASE "-t" ; cTable := AllTrim(hb_PValue( ++i )) ; EXIT
       CASE "-f" ; cFile := hb_PValue( ++i ) ; EXIT
       CASE "-u" ; cUser := hb_PValue( ++i ) ; EXIT
       CASE "-p" ; cPassword := hb_PValue( ++i ) ; EXIT
@@ -193,7 +193,7 @@ PROCEDURE Main()
                CASE cTypePG == "D" .AND. cTypeDB $ "CQ" ; cValue := CToD( cValue )
                CASE cTypePG == "D" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := hb_SToD( hb_ntos( cValue ) )
                CASE cTypePG == "L" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := ! Empty(cValue)
-               CASE cTypePG == "L" .AND. cTypeDB $ "CQ" ; cValue := AllTrim( cValue ) $ "YySs1"
+               CASE cTypePG == "L" .AND. cTypeDB $ "CQ" ; cValue := AllTrim(cValue) $ "YySs1"
                ENDCASE
             ENDIF
 

@@ -109,7 +109,7 @@ PROCEDURE Main( cInputFile )
             FOR tmp := 1 TO FCount()
                cOutput += ;
                   hb_ValToExp( ;
-                     iif(hb_LeftEq( hb_FieldType( tmp ), "C" ), RTrim( FieldGet( tmp ) ), FieldGet( tmp )) ) + ;
+                     iif(hb_LeftEq( hb_FieldType( tmp ), "C" ), RTrim(FieldGet( tmp )), FieldGet( tmp )) ) + ;
                   iif(tmp == FCount(), ;
                      iif(RecNo() == LastRec(), " } }", " }, ;") + hb_eol(), ", ")
             NEXT

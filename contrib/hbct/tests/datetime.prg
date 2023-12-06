@@ -370,7 +370,7 @@ FUNCTION ctodowtest()
       IF nKey == K_ESC
          c := .F.
       ELSE
-         @ 11, 10 SAY "The day number is " + Str( CToDoW( Upper(AllTrim( cDow )) ) )
+         @ 11, 10 SAY "The day number is " + Str( CToDoW( Upper(AllTrim(cDow)) ) )
 
          SET CURSOR OFF
          Inkey( 0 )
@@ -413,7 +413,7 @@ FUNCTION ctomonthtest()
       SET ESCAPE OFF
       SET CONFIRM ON
 
-      cDom := AllTrim( cDom )
+      cDom := AllTrim(cDom)
 
       nKey := LastKey()
 
@@ -466,7 +466,7 @@ FUNCTION dInMonthtest()
       SET ESCAPE OFF
       SET CONFIRM ON
 
-      cMonth := Upper(RTrim( cMonth ))
+      cMonth := Upper(RTrim(cMonth))
       nMonth := Val( cMonth )
 
       DO CASE
@@ -601,7 +601,7 @@ FUNCTION dmytest()
          c := .F.
       ELSE
          @ 12, 10 SAY "The date string returned is " + ;
-            LTrim( DMY( dDate, IsAffirm( cMode ) ) )
+            LTrim(DMY( dDate, IsAffirm( cMode ) ))
 
          SET CURSOR OFF
          Inkey( 0 )
@@ -699,7 +699,7 @@ FUNCTION eomtest()
       ELSE
 
          @ 11, 10 SAY "The last date in the month is " + ;
-            LTrim( DToC( EoM( dDate ) ) )
+            LTrim(DToC( EoM( dDate ) ))
 
          SET CURSOR OFF
          Inkey( 0 )
@@ -747,7 +747,7 @@ FUNCTION eoqtest()
       ELSE
 
          @ 11, 10 SAY "The last date in the month is " + ;
-            LTrim( DToC( EoQ( dDate ) ) )
+            LTrim(DToC( EoQ( dDate ) ))
 
          SET CURSOR OFF
          Inkey( 0 )
@@ -796,7 +796,7 @@ FUNCTION eoytest()
       ELSE
 
          @ 11, 10 SAY "The last date in the year is " + ;
-            LTrim( DToC( EoY( dDate ) ) )
+            LTrim(DToC( EoY( dDate ) ))
 
          SET CURSOR OFF
          Inkey( 0 )
@@ -962,7 +962,7 @@ FUNCTION mdytest()
       ELSE
 
          @ 11, 10 SAY "The date string returned is " + ;
-            LTrim( MDY( dDate ) )
+            LTrim(MDY( dDate ))
 
          SET CURSOR OFF
          Inkey( 0 )
@@ -1164,7 +1164,7 @@ FUNCTION stodtest()
          dDate := hb_SToD( cAnsidate )
 
          @ 10, 10 SAY "The Clipper format date is " + ;
-            PadR( LTrim( DToC( dDate ) ), 10 )
+            PadR( LTrim(DToC( dDate )), 10 )
 
          SET CURSOR OFF
          Inkey( 0 )

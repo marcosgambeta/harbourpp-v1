@@ -605,7 +605,7 @@ METHOD WvgWindow:setFontCompoundName( cFont )
          nPoint := 0
       ENDIF
 
-      cFace := AllTrim( cFont )
+      cFace := AllTrim(cFont)
 
       HB_SYMBOL_UNUSED( cFace )
       HB_SYMBOL_UNUSED( cAttr )

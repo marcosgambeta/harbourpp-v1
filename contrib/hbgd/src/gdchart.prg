@@ -338,7 +338,7 @@ METHOD VerticalBarChart() CLASS GDChart
    NEXT
 
    IF ! HB_ISNUMERIC( nLeftLabelSpace )
-      nLeftLabelSpace := nBorder + Len( LTrim( Transform( nMax, cAxisPict ) ) ) * ::GetFontWidth() + nBorder
+      nLeftLabelSpace := nBorder + Len( LTrim(Transform( nMax, cAxisPict )) ) * ::GetFontWidth() + nBorder
    ENDIF
    IF ! HB_ISNUMERIC( nRightLabelSpace )
       nRightLabelSpace := nLeftLabelSpace // nBorder + Len( hb_ntos( nMax ) ) * ::GetFontWidth() + nBorder
@@ -394,10 +394,10 @@ METHOD VerticalBarChart() CLASS GDChart
       // Y Axis
       FOR n := 10 TO 100 STEP 10
          nDim  := ( ( nMaxValue / 100 ) * n )
-         cLabel := LTrim( Transform( nDim, cAxisPict ) )
+         cLabel := LTrim(Transform( nDim, cAxisPict ))
          nPosY := ( nDim / nMaxValue ) * nHeight
          IF lShowLabelLeft
-            ::Say( x - nLeftLabelSpace + nBorder, ::Height() - ( y + nPosY ), PadL( cLabel, Len( LTrim( Transform( nMaxValue, cAxisPict ) ) ) ), color )
+            ::Say( x - nLeftLabelSpace + nBorder, ::Height() - ( y + nPosY ), PadL( cLabel, Len( LTrim(Transform( nMaxValue, cAxisPict )) ) ), color )
          ENDIF
          IF lShowLabelRight
             ::Say( x + nWidth + nBorder, ::Height() - ( y + nPosY ), cLabel, color )
@@ -533,7 +533,7 @@ METHOD HorizontalBarChart() CLASS GDChart
       nLeftLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
    IF ! HB_ISNUMERIC( nRightLabelSpace )
-      nRightLabelSpace := nBorder + ( Len( LTrim( Transform( nMax, cAxisPict ) ) ) * ::GetFontWidth() / 2 )
+      nRightLabelSpace := nBorder + ( Len( LTrim(Transform( nMax, cAxisPict )) ) * ::GetFontWidth() / 2 )
    ENDIF
    IF ! HB_ISNUMERIC( nTopLabelSpace )
       nTopLabelSpace := nBorder + ::GetFontHeight() + nBorder
@@ -589,7 +589,7 @@ METHOD HorizontalBarChart() CLASS GDChart
       // X Axis
       FOR n := 0 TO 100 STEP 10
          nDim   := ( ( nMaxValue / 100 ) * n )
-         cLabel := LTrim( Transform( nDim, cAxisPict ) )
+         cLabel := LTrim(Transform( nDim, cAxisPict ))
          nPosX  := ( nDim / nMaxValue ) * nWidth - ( ( Len( cLabel ) / 2 ) * ::GetFontWidth() )
          IF lShowLabelTop
             ::Say( x + nPosX, y - nTopLabelSpace + nBorder, cLabel, color )
@@ -738,7 +738,7 @@ METHOD LineChart() CLASS GDChart
    NEXT
 
    IF ! HB_ISNUMERIC( nLeftLabelSpace )
-      nLeftLabelSpace := nBorder + Max( Len( LTrim( Transform( nMax, cAxisPict ) ) ), Len( LTrim( Transform( nMin, cAxisPict ) ) ) ) * ::GetFontWidth() + nBorder
+      nLeftLabelSpace := nBorder + Max( Len( LTrim(Transform( nMax, cAxisPict )) ), Len( LTrim(Transform( nMin, cAxisPict )) ) ) * ::GetFontWidth() + nBorder
    ENDIF
    IF ! HB_ISNUMERIC( nRightLabelSpace )
       nRightLabelSpace := nLeftLabelSpace
@@ -821,7 +821,7 @@ METHOD LineChart() CLASS GDChart
       // Y Axis
       FOR n := 0 TO 100 STEP 10
          nDim  := ( ( nTotRange / 100 ) * n )
-         cLabel := LTrim( Transform( nMinValue + ( nTotRange / 10 ) * ( n / 10 ), cAxisPict ) )
+         cLabel := LTrim(Transform( nMinValue + ( nTotRange / 10 ) * ( n / 10 ), cAxisPict ))
          nPosY := ( nDim / nTotRange ) * nHeight
          IF lShowLabelLeft
             ::Say( x - nLeftLabelSpace + nBorder, ::Height() - ( y + nPosY ), cLabel, colorp )

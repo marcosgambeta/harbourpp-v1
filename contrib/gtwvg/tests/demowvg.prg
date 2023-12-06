@@ -528,8 +528,8 @@ STATIC PROCEDURE OnlineMap()
       ENDIF
 
       mweb := "https://maps.google.com/maps?q=from " + ;
-         AllTrim( mfrom3 ) + " " + AllTrim( mfrom2 ) + " " + AllTrim( mfrom1 ) + " to " + ;
-         AllTrim( mto3 )   + " " + AllTrim( mto2 )   + " " + AllTrim( mto1 )
+         AllTrim(mfrom3) + " " + AllTrim(mfrom2) + " " + AllTrim(mfrom1) + " to " + ;
+         AllTrim(mto3)   + " " + AllTrim(mto2)   + " " + AllTrim(mto1)
 
       hb_threadStart( {|| ExecuteActiveX( 1, mweb ) } )
    ENDDO

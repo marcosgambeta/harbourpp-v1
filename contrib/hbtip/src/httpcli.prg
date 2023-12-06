@@ -140,7 +140,7 @@ METHOD PostByVerb( xPostData, cQuery, cVerb ) CLASS TIPClientHTTP
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim( hb_CStr( item:__enumKey() ) ) ) + "=" + ;
+            tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + "=" + ;
             tip_URLEncode(          hb_CStr( item ) )
          IF ! item:__enumIsLast()
             cData += "&"
@@ -150,7 +150,7 @@ METHOD PostByVerb( xPostData, cQuery, cVerb ) CLASS TIPClientHTTP
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
-            tip_URLEncode( AllTrim( hb_CStr( item[ 1 ] ) ) ) + "=" + ;
+            tip_URLEncode( AllTrim(hb_CStr( item[ 1 ] )) ) + "=" + ;
             tip_URLEncode(          hb_CStr( item[ 2 ] ) )
          IF ! item:__enumIsLast()
             cData += "&"
@@ -257,7 +257,7 @@ METHOD ReadHeaders( lClear ) CLASS TIPClientHTTP
          LOOP
       ENDIF
 
-      ::hHeaders[ aHead[ 1 ] ] := LTrim( aHead[ 2 ] )
+      ::hHeaders[ aHead[ 1 ] ] := LTrim(aHead[ 2 ])
 
       DO CASE
       // RFC 2068 forces to discard content length on chunked encoding
@@ -314,7 +314,7 @@ METHOD Read( nLen ) CLASS TIPClientHTTP
          DO WHILE ! ( cLine := hb_defaultValue( ::inetRecvLine( ::SocketCon, @nPos, 1024 ), "" ) ) == ""
             // add Headers to footers
             IF Len( aHead := hb_regexSplit( ":", cLine,,, 1 ) ) == 2
-               ::hHeaders[ aHead[ 1 ] ] := LTrim( aHead[ 2 ] )
+               ::hHeaders[ aHead[ 1 ] ] := LTrim(aHead[ 2 ])
             ENDIF
          ENDDO
 
@@ -389,19 +389,19 @@ METHOD PROCEDURE setCookie( cLine ) CLASS TIPClientHTTP
    FOR EACH x IN hb_regexSplit( ";", cLine )
       IF Len( aElements := hb_regexSplit( "=", x, 1 ) ) == 2
          IF x:__enumIsFirst()
-            cName := AllTrim( aElements[ 1 ] )
-            cValue := AllTrim( aElements[ 2 ] )
+            cName := AllTrim(aElements[ 1 ])
+            cValue := AllTrim(aElements[ 2 ])
          ELSE
-            SWITCH Upper(AllTrim( aElements[ 1 ] ))
+            SWITCH Upper(AllTrim(aElements[ 1 ]))
 #if 0
             CASE "EXPIRES"
                EXIT
 #endif
             CASE "PATH"
-               cPath := AllTrim( aElements[ 2 ] )
+               cPath := AllTrim(aElements[ 2 ])
                EXIT
             CASE "DOMAIN"
-               cHost := AllTrim( aElements[ 2 ] )
+               cHost := AllTrim(aElements[ 2 ])
                EXIT
             ENDSWITCH
          ENDIF
@@ -510,16 +510,16 @@ METHOD PostMultiPart( xPostData, cQuery ) CLASS TIPClientHTTP
       FOR EACH item IN xPostData
          cData += ;
             cBound + cCrlf + "Content-Disposition: form-data; name=" + '"' + ;
-            tip_URLEncode( AllTrim( hb_CStr( item:__enumKey() ) ) ) + '"' + cCrlf + cCrLf + ;
-            tip_URLEncode( AllTrim( hb_CStr( item ) ) ) + cCrLf
+            tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + '"' + cCrlf + cCrLf + ;
+            tip_URLEncode( AllTrim(hb_CStr( item )) ) + cCrLf
       NEXT
    CASE HB_ISARRAY( xPostData )
       FOR EACH item IN xPostData
          IF Len( item ) >= 2
             cData += ;
                cBound + cCrlf + "Content-Disposition: form-data; name=" + '"' + ;
-               tip_URLEncode( AllTrim( hb_CStr( item[ 1 ] ) ) ) + '"' + cCrlf + cCrLf + ;
-               tip_URLEncode( AllTrim( hb_CStr( item[ 2 ] ) ) ) + cCrLf
+               tip_URLEncode( AllTrim(hb_CStr( item[ 1 ] )) ) + '"' + cCrlf + cCrLf + ;
+               tip_URLEncode( AllTrim(hb_CStr( item[ 2 ] )) ) + cCrLf
          ENDIF
       NEXT
    CASE HB_ISSTRING( xPostData )

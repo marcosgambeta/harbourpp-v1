@@ -450,35 +450,35 @@ STATIC FUNCTION NewLineVoodoo( cSectionIn )
 
    FOR EACH cLine IN hb_ATokens( cSectionIn, .T. )
 
-      IF Len( AllTrim( cLine ) ) == 0
+      IF Len( AllTrim(cLine) ) == 0
          IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() )
             cSection += hb_eol()
          ENDIF
          nLastIndent := -1
-      ELSEIF hb_LeftEq( AllTrim( cLine ), "<table" ) .OR. AllTrim( cLine ) == "<fixed>" .OR. hb_LeftEq( AllTrim( cLine ), '```' )
+      ELSEIF hb_LeftEq( AllTrim(cLine), "<table" ) .OR. AllTrim(cLine) == "<fixed>" .OR. hb_LeftEq( AllTrim(cLine), '```' )
          IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() ) .OR. lPreformatted
             cSection += hb_eol()
          ENDIF
-         cSection += AllTrim( cLine )  // + hb_eol()
+         cSection += AllTrim(cLine)  // + hb_eol()
          lLastPreformatted := lPreformatted
          lPreformatted := .T.
-      ELSEIF AllTrim( cLine ) == "</table>" .OR. AllTrim( cLine ) == "</fixed>"
+      ELSEIF AllTrim(cLine) == "</table>" .OR. AllTrim(Line) == "</fixed>"
          IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() ) .OR. lPreformatted
             cSection += hb_eol()
          ENDIF
-         cSection += AllTrim( cLine ) + hb_eol()
+         cSection += AllTrim(cLine) + hb_eol()
          lPreformatted := lLastPreformatted
-      ELSEIF nLastIndent != ( Len( cLine ) - Len( LTrim( cLine ) ) ) .OR. lPreformatted .OR. Right( cLine, Len( "</par>" ) ) == "</par>"
+      ELSEIF nLastIndent != ( Len( cLine ) - Len( LTrim(cLine) ) ) .OR. lPreformatted .OR. Right( cLine, Len( "</par>" ) ) == "</par>"
          IF Right( cLine, Len( "</par>" ) ) == "</par>"
             cLine := hb_StrShrink( cLine, Len( "</par>" ) )
          ENDIF
-         nLastIndent := Len( cLine ) - Len( LTrim( cLine ) )
+         nLastIndent := Len( cLine ) - Len( LTrim(cLine) )
          IF !( Right( cSection, Len( hb_eol() ) ) == hb_eol() )
             cSection += hb_eol()
          ENDIF
-         cSection += iif(lPreformatted, cLine, AllTrim( cLine ))
+         cSection += iif(lPreformatted, cLine, AllTrim(cLine))
       ELSE
-         cSection += " " + AllTrim( cLine )
+         cSection += " " + AllTrim(cLine)
       ENDIF
    NEXT
 
@@ -529,7 +529,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
       ", " + hb_HGetDef( hEntry, "CATEGORY", "" ) + ;
       ", " + hb_HGetDef( hEntry, "SUBCATEGORY", "" ), "," )
 
-      IF ! HB_ISNULL( item := AllTrim( item ) )
+      IF ! HB_ISNULL( item := AllTrim(item) )
          o:_tags[ item ] := NIL
       ENDIF
    NEXT
@@ -701,7 +701,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "PLATFORMS"
       cResult := ""
       FOR EACH cCode IN hb_ATokens( cCode, "," )
-         IF ! HB_ISNULL( cCode := AllTrim( cCode ) )
+         IF ! HB_ISNULL( cCode := AllTrim(cCode) )
             cResult += hb_eol() + hb_HGetDef( sc_hConstraint[ "platforms" ], cCode, cCode )
          ENDIF
       NEXT
@@ -871,7 +871,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
 
    IF nWidth == 0 .OR. lRaw
       idx := 99999
-      AEval( aText, {| c | iif(Empty(c), , idx := Min( idx, Len( c ) - Len( LTrim( c ) ) )) } )
+      AEval( aText, {| c | iif(Empty(c), , idx := Min( idx, Len( c ) - Len( LTrim(c) ) )) } )
       AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr( c, idx + 1 ) } )
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
@@ -882,7 +882,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
             cResult += hb_eol()
             lRaw := .F.
          ELSEIF lRaw .OR. lForceRaw
-            cResult += Space( nLeftMargin ) + LTrim( cLine ) + hb_eol()
+            cResult += Space( nLeftMargin ) + LTrim(cLine) + hb_eol()
          ELSE
             DO WHILE Len( cLine ) > nWidth
                idx := nWidth + 1
@@ -922,7 +922,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                ENDIF
 
                cResult += Space( nLeftMargin ) + Left( cLine, idx - iif(SubStr( cLine, idx, 1 ) == " ", 1, 0) ) + hb_eol()
-               cLine := LTrim( SubStr( cLine, idx + 1 ) )
+               cLine := LTrim(SubStr( cLine, idx + 1 ))
             ENDDO
 
             IF ! HB_ISNULL( cLine )

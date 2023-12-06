@@ -47,7 +47,7 @@ FUNCTION NumToTxtEN( nValue )
       nValue -= Int( nValue )
    ENDIF
 
-   RETURN RTrim( cRetVal )
+   RETURN RTrim(cRetVal)
 
 STATIC FUNCTION int_to_string( nValue )
 

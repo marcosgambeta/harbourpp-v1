@@ -238,7 +238,7 @@ FUNCTION GetVars( cFields, cSeparator )
          LOOP
       ENDIF
 
-      cName  := LTrim( aField[ 1 ] )
+      cName  := LTrim(aField[ 1 ])
       xValue := UrlDecode( aField[ 2 ] )
 
       // TraceLog( "cName, xValue", cName, xValue )
@@ -274,7 +274,7 @@ FUNCTION GetParams( aParams )
          LOOP
       ENDIF
 
-      cName  := LTrim( aField[ 1 ] )
+      cName  := LTrim(aField[ 1 ])
       xValue := UrlDecode( aField[ 2 ] )
 
       // TraceLog( "cName, xValue", cName, xValue )

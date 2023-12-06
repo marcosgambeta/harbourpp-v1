@@ -368,7 +368,7 @@ FUNCTION SQLPrepare( cQuery, ... )
             x := iif(x, "'t'", "'f'")
 
          CASE HB_ISSTRING( x )
-            x := SToQ( RTrim( x ) )
+            x := SToQ( RTrim(x) )
 
          OTHERWISE
             x := "null"

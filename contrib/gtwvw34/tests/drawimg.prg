@@ -92,7 +92,7 @@ PROCEDURE Main()
       CLS
       SetCursor( SC_NORMAL )
       cpict := PadR( cpict, 256 )
-      @ 0, 0 SAY "FileName  :" GET cpict PICTURE "@KS40" VALID hb_vfExists( RTrim( cpict ) )
+      @ 0, 0 SAY "FileName  :" GET cpict PICTURE "@KS40" VALID hb_vfExists( RTrim(cpict) )
       @ 1, 0 SAY "Transpar? :" GET ltransp PICTURE "Y"
       @ 2, 0 SAY "Max Cache :" GET nMaxCache PICTURE "999"
       @ 3, 0 SAY "NumOfCache=" + Str( wvw_NumBMCache(), 3 ) + ", " + ;
@@ -108,7 +108,7 @@ PROCEDURE Main()
       @ 5, 0 SAY "TOPLEFT: stretched image                 TOPRIGHT: fit vertically (proportional)"
       @ 6, 0 SAY "BOTLEFT: fit horizontally (proportional) BOTRIGHT: actual image size"
 
-      cpict := AllTrim( cpict )
+      cpict := AllTrim(cpict)
 
 #if 0
       wvw_LoadPicture( 1, cpict )  // 2006-07-07

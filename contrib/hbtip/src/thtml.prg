@@ -460,7 +460,7 @@ METHOD MatchCriteria( oFound ) CLASS THtmlIteratorScan
    IF ::cData != NIL
       xData := oFound:getText( " " )
       /* NOTE: != changed to ! == */
-      IF Empty(xData) .OR. ! AllTrim( ::cData ) == AllTrim( xData )
+      IF Empty(xData) .OR. ! AllTrim(::cData) == AllTrim(xData)
          RETURN .F.
       ENDIF
    ENDIF
@@ -503,7 +503,7 @@ METHOD MatchCriteria( oFound ) CLASS THtmlIteratorRegex
 
    IF ::cData != NIL
       xData := oFound:getText( " " )
-      IF Empty(xData) .OR. ! hb_regexHas( AllTrim( ::cData ), AllTrim( xData ) )
+      IF Empty(xData) .OR. ! hb_regexHas( AllTrim(::cData), AllTrim(xData) )
          RETURN .F.
       ENDIF
    ENDIF
@@ -693,13 +693,13 @@ METHOD parseHtml( parser ) CLASS THtmlNode
       P_SEEK( parser, ">" )
       nEnd     := parser:p_pos
       cAttr    := SubStr( parser:p_Str, nStart, nEnd - nStart + 1 )
-      cText    := LTrim( SubStr( parser:p_str, nLastPos + 1, nStart - nLastPos - 1 ) )
+      cText    := LTrim(SubStr( parser:p_str, nLastPos + 1, nStart - nLastPos - 1 ))
       cTagName := CutStr( " ", @cAttr )
 
       IF ! cText == ""
          IF hb_LeftEq( cText, "</" )
             // ending tag of previous node
-            cText := Lower(AllTrim( SubStr( CutStr( ">", @cText ), 3 ) ))
+            cText := Lower(AllTrim(SubStr( CutStr( ">", @cText ), 3 )))
             oLastTag := oThisTag:parent
             DO WHILE oLastTag != NIL .AND. ! Lower(oLastTag:htmlTagName) == cText  /* NOTE: != changed to ! == */
                oLastTag := oLastTag:parent
@@ -709,7 +709,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
             ENDIF
 
          ELSEIF Chr( 10 ) $ cText
-            cText := RTrim( cText )
+            cText := RTrim(cText)
             nPos := Len( cText ) + 1
             DO WHILE nPos > 0 .AND. SubStr( cText, --nPos, 1 ) $ Chr( 9 ) + Chr( 10 ) + Chr( 13 )
             ENDDO
@@ -721,11 +721,11 @@ METHOD parseHtml( parser ) CLASS THtmlNode
 
       IF cTagName == "<"
          // <  tagName>
-         cAttr    := LTrim( cAttr )
+         cAttr    := LTrim(cAttr)
          cTagName += CutStr( " ", @cAttr )
       ENDIF
       cTagName := StrTran( cTagName, ">" )
-      cTagName := AllTrim( SubStr( cTagName, 2 ) )
+      cTagName := AllTrim(SubStr( cTagName, 2 ))
 
       SWITCH Left( cTagName, 1 )
       CASE "!"
@@ -1148,7 +1148,7 @@ METHOD getText( cEOL ) CLASS THtmlNode
    hb_default( @cEOL, hb_eol() )
 
    IF ::htmlTagName == "_text_"
-      RETURN RTrim( ::htmlContent ) + cEOL
+      RETURN RTrim(::htmlContent) + cEOL
    ENDIF
 
    FOR EACH oNode IN ::htmlContent
@@ -1199,7 +1199,7 @@ METHOD getAttributes() CLASS THtmlNode
          ::htmlAttributes := { => }
          hb_HCaseMatch( ::htmlAttributes, .F. )
       ELSE
-         ::htmlAttributes := __ParseAttr( P_PARSER( AllTrim( ::htmlAttributes ) ) )
+         ::htmlAttributes := __ParseAttr( P_PARSER( AllTrim(::htmlAttributes) ) )
       ENDIF
    ENDIF
 
@@ -1468,7 +1468,7 @@ METHOD _getTextNode() CLASS THtmlNode
 // assigns text to a text node of this node
 METHOD _setTextNode( cText ) CLASS THtmlNode
 
-   cText := LTrim( hb_ValToStr( cText ) )
+   cText := LTrim(hb_ValToStr( cText ))
 
    DO WHILE "<" $ cText
       cText := StrTran( cText, "<", "&lt;" )
@@ -1487,7 +1487,7 @@ METHOD _setTextNode( cText ) CLASS THtmlNode
 METHOD pushNode( cTagName ) CLASS THtmlNode
 
    LOCAL oNode
-   LOCAL cAttr := AllTrim( cTagName )
+   LOCAL cAttr := AllTrim(cTagName)
    LOCAL cName := CutStr( " ", @cAttr )
 
    IF ::isEmpty()
@@ -1504,7 +1504,7 @@ METHOD pushNode( cTagName ) CLASS THtmlNode
       RETURN ::error( "Invalid HTML tag", ::className(), "+", EG_ARG, { cName } )
    ENDIF
 
-   IF LTrim( cAttr ) == ""
+   IF LTrim(cAttr) == ""
       cAttr := NIL
    ENDIF
 
@@ -1522,7 +1522,7 @@ METHOD popNode( cName ) CLASS THtmlNode
 
    LOCAL endTag
 
-   cName := Lower(LTrim( cName ))
+   cName := Lower(LTrim(cName))
 
    IF hb_LeftEq( cName, "/" )
       cName := SubStr( cName, 1 + 1 )

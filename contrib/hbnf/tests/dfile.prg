@@ -51,7 +51,7 @@ PROCEDURE Main( cInFile )
 
    @ 4, 9 TO 11, 71
 
-   ft_DFSetup( AllTrim( cInFile ), 5, 10, 10, 70, nStart, ;
+   ft_DFSetup( AllTrim(cInFile), 5, 10, 10, 70, nStart, ;
       nNColor, nHColor, aExitKeys, ;
       lBrowse, nColSkip, nRMargin, nBuffSize )
 

@@ -131,13 +131,13 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
       ENDIF
       cTo := ""
       FOR EACH cTmp IN xTo
-         cTo += tip_GetRawEmail( AllTrim( cTmp ) )
+         cTo += tip_GetRawEmail( AllTrim(cTmp) )
          IF ! cTmp:__enumIsLast()
             cTo += ","
          ENDIF
       NEXT
    CASE HB_ISSTRING( xTo )
-      cTo := tip_GetRawEmail( AllTrim( xTo ) )
+      cTo := tip_GetRawEmail( AllTrim(xTo) )
    ENDCASE
 
    // CC (Carbon Copy)
@@ -150,13 +150,13 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
       NEXT
       cCC := ""
       FOR EACH cTmp IN xCC
-         cCC += tip_GetRawEmail( AllTrim( cTmp ) )
+         cCC += tip_GetRawEmail( AllTrim(cTmp) )
          IF ! cTmp:__enumIsLast()
             cCC += ","
          ENDIF
       NEXT
    CASE HB_ISSTRING( xCC )
-      cCC := tip_GetRawEmail( AllTrim( xCC ) )
+      cCC := tip_GetRawEmail( AllTrim(xCC) )
    ENDCASE
 
    // BCC (Blind Carbon Copy)
@@ -169,13 +169,13 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
       NEXT
       cBCC := ""
       FOR EACH cTmp IN xBCC
-         cBCC += tip_GetRawEmail( AllTrim( cTmp ) )
+         cBCC += tip_GetRawEmail( AllTrim(cTmp) )
          IF ! cTmp:__enumIsLast()
             cBCC += ","
          ENDIF
       NEXT
    CASE HB_ISSTRING( xBCC )
-      cBCC := tip_GetRawEmail( AllTrim( xBCC ) )
+      cBCC := tip_GetRawEmail( AllTrim(xBCC) )
    ENDCASE
 
    cUser := StrTran( cUser, "@", "&at;" )

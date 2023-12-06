@@ -283,7 +283,7 @@ METHOD PROCEDURE WriteEntry( cField, cContent, lPreformatted ) CLASS GenerateHTM
          ::OpenTagInline( "div", "class", cTagClass )
          lFirst := .T.
          FOR EACH tmp IN hb_ATokens( cContent, "," )
-            tmp := AllTrim( tmp )
+            tmp := AllTrim(tmp)
             IF ! HB_ISNULL( tmp )
                // TOFIX: for multi-file output
                tmp1 := Parse( tmp, "(" )
@@ -325,7 +325,7 @@ METHOD PROCEDURE WriteEntry( cField, cContent, lPreformatted ) CLASS GenerateHTM
                cLine := Parse( @cContent, hb_eol() )
 
                DO CASE
-               CASE hb_LeftEq( LTrim( cLine ), "```" )
+               CASE hb_LeftEq( LTrim(cLine), "```" )
                   IF lCode
                      EXIT
                   ELSE

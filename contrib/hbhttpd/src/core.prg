@@ -774,12 +774,12 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
       IF aRequest[ nI ] == ""
          EXIT
       ELSEIF ( nJ := At( ":", aRequest[ nI ] ) ) > 0
-         cI := AllTrim( SubStr( aRequest[ nI ], nJ + 1 ) )
+         cI := AllTrim(SubStr( aRequest[ nI ], nJ + 1 ))
          SWITCH Upper(Left( aRequest[ nI ], nJ - 1 ))
          CASE "COOKIE"
             server[ "HTTP_COOKIE" ] := cI
             IF ( nK := At( ";", cI ) ) == 0
-               nK := Len( RTrim( cI ) )
+               nK := Len( RTrim(cI) )
             ENDIF
             cI := Left( cI, nK )
             IF ( nK := At( "=", cI ) ) > 0

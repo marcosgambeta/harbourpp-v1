@@ -218,7 +218,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
       IF ::lIndent
          aFile[ i ] := StrTran( aFile[ i ], Chr( 9 ), " " )
       ENDIF
-      aFile[ i ] := RTrim( aFile[ i ] )
+      aFile[ i ] := RTrim(aFile[ i ])
 
       IF Empty(aFile[ i ])
          aFile[ i ] := ""
@@ -235,7 +235,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
             ENDIF
          ENDIF
       ELSE
-         cLineAll := LTrim( aFile[ i ] )
+         cLineAll := LTrim(aFile[ i ])
          IF hb_LeftEq( cLineAll, "#" )
             cToken1 := Lower(hb_tokenGet( cLineAll, 1 ))
             cToken2 := Lower(hb_tokenGet( cLineAll, 2 ))
@@ -266,7 +266,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
          ENDIF
          IF nPosComment > 0 .AND. ::nSpaceComment >= 0
             nPos := nPosComment + iif(SubStr( cLineAll, nPosComment, 1 ) == "*", 1, 2)
-               cLineAll := Left( cLineAll, nPos - 1 ) + Space( ::nSpaceComment ) + LTrim( SubStr( cLineAll, nPos ) )
+               cLineAll := Left( cLineAll, nPos - 1 ) + Space( ::nSpaceComment ) + LTrim(SubStr( cLineAll, nPos ))
             ENDIF
          IF ( nPos := FindNotQuoted( "/*", cLineAll ) ) > 0 .AND. ( nPosComment == 0 .OR. nPosComment > nPos )
             nPosComment := nPos
@@ -279,7 +279,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
          IF nPosComment == 1 .AND. nDeep == 0 .AND. nState == RF_STATE_RET
             nState := 0
          ENDIF
-         lToBeContinued := ( nPosComment > 0 .AND. Right( RTrim( Left( cLineAll, nPosComment - 1 ) ), 1 ) == ';' ) ;
+         lToBeContinued := ( nPosComment > 0 .AND. Right( RTrim(Left( cLineAll, nPosComment - 1 )), 1 ) == ';' ) ;
             .OR. ( nPosComment == 0 .AND. Right( aFile[ i ], 1 ) == ';' )
          IF ! lPragmaDump .AND. ::lIndent .AND. ! lComment
             aFile[ i ] := cLineAll
@@ -483,7 +483,7 @@ METHOD FormatLine( cLine, lContinued ) CLASS HBFormatCode
 
    IF ! lContinued .AND. hb_LeftEq( cLine, "#" )
       IF ::lSpaces .AND. ::nSpaceDrt != -1
-         cLine := Left( cLine, nPos ) + Space( ::nSpaceDrt ) + LTrim( SubStr( cLine, nPos + 1 ) )
+         cLine := Left( cLine, nPos ) + Space( ::nSpaceDrt ) + LTrim(SubStr( cLine, nPos + 1 ))
       ENDIF
       nLen := Len( cLine )
       IF ::lCase .AND. ::nCaseDrt != -1
@@ -790,12 +790,12 @@ METHOD SetOption( cLine, i, aIni ) CLASS HBFormatCode
    LOCAL nPos, cToken1, cToken2, cTemp, xRes
 
    IF ( nPos := At( "=", cLine ) ) > 0
-      cToken1 := Upper(RTrim( Left( cLine, nPos - 1 ) ))
-      cToken2 := LTrim( SubStr( cLine, nPos + 1 ) )
+      cToken1 := Upper(RTrim(Left( cLine, nPos - 1 )))
+      cToken2 := LTrim(SubStr( cLine, nPos + 1 ))
       IF __objHasMsg( Self, cToken1 )
          IF Empty(cToken2)
             xRes := ""
-         ELSEIF IsDigit( cToken2 ) .OR. ( hb_LeftEq( cToken2, "-" ) .AND. IsDigit( LTrim( SubStr( cToken2, 2 ) ) ) )
+         ELSEIF IsDigit( cToken2 ) .OR. ( hb_LeftEq( cToken2, "-" ) .AND. IsDigit( LTrim(SubStr( cToken2, 2 )) ) )
             xRes := Val( cToken2 )
          ELSE
             cTemp := Upper(cToken2)
@@ -805,12 +805,12 @@ METHOD SetOption( cLine, i, aIni ) CLASS HBFormatCode
                xRes := .F.
             ELSE
                IF Right( cToken2, 1 ) == ";" .AND. aIni != NIL
-                  xRes := RTrim( hb_StrShrink( cToken2 ) )
+                  xRes := RTrim(hb_StrShrink( cToken2 ))
                   DO WHILE ++i < Len( aIni )
                      IF Right( aIni[ i ], 1 ) == ";"
-                        xRes += AllTrim( hb_StrShrink( aIni[ i ] ) )
+                        xRes += AllTrim(hb_StrShrink( aIni[ i ] ))
                      ELSE
-                        xRes += AllTrim( aIni[ i ] )
+                        xRes += AllTrim(aIni[ i ])
                         EXIT
                      ENDIF
                   ENDDO
@@ -845,7 +845,7 @@ METHOD ReadIni( cIniName ) CLASS HBFormatCode
       aIni := hb_ATokens( MemoRead( cIniName ), .T. )
       nLen := Len( aIni )
       FOR i := 1 TO nLen
-         IF ! HB_ISNULL( aIni[ i ] := AllTrim( aIni[ i ] ) ) .AND. ;
+         IF ! HB_ISNULL( aIni[ i ] := AllTrim(aIni[ i ]) ) .AND. ;
                !( ( c := Left( aIni[ i ], 1 ) ) == ";" ) .AND. !( c == "#" )
             IF ! ::SetOption( aIni[ i ], @i, aIni )
                EXIT
@@ -878,7 +878,7 @@ METHOD Array2Source( aSource ) CLASS HBFormatCode
          EXIT
       ENDIF
       IF i < nLen .OR. ! Empty(aSource[ i ])
-         cSource += RTrim( aSource[ i ] ) + ::cEol
+         cSource += RTrim(aSource[ i ]) + ::cEol
       ENDIF
    NEXT
 

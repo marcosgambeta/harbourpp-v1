@@ -329,7 +329,7 @@ FUNCTION lYesNo( cMsg )
 
    hb_default( @cMsg, "Please Confirm" )
 
-   cmsg := " " + AllTrim( cmsg ) + " "
+   cmsg := " " + AllTrim(cmsg) + " "
    nWidth := Max( Len( cmsg ), Len( "Yes" ) )
    nTopLine := nBotLine - 2 - 1
 
@@ -363,7 +363,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
 
    hb_default( @cTitle, "Info" )
 
-   cmsg := AllTrim( cmsg )
+   cmsg := AllTrim(cmsg)
    nNumLines := MLCount( cmsg, ( nright - nleft ) - 1 )
    nWidth := iif(nNumLines < 2, Len( cmsg ), nRight - nLeft - 1)
    nTopLine := nBotLine - nNumLines - 1
@@ -374,7 +374,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
 
    nMaxWidth := 0
    FOR i := 1 TO nNumLines
-      nMaxWidth := Max( nMaxWidth, Len( RTrim( MemoLine( cmsg, nwidth, i ) ) ) )
+      nMaxWidth := Max( nMaxWidth, Len( RTrim(MemoLine( cmsg, nwidth, i )) ) )
    NEXT
 
    nLeft := Max( nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ) )
@@ -385,7 +385,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
    DispBegin()
    FOR i := 1 TO nNumLines
       cAline := MemoLine( cMsg, nWidth, i )
-      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC( AllTrim( cAline ), nMaxWidth ) )
+      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC( AllTrim(cAline), nMaxWidth ) )
    NEXT
    DispEnd()
 
@@ -431,7 +431,7 @@ FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
    // GTWVW doesn't need box or textual title
    hb_DispBox( r1, c1, r2, c2, wtype )
    IF ! Empty(ctitle)
-      cTitle := " " + AllTrim( ctitle ) + " "
+      cTitle := " " + AllTrim(ctitle) + " "
       hb_DispOutAt( r1, nCeiling( ( c2 + c1 - Len( cTitle ) ) / 2 ), cTitle )
    ENDIF
 #endif
