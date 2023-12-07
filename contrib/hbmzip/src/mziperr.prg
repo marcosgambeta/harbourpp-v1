@@ -46,9 +46,9 @@
 
 #include "hbmzip.ch"
 
-FUNCTION hb_zipErrorStr( nStatus )
+FUNCTION hb_zipErrorStr(nStatus)
 
-   IF ! HB_ISNUMERIC( nStatus )
+   IF !HB_ISNUMERIC(nStatus)
       RETURN "ZIP_INVALID"
    ENDIF
 
@@ -67,11 +67,11 @@ FUNCTION hb_zipErrorStr( nStatus )
    CASE -6                      ; RETURN "Z_VERSION_ERROR"
    ENDSWITCH
 
-   RETURN "ZIP_UNKNOWN_" + hb_ntos( nStatus )
+   RETURN "ZIP_UNKNOWN_" + hb_ntos(nStatus)
 
-FUNCTION hb_unzipErrorStr( nStatus )
+FUNCTION hb_unzipErrorStr(nStatus)
 
-   IF ! HB_ISNUMERIC( nStatus )
+   IF !HB_ISNUMERIC(nStatus)
       RETURN "UNZ_INVALID"
    ENDIF
 
@@ -92,4 +92,4 @@ FUNCTION hb_unzipErrorStr( nStatus )
    CASE -6                      ; RETURN "Z_VERSION_ERROR"
    ENDSWITCH
 
-   RETURN "UNZ_UNKNOWN_" + hb_ntos( nStatus )
+   RETURN "UNZ_UNKNOWN_" + hb_ntos(nStatus)

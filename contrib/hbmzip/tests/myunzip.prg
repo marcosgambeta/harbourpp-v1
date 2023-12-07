@@ -50,72 +50,84 @@
 
 REQUEST HB_CODEPAGE_UTF8EX
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
-   LOCAL hUnzip, aWild, cFileName, cExt, cPath, cFile, ;
-      dDate, cTime, nSize, nCompSize, nErr, ;
-      lCrypted, cPassword, cComment, tmp
+   LOCAL hUnzip
+   LOCAL aWild
+   LOCAL cFileName
+   LOCAL cExt
+   LOCAL cPath
+   LOCAL cFile
+   LOCAL dDate
+   LOCAL cTime
+   LOCAL nSize
+   LOCAL nCompSize
+   LOCAL nErr
+   LOCAL lCrypted
+   LOCAL cPassword
+   LOCAL cComment
+   LOCAL tmp
 
-   hb_cdpSelect( "UTF8EX" )
-   hb_SetTermCP( hb_cdpTerm() )
-   Set( _SET_OSCODEPAGE, hb_cdpOS() )
+   hb_cdpSelect("UTF8EX")
+   hb_SetTermCP(hb_cdpTerm())
+   Set(_SET_OSCODEPAGE, hb_cdpOS())
 
-   Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
+   Set(_SET_DATEFORMAT, "yyyy-mm-dd")
 
-   aWild := { ... }
-   IF Len( aWild ) < 1
+   aWild := {...}
+   IF Len(aWild) < 1
       ? "Usage: myunzip <ZipName> [ --pass <password> ] [ <FilePattern1> ... ]"
       RETURN
    ENDIF
 
-   hb_FNameSplit( aWild[ 1 ], @cPath, @cFileName, @cExt )
+   hb_FNameSplit(aWild[1], @cPath, @cFileName, @cExt)
    IF Empty(cExt)
       cExt := ".zip"
    ENDIF
-   cFileName := hb_FNameMerge( cPath, cFileName, cExt )
+   cFileName := hb_FNameMerge(cPath, cFileName, cExt)
 
-   hb_ADel( aWild, 1, .T. )
+   hb_ADel(aWild, 1, .T.)
 
-   FOR tmp := 1 TO Len( aWild ) - 1
-      IF Lower(aWild[ tmp ]) == "--pass"
-         cPassword := aWild[ tmp + 1 ]
-         aWild[ tmp ] := ""
-         aWild[ tmp + 1 ] := ""
+   FOR tmp := 1 TO Len(aWild) - 1
+      IF Lower(aWild[tmp]) == "--pass"
+         cPassword := aWild[tmp + 1]
+         aWild[tmp] := ""
+         aWild[tmp + 1] := ""
       ENDIF
    NEXT
 
-   AEval( aWild, {| cPattern, nPos | aWild[ nPos ] := StrTran( cPattern, "\", "/" ) } )
+   AEval(aWild, {|cPattern, nPos|aWild[nPos] := StrTran(cPattern, "\", "/") })
 
-   hUnzip := hb_unzipOpen( cFileName )
+   hUnzip := hb_unzipOpen(cFileName)
 
-   IF ! Empty(hUnzip)
+   IF !Empty(hUnzip)
       ? "Archive file:", cFileName
-      hb_unzipGlobalInfo( hUnzip, @nSize, @cComment )
+      hb_unzipGlobalInfo(hUnzip, @nSize, @cComment)
       ? "Number of entries:", nSize
-      IF ! Empty(cComment)
+      IF !Empty(cComment)
          ? "global comment:", cComment
       ENDIF
       ? ""
       ? "Filename                          Date      Time         Size Compressed  Action"
       ? "-----------------------------------------------------------------------------------"
-      nErr := hb_unzipFileFirst( hUnzip )
+      nErr := hb_unzipFileFirst(hUnzip)
       DO WHILE nErr == 0
-         hb_unzipFileInfo( hUnzip, @cFile, @dDate, @cTime, , , , @nSize, @nCompSize, @lCrypted, @cComment )
-         ? PadR( cFile + iif(lCrypted, "*", ""), 30 ), DToC( dDate ), cTime, nSize, nCompSize
-         IF ! Empty(cComment)
+         hb_unzipFileInfo(hUnzip, @cFile, @dDate, @cTime, , , , @nSize, @nCompSize, @lCrypted, @cComment)
+         ? PadR(cFile + iif(lCrypted, "*", ""), 30), DToC(dDate), cTime, nSize, nCompSize
+         IF !Empty(cComment)
             ? "comment:", cComment
          ENDIF
 
-         IF AScan( aWild, {| cPattern | hb_WildMatch( cPattern, cFile, .T. ) } ) > 0
+         IF AScan(aWild, {|cPattern|hb_WildMatch(cPattern, cFile, .T.)}) > 0
             ?? " Extracting"
-            hb_unzipExtractCurrentFile( hUnzip, NIL, cPassword )
+            hb_unzipExtractCurrentFile(hUnzip, NIL, cPassword)
          ELSE
             ?? " Skipping"
          ENDIF
 
-         nErr := hb_unzipFileNext( hUnzip )
+         nErr := hb_unzipFileNext(hUnzip)
       ENDDO
-      hb_unzipClose( hUnzip )
+      hb_unzipClose(hUnzip)
    ENDIF
 
    RETURN

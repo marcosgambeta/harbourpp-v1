@@ -50,70 +50,79 @@
 
 REQUEST HB_CODEPAGE_UTF8EX
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
-   LOCAL hZip, aDir, aFile, aWild, ;
-      cZipName, cPath, cFileName, cExt, cWild, cPassword, cComment, ;
-      tmp
+   LOCAL hZip
+   LOCAL aDir
+   LOCAL aFile
+   LOCAL aWild
+   LOCAL cZipName
+   LOCAL cPath
+   LOCAL cFileName
+   LOCAL cExt
+   LOCAL cWild
+   LOCAL cPassword
+   LOCAL cComment
+   LOCAL tmp
    LOCAL lUnicode
 
    IF "--unicode" $ hb_CmdLine()
-      hb_cdpSelect( "UTF8EX" )
-      hb_SetTermCP( hb_cdpTerm() )
-      Set( _SET_OSCODEPAGE, hb_cdpOS() )
+      hb_cdpSelect("UTF8EX")
+      hb_SetTermCP(hb_cdpTerm())
+      Set(_SET_OSCODEPAGE, hb_cdpOS())
       lUnicode := .T.
    ELSE
       lUnicode := .F.
    ENDIF
 
-   aWild := { ... }
-   IF Len( aWild ) < 2
+   aWild := {...}
+   IF Len(aWild) < 2
       ? "Usage: myzip <ZipName> [ --pass <password> ] [ --unicode ] [ --comment <comment> ] <FilePattern1> [ <FilePattern2> ... ]"
       RETURN
    ENDIF
 
-   hb_FNameSplit( aWild[ 1 ], @cPath, @cFileName, @cExt )
+   hb_FNameSplit(aWild[1], @cPath, @cFileName, @cExt)
    IF Empty(cExt)
       cExt := ".zip"
    ENDIF
-   cZipName := hb_FNameMerge( cPath, cFileName, cExt )
+   cZipName := hb_FNameMerge(cPath, cFileName, cExt)
 
-   hb_ADel( aWild, 1, .T. )
+   hb_ADel(aWild, 1, .T.)
 
-   FOR tmp := Len( aWild ) - 1 TO 1 STEP -1
-      IF Lower(aWild[ tmp ]) == "--pass"
+   FOR tmp := Len(aWild) - 1 TO 1 STEP -1
+      IF Lower(aWild[tmp]) == "--pass"
          IF Empty(cPassword)
-            cPassword := aWild[ tmp + 1 ]
+            cPassword := aWild[tmp + 1]
          ENDIF
-         aWild[ tmp ] := ""
-         aWild[ tmp + 1 ] := ""
-      ELSEIF Lower(aWild[ tmp ]) == "--comment"
+         aWild[tmp] := ""
+         aWild[tmp + 1] := ""
+      ELSEIF Lower(aWild[tmp]) == "--comment"
          IF Empty(cComment)
-            cComment := aWild[ tmp + 1 ]
+            cComment := aWild[tmp + 1]
          ENDIF
-         aWild[ tmp ] := ""
-         aWild[ tmp + 1 ] := ""
-      ELSEIF Lower(aWild[ tmp ]) == "--unicode"
+         aWild[tmp] := ""
+         aWild[tmp + 1] := ""
+      ELSEIF Lower(aWild[tmp]) == "--unicode"
          /* skip */
       ENDIF
    NEXT
 
-   hZip := hb_zipOpen( cZipName )
-   IF ! Empty(hZip)
+   hZip := hb_zipOpen(cZipName)
+   IF !Empty(hZip)
       ? "Archive file:", cZipName
       FOR EACH cWild IN aWild
-         IF ! Empty(cWild)
-            hb_FNameSplit( cWild, @cPath, @cFileName, @cExt )
-            aDir := hb_DirScan( cPath, cFileName + cExt )
+         IF !Empty(cWild)
+            hb_FNameSplit(cWild, @cPath, @cFileName, @cExt)
+            aDir := hb_DirScan(cPath, cFileName + cExt)
             FOR EACH aFile IN aDir
-               IF ! cPath + aFile[ 1 ] == cZipName
-                  ? "Adding", cPath + aFile[ 1 ]
-                  hb_zipStoreFile( hZip, cPath + aFile[ 1 ], cPath + aFile[ 1 ], cPassword,, lUnicode )
+               IF !cPath + aFile[1] == cZipName
+                  ? "Adding", cPath + aFile[1]
+                  hb_zipStoreFile(hZip, cPath + aFile[1], cPath + aFile[1], cPassword,, lUnicode)
                ENDIF
             NEXT
          ENDIF
       NEXT
-      hb_zipClose( hZip, cComment )
+      hb_zipClose(hZip, cComment)
    ENDIF
 
    RETURN
@@ -121,7 +130,7 @@ PROCEDURE Main( ... )
 INIT PROCEDURE ClipInit()
 
    IF "--unicode" $ hb_CmdLine()
-      hb_cdpSelect( "UTF8EX" )
+      hb_cdpSelect("UTF8EX")
    ENDIF
 
    RETURN
