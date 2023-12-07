@@ -94,7 +94,7 @@ HB_FUNC( SETCLEARB )
 
    if( HB_ISNUM(1) ) {
       auto iChar = hb_parni(1);
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( !HB_CDP_ISCHARUNI(cdp) ) {
          iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
       }
@@ -113,7 +113,7 @@ HB_FUNC( SETCLEARB )
 HB_FUNC( GETCLEARB )
 {
    int iChar = hb_gtGetClearChar();
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( !HB_CDP_ISCHARUNI(cdp) ) {
       HB_UCHAR uc = hb_cdpGetUC(cdp, static_cast<HB_WCHAR>(iChar), 0);
