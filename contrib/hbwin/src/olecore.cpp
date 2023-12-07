@@ -1978,7 +1978,6 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
    UINT         uiArgErr;
    HRESULT      lOleError;
    HB_USHORT    uiClass;
-   int          iPCount;
 
    hb_oleInit();
 
@@ -1997,7 +1996,7 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
       return;
    }
 
-   iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    szMethod = hb_itemGetSymbol(hb_stackBaseItem())->szName;
    AnsiToWideBuffer(szMethod, szMethodWide, static_cast<int>(HB_SIZEOFARRAY(szMethodWide)));

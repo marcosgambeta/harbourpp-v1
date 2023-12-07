@@ -65,7 +65,7 @@ HB_FUNC( BETWEEN )
 HB_FUNC( INLIST )
 {
    HB_BOOL fResult = false;
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( iPCount > 1 )
    {

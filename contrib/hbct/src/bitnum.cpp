@@ -88,7 +88,7 @@ HB_BOOL ct_numParam(int iParam, HB_MAXINT * plNum)
 
 HB_FUNC( NUMAND )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
    HB_MAXINT lValue = -1, lNext = 0;
 
    if( iPCount && ct_numParam(1, &lValue) ) {
@@ -107,7 +107,7 @@ HB_FUNC( NUMAND )
 
 HB_FUNC( NUMOR )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
    HB_MAXINT lValue = -1, lNext = 0;
 
    if( iPCount && ct_numParam(1, &lValue) ) {
@@ -126,7 +126,7 @@ HB_FUNC( NUMOR )
 
 HB_FUNC( NUMXOR )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
    HB_MAXINT lValue = -1, lNext = 0;
 
    if( iPCount && ct_numParam(1, &lValue) ) {
@@ -222,7 +222,7 @@ HB_FUNC( NUMMIRR )
 
 HB_FUNC( CLEARBIT )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
    HB_MAXINT lValue;
 
    if( ct_numParam(1, &lValue) ) {
@@ -246,7 +246,7 @@ HB_FUNC( CLEARBIT )
 
 HB_FUNC( SETBIT )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
    HB_MAXINT lValue;
 
    if( ct_numParam(1, &lValue) ) {

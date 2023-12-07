@@ -63,7 +63,7 @@ typedef struct
 
 HB_FUNC( STRFORMAT )
 {
-   int nParNum = hb_pcount();
+   auto nParNum = hb_pcount();
 
    if( nParNum >= 1 )
    {

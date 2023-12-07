@@ -56,11 +56,10 @@ HB_FUNC( EXPAND )
          hb_retclen(szText, 1);
       } else {
          char * szDest, * szPtr, cRepl;
-         int i;
          HB_SIZE nSize, nPos;
 
          auto iRepl = hb_parni(2);
-         i = hb_pcount();
+         auto i = hb_pcount();
          if( i == 2 && HB_ISCHAR(2) ) {
             iRepl = 1;
             cRepl = hb_parc(2)[0];

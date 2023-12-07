@@ -53,7 +53,7 @@
 HB_FUNC( XHB_HASHERROR )
 {
    const char * szMessage = hb_itemGetSymbol(hb_stackBaseItem())->szName;
-   int          iPCount   = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( iPCount == 1 ) {
       if( szMessage[0] == '_' ) { /* ASSIGN */

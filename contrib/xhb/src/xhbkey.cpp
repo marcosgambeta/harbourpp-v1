@@ -106,7 +106,8 @@ HB_FUNC( XHB_KEYTRANS )
 
 HB_FUNC( XHB_INKEY )
 {
-   int iPCount = hb_pcount(), iKey;
+   auto iPCount = hb_pcount();
+   int iKey;
 
    iKey = hb_inkey(iPCount == 1 || (iPCount > 1 && HB_ISNUM(1)), hb_parnd(1), hb_parnidef(2, hb_setGetEventMask()) | HB_INKEY_EXT);
 
