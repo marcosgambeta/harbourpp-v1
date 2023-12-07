@@ -193,7 +193,7 @@ void * hb_libSymAddr(PHB_ITEM pDynLib, const char * pszSymbol)
 
 HB_FUNC( HB_LIBLOAD )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
    PHB_ITEM pArgs = nullptr;
 
    if( iPCount > 1 ) {

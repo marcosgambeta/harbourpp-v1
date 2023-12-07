@@ -75,7 +75,7 @@ static void hb_arrayNewRagged(PHB_ITEM pArray, int iDimension)
 
 HB_FUNC( ARRAY )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( iPCount > 0 ) {
       auto bError = false;

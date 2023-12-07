@@ -336,7 +336,7 @@ HB_FUNC( HB_UTF8RAT )
 HB_FUNC( HB_UTF8SUBSTR )
 {
    auto szString = hb_parc(1);
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( szString && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))) ) {
       char * szDest = nullptr;

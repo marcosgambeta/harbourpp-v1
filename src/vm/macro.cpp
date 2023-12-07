@@ -1144,7 +1144,7 @@ int hb_macroSetMacro(HB_BOOL fSet, int flag)
 HB_FUNC( HB_SETMACRO )
 {
    HB_STACK_TLS_PRELOAD
-   int iPrmCnt = hb_pcount();
+   auto iPrmCnt = hb_pcount();
 
    if( iPrmCnt > 0 ) {
       auto flags = hb_parni(1);

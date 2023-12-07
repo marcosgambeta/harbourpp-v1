@@ -59,7 +59,7 @@ HB_FUNC( __XHELP )
    if( hb_dynsymIsFunction(s_pDynSym) ) {
       /* NOTE: push the existing params after the dynamic symbol. [awhite] */
 
-      int iPCount = hb_pcount();
+      auto iPCount = hb_pcount();
 
       hb_vmPushDynSym(s_pDynSym);
       hb_vmPushNil();

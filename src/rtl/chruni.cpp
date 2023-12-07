@@ -244,7 +244,7 @@ HB_FUNC( HB_BPOKE )
 HB_FUNC( HB_USUBSTR )
 {
    auto pText = hb_param(1, Harbour::Item::STRING);
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
       auto cdp = hb_vmCDP();
@@ -290,7 +290,7 @@ HB_FUNC( HB_USUBSTR )
 HB_FUNC( HB_BSUBSTR )
 {
    auto pText = hb_param(1, Harbour::Item::STRING);
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
       auto pszText = hb_itemGetCPtr(pText);

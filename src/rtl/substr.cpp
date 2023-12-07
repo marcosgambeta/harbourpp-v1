@@ -55,7 +55,7 @@
 HB_FUNC( SUBSTR )
 {
    auto pText = hb_param(1, Harbour::Item::STRING);
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
       auto cdp = hb_vmCDP();

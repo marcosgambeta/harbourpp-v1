@@ -2516,7 +2516,7 @@ void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, 
       hb_vmPush(pObject);
 
       if( iParamOffset > 0 ) {
-         int iPCount = hb_pcount();
+         auto iPCount = hb_pcount();
 
          while( iParamOffset <= iPCount ) {
             hb_vmPush(hb_stackItemFromBase(iParamOffset));

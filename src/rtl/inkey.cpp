@@ -86,7 +86,7 @@ static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fIn
 
 HB_FUNC( INKEY )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    hb_retni(hb_inkey(iPCount == 1 || (iPCount > 1 && HB_ISNUM(1)), hb_parnd(1), hb_parnidef(2, hb_setGetEventMask())));
 }

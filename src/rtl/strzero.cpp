@@ -50,7 +50,7 @@
 
 HB_FUNC( STRZERO )
 {
-   int iParams = hb_pcount();
+   auto iParams = hb_pcount();
 
    if( iParams >= 1 && iParams <= 3 ) {
       auto pNumber = hb_param(1, Harbour::Item::NUMERIC);

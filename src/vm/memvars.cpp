@@ -1008,7 +1008,7 @@ static const char * hb_memvarGetMask(int iParam)
 HB_FUNC( __MVPUBLIC )
 {
    HB_STACK_TLS_PRELOAD
-   int iCount = hb_pcount();
+   auto iCount = hb_pcount();
 
    if( iCount ) {
       for( auto i = 1; i <= iCount; i++ ) {
@@ -1034,7 +1034,7 @@ HB_FUNC( __MVPUBLIC )
 HB_FUNC( __MVPRIVATE )
 {
    HB_STACK_TLS_PRELOAD
-   int iCount = hb_pcount();
+   auto iCount = hb_pcount();
 
    if( iCount ) {
       hb_memvarResetPrivatesBase();
@@ -1062,7 +1062,7 @@ HB_FUNC( __MVPRIVATE )
 HB_FUNC( __MVXRELEASE )
 {
    HB_STACK_TLS_PRELOAD
-   int iCount = hb_pcount();
+   auto iCount = hb_pcount();
 
    if( iCount ) {
       for( auto i = 1; i <= iCount; i++ ) {
@@ -1088,7 +1088,7 @@ HB_FUNC( __MVXRELEASE )
 HB_FUNC( __MVRELEASE )
 {
    HB_STACK_TLS_PRELOAD
-   int iCount = hb_pcount();
+   auto iCount = hb_pcount();
 
    if( iCount && HB_ISCHAR(1) ) {
       const char * pszMask = hb_memvarGetMask(1);
@@ -1121,7 +1121,7 @@ HB_FUNC( __MVCLEAR )
 HB_FUNC( __MVDBGINFO )
 {
    HB_STACK_TLS_PRELOAD
-   int iCount = hb_pcount();
+   auto iCount = hb_pcount();
 
    if( iCount == 1 || iCount == 2 ) {        /* request for a number of variables */
       hb_retns(hb_memvarCount(hb_parni(1), hb_parni(2)));

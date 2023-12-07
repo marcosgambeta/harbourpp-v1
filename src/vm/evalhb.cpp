@@ -56,7 +56,7 @@ HB_FUNC( EVAL )
    auto pItem = hb_param(1, Harbour::Item::BLOCK);
 
    if( pItem != nullptr ) {
-      int iPCount = hb_pcount();
+      auto iPCount = hb_pcount();
 
       hb_vmPushEvalSym();
       hb_vmPush(pItem);

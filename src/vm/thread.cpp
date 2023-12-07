@@ -2480,7 +2480,7 @@ HB_FUNC( HB_MUTEXEVAL )
 
       if( pEval ) {
          HB_STACK_TLS_PRELOAD
-         int iPCount = hb_pcount();
+         auto iPCount = hb_pcount();
 
          if( hb_threadMutexLock(pItem) ) {
             hb_vmPushEvalSym();

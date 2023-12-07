@@ -384,7 +384,7 @@ HB_FUNC( HB_EXECFROMARRAY )
    PHB_ITEM pArray = nullptr;
    PHB_ITEM pItem;
    HB_ULONG ulParamOffset = 0;
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    /* decode parameters */
    if( iPCount ) {
@@ -528,7 +528,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
  */
 HB_FUNC( HB_EXECMSG )
 {
-   int iParams = hb_pcount();
+   auto iParams = hb_pcount();
 
    if( iParams >= 2 && HB_ISSYMBOL(1) ) {
       auto pBase = hb_stackBaseItem();

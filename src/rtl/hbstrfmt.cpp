@@ -467,7 +467,7 @@ HB_FUNC( HB_STRFORMAT )
    auto pFormat = hb_param(1, Harbour::Item::STRING);
 
    if( pFormat ) {
-      int        iParams = hb_pcount();
+      auto iParams = hb_pcount();
       PHB_ITEM * pItemArray = nullptr;
 
       if( iParams > 1 ) {

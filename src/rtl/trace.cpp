@@ -153,7 +153,7 @@ HB_FUNC( HB_TRACELOGAT )
 
 HB_FUNC( HB_TRACESTRING )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( iPCount > 0 ) {
       char message[1024];

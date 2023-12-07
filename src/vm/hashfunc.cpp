@@ -54,7 +54,7 @@
 
 HB_FUNC( HB_HASH )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    if( iPCount & 1 ) {
       hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), HB_ERR_ARGS_BASEPARAMS);

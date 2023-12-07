@@ -263,7 +263,7 @@ HB_FUNC( SX_UNLOCK )
 
 HB_FUNC( SX_SETPASS )
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
    auto fResult = false;
    PHB_ITEM pItem;
 
@@ -369,7 +369,7 @@ HB_FUNC( SX_MEMOPACK )
 
    if( pArea != nullptr ) {
       auto pItem = hb_itemArrayNew(3);
-      int iPCount = hb_pcount();
+      auto iPCount = hb_pcount();
       for( auto i = 1; i <= iPCount; ++i ) {
          hb_arraySet(pItem, i, hb_param(i, Harbour::Item::ANY));
       }

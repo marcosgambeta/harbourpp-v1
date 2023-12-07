@@ -302,7 +302,7 @@ static char * hb_itemStringCon(PHB_ITEM pItem, HB_SIZE * pnLen, HB_BOOL * pfFree
 
 HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
       HB_SIZE nLen;
@@ -323,7 +323,7 @@ HB_FUNC( OUTSTD ) /* writes a list of values to the standard output device */
 
 HB_FUNC( OUTERR ) /* writes a list of values to the standard error device */
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
       HB_SIZE nLen;
@@ -344,7 +344,7 @@ HB_FUNC( OUTERR ) /* writes a list of values to the standard error device */
 
 HB_FUNC( QQOUT ) /* writes a list of values to the current device (screen or printer) and is affected by SET ALTERNATE */
 {
-   int iPCount = hb_pcount();
+   auto iPCount = hb_pcount();
 
    for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
       HB_SIZE nLen;
