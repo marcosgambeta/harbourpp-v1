@@ -1087,7 +1087,7 @@ static bool hb_deserializeTest(const HB_UCHAR ** pBufferPtr, HB_SIZE * pnSize, H
          break;
       case HB_SERIAL_XHB_Q:
          if( nSize >= 18 && pBuffer[8] == HB_SERIAL_XHB_C ) {
-            HB_SIZE nData = static_cast<HB_SIZE>(HB_GET_BE_UINT64(pBuffer));
+            auto nData = static_cast<HB_SIZE>(HB_GET_BE_UINT64(pBuffer));
             if( nData >= 9 && nData - 9 >= static_cast<HB_SIZE>(HB_GET_BE_UINT64(&pBuffer[9])) ) {
                nSize = 9 + nData;
             } else {
@@ -1391,8 +1391,8 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
          break;
 
       case HB_SERIAL_OBJ: {
-         const char * szClass, * szFunc;
-         szClass = reinterpret_cast<const char*>(&pBuffer[nOffset]);
+         const char * szFunc;
+         auto szClass = reinterpret_cast<const char*>(&pBuffer[nOffset]);
          nLen = strlen(szClass);
          szFunc = szClass + nLen + 1;
          nOffset = hb_deserializeItem(pItem, cdpIn, cdpOut, pBuffer, nOffset + nLen + strlen(szFunc) + 2, pRefList);
@@ -1647,7 +1647,7 @@ char * hb_itemSerialize( PHB_ITEM pItem, int iFlags, HB_SIZE *pnSize )
 
 PHB_ITEM hb_itemDeserializeCP(const char ** pBufferPtr, HB_SIZE * pnSize, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
 {
-   const HB_UCHAR * pBuffer = reinterpret_cast<const HB_UCHAR*>(*pBufferPtr);
+   auto pBuffer = reinterpret_cast<const HB_UCHAR*>(*pBufferPtr);
    PHB_ITEM pItem = nullptr;
    HB_REF_LIST refList;
 

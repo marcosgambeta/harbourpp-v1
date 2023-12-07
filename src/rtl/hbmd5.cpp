@@ -238,7 +238,7 @@ static void hb_md5val(HB_U32 accum[], char * md5val)
 
 static void hb_md5_count(const void * data, HB_SIZE nLen, char * digest, const void * init_block)
 {
-   const unsigned char * ucdata = static_cast<const unsigned char*>(data);
+   auto ucdata = static_cast<const unsigned char*>(data);
    HB_UCHAR buf[128];
    MD5_BUF md5;
    HB_ISIZ i, n;

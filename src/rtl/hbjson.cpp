@@ -596,7 +596,7 @@ char * hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent, PHB_CODEPA
    }
 
    HB_SIZE nLen = pCtx->pHead - pCtx->pBuffer;
-   char * szRet = static_cast<char*>(hb_xrealloc(pCtx->pBuffer, nLen + 1));
+   auto szRet = static_cast<char*>(hb_xrealloc(pCtx->pBuffer, nLen + 1));
    szRet[nLen] = '\0';
    hb_xfree(pCtx->pId);
    hb_xfree(pCtx);

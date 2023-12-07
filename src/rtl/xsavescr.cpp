@@ -64,7 +64,7 @@ using PHB_SCRDATA = HB_SCRDATA *;
 
 static void hb_xSaveRestRelease(void * cargo)
 {
-   PHB_SCRDATA pScrData = static_cast<PHB_SCRDATA>(cargo);
+   auto pScrData = static_cast<PHB_SCRDATA>(cargo);
 
    if( pScrData->buffer ) {
       hb_xfree(pScrData->buffer);
@@ -75,7 +75,7 @@ static HB_TSD_NEW(s_scrData, sizeof(HB_SCRDATA), nullptr, hb_xSaveRestRelease);
 
 HB_FUNC( __XSAVESCREEN )
 {
-   PHB_SCRDATA pScrData = static_cast<PHB_SCRDATA>(hb_stackGetTSD(&s_scrData));
+   auto pScrData = static_cast<PHB_SCRDATA>(hb_stackGetTSD(&s_scrData));
    HB_SIZE nSize;
 
    hb_gtGetPos(&pScrData->row, &pScrData->col);
@@ -96,7 +96,7 @@ HB_FUNC( __XSAVESCREEN )
 
 HB_FUNC( __XRESTSCREEN )
 {
-   PHB_SCRDATA pScrData = static_cast<PHB_SCRDATA>(hb_stackTestTSD( &s_scrData ));
+   auto pScrData = static_cast<PHB_SCRDATA>(hb_stackTestTSD( &s_scrData ));
 
    if( pScrData && pScrData->buffer ) {
       hb_gtRest(0, 0, pScrData->maxrow, pScrData->maxcol, pScrData->buffer);

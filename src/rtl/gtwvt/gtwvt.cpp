@@ -1783,7 +1783,7 @@ static void hb_gt_wvt_ResetWindowSize(PHB_GTWVT pWVT, HFONT hFont)
    }
 
    HDC hdc = GetDC(pWVT->hWnd);
-   HFONT hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
+   auto hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
    TEXTMETRIC tm;
    GetTextMetrics(hdc, &tm);
    SetTextCharacterExtra(hdc, 0); /* do not add extra char spacing even if bold */
@@ -3413,7 +3413,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
                   TEXTMETRIC tm;
                   HWND       hDesk    = GetDesktopWindow();
                   HDC        hdc      = GetDC(hDesk);
-                  HFONT      hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
+                  auto hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
 
                   SetTextCharacterExtra(hdc, 0);
                   GetTextMetrics(hdc, &tm);

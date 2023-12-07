@@ -184,7 +184,7 @@ HB_FUNC( SETKEY )
    auto iKeyCode = hb_parni(1);
 
    if( iKeyCode != 0 ) {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
+      auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
 
       if( hb_pcount() == 1 ) {
          /* Get a SETKEY value */
@@ -208,7 +208,7 @@ HB_FUNC( HB_SETKEY )
    auto iKeyCode = hb_parni(1);
 
    if( iKeyCode != 0 ) {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
+      auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
 
       if( hb_pcount() == 1 ) {
          /* Get a SETKEY value */
@@ -245,7 +245,7 @@ HB_FUNC( HB_SETKEYARRAY )
    auto pAction = hb_param(2, Harbour::Item::EVALITEM);
 
    if( pKeyCodeArray && pAction ) {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
+      auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
       auto pIsActive = hb_param(3, Harbour::Item::EVALITEM);
       HB_SIZE nLen = hb_arrayLen(pKeyCodeArray);
       HB_SIZE nPos;
@@ -261,7 +261,7 @@ HB_FUNC( HB_SETKEYGET )
    auto pKeyCode = hb_param(1, Harbour::Item::NUMERIC);
 
    if( pKeyCode ) {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
+      auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
       /* sk_list_end is not used in this context */
@@ -279,7 +279,7 @@ HB_FUNC( HB_SETKEYGET )
 
 HB_FUNC( HB_SETKEYSAVE )
 {
-   PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
+   auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
    PHB_SETKEY sk_list_tmp;
    HB_SIZE nItemCount, nItem;
 
@@ -327,7 +327,7 @@ HB_FUNC( HB_SETKEYCHECK )
    auto iKeyCode = hb_parni(1);
 
    if( iKeyCode != 0 ) {
-      PHB_SK_DATA sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
+      auto sk_data = static_cast<PHB_SK_DATA>(hb_stackGetTSD(&s_skData));
       PHB_SETKEY sk_list_tmp, sk_list_end;
 
       /* sk_list_end is not used in this context */
@@ -343,7 +343,8 @@ HB_FUNC( HB_SETKEYCHECK )
 
       if( sk_list_tmp ) {
          if( sk_testActive( sk_list_tmp->pIsActive, iKeyCode ) ) {
-            HB_USHORT uiPCount = static_cast<HB_USHORT>(hb_pcount()), uiParam;
+            auto uiPCount = static_cast<HB_USHORT>(hb_pcount());
+            HB_USHORT uiParam;
 
             hb_vmPushEvalSym();
             hb_vmPush(sk_list_tmp->pAction);

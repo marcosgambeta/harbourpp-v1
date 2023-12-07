@@ -56,7 +56,7 @@
 /* GZIP stream destructor */
 static HB_GARBAGE_FUNC(hb_gz_Destructor)
 {
-   gzFile * gzHolder = static_cast<gzFile*>(Cargo);
+   auto gzHolder = static_cast<gzFile*>(Cargo);
 
    if( *gzHolder ) {
       hb_vmUnlock();
@@ -74,7 +74,7 @@ static const HB_GC_FUNCS s_gcGZFuncs =
 
 static gzFile hb_gzParam(int iParam)
 {
-   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC(&s_gcGZFuncs, iParam));
+   auto gzHolder = static_cast<gzFile*>(hb_parptrGC(&s_gcGZFuncs, iParam));
 
    if( gzHolder && *gzHolder ) {
       return *gzHolder;
@@ -110,7 +110,7 @@ HB_FUNC( HB_GZOPEN )
       hb_vmLock();
 
       if( gz ) {
-         gzFile * gzHolder = static_cast<gzFile*>(hb_gcAllocate(sizeof(gzFile), &s_gcGZFuncs));
+         auto gzHolder = static_cast<gzFile*>(hb_gcAllocate(sizeof(gzFile), &s_gcGZFuncs));
          *gzHolder = gz;
          hb_retptrGC(gzHolder);
       }
@@ -136,7 +136,7 @@ HB_FUNC( HB_GZDOPEN )
       hb_vmLock();
 
       if( gz ) {
-         gzFile * gzHolder = static_cast<gzFile*>(hb_gcAllocate(sizeof(gzFile), &s_gcGZFuncs));
+         auto gzHolder = static_cast<gzFile*>(hb_gcAllocate(sizeof(gzFile), &s_gcGZFuncs));
          *gzHolder = gz;
          hb_retptrGC(gzHolder);
       }
@@ -152,7 +152,7 @@ HB_FUNC( HB_GZDOPEN )
 HB_FUNC( HB_GZCLOSE )
 {
 #ifndef HB_NO_GZLIB
-   gzFile * gzHolder = static_cast<gzFile*>(hb_parptrGC(&s_gcGZFuncs, 1));
+   auto gzHolder = static_cast<gzFile*>(hb_parptrGC(&s_gcGZFuncs, 1));
 
    if( gzHolder ) {
       gzFile gz = *gzHolder;
@@ -247,7 +247,7 @@ HB_FUNC( HB_GZGETS )
    if( iLen > 0 ) {
       gzFile gz = hb_gzParam(1);
       if( gz ) {
-         char * szBuffer = static_cast<char*>(hb_xalloc(iLen + 1));
+         auto szBuffer = static_cast<char*>(hb_xalloc(iLen + 1));
 
          if( szBuffer ) {
             char * szBuff;

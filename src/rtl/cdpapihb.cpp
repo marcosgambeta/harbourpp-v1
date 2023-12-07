@@ -449,7 +449,7 @@ HB_FUNC( HB_UTF8POKE )
       if( nPos ) {
 
          --nPos;
-         HB_WCHAR uc = static_cast<HB_WCHAR>(hb_parni(3));
+         auto uc = static_cast<HB_WCHAR>(hb_parni(3));
          int n = hb_cdpUTF8CharSize(uc);
          int n2 = 0;
          HB_WCHAR uc2;

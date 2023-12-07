@@ -67,7 +67,7 @@ using PHB_IDLEDATA = HB_IDLEDATA *;
 
 static void hb_idleDataRelease(void * Cargo)
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(Cargo);
+   auto pIdleData = static_cast<PHB_IDLEDATA>(Cargo);
 
    if( pIdleData->pIdleTasks ) {
       do {
@@ -91,7 +91,7 @@ void hb_releaseCPU(void)
 /* performs all tasks defined for idle state */
 void hb_idleState(void)
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
    if( !pIdleData->fIamIdle ) {
       pIdleData->fIamIdle = true;
@@ -118,7 +118,7 @@ void hb_idleState(void)
 
 void hb_idleReset(void)
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
    if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && !hb_setGetIdleRepeat() ) {
       pIdleData->iIdleTask = 0;
@@ -144,7 +144,7 @@ void hb_idleSleep(double dSeconds)
 /* signal that the user code is in idle state */
 HB_FUNC( HB_IDLESTATE )
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
    pIdleData->fCollectGarbage = true;
    hb_idleState();
@@ -168,7 +168,7 @@ HB_FUNC( HB_IDLEADD )
    auto pBlock = hb_param(1, Harbour::Item::EVALITEM);
 
    if( pBlock ) {
-      PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+      auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
       ++pIdleData->iIdleMaxTask;
 
@@ -191,7 +191,7 @@ HB_FUNC( HB_IDLEADD )
 /* Delete a task with given handle and return a codeblock with this task */
 HB_FUNC( HB_IDLEDEL )
 {
-   PHB_IDLEDATA pIdleData = static_cast<PHB_IDLEDATA>(hb_stackTestTSD(&s_idleData));
+   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackTestTSD(&s_idleData));
    auto pID = hb_parptr(1);
 
    if( pID && pIdleData && pIdleData->pIdleTasks ) {

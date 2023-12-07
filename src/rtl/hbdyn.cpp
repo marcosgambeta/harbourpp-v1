@@ -867,7 +867,7 @@ HB_DYN_CTYPE_DECL(float,  __stdcall, FX86_SFL);
 
 void hb_dynCall(int iFuncFlags, void * pFunctionRaw, int iParams, int iFirst, int * piArgFlags)
 {
-   PHB_DYNADDR pFunction = reinterpret_cast<PHB_DYNADDR>(pFunctionRaw);
+   auto pFunction = reinterpret_cast<PHB_DYNADDR>(pFunctionRaw);
 
    if( !pFunction ) {
       return;

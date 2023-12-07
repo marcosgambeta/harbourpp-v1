@@ -341,7 +341,7 @@ void * hb_i18n_alloc(void * cargo)
 void hb_i18n_release(void * cargo)
 {
    if( cargo ) {
-      PHB_I18N_TRANS pI18N = static_cast<PHB_I18N_TRANS>(cargo);
+      auto pI18N = static_cast<PHB_I18N_TRANS>(cargo);
 
       if( hb_atomic_dec(&pI18N->iUsers) ) {
          if( pI18N->table ) {
@@ -434,7 +434,7 @@ static PHB_ITEM hb_i18n_serialize( PHB_I18N_TRANS pI18N )
       char * pBuffer = hb_itemSerialize(pI18N->table, 0, &nSize);
 
       HB_U32 ulCRC = hb_crc32(0, pBuffer, nSize);
-      char * pI18Nbuffer = static_cast<char*>(memset(hb_xgrab(nSize + HB_I18N_HEADER_SIZE + 1), 0, HB_I18N_HEADER_SIZE));
+      auto pI18Nbuffer = static_cast<char*>(memset(hb_xgrab(nSize + HB_I18N_HEADER_SIZE + 1), 0, HB_I18N_HEADER_SIZE));
       memcpy(pI18Nbuffer + HB_I18N_HEADER_SIZE, pBuffer, nSize);
       hb_xfree(pBuffer);
 
@@ -493,7 +493,7 @@ static PHB_I18N_TRANS hb_i18n_deserialize( PHB_ITEM pItem )
 
 static HB_GARBAGE_FUNC( hb_i18n_destructor )
 {
-   PHB_I18N_TRANS * pI18NHolder = static_cast<PHB_I18N_TRANS*>(Cargo);
+   auto pI18NHolder = static_cast<PHB_I18N_TRANS*>(Cargo);
 
    if( *pI18NHolder ) {
       hb_i18n_release( static_cast<void*>(*pI18NHolder) );
@@ -509,7 +509,7 @@ static const HB_GC_FUNCS s_gcI18NFuncs =
 
 static PHB_I18N_TRANS hb_i18n_param(int * piParam, bool fActive)
 {
-   PHB_I18N_TRANS * pI18NHolder = static_cast<PHB_I18N_TRANS*>(hb_parptrGC(&s_gcI18NFuncs, *piParam));
+   auto pI18NHolder = static_cast<PHB_I18N_TRANS*>(hb_parptrGC(&s_gcI18NFuncs, *piParam));
 
    if( pI18NHolder ) {
       (*piParam)++;
@@ -521,13 +521,12 @@ static PHB_I18N_TRANS hb_i18n_param(int * piParam, bool fActive)
 
 static PHB_ITEM hb_i18n_newitem(PHB_I18N_TRANS pI18N)
 {
-   PHB_I18N_TRANS * pI18NHolder;
    auto pItem = hb_itemNew(nullptr);
 
    if( !pI18N ) {
       pI18N = hb_i18n_new();
    }
-   pI18NHolder = static_cast<PHB_I18N_TRANS*>(hb_gcAllocate(sizeof(PHB_I18N_TRANS), &s_gcI18NFuncs));
+   auto pI18NHolder = static_cast<PHB_I18N_TRANS*>(hb_gcAllocate(sizeof(PHB_I18N_TRANS), &s_gcI18NFuncs));
    *pI18NHolder = pI18N;
 
    return hb_itemPutPtrGC(pItem, pI18NHolder);

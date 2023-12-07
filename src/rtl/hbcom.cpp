@@ -2553,7 +2553,7 @@ long hb_comSend(int iPort, const void * data, long len, HB_MAXINT timeout)
    long lSent = -1;
 
    if( pCom != nullptr ) {
-      const char * buffer = static_cast<const char*>(data);
+      auto buffer = static_cast<const char*>(data);
       HB_MAXUINT timer = hb_timerInit(timeout);
 
       hb_comSetOsError(pCom, 0);
@@ -2594,7 +2594,7 @@ long hb_comRecv(int iPort, void * data, long len, HB_MAXINT timeout)
    long lReceived = -1;
 
    if( pCom != nullptr ) {
-      char * buffer = static_cast<char*>(data);
+      auto buffer = static_cast<char*>(data);
       HB_MAXUINT timer = hb_timerInit(timeout);
 
       hb_comSetOsError(pCom, 0);

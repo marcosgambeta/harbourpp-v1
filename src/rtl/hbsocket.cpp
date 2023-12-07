@@ -1949,7 +1949,7 @@ char * hb_socketAddrGetName(const void * pSockAddr, unsigned len)
 #if defined(AF_INET)
       case AF_INET:
          if( len >= sizeof(struct sockaddr_in) ) {
-            const struct sockaddr_in * sa = static_cast<const struct sockaddr_in*>(pSockAddr);
+            auto sa = static_cast<const struct sockaddr_in*>(pSockAddr);
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET_ADDRSTRLEN];
@@ -1969,7 +1969,7 @@ char * hb_socketAddrGetName(const void * pSockAddr, unsigned len)
 #if defined(HB_HAS_INET6)
       case AF_INET6:
          if( len >= sizeof(struct sockaddr_in6) ) {
-            const struct sockaddr_in6 * sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
+            auto sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET6_ADDRSTRLEN];
@@ -1994,7 +1994,7 @@ char * hb_socketAddrGetName(const void * pSockAddr, unsigned len)
       case AF_LOCAL:
 #  endif
          if( len >= sizeof(struct sockaddr_un) ) {
-            const struct sockaddr_un * sa = static_cast<const struct sockaddr_un*>(pSockAddr);
+            auto sa = static_cast<const struct sockaddr_un*>(pSockAddr);
             szName = hb_strdup(sa->sun_path);
          }
          break;
@@ -2089,7 +2089,7 @@ PHB_ITEM hb_socketAddrToItem(const void * pSockAddr, unsigned len)
 #if defined(AF_INET)
       case AF_INET:
          if( len >= sizeof(struct sockaddr_in) ) {
-            const struct sockaddr_in * sa = static_cast<const struct sockaddr_in*>(pSockAddr);
+            auto sa = static_cast<const struct sockaddr_in*>(pSockAddr);
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET_ADDRSTRLEN];
@@ -2112,7 +2112,7 @@ PHB_ITEM hb_socketAddrToItem(const void * pSockAddr, unsigned len)
 #if defined(HB_HAS_INET6)
       case AF_INET6:
          if( len >= sizeof(struct sockaddr_in6) ) {
-            const struct sockaddr_in6 * sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
+            auto sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
             const char * szAddr;
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET6_ADDRSTRLEN];
@@ -2139,7 +2139,7 @@ PHB_ITEM hb_socketAddrToItem(const void * pSockAddr, unsigned len)
       case AF_LOCAL:
 #  endif
          if( len >= sizeof(struct sockaddr_un) ) {
-            const struct sockaddr_un * sa = static_cast<const struct sockaddr_un*>(pSockAddr);
+            auto sa = static_cast<const struct sockaddr_un*>(pSockAddr);
             pAddrItm = hb_itemArrayNew(2);
             hb_arraySetNI(pAddrItm, 1, HB_SOCKET_AF_LOCAL);
             hb_arraySetC(pAddrItm, 2, sa->sun_path);
@@ -3271,7 +3271,7 @@ PHB_ITEM hb_socketGetHosts(const char * szAddr, int af)
       if( iCount > 0 ) {
          pItem = hb_itemArrayNew(iCount);
          do {
-            struct in_addr * sin = reinterpret_cast<struct in_addr*>(he->h_addr_list[iCount - 1]);
+            auto sin = reinterpret_cast<struct in_addr*>(he->h_addr_list[iCount - 1]);
 #  if defined(HB_HAS_INET_NTOP)
             char buf[INET_ADDRSTRLEN];
             szAddr = inet_ntop(AF_INET, sin, buf, sizeof(buf));
@@ -3350,7 +3350,7 @@ char * hb_socketGetHostName(const void * pSockAddr, unsigned len)
 
       if( af == AF_INET ) {
 #if defined(HB_HAS_GETHOSTBYADDR)
-         const struct sockaddr_in * sa = static_cast<const struct sockaddr_in*>(pSockAddr);
+         auto sa = static_cast<const struct sockaddr_in*>(pSockAddr);
          hb_vmUnlock();
          he = gethostbyaddr(reinterpret_cast<const char*>(&sa->sin_addr), sizeof(sa->sin_addr), af);
          hb_socketSetResolveError(he == nullptr ? HB_SOCK_GETHERROR() : 0);
@@ -3367,7 +3367,7 @@ char * hb_socketGetHostName(const void * pSockAddr, unsigned len)
       }
 #if defined(HB_HAS_INET6) && defined(HB_HAS_GETHOSTBYADDR)
       else if( af == AF_INET6 ) {
-         const struct sockaddr_in6 * sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
+         auto sa = static_cast<const struct sockaddr_in6*>(pSockAddr);
          hb_vmUnlock();
          he = gethostbyaddr(static_cast<const char*>(&sa->sin6_addr), sizeof(sa->sin6_addr), af);
          hb_socketSetResolveError(he == nullptr ? HB_SOCK_GETHERROR() : 0);
@@ -3423,8 +3423,8 @@ static char * hb_getMAC( const char * pszIfName )
 
       while( ifa != nullptr ) {
          if( ifa->ifa_addr != nullptr && ifa->ifa_addr->sa_family == AF_LINK && ifa->ifa_name && strcmp(ifa->ifa_name, pszIfName) == 0 ) {
-            struct sockaddr_dl * sdl = reinterpret_cast<struct sockaddr_dl*>(ifa->ifa_addr);
-            unsigned char * data = reinterpret_cast<unsigned char*>(LLADDR(sdl));
+            auto sdl = reinterpret_cast<struct sockaddr_dl*>(ifa->ifa_addr);
+            auto data = reinterpret_cast<unsigned char*>(LLADDR(sdl));
             char hwaddr[24];
 
             hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
@@ -3603,16 +3603,14 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
 #     endif
                if( ioctl(sd, SIOCGIFHWADDR, pifr) != -1 ) {
                   char hwaddr[24];
-                  unsigned char * data;
-                  data = reinterpret_cast<unsigned char*>(&pifr->ifr_hwaddr.sa_data[0]);
+                  auto data = reinterpret_cast<unsigned char*>(&pifr->ifr_hwaddr.sa_data[0]);
                   hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
                   hb_arraySetC(pItem, HB_SOCKET_IFINFO_HWADDR, hwaddr);
                }
 #  elif defined(SIOCGENADDR)
                if( ioctl(sd, SIOCGENADDR, pifr) != -1 ) {
                   char hwaddr[24];
-                  unsigned char * data;
-                  data = static_cast<unsigned char*>(&pifr->ifr_enaddr[0]);
+                  auto data = static_cast<unsigned char*>(&pifr->ifr_enaddr[0]);
                   hb_snprintf(hwaddr, sizeof(hwaddr), "%02X:%02X:%02X:%02X:%02X:%02X", data[0], data[1], data[2], data[3], data[4], data[5]);
                   hb_arraySetC(pItem, HB_SOCKET_IFINFO_HWADDR, hwaddr);
                }
@@ -3656,7 +3654,7 @@ PHB_ITEM hb_socketGetIFaces(int af, HB_BOOL fNoAliases)
    if( sd != HB_NO_SOCKET ) {
       DWORD dwBuffer = 0x8000 * sizeof(INTERFACE_INFO);
       auto pBuffer = hb_xgrab(dwBuffer);
-      LPINTERFACE_INFO pIfInfo = static_cast<LPINTERFACE_INFO>(pBuffer);
+      auto pIfInfo = static_cast<LPINTERFACE_INFO>(pBuffer);
 
       if( WSAIoctl(sd, SIO_GET_INTERFACE_LIST, nullptr, 0, pIfInfo, dwBuffer, &dwBuffer, 0, 0) != SOCKET_ERROR ) {
          int iCount = dwBuffer / sizeof(INTERFACE_INFO);

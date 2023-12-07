@@ -618,7 +618,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 {
    auto fError = true;
    DWORD dwResult;
-   HANDLE hProc = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess));
+   auto hProc = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess));
 
    if( hProc ) {
       hb_vmUnlock();
@@ -639,7 +639,7 @@ int hb_fsProcessValue(HB_FHANDLE hProcess, HB_BOOL fWait)
 #elif defined(HB_OS_UNIX)
 {
    int iStatus;
-   pid_t pid = static_cast<pid_t>(hProcess);
+   auto pid = static_cast<pid_t>(hProcess);
 
    if( pid > 0 ) {
       hb_vmUnlock();
@@ -686,7 +686,7 @@ HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
 
 #if defined(HB_OS_WIN)
 {
-   HANDLE hProc = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess));
+   auto hProc = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hProcess));
 
    if( hProc ) {
       fResult = TerminateProcess(hProc, fGentle ? 0 : 1) != 0;
@@ -701,7 +701,7 @@ HB_BOOL hb_fsProcessClose(HB_FHANDLE hProcess, HB_BOOL fGentle)
 }
 #elif defined(HB_OS_UNIX)
 {
-   pid_t pid = static_cast<pid_t>(hProcess);
+   auto pid = static_cast<pid_t>(hProcess);
    if( pid > 0 ) {
       fResult = kill(pid, fGentle ? SIGTERM : SIGKILL) == 0;
       hb_fsSetIOError(fResult, 0);

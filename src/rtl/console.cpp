@@ -85,9 +85,9 @@
    static const int  s_iCrLfLen = 2;
 #endif
 
-static HB_FHANDLE s_hFilenoStdin  = static_cast<HB_FHANDLE>(HB_STDIN_HANDLE);
-static HB_FHANDLE s_hFilenoStdout = static_cast<HB_FHANDLE>(HB_STDOUT_HANDLE);
-static HB_FHANDLE s_hFilenoStderr = static_cast<HB_FHANDLE>(HB_STDERR_HANDLE);
+static auto s_hFilenoStdin  = static_cast<HB_FHANDLE>(HB_STDIN_HANDLE);
+static auto s_hFilenoStdout = static_cast<HB_FHANDLE>(HB_STDOUT_HANDLE);
+static auto s_hFilenoStderr = static_cast<HB_FHANDLE>(HB_STDERR_HANDLE);
 
 struct HB_PRNPOS
 {

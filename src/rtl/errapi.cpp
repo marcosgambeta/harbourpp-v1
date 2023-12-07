@@ -97,7 +97,7 @@ using PHB_ERRDATA = HB_ERRDATA *;
 
 static void hb_errorDataRelease(void * Cargo)
 {
-   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>(Cargo);
+   auto pErrData = static_cast<PHB_ERRDATA>(Cargo);
    hb_itemRelease(pErrData->errorBlock);
 }
 
@@ -429,7 +429,7 @@ HB_FUNC( ERRORBLOCK )
 
 PHB_ITEM hb_errorBlock(void)
 {
-   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
+   auto pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
 
    if( !pErrData->errorBlock ) {
       pErrData->errorBlock = hb_itemNew(nullptr);
@@ -443,7 +443,7 @@ PHB_ITEM hb_errorBlock(void)
  */
 PHB_ERROR_INFO hb_errorHandler(PHB_ERROR_INFO pNewHandler)
 {
-   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
+   auto pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
    PHB_ERROR_INFO pOld = pErrData->errorHandler;
 
    if( pNewHandler ) {
@@ -456,7 +456,7 @@ PHB_ERROR_INFO hb_errorHandler(PHB_ERROR_INFO pNewHandler)
 
 HB_FUNC( DOSERROR )
 {
-   PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
+   auto pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
 
    hb_retni(pErrData->uiErrorDOS);
 
@@ -541,7 +541,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
    HB_USHORT uiAction = E_DEFAULT; /* Needed to avoid GCC -O2 warning */
 
    if( pError ) {
-      PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
+      auto pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
       HB_USHORT uiFlags = hb_errGetFlags(pError);
       PHB_ITEM pResult;
 
@@ -636,7 +636,7 @@ PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
    PHB_ITEM pResult;
 
    if( pError ) {
-      PHB_ERRDATA pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
+      auto pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
       HB_USHORT uiFlags = hb_errGetFlags(pError);
 
       /* Check if we have a valid error handler */

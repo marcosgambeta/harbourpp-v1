@@ -71,7 +71,7 @@ HB_FUNC( HB_UCHAR )
 HB_FUNC( HB_BCHAR )
 {
    if( HB_ISNUM(1) ) {
-      char c = static_cast<char>(hb_parni(1));
+      auto c = static_cast<char>(hb_parni(1));
       hb_retclen(&c, 1);
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

@@ -458,7 +458,7 @@ int hb_inkeyKeyStd(int iKey)
          if( iVal >= 32 && iVal <= 127 && (iFlags & (HB_KF_ALT | HB_KF_CTRL)) != 0 ) {
             iKey = s_inkeyTransChar(iVal, iFlags, &s_transKeyStd[iVal - 32]);
          } else if( HB_INKEY_ISUNICODE( iKey ) ) {
-            HB_WCHAR wc = static_cast<HB_WCHAR>(iVal);
+            auto wc = static_cast<HB_WCHAR>(iVal);
             if( wc ) {
                HB_UCHAR uc = hb_cdpGetUC( hb_vmCDP(), wc, 0 );
                if( uc != 0 ) {

@@ -232,8 +232,6 @@ int hb_sln_Init_Terminal(int phase)
    /* first time init phase - we don't want this after
       return from system command ( see run.c )      */
    if( phase == 0 ) {
-      unsigned const char * p;
-
       /* check if we run under linux console or under xterm */
       hb_sln_Init_TermType();
 
@@ -245,7 +243,7 @@ int hb_sln_Init_Terminal(int phase)
 #endif
 
       /* get Dead key definition */
-      p = reinterpret_cast<unsigned const char*>(getenv(s_DeadKeyEnvName));
+      auto p = reinterpret_cast<unsigned const char*>(getenv(s_DeadKeyEnvName));
       if( p && *p ) {
          s_iDeadKey = static_cast<int>(*p);
       }

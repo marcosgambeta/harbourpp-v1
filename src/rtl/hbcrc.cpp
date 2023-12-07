@@ -147,7 +147,7 @@ HB_U32 hb_crc32(HB_U32 crc, const void * buf, HB_SIZE len)
 {
    crc ^= 0xffffffffL;
    if( buf && len ) {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
+      auto ucbuf = static_cast<const unsigned char*>(buf);
       do {
          crc = crc32_tab[( crc ^ *ucbuf++ ) & 0xFF] ^ ( crc >> 8 );
       } while( --len );
@@ -159,7 +159,7 @@ HB_U16 hb_crc16(HB_U16 crc, const void * buf, HB_SIZE len)
 {
    crc ^= 0xffff;
    if( buf && len ) {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
+      auto ucbuf = static_cast<const unsigned char*>(buf);
       do {
          crc = crc16_tab[( crc ^ *ucbuf++ ) & 0xFF] ^ ( crc >> 8 );
       } while( --len );
@@ -170,7 +170,7 @@ HB_U16 hb_crc16(HB_U16 crc, const void * buf, HB_SIZE len)
 HB_MAXUINT hb_crc(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly)
 {
    if( buf && len ) {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
+      auto ucbuf = static_cast<const unsigned char*>(buf);
       HB_MAXUINT mask = 1, revp = 0;
 
       while( poly > 1 ) {
@@ -197,7 +197,7 @@ HB_MAXUINT hb_crc(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly
 HB_MAXUINT hb_crcct(HB_MAXUINT crc, const void * buf, HB_SIZE len, HB_MAXUINT poly)
 {
    if( buf && len ) {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
+      auto ucbuf = static_cast<const unsigned char*>(buf);
       HB_MAXUINT mask, revp = poly;
       int bits = 0;
 
@@ -260,7 +260,7 @@ HB_FUNC( HB_CRC )
    auto szString = hb_parc(1);
 
    if( szString ) {
-      HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
+      auto ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
       if( ulPolynomial == 0 ) {
          ulPolynomial = 0x11021;
       }
@@ -275,7 +275,7 @@ HB_FUNC( HB_CRCCT )
    auto szString = hb_parc(1);
 
    if( szString ) {
-      HB_MAXUINT ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
+      auto ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
       if( ulPolynomial == 0 ) {
          ulPolynomial = 0x11021;
       }

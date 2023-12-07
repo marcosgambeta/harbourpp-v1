@@ -188,7 +188,7 @@ static int hb_inetCloseSocket(PHB_SOCKET_STRUCT socket, HB_BOOL fShutDown)
 
 static HB_GARBAGE_FUNC(hb_inetSocketFinalize)
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>(Cargo);
+   auto socket = static_cast<PHB_SOCKET_STRUCT>(Cargo);
 
    if( socket->sd != HB_NO_SOCKET ) {
       hb_inetCloseSocket(socket, true);
@@ -212,7 +212,7 @@ static HB_GARBAGE_FUNC(hb_inetSocketFinalize)
 
 static HB_GARBAGE_FUNC(hb_inetSocketMark)
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>(Cargo);
+   auto socket = static_cast<PHB_SOCKET_STRUCT>(Cargo);
 
    if( socket->pPeriodicBlock ) {
       hb_gcMark(socket->pPeriodicBlock);
@@ -241,7 +241,7 @@ static void hb_inetAutoInit(void)
 
 HB_SOCKET hb_znetInetFD(PHB_ITEM pItem, HB_BOOL fError)
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
+   auto socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
 
    if( socket ) {
       return socket->sd;
@@ -254,7 +254,7 @@ HB_SOCKET hb_znetInetFD(PHB_ITEM pItem, HB_BOOL fError)
 
 HB_MAXINT hb_znetInetTimeout(PHB_ITEM pItem, HB_BOOL fError)
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
+   auto socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
 
    if( socket ) {
       return socket->iTimeout; /* socket->pPeriodicBlock ? socket->iTimeLimit */
@@ -273,7 +273,7 @@ HB_BOOL hb_znetInetInitialize( PHB_ITEM pItem, PHB_ZNETSTREAM pStream,
                                HB_INET_ERFUNC errorFunc,
                                HB_INET_ESFUNC errstrFunc )
 {
-   PHB_SOCKET_STRUCT socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
+   auto socket = static_cast<PHB_SOCKET_STRUCT>(hb_itemGetPtrGC(pItem, &s_gcInetFuncs));
 
    if( socket ) {
       hb_inetCloseStream(socket);

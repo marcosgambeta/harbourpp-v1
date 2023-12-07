@@ -600,7 +600,7 @@ HB_U32 hb_arc4random(void)
 
 void hb_arc4random_buf(void * _buf, HB_SIZE n)
 {
-   HB_U8 * buf = static_cast<HB_U8*>(_buf);
+   auto buf = static_cast<HB_U8*>(_buf);
 
    ARC4_LOCK();
 

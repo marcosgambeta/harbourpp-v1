@@ -64,7 +64,7 @@ HB_U32 hb_adler32(HB_U32 adler, const void * buf, HB_SIZE len)
    HB_U32 s2 = (adler >> 16) & 0xffff;
 
    if( buf && len ) {
-      const unsigned char * ucbuf = static_cast<const unsigned char*>(buf);
+      auto ucbuf = static_cast<const unsigned char*>(buf);
       do {
          HB_ISIZ n = len < NMAX ? len : NMAX;
          len -= n;

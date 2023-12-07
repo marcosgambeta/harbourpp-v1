@@ -681,7 +681,7 @@ HB_FUNC( IOUSR_SETERROR )
    HB_ERRCODE errCodePrev = hb_fsError();
 
    if( HB_ISNUM(1) ) {
-      HB_ERRCODE errCodeNew = static_cast<HB_ERRCODE>(hb_parni(1));
+      auto errCodeNew = static_cast<HB_ERRCODE>(hb_parni(1));
       if( errCodeNew != 0 ) {
          errCodeNew += static_cast<HB_ERRCODE>(hb_parni(2));
       }

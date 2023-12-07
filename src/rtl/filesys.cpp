@@ -1193,7 +1193,7 @@ HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void * buffer, HB_SIZE nSiz
 
 #if defined(HB_OS_WIN)
 {
-   HANDLE hPipe = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeHandle));
+   auto hPipe = reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeHandle));
    DWORD dwMode = 0;
 
    if( GetNamedPipeHandleState( hPipe, &dwMode, nullptr, nullptr, nullptr, nullptr, 0 ) ) {
@@ -2156,7 +2156,8 @@ HB_SIZE hb_fsReadAt(HB_FHANDLE hFileHandle, void * pBuff, HB_SIZE nCount, HB_FOF
       hb_fsSetIOError(ReadFile(DosToWinHandle(hFileHandle), pBuff, static_cast<DWORD>(nCount), &dwRead, &Overlapped) != 0, 0);
       nRead = dwRead;
    } else {
-      ULONG ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF), ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
+      auto ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF);
+      auto ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
       ulOffsetLow = SetFilePointer(DosToWinHandle(hFileHandle), ulOffsetLow, reinterpret_cast<PLONG>(&ulOffsetHigh), SEEK_SET);
       if( ulOffsetLow == static_cast<ULONG>(INVALID_SET_FILE_POINTER) && GetLastError() != NO_ERROR ) {
          hb_fsSetIOError(false, 0);
@@ -2269,7 +2270,8 @@ HB_SIZE hb_fsWriteAt(HB_FHANDLE hFileHandle, const void * pBuff, HB_SIZE nCount,
       hb_fsSetIOError(WriteFile(DosToWinHandle(hFileHandle), pBuff, static_cast<DWORD>(nCount), &dwWritten, &Overlapped) != 0, 0);
       nWritten = dwWritten;
    } else {
-      ULONG ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF), ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
+      auto ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF);
+      auto ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
       ulOffsetLow = SetFilePointer(DosToWinHandle(hFileHandle), ulOffsetLow, reinterpret_cast<PLONG>(&ulOffsetHigh), SEEK_SET);
       if( ulOffsetLow == static_cast<ULONG>(INVALID_SET_FILE_POINTER) && GetLastError() != NO_ERROR ) {
          hb_fsSetIOError(false, 0);
@@ -2326,7 +2328,8 @@ HB_BOOL hb_fsTruncAt(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset)
 
 #if defined(HB_OS_WIN)
    {
-      ULONG ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF), ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
+      auto ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF);
+      auto ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
 
       /* This is not atom operation anyhow if someone want to truncate
        * file then he has to made necessary synchronizations in upper level
@@ -2575,10 +2578,10 @@ HB_BOOL hb_fsLockLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nL
 
 #if defined(HB_OS_WIN)
    {
-      DWORD dwOffsetLo = static_cast<DWORD>(nStart & 0xFFFFFFFF),
-            dwOffsetHi = static_cast<DWORD>(nStart >> 32),
-            dwLengthLo = static_cast<DWORD>(nLength & 0xFFFFFFFF),
-            dwLengthHi = static_cast<DWORD>(nLength >> 32);
+      auto dwOffsetLo = static_cast<DWORD>(nStart & 0xFFFFFFFF);
+      auto dwOffsetHi = static_cast<DWORD>(nStart >> 32);
+      auto dwLengthLo = static_cast<DWORD>(nLength & 0xFFFFFFFF);
+      auto dwLengthHi = static_cast<DWORD>(nLength >> 32);
 
       hb_vmUnlock();
       switch( uiMode & FL_MASK ) {
@@ -2784,7 +2787,8 @@ HB_FOFFSET hb_fsSeekLarge( HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT
    {
       HB_USHORT nFlags = convert_seek_flags(uiFlags);
 
-      ULONG ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF), ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
+      auto ulOffsetLow  = static_cast<ULONG>(nOffset & 0xFFFFFFFF);
+      auto ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
 
       hb_vmUnlock();
       if( nOffset < 0 && nFlags == SEEK_SET ) {
@@ -3184,7 +3188,7 @@ HB_ERRCODE hb_fsCurDirBuff(int iDrive, char * pszBuffer, HB_SIZE nSize)
 
 #if defined(HB_OS_WIN)
    {
-      DWORD dwSize = static_cast<DWORD>(nSize);
+      auto dwSize = static_cast<DWORD>(nSize);
       auto lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
       lpBuffer[0] = TEXT('\0');
       hb_fsSetIOError((GetCurrentDirectory(dwSize, lpBuffer) != 0), 0);
@@ -3286,7 +3290,7 @@ HB_BOOL hb_fsGetCWD(char * pszBuffer, HB_SIZE nSize)
 
 #if defined(HB_OS_WIN)
    {
-      DWORD dwSize = static_cast<DWORD>(nSize);
+      auto dwSize = static_cast<DWORD>(nSize);
       auto lpBuffer = static_cast<LPTSTR>(hb_xgrab(dwSize * sizeof(TCHAR)));
       lpBuffer[0] = TEXT('\0');
       fResult = GetCurrentDirectory(dwSize, lpBuffer) != 0;
@@ -3787,7 +3791,7 @@ const char * hb_fsNameConv(const char * pszFileName, char ** pszFree)
 
    bool fTrim = hb_setGetTrimFileName();
    bool fEncodeCP = hb_osUseCP();
-   char cDirSep = static_cast<char>(hb_setGetDirSeparator());
+   auto cDirSep = static_cast<char>(hb_setGetDirSeparator());
    int iFileCase = hb_setGetFileCase();
    int iDirCase = hb_setGetDirCase();
    if( fTrim ) {
@@ -3913,7 +3917,7 @@ HB_WCHAR * hb_fsNameConvU16(const char * pszFileName)
 
    auto cdp = hb_vmCDP();
    bool fTrim = hb_setGetTrimFileName();
-   char cDirSep = static_cast<char>(hb_setGetDirSeparator());
+   auto cDirSep = static_cast<char>(hb_setGetDirSeparator());
    int iFileCase = hb_setGetFileCase();
    int iDirCase = hb_setGetDirCase();
    if( fTrim ) {

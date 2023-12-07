@@ -58,7 +58,7 @@ static void hb_memoread(HB_BOOL bHandleEOF)
 
    if( pszFileName ) {
       HB_SIZE nSize;
-      char * pBuffer = reinterpret_cast<char*>(hb_fileLoad(pszFileName, 0, &nSize));
+      auto pBuffer = reinterpret_cast<char*>(hb_fileLoad(pszFileName, 0, &nSize));
 
       if( pBuffer ) {
          /* Don't read the file terminating EOF character */

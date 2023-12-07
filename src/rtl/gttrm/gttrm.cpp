@@ -890,7 +890,7 @@ static int set_gpmevt(int fd, int mode, void * cargo)
 
    Gpm_Event gEvt;
 
-   PHB_GTTRM pTerm = static_cast<PHB_GTTRM>(cargo);
+   auto pTerm = static_cast<PHB_GTTRM>(cargo);
 
    if( Gpm_GetEvent(&gEvt) > 0 ) {
       pTerm->mLastEvt.flags = 0;
@@ -2066,7 +2066,7 @@ static int hb_gt_trm_AnsiGetAcsc(PHB_GTTRM pTerm, unsigned char c)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiGetAcsc(%p,%d)", static_cast<void*>(pTerm), c));
 #endif
 
-   for( const unsigned char * ptr = reinterpret_cast<const unsigned char*>(pTerm->szAcsc); *ptr && *( ptr + 1 ); ptr += 2 ) {
+   for( auto ptr = reinterpret_cast<const unsigned char*>(pTerm->szAcsc); *ptr && *( ptr + 1 ); ptr += 2 ) {
       if( *ptr == c ) {
          return *( ptr + 1 ) | HB_GTTRM_ATTR_ACSC;
       }
@@ -2338,7 +2338,7 @@ static void hb_gt_trm_SetDispTrans(PHB_GTTRM pTerm, int box)
    if( cdpHost && cdpTerm ) {
       for( auto i = 0; i < 256; ++i ) {
          if( hb_cdpIsAlpha(cdpHost, i) ) {
-            unsigned char uc = static_cast<unsigned char>(hb_cdpTranslateDispChar(i, cdpHost, cdpTerm));
+            auto uc = static_cast<unsigned char>(hb_cdpTranslateDispChar(i, cdpHost, cdpTerm));
 
             pTerm->chrattr[i] = uc | HB_GTTRM_ATTR_STD;
             if( box ) {

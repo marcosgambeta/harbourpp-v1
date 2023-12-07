@@ -1389,7 +1389,7 @@ HB_BOOL hb_fileDetach( PHB_FILE pFile )
       }
 #if defined(HB_OS_UNIX)
       else if( pFile->pFuncs == s_fileposMethods() ) {
-         PHB_FILEPOS pFilePos = reinterpret_cast<PHB_FILEPOS>(pFile);
+         auto pFilePos = reinterpret_cast<PHB_FILEPOS>(pFile);
 
          pFilePos->pFile->hFile = FS_ERROR;
          s_fileposClose(pFile);

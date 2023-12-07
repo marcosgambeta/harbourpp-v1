@@ -601,7 +601,7 @@ static int set_gpmevt(int fd, int mode, void * data)
    int nKey = 0;
    Gpm_Event gEvt;
 
-   mouseEvent * mEvt = static_cast<mouseEvent*>(data);
+   auto mEvt = static_cast<mouseEvent*>(data);
 
    if( Gpm_GetEvent(&gEvt) > 0 ) {
       mEvt->flags = 0;
@@ -1687,7 +1687,7 @@ static void setDispTrans(InOutBase * ioBase, PHB_CODEPAGE cdpHost, PHB_CODEPAGE 
    if( aSet ) {
       for( auto i = 0; i < 256; ++i ) {
          if( hb_cdpIsAlpha(cdpHost, i) ) {
-            unsigned char uc = static_cast<unsigned char>(hb_cdpTranslateDispChar(i, cdpHost, cdpTerm));
+            auto uc = static_cast<unsigned char>(hb_cdpTranslateDispChar(i, cdpHost, cdpTerm));
 
             ioBase->std_chmap[i] = uc | A_NORMAL;
             if( transBox ) {

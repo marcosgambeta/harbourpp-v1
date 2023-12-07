@@ -237,7 +237,7 @@ HB_FUNC( HB_COMRECV )
 
 HB_FUNC( HB_COMSEND )
 {
-   long  lLen = static_cast<long>(hb_parclen(2));
+   auto lLen = static_cast<long>(hb_parclen(2));
 
    if( HB_ISNUM(3) ) {
       long lParam = hb_parnl(3);

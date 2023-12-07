@@ -350,7 +350,7 @@ void hb_sha256_init(sha256_ctx *ctx)
 void hb_sha256_update(sha256_ctx *ctx, const void *messagev,
                    unsigned int len)
 {
-    const unsigned char * message = static_cast<const unsigned char*>(messagev);
+    auto message = static_cast<const unsigned char*>(messagev);
     unsigned int block_nb;
     unsigned int new_len, rem_len, tmp_len;
     const unsigned char *shifted_message;
@@ -548,7 +548,7 @@ void hb_sha512_init(sha512_ctx *ctx)
 void hb_sha512_update(sha512_ctx *ctx, const void *messagev,
                    unsigned int len)
 {
-    const unsigned char * message = static_cast<const unsigned char*>(messagev);
+    auto message = static_cast<const unsigned char*>(messagev);
     unsigned int block_nb;
     unsigned int new_len, rem_len, tmp_len;
     const unsigned char *shifted_message;
@@ -651,7 +651,7 @@ void hb_sha384_init(sha384_ctx *ctx)
 void hb_sha384_update(sha384_ctx *ctx, const void *messagev,
                    unsigned int len)
 {
-    const unsigned char * message = static_cast<const unsigned char*>(messagev);
+    auto message = static_cast<const unsigned char*>(messagev);
     unsigned int block_nb;
     unsigned int new_len, rem_len, tmp_len;
     const unsigned char *shifted_message;
@@ -752,7 +752,7 @@ void hb_sha224_init(sha224_ctx *ctx)
 void hb_sha224_update(sha224_ctx *ctx, const void *messagev,
                    unsigned int len)
 {
-    const unsigned char * message = static_cast<const unsigned char*>(messagev);
+    auto message = static_cast<const unsigned char*>(messagev);
     unsigned int block_nb;
     unsigned int new_len, rem_len, tmp_len;
     const unsigned char *shifted_message;

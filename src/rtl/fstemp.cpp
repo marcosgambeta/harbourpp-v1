@@ -337,7 +337,7 @@ HB_FHANDLE hb_fsCreateTemp(const char * pszDir, const char * pszPrefix, HB_FATTR
 /* NOTE: pszTempDir must be at least HB_PATH_MAX long. */
 HB_ERRCODE hb_fsTempDir(char * pszTempDir)
 {
-   HB_ERRCODE nResult = static_cast<HB_ERRCODE>(FS_ERROR);
+   auto nResult = static_cast<HB_ERRCODE>(FS_ERROR);
 
    pszTempDir[0] = '\0';
 

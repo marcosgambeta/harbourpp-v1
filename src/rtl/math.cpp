@@ -154,7 +154,7 @@ static int hb_matherr(HB_MATH_EXCEPTION * pexc)
 
 static void hb_mathErrDataInit(void * Cargo)
 {
-   PHB_MATHERRDATA pMathErr = static_cast<PHB_MATHERRDATA>(Cargo);
+   auto pMathErr = static_cast<PHB_MATHERRDATA>(Cargo);
 
    pMathErr->mode = HB_MATH_ERRMODE_DEFAULT;
 
@@ -175,7 +175,7 @@ static void hb_mathErrDataInit(void * Cargo)
 
 static void hb_mathErrDataRelease(void * Cargo)
 {
-   PHB_MATHERRDATA pMathErr = static_cast<PHB_MATHERRDATA>(Cargo);
+   auto pMathErr = static_cast<PHB_MATHERRDATA>(Cargo);
    hb_itemRelease(pMathErr->block);
 }
 

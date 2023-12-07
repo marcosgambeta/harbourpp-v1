@@ -68,7 +68,7 @@ static const HB_WCHAR s_szSpaceW[] = { ' ', 0 };
 
 PHB_GT hb_gt_Base(void)
 {
-   PHB_GT pGT = static_cast<PHB_GT>(hb_stackGetGT());
+   auto pGT = static_cast<PHB_GT>(hb_stackGetGT());
 
    if( pGT && HB_GTSELF_LOCK(pGT) ) {
       return pGT;
@@ -1213,7 +1213,7 @@ static long hb_gt_def_RectSize(PHB_GT pGT, int iTop, int iLeft, int iBottom, int
 
 static void hb_gt_def_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, void * pBuffer)
 {
-   HB_BYTE * pbyBuffer = static_cast<HB_BYTE*>(pBuffer);
+   auto pbyBuffer = static_cast<HB_BYTE*>(pBuffer);
    PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 
    while( iTop <= iBottom ) {
@@ -1244,7 +1244,7 @@ static void hb_gt_def_Save(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 
 static void hb_gt_def_Rest(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, const void * pBuffer)
 {
-   const HB_BYTE * pbyBuffer = static_cast<const HB_BYTE*>(pBuffer);
+   auto pbyBuffer = static_cast<const HB_BYTE*>(pBuffer);
    PHB_CODEPAGE cdp = pGT->fVgaCell ? HB_GTSELF_HOSTCP(pGT) : nullptr;
 
    while( iTop <= iBottom ) {
@@ -1507,7 +1507,7 @@ static void hb_gt_def_BoxW(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 
    if( iTop <= iMaxRow && iLeft <= iMaxCol && iBottom >= 0 && iRight >= 0 ) {
       HB_WCHAR szBoxW[10];
-      HB_WCHAR wcPadCh = static_cast<HB_WCHAR>(HB_GTSELF_GETCLEARCHAR(pGT));
+      auto wcPadCh = static_cast<HB_WCHAR>(HB_GTSELF_GETCLEARCHAR(pGT));
 
       if( szFrame && *szFrame ) {
          for( i = 0; *szFrame && i < 9; ++i ) {
@@ -3087,7 +3087,7 @@ static int hb_gt_def_mouseStorageSize(PHB_GT pGT)
 
 static void hb_gt_def_mouseSaveState(PHB_GT pGT, void * pBuffer)
 {
-   _HB_MOUSE_STORAGE * pStore = static_cast<_HB_MOUSE_STORAGE*>(pBuffer);
+   auto pStore = static_cast<_HB_MOUSE_STORAGE*>(pBuffer);
    int iRow, iCol, iTop, iLeft, iBottom, iRight;
 
    HB_GTSELF_MOUSEGETPOS(pGT, &iRow, &iCol);
@@ -3104,7 +3104,7 @@ static void hb_gt_def_mouseSaveState(PHB_GT pGT, void * pBuffer)
 
 static void hb_gt_def_mouseRestoreState(PHB_GT pGT, const void * pBuffer)
 {
-   const _HB_MOUSE_STORAGE * pStore = static_cast<const _HB_MOUSE_STORAGE*>(pBuffer);
+   auto pStore = static_cast<const _HB_MOUSE_STORAGE*>(pBuffer);
 
    HB_GTSELF_MOUSESETBOUNDS(pGT, pStore->iTop, pStore->iLeft, pStore->iBottom, pStore->iRight);
    HB_GTSELF_MOUSESETPOS(pGT, pStore->iRow, pStore->iCol);
@@ -3610,7 +3610,7 @@ PHB_GT hb_gtLoad(const char * szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable)
 
 void hb_gtIsGtRef(void * hGT)
 {
-   PHB_GT pGT = static_cast<PHB_GT>(hGT);
+   auto pGT = static_cast<PHB_GT>(hGT);
 
    if(pGT) {
       HB_GTSELF_MARK(pGT);
@@ -3763,7 +3763,7 @@ HB_GT_ANNOUNCE( HB_GT_NAME )
 
 static HB_GARBAGE_FUNC( hb_gt_Destructor )
 {
-   void ** gtHolder = static_cast<void**>(Cargo);
+   auto gtHolder = static_cast<void**>(Cargo);
 
    if( *gtHolder ) {
       hb_gtRelease(*gtHolder);
@@ -3773,7 +3773,7 @@ static HB_GARBAGE_FUNC( hb_gt_Destructor )
 
 static HB_GARBAGE_FUNC( hb_gt_Mark )
 {
-   void ** gtHolder = static_cast<void**>(Cargo);
+   auto gtHolder = static_cast<void**>(Cargo);
 
    if( *gtHolder ) {
       HB_GTSELF_MARK(static_cast<PHB_GT>(*gtHolder));
@@ -3788,7 +3788,7 @@ static const HB_GC_FUNCS s_gcGTFuncs =
 
 static void * hb_gtParam(int iParam)
 {
-   void ** gtHolder = static_cast<void**>(hb_parptrGC(&s_gcGTFuncs, iParam));
+   auto gtHolder = static_cast<void**>(hb_parptrGC(&s_gcGTFuncs, iParam));
 
    if( gtHolder && *gtHolder ) {
       return *gtHolder;
@@ -3800,10 +3800,10 @@ static void * hb_gtParam(int iParam)
 
 PHB_GT hb_gt_ItemBase( PHB_ITEM pItemGT )
 {
-   void ** gtHolder = static_cast<void**>(hb_itemGetPtrGC(pItemGT, &s_gcGTFuncs));
+   auto gtHolder = static_cast<void**>(hb_itemGetPtrGC(pItemGT, &s_gcGTFuncs));
 
    if( gtHolder && *gtHolder ) {
-      PHB_GT pGT = static_cast<PHB_GT>(*gtHolder);
+      auto pGT = static_cast<PHB_GT>(*gtHolder);
       if( HB_GTSELF_LOCK(pGT) ) {
          return pGT;
       }
@@ -3829,7 +3829,7 @@ HB_FUNC( HB_GTCREATE )
             HB_ISNUM(4) ? hb_numToHandle(hb_parnint(3)) : HB_STDERR_HANDLE);
 
    if( hGT ) {
-      void ** gtHolder = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcGTFuncs));
+      auto gtHolder = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcGTFuncs));
       *gtHolder = hGT;
       hb_retptrGC(gtHolder);
    }
@@ -3852,7 +3852,7 @@ HB_FUNC( HB_GTSELECT )
    }
 
    if( hGT ) {
-      void ** gtHolder = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcGTFuncs));
+      auto gtHolder = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcGTFuncs));
       *gtHolder = hGT;
       hb_retptrGC(gtHolder);
    }

@@ -2538,7 +2538,7 @@ static void hb_gt_xwc_MotifWmHints(PXWND_DEF wnd)
                                &nitems_return, &bytes_after_return,
                                &prop_return);
    if( result == Success && actual_type_return == s_atomMotifHints && actual_format_return == 32 && nitems_return >= MWM_HINTS_ITEMS ) {
-      PXWC_MWMHints pmwmhints = reinterpret_cast<PXWC_MWMHints>(prop_return);
+      auto pmwmhints = reinterpret_cast<PXWC_MWMHints>(prop_return);
 
       mwmhints.flags       = pmwmhints->flags;
       mwmhints.functions   = pmwmhints->functions;
@@ -2616,7 +2616,7 @@ static void hb_gt_xwc_UpdateWindowCords(PXWND_DEF wnd, int * pX, int * pY)
          if( prop_return ) {
             if( actual_type_return == s_atomCardinal && nitems_return == 4 && actual_format_return == 32 ) {
                /* _NET_FRAME_EXTENTS: left, right, top, bottom, CARDINAL[4]/32 */
-               long * fe = reinterpret_cast<long*>(prop_return);
+               auto fe = reinterpret_cast<long*>(prop_return);
 
                wnd->iCordLeft = fe[0];
                wnd->iCordTop  = fe[2];
@@ -3271,7 +3271,7 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent * evt)
 
             if( cdpin && cdpin != wnd->utf8CDP ) {
                HB_SIZE nLen = wnd->ClipboardSize;
-               unsigned char * pBuffer = reinterpret_cast<unsigned char*>(hb_cdpnDup(reinterpret_cast<const char*>(wnd->ClipboardData), &nLen, wnd->utf8CDP, cdpin));
+               auto pBuffer = reinterpret_cast<unsigned char*>(hb_cdpnDup(reinterpret_cast<const char*>(wnd->ClipboardData), &nLen, wnd->utf8CDP, cdpin));
 
                XChangeProperty(wnd->dpy, req->requestor, req->property, s_atomString, 8, PropModeReplace, pBuffer, nLen);
                hb_xfree(pBuffer);

@@ -144,7 +144,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT time
    } else {
       lRecv = hb_sockexRead(pBF->sock, data, len, timeout);
       if( lRecv > 0 ) {
-         HB_BYTE * pData = static_cast<HB_BYTE*>(data);
+         auto pData = static_cast<HB_BYTE*>(data);
 
          for( long l = 0; l < lRecv; ++l ) {
             if( (pBF->decoded & (HB_BF_CIPHERBLOCK - 1)) == 0 ) {
@@ -161,7 +161,7 @@ static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT time
 static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout)
 {
    PHB_SOCKEX_BF pBF = HB_BFSOCK_GET(pSock);
-   const HB_BYTE * pData = static_cast<const HB_BYTE*>(data);
+   auto pData = static_cast<const HB_BYTE*>(data);
    long lWritten = 0, lDone;
 
    for( lDone = 0; lDone < len; ++lDone ) {
@@ -296,7 +296,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
       hb_socekxParamsGetStd(pParams, &keydata, &keylen, &iv, &ivlen, nullptr, nullptr);
       if( keylen > 0 ) {
          auto pBF = static_cast<PHB_SOCKEX_BF>(hb_xgrabz(sizeof(HB_SOCKEX_BF)));
-         const HB_BYTE * pVect = static_cast<const HB_BYTE*>(ivlen > 0 ? iv : nullptr);
+         auto pVect = static_cast<const HB_BYTE*>(ivlen > 0 ? iv : nullptr);
          int i;
 
          hb_blowfishInit(&pBF->bf, keydata, keylen);
