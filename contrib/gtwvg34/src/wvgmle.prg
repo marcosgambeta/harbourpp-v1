@@ -270,7 +270,7 @@ METHOD WvgMLE:copyMarked()
    nE := wapi_HIWORD( n )
 
    IF ( n := nE - nB ) > 0
-      hb_gtInfo( HB_GTI_CLIPBOARDDATA, SubStr( ::getData(), nB, n ) )
+      hb_gtInfo( HB_GTI_CLIPBOARDDATA, SubStr(::getData(), nB, n) )
    ENDIF
 
    RETURN n
@@ -285,7 +285,7 @@ METHOD WvgMLE:cutMarked()
 
    IF ( n := nE - nB ) > 0
       cText := ::getData()
-      ::setData( Left(cText, nB - 1) + SubStr( cText, nE ) )
+      ::setData( Left(cText, nB - 1) + SubStr(cText, nE) )
    ENDIF
 
    RETURN n

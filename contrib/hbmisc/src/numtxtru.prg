@@ -668,10 +668,10 @@ STATIC FUNCTION OrdToGender( cValue, aMsg, nGender )
    LOCAL nTemp := Len( cValue ) - Len( aMsg[ NTSR_ORDG, 1 ] )
 
    IF nGender == NTSR_FEMA
-      cValue := Left(cValue, nTemp) + iif(SubStr( cValue, nTemp + 1 ) == aMsg[ NTSR_ORDG, 1 ], ;
+      cValue := Left(cValue, nTemp) + iif(SubStr(cValue, nTemp + 1) == aMsg[ NTSR_ORDG, 1 ], ;
          aMsg[ NTSR_ORDG, 2 ], aMsg[ NTSR_ORDG, 3 ])
    ELSEIF nGender == NTSR_MIDD
-      cValue := Left(cValue, nTemp) + iif(SubStr( cValue, nTemp + 1 ) == aMsg[ NTSR_ORDG, 1 ], ;
+      cValue := Left(cValue, nTemp) + iif(SubStr(cValue, nTemp + 1) == aMsg[ NTSR_ORDG, 1 ], ;
          aMsg[ NTSR_ORDG, 4 ], aMsg[ NTSR_ORDG, 5 ])
    ENDIF
 

@@ -40,7 +40,7 @@ METHOD twirl() CLASS Twirler
    LOCAL nSeconds := Seconds()
 
    IF Empty(::n_Seconds) .OR. nSeconds - ::n_Seconds >= ::n_Smooth .OR. nSeconds < ::n_Seconds
-      hb_DispOutAt( ::n_Row, ::n_Col, SubStr( ::c_Chars, ::n_Index, 1 ) )
+      hb_DispOutAt( ::n_Row, ::n_Col, SubStr(::c_Chars, ::n_Index, 1) )
       ::n_Index++
       if ::n_Index > Len( ::c_Chars )
          ::n_Index := 1

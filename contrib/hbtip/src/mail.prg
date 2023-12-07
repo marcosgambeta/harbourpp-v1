@@ -174,7 +174,7 @@ METHOD SetFieldPart( cPart, cValue ) CLASS TIPMail
    IF HB_ISSTRING( cValue ) .AND. ! Empty(cValue)
       IF hb_HGetRef( ::hHeaders, cPart, @cEnc ) .AND. ;
          ( nPos := At( ";", cEnc ) ) > 0
-         ::hHeaders[ cPart ] := cValue + SubStr( cEnc, nPos )
+         ::hHeaders[ cPart ] := cValue + SubStr(cEnc, nPos)
       ELSE
          ::hHeaders[ cPart ] := cValue
       ENDIF
@@ -357,10 +357,10 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
 
    DO WHILE ( nLinePos := hb_At( e"\r\n", cMail, nPos ) ) > nPos
       // going on with last field?
-      IF ( SubStr( cMail, nPos, 1 ) == " " .OR. SubStr( cMail, nPos, 1 ) == e"\t" ) .AND. ;
+      IF ( SubStr(cMail, nPos, 1) == " " .OR. SubStr(cMail, nPos, 1) == e"\t" ) .AND. ;
          cLastField != NIL
 
-         cValue := LTrim(SubStr( cMail, nPos, nLinePos - nPos ))
+         cValue := LTrim(SubStr(cMail, nPos, nLinePos - nPos))
          IF Lower(cLastField) == "received"
             ::aReceived[ Len( ::aReceived ) ] += " " + cValue
          ELSE
@@ -368,8 +368,8 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
          ENDIF
       ELSE
          nSplitPos := hb_At( ":", cMail, nPos )
-         cLastField := SubStr( cMail, nPos, nSplitPos - nPos )
-         cValue := LTrim(SubStr( cMail, nSplitPos + 1, nLinePos - nSplitPos - 1 ))
+         cLastField := SubStr(cMail, nPos, nSplitPos - nPos)
+         cValue := LTrim(SubStr(cMail, nSplitPos + 1, nLinePos - nSplitPos - 1))
          IF Lower(cLastField) == "received"
             AAdd( ::aReceived, cValue )
          ELSE
@@ -399,7 +399,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
       cSubBoundary := ::GetFieldOption( "Content-Type", "Boundary" )
       // strip " on boundary
       IF hb_LeftEq( cSubBoundary, '"' )
-         cSubBoundary := SubStr( cSubBoundary, 2, Len( cSubBoundary ) - 2 )
+         cSubBoundary := SubStr(cSubBoundary, 2, Len( cSubBoundary ) - 2)
       ENDIF
    ENDIF
 
@@ -428,7 +428,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
 
          // set our body
          IF nBodyPos > 0
-            ::cBody := SubStr( cMail, nBodyPos, nPos - nBodyPos )
+            ::cBody := SubStr(cMail, nBodyPos, nPos - nBodyPos)
             nBodyPos := 0
          ENDIF
 
@@ -461,7 +461,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
 
    // set our body if needed
    IF nBodyPos > 0
-      ::cBody := SubStr( cMail, nBodyPos, nPos - nBodyPos )
+      ::cBody := SubStr(cMail, nBodyPos, nPos - nBodyPos)
    ENDIF
 
    RETURN nPos
@@ -647,7 +647,7 @@ FUNCTION tip_GetRawEmail( cAddress )
 
    IF ( tmp := At( "<", cAddress ) ) > 0 .AND. ;
       ( tmp1 := hb_At( ">", cAddress, tmp + 1 ) ) > 0
-      RETURN AllTrim(SubStr( cAddress, tmp + 1, tmp1 - tmp - 1 ))
+      RETURN AllTrim(SubStr(cAddress, tmp + 1, tmp1 - tmp - 1))
    ENDIF
 
    RETURN cAddress

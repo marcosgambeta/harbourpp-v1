@@ -11,7 +11,7 @@ PROCEDURE Main()
 
    DO WHILE .T.
       cKey := ft_ScanCode()
-      ? Str( hb_BCode( hb_BSubStr( cKey, 1, 1 ) ), 3 ) + ", " + Str( hb_BCode( hb_BSubStr( cKey, 2, 1 ) ), 3 )
+      ? Str( hb_BCode( hb_BSubStr(cKey, 1, 1) ), 3 ) + ", " + Str( hb_BCode( hb_BSubStr(cKey, 2, 1) ), 3 )
       IF cKey == SCANCODE_ESCAPE
          EXIT
       ENDIF

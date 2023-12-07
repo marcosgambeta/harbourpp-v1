@@ -262,7 +262,7 @@ METHOD ReadHeaders( lClear ) CLASS TIPClientHTTP
       DO CASE
       // RFC 2068 forces to discard content length on chunked encoding
       CASE Lower(aHead[ 1 ]) == "content-length" .AND. ! ::bChunked
-         cLine := SubStr( cLine, 16 )
+         cLine := SubStr(cLine, 16)
          ::nLength := Val( cLine )
 
       // as above
@@ -442,7 +442,7 @@ METHOD getcookies( cHost, cPath ) CLASS TIPClientHTTP
    z := Len( cHost )
    cHost := Upper(cHost)
    FOR EACH x IN hb_HKeys( ::hCookies )
-      IF Upper(Right(x, z)) == cHost .AND. ( Len( x ) == z .OR. SubStr( x, -z, 1 ) == "." )
+      IF Upper(Right(x, z)) == cHost .AND. ( Len( x ) == z .OR. SubStr(x, -z, 1) == "." )
          AAdd( aDomKeys, x )
       ENDIF
    NEXT

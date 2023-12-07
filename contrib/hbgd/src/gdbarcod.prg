@@ -184,7 +184,7 @@ METHOD Draw13( cText ) CLASS GDBarCode
 
       // book, we changed the code to the right
       IF ::book .AND. Len( ::text ) == 10
-         ::text := "978" + SubStr( ::text, 1, Len( ::text ) - 1 )
+         ::text := "978" + SubStr(::text, 1, Len( ::text ) - 1)
       ENDIF
 
       //  contain only 12 characters ?
@@ -198,7 +198,7 @@ METHOD Draw13( cText ) CLASS GDBarCode
          // If we have to write text, we moved the barcode to the right to have space to put digit
          ::positionX := iif(::textfont == 0, 0, 10)
 
-         xParity := ::Parity[ Val( SubStr( ::text, 1, 1 ) ) ]
+         xParity := ::Parity[ Val( SubStr(::text, 1, 1) ) ]
 
          // First Bar
          ::positionX := 10
@@ -212,9 +212,9 @@ METHOD Draw13( cText ) CLASS GDBarCode
 
             // Calculate check digit
             IF Mod( Len( ::text ) + 1 - ii, 2 ) == 0
-               nChkSum += Int( Val( SubStr( ::text, ii, 1 ) ) )
+               nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
             ELSE
-               nChkSum += Int( Val( SubStr( ::text, ii, 1 ) ) ) * 3
+               nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
             ENDIF
 
             // Now, the bar of the middle
@@ -226,7 +226,7 @@ METHOD Draw13( cText ) CLASS GDBarCode
                ::positionX += 1
             ENDIF
 
-            jj := Val( SubStr( ::text, ii, 1 ) )
+            jj := Val( SubStr(::text, ii, 1) )
 
             IF jj == 0
                jj := 10
@@ -234,7 +234,7 @@ METHOD Draw13( cText ) CLASS GDBarCode
 
             IF ii > 1 .AND. ii < 8
 
-               ::DrawSingleBar( iif(SubStr( xParity, ii - 1, 1 ) == "E", ;
+               ::DrawSingleBar( iif(SubStr(xParity, ii - 1, 1) == "E", ;
                   ::LeftHand_Even[ jj ], ;
                   ::LeftHand_Odd[ jj ]) )
             ELSEIF ii > 1 .AND. ii >= 8
@@ -282,9 +282,9 @@ METHOD DrawText13() CLASS GDBarCode
 
    IF ::textfont != 0
 
-      ::Say( 2, ::maxHeight - ( ::GetFontHeight() / 2 ), SubStr( ::text, 1, 1 ), ::FillColor )
-      ::Say( ( 10 + ( 3 * ::res + 48 * ::res ) / 2 ) - ( ::GetFontWidth() * ( 6 / 2 ) ), ::maxHeight + 1, SubStr( ::text, 2, 6 ), ::FillColor )
-      ::Say( 10 + 46 * ::res + ( 3 * ::res + 46 * ::res ) / 2 - ::GetFontWidth() * ( 6 / 2 ), ::maxHeight + 1, SubStr( ::text, 8, 6 ), ::FillColor )
+      ::Say( 2, ::maxHeight - ( ::GetFontHeight() / 2 ), SubStr(::text, 1, 1), ::FillColor )
+      ::Say( ( 10 + ( 3 * ::res + 48 * ::res ) / 2 ) - ( ::GetFontWidth() * ( 6 / 2 ) ), ::maxHeight + 1, SubStr(::text, 2, 6), ::FillColor )
+      ::Say( 10 + 46 * ::res + ( 3 * ::res + 46 * ::res ) / 2 - ::GetFontWidth() * ( 6 / 2 ), ::maxHeight + 1, SubStr(::text, 8, 6), ::FillColor )
 
    ENDIF
 
@@ -329,9 +329,9 @@ METHOD Draw8( cText ) CLASS GDBarCode
       FOR ii := 1 TO Len( ::text )
 
          IF Mod( Len( ::text ) + 1 - ii, 2 ) == 0
-            nChkSum += Int( Val( SubStr( ::text, ii, 1 ) ) )
+            nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
          ELSE
-            nChkSum += Int( Val( SubStr( ::text, ii, 1 ) ) ) * 3
+            nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
          ENDIF
 
          IF ii == 5
@@ -342,7 +342,7 @@ METHOD Draw8( cText ) CLASS GDBarCode
             ::positionX += 1
          ENDIF
 
-         jj := Val( SubStr( ::text, ii, 1 ) )
+         jj := Val( SubStr(::text, ii, 1) )
 
          IF jj == 0
             jj := 10
@@ -385,8 +385,8 @@ METHOD Draw8( cText ) CLASS GDBarCode
 
 METHOD DrawText8() CLASS GDBarCode
 
-   ::say( 10 + ( ( 3 * ::res + 34 * ::res ) / 2 - ::GetFontWidth() * ( 4 / 2 ) ), ::maxHeight + 1, SubStr( ::text, 1, 4 ), ::fillcolor )
-   ::say( 10 + ( 32 * ::res + ( 3 * ::res + 32 * ::res ) / 2 - ::GetFontWidth() * ( 4 / 2 ) ), ::maxHeight + 1, SubStr( ::text, 5, 4 ), ::fillcolor )
+   ::say( 10 + ( ( 3 * ::res + 34 * ::res ) / 2 - ::GetFontWidth() * ( 4 / 2 ) ), ::maxHeight + 1, SubStr(::text, 1, 4), ::fillcolor )
+   ::say( 10 + ( 32 * ::res + ( 3 * ::res + 32 * ::res ) / 2 - ::GetFontWidth() * ( 4 / 2 ) ), ::maxHeight + 1, SubStr(::text, 5, 4), ::fillcolor )
 
    ::lastY := ::maxHeight + ::GetFontHeight()
 
@@ -400,7 +400,7 @@ METHOD FindCharCode( cString, cChar ) CLASS GDBarCode
 
    FOR i := 1 TO Len( cString )
 
-      IF SubStr( cString, i, 1 ) == cChar
+      IF SubStr(cString, i, 1) == cChar
          ++nC
          nRet := nC
          EXIT
@@ -444,24 +444,24 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
       IF cModeCode == "C"
 
-         nPos := AScan( ::KeysmodeC, {| x | x == SubStr( ::Text, i, 1 ) + SubStr( ::Text, i + 1, 1 ) } )
+         nPos := AScan( ::KeysmodeC, {| x | x == SubStr(::Text, i, 1) + SubStr(::Text, i + 1, 1) } )
 
          IF nPos == 0
-            ::DrawError( "With Code C, you must provide always pair of two integers. Character " + SubStr( ::text, i, 1 ) + SubStr( ::text, i + 1, 1 ) + " not allowed." )
+            ::DrawError( "With Code C, you must provide always pair of two integers. Character " + SubStr(::text, i, 1) + SubStr(::text, i + 1, 1) + " not allowed." )
             lError := .T.
          ENDIF
 
       ELSEIF cModeCode == "B"
 
-         IF ::FindCharCode( ::KeysmodeB, SubStr( ::Text, i, 1 ) ) == 0
-            ::DrawError( "Character " + SubStr( ::text, i, 1 ) + " not allowed." )
+         IF ::FindCharCode( ::KeysmodeB, SubStr(::Text, i, 1) ) == 0
+            ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
             lError := .T.
          ENDIF
 
       ELSEIF cModeCode == "A"
 
-         IF ::FindCharCode( ::KeysmodeA, SubStr( ::text, i, 1 ) ) == 0
-            ::DrawError( "Character " + SubStr( ::text, i, 1 ) + " not allowed." )
+         IF ::FindCharCode( ::KeysmodeA, SubStr(::text, i, 1) ) == 0
+            ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
             lError := .T.
          ENDIF
 
@@ -479,7 +479,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
             nSum       := STARTB
          ELSE
             FOR n := 1 TO Len( ::text )
-               nC += iif(SubStr( ::text, n, 1 ) > 31, 1, 0)
+               nC += iif(SubStr(::text, n, 1) > 31, 1, 0)
             NEXT
 
             IF nC < Len( ::text ) / 2
@@ -512,7 +512,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
          ++nC
 
-         cChar := SubStr( ::text, n, 1 )
+         cChar := SubStr(::text, n, 1)
 
          IF lTypeCodeC
 
@@ -520,7 +520,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
                cConc += ::aCode[ CODEB ]
                nValChar := Asc( cChar ) - 31
             ELSE
-               nValChar := Val( SubStr( ::text, n, 2 ) ) + 1
+               nValChar := Val( SubStr(::text, n, 2) ) + 1
                ++n
             ENDIF
 
@@ -554,8 +554,8 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
       cConc += ::aCode[ nSum ] + ::aCode[ 107 ]
 
       FOR n := 1 TO Len( cConc ) STEP 2
-         cBarCode += Replicate( "1", Val( SubStr( cConc, n, 1 ) ) )
-         cBarCode += Replicate( "0", Val( SubStr( cConc, n + 1, 1 ) ) )
+         cBarCode += Replicate( "1", Val( SubStr(cConc, n, 1) ) )
+         cBarCode += Replicate( "0", Val( SubStr(cConc, n + 1, 1) ) )
       NEXT
 
       ::DrawSingleBar( cBarCode )
@@ -636,14 +636,14 @@ METHOD MixCode( value ) CLASS GDBarCode
 
       DO WHILE i < l
 
-         cFirst := ::Findcode( SubStr( value, i, 1 ) )
-         cNext  := ::Findcode( SubStr( value, i + 1, 1 ) )
+         cFirst := ::Findcode( SubStr(value, i, 1) )
+         cNext  := ::Findcode( SubStr(value, i + 1, 1) )
 
          // Mix of the codes
          // NNNNWNNWWW
          //  N N N W W
          FOR k := 1 TO 5
-            s += SubStr( cFirst, k, 1 ) + SubStr( cNext, k, 1 )
+            s += SubStr(cFirst, k, 1) + SubStr(cNext, k, 1)
          NEXT
 
          i += 2

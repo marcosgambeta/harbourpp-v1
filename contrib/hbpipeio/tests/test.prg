@@ -24,7 +24,7 @@ PROCEDURE Main()
                "END" + hb_eol()
       nDone := 0
       WHILE nDone < hb_BLen( cData ) .AND. ;
-            ( nLen := hb_vfWrite( pFile, hb_BSubStr( cData, nDone + 1 ) ) ) > 0
+            ( nLen := hb_vfWrite( pFile, hb_BSubStr(cData, nDone + 1) ) ) > 0
          nDone += nLen
          ? "written: " + hb_ntos( nLen )
       ENDDO

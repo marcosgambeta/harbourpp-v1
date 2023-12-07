@@ -1189,7 +1189,7 @@ FUNCTION chkansi( cAnsidate )
    LOCAL lretval := .T.
 
    nYear  := Val( Left(cAnsidate, 4) )
-   nMonth := Val( SubStr( cAnsidate, 5, 2 ) )
+   nMonth := Val( SubStr(cAnsidate, 5, 2) )
    nDay   := Val( Right(cAnsidate, 2) )
 
    DO CASE

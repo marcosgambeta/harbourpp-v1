@@ -196,7 +196,7 @@ METHOD DrawSingleBar( pcode ) CLASS GDBar
 
       FOR i := 1 TO ::res
          ::Line( ::positionX + i, ::positionY, ::positionX + i, ::positionY + ::maxHeight, ;
-            iif(SubStr( pcode, j, 1 ) $ "0", ::BackColor, ::FillColor) )
+            iif(SubStr(pcode, j, 1) $ "0", ::BackColor, ::FillColor) )
       NEXT
 
       ::NextX()
@@ -221,7 +221,7 @@ METHOD DrawSingleI25( pcode ) CLASS GDBar
    FOR j := 1 TO Len( pcode )
 
       imgBar := iif(j % 2 == 0, ::FillColor, ::BackColor)
-      imgWid := iif(SubStr( pcode, j, 1 ) == "0", widthSlimBar, widthFatBar)
+      imgWid := iif(SubStr(pcode, j, 1) == "0", widthSlimBar, widthFatBar)
 
       end_y := ::maxHeight
 
@@ -284,8 +284,8 @@ METHOD CheckCode() CLASS GDBar
    LOCAL i
 
    FOR i := 1 TO Len( ::text )
-      IF HB_ISSTRING( ::CheckValInArray( SubStr( ::text, i, 1 ) ) )
-         ::DrawError( "Character " + SubStr( ::text, i, 1 ) + " not allowed." )
+      IF HB_ISSTRING( ::CheckValInArray( SubStr(::text, i, 1) ) )
+         ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
          lRet := .F.
       ENDIF
    NEXT
@@ -294,7 +294,7 @@ METHOD CheckCode() CLASS GDBar
 
 METHOD CheckValInArray( cChar ) CLASS GDBar
 
-   LOCAL nPos := AScan( ::keys, {| x | SubStr( x, 1, 1 ) == cChar } )
+   LOCAL nPos := AScan( ::keys, {| x | SubStr(x, 1, 1) == cChar } )
 
    RETURN iif(nPos > 0, nPos, NIL)
 

@@ -65,9 +65,9 @@ FUNCTION NumToTxtHU( nValue )
 
    IF ( tmp := ( nValue - tmp ) ) > 0 .AND. tmp < 1
 
-      tmp1 := Len( tmp2 := SubStr( Str( tmp, 8, 6 ), 3 ) )
+      tmp1 := Len( tmp2 := SubStr(Str( tmp, 8, 6 ), 3) )
 
-      DO WHILE SubStr( tmp2, tmp1, 1 ) == "0" .AND. tmp1 > 0
+      DO WHILE SubStr(tmp2, tmp1, 1) == "0" .AND. tmp1 > 0
          tmp1--
       ENDDO
 
@@ -93,7 +93,7 @@ STATIC FUNCTION NumToTxtRaw( nValue )
 
    aDigit := Array( nLen := Len( cValue ) )
    FOR tmp := 1 TO nLen
-      aDigit[ tmp ] := Val( SubStr( cValue, tmp, 1 ) )
+      aDigit[ tmp ] := Val( SubStr(cValue, tmp, 1) )
    NEXT
 
    cValue := ""

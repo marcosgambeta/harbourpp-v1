@@ -474,9 +474,9 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
          nLen := Len( cText )
          FOR tmp := 1 TO nLen
 
-            cPrev := iif(tmp > 1, SubStr( cText, tmp - 1, 1 ), "")
-            cChar := SubStr( cText, tmp, 1 )
-            cNext := SubStr( cText, tmp + 1, 1 )
+            cPrev := iif(tmp > 1, SubStr(cText, tmp - 1, 1), "")
+            cChar := SubStr(cText, tmp, 1)
+            cNext := SubStr(cText, tmp + 1, 1)
 
             DO CASE
             CASE ! lPR .AND. cChar == "\" .AND. tmp < Len( cText )
@@ -505,29 +505,29 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
                   nPR := Len( cOut ) + 1
                ENDIF
                cChar := iif(lPR, "<code>", "</code>")
-            CASE ! lPR .AND. SubStr( cText, tmp, 3 ) == "<b>"
+            CASE ! lPR .AND. SubStr(cText, tmp, 3) == "<b>"
                tmp += 2
                cChar := "<strong>"
-            CASE ! lPR .AND. SubStr( cText, tmp, 4 ) == "</b>"
+            CASE ! lPR .AND. SubStr(cText, tmp, 4) == "</b>"
                tmp += 3
                cChar := "</strong>"
             CASE ! lPR .AND. ;
-               ( SubStr( cText, tmp, 3 ) == "===" .OR. SubStr( cText, tmp, 3 ) == "---" )
-               DO WHILE tmp < nLen .AND. SubStr( cText, tmp, 1 ) == cChar
+               ( SubStr(cText, tmp, 3) == "===" .OR. SubStr(cText, tmp, 3) == "---" )
+               DO WHILE tmp < nLen .AND. SubStr(cText, tmp, 1) == cChar
                   tmp++
                ENDDO
                cChar := "<hr>"
             CASE ! lPR .AND. ;
-               ( SubStr( cText, tmp, 5 ) == "<URL:" .AND. ( tmp1 := hb_At( ">", cText, tmp + 6 ) ) > 0 )
-               tmp1 := SubStr( cText, tmp + 5, tmp1 - tmp - 5 )
+               ( SubStr(cText, tmp, 5) == "<URL:" .AND. ( tmp1 := hb_At( ">", cText, tmp + 6 ) ) > 0 )
+               tmp1 := SubStr(cText, tmp + 5, tmp1 - tmp - 5)
                tmp += Len( tmp1 ) + 5
                cChar := "<a href=" + '"' + tmp1 + '"' + ">" + tmp1 + "</a>"
             CASE ! lPR .AND. ;
-               ( SubStr( cText, tmp, 3 ) == "==>" .OR. SubStr( cText, tmp, 3 ) == "-->" )
+               ( SubStr(cText, tmp, 3) == "==>" .OR. SubStr(cText, tmp, 3) == "-->" )
                tmp += 2
                cChar := "&rarr;"
             CASE ! lPR .AND. ;
-               ( SubStr( cText, tmp, 2 ) == "->" )
+               ( SubStr(cText, tmp, 2) == "->" )
                tmp += 1
                cChar := "&rarr;"
             CASE cChar == "&"

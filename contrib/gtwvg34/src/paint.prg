@@ -582,7 +582,7 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
          IF hb_defaultValue( nForeBack, 0 ) == 0
             s := Left(cColor, n - 1)
          ELSE
-            s := SubStr( cColor, n + 1 )
+            s := SubStr(cColor, n + 1)
          ENDIF
       ELSE
          s := cColor
@@ -657,7 +657,7 @@ PROCEDURE wvt_PasteFromClipboard()
    LOCAL i
 
    FOR i := 1 TO nLen
-      wvt_Keyboard( hb_keyCode( SubStr( cText, i, 1 ) ) )
+      wvt_Keyboard( hb_keyCode( SubStr(cText, i, 1) ) )
    NEXT
 
    RETURN

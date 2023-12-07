@@ -88,7 +88,7 @@ METHOD msgNotFound( cMessage, ... ) CLASS amf_Obj
       IF Empty(::hCachedData)
          ::hCachedData := { => }
       ENDIF
-      RETURN ::hCachedData[ hb_BSubStr( cMessage, 2 ) ] := hb_PValue( 2 )
+      RETURN ::hCachedData[ hb_BSubStr(cMessage, 2) ] := hb_PValue( 2 )
    ENDIF
 
    RETURN NIL

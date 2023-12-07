@@ -142,7 +142,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
             Eval( hb_HValueAt( hCommands, nPos )[ 3 ], cCommand )
          ELSE
             IF Left(cCommand, Len( netcliID ) + 1) == netcliID + "."
-               IF ! Eval( netclictrl[ "cmd" ], netclictx, SubStr( cCommand, Len( netcliID ) + 2 ) )
+               IF ! Eval( netclictrl[ "cmd" ], netclictx, SubStr(cCommand, Len( netcliID ) + 2) )
                   hbnetiocon_ToConsole( hb_StrFormat( "Error: Unrecognized command '%1$s'.", cCommand ) )
                ENDIF
             ELSE

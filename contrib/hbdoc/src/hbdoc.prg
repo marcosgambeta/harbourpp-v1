@@ -160,7 +160,7 @@ PROCEDURE Main( ... )
             arg := ""
          ELSE
             cArgName := Left(arg, idx - 1)
-            arg := SubStr( arg, idx + 1 )
+            arg := SubStr(arg, idx + 1)
          ENDIF
 
          DO CASE
@@ -176,14 +176,14 @@ PROCEDURE Main( ... )
                AAdd( s_hSwitches[ "format" ], arg )
             ENDIF
          CASE hb_LeftEq( cArgName, "-output-" )
-            s_hSwitches[ "output" ] := SubStr( cArgName, Len( "-output-" ) + 1 )
+            s_hSwitches[ "output" ] := SubStr(cArgName, Len( "-output-" ) + 1)
          CASE cArgName == "-include-doc-source" ;     s_hSwitches[ "include-doc-source" ] := .T.
          OTHERWISE
-            IF SubStr( cArgName, 2 ) $ s_generators
-               IF SubStr( cArgName, 2 ) == "all"
+            IF SubStr(cArgName, 2) $ s_generators
+               IF SubStr(cArgName, 2) == "all"
                   s_hSwitches[ "format" ] := hb_HKeys( s_generators )
                ELSE
-                  AAdd( s_hSwitches[ "format" ], SubStr( cArgName, 2 ) )
+                  AAdd( s_hSwitches[ "format" ], SubStr(cArgName, 2) )
                ENDIF
             ELSE
                ShowHelp( "Unrecognized option:" + cArgName + iif(Len( arg ) > 0, "=" + arg, "") )
@@ -483,7 +483,7 @@ STATIC FUNCTION NewLineVoodoo( cSectionIn )
    NEXT
 
    IF hb_LeftEq( cSection, hb_eol() )
-      cSection := SubStr( cSection, Len( hb_eol() ) + 1 )
+      cSection := SubStr(cSection, Len( hb_eol() ) + 1)
    ENDIF
    IF Right(cSection, Len( hb_eol() )) == hb_eol()
       cSection := hb_StrShrink( cSection, Len( hb_eol() ) )
@@ -685,7 +685,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
          DO WHILE ! HB_ISNULL( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
-         RETURN SubStr( cResult, Len( hb_eol() ) + 1 )
+         RETURN SubStr(cResult, Len( hb_eol() ) + 1)
       ENDIF
 
       IF cCode $ sc_hConstraint[ "status" ]
@@ -705,7 +705,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
             cResult += hb_eol() + hb_HGetDef( sc_hConstraint[ "platforms" ], cCode, cCode )
          ENDIF
       NEXT
-      RETURN SubStr( cResult, Len( hb_eol() ) + 1 )
+      RETURN SubStr(cResult, Len( hb_eol() ) + 1)
 
    CASE "COMPLIANCE"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint[ "compliance" ]
@@ -713,7 +713,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
          DO WHILE ! HB_ISNULL( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
-         RETURN SubStr( cResult, Len( hb_eol() ) + 1 )
+         RETURN SubStr(cResult, Len( hb_eol() ) + 1)
       ENDIF
 
       RETURN hb_HGetDef( sc_hConstraint[ "compliance" ], cCode, cCode )
@@ -834,7 +834,7 @@ FUNCTION Parse( /* @ */ cVar, xDelimiter )
 
    IF ( idx := At( xDelimiter, cVar ) ) > 0
       cResult := Left(cVar, idx - 1)
-      cVar := SubStr( cVar, idx + Len( xDelimiter ) )
+      cVar := SubStr(cVar, idx + Len( xDelimiter ))
    ELSE
       cResult := cVar
       cVar := ""
@@ -872,7 +872,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
    IF nWidth == 0 .OR. lRaw
       idx := 99999
       AEval( aText, {| c | iif(Empty(c), , idx := Min( idx, Len( c ) - Len( LTrim(c) ) )) } )
-      AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr( c, idx + 1 ) } )
+      AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr(c, idx + 1) } )
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
       FOR EACH cLine IN aText
@@ -889,29 +889,29 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                DO WHILE idx > 0
                   idx--
                   DO CASE
-                  CASE ! SubStr( cLine, idx, 1 ) $ " ,;.!?"
+                  CASE ! SubStr(cLine, idx, 1) $ " ,;.!?"
                      /* do nothing */
-                  CASE Upper(SubStr( cLine, idx, 3 )) == ".T." .OR. Upper(SubStr( cLine, idx, 3 )) == ".F."
+                  CASE Upper(SubStr(cLine, idx, 3)) == ".T." .OR. Upper(SubStr(cLine, idx, 3)) == ".F."
                      idx--
-                  CASE Upper(SubStr( cLine, idx - 2, 3 )) == ".T." .OR. Upper(SubStr( cLine, idx - 1, 3 )) == ".F."
+                  CASE Upper(SubStr(cLine, idx - 2, 3)) == ".T." .OR. Upper(SubStr(cLine, idx - 1, 3)) == ".F."
                      idx -= 3
-                  CASE Upper(SubStr( cLine, idx, 5 )) == ".AND." .OR. Upper(SubStr( cLine, idx, 5 )) == ".NOT."
+                  CASE Upper(SubStr(cLine, idx, 5)) == ".AND." .OR. Upper(SubStr(cLine, idx, 5)) == ".NOT."
                      idx--
-                  CASE Upper(SubStr( cLine, idx - 4, 5 )) == ".AND." .OR. Upper(SubStr( cLine, idx - 4, 5 )) == ".NOT."
+                  CASE Upper(SubStr(cLine, idx - 4, 5)) == ".AND." .OR. Upper(SubStr(cLine, idx - 4, 5)) == ".NOT."
                      idx -= 5
-                  CASE Upper(SubStr( cLine, idx, 4 )) == ".OR."
+                  CASE Upper(SubStr(cLine, idx, 4)) == ".OR."
                      idx--
-                  CASE Upper(SubStr( cLine, idx - 3, 4 )) == ".OR."
+                  CASE Upper(SubStr(cLine, idx - 3, 4)) == ".OR."
                      idx -= 4
-                  CASE Upper(SubStr( cLine, idx - 1, 4 )) == "i.e."
+                  CASE Upper(SubStr(cLine, idx - 1, 4)) == "i.e."
                      idx -= 2
-                  CASE Upper(SubStr( cLine, idx - 3, 4 )) == "i.e."
+                  CASE Upper(SubStr(cLine, idx - 3, 4)) == "i.e."
                      idx -= 4
-                  CASE Upper(SubStr( cLine, idx - 1, 4 )) == "e.g."
+                  CASE Upper(SubStr(cLine, idx - 1, 4)) == "e.g."
                      idx -= 2
-                  CASE Upper(SubStr( cLine, idx - 3, 4 )) == "e.g."
+                  CASE Upper(SubStr(cLine, idx - 3, 4)) == "e.g."
                      idx -= 4
-                  CASE Upper(SubStr( cLine, idx - 1, 2 )) == "*."
+                  CASE Upper(SubStr(cLine, idx - 1, 2)) == "*."
                      idx -= 2
                   OTHERWISE
                      EXIT
@@ -921,8 +921,8 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                   idx := nWidth
                ENDIF
 
-               cResult += Space( nLeftMargin ) + Left(cLine, idx - iif(SubStr( cLine, idx, 1 ) == " ", 1, 0)) + hb_eol()
-               cLine := LTrim(SubStr( cLine, idx + 1 ))
+               cResult += Space( nLeftMargin ) + Left(cLine, idx - iif(SubStr(cLine, idx, 1) == " ", 1, 0)) + hb_eol()
+               cLine := LTrim(SubStr(cLine, idx + 1))
             ENDDO
 
             IF ! HB_ISNULL( cLine )
@@ -946,7 +946,7 @@ STATIC FUNCTION Filename( cFile )
    cFile := Lower(cFile)
 
    FOR idx := 1 TO Len( cFile )
-      tmp := SubStr( cFile, idx, 1 )
+      tmp := SubStr(cFile, idx, 1)
       IF hb_asciiIsDigit( tmp ) .OR. hb_asciiIsAlpha( tmp ) .OR. tmp == "_"
          cResult += tmp
       ENDIF
@@ -1045,7 +1045,7 @@ METHOD IsComplete( cIncompleteFieldsList ) CLASS Entry
       ENDIF
    NEXT
 
-   cIncompleteFieldsList := SubStr( cIncompleteFieldsList, 2 )
+   cIncompleteFieldsList := SubStr(cIncompleteFieldsList, 2)
 
    RETURN lResult
 

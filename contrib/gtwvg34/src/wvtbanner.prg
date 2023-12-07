@@ -162,7 +162,7 @@ METHOD WvtBanner:Refresh()
          ENDIF
 
          IF ::nCurAlign == 0   /* Left */
-            ::cDispText := SubStr( ::cText, ::nTextIndex )
+            ::cDispText := SubStr(::cText, ::nTextIndex)
          ELSE                  /* Right */
             ::cDispText := Left(::cText, ::nTextIndex)
          ENDIF
@@ -174,7 +174,7 @@ METHOD WvtBanner:Refresh()
          ENDIF
 
          IF ::nCurAlign == 0   /* Left */
-            ::cDispText := SubStr( ::cText, ::nTextIndex )
+            ::cDispText := SubStr(::cText, ::nTextIndex)
          ELSE                  /* Right */
             ::cDispText := Left(::cText, ::nTextIndex)
          ENDIF

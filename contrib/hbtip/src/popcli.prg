@@ -123,7 +123,7 @@ METHOD OpenDigest( cUrl ) CLASS TIPClientPOP
    IF ::GetOk()
       IF ( nPos := At( "<", ::cReply ) ) > 0
          IF ( nPos2 := hb_At( ">", ::cReply, nPos + 1 ) ) > nPos
-            cDigest := hb_MD5( SubStr( ::cReply, nPos, ( nPos2 - nPos ) + 1 ) + ::oUrl:cPassword )
+            cDigest := hb_MD5( SubStr(::cReply, nPos, ( nPos2 - nPos ) + 1) + ::oUrl:cPassword )
             ::inetSendAll( ::SocketCon, "APOP " + ::oUrl:cUserid + " " + cDigest + ::cCRLF )
             IF ::GetOK()
                ::isOpen := .T.
@@ -310,7 +310,7 @@ METHOD UIDL( nMsgId ) CLASS TIPClientPOP
       ENDDO
    ELSE
       // +OK Space( 1 ) nMsg Space( 1 ) UID
-      RETURN SubStr( ::cReply, RAt( Space( 1 ), ::cReply ) + 1 )
+      RETURN SubStr(::cReply, RAt( Space( 1 ), ::cReply ) + 1)
    ENDIF
 
    IF ::inetErrorCode( ::SocketCon ) != 0
@@ -327,7 +327,7 @@ METHOD countMail() CLASS TIPClientPop
       ::reset()
       cStat := ::Stat()
       IF HB_ISSTRING( cStat ) .AND. hb_LeftEq( cStat, "+OK" )
-         RETURN Val( SubStr( cStat, 4, hb_At( " ", cStat, 5 ) - 4 ) )
+         RETURN Val( SubStr(cStat, 4, hb_At( " ", cStat, 5 ) - 4) )
       ENDIF
    ENDIF
 
@@ -426,7 +426,7 @@ METHOD getBody( nMsgId ) CLASS TIPClientPOP
    xRet := ""
 
    IF ( nBoundary := AScan( aMsg, {| cLine | n1 := hb_AtI( "boundary=", cLine ), n1 > 0 } ) ) > 0
-      cBoundary := AllTrim(StrTran( SubStr( aMsg[ nBoundary ], n1 + 1 ), '"' ))
+      cBoundary := AllTrim(StrTran( SubStr(aMsg[ nBoundary ], n1 + 1), '"' ))
    ENDIF
 
    IF ! Empty(cBoundary)
@@ -450,7 +450,7 @@ METHOD getSubject( nMsgId ) CLASS TIPClientPOP
 
    FOR EACH cHeader IN ::getTop( nMsgId, .T. )
       IF hb_LeftEqI( cHeader, "subject: " )
-         RETURN SubStr( cHeader, Len( "subject: " ) + 1 )
+         RETURN SubStr(cHeader, Len( "subject: " ) + 1)
       ENDIF
    NEXT
 

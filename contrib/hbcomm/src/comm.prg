@@ -137,7 +137,7 @@ FUNCTION OUTCHR( nPort, cData )
          RETURN .F.
       ENDIF
 
-      cData := hb_BSubStr( cData, nLen + 1 )
+      cData := hb_BSubStr(cData, nLen + 1)
    ENDDO
 
    RETURN .T.

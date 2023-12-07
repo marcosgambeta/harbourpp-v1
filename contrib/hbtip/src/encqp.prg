@@ -78,14 +78,14 @@ FUNCTION tip_QPEncode( cData )
 
    nLen := hb_BLen( cData )
    FOR nPos := 1 TO nLen
-      c := hb_BSubStr( cData, nPos, 1 )
+      c := hb_BSubStr(cData, nPos, 1)
       IF c == Chr( 10 )
          cString += Chr( 13 ) + Chr( 10 )
          nLineLen := 0
       ELSEIF hb_BCode( c ) >= 127 .OR. ;
          c $ '=?!"#$@[\]^`{|}~' .OR. ;
          ( hb_BCode( c ) < 32 .AND. ! c $ Chr( 13 ) + Chr( 10 ) + Chr( 9 ) ) .OR. ;
-         ( c $ " " + Chr( 9 ) .AND. hb_BSubStr( cData, nPos + 1, 1 ) $ Chr( 13 ) + Chr( 10 ) )
+         ( c $ " " + Chr( 9 ) .AND. hb_BSubStr(cData, nPos + 1, 1) $ Chr( 13 ) + Chr( 10 ) )
          IF nLineLen + 3 > 75
             cString += "=" + Chr( 13 ) + Chr( 10 )
             nLineLen := 0
@@ -117,9 +117,9 @@ FUNCTION tip_QPDecode( cData )
 
    nLen := hb_BLen( cData )
    FOR nPos := 1 TO nLen
-      c := hb_BSubStr( cData, nPos, 1 )
-      IF c == "=" .AND. hb_BLen( hb_BSubStr( cData, nPos + 1, 2 ) ) == 2
-         cString += hb_BChar( hb_HexToNum( hb_BSubStr( cData, nPos + 1, 2 ) ) )
+      c := hb_BSubStr(cData, nPos, 1)
+      IF c == "=" .AND. hb_BLen( hb_BSubStr(cData, nPos + 1, 2) ) == 2
+         cString += hb_BChar( hb_HexToNum( hb_BSubStr(cData, nPos + 1, 2) ) )
          nPos += 2
       ELSE
          cString += c

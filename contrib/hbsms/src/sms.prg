@@ -186,7 +186,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
                IF !( Left(tmp[ 1 ], Len( "+CSMP: " )) == "+CSMP: " )
                   RETURN -8
                ENDIF
-               tmp := GetList( SubStr( tmp[ 1 ], Len( "+CSMP: " ) + 1 ) )
+               tmp := GetList( SubStr(tmp[ 1 ], Len( "+CSMP: " ) + 1) )
                IF Len( tmp ) > 1
                   IF lNotification
                      tmp[ 1 ] := hb_ntos( hb_bitSet( Val( tmp[ 1 ] ), 5 ) )
@@ -269,7 +269,7 @@ STATIC FUNCTION GetLines( cString )
    LOCAL tmp
 
    IF Left(cString, 2) == Chr( 13 ) + Chr( 10 )
-      cString := SubStr( cString, Len( Chr( 13 ) + Chr( 10 ) ) + 1 )
+      cString := SubStr(cString, Len( Chr( 13 ) + Chr( 10 ) ) + 1)
    ENDIF
    IF Right(cString, 2) == Chr( 13 ) + Chr( 10 )
       cString := hb_StrShrink( cString, Len( Chr( 13 ) + Chr( 10 ) ) )

@@ -50,7 +50,7 @@ FUNCTION IsBin( cString )
 
    cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
-      IF ! SubStr( cString, nX, 1 ) $ "01"
+      IF ! SubStr(cString, nX, 1) $ "01"
          RETURN .F.
       ENDIF
    NEXT
@@ -63,7 +63,7 @@ FUNCTION IsOctal( cString )
 
    cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
-      IF ! SubStr( cString, nX, 1 ) $ "01234567"
+      IF ! SubStr(cString, nX, 1) $ "01234567"
          RETURN .F.
       ENDIF
    NEXT
@@ -76,7 +76,7 @@ FUNCTION IsDec( cString )
 
    cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
-      IF ! SubStr( cString, nX, 1 ) $ "0123456789"
+      IF ! SubStr(cString, nX, 1) $ "0123456789"
          RETURN .F.
       ENDIF
    NEXT
@@ -89,7 +89,7 @@ FUNCTION IsHexa( cString )
 
    cString := AllTrim(cString)
    FOR nX := 1 TO Len( cString )
-      IF ! SubStr( cString, nX, 1 ) $ "0123456789ABCDEF"
+      IF ! SubStr(cString, nX, 1) $ "0123456789ABCDEF"
          RETURN .F.
       ENDIF
    NEXT
@@ -103,7 +103,7 @@ FUNCTION DecToBin( nNumber )
 
    DO WHILE nNumber > 0
       nTemp := nNumber % 2
-      cNewString := SubStr( "01", nTemp + 1, 1 ) + cNewString
+      cNewString := SubStr("01", nTemp + 1, 1) + cNewString
       nNumber := Int( ( nNumber - nTemp ) / 2 )
    ENDDO
 
@@ -116,7 +116,7 @@ FUNCTION DecToOctal( nNumber )
 
    DO WHILE nNumber > 0
       nTemp := nNumber % 8
-      cNewString := SubStr( "01234567", nTemp + 1, 1 ) + cNewString
+      cNewString := SubStr("01234567", nTemp + 1, 1) + cNewString
       nNumber := Int( ( nNumber - nTemp ) / 8 )
    ENDDO
 
@@ -129,7 +129,7 @@ FUNCTION DecToHexa( nNumber )
 
    DO WHILE nNumber > 0
       nTemp := nNumber % 16
-      cNewString := SubStr( "0123456789ABCDEF", nTemp + 1, 1 ) + cNewString
+      cNewString := SubStr("0123456789ABCDEF", nTemp + 1, 1) + cNewString
       nNumber := Int( ( nNumber - nTemp ) / 16 )
    ENDDO
 
@@ -142,7 +142,7 @@ FUNCTION BinToDec( cString )
    LOCAL nLen := Len( cNewString )
 
    FOR nX := 1 TO nLen
-      nNumber += ( At( SubStr( cNewString, nX, 1 ), "01" ) - 1 ) * ( 2 ^ ( nLen - nX ) )
+      nNumber += ( At( SubStr(cNewString, nX, 1), "01" ) - 1 ) * ( 2 ^ ( nLen - nX ) )
    NEXT
 
    RETURN nNumber
@@ -154,7 +154,7 @@ FUNCTION OctalToDec( cString )
    LOCAL nLen := Len( cNewString )
 
    FOR nX := 1 TO nLen
-      nNumber += ( At( SubStr( cNewString, nX, 1 ), "01234567" ) - 1 ) * ( 8 ^ ( nLen - nX ) )
+      nNumber += ( At( SubStr(cNewString, nX, 1), "01234567" ) - 1 ) * ( 8 ^ ( nLen - nX ) )
    NEXT
 
    RETURN nNumber
@@ -166,7 +166,7 @@ FUNCTION HexaToDec( cString )
    LOCAL nLen := Len( cNewString )
 
    FOR nX := 1 TO nLen
-      nNumber += ( At( SubStr( cNewString, nX, 1 ), "0123456789ABCDEF" ) - 1 ) * ( 16 ^ ( nLen - nX ) )
+      nNumber += ( At( SubStr(cNewString, nX, 1), "0123456789ABCDEF" ) - 1 ) * ( 16 ^ ( nLen - nX ) )
    NEXT
 
    RETURN nNumber

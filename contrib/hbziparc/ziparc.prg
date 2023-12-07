@@ -298,7 +298,7 @@ FUNCTION hb_ZipFile( ;
       FOR EACH cFN IN hb_defaultValue( acFiles, {} )
          hb_FNameSplit( cFN, @cPath, NIL, NIL, @cDrive )
          DO WHILE hb_LeftEq( cPath, "." + hb_ps() )  /* strip current dir if any */
-            cPath := SubStr( cPath, Len( "." + hb_ps() ) + 1 )
+            cPath := SubStr(cPath, Len( "." + hb_ps() ) + 1)
          ENDDO
          IF "?" $ cFN .OR. "*" $ cFN
             IF lFullPath
@@ -344,10 +344,10 @@ FUNCTION hb_ZipFile( ;
             IF lWithPath
                IF ! lWithDrive
                   IF ! Empty(cDrive) .AND. hb_LeftEq( cPath, cDrive += hb_osDriveSeparator() )
-                     cPath := SubStr( cPath, Len( cDrive ) + 1 )
+                     cPath := SubStr(cPath, Len( cDrive ) + 1)
                   ENDIF
                   DO WHILE Left(cPath, 1) $ "\/"
-                     cPath := SubStr( cPath, 2 )
+                     cPath := SubStr(cPath, 2)
                   ENDDO
                ENDIF
             ELSE

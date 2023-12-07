@@ -570,7 +570,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
       IF PCount() > 1
          // Point Count For Numeric InputMask
          FOR x := 1 TO Len( InBuffer )
-            CB := SubStr( InBuffer, x, 1 )
+            CB := SubStr(InBuffer, x, 1)
             IF CB == "." .OR. CB == ","
                pc++
             ENDIF
@@ -583,7 +583,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
          // Find First Non-Blank Position
          FOR x := 1 TO Len( InBuffer )
-            CB := SubStr( InBuffer, x, 1 )
+            CB := SubStr(InBuffer, x, 1)
             IF !( CB == " " )
                fnb := x
                EXIT
@@ -594,7 +594,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
    BackInBuffer := InBuffer
 
-   OldChar := SubStr( InBuffer, icp + 1, 1 )
+   OldChar := SubStr(InBuffer, icp + 1, 1)
 
    IF Len( InBuffer ) < Len( Mask )
       InBufferLeft := Left(InBuffer, icp)
@@ -623,8 +623,8 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    OutBuffer := "" // x for clarity
    BadEntry := .F. // x for clarity
    FOR x := 1 TO Len( Mask )
-      CB := SubStr( InBuffer, x, 1 )
-      CM := SubStr( Mask, x, 1 )
+      CB := SubStr(InBuffer, x, 1)
+      CM := SubStr(Mask, x, 1)
 
       DO CASE
       CASE CM == "A" .OR. CM == "!"
@@ -694,7 +694,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
          // x better:
          ol := Len( Output )
-         Output := PadL( "-" + SubStr( Output, At( ".", OutBuffer ) - 1 ), ol )
+         Output := PadL( "-" + SubStr(Output, At( ".", OutBuffer ) - 1), ol )
 
          // Replace Text
          wvw_ebSetText( mnwinnum, mnebid, Output )
@@ -718,8 +718,8 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
          // Skip Protected Characters
          FOR x := 1 TO Len( OutBuffer )
-            CB := SubStr( OutBuffer, icp + x, 1 )
-            CM := SubStr( Mask, icp + x, 1 )
+            CB := SubStr(OutBuffer, icp + x, 1)
+            CM := SubStr(Mask, icp + x, 1)
 
             IF ! IsDigit( CB ) .AND. ! IsAlpha( CB ) .AND. ;
                ( !( CB == " " ) .OR. ( CB == " " .AND. CM == " " ) )
@@ -742,8 +742,8 @@ STATIC FUNCTION CharMaskTekstOK( cString, cvaltype, cMask )
 
    IF cvaltype == "D"
       FOR x := 1 TO Min( Len( cString ), Len( cMask ) )
-         CB := SubStr( cString, x, 1 )
-         CM := SubStr( cMask, x, 1 )
+         CB := SubStr(cString, x, 1)
+         CM := SubStr(cMask, x, 1)
          DO CASE
          CASE CM == "9"
             IF IsDigit( CB ) .OR. CB == " "
@@ -759,8 +759,8 @@ STATIC FUNCTION CharMaskTekstOK( cString, cvaltype, cMask )
    ENDIF
 
    FOR x := 1 TO Min( Len( cString ), Len( cMask ) )
-      CB := SubStr( cString, x, 1 )
-      CM := SubStr( cMask, x, 1 )
+      CB := SubStr(cString, x, 1)
+      CM := SubStr(cMask, x, 1)
       DO CASE
          // JK
       CASE CM == "A" .OR. CM == "!"
@@ -807,7 +807,7 @@ STATIC FUNCTION GetValFromText( Text, mcvaltype )
    // ASSUME numeric
    s := ""
    FOR x := 1 TO Len( Text )
-      c := SubStr( Text, x, 1 )
+      c := SubStr(Text, x, 1)
       IF c $ "0123456789" .OR. c $ ".-"
          s += c
       ENDIF
@@ -836,7 +836,7 @@ STATIC FUNCTION GetNumMask( Text, mcvaltype )
 
    s := ""
    FOR i := 1 TO Len( Text )
-      c := SubStr( Text, i, 1 )
+      c := SubStr(Text, i, 1)
       IF c == "9" .OR. c == "."
          s += c
       ENDIF

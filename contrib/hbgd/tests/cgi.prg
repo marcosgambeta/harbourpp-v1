@@ -244,8 +244,8 @@ FUNCTION GetVars( cFields, cSeparator )
       // TraceLog( "cName, xValue", cName, xValue )
 
       // is it an array entry?
-      IF SubStr( cName, Len( cName ) - 1 ) == "[]"
-         cName := SubStr( cName, 1, Len( cName ) - 2 )
+      IF SubStr(cName, Len( cName ) - 1) == "[]"
+         cName := SubStr(cName, 1, Len( cName ) - 2)
 
          hHashVars[ cName ] := { xValue }
 
@@ -280,8 +280,8 @@ FUNCTION GetParams( aParams )
       // TraceLog( "cName, xValue", cName, xValue )
 
       // is it an array entry?
-      IF SubStr( cName, Len( cName ) - 1 ) == "[]"
-         cName := SubStr( cName, 1, Len( cName ) - 2 )
+      IF SubStr(cName, Len( cName ) - 1) == "[]"
+         cName := SubStr(cName, 1, Len( cName ) - 2)
 
          hHashVars[ cName ] := { xValue }
 
@@ -316,7 +316,7 @@ FUNCTION URLDecode( cStr )
 
       CASE cCar == "%"
          i++
-         cRet += Chr( hb_HexToNum( SubStr( cStr, i, 2 ) ) )
+         cRet += Chr( hb_HexToNum( SubStr(cStr, i, 2) ) )
          i++
 
       OTHERWISE

@@ -60,9 +60,9 @@
 
 #xtrans P_SEEK( <a>, <c> )    => ( <a>:p_end := <a>:p_pos, <a>:p_pos := hb_At( <c>, <a>:p_str, <a>:p_end + 1 ) )
 #xtrans P_SEEKI( <a>, <c> )   => ( <a>:p_end := <a>:p_pos, <a>:p_pos := hb_AtI( <c>, <a>:p_str, <a>:p_end + 1 ) )
-#xtrans P_PEEK( <a>, <c> )    => ( <a>:p_end := <a>:p_pos, hb_LeftEqI( SubStr( <a>:p_str, <a>:p_pos ), <c> ) )
-#xtrans P_NEXT( <a> )         => ( <a>:p_end := <a>:p_pos, SubStr( <a>:p_str, ++<a>:p_pos, 1 ) )
-#xtrans P_PREV( <a> )         => ( <a>:p_end := <a>:p_pos, SubStr( <a>:p_str, --<a>:p_pos, 1 ) )
+#xtrans P_PEEK( <a>, <c> )    => ( <a>:p_end := <a>:p_pos, hb_LeftEqI( SubStr(<a>:p_str, <a>:p_pos), <c> ) )
+#xtrans P_NEXT( <a> )         => ( <a>:p_end := <a>:p_pos, SubStr(<a>:p_str, ++<a>:p_pos, 1) )
+#xtrans P_PREV( <a> )         => ( <a>:p_end := <a>:p_pos, SubStr(<a>:p_str, --<a>:p_pos, 1) )
 
 // Directives for a light weight stack
 #define S_DATA                1  // array holding data elements
@@ -692,14 +692,14 @@ METHOD parseHtml( parser ) CLASS THtmlNode
       nStart   := parser:p_pos
       P_SEEK( parser, ">" )
       nEnd     := parser:p_pos
-      cAttr    := SubStr( parser:p_Str, nStart, nEnd - nStart + 1 )
-      cText    := LTrim(SubStr( parser:p_str, nLastPos + 1, nStart - nLastPos - 1 ))
+      cAttr    := SubStr(parser:p_Str, nStart, nEnd - nStart + 1)
+      cText    := LTrim(SubStr(parser:p_str, nLastPos + 1, nStart - nLastPos - 1))
       cTagName := CutStr( " ", @cAttr )
 
       IF ! cText == ""
          IF hb_LeftEq( cText, "</" )
             // ending tag of previous node
-            cText := Lower(AllTrim(SubStr( CutStr( ">", @cText ), 3 )))
+            cText := Lower(AllTrim(SubStr(CutStr( ">", @cText ), 3)))
             oLastTag := oThisTag:parent
             DO WHILE oLastTag != NIL .AND. ! Lower(oLastTag:htmlTagName) == cText  /* NOTE: != changed to ! == */
                oLastTag := oLastTag:parent
@@ -711,7 +711,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
          ELSEIF Chr( 10 ) $ cText
             cText := RTrim(cText)
             nPos := Len( cText ) + 1
-            DO WHILE nPos > 0 .AND. SubStr( cText, --nPos, 1 ) $ Chr( 9 ) + Chr( 10 ) + Chr( 13 )
+            DO WHILE nPos > 0 .AND. SubStr(cText, --nPos, 1) $ Chr( 9 ) + Chr( 10 ) + Chr( 13 )
             ENDDO
             oThisTag:addNode( THtmlNode():new( oThisTag, "_text_", , Left(cText, nPos) ) )
          ELSE
@@ -725,7 +725,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
          cTagName += CutStr( " ", @cAttr )
       ENDIF
       cTagName := StrTran( cTagName, ">" )
-      cTagName := AllTrim(SubStr( cTagName, 2 ))
+      cTagName := AllTrim(SubStr(cTagName, 2))
 
       SWITCH Left(cTagName, 1)
       CASE "!"
@@ -741,7 +741,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
          ELSE
 
             oNextTag := oThisTag:parent
-            DO WHILE oNextTag != NIL .AND. ! Lower(oNextTag:htmlTagName) == Lower(SubStr( cTagName, 2 ))  /* NOTE: != changed to ! == */
+            DO WHILE oNextTag != NIL .AND. ! Lower(oNextTag:htmlTagName) == Lower(SubStr(cTagName, 2))  /* NOTE: != changed to ! == */
                oNextTag := oNextTag:parent
             ENDDO
 
@@ -832,7 +832,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
    ENDDO
 
    IF nLastPos > 0 .AND. nLastPos < parser:p_len
-      oThisTag:addNode( THtmlNode():new( Self, "_text_", , SubStr( parser:p_str, nLastPos + 1 ) ) )
+      oThisTag:addNode( THtmlNode():new( Self, "_text_", , SubStr(parser:p_str, nLastPos + 1) ) )
    ENDIF
 
    RETURN Self
@@ -861,7 +861,7 @@ METHOD parseHtmlFixed( parser ) CLASS THtmlNode
    ENDDO
 
    nEnd  := parser:p_pos
-   ::addNode( THtmlNode():new( Self, "_text_", , SubStr( parser:p_Str, nStart, nEnd - nStart ) ) )
+   ::addNode( THtmlNode():new( Self, "_text_", , SubStr(parser:p_Str, nStart, nEnd - nStart) ) )
 
    ::htmlEndTagName := "/" + ::htmlTagName
 
@@ -1263,7 +1263,7 @@ STATIC FUNCTION __ParseAttr( parser )
 
          nStart := parser:p_pos
 
-         IF SubStr( parser:p_str, nStart, 1 ) == cChr
+         IF SubStr(parser:p_str, nStart, 1) == cChr
             // empty value ""
             hHash[ aAttr[ 1 ] ] := ""
             parser:p_end := parser:p_pos
@@ -1273,9 +1273,9 @@ STATIC FUNCTION __ParseAttr( parser )
             nEnd := parser:p_pos
 
             IF nEnd > 0
-               aAttr[ 2 ] := SubStr( parser:p_str, nStart, nEnd - nStart )
+               aAttr[ 2 ] := SubStr(parser:p_str, nStart, nEnd - nStart)
             ELSE
-               aAttr[ 2 ] := SubStr( parser:p_str, nStart )
+               aAttr[ 2 ] := SubStr(parser:p_str, nStart)
             ENDIF
 
             hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
@@ -1390,7 +1390,7 @@ METHOD noAttribute( cName, aValue ) CLASS THtmlNode
    cName := Lower(cName)
 
    IF hb_LeftEq( cName, "_" )
-      cName := SubStr( cName, 1 + 1 )
+      cName := SubStr(cName, 1 + 1)
    ENDIF
 
    IF cName $ t_hHT
@@ -1495,8 +1495,8 @@ METHOD pushNode( cTagName ) CLASS THtmlNode
    ENDIF
 
    IF ! cName $ t_hHT
-      IF hb_LeftEq( cName, "/" ) .AND. SubStr( cName, 2 ) $ t_hHT
-         IF ! Lower(SubStr( cName, 2 )) == Lower(::htmlTagName)
+      IF hb_LeftEq( cName, "/" ) .AND. SubStr(cName, 2) $ t_hHT
+         IF ! Lower(SubStr(cName, 2)) == Lower(::htmlTagName)
             RETURN ::error( "Not a valid closing HTML tag for: <" + ::htmlTagName + ">", ::className(), "-", EG_ARG, { cName } )
          ENDIF
          RETURN ::parent
@@ -1525,7 +1525,7 @@ METHOD popNode( cName ) CLASS THtmlNode
    cName := Lower(LTrim(cName))
 
    IF hb_LeftEq( cName, "/" )
-      cName := SubStr( cName, 1 + 1 )
+      cName := SubStr(cName, 1 + 1)
    ENDIF
 
    IF ! cName == Lower(::htmlTagName)
@@ -1553,7 +1553,7 @@ STATIC FUNCTION CutStr( cCut, cString )
 
    IF ( i := At( cCut, cString ) ) > 0
       cLeftPart := Left(cString, i - 1)
-      cString   := SubStr( cString, i + Len( cCut ) )
+      cString   := SubStr(cString, i + Len( cCut ))
    ELSE
       cLeftPart := cString
       cString   := ""
@@ -4232,7 +4232,7 @@ FUNCTION ANSIToHtml( cAnsiText )
    // Convert to Html but ignore all html character entities
    DO WHILE P_SEEK( parser, "&" ) > 0
       nEnd  := parser:p_pos
-      cText := SubStr( parser:p_str, nStart, nEnd - nStart )
+      cText := SubStr(parser:p_str, nStart, nEnd - nStart)
 
       DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty(cChr) .AND. parser:p_pos != 0
       ENDDO
@@ -4241,7 +4241,7 @@ FUNCTION ANSIToHtml( cAnsiText )
       CASE ";"  // HTML character entity found
          nStart  := nEnd
          nEnd    := parser:p_pos + 1
-         cEntity := SubStr( parser:p_str, nStart, nEnd - nStart )
+         cEntity := SubStr(parser:p_str, nStart, nEnd - nStart)
          parser:p_end := parser:p_pos
          parser:p_pos++
          EXIT
@@ -4249,9 +4249,9 @@ FUNCTION ANSIToHtml( cAnsiText )
          cHtmlText += cText
          nStart    := nEnd
          nEnd      := parser:p_pos + 1
-         cText     := SubStr( parser:p_str, nStart, nEnd - nStart )
+         cText     := SubStr(parser:p_str, nStart, nEnd - nStart)
          nStart    := nEnd
-         cHtmlText += "&amp;" + SubStr( cText, 2 )
+         cHtmlText += "&amp;" + SubStr(cText, 2)
          LOOP
       OTHERWISE
          cEntity := NIL
@@ -4263,7 +4263,7 @@ FUNCTION ANSIToHtml( cAnsiText )
       ENDIF
    ENDDO
 
-   RETURN cHtmlText + hb_StrReplace( SubStr( parser:p_str, nStart ), t_cHtmlAnsiChars, t_aHtmlAnsiEntities )
+   RETURN cHtmlText + hb_StrReplace( SubStr(parser:p_str, nStart), t_cHtmlAnsiChars, t_aHtmlAnsiEntities )
 
 // Inserts HTML character entities into an OEM text string
 FUNCTION OEMToHtml( cOemText )
@@ -4376,7 +4376,7 @@ FUNCTION tip_StrToHtml( cAnsiText )
    // Convert to Html but ignore all html character entities
    DO WHILE P_SEEK( parser, "&" ) > 0
       nEnd  := parser:p_pos
-      cText := SubStr( parser:p_str, nStart, nEnd - nStart )
+      cText := SubStr(parser:p_str, nStart, nEnd - nStart)
 
       DO WHILE ! ( cChr := P_NEXT( parser ) ) $ "; " .AND. ! Empty(cChr) .AND. parser:p_pos != 0
       ENDDO
@@ -4385,7 +4385,7 @@ FUNCTION tip_StrToHtml( cAnsiText )
       CASE ";"  // HTML character entity found
          nStart  := nEnd
          nEnd    := parser:p_pos + 1
-         cEntity := SubStr( parser:p_str, nStart, nEnd - nStart )
+         cEntity := SubStr(parser:p_str, nStart, nEnd - nStart)
          parser:p_end := parser:p_pos
          parser:p_pos++
          EXIT
@@ -4393,9 +4393,9 @@ FUNCTION tip_StrToHtml( cAnsiText )
          cHtmlText += cText
          nStart    := nEnd
          nEnd      := parser:p_pos + 1
-         cText     := SubStr( parser:p_str, nStart, nEnd - nStart )
+         cText     := SubStr(parser:p_str, nStart, nEnd - nStart)
          nStart    := nEnd
-         cHtmlText += "&amp;" + SubStr( cText, 2 )
+         cHtmlText += "&amp;" + SubStr(cText, 2)
          LOOP
       OTHERWISE
          cEntity := NIL
@@ -4407,7 +4407,7 @@ FUNCTION tip_StrToHtml( cAnsiText )
       ENDIF
    ENDDO
 
-   RETURN cHtmlText + hb_StrReplace( SubStr( parser:p_str, nStart ), t_cHtmlUnicChars, t_aHtmlUnicEntities )
+   RETURN cHtmlText + hb_StrReplace( SubStr(parser:p_str, nStart), t_cHtmlUnicChars, t_aHtmlUnicEntities )
 
 STATIC PROCEDURE _Init_Html_CharacterEntities()
 

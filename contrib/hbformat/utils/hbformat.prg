@@ -71,7 +71,7 @@ PROCEDURE Main( ... )
 
    FOR EACH cParam IN aParams
       IF hb_LeftEq( cParam, "-" )
-         IF SubStr( cParam, Len( "-" ) + 1 ) == "r"
+         IF SubStr(cParam, Len( "-" ) + 1) == "r"
             lRecursive := .T.
             cParam := "#"
             EXIT
@@ -91,7 +91,7 @@ PROCEDURE Main( ... )
    IF "*" $ cFileName .OR. ;
       "?" $ cFileName
 
-      IF SubStr( hb_FNameExt( cFileName ), 2, 1 ) < "a"
+      IF SubStr(hb_FNameExt( cFileName ), 2, 1) < "a"
          OutErr( I_( "Wrong mask" ) + hb_eol() )
       ELSE
          cInitDir := hb_FNameDir( cFileName )

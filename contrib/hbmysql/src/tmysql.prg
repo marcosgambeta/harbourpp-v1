@@ -491,7 +491,7 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
                   ::aRow[ i ] := hb_SToD()
                ELSE
                   // Date format YYYY-MM-DD
-                  ::aRow[ i ] := hb_SToD( Left(::aRow[ i ], 4) + SubStr( ::aRow[ i ], 6, 2 ) + Right(::aRow[ i ], 2) )
+                  ::aRow[ i ] := hb_SToD( Left(::aRow[ i ], 4) + SubStr(::aRow[ i ], 6, 2) + Right(::aRow[ i ], 2) )
                ENDIF
                EXIT
 

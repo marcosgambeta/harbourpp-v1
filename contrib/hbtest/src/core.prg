@@ -232,7 +232,7 @@ STATIC FUNCTION __StrToExp( cStr )
 
    nLen := hb_BLen( cStr )
    FOR nPos := 1 TO nLen
-      cByte := hb_BSubStr( cStr, nPos, 1 )
+      cByte := hb_BSubStr(cStr, nPos, 1)
       IF ! __ByteIsDisplayable( cByte ) .OR. cByte == '"'
          cResult += "\" + __ByteEscape( hb_BCode( cByte ) )
       ELSE
@@ -257,7 +257,7 @@ STATIC FUNCTION __ByteEscape( nByte )
    ELSE
       cResult := ""
       FOR nExp := 2 TO 0 STEP -1
-         cResult += SubStr( "01234567", Int( nByte / ( 8 ^ nExp ) ) + 1, 1 )
+         cResult += SubStr("01234567", Int( nByte / ( 8 ^ nExp ) ) + 1, 1)
          nByte %= 8 ^ nExp
       NEXT
    ENDIF

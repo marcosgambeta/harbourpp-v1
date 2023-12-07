@@ -308,7 +308,7 @@ METHOD OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName, cPasswor
       cResp := ""
       IF ::ReadHTTPProxyResponse( @cResp ) .AND. ;
          ( tmp := At( " ", cResp ) ) > 0 .AND. ;
-         Val( SubStr( cResp, tmp + 1 ) ) == 200
+         Val( SubStr(cResp, tmp + 1) ) == 200
          lRet := .T.
       ELSE
          ::close()
@@ -795,7 +795,7 @@ METHOD Log( ... ) CLASS TIPClient
    IF HB_ISEVALITEM( ::bTrace )
 
       cMsg := DToS( Date() ) + "-" + Time() + Space( 2 ) + ;
-         SubStr( ProcName( 1 ), RAt( ":", ProcName( 1 ) ) ) + ;
+         SubStr(ProcName( 1 ), RAt( ":", ProcName( 1 ) )) + ;
          "( "
 
       FOR EACH xVar IN hb_AParams()

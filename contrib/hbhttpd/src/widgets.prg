@@ -554,7 +554,7 @@ STATIC FUNCTION uhttpd_split( cSeparator, cString )
 
    DO WHILE ( nI := At( cSeparator, cString ) ) > 0
       AAdd( aRet, Left(cString, nI - 1) )
-      cString := SubStr( cString, nI + Len( cSeparator ) )
+      cString := SubStr(cString, nI + Len( cSeparator ))
    ENDDO
    AAdd( aRet, cString )
 

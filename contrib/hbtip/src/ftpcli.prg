@@ -170,7 +170,7 @@ METHOD GetReply() CLASS TIPClientFTP
    ENDIF
 
    // now, if the reply has a "-" as fourth character, we need to proceed...
-   DO WHILE ! Empty(cRep) .AND. SubStr( cRep, 4, 1 ) == "-"
+   DO WHILE ! Empty(cRep) .AND. SubStr(cRep, 4, 1) == "-"
       cRep := ::cReply := hb_defaultValue( ::inetRecvLine( ::SocketCon, @nLen, 128 ), "" )
    ENDDO
 
@@ -293,8 +293,8 @@ METHOD PWD() CLASS TIPClientFTP
 
    ::inetSendAll( ::SocketCon, "PWD" + ::cCRLF )
    IF ::GetReply()
-      ::cReply := SubStr( ::cReply, At( '"', ::cReply ) + 1, ;
-         RAt( '"', ::cReply ) - At( '"', ::cReply ) - 1 )
+      ::cReply := SubStr(::cReply, At( '"', ::cReply ) + 1, ;
+         RAt( '"', ::cReply ) - At( '"', ::cReply ) - 1)
       RETURN .T.
    ENDIF
 
@@ -585,7 +585,7 @@ METHOD MPut( cFileSpec, cAttr ) CLASS TIPClientFTP
 
    /* QUESTION: Shouldn't this return an array?
                 Why emulate a platform specific and ill-defined format? */
-   RETURN SubStr( cStr, Len( e"\r\n" ) + 1 )
+   RETURN SubStr(cStr, Len( e"\r\n" ) + 1)
 
 METHOD UploadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
 
@@ -692,7 +692,7 @@ METHOD ListFiles( cFileSpec ) CLASS TIPClientFTP
          nEnd   := hb_At( " ", cEntry, nStart )
 
          // file permissions (attributes)
-         aFile[ F_ATTR ] := SubStr( cEntry, nStart, nEnd - nStart )
+         aFile[ F_ATTR ] := SubStr(cEntry, nStart, nEnd - nStart)
          nStart          := nEnd
 
          IF Val( StrTran( aFile[ F_ATTR ], "-" ) ) == 0
@@ -700,52 +700,52 @@ METHOD ListFiles( cFileSpec ) CLASS TIPClientFTP
             // continue with Unix format
 
             // # of links
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd               := hb_At( " ", cEntry, nStart )
-            aFile[ F_LEN + 1 ] := Val( SubStr( cEntry, nStart, nEnd - nStart ) )
+            aFile[ F_LEN + 1 ] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
             nStart             := nEnd
 
             // owner name
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd               := hb_At( " ", cEntry, nStart )
-            aFile[ F_LEN + 2 ] := SubStr( cEntry, nStart, nEnd - nStart )
+            aFile[ F_LEN + 2 ] := SubStr(cEntry, nStart, nEnd - nStart)
             nStart             := nEnd
 
             // group name
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd               := hb_At( " ", cEntry, nStart )
-            aFile[ F_LEN + 3 ] := SubStr( cEntry, nStart, nEnd - nStart )
+            aFile[ F_LEN + 3 ] := SubStr(cEntry, nStart, nEnd - nStart)
             nStart             := nEnd
 
             // file size
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd            := hb_At( " ", cEntry, nStart )
-            aFile[ F_SIZE ] := Val( SubStr( cEntry, nStart, nEnd - nStart ) )
+            aFile[ F_SIZE ] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
             nStart          := nEnd
 
             // Month
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd          := hb_At( " ", cEntry, nStart )
-            cMonth        := StrZero( hb_AScan( aMonth, SubStr( cEntry, nStart, nEnd - nStart ), , , .T. ), 2 )
+            cMonth        := StrZero( hb_AScan( aMonth, SubStr(cEntry, nStart, nEnd - nStart), , , .T. ), 2 )
             nStart        := nEnd
 
             // Day
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd          := hb_At( " ", cEntry, nStart )
-            cDay          := SubStr( cEntry, nStart, nEnd - nStart )
+            cDay          := SubStr(cEntry, nStart, nEnd - nStart)
             nStart        := nEnd
 
             // Year
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd          := hb_At( " ", cEntry, nStart )
-            cYear         := SubStr( cEntry, nStart, nEnd - nStart )
+            cYear         := SubStr(cEntry, nStart, nEnd - nStart)
             nStart        := nEnd
 
             IF ":" $ cYear
@@ -768,28 +768,28 @@ METHOD ListFiles( cFileSpec ) CLASS TIPClientFTP
             aFile[ F_DATE ] := hb_CToD( aFile[ F_ATTR ], "mm-dd-yy" )
 
             // # time
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd   := hb_At( " ", cEntry, nStart )
-            cTime  := SubStr( cEntry, nStart, nEnd - nStart )
+            cTime  := SubStr(cEntry, nStart, nEnd - nStart)
             nStart := nEnd
 
             aFile[ F_TIME ] := Left(TString( Secs( Left(cTime, 5) ) + iif(Right(cTime, 2) == "PM", 43200, 0) ), 5)
 
             // file size
-            DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+            DO WHILE SubStr(cEntry, ++nStart, 1) == " "
             ENDDO
             nEnd            := hb_At( " ", cEntry, nStart )
-            aFile[ F_SIZE ] := Val( SubStr( cEntry, nStart, nEnd - nStart ) )
+            aFile[ F_SIZE ] := Val( SubStr(cEntry, nStart, nEnd - nStart) )
             nStart          := nEnd
 
          ENDIF
 
          // file name
-         DO WHILE SubStr( cEntry, ++nStart, 1 ) == " "
+         DO WHILE SubStr(cEntry, ++nStart, 1) == " "
          ENDDO
 
-         aFile[ F_NAME ] := SubStr( cEntry, nStart )
+         aFile[ F_NAME ] := SubStr(cEntry, nStart)
 
          cEntry := aFile
       ENDIF

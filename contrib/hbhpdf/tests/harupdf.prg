@@ -651,7 +651,7 @@ STATIC PROCEDURE Page_Text( pdf )
 
       HPDF_Page_SetTextMatrix( page, Cos( rad1 ), Sin( rad1 ), - Sin( rad1 ), Cos( rad1 ), x, y )
 
-      buf := SubStr( SAMP_TXT, i, 1 )
+      buf := SubStr(SAMP_TXT, i, 1)
       HPDF_Page_ShowText( page, buf )
       angle2 -= angle1
    NEXT
@@ -739,7 +739,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
    FOR i := 1 TO len
       r := i / len
       g := 1 - ( i / len )
-      buf := SubStr( samp_text, i, 1 )
+      buf := SubStr(samp_text, i, 1)
 
       HPDF_Page_SetRGBFill( page, r, g, 0.0 )
       HPDF_Page_ShowText( page, buf )
@@ -749,7 +749,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
    FOR i := 1 TO len
       r := i / len
       b := 1 - ( i / len )
-      buf := SubStr( samp_text, i, 1 )
+      buf := SubStr(samp_text, i, 1)
 
       HPDF_Page_SetRGBFill( page, r, 0.0, b )
       HPDF_Page_ShowText( page, buf )
@@ -759,7 +759,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
    FOR i := 1 TO len
       b := i / len
       g := 1 - ( i / len )
-      buf := SubStr( samp_text, i, 1 )
+      buf := SubStr(samp_text, i, 1)
 
       HPDF_Page_SetRGBFill( page, 0.0, g, b )
       HPDF_Page_ShowText( page, buf )

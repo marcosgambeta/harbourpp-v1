@@ -230,8 +230,8 @@ FUNCTION tp_recv( nPort, nLength, nTimeout )
       cRet := t_aPorts[ nPort, TPFP_INBUF ]
       t_aPorts[ nPort, TPFP_INBUF ] := ""
    ELSE
-      cRet := SubStr( t_aPorts[ nPort, TPFP_INBUF ], 1, nLength )
-      t_aPorts[ nPort, TPFP_INBUF ] := SubStr( t_aPorts[ nPort, TPFP_INBUF ], nLength + 1 )
+      cRet := SubStr(t_aPorts[ nPort, TPFP_INBUF ], 1, nLength)
+      t_aPorts[ nPort, TPFP_INBUF ] := SubStr(t_aPorts[ nPort, TPFP_INBUF ], nLength + 1)
    ENDIF
 
    RETURN cRet
@@ -258,7 +258,7 @@ FUNCTION tp_sendsub( nPort, cString, nStart, nLength, nTimeout )
       nLength := Len( cString )
    ENDIF
 
-   RETURN tp_send( nPort, SubStr( cString, nStart, nLength ), nTimeout )
+   RETURN tp_send( nPort, SubStr(cString, nStart, nLength), nTimeout )
 
 
 FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
@@ -338,7 +338,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 
    IF nFirst > 0
       cRet := Left(t_aPorts[ nPort, TPFP_INBUF ], nFirst)
-      t_aPorts[ nPort, TPFP_INBUF ] := SubStr( t_aPorts[ nPort, TPFP_INBUF ], nFirst + 1 )
+      t_aPorts[ nPort, TPFP_INBUF ] := SubStr(t_aPorts[ nPort, TPFP_INBUF ], nFirst + 1)
    ENDIF
 
    RETURN cRet

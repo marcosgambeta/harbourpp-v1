@@ -85,16 +85,16 @@ METHOD write( cSource ) CLASS TRtf
       cLine := hb_FReadLn() + "\par"
       y     := Len( cLine )
       FOR nChar := 1 TO y
-         cChar := SubStr( cLine, nChar, 1 )
+         cChar := SubStr(cLine, nChar, 1)
 
          // todo : i need function dec2hex()
          // to convert ascii to 2-characters hex
          // ie   : dec2hex( "H" ) -> 48
          IF cChar == "+" .OR. cChar == "-"
             xAtt := cChar + ;
-               SubStr( cLine, nChar + 1, 1 ) + ;
-               SubStr( cLine, nChar + 2, 1 ) + ;
-               SubStr( cLine, nChar + 3, 1 )
+               SubStr(cLine, nChar + 1, 1) + ;
+               SubStr(cLine, nChar + 2, 1) + ;
+               SubStr(cLine, nChar + 3, 1)
             IF ( i := AScan( attrib, {| e | e[ 1 ] == xAtt } ) ) > 0
                FWrite( ::nhandle, attrib[ i ][ 2 ] )
                nChar += Len( xAtt ) - 1

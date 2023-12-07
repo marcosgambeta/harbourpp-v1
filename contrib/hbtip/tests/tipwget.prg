@@ -99,7 +99,7 @@ PROCEDURE Main( cURL, cFile )
       ? "Connection status:", iif(Empty(oClient:cReply), "<connected>", oClient:cReply)
 
       IF HB_ISSTRING( cFile ) .AND. hb_LeftEq( cFile, "+" )
-         cFile := SubStr( cFile, 2 )
+         cFile := SubStr(cFile, 2)
          bWrite := .T.
       ENDIF
 
