@@ -262,12 +262,11 @@ LONG GetFontDialogUnits(HWND h, HFONT f)
 {
    HFONT  hFont;
    LONG   avgWidth;
-   HDC    hDc;
    const char * tmp = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
    SIZE   sz;
 
    /* get the hdc to the main window */
-   hDc = GetDC(h);
+   auto hDc = GetDC(h);
 
    /* with the current font attributes, select the font */
    hFont    = f; /* GetStockObject(ANSI_VAR_FONT); */
@@ -1668,14 +1667,13 @@ static int hb_gt_wvw_gfxPrimitive(PHB_GT pGT, int iType, int iTop, int iLeft, in
    COLORREF   color;
    HPEN       hPen   = nullptr, hOldPen = nullptr;
    HBRUSH     hBrush = nullptr, hOldBrush = nullptr;
-   HDC        hdc;
    BOOL       bOut        = FALSE;
    int        iRet        = 0;
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[s_pWvwData->s_usCurWindow];
 
    HB_SYMBOL_UNUSED(pGT);
 
-   hdc = GetDC(pWindowData->hWnd);
+   auto hdc = GetDC(pWindowData->hWnd);
 
    switch( iType ) {
       case HB_GFX_ACQUIRESCREEN:
@@ -2137,7 +2135,6 @@ static BOOL hb_gt_wvwInitWindow(WIN_DATA * pWindowData, HWND hWnd, USHORT col, U
 
 static BOOL hb_gt_wvwValidWindowSize(WIN_DATA * pWindowData, int rows, int cols, HFONT hFont, int iWidth, int * pmaxrows, int * pmaxcols)
 {
-   HDC        hdc;
    USHORT     width, height;
    USHORT     diffHeight, diffWidth;
    TEXTMETRIC tm{};
@@ -2151,7 +2148,7 @@ static BOOL hb_gt_wvwValidWindowSize(WIN_DATA * pWindowData, int rows, int cols,
    auto maxWidth  = static_cast<SHORT>(rcWorkArea.right - rcWorkArea.left + 1);
    auto maxHeight = static_cast<SHORT>(rcWorkArea.bottom - rcWorkArea.top + 1);
 
-   hdc      = GetDC(pWindowData->hWnd);
+   auto hdc = GetDC(pWindowData->hWnd);
    auto hOldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
    GetTextMetrics(hdc, &tm);
    SelectObject(hdc, hOldFont);
@@ -2190,7 +2187,6 @@ static BOOL hb_gt_wvwValidWindowSize(WIN_DATA * pWindowData, int rows, int cols,
 
 static void hb_gt_wvwResetWindowSize(WIN_DATA * pWindowData, HWND hWnd)
 {
-   HDC        hdc;
    USHORT     diffWidth, diffHeight;
    USHORT     height, width;
    RECT       wi{};
@@ -2206,7 +2202,7 @@ static void hb_gt_wvwResetWindowSize(WIN_DATA * pWindowData, HWND hWnd)
    /* set the font and get it's size to determine the size of the client area
     * for the required number of rows and columns
     */
-   hdc   = GetDC(hWnd);
+   auto hdc = GetDC(hWnd);
    auto hFont = hb_gt_wvwGetFont(pWindowData->fontFace, pWindowData->fontHeight, pWindowData->fontWidth, pWindowData->fontWeight, pWindowData->fontQuality, pWindowData->CodePage);
 
    if( pWindowData->hFont ) {
@@ -6089,14 +6085,10 @@ static void DrawTransparentBitmap(HDC hdc, HBITMAP hBitmap, short xStart, short 
 {
    BITMAP   bm;
    COLORREF cColor;
-   HBITMAP  bmAndBack, bmAndObject, bmAndMem;
-   HDC      hdcMem, hdcBack, hdcObject, hdcTemp;
-   HDC      hdcCopy;
-   HBITMAP  bmStretch;
    POINT    ptSize;
    COLORREF cTransparentColor;
 
-   hdcCopy = CreateCompatibleDC(hdc);
+   auto hdcCopy = CreateCompatibleDC(hdc);
    SelectObject(hdcCopy, hBitmap);
 
    cTransparentColor = GetPixel(hdcCopy, 0, 0);
@@ -6106,21 +6098,21 @@ static void DrawTransparentBitmap(HDC hdc, HBITMAP hBitmap, short xStart, short 
    ptSize.y = bm.bmHeight;
    DPtoLP(hdcCopy, &ptSize, 1);
 
-   bmStretch    = CreateCompatibleBitmap(hdc, iDestWidth, iDestHeight);
-   hdcTemp      = CreateCompatibleDC(hdc);
+   auto bmStretch = CreateCompatibleBitmap(hdc, iDestWidth, iDestHeight);
+   auto hdcTemp = CreateCompatibleDC(hdc);
    auto bmStretchOld = static_cast<HBITMAP>(SelectObject(hdcTemp, bmStretch));
 
    StretchBlt(hdcTemp, 0, 0, iDestWidth, iDestHeight, hdcCopy, 0, 0, ptSize.x, ptSize.y, SRCCOPY);
 
-   hdcBack   = CreateCompatibleDC(hdc);
-   hdcObject = CreateCompatibleDC(hdc);
-   hdcMem    = CreateCompatibleDC(hdc);
+   auto hdcBack   = CreateCompatibleDC(hdc);
+   auto hdcObject = CreateCompatibleDC(hdc);
+   auto hdcMem    = CreateCompatibleDC(hdc);
 
-   bmAndBack = CreateBitmap(iDestWidth, iDestHeight, 1, 1, nullptr);
+   auto bmAndBack = CreateBitmap(iDestWidth, iDestHeight, 1, 1, nullptr);
 
-   bmAndObject = CreateBitmap(iDestWidth, iDestHeight, 1, 1, nullptr);
+   auto bmAndObject = CreateBitmap(iDestWidth, iDestHeight, 1, 1, nullptr);
 
-   bmAndMem = CreateCompatibleBitmap(hdc, iDestWidth, iDestHeight);
+   auto bmAndMem = CreateCompatibleBitmap(hdc, iDestWidth, iDestHeight);
 
    auto bmBackOld   = static_cast<HBITMAP>(SelectObject(hdcBack, bmAndBack));
    auto bmObjectOld = static_cast<HBITMAP>(SelectObject(hdcObject, bmAndObject));
@@ -6173,7 +6165,7 @@ BOOL hb_gt_wvwDrawImage(UINT usWinNum, int x1, int y1, int wd, int ht, const cha
    HBITMAP hBitmap;
    BOOL    bResult;
    int     iWidth, iHeight;
-   HDC     hdc, hdcMem;
+   HDC     hdcMem;
 
    WIN_DATA * pWindowData = s_pWvwData->s_pWindows[usWinNum];
 
@@ -6214,7 +6206,7 @@ BOOL hb_gt_wvwDrawImage(UINT usWinNum, int x1, int y1, int wd, int ht, const cha
       AddUserBitmapHandle(image, hBitmap, iWidth, iHeight);
    }
 
-   hdc = GetDC(pWindowData->hWnd);
+   auto hdc = GetDC(pWindowData->hWnd);
 
    if( bTransparent ) {
       DrawTransparentBitmap(hdc, hBitmap, static_cast<short>(x1), static_cast<short>(y1), wd, ht);
@@ -6304,12 +6296,11 @@ BOOL hb_gt_wvwRenderPicture(UINT usWinNum, int x1, int y1, int wd, int ht, IPict
       /* if bTransp, we use different method */
       if( bTransp ) {
          OLE_HANDLE oHtemp;
-         HDC        hdc;
 
          iPicture->lpVtbl->get_Handle(iPicture, &oHtemp);
 
          if( oHtemp ) {
-            hdc = GetDC(pWindowData->hWnd);
+            auto hdc = GetDC(pWindowData->hWnd);
             DrawTransparentBitmap(hdc, reinterpret_cast<HBITMAP>(oHtemp), static_cast<short>(x1), static_cast<short>(y1), wd, ht);
             ReleaseDC(pWindowData->hWnd, hdc);
 
@@ -8380,16 +8371,13 @@ static HBITMAP hPrepareBitmap(char * szBitmap, UINT uiBitmap, int iExpWidth, int
             }
 
             if( iExpWidth != iWidth || iExpHeight != iHeight ) {
-
-               HDC     hdcSource, hdcTarget;
-               HBITMAP hBitmap2;
                BOOL    bResult;
 
-               hdcSource = CreateCompatibleDC(hdc);
+               auto hdcSource = CreateCompatibleDC(hdc);
                SelectObject(hdcSource, hBitmap);
 
-               hdcTarget = CreateCompatibleDC(hdc);
-               hBitmap2  = CreateCompatibleBitmap(hdcSource, iExpWidth, iExpHeight);
+               auto hdcTarget = CreateCompatibleDC(hdc);
+               auto hBitmap2  = CreateCompatibleBitmap(hdcSource, iExpWidth, iExpHeight);
                SelectObject(hdcTarget, hBitmap2);
 
                bResult = StretchBlt(
@@ -8605,7 +8593,6 @@ LRESULT CALLBACK hb_gt_wvwTBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
       case WM_PAINT: {
 
          HGDIOBJ hOldObj;
-         HDC     hdc;
          RECT    rTB{};
          int     iTop, iRight;
 
@@ -8615,7 +8602,7 @@ LRESULT CALLBACK hb_gt_wvwTBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
          iTop   = rTB.bottom - 3;
          iRight = rTB.right;
 
-         hdc = GetDC(hWnd);
+         auto hdc = GetDC(hWnd);
 
          hOldObj = SelectObject(hdc, s_pWvwData->s_sApp->penWhite);
 

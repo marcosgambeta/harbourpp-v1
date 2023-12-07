@@ -1168,7 +1168,7 @@ HB_FUNC( LOADICON )
 HB_FUNC( DRAWBITMAP )
 {
    auto hDC = reinterpret_cast<HDC>(HB_PARHANDLE(1));
-   HDC     hDCmem   = CreateCompatibleDC(hDC);
+   auto hDCmem = CreateCompatibleDC(hDC);
    DWORD   dwraster = HB_ISNIL(3) ? SRCCOPY : hb_parnl(3);
    auto hBitmap = reinterpret_cast<HBITMAP>(HB_PARHANDLE(2));
    BITMAP  bitmap;
@@ -1191,8 +1191,7 @@ HB_FUNC( WINDOW2BITMAP )
    auto hWnd = reinterpret_cast<HWND>(HB_PARHANDLE(1));
    BOOL    lFull  = HB_ISNIL(2) ? 0 : static_cast<BOOL>(hb_parl(2));
    HDC     hDC    = lFull ? GetWindowDC(hWnd) : GetDC(hWnd);
-   HDC     hDCmem = CreateCompatibleDC(hDC);
-   HBITMAP hBitmap;
+   auto hDCmem = CreateCompatibleDC(hDC);
    RECT    rc;
 
    if( lFull ) {
@@ -1201,7 +1200,7 @@ HB_FUNC( WINDOW2BITMAP )
       GetClientRect(hWnd, &rc);
    }
 
-   hBitmap = CreateCompatibleBitmap(hDC, rc.right - rc.left, rc.bottom - rc.top);
+   auto hBitmap = CreateCompatibleBitmap(hDC, rc.right - rc.left, rc.bottom - rc.top);
    SelectObject(hDCmem, hBitmap);
 
    BitBlt(hDCmem, 0, 0, rc.right - rc.left, rc.bottom - rc.top, hDC, 0, 0, SRCCOPY);

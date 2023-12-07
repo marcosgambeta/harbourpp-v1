@@ -150,7 +150,7 @@ HB_FUNC( WVW_SBADDPART )
    usWidth      = HB_ISNIL(3) || hb_parni(3) <= 0 ? 5 * WVW_SPACE_BETWEEN_PARTS : static_cast<USHORT>(hb_parni(3));
 
    if( HB_ISCHAR(2) ) {
-      HDC  hDCSB = GetDC(hWndSB);
+      auto hDCSB = GetDC(hWndSB);
       SIZE size{};
 
       auto hFont = reinterpret_cast<HFONT>(SendMessage(hWndSB, WM_GETFONT, 0, 0));
