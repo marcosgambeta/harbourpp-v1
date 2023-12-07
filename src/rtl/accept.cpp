@@ -73,7 +73,7 @@ HB_FUNC( __ACCEPTSTR )
 
 HB_FUNC( __ACCEPT )
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    char         szAcceptResult[ACCEPT_BUFFER_LEN];
    char         szKey[HB_MAX_CHAR_LEN];
    HB_SIZE      nLen  = 0, nChar;

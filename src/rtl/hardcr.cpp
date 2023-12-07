@@ -55,9 +55,8 @@ static char * hb_strHardCR(char * pszString, HB_SIZE nStringLen)
 #endif
 
    HB_SIZE nStringPos;
-   PHB_CODEPAGE cdp;
 
-   cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    if( HB_CDP_ISCUSTOM(cdp) ) {
       HB_WCHAR wc;
 

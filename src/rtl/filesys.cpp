@@ -3911,7 +3911,7 @@ HB_WCHAR * hb_fsNameConvU16(const char * pszFileName)
       return hb_mbtowc(pszFileName);  /* No HVM stack */
    }
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    bool fTrim = hb_setGetTrimFileName();
    char cDirSep = static_cast<char>(hb_setGetDirSeparator());
    int iFileCase = hb_setGetFileCase();

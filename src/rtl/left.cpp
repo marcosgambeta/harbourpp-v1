@@ -63,7 +63,7 @@ HB_FUNC( LEFT )
       } else {
          auto nText = hb_itemGetCLen(pText);
          if( static_cast<HB_SIZE>(nLen) < nText ) {
-            PHB_CODEPAGE cdp = hb_vmCDP();
+            auto cdp = hb_vmCDP();
             if( HB_CDP_ISCHARIDX(cdp) ) {
                nLen = hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nLen);
             }

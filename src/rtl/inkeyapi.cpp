@@ -426,7 +426,7 @@ HB_SIZE hb_inkeyKeyString(int iKey, char * buffer, HB_SIZE nSize)
          }
       }
       if( iKey >= 32 && iKey <= 255 && iKey != 127 ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          nLen = hb_cdpTextPutU16(cdp, buffer, nSize, hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iKey)));
       }
    }

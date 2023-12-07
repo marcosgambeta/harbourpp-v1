@@ -91,7 +91,7 @@ HB_FUNC( __NATISAFFIRM )
       }
 
       if( nStr && nLen >= nStr ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          if( cdp ) {
             fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
          } else {
@@ -119,7 +119,7 @@ HB_FUNC( __NATISNEGATIVE )
       nStr = strlen(szYesNo);
 
       if( nStr && nLen >= nStr ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          if( cdp ) {
             fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
          } else {

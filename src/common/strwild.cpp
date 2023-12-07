@@ -190,7 +190,7 @@ static bool hb_strMatchWildCDP(const char * szString, const char * szPattern, bo
 
 HB_BOOL hb_strMatchWild(const char * szString, const char * szPattern)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) ) {
       return hb_strMatchWildCDP(szString, szPattern, false, false, false, cdp);
@@ -201,7 +201,7 @@ HB_BOOL hb_strMatchWild(const char * szString, const char * szPattern)
 
 HB_BOOL hb_strMatchWildExact(const char * szString, const char * szPattern)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) ) {
       return hb_strMatchWildCDP(szString, szPattern, true, false, false, cdp);
@@ -212,7 +212,7 @@ HB_BOOL hb_strMatchWildExact(const char * szString, const char * szPattern)
 
 HB_BOOL hb_strMatchCaseWildExact(const char * szString, const char * szPattern)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) ) {
       return hb_strMatchWildCDP(szString, szPattern, true, true, false, cdp);
@@ -230,7 +230,7 @@ HB_BOOL hb_strMatchFile(const char * szString, const char * szPattern)
    return fnmatch(szPattern, szString, FNM_PATHNAME) == 0;
 #  endif
 #elif defined(HB_OS_WIN)
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp && HB_CDP_ISCHARIDX(cdp) ) {
       return hb_strMatchWildCDP(szString, szPattern, true, true, true, cdp);

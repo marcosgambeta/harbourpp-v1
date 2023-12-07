@@ -318,7 +318,7 @@ const char * hb_itemGetStrUTF8(PHB_ITEM pItem, void ** phString, HB_SIZE * pnLen
 #endif
 
    if( pItem && HB_IS_STRING(pItem) ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       HB_SIZE nLen = hb_cdpStrAsUTF8Len(cdp, pItem->item.asString.value, pItem->item.asString.length, 0);
       if( pnLen ) {
          *pnLen = nLen;
@@ -355,7 +355,7 @@ const HB_WCHAR * hb_itemGetStrU16(PHB_ITEM pItem, int iEndian, void ** phString,
 #endif
 
    if( pItem && HB_IS_STRING(pItem) ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       HB_SIZE nLen = hb_cdpStrAsU16Len(cdp, pItem->item.asString.value, pItem->item.asString.length, 0);
       if( pnLen ) {
          *pnLen = nLen;
@@ -465,7 +465,7 @@ PHB_ITEM hb_itemPutStrLenUTF8(PHB_ITEM pItem, const char * pStr, HB_SIZE nLen)
       return hb_itemPutC(pItem, nullptr);
    }
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    HB_SIZE nDest = hb_cdpUTF8AsStrLen(cdp, pStr, nLen, 0);
    auto pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
    hb_cdpUTF8ToStr(cdp, pStr, nLen, pszDest, nDest + 1);
@@ -483,7 +483,7 @@ PHB_ITEM hb_itemPutStrLenU16(PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr,
       return hb_itemPutC(pItem, nullptr);
    }
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    HB_SIZE nDest = hb_cdpU16AsStrLen(cdp, pStr, nLen, 0);
    auto pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
    hb_cdpU16ToStr(cdp, iEndian, pStr, nLen, pszDest, nDest + 1);
@@ -517,7 +517,7 @@ PHB_ITEM hb_itemPutStrUTF8(PHB_ITEM pItem, const char * pStr)
       return hb_itemPutC(pItem, nullptr);
    }
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    HB_SIZE nLen = strlen(pStr);
    HB_SIZE nDest = hb_cdpUTF8AsStrLen(cdp, pStr, nLen, 0);
    auto pszDest = static_cast<char*>(hb_xgrab(nDest + 1));
@@ -536,7 +536,7 @@ PHB_ITEM hb_itemPutStrU16(PHB_ITEM pItem, int iEndian, const HB_WCHAR * pStr)
       return hb_itemPutC(pItem, nullptr);
    }
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    HB_SIZE nLen = hb_wstrlen(pStr);
    HB_SIZE nDest = hb_cdpU16AsStrLen(cdp, pStr, nLen, 0);
    auto pszDest = static_cast<char*>(hb_xgrab(nDest + 1));

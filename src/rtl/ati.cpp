@@ -83,7 +83,7 @@ HB_FUNC( HB_ATI )
    auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
-      PHB_CODEPAGE cdp         = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       auto pszText             = hb_itemGetCPtr(pText);
       auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE      nStart      = hb_parns(3);

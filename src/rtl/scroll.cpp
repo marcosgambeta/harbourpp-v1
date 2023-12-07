@@ -158,7 +158,7 @@ HB_FUNC( HB_SCROLL )
    if( HB_ISNUM(8) ) {
       iChar = hb_parni(8);
       if( iChar > 0 && iChar <= 255 ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          if( !HB_CDP_ISCHARUNI(cdp) ) {
             iChar = hb_cdpGetU16(cdp, static_cast<HB_UCHAR>(iChar));
          }

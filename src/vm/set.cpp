@@ -2750,7 +2750,7 @@ HB_BOOL hb_osUseCP(void)
    {
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          return cdpHost && cdpHost != cdpOS;
       }
    }
@@ -2764,7 +2764,7 @@ const char * hb_osEncodeCP(const char * szName, char ** pszFree, HB_SIZE * pnSiz
       HB_STACK_TLS_PRELOAD
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS ) {
             HB_SIZE nSize = 0;
 
@@ -2793,7 +2793,7 @@ const char * hb_osDecodeCP(const char * szName, char ** pszFree, HB_SIZE * pnSiz
       HB_STACK_TLS_PRELOAD
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS ) {
             HB_SIZE nSize = 0;
 
@@ -2822,7 +2822,7 @@ char * hb_osStrEncode(const char * pszName)
       HB_STACK_TLS_PRELOAD
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS ) {
             return hb_cdpDup(pszName, cdpHost, cdpOS);
          }
@@ -2838,7 +2838,7 @@ char * hb_osStrEncodeN(const char * pszName, HB_SIZE nLen)
       HB_STACK_TLS_PRELOAD
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS ) {
             return hb_cdpDupn(pszName, nLen, cdpHost, cdpOS);
          }
@@ -2854,7 +2854,7 @@ char * hb_osStrEncode2(const char * pszName, char * pszBuffer, HB_SIZE nSize)
       HB_STACK_TLS_PRELOAD
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS ) {
             pszBuffer[nSize] = 0;
             hb_cdpnDup2(pszName, strlen(pszName), pszBuffer, &nSize, cdpHost, cdpOS);
@@ -2872,7 +2872,7 @@ char * hb_osStrDecode(const char * pszName)
       HB_STACK_TLS_PRELOAD
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS ) {
             return hb_cdpDup(pszName, cdpOS, cdpHost);
          }
@@ -2888,7 +2888,7 @@ char * hb_osStrDecode2(const char * pszName, char * pszBuffer, HB_SIZE nSize)
       HB_STACK_TLS_PRELOAD
       auto cdpOS = static_cast<PHB_CODEPAGE>(hb_stackSetStruct()->hb_set_oscp);
       if( cdpOS ) {
-         PHB_CODEPAGE cdpHost = hb_vmCDP();
+         auto cdpHost = hb_vmCDP();
          if( cdpHost && cdpHost != cdpOS ) {
             pszBuffer[nSize] = 0;
             hb_cdpnDup2(pszName, strlen(pszName), pszBuffer, &nSize, cdpOS, cdpHost);
@@ -2904,7 +2904,7 @@ char * hb_osStrDecode2(const char * pszName, char * pszBuffer, HB_SIZE nSize)
 HB_WCHAR * hb_osStrU16Encode(const char * pszName)
 {
    if( hb_vmIsReady() ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( cdp ) {
          HB_SIZE nLen = strlen(pszName);
          HB_SIZE nSize = hb_cdpStrAsU16Len(cdp, pszName, nLen, 0);
@@ -2920,7 +2920,7 @@ HB_WCHAR * hb_osStrU16Encode(const char * pszName)
 HB_WCHAR * hb_osStrU16EncodeN(const char * pszName, HB_SIZE nLen)
 {
    if( hb_vmIsReady() ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( cdp ) {
          nLen = hb_strnlen(pszName, nLen);
          HB_SIZE nSize = hb_cdpStrAsU16Len(cdp, pszName, nLen, 0);
@@ -2936,7 +2936,7 @@ HB_WCHAR * hb_osStrU16EncodeN(const char * pszName, HB_SIZE nLen)
 HB_WCHAR * hb_osStrU16Encode2(const char * pszName, HB_WCHAR * pszBufferW, HB_SIZE nSize)
 {
    if( hb_vmIsReady() ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( cdp ) {
          hb_cdpStrToU16(cdp, HB_CDP_ENDIAN_NATIVE, pszName, strlen(pszName), pszBufferW, nSize + 1);
          pszBufferW[nSize] = 0;
@@ -2950,7 +2950,7 @@ HB_WCHAR * hb_osStrU16Encode2(const char * pszName, HB_WCHAR * pszBufferW, HB_SI
 char * hb_osStrU16Decode(const HB_WCHAR * pszNameW)
 {
    if( hb_vmIsReady() ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( cdp ) {
          HB_SIZE nLen = hb_wstrlen(pszNameW);
          HB_SIZE nSize = hb_cdpU16AsStrLen(cdp, pszNameW, nLen, 0);
@@ -2966,7 +2966,7 @@ char * hb_osStrU16Decode(const HB_WCHAR * pszNameW)
 char * hb_osStrU16Decode2(const HB_WCHAR * pszNameW, char * pszBuffer, HB_SIZE nSize)
 {
    if( hb_vmIsReady() ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( cdp ) {
          hb_cdpU16ToStr(cdp, HB_CDP_ENDIAN_NATIVE, pszNameW, hb_wstrlen(pszNameW), pszBuffer, nSize);
          pszBuffer[nSize] = 0;

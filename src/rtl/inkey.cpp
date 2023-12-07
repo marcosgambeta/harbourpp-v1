@@ -56,7 +56,7 @@
 
 static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fInsert)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    HB_SIZE nIndex = 0;
    HB_WCHAR wc;
 
@@ -189,7 +189,7 @@ HB_FUNC( HB_KEYCODE )
    int iKey;
 
    if( szValue ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       HB_SIZE nIndex = 0;
       HB_WCHAR wc;
 

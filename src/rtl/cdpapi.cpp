@@ -674,37 +674,37 @@ HB_BOOL hb_cdpIsUpper(PHB_CODEPAGE cdp, int iChar)
 
 HB_BOOL hb_charIsDigit(int iChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    return (cdp != nullptr) ? (cdp->flags[iChar & 0x0ff] & HB_CDP_DIGIT) != 0 : HB_ISDIGIT(iChar);
 }
 
 HB_BOOL hb_charIsAlpha(int iChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    return (cdp != nullptr) ? (cdp->flags[iChar & 0x0ff] & HB_CDP_ALPHA) != 0 : HB_ISALPHA(iChar);
 }
 
 HB_BOOL hb_charIsLower(int iChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    return (cdp != nullptr) ? (cdp->flags[iChar & 0x0ff] & HB_CDP_LOWER) != 0 : HB_ISLOWER(iChar);
 }
 
 HB_BOOL hb_charIsUpper(int iChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    return (cdp != nullptr) ? (cdp->flags[iChar & 0x0ff] & HB_CDP_UPPER) != 0 : HB_ISUPPER(iChar);
 }
 
 int hb_charLower(int iChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    return (cdp != nullptr) ? cdp->lower[iChar & 0x0ff] : HB_TOLOWER(iChar);
 }
 
 int hb_charUpper(int iChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    return (cdp != nullptr) ? cdp->upper[iChar & 0x0ff] : HB_TOUPPER(iChar);
 }
 
@@ -714,7 +714,7 @@ char * hb_strLower(char * szText, HB_SIZE nLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_strLower(%s, %" HB_PFS "u)", szText, nLen));
 #endif
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp != nullptr ) {
       for( HB_SIZE u = 0; u < nLen; u++ ) {
@@ -735,7 +735,7 @@ char * hb_strUpper(char * szText, HB_SIZE nLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_strUpper(%s, %" HB_PFS "u)", szText, nLen));
 #endif
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp != nullptr ) {
       for( HB_SIZE u = 0; u < nLen; u++ ) {
@@ -758,7 +758,7 @@ char * hb_strUpper(char * szText, HB_SIZE nLen)
 
 HB_BOOL hb_strIsDigit(const char * szChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp != nullptr ) {
       if( HB_CDP_ISCUSTOM(cdp) && cdp->wcharFlags ) {
@@ -780,7 +780,7 @@ HB_BOOL hb_strIsDigit(const char * szChar)
 
 HB_BOOL hb_strIsAlpha(const char * szChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp != nullptr ) {
       if( HB_CDP_ISCUSTOM(cdp) && cdp->wcharFlags ) {
@@ -802,7 +802,7 @@ HB_BOOL hb_strIsAlpha(const char * szChar)
 
 HB_BOOL hb_strIsLower(const char * szChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp != nullptr ) {
       if( HB_CDP_ISCUSTOM(cdp) && cdp->wcharFlags ) {
@@ -824,7 +824,7 @@ HB_BOOL hb_strIsLower(const char * szChar)
 
 HB_BOOL hb_strIsUpper(const char * szChar)
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( cdp != nullptr ) {
       if( HB_CDP_ISCUSTOM(cdp) && cdp->wcharFlags ) {
@@ -2914,7 +2914,7 @@ PHB_CODEPAGE hb_cdpSelect(PHB_CODEPAGE cdp)
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpSelect(%p)", static_cast<void*>(cdp)));
 #endif
 
-   PHB_CODEPAGE cdpOld = hb_vmCDP();
+   auto cdpOld = hb_vmCDP();
    if( cdp != nullptr ) {
       hb_vmSetCDP(cdp);
    }
@@ -2928,7 +2928,7 @@ const char * hb_cdpID(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpID()"));
 #endif
 
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
    return cdp ? cdp->id : nullptr;
 }
 

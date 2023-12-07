@@ -2887,7 +2887,7 @@ static void hb_gt_def_InkeySetText(PHB_GT pGT, const char * szText, HB_SIZE nLen
    }
 
    if( szText && nLen ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       HB_SIZE nIndex = 0;
       HB_WCHAR wc, prev = 0;
 

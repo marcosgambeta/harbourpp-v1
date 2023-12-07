@@ -59,7 +59,7 @@ HB_FUNC( HB_STRSHRINK )
          auto pszText = hb_itemGetCPtr(pText);
          HB_ISIZ nText = hb_itemGetCLen(pText);
          HB_ISIZ nLen;
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
 
          if( HB_CDP_ISCHARIDX(cdp) ) {
             nLen = hb_cdpTextLen(cdp, pszText, nText);

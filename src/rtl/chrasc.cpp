@@ -65,7 +65,7 @@ HB_FUNC( CHR )
       szChar[1] = '\0';
       hb_retclen(szChar, 1);
 #else
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( HB_CDP_ISCHARUNI(cdp) ) {
          char szChar[HB_MAX_CHAR_LEN];
          HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
@@ -86,7 +86,7 @@ HB_FUNC( ASC )
 
    if( szValue ) {
       int iChar;
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( HB_CDP_ISCHARUNI(cdp) ) {
          iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));
       } else {

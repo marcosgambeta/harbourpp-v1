@@ -2423,7 +2423,7 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
    /* Both strings not empty */
    if( nMinLen ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( cdp && !HB_CDP_ISBINSORT(cdp) ) {
          iRet = hb_cdpcmp(szFirst, nLenFirst, szSecond, nLenSecond, cdp, bForceExact);
       } else {
@@ -2493,7 +2493,7 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
    /* Both strings not empty */
    if( nMinLen ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       if( cdp && !HB_CDP_ISBINSORT(cdp) ) {
          iRet = hb_cdpicmp(szFirst, nLenFirst, szSecond, nLenSecond, cdp, bForceExact);
       } else {

@@ -744,7 +744,7 @@ PHB_ITEM hb_i18n_gettext(PHB_ITEM pMsgID, PHB_ITEM pContext)
    if( pMsgID ) {
       if( HB_IS_STRING(pMsgID) ) {
          if( cdpage ) {
-            PHB_CODEPAGE cdp = hb_vmCDP();
+            auto cdp = hb_vmCDP();
             if( cdp && cdp != cdpage ) {
                if( pMsgDst != pMsgID ) {
                   hb_itemCopy(pMsgDst, pMsgID);
@@ -812,7 +812,7 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
    if( pMsgID ) {
       if( HB_IS_STRING(pMsgID) ) {
          if( cdpage ) {
-            PHB_CODEPAGE cdp = hb_vmCDP();
+            auto cdp = hb_vmCDP();
             if( cdp && cdp != cdpage ) {
                if( pMsgDst != pMsgID ) {
                   hb_itemCopy(pMsgDst, pMsgID);

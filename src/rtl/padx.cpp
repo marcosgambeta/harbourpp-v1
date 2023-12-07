@@ -181,7 +181,7 @@ static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
 /* left-pads a date, number, or string with spaces or supplied character */
 HB_FUNC( PADL )
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( !HB_CDP_ISCHARIDX(cdp) ) {
       cdp = nullptr;
@@ -197,7 +197,7 @@ HB_FUNC( HB_BPADL )
 
 HB_FUNC( HB_UPADL )
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( !HB_CDP_ISCUSTOM(cdp) ) {
       cdp = nullptr;
@@ -209,7 +209,7 @@ HB_FUNC( HB_UPADL )
 /* right-pads a date, number, or string with spaces or supplied character */
 HB_FUNC( PADR )
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( !HB_CDP_ISCHARIDX(cdp) ) {
       cdp = nullptr;
@@ -225,7 +225,7 @@ HB_FUNC( HB_BPADR )
 
 HB_FUNC( HB_UPADR )
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( !HB_CDP_ISCUSTOM(cdp) ) {
       cdp = nullptr;
@@ -237,7 +237,7 @@ HB_FUNC( HB_UPADR )
 /* centre-pads a date, number, or string with spaces or supplied character */
 HB_FUNC( PADC )
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( !HB_CDP_ISCHARIDX(cdp) ) {
       cdp = nullptr;
@@ -253,7 +253,7 @@ HB_FUNC( HB_BPADC )
 
 HB_FUNC( HB_UPADC )
 {
-   PHB_CODEPAGE cdp = hb_vmCDP();
+   auto cdp = hb_vmCDP();
 
    if( !HB_CDP_ISCUSTOM(cdp) ) {
       cdp = nullptr;

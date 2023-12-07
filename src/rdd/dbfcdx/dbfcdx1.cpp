@@ -442,7 +442,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
       case 'C': {
          HB_SIZE nDestLen = pTag->uiLen;
          char * pFree = nullptr, * pDest;
-         PHB_CODEPAGE cdpVM = hb_vmCDP();
+         auto cdpVM = hb_vmCDP();
 
          auto pText = hb_itemGetCPtr(pItem);
          nLen = hb_itemGetCLen(pItem);

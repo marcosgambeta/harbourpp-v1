@@ -79,7 +79,7 @@ HB_FUNC( TRANSFORM )
    if( pValue == nullptr ) {
       bError = true;
    } else if( pPic && hb_itemGetCLen(pPic) > 0 ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       char szPicDate[11];
       auto szPic = hb_itemGetCPtr(pPic);
       auto nPicLen = hb_itemGetCLen(pPic);

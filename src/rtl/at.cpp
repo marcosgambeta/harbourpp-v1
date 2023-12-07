@@ -58,7 +58,7 @@ HB_FUNC( HB_AT )
    auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
-      PHB_CODEPAGE cdp         = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       auto pszText             = hb_itemGetCPtr(pText);
       auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE      nStart      = hb_parns(3);
@@ -119,7 +119,7 @@ HB_FUNC( AT )
    if( pText && pSub ) {
       HB_SIZE nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), hb_itemGetCLen(pText));
       if( nPos ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          if( HB_CDP_ISCHARIDX(cdp) ) {
             nPos = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nPos - 1) + 1;
          }

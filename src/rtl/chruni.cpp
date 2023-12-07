@@ -142,7 +142,7 @@ HB_FUNC( HB_UPEEK )
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       auto szText = hb_itemGetCPtr(pText);
       auto nLen = hb_itemGetCLen(pText);
       HB_SIZE nPos = hb_parns(2);
@@ -185,7 +185,7 @@ HB_FUNC( HB_UPOKE )
    auto pText = hb_param(1, Harbour::Item::STRING);
 
    if( pText && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       auto szText = hb_itemGetCPtr(pText);
       auto nLen = hb_itemGetCLen(pText);
       HB_SIZE nPos = hb_parns(2);
@@ -247,7 +247,7 @@ HB_FUNC( HB_USUBSTR )
    int iPCount = hb_pcount();
 
    if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       auto pszText = hb_itemGetCPtr(pText);
       HB_ISIZ nSize = hb_itemGetCLen(pText);
       HB_ISIZ nFrom = hb_parns(2);
@@ -389,7 +389,7 @@ HB_FUNC( HB_URIGHT )
 
    if( nLen > 0 && nText > 0 ) {
       if( static_cast<HB_SIZE>(nLen) < nText ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
          if( nChars > static_cast<HB_SIZE>(nLen) ) {
             nLen = nText - hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nChars - nLen);
@@ -435,7 +435,7 @@ HB_FUNC( HB_UAT )
    auto pText = hb_param(2, Harbour::Item::STRING);
 
    if( pText && pSub ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       auto pszText = hb_itemGetCPtr(pText);
       auto nTextLength = hb_itemGetCLen(pText);
       HB_SIZE nStart = hb_parns(3);
@@ -628,7 +628,7 @@ HB_FUNC( HB_USTUFF )
    auto szIns = hb_parc(4);
 
    if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      PHB_CODEPAGE cdp = hb_vmCDP();
+      auto cdp = hb_vmCDP();
       auto nLen = hb_parclen(1);
       HB_SIZE nPos = hb_parns(2);
       HB_SIZE nDel = hb_parns(3);

@@ -57,7 +57,7 @@ HB_FUNC( RAT )
       HB_ISIZ nTo = hb_parclen(2) - nSubLen;
 
       if( nTo >= 0 ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          auto pszSub = hb_parc(1);
          auto pszText = hb_parc(2);
 
@@ -87,7 +87,7 @@ HB_FUNC( HB_RAT )
       HB_ISIZ nTo = nLen - nSubLen;
 
       if( nTo >= 0 ) {
-         PHB_CODEPAGE cdp = hb_vmCDP();
+         auto cdp = hb_vmCDP();
          auto pszSub = hb_parc(1);
          auto pszText = hb_parc(2);
          HB_ISIZ nStart = hb_parns(3);
