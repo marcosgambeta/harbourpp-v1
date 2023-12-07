@@ -500,7 +500,7 @@ static bool hb_clsDictRealloc(PCLASS pClass)
 static void hb_clsDictInit(PCLASS pClass, HB_SYMCNT uiHashKey)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_clsDictInit(%p,%hu)", static_cast<void*>(pClass), uiHashKey));
+   HB_TRACE(HB_TR_DEBUG, ("hb_clsDictInit(%p,%u)", static_cast<void*>(pClass), uiHashKey));
 #endif
 
    pClass->uiHashKey = uiHashKey;
