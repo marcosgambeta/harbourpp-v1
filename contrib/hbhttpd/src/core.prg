@@ -24,7 +24,7 @@
 #define THREAD_COUNT_MAX        50
 #define SESSION_TIMEOUT         600
 
-#define CR_LF                   ( Chr( 13 ) + Chr( 10 ) )
+#define CR_LF                   ( Chr(13) + Chr(10) )
 
 THREAD STATIC t_cResult, t_nStatusCode, t_aHeader, t_aSessionData
 
@@ -1641,7 +1641,7 @@ STATIC FUNCTION compile_file( cFileName, hConfig )
             Break( nPos )
          ENDIF
       RECOVER USING nPos
-         Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: syntax at %s(%d,%d)", cFileName, SUBSTRCOUNT( Chr( 10 ), cTpl,, nPos ) + 1, nPos - hb_RAt( Chr( 10 ), cTpl,, nPos - 1 ) ) )
+         Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: syntax at %s(%d,%d)", cFileName, SUBSTRCOUNT( Chr(10), cTpl,, nPos ) + 1, nPos - hb_RAt( Chr(10), cTpl,, nPos - 1 ) ) )
          aCode := {}
       END SEQUENCE
    ELSE

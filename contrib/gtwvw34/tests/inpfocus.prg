@@ -184,9 +184,9 @@ STATIC PROCEDURE typing( ch )
 
    DO CASE
    CASE ch == K_ENTER
-      ?? Chr( 10 )
+      ?? Chr(10)
    CASE ch == K_BS
-      ?? " " + Chr( 8 )
+      ?? " " + Chr(8)
    OTHERWISE
       ?? hb_keyChar( ch )
    ENDCASE

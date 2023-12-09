@@ -183,13 +183,13 @@ PROCEDURE Main()
    HBTEST StrDiff( "AXBC", "ABC" ) IS 6
    HBTEST StrDiff( "AXBC", "ADC" ) IS 9
 
-   HBTEST TabExpand( "-" + Chr( 9 ) + "!" )            IS "-       !"
-   HBTEST TabExpand( "----" + Chr( 9 ) + "!" )         IS "----    !"
-   HBTEST TabExpand( "-" + Chr( 9 ) + "!", , "+" )     IS "-+++++++!"
-   HBTEST TabExpand( "-" + Chr( 9 ) + "!", 4 )         IS "-   !"
-   HBTEST TabExpand( "----" + Chr( 9 ) + "!", 8 )      IS "----    !"
-   HBTEST TabExpand( "----" + Chr( 9 ) + "!", 8, "+" ) IS "----++++!"
-   HBTEST TabExpand( "-" + Chr( 9 ) + "!" + hb_eol() + "----" + Chr( 9 ) + "!", , "+" ) IS "-+++++++!" + hb_eol() + "----++++!"
+   HBTEST TabExpand( "-" + Chr(9) + "!" )            IS "-       !"
+   HBTEST TabExpand( "----" + Chr(9) + "!" )         IS "----    !"
+   HBTEST TabExpand( "-" + Chr(9) + "!", , "+" )     IS "-+++++++!"
+   HBTEST TabExpand( "-" + Chr(9) + "!", 4 )         IS "-   !"
+   HBTEST TabExpand( "----" + Chr(9) + "!", 8 )      IS "----    !"
+   HBTEST TabExpand( "----" + Chr(9) + "!", 8, "+" ) IS "----++++!"
+   HBTEST TabExpand( "-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9) + "!", , "+" ) IS "-+++++++!" + hb_eol() + "----++++!"
 
    HBTEST AtToken( "Hello, World!" )            IS 8
    HBTEST AtToken( "Hello, World!",, 2 )        IS 8

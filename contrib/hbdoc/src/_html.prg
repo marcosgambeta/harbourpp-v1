@@ -135,7 +135,7 @@ STATIC FUNCTION GitRev()
 
    hb_processRun( "git rev-parse --short HEAD",, @cStdOut )
 
-   RETURN hb_StrReplace( cStdOut, Chr( 13 ) + Chr( 10 ) )
+   RETURN hb_StrReplace( cStdOut, Chr(13) + Chr(10) )
 
 METHOD Generate() CLASS GenerateHTML
 

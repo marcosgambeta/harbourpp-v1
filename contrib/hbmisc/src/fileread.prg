@@ -136,12 +136,12 @@ METHOD ReadLine() CLASS TFileRead
          ENDIF
          // Deal with multiple possible end of line conditions.
          DO CASE
-         CASE SubStr(::cBuffer, nPos, 3) == Chr( 13 ) + Chr( 13 ) + Chr( 10 )
+         CASE SubStr(::cBuffer, nPos, 3) == Chr(13) + Chr(13) + Chr(10)
             // It's a messed up DOS newline (such as that created by a program
             // that uses "\r\n" as newline when writing to a text mode file,
             // which causes the '\n' to expand to "\r\n", giving "\r\r\n").
             nPos += 3
-         CASE SubStr(::cBuffer, nPos, 2) == Chr( 13 ) + Chr( 10 )
+         CASE SubStr(::cBuffer, nPos, 2) == Chr(13) + Chr(10)
             // It's a standard DOS newline
             nPos += 2
          OTHERWISE
@@ -159,8 +159,8 @@ METHOD EOL_pos() CLASS TFileRead
    LOCAL nCRpos, nLFpos, nPos
 
    // Look for both CR and LF in the file read buffer.
-   nCRpos := At( Chr( 13 ), ::cBuffer )
-   nLFpos := At( Chr( 10 ), ::cBuffer )
+   nCRpos := At( Chr(13), ::cBuffer )
+   nLFpos := At( Chr(10), ::cBuffer )
    DO CASE
    CASE nCRpos == 0
       // If there's no CR, use the LF position.

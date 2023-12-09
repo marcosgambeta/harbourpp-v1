@@ -158,24 +158,24 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
       RETURN -1
    ENDIF
 
-   port_send( smsctx[ _SMSCTX_xHnd ], "ATE0V1Q0" + Chr( 13 ) )
+   port_send( smsctx[ _SMSCTX_xHnd ], "ATE0V1Q0" + Chr(13) )
    IF IsOK( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
 
-      port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr( 13 ) )
+      port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr(13) )
       IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK"
 
          IF ! Empty(smsctx[ _SMSCTX_cPIN ])
-            port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CPIN="' + smsctx[ _SMSCTX_cPIN ] + '"' + Chr( 13 ) )
+            port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CPIN="' + smsctx[ _SMSCTX_cPIN ] + '"' + Chr(13) )
             IF !( StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK" )
                RETURN -5
             ENDIF
          ENDIF
 
-         port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr( 13 ) )
+         port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr(13) )
          IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK"
 
             IF HB_ISLOGICAL( lNotification )
-               port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP?" + Chr( 13 ) )
+               port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP?" + Chr(13) )
                tmp := GetLines( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
                IF Len( tmp ) < 2
                   RETURN -6
@@ -193,16 +193,16 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
                   ELSE
                      tmp[ 1 ] := hb_ntos( hb_bitReset( Val( tmp[ 1 ] ), 5 ) )
                   ENDIF
-                  port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP=" + MakeList( tmp ) + Chr( 13 ) )
+                  port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP=" + MakeList( tmp ) + Chr(13) )
                   IF !( StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK" )
                      RETURN -9
                   ENDIF
                ENDIF
             ENDIF
 
-            port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CMGS="' + cPhoneNo + '"' + Chr( 13 ) )
+            port_send( smsctx[ _SMSCTX_xHnd ], 'AT+CMGS="' + cPhoneNo + '"' + Chr(13) )
             IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "> "
-               port_send( smsctx[ _SMSCTX_xHnd ], StrTran( cText, Chr( 13 ) ) + Chr( 26 ) )
+               port_send( smsctx[ _SMSCTX_xHnd ], StrTran( cText, Chr(13) ) + Chr(26) )
                tmp := StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
                IF Left(tmp, Len( "+CMGS: " )) == "+CMGS: "
                   RETURN 0
@@ -251,11 +251,11 @@ FUNCTION smsctx_PIN( smsctx, cPIN )
 
 #if 0
 STATIC FUNCTION StripCR( cString )
-   RETURN StrTran( cString, Chr( 13 ) )
+   RETURN StrTran( cString, Chr(13) )
 #endif
 
 STATIC FUNCTION StripCRLF( cString )
-   RETURN StrTran( cString, Chr( 13 ) + Chr( 10 ) )
+   RETURN StrTran( cString, Chr(13) + Chr(10) )
 
 STATIC FUNCTION IsOK( cString )
 
@@ -268,14 +268,14 @@ STATIC FUNCTION GetLines( cString )
    LOCAL aLine := {}
    LOCAL tmp
 
-   IF Left(cString, 2) == Chr( 13 ) + Chr( 10 )
-      cString := SubStr(cString, Len( Chr( 13 ) + Chr( 10 ) ) + 1)
+   IF Left(cString, 2) == Chr(13) + Chr(10)
+      cString := SubStr(cString, Len( Chr(13) + Chr(10) ) + 1)
    ENDIF
-   IF Right(cString, 2) == Chr( 13 ) + Chr( 10 )
-      cString := hb_StrShrink( cString, Len( Chr( 13 ) + Chr( 10 ) ) )
+   IF Right(cString, 2) == Chr(13) + Chr(10)
+      cString := hb_StrShrink( cString, Len( Chr(13) + Chr(10) ) )
    ENDIF
 
-   FOR EACH tmp IN hb_ATokens( StrTran( cString, Chr( 13 ) ), Chr( 10 ) )
+   FOR EACH tmp IN hb_ATokens( StrTran( cString, Chr(13) ), Chr(10) )
       AAdd( aLine, tmp )
    NEXT
 

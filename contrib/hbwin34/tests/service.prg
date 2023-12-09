@@ -55,7 +55,7 @@ PROCEDURE Main( cMode )
 
       IF win_serviceInstall( _SERVICE_NAME, ;
                              "Harbour Windows Test Service", ;
-                             Chr( 34 ) + hb_ProgName() + Chr( 34 ) + " -service" )
+                             Chr(34) + hb_ProgName() + Chr(34) + " -service" )
          ? "Service has been successfully installed"
       ELSE
          ? "Error installing Service:", hb_ntos( wapi_GetLastError() ), win_ErrorDesc()

@@ -185,9 +185,9 @@ METHOD New( aParams, cIniName ) CLASS HBFormatCode
 
    DO CASE
    CASE ::nEol == 2
-      ::cEol := Chr( 10 )
+      ::cEol := Chr(10)
    CASE ::nEol == 1
-      ::cEol := Chr( 13 ) + Chr( 10 )
+      ::cEol := Chr(13) + Chr(10)
    CASE ::nEol == 0
       ::cEol := hb_eol()
    ENDCASE
@@ -216,7 +216,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
       nPosComment := 0
       lSpaceFirst := hb_LeftEq( aFile[ i ], " " )
       IF ::lIndent
-         aFile[ i ] := StrTran( aFile[ i ], Chr( 9 ), " " )
+         aFile[ i ] := StrTran( aFile[ i ], Chr(9), " " )
       ENDIF
       aFile[ i ] := RTrim(aFile[ i ])
 
@@ -859,10 +859,10 @@ METHOD ReadIni( cIniName ) CLASS HBFormatCode
 METHOD Source2Array( cSource ) CLASS HBFormatCode
 
    IF ::nEol < 0
-      IF Chr( 13 ) + Chr( 10 ) $ cSource
-         ::cEol := Chr( 13 ) + Chr( 10 )
+      IF Chr(13) + Chr(10) $ cSource
+         ::cEol := Chr(13) + Chr(10)
       ELSE
-         ::cEol := Chr( 10 )
+         ::cEol := Chr(10)
       ENDIF
    ENDIF
 

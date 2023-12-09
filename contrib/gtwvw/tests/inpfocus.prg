@@ -187,9 +187,9 @@ STATIC FUNCTION typing( ch )
    IF ch >= 0 .AND. ch <= 255 // TOFIX for unicode
       ?? hb_keyChar( ch )
       IF ch == K_ENTER
-         ?? Chr( 10 )
+         ?? Chr(10)
       ELSEIF ch == K_BS
-         ?? " " + Chr( 8 )
+         ?? " " + Chr(8)
       ENDIF
    ENDIF
 

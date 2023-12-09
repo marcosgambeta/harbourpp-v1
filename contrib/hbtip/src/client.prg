@@ -295,15 +295,15 @@ METHOD OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName, cPasswor
 
    IF ( tmp := ::inetErrorCode( ::SocketCon ) ) == 0
       cRequest := ;
-         "CONNECT " + cServer + ":" + hb_ntos( nPort ) + " HTTP/1.1" + Chr( 13 ) + Chr( 10 ) + ;
-         "Proxy-Connection: Keep-Alive" + Chr( 13 ) + Chr( 10 )
+         "CONNECT " + cServer + ":" + hb_ntos( nPort ) + " HTTP/1.1" + Chr(13) + Chr(10) + ;
+         "Proxy-Connection: Keep-Alive" + Chr(13) + Chr(10)
       IF HB_ISSTRING( cUserAgent ) .AND. ! cUserAgent == ""
-         cRequest += "User-Agent: " + cUserAgent + Chr( 13 ) + Chr( 10 )
+         cRequest += "User-Agent: " + cUserAgent + Chr(13) + Chr(10)
       ENDIF
       IF HB_ISSTRING( cUserName ) .AND. ! cUserName == ""
-         cRequest += "Proxy-Authorization: Basic " + hb_base64Encode( cUserName + ":" + hb_defaultValue( cPassword, "" ) ) + Chr( 13 ) + Chr( 10 )
+         cRequest += "Proxy-Authorization: Basic " + hb_base64Encode( cUserName + ":" + hb_defaultValue( cPassword, "" ) ) + Chr(13) + Chr(10)
       ENDIF
-      cRequest += Chr( 13 ) + Chr( 10 )
+      cRequest += Chr(13) + Chr(10)
       ::inetSendAll( ::SocketCon, cRequest )
       cResp := ""
       IF ::ReadHTTPProxyResponse( @cResp ) .AND. ;
@@ -804,7 +804,7 @@ METHOD Log( ... ) CLASS TIPClient
          IF xVar:__enumIsLast()
             cMsg += hb_CStr( xVar )
          ELSE
-            cMsg += hb_StrReplace( AllTrim(hb_CStr( xVar )), Chr( 13 ) + Chr( 10 ), { "<cr>", "<lf>" } )
+            cMsg += hb_StrReplace( AllTrim(hb_CStr( xVar )), Chr(13) + Chr(10), { "<cr>", "<lf>" } )
          ENDIF
 
          DO CASE

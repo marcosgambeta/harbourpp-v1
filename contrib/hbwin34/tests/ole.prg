@@ -287,9 +287,9 @@ STATIC PROCEDURE Exm_OOWriter()
       oText := oDoc:getText
       oCursor := oText:createTextCursor
 
-      oText:insertString( oCursor, "OpenOffice Writer scripting from Harbour." + Chr( 10 ), .F. )
+      oText:insertString( oCursor, "OpenOffice Writer scripting from Harbour." + Chr(10), .F. )
 
-      oText:insertString( oCursor, "This is the second line" + Chr( 10 ), .F. )
+      oText:insertString( oCursor, "This is the second line" + Chr(10), .F. )
 
       oTable := oDoc:createInstance( "com.sun.star.text.TextTable" )
       oTable:initialize( 2, 4 )

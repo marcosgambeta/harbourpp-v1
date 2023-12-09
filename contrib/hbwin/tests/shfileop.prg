@@ -35,7 +35,7 @@ PROCEDURE Main()
 
    FErase( "rename1.txt" )
 
-   ? "0x" + hb_NumToHex( win_SHFileOperation( NIL, WIN_FO_COPY, __FILE__ + Chr( 0 ) + "olesrv1.prg" + Chr( 0 ), "testcopy2", ;
+   ? "0x" + hb_NumToHex( win_SHFileOperation( NIL, WIN_FO_COPY, __FILE__ + Chr(0) + "olesrv1.prg" + Chr(0), "testcopy2", ;
       NIL, @lAbort, ;
       NIL, "Harbour SHFile 3" ) )
    ? lAbort

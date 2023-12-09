@@ -184,7 +184,7 @@ PROCEDURE Main( cPortName )
       ?
 
       ? "With no flow control the write should succeed whether printer is on or off"
-      cString := "this is a test string " + Replicate( "012356789", 30 ) + Chr( 13 ) + Chr( 10 )
+      cString := "this is a test string " + Replicate( "012356789", 30 ) + Chr(13) + Chr(10)
       IF ( nResult := oWinPort:Write( cString ) ) == hb_BLen( cString )
          ? "Write() succeeded"
       ELSE

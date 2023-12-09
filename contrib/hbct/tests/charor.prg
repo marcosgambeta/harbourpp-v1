@@ -48,7 +48,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_BChar( n ) Chr( n )
+#define hb_BChar( n ) Chr(n)
 #endif
 
 PROCEDURE Main()

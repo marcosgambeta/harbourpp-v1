@@ -298,11 +298,11 @@ STATIC PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    CLEAR TYPEAHEAD
    DO WHILE ( nKeyStd := hb_keyStd( Inkey( 0 ) ) ) != K_ESC
       IF nKeyStd == K_ENTER
-         ?? hb_keyChar( nKeyStd ) + Chr( 10 )
+         ?? hb_keyChar( nKeyStd ) + Chr(10)
          IF lEchoing
             // write the same thing to previous window
             wvw_nSetCurWindow( nCurWindow - 1 )
-            ?? hb_keyChar( nKeyStd ) + Chr( 10 )
+            ?? hb_keyChar( nKeyStd ) + Chr(10)
             wvw_nSetCurWindow( nCurWindow )
          ENDIF
       ELSEIF nKeyStd == K_CTRL_W

@@ -49,7 +49,7 @@
 
 #include "fileio.ch"
 
-#define _CRLF Chr( 13 ) + Chr( 10 )
+#define _CRLF Chr(13) + Chr(10)
 
 CREATE CLASS TIPCgi
 

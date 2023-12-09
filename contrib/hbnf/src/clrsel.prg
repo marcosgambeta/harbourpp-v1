@@ -30,7 +30,7 @@
  *   _ftClrPut( cClrStr, nElem, cClr )         place a clr element into str
  *   _ftDeskChar( aOpt )                       select desktop char
  *   _ftChr2Arr( cString, cDelim )             parse string into array
- *   _ftArr2Chr( aArray, cDelim )              create string from array
+ *   _ftArr2Chr(aArray, cDelim)                create string from array
  *   _ftShowPal( aClrPal, cChr )               paint palette on screen
  *   _ftInitPal( aClrTab )                     create the palette
  *   _ftIdentArr( aArray1, aArray2 )           compare array contents

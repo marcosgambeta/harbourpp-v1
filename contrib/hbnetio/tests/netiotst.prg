@@ -90,7 +90,7 @@ PROCEDURE createdb( cName )
    WHILE LastRec() < 100
       dbAppend()
       n := RecNo() - 1
-      field->F1 := Chr( n % 26 + Asc( "A" ) ) + " " + Time()
+      field->F1 := Chr(n % 26 + Asc( "A" )) + " " + Time()
       field->F2 := field->F1
       field->F3 := n / 100
       field->F4 := hb_DateTime()

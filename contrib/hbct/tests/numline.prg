@@ -17,11 +17,11 @@ PROCEDURE Main()
    ? NumLine( Replicate( "-", 80 ) ), 2
    ? NumLine( Replicate( "-", 160 ) ), 3
    ? NumLine( Replicate( "-", 100 ), 30 ), 4
-   ? NumLine( "-" + Chr( 13 ) + Chr( 10 ) ), 2
-   ? NumLine( "-" + Chr( 10 ) ), 2
-   ? NumLine( "-" + Chr( 13 ) + Chr( 10 ) + "=" ), 2
-   ? NumLine( "-" + Chr( 10 ) + "=" ), 2
-   ? NumLine( Replicate( "-", 100 ) + Chr( 13 ) + Chr( 10 ), 30 ), 5
-   ? NumLine( Replicate( "-", 100 ) + Chr( 10 ), 30 ), 5
+   ? NumLine( "-" + Chr(13) + Chr(10) ), 2
+   ? NumLine( "-" + Chr(10) ), 2
+   ? NumLine( "-" + Chr(13) + Chr(10) + "=" ), 2
+   ? NumLine( "-" + Chr(10) + "=" ), 2
+   ? NumLine( Replicate( "-", 100 ) + Chr(13) + Chr(10), 30 ), 5
+   ? NumLine( Replicate( "-", 100 ) + Chr(10), 30 ), 5
 
    RETURN

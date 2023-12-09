@@ -48,7 +48,7 @@ STATIC FUNCTION DialogFunc( hWnd, nMessage, wParam, lParam )
    CASE WIN_WM_COMMAND
       SWITCH WIN_LOWORD( wParam )
       CASE IDC_BUTTON1
-         wapi_MessageBox( , "Hello [" + wapi_GetDlgItemText( hWnd, IDC_EDIT1 ) + "]!" + Chr( 13 ) + "How are you?", "Hi!", WIN_MB_ICONASTERISK )
+         wapi_MessageBox( , "Hello [" + wapi_GetDlgItemText( hWnd, IDC_EDIT1 ) + "]!" + Chr(13) + "How are you?", "Hi!", WIN_MB_ICONASTERISK )
          RETURN .T.
       ENDSWITCH
    ENDSWITCH

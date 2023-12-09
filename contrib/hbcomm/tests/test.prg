@@ -26,9 +26,9 @@ PROCEDURE Main()
       ? "> "
 
       nOption := Inkey( 0 )
-      ?? Chr( nOption )
+      ?? Chr(nOption)
 
-      SWITCH Upper(Chr( nOption ))
+      SWITCH Upper(Chr(nOption))
       CASE "O" ; FConnect() ; EXIT
       CASE "C" ; FDisconnect() ; EXIT
       CASE "S" ; FSend() ; EXIT
@@ -74,7 +74,7 @@ STATIC PROCEDURE FSend()
    ACCEPT "Enter string to send: " TO cToSend
 
    IF s_lConnected .AND. ! Empty(cToSend) .AND. ISWORKING( s_nHandle )
-      OUTCHR( s_nHandle, cToSend )
+      OUTCHR(s_nHandle, cToSend)
    ELSE
       ? "Cannot send data"
    ENDIF
@@ -90,7 +90,7 @@ STATIC PROCEDURE FReceive()
 
    IF nSize > 0
       cReceive := Space( nSize )
-      INCHR( s_nHandle, nSize, @cReceive )
+      INCHR(s_nHandle, nSize, @cReceive)
       ? ">>", Left(cReceive, nSize)
    ENDIF
 

@@ -48,7 +48,7 @@
 #ifdef __HARBOURPP__
 #require "hbct"
 #else
-#define hb_BChar( n ) Chr( n )
+#define hb_BChar( n ) Chr(n)
 #endif
 
 PROCEDURE Main()
@@ -61,36 +61,36 @@ PROCEDURE Main()
    ?
 
    ? "Simple tests:"
-   ? '  TabExpand( "-" + Chr( 9 ) + "!" )            == "-       !" ? -> "' + TabExpand( "-" + Chr( 9 ) + "!" )            + '"'
-   ? '  TabExpand( "----" + Chr( 9 ) + "!" )         == "----    !" ? -> "' + TabExpand( "----" + Chr( 9 ) + "!" )         + '"'
-   ? '  TabExpand( "-" + Chr( 9 ) + "!",, "+" )      == "-+++++++!" ? -> "' + TabExpand( "-" + Chr( 9 ) + "!",, "+" )      + '"'
-   ? '  TabExpand( "-" + Chr( 9 ) + "!", 4 )         == "-   !"     ? -> "' + TabExpand( "-" + Chr( 9 ) + "!", 4 )         + '"'
-   ? '  TabExpand( "----" + Chr( 9 ) + "!", 8 )      == "----    !" ? -> "' + TabExpand( "----" + Chr( 9 ) + "!", 8 )      + '"'
-   ? '  TabExpand( "----" + Chr( 9 ) + "!", 8, "+" ) == "----++++!" ? -> "' + TabExpand( "----" + Chr( 9 ) + "!", 8, "+" ) + '"'
+   ? '  TabExpand( "-" + Chr(9) + "!" )            == "-       !" ? -> "' + TabExpand( "-" + Chr(9) + "!" )            + '"'
+   ? '  TabExpand( "----" + Chr(9) + "!" )         == "----    !" ? -> "' + TabExpand( "----" + Chr(9) + "!" )         + '"'
+   ? '  TabExpand( "-" + Chr(9) + "!",, "+" )      == "-+++++++!" ? -> "' + TabExpand( "-" + Chr(9) + "!",, "+" )      + '"'
+   ? '  TabExpand( "-" + Chr(9) + "!", 4 )         == "-   !"     ? -> "' + TabExpand( "-" + Chr(9) + "!", 4 )         + '"'
+   ? '  TabExpand( "----" + Chr(9) + "!", 8 )      == "----    !" ? -> "' + TabExpand( "----" + Chr(9) + "!", 8 )      + '"'
+   ? '  TabExpand( "----" + Chr(9) + "!", 8, "+" ) == "----++++!" ? -> "' + TabExpand( "----" + Chr(9) + "!", 8, "+" ) + '"'
    ?
 
    ? "Tests with newline characters: ^J == LF, ^M == CR"
    cStr := hb_eol()
-   cStr := StrTran( cStr, Chr( 10 ), "^J" )
-   cStr := StrTran( cStr, Chr( 13 ), "^M" )
+   cStr := StrTran( cStr, Chr(10), "^J" )
+   cStr := StrTran( cStr, Chr(13), "^M" )
    ? '  hb_eol() = "' + cStr + '"'
-   cStr := TabExpand( "-" + Chr( 9 ) + "!" + hb_eol() + "----" + Chr( 9 ) + "!", , "+" )
-   cStr := StrTran( cStr, Chr( 10 ), "^J" )
-   cStr := StrTran( cStr, Chr( 13 ), "^M" )
-   ? '  TabExpand( "-" + Chr( 9 ) + "!" + hb_eol() + "----" + Chr( 9 )+ "!",, "+" )'
+   cStr := TabExpand( "-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9) + "!", , "+" )
+   cStr := StrTran( cStr, Chr(10), "^J" )
+   cStr := StrTran( cStr, Chr(13), "^M" )
+   ? '  TabExpand( "-" + Chr(9) + "!" + hb_eol() + "----" + Chr(9)+ "!",, "+" )'
    ? '     == "-+++++++!"+hb_eol()+"----++++!"  ? -> "' + cStr + '"'
-   cStr := TabExpand( "-" + Chr( 9 ) + "!$$--" + hb_eol() + "--" + Chr( 9 ) + "!", , "+", "$" )
-   cStr := StrTran( cStr, Chr( 10 ), "^J" )
-   cStr := StrTran( cStr, Chr( 13 ), "^M" )
-   ? '  TabExpand( "-" + Chr( 9 ) + "!$$--" + hb_eol() + "--" + Chr( 9 ) + "!",, "+", "$" )'
+   cStr := TabExpand( "-" + Chr(9) + "!$$--" + hb_eol() + "--" + Chr(9) + "!", , "+", "$" )
+   cStr := StrTran( cStr, Chr(10), "^J" )
+   cStr := StrTran( cStr, Chr(13), "^M" )
+   ? '  TabExpand( "-" + Chr(9) + "!$$--" + hb_eol() + "--" + Chr(9) + "!",, "+", "$" )'
    nLen := Len( hb_eol() )
    ? '     == "-+++++++!$$--"+hb_eol()+"' + Replicate( "-", 4 - nLen ) + '++!"  ? -> "' + cStr + '"'
    ?
 
    ? "Tests with tab characters:"
-   ? '  TabExpand( "-" + Chr( 9 ) + "-",, "+" ) == "-+++++++-" ? -> "' + TabExpand( "-" + Chr( 9 ) + "-",, "+" ) + '"'
-   ? '  TabExpand( "-" + Chr( 9 ) + "-",, "+",, "-" )'
-   ? '                                          == "++++++++^I+++++++" ? -> "' + StrTran( TabExpand( "-" + Chr( 9 ) + "-",, "+",, "-" ), Chr( 9 ), "^I" ) + '"'
+   ? '  TabExpand( "-" + Chr(9) + "-",, "+" ) == "-+++++++-" ? -> "' + TabExpand( "-" + Chr(9) + "-",, "+" ) + '"'
+   ? '  TabExpand( "-" + Chr(9) + "-",, "+",, "-" )'
+   ? '                                          == "++++++++^I+++++++" ? -> "' + StrTran( TabExpand( "-" + Chr(9) + "-",, "+",, "-" ), Chr(9), "^I" ) + '"'
    ?
 
    ? "End test of TabExpand()"
@@ -103,24 +103,24 @@ PROCEDURE Main()
 
    ? "Simple tests: ^I == tab character"
 
-   ? '  TabPack( "AAAAAAA*",, "*" )   == "AAAAAAA*"  ? -> "' + StrTran( TabPack( "AAAAAAA*",, "*" ), Chr( 9 ), "^I" )  + '"'
-   ? '  TabPack( "AAAAA***",, "*" )   == "AAAAA^I"   ? -> "' + StrTran( TabPack( "AAAAA***",, "*" ), Chr( 9 ), "^I" )  + '"'
-   ? '  TabPack( "AAAAA*****",, "*" ) == "AAAAA^I**" ? -> "' + StrTran( TabPack( "AAAAA*****",, "*" ), Chr( 9 ), "^I" ) + '"'
+   ? '  TabPack( "AAAAAAA*",, "*" )   == "AAAAAAA*"  ? -> "' + StrTran( TabPack( "AAAAAAA*",, "*" ), Chr(9), "^I" )  + '"'
+   ? '  TabPack( "AAAAA***",, "*" )   == "AAAAA^I"   ? -> "' + StrTran( TabPack( "AAAAA***",, "*" ), Chr(9), "^I" )  + '"'
+   ? '  TabPack( "AAAAA*****",, "*" ) == "AAAAA^I**" ? -> "' + StrTran( TabPack( "AAAAA*****",, "*" ), Chr(9), "^I" ) + '"'
    ?
 
    ? "Tests with newline characters:"
    cStr := hb_eol()
-   cStr := StrTran( cStr, Chr( 10 ), "^J" )
-   cStr := StrTran( cStr, Chr( 13 ), "^M" )
+   cStr := StrTran( cStr, Chr(10), "^J" )
+   cStr := StrTran( cStr, Chr(13), "^M" )
    ? '  hb_eol() = "' + cStr + '"'
 
    cStr := "ABCD+" + hb_eol() + "++---+++++"
    cStr := TabPack( cStr, 4, "+" )
-   cStr := StrTran( cStr, Chr( 10 ), "^J" )
-   cStr := StrTran( cStr, Chr( 13 ), "^M" )
-   cStr := StrTran( cStr, Chr( 9 ), "^I" )
+   cStr := StrTran( cStr, Chr(10), "^J" )
+   cStr := StrTran( cStr, Chr(13), "^M" )
+   cStr := StrTran( cStr, Chr(9), "^I" )
    ? '  TabPack("ABCD+" + hb_eol() + "++---+++++", 4, "+")'
-   ? '     == "ABCD+" + hb_eol() + "++---" + Chr( 9 ) + "++" ? -> "' + cStr + '"'
+   ? '     == "ABCD+" + hb_eol() + "++---" + Chr(9) + "++" ? -> "' + cStr + '"'
 
    ? "End test of TabPack()"
    ?

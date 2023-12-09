@@ -79,22 +79,22 @@ FUNCTION tip_QPEncode( cData )
    nLen := hb_BLen( cData )
    FOR nPos := 1 TO nLen
       c := hb_BSubStr(cData, nPos, 1)
-      IF c == Chr( 10 )
-         cString += Chr( 13 ) + Chr( 10 )
+      IF c == Chr(10)
+         cString += Chr(13) + Chr(10)
          nLineLen := 0
       ELSEIF hb_BCode( c ) >= 127 .OR. ;
          c $ '=?!"#$@[\]^`{|}~' .OR. ;
-         ( hb_BCode( c ) < 32 .AND. ! c $ Chr( 13 ) + Chr( 10 ) + Chr( 9 ) ) .OR. ;
-         ( c $ " " + Chr( 9 ) .AND. hb_BSubStr(cData, nPos + 1, 1) $ Chr( 13 ) + Chr( 10 ) )
+         ( hb_BCode( c ) < 32 .AND. ! c $ Chr(13) + Chr(10) + Chr(9) ) .OR. ;
+         ( c $ " " + Chr(9) .AND. hb_BSubStr(cData, nPos + 1, 1) $ Chr(13) + Chr(10) )
          IF nLineLen + 3 > 75
-            cString += "=" + Chr( 13 ) + Chr( 10 )
+            cString += "=" + Chr(13) + Chr(10)
             nLineLen := 0
          ENDIF
          cString += "=" + hb_NumToHex( hb_BCode( c ), 2 )
          nLineLen += 3
-      ELSEIF ! c == Chr( 13 )
+      ELSEIF ! c == Chr(13)
          IF nLineLen + 3 > 75
-            cString += "=" + Chr( 13 ) + Chr( 10 )
+            cString += "=" + Chr(13) + Chr(10)
             nLineLen := 0
          ENDIF
          cString += c
@@ -112,8 +112,8 @@ FUNCTION tip_QPDecode( cData )
    LOCAL cString := ""
 
    /* delete soft line break. */
-   cData := StrTran( cData, "=" + Chr( 13 ) + Chr( 10 ) )
-   cData := StrTran( cData, "=" + Chr( 10 ) )  /* also delete non-standard line breaks */
+   cData := StrTran( cData, "=" + Chr(13) + Chr(10) )
+   cData := StrTran( cData, "=" + Chr(10) )  /* also delete non-standard line breaks */
 
    nLen := hb_BLen( cData )
    FOR nPos := 1 TO nLen

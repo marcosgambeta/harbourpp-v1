@@ -49,7 +49,7 @@
 PROCEDURE Main( cPortName )
 
    LOCAL oWinPort := win_com():Init( cPortName, WIN_CBR_9600, WIN_NOPARITY, 8, WIN_ONESTOPBIT )
-   LOCAL cString := "ATE0" + Chr( 13 ) + "ATI3" + Chr( 13 )
+   LOCAL cString := "ATE0" + Chr(13) + "ATI3" + Chr(13)
    LOCAL nResult
 
    IF ! oWinPort:Open()

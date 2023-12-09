@@ -49,7 +49,7 @@
 #require "hbct"
 #else
 #define hb_ntos( n ) LTrim(Str( n ))
-#define hb_BChar( n ) Chr( n )
+#define hb_BChar( n ) Chr(n)
 #endif
 
 PROCEDURE Main()

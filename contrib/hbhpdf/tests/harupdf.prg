@@ -1079,8 +1079,8 @@ STATIC PROCEDURE draw_fonts( page )
 
          buf := ( i - 1 ) * 16 + ( j - 1 )
          IF buf >= 32
-            d  := x - HPDF_Page_TextWidth( page, Chr( buf ) ) / 2
-            HPDF_Page_TextOut( page, d, y, Chr( buf ) )
+            d  := x - HPDF_Page_TextWidth( page, Chr(buf) ) / 2
+            HPDF_Page_TextOut( page, d, y, Chr(buf) )
          ENDIF
       NEXT
    NEXT

@@ -316,7 +316,7 @@ FUNCTION URLDecode( cStr )
 
       CASE cCar == "%"
          i++
-         cRet += Chr( hb_HexToNum( SubStr(cStr, i, 2) ) )
+         cRet += Chr(hb_HexToNum( SubStr(cStr, i, 2) ))
          i++
 
       OTHERWISE

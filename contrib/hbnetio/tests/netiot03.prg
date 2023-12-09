@@ -124,7 +124,7 @@ PROCEDURE createdb( cName )
    WHILE LastRec() < 100
       dbAppend()
       n := RecNo() - 1
-      field->F1 := Chr( n % 26 + Asc( "A" ) ) + " " + Time()
+      field->F1 := Chr(n % 26 + Asc( "A" )) + " " + Time()
       field->F2 := field->F1
       field->F3 := n / 100
       field->F4 := hb_DateTime()
@@ -201,7 +201,7 @@ STATIC FUNCTION rpc_charstream( pConnSock, nStream )
    LOCAL n := 0
 
    WHILE .T.
-      IF ! netio_SrvSendData( pConnSock, nStream, Chr( Asc( "A" ) + n ) )
+      IF ! netio_SrvSendData( pConnSock, nStream, Chr(Asc( "A" ) + n) )
          ? "CLOSED STREAM:", nStream
          EXIT
       ENDIF

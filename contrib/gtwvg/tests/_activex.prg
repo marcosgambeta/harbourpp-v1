@@ -58,7 +58,7 @@ FUNCTION ExecuteActiveX( nActiveX, xParam )
    oStatic := WvgStatic():new( oDA )
    oStatic:type    := WVGSTATIC_TYPE_TEXT
    oStatic:options := WVGSTATIC_TEXT_CENTER
-   oStatic:caption := Chr( 13 ) + "Implemented Xbase++ Parts"
+   oStatic:caption := Chr(13) + "Implemented Xbase++ Parts"
    oStatic:create( , , { 0, oTBar:currentSize()[2] + 3 }, { 120, oCrt:currentSize()[2] - ;
       oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4 }, , .T. )
    oStatic:setColorBG( RGB( 198, 198, 198 ) )

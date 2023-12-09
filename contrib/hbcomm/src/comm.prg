@@ -117,14 +117,14 @@ FUNCTION ISWORKING( nPort )
          HBCOMM could corrupt HVM because of its buggy way of returning data.
          [vszakats] */
 /* Fetch <nCount> chars into <cData> */
-FUNCTION INCHR( nPort, nCount, /* @ */ cData )
+FUNCTION INCHR(nPort, nCount, /* @ */ cData)
 
    cData := iif(HB_ISNUMERIC( nCount ), Space( nCount ), "")
 
    RETURN hb_comRecv( nPort, @cData, nCount )
 
 /* Send out characters. Returns .T. if successful. */
-FUNCTION OUTCHR( nPort, cData )
+FUNCTION OUTCHR(nPort, cData)
 
    LOCAL nLen
 

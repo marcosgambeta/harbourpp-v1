@@ -4,7 +4,7 @@
 
 #require "hbssl"
 
-#define CRLF Chr( 13 ) + Chr( 10 )
+#define CRLF Chr(13) + Chr(10)
 
 PROCEDURE Main()
 

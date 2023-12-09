@@ -283,11 +283,11 @@ PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    ch := Inkey( 0 )
    DO WHILE ch != K_ESC
       IF ch == K_ENTER
-         ?? hb_keyChar( ch ) + Chr( 10 )
+         ?? hb_keyChar( ch ) + Chr(10)
          IF lEchoing
             // write the same thing to previous window
             wvw_nSetCurWindow( nCurWindow - 1 )
-            ?? hb_keyChar( ch ) + Chr( 10 )
+            ?? hb_keyChar( ch ) + Chr(10)
             wvw_nSetCurWindow( nCurWindow )
          ENDIF
       ELSEIF ch == K_CTRL_W

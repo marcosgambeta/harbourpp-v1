@@ -607,7 +607,7 @@ METHOD new( oParent, cTagName, cAttrib, cContent ) CLASS THtmlNode
 
    IF HB_ISSTRING( oParent )
       // a HTML string is passed -> build new tree of objects
-      oParent := StrTran( oParent, Chr( 9 ), " " )
+      oParent := StrTran( oParent, Chr(9), " " )
       ::root           := Self
       ::htmlTagName    := "_root_"
       ::htmlTagType    := THtmlTagType( "_root_" )
@@ -708,10 +708,10 @@ METHOD parseHtml( parser ) CLASS THtmlNode
                oLastTag:htmlEndTagName := "/" + oLastTag:htmlTagName
             ENDIF
 
-         ELSEIF Chr( 10 ) $ cText
+         ELSEIF Chr(10) $ cText
             cText := RTrim(cText)
             nPos := Len( cText ) + 1
-            DO WHILE nPos > 0 .AND. SubStr(cText, --nPos, 1) $ Chr( 9 ) + Chr( 10 ) + Chr( 13 )
+            DO WHILE nPos > 0 .AND. SubStr(cText, --nPos, 1) $ Chr(9) + Chr(10) + Chr(13)
             ENDDO
             oThisTag:addNode( THtmlNode():new( oThisTag, "_text_", , Left(cText, nPos) ) )
          ELSE
@@ -1155,7 +1155,7 @@ METHOD getText( cEOL ) CLASS THtmlNode
       cText += oNode:getText( cEOL )
       IF Lower(::htmlTagName) $ "td,th" .AND. hb_AScan( ::parent:htmlContent, Self,,, .T. ) < Len( ::parent:htmlContent )
          // leave table rows in one line, cells separated by Tab
-         cText := hb_StrShrink( cText, Len( cEOL ) ) + Chr( 9 )
+         cText := hb_StrShrink( cText, Len( cEOL ) ) + Chr(9)
       ENDIF
    NEXT
 

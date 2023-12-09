@@ -368,10 +368,10 @@ PROCEDURE Main( ... )
 STATIC FUNCTION SortWeight( cString )
 
    SWITCH hb_defaultValue( cString, "" )
-   CASE "Document" ; RETURN Chr( 31 ) + "001" + cString  /* category */
-   CASE "Intro"    ; RETURN Chr( 31 ) + "001" + cString  /* subcategory */
-   CASE "License"  ; RETURN Chr( 31 ) + "002" + cString  /* subcategory */
-   CASE "Compiler" ; RETURN Chr( 31 ) + "003" + cString  /* subcategory */
+   CASE "Document" ; RETURN Chr(31) + "001" + cString  /* category */
+   CASE "Intro"    ; RETURN Chr(31) + "001" + cString  /* subcategory */
+   CASE "License"  ; RETURN Chr(31) + "002" + cString  /* subcategory */
+   CASE "Compiler" ; RETURN Chr(31) + "003" + cString  /* subcategory */
    ENDSWITCH
 
    RETURN cString
@@ -552,14 +552,14 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
    FOR EACH item IN hEntry
 
       cSectionName := item:__enumKey()
-      cSection := StrTran( item, Chr( 13 ) + Chr( 10 ), hb_eol() )
+      cSection := StrTran( item, Chr(13) + Chr(10), hb_eol() )
 
       IF !( cSectionName == "EXAMPLES" ) .AND. ;
          !( cSectionName == "TESTS" )
          cSection := NewLineVoodoo( cSection )  /* Decides which EOLs to keep and which to drop */
       ENDIF
 
-      cSection := StrTran( cSection, hb_eol(), Chr( 10 ) )
+      cSection := StrTran( cSection, hb_eol(), Chr(10) )
 
       IF hb_LeftEq( cSectionName, "_" ) .OR. ;
          cSectionName == "TEMPLATE"
@@ -1315,7 +1315,7 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
          "ANNOUNCE ([a-zA-Z0-9_]*)$" }
 
          IF ! Empty(pRegex := hb_regexComp( cFilter, .T., .T. ))
-            FOR EACH tmp IN hb_regexAll( pRegex, StrTran( cFile, Chr( 13 ) ),,,,, .T. )
+            FOR EACH tmp IN hb_regexAll( pRegex, StrTran( cFile, Chr(13) ),,,,, .T. )
                IF tmp[ 2 ] $ hAll
                   hAll[ tmp[ 2 ] ] += "," + cName
                ELSE

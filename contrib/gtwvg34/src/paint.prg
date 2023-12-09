@@ -453,7 +453,7 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
       xRet := {}
-      IF ! Empty(aTmp := hb_ATokens( cRet, Chr( 0 ) ))
+      IF ! Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len( aTmp )
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
@@ -494,7 +494,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
       xRet := {}
-      IF ! Empty(aTmp := hb_ATokens( cRet, Chr( 0 ) ))
+      IF ! Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len( aTmp )
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
@@ -748,7 +748,7 @@ FUNCTION wvg_GetMessageText( w, p1, p2 )
 
    wapi_SendMessage( w, p1, p2, @cText )
 
-   RETURN Left(cText, At( Chr( 0 ), cText + Chr( 0 ) ) - 1)
+   RETURN Left(cText, At( Chr(0), cText + Chr(0) ) - 1)
 
 FUNCTION wvt_IsLButtonPressed()
    RETURN hb_bitAnd( wapi_GetKeyState( WIN_VK_LBUTTON ), 0x8000 ) != 0

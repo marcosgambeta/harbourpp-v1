@@ -48,7 +48,7 @@
 
 PROCEDURE Main( cPortName )
 
-   LOCAL cString := "ATE0" + Chr( 13 ) + "ATI3" + Chr( 13 )
+   LOCAL cString := "ATE0" + Chr(13) + "ATI3" + Chr(13)
    LOCAL nResult
 
    LOCAL oWinPort := win_com():Init( hb_defaultValue( cPortName, "COM1" ), ;
