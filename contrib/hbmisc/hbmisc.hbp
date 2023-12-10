@@ -22,8 +22,9 @@ src/fcomma.prg
 src/fileread.prg
 src/hbedit.prg
 src/nconvert.prg
-src/numtxthu.prg
+src/ntp.prg
 src/numtxten.prg
+src/numtxthu.prg
 src/numtxtru.prg
 src/stringp.prg
 src/twirler.prg
