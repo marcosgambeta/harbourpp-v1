@@ -38,7 +38,7 @@ PROCEDURE Main( cDL, cUL )
    NEXT
 
    ? "Press key..."
-   Inkey( 0 )
+   Inkey(0)
 
    ? "INIT:", curl_global_init()
 
@@ -48,7 +48,7 @@ PROCEDURE Main( cDL, cUL )
       ? "UNESCAPE:", curl_easy_unescape( curl, tmp )
 
       ? "Press key..."
-      Inkey( 0 )
+      Inkey(0)
 
       hb_default( @cUL, __FILE__ )
 
@@ -79,7 +79,7 @@ PROCEDURE Main( cDL, cUL )
       curl_easy_reset( curl )
 
       ? "Press key..."
-      Inkey( 0 )
+      Inkey(0)
 
       /* Delete file */
 
@@ -99,7 +99,7 @@ PROCEDURE Main( cDL, cUL )
       curl_easy_reset( curl )
 
       ? "Press key..."
-      Inkey( 0 )
+      Inkey(0)
 
       /* Upload file from memory */
 
@@ -125,7 +125,7 @@ PROCEDURE Main( cDL, cUL )
       curl_easy_reset( curl )
 
       ? "Press key..."
-      Inkey( 0 )
+      Inkey(0)
 
       hb_default( @cDL, "ftp://ftp.cisco.com/pub/mibs/README-MIB.txt" )
 
@@ -145,7 +145,7 @@ PROCEDURE Main( cDL, cUL )
       curl_easy_reset( curl )
 
       ? "Press key..."
-      Inkey( 0 )
+      Inkey(0)
 
       /* Now let's download to memory */
 
@@ -171,7 +171,7 @@ PROCEDURE Main( cDL, cUL )
       curl_easy_reset( curl )
 
       ? "Press key..."
-      Inkey( 0 )
+      Inkey(0)
 
       hb_default( @cDL, "ftp://ftp.cisco.com/" )
 

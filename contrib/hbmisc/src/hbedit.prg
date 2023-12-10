@@ -330,7 +330,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
 #if 0
       nKey := WaitForKey()
 #endif
-      nKey := Inkey( 0 )
+      nKey := Inkey(0)
 
       DO CASE
       CASE !( hb_keyChar( nKey ) == "" )

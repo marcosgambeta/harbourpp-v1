@@ -97,7 +97,7 @@ PROCEDURE Main()
 
    s_afontinfo := wvw_GetFontInfo()
 
-   hb_gtInfo( HB_GTI_INKEYFILTER, {| nkey | nAfterInkey( nkey ) } )
+   hb_gtInfo( HB_GTI_INKEYFILTER, {| nkey | nAfterInkey(nkey) } )
    wvw_SetMouseMove( , .T. )                           // required by wvwmouse
    kF1 := SetKey( K_F1, {|| xHelp() } )
    kF2 := SetKey( K_F2, {|| xDebugInfo() } )
@@ -182,7 +182,7 @@ PROCEDURE Main()
    @ MaxRow() - 1, 0 SAY "This is line " + hb_ntos( MaxRow() - 1 )
    @ MaxRow(), 0 SAY "This is line " + hb_ntos( MaxRow() )
 
-   DO WHILE ( ch := Inkey( 0 ) ) != K_ESC
+   DO WHILE ( ch := Inkey(0) ) != K_ESC
       // experiment with different paintrefresh interval:
       DO CASE
       CASE ch == hb_keyCode( "<" )
@@ -280,7 +280,7 @@ PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    ?? "Press Ctrl+E to toggle between echoing what you type to previous window"
    ?
    DO WHILE Inkey() != 0; ENDDO  // clear typeahead
-   ch := Inkey( 0 )
+   ch := Inkey(0)
    DO WHILE ch != K_ESC
       IF ch == K_ENTER
          ?? hb_keyChar( ch ) + Chr(10)
@@ -306,7 +306,7 @@ PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
             wvw_nSetCurWindow( nCurWindow )
          ENDIF
       ENDIF
-      ch := Inkey( 0 )
+      ch := Inkey(0)
    ENDDO
 
    // *********** end typewriter mode ***************
@@ -481,7 +481,7 @@ FUNCTION DEMO_Browse()
    RefreshVXB( oBrowse, nCurWindow, nVScrollBar ) // 20040704
 
    WHILE ! lEnd
-      nKey := Inkey( 0 )
+      nKey := Inkey(0)
 
       DO CASE
       CASE nKey == K_ESC .OR. nKey == K_ENTER
@@ -932,7 +932,7 @@ FUNCTION AddMiscObjects( nWinNum, bAction )
 
 /* this is for use with SetInkeyAfterBlock() */
 
-FUNCTION nAfterInkey( nkey )
+FUNCTION nAfterInkey(nkey)
 
    // check if nkey is:
    // (1) menu command, or
@@ -1195,7 +1195,7 @@ PROCEDURE debugging( cMsg, nRow, nCol, nWinNum )
 PROCEDURE pause()
 
    Tone( 660, 2 )
-   Inkey( 0 )
+   Inkey(0)
 
    RETURN
 

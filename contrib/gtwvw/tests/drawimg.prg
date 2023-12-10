@@ -151,7 +151,7 @@ PROCEDURE Main()
       oWPaint:cImage := cpict
       wg_AddWPaintObj( 0, oWPaint )
 
-      Inkey( 0 )
+      Inkey(0)
 
       // delete all image objects
       wg_DelWPaintObj( 0, WPAINTOBJ_IMAGE, NIL )

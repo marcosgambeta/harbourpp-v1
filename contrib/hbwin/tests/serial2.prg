@@ -61,7 +61,7 @@ PROCEDURE Main( cPortName )
 
    ? "Attach a scanner now ..."
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    oWinPort := win_com():Init( cPortName, WIN_CBR_9600, WIN_ODDPARITY, 7, WIN_ONESTOPBIT )
    IF ! oWinPort:Open()
@@ -77,7 +77,7 @@ PROCEDURE Main( cPortName )
       ?
       ? "Testing DTR, configure a scanner to require DTR"
       ? "Scan something... and press enter (shouldn't scan)"
-      Inkey( 0 )
+      Inkey(0)
       ? "Read() ", oWinPort:Read( @cString, 32 ), Len( cString ), cString
       ?
       IF oWinPort:SetDTR( .T. )
@@ -86,7 +86,7 @@ PROCEDURE Main( cPortName )
          ? "SetDTR( .T. ) failed :", oWinPort:ErrorText()
       ENDIF
       ? "Scan something... and press enter (read should work)"
-      Inkey( 0 )
+      Inkey(0)
       ?
       IF oWinPort:QueueStatus( @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue )
          ? "QueueStatus() : CTSHold", lCtsHold, ", DSRHold", lDsrHold, ", DCDHold", lDCDHold, ", XoffHold", lXoffHold, ;
@@ -129,7 +129,7 @@ PROCEDURE Main( cPortName )
       ENDIF
       ?
       ? "Scan something... we'll not read it but purge it, press enter"
-      Inkey( 0 )
+      Inkey(0)
       IF oWinPort:QueueStatus( @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue )
          ? "QueueStatus() : CTSHold", lCtsHold, ", DSRHold", lDsrHold, ", DCDHold", lDCDHold, ", XoffHold", lXoffHold, ;
             ", Xoff Sent ", lXoffSent, ", InQueue ", nInQueue, ", nOutQueue ", nOutQueue
@@ -156,7 +156,7 @@ PROCEDURE Main( cPortName )
 
    ?
    ? "This is going to fail, so no device needed"
-   Inkey( 0 )
+   Inkey(0)
 
    oWinPort := win_com():Init( cPortName, WIN_CBR_9600, WIN_NOPARITY, 99, WIN_ONESTOPBIT )
    IF ! oWinPort:Open
@@ -168,7 +168,7 @@ PROCEDURE Main( cPortName )
 
    ? "Attach a printer now ..."
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    oWinPort := win_com():Init( cPortName, WIN_CBR_9600, WIN_NOPARITY, 8, WIN_ONESTOPBIT )
    IF ! oWinPort:Open

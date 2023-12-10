@@ -96,7 +96,7 @@ PROCEDURE Main()
    ? "End test of TabExpand()"
    ? "Press any key to continue with tests of TabPack()..."
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    ? "Begin test of TabPack()"
    ?
@@ -131,7 +131,7 @@ PROCEDURE Main()
    ? "  and make sure, you make use of soft and hard returns !"
    ? "  ...press any key to start the MemoEdit() now..."
    ?
-   Inkey( 0 )
+   Inkey(0)
    CLS
    DispBox( 0, 0, 20, 60 )
    cStr := MemoEdit( , 1, 1, 9, 59,,, 59 )
@@ -150,7 +150,7 @@ PROCEDURE Main()
    FOR ni := 1 TO MLCount( cStr1, 59, 4, .T. )
       ? "  " + Str( ni ) + ": " + MemoLine( cStr1, 59, ni, 4, .T. )
    NEXT
-   Inkey( 0 )
+   Inkey(0)
 #endif
 
    ctexit()

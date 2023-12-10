@@ -38,7 +38,7 @@ PROCEDURE fillscreen()
       NEXT
    NEXT
    ?? "Done. Press ESC to exit."
-   DO WHILE Inkey( 0 ) != K_ESC
+   DO WHILE Inkey(0) != K_ESC
    ENDDO
    wvw_lCloseWindow()
    wvw_lCloseWindow()

@@ -219,7 +219,7 @@ STATIC PROCEDURE ShowHelp( hCommands )
       IF ++c == m
          c := 0
          QQOut( "Press any key to continue..." )
-         Inkey( 0 )
+         Inkey(0)
 
          Scroll( Row(), 0, Row(), MaxCol() )
          SetPos( Row(), 0 )

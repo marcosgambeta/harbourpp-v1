@@ -35,7 +35,7 @@ PROCEDURE Main()
       ? "0) Quit"
       ? "> "
 
-      nOption := Inkey( 0 )
+      nOption := Inkey(0)
       ?? hb_keyChar( nOption )
 
       IF     nOption == hb_keyCode( "1" )
@@ -358,7 +358,7 @@ STATIC PROCEDURE Exm_OOOpen()
       oOO_Doc := oOO_Desktop:loadComponentFromURL( OO_ConvertToURL( hb_FNameMerge( cDir, "sample.odt" ) ), "_blank", 0, { oOO_PropVal01 } )
 
       ? "Press any key to close OpenOffice"
-      Inkey( 0 )
+      Inkey(0)
 
       oOO_Doc:Close( .T. )
       oOO_Doc := NIL

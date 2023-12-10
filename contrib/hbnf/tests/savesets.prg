@@ -6,6 +6,6 @@ PROCEDURE Main()
 
    HB_SYMBOL_UNUSED( aSets )
 
-   Inkey( 0 )
+   Inkey(0)
 
    RETURN

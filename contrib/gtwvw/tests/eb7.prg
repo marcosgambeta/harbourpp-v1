@@ -87,7 +87,7 @@ PROCEDURE Main()
 
    // wait until user click the close button
    DO WHILE ! lClosepermitted
-      Inkey( 0.2 )
+      Inkey(0.2)
    ENDDO
    SetKey( K_F8, bSetKey )
 
@@ -298,7 +298,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
 
    wvw_ebSetFocus( nwinnum, aEBGets[ 1 ][ __GET_NEBID ] )
    nFocus := 1
-   ch := Inkey( 0.5 )
+   ch := Inkey(0.5)
    DO WHILE ! lDone
       IF HB_ISBLOCK( SetKey( ch ) )
          Eval( SetKey( ch ) )
@@ -337,7 +337,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
       ELSE
          nFocus := nFocused( aEBGets )
       ENDIF
-      ch := Inkey( 0.5 )
+      ch := Inkey(0.5)
    ENDDO
 
    // session ended (already ended by OK or Cancel)
@@ -345,7 +345,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
    lClosepermitted := ( nwinnum == wvw_nNumWindows() - 1 )
    // wait until user click the close button
    DO WHILE ! lClosepermitted
-      Inkey( 0.5 )
+      Inkey(0.5)
    ENDDO
 
    RETURN // EBReadGets()

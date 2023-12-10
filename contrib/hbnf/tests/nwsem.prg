@@ -15,7 +15,7 @@ PROCEDURE Main()
    ? "Waiting ten seconds..."
    nRc := ft_NWSemWait( nHandle, 180 )
    ? "Final nRc value = " + Str( nRc )
-   Inkey( 0 )
+   Inkey(0)
    IF nRc == 254
       ? "Couldn't get the semaphore.  Try again."
       QUIT
@@ -33,7 +33,7 @@ PROCEDURE Main()
          "] stations, value is ["      + ;
          hb_ntos( nValue ) + "]"
 
-      IF Inkey( WAIT_SECONDS ) != 0
+      IF Inkey(WAIT_SECONDS) != 0
          EXIT
       ENDIF
 

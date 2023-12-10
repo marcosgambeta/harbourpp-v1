@@ -13,7 +13,7 @@ PROCEDURE Main()
    ? win_regWrite( "HKCU\_TEST\myqword", 0x1122334455667788, WIN_REG_QWORD )
    ? hb_NumToHex( win_regRead( "HKCU\_TEST\myqword" ) )
 
-   Inkey( 0 )
+   Inkey(0)
 
    ? win_regDelete( "HKCU\_TEST\teszt" )
    ? win_regDelete( "HKCU\_TEST\" )
@@ -32,7 +32,7 @@ PROCEDURE Main()
    ? win_regWrite( "HKCU\Control Panel\Desktop\Wallpaper", "harbour.bmp" )
    ? win_regRead( "HKCU\Control Panel\Desktop\Wallpaper" )
 
-   Inkey( 0 )
+   Inkey(0)
 
    ? win_regWrite( "HKCU\Control Panel\Desktop\Wallpaper", tmp )
 

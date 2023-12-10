@@ -48,6 +48,6 @@ PROCEDURE Main()
    ? wapi_GetIconInfo( i, @ii )
    ? hb_ValToExp( ii )
 
-   Inkey( 0 )
+   Inkey(0)
 
    RETURN

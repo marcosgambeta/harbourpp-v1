@@ -90,8 +90,8 @@ FUNCTION tp_baud( nPort, nNewBaud )
    RETURN t_aPorts[ nPort, TPFP_BAUD ]
 
 
-FUNCTION tp_inkey( ... )
-   RETURN Inkey( ... )
+FUNCTION tp_inkey(...)
+   RETURN Inkey(...)
 
 PROCEDURE tp_delay( nTime )
 

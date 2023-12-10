@@ -62,7 +62,7 @@ PROCEDURE Main()
    wvw_ShowWindow()
 
    nPos := 1
-   DO WHILE ( ch := Inkey( 0 ) ) != _SECRET_KEY
+   DO WHILE ( ch := Inkey(0) ) != _SECRET_KEY
       DO CASE
       CASE ch == K_TAB .OR. ch == K_ENTER
          IF nPos == 2 .AND. ch == K_ENTER .AND. wvw_pbEnable( NIL, nPBid )
@@ -93,7 +93,7 @@ PROCEDURE Main()
    @ 6, 1 SAY "Your response is:"
    @ 7, 1 SAY wvw_cbGetCurText( NIL, nCBid )
    @ 9, 1 SAY s_cThankYou
-   Inkey( 0 )
+   Inkey(0)
    SetCursor( nCursor )
 
    RETURN  // main

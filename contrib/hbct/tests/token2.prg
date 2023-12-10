@@ -97,7 +97,7 @@ PROCEDURE Main()
 
    ? "...Press any key..."
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    ? '  Incremental tokenizing the string "' + cStr3 + '" with the'
    ? '  token environment of cStr1 !'
@@ -123,7 +123,7 @@ PROCEDURE Main()
 
    ? "...Press any key..."
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    ? '  Save global token environment with savetoken'
    cTE1 := SaveToken()
@@ -145,7 +145,7 @@ PROCEDURE Main()
 
    ? "...Press any key..."
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    ? '  Now tokenize cStr4 := "' + cStr4 + '" and'
    ? '  cStr5 := "' + cStr5 + '"'
@@ -169,7 +169,7 @@ PROCEDURE Main()
 
    ? "...Press any key..."
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    ctexit()
 

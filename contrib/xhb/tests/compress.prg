@@ -66,6 +66,6 @@ PROCEDURE Main()
 
    @ 22, 25 SAY "Press a key to terminate"
 
-   Inkey( 0 )
+   Inkey(0)
 
    RETURN

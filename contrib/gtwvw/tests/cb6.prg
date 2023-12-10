@@ -86,7 +86,7 @@ PROCEDURE Main()
    ? "stat: '" + mstat + "'"
    ? "age : " + hb_ntos( mage )
    ? "that's what you've got from GET"
-   Inkey( 0 )
+   Inkey(0)
 
    // destroy all comboboxes:
    AEval( s_aComboList, {| x | wvw_cbDestroy( NIL, x[ 1 ] ) } )
@@ -96,7 +96,7 @@ PROCEDURE Main()
    ? "Comboboxes have now been removed"
    ? "Now press ESC to exit"
 
-   DO WHILE Inkey( 0 ) != K_ESC
+   DO WHILE Inkey(0) != K_ESC
    ENDDO
 
    RETURN
@@ -206,7 +206,7 @@ FUNCTION CBreader( oGet )
    ENDIF
 
    oGet:setfocus()
-   nKey := Inkey( 0 )
+   nKey := Inkey(0)
 
    IF nKey == K_ENTER
       // NOTE that in WVW_CB_KBD_CLIPPER mode we will never get here

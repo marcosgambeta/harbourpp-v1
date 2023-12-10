@@ -109,7 +109,7 @@ PROCEDURE Main()
 
    s_afontinfo := wvw_GetFontInfo()
 
-   hb_gtInfo( HB_GTI_INKEYFILTER, {| nkey | nAfterInkey( nkey ) } )
+   hb_gtInfo( HB_GTI_INKEYFILTER, {| nkey | nAfterInkey(nkey) } )
    wvw_SetMouseMove( , .T. )                           // required by wvwmouse
    kF1 := SetKey( K_F1, {|| xHelp() } )
    kF2 := SetKey( K_F2, {|| xDebugInfo() } )
@@ -202,7 +202,7 @@ PROCEDURE Main()
    @ MaxRow() - 1, 0 SAY "This is line " + hb_ntos( MaxRow() - 1 )
    @ MaxRow(), 0 SAY "This is line " + hb_ntos( MaxRow() )
 
-   DO WHILE ( nKeyStd := hb_keyStd( Inkey( 0 ) ) ) != K_ESC
+   DO WHILE ( nKeyStd := hb_keyStd( Inkey(0) ) ) != K_ESC
       // experiment with different paint refresh interval:
       DO CASE
       CASE nKeyStd == hb_keyCode( "<" )
@@ -296,7 +296,7 @@ STATIC PROCEDURE Demo_Console( nTop, nLeft, nBottom, nRight )
    ?? "Press <Ctrl+E> to toggle between echoing what you type to previous window"
    ?
    CLEAR TYPEAHEAD
-   DO WHILE ( nKeyStd := hb_keyStd( Inkey( 0 ) ) ) != K_ESC
+   DO WHILE ( nKeyStd := hb_keyStd( Inkey(0) ) ) != K_ESC
       IF nKeyStd == K_ENTER
          ?? hb_keyChar( nKeyStd ) + Chr(10)
          IF lEchoing
@@ -490,7 +490,7 @@ STATIC PROCEDURE DEMO_Browse()
    RefreshVXB( oBrowse, nCurWindow, nVScrollBar )  // 2004-07-04
 
    DO WHILE ! lEnd
-      nKey := hb_keyStd( Inkey( 0 ) )
+      nKey := hb_keyStd( Inkey(0) )
 
       DO CASE
       CASE nKey == K_ESC .OR. nKey == K_ENTER
@@ -940,7 +940,7 @@ STATIC PROCEDURE AddMiscObjects( nWinNum, bAction )
 
 /* this is for use with SetInkeyAfterBlock() */
 
-STATIC FUNCTION nAfterInkey( nKey )
+STATIC FUNCTION nAfterInkey(nKey)
 
    // check if nKey is:
    // (1) menu command, or

@@ -81,7 +81,7 @@ PROCEDURE Main()
    ? "stat:", "'" + mstat + "'"
    ? "age :", hb_ntos( mage )
    ? "that's what you've got from GET"
-   Inkey( 0 )
+   Inkey(0)
 
    // destroy all comboboxes:
    AEval( s_aComboList, {| x | wvw_cbDestroy( , x[ 1 ] ) } )
@@ -91,7 +91,7 @@ PROCEDURE Main()
    ? "Comboboxes have now been removed"
    ? "Now press ESC to exit"
 
-   DO WHILE hb_keyStd( Inkey( 0 ) ) != K_ESC
+   DO WHILE hb_keyStd( Inkey(0) ) != K_ESC
    ENDDO
 
    RETURN
@@ -145,7 +145,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
              * But do NOT assign oGetList:oGet into this oNewGet
              * from within here!
              * Remember that the reader() is still suspended
-             * on Inkey( 0 ). If we change the ActiveGet from here, then
+             * on Inkey(0). If we change the ActiveGet from here, then
              * when we leave this CB (eg. by means of K_TAB)
              * this reader() will resume, but alas the active get
              * is no longer the same! Thus reader() most likely
@@ -153,7 +153,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, cVar, GetList )
              *
              * The trick is simple:
              * reject the SETFOCUS. This will cause reader()
-             * resume its action on Inkey( 0 ).
+             * resume its action on Inkey(0).
              * All we have to do here is emulate the mouse click
              * event on oNewGet object beneath the CB, ie.
              * putting K_LBUTTONDOWN into keyboard buffer
@@ -200,7 +200,7 @@ STATIC PROCEDURE CBreader( oGet )
    ENDIF
 
    oGet:setfocus()
-   nKeyStd := hb_keyStd( nKey := Inkey( 0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT ) ) )
+   nKeyStd := hb_keyStd( nKey := Inkey(0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )) )
 
    DO CASE
    CASE nKeyStd == K_ENTER

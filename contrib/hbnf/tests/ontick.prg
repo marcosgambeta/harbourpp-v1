@@ -12,14 +12,14 @@ PROCEDURE Main()
 
    ft_OnTick( {|| OutStd( hb_MilliSeconds(), hb_eol() ) } )
 
-   Inkey( 0 )
+   Inkey(0)
 
    ft_OnTick( {|| OutStd( hb_MilliSeconds(), hb_eol() ) }, 18 )
 
-   Inkey( 0 )
+   Inkey(0)
 
    ft_OnTick()
 
-   Inkey( 0 )
+   Inkey(0)
 
    RETURN

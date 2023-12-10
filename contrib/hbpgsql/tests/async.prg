@@ -39,7 +39,7 @@ STATIC PROCEDURE Query( conn, cQuery, lCancel )
       DevPos( Row(), 20 )
       DevOut( "Processing:", ElapTime( cTime, Time() ) )
 
-      Inkey( 1 )
+      Inkey(1)
 
       IF lCancel
          pCancel := PQgetCancel( conn )

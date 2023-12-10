@@ -11,7 +11,7 @@ PROCEDURE Main()
    ? ft_Civ2Mil( "05:40 am" )
    ? ft_Civ2Mil( " 5:40 AM" )
    ?
-   Inkey( 0 )
+   Inkey(0)
    CLS
    ? "noon-midnight"
    ? ft_Civ2Mil( "12:00 m" )
@@ -21,7 +21,7 @@ PROCEDURE Main()
    ? ft_Civ2Mil( "12:00 N" )
    ? ft_Civ2Mil( "12:00 n" )
    ?
-   Inkey( 0 )
+   Inkey(0)
    CLS
    ? "errors in noon-midnight"
    ? ft_Civ2Mil( "12:01 n" )

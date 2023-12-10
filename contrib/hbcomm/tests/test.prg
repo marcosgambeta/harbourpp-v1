@@ -25,7 +25,7 @@ PROCEDURE Main()
       ? "Q) Quit"
       ? "> "
 
-      nOption := Inkey( 0 )
+      nOption := Inkey(0)
       ?? Chr(nOption)
 
       SWITCH Upper(Chr(nOption))

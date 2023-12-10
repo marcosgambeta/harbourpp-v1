@@ -177,7 +177,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    lGo := .T.
    DO WHILE lGo
 
-      nKeyStd := hb_keyStd( nKey := Inkey( 0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT ) ) )
+      nKeyStd := hb_keyStd( nKey := Inkey(0, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )) )
 
       IF nKey == 0
          LOOP

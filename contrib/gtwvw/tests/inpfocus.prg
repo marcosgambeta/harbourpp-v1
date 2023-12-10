@@ -39,12 +39,12 @@ PROCEDURE Main()
    CreateToolbar( 0 )
    CreateStatusbar( 0 )
 
-   ch := Inkey( 0 )
+   ch := Inkey(0)
    DO WHILE ch != K_ESC
       IF ch == wvw_SetMenuKeyEvent( 0 )
          MenuAction( 0, wvw_GetLastMenuEvent( 0 ) )
       ENDIF
-      ch := Inkey( 0 )
+      ch := Inkey(0)
    ENDDO
 
    wvw_MessageBox( 0, "Thanks for trying this program", "Goodbye", MB_OK )
@@ -143,10 +143,10 @@ STATIC FUNCTION OpenNewWindow()
 
    // then echoing user input, until user press ESC
    SetCursor( SC_NORMAL )
-   ch := Inkey( 0 )
+   ch := Inkey(0)
    DO WHILE ch != K_ESC
       typing( ch )
-      ch := Inkey( 0 )
+      ch := Inkey(0)
    ENDDO
 
    // close current window

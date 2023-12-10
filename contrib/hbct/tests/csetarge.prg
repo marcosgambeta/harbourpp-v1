@@ -78,7 +78,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_WHOCARES on argument error
    ?
@@ -92,7 +92,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_WARNING on argument error
    ?
@@ -106,7 +106,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_ERROR on argument error
    ?
@@ -120,7 +120,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_CATASTROPHIC on argument error
    ?
@@ -134,7 +134,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    ?
    ? "Standard error handler: "
@@ -147,7 +147,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_WHOCARES on argument error
    ?
@@ -157,7 +157,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_WARNING on argument error
    ?
@@ -167,7 +167,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_ERROR on argument error
    ?
@@ -177,7 +177,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    // CT_ARGERR_CATASTROPHIC on argument error
    ?
@@ -187,7 +187,7 @@ PROCEDURE Main()
    cRet := CharAdd( "AA", .F. )
    ? "  return value was", cRet, "<Press any key>"
    ?
-   Inkey( 0 )
+   Inkey(0)
 
    ? "End test of CSetArgErr()"
 

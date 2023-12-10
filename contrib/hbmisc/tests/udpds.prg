@@ -33,7 +33,7 @@ PROCEDURE Main( cParam )
 
    IF "S" $ Upper(cParam)
       ? "Press any key to stop server"
-      Inkey( 0 )
+      Inkey(0)
       hb_udpds_Stop( h )
    ENDIF
 

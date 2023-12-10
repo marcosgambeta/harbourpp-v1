@@ -59,7 +59,7 @@ PROCEDURE Main()
 
    dspcord()
    WHILE .T.
-      k := Inkey( 0, INKEY_ALL )
+      k := Inkey(0, INKEY_ALL)
       IF k == K_ESC
          EXIT
       ELSEIF k >= hb_keyCode( "1" ) .AND. k <= hb_keyCode( "9" )

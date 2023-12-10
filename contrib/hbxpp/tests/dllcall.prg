@@ -78,11 +78,11 @@ PROCEDURE Main()
 
    ? "Full content drag: OFF"
    ? DllCall( "user32.dll", DLL_OSAPI, "SystemParametersInfoA", SPI_SETDRAGFULLWINDOWS, 0, 0, 0 )
-   Inkey( 0 )
+   Inkey(0)
 
    ? "Full content drag: ON"
    ? DllCall( "user32.dll", DLL_OSAPI, "SystemParametersInfoA", SPI_SETDRAGFULLWINDOWS, 1, 0, 0 )
-   Inkey( 0 )
+   Inkey(0)
 
    ? "DLLCALL"
    cData := Space( MAX_PATH )

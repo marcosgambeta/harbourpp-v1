@@ -126,7 +126,7 @@ FUNCTION fubar()
 
    CLS
    QOut( "Press Any Key" )
-   Inkey( 0 )
+   Inkey(0)
    SetColor( OldColor )
 
    RETURN .T.

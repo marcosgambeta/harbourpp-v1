@@ -29,7 +29,7 @@ PROCEDURE Main()
 #if 0
    ? "Press Alt-D + Enter to activate debug"
    AltD( .T. )
-   Inkey( 0 )
+   Inkey(0)
 #endif
    AltD()
    // Check output directory

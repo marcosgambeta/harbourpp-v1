@@ -68,7 +68,7 @@ PROCEDURE Main( cPortName )
          ? "Write() failed, returned:", nResult, "expected:", hb_ntos( hb_BLen( cString ) )
       ENDIF
       ? "Scan something... we'll not read it but purge it, press enter"
-      Inkey( 0 )
+      Inkey(0)
       ? "Read()", oWinPort:Read( @cString, 32 ), hb_ntos( hb_BLen( cString ) ), cString
       ? oWinPort:ErrorText()
       ? "Close", oWinPort:Close()

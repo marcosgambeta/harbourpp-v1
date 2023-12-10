@@ -91,7 +91,7 @@ PROCEDURE Main()
 
    // wait until user click the close button
    DO WHILE ! lClosepermitted
-      Inkey( 0.2 )
+      Inkey(0.2)
    ENDDO
    SetKey( K_F8, bSetKey )
 
@@ -303,7 +303,7 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
    wvw_ebSetFocus( nwinnum, aEBGets[ 1 ][ __GET_NEBID ] )
    nFocus := 1
    DO WHILE ! lDone
-      nKeyStd := hb_keyStd( nKey := Inkey( 0.5, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT ) ) )
+      nKeyStd := hb_keyStd( nKey := Inkey(0.5, hb_bitOr( Set( _SET_EVENTMASK ), HB_INKEY_EXT )) )
       DO CASE
       CASE HB_ISEVALITEM( SetKey( nKey ) )
          Eval( SetKey( nKey ) )
@@ -351,7 +351,7 @@ STATIC PROCEDURE EBReadGets( nwinnum, aEBGets )
    lClosepermitted := ( nwinnum == wvw_nNumWindows() - 1 )
    // wait until user click the close button
    DO WHILE ! lClosepermitted
-      Inkey( 0.5 )
+      Inkey(0.5)
    ENDDO
 
    RETURN

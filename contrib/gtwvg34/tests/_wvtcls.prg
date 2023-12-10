@@ -393,7 +393,7 @@ STATIC PROCEDURE ExeProgBar( oPBar, oPBar1, oPBar2, oPBar3, oPBar4 )
       oPBar4:Display( i, 100 )
       hb_idleSleep( 0.3 )
    NEXT
-   Inkey( 0 )
+   Inkey(0)
    oPBar:DeActivate()
    oPBar1:DeActivate()
    oPBar2:DeActivate()

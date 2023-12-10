@@ -164,7 +164,7 @@ PROCEDURE Main()
 PROCEDURE WAIT4()
 
    ? "  Press any key"
-   Inkey( 0 )
+   Inkey(0)
    CLS
 
    RETURN

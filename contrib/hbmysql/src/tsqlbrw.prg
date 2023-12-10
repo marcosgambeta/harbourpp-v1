@@ -332,7 +332,7 @@ METHOD BrowseTable( lCanEdit, aExitKeys ) CLASS TBrowseSQL
       ENDDO
 
       IF nKey == 0
-         nKey := Inkey( 0 )
+         nKey := Inkey(0)
       ENDIF
 
       IF AScan( aExitKeys, nKey ) > 0

@@ -128,7 +128,7 @@ STATIC PROCEDURE xBrowse1()
 
       lMessage( "Record #" + hb_ntos( RecNo() ) )
 
-      nKey := hb_keyStd( Inkey( 0 ) )
+      nKey := hb_keyStd( Inkey(0) )
 
       DO CASE
       CASE nKey == K_ESC .OR. nKey == K_ENTER
@@ -296,7 +296,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
    NEXT
    DispEnd()
 
-   Inkey( 0 )
+   Inkey(0)
 
    // close window
    zrevwindow()

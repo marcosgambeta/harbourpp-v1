@@ -55,7 +55,7 @@ PROCEDURE Main()
 #else
    oPrinter := NIL
    ? "Do some printing to PDFCreator printer and press any key..."
-   Inkey( 0 )
+   Inkey(0)
 #endif
 
    oPC:cPrinterStop := .F.

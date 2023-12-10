@@ -139,7 +139,7 @@ PROCEDURE Main()
       // Open the "long table name" for Table2
       dbUseArea( .T., , "Customer Data", "custom", .T., .F. )
       ? "Press a key to browse", Alias()
-      Inkey( 0 )
+      Inkey(0)
       Browse()
       USE
       USE table1 NEW

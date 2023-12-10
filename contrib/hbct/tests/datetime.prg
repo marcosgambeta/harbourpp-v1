@@ -190,7 +190,7 @@ FUNCTION addmtest()
          @ 11, 39 SAY "The returned date is " + DToC( AddMonth( dDate, mnth ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
       ENDIF
@@ -234,7 +234,7 @@ FUNCTION bomtest()
          @ 11, 10 SAY "The returned date is " + DToC( BoM( dDate ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
       ENDIF
@@ -280,7 +280,7 @@ FUNCTION boqtest()
          @ 11, 10 SAY "The returned date is " + DToC( BoQ( dDate ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
       ENDIF
@@ -324,7 +324,7 @@ FUNCTION boytest()
          @ 11, 10 SAY "The returned date is " + DToC( BoY( dDate ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate   := hb_SToD()
@@ -373,7 +373,7 @@ FUNCTION ctodowtest()
          @ 11, 10 SAY "The day number is " + Str( CToDoW( Upper(AllTrim(cDow)) ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          cDow := Space( 9 )
@@ -423,7 +423,7 @@ FUNCTION ctomonthtest()
          @ 11, 10 SAY "The day number is " + Str( CToMonth( cDom ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          cDom := Space( 9 )
@@ -489,7 +489,7 @@ FUNCTION dInMonthtest()
             hb_ntos( DaysInMonth( nMonth, IsAffirm( cLeap ) ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          cMonth := Space( 9 )
@@ -547,7 +547,7 @@ FUNCTION d2month()
             hb_ntos( DaysToMonth( nMonth, IsAffirm( cLeap ) ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          cMonth := Space( 2 )
@@ -604,7 +604,7 @@ FUNCTION dmytest()
             LTrim(DMY( dDate, IsAffirm( cMode ) ))
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -653,7 +653,7 @@ FUNCTION doytest()
             hb_ntos( DoY( dDate ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -702,7 +702,7 @@ FUNCTION eomtest()
             LTrim(DToC( EoM( dDate ) ))
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -750,7 +750,7 @@ FUNCTION eoqtest()
             LTrim(DToC( EoQ( dDate ) ))
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -799,7 +799,7 @@ FUNCTION eoytest()
             LTrim(DToC( EoY( dDate ) ))
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -854,7 +854,7 @@ FUNCTION isleaptest()
          @ 11, 10 SAY "The result is " + cResult
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -913,7 +913,7 @@ FUNCTION lastdayomtest()
             hb_ntos( LastDayOM( dDate ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -965,7 +965,7 @@ FUNCTION mdytest()
             LTrim(MDY( dDate ))
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
@@ -1015,7 +1015,7 @@ FUNCTION ntocdowtest()
             PadR( NToCDoW( Val( cDay ) ), 10 )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          cDay := "  "
@@ -1065,7 +1065,7 @@ FUNCTION ntocmthtest()
             PadR( NToCMonth( Val( cMonth ) ), 10 )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          cMonth := "  "
@@ -1114,7 +1114,7 @@ FUNCTION qtrtest()
             hb_ntos( Quarter( dDate ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate  := hb_SToD()
@@ -1167,7 +1167,7 @@ FUNCTION stodtest()
             PadR( LTrim(DToC( dDate )), 10 )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          cAnsidate := Space( 8 )
@@ -1246,7 +1246,7 @@ FUNCTION weektest()
             hb_ntos( Week( dDate, IsAffirm( cMode ) ) )
 
          SET CURSOR OFF
-         Inkey( 0 )
+         Inkey(0)
          SET CURSOR ON
 
          dDate := hb_SToD()
