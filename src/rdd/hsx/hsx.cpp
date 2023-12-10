@@ -603,7 +603,7 @@ static int hb_hsxEval(int iHandle, PHB_ITEM pExpr, HB_BYTE * pKey, HB_BOOL * fDe
          *fDeleted = HB_FALSE;
       }
    } else {
-      int iArea = 0;
+      auto iArea = 0;
 
       if( pHSX->iArea != 0 ) {
          iArea = hb_rddGetCurrentWorkAreaNumber();

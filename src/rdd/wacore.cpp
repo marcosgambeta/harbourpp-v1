@@ -513,12 +513,11 @@ static HB_GARBAGE_FUNC(hb_waHolderDestructor)
 
    if( *pHolder ) {
       AREAP pArea;
-      int iArea;
 
       pArea = *pHolder;
       *pHolder = nullptr;
 
-      iArea = hb_rddGetCurrentWorkAreaNumber();
+      auto iArea = hb_rddGetCurrentWorkAreaNumber();
 
       if( hb_rddSelectFirstAvailable() != Harbour::SUCCESS ) {
          /* workarea number HB_RDD_MAX_AREA_NUM is reserved
@@ -563,10 +562,9 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
 
    AREAP * pHolder;
    HB_SIZE nPos;
-   int iArea;
 
    /* save current WA number */
-   iArea = hb_rddGetCurrentWorkAreaNumber();
+   auto iArea = hb_rddGetCurrentWorkAreaNumber();
    /* select given WA */
    hb_rddSelectWorkAreaNumber(pArea->uiArea);
    /* flush buffers */

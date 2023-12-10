@@ -6715,7 +6715,7 @@ static void hb_vmPushAliasedField(PHB_SYMB pSym)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
    auto pAlias = hb_stackItemFromTop(-1);
 
    /*
@@ -6978,7 +6978,7 @@ static void hb_vmPopAliasedField(PHB_SYMB pSym)
 
    HB_STACK_TLS_PRELOAD
 
-   int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
    if( hb_vmSelectWorkarea(hb_stackItemFromTop(-1), pSym) == Harbour::SUCCESS ) {
       hb_rddPutFieldValue(hb_stackItemFromTop(-2), pSym);
    }
@@ -9364,7 +9364,7 @@ HB_BOOL hb_xvmPushAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
    if( hb_rddSelectWorkAreaSymbol(pAlias) == Harbour::SUCCESS ) {
       hb_rddGetFieldValue(hb_stackAllocItem(), pField);
    }
@@ -9447,7 +9447,7 @@ HB_BOOL hb_xvmPopAliasedFieldExt(PHB_SYMB pAlias, PHB_SYMB pField)
 #endif
 
    HB_STACK_TLS_PRELOAD
-   int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
    if( hb_rddSelectWorkAreaSymbol(pAlias) == Harbour::SUCCESS ) {
       hb_rddPutFieldValue(hb_stackItemFromTop(-1), pField);
       hb_stackPop();

@@ -1446,7 +1446,7 @@ static HB_ERRCODE hb_waClearRel(AREAP pArea)
 
    /* Free all relations */
    if( pArea->lpdbRelations ) {
-      int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+      auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
 
       do {
          LPDBRELINFO lpdbRelation = pArea->lpdbRelations;
@@ -1835,9 +1835,9 @@ static HB_ERRCODE hb_waEvalBlock(AREAP pArea, PHB_ITEM pBlock)
    HB_TRACE(HB_TR_DEBUG, ("hb_waEvalBlock(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pBlock)));
 #endif
 
-   int iCurrArea, iUsedArea;
+   int iUsedArea;
 
-   iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+   auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
    iUsedArea = pArea->uiArea;
    if( iCurrArea != iUsedArea ) {
       hb_rddSelectWorkAreaNumber(iUsedArea);

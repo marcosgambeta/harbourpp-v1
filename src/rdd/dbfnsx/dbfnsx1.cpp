@@ -745,7 +745,7 @@ static LPKEYINFO hb_nsxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
       pKey = hb_nsxKeyPutItem(pKey, pItem, pArea->dbfarea.ulRecNo, pTag, false, nullptr);
       hb_itemRelease(pItem);
    } else {
-      int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+      auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
 
       if( iCurrArea != pArea->dbfarea.area.uiArea ) {
          hb_rddSelectWorkAreaNumber(pArea->dbfarea.area.uiArea);
@@ -771,7 +771,7 @@ static LPKEYINFO hb_nsxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
  */
 static bool hb_nsxEvalCond(NSXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 {
-   int iCurrArea = 0;
+   auto iCurrArea = 0;
    bool fRet;
 
    if( fSetWA ) {

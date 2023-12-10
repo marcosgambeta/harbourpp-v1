@@ -1661,7 +1661,7 @@ HB_FUNC( DBSETRELATION )
       if( HB_ISNUM(1) ) {
          uiChildArea = static_cast<HB_AREANO>(hb_parni(1));
       } else {
-         int iArea = hb_rddGetCurrentWorkAreaNumber();
+         auto iArea = hb_rddGetCurrentWorkAreaNumber();
 
          hb_rddSelectWorkAreaAlias(hb_parcx(1));
          if( hb_vmRequestQuery() ) {

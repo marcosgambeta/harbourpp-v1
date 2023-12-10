@@ -550,7 +550,7 @@ static PHB_ITEM hb_ntxKeyGetItem(PHB_ITEM pItem, LPKEYINFO pKey, LPTAGINFO pTag,
  */
 static bool hb_ntxEvalCond(NTXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 {
-   int iCurrArea = 0;
+   auto iCurrArea = 0;
    bool fRet;
 
    if( fSetWA ) {
@@ -603,7 +603,7 @@ static HB_BYTE hb_ntxGetKeyType(LPTAGINFO pTag)
       bType = hb_ntxItemType(pItem);
       hb_itemRelease(pItem);
    } else {
-      int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+      auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
 
       if( iCurrArea != pTag->pIndex->pArea->dbfarea.area.uiArea ) {
          hb_rddSelectWorkAreaNumber(pTag->pIndex->pArea->dbfarea.area.uiArea);
@@ -635,7 +635,7 @@ static LPKEYINFO hb_ntxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
       pKey = hb_ntxKeyPutItem(pKey, pItem, pArea->dbfarea.ulRecNo, pTag, false, nullptr);
       hb_itemRelease(pItem);
    } else {
-      int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+      auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
 
       if( iCurrArea != pArea->dbfarea.area.uiArea ) {
          hb_rddSelectWorkAreaNumber(pArea->dbfarea.area.uiArea);

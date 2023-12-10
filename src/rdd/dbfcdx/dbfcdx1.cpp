@@ -595,7 +595,7 @@ static LPCDXKEY hb_cdxKeyEval(LPCDXKEY pKey, LPCDXTAG pTag)
       SELF_GETVALUE(&pArea->dbfarea.area, pTag->nField, pItem);
       pKey = hb_cdxKeyPutItem(pKey, pItem, pArea->dbfarea.ulRecNo, pTag, CDX_CMP_EXACT);
    } else {
-      int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+      auto iCurrArea = hb_rddGetCurrentWorkAreaNumber();
 
       if( iCurrArea != pArea->dbfarea.area.uiArea ) {
          hb_rddSelectWorkAreaNumber(pArea->dbfarea.area.uiArea);
@@ -621,7 +621,7 @@ static LPCDXKEY hb_cdxKeyEval(LPCDXKEY pKey, LPCDXTAG pTag)
  */
 static bool hb_cdxEvalCond(CDXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 {
-   int iCurrArea = 0;
+   auto iCurrArea = 0;
    bool fRet;
 
    if( fSetWA ) {
