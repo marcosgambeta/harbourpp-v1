@@ -47,7 +47,7 @@
 
 #pragma -b-
 
-#define HB_CLS_NOTOBJECT      /* do not inherit from HBObject class */
+#define HB_CLS_NOTOBJECT      // do not inherit from HBObject class
 #include "hbclass.ch"
 
 /* HBDbBrowser
@@ -279,10 +279,10 @@ CREATE CLASS HBDbColumn
 
    EXPORTED:
 
-   VAR block      AS CODEBLOCK                  /* Code block to retrieve data for the column */
-   VAR colorBlock AS CODEBLOCK INIT {|| NIL }   /* column color block */
-   VAR defColor   AS ARRAY     INIT { 1, 2 }    /* Array of numeric indexes into the color table */
-   VAR width      AS USUAL                      /* Column display width */
+   VAR block      AS CODEBLOCK                  // Code block to retrieve data for the column
+   VAR colorBlock AS CODEBLOCK INIT {|| NIL }   // column color block
+   VAR defColor   AS ARRAY     INIT {1, 2}      // Array of numeric indexes into the color table
+   VAR width      AS USUAL                      // Column display width
 
    METHOD New(cHeading, bBlock)
 

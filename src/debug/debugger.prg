@@ -52,10 +52,10 @@
 
 #pragma -b-
 
-#define HB_CLS_NOTOBJECT      /* do not inherit from HBObject class */
+#define HB_CLS_NOTOBJECT      // do not inherit from HBObject class
 #include "hbclass.ch"
 
-#include "hbdebug.ch"   /* for "nMode" of __dbgEntry() */
+#include "hbdebug.ch"   // for "nMode" of __dbgEntry()
 #include "hbgtinfo.ch"
 #include "hbmemvar.ch"
 
@@ -65,25 +65,25 @@
 #include "setcurs.ch"
 
 
-/* Public or Private created in ::LoadVars(), value stored in HB_DBG_VAR_INDEX */
+// Public or Private created in ::LoadVars(), value stored in HB_DBG_VAR_INDEX
 #define HB_DBG_VAR_MVALUE       HB_DBG_VAR_INDEX
 
-/* Information structure stored in ::aWatch (watchpoints) */
+// Information structure stored in ::aWatch (watchpoints)
 #define WP_TYPE                 1  // wp: watchpoint, tr: tracepoint
 #define WP_EXPR                 2  // source of an expression
 
-/* The dimensions of the debugger window */
+// The dimensions of the debugger window
 #define DEBUGGER_MINROW         0
 #define DEBUGGER_MINCOL         0
 #define DEBUGGER_MAXROW         22
 #define DEBUGGER_MAXCOL         77
 
-/* command window scroll history */
+// command window scroll history
 #define DEBUGGER_CMDHIST_SIZE   128
 
 THREAD STATIC t_oDebugger
 
-/* debugger entry point */
+// debugger entry point
 PROCEDURE __dbgEntry(nMode, uParam1, uParam2, uParam3, uParam4)
 
    LOCAL lStartup
@@ -153,7 +153,7 @@ CREATE CLASS HBDebugger
    VAR nProcLevel                   // procedure level where the debugger is currently
    VAR aModules          INIT {}    // array of modules with static and GLOBAL variables
    VAR aWatch            INIT {}
-   VAR aColors           INIT { "W+/BG", "N/BG", "R/BG", "N+/BG", "W+/B", "GR+/B", "W/B", "N/W", "R/W", "N/BG", "R/BG" }
+   VAR aColors           INIT {"W+/BG", "N/BG", "R/BG", "N+/BG", "W+/B", "GR+/B", "W/B", "N/W", "R/W", "N/BG", "R/BG"}
 
    VAR aHistCommands
    VAR aLastCommands
@@ -280,7 +280,7 @@ CREATE CLASS HBDebugger
    METHOD ShowHelp(cTopic)
    METHOD ShowVars()
    METHOD LocatePrgPath(cPrgName)
-   METHOD Sort() INLINE ASort(::aVars, NIL, NIL, {| x, y | x[HB_DBG_VAR_NAME] < y[HB_DBG_VAR_NAME] }), ;
+   METHOD Sort() INLINE ASort(::aVars, NIL, NIL, {|x, y|x[HB_DBG_VAR_NAME] < y[HB_DBG_VAR_NAME]}), ;
       ::lSortVars := .T., ;
       iif(::oBrwVars != NIL, ::oBrwVars:RefreshAll(), NIL), ;
       iif(::oWndVars != NIL .AND. ::oWndVars:lVisible, iif(!::lGo .AND. ::oBrwVars != NIL, ::oBrwVars:ForceStable(), NIL), NIL)
@@ -334,7 +334,6 @@ CREATE CLASS HBDebugger
 
 ENDCLASS
 
-
 METHOD New() CLASS HBDebugger
 
    t_oDebugger := Self
@@ -350,14 +349,14 @@ METHOD New() CLASS HBDebugger
 
    ::lGo := ::lRunAtStartup
 
-   /* Store the initial screen dimensions for now */
+   // Store the initial screen dimensions for now
    ::nMaxRow := MaxRow()
    ::nMaxCol := MaxCol()
 
    ::oPullDown := __dbgBuildMenu(Self)
 
    ::oWndCode := HBDbWindow():New(1, 0, ::nMaxRow - ::nCmdWndHight - 3, ::nMaxCol)
-   ::oWndCode:bKeyPressed := {| nKey | ::CodeWindowProcessKey(nKey) }
+   ::oWndCode:bKeyPressed := {|nKey|::CodeWindowProcessKey(nKey)}
 
    AAdd(::aWindows, ::oWndCode)
 
@@ -385,7 +384,6 @@ METHOD PROCEDURE OpenDebuggerWindow() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE CloseDebuggerWindow() CLASS HBDebugger
 
    IF ::lDebuggerWindowIsOpen
@@ -395,7 +393,6 @@ METHOD PROCEDURE CloseDebuggerWindow() CLASS HBDebugger
    ENDIF
 
    RETURN
-
 
 METHOD PROCEDURE Activate() CLASS HBDebugger
 
@@ -437,7 +434,6 @@ METHOD PROCEDURE Activate() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE All() CLASS HBDebugger
 
    ::lShowPublics := ::lShowPrivates := ::lShowStatics := ;
@@ -471,7 +467,6 @@ METHOD PROCEDURE BarDisplay() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE BuildBrowseStack() CLASS HBDebugger
 
    LOCAL aColors
@@ -480,21 +475,20 @@ METHOD PROCEDURE BuildBrowseStack() CLASS HBDebugger
       aColors := __dbgColors()
       ::oBrwStack := HBDbBrowser():New(2, ::nMaxCol - 14, ::nMaxRow - ::nCmdWndHight - 4, ::nMaxCol - 1)
       ::oBrwStack:ColorSpec := aColors[3] + "," + aColors[4] + "," + aColors[5] + "," + aColors[6]
-      ::oBrwStack:goTopBlock := {|| ::oBrwStack:Cargo := 1 }
-      ::oBrwStack:goBottomBlock := {|| ::oBrwStack:Cargo := Len(::aProcStack) }
-      ::oBrwStack:skipBlock := {| nSkip, nOld | nOld := ::oBrwStack:Cargo, ;
+      ::oBrwStack:goTopBlock := {||::oBrwStack:Cargo := 1}
+      ::oBrwStack:goBottomBlock := {||::oBrwStack:Cargo := Len(::aProcStack)}
+      ::oBrwStack:skipBlock := {|nSkip, nOld|nOld := ::oBrwStack:Cargo, ;
          ::oBrwStack:Cargo += nSkip, ;
          ::oBrwStack:Cargo := Min(Max(::oBrwStack:Cargo, 1), ;
-         Len(::aProcStack)), ::oBrwStack:Cargo - nOld }
+         Len(::aProcStack)), ::oBrwStack:Cargo - nOld}
 
       ::oBrwStack:Cargo := 1 // Actual highlighted row
 
-      ::oBrwStack:AddColumn(HBDbColumnNew("", {|| iif(Len(::aProcStack) > 0, ;
-         PadC(::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_FUNCTION], 14), Space(14)) }))
+      ::oBrwStack:AddColumn(HBDbColumnNew("", {||iif(Len(::aProcStack) > 0, ;
+         PadC(::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_FUNCTION], 14), Space(14))}))
    ENDIF
 
    RETURN
-
 
 METHOD PROCEDURE BuildCommandWindow() CLASS HBDebugger
 
@@ -502,22 +496,21 @@ METHOD PROCEDURE BuildCommandWindow() CLASS HBDebugger
 
    ::oWndCommand := HBDbWindow():New(::nMaxRow - ::nCmdWndHight - 2, 0, ::nMaxRow - 1, ::nMaxCol, "Command")
 
-   ::oWndCommand:bKeyPressed := {| nKey | ::CommandWindowProcessKey(nKey) }
-   ::oWndCommand:bPainted    := {|| ::CommandWindowDisplay(), ;
+   ::oWndCommand:bKeyPressed := {|nKey|::CommandWindowProcessKey(nKey)}
+   ::oWndCommand:bPainted    := {||::CommandWindowDisplay(), ;
        hb_DispOutAt(::oWndCommand:nBottom - 1, ::oWndCommand:nLeft + 1, ;
                     "> ", __dbgColors()[2]), ;
-      ::oGetCommand:SetColor(__dbgColors()[2]):display() }
+      ::oGetCommand:SetColor(__dbgColors()[2]):display()}
    AAdd(::aWindows, ::oWndCommand)
 
-   ::aHistCommands := { "" }
-   ::aLastCommands := { "" }
+   ::aHistCommands := {""}
+   ::aLastCommands := {""}
    ::nCommand := 1
 
    nSize := ::oWndCommand:nRight - ::oWndCommand:nLeft - 3
    ::oGetCommand := HbDbInput():new(::oWndCommand:nBottom - 1, ::oWndCommand:nLeft + 3, nSize, "", __dbgColors()[2], Max(nSize, 256))
 
    RETURN
-
 
 METHOD PROCEDURE CallStackProcessKey(nKey) CLASS HBDebugger
 
@@ -622,14 +615,12 @@ METHOD PROCEDURE CallStackProcessKey(nKey) CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE CodeblockTrace() CLASS HBDebugger
 
    ::oPullDown:GetItemByIdent("CODEBLOCK"):checked := ::lCBTrace := !::lCBTrace
    __dbgSetCBTrace(::pInfo, ::lCBTrace)
 
    RETURN
-
 
 METHOD PROCEDURE CodeWindowProcessKey(nKey) CLASS HBDebugger
 
@@ -687,7 +678,6 @@ METHOD PROCEDURE CodeWindowProcessKey(nKey) CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE Colors() CLASS HBDebugger
 
    LOCAL oWndColors := HBDbWindow():New(4, 5, 16, ::nMaxCol - 5, "Debugger Colors[1..11]", ::ClrModal())
@@ -704,34 +694,33 @@ METHOD PROCEDURE Colors() CLASS HBDebugger
       RETURN
    ENDIF
 
-   oBrwColors:Cargo := { 1, {} }  // Actual highlighted row
+   oBrwColors:Cargo := {1, {}}  // Actual highlighted row
    oBrwColors:ColorSpec := ::ClrModal()
-   oBrwColors:goTopBlock := {|| oBrwColors:cargo[1] := 1 }
-   oBrwColors:goBottomBlock := {|| oBrwColors:cargo[1] := Len(oBrwColors:cargo[2][1]) }
-   oBrwColors:skipBlock := {| nPos | (nPos := ArrayBrowseSkip(nPos, oBrwColors), oBrwColors:cargo[1] := oBrwColors:cargo[1] + nPos, nPos) }
+   oBrwColors:goTopBlock := {||oBrwColors:cargo[1] := 1}
+   oBrwColors:goBottomBlock := {||oBrwColors:cargo[1] := Len(oBrwColors:cargo[2][1])}
+   oBrwColors:skipBlock := {|nPos|(nPos := ArrayBrowseSkip(nPos, oBrwColors), oBrwColors:cargo[1] := oBrwColors:cargo[1] + nPos, nPos)}
 
-   oBrwColors:AddColumn(oCol := HBDbColumnNew("", {|| aColors[oBrwColors:Cargo[1]] }))
+   oBrwColors:AddColumn(oCol := HBDbColumnNew("", {||aColors[oBrwColors:Cargo[1]]}))
    oCol:Width := 14
-   oCol:defColor := { 1, 2 }
+   oCol:defColor := {1, 2}
    AAdd(oBrwColors:Cargo[2], aColors)
    oBrwColors:AddColumn(oCol := HBDbColumnNew("", {||PadR('"' + ::aColors[oBrwColors:Cargo[1]] + '"', nWidth - 15)}))
    AAdd(oBrwColors:Cargo[2], aColors)
-   oCol:defColor := { 1, 3 }
+   oCol:defColor := {1, 3}
    oCol:Width := 50
    oBrwColors:autolite := .F.
 
-   oWndColors:bPainted    := {|| oBrwColors:ForceStable(), RefreshVarsS(oBrwColors) }
+   oWndColors:bPainted := {||oBrwColors:ForceStable(), RefreshVarsS(oBrwColors)}
 
-   oWndColors:bKeyPressed := {| nKey | SetsKeyPressed(nKey, oBrwColors, ;
+   oWndColors:bKeyPressed := {|nKey|SetsKeyPressed(nKey, oBrwColors, ;
       Len(aColors), oWndColors, "Debugger Colors", ;
-      {|| ::EditColor(oBrwColors:Cargo[1], oBrwColors) }) }
+      {||::EditColor(oBrwColors:Cargo[1], oBrwColors)})}
 
    oWndColors:ShowModal()
 
    ::LoadColors()
 
    RETURN
-
 
 METHOD PROCEDURE CommandWindowDisplay(cLine, lCmd) CLASS HBDebugger
 
@@ -758,7 +747,6 @@ METHOD PROCEDURE CommandWindowDisplay(cLine, lCmd) CLASS HBDebugger
    ENDDO
 
    RETURN
-
 
 METHOD PROCEDURE CommandWindowProcessKey(nKey) CLASS HBDebugger
 
@@ -800,7 +788,6 @@ METHOD PROCEDURE CommandWindowProcessKey(nKey) CLASS HBDebugger
    ENDSWITCH
 
    RETURN
-
 
 /*
  * ?? <expr>
@@ -899,7 +886,7 @@ METHOD DoCommand(cCommand) CLASS HBDebugger
          CASE hb_LeftEqI("WP", cParam2) .OR. hb_LeftEqI("TP", cParam2)
             ::WatchpointDel(cParam1)
          OTHERWISE
-            /* Cl*pper clears break and watch points in such case */
+            // Cl*pper clears break and watch points in such case
             cResult := "Command error"
          ENDCASE
       OTHERWISE
@@ -1093,7 +1080,7 @@ METHOD DoCommand(cCommand) CLASS HBDebugger
    CASE hb_LeftEq("QUIT", cCommand)
       ::Quit()
 
-   /* TODO: Support RESTART */
+   // TODO: Support RESTART
 
    CASE hb_LeftEqN("RESUME", cCommand, 4)
       ::Resume()
@@ -1208,7 +1195,6 @@ METHOD DoCommand(cCommand) CLASS HBDebugger
 
    RETURN cResult
 
-
 METHOD PROCEDURE DoScript(cFileName) CLASS HBDebugger
 
    LOCAL nPos
@@ -1225,7 +1211,6 @@ METHOD PROCEDURE DoScript(cFileName) CLASS HBDebugger
    ENDIF
 
    RETURN
-
 
 METHOD PROCEDURE EditColor(nColor, oBrwColors) CLASS HBDebugger
 
@@ -1266,7 +1251,6 @@ METHOD PROCEDURE EditSet(nSet, oBrwSets) CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE EditVar(nVar) CLASS HBDebugger
 
    LOCAL cVarName := ::aVars[nVar][1]
@@ -1293,14 +1277,11 @@ METHOD PROCEDURE EditVar(nVar) CLASS HBDebugger
 
    RETURN
 
-
 METHOD FindNext() CLASS HBDebugger
    RETURN ::Locate(1, ::cSearchString)
 
-
 METHOD FindPrevious() CLASS HBDebugger
    RETURN ::Locate(2, ::cSearchString)
-
 
 METHOD GetExprValue(xExpr, lValid) CLASS HBDebugger
 
@@ -1316,8 +1297,7 @@ METHOD GetExprValue(xExpr, lValid) CLASS HBDebugger
          xResult := oErr:operation + ": " + oErr:description
          IF HB_ISARRAY(oErr:args)
             xResult += "; arguments:"
-            AEval(oErr:args, {| x, i | xResult += iif(i == 1, " ", ", ") + ;
-                                                   __dbgValToStr(x) })
+            AEval(oErr:args, {|x, i|xResult += iif(i == 1, " ", ", ") + __dbgValToStr(x)})
          ENDIF
       ELSE
          xResult := "Syntax error"
@@ -1326,14 +1306,11 @@ METHOD GetExprValue(xExpr, lValid) CLASS HBDebugger
 
    RETURN xResult
 
-
 METHOD GetSourceFiles() CLASS HBDebugger
    RETURN __dbgGetSourceFiles(::pInfo)
 
-
 METHOD ModuleMatch(cModuleName1, cModuleName2) CLASS HBDebugger
    RETURN __dbgModuleMatch(::pInfo, cModuleName1, cModuleName2)
-
 
 METHOD PROCEDURE Global() CLASS HBDebugger
 
@@ -1341,7 +1318,6 @@ METHOD PROCEDURE Global() CLASS HBDebugger
    ::RefreshVars()
 
    RETURN
-
 
 METHOD PROCEDURE Go() CLASS HBDebugger
 
@@ -1357,13 +1333,11 @@ METHOD PROCEDURE Go() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE GotoLine(nLine) CLASS HBDebugger
 
    ::oBrwText:GotoLine(nLine)
 
    RETURN
-
 
 METHOD PROCEDURE HandleEvent() CLASS HBDebugger
 
@@ -1489,16 +1463,16 @@ METHOD PROCEDURE HandleEvent() CLASS HBDebugger
             ::aWindows[::nCurrentWindow]:KeyPressed(nKey)
             EXIT
 
-         CASE K_ALT_U /* Move the border between Command and Code windows Up */
+         CASE K_ALT_U // Move the border between Command and Code windows Up
             ::ResizeCmdWnd(1)
             EXIT
 
-         CASE K_ALT_D /* Move the border between Command and Code windows Down */
+         CASE K_ALT_D // Move the border between Command and Code windows Down
             ::ResizeCmdWnd(-1)
             EXIT
 
-         CASE K_ALT_G /* Grow active window */
-         CASE K_ALT_S /* Shrink active window */
+         CASE K_ALT_G // Grow active window
+         CASE K_ALT_S // Shrink active window
             ::NotSupported()
             EXIT
 
@@ -1560,13 +1534,11 @@ METHOD PROCEDURE HandleEvent() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE Hide() CLASS HBDebugger
 
    ::CloseDebuggerWindow()
 
    RETURN
-
 
 METHOD PROCEDURE HideCallStack() CLASS HBDebugger
 
@@ -1592,7 +1564,6 @@ METHOD PROCEDURE HideCallStack() CLASS HBDebugger
    ENDIF
 
    RETURN
-
 
 METHOD PROCEDURE HideVars() CLASS HBDebugger
 
@@ -1620,7 +1591,6 @@ METHOD PROCEDURE HideVars() CLASS HBDebugger
    ENDIF
 
    RETURN
-
 
 METHOD InputBox(cMsg, uValue, bValid, lEditable) CLASS HBDebugger
 
@@ -1700,17 +1670,14 @@ METHOD InputBox(cMsg, uValue, bValid, lEditable) CLASS HBDebugger
 
    RETURN uTemp
 
-
 METHOD PROCEDURE Inspect(uValue, cValueName) CLASS HBDebugger
 
    ::InputBox(uValue, cValueName, NIL, .F.)
 
    RETURN
 
-
 METHOD IsValidStopLine(cName, nLine) CLASS HBDebugger
    RETURN __dbgIsValidStopLine(::pInfo, cName, nLine)
-
 
 METHOD RunAtStartup(lRunAtStartup) CLASS HBDebugger
 
@@ -1718,7 +1685,6 @@ METHOD RunAtStartup(lRunAtStartup) CLASS HBDebugger
    ::oPulldown:GetItemByIdent("ALTD"):checked := ::lRunAtStartup
 
    RETURN Self
-
 
 METHOD LineNumbers(lLineNumbers) CLASS HBDebugger
 
@@ -1730,7 +1696,6 @@ METHOD LineNumbers(lLineNumbers) CLASS HBDebugger
    ENDIF
 
    RETURN Self
-
 
 METHOD ListBox(cCaption, aItems) CLASS HBDebugger
 
@@ -1746,7 +1711,7 @@ METHOD ListBox(cCaption, aItems) CLASS HBDebugger
 
    nItems := Len(aItems)
    nMaxWid := Len(cCaption) + 2
-   AEval(aItems, {| x | nMaxWid := Max(Len(x), nMaxWid) })
+   AEval(aItems, {|x|nMaxWid := Max(Len(x), nMaxWid)})
    nMaxWid += 2
 
    nTop    := Int((::nMaxRow / 2) - Min(nItems, ::nMaxRow - 5) / 2)
@@ -1763,7 +1728,6 @@ METHOD ListBox(cCaption, aItems) CLASS HBDebugger
 
    RETURN n
 
-
 METHOD PROCEDURE LoadCallStack() CLASS HBDebugger
 
    LOCAL i
@@ -1779,18 +1743,17 @@ METHOD PROCEDURE LoadCallStack() CLASS HBDebugger
 
    FOR i := nDebugLevel TO nCurrLevel
       nLevel := nCurrLevel - i + 1
-      IF (nPos := AScan(::aCallStack, {| a | a[HB_DBG_CS_LEVEL] == nLevel })) > 0
+      IF (nPos := AScan(::aCallStack, {|a|a[HB_DBG_CS_LEVEL] == nLevel})) > 0
          // a procedure with debug info
          ::aProcStack[i - nDebugLevel + 1] := ::aCallStack[nPos]
       ELSE
          ::aProcStack[i - nDebugLevel + 1] := iif(ProcLine(i) != 0, ;
-            { ProcFile(i), ProcName(i), ProcLine(i), nLevel, {}, {} }, ;
+            {ProcFile(i), ProcName(i), ProcLine(i), nLevel, {}, {}}, ;
             {, ProcName(i) + "(" + hb_ntos(ProcLine(i)) + ")", NIL, nLevel, NIL, })
       ENDIF
    NEXT
 
    RETURN
-
 
 METHOD PROCEDURE LoadColors() CLASS HBDebugger
 
@@ -1810,13 +1773,11 @@ METHOD PROCEDURE LoadColors() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE LoadSettings() CLASS HBDebugger
 
    ::DoScript(::cSettingsFileName)
 
    RETURN
-
 
 METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
 
@@ -1832,7 +1793,7 @@ METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
       nCount := __mvDbgInfo(HB_MV_PUBLIC)
       FOR n := nCount TO 1 STEP -1
          xValue := __mvDbgInfo(HB_MV_PUBLIC, n, @cName)
-         AAdd(aBVars, { cName, xValue, "Public" })
+         AAdd(aBVars, {cName, xValue, "Public"})
       NEXT
    ENDIF
 
@@ -1843,12 +1804,12 @@ METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
       nCount := __mvDbgInfo(HB_MV_PRIVATE)
       IF nCount > 0
          m := __mvDbgInfo(HB_MV_PRIVATE_LOCAL, ::nProcLevel)
-         hSkip := { => }
+         hSkip := {=>}
          hb_HAllocate(hSkip, nCount)
          FOR n := nCount TO 1 STEP -1
             xValue := __mvDbgInfo(HB_MV_PRIVATE, n, @cName)
             IF !cName $ hSkip
-               AAdd(aBVars, { cName, xValue, iif(m > 0, "Private", "Private^") })
+               AAdd(aBVars, {cName, xValue, iif(m > 0, "Private", "Private^")})
                hSkip[cName] := NIL
             ENDIF
             --m
@@ -1878,7 +1839,7 @@ METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
 
       IF ::lShowStatics
          cName := ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_MODULE]
-         IF (n := AScan(::aModules, {| a | ::ModuleMatch(a[HB_DBG_MOD_NAME], cName) })) > 0
+         IF (n := AScan(::aModules, {|a|::ModuleMatch(a[HB_DBG_MOD_NAME], cName)})) > 0
             FOR EACH m IN ::aModules[n][HB_DBG_MOD_STATICS]
                AAdd(aBVars, m)
             NEXT
@@ -1892,7 +1853,7 @@ METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
          FOR EACH n IN ::aProcStack[::oBrwStack:Cargo][HB_DBG_CS_LOCALS]
             cName := n[HB_DBG_VAR_NAME]
             // Is there another var with this name ?
-            IF (m := AScan(aBVars, {| aVar | aVar[HB_DBG_VAR_NAME] == cName .AND. aVar[HB_DBG_VAR_TYPE] == "S" })) > 0
+            IF (m := AScan(aBVars, {|aVar|aVar[HB_DBG_VAR_NAME] == cName .AND. aVar[HB_DBG_VAR_TYPE] == "S"})) > 0
                aBVars[m] := n
             ELSE
                AAdd(aBVars, n)
@@ -1911,14 +1872,12 @@ METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
 
    RETURN
 
-
 METHOD PROCEDURE Local() CLASS HBDebugger
 
    ::lShowLocals := !::lShowLocals
    ::RefreshVars()
 
    RETURN
-
 
 METHOD Locate(nMode, cValue) CLASS HBDebugger
 
@@ -1937,7 +1896,6 @@ METHOD Locate(nMode, cValue) CLASS HBDebugger
 
    RETURN lFound
 
-
 METHOD LocatePrgPath(cPrgName) CLASS HBDebugger
 
    LOCAL cRetPrgName
@@ -1952,7 +1910,6 @@ METHOD LocatePrgPath(cPrgName) CLASS HBDebugger
 
    RETURN NIL
 
-
 METHOD PROCEDURE MonoDisplay() CLASS HBDebugger
 
    ::lMonoDisplay := !::lMonoDisplay
@@ -1960,7 +1917,6 @@ METHOD PROCEDURE MonoDisplay() CLASS HBDebugger
    ::LoadColors()
 
    RETURN
-
 
 METHOD NextRoutine() CLASS HBDebugger
 
@@ -1970,7 +1926,6 @@ METHOD NextRoutine() CLASS HBDebugger
    ::Exit()
 
    RETURN Self
-
 
 METHOD PROCEDURE NextWindow() CLASS HBDebugger
 
@@ -1994,7 +1949,6 @@ METHOD PROCEDURE NextWindow() CLASS HBDebugger
    ENDIF
 
    RETURN
-
 
 METHOD PROCEDURE Open(cFileName) CLASS HBDebugger
 
@@ -2090,7 +2044,6 @@ METHOD OpenPPO() CLASS HBDebugger
 
    RETURN lSuccess
 
-
 METHOD PROCEDURE OSShell() CLASS HBDebugger
 
    LOCAL cImage := __dbgSaveScreen()
@@ -2126,7 +2079,6 @@ METHOD PROCEDURE OSShell() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE Quit() CLASS HBDebugger
 
    ::Exit()
@@ -2137,7 +2089,6 @@ METHOD PROCEDURE Quit() CLASS HBDebugger
    __Quit()
 
    RETURN
-
 
 METHOD PathForFiles(cPathForFiles) CLASS HBDebugger
 
@@ -2150,7 +2101,6 @@ METHOD PathForFiles(cPathForFiles) CLASS HBDebugger
    ::Resume()
 
    RETURN Self
-
 
 METHOD PROCEDURE PrevWindow() CLASS HBDebugger
 
@@ -2175,7 +2125,6 @@ METHOD PROCEDURE PrevWindow() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE Private() CLASS HBDebugger
 
    ::lShowPrivates := !::lShowPrivates
@@ -2183,14 +2132,12 @@ METHOD PROCEDURE Private() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE Public() CLASS HBDebugger
 
    ::lShowPublics := !::lShowPublics
    ::RefreshVars()
 
    RETURN
-
 
 METHOD PROCEDURE RefreshVars() CLASS HBDebugger
 
@@ -2213,7 +2160,6 @@ METHOD PROCEDURE RefreshVars() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE RemoveWindow(oWnd) CLASS HBDebugger
 
    LOCAL n
@@ -2225,7 +2171,6 @@ METHOD PROCEDURE RemoveWindow(oWnd) CLASS HBDebugger
    ::nCurrentWindow := 1
 
    RETURN
-
 
 METHOD ResizeWindows(oWindow) CLASS HBDebugger
 
@@ -2278,7 +2223,6 @@ METHOD ResizeWindows(oWindow) CLASS HBDebugger
 
    RETURN Self
 
-
 METHOD PROCEDURE RestoreAppScreen() CLASS HBDebugger
 
    LOCAL i
@@ -2291,7 +2235,6 @@ METHOD PROCEDURE RestoreAppScreen() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE RestoreAppState() CLASS HBDebugger
 
    Set(_SET_DIRCASE, ::nAppDirCase)
@@ -2300,7 +2243,6 @@ METHOD PROCEDURE RestoreAppState() CLASS HBDebugger
    hb_keySetLast(::nAppLastKey)
 
    RETURN
-
 
 METHOD PROCEDURE RestoreSettings(cFileName) CLASS HBDebugger
 
@@ -2317,7 +2259,6 @@ METHOD PROCEDURE RestoreSettings(cFileName) CLASS HBDebugger
    ::ShowVars()
 
    RETURN
-
 
 METHOD PROCEDURE SaveAppScreen() CLASS HBDebugger
 
@@ -2364,7 +2305,6 @@ METHOD PROCEDURE SaveAppScreen() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE SaveAppState() CLASS HBDebugger
 
    ::nAppDirCase := Set(_SET_DIRCASE, HB_SET_CASE_MIXED)
@@ -2373,7 +2313,6 @@ METHOD PROCEDURE SaveAppState() CLASS HBDebugger
    ::nAppLastKey := LastKey()
 
    RETURN
-
 
 METHOD PROCEDURE SaveSettings(cFileName) CLASS HBDebugger
 
@@ -2462,7 +2401,7 @@ METHOD PROCEDURE SaveSettings(cFileName) CLASS HBDebugger
    NEXT
 
    IF !::lWindowsAutoSized
-      /* This part of the script must be executed after all windows are created */
+      // This part of the script must be executed after all windows are created
       FOR EACH oWnd IN ::aWindows
          cInfo += ;
             "Window Size " + hb_ntos(oWnd:nBottom - oWnd:nTop + 1) + " " + ;
@@ -2476,7 +2415,6 @@ METHOD PROCEDURE SaveSettings(cFileName) CLASS HBDebugger
    hb_MemoWrit(::cSettingsFileName, cInfo)
 
    RETURN
-
 
 METHOD ResizeCmdWnd(nLines) CLASS HBDebugger
 
@@ -2550,12 +2488,10 @@ METHOD ResizeCmdWnd(nLines) CLASS HBDebugger
 
    RETURN Self
 
-
 METHOD PROCEDURE SearchLine(cLine) CLASS HBDebugger
 
    ::GotoLine(Max(1, iif(HB_ISSTRING(cLine) .AND. IsDigit(cLine), Val(cLine), ::InputBox("Line number", 1))))
    RETURN
-
 
 METHOD PROCEDURE Show() CLASS HBDebugger
 
@@ -2569,14 +2505,12 @@ METHOD PROCEDURE Show() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE ShowAllGlobals() CLASS HBDebugger
 
    ::lShowAllGlobals := !::lShowAllGlobals
    ::RefreshVars()
 
    RETURN
-
 
 METHOD PROCEDURE ShowAppScreen() CLASS HBDebugger
 
@@ -2591,7 +2525,6 @@ METHOD PROCEDURE ShowAppScreen() CLASS HBDebugger
    ::OpenDebuggerWindow()
 
    RETURN
-
 
 METHOD PROCEDURE ShowCallStack() CLASS HBDebugger
 
@@ -2617,8 +2550,8 @@ METHOD PROCEDURE ShowCallStack() CLASS HBDebugger
       ENDIF
 
       ::oWndStack := HBDbWindow():New(1, ::nMaxCol - 15, ::nMaxRow - ::nCmdWndHight - 3, ::nMaxCol, "Calls")
-      ::oWndStack:bKeyPressed  := {| nKey | ::CallStackProcessKey(nKey) }
-      ::oWndStack:bLButtonDown := {|| ::CallStackProcessKey(K_LBUTTONDOWN) }
+      ::oWndStack:bKeyPressed  := {|nKey|::CallStackProcessKey(nKey)}
+      ::oWndStack:bLButtonDown := {||::CallStackProcessKey(K_LBUTTONDOWN)}
 
       // Maintain fixed window array order: code, monitor, watch, callstack, command
       IF ::nCurrentWindow >= Len(::aWindows)
@@ -2630,15 +2563,14 @@ METHOD PROCEDURE ShowCallStack() CLASS HBDebugger
          ::BuildBrowseStack()
       ENDIF
 
-      ::oWndStack:bPainted := {|| ::oBrwStack:ColorSpec := __dbgColors()[2] + "," + ;
+      ::oWndStack:bPainted := {||::oBrwStack:ColorSpec := __dbgColors()[2] + "," + ;
          __dbgColors()[5] + "," + __dbgColors()[4] + "," + __dbgColors()[6], ;
-         ::oBrwStack:RefreshAll(), ::oBrwStack:ForceStable() }
+         ::oBrwStack:RefreshAll(), ::oBrwStack:ForceStable()}
 
       ::oWndStack:Show(.F.)
    ENDIF
 
    RETURN
-
 
 METHOD PROCEDURE ShowCodeLine(nProc) CLASS HBDebugger
 
@@ -2697,7 +2629,7 @@ METHOD PROCEDURE ShowCodeLine(nProc) CLASS HBDebugger
                ::oBrwText:LoadFile(cPrgName)
             ENDIF
 
-            ::oWndCode:bPainted := {|| iif(::oBrwText != NIL, ::oBrwText:RefreshAll():ForceStable(), ::oWndCode:Clear()) }
+            ::oWndCode:bPainted := {||iif(::oBrwText != NIL, ::oBrwText:RefreshAll():ForceStable(), ::oWndCode:Clear())}
             ::oWndCode:SetCaption(::cPrgName)
             ::oWndCode:Refresh()       // to force the window caption to update
          ENDIF
@@ -2708,13 +2640,11 @@ METHOD PROCEDURE ShowCodeLine(nProc) CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE ShowHelp(cTopic) CLASS HBDebugger
 
    __dbgHelp(cTopic)
 
    RETURN
-
 
 #define MAX_VARS_HEIGHT  7
 
@@ -2749,11 +2679,11 @@ METHOD PROCEDURE ShowVars() CLASS HBDebugger
          iif(::lShowStatics, " Static", "") + iif(::lShowPrivates, " Private", "") + ;
          iif(::lShowPublics, " Public", ""))
 
-      ::oWndVars:bLButtonDown := {| nMRow, nMCol | ::WndVarsLButtonDown(nMRow, nMCol) }
-      ::oWndVars:bLDblClick   := {|| ::EditVar(::oBrwVars:Cargo[1]) }
-      ::oWndVars:bPainted     := {|| iif(Len(::aVars) > 0, (::oBrwVars:RefreshAll():ForceStable(), RefreshVarsS(::oBrwVars)), NIL) }
+      ::oWndVars:bLButtonDown := {|nMRow, nMCol|::WndVarsLButtonDown(nMRow, nMCol)}
+      ::oWndVars:bLDblClick   := {||::EditVar(::oBrwVars:Cargo[1])}
+      ::oWndVars:bPainted     := {||iif(Len(::aVars) > 0, (::oBrwVars:RefreshAll():ForceStable(), RefreshVarsS(::oBrwVars)), NIL)}
 
-      ::oWndVars:bKeyPressed := {| nKey | iif(Len(::aVars) == 0, NIL, ( ;
+      ::oWndVars:bKeyPressed := {|nKey|iif(Len(::aVars) == 0, NIL, ( ;
          iif(nKey == K_DOWN, ::oBrwVars:Down(), NIL), ;
          iif(nKey == K_UP, ::oBrwVars:Up(), NIL), ;
          iif(nKey == K_PGDN, ::oBrwVars:PageDown(), NIL), ;
@@ -2761,7 +2691,7 @@ METHOD PROCEDURE ShowVars() CLASS HBDebugger
          iif(nKey == K_HOME, ::oBrwVars:GoTop(), NIL), ;
          iif(nKey == K_END, ::oBrwVars:GoBottom(), NIL), ;
          iif(nKey == K_ENTER, ::EditVar(::oBrwVars:Cargo[1]), NIL), ;
-         iif(Len(::aVars) > 0, ::oBrwVars:ForceStable(), NIL))) }
+         iif(Len(::aVars) > 0, ::oBrwVars:ForceStable(), NIL)))}
 
       // Maintain fixed window array order: code, monitor, watch, callstack, command
       hb_AIns(::aWindows, 2, ::oWndVars, .T.)
@@ -2798,23 +2728,23 @@ METHOD PROCEDURE ShowVars() CLASS HBDebugger
    IF Len(::aVars) > 0 .AND. ::oBrwVars == NIL
       ::oBrwVars := HBDbBrowser():New(nTop + 1, 1, nBottom - 1, ::nMaxCol - iif(::oWndStack != NIL, ::oWndStack:nWidth(), 0) - 1)
       aColors := __dbgColors()
-      ::oBrwVars:Cargo := { 1, {} } // Actual highlighted row
+      ::oBrwVars:Cargo := {1, {}} // Actual highlighted row
       ::oBrwVars:ColorSpec := aColors[2] + "," + aColors[5] + "," + aColors[3] + "," + aColors[6]
-      ::oBrwVars:goTopBlock := {|| ::oBrwVars:cargo[1] := Min(1, Len(::aVars)) }
-      ::oBrwVars:goBottomBlock := {|| ::oBrwVars:cargo[1] := Max(1, Len(::aVars)) }
-      ::oBrwVars:skipBlock := {| nSkip, nOld | ;
+      ::oBrwVars:goTopBlock := {||::oBrwVars:cargo[1] := Min(1, Len(::aVars))}
+      ::oBrwVars:goBottomBlock := {||::oBrwVars:cargo[1] := Max(1, Len(::aVars))}
+      ::oBrwVars:skipBlock := {|nSkip, nOld| ;
          nOld := ::oBrwVars:Cargo[1], ;
          ::oBrwVars:Cargo[1] += nSkip, ;
          ::oBrwVars:Cargo[1] := Min(Max(::oBrwVars:Cargo[1], 1), Len(::aVars)), ;
-         ::oBrwVars:Cargo[1] - nOld }
+         ::oBrwVars:Cargo[1] - nOld}
 
       oCol := HBDbColumnNew("", ;
-         {|| PadR(hb_ntos(::oBrwVars:Cargo[1] - 1) + ") " + ;
+         {||PadR(hb_ntos(::oBrwVars:Cargo[1] - 1) + ") " + ;
          ::VarGetInfo(::aVars[Max(::oBrwVars:Cargo[1], 1)]), ;
-         ::oWndVars:nWidth() - 2) })
+         ::oWndVars:nWidth() - 2)})
       ::oBrwVars:AddColumn(oCol)
       AAdd(::oBrwVars:Cargo[2], ::aVars)
-      oCol:DefColor := { 1, 2 }
+      oCol:DefColor := {1, 2}
       ::oBrwVars:ForceStable()
    ELSEIF Len(::aVars) == 0
       ::oBrwVars := NIL
@@ -2837,7 +2767,7 @@ METHOD PROCEDURE ShowVars() CLASS HBDebugger
 
       IF Len(::aVars) == 0
          IF nBottom == ::oWndVars:nBottom
-            /* We still need to redraw window caption, it could have changed */
+            // We still need to redraw window caption, it could have changed
             ::oWndVars:Refresh()
          ENDIF
       ENDIF
@@ -2858,7 +2788,6 @@ METHOD PROCEDURE ShowVars() CLASS HBDebugger
    DispEnd()
 
    RETURN
-
 
 METHOD PROCEDURE Stack(cParam) CLASS HBDebugger
 
@@ -2885,14 +2814,12 @@ METHOD PROCEDURE Stack(cParam) CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE Static() CLASS HBDebugger
 
    ::lShowStatics := !::lShowStatics
    ::RefreshVars()
 
    RETURN
-
 
 METHOD PROCEDURE Step() CLASS HBDebugger
 
@@ -2907,7 +2834,6 @@ METHOD PROCEDURE Step() CLASS HBDebugger
 
    RETURN
 
-
 METHOD ToCursor() CLASS HBDebugger
 
    IF ::IsValidStopLine(::cPrgName, ::oBrwText:RowPos)
@@ -2918,7 +2844,6 @@ METHOD ToCursor() CLASS HBDebugger
    ENDIF
 
    RETURN Self
-
 
 // Toggle a breakpoint at the cursor position in the currently viewed file
 // which may be different from the file in which execution was broken
@@ -2947,7 +2872,6 @@ METHOD PROCEDURE BreakPointToggle(nLine, cFileName) CLASS HBDebugger
 
    RETURN
 
-
 METHOD BreakPointDelete(cPos) CLASS HBDebugger
 
    LOCAL nAt
@@ -2971,13 +2895,11 @@ METHOD BreakPointDelete(cPos) CLASS HBDebugger
 
    RETURN Self
 
-
 METHOD BreakPointFunc(cFuncName) CLASS HBDebugger
 
    __dbgAddBreak(::pInfo, NIL, NIL, cFuncName)
 
    RETURN Self
-
 
 METHOD BreakPointList() CLASS HBDebugger
 
@@ -2994,14 +2916,12 @@ METHOD BreakPointList() CLASS HBDebugger
 
    RETURN Self
 
-
 METHOD Trace() CLASS HBDebugger
 
    __dbgSetTrace(::pInfo)
    ::Step() // forces a Step()
 
    RETURN Self
-
 
 METHOD TracepointAdd(cExpr) CLASS HBDebugger
 
@@ -3020,7 +2940,7 @@ METHOD TracepointAdd(cExpr) CLASS HBDebugger
       RETURN Self
    ENDIF
 
-   aWatch := { "tp", cExpr, NIL }
+   aWatch := {"tp", cExpr, NIL}
    ::RestoreAppState()
    __dbgAddWatch(::pInfo, cExpr, .T.)
    ::SaveAppState()
@@ -3028,7 +2948,6 @@ METHOD TracepointAdd(cExpr) CLASS HBDebugger
    ::WatchpointsShow()
 
    RETURN Self
-
 
 METHOD VarGetInfo(aVar) CLASS HBDebugger
 
@@ -3044,7 +2963,6 @@ METHOD VarGetInfo(aVar) CLASS HBDebugger
 
    RETURN aVar[HB_DBG_VAR_NAME] + " <" + cType + ", " + ValType(uValue) + ">: " + __dbgValToStr(uValue)
 
-
 METHOD VarGetValue(aVar) CLASS HBDebugger
 
    SWITCH aVar[HB_DBG_VAR_TYPE]
@@ -3055,7 +2973,6 @@ METHOD VarGetValue(aVar) CLASS HBDebugger
 
    // Public or Private created in ::LoadVars(), value stored in HB_DBG_VAR_INDEX
    RETURN aVar[HB_DBG_VAR_MVALUE]
-
 
 METHOD VarSetValue(aVar, uValue) CLASS HBDebugger
 
@@ -3080,7 +2997,6 @@ METHOD VarSetValue(aVar, uValue) CLASS HBDebugger
 
    RETURN Self
 
-
 METHOD PROCEDURE ViewSets() CLASS HBDebugger
 
    LOCAL aSets := __dbgGetSETs()
@@ -3090,27 +3006,26 @@ METHOD PROCEDURE ViewSets() CLASS HBDebugger
    LOCAL nWidth := oWndSets:nRight - oWndSets:nLeft - 1
    LOCAL oCol
 
-   oBrwSets:Cargo := { 1, {} } // Actual highlighted row
+   oBrwSets:Cargo := {1, {}} // Actual highlighted row
    oBrwSets:autolite := .F.
    oBrwSets:ColorSpec := ::ClrModal()
-   oBrwSets:goTopBlock := {|| oBrwSets:cargo[1] := 1 }
-   oBrwSets:goBottomBlock := {|| oBrwSets:cargo[1] := Len(oBrwSets:cargo[2][1]) }
-   oBrwSets:skipBlock := {| nPos | (nPos := ArrayBrowseSkip(nPos, oBrwSets), oBrwSets:cargo[1] := oBrwSets:cargo[1] + nPos, nPos) }
-   oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| aSets[oBrwSets:cargo[1]][HB_DBG_SET_NAME] }))
+   oBrwSets:goTopBlock := {||oBrwSets:cargo[1] := 1}
+   oBrwSets:goBottomBlock := {||oBrwSets:cargo[1] := Len(oBrwSets:cargo[2][1])}
+   oBrwSets:skipBlock := {|nPos|(nPos := ArrayBrowseSkip(nPos, oBrwSets), oBrwSets:cargo[1] := oBrwSets:cargo[1] + nPos, nPos)}
+   oBrwSets:AddColumn(oCol := HBDbColumnNew("", {||aSets[oBrwSets:cargo[1]][HB_DBG_SET_NAME]}))
    AAdd(oBrwSets:Cargo[2], aSets)
    oCol:Width := 14
-   oCol:defcolor := { 1, 2 }
+   oCol:defcolor := {1, 2}
    oBrwSets:AddColumn(oCol := HBDbColumnNew("", {||PadR(__dbgValToExp(Set(aSets[oBrwSets:cargo[1]][HB_DBG_SET_POS])), nWidth - 13)}))
-   oCol:defcolor := { 1, 3 }
+   oCol:defcolor := {1, 3}
    oCol:width := 40
-   oWndSets:bPainted := {|| oBrwSets:ForceStable(), RefreshVarsS(oBrwSets) }
+   oWndSets:bPainted := {||oBrwSets:ForceStable(), RefreshVarsS(oBrwSets)}
    oWndSets:bKeyPressed := {|nKey|SetsKeyPressed(nKey, oBrwSets, Len(aSets), oWndSets, "System Settings", ;
       {||::EditSet(aSets[oBrwSets:Cargo[1]][HB_DBG_SET_POS], oBrwSets)})}
 
    oWndSets:ShowModal()
 
    RETURN
-
 
 METHOD WatchGetInfo(nWatch) CLASS HBDebugger
 
@@ -3133,7 +3048,6 @@ METHOD WatchGetInfo(nWatch) CLASS HBDebugger
 
    RETURN aWatch[WP_EXPR] + " <" + aWatch[WP_TYPE] + ", " + cType + ">: " + xVal
 
-
 METHOD WatchpointAdd(cExpr) CLASS HBDebugger
 
    LOCAL aWatch
@@ -3151,13 +3065,12 @@ METHOD WatchpointAdd(cExpr) CLASS HBDebugger
       RETURN Self
    ENDIF
 
-   aWatch := { "wp", cExpr }
+   aWatch := {"wp", cExpr}
    __dbgAddWatch(::pInfo, cExpr, .F.)
    AAdd(::aWatch, aWatch)
    ::WatchpointsShow()
 
    RETURN Self
-
 
 METHOD WatchpointDel(xPos) CLASS HBDebugger
 
@@ -3202,7 +3115,6 @@ METHOD WatchpointDel(xPos) CLASS HBDebugger
 
    RETURN Self
 
-
 METHOD WatchpointEdit(nPos) CLASS HBDebugger
 
    LOCAL cExpr := ::InputBox("Enter Watchpoint", ::aWatch[nPos][WP_EXPR], __dbgExprValidBlock())
@@ -3218,14 +3130,13 @@ METHOD WatchpointEdit(nPos) CLASS HBDebugger
       RETURN Self
    ENDIF
 
-   aWatch := { "wp", cExpr }
+   aWatch := {"wp", cExpr}
 
    __dbgSetWatch(::pInfo, nPos - 1, cExpr, .F.)
    ::aWatch[nPos] := aWatch
    ::WatchpointsShow()
 
    RETURN Self
-
 
 METHOD WatchpointInspect(nPos) CLASS HBDebugger
 
@@ -3241,7 +3152,6 @@ METHOD WatchpointInspect(nPos) CLASS HBDebugger
 
    RETURN Self
 
-
 METHOD PROCEDURE WatchpointsHide() CLASS HBDebugger
 
    ::oWndPnt:Hide()
@@ -3252,7 +3162,6 @@ METHOD PROCEDURE WatchpointsHide() CLASS HBDebugger
    ENDIF
 
    RETURN
-
 
 METHOD PROCEDURE WatchpointsShow() CLASS HBDebugger
 
@@ -3287,37 +3196,37 @@ METHOD PROCEDURE WatchpointsShow() CLASS HBDebugger
       ::oBrwText:RefreshAll()
       ::oWndCode:SetFocus(.T.)
 
-      ::oWndPnt:bLButtonDown := {| nMRow, nMCol | ::WndVarsLButtonDown(nMRow, nMCol) }
-      ::oWndPnt:bLDblClick   := {| nMRow, nMCol | ::EditVar(::oBrwPnt:Cargo[1]) }
+      ::oWndPnt:bLButtonDown := {|nMRow, nMCol|::WndVarsLButtonDown(nMRow, nMCol)}
+      ::oWndPnt:bLDblClick   := {|nMRow, nMCol| ::EditVar(::oBrwPnt:Cargo[1])}
 #endif
 
       ::oBrwPnt := HBDbBrowser():New(nTop + 1, 1, ::oWndPnt:nBottom - 1, ::nMaxCol - iif(::oWndStack != NIL, ::oWndStack:nWidth(), 0) - 1)
 
       ::oWndPnt:Browser := ::oBrwPnt
 
-      ::oBrwPnt:Cargo := { 1, {} } // Actual highlighted row
+      ::oBrwPnt:Cargo := {1, {}} // Actual highlighted row
       aColors := __dbgColors()
       ::oBrwPnt:ColorSpec := aColors[2] + "," + aColors[5] + "," + aColors[3] + "," + aColors[6]
-      ::oBrwPnt:goTopBlock := {|| ::oBrwPnt:cargo[1] := Min(1, Len(::aWatch)) }
-      ::oBrwPnt:goBottomBlock := {|| ::oBrwPnt:cargo[1] := Len(::aWatch) }
-      ::oBrwPnt:skipBlock := {| nSkip, nOld | nOld := ::oBrwPnt:Cargo[1], ;
+      ::oBrwPnt:goTopBlock := {||::oBrwPnt:cargo[1] := Min(1, Len(::aWatch))}
+      ::oBrwPnt:goBottomBlock := {||::oBrwPnt:cargo[1] := Len(::aWatch)}
+      ::oBrwPnt:skipBlock := {|nSkip, nOld|nOld := ::oBrwPnt:Cargo[1], ;
          ::oBrwPnt:Cargo[1] += nSkip, ;
          ::oBrwPnt:Cargo[1] := Min(Max(::oBrwPnt:Cargo[1], 1), ;
          Len(::aWatch)), ;
-         iif(Len(::aWatch) > 0, ::oBrwPnt:Cargo[1] - nOld, 0) }
+         iif(Len(::aWatch) > 0, ::oBrwPnt:Cargo[1] - nOld, 0)}
 
       oCol := HBDbColumnNew("", ;
-         {|| PadR(iif(Len(::aWatch) > 0, ;
+         {||PadR(iif(Len(::aWatch) > 0, ;
                         hb_ntos(::oBrwPnt:Cargo[1] - 1) + ") " + ;
                            ::WatchGetInfo(Max(::oBrwPnt:Cargo[1], 1)), ;
-                        " "), ::oWndPnt:nWidth() - 2) })
+                        " "), ::oWndPnt:nWidth() - 2)})
       ::oBrwPnt:AddColumn(oCol)
       AAdd(::oBrwPnt:Cargo[2], ::aWatch)
-      oCol:DefColor := { 1, 2 }
+      oCol:DefColor := {1, 2}
 
-      ::oWndPnt:bPainted := {|| iif(Len(::aWatch) > 0, (::oBrwPnt:RefreshAll():ForceStable(), RefreshVarsS(::oBrwPnt) /*, ::RefreshVars()*/) , NIL) }
+      ::oWndPnt:bPainted := {||iif(Len(::aWatch) > 0, (::oBrwPnt:RefreshAll():ForceStable(), RefreshVarsS(::oBrwPnt) /*, ::RefreshVars()*/) , NIL)}
 
-      ::oWndPnt:bKeyPressed := {| nKey | ( ;
+      ::oWndPnt:bKeyPressed := {|nKey|( ;
          iif(nKey == K_DOWN, ::oBrwPnt:Down(), NIL), ;
          iif(nKey == K_UP, ::oBrwPnt:Up(), NIL), ;
          iif(nKey == K_PGDN, ::oBrwPnt:PageDown(), NIL), ;
@@ -3327,7 +3236,7 @@ METHOD PROCEDURE WatchpointsShow() CLASS HBDebugger
          iif(nKey == K_DEL, ::WatchpointDel(::oBrwPnt:Cargo[1] - 1), NIL), ;
          iif(nKey == K_ENTER, ::WatchpointEdit(::oBrwPnt:Cargo[1]), NIL), ;
          iif(nKey == K_CTRL_ENTER, ::WatchpointInspect(::oBrwPnt:Cargo[1]), NIL), ;
-         ::oBrwPnt:ForceStable()) }
+         ::oBrwPnt:ForceStable())}
 
       // Maintain fixed window array order: code, monitor, watch, callstack, command
       nPos := iif(::aWindows[2] == ::oWndVars, 3, 2)
@@ -3362,7 +3271,6 @@ METHOD PROCEDURE WatchpointsShow() CLASS HBDebugger
 
    RETURN
 
-
 METHOD PROCEDURE WatchpointList() CLASS HBDebugger
 
    LOCAL aWatch
@@ -3383,7 +3291,6 @@ METHOD PROCEDURE WatchpointList() CLASS HBDebugger
    NEXT
 
    RETURN
-
 
 METHOD PROCEDURE WndVarsLButtonDown(nMRow, nMCol) CLASS HBDebugger
 
@@ -3409,7 +3316,6 @@ METHOD PROCEDURE WndVarsLButtonDown(nMRow, nMCol) CLASS HBDebugger
    ENDIF
 
    RETURN
-
 
 STATIC PROCEDURE SetsKeyPressed(nKey, oBrwSets, nSets, oWnd, cCaption, bEdit)
 
@@ -3463,14 +3369,11 @@ STATIC PROCEDURE SetsKeyPressed(nKey, oBrwSets, nSets, oWnd, cCaption, bEdit)
 
    RETURN
 
-
 FUNCTION __dbgColors()
    RETURN t_oDebugger:GetColors()
 
-
 FUNCTION __dbg()
    RETURN t_oDebugger
-
 
 STATIC PROCEDURE RefreshVarsS(oBrowse)
 
@@ -3488,12 +3391,10 @@ STATIC PROCEDURE RefreshVarsS(oBrowse)
 
    RETURN
 
-
 STATIC FUNCTION ArrayBrowseSkip(nPos, oBrwSets)
    RETURN iif(oBrwSets:cargo[1] + nPos < 1, 0 - oBrwSets:cargo[1] + 1, ;
       iif(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
       Len(oBrwSets:cargo[2][1]) - oBrwSets:cargo[1], nPos))
-
 
 STATIC FUNCTION PathToArray(cList)
 
@@ -3511,17 +3412,15 @@ STATIC FUNCTION PathToArray(cList)
 
       AAdd(aList, cList)              // Add final element
 
-      /* Strip ending delimiters */
-      AEval(aList, {| x, i | iif(Right(x, 1) $ cDirSep, aList[i] := hb_StrShrink(x), NIL) })
+      // Strip ending delimiters
+      AEval(aList, {|x, i|iif(Right(x, 1) $ cDirSep, aList[i] := hb_StrShrink(x), NIL)})
    ENDIF
 
    RETURN aList
 
-
-/* Check if a string starts with another string with a min length */
+// Check if a string starts with another string with a min length
 STATIC FUNCTION hb_LeftEqN(cLine, cStart, nMin)
    RETURN Len(cStart) >= nMin .AND. hb_LeftEq(cLine, cStart)
-
 
 FUNCTION __dbgExprValidBlock(cType)
 
@@ -3545,8 +3444,7 @@ FUNCTION __dbgExprValidBlock(cType)
       RETURN {|u|iif(Type(u) == "UE", (__dbgAlert("Expression error"), .F.), Type(u) == cType .OR. (__dbgAlert("Must be " + cTypeName), .F.))}
    ENDIF
 
-   RETURN {| u | !Type(u) == "UE" .OR. (__dbgAlert("Expression error"), .F.) }
-
+   RETURN {|u|!Type(u) == "UE" .OR. (__dbgAlert("Expression error"), .F.)}
 
 FUNCTION __dbgInput(nRow, nCol, nWidth, cValue, bValid, cColor, nSize)
 
@@ -3582,7 +3480,6 @@ FUNCTION __dbgInput(nRow, nCol, nWidth, cValue, bValid, cColor, nSize)
 
    RETURN lOK
 
-
 FUNCTION __dbgAChoice(nTop, nLeft, nBottom, nRight, aItems, cColors)
 
    LOCAL oBrw
@@ -3594,10 +3491,10 @@ FUNCTION __dbgAChoice(nTop, nLeft, nBottom, nRight, aItems, cColors)
    oBrw:colorSpec := cColors
    nLen := nRight - nLeft + 1
    nRow := 1
-   oCol := HBDbColumnNew("", {|| PadR(aItems[nRow], nLen) })
+   oCol := HBDbColumnNew("", {||PadR(aItems[nRow], nLen)})
    oBrw:AddColumn(oCol)
-   oBrw:goTopBlock := {|| nRow := 1 }
-   oBrw:goBottomBlock := {|| nRow := Len(aItems) }
+   oBrw:goTopBlock := {||nRow := 1}
+   oBrw:goBottomBlock := {||nRow := Len(aItems)}
    oBrw:skipBlock := {|n|n := iif(n < 0, Max(n, 1 - nRow), Min(Len(aItems) - nRow, n)), nRow += n, n}
    DO WHILE .T.
       oBrw:forceStable()
@@ -3615,10 +3512,8 @@ FUNCTION __dbgAChoice(nTop, nLeft, nBottom, nRight, aItems, cColors)
 
    RETURN 0
 
-
 FUNCTION __dbgAlert(cMessage)
    RETURN hb_gtAlert(cMessage, {"Ok"}, "W+/R", "W+/B")
-
 
 FUNCTION __dbgInkey()
 
@@ -3634,7 +3529,6 @@ FUNCTION __dbgInkey()
 
    RETURN nKey
 
-
 FUNCTION __dbgSaveScreen(...)
 
    LOCAL lAppCompatBuffer := hb_gtInfo(HB_GTI_COMPATBUFFER, .F.)
@@ -3644,7 +3538,6 @@ FUNCTION __dbgSaveScreen(...)
 
    RETURN cScreen
 
-
 FUNCTION __dbgRestScreen(...)
 
    LOCAL lAppCompatBuffer := hb_gtInfo(HB_GTI_COMPATBUFFER, .F.)
@@ -3653,7 +3546,6 @@ FUNCTION __dbgRestScreen(...)
    hb_gtInfo(HB_GTI_COMPATBUFFER, lAppCompatBuffer)
 
    RETURN NIL
-
 
 FUNCTION __dbgTextToArray(cString)
    RETURN hb_ATokens(cString, .T.)
@@ -3688,7 +3580,6 @@ FUNCTION __dbgValToStr(uVal)
    ENDSWITCH
 
    RETURN "U"
-
 
 FUNCTION __dbgValToExp(uVal)
 

@@ -68,7 +68,7 @@ PROCEDURE __dbgShowWorkAreas()
    LOCAL cur_id
    LOCAL nOldArea := Select()
 
-   hb_WAEval({|| AAdd(aAlias, { Select(), Alias() }) })
+   hb_WAEval({|| AAdd(aAlias, {Select(), Alias()}) })
 
    IF Len(aAlias) == 0
       __dbgAlert("No workareas in use")
@@ -80,14 +80,14 @@ PROCEDURE __dbgShowWorkAreas()
       dbSelectArea(aAlias[1][1])
    ENDIF
 
-   /* Window creation */
+   // Window creation
 
    oDlg := HBDbWindow():New(2, 3, 21, 76, "", cColor)
 
    oDlg:bKeyPressed := {| nKey | DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, @aStruc, @aInfo) }
    oDlg:bPainted    := {|| DlgWorkAreaPaint(oDlg, aBrw) }
 
-   /* Alias browse */
+   // Alias browse
 
    aBrw[1] := HBDbBrowser():new(oDlg:nTop + 1, oDlg:nLeft + 1, oDlg:nBottom - 1, oDlg:nLeft + 11)
 
@@ -102,13 +102,13 @@ PROCEDURE __dbgShowWorkAreas()
 
    aBrw[1]:AddColumn(oCol := HBDbColumnNew("", {|| PadR(aAlias[n1][2], 11) }))
 
-   oCol:ColorBlock := {|| iif(aAlias[n1][1] == Select(), { 3, 4 }, { 1, 2 }) }
+   oCol:ColorBlock := {|| iif(aAlias[n1][1] == Select(), {3, 4}, {1, 2}) }
 
    IF cur_id > 1
       aBrw[1]:Configure():MoveCursor(cur_id - 1)
    ENDIF
 
-   /* Info Browse */
+   // Info Browse
 
    aInfo := (aAlias[n1][1])->(DbfInfo())
 
@@ -125,9 +125,9 @@ PROCEDURE __dbgShowWorkAreas()
 
    aBrw[2]:AddColumn(oCol := HBDbColumnNew("", {|| PadR(aInfo[n2], 40) }))
 
-   oCol:ColorBlock := {|| iif(aAlias[n1][1] == Select() .AND. n2 == 1, { 3, 4 }, { 1, 2 }) }
+   oCol:ColorBlock := {|| iif(aAlias[n1][1] == Select() .AND. n2 == 1, {3, 4}, {1, 2}) }
 
-   /* Structure browser */
+   // Structure browser
 
    aStruc := (aAlias[n1][1])->(dbStruct())
 
@@ -146,7 +146,7 @@ PROCEDURE __dbgShowWorkAreas()
       Str(aStruc[n3][DBS_LEN], 3) + " " + ;
       Str(aStruc[n3][DBS_DEC], 2) }))
 
-   /* Show dialog */
+   // Show dialog
 
    oDlg:ShowModal()
 
@@ -158,13 +158,13 @@ STATIC PROCEDURE DlgWorkAreaPaint(oDlg, aBrw)
 
    LOCAL oDebug := __dbg()
 
-   /* Display captions */
+   // Display captions
 
    hb_DispOutAt(oDlg:nTop, oDlg:nLeft + 5, " Area ", oDlg:cColor)
    hb_DispOutAt(oDlg:nTop, oDlg:nLeft + 28, " Status ", oDlg:cColor)
    hb_DispOutAt(oDlg:nTop, oDlg:nLeft + 56, " Structure ", oDlg:cColor)
 
-   /* Display separator lines */
+   // Display separator lines
 
    hb_DispBox(oDlg:nTop + 1, oDlg:nLeft + 12, oDlg:nBottom - 1, oDlg:nLeft + 12, HB_B_SINGLE_UNI, oDlg:cColor)
    hb_DispOutAtBox(oDlg:nTop, oDlg:nLeft + 12, hb_UTF8ToStrBox("┬"), oDlg:cColor)
@@ -178,7 +178,7 @@ STATIC PROCEDURE DlgWorkAreaPaint(oDlg, aBrw)
    hb_DispOutAtBox(oDlg:nTop + 6, oDlg:nLeft + 12, hb_UTF8ToStrBox("├"), oDlg:cColor)
    hb_DispOutAtBox(oDlg:nTop + 6, oDlg:nLeft + 53, hb_UTF8ToStrBox("┤"), oDlg:cColor)
 
-   /* Display labels */
+   // Display labels
 
    hb_DispOutAt(oDlg:nTop + 1, oDlg:nLeft + 15, "Alias:              Record:           ", oDlg:cColor)
    hb_DispOutAt(oDlg:nTop + 2, oDlg:nLeft + 15, "   BOF:         Deleted:              ", oDlg:cColor)
@@ -186,7 +186,7 @@ STATIC PROCEDURE DlgWorkAreaPaint(oDlg, aBrw)
    hb_DispOutAt(oDlg:nTop + 4, oDlg:nLeft + 15, "Filter:                               ", oDlg:cColor)
    hb_DispOutAt(oDlg:nTop + 5, oDlg:nLeft + 15, "   Key:                               ", oDlg:cColor)
 
-   /* Stabilize browse */
+   // Stabilize browse
 
    aBrw[1]:ForceStable()
    aBrw[2]:ForceStable()

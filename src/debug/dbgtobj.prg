@@ -46,13 +46,13 @@
 
 #pragma -b-
 
-#define HB_CLS_NOTOBJECT      /* do not inherit from HBObject class */
+#define HB_CLS_NOTOBJECT      // do not inherit from HBObject class
 #include "hbclass.ch"
 
 #include "inkey.ch"
 #include "setcurs.ch"
 
-/* object message description */
+// object message description
 #define OMSG_NAME       1
 #define OMSG_VALUE      2
 #define OMSG_EDIT       3
@@ -84,7 +84,7 @@ METHOD New(oObject, cVarName, lEditable) CLASS HBDbObject
 
    __dbgSetGo(__dbg():pInfo)
 
-   /* create list of object messages */
+   // create list of object messages
    aMessages := oObject:classSel()
    ASort(aMessages, NIL, NIL, {| x, y | x + Chr(0) < y + Chr(0) })
    aMethods := {}
@@ -92,13 +92,13 @@ METHOD New(oObject, cVarName, lEditable) CLASS HBDbObject
       IF hb_LeftEq(cMsg, "_") .AND. ;
          hb_AScan(aMessages, cMsgAcc := SubStr(cMsg, 2), NIL, NIL, .T.) > 0
          xValue := __dbgObjGetValue(oObject, cMsgAcc)
-         AAdd(::pItems, { cMsgAcc, xValue, .T. })
+         AAdd(::pItems, {cMsgAcc, xValue, .T.})
       ELSEIF hb_AScan(aMessages, "_" + cMsg, NIL, NIL, .T.) == 0
          AAdd(aMethods, cMsg)
       ENDIF
    NEXT
    FOR EACH cMsg IN aMethods
-      AAdd(::pItems, { Lower(cMsg), "Method", .F. })
+      AAdd(::pItems, {Lower(cMsg), "Method", .F.})
    NEXT
 
    ::objname := cVarName
@@ -145,14 +145,14 @@ METHOD addWindows(nRow) CLASS HBDbObject
    AEval(::pItems, {| x | nMaxLen := Max(nMaxLen, Len(x[OMSG_NAME])) })
    oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| ::pItems[::arrayindex][OMSG_NAME] }))
    oCol:width := nMaxLen
-   oCol:DefColor := { 1, 2 }
+   oCol:DefColor := {1, 2}
    oBrwSets:Freeze := 1
 
    oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| iif(!::pItems[::ArrayIndex][OMSG_EDIT], ;
       ::pItems[::ArrayIndex][OMSG_VALUE], ;
       __dbgValToExp(__dbgObjGetValue(::TheObj, ::pItems[::arrayindex][OMSG_NAME]))) }))
 
-   oCol:DefColor := { 1, 3 }
+   oCol:DefColor := {1, 3}
    oCol:width := oWndSets:nRight - oWndSets:nLeft - nMaxLen - 2
    oBrwSets:colPos := 2
 
@@ -272,7 +272,7 @@ STATIC FUNCTION __dbgObjGetValue(oObject, cVar, lCanAcc)
       lCanAcc := .T.
    RECOVER
       BEGIN SEQUENCE WITH __BreakBlock()
-         /* Try to access variables using class code level */
+         // Try to access variables using class code level
          xResult := __dbgSendMsg(0, oObject, cVar)
          lCanAcc := .T.
       RECOVER USING oErr
@@ -292,7 +292,7 @@ STATIC FUNCTION __dbgObjSetValue(oObject, cVar, xValue)
       __dbgSendMsg(nProcLevel, oObject, "_" + cVar, xValue)
    RECOVER
       BEGIN SEQUENCE WITH __BreakBlock()
-         /* Try to access variables using class code level */
+         // Try to access variables using class code level
          __dbgSendMsg(0, oObject, "_" + cVar, xValue)
       RECOVER USING oErr
          __dbgAlert(oErr:description)

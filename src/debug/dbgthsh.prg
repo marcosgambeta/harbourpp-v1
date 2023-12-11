@@ -46,7 +46,7 @@
 
 #pragma -b-
 
-#define HB_CLS_NOTOBJECT      /* do not inherit from HBObject class */
+#define HB_CLS_NOTOBJECT      // do not inherit from HBObject class
 #include "hbclass.ch"
 
 #include "inkey.ch"
@@ -102,7 +102,7 @@ METHOD addWindows(hHash, nRow) CLASS HBDbHash
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
    oBrwSets:ColorSpec := __dbg():ClrModal()
-   oBrwSets:Cargo := { 1, {} }  // Actual highlighted row
+   oBrwSets:Cargo := {1, {}}  // Actual highlighted row
    AAdd(oBrwSets:Cargo[2], hHash)
 
    oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| ::hashName + "[" + HashKeyString(hHash, oBrwSets:cargo[1]) + "]" }))
@@ -111,13 +111,13 @@ METHOD addWindows(hHash, nRow) CLASS HBDbHash
    nKeyLen := 0
    hb_HEval(hHash, {| k, v, p | HB_SYMBOL_UNUSED(k), HB_SYMBOL_UNUSED(v), nKeyLen := Max(nKeyLen, Len(::hashName + HashKeyString(hHash, p)) + 2) })
    oCol:width := nKeyLen
-   oCol:DefColor := { 1, 2 }
+   oCol:DefColor := {1, 2}
    nColWidth := oCol:Width
 
    oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| __dbgValToExp(hb_HValueAt(hHash, oBrwSets:cargo[1])) }))
 
    oCol:width := oWndSets:nRight - oWndSets:nLeft - nColWidth - 2
-   oCol:DefColor := { 1, 3 }
+   oCol:DefColor := {1, 3}
 
    oBrwSets:goTopBlock := {|| oBrwSets:cargo[1] := 1 }
    oBrwSets:goBottomBlock := {|| oBrwSets:cargo[1] := Len(oBrwSets:cargo[2][1]) }

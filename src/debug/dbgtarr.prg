@@ -46,7 +46,7 @@
 
 #pragma -b-
 
-#define HB_CLS_NOTOBJECT      /* do not inherit from HBObject class */
+#define HB_CLS_NOTOBJECT      // do not inherit from HBObject class
 #include "hbclass.ch"
 
 #include "inkey.ch"
@@ -102,18 +102,18 @@ METHOD addWindows(aArray, nRow) CLASS HBDbArray
 
    oBrwSets := HBDbBrowser():New(oWndSets:nTop + 1, oWndSets:nLeft + 1, oWndSets:nBottom - 1, oWndSets:nRight - 1)
    oBrwSets:ColorSpec := __dbg():ClrModal()
-   oBrwSets:Cargo := { 1, {} }  // Actual highlighted row
+   oBrwSets:Cargo := {1, {}}  // Actual highlighted row
    AAdd(oBrwSets:Cargo[2], aArray)
 
    oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| ::arrayName + "[" + hb_ntos(oBrwSets:cargo[1]) + "]" }))
    oCol:width := Len(::arrayName + "[" + hb_ntos(Len(aArray)) + "]")
-   oCol:DefColor := { 1, 2 }
+   oCol:DefColor := {1, 2}
    nColWidth := oCol:Width
 
    oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| __dbgValToExp(aArray[oBrwSets:cargo[1]]) }))
 
    oCol:width := oWndSets:nRight - oWndSets:nLeft - nColWidth - 2
-   oCol:defColor := { 1, 3 }
+   oCol:defColor := {1, 3}
 
    oBrwSets:goTopBlock := {|| oBrwSets:cargo[1] := 1 }
    oBrwSets:goBottomBlock := {|| oBrwSets:cargo[1] := Len(oBrwSets:cargo[2][1]) }

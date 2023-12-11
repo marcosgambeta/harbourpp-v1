@@ -46,7 +46,7 @@
 
 #pragma -b-
 
-#define HB_CLS_NOTOBJECT      /* do not inherit from HBObject class */
+#define HB_CLS_NOTOBJECT      // do not inherit from HBObject class
 #include "hbclass.ch"
 
 CREATE CLASS HBBrwText
@@ -134,15 +134,15 @@ METHOD New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers) CLASS
 
    ::oBrw:colorSpec := cColors
 
-   oCol := HBDbColumnNew("", {|| ::GetLineText() })
+   oCol := HBDbColumnNew("", {||::GetLineText()})
 
-   oCol:colorBlock := {|| ::GetLineColor() }
+   oCol:colorBlock := {||::GetLineColor()}
 
    ::oBrw:AddColumn(oCol)
 
-   ::oBrw:goTopBlock := {|| ::nRow := 1 }
-   ::oBrw:goBottomBlock := {|| ::nRow := ::nRows }
-   ::oBrw:skipBlock := {| n | ::Skip(n) }
+   ::oBrw:goTopBlock := {||::nRow := 1}
+   ::oBrw:goBottomBlock := {||::nRow := ::nRows}
+   ::oBrw:skipBlock := {|n|::Skip(n)}
 
    IF !Empty(cFileName)
       ::LoadFile(cFileName)
@@ -176,9 +176,9 @@ METHOD GetLineColor() CLASS HBBrwText
    LOCAL aColor
 
    IF __dbgIsBreak(__dbg():pInfo, ::cFileName, ::nRow) >= 0
-      aColor := iif(::nRow == ::nActiveLine, { 4, 4 }, { 3, 3 })
+      aColor := iif(::nRow == ::nActiveLine, {4, 4}, {3, 3})
    ELSE
-      aColor := iif(::nRow == ::nActiveLine, { 2, 2 }, { 1, 1 })
+      aColor := iif(::nRow == ::nActiveLine, {2, 2}, {1, 1})
    ENDIF
 
    RETURN aColor
@@ -239,15 +239,15 @@ METHOD Search(cString, lCaseSensitive, nMode) CLASS HBBrwText
    ENDIF
 
    SWITCH hb_defaultValue(nMode, 0)
-   CASE 0  // From Top
+   CASE 0 // From Top
       ::GoTop()
-      bMove := {|| ::Skip(1) }
+      bMove := {||::Skip(1)}
       EXIT
-   CASE 1  // Forward
-      bMove := {|| ::Skip(1) }
+   CASE 1 // Forward
+      bMove := {||::Skip(1)}
       EXIT
-   CASE 2  // Backward
-      bMove := {|| ::Skip(-1) }
+   CASE 2 // Backward
+      bMove := {||::Skip(-1)}
       EXIT
    ENDSWITCH
 
