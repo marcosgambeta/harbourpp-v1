@@ -508,7 +508,7 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
    return pSelf;
 }
 
-static HB_BOOL hb_compExprReducePlusNums(PHB_EXPR pSelf, PHB_EXPR pAdd)
+static bool hb_compExprReducePlusNums(PHB_EXPR pSelf, PHB_EXPR pAdd)
 {
    PHB_EXPR pLeft = pSelf->value.asOperator.pLeft;
    PHB_EXPR pRight = pSelf->value.asOperator.pRight;
