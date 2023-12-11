@@ -2938,7 +2938,7 @@ const char * hb_cdpSelectID(const char * id)
    HB_TRACE(HB_TR_DEBUG, ("hb_cdpSelectID(%s)", id));
 #endif
 
-   PHB_CODEPAGE cdp = hb_cdpSelect(hb_cdpFindExt(id));
+   auto cdp = hb_cdpSelect(hb_cdpFindExt(id));
    return cdp ? cdp->id : nullptr;
 }
 

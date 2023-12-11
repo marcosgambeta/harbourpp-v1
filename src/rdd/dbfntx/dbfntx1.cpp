@@ -627,7 +627,7 @@ static LPKEYINFO hb_ntxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
 {
    NTXAREAP pArea = pTag->pIndex->pArea;
    PHB_ITEM pItem;
-   PHB_CODEPAGE cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
+   auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
 
    if( pTag->nField ) {
       pItem = hb_itemNew(nullptr);
@@ -4981,7 +4981,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
       HB_BYTE * pSaveRecBuff = pArea->dbfarea.pRecord;
       char szBuffer[NTX_MAX_KEY];
       int iRecBuff = 0, iRecBufSize, iRec;
-      PHB_CODEPAGE cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
+      auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
       PHB_ITEM pForItem, pItem = nullptr;
 
       pForItem = pTag->pForItem;

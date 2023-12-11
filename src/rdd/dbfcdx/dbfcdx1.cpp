@@ -588,7 +588,7 @@ static LPCDXKEY hb_cdxKeyEval(LPCDXKEY pKey, LPCDXTAG pTag)
 {
    CDXAREAP pArea = pTag->pIndex->pArea;
    PHB_ITEM pItem;
-   PHB_CODEPAGE cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
+   auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
 
    if( pTag->nField ) {
       pItem = hb_stackReturnItem();
@@ -8812,7 +8812,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
    PHB_ITEM pWhileItem = nullptr, pEvalItem = nullptr;
    HB_ULONG ulRecCount, ulRecNo = pArea->dbfarea.ulRecNo;
    HB_LONG lStep = 0;
-   PHB_CODEPAGE cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
+   auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
 
    if( pArea->dbfarea.area.lpdbOrdCondInfo ) {
       pEvalItem = pArea->dbfarea.area.lpdbOrdCondInfo->itmCobEval;

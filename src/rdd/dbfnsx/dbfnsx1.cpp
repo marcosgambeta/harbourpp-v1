@@ -737,7 +737,7 @@ static LPKEYINFO hb_nsxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
 {
    NSXAREAP pArea = pTag->pIndex->pArea;
    PHB_ITEM pItem;
-   PHB_CODEPAGE cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
+   auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
 
    if( pTag->nField ) {
       pItem = hb_itemNew(nullptr);
@@ -5371,7 +5371,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
       char szBuffer[NSX_MAXKEYLEN];
       int iRecBuff = 0, iRecBufSize, iRec;
       double d;
-      PHB_CODEPAGE cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
+      auto cdpTmp = hb_cdpSelect(pArea->dbfarea.area.cdPage);
       PHB_ITEM pItem = nullptr;
       PHB_ITEM pForItem;
 
