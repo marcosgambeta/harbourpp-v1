@@ -104,7 +104,7 @@ CREATE CLASS HBDbWindow // Debugger windows and dialogs
 
 ENDCLASS
 
-METHOD New(nTop, nLeft, nBottom, nRight, cCaption, cColor) CLASS HBDbWindow
+METHOD HBDbWindow:New(nTop, nLeft, nBottom, nRight, cCaption, cColor)
 
    ::nTop     := nTop
    ::nLeft    := nLeft
@@ -129,7 +129,7 @@ METHOD PROCEDURE Hide() CLASS HBDbWindow
 
    RETURN
 
-METHOD IsOver(nRow, nCol) CLASS HBDbWindow
+METHOD HBDbWindow:IsOver(nRow, nCol)
 
    RETURN nRow >= ::nTop .AND. nRow <= ::nBottom .AND. nCol >= ::nLeft .AND. nCol <= ::nRight
 
@@ -335,7 +335,7 @@ METHOD PROCEDURE LoadColors() CLASS HBDbWindow
 
    RETURN
 
-METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBDbWindow
+METHOD HBDbWindow:Resize(nTop, nLeft, nBottom, nRight)
 
    LOCAL lShow
 

@@ -116,7 +116,7 @@ CREATE CLASS HBBrwText
 
 ENDCLASS
 
-METHOD New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers) CLASS HBBrwText
+METHOD HBBrwText:New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers)
 
    LOCAL oCol
 
@@ -150,28 +150,28 @@ METHOD New(nTop, nLeft, nBottom, nRight, cFileName, cColors, lLineNumbers) CLASS
 
    RETURN Self
 
-METHOD GotoLine(n) CLASS HBBrwText
+METHOD HBBrwText:GotoLine(n)
 
    ::oBrw:MoveCursor(n - ::nRow)
    ::RefreshAll()
 
    RETURN Self
 
-METHOD SetActiveLine(n) CLASS HBBrwText
+METHOD HBBrwText:SetActiveLine(n)
 
    ::nActiveLine := n
    ::RefreshAll()
 
    RETURN Self
 
-METHOD GetLine() CLASS HBBrwText
+METHOD HBBrwText:GetLine()
    RETURN iif(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
       MemoLine(::aRows[::nRow], ::nMaxLineLen, 1, ::nTabWidth, .F.)
 
-METHOD GetLineText() CLASS HBBrwText
+METHOD HBBrwText:GetLineText()
    RETURN PadR(SubStr(::GetLine(), ::nLineOffset), ::nWidth)
 
-METHOD GetLineColor() CLASS HBBrwText
+METHOD HBBrwText:GetLineColor()
 
    LOCAL aColor
 
@@ -201,7 +201,7 @@ METHOD PROCEDURE LoadFile(cFileName) CLASS HBBrwText
 
    RETURN
 
-METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBBrwText
+METHOD HBBrwText:Resize(nTop, nLeft, nBottom, nRight)
 
    LOCAL lResize := .F.
 
@@ -228,7 +228,7 @@ METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBBrwText
 
    RETURN Self
 
-METHOD Search(cString, lCaseSensitive, nMode) CLASS HBBrwText
+METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
 
    LOCAL bMove
    LOCAL lFound := .F.
@@ -264,19 +264,19 @@ METHOD Search(cString, lCaseSensitive, nMode) CLASS HBBrwText
 
    RETURN lFound
 
-METHOD GoFirst() CLASS HBBrwText
+METHOD HBBrwText:GoFirst()
 
    ::nRow := 1
 
    RETURN .T.
 
-METHOD GoLast() CLASS HBBrwText
+METHOD HBBrwText:GoLast()
 
    ::nRow := ::nRows
 
    RETURN .T.
 
-METHOD Skip(n) CLASS HBBrwText
+METHOD HBBrwText:Skip(n)
 
    LOCAL nSkipped := 0
 
@@ -294,7 +294,7 @@ METHOD Skip(n) CLASS HBBrwText
 
    RETURN nSkipped
 
-METHOD GoPrev() CLASS HBBrwText
+METHOD HBBrwText:GoPrev()
 
    LOCAL lMoved := .F.
 
@@ -305,7 +305,7 @@ METHOD GoPrev() CLASS HBBrwText
 
    RETURN lMoved
 
-METHOD GoNext() CLASS HBBrwText
+METHOD HBBrwText:GoNext()
 
    LOCAL lMoved := .F.
 

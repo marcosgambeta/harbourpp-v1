@@ -80,7 +80,7 @@ CREATE CLASS HBDbInput
 
 ENDCLASS
 
-METHOD new(nRow, nCol, nWidth, cValue, cColor, nSize) CLASS HBDbInput
+METHOD HBDbInput:new(nRow, nCol, nWidth, cValue, cColor, nSize)
 
    ::nRow   := nRow
    ::nCol   := nCol
@@ -92,7 +92,7 @@ METHOD new(nRow, nCol, nWidth, cValue, cColor, nSize) CLASS HBDbInput
 
    RETURN Self
 
-METHOD SetColor(cColor) CLASS HBDbInput
+METHOD HBDbInput:SetColor(cColor)
 
    ::acColor := {hb_ColorIndex(cColor, CLR_STANDARD), hb_ColorIndex(cColor, CLR_ENHANCED)}
    IF hb_ColorToN(::acColor[2]) == -1
@@ -101,24 +101,24 @@ METHOD SetColor(cColor) CLASS HBDbInput
 
    RETURN Self
 
-METHOD newPos(nRow, nCol) CLASS HBDbInput
+METHOD HBDbInput:newPos(nRow, nCol)
 
    ::nRow := nRow
    ::nCol := nCol
 
    RETURN Self
 
-METHOD getValue() CLASS HBDbInput
+METHOD HBDbInput:getValue()
    RETURN ::cValue
 
-METHOD setValue(cValue) CLASS HBDbInput
+METHOD HBDbInput:setValue(cValue)
 
    ::cValue := PadR(cValue, ::nSize)
    ::nPos := Min(::nSize, Len(RTrim(::cValue)) + 1)
 
    RETURN Self
 
-METHOD display() CLASS HBDbInput
+METHOD HBDbInput:display()
 
    IF ::nPos < ::nFirst
       ::nFirst := ::nPos
@@ -129,14 +129,14 @@ METHOD display() CLASS HBDbInput
 
    RETURN Self
 
-METHOD showCursor() CLASS HBDbInput
+METHOD HBDbInput:showCursor()
 
    SetPos(::nRow, ::nCol + ::nPos - ::nFirst)
    SetCursor(iif(Set(_SET_INSERT), SC_INSERT, SC_NORMAL))
 
    RETURN Self
 
-METHOD applyKey(nKey) CLASS HBDbInput
+METHOD HBDbInput:applyKey(nKey)
 
    LOCAL lUpdate := .T.
 

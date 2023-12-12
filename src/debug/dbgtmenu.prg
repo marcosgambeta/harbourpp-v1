@@ -101,7 +101,7 @@ CREATE CLASS HBDbMenu
 
 ENDCLASS
 
-METHOD aMenus(xNewVal) CLASS HBDbMenu
+METHOD HBDbMenu:aMenus(xNewVal)
 
    THREAD STATIC t_aMenus
 
@@ -111,7 +111,7 @@ METHOD aMenus(xNewVal) CLASS HBDbMenu
 
    RETURN t_aMenus
 
-METHOD New() CLASS HBDbMenu
+METHOD HBDbMenu:New()
 
    IF ::aMenus == NIL
       ::aMenus := {}
@@ -132,7 +132,7 @@ METHOD New() CLASS HBDbMenu
 
    RETURN Self
 
-METHOD AddItem(oMenuItem) CLASS HBDbMenu
+METHOD HBDbMenu:AddItem(oMenuItem)
 
    LOCAL oLastMenu := ATail(::aMenus)
    LOCAL oLastMenuItem
@@ -246,7 +246,7 @@ METHOD PROCEDURE EvalAction() CLASS HBDbMenu
 
    RETURN
 
-METHOD GetHotKeyPos(cKey) CLASS HBDbMenu
+METHOD HBDbMenu:GetHotKeyPos(cKey)
 
    LOCAL oMenuItem
 
@@ -258,7 +258,7 @@ METHOD GetHotKeyPos(cKey) CLASS HBDbMenu
 
    RETURN 0
 
-METHOD GetItemOrdByCoors(nRow, nCol) CLASS HBDbMenu
+METHOD HBDbMenu:GetItemOrdByCoors(nRow, nCol)
 
    LOCAL oMenuItem
 
@@ -271,7 +271,7 @@ METHOD GetItemOrdByCoors(nRow, nCol) CLASS HBDbMenu
 
    RETURN 0
 
-METHOD GetItemByIdent(uIdent) CLASS HBDbMenu
+METHOD HBDbMenu:GetItemByIdent(uIdent)
 
    LOCAL oMenuItem
    LOCAL oItem

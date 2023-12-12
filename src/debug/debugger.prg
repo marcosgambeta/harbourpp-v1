@@ -334,7 +334,7 @@ CREATE CLASS HBDebugger
 
 ENDCLASS
 
-METHOD New() CLASS HBDebugger
+METHOD HBDebugger:New()
 
    t_oDebugger := Self
 
@@ -795,7 +795,7 @@ METHOD PROCEDURE CommandWindowProcessKey(nKey) CLASS HBDebugger
  * ? <expr>
  *      displays either result or error description in command window
  */
-METHOD DoCommand(cCommand) CLASS HBDebugger
+METHOD HBDebugger:DoCommand(cCommand)
 
    LOCAL aCmnd[3]
    LOCAL cParam1 := ""
@@ -1277,13 +1277,13 @@ METHOD PROCEDURE EditVar(nVar) CLASS HBDebugger
 
    RETURN
 
-METHOD FindNext() CLASS HBDebugger
+METHOD HBDebugger:FindNext()
    RETURN ::Locate(1, ::cSearchString)
 
-METHOD FindPrevious() CLASS HBDebugger
+METHOD HBDebugger:FindPrevious()
    RETURN ::Locate(2, ::cSearchString)
 
-METHOD GetExprValue(xExpr, lValid) CLASS HBDebugger
+METHOD HBDebugger:GetExprValue(xExpr, lValid)
 
    LOCAL xResult
    LOCAL oErr
@@ -1306,10 +1306,10 @@ METHOD GetExprValue(xExpr, lValid) CLASS HBDebugger
 
    RETURN xResult
 
-METHOD GetSourceFiles() CLASS HBDebugger
+METHOD HBDebugger:GetSourceFiles()
    RETURN __dbgGetSourceFiles(::pInfo)
 
-METHOD ModuleMatch(cModuleName1, cModuleName2) CLASS HBDebugger
+METHOD HBDebugger:ModuleMatch(cModuleName1, cModuleName2)
    RETURN __dbgModuleMatch(::pInfo, cModuleName1, cModuleName2)
 
 METHOD PROCEDURE Global() CLASS HBDebugger
@@ -1592,7 +1592,7 @@ METHOD PROCEDURE HideVars() CLASS HBDebugger
 
    RETURN
 
-METHOD InputBox(cMsg, uValue, bValid, lEditable) CLASS HBDebugger
+METHOD HBDebugger:InputBox(cMsg, uValue, bValid, lEditable)
 
    LOCAL nTop    := Int((::nMaxRow / 2) - 5)
    LOCAL nLeft   := Int((::nMaxCol / 2) - 25)
@@ -1676,17 +1676,17 @@ METHOD PROCEDURE Inspect(uValue, cValueName) CLASS HBDebugger
 
    RETURN
 
-METHOD IsValidStopLine(cName, nLine) CLASS HBDebugger
+METHOD HBDebugger:IsValidStopLine(cName, nLine)
    RETURN __dbgIsValidStopLine(::pInfo, cName, nLine)
 
-METHOD RunAtStartup(lRunAtStartup) CLASS HBDebugger
+METHOD HBDebugger:RunAtStartup(lRunAtStartup)
 
    ::lRunAtStartup := hb_defaultValue(lRunAtStartup, !::lRunAtStartup)
    ::oPulldown:GetItemByIdent("ALTD"):checked := ::lRunAtStartup
 
    RETURN Self
 
-METHOD LineNumbers(lLineNumbers) CLASS HBDebugger
+METHOD HBDebugger:LineNumbers(lLineNumbers)
 
    ::lLineNumbers := hb_defaultValue(lLineNumbers, !::lLineNumbers)
    ::oPulldown:GetItemByIdent("LINE"):checked := ::lLineNumbers
@@ -1697,7 +1697,7 @@ METHOD LineNumbers(lLineNumbers) CLASS HBDebugger
 
    RETURN Self
 
-METHOD ListBox(cCaption, aItems) CLASS HBDebugger
+METHOD HBDebugger:ListBox(cCaption, aItems)
 
    LOCAL nItems
    LOCAL nMaxWid
@@ -1879,7 +1879,7 @@ METHOD PROCEDURE Local() CLASS HBDebugger
 
    RETURN
 
-METHOD Locate(nMode, cValue) CLASS HBDebugger
+METHOD HBDebugger:Locate(nMode, cValue)
 
    LOCAL lFound
 
@@ -1896,7 +1896,7 @@ METHOD Locate(nMode, cValue) CLASS HBDebugger
 
    RETURN lFound
 
-METHOD LocatePrgPath(cPrgName) CLASS HBDebugger
+METHOD HBDebugger:LocatePrgPath(cPrgName)
 
    LOCAL cRetPrgName
    LOCAL cDir
@@ -1918,7 +1918,7 @@ METHOD PROCEDURE MonoDisplay() CLASS HBDebugger
 
    RETURN
 
-METHOD NextRoutine() CLASS HBDebugger
+METHOD HBDebugger:NextRoutine()
 
    ::RestoreAppScreen()
    ::RestoreAppState()
@@ -1999,7 +1999,7 @@ METHOD PROCEDURE Open(cFileName) CLASS HBDebugger
 
    RETURN
 
-METHOD OpenMenu(cName) CLASS HBDebugger
+METHOD HBDebugger:OpenMenu(cName)
 
    LOCAL nPopup := ::oPullDown:GetHotKeyPos(Left(cName, 1))
 
@@ -2012,7 +2012,7 @@ METHOD OpenMenu(cName) CLASS HBDebugger
 
    RETURN .T.
 
-METHOD OpenPPO() CLASS HBDebugger
+METHOD HBDebugger:OpenPPO()
 
    LOCAL lSuccess
 
@@ -2090,7 +2090,7 @@ METHOD PROCEDURE Quit() CLASS HBDebugger
 
    RETURN
 
-METHOD PathForFiles(cPathForFiles) CLASS HBDebugger
+METHOD HBDebugger:PathForFiles(cPathForFiles)
 
    IF cPathForFiles == NIL
       cPathForFiles := ::InputBox("Search path for source files:", ::cPathForFiles)
@@ -2172,7 +2172,7 @@ METHOD PROCEDURE RemoveWindow(oWnd) CLASS HBDebugger
 
    RETURN
 
-METHOD ResizeWindows(oWindow) CLASS HBDebugger
+METHOD HBDebugger:ResizeWindows(oWindow)
 
    LOCAL oWindow2
    LOCAL nTop
@@ -2416,7 +2416,7 @@ METHOD PROCEDURE SaveSettings(cFileName) CLASS HBDebugger
 
    RETURN
 
-METHOD ResizeCmdWnd(nLines) CLASS HBDebugger
+METHOD HBDebugger:ResizeCmdWnd(nLines)
 
    LOCAL nRight
    LOCAL nTop
@@ -2834,7 +2834,7 @@ METHOD PROCEDURE Step() CLASS HBDebugger
 
    RETURN
 
-METHOD ToCursor() CLASS HBDebugger
+METHOD HBDebugger:ToCursor()
 
    IF ::IsValidStopLine(::cPrgName, ::oBrwText:RowPos)
       __dbgSetToCursor(::pInfo, ::cPrgName, ::oBrwText:RowPos)
@@ -2872,7 +2872,7 @@ METHOD PROCEDURE BreakPointToggle(nLine, cFileName) CLASS HBDebugger
 
    RETURN
 
-METHOD BreakPointDelete(cPos) CLASS HBDebugger
+METHOD HBDebugger:BreakPointDelete(cPos)
 
    LOCAL nAt
 
@@ -2895,13 +2895,13 @@ METHOD BreakPointDelete(cPos) CLASS HBDebugger
 
    RETURN Self
 
-METHOD BreakPointFunc(cFuncName) CLASS HBDebugger
+METHOD HBDebugger:BreakPointFunc(cFuncName)
 
    __dbgAddBreak(::pInfo, NIL, NIL, cFuncName)
 
    RETURN Self
 
-METHOD BreakPointList() CLASS HBDebugger
+METHOD HBDebugger:BreakPointList()
 
    LOCAL aBreak
    LOCAL cType
@@ -2916,14 +2916,14 @@ METHOD BreakPointList() CLASS HBDebugger
 
    RETURN Self
 
-METHOD Trace() CLASS HBDebugger
+METHOD HBDebugger:Trace()
 
    __dbgSetTrace(::pInfo)
    ::Step() // forces a Step()
 
    RETURN Self
 
-METHOD TracepointAdd(cExpr) CLASS HBDebugger
+METHOD HBDebugger:TracepointAdd(cExpr)
 
    LOCAL aWatch
 
@@ -2949,7 +2949,7 @@ METHOD TracepointAdd(cExpr) CLASS HBDebugger
 
    RETURN Self
 
-METHOD VarGetInfo(aVar) CLASS HBDebugger
+METHOD HBDebugger:VarGetInfo(aVar)
 
    LOCAL uValue := ::VarGetValue(aVar)
    LOCAL cType
@@ -2963,7 +2963,7 @@ METHOD VarGetInfo(aVar) CLASS HBDebugger
 
    RETURN aVar[HB_DBG_VAR_NAME] + " <" + cType + ", " + ValType(uValue) + ">: " + __dbgValToStr(uValue)
 
-METHOD VarGetValue(aVar) CLASS HBDebugger
+METHOD HBDebugger:VarGetValue(aVar)
 
    SWITCH aVar[HB_DBG_VAR_TYPE]
    CASE "G" ; RETURN __dbgVMVarGGet(aVar[HB_DBG_VAR_FRAME], aVar[HB_DBG_VAR_INDEX])
@@ -2974,7 +2974,7 @@ METHOD VarGetValue(aVar) CLASS HBDebugger
    // Public or Private created in ::LoadVars(), value stored in HB_DBG_VAR_INDEX
    RETURN aVar[HB_DBG_VAR_MVALUE]
 
-METHOD VarSetValue(aVar, uValue) CLASS HBDebugger
+METHOD HBDebugger:VarSetValue(aVar, uValue)
 
    LOCAL nProcLevel
 
@@ -3027,7 +3027,7 @@ METHOD PROCEDURE ViewSets() CLASS HBDebugger
 
    RETURN
 
-METHOD WatchGetInfo(nWatch) CLASS HBDebugger
+METHOD HBDebugger:WatchGetInfo(nWatch)
 
    LOCAL xVal
    LOCAL cType
@@ -3048,7 +3048,7 @@ METHOD WatchGetInfo(nWatch) CLASS HBDebugger
 
    RETURN aWatch[WP_EXPR] + " <" + aWatch[WP_TYPE] + ", " + cType + ">: " + xVal
 
-METHOD WatchpointAdd(cExpr) CLASS HBDebugger
+METHOD HBDebugger:WatchpointAdd(cExpr)
 
    LOCAL aWatch
 
@@ -3072,7 +3072,7 @@ METHOD WatchpointAdd(cExpr) CLASS HBDebugger
 
    RETURN Self
 
-METHOD WatchpointDel(xPos) CLASS HBDebugger
+METHOD HBDebugger:WatchpointDel(xPos)
 
    LOCAL nPos := -1
    LOCAL lAll := .F.
@@ -3115,7 +3115,7 @@ METHOD WatchpointDel(xPos) CLASS HBDebugger
 
    RETURN Self
 
-METHOD WatchpointEdit(nPos) CLASS HBDebugger
+METHOD HBDebugger:WatchpointEdit(nPos)
 
    LOCAL cExpr := ::InputBox("Enter Watchpoint", ::aWatch[nPos][WP_EXPR], __dbgExprValidBlock())
    LOCAL aWatch
@@ -3138,7 +3138,7 @@ METHOD WatchpointEdit(nPos) CLASS HBDebugger
 
    RETURN Self
 
-METHOD WatchpointInspect(nPos) CLASS HBDebugger
+METHOD HBDebugger:WatchpointInspect(nPos)
 
    LOCAL xValue
    LOCAL lValid

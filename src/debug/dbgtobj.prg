@@ -74,7 +74,7 @@ CREATE CLASS HBDbObject
 
 ENDCLASS
 
-METHOD New(oObject, cVarName, lEditable) CLASS HBDbObject
+METHOD HBDbObject:New(oObject, cVarName, lEditable)
 
    LOCAL cMsg
    LOCAL cMsgAcc
@@ -109,7 +109,7 @@ METHOD New(oObject, cVarName, lEditable) CLASS HBDbObject
 
    RETURN Self
 
-METHOD addWindows(nRow) CLASS HBDbObject
+METHOD HBDbObject:addWindows(nRow)
 
    LOCAL oBrwSets
    LOCAL nSize := Len(::pItems)

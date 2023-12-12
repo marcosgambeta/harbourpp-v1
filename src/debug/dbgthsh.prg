@@ -68,7 +68,7 @@ CREATE CLASS HBDbHash
 
 ENDCLASS
 
-METHOD New(hHash, cVarName, lEditable) CLASS HBDbHash
+METHOD HBDbHash:New(hHash, cVarName, lEditable)
 
    ::hashName := cVarName
    ::TheHash := hHash
@@ -78,7 +78,7 @@ METHOD New(hHash, cVarName, lEditable) CLASS HBDbHash
 
    RETURN Self
 
-METHOD addWindows(hHash, nRow) CLASS HBDbHash
+METHOD HBDbHash:addWindows(hHash, nRow)
 
    LOCAL oBrwSets
    LOCAL nSize := Len(hHash)
@@ -153,7 +153,7 @@ METHOD PROCEDURE doGet(oBrowse, pItem, nSet) CLASS HBDbHash
 
    RETURN
 
-METHOD SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash) CLASS HBDbHash
+METHOD HBDbHash:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, hHash)
 
    LOCAL nSet := oBrwSets:cargo[1]
    LOCAL cOldname := ::hashName

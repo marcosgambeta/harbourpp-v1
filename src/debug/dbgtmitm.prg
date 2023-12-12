@@ -71,7 +71,7 @@ CREATE CLASS HBDbMenuItem
 
 ENDCLASS
 
-METHOD New(cPrompt, bAction, lChecked, xIdent) CLASS HBDbMenuItem
+METHOD HBDbMenuItem:New(cPrompt, bAction, lChecked, xIdent)
 
    ::cPrompt  := cPrompt
    ::bAction  := bAction
@@ -80,7 +80,7 @@ METHOD New(cPrompt, bAction, lChecked, xIdent) CLASS HBDbMenuItem
 
    RETURN Self
 
-METHOD Display(cClrText, cClrHotKey) CLASS HBDbMenuItem
+METHOD HBDbMenuItem:Display(cClrText, cClrHotKey)
 
    LOCAL nAt
 

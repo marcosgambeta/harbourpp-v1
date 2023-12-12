@@ -68,7 +68,7 @@ CREATE CLASS HBDbArray
 
 ENDCLASS
 
-METHOD New(aArray, cVarName, lEditable) CLASS HBDbArray
+METHOD HBDbArray:New(aArray, cVarName, lEditable)
 
    ::arrayName := cVarName
    ::TheArray := aArray
@@ -78,7 +78,7 @@ METHOD New(aArray, cVarName, lEditable) CLASS HBDbArray
 
    RETURN Self
 
-METHOD addWindows(aArray, nRow) CLASS HBDbArray
+METHOD HBDbArray:addWindows(aArray, nRow)
 
    LOCAL oBrwSets
    LOCAL nSize := Len(aArray)
@@ -149,7 +149,7 @@ METHOD PROCEDURE doGet(oBrowse, pItem, nSet) CLASS HBDbArray
 
    RETURN
 
-METHOD SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray) CLASS HBDbArray
+METHOD HBDbArray:SetsKeyPressed(nKey, oBrwSets, oWnd, cName, aArray)
 
    LOCAL nSet := oBrwSets:cargo[1]
    LOCAL cOldName := ::arrayName

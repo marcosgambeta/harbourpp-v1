@@ -111,7 +111,7 @@ CREATE CLASS HBDbBrowser
 
 ENDCLASS
 
-METHOD New(nTop, nLeft, nBottom, nRight, oParentWindow) CLASS HBDbBrowser
+METHOD HBDbBrowser:New(nTop, nLeft, nBottom, nRight, oParentWindow)
 
    ::Window := oParentWindow
    ::nTop := nTop
@@ -121,7 +121,7 @@ METHOD New(nTop, nLeft, nBottom, nRight, oParentWindow) CLASS HBDbBrowser
 
    RETURN Self
 
-METHOD Configure() CLASS HBDbBrowser
+METHOD HBDbBrowser:Configure()
 
    ::rowCount := ::nBottom - ::nTop + 1
    IF ::rowPos > ::rowCount
@@ -133,7 +133,7 @@ METHOD Configure() CLASS HBDbBrowser
 
    RETURN Self
 
-METHOD SetColorSpec(cColors) CLASS HBDbBrowser
+METHOD HBDbBrowser:SetColorSpec(cColors)
 
    IF HB_ISSTRING(cColors)
       ::cColorSpec := cColors
@@ -142,7 +142,7 @@ METHOD SetColorSpec(cColors) CLASS HBDbBrowser
 
    RETURN ::cColorSpec
 
-METHOD MoveCursor(nSkip) CLASS HBDbBrowser
+METHOD HBDbBrowser:MoveCursor(nSkip)
 
    LOCAL nSkipped
 
@@ -160,7 +160,7 @@ METHOD MoveCursor(nSkip) CLASS HBDbBrowser
 
    RETURN Self
 
-METHOD DispRow(nRow, lHiLite) CLASS HBDbBrowser
+METHOD HBDbBrowser:DispRow(nRow, lHiLite)
 
    LOCAL nColX
    LOCAL nWid
@@ -198,7 +198,7 @@ METHOD DispRow(nRow, lHiLite) CLASS HBDbBrowser
 
    RETURN Self
 
-METHOD ForceStable() CLASS HBDbBrowser
+METHOD HBDbBrowser:ForceStable()
 
    LOCAL nRow
 
@@ -218,7 +218,7 @@ METHOD ForceStable() CLASS HBDbBrowser
 
    RETURN Self
 
-METHOD GoTo(nRow) CLASS HBDbBrowser
+METHOD HBDbBrowser:GoTo(nRow)
 
    LOCAL nOldRow := ::nFirstVisible + ::rowPos - 1
    LOCAL nSkipped := 0
@@ -233,7 +233,7 @@ METHOD GoTo(nRow) CLASS HBDbBrowser
 
    RETURN nSkipped - nOldRow + 1
 
-METHOD GoBottom() CLASS HBDbBrowser
+METHOD HBDbBrowser:GoBottom()
 
    LOCAL nScroll
 
@@ -248,7 +248,7 @@ METHOD GoBottom() CLASS HBDbBrowser
 
    RETURN Self
 
-METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBDbBrowser
+METHOD HBDbBrowser:Resize(nTop, nLeft, nBottom, nRight)
 
    LOCAL lResize := .F.
 
@@ -288,7 +288,7 @@ CREATE CLASS HBDbColumn
 
 ENDCLASS
 
-METHOD New(cHeading, bBlock) CLASS HBDbColumn
+METHOD HBDbColumn:New(cHeading, bBlock)
 
    HB_SYMBOL_UNUSED(cHeading)
    ::block := bBlock
