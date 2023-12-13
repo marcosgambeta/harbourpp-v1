@@ -239,7 +239,7 @@ METHOD AddEntry( oEntry ) CLASS GenerateHTML
          ELSE
             ::OpenTagInline( "h4" ):AppendInline( cEntry ):CloseTag( "h4" )
          ENDIF
-      ELSEIF oEntry:IsField( item ) .AND. oEntry:IsOutput( item ) .AND. Len( oEntry:fld[ item ] ) > 0
+      ELSEIF oEntry:IsField( item ) .AND. oEntry:IsOutput( item ) .AND. Len(oEntry:fld[ item ]) > 0
          ::WriteEntry( item, oEntry:fld[ item ], oEntry:IsPreformatted( item ) )
       ENDIF
    NEXT
@@ -396,7 +396,7 @@ METHOD OpenTagInline( cText, ... ) CLASS GenerateHTML
    LOCAL aArgs := hb_AParams()
    LOCAL idx
 
-   FOR idx := 2 TO Len( aArgs ) STEP 2
+   FOR idx := 2 TO Len(aArgs) STEP 2
       cText += " " + aArgs[ idx ] + "=" + '"' + aArgs[ idx + 1 ] + '"'
    NEXT
 
@@ -421,7 +421,7 @@ METHOD Tagged( cText, cTag, ... ) CLASS GenerateHTML
    LOCAL cResult := ""
    LOCAL idx
 
-   FOR idx := 3 TO Len( aArgs ) STEP 2
+   FOR idx := 3 TO Len(aArgs) STEP 2
       cResult += " " + aArgs[ idx ] + "=" + '"' + aArgs[ idx + 1 ] + '"'
    NEXT
 
@@ -471,7 +471,7 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
 
          lEM := lIT := lPR := .F.
          cOut := ""
-         nLen := Len( cText )
+         nLen := Len(cText)
          FOR tmp := 1 TO nLen
 
             cPrev := iif(tmp > 1, SubStr(cText, tmp - 1, 1), "")
@@ -479,14 +479,14 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
             cNext := SubStr(cText, tmp + 1, 1)
 
             DO CASE
-            CASE ! lPR .AND. cChar == "\" .AND. tmp < Len( cText )
+            CASE ! lPR .AND. cChar == "\" .AND. tmp < Len(cText)
                tmp++
                cChar := cNext
             CASE ! lPR .AND. cChar == "*" .AND. ! lIT .AND. ;
                  iif(lEM, ! Empty(cPrev) .AND. Empty(cNext), Empty(cPrev) .AND. ! Empty(cNext))
                lEM := ! lEM
                IF lEM
-                  nEM := Len( cOut ) + 1
+                  nEM := Len(cOut) + 1
                ENDIF
                cChar := iif(lEM, "<strong>", "</strong>")
             CASE ! lPR .AND. cChar == "_" .AND. ! lEM .AND. ;
@@ -494,7 +494,7 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
                    (   lIT .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
                lIT := ! lIT
                IF lIT
-                  nIT := Len( cOut ) + 1
+                  nIT := Len(cOut) + 1
                ENDIF
                cChar := iif(lIT, "<i>", "</i>")
             CASE cChar == "`" .AND. ;
@@ -502,7 +502,7 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
                    (   lPR .AND. ! Empty(cPrev) .AND. Empty(cNext) ) )
                lPR := ! lPR
                IF lPR
-                  nPR := Len( cOut ) + 1
+                  nPR := Len(cOut) + 1
                ENDIF
                cChar := iif(lPR, "<code>", "</code>")
             CASE ! lPR .AND. SubStr(cText, tmp, 3) == "<b>"
@@ -520,7 +520,7 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
             CASE ! lPR .AND. ;
                ( SubStr(cText, tmp, 5) == "<URL:" .AND. ( tmp1 := hb_At( ">", cText, tmp + 6 ) ) > 0 )
                tmp1 := SubStr(cText, tmp + 5, tmp1 - tmp - 5)
-               tmp += Len( tmp1 ) + 5
+               tmp += Len(tmp1) + 5
                cChar := "<a href=" + '"' + tmp1 + '"' + ">" + tmp1 + "</a>"
             CASE ! lPR .AND. ;
                ( SubStr(cText, tmp, 3) == "==>" .OR. SubStr(cText, tmp, 3) == "-->" )
@@ -545,13 +545,13 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
 
          /* Remove these tags if they weren't closed */
          IF lPR
-            cOut := Stuff( cOut, nPR, Len( "<code>" ), "`" )
+            cOut := Stuff( cOut, nPR, Len("<code>"), "`" )
          ENDIF
          IF lEM
-            cOut := Stuff( cOut, nEM, Len( "<strong>" ), "*" )
+            cOut := Stuff( cOut, nEM, Len("<strong>"), "*" )
          ENDIF
          IF lIT
-            cOut := Stuff( cOut, nIT, Len( "<i>" ), "_" )
+            cOut := Stuff( cOut, nIT, Len("<i>"), "_" )
          ENDIF
 
          cText := cOut
@@ -565,8 +565,8 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
          ENDIF
       NEXT
 
-      DO WHILE Right(cText, Len( hb_eol() )) == hb_eol()
-         cText := hb_StrShrink( cText, Len( hb_eol() ) )
+      DO WHILE Right(cText, Len(hb_eol())) == hb_eol()
+         cText := hb_StrShrink( cText, Len(hb_eol()) )
       ENDDO
 
       ::cFile += cText

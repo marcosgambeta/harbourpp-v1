@@ -101,8 +101,8 @@ METHOD WvtStatusBar:PaintBlock()
    AEval( ::aPanels, {| o | AAdd( a_, o:nTop ), AAdd( a_, o:nLeft ), ;
       AAdd( a_, o:nBottom ), AAdd( a_, o:nRight ) } )
 
-   a_[ Len( a_ ) ]++
-   nPanels := Len( ::aPanels )
+   a_[ Len(a_) ]++
+   nPanels := Len(::aPanels)
 
    ::bPaint  := {|| wvt_DrawStatusBar( nPanels, a_ ) }
    AAdd( ::aPaint, { ::bPaint, ;
@@ -131,7 +131,7 @@ METHOD WvtStatusBar:SetPanels( aPanels )
 
    ATail( ::aPanels ):nRight := nLastCol
 
-   FOR i := Len( ::aPanels ) - 1 TO 1 STEP -1
+   FOR i := Len(::aPanels) - 1 TO 1 STEP -1
       oPanel        := ::aPanels[ i ]
       oPanel:nRight := ::aPanels[ i + 1 ]:nLeft
       oPanel:cColor := ::cColor
@@ -143,7 +143,7 @@ METHOD WvtStatusBar:Update( nPanel, cText, cColor )
 
    LOCAL oPanel
 
-   IF nPanel >= 1 .AND. nPanel <= Len( ::aPanels )
+   IF nPanel >= 1 .AND. nPanel <= Len(::aPanels)
       oPanel        := ::aPanels[ nPanel ]
       oPanel:Text   := cText
       oPanel:cColor := iif(cColor == NIL, "N/W", cColor)
@@ -158,7 +158,7 @@ METHOD WvtStatusBar:SetText( nPanel, cText, cColor )
 
    __defaultNIL( @cColor, ::cColor )
 
-   IF nPanel >= 1 .AND. nPanel <= Len( ::aPanels )
+   IF nPanel >= 1 .AND. nPanel <= Len(::aPanels)
       oPanel        := ::aPanels[ nPanel ]
       oPanel:Text   := cText
       oPanel:cColor := cColor
@@ -168,7 +168,7 @@ METHOD WvtStatusBar:SetText( nPanel, cText, cColor )
 
 METHOD WvtStatusBar:SetIcon( nPanel, cIconFile )
 
-   IF nPanel >= 1 .AND. nPanel <= Len( ::aPanels )
+   IF nPanel >= 1 .AND. nPanel <= Len(::aPanels)
       ::aPanels[ nPanel ]:cIconFile := cIconFile
    ENDIF
 

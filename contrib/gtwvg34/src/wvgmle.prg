@@ -259,7 +259,7 @@ METHOD WvgMLE:clear()
 
    ::setData( "" )
 
-   RETURN Len( cText )
+   RETURN Len(cText)
 
 METHOD WvgMLE:copyMarked()
 

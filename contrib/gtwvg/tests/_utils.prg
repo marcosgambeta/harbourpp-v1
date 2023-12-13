@@ -121,7 +121,7 @@ FUNCTION Wvt_Mouse( nKey, nRow, nCol )
    STATIC s_nLastObj := 0
    STATIC s_nLastKey := 0
 
-   IF ( nLen := Len( aObjects ) ) == 0
+   IF ( nLen := Len(aObjects) ) == 0
       RETURN NIL
    ENDIF
 

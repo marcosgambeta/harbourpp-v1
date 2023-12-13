@@ -26,10 +26,10 @@ PROCEDURE Main( cDL, cUL )
 
    info := curl_version_info()
 
-   FOR tmp := 1 TO Len( info )
+   FOR tmp := 1 TO Len(info)
       IF tmp == 8
          ? tmp, ""
-         FOR tmp1 := 1 TO Len( info[ 8 ] )
+         FOR tmp1 := 1 TO Len(info[ 8 ])
             ?? info[ 8 ][ tmp1 ] + " "
          NEXT
       ELSE
@@ -71,8 +71,8 @@ PROCEDURE Main( cDL, cUL )
       ? curl_easy_getinfo( curl, HB_CURLINFO_TOTAL_TIME )
 
       info := curl_easy_getinfo( curl, HB_CURLINFO_SSL_ENGINES, @tmp )
-      ? "SSL ENGINES: ", tmp, Len( info )
-      FOR tmp := 1 TO Len( info )
+      ? "SSL ENGINES: ", tmp, Len(info)
+      FOR tmp := 1 TO Len(info)
          ?? info[ tmp ] + " "
       NEXT
 
@@ -108,7 +108,7 @@ PROCEDURE Main( cDL, cUL )
       ? curl_easy_setopt( curl, HB_CURLOPT_UPLOAD )
       ? curl_easy_setopt( curl, HB_CURLOPT_URL, REMOTE_URL_MEM )
       ? curl_easy_setopt( curl, HB_CURLOPT_UL_BUFF_SETUP, tmp )
-      ? curl_easy_setopt( curl, HB_CURLOPT_INFILESIZE, Len( tmp ) ), Len( tmp )
+      ? curl_easy_setopt( curl, HB_CURLOPT_INFILESIZE, Len(tmp) ), Len(tmp)
 #if 0
       /* May use this instead of embedding in URL */
       ? curl_easy_setopt( curl, HB_CURLOPT_USERPWD, "harbour:power" )

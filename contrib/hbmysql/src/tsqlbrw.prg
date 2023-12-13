@@ -100,7 +100,7 @@ METHOD Block() CLASS TBColumnSQL
 
    DO CASE
    CASE xType == "N"
-      xValue := "'" + Str( xValue, ::oBrw:oCurRow:FieldLen( ::nFieldNum ), ::oBrw:oCurRow:FieldDec( ::nFieldNum ) ) + "'"
+      xValue := "'" + Str( xValue, ::oBrw:oCurRow:FieldLen(::nFieldNum), ::oBrw:oCurRow:FieldDec( ::nFieldNum ) ) + "'"
 
    CASE xType == "D"
       xValue :=  "'" + DToC( xValue ) + "'"
@@ -175,7 +175,7 @@ METHOD New( nTop, nLeft, nBottom, nRight, oServer, oQuery, cTable ) CLASS TBrows
       oCol := TBColumnSQL():New( ::oCurRow:FieldName( i ),, Self )
 
       IF !( ::oCurRow:FieldType( i ) == "M" )
-         oCol:Width := Max( ::oCurRow:FieldLen( i ), Len( oCol:Heading ) )
+         oCol:Width := Max( ::oCurRow:FieldLen(i), Len(oCol:Heading) )
       ELSE
          oCol:Width := 10
       ENDIF
@@ -254,7 +254,7 @@ METHOD EditField() CLASS TBrowseSQL
       hb_DispBox( 10, 10, 22, 69 )
 
       /* use fieldspec for title */
-      // @ 10, ( ( 76 - Len( ::oCurRow:FieldName( oCol:nFieldNum ) ) / 2 ) SAY "  " + ( ::oCurRow:FieldName( oCol:nFieldNum ) ) + "  "
+      // @ 10, ( ( 76 - Len(::oCurRow:FieldName( oCol:nFieldNum )) / 2 ) SAY "  " + ( ::oCurRow:FieldName( oCol:nFieldNum ) ) + "  "
 
       /* edit the memo field */
       cMemo := MemoEdit( ::oCurRow:FieldGet( oCol:nFieldNum ), 11, 11, 21, 68, .T. )

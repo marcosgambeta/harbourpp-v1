@@ -68,7 +68,7 @@ STATIC FUNCTION GetPingResult( n )
       { "PQPING_NO_RESPONSE", "Could not establish connection" }, ;
       { "PQPING_NO_ATTEMPT" , "Connection not attempted (bad params)" } }
 
-   IF n >= 0 .AND. n < Len( aMsg )
+   IF n >= 0 .AND. n < Len(aMsg)
       RETURN aMsg[ n + 1 ][ 1 ] + " " + aMsg[ n + 1 ][ 2 ]
    ENDIF
 

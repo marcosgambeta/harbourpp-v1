@@ -9,19 +9,19 @@ PROCEDURE Main()
    ?
    ? "myarray1 := Directory()"
    ?
-   var0 := ft_AEMaxLen( myarray1 )
+   var0 := ft_AEMaxLen(myarray1)
    ? PadR( "ft_AEMaxLen( myarray1 ) ->", 30 )
    ?? var0
    ?
-   var0 := ft_AEMaxLen( myarray1, 2 )
+   var0 := ft_AEMaxLen(myarray1, 2)
    ? PadR( "ft_AEMaxLen( myarray1, 2 ) ->", 30 )
    ?? var0
    ?
-   var0 := ft_AEMaxLen( myarray1, 3 )
+   var0 := ft_AEMaxLen(myarray1, 3)
    ? PadR( "ft_AEMaxLen( myarray1, 3 ) ->", 30 )
    ?? var0
    ?
-   var0 := ft_AEMaxLen( ATail( myarray1 ) )
+   var0 := ft_AEMaxLen(ATail( myarray1 ))
    ? PadR( "ft_AEMaxLen( ATail( myarray1 ) ) ->", 30 )
    ?? var0
    ?

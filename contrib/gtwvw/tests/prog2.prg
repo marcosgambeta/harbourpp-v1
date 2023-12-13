@@ -95,7 +95,7 @@ PROCEDURE xGet1()
 #ifdef __GTWVW__
    nWin := znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), 10, 20, 22, 59, "Some Window" )
 
-   AddMiscObjects( nWin, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) } )
+   AddMiscObjects( nWin, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
 #else
    znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), 10, 20, 22, 59, "Some Window" )
 #endif
@@ -161,7 +161,7 @@ FUNCTION xBrowse1()
    oBrowse:GoBottomBlock := {|| dbGoBottom() }
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
-   FOR i := 1 TO Len( info_ )
+   FOR i := 1 TO Len(info_)
       bBlock := VouBlockField( i )
       oBrowse:AddColumn( TBColumnNew( info_[ i, 1 ], bBlock ) )
    NEXT
@@ -180,7 +180,7 @@ FUNCTION xBrowse1()
 
    AddMiscObjects( nWin, {| nWindow | wvw_DrawBoxRecessed( nWindow, nTop + 1, nLeft + 1, nBottom - 1, nRight - 1 ) } )
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
-   AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len( aColumnsSep ) ) } )
+   AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 #endif
 
    WHILE ! lEnd
@@ -330,7 +330,7 @@ FUNCTION lYesNo( cMsg )
    hb_default( @cMsg, "Please Confirm" )
 
    cmsg := " " + AllTrim(cmsg) + " "
-   nWidth := Max( Len( cmsg ), Len( "Yes" ) )
+   nWidth := Max( Len(cmsg), Len("Yes") )
    nTopLine := nBotLine - 2 - 1
 
    nLeft := Max( nLeft, ( ( nRight + nLeft ) * .5 ) - ( nWidth * .5 ) - 1 )
@@ -365,7 +365,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
 
    cmsg := AllTrim(cmsg)
    nNumLines := MLCount( cmsg, ( nright - nleft ) - 1 )
-   nWidth := iif(nNumLines < 2, Len( cmsg ), nRight - nLeft - 1)
+   nWidth := iif(nNumLines < 2, Len(cmsg), nRight - nLeft - 1)
    nTopLine := nBotLine - nNumLines - 1
    IF nTopLine < 0            // too many lines to display
       nNumLines += nTopLine
@@ -374,7 +374,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
 
    nMaxWidth := 0
    FOR i := 1 TO nNumLines
-      nMaxWidth := Max( nMaxWidth, Len( RTrim(MemoLine( cmsg, nwidth, i )) ) )
+      nMaxWidth := Max( nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))) )
    NEXT
 
    nLeft := Max( nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ) )
@@ -406,7 +406,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
 
 FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 
-   LOCAL i := Len( s_zwin )
+   LOCAL i := Len(s_zwin)
    LOCAL cScreen := SaveScreen( r1, c1, r2, c2 )
    LOCAL cOldColor := SetColor()
    LOCAL nrow := Row(), ncol := Col()
@@ -432,7 +432,7 @@ FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
    hb_DispBox( r1, c1, r2, c2, wtype )
    IF ! Empty(ctitle)
       cTitle := " " + AllTrim(ctitle) + " "
-      hb_DispOutAt( r1, nCeiling( ( c2 + c1 - Len( cTitle ) ) / 2 ), cTitle )
+      hb_DispOutAt( r1, nCeiling( ( c2 + c1 - Len(cTitle) ) / 2 ), cTitle )
    ENDIF
 #endif
 
@@ -443,7 +443,7 @@ FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 FUNCTION ZREVWINDOW()
 
    // Closes the last window and remove it from window list
-   LOCAL i := Len( s_zwin )
+   LOCAL i := Len(s_zwin)
 
    IF i == 0
       // no window to close
@@ -488,7 +488,7 @@ FUNCTION nCeiling( nNumber )
 
 FUNCTION WVW_Paint( nWinNum )
 
-   IF Len( s_amiscobjlist ) >= nWinNum + 1
+   IF Len(s_amiscobjlist) >= nWinNum + 1
       AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
@@ -498,7 +498,7 @@ FUNCTION ResetMiscObjects( nWinNum )
 
    hb_default( @nWinNum, wvw_nNumWindows() - 1 )
 
-   DO WHILE Len( s_amiscobjlist ) < nWinNum + 1
+   DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd( s_amiscobjlist, {} )
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}

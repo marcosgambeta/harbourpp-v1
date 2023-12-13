@@ -195,7 +195,7 @@ STATIC FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
          ENDIF
       ENDIF
 
-      IF Len( aHFonts ) > 0
+      IF Len(aHFonts) > 0
          wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_MLE ), WIN_WM_SETFONT, ahFonts[ 1 ], 0 )
       ENDIF
 
@@ -312,7 +312,7 @@ STATIC FUNCTION DlgSlideShowProc( hDlg, nMsg, wParam, lParam )
 
    CASE WIN_WM_TIMER
       t_nSlide++
-      IF t_nSlide > Len( t_aSlides )
+      IF t_nSlide > Len(t_aSlides)
          t_nSlide := 1
       ENDIF
       DrawSlide( hDlg, t_nSlide )

@@ -29,7 +29,7 @@ PROCEDURE Main()
    /* download the response */
    cHtml := oHTTP:ReadAll()
    oHTTP:Close()
-   ? hb_ntos( Len( cHtml ) ), "bytes received"
+   ? hb_ntos( Len(cHtml) ), "bytes received"
    ?
 
    oDoc := THtmlDocument():New( cHtml )

@@ -373,7 +373,7 @@ STATIC PROCEDURE Demo_Get()
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawImage( nWindow, 8 - nTop, 62 - nLeft, 12 - nTop, 69 - nLeft, hb_DirBase() + "vouch1.bmp" ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
 
@@ -472,7 +472,7 @@ STATIC PROCEDURE DEMO_Browse()
 
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len( aColumnsSep ) ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 
 #if 0
    /* we now use native push button */
@@ -804,7 +804,7 @@ FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
       "nWinNum: " + hb_ntos( nWinNum ) )
 #endif
 
-   IF Len( s_amiscobjlist ) >= nWinNum + 1
+   IF Len(s_amiscobjlist) >= nWinNum + 1
       AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
@@ -923,7 +923,7 @@ STATIC PROCEDURE xEnableToolbar( nWinNum )
 
 STATIC PROCEDURE ResetMiscObjects( nWinNum )
 
-   DO WHILE Len( s_amiscobjlist ) < nWinNum + 1
+   DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd( s_amiscobjlist, {} )
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}
@@ -1270,7 +1270,7 @@ METHOD New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWi
    hb_default( @nRow1, 0 )
    hb_default( @nCol1, 0 )
    hb_default( @nRow2, nRow1 )
-   hb_default( @nCol2, nCol1 + Max( 10, Len( cCaption ) + 2 ) - 1 )
+   hb_default( @nCol2, nCol1 + Max( 10, Len(cCaption) + 2 ) - 1 )
 
 #if 0  // TODO
    ::nId := iif(Empty(s_amouseobjlist), 1, ATail( s_amouseobjlist ):nGetId() + 1)
@@ -1527,7 +1527,7 @@ STATIC PROCEDURE wvwm_paint( nWinNum )
 
    // normally called by WVW_PAINT()
    // redraw every mouse object in window nWinNum
-   IF Len( s_amouseobjlist ) >= nWinNum + 1
+   IF Len(s_amouseobjlist) >= nWinNum + 1
       AEval( s_amouseobjlist[ nWinNum + 1 ], {| o | o[ 2 ]:draw( nWinNum ) } )
    ENDIF
 
@@ -1536,7 +1536,7 @@ STATIC PROCEDURE wvwm_paint( nWinNum )
 // clears all mouse objects from window nWinNum
 STATIC PROCEDURE wvwm_ResetMouseObjects( nWinNum )
 
-   DO WHILE Len( s_amouseobjlist ) < nWinNum + 1
+   DO WHILE Len(s_amouseobjlist) < nWinNum + 1
       AAdd( s_amouseobjlist, {} )
    ENDDO
    s_amouseobjlist[ nWinNum + 1 ] := {}
@@ -1639,7 +1639,7 @@ STATIC FUNCTION wvwm_nMouseChecker( nkey )
 
    nCurWindow := wvw_nNumWindows() - 1
 
-   IF Len( s_amouseobjlist ) < nCurWindow + 1
+   IF Len(s_amouseobjlist) < nCurWindow + 1
       RETURN nkey
    ENDIF
 

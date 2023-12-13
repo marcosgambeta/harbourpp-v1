@@ -174,10 +174,10 @@ STATIC FUNCTION ErrorMessage( oError )
    ENDIF
 
    IF HB_ISARRAY( oError:Args )
-      cMessage += "A:" + hb_ntos( Len( oError:Args ) ) + ":"
-      FOR tmp := 1 TO Len( oError:Args )
+      cMessage += "A:" + hb_ntos( Len(oError:Args) ) + ":"
+      FOR tmp := 1 TO Len(oError:Args)
          cMessage += ValType( oError:Args[ tmp ] ) + ":" + XToStr( oError:Args[ tmp ], .T. )
-         IF tmp < Len( oError:Args )
+         IF tmp < Len(oError:Args)
             cMessage += ";"
          ENDIF
       NEXT
@@ -230,7 +230,7 @@ STATIC FUNCTION __StrToExp( cStr )
    LOCAL nLen, nPos
    LOCAL cByte
 
-   nLen := hb_BLen( cStr )
+   nLen := hb_BLen(cStr)
    FOR nPos := 1 TO nLen
       cByte := hb_BSubStr(cStr, nPos, 1)
       IF ! __ByteIsDisplayable( cByte ) .OR. cByte == '"'

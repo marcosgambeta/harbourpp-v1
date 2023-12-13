@@ -121,7 +121,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    // cTo
    DO CASE
    CASE HB_ISARRAY( xTo )
-      FOR tmp := Len( xTo ) TO 1 STEP -1
+      FOR tmp := Len(xTo) TO 1 STEP -1
          IF Empty(xTo[ tmp ])
             hb_ADel( xTo, tmp, .T. )
          ENDIF
@@ -143,7 +143,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    // CC (Carbon Copy)
    DO CASE
    CASE HB_ISARRAY( xCC )
-      FOR tmp := Len( xCC ) TO 1 STEP -1
+      FOR tmp := Len(xCC) TO 1 STEP -1
          IF Empty(xCC[ tmp ])
             hb_ADel( xCC, tmp, .T. )
          ENDIF
@@ -162,7 +162,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
    // BCC (Blind Carbon Copy)
    DO CASE
    CASE HB_ISARRAY( xBCC )
-      FOR tmp := Len( xBCC ) TO 1 STEP -1
+      FOR tmp := Len(xBCC) TO 1 STEP -1
          IF Empty(xBCC[ tmp ])
             hb_ADel( xBCC, tmp, .T. )
          ENDIF

@@ -24,7 +24,7 @@ PROCEDURE Main( cFile )
       WAIT
       CLS
       aPrinter := cupsGetDests()
-      i := AChoice( 2, 5, 30, Len( aPrinter ) + 2, aPrinter )
+      i := AChoice( 2, 5, 30, Len(aPrinter) + 2, aPrinter )
       ? "Printing... Job ID:", cupsPrintFile( aPrinter[ i ], cFile, "Harbour CUPS Printing" )
 #if 0
       /* for duplex printing, tested on OKI B410 */

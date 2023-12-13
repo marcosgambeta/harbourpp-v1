@@ -216,7 +216,7 @@ FUNCTION tp_recv( nPort, nLength, nTimeout )
 
    nDone := Seconds() + iif(nTimeout >= 0, nTimeout, 0)
 
-   DO WHILE Len( t_aPorts[ nPort, TPFP_INBUF ] ) < nLength .AND. ;
+   DO WHILE Len(t_aPorts[ nPort, TPFP_INBUF ]) < nLength .AND. ;
          ( nTimeout < 0 .OR. Seconds() < nDone )
 
       IF ! tp_idle()
@@ -226,7 +226,7 @@ FUNCTION tp_recv( nPort, nLength, nTimeout )
       ENDIF
    ENDDO
 
-   IF nLength > Len( t_aPorts[ nPort, TPFP_INBUF ] )
+   IF nLength > Len(t_aPorts[ nPort, TPFP_INBUF ])
       cRet := t_aPorts[ nPort, TPFP_INBUF ]
       t_aPorts[ nPort, TPFP_INBUF ] := ""
    ELSE
@@ -244,7 +244,7 @@ FUNCTION tp_send( nPort, cString, nTimeout )
    IF ! isopenport( nPort )
       RETURN 0
    ENDIF
-   IF Len( cString ) == 0
+   IF Len(cString) == 0
       RETURN 0
    ENDIF
 
@@ -255,7 +255,7 @@ FUNCTION tp_sendsub( nPort, cString, nStart, nLength, nTimeout )
 
    hb_default( @nStart, 1 )
    IF ! HB_ISNUMERIC( nLength )
-      nLength := Len( cString )
+      nLength := Len(cString)
    ENDIF
 
    RETURN tp_send( nPort, SubStr(cString, nStart, nLength), nTimeout )
@@ -272,7 +272,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
       RETURN ""
    ENDIF
 
-   IF ! HB_ISSTRING( cDelim ) .OR. Len( cDelim ) == 0
+   IF ! HB_ISSTRING( cDelim ) .OR. Len(cDelim) == 0
       RETURN ""
    ENDIF
 
@@ -283,7 +283,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 
    /* Telepathy ng: [...] If nTimeout is omitted or zero, reads until finding the
                     delimiter or the input buffer is empty. */
-   IF nTimeout == 0 .AND. Len( t_aPorts[ nPort, TPFP_INBUF ] ) == 0
+   IF nTimeout == 0 .AND. Len(t_aPorts[ nPort, TPFP_INBUF ]) == 0
       RETURN ""
    ENDIF
 
@@ -291,7 +291,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 
    DO WHILE ( nTimeout < 0 .OR. Seconds() < nDone )
 
-      IF Len( cDelim ) == 1
+      IF Len(cDelim) == 1
 
          nAt := hb_At( cDelim, t_aPorts[ nPort, TPFP_INBUF ], nStartPos )
 
@@ -320,7 +320,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
       ELSE
          // Next loop I don't need to search that part of the input buffer that
          // I've already just searched for
-         nStartPos := Max( Len( t_aPorts[ nPort, TPFP_INBUF ] ), 1 )
+         nStartPos := Max( Len(t_aPorts[ nPort, TPFP_INBUF ]), 1 )
 
          // I've read more characters than I'm allowed to, so I exit
          IF nStartPos >= nMaxLen
@@ -367,7 +367,7 @@ FUNCTION tp_inchrs( nPort )
 
    FetchChars( nPort )
 
-   RETURN Len( t_aPorts[ nPort, TPFP_INBUF ] )
+   RETURN Len(t_aPorts[ nPort, TPFP_INBUF ])
 
 FUNCTION tp_infree( nPort )
 
@@ -416,7 +416,7 @@ FUNCTION tp_waitfor( ... ) /* nPort, nTimeout, acList|cString..., lIgnorecase */
 
    nPort := aParam[ 1 ]
    // nTimeout := aParam[ 2 ]
-   // lIgnorecase := aParam[ Len( aParam ) ]
+   // lIgnorecase := aParam[ Len(aParam) ]
 
    IF ! isopenport( nPort )
       RETURN 0
@@ -443,7 +443,7 @@ FUNCTION tp_waitfor( ... ) /* nPort, nTimeout, acList|cString..., lIgnorecase */
 
       FetchChars( nPort )
 
-      FOR x := 1 TO Len( acList )
+      FOR x := 1 TO Len(acList)
          IF lIgnorecase
             nAt := At( Upper(acList[ x ]), Upper(t_aPorts[ nPort, TPFP_INBUF ]) )
          ELSE
@@ -466,7 +466,7 @@ FUNCTION tp_waitfor( ... ) /* nPort, nTimeout, acList|cString..., lIgnorecase */
    ENDDO
 
    IF nFirst < 64000
-      tp_recv( nPort, nAt + Len( acList[ nRet ] ) )
+      tp_recv( nPort, nAt + Len(acList[ nRet ]) )
       RETURN nRet
    ENDIF
 #endif
@@ -653,7 +653,7 @@ STATIC FUNCTION FetchChars( nPort )
 
    t_aPorts[ nPort, TPFP_INBUF ] += cStr
 
-   RETURN Len( cStr )
+   RETURN Len(cStr)
 
 INIT PROCEDURE _tpinit()
 
@@ -661,7 +661,7 @@ INIT PROCEDURE _tpinit()
 
    IF t_aPorts == NIL
       t_aPorts := Array( TP_MAXPORTS )
-      FOR x := 1 TO Len( t_aPorts )
+      FOR x := 1 TO Len(t_aPorts)
          // / port name, file handle, baud, data bits, parity, stop bits, Open?, input buffer, input buff.size
          t_aPorts[ x ] := { "", -1, 1200, 8, "N", 1, .F., "", 0 }
       NEXT

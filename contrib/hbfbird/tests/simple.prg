@@ -36,7 +36,7 @@ PROCEDURE Main()
    FOR x := 1 TO 1
       aTables := oServer:ListTables()
 
-      FOR i := 1 TO Len( aTables )
+      FOR i := 1 TO Len(aTables)
          ? aTables[ i ]
       NEXT
    NEXT
@@ -80,9 +80,9 @@ PROCEDURE Main()
    ? "Structure of test table"
    aStruct := oServer:TableStruct( "test" )
 
-   FOR i := 1 TO Len( aStruct )
+   FOR i := 1 TO Len(aStruct)
       ?
-      FOR x := 1 TO Len( aStruct[ i ] )
+      FOR x := 1 TO Len(aStruct[ i ])
          ?? aStruct[ i, x ]
       NEXT
    NEXT
@@ -107,7 +107,7 @@ PROCEDURE Main()
 
    aStruct := oQuery:Struct()
 
-   FOR i := 1 TO Len( aStruct )
+   FOR i := 1 TO Len(aStruct)
       ? aStruct[ i, 1 ], aStruct[ i, 2 ], aStruct[ i, 3 ], aStruct[ i, 4 ]
    NEXT
 
@@ -124,8 +124,8 @@ PROCEDURE Main()
       oRow:FieldName( 1 ), ;
       oRow:FieldType( 1 ), ;
       oRow:FieldDec( 1 ), ;
-      oRow:FieldLen( 1 ), ;
-      Len( oRow:Getkeyfield() )
+      oRow:FieldLen(1), ;
+      Len(oRow:Getkeyfield())
 
    oRow:FieldPut( 1, 150 )
    oRow:FieldPut( 2, "MY TEST" )
@@ -147,7 +147,7 @@ PROCEDURE Main()
          oQuery:FieldName( 1 ), ;
          oQuery:FieldType( 1 ), ;
          oQuery:FieldDec( 1 ), ;
-         oQuery:FieldLen( 1 ), ;
+         oQuery:FieldLen(1), ;
          oQuery:FieldGet( 3 )
 
       IF oQuery:RecNo() == 50
@@ -177,7 +177,7 @@ PROCEDURE Main()
          oRow:FieldName( 1 ), ;
          oRow:FieldType( 1 ), ;
          oRow:FieldDec( 1 ), ;
-         oRow:FieldLen( 1 ), ;
+         oRow:FieldLen(1), ;
          oRow:FieldGet( 3 )
    ENDDO
 

@@ -187,7 +187,7 @@ METHOD wvtMenu:DisableItem( nItemNum )
    RETURN -1
 
 METHOD wvtMenu:NumItems()
-   RETURN Len( ::aItems )
+   RETURN Len(::aItems)
 
 METHOD wvtMenu:GetItem( nItemNum )
 

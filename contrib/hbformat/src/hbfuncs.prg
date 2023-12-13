@@ -95,8 +95,8 @@ STATIC PROCEDURE HBXToFuncList( /* @ */ cFunctions, cHBX )
    LOCAL cLine
 
    FOR EACH cLine IN hb_ATokens( StrTran( cHBX, Chr(13) ), Chr(10) )
-      IF Left(cLine, Len( "DYNAMIC " )) == "DYNAMIC "
-         cFunctions += "," + SubStr(cLine, Len( "DYNAMIC " ) + 1)
+      IF Left(cLine, Len("DYNAMIC ")) == "DYNAMIC "
+         cFunctions += "," + SubStr(cLine, Len("DYNAMIC ") + 1)
       ENDIF
    NEXT
 

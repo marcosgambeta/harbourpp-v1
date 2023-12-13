@@ -1378,7 +1378,7 @@ METHOD CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto) CLASS TMaria
    ENDIF
 
    // remove last comma from list
-   ::cCreateQuery := Left(::cCreateQuery, Len( ::cCreateQuery ) - 1) + ");"
+   ::cCreateQuery := Left(::cCreateQuery, Len(::cCreateQuery) - 1) + ");"
    IF mysql_query(::nSocket, ::cCreateQuery) == 0
       RETURN .T.
    ELSE

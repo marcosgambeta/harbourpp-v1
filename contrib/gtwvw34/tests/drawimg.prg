@@ -272,7 +272,7 @@ METHOD PROCEDURE Show() CLASS wPaintObj
 // if nObjNum specified, clears object >= nObjNum
 STATIC PROCEDURE wg_ResetWPaintObj( nWinNum, nObjNum )
 
-   DO WHILE Len( s_aPObjList ) < nWinNum + 1
+   DO WHILE Len(s_aPObjList) < nWinNum + 1
       AAdd( s_aPObjList, {} )
    ENDDO
 
@@ -322,7 +322,7 @@ STATIC PROCEDURE wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
    IF nType >= 1
       // exist nType + cId ?
       i := 1
-      nLen := Len( s_aPObjList[ nWinNum + 1 ] )
+      nLen := Len(s_aPObjList[ nWinNum + 1 ])
       DO WHILE i <= nLen
          IF s_aPObjList[ nWinNum + 1 ][ i ]:nType == nType .AND. ;
             ( lDelAll .OR. s_aPObjList[ nWinNum + 1 ][ i ]:cId == cId )
@@ -343,7 +343,7 @@ STATIC PROCEDURE wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
 
 FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 
-   IF Len( s_aPObjList ) >= nWinNum + 1
+   IF Len(s_aPObjList) >= nWinNum + 1
       // simple redraw, ignoring wpaint obj dependency with each other:
      AEval( s_aPObjList[ nWinNum + 1 ], {| oWPaint | oWPaint:draw() } )
    ENDIF

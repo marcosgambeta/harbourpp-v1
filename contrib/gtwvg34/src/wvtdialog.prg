@@ -140,7 +140,7 @@ CREATE CLASS WvtDialog
    VAR    lTabStops                               INIT .F.
    VAR    bOnCreate
 
-   ACCESS nObjects                                INLINE Len( ::aObjects )
+   ACCESS nObjects                                INLINE Len(::aObjects)
 
    METHOD New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFontBold, nFontQuality )
    METHOD create()
@@ -260,7 +260,7 @@ METHOD WvtDialog:Create()
 
    ::CreateObjects()
 
-   IF Len( ::aObjects ) > 0
+   IF Len(::aObjects) > 0
       ::oCurObj := ::aObjects[ 1 ]
    ENDIF
 

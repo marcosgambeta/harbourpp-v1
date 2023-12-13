@@ -176,7 +176,7 @@ PROCEDURE Main( ... )
                AAdd( s_hSwitches[ "format" ], arg )
             ENDIF
          CASE hb_LeftEq( cArgName, "-output-" )
-            s_hSwitches[ "output" ] := SubStr(cArgName, Len( "-output-" ) + 1)
+            s_hSwitches[ "output" ] := SubStr(cArgName, Len("-output-") + 1)
          CASE cArgName == "-include-doc-source" ;     s_hSwitches[ "include-doc-source" ] := .T.
          OTHERWISE
             IF SubStr(cArgName, 2) $ s_generators
@@ -186,7 +186,7 @@ PROCEDURE Main( ... )
                   AAdd( s_hSwitches[ "format" ], SubStr(cArgName, 2) )
                ENDIF
             ELSE
-               ShowHelp( "Unrecognized option:" + cArgName + iif(Len( arg ) > 0, "=" + arg, "") )
+               ShowHelp( "Unrecognized option:" + cArgName + iif(Len(arg) > 0, "=" + arg, "") )
                RETURN
             ENDIF
          ENDCASE
@@ -202,7 +202,7 @@ PROCEDURE Main( ... )
    hb_MemoWrit( "cats.json", hb_jsonencode( sc_hConstraint[ "categories" ], .T. ) )
 #endif
 
-   OutStd( hb_ntos( Len( aContent ) ), "items found" + hb_eol() )
+   OutStd( hb_ntos( Len(aContent) ), "items found" + hb_eol() )
    OutStd( hb_eol() )
 
    ASort( aContent,,, {| oL, oR | ;
@@ -278,7 +278,7 @@ PROCEDURE Main( ... )
             oIndex := Eval( generatorClass ):NewIndex( cFormat, "harbour", "Harbour Reference Guide" )
 
             FOR EACH item IN aContent
-               IF Right(item:_sourcefile, Len( "1stread.txt" )) == "1stread.txt"
+               IF Right(item:_sourcefile, Len("1stread.txt")) == "1stread.txt"
                   IF oIndex != NIL
                      oIndex:AddEntry( item )
                   ENDIF
@@ -299,10 +299,10 @@ PROCEDURE Main( ... )
                ENDIF
                oDocument:BeginSection( item:__enumKey(), oDocument:cFilename )
 
-               FOR idx := 1 TO Len( item[ 2 ] )
+               FOR idx := 1 TO Len(item[ 2 ])
                   IF ! Empty(item[ 2 ][ idx ])
                      ASort( item[ 2 ][ idx ], , , {| oL, oR | oL:fld[ "NAME" ] <= oR:fld[ "NAME" ] } )
-                     IF Len( item[ 1 ][ idx ] ) > 0
+                     IF Len(item[ 1 ][ idx ]) > 0
                         IF oIndex != NIL
                            oIndex:BeginSection( item[ 1 ][ idx ], oDocument:cFilename )
                         ENDIF
@@ -310,7 +310,7 @@ PROCEDURE Main( ... )
                      ENDIF
                      FOR EACH item4 IN item[ 2 ][ idx ]
                         IF ! Empty(item4)
-                           IF !( Right(item4:_sourcefile, Len( "1stread.txt" )) == "1stread.txt" )
+                           IF !( Right(item4:_sourcefile, Len("1stread.txt")) == "1stread.txt" )
                               IF oIndex != NIL
                                  oIndex:AddReference( item4 )
                               ENDIF
@@ -323,7 +323,7 @@ PROCEDURE Main( ... )
                            ENDIF
                         ENDIF
                      NEXT
-                     IF Len( item[ 1 ][ idx ] ) > 0
+                     IF Len(item[ 1 ][ idx ]) > 0
                         IF oIndex != NIL
                            oIndex:EndSection( item[ 1 ][ idx ], oDocument:cFilename )
                         ENDIF
@@ -424,7 +424,7 @@ STATIC FUNCTION ProcessDocDir( cDir, cComponent, aContent )
       hb_MemoWrit( "_" + aEntry[ 1 ][ "_COMPONENT" ] + ".json", hb_jsonEncode( aEntry, .t. ) )
 #endif
 
-      nOldContentLen := Len( aContent )
+      nOldContentLen := Len(aContent)
 
       FOR EACH hEntry IN aEntry
          IF Lower(hEntry[ "_LANG" ]) == s_hSwitches[ "lang" ]
@@ -432,8 +432,8 @@ STATIC FUNCTION ProcessDocDir( cDir, cComponent, aContent )
          ENDIF
       NEXT
 
-      IF Len( aContent ) > nOldContentLen
-         OutStd( ">", cDir, "(" + hb_ntos( Len( aContent ) - nOldContentLen ), "items)" + hb_eol() )
+      IF Len(aContent) > nOldContentLen
+         OutStd( ">", cDir, "(" + hb_ntos( Len(aContent) - nOldContentLen ), "items)" + hb_eol() )
       ENDIF
    ENDIF
 
@@ -450,30 +450,30 @@ STATIC FUNCTION NewLineVoodoo( cSectionIn )
 
    FOR EACH cLine IN hb_ATokens( cSectionIn, .T. )
 
-      IF Len( AllTrim(cLine) ) == 0
-         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() )
+      IF Len(AllTrim(cLine)) == 0
+         IF !( Right(cSection, Len(hb_eol())) == hb_eol() )
             cSection += hb_eol()
          ENDIF
          nLastIndent := -1
       ELSEIF hb_LeftEq( AllTrim(cLine), "<table" ) .OR. AllTrim(cLine) == "<fixed>" .OR. hb_LeftEq( AllTrim(cLine), '```' )
-         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() ) .OR. lPreformatted
+         IF !( Right(cSection, Len(hb_eol())) == hb_eol() ) .OR. lPreformatted
             cSection += hb_eol()
          ENDIF
          cSection += AllTrim(cLine)  // + hb_eol()
          lLastPreformatted := lPreformatted
          lPreformatted := .T.
       ELSEIF AllTrim(cLine) == "</table>" .OR. AllTrim(Line) == "</fixed>"
-         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() ) .OR. lPreformatted
+         IF !( Right(cSection, Len(hb_eol())) == hb_eol() ) .OR. lPreformatted
             cSection += hb_eol()
          ENDIF
          cSection += AllTrim(cLine) + hb_eol()
          lPreformatted := lLastPreformatted
-      ELSEIF nLastIndent != ( Len( cLine ) - Len( LTrim(cLine) ) ) .OR. lPreformatted .OR. Right(cLine, Len( "</par>" )) == "</par>"
-         IF Right(cLine, Len( "</par>" )) == "</par>"
-            cLine := hb_StrShrink( cLine, Len( "</par>" ) )
+      ELSEIF nLastIndent != ( Len(cLine) - Len(LTrim(cLine)) ) .OR. lPreformatted .OR. Right(cLine, Len("</par>")) == "</par>"
+         IF Right(cLine, Len("</par>")) == "</par>"
+            cLine := hb_StrShrink( cLine, Len("</par>") )
          ENDIF
-         nLastIndent := Len( cLine ) - Len( LTrim(cLine) )
-         IF !( Right(cSection, Len( hb_eol() )) == hb_eol() )
+         nLastIndent := Len(cLine) - Len(LTrim(cLine))
+         IF !( Right(cSection, Len(hb_eol())) == hb_eol() )
             cSection += hb_eol()
          ENDIF
          cSection += iif(lPreformatted, cLine, AllTrim(cLine))
@@ -483,10 +483,10 @@ STATIC FUNCTION NewLineVoodoo( cSectionIn )
    NEXT
 
    IF hb_LeftEq( cSection, hb_eol() )
-      cSection := SubStr(cSection, Len( hb_eol() ) + 1)
+      cSection := SubStr(cSection, Len(hb_eol()) + 1)
    ENDIF
-   IF Right(cSection, Len( hb_eol() )) == hb_eol()
-      cSection := hb_StrShrink( cSection, Len( hb_eol() ) )
+   IF Right(cSection, Len(hb_eol())) == hb_eol()
+      cSection := hb_StrShrink( cSection, Len(hb_eol()) )
    ENDIF
 
    RETURN cSection
@@ -601,7 +601,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
 
          CASE ! o:IsConstraint( cSectionName, cSection )
 
-            cSource := cSectionName + " is '" + iif(Len( cSection ) <= 20, cSection, Left(StrTran( cSection, hb_eol() ), 20) + "...") + "', should be one of: "
+            cSource := cSectionName + " is '" + iif(Len(cSection) <= 20, cSection, Left(StrTran( cSection, hb_eol() ), 20) + "...") + "', should be one of: "
 #if 0
             cSource := hb_HKeyAt( hsTemplate, idx ) + " should be one of: "
 #endif
@@ -685,12 +685,12 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
          DO WHILE ! HB_ISNULL( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
-         RETURN SubStr(cResult, Len( hb_eol() ) + 1)
+         RETURN SubStr(cResult, Len(hb_eol()) + 1)
       ENDIF
 
       IF cCode $ sc_hConstraint[ "status" ]
          RETURN sc_hConstraint[ "status" ][ cCode ]
-      ELSEIF Len( cCode ) > 1
+      ELSEIF Len(cCode) > 1
          RETURN cCode
       ELSEIF ! HB_ISNULL( cCode )
          RETURN "Unrecognized 'STATUS' code: '" + cCode + "'"
@@ -705,7 +705,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
             cResult += hb_eol() + hb_HGetDef( sc_hConstraint[ "platforms" ], cCode, cCode )
          ENDIF
       NEXT
-      RETURN SubStr(cResult, Len( hb_eol() ) + 1)
+      RETURN SubStr(cResult, Len(hb_eol()) + 1)
 
    CASE "COMPLIANCE"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint[ "compliance" ]
@@ -713,7 +713,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
          DO WHILE ! HB_ISNULL( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
-         RETURN SubStr(cResult, Len( hb_eol() ) + 1)
+         RETURN SubStr(cResult, Len(hb_eol()) + 1)
       ENDIF
 
       RETURN hb_HGetDef( sc_hConstraint[ "compliance" ], cCode, cCode )
@@ -764,7 +764,7 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
    LOCAL aHelp
 
    DO CASE
-   CASE Empty(aArgs) .OR. Len( aArgs ) <= 1 .OR. Empty(aArgs[ 1 ])
+   CASE Empty(aArgs) .OR. Len(aArgs) <= 1 .OR. Empty(aArgs[ 1 ])
       aHelp := { ;
          cExtraMessage, ;
          "Harbour++ Document Compiler (hbdoc) " + HBRawVersion(), ;
@@ -799,9 +799,9 @@ STATIC PROCEDURE ShowHelp( cExtraMessage, aArgs )
 
    CASE aArgs[ 2 ] == "Templates"
       aHelp := { ;
-         iif(Len( aArgs ) >= 3, aArgs[ 3 ] + " template is:", "Defined templates are:"), ;
+         iif(Len(aArgs) >= 3, aArgs[ 3 ] + " template is:", "Defined templates are:"), ;
          "", ;
-         {|| ShowTemplatesHelp( iif(Len( aArgs ) >= 3, aArgs[ 3 ], NIL), s_hSwitches[ "DELIMITER" ] ) } }
+         {|| ShowTemplatesHelp( iif(Len(aArgs) >= 3, aArgs[ 3 ], NIL), s_hSwitches[ "DELIMITER" ] ) } }
 
    CASE aArgs[ 2 ] == "Compliance"
       aHelp := { ;
@@ -834,7 +834,7 @@ FUNCTION Parse( /* @ */ cVar, xDelimiter )
 
    IF ( idx := At( xDelimiter, cVar ) ) > 0
       cResult := Left(cVar, idx - 1)
-      cVar := SubStr(cVar, idx + Len( xDelimiter ))
+      cVar := SubStr(cVar, idx + Len(xDelimiter))
    ELSE
       cResult := cVar
       cVar := ""
@@ -871,7 +871,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
 
    IF nWidth == 0 .OR. lRaw
       idx := 99999
-      AEval( aText, {| c | iif(Empty(c), , idx := Min( idx, Len( c ) - Len( LTrim(c) ) )) } )
+      AEval( aText, {| c | iif(Empty(c), , idx := Min( idx, Len(c) - Len(LTrim(c)) )) } )
       AEval( aText, {| c, n | aText[ n ] := Space( nLeftMargin ) + SubStr(c, idx + 1) } )
       cResult := Join( aText, hb_eol() ) + hb_eol() + hb_eol()
    ELSE
@@ -884,7 +884,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
          ELSEIF lRaw .OR. lForceRaw
             cResult += Space( nLeftMargin ) + LTrim(cLine) + hb_eol()
          ELSE
-            DO WHILE Len( cLine ) > nWidth
+            DO WHILE Len(cLine) > nWidth
                idx := nWidth + 1
                DO WHILE idx > 0
                   idx--
@@ -945,7 +945,7 @@ STATIC FUNCTION Filename( cFile )
 
    cFile := Lower(cFile)
 
-   FOR idx := 1 TO Len( cFile )
+   FOR idx := 1 TO Len(cFile)
       tmp := SubStr(cFile, idx, 1)
       IF hb_asciiIsDigit( tmp ) .OR. hb_asciiIsAlpha( tmp ) .OR. tmp == "_"
          cResult += tmp
@@ -1037,7 +1037,7 @@ METHOD IsComplete( cIncompleteFieldsList ) CLASS Entry
 
    cIncompleteFieldsList := ""
 
-   FOR idx := 1 TO Len( sc_hFields )
+   FOR idx := 1 TO Len(sc_hFields)
       key := hb_HKeyAt( sc_hFields, idx )
       IF hb_bitAnd( ::_group[ idx ], TPL_REQUIRED ) != 0 .AND. Empty(::fld[ key ])
          cIncompleteFieldsList += "," + key
@@ -1136,7 +1136,7 @@ STATIC PROCEDURE init_Templates()
    hb_HCaseMatch( sc_hConstraint[ "categories" ], .F. )
 
    FOR EACH item IN sc_hConstraint[ "categories" ]
-      AAdd( item, Array( Len( item[ 1 ] ) ) )  /* holder array of sub-category entries */
+      AAdd( item, Array( Len(item[ 1 ]) ) )  /* holder array of sub-category entries */
       FOR EACH tmp IN ATail( item )
          tmp := {}
       NEXT
@@ -1216,7 +1216,7 @@ STATIC PROCEDURE init_Templates()
 
 STATIC PROCEDURE ShowTemplatesHelp( cTemplate, cDelimiter )
 
-   LOCAL idxTemplates, nFrom := 1, nTo := Len( sc_hTemplates )
+   LOCAL idxTemplates, nFrom := 1, nTo := Len(sc_hTemplates)
    LOCAL idx, key, fldkey, o
 
    IF ! Empty(cTemplate) .AND. !( cTemplate == "Template" )
@@ -1241,7 +1241,7 @@ STATIC PROCEDURE ShowTemplatesHelp( cTemplate, cDelimiter )
 
          o := Entry():New( key )
 
-         FOR idx := 1 TO Len( sc_hFields )
+         FOR idx := 1 TO Len(sc_hFields)
             fldkey := hb_HKeyAt( sc_hFields, idx )
             IF o:_group[ idx ] != 0
                ShowSubHelp( iif(idx == 1, "/", " ") + "*  " + cDelimiter + fldkey + cDelimiter, 1, 0 )

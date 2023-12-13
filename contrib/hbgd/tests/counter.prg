@@ -103,7 +103,7 @@ PROCEDURE Main( cValue, cBaseImage )
 #endif
 
    /* Draw Digits */
-   FOR n := 1 TO Len( cValue )
+   FOR n := 1 TO Len(cValue)
       // Retrieve the number from array in memory
       oTemp := aNumberImages[ Val( SubStr(cValue, n, 1) ) + 1 ]:Clone()
       // Save it to show the number for a position

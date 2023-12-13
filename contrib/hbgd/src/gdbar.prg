@@ -192,7 +192,7 @@ METHOD DrawSingleBar( pcode ) CLASS GDBar
    LOCAL i
    LOCAL j
 
-   FOR j := 1 TO Len( pcode )
+   FOR j := 1 TO Len(pcode)
 
       FOR i := 1 TO ::res
          ::Line( ::positionX + i, ::positionY, ::positionX + i, ::positionY + ::maxHeight, ;
@@ -218,7 +218,7 @@ METHOD DrawSingleI25( pcode ) CLASS GDBar
 
    ::positionX := 10
 
-   FOR j := 1 TO Len( pcode )
+   FOR j := 1 TO Len(pcode)
 
       imgBar := iif(j % 2 == 0, ::FillColor, ::BackColor)
       imgWid := iif(SubStr(pcode, j, 1) == "0", widthSlimBar, widthFatBar)
@@ -239,7 +239,7 @@ METHOD DrawError( ptext ) CLASS GDBar
 
    ::error++
 
-   ::lastX := Max( ::GetFontWidth() * Len( ptext ), ::lastX )
+   ::lastX := Max( ::GetFontWidth() * Len(ptext), ::lastX )
    ::lastY := ::error * 15
 
    RETURN NIL
@@ -270,7 +270,7 @@ METHOD DrawText( lIsI25 ) CLASS GDBar
       ENDIF
    ELSE
       If ::textfont != 0
-         xPosition := ( ::positionX / 2 ) - ( Len( ::text ) / 2 ) * ::GetFontWidth()
+         xPosition := ( ::positionX / 2 ) - ( Len(::text) / 2 ) * ::GetFontWidth()
          ::say( xPosition, ::maxHeight, ::text, ::FillColor )
          ::lastY := ::maxHeight + ::GetFontHeight()
       ENDIF
@@ -283,7 +283,7 @@ METHOD CheckCode() CLASS GDBar
    LOCAL lRet := .T.
    LOCAL i
 
-   FOR i := 1 TO Len( ::text )
+   FOR i := 1 TO Len(::text)
       IF HB_ISSTRING( ::CheckValInArray( SubStr(::text, i, 1) ) )
          ::DrawError( "Character " + SubStr(::text, i, 1) + " not allowed." )
          lRet := .F.

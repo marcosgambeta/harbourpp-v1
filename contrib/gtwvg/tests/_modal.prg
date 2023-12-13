@@ -102,21 +102,21 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
       aButtons_ := { aButtons_ }
    ENDIF
 
-   nLinesRqd := Len( aText_ ) + iif(Len( aText_ ) == 0, 4, 5)
+   nLinesRqd := Len(aText_) + iif(Len(aText_) == 0, 4, 5)
    nTopReq   := Int( ( maxRow - nLinesRqd ) / 2 )
    nTop      := iif(nTop == NIL, nTopReq, iif(nTop >  nTopReq, nTop, nTopReq))
    nBottom   := nTop + nLinesRqd - 1   // 1 for shadow
 
    // check for columns
    // place 2 spaces before and after the buttons
-   nColCap   := Len( cCaption ) + 7  // " - " + "  " + cCaption + "  "
+   nColCap   := Len(cCaption) + 7  // " - " + "  " + cCaption + "  "
    nColTxt   := 0
    IF ! Empty(aText_)
-      AEval( aText_, {| e | nColTxt := Max( nColTxt, Len( e ) ) } )
+      AEval( aText_, {| e | nColTxt := Max( nColTxt, Len(e) ) } )
    ENDIF
    nColTxt   += 6                   // for two spaces at both sides
    nColBut   := 0
-   AEval( aButtons_, {| e | nColBut += Len( e ) + 7 } )
+   AEval( aButtons_, {| e | nColBut += Len(e) + 7 } )
    nColBut   += 3
 
    nColRqd   := 0
@@ -125,8 +125,8 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    nLeft     := iif(maxCol > nColRqd, Int( ( maxCol - nColRqd ) / 2 ), 0)
    nRight    := nLeft + nColRqd
 
-   aTrg_ := Array( Len( aButtons_ ) )
-   FOR i := 1 TO Len( aButtons_ )
+   aTrg_ := Array( Len(aButtons_) )
+   FOR i := 1 TO Len(aButtons_)
       aTrg_[i] := Upper(SubStr(aButtons_[i], 1, 1))
    NEXT
 
@@ -137,14 +137,14 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    nLeft   := 0
    nBottom := nTop + nLinesRqd - 1
    nRight  := nLeft + nColRqd
-   nBtnRow := nTop + 1 + Len( aText_ ) + iif(Len( aText_ ) == 0, 1, 2)
+   nBtnRow := nTop + 1 + Len(aText_) + iif(Len(aText_) == 0, 1, 2)
 
-   nBtnCol_  := Array( Len( aButtons_ ) )
+   nBtnCol_  := Array( Len(aButtons_) )
 
    nBtnCol_[1] := Int( ( nColRqd - nColBut ) / 2 ) + 3
-   IF Len( aButtons_ ) > 1
-      FOR i := 2 TO Len( aButtons_ )
-         nBtnCol_[i] := nBtnCol_[i - 1] + Len( aButtons_[i - 1] ) + 3 + 4
+   IF Len(aButtons_) > 1
+      FOR i := 2 TO Len(aButtons_)
+         nBtnCol_[i] := nBtnCol_[i - 1] + Len(aButtons_[i - 1]) + 3 + 4
       NEXT
    ENDIF
 
@@ -159,19 +159,19 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
 
    SetColor( pal_[DLG_CLR_TEXT] )
    IF ! Empty(aText_)
-      FOR i := 1 TO Len( aText_ )
+      FOR i := 1 TO Len(aText_)
          @ nTop + 1 + i, nLeft SAY PadC( aText_[i], nRight - nLeft + 1 )
       NEXT
    ENDIF
 
    // display buttons
-   FOR i := 1 TO Len( aButtons_ )
+   FOR i := 1 TO Len(aButtons_)
       SetColor( pal_[DLG_CLR_BTN] )
       @ nBtnRow, nBtnCol_[i] SAY "  " + aButtons_[i] + "  "
       SetColor( pal_[DLG_CLR_TRG] )
       @ nBtnRow, nBtnCol_[i] + 2 SAY SubStr(aButtons_[i], 1, 1)
 
-      AAdd( x_, { nBtnRow, nBtnCol_[i], nBtnRow, nBtnCol_[i] + Len( aButtons_[i] ) + 3 } )
+      AAdd( x_, { nBtnRow, nBtnCol_[i], nBtnRow, nBtnCol_[i] + Len(aButtons_[i]) + 3 } )
    NEXT
 
    SetColor( pal_[DLG_CLR_HILITE] )
@@ -208,8 +208,8 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
                lGo := .F.
             ENDIF
          ELSEIF nMRow == nBtnRow
-            FOR i := 1 TO Len( nBtnCol_ )
-               IF nMCol >= nBtnCol_[i] .AND. nMCol <= nBtnCol_[i] + Len( aButtons_[i] ) + 4
+            FOR i := 1 TO Len(nBtnCol_)
+               IF nMCol >= nBtnCol_[i] .AND. nMCol <= nBtnCol_[i] + Len(aButtons_[i]) + 4
                   sel := i
                   lGo := .F.
                ENDIF
@@ -233,14 +233,14 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
          ENDIF
       ENDCASE
 
-      IF sel > Len( aButtons_ )
+      IF sel > Len(aButtons_)
          sel := 1
       ELSEIF sel < 1
-         sel := Len( aButtons_ )
+         sel := Len(aButtons_)
       ENDIF
 
       DispBegin()
-      FOR i := 1 TO Len( aButtons_ )
+      FOR i := 1 TO Len(aButtons_)
          SetColor( pal_[DLG_CLR_BTN] )
          @ nBtnRow, nBtnCol_[i] SAY "  " + aButtons_[i] + "  "
          SetColor( pal_[DLG_CLR_TRG] )

@@ -143,7 +143,7 @@ CREATE CLASS GDImage
    METHOD OpenPolygon( aPoints, color )
    METHOD AddPoint( x, y )                 INLINE AAdd( ::aPoints, { x, y } )
    METHOD ResetPoints()                    INLINE ::aPoints := {}
-   METHOD Points()                         INLINE Len( ::aPoints )
+   METHOD Points()                         INLINE Len(::aPoints)
 
    METHOD Rectangle( x1, y1, x2, y2, lFilled, color )
    METHOD Arc( x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle )
@@ -166,7 +166,7 @@ CREATE CLASS GDImage
    METHOD SetStyle( aStyle )               INLINE hb_default( @aStyle, ::aStyles ), gdImageSetStyle( ::pImage, aStyle )
    METHOD AddStyle( pColor )               INLINE AAdd( ::aStyles, pColor )
    METHOD ResetStyles()                    INLINE ::aStyles := {}
-   METHOD StyleLenght()                    INLINE Len( ::aStyles )
+   METHOD StyleLenght()                    INLINE Len(::aStyles)
 
    METHOD SetThickness( nThickness )       INLINE gdImageSetThickness( ::pImage, nThickness )
    METHOD SetAlphaBlending( lAlphaBlending )  INLINE gdImageAlphaBlending( ::pImage, lAlphaBlending )
@@ -657,11 +657,11 @@ METHOD Say( x, y, cString, color, nAlign ) CLASS GDImage
 
    IF     nAlign == gdAlignCenter
       nWidth := ::GetFontWidth()
-      nLen   := Len( cString )
+      nLen   := Len(cString)
       nPosX  := x - ( nLen / 2 * nWidth )
    ELSEIF nAlign == gdAlignRight
       nWidth := ::GetFontWidth()
-      nLen   := Len( cString )
+      nLen   := Len(cString)
       nPosX  := x - ( nLen * nWidth )
    ELSE
       nPosX  := x
@@ -685,11 +685,11 @@ METHOD SayFreeType( x, y, cString, cFontName, nPitch, nAngle, color, nAlign, ;
 
    IF     nAlign == gdAlignCenter
       nWidth := nPitch // gdImageFTWidth( cFontName, nPitch )//, ::Radians( nAngle ) ) //::GetFontWidth()
-      nLen   := Len( cString )
+      nLen   := Len(cString)
       nPosX  := x - ( ( nLen / 2 ) * nWidth )
    ELSEIF nAlign == gdAlignRight
       nWidth := gdImageFTWidth( cFontName, nPitch ) // , ::Radians( nAngle ) ) //::GetFontWidth()
-      nLen   := Len( cString )
+      nLen   := Len(cString)
       nPosX  := x - ( nLen * nWidth )
    ELSE
       nPosX  := x

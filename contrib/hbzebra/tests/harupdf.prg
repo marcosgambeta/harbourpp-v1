@@ -79,7 +79,7 @@ PROCEDURE DrawBarcode( page, nY, nLineWidth, cType, cCode, nFlags )
          HPDF_Page_BeginText( page )
          HPDF_Page_TextOut( page,  40, nY - 13, cType )
          cTxt := hb_zebra_getcode( hZebra )
-         IF Len( cTxt ) < 20
+         IF Len(cTxt) < 20
             HPDF_Page_TextOut( page, 150, nY - 13, cTxt )
          ENDIF
          HPDF_Page_EndText( page )

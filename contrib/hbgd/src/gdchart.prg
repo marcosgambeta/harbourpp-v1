@@ -333,15 +333,15 @@ METHOD VerticalBarChart() CLASS GDChart
          nMax := Max( nMax, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMaxLabel := Max( nMaxLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
+      nMaxLabel := Max( nMaxLabel, Len(iif(cLabel != NIL, cLabel, "")) )
       nTot      += hElement[ "VALUE" ]
    NEXT
 
    IF ! HB_ISNUMERIC( nLeftLabelSpace )
-      nLeftLabelSpace := nBorder + Len( LTrim(Transform( nMax, cAxisPict )) ) * ::GetFontWidth() + nBorder
+      nLeftLabelSpace := nBorder + Len(LTrim(Transform( nMax, cAxisPict ))) * ::GetFontWidth() + nBorder
    ENDIF
    IF ! HB_ISNUMERIC( nRightLabelSpace )
-      nRightLabelSpace := nLeftLabelSpace // nBorder + Len( hb_ntos( nMax ) ) * ::GetFontWidth() + nBorder
+      nRightLabelSpace := nLeftLabelSpace // nBorder + Len(hb_ntos( nMax )) * ::GetFontWidth() + nBorder
    ENDIF
    IF ! HB_ISNUMERIC( nBottomLabelSpace )
       nBottomLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
@@ -366,7 +366,7 @@ METHOD VerticalBarChart() CLASS GDChart
       ENDIF
    ENDIF
 
-   nSize := nWidth / Len( aDataOfHash )
+   nSize := nWidth / Len(aDataOfHash)
 
    IF lShowGrid
       ::Rectangle( x, ::Height() - ( y + nHeight ), x + nWidth, ::Height() - y, .F., color )
@@ -397,7 +397,7 @@ METHOD VerticalBarChart() CLASS GDChart
          cLabel := LTrim(Transform( nDim, cAxisPict ))
          nPosY := ( nDim / nMaxValue ) * nHeight
          IF lShowLabelLeft
-            ::Say( x - nLeftLabelSpace + nBorder, ::Height() - ( y + nPosY ), PadL( cLabel, Len( LTrim(Transform( nMaxValue, cAxisPict )) ) ), color )
+            ::Say( x - nLeftLabelSpace + nBorder, ::Height() - ( y + nPosY ), PadL( cLabel, Len(LTrim(Transform( nMaxValue, cAxisPict ))) ), color )
          ENDIF
          IF lShowLabelRight
             ::Say( x + nWidth + nBorder, ::Height() - ( y + nPosY ), cLabel, color )
@@ -525,7 +525,7 @@ METHOD HorizontalBarChart() CLASS GDChart
          nMax := Max( nMax, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMaxLabel := Max( nMaxLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
+      nMaxLabel := Max( nMaxLabel, Len(iif(cLabel != NIL, cLabel, "")) )
       nTot      += hElement[ "VALUE" ]
    NEXT
 
@@ -533,7 +533,7 @@ METHOD HorizontalBarChart() CLASS GDChart
       nLeftLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
    IF ! HB_ISNUMERIC( nRightLabelSpace )
-      nRightLabelSpace := nBorder + ( Len( LTrim(Transform( nMax, cAxisPict )) ) * ::GetFontWidth() / 2 )
+      nRightLabelSpace := nBorder + ( Len(LTrim(Transform( nMax, cAxisPict ))) * ::GetFontWidth() / 2 )
    ENDIF
    IF ! HB_ISNUMERIC( nTopLabelSpace )
       nTopLabelSpace := nBorder + ::GetFontHeight() + nBorder
@@ -561,7 +561,7 @@ METHOD HorizontalBarChart() CLASS GDChart
       ENDIF
    ENDIF
 
-   nSize := nHeight / Len( aDataOfHash )
+   nSize := nHeight / Len(aDataOfHash)
 
    IF lShowGrid
       ::Rectangle( x, ::Height() - ( y + nHeight ), x + nWidth, ::Height() - y, .F., color )
@@ -590,7 +590,7 @@ METHOD HorizontalBarChart() CLASS GDChart
       FOR n := 0 TO 100 STEP 10
          nDim   := ( ( nMaxValue / 100 ) * n )
          cLabel := LTrim(Transform( nDim, cAxisPict ))
-         nPosX  := ( nDim / nMaxValue ) * nWidth - ( ( Len( cLabel ) / 2 ) * ::GetFontWidth() )
+         nPosX  := ( nDim / nMaxValue ) * nWidth - ( ( Len(cLabel) / 2 ) * ::GetFontWidth() )
          IF lShowLabelTop
             ::Say( x + nPosX, y - nTopLabelSpace + nBorder, cLabel, color )
          ENDIF
@@ -721,7 +721,7 @@ METHOD LineChart() CLASS GDChart
          nMax := Max( nMax, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMaxLabel := Max( nMaxLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
+      nMaxLabel := Max( nMaxLabel, Len(iif(cLabel != NIL, cLabel, "")) )
    NEXT
 
    // Before sum of values to determine percentual
@@ -734,11 +734,11 @@ METHOD LineChart() CLASS GDChart
          nMin := Min( nMin, hElement[ "VALUE" ] )
       ENDIF
       cLabel    := __HGetValue( hElement, "LABEL" )
-      nMinLabel := Max( nMinLabel, Len( iif(cLabel != NIL, cLabel, "") ) )
+      nMinLabel := Max( nMinLabel, Len(iif(cLabel != NIL, cLabel, "")) )
    NEXT
 
    IF ! HB_ISNUMERIC( nLeftLabelSpace )
-      nLeftLabelSpace := nBorder + Max( Len( LTrim(Transform( nMax, cAxisPict )) ), Len( LTrim(Transform( nMin, cAxisPict )) ) ) * ::GetFontWidth() + nBorder
+      nLeftLabelSpace := nBorder + Max( Len(LTrim(Transform( nMax, cAxisPict ))), Len(LTrim(Transform( nMin, cAxisPict ))) ) * ::GetFontWidth() + nBorder
    ENDIF
    IF ! HB_ISNUMERIC( nRightLabelSpace )
       nRightLabelSpace := nLeftLabelSpace
@@ -767,7 +767,7 @@ METHOD LineChart() CLASS GDChart
       ENDIF
    ENDIF
 
-   nSize := Len( aDataOfHash ) - 1
+   nSize := Len(aDataOfHash) - 1
 
    IF nSize > 1
       nSize := nWidth / nSize
@@ -888,7 +888,7 @@ METHOD LineChart() CLASS GDChart
    // ::AddStyle( gdTransparent )
    // ::AddStyle( gdTransparent )
    // ::SetStyle()
-   FOR n := 1 TO Len( aPoints ) - 1
+   FOR n := 1 TO Len(aPoints) - 1
       ::Line( aPoints[ n ][ 1 ], aPoints[ n ][ 2 ], aPoints[ n + 1 ][ 1 ], aPoints[ n + 1 ][ 2 ], colorp )
    NEXT
    ::SetThickness( nThick )

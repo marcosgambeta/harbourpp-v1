@@ -55,9 +55,9 @@ FUNCTION hb_ntp_GetTimeUTC( cServer, nPort, nTimeOut )
    IF HB_ISSTRING( cServer ) .AND. ! cServer == "" .AND. ;
       ! Empty( hSocket := hb_socketOpen( , HB_SOCKET_PT_DGRAM ) )
       cBuffer := hb_BChar( 8 ) + Replicate( hb_BChar( 0 ), 47 )
-      IF hb_socketSendTo( hSocket, cBuffer,,, { HB_SOCKET_AF_INET, hb_socketResolveAddr( cServer ), hb_defaultValue( nPort, 123 ) } ) == hb_BLen( cBuffer )
+      IF hb_socketSendTo( hSocket, cBuffer,,, { HB_SOCKET_AF_INET, hb_socketResolveAddr( cServer ), hb_defaultValue( nPort, 123 ) } ) == hb_BLen(cBuffer)
          cBuffer := Space( 12 * 4 )
-         IF hb_socketRecvFrom( hSocket, @cBuffer,,,, hb_defaultValue( nTimeOut, 10000 /* 10s */ ) ) == hb_BLen( cBuffer )
+         IF hb_socketRecvFrom( hSocket, @cBuffer,,,, hb_defaultValue( nTimeOut, 10000 /* 10s */ ) ) == hb_BLen(cBuffer)
             tTime := hb_SToT( "19000101" ) + ;
                Bin2U( ntohl( hb_BSubStr( cBuffer, 10 * 4 + 1, 4 ) ) ) / 86400 + ;
                ( Bin2U( ntohl( hb_BSubStr( cBuffer, 11 * 4 + 1, 4 ) ) ) / ( 2 ^ 32 ) ) / 86400

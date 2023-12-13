@@ -130,7 +130,7 @@ FUNCTION DesignHaruPDF( cFileToSave )
    HPDF_Page_MoveTextPos( page, 60, height - 105 )
 
 
-   FOR i := 1 TO Len( font_list )
+   FOR i := 1 TO Len(font_list)
       samp_text := "abcdefgABCDEFG12345!#$%&+-@?"
       font := HPDF_GetFont( pdf, font_list[ i ], NIL )
 
@@ -635,14 +635,14 @@ STATIC PROCEDURE Page_Text( pdf )
    HPDF_Page_Circle( page, 210, 190, 113 )
    HPDF_Page_Stroke( page )
 
-   angle1 := 360 / ( Len( SAMP_TXT ) )
+   angle1 := 360 / ( Len(SAMP_TXT) )
    angle2 := 180
 
    HPDF_Page_BeginText( page )
    font := HPDF_GetFont( pdf, "Courier-Bold", NIL )
    HPDF_Page_SetFontAndSize( page, font, 30 )
 
-   FOR i := 1 TO Len( SAMP_TXT )
+   FOR i := 1 TO Len(SAMP_TXT)
       rad1 := ( angle2 - 90 ) / 180 * 3.141592
       rad2 := angle2 / 180 * 3.141592
 
@@ -735,7 +735,7 @@ STATIC PROCEDURE Page_TextScaling( pdf )
 
    HPDF_Page_SetFontAndSize( page, font, 18 )
    HPDF_Page_MoveTextPos( page, 0, -20 )
-   len := Len( samp_text )
+   len := Len(samp_text)
    FOR i := 1 TO len
       r := i / len
       g := 1 - ( i / len )
@@ -982,7 +982,7 @@ STATIC FUNCTION Page_CodePages( pdf )
    root := HPDF_CreateOutline( pdf, NIL, "Encoding list", NIL )
    HPDF_Outline_SetOpened( root, .T. )
 
-   FOR i := 1 TO Len( encodings )
+   FOR i := 1 TO Len(encodings)
       page := HPDF_AddPage( pdf )
 
       HPDF_Page_SetWidth( page, PAGE_WIDTH )

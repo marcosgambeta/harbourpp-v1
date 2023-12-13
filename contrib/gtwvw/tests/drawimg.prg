@@ -288,7 +288,7 @@ FUNCTION wg_ResetWPaintObj( nWinNum, nObjNum, lStrict )
    hb_default( @nObjNum, 0 )
    hb_default( @lStrict, .F. )
 
-   DO WHILE Len( s_aPObjList ) < nWinNum + 1
+   DO WHILE Len(s_aPObjList) < nWinNum + 1
       AAdd( s_aPObjList, {} )
    ENDDO
 
@@ -356,7 +356,7 @@ FUNCTION wg_DelWPaintObj( nWinNum, nType, cId, lStrict )
 
    // exist nType + cId ?
    i := 1
-   nLen := Len( s_aPObjList[ nWinNum + 1 ] )
+   nLen := Len(s_aPObjList[ nWinNum + 1 ])
    DO WHILE i <= nLen
       IF s_aPObjList[ nWinNum + 1 ][ i ]:nType == nType .AND. ;
          ( lDelAll .OR. s_aPObjList[ nWinNum + 1 ][ i ]:cId == cId )

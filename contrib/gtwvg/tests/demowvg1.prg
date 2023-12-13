@@ -51,7 +51,7 @@ PROCEDURE Main()
    AAdd( aPaint, { "Image", {|| wvt_DrawImage( 8, 62, 12, 69, IMAGE_VOUCH ) }, { WVT_BLOCK_IMAGE, 8, 62, 12, 69 } } )
    AAdd( aPaint, { "Box_5", {|| wvt_DrawBoxRecessed( 7, 48, 13, 55 ) }, { WVT_BLOCK_BOX, 7, 48, 13, 55 } } )
    AAdd( aPaint, { "Line_1", {|| wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) }, NIL } )
-   AAdd( aPaint, { "Gets", {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) }, NIL } )
+   AAdd( aPaint, { "Gets", {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) }, NIL } )
 
    ExecForm( aPaint )
 

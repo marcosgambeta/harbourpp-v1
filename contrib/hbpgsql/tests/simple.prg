@@ -92,7 +92,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       oRow:FieldName( 2 ), ;
       oRow:FieldType( 1 ), ;
       oRow:FieldDec( 1 ), ;
-      oRow:FieldLen( 1 )
+      oRow:FieldLen(1)
 
    oRow:FieldPut( 1, 150 )
    oRow:FieldPut( 2, "MY TEST" )
@@ -115,7 +115,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
          oQuery:FieldName( 1 ), ;
          oQuery:FieldType( 1 ), ;
          oQuery:FieldDec( 1 ), ;
-         oQuery:FieldLen( 1 ), ;
+         oQuery:FieldLen(1), ;
          oQuery:FieldGet( 3 )
 
       IF oQuery:RecNo() == 50
@@ -146,7 +146,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
          oRow:FieldName( 1 ), ;
          oRow:FieldType( 1 ), ;
          oRow:FieldDec( 1 ), ;
-         oRow:FieldLen( 1 ), ;
+         oRow:FieldLen(1), ;
          oRow:FieldGet( i, 3 )
 
    NEXT

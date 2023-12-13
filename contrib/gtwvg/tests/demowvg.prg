@@ -135,7 +135,7 @@ PROCEDURE Main()
    AAdd( aBlocks, {|| wvt_DrawBoxRecessed( 7, 48, 13, 55 ) } )
    AAdd( aBlocks, {|| wvt_DrawLine( MaxRow() - 2, 0, MaxRow() - 2, MaxCol(), WVT_LINE_HORZ, WVT_LINE_RECESSED, WVT_LINE_BOTTOM ) } )
    AAdd( aBlocks, {|| wvt_DrawLine( MaxRow() - 1, 41, MaxRow(), 41, WVT_LINE_VERT, WVT_LINE_RECESSED, WVT_LINE_CENTER ) } )
-   AAdd( aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) } )
+   AAdd( aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
 
    AAdd( aBlocks, {|| wvt_Mouse( -1000001 ) } )
 
@@ -275,7 +275,7 @@ PROCEDURE WvtNextGets_X()
    AAdd( aBlocks, {|| wvt_SetBrush( 2, RGB( 255, 255, 100 ), 1 ) } )
    AAdd( aBlocks, {|| wvt_DrawRectangle( 11, 50, 13, 58 )     } )
    AAdd( aBlocks, {|| wvt_DrawBoxGroupRaised( 5, 6, 19, 72 )  } )
-   AAdd( aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) } )
+   AAdd( aBlocks, {|| AEval( GetList, {| oGet | wvt_DrawBoxGet( oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
 
    AAdd( aBlocks, {|| wvt_DrawButton( 21,  6, 22,  9, "New", "resources\vouch1.bmp" ) } )
    AAdd( aBlocks, {|| wvt_DrawButton( 21, 11, 22, 14, "Browse", "resources\vouch1.bmp", 1, RGB( 255, 255, 255 ) ) } )

@@ -139,9 +139,9 @@ FUNCTION BliFunCal( ... )
    LOCAL aParams := hb_AParams()
    LOCAL pFunction
 
-   IF Len( aParams ) > 0
+   IF Len(aParams) > 0
       pFunction := ATail( aParams )
-      ASize( aParams, Len( aParams ) - 1 )
+      ASize( aParams, Len(aParams) - 1 )
       RETURN hb_hrbDo( pFunction, hb_ArrayToParams( aParams ) )
    ENDIF
 

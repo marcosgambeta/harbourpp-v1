@@ -108,7 +108,7 @@ METHOD WvtGets:Create()
    LOCAL nCurRow := Row()
    LOCAL nCurCol := Col()
 
-   FOR i := 1 TO Len( ::aGetList )
+   FOR i := 1 TO Len(::aGetList)
 
       __defaultNIL( @::aGetList[ i ][ 7 ], "N/W*,N/W*,,,N/GR*" )
       __defaultNIL( @::aGetList[ i ][ 5 ], {|| .T. } )
@@ -130,7 +130,7 @@ METHOD WvtGets:PaintBlock( nIndex )
 
    LOCAL nLen, bPaint
 
-   nLen   := Len( Transform( ::aGetList[ nIndex ][ 3 ], ::aGetList[ nIndex ][ 4 ] ) )
+   nLen   := Len(Transform( ::aGetList[ nIndex ][ 3 ], ::aGetList[ nIndex ][ 4 ] ))
 
    bPaint := {|| wvt_DrawBoxGet( ::aGetList[ nIndex ][ 1 ], ::aGetList[ nIndex ][ 2 ], nLen ) }
 

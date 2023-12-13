@@ -8,6 +8,6 @@ PROCEDURE Main()
 
    cI := "Hello"
    cJ := hb_bz2_Compress( cI, , @nErr )
-   ? nErr, Len( cJ ), hb_StrToHex( cJ )
+   ? nErr, Len(cJ), hb_StrToHex( cJ )
 
    RETURN

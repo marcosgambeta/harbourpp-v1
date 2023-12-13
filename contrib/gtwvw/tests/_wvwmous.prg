@@ -130,12 +130,12 @@ METHOD New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWi
    hb_default( @nRow1, 0 )
    hb_default( @nCol1, 0 )
    hb_default( @nRow2, nRow1 )
-   hb_default( @nCol2, nCol1 + Max( 10, Len( cCaption ) + 2 ) - 1 )
+   hb_default( @nCol2, nCol1 + Max( 10, Len(cCaption) + 2 ) - 1 )
    hb_default( @nType, _BUTTON_NORMAL )        // 20040303
    hb_default( @lDraw, .T. )
    hb_default( @nWinId, wvw_nNumWindows() - 1 )  // 20040303
 
-   // TODO: ::nId := iif(Empty(s_amouseobjlist), 1, s_amouseobjlist[ Len( s_amouseobjlist ) ]:nGetId() + 1)
+   // TODO: ::nId := iif(Empty(s_amouseobjlist), 1, s_amouseobjlist[ Len(s_amouseobjlist) ]:nGetId() + 1)
    // TODO: ::nHotKey := NIL
    ::nWinId := nWinId  // 20040303
 
@@ -389,7 +389,7 @@ FUNCTION wvwm_paint( nWinNum )
 
    // normally called by WVW_Paint()
    // redraw every mouse object in window nWinNum
-   IF Len( s_amouseobjlist ) >= nWinNum + 1
+   IF Len(s_amouseobjlist) >= nWinNum + 1
       AEval( s_amouseobjlist[ nWinNum + 1 ], {| o | o[ 2 ]:draw( nWinNum ) } )
    ENDIF
 
@@ -398,7 +398,7 @@ FUNCTION wvwm_paint( nWinNum )
 // clears all mouse objects from window nWinNum
 FUNCTION wvwm_ResetMouseObjects( nWinNum )
 
-   DO WHILE Len( s_amouseobjlist ) < nWinNum + 1
+   DO WHILE Len(s_amouseobjlist) < nWinNum + 1
       AAdd( s_amouseobjlist, {} )
    ENDDO
    s_amouseobjlist[ nWinNum + 1 ] := {}
@@ -416,7 +416,7 @@ FUNCTION wvwm_AddMouseObjects( nWinNum, oMouse, nObjType )
 // returns number of mouse objects in window nWinNum
 FUNCTION wvwm_nNumMouseObjects( nWinNum )
 
-   RETURN Len( s_amouseobjlist[ nWinNum + 1 ] )
+   RETURN Len(s_amouseobjlist[ nWinNum + 1 ])
 
 // returns type of mouse objects number nObjNum in window nWinNum
 FUNCTION wvwm_nObjectType( nWinNum, nObjNum )
@@ -515,13 +515,13 @@ FUNCTION wvwm_nMouseChecker( nkey )
 
    nCurWindow := wvw_nNumWindows() - 1
 
-   IF Len( s_amouseobjlist ) < nCurWindow + 1
+   IF Len(s_amouseobjlist) < nCurWindow + 1
       RETURN nkey
    ENDIF
 
    s_ncurkey := nkey   // 20040303
 
-   FOR i := 1 TO Len( s_amouseobjlist[ nCurWindow + 1 ] )
+   FOR i := 1 TO Len(s_amouseobjlist[ nCurWindow + 1 ])
       oMouseObj := s_amouseobjlist[ nCurWindow + 1 ][ i ][ 2 ]
 
       DO CASE

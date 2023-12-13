@@ -355,20 +355,20 @@ METHOD Delete( oRow, cWhere ) CLASS TFbServer
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC( ::db ) .AND. Len( aTables ) == 1
+   IF ! HB_ISNUMERIC( ::db ) .AND. Len(aTables) == 1
       // Cannot delete joined tables
 
       IF cWhere == NIL
          aKeys := oRow:GetKeyField()
 
          cWhere := ""
-         FOR i := 1 TO Len( aKeys )
+         FOR i := 1 TO Len(aKeys)
             nField := oRow:FieldPos( aKeys[ i ] )
             xField := oRow:FieldGet( nField )
 
             cWhere += aKeys[ i ] + "=" + DataToSql( xField )
 
-            IF i != Len( aKeys )
+            IF i != Len(aKeys)
                cWhere += ","
             ENDIF
          NEXT
@@ -390,7 +390,7 @@ METHOD Append( oRow ) CLASS TFbServer
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC( ::db ) .AND. Len( aTables ) == 1
+   IF ! HB_ISNUMERIC( ::db ) .AND. Len(aTables) == 1
       // Can insert only one table, not in joined tables
 
       cQuery := 'INSERT INTO ' + aTables[ 1 ] + '('
@@ -401,7 +401,7 @@ METHOD Append( oRow ) CLASS TFbServer
          ENDIF
       NEXT
 
-      cQuery := Left(cQuery, Len( cQuery ) - 1) +  ") VALUES ("
+      cQuery := Left(cQuery, Len(cQuery) - 1) +  ") VALUES ("
 
       FOR i := 1 TO oRow:FCount()
          IF oRow:Changed( i )
@@ -409,7 +409,7 @@ METHOD Append( oRow ) CLASS TFbServer
          ENDIF
       NEXT
 
-      cQuery := Left(cQuery, Len( cQuery ) - 1) + ")"
+      cQuery := Left(cQuery, Len(cQuery) - 1) + ")"
 
       result := ::Execute( cQuery )
    ENDIF
@@ -423,20 +423,20 @@ METHOD Update( oRow, cWhere ) CLASS TFbServer
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC( ::db ) .AND. Len( aTables ) == 1
+   IF ! HB_ISNUMERIC( ::db ) .AND. Len(aTables) == 1
       // Can't insert joined tables
 
       IF cWhere == NIL
          aKeys := oRow:GetKeyField()
 
          cWhere := ""
-         FOR i := 1 TO Len( aKeys )
+         FOR i := 1 TO Len(aKeys)
             nField := oRow:FieldPos( aKeys[ i ] )
             xField := oRow:FieldGet( nField )
 
             cWhere += aKeys[ i ] + "=" + DataToSql( xField )
 
-            IF i != Len( aKeys )
+            IF i != Len(aKeys)
                cWhere += ", "
             ENDIF
          NEXT
@@ -450,7 +450,7 @@ METHOD Update( oRow, cWhere ) CLASS TFbServer
       NEXT
 
       IF !( cWhere == "" )
-         cQuery := Left(cQuery, Len( cQuery ) - 1) + " WHERE " + cWhere
+         cQuery := Left(cQuery, Len(cQuery) - 1) + " WHERE " + cWhere
 
          result := ::Execute( cQuery )
       ENDIF
@@ -495,7 +495,7 @@ CREATE CLASS TFbQuery
    METHOD   Struct()
    METHOD   FieldName( nField )
    METHOD   FieldPos( cField )
-   METHOD   FieldLen( nField )
+   METHOD   FieldLen(nField)
    METHOD   FieldDec( nField )
    METHOD   FieldType( nField )
 
@@ -551,7 +551,7 @@ METHOD Refresh() CLASS TFbQuery
       ::qry := qry
 
       /* Tables in query */
-      FOR i := 1 TO Len( ::aStruct )
+      FOR i := 1 TO Len(::aStruct)
          IF hb_AScan( aTable, ::aStruct[ i ][ 5 ], , , .T. ) == 0
             AAdd( aTable, ::aStruct[ i ][ 5 ] )
          ENDIF
@@ -609,7 +609,7 @@ METHOD Struct() CLASS TFbQuery
    LOCAL i
 
    IF ! ::lError
-      FOR i := 1 TO Len( ::aStruct )
+      FOR i := 1 TO Len(::aStruct)
          AAdd( result, { ::aStruct[ i ][ 1 ], ::aStruct[ i ][ 2 ], ::aStruct[ i ][ 3 ], ::aStruct[ i ][ 4 ] } )
       NEXT
    ENDIF
@@ -630,7 +630,7 @@ METHOD FieldName( nField ) CLASS TFbQuery
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 1 ]
    ENDIF
 
@@ -640,17 +640,17 @@ METHOD FieldType( nField ) CLASS TFbQuery
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 2 ]
    ENDIF
 
    RETURN result
 
-METHOD FieldLen( nField ) CLASS TFbQuery
+METHOD FieldLen(nField) CLASS TFbQuery
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 3 ]
    ENDIF
 
@@ -660,7 +660,7 @@ METHOD FieldDec( nField ) CLASS TFbQuery
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 4 ]
    ENDIF
 
@@ -670,7 +670,7 @@ METHOD FieldGet( nField ) CLASS TFbQuery
 
    LOCAL result, aBlob, i, cType
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len( ::aStruct ) .AND. ! ::closed
+   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct) .AND. ! ::closed
 
       /* TODO: Convert to right data type */
 
@@ -684,7 +684,7 @@ METHOD FieldGet( nField ) CLASS TFbQuery
             aBlob := FBGetBlob( ::db, result )
 
             result := ""
-            FOR i := 1 TO Len( aBlob )
+            FOR i := 1 TO Len(aBlob)
                result += aBlob[ i ]
             NEXT
 
@@ -791,12 +791,12 @@ CREATE CLASS TFbRow
    METHOD   New( row, struct, nDB, nDialect, aTable )
    METHOD   Changed( nField )
    METHOD   GetTables()        INLINE ::aTables
-   METHOD   FCount()           INLINE Len( ::aRow )
+   METHOD   FCount()           INLINE Len(::aRow)
    METHOD   FieldGet( nField )
    METHOD   FieldPut( nField, Value )
    METHOD   FieldName( nField )
    METHOD   FieldPos( cField )
-   METHOD   FieldLen( nField )
+   METHOD   FieldLen(nField)
    METHOD   FieldDec( nField )
    METHOD   FieldType( nField )
    METHOD   GetKeyField()
@@ -810,7 +810,7 @@ METHOD new( row, struct, nDb, nDialect, aTable ) CLASS TFbRow
    ::db := nDB
    ::dialect := nDialect
    ::aTables := aTable
-   ::aChanged := Array( Len( row ) )
+   ::aChanged := Array( Len(row) )
 
    RETURN Self
 
@@ -818,7 +818,7 @@ METHOD Changed( nField ) CLASS TFbRow
 
    LOCAL result
 
-   IF nField >= 1 .AND. nField <= Len( ::aRow )
+   IF nField >= 1 .AND. nField <= Len(::aRow)
       result := ( ::aChanged[ nField ] != NIL )
    ENDIF
 
@@ -828,7 +828,7 @@ METHOD FieldGet( nField ) CLASS TFbRow
 
    LOCAL result
 
-   IF nField >= 1 .AND. nField <= Len( ::aRow )
+   IF nField >= 1 .AND. nField <= Len(::aRow)
       result := ::aRow[ nField ]
    ENDIF
 
@@ -838,7 +838,7 @@ METHOD FieldPut( nField, Value ) CLASS TFbRow
 
    LOCAL result
 
-   IF nField >= 1 .AND. nField <= Len( ::aRow )
+   IF nField >= 1 .AND. nField <= Len(::aRow)
       ::aChanged[ nField ] := .T.
       result := ::aRow[ nField ] := Value
    ENDIF
@@ -849,7 +849,7 @@ METHOD FieldName( nField ) CLASS TFbRow
 
    LOCAL result
 
-   IF nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 1 ]
    ENDIF
 
@@ -862,17 +862,17 @@ METHOD FieldType( nField ) CLASS TFbRow
 
    LOCAL result
 
-   IF nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 2 ]
    ENDIF
 
    RETURN result
 
-METHOD FieldLen( nField ) CLASS TFbRow
+METHOD FieldLen(nField) CLASS TFbRow
 
    LOCAL result
 
-   IF nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 3 ]
    ENDIF
 
@@ -882,7 +882,7 @@ METHOD FieldDec( nField ) CLASS TFbRow
 
    LOCAL result
 
-   IF nField >= 1 .AND. nField <= Len( ::aStruct )
+   IF nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 4 ]
    ENDIF
 
@@ -904,7 +904,7 @@ STATIC FUNCTION KeyField( aTables, db, dialect )
 
    /* Check row, many tables exists in current query, so we must have only one table */
 
-   IF Len( aTables ) == 1
+   IF Len(aTables) == 1
       cTable := aTables[ 1 ]
 
       cQuery := ' select                                      '
@@ -969,11 +969,11 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
 
    /* create table list and field list */
 
-   FOR i := 1 TO Len( aStru )
+   FOR i := 1 TO Len(aStru)
       xtables += DataToSql( aStru[ i ][ 5 ] )
       xfields += DataToSql( aStru[ i ][ 1 ] )
 
-      IF i != Len( aStru )
+      IF i != Len(aStru)
          xtables += ","
          xfields += ","
       ENDIF
@@ -999,7 +999,7 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
 
       FBFree( qry )
 
-      FOR i := 1 TO Len( aStru )
+      FOR i := 1 TO Len(aStru)
          cField := RTrim(aStru[ i ][ 7 ])
          nType := aStru[ i ][ 2 ]
          nSize := aStru[ i ][ 3 ]

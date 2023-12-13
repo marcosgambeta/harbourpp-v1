@@ -80,7 +80,7 @@ CREATE CLASS WvgToolBar INHERIT WvgWindow /*WvgActiveXControl*/
    VAR    sl_buttonMenuClick
    VAR    sl_buttonDropDown
 
-   METHOD numItems()                            INLINE Len( ::aItems )
+   METHOD numItems()                            INLINE Len(::aItems)
 
    METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )

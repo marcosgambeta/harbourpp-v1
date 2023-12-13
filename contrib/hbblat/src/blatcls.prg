@@ -980,7 +980,7 @@ METHOD TranslateBlatError( nErr ) CLASS HBBlat
 STATIC FUNCTION ArrayToString( aArray )
 
    LOCAL cString := ""
-   LOCAL nLen    := Len( aArray )
+   LOCAL nLen    := Len(aArray)
    LOCAL cElem
 
    FOR EACH cElem IN aArray

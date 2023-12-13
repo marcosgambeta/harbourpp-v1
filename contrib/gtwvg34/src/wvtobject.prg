@@ -137,7 +137,7 @@ CREATE CLASS WvtObject
    VAR    bOnHilite                               INIT {|| NIL }
    VAR    bOnDeHilite                             INIT {|| NIL }
 
-   ACCESS nChildren                               INLINE Len( ::aChildren )
+   ACCESS nChildren                               INLINE Len(::aChildren)
    VAR    nIndexOrder
 
    METHOD New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )

@@ -76,7 +76,7 @@ FUNCTION tip_QPEncode( cData )
    LOCAL cString := ""
    LOCAL nLineLen := 0
 
-   nLen := hb_BLen( cData )
+   nLen := hb_BLen(cData)
    FOR nPos := 1 TO nLen
       c := hb_BSubStr(cData, nPos, 1)
       IF c == Chr(10)
@@ -115,10 +115,10 @@ FUNCTION tip_QPDecode( cData )
    cData := StrTran( cData, "=" + Chr(13) + Chr(10) )
    cData := StrTran( cData, "=" + Chr(10) )  /* also delete non-standard line breaks */
 
-   nLen := hb_BLen( cData )
+   nLen := hb_BLen(cData)
    FOR nPos := 1 TO nLen
       c := hb_BSubStr(cData, nPos, 1)
-      IF c == "=" .AND. hb_BLen( hb_BSubStr(cData, nPos + 1, 2) ) == 2
+      IF c == "=" .AND. hb_BLen(hb_BSubStr(cData, nPos + 1, 2)) == 2
          cString += hb_BChar( hb_HexToNum( hb_BSubStr(cData, nPos + 1, 2) ) )
          nPos += 2
       ELSE

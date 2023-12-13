@@ -194,7 +194,7 @@ FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
          ENDIF
       ENDIF
 
-      IF Len( aHFonts ) > 0
+      IF Len(aHFonts) > 0
          wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_MLE ), WM_SETFONT, ahFonts[1], 0 )
       ENDIF
 
@@ -311,7 +311,7 @@ FUNCTION DlgSlideShowProc( hDlg, nMsg, wParam, lParam )
 
    CASE WM_TIMER
       t_nSlide++
-      IF t_nSlide > Len( t_aSlides )
+      IF t_nSlide > Len(t_aSlides)
          t_nSlide := 1
       ENDIF
       DrawSlide( hDlg, t_nSlide )

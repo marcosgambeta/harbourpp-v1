@@ -37,7 +37,7 @@ PROCEDURE Main()
    ? "arrows - window move "
 
    SetClearB( 61 )
-   FOR i := 1 TO Len( aWin )
+   FOR i := 1 TO Len(aWin)
       y := i + 2
       x := i * 4 + 10
       SetColor( NToColor( i * 16 + 15 ) + ",W+/B*" )

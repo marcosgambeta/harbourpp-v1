@@ -172,7 +172,7 @@ METHOD Run( hConfig ) CLASS UHttpd
       ELSE
          Eval( ::hConfig[ "Trace" ], "New connection", hSocket )
          IF hb_mutexQueueInfo( ::hmtxQueue, @nWorkers, @nJobs ) .AND. ;
-               Len( aThreads ) < THREAD_COUNT_MAX .AND. ;
+               Len(aThreads) < THREAD_COUNT_MAX .AND. ;
                nJobs >= nWorkers
             AAdd( aThreads, hb_threadStart( HB_THREAD_INHERIT_PUBLIC, @ProcessConnection(), Self ) )
          ENDIF
@@ -211,7 +211,7 @@ METHOD LogAccess() CLASS UHttpd
       server[ "REMOTE_ADDR" ] + " - - [" + Right(cDate, 2) + "/" + ;
       { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[ Val( SubStr(cDate, 5, 2) ) ] + ;
       "/" + Left(cDate, 4) + ":" + cTime + ' +0000] "' + server[ "REQUEST_ALL" ] + '" ' + ;
-      hb_ntos( t_nStatusCode ) + " " + hb_ntos( Len( t_cResult ) ) + ;
+      hb_ntos( t_nStatusCode ) + " " + hb_ntos( Len(t_cResult) ) + ;
       ' "' + server[ "HTTP_REFERER" ] + '" "' + server[ "HTTP_USER_AGENT" ] + ;
       '"' )
    hb_mutexUnlock( ::hmtxLog )
@@ -223,7 +223,7 @@ STATIC FUNCTION IPAddr2Num( cIP )
    LOCAL aA, n1, n2, n3, n4
 
    aA := hb_regex( "^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$", cIP )
-   IF Len( aA ) == 5 .AND. ( n1 := Val( aA[ 2 ] ) ) <= 255 .AND. ( n2 := Val( aA[ 3 ] ) ) <= 255 .AND. ;
+   IF Len(aA) == 5 .AND. ( n1 := Val( aA[ 2 ] ) ) <= 255 .AND. ( n2 := Val( aA[ 3 ] ) ) <= 255 .AND. ;
          ( n3 := Val( aA[ 4 ] ) ) <= 255 .AND. ( n4 := Val( aA[ 5 ] ) ) <= 255
       RETURN ( ( ( n1 * 256 ) + n2 ) * 256 + n3 ) * 256 + n4
    ENDIF
@@ -305,7 +305,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
       IF nPos == 0 .OR. hb_HValueAt( aFilter, nPos ) < nAddr
          nPos++
       ENDIF
-      IF nPos > Len( aFilter )
+      IF nPos > Len(aFilter)
          LOOP
       ENDIF
 
@@ -571,7 +571,7 @@ STATIC FUNCTION ProcessConnection( oServer )
             nLen := 1
             nTime := hb_MilliSeconds()
             cBuf := Space( 4096 )
-            DO WHILE Len( cRequest ) < nReqLen
+            DO WHILE Len(cRequest) < nReqLen
                IF oServer:lHasSSL .AND. oServer:hConfig[ "SSL" ]
                   nLen := MY_SSL_READ( oServer:hConfig, hSSL, hSocket, @cBuf, 1000, @nErr )
                ELSE
@@ -634,7 +634,7 @@ STATIC FUNCTION ProcessConnection( oServer )
          // Send response
          cBuf := MakeResponse( oServer:hConfig )
 
-         DO WHILE hb_BLen( cBuf ) > 0 .AND. ! oServer:lStop
+         DO WHILE hb_BLen(cBuf) > 0 .AND. ! oServer:lStop
             IF oServer:lHasSSL .AND. oServer:hConfig[ "SSL" ]
                nLen := MY_SSL_WRITE( oServer:hConfig, hSSL, hSocket, cBuf, 1000, @nErr )
             ELSE
@@ -684,7 +684,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
    IF hb_HHasKey( aMount, cMount )
       cPath := ""
    ELSE
-      nI := Len( cMount )
+      nI := Len(cMount)
       DO WHILE ( nI := hb_RAt( "/", cMount,, nI ) ) > 0
          IF hb_HHasKey( aMount, Left(cMount, nI) + "*" )
             Eval( oServer:hConfig[ "Trace" ], "HAS", Left(cMount, nI) + "*" )
@@ -736,14 +736,14 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
    aLine := hb_ATokens( aRequest[ 1 ], " " )
 
    server[ "REQUEST_ALL" ] := aRequest[ 1 ]
-   IF Len( aLine ) == 3 .AND. Left(aLine[ 3 ], 5) == "HTTP/"
+   IF Len(aLine) == 3 .AND. Left(aLine[ 3 ], 5) == "HTTP/"
       server[ "REQUEST_METHOD" ] := aLine[ 1 ]
       server[ "REQUEST_URI" ] := aLine[ 2 ]
       server[ "SERVER_PROTOCOL" ] := aLine[ 3 ]
    ELSE
       server[ "REQUEST_METHOD" ] := aLine[ 1 ]
-      server[ "REQUEST_URI" ] := iif(Len( aLine ) >= 2, aLine[ 2 ], "")
-      server[ "SERVER_PROTOCOL" ] := iif(Len( aLine ) >= 3, aLine[ 3 ], "")
+      server[ "REQUEST_URI" ] := iif(Len(aLine) >= 2, aLine[ 2 ], "")
+      server[ "SERVER_PROTOCOL" ] := iif(Len(aLine) >= 3, aLine[ 3 ], "")
       RETURN NIL
    ENDIF
 
@@ -770,7 +770,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
    server[ "HTTP_REFERER" ] := ""
    server[ "HTTP_USER_AGENT" ] := ""
 
-   FOR nI := 2 TO Len( aRequest )
+   FOR nI := 2 TO Len(aRequest)
       IF aRequest[ nI ] == ""
          EXIT
       ELSEIF ( nJ := At( ":", aRequest[ nI ] ) ) > 0
@@ -779,7 +779,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
          CASE "COOKIE"
             server[ "HTTP_COOKIE" ] := cI
             IF ( nK := At( ";", cI ) ) == 0
-               nK := Len( RTrim(cI) )
+               nK := Len(RTrim(cI))
             ENDIF
             cI := Left(cI, nK)
             IF ( nK := At( "=", cI ) ) > 0
@@ -901,7 +901,7 @@ STATIC FUNCTION MakeResponse( hConfig )
    IF t_nStatusCode != 200
       t_cResult := "<html><body><h1>" + cStatus + "</h1></body></html>"
    ENDIF
-   UAddHeader( "Content-Length", hb_ntos( Len( t_cResult ) ) )
+   UAddHeader( "Content-Length", hb_ntos( Len(t_cResult) ) )
    AEval( t_aHeader, {| x | cRet += x[ 1 ] + ": " + x[ 2 ] + CR_LF } )
    cRet += CR_LF
    Eval( hConfig[ "Trace" ], cRet )
@@ -924,7 +924,7 @@ STATIC FUNCTION HttpDateUnformat( cDate, tDate )
    LOCAL nMonth, tI
 
    // TODO: support outdated compatibility format RFC2616
-   IF Len( cDate ) == 29 .AND. Right(cDate, 4) == " GMT" .AND. SubStr(cDate, 4, 2) == ", "
+   IF Len(cDate) == 29 .AND. Right(cDate, 4) == " GMT" .AND. SubStr(cDate, 4, 2) == ", "
       nMonth := AScan( { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", ;
          "Oct", "Nov", "Dec" }, SubStr(cDate, 9, 3) )
       IF nMonth > 0
@@ -988,17 +988,17 @@ STATIC FUNCTION GetErrorDesc( oErr )
 #else
    DO WHILE ! Empty(ProcName( ++nI ))
       cI := "    " + ProcName( nI ) + "(" + hb_ntos( ProcLine( nI ) ) + ")"
-      cI := PadR( cI, Max( 32, Len( cI ) + 1 ) )
+      cI := PadR( cI, Max( 32, Len(cI) + 1 ) )
       cI += "("
       aPar := __dbgVMParLList( nI )
-      FOR nJ := 1 TO Len( aPar )
+      FOR nJ := 1 TO Len(aPar)
          cI += cvt2str( aPar[ nJ ] )
-         IF nJ < Len( aPar )
+         IF nJ < Len(aPar)
             cI += ", "
          ENDIF
       NEXT
       cI += ")"
-      nJ := Len( aPar )
+      nJ := Len(aPar)
       DO WHILE ! HB_ISSYMBOL( xI := __dbgVMVarLGet( nI, ++nJ ) )
          cI += ", " + cvt2str( xI )
       ENDDO
@@ -1082,15 +1082,15 @@ STATIC FUNCTION cvt2str( xI, lLong )
    ELSEIF cValtype == "N"
       RETURN iif(lLong, "[N]:" + Str( xI ), hb_ntos( xI ))
    ELSEIF cValtype $ "CM"
-      IF Len( xI ) <= 260
-         RETURN iif(lLong, "[" + cValtype + hb_ntos( Len( xI ) ) + "]:", "") + '"' + xI + '"'
+      IF Len(xI) <= 260
+         RETURN iif(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + xI + '"'
       ELSE
-         RETURN iif(lLong, "[" + cValtype + hb_ntos( Len( xI ) ) + "]:", "") + '"' + Left(xI, 100) + '"...'
+         RETURN iif(lLong, "[" + cValtype + hb_ntos( Len(xI) ) + "]:", "") + '"' + Left(xI, 100) + '"...'
       ENDIF
    ELSEIF cValtype == "A"
-      RETURN "[A" + hb_ntos( Len( xI ) ) + "]"
+      RETURN "[A" + hb_ntos( Len(xI) ) + "]"
    ELSEIF cValtype == "H"
-      RETURN "[H" + hb_ntos( Len( xI ) ) + "]"
+      RETURN "[H" + hb_ntos( Len(xI) ) + "]"
    ELSEIF cValtype == "O"
       cI := ""
       IF __objHasMsg( xI, "ID" )
@@ -1276,7 +1276,7 @@ FUNCTION UHtmlEncode( cString )
 
    LOCAL nI, cI, cRet := ""
 
-   FOR nI := 1 TO Len( cString )
+   FOR nI := 1 TO Len(cString)
       cI := SubStr(cString, nI, 1)
       IF cI == "<"
          cRet += "&lt;"
@@ -1297,7 +1297,7 @@ FUNCTION UUrlEncode( cString )
 
    LOCAL nI, cI, cRet := ""
 
-   FOR nI := 1 TO Len( cString )
+   FOR nI := 1 TO Len(cString)
       cI := SubStr(cString, nI, 1)
       IF cI == " "
          cRet += "+"
@@ -1316,7 +1316,7 @@ FUNCTION UUrlDecode( cString )
 
    cString := StrTran( cString, "+", " " )
    nI := 1
-   DO WHILE nI <= Len( cString )
+   DO WHILE nI <= Len(cString)
       nI := hb_At( "%", cString, nI )
       IF nI == 0
          EXIT
@@ -1468,10 +1468,10 @@ PROCEDURE UProcFiles( cFileName, lIndex )
       FOR EACH aF IN aDir
          IF Left(aF[ 1 ], 1) == "."
          ELSEIF "D" $ aF[ 5 ]
-            UWrite( '[DIR] <a href="' + aF[ 1 ] + '/">' + aF[ 1 ] + '</a>' + Space( 50 - Len( aF[ 1 ] ) ) + ;
+            UWrite( '[DIR] <a href="' + aF[ 1 ] + '/">' + aF[ 1 ] + '</a>' + Space( 50 - Len(aF[ 1 ]) ) + ;
                DToC( aF[ 3 ] ) + ' ' + aF[ 4 ] + CR_LF )
          ELSE
-            UWrite( '      <a href="' + aF[ 1 ] + '">' + aF[ 1 ] + '</a>' + Space( 50 - Len( aF[ 1 ] ) ) + ;
+            UWrite( '      <a href="' + aF[ 1 ] + '">' + aF[ 1 ] + '</a>' + Space( 50 - Len(aF[ 1 ]) ) + ;
                DToC( aF[ 3 ] ) + ' ' + aF[ 4 ] + Str( aF[ 2 ], 12 ) + CR_LF )
          ENDIF
       NEXT
@@ -1637,7 +1637,7 @@ STATIC FUNCTION compile_file( cFileName, hConfig )
    IF hb_FileExists( cFileName )
       cTpl := hb_MemoRead( cFileName )
       BEGIN SEQUENCE
-         IF ( nPos := compile_buffer( cTpl, 1, aCode ) ) < Len( cTpl ) + 1
+         IF ( nPos := compile_buffer( cTpl, 1, aCode ) ) < Len(cTpl) + 1
             Break( nPos )
          ENDIF
       RECOVER USING nPos
@@ -1714,11 +1714,11 @@ STATIC FUNCTION compile_buffer( cTpl, nStart, aCode )
          Break( nS )
       ENDIF
    ENDDO
-   IF nStart < Len( cTpl )
+   IF nStart < Len(cTpl)
       AAdd( aCode, { "txt", SubStr(cTpl, nStart) } )
    ENDIF
 
-   RETURN Len( cTpl ) + 1
+   RETURN Len(cTpl) + 1
 
 STATIC FUNCTION SubStrCount( cSub, cString, nStart, nEnd )
 

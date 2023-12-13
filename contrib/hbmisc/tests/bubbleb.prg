@@ -45,7 +45,7 @@ FUNCTION BubbleBabbleEncode_Prg( cString )
    i := 1
    DO WHILE .T.
 
-      IF i > Len( cString )
+      IF i > Len(cString)
          cResult += ;
             SubStr(vo, nSeed % 6 + 1, 1) + ;
             SubStr(co, 16 + 1, 1) + ;
@@ -60,7 +60,7 @@ FUNCTION BubbleBabbleEncode_Prg( cString )
          SubStr(co, hb_bitAnd( hb_bitShift( byte1, -2 ), 15 ) + 1, 1) + ;
          SubStr(vo, ( ( hb_bitAnd( byte1, 3 ) + ( nSeed / 6 ) ) % 6 ) + 1, 1)
 
-      IF i + 1 > Len( cString )
+      IF i + 1 > Len(cString)
          EXIT
       ENDIF
 

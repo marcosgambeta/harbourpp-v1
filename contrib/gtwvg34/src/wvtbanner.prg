@@ -115,7 +115,7 @@ METHOD WvtBanner:Create()
    ::oLabel:Create()
 
    ::nCurSeconds := Seconds()
-   ::nTextLen    := Len( ::cText )
+   ::nTextLen    := Len(::cText)
    ::nTextIndex  := iif(::nDirection == 0, 1, ::nTextLen)
    ::nCurAlign   := ::nDirection
 

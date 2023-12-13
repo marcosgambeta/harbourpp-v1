@@ -558,12 +558,12 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
                IF nTemp > 20 .AND. nTemp % 10 != 0
                   cTemp += " "
                ENDIF
-               IF nTri + 37 <= Len( aMsg[ NTSR_CNT ] )
+               IF nTri + 37 <= Len(aMsg[ NTSR_CNT ])
                   cTemp += OrdToGender( aMsg[ NTSR_CNT, nTri + 37 ], aMsg, nGender )
                ELSE
                   cTemp += "10**" + hb_ntos( nTri * 3 )
                ENDIF
-            ELSEIF nTri <= Len( aMsg[ NTSR_1000_1 ] )
+            ELSEIF nTri <= Len(aMsg[ NTSR_1000_1 ])
                cTemp += " "
                nTemp1 := ( nValue % 10 )
                IF nTemp1 == 1 .AND. nValue != 11
@@ -648,11 +648,11 @@ STATIC FUNCTION TriToStr( nValue, aMsg, nGender, lOrd, lLast, nTri )
                nIdx := NTSR_CNT
                lLast := .F.
             ELSE
-               nIdx := iif(nValue + 1 <= Len( aMsg[ nGender ] ), nGender, NTSR_MALE)
+               nIdx := iif(nValue + 1 <= Len(aMsg[ nGender ]), nGender, NTSR_MALE)
             ENDIF
          ENDIF
       ELSE
-         nIdx := iif(nValue + 1 <= Len( aMsg[ nGender ] ), nGender, NTSR_MALE)
+         nIdx := iif(nValue + 1 <= Len(aMsg[ nGender ]), nGender, NTSR_MALE)
       ENDIF
       cTemp := aMsg[ nIdx, nValue + 1 ]
       IF nIdx == NTSR_CNT
@@ -665,7 +665,7 @@ STATIC FUNCTION TriToStr( nValue, aMsg, nGender, lOrd, lLast, nTri )
 
 STATIC FUNCTION OrdToGender( cValue, aMsg, nGender )
 
-   LOCAL nTemp := Len( cValue ) - Len( aMsg[ NTSR_ORDG, 1 ] )
+   LOCAL nTemp := Len(cValue) - Len(aMsg[ NTSR_ORDG, 1 ])
 
    IF nGender == NTSR_FEMA
       cValue := Left(cValue, nTemp) + iif(SubStr(cValue, nTemp + 1) == aMsg[ NTSR_ORDG, 1 ], ;

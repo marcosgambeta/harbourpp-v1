@@ -177,18 +177,18 @@ METHOD Draw13( cText ) CLASS GDBarCode
 
    IF ! lError
 
-      IF ::book .AND. Len( ::text ) != 10
+      IF ::book .AND. Len(::text) != 10
          ::DrawError( "Must contains 10 chars if ISBN is true." )
          lError := .T.
       ENDIF
 
       // book, we changed the code to the right
-      IF ::book .AND. Len( ::text ) == 10
-         ::text := "978" + SubStr(::text, 1, Len( ::text ) - 1)
+      IF ::book .AND. Len(::text) == 10
+         ::text := "978" + SubStr(::text, 1, Len(::text) - 1)
       ENDIF
 
       //  contain only 12 characters ?
-      IF Len( ::text ) != 12
+      IF Len(::text) != 12
          ::DrawError( "Must contains 12 chars, the 13th digit is automatically added." )
          lError := .T.
       ENDIF
@@ -208,10 +208,10 @@ METHOD Draw13( cText ) CLASS GDBarCode
          // start code
          ::maxHeight -= 9
 
-         FOR ii := 1 TO Len( ::text )
+         FOR ii := 1 TO Len(::text)
 
             // Calculate check digit
-            IF Mod( Len( ::text ) + 1 - ii, 2 ) == 0
+            IF Mod( Len(::text) + 1 - ii, 2 ) == 0
                nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
             ELSE
                nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
@@ -326,9 +326,9 @@ METHOD Draw8( cText ) CLASS GDBarCode
       // Start Code
       ::maxHeight -= 9
 
-      FOR ii := 1 TO Len( ::text )
+      FOR ii := 1 TO Len(::text)
 
-         IF Mod( Len( ::text ) + 1 - ii, 2 ) == 0
+         IF Mod( Len(::text) + 1 - ii, 2 ) == 0
             nChkSum += Int( Val( SubStr(::text, ii, 1) ) )
          ELSE
             nChkSum += Int( Val( SubStr(::text, ii, 1) ) ) * 3
@@ -398,7 +398,7 @@ METHOD FindCharCode( cString, cChar ) CLASS GDBarCode
    LOCAL nC   := 0
    LOCAL nret := 0
 
-   FOR i := 1 TO Len( cString )
+   FOR i := 1 TO Len(cString)
 
       IF SubStr(cString, i, 1) == cChar
          ++nC
@@ -440,7 +440,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
    ENDIF
 
    // Checking if all chars are allowed
-   FOR i := 1 TO Len( ::text )
+   FOR i := 1 TO Len(::text)
 
       IF cModeCode == "C"
 
@@ -473,16 +473,16 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
       IF Empty(cModeCode)
 
-         IF Str( Val( ::text ), Len( ::text ) ) == ::text
+         IF Str( Val( ::text ), Len(::text) ) == ::text
             lTypeCodeC :=  .T.
             cConc      := ::aCode[ STARTC ]
             nSum       := STARTB
          ELSE
-            FOR n := 1 TO Len( ::text )
+            FOR n := 1 TO Len(::text)
                nC += iif(SubStr(::text, n, 1) > 31, 1, 0)
             NEXT
 
-            IF nC < Len( ::text ) / 2
+            IF nC < Len(::text) / 2
                lTypeCodeA := .T.
                cConc      := ::aCode[ STARTA ]
                nSum       := FNC1
@@ -508,7 +508,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
       nC := 0
 
-      FOR n := 1 TO Len( ::text )
+      FOR n := 1 TO Len(::text)
 
          ++nC
 
@@ -516,7 +516,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
          IF lTypeCodeC
 
-            IF Len( ::text ) == n
+            IF Len(::text) == n
                cConc += ::aCode[ CODEB ]
                nValChar := Asc( cChar ) - 31
             ELSE
@@ -553,7 +553,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
       nSum := nSum % 103 + 1
       cConc += ::aCode[ nSum ] + ::aCode[ 107 ]
 
-      FOR n := 1 TO Len( cConc ) STEP 2
+      FOR n := 1 TO Len(cConc) STEP 2
          cBarCode += Replicate( "1", Val( SubStr(cConc, n, 1) ) )
          cBarCode += Replicate( "0", Val( SubStr(cConc, n + 1, 1) ) )
       NEXT
@@ -586,7 +586,7 @@ METHOD GenCodei25() CLASS GDBarCode
    LOCAL lError := .F.
    LOCAL bc_string
 
-   IF ( Len( ::text ) % 2 ) != 0
+   IF ( Len(::text) % 2 ) != 0
       ::DrawError( "Invalid barcode lenght" )
       lError := .T.
    ENDIF
@@ -625,7 +625,7 @@ METHOD MixCode( value ) CLASS GDBarCode
    LOCAL cFirst
    LOCAL cNext
 
-   l := Len( value )
+   l := Len(value)
 
    IF ( l % 2 ) != 0
       ::DrawError( "Code cannot be intercalated: Invalid length (mix)" )

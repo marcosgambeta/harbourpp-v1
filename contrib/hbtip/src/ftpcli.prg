@@ -585,7 +585,7 @@ METHOD MPut( cFileSpec, cAttr ) CLASS TIPClientFTP
 
    /* QUESTION: Shouldn't this return an array?
                 Why emulate a platform specific and ill-defined format? */
-   RETURN SubStr(cStr, Len( e"\r\n" ) + 1)
+   RETURN SubStr(cStr, Len(e"\r\n") + 1)
 
 METHOD UploadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
 

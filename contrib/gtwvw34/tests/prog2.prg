@@ -69,7 +69,7 @@ STATIC PROCEDURE xGet1()
 
    MEMVAR __temp__
 
-   AddMiscObjects( nWin, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) } )
+   AddMiscObjects( nWin, {| nWindow | __temp__ := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( __temp__, oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
 
    DO WHILE .T.
       @ 12, 22 SAY "Name    :" GET cName  PICTURE "@!K" WHEN lMessage( "Please enter your name" )
@@ -136,7 +136,7 @@ STATIC PROCEDURE xBrowse1()
 
    AddMiscObjects( nWin, {| nWindow | wvw_DrawBoxRecessed( nWindow, nTop + 1, nLeft + 1, nBottom - 1, nRight - 1 ) } )
    AddMiscObjects( nWin, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
-   AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len( aColumnsSep ) ) } )
+   AddMiscObjects( nWin, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 
    DO WHILE ! lEnd
       oBrowse:ForceStable()
@@ -252,7 +252,7 @@ STATIC FUNCTION lYesNo( cMsg )
    LOCAL oldColor := SetColor( _STD_COLOR_ )
 
    cmsg := " " + AllTrim(hb_defaultValue( cMsg, "Please Confirm" )) + " "
-   nWidth := Max( Len( cmsg ), Len( "Yes" ) )
+   nWidth := Max( Len(cmsg), Len("Yes") )
    nTopLine := nBotLine - 2 - 1
 
    nLeft := Max( nLeft, ( ( nRight + nLeft ) * .5 ) - ( nWidth * .5 ) - 1 )
@@ -285,7 +285,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
 
    cmsg := AllTrim(cmsg)
    nNumLines := MLCount( cmsg, ( nright - nleft ) - 1 )
-   nWidth := iif(nNumLines < 2, Len( cmsg ), nRight - nLeft - 1)
+   nWidth := iif(nNumLines < 2, Len(cmsg), nRight - nLeft - 1)
    nTopLine := nBotLine - nNumLines - 1
    IF nTopLine < 0            // too many lines to display
       nNumLines += nTopLine
@@ -294,7 +294,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
 
    nMaxWidth := 0
    FOR i := 1 TO nNumLines
-      nMaxWidth := Max( nMaxWidth, Len( RTrim(MemoLine( cmsg, nwidth, i )) ) )
+      nMaxWidth := Max( nMaxWidth, Len(RTrim(MemoLine( cmsg, nwidth, i ))) )
    NEXT
 
    nLeft := Max( nLeft, Int( ( ( nRight + nLeft ) / 2 ) - ( nMaxWidth / 2 ) - 1 ) )
@@ -325,7 +325,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
 // Return      : Numeric id of the new window
 STATIC FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 
-   LOCAL i := Len( s_zwin )
+   LOCAL i := Len(s_zwin)
    LOCAL cScreen := SaveScreen( r1, c1, r2, c2 )
    LOCAL cOldColor := SetColor()
    LOCAL nrow := Row(), ncol := Col()
@@ -353,7 +353,7 @@ STATIC FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 // Closes the last window and remove it from window list
 STATIC PROCEDURE ZREVWINDOW()
 
-   LOCAL i := Len( s_zwin )
+   LOCAL i := Len(s_zwin)
 
    IF i == 0
       RETURN  // no window to close
@@ -378,7 +378,7 @@ STATIC PROCEDURE ZREVWINDOW()
 
 FUNCTION WVW_PAINT( nWinNum )  /* must be a public function */
 
-   IF nWinNum + 1 <= Len( s_amiscobjlist )
+   IF nWinNum + 1 <= Len(s_amiscobjlist)
       AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
@@ -388,7 +388,7 @@ STATIC PROCEDURE ResetMiscObjects( nWinNum )
 
    hb_default( @nWinNum, wvw_nNumWindows() - 1 )
 
-   DO WHILE Len( s_amiscobjlist ) < nWinNum + 1
+   DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd( s_amiscobjlist, {} )
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}

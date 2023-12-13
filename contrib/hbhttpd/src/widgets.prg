@@ -78,17 +78,17 @@ METHOD Add( oWidget, nRow, nCol ) CLASS UWLayoutGrid
 
    LOCAL nI, nJ, aI
 
-   IF nRow > Len( ::aChilds )
-      FOR nI := Len( ::aChilds ) + 1 TO nRow
-         aI := Array( Len( ::aChilds[ 1 ] ) )
-         FOR nJ := 1 TO Len( ::aChilds[ 1 ] )
+   IF nRow > Len(::aChilds)
+      FOR nI := Len(::aChilds) + 1 TO nRow
+         aI := Array( Len(::aChilds[ 1 ]) )
+         FOR nJ := 1 TO Len(::aChilds[ 1 ])
             aI[ nJ ] := {}
          NEXT
          AAdd( ::aChilds, aI )
       NEXT
    ENDIF
-   IF nCol > Len( ::aChilds[ 1 ] )
-      FOR nI := Len( ::aChilds[ 1 ] ) + 1 TO nCol
+   IF nCol > Len(::aChilds[ 1 ])
+      FOR nI := Len(::aChilds[ 1 ]) + 1 TO nCol
          AEval( ::aChilds, {| x | AAdd( x, {} ) } )
       NEXT
    ENDIF
@@ -311,7 +311,7 @@ METHOD Paint() CLASS UWMenu
    LOCAL nI
 
    UWrite( '<div>' )
-   FOR nI := 1 TO Len( ::aItems )
+   FOR nI := 1 TO Len(::aItems)
       IF nI != 1
          UWrite( '&nbsp;|&nbsp;' )
       ENDIF
@@ -351,7 +351,7 @@ METHOD Output() CLASS UWBrowse
 
    // Header
    cRet += '<tr>'
-   FOR nI := 1 TO Len( ::aColumns )
+   FOR nI := 1 TO Len(::aColumns)
       cRet += '<th>' + UHtmlEncode( ::aColumns[ nI ][ 2 ] ) + '</th>'
    NEXT
    cRet += '</tr>'
@@ -364,7 +364,7 @@ METHOD Output() CLASS UWBrowse
    ENDIF
    DO WHILE ! Eof()
       cRet += '<tr>'
-      FOR nI := 1 TO Len( ::aColumns )
+      FOR nI := 1 TO Len(::aColumns)
          xField := ::aColumns[ nI ][ 3 ]
          DO CASE
          CASE HB_ISSTRING( xField )
@@ -461,7 +461,7 @@ PROCEDURE UProcWidgets( cURL, aMap )
 
       aURL := uhttpd_split( "/", cURL )
       nI := 1
-      nL := Min( Len( aURL ), Len( aStack ) )
+      nL := Min( Len(aURL), Len(aStack) )
       DO WHILE nI <= nL
          IF aStack[ nI ][ 1 ] == aURL[ nI ]
             nI++
@@ -471,20 +471,20 @@ PROCEDURE UProcWidgets( cURL, aMap )
       ENDDO
 
       // Exit procedures
-      DO WHILE nI <= Len( aStack )
+      DO WHILE nI <= Len(aStack)
          aFrame := ATail( aStack )
          IF aFrame[ 2 ] != NIL
             session[ "_uthis" ] := aFrame[ 3 ]
             Eval( aFrame[ 2 ], "EXIT" )
             session[ "_uthis" ] := NIL
          ENDIF
-         ASize( aStack, Len( aStack ) - 1 )
+         ASize( aStack, Len(aStack) - 1 )
       ENDDO
       aFrame := NIL
 
       lRet := .T.
       // Enter procedures
-      DO WHILE nI <= Len( aURL )
+      DO WHILE nI <= Len(aURL)
          cI := uhttpd_join( "/", ASize( AClone( aURL ), nI ) )
          IF hb_HHasKey( aMap, cI )
             session[ "_uthis" ] := { "idhash" => { => } }
@@ -554,7 +554,7 @@ STATIC FUNCTION uhttpd_split( cSeparator, cString )
 
    DO WHILE ( nI := At( cSeparator, cString ) ) > 0
       AAdd( aRet, Left(cString, nI - 1) )
-      cString := SubStr(cString, nI + Len( cSeparator ))
+      cString := SubStr(cString, nI + Len(cSeparator))
    ENDDO
    AAdd( aRet, cString )
 
@@ -565,7 +565,7 @@ STATIC FUNCTION uhttpd_join( cSeparator, aData )
    LOCAL cRet := ""
    LOCAL nI
 
-   FOR nI := 1 TO Len( aData )
+   FOR nI := 1 TO Len(aData)
 
       IF nI > 1
          cRet += cSeparator

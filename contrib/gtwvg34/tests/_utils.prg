@@ -121,7 +121,7 @@ PROCEDURE wvt_Mouse( nKey, nRow, nCol )  /* must be a public function */
    LOCAL aObjects := WvtSetObjects()
    LOCAL nObj, oObj
 
-   IF Len( aObjects ) == 0
+   IF Len(aObjects) == 0
       RETURN
    ENDIF
 

@@ -14,7 +14,7 @@ PROCEDURE Main()
 
    cFileCtx := hb_MemoRead( __FILE__ )
 
-   ? xdl_write_mmfile( pMMF, cFileCtx ), Len( cFileCtx )
+   ? xdl_write_mmfile( pMMF, cFileCtx ), Len(cFileCtx)
    ? xdl_mmfile_size( pMMF )
 
    ? xdl_read_mmfile( pMMF, NIL, _SIZE, @nSize )

@@ -357,7 +357,7 @@ METHOD WvgCrt:destroy()
       ::oMenu:destroy()
    ENDIF
 
-   IF Len( ::aChildren ) > 0
+   IF Len(::aChildren) > 0
       AEval( ::aChildren, {| o | o:destroy() } )
       ::aChildren := {}
    ENDIF

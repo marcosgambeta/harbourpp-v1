@@ -67,7 +67,7 @@ PROCEDURE GCUIConsole( oCrt )
 
    // The only additional calls to render your console GUI
    // The GETLIST  : This can be embedded via  @ GET preprocessor command
-   AEval( GetList, {| oGet | Wvg_BoxGet( oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } )
+   AEval( GetList, {| oGet | Wvg_BoxGet( oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } )
 
    hBoxR := Wvg_BoxRaised( 1, 2, 18, 49, { -5, -5, 5, 5 } )
 

@@ -333,7 +333,7 @@ METHOD ReadHTTPProxyResponse( /* @ */ cResponse ) CLASS TIPClient
 
    DO WHILE .T.
       cBuffer := Space( 1 )
-      IF ::inetRecv( ::SocketCon, @cBuffer, hb_BLen( cBuffer ) ) <= 0
+      IF ::inetRecv( ::SocketCon, @cBuffer, hb_BLen(cBuffer) ) <= 0
          RETURN .F.
       ENDIF
       cResponse += cBuffer
@@ -472,12 +472,12 @@ METHOD ReadToFile( /* @ */ cFile, nMode, nSize ) CLASS TIPClient
 
       IF lToMemory
          cFile += cData
-      ELSEIF hb_vfWrite( hFile, cData ) != hb_BLen( cData )
+      ELSEIF hb_vfWrite( hFile, cData ) != hb_BLen(cData)
          hb_vfClose( hFile )
          RETURN .F.
       ENDIF
 
-      nSent += hb_BLen( cData )
+      nSent += hb_BLen(cData)
 
       IF HB_ISEVALITEM( ::exGauge ) .AND. ;
          ! hb_defaultValue( Eval( ::exGauge, nSent, nSize, Self ), .T. )
@@ -553,7 +553,7 @@ METHOD WriteFromFile( cFile ) CLASS TIPClient
 METHOD Write( cData, nLen, lCommit ) CLASS TIPClient
 
    IF ! HB_ISNUMERIC( nLen ) .OR. nLen <= 0
-      nLen := hb_BLen( cData )
+      nLen := hb_BLen(cData)
    ENDIF
 
    ::nLastWrite := ::inetSendAll( ::SocketCon, cData, nLen )
@@ -571,7 +571,7 @@ METHOD inetSendAll( SocketCon, cData, nLen ) CLASS TIPClient
    LOCAL nRet
 
    IF ! HB_ISNUMERIC( nLen ) .OR. nLen <= 0
-      nLen := hb_BLen( cData )
+      nLen := hb_BLen(cData)
    ENDIF
 
    IF ::lSSL .AND. ( ::cProxyHost == "" .OR. ::lProxyXferSSL )

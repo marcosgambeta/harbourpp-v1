@@ -77,7 +77,7 @@ CREATE CLASS TIPMail
 
    METHOD Attach( oSubPart )
    METHOD NextAttachment()
-   METHOD CountAttachments()  INLINE Len( ::aAttachments )
+   METHOD CountAttachments()  INLINE Len(::aAttachments)
    METHOD GetAttachment()
    METHOD ResetAttachment()   INLINE ::nAttachPos := 1
 
@@ -218,7 +218,7 @@ METHOD Attach( oSubPart ) CLASS TIPMail
 
 METHOD NextAttachment() CLASS TIPMail
 
-   IF ::nAttachPos > Len( ::aAttachments )
+   IF ::nAttachPos > Len(::aAttachments)
       RETURN NIL
    ENDIF
 
@@ -226,7 +226,7 @@ METHOD NextAttachment() CLASS TIPMail
 
 METHOD GetAttachment() CLASS TIPMail
 
-   IF ::nAttachPos > Len( ::aAttachments )
+   IF ::nAttachPos > Len(::aAttachments)
       RETURN NIL
    ENDIF
 
@@ -339,16 +339,16 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
       RETURN 0
    ENDIF
 
-   IF Len( ::aAttachments ) > 0
+   IF Len(::aAttachments) > 0
       ::aAttachments := {}
    ENDIF
 
-   IF Len( ::hHeaders ) > 0
+   IF Len(::hHeaders) > 0
       ::hHeaders := { => }
       hb_HCaseMatch( ::hHeaders, .F. )
    ENDIF
 
-   IF Len( ::aReceived ) > 0
+   IF Len(::aReceived) > 0
       ::aReceived := {}
    ENDIF
 
@@ -362,7 +362,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
 
          cValue := LTrim(SubStr(cMail, nPos, nLinePos - nPos))
          IF Lower(cLastField) == "received"
-            ::aReceived[ Len( ::aReceived ) ] += " " + cValue
+            ::aReceived[ Len(::aReceived) ] += " " + cValue
          ELSE
             ::hHeaders[ cLastField ] += " " + cValue
          ENDIF
@@ -399,7 +399,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
       cSubBoundary := ::GetFieldOption( "Content-Type", "Boundary" )
       // strip " on boundary
       IF hb_LeftEq( cSubBoundary, '"' )
-         cSubBoundary := SubStr(cSubBoundary, 2, Len( cSubBoundary ) - 2)
+         cSubBoundary := SubStr(cSubBoundary, 2, Len(cSubBoundary) - 2)
       ENDIF
    ENDIF
 
@@ -422,7 +422,7 @@ METHOD FromString( cMail, cBoundary, nPos ) CLASS TIPMail
       IF HB_ISSTRING( cSubBoundary ) .AND. hb_At( "--" + cSubBoundary, cMail, nPos ) == nPos
 
          // is it the last subsection?
-         IF hb_At( "--", cMail, nPos + Len( cSubBoundary ) + 2, nLinePos ) > 0
+         IF hb_At( "--", cMail, nPos + Len(cSubBoundary) + 2, nLinePos ) > 0
             EXIT
          ENDIF
 

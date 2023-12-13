@@ -98,7 +98,7 @@ STATIC FUNCTION make_dbf()
       { "STATE", "C",  2, 0, }, ;
       { "ZIP  ", "C",  9, 0, } } )
    USE tbnames
-   FOR x := 1 TO Len( aData )
+   FOR x := 1 TO Len(aData)
       APPEND BLANK
       AEval( aData[ x ], {| e, n | FieldPut( n, e ) } )
    NEXT

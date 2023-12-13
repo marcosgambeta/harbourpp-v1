@@ -93,6 +93,6 @@ FUNCTION ThreadWaitAll( aThreads, nTimeOut )
    NEXT
 
    RETURN hb_threadWait( apThIDs, iif(HB_ISNUMERIC( nTimeOut ) .AND. nTimeOut != 0, ;
-      nTimeOut / 100, NIL), .T. ) == Len( apThIDs )
+      nTimeOut / 100, NIL), .T. ) == Len(apThIDs)
 
 /* TODO: ThreadInfo() */

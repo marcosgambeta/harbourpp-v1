@@ -27,7 +27,7 @@ STATIC FUNCTION MyMemoEdit( cText, nTop, nLeft, nBottom, nRight, lEdit )
       buffer used to hold the text
    */
 
-   oED := EditorNew( nTop, nLeft, nBottom, nRight, 254, , , , Len( cText ) * 2, 168 )
+   oED := EditorNew( nTop, nLeft, nBottom, nRight, 254, , , , Len(cText) * 2, 168 )
    IF oED != NIL
       EditorSetText( oED, cText )
       EditorEdit( oED, lEdit, .T. )

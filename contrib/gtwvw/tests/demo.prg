@@ -359,7 +359,7 @@ PROCEDURE Demo_Get()
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawImage( nWindow, 8 - nTop, 62 - nLeft, 12 - nTop, 69 - nLeft, "vouch1.bmp" ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 48 - nLeft, 13 - nTop, 55 - nLeft ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | x := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( x, oGet:Row, oGet:Col, Len( Transform( oGet:VarGet(), oGet:Picture ) ) ) } ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | x := nWindow, AEval( GetList, {| oGet | wvw_DrawBoxGet( x, oGet:Row, oGet:Col, Len(Transform( oGet:VarGet(), oGet:Picture )) ) } ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
 
@@ -447,7 +447,7 @@ FUNCTION DEMO_Browse()
    oBrowse:GoBottomBlock := {|| dbGoBottom() }
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
-   FOR i := 1 TO Len( info_ )
+   FOR i := 1 TO Len(info_)
       bBlock := VouBlockField( i )
       oBrowse:AddColumn( TBColumnNew( info_[ i, 1 ], bBlock ) )
    NEXT
@@ -464,7 +464,7 @@ FUNCTION DEMO_Browse()
 
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridHorz( nWindow, oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len( aColumnsSep ) ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawGridVert( nWindow, oBrowse:nTop, oBrowse:nBottom, aColumnsSep, Len(aColumnsSep) ) } )
 
    /* we now use native push button
    wvwm_AddMouseObjects( nCurWindow, WVWMouseButton():New("Info", MaxRow(), MaxCol() - 15, , , {|| xDebugInfo() } ))
@@ -788,7 +788,7 @@ FUNCTION WVW_Paint( nWinNum )
    // ldebug( "WVW_Paint:" + hb_eol() +;
    //        "hWnd = " + hb_ntos( hWnd ) + hb_eol() +;
    //        "nWinNum = " + hb_ntos( nWinNum ) )
-   IF Len( s_amiscobjlist ) >= nWinNum + 1
+   IF Len(s_amiscobjlist) >= nWinNum + 1
       AEval( s_amiscobjlist[ nWinNum + 1 ], {| e | Eval( e, nWinNum ) } )
    ENDIF
 
@@ -915,7 +915,7 @@ FUNCTION xEnableToolbar( nWinNum )
 
 FUNCTION ResetMiscObjects( nWinNum )
 
-   DO WHILE Len( s_amiscobjlist ) < nWinNum + 1
+   DO WHILE Len(s_amiscobjlist) < nWinNum + 1
       AAdd( s_amiscobjlist, {} )
    ENDDO
    s_amiscobjlist[ nWinNum + 1 ] := {}

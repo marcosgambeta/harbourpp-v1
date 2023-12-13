@@ -62,7 +62,7 @@ PROCEDURE Main()
    ? '  CharHist( "Hello World !" )' + "'109' == 3 ? --> ", CharHist( "Hello World !" )' 109 '
    ? '  AEval( CharHist( "Hello World !" ), {| x | nTotal += x } ) '
    AEval( CharHist( "Hello World !" ), {| x | nTotal += x } )
-   ? '    ==> nTotal == Len( "Hello World !" ) ? --> ', nTotal == Len( "Hello World !" )
+   ? '    ==> nTotal == Len("Hello World !") ? --> ', nTotal == Len("Hello World !")
 
    ? "End test of CharHist()"
    ?

@@ -314,7 +314,7 @@ METHOD PROCEDURE WvgWindow:destroy()
       ::oParent:removeChild( Self )
    ENDIF
 
-   IF Len( ::aChildren ) > 0
+   IF Len(::aChildren) > 0
       AEval( ::aChildren, {| o | o:destroy() } )
       ::aChildren := {}
    ENDIF

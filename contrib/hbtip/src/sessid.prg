@@ -54,7 +54,7 @@ FUNCTION tip_GenerateSID( cCRCKey )
 
    LOCAL cSID, nSIDCRC, cSIDCRC, n, cTemp, nKey, nRand
    LOCAL cBaseKeys   := BASE_KEY_STRING
-   LOCAL nLenKeys    := Len( cBaseKeys )
+   LOCAL nLenKeys    := Len(cBaseKeys)
 
    cCRCKey := Left(hb_defaultValue( cCRCKey, CRC_KEY_STRING ), 10)  // Max Length must to be of 10 chars
 
@@ -71,7 +71,7 @@ FUNCTION tip_GenerateSID( cCRCKey )
    cTemp   := StrZero( nSIDCRC, 5 )
 
    cSIDCRC := ""
-   FOR n := 1 TO Len( cTemp )
+   FOR n := 1 TO Len(cTemp)
       cSIDCRC += SubStr(cCRCKey, Val( SubStr(cTemp, n, 1) ) + 1, 1)
    NEXT
 
@@ -94,7 +94,7 @@ FUNCTION tip_CheckSID( cSID, cCRCKey )
    cTemp   := StrZero( nSIDCRC, 5 )
 
    cSIDCRC := ""
-   FOR n := 1 TO Len( cTemp )
+   FOR n := 1 TO Len(cTemp)
       cSIDCRC += SubStr(cCRCKey, Val( SubStr(cTemp, n, 1) ) + 1, 1)
    NEXT
 

@@ -128,7 +128,7 @@ PROCEDURE GetSession()
    cRemark += hb_eol() + "(from Session " + hb_ntos( nwinnum ) + ")"
 
    @ 1, 15 ebGET cName      LABEL "Name:"
-   @ 3, 15 ebGET cNickName  LABEL "Nickname:"   PICTURE Replicate( "!", Len( cNickName ) )
+   @ 3, 15 ebGET cNickName  LABEL "Nickname:"   PICTURE Replicate( "!", Len(cNickName) )
    @ 5, 15 ebGET dBirthDate LABEL "Birth Date:"
    @ 7, 15 ebGET nBudget    PICTURE "999,999.99"   // using default label
    @ 9, 15 ebGET cRemark    LABEL "Remarks:" MULTILINE
@@ -194,7 +194,7 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
    mcVarType := ValType( mxValue )
    DO CASE
    CASE mcVarType == "C"
-      mcPict := iif(HB_ISSTRING( mcPict ), mcPict, Replicate( "X", Len( mxValue ) ))
+      mcPict := iif(HB_ISSTRING( mcPict ), mcPict, Replicate( "X", Len(mxValue) ))
       mbText := {|| mxValue }
    CASE mcVarType == "N"
       mcPict := iif(HB_ISSTRING( mcPict ), mcPict, "999,999,999.99")
@@ -238,7 +238,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
       nrow1, ncol1, nrow2, ncol2
    LOCAL nOKbutton, nCancelbutton, nClosebutton, ldone := .F.
    LOCAL lclosePermitted := .F.
-   LOCAL nNumGets := Len( aEBGets )
+   LOCAL nNumGets := Len(aEBGets)
    LOCAL ch
    LOCAL nfocus, lchangefocus
 
@@ -252,7 +252,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
    FOR i := 1 TO nNumGets
       lmultiline := aEBGets[ i ][ __GET_LMULTILINE ]
       IF ! lmultiline
-         nlen := Len( aEBGets[ i ][ __GET_CPICT ] )
+         nlen := Len(aEBGets[ i ][ __GET_CPICT ])
       ELSE
          nlen := 30
       ENDIF
@@ -262,7 +262,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
       nrow2 := iif(aEBGets[ i ][ __GET_LMULTILINE ], nrow1 + 3, nrow1)
       ncol2 := ncol1 + nlen - 1
 
-      @ nrow1, ncol1 - Len( clabel ) - 1 SAY clabel
+      @ nrow1, ncol1 - Len(clabel) - 1 SAY clabel
 
       aEBGets[ i ][ __GET_NEBID ] := wvw_ebCreate( nwinnum, nrow1, ncol1, nrow2, ncol2, ;
          Transform( aEBGets[ i ][ __GET_XINIT ], aEBGets[ i ][ __GET_CPICT ] ), ;
@@ -354,7 +354,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
 
 STATIC PROCEDURE InpKeyHandler( nwinnum, ch, aEBGets, nOKbutton, nCancelbutton )
 
-   LOCAL nNumGets := Len( aEBGets )
+   LOCAL nNumGets := Len(aEBGets)
    LOCAL nFocus, lchangefocus
 
    IF HB_ISBLOCK( SetKey( ch ) )
@@ -404,7 +404,7 @@ STATIC PROCEDURE EndGets( nwinnum, aEBGets, nOKbutton, nCancelbutton, nCloseButt
    LOCAL i
 
    // session ended
-   FOR i := 1 TO Len( aEBGets )
+   FOR i := 1 TO Len(aEBGets)
       wvw_ebEnable( nwinnum, aEBGets[ i ][ __GET_NEBID ], .F. )
    NEXT
    wvw_pbEnable( nwinnum, nOKbutton, .F. )
@@ -423,7 +423,7 @@ STATIC PROCEDURE SaveVar( nwinnum, aEBGets, lDone )
 
    LOCAL i, cdebugreport
 
-   FOR i := 1 TO Len( aEBGets )
+   FOR i := 1 TO Len(aEBGets)
       // do some validation if necessary
       Eval( aEBGets[ i ][ __GET_BASSIGN ], ;
          GetValFromText( wvw_ebGetText( nwinnum, aEBGets[ i ][ __GET_NEBID ] ), aEBGets[ i ][ __GET_CVALTYPE ] ) )
@@ -442,7 +442,7 @@ STATIC PROCEDURE CancelVar( nwinnum, aEBGets, lDone )
 
    LOCAL i, cdebugreport
 
-   FOR i := 1 TO Len( aEBGets )
+   FOR i := 1 TO Len(aEBGets)
       Eval( aEBGets[ i ][ __GET_BASSIGN ], ;
          aEBGets[ i ][ __GET_XINIT ] )
    NEXT
@@ -569,7 +569,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
       IF PCount() > 1
          // Point Count For Numeric InputMask
-         FOR x := 1 TO Len( InBuffer )
+         FOR x := 1 TO Len(InBuffer)
             CB := SubStr(InBuffer, x, 1)
             IF CB == "." .OR. CB == ","
                pc++
@@ -582,7 +582,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
          ENDIF
 
          // Find First Non-Blank Position
-         FOR x := 1 TO Len( InBuffer )
+         FOR x := 1 TO Len(InBuffer)
             CB := SubStr(InBuffer, x, 1)
             IF !( CB == " " )
                fnb := x
@@ -596,10 +596,10 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
    OldChar := SubStr(InBuffer, icp + 1, 1)
 
-   IF Len( InBuffer ) < Len( Mask )
+   IF Len(InBuffer) < Len(Mask)
       InBufferLeft := Left(InBuffer, icp)
 
-      InBufferRight := Right(InBuffer, Len( InBuffer ) - icp)
+      InBufferRight := Right(InBuffer, Len(InBuffer) - icp)
 
       IF CharMaskTekstOK( InBufferLeft + " " + InBufferRight, mcvaltype, Mask ) .AND. ;
          ! CharMaskTekstOK( InBufferLeft + InBufferRight, mcvaltype, Mask )
@@ -609,12 +609,12 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
       ENDIF
    ENDIF
 
-   IF Len( InBuffer ) > Len( Mask ) .AND. ;
-         Len( Mask ) > 0
+   IF Len(InBuffer) > Len(Mask) .AND. ;
+         Len(Mask) > 0
 
       InBufferLeft := Left(InBuffer, icp)
 
-      InBufferRight := Right(InBuffer, Len( InBuffer ) - icp - 1)
+      InBufferRight := Right(InBuffer, Len(InBuffer) - icp - 1)
 
       InBuffer := InBufferLeft + InBufferRight
    ENDIF
@@ -622,7 +622,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    // Process Mask
    OutBuffer := "" // x for clarity
    BadEntry := .F. // x for clarity
-   FOR x := 1 TO Len( Mask )
+   FOR x := 1 TO Len(Mask)
       CB := SubStr(InBuffer, x, 1)
       CM := SubStr(Mask, x, 1)
 
@@ -693,7 +693,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
          Output := Transform( GetValFromText( wvw_ebGetText( mnwinnum, mnebid ), mcvaltype ), Mask )
 
          // x better:
-         ol := Len( Output )
+         ol := Len(Output)
          Output := PadL( "-" + SubStr(Output, At( ".", OutBuffer ) - 1), ol )
 
          // Replace Text
@@ -717,7 +717,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
          wvw_ebSetSel( mnwinnum, mnebid, icp, icp )
 
          // Skip Protected Characters
-         FOR x := 1 TO Len( OutBuffer )
+         FOR x := 1 TO Len(OutBuffer)
             CB := SubStr(OutBuffer, icp + x, 1)
             CM := SubStr(Mask, icp + x, 1)
 
@@ -741,7 +741,7 @@ STATIC FUNCTION CharMaskTekstOK( cString, cvaltype, cMask )
    LOCAL CB, CM, x
 
    IF cvaltype == "D"
-      FOR x := 1 TO Min( Len( cString ), Len( cMask ) )
+      FOR x := 1 TO Min( Len(cString), Len(cMask) )
          CB := SubStr(cString, x, 1)
          CM := SubStr(cMask, x, 1)
          DO CASE
@@ -758,7 +758,7 @@ STATIC FUNCTION CharMaskTekstOK( cString, cvaltype, cMask )
       RETURN .T.
    ENDIF
 
-   FOR x := 1 TO Min( Len( cString ), Len( cMask ) )
+   FOR x := 1 TO Min( Len(cString), Len(cMask) )
       CB := SubStr(cString, x, 1)
       CM := SubStr(cMask, x, 1)
       DO CASE
@@ -806,7 +806,7 @@ STATIC FUNCTION GetValFromText( Text, mcvaltype )
 
    // ASSUME numeric
    s := ""
-   FOR x := 1 TO Len( Text )
+   FOR x := 1 TO Len(Text)
       c := SubStr(Text, x, 1)
       IF c $ "0123456789" .OR. c $ ".-"
          s += c
@@ -835,7 +835,7 @@ STATIC FUNCTION GetNumMask( Text, mcvaltype )
    ENDIF
 
    s := ""
-   FOR i := 1 TO Len( Text )
+   FOR i := 1 TO Len(Text)
       c := SubStr(Text, i, 1)
       IF c == "9" .OR. c == "."
          s += c
@@ -920,10 +920,10 @@ FUNCTION WVW_INPUTFOCUS( nWinNum, hWnd, message, wParam, lParam )
 FUNCTION inp_handler( nwinnum, bhandler )
 
    STATIC s_bhandlers := {}
-   LOCAL retval := iif(Len( s_bhandlers ) >= nwinnum + 1, s_bhandlers[ nwinnum + 1 ], NIL)
+   LOCAL retval := iif(Len(s_bhandlers) >= nwinnum + 1, s_bhandlers[ nwinnum + 1 ], NIL)
 
    IF HB_ISBLOCK( bhandler )
-      IF Len( s_bhandlers ) < nwinnum + 1
+      IF Len(s_bhandlers) < nwinnum + 1
          ASize( s_bhandlers, nwinnum + 1 )
       ENDIF
       s_bhandlers[ nwinnum + 1 ] := bhandler

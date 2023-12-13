@@ -52,7 +52,7 @@
 // The current implementation of FOR EACH is not suitable for the HTML classes
 
 // Directives for a light weight html parser
-#xtrans P_PARSER( <c> )       => { <c>, 0, Len( <c> ), 0 }
+#xtrans P_PARSER( <c> )       => { <c>, 0, Len(<c>), 0 }
 #xtrans :p_str                => \[ 1 ]  // the string to parse
 #xtrans :p_pos                => \[ 2 ]  // current parser position
 #xtrans :p_len                => \[ 3 ]  // length of string
@@ -344,7 +344,7 @@ METHOD New( oHtml ) CLASS THtmlIterator
 
    ::oTop     := ::oNode
    ::nCurrent := 1
-   ::nLast    := Len( ::aNodes )
+   ::nLast    := Len(::aNodes)
 
    RETURN Self
 
@@ -365,7 +365,7 @@ METHOD Clone() CLASS THtmlIterator
    oRet:cValue     := ::cValue
    oRet:cData      := ::cData
    oRet:nCurrent   := 0
-   oRet:nLast      := Len( ::aNodes )
+   oRet:nLast      := Len(::aNodes)
    oRet:aNodes     := ::aNodes
 
    RETURN oRet
@@ -375,7 +375,7 @@ METHOD SetContext() CLASS THtmlIterator
    ::oTop          := ::oNode
    ::aNodes        := ::oNode:collect()
    ::nCurrent      := 0
-   ::nLast         := Len( ::aNodes )
+   ::nLast         := Len(::aNodes)
 
    RETURN Self
 
@@ -662,7 +662,7 @@ METHOD isOptional() CLASS THtmlNode
 
 // checks if this is a node (leafs contain no further nodes, e.g. <br />,<hr>,_text_)
 METHOD isNode() CLASS THtmlNode
-   RETURN HB_ISARRAY( ::htmlContent ) .AND. Len( ::htmlContent ) > 0
+   RETURN HB_ISARRAY( ::htmlContent ) .AND. Len(::htmlContent) > 0
 
 // checks if this is a block node that must be closed with an ending tag: eg: <table></table>, <ul></ul>
 METHOD isBlock() CLASS THtmlNode
@@ -710,7 +710,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
 
          ELSEIF Chr(10) $ cText
             cText := RTrim(cText)
-            nPos := Len( cText ) + 1
+            nPos := Len(cText) + 1
             DO WHILE nPos > 0 .AND. SubStr(cText, --nPos, 1) $ Chr(9) + Chr(10) + Chr(13)
             ENDDO
             oThisTag:addNode( THtmlNode():new( oThisTag, "_text_", , Left(cText, nPos) ) )
@@ -927,7 +927,7 @@ METHOD insertAfter( oTHtmlNode ) CLASS THtmlNode
       ::root:_document:changed := .T.
    ENDIF
 
-   IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) + 1 ) > Len( ::parent:htmlContent )
+   IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) + 1 ) > Len(::parent:htmlContent)
       ::parent:addNode( oTHtmlNode )
    ELSE
       hb_AIns( ::parent:htmlContent, nPos, oTHtmlNode, .T. )
@@ -991,14 +991,14 @@ METHOD nextNode() CLASS THtmlNode
       RETURN ::htmlContent[ 1 ]
    ENDIF
 
-   IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) ) < Len( ::parent:htmlContent )
+   IF ( nPos := hb_AScan( ::parent:htmlContent, Self,,, .T. ) ) < Len(::parent:htmlContent)
       RETURN ::parent:htmlContent[ nPos + 1 ]
    ENDIF
 
    aNodes := ::parent:parent:collect()
    nPos   := hb_AScan( aNodes, Self,,, .T. )
 
-   RETURN iif(nPos == Len( aNodes ), NIL, aNodes[ nPos + 1 ])
+   RETURN iif(nPos == Len(aNodes), NIL, aNodes[ nPos + 1 ])
 
 // returns previous node
 METHOD prevNode() CLASS THtmlNode
@@ -1059,7 +1059,7 @@ METHOD toString( nIndent ) CLASS THtmlNode
       IF ::isInline() .OR. ::keepFormatting() .OR. ::isType( CM_HEADING ) .OR. ::isType( CM_HEAD )
          RETURN cHtml += iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
       ENDIF
-      IF ! Right(cHtml, Len( hb_eol() )) == hb_eol()
+      IF ! Right(cHtml, Len(hb_eol())) == hb_eol()
          cHtml += hb_eol()
       ENDIF
       RETURN cHtml += cIndent + iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
@@ -1153,9 +1153,9 @@ METHOD getText( cEOL ) CLASS THtmlNode
 
    FOR EACH oNode IN ::htmlContent
       cText += oNode:getText( cEOL )
-      IF Lower(::htmlTagName) $ "td,th" .AND. hb_AScan( ::parent:htmlContent, Self,,, .T. ) < Len( ::parent:htmlContent )
+      IF Lower(::htmlTagName) $ "td,th" .AND. hb_AScan( ::parent:htmlContent, Self,,, .T. ) < Len(::parent:htmlContent)
          // leave table rows in one line, cells separated by Tab
-         cText := hb_StrShrink( cText, Len( cEOL ) ) + Chr(9)
+         cText := hb_StrShrink( cText, Len(cEOL) ) + Chr(9)
       ENDIF
    NEXT
 
@@ -1247,7 +1247,7 @@ STATIC FUNCTION __ParseAttr( parser )
          DO WHILE P_NEXT( parser ) == " "
          ENDDO
 
-         IF parser:p_pos > Len( parser:p_str )
+         IF parser:p_pos > Len(parser:p_str)
             RETURN hHash
          ENDIF
 
@@ -1446,7 +1446,7 @@ METHOD findNodesByTagName( cName, nOrdinal ) CLASS THtmlNode
    NEXT
 
    IF HB_ISNUMERIC( nOrdinal )
-      IF nOrdinal < 1 .OR. nOrdinal > Len( aRet )
+      IF nOrdinal < 1 .OR. nOrdinal > Len(aRet)
          RETURN NIL
       ENDIF
       RETURN aRet[ nOrdinal ]
@@ -1538,7 +1538,7 @@ METHOD popNode( cName ) CLASS THtmlNode
     */
    IF hb_AScan( { "tr", "th", "td" }, cName,,, .T. ) > 0
       endTag := "</" + cName + ">"
-      IF ! Right(::toString(), 3 + Len( cName )) == endTag
+      IF ! Right(::toString(), 3 + Len(cName)) == endTag
          ::addNode( THtmlNode():new( Self, "/" + cName, ,  ) )
       ENDIF
    ENDIF
@@ -1553,7 +1553,7 @@ STATIC FUNCTION CutStr( cCut, cString )
 
    IF ( i := At( cCut, cString ) ) > 0
       cLeftPart := Left(cString, i - 1)
-      cString   := SubStr(cString, i + Len( cCut ))
+      cString   := SubStr(cString, i + Len(cCut))
    ELSE
       cLeftPart := cString
       cString   := ""

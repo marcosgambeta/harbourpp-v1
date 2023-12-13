@@ -255,7 +255,7 @@ METHOD WvgSLE:clear()
 
    ::setData( "" )
 
-   RETURN Len( cText )
+   RETURN Len(cText)
 
 METHOD WvgSLE:copyMarked()
 

@@ -37,9 +37,9 @@ FUNCTION hb_udpds_Find( nPort, cName )
          DO WHILE nEnd > nTime
             cBuffer := Space( 2000 )
             nLen := hb_socketRecvFrom( hSocket, @cBuffer, , , @aAddr, nEnd - nTime )
-            IF hb_BLeft(cBuffer, hb_BLen( cName ) + 2) == hb_BChar( 6 ) + cName + hb_BChar( 0 ) .AND. ;
+            IF hb_BLeft(cBuffer, hb_BLen(cName) + 2) == hb_BChar( 6 ) + cName + hb_BChar( 0 ) .AND. ;
                AScan( aRet, {| x | x[ 1 ] == aAddr[ 2 ] } ) == 0
-               AAdd( aRet, { aAddr[ 2 ], hb_BSubStr(cBuffer, hb_BLen( cName ) + 3, nLen - hb_BLen( cName ) - 2) } )
+               AAdd( aRet, { aAddr[ 2 ], hb_BSubStr(cBuffer, hb_BLen(cName) + 3, nLen - hb_BLen(cName) - 2) } )
             ENDIF
             nTime := hb_MilliSeconds()
          ENDDO
@@ -56,7 +56,7 @@ STATIC FUNCTION s_sendBroadcastMessages( hSocket, nPort, cMessage )
    lResult := .F.
    FOR EACH cAddr IN s_getBroadcastAddresses()
       IF hb_socketSendTo( hSocket, cMessage, , , ;
-                          { HB_SOCKET_AF_INET, cAddr, nPort } ) == hb_BLen( cMessage )
+                          { HB_SOCKET_AF_INET, cAddr, nPort } ) == hb_BLen(cMessage)
          lResult := .T.
       ENDIF
    NEXT

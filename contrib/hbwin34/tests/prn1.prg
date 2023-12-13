@@ -71,7 +71,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:UnderLine( .F. )
          oPrinter:NewLine()
          aFonts := oPrinter:GetFonts()
-         FOR x := 1 TO Len( aFonts ) STEP 2
+         FOR x := 1 TO Len(aFonts) STEP 2
             oPrinter:CharSet( aFonts[ x ][ HB_WINFONT_CHARSET ] )
             IF oPrinter:SetFont( aFonts[ x ][ HB_WINFONT_NAME ] )      // Could use "IF oPrinter:SetFontOk" after call to oPrinter:SetFont()
                IF oPrinter:FontName == aFonts[ x ][ HB_WINFONT_NAME ]  // Make sure Windows didn't pick a different font

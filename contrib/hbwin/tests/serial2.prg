@@ -78,7 +78,7 @@ PROCEDURE Main( cPortName )
       ? "Testing DTR, configure a scanner to require DTR"
       ? "Scan something... and press enter (shouldn't scan)"
       Inkey(0)
-      ? "Read() ", oWinPort:Read( @cString, 32 ), Len( cString ), cString
+      ? "Read() ", oWinPort:Read( @cString, 32 ), Len(cString), cString
       ?
       IF oWinPort:SetDTR( .T. )
          ? "SetDTR( .T. ) succeeded"
@@ -95,7 +95,7 @@ PROCEDURE Main( cPortName )
          ? "QueueStatus() failed :", oWinPort:ErrorText()
       ENDIF
       ?
-      ? "Read() ", oWinPort:Read( @cString, 32 ), Len( cString ), cString
+      ? "Read() ", oWinPort:Read( @cString, 32 ), Len(cString), cString
       ?
       IF oWinPort:QueueStatus( @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue )
          ? "QueueStatus() : CTSHold", lCtsHold, ", DSRHold", lDsrHold, ", DCDHold", lDCDHold, ", XoffHold", lXoffHold, ;
@@ -149,7 +149,7 @@ PROCEDURE Main( cPortName )
          ? "QueueStatus() failed :", oWinPort:ErrorText()
       ENDIF
       ?
-      ? "Read ", oWinPort:Read( @cString, 32 ), Len( cString ), cString
+      ? "Read ", oWinPort:Read( @cString, 32 ), Len(cString), cString
       ?
       ? "Close", oWinPort:Close()
    ENDIF
@@ -187,10 +187,10 @@ PROCEDURE Main( cPortName )
 
       ? "With no flow control the write should succeed whether printer is on or off"
       cString := "this is a test string " + Replicate( "012356789", 30 ) + Chr(13) + Chr(10)
-      IF ( nResult := oWinPort:Write( cString ) ) == Len( cString )
+      IF ( nResult := oWinPort:Write( cString ) ) == Len(cString)
          ? "Write() succeeded"
       ELSE
-         ? "Write() failed, returned ", nResult, " expected ", Len( cString )
+         ? "Write() failed, returned ", nResult, " expected ", Len(cString)
       ENDIF
       IF oWinPort:QueueStatus( @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue )
          ? "QueueStatus() : CTSHold", lCtsHold, ", DSRHold", lDsrHold, ", DCDHold", lDCDHold, ", XoffHold", lXoffHold, ;
@@ -228,10 +228,10 @@ PROCEDURE Main( cPortName )
       ENDIF
       ?
       ? Seconds()
-      IF ( nResult := oWinPort:Write( cString ) ) == Len( cString )
+      IF ( nResult := oWinPort:Write( cString ) ) == Len(cString)
          ? "Write() succeeded"
       ELSE
-         ? "Write() failed, returned ", nResult, " expected ", Len( cString )
+         ? "Write() failed, returned ", nResult, " expected ", Len(cString)
       ENDIF
       ? Seconds()
       ? "Close", oWinPort:Close()

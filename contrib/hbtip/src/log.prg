@@ -90,7 +90,7 @@ METHOD Add( cMsg ) CLASS TIPLog
    ENDIF
 
    IF ::hFile != NIL
-      RETURN hb_vfWrite( ::hFile, cMsg ) == hb_BLen( cMsg )
+      RETURN hb_vfWrite( ::hFile, cMsg ) == hb_BLen(cMsg)
    ENDIF
 
    RETURN .F.

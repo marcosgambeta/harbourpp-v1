@@ -142,7 +142,7 @@ FUNCTION tip_MailAssemble( ;
             cFile := aThisFile
             cData := hb_MemoRead( cFile )
             hb_vfAttrGet( cFile, @nAttr )
-         CASE HB_ISARRAY( aThisFile ) .AND. Len( aThisFile ) >= 2
+         CASE HB_ISARRAY( aThisFile ) .AND. Len(aThisFile) >= 2
             cFile := aThisFile[ 1 ]
             IF HB_ISSTRING( aThisFile[ 2 ] )
                cData := aThisFile[ 2 ]
@@ -153,7 +153,7 @@ FUNCTION tip_MailAssemble( ;
             ELSE
                LOOP  /* No filename and no content. */
             ENDIF
-            IF Len( aThisFile ) >= 3 .AND. HB_ISSTRING( aThisFile[ 3 ] )
+            IF Len(aThisFile) >= 3 .AND. HB_ISSTRING( aThisFile[ 3 ] )
                cMimeType := aThisFile[ 3 ]
             ENDIF
          OTHERWISE

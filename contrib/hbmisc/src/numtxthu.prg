@@ -65,13 +65,13 @@ FUNCTION NumToTxtHU( nValue )
 
    IF ( tmp := ( nValue - tmp ) ) > 0 .AND. tmp < 1
 
-      tmp1 := Len( tmp2 := SubStr(Str( tmp, 8, 6 ), 3) )
+      tmp1 := Len(tmp2 := SubStr(Str( tmp, 8, 6 ), 3))
 
       DO WHILE SubStr(tmp2, tmp1, 1) == "0" .AND. tmp1 > 0
          tmp1--
       ENDDO
 
-      cRetVal += " egész " + NumToTxtRaw( tmp * ( 10 ^ tmp1 ) ) + iif(tmp1 >= 1 .AND. tmp1 <= Len( aTort ), " " + aTort[ tmp1 ], "")
+      cRetVal += " egész " + NumToTxtRaw( tmp * ( 10 ^ tmp1 ) ) + iif(tmp1 >= 1 .AND. tmp1 <= Len(aTort), " " + aTort[ tmp1 ], "")
    ENDIF
 
    RETURN hb_UTF8ToStr( cRetVal )
@@ -89,9 +89,9 @@ STATIC FUNCTION NumToTxtRaw( nValue )
    LOCAL tmp
 
    cValue := hb_ntos( nValue )
-   cValue := PadL( cValue, ( Int( Max( Len( cValue ) - 1, 0 ) / 3 ) + 1 ) * 3, "0" )
+   cValue := PadL( cValue, ( Int( Max( Len(cValue) - 1, 0 ) / 3 ) + 1 ) * 3, "0" )
 
-   aDigit := Array( nLen := Len( cValue ) )
+   aDigit := Array( nLen := Len(cValue) )
    FOR tmp := 1 TO nLen
       aDigit[ tmp ] := Val( SubStr(cValue, tmp, 1) )
    NEXT

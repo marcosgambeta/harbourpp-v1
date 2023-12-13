@@ -71,7 +71,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
    hbnetiocon_ToConsole( "Type a command or '?' for help." )
 
    aHistory   := { "quit" }
-   nHistIndex := Len( aHistory ) + 1
+   nHistIndex := Len(aHistory) + 1
 
    hCommands  := { ;
       "?"    => { "", "Synonym for 'help'." , {|| ShowHelp( hCommands ), Eval( netclictrl[ "cmd" ], netclictx, "?" ) } }, ;
@@ -96,12 +96,12 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
                           SC_NORMAL, SC_INSERT) ) } )
       bKeyUp    := SetKey( K_UP, ;
          {|| iif(nHistIndex > 1, ;
-                  cCommand := PadR( aHistory[ --nHistIndex ], Len( cCommand ) ), NIL), ;
+                  cCommand := PadR( aHistory[ --nHistIndex ], Len(cCommand) ), NIL), ;
                   ManageCursor( cCommand ) } )
       bKeyDown  := SetKey( K_DOWN, ;
-         {|| cCommand := PadR( iif(nHistIndex < Len( aHistory ), ;
+         {|| cCommand := PadR( iif(nHistIndex < Len(aHistory), ;
              aHistory[ ++nHistIndex ], ;
-             ( nHistIndex := Len( aHistory ) + 1, "" )), Len( cCommand ) ), ;
+             ( nHistIndex := Len(aHistory) + 1, "" )), Len(cCommand) ), ;
                   ManageCursor( cCommand ) } )
       bKeyPaste := SetKey( K_ALT_V, {|| hb_gtInfo( HB_GTI_CLIPBOARDPASTE, .T. ) } )
 
@@ -127,22 +127,22 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
       ENDIF
 
       IF Empty(aHistory) .OR. ! ATail( aHistory ) == cCommand
-         IF Len( aHistory ) < 64
+         IF Len(aHistory) < 64
             AAdd( aHistory, cCommand )
          ELSE
             ADel( aHistory, 1 )
-            aHistory[ Len( aHistory ) ] := cCommand
+            aHistory[ Len(aHistory) ] := cCommand
          ENDIF
       ENDIF
-      nHistIndex := Len( aHistory ) + 1
+      nHistIndex := Len(aHistory) + 1
 
       aCommand := hb_ATokens( cCommand, " " )
       IF ! Empty(aCommand)
          IF ( nPos := hb_HPos( hCommands, Lower(aCommand[ 1 ]) ) ) > 0
             Eval( hb_HValueAt( hCommands, nPos )[ 3 ], cCommand )
          ELSE
-            IF Left(cCommand, Len( netcliID ) + 1) == netcliID + "."
-               IF ! Eval( netclictrl[ "cmd" ], netclictx, SubStr(cCommand, Len( netcliID ) + 2) )
+            IF Left(cCommand, Len(netcliID) + 1) == netcliID + "."
+               IF ! Eval( netclictrl[ "cmd" ], netclictx, SubStr(cCommand, Len(netcliID) + 2) )
                   hbnetiocon_ToConsole( hb_StrFormat( "Error: Unrecognized command '%1$s'.", cCommand ) )
                ENDIF
             ELSE
@@ -175,10 +175,10 @@ STATIC PROCEDURE CompleteCmd( cCommand, hCommands )
    LOCAL n
 
    /* We need at least one character to search */
-   IF Len( s ) > 1
+   IF Len(s) > 1
       FOR EACH n IN hCommands
-         IF s == Lower(Left(n:__enumKey(), Len( s )))
-            cCommand := PadR( n:__enumKey(), Len( cCommand ) )
+         IF s == Lower(Left(n:__enumKey(), Len(s)))
+            cCommand := PadR( n:__enumKey(), Len(cCommand) )
             ManageCursor( cCommand )
             RETURN
          ENDIF
@@ -193,7 +193,7 @@ STATIC PROCEDURE ShowHelp( hCommands )
    LOCAL n, c, m
 
    m := 8
-   hb_HEval( hCommands, {| k, l | m := Max( m, Len( k + iif(Empty(l[ 1 ]), "", " " + l[ 1 ]) ) ) } )
+   hb_HEval( hCommands, {| k, l | m := Max( m, Len(k + iif(Empty(l[ 1 ]), "", " " + l[ 1 ])) ) } )
 
    AAdd( aTexts, "Commands:" )
 

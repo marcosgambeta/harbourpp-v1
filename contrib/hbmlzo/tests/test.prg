@@ -40,7 +40,7 @@ PROCEDURE Main()
 
    ?
    cStr := Replicate( TEST_STRING, 500 )
-   nLen := Len( cStr )
+   nLen := Len(cStr)
    checksum := hb_Adler32( cStr )
    cCompressed := hb_lzo1x_1_compress( @cStr, @nLenC, @nResult )
    ShowResult( @cStr, @cCompressed, @nLenC, @nResult )
@@ -86,19 +86,19 @@ PROCEDURE Main()
 #if 0
    cStr := Replicate( TEST_STRING, 1000000 )
    ?
-   ? "BZ2 ", hb_ntos( Len( hb_bz2_Compress( cStr, NIL, @nResult ) ) )
-   ? "GZIP", hb_ntos( Len( hb_gzCompress( cStr, NIL, @nResult ) ) )
-   ? "ZLIB", hb_ntos( Len( hb_ZCompress( cStr, NIL,  @nResult ) ) )
-   ? "LZF ", hb_ntos( Len( hb_lzf_compress( cStr, NIL, @nResult ) ) )
-   ? "LZO ", hb_ntos( Len( hb_lzo1x_1_compress( cStr, NIL, @nResult ) ) )
+   ? "BZ2 ", hb_ntos( Len(hb_bz2_Compress( cStr, NIL, @nResult )) )
+   ? "GZIP", hb_ntos( Len(hb_gzCompress( cStr, NIL, @nResult )) )
+   ? "ZLIB", hb_ntos( Len(hb_ZCompress( cStr, NIL,  @nResult )) )
+   ? "LZF ", hb_ntos( Len(hb_lzf_compress( cStr, NIL, @nResult )) )
+   ? "LZO ", hb_ntos( Len(hb_lzo1x_1_compress( cStr, NIL, @nResult )) )
 
    cStr := Replicate( hb_MemoRead( hb_argv( 0 ) ), 50 )
    ?
-   ? "BZ2 ", hb_ntos( Len( hb_bz2_Compress( cStr, NIL, @nResult ) ) )
-   ? "GZIP", hb_ntos( Len( hb_gzCompress( cStr, NIL, @nResult ) ) )
-   ? "ZLIB", hb_ntos( Len( hb_ZCompress( cStr, NIL,  @nResult ) ) )
-   ? "LZF ", hb_ntos( Len( hb_lzf_compress( cStr, NIL, @nResult ) ) )
-   ? "LZO ", hb_ntos( Len( hb_lzo1x_1_compress( cStr, NIL, @nResult ) ) )
+   ? "BZ2 ", hb_ntos( Len(hb_bz2_Compress( cStr, NIL, @nResult )) )
+   ? "GZIP", hb_ntos( Len(hb_gzCompress( cStr, NIL, @nResult )) )
+   ? "ZLIB", hb_ntos( Len(hb_ZCompress( cStr, NIL,  @nResult )) )
+   ? "LZF ", hb_ntos( Len(hb_lzf_compress( cStr, NIL, @nResult )) )
+   ? "LZO ", hb_ntos( Len(hb_lzo1x_1_compress( cStr, NIL, @nResult )) )
 #endif
 
    RETURN
@@ -106,7 +106,7 @@ PROCEDURE Main()
 STATIC PROCEDURE ShowResult( cStr, cCompressed, nLen, nResult )
 
    IF nResult == LZO_E_OK
-      ? hb_StrFormat( FMT_STRING, Len( cStr ), nLen, Len( cCompressed ) )
+      ? hb_StrFormat( FMT_STRING, Len(cStr), nLen, Len(cCompressed) )
    ELSEIF nResult == LZO_E_OUT_OF_MEMORY
       ? "Out of memory.."
    ELSEIF nResult == LZO_E_NOT_COMPRESSIBLE

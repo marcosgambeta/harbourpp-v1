@@ -78,8 +78,8 @@ FUNCTION FieldPutArr( aFields, xRecNo )
    ENDIF
 
    nFields := FCount()
-   IF nFields > Len( aFields )
-      nFields := Len( aFields )
+   IF nFields > Len(aFields)
+      nFields := Len(aFields)
    ENDIF
    FOR n := 1 TO nFields
       IF aFields[ n ] != NIL

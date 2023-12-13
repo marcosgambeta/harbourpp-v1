@@ -71,7 +71,7 @@ CREATE CLASS TMySQLRow
    METHOD FieldName( nNum )
    METHOD FieldPos( cFieldName )
 
-   METHOD FieldLen( nNum )                      // Length of field N
+   METHOD FieldLen(nNum)                        // Length of field N
    METHOD FieldDec( nNum, lFormat )             // How many decimals in field N
    METHOD FieldType( nNum )                     // Cl*pper type of field N
 
@@ -91,8 +91,8 @@ METHOD New( aRow, aFStruct, cTableName ) CLASS TMySQLRow
    ::aFieldStruct := aFStruct
    ::cTable := cTableName
 
-   ::aDirty := Array( Len( ::aRow ) )
-   ::aOldValue := Array( Len( ::aRow ) )
+   ::aDirty := Array( Len(::aRow) )
+   ::aOldValue := Array( Len(::aRow) )
 
    AFill( ::aDirty, .F. )
 
@@ -102,7 +102,7 @@ METHOD FieldGet( cnField ) CLASS TMySQLRow
 
    LOCAL nNum := iif(HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField)
 
-   IF nNum > 0 .AND. nNum <= Len( ::aRow )
+   IF nNum > 0 .AND. nNum <= Len(::aRow)
 
       // Char fields are padded with spaces since a real .dbf field would be
       IF ::FieldType( nNum ) == "C"
@@ -118,7 +118,7 @@ METHOD FieldPut( cnField, Value ) CLASS TMySQLRow
 
    LOCAL nNum := iif(HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField)
 
-   IF nNum > 0 .AND. nNum <= Len( ::aRow )
+   IF nNum > 0 .AND. nNum <= Len(::aRow)
 
       IF ValType( Value ) == ValType( ::aRow[ nNum ] ) .OR. ::aRow[ nNum ] == NIL
 
@@ -150,10 +150,10 @@ METHOD FieldPos( cFieldName ) CLASS TMySQLRow
 
 // Returns name of field N
 METHOD FieldName( nNum ) CLASS TMySQLRow
-   RETURN iif(nNum >= 1 .AND. nNum <= Len( ::aFieldStruct ), ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ], "")
+   RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ], "")
 
-METHOD FieldLen( nNum ) CLASS TMySQLRow
-   RETURN iif(nNum >= 1 .AND. nNum <= Len( ::aFieldStruct ), ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ], 0)
+METHOD FieldLen(nNum) CLASS TMySQLRow
+   RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ], 0)
 
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
@@ -162,7 +162,7 @@ METHOD FieldDec( nNum, lFormat ) CLASS TMySQLRow
 
    hb_default( @lFormat, .F. )
 
-   IF nNum >= 1 .AND. nNum <= Len( ::aFieldStruct )
+   IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
       IF ! lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
                            ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
@@ -176,7 +176,7 @@ METHOD FieldDec( nNum, lFormat ) CLASS TMySQLRow
 
 METHOD FieldType( nNum ) CLASS TMySQLRow
 
-   IF nNum >= 1 .AND. nNum <= Len( ::aFieldStruct )
+   IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
       SWITCH ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ]
       CASE MYSQL_TYPE_TINY
@@ -211,7 +211,7 @@ METHOD MakePrimaryKeyWhere() CLASS TMySQLRow
 
    LOCAL ni, cWhere := ""
 
-   FOR nI := 1 TO Len( ::aFieldStruct )
+   FOR nI := 1 TO Len(::aFieldStruct)
 
       // search for fields part of a primary key
       IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
@@ -290,7 +290,7 @@ CREATE CLASS TMySQLQuery
    METHOD FieldPos( cFieldName )
    METHOD FieldGet( cnField )
 
-   METHOD FieldLen( nNum )              // Length of field N
+   METHOD FieldLen(nNum)              // Length of field N
    METHOD FieldDec( nNum, lFormat )     // How many decimals in field N
    METHOD FieldType( nNum )             // Cl*pper type of field N
 
@@ -454,7 +454,7 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
 
       IF ::Eof()
          // Phantom record with empty fields
-         ::aRow := Array( Len( ::aFieldStruct ) )
+         ::aRow := Array( Len(::aFieldStruct) )
          AFill( ::aRow, "" )
       ELSE
          ::aRow := mysql_fetch_row( ::nResultHandle )
@@ -552,14 +552,14 @@ METHOD FieldPos( cFieldName ) CLASS TMySQLQuery
 
 #if 0
    nPos := 0
-   DO WHILE ++nPos <= Len( ::aFieldStruct )
+   DO WHILE ++nPos <= Len(::aFieldStruct)
       IF Upper(::aFieldStruct[ nPos ][ MYSQL_FS_NAME ]) == cUpperName
          EXIT
       ENDIF
    ENDDO
 
    // I haven't found field name
-   IF nPos > Len( ::aFieldStruct )
+   IF nPos > Len(::aFieldStruct)
       nPos := 0
    ENDIF
 #endif
@@ -570,7 +570,7 @@ METHOD FieldPos( cFieldName ) CLASS TMySQLQuery
 // Returns name of field N
 METHOD FieldName( nNum ) CLASS TMySQLQuery
 
-   IF nNum >= 1 .AND. nNum <= Len( ::aFieldStruct )
+   IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ]
    ENDIF
 
@@ -599,9 +599,9 @@ METHOD FieldGet( cnField ) CLASS TMySQLQuery
 
    RETURN NIL
 
-METHOD FieldLen( nNum ) CLASS TMySQLQuery
+METHOD FieldLen(nNum) CLASS TMySQLQuery
 
-   IF nNum >= 1 .AND. nNum <= Len( ::aFieldStruct )
+   IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ]
    ENDIF
 
@@ -613,7 +613,7 @@ METHOD FieldDec( nNum, lFormat ) CLASS TMySQLQuery
 
    hb_default( @lFormat, .F. )
 
-   IF nNum >= 1 .AND. nNum <= Len( ::aFieldStruct )
+   IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       IF ! lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
                            ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
          RETURN Set( _SET_DECIMALS )
@@ -626,7 +626,7 @@ METHOD FieldDec( nNum, lFormat ) CLASS TMySQLQuery
 
 METHOD FieldType( nNum ) CLASS TMySQLQuery
 
-   IF nNum >= 1 .AND. nNum <= Len( ::aFieldStruct )
+   IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       SWITCH ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ]
       CASE MYSQL_TYPE_TINY
       CASE MYSQL_TYPE_SHORT
@@ -760,17 +760,17 @@ METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
       ENDIF
 
       // remove last comma
-      cUpdateQuery := Left(cUpdateQuery, Len( cUpdateQuery ) - 1)
+      cUpdateQuery := Left(cUpdateQuery, Len(cUpdateQuery) - 1)
 
       IF lOldRecord
          // based in matching of ALL fields of old record
          // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
-         FOR nI := 1 TO Len( ::aFieldStruct )
+         FOR nI := 1 TO Len(::aFieldStruct)
             cWhere += ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( ::aOldValue[ nI ] ) + " AND "
          NEXT
          // remove last " AND "
-         cWhere := Left(cWhere, Len( cWhere ) - 5)
+         cWhere := Left(cWhere, Len(cWhere) - 5)
          cUpdateQuery += cWhere
 
       ELSE
@@ -795,24 +795,24 @@ METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
    ELSE
       IF oRow:cTable == ::cTable
 
-         FOR i := 1 TO Len( oRow:aRow )
+         FOR i := 1 TO Len(oRow:aRow)
             IF oRow:aDirty[ i ]
                cUpdateQuery += oRow:aFieldStruct[ i ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( oRow:aRow[ i ] ) + ","
             ENDIF
          NEXT
 
          // remove last comma
-         cUpdateQuery := Left(cUpdateQuery, Len( cUpdateQuery ) - 1)
+         cUpdateQuery := Left(cUpdateQuery, Len(cUpdateQuery) - 1)
 
          IF lOldRecord
             // based in matching of ALL fields of old record
             // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
-            FOR nI := 1 TO Len( oRow:aFieldStruct )
+            FOR nI := 1 TO Len(oRow:aFieldStruct)
                cWhere += oRow:aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "=" + ClipValue2SQL( oRow:aOriValue[ nI ] ) + " AND "
             NEXT
             // remove last " AND "
-            cWhere := Left(cWhere, Len( cWhere ) - 5)
+            cWhere := Left(cWhere, Len(cWhere) - 5)
             cUpdateQuery += cWhere
 
          ELSE
@@ -859,14 +859,14 @@ METHOD Delete( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
          // based in matching of ALL fields of old record
          // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
-         FOR nI := 1 TO Len( ::aFieldStruct )
+         FOR nI := 1 TO Len(::aFieldStruct)
             cWhere += ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "="
             // use original value
             cWhere += ClipValue2SQL( ::aOldValue[ nI ] )
             cWhere += " AND "
          NEXT
          // remove last " AND "
-         cWhere := Left(cWhere, Len( cWhere ) - 5)
+         cWhere := Left(cWhere, Len(cWhere) - 5)
          cDeleteQuery += cWhere
       ELSE
          // MakePrimaryKeyWhere is based in fields part of a primary key
@@ -896,14 +896,14 @@ METHOD Delete( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
             // based in matching of ALL fields of old record
             // WARNING: if there are more than one record of ALL fields matching, all of those records will be changed
 
-            FOR nI := 1 TO Len( oRow:aFieldStruct )
+            FOR nI := 1 TO Len(oRow:aFieldStruct)
                cWhere += oRow:aFieldStruct[ nI ][ MYSQL_FS_NAME ] + "="
                // use original value
                cWhere += ClipValue2SQL( oRow:aOriValue[ nI ] )
                cWhere += " AND "
             NEXT
             // remove last " AND "
-            cWhere := Left(cWhere, Len( cWhere ) - 5)
+            cWhere := Left(cWhere, Len(cWhere) - 5)
             cDeleteQuery += cWhere
 
          ELSE
@@ -944,7 +944,7 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
          ENDIF
       NEXT
       // remove last comma from list
-      cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ") VALUES ("
+      cInsertQuery := Left(cInsertQuery, Len(cInsertQuery) - 1) + ") VALUES ("
 
       // field values
       FOR i := 1 TO ::nNumFields
@@ -954,7 +954,7 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
       NEXT
 
       // remove last comma from list of values and add closing parenthesis
-      cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ")"
+      cInsertQuery := Left(cInsertQuery, Len(cInsertQuery) - 1) + ")"
 
       IF mysql_query( ::nSocket, cInsertQuery ) == 0
          ::lError := .F.
@@ -982,23 +982,23 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
       IF oRow:cTable == ::cTable
 
          // field names
-         FOR i := 1 TO Len( oRow:aRow )
+         FOR i := 1 TO Len(oRow:aRow)
             IF oRow:aFieldStruct[ i ][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
                cInsertQuery += oRow:aFieldStruct[ i ][ MYSQL_FS_NAME ] + ","
             ENDIF
          NEXT
          // remove last comma from list
-         cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ") VALUES ("
+         cInsertQuery := Left(cInsertQuery, Len(cInsertQuery) - 1) + ") VALUES ("
 
          // field values
-         FOR i := 1 TO Len( oRow:aRow )
+         FOR i := 1 TO Len(oRow:aRow)
             IF oRow:aFieldStruct[ i ][ MYSQL_FS_FLAGS ] != AUTO_INCREMENT_FLAG
                cInsertQuery += ClipValue2SQL( oRow:aRow[ i ] ) + ","
             ENDIF
          NEXT
 
          // remove last comma from list of values and add closing parenthesis
-         cInsertQuery := Left(cInsertQuery, Len( cInsertQuery ) - 1) + ")"
+         cInsertQuery := Left(cInsertQuery, Len(cInsertQuery) - 1) + ")"
 
          IF mysql_query( ::nSocket, cInsertQuery ) == 0
             ::lError := .F.
@@ -1150,7 +1150,7 @@ METHOD MakePrimaryKeyWhere() CLASS TMySQLTable
 
    LOCAL ni, cWhere := ""
 
-   FOR nI := 1 TO Len( ::aFieldStruct )
+   FOR nI := 1 TO Len(::aFieldStruct)
 
       // search for fields part of a primary key
       IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
@@ -1293,11 +1293,11 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
    LOCAL i
 
    // returns NOT NULL if extended structure has DBS_NOTNULL field to true
-   LOCAL cNN := {| aArr | iif(Len( aArr ) > DBS_DEC, iif(aArr[ DBS_NOTNULL ], " NOT NULL ", ""), "") }
+   LOCAL cNN := {| aArr | iif(Len(aArr) > DBS_DEC, iif(aArr[ DBS_NOTNULL ], " NOT NULL ", ""), "") }
 
    ::cCreateQuery := "CREATE TABLE " + Lower(cTable) + " ("
 
-   FOR i := 1 TO Len( aStruct )
+   FOR i := 1 TO Len(aStruct)
 
       SWITCH aStruct[ i ][ DBS_TYPE ]
       CASE "C"
@@ -1361,7 +1361,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
    ENDIF
 
    // remove last comma from list
-   ::cCreateQuery := Left(::cCreateQuery, Len( ::cCreateQuery ) - 1) + ");"
+   ::cCreateQuery := Left(::cCreateQuery, Len(::cCreateQuery) - 1) + ");"
    IF mysql_query( ::nSocket, ::cCreateQuery ) == 0
       RETURN .T.
    ELSE
@@ -1385,12 +1385,12 @@ METHOD CreateIndex( cName, cTable, aFNames, lUnique ) CLASS TMySQLServer
 
    cCreateQuery += cName + " ON " + Lower(cTable) + " ("
 
-   FOR i := 1 TO Len( aFNames )
+   FOR i := 1 TO Len(aFNames)
       cCreateQuery += aFNames[ i ] + ","
    NEXT
 
    // remove last comma from list
-   cCreateQuery := Left(cCreateQuery, Len( cCreateQuery ) - 1) + ")"
+   cCreateQuery := Left(cCreateQuery, Len(cCreateQuery) - 1) + ")"
 
    IF mysql_query( ::nSocket, cCreateQuery ) == 0
       RETURN .T.

@@ -109,14 +109,14 @@ METHOD New() CLASS TIPCgi
       ELSE
          ::HTTP_RAW_POST_DATA := cTemp
          FOR EACH item IN hb_ATokens( cTemp, "&" )
-            IF Len( aVar := hb_ATokens( item, "=" ) ) == 2
+            IF Len(aVar := hb_ATokens( item, "=" )) == 2
                ::hPosts[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
             ENDIF
          NEXT
       ENDIF
    ELSEIF ! Empty(cTemp := GetEnv( "QUERY_STRING" ))
       FOR EACH item IN hb_ATokens( cTemp, "&" )
-         IF Len( aVar := hb_ATokens( item, "=" ) ) == 2
+         IF Len(aVar := hb_ATokens( item, "=" )) == 2
             ::hGets[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
          ENDIF
       NEXT
@@ -124,7 +124,7 @@ METHOD New() CLASS TIPCgi
 
    IF ! Empty(cTemp := GetEnv( "HTTP_COOKIE" ))
       FOR EACH item IN hb_ATokens( cTemp, ";" )
-         IF Len( aVar := hb_ATokens( item, "=" ) ) == 2
+         IF Len(aVar := hb_ATokens( item, "=" )) == 2
             ::hCookies[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
          ENDIF
       NEXT
@@ -164,7 +164,7 @@ METHOD Flush() CLASS TIPCgi
 
    cStream := ::cCgiHeader + _CRLF + ::cHtmlPage + _CRLF
 
-   lRet := ( FWrite( hb_GetStdOut(), cStream ) == hb_BLen( cStream ) )
+   lRet := ( FWrite( hb_GetStdOut(), cStream ) == hb_BLen(cStream) )
 
    IF ::lDumpHtml
       IF ::cDumpSavePath == NIL
@@ -182,7 +182,7 @@ METHOD Flush() CLASS TIPCgi
 
       IF ( hFile := hb_vfOpen( cFile, FO_CREAT + FO_TRUNC + FO_WRITE + FO_EXCLUSIVE ) ) != NIL
          cSession := ::SessionEncode()
-         IF hb_vfWrite( hFile, cSession ) != hb_BLen( cSession )
+         IF hb_vfWrite( hFile, cSession ) != hb_BLen(cSession)
             ::Write( "ERROR: On writing session file: " + cFile + ", File error: " + hb_CStr( FError() ) )
          ENDIF
          hb_vfClose( hFile )

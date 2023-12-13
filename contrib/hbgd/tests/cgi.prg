@@ -234,7 +234,7 @@ FUNCTION GetVars( cFields, cSeparator )
 
    FOR EACH cField in aFields
       aField := hb_regexSplit( "=", cField, 2 )
-      IF Len( aField ) != 2
+      IF Len(aField) != 2
          LOOP
       ENDIF
 
@@ -244,8 +244,8 @@ FUNCTION GetVars( cFields, cSeparator )
       // TraceLog( "cName, xValue", cName, xValue )
 
       // is it an array entry?
-      IF SubStr(cName, Len( cName ) - 1) == "[]"
-         cName := SubStr(cName, 1, Len( cName ) - 2)
+      IF SubStr(cName, Len(cName) - 1) == "[]"
+         cName := SubStr(cName, 1, Len(cName) - 2)
 
          hHashVars[ cName ] := { xValue }
 
@@ -270,7 +270,7 @@ FUNCTION GetParams( aParams )
 
    FOR EACH cField in aFields
       aField := hb_regexSplit( "=", cField, 2 )
-      IF Len( aField ) != 2
+      IF Len(aField) != 2
          LOOP
       ENDIF
 
@@ -280,8 +280,8 @@ FUNCTION GetParams( aParams )
       // TraceLog( "cName, xValue", cName, xValue )
 
       // is it an array entry?
-      IF SubStr(cName, Len( cName ) - 1) == "[]"
-         cName := SubStr(cName, 1, Len( cName ) - 2)
+      IF SubStr(cName, Len(cName) - 1) == "[]"
+         cName := SubStr(cName, 1, Len(cName) - 2)
 
          hHashVars[ cName ] := { xValue }
 
@@ -307,7 +307,7 @@ FUNCTION URLDecode( cStr )
 
    // LOCAL lNumeric := .T.
 
-   FOR i := 1 TO Len( cStr )
+   FOR i := 1 TO Len(cStr)
       cCar := cStr[ i ]
 
       DO CASE
@@ -343,7 +343,7 @@ FUNCTION URLEncode( cStr )
 
    LOCAL cRet := "", i, nVal, cCar
 
-   FOR i := 1 TO Len( cStr )
+   FOR i := 1 TO Len(cStr)
       cCar := cStr[ i ]
       DO CASE
       CASE cCar == " "

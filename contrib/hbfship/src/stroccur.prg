@@ -57,7 +57,7 @@ FUNCTION StrOccurs( cSub, cStr, lAny )
       ELSE
          DO WHILE ( nPos := hb_At( cSub, cStr, nPos ) ) != 0
             nCount++
-            nPos += Len( cSub )
+            nPos += Len(cSub)
          ENDDO
       ENDIF
    ENDIF

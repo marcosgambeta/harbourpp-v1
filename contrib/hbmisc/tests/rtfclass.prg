@@ -83,7 +83,7 @@ METHOD write( cSource ) CLASS TRtf
    hb_FUse( cSource )  // open source file
    WHILE ! hb_FAtEof()  // read the file line by line
       cLine := hb_FReadLn() + "\par"
-      y     := Len( cLine )
+      y     := Len(cLine)
       FOR nChar := 1 TO y
          cChar := SubStr(cLine, nChar, 1)
 
@@ -97,19 +97,19 @@ METHOD write( cSource ) CLASS TRtf
                SubStr(cLine, nChar + 3, 1)
             IF ( i := AScan( attrib, {| e | e[ 1 ] == xAtt } ) ) > 0
                FWrite( ::nhandle, attrib[ i ][ 2 ] )
-               nChar += Len( xAtt ) - 1
+               nChar += Len(xAtt) - 1
             ELSE
                // 3 attributes
                xatt := Left(xAtt, 3)
                IF ( i := AScan( attrib, {| e | e[ 1 ] == xAtt } ) ) > 0
                   FWrite( ::nHandle, attrib[ i ][ 2 ] )
-                  nChar += Len( xAtt ) - 1
+                  nChar += Len(xAtt) - 1
                ELSE
                   // 2 attributes
                   xAtt := Left(xAtt, 2)
                   IF ( i := AScan( attrib, {| e | e[ 1 ] == xAtt } ) ) > 0
                      FWrite( ::nHandle, attrib[ i ][ 2 ] )
-                     nChar += Len( xAtt ) - 1
+                     nChar += Len(xAtt) - 1
                   ELSE
                      FWrite( ::nHandle, cChar )
                   ENDIF

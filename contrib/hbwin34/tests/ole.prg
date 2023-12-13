@@ -505,7 +505,7 @@ STATIC PROCEDURE Exm_DownloadHTTPS()
       oHTTP:Open( "GET", "https://example.org/index.html", .F. )
       oHTTP:Send()
       IF oHTTP:Status() == 200
-         ? "Downloaded", hb_ntos( hb_BLen( oHTTP:responseBody ) ), "byte(s)"
+         ? "Downloaded", hb_ntos( hb_BLen(oHTTP:responseBody) ), "byte(s)"
       ENDIF
    ELSE
       ? "Error: WinHttp 5.1 not available. [" + win_oleErrorText() + "]"

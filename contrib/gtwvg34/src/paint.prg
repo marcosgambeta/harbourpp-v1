@@ -67,7 +67,7 @@ FUNCTION WvtPaintObjects()
 
    LOCAL aBlocks := WvtSetPaint()
 
-   IF Len( aBlocks ) > 0
+   IF Len(aBlocks) > 0
       tlbr_ := wvt_GetPaintRect()
 
       FOR EACH blk IN aBlocks
@@ -79,7 +79,7 @@ FUNCTION WvtPaintObjects()
             DO CASE
             CASE blk[ 3 ][ 1 ] == WVT_BLOCK_GRID_V
                b := blk[ 3 ][ 6 ]
-               IF Len( b:aColumnsSep ) == 0
+               IF Len(b:aColumnsSep) == 0
                   lExe := .F.
                ELSE
                   nLeft  := b:aColumnsSep[ 1 ]
@@ -455,7 +455,7 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
       xRet := {}
       IF ! Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
-         FOR i := 2 TO Len( aTmp )
+         FOR i := 2 TO Len(aTmp)
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
          NEXT
       ENDIF
@@ -496,7 +496,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
       xRet := {}
       IF ! Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
-         FOR i := 2 TO Len( aTmp )
+         FOR i := 2 TO Len(aTmp)
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
          NEXT
       ENDIF
@@ -653,7 +653,7 @@ FUNCTION wvt_SetClipboard( cText )
 PROCEDURE wvt_PasteFromClipboard()
 
    LOCAL cText := hb_gtInfo( HB_GTI_CLIPBOARDDATA )
-   LOCAL nLen := Len( cText )
+   LOCAL nLen := Len(cText)
    LOCAL i
 
    FOR i := 1 TO nLen

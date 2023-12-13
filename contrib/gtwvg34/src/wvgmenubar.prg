@@ -82,7 +82,7 @@ CREATE CLASS WvgMenuBar INHERIT wvgWindow
 
    VAR    className                              INIT "MENUBAR"
 
-   METHOD numItems()                             INLINE Len( ::aMenuItems )
+   METHOD numItems()                             INLINE Len(::aMenuItems)
 
    METHOD new( oParent, aPresParams, lVisible )
    METHOD create( oParent, aPresParams, lVisible )
@@ -287,7 +287,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
 
    IF nPos <= 0
       AAdd( ::aMenuItems, aItem )
-      nItemIndex := Len( ::aMenuItems )
+      nItemIndex := Len(::aMenuItems)
       wapi_AppendMenu( ::hMenu, ;
          aItem[ 1 ], ;
          aItem[ 2 ], ;
@@ -398,7 +398,7 @@ METHOD WvgMenuBar:disableItem( nItemNum )
 
 METHOD WvgMenuBar:getItem( nItemNum )
 
-   IF HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1 .AND. nItemNum <= Len( ::aMenuItems )
+   IF HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1 .AND. nItemNum <= Len(::aMenuItems)
       RETURN { ;
          ::aMenuItems[ nItemNum ][ 3 ], ;
          ::aMenuItems[ nItemNum ][ 4 ], ;

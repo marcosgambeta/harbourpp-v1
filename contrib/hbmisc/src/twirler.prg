@@ -31,7 +31,7 @@ METHOD new( nRow, nCol, cTitle, cChars, nSmooth ) CLASS Twirler
    IF Empty(::c_Title)
       ::c_Title := ""
    ENDIF
-   ::n_Col += Len( ::c_Title )
+   ::n_Col += Len(::c_Title)
 
    RETURN Self
 
@@ -42,7 +42,7 @@ METHOD twirl() CLASS Twirler
    IF Empty(::n_Seconds) .OR. nSeconds - ::n_Seconds >= ::n_Smooth .OR. nSeconds < ::n_Seconds
       hb_DispOutAt( ::n_Row, ::n_Col, SubStr(::c_Chars, ::n_Index, 1) )
       ::n_Index++
-      if ::n_Index > Len( ::c_Chars )
+      if ::n_Index > Len(::c_Chars)
          ::n_Index := 1
       ENDIF
       IF ! Empty(::n_Seconds)
@@ -58,12 +58,12 @@ METHOD show() CLASS Twirler
    IF ! Empty(::n_Smooth)
       ::n_Seconds := - ::n_Smooth
    ENDIF
-   hb_DispOutAt( ::n_Row, ::n_Col - Len( ::c_Title ), ::c_Title )
+   hb_DispOutAt( ::n_Row, ::n_Col - Len(::c_Title), ::c_Title )
 
    RETURN Self
 
 METHOD hide() CLASS Twirler
 
-   hb_DispOutAt( ::n_Row, ::n_Col - Len( ::c_Title ), Space( Len( ::c_Title ) + 1 ) )
+   hb_DispOutAt( ::n_Row, ::n_Col - Len(::c_Title), Space( Len(::c_Title) + 1 ) )
 
    RETURN Self

@@ -77,7 +77,7 @@ PROCEDURE win_regPathSplit(cRegPath, /* @ */ nHKEY, /* @ */ cKey, /* @ */ cEntry
          cEntry := cRegPath
       ENDIF
 
-      /* Len( <literal> ) is optimized to a number by Harbour at compile time. */
+      /* Len(<literal>) is optimized to a number by Harbour at compile time. */
       DO CASE
       CASE Left(cHKEY, Len("HKCU"                 )) == "HKCU"                  ; nHKEY := WIN_HKEY_CURRENT_USER
       CASE Left(cHKEY, Len("HKLM"                 )) == "HKLM"                  ; nHKEY := WIN_HKEY_LOCAL_MACHINE

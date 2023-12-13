@@ -213,7 +213,7 @@ METHOD WvtBrowse:NotifyChild( nIndex, nKey, oCurObj )
 
    LOCAL xData, i
 
-   IF nIndex >= 1 .AND. nIndex <= Len( ::aChildren )
+   IF nIndex >= 1 .AND. nIndex <= Len(::aChildren)
       IF HB_ISEVALITEM( ::aChildren[ nIndex ][ OBJ_CHILD_DATABLOCK ] )
          xData := Eval( ::aChildren[ nIndex ][ OBJ_CHILD_DATABLOCK ] )
       ENDIF
@@ -314,7 +314,7 @@ METHOD WvtBrowse:PaintBlock( nPaintObj )
       EXIT
 
    CASE 4
-      bBlock := {|| wvt_DrawGridVert( b:nTop, b:nBottom, b:aColumnsSep, Len( b:aColumnsSep ) ) }
+      bBlock := {|| wvt_DrawGridVert( b:nTop, b:nBottom, b:aColumnsSep, Len(b:aColumnsSep) ) }
       AAdd( ::aPaint, { bBlock, { WVT_BLOCK_GRID_V, b:nTop + 1, b:nLeft + 1, b:nBottom - 1, b:nRight - 1, b } } )
       EXIT
 

@@ -208,21 +208,21 @@ METHOD Retrieve( nId, nLen ) CLASS TIPClientPOP
 
       cBuffer := Space( 1024 )
 
-      nRead := ::inetRecv( ::SocketCon, @cBuffer, hb_BLen( cBuffer ) )
+      nRead := ::inetRecv( ::SocketCon, @cBuffer, hb_BLen(cBuffer) )
 
       cRet += hb_BLeft(cBuffer, nRead)
 
       /* 2005-11-24 - <maurilio.longo@libero.it>
-                      "- Len( cEOM )" to be sure to always find a full EOM,
+                      "- Len(cEOM)" to be sure to always find a full EOM,
                       otherwise if response breaks EOM in two, it will never
                       be found
        */
-      IF ( nPos := hb_BAt( cEOM, cRet, Max( nRetLen - hb_BLen( cEOM ), 1 ) ) ) > 0
+      IF ( nPos := hb_BAt( cEOM, cRet, Max( nRetLen - hb_BLen(cEOM), 1 ) ) ) > 0
          // Remove ".CRLF"
          cRet := hb_BLeft(cRet, nPos + 1)
          ::bEof := .T.
 
-      ELSEIF HB_ISNUMERIC( nLen ) .AND. nLen < hb_BLen( cRet )  /* FIXME: might break UTF-8 chars */
+      ELSEIF HB_ISNUMERIC( nLen ) .AND. nLen < hb_BLen(cRet)  /* FIXME: might break UTF-8 chars */
          EXIT
       ELSE
          nRetLen += nRead
@@ -437,7 +437,7 @@ METHOD getBody( nMsgId ) CLASS TIPClientPOP
          NEXT
       ENDIF
    ELSEIF ( n := AScan( aMsg, {| cLine | Empty(cLine) } ) ) > 0
-      FOR i := n + 1 TO Len( aMsg )
+      FOR i := n + 1 TO Len(aMsg)
          xRet += aMsg[ i ] + ::cCRLF
       NEXT
    ENDIF
@@ -450,7 +450,7 @@ METHOD getSubject( nMsgId ) CLASS TIPClientPOP
 
    FOR EACH cHeader IN ::getTop( nMsgId, .T. )
       IF hb_LeftEqI( cHeader, "subject: " )
-         RETURN SubStr(cHeader, Len( "subject: " ) + 1)
+         RETURN SubStr(cHeader, Len("subject: ") + 1)
       ENDIF
    NEXT
 

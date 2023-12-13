@@ -71,7 +71,7 @@ PROCEDURE Main( ... )
 
    FOR EACH cParam IN aParams
       IF hb_LeftEq( cParam, "-" )
-         IF SubStr(cParam, Len( "-" ) + 1) == "r"
+         IF SubStr(cParam, Len("-") + 1) == "r"
             lRecursive := .T.
             cParam := "#"
             EXIT
@@ -108,7 +108,7 @@ PROCEDURE Main( ... )
 
 STATIC PROCEDURE FCallBack( aFile, nItem )
 
-   IF nItem % Int( Len( aFile ) / 40 ) == 1
+   IF nItem % Int( Len(aFile) / 40 ) == 1
       OutStd( "." )
    ENDIF
 
@@ -119,7 +119,7 @@ STATIC PROCEDURE Reformat( oRef, cFileName )
    LOCAL aFile
 
    IF ! Empty(aFile := oRef:File2Array( cFileName ))
-      OutStd( hb_StrFormat( I_( "Reformatting %1$s (%2$d lines)" ), cFileName, Len( aFile ) ) + hb_eol() )
+      OutStd( hb_StrFormat( I_( "Reformatting %1$s (%2$d lines)" ), cFileName, Len(aFile) ) + hb_eol() )
       OutStd( "<" )
       IF oRef:Reformat( aFile )
          oRef:Array2File( cFileName, aFile )

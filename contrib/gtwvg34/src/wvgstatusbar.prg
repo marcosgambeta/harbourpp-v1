@@ -63,7 +63,7 @@ CREATE CLASS WvgStatusBar INHERIT WvgWindow /* WvgActiveXControl */
 
    VAR    aItems                                INIT {}
 
-   METHOD numItems()                            INLINE Len( ::aItems )
+   METHOD numItems()                            INLINE Len(::aItems)
 
    METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
@@ -208,7 +208,7 @@ METHOD WvgStatusBar:delItem( nItemORcKey )
       nIndex := nItemORcKey
    ENDCASE
 
-   IF nIndex >= 1 .AND. nIndex <= Len( ::aItems )
+   IF nIndex >= 1 .AND. nIndex <= Len(::aItems)
       hb_ADel( ::aItems, nIndex, .T. )  /* Delete panel by window */
    ENDIF
 
@@ -225,7 +225,7 @@ METHOD WvgStatusBar:getItem( nItemORcKey )
       nIndex := nItemORcKey
    ENDCASE
 
-   IF nIndex >= 1 .AND. nIndex <= Len( ::aItems )
+   IF nIndex >= 1 .AND. nIndex <= Len(::aItems)
       RETURN ::aItems[ nIndex ]
    ENDIF
 

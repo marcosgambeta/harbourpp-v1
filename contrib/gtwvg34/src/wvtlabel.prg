@@ -84,7 +84,7 @@ METHOD WvtLabel:Create( lConfg )
    __defaultNIL( @lConfg, .F. )
 
    __defaultNIL( @::nBottom, ::nTop )
-   __defaultNIL( @::nRight, ::nLeft + Len( ::Text ) )
+   __defaultNIL( @::nRight, ::nLeft + Len(::Text) )
    __defaultNIL( @::nTextColor, WIN_RGB( 0, 0, 0 ) )
 
    ::nTextColorHoverOff := ::nTextColor

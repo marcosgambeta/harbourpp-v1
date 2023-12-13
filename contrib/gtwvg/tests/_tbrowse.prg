@@ -112,7 +112,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    oBrowse:GoBottomBlock := {|| dbGoBottom() }
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
-   FOR i := 1 TO Len( info_ )
+   FOR i := 1 TO Len(info_)
       bBlock := VouBlockField( i )
       oBrowse:AddColumn( TBColumnNew( info_[i, 1], bBlock ) )
    NEXT
@@ -128,7 +128,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    AAdd( aBlocks, {|| wvt_DrawBoxRaised( oBrowse:nTop - 2, oBrowse:nLeft - 2, oBrowse:nBottom + 1, oBrowse:nRight + 2 ) } )
    AAdd( aBlocks, {|| wvt_DrawBoxRecessed( oBrowse:nTop, oBrowse:nLeft, oBrowse:nBottom, oBrowse:nRight ) } )
    AAdd( aBlocks, {|| wvt_DrawGridHorz( oBrowse:nTop + 3, oBrowse:nLeft, oBrowse:nRight, oBrowse:nBottom - oBrowse:nTop - 2 ) } )
-   AAdd( aBlocks, {|| wvt_DrawGridVert( oBrowse:nTop, oBrowse:nBottom, oBrowse:aColumnsSep, Len( oBrowse:aColumnsSep ) ) } )
+   AAdd( aBlocks, {|| wvt_DrawGridVert( oBrowse:nTop, oBrowse:nBottom, oBrowse:aColumnsSep, Len(oBrowse:aColumnsSep) ) } )
 
    Vou_BrwAddScrollBars( oCrt, oBrowse, @oVBar, @oHBar )
 
@@ -380,7 +380,7 @@ STATIC FUNCTION BrwBuildListBoxIdx( oCrt, oBrw )
    oXbp:setColorBG( "B*" )
    oXbp:itemMarked := {| m1, m2, o | m1 := m2, BrwSetThisOrder( oBrw, o:XbpListBox:getData() - 1 ) }
    oXbp:addItem( "Natural Order" )
-   FOR i := 1 TO Len( aIdx )
+   FOR i := 1 TO Len(aIdx)
       oXbp:addItem( aIdx[i] )
    NEXT
    oXbp:tooltipText := "Click on an index to order database!"
@@ -459,7 +459,7 @@ STATIC PROCEDURE BrwReposButtons( oCrt )
    nG   := 2
    nTtl := 0
    AEval( aW, {| e | nTtl += e } )
-   nTtl += ( Len( aW ) - 1 ) * nG
+   nTtl += ( Len(aW) - 1 ) * nG
 
    nOff := ( ( MaxCol() + 1 ) - nTtl ) / 2
    i := 0
@@ -487,16 +487,16 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
    nG   := 2
    nTtl := 0
    AEval( aW, {| e | nTtl += e } )
-   nTtl += ( Len( aW ) - 1 ) * nG
+   nTtl += ( Len(aW) - 1 ) * nG
 
    nOff := ( ( MaxCol() + 1 ) - nTtl ) / 2
 
-   FOR i := 1 TO Len( aPmt )
+   FOR i := 1 TO Len(aPmt)
       oPB := WvgPushButton():new( oCrt )
       IF i == 3  /* We do not want this button to gain focus anytime */
          oPB:pointerFocus := .F.
       ENDIF
-      IF i == Len( aPmt )
+      IF i == Len(aPmt)
          oPB:caption := hb_DirBase() + "\" + "resources\v_lock.bmp"
          oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[i] } )
       ELSE
@@ -974,7 +974,7 @@ FUNCTION ConfigBrowser( aFields, cUseAlias, aTLBR, cDesc, oParent, cColorSpec, n
    oBrowse:GoBottomBlock := {|| dbGoBottom() }
    oBrowse:SkipBlock     := {| nSkip | dbSkipBlock( nSkip, oBrowse ) }
 
-   FOR i := 1 TO Len( aFields )
+   FOR i := 1 TO Len(aFields)
       bBlock := VouBlockField( aFields[i] )
       oBrowse:AddColumn( TBColumnNew( info_[aFields[i], 1], bBlock ) )
    NEXT
