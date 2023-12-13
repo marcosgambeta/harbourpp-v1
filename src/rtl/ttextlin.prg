@@ -56,7 +56,7 @@ CREATE CLASS HBTextLine
 ENDCLASS
 
 /* Creates a new line of text */
-METHOD Init(cLine, lSoftCR) CLASS HBTextLine
+METHOD HBTextLine:Init(cLine, lSoftCR)
 
    ::cText := hb_defaultValue(cLine, "")
    ::lSoftCR := hb_defaultValue(lSoftCR, .F.)

@@ -108,7 +108,7 @@ CREATE CLASS CheckBox FUNCTION HBCheckBox
 
 ENDCLASS
 
-METHOD setFocus() CLASS CheckBox
+METHOD CheckBox:setFocus()
 
    IF !::lHasFocus
       ::nCursor := SetCursor(SC_NONE)
@@ -122,7 +122,7 @@ METHOD setFocus() CLASS CheckBox
 
    RETURN Self
 
-METHOD select(lState) CLASS CheckBox
+METHOD CheckBox:select(lState)
 
    LOCAL lOldState := ::lBuffer
 
@@ -138,7 +138,7 @@ METHOD select(lState) CLASS CheckBox
 
    RETURN Self
 
-METHOD killFocus() CLASS CheckBox
+METHOD CheckBox:killFocus()
 
    IF ::lHasFocus
       ::lHasFocus := .F.
@@ -153,7 +153,7 @@ METHOD killFocus() CLASS CheckBox
 
    RETURN Self
 
-METHOD hitTest(nMRow, nMCol) CLASS CheckBox
+METHOD CheckBox:hitTest(nMRow, nMCol)
 
    LOCAL nPosAccel
    LOCAL nLenCaption
@@ -174,7 +174,7 @@ METHOD hitTest(nMRow, nMCol) CLASS CheckBox
 
    RETURN HTNOWHERE
 
-METHOD display() CLASS CheckBox
+METHOD CheckBox:display()
 
    LOCAL cColor
    LOCAL cStyle := ::cStyle
@@ -213,7 +213,7 @@ METHOD display() CLASS CheckBox
 
    RETURN Self
 
-METHOD bitmaps(aBitmaps) CLASS CheckBox
+METHOD CheckBox:bitmaps(aBitmaps)
 
    IF aBitmaps != NIL
       ::aBitmaps := __eInstVar53(Self, "BITMAPS", aBitmaps, "A", 1001)
@@ -221,10 +221,10 @@ METHOD bitmaps(aBitmaps) CLASS CheckBox
 
    RETURN ::aBitmaps
 
-METHOD buffer() CLASS CheckBox
+METHOD CheckBox:buffer()
    RETURN ::lBuffer
 
-METHOD capCol(nCapCol) CLASS CheckBox
+METHOD CheckBox:capCol(nCapCol)
 
    IF nCapCol != NIL
       ::nCapCol := __eInstVar53(Self, "CAPCOL", nCapCol, "N", 1001)
@@ -232,7 +232,7 @@ METHOD capCol(nCapCol) CLASS CheckBox
 
    RETURN ::nCapCol
 
-METHOD capRow(nCapRow) CLASS CheckBox
+METHOD CheckBox:capRow(nCapRow)
 
    IF nCapRow != NIL
       ::nCapRow := __eInstVar53(Self, "CAPROW", nCapRow, "N", 1001)
@@ -240,7 +240,7 @@ METHOD capRow(nCapRow) CLASS CheckBox
 
    RETURN ::nCapRow
 
-METHOD caption(cCaption) CLASS CheckBox
+METHOD CheckBox:caption(cCaption)
 
    IF cCaption != NIL
       ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
@@ -248,7 +248,7 @@ METHOD caption(cCaption) CLASS CheckBox
 
    RETURN ::cCaption
 
-METHOD col(nCol) CLASS CheckBox
+METHOD CheckBox:col(nCol)
 
    IF nCol != NIL
       ::nCol := __eInstVar53(Self, "COL", nCol, "N", 1001)
@@ -256,7 +256,7 @@ METHOD col(nCol) CLASS CheckBox
 
    RETURN ::nCol
 
-METHOD colorSpec(cColorSpec) CLASS CheckBox
+METHOD CheckBox:colorSpec(cColorSpec)
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, {||!Empty(hb_ColorIndex(cColorSpec, 3)) .AND. Empty(hb_ColorIndex(cColorSpec, 4))})
@@ -264,7 +264,7 @@ METHOD colorSpec(cColorSpec) CLASS CheckBox
 
    RETURN ::cColorSpec
 
-METHOD fBlock(bFBlock) CLASS CheckBox
+METHOD CheckBox:fBlock(bFBlock)
 
    IF PCount() > 0
       ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
@@ -272,10 +272,10 @@ METHOD fBlock(bFBlock) CLASS CheckBox
 
    RETURN ::bFBlock
 
-METHOD hasFocus() CLASS CheckBox
+METHOD CheckBox:hasFocus()
    RETURN ::lHasFocus
 
-METHOD message(cMessage) CLASS CheckBox
+METHOD CheckBox:message(cMessage)
 
    IF cMessage != NIL
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
@@ -283,7 +283,7 @@ METHOD message(cMessage) CLASS CheckBox
 
    RETURN ::cMessage
 
-METHOD row(nRow) CLASS CheckBox
+METHOD CheckBox:row(nRow)
 
    IF nRow != NIL
       ::nRow := __eInstVar53(Self, "ROW", nRow, "N", 1001)
@@ -291,7 +291,7 @@ METHOD row(nRow) CLASS CheckBox
 
    RETURN ::nRow
 
-METHOD sBlock(bSBlock) CLASS CheckBox
+METHOD CheckBox:sBlock(bSBlock)
 
    IF PCount() > 0
       ::bSBlock := iif(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
@@ -299,7 +299,7 @@ METHOD sBlock(bSBlock) CLASS CheckBox
 
    RETURN ::bSBlock
 
-METHOD style(cStyle) CLASS CheckBox
+METHOD CheckBox:style(cStyle)
 
    IF cStyle != NIL
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 0 .OR. Len(cStyle) == 4})
@@ -307,10 +307,10 @@ METHOD style(cStyle) CLASS CheckBox
 
    RETURN ::cStyle
 
-METHOD typeOut() CLASS CheckBox
+METHOD CheckBox:typeOut()
    RETURN .F.
 
-METHOD Init(nRow, nCol, cCaption) CLASS CheckBox
+METHOD CheckBox:Init(nRow, nCol, cCaption)
 
    LOCAL cColor
 

@@ -75,14 +75,14 @@ CREATE CLASS HBMemoEditor INHERIT HBEditor
 
 ENDCLASS
 
-METHOD UserFunctionIsValid() CLASS HBMemoEditor
+METHOD HBMemoEditor:UserFunctionIsValid()
 #ifdef HB_CLP_STRICT
    RETURN HB_ISSTRING(::xUserFunction)
 #else
    RETURN HB_ISSTRING(::xUserFunction) .OR. HB_ISEVALITEM(::xUserFunction)
 #endif
 
-METHOD MemoInit(xUserFunction) CLASS HBMemoEditor
+METHOD HBMemoEditor:MemoInit(xUserFunction)
 
    LOCAL nUdfReturn
 
@@ -109,7 +109,7 @@ METHOD MemoInit(xUserFunction) CLASS HBMemoEditor
 
    RETURN Self
 
-METHOD Edit() CLASS HBMemoEditor
+METHOD HBMemoEditor:Edit()
 
    LOCAL nKey
    LOCAL nKeyStd
@@ -154,7 +154,7 @@ METHOD Edit() CLASS HBMemoEditor
 
 // I come here if I have an unknown key and it is not a configurable key
 // if there is an user function I leave to it its handling
-METHOD KeyboardHook(nKey) CLASS HBMemoEditor
+METHOD HBMemoEditor:KeyboardHook(nKey)
 
    LOCAL nYesNoKey
    LOCAL cBackScr
@@ -195,7 +195,7 @@ METHOD KeyboardHook(nKey) CLASS HBMemoEditor
 
    RETURN Self
 
-METHOD IdleHook() CLASS HBMemoEditor
+METHOD HBMemoEditor:IdleHook()
 
    IF ::UserFunctionIsValid()
       ::xDo(ME_IDLE)
@@ -203,7 +203,7 @@ METHOD IdleHook() CLASS HBMemoEditor
 
    RETURN Self
 
-METHOD HandleUserKey(nKey, nUdfReturn) CLASS HBMemoEditor
+METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
 
    SWITCH nUdfReturn
    CASE ME_DEFAULT
@@ -274,7 +274,7 @@ METHOD HandleUserKey(nKey, nUdfReturn) CLASS HBMemoEditor
 
    RETURN .T.
 
-METHOD xDo(nStatus) CLASS HBMemoEditor
+METHOD HBMemoEditor:xDo(nStatus)
 
    LOCAL nOldRow := ::Row()
    LOCAL nOldCol := ::Col()
@@ -286,7 +286,7 @@ METHOD xDo(nStatus) CLASS HBMemoEditor
 
    RETURN hb_defaultValue(xResult, ME_DEFAULT)
 
-METHOD MoveCursor(nKey) CLASS HBMemoEditor
+METHOD HBMemoEditor:MoveCursor(nKey)
 
    IF nKey == K_CTRL_W
       ::lSaved := .T.
@@ -296,7 +296,7 @@ METHOD MoveCursor(nKey) CLASS HBMemoEditor
 
    RETURN ::super:MoveCursor(nKey)
 
-METHOD InsertState(lInsState) CLASS HBMemoEditor
+METHOD HBMemoEditor:InsertState(lInsState)
 
    IF HB_ISLOGICAL(lInsState) .AND. ::lEditAllow
       Set(_SET_INSERT, lInsState)

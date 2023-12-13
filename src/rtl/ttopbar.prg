@@ -99,7 +99,7 @@ CREATE CLASS TopBarMenu FUNCTION HBTopBarMenu
 
 ENDCLASS
 
-METHOD addItem(oItem) CLASS TopBarMenu
+METHOD TopBarMenu:addItem(oItem)
 
    IF HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
@@ -111,7 +111,7 @@ METHOD addItem(oItem) CLASS TopBarMenu
 
    RETURN Self
 
-METHOD delItem(nPos) CLASS TopBarMenu
+METHOD TopBarMenu:delItem(nPos)
 
    LOCAL nLen
    LOCAL nWidth
@@ -135,7 +135,7 @@ METHOD delItem(nPos) CLASS TopBarMenu
 
    RETURN Self
 
-METHOD display() CLASS TopBarMenu
+METHOD TopBarMenu:display()
 
    LOCAL nRow := ::nRow
    LOCAL nLeft := ::nLeft
@@ -204,7 +204,7 @@ METHOD display() CLASS TopBarMenu
 
    RETURN Self
 
-METHOD getFirst() CLASS TopBarMenu
+METHOD TopBarMenu:getFirst()
 
    LOCAL item
 
@@ -216,10 +216,10 @@ METHOD getFirst() CLASS TopBarMenu
 
    RETURN 0
 
-METHOD getItem(nPos) CLASS TopBarMenu
+METHOD TopBarMenu:getItem(nPos)
    RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
-METHOD getLast() CLASS TopBarMenu
+METHOD TopBarMenu:getLast()
 
    LOCAL item
 
@@ -231,7 +231,7 @@ METHOD getLast() CLASS TopBarMenu
 
    RETURN 0
 
-METHOD getNext() CLASS TopBarMenu
+METHOD TopBarMenu:getNext()
 
    LOCAL n
 
@@ -243,7 +243,7 @@ METHOD getNext() CLASS TopBarMenu
 
    RETURN 0
 
-METHOD getPrev() CLASS TopBarMenu
+METHOD TopBarMenu:getPrev()
 
    LOCAL n
 
@@ -260,7 +260,7 @@ METHOD getPrev() CLASS TopBarMenu
             first item is disabled
          2) when a menuitem is disabled it will ignore the key [jlalin] */
 
-METHOD getAccel(nKey) CLASS TopBarMenu
+METHOD TopBarMenu:getAccel(nKey)
 
    LOCAL nIndex := AScan({ ;
       K_ALT_A, K_ALT_B, K_ALT_C, K_ALT_D, K_ALT_E, K_ALT_F, ;
@@ -283,7 +283,7 @@ METHOD getAccel(nKey) CLASS TopBarMenu
 
    RETURN 0
 
-METHOD getShortCt(nKey) CLASS TopBarMenu
+METHOD TopBarMenu:getShortCt(nKey)
 
    LOCAL item
 
@@ -302,7 +302,7 @@ METHOD getShortCt(nKey) CLASS TopBarMenu
          This method correct a bug in Cl*pper:
          when click on a disabled menuitem it will ignore it [jlalin] */
 
-METHOD hitTest(nMRow, nMCol) CLASS TopBarMenu
+METHOD TopBarMenu:hitTest(nMRow, nMCol)
 
    LOCAL nColumn
    LOCAL item
@@ -321,7 +321,7 @@ METHOD hitTest(nMRow, nMCol) CLASS TopBarMenu
 
    RETURN HTNOWHERE
 
-METHOD insItem(nPos, oItem) CLASS TopBarMenu
+METHOD TopBarMenu:insItem(nPos, oItem)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
@@ -333,7 +333,7 @@ METHOD insItem(nPos, oItem) CLASS TopBarMenu
 
    RETURN Self
 
-METHOD select(nPos) CLASS TopBarMenu
+METHOD TopBarMenu:select(nPos)
 
    IF (nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled) .OR. nPos == 0
 
@@ -349,7 +349,7 @@ METHOD select(nPos) CLASS TopBarMenu
 
    RETURN Self
 
-METHOD setItem(nPos, oItem) CLASS TopBarMenu
+METHOD TopBarMenu:setItem(nPos, oItem)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
@@ -360,7 +360,7 @@ METHOD setItem(nPos, oItem) CLASS TopBarMenu
 
    RETURN Self
 
-METHOD colorSpec(cColorSpec) CLASS TopBarMenu
+METHOD TopBarMenu:colorSpec(cColorSpec)
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, {||!Empty(hb_ColorIndex(cColorSpec, 5)) .AND. Empty(hb_ColorIndex(cColorSpec, 6))})
@@ -369,13 +369,13 @@ METHOD colorSpec(cColorSpec) CLASS TopBarMenu
 
    RETURN ::cColorSpec
 
-METHOD current() CLASS TopBarMenu
+METHOD TopBarMenu:current()
    RETURN ::nCurrent
 
-METHOD itemCount() CLASS TopBarMenu
+METHOD TopBarMenu:itemCount()
    RETURN ::nItemCount
 
-METHOD left(nLeft) CLASS TopBarMenu
+METHOD TopBarMenu:left(nLeft)
 
    IF nLeft != NIL
       ::nLeft := __eInstVar53(Self, "LEFT", nLeft, "N", 1001)
@@ -383,7 +383,7 @@ METHOD left(nLeft) CLASS TopBarMenu
 
    RETURN ::nLeft
 
-METHOD right(nRight) CLASS TopBarMenu
+METHOD TopBarMenu:right(nRight)
 
    IF nRight != NIL
       ::nRight := __eInstVar53(Self, "RIGHT", nRight, "N", 1001)
@@ -391,7 +391,7 @@ METHOD right(nRight) CLASS TopBarMenu
 
    RETURN ::nRight
 
-METHOD row(nRow) CLASS TopBarMenu
+METHOD TopBarMenu:row(nRow)
 
    IF nRow != NIL
       /* NOTE: CA-Cl*pper 5.3 has a bug, where it would show "TOP" in case of an error. */
@@ -402,7 +402,7 @@ METHOD row(nRow) CLASS TopBarMenu
 
 /* -------------------------------------------- */
 
-METHOD Init(nRow, nLeft, nRight) CLASS TopBarMenu
+METHOD TopBarMenu:Init(nRow, nLeft, nRight)
 
    LOCAL cColor
 

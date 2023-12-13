@@ -61,17 +61,17 @@ CREATE CLASS Symbol
 
 ENDCLASS
 
-METHOD Init(cSymName) CLASS Symbol
+METHOD Symbol:Init(cSymName)
 
    ::nSym := __dynsN2Sym(cSymName)
 
    RETURN Self
 
-METHOD name() CLASS Symbol
+METHOD Symbol:name()
    RETURN ::nSym:Name
 
-METHOD isEqual(oSymbol) CLASS Symbol
+METHOD Symbol:isEqual(oSymbol)
    RETURN ::ClassH == oSymbol:ClassH .AND. ::nSym:Name == oSymbol:nSym:Name
 
-METHOD exec(...) CLASS Symbol
+METHOD Symbol:exec(...)
    RETURN ::nSym:exec(...)

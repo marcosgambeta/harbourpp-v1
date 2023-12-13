@@ -82,13 +82,13 @@ CREATE CLASS ScalarObject FUNCTION HBScalar
 
 ENDCLASS
 
-METHOD Copy() CLASS ScalarObject
+METHOD ScalarObject:Copy()
    RETURN Self
 
-METHOD IsScalar() CLASS ScalarObject
+METHOD ScalarObject:IsScalar()
    RETURN .T.
 
-METHOD AsString() CLASS ScalarObject
+METHOD ScalarObject:AsString()
 
    SWITCH ValType(Self)
    CASE "B" ; RETURN "{ || ... }"
@@ -106,7 +106,7 @@ METHOD AsString() CLASS ScalarObject
 
    RETURN "Error!"
 
-METHOD AsExpStr() CLASS ScalarObject
+METHOD ScalarObject:AsExpStr()
 
    SWITCH ValType(Self)
    CASE "M"
@@ -117,55 +117,55 @@ METHOD AsExpStr() CLASS ScalarObject
 
    RETURN ::AsString()
 
-METHOD isNumeric() CLASS ScalarObject
+METHOD ScalarObject:isNumeric()
    RETURN HB_ISNUMERIC(Self)
 
-METHOD isLogical() CLASS ScalarObject
+METHOD ScalarObject:isLogical()
    RETURN HB_ISLOGICAL(Self)
 
-METHOD isDate() CLASS ScalarObject
+METHOD ScalarObject:isDate()
    RETURN HB_ISDATE(Self)
 
-METHOD isDateTime() CLASS ScalarObject
+METHOD ScalarObject:isDateTime()
    RETURN HB_ISDATETIME(Self)
 
-METHOD isTimeStamp() CLASS ScalarObject
+METHOD ScalarObject:isTimeStamp()
    RETURN HB_ISTIMESTAMP(Self)
 
-METHOD isBlock() CLASS ScalarObject
+METHOD ScalarObject:isBlock()
    RETURN HB_ISBLOCK(Self)
 
-METHOD isPointer() CLASS ScalarObject
+METHOD ScalarObject:isPointer()
    RETURN HB_ISPOINTER(Self)
 
-METHOD isSymbol() CLASS ScalarObject
+METHOD ScalarObject:isSymbol()
    RETURN HB_ISSYMBOL(Self)
 
-METHOD isString() CLASS ScalarObject
+METHOD ScalarObject:isString()
    RETURN HB_ISSTRING(Self)
 
-METHOD isChar() CLASS ScalarObject
+METHOD ScalarObject:isChar()
    RETURN HB_ISCHAR(Self)
 
-METHOD isMemo() CLASS ScalarObject
+METHOD ScalarObject:isMemo()
    RETURN HB_ISMEMO(Self)
 
-METHOD isArray() CLASS ScalarObject
+METHOD ScalarObject:isArray()
    RETURN HB_ISARRAY(Self)
 
-METHOD isObject() CLASS ScalarObject
+METHOD ScalarObject:isObject()
    RETURN HB_ISOBJECT(Self)
 
-METHOD isHash() CLASS ScalarObject
+METHOD ScalarObject:isHash()
    RETURN HB_ISHASH(Self)
 
-METHOD isHashKey() CLASS ScalarObject
+METHOD ScalarObject:isHashKey()
    RETURN HB_ISHASHKEY(Self)
 
-METHOD isEvalItem() CLASS ScalarObject
+METHOD ScalarObject:isEvalItem()
    RETURN HB_ISEVALITEM(Self)
 
-METHOD isNull() CLASS ScalarObject
+METHOD ScalarObject:isNull()
    RETURN HB_ISNULL(Self)
 
 METHOD PROCEDURE BecomeErr() CLASS ScalarObject
@@ -203,34 +203,34 @@ CREATE CLASS Array INHERIT HBScalar FUNCTION __HBArray
 
 ENDCLASS
 
-METHOD Init(nElements) CLASS Array
+METHOD Array:Init(nElements)
 
    ::size := iif(nElements == NIL, 0, nElements)
 
    RETURN Self
 
-METHOD AddAll(aOtherCollection) CLASS Array
+METHOD Array:AddAll(aOtherCollection)
 
    aOtherCollection:Do({|e|::Add(e)})
 
    RETURN Self
 
-METHOD AsString() CLASS Array
+METHOD Array:AsString()
    RETURN "{ ... }"
 
-METHOD At(n) CLASS Array
+METHOD Array:At(n)
    RETURN Self[n]
 
-METHOD AtPut(n, x) CLASS Array
+METHOD Array:AtPut(n, x)
    RETURN Self[n] := x
 
-METHOD Add(x) CLASS Array
+METHOD Array:Add(x)
 
    AAdd(Self, x)
 
    RETURN .T.
 
-METHOD Collect(b) CLASS Array
+METHOD Array:Collect(b)
 
    LOCAL elem
    LOCAL result := {}
@@ -243,10 +243,10 @@ METHOD Collect(b) CLASS Array
 
    RETURN result
 
-METHOD Copy() CLASS Array
+METHOD Array:Copy()
    RETURN ACopy(Self, Array(Len(Self)))
 
-METHOD DeleteAt(n) CLASS Array
+METHOD Array:DeleteAt(n)
 
    IF n >= 1 .AND. n <= Len(Self)
       hb_ADel(Self, n, .T.)
@@ -254,7 +254,7 @@ METHOD DeleteAt(n) CLASS Array
 
    RETURN Self
 
-METHOD InsertAt(n, x) CLASS Array
+METHOD Array:InsertAt(n, x)
 
    DO CASE
    CASE n > Len(Self)
@@ -266,10 +266,10 @@ METHOD InsertAt(n, x) CLASS Array
 
    RETURN Self
 
-METHOD IsScalar() CLASS Array
+METHOD Array:IsScalar()
    RETURN .T.
 
-METHOD Do(b) CLASS Array
+METHOD Array:Do(b)
 
    LOCAL i
 
@@ -279,7 +279,7 @@ METHOD Do(b) CLASS Array
 
    RETURN Self
 
-METHOD IndexOf(x) CLASS Array
+METHOD Array:IndexOf(x)
 
    LOCAL elem
 
@@ -297,10 +297,10 @@ METHOD PROCEDURE Remove(e) CLASS Array
 
    RETURN
 
-METHOD Scan(b) CLASS Array
+METHOD Array:Scan(b)
    RETURN AScan(Self, b)
 
-METHOD _Size(newSize) CLASS Array
+METHOD Array:_Size(newSize)
 
    ASize(Self, newSize)
 
@@ -314,7 +314,7 @@ CREATE CLASS Block INHERIT HBScalar FUNCTION __HBBlock
 
 ENDCLASS
 
-METHOD AsString() CLASS Block
+METHOD Block:AsString()
    RETURN "{ || ... }"
 
 /* --- */
@@ -361,88 +361,88 @@ CREATE CLASS Character INHERIT HBScalar FUNCTION __HBCharacter
 
 ENDCLASS
 
-METHOD AsString() CLASS Character
+METHOD Character:AsString()
    RETURN Self
 
-METHOD AsExpStr() CLASS Character
+METHOD Character:AsExpStr()
    RETURN '"' + Self + '"'
 
-METHOD at(c) CLASS Character
+METHOD Character:at(c)
    RETURN at(c, Self)
 
-METHOD asc() CLASS Character
+METHOD Character:asc()
    RETURN asc(Self)
 
-METHOD empty() CLASS Character
+METHOD Character:empty()
    RETURN empty(Self)
 
-METHOD isAlpha() CLASS Character
+METHOD Character:isAlpha()
    RETURN isAlpha(Self)
 
-METHOD isDigit() CLASS Character
+METHOD Character:isDigit()
    RETURN isDigit(Self)
 
-METHOD isLower() CLASS Character
+METHOD Character:isLower()
    RETURN isLower(Self)
 
-METHOD isUpper() CLASS Character
+METHOD Character:isUpper()
    RETURN isUpper(Self)
 
-METHOD left(n) CLASS Character
+METHOD Character:left(n)
    RETURN left(Self, n)
 
-METHOD len() CLASS Character
+METHOD Character:len()
    RETURN len(Self)
 
-METHOD lower() CLASS Character
+METHOD Character:lower()
    RETURN lower(Self)
 
-METHOD ltrim() CLASS Character
+METHOD Character:ltrim()
    RETURN ltrim(Self)
 
-METHOD padl(...) CLASS Character
+METHOD Character:padl(...)
    RETURN padl(Self, ...)
 
-METHOD padc(...) CLASS Character
+METHOD Character:padc(...)
    RETURN padc(Self, ...)
 
-METHOD padr(...) CLASS Character
+METHOD Character:padr(...)
    RETURN padr(Self, ...)
 
-METHOD rat(c) CLASS Character
+METHOD Character:rat(c)
    RETURN rat(c, Self)
 
-METHOD replicate(n) CLASS Character
+METHOD Character:replicate(n)
    RETURN replicate(Self, n)
 
-METHOD right(n) CLASS Character
+METHOD Character:right(n)
    RETURN right(Self, n)
 
-METHOD rtrim() CLASS Character
+METHOD Character:rtrim()
    RETURN rtrim(Self)
 
-METHOD soundex() CLASS Character
+METHOD Character:soundex()
    RETURN soundex(Self)
 
-METHOD strtran(...) CLASS Character
+METHOD Character:strtran(...)
    RETURN strtran(Self, ...)
 
-METHOD stuff(...) CLASS Character
+METHOD Character:stuff(...)
    RETURN stuff(Self, ...)
 
-METHOD substr(...) CLASS Character
+METHOD Character:substr(...)
    RETURN substr(Self, ...)
 
-METHOD transform(c) CLASS Character
+METHOD Character:transform(c)
    RETURN transform(Self, c)
 
-METHOD trim() CLASS Character
+METHOD Character:trim()
    RETURN trim(Self)
 
-METHOD upper() CLASS Character
+METHOD Character:upper()
    RETURN upper(Self)
 
-METHOD val() CLASS Character
+METHOD Character:val()
    RETURN val(Self)
 
 /* --- */
@@ -457,19 +457,19 @@ CREATE CLASS Date INHERIT HBScalar FUNCTION __HBDate
 
 ENDCLASS
 
-METHOD AsString() CLASS Date
+METHOD Date:AsString()
    RETURN DToC(Self)
 
-METHOD AsExpStr() CLASS Date
+METHOD Date:AsExpStr()
    RETURN 'CToD("' + ::AsString() + '")'
 
-METHOD Year() CLASS Date
+METHOD Date:Year()
    RETURN Year(Self)
 
-METHOD Month() CLASS Date
+METHOD Date:Month()
    RETURN Month(Self)
 
-METHOD Day() CLASS Date
+METHOD Date:Day()
    RETURN Day(Self)
 
 /* --- */
@@ -490,34 +490,34 @@ CREATE CLASS TimeStamp INHERIT HBScalar FUNCTION __HBTimeStamp
 
 ENDCLASS
 
-METHOD AsString() CLASS TimeStamp
+METHOD TimeStamp:AsString()
    RETURN hb_TToS(Self)
 
-METHOD AsExpStr() CLASS TimeStamp
+METHOD TimeStamp:AsExpStr()
    RETURN 'hb_SToT("' + ::AsString() + '")'
 
-METHOD Date() CLASS TimeStamp
+METHOD TimeStamp:Date()
    RETURN hb_TToC(Self, NIL, "")
 
-METHOD Time() CLASS TimeStamp
+METHOD TimeStamp:Time()
    RETURN hb_TToC(Self, "", "hh:mm:ss")
 
-METHOD Year() CLASS TimeStamp
+METHOD TimeStamp:Year()
    RETURN Year(Self)
 
-METHOD Month() CLASS TimeStamp
+METHOD TimeStamp:Month()
    RETURN Month(Self)
 
-METHOD Day() CLASS TimeStamp
+METHOD TimeStamp:Day()
    RETURN Day(Self)
 
-METHOD Hour() CLASS TimeStamp
+METHOD TimeStamp:Hour()
    RETURN hb_Hour(Self)
 
-METHOD Minute() CLASS TimeStamp
+METHOD TimeStamp:Minute()
    RETURN hb_Minute(Self)
 
-METHOD Sec() CLASS TimeStamp
+METHOD TimeStamp:Sec()
    RETURN hb_Sec(Self)
 
 /* --- */
@@ -528,7 +528,7 @@ CREATE CLASS Hash INHERIT HBScalar FUNCTION __HBHash
 
 ENDCLASS
 
-METHOD AsString() CLASS Hash
+METHOD Hash:AsString()
    RETURN "{ ... => ... }"
 
 /* --- */
@@ -539,7 +539,7 @@ CREATE CLASS Logical INHERIT HBScalar FUNCTION __HBLogical
 
 ENDCLASS
 
-METHOD AsString() CLASS Logical
+METHOD Logical:AsString()
    RETURN iif(Self, ".T.", ".F.")
 
 /* --- */
@@ -550,7 +550,7 @@ CREATE CLASS NIL INHERIT HBScalar FUNCTION __HBNil
 
 ENDCLASS
 
-METHOD AsString() CLASS NIL
+METHOD NIL:AsString()
    RETURN "NIL"
 
 /* --- */
@@ -573,31 +573,31 @@ CREATE CLASS Numeric INHERIT HBScalar FUNCTION __HBNumeric
 
 ENDCLASS
 
-METHOD AsString() CLASS Numeric
+METHOD Numeric:AsString()
    RETURN hb_ntos(Self)
 
-METHOD abs() CLASS Numeric
+METHOD Numeric:abs()
    RETURN abs(Self)
 
-METHOD chr() CLASS Numeric
+METHOD Numeric:chr()
    RETURN chr(Self)
 
-METHOD empty() CLASS Numeric
+METHOD Numeric:empty()
    RETURN empty(Self)
 
-METHOD int() CLASS Numeric
+METHOD Numeric:int()
    RETURN int(Self)
 
-METHOD round(n) CLASS Numeric
+METHOD Numeric:round(n)
    RETURN round(Self, n)
 
-METHOD sqrt() CLASS Numeric
+METHOD Numeric:sqrt()
    RETURN sqrt(Self)
 
-METHOD str(...) CLASS Numeric
+METHOD Numeric:str(...)
    RETURN str(Self, ...)
 
-METHOD transform(...) CLASS Numeric
+METHOD Numeric:transform(...)
    RETURN transform(Self, ...)
 
 /* --- */
@@ -608,7 +608,7 @@ CREATE CLASS Symbol INHERIT HBScalar FUNCTION __HBSymbol
 
 ENDCLASS
 
-METHOD AsString() CLASS Symbol
+METHOD Symbol:AsString()
    RETURN "@" + ::name + "()"
 
 /* --- */
@@ -619,5 +619,5 @@ CREATE CLASS Pointer INHERIT HBScalar FUNCTION __HBPointer
 
 ENDCLASS
 
-METHOD AsString() CLASS Pointer
+METHOD Pointer:AsString()
    RETURN "<0x...>"

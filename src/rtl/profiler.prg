@@ -111,7 +111,7 @@ ENDCLASS
 
 //
 
-METHOD init(cName, aInfo) CLASS HBProfileEntity
+METHOD HBProfileEntity:init(cName, aInfo)
 
    ::cName  := cName
    ::nCalls := aInfo[1]
@@ -128,7 +128,7 @@ ACCESS nMeanTicks CLASS HBProfileEntity
 ACCESS nMeanSeconds CLASS HBProfileEntity
    RETURN iif(::nCalls == 0, 0, ::nSeconds / ::nCalls)
 
-METHOD describe() CLASS HBProfileEntity
+METHOD HBProfileEntity:describe()
    RETURN "Base Entity"
 
 // ---
@@ -143,7 +143,7 @@ ENDCLASS
 
 //
 
-METHOD describe() CLASS HBProfileFunction
+METHOD HBProfileFunction:describe()
    RETURN "Function"
 
 // ---
@@ -158,7 +158,7 @@ ENDCLASS
 
 //
 
-METHOD describe() CLASS HBProfileMethod
+METHOD HBProfileMethod:describe()
    RETURN "Method"
 
 // ---
@@ -173,7 +173,7 @@ ENDCLASS
 
 //
 
-METHOD describe() CLASS HBProfileOPCode
+METHOD HBProfileOPCode:describe()
    RETURN "OPCode"
 
 // ---
@@ -206,7 +206,7 @@ ENDCLASS
 
 //
 
-METHOD init() CLASS HBProfile
+METHOD HBProfile:init()
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -216,16 +216,16 @@ METHOD init() CLASS HBProfile
 
    RETURN Self
 
-METHOD reset() CLASS HBProfile
+METHOD HBProfile:reset()
 
    ::aProfile := {}
 
    RETURN Self
 
-METHOD ignoreSymbol(cSymbol) CLASS HBProfile
+METHOD HBProfile:ignoreSymbol(cSymbol)
    RETURN hb_LeftEq(cSymbol, "HBPROFILE") .OR. cSymbol == "__SETPROFILER"
 
-METHOD gatherFunctions() CLASS HBProfile
+METHOD HBProfile:gatherFunctions()
 
    LOCAL lProfile  := __SetProfiler(.F.)
    LOCAL nSymCount := __dynsCount()
@@ -252,7 +252,7 @@ METHOD gatherFunctions() CLASS HBProfile
 
    RETURN Self
 
-METHOD gatherMethods() CLASS HBProfile
+METHOD HBProfile:gatherMethods()
 
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL n        := 1
@@ -287,7 +287,7 @@ METHOD gatherMethods() CLASS HBProfile
 
    RETURN Self
 
-METHOD gather() CLASS HBProfile
+METHOD HBProfile:gather()
 
    LOCAL lProfile  := __SetProfiler(.F.)
 
@@ -299,7 +299,7 @@ METHOD gather() CLASS HBProfile
 
    RETURN Self
 
-METHOD forEach(b) CLASS HBProfile
+METHOD HBProfile:forEach(b)
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -309,7 +309,7 @@ METHOD forEach(b) CLASS HBProfile
 
    RETURN Self
 
-METHOD sort(b) CLASS HBProfile
+METHOD HBProfile:sort(b)
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -319,7 +319,7 @@ METHOD sort(b) CLASS HBProfile
 
    RETURN Self
 
-METHOD nameSort() CLASS HBProfile
+METHOD HBProfile:nameSort()
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -329,7 +329,7 @@ METHOD nameSort() CLASS HBProfile
 
    RETURN Self
 
-METHOD callSort() CLASS HBProfile
+METHOD HBProfile:callSort()
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -339,7 +339,7 @@ METHOD callSort() CLASS HBProfile
 
    RETURN Self
 
-METHOD timeSort() CLASS HBProfile
+METHOD HBProfile:timeSort()
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -349,7 +349,7 @@ METHOD timeSort() CLASS HBProfile
 
    RETURN Self
 
-METHOD totalCalls() CLASS HBProfile
+METHOD HBProfile:totalCalls()
 
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL nCalls   := 0
@@ -360,7 +360,7 @@ METHOD totalCalls() CLASS HBProfile
 
    RETURN nCalls
 
-METHOD totalTicks() CLASS HBProfile
+METHOD HBProfile:totalTicks()
 
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL nTicks   := 0
@@ -371,7 +371,7 @@ METHOD totalTicks() CLASS HBProfile
 
    RETURN nTicks
 
-METHOD totalSeconds() CLASS HBProfile
+METHOD HBProfile:totalSeconds()
 
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL nSeconds := 0
@@ -398,7 +398,7 @@ ENDCLASS
 
 //
 
-METHOD gather() CLASS HBProfileLowLevel
+METHOD HBProfileLowLevel:gather()
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -412,7 +412,7 @@ METHOD gather() CLASS HBProfileLowLevel
 
    RETURN Self
 
-METHOD gatherOPCodes() CLASS HBProfileLowLevel
+METHOD HBProfileLowLevel:gatherOPCodes()
 
    LOCAL nMax := __opCount()
    LOCAL cName
@@ -452,7 +452,7 @@ ENDCLASS
 
 //
 
-METHOD init(oProfile) CLASS HBProfileReport
+METHOD HBProfileReport:init(oProfile)
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -462,24 +462,24 @@ METHOD init(oProfile) CLASS HBProfileReport
 
    RETURN Self
 
-METHOD writeLines(aLines) CLASS HBProfileReport
+METHOD HBProfileReport:writeLines(aLines)
 
    AEval(aLines, {|c|QOut(c)})
 
    RETURN Self
 
-METHOD header() CLASS HBProfileReport
+METHOD HBProfileReport:header()
    RETURN { ;
       "Name                                Type       Calls    Ticks       Seconds", ;
       "=================================== ========== ======== =========== ==========="}
 
-METHOD emitHeader() CLASS HBProfileReport
+METHOD HBProfileReport:emitHeader()
 
    ::writeLines(::Header())
 
    RETURN Self
 
-METHOD line(oEntity) CLASS HBProfileReport
+METHOD HBProfileReport:line(oEntity)
    RETURN { ;
       PadR(oEntity:cName,      35) + " " + ;
       PadR(oEntity:describe(),  8) + " " + ;
@@ -487,13 +487,13 @@ METHOD line(oEntity) CLASS HBProfileReport
       Str(oEntity:nTicks,      11) + " " + ;
       Str(oEntity:nSeconds,    11, 2)}
 
-METHOD emitLine(oEntity) CLASS HBProfileReport
+METHOD HBProfileReport:emitLine(oEntity)
 
    ::writeLines(::line(oEntity))
 
    RETURN Self
 
-METHOD generate(bFilter) CLASS HBProfileReport
+METHOD HBProfileReport:generate(bFilter)
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -523,7 +523,7 @@ ENDCLASS
 
 //
 
-METHOD writeLines(aLines) CLASS HBProfileReportToFile
+METHOD HBProfileReportToFile:writeLines(aLines)
 
    IF ::hFile != F_ERROR
       AEval(aLines, {|c|FWrite(::hFile, c + hb_eol())})
@@ -531,7 +531,7 @@ METHOD writeLines(aLines) CLASS HBProfileReportToFile
 
    RETURN Self
 
-METHOD generate(bFilter, cFile) CLASS HBProfileReportToFile
+METHOD HBProfileReportToFile:generate(bFilter, cFile)
 
    LOCAL lProfile := __SetProfiler(.F.)
 
@@ -564,13 +564,13 @@ ENDCLASS
 
 //
 
-METHOD writeLines(aLines) CLASS HBProfileReportToArray
+METHOD HBProfileReportToArray:writeLines(aLines)
 
    AEval(aLines, {|c|AAdd(::aReport, c)})
 
    RETURN Self
 
-METHOD generate(bFilter) CLASS HBProfileReportToArray
+METHOD HBProfileReportToArray:generate(bFilter)
 
    ::aReport := {}
    ::super:generate(bFilter)
@@ -589,7 +589,7 @@ ENDCLASS
 
 //
 
-METHOD generate(bFilter) CLASS HBProfileReportToString
+METHOD HBProfileReportToString:generate(bFilter)
 
    LOCAL cReport := ""
 
@@ -619,17 +619,17 @@ ENDCLASS
 //
 
 // No header required.
-METHOD emitHeader() CLASS HBProfileReportToTBrowse
+METHOD HBProfileReportToTBrowse:emitHeader()
    RETURN Self
 
-METHOD emitLine(oEntity) CLASS HBProfileReportToTBrowse
+METHOD HBProfileReportToTBrowse:emitLine(oEntity)
 
    // Don't "emit" anything, simply add the entity to the array.
    AAdd(::aReport, oEntity)
 
    RETURN Self
 
-METHOD generate(bFilter, nTop, nLeft, nBottom, nRight) CLASS HBProfileReportToTBrowse
+METHOD HBProfileReportToTBrowse:generate(bFilter, nTop, nLeft, nBottom, nRight)
 
    LOCAL lProfile := __SetProfiler(.F.)
    LOCAL oBrowse
@@ -653,7 +653,7 @@ METHOD generate(bFilter, nTop, nLeft, nBottom, nRight) CLASS HBProfileReportToTB
 
    RETURN oBrowse
 
-METHOD addColumns(oBrowse) CLASS HBProfileReportToTBrowse
+METHOD HBProfileReportToTBrowse:addColumns(oBrowse)
 
    oBrowse:addColumn(TBColumnNew("Name",         {||PadR(::currentEntity():cName,        35   )}))
    oBrowse:addColumn(TBColumnNew("Type",         {||PadR(::currentEntity():describe(),    8   )}))
@@ -665,5 +665,5 @@ METHOD addColumns(oBrowse) CLASS HBProfileReportToTBrowse
 
    RETURN Self
 
-METHOD currentEntity() CLASS HBProfileReportToTBrowse
+METHOD HBProfileReportToTBrowse:currentEntity()
    RETURN ::aReport[::nEntity]

@@ -60,7 +60,7 @@ CREATE CLASS HBPersistent
 
 ENDCLASS
 
-METHOD LoadFromText(cObjectText, lIgnoreErrors) CLASS HBPersistent
+METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
 
    LOCAL nPos
    LOCAL cLine
@@ -139,7 +139,7 @@ METHOD LoadFromText(cObjectText, lIgnoreErrors) CLASS HBPersistent
 
    RETURN .T.
 
-METHOD SaveToText(cObjectName, nIndent) CLASS HBPersistent
+METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
    LOCAL oNew := &(::ClassName() + "()"):CreateNew()
    LOCAL cProp

@@ -61,7 +61,7 @@ CREATE CLASS hb_PopupMenu INHERIT HBPopupMenu
 
 ENDCLASS
 
-METHOD shadowed(lShadowed) CLASS hb_PopupMenu
+METHOD hb_PopupMenu:shadowed(lShadowed)
 
    IF lShadowed != NIL
       ::lShadowed := __eInstVar53(Self, "SHADOWED", lShadowed, "L", 1001)
@@ -69,7 +69,7 @@ METHOD shadowed(lShadowed) CLASS hb_PopupMenu
 
    RETURN ::lShadowed
 
-METHOD setCoors(nRow, nCol, lTop) CLASS hb_PopupMenu
+METHOD hb_PopupMenu:setCoors(nRow, nCol, lTop)
 
    LOCAL oItem
    LOCAL nDif
@@ -119,7 +119,7 @@ METHOD setCoors(nRow, nCol, lTop) CLASS hb_PopupMenu
 
    RETURN Self
 
-METHOD isShortCut(nKey, /* @ */ nID) CLASS hb_PopupMenu
+METHOD hb_PopupMenu:isShortCut(nKey, /* @ */ nID)
 
    LOCAL nItem
    LOCAL nTotal
@@ -160,7 +160,7 @@ METHOD isShortCut(nKey, /* @ */ nID) CLASS hb_PopupMenu
 
    RETURN .F.
 
-METHOD isQuick(nKey, /* @ */ nID) CLASS hb_PopupMenu
+METHOD hb_PopupMenu:isQuick(nKey, /* @ */ nID)
 
    LOCAL nShortCut
    LOCAL oItem

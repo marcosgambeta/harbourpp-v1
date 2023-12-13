@@ -159,7 +159,7 @@ CREATE CLASS ListBox FUNCTION HBListBox
 
 ENDCLASS
 
-METHOD addItem(cText, xData) CLASS ListBox
+METHOD ListBox:addItem(cText, xData)
 
    IF HB_ISSTRING(cText)
 
@@ -177,7 +177,7 @@ METHOD addItem(cText, xData) CLASS ListBox
 
    RETURN Self
 
-METHOD close() CLASS ListBox
+METHOD ListBox:close()
 
    IF ::lIsOpen
       RestScreen(::aSaveScr[1], ::aSaveScr[2], ::aSaveScr[3], ::aSaveScr[4], ::aSaveScr[5])
@@ -187,7 +187,7 @@ METHOD close() CLASS ListBox
 
    RETURN Self
 
-METHOD delItem(nPos) CLASS ListBox
+METHOD ListBox:delItem(nPos)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
 
@@ -218,7 +218,7 @@ METHOD delItem(nPos) CLASS ListBox
 
    RETURN Self
 
-METHOD display() CLASS ListBox
+METHOD ListBox:display()
 
    LOCAL nItem
    LOCAL nEnd
@@ -304,7 +304,7 @@ METHOD display() CLASS ListBox
 
    RETURN Self
 
-METHOD findText(cText, nPos, lCaseSensitive, lExact) CLASS ListBox
+METHOD ListBox:findText(cText, nPos, lCaseSensitive, lExact)
 
    LOCAL nPosFound
    LOCAL bSearch
@@ -347,7 +347,7 @@ METHOD findText(cText, nPos, lCaseSensitive, lExact) CLASS ListBox
          a different type than present in an item value. The RTE
          will be different and in Cl*pper, but will occur under
          the same conditions. */
-METHOD findData(xData, nPos, lCaseSensitive, lExact) CLASS ListBox
+METHOD ListBox:findData(xData, nPos, lCaseSensitive, lExact)
 
    LOCAL nPosFound
    LOCAL bSearch
@@ -381,16 +381,16 @@ METHOD findData(xData, nPos, lCaseSensitive, lExact) CLASS ListBox
 
    RETURN nPosFound
 
-METHOD getData(nPos) CLASS ListBox
+METHOD ListBox:getData(nPos)
    RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos][_ITEM_xData], NIL)
 
-METHOD getItem(nPos) CLASS ListBox
+METHOD ListBox:getItem(nPos)
    RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
-METHOD getText(nPos) CLASS ListBox
+METHOD ListBox:getText(nPos)
    RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos][_ITEM_cText], NIL)
 
-METHOD hitTest(nMRow, nMCol) CLASS ListBox
+METHOD ListBox:hitTest(nMRow, nMCol)
 
    LOCAL nRet
    LOCAL nTop
@@ -474,7 +474,7 @@ METHOD hitTest(nMRow, nMCol) CLASS ListBox
 
    RETURN 0
 
-METHOD insItem(nPos, cText, xData) CLASS ListBox
+METHOD ListBox:insItem(nPos, cText, xData)
 
    IF HB_ISSTRING(cText) .AND. HB_ISNUMERIC(nPos) .AND. nPos < ::nItemCount
 
@@ -492,7 +492,7 @@ METHOD insItem(nPos, cText, xData) CLASS ListBox
 
    RETURN Self
 
-METHOD killFocus() CLASS ListBox
+METHOD ListBox:killFocus()
 
    LOCAL nOldMCur
 
@@ -519,7 +519,7 @@ METHOD killFocus() CLASS ListBox
 
    RETURN Self
 
-METHOD nextItem() CLASS ListBox
+METHOD ListBox:nextItem()
 
    LOCAL nOldValue
 
@@ -529,7 +529,7 @@ METHOD nextItem() CLASS ListBox
 
    RETURN Self
 
-METHOD open() CLASS ListBox
+METHOD ListBox:open()
 
    IF !::lIsOpen
 
@@ -541,7 +541,7 @@ METHOD open() CLASS ListBox
 
    RETURN Self
 
-METHOD prevItem() CLASS ListBox
+METHOD ListBox:prevItem()
 
    LOCAL nOldValue
 
@@ -556,7 +556,7 @@ METHOD prevItem() CLASS ListBox
 
    RETURN Self
 
-METHOD scroll(nMethod) CLASS ListBox
+METHOD ListBox:scroll(nMethod)
 
    LOCAL nPos
    LOCAL nTopItem
@@ -662,7 +662,7 @@ METHOD scroll(nMethod) CLASS ListBox
 
    RETURN Self
 
-METHOD select(xPos) CLASS ListBox
+METHOD ListBox:select(xPos)
 
    LOCAL nValue
    LOCAL nPos
@@ -722,7 +722,7 @@ METHOD select(xPos) CLASS ListBox
    RETURN ::nValue
 
 /* NOTE: This function does nothing in Cl*pper, due to a bug. */
-METHOD setData(nPos, xData) CLASS ListBox
+METHOD ListBox:setData(nPos, xData)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
       ::aItems[nPos][_ITEM_xData] := xData
@@ -730,7 +730,7 @@ METHOD setData(nPos, xData) CLASS ListBox
 
    RETURN Self
 
-METHOD setFocus() CLASS ListBox
+METHOD ListBox:setFocus()
 
    IF !::lHasFocus
 
@@ -746,7 +746,7 @@ METHOD setFocus() CLASS ListBox
 
    RETURN Self
 
-METHOD setItem(nPos, aItem) CLASS ListBox
+METHOD ListBox:setItem(nPos, aItem)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. Len(aItem) == _ITEM_xData .AND. HB_ISSTRING(aItem[_ITEM_cText])
 
@@ -755,7 +755,7 @@ METHOD setItem(nPos, aItem) CLASS ListBox
 
    RETURN Self
 
-METHOD setText(nPos, cText) CLASS ListBox
+METHOD ListBox:setText(nPos, cText)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
       ::aItems[nPos][_ITEM_cText] := cText
@@ -765,7 +765,7 @@ METHOD setText(nPos, cText) CLASS ListBox
 
 /* --- */
 
-METHOD changeItem(nOldPos, nNewPos) CLASS ListBox
+METHOD ListBox:changeItem(nOldPos, nNewPos)
 
    LOCAL nValue
 
@@ -806,7 +806,7 @@ METHOD changeItem(nOldPos, nNewPos) CLASS ListBox
 
    RETURN Self
 
-METHOD scrollbarPos() CLASS ListBox
+METHOD ListBox:scrollbarPos()
 
    LOCAL nSize   := ::nBottom - ::nTop - iif(::lDropDown, 2, 1)
    LOCAL nCount  := ::nItemCount
@@ -822,7 +822,7 @@ METHOD scrollbarPos() CLASS ListBox
 
 /* --- */
 
-METHOD bitmap(cBitmap) CLASS ListBox
+METHOD ListBox:bitmap(cBitmap)
 
    IF cBitmap != NIL .AND. ::lDropDown
       ::cBitmap := __eInstVar53(Self, "BITMAP", cBitmap, "C", 1001)
@@ -830,7 +830,7 @@ METHOD bitmap(cBitmap) CLASS ListBox
 
    RETURN ::cBitmap
 
-METHOD bottom(nBottom) CLASS ListBox
+METHOD ListBox:bottom(nBottom)
 
    IF nBottom != NIL
       ::nBottom := __eInstVar53(Self, "BOTTOM", nBottom, "N", 1001)
@@ -841,10 +841,10 @@ METHOD bottom(nBottom) CLASS ListBox
 
    RETURN ::nBottom
 
-METHOD buffer() CLASS ListBox
+METHOD ListBox:buffer()
    RETURN ::xBuffer
 
-METHOD capCol(nCapCol) CLASS ListBox
+METHOD ListBox:capCol(nCapCol)
 
    IF nCapCol != NIL
       ::nCapCol := __eInstVar53(Self, "CAPCOL", nCapCol, "N", 1001)
@@ -852,7 +852,7 @@ METHOD capCol(nCapCol) CLASS ListBox
 
    RETURN ::nCapCol
 
-METHOD capRow(nCapRow) CLASS ListBox
+METHOD ListBox:capRow(nCapRow)
 
    IF nCapRow != NIL
       ::nCapRow := __eInstVar53(Self, "CAPROW", nCapRow, "N", 1001)
@@ -860,7 +860,7 @@ METHOD capRow(nCapRow) CLASS ListBox
 
    RETURN ::nCapRow
 
-METHOD caption(cCaption) CLASS ListBox
+METHOD ListBox:caption(cCaption)
 
    IF cCaption != NIL
       ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
@@ -872,7 +872,7 @@ METHOD caption(cCaption) CLASS ListBox
 
    RETURN ::cCaption
 
-METHOD coldBox(cColdBox) CLASS ListBox
+METHOD ListBox:coldBox(cColdBox)
 
    IF cColdBox != NIL
       ::cColdBox := __eInstVar53(Self, "COLDBOX", cColdBox, "C", 1001, {||Len(cColdBox) == 0 .OR. Len(cColdBox) == 8})
@@ -880,7 +880,7 @@ METHOD coldBox(cColdBox) CLASS ListBox
 
    RETURN ::cColdBox
 
-METHOD colorSpec(cColorSpec) CLASS ListBox
+METHOD ListBox:colorSpec(cColorSpec)
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, ;
@@ -891,7 +891,7 @@ METHOD colorSpec(cColorSpec) CLASS ListBox
 
    RETURN ::cColorSpec
 
-METHOD dropDown(lDropDown) CLASS ListBox
+METHOD ListBox:dropDown(lDropDown)
 
    IF lDropDown != NIL
 
@@ -906,7 +906,7 @@ METHOD dropDown(lDropDown) CLASS ListBox
 
    RETURN ::lDropDown
 
-METHOD fBlock(bFBlock) CLASS ListBox
+METHOD ListBox:fBlock(bFBlock)
 
    IF PCount() > 0
       ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
@@ -914,10 +914,10 @@ METHOD fBlock(bFBlock) CLASS ListBox
 
    RETURN ::bFBlock
 
-METHOD hasFocus() CLASS ListBox
+METHOD ListBox:hasFocus()
    RETURN ::lHasFocus
 
-METHOD hotBox(cHotBox) CLASS ListBox
+METHOD ListBox:hotBox(cHotBox)
 
    IF cHotBox != NIL
       ::cHotBox := __eInstVar53(Self, "HOTBOX", cHotBox, "C", 1001, {||Len(cHotBox) == 0 .OR. Len(cHotBox) == 8})
@@ -925,13 +925,13 @@ METHOD hotBox(cHotBox) CLASS ListBox
 
    RETURN ::cHotBox
 
-METHOD isOpen() CLASS ListBox
+METHOD ListBox:isOpen()
    RETURN ::lIsOpen
 
-METHOD itemCount() CLASS ListBox
+METHOD ListBox:itemCount()
    RETURN ::nItemCount
 
-METHOD left(nLeft) CLASS ListBox
+METHOD ListBox:left(nLeft)
 
    IF nLeft != NIL
       ::nLeft := __eInstVar53(Self, "LEFT", nLeft, "N", 1001)
@@ -939,7 +939,7 @@ METHOD left(nLeft) CLASS ListBox
 
    RETURN ::nLeft
 
-METHOD message(cMessage) CLASS ListBox
+METHOD ListBox:message(cMessage)
 
    IF cMessage != NIL
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
@@ -947,7 +947,7 @@ METHOD message(cMessage) CLASS ListBox
 
    RETURN ::cMessage
 
-METHOD right(nRight) CLASS ListBox
+METHOD ListBox:right(nRight)
 
    IF nRight != NIL
       ::nRight := __eInstVar53(Self, "RIGHT", nRight, "N", 1001)
@@ -958,7 +958,7 @@ METHOD right(nRight) CLASS ListBox
 
    RETURN ::nRight
 
-METHOD sBlock(bSBlock) CLASS ListBox
+METHOD ListBox:sBlock(bSBlock)
 
    IF PCount() > 0
       ::bSBlock := iif(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
@@ -966,7 +966,7 @@ METHOD sBlock(bSBlock) CLASS ListBox
 
    RETURN ::bSBlock
 
-METHOD style(cStyle) CLASS ListBox
+METHOD ListBox:style(cStyle)
 
    IF cStyle != NIL
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 1})
@@ -974,10 +974,10 @@ METHOD style(cStyle) CLASS ListBox
 
    RETURN ::cStyle
 
-METHOD textValue() CLASS ListBox
+METHOD ListBox:textValue()
    RETURN ::cTextValue
 
-METHOD top(nTop) CLASS ListBox
+METHOD ListBox:top(nTop)
 
    IF nTop != NIL
       ::nTop := __eInstVar53(Self, "TOP", nTop, "N", 1001)
@@ -988,7 +988,7 @@ METHOD top(nTop) CLASS ListBox
 
    RETURN ::nTop
 
-METHOD topItem(nTopItem) CLASS ListBox
+METHOD ListBox:topItem(nTopItem)
 
    IF nTopItem != NIL
 
@@ -1009,13 +1009,13 @@ METHOD topItem(nTopItem) CLASS ListBox
 
    RETURN ::nTopItem
 
-METHOD typeOut() CLASS ListBox
+METHOD ListBox:typeOut()
    RETURN ::nItemCount == 0
 
-METHOD value() CLASS ListBox
+METHOD ListBox:value()
    RETURN ::nValue
 
-METHOD vScroll(oVScroll) CLASS ListBox
+METHOD ListBox:vScroll(oVScroll)
 
    IF PCount() > 0
       IF oVScroll == NIL
@@ -1030,7 +1030,7 @@ METHOD vScroll(oVScroll) CLASS ListBox
 
 /* --- */
 
-METHOD Init(nTop, nLeft, nBottom, nRight, lDropDown) CLASS ListBox
+METHOD ListBox:Init(nTop, nLeft, nBottom, nRight, lDropDown)
 
    LOCAL cColor
 

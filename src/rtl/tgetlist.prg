@@ -143,9 +143,9 @@ ENDCLASS
 /* --- */
 
 #ifdef HB_COMPAT_C53
-METHOD ReadModal(nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor) CLASS HBGetList
+METHOD HBGetList:ReadModal(nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
 #else
-METHOD ReadModal() CLASS HBGetList
+METHOD HBGetList:ReadModal()
 #endif
 
 #ifdef HB_COMPAT_C53
@@ -215,13 +215,13 @@ METHOD ReadModal() CLASS HBGetList
 
    RETURN Self
 
-METHOD Updated() CLASS HBGetList
+METHOD HBGetList:Updated()
    RETURN ::lUpdated
 
-METHOD Get() CLASS HBGetList
+METHOD HBGetList:Get()
    RETURN ::oGet
 
-METHOD SetFocus() CLASS HBGetList
+METHOD HBGetList:SetFocus()
 
    __GetListSetActive(Self)
    __GetListLast(Self)
@@ -229,7 +229,7 @@ METHOD SetFocus() CLASS HBGetList
 
    RETURN Self
 
-METHOD Reader(oMenu, aMsg) CLASS HBGetList
+METHOD HBGetList:Reader(oMenu, aMsg)
 
    LOCAL oGet := ::oGet
    LOCAL nRow
@@ -300,7 +300,7 @@ METHOD Reader(oMenu, aMsg) CLASS HBGetList
 
    RETURN Self
 
-METHOD GetApplyKey(nKey, oGet, oMenu, aMsg) CLASS HBGetList
+METHOD HBGetList:GetApplyKey(nKey, oGet, oMenu, aMsg)
 
    LOCAL cKey
    LOCAL bKeyBlock
@@ -519,7 +519,7 @@ METHOD GetApplyKey(nKey, oGet, oMenu, aMsg) CLASS HBGetList
 
    RETURN Self
 
-METHOD GetPreValidate(oGet, aMsg) CLASS HBGetList
+METHOD HBGetList:GetPreValidate(oGet, aMsg)
 
    LOCAL lUpdated
    LOCAL lWhen := .T.
@@ -554,7 +554,7 @@ METHOD GetPreValidate(oGet, aMsg) CLASS HBGetList
 
    RETURN lWhen
 
-METHOD GetPostValidate(oGet, aMsg) CLASS HBGetList
+METHOD HBGetList:GetPostValidate(oGet, aMsg)
 
    LOCAL lUpdated
    LOCAL lValid := .T.
@@ -617,7 +617,7 @@ METHOD GetPostValidate(oGet, aMsg) CLASS HBGetList
 
    RETURN lValid
 
-METHOD GetDoSetKey(bKeyBlock, oGet) CLASS HBGetList
+METHOD HBGetList:GetDoSetKey(bKeyBlock, oGet)
 
    LOCAL lUpdated
    LOCAL lSetKey
@@ -646,7 +646,7 @@ METHOD GetDoSetKey(bKeyBlock, oGet) CLASS HBGetList
 
    RETURN hb_defaultValue(lSetKey, .T.)
 
-METHOD Settle(nPos, lInit) CLASS HBGetList
+METHOD HBGetList:Settle(nPos, lInit)
 
    LOCAL nExitState
 
@@ -737,7 +737,7 @@ METHOD Settle(nPos, lInit) CLASS HBGetList
 
    RETURN nPos
 
-METHOD PostActiveGet() CLASS HBGetList
+METHOD HBGetList:PostActiveGet()
 
    ::GetActive(::oGet)
    ::ReadVar(::GetReadVar())
@@ -745,10 +745,10 @@ METHOD PostActiveGet() CLASS HBGetList
 
    RETURN Self
 
-METHOD GetReadVar() CLASS HBGetList
+METHOD HBGetList:GetReadVar()
    RETURN hb_GetReadVar(::oGet)
 
-METHOD SetFormat(bFormat) CLASS HBGetList
+METHOD HBGetList:SetFormat(bFormat)
 
    LOCAL bSavFormat := ::bFormat
 
@@ -758,7 +758,7 @@ METHOD SetFormat(bFormat) CLASS HBGetList
 
    RETURN bSavFormat
 
-METHOD KillRead(lKill) CLASS HBGetList
+METHOD HBGetList:KillRead(lKill)
 
    LOCAL lSavKill := ::lKillRead
 
@@ -768,7 +768,7 @@ METHOD KillRead(lKill) CLASS HBGetList
 
    RETURN lSavKill
 
-METHOD GetActive(oGet) CLASS HBGetList
+METHOD HBGetList:GetActive(oGet)
 
    LOCAL oOldGet := ::oActiveGet
 
@@ -778,7 +778,7 @@ METHOD GetActive(oGet) CLASS HBGetList
 
    RETURN oOldGet
 
-METHOD ShowScoreboard() CLASS HBGetList
+METHOD HBGetList:ShowScoreboard()
 
    IF Set(_SET_SCOREBOARD)
 
@@ -792,7 +792,7 @@ METHOD ShowScoreboard() CLASS HBGetList
 
    RETURN Self
 
-METHOD DateMsg() CLASS HBGetList
+METHOD HBGetList:DateMsg()
 
    LOCAL nKey
 
@@ -810,7 +810,7 @@ METHOD DateMsg() CLASS HBGetList
 
    RETURN Self
 
-METHOD ReadVar(cNewVarName) CLASS HBGetList
+METHOD HBGetList:ReadVar(cNewVarName)
 
    LOCAL cOldName := ::cVarName
 
@@ -820,7 +820,7 @@ METHOD ReadVar(cNewVarName) CLASS HBGetList
 
    RETURN cOldName
 
-METHOD ReadUpdated(lUpdated) CLASS HBGetList
+METHOD HBGetList:ReadUpdated(lUpdated)
 
    LOCAL lSavUpdated := ::lUpdated
 
@@ -832,7 +832,7 @@ METHOD ReadUpdated(lUpdated) CLASS HBGetList
 
 #ifdef HB_COMPAT_C53
 
-METHOD GUIReader(oGet, oMenu, aMsg) CLASS HBGetList
+METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
 
    LOCAL oGUI
 
@@ -908,7 +908,7 @@ METHOD GUIReader(oGet, oMenu, aMsg) CLASS HBGetList
 
    RETURN Self
 
-METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
+METHOD HBGetList:GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg)
 
    LOCAL bKeyBlock
    LOCAL oTheClass
@@ -1109,7 +1109,7 @@ METHOD GUIApplyKey(oGet, oGUI, nKey, oMenu, aMsg) CLASS HBGetList
 
    RETURN Self
 
-METHOD GUIPreValidate(oGet, oGUI, aMsg) CLASS HBGetList
+METHOD HBGetList:GUIPreValidate(oGet, oGUI, aMsg)
 
    LOCAL lUpdated
    LOCAL lWhen := .T.
@@ -1143,7 +1143,7 @@ METHOD GUIPreValidate(oGet, oGUI, aMsg) CLASS HBGetList
 
    RETURN lWhen
 
-METHOD GUIPostValidate(oGet, oGUI, aMsg) CLASS HBGetList
+METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
 
    LOCAL lUpdated
    LOCAL lValid := .T.
@@ -1204,7 +1204,7 @@ METHOD GUIPostValidate(oGet, oGUI, aMsg) CLASS HBGetList
 
    RETURN lValid
 
-METHOD TBApplyKey(oGet, oTB, nKey, oMenu, aMsg) CLASS HBGetList
+METHOD HBGetList:TBApplyKey(oGet, oTB, nKey, oMenu, aMsg)
 
    LOCAL bKeyBlock
    LOCAL nMRow
@@ -1301,7 +1301,7 @@ METHOD TBApplyKey(oGet, oTB, nKey, oMenu, aMsg) CLASS HBGetList
 
    RETURN Self
 
-METHOD TBReader(oGet, oMenu, aMsg) CLASS HBGetList
+METHOD HBGetList:TBReader(oGet, oMenu, aMsg)
 
    LOCAL oTB
    LOCAL nKey
@@ -1384,7 +1384,7 @@ METHOD TBReader(oGet, oMenu, aMsg) CLASS HBGetList
 
    RETURN Self
 
-METHOD Accelerator(nKey, aMsg) CLASS HBGetList
+METHOD HBGetList:Accelerator(nKey, aMsg)
 
    LOCAL nGet
    LOCAL oGet
@@ -1458,7 +1458,7 @@ METHOD Accelerator(nKey, aMsg) CLASS HBGetList
 
    RETURN 0
 
-METHOD HitTest(nMRow, nMCol, aMsg) CLASS HBGetList
+METHOD HBGetList:HitTest(nMRow, nMCol, aMsg)
 
    LOCAL oGet
    LOCAL lGUI
@@ -1539,7 +1539,7 @@ METHOD HitTest(nMRow, nMCol, aMsg) CLASS HBGetList
 #define SNMENUID        16
 #define SNSVCURSOR      17
 
-METHOD ReadStats(nElement, xNewValue) CLASS HBGetList
+METHOD HBGetList:ReadStats(nElement, xNewValue)
 
    LOCAL xRetVal
 
@@ -1589,7 +1589,7 @@ METHOD ReadStats(nElement, xNewValue) CLASS HBGetList
 
    RETURN xRetVal
 
-METHOD ShowGetMsg(oGet, aMsg) CLASS HBGetList
+METHOD HBGetList:ShowGetMsg(oGet, aMsg)
 
 #ifdef HB_COMPAT_C53
    LOCAL cMsg
@@ -1614,7 +1614,7 @@ METHOD ShowGetMsg(oGet, aMsg) CLASS HBGetList
 
    RETURN Self
 
-METHOD EraseGetMsg(aMsg) CLASS HBGetList
+METHOD HBGetList:EraseGetMsg(aMsg)
 
 #ifdef HB_COMPAT_C53
    LOCAL nRow := Row()
@@ -1636,7 +1636,7 @@ METHOD EraseGetMsg(aMsg) CLASS HBGetList
 
 /* --- */
 
-METHOD Init(GetList) CLASS HBGetList
+METHOD HBGetList:Init(GetList)
 
    ::aGetList := GetList
 

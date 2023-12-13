@@ -91,7 +91,7 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
 
 ENDCLASS
 
-METHOD caption(cCaption) CLASS MenuItem
+METHOD MenuItem:caption(cCaption)
 
    IF cCaption != NIL
 
@@ -108,7 +108,7 @@ METHOD caption(cCaption) CLASS MenuItem
 
    RETURN ::cCaption
 
-METHOD checked(lChecked) CLASS MenuItem
+METHOD MenuItem:checked(lChecked)
 
    IF lChecked != NIL .AND. !::__issep
       ::lChecked := __eInstVar53(Self, "CHECKED", lChecked, "L", 1001)
@@ -116,7 +116,7 @@ METHOD checked(lChecked) CLASS MenuItem
 
    RETURN ::lChecked
 
-METHOD data(boData) CLASS MenuItem
+METHOD MenuItem:data(boData)
 
    IF boData != NIL
       IF HB_ISEVALITEM(boData)
@@ -128,7 +128,7 @@ METHOD data(boData) CLASS MenuItem
 
    RETURN ::boData
 
-METHOD enabled(lEnabled) CLASS MenuItem
+METHOD MenuItem:enabled(lEnabled)
 
    IF lEnabled != NIL .AND. !::__issep
       ::lEnabled := __eInstVar53(Self, "ENABLED", lEnabled, "L", 1001)
@@ -136,7 +136,7 @@ METHOD enabled(lEnabled) CLASS MenuItem
 
    RETURN ::lEnabled
 
-METHOD id(nID) CLASS MenuItem
+METHOD MenuItem:id(nID)
 
    IF nID != NIL
       ::nID := __eInstVar53(Self, "ID", nID, "N", 1001)
@@ -144,7 +144,7 @@ METHOD id(nID) CLASS MenuItem
 
    RETURN ::nID
 
-METHOD message(cMessage) CLASS MenuItem
+METHOD MenuItem:message(cMessage)
 
    IF cMessage != NIL
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
@@ -152,7 +152,7 @@ METHOD message(cMessage) CLASS MenuItem
 
    RETURN ::cMessage
 
-METHOD shortcut(nShortcut) CLASS MenuItem
+METHOD MenuItem:shortcut(nShortcut)
 
    IF nShortcut != NIL
       ::nShortcut := __eInstVar53(Self, "SHORTCUT", nShortcut, "N", 1001)
@@ -160,7 +160,7 @@ METHOD shortcut(nShortcut) CLASS MenuItem
 
    RETURN ::nShortcut
 
-METHOD style(cStyle) CLASS MenuItem
+METHOD MenuItem:style(cStyle)
 
    IF cStyle != NIL
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 2})
@@ -168,10 +168,10 @@ METHOD style(cStyle) CLASS MenuItem
 
    RETURN ::cStyle
 
-METHOD isPopUp() CLASS MenuItem
+METHOD MenuItem:isPopUp()
    RETURN HB_ISOBJECT(::data) .AND. IS_IN(::data:ClassName(), "POPUPMENU|HB_POPUPMENU")
 
-METHOD Init(cCaption, boData, nShortcut, cMessage, nID) CLASS MenuItem
+METHOD MenuItem:Init(cCaption, boData, nShortcut, cMessage, nID)
 
    ::data      := boData
    ::nID       := hb_defaultValue(nID, 0)

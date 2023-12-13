@@ -302,7 +302,7 @@ FUNCTION TBrowseNew(nTop, nLeft, nBottom, nRight)
    RETURN TBrowse():new(nTop, nLeft, nBottom, nRight)
 
 
-METHOD init(nTop, nLeft, nBottom, nRight) CLASS TBrowse
+METHOD TBrowse:init(nTop, nLeft, nBottom, nRight)
 
    __defaultNIL(@nTop, 0)
    __defaultNIL(@nLeft, 0)
@@ -424,7 +424,7 @@ STATIC PROCEDURE _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColo
    RETURN
 
 
-METHOD dispFrames() CLASS TBrowse
+METHOD TBrowse:dispFrames()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -456,7 +456,7 @@ METHOD dispFrames() CLASS TBrowse
    RETURN Self
 
 
-METHOD dispRow(nRow) CLASS TBrowse
+METHOD TBrowse:dispRow(nRow)
 
    LOCAL nRowPos
    LOCAL nColPos
@@ -508,7 +508,7 @@ METHOD dispRow(nRow) CLASS TBrowse
    RETURN Self
 
 
-METHOD colorRect(aRect, aColors) CLASS TBrowse
+METHOD TBrowse:colorRect(aRect, aColors)
 
    LOCAL nRow := ::rowCount
    LOCAL nCol := ::colCount
@@ -543,7 +543,7 @@ METHOD colorRect(aRect, aColors) CLASS TBrowse
    RETURN Self
 
 
-METHOD scrollBuffer(nRows) CLASS TBrowse
+METHOD TBrowse:scrollBuffer(nRows)
 
    LOCAL nRowCount := ::rowCount
    LOCAL aValues
@@ -584,7 +584,7 @@ METHOD scrollBuffer(nRows) CLASS TBrowse
    RETURN Self
 
 
-METHOD readRecord(nRow) CLASS TBrowse
+METHOD TBrowse:readRecord(nRow)
 
    LOCAL aCol
    LOCAL oCol
@@ -652,7 +652,7 @@ METHOD readRecord(nRow) CLASS TBrowse
    RETURN lRead
 
 
-METHOD setPosition() CLASS TBrowse
+METHOD TBrowse:setPosition()
 
    LOCAL nMoved
    LOCAL nRowCount := ::rowCount
@@ -727,7 +727,7 @@ METHOD setPosition() CLASS TBrowse
    RETURN Self
 
 
-METHOD stabilize() CLASS TBrowse
+METHOD TBrowse:stabilize()
 
    LOCAL nRowCount
    LOCAL nToMove
@@ -828,7 +828,7 @@ METHOD stabilize() CLASS TBrowse
    RETURN .T.
 
 
-METHOD forceStable() CLASS TBrowse
+METHOD TBrowse:forceStable()
 
    /* TODO: CA-Cl*pper does not call ::stabilize() if TBrowse object
     *       is stable and does not need screen update. It may be important
@@ -849,7 +849,7 @@ METHOD forceStable() CLASS TBrowse
    RETURN Self
 
 
-METHOD colorValue(nColorIndex) CLASS TBrowse
+METHOD TBrowse:colorValue(nColorIndex)
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -867,7 +867,7 @@ METHOD colorValue(nColorIndex) CLASS TBrowse
    RETURN ::aColors[_TBC_CLR_STANDARD]
 
 
-METHOD cellValue(nRow, nCol) CLASS TBrowse
+METHOD TBrowse:cellValue(nRow, nCol)
 
    IF nRow >= 1 .AND. nRow <= ::rowCount .AND. nCol >= 1 .AND. nCol <= ::colCount .AND. ::aCellStatus[nRow]
 
@@ -877,7 +877,7 @@ METHOD cellValue(nRow, nCol) CLASS TBrowse
    RETURN NIL
 
 
-METHOD cellColor(nRow, nCol) CLASS TBrowse
+METHOD TBrowse:cellColor(nRow, nCol)
 
    IF nRow >= 1 .AND. nRow <= ::rowCount .AND. nCol >= 1 .AND. nCol <= ::colCount .AND. ::aCellStatus[nRow]
 
@@ -983,7 +983,7 @@ STATIC FUNCTION _CELLCOLORS(aCol, xValue, nMaxColorIndex)
    RETURN aColors
 
 
-METHOD setCursorPos() CLASS TBrowse
+METHOD TBrowse:setCursorPos()
 
    LOCAL aCol
    LOCAL nRow
@@ -1017,7 +1017,7 @@ METHOD setCursorPos() CLASS TBrowse
    RETURN .F.
 
 
-METHOD setUnstable() CLASS TBrowse
+METHOD TBrowse:setUnstable()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -1035,7 +1035,7 @@ METHOD setUnstable() CLASS TBrowse
    RETURN Self
 
 
-METHOD invalidate() CLASS TBrowse
+METHOD TBrowse:invalidate()
 
    ::setUnstable()
    ::lInvalid := .T.
@@ -1044,7 +1044,7 @@ METHOD invalidate() CLASS TBrowse
    RETURN Self
 
 
-METHOD refreshAll() CLASS TBrowse
+METHOD TBrowse:refreshAll()
 
    ::setUnstable()
 
@@ -1060,7 +1060,7 @@ METHOD refreshAll() CLASS TBrowse
    RETURN Self
 
 
-METHOD refreshCurrent() CLASS TBrowse
+METHOD TBrowse:refreshCurrent()
 
    ::setUnstable()
 
@@ -1071,7 +1071,7 @@ METHOD refreshCurrent() CLASS TBrowse
    RETURN Self
 
 
-METHOD up() CLASS TBrowse
+METHOD TBrowse:up()
 
    ::setUnstable()
    ::nMoveOffset--
@@ -1079,7 +1079,7 @@ METHOD up() CLASS TBrowse
    RETURN Self
 
 
-METHOD down() CLASS TBrowse
+METHOD TBrowse:down()
 
    ::setUnstable()
    ::nMoveOffset++
@@ -1087,7 +1087,7 @@ METHOD down() CLASS TBrowse
    RETURN Self
 
 
-METHOD pageUp() CLASS TBrowse
+METHOD TBrowse:pageUp()
 
    ::setUnstable()
    ::nMoveOffset -= ::rowCount
@@ -1095,7 +1095,7 @@ METHOD pageUp() CLASS TBrowse
    RETURN Self
 
 
-METHOD pageDown() CLASS TBrowse
+METHOD TBrowse:pageDown()
 
    ::setUnstable()
    ::nMoveOffset += ::rowCount
@@ -1103,7 +1103,7 @@ METHOD pageDown() CLASS TBrowse
    RETURN Self
 
 
-METHOD left() CLASS TBrowse
+METHOD TBrowse:left()
 
    ::setUnstable()
    DO WHILE .T.
@@ -1116,7 +1116,7 @@ METHOD left() CLASS TBrowse
    RETURN Self
 
 
-METHOD right() CLASS TBrowse
+METHOD TBrowse:right()
 
    ::setUnstable()
    DO WHILE .T.
@@ -1129,14 +1129,14 @@ METHOD right() CLASS TBrowse
    RETURN Self
 
 
-METHOD home() CLASS TBrowse
+METHOD TBrowse:home()
 
    ::setUnstable()
    ::nColPos := iif(::nLeftVisible < ::nRightVisible, ::nLeftVisible, ::nRightVisible)
    RETURN Self
 
 
-METHOD end() CLASS TBrowse
+METHOD TBrowse:end()
 
    ::setUnstable()
    ::nColPos := ::nRightVisible
@@ -1144,7 +1144,7 @@ METHOD end() CLASS TBrowse
    RETURN Self
 
 
-METHOD panLeft() CLASS TBrowse
+METHOD TBrowse:panLeft()
 
    LOCAL nNewPos
 
@@ -1160,7 +1160,7 @@ METHOD panLeft() CLASS TBrowse
    RETURN Self
 
 
-METHOD panRight() CLASS TBrowse
+METHOD TBrowse:panRight()
 
    LOCAL nNewPos
 
@@ -1176,7 +1176,7 @@ METHOD panRight() CLASS TBrowse
    RETURN Self
 
 
-METHOD panHome() CLASS TBrowse
+METHOD TBrowse:panHome()
 
    ::setUnstable()
    ::nColPos := _NEXTCOLUMN(::aColData, 1)
@@ -1184,7 +1184,7 @@ METHOD panHome() CLASS TBrowse
    RETURN Self
 
 
-METHOD panEnd() CLASS TBrowse
+METHOD TBrowse:panEnd()
 
    ::setUnstable()
    ::nColPos := _PREVCOLUMN(::aColData, ::colCount)
@@ -1192,7 +1192,7 @@ METHOD panEnd() CLASS TBrowse
    RETURN Self
 
 
-METHOD goTop() CLASS TBrowse
+METHOD TBrowse:goTop()
 
    ::setUnstable()
 
@@ -1210,7 +1210,7 @@ METHOD goTop() CLASS TBrowse
    RETURN Self
 
 
-METHOD goBottom() CLASS TBrowse
+METHOD TBrowse:goBottom()
 
    LOCAL nMoved
 
@@ -1231,7 +1231,7 @@ METHOD goBottom() CLASS TBrowse
    RETURN Self
 
 
-METHOD configure(nMode) CLASS TBrowse
+METHOD TBrowse:configure(nMode)
 
    /* method configure() does not touch the screen contents or
     * cursor position. In CA-Cl*pper it only sets flag indicating
@@ -1247,7 +1247,7 @@ METHOD configure(nMode) CLASS TBrowse
    RETURN Self
 
 
-METHOD doConfigure() CLASS TBrowse
+METHOD TBrowse:doConfigure()
 
    LOCAL oCol
    LOCAL aCol
@@ -1695,7 +1695,7 @@ STATIC PROCEDURE _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
 
 
 /* set visible columns */
-METHOD setVisible() CLASS TBrowse
+METHOD TBrowse:setVisible()
 
    LOCAL nCol
    LOCAL nLeft
@@ -1806,7 +1806,7 @@ METHOD setVisible() CLASS TBrowse
    RETURN Self
 
 
-METHOD hiLite() CLASS TBrowse
+METHOD TBrowse:hiLite()
 
    LOCAL cValue
    LOCAL cColor
@@ -1834,7 +1834,7 @@ METHOD hiLite() CLASS TBrowse
    RETURN Self
 
 
-METHOD deHilite() CLASS TBrowse
+METHOD TBrowse:deHilite()
 
    LOCAL cValue
    LOCAL cColor
@@ -1863,7 +1863,7 @@ METHOD deHilite() CLASS TBrowse
 
 
 /* Returns the display width of a particular column */
-METHOD colWidth(nColumn) CLASS TBrowse
+METHOD TBrowse:colWidth(nColumn)
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -1877,7 +1877,7 @@ METHOD colWidth(nColumn) CLASS TBrowse
 
 
 /* get number of frozen columns */
-METHOD getFrozen() CLASS TBrowse
+METHOD TBrowse:getFrozen()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -1887,7 +1887,7 @@ METHOD getFrozen() CLASS TBrowse
 
 
 /* set number of columns to freeze */
-METHOD freeze(nColumns) CLASS TBrowse
+METHOD TBrowse:freeze(nColumns)
 
    LOCAL nCols
 
@@ -1916,7 +1916,7 @@ METHOD freeze(nColumns) CLASS TBrowse
 
 
 /* get/set string value with color table for the TBrowse display */
-METHOD colorSpec(cColorSpec) CLASS TBrowse
+METHOD TBrowse:colorSpec(cColorSpec)
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001)
@@ -1926,11 +1926,11 @@ METHOD colorSpec(cColorSpec) CLASS TBrowse
    RETURN ::cColorSpec
 
 
-METHOD colCount() CLASS TBrowse
+METHOD TBrowse:colCount()
    RETURN Len(::columns)
 
 
-METHOD rowCount() CLASS TBrowse
+METHOD TBrowse:rowCount()
 
    LOCAL nRows
 
@@ -1948,7 +1948,7 @@ METHOD rowCount() CLASS TBrowse
 /* NOTE: CA-Cl*pper has a bug where negative nRowPos value will be translated
          to 16-bit unsigned int, so the behaviour will be different in this case.
          [vszakats] */
-METHOD setRowPos(nRowPos) CLASS TBrowse
+METHOD TBrowse:setRowPos(nRowPos)
 
    LOCAL nRow
    LOCAL nRowCount := ::rowCount    /* executes doConfigure internally */
@@ -1965,7 +1965,7 @@ METHOD setRowPos(nRowPos) CLASS TBrowse
    RETURN ::nRowPos
 
 
-METHOD getRowPos() CLASS TBrowse
+METHOD TBrowse:getRowPos()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -1977,7 +1977,7 @@ METHOD getRowPos() CLASS TBrowse
 /* NOTE: CA-Cl*pper has a bug where negative nRowPos value will be translated
          to 16-bit unsigned int, so the behaviour will be different in this case.
          [vszakats] */
-METHOD setColPos(nColPos) CLASS TBrowse
+METHOD TBrowse:setColPos(nColPos)
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -1992,7 +1992,7 @@ METHOD setColPos(nColPos) CLASS TBrowse
    RETURN ::nColPos
 
 
-METHOD getColPos() CLASS TBrowse
+METHOD TBrowse:getColPos()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2001,7 +2001,7 @@ METHOD getColPos() CLASS TBrowse
    RETURN ::nColPos
 
 
-METHOD getTopFlag() CLASS TBrowse
+METHOD TBrowse:getTopFlag()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2010,7 +2010,7 @@ METHOD getTopFlag() CLASS TBrowse
    RETURN ::lHitTop
 
 
-METHOD setTopFlag(lTop) CLASS TBrowse
+METHOD TBrowse:setTopFlag(lTop)
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2025,7 +2025,7 @@ METHOD setTopFlag(lTop) CLASS TBrowse
    RETURN lTop
 
 
-METHOD getBottomFlag() CLASS TBrowse
+METHOD TBrowse:getBottomFlag()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2034,7 +2034,7 @@ METHOD getBottomFlag() CLASS TBrowse
    RETURN ::lHitBottom
 
 
-METHOD setBottomFlag(lBottom) CLASS TBrowse
+METHOD TBrowse:setBottomFlag(lBottom)
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2049,7 +2049,7 @@ METHOD setBottomFlag(lBottom) CLASS TBrowse
    RETURN lBottom
 
 
-METHOD getAutoLite() CLASS TBrowse
+METHOD TBrowse:getAutoLite()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2058,7 +2058,7 @@ METHOD getAutoLite() CLASS TBrowse
    RETURN ::lAutoLite
 
 
-METHOD setAutoLite(lAutoLite) CLASS TBrowse
+METHOD TBrowse:setAutoLite(lAutoLite)
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2073,7 +2073,7 @@ METHOD setAutoLite(lAutoLite) CLASS TBrowse
    RETURN lAutoLite
 
 
-METHOD getStableFlag() CLASS TBrowse
+METHOD TBrowse:getStableFlag()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2082,7 +2082,7 @@ METHOD getStableFlag() CLASS TBrowse
    RETURN ::lStable
 
 
-METHOD setStableFlag(lStable) CLASS TBrowse
+METHOD TBrowse:setStableFlag(lStable)
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2097,7 +2097,7 @@ METHOD setStableFlag(lStable) CLASS TBrowse
    RETURN lStable
 
 
-METHOD leftVisible() CLASS TBrowse
+METHOD TBrowse:leftVisible()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2106,7 +2106,7 @@ METHOD leftVisible() CLASS TBrowse
    RETURN ::nLeftVisible
 
 
-METHOD rightVisible() CLASS TBrowse
+METHOD TBrowse:rightVisible()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2116,7 +2116,7 @@ METHOD rightVisible() CLASS TBrowse
 
 
 /* Adds a TBColumn object to the TBrowse object */
-METHOD addColumn(oCol) CLASS TBrowse
+METHOD TBrowse:addColumn(oCol)
 
    /* NOTE: CA-Cl*pper doesn't check the parameters. */
 
@@ -2127,7 +2127,7 @@ METHOD addColumn(oCol) CLASS TBrowse
 
 
 /* Delete a column object from a browse */
-METHOD delColumn(nColumn) CLASS TBrowse
+METHOD TBrowse:delColumn(nColumn)
 
    LOCAL oCol
 
@@ -2146,7 +2146,7 @@ METHOD delColumn(nColumn) CLASS TBrowse
 
 
 /* Insert a column object in a browse */
-METHOD insColumn(nColumn, oCol) CLASS TBrowse
+METHOD TBrowse:insColumn(nColumn, oCol)
 
    /* NOTE: CA-Cl*pper doesn't check the parameters. */
 #ifndef HB_CLP_STRICT
@@ -2162,7 +2162,7 @@ METHOD insColumn(nColumn, oCol) CLASS TBrowse
 
 
 /* Replaces one TBColumn object with another */
-METHOD setColumn(nColumn, oCol) CLASS TBrowse
+METHOD TBrowse:setColumn(nColumn, oCol)
 
    LOCAL oPrevCol
 
@@ -2197,7 +2197,7 @@ METHOD setColumn(nColumn, oCol) CLASS TBrowse
 
 
 /* Gets a specific TBColumn object */
-METHOD getColumn(nColumn) CLASS TBrowse
+METHOD TBrowse:getColumn(nColumn)
 #ifdef HB_CLP_STRICT
    RETURN ::columns[nColumn]
 #else
@@ -2205,7 +2205,7 @@ METHOD getColumn(nColumn) CLASS TBrowse
 #endif
 
 
-METHOD footSep(cFootSep) CLASS TBrowse
+METHOD TBrowse:footSep(cFootSep)
 
    IF cFootSep != NIL
       ::cFootSep := __eInstVar53(Self, "FOOTSEP", cFootSep, "C", 1001)
@@ -2214,7 +2214,7 @@ METHOD footSep(cFootSep) CLASS TBrowse
    RETURN ::cFootSep
 
 
-METHOD colSep(cColSep) CLASS TBrowse
+METHOD TBrowse:colSep(cColSep)
 
    IF cColSep != NIL
       ::cColSep := __eInstVar53(Self, "COLSEP", cColSep, "C", 1001)
@@ -2223,7 +2223,7 @@ METHOD colSep(cColSep) CLASS TBrowse
    RETURN ::cColSep
 
 
-METHOD headSep(cHeadSep) CLASS TBrowse
+METHOD TBrowse:headSep(cHeadSep)
 
    IF cHeadSep != NIL
       ::cHeadSep := __eInstVar53(Self, "HEADSEP", cHeadSep, "C", 1001)
@@ -2232,7 +2232,7 @@ METHOD headSep(cHeadSep) CLASS TBrowse
    RETURN ::cHeadSep
 
 
-METHOD skipBlock(bSkipBlock) CLASS TBrowse
+METHOD TBrowse:skipBlock(bSkipBlock)
 
    IF bSkipBlock != NIL
       ::bSkipBlock := __eInstVar53(Self, "SKIPBLOCK", bSkipBlock, "B", 1001)
@@ -2241,7 +2241,7 @@ METHOD skipBlock(bSkipBlock) CLASS TBrowse
    RETURN ::bSkipBlock
 
 
-METHOD goTopBlock(bBlock) CLASS TBrowse
+METHOD TBrowse:goTopBlock(bBlock)
 
    IF bBlock != NIL
       ::bGoTopBlock := __eInstVar53(Self, "GOTOPBLOCK", bBlock, "B", 1001)
@@ -2250,7 +2250,7 @@ METHOD goTopBlock(bBlock) CLASS TBrowse
    RETURN ::bGoTopBlock
 
 
-METHOD goBottomBlock(bBlock) CLASS TBrowse
+METHOD TBrowse:goBottomBlock(bBlock)
 
    IF bBlock != NIL
       /* NOTE: In CA-Cl*pper the string is: "GOBOTTOMBL" */
@@ -2260,7 +2260,7 @@ METHOD goBottomBlock(bBlock) CLASS TBrowse
    RETURN ::bGoBottomBlock
 
 
-METHOD nTop(nTop) CLASS TBrowse
+METHOD TBrowse:nTop(nTop)
 
    IF nTop != NIL
 #ifdef HB_COMPAT_C53
@@ -2283,7 +2283,7 @@ METHOD nTop(nTop) CLASS TBrowse
    RETURN ::n_Top
 
 
-METHOD nLeft(nLeft) CLASS TBrowse
+METHOD TBrowse:nLeft(nLeft)
 
    IF nLeft != NIL
 #ifdef HB_COMPAT_C53
@@ -2306,7 +2306,7 @@ METHOD nLeft(nLeft) CLASS TBrowse
    RETURN ::n_Left
 
 
-METHOD nBottom(nBottom) CLASS TBrowse
+METHOD TBrowse:nBottom(nBottom)
 
    IF nBottom != NIL
       ::n_Bottom := __eInstVar53(Self, "NBOTTOM", nBottom, "N", 1001, {|o, x|x >= o:nTop})
@@ -2327,7 +2327,7 @@ METHOD nBottom(nBottom) CLASS TBrowse
    RETURN ::n_Bottom
 
 
-METHOD nRight(nRight) CLASS TBrowse
+METHOD TBrowse:nRight(nRight)
 
    IF nRight != NIL
       ::n_Right := __eInstVar53(Self, "NRIGHT", nRight, "N", 1001, {|o, x|x >= o:nLeft})
@@ -2348,7 +2348,7 @@ METHOD nRight(nRight) CLASS TBrowse
    RETURN ::n_Right
 
 #ifdef HB_COMPAT_C53
-METHOD nRow() CLASS TBrowse
+METHOD TBrowse:nRow()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2357,7 +2357,7 @@ METHOD nRow() CLASS TBrowse
    RETURN ::n_Row
 
 
-METHOD nCol() CLASS TBrowse
+METHOD TBrowse:nCol()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -2366,7 +2366,7 @@ METHOD nCol() CLASS TBrowse
    RETURN ::n_Col
 
 
-METHOD hitTest(mRow, mCol) CLASS TBrowse
+METHOD TBrowse:hitTest(mRow, mCol)
 
    LOCAL nTop
    LOCAL nLeft
@@ -2527,7 +2527,7 @@ STATIC PROCEDURE _mBrwPos(oBrw, mRow, mCol)
    RETURN
 
 
-METHOD mRowPos() CLASS TBrowse
+METHOD TBrowse:mRowPos()
 
    LOCAL mRow
    LOCAL mCol
@@ -2541,7 +2541,7 @@ METHOD mRowPos() CLASS TBrowse
    RETURN mRow
 
 
-METHOD mColPos() CLASS TBrowse
+METHOD TBrowse:mColPos()
 
    LOCAL mRow
    LOCAL mCol
@@ -2556,7 +2556,7 @@ METHOD mColPos() CLASS TBrowse
 #endif
 
 
-METHOD border(cBorder) CLASS TBrowse
+METHOD TBrowse:border(cBorder)
 
    IF cBorder != NIL
 
@@ -2585,7 +2585,7 @@ METHOD border(cBorder) CLASS TBrowse
    RETURN ::cBorder
 
 
-METHOD message(cMessage) CLASS TBrowse
+METHOD TBrowse:message(cMessage)
 
    IF cMessage != NIL
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
@@ -2594,7 +2594,7 @@ METHOD message(cMessage) CLASS TBrowse
    RETURN ::cMessage
 
 
-METHOD applyKey(nKey) CLASS TBrowse
+METHOD TBrowse:applyKey(nKey)
 
    LOCAL bBlock := ::SetKey(nKey)
 
@@ -2609,7 +2609,7 @@ METHOD applyKey(nKey) CLASS TBrowse
    RETURN Eval(bBlock, Self, nKey)
 
 
-METHOD setKey(nKey, bBlock) CLASS TBrowse
+METHOD TBrowse:setKey(nKey, bBlock)
 
    LOCAL bReturn
    LOCAL nPos
@@ -2662,7 +2662,7 @@ METHOD setKey(nKey, bBlock) CLASS TBrowse
    RETURN bReturn
 
 
-METHOD setStyle(nStyle, lNewValue) CLASS TBrowse
+METHOD TBrowse:setStyle(nStyle, lNewValue)
 
    /* NOTE: CA-Cl*pper 5.3 will initialize this var on the first
             :setStyle() method call. [vszakats] */

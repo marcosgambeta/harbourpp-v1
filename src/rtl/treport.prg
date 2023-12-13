@@ -180,6 +180,8 @@ CREATE CLASS HBReportForm
 
 ENDCLASS
 
+// TODO: errors if changed to METHOD HBReportForm:methodName(...)
+
 METHOD Init(cFrmName AS STRING, ;
       lPrinter AS LOGICAL, ;
       cAltFile AS STRING, ;

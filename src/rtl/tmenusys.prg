@@ -99,7 +99,7 @@ CREATE CLASS HBMenuSys
 ENDCLASS
 
 /* Standard Menu System Modal handling for Menu Items */
-METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS HBMenuSys
+METHOD HBMenuSys:Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
 
    LOCAL oTopMenu := ::oMenu
    LOCAL nReturn := 0
@@ -434,7 +434,7 @@ METHOD Modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList) CLASS
 
 /* Increment ::nMenuLevel and optionally select first item.
    If selected MenuItem IsPopUp, assign ::oMenu. */
-METHOD PushMenu() CLASS HBMenuSys
+METHOD HBMenuSys:PushMenu()
 
    LOCAL oNewMenu := ::oMenu:getItem(::oMenu:current)
 
@@ -454,7 +454,7 @@ METHOD PushMenu() CLASS HBMenuSys
    RETURN .F.
 
 /* Close SubMenuItem and Return to the upper MenuItem level. */
-METHOD PopMenu() CLASS HBMenuSys
+METHOD HBMenuSys:PopMenu()
 
    IF ::nMenuLevel > 1
       ::oMenu:select(0)
@@ -466,7 +466,7 @@ METHOD PopMenu() CLASS HBMenuSys
    RETURN .F.
 
 /* Close PopUp Child MenuItem and Return to the upper MenuItem level. */
-METHOD PopChild(nNewLevel) CLASS HBMenuSys
+METHOD HBMenuSys:PopChild(nNewLevel)
 
    LOCAL oOldMenuItem
    LOCAL nCurrent
@@ -483,7 +483,7 @@ METHOD PopChild(nNewLevel) CLASS HBMenuSys
    RETURN .F.
 
 /* Close all Menus below Top Menu and Return to upper MenuItem level. */
-METHOD PopAll() CLASS HBMenuSys
+METHOD HBMenuSys:PopAll()
 
    IF ::aMenuList[2] != NIL
       ::aMenuList[2]:close()
@@ -495,7 +495,7 @@ METHOD PopAll() CLASS HBMenuSys
    RETURN .T.
 
 /* Eval() the Data block if selected MenuItem is !IsPopUp. */
-METHOD Execute() CLASS HBMenuSys
+METHOD HBMenuSys:Execute()
 
    LOCAL oNewMenu := ::oMenu:getItem(::oMenu:current)
    LOCAL lPas := .T.
@@ -535,7 +535,7 @@ METHOD Execute() CLASS HBMenuSys
 
 /* Test to find the Mouse location.
    NOTE: Formal parameters received here were passed by reference. */
-METHOD MHitTest(oNewMenu, nNewLevel, nNewItem) CLASS HBMenuSys
+METHOD HBMenuSys:MHitTest(oNewMenu, nNewLevel, nNewItem)
 
    FOR nNewLevel := ::nMenuLevel TO 1 STEP -1
 
@@ -557,7 +557,7 @@ METHOD MHitTest(oNewMenu, nNewLevel, nNewItem) CLASS HBMenuSys
    Only erases Menu Message if lMode is .F.
    SaveScreen()/RestScreen() is used for the
    Message area in both text or graphics mode. */
-METHOD ShowMsg(lMode) CLASS HBMenuSys
+METHOD HBMenuSys:ShowMsg(lMode)
 
    LOCAL nCurrent
    LOCAL cMsg
@@ -585,12 +585,12 @@ METHOD ShowMsg(lMode) CLASS HBMenuSys
 /* NOTE: Generates the somewhat internal, yet widely used message line format of CA-Cl*pper 5.3
          This format contradicts the one in the official docs. */
 
-METHOD GetMsgArray() CLASS HBMenuSys
+METHOD HBMenuSys:GetMsgArray()
    RETURN {NIL, ::nMsgRow, ::nMsgLeft, ::nMsgRight, ::cMsgColor, NIL, NIL, NIL, NIL, NIL}
 
 /* --- */
 
-METHOD Init(oMenu) CLASS HBMenuSys
+METHOD HBMenuSys:Init(oMenu)
 
    ::oMenu := oMenu
 

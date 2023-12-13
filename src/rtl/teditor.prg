@@ -150,7 +150,7 @@ CREATE CLASS HBEditor
 ENDCLASS
 
 
-METHOD Init(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol) CLASS HBEditor
+METHOD HBEditor:Init(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol)
 
    ::cColorSpec := SetColor()
 
@@ -177,7 +177,7 @@ METHOD Init(cText, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSiz
    RETURN Self
 
 // Redefines editor window size and refreshes it
-METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBEditor
+METHOD HBEditor:Resize(nTop, nLeft, nBottom, nRight)
 
    // don't change coordinates not given
    IF HB_ISNUMERIC(nTop)
@@ -199,10 +199,10 @@ METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS HBEditor
 
    RETURN ::Goto(::nRow, ::nCol)
 
-METHOD LoadFile(cFileName) CLASS HBEditor
+METHOD HBEditor:LoadFile(cFileName)
    RETURN ::LoadText(hb_MemoRead(::cFile := cFileName))
 
-METHOD LoadText(cText) CLASS HBEditor
+METHOD HBEditor:LoadText(cText)
 
    ::aText := Text2Array(cText, iif(::lWordWrap, ::nWordWrapCol, NIL), ::nTabWidth)
    ::lDirty := .F.
@@ -210,40 +210,40 @@ METHOD LoadText(cText) CLASS HBEditor
    RETURN iif(::nNumCols > 0, ::GoTo(1, 1), Self)
 
 // Saves file being edited, if there is no file name does nothing, returns .T. if OK
-METHOD SaveFile() CLASS HBEditor
+METHOD HBEditor:SaveFile()
    RETURN !::cFile == "" .AND. !::lDirty := !hb_MemoWrit(::cFile, ::GetText())
 
 // Add a new Line of text at end of current text
-METHOD AddLine(cLine, lSoftCR) CLASS HBEditor
+METHOD HBEditor:AddLine(cLine, lSoftCR)
 
    AAdd(::aText, HBTextLine():New(cLine, lSoftCR))
 
    RETURN Self
 
 // Insert a line of text at a defined row
-METHOD InsertLine(cLine, lSoftCR, nRow) CLASS HBEditor
+METHOD HBEditor:InsertLine(cLine, lSoftCR, nRow)
 
    hb_AIns(::aText, nRow, HBTextLine():New(cLine, lSoftCR), .T.)
 
    RETURN Self
 
 // Remove a line of text
-METHOD RemoveLine(nRow) CLASS HBEditor
+METHOD HBEditor:RemoveLine(nRow)
 
    hb_ADel(::aText, nRow, .T.)
 
    RETURN Self
 
 // Return line n of text
-METHOD GetLine(nRow) CLASS HBEditor
+METHOD HBEditor:GetLine(nRow)
    RETURN iif(nRow >= 1 .AND. nRow <= ::LineCount, ::aText[nRow]:cText, "")
 
 // Return text length of line n
-METHOD LineLen(nRow) CLASS HBEditor
+METHOD HBEditor:LineLen(nRow)
    RETURN hb_ULen(::GetLine(nRow))
 
 // Converts an array of text lines to a String
-METHOD GetText(lSoftCR) CLASS HBEditor
+METHOD HBEditor:GetText(lSoftCR)
 
    LOCAL cText
    LOCAL cEOL
@@ -262,13 +262,13 @@ METHOD GetText(lSoftCR) CLASS HBEditor
 
    RETURN cText
 
-METHOD GotoLine(nRow) CLASS HBEditor
+METHOD HBEditor:GotoLine(nRow)
    RETURN ::Goto(nRow, ::nCol)
 
-METHOD LineCount() CLASS HBEditor
+METHOD HBEditor:LineCount()
    RETURN Len(::aText)
 
-METHOD Display() CLASS HBEditor
+METHOD HBEditor:Display()
 
    LOCAL nRow
    LOCAL nLine
@@ -285,21 +285,21 @@ METHOD Display() CLASS HBEditor
 
    RETURN Self
 
-METHOD RefreshLine() CLASS HBEditor
+METHOD HBEditor:RefreshLine()
 
    hb_DispOutAt(::Row(), ::nLeft, SubStrPad(::GetLine(::nRow), ::nFirstCol, ::nNumCols), ::LineColor(::nRow))
 
    RETURN Self
 
 // Returns color string to use to draw nRow (current line if nRow is empty)
-METHOD LineColor(nRow) CLASS HBEditor
+METHOD HBEditor:LineColor(nRow)
 
    HB_SYMBOL_UNUSED(nRow)
 
    RETURN ::cColorSpec
 
 // Set current column and row in edited text
-METHOD GoTo(nRow, nCol, nRefreshMode)
+METHOD HBEditor:GoTo(nRow, nCol, nRefreshMode)
 
    LOCAL nFirstRow := ::nFirstRow
    LOCAL nFirstCol := ::nFirstCol
@@ -351,15 +351,15 @@ METHOD GoTo(nRow, nCol, nRefreshMode)
    RETURN Self
 
 // Returns current line position on the screen
-METHOD Row() CLASS HBEditor
+METHOD HBEditor:Row()
    RETURN ::nTop + ::nRow - ::nFirstRow
 
 // Returns current column position on the screen
-METHOD Col() CLASS HBEditor
+METHOD HBEditor:Col()
    RETURN ::nLeft + ::nCol - ::nFirstCol
 
 // Handles cursor movements inside text array
-METHOD MoveCursor(nKey) CLASS HBEditor
+METHOD HBEditor:MoveCursor(nKey)
 
    SWITCH hb_keyStd(nKey)
    CASE K_DOWN
@@ -450,7 +450,7 @@ METHOD MoveCursor(nKey) CLASS HBEditor
    RETURN .T.
 
 // Edits text
-METHOD Edit(nPassedKey) CLASS HBEditor
+METHOD HBEditor:Edit(nPassedKey)
 
    LOCAL nKey
    LOCAL nKeyStd
@@ -591,7 +591,7 @@ METHOD Edit(nPassedKey) CLASS HBEditor
    RETURN Self
 
 // browse text without editing
-METHOD BrowseText(nPassedKey) CLASS HBEditor
+METHOD HBEditor:BrowseText(nPassedKey)
 
    LOCAL nKey
    LOCAL nKeyStd
@@ -624,7 +624,7 @@ METHOD BrowseText(nPassedKey) CLASS HBEditor
    RETURN Self
 
 // This method can be overloaded by HBEditor descendants to handle custom keys.
-METHOD KeyboardHook(nKey) CLASS HBEditor
+METHOD HBEditor:KeyboardHook(nKey)
 
    IF hb_keyStd(nKey) == K_ESC
       ::lSaved := .F.
@@ -634,11 +634,11 @@ METHOD KeyboardHook(nKey) CLASS HBEditor
    RETURN Self
 
 // There are no more keys to handle. Can I do something for you?
-METHOD IdleHook() CLASS HBEditor
+METHOD HBEditor:IdleHook()
    RETURN Self
 
 // Reform paragraph
-METHOD ReformParagraph() CLASS HBEditor
+METHOD HBEditor:ReformParagraph()
 
    LOCAL lNext := .T.
    LOCAL cText := ""
@@ -663,7 +663,7 @@ METHOD ReformParagraph() CLASS HBEditor
    RETURN ::GoTo(::nRow, ::nCol, _REFRESH_ALL)
 
 // Changes insert state and insertion / overstrike mode of editor
-METHOD InsertState(lInsState) CLASS HBEditor
+METHOD HBEditor:InsertState(lInsState)
 
    IF HB_ISLOGICAL(lInsState) .AND. ::lEditAllow
       Set(_SET_INSERT, lInsState)
@@ -672,10 +672,10 @@ METHOD InsertState(lInsState) CLASS HBEditor
 
    RETURN Self
 
-METHOD ExitState() CLASS HBEditor
+METHOD HBEditor:ExitState()
    RETURN ::lExitEdit
 
-METHOD SetColor(cColorString) CLASS HBEditor
+METHOD HBEditor:SetColor(cColorString)
 
    LOCAL cOldColor := ::cColorSpec
 
@@ -685,7 +685,7 @@ METHOD SetColor(cColorString) CLASS HBEditor
 
    RETURN cOldColor
 
-METHOD Hilite() CLASS HBEditor
+METHOD HBEditor:Hilite()
 
    // Swap CLR_STANDARD and CLR_ENHANCED
    LOCAL cEnhanced := hb_tokenGet(::cColorSpec, 2, ",") + "," + hb_tokenGet(::cColorSpec, 1, ",")
@@ -694,7 +694,7 @@ METHOD Hilite() CLASS HBEditor
 
    RETURN Self
 
-METHOD DeHilite() CLASS HBEditor
+METHOD HBEditor:DeHilite()
 
    // Swap CLR_STANDARD and CLR_ENHANCED back to their original position inside cColorSpec
    LOCAL cStandard := hb_tokenGet(::cColorSpec, 2, ",") + "," + hb_tokenGet(::cColorSpec, 1, ",")
@@ -703,25 +703,25 @@ METHOD DeHilite() CLASS HBEditor
 
    RETURN Self
 
-METHOD RowPos() CLASS HBEditor
+METHOD HBEditor:RowPos()
    RETURN ::nRow
 
-METHOD ColPos() CLASS HBEditor
+METHOD HBEditor:ColPos()
    RETURN ::nCol
 
-METHOD Saved() CLASS HBEditor
+METHOD HBEditor:Saved()
    RETURN ::lSaved
 
-METHOD Changed() CLASS HBEditor
+METHOD HBEditor:Changed()
    RETURN ::lDirty
 
-METHOD IsWordWrap() CLASS HBEditor
+METHOD HBEditor:IsWordWrap()
    RETURN ::lWordWrap
 
-METHOD WordWrapCol() CLASS HBEditor
+METHOD HBEditor:WordWrapCol()
    RETURN ::nWordWrapCol
 
-METHOD hitTest(nMRow, nMCol) CLASS HBEditor
+METHOD HBEditor:hitTest(nMRow, nMCol)
 
    IF nMRow >= ::nTop .AND. nMRow <= ::nBottom .AND. nMCol >= ::nLeft .AND. nMCol <= ::nRight
       RETURN HTCLIENT

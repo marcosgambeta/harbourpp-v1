@@ -55,7 +55,7 @@ CREATE CLASS hb_Get INHERIT Get
 
 ENDCLASS
 
-METHOD hideInput(lHideInput) CLASS hb_Get
+METHOD hb_Get:hideInput(lHideInput)
 
    IF lHideInput != NIL
       ::lHideInput := __eInstVar53(Self, "HIDEINPUT", lHideInput, "L", 1001)
@@ -63,7 +63,7 @@ METHOD hideInput(lHideInput) CLASS hb_Get
 
    RETURN ::lHideInput
 
-METHOD style(cStyle) CLASS hb_Get
+METHOD hb_Get:style(cStyle)
 
    IF cStyle != NIL
       ::cStyle := __eInstVar53(Self, "STYLE", cStyle, "C", 1001, {||Len(cStyle) == 1})

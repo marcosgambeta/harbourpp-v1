@@ -108,7 +108,7 @@ CREATE CLASS HBLabelForm
 
 ENDCLASS
 
-METHOD Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample) CLASS HBLabelForm
+METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nRecord, lRest, lSample)
 
    LOCAL lPrintOn := .F.               // PRINTER status
    LOCAL lConsoleOn                    // CONSOLE status
@@ -212,7 +212,7 @@ METHOD Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, nNext, nReco
 
    RETURN Self
 
-METHOD ExecuteLabel() CLASS HBLabelForm
+METHOD HBLabelForm:ExecuteLabel()
 
    LOCAL nField
    LOCAL aField
@@ -280,7 +280,7 @@ METHOD ExecuteLabel() CLASS HBLabelForm
 
    RETURN Self
 
-METHOD SampleLabels() CLASS HBLabelForm
+METHOD HBLabelForm:SampleLabels()
 
    LOCAL cKey
    LOCAL lMoreSamples := .T.
@@ -322,7 +322,7 @@ METHOD SampleLabels() CLASS HBLabelForm
 
    RETURN Self
 
-METHOD LoadLabel(cLblFile) CLASS HBLabelForm
+METHOD HBLabelForm:LoadLabel(cLblFile)
 
    LOCAL i                              // Counters
    LOCAL cBuff      := Space(BUFFSIZE)  // File buffer

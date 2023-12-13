@@ -129,7 +129,7 @@ CREATE CLASS RadioGroup FUNCTION HBRadioGroup
 
 ENDCLASS
 
-METHOD addItem(oRadioButton) CLASS RadioGroup
+METHOD RadioGroup:addItem(oRadioButton)
 
    IF HB_ISOBJECT(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN"
       AAdd(::aItems, oRadioButton)
@@ -138,7 +138,7 @@ METHOD addItem(oRadioButton) CLASS RadioGroup
 
    RETURN Self
 
-METHOD delItem(nPos) CLASS RadioGroup
+METHOD RadioGroup:delItem(nPos)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount
       hb_ADel(::aItems, nPos, .T.)
@@ -153,7 +153,7 @@ METHOD delItem(nPos) CLASS RadioGroup
 
    RETURN Self
 
-METHOD display() CLASS RadioGroup
+METHOD RadioGroup:display()
 
    LOCAL cSelBox
    LOCAL cUnSelBox
@@ -200,7 +200,7 @@ METHOD display() CLASS RadioGroup
 
    RETURN Self
 
-METHOD getAccel(xKey) CLASS RadioGroup
+METHOD RadioGroup:getAccel(xKey)
 
    LOCAL cKey
 
@@ -220,10 +220,10 @@ METHOD getAccel(xKey) CLASS RadioGroup
 
    RETURN 0
 
-METHOD getItem(nPos) CLASS RadioGroup
+METHOD RadioGroup:getItem(nPos)
    RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
-METHOD hitTest(nMRow, nMCol) CLASS RadioGroup
+METHOD RadioGroup:hitTest(nMRow, nMCol)
 
    LOCAL nLen
    LOCAL nPos
@@ -292,7 +292,7 @@ METHOD hitTest(nMRow, nMCol) CLASS RadioGroup
 
    RETURN HTNOWHERE
 
-METHOD insItem(nPos, oRadioButton) CLASS RadioGroup
+METHOD RadioGroup:insItem(nPos, oRadioButton)
 
    IF HB_ISOBJECT(oRadioButton) .AND. oRadioButton:ClassName() == "RADIOBUTTN" .AND. nPos < ::nItemCount
 
@@ -302,7 +302,7 @@ METHOD insItem(nPos, oRadioButton) CLASS RadioGroup
 
    RETURN ::aItems[nPos]
 
-METHOD killFocus() CLASS RadioGroup
+METHOD RadioGroup:killFocus()
 
    LOCAL item
    LOCAL nOldMCur
@@ -333,7 +333,7 @@ METHOD killFocus() CLASS RadioGroup
 
    RETURN Self
 
-METHOD setFocus() CLASS RadioGroup
+METHOD RadioGroup:setFocus()
 
    LOCAL item
    LOCAL nOldMCur
@@ -364,7 +364,7 @@ METHOD setFocus() CLASS RadioGroup
 
    RETURN Self
 
-METHOD nextItem() CLASS RadioGroup
+METHOD RadioGroup:nextItem()
 
    LOCAL nValue
 
@@ -374,7 +374,7 @@ METHOD nextItem() CLASS RadioGroup
 
    RETURN Self
 
-METHOD prevItem() CLASS RadioGroup
+METHOD RadioGroup:prevItem()
 
    LOCAL nValue
    LOCAL nPos
@@ -394,7 +394,7 @@ METHOD prevItem() CLASS RadioGroup
 
    RETURN Self
 
-METHOD select(xValue) CLASS RadioGroup
+METHOD RadioGroup:select(xValue)
 
    LOCAL nPos
    LOCAL nLen
@@ -436,7 +436,7 @@ METHOD select(xValue) CLASS RadioGroup
 
    RETURN Self
 
-METHOD setColor(cColorSpec) CLASS RadioGroup
+METHOD RadioGroup:setColor(cColorSpec)
 
    LOCAL item
 
@@ -446,7 +446,7 @@ METHOD setColor(cColorSpec) CLASS RadioGroup
 
    RETURN Self
 
-METHOD setStyle(cStyle) CLASS RadioGroup
+METHOD RadioGroup:setStyle(cStyle)
 
    LOCAL item
 
@@ -456,7 +456,7 @@ METHOD setStyle(cStyle) CLASS RadioGroup
 
    RETURN Self
 
-METHOD changeButton(nUnselect, nSelect) CLASS RadioGroup
+METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
    LOCAL nOldMCur := MSetCursor(.F.)
 
@@ -484,7 +484,7 @@ METHOD changeButton(nUnselect, nSelect) CLASS RadioGroup
 
    RETURN Self
 
-METHOD bottom(nBottom) CLASS RadioGroup
+METHOD RadioGroup:bottom(nBottom)
 
    IF nBottom != NIL
       ::nBottom := __eInstVar53(Self, "BOTTOM", nBottom, "N", 1001)
@@ -492,10 +492,10 @@ METHOD bottom(nBottom) CLASS RadioGroup
 
    RETURN ::nBottom
 
-METHOD buffer() CLASS RadioGroup
+METHOD RadioGroup:buffer()
    RETURN ::xBuffer
 
-METHOD capCol(nCapCol) CLASS RadioGroup
+METHOD RadioGroup:capCol(nCapCol)
 
    IF nCapCol != NIL
       ::nCapCol := __eInstVar53(Self, "CAPCOL", nCapCol, "N", 1001)
@@ -503,7 +503,7 @@ METHOD capCol(nCapCol) CLASS RadioGroup
 
    RETURN ::nCapCol
 
-METHOD capRow(nCapRow) CLASS RadioGroup
+METHOD RadioGroup:capRow(nCapRow)
 
    IF nCapRow != NIL
       ::nCapRow := __eInstVar53(Self, "CAPROW", nCapRow, "N", 1001)
@@ -511,7 +511,7 @@ METHOD capRow(nCapRow) CLASS RadioGroup
 
    RETURN ::nCapRow
 
-METHOD caption(cCaption) CLASS RadioGroup
+METHOD RadioGroup:caption(cCaption)
 
    IF cCaption != NIL
       ::cCaption := __eInstVar53(Self, "CAPTION", cCaption, "C", 1001)
@@ -519,7 +519,7 @@ METHOD caption(cCaption) CLASS RadioGroup
 
    RETURN ::cCaption
 
-METHOD coldBox(cColdBox) CLASS RadioGroup
+METHOD RadioGroup:coldBox(cColdBox)
 
    IF cColdBox != NIL
       ::cColdBox := __eInstVar53(Self, "COLDBOX", cColdBox, "C", 1001, {||Len(cColdBox) == 0 .OR. Len(cColdBox) == 8})
@@ -527,7 +527,7 @@ METHOD coldBox(cColdBox) CLASS RadioGroup
 
    RETURN ::cColdBox
 
-METHOD colorSpec(cColorSpec) CLASS RadioGroup
+METHOD RadioGroup:colorSpec(cColorSpec)
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, {||!Empty(hb_ColorIndex(cColorSpec, 2)) .AND. Empty(hb_ColorIndex(cColorSpec, 3))})
@@ -535,7 +535,7 @@ METHOD colorSpec(cColorSpec) CLASS RadioGroup
 
    RETURN ::cColorSpec
 
-METHOD fBlock(bFBlock) CLASS RadioGroup
+METHOD RadioGroup:fBlock(bFBlock)
 
    IF PCount() > 0
       ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
@@ -543,10 +543,10 @@ METHOD fBlock(bFBlock) CLASS RadioGroup
 
    RETURN ::bFBlock
 
-METHOD hasFocus() CLASS RadioGroup
+METHOD RadioGroup:hasFocus()
    RETURN ::lHasFocus
 
-METHOD hotBox(cHotBox) CLASS RadioGroup
+METHOD RadioGroup:hotBox(cHotBox)
 
    IF cHotBox != NIL
       ::cHotBox := __eInstVar53(Self, "HOTBOX", cHotBox, "C", 1001, {||Len(cHotBox) == 0 .OR. Len(cHotBox) == 8})
@@ -554,10 +554,10 @@ METHOD hotBox(cHotBox) CLASS RadioGroup
 
    RETURN ::cHotBox
 
-METHOD itemCount() CLASS RadioGroup
+METHOD RadioGroup:itemCount()
    RETURN ::nItemCount
 
-METHOD left(nLeft) CLASS RadioGroup
+METHOD RadioGroup:left(nLeft)
 
    IF nLeft != NIL
       ::nLeft := __eInstVar53(Self, "LEFT", nLeft, "N", 1001)
@@ -565,7 +565,7 @@ METHOD left(nLeft) CLASS RadioGroup
 
    RETURN ::nLeft
 
-METHOD message(cMessage) CLASS RadioGroup
+METHOD RadioGroup:message(cMessage)
 
    IF cMessage != NIL
       ::cMessage := __eInstVar53(Self, "MESSAGE", cMessage, "C", 1001)
@@ -573,7 +573,7 @@ METHOD message(cMessage) CLASS RadioGroup
 
    RETURN ::cMessage
 
-METHOD right(nRight) CLASS RadioGroup
+METHOD RadioGroup:right(nRight)
 
    IF nRight != NIL
       ::nRight := __eInstVar53(Self, "RIGHT", nRight, "N", 1001)
@@ -581,10 +581,10 @@ METHOD right(nRight) CLASS RadioGroup
 
    RETURN ::nRight
 
-METHOD textValue() CLASS RadioGroup
+METHOD RadioGroup:textValue()
    RETURN ::cTextValue
 
-METHOD top(nTop) CLASS RadioGroup
+METHOD RadioGroup:top(nTop)
 
    IF nTop != NIL
       ::nTop := __eInstVar53(Self, "TOP", nTop, "N", 1001)
@@ -592,13 +592,13 @@ METHOD top(nTop) CLASS RadioGroup
 
    RETURN ::nTop
 
-METHOD typeOut() CLASS RadioGroup
+METHOD RadioGroup:typeOut()
    RETURN ::nItemCount == 0 .OR. ::nValue > ::nItemCount
 
-METHOD value() CLASS RadioGroup
+METHOD RadioGroup:value()
    RETURN ::nValue
 
-METHOD Init(nTop, nLeft, nBottom, nRight) CLASS RadioGroup
+METHOD RadioGroup:Init(nTop, nLeft, nBottom, nRight)
 
    LOCAL cColor
 

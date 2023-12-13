@@ -116,7 +116,7 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
 
 ENDCLASS
 
-METHOD addItem(oItem) CLASS PopupMenu
+METHOD PopupMenu:addItem(oItem)
 
    IF HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
@@ -129,7 +129,7 @@ METHOD addItem(oItem) CLASS PopupMenu
 
    RETURN Self
 
-METHOD close(lCloseChild) CLASS PopupMenu
+METHOD PopupMenu:close(lCloseChild)
 
    __defaultNIL(@lCloseChild, .T.)
 
@@ -150,7 +150,7 @@ METHOD close(lCloseChild) CLASS PopupMenu
 
    RETURN Self
 
-METHOD delItem(nPos) CLASS PopupMenu
+METHOD PopupMenu:delItem(nPos)
 
    LOCAL nLen
    LOCAL nWidth
@@ -174,7 +174,7 @@ METHOD delItem(nPos) CLASS PopupMenu
 
    RETURN Self
 
-METHOD display() CLASS PopupMenu
+METHOD PopupMenu:display()
 
    LOCAL nTop
    LOCAL nLeft
@@ -264,7 +264,7 @@ METHOD display() CLASS PopupMenu
 
    RETURN Self
 
-METHOD getAccel(xKey) CLASS PopupMenu
+METHOD PopupMenu:getAccel(xKey)
 
    LOCAL cKey
    LOCAL item
@@ -289,7 +289,7 @@ METHOD getAccel(xKey) CLASS PopupMenu
 
    RETURN 0
 
-METHOD getFirst() CLASS PopupMenu
+METHOD PopupMenu:getFirst()
 
    LOCAL item
 
@@ -301,10 +301,10 @@ METHOD getFirst() CLASS PopupMenu
 
    RETURN 0
 
-METHOD getItem(nPos) CLASS PopupMenu
+METHOD PopupMenu:getItem(nPos)
    RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
-METHOD getLast() CLASS PopupMenu
+METHOD PopupMenu:getLast()
 
    LOCAL item
 
@@ -316,7 +316,7 @@ METHOD getLast() CLASS PopupMenu
 
    RETURN 0
 
-METHOD getNext() CLASS PopupMenu
+METHOD PopupMenu:getNext()
 
    LOCAL nPos
 
@@ -328,7 +328,7 @@ METHOD getNext() CLASS PopupMenu
 
    RETURN 0
 
-METHOD getPrev() CLASS PopupMenu
+METHOD PopupMenu:getPrev()
 
    LOCAL nPos
 
@@ -343,7 +343,7 @@ METHOD getPrev() CLASS PopupMenu
 /* NOTE: This method corrects a bug in Cl*pper:
          1) when a menuitem is disabled it will ignore the key [jlalin] */
 
-METHOD getShortCt(nKey) CLASS PopupMenu
+METHOD PopupMenu:getShortCt(nKey)
 
    LOCAL item
 
@@ -358,7 +358,7 @@ METHOD getShortCt(nKey) CLASS PopupMenu
 /* NOTE: This method corrects one bug in CA-Cl*pper:
          1) when a menuitem is disabled it will ignore the click [jlalin] */
 
-METHOD hitTest(nMRow, nMCol) CLASS PopupMenu
+METHOD PopupMenu:hitTest(nMRow, nMCol)
 
    LOCAL nPos
 
@@ -406,7 +406,7 @@ METHOD hitTest(nMRow, nMCol) CLASS PopupMenu
 
    RETURN HTNOWHERE
 
-METHOD insItem(nPos, oItem) CLASS PopupMenu
+METHOD PopupMenu:insItem(nPos, oItem)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
@@ -418,10 +418,10 @@ METHOD insItem(nPos, oItem) CLASS PopupMenu
 
    RETURN Self
 
-METHOD isOpen() CLASS PopupMenu
+METHOD PopupMenu:isOpen()
    RETURN ::aSaveScr != NIL
 
-METHOD open() CLASS PopupMenu
+METHOD PopupMenu:open()
 
    LOCAL nTop
    LOCAL nLeft
@@ -459,7 +459,7 @@ METHOD open() CLASS PopupMenu
 
    RETURN Self
 
-METHOD select(nPos) CLASS PopupMenu
+METHOD PopupMenu:select(nPos)
 
    IF (nPos >= 1 .AND. nPos <= ::nItemCount .AND. ::nCurrent != nPos .AND. ::aItems[nPos]:enabled) .OR. nPos == 0
 
@@ -475,7 +475,7 @@ METHOD select(nPos) CLASS PopupMenu
 
    RETURN Self
 
-METHOD setItem(nPos, oItem) CLASS PopupMenu
+METHOD PopupMenu:setItem(nPos, oItem)
 
    IF nPos >= 1 .AND. nPos <= ::nItemCount .AND. HB_ISOBJECT(oItem) .AND. oItem:ClassName() == "MENUITEM"
 
@@ -485,7 +485,7 @@ METHOD setItem(nPos, oItem) CLASS PopupMenu
 
    RETURN Self /* NOTE: CA-Cl*pper returns NIL, which is wrong. */
 
-METHOD setMetrics() CLASS PopupMenu
+METHOD PopupMenu:setMetrics()
 
    IF ::nTop != NIL
    ELSEIF ::nBottom == NIL
@@ -506,7 +506,7 @@ METHOD setMetrics() CLASS PopupMenu
 
    RETURN Self
 
-METHOD border(cBorder) CLASS PopupMenu
+METHOD PopupMenu:border(cBorder)
 
    IF cBorder != NIL
       ::cBorder := __eInstVar53(Self, "BORDER", cBorder, "C", 1001, {||Len(cBorder) == 0 .OR. Len(cBorder) == 11})
@@ -514,7 +514,7 @@ METHOD border(cBorder) CLASS PopupMenu
 
    RETURN ::cBorder
 
-METHOD bottom(nBottom) CLASS PopupMenu
+METHOD PopupMenu:bottom(nBottom)
 
 #ifdef HB_CLP_STRICT
    IF nBottom != NIL
@@ -528,7 +528,7 @@ METHOD bottom(nBottom) CLASS PopupMenu
 
    RETURN ::nBottom
 
-METHOD colorSpec(cColorSpec) CLASS PopupMenu
+METHOD PopupMenu:colorSpec(cColorSpec)
 
    IF cColorSpec != NIL
       ::cColorSpec := __eInstVar53(Self, "COLORSPEC", cColorSpec, "C", 1001, ;
@@ -537,13 +537,13 @@ METHOD colorSpec(cColorSpec) CLASS PopupMenu
 
    RETURN ::cColorSpec
 
-METHOD current() CLASS PopupMenu
+METHOD PopupMenu:current()
    RETURN ::nCurrent
 
-METHOD itemCount() CLASS PopupMenu
+METHOD PopupMenu:itemCount()
    RETURN ::nItemCount
 
-METHOD left(nLeft) CLASS PopupMenu
+METHOD PopupMenu:left(nLeft)
 
 #ifdef HB_CLP_STRICT
    IF nLeft != NIL
@@ -557,7 +557,7 @@ METHOD left(nLeft) CLASS PopupMenu
 
    RETURN ::nLeft
 
-METHOD right(nRight) CLASS PopupMenu
+METHOD PopupMenu:right(nRight)
 
 #ifdef HB_CLP_STRICT
    IF nRight != NIL
@@ -571,7 +571,7 @@ METHOD right(nRight) CLASS PopupMenu
 
    RETURN ::nRight
 
-METHOD top(nTop) CLASS PopupMenu
+METHOD PopupMenu:top(nTop)
 
 #ifdef HB_CLP_STRICT
    IF nTop != NIL
@@ -585,10 +585,10 @@ METHOD top(nTop) CLASS PopupMenu
 
    RETURN ::nTop
 
-METHOD width() CLASS PopupMenu
+METHOD PopupMenu:width()
    RETURN ::nWidth
 
-METHOD Init(nTop, nLeft, nBottom, nRight) CLASS PopupMenu
+METHOD PopupMenu:Init(nTop, nLeft, nBottom, nRight)
 
    LOCAL cColor
 
