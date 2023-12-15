@@ -1448,9 +1448,7 @@ PHB_EXPR hb_compExprReduceAnd(PHB_EXPR pSelf, HB_COMP_DECL)
    PHB_EXPR pRight = pSelf->value.asOperator.pRight;
 
    if( pLeft->ExprType == HB_ET_LOGICAL && pRight->ExprType == HB_ET_LOGICAL ) {
-      bool bResult;
-
-      bResult = pLeft->value.asLogical && pRight->value.asLogical;
+      bool bResult = pLeft->value.asLogical && pRight->value.asLogical;
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
       pSelf->ExprType = HB_ET_LOGICAL;
