@@ -100,10 +100,10 @@ METHOD Block() CLASS TBColumnSQL
 
    DO CASE
    CASE xType == "N"
-      xValue := "'" + Str( xValue, ::oBrw:oCurRow:FieldLen(::nFieldNum), ::oBrw:oCurRow:FieldDec( ::nFieldNum ) ) + "'"
+      xValue := "'" + Str( xValue, ::oBrw:oCurRow:FieldLen(::nFieldNum), ::oBrw:oCurRow:FieldDec(::nFieldNum) ) + "'"
 
    CASE xType == "D"
-      xValue :=  "'" + DToC( xValue ) + "'"
+      xValue :=  "'" + DToC(xValue) + "'"
 
    CASE xType == "L"
       xValue := iif(xValue, ".T.", ".F.")
@@ -161,12 +161,12 @@ METHOD New( nTop, nLeft, nBottom, nRight, oServer, oQuery, cTable ) CLASS TBrows
    ::oQuery := oQuery
 
    // Let's get a row to build needed columns
-   ::oCurRow := ::oQuery:GetRow( 1 )
+   ::oCurRow := ::oQuery:GetRow(1)
 
    // positioning blocks
    ::SkipBlock := {| n | ::oCurRow := Skipper( @n, ::oQuery ), n }
    ::GoBottomBlock := {|| ::oCurRow := ::oQuery:GetRow( ::oQuery:LastRec() ), 1 }
-   ::GoTopBlock := {|| ::oCurRow := ::oQuery:GetRow( 1 ), 1 }
+   ::GoTopBlock := {|| ::oCurRow := ::oQuery:GetRow(1), 1 }
 
    // Add a column for each field
    FOR i := 1 TO ::oQuery:FCount()
@@ -203,7 +203,7 @@ STATIC FUNCTION Skipper( nSkip, oQuery )
 
    DO CASE
    CASE nSkip == 0 .OR. oQuery:LastRec() == 0
-      oQuery:Skip( 0 )
+      oQuery:Skip(0)
 
    CASE nSkip > 0
       DO WHILE i < nSkip           // Skip Foward
@@ -211,7 +211,7 @@ STATIC FUNCTION Skipper( nSkip, oQuery )
          IF oQuery:recno() == oQuery:lastrec()
             EXIT
          ENDIF
-         oQuery:Skip( 1 )
+         oQuery:Skip(1)
          i++
 
       ENDDO
@@ -316,7 +316,7 @@ METHOD BrowseTable( lCanEdit, aExitKeys ) CLASS TBrowseSQL
    LOCAL nKey
    LOCAL lKeepGoing := .T.
 
-   IF ! HB_ISNUMERIC( nKey )
+   IF ! HB_ISNUMERIC(nKey)
       nKey := NIL
    ENDIF
    hb_default( @lCanEdit, .F. )

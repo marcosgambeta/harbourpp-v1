@@ -55,9 +55,9 @@ PROCEDURE Main()
 
    ? "Begin test of CSetAtMupa()"
    ? "  Default switch should be .F., is..................................", CSetAtMupa()
-   ? "  Setting switch to .T., return value should be .F., is.............", CSetAtMupa( .T. )
+   ? "  Setting switch to .T., return value should be .F., is.............", CSetAtMupa(.T.)
    ? "  Switch setting should now be .T., is..............................", CSetAtMupa()
-   ? "  Setting switch to .F. again, return value should still be .T., is ", CSetAtMupa( .F. )
+   ? "  Setting switch to .F. again, return value should still be .T., is ", CSetAtMupa(.F.)
    ? "End test of CSetAtMupa()"
    ?
 

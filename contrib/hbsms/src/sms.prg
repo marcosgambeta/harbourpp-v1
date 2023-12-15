@@ -110,7 +110,7 @@ FUNCTION smsctx_New( xPort )
 
    LOCAL smsctx[ _SMSCTX_MAX_ ]
 
-   IF HB_ISNUMERIC( xPort )
+   IF HB_ISNUMERIC(xPort)
       smsctx[ _SMSCTX_xHnd ] := xPort
       smsctx[ _SMSCTX_cPrevName ] := NIL
    ELSEIF HB_ISSTRING( xPort )

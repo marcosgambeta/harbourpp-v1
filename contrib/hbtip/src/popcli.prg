@@ -222,7 +222,7 @@ METHOD Retrieve( nId, nLen ) CLASS TIPClientPOP
          cRet := hb_BLeft(cRet, nPos + 1)
          ::bEof := .T.
 
-      ELSEIF HB_ISNUMERIC( nLen ) .AND. nLen < hb_BLen(cRet)  /* FIXME: might break UTF-8 chars */
+      ELSEIF HB_ISNUMERIC(nLen) .AND. nLen < hb_BLen(cRet)  /* FIXME: might break UTF-8 chars */
          EXIT
       ELSE
          nRetLen += nRead
@@ -288,7 +288,7 @@ METHOD UIDL( nMsgId ) CLASS TIPClientPOP
    LOCAL nPos
    LOCAL cStr, cRet
 
-   IF HB_ISNUMERIC( nMsgId ) .AND. nMsgId >= 1
+   IF HB_ISNUMERIC(nMsgId) .AND. nMsgId >= 1
       ::inetSendAll( ::SocketCon, "UIDL " + hb_ntos( Int( nMsgId ) ) + ::cCRLF )
    ELSE
       ::inetSendAll( ::SocketCon, "UIDL" + ::cCRLF )
@@ -309,8 +309,8 @@ METHOD UIDL( nMsgId ) CLASS TIPClientPOP
          ENDIF
       ENDDO
    ELSE
-      // +OK Space( 1 ) nMsg Space( 1 ) UID
-      RETURN SubStr(::cReply, RAt( Space( 1 ), ::cReply ) + 1)
+      // +OK Space(1) nMsg Space(1) UID
+      RETURN SubStr(::cReply, RAt( Space(1), ::cReply ) + 1)
    ENDIF
 
    IF ::inetErrorCode( ::SocketCon ) != 0

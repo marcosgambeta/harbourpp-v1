@@ -14,8 +14,8 @@ STATIC s_nAngle, s_nCoordX, s_nCoordY
 
 PROCEDURE Main()
 
-   DrawFlake( .T. )
-   DrawFlake( .F. )
+   DrawFlake(.T.)
+   DrawFlake(.F.)
 
    RETURN
 

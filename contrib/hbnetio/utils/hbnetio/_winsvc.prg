@@ -26,7 +26,7 @@
 
 PROCEDURE WinMain( ... )
 
-   LOCAL cMode := hb_PValue( 1 )
+   LOCAL cMode := hb_PValue(1)
 
    LOCAL cMsg, nError
 
@@ -88,7 +88,7 @@ STATIC PROCEDURE hbnetio_WinServiceEntry( ... )
 
    netiosrv_Main( .F., ... )  /* Non-interactive */
 
-   win_serviceSetExitCode( 0 )
+   win_serviceSetExitCode(0)
    win_serviceStop()
 
    RETURN

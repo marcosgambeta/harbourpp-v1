@@ -18,7 +18,7 @@ PROCEDURE Main()
 
    IF unix_daemon( 0, 0 ) == -1
       ? hb_StrFormat( "failed with errno=%d", posix_errno() )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
    ELSE
       IF hb_FileExists( cLogFile )
          FErase( cLogFile )

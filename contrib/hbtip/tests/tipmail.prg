@@ -23,24 +23,24 @@ PROCEDURE Main( cFileName )
       ? "Malformed mail. Dumping up to where parsed"
    ENDIF
 
-   ? PadC( " HEADERS ", 60, "-" )
+   ? PadC(" HEADERS ", 60, "-")
    FOR EACH i IN oMail:hHeaders
       ? i:__enumKey(), ":", i
    NEXT
    ?
 
-   ? PadC( " RECEIVED ", 60, "-" )
+   ? PadC(" RECEIVED ", 60, "-")
    FOR EACH cData IN oMail:aReceived
       ? cData
    NEXT
    ?
 
-   ? PadC( " BODY ", 60, "-" )
+   ? PadC(" BODY ", 60, "-")
    ? oMail:GetBody()
    ?
 
    DO WHILE oMail:GetAttachment() != NIL
-      ? PadC( " ATTACHMENT ", 60, "-" )
+      ? PadC(" ATTACHMENT ", 60, "-")
       ? oMail:NextAttachment():GetBody()
       ?
    ENDDO

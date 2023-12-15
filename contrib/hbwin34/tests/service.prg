@@ -122,7 +122,7 @@ STATIC PROCEDURE SrvMain( cParam1, cParam2 )
    hb_vfWrite( hFile, "Exiting..." + hb_eol() )
    hb_vfClose( hFile )
 
-   win_serviceSetExitCode( 0 )
+   win_serviceSetExitCode(0)
    win_serviceStop()
 
    RETURN

@@ -11,11 +11,11 @@ PROCEDURE Main()
    SetColor( "w+/b" )
    CLS
    IF ft_NumLock()
-      ft_NumLock( .F. )
+      ft_NumLock(.F.)
    ENDIF
    hb_keyPut( K_F1 )
    aRet := ft_Calendar( 10, 40, "w+/rb", .T., .T. ) // display calendar, return all.
-   @ 1, 0 SAY "Date        :" + DToC( aRet[ 1 ] )
+   @ 1, 0 SAY "Date        :" + DToC(aRet[ 1 ])
    @ 2, 0 SAY "Month Number:" + Str( aRet[ 2 ], 2, 0 )
    @ 3, 0 SAY "Day Number  :" + Str( aRet[ 3 ], 2, 0 )
    @ 4, 0 SAY "Year Number :" + Str( aRet[ 4 ], 4, 0 )

@@ -227,7 +227,7 @@ METHOD WvgStatic:handleEvent( nMessage, aNM )
       RETURN EVENT_HANDLED
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF Empty(::hBrushBG)
@@ -277,7 +277,7 @@ METHOD WvgStatic:setCaption( xCaption, cDll )
          wvg_DeleteObject( ::hBitmap )
       ENDIF
 
-      ::hBitmap := wvg_LoadImage( ::caption, iif(HB_ISNUMERIC( ::caption ), 1, 2) )
+      ::hBitmap := wvg_LoadImage( ::caption, iif(HB_ISNUMERIC(::caption), 1, 2) )
 
       ::sendMessage( STM_SETIMAGE, WIN_IMAGE_BITMAP, ::hBitmap )
 

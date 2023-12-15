@@ -86,14 +86,14 @@ PROCEDURE Main( cCmdLine )
       SetMode( 50, 80 )
    ENDIF
    nMaxRow := MaxRow()
-   SetBlink( .F. )
+   SetBlink(.F.)
    SetColor( cWindN + "*" )
    CLS
    SetColor( cNormN )
    @ nMaxRow, 0
    @ nMaxRow, 0 SAY hb_UTF8ToStr( " FT_MENU1 1.0 │ " )
    @ nMaxRow, 16 SAY "WRITTEN BY PAUL FERRARA [76702,556] FOR NANFORUM.LIB"
-   @ nMaxRow, 69 SAY hb_UTF8ToStr( "│ " ) + DToC( Date() )
+   @ nMaxRow, 69 SAY hb_UTF8ToStr( "│ " ) + DToC(Date())
 
    SetColor( cErrH )
    @ nMaxRow - 11, 23, nMaxRow - 3, 56 BOX hb_UTF8ToStr( "┌─┐│┘─└│ " )
@@ -111,7 +111,7 @@ PROCEDURE Main( cCmdLine )
 
    SetColor( "W/N" )
    SetCursor( SC_NORMAL )
-   SetBlink( .T. )
+   SetBlink(.T.)
    IF "VGA" $ Upper(cCmdLine)
       SetMode( 25, 80 )
    ENDIF

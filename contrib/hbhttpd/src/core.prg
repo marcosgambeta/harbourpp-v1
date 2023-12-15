@@ -917,7 +917,7 @@ STATIC FUNCTION HttpDateFormat( tDate )
       { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }[ DoW( tDate ) ] + ", " + ;
       PadL( Day( tDate ), 2, "0" ) + " " + ;
       { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[ Month( tDate ) ] + ;
-      " " + PadL( Year( tDate ), 4, "0" ) + " " + hb_TToC( tDate, "", "HH:MM:SS" ) + " GMT" // FIXME: time zone
+      " " + PadL( Year( tDate ), 4, "0" ) + " " + hb_TToC(tDate, "", "HH:MM:SS") + " GMT" // FIXME: time zone
 
 STATIC FUNCTION HttpDateUnformat( cDate, tDate )
 
@@ -948,17 +948,17 @@ STATIC FUNCTION UErrorHandler( oErr, oServer )
       RETURN .T.
    CASE ( oErr:genCode == EG_OPEN .AND. oErr:osCode == 32 .OR. ;
          oErr:genCode == EG_APPENDLOCK ) .AND. oErr:canDefault
-      NetErr( .T. )
+      NetErr(.T.)
       RETURN .F.
    ENDCASE
-   oServer:LogError( GetErrorDesc( oErr ) )
+   oServer:LogError( GetErrorDesc(oErr) )
    IF oErr != NIL // Dummy check to avoid unreachable code warning for RETURN NIL
       Break( oErr )
    ENDIF
 
    RETURN NIL
 
-STATIC FUNCTION GetErrorDesc( oErr )
+STATIC FUNCTION GetErrorDesc(oErr)
 
    LOCAL cRet, nI, cI, aPar, nJ, xI
 
@@ -1040,7 +1040,7 @@ STATIC FUNCTION GetErrorDesc( oErr )
       FOR nI := 1 TO 250
          BEGIN SEQUENCE WITH {| o | Break( o ) }
             IF Used()
-               dbSelectArea( nI )
+               dbSelectArea(nI)
                cRet += Str( nI, 6 ) + " " + rddName() + " " + PadR( Alias(), 15 ) + ;
                   Str( RecNo() ) + "/" + Str( LastRec() ) + ;
                   iif(Empty(ordSetFocus()), "", " Index " + ordSetFocus() + "(" + hb_ntos( ordNumber() ) + ")") + hb_eol()
@@ -1113,7 +1113,7 @@ STATIC FUNCTION cvt2str( xI, lLong )
       ENDIF
       RETURN "[O:" + xI:ClassName() + cI + "]"
    ELSEIF cValtype == "D"
-      RETURN iif(lLong, "[D]:", "") + DToC( xI )
+      RETURN iif(lLong, "[D]:", "") + DToC(xI)
    ELSEIF cValtype == "L"
       RETURN iif(lLong, "[L]:", "") + iif(xI, ".T.", ".F.")
    ELSEIF cValtype == "P"
@@ -1301,7 +1301,7 @@ FUNCTION UUrlEncode( cString )
       cI := SubStr(cString, nI, 1)
       IF cI == " "
          cRet += "+"
-      ELSEIF Asc( cI ) >= 127 .OR. Asc( cI ) <= 31 .OR. cI $ '=&%+'
+      ELSEIF Asc(cI) >= 127 .OR. Asc(cI) <= 31 .OR. cI $ '=&%+'
          cRet += "%" + hb_StrToHex( cI )
       ELSE
          cRet += cI
@@ -1469,10 +1469,10 @@ PROCEDURE UProcFiles( cFileName, lIndex )
          IF Left(aF[ 1 ], 1) == "."
          ELSEIF "D" $ aF[ 5 ]
             UWrite( '[DIR] <a href="' + aF[ 1 ] + '/">' + aF[ 1 ] + '</a>' + Space( 50 - Len(aF[ 1 ]) ) + ;
-               DToC( aF[ 3 ] ) + ' ' + aF[ 4 ] + CR_LF )
+               DToC(aF[ 3 ]) + ' ' + aF[ 4 ] + CR_LF )
          ELSE
             UWrite( '      <a href="' + aF[ 1 ] + '">' + aF[ 1 ] + '</a>' + Space( 50 - Len(aF[ 1 ]) ) + ;
-               DToC( aF[ 3 ] ) + ' ' + aF[ 4 ] + Str( aF[ 2 ], 12 ) + CR_LF )
+               DToC(aF[ 3 ]) + ' ' + aF[ 4 ] + Str( aF[ 2 ], 12 ) + CR_LF )
          ENDIF
       NEXT
       UWrite( "<hr></pre></body></html>" )
@@ -1528,9 +1528,9 @@ PROCEDURE UProcInfo()
 
 FUNCTION UParse( aData, cFileName, hConfig )
 
-   RETURN parse_data( aData, compile_file( cFileName, hConfig ), hConfig )
+   RETURN parse_data(aData, compile_file( cFileName, hConfig ), hConfig)
 
-STATIC FUNCTION parse_data( aData, aCode, hConfig )
+STATIC FUNCTION parse_data(aData, aCode, hConfig)
 
    LOCAL aInstr, aData2, cRet, xValue, aValue, cExtend := ""
 
@@ -1548,12 +1548,12 @@ STATIC FUNCTION parse_data( aData, aCode, hConfig )
                xValue := aData[ aInstr[ 2 ] ]
                IF HB_ISSTRING( xValue )
                   cRet += UHtmlEncode( xValue )
-               ELSEIF HB_ISNUMERIC( xValue )
+               ELSEIF HB_ISNUMERIC(xValue)
                   cRet += UHtmlEncode( Str( xValue ) )
                ELSEIF HB_ISDATE( xValue )
-                  cRet += UHtmlEncode( DToC( xValue ) )
+                  cRet += UHtmlEncode( DToC(xValue) )
                ELSEIF HB_ISTIMESTAMP( xValue )
-                  cRet += UHtmlEncode( hb_TToC( xValue ) )
+                  cRet += UHtmlEncode( hb_TToC(xValue) )
                ELSEIF HB_ISOBJECT( xValue )
                   cRet += UHtmlEncode( xValue:Output() )
                ELSE
@@ -1569,12 +1569,12 @@ STATIC FUNCTION parse_data( aData, aCode, hConfig )
                xValue := aData[ aInstr[ 2 ] ]
                IF HB_ISSTRING( xValue )
                   cRet += xValue
-               ELSEIF HB_ISNUMERIC( xValue )
+               ELSEIF HB_ISNUMERIC(xValue)
                   cRet += Str( xValue )
                ELSEIF HB_ISDATE( xValue )
-                  cRet += DToC( xValue )
+                  cRet += DToC(xValue)
                ELSEIF HB_ISTIMESTAMP( xValue )
-                  cRet += hb_TToC( xValue )
+                  cRet += hb_TToC(xValue)
                ELSEIF HB_ISOBJECT( xValue )
                   cRet += xValue:Output()
                ELSE
@@ -1588,9 +1588,9 @@ STATIC FUNCTION parse_data( aData, aCode, hConfig )
          CASE "if"
             xValue := iif(hb_HHasKey( aData, aInstr[ 2 ] ), aData[ aInstr[ 2 ] ], NIL)
             IF ! Empty(xValue)
-               cRet += parse_data( aData, aInstr[ 3 ], hConfig )
+               cRet += parse_data(aData, aInstr[ 3 ], hConfig)
             ELSE
-               cRet += parse_data( aData, aInstr[ 4 ], hConfig )
+               cRet += parse_data(aData, aInstr[ 4 ], hConfig)
             ENDIF
             EXIT
 
@@ -1600,7 +1600,7 @@ STATIC FUNCTION parse_data( aData, aCode, hConfig )
                   aData2 := hb_HClone( aData )
                   hb_HEval( xValue, {| k, v | aData2[ aInstr[ 2 ] + "." + k ] := v } )
                   aData2[ aInstr[ 2 ] + ".__index" ] := xValue:__enumIndex
-                  cRet += parse_data( aData2, aInstr[ 3 ], hConfig )
+                  cRet += parse_data(aData2, aInstr[ 3 ], hConfig)
                   aData2 := NIL
                NEXT
             ELSE
@@ -1613,7 +1613,7 @@ STATIC FUNCTION parse_data( aData, aCode, hConfig )
             EXIT
 
          CASE "include"
-            cRet += parse_data( aData, compile_file( aInstr[ 2 ], hConfig ), hConfig )
+            cRet += parse_data(aData, compile_file( aInstr[ 2 ], hConfig ), hConfig)
             EXIT
          ENDSWITCH
       NEXT

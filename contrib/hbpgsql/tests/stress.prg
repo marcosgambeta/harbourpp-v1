@@ -16,7 +16,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       "host = '" + hb_defaultValue( cHost, "localhost" ) + "' " + ;
       "user = '" + hb_defaultValue( cUser, hb_UserName() ) + "' " + ;
       "password = '" + hb_defaultValue( cPass, "" ) + "' " + ;
-      "port = 5432" )
+      "port = 5432")
 
    ? PQstatus( conn ), PQerrorMessage( conn )
 
@@ -26,7 +26,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    ? "Dropping table..."
 
-   PQexec( conn, "DROP TABLE test" )
+   PQexec(conn, "DROP TABLE test")
 
    ? "Creating test table..."
    cQuery := ;
@@ -42,9 +42,9 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       "   Creation Date," + ;
       "   Description text )"
 
-   PQexec( conn, cQuery )
-   PQexec( conn, "SELECT code, dept, name, sales, salary, creation FROM test" )
-   PQexec( conn, "BEGIN" )
+   PQexec(conn, cQuery)
+   PQexec(conn, "SELECT code, dept, name, sales, salary, creation FROM test")
+   PQexec(conn, "BEGIN")
 
    ?
    FOR i := 1 TO 10000
@@ -53,11 +53,11 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       cQuery := "INSERT INTO test(code, dept, name, sales, salary, creation) " + ;
          "VALUES( " + hb_ntos( i ) + "," + hb_ntos( i + 1 ) + ", 'DEPARTMENT NAME " + StrZero( i ) + "', 'y', " + hb_ntos( 300.49 + i ) + ", '2003-12-28' )"
 
-      PQexec( conn, cQuery )
+      PQexec(conn, cQuery)
 
       IF i % 100 == 0
-         ? PQexec( conn, "COMMIT" )
-         ? PQexec( conn, "BEGIN" )
+         ? PQexec(conn, "COMMIT")
+         ? PQexec(conn, "BEGIN")
       ENDIF
    NEXT
 
@@ -65,11 +65,11 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       @ 16, 0 SAY "Deleting values... " + hb_ntos( i )
 
       cQuery := "DELETE FROM test WHERE code = " + hb_ntos( i )
-      PQexec( conn, cQuery )
+      PQexec(conn, cQuery)
 
       IF i % 100 == 0
-         PQexec( conn, "COMMIT" )
-         PQexec( conn, "BEGIN" )
+         PQexec(conn, "COMMIT")
+         PQexec(conn, "BEGIN")
       ENDIF
    NEXT
 
@@ -77,15 +77,15 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       @ 17, 0 SAY "Updating values... " + hb_ntos( i )
 
       cQuery := "UPDATE FROM test SET salary = 400 WHERE code = " + hb_ntos( i )
-      PQexec( conn, cQuery )
+      PQexec(conn, cQuery)
 
       IF i % 100 == 0
-         PQexec( conn, "COMMIT" )
-         PQexec( conn, "BEGIN" )
+         PQexec(conn, "COMMIT")
+         PQexec(conn, "BEGIN")
       ENDIF
    NEXT
 
-   res := PQexec( conn, "SELECT sum(salary) as sum_salary FROM test WHERE code between 1 and 4000" )
+   res := PQexec(conn, "SELECT sum(salary) as sum_salary FROM test WHERE code between 1 and 4000")
 
    IF PQresultStatus( res ) == PGRES_TUPLES_OK
       @ 18, 0 SAY "Sum values... " + PQgetvalue( res, 1, 1 )
@@ -93,7 +93,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    x := 0
    FOR i := 1 TO 4000
-      res := PQexec( conn, "SELECT salary FROM test WHERE code = " + hb_ntos( i ) )
+      res := PQexec(conn, "SELECT salary FROM test WHERE code = " + hb_ntos( i ))
 
       IF PQresultStatus( res ) == PGRES_TUPLES_OK
          x += Val( PQgetvalue( res, 1, 1 ) )

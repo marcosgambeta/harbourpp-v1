@@ -126,7 +126,7 @@ PROCEDURE SrvMain( cParam1, cParam2 )
    FWrite( fhnd, "Exiting..." + hb_eol() )
    FClose( fhnd )
 
-   win_serviceSetExitCode( 0 )
+   win_serviceSetExitCode(0)
    win_serviceStop()
 
    RETURN

@@ -41,7 +41,7 @@ PROCEDURE Main()
 #if 1
    oPrinter := win_Prn():New( "PDFCreator" )
    oPrinter:Create()
-   oPrinter:startDoc( "Harbour print job via PDFCreator" )
+   oPrinter:startDoc("Harbour print job via PDFCreator")
    oPrinter:NewLine()
    oPrinter:NewLine()
    oPrinter:TextOut( "Hello, PDFCreator! This is Harbour :)" )

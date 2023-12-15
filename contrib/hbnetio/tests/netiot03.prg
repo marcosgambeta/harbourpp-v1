@@ -47,9 +47,9 @@ PROCEDURE Main()
    ? "netio_Connect():", netio_Connect( DBSERVER, DBPORT, , DBPASSWD )
    ?
 
-   netio_ProcExec( "QOut", "PROCEXEC", "P2", "P3", "P4" )
-   netio_FuncExec( "QOut", "FUNCEXEC", "P2", "P3", "P4" )
-   ? "SERVER TIME:", netio_FuncExec( "hb_dateTime" )
+   netio_ProcExec("QOut", "PROCEXEC", "P2", "P3", "P4")
+   netio_FuncExec("QOut", "FUNCEXEC", "P2", "P3", "P4")
+   ? "SERVER TIME:", netio_FuncExec("hb_dateTime")
    ?
    WAIT
 
@@ -58,34 +58,34 @@ PROCEDURE Main()
    nStream2 := netio_OpenDataStream( "reg_charstream" )
    ? "NETIO_OPENDATASTREAM:", nStream2
 
-   hb_idleSleep( 3 )
-   ? "NETIO_GETDATA 1:", hb_ValToExp( netio_GetData( nStream1 ) )
-   ? "NETIO_GETDATA 2:", hb_ValToExp( netio_GetData( nStream2 ) )
+   hb_idleSleep(3)
+   ? "NETIO_GETDATA 1:", hb_ValToExp( netio_GetData(nStream1) )
+   ? "NETIO_GETDATA 2:", hb_ValToExp( netio_GetData(nStream2) )
    nSec := Seconds() + 3
    WHILE Seconds() < nSec
-      xData := netio_GetData( nStream1 )
+      xData := netio_GetData(nStream1)
       IF ! Empty(xData)
          ? hb_ValToExp( xData )
       ENDIF
-      xData := netio_GetData( nStream2 )
+      xData := netio_GetData(nStream2)
       IF ! Empty(xData)
          ?? "", hb_ValToExp( xData )
       ENDIF
    ENDDO
    WAIT
-   ? "NETIO_GETDATA 1:", hb_ValToExp( netio_GetData( nStream1 ) )
-   ? "NETIO_GETDATA 2:", hb_ValToExp( netio_GetData( nStream2 ) )
+   ? "NETIO_GETDATA 1:", hb_ValToExp( netio_GetData(nStream1) )
+   ? "NETIO_GETDATA 2:", hb_ValToExp( netio_GetData(nStream2) )
    WAIT
 
-   lExists := netio_FuncExec( "hb_DirExists", "./data" )
+   lExists := netio_FuncExec("hb_DirExists", "./data")
    ? "Directory './data'", iif(lExists, "exists", "not exists")
    IF ! lExists
       ? "Creating directory './data' ->", ;
-         iif(netio_FuncExec( "hb_DirCreate", "./data" ) == -1, "error", "OK")
+         iif(netio_FuncExec("hb_DirCreate", "./data") == -1, "error", "OK")
    ENDIF
 
-   createdb( DBNAME )
-   testdb( DBNAME )
+   createdb(DBNAME)
+   testdb(DBNAME)
    WAIT
 
    ?
@@ -97,19 +97,19 @@ PROCEDURE Main()
    ? "table exists:", dbExists( DBNAME )
    WAIT
 
-   ? "NETIO_GETDATA 1:", hb_ValToExp( netio_GetData( nStream1 ) )
-   ? "NETIO_GETDATA 2:", hb_ValToExp( netio_GetData( nStream2 ) )
+   ? "NETIO_GETDATA 1:", hb_ValToExp( netio_GetData(nStream1) )
+   ? "NETIO_GETDATA 2:", hb_ValToExp( netio_GetData(nStream2) )
    ? "netio_Disconnect():", netio_Disconnect( DBSERVER, DBPORT )
    ? "NETIO_CLOSESTREAM 1:", netio_CloseStream( nStream1 )
    ? "NETIO_CLOSESTREAM 2:", netio_CloseStream( nStream2 )
-   hb_idleSleep( 2 )
+   hb_idleSleep(2)
    ?
    ? "stopping the server..."
    netio_ServerStop( pSockSrv, .T. )
 
    RETURN
 
-PROCEDURE createdb( cName )
+PROCEDURE createdb(cName)
 
    LOCAL n
 
@@ -124,7 +124,7 @@ PROCEDURE createdb( cName )
    WHILE LastRec() < 100
       dbAppend()
       n := RecNo() - 1
-      field->F1 := Chr(n % 26 + Asc( "A" )) + " " + Time()
+      field->F1 := Chr(n % 26 + Asc("A")) + " " + Time()
       field->F2 := field->F1
       field->F3 := n / 100
       field->F4 := hb_DateTime()
@@ -137,7 +137,7 @@ PROCEDURE createdb( cName )
 
    RETURN
 
-PROCEDURE testdb( cName )
+PROCEDURE testdb(cName)
 
    LOCAL i, j
 
@@ -151,7 +151,7 @@ PROCEDURE testdb( cName )
       ordSetFocus( i )
       ? i, "name:", ordName(), "key:", ordKey(), "keycount:", ordKeyCount()
    NEXT
-   ordSetFocus( 1 )
+   ordSetFocus(1)
    dbGoTop()
    WHILE ! Eof()
       IF ! field->F1 == field->F2
@@ -191,7 +191,7 @@ STATIC FUNCTION rpc_timer( pConnSock, nStream )
          ? "CLOSED STREAM:", nStream
          EXIT
       ENDIF
-      hb_idleSleep( 1 )
+      hb_idleSleep(1)
    ENDDO
 
    RETURN NIL
@@ -201,7 +201,7 @@ STATIC FUNCTION rpc_charstream( pConnSock, nStream )
    LOCAL n := 0
 
    WHILE .T.
-      IF ! netio_SrvSendData( pConnSock, nStream, Chr(Asc( "A" ) + n) )
+      IF ! netio_SrvSendData(pConnSock, nStream, Chr(Asc("A") + n))
          ? "CLOSED STREAM:", nStream
          EXIT
       ENDIF

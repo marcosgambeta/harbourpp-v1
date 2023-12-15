@@ -38,10 +38,10 @@ PROCEDURE Main()
       OutStd( xData[ "Today" ], hb_eol() )
    ENDIF
 
-   mxmlSetErrorCallback( NIL )
+   mxmlSetErrorCallback(NIL)
    mxmlSetCustomHandlers( NIL, NIL )
 
-   ErrorLevel( 0 )
+   ErrorLevel(0)
 
    RETURN
 
@@ -71,17 +71,17 @@ PROCEDURE my_mxmlError( cErrorMsg )
 
    RETURN
 
-FUNCTION load_c( node, cString )
+FUNCTION load_c(node, cString)
 
    mxmlSetCustom( node, hb_Deserialize( hb_base64Decode( cString ) ) )
 
    RETURN 0  /* 0 on success or non-zero on error */
 
-FUNCTION save_c( node )
+FUNCTION save_c(node)
 
    RETURN _ENCODE( node ) /* string on success or NIL on error */
 
-FUNCTION whitespace_cb( node, where )
+FUNCTION whitespace_cb(node, where)
 
    LOCAL parent        /* Parent node */
    LOCAL nLevel := -1  /* Indentation level */
@@ -125,7 +125,7 @@ FUNCTION whitespace_cb( node, where )
 
    RETURN NIL /* Return NIL for no added whitespace... */
 
-FUNCTION type_cb( node )
+FUNCTION type_cb(node)
 
    LOCAL nResult
    LOCAL cType

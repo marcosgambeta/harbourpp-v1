@@ -75,7 +75,7 @@ CREATE CLASS WvtBrowse INHERIT WvtObject
    VAR    bCurrentColumn
 
    ACCESS cDesc                                   INLINE iif(::cText == NIL, "", ::cText)
-   ASSIGN cDesc( cText )                          INLINE ::cText := cText
+   ASSIGN cDesc(cText)                            INLINE ::cText := cText
 
    METHOD New( oParent, nID, nTop, nLeft, nBottom, nRight )
    METHOD create()
@@ -101,7 +101,7 @@ METHOD WvtBrowse:New( oParent, nID, nTop, nLeft, nBottom, nRight )
 
 METHOD WvtBrowse:Create()
 
-   dbSelectArea( ::cAlias )
+   dbSelectArea(::cAlias)
 #if 0
    ::nTop    := ::oBrw:nTop - 2
    ::nLeft   := ::oBrw:nLeft - 2
@@ -113,10 +113,10 @@ METHOD WvtBrowse:Create()
    ::nBottom := ::oBrw:nBottom
    ::nRight  := ::oBrw:nRight
 #endif
-   ::PaintBlock( 1 )
-   ::PaintBlock( 2 )
-   ::PaintBlock( 3 )
-   ::PaintBlock( 4 )
+   ::PaintBlock(1)
+   ::PaintBlock(2)
+   ::PaintBlock(3)
+   ::PaintBlock(4)
 
    ::Super:Create()
 

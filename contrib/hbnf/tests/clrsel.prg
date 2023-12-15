@@ -26,7 +26,7 @@ PROCEDURE Main( cVidMode )
 
    SET SCOREBOARD OFF
    SetCursor( SC_NONE )
-   SetBlink( .F. )
+   SetBlink(.F.)
 
    // .... a typical application might have the following different settings
    //     normally these would be stored in a .dbf/.dbv
@@ -50,6 +50,6 @@ PROCEDURE Main( cVidMode )
    ft_RestSets( aEnvOri )
    RestScreen( 0, 0, MaxRow(), MaxCol(), cScrOri )
    SetPos( nRowOri, nColOri )
-   SetBlink( .F. )  // doesn't appear to be reset from FT_RestSets
+   SetBlink(.F.)  // doesn't appear to be reset from FT_RestSets
 
    RETURN

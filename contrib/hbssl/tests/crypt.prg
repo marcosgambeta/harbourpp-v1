@@ -73,7 +73,7 @@ PROCEDURE Main()
    ? "=============="
    bioe := BIO_new_fd( 1, HB_BIO_NOCLOSE )
    FOR EACH tmp IN all
-      ? tmp:__enumIndex(), pub := tmp:exec( "pubkey.pem", "test" )
+      ? tmp:__enumIndex(), pub := tmp:exec("pubkey.pem", "test")
       IF ! Empty(pub)
          ? "EVP_PKEY_free", EVP_PKEY_free( pub )
       ENDIF

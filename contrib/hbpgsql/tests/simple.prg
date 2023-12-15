@@ -11,7 +11,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       RETURN
    ENDIF
 
-   oServer:SetVerbosity( 2 )
+   oServer:SetVerbosity(2)
    oServer:traceon( "simple.log" )
 
    ? "Tables..."
@@ -88,16 +88,16 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
    ? ;
       oRow:FCount(), ;
       oRow:FieldPos( "sales" ), ;
-      oRow:FieldGet( 1 ), ;
-      oRow:FieldName( 2 ), ;
-      oRow:FieldType( 1 ), ;
-      oRow:FieldDec( 1 ), ;
+      oRow:FieldGet(1), ;
+      oRow:FieldName(2), ;
+      oRow:FieldType(1), ;
+      oRow:FieldDec(1), ;
       oRow:FieldLen(1)
 
    oRow:FieldPut( 1, 150 )
    oRow:FieldPut( 2, "MY TEST" )
 
-   ? oRow:FieldGet( 1 ), oRow:FieldGet( 2 )
+   ? oRow:FieldGet(1), oRow:FieldGet(2)
 
    ? oRow:aRow[ 1 ], oRow:aRow[ 2 ], oRow:aOld[ 1 ], oRow:aOld[ 2 ]
 
@@ -110,13 +110,13 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
          oQuery:RecNo(), ;
          oQuery:FieldPos( "code" ), ;
          oQuery:FieldGet( oQuery:FieldPos( "code" ) ), ;
-         oQuery:FieldGet( 4 ), ;
-         oQuery:FieldGet( 2 ), ;
-         oQuery:FieldName( 1 ), ;
-         oQuery:FieldType( 1 ), ;
-         oQuery:FieldDec( 1 ), ;
+         oQuery:FieldGet(4), ;
+         oQuery:FieldGet(2), ;
+         oQuery:FieldName(1), ;
+         oQuery:FieldType(1), ;
+         oQuery:FieldDec(1), ;
          oQuery:FieldLen(1), ;
-         oQuery:FieldGet( 3 )
+         oQuery:FieldGet(3)
 
       IF oQuery:RecNo() == 50
          oRow := oQuery:getrow()
@@ -141,11 +141,11 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
       ? i, ;
          oRow:FieldGet( oRow:FieldPos( "code" ) ), ;
-         oRow:FieldGet( 4 ), ;
-         oRow:FieldGet( 2 ), ;
-         oRow:FieldName( 1 ), ;
-         oRow:FieldType( 1 ), ;
-         oRow:FieldDec( 1 ), ;
+         oRow:FieldGet(4), ;
+         oRow:FieldGet(2), ;
+         oRow:FieldName(1), ;
+         oRow:FieldType(1), ;
+         oRow:FieldDec(1), ;
          oRow:FieldLen(1), ;
          oRow:FieldGet( i, 3 )
 

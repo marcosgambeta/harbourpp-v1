@@ -112,7 +112,7 @@ FUNCTION DynWinDialog( nInfo )
 
    RETURN hDlg
 
-STATIC FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
+STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
 
    LOCAL lClicked, cPrompt, nIndex, hFont, aHFonts
 
@@ -166,12 +166,12 @@ STATIC FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
    CASE WIN_WM_CTLCOLOREDIT
       DO CASE
       CASE wapi_GetDlgItem( hDlg, ID_MLE ) == wvg_n2p( lParam )
-         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB( 0, 0, 255 ) )
-         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB( 255, 255, 200 ) )
+         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB(0, 0, 255) )
+         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB(255, 255, 200) )
          RETURN EVENT_UNHANDLED
       CASE wapi_GetDlgItem( hDlg, ID_EDT_TEXT ) == wvg_n2p( lParam )
-         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB( 255, 255, 255 ) )
-         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB( 10, 200, 45 ) )
+         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB(255, 255, 255) )
+         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB(10, 200, 45) )
          RETURN EVENT_UNHANDLED
       ENDCASE
       EXIT
@@ -179,8 +179,8 @@ STATIC FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
    CASE WIN_WM_CTLCOLORSTATIC
 #if 0
       IF wapi_GetDlgItem( hDlg, ID_STA_TEXT ) == wvg_n2p( lParam )
-         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB( 255, 255, 255 ) )
-         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB( 0, 0, 0 ) )
+         wapi_SetTextColor( wvg_n2p( wParam ), WIN_RGB(255, 255, 255) )
+         wapi_SetBkColor( wvg_n2p( wParam ), WIN_RGB(0, 0, 0) )
          RETURN EVENT_UNHANDLED
       ENDIF
 #endif
@@ -293,7 +293,7 @@ FUNCTION DlgSlideShow()
 
    RETURN hDlg
 
-STATIC FUNCTION DlgSlideShowProc( hDlg, nMsg, wParam, lParam )
+STATIC FUNCTION DlgSlideShowProc(hDlg, nMsg, wParam, lParam)
 
    THREAD STATIC t_nSlide := 1
 
@@ -324,13 +324,13 @@ STATIC FUNCTION DlgSlideShowProc( hDlg, nMsg, wParam, lParam )
 
 STATIC PROCEDURE DrawSlide( hDlg, nSlide )
 
-   LOCAL hDC   := wvg_GetDC( hDlg )
+   LOCAL hDC   := wvg_GetDC(hDlg)
    LOCAL aRect := wvg_GetClientRect( hDlg )
 
    wapi_Rectangle( hDC, aRect[ 1 ] + 10, aRect[ 2 ] + 10, aRect[ 3 ] - 10, aRect[ 4 ] - 10 )
    wvg_DrawImage( hDC, aRect[ 1 ] + 10, aRect[ 2 ] + 10, aRect[ 3 ] - aRect[ 1 ] - 20, ;
       aRect[ 4 ] - aRect[ 2 ] - 20, t_aSlides[ nSlide ] )
 
-   wvg_ReleaseDC( hDlg, hDC )
+   wvg_ReleaseDC(hDlg, hDC)
 
    RETURN

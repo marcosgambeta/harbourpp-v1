@@ -53,7 +53,7 @@ FUNCTION BubbleBabbleEncode_Prg( cString )
          EXIT
       ENDIF
 
-      byte1 := Asc( SubStr(cString, i, 1) )
+      byte1 := Asc(SubStr(cString, i, 1))
 
       cResult += ;
          SubStr(vo, ( ( hb_bitAnd( hb_bitShift( byte1, -6 ), 3 ) + nSeed ) % 6 ) + 1, 1) + ;
@@ -64,7 +64,7 @@ FUNCTION BubbleBabbleEncode_Prg( cString )
          EXIT
       ENDIF
 
-      byte2 := Asc( SubStr(cString, i + 1, 1) )
+      byte2 := Asc(SubStr(cString, i + 1, 1))
 
       cResult += ;
          SubStr(co, hb_bitAnd( hb_bitShift( byte2, -4 ), 15 ) + 1, 1) + ;

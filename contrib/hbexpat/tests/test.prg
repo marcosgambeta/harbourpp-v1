@@ -27,14 +27,14 @@ PROCEDURE Main( cFileName )
       RETURN
    ENDIF
 
-   aUserData := Array( 1 )
+   aUserData := Array(1)
    aUserData[ 1 ] := 1
 
-   ? XML_GetUserData( p )
-   XML_SetUserData( p, aUserData )
-   ? ValType( XML_GetUserData( p ) )
+   ? XML_GetUserData(p)
+   XML_SetUserData(p, aUserData)
+   ? ValType( XML_GetUserData(p) )
    XML_SetElementHandler( p, {| x, e, a | cb_start( x, e, a ) }, {| x, e | cb_end( x, e ) } )
-   XML_SetCharacterDataHandler( p, {| x, d | cb_data( x, d ) } )
+   XML_SetCharacterDataHandler( p, {| x, d | cb_data(x, d) } )
 
    IF XML_Parse( p, MemoRead( hb_defaultValue( cFileName, hb_DirBase() + "test.xml" ) ), .T. ) == HB_XML_STATUS_ERROR
       ? hb_StrFormat( e"Parse error at line %1$d:\n%2$s", ;
@@ -71,7 +71,7 @@ STATIC PROCEDURE cb_end( aUserData, cElement )
 
    RETURN
 
-STATIC PROCEDURE cb_data( aUserData, cData )
+STATIC PROCEDURE cb_data(aUserData, cData)
 
    HB_SYMBOL_UNUSED( aUserData )
 

@@ -62,8 +62,8 @@ PROCEDURE Main()
    ? '    WordRepl( "aa", "1aaaa", "ba", .T. ) == "1baba" ? ------> "' + WordRepl( "aa", "1aaaa", "ba", .T. ) + '"'
    ?
 
-   ? "  Testing CSetAtMupa( .T. ) with lMode == .T.:"
-   CSetAtMupa( .T. )
+   ? "  Testing CSetAtMupa(.T.) with lMode == .T.:"
+   CSetAtMupa(.T.)
    ? '    WordRepl( "aa", "1aaaa", "ba" )      == "1abaa" ? --> "' + WordRepl( "aa", "1aaaa", "ba" )     + '"'
    ? '    WordRepl( "aa", "1aaaa", "ba", .T. ) == "1bbba" ? --> "' + WordRepl( "aa", "1aaaa", "ba", .T. ) + '"'
    ?

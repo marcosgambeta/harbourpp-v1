@@ -474,7 +474,7 @@ STATIC FUNCTION LogError(oErr)
             FWriteLine(nHandle, "Index Order .......: " + strvalue(Do("IndexOrd")))
          ENDIF
          IF hb_IsFunction("IndexKey")
-            FWriteLine(nHandle, "Active Key ........: " + strvalue(Eval(hb_macroBlock("IndexKey( 0 )"))))
+            FWriteLine(nHandle, "Active Key ........: " + strvalue(Eval(hb_macroBlock("IndexKey(0)"))))
          ENDIF
          FWriteLine(nHandle, "")
          RETURN .T.

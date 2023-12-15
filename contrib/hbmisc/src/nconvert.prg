@@ -70,7 +70,7 @@ FUNCTION IsOctal( cString )
 
    RETURN .T.
 
-FUNCTION IsDec( cString )
+FUNCTION IsDec(cString)
 
    LOCAL nX
 
@@ -83,7 +83,7 @@ FUNCTION IsDec( cString )
 
    RETURN .T.
 
-FUNCTION IsHexa( cString )
+FUNCTION IsHexa(cString)
 
    LOCAL nX
 
@@ -122,7 +122,7 @@ FUNCTION DecToOctal( nNumber )
 
    RETURN cNewString
 
-FUNCTION DecToHexa( nNumber )
+FUNCTION DecToHexa(nNumber)
 
    LOCAL cNewString := ""
    LOCAL nTemp
@@ -135,7 +135,7 @@ FUNCTION DecToHexa( nNumber )
 
    RETURN cNewString
 
-FUNCTION BinToDec( cString )
+FUNCTION BinToDec(cString)
 
    LOCAL nNumber := 0, nX
    LOCAL cNewString := AllTrim(cString)
@@ -147,7 +147,7 @@ FUNCTION BinToDec( cString )
 
    RETURN nNumber
 
-FUNCTION OctalToDec( cString )
+FUNCTION OctalToDec(cString)
 
    LOCAL nNumber := 0, nX
    LOCAL cNewString := AllTrim(cString)
@@ -159,7 +159,7 @@ FUNCTION OctalToDec( cString )
 
    RETURN nNumber
 
-FUNCTION HexaToDec( cString )
+FUNCTION HexaToDec(cString)
 
    LOCAL nNumber := 0, nX
    LOCAL cNewString := AllTrim(cString)

@@ -77,7 +77,7 @@ CREATE CLASS WvgPartHandler
    METHOD setParent( oWvg )
 
    METHOD notifier( nEvent, xParams )
-   METHOD controlWndProc( hWnd, nMessage, nwParam, nlParam )
+   METHOD controlWndProc(hWnd, nMessage, nwParam, nlParam)
 
    VAR    aChildren                             INIT {}
    VAR    nNameId
@@ -185,7 +185,7 @@ METHOD WvgPartHandler:setName( nNameId )
 
    LOCAL nOldNameId := ::nNameId
 
-   IF HB_ISNUMERIC( nNameId )
+   IF HB_ISNUMERIC(nNameId)
       ::nNameID := nNameId
    ENDIF
 
@@ -218,7 +218,7 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock( ... )
    IF ! Empty(a_) .AND. HB_ISEVALITEM( a_[ 1 ] )
       ::sb_notifier := a_[ 1 ]
 
-   ELSEIF ! Empty(a_) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_ISNUMERIC( a_[ 1 ] ) .AND. HB_ISARRAY( a_[ 2 ] )
+   ELSEIF ! Empty(a_) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_ISNUMERIC(a_[ 1 ]) .AND. HB_ISARRAY( a_[ 2 ] )
       Eval( ::sb_notifier, a_[ 1 ], a_[ 2 ], Self )
 
    ENDIF
@@ -439,7 +439,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
    RETURN nReturn
 
 /* This will be called if a control is assigned its own WndProc via ::SetWindowProcCallback() */
-METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
+METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
 
    LOCAL nCtrlID, nNotifctn, hWndCtrl, nObj, aMenuItem, oObj, nReturn
 
@@ -471,7 +471,7 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
       ELSE
          IF ( nObj := AScan( ::aChildren, {| o | o:nID == nCtrlID } ) ) > 0
             nReturn := ::aChildren[ nObj ]:handleEvent( HB_GTE_COMMAND, { nNotifctn, nCtrlID, hWndCtrl } )
-            IF HB_ISNUMERIC( nReturn ) .AND. nReturn == 0
+            IF HB_ISNUMERIC(nReturn) .AND. nReturn == 0
                RETURN EVENT_HANDLED
             ENDIF
          ENDIF
@@ -482,7 +482,7 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
       IF ( nObj := AScan( ::aChildren, {| o | o:nID == nwParam } ) ) > 0
          nReturn := ::aChildren[ nObj ]:handleEvent( HB_GTE_NOTIFY, { nwParam, wvg_n2p( nlParam ) } )
          DO CASE
-         CASE HB_ISNUMERIC( nReturn ) .AND. nReturn == EVENT_HANDLED
+         CASE HB_ISNUMERIC(nReturn) .AND. nReturn == EVENT_HANDLED
             RETURN EVENT_HANDLED
          CASE HB_ISLOGICAL( nReturn )
             RETURN nReturn
@@ -500,8 +500,8 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
       oObj := ::findObjectByHandle( wvg_n2p( nlParam ) )
       IF HB_ISOBJECT( oObj )
          nReturn := oObj:handleEvent( HB_GTE_CTLCOLOR, { wvg_n2p( nwParam ), wvg_n2p( nlParam ) } )
-         IF HB_ISNUMERIC( nReturn ) .AND. nReturn == EVENT_UNHANDLED
-            RETURN wapi_CallWindowProc( ::nOldProc, hWnd, nMessage, nwParam, nlParam )
+         IF HB_ISNUMERIC(nReturn) .AND. nReturn == EVENT_UNHANDLED
+            RETURN wapi_CallWindowProc(::nOldProc, hWnd, nMessage, nwParam, nlParam)
          ELSE
             RETURN nReturn
          ENDIF
@@ -561,4 +561,4 @@ METHOD WvgPartHandler:controlWndProc( hWnd, nMessage, nwParam, nlParam )
 
    ENDSWITCH
 
-   RETURN wapi_CallWindowProc( ::nOldProc, hWnd, nMessage, nwParam, nlParam )
+   RETURN wapi_CallWindowProc(::nOldProc, hWnd, nMessage, nwParam, nlParam)

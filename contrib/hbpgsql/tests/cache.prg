@@ -213,7 +213,7 @@ FUNCTION SQLFetch( lFetchAll )
 
 PROCEDURE SQLFetchAll()
 
-   SQLFetch( .T. )
+   SQLFetch(.T.)
    dbGoTop()
 
    RETURN
@@ -251,7 +251,7 @@ FUNCTION SQLOpen( cAlias, cQuery, xFetch, cOrder )
    IF Select( cAlias ) == 0
       hb_dbCreateTemp( cAlias, oQuery:Struct() )
    ELSE
-      dbSelectArea( cAlias )
+      dbSelectArea(cAlias)
       hb_dbZap()
    ENDIF
 
@@ -338,8 +338,8 @@ FUNCTION SQLPrepare( cQuery, ... )
 
    IF PCount() >= 2
       /* Remove unnecessary whitespace */
-      DO WHILE Space( 2 ) $ cQuery
-         cQuery := StrTran( cQuery, Space( 2 ), Space( 1 ) )
+      DO WHILE Space(2) $ cQuery
+         cQuery := StrTran( cQuery, Space(2), Space(1) )
       ENDDO
 
       /* Place {} in the parameters */
@@ -358,11 +358,11 @@ FUNCTION SQLPrepare( cQuery, ... )
          CASE x != NIL .AND. Empty(x)
             x := "null"
 
-         CASE HB_ISNUMERIC( x )
+         CASE HB_ISNUMERIC(x)
             x := hb_ntos( x )
 
          CASE HB_ISDATE( x )
-            x := "'" + hb_DToC( x, "yyyy-mm-dd" ) + "'"
+            x := "'" + hb_DToC(x, "yyyy-mm-dd") + "'"
 
          CASE HB_ISLOGICAL( x )
             x := iif(x, "'t'", "'f'")
@@ -419,16 +419,16 @@ FUNCTION QuickQuery( cQuery )
    LOCAL temp, aTemp
    LOCAL x, y
 
-   LOCAL pQuery := PQexec( t_oServer:pDB, cQuery )
+   LOCAL pQuery := PQexec(t_oServer:pDB, cQuery)
 
    IF PQresultStatus( pQuery ) == PGRES_TUPLES_OK
-      IF PQlastrec( pQuery ) != 0
-         IF PQfcount( pQuery ) == 1 .AND. PQlastrec( pQuery ) == 1
+      IF PQlastrec(pQuery) != 0
+         IF PQfcount( pQuery ) == 1 .AND. PQlastrec(pQuery) == 1
             temp := PQgetvalue( pQuery, 1, 1 )
             result := iif(temp == NIL, "", temp)
          ELSE
             result := {}
-            FOR x := 1 TO PQlastrec( pQuery )
+            FOR x := 1 TO PQlastrec(pQuery)
                aTemp := {}
                FOR y := 1 TO PQfcount( pQuery )
                   temp := PQgetvalue( pQuery, x, y )

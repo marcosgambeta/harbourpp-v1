@@ -40,15 +40,15 @@ PROCEDURE Main()
    SetColor( "W*/N+" )
    CLS
    SetCursor( SC_NONE )
-   @ 0, 0 SAY PadC( "This will demonstrate how to handle input on non-topmost window", MaxCol() + 1 )
-   @ 1, 0 SAY PadC( "(Sorry that currently caret is shown on topmost window only)", MaxCol() + 1 )
+   @ 0, 0 SAY PadC("This will demonstrate how to handle input on non-topmost window", MaxCol() + 1)
+   @ 1, 0 SAY PadC("(Sorry that currently caret is shown on topmost window only)", MaxCol() + 1)
 
-   CreateToolbar( 0 )
-   CreateStatusbar( 0 )
+   CreateToolbar(0)
+   CreateStatusbar(0)
 
    DO WHILE ( ch := hb_keyStd( Inkey(0) ) ) != K_ESC
-      IF ch == wvw_SetMenuKeyEvent( 0 )
-         MenuAction( 0, wvw_GetLastMenuEvent( 0 ) )
+      IF ch == wvw_SetMenuKeyEvent(0)
+         MenuAction( 0, wvw_GetLastMenuEvent(0) )
       ENDIF
    ENDDO
 
@@ -122,8 +122,8 @@ STATIC FUNCTION OpenNewWindow()
    ctitle := "Win #" + hb_ntos( nWinNum )
    nrow1  := 4 + ( nWinNum - 1 )
    ncol1  := 1 + ( nWinNum - 1 ) * 3
-   nrow2  := WinMaxRow( 0 ) - _MAX_WINNUM + 1 + ( nWinNum - 1 )
-   ncol2  := WinMaxCol( 0 ) - ( _MAX_WINNUM + 1 ) * 3 + ( nWinNum - 1 ) * 3
+   nrow2  := WinMaxRow(0) - _MAX_WINNUM + 1 + ( nWinNum - 1 )
+   ncol2  := WinMaxCol(0) - ( _MAX_WINNUM + 1 ) * 3 + ( nWinNum - 1 ) * 3
 
    // open a window whose parent is Main Window
    SetColor( "W+/N" )

@@ -11,11 +11,11 @@ PROCEDURE Main( cFile )
 
       DO WHILE ! hb_FAtEof()
          ? "line " + Str( hb_FRecNo(), 2 ) + " " + hb_FReadLn()
-         hb_FSkip( 1 )
+         hb_FSkip(1)
       ENDDO
       ?
       my_goto( 18 )
-      my_goto( 2 )
+      my_goto(2)
 
       hb_FGoBottom()
       ?

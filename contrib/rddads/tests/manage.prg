@@ -78,8 +78,8 @@ PROCEDURE Main()
    ?
    ? "Connect:", AdsMgConnect( "C:" )
    ?
-   ? "AdsVersion( 0 ):", AdsVersion( 0 )
-   ? "AdsVersion( 3 ):", AdsVersion( 3 )
+   ? "AdsVersion(0):", AdsVersion(0)
+   ? "AdsVersion(3):", AdsVersion(3)
    ?
 
    aRay := AdsMgGetInstallInfo()
@@ -97,42 +97,42 @@ PROCEDURE Main()
    ENDIF
 
    ? "Activity info:"
-   ? AdsMgGetActivityInfo( 1 )
-   ? AdsMgGetActivityInfo( 2 )
+   ? AdsMgGetActivityInfo(1)
+   ? AdsMgGetActivityInfo(2)
 
-   aRay := AdsMgGetActivityInfo( 3 )
+   aRay := AdsMgGetActivityInfo(3)
    IF Len(aRay) > 3
       ? "Up Time:", aRay[ 1 ], aRay[ 2 ], aRay[ 3 ], aRay[ 4 ]
       ?
    ENDIF
 
    ?    "    Item          In Use     MaxUsed    Rejected"
-   aRay := AdsMgGetActivityInfo( 4 )
+   aRay := AdsMgGetActivityInfo(4)
    IF Len(aRay) > 2
       ? "Users:         ", aRay[ 1 ], aRay[ 2 ], aRay[ 3 ]
    ENDIF
 
-   aRay := AdsMgGetActivityInfo( 5 )
+   aRay := AdsMgGetActivityInfo(5)
    IF Len(aRay) > 2
       ? "Connections:   ", aRay[ 1 ], aRay[ 2 ], aRay[ 3 ]
    ENDIF
 
-   aRay := AdsMgGetActivityInfo( 6 )
+   aRay := AdsMgGetActivityInfo(6)
    IF Len(aRay) > 2
       ? "WorkAreas:     ", aRay[ 1 ], aRay[ 2 ], aRay[ 3 ]
    ENDIF
 
-   aRay := AdsMgGetActivityInfo( 7 )
+   aRay := AdsMgGetActivityInfo(7)
    IF Len(aRay) > 2
       ? "Tables:        ", aRay[ 1 ], aRay[ 2 ], aRay[ 3 ]
    ENDIF
 
-   aRay := AdsMgGetActivityInfo( 8 )
+   aRay := AdsMgGetActivityInfo(8)
    IF Len(aRay) > 2
       ? "Indexes:       ", aRay[ 1 ], aRay[ 2 ], aRay[ 3 ]
    ENDIF
 
-   aRay := AdsMgGetActivityInfo( 9 )
+   aRay := AdsMgGetActivityInfo(9)
    IF Len(aRay) > 2
       ? "Locks:         ", aRay[ 1 ], aRay[ 2 ], aRay[ 3 ]
    ENDIF
@@ -178,7 +178,7 @@ PROCEDURE Main()
    WAIT
    ?
 
-   aRay := AdsMgGetConfigInfo( 0 )
+   aRay := AdsMgGetConfigInfo(0)
    IF Len(aRay) > 24
       ? aRay[  1 ], " number connections            "
       ? aRay[  2 ], " number work areas             "
@@ -210,7 +210,7 @@ PROCEDURE Main()
    WAIT
    ?
 
-   aRay := AdsMgGetConfigInfo( 1 )
+   aRay := AdsMgGetConfigInfo(1)
    IF Len(aRay) > 12
       ? aRay[  1 ], " Total mem taken by cfg params "
       ? aRay[  2 ], " memory taken by connections   "

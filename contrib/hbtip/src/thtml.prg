@@ -391,7 +391,7 @@ METHOD Find( cName, cAttribute, cValue, cData ) CLASS THtmlIterator
       RETURN NIL
    ENDIF
 
-   IF ::MatchCriteria( ::oNode )
+   IF ::MatchCriteria(::oNode)
       RETURN ::oNode
    ENDIF
 
@@ -404,7 +404,7 @@ METHOD Next() CLASS THtmlIterator
    DO WHILE ! lExit
       BEGIN SEQUENCE WITH __BreakBlock()
          oFound := ::aNodes[ ++::nCurrent ]
-         IF ::MatchCriteria( oFound )
+         IF ::MatchCriteria(oFound)
             ::oNode := oFound
             lExit := .T.
          ENDIF
@@ -428,7 +428,7 @@ CREATE CLASS THtmlIteratorScan INHERIT THtmlIterator MODULE FRIENDLY
 
    HIDDEN:
 
-   METHOD MatchCriteria( oFound )
+   METHOD MatchCriteria(oFound)
 
 ENDCLASS
 
@@ -438,7 +438,7 @@ METHOD New( oNodeTop ) CLASS THtmlIteratorScan
 
    RETURN Self
 
-METHOD MatchCriteria( oFound ) CLASS THtmlIteratorScan
+METHOD MatchCriteria(oFound) CLASS THtmlIteratorScan
 
    LOCAL xData
 
@@ -473,7 +473,7 @@ CREATE CLASS THtmlIteratorRegex INHERIT THtmlIterator MODULE FRIENDLY
 
    METHOD New( oNodeTop ) CONSTRUCTOR
    HIDDEN:
-   METHOD MatchCriteria( oFound )
+   METHOD MatchCriteria(oFound)
 
 ENDCLASS
 
@@ -483,7 +483,7 @@ METHOD New( oNodeTop ) CLASS THtmlIteratorRegex
 
    RETURN Self
 
-METHOD MatchCriteria( oFound ) CLASS THtmlIteratorRegex
+METHOD MatchCriteria(oFound) CLASS THtmlIteratorRegex
 
    LOCAL xData
 
@@ -602,7 +602,7 @@ ENDCLASS
 METHOD new( oParent, cTagName, cAttrib, cContent ) CLASS THtmlNode
 
    IF ! t_lInit
-      THtmlInit( .T. )
+      THtmlInit(.T.)
    ENDIF
 
    IF HB_ISSTRING( oParent )
@@ -1445,7 +1445,7 @@ METHOD findNodesByTagName( cName, nOrdinal ) CLASS THtmlNode
       ENDIF
    NEXT
 
-   IF HB_ISNUMERIC( nOrdinal )
+   IF HB_ISNUMERIC(nOrdinal)
       IF nOrdinal < 1 .OR. nOrdinal > Len(aRet)
          RETURN NIL
       ENDIF
@@ -1583,7 +1583,7 @@ FUNCTION THtmlInit( lInit )
    RETURN .T.
 
 FUNCTION THtmlCleanup()
-   RETURN THtmlInit( .F. )
+   RETURN THtmlInit(.F.)
 
 FUNCTION THtmlTagType( cTagName )
 

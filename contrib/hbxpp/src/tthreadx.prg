@@ -129,8 +129,8 @@ METHOD new( ... ) CLASS Thread
    LOCAL nMaxStackSize
 
    IF PCount() == 1
-      nMaxStackSize := hb_PValue( 1 )
-      IF HB_ISNUMERIC( nMaxStackSize )
+      nMaxStackSize := hb_PValue(1)
+      IF HB_ISNUMERIC(nMaxStackSize)
          ::maxStackSize := nMaxStackSize
       ENDIF
       /* TODO: Create new thread here and suspend its execution
@@ -158,7 +158,7 @@ METHOD PROCEDURE quit( xResult, nRestart ) CLASS Thread
       IF PCount() > 0
          ::result := xResult
       ENDIF
-      IF ! HB_ISNUMERIC( nRestart ) .OR. nRestart != QUIT_RESTART
+      IF ! HB_ISNUMERIC(nRestart) .OR. nRestart != QUIT_RESTART
          ::interval := NIL
       ENDIF
       QUIT
@@ -168,7 +168,7 @@ METHOD PROCEDURE quit( xResult, nRestart ) CLASS Thread
 
 METHOD setInterval( nHSeconds ) CLASS Thread
 
-   IF HB_ISNUMERIC( nHSeconds ) .AND. Int( nHSeconds ) >= 0
+   IF HB_ISNUMERIC(nHSeconds) .AND. Int( nHSeconds ) >= 0
       ::interval := Int( nHSeconds )
    ELSEIF PCount() > 0 .OR. nHSeconds == NIL
       ::interval := NIL
@@ -182,7 +182,7 @@ METHOD setInterval( nHSeconds ) CLASS Thread
 METHOD setPriority( nPriority ) CLASS Thread
 
    /* TODO: add thread priority setting */
-   IF HB_ISNUMERIC( nPriority )
+   IF HB_ISNUMERIC(nPriority)
       ::priority := nPriority
    ENDIF
 
@@ -190,7 +190,7 @@ METHOD setPriority( nPriority ) CLASS Thread
 
 METHOD setStartTime( nSeconds ) CLASS Thread
 
-   IF HB_ISNUMERIC( nSeconds )
+   IF HB_ISNUMERIC(nSeconds)
       IF nSeconds < 0 .OR. nSeconds > 86400
          RETURN .F.
       ENDIF
@@ -218,7 +218,7 @@ METHOD start( xAction, ... ) CLASS Thread
                ::active := .T.
                ::startCount++
 
-               IF HB_ISNUMERIC( ::startTime )
+               IF HB_ISNUMERIC(::startTime)
                   nTime := ::startTime - Seconds()
                   IF nTime < 0
                      nTime += 86400
@@ -254,7 +254,7 @@ METHOD start( xAction, ... ) CLASS Thread
                    *       it can be resumed
                    */
 
-                  IF ! HB_ISNUMERIC( ::interval )
+                  IF ! HB_ISNUMERIC(::interval)
                      EXIT
                   ENDIF
 
@@ -286,7 +286,7 @@ METHOD synchronize( nTimeOut ) CLASS Thread
 
    IF hb_threadSelf() != pThreadID
       RETURN hb_threadWait( pThreadID, ;
-         iif(HB_ISNUMERIC( nTimeOut ) .AND. nTimeOut != 0, ;
+         iif(HB_ISNUMERIC(nTimeOut) .AND. nTimeOut != 0, ;
          nTimeOut / 100, NIL) )
    ENDIF
 

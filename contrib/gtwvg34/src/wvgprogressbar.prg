@@ -121,11 +121,11 @@ METHOD WvgProgressBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
    ::createControl()
 
    ::SetValue( ::nValue, ::nRangeMin, ::nRangeMax, ::nSpeed )
-   IF HB_ISNUMERIC( ::nColorBarFG )
+   IF HB_ISNUMERIC(::nColorBarFG)
       ::SetColorBarFG( ::nColorBarFG )
    ENDIF
-   IF HB_ISNUMERIC( ::nColorBarBG )
-      ::SetColorBarGB( ::nColorBarBG )
+   IF HB_ISNUMERIC(::nColorBarBG)
+      ::SetColorBarGB(::nColorBarBG)
    ENDIF
 
    IF ::visible
@@ -153,7 +153,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
 
    CASE nMessage == HB_GTE_CTLCOLOR
 
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF ! Empty(::hBrushBG)
@@ -206,16 +206,16 @@ METHOD WvgProgressBar:activate( xParam )
 
 METHOD WvgProgressBar:SetValue( nValue, nRangeMin, nRangeMax, nSpeed )
 
-   IF HB_ISNUMERIC( nRangeMin ) .AND. HB_ISNUMERIC( nRangeMax ) .AND. ! ::lMarquee
+   IF HB_ISNUMERIC(nRangeMin) .AND. HB_ISNUMERIC(nRangeMax) .AND. ! ::lMarquee
       ::nRangeMin := nRangeMin
       ::nRangeMax := nRangeMax
       ::sendMessage( PBM_SETRANGE, 0, WIN_MAKELONG( ::nRangeMin, ::nRangeMax ) )
    ENDIF
-   IF HB_ISNUMERIC( nValue ) .AND. ! ::lMarquee
+   IF HB_ISNUMERIC(nValue) .AND. ! ::lMarquee
       ::sendMessage( PBM_SETPOS, nValue, 0 )
       ::nValue := nValue
    ENDIF
-   IF HB_ISNUMERIC( nSpeed ) .AND. ::lMarquee
+   IF HB_ISNUMERIC(nSpeed) .AND. ::lMarquee
       ::sendMessage( PBM_SETMARQUEE, 1, nSpeed )
       ::nSpeed := nSpeed
    ENDIF
@@ -224,7 +224,7 @@ METHOD WvgProgressBar:SetValue( nValue, nRangeMin, nRangeMax, nSpeed )
 
 METHOD PROCEDURE WvgProgressBar:SetCOlorBarFG( nColor )
 
-   IF HB_ISNUMERIC( nColor )
+   IF HB_ISNUMERIC(nColor)
       ::sendMessage( PBM_SETBARCOLOR, 0, nColor )
    ENDIF
 
@@ -232,7 +232,7 @@ METHOD PROCEDURE WvgProgressBar:SetCOlorBarFG( nColor )
 
 METHOD PROCEDURE WvgProgressBar:SetColorBarBG( nColor )
 
-   IF HB_ISNUMERIC( nColor )
+   IF HB_ISNUMERIC(nColor)
       ::sendMessage( PBM_SETBKCOLOR, 0, nColor )
    ENDIF
 

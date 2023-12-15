@@ -97,7 +97,7 @@ FUNCTION DynWinDialog( nInfo )
 
    lOnTop      := .F.
    cDlgProc    := "DynDlgProc"
-// bDlgProc    := {| a, b, c, d | DYNDLGPROC( a, b, c, d ) }
+// bDlgProc    := {| a, b, c, d | DYNDLGPROC(a, b, c, d) }
    cDlgIcon    := "resources\v_notes.ico"
 // nTimerTicks := 1000  // 1 second
 
@@ -115,7 +115,7 @@ FUNCTION DynWinDialog( nInfo )
 
    RETURN hDlg
 
-FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
+FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
 
    LOCAL lClicked, cPrompt, nIndex, hFont, aHFonts
 
@@ -168,19 +168,19 @@ FUNCTION DynDlgProc( hDlg, nMsg, wParam, lParam )
 
    CASE WM_CTLCOLOREDIT
       IF wvg_GetDlgItem( hDlg, ID_MLE ) == lParam
-         wvg_SetTextColor( wParam, RGB( 0, 0, 255 ) )
-         wvg_SetBkColor( wParam, RGB( 255, 255, 200 ) )
+         wvg_SetTextColor( wParam, RGB(0, 0, 255) )
+         wvg_SetBkColor( wParam, RGB(255, 255, 200) )
          RETURN 1
       ELSEIF wvg_GetDlgItem( hDlg, ID_EDT_TEXT ) == lParam
-         wvg_SetTextColor( wParam, RGB( 255, 255, 255 ) )
-         wvg_SetBkColor( wParam, RGB( 10, 200, 45 ) )
+         wvg_SetTextColor( wParam, RGB(255, 255, 255) )
+         wvg_SetBkColor( wParam, RGB(10, 200, 45) )
          RETURN 1
       ENDIF
       EXIT
 
    CASE WM_CTLCOLORSTATIC
       IF wvg_GetDlgItem( hDlg, ID_STA_TEXT ) == lParam
-         wvg_SetTextColor( wParam, RGB( 255, 255, 255 ) )
+         wvg_SetTextColor( wParam, RGB(255, 255, 255) )
          RETURN 1
       ENDIF
       EXIT
@@ -292,7 +292,7 @@ FUNCTION DlgSlideShow()
 
    RETURN hDlg
 
-FUNCTION DlgSlideShowProc( hDlg, nMsg, wParam, lParam )
+FUNCTION DlgSlideShowProc(hDlg, nMsg, wParam, lParam)
 
    THREAD STATIC t_nSlide := 1
 
@@ -325,13 +325,13 @@ STATIC PROCEDURE DrawSlide( hDlg, nSlide )
 
    LOCAL hDC, aRect
 
-   hDC   := wvg_GetDC( hDlg )
+   hDC   := wvg_GetDC(hDlg)
    aRect := wvg_GetClientRect( hDlg )
 
    win_Rectangle( hDC, aRect[1] + 10, aRect[2] + 10, aRect[3] - 10, aRect[4] - 10 )
    wvg_DrawImage( hDC, aRect[1] + 10, aRect[2] + 10, aRect[3] - aRect[1] - 20, ;
       aRect[4] - aRect[2] - 20, t_aSlides[nSlide] )
 
-   wvg_ReleaseDC( hDlg, hDC )
+   wvg_ReleaseDC(hDlg, hDC)
 
    RETURN

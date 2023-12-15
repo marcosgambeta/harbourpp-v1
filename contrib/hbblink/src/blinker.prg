@@ -78,7 +78,7 @@ PROCEDURE hb_BliDemDte( dDate )
 
 PROCEDURE hb_BliDemMin( nValue )
 
-   IF HB_ISNUMERIC( nValue )
+   IF HB_ISNUMERIC(nValue)
       s_nDemoMinutes := nValue
    ENDIF
 
@@ -89,7 +89,7 @@ FUNCTION BliDbgHan( nValue )
    STATIC s_nDebugHandle := 1
    LOCAL nOldValue := s_nDebugHandle
 
-   IF HB_ISNUMERIC( nValue )
+   IF HB_ISNUMERIC(nValue)
       s_nDebugHandle := nValue
    ENDIF
 
@@ -105,7 +105,7 @@ FUNCTION BliDemMin( nValue )
 
    LOCAL nOldValue := s_nDemoMinutes
 
-   IF HB_ISNUMERIC( nValue )
+   IF HB_ISNUMERIC(nValue)
       s_nDemoMinutes := nValue
    ENDIF
 
@@ -127,7 +127,7 @@ FUNCTION BliErrPrmBas()
    RETURN s_cErrorParam
 
 /* INCOMPATIBLE: Will return pointer instead of numeric. */
-FUNCTION BliLibLib( cLib )
+FUNCTION BliLibLib(cLib)
    RETURN iif(s_lLibOverrides, hb_hrbLoad( HB_HRB_BIND_OVERLOAD, cLib ), hb_hrbLoad( cLib ))
 
 /* INCOMPATIBLE: Will return array instead of numeric. */
@@ -184,7 +184,7 @@ FUNCTION BliMemPak( nValue )
    STATIC s_nGCFrequency := 0
    LOCAL nOldValue := s_nDemoMinutes
 
-   IF HB_ISNUMERIC( nValue )
+   IF HB_ISNUMERIC(nValue)
       s_nGCFrequency := nValue
    ENDIF
 
@@ -211,10 +211,10 @@ PROCEDURE BliOvlSus( nValue )
 
    RETURN
 
-FUNCTION BliPtrDec( nPointer, nValue )
+FUNCTION BliPtrDec(nPointer, nValue)
    RETURN nPointer - nValue
 
-FUNCTION BliPtrInc( nPointer, nValue )
+FUNCTION BliPtrInc(nPointer, nValue)
    RETURN nPointer + nValue
 
 FUNCTION BliSerNum()
@@ -322,7 +322,7 @@ FUNCTION SwpUseXms( lValue )
 
    RETURN .F.
 
-FUNCTION SwpUseUmb( lValue )
+FUNCTION SwpUseUmb(lValue)
 
    HB_SYMBOL_UNUSED( lValue )
 

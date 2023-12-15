@@ -135,17 +135,17 @@ METHOD Eval( cMethodName, ... ) CLASS OleNetioSrv
          xRetVal := netio_ProcExists( ::pConn, ... )
          EXIT
       CASE "PROCEXEC"
-         xRetVal := netio_ProcExec( ::pConn, ... )
+         xRetVal := netio_ProcExec(::pConn, ...)
          EXIT
       CASE "PROCEXECW"
          xRetVal := netio_ProcExecW( ::pConn, ... )
          EXIT
       CASE "FUNCEXEC"
-         xRetVal := netio_FuncExec( ::pConn, ... )
+         xRetVal := netio_FuncExec(::pConn, ...)
          EXIT
       OTHERWISE
          /* redirect all other messages to RPC server as function calls */
-         xRetVal := netio_FuncExec( ::pConn, cMethodName, ... )
+         xRetVal := netio_FuncExec(::pConn, cMethodName, ...)
       ENDSWITCH
    RECOVER USING oErr
       xRetVal := oErr

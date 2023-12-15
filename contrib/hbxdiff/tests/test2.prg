@@ -15,7 +15,7 @@ PROCEDURE Main()
    cFileCtx := hb_MemoRead( __FILE__ )
 
    xdl_write_mmfile( pMMFOld, @cFileCtx )
-   xdl_write_mmfile( pMMFNew, cFileCtx + hb_eol() + Space( 3 ) + "RETURN NIL" + hb_eol() )
+   xdl_write_mmfile( pMMFNew, cFileCtx + hb_eol() + Space(3) + "RETURN NIL" + hb_eol() )
 
    ? xdl_mmfile_cmp( pMMFOld, pMMFNew )
 

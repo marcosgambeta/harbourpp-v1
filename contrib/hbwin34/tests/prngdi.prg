@@ -20,9 +20,9 @@ PROCEDURE Main()
 
    pDEVMODE := __wapi_DEVMODE_New( cPrinterName )
    __wapi_DEVMODE_Set( pDEVMODE, { "dmPaperSize" => WIN_DMPAPER_A3 } )
-   ? hDC := wapi_CreateDC( , cPrinterName, , pDEVMODE )
+   ? hDC := wapi_CreateDC(, cPrinterName, , pDEVMODE)
 
-   ? wapi_StartDoc( hDC, { "lpszDocName" => "test job" } /* DOCINFO */ )
+   ? wapi_StartDoc(hDC, { "lpszDocName" => "test job" } /* DOCINFO */)
    ? wapi_StartPage( hDC )
    ? hOBJECT := wapi_CreateFont( ,,,,,,,,,,,,, "Arial" )
    ? wapi_SelectObject( hDC, hOBJECT )
@@ -73,6 +73,6 @@ PROCEDURE Main()
    ? hb_ValToExp( hSIZE )
 
    ? wapi_EndPage( hDC )
-   ? wapi_EndDoc( hDC )
+   ? wapi_EndDoc(hDC)
 
    RETURN

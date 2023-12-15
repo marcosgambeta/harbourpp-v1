@@ -19,19 +19,19 @@ PROCEDURE Main()
    LOCAL fetch_stat
    LOCAL tmp
 
-   hb_FNameSplit( hb_argv( 0 ), NIL, @cName, NIL )
+   hb_FNameSplit( hb_argv(0), NIL, @cName, NIL )
    cDatabase := hb_DirTemp() + cName + ".fdb"
 
    IF hb_FileExists( cDatabase )
       FErase( cDatabase )
    ENDIF
 
-   ? tmp := FBCreateDB( cServer + cDatabase, cUser, cPass, nPageSize, cCharSet, nDialect ), FBError( tmp )
+   ? tmp := FBCreateDB(cServer + cDatabase, cUser, cPass, nPageSize, cCharSet, nDialect), FBError( tmp )
 
 
    /* Connect rdbms */
    db := FBConnect( cServer + cDatabase, cUser, cPass )
-   IF HB_ISNUMERIC( db )
+   IF HB_ISNUMERIC(db)
       ? "Error:", db, FBError( db )
       QUIT
    ENDIF
@@ -40,7 +40,7 @@ PROCEDURE Main()
    ? tmp := FBExecute( db, "sldjfs;ldjs;djf", nDialect ), FBError( tmp )
 
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC( trans )
+   IF HB_ISNUMERIC(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? tmp := FBQuery( db, "create table teste (code smallint)", nDialect, trans ), FBError( tmp )
@@ -49,7 +49,7 @@ PROCEDURE Main()
 
    ? "==="
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC( trans )
+   IF HB_ISNUMERIC(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? tmp := FBQuery( db, "CREATE TABLE customer( customer VARCHAR(20) )", nDialect, trans ), FBError( tmp )
@@ -58,7 +58,7 @@ PROCEDURE Main()
    ? "==="
 
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC( trans )
+   IF HB_ISNUMERIC(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? "Status Execute: ", tmp := FBExecute( db, 'insert into customer(customer) values ("test 1")', nDialect, trans ), FBError( tmp )
@@ -66,7 +66,7 @@ PROCEDURE Main()
    ENDIF
 
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC( trans )
+   IF HB_ISNUMERIC(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? "Status Execute: ", tmp := FBExecute( db, 'insert into customer(customer) values ("test 2")', nDialect, trans ), FBError( tmp )
@@ -78,7 +78,7 @@ PROCEDURE Main()
    // FIX WINDOWS GPF BELOW
 
    qry := FBQuery( db, "SELECT * FROM customer", nDialect )
-   IF HB_ISNUMERIC( qry )
+   IF HB_ISNUMERIC(qry)
       ? "Error:", qry, FBError( qry )
    ELSE
       num_cols := qry[ 4 ]
@@ -96,7 +96,7 @@ PROCEDURE Main()
       DO WHILE ( fetch_stat := FBFetch( qry ) ) == 0
          ? fetch_stat
          FOR x := 1 TO num_cols
-            ?? FBGetData( qry, x ), ", "
+            ?? FBGetData(qry, x), ", "
          NEXT
       ENDDO
 

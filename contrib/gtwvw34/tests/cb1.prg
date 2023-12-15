@@ -33,7 +33,7 @@ PROCEDURE Main()
    SetColor( "N/W" )
    wvw_SetTitle( , "Quick Survey" )
    wvw_NoClose()
-   wvw_SetAltF4Close( .F. )
+   wvw_SetAltF4Close(.F.)
    wvw_SetLineSpacing( , 4 )
 #if 0
    wvw_SetLSpaceColor( , 7 )

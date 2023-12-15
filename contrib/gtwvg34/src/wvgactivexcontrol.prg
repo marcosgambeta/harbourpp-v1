@@ -151,7 +151,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
       RETURN NIL
    ENDIF
    ::oOLE:__hObj := hObj
-   __axDoVerb( ::hWnd, -4 )
+   __axDoVerb(::hWnd, -4)
 
    IF ! Empty(::hEvents)
       ::oOle:__hSink := __axRegisterHandler( ::oOle:__hObj, {| nEvent, ... | ::execEvent( nEvent, ... ) } )
@@ -236,7 +236,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 
 METHOD WvgActiveXControl:mapEvent( nEvent, bBlock )
 
-   IF HB_ISNUMERIC( nEvent ) .AND. HB_ISEVALITEM( bBlock )
+   IF HB_ISNUMERIC(nEvent) .AND. HB_ISEVALITEM( bBlock )
       ::hEvents[ nEvent ] := bBlock
    ENDIF
 

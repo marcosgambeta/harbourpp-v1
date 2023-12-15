@@ -73,7 +73,7 @@ STATIC FUNCTION FCM_INIT( nRDD )
 
    /* Set in our private RDD ITEM the array with hb_F*() work are numbers */
    AFill( aRData, F_ERROR )
-   USRRDD_RDDDATA( nRDD, aRData )
+   USRRDD_RDDDATA(nRDD, aRData)
 
    RETURN HB_SUCCESS
 
@@ -95,7 +95,7 @@ STATIC FUNCTION FCM_NEW( pWA )
     * cannot return EOF flag directly.
     */
 
-   USRRDD_AREADATA( pWA, aWData )
+   USRRDD_AREADATA(pWA, aWData)
 
    RETURN HB_SUCCESS
 
@@ -127,8 +127,8 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
       iif(aOpenInfo[ UR_OI_SHARED ], FO_SHARED, FO_EXCLUSIVE) + ;
       iif(aOpenInfo[ UR_OI_READONLY ], FO_READ, FO_READWRITE)
 
-   aRData := USRRDD_RDDDATA( USRRDD_ID( nWA ) )
-   aWData := USRRDD_AREADATA( nWA )
+   aRData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
+   aWData := USRRDD_AREADATA(nWA)
    nSlot := AScan( aRData, F_ERROR )
 
    IF nSlot == 0
@@ -181,12 +181,12 @@ STATIC FUNCTION FCM_OPEN( nWA, aOpenInfo )
 
 STATIC FUNCTION FCM_CLOSE( nWA )
 
-   LOCAL aRData, nSlot := USRRDD_AREADATA( nWA )[ 1 ]
+   LOCAL aRData, nSlot := USRRDD_AREADATA(nWA)[ 1 ]
 
    IF nSlot >= 0
       hb_FSelect( nSlot )
       hb_FUse()
-      aRData := USRRDD_RDDDATA( USRRDD_ID( nWA ) )
+      aRData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
       aRData[ nSlot ] := F_ERROR
    ENDIF
 
@@ -194,7 +194,7 @@ STATIC FUNCTION FCM_CLOSE( nWA )
 
 STATIC FUNCTION FCM_GETVALUE( nWA, nField, xValue )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA )
+   LOCAL aWData := USRRDD_AREADATA(nWA)
 
    IF nField == 1
       IF aWData[ 3 ]
@@ -211,7 +211,7 @@ STATIC FUNCTION FCM_GETVALUE( nWA, nField, xValue )
 
 STATIC FUNCTION FCM_GOTO( nWA, nRecord )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA )
+   LOCAL aWData := USRRDD_AREADATA(nWA)
 
    hb_FSelect( aWData[ 1 ] )
    IF nRecord <= 0
@@ -220,7 +220,7 @@ STATIC FUNCTION FCM_GOTO( nWA, nRecord )
       hb_FGoTop()
       aWData[ 2 ] := aWData[ 3 ] := hb_FAtEof()
    ELSE
-      hb_FSkip( 0 ) /* Clear the EOF flag inside hb_F* engin
+      hb_FSkip(0) /* Clear the EOF flag inside hb_F* engin
                      - it's not done automatically in hb_FGoBottom() :-( */
       hb_FGoto( nRecord )
       aWData[ 2 ] := hb_FRecNo() == 0
@@ -234,7 +234,7 @@ STATIC FUNCTION FCM_GOTOID( nWA, nRecord )
 
 STATIC FUNCTION FCM_GOTOP( nWA )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA )
+   LOCAL aWData := USRRDD_AREADATA(nWA)
 
    hb_FSelect( aWData[ 1 ] )
    hb_FGoTop()
@@ -244,13 +244,13 @@ STATIC FUNCTION FCM_GOTOP( nWA )
 
 STATIC FUNCTION FCM_GOBOTTOM( nWA )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA )
+   LOCAL aWData := USRRDD_AREADATA(nWA)
 
    hb_FSelect( aWData[ 1 ] )
    IF hb_FLastRec() == 0
       aWData[ 2 ] := aWData[ 3 ] := .T.
    ELSE
-      hb_FSkip( 0 ) /* Clear the EOF flag inside hb_F* engin
+      hb_FSkip(0) /* Clear the EOF flag inside hb_F* engin
                      - it's not done automatically in hb_FGoBottom() :-( */
       hb_FGoBottom()
       aWData[ 2 ] := aWData[ 3 ] := .F.
@@ -263,7 +263,7 @@ STATIC FUNCTION FCM_SKIPRAW( nWA, nRecords )
    LOCAL aWData
 
    IF nRecords != 0
-      aWData := USRRDD_AREADATA( nWA )
+      aWData := USRRDD_AREADATA(nWA)
       hb_FSelect( aWData[ 1 ] )
       IF aWData[ 3 ]
          IF nRecords > 0
@@ -287,7 +287,7 @@ STATIC FUNCTION FCM_SKIPRAW( nWA, nRecords )
 
 STATIC FUNCTION FCM_Bof( nWA, lBof )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA )
+   LOCAL aWData := USRRDD_AREADATA(nWA)
 
    lBof := aWData[ 2 ]
 
@@ -295,7 +295,7 @@ STATIC FUNCTION FCM_Bof( nWA, lBof )
 
 STATIC FUNCTION FCM_EOF( nWA, lEof )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA )
+   LOCAL aWData := USRRDD_AREADATA(nWA)
 
    lEof := aWData[ 3 ]
 
@@ -310,7 +310,7 @@ STATIC FUNCTION FCM_DELETED( nWA, lDeleted )
 
 STATIC FUNCTION FCM_RECID( nWA, nRecNo )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA )
+   LOCAL aWData := USRRDD_AREADATA(nWA)
 
    hb_FSelect( aWData[ 1 ] )
    IF aWData[ 3 ]
@@ -323,7 +323,7 @@ STATIC FUNCTION FCM_RECID( nWA, nRecNo )
 
 STATIC FUNCTION FCM_RECCOUNT( nWA, nRecords )
 
-   hb_FSelect( USRRDD_AREADATA( nWA )[ 1 ] )
+   hb_FSelect( USRRDD_AREADATA(nWA)[ 1 ] )
    nRecords := hb_FLastRec()
 
    RETURN HB_SUCCESS

@@ -109,4 +109,4 @@ FUNCTION tip_DateToGMT( tDate )
       StrZero( Day( tDate ), 2 ) + " " + ;
       { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }[ Month( tDate ) ] + " " + ;
       StrZero( Year( tDate ), 4 ) + " " + ;
-      hb_TToC( tDate, "", "hh:mm:ss" ) + " GMT"
+      hb_TToC(tDate, "", "hh:mm:ss") + " GMT"

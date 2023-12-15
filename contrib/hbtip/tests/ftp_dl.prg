@@ -36,7 +36,7 @@ PROCEDURE Main( cURL, ... )
          ELSEIF hb_inetErrorCode( oFTP:SocketCon ) == 0
             ? "Server response:", oFTP:cReply
          ELSE
-            ? "Error in connection:", hb_inetErrorDesc( oFTP:SocketCon )
+            ? "Error in connection:", hb_inetErrorDesc(oFTP:SocketCon)
          ENDIF
          lRetVal := .F.
       ENDIF

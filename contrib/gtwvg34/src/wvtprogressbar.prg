@@ -64,7 +64,7 @@ CREATE CLASS WvtProgressBar INHERIT WvtObject
    VAR    lVertical                               INIT .F.
    VAR    lActive                                 INIT .F.
 
-   VAR    nBarColor                               INIT WIN_RGB( 0, 0, 128 )
+   VAR    nBarColor                               INIT WIN_RGB(0, 0, 128)
    VAR    nCurrent                                INIT 0
    VAR    nTotal                                  INIT 1
    VAR    nPercent                                INIT 0
@@ -92,8 +92,8 @@ METHOD WvtProgressBar:Create()
    __defaultNIL( @::nLeft, 0 )
    __defaultNIL( @::nBottom, iif(::lVertical, ::nTop + 9, ::nTop) )
    __defaultNIL( @::nRight, iif(::lVertical, ::nLeft + 1, ::nLeft + 19) )
-   __defaultNIL( @::nTextColor, WIN_RGB( 255, 255, 255 ) )
-   __defaultNIL( @::nBackColor, WIN_RGB( 198, 198, 198 ) )
+   __defaultNIL( @::nTextColor, WIN_RGB(255, 255, 255) )
+   __defaultNIL( @::nBackColor, WIN_RGB(198, 198, 198) )
 
    ::bPaint := {|| ::Display() }
    AAdd( ::aPaint, { ::bPaint, { WVT_BLOCK_LABEL, ::nTop, ::nLeft, ::nBottom, ::nRight } } )

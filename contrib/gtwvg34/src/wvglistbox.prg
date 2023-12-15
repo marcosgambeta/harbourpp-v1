@@ -224,7 +224,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_NOTIFY
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF Empty(::hBrushBG)

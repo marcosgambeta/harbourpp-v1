@@ -46,16 +46,16 @@ PROCEDURE Main()
    ? "netio_Connect():", netio_Connect( DBSERVER, DBPORT, , DBPASSWD )
    ?
 
-   lExists := netio_FuncExec( "HB_DirExists", "./data" )
+   lExists := netio_FuncExec("HB_DirExists", "./data")
    ? "Directory './data'", iif(! lExists, "not exists", "exists")
    IF ! lExists
       ? "Creating directory './data' ->", ;
-         iif(netio_FuncExec( "hb_DirCreate", "./data" ) == -1, "error", "OK")
+         iif(netio_FuncExec("hb_DirCreate", "./data") == -1, "error", "OK")
    ENDIF
 
    ? "'" + DBNAME + "'"
-   createdb( DBNAME )
-   testdb( DBNAME )
+   createdb(DBNAME)
+   testdb(DBNAME)
    WAIT
 
    ?
@@ -75,7 +75,7 @@ PROCEDURE Main()
 
    RETURN
 
-PROCEDURE createdb( cName )
+PROCEDURE createdb(cName)
 
    LOCAL n
 
@@ -90,7 +90,7 @@ PROCEDURE createdb( cName )
    WHILE LastRec() < 100
       dbAppend()
       n := RecNo() - 1
-      field->F1 := Chr(n % 26 + Asc( "A" )) + " " + Time()
+      field->F1 := Chr(n % 26 + Asc("A")) + " " + Time()
       field->F2 := field->F1
       field->F3 := n / 100
       field->F4 := hb_DateTime()
@@ -103,7 +103,7 @@ PROCEDURE createdb( cName )
 
    RETURN
 
-PROCEDURE testdb( cName )
+PROCEDURE testdb(cName)
 
    LOCAL i, j
 
@@ -117,7 +117,7 @@ PROCEDURE testdb( cName )
       ordSetFocus( i )
       ? i, "name:", ordName(), "key:", ordKey(), "keycount:", ordKeyCount()
    NEXT
-   ordSetFocus( 1 )
+   ordSetFocus(1)
    dbGoTop()
    WHILE ! Eof()
       IF ! field->F1 == field->F2

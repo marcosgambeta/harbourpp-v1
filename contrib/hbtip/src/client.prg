@@ -132,7 +132,7 @@ CREATE CLASS TIPClient
    METHOD SetProxy( cProxyHost, nProxyPort, cProxyUser, cProxyPassword )
 
    METHOD lastErrorCode() INLINE ::nLastError
-   METHOD lastErrorMessage( SocketCon ) INLINE ::inetErrorDesc( SocketCon )
+   METHOD lastErrorMessage( SocketCon ) INLINE ::inetErrorDesc(SocketCon)
 
    METHOD InetRcvBufSize( SocketCon, nSizeBuff )
    METHOD InetSndBufSize( SocketCon, nSizeBuff )
@@ -155,7 +155,7 @@ CREATE CLASS TIPClient
    METHOD inetCount( SocketCon )
    METHOD inetSendAll( SocketCon, cData, nLen )
    METHOD inetErrorCode( SocketCon )
-   METHOD inetErrorDesc( SocketCon )
+   METHOD inetErrorDesc(SocketCon)
    METHOD inetConnect( cServer, nPort, SocketCon )
 
    METHOD Log( ... )
@@ -221,7 +221,7 @@ METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClient
    ENDIF
 
    IF ::lHasSSL .AND. lSSL
-      ::EnableSSL( .T. )
+      ::EnableSSL(.T.)
    ENDIF
 
    ::oUrl         := oUrl
@@ -332,7 +332,7 @@ METHOD ReadHTTPProxyResponse( /* @ */ cResponse ) CLASS TIPClient
    LOCAL cBuffer
 
    DO WHILE .T.
-      cBuffer := Space( 1 )
+      cBuffer := Space(1)
       IF ::inetRecv( ::SocketCon, @cBuffer, hb_BLen(cBuffer) ) <= 0
          RETURN .F.
       ENDIF
@@ -390,7 +390,7 @@ METHOD Read( nLen ) CLASS TIPClient
       RETURN NIL
    ENDIF
 
-   IF ! HB_ISNUMERIC( nLen ) .OR. nLen <= 0 .OR. ( ::nLength > 0 .AND. nLen > ::nLength - ::nRead )
+   IF ! HB_ISNUMERIC(nLen) .OR. nLen <= 0 .OR. ( ::nLength > 0 .AND. nLen > ::nLength - ::nRead )
       nLen := ::nLength - ::nRead
    ENDIF
 
@@ -440,7 +440,7 @@ METHOD ReadToFile( /* @ */ cFile, nMode, nSize ) CLASS TIPClient
    LOCAL cData
    LOCAL nSent := 0
 
-   LOCAL lToMemory := hb_PIsByRef( 1 )
+   LOCAL lToMemory := hb_PIsByRef(1)
 
    hb_default( @nSize, 0 )
 
@@ -552,7 +552,7 @@ METHOD WriteFromFile( cFile ) CLASS TIPClient
 
 METHOD Write( cData, nLen, lCommit ) CLASS TIPClient
 
-   IF ! HB_ISNUMERIC( nLen ) .OR. nLen <= 0
+   IF ! HB_ISNUMERIC(nLen) .OR. nLen <= 0
       nLen := hb_BLen(cData)
    ENDIF
 
@@ -570,7 +570,7 @@ METHOD inetSendAll( SocketCon, cData, nLen ) CLASS TIPClient
 
    LOCAL nRet
 
-   IF ! HB_ISNUMERIC( nLen ) .OR. nLen <= 0
+   IF ! HB_ISNUMERIC(nLen) .OR. nLen <= 0
       nLen := hb_BLen(cData)
    ENDIF
 
@@ -706,7 +706,7 @@ METHOD inetErrorCode( SocketCon ) CLASS TIPClient
 
    RETURN nRet
 
-METHOD inetErrorDesc( SocketCon ) CLASS TIPClient
+METHOD inetErrorDesc(SocketCon) CLASS TIPClient
 
    hb_default( @SocketCon, ::SocketCon )
 
@@ -716,7 +716,7 @@ METHOD inetErrorDesc( SocketCon ) CLASS TIPClient
             RETURN ERR_error_string( SSL_get_error( ::ssl, ::nSSLError ) )
          ENDIF
       ELSE
-         RETURN hb_inetErrorDesc( SocketCon )
+         RETURN hb_inetErrorDesc(SocketCon)
       ENDIF
    ENDIF
 
@@ -758,7 +758,7 @@ METHOD PROCEDURE inetConnect( cServer, nPort, SocketCon ) CLASS TIPClient
 /* Methods to manage buffers */
 METHOD InetRcvBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
 
-   IF HB_ISNUMERIC( nSizeBuff ) .AND. nSizeBuff > 0
+   IF HB_ISNUMERIC(nSizeBuff) .AND. nSizeBuff > 0
       hb_inetSetRcvBufSize( SocketCon, nSizeBuff )
    ENDIF
 
@@ -766,7 +766,7 @@ METHOD InetRcvBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
 
 METHOD InetSndBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
 
-   IF HB_ISNUMERIC( nSizeBuff ) .AND. nSizeBuff > 0
+   IF HB_ISNUMERIC(nSizeBuff) .AND. nSizeBuff > 0
       hb_inetSetSndBufSize( SocketCon, nSizeBuff )
    ENDIF
 
@@ -774,10 +774,10 @@ METHOD InetSndBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
 
 METHOD InetTimeOut( SocketCon, nConnTimeout ) CLASS TIPClient
 
-   IF HB_ISNUMERIC( nConnTimeout )
+   IF HB_ISNUMERIC(nConnTimeout)
       ::nConnTimeout := nConnTimeout
    ENDIF
-   IF HB_ISNUMERIC( ::nConnTimeout )
+   IF HB_ISNUMERIC(::nConnTimeout)
       RETURN hb_inetTimeout( SocketCon, ::nConnTimeout )
    ENDIF
 
@@ -785,7 +785,7 @@ METHOD InetTimeOut( SocketCon, nConnTimeout ) CLASS TIPClient
 
 /* Called from another method with list of parameters and, as last parameter, return code
    of function being logged.
-   Example, I want to log MyFunc( a, b, c ) which returns m,
+   Example, I want to log MyFunc(a, b, c) which returns m,
             ::Log( a, b, c, m ) */
 METHOD Log( ... ) CLASS TIPClient
 
@@ -794,8 +794,8 @@ METHOD Log( ... ) CLASS TIPClient
 
    IF HB_ISEVALITEM( ::bTrace )
 
-      cMsg := DToS( Date() ) + "-" + Time() + Space( 2 ) + ;
-         SubStr(ProcName( 1 ), RAt( ":", ProcName( 1 ) )) + ;
+      cMsg := DToS( Date() ) + "-" + Time() + Space(2) + ;
+         SubStr(ProcName(1), RAt( ":", ProcName(1) )) + ;
          "( "
 
       FOR EACH xVar IN hb_AParams()

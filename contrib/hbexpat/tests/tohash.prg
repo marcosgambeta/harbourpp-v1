@@ -49,11 +49,11 @@ PROCEDURE Main( cFileName )
 
    aNode[ _N_aParent ] := aUserData[ _D_aTree ]
 
-   ? XML_GetUserData( p )
-   XML_SetUserData( p, aUserData )
-   ? ValType( XML_GetUserData( p ) )
+   ? XML_GetUserData(p)
+   XML_SetUserData(p, aUserData)
+   ? ValType( XML_GetUserData(p) )
    XML_SetElementHandler( p, {| x, e, a | cb_start( x, e, a ) }, {| x | cb_end( x ) } )
-   XML_SetCharacterDataHandler( p, {| x, d | cb_data( x, d ) } )
+   XML_SetCharacterDataHandler( p, {| x, d | cb_data(x, d) } )
    XML_SetUnknownEncodingHandler( p, {| x, e, i | cb_unknownencoding( x, e, i ) } )
    XML_SetEndDoctypeDeclHandler( p, @cb_enddoctype() )
 
@@ -150,7 +150,7 @@ STATIC PROCEDURE cb_end( aUserData )
 
    RETURN
 
-STATIC PROCEDURE cb_data( aUserData, cData )
+STATIC PROCEDURE cb_data(aUserData, cData)
 
    aUserData[ _D_aNode ][ _N_xValue ] += cData
 

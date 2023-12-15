@@ -146,7 +146,7 @@ CREATE CLASS GDImage
    METHOD Points()                         INLINE Len(::aPoints)
 
    METHOD Rectangle( x1, y1, x2, y2, lFilled, color )
-   METHOD Arc( x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle )
+   METHOD Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle)
    METHOD Ellipse( x, y, nWidth, nHeight, lFilled, color )
 
    METHOD Circle( x, y, nRadius, lFilled, nColor ) ;
@@ -170,13 +170,13 @@ CREATE CLASS GDImage
 
    METHOD SetThickness( nThickness )       INLINE gdImageSetThickness( ::pImage, nThickness )
    METHOD SetAlphaBlending( lAlphaBlending )  INLINE gdImageAlphaBlending( ::pImage, lAlphaBlending )
-   METHOD SetSaveAlpha( lSaveAlpha )       INLINE gdImageSaveAlpha( ::pImage, lSaveAlpha )
-   METHOD SetClippingArea( x1, y1, x2, y2 )   INLINE gdImageSetClip( ::pImage, x1, y1, x2, y2 )
+   METHOD SetSaveAlpha(lSaveAlpha)       INLINE gdImageSaveAlpha(::pImage, lSaveAlpha)
+   METHOD SetClippingArea(x1, y1, x2, y2)   INLINE gdImageSetClip( ::pImage, x1, y1, x2, y2 )
 
    /* QUERY FUNCTIONS */
 
    METHOD ColorsTotal()                    INLINE gdImageColorsTotal( ::pImage )
-   METHOD Alpha( color )                   INLINE hb_default( @color, ::pColor ), gdImageAlpha( ::pImage, color )
+   METHOD Alpha(color)                     INLINE hb_default( @color, ::pColor ), gdImageAlpha(::pImage, color)
    METHOD Red( color )                     INLINE hb_default( @color, ::pColor ), gdImageRed( ::pImage, color )
    METHOD Green( color )                   INLINE hb_default( @color, ::pColor ), gdImageGreen( ::pImage, color )
    METHOD Blue( color )                    INLINE hb_default( @color, ::pColor ), gdImageBlue( ::pImage, color )
@@ -241,13 +241,13 @@ CREATE CLASS GDImage
 
    METHOD SetColor( r, g, b )              INLINE iif(PCount() == 2, ::pColor := r, ::pColor := gdImageColorAllocate( ::pImage, r, g, b ))
    METHOD DelColor( pColor )               INLINE ::pColor := NIL, gdImageColorDeallocate( ::pImage, pColor )
-   METHOD SetColorAlpha( r, g, b, a )      INLINE ::pColor := gdImageColorAllocateAlpha( ::pImage, r, g, b, a)
+   METHOD SetColorAlpha(r, g, b, a)        INLINE ::pColor := gdImageColorAllocateAlpha(::pImage, r, g, b, a)
    METHOD SetColorClosest( r, g, b )       INLINE ::pColor := gdImageColorClosest( ::pImage, r, g, b )
-   METHOD SetColorClosestAlpha( r, g, b, a ) INLINE ::pColor := gdImageColorClosestAlpha( ::pImage, r, g, b, a)
-   METHOD SetColorClosestHWB( r, g, b )    INLINE ::pColor := gdImageColorClosestHWB( ::pImage, r, g, b )
+   METHOD SetColorClosestAlpha(r, g, b, a) INLINE ::pColor := gdImageColorClosestAlpha(::pImage, r, g, b, a)
+   METHOD SetColorClosestHWB(r, g, b)      INLINE ::pColor := gdImageColorClosestHWB(::pImage, r, g, b)
    METHOD SetColorExact( r, g, b )         INLINE ::pColor := gdImageColorExact( ::pImage, r, g, b )
    METHOD SetColorResolve( r, g, b )       INLINE ::pColor := gdImageColorResolve( ::pImage, r, g, b )
-   METHOD SetColorResolveAlpha( r, g, b, a ) INLINE ::pColor := gdImageColorResolveAlpha( ::pImage, r, g, b, a)
+   METHOD SetColorResolveAlpha(r, g, b, a) INLINE ::pColor := gdImageColorResolveAlpha(::pImage, r, g, b, a)
    METHOD SetTransparent( pColor )         INLINE gdImageColorTransparent( ::pImage, pColor )
    METHOD SetSharpen( nPerc )              INLINE gdImageSharpen( ::pImage, nPerc )
    METHOD SetInterlace( lOnOff )           INLINE gdImageInterlace( ::pImage, lOnOff )
@@ -337,16 +337,16 @@ METHOD Rectangle( x1, y1, x2, y2, lFilled, color ) CLASS GDImage
 
    RETURN Self
 
-METHOD Arc( x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle ) CLASS GDImage
+METHOD Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle) CLASS GDImage
 
    hb_default( @lFilled, .F. )
    hb_default( @color, ::pColor )
    hb_default( @nStyle, gdArc )
 
    IF lFilled
-      gdImageFilledArc( ::pImage, x, y, nWidth, nHeight, nStartDegree, nEndDegree, color, nStyle )
+      gdImageFilledArc(::pImage, x, y, nWidth, nHeight, nStartDegree, nEndDegree, color, nStyle)
    ELSE
-      gdImageArc( ::pImage, x, y, nWidth, nHeight, nStartDegree, nEndDegree, color )
+      gdImageArc(::pImage, x, y, nWidth, nHeight, nStartDegree, nEndDegree, color)
    ENDIF
 
    RETURN Self

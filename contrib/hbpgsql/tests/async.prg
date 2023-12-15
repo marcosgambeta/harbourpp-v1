@@ -15,7 +15,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       "host = '" + hb_defaultValue( cHost, "localhost" ) + "' " + ;
       "user = '" + hb_defaultValue( cUser, hb_UserName() ) + "' " + ;
       "password = '" + hb_defaultValue( cPass, "" ) + "' " + ;
-      "port = 5432" )
+      "port = 5432")
 
    ? "Conection status", PQerrorMessage( conn ), PQstatus( conn )
 
@@ -58,7 +58,7 @@ STATIC PROCEDURE Query( conn, cQuery, lCancel )
       ? "PQgetResult", hb_ValToExp( res := PQgetResult( conn ) )
 
       IF ! Empty(res)
-         FOR x := 1 TO PQlastrec( res )
+         FOR x := 1 TO PQlastrec(res)
             ?
             FOR y := 1 TO PQfcount( res )
                ?? PQgetvalue( res, x, y ), " "

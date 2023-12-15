@@ -45,7 +45,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
    IF ! oPrinter:Create()
       Alert( "Cannot Create Printer" )
    ELSE
-      IF ! oPrinter:startDoc( "win_Prn(Doc name in Printer Properties)" )
+      IF ! oPrinter:startDoc("win_Prn(Doc name in Printer Properties)")
          Alert( "StartDoc() failed" )
       ELSE
          oPrinter:SetPen( WIN_PS_SOLID, 1, HB_WIN_RGB_RED )
@@ -55,8 +55,8 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:NewLine()
          oPrinter:TextOut( "   Partial list of available fonts that are available for OEM_" )
          oPrinter:NewLine()
-         oPrinter:UnderLine( .T. )
-         oPrinter:Italic( .T. )
+         oPrinter:UnderLine(.T.)
+         oPrinter:Italic(.T.)
 //       oPrinter:SetFont( "Courier New", 7, { 3, -50 } )  // Compressed print
          nColFixed   := 40 * oPrinter:CharWidth
          nColTTF     := 48 * oPrinter:CharWidth
@@ -69,8 +69,8 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:SetPos( nColCharset )
          oPrinter:TextOut( "CharSet#", .T. )
          oPrinter:NewLine()
-         oPrinter:Italic( .F. )
-         oPrinter:UnderLine( .F. )
+         oPrinter:Italic(.F.)
+         oPrinter:UnderLine(.F.)
          aFonts := oPrinter:GetFonts()
          oPrinter:NewLine()
          FOR x := 1 TO Len(aFonts) STEP 2
@@ -93,13 +93,13 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
             oPrinter:Line( 0, oPrinter:PosY + 5, 2000, oPrinter:PosY + 5 )
          NEXT
          oPrinter:SetFont( "Lucida Console", 8, { 3, -50 } )  // Alternative Compressed print
-         oPrinter:CharSet( 0 )  // Reset default charset
+         oPrinter:CharSet(0)  // Reset default charset
          oPrinter:Bold( WIN_FW_EXTRABOLD )
          oPrinter:NewLine()
          oPrinter:TextOut( "This is on line" + hb_ntos( oPrinter:PRow() ) + ", Printed bold, " )
          oPrinter:TextOut( " finishing at Column: " )
          oPrinter:TextOut( hb_ntos( oPrinter:PCol() ) )
-         oPrinter:SetPRC( oPrinter:PRow() + 3, 0 )
+         oPrinter:SetPRC(oPrinter:PRow() + 3, 0)
          oPrinter:Bold( WIN_FW_DONTCARE )
          oPrinter:TextOut( "Notice: UNDERLINE only prints correctly if there is a blank line after", .T. )
          oPrinter:TextOut( "        it. This is because of :LineHeight and the next line", .T. )
@@ -111,7 +111,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
          oPrinter:SetColor( HB_WIN_RGB_GREEN )
          oPrinter:TextOut( "Finally some larger print" )
          oPrinter:Box(   0, oPrinter:PosY + 100, 100, oPrinter:PosY + 200 )
-         oPrinter:Arc( 200, oPrinter:PosY + 100, 300, oPrinter:PosY + 200 )
+         oPrinter:Arc(200, oPrinter:PosY + 100, 300, oPrinter:PosY + 200)
          oPrinter:Ellipse( 400, oPrinter:PosY + 100, 500, oPrinter:PosY + 200 )
          oPrinter:FillRect( 600, oPrinter:PosY + 100, 700, oPrinter:PosY + 200, HB_WIN_RGB_RED )
 

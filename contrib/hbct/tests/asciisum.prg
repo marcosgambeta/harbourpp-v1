@@ -58,7 +58,7 @@ PROCEDURE Main()
 
    ? '  AsciiSum( Replicate( "A", 10000 ) ) == 650000 ? --> ' + Str( AsciiSum( Replicate( "A", 10000 ) ) )
    ? '  AsciiSum( "0123456789" ) == 525               ? --> ' + Str( AsciiSum( "0123456789" ) )
-   ? '  AsciiSum( NIL ) == 0                          ? --> ' + Str( AsciiSum( NIL ) )
+   ? '  AsciiSum(NIL) == 0                            ? --> ' + Str( AsciiSum(NIL) )
 
    ?
    ? "End test of AsciiSum()"

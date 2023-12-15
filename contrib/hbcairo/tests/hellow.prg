@@ -12,14 +12,14 @@ PROCEDURE Main()
 
    cairo_select_font_face( hCairo, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD )
    cairo_set_font_size( hCairo, 16 )
-   cairo_set_source_rgb( hCairo, 0, 0, 0 )  // black
+   cairo_set_source_rgb(hCairo, 0, 0, 0)  // black
 
    cairo_move_to( hCairo, 50, 50 )
    cairo_show_text( hCairo, "Hello, World!" )
 
    cairo_set_line_width( hCairo, 1 )
    FOR nI := 1 TO 10
-      cairo_set_source_rgb( hCairo, hb_Random(), hb_Random(), hb_Random() )
+      cairo_set_source_rgb(hCairo, hb_Random(), hb_Random(), hb_Random())
       cairo_rectangle( hCairo, 100 + nI * 5, 50 + nI * 5, 100, 70 )
       cairo_stroke( hCairo )
    NEXT
@@ -27,7 +27,7 @@ PROCEDURE Main()
    // Let's try some national characters
    cairo_select_font_face( hCairo, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL )
    cairo_set_font_size( hCairo, 10 )
-   cairo_set_source_rgb( hCairo, 0, 0, 0 )
+   cairo_set_source_rgb(hCairo, 0, 0, 0)
    cairo_move_to( hCairo, 50, 300 )
    cairo_show_text( hCairo, hb_UTF8ToStr( "Plaukė žąselė per ežerėlį..." ) )
 

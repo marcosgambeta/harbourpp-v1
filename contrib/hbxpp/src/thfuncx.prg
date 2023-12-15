@@ -70,7 +70,7 @@ FUNCTION ThreadWait( aThreads, nTimeOut )
       ENDIF
    NEXT
 
-   nPos := hb_threadWait( apThIDs, iif(HB_ISNUMERIC( nTimeOut ) .AND. nTimeOut != 0, ;
+   nPos := hb_threadWait( apThIDs, iif(HB_ISNUMERIC(nTimeOut) .AND. nTimeOut != 0, ;
       nTimeOut / 100, NIL) )
    IF nPos != 0
       xResult := aThreads[ nPos ]
@@ -92,7 +92,7 @@ FUNCTION ThreadWaitAll( aThreads, nTimeOut )
       ENDIF
    NEXT
 
-   RETURN hb_threadWait( apThIDs, iif(HB_ISNUMERIC( nTimeOut ) .AND. nTimeOut != 0, ;
+   RETURN hb_threadWait( apThIDs, iif(HB_ISNUMERIC(nTimeOut) .AND. nTimeOut != 0, ;
       nTimeOut / 100, NIL), .T. ) == Len(apThIDs)
 
 /* TODO: ThreadInfo() */

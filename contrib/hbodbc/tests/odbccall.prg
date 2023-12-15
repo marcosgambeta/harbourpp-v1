@@ -9,7 +9,7 @@ PROCEDURE Main()
    ? dsFunctions:FieldByName("First"):Value
    ? dsFunctions:Skip()
    ? dsFunctions:FieldByName("First"):Value
-   ? dsFunctions:GoTo( 1 )
+   ? dsFunctions:GoTo(1)
    ? dsFunctions:FieldByName("First"):Value
    ? dsFunctions:Prior()
    ? dsFunctions:FieldByName("First"):Value

@@ -31,7 +31,7 @@ PROCEDURE draw( hSurface )
    hPath := cairo_copy_path_flat( hCairo )
 
    cairo_set_line_width( hCairo, 1 )
-   cairo_set_source_rgb( hCairo, 0.6, 0.0, 0.0 )
+   cairo_set_source_rgb(hCairo, 0.6, 0.0, 0.0)
    cairo_stroke( hCairo )
 
    // Draw text
@@ -47,11 +47,11 @@ PROCEDURE draw( hSurface )
 
    // Paint
    cairo_set_line_cap( hCairo, CAIRO_LINE_CAP_ROUND )
-   cairo_set_source_rgb( hCairo, 0.2, 0.1, 0.8 )
+   cairo_set_source_rgb(hCairo, 0.2, 0.1, 0.8)
    cairo_fill_preserve( hCairo )
 
    cairo_set_line_width( hCairo, 1 )
-   cairo_set_source_rgb( hCairo, 0.2, 0.2, 0.2 )
+   cairo_set_source_rgb(hCairo, 0.2, 0.2, 0.2)
    cairo_stroke( hCairo )
 
    cairo_show_page( hCairo )

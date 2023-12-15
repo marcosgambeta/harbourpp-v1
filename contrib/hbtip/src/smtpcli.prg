@@ -63,7 +63,7 @@ CREATE CLASS TIPClientSMTP INHERIT TIPClient
    METHOD Write( cData, nLen, bCommit )
    METHOD Mail( cFrom )
    METHOD Rcpt( cTo )
-   METHOD Data( cData )
+   METHOD Data(cData)
    METHOD Commit()
    METHOD Quit()
    METHOD GetOK()
@@ -108,7 +108,7 @@ METHOD Open( cUrl, lSSL ) CLASS TIPClientSMTP
    ENDIF
 
    IF hb_defaultValue( lSSL, .F. )
-      ::EnableSSL( .T. )
+      ::EnableSSL(.T.)
       ::lAuthLogin := .T.
       ::lAuthPlain := .T.
    ENDIF
@@ -139,7 +139,7 @@ METHOD OpenSecure( cUrl, lSSL ) CLASS TIPClientSMTP
    hb_default( @lSSL, .F. )
 
    IF lSSL
-      ::EnableSSL( .T. )
+      ::EnableSSL(.T.)
       ::lAuthLogin := .T.
       ::lAuthPlain := .T.
    ENDIF
@@ -168,7 +168,7 @@ METHOD StartTLS() CLASS TIPClientSMTP
    ::inetSendAll( ::SocketCon, "STARTTLS" + ::cCRLF )
 
    IF ::GetOk() .AND. ::lHasSSL
-      ::EnableSSL( .T. )
+      ::EnableSSL(.T.)
       __tip_SSLConnectFD( ::ssl, ::SocketCon )
       ::inetSendAll( ::SocketCon, "EHLO " + iif(Empty(::cClientHost), "TIPClientSMTP", ::cClientHost) + ::cCRLF )
       RETURN ::DetectSecurity()
@@ -236,7 +236,7 @@ METHOD Rcpt( cTo ) CLASS TIPClientSMTP
 
    RETURN ::GetOk()
 
-METHOD Data( cData ) CLASS TIPClientSMTP
+METHOD Data(cData) CLASS TIPClientSMTP
 
    ::inetSendAll( ::SocketCon, "DATA" + ::cCRLF )
    IF ! ::GetOk()
@@ -263,7 +263,7 @@ METHOD Auth( cUser, cPass ) CLASS TIPClientSMTP
 
 METHOD AuthPlain( cUser, cPass ) CLASS TIPClientSMTP
 
-   ::inetSendAll( ::SocketCon, "AUTH PLAIN " + hb_base64Encode( hb_BChar( 0 ) + cUser + hb_BChar( 0 ) + cPass ) + ::cCRLF )
+   ::inetSendAll( ::SocketCon, "AUTH PLAIN " + hb_base64Encode( hb_BChar(0) + cUser + hb_BChar(0) + cPass ) + ::cCRLF )
 
    RETURN ::isAuth := ::GetOk()
 
@@ -331,4 +331,4 @@ METHOD SendMail( oTIpMail ) CLASS TIPClientSmtp
       ::rcpt( cTo )
    NEXT
 
-   RETURN ::data( oTIpMail:toString() )
+   RETURN ::data(oTIpMail:toString())

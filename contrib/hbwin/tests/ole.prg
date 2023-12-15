@@ -133,13 +133,13 @@ STATIC PROCEDURE Exm_MSExcel()
       oAS:Cells( 7, 2 ):Value := hb_DateTime()
 
       // Some formatting
-      oAS:Columns( 1 ):Font:Bold := .T.
-      oAS:Columns( 2 ):HorizontalAlignment := - 4152  // xlRight
+      oAS:Columns(1):Font:Bold := .T.
+      oAS:Columns(2):HorizontalAlignment := - 4152  // xlRight
 
-      oAS:Columns( 1 ):AutoFit()
-      oAS:Columns( 2 ):AutoFit()
-      oAS:Columns( 3 ):AutoFit()
-      oAS:Columns( 4 ):AutoFit()
+      oAS:Columns(1):AutoFit()
+      oAS:Columns(2):AutoFit()
+      oAS:Columns(3):AutoFit()
+      oAS:Columns(4):AutoFit()
 
       oAS:Cells( 3, 2 ):Font:ColorIndex := 3  // red
 
@@ -185,7 +185,7 @@ STATIC PROCEDURE Exm_MSOutlook()
    IF ( oOL := win_oleCreateObject( "Outlook.Application" ) ) != NIL
       oList := oOL:CreateItem( 7 /* olDistributionListItem */ )
       oList:DLName := "Distribution List"
-      oList:Display( .F. )
+      oList:Display(.F.)
    ELSE
       ? "Error. MS Outlook not available.", win_oleErrorText()
    ENDIF
@@ -208,10 +208,10 @@ STATIC PROCEDURE Exm_MSOutlook2()
 
       oLista := oOL:CreateItem( 7 /* olDistributionListItem */ )
       oLista:DLName := "Test with distribution list"
-      oLista:Display( .F. )
+      oLista:Display(.F.)
       oLista:AddMembers( oMail:Recipients )
       oLista:Save()
-      oLista:Close( 0 )
+      oLista:Close(0)
    ELSE
       ? "Error. MS Outlook not available.", win_oleErrorText()
    ENDIF
@@ -240,7 +240,7 @@ STATIC PROCEDURE Exm_IExplorer2()
       oIE:Visible := .T.
       oIE:Navigate( "https://harbour.github.io" )
       WHILE oIE:ReadyState != 4
-         hb_idleSleep( 0 )
+         hb_idleSleep(0)
       ENDDO
    ELSE
       ? "Error. Internet Explorer not available.", win_oleErrorText()
@@ -256,7 +256,7 @@ STATIC PROCEDURE Exm_OOCalc()
       oDesktop := oServiceManager:createInstance( "com.sun.star.frame.Desktop" )
       oDoc := oDesktop:loadComponentFromURL( "private:factory/scalc", "_blank", 0, {} )
 
-      oSheet := oDoc:getSheets:getByIndex( 0 )
+      oSheet := oDoc:getSheets:getByIndex(0)
 
       oSheet:getCellRangeByName( "A1" ):setString( "OLE from Harbour" )
 
@@ -267,7 +267,7 @@ STATIC PROCEDURE Exm_OOCalc()
       oSheet:getCellRangeByName( "B4" ):setValue( 1234.56 )
 
       oSheet:getCellRangeByName( "A5" ):setString( "Logical:" )
-      oSheet:getCellRangeByName( "B5" ):setValue( .T. )
+      oSheet:getCellRangeByName( "B5" ):setValue(.T.)
       oSheet:getCellRangeByName( "B5" ):setPropertyValue( "NumberFormat", 99 ) // BOOLEAN
 
       oSheet:getCellRangeByName( "A6" ):setString( "Date:" )
@@ -311,7 +311,7 @@ STATIC PROCEDURE Exm_OOWriter()
       oTable:setPropertyValue( "BackColor", ( 255 * 256 + 255 ) * 256 + 192 )
 
       oRows := oTable:getRows
-      oRow := oRows:getByIndex( 0 )
+      oRow := oRows:getByIndex(0)
       oRow:setPropertyValue( "BackTransparent", .F. )
       oRow:setPropertyValue( "BackColor", ( 192 * 256 + 192 ) * 256 + 128 )
 
@@ -328,7 +328,7 @@ STATIC PROCEDURE Exm_OOWriter()
       oTable:getCellByName( "A2" ):setValue( 123.12 )
       oTable:getCellByName( "B2" ):setValue( 97.07 )
       oTable:getCellByName( "C2" ):setValue( 106.38 )
-      oTable:getCellByName( "D2" ):setFormula( "sum <A2:C2>" )
+      oTable:getCellByName( "D2" ):setFormula("sum <A2:C2>")
 
       oText:insertControlCharacter( oCursor, 0, .F. )  // PARAGRAPH_BREAK
 
@@ -351,7 +351,7 @@ STATIC PROCEDURE Exm_OOOpen()
 
    IF ( oOO_ServiceManager := win_oleCreateObject( "com.sun.star.ServiceManager" ) ) != NIL
 
-      hb_FNameSplit( hb_argv( 0 ), @cDir )
+      hb_FNameSplit( hb_argv(0), @cDir )
 
       oOO_Desktop := oOO_ServiceManager:createInstance( "com.sun.star.frame.Desktop" )
       oOO_PropVal01 := oOO_ServiceManager:Bridge_GetStruct( "com.sun.star.beans.PropertyValue" )
@@ -360,7 +360,7 @@ STATIC PROCEDURE Exm_OOOpen()
       ? "Press any key to close OpenOffice"
       Inkey(0)
 
-      oOO_Doc:Close( .T. )
+      oOO_Doc:Close(.T.)
       oOO_Doc := NIL
 
       oOO_Desktop:Terminate()
@@ -485,7 +485,7 @@ STATIC PROCEDURE Exm_PocketSOAP()
       oHttp:Send( "https://www.dataaccess.com/webservicesserver/textcasing.wso?WSDL", oEnvelope:Serialize() )
       oEnvelope:Parse( oHttp )
 
-      ? oEnvelope:Parameters:Item( 0 ):Value
+      ? oEnvelope:Parameters:Item(0):Value
    ELSE
       ? "Error: PocketSOAP not available.", win_oleErrorText()
    ENDIF

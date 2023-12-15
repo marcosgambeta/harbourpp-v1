@@ -85,8 +85,8 @@ CREATE CLASS WvgFontDialog INHERIT WvgSysWindow
 
 
    VAR    outLine                               INIT .T.
-   VAR    previewBGClr                          INIT WIN_RGB( 255, 255, 255 )
-   VAR    previewFGClr                          INIT WIN_RGB( 0, 0, 0 )
+   VAR    previewBGClr                          INIT WIN_RGB(255, 255, 255)
+   VAR    previewFGClr                          INIT WIN_RGB(0, 0, 0)
    VAR    previewString                         INIT " "
    VAR    printerPS
    VAR    screenPS
@@ -125,7 +125,7 @@ CREATE CLASS WvgFontDialog INHERIT WvgSysWindow
    VAR    aPos                                  INIT { 0, 0 }
    VAR    ok                                    INIT .F.
 
-   METHOD wndProc( hWnd, nMessage, nwParam, nlParam )
+   METHOD wndProc(hWnd, nMessage, nwParam, nlParam)
    METHOD GetWvgFont( aFont )                   PROTECTED
 
 ENDCLASS
@@ -177,7 +177,7 @@ METHOD WvgFontDialog:create( oParent, oOwner, oScreenPS, oPrinterPS, aPos )
 
    RETURN Self
 
-METHOD WvgFontDialog:wndProc( hWnd, nMessage, nwParam, nlParam )
+METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
 
    LOCAL aRect, nL, nH
 
@@ -266,7 +266,7 @@ METHOD WvgFontDialog:display( nMode )
    ENDIF
 
    ::ok := .F.
-   aInfo := wvg_ChooseFont( hWnd, {| h, m, w, l | ::wndProc( h, m, w, l ) }, ::familyName, ;
+   aInfo := wvg_ChooseFont( hWnd, {| h, m, w, l | ::wndProc(h, m, w, l) }, ::familyName, ;
       ::nominalPointSize, ::viewScreenFonts, ::viewPrinterFonts )
    IF ! ::ok
       RETURN NIL

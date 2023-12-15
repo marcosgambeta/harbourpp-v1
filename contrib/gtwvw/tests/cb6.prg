@@ -254,7 +254,7 @@ FUNCTION CBreader( oGet )
    ENDIF
 
    IF oGet:exitState != GE_NOEXIT
-      SetWinFocus( NIL )  // assume current window
+      SetWinFocus(NIL)  // assume current window
       oGet:killfocus()
    ENDIF
 

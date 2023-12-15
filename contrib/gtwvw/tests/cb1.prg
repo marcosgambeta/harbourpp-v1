@@ -32,8 +32,8 @@ PROCEDURE Main()
 
    SetColor( "N/W" )
    wvw_SetTitle( NIL, "Quick Survey" )
-   wvw_NoClose( NIL )
-   wvw_SetAltF4Close( .F. )
+   wvw_NoClose(NIL)
+   wvw_SetAltF4Close(.F.)
    wvw_SetLineSpacing( NIL, 4 )
 #if 0
    wvw_SetLSpaceColor( NIL, 7 )

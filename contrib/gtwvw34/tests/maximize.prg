@@ -27,7 +27,7 @@ PROCEDURE Main()
    wvw_EnableMaximize( 0, .T. )
 
    // set the window to MAXIMIZED state
-   wvw_Maximize( 0 )
+   wvw_Maximize(0)
 
    updatescr()
    DO WHILE hb_keyStd( Inkey(0) ) != K_ESC
@@ -64,10 +64,10 @@ STATIC PROCEDURE updatescr()
    FOR i := 0 TO MaxRow()
       @ i, MaxCol() SAY "R"
    NEXT
-   @ Int( MaxRow() / 2 ) + 0, 2 SAY PadC( "Press MAXIMIZE/RESTORE button to change dimension", MaxCol() + 1 - 4 )
-   @ Int( MaxRow() / 2 ) + 1, 2 SAY PadC( "Try also changing taskbar size/position", MaxCol() + 1 - 4 )
-   @ Int( MaxRow() / 2 ) + 3, 2 SAY PadC( "Press any key to redraw screen", MaxCol() + 1 - 4 )
-   @ Int( MaxRow() / 2 ) + 4, 2 SAY PadC( "Press ESC to quit", MaxCol() + 1 - 4 )
+   @ Int( MaxRow() / 2 ) + 0, 2 SAY PadC("Press MAXIMIZE/RESTORE button to change dimension", MaxCol() + 1 - 4)
+   @ Int( MaxRow() / 2 ) + 1, 2 SAY PadC("Try also changing taskbar size/position", MaxCol() + 1 - 4)
+   @ Int( MaxRow() / 2 ) + 3, 2 SAY PadC("Press any key to redraw screen", MaxCol() + 1 - 4)
+   @ Int( MaxRow() / 2 ) + 4, 2 SAY PadC("Press ESC to quit", MaxCol() + 1 - 4)
    diminfo()
 
    RETURN

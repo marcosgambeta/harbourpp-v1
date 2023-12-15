@@ -82,13 +82,13 @@ STATIC FUNCTION LOGRDD_INIT( nRDD )
 
    /* Store data in RDD cargo */
    /* cFileName, hFile, cTag, lActive, cRDDName, bMsgLogBlock, bUserLogBlock */
-   USRRDD_RDDDATA( nRDD, { cFileName, NIL, cTag, lActive, cRDDName, NIL, NIL } )
+   USRRDD_RDDDATA(nRDD, { cFileName, NIL, cTag, lActive, cRDDName, NIL, NIL })
 
    RETURN HB_SUCCESS
 
 STATIC FUNCTION LOGRDD_EXIT( nRDD )
 
-   LOCAL aRDDData  := USRRDD_RDDDATA( nRDD )
+   LOCAL aRDDData  := USRRDD_RDDDATA(nRDD)
 
    /* Closing log file */
 
@@ -248,7 +248,7 @@ FUNCTION hb_LogRddLogFileName( cFileName )
 
    IF s_nRddID >= 0
 
-      aRDDData := USRRDD_RDDDATA( s_nRddID )
+      aRDDData := USRRDD_RDDDATA(s_nRddID)
 
       cOldFileName := aRDDData[ ARRAY_FILENAME ]
 
@@ -266,7 +266,7 @@ FUNCTION hb_LogRddTag( cTag )
 
    IF s_nRddID >= 0
 
-      aRDDData := USRRDD_RDDDATA( s_nRddID )
+      aRDDData := USRRDD_RDDDATA(s_nRddID)
 
       cOldTag := aRDDData[ ARRAY_TAG ]
 
@@ -284,7 +284,7 @@ FUNCTION hb_LogRddActive( lActive )
 
    IF s_nRddID >= 0
 
-      aRDDData := USRRDD_RDDDATA( s_nRddID )
+      aRDDData := USRRDD_RDDDATA(s_nRddID)
 
       lOldActive := aRDDData[ ARRAY_ACTIVE ]
 
@@ -302,7 +302,7 @@ FUNCTION hb_LogRddMsgLogBlock( bMsgLogBlock )
 
    IF s_nRddID >= 0
 
-      aRDDData := USRRDD_RDDDATA( s_nRddID )
+      aRDDData := USRRDD_RDDDATA(s_nRddID)
 
       bOldMsgLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
 
@@ -320,7 +320,7 @@ FUNCTION hb_LogRddUserLogBlock( bUserLogBlock )
 
    IF s_nRddID >= 0
 
-      aRDDData := USRRDD_RDDDATA( s_nRddID )
+      aRDDData := USRRDD_RDDDATA(s_nRddID)
 
       bOldUserLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
 
@@ -349,7 +349,7 @@ FUNCTION hb_LogRddValueToText( uValue )
 
 STATIC PROCEDURE OpenLogFile( nWA )
 
-   LOCAL aRDDData  := USRRDD_RDDDATA( USRRDD_ID( nWA ) )
+   LOCAL aRDDData  := USRRDD_RDDDATA(USRRDD_ID( nWA ))
    LOCAL cFileName := aRDDData[ ARRAY_FILENAME ]
    LOCAL hFile     := aRDDData[ ARRAY_FHANDLE ]
    LOCAL lActive   := aRDDData[ ARRAY_ACTIVE ]
@@ -420,7 +420,7 @@ STATIC FUNCTION ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
 
 STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
 
-   LOCAL aRDDData := USRRDD_RDDDATA( USRRDD_ID( nWA ) )
+   LOCAL aRDDData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
    LOCAL lActive  := aRDDData[ ARRAY_ACTIVE ]
    LOCAL hFile, cTag, cRDDName, bMsgLogBlock, bUserLogBlock, cLog
 

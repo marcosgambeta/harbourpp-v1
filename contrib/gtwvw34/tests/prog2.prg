@@ -28,7 +28,7 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   wvw_SetMainCoord( .T. )
+   wvw_SetMainCoord(.T.)
    nMaxRow := MaxRow()
    nMaxCol := MaxCol()
 
@@ -40,10 +40,10 @@ PROCEDURE Main()
    SetColor( _STD_COLOR_ )
    SetCursor( SC_NONE )
    CLS
-   @ 0, 0 SAY PadC( "This is the Main Window", MaxCol() + 1 )
+   @ 0, 0 SAY PadC("This is the Main Window", MaxCol() + 1)
 
    // screen background
-   ResetMiscObjects( 0 )   // make sure we start with no GUI objects
+   ResetMiscObjects(0)   // make sure we start with no GUI objects
    AddMiscObjects( 0, {| nWindow | wvw_DrawImage( nWindow, 1, 0, nmaxrow, nmaxcol, hb_DirBase() + "vouch1.bmp" ) } )
 
    lboxmessage( ;
@@ -127,7 +127,7 @@ STATIC PROCEDURE xBrowse1()
 
    nWin := znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), nTop, nLeft, nBottom, nRight, "Test table" )
 
-   wvw_SetPen( 0, 0, WIN_RGB( 210, 210, 210 ) )
+   wvw_SetPen( 0, 0, WIN_RGB(210, 210, 210) )
 
    aColumnsSep := Array( oBrowse:colCount )
    FOR EACH tmp IN aColumnsSep
@@ -183,7 +183,7 @@ STATIC FUNCTION DbSkipBlock( n )
    LOCAL nSkipped := 0
 
    IF n == 0
-      dbSkip( 0 )
+      dbSkip(0)
    ELSEIF n > 0
       DO WHILE nSkipped != n .AND. TBNext()
          nSkipped++
@@ -305,7 +305,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
    DispBegin()
    FOR i := 1 TO nNumLines
       cAline := MemoLine( cMsg, nWidth, i )
-      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC( AllTrim(cAline), nMaxWidth ) )
+      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC(AllTrim(cAline), nMaxWidth) )
    NEXT
    DispEnd()
 

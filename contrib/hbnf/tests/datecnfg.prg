@@ -153,18 +153,18 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
 
    IF dGivenDate == NIL .OR. !( ValType( dGivenDate ) $ "NDT" )
       dGivenDate := Date()
-   ELSEIF HB_ISNUMERIC( dGivenDate )
+   ELSEIF HB_ISNUMERIC(dGivenDate)
       nType := dGivenDate
       dGivenDate := Date()
    ENDIF
 
-   nType := iif(HB_ISNUMERIC( nType ), nType, 0)
+   nType := iif(HB_ISNUMERIC(nType), nType, 0)
 
    IF nType == 0
       IF SubStr(cFY_Start, 6, 5) == "01.01"
-         ? "          Calendar Month Calendar containing " + DToC( dGivenDate )
+         ? "          Calendar Month Calendar containing " + DToC(dGivenDate)
       ELSE
-         ? "            Fiscal Month Calendar containing " + DToC( dGivenDate )
+         ? "            Fiscal Month Calendar containing " + DToC(dGivenDate)
       ENDIF
 
       aTemp    := ft_Month( dGivenDate )
@@ -173,7 +173,7 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
       aTemp[ 2 ] -= ft_DayToBoW( aTemp[ 2 ] )
       aTemp[ 3 ] += 6 - ft_DayToBoW( aTemp[ 3 ] )
    ELSE
-      ? "            Accounting Month Calendar containing " + DToC( dGivenDate )
+      ? "            Accounting Month Calendar containing " + DToC(dGivenDate)
       aTemp := ft_AcctMonth( dGivenDate )
    ENDIF
 
@@ -181,7 +181,7 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
    dTemp := aTemp[ 2 ]
 
    FOR nTemp := 0 TO 6
-      ?? PadC( CDoW( dTemp + nTemp ), 10 )
+      ?? PadC(CDoW( dTemp + nTemp ), 10)
    NEXT
 
    ?
@@ -189,7 +189,7 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
       FOR nTemp := 1 TO 7
          ?? " "
          IF nType == 0 .AND. ( dTemp < dStart .OR. dTemp > dEnd )
-            ?? Space( 8 )
+            ?? Space(8)
          ELSE
             ?? dTemp
          ENDIF

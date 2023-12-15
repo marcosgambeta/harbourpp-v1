@@ -87,7 +87,7 @@ PROCEDURE Main()
 
    SetColor( "N/W,N/GR*,,,N/W*" )
    wvw_SetCodepage( , 255 )
-   wg_ResetWPaintObj( 0 )
+   wg_ResetWPaintObj(0)
    DO WHILE .T.
       CLS
       SetCursor( SC_NORMAL )

@@ -59,7 +59,7 @@ PROCEDURE Main( ... )
    LOCAL oRef, aParams, cFileName, cInitDir, cParam, lRecursive := .F.
 
 #if 0
-   AltD( 2 )
+   AltD(2)
    AltD()
 #endif
    aParams := hb_AParams()

@@ -72,7 +72,7 @@ CREATE CLASS WvgCheckBox INHERIT WvgWindow, WvgDataRef
 #if 0
    METHOD editBuffer()                          INLINE wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED
    METHOD getData()                             INLINE wvg_Button_GetCheck( ::hWnd ) == BST_CHECKED
-   METHOD setData( lCheck )                     INLINE ::sendMessage( BM_SETCHECK, iif(lCheck, BST_CHECKED, BST_UNCHECKED), 0 )
+   METHOD setData(lCheck)                       INLINE ::sendMessage( BM_SETCHECK, iif(lCheck, BST_CHECKED, BST_UNCHECKED), 0 )
 #endif
    METHOD setCaption( xCaption )
 
@@ -141,7 +141,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
       ENDIF
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF Empty(::hBrushBG)

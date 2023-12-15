@@ -63,7 +63,7 @@ FUNCTION _dbExport( cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, cXPP_Dr
 
    RETURN __dbCopy( cFile, aFields, bFor, bWhile, nNext, nRecord, lRest, cXPP_Driver )
 
-FUNCTION xpp_dbUseArea( lNewArea, cDriver, cName, xcAlias, lShared, lReadonly )
+FUNCTION xpp_dbUseArea(lNewArea, cDriver, cName, xcAlias, lShared, lReadonly)
 
    LOCAL nOldArea
    LOCAL nArea
@@ -81,8 +81,8 @@ FUNCTION xpp_dbUseArea( lNewArea, cDriver, cName, xcAlias, lShared, lReadonly )
          IF ( nArea := Select( xcAlias ) ) > 0
             xcAlias += "_" + hb_ntos( nArea )
          ENDIF
-         dbSelectArea( nOldArea )
+         dbSelectArea(nOldArea)
       ENDIF
    ENDIF
 
-   RETURN dbUseArea( lNewArea, cDriver, cName, xcAlias, lShared, lReadonly )
+   RETURN dbUseArea(lNewArea, cDriver, cName, xcAlias, lShared, lReadonly)

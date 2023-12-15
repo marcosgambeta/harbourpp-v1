@@ -50,10 +50,10 @@ PROCEDURE Main()
    bar:Draw13( ccode13 )
 
    // Build image
-   bar:Finish( 2 )
+   bar:Finish(2)
 
    // EAN8
-   bar := GDBarCode():New( 8 )
+   bar := GDBarCode():New(8)
 
    bar:Configure( 70, black, white, 2, 1 )
 
@@ -61,7 +61,7 @@ PROCEDURE Main()
 
    bar:Draw8( ccode8 )
 
-   bar:Finish( 8 )
+   bar:Finish(8)
 
    bar:ResizeImage()
 
@@ -79,7 +79,7 @@ PROCEDURE Main()
    // C- Numeric pairs of integer
    bar:Draw128( cCode128, "B" )
 
-   bar:Finish( 2 )
+   bar:Finish(2)
 
    // BRAZIL-FEBRABAN
    bar := GDBarCode():New( 25 )
@@ -88,6 +88,6 @@ PROCEDURE Main()
 
    bar:CreateBar( 560, 60, IMAGES_OUT + "febraban.gif", white )
    bar:DrawI25( "104995628545723070285700000008218000" )
-   bar:Finish( 8 )
+   bar:Finish(8)
 
    RETURN

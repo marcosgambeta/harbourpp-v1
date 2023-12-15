@@ -148,7 +148,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
       NEXT
    ENDIF
 
-   SetCursor( 0 )
+   SetCursor(0)
    SetColor( "N/W" )
    CLS
 
@@ -160,7 +160,7 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
    SetColor( pal_[DLG_CLR_TEXT] )
    IF ! Empty(aText_)
       FOR i := 1 TO Len(aText_)
-         @ nTop + 1 + i, nLeft SAY PadC( aText_[i], nRight - nLeft + 1 )
+         @ nTop + 1 + i, nLeft SAY PadC(aText_[i], nRight - nLeft + 1)
       NEXT
    ENDIF
 
@@ -280,9 +280,9 @@ FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
       oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS
    ENDIF
    oCrt:create()
-   SetCursor( 0 )
+   SetCursor(0)
 
-   IF HB_ISNUMERIC( xIcon )
+   IF HB_ISNUMERIC(xIcon)
       hb_gtInfo( HB_GTI_ICONRES, xIcon )
    ELSE
       IF ".ico" $ Lower(xIcon)
@@ -317,10 +317,10 @@ PROCEDURE DoModalWindow()
    oCrt:closable    := .F.
    oCrt:title       := "Information! [R:4 C:8]"
 
-   oCrt:rbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC( "rbUp", MaxCol() + 1 ), "W+/R*" ) }
-   oCrt:lbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC( "lbUp", MaxCol() + 1 ), "W+/B*" ) }
-   oCrt:leave       := {|| hb_DispOutAt( MaxRow(), 0, PadC( "Leaving", MaxCol() + 1 ), "W+/RB" ) }
-   oCrt:enter       := {|| hb_DispOutAt( MaxRow(), 0, PadC( "Entering", MaxCol() + 1 ), "W+/B" ) }
+   oCrt:rbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC("rbUp", MaxCol() + 1), "W+/R*" ) }
+   oCrt:lbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC("lbUp", MaxCol() + 1), "W+/B*" ) }
+   oCrt:leave       := {|| hb_DispOutAt( MaxRow(), 0, PadC("Leaving", MaxCol() + 1), "W+/RB" ) }
+   oCrt:enter       := {|| hb_DispOutAt( MaxRow(), 0, PadC("Entering", MaxCol() + 1), "W+/B" ) }
 
    oCrt:Create()
    oCrt:show()

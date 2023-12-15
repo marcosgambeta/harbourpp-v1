@@ -9,8 +9,8 @@ PROCEDURE Main()
    // set up 2 dimensional array ar[]
    FOR i := 1 TO 26
       ar[ 1, i ] := i                          //  1  ->  26  Numeric
-      ar[ 2, i ] := Chr(Asc( "A" ) + i - 1)    // "A" -> "Z"  Character
-      ar[ 3, i ] := Chr(Asc( "Z" ) - i + 1)    // "Z" -> "A"  Character
+      ar[ 2, i ] := Chr(Asc("A") + i - 1)    // "A" -> "Z"  Character
+      ar[ 3, i ] := Chr(Asc("Z") - i + 1)    // "Z" -> "A"  Character
    NEXT
    // Set Up aHeadings[] for column headings
    aHeadings  := { "Numbers", "Letters", "Reverse" }

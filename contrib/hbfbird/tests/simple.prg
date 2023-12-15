@@ -13,14 +13,14 @@ PROCEDURE Main()
    LOCAL nDialect := 1
    LOCAL cQuery, cName
 
-   hb_FNameSplit( hb_argv( 0 ), NIL, @cName, NIL )
+   hb_FNameSplit( hb_argv(0), NIL, @cName, NIL )
    cDatabase := hb_DirTemp() + cName + ".fdb"
 
    IF hb_FileExists( cDatabase )
       FErase( cDatabase )
    ENDIF
 
-   ? FBCreateDB( cServer + cDatabase, cUser, cPass, nPageSize, cCharSet, nDialect )
+   ? FBCreateDB(cServer + cDatabase, cUser, cPass, nPageSize, cCharSet, nDialect)
 
    ? "Connecting..."
 
@@ -120,17 +120,17 @@ PROCEDURE Main()
    ? ;
       oRow:FCount(), ;
       oRow:FieldPos( "code" ), ;
-      oRow:FieldGet( 1 ), ;
-      oRow:FieldName( 1 ), ;
-      oRow:FieldType( 1 ), ;
-      oRow:FieldDec( 1 ), ;
+      oRow:FieldGet(1), ;
+      oRow:FieldName(1), ;
+      oRow:FieldType(1), ;
+      oRow:FieldDec(1), ;
       oRow:FieldLen(1), ;
       Len(oRow:Getkeyfield())
 
    oRow:FieldPut( 1, 150 )
    oRow:FieldPut( 2, "MY TEST" )
 
-   ? oRow:FieldGet( 1 ), oRow:FieldGet( 2 )
+   ? oRow:FieldGet(1), oRow:FieldGet(2)
 
    ? oServer:Append( oRow )
 
@@ -142,13 +142,13 @@ PROCEDURE Main()
       oQuery:Skip()
       ? ;
          oQuery:FieldGet( oQuery:FieldPos( "code" ) ), ;
-         oQuery:FieldGet( 4 ), ;
-         oQuery:FieldGet( 2 ), ;
-         oQuery:FieldName( 1 ), ;
-         oQuery:FieldType( 1 ), ;
-         oQuery:FieldDec( 1 ), ;
+         oQuery:FieldGet(4), ;
+         oQuery:FieldGet(2), ;
+         oQuery:FieldName(1), ;
+         oQuery:FieldType(1), ;
+         oQuery:FieldDec(1), ;
          oQuery:FieldLen(1), ;
-         oQuery:FieldGet( 3 )
+         oQuery:FieldGet(3)
 
       IF oQuery:RecNo() == 50
          oRow := oQuery:getrow()
@@ -172,13 +172,13 @@ PROCEDURE Main()
 
       ? ;
          oRow:FieldGet( oRow:FieldPos( "code" ) ), ;
-         oRow:FieldGet( 4 ), ;
-         oRow:FieldGet( 2 ), ;
-         oRow:FieldName( 1 ), ;
-         oRow:FieldType( 1 ), ;
-         oRow:FieldDec( 1 ), ;
+         oRow:FieldGet(4), ;
+         oRow:FieldGet(2), ;
+         oRow:FieldName(1), ;
+         oRow:FieldType(1), ;
+         oRow:FieldDec(1), ;
          oRow:FieldLen(1), ;
-         oRow:FieldGet( 3 )
+         oRow:FieldGet(3)
    ENDDO
 
    oQuery:Destroy()

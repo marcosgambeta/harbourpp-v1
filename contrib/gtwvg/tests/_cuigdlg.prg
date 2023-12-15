@@ -39,31 +39,31 @@ PROCEDURE GCUIConsole( oCrt )
    CLS
    hb_gtInfo( HB_GTI_WINTITLE, "WVG Simplified yet Powerful CUI-GUI Console!" )
 
-   @ MaxRow(), 0 SAY PadC( "Navigate the Gets", MaxCol() + 1 ) COLOR "W+/B"
+   @ MaxRow(), 0 SAY PadC("Navigate the Gets", MaxCol() + 1) COLOR "W+/B"
 
    @  2, nColGet SAY "< Date >"
-   @  5, nColGet SAY "<" + PadC( "Name", 33 ) + ">"
-   @  8, nColGet SAY "<" + PadC( "Address", 33 ) + ">"
+   @  5, nColGet SAY "<" + PadC("Name", 33) + ">"
+   @  8, nColGet SAY "<" + PadC("Address", 33) + ">"
    @ 15, nColGet SAY "< Salary >"
 
    @  3, nColGet GET dDate  ;
-      WHEN  {|| Wvg_SetGObjData( hTxt, 1, FetchText( 1 ) ) } ;
-      VALID {|| Wvg_SetGObjData( hTxt, 6, RGB( 255, 0, 0 ) ), .T. }
+      WHEN  {|| Wvg_SetGObjData(hTxt, 1, FetchText(1)) } ;
+      VALID {|| Wvg_SetGObjData(hTxt, 6, RGB(255, 0, 0)), .T. }
    @  6, nColGet GET cName  ;
-      WHEN  {|| Wvg_SetGObjData( hTxt, 1, FetchText( 2 ) ) } ;
-      VALID {|| Wvg_SetGObjData( hTxt, 6, RGB( 255, 255, 0 ) ), ;
+      WHEN  {|| Wvg_SetGObjData(hTxt, 1, FetchText(2)) } ;
+      VALID {|| Wvg_SetGObjData(hTxt, 6, RGB(255, 255, 0)), ;
       Wvg_SetGObjState( hBoxR, 3 ), .T. }
    @  9, nColGet GET cAdd1  ;
-      WHEN  {|| Wvg_SetGObjData( hTxt, 1, FetchText( 3 ) ) } ;
-      VALID {|| Wvg_SetGObjData( hTxt, 6, RGB( 255, 0, 255 ) ), .T. }
+      WHEN  {|| Wvg_SetGObjData(hTxt, 1, FetchText(3)) } ;
+      VALID {|| Wvg_SetGObjData(hTxt, 6, RGB(255, 0, 255)), .T. }
    @ 11, nColGet GET cAdd2  ;
-      WHEN  {|| Wvg_SetGObjData( hTxt, 1, FetchText( 4 ) ) } ;
-      VALID {|| Wvg_SetGObjData( hTxt, 6, RGB( 255, 255, 255 ) ), ;
+      WHEN  {|| Wvg_SetGObjData(hTxt, 1, FetchText(4)) } ;
+      VALID {|| Wvg_SetGObjData(hTxt, 6, RGB(255, 255, 255)), ;
       Wvg_SetGObjState( hBoxR, 1 ), .T. }
    @ 13, nColGet GET cAdd3  ;
-      WHEN  {|| Wvg_SetGObjData( hTxt, 6, RGB( 198, 21, 140 ) ), .T. }
+      WHEN  {|| Wvg_SetGObjData(hTxt, 6, RGB(198, 21, 140)), .T. }
    @ 16, nColGet GET nSlry PICTURE "@Z 9999999.99" ;
-      WHEN  {|| Wvg_SetGObjData( hTxt, 6, RGB( 0, 0, 0 ) ), .T. }
+      WHEN  {|| Wvg_SetGObjData(hTxt, 6, RGB(0, 0, 0)), .T. }
 
    // The only additional calls to render your console GUI
    // The GETLIST  : This can be embedded via  @ GET preprocessor command

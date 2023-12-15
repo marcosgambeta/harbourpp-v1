@@ -726,13 +726,13 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
 
    DO CASE
    CASE xLine == NIL
-   CASE HB_ISNUMERIC( xLine )
+   CASE HB_ISNUMERIC(xLine)
       nMode := xLine
    CASE HB_ISEVALITEM( xLine )
       Eval( xLine )
    CASE HB_ISARRAY( xLine )
       IF nMode == 2
-         OutStd( Space( nIndent ) + Space( 2 ) )
+         OutStd( Space( nIndent ) + Space(2) )
       ENDIF
       AEval( xLine, {| x, n | ShowSubHelp( x, @nMode, nIndent + 2, n ) } )
       IF nMode == 2
@@ -947,7 +947,7 @@ STATIC FUNCTION Filename( cFile )
 
    FOR idx := 1 TO Len(cFile)
       tmp := SubStr(cFile, idx, 1)
-      IF hb_asciiIsDigit( tmp ) .OR. hb_asciiIsAlpha( tmp ) .OR. tmp == "_"
+      IF hb_asciiIsDigit( tmp ) .OR. hb_asciiIsAlpha(tmp) .OR. tmp == "_"
          cResult += tmp
       ENDIF
    NEXT
@@ -1010,7 +1010,7 @@ METHOD IsField( cField, nType ) CLASS Entry
 
    IF ( idx := hb_HPos( sc_hFields, cField ) ) > 0
       IF ::_group[ idx ] == 0
-      ELSEIF HB_ISNUMERIC( nType ) .AND. hb_bitAnd( ::_group[ idx ], nType ) != nType
+      ELSEIF HB_ISNUMERIC(nType) .AND. hb_bitAnd( ::_group[ idx ], nType ) != nType
       ELSE
          RETURN .T.
       ENDIF

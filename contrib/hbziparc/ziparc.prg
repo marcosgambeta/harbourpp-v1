@@ -215,7 +215,7 @@ PROCEDURE hb_SetBuffer( nWriteBuffer, nExtractBuffer, nReadBuffer )
    HB_SYMBOL_UNUSED( nWriteBuffer )
    HB_SYMBOL_UNUSED( nExtractBuffer )
 
-   IF HB_ISNUMERIC( nReadBuffer ) .AND. nReadBuffer >= 1
+   IF HB_ISNUMERIC(nReadBuffer) .AND. nReadBuffer >= 1
       t_nReadBuffer := Min( nReadBuffer, 32768 )
    ENDIF
 
@@ -416,7 +416,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
    IF Empty(hUnzip := hb_unzipOpen( cFileName ))
       lRetVal := .F.
    ELSE
-      IF HB_ISNUMERIC( acFiles ) .OR. ;
+      IF HB_ISNUMERIC(acFiles) .OR. ;
          HB_ISSTRING( acFiles )
          acFiles := { acFiles }
       ENDIF

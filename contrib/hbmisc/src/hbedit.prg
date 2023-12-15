@@ -335,7 +335,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
       DO CASE
       CASE !( hb_keyChar( nKey ) == "" )
          IF oEdit[ E_MODE ]
-            ed_PutChar( oEdit[ E_EDIT ], Asc( hb_keyChar( nKey ) ), oEdit[ E_INSERT ] )
+            ed_PutChar( oEdit[ E_EDIT ], Asc(hb_keyChar( nKey )), oEdit[ E_INSERT ] )
          ENDIF
 
       CASE nKey == K_F2 .AND. lSaveAllowed
@@ -399,10 +399,10 @@ STATIC PROCEDURE EditorKeys( oEdit, nKey )
 
    CASE nKey == K_TAB
 #if 0
-      ed_Tab( oEdit[ E_EDIT ], oEdit[ E_INSERT ] )
+      ed_Tab(oEdit[ E_EDIT ], oEdit[ E_INSERT ])
 #endif
       FOR i := 1 TO 4
-         ed_PutChar( oEdit[ E_EDIT ], Asc( " " ), oEdit[ E_INSERT ] )
+         ed_PutChar( oEdit[ E_EDIT ], Asc(" "), oEdit[ E_INSERT ] )
       NEXT
 
    CASE nKey == K_INS

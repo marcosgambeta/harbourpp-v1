@@ -225,7 +225,7 @@ FUNCTION wvt_SetDlgCoMode( nMode )
    LOCAL nOldMode
 
    nOldMode := sMode
-   IF HB_ISNUMERIC( nMode ) .AND. nMode <= 1 .AND. nMode >= 0
+   IF HB_ISNUMERIC(nMode) .AND. nMode <= 1 .AND. nMode >= 0
       sMode := nMode
    ENDIF
 
@@ -361,7 +361,7 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
    AAdd( aDlg[  8 ], nH )
    AAdd( aDlg[  9 ], cnId )
    AAdd( aDlg[ 10 ], cnDlgClass )
-   AAdd( aDlg[ 11 ], iif(HB_ISSTRING( cText ) .OR. HB_ISNUMERIC( cText ), cText, "") )
+   AAdd( aDlg[ 11 ], iif(HB_ISSTRING( cText ) .OR. HB_ISNUMERIC(cText), cText, "") )
    AAdd( aDlg[ 12 ], 0 )
 
    RETURN aDlg
@@ -374,7 +374,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC( acnDlg ), 1, 2))
+   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC(acnDlg), 1, 2))
 
    IF HB_ISARRAY( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -382,14 +382,14 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
       xTemplate := acnDlg
    ENDIF
 
-   hDlg := wvt_CreateDialogDynamic( xTemplate, lOnTop, cbDlgProc, nDlgMode )
+   hDlg := wvt_CreateDialogDynamic(xTemplate, lOnTop, cbDlgProc, nDlgMode)
 
    IF ! Empty(hDlg)
       IF ncIcon != NIL
          wvt_DlgSetIcon( hDlg, ncIcon )
       ENDIF
 
-      IF HB_ISNUMERIC( nTimerTicks )
+      IF HB_ISNUMERIC(nTimerTicks)
          wvg_SetTimer( hDlg, 1001, nTimerTicks )
       ENDIF
 
@@ -408,7 +408,7 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC( acnDlg ), 1, 2))
+   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC(acnDlg), 1, 2))
 
    IF HB_ISARRAY( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -524,7 +524,7 @@ FUNCTION wvt_GetTitle()
 PROCEDURE wvt_SetIcon( ncIconRes, cIconName )
 
    DO CASE
-   CASE HB_ISNUMERIC( ncIconRes ) ; hb_gtInfo( HB_GTI_ICONRES, ncIconRes )
+   CASE HB_ISNUMERIC(ncIconRes) ; hb_gtInfo( HB_GTI_ICONRES, ncIconRes )
    CASE HB_ISSTRING( cIconName )  ; hb_gtInfo( HB_GTI_ICONRES, cIconName )
    CASE HB_ISSTRING( ncIconRes )  ; hb_gtInfo( HB_GTI_ICONFILE, ncIconRes )
    ENDCASE
@@ -555,22 +555,22 @@ FUNCTION wvt_GetRGBColor( nIndex )
 
 #endif
 
-#define BLACK               WIN_RGB( 0x00, 0x00, 0x00 )
-#define BLUE                WIN_RGB( 0x00, 0x00, 0x85 )
-#define GREEN               WIN_RGB( 0x00, 0x85, 0x00 )
-#define CYAN                WIN_RGB( 0x00, 0x85, 0x85 )
-#define RED                 WIN_RGB( 0x85, 0x00, 0x00 )
-#define MAGENTA             WIN_RGB( 0x85, 0x00, 0x85 )
-#define BROWN               WIN_RGB( 0x85, 0x85, 0x00 )
-#define LIGHT_GRAY          WIN_RGB( 0xC6, 0xC6, 0xC6 )
-#define GRAY                WIN_RGB( 0x60, 0x60, 0x60 )
-#define BRIGHT_BLUE         WIN_RGB( 0x00, 0x00, 0xFF )
-#define BRIGHT_GREEN        WIN_RGB( 0x60, 0xFF, 0x60 )
-#define BRIGHT_CYAN         WIN_RGB( 0x60, 0xFF, 0xFF )
-#define BRIGHT_RED          WIN_RGB( 0xF8, 0x00, 0x26 )
-#define BRIGHT_MAGENTA      WIN_RGB( 0xFF, 0x60, 0xFF )
-#define YELLOW              WIN_RGB( 0xFF, 0xFF, 0x00 )
-#define WHITE               WIN_RGB( 0xFF, 0xFF, 0xFF )
+#define BLACK               WIN_RGB(0x00, 0x00, 0x00)
+#define BLUE                WIN_RGB(0x00, 0x00, 0x85)
+#define GREEN               WIN_RGB(0x00, 0x85, 0x00)
+#define CYAN                WIN_RGB(0x00, 0x85, 0x85)
+#define RED                 WIN_RGB(0x85, 0x00, 0x00)
+#define MAGENTA             WIN_RGB(0x85, 0x00, 0x85)
+#define BROWN               WIN_RGB(0x85, 0x85, 0x00)
+#define LIGHT_GRAY          WIN_RGB(0xC6, 0xC6, 0xC6)
+#define GRAY                WIN_RGB(0x60, 0x60, 0x60)
+#define BRIGHT_BLUE         WIN_RGB(0x00, 0x00, 0xFF)
+#define BRIGHT_GREEN        WIN_RGB(0x60, 0xFF, 0x60)
+#define BRIGHT_CYAN         WIN_RGB(0x60, 0xFF, 0xFF)
+#define BRIGHT_RED          WIN_RGB(0xF8, 0x00, 0x26)
+#define BRIGHT_MAGENTA      WIN_RGB(0xFF, 0x60, 0xFF)
+#define YELLOW              WIN_RGB(0xFF, 0xFF, 0x00)
+#define WHITE               WIN_RGB(0xFF, 0xFF, 0xFF)
 
 FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
 
@@ -744,7 +744,7 @@ FUNCTION wvg_InvalidateRect( w, r, e )
 
 FUNCTION wvg_GetMessageText( w, p1, p2 )
 
-   LOCAL cText := Replicate( hb_BChar( 0 ), 64000 )
+   LOCAL cText := Replicate( hb_BChar(0), 64000 )
 
    wapi_SendMessage( w, p1, p2, @cText )
 
@@ -797,7 +797,7 @@ PROCEDURE wvg_ForceWindowToTop( hWnd )
 
    RETURN
 
-FUNCTION wvg_SetWndProc( hWnd, pWndProc )
+FUNCTION wvg_SetWndProc(hWnd, pWndProc)
    RETURN wapi_SetWindowLongPtr( hWnd, WIN_GWLP_WNDPROC, pWndProc )
 
 STATIC FUNCTION wvg_hWnd()
@@ -819,7 +819,7 @@ FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
 
    LOCAL hIcon
 
-   IF HB_ISNUMERIC( ncIcon )
+   IF HB_ISNUMERIC(ncIcon)
       hIcon := wapi_LoadIcon( wapi_GetModuleHandle(), ncIcon )
    ELSEIF Empty(hIcon := wapi_LoadImage( , ncIcon, WIN_IMAGE_ICON,,, WIN_LR_LOADFROMFILE ))
       hIcon := wapi_LoadImage( wapi_GetModuleHandle(), ncIcon, WIN_IMAGE_ICON )
@@ -834,7 +834,7 @@ FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
 
 FUNCTION wvg_LoadIcon( ncIcon )
 
-   IF HB_ISNUMERIC( ncIcon )
+   IF HB_ISNUMERIC(ncIcon)
       RETURN wapi_LoadIcon( wapi_GetModuleHandle(), ncIcon )
    ENDIF
 
@@ -858,7 +858,7 @@ FUNCTION wvg_TrackPopupMenu( hMenu, nFlags, x, y, hWnd )
 
    LOCAL xy
 
-   IF ! HB_ISNUMERIC( x ) .OR. ! HB_ISNUMERIC( y )
+   IF ! HB_ISNUMERIC(x) .OR. ! HB_ISNUMERIC(y)
       xy := { => }
       wapi_GetCursorPos( @xy )
       x := xy[ "x" ]

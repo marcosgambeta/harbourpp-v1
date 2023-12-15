@@ -172,7 +172,7 @@ METHOD wvtMenu:DelItem( nItemNum )
 
 METHOD wvtMenu:EnableItem( nItemNum )
 
-   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1
+   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC(nItemNum) .AND. nItemNum >= 1
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_ENABLED )
    ENDIF
 
@@ -180,7 +180,7 @@ METHOD wvtMenu:EnableItem( nItemNum )
 
 METHOD wvtMenu:DisableItem( nItemNum )
 
-   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC( nItemNum ) .AND. nItemNum >= 1
+   IF ! Empty(::hMenu) .AND. HB_ISNUMERIC(nItemNum) .AND. nItemNum >= 1
       RETURN wapi_EnableMenuItem( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION + WIN_MF_GRAYED )
    ENDIF
 

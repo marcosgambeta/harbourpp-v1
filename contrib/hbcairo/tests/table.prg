@@ -21,7 +21,7 @@ PROCEDURE Main()
 
    cairo_select_font_face( hCairo, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD )
    cairo_set_font_size( hCairo, 16 )
-   cairo_set_source_rgb( hCairo, 0, 0, 0 )
+   cairo_set_source_rgb(hCairo, 0, 0, 0)
 
    cairo_move_to( hCairo, 50, 50 )
    cairo_show_text( hCairo, "Table of countries" )
@@ -43,7 +43,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
    cairo_save( hCairo )
    cairo_select_font_face( hCairo, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL )
    cairo_set_font_size( hCairo, 10 )
-   cairo_set_source_rgb( hCairo, 0, 0, 0 )
+   cairo_set_source_rgb(hCairo, 0, 0, 0)
    cairo_set_line_width( hCairo, 1 )
 
    dbGoTop()
@@ -90,7 +90,7 @@ STATIC PROCEDURE draw_table( hCairo, nX, nY, aCol )
             EXIT
          CASE "D"
             cairo_move_to( hCairo, nDX + 10, nY + 10 )
-            show_text_right(hCairo, DToC( xValue ))
+            show_text_right(hCairo, DToC(xValue))
             EXIT
          ENDSWITCH
          nDX += aWidth[ nI ]

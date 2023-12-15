@@ -375,7 +375,7 @@ METHOD Output() CLASS UWBrowse
          SWITCH ValType( xI )
          CASE "C"  ; xI := RTrim(xI); EXIT
          CASE "N"  ; xI := Str( xI ); EXIT
-         CASE "D"  ; xI := DToC( xI ); EXIT
+         CASE "D"  ; xI := DToC(xI); EXIT
          OTHERWISE ; xI := "ValType()==" + ValType( xI )
          ENDSWITCH
          IF ! ::aColumns[ nI ][ 4 ]
@@ -575,7 +575,7 @@ STATIC FUNCTION uhttpd_join( cSeparator, aData )
       CASE "C"
       CASE "M" ; cRet += aData[ nI ]; EXIT
       CASE "N" ; cRet += hb_ntos( aData[ nI ] ); EXIT
-      CASE "D" ; cRet += iif(Empty(aData[ nI ]), "", DToC( aData[ nI ] )); EXIT
+      CASE "D" ; cRet += iif(Empty(aData[ nI ]), "", DToC(aData[ nI ])); EXIT
       ENDSWITCH
    NEXT
 

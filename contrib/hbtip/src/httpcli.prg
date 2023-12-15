@@ -87,7 +87,7 @@ CREATE CLASS TIPClientHTTP INHERIT TIPClient
 
    PROTECTED:
 
-   METHOD PostByVerb( xPostData, cQuery, cVerb )
+   METHOD PostByVerb(xPostData, cQuery, cVerb)
 
 ENDCLASS
 
@@ -119,18 +119,18 @@ METHOD Get( cQuery ) CLASS TIPClientHTTP
    RETURN .F.
 
 METHOD Post( xPostData, cQuery ) CLASS TIPClientHTTP
-   RETURN ::postByVerb( xPostData, cQuery, "POST" )
+   RETURN ::postByVerb(xPostData, cQuery, "POST")
 
 METHOD Put( xPostData, cQuery ) CLASS TIPClientHTTP
-   RETURN ::postByVerb( xPostData, cQuery, "PUT" )
+   RETURN ::postByVerb(xPostData, cQuery, "PUT")
 
 METHOD Delete( xPostData, cQuery ) CLASS TIPClientHTTP
-   RETURN ::postByVerb( xPostData, cQuery, "DELETE" )
+   RETURN ::postByVerb(xPostData, cQuery, "DELETE")
 
 METHOD Head( xPostData, cQuery ) CLASS TIPClientHTTP
-   RETURN ::postByVerb( xPostData, cQuery, "HEAD" )
+   RETURN ::postByVerb(xPostData, cQuery, "HEAD")
 
-METHOD PostByVerb( xPostData, cQuery, cVerb ) CLASS TIPClientHTTP
+METHOD PostByVerb(xPostData, cQuery, cVerb) CLASS TIPClientHTTP
 
    LOCAL cData
    LOCAL item
@@ -563,7 +563,7 @@ METHOD PostMultiPart( xPostData, cQuery ) CLASS TIPClientHTTP
    ::StandardFields()
 
    IF ! "Content-Type" $ ::hFields
-      ::inetSendAll( ::SocketCon, "Content-Type: multipart/form-data; boundary=" + ::boundary( 2 ) + ::cCrlf )
+      ::inetSendAll( ::SocketCon, "Content-Type: multipart/form-data; boundary=" + ::boundary(2) + ::cCrlf )
    ENDIF
 
    ::inetSendAll( ::SocketCon, "Content-Length: " + hb_ntos( hb_BLen(cData) ) + ::cCRLF )

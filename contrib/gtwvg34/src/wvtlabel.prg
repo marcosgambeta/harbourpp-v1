@@ -85,7 +85,7 @@ METHOD WvtLabel:Create( lConfg )
 
    __defaultNIL( @::nBottom, ::nTop )
    __defaultNIL( @::nRight, ::nLeft + Len(::Text) )
-   __defaultNIL( @::nTextColor, WIN_RGB( 0, 0, 0 ) )
+   __defaultNIL( @::nTextColor, WIN_RGB(0, 0, 0) )
 
    ::nTextColorHoverOff := ::nTextColor
    ::nBackColorHoverOff := ::nBackColor
@@ -121,7 +121,7 @@ METHOD WvtLabel:SetText( cTxt )
 
 METHOD WvtLabel:SetTextColor( nRGB )
 
-   IF HB_ISNUMERIC( nRGB )
+   IF HB_ISNUMERIC(nRGB)
       ::nTextColor := nRGB
       ::nTextColorHoverOff := nRGB
       ::Refresh()
@@ -131,7 +131,7 @@ METHOD WvtLabel:SetTextColor( nRGB )
 
 METHOD WvtLabel:SetBackColor( nRGB )
 
-   IF HB_ISNUMERIC( nRGB )
+   IF HB_ISNUMERIC(nRGB)
       ::nBackColor := nRGB
       ::nBackColorHoverOff := nRGB
       ::Refresh()

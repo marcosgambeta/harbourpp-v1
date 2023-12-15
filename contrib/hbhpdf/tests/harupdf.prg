@@ -461,7 +461,7 @@ STATIC PROCEDURE draw_line2( page, x, y, label )
 
 STATIC PROCEDURE Page_Text( pdf )
 
-   LOCAL page, font, rect := Array( 4 )
+   LOCAL page, font, rect := Array(4)
    LOCAL SAMP_TXT := "The quick brown fox jumps over the lazy dog. "
    LOCAL angle1, angle2, rad1, rad2, i, x, y, buf
 
@@ -993,7 +993,7 @@ STATIC FUNCTION Page_CodePages( pdf )
       HPDF_Destination_SetXYZ( dst, 0, HPDF_Page_GetHeight( page ), 1 )
 
 #if 0
-      HPDF_Destination_SetFitB( dst )
+      HPDF_Destination_SetFitB(dst)
 #endif
       HPDF_Outline_SetDestination( outline, dst )
 
@@ -1116,7 +1116,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
    HPDF_Page_SetRGBFill( page, 1.0, 0, 0 )
    HPDF_Page_MoveTo( page, 100, 100 )
    HPDF_Page_LineTo( page, 100, 180 )
-   HPDF_Page_Arc( page, 100, 100, 80, 0, 360 * 0.45 )
+   HPDF_Page_Arc(page, 100, 100, 80, 0, 360 * 0.45)
    pos := HPDF_Page_GetCurrentPos( page )
    HPDF_Page_LineTo( page, 100, 100 )
    HPDF_Page_Fill( page )
@@ -1125,7 +1125,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
    HPDF_Page_SetRGBFill( page, 0, 0, 1.0 )
    HPDF_Page_MoveTo( page, 100, 100 )
    HPDF_Page_LineTo( page, pos[ 1 ], pos[ 2 ] )
-   HPDF_Page_Arc( page, 100, 100, 80, 360 * 0.45, 360 * 0.7 )
+   HPDF_Page_Arc(page, 100, 100, 80, 360 * 0.45, 360 * 0.7)
    pos := HPDF_Page_GetCurrentPos( page )
    HPDF_Page_LineTo( page, 100, 100 )
    HPDF_Page_Fill( page )
@@ -1134,7 +1134,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
    HPDF_Page_SetRGBFill( page, 0, 1.0, 0 )
    HPDF_Page_MoveTo( page, 100, 100 )
    HPDF_Page_LineTo( page, pos[ 1 ], pos[ 2 ] )
-   HPDF_Page_Arc( page, 100, 100, 80, 360 * 0.7, 360 * 0.85 )
+   HPDF_Page_Arc(page, 100, 100, 80, 360 * 0.7, 360 * 0.85)
    pos := HPDF_Page_GetCurrentPos( page )
    HPDF_Page_LineTo( page, 100, 100 )
    HPDF_Page_Fill( page )
@@ -1143,7 +1143,7 @@ STATIC PROCEDURE Page_Graphics( pdf )
    HPDF_Page_SetRGBFill( page, 1.0, 1.0, 0 )
    HPDF_Page_MoveTo( page, 100, 100 )
    HPDF_Page_LineTo( page, pos[ 1 ], pos[ 2 ] )
-   HPDF_Page_Arc( page, 100, 100, 80, 360 * 0.85, 360 )
+   HPDF_Page_Arc(page, 100, 100, 80, 360 * 0.85, 360)
 #if 0
    pos := HPDF_Page_GetCurrentPos( page )
 #endif

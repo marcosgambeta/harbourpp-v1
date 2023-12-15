@@ -49,7 +49,7 @@
 
 /* NOTE: This function is exactly the same as Skipped() in browdb.prg */
 
-FUNCTION xpp_TBrowseDB( nTop, nLeft, nBottom, nRight )
+FUNCTION xpp_TBrowseDB(nTop, nLeft, nBottom, nRight)
 
    LOCAL oBrowse := TBrowseNew( nTop, nLeft, nBottom, nRight )
 

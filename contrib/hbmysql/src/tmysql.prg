@@ -72,7 +72,7 @@ CREATE CLASS TMySQLRow
    METHOD FieldPos( cFieldName )
 
    METHOD FieldLen(nNum)                        // Length of field N
-   METHOD FieldDec( nNum, lFormat )             // How many decimals in field N
+   METHOD FieldDec(nNum, lFormat)             // How many decimals in field N
    METHOD FieldType( nNum )                     // Cl*pper type of field N
 
    METHOD MakePrimaryKeyWhere()                 // returns a WHERE x=y statement which uses primary key (if available)
@@ -158,7 +158,7 @@ METHOD FieldLen(nNum) CLASS TMySQLRow
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
  */
-METHOD FieldDec( nNum, lFormat ) CLASS TMySQLRow
+METHOD FieldDec(nNum, lFormat) CLASS TMySQLRow
 
    hb_default( @lFormat, .F. )
 
@@ -277,7 +277,7 @@ CREATE CLASS TMySQLQuery
    METHOD Eof() INLINE ::lEof
    METHOD RecNo() INLINE ::nCurRow
    METHOD LastRec() INLINE ::nNumRows
-   METHOD GoTop() INLINE ::GetRow( 1 )
+   METHOD GoTop() INLINE ::GetRow(1)
    METHOD GoBottom() INLINE ::GetRow( ::nNumRows )
    METHOD GoTO( nRow ) INLINE ::GetRow( nRow )
 
@@ -291,7 +291,7 @@ CREATE CLASS TMySQLQuery
    METHOD FieldGet( cnField )
 
    METHOD FieldLen(nNum)              // Length of field N
-   METHOD FieldDec( nNum, lFormat )     // How many decimals in field N
+   METHOD FieldDec(nNum, lFormat)     // How many decimals in field N
    METHOD FieldType( nNum )             // Cl*pper type of field N
 
 ENDCLASS
@@ -329,7 +329,7 @@ METHOD New( nSocket, cQuery ) CLASS TMySQLQuery
             aField := mysql_fetch_field( ::nResultHandle )
             AAdd( ::aFieldStruct, aField )
             IF ::lFieldAsData
-               __objAddData( Self, ::aFieldStruct[ nI ][ MYSQL_FS_NAME ] )
+               __objAddData(Self, ::aFieldStruct[ nI ][ MYSQL_FS_NAME ])
             ENDIF
          NEXT
 
@@ -427,7 +427,7 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
    LOCAL oRow := NIL
    LOCAL i
 
-   IF ! HB_ISNUMERIC( nRow )
+   IF ! HB_ISNUMERIC(nRow)
       nRow := ::nCurRow
    ENDIF
 
@@ -609,7 +609,7 @@ METHOD FieldLen(nNum) CLASS TMySQLQuery
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
 
    lFormat is useful for copying table structure from mysql to dbf */
-METHOD FieldDec( nNum, lFormat ) CLASS TMySQLQuery
+METHOD FieldDec(nNum, lFormat) CLASS TMySQLQuery
 
    hb_default( @lFormat, .F. )
 
@@ -668,7 +668,7 @@ CREATE CLASS TMySQLTable INHERIT TMySQLQuery
    METHOD New( nSocket, cQuery, cTableName )
    METHOD GetRow( nRow )
    METHOD Skip( nRow )
-   METHOD GoTop() INLINE ::GetRow( 1 )
+   METHOD GoTop() INLINE ::GetRow(1)
    METHOD GoBottom() INLINE ::GetRow( ::nNumRows )
    METHOD GoTo( nRow ) INLINE ::GetRow( nRow )
 
@@ -679,7 +679,7 @@ CREATE CLASS TMySQLTable INHERIT TMySQLQuery
    METHOD Delete( oRow, lOldRecord, lRefresh )      // Deletes passed row from table
    METHOD Append( oRow, lRefresh )                  // Inserts passed row into table
    METHOD GetBlankRow( lSetValues )                 // Returns an empty row with all available fields empty
-   METHOD SetBlankRow() INLINE ::GetBlankRow( .T. ) // Compatibility
+   METHOD SetBlankRow() INLINE ::GetBlankRow(.T.)   // Compatibility
 
    METHOD Blank() INLINE ::GetBlankRow()
    METHOD FieldPut( cnField, Value )                // field identifier, not only a number
@@ -1187,7 +1187,7 @@ CREATE CLASS TMySQLServer
    METHOD New( cServer, cUser, cPassword, nPort, nFlags )  // Opens connection to a server, returns a server object
    METHOD Destroy()                                        // Closes connection to server
 
-   METHOD SelectDB( cDBName )                              // Which data base I will use for subsequent queries
+   METHOD SelectDB(cDBName)                                // Which data base I will use for subsequent queries
 
    METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto )  // Create new table using the same syntax of dbCreate()
    METHOD DeleteTable( cTable )                            // delete table
@@ -1244,9 +1244,9 @@ METHOD sql_version() CLASS TMySQLServer
 
 
 
-// METHOD SelectDB( cDBName ) CLASS TMySQLServer
+// METHOD SelectDB(cDBName) CLASS TMySQLServer
 //
-//   IF mysql_select_db( ::nSocket, cDBName ) == 0
+//   IF mysql_select_db(::nSocket, cDBName) == 0
 //      ::cDBName := cDBName
 //      RETURN .T.
 //   ELSE
@@ -1257,11 +1257,11 @@ METHOD sql_version() CLASS TMySQLServer
 
 
 // === alterado ===
-METHOD SelectDB( cDBName ) CLASS TMySQLServer
+METHOD SelectDB(cDBName) CLASS TMySQLServer
 
    ::lError := .F.
 
-   IF mysql_select_db( ::nSocket, cDBName ) != 0     /* table doesn't exist */
+   IF mysql_select_db(::nSocket, cDBName) != 0     /* table doesn't exist */
       ::cDBName := ""
       ::lError := .T.
    ELSE                                       /* table exists */

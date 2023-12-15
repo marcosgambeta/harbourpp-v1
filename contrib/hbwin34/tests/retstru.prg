@@ -11,7 +11,7 @@ PROCEDURE Main()
 #endif
 
    ? wapi_GetCursorPos()
-   ? wapi_GetCursorPos( NIL )
+   ? wapi_GetCursorPos(NIL)
 
    xy := NIL
    ? "@", wapi_GetCursorPos( @xy )

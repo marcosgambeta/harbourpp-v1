@@ -72,9 +72,9 @@ PROCEDURE Main()
    wvw_pbSetFont( 0, "Arial" )  // font for pushbuttons
 
    wvw_SetCodepage( 0, 255 )
-   wvw_AllowNonTopEvent( .T. )  // this will make pushbuttons to work
+   wvw_AllowNonTopEvent(.T.)  // this will make pushbuttons to work
    // even on non-topmost window
-   wvw_RecurseCBlock( .T. )  // this will allow recursed execution
+   wvw_RecurseCBlock(.T.)  // this will allow recursed execution
    // of control's codeblocks
    // eg. multiple executions of pushbutton's codeblock
    //    invoking "GetSession()"
@@ -87,7 +87,7 @@ PROCEDURE Main()
    wvw_pbCreate( 0, 2, 12, 2, 22, "Close", , {|| ToCloseWindow( 0, @lClosepermitted ) } )
 
    // activate/show the main window
-   wvw_ShowWindow( 0 )
+   wvw_ShowWindow(0)
 
    // wait until user click the close button
    DO WHILE ! lClosepermitted
@@ -144,7 +144,7 @@ STATIC PROCEDURE GetSession()
       "Back to GetSession() of window " + hb_ntos( nwinnum ) + " with these values returned:" + hb_eol() + ;
       "cName:" + cName + hb_eol() + ;
       "cNickName:" + cNickName + hb_eol() + ;
-      "dBirthDate:" + DToC( dBirthDate ) + hb_eol() + ;
+      "dBirthDate:" + DToC(dBirthDate) + hb_eol() + ;
       "nBudget:" + Transform( nBudget, "999,999.99" ) + hb_eol() + ;
       "cRemark:" + cRemark )
 
@@ -205,7 +205,7 @@ STATIC FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, m
       EXIT
    CASE "D"
       mcPict := hb_defaultValue( mcPict, "9999-99-99" )
-      mbText := {|| DToC( mxValue ) }
+      mbText := {|| DToC(mxValue) }
       EXIT
    OTHERWISE
       // unsupported type
@@ -633,7 +633,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
       SWITCH CM
       CASE "A"
       CASE "!"
-         IF IsAlpha( CB ) .OR. CB == " "
+         IF IsAlpha(CB) .OR. CB == " "
             IF CM == "!"
                OutBuffer += Upper(CB)
             ELSE
@@ -729,7 +729,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
             CB := SubStr(OutBuffer, icp + x, 1)
             CM := SubStr(Mask, icp + x, 1)
 
-            IF ! IsDigit( CB ) .AND. ! IsAlpha( CB ) .AND. ;
+            IF ! IsDigit( CB ) .AND. ! IsAlpha(CB) .AND. ;
                ( ! CB == " " .OR. ( CB == " " .AND. CM == " " ) )
                wvw_ebSetSel( mnwinnum, mnebid, icp + x, icp + x )
             ELSE
@@ -776,7 +776,7 @@ STATIC FUNCTION CharMaskTekstOK( cString, cValType, cMask )
          // JK
       CASE "A"
       CASE "!"
-         IF IsAlpha( CB ) .OR. CB == " "
+         IF IsAlpha(CB) .OR. CB == " "
             // lPassed := .T.
             EXIT
          ELSE

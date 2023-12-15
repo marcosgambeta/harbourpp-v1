@@ -29,7 +29,7 @@ PROCEDURE DllMain()
    RETURN
 
 
-STATIC FUNCTION get_data( ... )
+STATIC FUNCTION get_data(...)
 
    LOCAL hAction := QSelf()
 

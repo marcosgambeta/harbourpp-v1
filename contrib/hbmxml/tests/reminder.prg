@@ -69,7 +69,7 @@ STATIC FUNCTION asXML( xml )
 
    RETURN cText
 
-FUNCTION type_cb( node )
+FUNCTION type_cb(node)
 
    LOCAL nResult
    LOCAL cType

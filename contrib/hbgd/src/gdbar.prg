@@ -227,7 +227,7 @@ METHOD DrawSingleI25( pcode ) CLASS GDBar
 
       FOR qw := 1 TO imgWid
          ::Line( ::positionX, 1, ::positionX, end_y, imgBar )
-         ::nextX( .T. )
+         ::nextX(.T.)
       NEXT
    NEXT
 

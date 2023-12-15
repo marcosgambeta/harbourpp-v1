@@ -217,9 +217,9 @@ METHOD OnPress() CLASS WVWMouseButton
 
    IF ::lRepeatPress // .AND. ::lPressed
       IF ! lWasPressed
-         xKeyRepeater( .T. ) // init it
+         xKeyRepeater(.T.) // init it
       ENDIF
-      wvwm_SetKeyRepeater( .T. )   // activate key repeater
+      wvwm_SetKeyRepeater(.T.)   // activate key repeater
    ENDIF
 
    IF HB_ISBLOCK( ::bPressBlock )
@@ -254,7 +254,7 @@ METHOD OnRelease() CLASS WVWMouseButton
    ::Draw()
 
    IF ::lRepeatPress // .AND. ::lPressed
-      wvwm_SetKeyRepeater( .F. )   // deactivate key repeater
+      wvwm_SetKeyRepeater(.F.)   // deactivate key repeater
    ENDIF
 
    IF lWasPressed
@@ -273,7 +273,7 @@ METHOD OnReleaseOut() CLASS WVWMouseButton
    ::lPressed := .F.
    ::Draw()
 
-   // NOTE: no need to do SetKeyRepeater( .F. ),
+   // NOTE: no need to do SetKeyRepeater(.F.),
    //       because it was already handled by onMouseOut
 
    RETURN Self
@@ -288,7 +288,7 @@ METHOD OnMouseOut() CLASS WVWMouseButton
    ENDIF
 
    if ::lRepeatPress .AND. ::lPressed
-      wvwm_SetKeyRepeater( .F. )   // stop key repeater
+      wvwm_SetKeyRepeater(.F.)   // stop key repeater
    ENDIF
 
    ::lHover := .F.
@@ -306,7 +306,7 @@ METHOD OnMouseOver() CLASS WVWMouseButton
    ENDIF
 
    if ::lRepeatPress .AND. ::lPressed
-      wvwm_SetKeyRepeater( .T. )   // activate key repeater
+      wvwm_SetKeyRepeater(.T.)   // activate key repeater
    ENDIF
 
    ::lHover := .T.
@@ -320,7 +320,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
    LOCAL lMouseOver := ::lHover // 20040303,was: ( MRow() >= ::nrow1 .AND. MRow() <= ::nrow2 .AND. MCol() >= ::ncol1 .AND. MCol() <= ::ncol2 )
    LOCAL lPressed := ::lPressed .AND. lMouseOver
    LOCAL aFontInfo := iif(::nCaptionHeight == NIL, wvw_GetFontInfo( nWinNum ), NIL)
-   LOCAL nLabelColor := iif(! lPressed, RGB( 0, 0, 0 ), RGB( 96, 96, 96 ))
+   LOCAL nLabelColor := iif(! lPressed, RGB(0, 0, 0), RGB(96, 96, 96))
    LOCAL lUseImage := HB_ISSTRING( ::cImage ) // 20040325
 
    IF ! ::lVisible .OR. ::nType == _BUTTON_NONE
@@ -351,7 +351,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
       ENDIF
 
       IF ! Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -369,13 +369,13 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
       ENDIF
 
       IF ! ::lEnable
-         nLabelColor := RGB( 96, 96, 96 )
+         nLabelColor := RGB(96, 96, 96)
       ELSEIF lMouseOver
-         nLabelColor := RGB( 255, 0, 0 )
+         nLabelColor := RGB(255, 0, 0)
       ENDIF
 
       IF ! Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )

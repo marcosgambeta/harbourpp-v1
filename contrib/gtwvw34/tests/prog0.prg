@@ -31,7 +31,7 @@ PROCEDURE Main()
    SetColor( _STD_COLOR_ )
    SetCursor( SC_NONE )
    CLS
-   @ 0, 0 SAY PadC( "This is the Main Window", MaxCol() + 1 )
+   @ 0, 0 SAY PadC("This is the Main Window", MaxCol() + 1)
 
    hb_Scroll( 1, 0, MaxRow() - 1, MaxCol(),,,, hb_UTF8ToStrBox( "▒" ) )  // screen background
 
@@ -157,7 +157,7 @@ STATIC FUNCTION DbSkipBlock( n )
    LOCAL nSkipped := 0
 
    IF n == 0
-      dbSkip( 0 )
+      dbSkip(0)
    ELSEIF n > 0
       DO WHILE nSkipped != n .AND. TBNext()
          nSkipped++
@@ -211,7 +211,7 @@ STATIC FUNCTION lMessage( cMsg )
 
    LOCAL cOldColor := SetColor( _STD_COLOR_ )
 
-   @ MaxRow(), 0 SAY PadC( cMsg, MaxCol() + 1 )
+   @ MaxRow(), 0 SAY PadC(cMsg, MaxCol() + 1)
    SetColor( cOldColor )
 
    RETURN .T.
@@ -281,7 +281,7 @@ STATIC PROCEDURE lBoxMessage( cMsg, cTitle )
    DispBegin()
    FOR i := 1 TO nNumLines
       cAline := MemoLine( cMsg, nWidth, i )
-      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC( AllTrim(cAline), nMaxWidth ) )
+      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC(AllTrim(cAline), nMaxWidth) )
    NEXT
    DispEnd()
 

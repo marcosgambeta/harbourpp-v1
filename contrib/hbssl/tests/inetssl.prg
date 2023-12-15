@@ -73,7 +73,7 @@ STATIC FUNCTION Client()
 
       IF s_lDelayCli
          ? "CLIENT: waiting..."
-         hb_idleSleep( 1 )
+         hb_idleSleep(1)
       ENDIF
 
       ? "CLIENT: SSL CONNECT..."
@@ -120,7 +120,7 @@ STATIC FUNCTION Server()
 
             IF s_lDelaySrv
                ? "SERVER: waiting..."
-               hb_idleSleep( 1 )
+               hb_idleSleep(1)
             ENDIF
 
             ? "SERVER: SSL ACCEPT..."

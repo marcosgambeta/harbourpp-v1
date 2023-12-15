@@ -173,7 +173,7 @@ METHOD WvtGets:Read()
 METHOD WvtGets:GetData()
    RETURN NIL
 
-METHOD WvtGets:SetData( /* aData */ )
+METHOD WvtGets:SetData(/* aData */)
    RETURN Self
 
 METHOD WvtGets:Hilite()

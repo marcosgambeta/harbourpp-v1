@@ -45,19 +45,19 @@
  */
 
 FUNCTION gdImageCircle( im, cx, cy, w, color )
-   RETURN gdImageArc( im, cx, cy, w, w, 0, 360, color )
+   RETURN gdImageArc(im, cx, cy, w, w, 0, 360, color)
 
 FUNCTION gdImageFilledCircle( im, cx, cy, w, color )
    RETURN gdImageFilledEllipse( im, cx, cy, w, w, color )
 
 FUNCTION gdImageEllipse( im, cx, cy, w, h, color )
-   RETURN gdImageArc( im, cx, cy, w, h, 0, 360, color )
+   RETURN gdImageArc(im, cx, cy, w, h, 0, 360, color)
 
 FUNCTION gdImageFTWidth( fontname, ptsize, angle )
 
    LOCAL nWidth := 0
    LOCAL cErr
-   LOCAL aRect := Array( 8 )
+   LOCAL aRect := Array(8)
 
    hb_default( @fontname, "Arial" )
    hb_default( @ptsize, 8 )
@@ -75,7 +75,7 @@ FUNCTION gdImageFTHeight( fontname, ptsize, angle )
 
    LOCAL nWidth := 0
    LOCAL cErr
-   LOCAL aRect := Array( 8 )
+   LOCAL aRect := Array(8)
 
    hb_default( @fontname, "Arial" )
    hb_default( @ptsize, 8 )
@@ -94,7 +94,7 @@ FUNCTION gdImageFTSize( string, fontname, ptsize, angle )
    LOCAL nHeight := 0
    LOCAL nX, nY
    LOCAL cErr
-   LOCAL aRect := Array( 8 )
+   LOCAL aRect := Array(8)
 
    hb_default( @fontname, "Arial" )
    hb_default( @ptsize, 8 )
@@ -115,7 +115,7 @@ FUNCTION gdImageStringFT( im, fg, fontname, ptsize, angle, x, y, string, ;
       linespacing, charmap, resolution )
 
    LOCAL cErr
-   LOCAL aRect := Array( 8 )
+   LOCAL aRect := Array(8)
 
    cErr := gdImageStringFTEx( , @aRect, fg, fontname, ptsize, angle, x, y, string, linespacing, charmap, resolution )
    IF cErr == ""

@@ -91,8 +91,8 @@ PROCEDURE Main()
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
    Set( _SET_SCOREBOARD, .F. )
-   // wvw_SetPaintRefresh( 0 )
-   wvw_SetVertCaret( .T. )
+   // wvw_SetPaintRefresh(0)
+   wvw_SetVertCaret(.T.)
    wvw_pbSetFont( , "Tahoma", 14 )
    nCursor := SetCursor( SC_NONE )
 
@@ -169,7 +169,7 @@ PROCEDURE Main()
    CreateToolbar( nCurWindow )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, WIN_RGB( 255, 255, 255 ), WIN_RGB( 198, 198, 198 ), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
    wvwm_AddMouseObjects( nCurWindow, WVWMouseButton():New( "Info!", MaxRow() - 2, 67, , , {|| xDebugInfo() } ) )
@@ -180,12 +180,12 @@ PROCEDURE Main()
    wvwm_AddMouseObjects( nCurWindow, oMouse )
 
    oMouse := WVWMouseButton():New( "None", MaxRow() - 2, 67 - 11 - 11, , , {|| lboxmessage( "none" ) }, 2 )
-   oMouse:Enable( .T. )
+   oMouse:Enable(.T.)
    wvwm_AddMouseObjects( nCurWindow, oMouse )
 
    wvwm_AddMouseObjects( nCurWindow, WVWMouseButton():New( "Hard", MaxRow() - 2, 67 - 11 - 11 - 11, , , {|| lboxmessage( "hard" ) }, 3 ) )
    oMouse := WVWMouseButton():New( "Disabled", MaxRow() - 2, 67 - 11 - 11 - 11 - 11, , , {|| xDebugInfo() } )
-   oMouse:Enable( .F. )
+   oMouse:Enable(.F.)
    wvwm_AddMouseObjects( nCurWindow, oMouse )
 
    oMouse := WVWMouseButton():New( "Tight", MaxRow() - 2, 67 - 11 - 11 - 11 - 11 - 11, , , {|| lboxmessage( "tight" ) } )
@@ -212,7 +212,7 @@ PROCEDURE Main()
          wvw_SetPaintRefresh( Int( wvw_SetPaintRefresh() * 2 ) )
          Alert( wvw_SetPaintRefresh() )
       CASE nKeyStd == hb_keyCode( "0" )
-         wvw_SetPaintRefresh( 0 )
+         wvw_SetPaintRefresh(0)
          Alert( wvw_SetPaintRefresh() )
       OTHERWISE
          // do nothing. Inkey() has been handled by nAfterInket()
@@ -367,7 +367,7 @@ STATIC PROCEDURE Demo_Get()
    wvw_SetIcon( , hb_DirBase() + "vr_1.ico" )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, WIN_RGB( 255, 255, 255 ), WIN_RGB( 198, 198, 198 ), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, WIN_RGB(255, 255, 255), WIN_RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 15 - nTop, 59 - nLeft, 18 - nTop, 72 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
@@ -387,8 +387,8 @@ STATIC PROCEDURE Demo_Get()
    CLS
 
    @  6 - nTop, nColGet - nLeft SAY "< Date >"
-   @  9 - nTop, nColGet - nLeft SAY "<" + PadC( "Name", 33 ) + ">"
-   @ 12 - nTop, nColGet - nLeft SAY "<" + PadC( "Address", 33 ) + ">"
+   @  9 - nTop, nColGet - nLeft SAY "<" + PadC("Name", 33) + ">"
+   @ 12 - nTop, nColGet - nLeft SAY "<" + PadC("Address", 33) + ">"
    @ 16 - nTop, 61 - nLeft      SAY "< Salary >"
 
    @  7 - nTop, nColGet - nLeft GET get_1
@@ -462,7 +462,7 @@ STATIC PROCEDURE DEMO_Browse()
 
    oBrowse:configure()
 
-   wvw_SetPen( WIN_PS_SOLID, 0, WIN_RGB( 210, 210, 210 ) )
+   wvw_SetPen( WIN_PS_SOLID, 0, WIN_RGB(210, 210, 210) )
    wvw_SetIcon( , hb_DirBase() + "dia_excl.ico" )
 
    aColumnsSep := Array( oBrowse:colCount )
@@ -483,11 +483,11 @@ STATIC PROCEDURE DEMO_Browse()
    nHScrollBar := wvw_xbCreate( nCurWindow, 0, oBrowse:nBottom + 1, oBrowse:nLeft, oBrowse:nRight - oBrowse:nLeft + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), HXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ )
    nVScrollBar := wvw_xbCreate( nCurWindow, 1, oBrowse:nTop, oBrowse:nRight + 1, oBrowse:nBottom - oBrowse:nTop + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), VXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ )
 
-   hb_DispOutAt( nTop + 1 - nTop, nleft - nleft, PadC( "Test table", nRight - nLeft + 1 ), "W+/W" )
+   hb_DispOutAt( nTop + 1 - nTop, nleft - nleft, PadC("Test table", nRight - nLeft + 1), "W+/W" )
 
    oBrowse:ForceStable()
-   RefreshHXB( oBrowse, nCurWindow, nHScrollBar )  // 2004-07-04
-   RefreshVXB( oBrowse, nCurWindow, nVScrollBar )  // 2004-07-04
+   RefreshHXB(oBrowse, nCurWindow, nHScrollBar)  // 2004-07-04
+   RefreshVXB(oBrowse, nCurWindow, nVScrollBar)  // 2004-07-04
 
    DO WHILE ! lEnd
       nKey := hb_keyStd( Inkey(0) )
@@ -560,8 +560,8 @@ STATIC PROCEDURE DEMO_Browse()
       oBrowse:ForceStable()
 
       // refresh the scrollbars due to keyboard navigation
-      RefreshHXB( oBrowse, nCurWindow, nHScrollBar )  // 2004-07-04
-      RefreshVXB( oBrowse, nCurWindow, nVScrollBar )  // 2004-07-04
+      RefreshHXB(oBrowse, nCurWindow, nHScrollBar)  // 2004-07-04
+      RefreshVXB(oBrowse, nCurWindow, nVScrollBar)  // 2004-07-04
 
    ENDDO
 
@@ -575,7 +575,7 @@ STATIC PROCEDURE DEMO_Browse()
    wvwm_ResetMouseObjects( nCurWindow )
    ResetMiscObjects( nCurWindow )
 
-   wvw_SetPen( 0 )
+   wvw_SetPen(0)
 
    SetColor( cColor )
 
@@ -630,7 +630,7 @@ STATIC PROCEDURE VXBscroller( oBrowse, nWinNum, XBid, XBmsg )
 
    IF lNeedStabilize
       oBrowse:ForceStable()
-      RefreshVXB( oBrowse, nWinNum, XBid )
+      RefreshVXB(oBrowse, nWinNum, XBid)
    ENDIF
 
    wvw_nSetCurWindow( nOldWin )
@@ -685,7 +685,7 @@ STATIC PROCEDURE HXBscroller( oBrowse, nWinNum, XBid, XBmsg )
    ENDDO
    IF lNeedStabilize
       oBrowse:ForceStable()
-      RefreshHXB( oBrowse, nWinNum, XBid )
+      RefreshHXB(oBrowse, nWinNum, XBid)
    ENDIF
 
    wvw_nSetCurWindow( nOldWin )
@@ -699,7 +699,7 @@ STATIC PROCEDURE HXBscroller( oBrowse, nWinNum, XBid, XBmsg )
 
    nMin <= nPos <= ( nMax - Max( nPage - 1, 0 ) )
  */
-STATIC PROCEDURE RefreshVXB( oBrowse, nWinNum, XBid )
+STATIC PROCEDURE RefreshVXB(oBrowse, nWinNum, XBid)
 
    LOCAL nMin, nMax, nPage, nPos
    LOCAL nRatio
@@ -727,7 +727,7 @@ STATIC PROCEDURE RefreshVXB( oBrowse, nWinNum, XBid )
    RETURN
 
 // Recalculate position
-STATIC PROCEDURE RefreshHXB( oBrowse, nWinNum, XBid )
+STATIC PROCEDURE RefreshHXB(oBrowse, nWinNum, XBid)
 
    LOCAL nMin := 1
    LOCAL nMax := oBrowse:ColCount
@@ -744,7 +744,7 @@ STATIC FUNCTION DbSkipBlock( n )
 
    DO CASE
    CASE n == 0
-      dbSkip( 0 )
+      dbSkip(0)
 
    CASE n > 0
       DO WHILE nSkipped != n .AND. TBNext()
@@ -970,7 +970,7 @@ STATIC FUNCTION nMenuChecker( nMenuEvent )
    LOCAL nkey := 0
 
    xDisableMenus( 0, 4 )
-   // xDisableToolbar( 0 )
+   // xDisableToolbar(0)
 
    SWITCH nMenuEvent
    CASE IDM_DEMO_GET
@@ -1006,16 +1006,16 @@ STATIC FUNCTION nMenuChecker( nMenuEvent )
       wvw_SetDefLineSpacing( wvw_SetLineSpacing() )
       EXIT
    CASE IDM_TOOLBAR_ENABLE
-      xEnableToolbar( 0 )
+      xEnableToolbar(0)
       EXIT
    CASE IDM_TOOLBAR_DISABLE
-      xDisableToolbar( 0 )
+      xDisableToolbar(0)
       EXIT
    CASE IDM_TOOLBAR_RESET
-      CreateToolbar( 0 )
+      CreateToolbar(0)
       EXIT
    CASE IDM_TOOLBAR_DELETE
-      wvw_tbDestroy( 0 )
+      wvw_tbDestroy(0)
       EXIT
    CASE IDM_HELP_HELP
       xHelp()
@@ -1027,7 +1027,7 @@ STATIC FUNCTION nMenuChecker( nMenuEvent )
       lboxmessage( "Sorry, unrecognized menu option: " + hb_ntos( nMenuEvent ) )
    ENDSWITCH
 
-   // xEnableToolbar( 0 )
+   // xEnableToolbar(0)
    xEnableMenus( 0, 4 )
 
    RETURN nkey
@@ -1356,9 +1356,9 @@ METHOD OnPress() CLASS WVWMouseButton
 
    IF ::lRepeatPress  // .AND. ::lPressed
       IF ! lWasPressed
-         xKeyRepeater( .T. )  // init it
+         xKeyRepeater(.T.)  // init it
       ENDIF
-      wvwm_SetKeyRepeater( .T. )  // activate key repeater
+      wvwm_SetKeyRepeater(.T.)  // activate key repeater
    ENDIF
 
    IF HB_ISEVALITEM( ::bPressBlock )
@@ -1393,7 +1393,7 @@ METHOD OnRelease() CLASS WVWMouseButton
    ::Draw()
 
    IF ::lRepeatPress // .AND. ::lPressed
-      wvwm_SetKeyRepeater( .F. )   // deactivate key repeater
+      wvwm_SetKeyRepeater(.F.)   // deactivate key repeater
    ENDIF
 
    IF lWasPressed
@@ -1412,7 +1412,7 @@ METHOD OnReleaseOut() CLASS WVWMouseButton
    ::lPressed := .F.
    ::Draw()
 
-   // NOTE: no need to do SetKeyRepeater( .F. ),
+   // NOTE: no need to do SetKeyRepeater(.F.),
    //       because it was already handled by onMouseOut
 
    RETURN Self
@@ -1427,7 +1427,7 @@ METHOD OnMouseOut() CLASS WVWMouseButton
    ENDIF
 
    IF ::lRepeatPress .AND. ::lPressed
-      wvwm_SetKeyRepeater( .F. )  // stop key repeater
+      wvwm_SetKeyRepeater(.F.)  // stop key repeater
    ENDIF
 
    ::lHover := .F.
@@ -1445,7 +1445,7 @@ METHOD OnMouseOver() CLASS WVWMouseButton
    ENDIF
 
    IF ::lRepeatPress .AND. ::lPressed
-      wvwm_SetKeyRepeater( .T. )  // activate key repeater
+      wvwm_SetKeyRepeater(.T.)  // activate key repeater
    ENDIF
 
    ::lHover := .T.
@@ -1459,7 +1459,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
    LOCAL lMouseOver := ::lHover // 2004-03-03,was: ( MRow() >= ::nrow1 .AND. MRow() <= ::nrow2 .AND. MCol() >= ::ncol1 .AND. MCol() <= ::ncol2 )
    LOCAL lPressed := ::lPressed .AND. lMouseOver
    LOCAL aFontInfo := iif(::nCaptionHeight == NIL, wvw_GetFontInfo( nWinNum ), NIL)
-   LOCAL nLabelColor := iif(lPressed, WIN_RGB( 96, 96, 96 ), WIN_RGB( 0, 0, 0 ))
+   LOCAL nLabelColor := iif(lPressed, WIN_RGB(96, 96, 96), WIN_RGB(0, 0, 0))
    LOCAL lUseImage := HB_ISSTRING( ::cImage )  // 2004-03-25
 
    IF ! ::lVisible .OR. ::nType == _BUTTON_NONE
@@ -1490,7 +1490,7 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
       ENDIF
 
       IF ! Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -1508,13 +1508,13 @@ METHOD DRAW( nWinNum ) CLASS WVWMouseButton
       ENDIF
 
       IF ! ::lEnable
-         nLabelColor := WIN_RGB( 96, 96, 96 )
+         nLabelColor := WIN_RGB(96, 96, 96)
       ELSEIF lMouseOver
-         nLabelColor := WIN_RGB( 255, 0, 0 )
+         nLabelColor := WIN_RGB(255, 0, 0)
       ENDIF
 
       IF ! Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB( 198, 198, 198 ), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )

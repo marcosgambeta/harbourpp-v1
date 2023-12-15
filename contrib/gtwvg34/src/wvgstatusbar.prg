@@ -148,7 +148,7 @@ METHOD WvgStatusBar:handleEvent( nMessage, aNM )
       ENDCASE
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF Empty(::hBrushBG)
@@ -202,9 +202,9 @@ METHOD WvgStatusBar:delItem( nItemORcKey )
    LOCAL nIndex := 0
 
    DO CASE
-   CASE HB_ISNUMERIC( nItemORcKey )
+   CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
-   CASE HB_ISNUMERIC( nItemORcKey )
+   CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 
@@ -221,7 +221,7 @@ METHOD WvgStatusBar:getItem( nItemORcKey )
    DO CASE
    CASE HB_ISSTRING( nItemORcKey )
       nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
-   CASE HB_ISNUMERIC( nItemORcKey )
+   CASE HB_ISNUMERIC(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 

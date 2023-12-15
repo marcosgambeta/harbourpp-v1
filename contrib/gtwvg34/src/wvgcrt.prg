@@ -305,7 +305,7 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::maxRow + 1, ::maxCol + 1, ::pGTp, .F., lRowCol, HB_WNDTYPE_CRT } )
    hb_gtInfo( HB_GTI_SETFONT, { ::fontName, ::fontHeight, ::fontWidth } )
 
-   IF HB_ISNUMERIC( ::icon )
+   IF HB_ISNUMERIC(::icon)
       hb_gtInfo( HB_GTI_ICONRES, ::icon )
    ELSEIF ".ico" $ Lower(::icon)
       hb_gtInfo( HB_GTI_ICONFILE, ::icon )
@@ -400,7 +400,7 @@ METHOD WvgCrt:enable()
 METHOD WvgCrt:getFrameState()
 
    DO CASE
-   CASE wapi_IsIconic( ::hWnd ) ; RETURN WVGDLG_FRAMESTAT_MINIMIZED
+   CASE wapi_IsIconic(::hWnd) ; RETURN WVGDLG_FRAMESTAT_MINIMIZED
    CASE wapi_IsZoomed( ::hWnd ) ; RETURN WVGDLG_FRAMESTAT_MAXIMIZED
    ENDCASE
 
@@ -469,7 +469,7 @@ METHOD WvgCrt:setFontCompoundName()
 
 METHOD WvgCrt:setFrameState( nState )
 
-   IF HB_ISNUMERIC( nState )
+   IF HB_ISNUMERIC(nState)
       SWITCH nState
       CASE WVGDLG_FRAMESTAT_MINIMIZED ; RETURN ::sendMessage( WIN_WM_SYSCOMMAND, WIN_SC_MINIMIZE, 0 )
       CASE WVGDLG_FRAMESTAT_MAXIMIZED ; RETURN ::sendMessage( WIN_WM_SYSCOMMAND, WIN_SC_MAXIMIZE, 0 )
@@ -784,7 +784,7 @@ METHOD WvgCrt:helpRequest( xParam )
 
 METHOD WvgCrt:keyboard( xParam )
 
-   IF HB_ISNUMERIC( xParam ) .AND. HB_ISEVALITEM( ::sl_keyboard )
+   IF HB_ISNUMERIC(xParam) .AND. HB_ISEVALITEM( ::sl_keyboard )
       Eval( ::sl_keyboard, xParam, , Self )
       RETURN Self
    ENDIF
@@ -854,7 +854,7 @@ METHOD WvgCrt:paint( xParam )
 
 METHOD WvgCrt:quit( xParam, xParam1 )
 
-   IF HB_ISNUMERIC( xParam ) .AND. HB_ISEVALITEM( ::sl_quit )
+   IF HB_ISNUMERIC(xParam) .AND. HB_ISEVALITEM( ::sl_quit )
       Eval( ::sl_quit, xParam, xParam1, Self )
       RETURN Self
    ENDIF

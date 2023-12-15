@@ -34,7 +34,7 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   lMainCoord := wvw_SetMainCoord( .T. )
+   lMainCoord := wvw_SetMainCoord(.T.)
 
    wvw_SetCodepage( , 255 )
 
@@ -42,7 +42,7 @@ PROCEDURE Main()
    SetColor( s_cStdColor )
    SetCursor( SC_NONE )
    CLS
-   @ 0, 0 SAY PadC( "This is the Main Window", MaxCol() + 1 )
+   @ 0, 0 SAY PadC("This is the Main Window", MaxCol() + 1)
 
    // screen background
    DispBegin()
@@ -198,7 +198,7 @@ STATIC FUNCTION DbSkipBlock( n, oTbr )
    HB_SYMBOL_UNUSED( oTbr )
 
    IF n == 0
-      dbSkip( 0 )
+      dbSkip(0)
    ELSEIF n > 0
       DO WHILE nSkipped != n .AND. TBNext( oTbr )
          nSkipped++
@@ -223,7 +223,7 @@ STATIC FUNCTION TBNext( oTbr )
    IF Eof()
       lMoved := .F.
    ELSE
-      dbSkip( 1 )
+      dbSkip(1)
       IF Eof()
          lMoved := .F.
          dbGoto( nSaveRecNum )
@@ -261,7 +261,7 @@ FUNCTION lMessage( cMsg )
 
    // displays a message on MaxRow() and returns .T.
    LOCAL cOldColor := SetColor( s_cStdColor )
-   @ MaxRow(), 0 SAY PadC( cMsg, MaxCol() + 1 )
+   @ MaxRow(), 0 SAY PadC(cMsg, MaxCol() + 1)
    SetColor( cOldColor )
 
    RETURN .T.
@@ -335,7 +335,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
    DispBegin()
    FOR i := 1 TO nNumLines
       cAline := MemoLine( cMsg, nWidth, i )
-      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC( AllTrim(cAline), nMaxWidth ) )
+      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC(AllTrim(cAline), nMaxWidth) )
    NEXT
    DispEnd()
 

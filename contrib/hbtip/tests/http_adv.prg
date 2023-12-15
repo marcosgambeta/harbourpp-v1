@@ -52,7 +52,7 @@ PROCEDURE Main( cURL )
       ELSEIF hb_inetErrorCode( oHTTP:SocketCon ) == 0
          ? "Server replied:", oHTTP:cReply
       ELSE
-         ? "Error in connection:", hb_inetErrorDesc( oHTTP:SocketCon )
+         ? "Error in connection:", hb_inetErrorDesc(oHTTP:SocketCon)
       ENDIF
    ENDIF
 

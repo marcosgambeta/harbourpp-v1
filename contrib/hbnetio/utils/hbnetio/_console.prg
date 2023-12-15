@@ -59,7 +59,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
    Set( _SET_TIMEFORMAT, "hh:mm:ss" )
 
-   SetCancel( .F. )
+   SetCancel(.F.)
 
    netclictx := Eval( netclictrl[ "init" ], hConIO, { ;
       "--netio.addr=" + cIP + ":" + hb_ntos( nPort ), ;
@@ -246,7 +246,7 @@ STATIC FUNCTION hbnetiocon_GetHidden()
    nSavedRow := Row()
 
    AAdd( GetList, hb_Get():New( Row(), Col(), {| v | iif(PCount() == 0, cPassword, cPassword := v) }, "cPassword", "@S" + hb_ntos( MaxCol() - Col() + 1 ), hb_ColorIndex( SetColor(), CLR_STANDARD ) + "," + hb_ColorIndex( SetColor(), CLR_STANDARD ) ) )
-   ATail( GetList ):hideInput( .T. )
+   ATail( GetList ):hideInput(.T.)
    ATail( GetList ):postBlock := {|| ! Empty(cPassword) }
    ATail( GetList ):display()
 

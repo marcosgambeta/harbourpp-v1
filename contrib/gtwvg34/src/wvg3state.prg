@@ -135,7 +135,7 @@ METHOD Wvg3State:handleEvent( nMessage, aNM )
       ENDIF
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF Empty(::hBrushBG)

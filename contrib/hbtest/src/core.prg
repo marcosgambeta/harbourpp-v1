@@ -115,17 +115,17 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       IF lFailed
          Eval( bOut, ;
             PadR( iif(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH ) + " " + ;
-            PadR( ProcName( 1 ) + "(" + hb_ntos( ProcLine( 1 ) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
+            PadR( ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
             RTrim(cBlock) + ;
             hb_eol() + ;
-            Space( 5 ) + "  Result: " + XToStr( xResult, .F. ) + ;
+            Space(5) + "  Result: " + XToStr( xResult, .F. ) + ;
             hb_eol() + ;
-            Space( 5 ) + "Expected: " + XToStr( xResultExpected, .F. ) + ;
+            Space(5) + "Expected: " + XToStr( xResultExpected, .F. ) + ;
             hb_eol() )
       ELSE
          Eval( bOut, ;
             PadR( iif(lFailed, "!", " "), TEST_RESULT_COL1_WIDTH ) + " " + ;
-            PadR( ProcName( 1 ) + "(" + hb_ntos( ProcLine( 1 ) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
+            PadR( ProcName(1) + "(" + hb_ntos( ProcLine(1) ) + ")", TEST_RESULT_COL2_WIDTH ) + " " + ;
             PadR( cBlock, TEST_RESULT_COL3_WIDTH ) + " -> " + ;
             PadR( XToStr( xResult, .F. ), TEST_RESULT_COL4_WIDTH ) + " | " + ;
             XToStr( xResultExpected, .F. ) + ;
@@ -140,7 +140,7 @@ STATIC FUNCTION ErrorMessage( oError )
    LOCAL cMessage := ""
    LOCAL tmp
 
-   IF HB_ISNUMERIC( oError:severity )
+   IF HB_ISNUMERIC(oError:severity)
       SWITCH oError:severity
       CASE ES_WHOCARES     ; cMessage += "M " ; EXIT
       CASE ES_WARNING      ; cMessage += "W " ; EXIT
@@ -148,13 +148,13 @@ STATIC FUNCTION ErrorMessage( oError )
       CASE ES_CATASTROPHIC ; cMessage += "C " ; EXIT
       ENDSWITCH
    ENDIF
-   IF HB_ISNUMERIC( oError:genCode )
+   IF HB_ISNUMERIC(oError:genCode)
       cMessage += hb_ntos( oError:genCode ) + " "
    ENDIF
    IF HB_ISSTRING( oError:subsystem )
       cMessage += oError:subsystem + " "
    ENDIF
-   IF HB_ISNUMERIC( oError:subCode )
+   IF HB_ISNUMERIC(oError:subCode)
       cMessage += hb_ntos( oError:subCode ) + " "
    ENDIF
    IF HB_ISSTRING( oError:description )
@@ -166,10 +166,10 @@ STATIC FUNCTION ErrorMessage( oError )
    IF ! Empty(oError:filename)
       cMessage += "<" + oError:filename + "> "
    ENDIF
-   IF HB_ISNUMERIC( oError:osCode )
+   IF HB_ISNUMERIC(oError:osCode)
       cMessage += "OS:" + hb_ntos( oError:osCode ) + " "
    ENDIF
-   IF HB_ISNUMERIC( oError:tries )
+   IF HB_ISNUMERIC(oError:tries)
       cMessage += "#:" + hb_ntos( oError:tries ) + " "
    ENDIF
 

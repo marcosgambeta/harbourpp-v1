@@ -89,8 +89,8 @@ PROCEDURE Main()
    WAIT4()
 
 
-   ? "Str( Cos( 0 ), 18, 15 ) =  1.000000000000000   // CT3"
-   ? Space( 26 ) + Str( Cos( 0 ), 18, 15 ) + "  <-- CT for Harbour"
+   ? "Str( Cos(0), 18, 15 ) =  1.000000000000000   // CT3"
+   ? Space( 26 ) + Str( Cos(0), 18, 15 ) + "  <-- CT for Harbour"
    ?
 
    ? "Str( Cos( Pi() / 4 ), 18, 15 ) =  0.707106781186548   // CT3"
@@ -113,8 +113,8 @@ PROCEDURE Main()
    WAIT4()
 
 
-   ? "Str( Tan( 0 ), 18, 15 ) =  1.000000000000000   // CT3 wrong ! "
-   ? Space( 26 ) + Str( Tan( 0 ), 18, 15 ) + "  <-- CT for Harbour"
+   ? "Str( Tan(0), 18, 15 ) =  1.000000000000000   // CT3 wrong ! "
+   ? Space( 26 ) + Str( Tan(0), 18, 15 ) + "  <-- CT for Harbour"
    ?
 
    ? "Str( Tan( Pi() / 4 ), 18, 15 ) =  1.000000000000000   // CT3"
@@ -214,7 +214,7 @@ PROCEDURE Main()
    ? "Testing Radian TO Degree..."
    ?
    ? "RToD( Pi() ) = 180             // CT3  "
-   ? Space( 7 ), RToD( Pi() ), " <-- CT for Harbour "
+   ? Space(7), RToD( Pi() ), " <-- CT for Harbour "
 
    ? "RToD( 2 * Pi() ) = 360             // CT3  "
    ? Space( 11 ), RToD( 2 * Pi() ), " <-- CT for Harbour "
@@ -223,7 +223,7 @@ PROCEDURE Main()
    ? Space( 11 ), RToD( 4 * Pi() ), " <-- CT for Harbour "
 
    ? "RToD( -Pi() ) = -180             // CT3"
-   ? Space( 9 ), RToD( -Pi() ), " <-- CT for Harbour "
+   ? Space(9), RToD( -Pi() ), " <-- CT for Harbour "
    ?
 
    WAIT4()

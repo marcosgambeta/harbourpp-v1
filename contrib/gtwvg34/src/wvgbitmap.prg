@@ -108,7 +108,7 @@ METHOD WvgBitmap:destroy()
       wvg_DeleteObject( ::hBitmap )
    ENDIF
    IF ::lDCtoDestroy
-      wvg_ReleaseDC( ::hDCcompat )
+      wvg_ReleaseDC(::hDCcompat)
    ENDIF
 
    RETURN Self

@@ -11,11 +11,11 @@ PROCEDURE Main( cFile )
 
       DO WHILE ! ft_FEof()
          ? "line " + Str( ft_FRecNo(), 2 ) + " " + ft_FReadLn()
-         ft_FSkip( 1 )
+         ft_FSkip(1)
       ENDDO
       ?
       my_goto( 18 )
-      my_goto( 2 )
+      my_goto(2)
 
       ft_FGoBot()
       ?

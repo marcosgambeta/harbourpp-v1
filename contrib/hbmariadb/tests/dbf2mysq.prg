@@ -104,7 +104,7 @@ PROCEDURE Main( ... )
       ENDCASE
    ENDDO
 
-   dbUseArea( .T.,, cFile, "dbffile",, .T. )
+   dbUseArea(.T.,, cFile, "dbffile",, .T.)
    aDbfStruct := dbffile->( dbStruct() )
 
    oServer := TMariaDBServer():New( cHostName, cUser, cPassWord )
@@ -113,7 +113,7 @@ PROCEDURE Main( ... )
       QUIT
    ENDIF
 
-   oServer:SelectDB( cDataBase )
+   oServer:SelectDB(cDataBase)
    IF oServer:NetErr()
       ? oServer:Error()
       QUIT

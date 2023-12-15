@@ -80,10 +80,10 @@ PROCEDURE Main( cPortName )
       Inkey(0)
       ? "Read() ", oWinPort:Read( @cString, 32 ), Len(cString), cString
       ?
-      IF oWinPort:SetDTR( .T. )
-         ? "SetDTR( .T. ) succeeded"
+      IF oWinPort:SetDTR(.T.)
+         ? "SetDTR(.T.) succeeded"
       ELSE
-         ? "SetDTR( .T. ) failed :", oWinPort:ErrorText()
+         ? "SetDTR(.T.) failed :", oWinPort:ErrorText()
       ENDIF
       ? "Scan something... and press enter (read should work)"
       Inkey(0)
@@ -109,11 +109,11 @@ PROCEDURE Main( cPortName )
       ELSE
          ? "RTSFlow( WIN_RTS_CONTROL_HANDSHAKE ) failed :", oWinPort:ErrorText()
       ENDIF
-      ? oWinPort:DebugDCB( HB_WIN_COM_DBGFLOW )
-      IF oWinPort:SetRTS( .F. )
-         ? "SetRTS( .F. ) succeeded (it shouldn't according to docs!)"
+      ? oWinPort:DebugDCB(HB_WIN_COM_DBGFLOW)
+      IF oWinPort:SetRTS(.F.)
+         ? "SetRTS(.F.) succeeded (it shouldn't according to docs!)"
       ELSE
-         ? "SetRTS( .F. ) failed (it should) :", oWinPort:ErrorText()
+         ? "SetRTS(.F.) failed (it should) :", oWinPort:ErrorText()
       ENDIF
       ?
       IF oWinPort:RTSFlow( WIN_RTS_CONTROL_DISABLE )
@@ -121,11 +121,11 @@ PROCEDURE Main( cPortName )
       ELSE
          ? "RTSFlow( WIN_RTS_CONTROL_DISABLE ) failed :", oWinPort:ErrorText()
       ENDIF
-      ? oWinPort:DebugDCB( HB_WIN_COM_DBGFLOW )
-      IF oWinPort:SetRTS( .F. )
-         ? "SetRTS( .F. ) succeeded (it should)"
+      ? oWinPort:DebugDCB(HB_WIN_COM_DBGFLOW)
+      IF oWinPort:SetRTS(.F.)
+         ? "SetRTS(.F.) succeeded (it should)"
       ELSE
-         ? "SetRTS( .F. ) failed :", oWinPort:ErrorText()
+         ? "SetRTS(.F.) failed :", oWinPort:ErrorText()
       ENDIF
       ?
       ? "Scan something... we'll not read it but purge it, press enter"
@@ -176,7 +176,7 @@ PROCEDURE Main( cPortName )
    ELSE
       ? "Open succeeded"
       ?
-      ? oWinPort:DebugDCB( HB_WIN_COM_DBGFLOW )
+      ? oWinPort:DebugDCB(HB_WIN_COM_DBGFLOW)
       ? "Printers will probably have CTS, DSR and DCD high, IF they are off they'll all be low"
       IF oWinPort:Status( @lCTS, @lDSR, @lRing, @lDCD )
          ? "Status() succeeded : CTS ", lCTS, ", DSR ", lDSR, ", Ring ", lRing, ", DCD ", lDCD
@@ -211,13 +211,13 @@ PROCEDURE Main( cPortName )
       ELSE
          ? "DTRFlow( WIN_DTR_CONTROL_HANDSHAKE ) failed :", oWinPort:ErrorText()
       ENDIF
-      IF oWinPort:XonXoffFlow( .T. )
-         ? "XonXoffFlow( .T. ) ", oWinPort:XonXoffFlow( .T. )
+      IF oWinPort:XonXoffFlow(.T.)
+         ? "XonXoffFlow(.T.) ", oWinPort:XonXoffFlow(.T.)
       ELSE
-         ? "XonXoffFlow( .T. ) failed :", oWinPort:ErrorText()
+         ? "XonXoffFlow(.T.) failed :", oWinPort:ErrorText()
       ENDIF
       ?
-      ? oWinPort:DebugDCB( HB_WIN_COM_DBGFLOW )
+      ? oWinPort:DebugDCB(HB_WIN_COM_DBGFLOW)
 
       ? "If it's on then no Hold status should be on, IF off then probably CTS and DSR"
       IF oWinPort:QueueStatus( @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue )

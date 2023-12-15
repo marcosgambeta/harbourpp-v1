@@ -57,7 +57,7 @@ PROCEDURE DrawBarcode( page, nY, nLineWidth, cType, cCode, nFlags )
    SWITCH cType
    CASE "EAN13"      ; hZebra := hb_zebra_create_ean13( cCode, nFlags )   ; EXIT
    CASE "EAN8"       ; hZebra := hb_zebra_create_ean8( cCode, nFlags )    ; EXIT
-   CASE "UPCA"       ; hZebra := hb_zebra_create_upca( cCode, nFlags )    ; EXIT
+   CASE "UPCA"       ; hZebra := hb_zebra_create_upca(cCode, nFlags)      ; EXIT
    CASE "UPCE"       ; hZebra := hb_zebra_create_upce( cCode, nFlags )    ; EXIT
    CASE "CODE39"     ; hZebra := hb_zebra_create_code39( cCode, nFlags )  ; EXIT
    CASE "ITF"        ; hZebra := hb_zebra_create_itf( cCode, nFlags )     ; EXIT

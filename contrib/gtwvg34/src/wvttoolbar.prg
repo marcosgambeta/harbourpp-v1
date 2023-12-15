@@ -67,7 +67,7 @@ CREATE CLASS WvtToolBar INHERIT WvtObject
    VAR    wScreen
    VAR    cScreen
    VAR    nBtnLeft                                INIT 0
-   VAR    nRGBSep                                 INIT WIN_RGB( 150, 150, 150 )
+   VAR    nRGBSep                                 INIT WIN_RGB(150, 150, 150)
 
    ACCESS nButtons                                INLINE Len(::aButtons)
 

@@ -23,12 +23,12 @@
  * pseudo object 'net', i.e. ? net:date()
  */
 #xtranslate net:<!func!>( [<params,...>] ) => ;
-            netio_FuncExec( #<func> [,<params>] )
+            netio_FuncExec(#<func> [,<params>])
 #xtranslate net:[<server>]:<!func!>( [<params,...>] ) => ;
-            netio_FuncExec( [ #<server> + ] ":" + #<func> [,<params>] )
+            netio_FuncExec([ #<server> + ] ":" + #<func> [,<params>])
 #xtranslate net:[<server>]:<port>:<!func!>( [<params,...>] ) => ;
-            netio_FuncExec( [ #<server> + ] ":" + #<port> + ":" + #<func> ;
-                            [,<params>] )
+            netio_FuncExec([ #<server> + ] ":" + #<port> + ":" + #<func> ;
+                            [,<params>])
 
 #xtranslate net:exists:<!func!> => ;
             netio_ProcExists( #<func> )

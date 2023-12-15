@@ -47,7 +47,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    // --- StatusBar ---
    oSBar   := WvgStatusBar():new( oDA ):create( , , , , , .T. )
    oSBar:panelClick := {| oPanel | wapi_MessageBox( , oPanel:caption ) }
-   oPanel  := oSBar:getItem( 1 )
+   oPanel  := oSBar:getItem(1)
    oPanel:caption := "My Root Panel"
    oPanel1 := oSBar:addItem()
    oPanel1:caption := "Ready"
@@ -61,7 +61,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oStatic:caption := Chr(13) + "Implemented Xbase++ Parts"
    oStatic:create( , , { 0, oTBar:currentSize()[ 2 ] + 3 }, { 120, oCrt:currentSize()[ 2 ] - ;
       oTBar:currentSize()[ 2 ] - oSBar:currentSize()[ 2 ] - 4 }, , .T. )
-   oStatic:setColorBG( WIN_RGB( 198, 198, 198 ) )
+   oStatic:setColorBG( WIN_RGB(198, 198, 198) )
 
 #if 0  // panel
    // --- Static + Radio + Checkbox ---
@@ -70,7 +70,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oStatic2:exStyle += WS_EX_WINDOWEDGE
 // oStatic2:options := WVGSTATIC_FRAMETHICK
    oStatic2:create()
-// oStatic2:setColorBG( WIN_RGB( 198,198,198 ) )
+// oStatic2:setColorBG( WIN_RGB(198, 198, 198) )
 
    oXbp    := WvgPushButton():new( oStatic2 )
    oXbp:caption     := "Hide"
@@ -144,7 +144,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oListBox := WvgListBox():new()
    oListBox:create( oStatic, , { 5, 55 }, { 107, 380 } )
 
-   oListBox:setColorFG( WIN_RGB( 218, 61, 34 ) )
+   oListBox:setColorFG( WIN_RGB(218, 61, 34) )
 
    AAdd( aParts, "XbpDialog"      )
    AAdd( aParts, "XbpMenuBar"     )
@@ -164,7 +164,7 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
 
    AEval( aParts, {| e | oListBox:addItem( e ) } )
    oListBox:itemSelected := {|| wapi_MessageBox( , oListBox:getCurItem() ) }
-   oListBox:setData( 3 )
+   oListBox:setData(3)
 
    // --- PushButton ---
    oXbp := WvgPushButton():new( oStatic )
@@ -180,8 +180,8 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oTree:hasButtons := .T.
    oTree:alwaysShowSelection := .T.
    oTree:create()
-   oTree:setColorBG( WIN_RGB( 120, 15, 240 ) )
-   oTree:setColorFG( WIN_RGB( 15, 240, 120 ) )
+   oTree:setColorBG( WIN_RGB(120, 15, 240) )
+   oTree:setColorFG( WIN_RGB(15, 240, 120) )
    oTree:itemSelected := {| oItem | iif(oItem != NIL, wapi_MessageBox( , oItem:caption ), NIL) }
 
    oItem1 := oTree:rootItem:addItem( "First level A" )
@@ -196,12 +196,12 @@ PROCEDURE ExecuteActiveX( nActiveX, xParam )
    oItem2:addItem( "Third level C" )
 
 #if 0
-   oItem1:expand( .T. )
+   oItem1:expand(.T.)
 #else
    oTree:showExpanded( .T., 2 )
 #endif
 
-   oTree:setData( oItem2 )
+   oTree:setData(oItem2)
 
    // --- Misc Config ---
    oTBar:buttonClick := {| oBtn | iif(oBtn:caption == "Hide", oStatic:hide(), NIL), ;
@@ -276,10 +276,10 @@ STATIC PROCEDURE ActiveXBuildMenu( oCrt, oStatic, oStatic2 )
    // calls a function
    oSubMenu       := WvgMenu():new( oMenuBar ):create()
    oSubMenu:title := "~Functional"
-   oSubMenu:addItem( { "Play Opening ~1", {|| MyFunction( 1 ) } } )
-   oSubMenu:addItem( { "Play Closing ~2", {|| MyFunction( 2 ) } } )
+   oSubMenu:addItem( { "Play Opening ~1", {|| MyFunction(1) } } )
+   oSubMenu:addItem( { "Play Closing ~2", {|| MyFunction(2) } } )
    oSubMenu:addItem()
-   oSubMenu:addItem( { "~MessageBox", {|| MyFunction( 3 ) } } )
+   oSubMenu:addItem( { "~MessageBox", {|| MyFunction(3) } } )
    oMenuBar:addItem( { oSubMenu, NIL } )
 
    oSubMenu       := WvgMenu():new( oMenuBar ):create()
@@ -321,7 +321,7 @@ STATIC FUNCTION BuildActiveXControl( nActiveX, oDA )
       oCom:Id    := 5
 
       oCom:mapEvent( evDblClk, {|| oCom:Value     := Seconds() / 86400, ;
-         oCom:BackColor := WIN_RGB( 0, 140, 210 ), ;
+         oCom:BackColor := WIN_RGB(0, 140, 210), ;
          oCom:Refresh(), ;
          oCom:ShowSecondsHand := .T., ;
          oCom:Hands3D := .T., ;
@@ -375,18 +375,18 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
    CASE 4
       ConfigureRMChart( oCom )
-      oCom:Draw( .T. )
+      oCom:Draw(.T.)
       oCom:Draw2Clipboard()
       EXIT
 
    CASE 5
       oCom:loadMultiPage( hb_DirBase() + "myharu.pdf", 2 )
-      oCom:addGradientBorder( 10, WIN_RGB( 12, 20, 233 ), WIN_RGB( 100, 255, 20 ), 0 )
+      oCom:addGradientBorder( 10, WIN_RGB(12, 20, 233), WIN_RGB(100, 255, 20), 0 )
       oCom:drawText( 10, 10, "Vouch" )
       // oCom:emboss( 3,0 )
       oCom:copy2ClipBoard()
       oCom:view := 11
-      oCom:setBackGroundColor( WIN_RGB( 225, 225, 225 ) )
+      oCom:setBackGroundColor( WIN_RGB(225, 225, 225) )
 #if 0
       oCom:rotate90()
 #endif
@@ -410,7 +410,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
          CASE 11
 #if 0
-            oCom:document( 0 ):InnerHTML := "<html><h1>Stream Test</h1><p>This HTML content in a document.</html>"
+            oCom:document(0):InnerHTML := "<html><h1>Stream Test</h1><p>This HTML content in a document.</html>"
 #endif
             EXIT
 
@@ -419,9 +419,9 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
             oCom:RMCStyle         := 2
             oCom:RMCUserWatermark := "Vouch"
 
-            oCom:Region( 1 ):SetProperties( 5, 5, -5, -5 )
+            oCom:Region(1):SetProperties( 5, 5, -5, -5 )
 
-            oCom:Draw( .T. )
+            oCom:Draw(.T.)
             EXIT
          ENDSWITCH
          EXIT
@@ -587,7 +587,7 @@ STATIC PROCEDURE ExeActiveX( nActiveX, oCom, xParam )
 
             oCom:Reset()
             oCom:RMCFile := sData
-            oCom:Draw( .T. )
+            oCom:Draw(.T.)
          ENDIF
          EXIT
       ENDSWITCH
@@ -614,7 +614,7 @@ STATIC PROCEDURE ConfigureRMChart( RMChart )
 
    RMChart:AddRegion()
 
-   oRegion := RMChart:Region( 1 )
+   oRegion := RMChart:Region(1)
    oRegion:Footer := hb_Version( HB_VERSION_URL_BASE )
 
    oRegion:AddCaption()

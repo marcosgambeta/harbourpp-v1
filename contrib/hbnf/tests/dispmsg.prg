@@ -35,7 +35,7 @@ PROCEDURE Main()
    SetColor( "W/N" )
    CLS
    nMaxRow := MaxRow()
-   SetBlink( .F. )
+   SetBlink(.F.)
    SetColor( cWindN + "*" )
    CLS
    SetColor( cNormN )
@@ -58,7 +58,7 @@ PROCEDURE Main()
 
    SetColor( "W/N" )
    SetCursor( SC_NORMAL )
-   SetBlink( .T. )
+   SetBlink(.T.)
    RestScreen( , , , , cDosScrn )
    SetPos( nDosRow, nDosCol )
 

@@ -359,7 +359,7 @@ FUNCTION URLEncode( cStr )
          cRet += cCar
 
       OTHERWISE
-         nVal := Asc( cCar )
+         nVal := Asc(cCar)
          cRet += "%" + hb_NumToHex( nVal )
       ENDCASE
    NEXT

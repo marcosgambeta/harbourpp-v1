@@ -74,7 +74,7 @@ CREATE CLASS WvgDataRef
    ASSIGN editBuffer( xData )                    INLINE ::sl_editBuffer := xData
 
    METHOD getData()
-   METHOD setData( xValue, mp2 )
+   METHOD setData(xValue, mp2)
    METHOD undo()
 
    METHOD validate( xParam )                     SETGET
@@ -123,7 +123,7 @@ METHOD WvgDataRef:getData()
 
    RETURN ::sl_editBuffer
 
-METHOD WvgDataRef:setData( xValue, mp2 )
+METHOD WvgDataRef:setData(xValue, mp2)
 
    LOCAL s
 
@@ -142,7 +142,7 @@ METHOD WvgDataRef:setData( xValue, mp2 )
       EXIT
 
    CASE "LISTBOX"    /* Single Selection */
-      IF HB_ISNUMERIC( ::sl_editBuffer )
+      IF HB_ISNUMERIC(::sl_editBuffer)
          RETURN wvg_lbSetCurSel( ::hWnd, ::sl_editBuffer - 1 ) >= 0
       ENDIF
       EXIT

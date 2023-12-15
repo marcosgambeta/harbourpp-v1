@@ -176,7 +176,7 @@ PROCEDURE netiosrv_Main( lUI, ... )
          SWITCH cExt
          CASE ".prg"
          CASE ".hb"
-            cFile := hb_compileBuf( hb_argv( 0 ), "-n2", "-w", "-es2", "-q0", ;
+            cFile := hb_compileBuf( hb_argv(0), "-n2", "-w", "-es2", "-q0", ;
                "-D" + "__HBSCRIPT__HBNETIOSRV", netiosrv[ _NETIOSRV_cRPCFFileName ] )
             IF cFile != NIL
                netiosrv[ _NETIOSRV_hRPCFHRB ] := hb_hrbLoad( HB_HRB_BIND_FORCELOCAL, cFile )
@@ -281,13 +281,13 @@ PROCEDURE netiosrv_Main( lUI, ... )
 
       /* Wait until embedded management console connects */
       IF ! Empty(netiomgm[ _NETIOSRV_pListenSocket ])
-         hb_idleSleep( 2 )
+         hb_idleSleep(2)
          netiomgm[ _NETIOSRV_lShowConn ] := .T.
       ENDIF
 
       /* Command prompt */
       DO WHILE ! netiosrv[ _NETIOSRV_lQuit ] .AND. inkey() != 27
-         hb_idleSleep( 5 )
+         hb_idleSleep(5)
       ENDDO
 
       netio_ServerStop( netiosrv[ _NETIOSRV_pListenSocket ] )
@@ -305,7 +305,7 @@ PROCEDURE netiosrv_Main( lUI, ... )
 
 STATIC PROCEDURE netiosrv_LogEvent( cText )
 
-   QQOut( hb_TToC( hb_DateTime() ) + " " + cText + hb_eol() )
+   QQOut( hb_TToC(hb_DateTime()) + " " + cText + hb_eol() )
 
    RETURN
 
@@ -575,7 +575,7 @@ STATIC FUNCTION netiomgm_rpc_sysinfo()
       hb_StrFormat( "OS: %1$s", OS() ), ;
       hb_StrFormat( "Harbour: %1$s", Version() ), ;
       hb_StrFormat( "C Compiler: %1$s", hb_Compiler() ), ;
-      hb_StrFormat( "Memory (KB): %1$d", Memory( 0 ) ) }
+      hb_StrFormat( "Memory (KB): %1$d", Memory(0) ) }
 
 STATIC FUNCTION netiomgm_rpc_serverconfig( netiosrv, netiomgm )
    RETURN netiosrv_config( netiosrv, netiomgm )

@@ -301,7 +301,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
    IF ! Empty(pBitmap)
       /* oBtn:image := pBitmap */
 
-      IF HB_ISNUMERIC( nMapRGB )
+      IF HB_ISNUMERIC(nMapRGB)
          nBtn := wapi_ImageList_AddMasked( ::hImageList, pBitmap, nMapRGB )
       ELSE
          nBtn := wapi_ImageList_Add( ::hImageList, pBitmap )

@@ -9,9 +9,9 @@ PROCEDURE Main()
 
    // 20 pages
    FOR nI := 1 TO 20
-      cairo_set_source_rgb( hCairo, 0, 0, 0 )
+      cairo_set_source_rgb(hCairo, 0, 0, 0)
       cairo_paint( hCairo )
-      cairo_set_source_rgb( hCairo, 1, 0.7, 1 )
+      cairo_set_source_rgb(hCairo, 1, 0.7, 1)
       DrawLightning( hCairo, 250, 50, 700, 3 )
       cairo_show_page( hCairo )
    NEXT

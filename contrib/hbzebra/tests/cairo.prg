@@ -8,11 +8,11 @@ PROCEDURE Main()
    hSurface := cairo_pdf_surface_create( hb_FNameExtSet( __FILE__, ".pdf" ), 567, 794 )  // A4
 
    hCairo := cairo_create( hSurface )
-   cairo_set_source_rgb( hCairo, 1.0, 1.0, 1.0 )
+   cairo_set_source_rgb(hCairo, 1.0, 1.0, 1.0)
    cairo_paint( hCairo )
    cairo_select_font_face( hCairo, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL )
    cairo_set_font_size( hCairo, 10 )
-   cairo_set_source_rgb( hCairo, 0, 0, 0 )
+   cairo_set_source_rgb(hCairo, 0, 0, 0)
 
    DrawBarcode( hCairo,  20,   1, "EAN13",      "477012345678" )
    DrawBarcode( hCairo,  40,   1, "EAN8",       "1234567" )
@@ -53,7 +53,7 @@ PROCEDURE DrawBarcode( hCairo, nY, nLineWidth, cType, cCode, nFlags )
    SWITCH cType
    CASE "EAN13"      ; hZebra := hb_zebra_create_ean13( cCode, nFlags )   ; EXIT
    CASE "EAN8"       ; hZebra := hb_zebra_create_ean8( cCode, nFlags )    ; EXIT
-   CASE "UPCA"       ; hZebra := hb_zebra_create_upca( cCode, nFlags )    ; EXIT
+   CASE "UPCA"       ; hZebra := hb_zebra_create_upca(cCode, nFlags)      ; EXIT
    CASE "UPCE"       ; hZebra := hb_zebra_create_upce( cCode, nFlags )    ; EXIT
    CASE "CODE39"     ; hZebra := hb_zebra_create_code39( cCode, nFlags )  ; EXIT
    CASE "ITF"        ; hZebra := hb_zebra_create_itf( cCode, nFlags )     ; EXIT

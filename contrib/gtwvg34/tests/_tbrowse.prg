@@ -36,7 +36,7 @@ PROCEDURE WvtMyBrowse()
          oCrt:resizeMode := HB_GTI_RESIZEMODE_ROWS, ;
          oCrt:icon := GetResource( "dia_excl.ico" ), ;
          oCrt:create(), ;
-         wvt_SetGUI( .T. ), ;
+         wvt_SetGUI(.T.), ;
          ExecBrowser( oCrt ), ;
          oCrt:destroy() } )
 
@@ -89,11 +89,11 @@ STATIC PROCEDURE ExecBrowser( oCrt )
       INDEX ON field->LAST  TAG "002" ADDITIVE
       INDEX ON field->CITY  TAG "003" ADDITIVE
       dbUnlock()
-      ordSetFocus( 1 )
+      ordSetFocus(1)
    ENDIF
    dbGoto( 50 )
 
-   Popups( 2 )
+   Popups(2)
 
    oBrowse := TBrowseWvg():New( nTop + 2, nLeft + 12, nBottom - 1, nRight - 1 )
 
@@ -111,7 +111,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    IF s_nStyle > WIN_PS_NULL
       s_nStyle := WIN_PS_SOLID
    ENDIF
-   wvt_SetPen( s_nStyle++, 0, WIN_RGB( 210, 210, 210 ) )
+   wvt_SetPen( s_nStyle++, 0, WIN_RGB(210, 210, 210) )
    hb_gtInfo( HB_GTI_WINTITLE, "WVT GUI TBrowse()" )
 
    AAdd( aBlocks, {|| wvt_DrawBoxRaised( oBrowse:nTop - 2, oBrowse:nLeft - 2, oBrowse:nBottom + 1, oBrowse:nRight + 2 ) } )
@@ -124,7 +124,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    aLastPaint := WvtSetBlocks( aBlocks )
 
    hb_DispBox( 0, 0, MaxRow(), MaxCol(), "         ", "N/W" )
-   hb_DispOutAt( oBrowse:nTop - 2, oBrowse:nleft - 2, PadC( "Test table", oBrowse:nRight - oBrowse:nLeft + 5 ), "W+/B*" )
+   hb_DispOutAt( oBrowse:nTop - 2, oBrowse:nleft - 2, PadC("Test table", oBrowse:nRight - oBrowse:nLeft + 5), "W+/B*" )
 
    oCom := BrwBuildActiveX( oCrt, oBrowse )
    oChk := BrwBuildCheckBox( oCrt, oBrowse, @t_lActiveX )
@@ -144,8 +144,8 @@ STATIC PROCEDURE ExecBrowser( oCrt )
       DispEnd()
 
       IF nKey == 0
-         oVBar:setData( ordKeyNo() )
-         oHBar:setData( oBrowse:colPos )
+         oVBar:setData(ordKeyNo())
+         oHBar:setData(oBrowse:colPos)
          DO WHILE ( ( nKey := Inkey(NIL, hb_bitOr( INKEY_ALL, HB_INKEY_GTEVENT )) ) == 0 .OR. nKey == K_MOVING )
          ENDDO
       ENDIF
@@ -189,7 +189,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
       ENDCASE
    ENDDO
 
-   wvt_SetPen( 0 )
+   wvt_SetPen(0)
    WvtSetBlocks( aLastPaint )
    WvtSetObjects( aObjects )
 
@@ -221,7 +221,7 @@ STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTr
    oBrw:configure()
 
    hb_DispBox( 0, 0, MaxRow(), MaxCol(), "         ", "N/W" )
-   hb_DispOutAt( oBrw:nTop - 2, oBrw:nleft - 2, PadC( "Test table", oBrw:nRight - oBrw:nLeft + 5 ), "W+/B*" )
+   hb_DispOutAt( oBrw:nTop - 2, oBrw:nleft - 2, PadC("Test table", oBrw:nRight - oBrw:nLeft + 5), "W+/B*" )
 
    oVBar:setPosAndSize()
    oHBar:setPosAndSize()
@@ -304,7 +304,7 @@ STATIC FUNCTION BrwBuildTree( oCrt /*, oBrw*/ )
    oItem2:addItem( "Third level z" )
 
    oTree:showExpanded( .T., 2 )
-   oTree:setData( oItem2 )
+   oTree:setData(oItem2)
 
    oTree:tooltipText := "Treeview embedded onto CUI window"
 
@@ -340,7 +340,7 @@ STATIC FUNCTION BrwBuildListBox( oCrt, oBrw )
    FOR i := 1 TO oBrw:colCount
       oXbp:addItem( oBrw:getColumn( i ):heading )
    NEXT
-   oXbp:setData( 1 )
+   oXbp:setData(1)
    oXbp:tooltipText := "Click on a field name to make it active!"
 
    RETURN oXbp
@@ -420,7 +420,7 @@ STATIC FUNCTION BrwBuildNvg( oCrt, oBrw, oCom )
    oXbp:setColorBG( "BG+"  )
    oXbp:returnPressed := {| m1, m2, o | m1 := m2, oCom:navigate( RTrim(o:getData()) ) }
    oXbp:tooltipText := "Type-in a web address and press ENTER"
-   oXbp:setData( hb_Version( HB_VERSION_URL_BASE ) )
+   oXbp:setData(hb_Version( HB_VERSION_URL_BASE ))
 
    RETURN { oLbl, oXbp }
 
@@ -501,7 +501,7 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
          oPB:create( , , { {|| -MaxRow() }, -nOff }, { -1, -aW[ i ] } )
       ENDIF
       oPB:activate := aAct[ i ]
-      oPB:setColorFG( WIN_RGB( 0, 255, 0 ) )
+      oPB:setColorFG( WIN_RGB(0, 255, 0) )
       oPB:tooltipText := aPmt[ i ]
 
       nOff += aW[ i ] + nG
@@ -552,14 +552,14 @@ STATIC FUNCTION BrwBuildMenu( oCrt )
    oSMenu:addItem( { "Procedure ~1", } )
    oSMenu:addItem( { "Procedure ~2", } )
    oSMenu:itemSelected := {| mp1 | MyMenuProcedure( 100 + mp1 ) }
-   oSMenu:checkItem( 2 )
+   oSMenu:checkItem(2)
    oMenu:addItem( { oSMenu, NIL } )
 
    RETURN oMenu
 
 STATIC FUNCTION BrwBuildToolBar( oCrt )
 
-   LOCAL oTBar, nRGB := WIN_RGB( 172, 172, 172 )
+   LOCAL oTBar, nRGB := WIN_RGB(172, 172, 172)
 
    oTBar := WvgToolBar():new( oCrt, , { -0.1, -0.1 }, { -3, {|| -( MaxCol() + 1 ) } } )
 
@@ -727,7 +727,7 @@ STATIC FUNCTION DbSkipBlock( n )
    LOCAL nSkipped := 0
 
    IF n == 0
-      dbSkip( 0 )
+      dbSkip(0)
 
    ELSEIF n > 0
       DO WHILE nSkipped != n .AND. TBNext()
@@ -955,7 +955,7 @@ FUNCTION ConfigBrowser( aFields, cUseAlias, aTLBR, cDesc, oParent, cColorSpec, n
    AAdd( aPopup, { "Top"      , {|| oBrowse:GoTop()   , oBrowse:ForceStable() } } )
    AAdd( aPopup, { "Bottom"   , {|| oBrowse:GoBottom(), oBrowse:ForceStable() } } )
 
-   dbSelectArea( cUseAlias )
+   dbSelectArea(cUseAlias)
 
    oBrowse := TBrowseWvg():New( aTLBR[ 1 ], aTLBR[ 2 ], aTLBR[ 3 ], aTLBR[ 4 ] )
 

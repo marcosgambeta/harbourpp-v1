@@ -19,8 +19,8 @@ PROCEDURE Main()
    ? "netio_Connect():", netio_Connect( NETSERVER, NETPORT,, NETPASSWD )
    ?
    /* check if some function are available on server side */
-   ? "Number of connected clients:", Len(netio_FuncExec( "netio_conninfo" ))
-   ? "SHUTDOWN server:", netio_FuncExec( "netio_shutdown" )
+   ? "Number of connected clients:", Len(netio_FuncExec("netio_conninfo"))
+   ? "SHUTDOWN server:", netio_FuncExec("netio_shutdown")
    ?
 
    /* close the connection to the server */

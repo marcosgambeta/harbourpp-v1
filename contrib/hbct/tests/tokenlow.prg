@@ -70,8 +70,8 @@ PROCEDURE Main()
    ?
 
    ? '  Lowercase the tokens in the string "' + cStr + '"'
-   ? '            with CSetRef( .T. ) and "@"'
-   CSetRef( .T. )
+   ? '            with CSetRef(.T.) and "@"'
+   CSetRef(.T.)
    ?
    ? '    --> return value of TokenLower(@cStr): ', TokenLower(@cStr)
    ? '    --> cStr is now: "' + cStr + '"'

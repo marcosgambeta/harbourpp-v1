@@ -122,7 +122,7 @@ STATIC FUNCTION AR_INIT( nRDD )
 
    /* Init DBF Hash */
 
-   USRRDD_RDDDATA( nRDD, { => } )
+   USRRDD_RDDDATA(nRDD, { => })
 
    RETURN HB_SUCCESS
 
@@ -208,7 +208,7 @@ STATIC FUNCTION AR_NEW( pWA )
     * cannot return EOF flag directly.
     */
 
-   USRRDD_AREADATA( pWA, AR_WADATAINIT() )
+   USRRDD_AREADATA(pWA, AR_WADATAINIT())
 
    RETURN HB_SUCCESS
 
@@ -216,7 +216,7 @@ STATIC FUNCTION AR_NEW( pWA )
 
 STATIC FUNCTION AR_CREATEFIELDS( nWA, aStruct )
 
-   LOCAL aWAData := USRRDD_AREADATA( nWA )
+   LOCAL aWAData := USRRDD_AREADATA(nWA)
    LOCAL nResult := HB_SUCCESS
    LOCAL aFieldStruct, aField
 
@@ -254,8 +254,8 @@ STATIC FUNCTION AR_CREATEFIELDS( nWA, aStruct )
 
 STATIC FUNCTION AR_CREATE( nWA, aOpenInfo )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
-   LOCAL hRDDData := USRRDD_RDDDATA( USRRDD_ID( nWA ) )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
+   LOCAL hRDDData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
    LOCAL cName
    LOCAL cFullName, aDBFData, nResult /*, aFieldStruct, aField, aStruct */
 
@@ -327,7 +327,7 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
       aOpenInfo[ UR_OI_ALIAS ] := cName
    ENDIF
 
-   hRDDData := USRRDD_RDDDATA( USRRDD_ID( nWA ) )
+   hRDDData := USRRDD_RDDDATA(USRRDD_ID( nWA ))
 
    IF cFullName $ hRDDData
       aDBFData := hRDDData[ cFullName ]
@@ -339,13 +339,13 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
       oError:Description := hb_langErrMsg( EG_OPEN ) + ", memory file not found"
       oError:FileName    := aOpenInfo[ UR_OI_NAME ]
       oError:CanDefault  := .T.
-      NetErr( .T. )
+      NetErr(.T.)
       UR_SUPER_ERROR( nWA, oError )
       RETURN HB_FAILURE
    ENDIF
 
    /* Set WorkArea Infos */
-   aWAData := USRRDD_AREADATA( nWA )
+   aWAData := USRRDD_AREADATA(nWA)
    aWAData[ WADATA_DATABASE ] := aDBFData   /* Put a reference to database */
    aWAData[ WADATA_WORKAREA ] := nWA
    aWAData[ WADATA_OPENINFO ] := aOpenInfo  /* Put open informations */
@@ -379,7 +379,7 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
          hb_langErrMsg( EG_LOCK ) + " - already opened in exclusive mode)"
       oError:FileName    := aOpenInfo[ UR_OI_NAME ]
       oError:CanDefault  := .T.
-      NetErr( .T. )
+      NetErr(.T.)
       UR_SUPER_ERROR( nWA, oError )
       RETURN HB_FAILURE
    ENDIF
@@ -397,13 +397,13 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
          oError:FileName    := aOpenInfo[ UR_OI_NAME ]
          oError:CanDefault  := .T.
          UR_SUPER_ERROR( nWA, oError )
-         NetErr( .T. )
+         NetErr(.T.)
          RETURN HB_FAILURE
       ENDIF
    ENDIF
 
    IF nResult == HB_SUCCESS
-      NetErr( .F. )
+      NetErr(.F.)
       AR_GOTOP( nWA )
    ENDIF
 
@@ -411,7 +411,7 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
 
 STATIC FUNCTION AR_CLOSE( nWA )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d", nWA ) )
@@ -428,7 +428,7 @@ STATIC FUNCTION AR_CLOSE( nWA )
 
 STATIC FUNCTION AR_GETVALUE( nWA, nField, xValue )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords := aDBFData[ DATABASE_RECORDS ]
    LOCAL aStruct  := aDBFData[ DATABASE_STRUCT ]
@@ -450,7 +450,7 @@ STATIC FUNCTION AR_GETVALUE( nWA, nField, xValue )
 
 STATIC FUNCTION AR_PUTVALUE( nWA, nField, xValue )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords := aDBFData[ DATABASE_RECORDS ]
    LOCAL aStruct  := aDBFData[ DATABASE_STRUCT ]
@@ -481,7 +481,7 @@ STATIC FUNCTION AR_PUTVALUE( nWA, nField, xValue )
 
 STATIC FUNCTION AR_GOTO( nWA, nRecord )
 
-   LOCAL aWAData   := USRRDD_AREADATA( nWA )
+   LOCAL aWAData   := USRRDD_AREADATA(nWA)
    LOCAL aDBFData  := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords  := aDBFData[ DATABASE_RECORDS ]
    LOCAL nRecCount := Len(aRecords)
@@ -519,7 +519,7 @@ STATIC FUNCTION AR_GOTOID( nWA, nRecord )
 
 STATIC FUNCTION AR_GOTOP( nWA )
 
-   LOCAL aWAData   := USRRDD_AREADATA( nWA )
+   LOCAL aWAData   := USRRDD_AREADATA(nWA)
    LOCAL aDBFData  := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords  := aDBFData[ DATABASE_RECORDS ]
    LOCAL aRecInfo  := aDBFData[ DATABASE_RECINFO ]
@@ -562,7 +562,7 @@ STATIC FUNCTION AR_GOTOP( nWA )
 
 STATIC FUNCTION AR_GOBOTTOM( nWA )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords := aDBFData[ DATABASE_RECORDS ]
    LOCAL aRecInfo := aDBFData[ DATABASE_RECINFO ]
@@ -606,7 +606,7 @@ STATIC FUNCTION AR_SETFILTER( nWa, aDbFilterInfo )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, aDbFilterInfo: %2$s", nWA, hb_ValToExp( aDbFilterInfo ) ) )
 
-   USRRDD_AREADATA( nWA )[ WADATA_FILTERINFO ] := aDbFilterInfo
+   USRRDD_AREADATA(nWA)[ WADATA_FILTERINFO ] := aDbFilterInfo
 
    RETURN HB_SUCCESS
 
@@ -614,13 +614,13 @@ STATIC FUNCTION AR_CLEARFILTER( nWA )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d", nWA ) )
 
-   USRRDD_AREADATA( nWA )[ WADATA_FILTERINFO ] := NIL
+   USRRDD_AREADATA(nWA)[ WADATA_FILTERINFO ] := NIL
 
    RETURN HB_SUCCESS
 
 STATIC FUNCTION AR_SKIPFILTER( nWA, nRecords )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aRecInfo := aDBFData[ DATABASE_RECINFO ]
    LOCAL lBof, nToSkip
@@ -659,7 +659,7 @@ STATIC FUNCTION AR_SKIPFILTER( nWA, nRecords )
 
 STATIC FUNCTION AR_SKIPRAW( nWA, nRecords )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL nIndex   := aWAData[ WADATA_INDEX ]
    LOCAL aIndexes := aWAData[ WADATA_DATABASE ][ DATABASE_INDEX ]
    LOCAL lBof, lEof
@@ -737,7 +737,7 @@ STATIC FUNCTION AR_SKIPRAW( nWA, nRecords )
 
 STATIC FUNCTION AR_BOF( nWA, lBof )
 
-   LOCAL aWAData := USRRDD_AREADATA( nWA )
+   LOCAL aWAData := USRRDD_AREADATA(nWA)
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, lBof: %2$s", nWA, hb_ValToExp( lBof ) ) )
 
@@ -753,7 +753,7 @@ STATIC FUNCTION AR_BOF( nWA, lBof )
 
 STATIC FUNCTION AR_EOF( nWA, lEof )
 
-   LOCAL aWAData := USRRDD_AREADATA( nWA )
+   LOCAL aWAData := USRRDD_AREADATA(nWA)
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, lEof: %2$s", nWA, hb_ValToExp( lEof ) ) )
 
@@ -763,7 +763,7 @@ STATIC FUNCTION AR_EOF( nWA, lEof )
 
 STATIC FUNCTION AR_DELETE( nWA )
 
-   LOCAL aWAData   := USRRDD_AREADATA( nWA )
+   LOCAL aWAData   := USRRDD_AREADATA(nWA)
    LOCAL aDBFData  := aWAData[ WADATA_DATABASE ]
    LOCAL aRecInfo  := aDBFData[ DATABASE_RECINFO ]
    LOCAL aOpenInfo := aWAData[ WADATA_OPENINFO ]
@@ -808,7 +808,7 @@ STATIC FUNCTION AR_DELETE( nWA )
 
 STATIC FUNCTION AR_DELETED( nWA, lDeleted )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aRecInfo := aDBFData[ DATABASE_RECINFO ]
 
@@ -824,7 +824,7 @@ STATIC FUNCTION AR_DELETED( nWA, lDeleted )
 
 STATIC FUNCTION AR_RECALL( nWA )
 
-   LOCAL aWAData   := USRRDD_AREADATA( nWA )
+   LOCAL aWAData   := USRRDD_AREADATA(nWA)
    LOCAL aDBFData  := aWAData[ WADATA_DATABASE ]
    LOCAL aRecInfo  := aDBFData[ DATABASE_RECINFO ]
    LOCAL aOpenInfo := aWAData[ WADATA_OPENINFO ]
@@ -867,7 +867,7 @@ STATIC FUNCTION AR_RECALL( nWA )
 
 STATIC FUNCTION AR_APPEND( nWA, nRecords )
 
-   LOCAL aWAData   := USRRDD_AREADATA( nWA )
+   LOCAL aWAData   := USRRDD_AREADATA(nWA)
    LOCAL aDBFData  := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords  := aDBFData[ DATABASE_RECORDS ]
    LOCAL aRecInfo  := aDBFData[ DATABASE_RECINFO ]
@@ -891,7 +891,7 @@ STATIC FUNCTION AR_APPEND( nWA, nRecords )
 #endif
       oError:CanDefault  := .T.
       oError:CanRetry    := .T.
-      NetErr( .T. )
+      NetErr(.T.)
       UR_SUPER_ERROR( nWA, oError )
       RETURN HB_FAILURE
 
@@ -902,7 +902,7 @@ STATIC FUNCTION AR_APPEND( nWA, nRecords )
    aRecDataInit := AR_RECDATAINIT()
    AAdd( aRecInfo, aRecDataInit )
 
-   NetErr( .F. )
+   NetErr(.F.)
    AR_GOTO( nWa, Len(aRecords) )
    AEval( aIndexes, {| aIndex, n | ModifyIndex( n, Eval( aIndex[ INDEX_ORCR ][ UR_ORCR_BKEY ] ), aIndex, aWAData ) } )
 
@@ -916,7 +916,7 @@ STATIC FUNCTION AR_APPEND( nWA, nRecords )
 
 STATIC FUNCTION AR_LOCK( nWA, aLock )
 
-   LOCAL aWAData := USRRDD_AREADATA( nWA )
+   LOCAL aWAData := USRRDD_AREADATA(nWA)
    LOCAL nRec    := iif(aLock[ UR_LI_RECORD ] == NIL, aWAData[ WADATA_RECNO ], aLock[ UR_LI_RECORD ])
    LOCAL aRecInfo
 
@@ -946,7 +946,7 @@ STATIC FUNCTION AR_LOCK( nWA, aLock )
 
 STATIC FUNCTION AR_UNLOCK( nWA, nRec )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aRecords := aWAData[ WADATA_LOCKS ]
    LOCAL aRecInfo := aWAData[ WADATA_DATABASE ][ DATABASE_RECINFO ]
    LOCAL nPos
@@ -971,7 +971,7 @@ STATIC FUNCTION AR_UNLOCK( nWA, nRec )
 
 STATIC FUNCTION AR_RECID( nWA, nRecNo )
 
-   LOCAL aWAData   := USRRDD_AREADATA( nWA )
+   LOCAL aWAData   := USRRDD_AREADATA(nWA)
    LOCAL aDBFData  := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords  := aDBFData[ DATABASE_RECORDS ]
    LOCAL nRecCount := Len(aRecords)
@@ -988,7 +988,7 @@ STATIC FUNCTION AR_RECID( nWA, nRecNo )
 
 STATIC FUNCTION AR_RECCOUNT( nWA, nRecords )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords := aDBFData[ DATABASE_RECORDS ]
 
@@ -1003,7 +1003,7 @@ STATIC FUNCTION AR_RECCOUNT( nWA, nRecords )
 STATIC FUNCTION AR_PACK( nWA )
 
    LOCAL oError, nRec, aIndex
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aRecords := aDBFData[ DATABASE_RECORDS ]
    LOCAL aRecInfo := aDBFData[ DATABASE_RECINFO ]
@@ -1054,7 +1054,7 @@ STATIC FUNCTION AR_PACK( nWA )
 
 STATIC FUNCTION AR_ZAP( nWA )
 
-   LOCAL aWAData   := USRRDD_AREADATA( nWA )
+   LOCAL aWAData   := USRRDD_AREADATA(nWA)
    LOCAL aDBFData  := aWAData[ WADATA_DATABASE ]
    LOCAL aOpenInfo := aWAData[ WADATA_OPENINFO ]
    LOCAL oError
@@ -1100,13 +1100,13 @@ STATIC FUNCTION AR_FOUND( nWa, lFound )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, lFound: %2$s", nWa, hb_ValToExp( lFound ) ) )
 
-   lFound := USRRDD_AREADATA( nWA )[ WADATA_FOUND ]
+   lFound := USRRDD_AREADATA(nWA)[ WADATA_FOUND ]
 
    RETURN HB_SUCCESS
 
 STATIC FUNCTION AR_SEEK( nWa, lSoftSeek, xSeek, lLast )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aIndexes := aWAData[ WADATA_DATABASE ][ DATABASE_INDEX ]
    LOCAL nIndex   := aWAData[ WADATA_INDEX ]
    LOCAL nResult  /* := HB_SUCCESS */
@@ -1126,7 +1126,7 @@ STATIC FUNCTION AR_SEEK( nWa, lSoftSeek, xSeek, lLast )
 
 STATIC FUNCTION AR_INFO( nWA, nMsg, xValue )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nMsg: %2$s, xValue: %3$s", nWA, hb_ValToExp( nMsg ), hb_ValToExp( xValue ) ) )
@@ -1146,7 +1146,7 @@ STATIC FUNCTION AR_INFO( nWA, nMsg, xValue )
 
 STATIC FUNCTION AR_ORDLSTADD( nWA, aOrderInfo )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aIndexes := aDBFData[ DATABASE_INDEX ]
 
@@ -1168,7 +1168,7 @@ STATIC FUNCTION AR_ORDLSTADD( nWA, aOrderInfo )
 
 STATIC FUNCTION AR_ORDLSTFOCUS( nWA, aOrderInfo )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aDBFData := aWAData[ WADATA_DATABASE ]
    LOCAL aIndexes := aDBFData[ DATABASE_INDEX ]
    LOCAL xIndex   := aOrderInfo[ UR_ORI_TAG ]
@@ -1197,7 +1197,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, aOrderCreate: %2$s", nWA, hb_ValToExp( aOrderCreate ) ) )
 
-   aWAData  := USRRDD_AREADATA( nWA )
+   aWAData  := USRRDD_AREADATA(nWA)
    aDBFData := aWAData[ WADATA_DATABASE ]
 
    IF HB_ISARRAY( aOrderCreate[ UR_ORCR_CONDINFO ] )
@@ -1296,7 +1296,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
 
 STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
 
-   LOCAL aWAData  := USRRDD_AREADATA( nWA )
+   LOCAL aWAData  := USRRDD_AREADATA(nWA)
    LOCAL aIndexes := aWAData[ WADATA_DATABASE ][ DATABASE_INDEX ]
    LOCAL nIndex, nPos
 
@@ -1414,19 +1414,19 @@ STATIC FUNCTION AR_ORDINFO( nWA, nMsg, aOrderInfo )
 
 STATIC FUNCTION AR_CLEARLOCATE( nWA )
 
-   USRRDD_AREADATA( nWA )[ WADATA_LOCATE ] := Array( UR_SI_SIZE )
+   USRRDD_AREADATA(nWA)[ WADATA_LOCATE ] := Array( UR_SI_SIZE )
 
    RETURN HB_SUCCESS
 
 STATIC FUNCTION AR_SETLOCATE( nWA, aScopeInfo )
 
-   USRRDD_AREADATA( nWA )[ WADATA_LOCATE ] := aScopeInfo
+   USRRDD_AREADATA(nWA)[ WADATA_LOCATE ] := aScopeInfo
 
    RETURN HB_SUCCESS
 
 STATIC FUNCTION AR_LOCATE( nWA, lContinue )
 
-   LOCAL aWAData    := USRRDD_AREADATA( nWA )
+   LOCAL aWAData    := USRRDD_AREADATA(nWA)
    LOCAL aScopeInfo := aWAData[ WADATA_LOCATE ]
    LOCAL bFor       := aScopeInfo[ UR_SI_BFOR ]
    LOCAL bWhile     := aScopeInfo[ UR_SI_BWHILE ]
@@ -1530,7 +1530,7 @@ FUNCTION hb_EraseArrayRdd( cFullName )
    LOCAL hRDDData
 
    IF s_nRddID >= 0
-      hRDDData := USRRDD_RDDDATA( s_nRddID )
+      hRDDData := USRRDD_RDDDATA(s_nRddID)
 
       IF hRDDData != NIL
          IF HB_ISSTRING( cFullName )
@@ -1609,7 +1609,7 @@ FUNCTION hb_FileArrayRdd( cFullName )
    LOCAL hRDDData
 
    IF s_nRddID >= 0
-      hRDDData := USRRDD_RDDDATA( s_nRddID )
+      hRDDData := USRRDD_RDDDATA(s_nRddID)
 
       IF hRDDData != NIL
          IF HB_ISSTRING( cFullName )
@@ -1657,7 +1657,7 @@ PROCEDURE hb_SetArrayRdd( aArray )
 
    LOCAL aRecInfo
    LOCAL nWA      := Select()
-   LOCAL aDBFData := USRRDD_AREADATA( nWA )[ WADATA_DATABASE ]
+   LOCAL aDBFData := USRRDD_AREADATA(nWA)[ WADATA_DATABASE ]
 
    aDBFData[ DATABASE_RECORDS ] := aArray
    aDBFData[ DATABASE_RECINFO ] := Array( Len(aArray) )

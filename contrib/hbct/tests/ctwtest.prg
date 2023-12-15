@@ -12,18 +12,18 @@
 
 PROCEDURE Main()
 
-   LOCAL aWin := Array( 9 ), y, x, i, k, lFlag := .F., lBoard := .T.
+   LOCAL aWin := Array(9), y, x, i, k, lFlag := .F., lBoard := .T.
 
-   SetBlink( .F. )
+   SetBlink(.F.)
    WBoard( 5, 5, 20, 75 )
    WMode( .T., .T., .T., .T. )
-   WSetShadow( 7 )
-   SetClearA( 10 * 16 + 14 )
-   SetClearB( 35 )
+   WSetShadow(7)
+   SetClearA(10 * 16 + 14)
+   SetClearB(35)
    DispBox( 0, 0, MaxRow(), MaxCol(), Replicate( "#", 9 ), NToColor( 10 * 16 + 14 ) )
    SetPos( 0, 0 )
    ? "GT driver: " + hb_gtVersion()
-   ? hb_gtVersion( 1 )
+   ? hb_gtVersion(1)
    ?
    ? "ESC - quit "
    ? "0 - select window 0 (base screen) "
@@ -36,7 +36,7 @@ PROCEDURE Main()
    ? "DEL - hide cursor "
    ? "arrows - window move "
 
-   SetClearB( 61 )
+   SetClearB(61)
    FOR i := 1 TO Len(aWin)
       y := i + 2
       x := i * 4 + 10
@@ -47,11 +47,11 @@ PROCEDURE Main()
 
       @ -1, 0 SAY "TITLE " + hb_ntos( aWin[ i ] )
       ? hb_ntos( Row() ) + ":" + hb_ntos( Col() ), "/", hb_ntos( MaxRow() ) + ":" + hb_ntos( MaxCol() ), ""
-      ? hb_ntos( WRow() ) + ":" + hb_ntos( WCol() ), "/", hb_ntos( MaxRow( .T. ) ) + ":" + hb_ntos( MaxCol( .T. ) ), ""
+      ? hb_ntos( WRow() ) + ":" + hb_ntos( WCol() ), "/", hb_ntos( MaxRow(.T.) ) + ":" + hb_ntos( MaxCol(.T.) ), ""
       ? hb_ntos( WFRow() ) + ":" + hb_ntos( WFCol() ), "/", ;
          hb_ntos( WFLastRow() ) + ":" + hb_ntos( WFLastCol() ), ""
-      ? hb_ntos( WFRow( .T. ) ) + ":" + hb_ntos( WFCol( .T. ) ), "/", ;
-         hb_ntos( WFLastRow( .T. ) ) + ":" + hb_ntos( WFLastCol( .T. ) ), ""
+      ? hb_ntos( WFRow(.T.) ) + ":" + hb_ntos( WFCol(.T.) ), "/", ;
+         hb_ntos( WFLastRow(.T.) ) + ":" + hb_ntos( WFLastCol(.T.) ), ""
       ? "window:", hb_ntos( aWin[ i ] ), ""
       SetCursor( Int( i % 5 ) )
 
@@ -65,14 +65,14 @@ PROCEDURE Main()
       ELSEIF k >= hb_keyCode( "1" ) .AND. k <= hb_keyCode( "9" )
          WSelect( aWin[ k - hb_keyCode( "0" ) ] )
       ELSEIF k == hb_keyCode( "0" )
-         WSelect( 0 )
+         WSelect(0)
       ELSEIF k == hb_keyCode( "C" ) .OR. k == hb_keyCode( "c" )
          WClose()
       ELSEIF k == hb_keyCode( "Q" ) .OR. k == hb_keyCode( "q" )
          CLS
       ELSEIF k == hb_keyCode( "B" ) .OR. k == hb_keyCode( "b" )
          IF lBoard
-            WBoard( 0, 0, MaxRow( .T. ) - 1, MaxCol( .T. ) )
+            WBoard( 0, 0, MaxRow(.T.) - 1, MaxCol(.T.) )
          ELSE
             WBoard( 5, 5, 20, 75 )
          ENDIF
@@ -81,7 +81,7 @@ PROCEDURE Main()
          y := WFRow()
          x := WFCol()
          i := WSelect()
-         WSelect( 0 )
+         WSelect(0)
          @ y, x SAY "THIS IS WINDOW 0 OUTPUT"
          WSelect( i )
       ELSEIF k == K_INS
@@ -107,7 +107,7 @@ STATIC PROCEDURE dspcord()
 
    LOCAL mr := MRow(), mc := MCol(), r := WRow(), c := WCol(), w := WSelect()
 
-   WSelect( 0 )
+   WSelect(0)
    @ MaxRow(), 0 SAY PadR( "WPOS(" + hb_ntos( r ) + "," + hb_ntos( c ) + ")" + ;
       iif(MPresent(), "MPOS(" + hb_ntos( mr ) + "," + hb_ntos( mc ) + ")", ""), MaxCol() + 1 )
    WSelect( w )

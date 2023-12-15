@@ -36,5 +36,5 @@ STATIC FUNCTION _enchex( a )  /* for hex notation */
    RETURN hb_StrToHex( amf3_Encode( a ), " " )
 
 STATIC FUNCTION _encsum( a )  /* for longer values */
-   RETURN hb_NumToHex( hb_CRC( amf3_Encode( a ) ), 4 )
+   RETURN hb_NumToHex( hb_CRC(amf3_Encode( a )), 4 )
 #endif

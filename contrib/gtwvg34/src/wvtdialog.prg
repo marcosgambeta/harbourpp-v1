@@ -213,7 +213,7 @@ METHOD WvtDialog:New( nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFon
    ::nKey                := 0
    ::cColor              := "N/W"
    ::nUseObj             := 0
-   ::lGui                := wvt_SetGUI( .F. )
+   ::lGui                := wvt_SetGUI(.F.)
 
    RETURN Self
 
@@ -221,19 +221,19 @@ METHOD WvtDialog:Create()
 
    LOCAL aPalette, i, j
 
-   ::oldToolTipActive := wvt_SetToolTipActive( .T. )
-   IF HB_ISNUMERIC( ::nTooltipWidth )
+   ::oldToolTipActive := wvt_SetToolTipActive(.T.)
+   IF HB_ISNUMERIC(::nTooltipWidth)
       wvt_SetToolTipWidth( ::nTooltipWidth )
    ENDIF
-   IF HB_ISNUMERIC( ::nTooltipBkColor )
+   IF HB_ISNUMERIC(::nTooltipBkColor)
       wvt_SetToolTipBkColor( ::nTooltipBkColor )
    ENDIF
-   IF HB_ISNUMERIC( ::nTooltipTextColor )
+   IF HB_ISNUMERIC(::nTooltipTextColor)
       wvt_SetToolTipTextColor( ::nTooltipTextColor )
    ENDIF
 
    aPalette      := hb_gtInfo( HB_GTI_PALETTE )
-   aPalette[ 9 ] := WIN_RGB( 175, 175, 175 )
+   aPalette[ 9 ] := WIN_RGB(175, 175, 175)
    hb_gtInfo( HB_GTI_PALETTE, aPalette )
 
    ::cScreen     := SaveScreen( 0, 0, MaxRow(), MaxCol() )
@@ -473,7 +473,7 @@ METHOD WvtDialog:Inkey()
          ::oLastObj := ::aObjects[ ::nCurObj ]
 
          IF ::oCurObj:nType == DLG_OBJ_BROWSE
-            dbSelectArea( ::oCurObj:cAlias )
+            dbSelectArea(::oCurObj:cAlias)
          ENDIF
 
          ::Eval( ::oCurObj:bOnFocus, ::oCurObj )

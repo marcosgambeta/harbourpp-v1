@@ -33,7 +33,7 @@ FUNCTION DispArray( aTest )
    FOR nk := 1 TO Len(aTest)
       ? aTest[ nk, 1 ]
       ?? "  "
-      ?? DToC( aTest[ nk, 2 ] )
+      ?? DToC(aTest[ nk, 2 ])
       ?? "  "
       ?? Str( aTest[ nk, 3 ] )
       ?? "  "

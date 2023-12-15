@@ -187,7 +187,7 @@ FUNCTION addmtest()
          c := .F.
       ELSE
 
-         @ 11, 39 SAY "The returned date is " + DToC( AddMonth( dDate, mnth ) )
+         @ 11, 39 SAY "The returned date is " + DToC(AddMonth( dDate, mnth ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -231,7 +231,7 @@ FUNCTION bomtest()
       IF nKey == K_ESC
          c := .F.
       ELSE
-         @ 11, 10 SAY "The returned date is " + DToC( BoM( dDate ) )
+         @ 11, 10 SAY "The returned date is " + DToC(BoM( dDate ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -277,7 +277,7 @@ FUNCTION boqtest()
       IF nKey == K_ESC
          c := .F.
       ELSE
-         @ 11, 10 SAY "The returned date is " + DToC( BoQ( dDate ) )
+         @ 11, 10 SAY "The returned date is " + DToC(BoQ( dDate ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -321,7 +321,7 @@ FUNCTION boytest()
       IF nKey == K_ESC
          c := .F.
       ELSE
-         @ 11, 10 SAY "The returned date is " + DToC( BoY( dDate ) )
+         @ 11, 10 SAY "The returned date is " + DToC(BoY( dDate ))
 
          SET CURSOR OFF
          Inkey(0)
@@ -349,7 +349,7 @@ FUNCTION ctodowtest()
    // English day names only.
 
    LOCAL getlist := {}
-   LOCAL cDow    := Space( 9 )
+   LOCAL cDow    := Space(9)
    LOCAL nkey
    LOCAL c       := .T.
 
@@ -376,7 +376,7 @@ FUNCTION ctodowtest()
          Inkey(0)
          SET CURSOR ON
 
-         cDow := Space( 9 )
+         cDow := Space(9)
 
       ENDIF
 
@@ -397,7 +397,7 @@ FUNCTION ctomonthtest()
    // invalid, CToMonth() Returns 0. English month names only
 
    LOCAL getlist := {}
-   LOCAL cDom    := Space( 9 )
+   LOCAL cDom    := Space(9)
    LOCAL c       := .T.
    LOCAL nKey
 
@@ -426,7 +426,7 @@ FUNCTION ctomonthtest()
          Inkey(0)
          SET CURSOR ON
 
-         cDom := Space( 9 )
+         cDom := Space(9)
       ENDIF
 
    ENDDO
@@ -446,11 +446,11 @@ FUNCTION dInMonthtest()
    // string or month number is passed. English Month names only.
 
    LOCAL getlist := {}
-   LOCAL cMonth  := Space( 9 )
+   LOCAL cMonth  := Space(9)
    LOCAL c       := .T.
    LOCAL nMonth
    LOCAL nKey
-   LOCAL cLeap   := Space( 1 )
+   LOCAL cLeap   := Space(1)
 
    DO WHILE c
       @ 5, 10 SAY "DaysInMonth() receives either the number of a month or"
@@ -492,8 +492,8 @@ FUNCTION dInMonthtest()
          Inkey(0)
          SET CURSOR ON
 
-         cMonth := Space( 9 )
-         cLeap  := Space( 1 )
+         cMonth := Space(9)
+         cLeap  := Space(1)
 
       ENDIF
 
@@ -515,8 +515,8 @@ FUNCTION d2month()
    // nMonth is greater than 2, ndays is incremented.
 
    LOCAL getlist := {}
-   LOCAL cMonth  := Space( 2 )
-   LOCAL cLeap   := Space( 1 )
+   LOCAL cMonth  := Space(2)
+   LOCAL cLeap   := Space(1)
    LOCAL c       := .T.
    LOCAL nMonth
    LOCAL nKey
@@ -550,8 +550,8 @@ FUNCTION d2month()
          Inkey(0)
          SET CURSOR ON
 
-         cMonth := Space( 2 )
-         cLeap  := Space( 1 )
+         cMonth := Space(2)
+         cLeap  := Space(1)
 
       ENDIF
 
@@ -575,7 +575,7 @@ FUNCTION dmytest()
 
    LOCAL getlist := {}
    LOCAL dDate   := hb_SToD()
-   LOCAL cMode   := Space( 1 )
+   LOCAL cMode   := Space(1)
    LOCAL c       := .T.
    LOCAL nKey
 
@@ -608,7 +608,7 @@ FUNCTION dmytest()
          SET CURSOR ON
 
          dDate := hb_SToD()
-         cMode := Space( 1 )
+         cMode := Space(1)
 
       ENDIF
 
@@ -699,7 +699,7 @@ FUNCTION eomtest()
       ELSE
 
          @ 11, 10 SAY "The last date in the month is " + ;
-            LTrim(DToC( EoM( dDate ) ))
+            LTrim(DToC(EoM( dDate )))
 
          SET CURSOR OFF
          Inkey(0)
@@ -747,7 +747,7 @@ FUNCTION eoqtest()
       ELSE
 
          @ 11, 10 SAY "The last date in the month is " + ;
-            LTrim(DToC( EoQ( dDate ) ))
+            LTrim(DToC(EoQ( dDate )))
 
          SET CURSOR OFF
          Inkey(0)
@@ -796,7 +796,7 @@ FUNCTION eoytest()
       ELSE
 
          @ 11, 10 SAY "The last date in the year is " + ;
-            LTrim(DToC( EoY( dDate ) ))
+            LTrim(DToC(EoY( dDate )))
 
          SET CURSOR OFF
          Inkey(0)
@@ -1139,7 +1139,7 @@ FUNCTION stodtest()
 
    LOCAL getlist   := {}
    LOCAL dDate
-   LOCAL cAnsidate := Space( 8 )
+   LOCAL cAnsidate := Space(8)
    LOCAL c         := .T.
    LOCAL nKey
 
@@ -1164,13 +1164,13 @@ FUNCTION stodtest()
          dDate := hb_SToD( cAnsidate )
 
          @ 10, 10 SAY "The Clipper format date is " + ;
-            PadR( LTrim(DToC( dDate )), 10 )
+            PadR( LTrim(DToC(dDate)), 10 )
 
          SET CURSOR OFF
          Inkey(0)
          SET CURSOR ON
 
-         cAnsidate := Space( 8 )
+         cAnsidate := Space(8)
 
       ENDIF
 
@@ -1219,7 +1219,7 @@ FUNCTION weektest()
    LOCAL dDate  := hb_SToD()
    LOCAL c      := .T.
    LOCAL nKey
-   LOCAL cMode := Space( 1 )
+   LOCAL cMode := Space(1)
 
    DO WHILE c
       @  5, 10 SAY "Week(dDate, lSWN) returns the calendar number of the week"

@@ -5,7 +5,7 @@
 
 PROCEDURE Main()
 
-   LOCAL cStr := Replicate( hb_MemoRead( hb_argv( 0 ) ), _NREPL_ )
+   LOCAL cStr := Replicate( hb_MemoRead( hb_argv(0) ), _NREPL_ )
    LOCAL aCompressedData := { NIL, NIL, NIL, NIL }
    LOCAL hFuncs := { ;
       "GZIP" => @hb_gzCompress(), ;
@@ -32,9 +32,9 @@ STATIC PROCEDURE MakeTest( ... )
    LOCAL nBegin, nEnd
    LOCAL lCmp := ( PCount() > 2 )
 
-   FOR EACH e, e2 IN hb_PValue( 1 ), hb_PValue( 2 )
+   FOR EACH e, e2 IN hb_PValue(1), hb_PValue(2)
       nBegin := hb_SecondsCPU()
-      cRes := Eval( e:__enumValue(), iif(lCmp, hb_PValue( 3 ), e2), NIL, @nResult )
+      cRes := Eval( e:__enumValue(), iif(lCmp, hb_PValue(3), e2), NIL, @nResult )
       nEnd := hb_SecondsCPU()
       IF lCmp
          e2 := cRes
@@ -42,8 +42,8 @@ STATIC PROCEDURE MakeTest( ... )
       cFmt := hb_StrFormat( ;
          "%s: %d -> %d, Ratio %.2f%%, Times %.2f", ;
          e:__enumKey(), ;
-         Len(iif(lCmp, hb_PValue( 3 ), e2)), Len(cRes), ;
-         ( Len(cRes) / Len(iif(lCmp, hb_PValue( 3 ), e2)) ) * 100, ;
+         Len(iif(lCmp, hb_PValue(3), e2)), Len(cRes), ;
+         ( Len(cRes) / Len(iif(lCmp, hb_PValue(3), e2)) ) * 100, ;
          nEnd - nBegin;
          )
       ? cFmt

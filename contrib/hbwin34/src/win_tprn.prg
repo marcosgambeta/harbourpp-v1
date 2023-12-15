@@ -83,7 +83,7 @@ CREATE CLASS win_Prn
    METHOD SetFont(cFontName, nPointSize, xWidth, nBold, lUnderline, lItalic, nCharSet, lManualSize)
                                                       // NB: xWidth is in "CharactersPerInch"
                                                       //     _OR_ { nMul, nDiv } which equates to "CharactersPerInch"
-                                                      //     _OR_ ZERO ( 0 ) which uses the default width of the font
+                                                      //     _OR_ ZERO (0) which uses the default width of the font
                                                       //          for the nPointSize
                                                       //   IF xWidth (or nDiv) is < 0 then Fixed font is emulated
 

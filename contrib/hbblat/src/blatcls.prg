@@ -297,7 +297,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // nMaxNames
-      IF HB_ISNUMERIC( ::nMaxNames ) .AND. ::nMaxNames > 0
+      IF HB_ISNUMERIC(::nMaxNames) .AND. ::nMaxNames > 0
          ::cCommand += " -maxNames " + hb_ntos( ::nMaxNames )
       ENDIF
 
@@ -488,22 +488,22 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // nPortSMTP
-      IF HB_ISNUMERIC( ::nPortSMTP ) .AND. ::nPortSMTP > 0
+      IF HB_ISNUMERIC(::nPortSMTP) .AND. ::nPortSMTP > 0
          ::cCommand += " -portSMTP " + hb_ntos( ::nPortSMTP )
       ENDIF
 
       // nPortNNTP
-      IF HB_ISNUMERIC( ::nPortNNTP ) .AND. ::nPortNNTP > 0
+      IF HB_ISNUMERIC(::nPortNNTP) .AND. ::nPortNNTP > 0
          ::cCommand += " -portNNTP " + hb_ntos( ::nPortNNTP )
       ENDIF
 
       // nPortPOP3
-      IF HB_ISNUMERIC( ::nPortPOP3 ) .AND. ::nPortPOP3 > 0
+      IF HB_ISNUMERIC(::nPortPOP3) .AND. ::nPortPOP3 > 0
          ::cCommand += " -portPOP3 " + hb_ntos( ::nPortPOP3 )
       ENDIF
 
       // nPortIMAP
-      IF HB_ISNUMERIC( ::nPortIMAP ) .AND. ::nPortIMAP > 0
+      IF HB_ISNUMERIC(::nPortIMAP) .AND. ::nPortIMAP > 0
          ::cCommand += " -portIMAP " + hb_ntos( ::nPortIMAP )
       ENDIF
 
@@ -630,7 +630,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // nSensitivity
-      IF HB_ISNUMERIC( ::nSensitivity ) .AND. AScan( { 0, 1, 2 }, ::nSensitivity ) > 0
+      IF HB_ISNUMERIC(::nSensitivity) .AND. AScan( { 0, 1, 2 }, ::nSensitivity ) > 0
          ::cCommand += " -sensitivity " + hb_ntos( ::nSensitivity )
       ENDIF
 
@@ -785,7 +785,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // nMultipartSize - optional
-      IF HB_ISNUMERIC( ::nMultipartSize ) .AND. ::nMultipartSize > 0
+      IF HB_ISNUMERIC(::nMultipartSize) .AND. ::nMultipartSize > 0
          ::cCommand += " -multipart " + hb_ntos( ::nMultipartSize )
       ENDIF
 
@@ -846,12 +846,12 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // nTimeout
-      IF HB_ISNUMERIC( ::nTimeout ) .AND. ::nTimeout > 0
+      IF HB_ISNUMERIC(::nTimeout) .AND. ::nTimeout > 0
          ::cCommand += " -ti " + hb_ntos( ::nTimeout )
       ENDIF
 
       // nTry
-      IF HB_ISNUMERIC( ::nTry )
+      IF HB_ISNUMERIC(::nTry)
          IF ::nTry == BLAT_TRY_INFINITE_KEY
             ::cCommand += " -try " + BLAT_TRY_INFINITE_VALUE
          ELSEIF ::nTry >= 0
@@ -875,7 +875,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
       ENDIF
 
       // nDelay
-      IF HB_ISNUMERIC( ::nDelay ) .AND. ::nDelay > 0
+      IF HB_ISNUMERIC(::nDelay) .AND. ::nDelay > 0
          ::cCommand += " -delay " + hb_ntos( ::nDelay )
       ENDIF
 

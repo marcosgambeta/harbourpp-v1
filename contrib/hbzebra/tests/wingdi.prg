@@ -17,12 +17,12 @@ PROCEDURE Main()
       "dmPaperSize"   => WIN_DMPAPER_A4, ;
       "dmOrientation" => WIN_DMORIENT_PORTRAIT } )
 
-   hDC := wapi_CreateDC( NIL, "Microsoft XPS Document Writer", NIL, pDEVMODE )
+   hDC := wapi_CreateDC(NIL, "Microsoft XPS Document Writer", NIL, pDEVMODE)
    IF ! Empty(hDC)
 
       wapi_SetMapMode( hDC, WIN_MM_TEXT )
 
-      IF wapi_StartDoc( hDC, { "lpszDocName" => "(barcode test)" } ) > 0
+      IF wapi_StartDoc(hDC, { "lpszDocName" => "(barcode test)" }) > 0
 
          wapi_SetBkMode( hDC, WIN_TRANSPARENT )
 
@@ -74,7 +74,7 @@ PROCEDURE Main()
 
             wapi_EndPage( hDC )
          ENDIF
-         wapi_EndDoc( hDC )
+         wapi_EndDoc(hDC)
       ENDIF
    ENDIF
 
@@ -89,7 +89,7 @@ PROCEDURE DrawBarcode( hDC, nY, nLineWidth, cType, cCode, nFlags )
    SWITCH cType
    CASE "EAN13"      ; hZebra := hb_zebra_create_ean13( cCode, nFlags )   ; EXIT
    CASE "EAN8"       ; hZebra := hb_zebra_create_ean8( cCode, nFlags )    ; EXIT
-   CASE "UPCA"       ; hZebra := hb_zebra_create_upca( cCode, nFlags )    ; EXIT
+   CASE "UPCA"       ; hZebra := hb_zebra_create_upca(cCode, nFlags)      ; EXIT
    CASE "UPCE"       ; hZebra := hb_zebra_create_upce( cCode, nFlags )    ; EXIT
    CASE "CODE39"     ; hZebra := hb_zebra_create_code39( cCode, nFlags )  ; EXIT
    CASE "ITF"        ; hZebra := hb_zebra_create_itf( cCode, nFlags )     ; EXIT
@@ -115,7 +115,7 @@ PROCEDURE DrawBarcode( hDC, nY, nLineWidth, cType, cCode, nFlags )
          IF Len(cTxt := hb_zebra_getcode( hZebra )) < 20
             wapi_TextOut( hDC, 150 * _SCALE_, nY, cTxt )
          ENDIF
-         hb_zebra_draw_wapi( hZebra, hDC, wapi_CreateSolidBrush( 0 ), 300 * _SCALE_, nY, nLineWidth, nLineHeight * _SCALE_ )
+         hb_zebra_draw_wapi( hZebra, hDC, wapi_CreateSolidBrush(0), 300 * _SCALE_, nY, nLineWidth, nLineHeight * _SCALE_ )
       ELSE
          ? "Type", cType, "Code", cCode, "Error", hb_zebra_geterror( hZebra )
       ENDIF

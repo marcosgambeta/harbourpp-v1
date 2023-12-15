@@ -56,7 +56,7 @@ PROCEDURE Main()
    gdImageFilledPolygon( im, { { 160, 180 }, { 170, 110 }, { 150, 160 } }, green )
 
    /* Draw an arc */
-   gdImageArc( im, 50, 50, 40, 40, 30, 190, red )
+   gdImageArc(im, 50, 50, 40, 40, 30, 190, red)
    gdImageFilledCircle( im, 50, 150, 45, green )
    gdImageEllipse( im, 120, 120, 50, 20, blue )
 
@@ -82,7 +82,7 @@ PROCEDURE Main()
    color := gdImageGetPixel( im, gdImageSX( im ) / 2, gdImageSY( im ) / 2 )
    ? "Pixel Color is: ", color
    ? "RGB Values: ", gdImageRed( im, color ), gdImageGreen( im, color ), gdImageBlue( im, color )
-   ? "Alpha Value: ",  gdImageAlpha( im, color )
+   ? "Alpha Value: ",  gdImageAlpha(im, color)
 
    /* Write Images on files */
    gdImagePng( im, IMAGES_OUT + "rect.png" )

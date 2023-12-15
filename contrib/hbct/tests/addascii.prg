@@ -74,7 +74,7 @@ PROCEDURE Main()
    ? "  value of cStr is now.....................................:", cStr
    ? "  return value of AddAscii( @cStr, -1, 1 ) call............:", AddAscii( @cStr, -1, 1 )
    ? "  value of cStr is now.....................................:", cStr
-   ? "  return value of CSetRef( .T. )...........................:", CSetRef( .T. )
+   ? "  return value of CSetRef(.T.).............................:", CSetRef(.T.)
    ? "  return value of AddAscii( 'A', 1, 1 ) call...............:", AddAscii( "A", 1, 1 )
    ? "  return value of AddAscii( cStr, 1, 1 ) call..............:", AddAscii( cStr, 1, 1 )
    ? "  value of cStr is now.....................................:", cStr
@@ -82,7 +82,7 @@ PROCEDURE Main()
    ? "  value of cStr is now.....................................:", cStr
    ? "  return value of AddAscii( @cStr, -1, 1 ) call............:", AddAscii( @cStr, -1, 1 )
    ? "  value of cStr is now.....................................:", cStr
-   ? "  return value of CSetRef( .F. )...........................:", CSetRef( .F. )
+   ? "  return value of CSetRef(.F.).............................:", CSetRef(.F.)
 
    ?
    ? "Carryover tests(new 4th parameter):"

@@ -87,7 +87,7 @@ FUNCTION hb_DynaCall1( cFunction, cLibrary, nCount, ... )
 
       hb_mutexUnlock( s_mutex )
 
-      IF HB_ISNUMERIC( nCount ) .AND. nCount >= 0 .AND. nCount < PCount() - 3
+      IF HB_ISNUMERIC(nCount) .AND. nCount >= 0 .AND. nCount < PCount() - 3
          aParams := ASize( hb_AParams(), nCount )
          RETURN hb_DynCall( { cFunction, hHandle, _DEF_CALLCONV_ }, hb_ArrayToParams( aParams ) )
       ELSE

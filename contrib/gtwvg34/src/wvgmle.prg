@@ -190,7 +190,7 @@ METHOD WvgMLE:handleEvent( nMessage, aNM )
       ENDCASE
 
    CASE nMessage ==  HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC( ::clr_FG )
+      IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF Empty(::hBrushBG)
@@ -257,7 +257,7 @@ METHOD WvgMLE:clear()
 
    LOCAL cText := ::getData()
 
-   ::setData( "" )
+   ::setData("")
 
    RETURN Len(cText)
 
@@ -285,7 +285,7 @@ METHOD WvgMLE:cutMarked()
 
    IF ( n := nE - nB ) > 0
       cText := ::getData()
-      ::setData( Left(cText, nB - 1) + SubStr(cText, nE) )
+      ::setData(Left(cText, nB - 1) + SubStr(cText, nE))
    ENDIF
 
    RETURN n

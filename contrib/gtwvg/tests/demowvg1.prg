@@ -29,9 +29,9 @@ PROCEDURE Main()
 
    Set( _SET_EVENTMASK, INKEY_ALL + HB_INKEY_GTEVENT )
 
-   wvt_SetGUI( .T. )
+   wvt_SetGUI(.T.)
    wvt_SetFont( "Courier New", 18, 0, 0 )
-   wvt_SetMouseMove( .T. )
+   wvt_SetMouseMove(.T.)
 
    SetColor( "N/W" )
    CLS
@@ -43,7 +43,7 @@ PROCEDURE Main()
 
    aPaint := {}
 
-   AAdd( aPaint, { "Label", {|| wvt_DrawLabel( 1, 40, "Harbour Console GUI Demo", 6, , RGB( 255, 255, 255 ), RGB( 198, 198, 198 ), "Arial", 26, , , , , .T., .T. ) }, { WVT_BLOCK_LABEL, 1, 10, 3, 50 } } )
+   AAdd( aPaint, { "Label", {|| wvt_DrawLabel( 1, 40, "Harbour Console GUI Demo", 6, , RGB(255, 255, 255), RGB(198, 198, 198), "Arial", 26, , , , , .T., .T. ) }, { WVT_BLOCK_LABEL, 1, 10, 3, 50 } } )
    AAdd( aPaint, { "Box_1", {|| wvt_DrawBoxRaised( 4, 4, 20, 75 ) }, { WVT_BLOCK_BOX, 4, 4, 20, 75 } } )
    AAdd( aPaint, { "Box_2", {|| wvt_DrawBoxRecessed( 7, 61, 13, 70 ) }, { WVT_BLOCK_BOX, 7, 61, 13, 70 } } )
    AAdd( aPaint, { "Box_3", {|| wvt_DrawBoxGroup( 15, 59, 18, 72 ) }, { WVT_BLOCK_BOX, 15, 59, 18, 72 } } )
@@ -86,8 +86,8 @@ STATIC PROCEDURE ExecForm( aPaint )
    SetKey( K_F2, {|| DoModalDialog() } )
 
    @  6, nColGet SAY "< Date >"
-   @  9, nColGet SAY "<" + PadC( "Name", 33 ) + ">"
-   @ 12, nColGet SAY "<" + PadC( "Address", 33 ) + ">"
+   @  9, nColGet SAY "<" + PadC("Name", 33) + ">"
+   @ 12, nColGet SAY "<" + PadC("Address", 33) + ">"
    @ 16, 61      SAY "< Salary >"
    @  7, nColGet GET dDate WHEN DispStatusMsg( "Date must be Valid" )
    @ 10, nColGet GET cName WHEN DispStatusMsg( "Must be one of the list!" ) VALID ( MyChoice() < 7 )
@@ -136,7 +136,7 @@ FUNCTION DispStatusMsg( cMsg )
    ClearStatusMsg()
 
    /* NOTE: The GUI function used as such is not subject to autopainting */
-   wvt_DrawLabel( MaxRow(), 60, cMsg, 6, , 0, RGB( 198, 198, 198 ), "Arial", 18, , 900 )
+   wvt_DrawLabel( MaxRow(), 60, cMsg, 6, , 0, RGB(198, 198, 198), "Arial", 18, , 900 )
 
    RETURN .T.
 

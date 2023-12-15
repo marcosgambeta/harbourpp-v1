@@ -17,11 +17,11 @@ PROCEDURE Main()
 
    CLS
 
-   hb_FNameSplit( hb_argv( 0 ), NIL, @cName, NIL )
+   hb_FNameSplit( hb_argv(0), NIL, @cName, NIL )
    cDatabase := hb_DirTemp() + cName + ".fdb"
 
    IF ! hb_FileExists( cDatabase )
-      ? FBCreateDB( cServer + cDatabase, cUser, cPass, nPageSize, cCharSet, nDialect )
+      ? FBCreateDB(cServer + cDatabase, cUser, cPass, nPageSize, cCharSet, nDialect)
    ENDIF
 
    ? "Connecting..."
@@ -110,7 +110,7 @@ PROCEDURE Main()
 
    IF ! oQuery:NetErr()
       oQuery:Fetch()
-      @ 18, 0 SAY "Sum values...." + Str( oQuery:FieldGet( 1 ) )
+      @ 18, 0 SAY "Sum values...." + Str( oQuery:FieldGet(1) )
       oQuery:Destroy()
    ENDIF
 

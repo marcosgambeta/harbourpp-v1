@@ -60,13 +60,13 @@ PROCEDURE Main( cArg )
       Alert( oServer:Error() )
    ENDIF
 
-   oServer:SelectDB( "ims" )
+   oServer:SelectDB("ims")
 #if 0
    oQuery := oServer:Query( "SELECT * from maga limit 10" )
    oRow := oQuery:GetRow()
 #endif
 
-   dbUseArea( .T.,, cArg, "wn", .F. )
+   dbUseArea(.T.,, cArg, "wn", .F.)
 
    IF ! oServer:DeleteTable( "test" )
       Alert( oServer:Error() )

@@ -15,7 +15,7 @@ PROCEDURE Main()
    HBTEST StrFormat( "%2 thing %1 stuff", "   space3", 0.12 )                  IS "0.12 thing space3 stuff"
    HBTEST StrFormat( "%2 %1 born on %3", "Smith", "Mr.", 0d20121127 )          IS "Mr. Smith born on 2012-11-27"
 
-   HBTEST StrFormat( "Please insert disk %1 to drive %2", hb_ntos( 2 ), "A:" ) IS "Please insert disk 2 to drive A:"
+   HBTEST StrFormat( "Please insert disk %1 to drive %2", hb_ntos(2), "A:" )   IS "Please insert disk 2 to drive A:"
    HBTEST StrFormat( "This is %1 from %2", "Victor", "Europe" )                IS "This is Victor from Europe"
    HBTEST StrFormat( "%2 %1 %2", "Param1", "Param2" )                          IS "Param2 Param1 Param2"
    HBTEST StrFormat( "Hello" )                                                 IS "Hello"

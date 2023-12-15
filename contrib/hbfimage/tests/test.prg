@@ -28,7 +28,7 @@ PROCEDURE Main()
 
 #if 0
    ? "Press Alt-D + Enter to activate debug"
-   AltD( .T. )
+   AltD(.T.)
    Inkey(0)
 #endif
    AltD()
@@ -86,7 +86,7 @@ PROCEDURE Main()
    ? "Flip Vertical ?  :", fi_FlipVertical( clone )
    ? "Save JPG ?       :", fi_Save( FIF_JPEG, clone, IMAGES_OUT + "vertical.jpg", JPEG_DEFAULT )
 
-   ? "Rotate Classic   :", hb_ValToExp( rotated := fi_RotateClassic( clone, 90 ) )
+   ? "Rotate Classic   :", hb_ValToExp( rotated := fi_RotateClassic(clone, 90) )
    ? "Save JPG ?       :", fi_Save( FIF_JPEG, rotated, IMAGES_OUT + "rotate.jpg", JPEG_DEFAULT )
 
    centerx := fi_GetWidth( clone ) / 2
@@ -101,7 +101,7 @@ PROCEDURE Main()
    ? "Save JPG ?       :", fi_Save( FIF_JPEG, rescale, IMAGES_OUT + "rescale.jpg", JPEG_DEFAULT )
 
    im2 := fi_Clone( im )
-   ? "Adjust Gamma ?   :", fi_AdjustGamma( im2, 3.0 )
+   ? "Adjust Gamma ?   :", fi_AdjustGamma(im2, 3.0)
    ? "Save JPG ?       :", fi_Save( FIF_JPEG, im2, IMAGES_OUT + "adjgamma.jpg", JPEG_DEFAULT )
 
    im2 := fi_Clone( im )
@@ -138,7 +138,7 @@ PROCEDURE Main()
    ? "Create ERROR     :"
    ? "Save GIF ?       :", fi_Save( FIF_GIF, im, IMAGES_OUT + "wrong.gif", 0 )
 
-   bkcolor := hb_BChar( 0 ) + hb_BChar( 0 ) + hb_BChar( 205 ) + hb_BChar( 0 ) /* RGBA */
+   bkcolor := hb_BChar(0) + hb_BChar(0) + hb_BChar( 205 ) + hb_BChar(0) /* RGBA */
    ? fi_SetBackgroundColor( im, bkcolor )
    ? fi_GetBackgroundColor( im, @bkcolor )
    ? hb_StrToHex( bkcolor )
@@ -170,7 +170,7 @@ PROCEDURE Main()
    bmpinfoheader:Reset()
    appo := NIL
    bmpinfoheader := NIL
-   hb_gcAll( .T. )
+   hb_gcAll(.T.)
 #endif
 
    //

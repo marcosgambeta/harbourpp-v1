@@ -79,8 +79,8 @@ PROCEDURE Main()
 
    Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
    SET SCOREBOARD OFF
-   // wvw_SetPaintRefresh( 0 )
-   wvw_SetVertCaret( .T. )
+   // wvw_SetPaintRefresh(0)
+   wvw_SetVertCaret(.T.)
    wvw_pbSetFont( , "Tahoma", 14 )
    nCursor := SetCursor( SC_NONE )
 
@@ -149,7 +149,7 @@ PROCEDURE Main()
    CreateToolbar( nCurWindow )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, RGB( 255, 255, 255 ), RGB( 198, 198, 198 ), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, 40, cLabel, 6,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
 
    wvwm_ResetMouseObjects( nCurWindow )
    wvwm_AddMouseObjects( nCurWindow, WVWMouseButton():New( "Info!", MaxRow() - 2, 67, , , {|| xDebugInfo() } ) )
@@ -160,12 +160,12 @@ PROCEDURE Main()
    wvwm_AddMouseObjects( nCurWindow, oMouse )
 
    oMouse := WVWMouseButton():New( "None",   MaxRow() - 2, 67 - 11 - 11, , , {|| lboxmessage( "none" ) }, 2, NIL )
-   oMouse:Enable( .T. )
+   oMouse:Enable(.T.)
    wvwm_AddMouseObjects( nCurWindow, oMouse )
 
    wvwm_AddMouseObjects( nCurWindow, WVWMouseButton():New( "Hard",   MaxRow() - 2, 67 - 11 - 11 - 11, , , {|| lboxmessage( "hard" ) }, 3, NIL ) )
    oMouse := WVWMouseButton():New( "Disabled",   MaxRow() - 2, 67 - 11 - 11 - 11 - 11, , , {|| xDebugInfo() } )
-   oMouse:Enable( .F. )
+   oMouse:Enable(.F.)
    wvwm_AddMouseObjects( nCurWindow, oMouse )
 
    oMouse := WVWMouseButton():New( "Tight",   MaxRow() - 2, 67 - 11 - 11 - 11 - 11 - 11, , , {|| lboxmessage( "tight" ) } )
@@ -192,7 +192,7 @@ PROCEDURE Main()
          wvw_SetPaintRefresh( Int( wvw_SetPaintRefresh() * 2 ) )
          Alert( wvw_SetPaintRefresh() )
       CASE ch == hb_keyCode( "0" )
-         wvw_SetPaintRefresh( 0 )
+         wvw_SetPaintRefresh(0)
          Alert( wvw_SetPaintRefresh() )
       OTHERWISE
          // do nothing. Inkey() has been handled by nAfterInket()
@@ -353,7 +353,7 @@ PROCEDURE Demo_Get()
    wvw_SetIcon( , "vr_1.ico" )
 
    ResetMiscObjects( nCurWindow )
-   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, RGB( 255, 255, 255 ), RGB( 198, 198, 198 ), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
+   AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawLabel( nWindow, 1, nRight - nLeft, cLabel, 2,, RGB(255, 255, 255), RGB(198, 198, 198), "Arial", s_afontinfo[ 2 ], , , , , .T., .T. ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxRecessed( nWindow, 7 - nTop, 61 - nLeft, 13 - nTop, 70 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 15 - nTop, 59 - nLeft, 18 - nTop, 72 - nLeft ) } )
    AddMiscObjects( nCurWindow, {| nWindow | wvw_DrawBoxGroup( nWindow, 5 - nTop, 6 - nLeft, 19 - nTop, 44 - nLeft ) } )
@@ -371,8 +371,8 @@ PROCEDURE Demo_Get()
    CLS
 
    @  6 - nTop, nColGet - nLeft SAY "< Date >"
-   @  9 - nTop, nColGet - nLeft SAY "<" + PadC( "Name", 33 ) + ">"
-   @ 12 - nTop, nColGet - nLeft SAY "<" + PadC( "Address", 33 ) + ">"
+   @  9 - nTop, nColGet - nLeft SAY "<" + PadC("Name", 33) + ">"
+   @ 12 - nTop, nColGet - nLeft SAY "<" + PadC("Address", 33) + ">"
    @ 16 - nTop, 61 - nLeft      SAY "< Salary >"
 
    @  7 - nTop, nColGet - nLeft GET get_1
@@ -454,7 +454,7 @@ FUNCTION DEMO_Browse()
 
    oBrowse:configure()
 
-   wvw_SetPen( nStyle, 0, RGB( 210, 1210, 210 ) )
+   wvw_SetPen( nStyle, 0, RGB(210, 1210, 210) ) // TODO: 1210 ?
    wvw_SetIcon( , "dia_excl.ico" )
 
    aColumnsSep := Array( oBrowse:colCount )
@@ -474,11 +474,11 @@ FUNCTION DEMO_Browse()
    nHScrollBar := wvw_xbCreate( nCurWindow, 0, oBrowse:nBottom + 1, oBrowse:nLeft, oBrowse:nRight - oBrowse:nLeft + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), HXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ NIL )
    nVScrollBar := wvw_xbCreate( nCurWindow, 1, oBrowse:nTop, oBrowse:nRight + 1, oBrowse:nBottom - oBrowse:nTop + 1, /*aBlock*/ {| nWinNum, nXBid, nXBmsg, nXBpos | HB_SYMBOL_UNUSED( nXBpos ), VXBscroller( oBrowse, nWinNum, nXBid, nXBmsg ) }, /*aOffset*/ NIL )
 
-   hb_DispOutAt( nTop + 1 - nTop, nleft - nleft, PadC( hb_CurDrive() + ":" + hb_ps() + CurDir() + hb_ps() + "test.dbf", nRight - nLeft + 1 ), "W+/W" )
+   hb_DispOutAt( nTop + 1 - nTop, nleft - nleft, PadC(hb_CurDrive() + ":" + hb_ps() + CurDir() + hb_ps() + "test.dbf", nRight - nLeft + 1), "W+/W" )
 
    oBrowse:ForceStable()
-   RefreshHXB( oBrowse, nCurWindow, nHScrollBar ) // 20040704
-   RefreshVXB( oBrowse, nCurWindow, nVScrollBar ) // 20040704
+   RefreshHXB(oBrowse, nCurWindow, nHScrollBar) // 20040704
+   RefreshVXB(oBrowse, nCurWindow, nVScrollBar) // 20040704
 
    WHILE ! lEnd
       nKey := Inkey(0)
@@ -547,8 +547,8 @@ FUNCTION DEMO_Browse()
       oBrowse:ForceStable()
 
       // refresh the scrollbars due to keyboard navigation
-      RefreshHXB( oBrowse, nCurWindow, nHScrollBar ) // 20040704
-      RefreshVXB( oBrowse, nCurWindow, nVScrollBar ) // 20040704
+      RefreshHXB(oBrowse, nCurWindow, nHScrollBar) // 20040704
+      RefreshVXB(oBrowse, nCurWindow, nVScrollBar) // 20040704
 
    ENDDO
 
@@ -562,7 +562,7 @@ FUNCTION DEMO_Browse()
    wvwm_ResetMouseObjects( nCurWindow )
    ResetMiscObjects( nCurWindow )
 
-   wvw_SetPen( 0 )
+   wvw_SetPen(0)
 
    SetColor( cColor )
    // SetCursor( nCursor )
@@ -607,7 +607,7 @@ FUNCTION VXBscroller( oBrowse, nWinNum, XBid, XBmsg )
 
    IF lNeedStabilize
       oBrowse:ForceStable()
-      RefreshVXB( oBrowse, nWinNum, XBid )
+      RefreshVXB(oBrowse, nWinNum, XBid)
    ENDIF
 
    wvw_nSetCurWindow( nOldWin )
@@ -651,7 +651,7 @@ FUNCTION HXBscroller( oBrowse, nWinNum, XBid, XBmsg )
    ENDDO // dummy loop
    IF lNeedStabilize
       oBrowse:ForceStable()
-      RefreshHXB( oBrowse, nWinNum, XBid )
+      RefreshHXB(oBrowse, nWinNum, XBid)
    ENDIF
 
    wvw_nSetCurWindow( nOldWin )
@@ -667,7 +667,7 @@ nPage :: pagesize
 nMin <= nPos <= ( nMax - Max( nPage - 1, 0 ) )
 **/
 
-STATIC FUNCTION RefreshVXB( oBrowse, nWinNum, XBid )
+STATIC FUNCTION RefreshVXB(oBrowse, nWinNum, XBid)
 
    LOCAL nMin, nMax, nPage, nPos
    LOCAL nRatio
@@ -694,7 +694,7 @@ STATIC FUNCTION RefreshVXB( oBrowse, nWinNum, XBid )
 
    RETURN NIL
 
-STATIC FUNCTION RefreshHXB( oBrowse, nWinNum, XBid )
+STATIC FUNCTION RefreshHXB(oBrowse, nWinNum, XBid)
 
    LOCAL nMin, nMax, nPage, nPos
 
@@ -717,7 +717,7 @@ STATIC FUNCTION DbSkipBlock( n, oTbr )
    HB_SYMBOL_UNUSED( oTbr )
 
    IF n == 0
-      dbSkip( 0 )
+      dbSkip(0)
 
    ELSEIF n > 0
       DO WHILE nSkipped != n .AND. TBNext( oTbr )
@@ -743,7 +743,7 @@ STATIC FUNCTION TBNext( oTbr )
    IF Eof()
       lMoved := .F.
    ELSE
-      dbSkip( 1 )
+      dbSkip(1)
       IF Eof()
          lMoved := .F.
          dbGoto( nSaveRecNum )
@@ -960,7 +960,7 @@ FUNCTION nMenuChecker( nMenuEvent )
    LOCAL nkey := 0
 
    xDisableMenus( 0, 4 )
-   // xDisableToolbar( 0 )
+   // xDisableToolbar(0)
 
    DO CASE
    CASE nMenuEvent == IDM_DEMO_GET
@@ -989,13 +989,13 @@ FUNCTION nMenuChecker( nMenuEvent )
       wvw_SetDefLineSpacing( wvw_SetLineSpacing() )
 
    CASE nMenuEvent == IDM_TOOLBAR_ENABLE
-      xEnableToolbar( 0 )
+      xEnableToolbar(0)
    CASE nMenuEvent == IDM_TOOLBAR_DISABLE
-      xDisableToolbar( 0 )
+      xDisableToolbar(0)
    CASE nMenuEvent == IDM_TOOLBAR_RESET
-      CreateToolbar( 0 )
+      CreateToolbar(0)
    CASE nMenuEvent == IDM_TOOLBAR_DELETE
-      wvw_tbDestroy( 0 )
+      wvw_tbDestroy(0)
 
    CASE nMenuEvent == IDM_HELP_HELP
       xHelp()
@@ -1005,7 +1005,7 @@ FUNCTION nMenuChecker( nMenuEvent )
       lboxmessage( "Sorry, unknown menu option" )
    ENDCASE
 
-   // xEnableToolbar( 0 )
+   // xEnableToolbar(0)
    xEnableMenus( 0, 4 )
 
    RETURN nkey // nMenuChecker()

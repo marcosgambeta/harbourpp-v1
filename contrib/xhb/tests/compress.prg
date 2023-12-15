@@ -58,10 +58,10 @@ PROCEDURE Main()
 
    IF nError != HB_Z_OK
       @ 13, 7 SAY "Error generated (" + hb_ntos( Len(cComp) ) + ")" + ;
-         hb_CompressErrorDesc( nError )
+         hb_CompressErrorDesc(nError)
    ELSE
       @ 13, 7 SAY "NO Error generated (" + hb_ntos( Len(cComp) ) + ")" + ;
-         hb_CompressErrorDesc( nError )
+         hb_CompressErrorDesc(nError)
    ENDIF
 
    @ 22, 25 SAY "Press a key to terminate"

@@ -17,7 +17,7 @@ PROCEDURE Main()
 
    HBTEST AsciiSum( Replicate( "A", 10000 ) ) IS 650000
    HBTEST AsciiSum( "0123456789" )            IS 525
-   HBTEST AsciiSum( NIL )                     IS 0
+   HBTEST AsciiSum(NIL)                       IS 0
 
    HBTEST AscPos( "0123456789" )     IS 57
    HBTEST AscPos( "0123456789", 1 )  IS 48
@@ -53,16 +53,16 @@ PROCEDURE Main()
 
    HBTEST CharSList( "Hello World !" ) IS " !HWdelor"
    HBTEST CharSList( "Hello World !" ) IS CharSort( CharList( "Hello World !" ) )
-   HBTEST CharSList( NIL )             IS ""
+   HBTEST CharSList(NIL)               IS ""
 
    HBTEST CharHist( "Hello World !" )[ 109 ] IS 3
    HBTEST ( nTotal := 0, AEval( CharHist( "Hello World !" ), {| x | nTotal += x } ), nTotal ) IS Len("Hello World !")
 
    HBTEST CharList( "Hello World !" ) IS "Helo Wrd!"
-   HBTEST CharList( NIL )             IS ""
+   HBTEST CharList(NIL)               IS ""
 
    HBTEST CharNoList( CharNoList( "Hello World !" ) ) IS CharSList( "Hello World !" )
-   HBTEST CharNoList( CharNoList( NIL ) )             IS ""
+   HBTEST CharNoList( CharNoList(NIL) )               IS ""
 
    HBTEST CharMirr( "racecar" )        IS "racecar"
    HBTEST CharMirr( "racecar  ", .T. ) IS "racecar  "
@@ -95,30 +95,30 @@ PROCEDURE Main()
    HBTEST WordRem( "abcd", "0ab1cd" ) IS "0ab1"
    HBTEST WordRem( "abcd", "ab0cd1" ) IS "0cd1"
 
-   HBTEST CharAdd( "012345678", hb_BChar( 1 ) )                     IS "123456789"
-   HBTEST CharAdd( "012345678", hb_BChar( 1 ) + hb_BChar( 2 ) )     IS "133557799"
+   HBTEST CharAdd( "012345678", hb_BChar(1) )                       IS "123456789"
+   HBTEST CharAdd( "012345678", hb_BChar(1) + hb_BChar(2) )         IS "133557799"
    HBTEST CharAdd( "123456789", hb_BChar( 255 ) )                   IS "012345678"
    HBTEST CharAdd( "123456789", hb_BChar( 255 ) + hb_BChar( 254 ) ) IS "002244668"
    HBTEST CharAnd( "012345678", hb_BChar( 254 ) )                   IS "002244668"
    HBTEST CharAnd( "012345678", hb_BChar( 254 ) + hb_BChar( 252 ) ) IS "002044648"
 
-   HBTEST CharNot( hb_BChar( 85 ) + hb_BChar( 128 ) + hb_BChar( 170 ) + hb_BChar( 1 ) ) IS hb_BChar( 170 ) + hb_BChar( 127 ) + hb_BChar( 85 ) + hb_BChar( 254 )
+   HBTEST CharNot( hb_BChar( 85 ) + hb_BChar( 128 ) + hb_BChar( 170 ) + hb_BChar(1) ) IS hb_BChar( 170 ) + hb_BChar( 127 ) + hb_BChar( 85 ) + hb_BChar( 254 )
    HBTEST CharNot( CharNot( "This is a test!" ) ) IS "This is a test!"
 
-   HBTEST CharOr( "012345678", hb_BChar( 1 ) )                 IS "113355779"
-   HBTEST CharOr( "012345678", hb_BChar( 1 ) + hb_BChar( 3 ) ) IS "133357779"
+   HBTEST CharOr( "012345678", hb_BChar(1) )                   IS "113355779"
+   HBTEST CharOr( "012345678", hb_BChar(1) + hb_BChar(3) )     IS "133357779"
 
    HBTEST CharXor( CharXor( "This is top secret !", "My Password" ), "My Password" ) IS "This is top secret !"
 
-   HBTEST CharSub( "123456789", hb_BChar( 1 ) )                     IS "012345678"
-   HBTEST CharSub( "123456789", hb_BChar( 1 ) + hb_BChar( 2 ) )     IS "002244668"
-   HBTEST CharSub( "012345678", hb_BChar( 255 ) )                   IS "123456789"
-   HBTEST CharSub( "012345678", hb_BChar( 255 ) + hb_BChar( 254 ) ) IS "133557799"
+   HBTEST CharSub("123456789", hb_BChar(1))                       IS "012345678"
+   HBTEST CharSub("123456789", hb_BChar(1) + hb_BChar(2))         IS "002244668"
+   HBTEST CharSub("012345678", hb_BChar( 255 ))                   IS "123456789"
+   HBTEST CharSub("012345678", hb_BChar( 255 ) + hb_BChar( 254 )) IS "133557799"
 
-   HBTEST CharShl( hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ) + hb_BChar( 0 ) + hb_BChar( 0 ) + hb_BChar( 0 )
-   HBTEST CharShr( hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar( 0 ) + hb_BChar( 0 ) + hb_BChar( 0 ) + hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 )
-   HBTEST CharRll( hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ) + hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 )
-   HBTEST CharRlr( hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ) + hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 )
+   HBTEST CharShl( hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ) + hb_BChar(0) + hb_BChar(0) + hb_BChar(0)
+   HBTEST CharShr( hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar(0) + hb_BChar(0) + hb_BChar(0) + hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 )
+   HBTEST CharRll( hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ) + hb_BChar(1) + hb_BChar(2) + hb_BChar(4)
+   HBTEST CharRlr( hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) IS hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ) + hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 )
 
    HBTEST CharRepl( "1234", "1x2y3z", "abcd" )            IS "axbycz"
    HBTEST CharRepl( "abcdefghij", "jhfdb", "1234567890" ) IS "08642"
@@ -149,9 +149,9 @@ PROCEDURE Main()
    HBTEST Sign( 0.0 )  IS 0
    HBTEST Log10( 10.0 )         IS 1.0
    HBTEST Log10( Sqrt( 10.0 ) ) IS 0.5
-   HBTEST Fact( 0 ) IS 1
-   HBTEST Fact( 1 ) IS 1
-   HBTEST Fact( 4 ) IS 24
+   HBTEST Fact(0) IS 1
+   HBTEST Fact(1) IS 1
+   HBTEST Fact(4) IS 24
    HBTEST Round( FV( 1000, 0.00, 10 ), 1 ) IS 10000.0
    HBTEST Round( FV( 1000, 0.05, 10 ), 3 ) IS 12577.893
    HBTEST Round( PV( 100, 0.0, 60 ), 1 )   IS 6000.0
@@ -257,7 +257,7 @@ PROCEDURE Main()
    HBTEST WordRepl( "aa", "1aaaa", "ba" )      IS "1abaa"
    HBTEST WordRepl( "aa", "1aaaa", "ba", .T. ) IS "1baba"
 
-   HBTEST ( CSetAtMupa( .T. ), WordRepl( "aa", "1aaaa", "ba" ) )      IS "1abaa"
-   HBTEST ( CSetAtMupa( .T. ), WordRepl( "aa", "1aaaa", "ba", .T. ) ) IS "1bbba"
+   HBTEST ( CSetAtMupa(.T.), WordRepl( "aa", "1aaaa", "ba" ) )      IS "1abaa"
+   HBTEST ( CSetAtMupa(.T.), WordRepl( "aa", "1aaaa", "ba", .T. ) ) IS "1bbba"
 
    RETURN

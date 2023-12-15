@@ -518,7 +518,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
             IF Len(::text) == n
                cConc += ::aCode[ CODEB ]
-               nValChar := Asc( cChar ) - 31
+               nValChar := Asc(cChar) - 31
             ELSE
                nValChar := Val( SubStr(::text, n, 2) ) + 1
                ++n
@@ -528,20 +528,20 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
             IF cChar > "_"
                cConc += ::aCode[ CODEB ]
-               nValChar := Asc( cChar ) - 31
+               nValChar := Asc(cChar) - 31
             ELSEIF cChar <= " "
-               nValChar := Asc( cChar ) + 64
+               nValChar := Asc(cChar) + 64
             ELSE
-               nValChar := Asc( cChar ) - 31
+               nValChar := Asc(cChar) - 31
             ENDIF
 
          ELSE
 
             IF cChar < " "
                cConc += ::aCode[ CODEA ]
-               nValChar := Asc( cChar ) + 64
+               nValChar := Asc(cChar) + 64
             ELSE
-               nValChar := Asc( cChar ) - 31
+               nValChar := Asc(cChar) - 31
             ENDIF
 
          ENDIF
@@ -607,7 +607,7 @@ METHOD GenCodei25() CLASS GDBarCode
 
       // Draw Text
       IF ::lDrawValue
-         ::DrawText( .T. )
+         ::DrawText(.T.)
       ENDIF
    ENDIF
 

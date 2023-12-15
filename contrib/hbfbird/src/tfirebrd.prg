@@ -107,7 +107,7 @@ METHOD New( cServer, cUser, cPassword, nDialect ) CLASS TFbServer
 
    ::db := FBConnect( cServer, cUser, cPassword )
 
-   IF HB_ISNUMERIC( ::db )
+   IF HB_ISNUMERIC(::db)
       ::lError := .T.
       ::nError := ::db
    ENDIF
@@ -120,7 +120,7 @@ METHOD StartTransaction() CLASS TFbServer
 
    ::trans := FBStartTransaction( ::db )
 
-   IF HB_ISNUMERIC( ::trans )
+   IF HB_ISNUMERIC(::trans)
       ::lError := .T.
       ::nError := ::trans
    ELSE
@@ -232,7 +232,7 @@ METHOD ListTables() CLASS TFbServer
 
    IF HB_ISARRAY( qry )
       DO WHILE FBFetch( qry ) == 0
-         AAdd( result, FBGetData( qry, 1 ) )
+         AAdd( result, FBGetData(qry, 1) )
       ENDDO
 
       FBFree( qry )
@@ -264,11 +264,11 @@ METHOD TableStruct( cTable ) CLASS TFbServer
 
    IF HB_ISARRAY( qry )
       DO WHILE FBFetch( qry ) == 0
-         cField  := FBGetData( qry, 1 )
-         nType   := Val( FBGetData( qry, 2 ) )
-         nSize   := Val( FBGetData( qry, 3 ) )
-         nDec    := Val( FBGetData( qry, 4 ) )
-         cDomain := FBGetData( qry, 5 )
+         cField  := FBGetData(qry, 1)
+         nType   := Val( FBGetData(qry, 2) )
+         nSize   := Val( FBGetData(qry, 3) )
+         nDec    := Val( FBGetData(qry, 4) )
+         cDomain := FBGetData(qry, 5)
 
          SWITCH nType
          CASE 7 // SMALLINT
@@ -355,7 +355,7 @@ METHOD Delete( oRow, cWhere ) CLASS TFbServer
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC( ::db ) .AND. Len(aTables) == 1
+   IF ! HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
       // Cannot delete joined tables
 
       IF cWhere == NIL
@@ -390,7 +390,7 @@ METHOD Append( oRow ) CLASS TFbServer
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC( ::db ) .AND. Len(aTables) == 1
+   IF ! HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
       // Can insert only one table, not in joined tables
 
       cQuery := 'INSERT INTO ' + aTables[ 1 ] + '('
@@ -423,7 +423,7 @@ METHOD Update( oRow, cWhere ) CLASS TFbServer
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC( ::db ) .AND. Len(aTables) == 1
+   IF ! HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
       // Can't insert joined tables
 
       IF cWhere == NIL
@@ -496,7 +496,7 @@ CREATE CLASS TFbQuery
    METHOD   FieldName( nField )
    METHOD   FieldPos( cField )
    METHOD   FieldLen(nField)
-   METHOD   FieldDec( nField )
+   METHOD   FieldDec(nField)
    METHOD   FieldType( nField )
 
    METHOD   FieldGet( nField )
@@ -656,7 +656,7 @@ METHOD FieldLen(nField) CLASS TFbQuery
 
    RETURN result
 
-METHOD FieldDec( nField ) CLASS TFbQuery
+METHOD FieldDec(nField) CLASS TFbQuery
 
    LOCAL result
 
@@ -674,21 +674,21 @@ METHOD FieldGet( nField ) CLASS TFbQuery
 
       /* TODO: Convert to right data type */
 
-      result := FBGetData( ::qry, nField )
+      result := FBGetData(::qry, nField)
       cType := ::aStruct[ nField ][ 2 ]
 
       IF cType == "M"
          /* Blob */
 
          IF result != NIL
-            aBlob := FBGetBlob( ::db, result )
+            aBlob := FBGetBlob(::db, result)
 
             result := ""
             FOR i := 1 TO Len(aBlob)
                result += aBlob[ i ]
             NEXT
 
-            // result := FBGetBlob( ::db, result )
+            // result := FBGetBlob(::db, result)
          ELSE
             result := ""
          ENDIF
@@ -797,7 +797,7 @@ CREATE CLASS TFbRow
    METHOD   FieldName( nField )
    METHOD   FieldPos( cField )
    METHOD   FieldLen(nField)
-   METHOD   FieldDec( nField )
+   METHOD   FieldDec(nField)
    METHOD   FieldType( nField )
    METHOD   GetKeyField()
 
@@ -878,7 +878,7 @@ METHOD FieldLen(nField) CLASS TFbRow
 
    RETURN result
 
-METHOD FieldDec( nField ) CLASS TFbRow
+METHOD FieldDec(nField) CLASS TFbRow
 
    LOCAL result
 
@@ -924,7 +924,7 @@ STATIC FUNCTION KeyField( aTables, db, dialect )
 
       IF HB_ISARRAY( qry )
          DO WHILE FBFetch( qry ) == 0
-            AAdd( aKeys, RTrim(FBGetData( qry, 1 )) )
+            AAdd( aKeys, RTrim(FBGetData(qry, 1)) )
          ENDDO
 
          FBFree( qry )
@@ -992,9 +992,9 @@ STATIC FUNCTION StructConvert( aStru, db, dialect )
 
       DO WHILE FBFetch( qry ) == 0
          AAdd( aDomains, { ;
-            iif(FBGetData( qry, 1 ) == NIL, "", FBGetData( qry, 1 )), ;
-            iif(FBGetData( qry, 2 ) == NIL, "", FBGetData( qry, 2 )), ;
-            iif(FBGetData( qry, 3 ) == NIL, "", FBGetData( qry, 3 )) } )
+            iif(FBGetData(qry, 1) == NIL, "", FBGetData(qry, 1)), ;
+            iif(FBGetData(qry, 2) == NIL, "", FBGetData(qry, 2)), ;
+            iif(FBGetData(qry, 3) == NIL, "", FBGetData(qry, 3)) } )
       ENDDO
 
       FBFree( qry )

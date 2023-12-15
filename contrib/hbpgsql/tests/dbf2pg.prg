@@ -184,8 +184,8 @@ PROCEDURE Main()
             IF cTypePG != cTypeDB
                DO CASE
                CASE cTypePG == "C" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := hb_ntos( cValue )
-               CASE cTypePG == "C" .AND. cTypeDB == "D" ; cValue := DToC( cValue )
-               CASE cTypePG == "C" .AND. cTypeDB $ "T@" ; cValue := hb_TToC( cValue )
+               CASE cTypePG == "C" .AND. cTypeDB == "D" ; cValue := DToC(cValue)
+               CASE cTypePG == "C" .AND. cTypeDB $ "T@" ; cValue := hb_TToC(cValue)
                CASE cTypePG == "C" .AND. cTypeDB == "L" ; cValue := iif(cValue, "S", "N")
                CASE cTypePG == "N" .AND. cTypeDB $ "CQ" ; cValue := Val( cValue )
                CASE cTypePG == "N" .AND. cTypeDB == "D" ; cValue := Val( DToS( cValue ) )

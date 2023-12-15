@@ -62,13 +62,13 @@ PROCEDURE Main()
    ?
 
    ? "Simple tests:"
-   ? '  CharShr( hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) =='
-   ? '           hb_BChar( 0 ) + hb_BChar( 0 ) + hb_BChar( 0 ) + hb_BChar( 1 ) + hb_BChar(  2 ) + hb_BChar(  4 ) + hb_BChar(  8 ) + hb_BChar(  16 ) ? -->'
+   ? '  CharShr( hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 ) =='
+   ? '           hb_BChar(0) + hb_BChar(0) + hb_BChar(0) + hb_BChar(1) + hb_BChar(  2 ) + hb_BChar(  4 ) + hb_BChar(  8 ) + hb_BChar(  16 ) ? -->'
 
    ? '           '
-   cStr := CharShr( hb_BChar( 1 ) + hb_BChar( 2 ) + hb_BChar( 4 ) + hb_BChar( 8 ) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 )
+   cStr := CharShr( hb_BChar(1) + hb_BChar(2) + hb_BChar(4) + hb_BChar(8) + hb_BChar( 16 ) + hb_BChar( 32 ) + hb_BChar( 64 ) + hb_BChar( 128 ), 3 )
    FOR ni := 1 TO Len(cStr)
-      ?? "hb_BChar( " + hb_ntos( Asc( SubStr(cStr, ni, 1) ) ) + " )"
+      ?? "hb_BChar( " + hb_ntos( Asc(SubStr(cStr, ni, 1)) ) + " )"
       IF ni < Len(cStr)
          ?? " + "
       ENDIF

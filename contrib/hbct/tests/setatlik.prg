@@ -57,9 +57,9 @@ PROCEDURE Main()
 
    ? "Begin test of SetAtLike()"
    ? "  Default mode should be 0, is................................", SetAtLike()
-   ? "  Setting mode to 1, return value should be 0, is.............", SetAtLike( 1 )
+   ? "  Setting mode to 1, return value should be 0, is.............", SetAtLike(1)
    ? "  Mode setting should now be 1, is............................", SetAtLike()
-   ? "  Setting mode to 0 again, return value should still be 1, is ", SetAtLike( 0 )
+   ? "  Setting mode to 0 again, return value should still be 1, is ", SetAtLike(0)
    ?
    SetAtLike( , @cWildcard )
    ? "  Default wildcard character should be '?', is................", cWildcard

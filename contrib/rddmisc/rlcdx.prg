@@ -74,7 +74,7 @@ STATIC FUNCTION RLCDX_NEW( pWA )
     * recursively called and array with LOCKED records
     */
 
-   USRRDD_AREADATA( pWA, aWData )
+   USRRDD_AREADATA(pWA, aWData)
 
    RETURN HB_SUCCESS
 
@@ -82,7 +82,7 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
 
    LOCAL aWData, nResult, xRecId, i
 
-   aWData := USRRDD_AREADATA( nWA )
+   aWData := USRRDD_AREADATA(nWA)
 
    /* Convert EXCLUSIVE locks to DBLM_MULTIPLE */
    IF aLockInfo[ UR_LI_METHOD ] == DBLM_EXCLUSIVE
@@ -146,9 +146,9 @@ STATIC FUNCTION RLCDX_LOCK( nWA, aLockInfo )
 
 STATIC FUNCTION RLCDX_UNLOCK( nWA, xRecID )
 
-   LOCAL aWData := USRRDD_AREADATA( nWA ), i
+   LOCAL aWData := USRRDD_AREADATA(nWA), i
 
-   IF HB_ISNUMERIC( xRecID ) .AND. xRecID > 0
+   IF HB_ISNUMERIC(xRecID) .AND. xRecID > 0
       IF ( i := AScan( aWData[ 2 ], {| x | x[ 1 ] == xRecID } ) ) > 0
          IF --aWData[ 2 ][ i ][ 2 ] > 0
             RETURN HB_SUCCESS
@@ -178,7 +178,7 @@ STATIC FUNCTION RLCDX_APPEND( nWA, lUnlockAll )
 
    IF ( nResult := UR_SUPER_APPEND( nWA, lUnlockAll ) ) == HB_SUCCESS
 
-      aWData := USRRDD_AREADATA( nWA )
+      aWData := USRRDD_AREADATA(nWA)
       IF aWData[ 1 ] == 0
          xRecId := RecNo()
          /* Some RDDs may allow to set phantom locks with RLOCK so we should

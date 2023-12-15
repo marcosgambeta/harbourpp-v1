@@ -117,7 +117,7 @@ CREATE CLASS HBFormatCode
    METHOD Reformat( aFile )
    METHOD FormatLine( cLine, lContinued )
    METHOD ConvertCmd( cLine, nBegin, nEnd, lFirstOnly )
-   METHOD ConvertFnc( cLine, nBegin, nEnd )
+   METHOD ConvertFnc(cLine, nBegin, nEnd)
    METHOD ConvertBool( cLine, nBegin, nEnd )
    METHOD Source2Array( cSource )
    METHOD Array2Source( aSource )
@@ -571,7 +571,7 @@ METHOD FormatLine( cLine, lContinued ) CLASS HBFormatCode
                      nEnd := i
                   ENDIF
                   IF ( ! lFirst .OR. ! ::ConvertCmd( @cLine, nBegin, nEnd, .T. ) ) .AND. c == "(" .AND. SubStr(cLine, i - 1, 1) != " "
-                     ::ConvertFnc( @cLine, nBegin, nEnd )
+                     ::ConvertFnc(@cLine, nBegin, nEnd)
                   ENDIF
                ENDIF
                IF ::lSpaces .AND. aBrackets[ iif(c == "(", 1, 2) ] <= ::nBr4Brac .AND. ;
@@ -632,7 +632,7 @@ METHOD FormatLine( cLine, lContinued ) CLASS HBFormatCode
                      ELSEIF nState == FL_STATE_OP
                         nState := FL_STATE_ANY
                      ENDIF
-                  ELSEIF ( hb_isNumeric( nEnd ) .AND. SubStr(cLine, nEnd - 1, 1) != "(" ) .OR. nState == FL_STATE_ANY .OR. nState == FL_STATE_DIGIT
+                  ELSEIF ( hb_isNumeric(nEnd) .AND. SubStr(cLine, nEnd - 1, 1) != "(" ) .OR. nState == FL_STATE_ANY .OR. nState == FL_STATE_DIGIT
                      nA := i
                      nState := FL_STATE_OP
                   ENDIF
@@ -689,7 +689,7 @@ METHOD ConvertCmd( cLine, nBegin, nEnd, lFirstOnly ) CLASS HBFormatCode
 
    IF ::lCase
 
-      IF ! HB_ISNUMERIC( nBegin ) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
+      IF ! HB_ISNUMERIC(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
          ::nErr := 1
          ::cLineErr := cLine
          RETURN .F.
@@ -726,7 +726,7 @@ METHOD ConvertCmd( cLine, nBegin, nEnd, lFirstOnly ) CLASS HBFormatCode
 
    RETURN .T.
 
-METHOD ConvertFnc( cLine, nBegin, nEnd ) CLASS HBFormatCode
+METHOD ConvertFnc(cLine, nBegin, nEnd) CLASS HBFormatCode
 
    LOCAL nPos, cToken
 

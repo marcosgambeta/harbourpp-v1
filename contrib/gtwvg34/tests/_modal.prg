@@ -94,7 +94,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
 
    nLinesRqd := Len(aText_) + iif(Len(aText_) == 0, 4, 5)
    nTopReq   := Int( ( maxRow - nLinesRqd ) / 2 )
-   nTop      := iif(HB_ISNUMERIC( nTop ), iif(nTop > nTopReq, nTop, nTopReq), nTopReq)
+   nTop      := iif(HB_ISNUMERIC(nTop), iif(nTop > nTopReq, nTop, nTopReq), nTopReq)
    nBottom   := nTop + nLinesRqd - 1   // 1 for shadow
 
    // check for columns
@@ -150,7 +150,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
    SetColor( pal_[ DLG_CLR_TEXT ] )
    IF ! Empty(aText_)
       FOR i := 1 TO Len(aText_)
-         @ nTop + 1 + i, nLeft SAY PadC( aText_[ i ], nRight - nLeft + 1 )
+         @ nTop + 1 + i, nLeft SAY PadC(aText_[ i ], nRight - nLeft + 1)
       NEXT
    ENDIF
 
@@ -256,7 +256,7 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
 STATIC FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
       lCenter, nRow, nCol )
 
-   LOCAL aPos := iif(hb_defaultValue( lCenter, .F. ), { -1, -1 }, iif(HB_ISNUMERIC( nRow ), { nRow, nCol }, { nT, nL }))
+   LOCAL aPos := iif(hb_defaultValue( lCenter, .F. ), { -1, -1 }, iif(HB_ISNUMERIC(nRow), { nRow, nCol }, { nT, nL }))
 
    LOCAL oCrt := WvgCrt():new( ,, aPos, { nB - nT, nR - nL },, ! hb_defaultValue( lHidden, .F. ) )
 
@@ -267,7 +267,7 @@ STATIC FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHi
    oCrt:create()
    SetCursor( SC_NONE )
 
-   IF HB_ISNUMERIC( xIcon )
+   IF HB_ISNUMERIC(xIcon)
       hb_gtInfo( HB_GTI_ICONRES, xIcon )
    ELSE
       hb_default( @xIcon, "VW_DFT" )
@@ -299,10 +299,10 @@ PROCEDURE DoModalWindow()
    oCrt:closable    := .F.
    oCrt:title       := "Information! [R:4 C:8]"
 
-   oCrt:rbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC( "rbUp", MaxCol() + 1 ), "W+/R*" ) }
-   oCrt:lbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC( "lbUp", MaxCol() + 1 ), "W+/B*" ) }
-   oCrt:leave       := {|| hb_DispOutAt( MaxRow(), 0, PadC( "Leaving", MaxCol() + 1 ), "W+/RB" ) }
-   oCrt:enter       := {|| hb_DispOutAt( MaxRow(), 0, PadC( "Entering", MaxCol() + 1 ), "W+/B" ) }
+   oCrt:rbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC("rbUp", MaxCol() + 1), "W+/R*" ) }
+   oCrt:lbUp        := {|| hb_DispOutAt( MaxRow(), 0, PadC("lbUp", MaxCol() + 1), "W+/B*" ) }
+   oCrt:leave       := {|| hb_DispOutAt( MaxRow(), 0, PadC("Leaving", MaxCol() + 1), "W+/RB" ) }
+   oCrt:enter       := {|| hb_DispOutAt( MaxRow(), 0, PadC("Entering", MaxCol() + 1), "W+/B" ) }
 
    oCrt:Create()
    oCrt:show()

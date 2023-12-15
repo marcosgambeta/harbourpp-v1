@@ -37,7 +37,7 @@ PROCEDURE Main()
 #endif
 
 #ifdef __GTWVW__
-   lMainCoord := wvw_SetMainCoord( .T. )
+   lMainCoord := wvw_SetMainCoord(.T.)
    nMaxRow := MaxRow()
    nMaxCol := MaxCol()
 
@@ -50,7 +50,7 @@ PROCEDURE Main()
    SetColor( s_cStdColor )
    SetCursor( SC_NONE )
    CLS
-   @ 0, 0 SAY PadC( "This is the Main Window", MaxCol() + 1 )
+   @ 0, 0 SAY PadC("This is the Main Window", MaxCol() + 1)
 
    // screen background
 #ifndef __GTWVW__
@@ -62,7 +62,7 @@ PROCEDURE Main()
    NEXT
    DispEnd()
 #else
-   ResetMiscObjects( 0 )   // make sure we start with no GUI objects
+   ResetMiscObjects(0)   // make sure we start with no GUI objects
    AddMiscObjects( 0, {| nWindow | wvw_DrawImage( nWindow, 1, 0, nmaxrow, nmaxcol, "vouch1.bmp" ) } )
 #endif
 
@@ -171,7 +171,7 @@ FUNCTION xBrowse1()
    nWin := znewwindow( hb_UTF8ToStrBox( "┌─┐│┘─└│" ), nTop, nLeft, nBottom, nRight, "test.dbf" )
 
 #ifdef __GTWVW__
-   wvw_SetPen( 0, 0, RGB( 210, 1210, 210 ) )
+   wvw_SetPen( 0, 0, RGB(210, 1210, 210) ) // TODO: 1210 ?
 
    aColumnsSep := Array( oBrowse:colCount )
    FOR EACH tmp IN aColumnsSep
@@ -242,7 +242,7 @@ STATIC FUNCTION DbSkipBlock( n, oTbr )
    LOCAL nSkipped := 0
 
    IF n == 0
-      dbSkip( 0 )
+      dbSkip(0)
    ELSEIF n > 0
       DO WHILE nSkipped != n .AND. TBNext( oTbr )
          nSkipped++
@@ -265,7 +265,7 @@ STATIC FUNCTION TBNext( oTbr )
    IF Eof()
       lMoved := .F.
    ELSE
-      dbSkip( 1 )
+      dbSkip(1)
       IF Eof()
          lMoved := .F.
          dbGoto( nSaveRecNum )
@@ -304,7 +304,7 @@ FUNCTION lMessage( cMsg )
 
    LOCAL cOldColor := SetColor( s_cStdColor )
 
-   @ MaxRow(), 0 SAY PadC( cMsg, MaxCol() + 1 )
+   @ MaxRow(), 0 SAY PadC(cMsg, MaxCol() + 1)
    SetColor( cOldColor )
 
 #else
@@ -385,7 +385,7 @@ FUNCTION lBoxMessage( cMsg, cTitle )
    DispBegin()
    FOR i := 1 TO nNumLines
       cAline := MemoLine( cMsg, nWidth, i )
-      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC( AllTrim(cAline), nMaxWidth ) )
+      hb_DispOutAt( nTopLine + i, nLeft + 1, PadC(AllTrim(cAline), nMaxWidth) )
    NEXT
    DispEnd()
 
@@ -418,7 +418,7 @@ FUNCTION ZNEWWINDOW( wtype, r1, c1, r2, c2, ctitle, ccolor )
 
 #ifdef __GTWVW__
    wvw_nOpenWindow( ctitle, r1, c1, r2, c2 )
-   ResetMiscObjects( NIL )   // make sure we start with no GUI objects
+   ResetMiscObjects(NIL)   // make sure we start with no GUI objects
 #endif
 
    AAdd( s_zwin, { i + 1, r1, c1, r2, c2, cScreen, ctitle, nrow, ncol, coldcolor } )
@@ -451,7 +451,7 @@ FUNCTION ZREVWINDOW()
    ENDIF
 
 #ifdef __GTWVW__
-   ResetMiscObjects( NIL )   // clear all GUI objects, if any
+   ResetMiscObjects(NIL)   // clear all GUI objects, if any
    wvw_lCloseWindow()
 #endif
 

@@ -130,7 +130,7 @@ PROCEDURE Main( nRow, nCol )
 
       nX := nY := 0
       DevPos( 14, 23 )
-      DevOut( ft_MButPrs( 1 ) )
+      DevOut( ft_MButPrs(1) )
       DevOut( ft_MButPrs( 0,, nX, nY ) )
       DevPos( 15, 23 )
 

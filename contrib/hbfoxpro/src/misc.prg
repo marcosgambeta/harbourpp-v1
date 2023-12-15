@@ -62,7 +62,7 @@ FUNCTION Sys( nValue, xPar1 )
    CASE 6
       RETURN Set( _SET_PRINTFILE )
    CASE 10
-      RETURN DToC( CToD( "" ) + hb_defaultValue( xPar1, 0 ) )
+      RETURN DToC(CToD( "" ) + hb_defaultValue( xPar1, 0 ))
    CASE 11
       RETURN hb_ntos( iif(HB_ISDATETIME( xPar1 ), xPar1, ;
                            iif(HB_ISSTRING( xPar1 ), CToD( xPar1 ), ;

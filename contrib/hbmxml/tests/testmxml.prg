@@ -45,7 +45,7 @@ PROCEDURE Main( cFileArg )
 
    IF Empty(cFileArg)
       OutErr( hb_StrFormat( "Usage: %1$s filename.xml", hb_ProgName() ) + hb_eol() )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -68,7 +68,7 @@ PROCEDURE Main( cFileArg )
       ENDIF
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -77,7 +77,7 @@ PROCEDURE Main( cFileArg )
       OutErr( hb_StrFormat( "ERROR: Parent value is '%s', expected 'element'", cStr ) + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -96,7 +96,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: No first child in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -111,7 +111,7 @@ PROCEDURE Main( cFileArg )
       ENDIF
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -120,7 +120,7 @@ PROCEDURE Main( cFileArg )
       OutErr( hb_StrFormat( "ERROR: First child value is %d, expected 123!", nNum ) + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -129,7 +129,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: No second child node in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -144,7 +144,7 @@ PROCEDURE Main( cFileArg )
       ENDIF
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -153,7 +153,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: No third child node in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -168,7 +168,7 @@ PROCEDURE Main( cFileArg )
       ENDIF
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -177,7 +177,7 @@ PROCEDURE Main( cFileArg )
       OutErr( hb_StrFormat( "ERROR: Third child value is %f, expected 123.4!", nNum ) + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -186,7 +186,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: No fourth child node in basic test!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -201,7 +201,7 @@ PROCEDURE Main( cFileArg )
       ENDIF
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -211,7 +211,7 @@ PROCEDURE Main( cFileArg )
          nNum, cStr ) + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -220,7 +220,7 @@ PROCEDURE Main( cFileArg )
          OutErr( hb_StrFormat( "ERROR: No group #%d child node in basic test!", i ) + hb_eol() )
 
          mxmlDelete( hTree )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
@@ -234,7 +234,7 @@ PROCEDURE Main( cFileArg )
          ENDIF
 
          mxmlDelete( hTree )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
    NEXT
@@ -248,13 +248,13 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: Unable to find value for '*/two'." + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ELSEIF mxmlGetType( hNode ) != MXML_OPAQUE .OR. !( mxmlGetOpaque( hNode ) == "value" )
       OutErr( "ERROR: Bad value for '*/two'." + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -263,13 +263,13 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: Unable to find value for 'foo/*/two'." + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ELSEIF mxmlGetType( hNode ) != MXML_OPAQUE .OR. !( mxmlGetOpaque( hNode ) == "value" )
       OutErr( "ERROR: Bad value for 'foo/*/two'." + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -278,13 +278,13 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: Unable to find value for 'foo/bar/one/two'." + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ELSEIF mxmlGetType( hNode ) != MXML_OPAQUE .OR. !( mxmlGetOpaque( hNode ) == "value" )
       OutErr( "ERROR: Bad value for 'foo/bar/one/two'." + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -297,7 +297,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: Unable to create index of all nodes!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -306,7 +306,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -316,7 +316,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -327,7 +327,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: Unable to create index of groups!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -336,7 +336,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -347,7 +347,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -358,7 +358,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: Unable to create index of type attributes!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -367,7 +367,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -377,7 +377,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -388,7 +388,7 @@ PROCEDURE Main( cFileArg )
       OutErr( "ERROR: Unable to create index of elements and attributes!" + hb_eol() )
 
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -397,7 +397,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -407,7 +407,7 @@ PROCEDURE Main( cFileArg )
 
       mxmlIndexDelete( hInd )
       mxmlDelete( hTree )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -424,7 +424,7 @@ PROCEDURE Main( cFileArg )
          OutErr( hb_StrFormat( "ERROR: Child pointer prematurely NULL on child #%d", i ) + hb_eol() )
 
          mxmlDelete( hTree )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
    NEXT
@@ -432,14 +432,14 @@ PROCEDURE Main( cFileArg )
    IF ! Empty(mxmlGetFirstChild( hTree ))
       OutErr( "ERROR: Child pointer not NULL after deleting all children!" + hb_eol() )
 
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
    IF ! Empty(mxmlGetLastChild( hTree ))
       OutErr( "ERROR: Last child pointer not NULL after deleting all children!" + hb_eol() )
 
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -460,7 +460,7 @@ PROCEDURE Main( cFileArg )
 
    IF Empty(hTree)
       OutErr( "Unable to read XML file!" + hb_eol() )
-      ErrorLevel( 1 )
+      ErrorLevel(1)
       QUIT
    ENDIF
 
@@ -475,7 +475,7 @@ PROCEDURE Main( cFileArg )
          OutErr( "Unable to find first <choice> element in XML tree!" + hb_eol() )
 
          mxmlDelete( hTree )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
@@ -483,7 +483,7 @@ PROCEDURE Main( cFileArg )
          OutErr( "Unable to find second <choice> element in XML tree!" + hb_eol() )
 
          mxmlDelete( hTree )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
    ENDIF
@@ -531,48 +531,48 @@ PROCEDURE Main( cFileArg )
       IF s_aSAXEventCounts[ MXML_SAX_CDATA ] != 1
          OutErr( hb_StrFormat( "MXML_SAX_CDATA seen %d times, expected 1 times!", ;
             s_aSAXEventCounts[ MXML_SAX_CDATA ] ) + hb_eol() )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
       IF s_aSAXEventCounts[ MXML_SAX_COMMENT ] != 1
          OutErr( hb_StrFormat( "MXML_SAX_COMMENT seen %d times, expected 1 times!", ;
             s_aSAXEventCounts[ MXML_SAX_COMMENT ] ) + hb_eol() )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
       IF s_aSAXEventCounts[ MXML_SAX_DATA ] != 60
          OutErr( hb_StrFormat( "MXML_SAX_DATA seen %d times, expected 60 times!", ;
             s_aSAXEventCounts[ MXML_SAX_DATA ] ) + hb_eol() )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
       IF s_aSAXEventCounts[ MXML_SAX_DIRECTIVE ] != 1
          OutErr( hb_StrFormat( "MXML_SAX_DIRECTIVE seen %d times, expected 1 times!", ;
             s_aSAXEventCounts[ MXML_SAX_DIRECTIVE ] ) + hb_eol() )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
       IF s_aSAXEventCounts[ MXML_SAX_ELEMENT_CLOSE ] != 20
          OutErr( hb_StrFormat( "MXML_SAX_ELEMENT_CLOSE seen %d times, expected 20 times!", ;
             s_aSAXEventCounts[ MXML_SAX_ELEMENT_CLOSE ] ) + hb_eol() )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
       IF s_aSAXEventCounts[ MXML_SAX_ELEMENT_OPEN ] != 20
          OutErr( hb_StrFormat( "MXML_SAX_ELEMENT_OPEN seen %d times, expected 20 times!", ;
             s_aSAXEventCounts[ MXML_SAX_ELEMENT_OPEN ] ) + hb_eol() )
-         ErrorLevel( 1 )
+         ErrorLevel(1)
          QUIT
       ENDIF
 
    ENDIF
 
-   ErrorLevel( 0 )
+   ErrorLevel(0)
 
    RETURN
 
@@ -584,7 +584,7 @@ PROCEDURE Main( cFileArg )
 /* I - SAX event */
 /* I - SAX user data */
 
-PROCEDURE sax_cb( hNode, hEvent, hData )
+PROCEDURE sax_cb(hNode, hEvent, hData)
 
    /*
     * This SAX callback just counts the different events.
@@ -604,7 +604,7 @@ PROCEDURE sax_cb( hNode, hEvent, hData )
 /* O - Data type */
 /* I - Element node */
 
-FUNCTION type_cb( hNode )
+FUNCTION type_cb(hNode)
 
    LOCAL cType                            /* Type string */
 
@@ -633,7 +633,7 @@ FUNCTION type_cb( hNode )
 /* I - Element node */
 /* I - Open or close tag? */
 
-FUNCTION whitespace_cb( hNode, nWhere )
+FUNCTION whitespace_cb(hNode, nWhere)
 
    LOCAL hParent                          /* Parent node */
    LOCAL nLevel                           /* Indentation level */
@@ -672,7 +672,7 @@ FUNCTION whitespace_cb( hNode, nWhere )
        */
 
       IF nWhere == MXML_WS_BEFORE_OPEN
-         RETURN Space( 8 )
+         RETURN Space(8)
       ELSEIF nWhere == MXML_WS_AFTER_CLOSE
          RETURN hb_eol()
       ENDIF

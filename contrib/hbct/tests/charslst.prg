@@ -58,7 +58,7 @@ PROCEDURE Main()
 
    ? "Simple tests:"
    ? '  CharSList( "Hello World !" ) == " !HWdelor" ? -> "' + CharSList( "Hello World !" ) + '"'
-   ? '  CharSList( NIL ) == "" ? -> "' + CharSList( NIL ) + '"'
+   ? '  CharSList(NIL) == "" ? -> "' + CharSList(NIL) + '"'
 
    ? "End test of CharSList()"
    ?

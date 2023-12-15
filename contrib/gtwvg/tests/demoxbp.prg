@@ -43,7 +43,7 @@ PROCEDURE Main()
    // --------------------------- StatusBar ---------------------------\\
    oSBar   := WvgStatusBar():new( oCrt ):create( , , , , , .T. )
    oSBar:panelClick := {| oPanel | wvg_MessageBox( , oPanel:caption ) }
-   oPanel  := oSBar:getItem( 1 )
+   oPanel  := oSBar:getItem(1)
    oPanel:caption := "My Root Panel"
    oPanel1 := oSBar:addItem()
    oPanel1:caption := "Ready"
@@ -58,14 +58,14 @@ PROCEDURE Main()
 
    oStatic:create( , , { 0, oTBar:currentSize()[2] + 3 }, { 120, oCrt:currentSize()[2] - ;
       oTBar:currentSize()[2] - oSBar:currentSize()[2] - 4 }, , .T. )
-   oStatic:setColorBG( RGB( 200, 200, 200 ) )
+   oStatic:setColorBG( RGB(200, 200, 200) )
 
    // --------------------------- ListBox -----------------------------\\
    oListBox := WvgListBox():new()
    oListBox:create( oStatic, , { 5, 55 }, { 107, 380 } )
 
-   oListBox:setColorFG( RGB( 218, 61, 34 ) )
-// oListBox:setColorBG( RGB( 250,244,182 ) )
+   oListBox:setColorFG( RGB(218, 61, 34) )
+// oListBox:setColorBG( RGB(250, 244, 182) )
 
    AAdd( aParts, "XbpDialog"        )
    AAdd( aParts, "XbpMenuBar"       )
@@ -92,7 +92,7 @@ PROCEDURE Main()
 
    AEval( aParts, {| e | oListBox:addItem( e ) } )
    oListBox:itemSelected := {|| wvg_MessageBox( , oListBox:getCurItem() ) }
-   oListBox:setData( 3 )    // show selected "XbpToolBar"
+   oListBox:setData(3)    // show selected "XbpToolBar"
 
    // --------------------------- PushButton --------------------------\\
    oXbp := WvgPushButton():new( oStatic )
@@ -109,8 +109,8 @@ PROCEDURE Main()
    oTree:hasButtons := .T.
    oTree:alwaysShowSelection := .T.
    oTree:create()
-   oTree:setColorBG( RGB( 120, 15, 240 ) )
-   oTree:setColorFG( RGB( 15, 240, 120 ) )
+   oTree:setColorBG( RGB(120, 15, 240) )
+   oTree:setColorFG( RGB(15, 240, 120) )
    oTree:itemSelected := {| oItem | iif(oItem != NIL, wvg_MessageBox( , oItem:caption ), NIL) }
 
    oItem1 := oTree:rootItem:addItem( "First level A" )
@@ -125,12 +125,12 @@ PROCEDURE Main()
    oItem2:addItem( "Third level C" )
 
 #if 0
-   oItem1:expand( .T. )
+   oItem1:expand(.T.)
 #else
    oTree:showExpanded( .T., 2 )
 #endif
 
-   oTree:setData( oItem2 )
+   oTree:setData(oItem2)
 
    // --------------------------- Active-X ---------------------------\\
    hb_gtInfo( HB_GTI_WINTITLE, "http://www.harbour.vouch.info" )
@@ -151,8 +151,8 @@ PROCEDURE Main()
    oAddr:border       := .T.
    cNavigate          := "http://www.harbour.vouch.info"
    oAddr:dataLink     := {| x | iif(x == NIL, cNavigate, cNavigate := x) }
-   oAddr:setColorFG( RGB( 0, 0, 255   ) )
-   oAddr:setColorBG( RGB( 0, 255, 255 ) )
+   oAddr:setColorFG( RGB(0, 0, 255) )
+   oAddr:setColorBG( RGB(0, 255, 255) )
    oAddr:create( oDA, , { 120, oTBar:currentSize()[2] }, { 500, 20 }, , .T. )
    oAddr:setData()
    oAddr:killInputFocus := {| m1, m2, oS | m1 := m1, m2 := m2, oS:getData(), oCom:navigate( cNavigate ) }
@@ -163,7 +163,7 @@ PROCEDURE Main()
    oStatic2:exStyle += WS_EX_WINDOWEDGE
    // oStatic2:options := WVGSTATIC_FRAMETHICK
    oStatic2:create()
-   oStatic2:setColorBG( RGB( 175, 175, 175 ) )
+   oStatic2:setColorBG( RGB(175, 175, 175) )
 
    oXbp    := WvgPushButton():new( oStatic2 )
    oXbp:caption     := "Hide"
@@ -305,10 +305,10 @@ STATIC FUNCTION ActiveXBuildMenuXbp( oCrt, oStatic, oStatic2 )
    // calls a function
    oSubMenu       := WvgMenu():new( oMenuBar ):create()
    oSubMenu:title := "~Functional"
-   oSubMenu:addItem( { "Play Opening ~1", {|| MyFunctionXbp( 1 ) } } )
-   oSubMenu:addItem( { "Play Closing ~2", {|| MyFunctionXbp( 2 ) } } )
+   oSubMenu:addItem( { "Play Opening ~1", {|| MyFunctionXbp(1) } } )
+   oSubMenu:addItem( { "Play Closing ~2", {|| MyFunctionXbp(2) } } )
    oSubMenu:addItem()
-   oSubMenu:addItem( { "~MessageBox"    , {|| MyFunctionXbp( 3 ) } } )
+   oSubMenu:addItem( { "~MessageBox"    , {|| MyFunctionXbp(3) } } )
    oMenuBar:addItem( { oSubMenu, NIL } )
 
    oSubMenu       := WvgMenu():new( oMenuBar ):create()
