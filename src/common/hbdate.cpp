@@ -819,9 +819,8 @@ HB_BOOL hb_timeStampStrGetDT(const char * szDateTime, long * plJulian, long * pl
 #endif
 
    int iYear, iMonth, iDay, iHour, iMinutes, iSeconds, iMSec;
-   bool fValid;
 
-   fValid = hb_timeStampStrGet(szDateTime, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec);
+   bool fValid = hb_timeStampStrGet(szDateTime, &iYear, &iMonth, &iDay, &iHour, &iMinutes, &iSeconds, &iMSec);
    if( plJulian ) {
       *plJulian = hb_dateEncode(iYear, iMonth, iDay);
    }
