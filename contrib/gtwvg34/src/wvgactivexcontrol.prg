@@ -84,7 +84,7 @@ CREATE CLASS WvgActiveXControl INHERIT WvgWindow
    METHOD new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    METHOD create( oParent, oOwner, aPos, aSize, aPresParams, lVisible, cCLSID, cLicense )
    METHOD Destroy()
-   METHOD execEvent( nEvent, ... )
+   METHOD execEvent(nEvent, ...)
    METHOD handleEvent( nEvent, aNM )
    METHOD mapEvent( nEvent, bBlock )
 
@@ -154,7 +154,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
    __axDoVerb(::hWnd, -4)
 
    IF ! Empty(::hEvents)
-      ::oOle:__hSink := __axRegisterHandler( ::oOle:__hObj, {| nEvent, ... | ::execEvent( nEvent, ... ) } )
+      ::oOle:__hSink := __axRegisterHandler( ::oOle:__hObj, {|nEvent, ...| ::execEvent(nEvent, ...) } )
    ENDIF
 
 #if 0
@@ -174,7 +174,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
    RETURN Self
 
-METHOD PROCEDURE WvgActiveXControl:execEvent( nEvent, ... )
+METHOD PROCEDURE WvgActiveXControl:execEvent(nEvent, ...)
 
 #if 0
    LOCAL cEvents := hb_ValToStr( nEvent ) + ", "
@@ -185,7 +185,7 @@ METHOD PROCEDURE WvgActiveXControl:execEvent( nEvent, ... )
 #endif
 
    IF nEvent $ ::hEvents
-      Eval( ::hEvents[ nEvent ], ... )
+      Eval(::hEvents[ nEvent ], ...)
    ENDIF
 
    RETURN

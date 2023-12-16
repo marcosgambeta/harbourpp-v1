@@ -57,8 +57,8 @@ PROCEDURE UnloadAllDll()
 
    RETURN
 
-FUNCTION CallDll32( cFunction, cLibrary, ... )
-   RETURN hb_DynaCall1( cFunction, cLibrary, NIL, ... )
+FUNCTION CallDll32(cFunction, cLibrary, ...)
+   RETURN hb_DynaCall1(cFunction, cLibrary, NIL, ...)
 
 #if define( __PLATFORM__WINDOWS )
    /* Use Windows system .dll calling convention on Windows systems,
@@ -69,7 +69,7 @@ FUNCTION CallDll32( cFunction, cLibrary, ... )
    #define _DEF_CALLCONV_ HB_DYN_CALLCONV_CDECL
 #endif
 
-FUNCTION hb_DynaCall1( cFunction, cLibrary, nCount, ... )
+FUNCTION hb_DynaCall1(cFunction, cLibrary, nCount, ...)
 
    LOCAL aParams
    LOCAL hHandle
@@ -91,7 +91,7 @@ FUNCTION hb_DynaCall1( cFunction, cLibrary, nCount, ... )
          aParams := ASize( hb_AParams(), nCount )
          RETURN hb_DynCall( { cFunction, hHandle, _DEF_CALLCONV_ }, hb_ArrayToParams( aParams ) )
       ELSE
-         RETURN hb_DynCall( { cFunction, hHandle, _DEF_CALLCONV_ }, ... )
+         RETURN hb_DynCall({ cFunction, hHandle, _DEF_CALLCONV_ }, ...)
       ENDIF
    ENDIF
 

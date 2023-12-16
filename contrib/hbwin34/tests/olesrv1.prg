@@ -114,11 +114,11 @@ CREATE CLASS OleNetioSrv
 
    EXPORTED:
 
-   METHOD Eval( cMethodName, ... )
+   METHOD Eval(cMethodName, ...)
 
 ENDCLASS
 
-METHOD OleNetioSrv:Eval( cMethodName, ... )
+METHOD OleNetioSrv:Eval(cMethodName, ...)
 
    LOCAL xRetVal, oErr
 
@@ -132,13 +132,13 @@ METHOD OleNetioSrv:Eval( cMethodName, ... )
          xRetVal := .T.
          EXIT
       CASE "PROCEXISTS"
-         xRetVal := netio_ProcExists( ::pConn, ... )
+         xRetVal := netio_ProcExists(::pConn, ...)
          EXIT
       CASE "PROCEXEC"
          xRetVal := netio_ProcExec(::pConn, ...)
          EXIT
       CASE "PROCEXECW"
-         xRetVal := netio_ProcExecW( ::pConn, ... )
+         xRetVal := netio_ProcExecW(::pConn, ...)
          EXIT
       CASE "FUNCEXEC"
          xRetVal := netio_FuncExec(::pConn, ...)

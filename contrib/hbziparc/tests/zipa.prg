@@ -1,6 +1,6 @@
 #require "hbziparc"
 
-PROCEDURE Main( cZip, ... )
+PROCEDURE Main(cZip, ...)
 
    LOCAL a, b, c
 

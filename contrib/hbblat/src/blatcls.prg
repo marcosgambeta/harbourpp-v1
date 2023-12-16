@@ -66,7 +66,7 @@ CREATE CLASS HBBlat
 
    // store common settings to the Windows Registry.  Takes the
    // same parameters as -install, and is only for SMTP settings.
-   METHOD SaveSettings(...)  INLINE ::Install( "SMTP", ... )
+   METHOD SaveSettings(...)  INLINE ::Install("SMTP", ...)
    //VAR lInstall                AS LOGICAL INIT .F.
    METHOD Install( cService, cServerAddress, cSenderEmailAddress, nTries, nPort, cProfile, cUsername, cPassword ) VIRTUAL // TODO
 

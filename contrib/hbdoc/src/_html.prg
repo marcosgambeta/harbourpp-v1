@@ -57,9 +57,9 @@ CREATE CLASS GenerateHTML INHERIT TPLGenerate
    HIDDEN:
 
    METHOD RecreateStyleDocument( cStyleFile )
-   METHOD OpenTagInline( cText, ... )
-   METHOD OpenTag( cText, ... )
-   METHOD Tagged( cText, cTag, ... )
+   METHOD OpenTagInline(cText, ...)
+   METHOD OpenTag(cText, ...)
+   METHOD Tagged(cText, cTag, ...)
    METHOD CloseTagInline( cText )
    METHOD CloseTag( cText )
    METHOD AppendInline( cText, cFormat, lCode )
@@ -391,7 +391,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
    RETURN
 
-METHOD GenerateHTML:OpenTagInline( cText, ... )
+METHOD GenerateHTML:OpenTagInline(cText, ...)
 
    LOCAL aArgs := hb_AParams()
    LOCAL idx
@@ -407,15 +407,15 @@ METHOD GenerateHTML:OpenTagInline( cText, ... )
 
    RETURN Self
 
-METHOD GenerateHTML:OpenTag( cText, ... )
+METHOD GenerateHTML:OpenTag(cText, ...)
 
-   ::OpenTagInline( cText, ... )
+   ::OpenTagInline(cText, ...)
 
    ::cFile += hb_eol()
 
    RETURN Self
 
-METHOD GenerateHTML:Tagged( cText, cTag, ... )
+METHOD GenerateHTML:Tagged(cText, cTag, ...)
 
    LOCAL aArgs := hb_AParams()
    LOCAL cResult := ""

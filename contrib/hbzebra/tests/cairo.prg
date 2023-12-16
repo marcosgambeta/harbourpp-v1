@@ -88,14 +88,14 @@ PROCEDURE DrawBarcode( hCairo, nY, nLineWidth, cType, cCode, nFlags )
 
    RETURN
 
-STATIC FUNCTION hb_zebra_draw_cairo( hZebra, hCairo, ... )
+STATIC FUNCTION hb_zebra_draw_cairo(hZebra, hCairo, ...)
 
    IF hb_zebra_geterror( hZebra ) != 0
       RETURN HB_ZEBRA_ERROR_INVALIDZEBRA
    ENDIF
 
    cairo_save( hCairo )
-   hb_zebra_draw( hZebra, {| x, y, w, h | cairo_rectangle( hCairo, x, y, w, h ) }, ... )
+   hb_zebra_draw(hZebra, {| x, y, w, h | cairo_rectangle( hCairo, x, y, w, h ) }, ...)
    cairo_fill( hCairo )
    cairo_restore( hCairo )
 

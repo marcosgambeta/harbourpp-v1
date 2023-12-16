@@ -51,7 +51,7 @@ DECLARE [cFunctionType] FunctionName IN LibraryName [AS AliasName]
    [cParamType1 [@] ParamName1, cParamType2 [@] ParamName2, ...]
 */
 
-FUNCTION fox___DynCall( cCommand, ... )
+FUNCTION fox___DynCall(cCommand, ...)
 
    LOCAL aParam
 
@@ -125,4 +125,4 @@ FUNCTION fox___DynCall( cCommand, ... )
       ENDIF
    ENDDO
 
-   RETURN hb_DynCall( aParam, ... )
+   RETURN hb_DynCall(aParam, ...)

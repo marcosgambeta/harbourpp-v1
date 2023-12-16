@@ -75,7 +75,7 @@ FUNCTION WvgSetAppWindow( oCrt )
       IF Empty(t_oCrt)
          t_oCrt := WvgCrt():new()
          t_oCrt:hWnd := t_oCrt:pWnd := hb_gtInfo( HB_GTI_WINHANDLE )
-         hb_gtInfo( HB_GTI_NOTIFIERBLOCKGUI, {| nEvent, ... | t_oCrt:notifier( nEvent, ... ) } )
+         hb_gtInfo( HB_GTI_NOTIFIERBLOCKGUI, {|nEvent, ...| t_oCrt:notifier(nEvent, ...) } )
          t_oCrt:isGT := .T.
          RETURN t_oCrt
       ENDIF

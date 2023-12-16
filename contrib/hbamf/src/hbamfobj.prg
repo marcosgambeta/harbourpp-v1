@@ -51,7 +51,7 @@ CREATE CLASS amf_Obj
 
    METHOD New( hCachedData ) CONSTRUCTOR
    ERROR HANDLER noMessage(...)
-   METHOD msgNotFound( cMessage, ... )
+   METHOD msgNotFound(cMessage, ...)
 
    PROTECTED:
 
@@ -76,9 +76,9 @@ METHOD amf_Obj:New( hCachedData )
    RETURN Self
 
 METHOD amf_Obj:noMessage(...)
-   RETURN ::msgNotFound( __GetMessage(), ... )
+   RETURN ::msgNotFound(__GetMessage(), ...)
 
-METHOD amf_Obj:msgNotFound( cMessage, ... )
+METHOD amf_Obj:msgNotFound(cMessage, ...)
 
    IF PCount() == 1 .AND. !( hb_BLeft(cMessage, 1) == "_" )
       IF ! Empty(::hCachedData) .AND. hb_HHasKey( ::hCachedData, cMessage )

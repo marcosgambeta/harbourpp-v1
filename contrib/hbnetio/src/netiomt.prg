@@ -105,12 +105,12 @@ FUNCTION netio_MTServer( nPort, cIfAddr, cRootDir, xRPC, ;
    RETURN pListenSocket
 
 
-STATIC FUNCTION NETIO_SRVLOOP( pListenSocket, xRPC, sSrvFunc, ... )
+STATIC FUNCTION NETIO_SRVLOOP(pListenSocket, xRPC, sSrvFunc, ...)
 
    LOCAL pConnectionSocket
 
    DO WHILE .T.
-      pConnectionSocket := netio_Accept( pListenSocket,, ... )
+      pConnectionSocket := netio_Accept(pListenSocket,, ...)
       IF Empty(pConnectionSocket)
          EXIT
       ENDIF

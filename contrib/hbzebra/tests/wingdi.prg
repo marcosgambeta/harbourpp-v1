@@ -126,10 +126,10 @@ PROCEDURE DrawBarcode( hDC, nY, nLineWidth, cType, cCode, nFlags )
 
    RETURN
 
-STATIC FUNCTION hb_zebra_draw_wapi( hZebra, hDC, hBrush, ... )
+STATIC FUNCTION hb_zebra_draw_wapi(hZebra, hDC, hBrush, ...)
 
    IF hb_zebra_geterror( hZebra ) != 0
       RETURN HB_ZEBRA_ERROR_INVALIDZEBRA
    ENDIF
 
-   RETURN hb_zebra_draw( hZebra, {| x, y, w, h | wapi_FillRect( hDC, { Int( x + .5 ), Int( y + .5 ), Int( x + .5 ) + Int( w ), Int( y + .5 ) + Int( h ) + 1 }, hBrush ) }, ... )
+   RETURN hb_zebra_draw(hZebra, {| x, y, w, h | wapi_FillRect( hDC, { Int( x + .5 ), Int( y + .5 ), Int( x + .5 ) + Int( w ), Int( y + .5 ) + Int( h ) + 1 }, hBrush ) }, ...)

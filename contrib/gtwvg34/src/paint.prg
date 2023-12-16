@@ -812,7 +812,7 @@ FUNCTION wvt_MessageBox(...)
       RETURN 0
    ENDIF
 
-   RETURN wapi_MessageBox( hWnd, ... )
+   RETURN wapi_MessageBox(hWnd, ...)
 
 /* wvt_DlgSetIcon( hDlg, ncIcon ) */
 FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )

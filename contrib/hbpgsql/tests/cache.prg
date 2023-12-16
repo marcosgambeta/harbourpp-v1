@@ -332,7 +332,7 @@ FUNCTION SQLExecQuery( cQuery )
 
    RETURN .T.
 
-FUNCTION SQLPrepare( cQuery, ... )
+FUNCTION SQLPrepare(cQuery, ...)
 
    LOCAL i, x
 

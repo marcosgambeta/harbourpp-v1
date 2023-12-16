@@ -80,11 +80,11 @@ REQUEST __HB_EXTERN__
 
 PROCEDURE Main(...)
 
-   netiosrv_Main( .T., ... )
+   netiosrv_Main(.T., ...)
 
    RETURN
 
-PROCEDURE netiosrv_Main( lUI, ... )
+PROCEDURE netiosrv_Main(lUI, ...)
 
    LOCAL netiosrv[ _NETIOSRV_MAX_ ]
    LOCAL netiomgm[ _NETIOSRV_MAX_ ]
@@ -239,30 +239,30 @@ PROCEDURE netiosrv_Main( lUI, ... )
             netiomgm[ _NETIOSRV_cRootDir ], ;
             { ;
                "hbnetiomgm_ping"           => {| ... | .T. }, ;
-               "hbnetiomgm_setclientinfo"  => {| ... | netiomgm_rpc_setclientinfo( netiomgm, ... ) }, ;
+               "hbnetiomgm_setclientinfo"  => {| ... | netiomgm_rpc_setclientinfo(netiomgm, ...) }, ;
                "hbnetiomgm_sysinfo"        => {| ... | netiomgm_rpc_sysinfo() }, ;
                "hbnetiomgm_serverconfig"   => {| ... | netiomgm_rpc_serverconfig( netiosrv, netiomgm ) }, ;
-               "hbnetiomgm_clientinfo"     => {| ... | netiomgm_rpc_clientinfo( netiosrv, netiomgm, ... ) }, ;
+               "hbnetiomgm_clientinfo"     => {| ... | netiomgm_rpc_clientinfo(netiosrv, netiomgm, ...) }, ;
                "hbnetiomgm_shutdown"       => {| ... | netiomgm_rpc_shutdown( netiosrv, netiomgm ) }, ;
                "hbnetiomgm_conninfo"       => {| ... | netiomgm_rpc_conninfo( netiosrv ) }, ;
                "hbnetiomgm_adminfo"        => {| ... | netiomgm_rpc_conninfo( netiomgm ) }, ;
-               "hbnetiomgm_allowadd"       => {| ... | netiomgm_rpc_filtermod( netiosrv, netiosrv[ _NETIOSRV_hAllow ], .T., ... ) }, ;
-               "hbnetiomgm_allowdel"       => {| ... | netiomgm_rpc_filtermod( netiosrv, netiosrv[ _NETIOSRV_hAllow ], .F., ... ) }, ;
-               "hbnetiomgm_blockadd"       => {| ... | netiomgm_rpc_filtermod( netiosrv, netiosrv[ _NETIOSRV_hBlock ], .T., ... ) }, ;
-               "hbnetiomgm_blockdel"       => {| ... | netiomgm_rpc_filtermod( netiosrv, netiosrv[ _NETIOSRV_hBlock ], .F., ... ) }, ;
-               "hbnetiomgm_allowaddadmin"  => {| ... | netiomgm_rpc_filtermod( netiomgm, netiomgm[ _NETIOSRV_hAllow ], .T., ... ) }, ;
-               "hbnetiomgm_allowdeladmin"  => {| ... | netiomgm_rpc_filtermod( netiomgm, netiomgm[ _NETIOSRV_hAllow ], .F., ... ) }, ;
-               "hbnetiomgm_blockaddadmin"  => {| ... | netiomgm_rpc_filtermod( netiomgm, netiomgm[ _NETIOSRV_hBlock ], .T., ... ) }, ;
-               "hbnetiomgm_blockdeladmin"  => {| ... | netiomgm_rpc_filtermod( netiomgm, netiomgm[ _NETIOSRV_hBlock ], .F., ... ) }, ;
+               "hbnetiomgm_allowadd"       => {| ... | netiomgm_rpc_filtermod(netiosrv, netiosrv[ _NETIOSRV_hAllow ], .T., ...) }, ;
+               "hbnetiomgm_allowdel"       => {| ... | netiomgm_rpc_filtermod(netiosrv, netiosrv[ _NETIOSRV_hAllow ], .F., ...) }, ;
+               "hbnetiomgm_blockadd"       => {| ... | netiomgm_rpc_filtermod(netiosrv, netiosrv[ _NETIOSRV_hBlock ], .T., ...) }, ;
+               "hbnetiomgm_blockdel"       => {| ... | netiomgm_rpc_filtermod(netiosrv, netiosrv[ _NETIOSRV_hBlock ], .F., ...) }, ;
+               "hbnetiomgm_allowaddadmin"  => {| ... | netiomgm_rpc_filtermod(netiomgm, netiomgm[ _NETIOSRV_hAllow ], .T., ...) }, ;
+               "hbnetiomgm_allowdeladmin"  => {| ... | netiomgm_rpc_filtermod(netiomgm, netiomgm[ _NETIOSRV_hAllow ], .F., ...) }, ;
+               "hbnetiomgm_blockaddadmin"  => {| ... | netiomgm_rpc_filtermod(netiomgm, netiomgm[ _NETIOSRV_hBlock ], .T., ...) }, ;
+               "hbnetiomgm_blockdeladmin"  => {| ... | netiomgm_rpc_filtermod(netiomgm, netiomgm[ _NETIOSRV_hBlock ], .F., ...) }, ;
                "hbnetiomgm_filters"        => {| ... | netiomgm_rpc_filters( netiosrv ) }, ;
                "hbnetiomgm_filtersadmin"   => {| ... | netiomgm_rpc_filters( netiomgm ) }, ;
                "hbnetiomgm_filtersave"     => {| ... | netiomgm_rpc_filtersave( netiosrv, netiomgm ) }, ;
-               "hbnetiomgm_stop"           => {| ... | netiomgm_rpc_stop( netiosrv, ... ) }, ;
+               "hbnetiomgm_stop"           => {| ... | netiomgm_rpc_stop(netiosrv, ...) }, ;
                "hbnetiomgm_conn"           => {| ... | netiomgm_rpc_conn( netiosrv, .T. ) }, ;
                "hbnetiomgm_noconn"         => {| ... | netiomgm_rpc_conn( netiosrv, .F. ) }, ;
                "hbnetiomgm_logconn"        => {| ... | netiomgm_rpc_logconn( netiosrv, .T. ) }, ;
                "hbnetiomgm_nologconn"      => {| ... | netiomgm_rpc_logconn( netiosrv, .F. ) }, ;
-               "hbnetiomgm_regnotif"       => {| ... | netiomgm_rpc_regnotif( netiomgm, ... ) } }, ;
+               "hbnetiomgm_regnotif"       => {| ... | netiomgm_rpc_regnotif(netiomgm, ...) } }, ;
             cPasswordManagement, ;
             NIL, ;
             NIL, ;

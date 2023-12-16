@@ -117,7 +117,7 @@ EXPORTED:
    METHOD setInterval( nHSeconds )
    METHOD setPriority( nPriority )
    METHOD setStartTime( nSeconds )
-   METHOD start( xAction, ... )
+   METHOD start(xAction, ...)
    METHOD synchronize( nTimeOut )
 
    METHOD threadSelf()
@@ -204,12 +204,12 @@ METHOD Thread:setStartTime( nSeconds )
 
    RETURN .T.
 
-METHOD Thread:start( xAction, ... )
+METHOD Thread:start(xAction, ...)
 
    IF ::active
       RETURN .F.
    ELSE
-      ::pThreadID := hb_threadStart( HB_THREAD_INHERIT_PUBLIC, ;
+      ::pThreadID := hb_threadStart(HB_THREAD_INHERIT_PUBLIC, ;
             {| ... |
                LOCAL nTime
 
@@ -229,7 +229,7 @@ METHOD Thread:start( xAction, ... )
 
                ::atStart(...)
                IF HB_ISBLOCK( ::_atStart )
-                  Eval( ::_atStart, ... )
+                  Eval(::_atStart, ...)
                ENDIF
 
                DO WHILE .T.
@@ -238,7 +238,7 @@ METHOD Thread:start( xAction, ... )
 
                   BEGIN SEQUENCE
                      IF ! Empty(xAction) .AND. ValType( xAction ) $ "CBS"
-                        ::result := Do( xAction, ... )
+                        ::result := Do(xAction, ...)
                      ELSE
                         ::result := ::execute(...)
                      ENDIF
@@ -268,12 +268,12 @@ METHOD Thread:start( xAction, ... )
 
                ::atEnd(...)
                IF HB_ISBLOCK( ::_atEnd )
-                  Eval( ::_atEnd, ... )
+                  Eval(::_atEnd, ...)
                ENDIF
                ::active := .F.
 
                RETURN NIL
-            }, ... )
+            }, ...)
 
       ::threadID := iif(::pThreadID == NIL, 0, hb_threadID( ::pThreadID ))
    ENDIF

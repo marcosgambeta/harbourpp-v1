@@ -146,7 +146,7 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::drawingArea := oW
    ENDIF
 
-   hb_gtInfo( HB_GTI_NOTIFIERBLOCK, {| nEvent, ... | ::notifier( nEvent, ... ) } )
+   hb_gtInfo( HB_GTI_NOTIFIERBLOCK, {|nEvent, ...| ::notifier(nEvent, ...) } )
 
    RETURN Self
 

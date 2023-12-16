@@ -2,7 +2,7 @@
 
 #require "hbtip"
 
-PROCEDURE Main( cURL, ... )
+PROCEDURE Main(cURL, ...)
 
    LOCAL lRetVal := .T.
 

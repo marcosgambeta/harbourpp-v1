@@ -290,8 +290,8 @@ METHOD WvgCrt:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
       ::pGT := hb_gtSelect()
    ENDIF
 
-   hb_gtInfo( HB_GTI_NOTIFIERBLOCKGUI, {| nEvent, ... | ::notifier( nEvent, ... )      } )
-   hb_gtInfo( HB_GTI_NOTIFIERBLOCK   , {| nEvent, ... | ::notifierBlock( nEvent, ... ) } )
+   hb_gtInfo( HB_GTI_NOTIFIERBLOCKGUI, {|nEvent, ...| ::notifier(nEvent, ...)      } )
+   hb_gtInfo( HB_GTI_NOTIFIERBLOCK   , {|nEvent, ...| ::notifierBlock(nEvent, ...) } )
 
    IF ::lModal
       ::style := WIN_WS_POPUP + WIN_WS_CAPTION + WIN_WS_SYSMENU

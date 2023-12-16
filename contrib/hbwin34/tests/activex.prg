@@ -43,7 +43,7 @@ METHOD HActiveX:Init( hWnd, cProgId, nTop, nLeft, nWidth, nHeight, cID )
 #if 0
    wapi_SetWindowPos( ::hWnd, WIN_HWND_TOPMOST, 0, 0, 1, 1, hb_bitOr( WIN_SWP_NOSIZE, WIN_SWP_DRAWFRAME ) )
 #endif
-   ::oOLE := win_axGetControl( ::hWnd, {| event, ... | ::Event( event, ... ) }, cID )
+   ::oOLE := win_axGetControl( ::hWnd, {|event, ...| ::Event(event, ...) }, cID )
 
    RETURN Self
 

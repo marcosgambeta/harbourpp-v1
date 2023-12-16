@@ -142,11 +142,11 @@ PROCEDURE Main( cInputFile )
 
 /* DO NOT REMOVE OR MODIFY THIS LINE, OR ANY CODE BELOW <<< */
 
-FUNCTION hbtest_Table( cAlias, ... )
+FUNCTION hbtest_Table(cAlias, ...)
 
    LOCAL r, f
 
-   IF ! hb_dbCreateTemp( hb_defaultValue( cAlias, "w_TEST" ), { ;
+   IF ! hb_dbCreateTemp(hb_defaultValue( cAlias, "w_TEST" ), { ;
       { "FIRST"     , "C"     ,    20,  0 }, ;
       { "LAST"      , "C"     ,    20,  0 }, ;
       { "STREET"    , "C"     ,    30,  0 }, ;
@@ -157,7 +157,7 @@ FUNCTION hbtest_Table( cAlias, ... )
       { "MARRIED"   , "L"     ,     1,  0 }, ;
       { "AGE"       , "N"     ,     2,  0 }, ;
       { "SALARY"    , "N"     ,     6,  0 }, ;
-      { "NOTES"     , "C"     ,    70,  0 } }, ... )
+      { "NOTES"     , "C"     ,    70,  0 } }, ...)
       RETURN .F.
    ENDIF
 

@@ -110,8 +110,8 @@ STATIC FUNCTION AFillNested( aValue, xVal )
 FUNCTION __fox_Array(...)
    RETURN AFillNested( Array(...), .F. )
 
-FUNCTION AElement( aValue, ... )
-   RETURN aValue[ ... ]
+FUNCTION AElement(aValue, ...)
+   RETURN aValue[...]
 
 FUNCTION InsMode(...)
-   RETURN Set( _SET_INSERT, ... )
+   RETURN Set(_SET_INSERT, ...)
