@@ -44,8 +44,8 @@
  *
  */
 
-FUNCTION tip_base64EncodeUrl( ... )
-   RETURN hb_StrReplace( hb_base64Encode( ... ), "+/=", "-_" )
+FUNCTION tip_base64EncodeUrl(...)
+   RETURN hb_StrReplace( hb_base64Encode(...), "+/=", "-_" )
 
 FUNCTION tip_base64DecodeUrl( cString )
    RETURN hb_base64Decode( hb_StrReplace( cString, "-_", "+/" ) )

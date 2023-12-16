@@ -50,7 +50,7 @@
 CREATE CLASS amf_Obj
 
    METHOD New( hCachedData ) CONSTRUCTOR
-   ERROR HANDLER noMessage( ... )
+   ERROR HANDLER noMessage(...)
    METHOD msgNotFound( cMessage, ... )
 
    PROTECTED:
@@ -75,7 +75,7 @@ METHOD amf_Obj:New( hCachedData )
 
    RETURN Self
 
-METHOD amf_Obj:noMessage( ... )
+METHOD amf_Obj:noMessage(...)
    RETURN ::msgNotFound( __GetMessage(), ... )
 
 METHOD amf_Obj:msgNotFound( cMessage, ... )

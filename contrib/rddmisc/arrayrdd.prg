@@ -1726,7 +1726,7 @@ STATIC FUNCTION EmptyValue( cType, nLen, nDec )
  *                   Decode a value from a list.
  */
 
-STATIC FUNCTION hb_Decode( ... )
+STATIC FUNCTION hb_Decode(...)
 
    LOCAL aParams, nParams, xDefault
    LOCAL xVal, cKey, xRet

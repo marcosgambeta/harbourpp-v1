@@ -460,7 +460,7 @@ PROCEDURE WvtExePicture( nTop, nLeft, nBottom, nRight, nSlot, aOffset )
 FUNCTION GetResource( cName )
    RETURN hb_DirBase() + cName
 
-PROCEDURE uiDebug( ... )
+PROCEDURE uiDebug(...)
 
    LOCAL aP := hb_AParams()
    LOCAL s := ""

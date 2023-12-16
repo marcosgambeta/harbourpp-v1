@@ -1379,7 +1379,7 @@ METHOD THtmlNode:isAttribute( cName )
    RETURN lRet
 
 // Error handling
-METHOD THtmlNode:noMessage( ... )
+METHOD THtmlNode:noMessage(...)
    RETURN ::noAttribute( __GetMessage(), hb_AParams() )
 
 // Non existent message -> returns and/or creates Tag or Attribute

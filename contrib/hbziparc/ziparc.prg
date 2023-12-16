@@ -229,8 +229,8 @@ FUNCTION hb_ZipFileByTDSpan( cFileName, aFileToCompress, nLevel, bUpdate, lOverw
    RETURN hb_ZipFile( cFileName, aFileToCompress, nLevel, bUpdate, lOverwrite, cPassword, lWithPath, lWithDrive, bProgress, lFullPath, acExclude )
 
 /* NOTE: Spanning not supported. */
-FUNCTION hb_ZipFileByPKSpan( ... )
-   RETURN hb_ZipFile( ... )
+FUNCTION hb_ZipFileByPKSpan(...)
+   RETURN hb_ZipFile(...)
 
 FUNCTION hb_ZipFile( ;
       cFileName, ;
@@ -475,11 +475,11 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
 
    RETURN lRetVal
 
-FUNCTION hb_UnzipFileIndex( ... )
-   RETURN hb_UnzipFile( ... )
+FUNCTION hb_UnzipFileIndex(...)
+   RETURN hb_UnzipFile(...)
 
-FUNCTION hb_UnzipAllFile( ... )
-   RETURN hb_UnzipFile( ... )
+FUNCTION hb_UnzipAllFile(...)
+   RETURN hb_UnzipFile(...)
 
 /* NOTE: Numeric file positions are not supported. */
 FUNCTION hb_ZipDeleteFiles( cFileName, acFiles )

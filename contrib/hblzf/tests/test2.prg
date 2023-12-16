@@ -25,7 +25,7 @@ PROCEDURE Main()
 
    RETURN
 
-STATIC PROCEDURE MakeTest( ... )
+STATIC PROCEDURE MakeTest(...)
 
    LOCAL e, e2, cRes, cFmt
    LOCAL nResult := 0

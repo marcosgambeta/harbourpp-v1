@@ -104,7 +104,7 @@ PROCEDURE Main()
          "FirewallFilter"      => "", ;
          "LogAccess"           => {| m | oLogAccess:Add( m + hb_eol() ) }, ;
          "LogError"            => {| m | oLogError:Add( m + hb_eol() ) }, ;
-         "Trace"               => {| ... | QOut( ... ) }, ;
+         "Trace"               => {| ... | QOut(...) }, ;
          "Port"                => nPort, ;
          "Idle"                => {| o | iif(hb_FileExists( ".uhttpd.stop" ), ( FErase( ".uhttpd.stop" ), o:Stop() ), NIL) }, ;
          "PrivateKeyFilename"  => "private.key", ;

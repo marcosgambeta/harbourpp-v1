@@ -91,9 +91,9 @@ CREATE CLASS WvgComboBox INHERIT WvgWindow, WvgDataRef
    VAR    sl_itemSelected
    VAR    sl_drawItem
 
-   METHOD itemMarked( ... )                     SETGET
-   METHOD itemSelected( ... )                   SETGET
-   METHOD drawItem( ... )                       SETGET
+   METHOD itemMarked(...)                     SETGET
+   METHOD itemSelected(...)                   SETGET
+   METHOD drawItem(...)                       SETGET
 
 ENDCLASS
 
@@ -285,7 +285,7 @@ METHOD WvgComboBox:setIcon( nItem, cIcon )
 
    RETURN Self
 
-METHOD WvgComboBox:itemMarked( ... )
+METHOD WvgComboBox:itemMarked(...)
 
    LOCAL a_ := hb_AParams()
 
@@ -297,7 +297,7 @@ METHOD WvgComboBox:itemMarked( ... )
 
    RETURN Self
 
-METHOD WvgComboBox:itemSelected( ... )
+METHOD WvgComboBox:itemSelected(...)
 
    LOCAL a_ := hb_AParams()
 
@@ -309,7 +309,7 @@ METHOD WvgComboBox:itemSelected( ... )
 
    RETURN Self
 
-METHOD WvgComboBox:drawItem( ... )
+METHOD WvgComboBox:drawItem(...)
 
    LOCAL a_ := hb_AParams()
 

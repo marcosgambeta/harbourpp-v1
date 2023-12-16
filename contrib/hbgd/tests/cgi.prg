@@ -9,7 +9,7 @@
 #command WRITE <c> => FWrite( 1, <c> + hb_eol() )
 #command OutHTML <c> => WRITE <c>
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
    LOCAL cPar
    LOCAL aParams := hb_AParams()

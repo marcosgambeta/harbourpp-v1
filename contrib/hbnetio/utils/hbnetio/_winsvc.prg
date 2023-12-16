@@ -24,7 +24,7 @@
 
 #define _SERVICE_NAME "Harbour_NetIO_Service"
 
-PROCEDURE WinMain( ... )
+PROCEDURE WinMain(...)
 
    LOCAL cMode := hb_PValue(1)
 
@@ -80,7 +80,7 @@ PROCEDURE WinMain( ... )
 
    RETURN
 
-STATIC PROCEDURE hbnetio_WinServiceEntry( ... )
+STATIC PROCEDURE hbnetio_WinServiceEntry(...)
 
 #if 0
    LOCAL bSignal := {|| win_serviceGetStatus() != WIN_SERVICE_RUNNING }

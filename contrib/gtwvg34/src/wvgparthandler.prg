@@ -87,7 +87,7 @@ CREATE CLASS WvgPartHandler
 
    /* Application Level Notifier */
    VAR    sb_notifier
-   METHOD notifierBlock( ... )                  SETGET
+   METHOD notifierBlock(...)                  SETGET
 
 ENDCLASS
 
@@ -211,7 +211,7 @@ METHOD WvgPartHandler:setParent( oWvg )
 
    RETURN oOldXbp
 
-METHOD PROCEDURE WvgPartHandler:notifierBlock( ... )
+METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
 
    LOCAL a_ := hb_AParams()
 

@@ -48,7 +48,7 @@
 
 #include "inkey.ch"
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
    LOCAL cTok
    LOCAL cHostName := "localhost"

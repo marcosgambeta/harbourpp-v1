@@ -736,8 +736,8 @@ FUNCTION wvg_GetClientRect( hWnd )
 
    RETURN rc
 
-FUNCTION wvg_SetTimer( ... )
-   RETURN ! Empty(wapi_SetTimer( ... ))
+FUNCTION wvg_SetTimer(...)
+   RETURN ! Empty(wapi_SetTimer(...))
 
 FUNCTION wvg_InvalidateRect( w, r, e )
    RETURN wapi_InvalidateRect( w, r, hb_defaultValue( e, .T. ) )
@@ -757,7 +757,7 @@ FUNCTION wvg_FindWindow( cTitle )
    RETURN wapi_FindWindow( , cTitle )
 
 #if 0
-FUNCTION wvg_CreateBrush( ... )  /* FIXME: causes problems due to the GC collected pointer is returns */
+FUNCTION wvg_CreateBrush(...)  /* FIXME: causes problems due to the GC collected pointer is returns */
    RETURN wapi_CreateBrushIndirect( { ... } )
 #endif
 
@@ -804,7 +804,7 @@ STATIC FUNCTION wvg_hWnd()
    RETURN hb_gtInfo( HB_GTI_WINHANDLE )
 
 /* wvt_MessageBox( cMessage, cTitle, nIcon, hWnd ) */
-FUNCTION wvt_MessageBox( ... )
+FUNCTION wvt_MessageBox(...)
 
    LOCAL hWnd := wvg_hWnd()
 

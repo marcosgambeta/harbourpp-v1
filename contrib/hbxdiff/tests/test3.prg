@@ -13,12 +13,12 @@ PROCEDURE Main()
    xdl_write_mmfile( pMMFOld, @cFileCtx )
    xdl_write_mmfile( pMMFNew, cFileCtx + hb_eol() + Space(3) + "RETURN NIL" + hb_eol() )
 
-   xdl_diff( pMMFOld, pMMFNew, 0, 3, {| ... | Diff( ... ) } )
+   xdl_diff( pMMFOld, pMMFNew, 0, 3, {| ... | Diff(...) } )
    xdl_diff( pMMFOld, pMMFNew, 0, 3, @Diff() )
 
    RETURN
 
-FUNCTION Diff( ... )
+FUNCTION Diff(...)
 
    LOCAL e
 

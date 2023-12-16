@@ -78,7 +78,7 @@ REQUEST __HB_EXTERN__
 #define _NETIOSRV_CONN_hInfo        4
 #define _NETIOSRV_CONN_MAX_         4
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
    netiosrv_Main( .T., ... )
 

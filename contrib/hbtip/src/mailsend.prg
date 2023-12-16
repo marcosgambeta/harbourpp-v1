@@ -47,8 +47,8 @@
  */
 
 #if defined( HB_LEGACY_LEVEL4 )
-FUNCTION hb_SendMail( ... )
-   RETURN tip_MailSend( ... )
+FUNCTION hb_SendMail(...)
+   RETURN tip_MailSend(...)
 #endif
 
 /*

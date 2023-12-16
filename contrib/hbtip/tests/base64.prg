@@ -9,7 +9,7 @@
 
 #include "fileio.ch"
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
    LOCAL oEncoder, cEncoder := "base64"
    LOCAL lDecode := .F., lHelp := .F.

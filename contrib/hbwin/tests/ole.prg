@@ -236,7 +236,7 @@ STATIC PROCEDURE Exm_IExplorer2()
    LOCAL oIE
 
    IF ( oIE := win_oleCreateObject( "InternetExplorer.Application" ) ) != NIL
-      oIE:__hSink := __axRegisterHandler( oIE:__hObj, {| ... | QOut( ... ) } )
+      oIE:__hSink := __axRegisterHandler( oIE:__hObj, {| ... | QOut(...) } )
       oIE:Visible := .T.
       oIE:Navigate( "https://harbour.github.io" )
       WHILE oIE:ReadyState != 4

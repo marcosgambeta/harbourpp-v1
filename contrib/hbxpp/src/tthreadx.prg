@@ -60,16 +60,16 @@ CREATE CLASS Signal
 
 EXPORTED:
 
-   METHOD new( ... )
+   METHOD new(...)
    METHOD wait( nTimeOut )
    METHOD signal()
 
 ENDCLASS
 
-METHOD Signal:new( ... )
+METHOD Signal:new(...)
 
    ::mutex := hb_mutexCreate()
-   ::Init( ... )
+   ::Init(...)
 
    RETURN Self
 
@@ -105,7 +105,7 @@ HIDDEN:
    VAR pThreadID        AS USUAL             INIT NIL
 
 EXPORTED:
-   METHOD new( ... )
+   METHOD new(...)
 
 PROTECTED:
    /* METHOD atEnd() */
@@ -124,7 +124,7 @@ EXPORTED:
 
 ENDCLASS
 
-METHOD Thread:new( ... )
+METHOD Thread:new(...)
 
    LOCAL nMaxStackSize
 
@@ -142,7 +142,7 @@ METHOD Thread:new( ... )
       /* TODO: do not ignore thread stack size set by user in ::maxStackSize */
    ENDIF
 
-   ::Init( ... )
+   ::Init(...)
 
    RETURN Self
 
@@ -227,7 +227,7 @@ METHOD Thread:start( xAction, ... )
                   ::startTime := NIL
                ENDIF
 
-               ::atStart( ... )
+               ::atStart(...)
                IF HB_ISBLOCK( ::_atStart )
                   Eval( ::_atStart, ... )
                ENDIF
@@ -240,7 +240,7 @@ METHOD Thread:start( xAction, ... )
                      IF ! Empty(xAction) .AND. ValType( xAction ) $ "CBS"
                         ::result := Do( xAction, ... )
                      ELSE
-                        ::result := ::execute( ... )
+                        ::result := ::execute(...)
                      ENDIF
                   ALWAYS
                      __QuitCancel()
@@ -266,7 +266,7 @@ METHOD Thread:start( xAction, ... )
 
                ENDDO
 
-               ::atEnd( ... )
+               ::atEnd(...)
                IF HB_ISBLOCK( ::_atEnd )
                   Eval( ::_atEnd, ... )
                ENDIF

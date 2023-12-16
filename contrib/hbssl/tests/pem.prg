@@ -69,7 +69,7 @@ STATIC FUNCTION cb_function( lWrite )
 
    RETURN "test"
 
-STATIC FUNCTION Output( ... )
+STATIC FUNCTION Output(...)
 
    ? ...
 

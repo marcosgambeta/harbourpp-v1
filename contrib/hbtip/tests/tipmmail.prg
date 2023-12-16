@@ -7,7 +7,7 @@
 
 #require "hbtip"
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
    LOCAL oMail, cData, i, oAttach
    LOCAL cFname

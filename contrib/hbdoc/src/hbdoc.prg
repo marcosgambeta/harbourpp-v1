@@ -101,7 +101,7 @@ STATIC s_hSwitches
 STATIC s_hComponent := { => }
 STATIC s_generators
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
    LOCAL aArgs := hb_AParams()
    LOCAL idx, item, item4

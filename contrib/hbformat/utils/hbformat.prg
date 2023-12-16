@@ -54,7 +54,7 @@ REQUEST HB_GT_CGI_DEFAULT
 
 #define I_( x )                 hb_UTF8ToStr( hb_i18n_gettext( x ) )
 
-PROCEDURE Main( ... )
+PROCEDURE Main(...)
 
    LOCAL oRef, aParams, cFileName, cInitDir, cParam, lRecursive := .F.
 

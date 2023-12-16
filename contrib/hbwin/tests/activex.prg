@@ -28,7 +28,7 @@ CREATE CLASS HActiveX
    VAR oOLE
    VAR hWnd
    METHOD Init( hWnd, cProgId, nTop, nLeft, nWidth, nHeight, cID )
-   METHOD Event( ... )
+   METHOD Event(...)
    ERROR HANDLER OnError()
    DESTRUCTOR Close()
 
@@ -47,7 +47,7 @@ METHOD HActiveX:Init( hWnd, cProgId, nTop, nLeft, nWidth, nHeight, cID )
 
    RETURN Self
 
-PROCEDURE HActiveX:Event( ... )
+PROCEDURE HActiveX:Event(...)
 
    LOCAL cEvents := ""
    LOCAL aEvents := { ... }

@@ -158,7 +158,7 @@ CREATE CLASS TIPClient
    METHOD inetErrorDesc(SocketCon)
    METHOD inetConnect( cServer, nPort, SocketCon )
 
-   METHOD Log( ... )
+   METHOD Log(...)
 
 ENDCLASS
 
@@ -787,7 +787,7 @@ METHOD TIPClient:InetTimeOut( SocketCon, nConnTimeout )
    of function being logged.
    Example, I want to log MyFunc(a, b, c) which returns m,
             ::Log( a, b, c, m ) */
-METHOD TIPClient:Log( ... )
+METHOD TIPClient:Log(...)
 
    LOCAL xVar
    LOCAL cMsg

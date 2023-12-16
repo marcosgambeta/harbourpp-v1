@@ -134,7 +134,7 @@ FUNCTION BliLibLib(cLib)
 FUNCTION BliFunHan( pLib, cFunction )
    RETURN hb_hrbGetFunSym( pLib, cFunction )
 
-FUNCTION BliFunCal( ... )
+FUNCTION BliFunCal(...)
 
    LOCAL aParams := hb_AParams()
    LOCAL pFunction

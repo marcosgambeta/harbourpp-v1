@@ -225,7 +225,7 @@ STATIC PROCEDURE Exm_IExplorer2()
    LOCAL oIE
 
    IF ( oIE := win_oleCreateObject( "InternetExplorer.Application" ) ) != NIL
-      oIE:__hSink := __axRegisterHandler( oIE:__hObj, {| ... | QOut( ... ) } )
+      oIE:__hSink := __axRegisterHandler( oIE:__hObj, {| ... | QOut(...) } )
       oIE:Visible := .T.
       oIE:Navigate( hb_Version( HB_VERSION_URL_BASE ) )
       DO WHILE oIE:ReadyState != 4

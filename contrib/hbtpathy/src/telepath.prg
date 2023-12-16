@@ -409,7 +409,7 @@ FUNCTION tp_crc32( cString )
    RETURN hb_CRC32( cString )
 
 
-FUNCTION tp_waitfor( ... ) /* nPort, nTimeout, acList|cString..., lIgnorecase */
+FUNCTION tp_waitfor(...) /* nPort, nTimeout, acList|cString..., lIgnorecase */
 
    LOCAL aParam := hb_AParams()
    LOCAL nPort // , nTimeout, lIgnorecase
@@ -731,14 +731,14 @@ STATIC FUNCTION __TP_INFREE()
 STATIC FUNCTION __TP_OUTFREE()
    RETURN -1
 
-FUNCTION bin_and( ... )
-   RETURN hb_bitAnd( ... )
+FUNCTION bin_and(...)
+   RETURN hb_bitAnd(...)
 
-FUNCTION bin_or( ... )
-   RETURN hb_bitOr( ... )
+FUNCTION bin_or(...)
+   RETURN hb_bitOr(...)
 
-FUNCTION bin_xor( ... )
-   RETURN hb_bitXor( ... )
+FUNCTION bin_xor(...)
+   RETURN hb_bitXor(...)
 
-FUNCTION bin_not( ... )
-   RETURN hb_bitNot( ... )
+FUNCTION bin_not(...)
+   RETURN hb_bitNot(...)
