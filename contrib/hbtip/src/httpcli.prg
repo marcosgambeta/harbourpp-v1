@@ -370,7 +370,7 @@ METHOD TIPClientHTTP:ReadAll()
 
    RETURN cOut
 
-METHOD PROCEDURE setCookie( cLine ) CLASS TIPClientHTTP
+METHOD PROCEDURE TIPClientHTTP:setCookie( cLine )
 
    // docs from https://tools.ietf.org/html/rfc2109
    LOCAL cHost, cPath, cName, cValue, aElements
@@ -490,7 +490,7 @@ METHOD TIPClientHTTP:Boundary( nType )
       ::cBoundary + ;
       iif(nType == 1, "--", "")
 
-METHOD PROCEDURE Attach( cName, cFileName, cType ) CLASS TIPClientHTTP
+METHOD PROCEDURE TIPClientHTTP:Attach( cName, cFileName, cType )
 
    AAdd( ::aAttachments, { cName, cFileName, cType } )
 

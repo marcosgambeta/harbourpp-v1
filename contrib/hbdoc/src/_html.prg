@@ -248,7 +248,7 @@ METHOD GenerateHTML:AddEntry( oEntry )
 
    RETURN Self
 
-METHOD PROCEDURE WriteEntry( cField, cContent, lPreformatted ) CLASS GenerateHTML
+METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
    STATIC s_class := { ;
       "NAME"     => "d-na", ;

@@ -296,7 +296,7 @@ METHOD GDImage:New( sx, sy )
 
 #if defined( HB_LEGACY_LEVEL4 )
 
-METHOD PROCEDURE Destruct() CLASS GDImage
+METHOD PROCEDURE GDImage:Destruct()
    RETURN
 
 #endif

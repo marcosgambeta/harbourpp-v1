@@ -135,7 +135,7 @@ METHOD GenerateXML:Generate()
 
    RETURN Self
 
-METHOD PROCEDURE WriteEntry( cCaption, cContent, lPreformatted ) CLASS GenerateXML
+METHOD PROCEDURE GenerateXML:WriteEntry( cCaption, cContent, lPreformatted )
 
    IF ! Empty(cContent)
 

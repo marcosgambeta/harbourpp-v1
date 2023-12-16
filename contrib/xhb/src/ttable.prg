@@ -538,7 +538,7 @@ METHOD HBRecord:NEW(cAlias)
 
    RETURN Self
 
-METHOD PROCEDURE Get() CLASS HBRecord
+METHOD PROCEDURE HBRecord:Get()
 
    LOCAL xField
 
@@ -549,7 +549,7 @@ METHOD PROCEDURE Get() CLASS HBRecord
 
    RETURN
 
-METHOD PROCEDURE Put() CLASS HBRecord
+METHOD PROCEDURE HBRecord:Put()
 
    LOCAL xField
 
@@ -750,7 +750,7 @@ METHOD HBTable:Open()
 
    RETURN lSuccess
 
-METHOD PROCEDURE DBMove(nDirection) CLASS HBTable
+METHOD PROCEDURE HBTable:DBMove(nDirection)
 
    __defaultNIL(@nDirection, 0)
 
@@ -842,7 +842,7 @@ METHOD HBTable:FldInit()
 
    RETURN oNew
 
-METHOD PROCEDURE Read(lKeepBuffer) CLASS HBTable
+METHOD PROCEDURE HBTable:Read(lKeepBuffer)
 
    LOCAL i
    LOCAL nSel   := Select(::Alias)
@@ -872,7 +872,7 @@ METHOD PROCEDURE Read(lKeepBuffer) CLASS HBTable
 
    RETURN
 
-METHOD PROCEDURE ReadBlank(lKeepBuffer) CLASS HBTable
+METHOD PROCEDURE HBTable:ReadBlank(lKeepBuffer)
 
    LOCAL i
    LOCAL nSel   := Select(::Alias)
@@ -1329,13 +1329,13 @@ METHOD HBTable:CreateTable(cFile)
 
    RETURN Self
 
-METHOD PROCEDURE AddField(f, t, l, d) CLASS HBTable
+METHOD PROCEDURE HBTable:AddField(f, t, l, d)
 
    AAdd(::aStruc, {f, t, l, d})
 
    RETURN
 
-METHOD PROCEDURE Gentable() CLASS HBTable
+METHOD PROCEDURE HBTable:Gentable()
 
    dbCreate(::cDbf, ::aStruc, ::Driver)
 
@@ -1426,7 +1426,7 @@ METHOD HBOrder:New(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, 
 
    RETURN Self
 
-METHOD PROCEDURE CREATE() CLASS HBOrder
+METHOD PROCEDURE HBOrder:CREATE()
 
    __defaultNIL(@::cOrderBag, ::oTable:cOrderBag)
 

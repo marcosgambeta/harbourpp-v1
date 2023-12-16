@@ -289,7 +289,7 @@ METHOD win_Prn:Destroy()
 
    RETURN .T.
 
-METHOD PROCEDURE Destruct() CLASS win_Prn
+METHOD PROCEDURE win_Prn:Destruct()
 
    ::Destroy()
 
@@ -820,7 +820,7 @@ METHOD win_Prn:DrawBitmap(oBmp)
 
    RETURN lResult
 
-METHOD PROCEDURE SetPRC(nRow, nCol) CLASS win_Prn
+METHOD PROCEDURE win_Prn:SetPRC(nRow, nCol)
 
    ::SetPos((nCol * ::CharWidth) + ::LeftMArgin, (nRow * ::LineHeight) + ::TopMargin)
 

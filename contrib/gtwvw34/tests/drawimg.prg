@@ -202,7 +202,7 @@ METHOD wPaintObj:New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR,
 
    RETURN Self
 
-METHOD PROCEDURE Draw() CLASS wPaintObj
+METHOD PROCEDURE wPaintObj:Draw()
 
    IF ::lVisible
       DO CASE
@@ -221,7 +221,7 @@ METHOD PROCEDURE Draw() CLASS wPaintObj
 // undraw the object
 // normally this is called with ::lVisible == .F.,
 // otherwise the object will be redrawn by WVW_PAINT()
-METHOD PROCEDURE Undraw() CLASS wPaintObj
+METHOD PROCEDURE wPaintObj:Undraw()
 
    LOCAL cScreen
    LOCAL nRow1, nCol1, nRow2, nCol2
@@ -250,7 +250,7 @@ METHOD PROCEDURE Undraw() CLASS wPaintObj
 
    RETURN
 
-METHOD PROCEDURE Hide() CLASS wPaintObj
+METHOD PROCEDURE wPaintObj:Hide()
 
    // temporarily hides the object
    ::lVisible := .F.
@@ -258,7 +258,7 @@ METHOD PROCEDURE Hide() CLASS wPaintObj
 
    RETURN
 
-METHOD PROCEDURE Show() CLASS wPaintObj
+METHOD PROCEDURE wPaintObj:Show()
 
    // show the object
    ::lVisible := .T.

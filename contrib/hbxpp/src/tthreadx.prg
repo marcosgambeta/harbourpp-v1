@@ -146,13 +146,13 @@ METHOD Thread:new( ... )
 
    RETURN Self
 
-METHOD PROCEDURE execute() CLASS Thread
+METHOD PROCEDURE Thread:execute()
 
    HB_SYMBOL_UNUSED( Self )
 
    RETURN
 
-METHOD PROCEDURE quit( xResult, nRestart ) CLASS Thread
+METHOD PROCEDURE Thread:quit( xResult, nRestart )
 
    IF hb_threadSelf() == ::pThreadID
       IF PCount() > 0

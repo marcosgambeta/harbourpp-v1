@@ -723,7 +723,7 @@ METHOD TIPClient:inetErrorDesc(SocketCon)
    RETURN ""
 
 /* BROKEN, should test number of parameters and act accordingly, see doc/inet.txt */
-METHOD PROCEDURE inetConnect( cServer, nPort, SocketCon ) CLASS TIPClient
+METHOD PROCEDURE TIPClient:inetConnect( cServer, nPort, SocketCon )
 
    hb_inetConnect( cServer, nPort, SocketCon )
 

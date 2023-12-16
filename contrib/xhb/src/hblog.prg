@@ -240,7 +240,7 @@ METHOD HB_Logger:New()
  * Open all the channels calling their ::Open() method
  */
 
-METHOD PROCEDURE Open() CLASS HB_Logger
+METHOD PROCEDURE HB_Logger:Open()
 
    LOCAL oChannel
 
@@ -258,7 +258,7 @@ METHOD PROCEDURE Open() CLASS HB_Logger
  * Close all the channels calling their ::Close() method
  */
 
-METHOD PROCEDURE close() CLASS HB_Logger
+METHOD PROCEDURE HB_Logger:close()
 
    LOCAL oChannel
 
@@ -276,7 +276,7 @@ METHOD PROCEDURE close() CLASS HB_Logger
  * Send a log message to all the channels
  */
 
-METHOD PROCEDURE Log(cMessage, nPriority) CLASS HB_Logger
+METHOD PROCEDURE HB_Logger:Log(cMessage, nPriority)
 
    LOCAL oChannel
 
@@ -339,7 +339,7 @@ METHOD HB_LogChannel:New(nLevel)
  * if the log level is higher or equal than the channel setting
  */
 
-METHOD PROCEDURE Log(nStyle, cMessage, cName, nPriority) CLASS HB_LogChannel
+METHOD PROCEDURE HB_LogChannel:Log(nStyle, cMessage, cName, nPriority)
 
    IF nPriority <= ::nLevel .AND. ::lActive
       ::Send(nStyle, cMessage, cName, nPriority)
@@ -450,13 +450,13 @@ METHOD HB_LogConsole:close(cName)
 
    RETURN .T.
 
-METHOD PROCEDURE Send(nStyle, cMessage, cName, nPriority) CLASS HB_LogConsole
+METHOD PROCEDURE HB_LogConsole:Send(nStyle, cMessage, cName, nPriority)
 
    ::Out(::Format(nStyle, cMessage, cName, nPriority))
 
    RETURN
 
-METHOD PROCEDURE Out(...) CLASS HB_LogConsole
+METHOD PROCEDURE HB_LogConsole:Out(...)
 
    LOCAL cMsg := "", xPar
    LOCAL nLen := Len(hb_AParams())
@@ -794,7 +794,7 @@ METHOD HB_LogDebug:New(nLevel, nMaxLevel)
 
    RETURN Self
 
-METHOD PROCEDURE Send(nStyle, cMessage, cName, nPriority) CLASS HB_LogDebug
+METHOD PROCEDURE HB_LogDebug:Send(nStyle, cMessage, cName, nPriority)
 
    IF !Empty(::nMaxLevel)
       IF nPriority < ::nMaxLevel

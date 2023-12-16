@@ -280,7 +280,7 @@ METHOD TIPCgi:DestroySession( cID )
 
    RETURN lOk
 
-METHOD PROCEDURE ErrHandler( xError ) CLASS TIPCgi
+METHOD PROCEDURE TIPCgi:ErrHandler( xError )
 
    LOCAL nCalls
 

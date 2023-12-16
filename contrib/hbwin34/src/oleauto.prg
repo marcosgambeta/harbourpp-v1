@@ -94,7 +94,7 @@ METHOD win_oleAuto:__enumSkip(enum, lDescend)
 
    RETURN lContinue
 
-METHOD PROCEDURE __enumStop() CLASS win_oleAuto
+METHOD PROCEDURE win_oleAuto:__enumStop()
 
    ::__hObjEnum := NIL     /* activate auto-destructor */
 

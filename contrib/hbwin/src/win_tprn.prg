@@ -296,7 +296,7 @@ METHOD win_Prn:Destroy()
 
    RETURN .T.
 
-METHOD PROCEDURE Destruct() CLASS win_Prn
+METHOD PROCEDURE win_Prn:Destruct()
 
    ::Destroy()
 

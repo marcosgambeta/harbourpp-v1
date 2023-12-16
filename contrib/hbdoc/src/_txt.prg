@@ -143,7 +143,7 @@ METHOD GenerateText:AddEntry( oEntry )
 
    RETURN Self
 
-METHOD PROCEDURE WriteEntry( cCaption, cContent, lPreformatted ) CLASS GenerateText
+METHOD PROCEDURE GenerateText:WriteEntry( cCaption, cContent, lPreformatted )
 
    LOCAL nIndent
 

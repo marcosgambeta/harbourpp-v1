@@ -130,7 +130,7 @@ METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
 
    RETURN Self
 
-METHOD PROCEDURE Destroy() CLASS TPQserver
+METHOD PROCEDURE TPQserver:Destroy()
 
    ::TraceOff()
    ::pDb := NIL
@@ -420,7 +420,7 @@ METHOD TPQserver:DeleteTable(cTable)
 
    RETURN !::lError
 
-METHOD PROCEDURE TraceOn(cFile) CLASS TPQserver
+METHOD PROCEDURE TPQserver:TraceOn(cFile)
 
    ::pTrace := PQtracecreate(cFile)
 
@@ -431,7 +431,7 @@ METHOD PROCEDURE TraceOn(cFile) CLASS TPQserver
 
    RETURN
 
-METHOD PROCEDURE TraceOff() CLASS TPQserver
+METHOD PROCEDURE TPQserver:TraceOff()
 
    IF ::pTrace != NIL
       PQuntrace(::pDb)
@@ -1106,7 +1106,7 @@ METHOD TPQquery:GetBlankRow()
 
    RETURN TPQRow():New(aRow, aOld, ::aStruct)
 
-METHOD PROCEDURE SetKey() CLASS TPQquery
+METHOD PROCEDURE TPQquery:SetKey()
 
    LOCAL cQuery
    LOCAL i, x

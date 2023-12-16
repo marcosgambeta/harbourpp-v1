@@ -95,7 +95,7 @@ METHOD win_BMP:LoadFile(cFileName, aDimXY)
 METHOD win_BMP:Create()  // Compatibility function for Alaska Xbase++
    RETURN Self
 
-METHOD PROCEDURE Destroy() CLASS win_BMP  // Compatibility function for Alaska Xbase++
+METHOD PROCEDURE win_BMP:Destroy() // Compatibility function for Alaska Xbase++
    RETURN
 
 METHOD win_BMP:IsSupported(oPrn, /* @ */ nError)
