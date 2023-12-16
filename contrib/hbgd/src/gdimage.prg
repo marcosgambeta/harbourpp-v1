@@ -288,7 +288,7 @@ CREATE CLASS GDImage
 
 ENDCLASS
 
-METHOD New( sx, sy ) CLASS GDImage
+METHOD GDImage:New( sx, sy )
 
    ::Create( sx, sy )
 
@@ -301,7 +301,7 @@ METHOD PROCEDURE Destruct() CLASS GDImage
 
 #endif
 
-METHOD Polygon( aPoints, lFilled, color ) CLASS GDImage
+METHOD GDImage:Polygon( aPoints, lFilled, color )
 
    hb_default( @aPoints, ::aPoints )
    hb_default( @lFilled, .F. )
@@ -315,7 +315,7 @@ METHOD Polygon( aPoints, lFilled, color ) CLASS GDImage
 
    RETURN Self
 
-METHOD OpenPolygon( aPoints, color ) CLASS GDImage
+METHOD GDImage:OpenPolygon( aPoints, color )
 
    hb_default( @aPoints, ::aPoints )
    hb_default( @color, ::pColor )
@@ -324,7 +324,7 @@ METHOD OpenPolygon( aPoints, color ) CLASS GDImage
 
    RETURN Self
 
-METHOD Rectangle( x1, y1, x2, y2, lFilled, color ) CLASS GDImage
+METHOD GDImage:Rectangle( x1, y1, x2, y2, lFilled, color )
 
    hb_default( @lFilled, .F. )
    hb_default( @color, ::pColor )
@@ -337,7 +337,7 @@ METHOD Rectangle( x1, y1, x2, y2, lFilled, color ) CLASS GDImage
 
    RETURN Self
 
-METHOD Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle) CLASS GDImage
+METHOD GDImage:Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nStyle)
 
    hb_default( @lFilled, .F. )
    hb_default( @color, ::pColor )
@@ -351,7 +351,7 @@ METHOD Arc(x, y, nWidth, nHeight, nStartDegree, nEndDegree, lFilled, color, nSty
 
    RETURN Self
 
-METHOD Ellipse( x, y, nWidth, nHeight, lFilled, color ) CLASS GDImage
+METHOD GDImage:Ellipse( x, y, nWidth, nHeight, lFilled, color )
 
    hb_default( @lFilled, .F. )
    hb_default( @color, ::pColor )
@@ -364,7 +364,7 @@ METHOD Ellipse( x, y, nWidth, nHeight, lFilled, color ) CLASS GDImage
 
    RETURN Self
 
-METHOD LoadFromFile( cFile ) CLASS GDImage
+METHOD GDImage:LoadFromFile( cFile )
 
    LOCAL aLoad
 
@@ -383,12 +383,12 @@ METHOD LoadFromFile( cFile ) CLASS GDImage
 #if defined( HB_LEGACY_LEVEL4 )
 
 /* dummy. no longer needed */
-METHOD Destroy() CLASS GDImage
+METHOD GDImage:Destroy()
    RETURN Self
 
 #endif
 
-METHOD Copy( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, oDestImage ) CLASS GDImage
+METHOD GDImage:Copy( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, oDestImage )
 
    hb_default( @nSrcX     , 0 )
    hb_default( @nSrcY     , 0 )
@@ -409,7 +409,7 @@ METHOD Copy( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, oDestImage ) CLASS GDI
 
    RETURN oDestImage
 
-METHOD CopyResized( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage ) CLASS GDImage
+METHOD GDImage:CopyResized( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage )
 
    hb_default( @nSrcX     , 0 )
    hb_default( @nSrcY     , 0 )
@@ -432,7 +432,7 @@ METHOD CopyResized( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth
 
    RETURN oDestImage
 
-METHOD CopyResampled( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage ) CLASS GDImage
+METHOD GDImage:CopyResampled( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWidth, nDstHeight, oDestImage )
 
    hb_default( @nSrcX      , 0 )
    hb_default( @nSrcY      , 0 )
@@ -455,7 +455,7 @@ METHOD CopyResampled( nSrcX, nSrcY, nSrcWidth, nSrcHeight, nDstX, nDstY, nDstWid
 
    RETURN oDestImage
 
-METHOD CopyRotated( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestImage ) CLASS GDImage
+METHOD GDImage:CopyRotated( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestImage )
 
    hb_default( @nSrcX      , 0 )
    hb_default( @nSrcY      , 0 )
@@ -477,7 +477,7 @@ METHOD CopyRotated( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nAngle, oDestIm
 
    RETURN oDestImage
 
-METHOD CopyMerge( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage ) CLASS GDImage
+METHOD GDImage:CopyMerge( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage )
 
    hb_default( @nSrcX      , 0 )
    hb_default( @nSrcY      , 0 )
@@ -499,7 +499,7 @@ METHOD CopyMerge( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage
 
    RETURN oDestImage
 
-METHOD CopyMergeGray( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage ) CLASS GDImage
+METHOD GDImage:CopyMergeGray( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestImage )
 
    hb_default( @nSrcX      , 0 )
    hb_default( @nSrcY      , 0 )
@@ -521,7 +521,7 @@ METHOD CopyMergeGray( nSrcX, nSrcY, nWidth, nHeight, nDstX, nDstY, nPerc, oDestI
 
    RETURN oDestImage
 
-METHOD CopyZoomed( nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight ) CLASS GDImage
+METHOD GDImage:CopyZoomed( nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight )
 
    LOCAL oDestImage
    LOCAL nDstX, nDstY, nDstWidth, nDstHeight
@@ -551,7 +551,7 @@ METHOD CopyZoomed( nPerc, nSrcX, nSrcY, nSrcWidth, nSrcHeight ) CLASS GDImage
 
    RETURN oDestImage
 
-METHOD Rotate( nAngle, lInside ) CLASS GDImage
+METHOD GDImage:Rotate( nAngle, lInside )
 
    LOCAL oDestImage
    LOCAL nWidth, nHeight
@@ -585,7 +585,7 @@ METHOD Rotate( nAngle, lInside ) CLASS GDImage
 
    RETURN Self
 
-METHOD Crop( nX, nY, nWidth, nHeight ) CLASS GDImage
+METHOD GDImage:Crop( nX, nY, nWidth, nHeight )
 
    LOCAL oDestImage
 
@@ -598,7 +598,7 @@ METHOD Crop( nX, nY, nWidth, nHeight ) CLASS GDImage
 
    RETURN Self
 
-METHOD Resize( nWidth, nHeight ) CLASS GDImage
+METHOD GDImage:Resize( nWidth, nHeight )
 
    LOCAL oDestImage
 
@@ -611,7 +611,7 @@ METHOD Resize( nWidth, nHeight ) CLASS GDImage
 
    RETURN Self
 
-METHOD Zoom( nPerc ) CLASS GDImage
+METHOD GDImage:Zoom( nPerc )
 
    LOCAL oDestImage
 
@@ -624,7 +624,7 @@ METHOD Zoom( nPerc ) CLASS GDImage
 
    RETURN Self
 
-METHOD Clone() CLASS GDImage
+METHOD GDImage:Clone()
 
    LOCAL oDestImage
    LOCAL pImage
@@ -647,7 +647,7 @@ METHOD Clone() CLASS GDImage
 
    RETURN oDestImage
 
-METHOD Say( x, y, cString, color, nAlign ) CLASS GDImage
+METHOD GDImage:Say( x, y, cString, color, nAlign )
 
    LOCAL nWidth, nLen
    LOCAL nPosX
@@ -671,8 +671,8 @@ METHOD Say( x, y, cString, color, nAlign ) CLASS GDImage
 
    RETURN Self
 
-METHOD SayFreeType( x, y, cString, cFontName, nPitch, nAngle, color, nAlign, ;
-      nLineSpacing, nCharMap, nResolution )  CLASS GDImage
+METHOD GDImage:SayFreeType( x, y, cString, cFontName, nPitch, nAngle, color, nAlign, ;
+      nLineSpacing, nCharMap, nResolution )
 
    LOCAL nWidth, nLen
    LOCAL nPosX

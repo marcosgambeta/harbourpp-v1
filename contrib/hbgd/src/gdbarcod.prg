@@ -82,7 +82,7 @@ CREATE CLASS GDBarCode INHERIT GDBar
 
 ENDCLASS
 
-METHOD New( nTypeCode ) CLASS GDBarCode
+METHOD GDBarCode:New( nTypeCode )
 
    LOCAL ii
 
@@ -146,7 +146,7 @@ METHOD New( nTypeCode ) CLASS GDBarCode
 
    RETURN Self
 
-METHOD Draw( cText ) CLASS GDBarCode
+METHOD GDBarCode:Draw( cText )
 
    IF ::nType == 13
       ::Draw13( cText )
@@ -160,7 +160,7 @@ METHOD Draw( cText ) CLASS GDBarCode
 
    RETURN NIL
 
-METHOD Draw13( cText ) CLASS GDBarCode
+METHOD GDBarCode:Draw13( cText )
 
    LOCAL lError  := .F.
    LOCAL nChkSum := 0
@@ -278,7 +278,7 @@ METHOD Draw13( cText ) CLASS GDBarCode
 
    RETURN NIL
 
-METHOD DrawText13() CLASS GDBarCode
+METHOD GDBarCode:DrawText13()
 
    IF ::textfont != 0
 
@@ -292,7 +292,7 @@ METHOD DrawText13() CLASS GDBarCode
 
    RETURN NIL
 
-METHOD Draw8( cText ) CLASS GDBarCode
+METHOD GDBarCode:Draw8( cText )
 
    LOCAL lError := .F.
    LOCAL ii, jj
@@ -383,7 +383,7 @@ METHOD Draw8( cText ) CLASS GDBarCode
 
    RETURN NIL
 
-METHOD DrawText8() CLASS GDBarCode
+METHOD GDBarCode:DrawText8()
 
    ::say( 10 + ( ( 3 * ::res + 34 * ::res ) / 2 - ::GetFontWidth() * ( 4 / 2 ) ), ::maxHeight + 1, SubStr(::text, 1, 4), ::fillcolor )
    ::say( 10 + ( 32 * ::res + ( 3 * ::res + 32 * ::res ) / 2 - ::GetFontWidth() * ( 4 / 2 ) ), ::maxHeight + 1, SubStr(::text, 5, 4), ::fillcolor )
@@ -392,7 +392,7 @@ METHOD DrawText8() CLASS GDBarCode
 
    RETURN NIL
 
-METHOD FindCharCode( cString, cChar ) CLASS GDBarCode
+METHOD GDBarCode:FindCharCode( cString, cChar )
 
    LOCAL i
    LOCAL nC   := 0
@@ -412,7 +412,7 @@ METHOD FindCharCode( cString, cChar ) CLASS GDBarCode
 
    RETURN nret
 
-METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
+METHOD GDBarCode:Draw128( cText, cModeCode )
 
    LOCAL cChar, nValChar, n, i
 
@@ -573,7 +573,7 @@ METHOD Draw128( cText, cModeCode ) CLASS GDBarCode
 
    RETURN NIL
 
-METHOD DrawI25( cText ) CLASS GDBarCode
+METHOD GDBarCode:DrawI25( cText )
 
    ::settext( cText )
 
@@ -581,7 +581,7 @@ METHOD DrawI25( cText ) CLASS GDBarCode
 
    RETURN NIL
 
-METHOD GenCodei25() CLASS GDBarCode
+METHOD GDBarCode:GenCodei25()
 
    LOCAL lError := .F.
    LOCAL bc_string
@@ -617,7 +617,7 @@ METHOD GenCodei25() CLASS GDBarCode
    It makes mixe of the value to be codified by the Bar code I25
 */
 
-METHOD MixCode( value ) CLASS GDBarCode
+METHOD GDBarCode:MixCode( value )
 
    LOCAL l, i, k
    LOCAL s
@@ -656,6 +656,6 @@ METHOD MixCode( value ) CLASS GDBarCode
 
    RETURN bar_string
 
-METHOD Findcode( uVal ) CLASS GDBarCode
+METHOD GDBarCode:Findcode( uVal )
 
    RETURN ::acode[ AScan( ::keys, {| x | Left(x, 1) == uVal } ) ]

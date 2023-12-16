@@ -65,7 +65,7 @@ CREATE CLASS GenerateXML INHERIT TPLGenerate
 
 ENDCLASS
 
-METHOD NewDocument( cDir, cFilename, cTitle, cLang ) CLASS GenerateXML
+METHOD GenerateXML:NewDocument( cDir, cFilename, cTitle, cLang )
 
    ::super:NewDocument( cDir, cFilename, cTitle, ".xml", cLang )
    ::cFile += ;
@@ -74,7 +74,7 @@ METHOD NewDocument( cDir, cFilename, cTitle, cLang ) CLASS GenerateXML
 
    RETURN Self
 
-METHOD NewIndex( cDir, cFilename, cTitle, cLang ) CLASS GenerateXML
+METHOD GenerateXML:NewIndex( cDir, cFilename, cTitle, cLang )
 
    ::super:NewIndex( cDir, cFilename, cTitle, ".xml", cLang )
    ::cFile += ;
@@ -83,7 +83,7 @@ METHOD NewIndex( cDir, cFilename, cTitle, cLang ) CLASS GenerateXML
 
    RETURN Self
 
-METHOD BeginSection( cSection, cFilename ) CLASS GenerateXML
+METHOD GenerateXML:BeginSection( cSection, cFilename )
 
    IF ::Depth == 0
       ::cFile += Replicate( Chr(9), ::Depth ) + '<Section name="' + cSection + '" file="' + cFilename + ::cExtension + '">' + hb_eol()
@@ -94,7 +94,7 @@ METHOD BeginSection( cSection, cFilename ) CLASS GenerateXML
 
    RETURN Self
 
-METHOD EndSection( cSection, cFilename ) CLASS GenerateXML
+METHOD GenerateXML:EndSection( cSection, cFilename )
 
    HB_SYMBOL_UNUSED( cSection )
    HB_SYMBOL_UNUSED( cFilename )
@@ -103,13 +103,13 @@ METHOD EndSection( cSection, cFilename ) CLASS GenerateXML
 
    RETURN Self
 
-METHOD AddIndex( oEntry ) CLASS GenerateXML
+METHOD GenerateXML:AddIndex( oEntry )
 
    ::WriteEntry( "ENTRY", oEntry:fld[ "NAME" ] + " - " + oEntry:fld[ "ONELINER" ], .F. )
 
    RETURN Self
 
-METHOD AddEntry( oEntry ) CLASS GenerateXML
+METHOD GenerateXML:AddEntry( oEntry )
 
    LOCAL item
 
@@ -127,7 +127,7 @@ METHOD AddEntry( oEntry ) CLASS GenerateXML
 
    RETURN Self
 
-METHOD Generate() CLASS GenerateXML
+METHOD GenerateXML:Generate()
 
    ::cFile += '</HarbourReference>' + hb_eol()
 

@@ -221,7 +221,7 @@ CREATE CLASS TRPCFunction
 
 ENDCLASS
 
-METHOD New(cFname, cSerial, nAuthLevel, oExec, oMeth) CLASS TRPCFunction
+METHOD TRPCFunction:New(cFname, cSerial, nAuthLevel, oExec, oMeth)
 
    LOCAL cParam
    LOCAL aParams, aFuncDef
@@ -278,7 +278,7 @@ METHOD New(cFname, cSerial, nAuthLevel, oExec, oMeth) CLASS TRPCFunction
 
    RETURN Self
 
-METHOD SetCallable(oExec, oMeth) CLASS TRPCFunction
+METHOD TRPCFunction:SetCallable(oExec, oMeth)
 
    // If the callable is an object, we need to store the method
    IF HB_ISOBJECT(oExec)
@@ -292,7 +292,7 @@ METHOD SetCallable(oExec, oMeth) CLASS TRPCFunction
 
    RETURN .T.
 
-METHOD Run(aParams, oClient) CLASS TRPCFunction
+METHOD TRPCFunction:Run(aParams, oClient)
 
    LOCAL nStart, nCount, xRet
 
@@ -313,7 +313,7 @@ METHOD Run(aParams, oClient) CLASS TRPCFunction
 
    RETURN xRet
 
-METHOD CheckParam(cParam) CLASS TRPCFunction
+METHOD TRPCFunction:CheckParam(cParam)
 
    IF !hb_regexMatch(::cPattern, cParam)
       Alert("TRPCFunction:CheckParam() wrong parameter specification: " + cParam)
@@ -322,7 +322,7 @@ METHOD CheckParam(cParam) CLASS TRPCFunction
 
    RETURN .T.
 
-METHOD CheckTypes(aParams) CLASS TRPCFunction
+METHOD TRPCFunction:CheckTypes(aParams)
 
    LOCAL oElem, i := 0
 
@@ -343,7 +343,7 @@ METHOD CheckTypes(aParams) CLASS TRPCFunction
 
    RETURN .T.
 
-METHOD Describe() CLASS TRPCFunction
+METHOD TRPCFunction:Describe()
 
    LOCAL cRet := ::cName + "("
    LOCAL nCount
@@ -427,7 +427,7 @@ CREATE CLASS TRPCServeCon
 
 ENDCLASS
 
-METHOD New(oParent, skIn) CLASS TRPCServeCon
+METHOD TRPCServeCon:New(oParent, skIn)
 
    ::oServer := oParent
    ::skRemote := skIn
@@ -438,7 +438,7 @@ METHOD New(oParent, skIn) CLASS TRPCServeCon
 
    RETURN Self
 
-METHOD Destroy() CLASS TRPCServeCon
+METHOD TRPCServeCon:Destroy()
 
    hb_mutexLock(::mtxBusy)
    // Eventually wait for the function to terminate
@@ -454,7 +454,7 @@ METHOD Destroy() CLASS TRPCServeCon
 
    RETURN .T.
 
-METHOD Start() CLASS TRPCServeCon
+METHOD TRPCServeCon:Start()
 
    LOCAL lRet := .F.
 
@@ -467,7 +467,7 @@ METHOD Start() CLASS TRPCServeCon
 
    RETURN lRet
 
-METHOD Stop() CLASS TRPCServeCon
+METHOD TRPCServeCon:Stop()
 
    LOCAL lRet := .F.
 
@@ -484,7 +484,7 @@ METHOD Stop() CLASS TRPCServeCon
 
    RETURN lRet
 
-METHOD Run() CLASS TRPCServeCon
+METHOD TRPCServeCon:Run()
 
    LOCAL cCode := Space(6)
    LOCAL lBreak := .F.
@@ -686,7 +686,7 @@ METHOD Run() CLASS TRPCServeCon
 
    RETURN .T.
 
-METHOD RecvAuth(lEncrypt) CLASS TRPCServeCon
+METHOD TRPCServeCon:RecvAuth(lEncrypt)
 
    LOCAL cLength := Space(8), nLen, nPos
    LOCAL cUserID, cPassword
@@ -733,7 +733,7 @@ METHOD RecvAuth(lEncrypt) CLASS TRPCServeCon
 
    RETURN ::LaunchChallenge(cUserid, cPassword)
 
-METHOD LaunchChallenge(cUserid, cPassword) CLASS TRPCServeCon
+METHOD TRPCServeCon:LaunchChallenge(cUserid, cPassword)
 
    LOCAL cChallenge, nCount
 
@@ -762,7 +762,7 @@ METHOD LaunchChallenge(cUserid, cPassword) CLASS TRPCServeCon
    RETURN .T.
 
 
-METHOD RecvChallenge() CLASS TRPCServeCon
+METHOD TRPCServeCon:RecvChallenge()
 
    LOCAL cNumber := Space(8)
 
@@ -791,7 +791,7 @@ METHOD RecvChallenge() CLASS TRPCServeCon
 
    RETURN .T.
 
-METHOD RecvFunction(bComp, bMode) CLASS TRPCServeCon
+METHOD TRPCServeCon:RecvFunction(bComp, bMode)
 
    LOCAL cLength := Space(8), nLen, nComp
    LOCAL cMode := " "
@@ -843,7 +843,7 @@ METHOD RecvFunction(bComp, bMode) CLASS TRPCServeCon
 
    RETURN {cMode, cData}
 
-METHOD FuncCall(cData) CLASS TRPCServeCon
+METHOD TRPCServeCon:FuncCall(cData)
 
    LOCAL cSer, cFuncName, aParams
 
@@ -863,7 +863,7 @@ METHOD FuncCall(cData) CLASS TRPCServeCon
 
    RETURN ::LaunchFunction(cFuncName, aParams, 0)
 
-METHOD FuncLoopCall(cMode, cData) CLASS TRPCServeCon
+METHOD TRPCServeCon:FuncLoopCall(cMode, cData)
 
    LOCAL nBegin, nEnd, nStep
    LOCAL cSer
@@ -888,7 +888,7 @@ METHOD FuncLoopCall(cMode, cData) CLASS TRPCServeCon
 
    RETURN ::LaunchFunction(cFuncName, aParams, 1, {cMode, nBegin, nEnd, nStep})
 
-METHOD FuncForeachCall(cMode, cData) CLASS TRPCServeCon
+METHOD TRPCServeCon:FuncForeachCall(cMode, cData)
 
    LOCAL cSer
    LOCAL cFuncName, aParams
@@ -912,7 +912,7 @@ METHOD FuncForeachCall(cMode, cData) CLASS TRPCServeCon
 
    RETURN ::LaunchFunction(cFuncName, aParams, 2, {cMode, aItems})
 
-METHOD LaunchFunction(cFuncName, aParams, nMode, aDesc) CLASS TRPCServeCon
+METHOD TRPCServeCon:LaunchFunction(cFuncName, aParams, nMode, aDesc)
 
    LOCAL oFunc
 
@@ -953,7 +953,7 @@ METHOD LaunchFunction(cFuncName, aParams, nMode, aDesc) CLASS TRPCServeCon
 
    RETURN .T.
 
-METHOD FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc) CLASS TRPCServeCon
+METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
    LOCAL nCount
    LOCAL oRet, oElem, aRet
@@ -1125,7 +1125,7 @@ METHOD SendResult(oRet, cFuncName)
 
    RETURN .T.
 
-METHOD SendProgress(nProgress, oData) CLASS TRPCServeCon
+METHOD TRPCServeCon:SendProgress(nProgress, oData)
 
    LOCAL cOrigLen, cCompLen, lRet := .T.
    LOCAL cData
@@ -1160,7 +1160,7 @@ METHOD SendProgress(nProgress, oData) CLASS TRPCServeCon
 
    RETURN lRet
 
-METHOD Encrypt(cDataIn) CLASS TRPCServeCon
+METHOD TRPCServeCon:Encrypt(cDataIn)
 
    IF ::bEncrypted
       RETURN hb_Crypt(cDataIn, ::cCryptKey)
@@ -1168,7 +1168,7 @@ METHOD Encrypt(cDataIn) CLASS TRPCServeCon
 
    RETURN cDataIn
 
-METHOD Decrypt(cDataIn) CLASS TRPCServeCon
+METHOD TRPCServeCon:Decrypt(cDataIn)
 
    IF ::bEncrypted
       RETURN hb_Decrypt(cDataIn, ::cCryptKey)
@@ -1259,7 +1259,7 @@ CREATE CLASS TRPCService
 
 ENDCLASS
 
-METHOD New() CLASS TRPCService
+METHOD TRPCService:New()
 
    ::aFunctions := {}
 
@@ -1286,7 +1286,7 @@ METHOD Add(xFunction, cVersion, nLevel, oExec, oMethod)
 
    RETURN lRet
 
-METHOD Find(cName) CLASS TRPCService
+METHOD TRPCService:Find(cName)
 
    LOCAL nElem
    LOCAL oRet := NIL
@@ -1300,7 +1300,7 @@ METHOD Find(cName) CLASS TRPCService
 
    RETURN oRet
 
-METHOD Remove(cName) CLASS TRPCService
+METHOD TRPCService:Remove(cName)
 
    LOCAL nElem
    LOCAL lRet := .F.
@@ -1315,7 +1315,7 @@ METHOD Remove(cName) CLASS TRPCService
 
    RETURN lRet
 
-METHOD Run(cName, aParams) CLASS TRPCService
+METHOD TRPCService:Run(cName, aParams)
 
    LOCAL oFunc := ::Find(cName)
    LOCAL oRet := NIL
@@ -1328,7 +1328,7 @@ METHOD Run(cName, aParams) CLASS TRPCService
 
    RETURN oRet
 
-METHOD Describe(cName) CLASS TRPCService
+METHOD TRPCService:Describe(cName)
 
    LOCAL oFunc := ::Find(cName)
    LOCAL cRet := NIL
@@ -1341,7 +1341,7 @@ METHOD Describe(cName) CLASS TRPCService
 
    RETURN cRet
 
-METHOD Start(lStartUdp) CLASS TRPCService
+METHOD TRPCService:Start(lStartUdp)
 
    IF Empty(::cBindAddress)
       ::skServer := hb_inetServer(::nTcpPort)
@@ -1361,7 +1361,7 @@ METHOD Start(lStartUdp) CLASS TRPCService
 
    RETURN .T.
 
-METHOD Stop() CLASS TRPCService
+METHOD TRPCService:Stop()
 
    LOCAL oElem
 
@@ -1397,7 +1397,7 @@ METHOD Stop() CLASS TRPCService
 
    RETURN .T.
 
-METHOD Accept() CLASS TRPCService
+METHOD TRPCService:Accept()
 
    LOCAL skIn
 
@@ -1414,7 +1414,7 @@ METHOD Accept() CLASS TRPCService
 
    RETURN .T.
 
-METHOD StartService(skIn) CLASS TRPCService
+METHOD TRPCService:StartService(skIn)
 
    LOCAL oService
 
@@ -1427,7 +1427,7 @@ METHOD StartService(skIn) CLASS TRPCService
 
    RETURN .T.
 
-METHOD UDPListen() CLASS TRPCService
+METHOD TRPCService:UDPListen()
 
    LOCAL cData := Space(1000)
    LOCAL nPacketLen
@@ -1442,7 +1442,7 @@ METHOD UDPListen() CLASS TRPCService
 
    RETURN .T.
 
-METHOD UDPParseRequest(cData, nPacketLen) CLASS TRPCService
+METHOD TRPCService:UDPParseRequest(cData, nPacketLen)
 
    LOCAL cToSend
 
@@ -1453,7 +1453,7 @@ METHOD UDPParseRequest(cData, nPacketLen) CLASS TRPCService
 
    RETURN .F.
 
-METHOD UDPInterpretRequest(cData, nPacketLen, cRes) CLASS TRPCService
+METHOD TRPCService:UDPInterpretRequest(cData, nPacketLen, cRes)
 
    LOCAL cCode, cMatch, cNumber, cSerial
    LOCAL oFunc
@@ -1518,7 +1518,7 @@ METHOD UDPInterpretRequest(cData, nPacketLen, cRes) CLASS TRPCService
 
    RETURN .F.
 
-METHOD Terminating(oConnection) CLASS TRPCService
+METHOD TRPCService:Terminating(oConnection)
 
    LOCAL nToken
 
@@ -1532,7 +1532,7 @@ METHOD Terminating(oConnection) CLASS TRPCService
 
    RETURN .T.
 
-METHOD AuthorizeChallenge(cUserId, cData) CLASS TRPCService
+METHOD TRPCService:AuthorizeChallenge(cUserId, cData)
 
    LOCAL cKey, nPos, cMarker := "PASSWORD:"
 
@@ -1564,7 +1564,7 @@ METHOD AuthorizeChallenge(cUserId, cData) CLASS TRPCService
 /* Default authorization will ALWAYS return 1 if a bAuthorize block is not provided */
 /* IF cPassword is NIL, must return the level of the given userid */
 
-METHOD Authorize(cUserid, cPassword) CLASS TRPCService
+METHOD TRPCService:Authorize(cUserid, cPassword)
 
    IF ::bAuthorize != NIL
       RETURN Eval(::bAuthorize, cUserid, cPassword)
@@ -1574,7 +1574,7 @@ METHOD Authorize(cUserid, cPassword) CLASS TRPCService
 
 /* By default, do not provide an encryption key for any user */
 
-METHOD GetEncryption(cUserId) CLASS TRPCService
+METHOD TRPCService:GetEncryption(cUserId)
 
    IF ::bGetEncryption != NIL
       RETURN Eval(::bGetEncryption, cUserId)
@@ -1582,7 +1582,7 @@ METHOD GetEncryption(cUserId) CLASS TRPCService
 
    RETURN NIL
 
-METHOD OnFunctionScan() CLASS TRPCService
+METHOD TRPCService:OnFunctionScan()
 
    IF ::bOnFunctionScan != NIL
       RETURN Eval(::bOnFunctionScan, Self)
@@ -1590,7 +1590,7 @@ METHOD OnFunctionScan() CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnServerScan() CLASS TRPCService
+METHOD TRPCService:OnServerScan()
 
    IF ::bOnServerScan != NIL
       RETURN Eval(::bOnServerScan, Self)
@@ -1598,7 +1598,7 @@ METHOD OnServerScan() CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnClientConnect(oClient) CLASS TRPCService
+METHOD TRPCService:OnClientConnect(oClient)
 
    IF ::bOnClientConnect != NIL
       RETURN Eval(::bOnClientConnect, oClient)
@@ -1606,7 +1606,7 @@ METHOD OnClientConnect(oClient) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnClientLogin(oClient) CLASS TRPCService
+METHOD TRPCService:OnClientLogin(oClient)
 
    IF ::bOnClientLogin != NIL
       Eval(::bOnClientLogin, oClient)
@@ -1614,7 +1614,7 @@ METHOD OnClientLogin(oClient) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnClientRequest(oClient, nRequest, cData) CLASS TRPCService
+METHOD TRPCService:OnClientRequest(oClient, nRequest, cData)
 
    IF ::bOnClientRequest != NIL
       RETURN Eval(::bOnClientRequest, oClient, nRequest, cData)
@@ -1622,7 +1622,7 @@ METHOD OnClientRequest(oClient, nRequest, cData) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnFunctionProgress(oClient, nProgress, aData) CLASS TRPCService
+METHOD TRPCService:OnFunctionProgress(oClient, nProgress, aData)
 
    IF ::bOnFunctionProgress != NIL
       RETURN Eval(::bOnFunctionProgress, oClient, nProgress, aData)
@@ -1630,7 +1630,7 @@ METHOD OnFunctionProgress(oClient, nProgress, aData) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnFunctionError(oClient, cFunction, nError) CLASS TRPCService
+METHOD TRPCService:OnFunctionError(oClient, cFunction, nError)
 
    IF ::bOnFunctionError != NIL
       RETURN Eval(::bOnFunctionError, oClient, cFunction, nError)
@@ -1638,7 +1638,7 @@ METHOD OnFunctionError(oClient, cFunction, nError) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnFunctionReturn(oClient, aData) CLASS TRPCService
+METHOD TRPCService:OnFunctionReturn(oClient, aData)
 
    IF ::bOnFunctionReturn != NIL
       RETURN Eval(::bOnFunctionReturn, oClient, aData)
@@ -1646,7 +1646,7 @@ METHOD OnFunctionReturn(oClient, aData) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnFunctionCanceled(oClient, cFuncName) CLASS TRPCService
+METHOD TRPCService:OnFunctionCanceled(oClient, cFuncName)
 
    IF ::bOnFunctionCanceled != NIL
       RETURN Eval(::bOnFunctionCanceled, oClient, cFuncName)
@@ -1654,7 +1654,7 @@ METHOD OnFunctionCanceled(oClient, cFuncName) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnClientLogout(oClient) CLASS TRPCService
+METHOD TRPCService:OnClientLogout(oClient)
 
    IF ::bOnClientLogout != NIL
       RETURN Eval(::bOnClientLogout, oClient)
@@ -1662,7 +1662,7 @@ METHOD OnClientLogout(oClient) CLASS TRPCService
 
    RETURN .T.
 
-METHOD OnClientTerminate(oClient) CLASS TRPCService
+METHOD TRPCService:OnClientTerminate(oClient)
 
    IF ::bOnClientTerminate != NIL
       RETURN Eval(::bOnClientTerminate, oClient)

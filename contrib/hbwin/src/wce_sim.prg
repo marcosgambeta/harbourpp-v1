@@ -68,10 +68,10 @@ CREATE CLASS wce_Sim
 
 ENDCLASS
 
-METHOD New() CLASS wce_Sim
+METHOD wce_Sim:New()
    RETURN Self
 
-METHOD lInitialize() CLASS wce_Sim
+METHOD wce_Sim:lInitialize()
 
    LOCAL nResult := wce_SimInitialize(@::hSim)
 
@@ -80,7 +80,7 @@ METHOD lInitialize() CLASS wce_Sim
 
    RETURN ::lInitialized
 
-METHOD lDeInitialize() CLASS wce_Sim
+METHOD wce_Sim:lDeInitialize()
 
    LOCAL nResult
 
@@ -96,7 +96,7 @@ METHOD lDeInitialize() CLASS wce_Sim
 
    RETURN nResult == SIM_E_OK
 
-METHOD lNumberOfPhoneBookEntries(nType, /* @ */ nTotal, /* @ */ nUsed) CLASS wce_Sim
+METHOD wce_Sim:lNumberOfPhoneBookEntries(nType, /* @ */ nTotal, /* @ */ nUsed)
 
    LOCAL nResult
 
@@ -112,7 +112,7 @@ METHOD lNumberOfPhoneBookEntries(nType, /* @ */ nTotal, /* @ */ nUsed) CLASS wce
 
    RETURN nResult == SIM_E_OK
 
-METHOD aGetAllPhoneBookEntries(nType) CLASS wce_Sim
+METHOD wce_Sim:aGetAllPhoneBookEntries(nType)
 
    LOCAL nResult
    LOCAL nTotal
@@ -148,7 +148,7 @@ METHOD aGetAllPhoneBookEntries(nType) CLASS wce_Sim
 
    RETURN aEntries
 
-METHOD lGetSimPhoneEntry(nPos, nType, /* @ */ aEntry) CLASS wce_Sim
+METHOD wce_Sim:lGetSimPhoneEntry(nPos, nType, /* @ */ aEntry)
 
    LOCAL nResult
    LOCAL a
@@ -167,7 +167,7 @@ METHOD lGetSimPhoneEntry(nPos, nType, /* @ */ aEntry) CLASS wce_Sim
 
    RETURN nResult == SIM_E_OK
 
-METHOD lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType) CLASS wce_Sim
+METHOD wce_Sim:lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType)
 
    LOCAL nResult
 
@@ -184,7 +184,7 @@ METHOD lSetSimPhoneEntry(nPos, nType, cNumber, cName, nPlan, nAddrType) CLASS wc
 
    RETURN nResult == SIM_E_OK
 
-METHOD lDelSimPhoneEntry(nPos, nType) CLASS wce_Sim
+METHOD wce_Sim:lDelSimPhoneEntry(nPos, nType)
 
    LOCAL nResult
 
@@ -200,7 +200,7 @@ METHOD lDelSimPhoneEntry(nPos, nType) CLASS wce_Sim
 
    RETURN nResult == SIM_E_OK
 
-METHOD End() CLASS wce_Sim
+METHOD wce_Sim:End()
 
    IF ::lInitialized
       ::lDeInitialize()

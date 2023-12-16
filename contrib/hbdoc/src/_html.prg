@@ -89,7 +89,7 @@ CREATE CLASS GenerateHTML INHERIT TPLGenerate
 
 ENDCLASS
 
-METHOD NewFile() CLASS GenerateHTML
+METHOD GenerateHTML:NewFile()
 
    ::cFile += "<!DOCTYPE html>" + hb_eol()
 
@@ -137,7 +137,7 @@ STATIC FUNCTION GitRev()
 
    RETURN hb_StrReplace( cStdOut, Chr(13) + Chr(10) )
 
-METHOD Generate() CLASS GenerateHTML
+METHOD GenerateHTML:Generate()
 
    LOCAL cRevision := GitRev()
 
@@ -169,21 +169,21 @@ METHOD Generate() CLASS GenerateHTML
 
    RETURN Self
 
-METHOD NewDocument( cDir, cFilename, cTitle, cLang ) CLASS GenerateHTML
+METHOD GenerateHTML:NewDocument( cDir, cFilename, cTitle, cLang )
 
    ::super:NewDocument( cDir, cFilename, cTitle, EXTENSION, cLang )
    ::NewFile()
 
    RETURN Self
 
-METHOD NewIndex( cDir, cFilename, cTitle, cLang ) CLASS GenerateHTML
+METHOD GenerateHTML:NewIndex( cDir, cFilename, cTitle, cLang )
 
    ::super:NewIndex( cDir, cFilename, cTitle, EXTENSION, cLang )
    ::NewFile()
 
    RETURN Self
 
-METHOD BeginSection( cSection, cFilename ) CLASS GenerateHTML
+METHOD GenerateHTML:BeginSection( cSection, cFilename )
 
    cSection := SymbolToHTMLID( cSection )
 
@@ -201,7 +201,7 @@ METHOD BeginSection( cSection, cFilename ) CLASS GenerateHTML
 
    RETURN Self
 
-METHOD EndSection( cSection, cFilename ) CLASS GenerateHTML
+METHOD GenerateHTML:EndSection( cSection, cFilename )
 
    HB_SYMBOL_UNUSED( cSection )
    HB_SYMBOL_UNUSED( cFilename )
@@ -209,7 +209,7 @@ METHOD EndSection( cSection, cFilename ) CLASS GenerateHTML
 
    RETURN Self
 
-METHOD AddReference( oEntry, cReference, cSubReference ) CLASS GenerateHTML
+METHOD GenerateHTML:AddReference( oEntry, cReference, cSubReference )
 
    IF HB_ISOBJECT( oEntry ) .AND. oEntry:ClassName() == "ENTRY"
       ::OpenTag( "a", "href", ::TargetFilename + ::cExtension + "#" + oEntry:_filename ):Append( oEntry:fld[ "NAME" ] ):CloseTag( "a" ):Append( oEntry:fld[ "ONELINER" ] ):Newline()
@@ -223,7 +223,7 @@ METHOD AddReference( oEntry, cReference, cSubReference ) CLASS GenerateHTML
 
    RETURN Self
 
-METHOD AddEntry( oEntry ) CLASS GenerateHTML
+METHOD GenerateHTML:AddEntry( oEntry )
 
    LOCAL item
    LOCAL cEntry
@@ -391,7 +391,7 @@ METHOD PROCEDURE WriteEntry( cField, cContent, lPreformatted ) CLASS GenerateHTM
 
    RETURN
 
-METHOD OpenTagInline( cText, ... ) CLASS GenerateHTML
+METHOD GenerateHTML:OpenTagInline( cText, ... )
 
    LOCAL aArgs := hb_AParams()
    LOCAL idx
@@ -407,7 +407,7 @@ METHOD OpenTagInline( cText, ... ) CLASS GenerateHTML
 
    RETURN Self
 
-METHOD OpenTag( cText, ... ) CLASS GenerateHTML
+METHOD GenerateHTML:OpenTag( cText, ... )
 
    ::OpenTagInline( cText, ... )
 
@@ -415,7 +415,7 @@ METHOD OpenTag( cText, ... ) CLASS GenerateHTML
 
    RETURN Self
 
-METHOD Tagged( cText, cTag, ... ) CLASS GenerateHTML
+METHOD GenerateHTML:Tagged( cText, cTag, ... )
 
    LOCAL aArgs := hb_AParams()
    LOCAL cResult := ""
@@ -429,13 +429,13 @@ METHOD Tagged( cText, cTag, ... ) CLASS GenerateHTML
 
    RETURN Self
 
-METHOD CloseTagInline( cText ) CLASS GenerateHTML
+METHOD GenerateHTML:CloseTagInline( cText )
 
    ::cFile += "</" + cText + ">"
 
    RETURN Self
 
-METHOD CloseTag( cText ) CLASS GenerateHTML
+METHOD GenerateHTML:CloseTag( cText )
 
    ::cFile += "</" + cText + ">" + hb_eol()
 
@@ -451,7 +451,7 @@ STATIC FUNCTION StrEsc(cString)
 
    RETURN hb_StrReplace( cString, s_html )
 
-METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
+METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
 
    LOCAL idx
 
@@ -574,14 +574,14 @@ METHOD AppendInline( cText, cFormat, lCode ) CLASS GenerateHTML
 
    RETURN Self
 
-METHOD Append( cText, cFormat, lCode ) CLASS GenerateHTML
+METHOD GenerateHTML:Append( cText, cFormat, lCode )
 
    ::AppendInline( cText, cFormat, lCode )
    ::cFile += hb_eol()
 
    RETURN Self
 
-METHOD RecreateStyleDocument( cStyleFile ) CLASS GenerateHTML
+METHOD GenerateHTML:RecreateStyleDocument( cStyleFile )
 
    LOCAL cString
 

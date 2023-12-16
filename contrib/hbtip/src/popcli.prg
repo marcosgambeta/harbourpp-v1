@@ -76,7 +76,7 @@ CREATE CLASS TIPClientPOP INHERIT TIPClient
 
 ENDCLASS
 
-METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClientPOP
+METHOD TIPClientPOP:New( oUrl, xTrace, oCredentials )
 
    ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "pop3", xTrace), oCredentials )
 
@@ -85,7 +85,7 @@ METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClientPOP
 
    RETURN Self
 
-METHOD Open( cUrl ) CLASS TIPClientPOP
+METHOD TIPClientPOP:Open( cUrl )
 
    IF ! ::super:Open( cUrl )
       RETURN .F.
@@ -108,7 +108,7 @@ METHOD Open( cUrl ) CLASS TIPClientPOP
 
    RETURN .F.
 
-METHOD OpenDigest( cUrl ) CLASS TIPClientPOP
+METHOD TIPClientPOP:OpenDigest( cUrl )
 
    LOCAL nPos, nPos2, cDigest
 
@@ -135,7 +135,7 @@ METHOD OpenDigest( cUrl ) CLASS TIPClientPOP
 
    RETURN .F.
 
-METHOD Close( lAutoQuit ) CLASS TIPClientPOP
+METHOD TIPClientPOP:Close( lAutoQuit )
 
    ::InetTimeOut( ::SocketCon )
 
@@ -145,13 +145,13 @@ METHOD Close( lAutoQuit ) CLASS TIPClientPOP
 
    RETURN ::super:Close()
 
-METHOD Delete( nId ) CLASS TIPClientPOP
+METHOD TIPClientPOP:Delete( nId )
 
    ::inetSendAll( ::SocketCon, "DELE " + hb_ntos( Int( nId ) ) + ::cCRLF )
 
    RETURN ::GetOk()
 
-METHOD List() CLASS TIPClientPOP
+METHOD TIPClientPOP:List()
 
    LOCAL nPos
    LOCAL cStr, cRet
@@ -177,13 +177,13 @@ METHOD List() CLASS TIPClientPOP
 
    RETURN cRet
 
-METHOD Noop() CLASS TIPClientPOP
+METHOD TIPClientPOP:Noop()
 
    ::inetSendAll( ::SocketCon, "NOOP" + ::cCRLF )
 
    RETURN ::GetOk()
 
-METHOD Retrieve( nId, nLen ) CLASS TIPClientPOP
+METHOD TIPClientPOP:Retrieve( nId, nLen )
 
    LOCAL nPos
    LOCAL cRet, nRetLen, cBuffer, nRead
@@ -237,13 +237,13 @@ METHOD Retrieve( nId, nLen ) CLASS TIPClientPOP
 
    RETURN StrTran( cRet, ::cCRLF + "..", ::cCRLF + "." )
 
-METHOD Rset() CLASS TIPClientPOP
+METHOD TIPClientPOP:Rset()
 
    ::inetSendAll( ::SocketCon, "RSET" + ::cCRLF )
 
    RETURN ::GetOk()
 
-METHOD Stat() CLASS TIPClientPOP
+METHOD TIPClientPOP:Stat()
 
    LOCAL nRead
 
@@ -251,7 +251,7 @@ METHOD Stat() CLASS TIPClientPOP
 
    RETURN ::inetRecvLine( ::SocketCon, @nRead, 128 )
 
-METHOD Top( nMsgId ) CLASS TIPClientPOP
+METHOD TIPClientPOP:Top( nMsgId )
 
    LOCAL nPos
    LOCAL cStr, cRet
@@ -277,13 +277,13 @@ METHOD Top( nMsgId ) CLASS TIPClientPOP
 
    RETURN cRet
 
-METHOD Quit() CLASS TIPClientPOP
+METHOD TIPClientPOP:Quit()
 
    ::inetSendAll( ::SocketCon, "QUIT" + ::cCRLF )
 
    RETURN ::GetOk()
 
-METHOD UIDL( nMsgId ) CLASS TIPClientPOP
+METHOD TIPClientPOP:UIDL( nMsgId )
 
    LOCAL nPos
    LOCAL cStr, cRet
@@ -319,7 +319,7 @@ METHOD UIDL( nMsgId ) CLASS TIPClientPOP
 
    RETURN cRet
 
-METHOD countMail() CLASS TIPClientPop
+METHOD TIPClientPOP:countMail()
 
    LOCAL cStat
 
@@ -333,7 +333,7 @@ METHOD countMail() CLASS TIPClientPop
 
    RETURN -1
 
-METHOD GetOk() CLASS TIPClientPOP
+METHOD TIPClientPOP:GetOk()
 
    ::cReply := ::inetRecvLine( ::SocketCon,, 128 )
 
@@ -342,7 +342,7 @@ METHOD GetOk() CLASS TIPClientPOP
 
 /* QUESTION: This method will return logical, NIL or string
              Is it really intended that way? [vszakats] */
-METHOD Read( nLen ) CLASS TIPClientPOP
+METHOD TIPClientPOP:Read( nLen )
 
    /* Decide what to read */
    IF Empty(::oUrl:cFile)
@@ -353,7 +353,7 @@ METHOD Read( nLen ) CLASS TIPClientPOP
 
    RETURN ::Retrieve( Val( ::oUrl:cFile ), nLen )  /* return NIL or string */
 
-METHOD retrieveAll( lDelete ) CLASS TIPClientPOP
+METHOD TIPClientPOP:retrieveAll( lDelete )
 
    LOCAL aMails, oMail
 
@@ -376,7 +376,7 @@ METHOD retrieveAll( lDelete ) CLASS TIPClientPOP
 
    RETURN aMails
 
-METHOD getTop( nMsgId ) CLASS TIPClientPOP
+METHOD TIPClientPOP:getTop( nMsgId )
 
    LOCAL nPos, cStr, xRet
 
@@ -395,7 +395,7 @@ METHOD getTop( nMsgId ) CLASS TIPClientPOP
 
    RETURN xRet
 
-METHOD getMessageRaw( nMsgId ) CLASS TIPClientPOP
+METHOD TIPClientPOP:getMessageRaw( nMsgId )
 
    LOCAL cLine, nBytes, xRet
 
@@ -415,7 +415,7 @@ METHOD getMessageRaw( nMsgId ) CLASS TIPClientPOP
 
    RETURN xRet
 
-METHOD getBody( nMsgId ) CLASS TIPClientPOP
+METHOD TIPClientPOP:getBody( nMsgId )
 
    LOCAL xRet, n, n1, i, nBoundary, cBoundary, aMsg
 
@@ -444,7 +444,7 @@ METHOD getBody( nMsgId ) CLASS TIPClientPOP
 
    RETURN xRet
 
-METHOD getSubject( nMsgId ) CLASS TIPClientPOP
+METHOD TIPClientPOP:getSubject( nMsgId )
 
    LOCAL cHeader
 

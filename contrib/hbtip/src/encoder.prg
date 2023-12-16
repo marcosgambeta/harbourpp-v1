@@ -63,16 +63,16 @@ ENDCLASS
 
 #define MODE_PASSTHROUGH  "as-is"
 
-METHOD New( cMode ) CLASS TIPEncoder
+METHOD TIPEncoder:New( cMode )
 
    ::cName := Lower(hb_defaultValue( cMode, MODE_PASSTHROUGH ))
 
    RETURN Self
 
-METHOD Encode( cData ) CLASS TIPEncoder
+METHOD TIPEncoder:Encode( cData )
    RETURN iif(::cName == MODE_PASSTHROUGH, cData, tip_GetEncoder( ::cName ):Encode( cData ))
 
-METHOD Decode( cData ) CLASS TIPEncoder
+METHOD TIPEncoder:Decode( cData )
    RETURN iif(::cName == MODE_PASSTHROUGH, cData, tip_GetEncoder( ::cName ):Decode( cData ))
 
 FUNCTION tip_GetEncoder( cMode )

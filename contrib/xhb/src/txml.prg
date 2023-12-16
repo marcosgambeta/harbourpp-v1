@@ -89,7 +89,7 @@ CREATE CLASS TXMLNode
 
 ENDCLASS
 
-METHOD New(nType, cName, aAttributes, cData) CLASS TXmlNode
+METHOD TXmlNode:New(nType, cName, aAttributes, cData)
 
    IF nType == NIL
       ::nType := HBXML_TYPE_TAG
@@ -108,7 +108,7 @@ METHOD New(nType, cName, aAttributes, cData) CLASS TXmlNode
 
    RETURN Self
 
-METHOD NextInTree() CLASS TXmlNode
+METHOD TXmlNode:NextInTree()
 
    LOCAL oNext := NIL, oTemp
 
@@ -129,7 +129,7 @@ METHOD NextInTree() CLASS TXmlNode
 
    RETURN oNext
 
-METHOD Depth() CLASS TXmlNode
+METHOD TXmlNode:Depth()
 
    IF ::oParent != NIL
       RETURN ::oParent:Depth() + 1
@@ -137,7 +137,7 @@ METHOD Depth() CLASS TXmlNode
 
    RETURN 0
 
-METHOD Path() CLASS TXmlNode
+METHOD TXmlNode:Path()
 
    IF ::nType == HBXML_TYPE_DOCUMENT
       RETURN ""
@@ -186,7 +186,7 @@ CREATE CLASS TXmlIterator
 
 ENDCLASS
 
-METHOD New(oNodeTop) CLASS TXmlIterator
+METHOD TXmlIterator:New(oNodeTop)
 
    ::oTop  := oNodeTop
    ::oNode := oNodeTop
@@ -194,7 +194,7 @@ METHOD New(oNodeTop) CLASS TXmlIterator
 
    RETURN Self
 
-METHOD Clone() CLASS TXmlIterator
+METHOD TXmlIterator:Clone()
 
    LOCAL oRet
 
@@ -206,13 +206,13 @@ METHOD Clone() CLASS TXmlIterator
 
    RETURN oRet
 
-METHOD SetContext() CLASS TXmlIterator
+METHOD TXmlIterator:SetContext()
 
    ::oTop := ::oNode
 
    RETURN Self
 
-METHOD Find(cName, cAttribute, cValue, cData) CLASS TXmlIterator
+METHOD TXmlIterator:Find(cName, cAttribute, cValue, cData)
 
    ::cName := cName
    ::cAttribute := cAttribute
@@ -232,7 +232,7 @@ METHOD Find(cName, cAttribute, cValue, cData) CLASS TXmlIterator
 
    RETURN ::Next()
 
-METHOD Next() CLASS TXmlIterator
+METHOD TXmlIterator:Next()
 
    LOCAL oFound := ::oNode:NextInTree()
 
@@ -251,7 +251,7 @@ METHOD Next() CLASS TXmlIterator
 
    RETURN NIL
 
-METHOD MatchCriteria(oNode) CLASS TXmlIterator
+METHOD TXmlIterator:MatchCriteria(oNode)
 
    HB_SYMBOL_UNUSED(oNode)
 
@@ -270,13 +270,13 @@ CREATE CLASS TXmlIteratorScan FROM TXmlIterator
 
 ENDCLASS
 
-METHOD New(oNodeTop) CLASS TXmlIteratorScan
+METHOD TXmlIteratorScan:New(oNodeTop)
 
    ::Super:New(oNodeTop)
 
    RETURN Self
 
-METHOD MatchCriteria(oFound) CLASS TXmlIteratorScan
+METHOD TXmlIteratorScan:MatchCriteria(oFound)
 
    IF ::cName != NIL .AND. ( oFound:cName == NIL .OR. !( ::cName == oFound:cName ) )
       RETURN .F.
@@ -309,13 +309,13 @@ CREATE CLASS TXmlIteratorRegex FROM TXmlIterator
 
 ENDCLASS
 
-METHOD New(oNodeTop) CLASS TXmlIteratorRegex
+METHOD TXmlIteratorRegex:New(oNodeTop)
 
    ::Super:New(oNodeTop)
 
    RETURN Self
 
-METHOD MatchCriteria(oFound) CLASS TXmlIteratorRegex
+METHOD TXmlIteratorRegex:MatchCriteria(oFound)
 
    IF ::cName != NIL .AND. (oFound:cName == NIL .OR. !hb_regexLike(::cName, oFound:cName, .T.))
       RETURN .F.
@@ -367,7 +367,7 @@ CREATE CLASS TXMLDocument
 
 ENDCLASS
 
-METHOD New(xElem, nStyle) CLASS TXMLDocument
+METHOD TXMLDocument:New(xElem, nStyle)
 
    ::nStatus := HBXML_STATUS_OK
    ::nError := HBXML_ERROR_NONE
@@ -400,7 +400,7 @@ METHOD New(xElem, nStyle) CLASS TXMLDocument
 
    RETURN Self
 
-METHOD Write(fHandle, nStyle) CLASS TXMLDocument
+METHOD TXMLDocument:Write(fHandle, nStyle)
 
    LOCAL nResult := HBXML_STATUS_ERROR
 
@@ -422,19 +422,19 @@ METHOD Write(fHandle, nStyle) CLASS TXMLDocument
 
    RETURN ::oRoot:Write(fHandle, nStyle)
 
-METHOD FindFirst(cName, cAttrib, cValue, cData) CLASS TXMLDocument
+METHOD TXMLDocument:FindFirst(cName, cAttrib, cValue, cData)
 
    ::oIterator := TXMLIteratorScan():New(::oRoot)
 
    RETURN ::oIterator:Find(cName, cAttrib, cValue, cData)
 
-METHOD FindFirstRegex(cName, cAttrib, cValue, cData) CLASS TXMLDocument
+METHOD TXMLDocument:FindFirstRegex(cName, cAttrib, cValue, cData)
 
    ::oIterator := TXMLIteratorRegex():New(::oRoot)
 
    RETURN ::oIterator:Find(cName, cAttrib, cValue, cData)
 
-METHOD GetContext() CLASS TXMLDocument
+METHOD TXMLDocument:GetContext()
 
    LOCAL oDoc
 

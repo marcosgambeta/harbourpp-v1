@@ -65,7 +65,7 @@ CREATE CLASS xpp_TBrowse INHERIT TBrowse
 
 ENDCLASS
 
-METHOD viewArea() CLASS xpp_TBrowse
+METHOD xpp_TBrowse:viewArea()
 
    LOCAL nWidth, nFrozenWidth
 
@@ -88,7 +88,7 @@ METHOD viewArea() CLASS xpp_TBrowse
 
 /* NOTE: Returns the left margin relative column position of the first
          non-frozen column. Xbase++ compatible method. */
-METHOD firstScrCol() CLASS xpp_TBrowse
+METHOD xpp_TBrowse:firstScrCol()
 
    IF ::nConfigure != 0
       ::doConfigure()
@@ -100,11 +100,11 @@ METHOD firstScrCol() CLASS xpp_TBrowse
 #endif
    RETURN 0
 
-METHOD _left() CLASS xpp_TBrowse
+METHOD xpp_TBrowse:_left()
    RETURN ::left()
 
-METHOD _right() CLASS xpp_TBrowse
+METHOD xpp_TBrowse:_right()
    RETURN ::right()
 
-METHOD _end() CLASS xpp_TBrowse
+METHOD xpp_TBrowse:_end()
    RETURN ::end()

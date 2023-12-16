@@ -88,7 +88,7 @@ CREATE CLASS TIPCgi
 
 ENDCLASS
 
-METHOD New() CLASS TIPCgi
+METHOD TIPCgi:New()
 
    LOCAL aVar
    LOCAL nLen
@@ -132,7 +132,7 @@ METHOD New() CLASS TIPCgi
 
    RETURN Self
 
-METHOD Header( cValue ) CLASS TIPCgi
+METHOD TIPCgi:Header( cValue )
 
    IF HB_ISSTRING( cValue ) .AND. ! Empty(cValue)
       ::cCgiHeader += cValue + _CRLF
@@ -142,7 +142,7 @@ METHOD Header( cValue ) CLASS TIPCgi
 
    RETURN Self
 
-METHOD Redirect( cUrl ) CLASS TIPCgi
+METHOD TIPCgi:Redirect( cUrl )
 
    IF HB_ISSTRING( cUrl ) .AND. ! Empty(cUrl)
       ::cCgiHeader += "Location: " + cUrl + _CRLF
@@ -150,7 +150,7 @@ METHOD Redirect( cUrl ) CLASS TIPCgi
 
    RETURN Self
 
-METHOD Flush() CLASS TIPCgi
+METHOD TIPCgi:Flush()
 
    LOCAL cStream
    LOCAL lRet
@@ -193,10 +193,10 @@ METHOD Flush() CLASS TIPCgi
 
    RETURN lRet
 
-METHOD SaveHtmlPage( cFile ) CLASS TIPCgi
+METHOD TIPCgi:SaveHtmlPage( cFile )
    RETURN hb_MemoWrit( cFile, ::cHtmlPage + _CRLF )
 
-METHOD StartSession( cSID ) CLASS TIPCgi
+METHOD TIPCgi:StartSession( cSID )
 
    LOCAL hFile
    LOCAL cFile
@@ -245,13 +245,13 @@ METHOD StartSession( cSID ) CLASS TIPCgi
 
    RETURN Self
 
-METHOD SessionEncode() CLASS TIPCgi
+METHOD TIPCgi:SessionEncode()
    RETURN hb_Serialize( ::hSession )
 
-METHOD SessionDecode( cData ) CLASS TIPCgi
+METHOD TIPCgi:SessionDecode( cData )
    RETURN HB_ISHASH( ::hSession := hb_Deserialize( cData ) )
 
-METHOD DestroySession( cID ) CLASS TIPCgi
+METHOD TIPCgi:DestroySession( cID )
 
    LOCAL cFile
    LOCAL cSID
@@ -316,13 +316,13 @@ METHOD PROCEDURE ErrHandler( xError ) CLASS TIPCgi
 
    RETURN
 
-METHOD Write( cString ) CLASS TIPCgi
+METHOD TIPCgi:Write( cString )
 
    ::cHtmlPage += cString + _CRLF
 
    RETURN Self
 
-METHOD StartHtml( hOptions ) CLASS TIPCgi
+METHOD TIPCgi:StartHtml( hOptions )
 
    ::cHtmlPage += ;
       "<!DOCTYPE html>" + _CRLF + ;
@@ -337,7 +337,7 @@ METHOD StartHtml( hOptions ) CLASS TIPCgi
 
    RETURN Self
 
-METHOD EndHtml() CLASS TIPCgi
+METHOD TIPCgi:EndHtml()
 
    ::cHtmlPage += "</body></html>"
 

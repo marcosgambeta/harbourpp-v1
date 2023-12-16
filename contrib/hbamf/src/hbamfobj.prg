@@ -69,16 +69,16 @@ CREATE CLASS amf_Obj
 
 ENDCLASS
 
-METHOD New( hCachedData ) CLASS amf_Obj
+METHOD amf_Obj:New( hCachedData )
 
    ::hCachedData := hCachedData
 
    RETURN Self
 
-METHOD noMessage( ... ) CLASS amf_Obj
+METHOD amf_Obj:noMessage( ... )
    RETURN ::msgNotFound( __GetMessage(), ... )
 
-METHOD msgNotFound( cMessage, ... ) CLASS amf_Obj
+METHOD amf_Obj:msgNotFound( cMessage, ... )
 
    IF PCount() == 1 .AND. !( hb_BLeft(cMessage, 1) == "_" )
       IF ! Empty(::hCachedData) .AND. hb_HHasKey( ::hCachedData, cMessage )
@@ -103,7 +103,7 @@ CREATE CLASS amf_Raw
 
 ENDCLASS
 
-METHOD New( cData ) CLASS amf_Raw
+METHOD amf_Raw:New( cData )
 
    ::cData := cData
 

@@ -62,7 +62,7 @@ CREATE CLASS UHttpdLog
 
 ENDCLASS
 
-METHOD New( cFileName ) CLASS UHttpdLog
+METHOD UHttpdLog:New( cFileName )
 
    IF HB_ISSTRING( cFileName )
 
@@ -75,10 +75,10 @@ METHOD New( cFileName ) CLASS UHttpdLog
 
    RETURN Self
 
-METHOD IsOpen() CLASS UHttpdLog
+METHOD UHttpdLog:IsOpen()
    RETURN ::fhnd != F_ERROR
 
-METHOD Add( cMsg ) CLASS UHttpdLog
+METHOD UHttpdLog:Add( cMsg )
 
    IF ! HB_ISSTRING( cMsg )
       RETURN .F.
@@ -90,7 +90,7 @@ METHOD Add( cMsg ) CLASS UHttpdLog
 
    RETURN ::fhnd != F_ERROR .AND. FWrite( ::fhnd, cMsg ) == hb_BLen(cMsg)
 
-METHOD Close() CLASS UHttpdLog
+METHOD UHttpdLog:Close()
 
    LOCAL lRetVal
 

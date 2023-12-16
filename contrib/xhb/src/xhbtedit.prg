@@ -245,7 +245,7 @@ ENDCLASS
 
 //
 
-METHOD New(cString, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol) CLASS XHBEditor
+METHOD XHBEditor:New(cString, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol)
 
    __defaultNIL(@cString, "")
    __defaultNIL(@nTop, 0)
@@ -373,7 +373,7 @@ METHOD New(cString, nTop, nLeft, nBottom, nRight, lEditMode, nLineLength, nTabSi
 // Redefines editor window size and refreshes it
 //
 
-METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS XHBEditor
+METHOD XHBEditor:Resize(nTop, nLeft, nBottom, nRight)
 
    // don't change coordinates not given
    __defaultNIL(@nTop, ::nTop)
@@ -416,7 +416,7 @@ METHOD Resize(nTop, nLeft, nBottom, nRight) CLASS XHBEditor
 // Redraws a screenfull of text
 //
 
-METHOD RefreshWindow() CLASS XHBEditor
+METHOD XHBEditor:RefreshWindow()
 
    LOCAL i
    LOCAL nOCol
@@ -460,7 +460,7 @@ METHOD RefreshWindow() CLASS XHBEditor
 // Return the color of the row
 //
 
-METHOD LineColor(nRow) CLASS XHBEditor
+METHOD XHBEditor:LineColor(nRow)
 
    LOCAL cColor
 
@@ -476,7 +476,7 @@ METHOD LineColor(nRow) CLASS XHBEditor
 // Return the color of the Col
 //
 
-METHOD ColColor() CLASS XHBEditor
+METHOD XHBEditor:ColColor()
 
    LOCAL cColor
 
@@ -492,7 +492,7 @@ METHOD ColColor() CLASS XHBEditor
 // Redraws current screen line
 //
 
-METHOD RefreshLine(lRefreshColSel) CLASS XHBEditor
+METHOD XHBEditor:RefreshLine(lRefreshColSel)
 
    LOCAL nOCol
    LOCAL nORow
@@ -537,7 +537,7 @@ METHOD RefreshLine(lRefreshColSel) CLASS XHBEditor
 // Refreshes only one screen column of text ( for Left() and Right() movements )
 //
 
-METHOD RefreshColumn() CLASS XHBEditor
+METHOD XHBEditor:RefreshColumn()
 
    LOCAL i
    LOCAL nOCol
@@ -568,7 +568,7 @@ METHOD RefreshColumn() CLASS XHBEditor
 // Wrapper for Cursor Movement to be used from Outside of This Class
 //
 
-METHOD MoveCursor(nKey) CLASS XHBEditor
+METHOD XHBEditor:MoveCursor(nKey)
 
    // Modified to handle cursor movements inside text array without crashing!
    // Modified to allow line wrapping, and to track cursor to line ends.
@@ -658,7 +658,7 @@ METHOD MoveCursor(nKey) CLASS XHBEditor
 //                             Editing
 //
 
-METHOD Edit(nPassedKey) CLASS XHBEditor
+METHOD XHBEditor:Edit(nPassedKey)
 
    LOCAL nKey
    LOCAL lSingleKeyProcess := .F.
@@ -990,7 +990,7 @@ METHOD Edit(nPassedKey) CLASS XHBEditor
 //                          Vertical Navigation
 //
 
-METHOD Down() CLASS XHBEditor
+METHOD XHBEditor:Down()
 
    IF ::lVerticalScroll
       IF ::nRow < ::LastRow()
@@ -1013,7 +1013,7 @@ METHOD Down() CLASS XHBEditor
 
 //
 
-METHOD PageDown() CLASS XHBEditor
+METHOD XHBEditor:PageDown()
 
    LOCAL nJump
 
@@ -1048,7 +1048,7 @@ METHOD PageDown() CLASS XHBEditor
 
 //
 
-METHOD Bottom() CLASS XHBEditor
+METHOD XHBEditor:Bottom()
 
    LOCAL nRowTo := Min(::nFirstRow + ::nNumRows - 1, ::LastRow())
 
@@ -1058,7 +1058,7 @@ METHOD Bottom() CLASS XHBEditor
 
 //
 
-METHOD GoBottom() CLASS XHBEditor
+METHOD XHBEditor:GoBottom()
 
    ::GotoPos(::LastRow(), ::LineLen(::LastRow()) + 1, .T.)
 
@@ -1066,7 +1066,7 @@ METHOD GoBottom() CLASS XHBEditor
 
 //
 
-METHOD Up() CLASS XHBEditor
+METHOD XHBEditor:Up()
 
    IF ::lVerticalScroll
       IF ::nRow > 1
@@ -1090,7 +1090,7 @@ METHOD Up() CLASS XHBEditor
 
 //
 
-METHOD PageUp() CLASS XHBEditor
+METHOD XHBEditor:PageUp()
 
    LOCAL nJump
 
@@ -1125,7 +1125,7 @@ METHOD PageUp() CLASS XHBEditor
 
 //
 
-METHOD Top() CLASS XHBEditor
+METHOD XHBEditor:Top()
 
    ::GotoPos(::nFirstRow, 1, .T.)
 
@@ -1133,7 +1133,7 @@ METHOD Top() CLASS XHBEditor
 
 //
 
-METHOD GoTop() CLASS XHBEditor
+METHOD XHBEditor:GoTop()
 
    ::GotoPos(1, 1)
 
@@ -1143,7 +1143,7 @@ METHOD GoTop() CLASS XHBEditor
 //                       Horizontal Navigation
 //
 
-METHOD Right() CLASS XHBEditor
+METHOD XHBEditor:Right()
 
    IF ::lWordWrap
       // 2006-07-19 - E.F. Changed max right point to pos cursor to next.
@@ -1170,7 +1170,7 @@ METHOD Right() CLASS XHBEditor
 
 //
 
-METHOD WordRight() CLASS XHBEditor
+METHOD XHBEditor:WordRight()
 
    LOCAL nMaxCol := Min(::nWordWrapCol + 1, ::LineLen(::nRow))
 
@@ -1252,7 +1252,7 @@ METHOD WordRight() CLASS XHBEditor
 
 //
 
-METHOD End() CLASS XHBEditor
+METHOD XHBEditor:End()
 
    // 2006-07-19 - E.F. Changed to avoid the cursor out of line.
    //
@@ -1262,7 +1262,7 @@ METHOD End() CLASS XHBEditor
 
 //
 
-METHOD Left() CLASS XHBEditor
+METHOD XHBEditor:Left()
 
    // Gotocol checks for nCol > 1 also, but this saves a func call
    IF ::nCol == 1
@@ -1282,7 +1282,7 @@ METHOD Left() CLASS XHBEditor
 
 //
 
-METHOD WordLeft() CLASS XHBEditor
+METHOD XHBEditor:WordLeft()
 
    // splitline() does not use this function
    // modifed to wrap lines and position at first letter of word, not word end
@@ -1343,7 +1343,7 @@ METHOD WordLeft() CLASS XHBEditor
 
 //
 
-METHOD Home() CLASS XHBEditor
+METHOD XHBEditor:Home()
 
    ::GotoCol(1)
 
@@ -1351,7 +1351,7 @@ METHOD Home() CLASS XHBEditor
 
 //
 
-METHOD K_Mouse(nKey) CLASS XHBEditor
+METHOD XHBEditor:K_Mouse(nKey)
 
    LOCAL nRow, nCol, nJump
 
@@ -1385,7 +1385,7 @@ METHOD K_Mouse(nKey) CLASS XHBEditor
 //                      Keystroke Handelling
 //
 
-METHOD K_Ascii(nKey) CLASS XHBEditor
+METHOD XHBEditor:K_Ascii(nKey)
 
    IF !::lEditAllow .OR. ::nCol > ::nWordWrapCol + 1
       RETURN Self
@@ -1431,7 +1431,7 @@ METHOD K_Ascii(nKey) CLASS XHBEditor
 
 // Backspace
 
-METHOD K_Bs() CLASS XHBEditor
+METHOD XHBEditor:K_Bs()
 
    IF !::lEditAllow
       ::Left()
@@ -1513,7 +1513,7 @@ METHOD K_Bs() CLASS XHBEditor
 
 // Process DEL key
 
-METHOD K_Del() CLASS XHBEditor
+METHOD XHBEditor:K_Del()
 
    LOCAL lMerge := .F.
    LOCAL nCurRow, nCurCol
@@ -1585,7 +1585,7 @@ METHOD K_Del() CLASS XHBEditor
 
 //
 
-METHOD K_Tab() CLASS XHBEditor
+METHOD XHBEditor:K_Tab()
 
    LOCAL lHardCR, i
 
@@ -1637,7 +1637,7 @@ METHOD K_Tab() CLASS XHBEditor
 
 //
 
-METHOD K_Return() CLASS XHBEditor
+METHOD XHBEditor:K_Return()
 
    IF ::LastRow() == 0 .AND. !::lInsert
       RETURN Self
@@ -1704,7 +1704,7 @@ METHOD K_Return() CLASS XHBEditor
 
 //
 
-METHOD K_Esc() CLASS XHBEditor
+METHOD XHBEditor:K_Esc()
 
    LOCAL cScreenMsg, nCurRow, nCurCol, nCursor, nKey
 
@@ -1741,7 +1741,7 @@ METHOD K_Esc() CLASS XHBEditor
 // Add a new Line of text at end of current text
 //
 
-METHOD AddLine(cLine, lSoftCR) CLASS XHBEditor
+METHOD XHBEditor:AddLine(cLine, lSoftCR)
 
    __defaultNIL(@cLine, "")
    __defaultNIL(@lSoftCR, .F.)
@@ -1754,7 +1754,7 @@ METHOD AddLine(cLine, lSoftCR) CLASS XHBEditor
 // Insert a line of text at a defined row
 //
 
-METHOD InsertLine(cLine, lSoftCR, nRow) CLASS XHBEditor
+METHOD XHBEditor:InsertLine(cLine, lSoftCR, nRow)
 
    __defaultNIL(@nRow, ::nRow)
    __defaultNIL(@lSoftCR, .F.)
@@ -1774,7 +1774,7 @@ METHOD InsertLine(cLine, lSoftCR, nRow) CLASS XHBEditor
 // Remove a line of text
 //
 
-METHOD RemoveLine(nRow) CLASS XHBEditor
+METHOD XHBEditor:RemoveLine(nRow)
 
    __defaultNIL(@nRow, ::nRow)
 
@@ -1786,7 +1786,7 @@ METHOD RemoveLine(nRow) CLASS XHBEditor
 // Return line n of text
 //
 
-METHOD GetLine(nRow) CLASS XHBEditor
+METHOD XHBEditor:GetLine(nRow)
 
    __defaultNIL(@nRow, ::nRow)
 
@@ -1806,7 +1806,7 @@ METHOD GetLine(nRow) CLASS XHBEditor
 // Delete text from cursor to end of line.
 //
 
-METHOD DelTextRight(nRow) CLASS XHBEditor
+METHOD XHBEditor:DelTextRight(nRow)
 
    __defaultNIL(@nRow, ::nRow)
 
@@ -1826,7 +1826,7 @@ METHOD DelTextRight(nRow) CLASS XHBEditor
 // Delete a word to the right of cursor. <Ctrl+T>
 //
 
-METHOD DelWordRight() CLASS XHBEditor
+METHOD XHBEditor:DelWordRight()
 
    LOCAL nCol, nCutCol
    LOCAL nSpacesPre, cText
@@ -1883,7 +1883,7 @@ METHOD DelWordRight() CLASS XHBEditor
 
 // <Ctrl+B> behaviour.
 
-METHOD ReformParagraph() CLASS XHBEditor
+METHOD XHBEditor:ReformParagraph()
 
    LOCAL nRow
 
@@ -1906,7 +1906,7 @@ METHOD ReformParagraph() CLASS XHBEditor
 
 //
 
-METHOD GotoLine(nRow) CLASS XHBEditor
+METHOD XHBEditor:GotoLine(nRow)
 
    LOCAL lRefresh := .F.
 
@@ -1937,7 +1937,7 @@ METHOD GotoLine(nRow) CLASS XHBEditor
 
 //
 
-METHOD GotoCol(nCol) CLASS XHBEditor
+METHOD XHBEditor:GotoCol(nCol)
 
    IF nCol >= 1
 
@@ -1965,7 +1965,7 @@ METHOD GotoCol(nCol) CLASS XHBEditor
 
 //
 
-METHOD GotoPos(nRow, nCol, lRefresh) CLASS XHBEditor
+METHOD XHBEditor:GotoPos(nRow, nCol, lRefresh)
 
    __defaultNIL(@lRefresh, .F.)
 
@@ -2074,7 +2074,7 @@ STATIC FUNCTION GetParagraph(oSelf, nRow)
 // Used during text editing to reflow a paragraph
 //
 
-METHOD SplitLine(nRow) CLASS XHBEditor
+METHOD XHBEditor:SplitLine(nRow)
 
    LOCAL nFirstSpace, nCurSpace
    LOCAL cLine
@@ -2216,7 +2216,7 @@ METHOD SplitLine(nRow) CLASS XHBEditor
 // to handle particular keys.
 //
 
-METHOD KeyboardHook()  CLASS XHBEditor
+METHOD XHBEditor:KeyboardHook()
 
    RETURN Self
 
@@ -2224,13 +2224,13 @@ METHOD KeyboardHook()  CLASS XHBEditor
 // There are no more keys to handle. Can I do something for you?
 //
 
-METHOD IdleHook()  CLASS XHBEditor
+METHOD XHBEditor:IdleHook()
 
    RETURN Self
 
 //
 
-METHOD SetColor(cColorString) CLASS XHBEditor
+METHOD XHBEditor:SetColor(cColorString)
 
    LOCAL cOldColor := ::cColorSpec
 
@@ -2242,7 +2242,7 @@ METHOD SetColor(cColorString) CLASS XHBEditor
 
 //
 
-METHOD Hilite() CLASS XHBEditor
+METHOD XHBEditor:Hilite()
 
    LOCAL cEnhanced := ""
 
@@ -2256,7 +2256,7 @@ METHOD Hilite() CLASS XHBEditor
 
 //
 
-METHOD DeHilite() CLASS XHBEditor
+METHOD XHBEditor:DeHilite()
 
    LOCAL cStandard := ""
 
@@ -2270,7 +2270,7 @@ METHOD DeHilite() CLASS XHBEditor
 
 //
 
-METHOD SetPos(nRow, nCol) CLASS XHBEditor
+METHOD XHBEditor:SetPos(nRow, nCol)
 
    __defaultNIL(@nRow, ::nPhysRow)
    __defaultNIL(@nCol, ::nPhysCol)
@@ -2286,7 +2286,7 @@ METHOD SetPos(nRow, nCol) CLASS XHBEditor
 // Changes lInsert value and insertion / overstrike mode of editor
 //
 
-METHOD InsertState(lInsState) CLASS XHBEditor
+METHOD XHBEditor:InsertState(lInsState)
 
    // 2006-07-22 - E.F. - Insert only in edit mode.
    IF ::lEditAllow .AND. HB_ISLOGICAL(lInsState) .AND. ::lInsert != lInsState
@@ -2312,7 +2312,7 @@ METHOD InsertState(lInsState) CLASS XHBEditor
 // 2006-07-15  - E.F. - Display "<insert>" message
 //
 
-METHOD DisplayInsert(lInsert) CLASS XHBEditor
+METHOD XHBEditor:DisplayInsert(lInsert)
 
    LOCAL nCurRow, nCurCol, nCursor
 
@@ -2345,7 +2345,7 @@ METHOD DisplayInsert(lInsert) CLASS XHBEditor
 // Converts an array of text lines to a String
 //
 
-METHOD GetText(lSoftCr) CLASS XHBEditor
+METHOD XHBEditor:GetText(lSoftCr)
 
    LOCAL cString := ""
    LOCAL cSoftCR
@@ -2375,7 +2375,7 @@ METHOD GetText(lSoftCr) CLASS XHBEditor
 // Returns the text selection in a string
 //
 
-METHOD GetTextSelection(lSoftCr) CLASS XHBEditor
+METHOD XHBEditor:GetTextSelection(lSoftCr)
 
    LOCAL cString := ""
    LOCAL cSoftCR
@@ -2417,7 +2417,7 @@ METHOD GetTextSelection(lSoftCr) CLASS XHBEditor
 // Set current selection
 //
 
-METHOD SetTextSelection(cAction, nCount) CLASS XHBEditor
+METHOD XHBEditor:SetTextSelection(cAction, nCount)
 
    IF !::lSelActive
 
@@ -2663,7 +2663,7 @@ METHOD SetTextSelection(cAction, nCount) CLASS XHBEditor
 // Clear current selection
 //
 
-METHOD ClrTextSelection() CLASS XHBEditor
+METHOD XHBEditor:ClrTextSelection()
 
    IF ::lSelActive
       ::lSelActive := .F.
@@ -2675,7 +2675,7 @@ METHOD ClrTextSelection() CLASS XHBEditor
 
    RETURN NIL
 
-METHOD DelText() CLASS XHBEditor
+METHOD XHBEditor:DelText()
 
    IF !::lEditAllow
       RETURN self
@@ -2697,7 +2697,7 @@ METHOD DelText() CLASS XHBEditor
 
    RETURN Self
 
-METHOD DelTextSelection() CLASS XHBEditor
+METHOD XHBEditor:DelTextSelection()
 
    LOCAL nRowSelStart
    LOCAL nRowSelEnd
@@ -2767,7 +2767,7 @@ METHOD DelTextSelection() CLASS XHBEditor
 
    RETURN Self
 
-METHOD AddText(cString, lAtPos) CLASS XHBEditor
+METHOD XHBEditor:AddText(cString, lAtPos)
 
    LOCAL aTmpText
    LOCAL nLines
@@ -2820,7 +2820,7 @@ METHOD AddText(cString, lAtPos) CLASS XHBEditor
 
    RETURN Self
 
-METHOD GetTextIndex() CLASS XHBEditor
+METHOD XHBEditor:GetTextIndex()
 
    LOCAL nPos := 0
    LOCAL oItem, nCount
@@ -2843,7 +2843,7 @@ METHOD GetTextIndex() CLASS XHBEditor
 
    RETURN nPos
 
-METHOD LoadText(cString) CLASS XHBEditor
+METHOD XHBEditor:LoadText(cString)
 
    ::aText := Text2Array(cString, iif(::lWordWrap, ::nNumCols, NIL))
 
@@ -2858,7 +2858,7 @@ METHOD LoadText(cString) CLASS XHBEditor
 
 
 
-METHOD LoadFile(cFileName) CLASS XHBEditor
+METHOD XHBEditor:LoadFile(cFileName)
 
    LOCAL cString := ""
 
@@ -2882,7 +2882,7 @@ METHOD LoadFile(cFileName) CLASS XHBEditor
 // Saves file being edited, if there is no file name does nothing, returns .T. if OK
 //
 
-METHOD SaveFile() CLASS XHBEditor
+METHOD XHBEditor:SaveFile()
 
    LOCAL cString
 
@@ -3020,7 +3020,7 @@ STATIC FUNCTION Text2Array(cString, nWordWrapCol)
 // handles only movement keys and discards all the others
 //
 
-METHOD BrowseText(nPassedKey, lHandleOneKey) CLASS XHBEditor
+METHOD XHBEditor:BrowseText(nPassedKey, lHandleOneKey)
 
    LOCAL nKey, bKeyBlock
 

@@ -73,7 +73,7 @@ CREATE CLASS HB_LogEmail INHERIT HB_LogChannel
 
 ENDCLASS
 
-METHOD New(nLevel, cHelo, cServer, cSendTo, cSubject, cFrom) CLASS HB_LogEmail
+METHOD HB_LogEmail:New(nLevel, cHelo, cServer, cSendTo, cSubject, cFrom)
 
    LOCAL nPos
 
@@ -103,7 +103,7 @@ METHOD New(nLevel, cHelo, cServer, cSendTo, cSubject, cFrom) CLASS HB_LogEmail
    RETURN Self
 
 /* hb_inetInit() must be called here */
-METHOD Open(cName) CLASS HB_LogEmail
+METHOD HB_LogEmail:Open(cName)
 
    HB_SYMBOL_UNUSED(cName)
    hb_inetInit()
@@ -111,7 +111,7 @@ METHOD Open(cName) CLASS HB_LogEmail
    RETURN .T.
 
 /* hb_inetCleanup() to be called here */
-METHOD Close(cName) CLASS HB_LogEmail
+METHOD HB_LogEmail:Close(cName)
 
    HB_SYMBOL_UNUSED(cName)
    hb_inetCleanup()
@@ -119,7 +119,7 @@ METHOD Close(cName) CLASS HB_LogEmail
    RETURN .T.
 
 /* Sends the real message in email */
-METHOD Send(nStyle, cMessage, cName, nPriority) CLASS HB_LogEmail
+METHOD HB_LogEmail:Send(nStyle, cMessage, cName, nPriority)
 
    LOCAL skCon := hb_inetCreate()
 
@@ -163,7 +163,7 @@ METHOD Send(nStyle, cMessage, cName, nPriority) CLASS HB_LogEmail
    RETURN ::GetOk(skCon)  // if quit fails, the mail does not go!
 /* Get the reply and returns true if it is alright */
 
-METHOD GetOk(skCon) CLASS HB_LogEmail
+METHOD HB_LogEmail:GetOk(skCon)
 
    LOCAL nLen, cReply
 
@@ -174,7 +174,7 @@ METHOD GetOk(skCon) CLASS HB_LogEmail
 
    RETURN .T.
 
-METHOD Prepare(nStyle, cMessage, cName, nPriority) CLASS HB_LogEmail
+METHOD HB_LogEmail:Prepare(nStyle, cMessage, cName, nPriority)
 
    LOCAL cPre
 
@@ -217,7 +217,7 @@ CREATE CLASS HB_LogInetPort FROM HB_LogChannel
 
 ENDCLASS
 
-METHOD New(nLevel, nPort) CLASS HB_LogInetPort
+METHOD HB_LogInetPort:New(nLevel, nPort)
 
    ::Super:New(nLevel)
 
@@ -227,7 +227,7 @@ METHOD New(nLevel, nPort) CLASS HB_LogInetPort
 
    RETURN Self
 
-METHOD Open(cName) CLASS HB_LogInetPort
+METHOD HB_LogInetPort:Open(cName)
 
    HB_SYMBOL_UNUSED(cName)
 
@@ -244,7 +244,7 @@ METHOD Open(cName) CLASS HB_LogInetPort
 
    RETURN .T.
 
-METHOD Close(cName) CLASS HB_LogInetPort
+METHOD HB_LogInetPort:Close(cName)
 
    LOCAL sk
 
@@ -272,7 +272,7 @@ METHOD Close(cName) CLASS HB_LogInetPort
 
    RETURN .T.
 
-METHOD Send(nStyle, cMessage, cName, nPriority) CLASS HB_LogInetPort
+METHOD HB_LogInetPort:Send(nStyle, cMessage, cName, nPriority)
 
    LOCAL sk, nCount
 
@@ -298,7 +298,7 @@ METHOD Send(nStyle, cMessage, cName, nPriority) CLASS HB_LogInetPort
 
    RETURN .T.
 
-METHOD AcceptCon() CLASS HB_LogInetPort
+METHOD HB_LogInetPort:AcceptCon()
 
    LOCAL sk
 

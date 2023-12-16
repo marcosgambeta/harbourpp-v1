@@ -100,7 +100,7 @@ CREATE CLASS TCgiFile
 
 ENDCLASS
 
-METHOD New(cName) CLASS TCgiFile
+METHOD TCgiFile:New(cName)
 
    ::Name      := cName
    ::Buffer    := ""
@@ -118,7 +118,7 @@ METHOD New(cName) CLASS TCgiFile
 **   ::Open([<nMode>]) --> lSuccess
 */
 
-METHOD Open(nMode) CLASS TCgiFile
+METHOD TCgiFile:Open(nMode)
 
    __defaultNIL(@nMode, FO_EXCLUSIVE)
    ::Handle := FOpen(::Name, nMode)
@@ -132,7 +132,7 @@ METHOD Open(nMode) CLASS TCgiFile
 **   ::Create([<nAttrib>]) --> lSuccess
 */
 
-METHOD Create(nAttr) CLASS TCgiFile
+METHOD TCgiFile:Create(nAttr)
 
    LOCAL nSuccess
 
@@ -148,7 +148,7 @@ METHOD Create(nAttr) CLASS TCgiFile
 **   RETURNs the size in bytes of the current file.
 */
 
-METHOD Size() CLASS TCgiFile
+METHOD TCgiFile:Size()
 
    LOCAL nCurrent
    LOCAL nLength
@@ -165,7 +165,7 @@ METHOD Size() CLASS TCgiFile
 **   ::Read([<nSize>], [@<cBuff>]) --> nBytesRead
 */
 
-METHOD _Read(nSize, cBuff) CLASS TCgiFile
+METHOD TCgiFile:_Read(nSize, cBuff)
 
    __defaultNIL(@nSize, 1024)
    __defaultNIL(@cBuff, Space(nSize))
@@ -181,7 +181,7 @@ METHOD _Read(nSize, cBuff) CLASS TCgiFile
 **    Read forward in the file without moving the pointer.
 */
 
-METHOD ReadAhead(nSize, cBuff) CLASS TCgiFile
+METHOD TCgiFile:ReadAhead(nSize, cBuff)
 
    LOCAL nCurrent
 
@@ -203,7 +203,7 @@ METHOD ReadAhead(nSize, cBuff) CLASS TCgiFile
 **   ::ReadLine([<nBytes>]) --> cLine
 */
 
-METHOD Readline(nSize) CLASS TCgiFile
+METHOD TCgiFile:Readline(nSize)
 
    LOCAL cString
    LOCAL nCurrent
@@ -231,7 +231,7 @@ METHOD Readline(nSize) CLASS TCgiFile
 **   ::ReadByte() --> nByte or -1 if unsuccessfull
 */
 
-METHOD ReadByte() CLASS TCgiFile
+METHOD TCgiFile:ReadByte()
 
    LOCAL nBytes
    LOCAL cBuff  := Space(1)
@@ -244,7 +244,7 @@ METHOD ReadByte() CLASS TCgiFile
 **   ::ReadInt() --> nUnsignedInt or -1 if unsuccessfull
 */
 
-METHOD ReadInt() CLASS TCgiFile
+METHOD TCgiFile:ReadInt()
 
    LOCAL nBytes
    LOCAL cBuff  := Space(2)
@@ -257,7 +257,7 @@ METHOD ReadInt() CLASS TCgiFile
 **   ::ReadLong() --> nLong or -1 if unsuccessfull
 */
 
-METHOD ReadLong() CLASS TCgiFile
+METHOD TCgiFile:ReadLong()
 
    LOCAL nBytes
    LOCAL cBuff  := Space(4)
@@ -270,7 +270,7 @@ METHOD ReadLong() CLASS TCgiFile
 **   ::WriteByte(nByte) --> lSuccess
 */
 
-METHOD WriteByte(nByte) CLASS TCgiFile
+METHOD TCgiFile:WriteByte(nByte)
 
    LOCAL lSuccess := (FWrite(::nHandle, hb_BCode(nByte), 1) == 1)
 
@@ -280,7 +280,7 @@ METHOD WriteByte(nByte) CLASS TCgiFile
 **   ::WriteInt(nInt) --> lSuccess
 */
 
-METHOD WriteInt(nInt) CLASS TCgiFile
+METHOD TCgiFile:WriteInt(nInt)
 
    LOCAL lSuccess := (FWrite(::nHandle, I2Bin(nInt), 2) == 2)
 
@@ -290,7 +290,7 @@ METHOD WriteInt(nInt) CLASS TCgiFile
 **   ::WriteLong(nLong) --> lSuccess
 */
 
-METHOD WriteLong(nLong) CLASS TCgiFile
+METHOD TCgiFile:WriteLong(nLong)
 
    LOCAL lSuccess := (FWrite(::nHandle, L2Bin(nLong), 4) == 4)
 
@@ -303,7 +303,7 @@ METHOD WriteLong(nLong) CLASS TCgiFile
 **
 */
 
-METHOD Goto(nLine) CLASS TCgiFile
+METHOD TCgiFile:Goto(nLine)
 
    LOCAL nCount := 1
    LOCAL nPos   := FPOS(::Handle)
@@ -339,7 +339,7 @@ METHOD Goto(nLine) CLASS TCgiFile
 **
 */
 
-METHOD Skip(nLines) CLASS TCgiFile
+METHOD TCgiFile:Skip(nLines)
 
    LOCAL nCount := 0
    LOCAL nPos   := FPOS(::Handle)
@@ -368,7 +368,7 @@ METHOD Skip(nLines) CLASS TCgiFile
 **   ::MaxPages(<nPageSize>) --> nMaxPages
 */
 
-METHOD MaxPages(nPageSize) CLASS TCgiFile
+METHOD TCgiFile:MaxPages(nPageSize)
 
    __defaultNIL(@nPageSize, ::nPageSize)
 
@@ -378,7 +378,7 @@ METHOD MaxPages(nPageSize) CLASS TCgiFile
 **   ::PrevPage([<nBytes>]) --> cPage
 */
 
-METHOD PrevPage(nBytes) CLASS TCgiFile
+METHOD TCgiFile:PrevPage(nBytes)
 
    __defaultNIL(@nBytes, 1024)
 
@@ -399,7 +399,7 @@ METHOD PrevPage(nBytes) CLASS TCgiFile
 **   ::NextPage([<nBytes>]) --> cPage
 */
 
-METHOD NextPage(nBytes) CLASS TCgiFile
+METHOD TCgiFile:NextPage(nBytes)
 
    __defaultNIL(@nBytes, 1024)
 
@@ -418,7 +418,7 @@ METHOD NextPage(nBytes) CLASS TCgiFile
 **   ::PrevLine([<nBytes>]) --> ::Buffer
 */
 
-METHOD PrevLine(nBytes) CLASS TCgiFile
+METHOD TCgiFile:PrevLine(nBytes)
 
    LOCAL fHandle    := ::Handle
    LOCAL nOrigPos   := FPOS(fHandle)

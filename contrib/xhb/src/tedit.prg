@@ -147,7 +147,7 @@ CREATE CLASS THtmlControl
 
 ENDCLASS
 
-METHOD Put() CLASS THtmlControl
+METHOD THtmlControl:Put()
 
    LOCAL i
    LOCAL cStr := ""
@@ -327,7 +327,7 @@ METHOD Put() CLASS THtmlControl
 *
 */
 
-METHOD AddOption(cOption, cValue, cLabel, lSelected, lDisabled) CLASS THtmlControl
+METHOD THtmlControl:AddOption(cOption, cValue, cLabel, lSelected, lDisabled)
 
    AAdd(::aOptions, {cOption, cValue, cLabel, lSelected, lDisabled})
 
@@ -341,11 +341,11 @@ METHOD AddOption(cOption, cValue, cLabel, lSelected, lDisabled) CLASS THtmlContr
 *
 */
 
-METHOD SetControl(name, rows, cols, size, maxchars, value, onfocus, ;
+METHOD THtmlControl:SetControl(name, rows, cols, size, maxchars, value, onfocus, ;
       onblur, onchange, onselect, onclick, onmsover, onmsout, ;
       onmsdown, onmsup, onkdown, onkup, onkprs, ;
       pic, cap, dis, ro, lMulti, checked, ;
-      align, wrap, type, Style, ID, lLabel) CLASS THtmlControl
+      align, wrap, type, Style, ID, lLabel)
 
    ::name := name
    ::rows := ROWS
@@ -462,7 +462,7 @@ ENDCLASS
 *
 */
 
-METHOD New(cName, cAction, cMethod, lFrame, cCaption, nWidth) CLASS THtmlForm
+METHOD THtmlForm:New(cName, cAction, cMethod, lFrame, cCaption, nWidth)
 
    HB_SYMBOL_UNUSED(cAction)
 
@@ -494,7 +494,7 @@ METHOD New(cName, cAction, cMethod, lFrame, cCaption, nWidth) CLASS THtmlForm
 *
 */
 
-METHOD Put(lPutControls) CLASS THtmlForm
+METHOD THtmlForm:Put(lPutControls)
 
    hb_default(@lPutControls, .F.)
 
@@ -635,7 +635,7 @@ METHOD Put(lPutControls) CLASS THtmlForm
 *
 */
 
-METHOD End() CLASS THtmlForm
+METHOD THtmlForm:End()
 
    ::ohtm:cStr += "</form>" + CRLF()
 
@@ -657,7 +657,7 @@ METHOD End() CLASS THtmlForm
 *
 */
 
-METHOD GetControl(cName) CLASS THtmlForm
+METHOD THtmlForm:GetControl(cName)
 
    LOCAL oRet
    LOCAL nPos := AScan(::aControls, {|e|e:name == cName})

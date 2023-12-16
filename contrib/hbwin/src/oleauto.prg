@@ -66,7 +66,7 @@ CREATE CLASS win_oleAuto
 ENDCLASS
 
 
-METHOD __enumStart(enum, lDescend) CLASS win_oleAuto
+METHOD win_oleAuto:__enumStart(enum, lDescend)
 
    LOCAL hObjEnum
 
@@ -84,7 +84,7 @@ METHOD __enumStart(enum, lDescend) CLASS win_oleAuto
    RETURN .F.
 
 
-METHOD __enumSkip(enum, lDescend) CLASS win_oleAuto
+METHOD win_oleAuto:__enumSkip(enum, lDescend)
 
    LOCAL lContinue, xValue
 

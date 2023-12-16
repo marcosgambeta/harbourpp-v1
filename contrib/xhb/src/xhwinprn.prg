@@ -85,7 +85,7 @@ CREATE CLASS Win32Prn FROM win_Prn
 
 ENDCLASS
 
-METHOD Create() CLASS WIN32PRN
+METHOD WIN32PRN:Create()
 
    IF ::PaperLength > 0 .AND. ::PaperWidth > 0
       ::FormType := FORM_CUSTOM
@@ -93,7 +93,7 @@ METHOD Create() CLASS WIN32PRN
 
    RETURN ::win_Prn:Create()
 
-METHOD StartPage() CLASS WIN32PRN
+METHOD WIN32PRN:StartPage()
 
    IF ::PaperLength > 0 .AND. ::PaperWidth > 0
       ::FormType := FORM_CUSTOM
@@ -101,22 +101,22 @@ METHOD StartPage() CLASS WIN32PRN
 
    RETURN ::win_Prn:StartPage()
 
-METHOD TextOut(cString, lNewLine, lUpdatePosX, nAlignHori, nAlignVert) CLASS WIN32PRN
+METHOD WIN32PRN:TextOut(cString, lNewLine, lUpdatePosX, nAlignHori, nAlignVert)
 
    __defaultNIL(@nAlignHori, ::SetTextHori)
    __defaultNIL(@nAlignVert, ::SetTextVert)
 
    RETURN ::win_Prn:TextOut(cString, lNewLine, lUpdatePosX, hb_bitOr(nAlignHori, nAlignVert))
 
-METHOD TextOutAt(nPosX, nPosY, cString, lNewLine, lUpdatePosX, nAlignHori, nAlignVert) CLASS WIN32PRN
+METHOD WIN32PRN:TextOutAt(nPosX, nPosY, cString, lNewLine, lUpdatePosX, nAlignHori, nAlignVert)
 
    __defaultNIL(@nAlignHori, ::SetTextHori)
    __defaultNIL(@nAlignVert, ::SetTextVert)
 
    RETURN ::win_Prn:TextOutAt(nPosX, nPosY, cString, lNewLine, lUpdatePosX, hb_bitOr(nAlignHori, nAlignVert))
 
-METHOD TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBold, lUnderLine, lItalic, lNewLine, ;
-      lUpdatePosX, nColor, nAlignHori, nAlignVert) CLASS WIN32PRN
+METHOD WIN32PRN:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBold, lUnderLine, lItalic, lNewLine, ;
+      lUpdatePosX, nColor, nAlignHori, nAlignVert)
 
    __defaultNIL(@nAlignHori, ::SetTextHori)
    __defaultNIL(@nAlignVert, ::SetTextVert)

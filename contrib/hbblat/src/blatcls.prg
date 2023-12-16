@@ -202,7 +202,7 @@ CREATE CLASS HBBlat
 
 ENDCLASS
 
-METHOD Send() CLASS HBBlat
+METHOD HBBlat:Send()
 
    ::Check()
 
@@ -902,7 +902,7 @@ METHOD PROCEDURE Check() CLASS HBBlat
 
    RETURN
 
-METHOD GetCommand() CLASS HBBlat
+METHOD HBBlat:GetCommand()
 
    IF ! ::lChecked
       ::Check()
@@ -910,22 +910,22 @@ METHOD GetCommand() CLASS HBBlat
 
    RETURN ::cCommand
 
-METHOD Error() CLASS HBBlat
+METHOD HBBlat:Error()
    RETURN ::nError
 
-METHOD ErrorString() CLASS HBBlat
+METHOD HBBlat:ErrorString()
    RETURN ::cError
 
-METHOD GetErrors() CLASS HBBlat
+METHOD HBBlat:GetErrors()
    RETURN ::aErrors
 
-METHOD BlatError() CLASS HBBlat
+METHOD HBBlat:BlatError()
    RETURN ::nBlatError
 
-METHOD BlatErrorString() CLASS HBBlat
+METHOD HBBlat:BlatErrorString()
    RETURN ::cBlatError
 
-METHOD TranslateBlatError( nErr ) CLASS HBBlat
+METHOD HBBlat:TranslateBlatError( nErr )
 
    LOCAL cError, nPos
    // TODO: add function that returns language error array

@@ -47,7 +47,7 @@ CREATE CLASS TRtf
 
 END CLASS
 
-METHOD new( cFilename ) CLASS TRtf
+METHOD TRtf:new( cFilename )
 
    ::nHandle := FCreate( cFilename )
    FWrite( ::nHandle, ;
@@ -56,7 +56,7 @@ METHOD new( cFilename ) CLASS TRtf
 
    RETURN self
 
-METHOD write( cSource ) CLASS TRtf
+METHOD TRtf:write( cSource )
 
    LOCAL cChar, cLine, xAtt, i
    LOCAL nChar, y
@@ -126,7 +126,7 @@ METHOD write( cSource ) CLASS TRtf
 
    RETURN self
 
-METHOD CLOSE() CLASS TRtf
+METHOD TRtf:CLOSE()
 
    FWrite( ::nHandle, "\f1\fs16\par" + hb_eol() + "}" )
    FClose( ::nHandle )

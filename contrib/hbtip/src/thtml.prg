@@ -124,7 +124,7 @@ CREATE CLASS THtmlDocument MODULE FRIENDLY
 ENDCLASS
 
 // accepts a HTML formatted string
-METHOD new( cHtmlString ) CLASS THtmlDocument
+METHOD THtmlDocument:new( cHtmlString )
 
    LOCAL oSubNode, oErrNode, aHead, aBody, nMode := 0
 
@@ -216,11 +216,11 @@ METHOD new( cHtmlString ) CLASS THtmlDocument
    RETURN Self
 
 // Builds a HTML formatted string
-METHOD toString() CLASS THtmlDocument
+METHOD THtmlDocument:toString()
    RETURN ::root:toString()
 
 // reads HTML file and parses it into tree of objects
-METHOD readFile( cFileName ) CLASS THtmlDocument
+METHOD THtmlDocument:readFile( cFileName )
 
    IF hb_vfExists( cFileName )
       ::changed := .T.
@@ -232,7 +232,7 @@ METHOD readFile( cFileName ) CLASS THtmlDocument
    RETURN .F.
 
 // writes the entire tree of HTML objects into a file
-METHOD writeFile( cFileName ) CLASS THtmlDocument
+METHOD THtmlDocument:writeFile( cFileName )
 
    LOCAL lSuccess := hb_MemoWrit( cFileName, ::toString() )
 
@@ -243,7 +243,7 @@ METHOD writeFile( cFileName ) CLASS THtmlDocument
    RETURN lSuccess
 
 // builds a one dimensional array of all nodes contained in the HTML document
-METHOD collect() CLASS THtmlDocument
+METHOD THtmlDocument:collect()
 
    IF ::changed
       ::nodes   := ::root:collect()
@@ -253,7 +253,7 @@ METHOD collect() CLASS THtmlDocument
    RETURN ::nodes
 
 // returns the first tag matching the passed tag name
-METHOD getNode( cTagName ) CLASS THtmlDocument
+METHOD THtmlDocument:getNode( cTagName )
 
    LOCAL oNode
 
@@ -270,7 +270,7 @@ METHOD getNode( cTagName ) CLASS THtmlDocument
    RETURN NIL
 
 // returns all tags matching the passed tag name
-METHOD getNodes( cTagName ) CLASS THtmlDocument
+METHOD THtmlDocument:getNodes( cTagName )
 
    LOCAL oNode, stack := S_STACK()
 
@@ -289,14 +289,14 @@ METHOD getNodes( cTagName ) CLASS THtmlDocument
    RETURN stack[ S_DATA ]
 
 // finds the first HTML tag matching the search criteria
-METHOD findFirst( cName, cAttrib, cValue, cData ) CLASS THtmlDocument
+METHOD THtmlDocument:findFirst( cName, cAttrib, cValue, cData )
 
    ::oIterator := THtmlIteratorScan():New( Self )
 
    RETURN ::oIterator:Find( cName, cAttrib, cValue, cData )
 
 // finds the first HTML tag matching the RegEx search criteria
-METHOD findFirstRegex( cName, cAttrib, cValue, cData ) CLASS THtmlDocument
+METHOD THtmlDocument:findFirstRegex( cName, cAttrib, cValue, cData )
 
    ::oIterator := THtmlIteratorRegex():New( Self )
 
@@ -332,7 +332,7 @@ CREATE CLASS THtmlIterator MODULE FRIENDLY
 ENDCLASS
 
 // accepts a THtmlNode or THtmlDocument object
-METHOD New( oHtml ) CLASS THtmlIterator
+METHOD THtmlIterator:New( oHtml )
 
    IF oHtml:isDerivedFrom ( "THtmlDocument" )
       ::oNode := oHtml:root
@@ -348,14 +348,14 @@ METHOD New( oHtml ) CLASS THtmlIterator
 
    RETURN Self
 
-METHOD rewind() CLASS THtmlIterator
+METHOD THtmlIterator:rewind()
 
    ::oNode := ::oTop
    ::nCurrent := 0
 
    RETURN Self
 
-METHOD Clone() CLASS THtmlIterator
+METHOD THtmlIterator:Clone()
 
    LOCAL oRet
 
@@ -370,7 +370,7 @@ METHOD Clone() CLASS THtmlIterator
 
    RETURN oRet
 
-METHOD SetContext() CLASS THtmlIterator
+METHOD THtmlIterator:SetContext()
 
    ::oTop          := ::oNode
    ::aNodes        := ::oNode:collect()
@@ -379,7 +379,7 @@ METHOD SetContext() CLASS THtmlIterator
 
    RETURN Self
 
-METHOD Find( cName, cAttribute, cValue, cData ) CLASS THtmlIterator
+METHOD THtmlIterator:Find( cName, cAttribute, cValue, cData )
 
    ::cName         := cName
    ::cAttribute    := cAttribute
@@ -397,7 +397,7 @@ METHOD Find( cName, cAttribute, cValue, cData ) CLASS THtmlIterator
 
    RETURN ::Next()
 
-METHOD Next() CLASS THtmlIterator
+METHOD THtmlIterator:Next()
 
    LOCAL oFound, lExit := .F.
 
@@ -417,7 +417,7 @@ METHOD Next() CLASS THtmlIterator
 
    RETURN oFound
 
-METHOD MatchCriteria() CLASS THtmlIterator
+METHOD THtmlIterator:MatchCriteria()
    RETURN .T.
 
 /* Iterator scan class */
@@ -432,13 +432,13 @@ CREATE CLASS THtmlIteratorScan INHERIT THtmlIterator MODULE FRIENDLY
 
 ENDCLASS
 
-METHOD New( oNodeTop ) CLASS THtmlIteratorScan
+METHOD THtmlIteratorScan:New( oNodeTop )
 
    ::Super:New( oNodeTop )
 
    RETURN Self
 
-METHOD MatchCriteria(oFound) CLASS THtmlIteratorScan
+METHOD THtmlIteratorScan:MatchCriteria(oFound)
 
    LOCAL xData
 
@@ -477,13 +477,13 @@ CREATE CLASS THtmlIteratorRegex INHERIT THtmlIterator MODULE FRIENDLY
 
 ENDCLASS
 
-METHOD New( oNodeTop ) CLASS THtmlIteratorRegex
+METHOD THtmlIteratorRegex:New( oNodeTop )
 
    ::Super:New( oNodeTop )
 
    RETURN Self
 
-METHOD MatchCriteria(oFound) CLASS THtmlIteratorRegex
+METHOD THtmlIteratorRegex:MatchCriteria(oFound)
 
    LOCAL xData
 
@@ -599,7 +599,7 @@ CREATE CLASS THtmlNode MODULE FRIENDLY
 
 ENDCLASS
 
-METHOD new( oParent, cTagName, cAttrib, cContent ) CLASS THtmlNode
+METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
 
    IF ! t_lInit
       THtmlInit(.T.)
@@ -636,7 +636,7 @@ METHOD new( oParent, cTagName, cAttrib, cContent ) CLASS THtmlNode
 
    RETURN Self
 
-METHOD isType( nType ) CLASS THtmlNode
+METHOD THtmlNode:isType( nType )
 
    LOCAL lRet
 
@@ -649,31 +649,31 @@ METHOD isType( nType ) CLASS THtmlNode
    RETURN lRet
 
 // checks if this is a node that is always empty and never has HTML text, e.g. <img>,<link>,<meta>
-METHOD isEmpty() CLASS THtmlNode
+METHOD THtmlNode:isEmpty()
    RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_EMPTY ) != 0
 
 // checks if this is a node that may occur inline, eg. <b>,<font>
-METHOD isInline() CLASS THtmlNode
+METHOD THtmlNode:isInline()
    RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_INLINE ) != 0
 
 // checks if this is a node that may appear without a closing tag, eg. <p>,<tr>,<td>
-METHOD isOptional() CLASS THtmlNode
+METHOD THtmlNode:isOptional()
    RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_OPT ) != 0
 
 // checks if this is a node (leafs contain no further nodes, e.g. <br />,<hr>,_text_)
-METHOD isNode() CLASS THtmlNode
+METHOD THtmlNode:isNode()
    RETURN HB_ISARRAY( ::htmlContent ) .AND. Len(::htmlContent) > 0
 
 // checks if this is a block node that must be closed with an ending tag: eg: <table></table>, <ul></ul>
-METHOD isBlock() CLASS THtmlNode
+METHOD THtmlNode:isBlock()
    RETURN hb_bitAnd( ::htmlTagType[ 2 ], CM_BLOCK ) != 0
 
 // checks if this is a node whose text line formatting must be preserved: <pre>,<script>,<textarea>
-METHOD keepFormatting() CLASS THtmlNode
+METHOD THtmlNode:keepFormatting()
    RETURN "<" + Lower(::htmlTagName) + ">" $ "<pre>,<script>,<textarea>"
 
 // parses a HTML string and builds a tree of THtmlNode objects
-METHOD parseHtml( parser ) CLASS THtmlNode
+METHOD THtmlNode:parseHtml( parser )
 
    LOCAL nLastPos := parser:p_pos
    LOCAL lRewind  := .F.
@@ -838,7 +838,7 @@ METHOD parseHtml( parser ) CLASS THtmlNode
    RETURN Self
 
 // parses a HTML string without any changes to indentation and line breaks
-METHOD parseHtmlFixed( parser ) CLASS THtmlNode
+METHOD THtmlNode:parseHtmlFixed( parser )
 
    LOCAL nStart, nEnd
 
@@ -870,7 +870,7 @@ METHOD parseHtmlFixed( parser ) CLASS THtmlNode
    RETURN Self
 
 // adds a new CHILD node to the current one
-METHOD addNode( oTHtmlNode ) CLASS THtmlNode
+METHOD THtmlNode:addNode( oTHtmlNode )
 
    IF oTHtmlNode:parent != NIL .AND. ! oTHtmlNode:parent == Self
       oTHtmlNode:delete()
@@ -888,7 +888,7 @@ METHOD addNode( oTHtmlNode ) CLASS THtmlNode
    RETURN oTHtmlNode
 
 // inserts a SIBLING node before the current one
-METHOD insertBefore( oTHtmlNode ) CLASS THtmlNode
+METHOD THtmlNode:insertBefore( oTHtmlNode )
 
    IF ::parent == NIL
       RETURN ::error( "Cannot insert before root node", ::className(), ":insertBefore()", EG_ARG, hb_AParams() )
@@ -912,7 +912,7 @@ METHOD insertBefore( oTHtmlNode ) CLASS THtmlNode
    RETURN oTHtmlNode
 
 // inserts a SIBLING node after the current one
-METHOD insertAfter( oTHtmlNode ) CLASS THtmlNode
+METHOD THtmlNode:insertAfter( oTHtmlNode )
 
    LOCAL nPos
 
@@ -936,7 +936,7 @@ METHOD insertAfter( oTHtmlNode ) CLASS THtmlNode
    RETURN oTHtmlNode
 
 // deletes this node from the object tree
-METHOD Delete()  CLASS THtmlNode
+METHOD THtmlNode:Delete()
 
    IF ::parent == NIL
       RETURN Self
@@ -956,7 +956,7 @@ METHOD Delete()  CLASS THtmlNode
    RETURN Self
 
 // returns first node in subtree (.F.) or first node of entire tree (.T.)
-METHOD firstNode( lRoot ) CLASS THtmlNode
+METHOD THtmlNode:firstNode( lRoot )
 
    IF hb_defaultValue( lRoot, .F. )
       RETURN ::root:htmlContent[ 1 ]
@@ -967,7 +967,7 @@ METHOD firstNode( lRoot ) CLASS THtmlNode
    RETURN iif(Empty(::htmlContent), NIL, ::htmlContent[ 1 ])
 
 // returns last node in subtree (.F.) or last node of entire tree (.T.)
-METHOD lastNode( lRoot ) CLASS THtmlNode
+METHOD THtmlNode:lastNode( lRoot )
 
    hb_default( @lRoot, .F. )
 
@@ -978,7 +978,7 @@ METHOD lastNode( lRoot ) CLASS THtmlNode
    RETURN ATail( iif(lRoot, ::root:collect(), ::collect() ))
 
 // returns next node
-METHOD nextNode() CLASS THtmlNode
+METHOD THtmlNode:nextNode()
 
    LOCAL nPos, aNodes
 
@@ -1001,7 +1001,7 @@ METHOD nextNode() CLASS THtmlNode
    RETURN iif(nPos == Len(aNodes), NIL, aNodes[ nPos + 1 ])
 
 // returns previous node
-METHOD prevNode() CLASS THtmlNode
+METHOD THtmlNode:prevNode()
 
    LOCAL nPos, aNodes
 
@@ -1015,7 +1015,7 @@ METHOD prevNode() CLASS THtmlNode
    RETURN iif(nPos == 1, ::parent, aNodes[ nPos - 1 ])
 
 // creates HTML code for this node
-METHOD toString( nIndent ) CLASS THtmlNode
+METHOD THtmlNode:toString( nIndent )
 
    LOCAL cIndent, cHtml := "", oNode
 
@@ -1070,7 +1070,7 @@ METHOD toString( nIndent ) CLASS THtmlNode
    RETURN cHtml
 
 // Builds the attribute string
-METHOD attrToString() CLASS THtmlNode
+METHOD THtmlNode:attrToString()
 
    LOCAL aAttr, cAttr
 
@@ -1107,7 +1107,7 @@ STATIC FUNCTION __AttrToStr( cName, cValue, aAttr, oTHtmlNode )
    RETURN " " + cName + "=" + '"' + cValue + '"'
 
 // collects all (sub)nodes of the tree in a one dimensional array
-METHOD collect( oEndNode ) CLASS THtmlNode
+METHOD THtmlNode:collect( oEndNode )
 
    LOCAL stack, oSubNode
 
@@ -1140,7 +1140,7 @@ STATIC FUNCTION __CollectTags( oTHtmlNode, stack, oEndNode )
    RETURN stack
 
 // Retrieves the textual content of a node
-METHOD getText( cEOL ) CLASS THtmlNode
+METHOD THtmlNode:getText( cEOL )
 
    LOCAL cText := ""
    LOCAL oNode
@@ -1162,7 +1162,7 @@ METHOD getText( cEOL ) CLASS THtmlNode
    RETURN cText
 
 // Returns the value of an HTML attribute
-METHOD getAttribute( cName ) CLASS THtmlNode
+METHOD THtmlNode:getAttribute( cName )
 
    LOCAL hHash := ::getAttributes()
    LOCAL cValue
@@ -1180,7 +1180,7 @@ METHOD getAttribute( cName ) CLASS THtmlNode
    RETURN cValue
 
 // Returns all HTML attributes as a Hash
-METHOD getAttributes() CLASS THtmlNode
+METHOD THtmlNode:getAttributes()
 
    IF ::htmlTagType[ 1 ] == NIL
       // Tag has no valid attributes
@@ -1303,7 +1303,7 @@ STATIC FUNCTION __ParseAttr( parser )
    RETURN hHash
 
 // Sets one attribute and value
-METHOD setAttribute( cName, cValue ) CLASS THtmlNode
+METHOD THtmlNode:setAttribute( cName, cValue )
 
    LOCAL aAttr
    LOCAL nPos
@@ -1335,14 +1335,14 @@ METHOD setAttribute( cName, cValue ) CLASS THtmlNode
    RETURN hHash[ cName ]
 
 // Sets all attribute and values
-METHOD setAttributes( cHtml ) CLASS THtmlNode
+METHOD THtmlNode:setAttributes( cHtml )
 
    ::htmlAttributes := cHtml
 
    RETURN ::getAttributes()
 
 // Removes one attribute
-METHOD delAttribute( cName ) CLASS THtmlNode
+METHOD THtmlNode:delAttribute( cName )
 
    LOCAL xVal := ::getAttribute( cName )
    LOCAL lRet := .F.
@@ -1359,14 +1359,14 @@ METHOD delAttribute( cName ) CLASS THtmlNode
    RETURN lRet
 
 // Removes all attributes
-METHOD delAttributes() CLASS THtmlNode
+METHOD THtmlNode:delAttributes()
 
    ::htmlAttributes := NIL
 
    RETURN .T.
 
 // Checks for the existence of an attribute
-METHOD isAttribute( cName ) CLASS THtmlNode
+METHOD THtmlNode:isAttribute( cName )
 
    LOCAL lRet
 
@@ -1379,11 +1379,11 @@ METHOD isAttribute( cName ) CLASS THtmlNode
    RETURN lRet
 
 // Error handling
-METHOD noMessage( ... ) CLASS THtmlNode
+METHOD THtmlNode:noMessage( ... )
    RETURN ::noAttribute( __GetMessage(), hb_AParams() )
 
 // Non existent message -> returns and/or creates Tag or Attribute
-METHOD noAttribute( cName, aValue ) CLASS THtmlNode
+METHOD THtmlNode:noAttribute( cName, aValue )
 
    LOCAL oNode
 
@@ -1419,7 +1419,7 @@ METHOD noAttribute( cName, aValue ) CLASS THtmlNode
    RETURN ::getAttribute( cName )
 
 // finds the first node in tree with this name
-METHOD findNodeByTagName( cName ) CLASS THtmlNode
+METHOD THtmlNode:findNodeByTagName( cName )
 
    LOCAL aNodes := ::collect()
    LOCAL oNode
@@ -1433,7 +1433,7 @@ METHOD findNodeByTagName( cName ) CLASS THtmlNode
    RETURN NIL
 
 // collects all nodes in tree with this name
-METHOD findNodesByTagName( cName, nOrdinal ) CLASS THtmlNode
+METHOD THtmlNode:findNodesByTagName( cName, nOrdinal )
 
    LOCAL aNodes := ::collect()
    LOCAL oNode
@@ -1455,7 +1455,7 @@ METHOD findNodesByTagName( cName, nOrdinal ) CLASS THtmlNode
    RETURN aRet
 
 // returns the text node of this node
-METHOD _getTextNode() CLASS THtmlNode
+METHOD THtmlNode:_getTextNode()
 
    IF ::htmlTagName == "_text_"
       RETURN Self
@@ -1466,7 +1466,7 @@ METHOD _getTextNode() CLASS THtmlNode
    RETURN ATail( ::htmlContent )
 
 // assigns text to a text node of this node
-METHOD _setTextNode( cText ) CLASS THtmlNode
+METHOD THtmlNode:_setTextNode( cText )
 
    cText := LTrim(hb_ValToStr( cText ))
 
@@ -1484,7 +1484,7 @@ METHOD _setTextNode( cText ) CLASS THtmlNode
 
 // called by "+" operator
 // Creates a new node of the specified tag name and raises error if cTagName is invalid
-METHOD pushNode( cTagName ) CLASS THtmlNode
+METHOD THtmlNode:pushNode( cTagName )
 
    LOCAL oNode
    LOCAL cAttr := AllTrim(cTagName)
@@ -1518,7 +1518,7 @@ METHOD pushNode( cTagName ) CLASS THtmlNode
 
 // called by "-" operator
 // returns the parent of this node and raises error if cName is an invalid closing tag
-METHOD popNode( cName ) CLASS THtmlNode
+METHOD THtmlNode:popNode( cName )
 
    LOCAL endTag
 

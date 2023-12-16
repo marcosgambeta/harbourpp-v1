@@ -112,7 +112,7 @@ CREATE CLASS TIPClientFTP INHERIT TIPClient
 
 ENDCLASS
 
-METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClientFTP
+METHOD TIPClientFTP:New( oUrl, xTrace, oCredentials )
 
    ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "ftp", xTrace), oCredentials )
 
@@ -128,7 +128,7 @@ METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClientFTP
 
    RETURN Self
 
-METHOD Open( cUrl ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Open( cUrl )
 
    IF HB_ISSTRING( cUrl )
       ::oUrl := TUrl():New( cUrl )
@@ -152,7 +152,7 @@ METHOD Open( cUrl ) CLASS TIPClientFTP
 
    RETURN .F.
 
-METHOD Close() CLASS TIPClientFTP
+METHOD TIPClientFTP:Close()
 
    ::InetTimeOut( ::SocketCon )
 
@@ -160,7 +160,7 @@ METHOD Close() CLASS TIPClientFTP
 
    RETURN ::super:Close()
 
-METHOD GetReply() CLASS TIPClientFTP
+METHOD TIPClientFTP:GetReply()
 
    LOCAL nLen
    LOCAL cRep := ::cReply := ::inetRecvLine( ::SocketCon, @nLen, 128 )
@@ -177,7 +177,7 @@ METHOD GetReply() CLASS TIPClientFTP
    // 4 and 5 are error codes
    RETURN ::inetErrorCode( ::SocketCon ) == 0 .AND. Val( Left(::cReply, 1) ) < 4
 
-METHOD Commit() CLASS TIPClientFTP
+METHOD TIPClientFTP:Commit()
 
    hb_inetClose( ::SocketCon )
 
@@ -188,7 +188,7 @@ METHOD Commit() CLASS TIPClientFTP
    RETURN ::GetReply() .AND. ! hb_LeftEq( ::cReply, "5" )
 
 // scan last reply for an hint of length
-METHOD ScanLength() CLASS TIPClientFTP
+METHOD TIPClientFTP:ScanLength()
 
    LOCAL aBytes := hb_regex( ::RegBytes, ::cReply )
 
@@ -198,7 +198,7 @@ METHOD ScanLength() CLASS TIPClientFTP
 
    RETURN .T.
 
-METHOD TransferStart() CLASS TIPClientFTP
+METHOD TIPClientFTP:TransferStart()
 
    LOCAL skt
 
@@ -240,7 +240,7 @@ METHOD TransferStart() CLASS TIPClientFTP
 
    RETURN .T.
 
-METHOD Pasv() CLASS TIPClientFTP
+METHOD TIPClientFTP:Pasv()
 
    LOCAL aRep
 
@@ -259,37 +259,37 @@ METHOD Pasv() CLASS TIPClientFTP
 
    RETURN .T.
 
-METHOD Quit() CLASS TIPClientFTP
+METHOD TIPClientFTP:Quit()
 
    ::inetSendAll( ::SocketCon, "QUIT" + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD TypeI() CLASS TIPClientFTP
+METHOD TIPClientFTP:TypeI()
 
    ::inetSendAll( ::SocketCon, "TYPE I" + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD TypeA() CLASS TIPClientFTP
+METHOD TIPClientFTP:TypeA()
 
    ::inetSendAll( ::SocketCon, "TYPE A" + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD NoOp() CLASS TIPClientFTP
+METHOD TIPClientFTP:NoOp()
 
    ::inetSendAll( ::SocketCon, "NOOP" + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD Rest( nPos ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Rest( nPos )
 
    ::inetSendAll( ::SocketCon, "REST " + hb_ntos( Int( hb_defaultValue( nPos, 0 ) ) ) + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD PWD() CLASS TIPClientFTP
+METHOD TIPClientFTP:PWD()
 
    ::inetSendAll( ::SocketCon, "PWD" + ::cCRLF )
    IF ::GetReply()
@@ -300,19 +300,19 @@ METHOD PWD() CLASS TIPClientFTP
 
    RETURN .F.
 
-METHOD CWD( cPath ) CLASS TIPClientFTP
+METHOD TIPClientFTP:CWD( cPath )
 
    ::inetSendAll( ::SocketCon, "CWD " + cPath + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD Dele( cPath ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Dele( cPath )
 
    ::inetSendAll( ::SocketCon, "DELE " + cPath + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD LS( cSpec ) CLASS TIPClientFTP
+METHOD TIPClientFTP:LS( cSpec )
 
    IF ::bUsePasv .AND. ! ::Pasv()
 #if 0
@@ -329,7 +329,7 @@ METHOD LS( cSpec ) CLASS TIPClientFTP
 
    RETURN hb_defaultValue( ::ReadAuxPort(), "" )
 
-METHOD Rename( cFrom, cTo ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Rename( cFrom, cTo )
 
    ::inetSendAll( ::SocketCon, "RNFR " + hb_defaultValue( cFrom, "" ) + ::cCRLF )
    IF ::GetReply()
@@ -340,20 +340,20 @@ METHOD Rename( cFrom, cTo ) CLASS TIPClientFTP
    RETURN .F.
 
 // Create a new directory
-METHOD MKD( cPath ) CLASS TIPClientFTP
+METHOD TIPClientFTP:MKD( cPath )
 
    ::inetSendAll( ::SocketCon, "MKD " + cPath + ::cCRLF )
 
    RETURN ::GetReply()
 
 // Delete an existing directory
-METHOD RMD( cPath ) CLASS TIPClientFTP
+METHOD TIPClientFTP:RMD( cPath )
 
    ::inetSendAll( ::SocketCon, "RMD " + cPath + ::cCRLF )
 
    RETURN ::GetReply()
 
-METHOD Retr( cFile ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Retr( cFile )
 
    IF ::bUsePasv .AND. ! ::Pasv()
 #if 0
@@ -371,7 +371,7 @@ METHOD Retr( cFile ) CLASS TIPClientFTP
 
    RETURN .F.
 
-METHOD Stor( cFile ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Stor( cFile )
 
    IF ::bUsePasv .AND. ! ::Pasv()
 #if 0
@@ -390,7 +390,7 @@ METHOD Stor( cFile ) CLASS TIPClientFTP
 
    RETURN ::TransferStart()
 
-METHOD List( cSpec ) CLASS TIPClientFTP
+METHOD TIPClientFTP:List( cSpec )
 
    LOCAL cStr
 
@@ -416,7 +416,7 @@ METHOD List( cSpec ) CLASS TIPClientFTP
 
    RETURN cStr
 
-METHOD UserCommand( cCommand, lPasv, lReadPort, lGetReply ) CLASS TIPClientFTP
+METHOD TIPClientFTP:UserCommand( cCommand, lPasv, lReadPort, lGetReply )
 
    IF ::bUsePasv .AND. hb_defaultValue( lPasv, .T. ) .AND. ! ::Pasv()
       RETURN .F.
@@ -434,7 +434,7 @@ METHOD UserCommand( cCommand, lPasv, lReadPort, lGetReply ) CLASS TIPClientFTP
 
    RETURN .T.
 
-METHOD Port() CLASS TIPClientFTP
+METHOD TIPClientFTP:Port()
 
    ::SocketPortServer := hb_inetCreate( ::nConnTimeout )
 
@@ -454,7 +454,7 @@ METHOD Port() CLASS TIPClientFTP
 
    RETURN .F.
 
-METHOD SendPort() CLASS TIPClientFTP
+METHOD TIPClientFTP:SendPort()
 
    LOCAL nPort := hb_inetPort( ::SocketPortServer )
 
@@ -465,7 +465,7 @@ METHOD SendPort() CLASS TIPClientFTP
 
    RETURN ::GetReply()
 
-METHOD ReadAuxPort() CLASS TIPClientFTP
+METHOD TIPClientFTP:ReadAuxPort()
 
    LOCAL cRet
    LOCAL cList
@@ -487,7 +487,7 @@ METHOD ReadAuxPort() CLASS TIPClientFTP
 
    RETURN NIL
 
-METHOD Read( nLen ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Read( nLen )
 
    LOCAL cRet
 
@@ -519,7 +519,7 @@ METHOD Read( nLen ) CLASS TIPClientFTP
    RETURN cRet
 
 /* FTP transfer wants commit only at end. */
-METHOD Write( cData, nLen ) CLASS TIPClientFTP
+METHOD TIPClientFTP:Write( cData, nLen )
 
    IF ! ::bInitialized
 
@@ -541,7 +541,7 @@ METHOD Write( cData, nLen ) CLASS TIPClientFTP
 
    RETURN ::super:Write( cData, nLen, .F. )
 
-METHOD MGet( cSpec, cLocalPath ) CLASS TIPClientFTP
+METHOD TIPClientFTP:MGet( cSpec, cLocalPath )
 
    LOCAL cStr, cFile
 
@@ -567,7 +567,7 @@ METHOD MGet( cSpec, cLocalPath ) CLASS TIPClientFTP
 
    RETURN cStr
 
-METHOD MPut( cFileSpec, cAttr ) CLASS TIPClientFTP
+METHOD TIPClientFTP:MPut( cFileSpec, cAttr )
 
    LOCAL aFile
    LOCAL cStr
@@ -587,7 +587,7 @@ METHOD MPut( cFileSpec, cAttr ) CLASS TIPClientFTP
                 Why emulate a platform specific and ill-defined format? */
    RETURN SubStr(cStr, Len(e"\r\n") + 1)
 
-METHOD UploadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
+METHOD TIPClientFTP:UploadFile( cLocalFile, cRemoteFile )
 
    ::bEof := .F.
    ::oUrl:cFile := hb_defaultValue( cRemoteFile, hb_FNameNameExt( cLocalFile ) )
@@ -616,7 +616,7 @@ METHOD UploadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
 
    RETURN ::WriteFromFile( cLocalFile )
 
-METHOD DownloadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
+METHOD TIPClientFTP:DownloadFile( cLocalFile, cRemoteFile )
 
    ::bEof := .F.
    ::oUrl:cFile := hb_defaultValue( cRemoteFile, hb_FNameNameExt( cLocalFile ) )
@@ -644,7 +644,7 @@ METHOD DownloadFile( cLocalFile, cRemoteFile ) CLASS TIPClientFTP
    RETURN ::ReadToFile( cLocalFile, , ::nLength )
 
 // Return total file size for <cFileSpec>
-METHOD FileSize( cFileSpec ) CLASS TIPClientFTP
+METHOD TIPClientFTP:FileSize( cFileSpec )
 
    LOCAL aFile
    LOCAL nSize := 0
@@ -667,7 +667,7 @@ METHOD FileSize( cFileSpec ) CLASS TIPClientFTP
  */
 
 // Parse the :list() string into a hb_vfDirectory() compatible 2-dim array
-METHOD ListFiles( cFileSpec ) CLASS TIPClientFTP
+METHOD TIPClientFTP:ListFiles( cFileSpec )
 
    LOCAL aMonth := { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }
 

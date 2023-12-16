@@ -54,14 +54,14 @@ CREATE CLASS TIPEncoderUrl INHERIT TIPEncoder
 
 ENDCLASS
 
-METHOD New() CLASS TIPEncoderUrl
+METHOD TIPEncoderUrl:New()
 
    ::cName := "urlencoded"
 
    RETURN Self
 
-METHOD Encode( cData ) CLASS TIPEncoderUrl
+METHOD TIPEncoderUrl:Encode( cData )
    RETURN tip_URLEncode( cData )
 
-METHOD Decode( cData ) CLASS TIPEncoderUrl
+METHOD TIPEncoderUrl:Decode( cData )
    RETURN tip_URLDecode( cData )

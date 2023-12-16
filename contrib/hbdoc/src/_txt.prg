@@ -54,14 +54,14 @@ CREATE CLASS GenerateAscii INHERIT GenerateText
 
 ENDCLASS
 
-METHOD NewDocument( cDir, cFilename, cTitle, cLang ) CLASS GenerateAscii
+METHOD GenerateAscii:NewDocument( cDir, cFilename, cTitle, cLang )
 
    ::lContinuous := .T.
    ::super:NewDocument( cDir, cFilename, cTitle,, cLang )
 
    RETURN Self
 
-METHOD NewIndex( cDir, cFilename, cTitle, cLang ) CLASS GenerateAscii
+METHOD GenerateAscii:NewIndex( cDir, cFilename, cTitle, cLang )
 
    ::lContinuous := .T.
    ::super:NewIndex( cDir, cFilename, cTitle,, cLang )
@@ -92,21 +92,21 @@ CREATE CLASS GenerateText INHERIT TPLGenerate
 
 ENDCLASS
 
-METHOD NewDocument( cDir, cFilename, cTitle, cLang ) CLASS GenerateText
+METHOD GenerateText:NewDocument( cDir, cFilename, cTitle, cLang )
 
    ::super:NewDocument( cDir, cFilename, cTitle, ".txt", cLang )
    ::WriteEntry( "", cTitle + hb_eol(), .F. )
 
    RETURN Self
 
-METHOD NewIndex( cDir, cFilename, cTitle, cLang ) CLASS GenerateText
+METHOD GenerateText:NewIndex( cDir, cFilename, cTitle, cLang )
 
    ::super:NewIndex( cDir, cFilename, cTitle, ".txt", cLang )
    ::WriteEntry( "", cTitle + hb_eol(), .F. )
 
    RETURN Self
 
-METHOD BeginSection( cSection, cFilename ) CLASS GenerateText
+METHOD GenerateText:BeginSection( cSection, cFilename )
 
    IF ::Depth == 0
       ::WriteEntry( "", cSection + " (see " + cFilename + ::cExtension + "):", .F. )
@@ -117,13 +117,13 @@ METHOD BeginSection( cSection, cFilename ) CLASS GenerateText
 
    RETURN Self
 
-METHOD AddIndex( oEntry ) CLASS GenerateText
+METHOD GenerateText:AddIndex( oEntry )
 
    ::WriteEntry( FieldCaption( "NAME" ), oEntry:fld[ "NAME" ] + " - " + oEntry:fld[ "ONELINER" ], .F. )
 
    RETURN Self
 
-METHOD AddEntry( oEntry ) CLASS GenerateText
+METHOD GenerateText:AddEntry( oEntry )
 
    LOCAL item
 
@@ -158,7 +158,7 @@ METHOD PROCEDURE WriteEntry( cCaption, cContent, lPreformatted ) CLASS GenerateT
       ENDDO
    ENDIF
 
-METHOD Generate() CLASS GenerateText
+METHOD GenerateText:Generate()
 
    IF ::IsIndex() .AND. ! ::lContinuous
       ::cFile += hb_BChar( 12 ) + hb_eol()

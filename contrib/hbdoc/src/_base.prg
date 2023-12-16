@@ -81,19 +81,19 @@ CREATE CLASS TPLGenerate
 
 ENDCLASS
 
-METHOD NewIndex( cDir, cFilename, cTitle, cExtension, cLang ) CLASS TPLGenerate
+METHOD TPLGenerate:NewIndex( cDir, cFilename, cTitle, cExtension, cLang )
 
    ::New( cDir, cFilename, cTitle, cExtension, cLang, INDEX_ )
 
    RETURN Self
 
-METHOD NewDocument( cDir, cFilename, cTitle, cExtension, cLang ) CLASS TPLGenerate
+METHOD TPLGenerate:NewDocument( cDir, cFilename, cTitle, cExtension, cLang )
 
    ::New( cDir, cFilename, cTitle, cExtension, cLang, DOCUMENT_ )
 
    RETURN Self
 
-METHOD New( cDir, cFilename, cTitle, cExtension, cLang, nType ) CLASS TPLGenerate
+METHOD TPLGenerate:New( cDir, cFilename, cTitle, cExtension, cLang, nType )
 
    ::cDir := cDir
    ::cFilename := cFilename
@@ -110,7 +110,7 @@ METHOD New( cDir, cFilename, cTitle, cExtension, cLang, nType ) CLASS TPLGenerat
 
    RETURN Self
 
-METHOD Generate() CLASS TPLGenerate
+METHOD TPLGenerate:Generate()
 
    LOCAL cDir := hb_FNameDir( ::cOutFileName )
 

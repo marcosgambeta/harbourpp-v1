@@ -41,7 +41,7 @@ CREATE CLASS TFileRead
 
 END CLASS
 
-METHOD New( cFile, nSize ) CLASS TFileRead
+METHOD TFileRead:New( cFile, nSize )
 
    IF nSize == NIL .OR. nSize < 1
       // The readahead size can be set to as little as 1 byte, or as much as
@@ -59,7 +59,7 @@ METHOD New( cFile, nSize ) CLASS TFileRead
 
    RETURN Self
 
-METHOD Open( nMode ) CLASS TFileRead
+METHOD TFileRead:Open( nMode )
 
    IF ::nHan == F_ERROR
       // Only open the file if it isn't already open.
@@ -87,7 +87,7 @@ METHOD Open( nMode ) CLASS TFileRead
 
    RETURN Self
 
-METHOD ReadLine() CLASS TFileRead
+METHOD TFileRead:ReadLine()
 
    LOCAL cLine := ""
    LOCAL nPos
@@ -154,7 +154,7 @@ METHOD ReadLine() CLASS TFileRead
 
    RETURN cLine
 
-METHOD EOL_pos() CLASS TFileRead
+METHOD TFileRead:EOL_pos()
 
    LOCAL nCRpos, nLFpos, nPos
 
@@ -175,7 +175,7 @@ METHOD EOL_pos() CLASS TFileRead
 
    RETURN nPos
 
-METHOD Close() CLASS TFileRead
+METHOD TFileRead:Close()
 
    ::nLastOp := oF_CLOSE_FILE
    ::lEOF := .T.
@@ -193,38 +193,38 @@ METHOD Close() CLASS TFileRead
 
    RETURN Self
 
-METHOD Name() CLASS TFileRead
+METHOD TFileRead:Name()
 
    // Returns the filename associated with this class instance.
 
    RETURN ::cFile
 
-METHOD IsOpen() CLASS TFileRead
+METHOD TFileRead:IsOpen()
 
    // Returns .T. if the file is open.
 
    RETURN ::nHan != F_ERROR
 
-METHOD MoreToRead() CLASS TFileRead
+METHOD TFileRead:MoreToRead()
 
    // Returns .T. if there is more to be read from either the file or the
    // readahead buffer. Only when both are exhausted is there no more to read.
 
    RETURN ! ::lEOF .OR. ! Empty(::cBuffer)
 
-METHOD Error() CLASS TFileRead
+METHOD TFileRead:Error()
 
    // Returns .T. if an error was recorded.
 
    RETURN ::nError != 0
 
-METHOD ErrorNo() CLASS TFileRead
+METHOD TFileRead:ErrorNo()
 
    // Returns the last error code that was recorded.
 
    RETURN ::nError
 
-METHOD ErrorMsg( cText ) CLASS TFileRead
+METHOD TFileRead:ErrorMsg( cText )
 
    STATIC sc_cAction := { "on", "creating object for", "opening", "reading from", "closing" }
 

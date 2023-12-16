@@ -111,7 +111,7 @@ ENDCLASS
 *
 */
 
-METHOD New(cVarName, cUrl, cName, x, y, w, h) CLASS TJSWindow
+METHOD TJSWindow:New(cVarName, cUrl, cName, x, y, w, h)
 
    __defaultNIL(@cVarName, "newWin")
    __defaultNIL(@cURL, " ")
@@ -135,10 +135,10 @@ METHOD New(cVarName, cUrl, cName, x, y, w, h) CLASS TJSWindow
    RETURN Self
 
 /* Set the properties of the window */
-METHOD SetFeatures(alwaysRaised, alwaysLowered, ;
+METHOD TJSWindow:SetFeatures(alwaysRaised, alwaysLowered, ;
       Resizable, Menubar, personalBar, ;
       dependent, location, directories, ;
-      Scrollbars, Status, TitleBar, Toolbar, copyHistory) CLASS TJSWindow
+      Scrollbars, Status, TitleBar, Toolbar, copyHistory)
 
    LOCAL cStr := ""
 
@@ -227,7 +227,7 @@ METHOD SetFeatures(alwaysRaised, alwaysLowered, ;
    RETURN Self
 
 /* set the size for the window */
-METHOD SetSize(x, y, h, w) CLASS TJSWindow
+METHOD TJSWindow:SetSize(x, y, h, w)
 
    LOCAL cStr := ""
 
@@ -252,7 +252,7 @@ METHOD SetSize(x, y, h, w) CLASS TJSWindow
    RETURN Self
 
 /* Open the window from within the current document */
-METHOD Put() CLASS TJSWindow
+METHOD TJSWindow:Put()
 
    LOCAL cStr := ""
 
@@ -280,7 +280,7 @@ METHOD Put() CLASS TJSWindow
    RETURN Self
 
 /* Output stand alone Javascript code in the current document */
-METHOD Write(c) CLASS TJSWindow
+METHOD TJSWindow:Write(c)
 
    HtmlJSCmd(::nH, ::varName + ".document.write('" + c + "')" + CRLF())
 
@@ -288,7 +288,7 @@ METHOD Write(c) CLASS TJSWindow
 
 /* Output Javascript (or HTML) code in the current document and
    in the current script */
-METHOD QOut(c) CLASS TJSWindow
+METHOD TJSWindow:QOut(c)
 
    FWrite(::nH, ::varName + ".document.write('" + c + "')" + CRLF())
 
@@ -296,7 +296,7 @@ METHOD QOut(c) CLASS TJSWindow
 
 /* Begin HTML output to the window from within the current document
    and the current script */
-METHOD Begin() CLASS TJSWindow
+METHOD TJSWindow:Begin()
 
    LOCAL i
 
@@ -354,14 +354,14 @@ METHOD Begin() CLASS TJSWindow
    RETURN Self
 
 /* End HTML output to the window */
-METHOD End() CLASS TJSWindow
+METHOD TJSWindow:End()
 
    HtmlJSCmd(::nH, ::varName + ".document.write('</body></html>')" + CRLF())
 
    RETURN Self
 
 /* Place an image link to the window */
-METHOD ImageURL(cImage, cUrl, nHeight, nBorder, cOnClick, cOnMsover, cOnMsout, cName, cAlt) CLASS TJSWindow
+METHOD TJSWindow:ImageURL(cImage, cUrl, nHeight, nBorder, cOnClick, cOnMsover, cOnMsout, cName, cAlt)
 
    LOCAL cStr := ""
 

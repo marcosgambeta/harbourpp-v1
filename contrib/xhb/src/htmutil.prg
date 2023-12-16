@@ -365,7 +365,7 @@ ENDCLASS
 *
 */
 
-METHOD New(cVarName, cUrl, cName, x, y, w, h) CLASS JWindow
+METHOD JWindow:New(cVarName, cUrl, cName, x, y, w, h)
 
    __defaultNIL(@cVarName, "newWin")
    __defaultNIL(@cURL, " ")
@@ -400,10 +400,10 @@ METHOD New(cVarName, cUrl, cName, x, y, w, h) CLASS JWindow
 *
 */
 
-METHOD SetFeatures(alwaysRaised, alwaysLowered, ;
+METHOD JWindow:SetFeatures(alwaysRaised, alwaysLowered, ;
       Resizable, Menubar, personalBar, ;
       dependent, location, directories, ;
-      Scrollbars, Status, TitleBar, Toolbar, copyHistory) CLASS JWindow
+      Scrollbars, Status, TitleBar, Toolbar, copyHistory)
 
    LOCAL cStr := ""
 
@@ -499,7 +499,7 @@ METHOD SetFeatures(alwaysRaised, alwaysLowered, ;
 *
 */
 
-METHOD SetSize(x, y, h, w) CLASS JWindow
+METHOD JWindow:SetSize(x, y, h, w)
 
    LOCAL cStr := ""
 
@@ -531,7 +531,7 @@ METHOD SetSize(x, y, h, w) CLASS JWindow
 *
 */
 
-METHOD Put() CLASS JWindow
+METHOD JWindow:Put()
 
    LOCAL cStr := ""
 
@@ -564,7 +564,7 @@ METHOD Put() CLASS JWindow
 *
 */
 
-METHOD Write(c) CLASS JWindow
+METHOD JWindow:Write(c)
 
    HtmlJSCmd(::nH, ::varName + ".document.write('" + c + "')" + CRLF())
 
@@ -577,7 +577,7 @@ METHOD Write(c) CLASS JWindow
 *
 */
 
-METHOD QOut(c) CLASS JWindow
+METHOD JWindow:QOut(c)
 
    FWrite(::nH, ::varName + ".document.write('" + c + "')" + CRLF())
 
@@ -591,7 +591,7 @@ METHOD QOut(c) CLASS JWindow
 *
 */
 
-METHOD Begin() CLASS JWindow
+METHOD JWindow:Begin()
 
    LOCAL i
 
@@ -656,7 +656,7 @@ METHOD Begin() CLASS JWindow
 *
 */
 
-METHOD End() CLASS JWindow
+METHOD JWindow:End()
 
    HtmlJSCmd(::nH, ::varName + ".document.write('</body></html>')" + CRLF())
 
@@ -670,7 +670,7 @@ METHOD End() CLASS JWindow
 *
 */
 
-METHOD ImageURL(cImage, cUrl, nHeight, nBorder, cOnClick, cOnMsover, cOnMsout, cName, cAlt) CLASS JWindow
+METHOD JWindow:ImageURL(cImage, cUrl, nHeight, nBorder, cOnClick, cOnMsover, cOnMsout, cName, cAlt)
 
    LOCAL cStr := ""
 

@@ -190,7 +190,7 @@ CREATE CLASS TRPCClient
 
 ENDCLASS
 
-METHOD New(cNetwork, nTcpPort, nUdpPort) CLASS TRPCClient
+METHOD TRPCClient:New(cNetwork, nTcpPort, nUdpPort)
 
    ::nStatus := RPC_STATUS_NONE // not connected
    ::nErrorCode := 0 // no RPC error
@@ -211,7 +211,7 @@ METHOD New(cNetwork, nTcpPort, nUdpPort) CLASS TRPCClient
 
    RETURN Self
 
-METHOD Destroy() CLASS TRPCClient
+METHOD TRPCClient:Destroy()
 
    hb_mutexLock(::mtxBusy)
 
@@ -239,7 +239,7 @@ METHOD SetEncryption(cKey)
 
    RETURN .T.
 
-METHOD ScanServers(cName) CLASS TRPCClient
+METHOD TRPCClient:ScanServers(cName)
 
    // do not allow asynchronous mode without timeout
    IF !::lAsyncMode .AND. (::nTimeout == NIL .OR. ::nTimeOut <= 0)
@@ -284,7 +284,7 @@ METHOD CheckServer(cRemote)
 
    RETURN .F.
 
-METHOD ScanFunctions(cFunc, cSerial) CLASS TRPCClient
+METHOD TRPCClient:ScanFunctions(cFunc, cSerial)
 
    // do not allow asynchronous mode without timeout
    IF !::lAsyncMode .AND. (::nTimeOut == NIL .OR. ::nTimeOut <= 0)
@@ -327,7 +327,7 @@ METHOD StartScan()
 
    RETURN .T.
 
-METHOD UDPAccept() CLASS TRPCClient
+METHOD TRPCClient:UDPAccept()
 
    LOCAL nTime, nDatalen, cData
 
@@ -365,7 +365,7 @@ METHOD UDPAccept() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD UDPParse(cData, nLen) CLASS TRPCClient
+METHOD TRPCClient:UDPParse(cData, nLen)
 
    LOCAL cCode, cSer, cFunc, cName
    LOCAL aLoc
@@ -408,7 +408,7 @@ METHOD UDPParse(cData, nLen) CLASS TRPCClient
 
    RETURN .F.
 
-METHOD StopScan() CLASS TRPCClient
+METHOD TRPCClient:StopScan()
 
    hb_mutexLock(::mtxBusy)
    IF hb_threadID(::thUDPAccept) != 0
@@ -422,7 +422,7 @@ METHOD StopScan() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD Connect(cServer, cUserId, cPassword) CLASS TRPCClient
+METHOD TRPCClient:Connect(cServer, cUserId, cPassword)
 
    LOCAL cAuth, cReply := Space(8)
 
@@ -458,7 +458,7 @@ METHOD Connect(cServer, cUserId, cPassword) CLASS TRPCClient
 
    RETURN .F.
 
-METHOD BuildChallengePwd(cPassword) CLASS TRPCClient
+METHOD TRPCClient:BuildChallengePwd(cPassword)
 
    LOCAL nLen, nCount, cRet
 
@@ -479,7 +479,7 @@ METHOD BuildChallengePwd(cPassword) CLASS TRPCClient
 
    RETURN cRet
 
-METHOD ManageChallenge() CLASS TRPCClient
+METHOD TRPCClient:ManageChallenge()
 
    LOCAL cCode, cLen, nLen
    LOCAL cData, nChallenge
@@ -523,7 +523,7 @@ METHOD ManageChallenge() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD Disconnect() CLASS TRPCClient
+METHOD TRPCClient:Disconnect()
 
    IF ::nStatus >= RPC_STATUS_LOGGED
       hb_mutexLock(::mtxBusy)
@@ -536,7 +536,7 @@ METHOD Disconnect() CLASS TRPCClient
 
    RETURN .F.
 
-METHOD SetLoopMode(nMethod, xData, nEnd, nStep) CLASS TRPCClient
+METHOD TRPCClient:SetLoopMode(nMethod, xData, nEnd, nStep)
 
    IF nMethod == RPC_LOOP_NONE
       ::nLoopMode := RPC_LOOP_NONE
@@ -566,7 +566,7 @@ METHOD SetLoopMode(nMethod, xData, nEnd, nStep) CLASS TRPCClient
 
    RETURN .T.
 
-METHOD ClearTCPBuffer() CLASS TRPCClient
+METHOD TRPCClient:ClearTCPBuffer()
 
    LOCAL cDummy := Space(512)
 
@@ -581,7 +581,7 @@ METHOD ClearTCPBuffer() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD Call(...) CLASS TRPCClient
+METHOD TRPCClient:Call(...)
 
    LOCAL oCalling
    LOCAL cFunction, aParams
@@ -641,7 +641,7 @@ METHOD Call(...) CLASS TRPCClient
 
    RETURN ::oResult
 
-METHOD SetPeriodCallback(...) CLASS TRPCClient
+METHOD TRPCClient:SetPeriodCallback(...)
 
    LOCAL caCalling
    LOCAL nCount
@@ -674,7 +674,7 @@ METHOD SetPeriodCallback(...) CLASS TRPCClient
 
    RETURN .T.
 
-METHOD ClearPeriodCallback() CLASS TRPCClient
+METHOD TRPCClient:ClearPeriodCallback()
 
    hb_mutexLock(::mtxBusy)
 
@@ -692,7 +692,7 @@ METHOD ClearPeriodCallback() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD SetTimeout(nTime) CLASS TRPCClient
+METHOD TRPCClient:SetTimeout(nTime)
 
    hb_mutexLock(::mtxBusy)
 
@@ -713,7 +713,7 @@ METHOD GetTimeout()
 
    RETURN nRet
 
-METHOD StopCall() CLASS TRPCClient
+METHOD TRPCClient:StopCall()
 
    IF ::nStatus != RPC_STATUS_WAITING
       RETURN .F.
@@ -739,7 +739,7 @@ METHOD StopCall() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD SendCall(cFunction, aParams) CLASS TRPCClient
+METHOD TRPCClient:SendCall(cFunction, aParams)
 
    LOCAL cData := "", nLen
    LOCAL nReq, cType
@@ -793,7 +793,7 @@ METHOD SendCall(cFunction, aParams) CLASS TRPCClient
 
    RETURN hb_inetErrorCode(::skTCP) == 0
 
-METHOD TCPAccept() CLASS TRPCClient
+METHOD TRPCClient:TCPAccept()
 
    LOCAL nTime := 0
    LOCAL cCode
@@ -849,7 +849,7 @@ METHOD TCPAccept() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD TCPParse(cCode) CLASS TRPCClient
+METHOD TRPCClient:TCPParse(cCode)
 
    LOCAL nDataLen, cData, nOrigLen
    LOCAL cDataLen := Space(8), cOrigLen := Space(8)
@@ -956,7 +956,7 @@ METHOD TCPParse(cCode) CLASS TRPCClient
 * Utility functions
 ************************************/
 
-METHOD GetFunctionName(xId) CLASS TRPCClient
+METHOD TRPCClient:GetFunctionName(xId)
 
    LOCAL cData, nPos
 
@@ -975,7 +975,7 @@ METHOD GetFunctionName(xId) CLASS TRPCClient
 
    RETURN cData
 
-METHOD GetServerName(xId) CLASS TRPCClient
+METHOD TRPCClient:GetServerName(xId)
 
    LOCAL cData
 
@@ -993,7 +993,7 @@ METHOD GetServerName(xId) CLASS TRPCClient
 
    RETURN cData
 
-METHOD GetServerAddress(xId) CLASS TRPCClient
+METHOD TRPCClient:GetServerAddress(xId)
 
    LOCAL cData
 
@@ -1011,7 +1011,7 @@ METHOD GetServerAddress(xId) CLASS TRPCClient
 
    RETURN cData
 
-METHOD Encrypt(cDataIn) CLASS TRPCClient
+METHOD TRPCClient:Encrypt(cDataIn)
 
    IF ::bEncrypted
       RETURN hb_Crypt(cDataIn, ::cCryptKey)
@@ -1019,7 +1019,7 @@ METHOD Encrypt(cDataIn) CLASS TRPCClient
 
    RETURN cDataIn
 
-METHOD Decrypt(cDataIn) CLASS TRPCClient
+METHOD TRPCClient:Decrypt(cDataIn)
 
    IF ::bEncrypted
       RETURN hb_Decrypt(cDataIn, ::cCryptKey)
@@ -1032,7 +1032,7 @@ METHOD Decrypt(cDataIn) CLASS TRPCClient
 * Event handlers
 ************************************/
 
-METHOD OnScanComplete() CLASS TRPCClient
+METHOD TRPCClient:OnScanComplete()
 
    IF ::bOnScanComplete != NIL
       RETURN Eval(::bOnScanComplete)
@@ -1040,7 +1040,7 @@ METHOD OnScanComplete() CLASS TRPCClient
 
    RETURN .T.
 
-METHOD OnScanServersProgress(aLoc) CLASS TRPCClient
+METHOD TRPCClient:OnScanServersProgress(aLoc)
 
    IF ::bOnScanServersProgress != NIL
       RETURN Eval(::bOnScanServersProgress, aLoc)
@@ -1048,7 +1048,7 @@ METHOD OnScanServersProgress(aLoc) CLASS TRPCClient
 
    RETURN .T.
 
-METHOD OnScanFunctionsProgress(aLoc) CLASS TRPCClient
+METHOD TRPCClient:OnScanFunctionsProgress(aLoc)
 
    IF ::bOnScanFunctionsProgress != NIL
       RETURN Eval(::bOnScanFunctionsProgress, aLoc)
@@ -1056,7 +1056,7 @@ METHOD OnScanFunctionsProgress(aLoc) CLASS TRPCClient
 
    RETURN .T.
 
-METHOD OnFunctionFail(nReason, cReason) CLASS TRPCClient
+METHOD TRPCClient:OnFunctionFail(nReason, cReason)
 
    IF ::bOnFunctionFail != NIL
       RETURN Eval(::bOnFunctionFail, nReason, cReason)
@@ -1064,7 +1064,7 @@ METHOD OnFunctionFail(nReason, cReason) CLASS TRPCClient
 
    RETURN .T.
 
-METHOD OnFunctionReturn(oReturn) CLASS TRPCClient
+METHOD TRPCClient:OnFunctionReturn(oReturn)
 
    IF ::bOnFunctionReturn != NIL
       RETURN Eval(::bOnFunctionReturn, oReturn)
@@ -1072,7 +1072,7 @@ METHOD OnFunctionReturn(oReturn) CLASS TRPCClient
 
    RETURN .T.
 
-METHOD OnFunctionProgress(nProgress, oData) CLASS TRPCClient
+METHOD TRPCClient:OnFunctionProgress(nProgress, oData)
 
    IF ::bOnFunctionProgress != NIL
       RETURN Eval(::bOnFunctionProgress, nProgress, oData)

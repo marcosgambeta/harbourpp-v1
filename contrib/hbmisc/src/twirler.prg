@@ -21,7 +21,7 @@ CREATE CLASS Twirler
 
 ENDCLASS
 
-METHOD new( nRow, nCol, cTitle, cChars, nSmooth ) CLASS Twirler
+METHOD Twirler:new( nRow, nCol, cTitle, cChars, nSmooth )
 
    ::n_Row := nRow
    ::n_Col := nCol
@@ -35,7 +35,7 @@ METHOD new( nRow, nCol, cTitle, cChars, nSmooth ) CLASS Twirler
 
    RETURN Self
 
-METHOD twirl() CLASS Twirler
+METHOD Twirler:twirl()
 
    LOCAL nSeconds := Seconds()
 
@@ -52,7 +52,7 @@ METHOD twirl() CLASS Twirler
 
    RETURN Self
 
-METHOD show() CLASS Twirler
+METHOD Twirler:show()
 
    ::n_Index := 1
    IF ! Empty(::n_Smooth)
@@ -62,7 +62,7 @@ METHOD show() CLASS Twirler
 
    RETURN Self
 
-METHOD hide() CLASS Twirler
+METHOD Twirler:hide()
 
    hb_DispOutAt( ::n_Row, ::n_Col - Len(::c_Title), Space( Len(::c_Title) + 1 ) )
 

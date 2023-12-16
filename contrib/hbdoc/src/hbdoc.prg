@@ -986,7 +986,7 @@ CREATE CLASS Entry
 
 ENDCLASS
 
-METHOD New( cTemplate ) CLASS Entry
+METHOD Entry:New( cTemplate )
 
    LOCAL item, key, idx
 
@@ -1004,7 +1004,7 @@ METHOD New( cTemplate ) CLASS Entry
 
    RETURN self
 
-METHOD IsField( cField, nType ) CLASS Entry
+METHOD Entry:IsField( cField, nType )
 
    LOCAL idx
 
@@ -1018,7 +1018,7 @@ METHOD IsField( cField, nType ) CLASS Entry
 
    RETURN .F.
 
-METHOD IsConstraint( cField, cSection ) CLASS Entry
+METHOD Entry:IsConstraint( cField, cSection )
 
    IF hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], hb_bitAnd( TPL_REQUIRED, TPL_OPTIONAL ) ) == 0
       RETURN .T.
@@ -1030,7 +1030,7 @@ METHOD IsConstraint( cField, cSection ) CLASS Entry
 
    RETURN .T.
 
-METHOD IsComplete( cIncompleteFieldsList ) CLASS Entry
+METHOD Entry:IsComplete( cIncompleteFieldsList )
 
    LOCAL lResult := .T.
    LOCAL idx, key
@@ -1049,20 +1049,20 @@ METHOD IsComplete( cIncompleteFieldsList ) CLASS Entry
 
    RETURN lResult
 
-METHOD IsPreformatted( cField ) CLASS Entry
+METHOD Entry:IsPreformatted( cField )
    LOCAL nGroup := hb_HPos( sc_hFields, cField )
    RETURN nGroup > 0 .AND. hb_bitAnd( ::_group[ nGroup ], TPL_PREFORMATTED ) != 0
 
-METHOD IsRequired( cField ) CLASS Entry
+METHOD Entry:IsRequired( cField )
    RETURN hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], TPL_REQUIRED ) != 0
 
-METHOD IsOptional( cField ) CLASS Entry
+METHOD Entry:IsOptional( cField )
    RETURN hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OPTIONAL ) != 0
 
-METHOD IsOutput( cField ) CLASS Entry
+METHOD Entry:IsOutput( cField )
    RETURN hb_bitAnd( ::_group[ hb_HPos( sc_hFields, cField ) ], TPL_OUTPUT ) != 0
 
-METHOD SubcategoryIndex( cCategory, cSubcategory ) CLASS Entry
+METHOD Entry:SubcategoryIndex( cCategory, cSubcategory )
    RETURN iif(cCategory $ sc_hConstraint[ "categories" ], ;
       hb_AScan( sc_hConstraint[ "categories" ][ cCategory ][ 1 ], cSubcategory, , , .T. ), ;
       0)

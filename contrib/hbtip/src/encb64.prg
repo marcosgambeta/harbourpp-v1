@@ -59,14 +59,14 @@ CREATE CLASS TIPEncoderBase64 INHERIT TIPEncoder
 
 ENDCLASS
 
-METHOD New() CLASS TIPEncoderBase64
+METHOD TIPEncoderBase64:New()
 
    ::cName := "base64"
 
    RETURN Self
 
-METHOD Encode( cData ) CLASS TIPEncoderBase64
+METHOD TIPEncoderBase64:Encode( cData )
    RETURN hb_base64Encode( cData, iif(::bHttpExcept, NIL, 76) )
 
-METHOD Decode( cData ) CLASS TIPEncoderBase64
+METHOD TIPEncoderBase64:Decode( cData )
    RETURN hb_base64Decode( cData )

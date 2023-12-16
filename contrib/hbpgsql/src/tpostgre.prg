@@ -94,7 +94,7 @@ CREATE CLASS TPQServer
 
 ENDCLASS
 
-METHOD New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom) CLASS TPQserver
+METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
 
    LOCAL res
    LOCAL item
@@ -137,7 +137,7 @@ METHOD PROCEDURE Destroy() CLASS TPQserver
 
    RETURN
 
-METHOD SetSchema(cSchema) CLASS TPQserver
+METHOD TPQserver:SetSchema(cSchema)
 
    LOCAL res
    LOCAL result
@@ -152,7 +152,7 @@ METHOD SetSchema(cSchema) CLASS TPQserver
 
    RETURN result
 
-METHOD StartTransaction() CLASS TPQserver
+METHOD TPQserver:StartTransaction()
 
    LOCAL res := PQexec(::pDB, "BEGIN")
 
@@ -164,7 +164,7 @@ METHOD StartTransaction() CLASS TPQserver
 
    RETURN ::lError
 
-METHOD Commit() CLASS TPQserver
+METHOD TPQserver:Commit()
 
    LOCAL res := PQexec(::pDB, "COMMIT")
 
@@ -176,7 +176,7 @@ METHOD Commit() CLASS TPQserver
 
    RETURN ::lError
 
-METHOD Rollback() CLASS TPQserver
+METHOD TPQserver:Rollback()
 
    LOCAL res := PQexec(::pDB, "ROLLBACK")
 
@@ -188,7 +188,7 @@ METHOD Rollback() CLASS TPQserver
 
    RETURN ::lError
 
-METHOD Query(cQuery, lNull) CLASS TPQserver
+METHOD TPQserver:Query(cQuery, lNull)
 
    IF !HB_ISLOGICAL(lNull)
       lNull := ::lNull
@@ -196,7 +196,7 @@ METHOD Query(cQuery, lNull) CLASS TPQserver
 
    RETURN TPQQuery():New(::pDB, cQuery, ::lAllCols, ::Schema,, lNull)
 
-METHOD TableExists(cTable) CLASS TPQserver
+METHOD TPQserver:TableExists(cTable)
 
    LOCAL result
 
@@ -215,7 +215,7 @@ METHOD TableExists(cTable) CLASS TPQserver
 
    RETURN result
 
-METHOD ListTables() CLASS TPQserver
+METHOD TPQserver:ListTables()
 
    LOCAL result := {}
    LOCAL i
@@ -236,7 +236,7 @@ METHOD ListTables() CLASS TPQserver
 
    RETURN result
 
-METHOD TableStruct(cTable) CLASS TPQserver
+METHOD TPQserver:TableStruct(cTable)
 
    LOCAL result := {}
    LOCAL i
@@ -366,7 +366,7 @@ METHOD TableStruct(cTable) CLASS TPQserver
 
    RETURN result
 
-METHOD CreateTable(cTable, aStruct) CLASS TPQserver
+METHOD TPQserver:CreateTable(cTable, aStruct)
 
    LOCAL res
    LOCAL fld
@@ -408,7 +408,7 @@ METHOD CreateTable(cTable, aStruct) CLASS TPQserver
 
    RETURN !::lError
 
-METHOD DeleteTable(cTable) CLASS TPQserver
+METHOD TPQserver:DeleteTable(cTable)
 
    LOCAL res := PQexec(::pDB, "DROP TABLE " + ::Schema + "." + cTable)
 
@@ -442,7 +442,7 @@ METHOD PROCEDURE TraceOff() CLASS TPQserver
 
    RETURN
 
-METHOD SetNull(lValue) CLASS TPQserver
+METHOD TPQserver:SetNull(lValue)
 
    LOCAL lOldValue := ::lNull
 
@@ -519,7 +519,7 @@ CREATE CLASS TPQQuery
 
 ENDCLASS
 
-METHOD New(pDB, cQuery, lAllCols, cSchema, res, lNull) CLASS TPQquery
+METHOD TPQquery:New(pDB, cQuery, lAllCols, cSchema, res, lNull)
 
    ::pDB := pDB
    ::nResultStatus := -1
@@ -539,7 +539,7 @@ METHOD New(pDB, cQuery, lAllCols, cSchema, res, lNull) CLASS TPQquery
 
    RETURN Self
 
-METHOD Destroy() CLASS TPQquery
+METHOD TPQquery:Destroy()
 
    IF ::nResultStatus != -1
       ::pQuery := NIL
@@ -548,7 +548,7 @@ METHOD Destroy() CLASS TPQquery
 
    RETURN .T.
 
-METHOD Refresh(lQuery, lMeta) CLASS TPQquery
+METHOD TPQquery:Refresh(lQuery, lMeta)
 
    LOCAL res
    LOCAL aStruct := {}
@@ -700,7 +700,7 @@ METHOD Refresh(lQuery, lMeta) CLASS TPQquery
 
    RETURN !::lError
 
-METHOD Struct() CLASS TPQquery
+METHOD TPQquery:Struct()
 
    LOCAL result := {}
    LOCAL i
@@ -711,7 +711,7 @@ METHOD Struct() CLASS TPQquery
 
    RETURN result
 
-METHOD Read() CLASS TPQquery
+METHOD TPQquery:Read()
 
    IF !::lEof
       IF ::lRead
@@ -723,7 +723,7 @@ METHOD Read() CLASS TPQquery
 
    RETURN !::lEof
 
-METHOD Skip(nrecno) CLASS TPQquery
+METHOD TPQquery:Skip(nrecno)
 
    hb_default(@nRecno, 1)
 
@@ -745,7 +745,7 @@ METHOD Skip(nrecno) CLASS TPQquery
 
    RETURN .T.
 
-METHOD Goto(nRecno) CLASS TPQquery
+METHOD TPQquery:Goto(nRecno)
 
    IF nRecno >= 1 .AND. nRecno <= ::nLastrec
       ::nRecno := nRecno
@@ -754,13 +754,13 @@ METHOD Goto(nRecno) CLASS TPQquery
 
    RETURN .T.
 
-METHOD FieldPos(cField) CLASS TPQquery
+METHOD TPQquery:FieldPos(cField)
 
    cField := RTrim(Lower(cField))
 
    RETURN AScan(::aStruct, {|x|x[_STRU_FIELDNAME] == cField})
 
-METHOD FieldName(nField) CLASS TPQquery
+METHOD TPQquery:FieldName(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -774,7 +774,7 @@ METHOD FieldName(nField) CLASS TPQquery
 
    RETURN NIL
 
-METHOD FieldType(nField) CLASS TPQquery
+METHOD TPQquery:FieldType(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -788,7 +788,7 @@ METHOD FieldType(nField) CLASS TPQquery
 
    RETURN NIL
 
-METHOD FieldLen(nField) CLASS TPQquery
+METHOD TPQquery:FieldLen(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -802,7 +802,7 @@ METHOD FieldLen(nField) CLASS TPQquery
 
    RETURN NIL
 
-METHOD FieldDec(nField) CLASS TPQquery
+METHOD TPQquery:FieldDec(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -816,7 +816,7 @@ METHOD FieldDec(nField) CLASS TPQquery
 
    RETURN NIL
 
-METHOD Delete(oRow) CLASS TPQquery
+METHOD TPQquery:Delete(oRow)
 
    LOCAL res
    LOCAL i
@@ -862,7 +862,7 @@ METHOD Delete(oRow) CLASS TPQquery
 
    RETURN !::lError
 
-METHOD Append(oRow) CLASS TPQquery
+METHOD TPQquery:Append(oRow)
 
    LOCAL cQuery
    LOCAL i
@@ -921,7 +921,7 @@ METHOD Append(oRow) CLASS TPQquery
 
    RETURN !::lError
 
-METHOD Update(oRow) CLASS TPQquery
+METHOD TPQquery:Update(oRow)
 
    LOCAL cQuery
    LOCAL i
@@ -988,7 +988,7 @@ METHOD Update(oRow) CLASS TPQquery
 
    RETURN !::lError
 
-METHOD FieldGet(nField, nRow) CLASS TPQquery
+METHOD TPQquery:FieldGet(nField, nRow)
 
    LOCAL result
 
@@ -1044,7 +1044,7 @@ METHOD FieldGet(nField, nRow) CLASS TPQquery
 
    RETURN result
 
-METHOD Getrow(nRow) CLASS TPQquery
+METHOD TPQquery:Getrow(nRow)
 
    LOCAL result
    LOCAL aRow
@@ -1076,7 +1076,7 @@ METHOD Getrow(nRow) CLASS TPQquery
 
    RETURN result
 
-METHOD GetBlankRow() CLASS TPQquery
+METHOD TPQquery:GetBlankRow()
 
    LOCAL aRow := Array(::nFields)
    LOCAL aOld := Array(::nFields)
@@ -1203,7 +1203,7 @@ CREATE CLASS TPQRow
 
 ENDCLASS
 
-METHOD New(row, old, struct) CLASS TPQrow
+METHOD TPQrow:New(row, old, struct)
 
    ::aRow := row
    ::aOld := old
@@ -1211,7 +1211,7 @@ METHOD New(row, old, struct) CLASS TPQrow
 
    RETURN Self
 
-METHOD FieldGet(nField) CLASS TPQrow
+METHOD TPQrow:FieldGet(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -1223,7 +1223,7 @@ METHOD FieldGet(nField) CLASS TPQrow
 
    RETURN NIL
 
-METHOD FieldPut(nField, Value) CLASS TPQrow
+METHOD TPQrow:FieldPut(nField, Value)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -1235,7 +1235,7 @@ METHOD FieldPut(nField, Value) CLASS TPQrow
 
    RETURN NIL
 
-METHOD FieldName(nField) CLASS TPQrow
+METHOD TPQrow:FieldName(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -1247,13 +1247,13 @@ METHOD FieldName(nField) CLASS TPQrow
 
    RETURN NIL
 
-METHOD FieldPos(cField) CLASS TPQrow
+METHOD TPQrow:FieldPos(cField)
 
    cField := RTrim(Lower(cField))
 
    RETURN AScan(::aStruct, {|x|x[_STRU_FIELDNAME] == cField})
 
-METHOD FieldType(nField) CLASS TPQrow
+METHOD TPQrow:FieldType(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -1265,7 +1265,7 @@ METHOD FieldType(nField) CLASS TPQrow
 
    RETURN NIL
 
-METHOD FieldLen(nField) CLASS TPQrow
+METHOD TPQrow:FieldLen(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)
@@ -1277,7 +1277,7 @@ METHOD FieldLen(nField) CLASS TPQrow
 
    RETURN NIL
 
-METHOD FieldDec(nField) CLASS TPQrow
+METHOD TPQrow:FieldDec(nField)
 
    IF HB_ISSTRING(nField)
       nField := ::FieldPos(nField)

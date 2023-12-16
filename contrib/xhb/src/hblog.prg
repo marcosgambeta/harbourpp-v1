@@ -226,7 +226,7 @@ ENDCLASS
  * Channels can be called at a second time.
  */
 
-METHOD New() CLASS HB_Logger
+METHOD HB_Logger:New()
 
    LOCAL nCount
 
@@ -323,7 +323,7 @@ ENDCLASS
  *  cName is the "program name" and must be given
  */
 
-METHOD New(nLevel) CLASS HB_LogChannel
+METHOD HB_LogChannel:New(nLevel)
 
    IF nLevel == NIL
       // log everything by default
@@ -353,7 +353,7 @@ METHOD PROCEDURE Log(nStyle, cMessage, cName, nPriority) CLASS HB_LogChannel
  * may or may not call it.
  */
 
-METHOD Format(nStyle, cMessage, cName, nPriority) CLASS HB_LogChannel
+METHOD HB_LogChannel:Format(nStyle, cMessage, cName, nPriority)
 
    LOCAL cPrefix := ""
 
@@ -422,13 +422,13 @@ CREATE CLASS HB_LogConsole FROM HB_LogChannel
 
 ENDCLASS
 
-METHOD New(nLevel) CLASS HB_LogConsole
+METHOD HB_LogConsole:New(nLevel)
 
    ::Super:New(nLevel)
 
    RETURN Self
 
-METHOD Open(cName) CLASS HB_LogConsole
+METHOD HB_LogConsole:Open(cName)
 
    IF ::lOpened
       RETURN .F.
@@ -439,7 +439,7 @@ METHOD Open(cName) CLASS HB_LogConsole
 
    RETURN .T.
 
-METHOD close(cName) CLASS HB_LogConsole
+METHOD HB_LogConsole:close(cName)
 
    IF !::lOpened
       RETURN .F.
@@ -495,7 +495,7 @@ CREATE CLASS HB_LogFile FROM HB_LogChannel
 
 ENDCLASS
 
-METHOD New(nLevel, cFilename, nMaxSize, nBackup) CLASS HB_LogFile
+METHOD HB_LogFile:New(nLevel, cFilename, nMaxSize, nBackup)
 
    ::Super:New(nLevel)
    ::cFileName := cFileName
@@ -510,7 +510,7 @@ METHOD New(nLevel, cFilename, nMaxSize, nBackup) CLASS HB_LogFile
 
    RETURN Self
 
-METHOD Open(cProgName) CLASS HB_LogFile
+METHOD HB_LogFile:Open(cProgName)
 
    IF ::lOpened
       RETURN .F.
@@ -536,7 +536,7 @@ METHOD Open(cProgName) CLASS HB_LogFile
 
    RETURN .T.
 
-METHOD close(cProgName) CLASS HB_LogFile
+METHOD HB_LogFile:close(cProgName)
 
    IF !::lOpened
       RETURN .F.
@@ -551,7 +551,7 @@ METHOD close(cProgName) CLASS HB_LogFile
 
    RETURN .T.
 
-METHOD Send(nStyle, cMessage, cProgName, nPriority) CLASS HB_LogFile
+METHOD HB_LogFile:Send(nStyle, cMessage, cProgName, nPriority)
 
    LOCAL nCount
 
@@ -607,7 +607,7 @@ CREATE CLASS HB_LogDbf FROM HB_LogChannel
 
 ENDCLASS
 
-METHOD New(nLevel, cDBFName, cIndexName, aStruct, cDriver) CLASS HB_LogDbf
+METHOD HB_LogDbf:New(nLevel, cDBFName, cIndexName, aStruct, cDriver)
 
    LOCAL cPath, cName, cExt, cDrive
 
@@ -644,7 +644,7 @@ METHOD New(nLevel, cDBFName, cIndexName, aStruct, cDriver) CLASS HB_LogDbf
 
    RETURN Self
 
-METHOD Open(cProgName) CLASS HB_LogDbf
+METHOD HB_LogDbf:Open(cProgName)
 
    IF ::lOpened
       RETURN .F.
@@ -678,7 +678,7 @@ METHOD Open(cProgName) CLASS HB_LogDbf
 
    RETURN .T.
 
-METHOD close(cProgName) CLASS HB_LogDbf
+METHOD HB_LogDbf:close(cProgName)
 
    IF !::lOpened
       RETURN .F.
@@ -696,7 +696,7 @@ METHOD close(cProgName) CLASS HB_LogDbf
 
    RETURN .T.
 
-METHOD Send(nStyle, cMessage, cProgName, nPriority) CLASS HB_LogDbf
+METHOD HB_LogDbf:Send(nStyle, cMessage, cProgName, nPriority)
 
    LogDbf->(dbAppend())
    LogDbf->priority := nPriority
@@ -729,14 +729,14 @@ CREATE CLASS HB_LogSysLog FROM HB_LogChannel
 
 ENDCLASS
 
-METHOD New(nLevel, nId) CLASS HB_LogSysLog
+METHOD HB_LogSysLog:New(nLevel, nId)
 
    ::Super:New(nLevel)
    ::nId := nId
 
    RETURN SELF
 
-METHOD Open(cName) CLASS HB_LogSysLog
+METHOD HB_LogSysLog:Open(cName)
 
    IF ::lOpened
       RETURN .F.
@@ -749,7 +749,7 @@ METHOD Open(cName) CLASS HB_LogSysLog
 
    RETURN .F.
 
-METHOD close(cName) CLASS HB_LogSysLog
+METHOD HB_LogSysLog:close(cName)
 
    IF !::lOpened
       RETURN .F.
@@ -762,7 +762,7 @@ METHOD close(cName) CLASS HB_LogSysLog
 
    RETURN .F.
 
-METHOD Send(nType, cMessage, cName, nPriority) CLASS HB_LogSysLog
+METHOD HB_LogSysLog:Send(nType, cMessage, cName, nPriority)
 
    HB_SYMBOL_UNUSED(nType)
    // Syslog does not need timestamp, nor priority
@@ -787,7 +787,7 @@ CREATE CLASS HB_LogDebug FROM HB_LogChannel
 
 ENDCLASS
 
-METHOD New(nLevel, nMaxLevel) CLASS HB_LogDebug
+METHOD HB_LogDebug:New(nLevel, nMaxLevel)
 
    ::Super:New(nLevel)
    ::nMaxLevel := nMaxLevel

@@ -137,7 +137,7 @@ CREATE CLASS TStreamFileReader FROM TStream
 
 ENDCLASS
 
-METHOD New(cFile, nMode) CLASS TStreamFileReader
+METHOD TStreamFileReader:New(cFile, nMode)
 
    ::lCanRead := .T.
 
@@ -165,7 +165,7 @@ METHOD PROCEDURE Finalize CLASS TStreamFileReader
 
    RETURN
 
-METHOD Read(sBuffer, nOffset, nCount) CLASS TStreamFileReader
+METHOD TStreamFileReader:Read(sBuffer, nOffset, nCount)
 
    LOCAL nRead
 
@@ -181,7 +181,7 @@ METHOD Read(sBuffer, nOffset, nCount) CLASS TStreamFileReader
 
    RETURN nRead
 
-METHOD ReadByte()  CLASS TStreamFileReader
+METHOD TStreamFileReader:ReadByte()
 
    LOCAL sBuffer := " "
 
@@ -209,7 +209,7 @@ CREATE CLASS TStreamFileWriter FROM TStream
 
 ENDCLASS
 
-METHOD New(cFile, nMode) CLASS TStreamFileWriter
+METHOD TStreamFileWriter:New(cFile, nMode)
 
    ::lCanWrite := .T.
 
@@ -245,7 +245,7 @@ METHOD PROCEDURE Finalize CLASS TStreamFileWriter
 
    RETURN
 
-METHOD Write(sBuffer, nOffset, nCount) CLASS TStreamFileWriter
+METHOD TStreamFileWriter:Write(sBuffer, nOffset, nCount)
 
    LOCAL nWritten
 

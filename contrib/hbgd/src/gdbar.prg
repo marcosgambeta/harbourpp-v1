@@ -109,7 +109,7 @@ CREATE CLASS GDBar INHERIT GDImage
 
 ENDCLASS
 
-METHOD CreateBar( sx, sy, filename, cColor ) CLASS GDBar
+METHOD GDBar:CreateBar( sx, sy, filename, cColor )
 
    ::Create( sx, sy )
 
@@ -145,7 +145,7 @@ METHOD CreateBar( sx, sy, filename, cColor ) CLASS GDBar
 
    RETURN Self
 
-METHOD Configure( nMaxHeight, aFillColor, aBackColor, nRes, nTextFont, lBook, lDrawValue ) CLASS GDBar
+METHOD GDBar:Configure( nMaxHeight, aFillColor, aBackColor, nRes, nTextFont, lBook, lDrawValue )
 
    hb_default( @lBook      , .F. )
    hb_default( @lDrawValue , .T. )
@@ -166,20 +166,20 @@ METHOD Configure( nMaxHeight, aFillColor, aBackColor, nRes, nTextFont, lBook, lD
 
    RETURN NIL
 
-METHOD SetText( ptext ) CLASS GDBar
+METHOD GDBar:SetText( ptext )
 
    ::text := ptext
 
    RETURN NIL
 
-METHOD ResetColor() CLASS GDBar
+METHOD GDBar:ResetColor()
 
    ::FillColor := ::SetColor( ::color_f[ 1 ], ::color_f[ 2 ], ::color_f[ 3 ] )
    ::BackColor := ::SetColor( ::color_b[ 1 ], ::color_b[ 2 ], ::color_b[ 3 ] )
 
    RETURN NIL
 
-METHOD Allocate() CLASS GDBar
+METHOD GDBar:Allocate()
 
    LOCAL R := ::color_b[ 1 ]
    LOCAL G := ::color_b[ 2 ]
@@ -187,7 +187,7 @@ METHOD Allocate() CLASS GDBar
 
    RETURN ::SetColor( R, G, B )
 
-METHOD DrawSingleBar( pcode ) CLASS GDBar
+METHOD GDBar:DrawSingleBar( pcode )
 
    LOCAL i
    LOCAL j
@@ -204,7 +204,7 @@ METHOD DrawSingleBar( pcode ) CLASS GDBar
 
    RETURN NIL
 
-METHOD DrawSingleI25( pcode ) CLASS GDBar
+METHOD GDBar:DrawSingleI25( pcode )
 
    LOCAL j
 
@@ -233,7 +233,7 @@ METHOD DrawSingleI25( pcode ) CLASS GDBar
 
    RETURN NIL
 
-METHOD DrawError( ptext ) CLASS GDBar
+METHOD GDBar:DrawError( ptext )
 
    ::Say( 5, ::error * 15, ptext, ::FillColor )
 
@@ -244,7 +244,7 @@ METHOD DrawError( ptext ) CLASS GDBar
 
    RETURN NIL
 
-METHOD nextX( lI25 ) CLASS GDBar
+METHOD GDBar:nextX( lI25 )
 
    hb_default( @li25, .F. )
 
@@ -256,7 +256,7 @@ METHOD nextX( lI25 ) CLASS GDBar
 
    RETURN NIL
 
-METHOD DrawText( lIsI25 ) CLASS GDBar
+METHOD GDBar:DrawText( lIsI25 )
 
    LOCAL xPosition
 
@@ -278,7 +278,7 @@ METHOD DrawText( lIsI25 ) CLASS GDBar
 
    RETURN .T.
 
-METHOD CheckCode() CLASS GDBar
+METHOD GDBar:CheckCode()
 
    LOCAL lRet := .T.
    LOCAL i
@@ -292,13 +292,13 @@ METHOD CheckCode() CLASS GDBar
 
    RETURN lRet
 
-METHOD CheckValInArray( cChar ) CLASS GDBar
+METHOD GDBar:CheckValInArray( cChar )
 
    LOCAL nPos := AScan( ::keys, {| x | SubStr(x, 1, 1) == cChar } )
 
    RETURN iif(nPos > 0, nPos, NIL)
 
-METHOD Finish( image_style, quality, nFG ) CLASS GDBar
+METHOD GDBar:Finish( image_style, quality, nFG )
 
    hb_default( @image_style, IMG_FORMAT_PNG )
    hb_default( @quality    , 95 )

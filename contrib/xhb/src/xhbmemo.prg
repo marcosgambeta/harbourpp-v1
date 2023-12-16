@@ -70,7 +70,7 @@ CREATE CLASS xhb_TMemoEditor INHERIT XHBEditor
 
 ENDCLASS
 
-METHOD MemoInit(xUDF) CLASS xhb_TMemoEditor
+METHOD xhb_TMemoEditor:MemoInit(xUDF)
 
    LOCAL nUdfReturn
 
@@ -145,7 +145,7 @@ METHOD MemoInit(xUDF) CLASS xhb_TMemoEditor
 
    RETURN Self
 
-METHOD Edit() CLASS xhb_TMemoEditor
+METHOD xhb_TMemoEditor:Edit()
 
    LOCAL nKey, nUdfReturn, nNextKey
 
@@ -268,7 +268,7 @@ METHOD Edit() CLASS xhb_TMemoEditor
 // I come here if I have an unknown key and it is not a configurable key
 // if there is an user function I leave to it its handling
 //
-METHOD KeyboardHook(nKey) CLASS xhb_TMemoEditor
+METHOD xhb_TMemoEditor:KeyboardHook(nKey)
 
    LOCAL nUdfReturn
 
@@ -280,7 +280,7 @@ METHOD KeyboardHook(nKey) CLASS xhb_TMemoEditor
    RETURN Self
 
 
-METHOD HandleUdf(nKey, nUdfReturn, lEdited) CLASS xhb_TMemoEditor
+METHOD xhb_TMemoEditor:HandleUdf(nKey, nUdfReturn, lEdited)
 
    /* 2004-08-05 - <maurilio.longo@libero.it>
                    A little trick to be able to handle a nUdfReturn with value of NIL
@@ -376,7 +376,7 @@ METHOD HandleUdf(nKey, nUdfReturn, lEdited) CLASS xhb_TMemoEditor
 
    RETURN Self
 
-METHOD CallUdf(nMode) CLASS xhb_TMemoEditor
+METHOD xhb_TMemoEditor:CallUdf(nMode)
 
    LOCAL nCurRow := ::Row()
    LOCAL nCurCol := ::Col()

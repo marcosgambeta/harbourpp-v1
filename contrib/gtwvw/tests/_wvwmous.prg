@@ -124,7 +124,7 @@ CREATE CLASS WVWMouseButton
 
 ENDCLASS   // WVWMouseButton
 
-METHOD New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWinId ) CLASS WVWMouseButton
+METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWinId )
 
    hb_default( @cCaption, "" ) // 20040325,was: "Button"
    hb_default( @nRow1, 0 )
@@ -172,38 +172,38 @@ METHOD New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nType, lDraw, nWi
 
    RETURN Self     // WVWMouseButton
 
-METHOD Enable( lEnable ) CLASS WVWMouseButton
+METHOD WVWMouseButton:Enable( lEnable )
 
    ::lEnable := lEnable
    ::draw()
 
    RETURN Self
 
-METHOD SetClickBlock( bBlock ) CLASS WVWMouseButton
+METHOD WVWMouseButton:SetClickBlock( bBlock )
 
    ::bClickBlock := bBlock
 
    RETURN Self
 
-METHOD SetPressBlock( bBlock ) CLASS WVWMouseButton
+METHOD WVWMouseButton:SetPressBlock( bBlock )
 
    ::bPressBlock := bBlock
 
    RETURN Self
 
-METHOD SetRepeatPress( lRepeat ) CLASS WVWMouseButton
+METHOD WVWMouseButton:SetRepeatPress( lRepeat )
 
    ::lRepeatPress := lRepeat
 
    RETURN Self
 
-METHOD SetCaption( cCaption ) CLASS WVWMouseButton
+METHOD WVWMouseButton:SetCaption( cCaption )
 
    ::cCaption := cCaption
 
    RETURN Self
 
-METHOD OnPress() CLASS WVWMouseButton
+METHOD WVWMouseButton:OnPress()
 
    // this is called when LEFT mouse button is pressed on the object
    LOCAL lWasPressed
@@ -228,7 +228,7 @@ METHOD OnPress() CLASS WVWMouseButton
 
    RETURN Self
 
-METHOD OnClick() CLASS WVWMouseButton
+METHOD WVWMouseButton:OnClick()
 
    // this is called when LEFT mouse button is clicked on the object
    // normally (or should it be restricted to be?) called from ::OnRelease()
@@ -242,7 +242,7 @@ METHOD OnClick() CLASS WVWMouseButton
 
    RETURN Self
 
-METHOD OnRelease() CLASS WVWMouseButton
+METHOD WVWMouseButton:OnRelease()
 
    LOCAL lWasPressed := ::lPressed
 
@@ -263,7 +263,7 @@ METHOD OnRelease() CLASS WVWMouseButton
 
    RETURN Self
 
-METHOD OnReleaseOut() CLASS WVWMouseButton
+METHOD WVWMouseButton:OnReleaseOut()
 
    // left button is released outside of mouse region
    IF ! ::lEnable  // 20040303
@@ -280,7 +280,7 @@ METHOD OnReleaseOut() CLASS WVWMouseButton
 
 // 20040303
 
-METHOD OnMouseOut() CLASS WVWMouseButton
+METHOD WVWMouseButton:OnMouseOut()
 
    // mouse is moved from over the button outside
    IF ! ::lEnable  // 20040303
@@ -298,7 +298,7 @@ METHOD OnMouseOut() CLASS WVWMouseButton
 
 // 20040303
 
-METHOD OnMouseOver() CLASS WVWMouseButton
+METHOD WVWMouseButton:OnMouseOver()
 
    // mouse is moved to over the button from outside
    IF ! ::lEnable  // 20040303
@@ -314,7 +314,7 @@ METHOD OnMouseOver() CLASS WVWMouseButton
 
    RETURN Self
 
-METHOD DRAW( nWinNum ) CLASS WVWMouseButton
+METHOD WVWMouseButton:DRAW( nWinNum )
 
    LOCAL nOldCursor := SetCursor( SC_NONE )
    LOCAL lMouseOver := ::lHover // 20040303,was: ( MRow() >= ::nrow1 .AND. MRow() <= ::nrow2 .AND. MCol() >= ::ncol1 .AND. MCol() <= ::ncol2 )

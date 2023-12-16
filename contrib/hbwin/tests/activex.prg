@@ -34,7 +34,7 @@ CREATE CLASS HActiveX
 
 ENDCLASS
 
-METHOD Init( hWnd, cProgId, nTop, nLeft, nWidth, nHeight, cID ) CLASS HActiveX
+METHOD HActiveX:Init( hWnd, cProgId, nTop, nLeft, nWidth, nHeight, cID )
 
    LOCAL nStyle := WIN_WS_CHILD + WIN_WS_VISIBLE + WIN_WS_CLIPCHILDREN
 
@@ -47,7 +47,7 @@ METHOD Init( hWnd, cProgId, nTop, nLeft, nWidth, nHeight, cID ) CLASS HActiveX
 
    RETURN Self
 
-PROCEDURE Event( ... ) CLASS HActiveX
+PROCEDURE HActiveX:Event( ... )
 
    LOCAL cEvents := ""
    LOCAL aEvents := { ... }
@@ -57,10 +57,10 @@ PROCEDURE Event( ... ) CLASS HActiveX
 
    RETURN
 
-METHOD OnError() CLASS HActiveX
+METHOD HActiveX:OnError()
    RETURN hb_ExecFromArray( ::oOLE, __GetMessage(), hb_AParams() )
 
-METHOD Close() CLASS HActiveX
+METHOD HActiveX:Close()
 
    wapi_OutputDebugString( "Close" )
    wapi_DestroyWindow( ::hWnd )

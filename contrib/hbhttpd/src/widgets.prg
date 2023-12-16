@@ -25,7 +25,7 @@ FUNCTION UWMainNew()
 
    RETURN oW
 
-METHOD Paint() CLASS UWMain
+METHOD UWMain:Paint()
 
    UWrite( '<html><link href="/files/main.css" type=text/css rel=stylesheet>' )
    UWrite( '<meta http-equiv="content-type" content="text/html; charset=UTF-8">' )
@@ -36,7 +36,7 @@ METHOD Paint() CLASS UWMain
 
    RETURN Self
 
-METHOD Add( oWidget ) CLASS UWMain
+METHOD UWMain:Add( oWidget )
 
    AAdd( ::aChilds, oWidget )
 
@@ -56,7 +56,7 @@ ENDCLASS
 FUNCTION UWLayoutGridNew()
    RETURN UWLayoutGrid()
 
-METHOD Paint() CLASS UWLayoutGrid
+METHOD UWLayoutGrid:Paint()
 
    LOCAL aRow, aCell
 
@@ -74,7 +74,7 @@ METHOD Paint() CLASS UWLayoutGrid
 
    RETURN Self
 
-METHOD Add( oWidget, nRow, nCol ) CLASS UWLayoutGrid
+METHOD UWLayoutGrid:Add( oWidget, nRow, nCol )
 
    LOCAL nI, nJ, aI
 
@@ -114,7 +114,7 @@ FUNCTION UWHtmlNew( cText )
 
    RETURN oW
 
-METHOD Paint() CLASS UWHtml
+METHOD UWHtml:Paint()
 
    UWrite( ::cText )
 
@@ -142,7 +142,7 @@ FUNCTION UWLabelNew( cText, cID, cStyle )
 
    RETURN oW
 
-METHOD Paint() CLASS UWLabel
+METHOD UWLabel:Paint()
 
    UWrite( '<div' + iif(::cID != NIL, ' id="' + ::cID + '"', "") + ;
       iif(::cStyle != NIL, ' style="' + ::cStyle + '"', "") + '>' + ;
@@ -171,13 +171,13 @@ FUNCTION UWFormNew( cAction )
 
    RETURN oW
 
-METHOD Add( oWidget ) CLASS UWForm
+METHOD UWForm:Add( oWidget )
 
    AAdd( ::aChilds, oWidget )
 
    RETURN Self
 
-METHOD Paint() CLASS UWForm
+METHOD UWForm:Paint()
 
    UWrite( '<form action="' + ::cAction + '" method="' + ::cMethod + '">' )
    AEval( ::aChilds, {| x | x:Paint() } )
@@ -209,7 +209,7 @@ FUNCTION UWInputNew( cName, cValue, cID, cStyle )
 
    RETURN oW
 
-METHOD Paint() CLASS UWInput
+METHOD UWInput:Paint()
 
    UWrite( '<input type="text" name="' + iif(::cName != NIL, ::cName, "") + ;
       '" value="' + iif(::cValue != NIL, UHtmlEncode( ::cValue ), "") + '">' )
@@ -235,7 +235,7 @@ FUNCTION UWPasswordNew( cName )
 
    RETURN oW
 
-METHOD Paint() CLASS UWPassword
+METHOD UWPassword:Paint()
 
    UWrite( '<input type="password" name="' + iif(::cName != NIL, ::cName, "") + ;
       '" value="' + iif(::cValue != NIL, ::cValue, "") + '">' )
@@ -262,7 +262,7 @@ FUNCTION UWSubmitNew( cName, cValue )
 
    RETURN oW
 
-METHOD Paint() CLASS UWSubmit
+METHOD UWSubmit:Paint()
 
    UWrite( '<input type="submit" name="' + iif(::cName != NIL, ::cName, "") + ;
       '" value="' + iif(::cValue != NIL, UHtmlEncode( ::cValue ), "") + '">' )
@@ -280,7 +280,7 @@ ENDCLASS
 FUNCTION UWSeparatorNew()
    RETURN UWSeparator()
 
-METHOD Paint() CLASS UWSeparator
+METHOD UWSeparator:Paint()
 
    UWrite( '<hr>' )
 
@@ -300,13 +300,13 @@ ENDCLASS
 FUNCTION UWMenuNew()
    RETURN UWMenu()
 
-METHOD AddItem( cTitle, cLink ) CLASS UWMenu
+METHOD UWMenu:AddItem( cTitle, cLink )
 
    AAdd( ::aItems, { cTitle, cLink } )
 
    RETURN Self
 
-METHOD Paint() CLASS UWMenu
+METHOD UWMenu:Paint()
 
    LOCAL nI
 
@@ -337,13 +337,13 @@ ENDCLASS
 FUNCTION UWBrowseNew()
    RETURN UWBrowse()
 
-METHOD AddColumn( nID, cTitle, cField, lRaw ) CLASS UWBrowse
+METHOD UWBrowse:AddColumn( nID, cTitle, cField, lRaw )
 
    AAdd( ::aColumns, { nID, cTitle, cField, ! Empty(lRaw) } )
 
    RETURN Self
 
-METHOD Output() CLASS UWBrowse
+METHOD UWBrowse:Output()
 
    LOCAL cRet := "", nI, xI, xField, nPos, cUrl, cI, lValidate
 
@@ -433,13 +433,13 @@ ENDCLASS
 FUNCTION UWOptionNew()
    RETURN UWOption()
 
-METHOD Add( cTitle, cCode, lRaw ) CLASS UWOption
+METHOD UWOption:Add( cTitle, cCode, lRaw )
 
    AAdd( ::aOption, { iif(Empty(lRaw), UHtmlEncode( cTitle ), cTitle), cCode } )
 
    RETURN Self
 
-METHOD Output() CLASS UWOption
+METHOD UWOption:Output()
 
    LOCAL cRet := ""
 

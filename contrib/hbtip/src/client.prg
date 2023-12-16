@@ -162,7 +162,7 @@ CREATE CLASS TIPClient
 
 ENDCLASS
 
-METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClient
+METHOD TIPClient:New( oUrl, xTrace, oCredentials )
 
    LOCAL oErr
    LOCAL oLog
@@ -229,7 +229,7 @@ METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClient
 
    RETURN Self
 
-METHOD Open( cUrl ) CLASS TIPClient
+METHOD TIPClient:Open( cUrl )
 
    LOCAL nPort
 
@@ -255,7 +255,7 @@ METHOD Open( cUrl ) CLASS TIPClient
 
    RETURN .T.
 
-METHOD EnableSSL( lEnable ) CLASS TIPClient
+METHOD TIPClient:EnableSSL( lEnable )
 
    LOCAL lSuccess
 
@@ -285,7 +285,7 @@ METHOD EnableSSL( lEnable ) CLASS TIPClient
 
    RETURN lSuccess
 
-METHOD OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName, cPassword, cUserAgent ) CLASS TIPClient
+METHOD TIPClient:OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName, cPassword, cUserAgent )
 
    LOCAL cRequest
    LOCAL lRet := .F.
@@ -327,7 +327,7 @@ METHOD OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName, cPasswor
 
    RETURN lRet
 
-METHOD ReadHTTPProxyResponse( /* @ */ cResponse ) CLASS TIPClient
+METHOD TIPClient:ReadHTTPProxyResponse( /* @ */ cResponse )
 
    LOCAL cBuffer
 
@@ -344,7 +344,7 @@ METHOD ReadHTTPProxyResponse( /* @ */ cResponse ) CLASS TIPClient
 
    RETURN .T.
 
-METHOD Close() CLASS TIPClient
+METHOD TIPClient:Close()
 
    LOCAL nRet
 
@@ -371,17 +371,17 @@ METHOD Close() CLASS TIPClient
 
    RETURN nRet
 
-METHOD Reset() CLASS TIPClient
+METHOD TIPClient:Reset()
 
    ::bInitialized := .F.
    ::bEof := .F.
 
    RETURN .T.
 
-METHOD Commit() CLASS TIPClient
+METHOD TIPClient:Commit()
    RETURN .T.
 
-METHOD Read( nLen ) CLASS TIPClient
+METHOD TIPClient:Read( nLen )
 
    LOCAL cStr0
    LOCAL cStr1
@@ -434,7 +434,7 @@ METHOD Read( nLen ) CLASS TIPClient
 
    RETURN cStr0
 
-METHOD ReadToFile( /* @ */ cFile, nMode, nSize ) CLASS TIPClient
+METHOD TIPClient:ReadToFile( /* @ */ cFile, nMode, nSize )
 
    LOCAL hFile
    LOCAL cData
@@ -499,7 +499,7 @@ METHOD ReadToFile( /* @ */ cFile, nMode, nSize ) CLASS TIPClient
 
    RETURN ::inetErrorCode( ::SocketCon ) == 0
 
-METHOD WriteFromFile( cFile ) CLASS TIPClient
+METHOD TIPClient:WriteFromFile( cFile )
 
    LOCAL nFIn
    LOCAL cData
@@ -550,7 +550,7 @@ METHOD WriteFromFile( cFile ) CLASS TIPClient
 
    RETURN .T.
 
-METHOD Write( cData, nLen, lCommit ) CLASS TIPClient
+METHOD TIPClient:Write( cData, nLen, lCommit )
 
    IF ! HB_ISNUMERIC(nLen) .OR. nLen <= 0
       nLen := hb_BLen(cData)
@@ -566,7 +566,7 @@ METHOD Write( cData, nLen, lCommit ) CLASS TIPClient
 
    RETURN ::nLastWrite
 
-METHOD inetSendAll( SocketCon, cData, nLen ) CLASS TIPClient
+METHOD TIPClient:inetSendAll( SocketCon, cData, nLen )
 
    LOCAL nRet
 
@@ -594,7 +594,7 @@ METHOD inetSendAll( SocketCon, cData, nLen ) CLASS TIPClient
 
    RETURN nRet
 
-METHOD inetCount( SocketCon ) CLASS TIPClient
+METHOD TIPClient:inetCount( SocketCon )
 
    LOCAL nRet := hb_inetCount( SocketCon )
 
@@ -604,7 +604,7 @@ METHOD inetCount( SocketCon ) CLASS TIPClient
 
    RETURN nRet
 
-METHOD inetRecv( SocketCon, cStr1, len ) CLASS TIPClient
+METHOD TIPClient:inetRecv( SocketCon, cStr1, len )
 
    LOCAL nRet
 
@@ -628,7 +628,7 @@ METHOD inetRecv( SocketCon, cStr1, len ) CLASS TIPClient
 
    RETURN nRet
 
-METHOD inetRecvLine( SocketCon, nRet, size ) CLASS TIPClient
+METHOD TIPClient:inetRecvLine( SocketCon, nRet, size )
 
    LOCAL cRet
 
@@ -656,7 +656,7 @@ METHOD inetRecvLine( SocketCon, nRet, size ) CLASS TIPClient
 
    RETURN cRet
 
-METHOD inetRecvAll( SocketCon, cRet, size ) CLASS TIPClient
+METHOD TIPClient:inetRecvAll( SocketCon, cRet, size )
 
    LOCAL nRet
 
@@ -684,7 +684,7 @@ METHOD inetRecvAll( SocketCon, cRet, size ) CLASS TIPClient
 
    RETURN nRet
 
-METHOD inetErrorCode( SocketCon ) CLASS TIPClient
+METHOD TIPClient:inetErrorCode( SocketCon )
 
    LOCAL nRet
 
@@ -706,7 +706,7 @@ METHOD inetErrorCode( SocketCon ) CLASS TIPClient
 
    RETURN nRet
 
-METHOD inetErrorDesc(SocketCon) CLASS TIPClient
+METHOD TIPClient:inetErrorDesc(SocketCon)
 
    hb_default( @SocketCon, ::SocketCon )
 
@@ -756,7 +756,7 @@ METHOD PROCEDURE inetConnect( cServer, nPort, SocketCon ) CLASS TIPClient
    RETURN
 
 /* Methods to manage buffers */
-METHOD InetRcvBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
+METHOD TIPClient:InetRcvBufSize( SocketCon, nSizeBuff )
 
    IF HB_ISNUMERIC(nSizeBuff) .AND. nSizeBuff > 0
       hb_inetSetRcvBufSize( SocketCon, nSizeBuff )
@@ -764,7 +764,7 @@ METHOD InetRcvBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
 
    RETURN hb_inetGetRcvBufSize( SocketCon )
 
-METHOD InetSndBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
+METHOD TIPClient:InetSndBufSize( SocketCon, nSizeBuff )
 
    IF HB_ISNUMERIC(nSizeBuff) .AND. nSizeBuff > 0
       hb_inetSetSndBufSize( SocketCon, nSizeBuff )
@@ -772,7 +772,7 @@ METHOD InetSndBufSize( SocketCon, nSizeBuff ) CLASS TIPClient
 
    RETURN hb_inetGetSndBufSize( SocketCon )
 
-METHOD InetTimeOut( SocketCon, nConnTimeout ) CLASS TIPClient
+METHOD TIPClient:InetTimeOut( SocketCon, nConnTimeout )
 
    IF HB_ISNUMERIC(nConnTimeout)
       ::nConnTimeout := nConnTimeout
@@ -787,7 +787,7 @@ METHOD InetTimeOut( SocketCon, nConnTimeout ) CLASS TIPClient
    of function being logged.
    Example, I want to log MyFunc(a, b, c) which returns m,
             ::Log( a, b, c, m ) */
-METHOD Log( ... ) CLASS TIPClient
+METHOD TIPClient:Log( ... )
 
    LOCAL xVar
    LOCAL cMsg
@@ -822,7 +822,7 @@ METHOD Log( ... ) CLASS TIPClient
 
    RETURN Self
 
-METHOD SetProxy( cProxyHost, nProxyPort, cProxyUser, cProxyPassword ) CLASS TIPClient
+METHOD TIPClient:SetProxy( cProxyHost, nProxyPort, cProxyUser, cProxyPassword )
 
    IF __clsParent( cProxyHost:classH(), "TURL" )
       ::cProxyHost     := cProxyHost:cServer

@@ -119,7 +119,7 @@ CREATE CLASS OleNetioSrv
 
 ENDCLASS
 
-METHOD Eval( cMethodName, ... ) CLASS OleNetioSrv
+METHOD OleNetioSrv:Eval( cMethodName, ... )
 
    LOCAL xRetVal, oErr
 

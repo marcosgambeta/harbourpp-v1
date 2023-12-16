@@ -83,7 +83,7 @@ CREATE CLASS TCgi INHERIT THtml
 
 ENDCLASS
 
-METHOD New(cInBuffer) CLASS TCgi
+METHOD TCgi:New(cInBuffer)
 
    LOCAL i
    LOCAL aTemp
@@ -145,7 +145,7 @@ METHOD New(cInBuffer) CLASS TCgi
  *
  * It subclasses the TCgi class to a *new* class
  */
-METHOD ToObject() CLASS TCgi
+METHOD TCgi:ToObject()
 
    LOCAL i
    LOCAL nScope := 1
@@ -194,7 +194,7 @@ METHOD ToObject() CLASS TCgi
 
    RETURN oNew
 
-METHOD Field(cQueryName) CLASS TCgi
+METHOD TCgi:Field(cQueryName)
 
    LOCAL cRet := ""
    LOCAL nRet

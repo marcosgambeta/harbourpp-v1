@@ -28,13 +28,13 @@ CREATE CLASS OleObjServer
 
 ENDCLASS
 
-METHOD timer() CLASS OleObjServer
+METHOD OleObjServer:timer()
    RETURN timerCls():new()
 
-METHOD info() CLASS OleObjServer
+METHOD OleObjServer:info()
    RETURN infoCls():new()
 
-METHOD ref( p1, p2, p3, p4, p5, p6, p7 ) CLASS OleObjServer
+METHOD OleObjServer:ref( p1, p2, p3, p4, p5, p6, p7 )
 
    p1 := Date()
    p2 := hb_DateTime()

@@ -85,7 +85,7 @@ CREATE CLASS TBColumnSQL FROM TBColumn
 ENDCLASS
 
 
-METHOD New( cHeading, bBlock, oBrw ) CLASS TBColumnSQL
+METHOD TBColumnSQL:New( cHeading, bBlock, oBrw )
 
    ::super:New( cHeading, bBlock )
    ::oBrw := oBrw
@@ -93,7 +93,7 @@ METHOD New( cHeading, bBlock, oBrw ) CLASS TBColumnSQL
    RETURN Self
 
 
-METHOD Block() CLASS TBColumnSQL
+METHOD TBColumnSQL:Block()
 
    LOCAL xValue := ::oBrw:oCurRow:FieldGet( ::nFieldNum )
    LOCAL xType := ::oBrw:oCurRow:FieldType( ::nFieldNum )
@@ -149,7 +149,7 @@ CREATE CLASS TBrowseSQL FROM TBrowse
 ENDCLASS
 
 
-METHOD New( nTop, nLeft, nBottom, nRight, oServer, oQuery, cTable ) CLASS TBrowseSQL
+METHOD TBrowseSQL:New( nTop, nLeft, nBottom, nRight, oServer, oQuery, cTable )
 
    LOCAL i, oCol
 
@@ -234,7 +234,7 @@ STATIC FUNCTION Skipper( nSkip, oQuery )
    RETURN oQuery:GetRow( oQuery:RecNo() )
 
 
-METHOD EditField() CLASS TBrowseSQL
+METHOD TBrowseSQL:EditField()
 
    LOCAL oCol
    LOCAL aGetList
@@ -311,7 +311,7 @@ METHOD EditField() CLASS TBrowseSQL
    RETURN Self
 
 
-METHOD BrowseTable( lCanEdit, aExitKeys ) CLASS TBrowseSQL
+METHOD TBrowseSQL:BrowseTable( lCanEdit, aExitKeys )
 
    LOCAL nKey
    LOCAL lKeepGoing := .T.
@@ -409,7 +409,7 @@ METHOD BrowseTable( lCanEdit, aExitKeys ) CLASS TBrowseSQL
    RETURN Self
 
 // Empty method to be subclassed
-METHOD KeyboardHook( nKey ) CLASS TBrowseSQL
+METHOD TBrowseSQL:KeyboardHook( nKey )
 
    HB_SYMBOL_UNUSED( nKey )
 

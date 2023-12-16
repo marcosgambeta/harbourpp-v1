@@ -66,17 +66,17 @@ EXPORTED:
 
 ENDCLASS
 
-METHOD new( ... ) CLASS Signal
+METHOD Signal:new( ... )
 
    ::mutex := hb_mutexCreate()
    ::Init( ... )
 
    RETURN Self
 
-METHOD wait( nTimeOut ) CLASS SIGNAL
+METHOD Signal:wait( nTimeOut )
    RETURN __clsSyncWait( ::mutex, nTimeOut )
 
-METHOD signal() CLASS Signal
+METHOD Signal:signal()
 
    __clsSyncSignal( ::mutex )
 
@@ -124,7 +124,7 @@ EXPORTED:
 
 ENDCLASS
 
-METHOD new( ... ) CLASS Thread
+METHOD Thread:new( ... )
 
    LOCAL nMaxStackSize
 
@@ -166,7 +166,7 @@ METHOD PROCEDURE quit( xResult, nRestart ) CLASS Thread
 
    RETURN
 
-METHOD setInterval( nHSeconds ) CLASS Thread
+METHOD Thread:setInterval( nHSeconds )
 
    IF HB_ISNUMERIC(nHSeconds) .AND. Int( nHSeconds ) >= 0
       ::interval := Int( nHSeconds )
@@ -179,7 +179,7 @@ METHOD setInterval( nHSeconds ) CLASS Thread
 
    RETURN .T.
 
-METHOD setPriority( nPriority ) CLASS Thread
+METHOD Thread:setPriority( nPriority )
 
    /* TODO: add thread priority setting */
    IF HB_ISNUMERIC(nPriority)
@@ -188,7 +188,7 @@ METHOD setPriority( nPriority ) CLASS Thread
 
    RETURN .F.
 
-METHOD setStartTime( nSeconds ) CLASS Thread
+METHOD Thread:setStartTime( nSeconds )
 
    IF HB_ISNUMERIC(nSeconds)
       IF nSeconds < 0 .OR. nSeconds > 86400
@@ -204,7 +204,7 @@ METHOD setStartTime( nSeconds ) CLASS Thread
 
    RETURN .T.
 
-METHOD start( xAction, ... ) CLASS Thread
+METHOD Thread:start( xAction, ... )
 
    IF ::active
       RETURN .F.
@@ -280,7 +280,7 @@ METHOD start( xAction, ... ) CLASS Thread
 
    RETURN .T.
 
-METHOD synchronize( nTimeOut ) CLASS Thread
+METHOD Thread:synchronize( nTimeOut )
 
    LOCAL pThreadID := ::pThreadID
 
@@ -292,11 +292,11 @@ METHOD synchronize( nTimeOut ) CLASS Thread
 
    RETURN .F.
 
-METHOD threadSelf() CLASS Thread
+METHOD Thread:threadSelf()
    RETURN ::pThreadID
 
 #if 0
-METHOD threadID() CLASS Thread
+METHOD Thread:threadID()
 
    LOCAL pThreadID := ::pThreadID
 

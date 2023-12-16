@@ -126,7 +126,7 @@ CREATE CLASS HBFormatCode
 
 ENDCLASS
 
-METHOD New( aParams, cIniName ) CLASS HBFormatCode
+METHOD HBFormatCode:New( aParams, cIniName )
 
    LOCAL cParam
 
@@ -194,7 +194,7 @@ METHOD New( aParams, cIniName ) CLASS HBFormatCode
 
    RETURN Self
 
-METHOD Reformat( aFile ) CLASS HBFormatCode
+METHOD HBFormatCode:Reformat( aFile )
 
    LOCAL i, iDelta := 0, nLen := Len(aFile), cToken1, cToken2, nLenToken, nPos
    LOCAL nPosSep, cLine, cLineAll, nLineSegment
@@ -461,7 +461,7 @@ METHOD Reformat( aFile ) CLASS HBFormatCode
 #define FL_STATE_QUOTED 11
 #define FL_STATE_SQBR   12
 
-METHOD FormatLine( cLine, lContinued ) CLASS HBFormatCode
+METHOD HBFormatCode:FormatLine( cLine, lContinued )
 
    LOCAL i, nLen, c, nState := 0, cSymb, cToken, nPos := 1
    LOCAL lFirst, nBegin, nEnd, nB := 0, nA := 0, aBrackets[ 2 ]
@@ -683,7 +683,7 @@ METHOD FormatLine( cLine, lContinued ) CLASS HBFormatCode
 
    RETURN cLine
 
-METHOD ConvertCmd( cLine, nBegin, nEnd, lFirstOnly ) CLASS HBFormatCode
+METHOD HBFormatCode:ConvertCmd( cLine, nBegin, nEnd, lFirstOnly )
 
    LOCAL nPos, cToken
 
@@ -726,7 +726,7 @@ METHOD ConvertCmd( cLine, nBegin, nEnd, lFirstOnly ) CLASS HBFormatCode
 
    RETURN .T.
 
-METHOD ConvertFnc(cLine, nBegin, nEnd) CLASS HBFormatCode
+METHOD HBFormatCode:ConvertFnc(cLine, nBegin, nEnd)
 
    LOCAL nPos, cToken
 
@@ -756,7 +756,7 @@ METHOD ConvertFnc(cLine, nBegin, nEnd) CLASS HBFormatCode
 
    RETURN .T.
 
-METHOD ConvertBool( cLine, nBegin, nEnd ) CLASS HBFormatCode
+METHOD HBFormatCode:ConvertBool( cLine, nBegin, nEnd )
 
    LOCAL cBool
    LOCAL nPos, cToken
@@ -785,7 +785,7 @@ METHOD ConvertBool( cLine, nBegin, nEnd ) CLASS HBFormatCode
 
    RETURN .T.
 
-METHOD SetOption( cLine, i, aIni ) CLASS HBFormatCode
+METHOD HBFormatCode:SetOption( cLine, i, aIni )
 
    LOCAL nPos, cToken1, cToken2, cTemp, xRes
 
@@ -837,7 +837,7 @@ METHOD SetOption( cLine, i, aIni ) CLASS HBFormatCode
 
    RETURN ::nErr == 0
 
-METHOD ReadIni( cIniName ) CLASS HBFormatCode
+METHOD HBFormatCode:ReadIni( cIniName )
 
    LOCAL i, nLen, aIni, c
 
@@ -856,7 +856,7 @@ METHOD ReadIni( cIniName ) CLASS HBFormatCode
 
    RETURN ::nErr == 0
 
-METHOD Source2Array( cSource ) CLASS HBFormatCode
+METHOD HBFormatCode:Source2Array( cSource )
 
    IF ::nEol < 0
       IF Chr(13) + Chr(10) $ cSource
@@ -868,7 +868,7 @@ METHOD Source2Array( cSource ) CLASS HBFormatCode
 
    RETURN hb_ATokens( cSource, .T. )
 
-METHOD Array2Source( aSource ) CLASS HBFormatCode
+METHOD HBFormatCode:Array2Source( aSource )
 
    LOCAL nLen := Len(aSource), i
    LOCAL cSource := ""
@@ -888,7 +888,7 @@ METHOD Array2Source( aSource ) CLASS HBFormatCode
 
    RETURN cSource
 
-METHOD File2Array( cFileName ) CLASS HBFormatCode
+METHOD HBFormatCode:File2Array( cFileName )
 
    IF hb_vfExists( cFileName )
       RETURN ::Source2Array( MemoRead( cFileName ) )
@@ -896,7 +896,7 @@ METHOD File2Array( cFileName ) CLASS HBFormatCode
 
    RETURN NIL
 
-METHOD Array2File( cFileName, aSource ) CLASS HBFormatCode
+METHOD HBFormatCode:Array2File( cFileName, aSource )
 
    LOCAL cDir, cName, cExt
 

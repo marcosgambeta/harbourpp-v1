@@ -274,7 +274,7 @@ ENDCLASS
 *     Starts a new CGI-HTML stream file.
 */
 
-METHOD cgiNew(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
+METHOD THtml:cgiNew(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
       BGIMAGE, BGCOLOR, txtColor, aJsCode, ;
       onLoad, onUnload, ;
       cLinkClr, cVLinkClr, cALinkClr, ;
@@ -282,7 +282,7 @@ METHOD cgiNew(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
       cBaseURL, cBaseTarget, ;
       nRefresh, cRefreshURL, cStyleScr, ;
       lNocache, NOF, nMarginTop, nMarginHeight, ;
-      nMarginWidth, nMarginLeft, lCgi, cFile) CLASS THtml
+      nMarginWidth, nMarginLeft, lCgi, cFile)
 
    HB_SYMBOL_UNUSED(lCgi)
 
@@ -296,7 +296,7 @@ METHOD cgiNew(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
       lNocache, NOF, nMarginTop, nMarginHeight, ;
       nMarginWidth, nMarginLeft, .T., cFile)
 
-METHOD New(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
+METHOD THtml:New(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
       BGIMAGE, BGCOLOR, txtColor, aJsCode, ;
       onLoad, onUnload, ;
       cLinkClr, cVLinkClr, cALinkClr, ;
@@ -304,7 +304,7 @@ METHOD New(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
       cBaseURL, cBaseTarget, ;
       nRefresh, cRefreshURL, cStyleScr, ;
       lNocache, NOF, nMarginTop, nMarginHeight, ;
-      nMarginWidth, nMarginLeft, lCgi, cFile) CLASS THtml
+      nMarginWidth, nMarginLeft, lCgi, cFile)
 
    LOCAL i
 
@@ -507,7 +507,7 @@ METHOD New(cTitle, cLinkTitle, cCharSet, aScriptSRC, ;
 
    RETURN Self
 
-METHOD NewAlt(cType) CLASS THtml
+METHOD THtml:NewAlt(cType)
 
    ::nH    := STD_OUT
    ::cStr += 'Content-Type: ' + cType + CRLF() + CRLF()
@@ -525,7 +525,7 @@ METHOD NewAlt(cType) CLASS THtml
 *     obvious...
 */
 
-METHOD SetFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet) CLASS THtml
+METHOD THtml:SetFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet)
 
    LOCAL cStr := CRLF() + '<font'
 
@@ -588,7 +588,7 @@ METHOD SetFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet) CLASS THtml
 *     end the definition appropriately later
 */
 
-METHOD StartFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet, lPut) CLASS THtml
+METHOD THtml:StartFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet, lPut)
 
    LOCAL cStr := "<font "
 
@@ -657,7 +657,7 @@ METHOD StartFont(cFont, lBold, lItalic, lULine, nSize, cColor, lSet, lPut) CLASS
 *     Use ::endFont() to cancel this font
 */
 
-METHOD DefineFont(cFont, cType, nSize, cColor, lSet) CLASS THtml
+METHOD THtml:DefineFont(cFont, cType, nSize, cColor, lSet)
 
    LOCAL cStr := "<font "
 
@@ -710,7 +710,7 @@ METHOD DefineFont(cFont, cType, nSize, cColor, lSet) CLASS THtml
 *     End a font definition
 */
 
-METHOD EndFont() CLASS THtml
+METHOD THtml:EndFont()
 
    ::cStr += '</font>' + CRLF()
 
@@ -724,7 +724,7 @@ METHOD EndFont() CLASS THtml
 *
 */
 
-METHOD Say(str, font, size, type, color, style) CLASS THtml
+METHOD THtml:Say(str, font, size, type, color, style)
 
    LOCAL cOut    := ""
    LOCAL lBold   := .F.
@@ -821,7 +821,7 @@ METHOD Say(str, font, size, type, color, style) CLASS THtml
 *
 */
 
-METHOD Paragraph(lStart, cAlign, cStyle) CLASS THtml
+METHOD THtml:Paragraph(lStart, cAlign, cStyle)
 
    LOCAL cStr := "<p"
 
@@ -852,7 +852,7 @@ METHOD Paragraph(lStart, cAlign, cStyle) CLASS THtml
 *     Put a Horizontal line
 */
 
-METHOD HLine(nSize, nWidth, lShade, cColor) CLASS THtml
+METHOD THtml:HLine(nSize, nWidth, lShade, cColor)
 
    __defaultNIL(@nSize, 3)
    __defaultNIL(@nWidth, 100)
@@ -877,7 +877,7 @@ METHOD HLine(nSize, nWidth, lShade, cColor) CLASS THtml
 *     Put an HTML heading ( large text )
 */
 
-METHOD PutHeading(cText, nWeight, lCentered) CLASS THtml
+METHOD THtml:PutHeading(cText, nWeight, lCentered)
 
    __defaultNIL(@nWeight, 3)
    __defaultNIL(@lCentered, .F.)
@@ -901,7 +901,7 @@ METHOD PutHeading(cText, nWeight, lCentered) CLASS THtml
 *     Put a text link.
 */
 
-METHOD PutTextUrl(cText, cUrl, cOnClick, cOnMsOver, cOnMsout, cTarget, font, clr, size, style, bld, lbreak, cClass) CLASS THtml
+METHOD THtml:PutTextUrl(cText, cUrl, cOnClick, cOnMsOver, cOnMsout, cTarget, font, clr, size, style, bld, lbreak, cClass)
 
    LOCAL cStr := ""
 
@@ -993,9 +993,9 @@ METHOD PutTextUrl(cText, cUrl, cOnClick, cOnMsOver, cOnMsout, cTarget, font, clr
 *     Put an Image link.
 */
 
-METHOD PutImageUrl(cImage, nBorder, nHeight, cUrl, ;
+METHOD THtml:PutImageUrl(cImage, nBorder, nHeight, cUrl, ;
       cOnclick, cOnMsOver, cOnMsOut, cName, cAlt, cTarget, nWidth, lbreak, cClass, ;
-      Id, hSpace, Aling) CLASS THtml
+      Id, hSpace, Aling)
 
    LOCAL cStr := ""
 
@@ -1059,8 +1059,8 @@ METHOD PutImageUrl(cImage, nBorder, nHeight, cUrl, ;
 
    RETURN Self
 
-METHOD PutTextImageUrl(cImage, nBorder, nHeight, cUrl, ;
-      cOnclick, cOnMsOver, cOnMsOut, cName, cAlt, cTarget, nWidth, lbreak, cClass, cText) CLASS THtml
+METHOD THtml:PutTextImageUrl(cImage, nBorder, nHeight, cUrl, ;
+      cOnclick, cOnMsOver, cOnMsOut, cName, cAlt, cTarget, nWidth, lbreak, cClass, cText)
 
    LOCAL cStr := ""
 
@@ -1118,9 +1118,9 @@ METHOD PutTextImageUrl(cImage, nBorder, nHeight, cUrl, ;
 *     Put an Image.
 */
 
-METHOD PutImage(cImage, nBorder, nHeight, ;
+METHOD THtml:PutImage(cImage, nBorder, nHeight, ;
       cOnclick, cOnMsOver, cOnMsOut, cName, cAlt, cTarget, ;
-      nWidth, lbreak, Id, Map, Aling, hSpace) CLASS THtml
+      nWidth, lbreak, Id, Map, Aling, hSpace)
 
    LOCAL cStr := ""
 
@@ -1198,7 +1198,7 @@ METHOD PutImage(cImage, nBorder, nHeight, ;
 *
 */
 
-METHOD Close() CLASS THtml
+METHOD THtml:Close()
 
 #if 0
    ::cStr += ::cStr
@@ -1223,7 +1223,7 @@ METHOD Close() CLASS THtml
 *     Close a CGI-HTML stream file
 */
 
-METHOD cgiClose() CLASS THtml
+METHOD THtml:cgiClose()
 
    ::cStr += "</body>" + CRLF()
    ::cStr += "</html>" + CRLF()
@@ -1241,10 +1241,10 @@ METHOD cgiClose() CLASS THtml
 *
 */
 
-METHOD DefineTable(nCols, nBorder, nWidth, nHeight, ColorFore, ColorBG, ;
+METHOD THtml:DefineTable(nCols, nBorder, nWidth, nHeight, ColorFore, ColorBG, ;
       l3d, lRuleCols, lRuleRows, cClrDark, cClrLight, cClrBorder, ;
       nCellPadding, nCellSpacing, cAling, lRules, ;
-      bgImage, cStyle, Id, NOF) CLASS THtml
+      bgImage, cStyle, Id, NOF)
 
    LOCAL cStr  := CRLF() + CRLF() + "<table "
    LOCAL xCols := nCols
@@ -1343,7 +1343,7 @@ METHOD DefineTable(nCols, nBorder, nWidth, nHeight, ColorFore, ColorBG, ;
 *
 */
 
-METHOD TableHead(cHead, cColor, cAlign, cFont, nSize, cFntColor, nHeight, cBgPic) CLASS THtml
+METHOD THtml:TableHead(cHead, cColor, cAlign, cFont, nSize, cFntColor, nHeight, cBgPic)
 
    LOCAL cStr := Space(3) + "<th"
 
@@ -1397,7 +1397,7 @@ METHOD TableHead(cHead, cColor, cAlign, cFont, nSize, cFntColor, nHeight, cBgPic
 *
 */
 
-METHOD NewTableRow(cColor, vAling, aLing) CLASS THtml
+METHOD THtml:NewTableRow(cColor, vAling, aLing)
 
    LOCAL cStr := Space(5) + "<tr"
 
@@ -1426,7 +1426,7 @@ METHOD NewTableRow(cColor, vAling, aLing) CLASS THtml
 *
 */
 
-METHOD EndTableRow() CLASS THtml
+METHOD THtml:EndTableRow()
 
    ::cStr += Space(5) + "</tr>" + CRLF()
 
@@ -1440,10 +1440,10 @@ METHOD EndTableRow() CLASS THtml
 *
 */
 
-METHOD NewTableCell(cAlign, cColor, ;
+METHOD THtml:NewTableCell(cAlign, cColor, ;
       cFont, nSize, cFntColor, nHeight, ;
       cBgPic, nWidth, lWrap, ;
-      nColspan, nRowspan, cValign, clrdrk, clrlt, cBdrClr, cClass, lNoFont) CLASS THtml
+      nColspan, nRowspan, cValign, clrdrk, clrlt, cBdrClr, cClass, lNoFont)
 
    LOCAL cStr := Space(10) + "<td"
    LOCAL cAli := cAlign
@@ -1549,7 +1549,7 @@ METHOD NewTableCell(cAlign, cColor, ;
 *
 */
 
-METHOD EndTableCell() CLASS THtml
+METHOD THtml:EndTableCell()
 
    IF ::lFont
       ::cStr += "</font></td>" + CRLF()
@@ -1568,7 +1568,7 @@ METHOD EndTableCell() CLASS THtml
 *     End a table definition.
 */
 
-METHOD EndTable() CLASS THtml
+METHOD THtml:EndTable()
 
    ::cStr += "</table>" + CRLF()
    ::cStr += CRLF() + CRLF() + CRLF()
@@ -1584,7 +1584,7 @@ METHOD EndTable() CLASS THtml
 *
 */
 
-METHOD NewForm(cMethod, cAction, cName) CLASS THtml
+METHOD THtml:NewForm(cMethod, cAction, cName)
 
    __defaultNIL(@cMethod, "POST")
    __defaultNIL(@cName, "newForm")
@@ -1617,7 +1617,7 @@ METHOD NewForm(cMethod, cAction, cName) CLASS THtml
 *
 */
 
-METHOD FormEdit(cType, cName, xValue, nSize) CLASS THtml
+METHOD THtml:FormEdit(cType, cName, xValue, nSize)
 
    __defaultNIL(@cType, "edit")
 
@@ -1647,7 +1647,7 @@ METHOD FormEdit(cType, cName, xValue, nSize) CLASS THtml
 *
 */
 
-METHOD FormSubmit(cText) CLASS THtml
+METHOD THtml:FormSubmit(cText)
 
    ::cStr += '<input type="submit" Value="' + cText + '">' + CRLF()
 
@@ -1661,7 +1661,7 @@ METHOD FormSubmit(cText) CLASS THtml
 *
 */
 
-METHOD FormImage(cText, name, file) CLASS THtml
+METHOD THtml:FormImage(cText, name, file)
 
    HB_SYMBOL_UNUSED(cText)
 
@@ -1677,7 +1677,7 @@ METHOD FormImage(cText, name, file) CLASS THtml
 *
 */
 
-METHOD FormReset(cText) CLASS THtml
+METHOD THtml:FormReset(cText)
 
    ::cStr += '<input type="Reset" Value="' + cText + '">' + CRLF()
 
@@ -1691,7 +1691,7 @@ METHOD FormReset(cText) CLASS THtml
 *     Either pass onClick or cCgiApp - not both
 */
 
-METHOD PushButton(cName, cCaption, cCgiApp, cOnClick, cOnFocus, cOnBlur, cOnMsOver, cOnMsOut, style, ID) CLASS THtml
+METHOD THtml:PushButton(cName, cCaption, cCgiApp, cOnClick, cOnFocus, cOnBlur, cOnMsOver, cOnMsOut, style, ID)
 
    LOCAL cStr := CRLF() + "<input type=BUTTON " + CRLF()
 
@@ -1750,7 +1750,7 @@ METHOD PushButton(cName, cCaption, cCgiApp, cOnClick, cOnFocus, cOnBlur, cOnMsOv
 *
 */
 
-METHOD Button(cName, cCaption, cOnClick, cCGIApp, cOnMsOver, cOnMsOut, Style, ID) CLASS THtml
+METHOD THtml:Button(cName, cCaption, cOnClick, cCGIApp, cOnMsOver, cOnMsOut, Style, ID)
 
    LOCAL cStr := CRLF() + "<button " + CRLF()
 
@@ -1801,7 +1801,7 @@ METHOD Button(cName, cCaption, cOnClick, cCGIApp, cOnMsOver, cOnMsOut, Style, ID
 *
 */
 
-METHOD EndButton() CLASS THtml
+METHOD THtml:EndButton()
 
    ::cStr += CRLF() + CRLF() + "</button>" + CRLF()
 
@@ -1815,11 +1815,11 @@ METHOD EndButton() CLASS THtml
 *
 */
 
-METHOD Marquee(cText, cFont, cFntColor, nFntSize, ;
+METHOD THtml:Marquee(cText, cFont, cFntColor, nFntSize, ;
       cAlign, nWidth, nHeight, cbgColor, ;
       cBehavior, cDirection, ;
       nScrollAmt, nScrollDelay, LOOP, ;
-      onMsOver, onMsOut, onClick, onStart, onFinish) CLASS THtml
+      onMsOver, onMsOut, onClick, onStart, onFinish)
 
    __defaultNIL(@cFont, "Verdana")
    __defaultNIL(@cFntColor, "white")
@@ -1866,11 +1866,11 @@ METHOD Marquee(cText, cFont, cFntColor, nFntSize, ;
 *
 */
 
-METHOD StartMarquee(cFont, cFntColor, nFntSize, ;
+METHOD THtml:StartMarquee(cFont, cFntColor, nFntSize, ;
       cAlign, nWidth, nHeight, cbgColor, ;
       cBehavior, cDirection, ;
       nScrollAmt, nScrollDelay, LOOP, ;
-      onMsOver, onMsOut, onClick, onStart, onFinish) CLASS THtml
+      onMsOver, onMsOut, onClick, onStart, onFinish)
 
    LOCAL cStr := ""
 
@@ -1915,7 +1915,7 @@ METHOD StartMarquee(cFont, cFntColor, nFntSize, ;
 *
 */
 
-METHOD EndMarquee() CLASS THtml
+METHOD THtml:EndMarquee()
 
    ::cStr += "</marquee>" + CRLF()
 
@@ -1929,7 +1929,7 @@ METHOD EndMarquee() CLASS THtml
 *
 */
 
-METHOD iFrame(name, src, border, marginwidth, marginheight, scrolling, align, WIDTH, HEIGHT) CLASS THtml
+METHOD THtml:iFrame(name, src, border, marginwidth, marginheight, scrolling, align, WIDTH, HEIGHT)
 
    LOCAL cStr := "<iframe " + CRLF()
 
@@ -1985,7 +1985,7 @@ METHOD iFrame(name, src, border, marginwidth, marginheight, scrolling, align, WI
 
 /*   New    Methods   */
 
-METHOD Span(c, Style) CLASS THtml
+METHOD THtml:Span(c, Style)
 
    LOCAL cStr := "<span "
 
@@ -1997,7 +1997,7 @@ METHOD Span(c, Style) CLASS THtml
 
    RETURN Self
 
-METHOD Comment(cText) CLASS THtml
+METHOD THtml:Comment(cText)
 
    LOCAL cStr := CRLF() + "<!-- "
 
@@ -2006,7 +2006,7 @@ METHOD Comment(cText) CLASS THtml
 
    RETURN Self
 
-METHOD AddObject(cType, cClassid, cAling, cCode, lDisable, cCodeBase, cName, nWidth, nHeight) CLASS THtml
+METHOD THtml:AddObject(cType, cClassid, cAling, cCode, lDisable, cCodeBase, cName, nWidth, nHeight)
 
    LOCAL cStr := "<object "
 
@@ -2055,19 +2055,19 @@ METHOD AddObject(cType, cClassid, cAling, cCode, lDisable, cCodeBase, cName, nWi
 
    RETURN Self
 
-METHOD EndObject() CLASS THtml
+METHOD THtml:EndObject()
 
    ::cStr += "</object>" + CRLF()
 
    RETURN Self
 
-METHOD ADDPARAM(cType, cValue) CLASS THtml
+METHOD THtml:ADDPARAM(cType, cValue)
 
    ::cStr += '<param name="' + cType + '" value="' + cValue + '">' + CRLF()
 
    RETURN Self
 
-METHOD PutLinkName(cName) CLASS THtml
+METHOD THtml:PutLinkName(cName)
 
    ::cStr += '<a name="' + cName + '"></a>'
 

@@ -72,10 +72,10 @@ CREATE CLASS win_BMP
 
 ENDCLASS
 
-METHOD New() CLASS win_BMP
+METHOD win_BMP:New()
    RETURN Self
 
-METHOD LoadFile(cFileName, aDimXY) CLASS win_BMP
+METHOD win_BMP:LoadFile(cFileName, aDimXY)
 
    ::FileName := cFileName
    ::Bitmap := win_LoadBitmapFile(::FileName)
@@ -93,16 +93,16 @@ METHOD LoadFile(cFileName, aDimXY) CLASS win_BMP
 
    RETURN ::Type != HB_WIN_BITMAP_UNKNOWN
 
-METHOD Create() CLASS win_BMP  // Compatibility function for Alaska Xbase++
+METHOD win_BMP:Create()  // Compatibility function for Alaska Xbase++
    RETURN Self
 
-METHOD Destroy() CLASS win_BMP  // Compatibility function for Alaska Xbase++
+METHOD win_BMP:Destroy()  // Compatibility function for Alaska Xbase++
    RETURN NIL
 
-METHOD IsSupported(oPrn, /* @ */ nError) CLASS win_BMP
+METHOD win_BMP:IsSupported(oPrn, /* @ */ nError)
    RETURN (nError := win_bitmapIsSupported(oPrn:hPrinterDc, ::Bitmap)) == 0
 
-METHOD Draw(oPrn, aRectangle, /* @ */ nError) CLASS win_BMP // Pass a win_Prn object reference and rectangle array
+METHOD win_BMP:Draw(oPrn, aRectangle, /* @ */ nError) // Pass a win_Prn object reference and rectangle array
 
    IF HB_ISARRAY(aRectangle)
       ::Rect := aRectangle

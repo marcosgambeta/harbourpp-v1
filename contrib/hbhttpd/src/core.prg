@@ -65,7 +65,7 @@ ENDCLASS
 FUNCTION UHttpdNew()
    RETURN UHttpd()
 
-METHOD Run( hConfig ) CLASS UHttpd
+METHOD UHttpd:Run( hConfig )
 
    LOCAL hSocket, nI, aI, xValue, aThreads, nJobs, nWorkers
 
@@ -187,14 +187,14 @@ METHOD Run( hConfig ) CLASS UHttpd
 
    RETURN .T.
 
-METHOD Stop() CLASS UHttpd
+METHOD UHttpd:Stop()
 
    Eval( ::hConfig[ "Trace" ], "stopping" )
    ::lStop := .T.
 
    RETURN NIL
 
-METHOD LogError( cError ) CLASS UHttpd
+METHOD UHttpd:LogError( cError )
 
    hb_mutexLock( ::hmtxLog )
    Eval( ::hConfig[ "LogError" ], DToS( Date() ) + " " + Time() + " " + cError )
@@ -202,7 +202,7 @@ METHOD LogError( cError ) CLASS UHttpd
 
    RETURN NIL
 
-METHOD LogAccess() CLASS UHttpd
+METHOD UHttpd:LogAccess()
 
    LOCAL cDate := DToS( Date() ), cTime := Time()
 

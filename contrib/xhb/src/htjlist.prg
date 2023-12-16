@@ -80,7 +80,7 @@ CREATE CLASS TJSList
 ENDCLASS
 
 /* Create main node */
-METHOD New(name, lOpen, width, height, bgColor, FONT, fntColor, fntSize, cMinusImg, cPlusImg) CLASS TJSList
+METHOD TJSList:New(name, lOpen, width, height, bgColor, FONT, fntColor, fntSize, cMinusImg, cPlusImg)
 
    LOCAL cStr
 
@@ -139,7 +139,7 @@ METHOD New(name, lOpen, width, height, bgColor, FONT, fntColor, fntSize, cMinusI
 *
 */
 
-METHOD NewNode(name, lOpen, width, height, bgColor) CLASS TJSList
+METHOD TJSList:NewNode(name, lOpen, width, height, bgColor)
 
    LOCAL cStr := ""
 
@@ -168,7 +168,7 @@ METHOD NewNode(name, lOpen, width, height, bgColor) CLASS TJSList
 *
 */
 
-METHOD SetFont(name, font, fntColor, fntSize) CLASS TJSList
+METHOD TJSList:SetFont(name, font, fntColor, fntSize)
 
    LOCAL cStr
 
@@ -193,7 +193,7 @@ METHOD SetFont(name, font, fntColor, fntSize) CLASS TJSList
 *
 */
 
-METHOD AddItem(name, url, bgColor) CLASS TJSList
+METHOD TJSList:AddItem(name, url, bgColor)
 
    LOCAL cStr
    LOCAL cUrl
@@ -213,7 +213,7 @@ METHOD AddItem(name, url, bgColor) CLASS TJSList
 *
 */
 
-METHOD AddLink(name, url, img, bgColor) CLASS TJSList
+METHOD TJSList:AddLink(name, url, img, bgColor)
 
    LOCAL cStr
    LOCAL cUrl
@@ -228,7 +228,7 @@ METHOD AddLink(name, url, img, bgColor) CLASS TJSList
 
    RETURN Self
 
-METHOD EndNode(name, caption) CLASS TJSList
+METHOD TJSList:EndNode(name, caption)
 
    LOCAL cStr
 
@@ -240,7 +240,7 @@ METHOD EndNode(name, caption) CLASS TJSList
 
    RETURN Self
 
-METHOD Build(xPos, yPos) CLASS TJSList
+METHOD TJSList:Build(xPos, yPos)
 
    LOCAL i
    LOCAL cStr := ""
@@ -281,7 +281,7 @@ METHOD Build(xPos, yPos) CLASS TJSList
 
    RETURN Self
 
-METHOD Put(cFile) CLASS TJSList
+METHOD TJSList:Put(cFile)
 
    IF cFile == NIL
       ::nH := STD_OUT

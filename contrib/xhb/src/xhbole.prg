@@ -166,7 +166,7 @@ CREATE CLASS TOleAuto FROM win_oleAuto
 
 ENDCLASS
 
-METHOD hObj(xOle) CLASS TOleAuto
+METHOD TOleAuto:hObj(xOle)
 
    IF xOle != NIL
       IF HB_ISNUMERIC(xOle)
@@ -179,7 +179,7 @@ METHOD hObj(xOle) CLASS TOleAuto
 
    RETURN ::__hObj
 
-METHOD New(xOle, cClass, cLicense) CLASS TOleAuto
+METHOD TOleAuto:New(xOle, cClass, cLicense)
 
    LOCAL hOle
 
@@ -202,7 +202,7 @@ METHOD New(xOle, cClass, cLicense) CLASS TOleAuto
 
    RETURN Self
 
-METHOD GetActiveObject(cClass) CLASS TOleAuto
+METHOD TOleAuto:GetActiveObject(cClass)
 
    IF HB_ISSTRING(cClass)
       IF Empty(::__hObj := __oleGetActiveObject(cClass))
@@ -216,10 +216,10 @@ METHOD GetActiveObject(cClass) CLASS TOleAuto
 
    RETURN Self
 
-METHOD OleValue() CLASS TOleAuto
+METHOD TOleAuto:OleValue()
    RETURN __oleInvokeGet(::__hObj, DISPID_VALUE)
 
-METHOD _OleValue(xValue) CLASS TOleAuto
+METHOD TOleAuto:_OleValue(xValue)
    RETURN __oleInvokePut(::__hObj, DISPID_VALUE, xValue)
 
 #xcommand OLE OPERATOR <op> METHOD <!mth!> [WITH <!arg!>] IS <exp> => ;

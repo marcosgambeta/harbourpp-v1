@@ -80,7 +80,7 @@ CREATE CLASS TMySQLRow
 ENDCLASS
 
 
-METHOD New( aRow, aFStruct, cTableName ) CLASS TMySQLRow
+METHOD TMySQLRow:New( aRow, aFStruct, cTableName )
 
    hb_default( @cTableName, "" )
    hb_default( @aFStruct, {} )
@@ -98,7 +98,7 @@ METHOD New( aRow, aFStruct, cTableName ) CLASS TMySQLRow
 
    RETURN Self
 
-METHOD FieldGet( cnField ) CLASS TMySQLRow
+METHOD TMySQLRow:FieldGet( cnField )
 
    LOCAL nNum := iif(HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField)
 
@@ -114,7 +114,7 @@ METHOD FieldGet( cnField ) CLASS TMySQLRow
 
    RETURN NIL
 
-METHOD FieldPut( cnField, Value ) CLASS TMySQLRow
+METHOD TMySQLRow:FieldPut( cnField, Value )
 
    LOCAL nNum := iif(HB_ISSTRING( cnField ), ::FieldPos( cnField ), cnField)
 
@@ -142,23 +142,23 @@ METHOD FieldPut( cnField, Value ) CLASS TMySQLRow
    RETURN NIL
 
 // Given a field name returns it's position
-METHOD FieldPos( cFieldName ) CLASS TMySQLRow
+METHOD TMySQLRow:FieldPos( cFieldName )
 
    LOCAL cUpperName := Upper(cFieldName)
 
    RETURN AScan( ::aFieldStruct, {| aItem | Upper(aItem[ MYSQL_FS_NAME ]) == cUpperName } )
 
 // Returns name of field N
-METHOD FieldName( nNum ) CLASS TMySQLRow
+METHOD TMySQLRow:FieldName( nNum )
    RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ], "")
 
-METHOD FieldLen(nNum) CLASS TMySQLRow
+METHOD TMySQLRow:FieldLen(nNum)
    RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ], 0)
 
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
  */
-METHOD FieldDec(nNum, lFormat) CLASS TMySQLRow
+METHOD TMySQLRow:FieldDec(nNum, lFormat)
 
    hb_default( @lFormat, .F. )
 
@@ -174,7 +174,7 @@ METHOD FieldDec(nNum, lFormat) CLASS TMySQLRow
 
    RETURN 0
 
-METHOD FieldType( nNum ) CLASS TMySQLRow
+METHOD TMySQLRow:FieldType( nNum )
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
@@ -207,7 +207,7 @@ METHOD FieldType( nNum ) CLASS TMySQLRow
    RETURN "U"
 
 // returns a WHERE x=y statement which uses primary key (if available)
-METHOD MakePrimaryKeyWhere() CLASS TMySQLRow
+METHOD TMySQLRow:MakePrimaryKeyWhere()
 
    LOCAL ni, cWhere := ""
 
@@ -297,7 +297,7 @@ CREATE CLASS TMySQLQuery
 ENDCLASS
 
 
-METHOD New( nSocket, cQuery ) CLASS TMySQLQuery
+METHOD TMySQLQuery:New( nSocket, cQuery )
 
    LOCAL nI, aField
 
@@ -343,7 +343,7 @@ METHOD New( nSocket, cQuery ) CLASS TMySQLQuery
 
    RETURN Self
 
-METHOD Refresh() CLASS TMySQLQuery
+METHOD TMySQLQuery:Refresh()
 
    // free present result handle
    ::nResultHandle := NIL
@@ -380,7 +380,7 @@ METHOD Refresh() CLASS TMySQLQuery
    RETURN ! ::lError
 
 
-METHOD Skip( nRows ) CLASS TMySQLQuery
+METHOD TMySQLQuery:Skip( nRows )
 
    LOCAL lBof
 
@@ -422,7 +422,7 @@ METHOD Skip( nRows ) CLASS TMySQLQuery
    RETURN NIL
 
 // Get row n of a query and return it as a TMySQLRow object
-METHOD GetRow( nRow ) CLASS TMySQLQuery
+METHOD TMySQLQuery:GetRow( nRow )
 
    LOCAL oRow := NIL
    LOCAL i
@@ -526,23 +526,23 @@ METHOD GetRow( nRow ) CLASS TMySQLQuery
    RETURN iif(::aRow == NIL, NIL, oRow)
 
 // Free result handle and associated resources
-METHOD Destroy() CLASS TMySQLQuery
+METHOD TMySQLQuery:Destroy()
 
    ::nResultHandle := NIL
 
    RETURN Self
 
-METHOD FCount() CLASS TMySQLQuery
+METHOD TMySQLQuery:FCount()
    RETURN ::nNumFields
 
-METHOD Error() CLASS TMySQLQuery
+METHOD TMySQLQuery:Error()
 
    ::lError := .F.
 
    RETURN mysql_error( ::nSocket )
 
 // Given a field name returns it's position
-METHOD FieldPos( cFieldName ) CLASS TMySQLQuery
+METHOD TMySQLQuery:FieldPos( cFieldName )
 
    LOCAL cUpperName, nPos
 
@@ -568,7 +568,7 @@ METHOD FieldPos( cFieldName ) CLASS TMySQLQuery
 
 
 // Returns name of field N
-METHOD FieldName( nNum ) CLASS TMySQLQuery
+METHOD TMySQLQuery:FieldName( nNum )
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_NAME ]
@@ -576,7 +576,7 @@ METHOD FieldName( nNum ) CLASS TMySQLQuery
 
    RETURN ""
 
-METHOD FieldGet( cnField ) CLASS TMySQLQuery
+METHOD TMySQLQuery:FieldGet( cnField )
 
    LOCAL nNum, Value
 
@@ -599,7 +599,7 @@ METHOD FieldGet( cnField ) CLASS TMySQLQuery
 
    RETURN NIL
 
-METHOD FieldLen(nNum) CLASS TMySQLQuery
+METHOD TMySQLQuery:FieldLen(nNum)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       RETURN ::aFieldStruct[ nNum ][ MYSQL_FS_LENGTH ]
@@ -609,7 +609,7 @@ METHOD FieldLen(nNum) CLASS TMySQLQuery
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
 
    lFormat is useful for copying table structure from mysql to dbf */
-METHOD FieldDec(nNum, lFormat) CLASS TMySQLQuery
+METHOD TMySQLQuery:FieldDec(nNum, lFormat)
 
    hb_default( @lFormat, .F. )
 
@@ -624,7 +624,7 @@ METHOD FieldDec(nNum, lFormat) CLASS TMySQLQuery
 
    RETURN 0
 
-METHOD FieldType( nNum ) CLASS TMySQLQuery
+METHOD TMySQLQuery:FieldType( nNum )
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       SWITCH ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ]
@@ -689,7 +689,7 @@ CREATE CLASS TMySQLTable INHERIT TMySQLQuery
 ENDCLASS
 
 
-METHOD New( nSocket, cQuery, cTableName ) CLASS TMySQLTable
+METHOD TMySQLTable:New( nSocket, cQuery, cTableName )
 
    LOCAL i
 
@@ -704,7 +704,7 @@ METHOD New( nSocket, cQuery, cTableName ) CLASS TMySQLTable
 
    RETURN Self
 
-METHOD GetRow( nRow ) CLASS TMySQLTable
+METHOD TMySQLTable:GetRow( nRow )
 
    LOCAL oRow := ::super:GetRow( nRow ), i
 
@@ -720,7 +720,7 @@ METHOD GetRow( nRow ) CLASS TMySQLTable
 
    RETURN oRow
 
-METHOD Skip( nRow ) CLASS TMySQLTable
+METHOD TMySQLTable:Skip( nRow )
 
    LOCAL i
 
@@ -733,7 +733,7 @@ METHOD Skip( nRow ) CLASS TMySQLTable
    RETURN NIL
 
 /* Creates an update query for changed fields and submits it to server */
-METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
+METHOD TMySQLTable:Update( oRow, lOldRecord, lRefresh )
 
    LOCAL cUpdateQuery := "UPDATE " + ::cTable + " SET "
    LOCAL i
@@ -842,7 +842,7 @@ METHOD Update( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
 
    RETURN ! ::lError
 
-METHOD Delete( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
+METHOD TMySQLTable:Delete( oRow, lOldRecord, lRefresh )
 
    LOCAL cDeleteQuery := "DELETE FROM " + ::cTable, i
 
@@ -927,7 +927,7 @@ METHOD Delete( oRow, lOldRecord, lRefresh ) CLASS TMySQLTable
    RETURN ! ::lError
 
 // Adds a row with values passed into oRow
-METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
+METHOD TMySQLTable:Append( oRow, lRefresh )
 
    LOCAL cInsertQuery := "INSERT INTO " + ::cTable + " ("
    LOCAL i
@@ -1026,7 +1026,7 @@ METHOD Append( oRow, lRefresh ) CLASS TMySQLTable
 
    RETURN .F.
 
-METHOD GetBlankRow( lSetValues ) CLASS TMySQLTable
+METHOD TMySQLTable:GetBlankRow( lSetValues )
 
    LOCAL i
    LOCAL aRow := Array( ::nNumFields )
@@ -1078,7 +1078,7 @@ METHOD GetBlankRow( lSetValues ) CLASS TMySQLTable
 
    RETURN TMySQLRow():New( aRow, ::aFieldStruct, ::cTable, .F. )
 
-METHOD FieldPut( cnField, Value ) CLASS TMySQLTable
+METHOD TMySQLTable:FieldPut( cnField, Value )
 
    LOCAL nNum
 
@@ -1108,7 +1108,7 @@ METHOD FieldPut( cnField, Value ) CLASS TMySQLTable
 
    RETURN NIL
 
-METHOD Refresh() CLASS TMySQLTABLE
+METHOD TMySQLTable:Refresh()
 
    // free present result handle
    ::nResultHandle := NIL
@@ -1146,7 +1146,7 @@ METHOD Refresh() CLASS TMySQLTABLE
    RETURN ! ::lError
 
 // returns a WHERE x=y statement which uses primary key (if available)
-METHOD MakePrimaryKeyWhere() CLASS TMySQLTable
+METHOD TMySQLTable:MakePrimaryKeyWhere()
 
    LOCAL ni, cWhere := ""
 
@@ -1212,7 +1212,7 @@ CREATE CLASS TMySQLServer
 ENDCLASS
 
 
-METHOD New( cServer, cUser, cPassword, nPort, nFlags ) CLASS TMySQLServer
+METHOD TMySQLServer:New( cServer, cUser, cPassword, nPort, nFlags )
 
    ::cServer := cServer
    ::nPort := nPort
@@ -1227,24 +1227,24 @@ METHOD New( cServer, cUser, cPassword, nPort, nFlags ) CLASS TMySQLServer
 
    RETURN Self
 
-METHOD Destroy() CLASS TMySQLServer
+METHOD TMySQLServer:Destroy()
 
    ::nSocket := NIL
 
    RETURN Self
 
-METHOD sql_commit() CLASS TMySQLServer
+METHOD TMySQLServer:sql_commit()
    RETURN mysql_commit( ::nSocket ) == 0
 
-METHOD sql_rollback() CLASS TMySQLServer
+METHOD TMySQLServer:sql_rollback()
    RETURN mysql_rollback( ::nSocket ) == 0
 
-METHOD sql_version() CLASS TMySQLServer
+METHOD TMySQLServer:sql_version()
    RETURN mysql_get_server_version( ::nSocket )
 
 
 
-// METHOD SelectDB(cDBName) CLASS TMySQLServer
+// METHOD TMySQLServer:SelectDB(cDBName)
 //
 //   IF mysql_select_db(::nSocket, cDBName) == 0
 //      ::cDBName := cDBName
@@ -1257,7 +1257,7 @@ METHOD sql_version() CLASS TMySQLServer
 
 
 // === alterado ===
-METHOD SelectDB(cDBName) CLASS TMySQLServer
+METHOD TMySQLServer:SelectDB(cDBName)
 
    ::lError := .F.
 
@@ -1273,7 +1273,7 @@ METHOD SelectDB(cDBName) CLASS TMySQLServer
    RETURN .F.
 
 
-METHOD CreateDatabase( cDataBase ) CLASS TMySQLServer
+METHOD TMySQLServer:CreateDatabase( cDataBase )
 
    LOCAL cCreateQuery := "CREATE DATABASE " + Lower(cDatabase)
 
@@ -1286,7 +1286,7 @@ METHOD CreateDatabase( cDataBase ) CLASS TMySQLServer
 // NOTE: OS/2 port of MySQL is picky about table names, that is if you create a table with
 // an upper case name you cannot alter it (for example) using a lower case name, this violates
 // OS/2 case insensibility about names
-METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMySQLServer
+METHOD TMySQLServer:CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto )
 
    /* NOTE: all table names are created with lower case */
 
@@ -1370,7 +1370,7 @@ METHOD CreateTable( cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto ) CLASS TMyS
 
    RETURN .F.
 
-METHOD CreateIndex( cName, cTable, aFNames, lUnique ) CLASS TMySQLServer
+METHOD TMySQLServer:CreateIndex( cName, cTable, aFNames, lUnique )
 
    LOCAL cCreateQuery := "CREATE "
    LOCAL i
@@ -1399,7 +1399,7 @@ METHOD CreateIndex( cName, cTable, aFNames, lUnique ) CLASS TMySQLServer
    RETURN .F.
 
 
-METHOD DeleteIndex( cName, cTable ) CLASS TMySQLServer
+METHOD TMySQLServer:DeleteIndex( cName, cTable )
 
    LOCAL cDropQuery := "DROP INDEX " + cName + " FROM " + Lower(cTable)
 
@@ -1410,7 +1410,7 @@ METHOD DeleteIndex( cName, cTable ) CLASS TMySQLServer
    RETURN .F.
 
 
-METHOD DeleteTable( cTable ) CLASS TMySQLServer
+METHOD TMySQLServer:DeleteTable( cTable )
 
    LOCAL cDropQuery := "DROP TABLE " + Lower(cTable)
 
@@ -1421,7 +1421,7 @@ METHOD DeleteTable( cTable ) CLASS TMySQLServer
    RETURN .F.
 
 
-METHOD DeleteDatabase( cDataBase ) CLASS TMySQLServer
+METHOD TMySQLServer:DeleteDatabase( cDataBase )
 
    LOCAL cDropQuery := "DROP DATABASE " + Lower(cDataBase)
 
@@ -1432,7 +1432,7 @@ METHOD DeleteDatabase( cDataBase ) CLASS TMySQLServer
    RETURN .F.
 
 
-METHOD Query( cQuery ) CLASS TMySQLServer
+METHOD TMySQLServer:Query( cQuery )
 
    LOCAL oQuery, cTableName, i, cUpperQuery, nNumTables, cToken
 
@@ -1468,21 +1468,21 @@ METHOD Query( cQuery ) CLASS TMySQLServer
 
    RETURN oQuery
 
-METHOD Error() CLASS TMySQLServer
+METHOD TMySQLServer:Error()
 
    ::lError := .F.
 
    RETURN iif(Empty(::nSocket), "No connection to server", mysql_error( ::nSocket ))
 
-METHOD ListDBs() CLASS TMySQLServer
+METHOD TMySQLServer:ListDBs()
    RETURN mysql_list_dbs( ::nSocket )
 
-METHOD ListTables() CLASS TMySQLServer
+METHOD TMySQLServer:ListTables()
    RETURN mysql_list_tables( ::nSocket )
 
 
 /* FIXME: Conversion creates a .dbf with fields of wrong dimension (often) */
-METHOD TableStruct( cTable ) CLASS TMySQLServer
+METHOD TMySQLServer:TableStruct( cTable )
 
    LOCAL aStruct := {}
 

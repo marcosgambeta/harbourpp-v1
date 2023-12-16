@@ -84,7 +84,7 @@ CREATE CLASS TIPClientSMTP INHERIT TIPClient
 
 ENDCLASS
 
-METHOD New( oUrl, xTrace, oCredentials, cClientHost ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:New( oUrl, xTrace, oCredentials, cClientHost )
 
    ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "smtp", xTrace), oCredentials )
 
@@ -95,7 +95,7 @@ METHOD New( oUrl, xTrace, oCredentials, cClientHost ) CLASS TIPClientSMTP
 
    RETURN Self
 
-METHOD Open( cUrl, lSSL ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Open( cUrl, lSSL )
 
    LOCAL lOk
 
@@ -124,7 +124,7 @@ METHOD Open( cUrl, lSSL ) CLASS TIPClientSMTP
 
    RETURN lOk
 
-METHOD OpenSecure( cUrl, lSSL ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:OpenSecure( cUrl, lSSL )
 
    LOCAL lOk
 
@@ -154,7 +154,7 @@ METHOD OpenSecure( cUrl, lSSL ) CLASS TIPClientSMTP
 
    RETURN lOk
 
-METHOD GetOk() CLASS TIPClientSMTP
+METHOD TIPClientSMTP:GetOk()
 
    ::cReply := ::inetRecvLine( ::SocketCon,, 512 )
    IF ::inetErrorCode( ::SocketCon ) != 0 .OR. ! HB_ISSTRING( ::cReply ) .OR. hb_LeftEq( ::cReply, "5" )
@@ -163,7 +163,7 @@ METHOD GetOk() CLASS TIPClientSMTP
 
    RETURN .T.
 
-METHOD StartTLS() CLASS TIPClientSMTP
+METHOD TIPClientSMTP:StartTLS()
 
    ::inetSendAll( ::SocketCon, "STARTTLS" + ::cCRLF )
 
@@ -176,7 +176,7 @@ METHOD StartTLS() CLASS TIPClientSMTP
 
    RETURN .F.
 
-METHOD DetectSecurity() CLASS TIPClientSMTP
+METHOD TIPClientSMTP:DetectSecurity()
 
    LOCAL lOk
 
@@ -204,39 +204,39 @@ METHOD DetectSecurity() CLASS TIPClientSMTP
 
    RETURN lOk
 
-METHOD Close() CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Close()
 
    ::InetTimeOut( ::SocketCon )
    ::Quit()
 
    RETURN ::super:Close()
 
-METHOD Commit() CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Commit()
 
    ::inetSendAll( ::SocketCon, ::cCRLF + "." + ::cCRLF )
 
    RETURN ::GetOk()
 
-METHOD Quit() CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Quit()
 
    ::inetSendAll( ::SocketCon, "QUIT" + ::cCRLF )
    ::isAuth := .F.
 
    RETURN ::GetOk()
 
-METHOD Mail( cFrom ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Mail( cFrom )
 
    ::inetSendAll( ::SocketCon, "MAIL FROM: <" + cFrom + ">" + ::cCRLF )
 
    RETURN ::GetOk()
 
-METHOD Rcpt( cTo ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Rcpt( cTo )
 
    ::inetSendAll( ::SocketCon, "RCPT TO: <" + cTo + ">" + ::cCRLF )
 
    RETURN ::GetOk()
 
-METHOD Data(cData) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Data(cData)
 
    ::inetSendAll( ::SocketCon, "DATA" + ::cCRLF )
    IF ! ::GetOk()
@@ -246,7 +246,7 @@ METHOD Data(cData) CLASS TIPClientSMTP
 
    RETURN ::GetOk()
 
-METHOD Auth( cUser, cPass ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Auth( cUser, cPass )
 
    ::inetSendAll( ::SocketCon, "AUTH LOGIN" + ::cCRLF )
    IF ::GetOk()
@@ -261,13 +261,13 @@ METHOD Auth( cUser, cPass ) CLASS TIPClientSMTP
 
    RETURN ::isAuth := .F.
 
-METHOD AuthPlain( cUser, cPass ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:AuthPlain( cUser, cPass )
 
    ::inetSendAll( ::SocketCon, "AUTH PLAIN " + hb_base64Encode( hb_BChar(0) + cUser + hb_BChar(0) + cPass ) + ::cCRLF )
 
    RETURN ::isAuth := ::GetOk()
 
-METHOD Write( cData, nLen, bCommit ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:Write( cData, nLen, bCommit )
 
    LOCAL cRcpt
 
@@ -296,7 +296,7 @@ METHOD Write( cData, nLen, bCommit ) CLASS TIPClientSMTP
 
    RETURN ::super:Write( cData, nLen, bCommit )
 
-METHOD ServerSuportSecure( /* @ */ lAuthPlain, /* @ */ lAuthLogin ) CLASS TIPClientSMTP
+METHOD TIPClientSMTP:ServerSuportSecure( /* @ */ lAuthPlain, /* @ */ lAuthLogin )
 
    IF ::OpenSecure()
       lAuthLogin := ::lAuthLogin
@@ -309,7 +309,7 @@ METHOD ServerSuportSecure( /* @ */ lAuthPlain, /* @ */ lAuthLogin ) CLASS TIPCli
 
    RETURN lAuthLogin .OR. lAuthPlain
 
-METHOD SendMail( oTIpMail ) CLASS TIPClientSmtp
+METHOD TIPClientSMTP:SendMail( oTIpMail )
 
    LOCAL cTo
 

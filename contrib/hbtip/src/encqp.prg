@@ -56,16 +56,16 @@ CREATE CLASS TIPEncoderQP INHERIT TIPEncoder
 
 ENDCLASS
 
-METHOD New() CLASS TIPEncoderQP
+METHOD TIPEncoderQP:New()
 
    ::cName := "quoted-printable"
 
    RETURN Self
 
-METHOD Encode( cData ) CLASS TIPEncoderQP
+METHOD TIPEncoderQP:Encode( cData )
    RETURN tip_QPEncode( cData )
 
-METHOD Decode( cData ) CLASS TIPEncoderQP
+METHOD TIPEncoderQP:Decode( cData )
    RETURN tip_QPDecode( cData )
 
 FUNCTION tip_QPEncode( cData )

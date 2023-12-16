@@ -97,7 +97,7 @@ CREATE CLASS win_Com
 ENDCLASS
 
 
-METHOD Init(cPortName, nBaudRate, nParity, nByteSize, nStopBits) CLASS win_Com
+METHOD win_Com:Init(cPortName, nBaudRate, nParity, nByteSize, nStopBits)
 
    ::cPortName := Upper(cPortName)
    IF Left(::cPortName, 3) == "COM"
@@ -109,22 +109,22 @@ METHOD Init(cPortName, nBaudRate, nParity, nByteSize, nStopBits) CLASS win_Com
 
    RETURN Self
 
-METHOD QueueSize(nInQueue, nOutQueue) CLASS win_Com
+METHOD win_Com:QueueSize(nInQueue, nOutQueue)
    RETURN win_comSetQueueSize(::nPort, nInQueue, nOutQueue)
 
-METHOD TimeOuts(nReadInterval, nReadMultiplier, nReadConstant, nWriteMultiplier, nWriteConstant) CLASS win_Com
+METHOD win_Com:TimeOuts(nReadInterval, nReadMultiplier, nReadConstant, nWriteMultiplier, nWriteConstant)
    RETURN win_comSetTimeouts(::nPort, nReadInterval, nReadMultiplier, nReadConstant, nWriteMultiplier, nWriteConstant)
 
-METHOD Read(/* @ */ cString, nLength) CLASS win_Com
+METHOD win_Com:Read(/* @ */ cString, nLength)
 
    cString := Space(nlength)
 
    RETURN win_comRead(::nPort, @cString)
 
-METHOD Recv(nLength, nResult) CLASS win_Com
+METHOD win_Com:Recv(nLength, nResult)
    RETURN win_comRecv(::nPort, nLength, @nResult)
 
-METHOD RecvTo(cDelim, nMaxlen) CLASS win_Com
+METHOD win_Com:RecvTo(cDelim, nMaxlen)
 
    LOCAL nResult
    LOCAL cRecv := ""
@@ -152,49 +152,49 @@ METHOD RecvTo(cDelim, nMaxlen) CLASS win_Com
 
    RETURN cRecv
 
-METHOD Write(cString) CLASS win_Com
+METHOD win_Com:Write(cString)
    RETURN win_comWrite(::nPort, cString)
 
-METHOD Status(lCTS, lDSR, lRing, lDCD) CLASS win_Com
+METHOD win_Com:Status(lCTS, lDSR, lRing, lDCD)
    RETURN win_comStatus(::nPort, @lCTS, @lDSR, @lRing, @lDCD)
 
-METHOD QueueStatus(lCTSHold, lDSRHold, lDCDHold, lXoffHold, lXoffSent, nInQueue, nOutQueue) CLASS win_Com
+METHOD win_Com:QueueStatus(lCTSHold, lDSRHold, lDCDHold, lXoffHold, lXoffSent, nInQueue, nOutQueue)
    RETURN win_comQueueStatus(::nPort, @lCTSHold, @lDSRHold, @lDCDHold, @lXoffHold, @lXoffSent, @nInQueue, @nOutQueue)
 
-METHOD SetRTS(lCTS) CLASS win_Com
+METHOD win_Com:SetRTS(lCTS)
    RETURN win_comSetRTS(::nPort, lCTS) /* boolean return is the status of the call not the line! */
 
-METHOD SetDTR(lDTR) CLASS win_Com
+METHOD win_Com:SetDTR(lDTR)
    RETURN win_comSetDTR(::nPort, lDTR) /* boolean return is the status of the call not the line! */
 
-METHOD RTSFlow(nRTS) CLASS win_Com
+METHOD win_Com:RTSFlow(nRTS)
    RETURN win_comRTSFlow(::nPort, nRTS)
 
-METHOD DTRFlow(nDTR) CLASS win_Com
+METHOD win_Com:DTRFlow(nDTR)
    RETURN win_comDTRFlow(::nPort, nDTR)
 
-METHOD XonXoffFlow(lXonXoff) CLASS win_Com
+METHOD win_Com:XonXoffFlow(lXonXoff)
    RETURN win_comXonXoffFlow(::nPort, lXonXoff)
 
-METHOD Purge(lRXBuffer, lTXBuffer) CLASS win_Com
+METHOD win_Com:Purge(lRXBuffer, lTXBuffer)
    RETURN win_comPurge(::nPort, lRXBuffer, lTXBuffer)
 
-METHOD PurgeRX() CLASS win_Com
+METHOD win_Com:PurgeRX()
    RETURN win_comPurge(::nPort, .T., .F.)
 
-METHOD PurgeTX() CLASS win_Com
+METHOD win_Com:PurgeTX()
    RETURN win_comPurge(::nPort, .F., .T.)
 
-METHOD Close(nDrain) CLASS win_Com
+METHOD win_Com:Close(nDrain)
    RETURN win_comClose(::nPort, iif(Empty(nDrain), 0, nDrain))
 
-METHOD DebugDCB(nDebug) CLASS win_Com
+METHOD win_Com:DebugDCB(nDebug)
    RETURN win_comDebugDCB(::nPort, nDebug)
 
 /* Since the win_Com functions are an amalgamation of Win functions this allows
    you to see what call did the deed when things go wrong. */
 
-METHOD ErrorText() CLASS win_Com
+METHOD win_Com:ErrorText()
 
    LOCAL nFcn := win_comFuncLast(::nPort)
    LOCAL cString
@@ -228,5 +228,5 @@ METHOD ErrorText() CLASS win_Com
 
    RETURN cString + "error (" + hb_ntos(nError) + ") : " + cMsg
 
-METHOD Error() CLASS win_Com
+METHOD win_Com:Error()
    RETURN win_comError(::nPort)

@@ -61,7 +61,7 @@ ENDCLASS
 /* NOTE: Not tested or compared to Xbase++. [vszakats] */
 /* FIXME: To make it work when @S was used. [vszakats] */
 
-METHOD posInBuffer( nRow, nCol ) CLASS xpp_Get
+METHOD xpp_Get:posInBuffer( nRow, nCol )
 
    IF ::hasFocus .AND. ;
       nRow == ::nRow .AND. ;
@@ -73,11 +73,11 @@ METHOD posInBuffer( nRow, nCol ) CLASS xpp_Get
 
    RETURN 0
 
-METHOD _end() CLASS xpp_Get
+METHOD xpp_Get:_end()
    RETURN ::end()
 
-METHOD _assign() CLASS xpp_Get
+METHOD xpp_Get:_assign()
    RETURN ::assign()
 
-METHOD _delete() CLASS xpp_Get
+METHOD xpp_Get:_delete()
    RETURN ::delete()

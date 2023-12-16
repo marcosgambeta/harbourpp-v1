@@ -66,7 +66,7 @@ CREATE CLASS THtmlFrameSet
 ENDCLASS
 
 
-METHOD New(cFName, cTitle) CLASS THtmlFrameSet
+METHOD THtmlFrameSet:New(cFName, cTitle)
 
    LOCAL cStr
 
@@ -92,7 +92,7 @@ METHOD New(cFName, cTitle) CLASS THtmlFrameSet
 
    RETURN Self
 
-METHOD StartSet(aRows, aCols, onLoad, onUnload) CLASS THtmlFrameSet
+METHOD THtmlFrameSet:StartSet(aRows, aCols, onLoad, onUnload)
 
    LOCAL cStr
    LOCAL cItem
@@ -142,14 +142,14 @@ METHOD StartSet(aRows, aCols, onLoad, onUnload) CLASS THtmlFrameSet
    RETURN Self
 
 
-METHOD Endset() CLASS THtmlFrameSet
+METHOD THtmlFrameSet:Endset()
 
    ::cStr += " </frameset>" + CRLF()
 
    RETURN Self
 
 
-METHOD End() CLASS THtmlFrameSet
+METHOD THtmlFrameSet:End()
 
    ::cStr += "</html>" + CRLF()
 
@@ -162,7 +162,7 @@ METHOD End() CLASS THtmlFrameSet
    RETURN Self
 
 
-METHOD Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidth, marginheight, cTarget, cScrolling) CLASS THtmlFrameSet
+METHOD THtmlFrameSet:Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidth, marginheight, cTarget, cScrolling)
 
    LOCAL cStr
 

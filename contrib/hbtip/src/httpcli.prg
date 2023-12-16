@@ -91,7 +91,7 @@ CREATE CLASS TIPClientHTTP INHERIT TIPClient
 
 ENDCLASS
 
-METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:New( oUrl, xTrace, oCredentials )
 
    ::super:new( oUrl, iif(hb_defaultValue( xTrace, .F. ), "http", xTrace), oCredentials )
 
@@ -103,7 +103,7 @@ METHOD New( oUrl, xTrace, oCredentials ) CLASS TIPClientHTTP
 
    RETURN Self
 
-METHOD Get( cQuery ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:Get( cQuery )
 
    IF ! HB_ISSTRING( cQuery )
       cQuery := ::oUrl:BuildQuery()
@@ -118,19 +118,19 @@ METHOD Get( cQuery ) CLASS TIPClientHTTP
 
    RETURN .F.
 
-METHOD Post( xPostData, cQuery ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:Post( xPostData, cQuery )
    RETURN ::postByVerb(xPostData, cQuery, "POST")
 
-METHOD Put( xPostData, cQuery ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:Put( xPostData, cQuery )
    RETURN ::postByVerb(xPostData, cQuery, "PUT")
 
-METHOD Delete( xPostData, cQuery ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:Delete( xPostData, cQuery )
    RETURN ::postByVerb(xPostData, cQuery, "DELETE")
 
-METHOD Head( xPostData, cQuery ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:Head( xPostData, cQuery )
    RETURN ::postByVerb(xPostData, cQuery, "HEAD")
 
-METHOD PostByVerb(xPostData, cQuery, cVerb) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
 
    LOCAL cData
    LOCAL item
@@ -185,7 +185,7 @@ METHOD PostByVerb(xPostData, cQuery, cVerb) CLASS TIPClientHTTP
 
    RETURN .F.
 
-METHOD StandardFields() CLASS TIPClientHTTP
+METHOD TIPClientHTTP:StandardFields()
 
    LOCAL oEncoder, cCookies
    LOCAL field
@@ -217,7 +217,7 @@ METHOD StandardFields() CLASS TIPClientHTTP
 
    RETURN .T.
 
-METHOD ReadHeaders( lClear ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:ReadHeaders( lClear )
 
    LOCAL cLine, nPos, aVersion
    LOCAL aHead
@@ -283,7 +283,7 @@ METHOD ReadHeaders( lClear ) CLASS TIPClientHTTP
 
    RETURN .T.
 
-METHOD Read( nLen ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:Read( nLen )
 
    LOCAL cData, nPos, cLine, aHead
 
@@ -349,7 +349,7 @@ METHOD Read( nLen ) CLASS TIPClientHTTP
 
    RETURN cData
 
-METHOD ReadAll() CLASS TIPClientHTTP
+METHOD TIPClientHTTP:ReadAll()
 
    LOCAL cOut := "", cChunk
 
@@ -421,7 +421,7 @@ METHOD PROCEDURE setCookie( cLine ) CLASS TIPClientHTTP
 
    RETURN
 
-METHOD getcookies( cHost, cPath ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:getcookies( cHost, cPath )
 
    LOCAL x, aDomKeys := {}, z, cKey, aPathKeys, nPath
    LOCAL a, cOut := "", c
@@ -477,7 +477,7 @@ METHOD getcookies( cHost, cPath ) CLASS TIPClientHTTP
    1: -----------------------------41184676334--   // last one of the stdin stream
    2: ---------------------------41184676334       // in the header or CGI environment
  */
-METHOD Boundary( nType ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:Boundary( nType )
 
    IF ::cBoundary == NIL
       ::cBoundary := Replicate( "-", 27 ) + StrZero( hb_randNum( 99999999999 ), 11, 0 )
@@ -497,7 +497,7 @@ METHOD PROCEDURE Attach( cName, cFileName, cType ) CLASS TIPClientHTTP
    RETURN
 
 /* https://tools.ietf.org/html/rfc2388 */
-METHOD PostMultiPart( xPostData, cQuery ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    LOCAL cData := "", item, cBound := ::boundary()
    LOCAL cCrlf := ::cCRlf, aAttachment
@@ -578,7 +578,7 @@ METHOD PostMultiPart( xPostData, cQuery ) CLASS TIPClientHTTP
 
    RETURN .F.
 
-METHOD WriteAll( cFile ) CLASS TIPClientHTTP
+METHOD TIPClientHTTP:WriteAll( cFile )
 
    LOCAL hFile
    LOCAL lSuccess

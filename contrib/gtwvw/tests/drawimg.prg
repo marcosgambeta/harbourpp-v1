@@ -191,7 +191,7 @@ CREATE CLASS wPaintObj FROM wGUIObj
 
 ENDCLASS
 
-METHOD New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR, lTransp ) CLASS wPaintObj
+METHOD wPaintObj:New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR, lTransp )
 
    hb_default( @aOffTLBR, { 0, 0, 0, 0 } )
    hb_default( @lTransp, .F. )
@@ -212,7 +212,7 @@ METHOD New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR, lTransp )
 
    RETURN Self
 
-METHOD Draw() CLASS wPaintObj
+METHOD wPaintObj:Draw()
 
    IF ! ::lVisible
       RETURN NIL
@@ -234,7 +234,7 @@ METHOD Draw() CLASS wPaintObj
 // undraw the object
 // normally this is called with ::lVisible == .F.,
 // otherwise the object will be redrawn by WVW_PAINT
-METHOD Undraw() CLASS wPaintObj
+METHOD wPaintObj:Undraw()
 
    LOCAL cScreen
    LOCAL nRow1, nCol1, nRow2, nCol2, nMaxRow, nMaxCol
@@ -263,7 +263,7 @@ METHOD Undraw() CLASS wPaintObj
 
    RETURN NIL // undraw()
 
-METHOD Hide() CLASS wPaintObj
+METHOD wPaintObj:Hide()
 
    // temporarily hides the object
    ::lVisible := .F.
@@ -271,7 +271,7 @@ METHOD Hide() CLASS wPaintObj
 
    RETURN NIL
 
-METHOD Show() CLASS wPaintObj
+METHOD wPaintObj:Show()
 
    // show the object
    ::lVisible := .T.

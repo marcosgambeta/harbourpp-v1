@@ -62,7 +62,7 @@ CREATE CLASS TIPLog
 
 ENDCLASS
 
-METHOD New( cFileName ) CLASS TIPLog
+METHOD TIPLog:New( cFileName )
 
    hb_default( @cFileName, "hbtip" )
 
@@ -74,7 +74,7 @@ METHOD New( cFileName ) CLASS TIPLog
 
    RETURN Self
 
-METHOD Add( cMsg ) CLASS TIPLog
+METHOD TIPLog:Add( cMsg )
 
    LOCAL cDir, cName, cExt
    LOCAL n
@@ -95,7 +95,7 @@ METHOD Add( cMsg ) CLASS TIPLog
 
    RETURN .F.
 
-METHOD Close() CLASS TIPLog
+METHOD TIPLog:Close()
 
    LOCAL lRetVal
 
@@ -107,5 +107,5 @@ METHOD Close() CLASS TIPLog
 
    RETURN .F.
 
-METHOD Clear() CLASS TIPLog
+METHOD TIPLog:Clear()
    RETURN ::Close() .AND. hb_vfErase( ::cFileName ) != F_ERROR

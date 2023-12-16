@@ -80,7 +80,7 @@ CREATE CLASS TMariaDBRow
 ENDCLASS
 
 
-METHOD New(aRow, aFStruct, cTableName) CLASS TMariaDBRow
+METHOD TMariaDBRow:New(aRow, aFStruct, cTableName)
 
    hb_default(@cTableName, "")
    hb_default(@aFStruct, {})
@@ -98,7 +98,7 @@ METHOD New(aRow, aFStruct, cTableName) CLASS TMariaDBRow
 
    RETURN Self
 
-METHOD FieldGet(cnField) CLASS TMariaDBRow
+METHOD TMariaDBRow:FieldGet(cnField)
 
    LOCAL nNum := iif(HB_ISSTRING(cnField), ::FieldPos(cnField), cnField)
 
@@ -114,7 +114,7 @@ METHOD FieldGet(cnField) CLASS TMariaDBRow
 
    RETURN NIL
 
-METHOD FieldPut(cnField, Value) CLASS TMariaDBRow
+METHOD TMariaDBRow:FieldPut(cnField, Value)
 
    LOCAL nNum := iif(HB_ISSTRING(cnField), ::FieldPos(cnField), cnField)
 
@@ -142,23 +142,23 @@ METHOD FieldPut(cnField, Value) CLASS TMariaDBRow
    RETURN NIL
 
 // Given a field name returns it's position
-METHOD FieldPos(cFieldName) CLASS TMariaDBRow
+METHOD TMariaDBRow:FieldPos(cFieldName)
 
    LOCAL cUpperName := Upper(cFieldName)
 
    RETURN AScan(::aFieldStruct, {|aItem|Upper(aItem[MYSQL_FS_NAME]) == cUpperName })
 
 // Returns name of field N
-METHOD FieldName(nNum) CLASS TMariaDBRow
+METHOD TMariaDBRow:FieldName(nNum)
    RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][MYSQL_FS_NAME], "")
 
-METHOD FieldLen(nNum) CLASS TMariaDBRow
+METHOD TMariaDBRow:FieldLen(nNum)
    RETURN iif(nNum >= 1 .AND. nNum <= Len(::aFieldStruct), ::aFieldStruct[nNum][MYSQL_FS_LENGTH], 0)
 
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
    lFormat is useful for copying table structure from mysql to dbf
  */
-METHOD FieldDec(nNum, lFormat) CLASS TMariaDBRow
+METHOD TMariaDBRow:FieldDec(nNum, lFormat)
 
    hb_default(@lFormat, .F.)
 
@@ -174,7 +174,7 @@ METHOD FieldDec(nNum, lFormat) CLASS TMariaDBRow
 
    RETURN 0
 
-METHOD FieldType(nNum) CLASS TMariaDBRow
+METHOD TMariaDBRow:FieldType(nNum)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
@@ -209,7 +209,7 @@ METHOD FieldType(nNum) CLASS TMariaDBRow
    RETURN "U"
 
 // returns a WHERE x=y statement which uses primary key (if available)
-METHOD MakePrimaryKeyWhere() CLASS TMariaDBRow
+METHOD TMariaDBRow:MakePrimaryKeyWhere()
 
    LOCAL ni
    LOCAL cWhere := ""
@@ -300,7 +300,7 @@ CREATE CLASS TMariaDBQuery
 ENDCLASS
 
 
-METHOD New(nSocket, cQuery) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:New(nSocket, cQuery)
 
    LOCAL nI
    LOCAL aField
@@ -347,7 +347,7 @@ METHOD New(nSocket, cQuery) CLASS TMariaDBQuery
 
    RETURN Self
 
-METHOD Refresh() CLASS TMariaDBQuery
+METHOD TMariaDBQuery:Refresh()
 
    // free present result handle
    ::nResultHandle := NIL
@@ -384,7 +384,7 @@ METHOD Refresh() CLASS TMariaDBQuery
    RETURN !::lError
 
 
-METHOD Skip(nRows) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:Skip(nRows)
 
    LOCAL lBof
 
@@ -426,7 +426,7 @@ METHOD Skip(nRows) CLASS TMariaDBQuery
    RETURN NIL
 
 // Get row n of a query and return it as a TMySQLRow object
-METHOD GetRow(nRow) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:GetRow(nRow)
 
    LOCAL oRow := NIL
    LOCAL i
@@ -532,23 +532,23 @@ METHOD GetRow(nRow) CLASS TMariaDBQuery
    RETURN iif(::aRow == NIL, NIL, oRow)
 
 // Free result handle and associated resources
-METHOD Destroy() CLASS TMariaDBQuery
+METHOD TMariaDBQuery:Destroy()
 
    ::nResultHandle := NIL
 
    RETURN Self
 
-METHOD FCount() CLASS TMariaDBQuery
+METHOD TMariaDBQuery:FCount()
    RETURN ::nNumFields
 
-METHOD Error() CLASS TMariaDBQuery
+METHOD TMariaDBQuery:Error()
 
    ::lError := .F.
 
    RETURN mysql_error(::nSocket)
 
 // Given a field name returns it's position
-METHOD FieldPos(cFieldName) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:FieldPos(cFieldName)
 
    LOCAL cUpperName
    LOCAL nPos
@@ -575,7 +575,7 @@ METHOD FieldPos(cFieldName) CLASS TMariaDBQuery
 
 
 // Returns name of field N
-METHOD FieldName(nNum) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:FieldName(nNum)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       RETURN ::aFieldStruct[nNum][MYSQL_FS_NAME]
@@ -583,7 +583,7 @@ METHOD FieldName(nNum) CLASS TMariaDBQuery
 
    RETURN ""
 
-METHOD FieldGet(cnField) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:FieldGet(cnField)
 
    LOCAL nNum
    LOCAL Value
@@ -607,7 +607,7 @@ METHOD FieldGet(cnField) CLASS TMariaDBQuery
 
    RETURN NIL
 
-METHOD FieldLen(nNum) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:FieldLen(nNum)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
       RETURN ::aFieldStruct[nNum][MYSQL_FS_LENGTH]
@@ -617,7 +617,7 @@ METHOD FieldLen(nNum) CLASS TMariaDBQuery
 /* lFormat: when .T. method returns number of formatted decimal places from mysql table otherwise _SET_DECIMALS.
 
    lFormat is useful for copying table structure from mysql to dbf */
-METHOD FieldDec(nNum, lFormat) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:FieldDec(nNum, lFormat)
 
    hb_default(@lFormat, .F.)
 
@@ -632,7 +632,7 @@ METHOD FieldDec(nNum, lFormat) CLASS TMariaDBQuery
 
    RETURN 0
 
-METHOD FieldType(nNum) CLASS TMariaDBQuery
+METHOD TMariaDBQuery:FieldType(nNum)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
@@ -700,7 +700,7 @@ CREATE CLASS TMariaDBTable INHERIT TMariaDBQuery
 ENDCLASS
 
 
-METHOD New(nSocket, cQuery, cTableName) CLASS TMariaDBTable
+METHOD TMariaDBTable:New(nSocket, cQuery, cTableName)
 
    LOCAL i
 
@@ -715,7 +715,7 @@ METHOD New(nSocket, cQuery, cTableName) CLASS TMariaDBTable
 
    RETURN Self
 
-METHOD GetRow(nRow) CLASS TMariaDBTable
+METHOD TMariaDBTable:GetRow(nRow)
 
    LOCAL oRow := ::super:GetRow(nRow)
    LOCAL i
@@ -732,7 +732,7 @@ METHOD GetRow(nRow) CLASS TMariaDBTable
 
    RETURN oRow
 
-METHOD Skip(nRow) CLASS TMariaDBTable
+METHOD TMariaDBTable:Skip(nRow)
 
    LOCAL i
 
@@ -745,7 +745,7 @@ METHOD Skip(nRow) CLASS TMariaDBTable
    RETURN NIL
 
 /* Creates an update query for changed fields and submits it to server */
-METHOD Update(oRow, lOldRecord, lRefresh) CLASS TMariaDBTable
+METHOD TMariaDBTable:Update(oRow, lOldRecord, lRefresh)
 
    LOCAL cUpdateQuery := "UPDATE " + ::cTable + " SET "
    LOCAL i
@@ -854,7 +854,7 @@ METHOD Update(oRow, lOldRecord, lRefresh) CLASS TMariaDBTable
 
    RETURN !::lError
 
-METHOD Delete(oRow, lOldRecord, lRefresh) CLASS TMariaDBTable
+METHOD TMariaDBTable:Delete(oRow, lOldRecord, lRefresh)
 
    LOCAL cDeleteQuery := "DELETE FROM " + ::cTable
    LOCAL i
@@ -940,7 +940,7 @@ METHOD Delete(oRow, lOldRecord, lRefresh) CLASS TMariaDBTable
    RETURN !::lError
 
 // Adds a row with values passed into oRow
-METHOD Append(oRow, lRefresh) CLASS TMariaDBTable
+METHOD TMariaDBTable:Append(oRow, lRefresh)
 
    LOCAL cInsertQuery := "INSERT INTO " + ::cTable + " ("
    LOCAL i
@@ -1039,7 +1039,7 @@ METHOD Append(oRow, lRefresh) CLASS TMariaDBTable
 
    RETURN .F.
 
-METHOD GetBlankRow(lSetValues) CLASS TMariaDBTable
+METHOD TMariaDBTable:GetBlankRow(lSetValues)
 
    LOCAL i
    LOCAL aRow := Array(::nNumFields)
@@ -1093,7 +1093,7 @@ METHOD GetBlankRow(lSetValues) CLASS TMariaDBTable
 
    RETURN TMariaDBRow():New(aRow, ::aFieldStruct, ::cTable, .F.)
 
-METHOD FieldPut(cnField, Value) CLASS TMariaDBTable
+METHOD TMariaDBTable:FieldPut(cnField, Value)
 
    LOCAL nNum
 
@@ -1123,7 +1123,7 @@ METHOD FieldPut(cnField, Value) CLASS TMariaDBTable
 
    RETURN NIL
 
-METHOD Refresh() CLASS TMariaDBTABLE
+METHOD TMariaDBTable:Refresh()
 
    // free present result handle
    ::nResultHandle := NIL
@@ -1161,7 +1161,7 @@ METHOD Refresh() CLASS TMariaDBTABLE
    RETURN !::lError
 
 // returns a WHERE x=y statement which uses primary key (if available)
-METHOD MakePrimaryKeyWhere() CLASS TMariaDBTable
+METHOD TMariaDBTable:MakePrimaryKeyWhere()
 
    LOCAL ni
    LOCAL cWhere := ""
@@ -1228,7 +1228,7 @@ CREATE CLASS TMariaDBServer
 ENDCLASS
 
 
-METHOD New(cServer, cUser, cPassword, nPort, nFlags) CLASS TMariaDBServer
+METHOD TMariaDBServer:New(cServer, cUser, cPassword, nPort, nFlags)
 
    ::cServer := cServer
    ::nPort := nPort
@@ -1243,19 +1243,19 @@ METHOD New(cServer, cUser, cPassword, nPort, nFlags) CLASS TMariaDBServer
 
    RETURN Self
 
-METHOD Destroy() CLASS TMariaDBServer
+METHOD TMariaDBServer:Destroy()
 
    ::nSocket := NIL
 
    RETURN Self
 
-METHOD sql_commit() CLASS TMariaDBServer
+METHOD TMariaDBServer:sql_commit()
    RETURN mysql_commit(::nSocket) == 0
 
-METHOD sql_rollback() CLASS TMariaDBServer
+METHOD TMariaDBServer:sql_rollback()
    RETURN mysql_rollback(::nSocket) == 0
 
-METHOD sql_version() CLASS TMariaDBServer
+METHOD TMariaDBServer:sql_version()
    RETURN mysql_get_server_version(::nSocket)
 
 
@@ -1273,7 +1273,7 @@ METHOD sql_version() CLASS TMariaDBServer
 
 
 // === alterado ===
-METHOD SelectDB(cDBName) CLASS TMariaDBServer
+METHOD TMariaDBServer:SelectDB(cDBName)
 
    ::lError := .F.
 
@@ -1289,7 +1289,7 @@ METHOD SelectDB(cDBName) CLASS TMariaDBServer
    RETURN .F.
 
 
-METHOD CreateDatabase(cDataBase) CLASS TMariaDBServer
+METHOD TMariaDBServer:CreateDatabase(cDataBase)
 
    LOCAL cCreateQuery := "CREATE DATABASE " + Lower(cDatabase)
 
@@ -1302,7 +1302,7 @@ METHOD CreateDatabase(cDataBase) CLASS TMariaDBServer
 // NOTE: OS/2 port of MySQL is picky about table names, that is if you create a table with
 // an upper case name you cannot alter it (for example) using a lower case name, this violates
 // OS/2 case insensibility about names
-METHOD CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto) CLASS TMariaDBServer
+METHOD TMariaDBServer:CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto)
 
    /* NOTE: all table names are created with lower case */
 
@@ -1387,7 +1387,7 @@ METHOD CreateTable(cTable, aStruct, cPrimaryKey, cUniqueKey, cAuto) CLASS TMaria
 
    RETURN .F.
 
-METHOD CreateIndex(cName, cTable, aFNames, lUnique) CLASS TMariaDBServer
+METHOD TMariaDBServer:CreateIndex(cName, cTable, aFNames, lUnique)
 
    LOCAL cCreateQuery := "CREATE "
    LOCAL i
@@ -1416,7 +1416,7 @@ METHOD CreateIndex(cName, cTable, aFNames, lUnique) CLASS TMariaDBServer
    RETURN .F.
 
 
-METHOD DeleteIndex(cName, cTable) CLASS TMariaDBServer
+METHOD TMariaDBServer:DeleteIndex(cName, cTable)
 
    LOCAL cDropQuery := "DROP INDEX " + cName + " FROM " + Lower(cTable)
 
@@ -1427,7 +1427,7 @@ METHOD DeleteIndex(cName, cTable) CLASS TMariaDBServer
    RETURN .F.
 
 
-METHOD DeleteTable(cTable) CLASS TMariaDBServer
+METHOD TMariaDBServer:DeleteTable(cTable)
 
    LOCAL cDropQuery := "DROP TABLE " + Lower(cTable)
 
@@ -1438,7 +1438,7 @@ METHOD DeleteTable(cTable) CLASS TMariaDBServer
    RETURN .F.
 
 
-METHOD DeleteDatabase(cDataBase) CLASS TMariaDBServer
+METHOD TMariaDBServer:DeleteDatabase(cDataBase)
 
    LOCAL cDropQuery := "DROP DATABASE " + Lower(cDataBase)
 
@@ -1449,7 +1449,7 @@ METHOD DeleteDatabase(cDataBase) CLASS TMariaDBServer
    RETURN .F.
 
 
-METHOD Query(cQuery) CLASS TMariaDBServer
+METHOD TMariaDBServer:Query(cQuery)
 
    LOCAL oQuery
    LOCAL cTableName
@@ -1490,21 +1490,21 @@ METHOD Query(cQuery) CLASS TMariaDBServer
 
    RETURN oQuery
 
-METHOD Error() CLASS TMariaDBServer
+METHOD TMariaDBServer:Error()
 
    ::lError := .F.
 
    RETURN iif(Empty(::nSocket ), "No connection to server", mysql_error(::nSocket))
 
-METHOD ListDBs() CLASS TMariaDBServer
+METHOD TMariaDBServer:ListDBs()
    RETURN mysql_list_dbs(::nSocket)
 
-METHOD ListTables() CLASS TMariaDBServer
+METHOD TMariaDBServer:ListTables()
    RETURN mysql_list_tables(::nSocket)
 
 
 /* FIXME: Conversion creates a .dbf with fields of wrong dimension (often) */
-METHOD TableStruct(cTable) CLASS TMariaDBServer
+METHOD TMariaDBServer:TableStruct(cTable)
 
    LOCAL aStruct := {}
 

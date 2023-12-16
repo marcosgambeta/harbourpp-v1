@@ -184,7 +184,7 @@ CREATE CLASS wPaintObj INHERIT wGUIObj STATIC
 
 ENDCLASS
 
-METHOD New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR, lTransp ) CLASS wPaintObj
+METHOD wPaintObj:New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR, lTransp )
 
    ::nWinNum := nWinNum
    ::lVisible := .T.

@@ -80,7 +80,7 @@ CREATE CLASS GDChart INHERIT GDImage
 
 ENDCLASS
 
-METHOD New( sx, sy ) CLASS GDChart
+METHOD GDChart:New( sx, sy )
 
    hb_default( @sx, 320 )
    hb_default( @sy, 200 )
@@ -94,7 +94,7 @@ METHOD New( sx, sy ) CLASS GDChart
 
    RETURN Self
 
-METHOD AddData(hData) CLASS GDChart
+METHOD GDChart:AddData(hData)
 
    IF HB_ISHASH( hData )
       AAdd( ::aDataOfHashes, hData )
@@ -102,7 +102,7 @@ METHOD AddData(hData) CLASS GDChart
 
    RETURN Self
 
-METHOD SetData(aData) CLASS GDChart
+METHOD GDChart:SetData(aData)
 
    IF HB_ISARRAY( aData )
       ::aDataOfHashes := aData
@@ -110,7 +110,7 @@ METHOD SetData(aData) CLASS GDChart
 
    RETURN Self
 
-METHOD AddDef( cDefKey, xDefVal ) CLASS GDChart
+METHOD GDChart:AddDef( cDefKey, xDefVal )
 
    IF HB_ISSTRING( cDefKey )
       ::hDefs[ Upper(cDefKey) ] := xDefVal
@@ -118,7 +118,7 @@ METHOD AddDef( cDefKey, xDefVal ) CLASS GDChart
 
    RETURN Self
 
-METHOD SetDefs( hDefs ) CLASS GDChart
+METHOD GDChart:SetDefs( hDefs )
 
    IF HB_ISHASH( hDefs )
       ::hDefs := hDefs
@@ -126,7 +126,7 @@ METHOD SetDefs( hDefs ) CLASS GDChart
 
    RETURN Self
 
-METHOD PieChart() CLASS GDChart
+METHOD GDChart:PieChart()
 
    LOCAL hElement, nTot := 0
    LOCAL nDegree := 0
@@ -253,7 +253,7 @@ METHOD PieChart() CLASS GDChart
 
    RETURN Self
 
-METHOD VerticalBarChart() CLASS GDChart
+METHOD GDChart:VerticalBarChart()
 
    LOCAL hElement, nTot := 0
 // LOCAL nDegree := 0
@@ -447,7 +447,7 @@ METHOD VerticalBarChart() CLASS GDChart
 
    RETURN Self
 
-METHOD HorizontalBarChart() CLASS GDChart
+METHOD GDChart:HorizontalBarChart()
 
    LOCAL hElement, nTot := 0
    LOCAL lFilled, /* lExtruded, nExtrude, */ pTile
@@ -641,7 +641,7 @@ METHOD HorizontalBarChart() CLASS GDChart
 
    RETURN Self
 
-METHOD LineChart() CLASS GDChart
+METHOD GDChart:LineChart()
 
    LOCAL hElement
    LOCAL /* lFilled, lExtruded, nExtrude, */ pTile
@@ -895,7 +895,7 @@ METHOD LineChart() CLASS GDChart
 
    RETURN Self
 
-METHOD Clone() CLASS GDChart
+METHOD GDChart:Clone()
 
    LOCAL oDestImage
    LOCAL pImage

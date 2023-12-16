@@ -509,7 +509,7 @@ CREATE CLASS HBRecord
 
 ENDCLASS
 
-METHOD NEW(cAlias) CLASS HBRecord
+METHOD HBRecord:NEW(cAlias)
 
    LOCAL i
    LOCAL oFld
@@ -689,7 +689,7 @@ ENDCLASS
 //  Constructor...
 // ---------------------
 
-METHOD New(cDBF, cALIAS, cOrderBag, cDRIVER, lNET, cPATH, lNEW, lREADONLY) CLASS HBTable
+METHOD HBTable:New(cDBF, cALIAS, cOrderBag, cDRIVER, lNET, cPATH, lNEW, lREADONLY)
 
    LOCAL cOldRdd
 
@@ -720,7 +720,7 @@ METHOD New(cDBF, cALIAS, cOrderBag, cDRIVER, lNET, cPATH, lNEW, lREADONLY) CLASS
 
    RETURN Self
 
-METHOD Open() CLASS HBTable
+METHOD HBTable:Open()
 
    LOCAL lSuccess := .T.
 
@@ -779,7 +779,7 @@ METHOD PROCEDURE DBMove(nDirection) CLASS HBTable
 // -->
 // -->
 
-METHOD FldInit() CLASS HBTable
+METHOD HBTable:FldInit()
 
    LOCAL i
    LOCAL aDb
@@ -904,7 +904,7 @@ METHOD PROCEDURE ReadBlank(lKeepBuffer) CLASS HBTable
 
    RETURN
 
-METHOD Write(lKeepBuffer) CLASS HBTable
+METHOD HBTable:Write(lKeepBuffer)
 
    LOCAL i
    LOCAL aOldBuffer := Array((::Alias)->(FCount()))
@@ -949,7 +949,7 @@ METHOD Write(lKeepBuffer) CLASS HBTable
 
    RETURN .T.
 
-METHOD BUFWrite(aBuffer) CLASS HBTable
+METHOD HBTable:BUFWrite(aBuffer)
 
    LOCAL nSel       := Select(::Alias)
    LOCAL nOrd       := (::Alias)->(ordSetFocus())
@@ -978,7 +978,7 @@ METHOD BUFWrite(aBuffer) CLASS HBTable
 
    RETURN .T.
 
-METHOD __oTDelete(lKeepBuffer)        // ::Delete()
+METHOD HBTable:__oTDelete(lKeepBuffer)        // ::Delete()
 
    LOCAL lRet
    LOCAL lDeleted := Set(_SET_DELETED, .F.)                  // make deleted records visible
@@ -1007,7 +1007,7 @@ METHOD __oTDelete(lKeepBuffer)        // ::Delete()
 
    RETURN lRet
 
-METHOD SetMonitor(l) CLASS HBTable
+METHOD HBTable:SetMonitor(l)
 
    LOCAL lTemp := ::lMonitor
 
@@ -1019,7 +1019,7 @@ METHOD SetMonitor(l) CLASS HBTable
 // Transaction control subsystem...
 //
 
-METHOD Undo(nBuffer, nLevel) CLASS HBTable
+METHOD HBTable:Undo(nBuffer, nLevel)
 
    LOCAL nLen
    LOCAL lRet      := .F.
@@ -1147,7 +1147,7 @@ METHOD Undo(nBuffer, nLevel) CLASS HBTable
 //   ORDER MANAGEMENT
 //
 
-METHOD AddOrder(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, cOrderFile) CLASS HBTable
+METHOD HBTable:AddOrder(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, cOrderFile)
 
    LOCAL oOrd
 
@@ -1162,7 +1162,7 @@ METHOD AddOrder(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, cOr
 
    RETURN oOrd
 
-METHOD Reindex() CLASS HBTable
+METHOD HBTable:Reindex()
 
    LOCAL nSel := Select(::Alias)
    LOCAL nOrd := (::Alias)->(ordSetFocus(0))
@@ -1204,7 +1204,7 @@ METHOD Reindex() CLASS HBTable
 
    RETURN .T.
 
-METHOD FastReindex() CLASS HBTable
+METHOD HBTable:FastReindex()
 
    LOCAL nSel := Select(::Alias)
    LOCAL nOrd := (::Alias)->(ordSetFocus(0))
@@ -1243,7 +1243,7 @@ METHOD FastReindex() CLASS HBTable
 
    RETURN .T.
 
-METHOD GetOrder(xOrder) CLASS HBTable
+METHOD HBTable:GetOrder(xOrder)
 
    LOCAL nPos
    LOCAL xType := ValType(xOrder)
@@ -1262,7 +1262,7 @@ METHOD GetOrder(xOrder) CLASS HBTable
 
    RETURN ::aOrders[nPos]                // returns oOrder
 
-METHOD SetOrder(xTag) CLASS HBTable
+METHOD HBTable:SetOrder(xTag)
 
    LOCAL nOldOrd := (::Alias)->(ordSetFocus())
 
@@ -1286,7 +1286,7 @@ METHOD SetOrder(xTag) CLASS HBTable
 
    RETURN nOldOrd
 
-METHOD GetOrderLabels() CLASS HBTable
+METHOD HBTable:GetOrderLabels()
 
    LOCAL aRet := {}
 
@@ -1319,7 +1319,7 @@ STATIC FUNCTION FixExt(cFileName)
 
    RETURN Left(cFileName, iif(nLeft == 0, Len(cFilename), nLeft - 1))
 
-METHOD CreateTable(cFile) CLASS HBTable
+METHOD HBTable:CreateTable(cFile)
 
    ::cDbf := cFile
    IF Len(::aStruc) > 0
@@ -1341,7 +1341,7 @@ METHOD PROCEDURE Gentable() CLASS HBTable
 
    RETURN
 
-METHOD OnError(uParam) CLASS HBTable
+METHOD HBTable:OnError(uParam)
 
    LOCAL cMsg := __GetMessage()
    LOCAL nPos
@@ -1402,7 +1402,7 @@ CREATE CLASS HBOrder
 
 ENDCLASS
 
-METHOD New(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, cOrderBag) CLASS HBOrder
+METHOD HBOrder:New(cTag, cKey, cLabel, cFor, cWhile, lUnique, bEval, nInterval, cOrderBag)
 
    __defaultNIL(@cKey, ".T.")
    __defaultNIL(@lUnique, .F.)

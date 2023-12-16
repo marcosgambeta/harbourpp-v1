@@ -82,13 +82,13 @@ CREATE CLASS TUrl
 
 ENDCLASS
 
-METHOD New( cUrl ) CLASS TUrl
+METHOD TUrl:New( cUrl )
 
    ::SetAddress( cUrl )
 
    RETURN Self
 
-METHOD SetAddress( cUrl ) CLASS TUrl
+METHOD TUrl:SetAddress( cUrl )
 
    LOCAL aMatch, cServer, cPath
 
@@ -137,7 +137,7 @@ METHOD SetAddress( cUrl ) CLASS TUrl
 
    RETURN .T.
 
-METHOD BuildAddress() CLASS TUrl
+METHOD TUrl:BuildAddress()
 
    LOCAL cRet := ""
 
@@ -175,7 +175,7 @@ METHOD BuildAddress() CLASS TUrl
 
    RETURN iif(cRet == "", NIL, ::cAddress := cRet)
 
-METHOD BuildQuery() CLASS TUrl
+METHOD TUrl:BuildQuery()
 
    LOCAL cLine
 
@@ -190,7 +190,7 @@ METHOD BuildQuery() CLASS TUrl
 
    RETURN cLine
 
-METHOD AddGetForm( xPostData ) CLASS TUrl
+METHOD TUrl:AddGetForm( xPostData )
 
    LOCAL cData := ""
    LOCAL item

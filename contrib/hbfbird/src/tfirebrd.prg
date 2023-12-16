@@ -96,7 +96,7 @@ CREATE CLASS TFbServer
 
 ENDCLASS
 
-METHOD New( cServer, cUser, cPassword, nDialect ) CLASS TFbServer
+METHOD TFbServer:New( cServer, cUser, cPassword, nDialect )
 
    hb_default( @nDialect, 1 )
 
@@ -114,7 +114,7 @@ METHOD New( cServer, cUser, cPassword, nDialect ) CLASS TFbServer
 
    RETURN Self
 
-METHOD StartTransaction() CLASS TFbServer
+METHOD TFbServer:StartTransaction()
 
    LOCAL result := .F.
 
@@ -132,7 +132,7 @@ METHOD StartTransaction() CLASS TFbServer
 
    RETURN result
 
-METHOD Rollback() CLASS TFbServer
+METHOD TFbServer:Rollback()
 
    LOCAL result := .F.
    LOCAL n
@@ -151,7 +151,7 @@ METHOD Rollback() CLASS TFbServer
 
    RETURN result
 
-METHOD Commit() CLASS TFbServer
+METHOD TFbServer:Commit()
 
    LOCAL result := .F.
    LOCAL n
@@ -170,7 +170,7 @@ METHOD Commit() CLASS TFbServer
 
    RETURN result
 
-METHOD Execute( cQuery ) CLASS TFbServer
+METHOD TFbServer:Execute( cQuery )
 
    LOCAL result
    LOCAL n
@@ -195,10 +195,10 @@ METHOD Execute( cQuery ) CLASS TFbServer
 
    RETURN result
 
-METHOD Query( cQuery ) CLASS TFbServer
+METHOD TFbServer:Query( cQuery )
    RETURN TFBQuery():New( ::db, cQuery, ::dialect )
 
-METHOD TableExists( cTable ) CLASS TFbServer
+METHOD TFbServer:TableExists( cTable )
 
    LOCAL cQuery
    LOCAL result := .F.
@@ -216,7 +216,7 @@ METHOD TableExists( cTable ) CLASS TFbServer
 
    RETURN result
 
-METHOD ListTables() CLASS TFbServer
+METHOD TFbServer:ListTables()
 
    LOCAL result := {}
    LOCAL cQuery
@@ -240,7 +240,7 @@ METHOD ListTables() CLASS TFbServer
 
    RETURN result
 
-METHOD TableStruct( cTable ) CLASS TFbServer
+METHOD TFbServer:TableStruct( cTable )
 
    LOCAL result := {}
    LOCAL cQuery, cType, nSize, cDomain, cField, nType, nDec
@@ -348,7 +348,7 @@ METHOD TableStruct( cTable ) CLASS TFbServer
 
    RETURN result
 
-METHOD Delete( oRow, cWhere ) CLASS TFbServer
+METHOD TFbServer:Delete( oRow, cWhere )
 
    LOCAL result := .F.
    LOCAL aKeys, i, nField, xField, cQuery, aTables
@@ -383,7 +383,7 @@ METHOD Delete( oRow, cWhere ) CLASS TFbServer
 
    RETURN result
 
-METHOD Append( oRow ) CLASS TFbServer
+METHOD TFbServer:Append( oRow )
 
    LOCAL result := .F.
    LOCAL cQuery, i, aTables
@@ -416,7 +416,7 @@ METHOD Append( oRow ) CLASS TFbServer
 
    RETURN result
 
-METHOD Update( oRow, cWhere ) CLASS TFbServer
+METHOD TFbServer:Update( oRow, cWhere )
 
    LOCAL result := .F.
    LOCAL aKeys, cQuery, i, nField, xField, aTables
@@ -507,7 +507,7 @@ CREATE CLASS TFbQuery
 
 ENDCLASS
 
-METHOD New( nDB, cQuery, nDialect ) CLASS TFbQuery
+METHOD TFbQuery:New( nDB, cQuery, nDialect )
 
    ::db := nDb
    ::query := RemoveSpaces( cQuery )
@@ -519,7 +519,7 @@ METHOD New( nDB, cQuery, nDialect ) CLASS TFbQuery
 
    RETURN Self
 
-METHOD Refresh() CLASS TFbQuery
+METHOD TFbQuery:Refresh()
 
    LOCAL qry, result, i, aTable := {}
 
@@ -566,7 +566,7 @@ METHOD Refresh() CLASS TFbQuery
 
    RETURN result
 
-METHOD Destroy() CLASS TFbQuery
+METHOD TFbQuery:Destroy()
 
    LOCAL result := .T.
    LOCAL n
@@ -580,7 +580,7 @@ METHOD Destroy() CLASS TFbQuery
 
    RETURN result
 
-METHOD Fetch() CLASS TFbQuery
+METHOD TFbQuery:Fetch()
 
    LOCAL result := .F.
    LOCAL fetch_stat
@@ -603,7 +603,7 @@ METHOD Fetch() CLASS TFbQuery
 
    RETURN result
 
-METHOD Struct() CLASS TFbQuery
+METHOD TFbQuery:Struct()
 
    LOCAL result := {}
    LOCAL i
@@ -616,7 +616,7 @@ METHOD Struct() CLASS TFbQuery
 
    RETURN result
 
-METHOD FieldPos( cField ) CLASS TFbQuery
+METHOD TFbQuery:FieldPos( cField )
 
    LOCAL result := 0
 
@@ -626,7 +626,7 @@ METHOD FieldPos( cField ) CLASS TFbQuery
 
    RETURN result
 
-METHOD FieldName( nField ) CLASS TFbQuery
+METHOD TFbQuery:FieldName( nField )
 
    LOCAL result
 
@@ -636,7 +636,7 @@ METHOD FieldName( nField ) CLASS TFbQuery
 
    RETURN result
 
-METHOD FieldType( nField ) CLASS TFbQuery
+METHOD TFbQuery:FieldType( nField )
 
    LOCAL result
 
@@ -646,7 +646,7 @@ METHOD FieldType( nField ) CLASS TFbQuery
 
    RETURN result
 
-METHOD FieldLen(nField) CLASS TFbQuery
+METHOD TFbQuery:FieldLen(nField)
 
    LOCAL result
 
@@ -656,7 +656,7 @@ METHOD FieldLen(nField) CLASS TFbQuery
 
    RETURN result
 
-METHOD FieldDec(nField) CLASS TFbQuery
+METHOD TFbQuery:FieldDec(nField)
 
    LOCAL result
 
@@ -666,7 +666,7 @@ METHOD FieldDec(nField) CLASS TFbQuery
 
    RETURN result
 
-METHOD FieldGet( nField ) CLASS TFbQuery
+METHOD TFbQuery:FieldGet( nField )
 
    LOCAL result, aBlob, i, cType
 
@@ -718,7 +718,7 @@ METHOD FieldGet( nField ) CLASS TFbQuery
 
    RETURN result
 
-METHOD Getrow() CLASS TFbQuery
+METHOD TFbQuery:Getrow()
 
    LOCAL result
    LOCAL aRow
@@ -737,7 +737,7 @@ METHOD Getrow() CLASS TFbQuery
 
    RETURN result
 
-METHOD GetBlankRow() CLASS TFbQuery
+METHOD TFbQuery:GetBlankRow()
 
    LOCAL result
    LOCAL aRow
@@ -770,7 +770,7 @@ METHOD GetBlankRow() CLASS TFbQuery
 
    RETURN result
 
-METHOD GetKeyField() CLASS TFbQuery
+METHOD TFbQuery:GetKeyField()
 
    IF ::aKeys == NIL
       ::aKeys := KeyField( ::aTables, ::db, ::dialect )
@@ -803,7 +803,7 @@ CREATE CLASS TFbRow
 
 ENDCLASS
 
-METHOD new( row, struct, nDb, nDialect, aTable ) CLASS TFbRow
+METHOD TFbRow:new( row, struct, nDb, nDialect, aTable )
 
    ::aRow := row
    ::aStruct := struct
@@ -814,7 +814,7 @@ METHOD new( row, struct, nDb, nDialect, aTable ) CLASS TFbRow
 
    RETURN Self
 
-METHOD Changed( nField ) CLASS TFbRow
+METHOD TFbRow:Changed( nField )
 
    LOCAL result
 
@@ -824,7 +824,7 @@ METHOD Changed( nField ) CLASS TFbRow
 
    RETURN result
 
-METHOD FieldGet( nField ) CLASS TFbRow
+METHOD TFbRow:FieldGet( nField )
 
    LOCAL result
 
@@ -834,7 +834,7 @@ METHOD FieldGet( nField ) CLASS TFbRow
 
    RETURN result
 
-METHOD FieldPut( nField, Value ) CLASS TFbRow
+METHOD TFbRow:FieldPut( nField, Value )
 
    LOCAL result
 
@@ -845,7 +845,7 @@ METHOD FieldPut( nField, Value ) CLASS TFbRow
 
    RETURN result
 
-METHOD FieldName( nField ) CLASS TFbRow
+METHOD TFbRow:FieldName( nField )
 
    LOCAL result
 
@@ -855,10 +855,10 @@ METHOD FieldName( nField ) CLASS TFbRow
 
    RETURN result
 
-METHOD FieldPos( cField ) CLASS TFbRow
+METHOD TFbRow:FieldPos( cField )
    RETURN AScan( ::aStruct, {| x | x[ 1 ] == RTrim(Upper(cField)) } )
 
-METHOD FieldType( nField ) CLASS TFbRow
+METHOD TFbRow:FieldType( nField )
 
    LOCAL result
 
@@ -868,7 +868,7 @@ METHOD FieldType( nField ) CLASS TFbRow
 
    RETURN result
 
-METHOD FieldLen(nField) CLASS TFbRow
+METHOD TFbRow:FieldLen(nField)
 
    LOCAL result
 
@@ -878,7 +878,7 @@ METHOD FieldLen(nField) CLASS TFbRow
 
    RETURN result
 
-METHOD FieldDec(nField) CLASS TFbRow
+METHOD TFbRow:FieldDec(nField)
 
    LOCAL result
 
@@ -888,7 +888,7 @@ METHOD FieldDec(nField) CLASS TFbRow
 
    RETURN result
 
-METHOD GetKeyField() CLASS TFbRow
+METHOD TFbRow:GetKeyField()
 
    IF ::aKeys == NIL
       ::aKeys := KeyField( ::aTables, ::db, ::dialect )
