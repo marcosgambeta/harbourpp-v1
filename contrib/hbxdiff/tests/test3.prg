@@ -22,7 +22,7 @@ FUNCTION Diff(...)
 
    LOCAL e
 
-   FOR EACH e IN { ... }
+   FOR EACH e IN {...}
       ? e
    NEXT
 

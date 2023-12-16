@@ -758,7 +758,7 @@ FUNCTION wvg_FindWindow( cTitle )
 
 #if 0
 FUNCTION wvg_CreateBrush(...)  /* FIXME: causes problems due to the GC collected pointer is returns */
-   RETURN wapi_CreateBrushIndirect( { ... } )
+   RETURN wapi_CreateBrushIndirect( {...} )
 #endif
 
 FUNCTION wvg_SetDCBrushColor( hDC, nRGB )

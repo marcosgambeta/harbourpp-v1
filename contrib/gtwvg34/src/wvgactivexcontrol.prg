@@ -178,7 +178,7 @@ METHOD PROCEDURE WvgActiveXControl:execEvent( nEvent, ... )
 
 #if 0
    LOCAL cEvents := hb_ValToStr( nEvent ) + ", "
-   LOCAL aEvents := { ... }
+   LOCAL aEvents := {...}
 
    AEval( aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " } )
    hb_traceLog( cEvents )

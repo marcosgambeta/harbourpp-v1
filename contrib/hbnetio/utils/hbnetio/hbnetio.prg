@@ -135,7 +135,7 @@ PROCEDURE netiosrv_Main( lUI, ... )
    netiomgm[ _NETIOSRV_hNotifStream ]   := { => }
    netiomgm[ _NETIOSRV_mtxNotifStream ] := hb_mutexCreate()
 
-   FOR EACH cParam IN { ... }
+   FOR EACH cParam IN {...}
       DO CASE
       CASE Lower(cParam) == "-a"
          /* Ignore */

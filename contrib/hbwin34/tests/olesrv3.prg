@@ -24,7 +24,7 @@ PROCEDURE DllMain()
 
 
 FUNCTION MyMethod(...)  /* must be a public function */
-   RETURN "Hello from MyOleServer [" + hb_ValToExp( { ... } ) + "]"
+   RETURN "Hello from MyOleServer [" + hb_ValToExp( {...} ) + "]"
 
 
 ANNOUNCE GT_SYS

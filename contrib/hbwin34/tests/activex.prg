@@ -50,7 +50,7 @@ METHOD HActiveX:Init( hWnd, cProgId, nTop, nLeft, nWidth, nHeight, cID )
 PROCEDURE HActiveX:Event(...)
 
    LOCAL cEvents := ""
-   LOCAL aEvents := { ... }
+   LOCAL aEvents := {...}
 
    AEval( aEvents, {| xEvent | cEvents += hb_ValToStr( xEvent ) + ", " } )
    wapi_OutputDebugString( cEvents )
