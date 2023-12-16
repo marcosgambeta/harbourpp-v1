@@ -164,7 +164,7 @@ METHOD HBDbObject:addWindows(nRow)
 
    RETURN Self
 
-METHOD PROCEDURE doGet(oBrowse) CLASS HBDbObject
+METHOD PROCEDURE HBDbObject:doGet(oBrowse)
 
    LOCAL oErr
    LOCAL cValue
@@ -193,7 +193,7 @@ METHOD PROCEDURE doGet(oBrowse) CLASS HBDbObject
 
    RETURN
 
-METHOD PROCEDURE SetsKeyPressed(nKey, oBrwSets) CLASS HBDbObject
+METHOD PROCEDURE HBDbObject:SetsKeyPressed(nKey, oBrwSets)
 
    LOCAL aItemRef
 

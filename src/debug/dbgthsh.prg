@@ -132,7 +132,7 @@ METHOD HBDbHash:addWindows(hHash, nRow)
 
    RETURN Self
 
-METHOD PROCEDURE doGet(oBrowse, pItem, nSet) CLASS HBDbHash
+METHOD PROCEDURE HBDbHash:doGet(oBrowse, pItem, nSet)
 
    LOCAL oErr
    LOCAL cValue

@@ -128,7 +128,7 @@ METHOD HBDbArray:addWindows(aArray, nRow)
 
    RETURN Self
 
-METHOD PROCEDURE doGet(oBrowse, pItem, nSet) CLASS HBDbArray
+METHOD PROCEDURE HBDbArray:doGet(oBrowse, pItem, nSet)
 
    LOCAL oErr
    LOCAL cValue

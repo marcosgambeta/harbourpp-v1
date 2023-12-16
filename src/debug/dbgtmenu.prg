@@ -155,7 +155,7 @@ METHOD HBDbMenu:AddItem(oMenuItem)
 
    RETURN oMenuItem
 
-METHOD PROCEDURE Build() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:Build()
 
    LOCAL nPos := 0
    LOCAL oMenuItem
@@ -189,7 +189,7 @@ METHOD PROCEDURE Build() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE ClosePopup(nPopup) CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:ClosePopup(nPopup)
 
    LOCAL oPopup
 
@@ -204,7 +204,7 @@ METHOD PROCEDURE ClosePopup(nPopup) CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE DeHilite() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:DeHilite()
 
    LOCAL oMenuItem := ::aItems[::nOpenPopup]
 
@@ -212,7 +212,7 @@ METHOD PROCEDURE DeHilite() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE Display() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:Display()
 
    LOCAL oMenuItem
 
@@ -234,7 +234,7 @@ METHOD PROCEDURE Display() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE EvalAction() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:EvalAction()
 
    LOCAL oPopup := ::aItems[::nOpenPopup]:bAction
    LOCAL oMenuItem := oPopup:aItems[oPopup:nOpenPopup]
@@ -289,7 +289,7 @@ METHOD HBDbMenu:GetItemByIdent(uIdent)
 
    RETURN NIL
 
-METHOD PROCEDURE GoBottom() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:GoBottom()
 
    LOCAL oPopup
 
@@ -301,7 +301,7 @@ METHOD PROCEDURE GoBottom() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE GoLeft() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:GoLeft()
 
    LOCAL oMenuItem := ::aItems[::nOpenPopup]
 
@@ -325,7 +325,7 @@ METHOD PROCEDURE GoLeft() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE GoRight() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:GoRight()
 
    LOCAL oMenuItem := ::aItems[::nOpenPopup]
 
@@ -349,7 +349,7 @@ METHOD PROCEDURE GoRight() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE GoTop() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:GoTop()
 
    LOCAL oPopup
 
@@ -361,7 +361,7 @@ METHOD PROCEDURE GoTop() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE LoadColors() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:LoadColors()
 
    LOCAL aColors := __dbgColors()
    LOCAL oMenuItem
@@ -379,7 +379,7 @@ METHOD PROCEDURE LoadColors() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE Refresh() CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:Refresh()
 
    LOCAL oMenuItem
 
@@ -397,7 +397,7 @@ METHOD PROCEDURE Refresh() CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE ShowPopup(nPopup) CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:ShowPopup(nPopup)
 
    ::aItems[nPopup]:Display(::cClrHilite, ::cClrHotFocus)
    ::nOpenPopup := nPopup
@@ -409,7 +409,7 @@ METHOD PROCEDURE ShowPopup(nPopup) CLASS HBDbMenu
 
    RETURN
 
-METHOD PROCEDURE ProcessKey(nKey) CLASS HBDbMenu
+METHOD PROCEDURE HBDbMenu:ProcessKey(nKey)
 
    LOCAL nPopup
    LOCAL oPopup

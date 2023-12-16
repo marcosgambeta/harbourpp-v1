@@ -370,7 +370,7 @@ METHOD HBDebugger:New()
 
    RETURN Self
 
-METHOD PROCEDURE OpenDebuggerWindow() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:OpenDebuggerWindow()
 
    IF !::lDebuggerWindowIsOpen
       ::hUserWindow := hb_gtInfo(HB_GTI_GETWIN)
@@ -384,7 +384,7 @@ METHOD PROCEDURE OpenDebuggerWindow() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE CloseDebuggerWindow() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:CloseDebuggerWindow()
 
    IF ::lDebuggerWindowIsOpen
       ::hDebuggerWindow := hb_gtInfo(HB_GTI_GETWIN)
@@ -394,7 +394,7 @@ METHOD PROCEDURE CloseDebuggerWindow() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Activate() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Activate()
 
    LOCAL lFirst := .F.
 
@@ -434,7 +434,7 @@ METHOD PROCEDURE Activate() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE All() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:All()
 
    ::lShowPublics := ::lShowPrivates := ::lShowStatics := ;
       ::lShowLocals := ::lShowGlobals := ::lAll := !::lAll
@@ -443,7 +443,7 @@ METHOD PROCEDURE All() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE BarDisplay() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:BarDisplay()
 
    LOCAL cClrItem   := __dbgColors()[8]
    LOCAL cClrHotKey := __dbgColors()[9]
@@ -467,7 +467,7 @@ METHOD PROCEDURE BarDisplay() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE BuildBrowseStack() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:BuildBrowseStack()
 
    LOCAL aColors
 
@@ -490,7 +490,7 @@ METHOD PROCEDURE BuildBrowseStack() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE BuildCommandWindow() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:BuildCommandWindow()
 
    LOCAL nSize
 
@@ -512,7 +512,7 @@ METHOD PROCEDURE BuildCommandWindow() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE CallStackProcessKey(nKey) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:CallStackProcessKey(nKey)
 
    LOCAL n
    LOCAL nSkip
@@ -615,14 +615,14 @@ METHOD PROCEDURE CallStackProcessKey(nKey) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE CodeblockTrace() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:CodeblockTrace()
 
    ::oPullDown:GetItemByIdent("CODEBLOCK"):checked := ::lCBTrace := !::lCBTrace
    __dbgSetCBTrace(::pInfo, ::lCBTrace)
 
    RETURN
 
-METHOD PROCEDURE CodeWindowProcessKey(nKey) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:CodeWindowProcessKey(nKey)
 
    IF ::oBrwText != NIL
 
@@ -678,7 +678,7 @@ METHOD PROCEDURE CodeWindowProcessKey(nKey) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Colors() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Colors()
 
    LOCAL oWndColors := HBDbWindow():New(4, 5, 16, ::nMaxCol - 5, "Debugger Colors[1..11]", ::ClrModal())
    LOCAL aColors := { ;
@@ -722,7 +722,7 @@ METHOD PROCEDURE Colors() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE CommandWindowDisplay(cLine, lCmd) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:CommandWindowDisplay(cLine, lCmd)
 
    LOCAL n
    LOCAL nRow
@@ -748,7 +748,7 @@ METHOD PROCEDURE CommandWindowDisplay(cLine, lCmd) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE CommandWindowProcessKey(nKey) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:CommandWindowProcessKey(nKey)
 
    LOCAL cCommand
    LOCAL n
@@ -1195,7 +1195,7 @@ METHOD HBDebugger:DoCommand(cCommand)
 
    RETURN cResult
 
-METHOD PROCEDURE DoScript(cFileName) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:DoScript(cFileName)
 
    LOCAL nPos
    LOCAL cLine
@@ -1212,7 +1212,7 @@ METHOD PROCEDURE DoScript(cFileName) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE EditColor(nColor, oBrwColors) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:EditColor(nColor, oBrwColors)
 
    LOCAL cColor := '"' + ::aColors[nColor] + '"'
 
@@ -1231,7 +1231,7 @@ METHOD PROCEDURE EditColor(nColor, oBrwColors) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE EditSet(nSet, oBrwSets) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:EditSet(nSet, oBrwSets)
 
    LOCAL cSet  := PadR(__dbgValToExp(Set(nSet)), oBrwSets:getColumn(2):Width)
    LOCAL cType := ValType(Set(nSet))
@@ -1251,7 +1251,7 @@ METHOD PROCEDURE EditSet(nSet, oBrwSets) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE EditVar(nVar) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:EditVar(nVar)
 
    LOCAL cVarName := ::aVars[nVar][1]
    LOCAL cVarStr
@@ -1312,14 +1312,14 @@ METHOD HBDebugger:GetSourceFiles()
 METHOD HBDebugger:ModuleMatch(cModuleName1, cModuleName2)
    RETURN __dbgModuleMatch(::pInfo, cModuleName1, cModuleName2)
 
-METHOD PROCEDURE Global() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Global()
 
    ::lShowGlobals := !::lShowGlobals
    ::RefreshVars()
 
    RETURN
 
-METHOD PROCEDURE Go() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Go()
 
    // we are starting to run again so reset to the deepest call if
    // displaying stack
@@ -1333,13 +1333,13 @@ METHOD PROCEDURE Go() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE GotoLine(nLine) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:GotoLine(nLine)
 
    ::oBrwText:GotoLine(nLine)
 
    RETURN
 
-METHOD PROCEDURE HandleEvent() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:HandleEvent()
 
    LOCAL nPopup
    LOCAL oWnd
@@ -1534,13 +1534,13 @@ METHOD PROCEDURE HandleEvent() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Hide() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Hide()
 
    ::CloseDebuggerWindow()
 
    RETURN
 
-METHOD PROCEDURE HideCallStack() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:HideCallStack()
 
    ::lShowCallStack := .F.
 
@@ -1565,7 +1565,7 @@ METHOD PROCEDURE HideCallStack() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE HideVars() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:HideVars()
 
    LOCAL nTop
 
@@ -1670,7 +1670,7 @@ METHOD HBDebugger:InputBox(cMsg, uValue, bValid, lEditable)
 
    RETURN uTemp
 
-METHOD PROCEDURE Inspect(uValue, cValueName) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Inspect(uValue, cValueName)
 
    ::InputBox(uValue, cValueName, NIL, .F.)
 
@@ -1728,7 +1728,7 @@ METHOD HBDebugger:ListBox(cCaption, aItems)
 
    RETURN n
 
-METHOD PROCEDURE LoadCallStack() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:LoadCallStack()
 
    LOCAL i
    LOCAL nDebugLevel
@@ -1755,7 +1755,7 @@ METHOD PROCEDURE LoadCallStack() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE LoadColors() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:LoadColors()
 
    LOCAL oWnd
 
@@ -1773,13 +1773,13 @@ METHOD PROCEDURE LoadColors() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE LoadSettings() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:LoadSettings()
 
    ::DoScript(::cSettingsFileName)
 
    RETURN
 
-METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
+METHOD PROCEDURE HBDebugger:LoadVars() // updates monitored variables
 
    LOCAL nCount
    LOCAL n
@@ -1872,7 +1872,7 @@ METHOD PROCEDURE LoadVars() CLASS HBDebugger  // updates monitored variables
 
    RETURN
 
-METHOD PROCEDURE Local() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Local()
 
    ::lShowLocals := !::lShowLocals
    ::RefreshVars()
@@ -1910,7 +1910,7 @@ METHOD HBDebugger:LocatePrgPath(cPrgName)
 
    RETURN NIL
 
-METHOD PROCEDURE MonoDisplay() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:MonoDisplay()
 
    ::lMonoDisplay := !::lMonoDisplay
    ::oPullDown:GetItemByIdent("MONO"):checked := ::lMonoDisplay
@@ -1927,7 +1927,7 @@ METHOD HBDebugger:NextRoutine()
 
    RETURN Self
 
-METHOD PROCEDURE NextWindow() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:NextWindow()
 
    LOCAL oWnd
 
@@ -1950,7 +1950,7 @@ METHOD PROCEDURE NextWindow() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Open(cFileName) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Open(cFileName)
 
    LOCAL nFileName
    LOCAL cRealName
@@ -2044,7 +2044,7 @@ METHOD HBDebugger:OpenPPO()
 
    RETURN lSuccess
 
-METHOD PROCEDURE OSShell() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:OSShell()
 
    LOCAL cImage := __dbgSaveScreen()
    LOCAL cColors := SetColor()
@@ -2079,7 +2079,7 @@ METHOD PROCEDURE OSShell() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Quit() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Quit()
 
    ::Exit()
    ::Hide()
@@ -2102,7 +2102,7 @@ METHOD HBDebugger:PathForFiles(cPathForFiles)
 
    RETURN Self
 
-METHOD PROCEDURE PrevWindow() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:PrevWindow()
 
    LOCAL oWnd
 
@@ -2125,21 +2125,21 @@ METHOD PROCEDURE PrevWindow() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Private() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Private()
 
    ::lShowPrivates := !::lShowPrivates
    ::RefreshVars()
 
    RETURN
 
-METHOD PROCEDURE Public() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Public()
 
    ::lShowPublics := !::lShowPublics
    ::RefreshVars()
 
    RETURN
 
-METHOD PROCEDURE RefreshVars() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:RefreshVars()
 
    ::oPulldown:GetItemByIdent("GLOBAL"):checked := ::lShowGlobals
    ::oPulldown:GetItemByIdent("LOCAL"):checked := ::lShowLocals
@@ -2160,7 +2160,7 @@ METHOD PROCEDURE RefreshVars() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE RemoveWindow(oWnd) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:RemoveWindow(oWnd)
 
    LOCAL n
 
@@ -2223,7 +2223,7 @@ METHOD HBDebugger:ResizeWindows(oWindow)
 
    RETURN Self
 
-METHOD PROCEDURE RestoreAppScreen() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:RestoreAppScreen()
 
    LOCAL i
 
@@ -2235,7 +2235,7 @@ METHOD PROCEDURE RestoreAppScreen() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE RestoreAppState() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:RestoreAppState()
 
    Set(_SET_DIRCASE, ::nAppDirCase)
    Set(_SET_FILECASE, ::nAppFileCase)
@@ -2244,7 +2244,7 @@ METHOD PROCEDURE RestoreAppState() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE RestoreSettings(cFileName) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:RestoreSettings(cFileName)
 
    IF Empty(cFileName)
       ::cSettingsFileName := ::InputBox("File name", ::cSettingsFileName)
@@ -2260,7 +2260,7 @@ METHOD PROCEDURE RestoreSettings(cFileName) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE SaveAppScreen() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:SaveAppScreen()
 
    LOCAL nRight
    LOCAL nTop
@@ -2305,7 +2305,7 @@ METHOD PROCEDURE SaveAppScreen() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE SaveAppState() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:SaveAppState()
 
    ::nAppDirCase := Set(_SET_DIRCASE, HB_SET_CASE_MIXED)
    ::nAppFileCase := Set(_SET_FILECASE, HB_SET_CASE_MIXED)
@@ -2314,7 +2314,7 @@ METHOD PROCEDURE SaveAppState() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE SaveSettings(cFileName) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:SaveSettings(cFileName)
 
    LOCAL cInfo := ""
    LOCAL n
@@ -2488,12 +2488,12 @@ METHOD HBDebugger:ResizeCmdWnd(nLines)
 
    RETURN Self
 
-METHOD PROCEDURE SearchLine(cLine) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:SearchLine(cLine)
 
    ::GotoLine(Max(1, iif(HB_ISSTRING(cLine) .AND. IsDigit(cLine), Val(cLine), ::InputBox("Line number", 1))))
    RETURN
 
-METHOD PROCEDURE Show() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Show()
 
    ::SaveAppScreen()
    ::oPullDown:Display()
@@ -2505,14 +2505,14 @@ METHOD PROCEDURE Show() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE ShowAllGlobals() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:ShowAllGlobals()
 
    ::lShowAllGlobals := !::lShowAllGlobals
    ::RefreshVars()
 
    RETURN
 
-METHOD PROCEDURE ShowAppScreen() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:ShowAppScreen()
 
    ::CloseDebuggerWindow()
 
@@ -2526,7 +2526,7 @@ METHOD PROCEDURE ShowAppScreen() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE ShowCallStack() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:ShowCallStack()
 
    ::lShowCallStack := .T.
 
@@ -2572,7 +2572,7 @@ METHOD PROCEDURE ShowCallStack() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE ShowCodeLine(nProc) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:ShowCodeLine(nProc)
 
    LOCAL nLine
    LOCAL cPrgName
@@ -2640,7 +2640,7 @@ METHOD PROCEDURE ShowCodeLine(nProc) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE ShowHelp(cTopic) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:ShowHelp(cTopic)
 
    __dbgHelp(cTopic)
 
@@ -2648,7 +2648,7 @@ METHOD PROCEDURE ShowHelp(cTopic) CLASS HBDebugger
 
 #define MAX_VARS_HEIGHT  7
 
-METHOD PROCEDURE ShowVars() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:ShowVars()
 
    LOCAL oCol
    LOCAL lRepaint := .F.
@@ -2789,7 +2789,7 @@ METHOD PROCEDURE ShowVars() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Stack(cParam) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Stack(cParam)
 
    SWITCH iif(HB_ISSTRING(cParam), cParam, "")
    CASE "ON"
@@ -2814,14 +2814,14 @@ METHOD PROCEDURE Stack(cParam) CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE Static() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Static()
 
    ::lShowStatics := !::lShowStatics
    ::RefreshVars()
 
    RETURN
 
-METHOD PROCEDURE Step() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:Step()
 
    // we are starting to run again so reset to the deepest call if displaying stack
    IF ::oBrwStack != NIL
@@ -2847,7 +2847,7 @@ METHOD HBDebugger:ToCursor()
 
 // Toggle a breakpoint at the cursor position in the currently viewed file
 // which may be different from the file in which execution was broken
-METHOD PROCEDURE BreakPointToggle(nLine, cFileName) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:BreakPointToggle(nLine, cFileName)
 
    // look for a breakpoint which matches both line number and module name
 
@@ -2997,7 +2997,7 @@ METHOD HBDebugger:VarSetValue(aVar, uValue)
 
    RETURN Self
 
-METHOD PROCEDURE ViewSets() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:ViewSets()
 
    LOCAL aSets := __dbgGetSETs()
    LOCAL oWndSets := HBDbWindow():New(1, 7, ::nMaxRow - 2, ::nMaxCol - 7, ;
@@ -3152,7 +3152,7 @@ METHOD HBDebugger:WatchpointInspect(nPos)
 
    RETURN Self
 
-METHOD PROCEDURE WatchpointsHide() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:WatchpointsHide()
 
    ::oWndPnt:Hide()
    ::oWndCode:nTop := iif(::oWndVars != NIL .AND. ::oWndVars:lVisible, ::oWndVars:nBottom + 1, 1)
@@ -3163,7 +3163,7 @@ METHOD PROCEDURE WatchpointsHide() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE WatchpointsShow() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:WatchpointsShow()
 
    LOCAL oCol
    LOCAL lRepaint := .F.
@@ -3271,7 +3271,7 @@ METHOD PROCEDURE WatchpointsShow() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE WatchpointList() CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:WatchpointList()
 
    LOCAL aWatch
    LOCAL cType
@@ -3292,7 +3292,7 @@ METHOD PROCEDURE WatchpointList() CLASS HBDebugger
 
    RETURN
 
-METHOD PROCEDURE WndVarsLButtonDown(nMRow, nMCol) CLASS HBDebugger
+METHOD PROCEDURE HBDebugger:WndVarsLButtonDown(nMRow, nMCol)
 
    IF nMRow > ::oWndVars:nTop .AND. ;
       nMRow < ::oWndVars:nBottom .AND. ;

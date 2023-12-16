@@ -168,7 +168,7 @@ METHOD ScalarObject:isEvalItem()
 METHOD ScalarObject:isNull()
    RETURN HB_ISNULL(Self)
 
-METHOD PROCEDURE BecomeErr() CLASS ScalarObject
+METHOD PROCEDURE ScalarObject:BecomeErr()
 
 #if 0
    // Not implemented yet
@@ -291,7 +291,7 @@ METHOD Array:IndexOf(x)
 
    RETURN 0
 
-METHOD PROCEDURE Remove(e) CLASS Array
+METHOD PROCEDURE Array:Remove(e)
 
    ::DeleteAt(::IndexOf(e))
 

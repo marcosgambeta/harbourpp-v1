@@ -115,13 +115,13 @@ METHOD HBDbWindow:New(nTop, nLeft, nBottom, nRight, cCaption, cColor)
 
    RETURN Self
 
-METHOD PROCEDURE Clear() CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:Clear()
 
    hb_Scroll(::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1, NIL, NIL, ::cColor)
 
    RETURN
 
-METHOD PROCEDURE Hide() CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:Hide()
 
    __dbgRestScreen(::nTop, ::nLeft, ::nBottom + iif(::lShadow, 1, 0), ::nRight + iif(::lShadow, 2, 0), ::cBackImage)
    ::cBackImage := NIL
@@ -133,19 +133,19 @@ METHOD HBDbWindow:IsOver(nRow, nCol)
 
    RETURN nRow >= ::nTop .AND. nRow <= ::nBottom .AND. nCol >= ::nLeft .AND. nCol <= ::nRight
 
-METHOD PROCEDURE ScrollUp(nLines) CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:ScrollUp(nLines)
 
    hb_Scroll(::nTop + 1, ::nLeft + 1, ::nBottom - 1, ::nRight - 1, hb_defaultValue(nLines, 1), NIL, ::cColor)
 
    RETURN
 
-METHOD PROCEDURE SetCaption(cCaption) CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:SetCaption(cCaption)
 
    ::cCaption := cCaption
 
    RETURN
 
-METHOD PROCEDURE ShowCaption() CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:ShowCaption()
 
    IF !Empty(::cCaption)
       hb_DispOutAt(::nTop, ::nLeft + ((::nRight - ::nLeft) / 2) - ((Len(::cCaption) + 2) / 2), " " + ::cCaption + " ", ::cColor)
@@ -153,7 +153,7 @@ METHOD PROCEDURE ShowCaption() CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE SetFocus(lOnOff) CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:SetFocus(lOnOff)
 
    IF !lOnOff .AND. HB_ISEVALITEM(::bLostFocus)
       Eval(::bLostFocus, Self)
@@ -167,7 +167,7 @@ METHOD PROCEDURE SetFocus(lOnOff) CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE Refresh() CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:Refresh()
 
    DispBegin()
 
@@ -184,7 +184,7 @@ METHOD PROCEDURE Refresh() CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE Show(lFocused) CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:Show(lFocused)
 
    ::cBackImage := __dbgSaveScreen(::nTop, ::nLeft, ::nBottom + iif(::lShadow, 1, 0), ::nRight + iif(::lShadow, 2, 0))
    hb_Scroll(::nTop, ::nLeft, ::nBottom, ::nRight, NIL, NIL, ::cColor)
@@ -199,7 +199,7 @@ METHOD PROCEDURE Show(lFocused) CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE ShowModal() CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:ShowModal()
 
    LOCAL lExit := .F.
    LOCAL nKey
@@ -233,7 +233,7 @@ METHOD PROCEDURE ShowModal() CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE LButtonDown(nMRow, nMCol) CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:LButtonDown(nMRow, nMCol)
 
    IF HB_ISEVALITEM(::bLButtonDown)
       Eval(::bLButtonDown, nMRow, nMCol)
@@ -241,7 +241,7 @@ METHOD PROCEDURE LButtonDown(nMRow, nMCol) CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE LDblClick(nMRow, nMCol) CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:LDblClick(nMRow, nMCol)
 
    IF HB_ISEVALITEM(::bLDblClick)
       Eval(::bLDblClick, nMRow, nMCol)
@@ -249,7 +249,7 @@ METHOD PROCEDURE LDblClick(nMRow, nMCol) CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE Move() CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:Move()
 
    LOCAL nOldTop    := ::nTop
    LOCAL nOldLeft   := ::nLeft
@@ -315,7 +315,7 @@ METHOD PROCEDURE Move() CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE KeyPressed(nKey) CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:KeyPressed(nKey)
 
    IF HB_ISEVALITEM(::bKeyPressed)
       Eval(::bKeyPressed, nKey, Self)
@@ -323,7 +323,7 @@ METHOD PROCEDURE KeyPressed(nKey) CLASS HBDbWindow
 
    RETURN
 
-METHOD PROCEDURE LoadColors() CLASS HBDbWindow
+METHOD PROCEDURE HBDbWindow:LoadColors()
 
    LOCAL aClr := __dbgColors()
 

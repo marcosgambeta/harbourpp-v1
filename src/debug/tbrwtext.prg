@@ -183,7 +183,7 @@ METHOD HBBrwText:GetLineColor()
 
    RETURN aColor
 
-METHOD PROCEDURE LoadFile(cFileName) CLASS HBBrwText
+METHOD PROCEDURE HBBrwText:LoadFile(cFileName)
 
    LOCAL nMaxLineLen := 0
    LOCAL cLine
