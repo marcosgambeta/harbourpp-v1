@@ -3711,7 +3711,7 @@ static HB_BOOL hb_gtTryInit(const char * szGtName, HB_BOOL fFree)
    if( szGtName ) {
       if( hb_stackGetGT() == nullptr ) {
          if( fFree ) {
-            char * pszStr = const_cast<char*>(strchr(szGtName, ':'));
+            auto pszStr = const_cast<char*>(strchr(szGtName, ':'));
             if( pszStr != nullptr ) {
                *pszStr = '\0';
             }

@@ -527,7 +527,7 @@ const char * hb_fsNameConv(const char * szFileName, char ** pszFree)
       }
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR ) {
-         char * p = const_cast<char*>(szFileName);
+         auto p = const_cast<char*>(szFileName);
          while( *p ) {
             if( *p == s_cDirSep ) {
                *p = HB_OS_PATH_DELIM_CHR;
@@ -613,7 +613,7 @@ HB_WCHAR * hb_fsNameConvU16(const char * szFileName)
       szFileName = pszBuffer = hb_strncpy(static_cast<char*>(hb_xgrab(HB_PATH_MAX)), szFileName, HB_PATH_MAX - 1);
 
       if( s_cDirSep != HB_OS_PATH_DELIM_CHR ) {
-         char * p = const_cast<char*>(szFileName);
+         auto p = const_cast<char*>(szFileName);
          while( *p ) {
             if( *p == s_cDirSep ) {
                *p = HB_OS_PATH_DELIM_CHR;

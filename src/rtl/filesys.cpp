@@ -3815,7 +3815,7 @@ const char * hb_fsNameConv(const char * pszFileName, char ** pszFree)
       }
 
       if( cDirSep != HB_OS_PATH_DELIM_CHR ) {
-         char * p = const_cast<char*>(pszFileName);
+         auto p = const_cast<char*>(pszFileName);
          while( *p ) {
             if( *p == cDirSep ) {
                *p = HB_OS_PATH_DELIM_CHR;
