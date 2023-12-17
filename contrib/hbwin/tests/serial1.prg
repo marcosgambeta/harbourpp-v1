@@ -52,7 +52,7 @@ PROCEDURE Main( cPortName )
    LOCAL cString := "ATE0" + Chr(13) + "ATI3" + Chr(13)
    LOCAL nResult
 
-   IF ! oWinPort:Open()
+   IF !oWinPort:Open()
       ? "Open() failed"
    ELSE
       ? "Open() succeeded"

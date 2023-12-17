@@ -133,23 +133,23 @@ METHOD HBFormatCode:New( aParams, cIniName )
    ::nErr := 0
 
    IF HB_ISSTRING( cIniName )
-      IF ! ::ReadIni( cIniName )
+      IF !::ReadIni( cIniName )
          RETURN Self
       ENDIF
       FOR EACH cParam IN aParams
          IF hb_LeftEq( cParam, "@" )
-            IF ! ::ReadIni( SubStr(cParam, 2) )
+            IF !::ReadIni( SubStr(cParam, 2) )
                RETURN Self
             ENDIF
          ELSEIF Left(cParam, 1) $ "-/"
-            IF ! ::SetOption( SubStr(cParam, 2), 0 )
+            IF !::SetOption( SubStr(cParam, 2), 0 )
                RETURN Self
             ENDIF
          ENDIF
       NEXT
    ENDIF
 
-   IF ! Right(::cCommands, 1) == ","
+   IF !Right(::cCommands, 1) == ","
       ::cCommands += ","
    ENDIF
 
@@ -161,7 +161,7 @@ METHOD HBFormatCode:New( aParams, cIniName )
       "LOOP,MENU,NEXT,PACK,PRINT,QUIT,READ,RECALL,REINDEX,RELEASE,RENAME,REQUEST,REPLACE,RESTORE," + ;
       "RUN,SAVE,SEEK,SELECT,SET,SKIP,SORT,STORE,SUM,TEXT,TOTAL,UNLOCK,UPDATE,USE,VAR,WAIT,ZAP,DIR,"
 
-   IF ! Right(::cClauses, 1) == ","
+   IF !Right(::cClauses, 1) == ","
       ::cClauses += ","
    ENDIF
 
@@ -175,10 +175,10 @@ METHOD HBFormatCode:New( aParams, cIniName )
       "EVENTMASK,VIDEOMODE,SCOPE,SCOPETOP,SCOPEBOTTOM,AUTORDER,AUTOSHARE,MBLOCKSIZE,MEMOBLOCK,MFILEEXT,STRICTREAD,OPTIMIZE,AUTOPEN,TIME," + ;
       "AMERICAN,ANSI,BRITISH,FRENCH,GERMAN,ITALIAN,JAPANESE,USA,SAFETY,STATUS,TALK,HEADING,ECHO,SDF,HBV,"
 
-   IF ! Right(::cFunctions, 1) == ","
+   IF !Right(::cFunctions, 1) == ","
       ::cFunctions += ","
    ENDIF
-   IF ! ",STR," $ Upper(::cFunctions)
+   IF !",STR," $ Upper(::cFunctions)
       ::cFunctions += "iif,ISNIL,ISARRAY,ISBLOCK,ISCHARACTER,ISDATE,ISLOGICAL,ISMEMO,ISNUMBER,ISOBJECT,Main"
       __hbformat_BuildListOfFunctions( @::cFunctions, ::cHBXList )
    ENDIF
@@ -228,7 +228,7 @@ METHOD HBFormatCode:Reformat( aFile )
       IF lComment
          IF ( nPos := hb_At( "*/", aFile[ i ] ) ) > 0
             lComment := .F.
-            IF ! Empty(cToken1 := SubStr(aFile[ i ], nPos + 2))
+            IF !Empty(cToken1 := SubStr(aFile[ i ], nPos + 2))
                aFile[ i ] := Left(aFile[ i ], nPos + 1)
                nLen := rf_AINS( aFile, i + 1, cToken1 )
                iDelta++
@@ -281,14 +281,14 @@ METHOD HBFormatCode:Reformat( aFile )
          ENDIF
          lToBeContinued := ( nPosComment > 0 .AND. Right(RTrim(Left(cLineAll, nPosComment - 1)), 1) == ';' ) ;
             .OR. ( nPosComment == 0 .AND. Right(aFile[ i ], 1) == ';' )
-         IF ! lPragmaDump .AND. ::lIndent .AND. ! lComment
+         IF !lPragmaDump .AND. ::lIndent .AND. ! lComment
             aFile[ i ] := cLineAll
-            IF ! lContinue
+            IF !lContinue
                nPosSep := 1
                nLineSegment := 1
                DO WHILE .T.
                   nPos := nPosSep
-                  IF ! hb_LeftEq( aFile[ i ], "#" ) .AND. ;
+                  IF !hb_LeftEq( aFile[ i ], "#" ) .AND. ;
                         ( nPosSep := FindNotQuoted( ";", aFile[ i ], nPosSep ) ) > 0 .AND. ;
                         nPosSep < Len(aFile[ i ]) .AND. ( nPosComment == 0 .OR. nPosSep < nPosComment )
                      cLine := SubStr(aFile[ i ], nPos, nPosSep - nPos + 1)
@@ -410,7 +410,7 @@ METHOD HBFormatCode:Reformat( aFile )
                            ( nState == RF_STATE_FUNC .AND. ::nLineFnc == 1 ) .OR. ;
                            ( nState == RF_STATE_VAR  .AND. ::nLineVar == 1 ) .OR. ;
                            ( nState == RF_STATE_CODE .AND. ::nLineCode == 1 )
-                           IF ! Empty(aFile[ nPos ])
+                           IF !Empty(aFile[ nPos ])
                               nLen := rf_AINS( aFile, nPos + 1, "" )
                               iDelta++
                               i++
@@ -468,7 +468,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
    LOCAL cOperators := "+-*/%#=~^<>$!"
    LOCAL nPrevState
 
-   IF ! ::lCase .AND. ! ::lSpaces
+   IF !::lCase .AND. ! ::lSpaces
       RETURN cLine
    ENDIF
 
@@ -481,7 +481,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
       nPos++
    ENDDO
 
-   IF ! lContinued .AND. hb_LeftEq( cLine, "#" )
+   IF !lContinued .AND. hb_LeftEq( cLine, "#" )
       IF ::lSpaces .AND. ::nSpaceDrt != -1
          cLine := Left(cLine, nPos) + Space( ::nSpaceDrt ) + LTrim(SubStr(cLine, nPos + 1))
       ENDIF
@@ -641,7 +641,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                IF SubStr(cLine, i + 1, 1) != "|"
                nA := i
                ENDIF
-               IF ! SubStr(cLine, i - 1, 1) $ "{|"
+               IF !SubStr(cLine, i - 1, 1) $ "{|"
                   nB := i
                ENDIF
             ELSEIF c == ")" .OR. c == "}" .OR. c == "]"
@@ -689,7 +689,7 @@ METHOD HBFormatCode:ConvertCmd( cLine, nBegin, nEnd, lFirstOnly )
 
    IF ::lCase
 
-      IF ! HB_ISNUMERIC(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
+      IF !HB_ISNUMERIC(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
          ::nErr := 1
          ::cLineErr := cLine
          RETURN .F.
@@ -845,9 +845,9 @@ METHOD HBFormatCode:ReadIni( cIniName )
       aIni := hb_ATokens( MemoRead( cIniName ), .T. )
       nLen := Len(aIni)
       FOR i := 1 TO nLen
-         IF ! HB_ISNULL( aIni[ i ] := AllTrim(aIni[ i ]) ) .AND. ;
+         IF !HB_ISNULL( aIni[ i ] := AllTrim(aIni[ i ]) ) .AND. ;
                !( ( c := Left(aIni[ i ], 1) ) == ";" ) .AND. !( c == "#" )
-            IF ! ::SetOption( aIni[ i ], @i, aIni )
+            IF !::SetOption( aIni[ i ], @i, aIni )
                EXIT
             ENDIF
          ENDIF
@@ -905,7 +905,7 @@ METHOD HBFormatCode:Array2File( cFileName, aSource )
       RETURN .F.
    ENDIF
 
-   IF ! HB_ISNULL( ::cExtSave )
+   IF !HB_ISNULL( ::cExtSave )
       cFileName := hb_FNameExtSet( cFileName, ::cExtSave )
    ENDIF
 

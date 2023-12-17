@@ -81,7 +81,7 @@ FUNCTION netio_MTServer( nPort, cIfAddr, cRootDir, xRPC, ;
       ENDSWITCH
 
       pListenSocket := netio_Listen( nPort, cIfAddr, cRootDir, lRPC )
-      IF ! Empty(pListenSocket)
+      IF !Empty(pListenSocket)
          hb_threadDetach( hb_threadStart( @netio_srvloop(), pListenSocket, ;
                                           xRPC, sSrvFunc, ;
                                           cPasswd, nCompressLevel, nStrategy ) )

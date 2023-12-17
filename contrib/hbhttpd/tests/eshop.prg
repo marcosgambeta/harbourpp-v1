@@ -42,7 +42,7 @@ PROCEDURE Main()
 
    rddSetDefault( "DBFCDX" )
 
-   IF ! hb_dbExists( "users.dbf" )
+   IF !hb_dbExists( "users.dbf" )
       hb_dbDrop( "users.cdx" )
       dbCreate( "users", { { "USER", "C", 16, 0 }, { "PASSWORD", "C", 16, 0 }, { "NAME", "C", 50, 0 } }, , .T., "user" )
       dbAppend()
@@ -57,7 +57,7 @@ PROCEDURE Main()
       dbCloseArea()
    ENDIF
 
-   IF ! hb_dbExists( "carts.dbf" )
+   IF !hb_dbExists( "carts.dbf" )
       hb_dbDrop( "carts.cdx" )
       dbCreate( "carts", { { "USER", "C", 16, 0 }, { "CODE", "C", 16, 0 }, { "AMOUNT", "N", 6, 0 }, { "TOTAL", "N", 9, 2 } }, , .T., "cart" )
       ordCreate( "carts", "user", "USER+CODE" )
@@ -68,7 +68,7 @@ PROCEDURE Main()
       dbCloseArea()
    ENDIF
 
-   IF ! hb_dbExists( "items.dbf" )
+   IF !hb_dbExists( "items.dbf" )
       hb_dbDrop( "items.cdx" )
       dbCreate( "items", { { "CODE", "C", 16, 0 }, { "TITLE", "C", 80, 0 }, { "PRICE", "N", 9, 2 } }, , .T., "items" )
       ordCreate( "items", "code", "CODE" )
@@ -81,7 +81,7 @@ PROCEDURE Main()
 
    oLogAccess := UHttpdLog():New( "eshop_access.log" )
 
-   IF ! oLogAccess:Add( "" )
+   IF !oLogAccess:Add( "" )
       oLogAccess:Close()
       ? "Access log file open error " + hb_ntos( FError() )
       RETURN
@@ -89,7 +89,7 @@ PROCEDURE Main()
 
    oLogError := UHttpdLog():New( "eshop_error.log" )
 
-   IF ! oLogError:Add( "" )
+   IF !oLogError:Add( "" )
       oLogError:Close()
       oLogAccess:Close()
       ? "Error log file open error " + hb_ntos( FError() )
@@ -100,7 +100,7 @@ PROCEDURE Main()
 
    oServer := UHttpdNew()
 
-   IF ! oServer:Run( { ;
+   IF !oServer:Run( { ;
          "FirewallFilter"      => "", ;
          "LogAccess"           => {| m | oLogAccess:Add( m + hb_eol() ) }, ;
          "LogError"            => {| m | oLogError:Add( m + hb_eol() ) }, ;
@@ -144,7 +144,7 @@ STATIC FUNCTION proc_login()
       ordSetFocus( "user" )
       cUser := PadR( hb_HGetDef( post, "user", "" ), 16 )
       USessionStart()
-      IF ! Empty(cUser) .AND. dbSeek( cUser, .F. ) .AND. ! Deleted() .AND. ;
+      IF !Empty(cUser) .AND. dbSeek( cUser, .F. ) .AND. ! Deleted() .AND. ;
             PadR( hb_HGetDef( post, "password", "" ), 16 ) == FIELD->PASSWORD
          session[ "user" ] := cUser
          URedirect( "main" )
@@ -172,7 +172,7 @@ STATIC FUNCTION proc_logout()
 STATIC FUNCTION proc_main()
 
    USessionStart()
-   IF ! hb_HHasKey( session, "user" )
+   IF !hb_HHasKey( session, "user" )
       URedirect( "/app/login" )
       RETURN NIL
    ENDIF
@@ -184,7 +184,7 @@ STATIC FUNCTION proc_shopping()
    LOCAL oW, nT, cCode
 
    USessionStart()
-   IF ! hb_HHasKey( session, "user" )
+   IF !hb_HHasKey( session, "user" )
       URedirect( "/app/login" )
       RETURN NIL
    ENDIF
@@ -197,7 +197,7 @@ STATIC FUNCTION proc_shopping()
    IF hb_HHasKey( get, "add" )
       cCode := PadR( get[ "add" ], 16 )
       IF items->( dbSeek( cCode ) ) .AND. carts->( FLock() )
-         IF ! carts->( dbSeek( session[ "user" ] + cCode ) )
+         IF !carts->( dbSeek( session[ "user" ] + cCode ) )
             carts->( dbAppend() )
             carts->USER := session[ "user" ]
             carts->CODE := cCode
@@ -233,7 +233,7 @@ STATIC FUNCTION proc_cart()
    LOCAL oW, nT, cCode
 
    USessionStart()
-   IF ! hb_HHasKey( session, "user" )
+   IF !hb_HHasKey( session, "user" )
       URedirect( "/app/login" )
       RETURN NIL
    ENDIF
@@ -278,7 +278,7 @@ STATIC FUNCTION proc_cart()
 STATIC FUNCTION proc_account()
 
    USessionStart()
-   IF ! hb_HHasKey( session, "user" )
+   IF !hb_HHasKey( session, "user" )
       URedirect( "/app/login" )
       RETURN NIL
    ENDIF
@@ -293,7 +293,7 @@ STATIC FUNCTION proc_account_edit()
    LOCAL cName, cPassword1, cPassword2, aRet
 
    USessionStart()
-   IF ! hb_HHasKey( session, "user" )
+   IF !hb_HHasKey( session, "user" )
       URedirect( "/app/login" )
       RETURN NIL
    ENDIF
@@ -318,7 +318,7 @@ STATIC FUNCTION proc_account_edit()
       ELSE
          FLock()
          FIELD->NAME := cName
-         IF ! Empty(cPassword1)
+         IF !Empty(cPassword1)
             FIELD->PASSWORD := cPassword1
          ENDIF
          dbUnlock()

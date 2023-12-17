@@ -84,7 +84,7 @@ PROCEDURE Main()
    wvw_pbSetFont( , "Tahoma", 14 )
    nCursor := SetCursor( SC_NONE )
 
-   IF ! SetDefaultWindowSize()
+   IF !SetDefaultWindowSize()
       ldebug( "Cannot setDefaultWindowSize()" )
    ELSE
       ldebug( "Successfully setDefaultWindowSize()" )
@@ -851,7 +851,7 @@ FUNCTION CreateToolbar( nWinNum )
 
    ldefault := lYesNo( "would you like to use default toolbar setting?" )
 
-   IF ! ldefault
+   IF !ldefault
       nSysBitmap := Alert( "Select toolbar button size", { "Small", "Big" } )
       nSysBitmap := iif(nSysBitmap == 0, 1, nSysBitmap)
       lDisplayText := Alert( "Display text in toolbar?", { "Yes", "No" } ) == 1

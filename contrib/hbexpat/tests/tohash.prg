@@ -90,7 +90,7 @@ STATIC FUNCTION DUMPATTR( hAttr )
 
    LOCAL s := "", cValue
 
-   IF ! Empty(hAttr)
+   IF !Empty(hAttr)
       s += " ("
       FOR EACH cValue IN hAttr
          s += cValue:__enumKey() + "='" + cValue + "' "
@@ -109,7 +109,7 @@ STATIC FUNCTION cb_unknownencoding( xEData, cEncoding, aMap )
 
    HB_SYMBOL_UNUSED( xEData )
 
-   IF ! Empty(aMyMap := hb_XML_get_unicode_table( cEncoding ))
+   IF !Empty(aMyMap := hb_XML_get_unicode_table( cEncoding ))
       ACopy( aMyMap, aMap )
       RETURN HB_XML_STATUS_OK
    ENDIF

@@ -201,7 +201,7 @@ FUNCTION CBreader( oGet )
    LOCAL nKey, bKeyBlock
    LOCAL oGetList := __GetListActive()
 
-   IF ! wvw_cbIsFocused( NIL, oGet:cargo )
+   IF !wvw_cbIsFocused( NIL, oGet:cargo )
       wvw_cbSetFocus( NIL, oGet:cargo )
    ENDIF
 
@@ -241,7 +241,7 @@ FUNCTION CBreader( oGet )
 
    ELSEIF nKey == K_LBUTTONDOWN .OR. nKey == K_LDBLCLK
       // is there any GET object hit?
-      IF ! Empty(HitTest( oGetList:aGetList, MRow(), MCol(), NIL ))
+      IF !Empty(HitTest( oGetList:aGetList, MRow(), MCol(), NIL ))
          oGet:exitState := GE_MOUSEHIT
       ELSE
          oGet:exitState := GE_NOEXIT

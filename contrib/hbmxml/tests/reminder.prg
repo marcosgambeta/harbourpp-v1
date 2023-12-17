@@ -15,7 +15,7 @@ PROCEDURE Main()
       RETURN
    ENDIF
 
-   IF ! s_mxml_error
+   IF !s_mxml_error
       OutStd( asXML( xml ), hb_eol() )
    ENDIF
 

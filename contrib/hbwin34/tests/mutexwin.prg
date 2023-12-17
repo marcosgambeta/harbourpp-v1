@@ -8,7 +8,7 @@ PROCEDURE Main()
    LOCAL cAppName := hb_FNameName( hb_ProgName() )
 
    s_hMutex := wapi_CreateMutex( , , cAppName )
-   IF ! Empty(s_hMutex) .AND. wapi_GetLastError() == 0
+   IF !Empty(s_hMutex) .AND. wapi_GetLastError() == 0
       ? cAppName, "=> Hello World! OK."
    ELSE
       ? cAppName, "=> Application is running. Error", ;

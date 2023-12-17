@@ -81,7 +81,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
 
    pGT := SetGT( 2, hb_gtSelect() )
 
-   IF ! hbtest_Table( , "DBFCDX" )
+   IF !hbtest_Table( , "DBFCDX" )
       RETURN
    ENDIF
    IF FLock()

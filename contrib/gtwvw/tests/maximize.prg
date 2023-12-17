@@ -84,7 +84,7 @@ FUNCTION WVW_SIZE( nWinNum, hWnd, message, wParam, lParam )
    HB_SYMBOL_UNUSED( hWnd )
    HB_SYMBOL_UNUSED( lParam )
 
-   IF ! s_lSizeReady
+   IF !s_lSizeReady
       // program is not ready to handle window resizing
       // (or this function is currently running)
       RETURN NIL

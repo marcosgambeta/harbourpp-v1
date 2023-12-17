@@ -20,7 +20,7 @@ PROCEDURE Main()
    hb_FNameSplit( hb_argv(0), NIL, @cName, NIL )
    cDatabase := hb_DirTemp() + cName + ".fdb"
 
-   IF ! hb_FileExists( cDatabase )
+   IF !hb_FileExists( cDatabase )
       ? FBCreateDB(cServer + cDatabase, cUser, cPass, nPageSize, cCharSet, nDialect)
    ENDIF
 
@@ -108,7 +108,7 @@ PROCEDURE Main()
 
    oQuery := oServer:Query( "SELECT sum(salary) sum_salary FROM test WHERE code between 1 and 4000" )
 
-   IF ! oQuery:NetErr()
+   IF !oQuery:NetErr()
       oQuery:Fetch()
       @ 18, 0 SAY "Sum values...." + Str( oQuery:FieldGet(1) )
       oQuery:Destroy()
@@ -118,7 +118,7 @@ PROCEDURE Main()
    FOR i := 1 TO 4000
       oQuery := oServer:Query( "SELECT * FROM test WHERE code = " + Str( i ) )
 
-      IF ! oQuery:NetErr()
+      IF !oQuery:NetErr()
          oQuery:Fetch()
          oRow := oQuery:getrow()
 

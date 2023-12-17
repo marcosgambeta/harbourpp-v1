@@ -57,7 +57,7 @@ FUNCTION EditorNew( nTop, nLeft, nBottom, nRight, nLength, ;
    hb_default( @nLength, 80 )
 
    pEdit := ed_New( nLength, 4, nSize, nEscape )
-   IF ! Empty(pEdit)
+   IF !Empty(pEdit)
 
       __defaultNIL( @cFrame, HB_B_DOUBLE_UNI )
       __defaultNIL( @cColor, "W/N,W+/N,W+/R,GR+/N,G+/N" )
@@ -344,12 +344,12 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
       CASE EditorMove( oEdit[ E_EDIT ], nKey )
 
       CASE nKey == K_DOWN
-         IF ! ed_Down( oEdit[ E_EDIT ] )
+         IF !ed_Down( oEdit[ E_EDIT ] )
             hb_Scroll( nTop, nLeft, nBottom, nRight, 1 )
          ENDIF
 
       CASE nKey == K_UP
-         IF ! ed_Up( oEdit[ E_EDIT ] )
+         IF !ed_Up( oEdit[ E_EDIT ] )
             hb_Scroll( nTop, nLeft, nBottom, nRight, -1 )
          ENDIF
 

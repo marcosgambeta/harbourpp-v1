@@ -138,7 +138,7 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::setPosAndSize()
 
    /* Build SLE and ListBox Part - May not be available for all Windows Versions - How to handle then ? */
-   IF ! Empty(::aInfo := wvg_SendCBMessage( ::hWnd, CB_GETCOMBOBOXINFO ))
+   IF !Empty(::aInfo := wvg_SendCBMessage( ::hWnd, CB_GETCOMBOBOXINFO ))
       ::oSLE := WvgSLE():new()
       ::oSLE:oParent := Self
       ::oSLE:hWnd := ::aInfo[ 5 ]

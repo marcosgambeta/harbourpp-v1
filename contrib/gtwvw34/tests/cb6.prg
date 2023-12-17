@@ -195,7 +195,7 @@ STATIC PROCEDURE CBreader( oGet )
    LOCAL nKey, nKeyStd, bKeyBlock
    LOCAL oGetList := __GetListActive()
 
-   IF ! wvw_cbIsFocused( , oGet:cargo )
+   IF !wvw_cbIsFocused( , oGet:cargo )
       wvw_cbSetFocus( , oGet:cargo )
    ENDIF
 

@@ -83,7 +83,7 @@ PROCEDURE Main( cInputFile )
       ENDIF
 
       cOutput += hb_eol()
-      cOutput += "   IF ! hb_dbCreateTemp( hb_defaultValue( cAlias, " + '"' + "w_TEST" + '"' + " ), { ;" + hb_eol()
+      cOutput += "   IF !hb_dbCreateTemp( hb_defaultValue( cAlias, " + '"' + "w_TEST" + '"' + " ), { ;" + hb_eol()
       FOR EACH fld IN dbStruct()
          cOutput += ;
             "      " + ;
@@ -146,7 +146,7 @@ FUNCTION hbtest_Table(cAlias, ...)
 
    LOCAL r, f
 
-   IF ! hb_dbCreateTemp(hb_defaultValue( cAlias, "w_TEST" ), { ;
+   IF !hb_dbCreateTemp(hb_defaultValue( cAlias, "w_TEST" ), { ;
       { "FIRST"     , "C"     ,    20,  0 }, ;
       { "LAST"      , "C"     ,    20,  0 }, ;
       { "STREET"    , "C"     ,    30,  0 }, ;

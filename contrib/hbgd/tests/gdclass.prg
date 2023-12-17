@@ -19,7 +19,7 @@ PROCEDURE Main()
 
 #if 0
    // Check output directory
-   IF ! hb_DirExists( IMAGES_OUT )
+   IF !hb_DirExists( IMAGES_OUT )
       DirMake( IMAGES_OUT )
    ENDIF
 #endif

@@ -114,7 +114,7 @@ METHOD TPLGenerate:Generate()
 
    LOCAL cDir := hb_FNameDir( ::cOutFileName )
 
-   IF ! hb_vfDirExists( cDir )
+   IF !hb_vfDirExists( cDir )
       OutStd( hb_eol() + "Creating directory", "'" + cDir + "'" )
       hb_vfDirMake( cDir )
    ENDIF

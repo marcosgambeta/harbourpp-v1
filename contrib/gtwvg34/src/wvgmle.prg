@@ -125,13 +125,13 @@ METHOD WvgMLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    IF ::tabStop
       ::style += WIN_WS_TABSTOP
    ENDIF
-   IF ! ::editable
+   IF !::editable
       ::style += ES_READONLY
    ENDIF
    IF ::border
       ::style += WIN_WS_BORDER
    ENDIF
-   IF ! ::wordWrap
+   IF !::wordWrap
       IF ::horizScroll
          ::style += WIN_WS_HSCROLL
       ELSE

@@ -13,7 +13,7 @@ PROCEDURE Main( cURL )
       RETURN
    ENDIF
 
-   IF ! oURL:cProto == "ftp"
+   IF !oURL:cProto == "ftp"
       ? "This is a 'DELE' test for FTP."
       ? "Use an FTP address with a file that you can delete."
       RETURN
@@ -36,7 +36,7 @@ PROCEDURE Main( cURL )
       NEXT
       IF oFTP:CWD( oURL:cPath )
          ? "CWD success"
-         IF ! Empty(oURL:cFile)
+         IF !Empty(oURL:cFile)
             ? "Deleting", oURL:cPath
             IF oFTP:Dele( oURL:cFile )
                ? "DELE success"

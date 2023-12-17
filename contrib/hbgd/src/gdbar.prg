@@ -121,7 +121,7 @@ METHOD GDBar:CreateBar( sx, sy, filename, cColor )
    ::positionY := 0
    ::imWidth   := sx
 
-   IF ! Empty(filename)
+   IF !Empty(filename)
       ::filename := filename
    ENDIF
 

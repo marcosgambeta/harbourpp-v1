@@ -27,7 +27,7 @@ FUNCTION hb_udpds_Find( nPort, cName )
 
    LOCAL hSocket, aRet, nEnd, nTime, cBuffer, nLen, aAddr
 
-   IF ! Empty(hSocket := hb_socketOpen( , HB_SOCKET_PT_DGRAM ))
+   IF !Empty(hSocket := hb_socketOpen( , HB_SOCKET_PT_DGRAM ))
       hb_socketSetBroadcast( hSocket, .T. )
       cName := hb_StrToUTF8( cName )
       IF s_sendBroadcastMessages( hSocket, nPort, hb_BChar(5) + cName + hb_BChar(0) )
@@ -72,7 +72,7 @@ STATIC FUNCTION s_getBroadcastAddresses()
 
    FOR EACH aIF IN hb_socketGetIFaces()
       IF Empty(cAddr := aIF[ HB_SOCKET_IFINFO_BROADCAST ])
-         IF ! lLo .AND. aIF[ HB_SOCKET_IFINFO_ADDR ] == "127.0.0.1"
+         IF !lLo .AND. aIF[ HB_SOCKET_IFINFO_ADDR ] == "127.0.0.1"
             lLo := .T.
          ENDIF
       ELSEIF hb_AScan( aAddrs, cAddr,,, .T. ) == 0
@@ -94,7 +94,7 @@ FUNCTION hb_udpds_Start( nPort, cName, cVersion )
 
    LOCAL hSocket
 
-   IF ! Empty(hSocket := hb_socketOpen( , HB_SOCKET_PT_DGRAM ))
+   IF !Empty(hSocket := hb_socketOpen( , HB_SOCKET_PT_DGRAM ))
       IF hb_socketBind( hSocket, { HB_SOCKET_AF_INET, "0.0.0.0", nPort } )
          hb_threadDetach( hb_threadStart( @UDPDS(), hSocket, cName, cVersion ) )
          RETURN hSocket

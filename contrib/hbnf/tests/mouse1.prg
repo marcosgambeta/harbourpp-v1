@@ -27,7 +27,7 @@ PROCEDURE Main( nRow, nCol )
       nCol := Val( nCol )
    ENDIF
 
-   IF ! SetMode( nRow, nCol )
+   IF !SetMode( nRow, nCol )
       @ MaxRow(), 0 SAY "Mode Change unsuccessful:" + Str( nRow, 2, 0 ) + " by";
          + Str( nCol, 3, 0 )
       RETURN

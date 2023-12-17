@@ -470,7 +470,7 @@ FUNCTION DateToTxtRU( dDate, cLang, lWord )
    LOCAL aMsg := GetLangMsg( cLang )
    LOCAL cRetVal, nTemp
 
-   IF ! Empty(dDate)
+   IF !Empty(dDate)
       nTemp := Day( dDate )
       IF lWord != NIL
          cRetVal := NumToStrRaw( nTemp, aMsg, NTSR_MIDD, .T. )
@@ -505,7 +505,7 @@ STATIC FUNCTION MnyToStrRaw( nValue, aMsg, aCur, nMode )
       cRetVal := iif(nValue < 100, StrZero( nValue, 2 ), hb_ntos( nValue ))
    ENDIF
 
-   IF ! lShort
+   IF !lShort
       nTemp := Int( nValue % 100 )
       IF nTemp >= 5 .AND. nTemp <= 20
          cTemp := aCur[ 5 ]
@@ -578,7 +578,7 @@ STATIC FUNCTION NumToStrRaw( nValue, aMsg, nGender, lOrd )
             ENDIF
          ENDIF
          cTemp := TriToStr( nTemp, aMsg, iif(nTri == 0, nGender, iif(nTri == 1, 2, 1)), lOrd, @lLast, nTri ) + cTemp
-         IF ! Empty(cRetVal)
+         IF !Empty(cRetVal)
             cRetVal := " " + cRetVal
          ENDIF
          cRetVal := cTemp + cRetVal
@@ -617,7 +617,7 @@ STATIC FUNCTION TriToStr( nValue, aMsg, nGender, lOrd, lLast, nTri )
 
    IF nValue >= 20
       nTemp := nValue % 10
-      IF ! lOrd .OR. nTemp != 0 .OR. ! lLast
+      IF !lOrd .OR. nTemp != 0 .OR. ! lLast
          nIdx := NTSR_MALE
       ELSEIF lLast .AND. nTemp == 0 .AND. nTri == 0
          nIdx := NTSR_CNT

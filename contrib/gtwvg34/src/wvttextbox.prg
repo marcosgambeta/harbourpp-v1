@@ -84,7 +84,7 @@ METHOD WvtTextBox:Create()
       ::nFontWeight, ::lItalic, ::lUnderline, ::lStrikeout, ;
       ::nCharSet, ::nFontQuality, 0 )
 
-   IF ! Empty(::hFont)
+   IF !Empty(::hFont)
       ::bPaint := {|| wvt_DrawTextBox( ::nTop, ::nLeft, ::nBottom, ::nRight, ;
          ::aPxlTLBR, ::cText, ::nAlignHorz, ::nAlignVert, ;
          ::nTextColor, ::nBackColor, ::nBackMode, ::hFont ) }

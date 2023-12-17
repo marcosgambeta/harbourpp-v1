@@ -19,7 +19,7 @@ REQUEST HB_MT
 PROCEDURE Main( delay )
    LOCAL thrd
 
-   IF ! Empty(delay)
+   IF !Empty(delay)
       s_lDelayCli := "C" $ Upper(delay)
       s_lDelaySrv := "S" $ Upper(delay)
    ENDIF
@@ -114,7 +114,7 @@ STATIC FUNCTION Server()
       hb_inetTimeout( sockSrv, 100 )
       s_lReady := .T.
       DO WHILE ! s_lStop
-         IF ! Empty(sockConn := hb_inetAccept( sockSrv ))
+         IF !Empty(sockConn := hb_inetAccept( sockSrv ))
             ? "SERVER: accepted new connection."
             hb_inetTimeout( sockConn, 3000 )
 
@@ -159,7 +159,7 @@ STATIC FUNCTION LoadCertificates( ssl_ctx, cCertFile, cKeyFile )
          openssl req -x509 -nodes -days 365 -newkey rsa:1024 \
                  -out <cCertFile> -keyout <cKeyFile>
     */
-   IF ! hb_FileExists( cCertFile ) .AND. ! hb_FileExists( cKeyFile )
+   IF !hb_FileExists( cCertFile ) .AND. ! hb_FileExists( cKeyFile )
       ? "SERVER: generating certificates..."
       hb_run( "openssl req -x509 -nodes -days 365 -newkey rsa:1024 " + ;
               "-out " + cCertFile + " -keyout " + cKeyFile )
@@ -180,7 +180,7 @@ STATIC FUNCTION LoadCertificates( ssl_ctx, cCertFile, cKeyFile )
    ENDIF
 
    /* verify private key */
-   IF ! SSL_CTX_check_private_key( ssl_ctx ) == 1
+   IF !SSL_CTX_check_private_key( ssl_ctx ) == 1
       OutErr( e"SERVER: Private key does not match the public certificate\n" )
       QUIT
    ENDIF
@@ -191,7 +191,7 @@ STATIC FUNCTION LoadCertificates( ssl_ctx, cCertFile, cKeyFile )
 STATIC FUNCTION DispCertInfo( ssl, cWho )
    LOCAL cert
 
-   IF ! Empty(cert := SSL_get_peer_certificate( ssl ))
+   IF !Empty(cert := SSL_get_peer_certificate( ssl ))
       ? cWho + "Server certificates:"
       ? cWho + "Subject:", X509_name_oneline( X509_get_subject_name( cert ), 0, 0 )
       ? cWho + "Issuer:", X509_name_oneline( X509_get_issuer_name( cert ), 0, 0 )

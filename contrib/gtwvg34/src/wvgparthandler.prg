@@ -215,7 +215,7 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF ! Empty(a_) .AND. HB_ISEVALITEM( a_[ 1 ] )
+   IF !Empty(a_) .AND. HB_ISEVALITEM( a_[ 1 ] )
       ::sb_notifier := a_[ 1 ]
 
    ELSEIF ! Empty(a_) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_ISNUMERIC(a_[ 1 ]) .AND. HB_ISARRAY( a_[ 2 ] )
@@ -353,7 +353,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       DO CASE
       CASE xParams[ 1 ] == 0                             /* menu selected */
          IF HB_ISOBJECT( ::oMenu )
-            IF ! Empty(aMenuItem := ::oMenu:FindMenuItemById( xParams[ 2 ] ))
+            IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( xParams[ 2 ] ))
                DO CASE
                CASE HB_ISEVALITEM( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
@@ -458,7 +458,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
 
       IF Empty(hWndCtrl)                   /* It is menu */
          IF HB_ISOBJECT( ::oMenu )
-            IF ! Empty(aMenuItem := ::oMenu:FindMenuItemById( nCtrlID ))
+            IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( nCtrlID ))
                DO CASE
                CASE HB_ISEVALITEM( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
@@ -523,7 +523,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
 #if 0
    CASE WIN_WM_MOUSEMOVE
       IF ::objType == objTypeScrollBar
-         IF ! ::lTracking
+         IF !::lTracking
             ::lTracking := wvg_BeginMouseTracking( ::hWnd )
          ENDIF
       ENDIF

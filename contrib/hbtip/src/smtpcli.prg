@@ -99,11 +99,11 @@ METHOD TIPClientSMTP:Open( cUrl, lSSL )
 
    LOCAL lOk
 
-   IF ! ::super:Open( cUrl )
+   IF !::super:Open( cUrl )
       RETURN .F.
    ENDIF
 
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN .F.
    ENDIF
 
@@ -128,11 +128,11 @@ METHOD TIPClientSMTP:OpenSecure( cUrl, lSSL )
 
    LOCAL lOk
 
-   IF ! ::super:Open( cUrl )
+   IF !::super:Open( cUrl )
       RETURN .F.
    ENDIF
 
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN .F.
    ENDIF
 
@@ -239,7 +239,7 @@ METHOD TIPClientSMTP:Rcpt( cTo )
 METHOD TIPClientSMTP:Data(cData)
 
    ::inetSendAll( ::SocketCon, "DATA" + ::cCRLF )
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN .F.
    ENDIF
    ::inetSendAll( ::SocketCon, cData + ::cCRLF + "." + ::cCRLF )
@@ -271,24 +271,24 @@ METHOD TIPClientSMTP:Write( cData, nLen, bCommit )
 
    LOCAL cRcpt
 
-   IF ! ::bInitialized
+   IF !::bInitialized
 
       IF Empty(::oUrl:cFile)  // GD user id not needed if we did not auth
          RETURN -1
       ENDIF
 
-      IF ! ::Mail( ::oUrl:cUserid )
+      IF !::Mail( ::oUrl:cUserid )
          RETURN -1
       ENDIF
 
       FOR EACH cRcpt IN hb_regexSplit( ",", ::oUrl:cFile )
-         IF ! ::Rcpt( cRcpt )
+         IF !::Rcpt( cRcpt )
             RETURN -1
          ENDIF
       NEXT
 
       ::inetSendAll( ::SocketCon, "DATA" + ::cCRLF )
-      IF ! ::GetOk()
+      IF !::GetOk()
          RETURN -1
       ENDIF
       ::bInitialized := .T.
@@ -313,13 +313,13 @@ METHOD TIPClientSMTP:SendMail( oTIpMail )
 
    LOCAL cTo
 
-   IF ! ::isOpen
+   IF !::isOpen
       RETURN .F.
    ENDIF
 
-   IF ! ::isAuth
+   IF !::isAuth
       ::Auth( ::oUrl:cUserId, ::oUrl:cPassword )
-      IF ! ::isAuth
+      IF !::isAuth
          RETURN .F.
       ENDIF
    ENDIF

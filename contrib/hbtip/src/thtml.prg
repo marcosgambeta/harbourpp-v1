@@ -137,7 +137,7 @@ METHOD THtmlDocument:new( cHtmlString )
       " </body>" + hb_eol() + ;
       "</html>"
 
-   IF ! HB_ISSTRING( cHtmlString )
+   IF !HB_ISSTRING( cHtmlString )
       ::root := THtmlNode():new( cEmptyHtmlDoc )
    ELSEIF "<html" $ Lower(Left(cHtmlString, 4096))
       ::root := THtmlNode():new( cHtmlString )
@@ -601,7 +601,7 @@ ENDCLASS
 
 METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
 
-   IF ! t_lInit
+   IF !t_lInit
       THtmlInit(.T.)
    ENDIF
 
@@ -680,7 +680,7 @@ METHOD THtmlNode:parseHtml( parser )
    LOCAL oThisTag, oNextTag, oLastTag
    LOCAL cTagName, cAttr, nStart, nEnd, nPos, cText
 
-   IF ! "<" $ parser:p_Str
+   IF !"<" $ parser:p_Str
       // Plain text
       ::addNode( THtmlNode():new( Self, "_text_", , parser:p_Str ) )
       RETURN Self
@@ -696,7 +696,7 @@ METHOD THtmlNode:parseHtml( parser )
       cText    := LTrim(SubStr(parser:p_str, nLastPos + 1, nStart - nLastPos - 1))
       cTagName := CutStr( " ", @cAttr )
 
-      IF ! cText == ""
+      IF !cText == ""
          IF hb_LeftEq( cText, "</" )
             // ending tag of previous node
             cText := Lower(AllTrim(SubStr(CutStr( ">", @cText ), 3)))
@@ -787,7 +787,7 @@ METHOD THtmlNode:parseHtml( parser )
             ENDIF
          ENDIF
 
-         IF ! lRewind
+         IF !lRewind
             IF cAttr == ""
                // tag has no attributes
                oNextTag := THtmlNode():new( oThisTag, cTagName )
@@ -798,7 +798,7 @@ METHOD THtmlNode:parseHtml( parser )
 
             oThisTag:addNode( oNextTag )
 
-            IF ! oThisTag:isOptional() .AND. Lower(oThisTag:htmlTagName) == Lower(ctagName)
+            IF !oThisTag:isOptional() .AND. Lower(oThisTag:htmlTagName) == Lower(ctagName)
                oThisTag:htmlEndTagName := "/" + oThisTag:htmlTagName
             ENDIF
 
@@ -851,7 +851,7 @@ METHOD THtmlNode:parseHtmlFixed( parser )
       P_SEEK( parser, "]]>" )
    ENDIF
 
-   IF ! P_PEEK( parser, "/" + ::htmlTagName )
+   IF !P_PEEK( parser, "/" + ::htmlTagName )
       // seek  <  /endtag>
       P_SEEKI( parser, "/" + ::htmlTagName )
    ENDIF
@@ -987,7 +987,7 @@ METHOD THtmlNode:nextNode()
    ENDIF
 
    /* NOTE: != changed to ! == */
-   IF ! ::htmlTagName == "_text_" .AND. ! Empty(::htmlContent)
+   IF !::htmlTagName == "_text_" .AND. ! Empty(::htmlContent)
       RETURN ::htmlContent[ 1 ]
    ENDIF
 
@@ -1028,16 +1028,16 @@ METHOD THtmlNode:toString( nIndent )
 
    cIndent := iif(::keepFormatting(), "", Space( Max( 0, nIndent ) ))
 
-   IF ! ::htmlTagName == "_root_"
+   IF !::htmlTagName == "_root_"
       // all nodes but the root node have a HTML tag
-      IF ! ::isInline() .OR. ::htmlTagName == "!--"
+      IF !::isInline() .OR. ::htmlTagName == "!--"
          cHtml += cIndent
       ELSEIF ::keepFormatting()
          cHtml += hb_eol()
       ENDIF
       cHtml += "<" + ::htmlTagName + ::attrToString()
 
-      IF ! ::htmlEndTagName == "/"
+      IF !::htmlEndTagName == "/"
          cHtml += ">"
       ENDIF
    ENDIF
@@ -1045,7 +1045,7 @@ METHOD THtmlNode:toString( nIndent )
    IF HB_ISARRAY( ::htmlContent )
 
       FOR EACH oNode IN ::htmlContent
-         IF ! oNode:isInline() .OR. oNode:htmlTagName == "!--"
+         IF !oNode:isInline() .OR. oNode:htmlTagName == "!--"
             cHtml += hb_eol()
          ENDIF
          cHtml += oNode:toString( nIndent + 1 )
@@ -1059,7 +1059,7 @@ METHOD THtmlNode:toString( nIndent )
       IF ::isInline() .OR. ::keepFormatting() .OR. ::isType( CM_HEADING ) .OR. ::isType( CM_HEAD )
          RETURN cHtml += iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
       ENDIF
-      IF ! Right(cHtml, Len(hb_eol())) == hb_eol()
+      IF !Right(cHtml, Len(hb_eol())) == hb_eol()
          cHtml += hb_eol()
       ENDIF
       RETURN cHtml += cIndent + iif(::htmlEndTagName == "/", " />", "<" + ::htmlEndTagName + ">")
@@ -1167,7 +1167,7 @@ METHOD THtmlNode:getAttribute( cName )
    LOCAL hHash := ::getAttributes()
    LOCAL cValue
 
-   IF ! HB_ISHASH( hHash )
+   IF !HB_ISHASH( hHash )
       RETURN hHash
    ENDIF
 
@@ -1231,7 +1231,7 @@ STATIC FUNCTION __ParseAttr( parser )
 
       CASE " "
          IF nMode == 1
-            IF ! aAttr[ 1 ] == ""
+            IF !aAttr[ 1 ] == ""
                hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
                aAttr[ 1 ] := ""
                aAttr[ 2 ] := ""
@@ -1296,7 +1296,7 @@ STATIC FUNCTION __ParseAttr( parser )
       ENDSWITCH
    ENDDO
 
-   IF ! aAttr[ 1 ] == ""
+   IF !aAttr[ 1 ] == ""
       hHash[ aAttr[ 1 ] ] := aAttr[ 2 ]
    ENDIF
 
@@ -1309,7 +1309,7 @@ METHOD THtmlNode:setAttribute( cName, cValue )
    LOCAL nPos
    LOCAL hHash := ::getAttributes()
 
-   IF ! HB_ISHASH( hHash )
+   IF !HB_ISHASH( hHash )
       // Tag doesn't have any attribute
       RETURN ::error( "Invalid HTML attribute for: <" + ::htmlTagName + ">", ::className(), cName, EG_ARG, { cName, cValue } )
    ENDIF
@@ -1399,7 +1399,7 @@ METHOD THtmlNode:noAttribute( cName, aValue )
 
       IF oNode == NIL
          oNode := THtmlNode():new( Self, cName )
-         IF ! oNode:isOptional() .AND. ! oNode:isEmpty()
+         IF !oNode:isOptional() .AND. ! oNode:isEmpty()
             oNode:htmlEndTagName := "/" + cName
          ENDIF
          ::addNode( oNode )
@@ -1412,7 +1412,7 @@ METHOD THtmlNode:noAttribute( cName, aValue )
       RETURN ::findNodesByTagName( hb_StrShrink( cName ), ATail( aValue ) )
    ENDIF
 
-   IF ! Empty(aValue)
+   IF !Empty(aValue)
       RETURN ::setAttribute( cName, aValue[ 1 ] )
    ENDIF
 
@@ -1494,9 +1494,9 @@ METHOD THtmlNode:pushNode( cTagName )
       RETURN ::error( "Cannot add HTML tag to: <" + ::htmlTagName + ">", ::className(), "+", EG_ARG, { cName } )
    ENDIF
 
-   IF ! cName $ t_hHT
+   IF !cName $ t_hHT
       IF hb_LeftEq( cName, "/" ) .AND. SubStr(cName, 2) $ t_hHT
-         IF ! Lower(SubStr(cName, 2)) == Lower(::htmlTagName)
+         IF !Lower(SubStr(cName, 2)) == Lower(::htmlTagName)
             RETURN ::error( "Not a valid closing HTML tag for: <" + ::htmlTagName + ">", ::className(), "-", EG_ARG, { cName } )
          ENDIF
          RETURN ::parent
@@ -1509,7 +1509,7 @@ METHOD THtmlNode:pushNode( cTagName )
    ENDIF
 
    oNode := THtmlNode():new( Self, cName, cAttr )
-   IF ! oNode:isOptional() .AND. ! oNode:isEmpty()
+   IF !oNode:isOptional() .AND. ! oNode:isEmpty()
       oNode:htmlEndTagName := "/" + cName
    ENDIF
    ::addNode( oNode )
@@ -1528,7 +1528,7 @@ METHOD THtmlNode:popNode( cName )
       cName := SubStr(cName, 1 + 1)
    ENDIF
 
-   IF ! cName == Lower(::htmlTagName)
+   IF !cName == Lower(::htmlTagName)
       RETURN ::error( "Invalid closing HTML tag for: <" + ::htmlTagName + ">", ::className(), "-", EG_ARG, { cName } )
    ENDIF
 
@@ -1538,7 +1538,7 @@ METHOD THtmlNode:popNode( cName )
     */
    IF hb_AScan( { "tr", "th", "td" }, cName,,, .T. ) > 0
       endTag := "</" + cName + ">"
-      IF ! Right(::toString(), 3 + Len(cName)) == endTag
+      IF !Right(::toString(), 3 + Len(cName)) == endTag
          ::addNode( THtmlNode():new( Self, "/" + cName, ,  ) )
       ENDIF
    ENDIF
@@ -1563,7 +1563,7 @@ STATIC FUNCTION CutStr( cCut, cString )
 
 FUNCTION THtmlInit( lInit )
 
-   IF ! hb_defaultValue( lInit, .T. )
+   IF !hb_defaultValue( lInit, .T. )
       t_aHA := NIL
       t_hHT := NIL
 #ifdef HB_LEGACY_LEVEL4

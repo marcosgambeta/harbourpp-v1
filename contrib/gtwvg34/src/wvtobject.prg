@@ -173,7 +173,7 @@ ENDCLASS
 
 METHOD WvtObject:New( oParent, nType, nID, nTop, nLeft, nBottom, nRight )
 
-   IF ! HB_ISNUMERIC(nID)
+   IF !HB_ISNUMERIC(nID)
       nID := ++::nObjID
    ENDIF
 
@@ -278,7 +278,7 @@ METHOD WvtObject:CreatePopup()
 
    LOCAL i, nID
 
-   IF ! Empty(::aPopup) .AND. ::hPopup == NIL
+   IF !Empty(::aPopup) .AND. ::hPopup == NIL
       ::hPopup := wapi_CreatePopupMenu()
 
       FOR EACH i IN ::aPopup

@@ -102,7 +102,7 @@ PROCEDURE Main()
       ldebug( "Cannot setDefaultWindowSize()" )
    ENDIF
 
-   IF ! Empty(wvw_sbCreate()) .AND. ;
+   IF !Empty(wvw_sbCreate()) .AND. ;
       wvw_sbAddPart( , "99:99:99" ) > 0
       wvw_SetTimer( , 1000 )
    ENDIF
@@ -441,7 +441,7 @@ STATIC PROCEDURE DEMO_Browse()
    CLS
    SetColor( "N/W*,N/GR*,,,N/W*" )
 
-   IF ! hbtest_Table()
+   IF !hbtest_Table()
       wvw_lCloseWindow()
       RETURN
    ENDIF
@@ -861,7 +861,7 @@ STATIC PROCEDURE CreateToolbar( nWinNum )
 
    wvw_tbDestroy( nWinNum )
 
-   IF ! lYesNo( "would you like to use default toolbar setting?" )
+   IF !lYesNo( "would you like to use default toolbar setting?" )
       nSysBitmap := Alert( "Select toolbar button size", { "Small", "Big" } )
       nSysBitmap := iif(nSysBitmap == 0, 1, nSysBitmap)
       lDisplayText := Alert( "Display text in toolbar?", { "Yes", "No" } ) == 1
@@ -1346,7 +1346,7 @@ METHOD WVWMouseButton:OnPress()
 
    // this is called when LEFT mouse button is pressed on the object
    LOCAL lWasPressed
-   IF ! ::lEnable  // 2004-03-03
+   IF !::lEnable  // 2004-03-03
       RETURN Self
    ENDIF
 
@@ -1355,7 +1355,7 @@ METHOD WVWMouseButton:OnPress()
    ::Draw()
 
    IF ::lRepeatPress  // .AND. ::lPressed
-      IF ! lWasPressed
+      IF !lWasPressed
          xKeyRepeater(.T.)  // init it
       ENDIF
       wvwm_SetKeyRepeater(.T.)  // activate key repeater
@@ -1371,7 +1371,7 @@ METHOD WVWMouseButton:OnClick()
 
    // this is called when LEFT mouse button is clicked on the object
    // normally (or should it be restricted to be?) called from ::OnRelease()
-   IF ! ::lEnable  // 2004-03-03
+   IF !::lEnable  // 2004-03-03
       RETURN Self
    ENDIF
 
@@ -1385,7 +1385,7 @@ METHOD WVWMouseButton:OnRelease()
 
    LOCAL lWasPressed := ::lPressed
 
-   IF ! ::lEnable  // 2004-03-03
+   IF !::lEnable  // 2004-03-03
       RETURN Self
    ENDIF
 
@@ -1405,7 +1405,7 @@ METHOD WVWMouseButton:OnRelease()
 METHOD WVWMouseButton:OnReleaseOut()
 
    // left button is released outside of mouse region
-   IF ! ::lEnable  // 2004-03-03
+   IF !::lEnable  // 2004-03-03
       RETURN Self
    ENDIF
 
@@ -1422,7 +1422,7 @@ METHOD WVWMouseButton:OnReleaseOut()
 METHOD WVWMouseButton:OnMouseOut()
 
    // mouse is moved from over the button outside
-   IF ! ::lEnable  // 2004-03-03
+   IF !::lEnable  // 2004-03-03
       RETURN Self
    ENDIF
 
@@ -1440,7 +1440,7 @@ METHOD WVWMouseButton:OnMouseOut()
 METHOD WVWMouseButton:OnMouseOver()
 
    // mouse is moved to over the button from outside
-   IF ! ::lEnable  // 2004-03-03
+   IF !::lEnable  // 2004-03-03
       RETURN Self
    ENDIF
 
@@ -1462,7 +1462,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
    LOCAL nLabelColor := iif(lPressed, WIN_RGB(96, 96, 96), WIN_RGB(0, 0, 0))
    LOCAL lUseImage := HB_ISSTRING( ::cImage )  // 2004-03-25
 
-   IF ! ::lVisible .OR. ::nType == _BUTTON_NONE
+   IF !::lVisible .OR. ::nType == _BUTTON_NONE
       SetCursor( nOldCursor )  // 2004-03-03
       RETURN Self
    ENDIF
@@ -1484,12 +1484,12 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF lUseImage .AND. ::nType != _BUTTON_NONE
-         IF ! wvw_DrawImage( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::cImage, ::lTight )
+         IF !wvw_DrawImage( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::cImage, ::lTight )
             wapi_MessageBox( , "Button failed wvw_DrawImage( " + ::cImage + " )" )
          ENDIF
       ENDIF
 
-      IF ! Empty(::cCaption)
+      IF !Empty(::cCaption)
          wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
@@ -1502,18 +1502,18 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF lUseImage .AND. ::nType != _BUTTON_NONE
-         IF ! wvw_DrawImage( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::cImage, ::lTight )
+         IF !wvw_DrawImage( nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ::cImage, ::lTight )
             wapi_MessageBox( , "Button failed wvw_DrawImage( " + ::cImage + " )" )
          ENDIF
       ENDIF
 
-      IF ! ::lEnable
+      IF !::lEnable
          nLabelColor := WIN_RGB(96, 96, 96)
       ELSEIF lMouseOver
          nLabelColor := WIN_RGB(255, 0, 0)
       ENDIF
 
-      IF ! Empty(::cCaption)
+      IF !Empty(::cCaption)
          wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, WIN_RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
@@ -1558,7 +1558,7 @@ STATIC FUNCTION wvwm_SetKeyRepeater( lSet )
 
    IF HB_ISLOGICAL( lSet )
       IF lSet
-         IF ! lWasSet
+         IF !lWasSet
             s_nkeyrepeater := hb_idleAdd( {|| xKeyRepeater() } )
          ENDIF
       ELSE
@@ -1683,7 +1683,7 @@ STATIC PROCEDURE xKeyRepeater( lInit )
       RETURN  // not yet
    ENDIF
 
-   IF ! MLeftDown()
+   IF !MLeftDown()
       RETURN  // mouse is not pressed
    ENDIF
 

@@ -378,7 +378,7 @@ METHOD UWBrowse:Output()
          CASE "D"  ; xI := DToC(xI); EXIT
          OTHERWISE ; xI := "ValType()==" + ValType( xI )
          ENDSWITCH
-         IF ! ::aColumns[ nI ][ 4 ]
+         IF !::aColumns[ nI ][ 4 ]
             xI := UHtmlEncode( xI )
          ENDIF
          cRet += '<td><nobr>' + xI + '</nobr></td>'
@@ -390,7 +390,7 @@ METHOD UWBrowse:Output()
       ENDIF
    ENDDO
    cRet += '</table>'
-   IF ! Eof() .OR. ::nPos > 0
+   IF !Eof() .OR. ::nPos > 0
       cUrl := server[ "REQUEST_URI" ]
       IF ( nI := At( "?_ucs=", cUrl ) ) == 0
          nI := At( "&_ucs=", cUrl )
@@ -406,7 +406,7 @@ METHOD UWBrowse:Output()
       ENDIF
       cUrl += iif("?" $ cUrl, "&", "?") + "_pos="
       cRet := '<br />' + cRet
-      IF ! Eof()
+      IF !Eof()
          cI := cUrl + hb_ntos( ::nPos + ::nPageSize )
          cRet := '<a href="' + iif(lValidate, UUrlChecksum( cI ), cI) + '">&gt;&gt;</a>' + cRet
       ENDIF

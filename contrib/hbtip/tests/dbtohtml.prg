@@ -8,7 +8,7 @@ PROCEDURE Main()
    LOCAL oDoc, oNode, oTable, oRow, oCell
    LOCAL i, j
 
-   IF ! hbtest_Table()
+   IF !hbtest_Table()
       ? "Error: Test database couldn't be created"
       RETURN
    ENDIF

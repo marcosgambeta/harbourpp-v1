@@ -42,7 +42,7 @@ PROCEDURE Main()
    FErase( "Table2.adi" )
 
    // now Create a Data dictionary and the files if not exist
-   IF ! hb_FileExists( "harbour.add" )
+   IF !hb_FileExists( "harbour.add" )
 
       AdsDDCreate( "harbour.add", , "Harbour ADS demo for data dictionary" )
       // This also creates an Administrative Handle that is set as the default
@@ -91,7 +91,7 @@ PROCEDURE Main()
       ? "Add the tables"
       AdsDDAddTable( "Table1", "table1.adt", "table1.adi" )
       ?
-      IF ! AdsDDAddTable( "Customer Data", "table2.adt", "table2.adi" )
+      IF !AdsDDAddTable( "Customer Data", "table2.adt", "table2.adi" )
          // notice the "long table name" for file Table2.adt.  Later open it with "Customer Data" as the table name
          ? "Error adding table:", AdsGetLastError( @cErr ), cErr
       ENDIF
@@ -117,7 +117,7 @@ PROCEDURE Main()
 
       FOR n := 1 TO  100
          IF AdsCreateSQLStatement( "Data2", 3 )
-            IF ! AdsExecuteSQLDirect( " insert into Table1( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str( n ) + ")" )
+            IF !AdsExecuteSQLDirect( " insert into Table1( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str( n ) + ")" )
                ShowAdsError()
             ENDIF
             USE
@@ -126,7 +126,7 @@ PROCEDURE Main()
 
       FOR n := 1 TO 100
          IF AdsCreateSQLStatement( "Data1", 3 )
-            IF ! AdsExecuteSQLDirect( " insert into " + '"Customer Data"' + "( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str( n ) + ")" )
+            IF !AdsExecuteSQLDirect( " insert into " + '"Customer Data"' + "( name,address,city,age) VALUES( '" + StrZero( n ) + "','" + StrZero( n ) + "','" + StrZero( n ) + "'," + Str( n ) + ")" )
                ShowAdsError()
             ENDIF
             USE

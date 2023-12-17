@@ -69,7 +69,7 @@ METHOD UHttpd:Run( hConfig )
 
    LOCAL hSocket, nI, aI, xValue, aThreads, nJobs, nWorkers
 
-   IF ! hb_mtvm()
+   IF !hb_mtvm()
       ::cError := "Multithread support required"
       RETURN .F.
    ENDIF
@@ -88,7 +88,7 @@ METHOD UHttpd:Run( hConfig )
       "FirewallFilter"       => "0.0.0.0/0" }
 
    FOR EACH xValue IN hConfig
-      IF ! hb_HHasKey( ::hConfig, xValue:__enumKey ) .OR. !( ValType( xValue ) == ValType( ::hConfig[ xValue:__enumKey ] ) )
+      IF !hb_HHasKey( ::hConfig, xValue:__enumKey ) .OR. !( ValType( xValue ) == ValType( ::hConfig[ xValue:__enumKey ] ) )
          ::cError := "Invalid config option '" + xValue:__enumKey + "'"
          RETURN .F.
       ENDIF
@@ -139,13 +139,13 @@ METHOD UHttpd:Run( hConfig )
       RETURN .F.
    ENDIF
 
-   IF ! hb_socketBind( ::hListen, { HB_SOCKET_AF_INET, ::hConfig[ "BindAddress" ], ::hConfig[ "Port" ] } )
+   IF !hb_socketBind( ::hListen, { HB_SOCKET_AF_INET, ::hConfig[ "BindAddress" ], ::hConfig[ "Port" ] } )
       ::cError := "Bind error: " + hb_socketErrorString()
       hb_socketClose( ::hListen )
       RETURN .F.
    ENDIF
 
-   IF ! hb_socketListen( ::hListen )
+   IF !hb_socketListen( ::hListen )
       ::cError := "Listen error: " + hb_socketErrorString()
       hb_socketClose( ::hListen )
       RETURN .F.
@@ -238,7 +238,7 @@ STATIC FUNCTION ParseFirewallFilter( cFilter, aFilter )
    hb_HKeepOrder( aFilter, .F. )
    aDeny := {}
    FOR EACH cExpr IN hb_ATokens( cFilter, " " )
-      IF ! Empty(cExpr)
+      IF !Empty(cExpr)
          IF lDeny := ( Left(cExpr, 1) == "!" )
             cExpr := SubStr(cExpr, 2)
          ENDIF
@@ -445,12 +445,12 @@ STATIC FUNCTION ProcessConnection( oServer )
          because request handler script can ruin variable value */
       aServer := { => }
       aServer[ "HTTPS" ] := oServer:hConfig[ "SSL" ]
-      IF ! Empty(aI := hb_socketGetPeerName( hSocket ))
+      IF !Empty(aI := hb_socketGetPeerName( hSocket ))
          aServer[ "REMOTE_ADDR" ] := aI[ 2 ]
          aServer[ "REMOTE_HOST" ] := aServer[ "REMOTE_ADDR" ] // no reverse DNS
          aServer[ "REMOTE_PORT" ] := aI[ 3 ]
       ENDIF
-      IF ! Empty(aI := hb_socketGetSockName( hSocket ))
+      IF !Empty(aI := hb_socketGetSockName( hSocket ))
          aServer[ "SERVER_ADDR" ] := aI[ 2 ]
          aServer[ "SERVER_PORT" ] := aI[ 3 ]
       ENDIF
@@ -799,7 +799,7 @@ STATIC FUNCTION ParseRequestHeader( cRequest )
          ENDSWITCH
       ENDIF
    NEXT
-   IF ! server[ "QUERY_STRING" ] == ""
+   IF !server[ "QUERY_STRING" ] == ""
       FOR EACH cI IN hb_ATokens( server[ "QUERY_STRING" ], "&" )
          IF ( nI := At( "=", cI ) ) > 0
             get[ UUrlDecode( Left(cI, nI - 1) ) ] := UUrlDecode( SubStr(cI, nI + 1) )
@@ -820,7 +820,7 @@ STATIC PROCEDURE ParseRequestBody( cRequest )
       IF ( nI := At( "CHARSET=", Upper(server[ "CONTENT_TYPE" ]) ) ) > 0
          cEncoding := Upper(SubStr(server[ "CONTENT_TYPE" ], nI + 8))
       ENDIF
-      IF ! cRequest == ""
+      IF !cRequest == ""
          IF cEncoding == "UTF-8"
             FOR EACH cPart IN hb_ATokens( cRequest, "&" )
                IF ( nI := At( "=", cPart ) ) > 0
@@ -929,7 +929,7 @@ STATIC FUNCTION HttpDateUnformat( cDate, tDate )
          "Oct", "Nov", "Dec" }, SubStr(cDate, 9, 3) )
       IF nMonth > 0
          tI := hb_SToT( SubStr(cDate, 13, 4) + PadL( nMonth, 2, "0" ) + SubStr(cDate, 6, 2) + StrTran( SubStr(cDate, 18, 8), ":" ) )
-         IF ! Empty(tI)
+         IF !Empty(tI)
             tDate := tI + hb_UTCOffset() / ( 3600 * 24 )
             RETURN .T.
          ENDIF
@@ -965,13 +965,13 @@ STATIC FUNCTION GetErrorDesc(oErr)
    cRet := "ERRORLOG ============================================================" + hb_eol() + ;
       "Error: " + oErr:subsystem + "/" + ErrDescCode( oErr:genCode ) + "(" + hb_ntos( oErr:genCode ) + ") " + ;
       hb_ntos( oErr:subcode ) + hb_eol()
-   IF ! Empty(oErr:filename);      cRet += "File: " + oErr:filename + hb_eol()
+   IF !Empty(oErr:filename);      cRet += "File: " + oErr:filename + hb_eol()
    ENDIF
-   IF ! Empty(oErr:description);   cRet += "Description: " + oErr:description + hb_eol()
+   IF !Empty(oErr:description);   cRet += "Description: " + oErr:description + hb_eol()
    ENDIF
-   IF ! Empty(oErr:operation);     cRet += "Operation: " + oErr:operation + hb_eol()
+   IF !Empty(oErr:operation);     cRet += "Operation: " + oErr:operation + hb_eol()
    ENDIF
-   IF ! Empty(oErr:osCode);        cRet += "OS error: " + hb_ntos( oErr:osCode ) + hb_eol()
+   IF !Empty(oErr:osCode);        cRet += "OS error: " + hb_ntos( oErr:osCode ) + hb_eol()
    ENDIF
    IF HB_ISARRAY( oErr:args )
       cRet += "Arguments:" + hb_eol()
@@ -1095,19 +1095,19 @@ STATIC FUNCTION cvt2str( xI, lLong )
       cI := ""
       IF __objHasMsg( xI, "ID" )
          xJ := xI:ID
-         IF ! HB_ISOBJECT( xJ )
+         IF !HB_ISOBJECT( xJ )
             cI += ",ID=" + cvt2str( xJ )
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "nID" )
          xJ := xI:nID
-         IF ! HB_ISOBJECT( xJ )
+         IF !HB_ISOBJECT( xJ )
             cI += ",NID=" + cvt2str( xJ )
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "xValue" )
          xJ := xI:xValue
-         IF ! HB_ISOBJECT( xJ )
+         IF !HB_ISOBJECT( xJ )
             cI += ",XVALUE=" + cvt2str( xJ )
          ENDIF
       ENDIF
@@ -1266,7 +1266,7 @@ PROCEDURE USessionDestroy()
 
 FUNCTION UOsFileName( cFileName )
 
-   IF ! hb_ps() == "/"
+   IF !hb_ps() == "/"
       RETURN StrTran( cFileName, "/", hb_ps() )
    ENDIF
 
@@ -1355,7 +1355,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
 
    LOCAL aDir, aF, nI, cI, tDate, tHDate
 
-   IF ! HB_ISLOGICAL( lIndex )
+   IF !HB_ISLOGICAL( lIndex )
       lIndex := .F.
    ENDIF
 
@@ -1437,7 +1437,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
          UWrite( hb_MemoRead( UOsFileName( cFileName ) ) )
          RETURN
       ENDIF
-      IF ! lIndex
+      IF !lIndex
          USetStatusCode( 403 )
          RETURN
       ENDIF
@@ -1510,14 +1510,14 @@ PROCEDURE UProcInfo()
    AEval( ASort( hb_HKeys( server ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( server[ X ] ) ) + '</td></tr>' ) } )
    UWrite( '</table>' )
 
-   IF ! Empty(get)
+   IF !Empty(get)
       UWrite( '<h3>get</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
       AEval( ASort( hb_HKeys( get ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( get[ X ] ) ) + '</td></tr>' ) } )
       UWrite( '</table>' )
    ENDIF
 
-   IF ! Empty(post)
+   IF !Empty(post)
       UWrite( '<h3>post</h3>' )
       UWrite( '<table border=1 cellspacing=0>' )
       AEval( ASort( hb_HKeys( post ) ), {| X | UWrite( '<tr><td>' + X + '</td><td>' + UHtmlEncode( hb_CStr( post[ X ] ) ) + '</td></tr>' ) } )
@@ -1587,7 +1587,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
 
          CASE "if"
             xValue := iif(hb_HHasKey( aData, aInstr[ 2 ] ), aData[ aInstr[ 2 ] ], NIL)
-            IF ! Empty(xValue)
+            IF !Empty(xValue)
                cRet += parse_data(aData, aInstr[ 3 ], hConfig)
             ELSE
                cRet += parse_data(aData, aInstr[ 4 ], hConfig)

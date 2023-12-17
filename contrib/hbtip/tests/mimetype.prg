@@ -4,7 +4,7 @@
 
 PROCEDURE Main( cFileName )
 
-   IF ! HB_ISSTRING( cFileName )
+   IF !HB_ISSTRING( cFileName )
       ? hb_StrFormat( "Usage: %1$s <file to test>", hb_ProgName() )
    ELSEIF hb_vfExists( cFileName )
       ? cFileName

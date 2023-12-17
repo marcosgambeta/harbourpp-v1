@@ -79,7 +79,7 @@ FUNCTION SQLApplyUpdates()
          IF i > oQuery:LastRec()
 
             /* Check if it's a new record */
-            IF ! Deleted()
+            IF !Deleted()
 
                oRow := oQuery:GetBlankRow()
 
@@ -236,7 +236,7 @@ FUNCTION SQLOpen( cAlias, cQuery, xFetch, cOrder )
 
    IF cQuery == NIL
       cQuery := "SELECT * FROM " + cAlias
-      IF ! Empty(cOrder)
+      IF !Empty(cOrder)
          cQuery += " ORDER BY " + cOrder
       ENDIF
    ENDIF

@@ -137,7 +137,7 @@ METHOD GenerateXML:Generate()
 
 METHOD PROCEDURE GenerateXML:WriteEntry( cCaption, cContent, lPreformatted )
 
-   IF ! Empty(cContent)
+   IF !Empty(cContent)
 
       IF hb_eol() $ cContent
          cContent := hb_eol() + cContent

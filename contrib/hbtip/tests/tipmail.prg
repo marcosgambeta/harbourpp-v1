@@ -11,7 +11,7 @@ PROCEDURE Main( cFileName )
 
    LOCAL oMail, cData, i
 
-   IF ! HB_ISSTRING( cFileName ) .OR. ;
+   IF !HB_ISSTRING( cFileName ) .OR. ;
       ( cData := hb_MemoRead( cFileName ) ) == ""
 
       ? "Cannot open", cFileName

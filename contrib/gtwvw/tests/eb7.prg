@@ -209,7 +209,7 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
 
    hb_default( @aEBGEts, {} )
 
-   IF ! HB_ISLOGICAL( mlMultiline ) .OR. ;
+   IF !HB_ISLOGICAL( mlMultiline ) .OR. ;
       ! HB_ISSTRING( mxValue )
       mlMultiline := .F.
    ENDIF
@@ -251,7 +251,7 @@ PROCEDURE EBReadGets( nwinnum, aEBGets )
    nmincol := 99999
    FOR i := 1 TO nNumGets
       lmultiline := aEBGets[ i ][ __GET_LMULTILINE ]
-      IF ! lmultiline
+      IF !lmultiline
          nlen := Len(aEBGets[ i ][ __GET_CPICT ])
       ELSE
          nlen := 30
@@ -459,7 +459,7 @@ STATIC PROCEDURE ToCloseWindow( nwinnum, lPermitted )
 
    // allow to close topmost window only
    lPermitted := ( nwinnum == wvw_nNumWindows() - 1 )
-   IF ! lpermitted
+   IF !lpermitted
       MyMessageBox( nwinnum, "Window " + hb_ntos( nwinnum ) + " is not allowed to be closed, yet" + hb_eol() + ;
          "Please close window " + hb_ntos( wvw_nNumWindows() - 1 ) + " first" )
    ENDIF
@@ -500,7 +500,7 @@ STATIC FUNCTION MaskEditBox( nWinNum, nId, nEvent, aEBGets )
 
    DO CASE
    CASE nEvent == EN_KILLFOCUS
-      IF ! mlmultiline .AND. mcvaltype $ "ND"
+      IF !mlmultiline .AND. mcvaltype $ "ND"
          ctext := wvw_ebGetText( nwinnum, nid )
          IF mcvaltype == "D" .AND. IsBadDate( ctext )
             // don't leave it in an invalid state
@@ -510,7 +510,7 @@ STATIC FUNCTION MaskEditBox( nWinNum, nId, nEvent, aEBGets )
          ENDIF
       ENDIF
    CASE nEvent == EN_SETFOCUS
-      IF ! mlmultiline .AND. mcvaltype == "N"
+      IF !mlmultiline .AND. mcvaltype == "N"
          ctext := wvw_ebGetText( nwinnum, nid )
          wvw_ebSetText( nwinnum, nId, Transform( GetValFromText( ctext, mcvaltype ), GetNumMask( mcpict, mcvaltype ) ) )
       ENDIF
@@ -521,7 +521,7 @@ STATIC FUNCTION MaskEditBox( nWinNum, nId, nEvent, aEBGets )
       ENDIF
       aEBGets[ nIndex ][ __GET_LFOCUSED ] := .T.
    CASE nEvent == EN_CHANGE
-      IF ! mlmultiline
+      IF !mlmultiline
          ProcessCharMask( nwinnum, nId, mcvaltype, mcpict )
       ENDIF
    ENDCASE
@@ -681,7 +681,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    NEXT
 
    // Replace Content
-   IF ! ( BackInBuffer == OutBuffer )
+   IF !( BackInBuffer == OutBuffer )
       wvw_ebSetText( mnwinnum, mnebid, OutBuffer )
    ENDIF
 
@@ -721,7 +721,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
             CB := SubStr(OutBuffer, icp + x, 1)
             CM := SubStr(Mask, icp + x, 1)
 
-            IF ! IsDigit( CB ) .AND. ! IsAlpha(CB) .AND. ;
+            IF !IsDigit( CB ) .AND. ! IsAlpha(CB) .AND. ;
                ( !( CB == " " ) .OR. ( CB == " " .AND. CM == " " ) )
                wvw_ebSetSel( mnwinnum, mnebid, icp + x, icp + x )
             ELSE

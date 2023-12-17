@@ -42,10 +42,10 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
       oPrinter:AskProperties := lAsk
    ENDIF
 
-   IF ! oPrinter:Create()
+   IF !oPrinter:Create()
       Alert( "Cannot Create Printer" )
    ELSE
-      IF ! oPrinter:startDoc("win_Prn(Doc name in Printer Properties)")
+      IF !oPrinter:startDoc("win_Prn(Doc name in Printer Properties)")
          Alert( "StartDoc() failed" )
       ELSE
          oPrinter:SetPen( WIN_PS_SOLID, 1, HB_WIN_RGB_RED )
@@ -132,7 +132,7 @@ STATIC PROCEDURE PrintBitmap( oPrn, cBitFile )
 
    LOCAL oBMP
 
-   IF ! Empty(cBitFile)
+   IF !Empty(cBitFile)
       IF hb_FileExists( cBitFile )
          oBMP := win_BMP():New()
          IF oBmp:loadFile( cBitFile )

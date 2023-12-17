@@ -278,7 +278,7 @@ STATIC FUNCTION AR_CREATE( nWA, aOpenInfo )
       2008-11-07 FSG - dbCreate() doesn't check if a dbf file exists. So I will not check it.
       If you need to check if a table exists use hb_dbExists() function that works in
       similar way of hb_vfExists(), i.e.:
-      IF ! hb_dbExists( cFullName )
+      IF !hb_dbExists( cFullName )
          dbCreate( cFullName, aStructure, "ARRAYRDD" )
          ...
       ENDIF
@@ -385,7 +385,7 @@ STATIC FUNCTION AR_OPEN( nWA, aOpenInfo )
    ENDIF
 
    /* Open file in exclusive mode */
-   IF ! aOpenInfo[ UR_OI_SHARED ]
+   IF !aOpenInfo[ UR_OI_SHARED ]
       IF aDBFData[ DATABASE_OPENNUMBER ] == 1
          aDBFData[ DATABASE_LOCKED ] := .T.
       ELSE
@@ -468,7 +468,7 @@ STATIC FUNCTION AR_PUTVALUE( nWA, nField, xValue )
 
       AEval( aIndexes, {| aInd, n | aKeys[ n ] := Eval( aInd[ INDEX_ORCR ][ UR_ORCR_BKEY ] ) } )
 
-      IF ! aWAData[ WADATA_EOF ]
+      IF !aWAData[ WADATA_EOF ]
          aRecords[ nRecNo ][ nField ] := xVal
       ENDIF
 
@@ -783,7 +783,7 @@ STATIC FUNCTION AR_DELETE( nWA )
       RETURN HB_FAILURE
    ENDIF
 
-   IF ! aWAData[ WADATA_EOF ]
+   IF !aWAData[ WADATA_EOF ]
 
       IF aOpenInfo[ UR_OI_SHARED ] .AND. AScan( aWAData[ WADATA_LOCKS ], aWAData[ WADATA_RECNO ] ) == 0
          oError := ErrorNew()
@@ -844,7 +844,7 @@ STATIC FUNCTION AR_RECALL( nWA )
       RETURN HB_FAILURE
    ENDIF
 
-   IF ! aWAData[ WADATA_EOF ]
+   IF !aWAData[ WADATA_EOF ]
 
       IF aOpenInfo[ UR_OI_SHARED ] .AND. AScan( aWAData[ WADATA_LOCKS ], aWAData[ WADATA_RECNO ] ) == 0
          oError := ErrorNew()
@@ -953,7 +953,7 @@ STATIC FUNCTION AR_UNLOCK( nWA, nRec )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nRec: %2$d", nWA, nRec ) )
 
-   IF ! Empty(aRecords)
+   IF !Empty(aRecords)
       IF nRec == NIL            /* Unlock All */
          FOR EACH nRec IN aRecords
             aRecInfo[ nRec ][ RECDATA_LOCKED ] := 0
@@ -1012,7 +1012,7 @@ STATIC FUNCTION AR_PACK( nWA )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d", nWA ) )
 
-   IF ! aDBFData[ DATABASE_LOCKED ]
+   IF !aDBFData[ DATABASE_LOCKED ]
       oError := ErrorNew()
       oError:GenCode     := EG_UNLOCKED
       oError:SubCode     := 1022  /* EDBF_UNLOCKED */
@@ -1437,7 +1437,7 @@ STATIC FUNCTION AR_LOCATE( nWA, lContinue )
    ENDIF
    IF bWhile == NIL
       bLocate := {|| ! Eval( bFor ) }
-      IF ! lContinue .AND. aScopeInfo[ UR_SI_NEXT ] == NIL .AND. aScopeInfo[ UR_SI_RECORD ] == NIL .AND. ! aScopeInfo[ UR_SI_REST ]
+      IF !lContinue .AND. aScopeInfo[ UR_SI_NEXT ] == NIL .AND. aScopeInfo[ UR_SI_RECORD ] == NIL .AND. ! aScopeInfo[ UR_SI_REST ]
          AR_GOTOP( nWA )
       ENDIF
    ELSE
@@ -1771,7 +1771,7 @@ STATIC FUNCTION hb_Decode(...)
 
                /* Check if array has a default value, this will be last value and has a value */
                /* different from an array */
-               IF ! HB_ISARRAY( ValType( xDefault[ nLen ] ) )
+               IF !HB_ISARRAY( ValType( xDefault[ nLen ] ) )
                   aParams := Array( ( nLen - 1 ) * 2 )
 
                   n := 1

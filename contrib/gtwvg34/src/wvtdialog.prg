@@ -524,9 +524,9 @@ METHOD WvtDialog:Inkey()
          ::lEventHandled := ::aObjects[ ::nUseObj ]:ShowPopup()
       ENDIF
 
-      IF ! ::lEventHandled
+      IF !::lEventHandled
          IF ::nCurObj > 0
-            IF ! Empty(::aDialogKeys)
+            IF !Empty(::aDialogKeys)
                IF ( n := AScan( ::aDialogKeys, {| e_ | e_[ 1 ] == ::nKey } ) ) > 0
                   Eval( ::aDialogKeys[ n ][ 2 ], Self, ::oCurObj )
                ENDIF
@@ -546,7 +546,7 @@ METHOD WvtDialog:Inkey()
          ENDIF
       ENDIF
 
-      IF ! ::lEventHandled
+      IF !::lEventHandled
          IF HB_ISEVALITEM( SetKey( ::nKey ) )
             Eval( SetKey( ::nKey ) )
          ENDIF
@@ -651,7 +651,7 @@ METHOD WvtDialog:ActivateMenu()
 
    IF nMenu != 0
       IF HB_ISOBJECT( ::oMenu )
-         IF ! Empty(aMenuItem := ::oMenu:FindMenuItemById( nMenu ))
+         IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( nMenu ))
             IF HB_ISEVALITEM( aMenuItem[ WVT_MENU_ACTION ] )
                Eval( aMenuItem[ WVT_MENU_ACTION ] )
             ENDIF

@@ -125,7 +125,7 @@ PROCEDURE wvt_Mouse( nKey, nRow, nCol )  /* must be a public function */
       RETURN
    ENDIF
 
-   IF ! SetMouseCheck()
+   IF !SetMouseCheck()
       RETURN
    ENDIF
 
@@ -333,7 +333,7 @@ FUNCTION SetFonts( hFont )
 
    THREAD STATIC t_ahFonts := {}
 
-   IF ! Empty(hFont)
+   IF !Empty(hFont)
       AAdd( t_ahFonts, hFont )
    ENDIF
 
@@ -343,7 +343,7 @@ FUNCTION SetIcons( hIcon )
 
    THREAD STATIC t_ahIcons := {}
 
-   IF ! Empty(hIcon)
+   IF !Empty(hIcon)
       AAdd( t_ahIcons, hIcon )
    ENDIF
 
@@ -440,7 +440,7 @@ FUNCTION ClearStatusMsg()
 PROCEDURE WvtPictures( nSlot, cFilePic )
 
    IF HB_ISNUMERIC(nSlot) .AND. nSlot <= 20 .AND. hb_vfExists( cFilePic )
-      IF ! t_pic_[ nSlot ] == cFilePic
+      IF !t_pic_[ nSlot ] == cFilePic
          IF wvt_LoadPicture( cFilePic, nSlot )
             t_pic_[ nSlot ] := cFilePic
          ENDIF

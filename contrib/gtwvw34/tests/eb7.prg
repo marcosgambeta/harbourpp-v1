@@ -214,7 +214,7 @@ STATIC FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, m
 
    hb_default( @aEBGEts, {} )
 
-   IF ! HB_ISLOGICAL( mlMultiline ) .OR. ;
+   IF !HB_ISLOGICAL( mlMultiline ) .OR. ;
       ! HB_ISSTRING( mxValue )
       mlMultiline := .F.
    ENDIF
@@ -506,7 +506,7 @@ STATIC PROCEDURE MaskEditBox( nWinNum, nId, nEvent, aEBGets )
 
    DO CASE
    CASE nEvent == EN_KILLFOCUS
-      IF ! mlmultiline .AND. mcvaltype $ "ND"
+      IF !mlmultiline .AND. mcvaltype $ "ND"
          ctext := wvw_ebGetText( nwinnum, nid )
          IF mcvaltype == "D" .AND. IsBadDate( ctext )
             // don't leave it in an invalid state
@@ -516,7 +516,7 @@ STATIC PROCEDURE MaskEditBox( nWinNum, nId, nEvent, aEBGets )
          ENDIF
       ENDIF
    CASE nEvent == EN_SETFOCUS
-      IF ! mlmultiline .AND. mcvaltype == "N"
+      IF !mlmultiline .AND. mcvaltype == "N"
          ctext := wvw_ebGetText( nwinnum, nid )
          wvw_ebSetText( nwinnum, nId, Transform( GetValFromText( ctext, mcvaltype ), GetNumMask( mcpict, mcvaltype ) ) )
       ENDIF
@@ -527,7 +527,7 @@ STATIC PROCEDURE MaskEditBox( nWinNum, nId, nEvent, aEBGets )
       ENDIF
       aEBGets[ nIndex ][ __GET_LFOCUSED ] := .T.
    CASE nEvent == EN_CHANGE
-      IF ! mlmultiline
+      IF !mlmultiline
          ProcessCharMask( nwinnum, nId, mcvaltype, mcpict )
       ENDIF
    ENDCASE
@@ -591,7 +591,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
 
          // Find First Non-Blank Position
          FOR x := 1 TO Len(InBuffer)
-            IF ! SubStr(InBuffer, x, 1) == " "
+            IF !SubStr(InBuffer, x, 1) == " "
                fnb := x
                EXIT
             ENDIF
@@ -689,7 +689,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
    NEXT
 
    // Replace Content
-   IF ! BackInBuffer == OutBuffer
+   IF !BackInBuffer == OutBuffer
       wvw_ebSetText( mnwinnum, mnebid, OutBuffer )
    ENDIF
 
@@ -729,7 +729,7 @@ STATIC PROCEDURE ProcessCharMask( mnwinnum, mnebid, mcvaltype, mcpict )
             CB := SubStr(OutBuffer, icp + x, 1)
             CM := SubStr(Mask, icp + x, 1)
 
-            IF ! IsDigit( CB ) .AND. ! IsAlpha(CB) .AND. ;
+            IF !IsDigit( CB ) .AND. ! IsAlpha(CB) .AND. ;
                ( ! CB == " " .OR. ( CB == " " .AND. CM == " " ) )
                wvw_ebSetSel( mnwinnum, mnebid, icp + x, icp + x )
             ELSE

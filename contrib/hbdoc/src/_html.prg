@@ -263,11 +263,11 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
    LOCAL cLine
    LOCAL lCode, lTable, lTablePrev, cHeaderClass
 
-   IF ! Empty(cContent)
+   IF !Empty(cContent)
 
       cTagClass := hb_HGetDef( s_class, cField, "d-it" )
 
-      IF ! HB_ISNULL( cCaption := FieldCaption( cField ) )
+      IF !HB_ISNULL( cCaption := FieldCaption( cField ) )
          ::Tagged( cCaption, "div", "class", "d-d" )
       ENDIF
 
@@ -284,7 +284,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
          lFirst := .T.
          FOR EACH tmp IN hb_ATokens( cContent, "," )
             tmp := AllTrim(tmp)
-            IF ! HB_ISNULL( tmp )
+            IF !HB_ISNULL( tmp )
                // TOFIX: for multi-file output
                tmp1 := Parse( tmp, "(" )
                IF lFirst
@@ -348,7 +348,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
                   lTable := .F.
                OTHERWISE
                   tmp1 += cLine + hb_eol()
-                  IF ! lCode
+                  IF !lCode
                      EXIT
                   ENDIF
                ENDCASE
@@ -400,7 +400,7 @@ METHOD GenerateHTML:OpenTagInline(cText, ...)
       cText += " " + aArgs[ idx ] + "=" + '"' + aArgs[ idx + 1 ] + '"'
    NEXT
 
-   IF ! cText $ "pre"
+   IF !cText $ "pre"
       ::cFile += Replicate( "  ", ::nIndent )
    ENDIF
    ::cFile += "<" + cText + ">"
@@ -460,7 +460,7 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
    LOCAL nEM, nIT, nPR
    LOCAL cdp
 
-   IF ! HB_ISNULL( cText )
+   IF !HB_ISNULL( cText )
 
       hb_default( @lCode, .F. )
 
@@ -560,7 +560,7 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
       ENDIF
 
       FOR EACH idx IN hb_ATokens( hb_defaultValue( cFormat, "" ), "," ) DESCEND
-         IF ! Empty(idx)
+         IF !Empty(idx)
             cText := "<" + idx + ">" + cText + "</" + idx + ">"
          ENDIF
       NEXT
@@ -587,7 +587,7 @@ METHOD GenerateHTML:RecreateStyleDocument( cStyleFile )
 
    #pragma __streaminclude "hbdoc.css" | cString := %s
 
-   IF ! hb_MemoWrit( ::cDir + hb_ps() + cStyleFile, cString )
+   IF !hb_MemoWrit( ::cDir + hb_ps() + cStyleFile, cString )
       /* TODO: raise an error, could not create style file */
    ENDIF
 

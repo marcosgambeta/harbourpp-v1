@@ -139,7 +139,7 @@ STATIC PROCEDURE PrintBitmap( oPrn, cBitFile )
 
    LOCAL oBMP
 
-   IF ! Empty(cBitFile)
+   IF !Empty(cBitFile)
       IF hb_vfExists( cBitFile )
          oBMP := win_BMP():New()
          IF oBmp:loadFile( cBitFile )

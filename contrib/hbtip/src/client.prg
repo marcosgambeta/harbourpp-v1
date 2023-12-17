@@ -211,7 +211,7 @@ METHOD TIPClient:New( oUrl, xTrace, oCredentials )
       Eval( ErrorBlock(), oErr )
    ENDSWITCH
 
-   IF ! ::bInitSocks
+   IF !::bInitSocks
       hb_inetInit()
       IF ::lHasSSL
          SSL_init()
@@ -390,7 +390,7 @@ METHOD TIPClient:Read( nLen )
       RETURN NIL
    ENDIF
 
-   IF ! HB_ISNUMERIC(nLen) .OR. nLen <= 0 .OR. ( ::nLength > 0 .AND. nLen > ::nLength - ::nRead )
+   IF !HB_ISNUMERIC(nLen) .OR. nLen <= 0 .OR. ( ::nLength > 0 .AND. nLen > ::nLength - ::nRead )
       nLen := ::nLength - ::nRead
    ENDIF
 
@@ -463,7 +463,7 @@ METHOD TIPClient:ReadToFile( /* @ */ cFile, nMode, nSize )
          ENDIF
          RETURN ::inetErrorCode( ::SocketCon ) == 0
       ENDIF
-      IF ! lToMemory .AND. hFile == NIL
+      IF !lToMemory .AND. hFile == NIL
          IF ( hFile := hb_vfOpen( cFile, hb_bitOr( FO_CREAT + FO_TRUNC + FO_WRITE, hb_defaultValue( nMode, 0 ) ) ) ) == NIL
             ::nStatus := 0
             RETURN .F.
@@ -552,7 +552,7 @@ METHOD TIPClient:WriteFromFile( cFile )
 
 METHOD TIPClient:Write( cData, nLen, lCommit )
 
-   IF ! HB_ISNUMERIC(nLen) .OR. nLen <= 0
+   IF !HB_ISNUMERIC(nLen) .OR. nLen <= 0
       nLen := hb_BLen(cData)
    ENDIF
 
@@ -570,7 +570,7 @@ METHOD TIPClient:inetSendAll( SocketCon, cData, nLen )
 
    LOCAL nRet
 
-   IF ! HB_ISNUMERIC(nLen) .OR. nLen <= 0
+   IF !HB_ISNUMERIC(nLen) .OR. nLen <= 0
       nLen := hb_BLen(cData)
    ENDIF
 
@@ -710,7 +710,7 @@ METHOD TIPClient:inetErrorDesc(SocketCon)
 
    hb_default( @SocketCon, ::SocketCon )
 
-   IF ! Empty(SocketCon)
+   IF !Empty(SocketCon)
       IF ::lSSL
          IF ::lHasSSL .AND. ::nSSLError != 0
             RETURN ERR_error_string( SSL_get_error( ::ssl, ::nSSLError ) )

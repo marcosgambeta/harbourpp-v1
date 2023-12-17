@@ -64,7 +64,7 @@ PROCEDURE Main( cPortName )
    Inkey(0)
 
    oWinPort := win_com():Init( cPortName, WIN_CBR_9600, WIN_ODDPARITY, 7, WIN_ONESTOPBIT )
-   IF ! oWinPort:Open()
+   IF !oWinPort:Open()
       ? "Open() failed"
    ELSE
       ? "Open() succeeded"
@@ -159,7 +159,7 @@ PROCEDURE Main( cPortName )
    Inkey(0)
 
    oWinPort := win_com():Init( cPortName, WIN_CBR_9600, WIN_NOPARITY, 99, WIN_ONESTOPBIT )
-   IF ! oWinPort:Open
+   IF !oWinPort:Open
       ? "Open() failed :", oWinPort:ErrorText()
    ELSE
       ? "Open succeeded"
@@ -171,7 +171,7 @@ PROCEDURE Main( cPortName )
    Inkey(0)
 
    oWinPort := win_com():Init( cPortName, WIN_CBR_9600, WIN_NOPARITY, 8, WIN_ONESTOPBIT )
-   IF ! oWinPort:Open
+   IF !oWinPort:Open
       ? "Open() failed :", oWinPort:ErrorText()
    ELSE
       ? "Open succeeded"

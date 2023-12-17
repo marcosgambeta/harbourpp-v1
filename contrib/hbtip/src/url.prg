@@ -92,7 +92,7 @@ METHOD TUrl:SetAddress( cUrl )
 
    LOCAL aMatch, cServer, cPath
 
-   IF ! HB_ISSTRING( cUrl )
+   IF !HB_ISSTRING( cUrl )
       RETURN .F.
    ENDIF
 
@@ -145,19 +145,19 @@ METHOD TUrl:BuildAddress()
       ::cProto := Lower(::cProto)
    ENDIF
 
-   IF ! Empty(::cProto) .AND. ! ::cServer == ""
+   IF !Empty(::cProto) .AND. ! ::cServer == ""
       cRet := ::cProto + "://"
    ENDIF
 
-   IF ! ::cUserid == ""
+   IF !::cUserid == ""
       cRet += ::cUserid
-      IF ! ::cPassword == ""
+      IF !::cPassword == ""
          cRet += ":" + ::cPassword
       ENDIF
       cRet += "@"
    ENDIF
 
-   IF ! ::cServer == ""
+   IF !::cServer == ""
       cRet += ::cServer
       IF ::nPort > 0
          cRet += ":" + hb_ntos( ::nPort )
@@ -169,7 +169,7 @@ METHOD TUrl:BuildAddress()
    ENDIF
 
    cRet += ::cPath + ::cFile
-   IF ! ::cQuery == ""
+   IF !::cQuery == ""
       cRet += "?" + ::cQuery
    ENDIF
 
@@ -184,7 +184,7 @@ METHOD TUrl:BuildQuery()
    ENDIF
 
    cLine := ::cPath + ::cFile
-   IF ! ::cQuery == ""
+   IF !::cQuery == ""
       cLine += "?" + ::cQuery
    ENDIF
 
@@ -201,7 +201,7 @@ METHOD TUrl:AddGetForm( xPostData )
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + "=" + ;
             tip_URLEncode( AllTrim(hb_CStr( item )) )
-         IF ! item:__enumIsLast()
+         IF !item:__enumIsLast()
             cData += "&"
          ENDIF
       NEXT
@@ -210,7 +210,7 @@ METHOD TUrl:AddGetForm( xPostData )
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr( item:__enumIndex() )) ) + "=" + ;
             tip_URLEncode( AllTrim(hb_CStr( item )) )
-         IF ! item:__enumIsLast()
+         IF !item:__enumIsLast()
             cData += "&"
          ENDIF
       NEXT

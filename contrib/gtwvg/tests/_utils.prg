@@ -125,7 +125,7 @@ FUNCTION Wvt_Mouse( nKey, nRow, nCol )
       RETURN NIL
    ENDIF
 
-   IF ! SetMouseCheck()
+   IF !SetMouseCheck()
       RETURN NIL
    ENDIF
 
@@ -343,7 +343,7 @@ FUNCTION SetFonts( hFont )
 
    THREAD STATIC t_ahFonts := {}
    oldFont := t_ahFonts
-   IF ! Empty(hFont)
+   IF !Empty(hFont)
       AAdd( t_ahFonts, hFont )
    ENDIF
 
@@ -355,7 +355,7 @@ FUNCTION SetIcons( hIcon )
 
    THREAD STATIC t_ahIcons := {}
    oldIcon := t_ahIcons
-   IF ! Empty(hIcon)
+   IF !Empty(hIcon)
       AAdd( t_ahIcons, hIcon )
    ENDIF
 

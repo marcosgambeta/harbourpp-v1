@@ -12,7 +12,7 @@ PROCEDURE Main( cURL, cMask )
    LOCAL oFTP, oURL
 
    /* fetch files to transfer */
-   IF ! Empty(aFiles := hb_vfDirectory( hb_defaultValue( cMask, hb_osFileMask() ) ))
+   IF !Empty(aFiles := hb_vfDirectory( hb_defaultValue( cMask, hb_osFileMask() ) ))
 
       hb_default( @cURL, "ftp://user:pass@ftp.example.com" )
 
@@ -25,7 +25,7 @@ PROCEDURE Main( cURL, cMask )
       IF oFTP:Open( cURL )
          FOR EACH aFile IN aFiles
             ? "Filename:", aFile[ F_NAME ]
-            IF ! oFtp:UploadFile( aFile[ F_NAME ] )
+            IF !oFtp:UploadFile( aFile[ F_NAME ] )
                lRetVal := .F.
                EXIT
             ENDIF

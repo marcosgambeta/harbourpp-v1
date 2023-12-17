@@ -158,7 +158,7 @@ METHOD PROCEDURE Thread:quit( xResult, nRestart )
       IF PCount() > 0
          ::result := xResult
       ENDIF
-      IF ! HB_ISNUMERIC(nRestart) .OR. nRestart != QUIT_RESTART
+      IF !HB_ISNUMERIC(nRestart) .OR. nRestart != QUIT_RESTART
          ::interval := NIL
       ENDIF
       QUIT
@@ -237,7 +237,7 @@ METHOD Thread:start(xAction, ...)
                   nTime := hb_MilliSeconds()
 
                   BEGIN SEQUENCE
-                     IF ! Empty(xAction) .AND. ValType( xAction ) $ "CBS"
+                     IF !Empty(xAction) .AND. ValType( xAction ) $ "CBS"
                         ::result := Do(xAction, ...)
                      ELSE
                         ::result := ::execute(...)
@@ -254,7 +254,7 @@ METHOD Thread:start(xAction, ...)
                    *       it can be resumed
                    */
 
-                  IF ! HB_ISNUMERIC(::interval)
+                  IF !HB_ISNUMERIC(::interval)
                      EXIT
                   ENDIF
 

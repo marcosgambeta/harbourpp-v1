@@ -18,7 +18,7 @@ PROCEDURE Main()
       "dmOrientation" => WIN_DMORIENT_PORTRAIT } )
 
    hDC := wapi_CreateDC(NIL, "Microsoft XPS Document Writer", NIL, pDEVMODE)
-   IF ! Empty(hDC)
+   IF !Empty(hDC)
 
       wapi_SetMapMode( hDC, WIN_MM_TEXT )
 

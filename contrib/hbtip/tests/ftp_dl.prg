@@ -10,7 +10,7 @@ PROCEDURE Main(cURL, ...)
    LOCAL oFTP, oURL
 
    /* fetch files to transfer */
-   IF ! Empty(aFiles := {...})
+   IF !Empty(aFiles := {...})
 
       hb_default( @cURL, "ftp://user:pass@ftp.example.com" )
 
@@ -23,7 +23,7 @@ PROCEDURE Main(cURL, ...)
       IF oFTP:Open( cURL )
          FOR EACH cFile IN aFiles
             ? "Filename:", cFile
-            IF ! oFtp:DownloadFile( cFile )
+            IF !oFtp:DownloadFile( cFile )
                lRetVal := .F.
                EXIT
             ENDIF

@@ -126,7 +126,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    IF ::autoSize
 
    ENDIF
-   IF ! ::editable
+   IF !::editable
       ::style += ES_READONLY
    ENDIF
    IF ::unReadable

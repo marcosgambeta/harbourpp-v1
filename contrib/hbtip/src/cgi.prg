@@ -122,7 +122,7 @@ METHOD TIPCgi:New()
       NEXT
    ENDIF
 
-   IF ! Empty(cTemp := GetEnv( "HTTP_COOKIE" ))
+   IF !Empty(cTemp := GetEnv( "HTTP_COOKIE" ))
       FOR EACH item IN hb_ATokens( cTemp, ";" )
          IF Len(aVar := hb_ATokens( item, "=" )) == 2
             ::hCookies[ AllTrim(tip_URLDecode( aVar[ 1 ] )) ] := tip_URLDecode( aVar[ 2 ] )
@@ -176,7 +176,7 @@ METHOD TIPCgi:Flush()
    ::cCgiHeader := ""
    ::cHtmlPage := ""
 
-   IF ! Empty(::cSID)
+   IF !Empty(::cSID)
 
       cFile := hb_DirSepAdd( ::cSessionSavePath ) + "SESSIONID_" + ::cSID
 
@@ -203,7 +203,7 @@ METHOD TIPCgi:StartSession( cSID )
    LOCAL nFileSize
    LOCAL cBuffer
 
-   IF ! HB_ISSTRING( cSID ) .OR. Empty(cSID)
+   IF !HB_ISSTRING( cSID ) .OR. Empty(cSID)
       DO CASE
       CASE hb_HGetRef( ::hGets, "SESSIONID", @cSID )
       CASE hb_HGetRef( ::hPosts, "SESSIONID", @cSID )
@@ -215,7 +215,7 @@ METHOD TIPCgi:StartSession( cSID )
       ::cSessionSavePath := hb_DirTemp()
    ENDIF
 
-   IF ! Empty(cSID)
+   IF !Empty(cSID)
 
       ::cSID := cSID
 
@@ -263,7 +263,7 @@ METHOD TIPCgi:DestroySession( cID )
       cSID := ::cSID
    ENDIF
 
-   IF ! Empty(cSID)
+   IF !Empty(cSID)
 
       ::hSession := { => }
 

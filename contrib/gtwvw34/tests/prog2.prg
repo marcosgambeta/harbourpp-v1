@@ -106,7 +106,7 @@ STATIC PROCEDURE xBrowse1()
 
    LOCAL aColumnsSep, tmp
 
-   IF ! hbtest_Table()
+   IF !hbtest_Table()
       RETURN
    ENDIF
 

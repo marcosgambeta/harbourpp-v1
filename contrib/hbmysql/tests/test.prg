@@ -68,7 +68,7 @@ PROCEDURE Main( cArg )
 
    dbUseArea(.T.,, cArg, "wn", .F.)
 
-   IF ! oServer:DeleteTable( "test" )
+   IF !oServer:DeleteTable( "test" )
       Alert( oServer:Error() )
    ENDIF
 
@@ -100,7 +100,7 @@ PROCEDURE Main( cArg )
          oRow:FieldPut( oRow:FieldPos( "ACQGR" ), oRow:FieldGet( oRow:FieldPos( "ACQGR" ) ) + wn->ACQGR )
          oRow:FieldPut( oRow:FieldPos( "ACQDI" ), oRow:FieldGet( oRow:FieldPos( "ACQDI" ) ) + wn->ACQDI )
 
-         IF ! oQuery2:Update( oRow )
+         IF !oQuery2:Update( oRow )
             Alert( oQuery2:Error() )
          ENDIF
       ELSE
@@ -115,7 +115,7 @@ PROCEDURE Main( cArg )
          oRow:FieldPut( oRow:FieldPos( "ACQGR" ), wn->ACQGR )
          oRow:FieldPut( oRow:FieldPos( "ACQDI" ), wn->ACQDI )
 
-         IF ! oQuery:Append( oRow )
+         IF !oQuery:Append( oRow )
             Alert( oQuery:Error() )
          ENDIF
       ENDIF

@@ -186,7 +186,7 @@ STATIC FUNCTION LOGRDD_PUTVALUE( nWA, nField, xValue )
 
    // Log changes only
 
-   IF ! xOldValue == xValue
+   IF !xOldValue == xValue
       ToLog( "PUTVALUE", nWA, nField, xValue, xOldValue )
    ENDIF
 
@@ -433,7 +433,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
       bUserLogBlock := aRDDData[ ARRAY_USERLOGBLOCK ]
 
       // If not defined a User codeblock
-      IF ! HB_ISEVALITEM( bUserLogBlock )
+      IF !HB_ISEVALITEM( bUserLogBlock )
 
          hFile := aRDDData[ ARRAY_FHANDLE ]
 

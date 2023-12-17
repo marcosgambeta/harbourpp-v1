@@ -96,7 +96,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
    LOCAL cExt
    LOCAL cFile
 
-   IF ! hb_mtvm()
+   IF !hb_mtvm()
       QOut( "Multithread support required." )
       RETURN
    ENDIF
@@ -188,7 +188,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
          ENDSWITCH
 
          netiosrv[ _NETIOSRV_lRPC ] := ! Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]) .AND. ! Empty(hb_hrbGetFunSym( netiosrv[ _NETIOSRV_hRPCFHRB ], _RPC_FILTER ))
-         IF ! netiosrv[ _NETIOSRV_lRPC ]
+         IF !netiosrv[ _NETIOSRV_lRPC ]
             netiosrv[ _NETIOSRV_cRPCFFileName ] := NIL
             netiosrv[ _NETIOSRV_hRPCFHRB ] := NIL
          ENDIF
@@ -231,7 +231,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
    ELSE
       netiosrv_LogEvent( "Ready to accept connections." )
 
-      IF ! Empty(cPasswordManagement)
+      IF !Empty(cPasswordManagement)
 
          netiomgm[ _NETIOSRV_pListenSocket ] := netio_MTServer( ;
             netiomgm[ _NETIOSRV_nPort ], ;
@@ -280,7 +280,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
       ShowConfig( netiosrv, netiomgm )
 
       /* Wait until embedded management console connects */
-      IF ! Empty(netiomgm[ _NETIOSRV_pListenSocket ])
+      IF !Empty(netiomgm[ _NETIOSRV_pListenSocket ])
          hb_idleSleep(2)
          netiomgm[ _NETIOSRV_lShowConn ] := .T.
       ENDIF
@@ -293,7 +293,7 @@ PROCEDURE netiosrv_Main(lUI, ...)
       netio_ServerStop( netiosrv[ _NETIOSRV_pListenSocket ] )
       netiosrv[ _NETIOSRV_pListenSocket ] := NIL
 
-      IF ! Empty(netiomgm[ _NETIOSRV_pListenSocket ])
+      IF !Empty(netiomgm[ _NETIOSRV_pListenSocket ])
          netio_ServerStop( netiomgm[ _NETIOSRV_pListenSocket ] )
          netiomgm[ _NETIOSRV_pListenSocket ] := NIL
       ENDIF
@@ -369,7 +369,7 @@ STATIC FUNCTION netiosrv_config( netiosrv, netiomgm )
       hb_StrFormat( "Encryption: %1$s", iif(netiosrv[ _NETIOSRV_lEncryption ], "enabled", "disabled") ), ;
       hb_StrFormat( "RPC filter module: %1$s", iif(Empty(netiosrv[ _NETIOSRV_hRPCFHRB ]), iif(netiosrv[ _NETIOSRV_lRPC ], "not set (WARNING: unsafe open server)", "not set"), netiosrv[ _NETIOSRV_cRPCFFileName ] )) }
 
-   IF ! Empty(netiomgm[ _NETIOSRV_pListenSocket ])
+   IF !Empty(netiomgm[ _NETIOSRV_pListenSocket ])
       AAdd( aArray, hb_StrFormat( "Management iface: %1$s:%2$d", netiomgm[ _NETIOSRV_cIFAddr ], netiomgm[ _NETIOSRV_nPort ] ) )
    ENDIF
 
@@ -389,7 +389,7 @@ STATIC PROCEDURE netiosrv_notifyclients( netiomgm, cMsg )
 
    FOR EACH aClient IN netiomgm[ _NETIOSRV_hNotifStream ]
       IF aClient[ _CLI_lNotify ]
-         IF ! netio_SrvSendItem( aClient[ _CLI_pConnSock ], aClient[ _CLI_nStreamID ], hb_TToS( hb_DateTime() ) + " " + cMsg )
+         IF !netio_SrvSendItem( aClient[ _CLI_pConnSock ], aClient[ _CLI_nStreamID ], hb_TToS( hb_DateTime() ) + " " + cMsg )
             ++aClient[ _CLI_nSendErrors ]
          ENDIF
       ENDIF
@@ -423,16 +423,16 @@ STATIC FUNCTION netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, lManag
       lBlocked := .F.
 
       /* Handle positive filter */
-      IF ! Empty(netiosrv[ _NETIOSRV_hAllow ])
+      IF !Empty(netiosrv[ _NETIOSRV_hAllow ])
          hb_mutexLock( netiosrv[ _NETIOSRV_mtxFilters ] )
-         IF ! cAddressPeer $ netiosrv[ _NETIOSRV_hAllow ]
+         IF !cAddressPeer $ netiosrv[ _NETIOSRV_hAllow ]
             IF hb_HScan( netiosrv[ _NETIOSRV_hAllow ], {| tmp | hb_WildMatch( tmp, cAddressPeer ) } ) == 0
                lBlocked := .T.
             ENDIF
          ENDIF
          hb_mutexUnlock( netiosrv[ _NETIOSRV_mtxFilters ] )
          IF lBlocked
-            IF ! lManagement
+            IF !lManagement
                netiosrv_notifyclients( netiomgm, hb_StrFormat( "Connection denied: %1$s", cAddressPeer ) )
             ENDIF
             RETURN NIL
@@ -440,7 +440,7 @@ STATIC FUNCTION netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, lManag
       ENDIF
 
       /* Handle negative filter */
-      IF ! Empty(netiosrv[ _NETIOSRV_hBlock ])
+      IF !Empty(netiosrv[ _NETIOSRV_hBlock ])
          hb_mutexLock( netiosrv[ _NETIOSRV_mtxFilters ] )
          IF cAddressPeer $ netiosrv[ _NETIOSRV_hBlock ]
             lBlocked := .T.
@@ -451,7 +451,7 @@ STATIC FUNCTION netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, lManag
          ENDIF
          hb_mutexUnlock( netiosrv[ _NETIOSRV_mtxFilters ] )
          IF lBlocked
-            IF ! lManagement
+            IF !lManagement
                netiosrv_notifyclients( netiomgm, hb_StrFormat( "Connection denied: %1$s", cAddressPeer ) )
             ENDIF
             RETURN NIL
@@ -461,7 +461,7 @@ STATIC FUNCTION netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, lManag
       IF netiosrv[ _NETIOSRV_lShowConn ]
          netiosrv_LogEvent( hb_StrFormat( "Connecting (%1$s): %2$s", netiosrv[ _NETIOSRV_cName ], cAddressPeer ) )
       ENDIF
-      IF ! lManagement
+      IF !lManagement
          netiosrv_notifyclients( netiomgm, hb_StrFormat( "Connecting: %1$s", cAddressPeer ) )
       ENDIF
 
@@ -477,7 +477,7 @@ STATIC FUNCTION netiosrv_callback( netiomgm, netiosrv, pConnectionSocket, lManag
       IF netiosrv[ _NETIOSRV_lShowConn ]
          netiosrv_LogEvent( hb_StrFormat( "Disconnected (%1$s): %2$s", netiosrv[ _NETIOSRV_cName ], AddrToIPPort( aAddressPeer ) ) )
       ENDIF
-      IF ! lManagement
+      IF !lManagement
          netiosrv_notifyclients( netiomgm, hb_StrFormat( "Diconnected: %1$s", cAddressPeer ) )
       ENDIF
 
@@ -495,7 +495,7 @@ STATIC PROCEDURE netiosrv_conn_register( netiosrv, pConnectionSocket )
 
    hb_mutexLock( netiosrv[ _NETIOSRV_mtxConnection ] )
 
-   IF ! pConnectionSocket $ netiosrv[ _NETIOSRV_hConnection ]
+   IF !pConnectionSocket $ netiosrv[ _NETIOSRV_hConnection ]
       netiosrv[ _NETIOSRV_hConnection ][ pConnectionSocket ] := nconn
    ENDIF
 
@@ -528,7 +528,7 @@ STATIC FUNCTION netiomgm_rpc_regnotif( netiomgm, pConnSock, nStreamID, lRegister
       RETURN iif(cIndex $ netiomgm[ _NETIOSRV_hNotifStream ], netiomgm[ _NETIOSRV_hNotifStream ][ cIndex ][ _CLI_xCargo ], NIL)
 #endif
    CASE 4
-      IF ! HB_ISLOGICAL( lRegister ) .OR. ! lRegister
+      IF !HB_ISLOGICAL( lRegister ) .OR. ! lRegister
          hb_mutexLock( netiomgm[ _NETIOSRV_mtxNotifStream ] )
          IF cIndex $ netiomgm[ _NETIOSRV_hNotifStream ]
             hb_HDel( netiomgm[ _NETIOSRV_hNotifStream ], cIndex )
@@ -642,7 +642,7 @@ STATIC FUNCTION netiomgm_rpc_clientinfo( netiosrv, netiomgm, cIPPort )
 
       lDone := .F.
 
-      IF ! lDone
+      IF !lDone
          hb_mutexLock( netiosrv[ _NETIOSRV_mtxConnection ] )
          FOR EACH nconn IN netiosrv[ _NETIOSRV_hConnection ]
 
@@ -658,7 +658,7 @@ STATIC FUNCTION netiomgm_rpc_clientinfo( netiosrv, netiomgm, cIPPort )
          hb_mutexUnlock( netiosrv[ _NETIOSRV_mtxConnection ] )
       ENDIF
 
-      IF ! lDone
+      IF !lDone
          hb_mutexLock( netiomgm[ _NETIOSRV_mtxConnection ] )
          FOR EACH nconn IN netiomgm[ _NETIOSRV_hConnection ]
 
@@ -735,7 +735,7 @@ STATIC FUNCTION netiomgm_rpc_filtermod( netiosrv, hList, lAdd, cAddress )
    hb_mutexLock( netiosrv[ _NETIOSRV_mtxFilters ] )
 
    IF lAdd
-      IF ! cAddress $ hList
+      IF !cAddress $ hList
          hList[ cAddress ] := NIL
       ELSE
          lSuccess := .F.

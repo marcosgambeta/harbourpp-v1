@@ -49,7 +49,7 @@ FUNCTION RunShell( cCommand, cProgram, lAsync, lBackground )
    /* Not supported (yet?) */
    HB_SYMBOL_UNUSED( lBackground )
 
-   IF ! HB_ISSTRING( cProgram )
+   IF !HB_ISSTRING( cProgram )
 #if defined( __PLATFORM__UNIX )
       cProgram := GetEnv( "SHELL" )
 #elif defined( __PLATFORM__OS2 )

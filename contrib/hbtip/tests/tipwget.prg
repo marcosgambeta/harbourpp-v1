@@ -58,7 +58,7 @@ PROCEDURE Main( cURL, cFile )
 
    ? "Harbour - TIP (class based internet client protocol) test"
 
-   IF ! HB_ISSTRING( cURL ) .OR. Empty(cURL)
+   IF !HB_ISSTRING( cURL ) .OR. Empty(cURL)
       ? hb_StrFormat( "Usage: %1$s <URI> [dumpToOrFromFileName]", hb_ProgName() )
       RETURN
    ENDIF
@@ -135,7 +135,7 @@ PROCEDURE Main( cURL, cFile )
       ? "Done:", iif(Empty(oClient:cReply), "(no goodbye message)", oClient:cReply)
    ELSE
       ? "Could not open URI", cURL
-      IF ! Empty(oClient:cReply)
+      IF !Empty(oClient:cReply)
          ? oClient:cReply
       ENDIF
    ENDIF

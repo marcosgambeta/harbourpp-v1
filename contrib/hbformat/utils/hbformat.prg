@@ -118,7 +118,7 @@ STATIC PROCEDURE Reformat( oRef, cFileName )
 
    LOCAL aFile
 
-   IF ! Empty(aFile := oRef:File2Array( cFileName ))
+   IF !Empty(aFile := oRef:File2Array( cFileName ))
       OutStd( hb_StrFormat( I_( "Reformatting %1$s (%2$d lines)" ), cFileName, Len(aFile) ) + hb_eol() )
       OutStd( "<" )
       IF oRef:Reformat( aFile )
@@ -142,7 +142,7 @@ STATIC PROCEDURE DirEval( cInitDir, cMask, lRecur, bCode )
 
    FOR EACH file IN hb_vfDirectory( cInitDir + cMask, "HSD" )
       IF "D" $ file[ F_ATTR ]
-         IF ! "." == file[ F_NAME ] .AND. ;
+         IF !"." == file[ F_NAME ] .AND. ;
             ! ".." == file[ F_NAME ] .AND. lRecur
             DirEval( cInitDir + file[ F_NAME ], cMask, lRecur, bCode )
          ENDIF

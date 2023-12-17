@@ -418,7 +418,7 @@ PROCEDURE Main( cFileArg )
     */
 
    FOR i := 0 TO 8
-      IF ! Empty(mxmlGetFirstChild( hTree ))
+      IF !Empty(mxmlGetFirstChild( hTree ))
          mxmlDelete( mxmlGetFirstChild( hTree ) )
       ELSE
          OutErr( hb_StrFormat( "ERROR: Child pointer prematurely NULL on child #%d", i ) + hb_eol() )
@@ -429,14 +429,14 @@ PROCEDURE Main( cFileArg )
       ENDIF
    NEXT
 
-   IF ! Empty(mxmlGetFirstChild( hTree ))
+   IF !Empty(mxmlGetFirstChild( hTree ))
       OutErr( "ERROR: Child pointer not NULL after deleting all children!" + hb_eol() )
 
       ErrorLevel(1)
       QUIT
    ENDIF
 
-   IF ! Empty(mxmlGetLastChild( hTree ))
+   IF !Empty(mxmlGetLastChild( hTree ))
       OutErr( "ERROR: Last child pointer not NULL after deleting all children!" + hb_eol() )
 
       ErrorLevel(1)

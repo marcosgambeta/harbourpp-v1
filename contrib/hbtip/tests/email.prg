@@ -14,7 +14,7 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
    LOCAL nPort
    LOCAL lSTARTTLS := .F.
 
-   IF ! tip_SSL()
+   IF !tip_SSL()
       ? "Error: Requires SSL support"
       RETURN
    ENDIF

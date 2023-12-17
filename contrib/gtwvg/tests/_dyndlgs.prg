@@ -201,7 +201,7 @@ FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       IF Empty(SetIcons())
          SetIcons( wvg_LoadIcon( "resources\vr_1.ico" ) )
       ENDIF
-      IF ! Empty(SetIcons())
+      IF !Empty(SetIcons())
          wvg_SendMessage( wvg_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, IMAGE_ICON, SetIcons()[1] )
       ENDIF
 

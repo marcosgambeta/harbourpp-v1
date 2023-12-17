@@ -59,10 +59,10 @@ PROCEDURE Main()
       Alert( "Pos 123 error" )
    ENDIF
 
-   IF ! o:lSetSimPhoneEntry( 80, SIM_PBSTORAGE_SIM, "660099696", "pepeluis", SIM_NUMPLAN_UNKNOWN, SIM_ADDRTYPE_NATIONAL )
+   IF !o:lSetSimPhoneEntry( 80, SIM_PBSTORAGE_SIM, "660099696", "pepeluis", SIM_NUMPLAN_UNKNOWN, SIM_ADDRTYPE_NATIONAL )
       Alert( "Error writing pos 80 Error => " + hb_ntos( o:nLastError ) )
    ENDIF
-   IF ! o:lDelSimPhoneEntry( 80, SIM_PBSTORAGE_SIM )
+   IF !o:lDelSimPhoneEntry( 80, SIM_PBSTORAGE_SIM )
       Alert( "Error deleting pos 80 Error => " + hb_ntos( o:nLastError ) )
    ENDIF
 

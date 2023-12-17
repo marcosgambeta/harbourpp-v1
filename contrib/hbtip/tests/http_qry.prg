@@ -21,7 +21,7 @@ PROCEDURE Main()
       "kl" => "us-en" } )
 
    /* Connect to the HTTP server */
-   IF ! oHTTP:Open()
+   IF !oHTTP:Open()
       ? "Connection error:", oHTTP:lastErrorMessage()
       RETURN
    ENDIF

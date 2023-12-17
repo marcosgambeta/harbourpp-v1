@@ -66,7 +66,7 @@ PROCEDURE __hbformat_BuildListOfFunctions( /* @ */ cFunctions, cHBXList )
    NEXT
 
    /* from standalone .hbx files in some known locations */
-   IF ! lContribHBR
+   IF !lContribHBR
       WalkDir( hb_DirBase() + ".." + hb_ps() + "contrib", @cFunctions )
    ENDIF
    WalkDir( hb_DirBase() + ".." + hb_ps() + "addons", @cFunctions )

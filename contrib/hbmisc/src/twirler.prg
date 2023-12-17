@@ -45,7 +45,7 @@ METHOD Twirler:twirl()
       if ::n_Index > Len(::c_Chars)
          ::n_Index := 1
       ENDIF
-      IF ! Empty(::n_Seconds)
+      IF !Empty(::n_Seconds)
          ::n_Seconds := nSeconds
       ENDIF
    ENDIF
@@ -55,7 +55,7 @@ METHOD Twirler:twirl()
 METHOD Twirler:show()
 
    ::n_Index := 1
-   IF ! Empty(::n_Smooth)
+   IF !Empty(::n_Smooth)
       ::n_Seconds := - ::n_Smooth
    ENDIF
    hb_DispOutAt( ::n_Row, ::n_Col - Len(::c_Title), ::c_Title )

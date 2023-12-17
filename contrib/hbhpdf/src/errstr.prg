@@ -52,7 +52,7 @@
 
 FUNCTION hb_HPDF_GetErrorString( nStatus )
 
-   IF ! HB_ISNUMERIC(nStatus)
+   IF !HB_ISNUMERIC(nStatus)
       RETURN "HB_HPDF_INVALID"
    ENDIF
 

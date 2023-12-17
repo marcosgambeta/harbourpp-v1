@@ -160,10 +160,10 @@ STATIC FUNCTION ErrorMessage( oError )
    IF HB_ISSTRING( oError:description )
       cMessage += oError:description + " "
    ENDIF
-   IF ! Empty(oError:operation)
+   IF !Empty(oError:operation)
       cMessage += "(" + oError:operation + ") "
    ENDIF
-   IF ! Empty(oError:filename)
+   IF !Empty(oError:filename)
       cMessage += "<" + oError:filename + "> "
    ENDIF
    IF HB_ISNUMERIC(oError:osCode)
@@ -215,7 +215,7 @@ STATIC FUNCTION XToStr( xValue, lInString )
    CASE "A"
    CASE "H"
    CASE "O"
-      IF ! lInString
+      IF !lInString
          RETURN hb_ValToExp( xValue, .T. )
       ENDIF
       EXIT
@@ -233,7 +233,7 @@ STATIC FUNCTION __StrToExp( cStr )
    nLen := hb_BLen(cStr)
    FOR nPos := 1 TO nLen
       cByte := hb_BSubStr(cStr, nPos, 1)
-      IF ! __ByteIsDisplayable( cByte ) .OR. cByte == '"'
+      IF !__ByteIsDisplayable( cByte ) .OR. cByte == '"'
          cResult += "\" + __ByteEscape( hb_BCode( cByte ) )
       ELSE
          cResult += cByte

@@ -80,7 +80,7 @@ METHOD UHttpdLog:IsOpen()
 
 METHOD UHttpdLog:Add( cMsg )
 
-   IF ! HB_ISSTRING( cMsg )
+   IF !HB_ISSTRING( cMsg )
       RETURN .F.
    ENDIF
 

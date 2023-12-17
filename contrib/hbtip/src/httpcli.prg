@@ -105,7 +105,7 @@ METHOD TIPClientHTTP:New( oUrl, xTrace, oCredentials )
 
 METHOD TIPClientHTTP:Get( cQuery )
 
-   IF ! HB_ISSTRING( cQuery )
+   IF !HB_ISSTRING( cQuery )
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 
@@ -142,7 +142,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + "=" + ;
             tip_URLEncode(          hb_CStr( item ) )
-         IF ! item:__enumIsLast()
+         IF !item:__enumIsLast()
             cData += "&"
          ENDIF
       NEXT
@@ -152,7 +152,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr( item[ 1 ] )) ) + "=" + ;
             tip_URLEncode(          hb_CStr( item[ 2 ] ) )
-         IF ! item:__enumIsLast()
+         IF !item:__enumIsLast()
             cData += "&"
          ENDIF
       NEXT
@@ -162,14 +162,14 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
       RETURN .F.
    ENDCASE
 
-   IF ! HB_ISSTRING( cQuery )
+   IF !HB_ISSTRING( cQuery )
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 
    ::inetSendAll( ::SocketCon, hb_defaultValue( cVerb, "POST" ) + " " + cQuery + " HTTP/1.1" + ::cCRLF )
 
    ::StandardFields()
-   IF ! "Content-Type" $ ::hFields
+   IF !"Content-Type" $ ::hFields
       ::inetSendAll( ::SocketCon, "Content-Type: application/x-www-form-urlencoded" + ::cCRLF )
    ENDIF
    ::inetSendAll( ::SocketCon, "Content-Length: " + hb_ntos( hb_BLen(cData) ) + ::cCRLF )
@@ -192,7 +192,7 @@ METHOD TIPClientHTTP:StandardFields()
 
    ::inetSendAll( ::SocketCon, "Host: " + ::oUrl:cServer + ::cCRLF )
    ::inetSendAll( ::SocketCon, "User-agent: " + ::cUserAgent + ::cCRLF )
-   IF ! ::lPersistent
+   IF !::lPersistent
       ::inetSendAll( ::SocketCon, "Connection: close" + ::cCRLF )
    ENDIF
 
@@ -206,7 +206,7 @@ METHOD TIPClientHTTP:StandardFields()
 
    // send cookies
    cCookies := ::getCookies()
-   IF ! Empty(cCookies)
+   IF !Empty(cCookies)
       ::inetSendAll( ::SocketCon, "Cookie: " + cCookies + ::cCRLF )
    ENDIF
 
@@ -287,9 +287,9 @@ METHOD TIPClientHTTP:Read( nLen )
 
    LOCAL cData, nPos, cLine, aHead
 
-   IF ! ::bInitialized
+   IF !::bInitialized
       ::bInitialized := .T.
-      IF ! ::Get()
+      IF !::Get()
          RETURN NIL
       ENDIF
    ENDIF
@@ -303,7 +303,7 @@ METHOD TIPClientHTTP:Read( nLen )
 
       cLine := ::inetRecvLine( ::SocketCon, @nPos, 1024 )
 
-      IF ! HB_ISSTRING( cLine ) .OR. cLine == ""
+      IF !HB_ISSTRING( cLine ) .OR. cLine == ""
          RETURN NIL
       ENDIF
 
@@ -353,9 +353,9 @@ METHOD TIPClientHTTP:ReadAll()
 
    LOCAL cOut := "", cChunk
 
-   IF ! ::bInitialized
+   IF !::bInitialized
       ::bInitialized := .T.
-      IF ! ::Get()
+      IF !::Get()
          RETURN NIL
       ENDIF
    ENDIF
@@ -407,13 +407,13 @@ METHOD PROCEDURE TIPClientHTTP:setCookie( cLine )
          ENDIF
       ENDIF
    NEXT
-   IF ! Empty(cName)
+   IF !Empty(cName)
       // cookies are stored in hashes as host.path.name
       // check if we have a host hash yet
-      IF ! cHost $ ::hCookies
+      IF !cHost $ ::hCookies
          ::hCookies[ cHost ] := { => }
       ENDIF
-      IF ! cPath $ ::hCookies[ cHost ]
+      IF !cPath $ ::hCookies[ cHost ]
          ::hCookies[ cHost ][ cPath ] := { => }
       ENDIF
       ::hCookies[ cHost ][ cPath ][ cName ] := cValue
@@ -428,7 +428,7 @@ METHOD TIPClientHTTP:getcookies( cHost, cPath )
 
    hb_default( @cHost, ::oUrl:cServer )
 
-   IF ! HB_ISSTRING( cPath )
+   IF !HB_ISSTRING( cPath )
       cPath := ::oUrl:cPath
       IF cPath == ""
          cPath := "/"
@@ -459,7 +459,7 @@ METHOD TIPClientHTTP:getcookies( cHost, cPath )
 
       FOR EACH a IN ASort( aPathKeys,,, {| cX, cY | Len(cX) > Len(cY) } )
          FOR EACH c IN hb_HKeys( ::hCookies[ x ][ a ] )
-            IF ! cOut == ""
+            IF !cOut == ""
                cOut += "; "
             ENDIF
             cOut += c + "=" + ::hCookies[ x ][ a ][ c ]
@@ -531,7 +531,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
       cFile := hb_defaultValue( aAttachment[ 2 ], "" )
 
       cType := aAttachment[ 3 ]
-      IF ! HB_ISSTRING( cType ) .OR. Empty(cType)
+      IF !HB_ISSTRING( cType ) .OR. Empty(cType)
          cType := "text/html"
       ENDIF
 
@@ -555,14 +555,14 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    cData += cBound + "--" + cCrlf
 
-   IF ! HB_ISSTRING( cQuery )
+   IF !HB_ISSTRING( cQuery )
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 
    ::inetSendAll( ::SocketCon, "POST " + cQuery + " HTTP/1.1" + ::cCRLF )
    ::StandardFields()
 
-   IF ! "Content-Type" $ ::hFields
+   IF !"Content-Type" $ ::hFields
       ::inetSendAll( ::SocketCon, "Content-Type: multipart/form-data; boundary=" + ::boundary(2) + ::cCrlf )
    ENDIF
 

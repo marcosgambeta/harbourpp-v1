@@ -34,7 +34,7 @@ PROCEDURE Main()
    hbshell_gtSelect( "GTWVW" )
 #endif
 
-   IF ! SetMode( 25, 80 )
+   IF !SetMode( 25, 80 )
       wvw_MessageBox( 0, "Cannot set to (25,80) screen", "Warning", WIN_MB_OK + WIN_MB_ICONEXCLAMATION )
    ENDIF
    SetColor( "W*/N+" )

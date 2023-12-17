@@ -48,7 +48,7 @@ PROCEDURE Main()
 
    lExists := netio_FuncExec("HB_DirExists", "./data")
    ? "Directory './data'", iif(! lExists, "not exists", "exists")
-   IF ! lExists
+   IF !lExists
       ? "Creating directory './data' ->", ;
          iif(netio_FuncExec("hb_DirCreate", "./data") == -1, "error", "OK")
    ENDIF
@@ -120,7 +120,7 @@ PROCEDURE testdb(cName)
    ordSetFocus(1)
    dbGoTop()
    WHILE ! Eof()
-      IF ! field->F1 == field->F2
+      IF !field->F1 == field->F2
          ? "error at record:", RecNo()
          ? "  ! '" + field->F1 + "' == '" + field->F2 + "'"
       ENDIF

@@ -270,7 +270,7 @@ METHOD TBrowseSQL:EditField()
          ::oCurRow:FieldPut(oCol:nFieldNum, cMemo)
 
          /* NOTE: To do in a better way */
-         IF ! ::oQuery:Update(::oCurRow)
+         IF !::oQuery:Update(::oCurRow)
             Alert(Left(::oQuery:Error(), 60))
          ENDIF
       ENDIF
@@ -293,13 +293,13 @@ METHOD TBrowseSQL:EditField()
       // SetCursor(SC_NONE)
 
       /* NOTE: To do in a better way */
-      IF ! ::oQuery:Update(::oCurRow)
+      IF !::oQuery:Update(::oCurRow)
          Alert(Left(::oQuery:Error(), 60))
       ENDIF
 
    endif
 
-   IF ! ::oQuery:Refresh()
+   IF !::oQuery:Refresh()
       Alert(::oQuery:Error())
    ENDIF
 
@@ -325,7 +325,7 @@ METHOD TBrowseSQL:BrowseTable(lCanEdit, aExitKeys)
    LOCAL nKey
    LOCAL lKeepGoing := .T.
 
-   IF ! HB_ISNUMERIC(nKey)
+   IF !HB_ISNUMERIC(nKey)
       nKey := NIL
    ENDIF
    hb_default(@lCanEdit, .F.)
@@ -418,10 +418,10 @@ METHOD TBrowseSQL:BrowseTable(lCanEdit, aExitKeys)
 #if 0
       CASE K_DEL
          IF lCanEdit
-            IF ! ::oQuery:Delete(::oCurRow)
+            IF !::oQuery:Delete(::oCurRow)
                Alert("not deleted " + ::oQuery:Error())
             ENDIF
-            IF ! ::oQuery:Refresh()
+            IF !::oQuery:Refresh()
                Alert(::oQuery:Error())
             ENDIF
 

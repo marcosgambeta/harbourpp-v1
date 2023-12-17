@@ -52,7 +52,7 @@ STATIC PROCEDURE cb_start( aUserData, cElement, aAttr )
 
    ? Replicate( "  ", aUserData[ 1 ] ), cElement
 
-   IF ! Empty(aAttr)
+   IF !Empty(aAttr)
       FOR EACH aItem IN aAttr
          ?? "", aItem[ HB_XML_ATTR_cName ] + "='" + aItem[ HB_XML_ATTR_cValue ] + "'"
       NEXT
@@ -75,7 +75,7 @@ STATIC PROCEDURE cb_data(aUserData, cData)
 
    HB_SYMBOL_UNUSED( aUserData )
 
-   IF ! Empty(cData)
+   IF !Empty(cData)
       ?? "", "'" + cData + "'"
    ENDIF
 

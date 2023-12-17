@@ -64,7 +64,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
    netclictx := Eval( netclictrl[ "init" ], hConIO, { ;
       "--netio.addr=" + cIP + ":" + hb_ntos( nPort ), ;
       "--netio.pass=" + cPassword } )
-   IF ! Empty(netclictx)
+   IF !Empty(netclictx)
       netcliID := netclictrl[ "id" ]
    ENDIF
 
@@ -137,16 +137,16 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
       nHistIndex := Len(aHistory) + 1
 
       aCommand := hb_ATokens( cCommand, " " )
-      IF ! Empty(aCommand)
+      IF !Empty(aCommand)
          IF ( nPos := hb_HPos( hCommands, Lower(aCommand[ 1 ]) ) ) > 0
             Eval( hb_HValueAt( hCommands, nPos )[ 3 ], cCommand )
          ELSE
             IF Left(cCommand, Len(netcliID) + 1) == netcliID + "."
-               IF ! Eval( netclictrl[ "cmd" ], netclictx, SubStr(cCommand, Len(netcliID) + 2) )
+               IF !Eval( netclictrl[ "cmd" ], netclictx, SubStr(cCommand, Len(netcliID) + 2) )
                   hbnetiocon_ToConsole( hb_StrFormat( "Error: Unrecognized command '%1$s'.", cCommand ) )
                ENDIF
             ELSE
-               IF ! Eval( netclictrl[ "cmd" ], netclictx, cCommand )
+               IF !Eval( netclictrl[ "cmd" ], netclictx, cCommand )
                   hbnetiocon_ToConsole( hb_StrFormat( "Error: Unrecognized command '%1$s'.", cCommand ) )
                ENDIF
             ENDIF
@@ -162,7 +162,7 @@ PROCEDURE hbnetiocon_cmdUI( cIP, nPort, cPassword )
 STATIC PROCEDURE ManageCursor( cCommand )
 
    hb_keyPut( K_HOME )
-   IF ! Empty(cCommand)
+   IF !Empty(cCommand)
       hb_keyPut( K_END )
    ENDIF
 

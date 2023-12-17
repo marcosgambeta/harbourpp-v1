@@ -355,7 +355,7 @@ METHOD TFbServer:Delete( oRow, cWhere )
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
+   IF !HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
       // Cannot delete joined tables
 
       IF cWhere == NIL
@@ -390,7 +390,7 @@ METHOD TFbServer:Append( oRow )
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
+   IF !HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
       // Can insert only one table, not in joined tables
 
       cQuery := 'INSERT INTO ' + aTables[ 1 ] + '('
@@ -423,7 +423,7 @@ METHOD TFbServer:Update( oRow, cWhere )
 
    aTables := oRow:GetTables()
 
-   IF ! HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
+   IF !HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
       // Can't insert joined tables
 
       IF cWhere == NIL
@@ -523,7 +523,7 @@ METHOD TFbQuery:Refresh()
 
    LOCAL qry, result, i, aTable := {}
 
-   IF ! ::closed
+   IF !::closed
       ::Destroy()
    ENDIF
 
@@ -571,7 +571,7 @@ METHOD TFbQuery:Destroy()
    LOCAL result := .T.
    LOCAL n
 
-   IF ! ::lError .AND. ( n := FBFree( ::qry ) ) < 0
+   IF !::lError .AND. ( n := FBFree( ::qry ) ) < 0
       ::lError := .T.
       ::nError := n
    ENDIF
@@ -585,9 +585,9 @@ METHOD TFbQuery:Fetch()
    LOCAL result := .F.
    LOCAL fetch_stat
 
-   IF ! ::lError .AND. ! ::lEof
+   IF !::lError .AND. ! ::lEof
 
-      IF ! ::Closed
+      IF !::Closed
          fetch_stat := FBFetch( ::qry )
 
          ::nRecno++
@@ -608,7 +608,7 @@ METHOD TFbQuery:Struct()
    LOCAL result := {}
    LOCAL i
 
-   IF ! ::lError
+   IF !::lError
       FOR i := 1 TO Len(::aStruct)
          AAdd( result, { ::aStruct[ i ][ 1 ], ::aStruct[ i ][ 2 ], ::aStruct[ i ][ 3 ], ::aStruct[ i ][ 4 ] } )
       NEXT
@@ -620,7 +620,7 @@ METHOD TFbQuery:FieldPos( cField )
 
    LOCAL result := 0
 
-   IF ! ::lError
+   IF !::lError
       result := AScan( ::aStruct, {| x | x[ 1 ] == RTrim(Upper(cField)) } )
    ENDIF
 
@@ -630,7 +630,7 @@ METHOD TFbQuery:FieldName( nField )
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
+   IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 1 ]
    ENDIF
 
@@ -640,7 +640,7 @@ METHOD TFbQuery:FieldType( nField )
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
+   IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 2 ]
    ENDIF
 
@@ -650,7 +650,7 @@ METHOD TFbQuery:FieldLen(nField)
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
+   IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 3 ]
    ENDIF
 
@@ -660,7 +660,7 @@ METHOD TFbQuery:FieldDec(nField)
 
    LOCAL result
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
+   IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct)
       result := ::aStruct[ nField ][ 4 ]
    ENDIF
 
@@ -670,7 +670,7 @@ METHOD TFbQuery:FieldGet( nField )
 
    LOCAL result, aBlob, i, cType
 
-   IF ! ::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct) .AND. ! ::closed
+   IF !::lError .AND. nField >= 1 .AND. nField <= Len(::aStruct) .AND. ! ::closed
 
       /* TODO: Convert to right data type */
 
@@ -724,7 +724,7 @@ METHOD TFbQuery:Getrow()
    LOCAL aRow
    LOCAL i
 
-   IF ! ::lError .AND. ! ::closed
+   IF !::lError .AND. ! ::closed
 
       aRow := Array( ::numcols )
 
@@ -743,7 +743,7 @@ METHOD TFbQuery:GetBlankRow()
    LOCAL aRow
    LOCAL i
 
-   IF ! ::lError
+   IF !::lError
       aRow := Array( ::numcols )
 
       FOR i := 1 TO ::numcols

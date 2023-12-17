@@ -8,7 +8,7 @@ PROCEDURE Main( cPath, cHide )
 
    cFile := ft_TempFil( cPath, cHide == "Y" )
 
-   IF ! Empty(cFile)
+   IF !Empty(cFile)
       ? cFile
       nHandle := FOpen( cFile, FO_WRITE )
       FWrite( nHandle, "This is a test!" )

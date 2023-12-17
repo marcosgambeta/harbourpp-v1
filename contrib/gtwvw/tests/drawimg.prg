@@ -214,13 +214,13 @@ METHOD wPaintObj:New( nWinNum, nType, cId, nRow1, nCol1, nRow2, nCol2, aOffTLBR,
 
 METHOD wPaintObj:Draw()
 
-   IF ! ::lVisible
+   IF !::lVisible
       RETURN NIL
    ENDIF
 
    DO CASE
    case ::nType == WPAINTOBJ_IMAGE
-      IF ! Empty(::cImage)
+      IF !Empty(::cImage)
          wvw_DrawImage( ::nWinNum, ::nRow1, ::nCol1, ::nRow2, ::nCol2, ;
             ::cImage, ::aOffTLBR, ::lTransp )
       ENDIF

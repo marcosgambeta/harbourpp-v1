@@ -132,7 +132,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
       cTo := ""
       FOR EACH cTmp IN xTo
          cTo += tip_GetRawEmail( AllTrim(cTmp) )
-         IF ! cTmp:__enumIsLast()
+         IF !cTmp:__enumIsLast()
             cTo += ","
          ENDIF
       NEXT
@@ -151,7 +151,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
       cCC := ""
       FOR EACH cTmp IN xCC
          cCC += tip_GetRawEmail( AllTrim(cTmp) )
-         IF ! cTmp:__enumIsLast()
+         IF !cTmp:__enumIsLast()
             cCC += ","
          ENDIF
       NEXT
@@ -170,7 +170,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
       cBCC := ""
       FOR EACH cTmp IN xBCC
          cBCC += tip_GetRawEmail( AllTrim(cTmp) )
-         IF ! cTmp:__enumIsLast()
+         IF !cTmp:__enumIsLast()
             cBCC += ","
          ENDIF
       NEXT
@@ -219,7 +219,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
 
    oInmail:nConnTimeout := nTimeOut
 
-   IF ! lNoAuth
+   IF !lNoAuth
       IF oInMail:OpenSecure( , lSSL )
 
          lAuthTLS := oInMail:lTLS
@@ -229,7 +229,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
             lConnect := .T.
          ENDIF
       ENDIF
-      IF ! lConnect
+      IF !lConnect
          oInMail:Close()
          BEGIN SEQUENCE WITH __BreakBlock()
             oInmail := TIPClientSMTP():New( oUrl, xTrace,, cClientHost )
@@ -241,8 +241,8 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
       ENDIF
    ENDIF
 
-   IF ! lConnect
-      IF ! oInMail:Open( NIL, lAuthTLS )
+   IF !lConnect
+      IF !oInMail:Open( NIL, lAuthTLS )
          oInmail:Close()
          RETURN .F.
       ENDIF

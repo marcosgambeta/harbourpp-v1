@@ -153,7 +153,7 @@ METHOD WvgActiveXControl:Create( oParent, oOwner, aPos, aSize, aPresParams, lVis
    ::oOLE:__hObj := hObj
    __axDoVerb(::hWnd, -4)
 
-   IF ! Empty(::hEvents)
+   IF !Empty(::hEvents)
       ::oOle:__hSink := __axRegisterHandler( ::oOle:__hObj, {|nEvent, ...| ::execEvent(nEvent, ...) } )
    ENDIF
 
@@ -224,7 +224,7 @@ METHOD WvgActiveXControl:OnError()
 
 METHOD PROCEDURE WvgActiveXControl:Destroy()
 
-   IF ! Empty(::oOLE:__hObj)
+   IF !Empty(::oOLE:__hObj)
       IF wapi_IsWindow( ::hWnd )
          wapi_DestroyWindow( ::hWnd )
       ENDIF

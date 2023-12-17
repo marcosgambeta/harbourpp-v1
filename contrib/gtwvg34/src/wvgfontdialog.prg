@@ -165,7 +165,7 @@ METHOD WvgFontDialog:create( oParent, oOwner, oScreenPS, oPrinterPS, aPos )
    IF ::viewPrinterFonts .AND. ::oPrinterPS == NIL
       ::viewPrinterFonts := .F.
    ENDIF
-   IF ! ::viewScreenFonts .AND. ! ::viewPrinterFonts
+   IF !::viewScreenFonts .AND. ! ::viewPrinterFonts
       ::viewScreenFonts := .T.
    ENDIF
 
@@ -188,31 +188,31 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
    CASE nMessage == WIN_WM_INITDIALOG
       ::hWnd := hWnd
 
-      IF ! Empty(::title)
+      IF !Empty(::title)
          wapi_SetWindowText( ::hWnd, ::title )
       ENDIF
-      IF ! ::buttonCancel
+      IF !::buttonCancel
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, WIN_IDCANCEL ), .F. )
       ENDIF
-      IF ! ::buttonApply
+      IF !::buttonApply
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1026 ), .F. )
       ENDIF
-      IF ! ::buttonHelp
+      IF !::buttonHelp
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1038 ), .F. )
       ENDIF
-      IF ! ::strikeOut
+      IF !::strikeOut
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1040 ), .F. )
       ENDIF
-      IF ! ::underscore
+      IF !::underscore
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1041 ), .F. )
       ENDIF
-      IF ! ::name
+      IF !::name
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1136 ), .F. )
       ENDIF
-      IF ! ::style
+      IF !::style
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1137 ), .F. )
       ENDIF
-      IF ! ::size
+      IF !::size
          wapi_EnableWindow( wapi_GetDlgItem( ::hWnd, 1138 ), .F. )
       ENDIF
 
@@ -268,7 +268,7 @@ METHOD WvgFontDialog:display( nMode )
    ::ok := .F.
    aInfo := wvg_ChooseFont( hWnd, {| h, m, w, l | ::wndProc(h, m, w, l) }, ::familyName, ;
       ::nominalPointSize, ::viewScreenFonts, ::viewPrinterFonts )
-   IF ! ::ok
+   IF !::ok
       RETURN NIL
    ENDIF
 
@@ -287,7 +287,7 @@ METHOD WvgFontDialog:GetWvgFont( aFont )
 
    LOCAL oWvgFont
 
-   IF ! HB_ISARRAY( aFont )
+   IF !HB_ISARRAY( aFont )
       aFont := wvg_ChooseFont_GetLogFont( ::hWnd )
    ENDIF
 

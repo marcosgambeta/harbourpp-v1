@@ -559,7 +559,7 @@ METHOD GDImage:Rotate( nAngle, lInside )
 
    hb_default( @lInside, .F. )
 
-   IF ! lInside
+   IF !lInside
       nWidth  := ::Width * Cos( nAngRad ) + ::Height * Sin( nAngRad )
       nHeight := ::Width * Sin( nAngRad ) + ::Height * Cos( nAngRad )
    ELSE
@@ -572,7 +572,7 @@ METHOD GDImage:Rotate( nAngle, lInside )
    ELSE
       oDestImage := GDImage():Create( nWidth, nHeight )
    ENDIF
-   IF ! lInside
+   IF !lInside
       ::CopyRotated( ,,,, nWidth - nWidth / 2, nHeight - nHeight / 2, nAngle, oDestImage )
    ELSE
       ::CopyRotated( ,,,,,, nAngle, oDestImage )

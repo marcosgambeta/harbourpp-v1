@@ -87,7 +87,7 @@ METHOD TIPClientPOP:New( oUrl, xTrace, oCredentials )
 
 METHOD TIPClientPOP:Open( cUrl )
 
-   IF ! ::super:Open( cUrl )
+   IF !::super:Open( cUrl )
       RETURN .F.
    ENDIF
 
@@ -112,7 +112,7 @@ METHOD TIPClientPOP:OpenDigest( cUrl )
 
    LOCAL nPos, nPos2, cDigest
 
-   IF ! ::super:Open( cUrl )
+   IF !::super:Open( cUrl )
       RETURN .F.
    ENDIF
 
@@ -157,14 +157,14 @@ METHOD TIPClientPOP:List()
    LOCAL cStr, cRet
 
    ::inetSendAll( ::SocketCon, "LIST" + ::cCRLF )
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN NIL
    ENDIF
 
    cRet := ""
    DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
       cStr := ::inetRecvLine( ::SocketCon, @nPos, 256 )
-      IF ! HB_ISSTRING( cStr ) .OR. cStr == "."
+      IF !HB_ISSTRING( cStr ) .OR. cStr == "."
          ::bEof := .T.
       ELSE
          cRet += cStr + ::cCRLF
@@ -189,9 +189,9 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
    LOCAL cRet, nRetLen, cBuffer, nRead
    LOCAL cEOM := ::cCRLF + "." + ::cCRLF        // End Of Mail
 
-   IF ! ::bInitialized
+   IF !::bInitialized
       ::inetSendAll( ::SocketCon, "RETR " + hb_ntos( Int( nId ) ) + ::cCRLF )
-      IF ! ::GetOk()
+      IF !::GetOk()
          ::bEof := .T.
          RETURN NIL
       ENDIF
@@ -257,14 +257,14 @@ METHOD TIPClientPOP:Top( nMsgId )
    LOCAL cStr, cRet
 
    ::inetSendAll( ::SocketCon, "TOP " + hb_ntos( Int( nMsgId ) ) + " 0" + ::cCRLF )
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN NIL
    ENDIF
 
    cRet := ""
    DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
       cStr := ::inetRecvLine( ::SocketCon, @nPos, 512 )
-      IF ! HB_ISSTRING( cStr ) .OR. cStr == "."
+      IF !HB_ISSTRING( cStr ) .OR. cStr == "."
          ::bEof := .T.
       ELSE
          cRet += cStr + ::cCRLF
@@ -294,7 +294,7 @@ METHOD TIPClientPOP:UIDL( nMsgId )
       ::inetSendAll( ::SocketCon, "UIDL" + ::cCRLF )
    ENDIF
 
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN NIL
    ENDIF
 
@@ -302,7 +302,7 @@ METHOD TIPClientPOP:UIDL( nMsgId )
       cRet := ""
       DO WHILE ! cStr == "." .AND. ::inetErrorCode( ::SocketCon ) == 0
          cStr := ::inetRecvLine( ::SocketCon, @nPos, 256 )
-         IF ! HB_ISSTRING( cStr ) .OR. cStr == "."
+         IF !HB_ISSTRING( cStr ) .OR. cStr == "."
             ::bEof := .T.
          ELSE
             cRet += cStr + ::cCRLF
@@ -381,7 +381,7 @@ METHOD TIPClientPOP:getTop( nMsgId )
    LOCAL nPos, cStr, xRet
 
    ::inetSendAll( ::SocketCon, "TOP " + hb_ntos( Int( nMsgId ) ) + " 0" + ::cCRLF )
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN NIL
    ENDIF
 
@@ -400,7 +400,7 @@ METHOD TIPClientPOP:getMessageRaw( nMsgId )
    LOCAL cLine, nBytes, xRet
 
    ::inetSendAll( ::SocketCon, "RETR " + hb_ntos( Int( nMsgId ) ) + ::cCRLF )
-   IF ! ::GetOk()
+   IF !::GetOk()
       RETURN NIL
    ENDIF
 
@@ -429,7 +429,7 @@ METHOD TIPClientPOP:getBody( nMsgId )
       cBoundary := AllTrim(StrTran( SubStr(aMsg[ nBoundary ], n1 + 1), '"' ))
    ENDIF
 
-   IF ! Empty(cBoundary)
+   IF !Empty(cBoundary)
       IF ( n := AScan( aMsg, {| cLine | cBoundary $ cLine }, nBoundary + 1 ) ) > 0 .AND. ;
          ( n1 := AScan( aMsg, {| cLine | cBoundary $ cLine }, n + 1 ) ) > 0  // This must not happen, but
          FOR i := n + 3 TO n1 - 1

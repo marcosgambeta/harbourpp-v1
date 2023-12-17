@@ -19,13 +19,13 @@ PROCEDURE Main()
 
    FIELD last, first
 
-   IF ! hb_dbExists( "tbnames.dbf" )
+   IF !hb_dbExists( "tbnames.dbf" )
       make_dbf()
    ENDIF
 
    USE tbnames
 
-   IF ! hb_dbExists( "tbnames.ntx" )
+   IF !hb_dbExists( "tbnames.ntx" )
       INDEX ON last + first TO tbnames
    ENDIF
 

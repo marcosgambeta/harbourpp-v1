@@ -10,7 +10,7 @@ PROCEDURE Main()
    mxmlSetErrorCallback( @my_mxmlError() )
    mxmlSetCustomHandlers( @load_c(), @save_c() )
 
-   IF ! hb_FileExists( "cust.xml" )
+   IF !hb_FileExists( "cust.xml" )
       create_cust()
    ENDIF
 

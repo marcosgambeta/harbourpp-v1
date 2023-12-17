@@ -156,7 +156,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
       IF HB_ISNUMERIC(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
-      IF ! Empty(::hBrushBG)
+      IF !Empty(::hBrushBG)
          wapi_SetBkMode( aNM[ 1 ], WIN_TRANSPARENT )
          RETURN ::hBrushBG
       ENDIF

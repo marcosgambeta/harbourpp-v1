@@ -105,12 +105,12 @@ FUNCTION tip_MailAssemble( ;
    cContentType := iif(lBodyHTML, "text/html", "text/plain") + "; charset=" + cCharset
 
    /* add ending EOL to body, if there wasn't any */
-   IF ! Right(cBody, 2) == Chr(13) + Chr(10)
+   IF !Right(cBody, 2) == Chr(13) + Chr(10)
       cBody += Chr(13) + Chr(10)
    ENDIF
 
    /* Convert input to the CP of the email */
-   IF ! Empty(cCharsetCP)
+   IF !Empty(cCharsetCP)
       xTo := s_TransCP( xTo, cCharsetCP )
       xCC := s_TransCP( xCC, cCharsetCP )
       cFrom := s_TransCP( cFrom, cCharsetCP )
@@ -171,7 +171,7 @@ FUNCTION tip_MailAssemble( ;
 
          IF cMimeType == "text/html"
             cMimeType += "; charset=" + cCharset
-            IF ! Right(cData, 2) == Chr(13) + Chr(10)
+            IF !Right(cData, 2) == Chr(13) + Chr(10)
                cData += Chr(13) + Chr(10)
             ENDIF
          ENDIF
@@ -199,7 +199,7 @@ FUNCTION tip_MailAssemble( ;
 
    oMail:SetHeader( cSubject, cFrom, xTo, xCC )
    oMail:hHeaders[ "Date" ] := tip_TimeStamp()
-   IF ! Empty(cReplyTo)
+   IF !Empty(cReplyTo)
       oMail:hHeaders[ "Reply-to" ] := cReplyTo
    ENDIF
    IF lRead
@@ -215,7 +215,7 @@ STATIC FUNCTION s_TransCP( xData, cCP )
 
    LOCAL tmp
 
-   IF ! Empty(cCP)
+   IF !Empty(cCP)
       DO CASE
       CASE HB_ISSTRING( xData )
          RETURN hb_Translate( xData,, cCP )

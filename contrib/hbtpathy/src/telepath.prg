@@ -71,11 +71,11 @@ FUNCTION tp_baud( nPort, nNewBaud )
 
    hb_default( @nNewBaud, 0 )
 
-   IF ! isport( nPort ) .OR. Empty(t_aPorts[ nPort, TPFP_NAME ])
+   IF !isport( nPort ) .OR. Empty(t_aPorts[ nPort, TPFP_NAME ])
       RETURN TE_NOPORT
    ENDIF
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -112,7 +112,7 @@ FUNCTION tp_close( nPort, nTimeout )
    hb_default( @nTimeout, 0 )
 
    /* Clipper returns 0 even if a port is not open */
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -138,7 +138,7 @@ FUNCTION tp_reopen( nPort, nInSize, nOutSize )
 
    LOCAL nBaud, nData, cParity, nStop, cPortName
 
-   IF ! isport( nPort ) .OR. Empty(t_aPorts[ nPort, TPFP_NAME ])
+   IF !isport( nPort ) .OR. Empty(t_aPorts[ nPort, TPFP_NAME ])
       RETURN TE_NOPORT
    ENDIF
 
@@ -152,7 +152,7 @@ FUNCTION tp_reopen( nPort, nInSize, nOutSize )
 
 FUNCTION tp_open( nPort, nInSize, nOutSize, nBaud, nData, cParity, nStop, cPortname )
 
-   IF ! isport( nPort )
+   IF !isport( nPort )
       RETURN TE_NOPORT
    ENDIF
 
@@ -207,7 +207,7 @@ FUNCTION tp_recv( nPort, nLength, nTimeout )
    LOCAL nDone
    LOCAL cRet
 
-   IF ! HB_ISNUMERIC(nLength)
+   IF !HB_ISNUMERIC(nLength)
       nLength := t_aPorts[ nPort, TPFP_INBUF_SIZE ]
    ENDIF
    hb_default( @nTimeout, 0 )
@@ -219,7 +219,7 @@ FUNCTION tp_recv( nPort, nLength, nTimeout )
    DO WHILE Len(t_aPorts[ nPort, TPFP_INBUF ]) < nLength .AND. ;
          ( nTimeout < 0 .OR. Seconds() < nDone )
 
-      IF ! tp_idle()
+      IF !tp_idle()
          FetchChars( nPort )
       ELSE
          EXIT
@@ -241,7 +241,7 @@ FUNCTION tp_send( nPort, cString, nTimeout )
    hb_default( @cString, "" )
    hb_default( @nTimeout, 0 )
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
    IF Len(cString) == 0
@@ -254,7 +254,7 @@ FUNCTION tp_send( nPort, cString, nTimeout )
 FUNCTION tp_sendsub(nPort, cString, nStart, nLength, nTimeout)
 
    hb_default( @nStart, 1 )
-   IF ! HB_ISNUMERIC(nLength)
+   IF !HB_ISNUMERIC(nLength)
       nLength := Len(cString)
    ENDIF
 
@@ -268,11 +268,11 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
    LOCAL nStartPos := 1, nFirst := 0
    LOCAL nDone, cRet := ""
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN ""
    ENDIF
 
-   IF ! HB_ISSTRING( cDelim ) .OR. Len(cDelim) == 0
+   IF !HB_ISSTRING( cDelim ) .OR. Len(cDelim) == 0
       RETURN ""
    ENDIF
 
@@ -327,7 +327,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
             EXIT
          ENDIF
 
-         IF ! tp_idle()
+         IF !tp_idle()
             FetchChars( nPort )
          ELSE
             EXIT
@@ -351,7 +351,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
 */
 FUNCTION tp_lookfor( nPort, cLookfor )
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -361,7 +361,7 @@ FUNCTION tp_lookfor( nPort, cLookfor )
 
 FUNCTION tp_inchrs( nPort )
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -371,7 +371,7 @@ FUNCTION tp_inchrs( nPort )
 
 FUNCTION tp_infree( nPort )
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -379,7 +379,7 @@ FUNCTION tp_infree( nPort )
 
 FUNCTION tp_outfree( nPort )
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -418,7 +418,7 @@ FUNCTION tp_waitfor(...) /* nPort, nTimeout, acList|cString..., lIgnorecase */
    // nTimeout := aParam[ 2 ]
    // lIgnorecase := aParam[ Len(aParam) ]
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -480,7 +480,7 @@ FUNCTION tp_ctrlcts( nPort, nNewCtrl )
    LOCAL nCurValue
    LOCAL nFlag
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -515,7 +515,7 @@ FUNCTION tp_ctrldtr( nPort, nNewCtrl )
    LOCAL nCurValue
    LOCAL nFlag
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 
@@ -539,7 +539,7 @@ FUNCTION tp_isdcd( nPort )
 
    LOCAL nValue
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN .F.
    ENDIF
 
@@ -551,7 +551,7 @@ FUNCTION tp_isri( nPort )
 
    LOCAL nValue
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN .F.
    ENDIF
 
@@ -563,7 +563,7 @@ FUNCTION tp_isdsr( nPort )
 
    LOCAL nValue
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN .F.
    ENDIF
 
@@ -575,7 +575,7 @@ FUNCTION tp_iscts( nPort )
 
    LOCAL nValue
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN .F.
    ENDIF
 
@@ -589,7 +589,7 @@ FUNCTION tp_flush( nPort, nTimeout )
 
    hb_default( @nTimeout, -1 )
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN TE_CLOSED
    ENDIF
 
@@ -626,7 +626,7 @@ FUNCTION tp_setport()
 
 STATIC FUNCTION isopenport( nPort )
 
-   IF ! isport( nPort )
+   IF !isport( nPort )
       RETURN .F.
    ENDIF
 
@@ -634,7 +634,7 @@ STATIC FUNCTION isopenport( nPort )
 
 STATIC FUNCTION isport( nPort )
 
-   IF ! HB_ISNUMERIC(nPort) .OR. nPort < 1 .OR. nPort > TP_MAXPORTS
+   IF !HB_ISNUMERIC(nPort) .OR. nPort < 1 .OR. nPort > TP_MAXPORTS
       RETURN .F.
    ENDIF
 
@@ -644,7 +644,7 @@ STATIC FUNCTION FetchChars( nPort )
 
    LOCAL cStr
 
-   IF ! isopenport( nPort )
+   IF !isopenport( nPort )
       RETURN 0
    ENDIF
 

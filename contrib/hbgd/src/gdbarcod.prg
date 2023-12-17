@@ -171,11 +171,11 @@ METHOD GDBarCode:Draw13( cText )
    ::Settext( cText )
 
    // Valid characters
-   IF ! ::CheckCode()
+   IF !::CheckCode()
       lError := .T.
    ENDIF
 
-   IF ! lError
+   IF !lError
 
       IF ::book .AND. Len(::text) != 10
          ::DrawError( "Must contains 10 chars if ISBN is true." )
@@ -193,7 +193,7 @@ METHOD GDBarCode:Draw13( cText )
          lError := .T.
       ENDIF
 
-      IF ! lError
+      IF !lError
 
          // If we have to write text, we moved the barcode to the right to have space to put digit
          ::positionX := iif(::textfont == 0, 0, 10)
@@ -306,11 +306,11 @@ METHOD GDBarCode:Draw8( cText )
    ::Settext( cText )
 
    // Valid characters
-   IF ! ::CheckCode()
+   IF !::CheckCode()
       lError := .T.
    ENDIF
 
-   IF ! lError
+   IF !lError
 
       ::positionX := iif(::textfont == 0, 0, 10)
 
@@ -430,7 +430,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
 
    ::settext( cText )
 
-   IF ! Empty(cModeCode)
+   IF !Empty(cModeCode)
       IF HB_ISSTRING( cModeCode ) .AND. Upper(cModeCode) $ "ABC"
          cModeCode := Upper(cModeCode)
       ELSE
@@ -469,7 +469,7 @@ METHOD GDBarCode:Draw128( cText, cModeCode )
 
    NEXT
 
-   IF ! lError
+   IF !lError
 
       IF Empty(cModeCode)
 
@@ -591,7 +591,7 @@ METHOD GDBarCode:GenCodei25()
       lError := .T.
    ENDIF
 
-   IF ! lError
+   IF !lError
 
       bc_string := Upper(::text)
 

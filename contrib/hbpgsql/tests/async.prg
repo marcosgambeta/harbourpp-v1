@@ -48,7 +48,7 @@ STATIC PROCEDURE Query( conn, cQuery, lCancel )
       ENDIF
 
       IF PQconsumeInput( conn )
-         IF ! PQisBusy( conn )
+         IF !PQisBusy( conn )
             EXIT
          ENDIF
       ENDIF
@@ -57,7 +57,7 @@ STATIC PROCEDURE Query( conn, cQuery, lCancel )
    IF hb_keyStd( Inkey() ) != K_ESC
       ? "PQgetResult", hb_ValToExp( res := PQgetResult( conn ) )
 
-      IF ! Empty(res)
+      IF !Empty(res)
          FOR x := 1 TO PQlastrec(res)
             ?
             FOR y := 1 TO PQfcount( res )

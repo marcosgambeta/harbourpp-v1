@@ -161,7 +161,7 @@ METHOD WvgToolBar:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::SetWindowProcCallback()
 #endif
 
-   IF ! Empty(::hWnd)
+   IF !Empty(::hWnd)
       ::SendToolbarMessage( TB_BUTTONSTRUCTSIZE )
       ::hImageList := wapi_ImageList_Create( ::imageWidth, ::imageHeight, ILC_COLOR32 + ILC_MASK, 0, 1 )
       ::SendToolbarMessage( TB_SETIMAGELIST, ::hImageList )
@@ -237,7 +237,7 @@ METHOD PROCEDURE WvgToolBar:destroy()
       ENDIF
    NEXT
 
-   IF ! Empty(::hImageList)
+   IF !Empty(::hImageList)
       wapi_ImageList_Destroy( ::hImageList )
    ENDIF
 
@@ -263,7 +263,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
    HB_SYMBOL_UNUSED( cDLL )
 
    /* Issue this at the beginning of first item */
-   IF ! ::lSized
+   IF !::lSized
 #if 0
       ::SendToolbarMessage( TB_SETBUTTONWIDTH, ::buttonWidth, ::buttonWidth )
 #endif
@@ -298,7 +298,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
 
    ENDSWITCH
 
-   IF ! Empty(pBitmap)
+   IF !Empty(pBitmap)
       /* oBtn:image := pBitmap */
 
       IF HB_ISNUMERIC(nMapRGB)
@@ -306,7 +306,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
       ELSE
          nBtn := wapi_ImageList_Add( ::hImageList, pBitmap )
       ENDIF
-      IF ! HB_ISPOINTER( xImage )
+      IF !HB_ISPOINTER( xImage )
          wvg_DeleteObject( pBitmap )
       ENDIF
 

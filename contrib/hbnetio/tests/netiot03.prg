@@ -64,11 +64,11 @@ PROCEDURE Main()
    nSec := Seconds() + 3
    WHILE Seconds() < nSec
       xData := netio_GetData(nStream1)
-      IF ! Empty(xData)
+      IF !Empty(xData)
          ? hb_ValToExp( xData )
       ENDIF
       xData := netio_GetData(nStream2)
-      IF ! Empty(xData)
+      IF !Empty(xData)
          ?? "", hb_ValToExp( xData )
       ENDIF
    ENDDO
@@ -79,7 +79,7 @@ PROCEDURE Main()
 
    lExists := netio_FuncExec("hb_DirExists", "./data")
    ? "Directory './data'", iif(lExists, "exists", "not exists")
-   IF ! lExists
+   IF !lExists
       ? "Creating directory './data' ->", ;
          iif(netio_FuncExec("hb_DirCreate", "./data") == -1, "error", "OK")
    ENDIF
@@ -154,7 +154,7 @@ PROCEDURE testdb(cName)
    ordSetFocus(1)
    dbGoTop()
    WHILE ! Eof()
-      IF ! field->F1 == field->F2
+      IF !field->F1 == field->F2
          ? "error at record:", RecNo()
          ? "  ! '" + field->F1 + "' == '" + field->F2 + "'"
       ENDIF
@@ -187,7 +187,7 @@ FUNCTION reg_charstream( pConnSock, nStream )
 STATIC FUNCTION rpc_timer( pConnSock, nStream )
 
    WHILE .T.
-      IF ! netio_SrvSendItem( pConnSock, nStream, Time() )
+      IF !netio_SrvSendItem( pConnSock, nStream, Time() )
          ? "CLOSED STREAM:", nStream
          EXIT
       ENDIF
@@ -201,7 +201,7 @@ STATIC FUNCTION rpc_charstream( pConnSock, nStream )
    LOCAL n := 0
 
    WHILE .T.
-      IF ! netio_SrvSendData(pConnSock, nStream, Chr(Asc("A") + n))
+      IF !netio_SrvSendData(pConnSock, nStream, Chr(Asc("A") + n))
          ? "CLOSED STREAM:", nStream
          EXIT
       ENDIF

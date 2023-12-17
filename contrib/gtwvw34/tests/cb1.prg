@@ -111,7 +111,7 @@ STATIC PROCEDURE CBhandler( nWinNum, nId, nEvent, nIndex, nPBid )
       wvw_pbEnable( nWinNum, nPBid, nIndex == 0 )
       EXIT
    CASE 1  // CBN_SELCHANGE
-      IF ! wvw_cbIsDropped( nWinNum, nId )
+      IF !wvw_cbIsDropped( nWinNum, nId )
          wvw_pbEnable( nWinNum, nPBid, nIndex == 0 )  // nIndex is 0-based
          wvw_cbSetFocus( nWinNum, nId )
       ENDIF

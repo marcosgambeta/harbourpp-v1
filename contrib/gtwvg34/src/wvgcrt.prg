@@ -362,7 +362,7 @@ METHOD WvgCrt:destroy()
       ::aChildren := {}
    ENDIF
 
-   IF ! ::isGT
+   IF !::isGT
       IF ::lModal
          hb_gtInfo( HB_GTI_ENABLE, ::pGTp )
          hb_gtSelect( ::pGTp )
@@ -449,7 +449,7 @@ METHOD WvgCrt:lockUpdate()
 
 METHOD WvgCrt:menuBar()
 
-   IF ! HB_ISOBJECT( ::oMenu )
+   IF !HB_ISOBJECT( ::oMenu )
       ::oMenu := WvgMenuBar():New( Self ):create()
    ENDIF
 

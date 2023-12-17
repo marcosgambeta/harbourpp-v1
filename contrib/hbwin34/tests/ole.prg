@@ -358,7 +358,7 @@ STATIC FUNCTION OO_ConvertToURL( cString )
    cString := StrTran( cString, "\", "/" )
 
    // Handle UNC paths
-   IF ! hb_LeftEq( cString, "//" )
+   IF !hb_LeftEq( cString, "//" )
       cString := StrTran( cString, ":", "|" )
       cString := "///" + cString
    ENDIF

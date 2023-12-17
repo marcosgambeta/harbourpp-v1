@@ -134,7 +134,7 @@ METHOD TIPClientFTP:Open( cUrl )
       ::oUrl := TUrl():New( cUrl )
    ENDIF
 
-   IF ! ::oUrl:cUserid == "" .AND. ;
+   IF !::oUrl:cUserid == "" .AND. ;
       ! ::oUrl:cPassword == ""
 
       IF ::super:Open()
@@ -192,7 +192,7 @@ METHOD TIPClientFTP:ScanLength()
 
    LOCAL aBytes := hb_regex( ::RegBytes, ::cReply )
 
-   IF ! Empty(aBytes)
+   IF !Empty(aBytes)
       ::nLength := Val( aBytes[ 2 ] )
    ENDIF
 
@@ -208,7 +208,7 @@ METHOD TIPClientFTP:TransferStart()
       skt := hb_inetConnectIP( ::cDataServer, ::nDataPort )
       IF skt != NIL .AND. ::inetErrorCode( skt ) == 0
          // Get the start message from the control connection
-         IF ! ::GetReply()
+         IF !::GetReply()
             hb_inetClose( skt )
             RETURN .F.
          ENDIF
@@ -246,7 +246,7 @@ METHOD TIPClientFTP:Pasv()
 
    ::inetSendAll( ::SocketCon, "PASV" + ::cCRLF )
 
-   IF ! ::GetReply()
+   IF !::GetReply()
       RETURN .F.
    ENDIF
 
@@ -321,7 +321,7 @@ METHOD TIPClientFTP:LS( cSpec )
       RETURN .F.
    ENDIF
 
-   IF ! ::bUsePasv .AND. ! ::Port()
+   IF !::bUsePasv .AND. ! ::Port()
       RETURN .F.
    ENDIF
 
@@ -384,7 +384,7 @@ METHOD TIPClientFTP:Stor( cFile )
 
    /* It is important not to delete these lines in order not to disrupt the timing of
       the responses, which can lead to failures in transfers. */
-   IF ! ::bUsePasv
+   IF !::bUsePasv
       ::GetReply()
    ENDIF
 
@@ -400,13 +400,13 @@ METHOD TIPClientFTP:List( cSpec )
 #endif
       RETURN NIL
    ENDIF
-   IF ! ::bUsePasv .AND. ! ::Port()
+   IF !::bUsePasv .AND. ! ::Port()
       RETURN NIL
    ENDIF
 
    hb_default( @cSpec, "" )
 
-   IF ! Empty(cSpec)
+   IF !Empty(cSpec)
       cSpec := " " + cSpec
    ENDIF
 
@@ -491,9 +491,9 @@ METHOD TIPClientFTP:Read( nLen )
 
    LOCAL cRet
 
-   IF ! ::bInitialized
+   IF !::bInitialized
 
-      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          ::bEof := .T.  // no data for this transaction
          RETURN NIL
       ENDIF
@@ -502,7 +502,7 @@ METHOD TIPClientFTP:Read( nLen )
          RETURN ::List()
       ENDIF
 
-      IF ! ::Retr( ::oUrl:cFile )
+      IF !::Retr( ::oUrl:cFile )
          ::bEof := .T.  // no data for this transaction
          RETURN NIL
       ENDIF
@@ -521,17 +521,17 @@ METHOD TIPClientFTP:Read( nLen )
 /* FTP transfer wants commit only at end. */
 METHOD TIPClientFTP:Write( cData, nLen )
 
-   IF ! ::bInitialized
+   IF !::bInitialized
 
       IF Empty(::oUrl:cFile)
          RETURN -1
       ENDIF
 
-      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          RETURN -1
       ENDIF
 
-      IF ! ::Stor( ::oUrl:cFile )
+      IF !::Stor( ::oUrl:cFile )
          RETURN -1
       ENDIF
 
@@ -559,7 +559,7 @@ METHOD TIPClientFTP:MGet( cSpec, cLocalPath )
    IF ( cStr := ::ReadAuxPort() ) != NIL
       FOR EACH cFile IN hb_ATokens( cStr, .T. )
          cFile := RTrim(cFile)
-         IF ! cFile == ""
+         IF !cFile == ""
             ::Downloadfile( cLocalPath + cFile, cFile )
          ENDIF
       NEXT
@@ -572,7 +572,7 @@ METHOD TIPClientFTP:MPut( cFileSpec, cAttr )
    LOCAL aFile
    LOCAL cStr
 
-   IF ! HB_ISSTRING( cFileSpec )
+   IF !HB_ISSTRING( cFileSpec )
       RETURN NIL
    ENDIF
 
@@ -592,21 +592,21 @@ METHOD TIPClientFTP:UploadFile( cLocalFile, cRemoteFile )
    ::bEof := .F.
    ::oUrl:cFile := hb_defaultValue( cRemoteFile, hb_FNameNameExt( cLocalFile ) )
 
-   IF ! ::bInitialized
+   IF !::bInitialized
 
       IF Empty(::oUrl:cFile)
          RETURN .F.
       ENDIF
 
-      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          RETURN .F.
       ENDIF
 
-      IF ! ::bUsePasv .AND. ! ::Port()
+      IF !::bUsePasv .AND. ! ::Port()
          RETURN .F.
       ENDIF
 
-      IF ! ::Stor( ::oUrl:cFile )
+      IF !::Stor( ::oUrl:cFile )
          RETURN .F.
       ENDIF
 
@@ -621,18 +621,18 @@ METHOD TIPClientFTP:DownloadFile( cLocalFile, cRemoteFile )
    ::bEof := .F.
    ::oUrl:cFile := hb_defaultValue( cRemoteFile, hb_FNameNameExt( cLocalFile ) )
 
-   IF ! ::bInitialized
+   IF !::bInitialized
 
-      IF ! Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
+      IF !Empty(::oUrl:cPath) .AND. ! ::CWD( ::oUrl:cPath )
          ::bEof := .T.  // no data for this transaction
          RETURN .F.
       ENDIF
 
-      IF ! ::bUsePasv .AND. ! ::Port()
+      IF !::bUsePasv .AND. ! ::Port()
          RETURN .F.
       ENDIF
 
-      IF ! ::Retr( ::oUrl:cFile )
+      IF !::Retr( ::oUrl:cFile )
          ::bEof := .T.  // no data for this transaction
          RETURN .F.
       ENDIF

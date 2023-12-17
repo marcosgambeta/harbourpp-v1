@@ -136,7 +136,7 @@ METHOD GenerateText:AddEntry( oEntry )
          ENDIF
       NEXT
 
-      IF ! ::lContinuous
+      IF !::lContinuous
          ::cFile += hb_BChar( 12 ) + hb_eol()
       ENDIF
    ENDIF
@@ -147,9 +147,9 @@ METHOD PROCEDURE GenerateText:WriteEntry( cCaption, cContent, lPreformatted )
 
    LOCAL nIndent
 
-   IF ! Empty(cContent)
+   IF !Empty(cContent)
       nIndent := iif(HB_ISNULL( cCaption ), 0, 6)
-      IF ! HB_ISNULL( cCaption ) .AND. nIndent > 0
+      IF !HB_ISNULL( cCaption ) .AND. nIndent > 0
          ::cFile += Space( ::Depth * 6 ) + cCaption + ": " + hb_eol()
       ENDIF
       nIndent += ::Depth * 6

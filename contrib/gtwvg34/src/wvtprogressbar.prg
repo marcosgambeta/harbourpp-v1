@@ -104,7 +104,7 @@ METHOD WvtProgressBar:Create()
 
 METHOD WvtProgressBar:Display( nCurrent, nTotal )
 
-   IF ! ::lActive
+   IF !::lActive
       RETURN Self
    ENDIF
 

@@ -128,7 +128,7 @@ METHOD TMySQLRow:FieldPut( cnField, Value )
          ENDIF
 
          // Save starting value for this field
-         IF ! ::aDirty[ nNum ]
+         IF !::aDirty[ nNum ]
             ::aOldValue[ nNum ] := ::aRow[ nNum ]
             ::aDirty[ nNum ] := .T.
          ENDIF
@@ -164,7 +164,7 @@ METHOD TMySQLRow:FieldDec(nNum, lFormat)
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
 
-      IF ! lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
+      IF !lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
                            ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
          RETURN Set( _SET_DECIMALS )
       ELSE
@@ -217,7 +217,7 @@ METHOD TMySQLRow:MakePrimaryKeyWhere()
       IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
          hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG ) == MULTIPLE_KEY_FLAG
 
-         IF ! Empty(cWhere)
+         IF !Empty(cWhere)
             cWhere += " AND "
          ENDIF
 
@@ -232,7 +232,7 @@ METHOD TMySQLRow:MakePrimaryKeyWhere()
       ENDIF
    NEXT
 
-   IF ! Empty(cWhere)
+   IF !Empty(cWhere)
       cWhere := " WHERE " + cWhere
    ENDIF
 
@@ -319,7 +319,7 @@ METHOD TMySQLQuery:New( nSocket, cQuery )
    IF mysql_query( nSocket, cQuery ) == 0
 
       // save result set
-      IF ! Empty(::nResultHandle := mysql_store_result( nSocket ))
+      IF !Empty(::nResultHandle := mysql_store_result( nSocket ))
 
          ::nNumRows := mysql_num_rows( ::nResultHandle )
          ::nNumFields := mysql_num_fields( ::nResultHandle )
@@ -427,7 +427,7 @@ METHOD TMySQLQuery:GetRow( nRow )
    LOCAL oRow := NIL
    LOCAL i
 
-   IF ! HB_ISNUMERIC(nRow)
+   IF !HB_ISNUMERIC(nRow)
       nRow := ::nCurRow
    ENDIF
 
@@ -614,7 +614,7 @@ METHOD TMySQLQuery:FieldDec(nNum, lFormat)
    hb_default( @lFormat, .F. )
 
    IF nNum >= 1 .AND. nNum <= Len(::aFieldStruct)
-      IF ! lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
+      IF !lFormat .AND. ( ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_FLOAT .OR. ;
                            ::aFieldStruct[ nNum ][ MYSQL_FS_TYPE ] == MYSQL_TYPE_DOUBLE )
          RETURN Set( _SET_DECIMALS )
       ELSE
@@ -1156,7 +1156,7 @@ METHOD TMySQLTable:MakePrimaryKeyWhere()
       IF hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], PRI_KEY_FLAG ) == PRI_KEY_FLAG .OR. ;
          hb_bitAnd( ::aFieldStruct[ nI ][ MYSQL_FS_FLAGS ], MULTIPLE_KEY_FLAG ) == MULTIPLE_KEY_FLAG
 
-         IF ! Empty(cWhere)
+         IF !Empty(cWhere)
             cWhere += " AND "
          ENDIF
 
@@ -1164,7 +1164,7 @@ METHOD TMySQLTable:MakePrimaryKeyWhere()
       ENDIF
    NEXT
 
-   IF ! Empty(cWhere)
+   IF !Empty(cWhere)
       cWhere := " WHERE " + cWhere
    ENDIF
 
@@ -1495,7 +1495,7 @@ METHOD TMySQLServer:TableStruct( cTable )
    aStruct := {}
    nRes := mysql_list_fields( ::nSocket, cTable )
 
-   IF ! Empty(nRes)
+   IF !Empty(nRes)
       FOR i := 1 TO mysql_num_fields( nRes )
 
          aField := mysql_fetch_field( nRes )

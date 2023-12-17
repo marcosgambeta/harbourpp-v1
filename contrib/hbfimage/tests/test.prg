@@ -33,7 +33,7 @@ PROCEDURE Main()
 #endif
    AltD()
    // Check output directory
-   IF ! hb_DirExists( IMAGES_OUT )
+   IF !hb_DirExists( IMAGES_OUT )
       hb_DirCreate( IMAGES_OUT )
    ENDIF
 

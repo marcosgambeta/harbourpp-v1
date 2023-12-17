@@ -206,7 +206,7 @@ METHOD TIPMail:Attach( oSubPart )
 
    IF HB_ISOBJECT( oSubPart ) .AND. oSubPart:ClassName() == "TIPMAIL"
       // reset wrong content-type
-      IF ! ::isMultiPart()
+      IF !::isMultiPart()
          ::hHeaders[ "Content-Type" ] := "multipart/mixed"
       ENDIF
 
@@ -254,7 +254,7 @@ METHOD TIPMail:HeadersToString()
       ENDIF
    NEXT
 
-   IF ! Empty(::aAttachments)
+   IF !Empty(::aAttachments)
       cRet += "Mime-Version: " + ::hHeaders[ "Mime-Version" ] + e"\r\n"
    ENDIF
 
@@ -281,11 +281,11 @@ METHOD TIPMail:ToString()
    LOCAL cRet
 
    // this is a multipart message; we need a boundary
-   IF ! Empty(::aAttachments)
+   IF !Empty(::aAttachments)
       ::hHeaders[ "Mime-Version" ] := "1.0"
 
       // reset failing content type
-      IF ! ::isMultiPart()
+      IF !::isMultiPart()
          ::hHeaders[ "Content-Type" ] := "multipart/mixed"
       ENDIF
 
@@ -293,7 +293,7 @@ METHOD TIPMail:ToString()
       cBoundary := ::GetFieldOption( "Content-Type", "Boundary" )
       IF Empty(cBoundary)
          cBoundary := ::MakeBoundary()
-         IF ! ::SetFieldOption( "Content-Type", "Boundary", cBoundary )
+         IF !::SetFieldOption( "Content-Type", "Boundary", cBoundary )
             ::hHeaders[ "Content-Type" ] := "multipart/mixed; boundary=" + '"' + cBoundary + '"'
          ENDIF
       ENDIF
@@ -319,7 +319,7 @@ METHOD TIPMail:ToString()
       ENDIF
    ENDIF
 
-   IF ! Empty(::aAttachments)
+   IF !Empty(::aAttachments)
       // Eventually go with MIME multipart
       FOR EACH i IN ::aAttachments
          cRet += "--" + cBoundary + e"\r\n" + i:ToString() + e"\r\n"
@@ -335,7 +335,7 @@ METHOD TIPMail:FromString( cMail, cBoundary, nPos )
    LOCAL nLinePos, nSplitPos, nBodyPos
    LOCAL cValue, cLastField
 
-   IF ! HB_ISSTRING( cMail )
+   IF !HB_ISSTRING( cMail )
       RETURN 0
    ENDIF
 
@@ -484,7 +484,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
 
    LOCAL i
 
-   IF ! HB_ISSTRING( cFrom ) .OR. Empty(cFrom)
+   IF !HB_ISSTRING( cFrom ) .OR. Empty(cFrom)
       RETURN .F.
    ENDIF
 
@@ -511,8 +511,8 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
 
    cTo := ""
    FOR EACH i IN aTo
-      IF ! Empty(i)
-         IF ! Empty(cTo)
+      IF !Empty(i)
+         IF !Empty(cTo)
             cTo += "," + e"\r\n" + " "
          ENDIF
          i := AllTrim(i)
@@ -528,11 +528,11 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
 
    ::setFieldPart( "To", cTo )
 
-   IF ! Empty(aCC)
+   IF !Empty(aCC)
       cCC := ""
       FOR EACH i IN aCC
-         IF ! Empty(i)
-            IF ! Empty(cCC)
+         IF !Empty(i)
+            IF !Empty(cCC)
                cCC += "," + e"\r\n" + " "
             ENDIF
             i := AllTrim(i)
@@ -542,7 +542,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
          ENDIF
       NEXT
 
-      IF ! Empty(cCC)
+      IF !Empty(cCC)
          ::setFieldPart( "Cc", cCC )
       ENDIF
    ENDIF
@@ -622,7 +622,7 @@ STATIC FUNCTION WordEncodeQ( cData, cCharset )
    LOCAL cString
    LOCAL lToEncode := .F.
 
-   IF ! Empty(cCharset)
+   IF !Empty(cCharset)
 
       /* FIXME: Add support to handle long string. */
 

@@ -384,7 +384,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
 
    hDlg := wvt_CreateDialogDynamic(xTemplate, lOnTop, cbDlgProc, nDlgMode)
 
-   IF ! Empty(hDlg)
+   IF !Empty(hDlg)
       IF ncIcon != NIL
          wvt_DlgSetIcon( hDlg, ncIcon )
       ENDIF
@@ -453,7 +453,7 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
       xRet := {}
-      IF ! Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
+      IF !Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len(aTmp)
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
@@ -494,7 +494,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
       xRet := {}
-      IF ! Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
+      IF !Empty(aTmp := hb_ATokens( cRet, Chr(0) ))
          cPath := aTmp[ 1 ]
          FOR i := 2 TO Len(aTmp)
             AAdd( xRet, cPath + "\" + aTmp[ i ] )
@@ -669,7 +669,7 @@ PROCEDURE wvt_SetTimer( nTimerID, nMiliSeconds )
 
    LOCAL hWnd := hb_gtInfo( HB_GTI_WINHANDLE )
 
-   IF ! Empty(hWnd)
+   IF !Empty(hWnd)
       wapi_SetTimer( hWnd, nTimerID, nMiliSeconds )
    ENDIF
 
@@ -679,7 +679,7 @@ PROCEDURE wvt_KillTimer( nTimerID )
 
    LOCAL hWnd := hb_gtInfo( HB_GTI_WINHANDLE )
 
-   IF ! Empty(hWnd)
+   IF !Empty(hWnd)
       wapi_KillTimer( hWnd, nTimerID )
    ENDIF
 
@@ -825,7 +825,7 @@ FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
       hIcon := wapi_LoadImage( wapi_GetModuleHandle(), ncIcon, WIN_IMAGE_ICON )
    ENDIF
 
-   IF ! Empty(hIcon)
+   IF !Empty(hIcon)
       wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_SMALL, hIcon )  /* Titlebar icon */
       wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_BIG  , hIcon )  /* Tasklist icon */
    ENDIF
@@ -858,7 +858,7 @@ FUNCTION wvg_TrackPopupMenu( hMenu, nFlags, x, y, hWnd )
 
    LOCAL xy
 
-   IF ! HB_ISNUMERIC(x) .OR. ! HB_ISNUMERIC(y)
+   IF !HB_ISNUMERIC(x) .OR. ! HB_ISNUMERIC(y)
       xy := { => }
       wapi_GetCursorPos( @xy )
       x := xy[ "x" ]

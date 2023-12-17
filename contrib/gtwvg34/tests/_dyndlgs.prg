@@ -190,7 +190,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       wvg_SetTimer( hDlg, 5001, 1000 ) // 1 sec
 
       IF Empty(aHFonts := SetFonts())
-         IF ! Empty(hFont := wvt_CreateFont( "Times New Roman", 18 ))
+         IF !Empty(hFont := wvt_CreateFont( "Times New Roman", 18 ))
             SetFonts( hFont )
          ENDIF
       ENDIF
@@ -202,7 +202,7 @@ STATIC FUNCTION DynDlgProc(hDlg, nMsg, wParam, lParam)
       IF Empty(SetIcons())
          SetIcons( wvg_LoadIcon( "vr_1.ico" ) )
       ENDIF
-      IF ! Empty(SetIcons())
+      IF !Empty(SetIcons())
          wapi_SendMessage( wapi_GetDlgItem( hDlg, ID_ICO_VOUCH ), STM_SETIMAGE, WIN_IMAGE_ICON, SetIcons()[ 1 ] )
       ENDIF
 

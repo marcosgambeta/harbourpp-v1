@@ -30,7 +30,7 @@ PROCEDURE Main( cValue, cBaseImage )
    hb_default( @cValue, Str( hb_RandomInt( 1, 10 ^ DISPLAY_NUM ), DISPLAY_NUM ) )
    hb_default( @cBaseImage, "d57chevy.gif" )
 
-   IF ! hb_FileExists( IMAGES_IN + cBaseImage )
+   IF !hb_FileExists( IMAGES_IN + cBaseImage )
       ? "ERROR: Base Image File '" + IMAGES_IN + cBaseImage + "' not found"
       QUIT
    ENDIF
@@ -48,7 +48,7 @@ PROCEDURE Main( cValue, cBaseImage )
 
    // Check output directory
 #if 0
-   IF ! hb_DirExists( IMAGES_OUT )
+   IF !hb_DirExists( IMAGES_OUT )
       DirMake( IMAGES_OUT )
    ENDIF
 #endif
