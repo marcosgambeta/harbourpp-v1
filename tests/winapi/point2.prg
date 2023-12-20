@@ -1,7 +1,7 @@
 /*
  * WinApi test
  *
- * Copyright 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+ * Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
  *
  */
 
@@ -13,7 +13,7 @@ PROCEDURE Main()
 
    ? "pointer=", oPoint:ptr
 
-   ? "WinApi_GetCursorPos(oPoint)=", WinApi_GetCursorPos(oPoint)
+   ? "waGetCursorPos(oPoint)=", waGetCursorPos(oPoint)
 
    ? "X=", oPoint:GetX()
    ? "Y=", oPoint:GetY()

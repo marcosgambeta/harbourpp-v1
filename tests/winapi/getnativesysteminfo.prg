@@ -1,7 +1,7 @@
 /*
  * WinApi test
  *
- * Copyright 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+ * Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
  *
  */
 
@@ -24,9 +24,9 @@ PROCEDURE Main()
 
    ?
 
-   ? "calling WinApi_GetNativeSystemInfo"
+   ? "calling waGetNativeSystemInfo"
 
-   WinApi_GetNativeSystemInfo(o)
+   waGetNativeSystemInfo(o)
 
    ?
 

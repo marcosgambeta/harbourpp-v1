@@ -32,12 +32,12 @@ SOFTWARE.
 
 #include "hbapi.hpp"
 
-HB_FUNC( WINAPI_PTON )
+HB_FUNC( WAPTON )
 {
   hb_retnint(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
 }
 
-HB_FUNC( WINAPI_NTOP )
+HB_FUNC( WANTOP )
 {
   hb_retptr(reinterpret_cast<void*>(hb_parnint(1)));
 }

@@ -57,7 +57,7 @@ WINBASEAPI UINT WINAPI EnumSystemFirmwareTables (DWORD FirmwareTableProviderSign
 /*
 WINBASEAPI VOID WINAPI GetLocalTime (LPSYSTEMTIME lpSystemTime)
 */
-HB_FUNC( WINAPI_GETLOCALTIME )
+HB_FUNC( WAGETLOCALTIME )
 {
   GetLocalTime(static_cast<LPSYSTEMTIME>(winapi_get_ptr(1)));
 }
@@ -75,7 +75,7 @@ WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformationEx (LOGICAL_PROCESSOR_RE
 /*
 WINBASEAPI VOID WINAPI GetNativeSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
-HB_FUNC( WINAPI_GETNATIVESYSTEMINFO )
+HB_FUNC( WAGETNATIVESYSTEMINFO )
 {
   GetNativeSystemInfo(static_cast<LPSYSTEM_INFO>(winapi_get_ptr(1)));
 }
@@ -90,7 +90,7 @@ WINBASEAPI WINBOOL WINAPI GetOsSafeBootMode (PDWORD Flags)
 WINBASEAPI WINBOOL WINAPI GetProductInfo (DWORD dwOSMajorVersion, DWORD dwOSMinorVersion, DWORD dwSpMajorVersion, DWORD dwSpMinorVersion, PDWORD pdwReturnedProductType)
 */
 #if _WIN32_WINNT >= 0x0600
-HB_FUNC( WINAPI_GETPRODUCTINFO )
+HB_FUNC( WAGETPRODUCTINFO )
 {
   DWORD dwReturnedProductType;
   winapi_ret_BOOL(GetProductInfo(winapi_par_DWORD(1), winapi_par_DWORD(2), winapi_par_DWORD(3), winapi_par_DWORD(4), &dwReturnedProductType));
@@ -113,7 +113,7 @@ WINBASEAPI UINT WINAPI GetSystemFirmwareTable (DWORD FirmwareTableProviderSignat
 /*
 WINBASEAPI VOID WINAPI GetSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
-HB_FUNC( WINAPI_GETSYSTEMINFO )
+HB_FUNC( WAGETSYSTEMINFO )
 {
   GetSystemInfo(static_cast<LPSYSTEM_INFO>(winapi_get_ptr(1)));
 }
@@ -121,7 +121,7 @@ HB_FUNC( WINAPI_GETSYSTEMINFO )
 /*
 WINBASEAPI VOID WINAPI GetSystemTime (LPSYSTEMTIME lpSystemTime)
 */
-HB_FUNC( WINAPI_GETSYSTEMTIME )
+HB_FUNC( WAGETSYSTEMTIME )
 {
   GetSystemTime(static_cast<LPSYSTEMTIME>(winapi_get_ptr(1)));
 }
@@ -129,7 +129,7 @@ HB_FUNC( WINAPI_GETSYSTEMTIME )
 /*
 WINBASEAPI WINBOOL WINAPI GetSystemTimeAdjustment (PDWORD lpTimeAdjustment, PDWORD lpTimeIncrement, PBOOL lpTimeAdjustmentDisabled)
 */
-HB_FUNC( WINAPI_GETSYSTEMTIMEADJUSTMENT )
+HB_FUNC( WAGETSYSTEMTIMEADJUSTMENT )
 {
   DWORD TimeAdjustment;
   DWORD TimeIncrement;
@@ -159,7 +159,7 @@ WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryW (LPWSTR lpBuffer, UINT uSize)
 /*
 WINBASEAPI DWORD WINAPI GetTickCount (VOID)
 */
-HB_FUNC( WINAPI_GETTICKCOUNT )
+HB_FUNC( WAGETTICKCOUNT )
 {
   winapi_ret_DWORD(GetTickCount());
 }
@@ -168,7 +168,7 @@ HB_FUNC( WINAPI_GETTICKCOUNT )
 WINBASEAPI ULONGLONG WINAPI GetTickCount64 (VOID)
 */
 #if _WIN32_WINNT >= 0x0600
-HB_FUNC( WINAPI_GETTICKCOUNT64 )
+HB_FUNC( WAGETTICKCOUNT64 )
 {
   winapi_ret_ULONGLONG(GetTickCount64());
 }
@@ -197,7 +197,7 @@ WINBASEAPI UINT WINAPI GetWindowsDirectoryW (LPWSTR lpBuffer, UINT uSize)
 /*
 WINBASEAPI WINBOOL WINAPI GlobalMemoryStatusEx (LPMEMORYSTATUSEX lpBuffer)
 */
-HB_FUNC( WINAPI_GLOBALMEMORYSTATUSEX )
+HB_FUNC( WAGLOBALMEMORYSTATUSEX )
 {
   winapi_ret_BOOL(GlobalMemoryStatusEx(static_cast<LPMEMORYSTATUSEX>(winapi_get_ptr(1))));
 }
@@ -209,7 +209,7 @@ WINBASEAPI WINBOOL WINAPI SetComputerNameExW (COMPUTER_NAME_FORMAT NameType, LPC
 /*
 WINBASEAPI WINBOOL WINAPI SetLocalTime (CONST SYSTEMTIME *lpSystemTime)
 */
-HB_FUNC( WINAPI_SETLOCALTIME )
+HB_FUNC( WASETLOCALTIME )
 {
   winapi_ret_BOOL(SetLocalTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
 }
@@ -217,7 +217,7 @@ HB_FUNC( WINAPI_SETLOCALTIME )
 /*
 WINBASEAPI WINBOOL WINAPI SetSystemTime (CONST SYSTEMTIME *lpSystemTime)
 */
-HB_FUNC( WINAPI_SETSYSTEMTIME )
+HB_FUNC( WASETSYSTEMTIME )
 {
   winapi_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
 }

@@ -45,7 +45,7 @@ SOFTWARE.
 /*
 WINADVAPI LONG WINAPI RegCloseKey(HKEY hKey)
 */
-HB_FUNC( WINAPI_REGCLOSEKEY )
+HB_FUNC( WAREGCLOSEKEY )
 {
   winapi_ret_LONG(RegCloseKey(winapi_par_HKEY(1)));
 }
@@ -53,7 +53,7 @@ HB_FUNC( WINAPI_REGCLOSEKEY )
 /*
 WINADVAPI LONG WINAPI RegOverridePredefKey(HKEY hKey,HKEY hNewHKey)
 */
-HB_FUNC( WINAPI_REGOVERRIDEPREDEFKEY )
+HB_FUNC( WAREGOVERRIDEPREDEFKEY )
 {
   winapi_ret_LONG(RegOverridePredefKey(winapi_par_HKEY(1), winapi_par_HKEY(2)));
 }
@@ -69,7 +69,7 @@ WINADVAPI LONG WINAPI RegOpenCurrentUser(REGSAM samDesired,PHKEY phkResult)
 /*
 WINADVAPI LONG WINAPI RegDisablePredefinedCache(void)
 */
-HB_FUNC( WINAPI_REGDISABLEPREDEFINEDCACHE )
+HB_FUNC( WAREGDISABLEPREDEFINEDCACHE )
 {
   winapi_ret_LONG(RegDisablePredefinedCache());
 }
@@ -109,7 +109,7 @@ WINADVAPI LONG WINAPI RegCreateKeyExW(HKEY hKey,LPCWSTR lpSubKey,DWORD Reserved,
 /*
 WINADVAPI LONG WINAPI RegDeleteKeyA(HKEY hKey,LPCSTR lpSubKey)
 */
-HB_FUNC( WINAPI_REGDELETEKEYA )
+HB_FUNC( WAREGDELETEKEYA )
 {
   winapi_ret_LONG(RegDeleteKeyA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2)));
 }
@@ -117,12 +117,12 @@ HB_FUNC( WINAPI_REGDELETEKEYA )
 /*
 WINADVAPI LONG WINAPI RegDeleteKeyW(HKEY hKey,LPCWSTR lpSubKey)
 */
-HB_FUNC( WINAPI_REGDELETEKEYW )
+HB_FUNC( WAREGDELETEKEYW )
 {
   winapi_ret_LONG(RegDeleteKeyW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2)));
 }
 
-HB_FUNC( WINAPI_REGDELETEKEY )
+HB_FUNC( WAREGDELETEKEY )
 {
   void * str2;
   winapi_ret_LONG(RegDeleteKey(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
@@ -140,7 +140,7 @@ WINADVAPI LONG WINAPI RegDeleteKeyExW(HKEY hKey,LPCWSTR lpSubKey,REGSAM samDesir
 /*
 WINADVAPI LONG WINAPI RegDisableReflectionKey(HKEY hBase)
 */
-HB_FUNC( WINAPI_REGDISABLEREFLECTIONKEY )
+HB_FUNC( WAREGDISABLEREFLECTIONKEY )
 {
   winapi_ret_LONG(RegDisableReflectionKey(winapi_par_HKEY(1)));
 }
@@ -148,7 +148,7 @@ HB_FUNC( WINAPI_REGDISABLEREFLECTIONKEY )
 /*
 WINADVAPI LONG WINAPI RegEnableReflectionKey(HKEY hBase)
 */
-HB_FUNC( WINAPI_REGENABLEREFLECTIONKEY )
+HB_FUNC( WAREGENABLEREFLECTIONKEY )
 {
   winapi_ret_LONG(RegEnableReflectionKey(winapi_par_HKEY(1)));
 }
@@ -156,7 +156,7 @@ HB_FUNC( WINAPI_REGENABLEREFLECTIONKEY )
 /*
 WINADVAPI LONG WINAPI RegQueryReflectionKey(HKEY hBase,WINBOOL *bIsReflectionDisabled)
 */
-HB_FUNC( WINAPI_REGQUERYREFLECTIONKEY )
+HB_FUNC( WAREGQUERYREFLECTIONKEY )
 {
   BOOL bIsReflectionDisabled;
   winapi_ret_LONG(RegQueryReflectionKey(winapi_par_HKEY(1), &bIsReflectionDisabled));
@@ -166,7 +166,7 @@ HB_FUNC( WINAPI_REGQUERYREFLECTIONKEY )
 /*
 WINADVAPI LONG WINAPI RegDeleteValueA(HKEY hKey,LPCSTR lpValueName)
 */
-HB_FUNC( WINAPI_REGDELETEVALUEA )
+HB_FUNC( WAREGDELETEVALUEA )
 {
   winapi_ret_LONG(RegDeleteValueA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2)));
 }
@@ -174,12 +174,12 @@ HB_FUNC( WINAPI_REGDELETEVALUEA )
 /*
 WINADVAPI LONG WINAPI RegDeleteValueW(HKEY hKey,LPCWSTR lpValueName)
 */
-HB_FUNC( WINAPI_REGDELETEVALUEW )
+HB_FUNC( WAREGDELETEVALUEW )
 {
   winapi_ret_LONG(RegDeleteValueW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2)));
 }
 
-HB_FUNC( WINAPI_REGDELETEVALUE )
+HB_FUNC( WAREGDELETEVALUE )
 {
   void * str2;
   winapi_ret_LONG(RegDeleteValue(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
@@ -189,7 +189,7 @@ HB_FUNC( WINAPI_REGDELETEVALUE )
 /*
 WINADVAPI LONG WINAPI RegEnumKeyA(HKEY hKey,DWORD dwIndex,LPSTR lpName,DWORD cchName)
 */
-HB_FUNC( WINAPI_REGENUMKEYA )
+HB_FUNC( WAREGENUMKEYA )
 {
   winapi_ret_LONG(RegEnumKeyA(winapi_par_HKEY(1), winapi_par_DWORD(2), ( LPSTR ) hb_parc(3), winapi_par_DWORD(4)));
 }
@@ -197,7 +197,7 @@ HB_FUNC( WINAPI_REGENUMKEYA )
 /*
 WINADVAPI LONG WINAPI RegEnumKeyW(HKEY hKey,DWORD dwIndex,LPWSTR lpName,DWORD cchName)
 */
-HB_FUNC( WINAPI_REGENUMKEYW )
+HB_FUNC( WAREGENUMKEYW )
 {
   winapi_ret_LONG(RegEnumKeyW(winapi_par_HKEY(1), winapi_par_DWORD(2), ( LPWSTR ) hb_parc(3), winapi_par_DWORD(4)));
 }
@@ -221,7 +221,7 @@ WINADVAPI LONG WINAPI RegEnumValueW(HKEY hKey,DWORD dwIndex,LPWSTR lpValueName,L
 /*
 WINADVAPI LONG WINAPI RegFlushKey(HKEY hKey)
 */
-HB_FUNC( WINAPI_REGFLUSHKEY )
+HB_FUNC( WAREGFLUSHKEY )
 {
   winapi_ret_LONG(RegFlushKey(winapi_par_HKEY(1)));
 }
@@ -233,7 +233,7 @@ WINADVAPI LONG WINAPI RegGetKeySecurity(HKEY hKey,SECURITY_INFORMATION SecurityI
 /*
 WINADVAPI LONG WINAPI RegLoadKeyA(HKEY hKey,LPCSTR lpSubKey,LPCSTR lpFile)
 */
-HB_FUNC( WINAPI_REGLOADKEYA )
+HB_FUNC( WAREGLOADKEYA )
 {
   winapi_ret_LONG(RegLoadKeyA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3)));
 }
@@ -241,12 +241,12 @@ HB_FUNC( WINAPI_REGLOADKEYA )
 /*
 WINADVAPI LONG WINAPI RegLoadKeyW(HKEY hKey,LPCWSTR lpSubKey,LPCWSTR lpFile)
 */
-HB_FUNC( WINAPI_REGLOADKEYW )
+HB_FUNC( WAREGLOADKEYW )
 {
   winapi_ret_LONG(RegLoadKeyW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3)));
 }
 
-HB_FUNC( WINAPI_REGLOADKEY )
+HB_FUNC( WAREGLOADKEY )
 {
   void * str2;
   void * str3;
@@ -258,7 +258,7 @@ HB_FUNC( WINAPI_REGLOADKEY )
 /*
 WINADVAPI LONG WINAPI RegNotifyChangeKeyValue(HKEY hKey,WINBOOL bWatchSubtree,DWORD dwNotifyFilter,HANDLE hEvent,WINBOOL fAsynchronous)
 */
-HB_FUNC( WINAPI_REGNOTIFYCHANGEKEYVALUE )
+HB_FUNC( WAREGNOTIFYCHANGEKEYVALUE )
 {
   winapi_ret_LONG(RegNotifyChangeKeyValue(winapi_par_HKEY(1), winapi_par_BOOL(2), winapi_par_DWORD(3), winapi_par_HANDLE(4), winapi_par_BOOL(5)));
 }
@@ -314,7 +314,7 @@ WINADVAPI LONG WINAPI RegQueryValueExW(HKEY hKey,LPCWSTR lpValueName,LPDWORD lpR
 /*
 WINADVAPI LONG WINAPI RegReplaceKeyA(HKEY hKey,LPCSTR lpSubKey,LPCSTR lpNewFile,LPCSTR lpOldFile)
 */
-HB_FUNC( WINAPI_REGREPLACEKEYA )
+HB_FUNC( WAREGREPLACEKEYA )
 {
   winapi_ret_LONG(RegReplaceKeyA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3), ( LPCSTR ) hb_parc(4)));
 }
@@ -322,12 +322,12 @@ HB_FUNC( WINAPI_REGREPLACEKEYA )
 /*
 WINADVAPI LONG WINAPI RegReplaceKeyW(HKEY hKey,LPCWSTR lpSubKey,LPCWSTR lpNewFile,LPCWSTR lpOldFile)
 */
-HB_FUNC( WINAPI_REGREPLACEKEYW )
+HB_FUNC( WAREGREPLACEKEYW )
 {
   winapi_ret_LONG(RegReplaceKeyW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4)));
 }
 
-HB_FUNC( WINAPI_REGREPLACEKEY )
+HB_FUNC( WAREGREPLACEKEY )
 {
   void * str2;
   void * str3;
@@ -341,7 +341,7 @@ HB_FUNC( WINAPI_REGREPLACEKEY )
 /*
 WINADVAPI LONG WINAPI RegRestoreKeyA(HKEY hKey,LPCSTR lpFile,DWORD dwFlags)
 */
-HB_FUNC( WINAPI_REGRESTOREKEYA )
+HB_FUNC( WAREGRESTOREKEYA )
 {
   winapi_ret_LONG(RegRestoreKeyA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2), winapi_par_DWORD(3)));
 }
@@ -349,12 +349,12 @@ HB_FUNC( WINAPI_REGRESTOREKEYA )
 /*
 WINADVAPI LONG WINAPI RegRestoreKeyW(HKEY hKey,LPCWSTR lpFile,DWORD dwFlags)
 */
-HB_FUNC( WINAPI_REGRESTOREKEYW )
+HB_FUNC( WAREGRESTOREKEYW )
 {
   winapi_ret_LONG(RegRestoreKeyW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2), winapi_par_DWORD(3)));
 }
 
-HB_FUNC( WINAPI_REGRESTOREKEY )
+HB_FUNC( WAREGRESTOREKEY )
 {
   void * str2;
   winapi_ret_LONG(RegRestoreKey(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), winapi_par_DWORD(3)));
@@ -376,7 +376,7 @@ WINADVAPI LONG WINAPI RegSetKeySecurity(HKEY hKey,SECURITY_INFORMATION SecurityI
 /*
 WINADVAPI LONG WINAPI RegSetValueA(HKEY hKey,LPCSTR lpSubKey,DWORD dwType,LPCSTR lpData,DWORD cbData)
 */
-HB_FUNC( WINAPI_REGSETVALUEA )
+HB_FUNC( WAREGSETVALUEA )
 {
   winapi_ret_LONG(RegSetValueA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2), winapi_par_DWORD(3), ( LPCSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
@@ -384,12 +384,12 @@ HB_FUNC( WINAPI_REGSETVALUEA )
 /*
 WINADVAPI LONG WINAPI RegSetValueW(HKEY hKey,LPCWSTR lpSubKey,DWORD dwType,LPCWSTR lpData,DWORD cbData)
 */
-HB_FUNC( WINAPI_REGSETVALUEW )
+HB_FUNC( WAREGSETVALUEW )
 {
   winapi_ret_LONG(RegSetValueW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2), winapi_par_DWORD(3), ( LPCWSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
 
-HB_FUNC( WINAPI_REGSETVALUE )
+HB_FUNC( WAREGSETVALUE )
 {
   void * str2;
   void * str4;
@@ -409,7 +409,7 @@ WINADVAPI LONG WINAPI RegSetValueExW(HKEY hKey,LPCWSTR lpValueName,DWORD Reserve
 /*
 WINADVAPI LONG WINAPI RegUnLoadKeyA(HKEY hKey,LPCSTR lpSubKey)
 */
-HB_FUNC( WINAPI_REGUNLOADKEYA )
+HB_FUNC( WAREGUNLOADKEYA )
 {
   winapi_ret_LONG(RegUnLoadKeyA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2)));
 }
@@ -417,12 +417,12 @@ HB_FUNC( WINAPI_REGUNLOADKEYA )
 /*
 WINADVAPI LONG WINAPI RegUnLoadKeyW(HKEY hKey,LPCWSTR lpSubKey)
 */
-HB_FUNC( WINAPI_REGUNLOADKEYW )
+HB_FUNC( WAREGUNLOADKEYW )
 {
   winapi_ret_LONG(RegUnLoadKeyW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2)));
 }
 
-HB_FUNC( WINAPI_REGUNLOADKEY )
+HB_FUNC( WAREGUNLOADKEY )
 {
   void * str2;
   winapi_ret_LONG(RegUnLoadKey(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
@@ -432,7 +432,7 @@ HB_FUNC( WINAPI_REGUNLOADKEY )
 /*
 WINADVAPI LONG WINAPI RegGetValueA(HKEY hkey,LPCSTR lpSubKey,LPCSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData)
 */
-HB_FUNC( WINAPI_REGGETVALUEA )
+HB_FUNC( WAREGGETVALUEA )
 {
   DWORD Type;
   DWORD Data;
@@ -444,7 +444,7 @@ HB_FUNC( WINAPI_REGGETVALUEA )
 /*
 WINADVAPI LONG WINAPI RegGetValueW(HKEY hkey,LPCWSTR lpSubKey,LPCWSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData)
 */
-HB_FUNC( WINAPI_REGGETVALUEW )
+HB_FUNC( WAREGGETVALUEW )
 {
   DWORD Type;
   DWORD Data;
@@ -453,7 +453,7 @@ HB_FUNC( WINAPI_REGGETVALUEW )
   winapi_stor_DWORD(Data, 7);
 }
 
-HB_FUNC( WINAPI_REGGETVALUE )
+HB_FUNC( WAREGGETVALUE )
 {
   void * str2;
   void * str3;
@@ -469,7 +469,7 @@ HB_FUNC( WINAPI_REGGETVALUE )
 /*
 WINADVAPI WINBOOL WINAPI InitiateSystemShutdownA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown)
 */
-HB_FUNC( WINAPI_INITIATESYSTEMSHUTDOWNA )
+HB_FUNC( WAINITIATESYSTEMSHUTDOWNA )
 {
   winapi_ret_BOOL(InitiateSystemShutdownA(( LPSTR ) hb_parc(1), ( LPSTR ) hb_parc(2), winapi_par_DWORD(3), hb_parl(4), hb_parl(5)));
 }
@@ -477,7 +477,7 @@ HB_FUNC( WINAPI_INITIATESYSTEMSHUTDOWNA )
 /*
 WINADVAPI WINBOOL WINAPI InitiateSystemShutdownW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown)
 */
-HB_FUNC( WINAPI_INITIATESYSTEMSHUTDOWNW )
+HB_FUNC( WAINITIATESYSTEMSHUTDOWNW )
 {
   winapi_ret_BOOL(InitiateSystemShutdownW(( LPWSTR ) hb_parc(1), ( LPWSTR ) hb_parc(2), winapi_par_DWORD(3), hb_parl(4), hb_parl(5)));
 }
@@ -485,7 +485,7 @@ HB_FUNC( WINAPI_INITIATESYSTEMSHUTDOWNW )
 /*
 WINADVAPI WINBOOL WINAPI AbortSystemShutdownA(LPSTR lpMachineName)
 */
-HB_FUNC( WINAPI_ABORTSYSTEMSHUTDOWNA )
+HB_FUNC( WAABORTSYSTEMSHUTDOWNA )
 {
   winapi_ret_BOOL(AbortSystemShutdownA(( LPSTR ) hb_parc(1)));
 }
@@ -493,7 +493,7 @@ HB_FUNC( WINAPI_ABORTSYSTEMSHUTDOWNA )
 /*
 WINADVAPI WINBOOL WINAPI AbortSystemShutdownW(LPWSTR lpMachineName)
 */
-HB_FUNC( WINAPI_ABORTSYSTEMSHUTDOWNW )
+HB_FUNC( WAABORTSYSTEMSHUTDOWNW )
 {
   winapi_ret_BOOL(AbortSystemShutdownW(( LPWSTR ) hb_parc(1)));
 }
@@ -501,7 +501,7 @@ HB_FUNC( WINAPI_ABORTSYSTEMSHUTDOWNW )
 /*
 WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExA(LPSTR lpMachineName,LPSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
 */
-HB_FUNC( WINAPI_INITIATESYSTEMSHUTDOWNEXA )
+HB_FUNC( WAINITIATESYSTEMSHUTDOWNEXA )
 {
   winapi_ret_BOOL(InitiateSystemShutdownExA(( LPSTR ) hb_parc(1), ( LPSTR ) hb_parc(2), winapi_par_DWORD(3), hb_parl(4), hb_parl(5), winapi_par_DWORD(6)));
 }
@@ -509,7 +509,7 @@ HB_FUNC( WINAPI_INITIATESYSTEMSHUTDOWNEXA )
 /*
 WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExW(LPWSTR lpMachineName,LPWSTR lpMessage,DWORD dwTimeout,WINBOOL bForceAppsClosed,WINBOOL bRebootAfterShutdown,DWORD dwReason)
 */
-HB_FUNC( WINAPI_INITIATESYSTEMSHUTDOWNEXW )
+HB_FUNC( WAINITIATESYSTEMSHUTDOWNEXW )
 {
   winapi_ret_BOOL(InitiateSystemShutdownExW(( LPWSTR ) hb_parc(1), ( LPWSTR ) hb_parc(2), winapi_par_DWORD(3), hb_parl(4), hb_parl(5), winapi_par_DWORD(6)));
 }
@@ -554,7 +554,7 @@ WINADVAPI LONG WINAPI RegDeleteKeyTransactedW(HKEY hKey, LPCWSTR lpSubKey, REGSA
 WINADVAPI LONG WINAPI RegDeleteKeyValueA(HKEY hKey, LPCSTR lpSubKey, LPCSTR lpValueName)
 */
 #if 0
-HB_FUNC( WINAPI_REGDELETEKEYVALUEA )
+HB_FUNC( WAREGDELETEKEYVALUEA )
 {
   winapi_ret_LONG(RegDeleteKeyValueA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2), ( LPCSTR ) hb_parc(3)));
 }
@@ -564,14 +564,14 @@ HB_FUNC( WINAPI_REGDELETEKEYVALUEA )
 WINADVAPI LONG WINAPI RegDeleteKeyValueW(HKEY hKey, LPCWSTR lpSubKey, LPCWSTR lpValueName)
 */
 #if 0
-HB_FUNC( WINAPI_REGDELETEKEYVALUEW )
+HB_FUNC( WAREGDELETEKEYVALUEW )
 {
   winapi_ret_LONG(RegDeleteKeyValueW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2), ( LPCWSTR ) hb_parc(3)));
 }
 #endif
 
 #if 0
-HB_FUNC( WINAPI_REGDELETEKEYVALUE )
+HB_FUNC( WAREGDELETEKEYVALUE )
 {
   void * str2;
   void * str3;
@@ -585,7 +585,7 @@ HB_FUNC( WINAPI_REGDELETEKEYVALUE )
 WINADVAPI LONG WINAPI RegDeleteTreeA(HKEY hKey, LPCSTR lpSubKey)
 */
 #if 0
-HB_FUNC( WINAPI_REGDELETETREEA )
+HB_FUNC( WAREGDELETETREEA )
 {
   winapi_ret_LONG(RegDeleteTreeA(winapi_par_HKEY(1), ( LPCSTR ) hb_parc(2)));
 }
@@ -595,14 +595,14 @@ HB_FUNC( WINAPI_REGDELETETREEA )
 WINADVAPI LONG WINAPI RegDeleteTreeW(HKEY hKey, LPCWSTR lpSubKey)
 */
 #if 0
-HB_FUNC( WINAPI_REGDELETETREEW )
+HB_FUNC( WAREGDELETETREEW )
 {
   winapi_ret_LONG(RegDeleteTreeW(winapi_par_HKEY(1), ( LPCWSTR ) hb_parc(2)));
 }
 #endif
 
 #if 0
-HB_FUNC( WINAPI_REGDELETETREE )
+HB_FUNC( WAREGDELETETREE )
 {
   void * str2;
   winapi_ret_LONG(RegDeleteTree(winapi_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
@@ -614,7 +614,7 @@ HB_FUNC( WINAPI_REGDELETETREE )
 WINADVAPI LONG WINAPI RegDisablePredefinedCacheEx(void)
 */
 #if 0
-HB_FUNC( WINAPI_REGDISABLEPREDEFINEDCACHEEX )
+HB_FUNC( WAREGDISABLEPREDEFINEDCACHEEX )
 {
   winapi_ret_LONG(RegDisablePredefinedCacheEx());
 }

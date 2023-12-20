@@ -45,7 +45,7 @@ SOFTWARE.
 /*
 WINCOMMCTRLAPI void WINAPI InitCommonControls(void)
 */
-HB_FUNC( WINAPI_INITCOMMONCONTROLS )
+HB_FUNC( WAINITCOMMONCONTROLS )
 {
   InitCommonControls();
 }
@@ -53,7 +53,7 @@ HB_FUNC( WINAPI_INITCOMMONCONTROLS )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI InitCommonControlsEx(const INITCOMMONCONTROLSEX *)
 */
-HB_FUNC( WINAPI_INITCOMMONCONTROLSEX )
+HB_FUNC( WAINITCOMMONCONTROLSEX )
 {
   winapi_ret_BOOL(InitCommonControlsEx(static_cast<const INITCOMMONCONTROLSEX*>(winapi_get_ptr(1))));
 }
@@ -61,7 +61,7 @@ HB_FUNC( WINAPI_INITCOMMONCONTROLSEX )
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Create(int cx,int cy,UINT flags,int cInitial,int cGrow)
 */
-HB_FUNC( WINAPI_IMAGELIST_CREATE )
+HB_FUNC( WAIMAGELIST_CREATE )
 {
   winapi_ret_HIMAGELIST(ImageList_Create(winapi_par_int(1), winapi_par_int(2), winapi_par_UINT(3), winapi_par_int(4), winapi_par_int(5)));
 }
@@ -69,7 +69,7 @@ HB_FUNC( WINAPI_IMAGELIST_CREATE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Destroy(HIMAGELIST himl)
 */
-HB_FUNC( WINAPI_IMAGELIST_DESTROY )
+HB_FUNC( WAIMAGELIST_DESTROY )
 {
   winapi_ret_BOOL(ImageList_Destroy(winapi_par_HIMAGELIST(1)));
 }
@@ -77,7 +77,7 @@ HB_FUNC( WINAPI_IMAGELIST_DESTROY )
 /*
 WINCOMMCTRLAPI int WINAPI ImageList_GetImageCount(HIMAGELIST himl)
 */
-HB_FUNC( WINAPI_IMAGELIST_GETIMAGECOUNT )
+HB_FUNC( WAIMAGELIST_GETIMAGECOUNT )
 {
   winapi_ret_int(ImageList_GetImageCount(winapi_par_HIMAGELIST(1)));
 }
@@ -85,7 +85,7 @@ HB_FUNC( WINAPI_IMAGELIST_GETIMAGECOUNT )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_SetImageCount(HIMAGELIST himl,UINT uNewCount)
 */
-HB_FUNC( WINAPI_IMAGELIST_SETIMAGECOUNT )
+HB_FUNC( WAIMAGELIST_SETIMAGECOUNT )
 {
   winapi_ret_BOOL(ImageList_SetImageCount(winapi_par_HIMAGELIST(1), winapi_par_UINT(2)));
 }
@@ -93,7 +93,7 @@ HB_FUNC( WINAPI_IMAGELIST_SETIMAGECOUNT )
 /*
 WINCOMMCTRLAPI int WINAPI ImageList_Add(HIMAGELIST himl,HBITMAP hbmImage,HBITMAP hbmMask)
 */
-HB_FUNC( WINAPI_IMAGELIST_ADD )
+HB_FUNC( WAIMAGELIST_ADD )
 {
   winapi_ret_int(ImageList_Add(winapi_par_HIMAGELIST(1), winapi_par_HBITMAP(2), winapi_par_HBITMAP(3)));
 }
@@ -101,7 +101,7 @@ HB_FUNC( WINAPI_IMAGELIST_ADD )
 /*
 WINCOMMCTRLAPI int WINAPI ImageList_ReplaceIcon(HIMAGELIST himl,int i,HICON hicon)
 */
-HB_FUNC( WINAPI_IMAGELIST_REPLACEICON )
+HB_FUNC( WAIMAGELIST_REPLACEICON )
 {
   winapi_ret_int(ImageList_ReplaceIcon(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_HICON(3)));
 }
@@ -109,7 +109,7 @@ HB_FUNC( WINAPI_IMAGELIST_REPLACEICON )
 /*
 WINCOMMCTRLAPI COLORREF WINAPI ImageList_SetBkColor(HIMAGELIST himl,COLORREF clrBk)
 */
-HB_FUNC( WINAPI_IMAGELIST_SETBKCOLOR )
+HB_FUNC( WAIMAGELIST_SETBKCOLOR )
 {
   winapi_ret_COLORREF(ImageList_SetBkColor(winapi_par_HIMAGELIST(1), winapi_par_COLORREF(2)));
 }
@@ -117,7 +117,7 @@ HB_FUNC( WINAPI_IMAGELIST_SETBKCOLOR )
 /*
 WINCOMMCTRLAPI COLORREF WINAPI ImageList_GetBkColor(HIMAGELIST himl)
 */
-HB_FUNC( WINAPI_IMAGELIST_GETBKCOLOR )
+HB_FUNC( WAIMAGELIST_GETBKCOLOR )
 {
   winapi_ret_COLORREF(ImageList_GetBkColor(winapi_par_HIMAGELIST(1)));
 }
@@ -125,7 +125,7 @@ HB_FUNC( WINAPI_IMAGELIST_GETBKCOLOR )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_SetOverlayImage(HIMAGELIST himl,int iImage,int iOverlay)
 */
-HB_FUNC( WINAPI_IMAGELIST_SETOVERLAYIMAGE )
+HB_FUNC( WAIMAGELIST_SETOVERLAYIMAGE )
 {
   winapi_ret_BOOL(ImageList_SetOverlayImage(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_int(3)));
 }
@@ -133,7 +133,7 @@ HB_FUNC( WINAPI_IMAGELIST_SETOVERLAYIMAGE )
 /*
 int ImageList_AddIcon(HIMAGELIST himl,HICON  hicon)
 */
-HB_FUNC( WINAPI_IMAGELIST_ADDICON )
+HB_FUNC( WAIMAGELIST_ADDICON )
 {
   winapi_ret_int(ImageList_AddIcon(winapi_par_HIMAGELIST(1), winapi_par_HICON(2)));
 }
@@ -141,7 +141,7 @@ HB_FUNC( WINAPI_IMAGELIST_ADDICON )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Draw(HIMAGELIST himl,int i,HDC hdcDst,int x,int y,UINT fStyle)
 */
-HB_FUNC( WINAPI_IMAGELIST_DRAW )
+HB_FUNC( WAIMAGELIST_DRAW )
 {
   winapi_ret_BOOL(ImageList_Draw(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_HDC(3), winapi_par_int(4), winapi_par_int(5), winapi_par_UINT(6)));
 }
@@ -149,7 +149,7 @@ HB_FUNC( WINAPI_IMAGELIST_DRAW )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Replace(HIMAGELIST himl,int i,HBITMAP hbmImage,HBITMAP hbmMask)
 */
-HB_FUNC( WINAPI_IMAGELIST_REPLACE )
+HB_FUNC( WAIMAGELIST_REPLACE )
 {
   winapi_ret_BOOL(ImageList_Replace(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_HBITMAP(3), winapi_par_HBITMAP(4)));
 }
@@ -157,7 +157,7 @@ HB_FUNC( WINAPI_IMAGELIST_REPLACE )
 /*
 WINCOMMCTRLAPI int WINAPI ImageList_AddMasked(HIMAGELIST himl,HBITMAP hbmImage,COLORREF crMask)
 */
-HB_FUNC( WINAPI_IMAGELIST_ADDMASKED )
+HB_FUNC( WAIMAGELIST_ADDMASKED )
 {
   winapi_ret_int(ImageList_AddMasked(winapi_par_HIMAGELIST(1), winapi_par_HBITMAP(2), winapi_par_COLORREF(3)));
 }
@@ -165,7 +165,7 @@ HB_FUNC( WINAPI_IMAGELIST_ADDMASKED )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawEx(HIMAGELIST himl,int i,HDC hdcDst,int x,int y,int dx,int dy,COLORREF rgbBk,COLORREF rgbFg,UINT fStyle)
 */
-HB_FUNC( WINAPI_IMAGELIST_DRAWEX )
+HB_FUNC( WAIMAGELIST_DRAWEX )
 {
   winapi_ret_BOOL(ImageList_DrawEx(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_HDC(3), winapi_par_int(4), winapi_par_int(5), winapi_par_int(6), winapi_par_int(7), winapi_par_COLORREF(8), winapi_par_COLORREF(9), winapi_par_UINT(10)));
 }
@@ -173,7 +173,7 @@ HB_FUNC( WINAPI_IMAGELIST_DRAWEX )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawIndirect(IMAGELISTDRAWPARAMS *pimldp)
 */
-HB_FUNC( WINAPI_IMAGELIST_DRAWINDIRECT )
+HB_FUNC( WAIMAGELIST_DRAWINDIRECT )
 {
   winapi_ret_BOOL(ImageList_DrawIndirect(static_cast<IMAGELISTDRAWPARAMS*>(winapi_get_ptr(1))));
 }
@@ -181,7 +181,7 @@ HB_FUNC( WINAPI_IMAGELIST_DRAWINDIRECT )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Remove(HIMAGELIST himl,int i)
 */
-HB_FUNC( WINAPI_IMAGELIST_REMOVE )
+HB_FUNC( WAIMAGELIST_REMOVE )
 {
   winapi_ret_BOOL(ImageList_Remove(winapi_par_HIMAGELIST(1), winapi_par_int(2)));
 }
@@ -189,7 +189,7 @@ HB_FUNC( WINAPI_IMAGELIST_REMOVE )
 /*
 WINCOMMCTRLAPI HICON WINAPI ImageList_GetIcon(HIMAGELIST himl,int i,UINT flags)
 */
-HB_FUNC( WINAPI_IMAGELIST_GETICON )
+HB_FUNC( WAIMAGELIST_GETICON )
 {
   winapi_ret_HICON(ImageList_GetIcon(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_UINT(3)));
 }
@@ -197,7 +197,7 @@ HB_FUNC( WINAPI_IMAGELIST_GETICON )
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageA(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLORREF crMask,UINT uType,UINT uFlags)
 */
-HB_FUNC( WINAPI_IMAGELIST_LOADIMAGEA )
+HB_FUNC( WAIMAGELIST_LOADIMAGEA )
 {
   winapi_ret_HIMAGELIST(ImageList_LoadImageA(winapi_par_HINSTANCE(1), ( LPCSTR ) hb_parc(2), winapi_par_int(3), winapi_par_int(4), winapi_par_COLORREF(5), winapi_par_UINT(6), winapi_par_UINT(7)));
 }
@@ -205,7 +205,7 @@ HB_FUNC( WINAPI_IMAGELIST_LOADIMAGEA )
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageW(HINSTANCE hi,LPCWSTR lpbmp,int cx,int cGrow,COLORREF crMask,UINT uType,UINT uFlags)
 */
-HB_FUNC( WINAPI_IMAGELIST_LOADIMAGEW )
+HB_FUNC( WAIMAGELIST_LOADIMAGEW )
 {
   winapi_ret_HIMAGELIST(ImageList_LoadImageW(winapi_par_HINSTANCE(1), ( LPCWSTR ) hb_parc(2), winapi_par_int(3), winapi_par_int(4), winapi_par_COLORREF(5), winapi_par_UINT(6), winapi_par_UINT(7)));
 }
@@ -213,7 +213,7 @@ HB_FUNC( WINAPI_IMAGELIST_LOADIMAGEW )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_Copy(HIMAGELIST himlDst,int iDst,HIMAGELIST himlSrc,int iSrc,UINT uFlags)
 */
-HB_FUNC( WINAPI_IMAGELIST_COPY )
+HB_FUNC( WAIMAGELIST_COPY )
 {
   winapi_ret_BOOL(ImageList_Copy(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_HIMAGELIST(3), winapi_par_int(4), winapi_par_UINT(5)));
 }
@@ -221,7 +221,7 @@ HB_FUNC( WINAPI_IMAGELIST_COPY )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_BeginDrag(HIMAGELIST himlTrack,int iTrack,int dxHotspot,int dyHotspot)
 */
-HB_FUNC( WINAPI_IMAGELIST_BEGINDRAG )
+HB_FUNC( WAIMAGELIST_BEGINDRAG )
 {
   winapi_ret_BOOL(ImageList_BeginDrag(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4)));
 }
@@ -229,7 +229,7 @@ HB_FUNC( WINAPI_IMAGELIST_BEGINDRAG )
 /*
 WINCOMMCTRLAPI void WINAPI ImageList_EndDrag(void)
 */
-HB_FUNC( WINAPI_IMAGELIST_ENDDRAG )
+HB_FUNC( WAIMAGELIST_ENDDRAG )
 {
   ImageList_EndDrag();
 }
@@ -237,7 +237,7 @@ HB_FUNC( WINAPI_IMAGELIST_ENDDRAG )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DragEnter(HWND hwndLock,int x,int y)
 */
-HB_FUNC( WINAPI_IMAGELIST_DRAGENTER )
+HB_FUNC( WAIMAGELIST_DRAGENTER )
 {
   winapi_ret_BOOL(ImageList_DragEnter(winapi_par_HWND(1), winapi_par_int(2), winapi_par_int(3)));
 }
@@ -245,7 +245,7 @@ HB_FUNC( WINAPI_IMAGELIST_DRAGENTER )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DragLeave(HWND hwndLock)
 */
-HB_FUNC( WINAPI_IMAGELIST_DRAGLEAVE )
+HB_FUNC( WAIMAGELIST_DRAGLEAVE )
 {
   winapi_ret_BOOL(ImageList_DragLeave(winapi_par_HWND(1)));
 }
@@ -253,7 +253,7 @@ HB_FUNC( WINAPI_IMAGELIST_DRAGLEAVE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DragMove(int x,int y)
 */
-HB_FUNC( WINAPI_IMAGELIST_DRAGMOVE )
+HB_FUNC( WAIMAGELIST_DRAGMOVE )
 {
   winapi_ret_BOOL(ImageList_DragMove(winapi_par_int(1), winapi_par_int(2)));
 }
@@ -261,7 +261,7 @@ HB_FUNC( WINAPI_IMAGELIST_DRAGMOVE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_SetDragCursorImage(HIMAGELIST himlDrag,int iDrag,int dxHotspot,int dyHotspot)
 */
-HB_FUNC( WINAPI_IMAGELIST_SETDRAGCURSORIMAGE )
+HB_FUNC( WAIMAGELIST_SETDRAGCURSORIMAGE )
 {
   winapi_ret_BOOL(ImageList_SetDragCursorImage(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4)));
 }
@@ -269,7 +269,7 @@ HB_FUNC( WINAPI_IMAGELIST_SETDRAGCURSORIMAGE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DragShowNolock(WINBOOL fShow)
 */
-HB_FUNC( WINAPI_IMAGELIST_DRAGSHOWNOLOCK )
+HB_FUNC( WAIMAGELIST_DRAGSHOWNOLOCK )
 {
   winapi_ret_BOOL(ImageList_DragShowNolock(hb_parl(1)));
 }
@@ -277,7 +277,7 @@ HB_FUNC( WINAPI_IMAGELIST_DRAGSHOWNOLOCK )
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_GetDragImage(POINT *ppt,POINT *pptHotspot)
 */
-HB_FUNC( WINAPI_IMAGELIST_GETDRAGIMAGE )
+HB_FUNC( WAIMAGELIST_GETDRAGIMAGE )
 {
   winapi_ret_HIMAGELIST(ImageList_GetDragImage(static_cast<POINT*>(winapi_get_ptr(1)), static_cast<POINT*>(winapi_get_ptr(2))));
 }
@@ -285,7 +285,7 @@ HB_FUNC( WINAPI_IMAGELIST_GETDRAGIMAGE )
 /*
 WINBOOL ImageList_RemoveAll(HIMAGELIST himl)
 */
-HB_FUNC( WINAPI_IMAGELIST_REMOVEALL )
+HB_FUNC( WAIMAGELIST_REMOVEALL )
 {
   winapi_ret_BOOL(ImageList_RemoveAll(winapi_par_HIMAGELIST(1)));
 }
@@ -293,7 +293,7 @@ HB_FUNC( WINAPI_IMAGELIST_REMOVEALL )
 /*
 HICON ImageList_ExtractIcon(HINSTANCE hi,HIMAGELIST himl,int i)
 */
-HB_FUNC( WINAPI_IMAGELIST_EXTRACTICON )
+HB_FUNC( WAIMAGELIST_EXTRACTICON )
 {
   winapi_ret_HICON(ImageList_ExtractIcon(winapi_par_HINSTANCE(1), winapi_par_HIMAGELIST(2), winapi_par_int(3)));
 }
@@ -301,7 +301,7 @@ HB_FUNC( WINAPI_IMAGELIST_EXTRACTICON )
 /*
 HIMAGELIST ImageList_LoadBitmap(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLORREF crMask)
 */
-HB_FUNC( WINAPI_IMAGELIST_LOADBITMAP )
+HB_FUNC( WAIMAGELIST_LOADBITMAP )
 {
   void * str2;
   winapi_ret_HIMAGELIST(ImageList_LoadBitmap(winapi_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), winapi_par_int(3), winapi_par_int(4), winapi_par_COLORREF(5)));
@@ -327,7 +327,7 @@ WINCOMMCTRLAPI HRESULT WINAPI ImageList_WriteEx(HIMAGELIST himl,DWORD dwFlags,LP
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_GetIconSize(HIMAGELIST himl,int *cx,int *cy)
 */
-HB_FUNC( WINAPI_IMAGELIST_GETICONSIZE )
+HB_FUNC( WAIMAGELIST_GETICONSIZE )
 {
   int cx;
   int cy;
@@ -339,7 +339,7 @@ HB_FUNC( WINAPI_IMAGELIST_GETICONSIZE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_SetIconSize(HIMAGELIST himl,int cx,int cy)
 */
-HB_FUNC( WINAPI_IMAGELIST_SETICONSIZE )
+HB_FUNC( WAIMAGELIST_SETICONSIZE )
 {
   winapi_ret_BOOL(ImageList_SetIconSize(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_int(3)));
 }
@@ -351,7 +351,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI ImageList_GetImageInfo(HIMAGELIST himl,int i,IMAGE
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Merge(HIMAGELIST himl1,int i1,HIMAGELIST himl2,int i2,int dx,int dy)
 */
-HB_FUNC( WINAPI_IMAGELIST_MERGE )
+HB_FUNC( WAIMAGELIST_MERGE )
 {
   winapi_ret_HIMAGELIST(ImageList_Merge(winapi_par_HIMAGELIST(1), winapi_par_int(2), winapi_par_HIMAGELIST(3), winapi_par_int(4), winapi_par_int(5), winapi_par_int(6)));
 }
@@ -359,7 +359,7 @@ HB_FUNC( WINAPI_IMAGELIST_MERGE )
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Duplicate(HIMAGELIST himl)
 */
-HB_FUNC( WINAPI_IMAGELIST_DUPLICATE )
+HB_FUNC( WAIMAGELIST_DUPLICATE )
 {
   winapi_ret_HIMAGELIST(ImageList_Duplicate(winapi_par_HIMAGELIST(1)));
 }
@@ -379,7 +379,7 @@ WINCOMMCTRLAPI HBITMAP WINAPI CreateMappedBitmap(HINSTANCE hInstance,INT_PTR idB
 /*
 WINCOMMCTRLAPI void WINAPI DrawStatusTextA(HDC hDC,LPCRECT lprc,LPCSTR pszText,UINT uFlags)
 */
-HB_FUNC( WINAPI_DRAWSTATUSTEXTA )
+HB_FUNC( WADRAWSTATUSTEXTA )
 {
   DrawStatusTextA(winapi_par_HDC(1), static_cast<LPCRECT>(winapi_get_ptr(2)), ( LPCSTR ) hb_parc(3), winapi_par_UINT(4));
 }
@@ -387,7 +387,7 @@ HB_FUNC( WINAPI_DRAWSTATUSTEXTA )
 /*
 WINCOMMCTRLAPI void WINAPI DrawStatusTextW(HDC hDC,LPCRECT lprc,LPCWSTR pszText,UINT uFlags)
 */
-HB_FUNC( WINAPI_DRAWSTATUSTEXTW )
+HB_FUNC( WADRAWSTATUSTEXTW )
 {
   DrawStatusTextW(winapi_par_HDC(1), static_cast<LPCRECT>(winapi_get_ptr(2)), ( LPCWSTR ) hb_parc(3), winapi_par_UINT(4));
 }
@@ -395,7 +395,7 @@ HB_FUNC( WINAPI_DRAWSTATUSTEXTW )
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowA(LONG style,LPCSTR lpszText,HWND hwndParent,UINT wID)
 */
-HB_FUNC( WINAPI_CREATESTATUSWINDOWA )
+HB_FUNC( WACREATESTATUSWINDOWA )
 {
   winapi_ret_HWND(CreateStatusWindowA(hb_parnl(1), ( LPCSTR ) hb_parc(2), winapi_par_HWND(3), winapi_par_UINT(4)));
 }
@@ -403,7 +403,7 @@ HB_FUNC( WINAPI_CREATESTATUSWINDOWA )
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowW(LONG style,LPCWSTR lpszText,HWND hwndParent,UINT wID)
 */
-HB_FUNC( WINAPI_CREATESTATUSWINDOWW )
+HB_FUNC( WACREATESTATUSWINDOWW )
 {
   winapi_ret_HWND(CreateStatusWindowW(hb_parnl(1), ( LPCWSTR ) hb_parc(2), winapi_par_HWND(3), winapi_par_UINT(4)));
 }
@@ -423,7 +423,7 @@ WINCOMMCTRLAPI void WINAPI GetEffectiveClientRect(HWND hWnd,LPRECT lprc,const IN
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI MakeDragList(HWND hLB)
 */
-HB_FUNC( WINAPI_MAKEDRAGLIST )
+HB_FUNC( WAMAKEDRAGLIST )
 {
   winapi_ret_BOOL(MakeDragList(winapi_par_HWND(1)));
 }
@@ -431,7 +431,7 @@ HB_FUNC( WINAPI_MAKEDRAGLIST )
 /*
 WINCOMMCTRLAPI void WINAPI DrawInsert(HWND handParent,HWND hLB,int nItem)
 */
-HB_FUNC( WINAPI_DRAWINSERT )
+HB_FUNC( WADRAWINSERT )
 {
   DrawInsert(winapi_par_HWND(1), winapi_par_HWND(2), winapi_par_int(3));
 }
@@ -440,7 +440,7 @@ HB_FUNC( WINAPI_DRAWINSERT )
 WINCOMMCTRLAPI int WINAPI LBItemFromPt(HWND hLB,POINT pt,WINBOOL bAutoScroll)
 */
 #if 0
-HB_FUNC( WINAPI_LBITEMFROMPT )
+HB_FUNC( WALBITEMFROMPT )
 {
   winapi_ret_int(LBItemFromPt(winapi_par_HWND(1), static_cast<POINT>(winapi_get_ptr(2)), hb_parl(3))); // TODO: fix
 }
@@ -449,7 +449,7 @@ HB_FUNC( WINAPI_LBITEMFROMPT )
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateUpDownControl(DWORD dwStyle,int x,int y,int cx,int cy,HWND hParent,int nID,HINSTANCE hInst,HWND hBuddy,int nUpper,int nLower,int nPos)
 */
-HB_FUNC( WINAPI_CREATEUPDOWNCONTROL )
+HB_FUNC( WACREATEUPDOWNCONTROL )
 {
   winapi_ret_HWND(CreateUpDownControl(winapi_par_DWORD(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), winapi_par_int(5), winapi_par_HWND(6), winapi_par_int(7), winapi_par_HINSTANCE(8), winapi_par_HWND(9), winapi_par_int(10), winapi_par_int(11), winapi_par_int(12)));
 }
@@ -593,7 +593,7 @@ WINCOMMCTRLAPI int WINAPI DPA_Search (HDPA hdpa, void *pFind, int iStart, PFNDAC
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_EnableScrollBar(HWND,int,UINT)
 */
-HB_FUNC( WINAPI_FLATSB_ENABLESCROLLBAR )
+HB_FUNC( WAFLATSB_ENABLESCROLLBAR )
 {
   winapi_ret_BOOL(FlatSB_EnableScrollBar(winapi_par_HWND(1), winapi_par_int(2), winapi_par_UINT(3)));
 }
@@ -601,7 +601,7 @@ HB_FUNC( WINAPI_FLATSB_ENABLESCROLLBAR )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_ShowScrollBar(HWND,int code,WINBOOL)
 */
-HB_FUNC( WINAPI_FLATSB_SHOWSCROLLBAR )
+HB_FUNC( WAFLATSB_SHOWSCROLLBAR )
 {
   winapi_ret_BOOL(FlatSB_ShowScrollBar(winapi_par_HWND(1), winapi_par_int(2), hb_parl(3)));
 }
@@ -609,7 +609,7 @@ HB_FUNC( WINAPI_FLATSB_SHOWSCROLLBAR )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollRange(HWND,int code,LPINT,LPINT)
 */
-HB_FUNC( WINAPI_FLATSB_GETSCROLLRANGE )
+HB_FUNC( WAFLATSB_GETSCROLLRANGE )
 {
   INT i1;
   INT i2;
@@ -621,7 +621,7 @@ HB_FUNC( WINAPI_FLATSB_GETSCROLLRANGE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollInfo(HWND,int code,LPSCROLLINFO)
 */
-HB_FUNC( WINAPI_FLATSB_GETSCROLLINFO )
+HB_FUNC( WAFLATSB_GETSCROLLINFO )
 {
   winapi_ret_BOOL(FlatSB_GetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3))));
 }
@@ -629,7 +629,7 @@ HB_FUNC( WINAPI_FLATSB_GETSCROLLINFO )
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_GetScrollPos(HWND,int code)
 */
-HB_FUNC( WINAPI_FLATSB_GETSCROLLPOS )
+HB_FUNC( WAFLATSB_GETSCROLLPOS )
 {
   winapi_ret_int(FlatSB_GetScrollPos(winapi_par_HWND(1), winapi_par_int(2)));
 }
@@ -637,7 +637,7 @@ HB_FUNC( WINAPI_FLATSB_GETSCROLLPOS )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollProp(HWND,int propIndex,LPINT)
 */
-HB_FUNC( WINAPI_FLATSB_SCROLLPROP )
+HB_FUNC( WAFLATSB_SCROLLPROP )
 {
   INT i;
   winapi_ret_BOOL(FlatSB_GetScrollProp(winapi_par_HWND(1), winapi_par_int(2), &i));
@@ -651,7 +651,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollPropPtr(HWND,int propIndex,PINT_PT
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollPos(HWND,int code,int pos,WINBOOL fRedraw)
 */
-HB_FUNC( WINAPI_FLATSB_SETSCROLLPOS )
+HB_FUNC( WAFLATSB_SETSCROLLPOS )
 {
   winapi_ret_int(FlatSB_SetScrollPos(winapi_par_HWND(1), winapi_par_int(2), winapi_par_int(3), hb_parl(4)));
 }
@@ -659,7 +659,7 @@ HB_FUNC( WINAPI_FLATSB_SETSCROLLPOS )
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollInfo(HWND,int code,LPSCROLLINFO,WINBOOL fRedraw)
 */
-HB_FUNC( WINAPI_FLATSB_SETSCROLLINFO )
+HB_FUNC( WAFLATSB_SETSCROLLINFO )
 {
   winapi_ret_int(FlatSB_SetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3)), winapi_par_BOOL(4)));
 }
@@ -667,7 +667,7 @@ HB_FUNC( WINAPI_FLATSB_SETSCROLLINFO )
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollRange(HWND,int code,int min,int max,WINBOOL fRedraw)
 */
-HB_FUNC( WINAPI_FLATSB_SETSCROLLRANGE )
+HB_FUNC( WAFLATSB_SETSCROLLRANGE )
 {
   winapi_ret_int(FlatSB_SetScrollRange(winapi_par_HWND(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), hb_parl(5)));
 }
@@ -675,7 +675,7 @@ HB_FUNC( WINAPI_FLATSB_SETSCROLLRANGE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_SetScrollProp(HWND,UINT index,INT_PTR newValue,WINBOOL)
 */
-HB_FUNC( WINAPI_FLATSB_SETSCROLLPROP )
+HB_FUNC( WAFLATSB_SETSCROLLPROP )
 {
   winapi_ret_BOOL(FlatSB_SetScrollProp(winapi_par_HWND(1), winapi_par_UINT(2), winapi_par_INT_PTR(3), hb_parl(4)));
 }
@@ -683,7 +683,7 @@ HB_FUNC( WINAPI_FLATSB_SETSCROLLPROP )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI InitializeFlatSB(HWND)
 */
-HB_FUNC( WINAPI_INITIALIZEFLATSB )
+HB_FUNC( WAINITIALIZEFLATSB )
 {
   winapi_ret_BOOL(InitializeFlatSB(winapi_par_HWND(1)));
 }
@@ -691,7 +691,7 @@ HB_FUNC( WINAPI_INITIALIZEFLATSB )
 /*
 WINCOMMCTRLAPI HRESULT WINAPI UninitializeFlatSB(HWND)
 */
-HB_FUNC( WINAPI_UNINITIALIZEFLATSB )
+HB_FUNC( WAUNINITIALIZEFLATSB )
 {
   winapi_ret_HRESULT(UninitializeFlatSB(winapi_par_HWND(1)));
 }

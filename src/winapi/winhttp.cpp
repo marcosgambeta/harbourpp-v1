@@ -45,7 +45,7 @@ SOFTWARE.
 /*
 WINBOOL WINAPI WinHttpAddRequestHeaders(HINTERNET,LPCWSTR,DWORD,DWORD)
 */
-HB_FUNC( WINAPI_WINHTTPADDREQUESTHEADERS )
+HB_FUNC( WAWINHTTPADDREQUESTHEADERS )
 {
   winapi_ret_BOOL(WinHttpAddRequestHeaders(winapi_par_HINTERNET(1), ( LPCWSTR ) hb_parc(2), winapi_par_DWORD(3), winapi_par_DWORD(4)));
 }
@@ -57,7 +57,7 @@ WINBOOL WINAPI WinHttpDetectAutoProxyConfigUrl(DWORD,LPWSTR*)
 /*
 WINBOOL WINAPI WinHttpCheckPlatform(void)
 */
-HB_FUNC( WINAPI_WINHTTPCHECKPLATFORM )
+HB_FUNC( WAWINHTTPCHECKPLATFORM )
 {
   winapi_ret_BOOL(WinHttpCheckPlatform());
 }
@@ -65,7 +65,7 @@ HB_FUNC( WINAPI_WINHTTPCHECKPLATFORM )
 /*
 WINBOOL WINAPI WinHttpCloseHandle(HINTERNET)
 */
-HB_FUNC( WINAPI_WINHTTPCLOSEHANDLE )
+HB_FUNC( WAWINHTTPCLOSEHANDLE )
 {
   winapi_ret_BOOL(WinHttpCloseHandle(winapi_par_HINTERNET(1)));
 }
@@ -97,7 +97,7 @@ WINBOOL WINAPI WinHttpGetProxyForUrl(HINTERNET,LPCWSTR,WINHTTP_AUTOPROXY_OPTIONS
 /*
 HINTERNET WINAPI WinHttpOpen(LPCWSTR,DWORD,LPCWSTR,LPCWSTR,DWORD)
 */
-HB_FUNC( WINAPI_WINHTTPOPEN )
+HB_FUNC( WAWINHTTPOPEN )
 {
   winapi_ret_HINTERNET(WinHttpOpen(( LPCWSTR ) hb_parc(1), winapi_par_DWORD(2), ( LPCWSTR ) hb_parc(3), ( LPCWSTR ) hb_parc(4), winapi_par_DWORD(5)));
 }
@@ -114,7 +114,7 @@ WINBOOL WINAPI WinHttpQueryAuthParams(HINTERNET,DWORD,LPVOID*)
 WINBOOL WINAPI WinHttpQueryAuthSchemes(HINTERNET,LPDWORD,LPDWORD,LPDWORD)
 WINHTTPAPI BOOL WinHttpQueryAuthSchemes([in] HINTERNET hRequest, [out] LPDWORD lpdwSupportedSchemes, [out] LPDWORD lpdwFirstScheme, [out] LPDWORD pdwAuthTarget)
 */
-HB_FUNC( WINAPI_WINHTTPQUERYAUTHSCHEMES )
+HB_FUNC( WAWINHTTPQUERYAUTHSCHEMES )
 {
   DWORD dwSupportedSchemes;
   DWORD dwFirstScheme;
@@ -129,7 +129,7 @@ HB_FUNC( WINAPI_WINHTTPQUERYAUTHSCHEMES )
 WINBOOL WINAPI WinHttpQueryDataAvailable(HINTERNET,LPDWORD)
 WINHTTPAPI BOOL WinHttpQueryDataAvailable([in] HINTERNET hRequest, [out] LPDWORD lpdwNumberOfBytesAvailable)
 */
-HB_FUNC( WINAPI_WINHTTPQUERYDATAAVAILABLE )
+HB_FUNC( WAWINHTTPQUERYDATAAVAILABLE )
 {
   DWORD dwNumberOfBytesAvailable;
   winapi_ret_BOOL(WinHttpQueryDataAvailable(winapi_par_HINTERNET(1), &dwNumberOfBytesAvailable));
@@ -140,7 +140,7 @@ HB_FUNC( WINAPI_WINHTTPQUERYDATAAVAILABLE )
 WINBOOL WINAPI WinHttpQueryHeaders(HINTERNET,DWORD,LPCWSTR,LPVOID,LPDWORD,LPDWORD)
 WINHTTPAPI BOOL WinHttpQueryHeaders([in] HINTERNET hRequest, [in] DWORD dwInfoLevel, [in, optional] LPCWSTR pwszName, [out] LPVOID lpBuffer, [in, out] LPDWORD lpdwBufferLength, [in, out] LPDWORD lpdwIndex)
 */
-HB_FUNC( WINAPI_WINHTTPQUERYHEADERS )
+HB_FUNC( WAWINHTTPQUERYHEADERS )
 {
   LPVOID Buffer = nullptr;
   DWORD dwBufferLength = winapi_par_DWORD(5);
@@ -155,7 +155,7 @@ HB_FUNC( WINAPI_WINHTTPQUERYHEADERS )
 WINBOOL WINAPI WinHttpQueryOption(HINTERNET,DWORD,LPVOID,LPDWORD)
 WINHTTPAPI BOOL WinHttpQueryOption([in] HINTERNET hInternet, [in] DWORD dwOption, [out] LPVOID lpBuffer, [in, out] LPDWORD lpdwBufferLength)
 */
-HB_FUNC( WINAPI_WINHTTPQUERYOPTION )
+HB_FUNC( WAWINHTTPQUERYOPTION )
 {
   LPVOID Buffer = nullptr;
   DWORD dwBufferLength = winapi_par_DWORD(4);
@@ -168,7 +168,7 @@ HB_FUNC( WINAPI_WINHTTPQUERYOPTION )
 WINBOOL WINAPI WinHttpReadData(HINTERNET,LPVOID,DWORD,LPDWORD)
 WINHTTPAPI BOOL WinHttpReadData([in] HINTERNET hRequest, [out] LPVOID lpBuffer, [in] DWORD dwNumberOfBytesToRead, [out] LPDWORD lpdwNumberOfBytesRead)
 */
-HB_FUNC( WINAPI_WINHTTPREADDATA )
+HB_FUNC( WAWINHTTPREADDATA )
 {
   LPVOID Buffer = nullptr;
   DWORD dwNumberOfBytesRead;
@@ -181,7 +181,7 @@ HB_FUNC( WINAPI_WINHTTPREADDATA )
 WINBOOL WINAPI WinHttpReceiveResponse(HINTERNET,LPVOID)
 WINHTTPAPI BOOL WinHttpReceiveResponse([in] HINTERNET hRequest, [in] LPVOID lpReserved)
 */
-HB_FUNC( WINAPI_WINHTTPRECEIVERESPONSE )
+HB_FUNC( WAWINHTTPRECEIVERESPONSE )
 {
   winapi_ret_BOOL(WinHttpReceiveResponse(winapi_par_HINTERNET(1), winapi_par_LPVOID(2)));
 }
@@ -190,7 +190,7 @@ HB_FUNC( WINAPI_WINHTTPRECEIVERESPONSE )
 WINBOOL WINAPI WinHttpSendRequest(HINTERNET,LPCWSTR,DWORD,LPVOID,DWORD,DWORD,DWORD_PTR)
 WINHTTPAPI BOOL WinHttpSendRequest([in] HINTERNET hRequest, [in, optional] LPCWSTR lpszHeaders, [in] DWORD dwHeadersLength, [in, optional] LPVOID lpOptional, [in] DWORD dwOptionalLength, [in] DWORD dwTotalLength, [in] DWORD_PTR dwContext)
 */
-HB_FUNC( WINAPI_WINHTTPSENDREQUEST )
+HB_FUNC( WAWINHTTPSENDREQUEST )
 {
   winapi_ret_BOOL(WinHttpSendRequest(winapi_par_HINTERNET(1), ( LPCWSTR ) hb_parc(2), winapi_par_DWORD(3), winapi_par_LPVOID(4), winapi_par_DWORD(5), winapi_par_DWORD(6), winapi_par_DWORD_PTR(7)));
 }
@@ -202,7 +202,7 @@ WINBOOL WINAPI WinHttpSetDefaultProxyConfiguration(WINHTTP_PROXY_INFO*)
 /*
 WINBOOL WINAPI WinHttpSetCredentials(HINTERNET,DWORD,DWORD,LPCWSTR,LPCWSTR,LPVOID)
 */
-HB_FUNC( WINAPI_WINHTTPSETCREDENTIALS )
+HB_FUNC( WAWINHTTPSETCREDENTIALS )
 {
   winapi_ret_BOOL(WinHttpSetCredentials(winapi_par_HINTERNET(1), winapi_par_DWORD(2), winapi_par_DWORD(3), ( LPCWSTR ) hb_parc(4), ( LPCWSTR ) hb_parc(5), static_cast<LPVOID>(hb_parptr(6))));
 }
@@ -210,7 +210,7 @@ HB_FUNC( WINAPI_WINHTTPSETCREDENTIALS )
 /*
 WINBOOL WINAPI WinHttpSetOption(HINTERNET,DWORD,LPVOID,DWORD)
 */
-HB_FUNC( WINAPI_WINHTTPSETOPTION )
+HB_FUNC( WAWINHTTPSETOPTION )
 {
   winapi_ret_BOOL(WinHttpSetOption(winapi_par_HINTERNET(1), winapi_par_DWORD(2), static_cast<LPVOID>(hb_parptr(3)), winapi_par_DWORD(4)));
 }
@@ -222,7 +222,7 @@ WINHTTP_STATUS_CALLBACK WINAPI WinHttpSetStatusCallback(HINTERNET,WINHTTP_STATUS
 /*
 WINBOOL WINAPI WinHttpSetTimeouts(HINTERNET,int,int,int,int)
 */
-HB_FUNC( WINAPI_WINHTTPSETTIMEOUTS )
+HB_FUNC( WAWINHTTPSETTIMEOUTS )
 {
   winapi_ret_BOOL(WinHttpSetTimeouts(winapi_par_HINTERNET(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), winapi_par_int(5)));
 }
@@ -234,7 +234,7 @@ WINBOOL WINAPI WinHttpTimeFromSystemTime(const SYSTEMTIME *,LPWSTR)
 /*
 WINBOOL WINAPI WinHttpTimeToSystemTime(LPCWSTR,SYSTEMTIME*)
 */
-HB_FUNC( WINAPI_WINHTTPTIMETOSYSTEMTIME )
+HB_FUNC( WAWINHTTPTIMETOSYSTEMTIME )
 {
   winapi_ret_BOOL(WinHttpTimeToSystemTime(( LPCWSTR ) hb_parc(1), static_cast<SYSTEMTIME*>(winapi_get_ptr(2))));
 }
@@ -242,7 +242,7 @@ HB_FUNC( WINAPI_WINHTTPTIMETOSYSTEMTIME )
 /*
 WINBOOL WINAPI WinHttpWriteData(HINTERNET,LPCVOID,DWORD,LPDWORD)
 */
-HB_FUNC( WINAPI_WINHTTPWRITEDATA )
+HB_FUNC( WAWINHTTPWRITEDATA )
 {
   winapi_ret_BOOL(WinHttpWriteData(winapi_par_HINTERNET(1), static_cast<LPCVOID>(hb_parptr(2)), winapi_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4))));
 }
