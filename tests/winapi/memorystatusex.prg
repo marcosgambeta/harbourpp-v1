@@ -7,7 +7,7 @@
 
 PROCEDURE Main()
 
-   LOCAL o := WINAPI_STRUCT_MEMORYSTATUSEX():new()
+   LOCAL o := wasMEMORYSTATUSEX():new()
 
    ? "dwLength...............:", o:dwLength
    ? "dwMemoryLoad...........:", o:dwMemoryLoad

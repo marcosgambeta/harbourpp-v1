@@ -7,7 +7,7 @@
 
 PROCEDURE Main()
 
-   LOCAL o := WINAPI_STRUCT_SYSTEMTIME():new()
+   LOCAL o := wasSYSTEMTIME():new()
 
    ? "wYear........:", o:wYear
    ? "wMonth.......:", o:wMonth

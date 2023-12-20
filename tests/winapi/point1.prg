@@ -9,7 +9,7 @@ PROCEDURE Main()
 
    LOCAL oPoint
 
-   oPoint := WINAPI_STRUCT_POINT():new()
+   oPoint := wasPOINT():new()
 
    ? "pointer=", oPoint:ptr
 

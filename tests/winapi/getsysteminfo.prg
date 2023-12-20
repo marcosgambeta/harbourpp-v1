@@ -7,7 +7,7 @@
 
 PROCEDURE Main()
 
-   LOCAL o := WINAPI_STRUCT_SYSTEM_INFO():new()
+   LOCAL o := wasSYSTEM_INFO():new()
 
    ? "dwOemId....................:", o:dwOemId
    ? "wProcessorArchitecture.....:", o:wProcessorArchitecture

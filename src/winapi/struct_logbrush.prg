@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_LOGBRUSH
+CLASS WASLOGBRUSH
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -66,7 +66,7 @@ CLASS WINAPI_STRUCT_LOGBRUSH
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_LOGBRUSH
+PROCEDURE destroyObject() CLASS WASLOGBRUSH
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -80,7 +80,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_NEW )
+HB_FUNC_STATIC( WASLOGBRUSH_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new LOGBRUSH());
@@ -88,7 +88,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
+HB_FUNC_STATIC( WASLOGBRUSH_DELETE )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_DELETE )
 
 // UINT lbStyle
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
+HB_FUNC_STATIC( WASLOGBRUSH_SETLBSTYLE )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -113,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBSTYLE )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
+HB_FUNC_STATIC( WASLOGBRUSH_GETLBSTYLE )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBSTYLE )
 
 // COLORREF lbColor
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
+HB_FUNC_STATIC( WASLOGBRUSH_SETLBCOLOR )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -135,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBCOLOR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
+HB_FUNC_STATIC( WASLOGBRUSH_GETLBCOLOR )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +147,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBCOLOR )
 
 // ULONG_PTR lbHatch
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
+HB_FUNC_STATIC( WASLOGBRUSH_SETLBHATCH )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -157,7 +157,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_SETLBHATCH )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_LOGBRUSH_GETLBHATCH )
+HB_FUNC_STATIC( WASLOGBRUSH_GETLBHATCH )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

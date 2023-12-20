@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_RECT
+CLASS WASRECT
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -72,7 +72,7 @@ CLASS WINAPI_STRUCT_RECT
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_RECT
+PROCEDURE destroyObject() CLASS WASRECT
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -86,7 +86,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_NEW )
+HB_FUNC_STATIC( WASRECT_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new RECT());
@@ -94,7 +94,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_DELETE )
+HB_FUNC_STATIC( WASRECT_DELETE )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_DELETE )
 
 // LONG left
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETLEFT )
+HB_FUNC_STATIC( WASRECT_SETLEFT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETLEFT )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETLEFT )
+HB_FUNC_STATIC( WASRECT_GETLEFT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETLEFT )
 
 // LONG top
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETTOP )
+HB_FUNC_STATIC( WASRECT_SETTOP )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -141,7 +141,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETTOP )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETTOP )
+HB_FUNC_STATIC( WASRECT_GETTOP )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETTOP )
 
 // LONG right
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETRIGHT )
+HB_FUNC_STATIC( WASRECT_SETRIGHT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETRIGHT )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETRIGHT )
+HB_FUNC_STATIC( WASRECT_GETRIGHT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -175,7 +175,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETRIGHT )
 
 // LONG bottom
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETBOTTOM )
+HB_FUNC_STATIC( WASRECT_SETBOTTOM )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -185,7 +185,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_RECT_SETBOTTOM )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_RECT_GETBOTTOM )
+HB_FUNC_STATIC( WASRECT_GETBOTTOM )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

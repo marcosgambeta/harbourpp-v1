@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_SIZE
+CLASS WASSIZE
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +60,7 @@ CLASS WINAPI_STRUCT_SIZE
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_SIZE
+PROCEDURE destroyObject() CLASS WASSIZE
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -74,7 +74,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
+HB_FUNC_STATIC( WASSIZE_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new SIZE());
@@ -82,7 +82,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
+HB_FUNC_STATIC( WASSIZE_DELETE )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -97,7 +97,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_DELETE )
 
 // LONG cx
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
+HB_FUNC_STATIC( WASSIZE_SETCX )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -107,7 +107,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCX )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
+HB_FUNC_STATIC( WASSIZE_GETCX )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCX )
 
 // LONG cy
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
+HB_FUNC_STATIC( WASSIZE_SETCY )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +129,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_SETCY )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_SIZE_GETCY )
+HB_FUNC_STATIC( WASSIZE_GETCY )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_POINT
+CLASS WASPOINT
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +60,7 @@ CLASS WINAPI_STRUCT_POINT
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_POINT
+PROCEDURE destroyObject() CLASS WASPOINT
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -74,7 +74,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_NEW )
+HB_FUNC_STATIC( WASPOINT_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new POINT());
@@ -82,7 +82,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_DELETE )
+HB_FUNC_STATIC( WASPOINT_DELETE )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -97,7 +97,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_DELETE )
 
 // LONG x
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETX )
+HB_FUNC_STATIC( WASPOINT_SETX )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -107,7 +107,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETX )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_GETX )
+HB_FUNC_STATIC( WASPOINT_GETX )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +119,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_GETX )
 
 // LONG y
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETY )
+HB_FUNC_STATIC( WASPOINT_SETY )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +129,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_POINT_SETY )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_POINT_GETY )
+HB_FUNC_STATIC( WASPOINT_GETY )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

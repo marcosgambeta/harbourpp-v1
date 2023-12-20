@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_ABC
+CLASS WASABC
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -66,7 +66,7 @@ CLASS WINAPI_STRUCT_ABC
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_ABC
+PROCEDURE destroyObject() CLASS WASABC
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -80,7 +80,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_NEW )
+HB_FUNC_STATIC( WASABC_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new ABC());
@@ -88,7 +88,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_DELETE )
+HB_FUNC_STATIC( WASABC_DELETE )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_DELETE )
 
 // int abcA
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCA )
+HB_FUNC_STATIC( WASABC_SETABCA )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -113,7 +113,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCA )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCA )
+HB_FUNC_STATIC( WASABC_GETABCA )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCA )
 
 // UINT abcB
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCB )
+HB_FUNC_STATIC( WASABC_SETABCB )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -135,7 +135,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCB )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCB )
+HB_FUNC_STATIC( WASABC_GETABCB )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +147,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCB )
 
 // int abcC
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCC )
+HB_FUNC_STATIC( WASABC_SETABCC )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -157,7 +157,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_ABC_SETABCC )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_ABC_GETABCC )
+HB_FUNC_STATIC( WASABC_GETABCC )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

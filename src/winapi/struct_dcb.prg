@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WINAPI_STRUCT_DCB
+CLASS WASDCB
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -216,7 +216,7 @@ CLASS WINAPI_STRUCT_DCB
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WINAPI_STRUCT_DCB
+PROCEDURE destroyObject() CLASS WASDCB
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -230,7 +230,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_NEW )
+HB_FUNC_STATIC( WASDCB_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new DCB());
@@ -238,7 +238,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_DELETE )
+HB_FUNC_STATIC( WASDCB_DELETE )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -253,7 +253,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_DELETE )
 
 // DWORD DCBlength
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETDCBLENGTH )
+HB_FUNC_STATIC( WASDCB_SETDCBLENGTH )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -263,7 +263,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETDCBLENGTH )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETDCBLENGTH )
+HB_FUNC_STATIC( WASDCB_GETDCBLENGTH )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -275,7 +275,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETDCBLENGTH )
 
 // DWORD BaudRate
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBAUDRATE )
+HB_FUNC_STATIC( WASDCB_SETBAUDRATE )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -285,7 +285,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBAUDRATE )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBAUDRATE )
+HB_FUNC_STATIC( WASDCB_GETBAUDRATE )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -297,7 +297,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBAUDRATE )
 
 // DWORD fBinary : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFBINARY )
+HB_FUNC_STATIC( WASDCB_SETFBINARY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -307,7 +307,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFBINARY )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFBINARY )
+HB_FUNC_STATIC( WASDCB_GETFBINARY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -319,7 +319,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFBINARY )
 
 // DWORD fParity : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFPARITY )
+HB_FUNC_STATIC( WASDCB_SETFPARITY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -329,7 +329,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFPARITY )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFPARITY )
+HB_FUNC_STATIC( WASDCB_GETFPARITY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -341,7 +341,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFPARITY )
 
 // DWORD fOutxCtsFlow : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXCTSFLOW )
+HB_FUNC_STATIC( WASDCB_SETFOUTXCTSFLOW )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -351,7 +351,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXCTSFLOW )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXCTSFLOW )
+HB_FUNC_STATIC( WASDCB_GETFOUTXCTSFLOW )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -363,7 +363,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXCTSFLOW )
 
 // DWORD fOutxDsrFlow : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXDSRFLOW )
+HB_FUNC_STATIC( WASDCB_SETFOUTXDSRFLOW )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -373,7 +373,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTXDSRFLOW )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXDSRFLOW )
+HB_FUNC_STATIC( WASDCB_GETFOUTXDSRFLOW )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -385,7 +385,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTXDSRFLOW )
 
 // DWORD fDtrControl : 2
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDTRCONTROL )
+HB_FUNC_STATIC( WASDCB_SETFDTRCONTROL )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -395,7 +395,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDTRCONTROL )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDTRCONTROL )
+HB_FUNC_STATIC( WASDCB_GETFDTRCONTROL )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -407,7 +407,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDTRCONTROL )
 
 // DWORD fDsrSensitivity : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDSRSENSITIVITY )
+HB_FUNC_STATIC( WASDCB_SETFDSRSENSITIVITY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -417,7 +417,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDSRSENSITIVITY )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDSRSENSITIVITY )
+HB_FUNC_STATIC( WASDCB_GETFDSRSENSITIVITY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -429,7 +429,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDSRSENSITIVITY )
 
 // DWORD fTXContinueOnXoff : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFTXCONTINUEONXOFF )
+HB_FUNC_STATIC( WASDCB_SETFTXCONTINUEONXOFF )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -439,7 +439,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFTXCONTINUEONXOFF )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFTXCONTINUEONXOFF )
+HB_FUNC_STATIC( WASDCB_GETFTXCONTINUEONXOFF )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -451,7 +451,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFTXCONTINUEONXOFF )
 
 // DWORD fOutX : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTX )
+HB_FUNC_STATIC( WASDCB_SETFOUTX )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -461,7 +461,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFOUTX )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTX )
+HB_FUNC_STATIC( WASDCB_GETFOUTX )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -473,7 +473,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFOUTX )
 
 // DWORD fInX : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFINX )
+HB_FUNC_STATIC( WASDCB_SETFINX )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -483,7 +483,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFINX )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFINX )
+HB_FUNC_STATIC( WASDCB_GETFINX )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -495,7 +495,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFINX )
 
 // DWORD fErrorChar : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFERRORCHAR )
+HB_FUNC_STATIC( WASDCB_SETFERRORCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -505,7 +505,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFERRORCHAR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFERRORCHAR )
+HB_FUNC_STATIC( WASDCB_GETFERRORCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -517,7 +517,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFERRORCHAR )
 
 // DWORD fNull : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFNULL )
+HB_FUNC_STATIC( WASDCB_SETFNULL )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -527,7 +527,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFNULL )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFNULL )
+HB_FUNC_STATIC( WASDCB_GETFNULL )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -539,7 +539,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFNULL )
 
 // DWORD fRtsControl : 2
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFRTSCONTROL )
+HB_FUNC_STATIC( WASDCB_SETFRTSCONTROL )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -549,7 +549,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFRTSCONTROL )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFRTSCONTROL )
+HB_FUNC_STATIC( WASDCB_GETFRTSCONTROL )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -561,7 +561,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFRTSCONTROL )
 
 // DWORD fAbortOnError : 1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFABORTONERROR )
+HB_FUNC_STATIC( WASDCB_SETFABORTONERROR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -571,7 +571,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFABORTONERROR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFABORTONERROR )
+HB_FUNC_STATIC( WASDCB_GETFABORTONERROR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -583,7 +583,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFABORTONERROR )
 
 // DWORD fDummy2 : 17
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDUMMY2 )
+HB_FUNC_STATIC( WASDCB_SETFDUMMY2 )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -593,7 +593,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETFDUMMY2 )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDUMMY2 )
+HB_FUNC_STATIC( WASDCB_GETFDUMMY2 )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -605,7 +605,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETFDUMMY2 )
 
 // WORD wReserved
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED )
+HB_FUNC_STATIC( WASDCB_SETWRESERVED )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -615,7 +615,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED )
+HB_FUNC_STATIC( WASDCB_GETWRESERVED )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -627,7 +627,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED )
 
 // WORD XonLim
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONLIM )
+HB_FUNC_STATIC( WASDCB_SETXONLIM )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -637,7 +637,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONLIM )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONLIM )
+HB_FUNC_STATIC( WASDCB_GETXONLIM )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -649,7 +649,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONLIM )
 
 // WORD XoffLim
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFLIM )
+HB_FUNC_STATIC( WASDCB_SETXOFFLIM )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -659,7 +659,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFLIM )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFLIM )
+HB_FUNC_STATIC( WASDCB_GETXOFFLIM )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -671,7 +671,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFLIM )
 
 // BYTE ByteSize
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBYTESIZE )
+HB_FUNC_STATIC( WASDCB_SETBYTESIZE )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -681,7 +681,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETBYTESIZE )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBYTESIZE )
+HB_FUNC_STATIC( WASDCB_GETBYTESIZE )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -693,7 +693,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETBYTESIZE )
 
 // BYTE Parity
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETPARITY )
+HB_FUNC_STATIC( WASDCB_SETPARITY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -703,7 +703,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETPARITY )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETPARITY )
+HB_FUNC_STATIC( WASDCB_GETPARITY )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -715,7 +715,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETPARITY )
 
 // BYTE StopBits
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETSTOPBITS )
+HB_FUNC_STATIC( WASDCB_SETSTOPBITS )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -725,7 +725,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETSTOPBITS )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETSTOPBITS )
+HB_FUNC_STATIC( WASDCB_GETSTOPBITS )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -737,7 +737,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETSTOPBITS )
 
 // char XonChar
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONCHAR )
+HB_FUNC_STATIC( WASDCB_SETXONCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -747,7 +747,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXONCHAR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONCHAR )
+HB_FUNC_STATIC( WASDCB_GETXONCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -759,7 +759,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXONCHAR )
 
 // char XoffChar
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFCHAR )
+HB_FUNC_STATIC( WASDCB_SETXOFFCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -769,7 +769,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETXOFFCHAR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFCHAR )
+HB_FUNC_STATIC( WASDCB_GETXOFFCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -781,7 +781,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETXOFFCHAR )
 
 // char ErrorChar
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETERRORCHAR )
+HB_FUNC_STATIC( WASDCB_SETERRORCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -791,7 +791,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETERRORCHAR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETERRORCHAR )
+HB_FUNC_STATIC( WASDCB_GETERRORCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -803,7 +803,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETERRORCHAR )
 
 // char EofChar
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEOFCHAR )
+HB_FUNC_STATIC( WASDCB_SETEOFCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -813,7 +813,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEOFCHAR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEOFCHAR )
+HB_FUNC_STATIC( WASDCB_GETEOFCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -825,7 +825,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEOFCHAR )
 
 // char EvtChar
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEVTCHAR )
+HB_FUNC_STATIC( WASDCB_SETEVTCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -835,7 +835,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETEVTCHAR )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEVTCHAR )
+HB_FUNC_STATIC( WASDCB_GETEVTCHAR )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -847,7 +847,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETEVTCHAR )
 
 // WORD wReserved1
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED1 )
+HB_FUNC_STATIC( WASDCB_SETWRESERVED1 )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -857,7 +857,7 @@ HB_FUNC_STATIC( WINAPI_STRUCT_DCB_SETWRESERVED1 )
   }
 }
 
-HB_FUNC_STATIC( WINAPI_STRUCT_DCB_GETWRESERVED1 )
+HB_FUNC_STATIC( WASDCB_GETWRESERVED1 )
 {
   auto obj = static_cast<DCB*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
