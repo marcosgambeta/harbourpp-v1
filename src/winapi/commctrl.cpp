@@ -593,22 +593,27 @@ WINCOMMCTRLAPI int WINAPI DPA_Search (HDPA hdpa, void *pFind, int iStart, PFNDAC
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_EnableScrollBar(HWND,int,UINT)
 */
+#if 0
 HB_FUNC( WAFLATSB_ENABLESCROLLBAR )
 {
   winapi_ret_BOOL(FlatSB_EnableScrollBar(winapi_par_HWND(1), winapi_par_int(2), winapi_par_UINT(3)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_ShowScrollBar(HWND,int code,WINBOOL)
 */
+#if 0
 HB_FUNC( WAFLATSB_SHOWSCROLLBAR )
 {
   winapi_ret_BOOL(FlatSB_ShowScrollBar(winapi_par_HWND(1), winapi_par_int(2), hb_parl(3)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollRange(HWND,int code,LPINT,LPINT)
 */
+#if 0
 HB_FUNC( WAFLATSB_GETSCROLLRANGE )
 {
   INT i1;
@@ -617,32 +622,39 @@ HB_FUNC( WAFLATSB_GETSCROLLRANGE )
   winapi_stor_INT(i1, 3);
   winapi_stor_INT(i2, 4);
 }
+#endif
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollInfo(HWND,int code,LPSCROLLINFO)
 */
+#if 0
 HB_FUNC( WAFLATSB_GETSCROLLINFO )
 {
   winapi_ret_BOOL(FlatSB_GetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3))));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_GetScrollPos(HWND,int code)
 */
+#if 0
 HB_FUNC( WAFLATSB_GETSCROLLPOS )
 {
   winapi_ret_int(FlatSB_GetScrollPos(winapi_par_HWND(1), winapi_par_int(2)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollProp(HWND,int propIndex,LPINT)
 */
+#if 0
 HB_FUNC( WAFLATSB_SCROLLPROP )
 {
   INT i;
   winapi_ret_BOOL(FlatSB_GetScrollProp(winapi_par_HWND(1), winapi_par_int(2), &i));
   winapi_stor_INT(i, 3);
 }
+#endif
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollPropPtr(HWND,int propIndex,PINT_PTR)
@@ -651,50 +663,62 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollPropPtr(HWND,int propIndex,PINT_PT
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollPos(HWND,int code,int pos,WINBOOL fRedraw)
 */
+#if 0
 HB_FUNC( WAFLATSB_SETSCROLLPOS )
 {
   winapi_ret_int(FlatSB_SetScrollPos(winapi_par_HWND(1), winapi_par_int(2), winapi_par_int(3), hb_parl(4)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollInfo(HWND,int code,LPSCROLLINFO,WINBOOL fRedraw)
 */
+#if 0
 HB_FUNC( WAFLATSB_SETSCROLLINFO )
 {
   winapi_ret_int(FlatSB_SetScrollInfo(winapi_par_HWND(1), winapi_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3)), winapi_par_BOOL(4)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollRange(HWND,int code,int min,int max,WINBOOL fRedraw)
 */
+#if 0
 HB_FUNC( WAFLATSB_SETSCROLLRANGE )
 {
   winapi_ret_int(FlatSB_SetScrollRange(winapi_par_HWND(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), hb_parl(5)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_SetScrollProp(HWND,UINT index,INT_PTR newValue,WINBOOL)
 */
+#if 0
 HB_FUNC( WAFLATSB_SETSCROLLPROP )
 {
   winapi_ret_BOOL(FlatSB_SetScrollProp(winapi_par_HWND(1), winapi_par_UINT(2), winapi_par_INT_PTR(3), hb_parl(4)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI InitializeFlatSB(HWND)
 */
+#if 0
 HB_FUNC( WAINITIALIZEFLATSB )
 {
   winapi_ret_BOOL(InitializeFlatSB(winapi_par_HWND(1)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI HRESULT WINAPI UninitializeFlatSB(HWND)
 */
+#if 0
 HB_FUNC( WAUNINITIALIZEFLATSB )
 {
   winapi_ret_HRESULT(UninitializeFlatSB(winapi_par_HWND(1)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI HRESULT WINAPI LoadIconMetric (HINSTANCE hinst, PCWSTR pszName, int lims, HICON *phico)
