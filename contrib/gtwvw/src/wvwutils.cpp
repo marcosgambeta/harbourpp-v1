@@ -2311,10 +2311,14 @@ HB_FUNC( WVW_CREATEFONT )
    }
 }
 
-HB_FUNC( WVW_GETKEYSTATE )
+#if 0
+HB_FUNC( WVW_GETKEYSTATE ) // TODO: deprecated (using waGetKeyState from WinApi library)
 {
    hb_retni(GetKeyState(hb_parni(1)));
 }
+#endif
+
+HB_FUNC_TRANSLATE( WVW_GETKEYSTATE, WAGETKEYSTATE )
 
 HB_FUNC( WVW_LOWORD )
 {

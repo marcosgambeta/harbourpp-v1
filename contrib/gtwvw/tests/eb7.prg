@@ -943,4 +943,4 @@ STATIC FUNCTION MyMessageBox( nwinnum, cMessage, cCaption, nFlags )
    RETURN win_MessageBox( nParent, cMessage, cCaption, nFlags )
 
 STATIC FUNCTION lShiftPressed()
-   RETURN wvw_GetKeyState( VK_SHIFT ) < 0
+   RETURN waGetKeyState(VK_SHIFT) < 0
