@@ -31,7 +31,8 @@ HB_DYN_LIBS := \
    gtxwc \
    hbvm \
    hbvmmt \
-   hbmaindllh
+   hbmaindllh \
+   hbwinapi
 
 ifneq ($(HB_HAS_PCRE_LOCAL),)
    HB_DYN_LIBS += hbpcre
