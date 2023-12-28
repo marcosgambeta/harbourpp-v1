@@ -108,10 +108,14 @@ HB_FUNC( WAPI_GETSYSTEMMETRICS ) // TODO: deprecated (using waGetSystemMetrics f
 
 HB_FUNC_TRANSLATE( WAPI_GETSYSTEMMETRICS, WAGETSYSTEMMETRICS )
 
-HB_FUNC( WAPI_GETKEYSTATE )
+#if 0
+HB_FUNC( WAPI_GETKEYSTATE ) // TODO: deprecated (using waGetKeyState from WinApi library)
 {
    hbwapi_ret_NI(GetKeyState(hbwapi_par_INT(1)));
 }
+#endif
+
+HB_FUNC_TRANSLATE( WAPI_GETKEYSTATE, WAGETKEYSTATE )
 
 HB_FUNC( WAPI_GETDESKTOPWINDOW )
 {
