@@ -751,7 +751,7 @@ FUNCTION wvg_GetMessageText( w, p1, p2 )
    RETURN Left(cText, At( Chr(0), cText + Chr(0) ) - 1)
 
 FUNCTION wvt_IsLButtonPressed()
-   RETURN hb_bitAnd( wapi_GetKeyState( WIN_VK_LBUTTON ), 0x8000 ) != 0
+   RETURN hb_bitAnd( waGetKeyState(WIN_VK_LBUTTON), 0x8000 ) != 0
 
 FUNCTION wvg_FindWindow( cTitle )
    RETURN wapi_FindWindow( , cTitle )
