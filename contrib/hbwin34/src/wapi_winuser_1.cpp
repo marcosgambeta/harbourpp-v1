@@ -829,10 +829,14 @@ HB_FUNC( WAPI_GETKEYBOARDLAYOUTNAME )
    hbwapi_ret_L(bResult);
 }
 
-HB_FUNC( WAPI_GETSYSCOLOR )
+#if 0
+HB_FUNC( WAPI_GETSYSCOLOR ) // TODO: deprecated (using waGetSysColor from WinApi library)
 {
    hbwapi_ret_DWORD(GetSysColor(hb_parni(1)));
 }
+#endif
+
+HB_FUNC_TRANSLATE( WAPI_GETSYSCOLOR, WAGETSYSCOLOR )
 
 HB_FUNC( WAPI_GETCLIENTRECT )
 {

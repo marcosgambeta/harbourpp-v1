@@ -1230,7 +1230,7 @@
 #define WIN_RT_ANIICON                     22
 #define WIN_RT_HTML                        23
 
-/* Color indexes (wapi_GetSysColor() parameter) */
+/* Color indexes (waGetSysColor() parameter) */
 #define WIN_CTLCOLOR_MSGBOX                0
 #define WIN_CTLCOLOR_EDIT                  1
 #define WIN_CTLCOLOR_LISTBOX               2
