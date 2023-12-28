@@ -404,7 +404,7 @@ PROCEDURE wvw_Minimize(nWin)
    RETURN
 
 FUNCTION wvw_IsLButtonPressed()
-   RETURN hb_bitAnd(wapi_GetKeyState(WIN_VK_LBUTTON), 0x8000) != 0
+   RETURN hb_bitAnd(waGetKeyState(WIN_VK_LBUTTON), 0x8000) != 0
 
 FUNCTION wvw_GetScreenWidth()
    RETURN waGetSystemMetrics(WIN_SM_CXSCREEN)

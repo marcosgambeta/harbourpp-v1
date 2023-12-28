@@ -938,4 +938,4 @@ STATIC FUNCTION MyMessageBox( nwinnum, cMessage, cCaption, nFlags )
 #define VK_SHIFT            16
 
 STATIC FUNCTION lShiftPressed()
-   RETURN wapi_GetKeyState( VK_SHIFT ) < 0
+   RETURN waGetKeyState(VK_SHIFT) < 0
