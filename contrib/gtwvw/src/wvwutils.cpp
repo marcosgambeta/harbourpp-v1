@@ -943,10 +943,14 @@ HB_FUNC( RGB )
    hb_retnl(RGB(hb_parni(1), hb_parni(2), hb_parni(3)));
 }
 
-HB_FUNC( GETSYSCOLOR )
+#if 0
+HB_FUNC( GETSYSCOLOR ) // TODO: deprecated (using waGetSysColor from WinApi library)
 {
    hb_retnl(static_cast<LONG>(GetSysColor(hb_parni(1))));
 }
+#endif
+
+HB_FUNC_TRANSLATE( GETSYSCOLOR, WAGETSYSCOLOR )
 
 HB_FUNC( REDRAWWINDOW )
 {
