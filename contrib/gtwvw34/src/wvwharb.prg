@@ -407,10 +407,10 @@ FUNCTION wvw_IsLButtonPressed()
    RETURN hb_bitAnd(wapi_GetKeyState(WIN_VK_LBUTTON), 0x8000) != 0
 
 FUNCTION wvw_GetScreenWidth()
-   RETURN wapi_GetSystemMetrics(WIN_SM_CXSCREEN)
+   RETURN waGetSystemMetrics(WIN_SM_CXSCREEN)
 
 FUNCTION wvw_GetScreenHeight()
-   RETURN wapi_GetSystemMetrics(WIN_SM_CYSCREEN)
+   RETURN waGetSystemMetrics(WIN_SM_CYSCREEN)
 
 FUNCTION wvw_stSetText(dummy, hWnd, cText)  /* QUESTION: Is this correct? */
 
