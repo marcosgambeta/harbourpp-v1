@@ -70,13 +70,17 @@ HB_FUNC( WAPI_ISZOOMED )
    hbwapi_ret_L(IsZoomed(hbwapi_par_raw_HWND(1)));
 }
 
-HB_FUNC( WAPI_GETSYSTEMMETRICS )
+#if 0
+HB_FUNC( WAPI_GETSYSTEMMETRICS ) // TODO: deprecated (using waGetSystemMetrics from WinApi library)
 {
    int iResult = GetSystemMetrics(hbwapi_par_INT(1));
 
    hbwapi_SetLastError(GetLastError());
    hbwapi_ret_NI(iResult);
 }
+#endif
+
+HB_FUNC_TRANSLATE( WAPI_GETSYSTEMMETRICS, WAGETSYSTEMMETRICS )
 
 HB_FUNC( WAPI_GETKEYSTATE )
 {

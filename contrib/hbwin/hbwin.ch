@@ -350,7 +350,7 @@
 #define WIN_SCALINGFACTORX                 114   /* Scaling factor x */
 #define WIN_SCALINGFACTORY                 115   /* Scaling factor y */
 
-/* wapi_GetSystemMetrics() parameters */
+/* waGetSystemMetrics() parameters */
 #define WIN_SM_CXSCREEN                    0
 #define WIN_SM_CYSCREEN                    1
 #define WIN_SM_CXVSCROLL                   2
