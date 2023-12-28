@@ -460,5 +460,5 @@ FUNCTION wvw_ChooseColor(nColor, aColor, nFlags)
    ENDIF
 
    RETURN win_ChooseColor(hWnd,, nColor, ;
-      hb_defaultValue(aColor, AFill(Array(16), wapi_GetSysColor(WIN_COLOR_BTNFACE))), ;
+      hb_defaultValue(aColor, AFill(Array(16), waGetSysColor(WIN_COLOR_BTNFACE))), ;
       hb_defaultValue(nFlags, hb_bitOr(WIN_CC_ANYCOLOR, WIN_CC_RGBINIT, WIN_CC_FULLOPEN)))
