@@ -3891,3 +3891,5 @@ zError
 zlibCompileFlags
 zlibVersion
 HB_FUN_WAGETSYSCOLOR
+HB_FUN_WAGETSYSTEMMETRICS
+
