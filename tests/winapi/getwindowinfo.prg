@@ -30,7 +30,7 @@ PROCEDURE Main()
 
    ?
 
-   ? "cbSize=", oWindowInfo:cbSize
+   ? "cbSize.........=", oWindowInfo:cbSize
    //RECT  rcWindow; // TODO:
    //RECT  rcClient; // TODO:
    ? "dwStyle........=", oWindowInfo:dwStyle
