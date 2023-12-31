@@ -45,6 +45,7 @@ PRG_SOURCES := \
    struct_system_info.prg \
    struct_systemtime.prg \
    struct_timecaps.prg \
+   struct_windowinfo.prg \
 
 LIBNAME := hbwinapi
 

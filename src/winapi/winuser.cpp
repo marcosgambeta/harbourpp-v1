@@ -4351,6 +4351,10 @@ WINUSERAPI WINBOOL WINAPI GetCursorInfo(PCURSORINFO pci)
 /*
 WINUSERAPI WINBOOL WINAPI GetWindowInfo(HWND hwnd,PWINDOWINFO pwi)
 */
+HB_FUNC( WAGETWINDOWINFO )
+{
+  winapi_ret_BOOL(GetWindowInfo(winapi_par_HWND(1), static_cast<PWINDOWINFO>(winapi_get_ptr(2))));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetTitleBarInfo(HWND hwnd,PTITLEBARINFO pti)
@@ -4379,6 +4383,10 @@ HB_FUNC( WAGETANCESTOR )
 /*
 WINUSERAPI HWND WINAPI RealChildWindowFromPoint(HWND hwndParent,POINT ptParentClientCoords)
 */
+HB_FUNC( WAREALCHILDWINDOWFROMPOINT )
+{
+  winapi_ret_HWND(RealChildWindowFromPoint(winapi_par_HWND(1), *static_cast<POINT*>(winapi_get_ptr(2))));
+}
 
 /*
 WINUSERAPI UINT WINAPI RealGetWindowClassA(HWND hwnd,LPSTR ptszClassName,UINT cchClassNameMax)
