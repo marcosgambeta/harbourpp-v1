@@ -4571,10 +4571,22 @@ WINUSERAPI WINBOOL WINAPI SetDisplayAutoRotationPreferences (ORIENTATION_PREFERE
 /*
 WINUSERAPI WINBOOL WINAPI IsImmersiveProcess (HANDLE hProcess)
 */
+#if 0
+HB_FUNC( WAISIMMERSIVEPROCESS )
+{
+  winapi_ret_BOOL(IsImmersiveProcess(winapi_par_HANDLE(1)));
+}
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI SetProcessRestrictionExemption (WINBOOL fEnableExemption)
 */
+#if 0
+HB_FUNC( WASETPROCESSRESTRICTIONEXEMPTION )
+{
+  winapi_ret_BOOL(SetProcessRestrictionExemption(winapi_par_BOOL(1)));
+}
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI GetPointerInputTransform(UINT32 pointerId, UINT32 historyCount, UINT32 *inputTransform)
@@ -4583,6 +4595,12 @@ WINUSERAPI WINBOOL WINAPI GetPointerInputTransform(UINT32 pointerId, UINT32 hist
 /*
 WINUSERAPI WINBOOL WINAPI IsMousePointerEnabled(void)
 */
+#if 0
+HB_FUNC( WAISMOUSEPOINTERENABLED )
+{
+  winapi_ret_BOOL(IsMousePointerEnabled());
+}
+#endif
 
 /*
 int GetSystemMetrics([in] int nIndex);
