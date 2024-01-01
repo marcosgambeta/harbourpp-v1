@@ -45,9 +45,9 @@ CLASS WASSCROLLINFO
    METHOD delete
 
    // UINT cbSize
-   ASSIGN cbSize(n) INLINE ::setcbSize(n)
+   //ASSIGN cbSize(n) INLINE ::setcbSize(n)
    ACCESS cbSize INLINE ::getcbSize()
-   METHOD setcbSize
+   //METHOD setcbSize
    METHOD getcbSize
 
    // UINT fMask
@@ -106,8 +106,10 @@ RETURN
 
 HB_FUNC_STATIC( WASSCROLLINFO_NEW )
 {
+  auto obj = new SCROLLINFO();
+  obj->cbSize = sizeof(SCROLLINFO);
   auto self = hb_stackSelfItem();
-  hb_objDataPutPtr(self, "_PTR", new SCROLLINFO());
+  hb_objDataPutPtr(self, "_PTR", obj);
   hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
   hb_itemReturn(self);
 }
@@ -127,15 +129,15 @@ HB_FUNC_STATIC( WASSCROLLINFO_DELETE )
 
 // UINT cbSize
 
-HB_FUNC_STATIC( WASSCROLLINFO_SETCBSIZE )
-{
-  auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
-
-  if( obj != nullptr )
-  {
-    obj->cbSize = winapi_par_UINT(1);
-  }
-}
+// HB_FUNC_STATIC( WASSCROLLINFO_SETCBSIZE )
+// {
+//   auto obj = static_cast<SCROLLINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+//
+//   if( obj != nullptr )
+//   {
+//     obj->cbSize = winapi_par_UINT(1);
+//   }
+// }
 
 HB_FUNC_STATIC( WASSCROLLINFO_GETCBSIZE )
 {
