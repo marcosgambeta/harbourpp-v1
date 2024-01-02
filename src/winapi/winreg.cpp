@@ -111,7 +111,7 @@ WINADVAPI LONG WINAPI RegDeleteKeyA(HKEY hKey,LPCSTR lpSubKey)
 */
 HB_FUNC( WAREGDELETEKEYA )
 {
-  winapi_ret_LONG(RegDeleteKeyA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2))));
+  winapi_ret_LONG(RegDeleteKeyA(winapi_par_HKEY(1), winapi_par_LPCSTR(2)));
 }
 
 /*
@@ -168,7 +168,7 @@ WINADVAPI LONG WINAPI RegDeleteValueA(HKEY hKey,LPCSTR lpValueName)
 */
 HB_FUNC( WAREGDELETEVALUEA )
 {
-  winapi_ret_LONG(RegDeleteValueA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2))));
+  winapi_ret_LONG(RegDeleteValueA(winapi_par_HKEY(1), winapi_par_LPCSTR(2)));
 }
 
 /*
@@ -235,7 +235,7 @@ WINADVAPI LONG WINAPI RegLoadKeyA(HKEY hKey,LPCSTR lpSubKey,LPCSTR lpFile)
 */
 HB_FUNC( WAREGLOADKEYA )
 {
-  winapi_ret_LONG(RegLoadKeyA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2)), static_cast<LPCSTR>(hb_parc(3))));
+  winapi_ret_LONG(RegLoadKeyA(winapi_par_HKEY(1), winapi_par_LPCSTR(2), winapi_par_LPCSTR(3)));
 }
 
 /*
@@ -316,7 +316,7 @@ WINADVAPI LONG WINAPI RegReplaceKeyA(HKEY hKey,LPCSTR lpSubKey,LPCSTR lpNewFile,
 */
 HB_FUNC( WAREGREPLACEKEYA )
 {
-  winapi_ret_LONG(RegReplaceKeyA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2)), static_cast<LPCSTR>(hb_parc(3)), static_cast<LPCSTR>(hb_parc(4))));
+  winapi_ret_LONG(RegReplaceKeyA(winapi_par_HKEY(1), winapi_par_LPCSTR(2), winapi_par_LPCSTR(3), winapi_par_LPCSTR(4)));
 }
 
 /*
@@ -343,7 +343,7 @@ WINADVAPI LONG WINAPI RegRestoreKeyA(HKEY hKey,LPCSTR lpFile,DWORD dwFlags)
 */
 HB_FUNC( WAREGRESTOREKEYA )
 {
-  winapi_ret_LONG(RegRestoreKeyA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2)), winapi_par_DWORD(3)));
+  winapi_ret_LONG(RegRestoreKeyA(winapi_par_HKEY(1), winapi_par_LPCSTR(2), winapi_par_DWORD(3)));
 }
 
 /*
@@ -378,7 +378,7 @@ WINADVAPI LONG WINAPI RegSetValueA(HKEY hKey,LPCSTR lpSubKey,DWORD dwType,LPCSTR
 */
 HB_FUNC( WAREGSETVALUEA )
 {
-  winapi_ret_LONG(RegSetValueA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2)), winapi_par_DWORD(3), static_cast<LPCSTR>(hb_parc(4)), winapi_par_DWORD(5)));
+  winapi_ret_LONG(RegSetValueA(winapi_par_HKEY(1), winapi_par_LPCSTR(2), winapi_par_DWORD(3), winapi_par_LPCSTR(4), winapi_par_DWORD(5)));
 }
 
 /*
@@ -411,7 +411,7 @@ WINADVAPI LONG WINAPI RegUnLoadKeyA(HKEY hKey,LPCSTR lpSubKey)
 */
 HB_FUNC( WAREGUNLOADKEYA )
 {
-  winapi_ret_LONG(RegUnLoadKeyA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2))));
+  winapi_ret_LONG(RegUnLoadKeyA(winapi_par_HKEY(1), winapi_par_LPCSTR(2)));
 }
 
 /*
@@ -436,7 +436,7 @@ HB_FUNC( WAREGGETVALUEA )
 {
   DWORD Type;
   DWORD Data;
-  winapi_ret_LONG(RegGetValueA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2)), static_cast<LPCSTR>(hb_parc(3)), winapi_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
+  winapi_ret_LONG(RegGetValueA(winapi_par_HKEY(1), winapi_par_LPCSTR(2), winapi_par_LPCSTR(3), winapi_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
   winapi_stor_DWORD(Type, 5);
   winapi_stor_DWORD(Data, 7);
 }
@@ -556,7 +556,7 @@ WINADVAPI LONG WINAPI RegDeleteKeyValueA(HKEY hKey, LPCSTR lpSubKey, LPCSTR lpVa
 #if 0
 HB_FUNC( WAREGDELETEKEYVALUEA )
 {
-  winapi_ret_LONG(RegDeleteKeyValueA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2)), static_cast<LPCSTR>(hb_parc(3))));
+  winapi_ret_LONG(RegDeleteKeyValueA(winapi_par_HKEY(1), winapi_par_LPCSTR(2), winapi_par_LPCSTR(3)));
 }
 #endif
 
@@ -587,7 +587,7 @@ WINADVAPI LONG WINAPI RegDeleteTreeA(HKEY hKey, LPCSTR lpSubKey)
 #if 0
 HB_FUNC( WAREGDELETETREEA )
 {
-  winapi_ret_LONG(RegDeleteTreeA(winapi_par_HKEY(1), static_cast<LPCSTR>(hb_parc(2))));
+  winapi_ret_LONG(RegDeleteTreeA(winapi_par_HKEY(1), winapi_par_LPCSTR(2)));
 }
 #endif
 

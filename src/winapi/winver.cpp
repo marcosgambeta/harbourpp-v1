@@ -64,7 +64,7 @@ DWORD GetFileVersionInfoSizeA([in] LPCSTR lptstrFilename, [out, optional] LPDWOR
 HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
 {
   DWORD dwHandle;
-  winapi_ret_DWORD(GetFileVersionInfoSizeA(static_cast<LPCSTR>(hb_parc(1)), &dwHandle));
+  winapi_ret_DWORD(GetFileVersionInfoSizeA(winapi_par_LPCSTR(1), &dwHandle));
   winapi_stor_DWORD(dwHandle, 2);
 }
 
@@ -94,7 +94,7 @@ BOOL GetFileVersionInfoA([in] LPCSTR lptstrFilename, DWORD dwHandle, [in] DWORD 
 */
 HB_FUNC( WAGETFILEVERSIONINFOA )
 {
-  winapi_ret_BOOL(GetFileVersionInfoA(static_cast<LPCSTR>(hb_parc(1)), 0, winapi_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
+  winapi_ret_BOOL(GetFileVersionInfoA(winapi_par_LPCSTR(1), 0, winapi_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
 }
 
 /*
@@ -135,7 +135,7 @@ BOOL GetFileVersionInfoExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, DWORD
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOEXA )
 {
-  winapi_ret_BOOL(GetFileVersionInfoExA(winapi_par_DWORD(1), static_cast<LPCSTR>(hb_parc(2)), 0, winapi_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)))); // TODO: buffer for data
+  winapi_ret_BOOL(GetFileVersionInfoExA(winapi_par_DWORD(1), winapi_par_LPCSTR(2), 0, winapi_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)))); // TODO: buffer for data
 }
 #endif
 
@@ -165,7 +165,7 @@ DWORD GetFileVersionInfoSizeExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, 
 HB_FUNC( WAGETFILEVERSIONINFOSIZEEXA )
 {
   DWORD dwHandle;
-  winapi_ret_DWORD(GetFileVersionInfoSizeExA(winapi_par_DWORD(1), static_cast<LPCSTR>(hb_parc(2)), &dwHandle));
+  winapi_ret_DWORD(GetFileVersionInfoSizeExA(winapi_par_DWORD(1), winapi_par_LPCSTR(2), &dwHandle));
   winapi_stor_DWORD(dwHandle, 3);
 }
 #endif

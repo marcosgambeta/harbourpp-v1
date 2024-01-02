@@ -95,7 +95,7 @@ WINMMAPI WINBOOL WINAPI sndPlaySoundA(LPCSTR pszSound,UINT fuSound)
 #if 0
 HB_FUNC( WASNDPLAYSOUNDA )
 {
-  winapi_ret_BOOL(sndPlaySoundA(static_cast<LPCSTR>(hb_parc(1)), winapi_par_UINT(2)));
+  winapi_ret_BOOL(sndPlaySoundA(winapi_par_LPCSTR(1), winapi_par_UINT(2)));
 }
 #endif
 
@@ -122,7 +122,7 @@ WINMMAPI WINBOOL WINAPI PlaySoundA(LPCSTR pszSound,HMODULE hmod,DWORD fdwSound)
 #if 0
 HB_FUNC( WAPLAYSOUNDA )
 {
-  winapi_ret_BOOL(PlaySoundA(static_cast<LPCSTR>(hb_parc(1)), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
+  winapi_ret_BOOL(PlaySoundA(winapi_par_LPCSTR(1), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
 }
 #endif
 
@@ -990,7 +990,7 @@ WINMMAPI MCIERROR WINAPI mciSendStringA(LPCSTR lpstrCommand,LPSTR lpstrReturnStr
 */
 HB_FUNC( WAMCISENDSTRINGA )
 {
-  winapi_ret_MCIERROR(mciSendStringA(static_cast<LPCSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), winapi_par_UINT(3), winapi_par_HWND(4)));
+  winapi_ret_MCIERROR(mciSendStringA(winapi_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), winapi_par_UINT(3), winapi_par_HWND(4)));
 }
 
 /*
@@ -1006,7 +1006,7 @@ WINMMAPI MCIDEVICEID WINAPI mciGetDeviceIDA(LPCSTR pszDevice)
 */
 HB_FUNC( WAMCIGETDEVICEIDA )
 {
-  winapi_ret_MCIDEVICEID(mciGetDeviceIDA(static_cast<LPCSTR>(hb_parc(1))));
+  winapi_ret_MCIDEVICEID(mciGetDeviceIDA(winapi_par_LPCSTR(1)));
 }
 
 /*
@@ -1029,7 +1029,7 @@ WINMMAPI MCIDEVICEID WINAPI mciGetDeviceIDFromElementIDA(DWORD dwElementID,LPCST
 */
 HB_FUNC( WAMCIGETDEVICEIDFROMELEMENTIDA )
 {
-  winapi_ret_MCIDEVICEID(mciGetDeviceIDFromElementIDA(winapi_par_DWORD(1), static_cast<LPCSTR>(hb_parc(2))));
+  winapi_ret_MCIDEVICEID(mciGetDeviceIDFromElementIDA(winapi_par_DWORD(1), winapi_par_LPCSTR(2)));
 }
 
 /*
