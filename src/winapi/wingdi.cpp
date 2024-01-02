@@ -2717,3 +2717,27 @@ HB_FUNC( WAWGLSWAPLAYERBUFFERS )
 /*
 WINGDIAPI DWORD WINAPI wglSwapMultipleBuffers(UINT,CONST WGLSWAP *)
 */
+
+/*
+void GetRValue(rgb) (macro)
+*/
+HB_FUNC( WAGETRVALUE )
+{
+  wa_ret_int(GetRValue(wa_par_COLORREF(1)));
+}
+
+/*
+void GetGValue(rgb) (macro)
+*/
+HB_FUNC( WAGETGVALUE )
+{
+  wa_ret_int(GetGValue(wa_par_COLORREF(1)));
+}
+
+/*
+void GetBValue(rgb) (macro)
+*/
+HB_FUNC( WAGETBVALUE )
+{
+  wa_ret_int(GetBValue(wa_par_COLORREF(1)));
+}
