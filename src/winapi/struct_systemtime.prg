@@ -149,7 +149,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWYEAR )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wYear);
+    wa_ret_WORD(obj->wYear);
   }
 }
 
@@ -171,7 +171,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWMONTH )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wMonth);
+    wa_ret_WORD(obj->wMonth);
   }
 }
 
@@ -193,7 +193,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWDAYOFWEEK )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wDayOfWeek);
+    wa_ret_WORD(obj->wDayOfWeek);
   }
 }
 
@@ -215,7 +215,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWDAY )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wDay);
+    wa_ret_WORD(obj->wDay);
   }
 }
 
@@ -237,7 +237,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWHOUR )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wHour);
+    wa_ret_WORD(obj->wHour);
   }
 }
 
@@ -259,7 +259,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWMINUTE )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wMinute);
+    wa_ret_WORD(obj->wMinute);
   }
 }
 
@@ -281,7 +281,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWSECOND )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wSecond);
+    wa_ret_WORD(obj->wSecond);
   }
 }
 
@@ -303,7 +303,7 @@ HB_FUNC_STATIC( WASSYSTEMTIME_GETWMILLISECONDS )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wMilliseconds);
+    wa_ret_WORD(obj->wMilliseconds);
   }
 }
 

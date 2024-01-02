@@ -113,7 +113,7 @@ HB_FUNC_STATIC( WASFILETIME_GETDWLOWDATETIME )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwLowDateTime);
+    wa_ret_DWORD(obj->dwLowDateTime);
   }
 }
 
@@ -135,7 +135,7 @@ HB_FUNC_STATIC( WASFILETIME_GETDWHIGHDATETIME )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwHighDateTime);
+    wa_ret_DWORD(obj->dwHighDateTime);
   }
 }
 

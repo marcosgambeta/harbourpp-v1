@@ -119,7 +119,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_GETLBSTYLE )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->lbStyle);
+    wa_ret_UINT(obj->lbStyle);
   }
 }
 
@@ -141,7 +141,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_GETLBCOLOR )
 
   if( obj != nullptr )
   {
-    winapi_ret_COLORREF(obj->lbColor);
+    wa_ret_COLORREF(obj->lbColor);
   }
 }
 
@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_GETLBHATCH )
 
   if( obj != nullptr )
   {
-    winapi_ret_ULONG_PTR(obj->lbHatch);
+    wa_ret_ULONG_PTR(obj->lbHatch);
   }
 }
 

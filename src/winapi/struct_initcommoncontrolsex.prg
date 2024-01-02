@@ -114,7 +114,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_GETDWSIZE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwSize);
+    wa_ret_DWORD(obj->dwSize);
   }
 }
 
@@ -136,7 +136,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_GETDWICC )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwICC);
+    wa_ret_DWORD(obj->dwICC);
   }
 }
 

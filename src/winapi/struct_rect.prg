@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WASRECT_GETLEFT )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->left);
+    wa_ret_LONG(obj->left);
   }
 }
 
@@ -147,7 +147,7 @@ HB_FUNC_STATIC( WASRECT_GETTOP )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->top);
+    wa_ret_LONG(obj->top);
   }
 }
 
@@ -169,7 +169,7 @@ HB_FUNC_STATIC( WASRECT_GETRIGHT )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->right);
+    wa_ret_LONG(obj->right);
   }
 }
 
@@ -191,7 +191,7 @@ HB_FUNC_STATIC( WASRECT_GETBOTTOM )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->bottom);
+    wa_ret_LONG(obj->bottom);
   }
 }
 

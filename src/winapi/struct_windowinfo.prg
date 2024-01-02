@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETCBSIZE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->cbSize);
+    wa_ret_DWORD(obj->cbSize);
   }
 }
 
@@ -193,7 +193,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETDWSTYLE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwStyle);
+    wa_ret_DWORD(obj->dwStyle);
   }
 }
 
@@ -215,7 +215,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETDWEXSTYLE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwExStyle);
+    wa_ret_DWORD(obj->dwExStyle);
   }
 }
 
@@ -237,7 +237,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETDWWINDOWSTATUS )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwWindowStatus);
+    wa_ret_DWORD(obj->dwWindowStatus);
   }
 }
 
@@ -259,7 +259,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETCXWINDOWBORDERS )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->cxWindowBorders);
+    wa_ret_UINT(obj->cxWindowBorders);
   }
 }
 
@@ -281,7 +281,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETCYWINDOWBORDERS )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->cyWindowBorders);
+    wa_ret_UINT(obj->cyWindowBorders);
   }
 }
 
@@ -303,7 +303,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETATOMWINDOWTYPE )
 
   if( obj != nullptr )
   {
-    winapi_ret_ATOM(obj->atomWindowType);
+    wa_ret_ATOM(obj->atomWindowType);
   }
 }
 
@@ -325,7 +325,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETWCREATORVERSION )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wCreatorVersion);
+    wa_ret_WORD(obj->wCreatorVersion);
   }
 }
 

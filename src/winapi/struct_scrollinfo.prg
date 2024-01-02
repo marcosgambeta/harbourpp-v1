@@ -145,7 +145,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_GETCBSIZE )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->cbSize);
+    wa_ret_UINT(obj->cbSize);
   }
 }
 
@@ -167,7 +167,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_GETFMASK )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->fMask);
+    wa_ret_UINT(obj->fMask);
   }
 }
 
@@ -189,7 +189,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_GETNMIN )
 
   if( obj != nullptr )
   {
-    winapi_ret_int(obj->nMin);
+    wa_ret_int(obj->nMin);
   }
 }
 
@@ -211,7 +211,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_GETNMAX )
 
   if( obj != nullptr )
   {
-    winapi_ret_int(obj->nMax);
+    wa_ret_int(obj->nMax);
   }
 }
 
@@ -233,7 +233,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_GETNPAGE )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->nPage);
+    wa_ret_UINT(obj->nPage);
   }
 }
 
@@ -255,7 +255,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_GETNPOS )
 
   if( obj != nullptr )
   {
-    winapi_ret_int(obj->nPos);
+    wa_ret_int(obj->nPos);
   }
 }
 
@@ -277,7 +277,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_GETNTRACKPOS )
 
   if( obj != nullptr )
   {
-    winapi_ret_int(obj->nTrackPos);
+    wa_ret_int(obj->nTrackPos);
   }
 }
 

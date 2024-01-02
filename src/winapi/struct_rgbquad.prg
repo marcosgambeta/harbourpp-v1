@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WASRGBQUAD_GETRGBBLUE )
 
   if( obj != nullptr )
   {
-    winapi_ret_BYTE(obj->rgbBlue);
+    wa_ret_BYTE(obj->rgbBlue);
   }
 }
 
@@ -147,7 +147,7 @@ HB_FUNC_STATIC( WASRGBQUAD_GETRGBGREEN )
 
   if( obj != nullptr )
   {
-    winapi_ret_BYTE(obj->rgbGreen);
+    wa_ret_BYTE(obj->rgbGreen);
   }
 }
 
@@ -169,7 +169,7 @@ HB_FUNC_STATIC( WASRGBQUAD_GETRGBRED )
 
   if( obj != nullptr )
   {
-    winapi_ret_BYTE(obj->rgbRed);
+    wa_ret_BYTE(obj->rgbRed);
   }
 }
 
@@ -191,7 +191,7 @@ HB_FUNC_STATIC( WASRGBQUAD_GETRGBRESERVED )
 
   if( obj != nullptr )
   {
-    winapi_ret_BYTE(obj->rgbReserved);
+    wa_ret_BYTE(obj->rgbReserved);
   }
 }
 

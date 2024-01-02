@@ -119,7 +119,7 @@ HB_FUNC_STATIC( WASLOGPEN_GETLOPNSTYLE )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->lopnStyle);
+    wa_ret_UINT(obj->lopnStyle);
   }
 }
 
@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WASLOGPEN_GETLOPNCOLOR )
 
   if( obj != nullptr )
   {
-    winapi_ret_COLORREF(obj->lopnColor);
+    wa_ret_COLORREF(obj->lopnColor);
   }
 }
 

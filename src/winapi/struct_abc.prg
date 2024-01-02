@@ -119,7 +119,7 @@ HB_FUNC_STATIC( WASABC_GETABCA )
 
   if( obj != nullptr )
   {
-    winapi_ret_int(obj->abcA);
+    wa_ret_int(obj->abcA);
   }
 }
 
@@ -141,7 +141,7 @@ HB_FUNC_STATIC( WASABC_GETABCB )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->abcB);
+    wa_ret_UINT(obj->abcB);
   }
 }
 
@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WASABC_GETABCC )
 
   if( obj != nullptr )
   {
-    winapi_ret_int(obj->abcC);
+    wa_ret_int(obj->abcC);
   }
 }
 

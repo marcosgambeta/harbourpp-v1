@@ -161,7 +161,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFCTSHOLD )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fCtsHold);
+    wa_ret_DWORD(obj->fCtsHold);
   }
 }
 
@@ -183,7 +183,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFDSRHOLD )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fDsrHold);
+    wa_ret_DWORD(obj->fDsrHold);
   }
 }
 
@@ -205,7 +205,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFRLSDHOLD )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fRlsdHold);
+    wa_ret_DWORD(obj->fRlsdHold);
   }
 }
 
@@ -227,7 +227,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFXOFFHOLD )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fXoffHold);
+    wa_ret_DWORD(obj->fXoffHold);
   }
 }
 
@@ -249,7 +249,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFXOFFSENT )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fXoffSent);
+    wa_ret_DWORD(obj->fXoffSent);
   }
 }
 
@@ -271,7 +271,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFEOF )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fEof);
+    wa_ret_DWORD(obj->fEof);
   }
 }
 
@@ -293,7 +293,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFTXIM )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fTxim);
+    wa_ret_DWORD(obj->fTxim);
   }
 }
 
@@ -315,7 +315,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETFRESERVED )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->fReserved);
+    wa_ret_DWORD(obj->fReserved);
   }
 }
 
@@ -337,7 +337,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETCBINQUE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->cbInQue);
+    wa_ret_DWORD(obj->cbInQue);
   }
 }
 
@@ -359,7 +359,7 @@ HB_FUNC_STATIC( WASCOMSTAT_GETCBOUTQUE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->cbOutQue);
+    wa_ret_DWORD(obj->cbOutQue);
   }
 }
 

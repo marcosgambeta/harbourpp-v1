@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WASICONINFO_GETFICON )
 
   if( obj != nullptr )
   {
-    winapi_ret_BOOL(obj->fIcon);
+    wa_ret_BOOL(obj->fIcon);
   }
 }
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WASICONINFO_GETXHOTSPOT )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->xHotspot);
+    wa_ret_DWORD(obj->xHotspot);
   }
 }
 
@@ -175,7 +175,7 @@ HB_FUNC_STATIC( WASICONINFO_GETYHOTSPOT )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->yHotspot);
+    wa_ret_DWORD(obj->yHotspot);
   }
 }
 
@@ -197,7 +197,7 @@ HB_FUNC_STATIC( WASICONINFO_GETHBMMASK )
 
   if( obj != nullptr )
   {
-    winapi_ret_HBITMAP(obj->hbmMask);
+    wa_ret_HBITMAP(obj->hbmMask);
   }
 }
 
@@ -219,7 +219,7 @@ HB_FUNC_STATIC( WASICONINFO_GETHBMCOLOR )
 
   if( obj != nullptr )
   {
-    winapi_ret_HBITMAP(obj->hbmColor);
+    wa_ret_HBITMAP(obj->hbmColor);
   }
 }
 

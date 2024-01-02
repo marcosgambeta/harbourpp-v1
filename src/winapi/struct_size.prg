@@ -113,7 +113,7 @@ HB_FUNC_STATIC( WASSIZE_GETCX )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->cx);
+    wa_ret_LONG(obj->cx);
   }
 }
 
@@ -135,7 +135,7 @@ HB_FUNC_STATIC( WASSIZE_GETCY )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->cy);
+    wa_ret_LONG(obj->cy);
   }
 }
 

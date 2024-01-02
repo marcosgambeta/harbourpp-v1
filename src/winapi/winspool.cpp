@@ -103,7 +103,7 @@ WINBOOL WINAPI DeletePrinter(HANDLE hPrinter)
 */
 HB_FUNC( WADELETEPRINTER )
 {
-  winapi_ret_BOOL(DeletePrinter(wa_par_HANDLE(1)));
+  wa_ret_BOOL(DeletePrinter(wa_par_HANDLE(1)));
 }
 
 /*
@@ -167,7 +167,7 @@ WINBOOL WINAPI DeletePrinterDriverA(LPSTR pName,LPSTR pEnvironment,LPSTR pDriver
 */
 HB_FUNC( WADELETEPRINTERDRIVERA )
 {
-  winapi_ret_BOOL(DeletePrinterDriverA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
+  wa_ret_BOOL(DeletePrinterDriverA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
 }
 
 /*
@@ -175,7 +175,7 @@ WINBOOL WINAPI DeletePrinterDriverW(LPWSTR pName,LPWSTR pEnvironment,LPWSTR pDri
 */
 HB_FUNC( WADELETEPRINTERDRIVERW )
 {
-  winapi_ret_BOOL(DeletePrinterDriverW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(DeletePrinterDriverW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
 /*
@@ -183,7 +183,7 @@ WINBOOL WINAPI DeletePrinterDriverExA(LPSTR pName,LPSTR pEnvironment,LPSTR pDriv
 */
 HB_FUNC( WADELETEPRINTERDRIVEREXA )
 {
-  winapi_ret_BOOL(DeletePrinterDriverExA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3)), wa_par_DWORD(4), wa_par_DWORD(5)));
+  wa_ret_BOOL(DeletePrinterDriverExA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3)), wa_par_DWORD(4), wa_par_DWORD(5)));
 }
 
 /*
@@ -191,7 +191,7 @@ WINBOOL WINAPI DeletePrinterDriverExW(LPWSTR pName,LPWSTR pEnvironment,LPWSTR pD
 */
 HB_FUNC( WADELETEPRINTERDRIVEREXW )
 {
-  winapi_ret_BOOL(DeletePrinterDriverExW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), wa_par_DWORD(4), wa_par_DWORD(5)));
+  wa_ret_BOOL(DeletePrinterDriverExW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), wa_par_DWORD(4), wa_par_DWORD(5)));
 }
 
 /*
@@ -199,7 +199,7 @@ WINBOOL WINAPI AddPrintProcessorA(LPSTR pName,LPSTR pEnvironment,LPSTR pPathName
 */
 HB_FUNC( WAADDPRINTPROCESSORA )
 {
-  winapi_ret_BOOL(AddPrintProcessorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3)), const_cast<LPSTR>(hb_parc(4))));
+  wa_ret_BOOL(AddPrintProcessorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3)), const_cast<LPSTR>(hb_parc(4))));
 }
 
 /*
@@ -207,7 +207,7 @@ WINBOOL WINAPI AddPrintProcessorW(LPWSTR pName,LPWSTR pEnvironment,LPWSTR pPathN
 */
 HB_FUNC( WAADDPRINTPROCESSORW )
 {
-  winapi_ret_BOOL(AddPrintProcessorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(4)))));
+  wa_ret_BOOL(AddPrintProcessorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(4)))));
 }
 
 /*
@@ -239,7 +239,7 @@ WINBOOL WINAPI DeletePrintProcessorA(LPSTR pName,LPSTR pEnvironment,LPSTR pPrint
 */
 HB_FUNC( WADELETEPRINTPROCESSORA )
 {
-  winapi_ret_BOOL(DeletePrintProcessorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
+  wa_ret_BOOL(DeletePrintProcessorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
 }
 
 /*
@@ -247,7 +247,7 @@ WINBOOL WINAPI DeletePrintProcessorW(LPWSTR pName,LPWSTR pEnvironment,LPWSTR pPr
 */
 HB_FUNC( WADELETEPRINTPROCESSORW )
 {
-  winapi_ret_BOOL(DeletePrintProcessorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(DeletePrintProcessorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
 /*
@@ -263,7 +263,7 @@ WINBOOL WINAPI StartPagePrinter(HANDLE hPrinter)
 */
 HB_FUNC( WASTARTPAGEPRINTER )
 {
-  winapi_ret_BOOL(StartPagePrinter(wa_par_HANDLE(1)));
+  wa_ret_BOOL(StartPagePrinter(wa_par_HANDLE(1)));
 }
 
 /*
@@ -271,7 +271,7 @@ WINBOOL WINAPI WritePrinter(HANDLE hPrinter,LPVOID pBuf,DWORD cbBuf,LPDWORD pcWr
 */
 HB_FUNC( WAWRITEPRINTER )
 {
-  winapi_ret_BOOL(WritePrinter(wa_par_HANDLE(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4))));
+  wa_ret_BOOL(WritePrinter(wa_par_HANDLE(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -279,7 +279,7 @@ WINBOOL WINAPI FlushPrinter(HANDLE hPrinter,LPVOID pBuf,DWORD cbBuf,LPDWORD pcWr
 */
 HB_FUNC( WAFLUSHPRINTER )
 {
-  winapi_ret_BOOL(FlushPrinter(wa_par_HANDLE(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4)), wa_par_DWORD(5)));
+  wa_ret_BOOL(FlushPrinter(wa_par_HANDLE(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4)), wa_par_DWORD(5)));
 }
 
 /*
@@ -287,7 +287,7 @@ WINBOOL WINAPI EndPagePrinter(HANDLE hPrinter)
 */
 HB_FUNC( WAENDPAGEPRINTER )
 {
-  winapi_ret_BOOL(EndPagePrinter(wa_par_HANDLE(1)));
+  wa_ret_BOOL(EndPagePrinter(wa_par_HANDLE(1)));
 }
 
 /*
@@ -295,7 +295,7 @@ WINBOOL WINAPI AbortPrinter(HANDLE hPrinter)
 */
 HB_FUNC( WAABORTPRINTER )
 {
-  winapi_ret_BOOL(AbortPrinter(wa_par_HANDLE(1)));
+  wa_ret_BOOL(AbortPrinter(wa_par_HANDLE(1)));
 }
 
 /*
@@ -303,7 +303,7 @@ WINBOOL WINAPI ReadPrinter(HANDLE hPrinter,LPVOID pBuf,DWORD cbBuf,LPDWORD pNoBy
 */
 HB_FUNC( WAREADPRINTER )
 {
-  winapi_ret_BOOL(ReadPrinter(wa_par_HANDLE(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4))));
+  wa_ret_BOOL(ReadPrinter(wa_par_HANDLE(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPDWORD>(hb_parptr(4))));
 }
 
 /*
@@ -311,7 +311,7 @@ WINBOOL WINAPI EndDocPrinter(HANDLE hPrinter)
 */
 HB_FUNC( WAENDDOCPRINTER )
 {
-  winapi_ret_BOOL(EndDocPrinter(wa_par_HANDLE(1)));
+  wa_ret_BOOL(EndDocPrinter(wa_par_HANDLE(1)));
 }
 
 /*
@@ -327,7 +327,7 @@ WINBOOL WINAPI ScheduleJob(HANDLE hPrinter,DWORD JobId)
 */
 HB_FUNC( WASCHEDULEJOB )
 {
-  winapi_ret_BOOL(ScheduleJob(wa_par_HANDLE(1), wa_par_DWORD(2)));
+  wa_ret_BOOL(ScheduleJob(wa_par_HANDLE(1), wa_par_DWORD(2)));
 }
 
 /*
@@ -335,7 +335,7 @@ WINBOOL WINAPI PrinterProperties(HWND hWnd,HANDLE hPrinter)
 */
 HB_FUNC( WAPRINTERPROPERTIES )
 {
-  winapi_ret_BOOL(PrinterProperties(wa_par_HWND(1), wa_par_HANDLE(2)));
+  wa_ret_BOOL(PrinterProperties(wa_par_HWND(1), wa_par_HANDLE(2)));
 }
 
 /*
@@ -491,7 +491,7 @@ WINBOOL WINAPI ClosePrinter(HANDLE hPrinter)
 */
 HB_FUNC( WACLOSEPRINTER )
 {
-  winapi_ret_BOOL(ClosePrinter(wa_par_HANDLE(1)));
+  wa_ret_BOOL(ClosePrinter(wa_par_HANDLE(1)));
 }
 
 /*
@@ -507,7 +507,7 @@ WINBOOL WINAPI DeleteFormA(HANDLE hPrinter,LPSTR pFormName)
 */
 HB_FUNC( WADELETEFORMA )
 {
-  winapi_ret_BOOL(DeleteFormA(wa_par_HANDLE(1), const_cast<LPSTR>(hb_parc(2))));
+  wa_ret_BOOL(DeleteFormA(wa_par_HANDLE(1), const_cast<LPSTR>(hb_parc(2))));
 }
 
 /*
@@ -515,7 +515,7 @@ WINBOOL WINAPI DeleteFormW(HANDLE hPrinter,LPWSTR pFormName)
 */
 HB_FUNC( WADELETEFORMW )
 {
-  winapi_ret_BOOL(DeleteFormW(wa_par_HANDLE(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2)))));
+  wa_ret_BOOL(DeleteFormW(wa_par_HANDLE(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2)))));
 }
 
 /*
@@ -563,7 +563,7 @@ WINBOOL WINAPI DeleteMonitorA(LPSTR pName,LPSTR pEnvironment,LPSTR pMonitorName)
 */
 HB_FUNC( WADELETEMONITORA )
 {
-  winapi_ret_BOOL(DeleteMonitorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
+  wa_ret_BOOL(DeleteMonitorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
 }
 
 /*
@@ -571,7 +571,7 @@ WINBOOL WINAPI DeleteMonitorW(LPWSTR pName,LPWSTR pEnvironment,LPWSTR pMonitorNa
 */
 HB_FUNC( WADELETEMONITORW )
 {
-  winapi_ret_BOOL(DeleteMonitorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(DeleteMonitorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
 /*
@@ -587,7 +587,7 @@ WINBOOL WINAPI AddPortA(LPSTR pName,HWND hWnd,LPSTR pMonitorName)
 */
 HB_FUNC( WAADDPORTA )
 {
-  winapi_ret_BOOL(AddPortA(const_cast<LPSTR>(hb_parc(1)), wa_par_HWND(2), const_cast<LPSTR>(hb_parc(3))));
+  wa_ret_BOOL(AddPortA(const_cast<LPSTR>(hb_parc(1)), wa_par_HWND(2), const_cast<LPSTR>(hb_parc(3))));
 }
 
 /*
@@ -595,7 +595,7 @@ WINBOOL WINAPI AddPortW(LPWSTR pName,HWND hWnd,LPWSTR pMonitorName)
 */
 HB_FUNC( WAADDPORTW )
 {
-  winapi_ret_BOOL(AddPortW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_HWND(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(AddPortW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_HWND(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
 /*
@@ -603,7 +603,7 @@ WINBOOL WINAPI ConfigurePortA(LPSTR pName,HWND hWnd,LPSTR pPortName)
 */
 HB_FUNC( WACONFIGUREPORTA )
 {
-  winapi_ret_BOOL(ConfigurePortA(const_cast<LPSTR>(hb_parc(1)), wa_par_HWND(2), const_cast<LPSTR>(hb_parc(3))));
+  wa_ret_BOOL(ConfigurePortA(const_cast<LPSTR>(hb_parc(1)), wa_par_HWND(2), const_cast<LPSTR>(hb_parc(3))));
 }
 
 /*
@@ -611,7 +611,7 @@ WINBOOL WINAPI ConfigurePortW(LPWSTR pName,HWND hWnd,LPWSTR pPortName)
 */
 HB_FUNC( WACONFIGUREPORTW )
 {
-  winapi_ret_BOOL(ConfigurePortW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_HWND(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(ConfigurePortW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_HWND(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
 /*
@@ -619,7 +619,7 @@ WINBOOL WINAPI DeletePortA(LPSTR pName,HWND hWnd,LPSTR pPortName)
 */
 HB_FUNC( WADELETEPORTA )
 {
-  winapi_ret_BOOL(DeletePortA(const_cast<LPSTR>(hb_parc(1)), wa_par_HWND(2), const_cast<LPSTR>(hb_parc(3))));
+  wa_ret_BOOL(DeletePortA(const_cast<LPSTR>(hb_parc(1)), wa_par_HWND(2), const_cast<LPSTR>(hb_parc(3))));
 }
 
 /*
@@ -627,7 +627,7 @@ WINBOOL WINAPI DeletePortW(LPWSTR pName,HWND hWnd,LPWSTR pPortName)
 */
 HB_FUNC( WADELETEPORTW )
 {
-  winapi_ret_BOOL(DeletePortW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_HWND(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(DeletePortW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), wa_par_HWND(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
 /*
@@ -639,7 +639,7 @@ WINBOOL WINAPI GetDefaultPrinterA(LPSTR pszBuffer,LPDWORD pcchBuffer)
 */
 HB_FUNC( WAGETDEFAULTPRINTERA )
 {
-  winapi_ret_BOOL(GetDefaultPrinterA(const_cast<LPSTR>(hb_parc(1)), static_cast<LPDWORD>(hb_parptr(2))));
+  wa_ret_BOOL(GetDefaultPrinterA(const_cast<LPSTR>(hb_parc(1)), static_cast<LPDWORD>(hb_parptr(2))));
 }
 
 /*
@@ -647,7 +647,7 @@ WINBOOL WINAPI GetDefaultPrinterW(LPWSTR pszBuffer,LPDWORD pcchBuffer)
 */
 HB_FUNC( WAGETDEFAULTPRINTERW )
 {
-  winapi_ret_BOOL(GetDefaultPrinterW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), static_cast<LPDWORD>(hb_parptr(2))));
+  wa_ret_BOOL(GetDefaultPrinterW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), static_cast<LPDWORD>(hb_parptr(2))));
 }
 
 /*
@@ -655,7 +655,7 @@ WINBOOL WINAPI SetDefaultPrinterA(LPCSTR pszPrinter)
 */
 HB_FUNC( WASETDEFAULTPRINTERA )
 {
-  winapi_ret_BOOL(SetDefaultPrinterA(wa_par_LPCSTR(1)));
+  wa_ret_BOOL(SetDefaultPrinterA(wa_par_LPCSTR(1)));
 }
 
 /*
@@ -663,7 +663,7 @@ WINBOOL WINAPI SetDefaultPrinterW(LPCWSTR pszPrinter)
 */
 HB_FUNC( WASETDEFAULTPRINTERW )
 {
-  winapi_ret_BOOL(SetDefaultPrinterW(wa_par_LPCWSTR(1)));
+  wa_ret_BOOL(SetDefaultPrinterW(wa_par_LPCWSTR(1)));
 }
 
 /*
@@ -679,7 +679,7 @@ WINBOOL WINAPI AddPrinterConnectionA(LPSTR pName)
 */
 HB_FUNC( WAADDPRINTERCONNECTIONA )
 {
-  winapi_ret_BOOL(AddPrinterConnectionA(const_cast<LPSTR>(hb_parc(1))));
+  wa_ret_BOOL(AddPrinterConnectionA(const_cast<LPSTR>(hb_parc(1))));
 }
 
 /*
@@ -687,7 +687,7 @@ WINBOOL WINAPI AddPrinterConnectionW(LPWSTR pName)
 */
 HB_FUNC( WAADDPRINTERCONNECTIONW )
 {
-  winapi_ret_BOOL(AddPrinterConnectionW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1)))));
+  wa_ret_BOOL(AddPrinterConnectionW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1)))));
 }
 
 /*
@@ -695,7 +695,7 @@ WINBOOL WINAPI DeletePrinterConnectionA(LPSTR pName)
 */
 HB_FUNC( WADELETEPRINTERCONNECTIONA )
 {
-  winapi_ret_BOOL(DeletePrinterConnectionA(const_cast<LPSTR>(hb_parc(1))));
+  wa_ret_BOOL(DeletePrinterConnectionA(const_cast<LPSTR>(hb_parc(1))));
 }
 
 /*
@@ -703,7 +703,7 @@ WINBOOL WINAPI DeletePrinterConnectionW(LPWSTR pName)
 */
 HB_FUNC( WADELETEPRINTERCONNECTIONW )
 {
-  winapi_ret_BOOL(DeletePrinterConnectionW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1)))));
+  wa_ret_BOOL(DeletePrinterConnectionW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1)))));
 }
 
 /*
@@ -727,7 +727,7 @@ WINBOOL WINAPI DeletePrintProvidorA(LPSTR pName,LPSTR pEnvironment,LPSTR pPrintP
 */
 HB_FUNC( WADELETEPRINTPROVIDORA )
 {
-  winapi_ret_BOOL(DeletePrintProvidorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
+  wa_ret_BOOL(DeletePrintProvidorA(const_cast<LPSTR>(hb_parc(1)), const_cast<LPSTR>(hb_parc(2)), const_cast<LPSTR>(hb_parc(3))));
 }
 
 /*
@@ -735,7 +735,7 @@ WINBOOL WINAPI DeletePrintProvidorW(LPWSTR pName,LPWSTR pEnvironment,LPWSTR pPri
 */
 HB_FUNC( WADELETEPRINTPROVIDORW )
 {
-  winapi_ret_BOOL(DeletePrintProvidorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
+  wa_ret_BOOL(DeletePrintProvidorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
 /*

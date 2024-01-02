@@ -93,7 +93,7 @@ WINBASEAPI WINBOOL WINAPI GetProductInfo (DWORD dwOSMajorVersion, DWORD dwOSMino
 HB_FUNC( WAGETPRODUCTINFO )
 {
   DWORD dwReturnedProductType;
-  winapi_ret_BOOL(GetProductInfo(wa_par_DWORD(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4), &dwReturnedProductType));
+  wa_ret_BOOL(GetProductInfo(wa_par_DWORD(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4), &dwReturnedProductType));
   winapi_stor_DWORD(dwReturnedProductType, 5);
 }
 #endif
@@ -134,7 +134,7 @@ HB_FUNC( WAGETSYSTEMTIMEADJUSTMENT )
   DWORD TimeAdjustment;
   DWORD TimeIncrement;
   BOOL TimeAdjustmentDisabled;
-  winapi_ret_BOOL(GetSystemTimeAdjustment(&TimeAdjustment, &TimeIncrement, &TimeAdjustmentDisabled));
+  wa_ret_BOOL(GetSystemTimeAdjustment(&TimeAdjustment, &TimeIncrement, &TimeAdjustmentDisabled));
   winapi_stor_DWORD(TimeAdjustment, 1);
   winapi_stor_DWORD(TimeIncrement, 2);
   winapi_stor_BOOL(TimeAdjustmentDisabled, 3);
@@ -161,7 +161,7 @@ WINBASEAPI DWORD WINAPI GetTickCount (VOID)
 */
 HB_FUNC( WAGETTICKCOUNT )
 {
-  winapi_ret_DWORD(GetTickCount());
+  wa_ret_DWORD(GetTickCount());
 }
 
 /*
@@ -170,7 +170,7 @@ WINBASEAPI ULONGLONG WINAPI GetTickCount64 (VOID)
 #if _WIN32_WINNT >= 0x0600
 HB_FUNC( WAGETTICKCOUNT64 )
 {
-  winapi_ret_ULONGLONG(GetTickCount64());
+  wa_ret_ULONGLONG(GetTickCount64());
 }
 #endif
 
@@ -199,7 +199,7 @@ WINBASEAPI WINBOOL WINAPI GlobalMemoryStatusEx (LPMEMORYSTATUSEX lpBuffer)
 */
 HB_FUNC( WAGLOBALMEMORYSTATUSEX )
 {
-  winapi_ret_BOOL(GlobalMemoryStatusEx(static_cast<LPMEMORYSTATUSEX>(winapi_get_ptr(1))));
+  wa_ret_BOOL(GlobalMemoryStatusEx(static_cast<LPMEMORYSTATUSEX>(winapi_get_ptr(1))));
 }
 
 /*
@@ -211,7 +211,7 @@ WINBASEAPI WINBOOL WINAPI SetLocalTime (CONST SYSTEMTIME *lpSystemTime)
 */
 HB_FUNC( WASETLOCALTIME )
 {
-  winapi_ret_BOOL(SetLocalTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
+  wa_ret_BOOL(SetLocalTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
 }
 
 /*
@@ -219,7 +219,7 @@ WINBASEAPI WINBOOL WINAPI SetSystemTime (CONST SYSTEMTIME *lpSystemTime)
 */
 HB_FUNC( WASETSYSTEMTIME )
 {
-  winapi_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
+  wa_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
 }
 
 /*

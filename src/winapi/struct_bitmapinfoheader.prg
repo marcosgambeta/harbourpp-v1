@@ -167,7 +167,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBISIZE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->biSize);
+    wa_ret_DWORD(obj->biSize);
   }
 }
 
@@ -189,7 +189,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBIWIDTH )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->biWidth);
+    wa_ret_LONG(obj->biWidth);
   }
 }
 
@@ -211,7 +211,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBIHEIGHT )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->biHeight);
+    wa_ret_LONG(obj->biHeight);
   }
 }
 
@@ -233,7 +233,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBIPLANES )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->biPlanes);
+    wa_ret_WORD(obj->biPlanes);
   }
 }
 
@@ -255,7 +255,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBIBITCOUNT )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->biBitCount);
+    wa_ret_WORD(obj->biBitCount);
   }
 }
 
@@ -277,7 +277,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBICOMPRESSION )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->biCompression);
+    wa_ret_DWORD(obj->biCompression);
   }
 }
 
@@ -299,7 +299,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBISIZEIMAGE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->biSizeImage);
+    wa_ret_DWORD(obj->biSizeImage);
   }
 }
 
@@ -321,7 +321,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBIXPELSPERMETER )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->biXPelsPerMeter);
+    wa_ret_LONG(obj->biXPelsPerMeter);
   }
 }
 
@@ -343,7 +343,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBIYPELSPERMETER )
 
   if( obj != nullptr )
   {
-    winapi_ret_LONG(obj->biYPelsPerMeter);
+    wa_ret_LONG(obj->biYPelsPerMeter);
   }
 }
 
@@ -365,7 +365,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBICLRUSED )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->biClrUsed);
+    wa_ret_DWORD(obj->biClrUsed);
   }
 }
 
@@ -387,7 +387,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_GETBICLRIMPORTANT )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->biClrImportant);
+    wa_ret_DWORD(obj->biClrImportant);
   }
 }
 

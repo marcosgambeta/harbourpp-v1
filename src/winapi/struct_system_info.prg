@@ -173,7 +173,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETDWOEMID )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwOemId);
+    wa_ret_DWORD(obj->dwOemId);
   }
 }
 
@@ -195,7 +195,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETWPROCESSORARCHITECTURE )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wProcessorArchitecture);
+    wa_ret_WORD(obj->wProcessorArchitecture);
   }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETWRESERVED )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wReserved);
+    wa_ret_WORD(obj->wReserved);
   }
 }
 
@@ -239,7 +239,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETDWPAGESIZE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwPageSize);
+    wa_ret_DWORD(obj->dwPageSize);
   }
 }
 
@@ -261,7 +261,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETLPMINIMUMAPPLICATIONADDRESS )
 
   if( obj != nullptr )
   {
-    winapi_ret_LPVOID(obj->lpMinimumApplicationAddress);
+    wa_ret_LPVOID(obj->lpMinimumApplicationAddress);
   }
 }
 
@@ -283,7 +283,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETLPMAXIMUMAPPLICATIONADDRESS )
 
   if( obj != nullptr )
   {
-    winapi_ret_LPVOID(obj->lpMaximumApplicationAddress);
+    wa_ret_LPVOID(obj->lpMaximumApplicationAddress);
   }
 }
 
@@ -305,7 +305,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETDWACTIVEPROCESSORMASK )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD_PTR(obj->dwActiveProcessorMask);
+    wa_ret_DWORD_PTR(obj->dwActiveProcessorMask);
   }
 }
 
@@ -327,7 +327,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETDWNUMBEROFPROCESSORS )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwNumberOfProcessors);
+    wa_ret_DWORD(obj->dwNumberOfProcessors);
   }
 }
 
@@ -349,7 +349,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETDWPROCESSORTYPE )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwProcessorType);
+    wa_ret_DWORD(obj->dwProcessorType);
   }
 }
 
@@ -371,7 +371,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETDWALLOCATIONGRANULARITY )
 
   if( obj != nullptr )
   {
-    winapi_ret_DWORD(obj->dwAllocationGranularity);
+    wa_ret_DWORD(obj->dwAllocationGranularity);
   }
 }
 
@@ -393,7 +393,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETWPROCESSORLEVEL )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wProcessorLevel);
+    wa_ret_WORD(obj->wProcessorLevel);
   }
 }
 
@@ -415,7 +415,7 @@ HB_FUNC_STATIC( WASSYSTEM_INFO_GETWPROCESSORREVISION )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->wProcessorRevision);
+    wa_ret_WORD(obj->wProcessorRevision);
   }
 }
 

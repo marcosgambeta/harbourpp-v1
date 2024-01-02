@@ -173,7 +173,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCASIZE )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caSize);
+    wa_ret_WORD(obj->caSize);
   }
 }
 
@@ -195,7 +195,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCAFLAGS )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caFlags);
+    wa_ret_WORD(obj->caFlags);
   }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCAILLUMINANTINDEX )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caIlluminantIndex);
+    wa_ret_WORD(obj->caIlluminantIndex);
   }
 }
 
@@ -239,7 +239,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCAREDGAMMA )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caRedGamma);
+    wa_ret_WORD(obj->caRedGamma);
   }
 }
 
@@ -261,7 +261,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCAGREENGAMMA )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caGreenGamma);
+    wa_ret_WORD(obj->caGreenGamma);
   }
 }
 
@@ -283,7 +283,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCABLUEGAMMA )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caBlueGamma);
+    wa_ret_WORD(obj->caBlueGamma);
   }
 }
 
@@ -305,7 +305,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCAREFERENCEBLACK )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caReferenceBlack);
+    wa_ret_WORD(obj->caReferenceBlack);
   }
 }
 
@@ -327,7 +327,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCAREFERENCEWHITE )
 
   if( obj != nullptr )
   {
-    winapi_ret_WORD(obj->caReferenceWhite);
+    wa_ret_WORD(obj->caReferenceWhite);
   }
 }
 
@@ -349,7 +349,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCACONTRAST )
 
   if( obj != nullptr )
   {
-    winapi_ret_SHORT(obj->caContrast);
+    wa_ret_SHORT(obj->caContrast);
   }
 }
 
@@ -371,7 +371,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCABRIGHTNESS )
 
   if( obj != nullptr )
   {
-    winapi_ret_SHORT(obj->caBrightness);
+    wa_ret_SHORT(obj->caBrightness);
   }
 }
 
@@ -393,7 +393,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCACOLORFULNESS )
 
   if( obj != nullptr )
   {
-    winapi_ret_SHORT(obj->caColorfulness);
+    wa_ret_SHORT(obj->caColorfulness);
   }
 }
 
@@ -415,7 +415,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_GETCAREDGREENTINT )
 
   if( obj != nullptr )
   {
-    winapi_ret_SHORT(obj->caRedGreenTint);
+    wa_ret_SHORT(obj->caRedGreenTint);
   }
 }
 

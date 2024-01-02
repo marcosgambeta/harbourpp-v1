@@ -173,7 +173,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETWDEVICEINDEX )
 
   if( obj != nullptr )
   {
-    winapi_ret_UINT(obj->wDeviceIndex);
+    wa_ret_UINT(obj->wDeviceIndex);
   }
 }
 
@@ -195,7 +195,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETFHASOVERLAY )
 
   if( obj != nullptr )
   {
-    winapi_ret_BOOL(obj->fHasOverlay);
+    wa_ret_BOOL(obj->fHasOverlay);
   }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETFHASDLGVIDEOSOURCE )
 
   if( obj != nullptr )
   {
-    winapi_ret_BOOL(obj->fHasDlgVideoSource);
+    wa_ret_BOOL(obj->fHasDlgVideoSource);
   }
 }
 
@@ -239,7 +239,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETFHASDLGVIDEOFORMAT )
 
   if( obj != nullptr )
   {
-    winapi_ret_BOOL(obj->fHasDlgVideoFormat);
+    wa_ret_BOOL(obj->fHasDlgVideoFormat);
   }
 }
 
@@ -261,7 +261,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETFHASDLGVIDEODISPLAY )
 
   if( obj != nullptr )
   {
-    winapi_ret_BOOL(obj->fHasDlgVideoDisplay);
+    wa_ret_BOOL(obj->fHasDlgVideoDisplay);
   }
 }
 
@@ -283,7 +283,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETFCAPTUREINITIALIZED )
 
   if( obj != nullptr )
   {
-    winapi_ret_BOOL(obj->fCaptureInitialized);
+    wa_ret_BOOL(obj->fCaptureInitialized);
   }
 }
 
@@ -305,7 +305,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETFDRIVERSUPPLIESPALETTES )
 
   if( obj != nullptr )
   {
-    winapi_ret_BOOL(obj->fDriverSuppliesPalettes);
+    wa_ret_BOOL(obj->fDriverSuppliesPalettes);
   }
 }
 
@@ -327,7 +327,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETHVIDEOIN )
 
   if( obj != nullptr )
   {
-    winapi_ret_HANDLE(obj->hVideoIn);
+    wa_ret_HANDLE(obj->hVideoIn);
   }
 }
 
@@ -349,7 +349,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETHVIDEOOUT )
 
   if( obj != nullptr )
   {
-    winapi_ret_HANDLE(obj->hVideoOut);
+    wa_ret_HANDLE(obj->hVideoOut);
   }
 }
 
@@ -371,7 +371,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETHVIDEOEXTIN )
 
   if( obj != nullptr )
   {
-    winapi_ret_HANDLE(obj->hVideoExtIn);
+    wa_ret_HANDLE(obj->hVideoExtIn);
   }
 }
 
@@ -393,7 +393,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_GETHVIDEOEXTOUT )
 
   if( obj != nullptr )
   {
-    winapi_ret_HANDLE(obj->hVideoExtOut);
+    wa_ret_HANDLE(obj->hVideoExtOut);
   }
 }
 
