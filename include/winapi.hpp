@@ -91,6 +91,7 @@ SOFTWARE.
 #define winapi_par_LONG(n)         static_cast<LONG>(hb_parnl(n))
 #define winapi_par_LPARAM(n)       static_cast<LPARAM>(hb_parnl(n))
 #define winapi_par_LPCSTR(n)       hb_parc(n)
+#define winapi_par_LPCWSTR(n)      reinterpret_cast<LPCWSTR>(hb_parc(n))
 #define winapi_par_LPVOID(n)       static_cast<LPVOID>(hb_parptr(n))
 #define winapi_par_LRESULT(n)      static_cast<LRESULT>(hb_parnl(n))
 #define winapi_par_MCIDEVICEID(n)  static_cast<MCIDEVICEID>(hb_parni(n))

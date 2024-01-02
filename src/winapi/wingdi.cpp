@@ -54,7 +54,7 @@ WINGDIAPI int WINAPI AddFontResourceW(LPCWSTR)
 */
 HB_FUNC( WAADDFONTRESOURCEW )
 {
-  winapi_ret_int(AddFontResourceW(reinterpret_cast<LPCWSTR>(hb_parc(1))));
+  winapi_ret_int(AddFontResourceW(winapi_par_LPCWSTR(1)));
 }
 
 HB_FUNC( WAADDFONTRESOURCE )
@@ -137,7 +137,7 @@ WINGDIAPI HMETAFILE WINAPI CopyMetaFileW(HMETAFILE,LPCWSTR)
 */
 HB_FUNC( WACOPYMETAFILEW )
 {
-  winapi_ret_HMETAFILE(CopyMetaFileW(winapi_par_HMETAFILE(1), reinterpret_cast<LPCWSTR>(hb_parc(2))));
+  winapi_ret_HMETAFILE(CopyMetaFileW(winapi_par_HMETAFILE(1), winapi_par_LPCWSTR(2)));
 }
 
 HB_FUNC( WACOPYMETAFILE )
@@ -252,7 +252,7 @@ WINGDIAPI HFONT WINAPI CreateFontW(int cHeight,int cWidth,int cEscapement,int cO
 */
 HB_FUNC( WACREATEFONTW )
 {
-  winapi_ret_HFONT(CreateFontW(winapi_par_int(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), winapi_par_int(5), winapi_par_DWORD(6), winapi_par_DWORD(7), winapi_par_DWORD(8), winapi_par_DWORD(9), winapi_par_DWORD(10), winapi_par_DWORD(11), winapi_par_DWORD(12), winapi_par_DWORD(13), reinterpret_cast<LPCWSTR>(hb_parc(14))));
+  winapi_ret_HFONT(CreateFontW(winapi_par_int(1), winapi_par_int(2), winapi_par_int(3), winapi_par_int(4), winapi_par_int(5), winapi_par_DWORD(6), winapi_par_DWORD(7), winapi_par_DWORD(8), winapi_par_DWORD(9), winapi_par_DWORD(10), winapi_par_DWORD(11), winapi_par_DWORD(12), winapi_par_DWORD(13), winapi_par_LPCWSTR(14)));
 }
 
 HB_FUNC( WACREATEFONT )
@@ -291,7 +291,7 @@ WINGDIAPI HDC WINAPI CreateMetaFileW(LPCWSTR pszFile)
 */
 HB_FUNC( WACREATEMETAFILEW )
 {
-  winapi_ret_HDC(CreateMetaFileW(reinterpret_cast<LPCWSTR>(hb_parc(1))));
+  winapi_ret_HDC(CreateMetaFileW(winapi_par_LPCWSTR(1)));
 }
 
 HB_FUNC( WACREATEMETAFILE )
@@ -370,7 +370,7 @@ WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceW(DWORD fdwHidden,LPCWSTR lps
 */
 HB_FUNC( WACREATESCALABLEFONTRESOURCEW )
 {
-  winapi_ret_BOOL(CreateScalableFontResourceW(winapi_par_DWORD(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), reinterpret_cast<LPCWSTR>(hb_parc(3)), reinterpret_cast<LPCWSTR>(hb_parc(4))));
+  winapi_ret_BOOL(CreateScalableFontResourceW(winapi_par_DWORD(1), winapi_par_LPCWSTR(2), winapi_par_LPCWSTR(3), winapi_par_LPCWSTR(4)));
 }
 
 HB_FUNC( WACREATESCALABLEFONTRESOURCE )
@@ -809,7 +809,7 @@ WINGDIAPI HMETAFILE WINAPI GetMetaFileW(LPCWSTR lpName)
 */
 HB_FUNC( WAGETMETAFILEW )
 {
-  winapi_ret_HMETAFILE(GetMetaFileW(reinterpret_cast<LPCWSTR>(hb_parc(1))));
+  winapi_ret_HMETAFILE(GetMetaFileW(winapi_par_LPCWSTR(1)));
 }
 
 HB_FUNC( WAGETMETAFILE )
@@ -968,7 +968,7 @@ WINGDIAPI WINBOOL WINAPI GetTextExtentPointW(HDC hdc,LPCWSTR lpString,int c,LPSI
 */
 HB_FUNC( WAGETTEXTEXTENTPOINTW )
 {
-  winapi_ret_BOOL(GetTextExtentPointW(winapi_par_HDC(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
+  winapi_ret_BOOL(GetTextExtentPointW(winapi_par_HDC(1), winapi_par_LPCWSTR(2), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
 }
 
 HB_FUNC( WAGETTEXTEXTENTPOINT )
@@ -991,7 +991,7 @@ WINGDIAPI WINBOOL WINAPI GetTextExtentPoint32W(HDC hdc,LPCWSTR lpString,int c,LP
 */
 HB_FUNC( WAGETTEXTEXTENTPOINT32W )
 {
-  winapi_ret_BOOL(GetTextExtentPoint32W(winapi_par_HDC(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
+  winapi_ret_BOOL(GetTextExtentPoint32W(winapi_par_HDC(1), winapi_par_LPCWSTR(2), winapi_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
 }
 
 HB_FUNC( WAGETTEXTEXTENTPOINT32 )
@@ -1020,7 +1020,7 @@ HB_FUNC( WAGETTEXTEXTENTEXPOINTW )
 {
   INT lpnFit;
   INT lpnDx;
-  winapi_ret_BOOL(GetTextExtentExPointW(winapi_par_HDC(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), winapi_par_int(3), winapi_par_int(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(winapi_get_ptr(7))));
+  winapi_ret_BOOL(GetTextExtentExPointW(winapi_par_HDC(1), winapi_par_LPCWSTR(2), winapi_par_int(3), winapi_par_int(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(winapi_get_ptr(7))));
   winapi_stor_INT(lpnFit, 5);
   winapi_stor_INT(lpnDx, 6);
 }
@@ -1088,7 +1088,7 @@ WINGDIAPI DWORD WINAPI GetGlyphIndicesW(HDC hdc,LPCWSTR lpstr,int c,LPWORD pgi,D
 HB_FUNC( WAGETGLYPHINDICESW )
 {
   WORD gi;
-  winapi_ret_DWORD(GetGlyphIndicesW(winapi_par_HDC(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), winapi_par_int(3), &gi, winapi_par_DWORD(5)));
+  winapi_ret_DWORD(GetGlyphIndicesW(winapi_par_HDC(1), winapi_par_LPCWSTR(2), winapi_par_int(3), &gi, winapi_par_DWORD(5)));
   winapi_stor_WORD(gi, 4);
 }
 
@@ -1144,7 +1144,7 @@ WINGDIAPI int WINAPI AddFontResourceExW(LPCWSTR name,DWORD fl,PVOID res)
 */
 HB_FUNC( WAADDFONTRESOURCEEXW )
 {
-  winapi_ret_int(AddFontResourceExW(reinterpret_cast<LPCWSTR>(hb_parc(1)), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
+  winapi_ret_int(AddFontResourceExW(winapi_par_LPCWSTR(1), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
 }
 
 HB_FUNC( WAADDFONTRESOURCEEX )
@@ -1167,7 +1167,7 @@ WINGDIAPI WINBOOL WINAPI RemoveFontResourceExW(LPCWSTR name,DWORD fl,PVOID pdv)
 */
 HB_FUNC( WAREMOVEFONTRESOURCEEXW )
 {
-  winapi_ret_BOOL(RemoveFontResourceExW(reinterpret_cast<LPCWSTR>(hb_parc(1)), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
+  winapi_ret_BOOL(RemoveFontResourceExW(winapi_par_LPCWSTR(1), winapi_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
 }
 
 HB_FUNC( WAREMOVEFONTRESOURCEEX )
@@ -1398,7 +1398,7 @@ WINGDIAPI WINBOOL WINAPI RemoveFontResourceW(LPCWSTR lpFileName)
 */
 HB_FUNC( WAREMOVEFONTRESOURCEW )
 {
-  winapi_ret_BOOL(RemoveFontResourceW(reinterpret_cast<LPCWSTR>(hb_parc(1))));
+  winapi_ret_BOOL(RemoveFontResourceW(winapi_par_LPCWSTR(1)));
 }
 
 HB_FUNC( WAREMOVEFONTRESOURCE )
@@ -1761,7 +1761,7 @@ WINGDIAPI HENHMETAFILE WINAPI CopyEnhMetaFileW(HENHMETAFILE hEnh,LPCWSTR lpFileN
 */
 HB_FUNC( WACOPYENHMETAFILEW )
 {
-  winapi_ret_HENHMETAFILE(CopyEnhMetaFileW(winapi_par_HENHMETAFILE(1), reinterpret_cast<LPCWSTR>(hb_parc(2))));
+  winapi_ret_HENHMETAFILE(CopyEnhMetaFileW(winapi_par_HENHMETAFILE(1), winapi_par_LPCWSTR(2)));
 }
 
 HB_FUNC( WACOPYENHMETAFILE )
@@ -1784,7 +1784,7 @@ WINGDIAPI HDC WINAPI CreateEnhMetaFileW(HDC hdc,LPCWSTR lpFilename,CONST RECT *l
 */
 HB_FUNC( WACREATEENHMETAFILEW )
 {
-  winapi_ret_HDC(CreateEnhMetaFileW(winapi_par_HDC(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), static_cast<CONST RECT *>(winapi_get_ptr(3)), reinterpret_cast<LPCWSTR>(hb_parc(4))));
+  winapi_ret_HDC(CreateEnhMetaFileW(winapi_par_HDC(1), winapi_par_LPCWSTR(2), static_cast<CONST RECT *>(winapi_get_ptr(3)), winapi_par_LPCWSTR(4)));
 }
 
 HB_FUNC( WACREATEENHMETAFILE )
@@ -1821,7 +1821,7 @@ WINGDIAPI HENHMETAFILE WINAPI GetEnhMetaFileW(LPCWSTR lpName)
 */
 HB_FUNC( WAGETENHMETAFILEW )
 {
-  winapi_ret_HENHMETAFILE(GetEnhMetaFileW(reinterpret_cast<LPCWSTR>(hb_parc(1))));
+  winapi_ret_HENHMETAFILE(GetEnhMetaFileW(winapi_par_LPCWSTR(1)));
 }
 
 HB_FUNC( WAGETENHMETAFILE )
@@ -2192,7 +2192,7 @@ WINGDIAPI WINBOOL WINAPI TextOutW(HDC hdc,int x,int y,LPCWSTR lpString,int c)
 */
 HB_FUNC( WATEXTOUTW )
 {
-  winapi_ret_BOOL(TextOutW(winapi_par_HDC(1), winapi_par_int(2), winapi_par_int(3), reinterpret_cast<LPCWSTR>(hb_parc(4)), winapi_par_int(5)));
+  winapi_ret_BOOL(TextOutW(winapi_par_HDC(1), winapi_par_int(2), winapi_par_int(3), winapi_par_LPCWSTR(4), winapi_par_int(5)));
 }
 
 HB_FUNC( WATEXTOUT )

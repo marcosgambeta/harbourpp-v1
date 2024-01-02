@@ -403,7 +403,7 @@ DWORD WINAPI EnumPrinterKeyW(HANDLE hPrinter,LPCWSTR pKeyName,LPWSTR pSubkey,DWO
 */
 HB_FUNC( WAENUMPRINTERKEYW )
 {
-  hb_retnl(EnumPrinterKeyW(winapi_par_HANDLE(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), winapi_par_DWORD(4), static_cast<LPDWORD>(hb_parptr(5))));
+  hb_retnl(EnumPrinterKeyW(winapi_par_HANDLE(1), winapi_par_LPCWSTR(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), winapi_par_DWORD(4), static_cast<LPDWORD>(hb_parptr(5))));
 }
 
 /*
@@ -451,7 +451,7 @@ DWORD WINAPI DeletePrinterDataExW(HANDLE hPrinter,LPCWSTR pKeyName,LPCWSTR pValu
 */
 HB_FUNC( WADELETEPRINTERDATAEXW )
 {
-  hb_retnl(DeletePrinterDataExW(winapi_par_HANDLE(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), reinterpret_cast<LPCWSTR>(hb_parc(3))));
+  hb_retnl(DeletePrinterDataExW(winapi_par_HANDLE(1), winapi_par_LPCWSTR(2), winapi_par_LPCWSTR(3)));
 }
 
 /*
@@ -467,7 +467,7 @@ DWORD WINAPI DeletePrinterKeyW(HANDLE hPrinter,LPCWSTR pKeyName)
 */
 HB_FUNC( WADELETEPRINTERKEYW )
 {
-  hb_retnl(DeletePrinterKeyW(winapi_par_HANDLE(1), reinterpret_cast<LPCWSTR>(hb_parc(2))));
+  hb_retnl(DeletePrinterKeyW(winapi_par_HANDLE(1), winapi_par_LPCWSTR(2)));
 }
 
 /*
@@ -663,7 +663,7 @@ WINBOOL WINAPI SetDefaultPrinterW(LPCWSTR pszPrinter)
 */
 HB_FUNC( WASETDEFAULTPRINTERW )
 {
-  winapi_ret_BOOL(SetDefaultPrinterW(reinterpret_cast<LPCWSTR>(hb_parc(1))));
+  winapi_ret_BOOL(SetDefaultPrinterW(winapi_par_LPCWSTR(1)));
 }
 
 /*

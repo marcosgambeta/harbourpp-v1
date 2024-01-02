@@ -207,7 +207,7 @@ WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageW(HINSTANCE hi,LPCWSTR lpbmp
 */
 HB_FUNC( WAIMAGELIST_LOADIMAGEW )
 {
-  winapi_ret_HIMAGELIST(ImageList_LoadImageW(winapi_par_HINSTANCE(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), winapi_par_int(3), winapi_par_int(4), winapi_par_COLORREF(5), winapi_par_UINT(6), winapi_par_UINT(7)));
+  winapi_ret_HIMAGELIST(ImageList_LoadImageW(winapi_par_HINSTANCE(1), winapi_par_LPCWSTR(2), winapi_par_int(3), winapi_par_int(4), winapi_par_COLORREF(5), winapi_par_UINT(6), winapi_par_UINT(7)));
 }
 
 /*
@@ -389,7 +389,7 @@ WINCOMMCTRLAPI void WINAPI DrawStatusTextW(HDC hDC,LPCRECT lprc,LPCWSTR pszText,
 */
 HB_FUNC( WADRAWSTATUSTEXTW )
 {
-  DrawStatusTextW(winapi_par_HDC(1), static_cast<LPCRECT>(winapi_get_ptr(2)), reinterpret_cast<LPCWSTR>(hb_parc(3)), winapi_par_UINT(4));
+  DrawStatusTextW(winapi_par_HDC(1), static_cast<LPCRECT>(winapi_get_ptr(2)), winapi_par_LPCWSTR(3), winapi_par_UINT(4));
 }
 
 /*
@@ -405,7 +405,7 @@ WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowW(LONG style,LPCWSTR lpszText,HWND 
 */
 HB_FUNC( WACREATESTATUSWINDOWW )
 {
-  winapi_ret_HWND(CreateStatusWindowW(hb_parnl(1), reinterpret_cast<LPCWSTR>(hb_parc(2)), winapi_par_HWND(3), winapi_par_UINT(4)));
+  winapi_ret_HWND(CreateStatusWindowW(hb_parnl(1), winapi_par_LPCWSTR(2), winapi_par_HWND(3), winapi_par_UINT(4)));
 }
 
 /*

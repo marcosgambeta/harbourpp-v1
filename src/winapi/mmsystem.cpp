@@ -105,7 +105,7 @@ WINMMAPI WINBOOL WINAPI sndPlaySoundW(LPCWSTR pszSound,UINT fuSound)
 #if 0
 HB_FUNC( WASNDPLAYSOUNDW )
 {
-  winapi_ret_BOOL(sndPlaySoundW(reinterpret_cast<LPCWSTR>(hb_parc(1)), winapi_par_UINT(2)));
+  winapi_ret_BOOL(sndPlaySoundW(winapi_par_LPCWSTR(1), winapi_par_UINT(2)));
 }
 #endif
 
@@ -132,7 +132,7 @@ WINMMAPI WINBOOL WINAPI PlaySoundW(LPCWSTR pszSound,HMODULE hmod,DWORD fdwSound)
 #if 0
 HB_FUNC( WAPLAYSOUNDW )
 {
-  winapi_ret_BOOL(PlaySoundW(reinterpret_cast<LPCWSTR>(hb_parc(1)), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
+  winapi_ret_BOOL(PlaySoundW(winapi_par_LPCWSTR(1), winapi_par_HMODULE(2), winapi_par_DWORD(3)));
 }
 #endif
 
@@ -998,7 +998,7 @@ WINMMAPI MCIERROR WINAPI mciSendStringW(LPCWSTR lpstrCommand,LPWSTR lpstrReturnS
 */
 HB_FUNC( WAMCISENDSTRINGW )
 {
-  winapi_ret_MCIERROR(mciSendStringW(reinterpret_cast<LPCWSTR>(hb_parc(1)), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), winapi_par_UINT(3), winapi_par_HWND(4)));
+  winapi_ret_MCIERROR(mciSendStringW(winapi_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), winapi_par_UINT(3), winapi_par_HWND(4)));
 }
 
 /*
@@ -1014,7 +1014,7 @@ WINMMAPI MCIDEVICEID WINAPI mciGetDeviceIDW(LPCWSTR pszDevice)
 */
 HB_FUNC( WAMCIGETDEVICEIDW )
 {
-  winapi_ret_MCIDEVICEID(mciGetDeviceIDW(reinterpret_cast<LPCWSTR>(hb_parc(1))));
+  winapi_ret_MCIDEVICEID(mciGetDeviceIDW(winapi_par_LPCWSTR(1)));
 }
 
 HB_FUNC( WAMCIGETDEVICEID )
@@ -1037,7 +1037,7 @@ WINMMAPI MCIDEVICEID WINAPI mciGetDeviceIDFromElementIDW(DWORD dwElementID,LPCWS
 */
 HB_FUNC( WAMCIGETDEVICEIDFROMELEMENTIDW )
 {
-  winapi_ret_MCIDEVICEID(mciGetDeviceIDFromElementIDW(winapi_par_DWORD(1), reinterpret_cast<LPCWSTR>(hb_parc(2))));
+  winapi_ret_MCIDEVICEID(mciGetDeviceIDFromElementIDW(winapi_par_DWORD(1), winapi_par_LPCWSTR(2)));
 }
 
 HB_FUNC( WAMCIGETDEVICEIDFROMELEMENTID )
