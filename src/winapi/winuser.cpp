@@ -902,8 +902,12 @@ HB_FUNC( WAANIMATEWINDOW )
 }
 
 /*
-WINUSERAPI WINBOOL WINAPI UpdateLayeredWindow (HWND hWnd, HDC hdcDst, POINT *pptDst, SIZE *psize, HDC hdcSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
+WINUSERAPI WINBOOL WINAPI UpdateLayeredWindow(HWND hWnd, HDC hdcDst, POINT *pptDst, SIZE *psize, HDC hdcSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
 */
+HB_FUNC( WAUPDATELAYEREDWINDOW )
+{
+  wa_ret_BOOL(UpdateLayeredWindow(wa_par_HWND(1), wa_par_HDC(2), static_cast<POINT*>(winapi_get_ptr(3)), static_cast<SIZE*>(winapi_get_ptr(4)), wa_par_HDC(5), static_cast<POINT*>(winapi_get_ptr(6)), wa_par_COLORREF(7), static_cast<BLENDFUNCTION*>(winapi_get_ptr(8)), wa_par_DWORD(9)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI UpdateLayeredWindowIndirect (HWND hWnd, const UPDATELAYEREDWINDOWINFO *pULWInfo)
