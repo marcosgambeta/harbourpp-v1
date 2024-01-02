@@ -121,7 +121,7 @@ HB_FUNC_STATIC( WASICONINFO_SETFICON )
 
   if( obj != nullptr )
   {
-    obj->fIcon = winapi_par_BOOL(1);
+    obj->fIcon = wa_par_BOOL(1);
   }
 }
 
@@ -143,7 +143,7 @@ HB_FUNC_STATIC( WASICONINFO_SETXHOTSPOT )
 
   if( obj != nullptr )
   {
-    obj->xHotspot = winapi_par_DWORD(1);
+    obj->xHotspot = wa_par_DWORD(1);
   }
 }
 
@@ -165,7 +165,7 @@ HB_FUNC_STATIC( WASICONINFO_SETYHOTSPOT )
 
   if( obj != nullptr )
   {
-    obj->yHotspot = winapi_par_DWORD(1);
+    obj->yHotspot = wa_par_DWORD(1);
   }
 }
 
@@ -187,7 +187,7 @@ HB_FUNC_STATIC( WASICONINFO_SETHBMMASK )
 
   if( obj != nullptr )
   {
-    obj->hbmMask = winapi_par_HBITMAP(1);
+    obj->hbmMask = wa_par_HBITMAP(1);
   }
 }
 
@@ -209,7 +209,7 @@ HB_FUNC_STATIC( WASICONINFO_SETHBMCOLOR )
 
   if( obj != nullptr )
   {
-    obj->hbmColor = winapi_par_HBITMAP(1);
+    obj->hbmColor = wa_par_HBITMAP(1);
   }
 }
 

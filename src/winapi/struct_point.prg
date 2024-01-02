@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WASPOINT_SETX )
 
   if( obj != nullptr )
   {
-    obj->x = winapi_par_LONG(1);
+    obj->x = wa_par_LONG(1);
   }
 }
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WASPOINT_SETY )
 
   if( obj != nullptr )
   {
-    obj->y = winapi_par_LONG(1);
+    obj->y = wa_par_LONG(1);
   }
 }
 

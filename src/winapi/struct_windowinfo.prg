@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_DELETE )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->cbSize = winapi_par_DWORD(1);
+//     obj->cbSize = wa_par_DWORD(1);
 //   }
 // }
 
@@ -183,7 +183,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETCBSIZE )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->dwStyle = winapi_par_DWORD(1);
+//     obj->dwStyle = wa_par_DWORD(1);
 //   }
 // }
 
@@ -205,7 +205,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETDWSTYLE )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->dwExStyle = winapi_par_DWORD(1);
+//     obj->dwExStyle = wa_par_DWORD(1);
 //   }
 // }
 
@@ -227,7 +227,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETDWEXSTYLE )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->dwWindowStatus = winapi_par_DWORD(1);
+//     obj->dwWindowStatus = wa_par_DWORD(1);
 //   }
 // }
 
@@ -249,7 +249,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETDWWINDOWSTATUS )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->cxWindowBorders = winapi_par_UINT(1);
+//     obj->cxWindowBorders = wa_par_UINT(1);
 //   }
 // }
 
@@ -271,7 +271,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETCXWINDOWBORDERS )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->cyWindowBorders = winapi_par_UINT(1);
+//     obj->cyWindowBorders = wa_par_UINT(1);
 //   }
 // }
 
@@ -293,7 +293,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETCYWINDOWBORDERS )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->atomWindowType = winapi_par_ATOM(1);
+//     obj->atomWindowType = wa_par_ATOM(1);
 //   }
 // }
 
@@ -315,7 +315,7 @@ HB_FUNC_STATIC( WASWINDOWINFO_GETATOMWINDOWTYPE )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->wCreatorVersion = winapi_par_WORD(1);
+//     obj->wCreatorVersion = wa_par_WORD(1);
 //   }
 // }
 

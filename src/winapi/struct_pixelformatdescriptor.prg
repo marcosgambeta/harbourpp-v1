@@ -247,7 +247,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETNSIZE )
 
   if( obj != nullptr )
   {
-    obj->nSize = winapi_par_WORD(1);
+    obj->nSize = wa_par_WORD(1);
   }
 }
 
@@ -269,7 +269,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETNVERSION )
 
   if( obj != nullptr )
   {
-    obj->nVersion = winapi_par_WORD(1);
+    obj->nVersion = wa_par_WORD(1);
   }
 }
 
@@ -291,7 +291,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETDWFLAGS )
 
   if( obj != nullptr )
   {
-    obj->dwFlags = winapi_par_DWORD(1);
+    obj->dwFlags = wa_par_DWORD(1);
   }
 }
 
@@ -313,7 +313,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETIPIXELTYPE )
 
   if( obj != nullptr )
   {
-    obj->iPixelType = winapi_par_BYTE(1);
+    obj->iPixelType = wa_par_BYTE(1);
   }
 }
 
@@ -335,7 +335,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCCOLORBITS )
 
   if( obj != nullptr )
   {
-    obj->cColorBits = winapi_par_BYTE(1);
+    obj->cColorBits = wa_par_BYTE(1);
   }
 }
 
@@ -357,7 +357,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCREDBITS )
 
   if( obj != nullptr )
   {
-    obj->cRedBits = winapi_par_BYTE(1);
+    obj->cRedBits = wa_par_BYTE(1);
   }
 }
 
@@ -379,7 +379,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCREDSHIFT )
 
   if( obj != nullptr )
   {
-    obj->cRedShift = winapi_par_BYTE(1);
+    obj->cRedShift = wa_par_BYTE(1);
   }
 }
 
@@ -401,7 +401,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCGREENBITS )
 
   if( obj != nullptr )
   {
-    obj->cGreenBits = winapi_par_BYTE(1);
+    obj->cGreenBits = wa_par_BYTE(1);
   }
 }
 
@@ -423,7 +423,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCGREENSHIFT )
 
   if( obj != nullptr )
   {
-    obj->cGreenShift = winapi_par_BYTE(1);
+    obj->cGreenShift = wa_par_BYTE(1);
   }
 }
 
@@ -445,7 +445,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCBLUEBITS )
 
   if( obj != nullptr )
   {
-    obj->cBlueBits = winapi_par_BYTE(1);
+    obj->cBlueBits = wa_par_BYTE(1);
   }
 }
 
@@ -467,7 +467,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCBLUESHIFT )
 
   if( obj != nullptr )
   {
-    obj->cBlueShift = winapi_par_BYTE(1);
+    obj->cBlueShift = wa_par_BYTE(1);
   }
 }
 
@@ -489,7 +489,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCALPHABITS )
 
   if( obj != nullptr )
   {
-    obj->cAlphaBits = winapi_par_BYTE(1);
+    obj->cAlphaBits = wa_par_BYTE(1);
   }
 }
 
@@ -511,7 +511,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCALPHASHIFT )
 
   if( obj != nullptr )
   {
-    obj->cAlphaShift = winapi_par_BYTE(1);
+    obj->cAlphaShift = wa_par_BYTE(1);
   }
 }
 
@@ -533,7 +533,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCACCUMBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumBits = winapi_par_BYTE(1);
+    obj->cAccumBits = wa_par_BYTE(1);
   }
 }
 
@@ -555,7 +555,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCACCUMREDBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumRedBits = winapi_par_BYTE(1);
+    obj->cAccumRedBits = wa_par_BYTE(1);
   }
 }
 
@@ -577,7 +577,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCACCUMGREENBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumGreenBits = winapi_par_BYTE(1);
+    obj->cAccumGreenBits = wa_par_BYTE(1);
   }
 }
 
@@ -599,7 +599,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCACCUMBLUEBITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumBlueBits = winapi_par_BYTE(1);
+    obj->cAccumBlueBits = wa_par_BYTE(1);
   }
 }
 
@@ -621,7 +621,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCACCUMALPHABITS )
 
   if( obj != nullptr )
   {
-    obj->cAccumAlphaBits = winapi_par_BYTE(1);
+    obj->cAccumAlphaBits = wa_par_BYTE(1);
   }
 }
 
@@ -643,7 +643,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCDEPTHBITS )
 
   if( obj != nullptr )
   {
-    obj->cDepthBits = winapi_par_BYTE(1);
+    obj->cDepthBits = wa_par_BYTE(1);
   }
 }
 
@@ -665,7 +665,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCSTENCILBITS )
 
   if( obj != nullptr )
   {
-    obj->cStencilBits = winapi_par_BYTE(1);
+    obj->cStencilBits = wa_par_BYTE(1);
   }
 }
 
@@ -687,7 +687,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETCAUXBUFFERS )
 
   if( obj != nullptr )
   {
-    obj->cAuxBuffers = winapi_par_BYTE(1);
+    obj->cAuxBuffers = wa_par_BYTE(1);
   }
 }
 
@@ -709,7 +709,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETILAYERTYPE )
 
   if( obj != nullptr )
   {
-    obj->iLayerType = winapi_par_BYTE(1);
+    obj->iLayerType = wa_par_BYTE(1);
   }
 }
 
@@ -731,7 +731,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETBRESERVED )
 
   if( obj != nullptr )
   {
-    obj->bReserved = winapi_par_BYTE(1);
+    obj->bReserved = wa_par_BYTE(1);
   }
 }
 
@@ -753,7 +753,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETDWLAYERMASK )
 
   if( obj != nullptr )
   {
-    obj->dwLayerMask = winapi_par_DWORD(1);
+    obj->dwLayerMask = wa_par_DWORD(1);
   }
 }
 
@@ -775,7 +775,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETDWVISIBLEMASK )
 
   if( obj != nullptr )
   {
-    obj->dwVisibleMask = winapi_par_DWORD(1);
+    obj->dwVisibleMask = wa_par_DWORD(1);
   }
 }
 
@@ -797,7 +797,7 @@ HB_FUNC_STATIC( WASPIXELFORMATDESCRIPTOR_SETDWDAMAGEMASK )
 
   if( obj != nullptr )
   {
-    obj->dwDamageMask = winapi_par_DWORD(1);
+    obj->dwDamageMask = wa_par_DWORD(1);
   }
 }
 

@@ -157,7 +157,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBISIZE )
 
   if( obj != nullptr )
   {
-    obj->biSize = winapi_par_DWORD(1);
+    obj->biSize = wa_par_DWORD(1);
   }
 }
 
@@ -179,7 +179,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBIWIDTH )
 
   if( obj != nullptr )
   {
-    obj->biWidth = winapi_par_LONG(1);
+    obj->biWidth = wa_par_LONG(1);
   }
 }
 
@@ -201,7 +201,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBIHEIGHT )
 
   if( obj != nullptr )
   {
-    obj->biHeight = winapi_par_LONG(1);
+    obj->biHeight = wa_par_LONG(1);
   }
 }
 
@@ -223,7 +223,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBIPLANES )
 
   if( obj != nullptr )
   {
-    obj->biPlanes = winapi_par_WORD(1);
+    obj->biPlanes = wa_par_WORD(1);
   }
 }
 
@@ -245,7 +245,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBIBITCOUNT )
 
   if( obj != nullptr )
   {
-    obj->biBitCount = winapi_par_WORD(1);
+    obj->biBitCount = wa_par_WORD(1);
   }
 }
 
@@ -267,7 +267,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBICOMPRESSION )
 
   if( obj != nullptr )
   {
-    obj->biCompression = winapi_par_DWORD(1);
+    obj->biCompression = wa_par_DWORD(1);
   }
 }
 
@@ -289,7 +289,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBISIZEIMAGE )
 
   if( obj != nullptr )
   {
-    obj->biSizeImage = winapi_par_DWORD(1);
+    obj->biSizeImage = wa_par_DWORD(1);
   }
 }
 
@@ -311,7 +311,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBIXPELSPERMETER )
 
   if( obj != nullptr )
   {
-    obj->biXPelsPerMeter = winapi_par_LONG(1);
+    obj->biXPelsPerMeter = wa_par_LONG(1);
   }
 }
 
@@ -333,7 +333,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBIYPELSPERMETER )
 
   if( obj != nullptr )
   {
-    obj->biYPelsPerMeter = winapi_par_LONG(1);
+    obj->biYPelsPerMeter = wa_par_LONG(1);
   }
 }
 
@@ -355,7 +355,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBICLRUSED )
 
   if( obj != nullptr )
   {
-    obj->biClrUsed = winapi_par_DWORD(1);
+    obj->biClrUsed = wa_par_DWORD(1);
   }
 }
 
@@ -377,7 +377,7 @@ HB_FUNC_STATIC( WASBITMAPINFOHEADER_SETBICLRIMPORTANT )
 
   if( obj != nullptr )
   {
-    obj->biClrImportant = winapi_par_DWORD(1);
+    obj->biClrImportant = wa_par_DWORD(1);
   }
 }
 

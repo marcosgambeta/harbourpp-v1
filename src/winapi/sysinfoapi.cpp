@@ -93,7 +93,7 @@ WINBASEAPI WINBOOL WINAPI GetProductInfo (DWORD dwOSMajorVersion, DWORD dwOSMino
 HB_FUNC( WAGETPRODUCTINFO )
 {
   DWORD dwReturnedProductType;
-  winapi_ret_BOOL(GetProductInfo(winapi_par_DWORD(1), winapi_par_DWORD(2), winapi_par_DWORD(3), winapi_par_DWORD(4), &dwReturnedProductType));
+  winapi_ret_BOOL(GetProductInfo(wa_par_DWORD(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4), &dwReturnedProductType));
   winapi_stor_DWORD(dwReturnedProductType, 5);
 }
 #endif

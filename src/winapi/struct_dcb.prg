@@ -259,7 +259,7 @@ HB_FUNC_STATIC( WASDCB_SETDCBLENGTH )
 
   if( obj != nullptr )
   {
-    obj->DCBlength = winapi_par_DWORD(1);
+    obj->DCBlength = wa_par_DWORD(1);
   }
 }
 
@@ -281,7 +281,7 @@ HB_FUNC_STATIC( WASDCB_SETBAUDRATE )
 
   if( obj != nullptr )
   {
-    obj->BaudRate = winapi_par_DWORD(1);
+    obj->BaudRate = wa_par_DWORD(1);
   }
 }
 
@@ -303,7 +303,7 @@ HB_FUNC_STATIC( WASDCB_SETFBINARY )
 
   if( obj != nullptr )
   {
-    obj->fBinary = winapi_par_DWORD(1);
+    obj->fBinary = wa_par_DWORD(1);
   }
 }
 
@@ -325,7 +325,7 @@ HB_FUNC_STATIC( WASDCB_SETFPARITY )
 
   if( obj != nullptr )
   {
-    obj->fParity = winapi_par_DWORD(1);
+    obj->fParity = wa_par_DWORD(1);
   }
 }
 
@@ -347,7 +347,7 @@ HB_FUNC_STATIC( WASDCB_SETFOUTXCTSFLOW )
 
   if( obj != nullptr )
   {
-    obj->fOutxCtsFlow = winapi_par_DWORD(1);
+    obj->fOutxCtsFlow = wa_par_DWORD(1);
   }
 }
 
@@ -369,7 +369,7 @@ HB_FUNC_STATIC( WASDCB_SETFOUTXDSRFLOW )
 
   if( obj != nullptr )
   {
-    obj->fOutxDsrFlow = winapi_par_DWORD(1);
+    obj->fOutxDsrFlow = wa_par_DWORD(1);
   }
 }
 
@@ -391,7 +391,7 @@ HB_FUNC_STATIC( WASDCB_SETFDTRCONTROL )
 
   if( obj != nullptr )
   {
-    obj->fDtrControl = winapi_par_DWORD(1);
+    obj->fDtrControl = wa_par_DWORD(1);
   }
 }
 
@@ -413,7 +413,7 @@ HB_FUNC_STATIC( WASDCB_SETFDSRSENSITIVITY )
 
   if( obj != nullptr )
   {
-    obj->fDsrSensitivity = winapi_par_DWORD(1);
+    obj->fDsrSensitivity = wa_par_DWORD(1);
   }
 }
 
@@ -435,7 +435,7 @@ HB_FUNC_STATIC( WASDCB_SETFTXCONTINUEONXOFF )
 
   if( obj != nullptr )
   {
-    obj->fTXContinueOnXoff = winapi_par_DWORD(1);
+    obj->fTXContinueOnXoff = wa_par_DWORD(1);
   }
 }
 
@@ -457,7 +457,7 @@ HB_FUNC_STATIC( WASDCB_SETFOUTX )
 
   if( obj != nullptr )
   {
-    obj->fOutX = winapi_par_DWORD(1);
+    obj->fOutX = wa_par_DWORD(1);
   }
 }
 
@@ -479,7 +479,7 @@ HB_FUNC_STATIC( WASDCB_SETFINX )
 
   if( obj != nullptr )
   {
-    obj->fInX = winapi_par_DWORD(1);
+    obj->fInX = wa_par_DWORD(1);
   }
 }
 
@@ -501,7 +501,7 @@ HB_FUNC_STATIC( WASDCB_SETFERRORCHAR )
 
   if( obj != nullptr )
   {
-    obj->fErrorChar = winapi_par_DWORD(1);
+    obj->fErrorChar = wa_par_DWORD(1);
   }
 }
 
@@ -523,7 +523,7 @@ HB_FUNC_STATIC( WASDCB_SETFNULL )
 
   if( obj != nullptr )
   {
-    obj->fNull = winapi_par_DWORD(1);
+    obj->fNull = wa_par_DWORD(1);
   }
 }
 
@@ -545,7 +545,7 @@ HB_FUNC_STATIC( WASDCB_SETFRTSCONTROL )
 
   if( obj != nullptr )
   {
-    obj->fRtsControl = winapi_par_DWORD(1);
+    obj->fRtsControl = wa_par_DWORD(1);
   }
 }
 
@@ -567,7 +567,7 @@ HB_FUNC_STATIC( WASDCB_SETFABORTONERROR )
 
   if( obj != nullptr )
   {
-    obj->fAbortOnError = winapi_par_DWORD(1);
+    obj->fAbortOnError = wa_par_DWORD(1);
   }
 }
 
@@ -589,7 +589,7 @@ HB_FUNC_STATIC( WASDCB_SETFDUMMY2 )
 
   if( obj != nullptr )
   {
-    obj->fDummy2 = winapi_par_DWORD(1);
+    obj->fDummy2 = wa_par_DWORD(1);
   }
 }
 
@@ -611,7 +611,7 @@ HB_FUNC_STATIC( WASDCB_SETWRESERVED )
 
   if( obj != nullptr )
   {
-    obj->wReserved = winapi_par_WORD(1);
+    obj->wReserved = wa_par_WORD(1);
   }
 }
 
@@ -633,7 +633,7 @@ HB_FUNC_STATIC( WASDCB_SETXONLIM )
 
   if( obj != nullptr )
   {
-    obj->XonLim = winapi_par_WORD(1);
+    obj->XonLim = wa_par_WORD(1);
   }
 }
 
@@ -655,7 +655,7 @@ HB_FUNC_STATIC( WASDCB_SETXOFFLIM )
 
   if( obj != nullptr )
   {
-    obj->XoffLim = winapi_par_WORD(1);
+    obj->XoffLim = wa_par_WORD(1);
   }
 }
 
@@ -677,7 +677,7 @@ HB_FUNC_STATIC( WASDCB_SETBYTESIZE )
 
   if( obj != nullptr )
   {
-    obj->ByteSize = winapi_par_BYTE(1);
+    obj->ByteSize = wa_par_BYTE(1);
   }
 }
 
@@ -699,7 +699,7 @@ HB_FUNC_STATIC( WASDCB_SETPARITY )
 
   if( obj != nullptr )
   {
-    obj->Parity = winapi_par_BYTE(1);
+    obj->Parity = wa_par_BYTE(1);
   }
 }
 
@@ -721,7 +721,7 @@ HB_FUNC_STATIC( WASDCB_SETSTOPBITS )
 
   if( obj != nullptr )
   {
-    obj->StopBits = winapi_par_BYTE(1);
+    obj->StopBits = wa_par_BYTE(1);
   }
 }
 
@@ -743,7 +743,7 @@ HB_FUNC_STATIC( WASDCB_SETXONCHAR )
 
   if( obj != nullptr )
   {
-    obj->XonChar = winapi_par_char(1);
+    obj->XonChar = wa_par_char(1);
   }
 }
 
@@ -765,7 +765,7 @@ HB_FUNC_STATIC( WASDCB_SETXOFFCHAR )
 
   if( obj != nullptr )
   {
-    obj->XoffChar = winapi_par_char(1);
+    obj->XoffChar = wa_par_char(1);
   }
 }
 
@@ -787,7 +787,7 @@ HB_FUNC_STATIC( WASDCB_SETERRORCHAR )
 
   if( obj != nullptr )
   {
-    obj->ErrorChar = winapi_par_char(1);
+    obj->ErrorChar = wa_par_char(1);
   }
 }
 
@@ -809,7 +809,7 @@ HB_FUNC_STATIC( WASDCB_SETEOFCHAR )
 
   if( obj != nullptr )
   {
-    obj->EofChar = winapi_par_char(1);
+    obj->EofChar = wa_par_char(1);
   }
 }
 
@@ -831,7 +831,7 @@ HB_FUNC_STATIC( WASDCB_SETEVTCHAR )
 
   if( obj != nullptr )
   {
-    obj->EvtChar = winapi_par_char(1);
+    obj->EvtChar = wa_par_char(1);
   }
 }
 
@@ -853,7 +853,7 @@ HB_FUNC_STATIC( WASDCB_SETWRESERVED1 )
 
   if( obj != nullptr )
   {
-    obj->wReserved1 = winapi_par_WORD(1);
+    obj->wReserved1 = wa_par_WORD(1);
   }
 }
 

@@ -194,7 +194,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETCBSIZE )
 
   if( obj != nullptr )
   {
-    obj->cbSize = winapi_par_DWORD(1);
+    obj->cbSize = wa_par_DWORD(1);
   }
 }
 
@@ -216,7 +216,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETHIML )
 
   if( obj != nullptr )
   {
-    obj->himl = winapi_par_HIMAGELIST(1);
+    obj->himl = wa_par_HIMAGELIST(1);
   }
 }
 
@@ -238,7 +238,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETI )
 
   if( obj != nullptr )
   {
-    obj->i = winapi_par_int(1);
+    obj->i = wa_par_int(1);
   }
 }
 
@@ -260,7 +260,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETHDCDST )
 
   if( obj != nullptr )
   {
-    obj->hdcDst = winapi_par_HDC(1);
+    obj->hdcDst = wa_par_HDC(1);
   }
 }
 
@@ -282,7 +282,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETX )
 
   if( obj != nullptr )
   {
-    obj->x = winapi_par_int(1);
+    obj->x = wa_par_int(1);
   }
 }
 
@@ -304,7 +304,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETY )
 
   if( obj != nullptr )
   {
-    obj->y = winapi_par_int(1);
+    obj->y = wa_par_int(1);
   }
 }
 
@@ -326,7 +326,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETCX )
 
   if( obj != nullptr )
   {
-    obj->cx = winapi_par_int(1);
+    obj->cx = wa_par_int(1);
   }
 }
 
@@ -348,7 +348,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETCY )
 
   if( obj != nullptr )
   {
-    obj->cy = winapi_par_int(1);
+    obj->cy = wa_par_int(1);
   }
 }
 
@@ -370,7 +370,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETXBITMAP )
 
   if( obj != nullptr )
   {
-    obj->xBitmap = winapi_par_int(1);
+    obj->xBitmap = wa_par_int(1);
   }
 }
 
@@ -392,7 +392,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETYBITMAP )
 
   if( obj != nullptr )
   {
-    obj->yBitmap = winapi_par_int(1);
+    obj->yBitmap = wa_par_int(1);
   }
 }
 
@@ -414,7 +414,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETRGBBK )
 
   if( obj != nullptr )
   {
-    obj->rgbBk = winapi_par_COLORREF(1);
+    obj->rgbBk = wa_par_COLORREF(1);
   }
 }
 
@@ -436,7 +436,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETRGBFG )
 
   if( obj != nullptr )
   {
-    obj->rgbFg = winapi_par_COLORREF(1);
+    obj->rgbFg = wa_par_COLORREF(1);
   }
 }
 
@@ -458,7 +458,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETFSTYLE )
 
   if( obj != nullptr )
   {
-    obj->fStyle = winapi_par_UINT(1);
+    obj->fStyle = wa_par_UINT(1);
   }
 }
 
@@ -480,7 +480,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETDWROP )
 
   if( obj != nullptr )
   {
-    obj->dwRop = winapi_par_DWORD(1);
+    obj->dwRop = wa_par_DWORD(1);
   }
 }
 
@@ -502,7 +502,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETFSTATE )
 
   if( obj != nullptr )
   {
-    obj->fState = winapi_par_DWORD(1);
+    obj->fState = wa_par_DWORD(1);
   }
 }
 
@@ -524,7 +524,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETFRAME )
 
   if( obj != nullptr )
   {
-    obj->Frame = winapi_par_DWORD(1);
+    obj->Frame = wa_par_DWORD(1);
   }
 }
 
@@ -546,7 +546,7 @@ HB_FUNC_STATIC( WASIMAGELISTDRAWPARAMS_SETCREFFECT )
 
   if( obj != nullptr )
   {
-    obj->crEffect = winapi_par_COLORREF(1);
+    obj->crEffect = wa_par_COLORREF(1);
   }
 }
 

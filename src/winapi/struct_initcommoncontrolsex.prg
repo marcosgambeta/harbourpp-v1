@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_SETDWSIZE )
 
   if( obj != nullptr )
   {
-    obj->dwSize = winapi_par_DWORD(1);
+    obj->dwSize = wa_par_DWORD(1);
   }
 }
 
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_SETDWICC )
 
   if( obj != nullptr )
   {
-    obj->dwICC = winapi_par_DWORD(1);
+    obj->dwICC = wa_par_DWORD(1);
   }
 }
 

@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCASIZE )
 
   if( obj != nullptr )
   {
-    obj->caSize = winapi_par_WORD(1);
+    obj->caSize = wa_par_WORD(1);
   }
 }
 
@@ -185,7 +185,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCAFLAGS )
 
   if( obj != nullptr )
   {
-    obj->caFlags = winapi_par_WORD(1);
+    obj->caFlags = wa_par_WORD(1);
   }
 }
 
@@ -207,7 +207,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCAILLUMINANTINDEX )
 
   if( obj != nullptr )
   {
-    obj->caIlluminantIndex = winapi_par_WORD(1);
+    obj->caIlluminantIndex = wa_par_WORD(1);
   }
 }
 
@@ -229,7 +229,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCAREDGAMMA )
 
   if( obj != nullptr )
   {
-    obj->caRedGamma = winapi_par_WORD(1);
+    obj->caRedGamma = wa_par_WORD(1);
   }
 }
 
@@ -251,7 +251,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCAGREENGAMMA )
 
   if( obj != nullptr )
   {
-    obj->caGreenGamma = winapi_par_WORD(1);
+    obj->caGreenGamma = wa_par_WORD(1);
   }
 }
 
@@ -273,7 +273,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCABLUEGAMMA )
 
   if( obj != nullptr )
   {
-    obj->caBlueGamma = winapi_par_WORD(1);
+    obj->caBlueGamma = wa_par_WORD(1);
   }
 }
 
@@ -295,7 +295,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCAREFERENCEBLACK )
 
   if( obj != nullptr )
   {
-    obj->caReferenceBlack = winapi_par_WORD(1);
+    obj->caReferenceBlack = wa_par_WORD(1);
   }
 }
 
@@ -317,7 +317,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCAREFERENCEWHITE )
 
   if( obj != nullptr )
   {
-    obj->caReferenceWhite = winapi_par_WORD(1);
+    obj->caReferenceWhite = wa_par_WORD(1);
   }
 }
 
@@ -339,7 +339,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCACONTRAST )
 
   if( obj != nullptr )
   {
-    obj->caContrast = winapi_par_SHORT(1);
+    obj->caContrast = wa_par_SHORT(1);
   }
 }
 
@@ -361,7 +361,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCABRIGHTNESS )
 
   if( obj != nullptr )
   {
-    obj->caBrightness = winapi_par_SHORT(1);
+    obj->caBrightness = wa_par_SHORT(1);
   }
 }
 
@@ -383,7 +383,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCACOLORFULNESS )
 
   if( obj != nullptr )
   {
-    obj->caColorfulness = winapi_par_SHORT(1);
+    obj->caColorfulness = wa_par_SHORT(1);
   }
 }
 
@@ -405,7 +405,7 @@ HB_FUNC_STATIC( WASCOLORADJUSTMENT_SETCAREDGREENTINT )
 
   if( obj != nullptr )
   {
-    obj->caRedGreenTint = winapi_par_SHORT(1);
+    obj->caRedGreenTint = wa_par_SHORT(1);
   }
 }
 

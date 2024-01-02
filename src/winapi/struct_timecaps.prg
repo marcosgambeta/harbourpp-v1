@@ -103,7 +103,7 @@ HB_FUNC_STATIC( WASTIMECAPS_SETWPERIODMIN )
 
   if( obj != nullptr )
   {
-    obj->wPeriodMin = winapi_par_UINT(1);
+    obj->wPeriodMin = wa_par_UINT(1);
   }
 }
 
@@ -125,7 +125,7 @@ HB_FUNC_STATIC( WASTIMECAPS_SETWPERIODMAX )
 
   if( obj != nullptr )
   {
-    obj->wPeriodMax = winapi_par_UINT(1);
+    obj->wPeriodMax = wa_par_UINT(1);
   }
 }
 

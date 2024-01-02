@@ -163,7 +163,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETWDEVICEINDEX )
 
   if( obj != nullptr )
   {
-    obj->wDeviceIndex = winapi_par_UINT(1);
+    obj->wDeviceIndex = wa_par_UINT(1);
   }
 }
 
@@ -185,7 +185,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETFHASOVERLAY )
 
   if( obj != nullptr )
   {
-    obj->fHasOverlay = winapi_par_BOOL(1);
+    obj->fHasOverlay = wa_par_BOOL(1);
   }
 }
 
@@ -207,7 +207,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETFHASDLGVIDEOSOURCE )
 
   if( obj != nullptr )
   {
-    obj->fHasDlgVideoSource = winapi_par_BOOL(1);
+    obj->fHasDlgVideoSource = wa_par_BOOL(1);
   }
 }
 
@@ -229,7 +229,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETFHASDLGVIDEOFORMAT )
 
   if( obj != nullptr )
   {
-    obj->fHasDlgVideoFormat = winapi_par_BOOL(1);
+    obj->fHasDlgVideoFormat = wa_par_BOOL(1);
   }
 }
 
@@ -251,7 +251,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETFHASDLGVIDEODISPLAY )
 
   if( obj != nullptr )
   {
-    obj->fHasDlgVideoDisplay = winapi_par_BOOL(1);
+    obj->fHasDlgVideoDisplay = wa_par_BOOL(1);
   }
 }
 
@@ -273,7 +273,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETFCAPTUREINITIALIZED )
 
   if( obj != nullptr )
   {
-    obj->fCaptureInitialized = winapi_par_BOOL(1);
+    obj->fCaptureInitialized = wa_par_BOOL(1);
   }
 }
 
@@ -295,7 +295,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETFDRIVERSUPPLIESPALETTES )
 
   if( obj != nullptr )
   {
-    obj->fDriverSuppliesPalettes = winapi_par_BOOL(1);
+    obj->fDriverSuppliesPalettes = wa_par_BOOL(1);
   }
 }
 
@@ -317,7 +317,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETHVIDEOIN )
 
   if( obj != nullptr )
   {
-    obj->hVideoIn = winapi_par_HANDLE(1);
+    obj->hVideoIn = wa_par_HANDLE(1);
   }
 }
 
@@ -339,7 +339,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETHVIDEOOUT )
 
   if( obj != nullptr )
   {
-    obj->hVideoOut = winapi_par_HANDLE(1);
+    obj->hVideoOut = wa_par_HANDLE(1);
   }
 }
 
@@ -361,7 +361,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETHVIDEOEXTIN )
 
   if( obj != nullptr )
   {
-    obj->hVideoExtIn = winapi_par_HANDLE(1);
+    obj->hVideoExtIn = wa_par_HANDLE(1);
   }
 }
 
@@ -383,7 +383,7 @@ HB_FUNC_STATIC( WASCAPDRIVERCAPS_SETHVIDEOEXTOUT )
 
   if( obj != nullptr )
   {
-    obj->hVideoExtOut = winapi_par_HANDLE(1);
+    obj->hVideoExtOut = wa_par_HANDLE(1);
   }
 }
 

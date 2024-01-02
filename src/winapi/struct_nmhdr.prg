@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WASNMHDR_SETHWNDFROM )
 
   if( obj != nullptr )
   {
-    obj->hwndFrom = winapi_par_HWND(1);
+    obj->hwndFrom = wa_par_HWND(1);
   }
 }
 
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WASNMHDR_SETIDFROM )
 
   if( obj != nullptr )
   {
-    obj->idFrom = winapi_par_UINT_PTR(1);
+    obj->idFrom = wa_par_UINT_PTR(1);
   }
 }
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WASNMHDR_SETCODE )
 
   if( obj != nullptr )
   {
-    obj->code = winapi_par_UINT(1);
+    obj->code = wa_par_UINT(1);
   }
 }
 

@@ -129,7 +129,7 @@ HB_FUNC_STATIC( WASMSG_SETHWND )
 
   if( obj != nullptr )
   {
-    obj->hwnd = winapi_par_HWND(1);
+    obj->hwnd = wa_par_HWND(1);
   }
 }
 
@@ -151,7 +151,7 @@ HB_FUNC_STATIC( WASMSG_SETMESSAGE )
 
   if( obj != nullptr )
   {
-    obj->message = winapi_par_UINT(1);
+    obj->message = wa_par_UINT(1);
   }
 }
 
@@ -173,7 +173,7 @@ HB_FUNC_STATIC( WASMSG_SETWPARAM )
 
   if( obj != nullptr )
   {
-    obj->wParam = winapi_par_WPARAM(1);
+    obj->wParam = wa_par_WPARAM(1);
   }
 }
 
@@ -195,7 +195,7 @@ HB_FUNC_STATIC( WASMSG_SETLPARAM )
 
   if( obj != nullptr )
   {
-    obj->lParam = winapi_par_LPARAM(1);
+    obj->lParam = wa_par_LPARAM(1);
   }
 }
 
@@ -217,7 +217,7 @@ HB_FUNC_STATIC( WASMSG_SETTIME )
 
   if( obj != nullptr )
   {
-    obj->time = winapi_par_DWORD(1);
+    obj->time = wa_par_DWORD(1);
   }
 }
 

@@ -135,7 +135,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_DELETE )
 //
 //   if( obj != nullptr )
 //   {
-//     obj->cbSize = winapi_par_UINT(1);
+//     obj->cbSize = wa_par_UINT(1);
 //   }
 // }
 
@@ -157,7 +157,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_SETFMASK )
 
   if( obj != nullptr )
   {
-    obj->fMask = winapi_par_UINT(1);
+    obj->fMask = wa_par_UINT(1);
   }
 }
 
@@ -179,7 +179,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_SETNMIN )
 
   if( obj != nullptr )
   {
-    obj->nMin = winapi_par_int(1);
+    obj->nMin = wa_par_int(1);
   }
 }
 
@@ -201,7 +201,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_SETNMAX )
 
   if( obj != nullptr )
   {
-    obj->nMax = winapi_par_int(1);
+    obj->nMax = wa_par_int(1);
   }
 }
 
@@ -223,7 +223,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_SETNPAGE )
 
   if( obj != nullptr )
   {
-    obj->nPage = winapi_par_UINT(1);
+    obj->nPage = wa_par_UINT(1);
   }
 }
 
@@ -245,7 +245,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_SETNPOS )
 
   if( obj != nullptr )
   {
-    obj->nPos = winapi_par_int(1);
+    obj->nPos = wa_par_int(1);
   }
 }
 
@@ -267,7 +267,7 @@ HB_FUNC_STATIC( WASSCROLLINFO_SETNTRACKPOS )
 
   if( obj != nullptr )
   {
-    obj->nTrackPos = winapi_par_int(1);
+    obj->nTrackPos = wa_par_int(1);
   }
 }
 

@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WASABCFLOAT_SETABCFA )
 
   if( obj != nullptr )
   {
-    obj->abcfA = winapi_par_FLOAT(1);
+    obj->abcfA = wa_par_FLOAT(1);
   }
 }
 
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WASABCFLOAT_SETABCFB )
 
   if( obj != nullptr )
   {
-    obj->abcfB = winapi_par_FLOAT(1);
+    obj->abcfB = wa_par_FLOAT(1);
   }
 }
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WASABCFLOAT_SETABCFC )
 
   if( obj != nullptr )
   {
-    obj->abcfC = winapi_par_FLOAT(1);
+    obj->abcfC = wa_par_FLOAT(1);
   }
 }
 
