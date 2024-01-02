@@ -120,9 +120,9 @@ HB_FUNC( WAWINHTTPQUERYAUTHSCHEMES )
   DWORD dwFirstScheme;
   DWORD dwAuthTarget;
   wa_ret_BOOL(WinHttpQueryAuthSchemes(wa_par_HINTERNET(1), &dwSupportedSchemes, &dwFirstScheme, &dwAuthTarget));
-  winapi_stor_DWORD(dwSupportedSchemes, 2);
-  winapi_stor_DWORD(dwFirstScheme, 3);
-  winapi_stor_DWORD(dwAuthTarget, 4);
+  wa_stor_DWORD(dwSupportedSchemes, 2);
+  wa_stor_DWORD(dwFirstScheme, 3);
+  wa_stor_DWORD(dwAuthTarget, 4);
 }
 
 /*
@@ -133,7 +133,7 @@ HB_FUNC( WAWINHTTPQUERYDATAAVAILABLE )
 {
   DWORD dwNumberOfBytesAvailable;
   wa_ret_BOOL(WinHttpQueryDataAvailable(wa_par_HINTERNET(1), &dwNumberOfBytesAvailable));
-  winapi_stor_DWORD(dwNumberOfBytesAvailable, 2);
+  wa_stor_DWORD(dwNumberOfBytesAvailable, 2);
 }
 
 /*
@@ -146,9 +146,9 @@ HB_FUNC( WAWINHTTPQUERYHEADERS )
   DWORD dwBufferLength = wa_par_DWORD(5);
   DWORD dwIndex = wa_par_DWORD(6);
   wa_ret_BOOL(WinHttpQueryHeaders(wa_par_HINTERNET(1), wa_par_DWORD(2), wa_par_LPCWSTR(3), Buffer, &dwBufferLength, &dwIndex));
-  winapi_stor_LPVOID(Buffer, 4);
-  winapi_stor_DWORD(dwBufferLength, 5);
-  winapi_stor_DWORD(dwIndex, 6);
+  wa_stor_LPVOID(Buffer, 4);
+  wa_stor_DWORD(dwBufferLength, 5);
+  wa_stor_DWORD(dwIndex, 6);
 }
 
 /*
@@ -160,8 +160,8 @@ HB_FUNC( WAWINHTTPQUERYOPTION )
   LPVOID Buffer = nullptr;
   DWORD dwBufferLength = wa_par_DWORD(4);
   wa_ret_BOOL(WinHttpQueryOption(wa_par_HINTERNET(1), wa_par_DWORD(2), Buffer, &dwBufferLength));
-  winapi_stor_LPVOID(Buffer, 3);
-  winapi_stor_DWORD(dwBufferLength, 4);
+  wa_stor_LPVOID(Buffer, 3);
+  wa_stor_DWORD(dwBufferLength, 4);
 }
 
 /*
@@ -173,8 +173,8 @@ HB_FUNC( WAWINHTTPREADDATA )
   LPVOID Buffer = nullptr;
   DWORD dwNumberOfBytesRead;
   wa_ret_BOOL(WinHttpReadData(wa_par_HINTERNET(1), Buffer, wa_par_DWORD(3), &dwNumberOfBytesRead));
-  winapi_stor_LPVOID(Buffer, 2);
-  winapi_stor_DWORD(dwNumberOfBytesRead, 4);
+  wa_stor_LPVOID(Buffer, 2);
+  wa_stor_DWORD(dwNumberOfBytesRead, 4);
 }
 
 /*

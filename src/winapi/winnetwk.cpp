@@ -172,7 +172,7 @@ HB_FUNC( WAWNETGETCONNECTIONA )
 {
   DWORD nLength;
   wa_ret_DWORD(WNetGetConnectionA(wa_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), &nLength));
-  winapi_stor_DWORD(nLength, 3);
+  wa_stor_DWORD(nLength, 3);
 }
 
 /*
@@ -182,7 +182,7 @@ HB_FUNC( WAWNETGETCONNECTIONW )
 {
   DWORD nLength;
   wa_ret_DWORD(WNetGetConnectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
-  winapi_stor_DWORD(nLength, 3);
+  wa_stor_DWORD(nLength, 3);
 }
 
 HB_FUNC( WAWNETGETCONNECTION )
@@ -190,7 +190,7 @@ HB_FUNC( WAWNETGETCONNECTION )
   void * str1;
   DWORD nLength;
   wa_ret_DWORD(WNetGetConnection(HB_PARSTR(1, &str1, nullptr), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
-  winapi_stor_DWORD(nLength, 3);
+  wa_stor_DWORD(nLength, 3);
   hb_strfree(str1);
 }
 
@@ -202,8 +202,8 @@ HB_FUNC( WAWNETUSECONNECTIONA )
   DWORD BufferSize;
   DWORD Result;
   wa_ret_DWORD(WNetUseConnectionA(wa_par_HWND(1), static_cast<LPNETRESOURCEA>(hb_parptr(2)), wa_par_LPCSTR(3), wa_par_LPCSTR(4), wa_par_DWORD(5), const_cast<LPSTR>(hb_parc(6)), &BufferSize, &Result));
-  winapi_stor_DWORD(BufferSize, 7);
-  winapi_stor_DWORD(Result, 8);
+  wa_stor_DWORD(BufferSize, 7);
+  wa_stor_DWORD(Result, 8);
 }
 
 /*
@@ -214,8 +214,8 @@ HB_FUNC( WAWNETUSECONNECTIONW )
   DWORD BufferSize;
   DWORD Result;
   wa_ret_DWORD(WNetUseConnectionW(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), wa_par_LPCWSTR(3), wa_par_LPCWSTR(4), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), &BufferSize, &Result));
-  winapi_stor_DWORD(BufferSize, 7);
-  winapi_stor_DWORD(Result, 8);
+  wa_stor_DWORD(BufferSize, 7);
+  wa_stor_DWORD(Result, 8);
 }
 
 HB_FUNC( WAWNETUSECONNECTION )
@@ -225,8 +225,8 @@ HB_FUNC( WAWNETUSECONNECTION )
   DWORD BufferSize;
   DWORD Result;
   wa_ret_DWORD(WNetUseConnection(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), &BufferSize, &Result));
-  winapi_stor_DWORD(BufferSize, 7);
-  winapi_stor_DWORD(Result, 8);
+  wa_stor_DWORD(BufferSize, 7);
+  wa_stor_DWORD(Result, 8);
   hb_strfree(str3);
   hb_strfree(str4);
 }
@@ -320,9 +320,9 @@ HB_FUNC( WAWNETENUMRESOURCEA )
   //LPVOID lpBuffer
   DWORD BufferSize;
   wa_ret_DWORD(WNetEnumResourceA(wa_par_HANDLE(1), &cCount, static_cast<LPVOID>(hb_parptr(3)), &BufferSize));
-  winapi_stor_DWORD(cCount, 2);
+  wa_stor_DWORD(cCount, 2);
   //LPVOID lpBuffer
-  winapi_stor_DWORD(BufferSize, 4);
+  wa_stor_DWORD(BufferSize, 4);
 
 }
 
@@ -335,9 +335,9 @@ HB_FUNC( WAWNETENUMRESOURCEW )
   //LPVOID lpBuffer
   DWORD BufferSize;
   wa_ret_DWORD(WNetEnumResourceW(wa_par_HANDLE(1), &cCount, static_cast<LPVOID>(hb_parptr(3)), &BufferSize));
-  winapi_stor_DWORD(cCount, 2);
+  wa_stor_DWORD(cCount, 2);
   //LPVOID lpBuffer
-  winapi_stor_DWORD(BufferSize, 4);
+  wa_stor_DWORD(BufferSize, 4);
 }
 
 /*
@@ -355,7 +355,7 @@ HB_FUNC( WAWNETGETRESOURCEPARENTA )
 {
   DWORD cbBuffer;
   wa_ret_DWORD(WNetGetResourceParentA(static_cast<LPNETRESOURCEA>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), &cbBuffer));
-  winapi_stor_DWORD(cbBuffer, 3);
+  wa_stor_DWORD(cbBuffer, 3);
 }
 
 /*
@@ -365,7 +365,7 @@ HB_FUNC( WAWNETGETRESOURCEPARENTW )
 {
   DWORD cbBuffer;
   wa_ret_DWORD(WNetGetResourceParentW(static_cast<LPNETRESOURCEW>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), &cbBuffer));
-  winapi_stor_DWORD(cbBuffer, 3);
+  wa_stor_DWORD(cbBuffer, 3);
 }
 
 /*

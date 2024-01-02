@@ -332,8 +332,8 @@ HB_FUNC( WAIMAGELIST_GETICONSIZE )
   int cx;
   int cy;
   wa_ret_BOOL(ImageList_GetIconSize(wa_par_HIMAGELIST(1), &cx, &cy));
-  winapi_stor_int(cx, 2);
-  winapi_stor_int(cy, 3);
+  wa_stor_int(cx, 2);
+  wa_stor_int(cy, 3);
 }
 
 /*
@@ -619,8 +619,8 @@ HB_FUNC( WAFLATSB_GETSCROLLRANGE )
   INT i1;
   INT i2;
   wa_ret_BOOL(FlatSB_GetScrollRange(wa_par_HWND(1), wa_par_int(2), &i1, &i2));
-  winapi_stor_INT(i1, 3);
-  winapi_stor_INT(i2, 4);
+  wa_stor_INT(i1, 3);
+  wa_stor_INT(i2, 4);
 }
 #endif
 
@@ -652,7 +652,7 @@ HB_FUNC( WAFLATSB_SCROLLPROP )
 {
   INT i;
   wa_ret_BOOL(FlatSB_GetScrollProp(wa_par_HWND(1), wa_par_int(2), &i));
-  winapi_stor_INT(i, 3);
+  wa_stor_INT(i, 3);
 }
 #endif
 

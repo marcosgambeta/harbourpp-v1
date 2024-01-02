@@ -65,7 +65,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
 {
   DWORD dwHandle;
   wa_ret_DWORD(GetFileVersionInfoSizeA(wa_par_LPCSTR(1), &dwHandle));
-  winapi_stor_DWORD(dwHandle, 2);
+  wa_stor_DWORD(dwHandle, 2);
 }
 
 /*
@@ -76,7 +76,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEW )
 {
   DWORD dwHandle;
   wa_ret_DWORD(GetFileVersionInfoSizeW(wa_par_LPCWSTR(1), &dwHandle));
-  winapi_stor_DWORD(dwHandle, 2);
+  wa_stor_DWORD(dwHandle, 2);
 }
 
 HB_FUNC( WAGETFILEVERSIONINFOSIZE )
@@ -84,7 +84,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZE )
   void * str1;
   DWORD dwHandle;
   wa_ret_DWORD(GetFileVersionInfoSize(HB_PARSTR(1, &str1, nullptr), &dwHandle));
-  winapi_stor_DWORD(dwHandle, 2);
+  wa_stor_DWORD(dwHandle, 2);
   hb_strfree(str1);
 }
 
@@ -166,7 +166,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEXA )
 {
   DWORD dwHandle;
   wa_ret_DWORD(GetFileVersionInfoSizeExA(wa_par_DWORD(1), wa_par_LPCSTR(2), &dwHandle));
-  winapi_stor_DWORD(dwHandle, 3);
+  wa_stor_DWORD(dwHandle, 3);
 }
 #endif
 
@@ -178,7 +178,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEXW )
 {
   DWORD dwHandle;
   wa_ret_DWORD(GetFileVersionInfoSizeExW(wa_par_DWORD(1), wa_par_LPCWSTR(2), &dwHandle));
-  winapi_stor_DWORD(dwHandle, 3);
+  wa_stor_DWORD(dwHandle, 3);
 }
 #endif
 
@@ -188,7 +188,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEX )
   void * str2;
   DWORD dwHandle;
   wa_ret_DWORD(GetFileVersionInfoSizeEx(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), &dwHandle));
-  winapi_stor_DWORD(dwHandle, 3);
+  wa_stor_DWORD(dwHandle, 3);
   hb_strfree(str2);
 }
 #endif

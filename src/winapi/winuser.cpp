@@ -263,7 +263,7 @@ HB_FUNC( WAGETUSEROBJECTINFORMATIONA )
 {
   DWORD nLengthNeeded;
   wa_ret_BOOL(GetUserObjectInformationA(wa_par_HANDLE(1), wa_par_int(2), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4), &nLengthNeeded));
-  winapi_stor_DWORD(nLengthNeeded, 5);
+  wa_stor_DWORD(nLengthNeeded, 5);
 }
 
 /*
@@ -273,7 +273,7 @@ HB_FUNC( WAGETUSEROBJECTINFORMATIONW )
 {
   DWORD nLengthNeeded;
   wa_ret_BOOL(GetUserObjectInformationW(wa_par_HANDLE(1), wa_par_int(2), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4), &nLengthNeeded));
-  winapi_stor_DWORD(nLengthNeeded, 5);
+  wa_stor_DWORD(nLengthNeeded, 5);
 }
 
 /*
@@ -918,9 +918,9 @@ HB_FUNC( WAGETLAYEREDWINDOWATTRIBUTES )
   BYTE bAlpha;
   DWORD dwFlags;
   wa_ret_BOOL(GetLayeredWindowAttributes(wa_par_HWND(1), &crKey, &bAlpha, &dwFlags));
-  winapi_stor_COLORREF(crKey, 2);
-  winapi_stor_BYTE(bAlpha, 3);
-  winapi_stor_DWORD(dwFlags, 4);
+  wa_stor_COLORREF(crKey, 2);
+  wa_stor_BYTE(bAlpha, 3);
+  wa_stor_DWORD(dwFlags, 4);
 }
 
 /*
@@ -1015,7 +1015,7 @@ HB_FUNC( WAGETWINDOWDISPLAYAFFINITY )
 {
   DWORD dwAffinity;
   wa_ret_BOOL(GetWindowDisplayAffinity(wa_par_HWND(1), &dwAffinity));
-  winapi_stor_DWORD(dwAffinity, 2);
+  wa_stor_DWORD(dwAffinity, 2);
 }
 #endif
 
@@ -1156,7 +1156,7 @@ HB_FUNC( WAGETDLGITEMINT )
 {
   BOOL Translated;
   wa_ret_UINT(GetDlgItemInt(wa_par_HWND(1), wa_par_int(2), &Translated, wa_par_BOOL(4)));
-  winapi_stor_BOOL(Translated, 3);
+  wa_stor_BOOL(Translated, 3);
 }
 
 /*
@@ -1889,7 +1889,7 @@ HB_FUNC( WAISTOUCHWINDOW )
 {
   ULONG Flags;
   wa_ret_BOOL(IsTouchWindow(wa_par_HWND(1), &Flags));
-  winapi_stor_ULONG(Flags, 2);
+  wa_stor_ULONG(Flags, 2);
 }
 #endif
 
@@ -3638,7 +3638,7 @@ HB_FUNC( WAGETWINDOWTHREADPROCESSID )
 {
   DWORD dwProcessId;
   wa_ret_DWORD(GetWindowThreadProcessId(wa_par_HWND(1), &dwProcessId));
-  winapi_stor_DWORD(dwProcessId, 2);
+  wa_stor_DWORD(dwProcessId, 2);
 }
 
 /*

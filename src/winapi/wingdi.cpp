@@ -639,7 +639,7 @@ HB_FUNC( WAGETCHARWIDTH32A )
 {
   INT lpBuffer;
   wa_ret_BOOL(GetCharWidth32A(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
-  winapi_stor_INT(lpBuffer, 4);
+  wa_stor_INT(lpBuffer, 4);
 }
 
 /*
@@ -649,7 +649,7 @@ HB_FUNC( WAGETCHARWIDTH32W )
 {
   INT lpBuffer;
   wa_ret_BOOL(GetCharWidth32W(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
-  winapi_stor_INT(lpBuffer, 4);
+  wa_stor_INT(lpBuffer, 4);
 }
 
 /*
@@ -659,7 +659,7 @@ HB_FUNC( WAGETCHARWIDTHFLOATA )
 {
   FLOAT lpBuffer;
   wa_ret_BOOL(GetCharWidthFloatA(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
-  winapi_stor_FLOAT(lpBuffer, 4);
+  wa_stor_FLOAT(lpBuffer, 4);
 }
 
 /*
@@ -669,7 +669,7 @@ HB_FUNC( WAGETCHARWIDTHFLOATW )
 {
   FLOAT lpBuffer;
   wa_ret_BOOL(GetCharWidthFloatW(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
-  winapi_stor_FLOAT(lpBuffer, 4);
+  wa_stor_FLOAT(lpBuffer, 4);
 }
 
 /*
@@ -1009,8 +1009,8 @@ HB_FUNC( WAGETTEXTEXTENTEXPOINTA )
   INT lpnFit;
   INT lpnDx;
   wa_ret_BOOL(GetTextExtentExPointA(wa_par_HDC(1), wa_par_LPCSTR(2), wa_par_int(3), wa_par_int(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(winapi_get_ptr(7))));
-  winapi_stor_INT(lpnFit, 5);
-  winapi_stor_INT(lpnDx, 6);
+  wa_stor_INT(lpnFit, 5);
+  wa_stor_INT(lpnDx, 6);
 }
 
 /*
@@ -1021,8 +1021,8 @@ HB_FUNC( WAGETTEXTEXTENTEXPOINTW )
   INT lpnFit;
   INT lpnDx;
   wa_ret_BOOL(GetTextExtentExPointW(wa_par_HDC(1), wa_par_LPCWSTR(2), wa_par_int(3), wa_par_int(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(winapi_get_ptr(7))));
-  winapi_stor_INT(lpnFit, 5);
-  winapi_stor_INT(lpnDx, 6);
+  wa_stor_INT(lpnFit, 5);
+  wa_stor_INT(lpnDx, 6);
 }
 
 HB_FUNC( WAGETTEXTEXTENTEXPOINT )
@@ -1031,8 +1031,8 @@ HB_FUNC( WAGETTEXTEXTENTEXPOINT )
   INT lpnFit;
   INT lpnDx;
   wa_ret_BOOL(GetTextExtentExPoint(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_int(4), &lpnFit, &lpnDx, static_cast<LPSIZE>(winapi_get_ptr(7))));
-  winapi_stor_INT(lpnFit, 5);
-  winapi_stor_INT(lpnDx, 6);
+  wa_stor_INT(lpnFit, 5);
+  wa_stor_INT(lpnDx, 6);
   hb_strfree(str2);
 }
 
@@ -1079,7 +1079,7 @@ HB_FUNC( WAGETGLYPHINDICESA )
 {
   WORD gi;
   wa_ret_DWORD(GetGlyphIndicesA(wa_par_HDC(1), wa_par_LPCSTR(2), wa_par_int(3), &gi, wa_par_DWORD(5)));
-  winapi_stor_WORD(gi, 4);
+  wa_stor_WORD(gi, 4);
 }
 
 /*
@@ -1089,7 +1089,7 @@ HB_FUNC( WAGETGLYPHINDICESW )
 {
   WORD gi;
   wa_ret_DWORD(GetGlyphIndicesW(wa_par_HDC(1), wa_par_LPCWSTR(2), wa_par_int(3), &gi, wa_par_DWORD(5)));
-  winapi_stor_WORD(gi, 4);
+  wa_stor_WORD(gi, 4);
 }
 
 HB_FUNC( WAGETGLYPHINDICES )
@@ -1097,7 +1097,7 @@ HB_FUNC( WAGETGLYPHINDICES )
   void * str2;
   WORD gi;
   wa_ret_DWORD(GetGlyphIndices(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), &gi, wa_par_DWORD(5)));
-  winapi_stor_WORD(gi, 4);
+  wa_stor_WORD(gi, 4);
   hb_strfree(str2);
 }
 
@@ -1109,7 +1109,7 @@ HB_FUNC( WAGETTEXTEXTENTPOINTI )
 {
   WORD giIn;
   wa_ret_BOOL(GetTextExtentPointI(wa_par_HDC(1), &giIn, wa_par_int(3), static_cast<LPSIZE>(winapi_get_ptr(4))));
-  winapi_stor_WORD(giIn, 2);
+  wa_stor_WORD(giIn, 2);
 }
 #endif
 
@@ -1128,7 +1128,7 @@ HB_FUNC( WAGETCHARABCWIDTHSI )
 {
   WORD gi;
   wa_ret_BOOL(GetCharABCWidthsI(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &gi, static_cast<LPABC>(winapi_get_ptr(5))));
-  winapi_stor_WORD(gi, 4);
+  wa_stor_WORD(gi, 4);
 }
 
 /*
@@ -2106,7 +2106,7 @@ HB_FUNC( WASETMITERLIMIT )
 {
   FLOAT old;
   wa_ret_BOOL(SetMiterLimit(wa_par_HDC(1), static_cast<FLOAT>(hb_parnd(2)), &old));
-  winapi_stor_FLOAT(old, 3);
+  wa_stor_FLOAT(old, 3);
 }
 
 /*
@@ -2144,7 +2144,7 @@ HB_FUNC( WAGETMITERLIMIT )
 {
   FLOAT limit;
   wa_ret_BOOL(GetMiterLimit(wa_par_HDC(1), &limit));
-  winapi_stor_FLOAT(limit, 2);
+  wa_stor_FLOAT(limit, 2);
 }
 
 /*
@@ -2493,7 +2493,7 @@ HB_FUNC( WAGETICMPROFILEA )
 {
   DWORD BufSize;
   wa_ret_BOOL(GetICMProfileA(wa_par_HDC(1), &BufSize, const_cast<LPSTR>(hb_parc(3))));
-  winapi_stor_DWORD(BufSize, 2);
+  wa_stor_DWORD(BufSize, 2);
 }
 
 /*
@@ -2503,7 +2503,7 @@ HB_FUNC( WAGETICMPROFILEW )
 {
   DWORD BufSize;
   wa_ret_BOOL(GetICMProfileW(wa_par_HDC(1), &BufSize, reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
-  winapi_stor_DWORD(BufSize, 2);
+  wa_stor_DWORD(BufSize, 2);
 }
 
 /*

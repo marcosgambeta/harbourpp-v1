@@ -160,7 +160,7 @@ HB_FUNC( WAREGQUERYREFLECTIONKEY )
 {
   BOOL bIsReflectionDisabled;
   wa_ret_LONG(RegQueryReflectionKey(wa_par_HKEY(1), &bIsReflectionDisabled));
-  winapi_stor_BOOL(bIsReflectionDisabled, 2);
+  wa_stor_BOOL(bIsReflectionDisabled, 2);
 }
 
 /*
@@ -437,8 +437,8 @@ HB_FUNC( WAREGGETVALUEA )
   DWORD Type;
   DWORD Data;
   wa_ret_LONG(RegGetValueA(wa_par_HKEY(1), wa_par_LPCSTR(2), wa_par_LPCSTR(3), wa_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
-  winapi_stor_DWORD(Type, 5);
-  winapi_stor_DWORD(Data, 7);
+  wa_stor_DWORD(Type, 5);
+  wa_stor_DWORD(Data, 7);
 }
 
 /*
@@ -449,8 +449,8 @@ HB_FUNC( WAREGGETVALUEW )
   DWORD Type;
   DWORD Data;
   wa_ret_LONG(RegGetValueW(wa_par_HKEY(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), wa_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
-  winapi_stor_DWORD(Type, 5);
-  winapi_stor_DWORD(Data, 7);
+  wa_stor_DWORD(Type, 5);
+  wa_stor_DWORD(Data, 7);
 }
 
 HB_FUNC( WAREGGETVALUE )
@@ -460,8 +460,8 @@ HB_FUNC( WAREGGETVALUE )
   DWORD Type;
   DWORD Data;
   wa_ret_LONG(RegGetValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
-  winapi_stor_DWORD(Type, 5);
-  winapi_stor_DWORD(Data, 7);
+  wa_stor_DWORD(Type, 5);
+  wa_stor_DWORD(Data, 7);
   hb_strfree(str2);
   hb_strfree(str3);
 }

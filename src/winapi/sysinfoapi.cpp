@@ -94,7 +94,7 @@ HB_FUNC( WAGETPRODUCTINFO )
 {
   DWORD dwReturnedProductType;
   wa_ret_BOOL(GetProductInfo(wa_par_DWORD(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4), &dwReturnedProductType));
-  winapi_stor_DWORD(dwReturnedProductType, 5);
+  wa_stor_DWORD(dwReturnedProductType, 5);
 }
 #endif
 
@@ -135,9 +135,9 @@ HB_FUNC( WAGETSYSTEMTIMEADJUSTMENT )
   DWORD TimeIncrement;
   BOOL TimeAdjustmentDisabled;
   wa_ret_BOOL(GetSystemTimeAdjustment(&TimeAdjustment, &TimeIncrement, &TimeAdjustmentDisabled));
-  winapi_stor_DWORD(TimeAdjustment, 1);
-  winapi_stor_DWORD(TimeIncrement, 2);
-  winapi_stor_BOOL(TimeAdjustmentDisabled, 3);
+  wa_stor_DWORD(TimeAdjustment, 1);
+  wa_stor_DWORD(TimeIncrement, 2);
+  wa_stor_BOOL(TimeAdjustmentDisabled, 3);
 }
 
 /*

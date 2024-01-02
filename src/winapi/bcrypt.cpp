@@ -64,7 +64,7 @@ HB_FUNC( WABCRYPTENUMALGORITHMS )
 {
   ULONG AlgCount;
   wa_ret_NTSTATUS(BCryptEnumAlgorithms(wa_par_ULONG(1), &AlgCount, ###, wa_par_ULONG(4)));
-  winapi_stor_ULONG(AlgCount, 2);
+  wa_stor_ULONG(AlgCount, 2);
 }
 #endif
 
@@ -77,7 +77,7 @@ HB_FUNC( WABCRYPTENUMPROVIDERS )
   void * str1;
   ULONG ImplCount;
   wa_ret_NTSTATUS(BCryptEnumProviders(HB_PARSTR(1, &str1, nullptr), &ImplCount, ###, wa_par_ULONG(4)));
-  winapi_stor_ULONG(ImplCount, 2);
+  wa_stor_ULONG(ImplCount, 2);
   hb_strfree(str1);
 }
 #endif
@@ -92,8 +92,8 @@ HB_FUNC( WABCRYPTGETPROPERTY )
   UCHAR bOutput;
   ULONG cbResult;
   wa_ret_NTSTATUS(BCryptGetProperty(wa_par_BCRYPT_HANDLE(1), HB_PARSTR(2, &str2, nullptr), &bOutput, wa_par_ULONG(4), &cbResult, wa_par_ULONG(6)));
-  winapi_stor_UCHAR(bOutput, 3);
-  winapi_stor_ULONG(cbResult, 5);
+  wa_stor_UCHAR(bOutput, 3);
+  wa_stor_ULONG(cbResult, 5);
   hb_strfree(str2);
 }
 #endif
@@ -107,7 +107,7 @@ HB_FUNC( WABCRYPTSETPROPERTY )
   void * str2;
   UCHAR bInput;
   wa_ret_NTSTATUS(BCryptSetProperty(wa_par_BCRYPT_HANDLE(1), HB_PARSTR(2, &str2, nullptr), &bInput, wa_par_ULONG(4), wa_par_ULONG(5)));
-  winapi_stor_UCHAR(bInput, 3);
+  wa_stor_UCHAR(bInput, 3);
   hb_strfree(str2);
 }
 #endif
@@ -141,8 +141,8 @@ HB_FUNC( WABCRYPTGENERATESYMMETRICKEY )
   UCHAR bKeyObject;
   UCHAR bSecret;
   wa_ret_NTSTATUS(BCryptGenerateSymmetricKey(wa_par_BCRYPT_ALG_HANDLE(1), ###, &bKeyObject, wa_par_ULONG(4), &bSecret, wa_par_ULONG(6), wa_par_ULONG(7)));
-  winapi_stor_UCHAR(bKeyObject, 3);
-  winapi_stor_UCHAR(bSecret, 5);
+  wa_stor_UCHAR(bKeyObject, 3);
+  wa_stor_UCHAR(bSecret, 5);
 }
 #endif
 
@@ -166,9 +166,9 @@ HB_FUNC( WABCRYPTENCRYPT )
   UCHAR bIV;
   UCHAR bOutput;
   wa_ret_NTSTATUS(BCryptEncrypt(wa_par_BCRYPT_KEY_HANDLE(1), &bInput, wa_par_ULONG(3), ###, &bIV, wa_par_ULONG(6), &bOutput, wa_par_ULONG(8), ###, wa_par_ULONG(10)));
-  winapi_stor_UCHAR(bInput, 2);
-  winapi_stor_UCHAR(bIV, 5);
-  winapi_stor_UCHAR(bOutput, 7);
+  wa_stor_UCHAR(bInput, 2);
+  wa_stor_UCHAR(bIV, 5);
+  wa_stor_UCHAR(bOutput, 7);
 }
 #endif
 
@@ -182,9 +182,9 @@ HB_FUNC( WABCRYPTDECRYPT )
   UCHAR bIV;
   UCHAR bOutput;
   wa_ret_NTSTATUS(BCryptDecrypt(wa_par_BCRYPT_KEY_HANDLE(1), &bInput, wa_par_ULONG(3), ###, &bIV, wa_par_ULONG(6), &bOutput, wa_par_ULONG(8), ###, wa_par_ULONG(10)));
-  winapi_stor_UCHAR(bInput, 2);
-  winapi_stor_UCHAR(bIV, 5);
-  winapi_stor_UCHAR(bOutput, 7);
+  wa_stor_UCHAR(bInput, 2);
+  wa_stor_UCHAR(bIV, 5);
+  wa_stor_UCHAR(bOutput, 7);
 }
 #endif
 
