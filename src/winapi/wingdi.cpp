@@ -2389,10 +2389,18 @@ HB_FUNC( WAGETTEXTFACEW )
 /*
 WINGDIAPI DWORD WINAPI GetKerningPairsA(HDC hdc,DWORD nPairs,LPKERNINGPAIR lpKernPair)
 */
+HB_FUNC( WAGETKERNINGPAIRSA )
+{
+  wa_ret_DWORD(GetKerningPairsA(wa_par_HDC(1), wa_par_DWORD(2), static_cast<LPKERNINGPAIR>(winapi_get_ptr(3))));
+}
 
 /*
 WINGDIAPI DWORD WINAPI GetKerningPairsW(HDC hdc,DWORD nPairs,LPKERNINGPAIR lpKernPair)
 */
+HB_FUNC( WAGETKERNINGPAIRSW )
+{
+  wa_ret_DWORD(GetKerningPairsW(wa_par_HDC(1), wa_par_DWORD(2), static_cast<LPKERNINGPAIR>(winapi_get_ptr(3))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetDCOrgEx(HDC hdc,LPPOINT lppt)

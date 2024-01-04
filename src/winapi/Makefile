@@ -32,6 +32,7 @@ PRG_SOURCES := \
    struct_iconinfo.prg \
    struct_imagelistdrawparams.prg \
    struct_initcommoncontrolsex.prg \
+   struct_kerningpair.prg \
    struct_logbrush.prg \
    struct_logpen.prg \
    struct_memorystatusex.prg \
@@ -39,6 +40,7 @@ PRG_SOURCES := \
    struct_nmhdr.prg \
    struct_pixelformatdescriptor.prg \
    struct_point.prg \
+   struct_pointfloat.prg \
    struct_rect.prg \
    struct_rgbquad.prg \
    struct_scrollinfo.prg \
