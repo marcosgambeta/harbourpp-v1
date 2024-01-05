@@ -1926,18 +1926,34 @@ WINGDIAPI WINBOOL WINAPI PolyPolyline(HDC hdc,CONST POINT *apt,CONST DWORD *asz,
 /*
 WINGDIAPI WINBOOL WINAPI GetWorldTransform(HDC hdc,LPXFORM lpxf)
 */
+HB_FUNC( WAGETWORLDTRANSFORM )
+{
+  wa_ret_BOOL(GetWorldTransform(wa_par_HDC(1), static_cast<LPXFORM>(winapi_get_ptr(2))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI SetWorldTransform(HDC hdc,CONST XFORM *lpxf)
 */
+HB_FUNC( WASETWORLDTRANSFORM )
+{
+  wa_ret_BOOL(SetWorldTransform(wa_par_HDC(1), static_cast<CONST XFORM*>(winapi_get_ptr(2))));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI ModifyWorldTransform(HDC hdc,CONST XFORM *lpxf,DWORD mode)
 */
+HB_FUNC( WAMODIFYWORLDTRANSFORM )
+{
+  wa_ret_BOOL(ModifyWorldTransform(wa_par_HDC(1), static_cast<CONST XFORM*>(winapi_get_ptr(2)), wa_par_DWORD(3)));
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI CombineTransform(LPXFORM lpxfOut,CONST XFORM *lpxf1,CONST XFORM *lpxf2)
 */
+HB_FUNC( WACOMBINETRANSFORM )
+{
+  wa_ret_BOOL(CombineTransform(static_cast<LPXFORM>(winapi_get_ptr(1)), static_cast<CONST XFORM*>(winapi_get_ptr(2)), static_cast<CONST XFORM*>(winapi_get_ptr(3))));
+}
 
 /*
 WINGDIAPI HBITMAP WINAPI CreateDIBSection(HDC hdc,CONST BITMAPINFO *lpbmi,UINT usage,VOID **ppvBits,HANDLE hSection,DWORD offset)
