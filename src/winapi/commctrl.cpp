@@ -439,12 +439,10 @@ HB_FUNC( WADRAWINSERT )
 /*
 WINCOMMCTRLAPI int WINAPI LBItemFromPt(HWND hLB,POINT pt,WINBOOL bAutoScroll)
 */
-#if 0
 HB_FUNC( WALBITEMFROMPT )
 {
-  wa_ret_int(LBItemFromPt(wa_par_HWND(1), static_cast<POINT>(wa_get_ptr(2)), hb_parl(3))); // TODO: fix
+  wa_ret_int(LBItemFromPt(wa_par_HWND(1), *static_cast<POINT*>(wa_get_ptr(2)), wa_par_BOOL(3)));
 }
-#endif
 
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateUpDownControl(DWORD dwStyle,int x,int y,int cx,int cy,HWND hParent,int nID,HINSTANCE hInst,HWND hBuddy,int nUpper,int nLower,int nPos)
