@@ -55,7 +55,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI InitCommonControlsEx(const INITCOMMONCONTROLSEX *)
 */
 HB_FUNC( WAINITCOMMONCONTROLSEX )
 {
-  wa_ret_BOOL(InitCommonControlsEx(static_cast<const INITCOMMONCONTROLSEX*>(winapi_get_ptr(1))));
+  wa_ret_BOOL(InitCommonControlsEx(static_cast<const INITCOMMONCONTROLSEX*>(wa_get_ptr(1))));
 }
 
 /*
@@ -175,7 +175,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawIndirect(IMAGELISTDRAWPARAMS *pimldp
 */
 HB_FUNC( WAIMAGELIST_DRAWINDIRECT )
 {
-  wa_ret_BOOL(ImageList_DrawIndirect(static_cast<IMAGELISTDRAWPARAMS*>(winapi_get_ptr(1))));
+  wa_ret_BOOL(ImageList_DrawIndirect(static_cast<IMAGELISTDRAWPARAMS*>(wa_get_ptr(1))));
 }
 
 /*
@@ -279,7 +279,7 @@ WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_GetDragImage(POINT *ppt,POINT *pptHot
 */
 HB_FUNC( WAIMAGELIST_GETDRAGIMAGE )
 {
-  wa_ret_HIMAGELIST(ImageList_GetDragImage(static_cast<POINT*>(winapi_get_ptr(1)), static_cast<POINT*>(winapi_get_ptr(2))));
+  wa_ret_HIMAGELIST(ImageList_GetDragImage(static_cast<POINT*>(wa_get_ptr(1)), static_cast<POINT*>(wa_get_ptr(2))));
 }
 
 /*
@@ -381,7 +381,7 @@ WINCOMMCTRLAPI void WINAPI DrawStatusTextA(HDC hDC,LPCRECT lprc,LPCSTR pszText,U
 */
 HB_FUNC( WADRAWSTATUSTEXTA )
 {
-  DrawStatusTextA(wa_par_HDC(1), static_cast<LPCRECT>(winapi_get_ptr(2)), wa_par_LPCSTR(3), wa_par_UINT(4));
+  DrawStatusTextA(wa_par_HDC(1), static_cast<LPCRECT>(wa_get_ptr(2)), wa_par_LPCSTR(3), wa_par_UINT(4));
 }
 
 /*
@@ -389,7 +389,7 @@ WINCOMMCTRLAPI void WINAPI DrawStatusTextW(HDC hDC,LPCRECT lprc,LPCWSTR pszText,
 */
 HB_FUNC( WADRAWSTATUSTEXTW )
 {
-  DrawStatusTextW(wa_par_HDC(1), static_cast<LPCRECT>(winapi_get_ptr(2)), wa_par_LPCWSTR(3), wa_par_UINT(4));
+  DrawStatusTextW(wa_par_HDC(1), static_cast<LPCRECT>(wa_get_ptr(2)), wa_par_LPCWSTR(3), wa_par_UINT(4));
 }
 
 /*
@@ -442,7 +442,7 @@ WINCOMMCTRLAPI int WINAPI LBItemFromPt(HWND hLB,POINT pt,WINBOOL bAutoScroll)
 #if 0
 HB_FUNC( WALBITEMFROMPT )
 {
-  wa_ret_int(LBItemFromPt(wa_par_HWND(1), static_cast<POINT>(winapi_get_ptr(2)), hb_parl(3))); // TODO: fix
+  wa_ret_int(LBItemFromPt(wa_par_HWND(1), static_cast<POINT>(wa_get_ptr(2)), hb_parl(3))); // TODO: fix
 }
 #endif
 
@@ -630,7 +630,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollInfo(HWND,int code,LPSCROLLINFO)
 #if 0
 HB_FUNC( WAFLATSB_GETSCROLLINFO )
 {
-  wa_ret_BOOL(FlatSB_GetScrollInfo(wa_par_HWND(1), wa_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3))));
+  wa_ret_BOOL(FlatSB_GetScrollInfo(wa_par_HWND(1), wa_par_int(2), static_cast<LPSCROLLINFO>(wa_get_ptr(3))));
 }
 #endif
 
@@ -676,7 +676,7 @@ WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollInfo(HWND,int code,LPSCROLLINFO,WINBOO
 #if 0
 HB_FUNC( WAFLATSB_SETSCROLLINFO )
 {
-  wa_ret_int(FlatSB_SetScrollInfo(wa_par_HWND(1), wa_par_int(2), static_cast<LPSCROLLINFO>(winapi_get_ptr(3)), wa_par_BOOL(4)));
+  wa_ret_int(FlatSB_SetScrollInfo(wa_par_HWND(1), wa_par_int(2), static_cast<LPSCROLLINFO>(wa_get_ptr(3)), wa_par_BOOL(4)));
 }
 #endif
 

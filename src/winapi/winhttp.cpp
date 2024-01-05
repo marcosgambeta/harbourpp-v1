@@ -236,7 +236,7 @@ WINBOOL WINAPI WinHttpTimeToSystemTime(LPCWSTR,SYSTEMTIME*)
 */
 HB_FUNC( WAWINHTTPTIMETOSYSTEMTIME )
 {
-  wa_ret_BOOL(WinHttpTimeToSystemTime(wa_par_LPCWSTR(1), static_cast<SYSTEMTIME*>(winapi_get_ptr(2))));
+  wa_ret_BOOL(WinHttpTimeToSystemTime(wa_par_LPCWSTR(1), static_cast<SYSTEMTIME*>(wa_get_ptr(2))));
 }
 
 /*

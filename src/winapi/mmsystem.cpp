@@ -802,7 +802,7 @@ WINMMAPI MMRESULT WINAPI timeGetDevCaps(LPTIMECAPS ptc,UINT cbtc)
 */
 HB_FUNC( WATIMEGETDEVCAPS )
 {
-  wa_ret_MMRESULT(timeGetDevCaps(static_cast<LPTIMECAPS>(winapi_get_ptr(1)), wa_par_UINT(2)));
+  wa_ret_MMRESULT(timeGetDevCaps(static_cast<LPTIMECAPS>(wa_get_ptr(1)), wa_par_UINT(2)));
 }
 
 /*

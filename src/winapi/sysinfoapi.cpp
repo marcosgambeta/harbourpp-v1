@@ -59,7 +59,7 @@ WINBASEAPI VOID WINAPI GetLocalTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WAGETLOCALTIME )
 {
-  GetLocalTime(static_cast<LPSYSTEMTIME>(winapi_get_ptr(1)));
+  GetLocalTime(static_cast<LPSYSTEMTIME>(wa_get_ptr(1)));
 }
 
 /*
@@ -77,7 +77,7 @@ WINBASEAPI VOID WINAPI GetNativeSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
 HB_FUNC( WAGETNATIVESYSTEMINFO )
 {
-  GetNativeSystemInfo(static_cast<LPSYSTEM_INFO>(winapi_get_ptr(1)));
+  GetNativeSystemInfo(static_cast<LPSYSTEM_INFO>(wa_get_ptr(1)));
 }
 
 /*
@@ -115,7 +115,7 @@ WINBASEAPI VOID WINAPI GetSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
 HB_FUNC( WAGETSYSTEMINFO )
 {
-  GetSystemInfo(static_cast<LPSYSTEM_INFO>(winapi_get_ptr(1)));
+  GetSystemInfo(static_cast<LPSYSTEM_INFO>(wa_get_ptr(1)));
 }
 
 /*
@@ -123,7 +123,7 @@ WINBASEAPI VOID WINAPI GetSystemTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WAGETSYSTEMTIME )
 {
-  GetSystemTime(static_cast<LPSYSTEMTIME>(winapi_get_ptr(1)));
+  GetSystemTime(static_cast<LPSYSTEMTIME>(wa_get_ptr(1)));
 }
 
 /*
@@ -199,7 +199,7 @@ WINBASEAPI WINBOOL WINAPI GlobalMemoryStatusEx (LPMEMORYSTATUSEX lpBuffer)
 */
 HB_FUNC( WAGLOBALMEMORYSTATUSEX )
 {
-  wa_ret_BOOL(GlobalMemoryStatusEx(static_cast<LPMEMORYSTATUSEX>(winapi_get_ptr(1))));
+  wa_ret_BOOL(GlobalMemoryStatusEx(static_cast<LPMEMORYSTATUSEX>(wa_get_ptr(1))));
 }
 
 /*
@@ -211,7 +211,7 @@ WINBASEAPI WINBOOL WINAPI SetLocalTime (CONST SYSTEMTIME *lpSystemTime)
 */
 HB_FUNC( WASETLOCALTIME )
 {
-  wa_ret_BOOL(SetLocalTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
+  wa_ret_BOOL(SetLocalTime(static_cast<CONST SYSTEMTIME *>(wa_get_ptr(1))));
 }
 
 /*
@@ -219,7 +219,7 @@ WINBASEAPI WINBOOL WINAPI SetSystemTime (CONST SYSTEMTIME *lpSystemTime)
 */
 HB_FUNC( WASETSYSTEMTIME )
 {
-  wa_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(winapi_get_ptr(1))));
+  wa_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(wa_get_ptr(1))));
 }
 
 /*

@@ -677,7 +677,7 @@ WINBASEAPI WINBOOL WINAPI ClearCommError (HANDLE hFile, LPDWORD lpErrors, LPCOMS
 HB_FUNC( WACLEARCOMMERROR )
 {
   DWORD Errors;
-  wa_ret_BOOL(ClearCommError(wa_par_HANDLE(1), &Errors, static_cast<LPCOMSTAT>(winapi_get_ptr(3))));
+  wa_ret_BOOL(ClearCommError(wa_par_HANDLE(1), &Errors, static_cast<LPCOMSTAT>(wa_get_ptr(3))));
   wa_stor_DWORD(Errors, 2);
 }
 
@@ -745,7 +745,7 @@ WINBASEAPI WINBOOL WINAPI GetCommState (HANDLE hFile, LPDCB lpDCB)
 */
 HB_FUNC( WAGETCOMMSTATE )
 {
-  wa_ret_BOOL(GetCommState(wa_par_HANDLE(1), static_cast<LPDCB>(winapi_get_ptr(2))));
+  wa_ret_BOOL(GetCommState(wa_par_HANDLE(1), static_cast<LPDCB>(wa_get_ptr(2))));
 }
 
 /*
@@ -797,7 +797,7 @@ WINBASEAPI WINBOOL WINAPI SetCommState (HANDLE hFile, LPDCB lpDCB)
 */
 HB_FUNC( WASETCOMMSTATE )
 {
-  wa_ret_BOOL(SetCommState(wa_par_HANDLE(1), static_cast<LPDCB>(winapi_get_ptr(2))));
+  wa_ret_BOOL(SetCommState(wa_par_HANDLE(1), static_cast<LPDCB>(wa_get_ptr(2))));
 }
 
 /*
@@ -923,7 +923,7 @@ WINBOOL WINAPI GetSystemTimes (LPFILETIME lpIdleTime, LPFILETIME lpKernelTime, L
 */
 HB_FUNC( WAGETSYSTEMTIMES )
 {
-  wa_ret_BOOL(GetSystemTimes(static_cast<LPFILETIME>(winapi_get_ptr(1)), static_cast<LPFILETIME>(winapi_get_ptr(2)), static_cast<LPFILETIME>(winapi_get_ptr(3))));
+  wa_ret_BOOL(GetSystemTimes(static_cast<LPFILETIME>(wa_get_ptr(1)), static_cast<LPFILETIME>(wa_get_ptr(2)), static_cast<LPFILETIME>(wa_get_ptr(3))));
 }
 
 /*
@@ -933,7 +933,7 @@ HB_FUNC( WAFILETIMETODOSDATETIME )
 {
   WORD FatDate;
   WORD FatTime;
-  wa_ret_BOOL(FileTimeToDosDateTime(static_cast<CONST FILETIME*>(winapi_get_ptr(1)), &FatDate, &FatTime));
+  wa_ret_BOOL(FileTimeToDosDateTime(static_cast<CONST FILETIME*>(wa_get_ptr(1)), &FatDate, &FatTime));
   wa_stor_WORD(FatDate, 2);
   wa_stor_WORD(FatTime, 3);
 }
@@ -943,7 +943,7 @@ WINBASEAPI WINBOOL WINAPI DosDateTimeToFileTime (WORD wFatDate, WORD wFatTime, L
 */
 HB_FUNC( WADOSDATETIMETOFILETIME )
 {
-  wa_ret_BOOL(DosDateTimeToFileTime(wa_par_WORD(1), wa_par_WORD(2), static_cast<LPFILETIME>(winapi_get_ptr(3))));
+  wa_ret_BOOL(DosDateTimeToFileTime(wa_par_WORD(1), wa_par_WORD(2), static_cast<LPFILETIME>(wa_get_ptr(3))));
 }
 
 /*
