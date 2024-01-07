@@ -41,6 +41,7 @@ PRG_SOURCES := \
    struct_nmhdr.prg \
    struct_pixelformatdescriptor.prg \
    struct_point.prg \
+   struct_pointf.prg \
    struct_pointfloat.prg \
    struct_rect.prg \
    struct_rgbquad.prg \
