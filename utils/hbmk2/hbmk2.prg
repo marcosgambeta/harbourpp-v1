@@ -1834,7 +1834,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       cOptPrefix := "-/"
       /* NOTE: Some targets need kernel32 explicitly. */
       l_aLIBSYSCORE := { "winmm", "kernel32", "user32", "gdi32", "advapi32", "ws2_32", "iphlpapi" }
-      l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "uuid", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32" }
+      l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "uuid", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32", "gdiplus" }
    OTHERWISE
       _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Platform value unrecognized: %1$s"), hbmk[_HBMK_cPLAT]))
       RETURN _EXIT_UNKNPLAT
