@@ -53,6 +53,10 @@ PRG_SOURCES := \
    struct_timecaps.prg \
    struct_windowinfo.prg \
    struct_xform.prg \
+   gppoint.prg \
+   gppointf.prg \
+   gprect.prg \
+   gprectf.prg \
 
 LIBNAME := hbwinapi
 

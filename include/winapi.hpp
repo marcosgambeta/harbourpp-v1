@@ -97,6 +97,7 @@ SOFTWARE.
 #define wa_par_MCIDEVICEID(n)  static_cast<MCIDEVICEID>(hb_parni(n))
 #define wa_par_MCIERROR(n)     static_cast<MCIERROR>(hb_parnl(n))
 #define wa_par_MMRESULT(n)     static_cast<MMRESULT>(hb_parni(n))
+#define wa_par_REAL(n)         static_cast<REAL>(hb_parnd(n))
 #define wa_par_SIZE_T(n)       static_cast<SIZE_T>(hb_parnl(n))
 #define wa_par_UCHAR(n)        static_cast<UCHAR>(hb_parni(n))
 #define wa_par_UINT(n)         static_cast<UINT>(hb_parni(n))
@@ -159,6 +160,7 @@ SOFTWARE.
 #define wa_ret_HWINSTA(x)      hb_retptr(x)
 #define wa_ret_HWND(x)         hb_retptr(x)
 #define wa_ret_int(x)          hb_retni(x)
+#define wa_ret_INT(x)          hb_retni(x)
 #define wa_ret_LONG(x)         hb_retnl(x)
 #define wa_ret_LPARAM(x)       hb_retnl(x)
 #define wa_ret_LRESULT(x)      hb_retnl(x)
@@ -182,6 +184,7 @@ SOFTWARE.
 #define wa_ret_UINT_PTR(x)     hb_retni(x)
 #define wa_ret_LPVOID(x)       hb_retptr(x)
 #define wa_ret_DWORD_PTR(x)    hb_retnl(x)
+#define wa_ret_REAL(x)         hb_retnd(x)
 
 // #define wa_stor_ATOM(v, n)         hb_storni(v, n)
 #define wa_stor_BOOL(v, n)         hb_storl(v, n)
@@ -255,3 +258,4 @@ SOFTWARE.
 // #define wa_stor_WCHAR(v, n)        hb_storni(v, n)
 #define wa_stor_WORD(v, n)         hb_storni(v, n)
 // #define wa_stor_WPARAM(v, n)       hb_storni(v, n)
+#define wa_stor_REAL(v, n)         hb_stornd(v, n)
