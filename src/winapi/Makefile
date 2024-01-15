@@ -57,6 +57,8 @@ PRG_SOURCES := \
    gppointf.prg \
    gprect.prg \
    gprectf.prg \
+   gpsize.prg \
+   gpsizef.prg \
 
 LIBNAME := hbwinapi
 

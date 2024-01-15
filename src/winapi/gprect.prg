@@ -91,10 +91,32 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC( WAGPRECT_NEW )
 {
-  auto self = hb_stackSelfItem();
-  hb_objDataPutPtr(self, "_PTR", new GpRect());
-  hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
-  hb_itemReturn(self);
+  if( hb_pcount() == 0 )
+  {
+    // Rect()
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpRect());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+#if 0
+  else if( hb_pcount() == 2 ) // TODO:
+  {
+    // Rect(const Point& location, const Size& size)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpRect());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+#endif
+  else if( hb_pcount() == 4 && HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) )
+  {
+    // Rect(INT x, INT y, INT width, INT height)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpRect(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4)));
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
 }
 
 HB_FUNC_STATIC( WAGPRECT_DELETE )

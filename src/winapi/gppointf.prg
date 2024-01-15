@@ -79,10 +79,40 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC( WAGPPOINTF_NEW )
 {
-  auto self = hb_stackSelfItem();
-  hb_objDataPutPtr(self, "_PTR", new GpPointF);
-  hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
-  hb_itemReturn(self);
+  if( hb_pcount() == 0 )
+  {
+    // PointF()
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPointF());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+  else if( hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2) )
+  {
+    // PointF(REAL x, REAL y)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPointF(wa_par_REAL(1), wa_par_REAL(2)));
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+#if 0
+  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* PointF */ )
+  {
+    // PointF(const PointF& point)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPointF());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* SizeF */ )
+  {
+    // PointF(const SizeF& size)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPointF());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+#endif
 }
 
 HB_FUNC_STATIC( WAGPPOINTF_DELETE )

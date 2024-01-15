@@ -36,7 +36,7 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WAGPRECTF
+CLASS WAGPSIZEF
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -44,25 +44,13 @@ CLASS WAGPRECTF
    METHOD new
    METHOD delete
 
-   // INT X
-   ASSIGN X(n) INLINE ::setX(n)
-   ACCESS X INLINE ::getX()
-   METHOD setX
-   METHOD getX
-
-   // INT Y
-   ASSIGN Y(n) INLINE ::setY(n)
-   ACCESS Y INLINE ::getY()
-   METHOD setY
-   METHOD getY
-
-   // INT Width
+   // REAL Width
    ASSIGN Width(n) INLINE ::setWidth(n)
    ACCESS Width INLINE ::getWidth()
    METHOD setWidth
    METHOD getWidth
 
-   // INT Height
+   // REAL Height
    ASSIGN Height(n) INLINE ::setHeight(n)
    ACCESS Height INLINE ::getHeight()
    METHOD setHeight
@@ -72,7 +60,7 @@ CLASS WAGPRECTF
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WAGPRECTF
+PROCEDURE destroyObject() CLASS WAGPSIZEF
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -89,39 +77,39 @@ RETURN
 
 using namespace Gdiplus;
 
-HB_FUNC_STATIC( WAGPRECTF_NEW )
+HB_FUNC_STATIC( WAGPSIZEF_NEW )
 {
   if( hb_pcount() == 0 )
   {
-    // RectF()
+    // SizeF()
     auto self = hb_stackSelfItem();
-    hb_objDataPutPtr(self, "_PTR", new GpRectF());
+    hb_objDataPutPtr(self, "_PTR", new SizeF());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+  else if( hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2) )
+  {
+    // SizeF(REAL width, REAL height)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new SizeF(wa_par_REAL(1), wa_par_REAL(2)));
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
   }
 #if 0
-  else if( hb_pcount() == 2 ) // TODO:
+  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* SizeF */ )
   {
-    // RectF(const PointF& location, const SizeF& size)
+    // SizeF(const SizeF& size)
     auto self = hb_stackSelfItem();
-    hb_objDataPutPtr(self, "_PTR", new GpRectF());
+    hb_objDataPutPtr(self, "_PTR", new SizeF());
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
   }
 #endif
-  else if( hb_pcount() == 4 && HB_ISNUM(1) && HB_ISNUM(2) && HB_ISNUM(3) && HB_ISNUM(4) )
-  {
-    // RectF(REAL x, REAL y, REAL width, REAL height)
-    auto self = hb_stackSelfItem();
-    hb_objDataPutPtr(self, "_PTR", new GpRectF(wa_par_REAL(1), wa_par_REAL(2), wa_par_REAL(3), wa_par_REAL(4)));
-    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
-    hb_itemReturn(self);
-  }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_DELETE )
+HB_FUNC_STATIC( WAGPSIZEF_DELETE )
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -132,55 +120,11 @@ HB_FUNC_STATIC( WAGPRECTF_DELETE )
   hb_itemReturn(hb_stackSelfItem());
 }
 
-// INT X
+// REAL Width
 
-HB_FUNC_STATIC( WAGPRECTF_SETX )
+HB_FUNC_STATIC( WAGPSIZEF_SETWIDTH )
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
-
-  if( obj != nullptr )
-  {
-    obj->X = wa_par_REAL(1);
-  }
-}
-
-HB_FUNC_STATIC( WAGPRECTF_GETX )
-{
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
-
-  if( obj != nullptr )
-  {
-    wa_ret_REAL(obj->X);
-  }
-}
-
-// INT Y
-
-HB_FUNC_STATIC( WAGPRECTF_SETY )
-{
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
-
-  if( obj != nullptr )
-  {
-    obj->Y = wa_par_REAL(1);
-  }
-}
-
-HB_FUNC_STATIC( WAGPRECTF_GETY )
-{
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
-
-  if( obj != nullptr )
-  {
-    wa_ret_REAL(obj->Y);
-  }
-}
-
-// INT Width
-
-HB_FUNC_STATIC( WAGPRECTF_SETWIDTH )
-{
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -188,9 +132,9 @@ HB_FUNC_STATIC( WAGPRECTF_SETWIDTH )
   }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_GETWIDTH )
+HB_FUNC_STATIC( WAGPSIZEF_GETWIDTH )
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -198,11 +142,11 @@ HB_FUNC_STATIC( WAGPRECTF_GETWIDTH )
   }
 }
 
-// INT Height
+// REAL Height
 
-HB_FUNC_STATIC( WAGPRECTF_SETHEIGHT )
+HB_FUNC_STATIC( WAGPSIZEF_SETHEIGHT )
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -210,9 +154,9 @@ HB_FUNC_STATIC( WAGPRECTF_SETHEIGHT )
   }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_GETHEIGHT )
+HB_FUNC_STATIC( WAGPSIZEF_GETHEIGHT )
 {
-  auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+  auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
   if( obj != nullptr )
   {
@@ -221,12 +165,10 @@ HB_FUNC_STATIC( WAGPRECTF_GETHEIGHT )
 }
 
 /*
-typedef struct RectF {
-   REAL X;
-   REAL Y;
+typedef struct SizeF {
    REAL Width;
    REAL Height;
-} RectF;
+} SizeF;
 */
 
 #pragma ENDDUMP

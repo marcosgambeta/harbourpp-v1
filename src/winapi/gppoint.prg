@@ -79,10 +79,40 @@ using namespace Gdiplus;
 
 HB_FUNC_STATIC( WAGPPOINT_NEW )
 {
-  auto self = hb_stackSelfItem();
-  hb_objDataPutPtr(self, "_PTR", new GpPoint());
-  hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
-  hb_itemReturn(self);
+  if( hb_pcount() == 0 )
+  {
+    // Point()
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPoint());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+  else if( hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2) )
+  {
+    // Point(INT x, INT y)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPoint(wa_par_INT(1), wa_par_INT(2)));
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+#if 0
+  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* Point */ )
+  {
+    // Point(const Point& point)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPoint());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+  else if( hb_pcount() == 1 && HB_ISOBJECT(1) /* Size */ )
+  {
+    // Point(const Size& size)
+    auto self = hb_stackSelfItem();
+    hb_objDataPutPtr(self, "_PTR", new GpPoint());
+    hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+    hb_itemReturn(self);
+  }
+#endif
 }
 
 HB_FUNC_STATIC( WAGPPOINT_DELETE )
