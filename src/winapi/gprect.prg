@@ -85,6 +85,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include <hbapierr.h>
 #include "winapi.hpp"
 
 using namespace Gdiplus;
@@ -116,6 +117,10 @@ HB_FUNC_STATIC( WAGPRECT_NEW )
     hb_objDataPutPtr(self, "_PTR", new GpRect(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_INT(4)));
     hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
     hb_itemReturn(self);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 }
 

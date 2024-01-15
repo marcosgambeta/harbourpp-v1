@@ -73,6 +73,7 @@ RETURN
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
+#include <hbapierr.h>
 #include "winapi.hpp"
 
 using namespace Gdiplus;
@@ -113,6 +114,10 @@ HB_FUNC_STATIC( WAGPPOINT_NEW )
     hb_itemReturn(self);
   }
 #endif
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC_STATIC( WAGPPOINT_DELETE )
