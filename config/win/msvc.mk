@@ -15,7 +15,7 @@ CC_OUT := -Fo
 
 CFLAGS += -I. -I$(HB_HOST_INC)
 
-CFLAGS += -nologo
+CFLAGS += -nologo /EHsc
 
 # MSVS 2005 SP1 also supports it, but we only enable it for 2008 and upper.
 ifeq ($(filter $(HB_COMPILER_VER),1200 1300 1310 1400),)
