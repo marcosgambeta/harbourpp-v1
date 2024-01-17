@@ -252,6 +252,7 @@ SOFTWARE.
 #define wa_stor_UCHAR(v, n)        hb_storni(v, n)
 #define wa_stor_UINT(v, n)         hb_storni(v, n)
 // #define wa_stor_UINT_PTR(v, n)     hb_storni(v, n)
+#define wa_stor_UINT16(v, n)       hb_storni(v, n)
 // #define wa_stor_UINT32(v, n)       hb_storni(v, n)
 #define wa_stor_ULONG(v, n)        hb_stornl(v, n)
 // #define wa_stor_ULONG_PTR(v, n)    hb_stornl(v, n)
