@@ -24,6 +24,8 @@ CPP_SOURCES := \
 PRG_SOURCES := \
    struct_abc.prg \
    struct_abcfloat.prg \
+   struct_bitmap.prg \
+   struct_bitmapinfo.prg \
    struct_bitmapinfoheader.prg \
    struct_blendfunction.prg \
    struct_capdrivercaps.prg \
@@ -36,10 +38,12 @@ PRG_SOURCES := \
    struct_initcommoncontrolsex.prg \
    struct_kerningpair.prg \
    struct_logbrush.prg \
+   struct_logpalette.prg \
    struct_logpen.prg \
    struct_memorystatusex.prg \
    struct_msg.prg \
    struct_nmhdr.prg \
+   struct_paletteentry.prg \
    struct_pixelformatdescriptor.prg \
    struct_point.prg \
    struct_pointf.prg \
