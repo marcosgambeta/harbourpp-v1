@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,9 +60,9 @@ HB_FUNC( WAWNETADDCONNECTIONW )
 
 HB_FUNC( WAWNETADDCONNECTION )
 {
-  void * str1;
-  void * str2;
-  void * str3;
+  void * str1{};
+  void * str2{};
+  void * str3{};
   wa_ret_DWORD(WNetAddConnection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -87,8 +87,8 @@ HB_FUNC( WAWNETADDCONNECTION2W )
 
 HB_FUNC( WAWNETADDCONNECTION2 )
 {
-  void * str2;
-  void * str3;
+  void * str2{};
+  void * str3{};
   wa_ret_DWORD(WNetAddConnection2(static_cast<LPNETRESOURCEW>(hb_parptr(1)), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -137,7 +137,7 @@ HB_FUNC( WAWNETCANCELCONNECTIONW )
 
 HB_FUNC( WAWNETCANCELCONNECTION )
 {
-  void * str1;
+  void * str1{};
   wa_ret_DWORD(WNetCancelConnection(HB_PARSTR(1, &str1, nullptr), wa_par_BOOL(2)));
   hb_strfree(str1);
 }
@@ -160,7 +160,7 @@ HB_FUNC( WAWNETCANCELCONNECTION2W )
 
 HB_FUNC( WAWNETCANCELCONNECTION2 )
 {
-  void * str1;
+  void * str1{};
   wa_ret_DWORD(WNetCancelConnection2(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2), wa_par_BOOL(3)));
   hb_strfree(str1);
 }
@@ -170,7 +170,7 @@ DWORD WINAPI WNetGetConnectionA(LPCSTR lpLocalName,LPSTR lpRemoteName,LPDWORD lp
 */
 HB_FUNC( WAWNETGETCONNECTIONA )
 {
-  DWORD nLength;
+  DWORD nLength{};
   wa_ret_DWORD(WNetGetConnectionA(wa_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), &nLength));
   wa_stor_DWORD(nLength, 3);
 }
@@ -180,15 +180,15 @@ DWORD WINAPI WNetGetConnectionW(LPCWSTR lpLocalName,LPWSTR lpRemoteName,LPDWORD 
 */
 HB_FUNC( WAWNETGETCONNECTIONW )
 {
-  DWORD nLength;
+  DWORD nLength{};
   wa_ret_DWORD(WNetGetConnectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
   wa_stor_DWORD(nLength, 3);
 }
 
 HB_FUNC( WAWNETGETCONNECTION )
 {
-  void * str1;
-  DWORD nLength;
+  void * str1{};
+  DWORD nLength{};
   wa_ret_DWORD(WNetGetConnection(HB_PARSTR(1, &str1, nullptr), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
   wa_stor_DWORD(nLength, 3);
   hb_strfree(str1);
@@ -199,8 +199,8 @@ DWORD WINAPI WNetUseConnectionA(HWND hwndOwner,LPNETRESOURCEA lpNetResource,LPCS
 */
 HB_FUNC( WAWNETUSECONNECTIONA )
 {
-  DWORD BufferSize;
-  DWORD Result;
+  DWORD BufferSize{};
+  DWORD Result{};
   wa_ret_DWORD(WNetUseConnectionA(wa_par_HWND(1), static_cast<LPNETRESOURCEA>(hb_parptr(2)), wa_par_LPCSTR(3), wa_par_LPCSTR(4), wa_par_DWORD(5), const_cast<LPSTR>(hb_parc(6)), &BufferSize, &Result));
   wa_stor_DWORD(BufferSize, 7);
   wa_stor_DWORD(Result, 8);
@@ -211,8 +211,8 @@ DWORD WINAPI WNetUseConnectionW(HWND hwndOwner,LPNETRESOURCEW lpNetResource,LPCW
 */
 HB_FUNC( WAWNETUSECONNECTIONW )
 {
-  DWORD BufferSize;
-  DWORD Result;
+  DWORD BufferSize{};
+  DWORD Result{};
   wa_ret_DWORD(WNetUseConnectionW(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), wa_par_LPCWSTR(3), wa_par_LPCWSTR(4), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), &BufferSize, &Result));
   wa_stor_DWORD(BufferSize, 7);
   wa_stor_DWORD(Result, 8);
@@ -220,10 +220,10 @@ HB_FUNC( WAWNETUSECONNECTIONW )
 
 HB_FUNC( WAWNETUSECONNECTION )
 {
-  void * str3;
-  void * str4;
-  DWORD BufferSize;
-  DWORD Result;
+  void * str3{};
+  void * str4{};
+  DWORD BufferSize{};
+  DWORD Result{};
   wa_ret_DWORD(WNetUseConnection(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), &BufferSize, &Result));
   wa_stor_DWORD(BufferSize, 7);
   wa_stor_DWORD(Result, 8);
@@ -316,9 +316,9 @@ DWORD WINAPI WNetEnumResourceA(HANDLE hEnum,LPDWORD lpcCount,LPVOID lpBuffer,LPD
 */
 HB_FUNC( WAWNETENUMRESOURCEA )
 {
-  DWORD cCount;
+  DWORD cCount{};
   //LPVOID lpBuffer
-  DWORD BufferSize;
+  DWORD BufferSize{};
   wa_ret_DWORD(WNetEnumResourceA(wa_par_HANDLE(1), &cCount, static_cast<LPVOID>(hb_parptr(3)), &BufferSize));
   wa_stor_DWORD(cCount, 2);
   //LPVOID lpBuffer
@@ -331,9 +331,9 @@ DWORD WINAPI WNetEnumResourceW(HANDLE hEnum,LPDWORD lpcCount,LPVOID lpBuffer,LPD
 */
 HB_FUNC( WAWNETENUMRESOURCEW )
 {
-  DWORD cCount;
+  DWORD cCount{};
   //LPVOID lpBuffer
-  DWORD BufferSize;
+  DWORD BufferSize{};
   wa_ret_DWORD(WNetEnumResourceW(wa_par_HANDLE(1), &cCount, static_cast<LPVOID>(hb_parptr(3)), &BufferSize));
   wa_stor_DWORD(cCount, 2);
   //LPVOID lpBuffer
@@ -353,7 +353,7 @@ DWORD WINAPI WNetGetResourceParentA(LPNETRESOURCEA lpNetResource,LPVOID lpBuffer
 */
 HB_FUNC( WAWNETGETRESOURCEPARENTA )
 {
-  DWORD cbBuffer;
+  DWORD cbBuffer{};
   wa_ret_DWORD(WNetGetResourceParentA(static_cast<LPNETRESOURCEA>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), &cbBuffer));
   wa_stor_DWORD(cbBuffer, 3);
 }
@@ -363,7 +363,7 @@ DWORD WINAPI WNetGetResourceParentW(LPNETRESOURCEW lpNetResource,LPVOID lpBuffer
 */
 HB_FUNC( WAWNETGETRESOURCEPARENTW )
 {
-  DWORD cbBuffer;
+  DWORD cbBuffer{};
   wa_ret_DWORD(WNetGetResourceParentW(static_cast<LPNETRESOURCEW>(hb_parptr(1)), static_cast<LPVOID>(hb_parptr(2)), &cbBuffer));
   wa_stor_DWORD(cbBuffer, 3);
 }

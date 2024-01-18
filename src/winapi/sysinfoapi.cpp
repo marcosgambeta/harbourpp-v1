@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (C) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,11 @@ SOFTWARE.
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
+#define wa_par_SYSTEMTIME(n)               static_cast<SYSTEMTIME *>(wa_get_ptr(n))
+#define wa_par_SYSTEM_INFO(n)              static_cast<SYSTEM_INFO *>(wa_get_ptr(n))
+#define wa_par_MEMORYSTATUSEX(n)           static_cast<MEMORYSTATUSEX *>(wa_get_ptr(n))
+#define wa_par_FILETIME(n)                 static_cast<FILETIME *>(wa_get_ptr(n))
+
 /*
 WINBASEAPI WINBOOL WINAPI GetComputerNameExA (COMPUTER_NAME_FORMAT NameType, LPSTR lpBuffer, LPDWORD nSize)
 */
@@ -59,7 +64,7 @@ WINBASEAPI VOID WINAPI GetLocalTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WAGETLOCALTIME )
 {
-  GetLocalTime(static_cast<LPSYSTEMTIME>(wa_get_ptr(1)));
+  GetLocalTime(wa_par_SYSTEMTIME(1));
 }
 
 /*
@@ -77,7 +82,7 @@ WINBASEAPI VOID WINAPI GetNativeSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
 HB_FUNC( WAGETNATIVESYSTEMINFO )
 {
-  GetNativeSystemInfo(static_cast<LPSYSTEM_INFO>(wa_get_ptr(1)));
+  GetNativeSystemInfo(wa_par_SYSTEM_INFO(1));
 }
 
 /*
@@ -92,7 +97,7 @@ WINBASEAPI WINBOOL WINAPI GetProductInfo (DWORD dwOSMajorVersion, DWORD dwOSMino
 #if _WIN32_WINNT >= 0x0600
 HB_FUNC( WAGETPRODUCTINFO )
 {
-  DWORD dwReturnedProductType;
+  DWORD dwReturnedProductType{};
   wa_ret_BOOL(GetProductInfo(wa_par_DWORD(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4), &dwReturnedProductType));
   wa_stor_DWORD(dwReturnedProductType, 5);
 }
@@ -115,7 +120,7 @@ WINBASEAPI VOID WINAPI GetSystemInfo (LPSYSTEM_INFO lpSystemInfo)
 */
 HB_FUNC( WAGETSYSTEMINFO )
 {
-  GetSystemInfo(static_cast<LPSYSTEM_INFO>(wa_get_ptr(1)));
+  GetSystemInfo(wa_par_SYSTEM_INFO(1));
 }
 
 /*
@@ -123,7 +128,7 @@ WINBASEAPI VOID WINAPI GetSystemTime (LPSYSTEMTIME lpSystemTime)
 */
 HB_FUNC( WAGETSYSTEMTIME )
 {
-  GetSystemTime(static_cast<LPSYSTEMTIME>(wa_get_ptr(1)));
+  GetSystemTime(wa_par_SYSTEMTIME(1));
 }
 
 /*
@@ -131,9 +136,9 @@ WINBASEAPI WINBOOL WINAPI GetSystemTimeAdjustment (PDWORD lpTimeAdjustment, PDWO
 */
 HB_FUNC( WAGETSYSTEMTIMEADJUSTMENT )
 {
-  DWORD TimeAdjustment;
-  DWORD TimeIncrement;
-  BOOL TimeAdjustmentDisabled;
+  DWORD TimeAdjustment{};
+  DWORD TimeIncrement{};
+  BOOL TimeAdjustmentDisabled{};
   wa_ret_BOOL(GetSystemTimeAdjustment(&TimeAdjustment, &TimeIncrement, &TimeAdjustmentDisabled));
   wa_stor_DWORD(TimeAdjustment, 1);
   wa_stor_DWORD(TimeIncrement, 2);
@@ -143,10 +148,20 @@ HB_FUNC( WAGETSYSTEMTIMEADJUSTMENT )
 /*
 WINBASEAPI VOID WINAPI GetSystemTimeAsFileTime (LPFILETIME lpSystemTimeAsFileTime)
 */
+HB_FUNC( WAGETSYSTEMTIMEASFILETIME )
+{
+  GetSystemTimeAsFileTime(wa_par_FILETIME(1));
+}
 
 /*
 WINBASEAPI VOID WINAPI GetSystemTimePreciseAsFileTime (LPFILETIME lpSystemTimeAsFileTime)
 */
+#if 0
+HB_FUNC( WAGETSYSTEMTIMEPRECISEASFILETIME ) // TODO: Windows 8/2012
+{
+  GetSystemTimePreciseAsFileTime(wa_par_FILETIME(1));
+}
+#endif
 
 /*
 WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryA (LPSTR lpBuffer, UINT uSize)
@@ -177,6 +192,10 @@ HB_FUNC( WAGETTICKCOUNT64 )
 /*
 WINBASEAPI DWORD WINAPI GetVersion (VOID)
 */
+HB_FUNC( WAGETVERSION )
+{
+  wa_ret_DWORD(GetVersion());
+}
 
 /*
 WINBASEAPI WINBOOL WINAPI GetVersionExA (LPOSVERSIONINFOA lpVersionInformation)
@@ -199,7 +218,7 @@ WINBASEAPI WINBOOL WINAPI GlobalMemoryStatusEx (LPMEMORYSTATUSEX lpBuffer)
 */
 HB_FUNC( WAGLOBALMEMORYSTATUSEX )
 {
-  wa_ret_BOOL(GlobalMemoryStatusEx(static_cast<LPMEMORYSTATUSEX>(wa_get_ptr(1))));
+  wa_ret_BOOL(GlobalMemoryStatusEx(wa_par_MEMORYSTATUSEX(1)));
 }
 
 /*
@@ -211,7 +230,7 @@ WINBASEAPI WINBOOL WINAPI SetLocalTime (CONST SYSTEMTIME *lpSystemTime)
 */
 HB_FUNC( WASETLOCALTIME )
 {
-  wa_ret_BOOL(SetLocalTime(static_cast<CONST SYSTEMTIME *>(wa_get_ptr(1))));
+  wa_ret_BOOL(SetLocalTime(wa_par_SYSTEMTIME(1)));
 }
 
 /*
@@ -219,9 +238,13 @@ WINBASEAPI WINBOOL WINAPI SetSystemTime (CONST SYSTEMTIME *lpSystemTime)
 */
 HB_FUNC( WASETSYSTEMTIME )
 {
-  wa_ret_BOOL(SetSystemTime(static_cast<CONST SYSTEMTIME *>(wa_get_ptr(1))));
+  wa_ret_BOOL(SetSystemTime(wa_par_SYSTEMTIME(1)));
 }
 
 /*
 NTSYSAPI ULONGLONG NTAPI VerSetConditionMask (ULONGLONG ConditionMask, ULONG TypeMask, UCHAR Condition)
 */
+HB_FUNC( WAVERSETCONDITIONMASK )
+{
+  wa_ret_ULONGLONG(VerSetConditionMask(wa_par_ULONGLONG(1), wa_par_ULONG(2), wa_par_UCHAR(3)));
+}

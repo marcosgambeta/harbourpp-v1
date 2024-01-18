@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,8 @@ SOFTWARE.
 #include "hbapicls.hpp"
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
+
+#define wa_par_SYSTEMTIME(n)               static_cast<SYSTEMTIME *>(wa_get_ptr(n))
 
 /*
 WINBOOL WINAPI WinHttpAddRequestHeaders(HINTERNET,LPCWSTR,DWORD,DWORD)
@@ -116,9 +118,9 @@ WINHTTPAPI BOOL WinHttpQueryAuthSchemes([in] HINTERNET hRequest, [out] LPDWORD l
 */
 HB_FUNC( WAWINHTTPQUERYAUTHSCHEMES )
 {
-  DWORD dwSupportedSchemes;
-  DWORD dwFirstScheme;
-  DWORD dwAuthTarget;
+  DWORD dwSupportedSchemes{};
+  DWORD dwFirstScheme{};
+  DWORD dwAuthTarget{};
   wa_ret_BOOL(WinHttpQueryAuthSchemes(wa_par_HINTERNET(1), &dwSupportedSchemes, &dwFirstScheme, &dwAuthTarget));
   wa_stor_DWORD(dwSupportedSchemes, 2);
   wa_stor_DWORD(dwFirstScheme, 3);
@@ -131,7 +133,7 @@ WINHTTPAPI BOOL WinHttpQueryDataAvailable([in] HINTERNET hRequest, [out] LPDWORD
 */
 HB_FUNC( WAWINHTTPQUERYDATAAVAILABLE )
 {
-  DWORD dwNumberOfBytesAvailable;
+  DWORD dwNumberOfBytesAvailable{};
   wa_ret_BOOL(WinHttpQueryDataAvailable(wa_par_HINTERNET(1), &dwNumberOfBytesAvailable));
   wa_stor_DWORD(dwNumberOfBytesAvailable, 2);
 }
@@ -142,7 +144,7 @@ WINHTTPAPI BOOL WinHttpQueryHeaders([in] HINTERNET hRequest, [in] DWORD dwInfoLe
 */
 HB_FUNC( WAWINHTTPQUERYHEADERS )
 {
-  LPVOID Buffer = nullptr;
+  LPVOID Buffer{};
   DWORD dwBufferLength = wa_par_DWORD(5);
   DWORD dwIndex = wa_par_DWORD(6);
   wa_ret_BOOL(WinHttpQueryHeaders(wa_par_HINTERNET(1), wa_par_DWORD(2), wa_par_LPCWSTR(3), Buffer, &dwBufferLength, &dwIndex));
@@ -157,7 +159,7 @@ WINHTTPAPI BOOL WinHttpQueryOption([in] HINTERNET hInternet, [in] DWORD dwOption
 */
 HB_FUNC( WAWINHTTPQUERYOPTION )
 {
-  LPVOID Buffer = nullptr;
+  LPVOID Buffer{};
   DWORD dwBufferLength = wa_par_DWORD(4);
   wa_ret_BOOL(WinHttpQueryOption(wa_par_HINTERNET(1), wa_par_DWORD(2), Buffer, &dwBufferLength));
   wa_stor_LPVOID(Buffer, 3);
@@ -170,8 +172,8 @@ WINHTTPAPI BOOL WinHttpReadData([in] HINTERNET hRequest, [out] LPVOID lpBuffer, 
 */
 HB_FUNC( WAWINHTTPREADDATA )
 {
-  LPVOID Buffer = nullptr;
-  DWORD dwNumberOfBytesRead;
+  LPVOID Buffer{};
+  DWORD dwNumberOfBytesRead{};
   wa_ret_BOOL(WinHttpReadData(wa_par_HINTERNET(1), Buffer, wa_par_DWORD(3), &dwNumberOfBytesRead));
   wa_stor_LPVOID(Buffer, 2);
   wa_stor_DWORD(dwNumberOfBytesRead, 4);
@@ -236,7 +238,7 @@ WINBOOL WINAPI WinHttpTimeToSystemTime(LPCWSTR,SYSTEMTIME*)
 */
 HB_FUNC( WAWINHTTPTIMETOSYSTEMTIME )
 {
-  wa_ret_BOOL(WinHttpTimeToSystemTime(wa_par_LPCWSTR(1), static_cast<SYSTEMTIME*>(wa_get_ptr(2))));
+  wa_ret_BOOL(WinHttpTimeToSystemTime(wa_par_LPCWSTR(1), wa_par_SYSTEMTIME(2)));
 }
 
 /*

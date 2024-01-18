@@ -92,6 +92,7 @@ SOFTWARE.
 #define wa_par_LPARAM(n)       static_cast<LPARAM>(hb_parnl(n))
 #define wa_par_LPCSTR(n)       hb_parc(n)
 #define wa_par_LPCWSTR(n)      reinterpret_cast<LPCWSTR>(hb_parc(n))
+#define wa_par_PCWSTR(n)       reinterpret_cast<PCWSTR>(hb_parc(n))
 #define wa_par_LPVOID(n)       static_cast<LPVOID>(hb_parptr(n))
 #define wa_par_LRESULT(n)      static_cast<LRESULT>(hb_parnl(n))
 #define wa_par_MCIDEVICEID(n)  static_cast<MCIDEVICEID>(hb_parni(n))
@@ -110,6 +111,8 @@ SOFTWARE.
 #define wa_par_WPARAM(n)       static_cast<WPARAM>(hb_parni(n))
 #define wa_par_SHORT(n)        static_cast<SHORT>(hb_parni(n))
 #define wa_par_DWORDLONG(n)    static_cast<DWORDLONG>(hb_parnll(n))
+#define wa_par_ULONGLONG(n)    static_cast<ULONGLONG>(hb_parnll(n))
+#define wa_par_LANGID(n)       static_cast<LANGID>(hb_parni(n))
 
 #define wa_ret___LONG32(x)     hb_retnl(x)
 #define wa_ret_ATOM(x)         hb_retni(x)

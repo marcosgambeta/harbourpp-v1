@@ -51,79 +51,75 @@ SOFTWARE.
 #define wa_par_ARGB(n) hb_parnl(n) // TODO: check type
 #define wa_stor_ARGB(x, n) hb_stornl(x, n); // TODO: check type
 
-#define wa_par_GpAdjustableArrowCap(n) static_cast<GpAdjustableArrowCap*>(hb_parptr(n))
-#define wa_par_GpBitmap(n)             static_cast<GpBitmap*>(hb_parptr(n))
-#define wa_par_GpBrush(n)              static_cast<GpBrush*>(hb_parptr(n))
-#define wa_par_GpCachedBitmap(n)       static_cast<GpCachedBitmap*>(hb_parptr(n))
-#define wa_par_GpColorMatrix(n)        static_cast<ColorMatrix*>(hb_parptr(n))
-#define wa_par_GpColorPalette(n)       static_cast<ColorPalette*>(hb_parptr(n))
-#define wa_par_GpCustomLineCap(n)      static_cast<GpCustomLineCap*>(hb_parptr(n))
-#define wa_par_GpEncoderParameters(n)  static_cast<EncoderParameters*>(hb_parptr(n))
-#define wa_par_GpFont(n)               static_cast<GpFont*>(hb_parptr(n))
-#define wa_par_GpFontCollection(n)     static_cast<GpFontCollection*>(hb_parptr(n))
-#define wa_par_GpFontFamily(n)         static_cast<GpFontFamily*>(hb_parptr(n))
-#define wa_par_GpGraphics(n)           static_cast<GpGraphics*>(hb_parptr(n))
-#define wa_par_GpHatch(n)              static_cast<GpHatch*>(hb_parptr(n))
-#define wa_par_GpImage(n)              static_cast<GpImage*>(hb_parptr(n))
-#define wa_par_GpImageAttributes(n)    static_cast<GpImageAttributes*>(hb_parptr(n))
-#define wa_par_GpLineGradient(n)       static_cast<GpLineGradient*>(hb_parptr(n))
-#define wa_par_GpMatrix(n)             static_cast<GpMatrix*>(hb_parptr(n))
-#define wa_par_GpPath(n)               static_cast<GpPath*>(hb_parptr(n))
-#define wa_par_GpPathGradient(n)       static_cast<GpPathGradient*>(hb_parptr(n))
-#define wa_par_GpPathIterator(n)       static_cast<GpPathIterator*>(hb_parptr(n))
-#define wa_par_GpPen(n)                static_cast<GpPen*>(hb_parptr(n))
-#define wa_par_GpPoint(n)              static_cast<GpPoint*>(wa_get_ptr(n))
-#define wa_par_GpPointF(n)             static_cast<GpPointF*>(wa_get_ptr(n))
-#define wa_par_GpPropertyItem(n)       static_cast<PropertyItem*>(hb_parptr(n))
-#define wa_par_GpRect(n)               static_cast<GpRect*>(wa_get_ptr(n))
-#define wa_par_GpRectF(n)              static_cast<GpRectF*>(wa_get_ptr(n))
-#define wa_par_GpRegion(n)             static_cast<GpRegion*>(hb_parptr(n))
-#define wa_par_GpSolidFill(n)          static_cast<GpSolidFill*>(hb_parptr(n))
-#define wa_par_GpStringFormat(n)       static_cast<GpStringFormat*>(hb_parptr(n))
-#define wa_par_GpTexture(n)            static_cast<GpTexture*>(hb_parptr(n))
+#define wa_par_GpAdjustableArrowCap(n)            static_cast<GpAdjustableArrowCap*>(hb_parptr(n))
+#define wa_par_GpBitmap(n)                        static_cast<GpBitmap*>(hb_parptr(n))
+#define wa_par_GpBrush(n)                         static_cast<GpBrush*>(hb_parptr(n))
+#define wa_par_GpCachedBitmap(n)                  static_cast<GpCachedBitmap*>(hb_parptr(n))
+#define wa_par_GpColorMatrix(n)                   static_cast<ColorMatrix*>(hb_parptr(n))
+#define wa_par_GpColorPalette(n)                  static_cast<ColorPalette*>(hb_parptr(n))
+#define wa_par_GpCustomLineCap(n)                 static_cast<GpCustomLineCap*>(hb_parptr(n))
+#define wa_par_GpEncoderParameters(n)             static_cast<EncoderParameters*>(hb_parptr(n))
+#define wa_par_GpFont(n)                          static_cast<GpFont*>(hb_parptr(n))
+#define wa_par_GpFontCollection(n)                static_cast<GpFontCollection*>(hb_parptr(n))
+#define wa_par_GpFontFamily(n)                    static_cast<GpFontFamily*>(hb_parptr(n))
+#define wa_par_GpGraphics(n)                      static_cast<GpGraphics*>(hb_parptr(n))
+#define wa_par_GpHatch(n)                         static_cast<GpHatch*>(hb_parptr(n))
+#define wa_par_GpImage(n)                         static_cast<GpImage*>(hb_parptr(n))
+#define wa_par_GpImageAttributes(n)               static_cast<GpImageAttributes*>(hb_parptr(n))
+#define wa_par_GpLineGradient(n)                  static_cast<GpLineGradient*>(hb_parptr(n))
+#define wa_par_GpMatrix(n)                        static_cast<GpMatrix*>(hb_parptr(n))
+#define wa_par_GpPath(n)                          static_cast<GpPath*>(hb_parptr(n))
+#define wa_par_GpPathGradient(n)                  static_cast<GpPathGradient*>(hb_parptr(n))
+#define wa_par_GpPathIterator(n)                  static_cast<GpPathIterator*>(hb_parptr(n))
+#define wa_par_GpPen(n)                           static_cast<GpPen*>(hb_parptr(n))
+#define wa_par_GpPoint(n)                         static_cast<GpPoint*>(wa_get_ptr(n))
+#define wa_par_GpPointF(n)                        static_cast<GpPointF*>(wa_get_ptr(n))
+#define wa_par_GpPropertyItem(n)                  static_cast<PropertyItem*>(hb_parptr(n))
+#define wa_par_GpRect(n)                          static_cast<GpRect*>(wa_get_ptr(n))
+#define wa_par_GpRectF(n)                         static_cast<GpRectF*>(wa_get_ptr(n))
+#define wa_par_GpRegion(n)                        static_cast<GpRegion*>(hb_parptr(n))
+#define wa_par_GpSolidFill(n)                     static_cast<GpSolidFill*>(hb_parptr(n))
+#define wa_par_GpStringFormat(n)                  static_cast<GpStringFormat*>(hb_parptr(n))
+#define wa_par_GpTexture(n)                       static_cast<GpTexture*>(hb_parptr(n))
+#define wa_par_IStream(n)                         static_cast<IStream*>(hb_parptr(n))
 
-#define wa_par_IStream(n)              static_cast<IStream*>(hb_parptr(n))
-
-#define wa_par_GpColorAdjustType(n)    static_cast<ColorAdjustType>(hb_parni(n))
-//#define wa_par_GpCombineMode(n)        static_cast<GpCombineMode>(hb_parni(n)) // TODO: fix MSVC error
-#define wa_par_GpCombineMode(n)        static_cast<CombineMode>(hb_parni(n))
-//#define wa_par_GpCompositingMode(n)    static_cast<GpCompositingMode>(hb_parni(n)) // TODO: fix MSVC error
-#define wa_par_GpCompositingMode(n)    static_cast<CompositingMode>(hb_parni(n))
-//#define wa_par_GpCompositingQuality(n) static_cast<GpCompositingQuality>(hb_parni(n)) // TODO: fix MSVC error
-#define wa_par_GpCompositingQuality(n) static_cast<CompositingQuality>(hb_parni(n))
-#define wa_par_GpColorChannelFlags(n)  static_cast<ColorChannelFlags>(hb_parni(n))
-#define wa_par_GpColorMatrixFlags(n)   static_cast<ColorMatrixFlags>(hb_parni(n))
-#define wa_par_GpCoordinateSpace(n)    static_cast<GpCoordinateSpace>(hb_parni(n))
-//#define wa_par_GpCustomLineCapType(n)  static_cast<GpCustomLineCapType>(hb_parni(n)) // TODO: fix MSVC error
-#define wa_par_GpCustomLineCapType(n)  static_cast<CustomLineCapType>(hb_parni(n))
-#define wa_par_GpDashCap(n)            static_cast<GpDashCap>(hb_parni(n))
-#define wa_par_GpDashStyle(n)          static_cast<GpDashStyle>(hb_parni(n))
-#define wa_par_GpDitherType(n)         static_cast<DitherType>(hb_parni(n))
-#define wa_par_GpEmfPlusRecordType(n)  static_cast<GpEmfPlusRecordType>(hb_parni(n))
-#define wa_par_GpEmfType(n)            static_cast<GpEmfType>(hb_parni(n))
-#define wa_par_GpFillMode(n)           static_cast<GpFillMode>(hb_parni(n))
-#define wa_par_GpFlushIntention(n)     static_cast<GpFlushIntention>(hb_parni(n))
-#define wa_par_GpGraphicsContainer(n)  static_cast<GraphicsContainer>(hb_parni(n))
-#define wa_par_GpGraphicsState(n)      static_cast<GraphicsState>(hb_parni(n))
-#define wa_par_GpHatchStyle(n)         static_cast<GpHatchStyle>(hb_parni(n))
-#define wa_par_GpHistogramFormat(n)    static_cast<HistogramFormat>(hb_parni(n))
-#define wa_par_GpInterpolationMode(n)  static_cast<InterpolationMode>(hb_parni(n))
-#define wa_par_GpLinearGradientMode(n) static_cast<LinearGradientMode>(hb_parni(n))
-#define wa_par_GpLineCap(n)            static_cast<GpLineCap>(hb_parni(n))
-#define wa_par_GpLineJoin(n)           static_cast<GpLineJoin>(hb_parni(n))
-#define wa_par_GpMatrixOrder(n)        static_cast<GpMatrixOrder>(hb_parni(n))
-#define wa_par_GpPaletteType(n)        static_cast<PaletteType>(hb_parni(n))
-#define wa_par_GpPenAlignment(n)       static_cast<GpPenAlignment>(hb_parni(n))
-#define wa_par_GpPixelFormat(n)        static_cast<PixelFormat>(hb_parni(n))
-#define wa_par_GpPixelOffsetMode(n)    static_cast<PixelOffsetMode>(hb_parni(n))
-#define wa_par_GpRotateFlipType(n)     static_cast<RotateFlipType>(hb_parni(n))
-#define wa_par_GpSmoothingMode(n)      static_cast<SmoothingMode>(hb_parni(n))
-#define wa_par_GpStringAlignment(n)    static_cast<StringAlignment>(hb_parni(n))
-#define wa_par_GpStringTrimming(n)     static_cast<StringTrimming>(hb_parni(n))
-#define wa_par_GpTextRenderingHint(n)  static_cast<TextRenderingHint>(hb_parni(n))
-#define wa_par_GpUnit(n)               static_cast<GpUnit>(hb_parni(n))
-#define wa_par_GpWarpMode(n)           static_cast<WarpMode>(hb_parni(n))
-#define wa_par_GpWrapMode(n)           static_cast<GpWrapMode>(hb_parni(n))
+#define wa_par_GpColorAdjustType(n)               static_cast<ColorAdjustType>(hb_parni(n))
+#define wa_par_GpColorChannelFlags(n)             static_cast<ColorChannelFlags>(hb_parni(n))
+#define wa_par_GpColorMatrixFlags(n)              static_cast<ColorMatrixFlags>(hb_parni(n))
+#define wa_par_GpCombineMode(n)                   static_cast<CombineMode>(hb_parni(n))
+#define wa_par_GpCompositingMode(n)               static_cast<CompositingMode>(hb_parni(n))
+#define wa_par_GpCompositingQuality(n)            static_cast<CompositingQuality>(hb_parni(n))
+#define wa_par_GpCoordinateSpace(n)               static_cast<GpCoordinateSpace>(hb_parni(n))
+#define wa_par_GpCustomLineCapType(n)             static_cast<CustomLineCapType>(hb_parni(n))
+#define wa_par_GpDashCap(n)                       static_cast<GpDashCap>(hb_parni(n))
+#define wa_par_GpDashStyle(n)                     static_cast<GpDashStyle>(hb_parni(n))
+#define wa_par_GpDitherType(n)                    static_cast<DitherType>(hb_parni(n))
+#define wa_par_GpEmfPlusRecordType(n)             static_cast<GpEmfPlusRecordType>(hb_parni(n))
+#define wa_par_GpEmfType(n)                       static_cast<GpEmfType>(hb_parni(n))
+#define wa_par_GpFillMode(n)                      static_cast<GpFillMode>(hb_parni(n))
+#define wa_par_GpFlushIntention(n)                static_cast<GpFlushIntention>(hb_parni(n))
+#define wa_par_GpGraphicsContainer(n)             static_cast<GraphicsContainer>(hb_parni(n))
+#define wa_par_GpGraphicsState(n)                 static_cast<GraphicsState>(hb_parni(n))
+#define wa_par_GpHatchStyle(n)                    static_cast<GpHatchStyle>(hb_parni(n))
+#define wa_par_GpHistogramFormat(n)               static_cast<HistogramFormat>(hb_parni(n))
+#define wa_par_GpInterpolationMode(n)             static_cast<InterpolationMode>(hb_parni(n))
+#define wa_par_GpLinearGradientMode(n)            static_cast<LinearGradientMode>(hb_parni(n))
+#define wa_par_GpLineCap(n)                       static_cast<GpLineCap>(hb_parni(n))
+#define wa_par_GpLineJoin(n)                      static_cast<GpLineJoin>(hb_parni(n))
+#define wa_par_GpMatrixOrder(n)                   static_cast<GpMatrixOrder>(hb_parni(n))
+#define wa_par_GpPaletteType(n)                   static_cast<PaletteType>(hb_parni(n))
+#define wa_par_GpPenAlignment(n)                  static_cast<GpPenAlignment>(hb_parni(n))
+#define wa_par_GpPixelFormat(n)                   static_cast<PixelFormat>(hb_parni(n))
+#define wa_par_GpPixelOffsetMode(n)               static_cast<PixelOffsetMode>(hb_parni(n))
+#define wa_par_GpRotateFlipType(n)                static_cast<RotateFlipType>(hb_parni(n))
+#define wa_par_GpSmoothingMode(n)                 static_cast<SmoothingMode>(hb_parni(n))
+#define wa_par_GpStringAlignment(n)               static_cast<StringAlignment>(hb_parni(n))
+#define wa_par_GpStringDigitSubstitute(n)         static_cast<StringDigitSubstitute>(hb_parni(n))
+#define wa_par_GpStringTrimming(n)                static_cast<StringTrimming>(hb_parni(n))
+#define wa_par_GpTextRenderingHint(n)             static_cast<TextRenderingHint>(hb_parni(n))
+#define wa_par_GpUnit(n)                          static_cast<GpUnit>(hb_parni(n))
+#define wa_par_GpWarpMode(n)                      static_cast<WarpMode>(hb_parni(n))
+#define wa_par_GpWrapMode(n)                      static_cast<GpWrapMode>(hb_parni(n))
 
 using namespace Gdiplus;
 using namespace Gdiplus::DllExports;
@@ -5888,6 +5884,12 @@ HB_FUNC( WAGDIPGETSOLIDFILLCOLOR )
 /*
 GpStatus WINGDIPAPI GdipCreateStringFormat(INT,LANGID,GpStringFormat**)
 */
+HB_FUNC( WAGDIPCREATESTRINGFORMAT )
+{
+  GpStringFormat *p{};
+  wa_ret_GpStatus(GdipCreateStringFormat(wa_par_INT(1), wa_par_LANGID(2), &p));
+  hb_storptr(p, 3);
+}
 
 /*
 GpStatus WINGDIPAPI GdipStringFormatGetGenericDefault(GpStringFormat**)
@@ -6052,10 +6054,22 @@ HB_FUNC( WAGDIPGETSTRINGFORMATTABSTOPCOUNT )
 /*
 GpStatus WINGDIPAPI GdipSetStringFormatDigitSubstitution(GpStringFormat*,LANGID,StringDigitSubstitute)
 */
+HB_FUNC( WAGDIPSETSTRINGFORMATDIGITSUBSTITUTION )
+{
+  wa_ret_GpStatus(GdipSetStringFormatDigitSubstitution(wa_par_GpStringFormat(1), wa_par_LANGID(2), wa_par_GpStringDigitSubstitute(3)));
+}
 
 /*
 GpStatus WINGDIPAPI GdipGetStringFormatDigitSubstitution(GDIPCONST GpStringFormat*,LANGID*,StringDigitSubstitute*)
 */
+#if 0
+HB_FUNC( WAGDIPGETSTRINGFORMATDIGITSUBSTITUTION )
+{
+  StringDigitSubstitute sds{};
+  wa_ret_GpStatus(GdipGetStringFormatDigitSubstitution(wa_par_GpStringFormat(1), LANGID*, &sds));
+  hb_storni(sds, 3);
+}
+#endif
 
 /*
 GpStatus WINGDIPAPI GdipGetStringFormatMeasurableCharacterRangeCount(GDIPCONST GpStringFormat*,INT*)

@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -124,7 +124,7 @@ HB_FUNC( WAREGDELETEKEYW )
 
 HB_FUNC( WAREGDELETEKEY )
 {
-  void * str2;
+  void * str2{};
   wa_ret_LONG(RegDeleteKey(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -158,7 +158,7 @@ WINADVAPI LONG WINAPI RegQueryReflectionKey(HKEY hBase,WINBOOL *bIsReflectionDis
 */
 HB_FUNC( WAREGQUERYREFLECTIONKEY )
 {
-  BOOL bIsReflectionDisabled;
+  BOOL bIsReflectionDisabled{};
   wa_ret_LONG(RegQueryReflectionKey(wa_par_HKEY(1), &bIsReflectionDisabled));
   wa_stor_BOOL(bIsReflectionDisabled, 2);
 }
@@ -181,7 +181,7 @@ HB_FUNC( WAREGDELETEVALUEW )
 
 HB_FUNC( WAREGDELETEVALUE )
 {
-  void * str2;
+  void * str2{};
   wa_ret_LONG(RegDeleteValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -248,8 +248,8 @@ HB_FUNC( WAREGLOADKEYW )
 
 HB_FUNC( WAREGLOADKEY )
 {
-  void * str2;
-  void * str3;
+  void * str2{};
+  void * str3{};
   wa_ret_LONG(RegLoadKey(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -329,9 +329,9 @@ HB_FUNC( WAREGREPLACEKEYW )
 
 HB_FUNC( WAREGREPLACEKEY )
 {
-  void * str2;
-  void * str3;
-  void * str4;
+  void * str2{};
+  void * str3{};
+  void * str4{};
   wa_ret_LONG(RegReplaceKey(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -356,7 +356,7 @@ HB_FUNC( WAREGRESTOREKEYW )
 
 HB_FUNC( WAREGRESTOREKEY )
 {
-  void * str2;
+  void * str2{};
   wa_ret_LONG(RegRestoreKey(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3)));
   hb_strfree(str2);
 }
@@ -391,8 +391,8 @@ HB_FUNC( WAREGSETVALUEW )
 
 HB_FUNC( WAREGSETVALUE )
 {
-  void * str2;
-  void * str4;
+  void * str2{};
+  void * str4{};
   wa_ret_LONG(RegSetValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5)));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -424,7 +424,7 @@ HB_FUNC( WAREGUNLOADKEYW )
 
 HB_FUNC( WAREGUNLOADKEY )
 {
-  void * str2;
+  void * str2{};
   wa_ret_LONG(RegUnLoadKey(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -434,8 +434,8 @@ WINADVAPI LONG WINAPI RegGetValueA(HKEY hkey,LPCSTR lpSubKey,LPCSTR lpValue,DWOR
 */
 HB_FUNC( WAREGGETVALUEA )
 {
-  DWORD Type;
-  DWORD Data;
+  DWORD Type{};
+  DWORD Data{};
   wa_ret_LONG(RegGetValueA(wa_par_HKEY(1), wa_par_LPCSTR(2), wa_par_LPCSTR(3), wa_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
   wa_stor_DWORD(Type, 5);
   wa_stor_DWORD(Data, 7);
@@ -446,8 +446,8 @@ WINADVAPI LONG WINAPI RegGetValueW(HKEY hkey,LPCWSTR lpSubKey,LPCWSTR lpValue,DW
 */
 HB_FUNC( WAREGGETVALUEW )
 {
-  DWORD Type;
-  DWORD Data;
+  DWORD Type{};
+  DWORD Data{};
   wa_ret_LONG(RegGetValueW(wa_par_HKEY(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), wa_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
   wa_stor_DWORD(Type, 5);
   wa_stor_DWORD(Data, 7);
@@ -455,10 +455,10 @@ HB_FUNC( WAREGGETVALUEW )
 
 HB_FUNC( WAREGGETVALUE )
 {
-  void * str2;
-  void * str3;
-  DWORD Type;
-  DWORD Data;
+  void * str2{};
+  void * str3{};
+  DWORD Type{};
+  DWORD Data{};
   wa_ret_LONG(RegGetValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4), &Type, static_cast<PVOID>(hb_parptr(6)), &Data));
   wa_stor_DWORD(Type, 5);
   wa_stor_DWORD(Data, 7);
@@ -573,8 +573,8 @@ HB_FUNC( WAREGDELETEKEYVALUEW )
 #if 0
 HB_FUNC( WAREGDELETEKEYVALUE )
 {
-  void * str2;
-  void * str3;
+  void * str2{};
+  void * str3{};
   wa_ret_LONG(RegDeleteKeyValue(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -604,7 +604,7 @@ HB_FUNC( WAREGDELETETREEW )
 #if 0
 HB_FUNC( WAREGDELETETREE )
 {
-  void * str2;
+  void * str2{};
   wa_ret_LONG(RegDeleteTree(wa_par_HKEY(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }

@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,10 @@ SOFTWARE.
 #include "hbapicls.hpp"
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
+
+#define wa_par_COMSTAT(n)               static_cast<COMSTAT *>(wa_get_ptr(n))
+#define wa_par_DCB(n)                   static_cast<DCB *>(wa_get_ptr(n))
+#define wa_par_FILETIME(n)              static_cast<FILETIME *>(wa_get_ptr(n))
 
 /*
 WINBASEAPI HLOCAL WINAPI LocalAlloc (UINT uFlags, SIZE_T uBytes)
@@ -248,7 +252,7 @@ WINBASEAPI WINBOOL WINAPI GetBinaryTypeA (LPCSTR lpApplicationName, LPDWORD lpBi
 */
 HB_FUNC( WAGETBINARYTYPEA )
 {
-  DWORD BinaryType;
+  DWORD BinaryType{};
   wa_ret_BOOL(GetBinaryTypeA(wa_par_LPCSTR(1), &BinaryType));
   wa_stor_DWORD(BinaryType, 2);
 }
@@ -258,15 +262,15 @@ WINBASEAPI WINBOOL WINAPI GetBinaryTypeW (LPCWSTR lpApplicationName, LPDWORD lpB
 */
 HB_FUNC( WAGETBINARYTYPEW )
 {
-  DWORD BinaryType;
+  DWORD BinaryType{};
   wa_ret_BOOL(GetBinaryTypeW(wa_par_LPCWSTR(1), &BinaryType));
   wa_stor_DWORD(BinaryType, 2);
 }
 
 HB_FUNC( WAGETBINARYTYPE )
 {
-  void * str1;
-  DWORD BinaryType;
+  void * str1{};
+  DWORD BinaryType{};
   wa_ret_BOOL(GetBinaryType(HB_PARSTR(1, &str1, nullptr), &BinaryType));
   wa_stor_DWORD(BinaryType, 2);
   hb_strfree(str1);
@@ -414,8 +418,8 @@ WINBASEAPI WINBOOL WINAPI GetProcessDEPPolicy (HANDLE hProcess, LPDWORD lpFlags,
 #if 0
 HB_FUNC( WAGETPROCESSDEPPOLICY )
 {
-  DWORD Flags;
-  BOOL Permanent;
+  DWORD Flags{};
+  BOOL Permanent{};
   wa_ret_BOOL(GetProcessDEPPolicy(wa_par_HANDLE(1), &Flags, &Permanent));
   wa_stor_DWORD(Flags, 2);
   wa_stor_BOOL(Permanent, 3);
@@ -496,7 +500,7 @@ WINBASEAPI WINBOOL WINAPI SetFileIoOverlappedRange (HANDLE FileHandle, PUCHAR Ov
 #if 0
 HB_FUNC( WASetFileIoOverlappedRange )
 {
-  UCHAR OverlappedRangeStart;
+  UCHAR OverlappedRangeStart{};
   wa_ret_BOOL(SetFileIoOverlappedRange(wa_par_HANDLE(1), &OverlappedRangeStart, wa_par_ULONG(3)));
   wa_stor_UCHAR(OverlappedRangeStart, 2);
 }
@@ -515,7 +519,7 @@ WINBASEAPI WINBOOL WINAPI SetThreadErrorMode (DWORD dwNewMode, LPDWORD lpOldMode
 */
 HB_FUNC( WASETTHREADERRORMODE )
 {
-  DWORD OldMode;
+  DWORD OldMode{};
   wa_ret_BOOL(SetThreadErrorMode(wa_par_DWORD(1), &OldMode));
   wa_stor_DWORD(OldMode, 2);
 }
@@ -642,7 +646,7 @@ HB_FUNC( WASETFILESHORTNAMEW )
 
 HB_FUNC( WASETFILESHORTNAME )
 {
-  void * str2;
+  void * str2{};
   wa_ret_BOOL(SetFileShortName(wa_par_HANDLE(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -676,8 +680,8 @@ WINBASEAPI WINBOOL WINAPI ClearCommError (HANDLE hFile, LPDWORD lpErrors, LPCOMS
 */
 HB_FUNC( WACLEARCOMMERROR )
 {
-  DWORD Errors;
-  wa_ret_BOOL(ClearCommError(wa_par_HANDLE(1), &Errors, static_cast<LPCOMSTAT>(wa_get_ptr(3))));
+  DWORD Errors{};
+  wa_ret_BOOL(ClearCommError(wa_par_HANDLE(1), &Errors, wa_par_COMSTAT(3)));
   wa_stor_DWORD(Errors, 2);
 }
 
@@ -715,7 +719,7 @@ WINBASEAPI WINBOOL WINAPI GetCommMask (HANDLE hFile, LPDWORD lpEvtMask)
 */
 HB_FUNC( WAGETCOMMMASK )
 {
-  DWORD EvtMask;
+  DWORD EvtMask{};
   wa_ret_BOOL(GetCommMask(wa_par_HANDLE(1), &EvtMask));
   wa_stor_DWORD(EvtMask, 2);
 }
@@ -735,7 +739,7 @@ WINBASEAPI WINBOOL WINAPI GetCommModemStatus (HANDLE hFile, LPDWORD lpModemStat)
 */
 HB_FUNC( WAGETCOMMMODEMSTATUS )
 {
-  DWORD ModemStat;
+  DWORD ModemStat{};
   wa_ret_BOOL(GetCommModemStatus(wa_par_HANDLE(1), &ModemStat));
   wa_stor_DWORD(ModemStat, 2);
 }
@@ -745,7 +749,7 @@ WINBASEAPI WINBOOL WINAPI GetCommState (HANDLE hFile, LPDCB lpDCB)
 */
 HB_FUNC( WAGETCOMMSTATE )
 {
-  wa_ret_BOOL(GetCommState(wa_par_HANDLE(1), static_cast<LPDCB>(wa_get_ptr(2))));
+  wa_ret_BOOL(GetCommState(wa_par_HANDLE(1), wa_par_DCB(2)));
 }
 
 /*
@@ -797,7 +801,7 @@ WINBASEAPI WINBOOL WINAPI SetCommState (HANDLE hFile, LPDCB lpDCB)
 */
 HB_FUNC( WASETCOMMSTATE )
 {
-  wa_ret_BOOL(SetCommState(wa_par_HANDLE(1), static_cast<LPDCB>(wa_get_ptr(2))));
+  wa_ret_BOOL(SetCommState(wa_par_HANDLE(1), wa_par_DCB(2)));
 }
 
 /*
@@ -824,7 +828,7 @@ WINBASEAPI WINBOOL WINAPI WaitCommEvent (HANDLE hFile, LPDWORD lpEvtMask, LPOVER
 #if 0
 HB_FUNC( WAWAITCOMMEVENT )
 {
-  DWORD EvtMask;
+  DWORD EvtMask{};
   wa_ret_BOOL(WaitCommEvent(wa_par_HANDLE(1), &EvtMask, ###));
   wa_stor_DWORD(EvtMask, 3);
 }
@@ -843,9 +847,9 @@ WINBASEAPI DWORD WINAPI GetTapePosition (HANDLE hDevice, DWORD dwPositionType, L
 */
 HB_FUNC( WAGETTAPEPOSITION )
 {
-  DWORD dwPartition;
-  DWORD dwOffsetLow;
-  DWORD dwOffsetHigh;
+  DWORD dwPartition{};
+  DWORD dwOffsetLow{};
+  DWORD dwOffsetHigh{};
   wa_ret_DWORD(GetTapePosition(wa_par_HANDLE(1), wa_par_DWORD(2), &dwPartition, &dwOffsetLow, &dwOffsetHigh));
   wa_stor_DWORD(dwPartition, 3);
   wa_stor_DWORD(dwOffsetLow, 4);
@@ -897,7 +901,7 @@ WINBASEAPI DWORD WINAPI GetTapeParameters (HANDLE hDevice, DWORD dwOperation, LP
 */
 HB_FUNC( WAGETTAPEPARAMETERS )
 {
-  DWORD dwSize;
+  DWORD dwSize{};
   wa_ret_DWORD(GetTapeParameters(wa_par_HANDLE(1), wa_par_DWORD(2), &dwSize, static_cast<LPVOID>(hb_parptr(4))));
   wa_stor_DWORD(dwSize, 3);
 }
@@ -923,7 +927,7 @@ WINBOOL WINAPI GetSystemTimes (LPFILETIME lpIdleTime, LPFILETIME lpKernelTime, L
 */
 HB_FUNC( WAGETSYSTEMTIMES )
 {
-  wa_ret_BOOL(GetSystemTimes(static_cast<LPFILETIME>(wa_get_ptr(1)), static_cast<LPFILETIME>(wa_get_ptr(2)), static_cast<LPFILETIME>(wa_get_ptr(3))));
+  wa_ret_BOOL(GetSystemTimes(wa_par_FILETIME(1), wa_par_FILETIME(2), wa_par_FILETIME(3)));
 }
 
 /*
@@ -931,9 +935,9 @@ WINBASEAPI WINBOOL WINAPI FileTimeToDosDateTime (CONST FILETIME *lpFileTime, LPW
 */
 HB_FUNC( WAFILETIMETODOSDATETIME )
 {
-  WORD FatDate;
-  WORD FatTime;
-  wa_ret_BOOL(FileTimeToDosDateTime(static_cast<CONST FILETIME*>(wa_get_ptr(1)), &FatDate, &FatTime));
+  WORD FatDate{};
+  WORD FatTime{};
+  wa_ret_BOOL(FileTimeToDosDateTime(wa_par_FILETIME(1), &FatDate, &FatTime));
   wa_stor_WORD(FatDate, 2);
   wa_stor_WORD(FatTime, 3);
 }
@@ -943,7 +947,7 @@ WINBASEAPI WINBOOL WINAPI DosDateTimeToFileTime (WORD wFatDate, WORD wFatTime, L
 */
 HB_FUNC( WADOSDATETIMETOFILETIME )
 {
-  wa_ret_BOOL(DosDateTimeToFileTime(wa_par_WORD(1), wa_par_WORD(2), static_cast<LPFILETIME>(wa_get_ptr(3))));
+  wa_ret_BOOL(DosDateTimeToFileTime(wa_par_WORD(1), wa_par_WORD(2), wa_par_FILETIME(3)));
 }
 
 /*
@@ -975,10 +979,10 @@ WINBASEAPI WINBOOL WINAPI GetNamedPipeInfo (HANDLE hNamedPipe, LPDWORD lpFlags, 
 */
 HB_FUNC( WAGETNAMEDPIPEINFO )
 {
-  DWORD Flags;
-  DWORD OutBufferSize;
-  DWORD InBufferSize;
-  DWORD MaxInstances;
+  DWORD Flags{};
+  DWORD OutBufferSize{};
+  DWORD InBufferSize{};
+  DWORD MaxInstances{};
   wa_ret_BOOL(GetNamedPipeInfo(wa_par_HANDLE(1), &Flags, &OutBufferSize, &InBufferSize, &MaxInstances));
   wa_stor_DWORD(Flags, 2);
   wa_stor_DWORD(OutBufferSize, 3);
@@ -999,10 +1003,10 @@ WINBASEAPI WINBOOL WINAPI GetMailslotInfo (HANDLE hMailslot, LPDWORD lpMaxMessag
 */
 HB_FUNC( WAGETMAILSLOTINFO )
 {
-  DWORD MaxMessageSize;
-  DWORD NextSize;
-  DWORD MessageCount;
-  DWORD ReadTimeout;
+  DWORD MaxMessageSize{};
+  DWORD NextSize{};
+  DWORD MessageCount{};
+  DWORD ReadTimeout{};
   wa_ret_BOOL(GetMailslotInfo(wa_par_HANDLE(1), &MaxMessageSize, &NextSize, &MessageCount, &ReadTimeout));
   wa_stor_DWORD(MaxMessageSize, 2);
   wa_stor_DWORD(NextSize, 3);
@@ -1036,7 +1040,7 @@ HB_FUNC( WAENCRYPTFILEW )
 
 HB_FUNC( WAENCRYPTFILE )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(EncryptFile(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1059,7 +1063,7 @@ HB_FUNC( WADECRYPTFILEW )
 
 HB_FUNC( WADECRYPTFILE )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(DecryptFile(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2)));
   hb_strfree(str1);
 }
@@ -1069,7 +1073,7 @@ WINADVAPI WINBOOL WINAPI FileEncryptionStatusA (LPCSTR lpFileName, LPDWORD lpSta
 */
 HB_FUNC( WAFILEENCRYPTIONSTATUSA )
 {
-  DWORD Status;
+  DWORD Status{};
   wa_ret_BOOL(FileEncryptionStatusA(wa_par_LPCSTR(1), &Status));
   wa_stor_DWORD(Status, 2);
 }
@@ -1079,15 +1083,15 @@ WINADVAPI WINBOOL WINAPI FileEncryptionStatusW (LPCWSTR lpFileName, LPDWORD lpSt
 */
 HB_FUNC( WAFILEENCRYPTIONSTATUSW )
 {
-  DWORD Status;
+  DWORD Status{};
   wa_ret_BOOL(FileEncryptionStatusW(wa_par_LPCWSTR(1), &Status));
   wa_stor_DWORD(Status, 2);
 }
 
 HB_FUNC( WAFILEENCRYPTIONSTATUS )
 {
-  void * str1;
-  DWORD Status;
+  void * str1{};
+  DWORD Status{};
   wa_ret_BOOL(FileEncryptionStatus(HB_PARSTR(1, &str1, nullptr), &Status));
   wa_stor_DWORD(Status, 2);
   hb_strfree(str1);
@@ -1135,8 +1139,8 @@ HB_FUNC( WALSTRCMPW )
 
 HB_FUNC( WALSTRCMP )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_int(lstrcmp(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1160,8 +1164,8 @@ HB_FUNC( WALSTRCMPIW )
 
 HB_FUNC( WALSTRCMPI )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_int(lstrcmpi(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1221,7 +1225,7 @@ HB_FUNC( WALSTRLENW )
 
 HB_FUNC( WALSTRLEN )
 {
-  void * str1;
+  void * str1{};
   wa_ret_int(lstrlen(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1287,7 +1291,7 @@ WINADVAPI WINBOOL WINAPI IsTextUnicode (CONST VOID *lpv, int iSize, LPINT lpiRes
 */
 HB_FUNC( WAISTEXTUNICODE )
 {
-  INT iResult;
+  INT iResult{};
   wa_ret_BOOL(IsTextUnicode(static_cast<CONST VOID*>(hb_parptr(1)), wa_par_int(2), &iResult));
   wa_stor_INT(iResult, 3);
 }
@@ -1334,7 +1338,7 @@ HB_FUNC( WALOADLIBRARYW )
 
 HB_FUNC( WALOADLIBRARY )
 {
-  void * str1;
+  void * str1{};
   wa_ret_HMODULE(LoadLibrary(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1431,8 +1435,8 @@ WINBASEAPI WINBOOL WINAPI GetProcessShutdownParameters (LPDWORD lpdwLevel, LPDWO
 */
 HB_FUNC( WAGETPROCESSSHUTDOWNPARAMETERS )
 {
-  DWORD dwLevel;
-  DWORD dwFlags;
+  DWORD dwLevel{};
+  DWORD dwFlags{};
   wa_ret_BOOL(GetProcessShutdownParameters(&dwLevel, &dwFlags));
   wa_stor_DWORD(dwLevel, 1);
   wa_stor_DWORD(dwFlags, 2);
@@ -1456,7 +1460,7 @@ HB_FUNC( WAFATALAPPEXITW )
 
 HB_FUNC( WAFATALAPPEXIT )
 {
-  void * str2;
+  void * str2{};
   FatalAppExit(wa_par_UINT(1), HB_PARSTR(2, &str2, nullptr));
   hb_strfree(str2);
 }
@@ -1483,8 +1487,8 @@ HB_FUNC( WAGETFIRMWAREENVIRONMENTVARIABLEW )
 
 HB_FUNC( WAGETFIRMWAREENVIRONMENTVARIABLE )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_DWORD(GetFirmwareEnvironmentVariable(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1508,8 +1512,8 @@ HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLEW )
 
 HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLE )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(SetFirmwareEnvironmentVariable(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1533,8 +1537,8 @@ HB_FUNC( WAFINDRESOURCEW )
 
 HB_FUNC( WAFINDRESOURCE )
 {
-  void * str2;
-  void * str3;
+  void * str2{};
+  void * str3{};
   wa_ret_HRSRC(FindResource(static_cast<HMODULE>(hb_parptr(1)), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -1590,7 +1594,7 @@ HB_FUNC( WABEGINUPDATERESOURCEW )
 
 HB_FUNC( WABEGINUPDATERESOURCE )
 {
-  void * str1;
+  void * str1{};
   wa_ret_HANDLE(BeginUpdateResource(HB_PARSTR(1, &str1, nullptr), wa_par_BOOL(2)));
   hb_strfree(str1);
 }
@@ -1613,8 +1617,8 @@ HB_FUNC( WAUPDATERESOURCEW )
 
 HB_FUNC( WAUPDATERESOURCE )
 {
-  void * str2;
-  void * str3;
+  void * str2{};
+  void * str3{};
   wa_ret_BOOL(UpdateResource(wa_par_HANDLE(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_WORD(4), static_cast<LPVOID>(hb_parptr(5)), wa_par_DWORD(6)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -1667,8 +1671,8 @@ HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLEEXW )
 #if 0
 HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLEEX )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(SetFirmwareEnvironmentVariableEx(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4), wa_par_DWORD(5)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1685,7 +1689,7 @@ WINBASEAPI WINBOOL WINAPI IsNativeVhdBoot (PBOOL NativeVhdBoot)
 #if 0
 HB_FUNC( WAISNATIVEVHDBOOT )
 {
-  BOOL NativeVhdBoot;
+  BOOL NativeVhdBoot{};
   wa_ret_BOOL(IsNativeVhdBoot(&NativeVhdBoot));
   wa_stor_BOOL(NativeVhdBoot, 1);
 }
@@ -1709,7 +1713,7 @@ HB_FUNC( WAGLOBALADDATOMW )
 
 HB_FUNC( WAGLOBALADDATOM )
 {
-  void * str1;
+  void * str1{};
   wa_ret_ATOM(GlobalAddAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1737,7 +1741,7 @@ HB_FUNC( WAGLOBALADDATOMEXW )
 #if 0
 HB_FUNC( WAGLOBALADDATOMEX )
 {
-  void * str1;
+  void * str1{};
   wa_ret_ATOM(GlobalAddAtomEx(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2)));
   hb_strfree(str1);
 }
@@ -1761,7 +1765,7 @@ HB_FUNC( WAGLOBALFINDATOMW )
 
 HB_FUNC( WAGLOBALFINDATOM )
 {
-  void * str1;
+  void * str1{};
   wa_ret_ATOM(GlobalFindAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1800,7 +1804,7 @@ HB_FUNC( WAADDATOMW )
 
 HB_FUNC( WAADDATOM )
 {
-  void * str1;
+  void * str1{};
   wa_ret_ATOM(AddAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1823,7 +1827,7 @@ HB_FUNC( WAFINDATOMW )
 
 HB_FUNC( WAFINDATOM )
 {
-  void * str1;
+  void * str1{};
   wa_ret_ATOM(FindAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1862,8 +1866,8 @@ HB_FUNC( WAGETPROFILEINTW )
 
 HB_FUNC( WAGETPROFILEINT )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_UINT(GetProfileInt(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_INT(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1903,9 +1907,9 @@ HB_FUNC( WAWRITEPROFILESTRINGW )
 
 HB_FUNC( WAWRITEPROFILESTRING )
 {
-  void * str1;
-  void * str2;
-  void * str3;
+  void * str1{};
+  void * str2{};
+  void * str3{};
   wa_ret_BOOL(WriteProfileString(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1946,8 +1950,8 @@ HB_FUNC( WAWRITEPROFILESECTIONW )
 
 HB_FUNC( WAWRITEPROFILESECTION )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(WriteProfileSection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1971,9 +1975,9 @@ HB_FUNC( WAGETPRIVATEPROFILEINTW )
 
 HB_FUNC( WAGETPRIVATEPROFILEINT )
 {
-  void * str1;
-  void * str2;
-  void * str4;
+  void * str1{};
+  void * str2{};
+  void * str4{};
   wa_ret_UINT(GetPrivateProfileInt(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_INT(3), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2014,10 +2018,10 @@ HB_FUNC( WAWRITEPRIVATEPROFILESTRINGW )
 
 HB_FUNC( WAWRITEPRIVATEPROFILESTRING )
 {
-  void * str1;
-  void * str2;
-  void * str3;
-  void * str4;
+  void * str1{};
+  void * str2{};
+  void * str3{};
+  void * str4{};
   wa_ret_BOOL(WritePrivateProfileString(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2059,9 +2063,9 @@ HB_FUNC( WAWRITEPRIVATEPROFILESECTIONW )
 
 HB_FUNC( WAWRITEPRIVATEPROFILESECTION )
 {
-  void * str1;
-  void * str2;
-  void * str3;
+  void * str1{};
+  void * str2{};
+  void * str3{};
   wa_ret_BOOL(WritePrivateProfileSection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2118,9 +2122,9 @@ HB_FUNC( WAWRITEPRIVATEPROFILESTRUCTW )
 
 HB_FUNC( WAWRITEPRIVATEPROFILESTRUCT )
 {
-  void * str1;
-  void * str2;
-  void * str5;
+  void * str1{};
+  void * str2{};
+  void * str5{};
   wa_ret_BOOL(WritePrivateProfileStruct(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<LPVOID>(hb_parptr(3)), wa_par_UINT(4), HB_PARSTR(5, &str5, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2185,7 +2189,7 @@ HB_FUNC( WASETDLLDIRECTORYW )
 
 HB_FUNC( WASETDLLDIRECTORY )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(SetDllDirectory(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -2253,7 +2257,7 @@ HB_FUNC( WAREMOVEDIRECTORYTRANSACTEDW )
 #if 0
 HB_FUNC( WAREMOVEDIRECTORYTRANSACTED )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(RemoveDirectoryTransacted(HB_PARSTR(1, &str1, nullptr), wa_par_HANDLE(2)));
   hb_strfree(str1);
 }
@@ -2322,7 +2326,7 @@ HB_FUNC( WASETFILEATTRIBUTESTRANSACTEDW )
 #if 0
 HB_FUNC( WASETFILEATTRIBUTESTRANSACTED )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(SetFileAttributesTransacted(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2), wa_par_HANDLE(3)));
   hb_strfree(str1);
 }
@@ -2341,7 +2345,7 @@ WINBASEAPI DWORD WINAPI GetCompressedFileSizeA (LPCSTR lpFileName, LPDWORD lpFil
 */
 HB_FUNC( WAGETCOMPRESSEDFILESIZEA )
 {
-  DWORD FileSizeHigh;
+  DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSizeA(wa_par_LPCSTR(1), &FileSizeHigh));
   wa_stor_DWORD(FileSizeHigh, 2);
 }
@@ -2351,15 +2355,15 @@ WINBASEAPI DWORD WINAPI GetCompressedFileSizeW (LPCWSTR lpFileName, LPDWORD lpFi
 */
 HB_FUNC( WAGETCOMPRESSEDFILESIZEW )
 {
-  DWORD FileSizeHigh;
+  DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSizeW(wa_par_LPCWSTR(1), &FileSizeHigh));
   wa_stor_DWORD(FileSizeHigh, 2);
 }
 
 HB_FUNC( WAGETCOMPRESSEDFILESIZE )
 {
-  void * str1;
-  DWORD FileSizeHigh;
+  void * str1{};
+  DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSize(HB_PARSTR(1, &str1, nullptr), &FileSizeHigh));
   wa_stor_DWORD(FileSizeHigh, 2);
   hb_strfree(str1);
@@ -2371,7 +2375,7 @@ WINBASEAPI DWORD WINAPI GetCompressedFileSizeTransactedA (LPCSTR lpFileName, LPD
 #if 0
 HB_FUNC( WAGETCOMPRESSEDFILESIZETRANSACTEDA )
 {
-  DWORD FileSizeHigh;
+  DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSizeTransactedA(wa_par_LPCSTR(1), &FileSizeHigh, wa_par_HANDLE(3)));
   wa_stor_DWORD(FileSizeHigh, 2);
 }
@@ -2383,7 +2387,7 @@ WINBASEAPI DWORD WINAPI GetCompressedFileSizeTransactedW (LPCWSTR lpFileName, LP
 #if 0
 HB_FUNC( WAGETCOMPRESSEDFILESIZETRANSACTEDW )
 {
-  DWORD FileSizeHigh;
+  DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSizeTransactedW(wa_par_LPCWSTR(1), &FileSizeHigh, wa_par_HANDLE(3)));
   wa_stor_DWORD(FileSizeHigh, 2);
 }
@@ -2392,8 +2396,8 @@ HB_FUNC( WAGETCOMPRESSEDFILESIZETRANSACTEDW )
 #if 0
 HB_FUNC( WAGETCOMPRESSEDFILESIZETRANSACTED )
 {
-  void * str1;
-  DWORD FileSizeHigh;
+  void * str1{};
+  DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSizeTransacted(HB_PARSTR(1, &str1, nullptr), &FileSizeHigh, wa_par_HANDLE(3)));
   wa_stor_DWORD(FileSizeHigh, 2);
   hb_strfree(str1);
@@ -2423,7 +2427,7 @@ HB_FUNC( WADELETEFILETRANSACTEDW )
 #if 0
 HB_FUNC( WADELETEFILETRANSACTED )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(DeleteFileTransacted(HB_PARSTR(1, &str1, nullptr), wa_par_HANDLE(2)));
   hb_strfree(str1);
 }
@@ -2455,8 +2459,8 @@ HB_FUNC( WACOPYFILEW )
 
 HB_FUNC( WACOPYFILE )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(CopyFileW(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_BOOL(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2508,8 +2512,8 @@ HB_FUNC( WAMOVEFILEW )
 
 HB_FUNC( WAMOVEFILE )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(MoveFile(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2533,8 +2537,8 @@ HB_FUNC( WAMOVEFILEEXW )
 
 HB_FUNC( WAMOVEFILEEX )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(MoveFileEx(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2574,9 +2578,9 @@ HB_FUNC( WAREPLACEFILEW )
 
 HB_FUNC( WAREPLACEFILE )
 {
-  void * str1;
-  void * str2;
-  void * str3;
+  void * str1{};
+  void * str2{};
+  void * str3{};
   wa_ret_BOOL(ReplaceFile(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)), static_cast<LPVOID>(hb_parptr(6))));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2664,10 +2668,10 @@ WINBASEAPI WINBOOL WINAPI GetNamedPipeHandleStateA (HANDLE hNamedPipe, LPDWORD l
 */
 HB_FUNC( WAGETNAMEDPIPEHANDLESTATEA )
 {
-  DWORD State;
-  DWORD CurInstances;
-  DWORD MaxCollectionCount;
-  DWORD CollectDataTimeout;
+  DWORD State{};
+  DWORD CurInstances{};
+  DWORD MaxCollectionCount{};
+  DWORD CollectDataTimeout{};
   wa_ret_BOOL(GetNamedPipeHandleStateA(wa_par_HANDLE(1), &State, &CurInstances, &MaxCollectionCount, &CollectDataTimeout, const_cast<LPSTR>(hb_parc(6)), wa_par_DWORD(7)));
   wa_stor_DWORD(State, 2);
   wa_stor_DWORD(CurInstances, 3);
@@ -2680,10 +2684,10 @@ WINBASEAPI WINBOOL WINAPI GetNamedPipeHandleStateW (HANDLE hNamedPipe, LPDWORD l
 */
 HB_FUNC( WAGETNAMEDPIPEHANDLESTATEW )
 {
-  DWORD State;
-  DWORD CurInstances;
-  DWORD MaxCollectionCount;
-  DWORD CollectDataTimeout;
+  DWORD State{};
+  DWORD CurInstances{};
+  DWORD MaxCollectionCount{};
+  DWORD CollectDataTimeout{};
   wa_ret_BOOL(GetNamedPipeHandleStateW(wa_par_HANDLE(1), &State, &CurInstances, &MaxCollectionCount, &CollectDataTimeout, reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), wa_par_DWORD(7)));
   wa_stor_DWORD(State, 2);
   wa_stor_DWORD(CurInstances, 3);
@@ -2696,7 +2700,7 @@ WINBASEAPI WINBOOL WINAPI CallNamedPipeA (LPCSTR lpNamedPipeName, LPVOID lpInBuf
 */
 HB_FUNC( WACALLNAMEDPIPEA )
 {
-  DWORD BytesRead;
+  DWORD BytesRead{};
   wa_ret_BOOL(CallNamedPipeA(wa_par_LPCSTR(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)), wa_par_DWORD(5), &BytesRead, wa_par_DWORD(7)));
   wa_stor_DWORD(BytesRead, 6);
 }
@@ -2706,7 +2710,7 @@ WINBASEAPI WINBOOL WINAPI CallNamedPipeW (LPCWSTR lpNamedPipeName, LPVOID lpInBu
 */
 HB_FUNC( WACALLNAMEDPIPEW )
 {
-  DWORD BytesRead;
+  DWORD BytesRead{};
   wa_ret_BOOL(CallNamedPipeW(wa_par_LPCWSTR(1), static_cast<LPVOID>(hb_parptr(2)), wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)), wa_par_DWORD(5), &BytesRead, wa_par_DWORD(7)));
   wa_stor_DWORD(BytesRead, 6);
 }
@@ -2737,8 +2741,8 @@ HB_FUNC( WASETVOLUMELABELW )
 
 HB_FUNC( WASETVOLUMELABEL )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(SetVolumeLabel(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2773,9 +2777,9 @@ WINBASEAPI WINBOOL WINAPI GetVolumeInformationA (LPCSTR lpRootPathName, LPSTR lp
 */
 HB_FUNC( WAGETVOLUMEINFORMATIONA )
 {
-  DWORD VolumeSerialNumber;
-  DWORD MaximumComponentLength;
-  DWORD FileSystemFlags;
+  DWORD VolumeSerialNumber{};
+  DWORD MaximumComponentLength{};
+  DWORD FileSystemFlags{};
   wa_ret_BOOL(GetVolumeInformationA(wa_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), wa_par_DWORD(3), &VolumeSerialNumber, &MaximumComponentLength, &FileSystemFlags, const_cast<LPSTR>(hb_parc(7)), wa_par_DWORD(8)));
   wa_stor_DWORD(VolumeSerialNumber, 4);
   wa_stor_DWORD(MaximumComponentLength, 5);
@@ -2800,7 +2804,7 @@ HB_FUNC( WACLEAREVENTLOGW )
 
 HB_FUNC( WACLEAREVENTLOG )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(ClearEventLog(wa_par_HANDLE(1), HB_PARSTR(2, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -2823,7 +2827,7 @@ HB_FUNC( WABACKUPEVENTLOGW )
 
 HB_FUNC( WABACKUPEVENTLOG )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(BackupEventLog(wa_par_HANDLE(1), HB_PARSTR(2, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -2857,7 +2861,7 @@ WINADVAPI WINBOOL WINAPI GetNumberOfEventLogRecords (HANDLE hEventLog, PDWORD Nu
 */
 HB_FUNC( WAGETNUMBEROFEVENTLOGRECORDS )
 {
-  DWORD NumberOfRecords;
+  DWORD NumberOfRecords{};
   wa_ret_BOOL(GetNumberOfEventLogRecords(wa_par_HANDLE(1), &NumberOfRecords));
   wa_stor_DWORD(NumberOfRecords, 2);
 }
@@ -2867,7 +2871,7 @@ WINADVAPI WINBOOL WINAPI GetOldestEventLogRecord (HANDLE hEventLog, PDWORD Oldes
 */
 HB_FUNC( WAGETOLDESTEVENTLOGRECORD )
 {
-  DWORD OldestRecord;
+  DWORD OldestRecord{};
   wa_ret_BOOL(GetOldestEventLogRecord(wa_par_HANDLE(1), &OldestRecord));
   wa_stor_DWORD(OldestRecord, 2);
 }
@@ -2890,8 +2894,8 @@ HB_FUNC( WAOPENEVENTLOGW )
 
 HB_FUNC( WAOPENEVENTLOG )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_HANDLE(OpenEventLog(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2915,8 +2919,8 @@ HB_FUNC( WAREGISTEREVENTSOURCEW )
 
 HB_FUNC( WAREGISTEREVENTSOURCE )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_HANDLE(RegisterEventSource(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2940,8 +2944,8 @@ HB_FUNC( WAOPENBACKUPEVENTLOGW )
 
 HB_FUNC( WAOPENBACKUPEVENTLOG )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_HANDLE(OpenBackupEventLog(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2968,7 +2972,7 @@ WINADVAPI WINBOOL WINAPI GetEventLogInformation (HANDLE hEventLog, DWORD dwInfoL
 */
 HB_FUNC( WAGETEVENTLOGINFORMATION )
 {
-  DWORD cbBytesNeeded;
+  DWORD cbBytesNeeded{};
   wa_ret_BOOL(GetEventLogInformation(wa_par_HANDLE(1), wa_par_DWORD(2), static_cast<LPVOID>(hb_parptr(3)), wa_par_DWORD(4), &cbBytesNeeded));
   wa_stor_DWORD(cbBytesNeeded, 5);
 }
@@ -3091,7 +3095,7 @@ HB_FUNC( WAISBADSTRINGPTRW )
 
 HB_FUNC( WAISBADSTRINGPTR )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(IsBadStringPtr(HB_PARSTR(1, &str1, nullptr), wa_par_UINT_PTR(2)));
   hb_strfree(str1);
 }
@@ -3157,8 +3161,8 @@ WINADVAPI WINBOOL WINAPI LookupPrivilegeDisplayNameA (LPCSTR lpSystemName, LPCST
 */
 HB_FUNC( WALOOKUPPRIVILEGEDISPLAYNAMEA ) // TODO: corrigir parametro 3
 {
-  DWORD cchDisplayName;
-  DWORD LanguageId;
+  DWORD cchDisplayName{};
+  DWORD LanguageId{};
   wa_ret_BOOL(LookupPrivilegeDisplayNameA(wa_par_LPCSTR(1), wa_par_LPCSTR(2), const_cast<LPSTR>(hb_parc(3)), &cchDisplayName, &LanguageId));
   wa_stor_DWORD(cchDisplayName, 4);
   wa_stor_DWORD(LanguageId, 5);
@@ -3169,8 +3173,8 @@ WINADVAPI WINBOOL WINAPI LookupPrivilegeDisplayNameW (LPCWSTR lpSystemName, LPCW
 */
 HB_FUNC( WALOOKUPPRIVILEGEDISPLAYNAMEW ) // TODO: corrigir parametro 3
 {
-  DWORD cchDisplayName;
-  DWORD LanguageId;
+  DWORD cchDisplayName{};
+  DWORD LanguageId{};
   wa_ret_BOOL(LookupPrivilegeDisplayNameW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3))), &cchDisplayName, &LanguageId));
   wa_stor_DWORD(cchDisplayName, 4);
   wa_stor_DWORD(LanguageId, 5);
@@ -3179,11 +3183,11 @@ HB_FUNC( WALOOKUPPRIVILEGEDISPLAYNAMEW ) // TODO: corrigir parametro 3
 #if 0
 HB_FUNC( WALOOKUPPRIVILEGEDISPLAYNAME ) // TODO: corrigir parametro 3
 {
-  void * str1;
-  void * str2;
-  void * str3;
-  DWORD cchDisplayName;
-  DWORD LanguageId;
+  void * str1{};
+  void * str2{};
+  void * str3{};
+  DWORD cchDisplayName{};
+  DWORD LanguageId{};
   wa_ret_BOOL(LookupPrivilegeDisplayName(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), &cchDisplayName, &LanguageId));
   wa_stor_DWORD(cchDisplayName, 4);
   wa_stor_DWORD(LanguageId, 5);
@@ -3238,7 +3242,7 @@ WINBASEAPI WINBOOL WINAPI GetComputerNameA (LPSTR lpBuffer, LPDWORD nSize)
 */
 HB_FUNC( WAGETCOMPUTERNAMEA ) // TODO: corrigir parametro 1
 {
-  DWORD nSize;
+  DWORD nSize{};
   wa_ret_BOOL(GetComputerNameA(const_cast<LPSTR>(hb_parc(1)), &nSize));
   wa_stor_DWORD(nSize, 2);
 }
@@ -3248,7 +3252,7 @@ WINBASEAPI WINBOOL WINAPI GetComputerNameW (LPWSTR lpBuffer, LPDWORD nSize)
 */
 HB_FUNC( WAGETCOMPUTERNAMEW ) // TODO: corrigir parametro 1
 {
-  DWORD nSize;
+  DWORD nSize{};
   wa_ret_BOOL(GetComputerNameW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), &nSize));
   wa_stor_DWORD(nSize, 2);
 }
@@ -3271,7 +3275,7 @@ HB_FUNC( WASETCOMPUTERNAMEW )
 
 HB_FUNC( WASETCOMPUTERNAME )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(SetComputerName(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -3285,7 +3289,7 @@ WINBASEAPI WINBOOL WINAPI DnsHostnameToComputerNameA (LPCSTR Hostname, LPSTR Com
 */
 HB_FUNC( WADNSHOSTNAMETOCOMPUTERNAMEA )
 {
-  DWORD nSize;
+  DWORD nSize{};
   wa_ret_BOOL(DnsHostnameToComputerNameA(wa_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), &nSize));
   wa_stor_DWORD(nSize, 3);
 }
@@ -3295,7 +3299,7 @@ WINBASEAPI WINBOOL WINAPI DnsHostnameToComputerNameW (LPCWSTR Hostname, LPWSTR C
 */
 HB_FUNC( WADNSHOSTNAMETOCOMPUTERNAMEW )
 {
-  DWORD nSize;
+  DWORD nSize{};
   wa_ret_BOOL(DnsHostnameToComputerNameW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nSize));
   wa_stor_DWORD(nSize, 3);
 }
@@ -3305,7 +3309,7 @@ WINADVAPI WINBOOL WINAPI GetUserNameA (LPSTR lpBuffer, LPDWORD pcbBuffer)
 */
 HB_FUNC( WAGETUSERNAMEA ) // TODO: corrigir parametro 1
 {
-  DWORD pcbBuffer;
+  DWORD pcbBuffer{};
   wa_ret_BOOL(GetUserNameA(const_cast<LPSTR>(hb_parc(1)), &pcbBuffer));
   wa_stor_DWORD(pcbBuffer, 2);
 }
@@ -3315,7 +3319,7 @@ WINADVAPI WINBOOL WINAPI GetUserNameW (LPWSTR lpBuffer, LPDWORD pcbBuffer)
 */
 HB_FUNC( WAGETUSERNAMEW ) // TODO: corrigir parametro 1
 {
-  DWORD pcbBuffer;
+  DWORD pcbBuffer{};
   wa_ret_BOOL(GetUserNameW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), &pcbBuffer));
   wa_stor_DWORD(pcbBuffer, 2);
 }
@@ -3458,7 +3462,7 @@ WINBASEAPI WINBOOL WINAPI GetMemoryErrorHandlingCapabilities (PULONG Capabilitie
 #if 0
 HB_FUNC( WAGETMEMORYERRORHANDLINGCAPABILITIES )
 {
-  ULONG Capabilities;
+  ULONG Capabilities{};
   wa_ret_BOOL(GetMemoryErrorHandlingCapabilities(&Capabilities));
   wa_stor_DWORD(Capabilities, 1);
 }
@@ -3506,7 +3510,7 @@ HB_FUNC( WAOPENJOBOBJECTW )
 
 HB_FUNC( WAOPENJOBOBJECT )
 {
-  void * str3;
+  void * str3{};
   wa_ret_HANDLE(OpenJobObject(wa_par_DWORD(1), wa_par_BOOL(2), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str3);
 }
@@ -3613,8 +3617,8 @@ HB_FUNC( WASETVOLUMEMOUNTPOINTW )
 
 HB_FUNC( WASETVOLUMEMOUNTPOINT )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOL(SetVolumeMountPoint(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -3838,7 +3842,7 @@ WINBASEAPI HRESULT WINAPI ApplicationRecoveryInProgress (PBOOL pbCancelled)
 #if 0
 HB_FUNC( WAAPPLICATIONRECOVERYINPROGRESS )
 {
-  BOOL Cancelled;
+  BOOL Cancelled{};
   wa_ret_HRESULT(ApplicationRecoveryInProgress(&Cancelled));
   wa_stor_BOOL(Cancelled, 1);
 }
@@ -3885,8 +3889,8 @@ HB_FUNC( WACREATESYMBOLICLINKW )
 #if 0
 HB_FUNC( WACREATESYMBOLICLINK )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOLEAN(CreateSymbolicLink(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -3916,8 +3920,8 @@ HB_FUNC( WACREATESYMBOLICLINKTRANSACTEDW )
 #if 0
 HB_FUNC( WACREATESYMBOLICLINKTRANSACTED )
 {
-  void * str1;
-  void * str2;
+  void * str1{};
+  void * str2{};
   wa_ret_BOOLEAN(CreateSymbolicLinkTransacted(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3), wa_par_HANDLE(4)));
   hb_strfree(str1);
   hb_strfree(str2);

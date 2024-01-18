@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,12 @@ SOFTWARE.
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
+#define wa_par_INITCOMMONCONTROLSEX(n)            static_cast<INITCOMMONCONTROLSEX *>(wa_get_ptr(n))
+#define wa_par_IMAGELISTDRAWPARAMS(n)             static_cast<IMAGELISTDRAWPARAMS *>(wa_get_ptr(n))
+#define wa_par_POINT(n)                           static_cast<POINT *>(wa_get_ptr(n))
+#define wa_par_RECT(n)                            static_cast<RECT *>(wa_get_ptr(n))
+#define wa_par_SCROLLINFO(n)                      static_cast<SCROLLINFO *>(wa_get_ptr(n))
+
 /*
 WINCOMMCTRLAPI void WINAPI InitCommonControls(void)
 */
@@ -55,7 +61,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI InitCommonControlsEx(const INITCOMMONCONTROLSEX *)
 */
 HB_FUNC( WAINITCOMMONCONTROLSEX )
 {
-  wa_ret_BOOL(InitCommonControlsEx(static_cast<const INITCOMMONCONTROLSEX*>(wa_get_ptr(1))));
+  wa_ret_BOOL(InitCommonControlsEx(wa_par_INITCOMMONCONTROLSEX(1)));
 }
 
 /*
@@ -175,7 +181,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI ImageList_DrawIndirect(IMAGELISTDRAWPARAMS *pimldp
 */
 HB_FUNC( WAIMAGELIST_DRAWINDIRECT )
 {
-  wa_ret_BOOL(ImageList_DrawIndirect(static_cast<IMAGELISTDRAWPARAMS*>(wa_get_ptr(1))));
+  wa_ret_BOOL(ImageList_DrawIndirect(wa_par_IMAGELISTDRAWPARAMS(1)));
 }
 
 /*
@@ -279,7 +285,7 @@ WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_GetDragImage(POINT *ppt,POINT *pptHot
 */
 HB_FUNC( WAIMAGELIST_GETDRAGIMAGE )
 {
-  wa_ret_HIMAGELIST(ImageList_GetDragImage(static_cast<POINT*>(wa_get_ptr(1)), static_cast<POINT*>(wa_get_ptr(2))));
+  wa_ret_HIMAGELIST(ImageList_GetDragImage(wa_par_POINT(1), wa_par_POINT(2)));
 }
 
 /*
@@ -303,7 +309,7 @@ HIMAGELIST ImageList_LoadBitmap(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLOR
 */
 HB_FUNC( WAIMAGELIST_LOADBITMAP )
 {
-  void * str2;
+  void * str2{};
   wa_ret_HIMAGELIST(ImageList_LoadBitmap(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5)));
   hb_strfree(str2);
 }
@@ -329,8 +335,8 @@ WINCOMMCTRLAPI WINBOOL WINAPI ImageList_GetIconSize(HIMAGELIST himl,int *cx,int 
 */
 HB_FUNC( WAIMAGELIST_GETICONSIZE )
 {
-  int cx;
-  int cy;
+  int cx{};
+  int cy{};
   wa_ret_BOOL(ImageList_GetIconSize(wa_par_HIMAGELIST(1), &cx, &cy));
   wa_stor_int(cx, 2);
   wa_stor_int(cy, 3);
@@ -381,7 +387,7 @@ WINCOMMCTRLAPI void WINAPI DrawStatusTextA(HDC hDC,LPCRECT lprc,LPCSTR pszText,U
 */
 HB_FUNC( WADRAWSTATUSTEXTA )
 {
-  DrawStatusTextA(wa_par_HDC(1), static_cast<LPCRECT>(wa_get_ptr(2)), wa_par_LPCSTR(3), wa_par_UINT(4));
+  DrawStatusTextA(wa_par_HDC(1), wa_par_RECT(2), wa_par_LPCSTR(3), wa_par_UINT(4));
 }
 
 /*
@@ -389,7 +395,7 @@ WINCOMMCTRLAPI void WINAPI DrawStatusTextW(HDC hDC,LPCRECT lprc,LPCWSTR pszText,
 */
 HB_FUNC( WADRAWSTATUSTEXTW )
 {
-  DrawStatusTextW(wa_par_HDC(1), static_cast<LPCRECT>(wa_get_ptr(2)), wa_par_LPCWSTR(3), wa_par_UINT(4));
+  DrawStatusTextW(wa_par_HDC(1), wa_par_RECT(2), wa_par_LPCWSTR(3), wa_par_UINT(4));
 }
 
 /*
@@ -441,7 +447,7 @@ WINCOMMCTRLAPI int WINAPI LBItemFromPt(HWND hLB,POINT pt,WINBOOL bAutoScroll)
 */
 HB_FUNC( WALBITEMFROMPT )
 {
-  wa_ret_int(LBItemFromPt(wa_par_HWND(1), *static_cast<POINT*>(wa_get_ptr(2)), wa_par_BOOL(3)));
+  wa_ret_int(LBItemFromPt(wa_par_HWND(1), *wa_par_POINT(2), wa_par_BOOL(3)));
 }
 
 /*
@@ -614,8 +620,8 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollRange(HWND,int code,LPINT,LPINT)
 #if 0
 HB_FUNC( WAFLATSB_GETSCROLLRANGE )
 {
-  INT i1;
-  INT i2;
+  INT i1{};
+  INT i2{};
   wa_ret_BOOL(FlatSB_GetScrollRange(wa_par_HWND(1), wa_par_int(2), &i1, &i2));
   wa_stor_INT(i1, 3);
   wa_stor_INT(i2, 4);
@@ -628,7 +634,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollInfo(HWND,int code,LPSCROLLINFO)
 #if 0
 HB_FUNC( WAFLATSB_GETSCROLLINFO )
 {
-  wa_ret_BOOL(FlatSB_GetScrollInfo(wa_par_HWND(1), wa_par_int(2), static_cast<LPSCROLLINFO>(wa_get_ptr(3))));
+  wa_ret_BOOL(FlatSB_GetScrollInfo(wa_par_HWND(1), wa_par_int(2), wa_par_SCROLLINFO(3)));
 }
 #endif
 
@@ -648,7 +654,7 @@ WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_GetScrollProp(HWND,int propIndex,LPINT)
 #if 0
 HB_FUNC( WAFLATSB_SCROLLPROP )
 {
-  INT i;
+  INT i{};
   wa_ret_BOOL(FlatSB_GetScrollProp(wa_par_HWND(1), wa_par_int(2), &i));
   wa_stor_INT(i, 3);
 }
@@ -674,7 +680,7 @@ WINCOMMCTRLAPI int WINAPI FlatSB_SetScrollInfo(HWND,int code,LPSCROLLINFO,WINBOO
 #if 0
 HB_FUNC( WAFLATSB_SETSCROLLINFO )
 {
-  wa_ret_int(FlatSB_SetScrollInfo(wa_par_HWND(1), wa_par_int(2), static_cast<LPSCROLLINFO>(wa_get_ptr(3)), wa_par_BOOL(4)));
+  wa_ret_int(FlatSB_SetScrollInfo(wa_par_HWND(1), wa_par_int(2), wa_par_SCROLLINFO(3), wa_par_BOOL(4)));
 }
 #endif
 
@@ -721,7 +727,23 @@ HB_FUNC( WAUNINITIALIZEFLATSB )
 /*
 WINCOMMCTRLAPI HRESULT WINAPI LoadIconMetric (HINSTANCE hinst, PCWSTR pszName, int lims, HICON *phico)
 */
+#if 0
+HB_FUNC( WALOADICONMETRIC )
+{
+  HICON * phico{};
+  wa_ret_HRESULT(LoadIconMetric(wa_par_HINSTANCE(1), wa_par_PCWSTR(2), wa_par_int(3), &phico));
+  hb_storptr(phico, 4);
+}
+#endif
 
 /*
 WINCOMMCTRLAPI HRESULT WINAPI LoadIconWithScaleDown (HINSTANCE hinst, PCWSTR pszName, int cx, int cy, HICON *phico)
 */
+#if 0
+HB_FUNC( WALOADICONWITHSCALEDOWN )
+{
+  HICON * phico{};
+  wa_ret_HRESULT(LoadIconWithScaleDown(wa_par_HINSTANCE(1), wa_par_PCWSTR(2), wa_par_int(3), wa_par_int(4), &phico));
+  hb_storptr(phico, 4);
+}
+#endif

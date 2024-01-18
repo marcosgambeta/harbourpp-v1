@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ DWORD GetFileVersionInfoSizeA([in] LPCSTR lptstrFilename, [out, optional] LPDWOR
 */
 HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
 {
-  DWORD dwHandle;
+  DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeA(wa_par_LPCSTR(1), &dwHandle));
   wa_stor_DWORD(dwHandle, 2);
 }
@@ -74,15 +74,15 @@ DWORD GetFileVersionInfoSizeW([in] LPCWSTR lptstrFilename, [out, optional] LPDWO
 */
 HB_FUNC( WAGETFILEVERSIONINFOSIZEW )
 {
-  DWORD dwHandle;
+  DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeW(wa_par_LPCWSTR(1), &dwHandle));
   wa_stor_DWORD(dwHandle, 2);
 }
 
 HB_FUNC( WAGETFILEVERSIONINFOSIZE )
 {
-  void * str1;
-  DWORD dwHandle;
+  void * str1{};
+  DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSize(HB_PARSTR(1, &str1, nullptr), &dwHandle));
   wa_stor_DWORD(dwHandle, 2);
   hb_strfree(str1);
@@ -108,7 +108,7 @@ HB_FUNC( WAGETFILEVERSIONINFOW )
 
 HB_FUNC( WAGETFILEVERSIONINFO )
 {
-  void * str1;
+  void * str1{};
   wa_ret_BOOL(GetFileVersionInfo(HB_PARSTR(1, &str1, nullptr), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
   hb_strfree(str1);
 }
@@ -152,7 +152,7 @@ HB_FUNC( WAGETFILEVERSIONINFOEXW )
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOEX )
 {
-  void * str2;
+  void * str2{};
   wa_ret_BOOL(GetFileVersionInfoEx(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), 0, wa_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)))); // TODO: buffer for data
   hb_strfree(str2);
 }
@@ -164,7 +164,7 @@ DWORD GetFileVersionInfoSizeExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, 
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEEXA )
 {
-  DWORD dwHandle;
+  DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeExA(wa_par_DWORD(1), wa_par_LPCSTR(2), &dwHandle));
   wa_stor_DWORD(dwHandle, 3);
 }
@@ -176,7 +176,7 @@ DWORD GetFileVersionInfoSizeExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename,
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEEXW )
 {
-  DWORD dwHandle;
+  DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeExW(wa_par_DWORD(1), wa_par_LPCWSTR(2), &dwHandle));
   wa_stor_DWORD(dwHandle, 3);
 }
@@ -185,8 +185,8 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEXW )
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEEX )
 {
-  void * str2;
-  DWORD dwHandle;
+  void * str2{};
+  DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeEx(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), &dwHandle));
   wa_stor_DWORD(dwHandle, 3);
   hb_strfree(str2);
