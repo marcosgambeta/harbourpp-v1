@@ -43,6 +43,7 @@ PRG_SOURCES := \
    struct_memorystatusex.prg \
    struct_msg.prg \
    struct_nmhdr.prg \
+   struct_paintstruct.prg \
    struct_paletteentry.prg \
    struct_pixelformatdescriptor.prg \
    struct_point.prg \

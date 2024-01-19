@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -50,19 +50,20 @@ SOFTWARE.
 #define wa_par_BITMAPINFO(n)            static_cast<BITMAPINFO *>(wa_get_ptr(n))
 #define wa_par_BLENDFUNCTION(n)         static_cast<BLENDFUNCTION *>(wa_get_ptr(n))
 #define wa_par_COLORADJUSTMENT(n)       static_cast<COLORADJUSTMENT *>(wa_get_ptr(n))
+#define wa_par_ICONINFO(n)              static_cast<ICONINFO *>(wa_get_ptr(n))
 #define wa_par_KERNINGPAIR(n)           static_cast<KERNINGPAIR *>(wa_get_ptr(n))
 #define wa_par_LOGBRUSH(n)              static_cast<LOGBRUSH *>(wa_get_ptr(n))
 #define wa_par_LOGPALETTE(n)            static_cast<LOGPALETTE *>(wa_get_ptr(n))
 #define wa_par_LOGPEN(n)                static_cast<LOGPEN *>(wa_get_ptr(n))
+#define wa_par_MSG(n)                   static_cast<MSG *>(wa_get_ptr(n))
+#define wa_par_PAINTSTRUCT(n)           static_cast<PAINTSTRUCT *>(wa_get_ptr(n))
 #define wa_par_PIXELFORMATDESCRIPTOR(n) static_cast<PIXELFORMATDESCRIPTOR *>(wa_get_ptr(n))
 #define wa_par_POINT(n)                 static_cast<POINT *>(wa_get_ptr(n))
 #define wa_par_RECT(n)                  static_cast<RECT *>(wa_get_ptr(n))
-#define wa_par_SIZE(n)                  static_cast<SIZE *>(wa_get_ptr(n))
-#define wa_par_XFORM(n)                 static_cast<XFORM *>(wa_get_ptr(n))
-#define wa_par_MSG(n)                   static_cast<MSG *>(wa_get_ptr(n))
-#define wa_par_ICONINFO(n)              static_cast<ICONINFO *>(wa_get_ptr(n))
 #define wa_par_SCROLLINFO(n)            static_cast<SCROLLINFO *>(wa_get_ptr(n))
+#define wa_par_SIZE(n)                  static_cast<SIZE *>(wa_get_ptr(n))
 #define wa_par_WINDOWINFO(n)            static_cast<WINDOWINFO *>(wa_get_ptr(n))
+#define wa_par_XFORM(n)                 static_cast<XFORM *>(wa_get_ptr(n))
 
 /*
 WINUSERAPI int WINAPI wvsprintfA(LPSTR,LPCSTR,va_list arglist)
@@ -2761,14 +2762,26 @@ HB_FUNC( WARELEASEDC )
 /*
 WINUSERAPI HDC WINAPI BeginPaint(HWND hWnd,LPPAINTSTRUCT lpPaint)
 */
+HB_FUNC( WABEGINPAINT )
+{
+  wa_ret_HDC(BeginPaint(wa_par_HWND(1), wa_par_PAINTSTRUCT(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI EndPaint(HWND hWnd,CONST PAINTSTRUCT *lpPaint)
 */
+HB_FUNC( WAENDPAINT )
+{
+  wa_ret_BOOL(EndPaint(wa_par_HWND(1), wa_par_PAINTSTRUCT(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetUpdateRect(HWND hWnd,LPRECT lpRect,WINBOOL bErase)
 */
+HB_FUNC( WAGETUPDATERECT )
+{
+  wa_ret_BOOL(GetUpdateRect(wa_par_HWND(1), wa_par_RECT(2), wa_par_BOOL(3)));
+}
 
 /*
 WINUSERAPI int WINAPI GetUpdateRgn(HWND hWnd,HRGN hRgn,WINBOOL bErase)
@@ -2797,6 +2810,10 @@ HB_FUNC( WAGETWINDOWRGN )
 /*
 WINUSERAPI int WINAPI GetWindowRgnBox(HWND hWnd,LPRECT lprc)
 */
+HB_FUNC( WAGETWINDOWRGNBOX )
+{
+  wa_ret_int(GetWindowRgnBox(wa_par_HWND(1), wa_par_RECT(2)));
+}
 
 /*
 WINUSERAPI int WINAPI ExcludeUpdateRgn(HDC hDC,HWND hWnd)
@@ -2809,10 +2826,18 @@ HB_FUNC( WAEXCLUDEUPDATERGN )
 /*
 WINUSERAPI WINBOOL WINAPI InvalidateRect(HWND hWnd,CONST RECT *lpRect,WINBOOL bErase)
 */
+HB_FUNC( WAINVALIDATERECT )
+{
+  wa_ret_BOOL(InvalidateRect(wa_par_HWND(1), wa_par_RECT(2), wa_par_BOOL(3)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI ValidateRect(HWND hWnd,CONST RECT *lpRect)
 */
+HB_FUNC( WAVALIDATERECT )
+{
+  wa_ret_BOOL(ValidateRect(wa_par_HWND(1), wa_par_RECT(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI InvalidateRgn(HWND hWnd,HRGN hRgn,WINBOOL bErase)
@@ -2833,6 +2858,10 @@ HB_FUNC( WAVALIDATERGN )
 /*
 WINUSERAPI WINBOOL WINAPI RedrawWindow(HWND hWnd,CONST RECT *lprcUpdate,HRGN hrgnUpdate,UINT flags)
 */
+HB_FUNC( WAREDRAWWINDOW )
+{
+  wa_ret_BOOL(RedrawWindow(wa_par_HWND(1), wa_par_RECT(2), wa_par_HRGN(3), wa_par_UINT(4)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI LockWindowUpdate(HWND hWndLock)
@@ -2845,14 +2874,26 @@ HB_FUNC( WALOCKWINDOWUPDATE )
 /*
 WINUSERAPI WINBOOL WINAPI ScrollWindow(HWND hWnd,int XAmount,int YAmount,CONST RECT *lpRect,CONST RECT *lpClipRect)
 */
+HB_FUNC( WASCROLLWINDOW )
+{
+  wa_ret_BOOL(ScrollWindow(wa_par_HWND(1), wa_par_int(2), wa_par_int(3), wa_par_RECT(4), wa_par_RECT(5)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI ScrollDC(HDC hDC,int dx,int dy,CONST RECT *lprcScroll,CONST RECT *lprcClip,HRGN hrgnUpdate,LPRECT lprcUpdate)
 */
+HB_FUNC( WASCROLLDC )
+{
+  wa_ret_BOOL(ScrollDC(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_RECT(4), wa_par_RECT(5), wa_par_HRGN(6), wa_par_RECT(7)));
+}
 
 /*
 WINUSERAPI int WINAPI ScrollWindowEx(HWND hWnd,int dx,int dy,CONST RECT *prcScroll,CONST RECT *prcClip,HRGN hrgnUpdate,LPRECT prcUpdate,UINT flags)
 */
+HB_FUNC( WASCROLLWINDOWEX )
+{
+  wa_ret_int(ScrollWindowEx(wa_par_HWND(1), wa_par_int(2), wa_par_int(3), wa_par_RECT(4), wa_par_RECT(5), wa_par_HRGN(6), wa_par_RECT(7), wa_par_UINT(8)));
+}
 
 /*
 WINUSERAPI int WINAPI SetScrollPos(HWND hWnd,int nBar,int nPos,WINBOOL bRedraw)
@@ -2881,6 +2922,14 @@ HB_FUNC( WASETSCROLLRANGE )
 /*
 WINUSERAPI WINBOOL WINAPI GetScrollRange(HWND hWnd,int nBar,LPINT lpMinPos,LPINT lpMaxPos)
 */
+HB_FUNC( WAGETSCROLLRANGE )
+{
+  INT MinPos{};
+  INT MaxPos{};
+  wa_ret_BOOL(GetScrollRange(wa_par_HWND(1), wa_par_int(2), &MinPos, &MaxPos));
+  wa_stor_INT(MinPos, 3);
+  wa_stor_INT(MaxPos, 4);
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI ShowScrollBar(HWND hWnd,int wBar,WINBOOL bShow)
@@ -3020,18 +3069,34 @@ HB_FUNC( WAGETWINDOWTEXTLENGTHW )
 /*
 WINUSERAPI WINBOOL WINAPI GetClientRect(HWND hWnd,LPRECT lpRect)
 */
+HB_FUNC( WAGETCLIENTRECT )
+{
+  wa_ret_BOOL(GetClientRect(wa_par_HWND(1), wa_par_RECT(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetWindowRect(HWND hWnd,LPRECT lpRect)
 */
+HB_FUNC( WAGETWINDOWRECT )
+{
+  wa_ret_BOOL(GetWindowRect(wa_par_HWND(1), wa_par_RECT(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI AdjustWindowRect(LPRECT lpRect,DWORD dwStyle,WINBOOL bMenu)
 */
+HB_FUNC( WAADJUSTWINDOWRECT )
+{
+  wa_ret_BOOL(AdjustWindowRect(wa_par_RECT(1), wa_par_DWORD(2), wa_par_BOOL(3)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI AdjustWindowRectEx(LPRECT lpRect,DWORD dwStyle,WINBOOL bMenu,DWORD dwExStyle)
 */
+HB_FUNC( WAADJUSTWINDOWRECTEX )
+{
+  wa_ret_BOOL(AdjustWindowRectEx(wa_par_RECT(1), wa_par_DWORD(2), wa_par_BOOL(3), wa_par_DWORD(4)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI SetWindowContextHelpId(HWND,DWORD)
@@ -3166,6 +3231,10 @@ HB_FUNC( WAGETCURSORPOS )
 /*
 WINUSERAPI WINBOOL WINAPI ClipCursor(CONST RECT *lpRect)
 */
+HB_FUNC( WACLIPCURSOR )
+{
+  wa_ret_BOOL(ClipCursor(wa_par_RECT(1)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetClipCursor(LPRECT lpRect)
@@ -3274,14 +3343,26 @@ HB_FUNC( WAMAPWINDOWPOINTS )
 /*
 WINUSERAPI HWND WINAPI WindowFromPoint(POINT Point)
 */
+HB_FUNC( WAWINDOWFROMPOINT )
+{
+  wa_ret_HWND(WindowFromPoint(*wa_par_POINT(1)));
+}
 
 /*
 WINUSERAPI HWND WINAPI ChildWindowFromPoint(HWND hWndParent,POINT Point)
 */
+HB_FUNC( WACHILDWINDOWFROMPOINT )
+{
+  wa_ret_HWND(ChildWindowFromPoint(wa_par_HWND(1), *wa_par_POINT(2)));
+}
 
 /*
 WINUSERAPI HWND WINAPI ChildWindowFromPointEx(HWND hwnd,POINT pt,UINT flags)
 */
+HB_FUNC( WACHILDWINDOWFROMPOINTEX )
+{
+  wa_ret_HWND(ChildWindowFromPointEx(wa_par_HWND(1), *wa_par_POINT(2), wa_par_UINT(3)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI SetPhysicalCursorPos (int X, int Y)
