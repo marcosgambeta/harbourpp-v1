@@ -32,7 +32,9 @@ PRG_SOURCES := \
    struct_coloradjustment.prg \
    struct_comstat.prg \
    struct_dcb.prg \
+   struct_drawtextparams.prg \
    struct_filetime.prg \
+   struct_flashwinfo.prg \
    struct_iconinfo.prg \
    struct_imagelistdrawparams.prg \
    struct_initcommoncontrolsex.prg \
@@ -41,6 +43,7 @@ PRG_SOURCES := \
    struct_logpalette.prg \
    struct_logpen.prg \
    struct_memorystatusex.prg \
+   struct_mousemovepoint.prg \
    struct_msg.prg \
    struct_nmhdr.prg \
    struct_paintstruct.prg \
@@ -57,6 +60,7 @@ PRG_SOURCES := \
    struct_systemtime.prg \
    struct_timecaps.prg \
    struct_windowinfo.prg \
+   struct_windowplacement.prg \
    struct_xform.prg \
    gppoint.prg \
    gppointf.prg \

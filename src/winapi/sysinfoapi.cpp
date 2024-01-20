@@ -42,11 +42,6 @@ SOFTWARE.
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-#define wa_par_SYSTEMTIME(n)               static_cast<SYSTEMTIME *>(wa_get_ptr(n))
-#define wa_par_SYSTEM_INFO(n)              static_cast<SYSTEM_INFO *>(wa_get_ptr(n))
-#define wa_par_MEMORYSTATUSEX(n)           static_cast<MEMORYSTATUSEX *>(wa_get_ptr(n))
-#define wa_par_FILETIME(n)                 static_cast<FILETIME *>(wa_get_ptr(n))
-
 /*
 WINBASEAPI WINBOOL WINAPI GetComputerNameExA (COMPUTER_NAME_FORMAT NameType, LPSTR lpBuffer, LPDWORD nSize)
 */

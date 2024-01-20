@@ -42,25 +42,6 @@ SOFTWARE.
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-#define wa_par_ABC(n)                   static_cast<ABC *>(wa_get_ptr(n))
-#define wa_par_ABCFLOAT(n)              static_cast<ABCFLOAT *>(wa_get_ptr(n))
-#define wa_par_BITMAP(n)                static_cast<BITMAP *>(wa_get_ptr(n))
-#define wa_par_BITMAPINFO(n)            static_cast<BITMAPINFO *>(wa_get_ptr(n))
-#define wa_par_BLENDFUNCTION(n)         static_cast<BLENDFUNCTION *>(wa_get_ptr(n))
-#define wa_par_COLORADJUSTMENT(n)       static_cast<COLORADJUSTMENT *>(wa_get_ptr(n))
-#define wa_par_KERNINGPAIR(n)           static_cast<KERNINGPAIR *>(wa_get_ptr(n))
-#define wa_par_LOGBRUSH(n)              static_cast<LOGBRUSH *>(wa_get_ptr(n))
-#define wa_par_LOGPALETTE(n)            static_cast<LOGPALETTE *>(wa_get_ptr(n))
-#define wa_par_LOGPEN(n)                static_cast<LOGPEN *>(wa_get_ptr(n))
-#define wa_par_PIXELFORMATDESCRIPTOR(n) static_cast<PIXELFORMATDESCRIPTOR *>(wa_get_ptr(n))
-#define wa_par_POINT(n)                 static_cast<POINT *>(wa_get_ptr(n))
-#define wa_par_RECT(n)                  static_cast<RECT *>(wa_get_ptr(n))
-#define wa_par_SIZE(n)                  static_cast<SIZE *>(wa_get_ptr(n))
-#define wa_par_XFORM(n)                 static_cast<XFORM *>(wa_get_ptr(n))
-
-#define wa_ret_PROC(x) hb_retptr((void*) x)
-#define wa_ret_ULONG(x) hb_retnl(x)
-
 /*
 WINGDIAPI int WINAPI AddFontResourceA(LPCSTR)
 */
@@ -165,18 +146,22 @@ HB_FUNC( WACOMBINERGN )
 /*
 WINGDIAPI HMETAFILE WINAPI CopyMetaFileA(HMETAFILE,LPCSTR)
 */
+#if 0
 HB_FUNC( WACOPYMETAFILEA )
 {
   wa_ret_HMETAFILE(CopyMetaFileA(wa_par_HMETAFILE(1), wa_par_LPCSTR(2)));
 }
+#endif
 
 /*
 WINGDIAPI HMETAFILE WINAPI CopyMetaFileW(HMETAFILE,LPCWSTR)
 */
+#if 0
 HB_FUNC( WACOPYMETAFILEW )
 {
   wa_ret_HMETAFILE(CopyMetaFileW(wa_par_HMETAFILE(1), wa_par_LPCWSTR(2)));
 }
+#endif
 
 HB_FUNC( WACOPYMETAFILE )
 {
@@ -284,18 +269,22 @@ WINGDIAPI HFONT WINAPI CreateFontIndirectW(CONST LOGFONTW *lplf)
 /*
 WINGDIAPI HFONT WINAPI CreateFontA(int cHeight,int cWidth,int cEscapement,int cOrientation,int cWeight,DWORD bItalic,DWORD bUnderline,DWORD bStrikeOut,DWORD iCharSet,DWORD iOutPrecision,DWORD iClipPrecision,DWORD iQuality,DWORD iPitchAndFamily,LPCSTR pszFaceName)
 */
+#if 0
 HB_FUNC( WACREATEFONTA )
 {
   wa_ret_HFONT(CreateFontA(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_DWORD(6), wa_par_DWORD(7), wa_par_DWORD(8), wa_par_DWORD(9), wa_par_DWORD(10), wa_par_DWORD(11), wa_par_DWORD(12), wa_par_DWORD(13), wa_par_LPCSTR(14)));
 }
+#endif
 
 /*
 WINGDIAPI HFONT WINAPI CreateFontW(int cHeight,int cWidth,int cEscapement,int cOrientation,int cWeight,DWORD bItalic,DWORD bUnderline,DWORD bStrikeOut,DWORD iCharSet,DWORD iOutPrecision,DWORD iClipPrecision,DWORD iQuality,DWORD iPitchAndFamily,LPCWSTR pszFaceName)
 */
+#if 0
 HB_FUNC( WACREATEFONTW )
 {
   wa_ret_HFONT(CreateFontW(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_DWORD(6), wa_par_DWORD(7), wa_par_DWORD(8), wa_par_DWORD(9), wa_par_DWORD(10), wa_par_DWORD(11), wa_par_DWORD(12), wa_par_DWORD(13), wa_par_LPCWSTR(14)));
 }
+#endif
 
 HB_FUNC( WACREATEFONT )
 {
@@ -323,18 +312,22 @@ WINGDIAPI HDC WINAPI CreateICW(LPCWSTR pszDriver,LPCWSTR pszDevice,LPCWSTR pszPo
 /*
 WINGDIAPI HDC WINAPI CreateMetaFileA(LPCSTR pszFile)
 */
+#if 0
 HB_FUNC( WACREATEMETAFILEA )
 {
   wa_ret_HDC(CreateMetaFileA(wa_par_LPCSTR(1)));
 }
+#endif
 
 /*
 WINGDIAPI HDC WINAPI CreateMetaFileW(LPCWSTR pszFile)
 */
+#if 0
 HB_FUNC( WACREATEMETAFILEW )
 {
   wa_ret_HDC(CreateMetaFileW(wa_par_LPCWSTR(1)));
 }
+#endif
 
 HB_FUNC( WACREATEMETAFILE )
 {
@@ -430,18 +423,22 @@ HB_FUNC( WACREATEROUNDRECTRGN )
 /*
 WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceA(DWORD fdwHidden,LPCSTR lpszFont,LPCSTR lpszFile,LPCSTR lpszPath)
 */
+#if 0
 HB_FUNC( WACREATESCALABLEFONTRESOURCEA )
 {
   wa_ret_BOOL(CreateScalableFontResourceA(wa_par_DWORD(1), wa_par_LPCSTR(2), wa_par_LPCSTR(3), wa_par_LPCSTR(4)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI CreateScalableFontResourceW(DWORD fdwHidden,LPCWSTR lpszFont,LPCWSTR lpszFile,LPCWSTR lpszPath)
 */
+#if 0
 HB_FUNC( WACREATESCALABLEFONTRESOURCEW )
 {
   wa_ret_BOOL(CreateScalableFontResourceW(wa_par_DWORD(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), wa_par_LPCWSTR(4)));
 }
+#endif
 
 HB_FUNC( WACREATESCALABLEFONTRESOURCE )
 {
@@ -705,73 +702,113 @@ WINGDIAPI WINBOOL WINAPI GetCharWidthW(HDC hdc,UINT iFirst,UINT iLast,LPINT lpBu
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidth32A(HDC hdc,UINT iFirst,UINT iLast,LPINT lpBuffer)
 */
+#if 0
 HB_FUNC( WAGETCHARWIDTH32A )
 {
   INT lpBuffer{};
   wa_ret_BOOL(GetCharWidth32A(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
   wa_stor_INT(lpBuffer, 4);
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidth32W(HDC hdc,UINT iFirst,UINT iLast,LPINT lpBuffer)
 */
+#if 0
 HB_FUNC( WAGETCHARWIDTH32W )
 {
   INT lpBuffer{};
   wa_ret_BOOL(GetCharWidth32W(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
   wa_stor_INT(lpBuffer, 4);
 }
+#endif
+
+HB_FUNC( WAGETCHARWIDTH32 )
+{
+  INT lpBuffer{};
+  wa_ret_BOOL(GetCharWidth32(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
+  wa_stor_INT(lpBuffer, 4);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidthFloatA(HDC hdc,UINT iFirst,UINT iLast,PFLOAT lpBuffer)
 */
+#if 0
 HB_FUNC( WAGETCHARWIDTHFLOATA )
 {
   FLOAT lpBuffer{};
   wa_ret_BOOL(GetCharWidthFloatA(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
   wa_stor_FLOAT(lpBuffer, 4);
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharWidthFloatW(HDC hdc,UINT iFirst,UINT iLast,PFLOAT lpBuffer)
 */
+#if 0
 HB_FUNC( WAGETCHARWIDTHFLOATW )
 {
   FLOAT lpBuffer{};
   wa_ret_BOOL(GetCharWidthFloatW(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
   wa_stor_FLOAT(lpBuffer, 4);
 }
+#endif
+
+HB_FUNC( WAGETCHARWIDTHFLOAT )
+{
+  FLOAT lpBuffer{};
+  wa_ret_BOOL(GetCharWidthFloat(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), &lpBuffer));
+  wa_stor_FLOAT(lpBuffer, 4);
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsA(HDC hdc,UINT wFirst,UINT wLast,LPABC lpABC)
 */
+#if 0
 HB_FUNC( WAGETCHARABCWIDTHSA )
 {
   wa_ret_BOOL(GetCharABCWidthsA(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABC(4)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsW(HDC hdc,UINT wFirst,UINT wLast,LPABC lpABC)
 */
+#if 0
 HB_FUNC( WAGETCHARABCWIDTHSW )
 {
   wa_ret_BOOL(GetCharABCWidthsW(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABC(4)));
+}
+#endif
+
+HB_FUNC( WAGETCHARABCWIDTHS )
+{
+  wa_ret_BOOL(GetCharABCWidths(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABC(4)));
 }
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsFloatA(HDC hdc,UINT iFirst,UINT iLast,LPABCFLOAT lpABC)
 */
+#if 0
 HB_FUNC( WAGETCHARABCWIDTHSFLOATA )
 {
   wa_ret_BOOL(GetCharABCWidthsFloatA(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABCFLOAT(4)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetCharABCWidthsFloatW(HDC hdc,UINT iFirst,UINT iLast,LPABCFLOAT lpABC)
 */
+#if 0
 HB_FUNC( WAGETCHARABCWIDTHSFLOATW )
 {
   wa_ret_BOOL(GetCharABCWidthsFloatW(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABCFLOAT(4)));
+}
+#endif
+
+HB_FUNC( WAGETCHARABCWIDTHSFLOAT )
+{
+  wa_ret_BOOL(GetCharABCWidthsFloat(wa_par_HDC(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_ABCFLOAT(4)));
 }
 
 /*
@@ -869,18 +906,22 @@ HB_FUNC( WAGETMETAFILEBITSEX )
 /*
 WINGDIAPI HMETAFILE WINAPI GetMetaFileA(LPCSTR lpName)
 */
+#if 0
 HB_FUNC( WAGETMETAFILEA )
 {
   wa_ret_HMETAFILE(GetMetaFileA(wa_par_LPCSTR(1)));
 }
+#endif
 
 /*
 WINGDIAPI HMETAFILE WINAPI GetMetaFileW(LPCWSTR lpName)
 */
+#if 0
 HB_FUNC( WAGETMETAFILEW )
 {
   wa_ret_HMETAFILE(GetMetaFileW(wa_par_LPCWSTR(1)));
 }
+#endif
 
 HB_FUNC( WAGETMETAFILE )
 {
@@ -1028,18 +1069,22 @@ HB_FUNC( WAGETTEXTCOLOR )
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPointA(HDC hdc,LPCSTR lpString,int c,LPSIZE lpsz)
 */
+#if 0
 HB_FUNC( WAGETTEXTEXTENTPOINTA )
 {
   wa_ret_BOOL(GetTextExtentPointA(wa_par_HDC(1), wa_par_LPCSTR(2), wa_par_int(3), wa_par_SIZE(4)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPointW(HDC hdc,LPCWSTR lpString,int c,LPSIZE lpsz)
 */
+#if 0
 HB_FUNC( WAGETTEXTEXTENTPOINTW )
 {
   wa_ret_BOOL(GetTextExtentPointW(wa_par_HDC(1), wa_par_LPCWSTR(2), wa_par_int(3), wa_par_SIZE(4)));
 }
+#endif
 
 HB_FUNC( WAGETTEXTEXTENTPOINT )
 {
@@ -1051,18 +1096,22 @@ HB_FUNC( WAGETTEXTEXTENTPOINT )
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPoint32A(HDC hdc,LPCSTR lpString,int c,LPSIZE psizl)
 */
+#if 0
 HB_FUNC( WAGETTEXTEXTENTPOINT32A )
 {
   wa_ret_BOOL(GetTextExtentPoint32A(wa_par_HDC(1), wa_par_LPCSTR(2), wa_par_int(3), wa_par_SIZE(4)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentPoint32W(HDC hdc,LPCWSTR lpString,int c,LPSIZE psizl)
 */
+#if 0
 HB_FUNC( WAGETTEXTEXTENTPOINT32W )
 {
   wa_ret_BOOL(GetTextExtentPoint32W(wa_par_HDC(1), wa_par_LPCWSTR(2), wa_par_int(3), wa_par_SIZE(4)));
 }
+#endif
 
 HB_FUNC( WAGETTEXTEXTENTPOINT32 )
 {
@@ -1074,6 +1123,7 @@ HB_FUNC( WAGETTEXTEXTENTPOINT32 )
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentExPointA(HDC hdc,LPCSTR lpszString,int cchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
 */
+#if 0
 HB_FUNC( WAGETTEXTEXTENTEXPOINTA )
 {
   INT lpnFit{};
@@ -1082,10 +1132,12 @@ HB_FUNC( WAGETTEXTEXTENTEXPOINTA )
   wa_stor_INT(lpnFit, 5);
   wa_stor_INT(lpnDx, 6);
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI GetTextExtentExPointW(HDC hdc,LPCWSTR lpszString,int cchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
 */
+#if 0
 HB_FUNC( WAGETTEXTEXTENTEXPOINTW )
 {
   INT lpnFit{};
@@ -1094,6 +1146,7 @@ HB_FUNC( WAGETTEXTEXTENTEXPOINTW )
   wa_stor_INT(lpnFit, 5);
   wa_stor_INT(lpnDx, 6);
 }
+#endif
 
 HB_FUNC( WAGETTEXTEXTENTEXPOINT )
 {
@@ -1145,22 +1198,26 @@ WINGDIAPI DWORD WINAPI GetFontUnicodeRanges(HDC hdc,LPGLYPHSET lpgs)
 /*
 WINGDIAPI DWORD WINAPI GetGlyphIndicesA(HDC hdc,LPCSTR lpstr,int c,LPWORD pgi,DWORD fl)
 */
+#if 0
 HB_FUNC( WAGETGLYPHINDICESA )
 {
   WORD gi{};
   wa_ret_DWORD(GetGlyphIndicesA(wa_par_HDC(1), wa_par_LPCSTR(2), wa_par_int(3), &gi, wa_par_DWORD(5)));
   wa_stor_WORD(gi, 4);
 }
+#endif
 
 /*
 WINGDIAPI DWORD WINAPI GetGlyphIndicesW(HDC hdc,LPCWSTR lpstr,int c,LPWORD pgi,DWORD fl)
 */
+#if 0
 HB_FUNC( WAGETGLYPHINDICESW )
 {
   WORD gi{};
   wa_ret_DWORD(GetGlyphIndicesW(wa_par_HDC(1), wa_par_LPCWSTR(2), wa_par_int(3), &gi, wa_par_DWORD(5)));
   wa_stor_WORD(gi, 4);
 }
+#endif
 
 HB_FUNC( WAGETGLYPHINDICES )
 {
@@ -1204,18 +1261,22 @@ HB_FUNC( WAGETCHARABCWIDTHSI )
 /*
 WINGDIAPI int WINAPI AddFontResourceExA(LPCSTR name,DWORD fl,PVOID res)
 */
+#if 0
 HB_FUNC( WAADDFONTRESOURCEEXA )
 {
   wa_ret_int(AddFontResourceExA(wa_par_LPCSTR(1), wa_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
 }
+#endif
 
 /*
 WINGDIAPI int WINAPI AddFontResourceExW(LPCWSTR name,DWORD fl,PVOID res)
 */
+#if 0
 HB_FUNC( WAADDFONTRESOURCEEXW )
 {
   wa_ret_int(AddFontResourceExW(wa_par_LPCWSTR(1), wa_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
 }
+#endif
 
 HB_FUNC( WAADDFONTRESOURCEEX )
 {
@@ -1227,18 +1288,22 @@ HB_FUNC( WAADDFONTRESOURCEEX )
 /*
 WINGDIAPI WINBOOL WINAPI RemoveFontResourceExA(LPCSTR name,DWORD fl,PVOID pdv)
 */
+#if 0
 HB_FUNC( WAREMOVEFONTRESOURCEEXA )
 {
   wa_ret_BOOL(RemoveFontResourceExA(wa_par_LPCSTR(1), wa_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI RemoveFontResourceExW(LPCWSTR name,DWORD fl,PVOID pdv)
 */
+#if 0
 HB_FUNC( WAREMOVEFONTRESOURCEEXW )
 {
   wa_ret_BOOL(RemoveFontResourceExW(wa_par_LPCWSTR(1), wa_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
 }
+#endif
 
 HB_FUNC( WAREMOVEFONTRESOURCEEX )
 {
@@ -1482,18 +1547,22 @@ HB_FUNC( WAREALIZEPALETTE )
 /*
 WINGDIAPI WINBOOL WINAPI RemoveFontResourceA(LPCSTR lpFileName)
 */
+#if 0
 HB_FUNC( WAREMOVEFONTRESOURCEA )
 {
   wa_ret_BOOL(RemoveFontResourceA(wa_par_LPCSTR(1)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI RemoveFontResourceW(LPCWSTR lpFileName)
 */
+#if 0
 HB_FUNC( WAREMOVEFONTRESOURCEW )
 {
   wa_ret_BOOL(RemoveFontResourceW(wa_par_LPCWSTR(1)));
 }
+#endif
 
 HB_FUNC( WAREMOVEFONTRESOURCE )
 {
@@ -1897,18 +1966,22 @@ HB_FUNC( WACLOSEENHMETAFILE )
 /*
 WINGDIAPI HENHMETAFILE WINAPI CopyEnhMetaFileA(HENHMETAFILE hEnh,LPCSTR lpFileName)
 */
+#if 0
 HB_FUNC( WACOPYENHMETAFILEA )
 {
   wa_ret_HENHMETAFILE(CopyEnhMetaFileA(wa_par_HENHMETAFILE(1), wa_par_LPCSTR(2)));
 }
+#endif
 
 /*
 WINGDIAPI HENHMETAFILE WINAPI CopyEnhMetaFileW(HENHMETAFILE hEnh,LPCWSTR lpFileName)
 */
+#if 0
 HB_FUNC( WACOPYENHMETAFILEW )
 {
   wa_ret_HENHMETAFILE(CopyEnhMetaFileW(wa_par_HENHMETAFILE(1), wa_par_LPCWSTR(2)));
 }
+#endif
 
 HB_FUNC( WACOPYENHMETAFILE )
 {
@@ -1920,18 +1993,22 @@ HB_FUNC( WACOPYENHMETAFILE )
 /*
 WINGDIAPI HDC WINAPI CreateEnhMetaFileA(HDC hdc,LPCSTR lpFilename,CONST RECT *lprc,LPCSTR lpDesc)
 */
+#if 0
 HB_FUNC( WACREATEENHMETAFILEA )
 {
   wa_ret_HDC(CreateEnhMetaFileA(wa_par_HDC(1), wa_par_LPCSTR(2), wa_par_RECT(3), wa_par_LPCSTR(4)));
 }
+#endif
 
 /*
 WINGDIAPI HDC WINAPI CreateEnhMetaFileW(HDC hdc,LPCWSTR lpFilename,CONST RECT *lprc,LPCWSTR lpDesc)
 */
+#if 0
 HB_FUNC( WACREATEENHMETAFILEW )
 {
   wa_ret_HDC(CreateEnhMetaFileW(wa_par_HDC(1), wa_par_LPCWSTR(2), wa_par_RECT(3), wa_par_LPCWSTR(4)));
 }
+#endif
 
 HB_FUNC( WACREATEENHMETAFILE )
 {
@@ -1957,18 +2034,22 @@ WINGDIAPI WINBOOL WINAPI EnumEnhMetaFile(HDC hdc,HENHMETAFILE hmf,ENHMFENUMPROC 
 /*
 WINGDIAPI HENHMETAFILE WINAPI GetEnhMetaFileA(LPCSTR lpName)
 */
+#if 0
 HB_FUNC( WAGETENHMETAFILEA )
 {
   wa_ret_HENHMETAFILE(GetEnhMetaFileA(wa_par_LPCSTR(1)));
 }
+#endif
 
 /*
 WINGDIAPI HENHMETAFILE WINAPI GetEnhMetaFileW(LPCWSTR lpName)
 */
+#if 0
 HB_FUNC( WAGETENHMETAFILEW )
 {
   wa_ret_HENHMETAFILE(GetEnhMetaFileW(wa_par_LPCWSTR(1)));
 }
+#endif
 
 HB_FUNC( WAGETENHMETAFILE )
 {
@@ -1984,7 +2065,7 @@ WINGDIAPI UINT WINAPI GetEnhMetaFileBits(HENHMETAFILE hEMF,UINT nSize,LPBYTE lpD
 /*
 WINGDIAPI UINT WINAPI GetEnhMetaFileDescriptionA(HENHMETAFILE hemf,UINT cchBuffer,LPSTR lpDescription)
 */
-HB_FUNC( WAGETENHMETAFILEDESCRIPTIONA )
+HB_FUNC( WAGETENHMETAFILEDESCRIPTIONA ) // TODO: fix
 {
   wa_ret_UINT(GetEnhMetaFileDescriptionA(wa_par_HENHMETAFILE(1), wa_par_UINT(2), const_cast<LPSTR>(hb_parc(3))));
 }
@@ -1992,7 +2073,7 @@ HB_FUNC( WAGETENHMETAFILEDESCRIPTIONA )
 /*
 WINGDIAPI UINT WINAPI GetEnhMetaFileDescriptionW(HENHMETAFILE hemf,UINT cchBuffer,LPWSTR lpDescription)
 */
-HB_FUNC( WAGETENHMETAFILEDESCRIPTIONW )
+HB_FUNC( WAGETENHMETAFILEDESCRIPTIONW ) // TODO: fix
 {
   wa_ret_UINT(GetEnhMetaFileDescriptionW(wa_par_HENHMETAFILE(1), wa_par_UINT(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
@@ -2368,7 +2449,7 @@ HB_FUNC( WAGETARCDIRECTION )
 /*
 WINGDIAPI int WINAPI GetObjectA(HANDLE h,int c,LPVOID pv)
 */
-HB_FUNC( WAGETOBJECTA )
+HB_FUNC( WAGETOBJECTA ) // TODO: fix
 {
   wa_ret_int(GetObjectA(wa_par_HANDLE(1), wa_par_int(2), static_cast<LPVOID>(hb_parptr(3))));
 }
@@ -2376,7 +2457,7 @@ HB_FUNC( WAGETOBJECTA )
 /*
 WINGDIAPI int WINAPI GetObjectW(HANDLE h,int c,LPVOID pv)
 */
-HB_FUNC( WAGETOBJECTW )
+HB_FUNC( WAGETOBJECTW ) // TODO: fix
 {
   wa_ret_int(GetObjectW(wa_par_HANDLE(1), wa_par_int(2), static_cast<LPVOID>(hb_parptr(3))));
 }
@@ -2392,18 +2473,22 @@ HB_FUNC( WAMOVETOEX )
 /*
 WINGDIAPI WINBOOL WINAPI TextOutA(HDC hdc,int x,int y,LPCSTR lpString,int c)
 */
+#if 0
 HB_FUNC( WATEXTOUTA )
 {
   wa_ret_BOOL(TextOutA(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_LPCSTR(4), wa_par_int(5)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI TextOutW(HDC hdc,int x,int y,LPCWSTR lpString,int c)
 */
+#if 0
 HB_FUNC( WATEXTOUTW )
 {
   wa_ret_BOOL(TextOutW(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), wa_par_LPCWSTR(4), wa_par_int(5)));
 }
+#endif
 
 HB_FUNC( WATEXTOUT )
 {
@@ -2575,7 +2660,7 @@ HB_FUNC( WASETBRUSHORGEX )
 /*
 WINGDIAPI int WINAPI GetTextFaceA(HDC hdc,int c,LPSTR lpName)
 */
-HB_FUNC( WAGETTEXTFACEA )
+HB_FUNC( WAGETTEXTFACEA ) // TODO: fix
 {
   wa_ret_int(GetTextFaceA(wa_par_HDC(1), wa_par_int(2), const_cast<LPSTR>(hb_parc(3))));
 }
@@ -2583,7 +2668,7 @@ HB_FUNC( WAGETTEXTFACEA )
 /*
 WINGDIAPI int WINAPI GetTextFaceW(HDC hdc,int c,LPWSTR lpName)
 */
-HB_FUNC( WAGETTEXTFACEW )
+HB_FUNC( WAGETTEXTFACEW ) // TODO: fix
 {
   wa_ret_int(GetTextFaceW(wa_par_HDC(1), wa_par_int(2), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
@@ -2591,17 +2676,26 @@ HB_FUNC( WAGETTEXTFACEW )
 /*
 WINGDIAPI DWORD WINAPI GetKerningPairsA(HDC hdc,DWORD nPairs,LPKERNINGPAIR lpKernPair)
 */
+#if 0
 HB_FUNC( WAGETKERNINGPAIRSA )
 {
   wa_ret_DWORD(GetKerningPairsA(wa_par_HDC(1), wa_par_DWORD(2), wa_par_KERNINGPAIR(3)));
 }
+#endif
 
 /*
 WINGDIAPI DWORD WINAPI GetKerningPairsW(HDC hdc,DWORD nPairs,LPKERNINGPAIR lpKernPair)
 */
+#if 0
 HB_FUNC( WAGETKERNINGPAIRSW )
 {
   wa_ret_DWORD(GetKerningPairsW(wa_par_HDC(1), wa_par_DWORD(2), wa_par_KERNINGPAIR(3)));
+}
+#endif
+
+HB_FUNC( WAGETKERNINGPAIRS )
+{
+  wa_ret_DWORD(GetKerningPairs(wa_par_HDC(1), wa_par_DWORD(2), wa_par_KERNINGPAIR(3)));
 }
 
 /*
@@ -2707,7 +2801,7 @@ HB_FUNC( WADELETECOLORSPACE )
 /*
 WINGDIAPI WINBOOL WINAPI GetICMProfileA(HDC hdc,LPDWORD pBufSize,LPSTR pszFilename)
 */
-HB_FUNC( WAGETICMPROFILEA )
+HB_FUNC( WAGETICMPROFILEA ) // TODO: fix
 {
   DWORD BufSize{};
   wa_ret_BOOL(GetICMProfileA(wa_par_HDC(1), &BufSize, const_cast<LPSTR>(hb_parc(3))));
@@ -2717,7 +2811,7 @@ HB_FUNC( WAGETICMPROFILEA )
 /*
 WINGDIAPI WINBOOL WINAPI GetICMProfileW(HDC hdc,LPDWORD pBufSize,LPWSTR pszFilename)
 */
-HB_FUNC( WAGETICMPROFILEW )
+HB_FUNC( WAGETICMPROFILEW ) // TODO: fix
 {
   DWORD BufSize{};
   wa_ret_BOOL(GetICMProfileW(wa_par_HDC(1), &BufSize, reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
@@ -2871,17 +2965,26 @@ HB_FUNC( WAWGLSHARELISTS )
 /*
 WINGDIAPI WINBOOL WINAPI wglUseFontBitmapsA(HDC,DWORD,DWORD,DWORD)
 */
+#if 0
 HB_FUNC( WAWGLUSEFONTBITMAPSA )
 {
   wa_ret_BOOL(wglUseFontBitmapsA(wa_par_HDC(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4)));
 }
+#endif
 
 /*
 WINGDIAPI WINBOOL WINAPI wglUseFontBitmapsW(HDC,DWORD,DWORD,DWORD)
 */
+#if 0
 HB_FUNC( WAWGLUSEFONTBITMAPSW )
 {
   wa_ret_BOOL(wglUseFontBitmapsW(wa_par_HDC(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4)));
+}
+#endif
+
+HB_FUNC( WAWGLUSEFONTBITMAPS )
+{
+  wa_ret_BOOL(wglUseFontBitmaps(wa_par_HDC(1), wa_par_DWORD(2), wa_par_DWORD(3), wa_par_DWORD(4)));
 }
 
 /*

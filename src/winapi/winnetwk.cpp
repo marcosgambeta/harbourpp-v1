@@ -45,18 +45,22 @@ SOFTWARE.
 /*
 DWORD WINAPI WNetAddConnectionA(LPCSTR lpRemoteName,LPCSTR lpPassword,LPCSTR lpLocalName)
 */
+#if 0
 HB_FUNC( WAWNETADDCONNECTIONA )
 {
   wa_ret_DWORD(WNetAddConnectionA(wa_par_LPCSTR(1), wa_par_LPCSTR(2), wa_par_LPCSTR(3)));
 }
+#endif
 
 /*
 DWORD WINAPI WNetAddConnectionW(LPCWSTR lpRemoteName,LPCWSTR lpPassword,LPCWSTR lpLocalName)
 */
+#if 0
 HB_FUNC( WAWNETADDCONNECTIONW )
 {
   wa_ret_DWORD(WNetAddConnectionW(wa_par_LPCWSTR(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3)));
 }
+#endif
 
 HB_FUNC( WAWNETADDCONNECTION )
 {
@@ -72,18 +76,22 @@ HB_FUNC( WAWNETADDCONNECTION )
 /*
 DWORD WINAPI WNetAddConnection2A(LPNETRESOURCEA lpNetResource,LPCSTR lpPassword,LPCSTR lpUserName,DWORD dwFlags)
 */
+#if 0
 HB_FUNC( WAWNETADDCONNECTION2A )
 {
   wa_ret_DWORD(WNetAddConnection2A(static_cast<LPNETRESOURCEA>(hb_parptr(1)), wa_par_LPCSTR(2), wa_par_LPCSTR(3), wa_par_DWORD(4)));
 }
+#endif
 
 /*
 DWORD WINAPI WNetAddConnection2W(LPNETRESOURCEW lpNetResource,LPCWSTR lpPassword,LPCWSTR lpUserName,DWORD dwFlags)
 */
+#if 0
 HB_FUNC( WAWNETADDCONNECTION2W )
 {
   wa_ret_DWORD(WNetAddConnection2W(static_cast<LPNETRESOURCEW>(hb_parptr(1)), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3), wa_par_DWORD(4)));
 }
+#endif
 
 HB_FUNC( WAWNETADDCONNECTION2 )
 {
@@ -97,23 +105,27 @@ HB_FUNC( WAWNETADDCONNECTION2 )
 /*
 DWORD WINAPI WNetAddConnection3A(HWND hwndOwner,LPNETRESOURCEA lpNetResource,LPCSTR lpPassword,LPCSTR lpUserName,DWORD dwFlags)
 */
+#if 0
 HB_FUNC( WAWNETADDCONNECTION3A )
 {
   wa_ret_DWORD(WNetAddConnection3A(wa_par_HWND(1), static_cast<LPNETRESOURCEA>(hb_parptr(2)), wa_par_LPCSTR(3), wa_par_LPCSTR(4), wa_par_DWORD(5)));
 }
+#endif
 
 /*
 DWORD WINAPI WNetAddConnection3W(HWND hwndOwner,LPNETRESOURCEW lpNetResource,LPCWSTR lpPassword,LPCWSTR lpUserName,DWORD dwFlags)
 */
+#if 0
 HB_FUNC( WAWNETADDCONNECTION3W )
 {
   wa_ret_DWORD(WNetAddConnection3W(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), wa_par_LPCWSTR(3), wa_par_LPCWSTR(4), wa_par_DWORD(5)));
 }
+#endif
 
 HB_FUNC( WAWNETADDCONNECTION3 )
 {
-  void * str3;
-  void * str4;
+  void * str3{};
+  void * str4{};
   wa_ret_DWORD(WNetAddConnection3(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5)));
   hb_strfree(str3);
   hb_strfree(str4);
@@ -122,18 +134,22 @@ HB_FUNC( WAWNETADDCONNECTION3 )
 /*
 DWORD WINAPI WNetCancelConnectionA(LPCSTR lpName,WINBOOL fForce)
 */
+#if 0
 HB_FUNC( WAWNETCANCELCONNECTIONA )
 {
   wa_ret_DWORD(WNetCancelConnectionA(wa_par_LPCSTR(1), wa_par_BOOL(2)));
 }
+#endif
 
 /*
 DWORD WINAPI WNetCancelConnectionW(LPCWSTR lpName,WINBOOL fForce)
 */
+#if 0
 HB_FUNC( WAWNETCANCELCONNECTIONW )
 {
   wa_ret_DWORD(WNetCancelConnectionW(wa_par_LPCWSTR(1), wa_par_BOOL(2)));
 }
+#endif
 
 HB_FUNC( WAWNETCANCELCONNECTION )
 {
@@ -145,18 +161,22 @@ HB_FUNC( WAWNETCANCELCONNECTION )
 /*
 DWORD WINAPI WNetCancelConnection2A(LPCSTR lpName,DWORD dwFlags,WINBOOL fForce)
 */
+#if 0
 HB_FUNC( WAWNETCANCELCONNECTION2A )
 {
   wa_ret_DWORD(WNetCancelConnection2A(wa_par_LPCSTR(1), wa_par_DWORD(2), wa_par_BOOL(3)));
 }
+#endif
 
 /*
 DWORD WINAPI WNetCancelConnection2W(LPCWSTR lpName,DWORD dwFlags,WINBOOL fForce)
 */
+#if 0
 HB_FUNC( WAWNETCANCELCONNECTION2W )
 {
   wa_ret_DWORD(WNetCancelConnection2W(wa_par_LPCWSTR(1), wa_par_DWORD(2), wa_par_BOOL(3)));
 }
+#endif
 
 HB_FUNC( WAWNETCANCELCONNECTION2 )
 {
@@ -168,22 +188,26 @@ HB_FUNC( WAWNETCANCELCONNECTION2 )
 /*
 DWORD WINAPI WNetGetConnectionA(LPCSTR lpLocalName,LPSTR lpRemoteName,LPDWORD lpnLength)
 */
+#if 0
 HB_FUNC( WAWNETGETCONNECTIONA )
 {
   DWORD nLength{};
   wa_ret_DWORD(WNetGetConnectionA(wa_par_LPCSTR(1), const_cast<LPSTR>(hb_parc(2)), &nLength));
   wa_stor_DWORD(nLength, 3);
 }
+#endif
 
 /*
 DWORD WINAPI WNetGetConnectionW(LPCWSTR lpLocalName,LPWSTR lpRemoteName,LPDWORD lpnLength)
 */
+#if 0
 HB_FUNC( WAWNETGETCONNECTIONW )
 {
   DWORD nLength{};
   wa_ret_DWORD(WNetGetConnectionW(wa_par_LPCWSTR(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
   wa_stor_DWORD(nLength, 3);
 }
+#endif
 
 HB_FUNC( WAWNETGETCONNECTION )
 {
@@ -197,6 +221,7 @@ HB_FUNC( WAWNETGETCONNECTION )
 /*
 DWORD WINAPI WNetUseConnectionA(HWND hwndOwner,LPNETRESOURCEA lpNetResource,LPCSTR lpPassword,LPCSTR lpUserID,DWORD dwFlags,LPSTR lpAccessName,LPDWORD lpBufferSize,LPDWORD lpResult)
 */
+#if 0
 HB_FUNC( WAWNETUSECONNECTIONA )
 {
   DWORD BufferSize{};
@@ -205,10 +230,12 @@ HB_FUNC( WAWNETUSECONNECTIONA )
   wa_stor_DWORD(BufferSize, 7);
   wa_stor_DWORD(Result, 8);
 }
+#endif
 
 /*
 DWORD WINAPI WNetUseConnectionW(HWND hwndOwner,LPNETRESOURCEW lpNetResource,LPCWSTR lpPassword,LPCWSTR lpUserID,DWORD dwFlags,LPWSTR lpAccessName,LPDWORD lpBufferSize,LPDWORD lpResult)
 */
+#if 0
 HB_FUNC( WAWNETUSECONNECTIONW )
 {
   DWORD BufferSize{};
@@ -217,6 +244,7 @@ HB_FUNC( WAWNETUSECONNECTIONW )
   wa_stor_DWORD(BufferSize, 7);
   wa_stor_DWORD(Result, 8);
 }
+#endif
 
 HB_FUNC( WAWNETUSECONNECTION )
 {

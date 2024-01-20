@@ -61,23 +61,27 @@ DWORD WINAPI VerInstallFileW(DWORD uFlags,LPWSTR szSrcFileName,LPWSTR szDestFile
 DWORD WINAPI GetFileVersionInfoSizeA(LPCSTR lptstrFilename,LPDWORD lpdwHandle)
 DWORD GetFileVersionInfoSizeA([in] LPCSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
 */
+#if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
 {
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeA(wa_par_LPCSTR(1), &dwHandle));
   wa_stor_DWORD(dwHandle, 2);
 }
+#endif
 
 /*
 DWORD WINAPI GetFileVersionInfoSizeW(LPCWSTR lptstrFilename,LPDWORD lpdwHandle)
 DWORD GetFileVersionInfoSizeW([in] LPCWSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
 */
+#if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEW )
 {
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeW(wa_par_LPCWSTR(1), &dwHandle));
   wa_stor_DWORD(dwHandle, 2);
 }
+#endif
 
 HB_FUNC( WAGETFILEVERSIONINFOSIZE )
 {
@@ -92,19 +96,23 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZE )
 WINBOOL WINAPI GetFileVersionInfoA(LPCSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
 BOOL GetFileVersionInfoA([in] LPCSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 */
+#if 0
 HB_FUNC( WAGETFILEVERSIONINFOA )
 {
   wa_ret_BOOL(GetFileVersionInfoA(wa_par_LPCSTR(1), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
 }
+#endif
 
 /*
 WINBOOL WINAPI GetFileVersionInfoW(LPCWSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
 BOOL GetFileVersionInfoW([in] LPCWSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 */
+#if 0
 HB_FUNC( WAGETFILEVERSIONINFOW )
 {
   wa_ret_BOOL(GetFileVersionInfoW(wa_par_LPCWSTR(1), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
 }
+#endif
 
 HB_FUNC( WAGETFILEVERSIONINFO )
 {

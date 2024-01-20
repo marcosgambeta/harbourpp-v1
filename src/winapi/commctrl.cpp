@@ -42,12 +42,6 @@ SOFTWARE.
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-#define wa_par_INITCOMMONCONTROLSEX(n)            static_cast<INITCOMMONCONTROLSEX *>(wa_get_ptr(n))
-#define wa_par_IMAGELISTDRAWPARAMS(n)             static_cast<IMAGELISTDRAWPARAMS *>(wa_get_ptr(n))
-#define wa_par_POINT(n)                           static_cast<POINT *>(wa_get_ptr(n))
-#define wa_par_RECT(n)                            static_cast<RECT *>(wa_get_ptr(n))
-#define wa_par_SCROLLINFO(n)                      static_cast<SCROLLINFO *>(wa_get_ptr(n))
-
 /*
 WINCOMMCTRLAPI void WINAPI InitCommonControls(void)
 */
