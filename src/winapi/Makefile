@@ -35,7 +35,10 @@ PRG_SOURCES := \
    struct_drawtextparams.prg \
    struct_filetime.prg \
    struct_flashwinfo.prg \
+   struct_gradient_rect.prg \
+   struct_gradient_triangle.prg \
    struct_iconinfo.prg \
+   struct_imageinfo.prg \
    struct_imagelistdrawparams.prg \
    struct_initcommoncontrolsex.prg \
    struct_kerningpair.prg \
@@ -59,6 +62,7 @@ PRG_SOURCES := \
    struct_system_info.prg \
    struct_systemtime.prg \
    struct_timecaps.prg \
+   struct_trivertex.prg \
    struct_windowinfo.prg \
    struct_windowplacement.prg \
    struct_xform.prg \

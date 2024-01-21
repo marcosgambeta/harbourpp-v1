@@ -35,6 +35,7 @@ SOFTWARE.
 */
 
 #include <windows.h>
+#include <vector>
 #include <commctrl.h>
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
@@ -379,46 +380,110 @@ WINCOMMCTRLAPI HBITMAP WINAPI CreateMappedBitmap(HINSTANCE hInstance,INT_PTR idB
 /*
 WINCOMMCTRLAPI void WINAPI DrawStatusTextA(HDC hDC,LPCRECT lprc,LPCSTR pszText,UINT uFlags)
 */
+#if 0
 HB_FUNC( WADRAWSTATUSTEXTA )
 {
   DrawStatusTextA(wa_par_HDC(1), wa_par_RECT(2), wa_par_LPCSTR(3), wa_par_UINT(4));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI void WINAPI DrawStatusTextW(HDC hDC,LPCRECT lprc,LPCWSTR pszText,UINT uFlags)
 */
+#if 0
 HB_FUNC( WADRAWSTATUSTEXTW )
 {
   DrawStatusTextW(wa_par_HDC(1), wa_par_RECT(2), wa_par_LPCWSTR(3), wa_par_UINT(4));
+}
+#endif
+
+HB_FUNC( WADRAWSTATUSTEXT )
+{
+  void * str{};
+  DrawStatusText(wa_par_HDC(1), wa_par_RECT(2), HB_PARSTR(3, &str, nullptr), wa_par_UINT(4));
+  hb_strfree(str);
 }
 
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowA(LONG style,LPCSTR lpszText,HWND hwndParent,UINT wID)
 */
+#if 0
 HB_FUNC( WACREATESTATUSWINDOWA )
 {
   wa_ret_HWND(CreateStatusWindowA(hb_parnl(1), wa_par_LPCSTR(2), wa_par_HWND(3), wa_par_UINT(4)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI HWND WINAPI CreateStatusWindowW(LONG style,LPCWSTR lpszText,HWND hwndParent,UINT wID)
 */
+#if 0
 HB_FUNC( WACREATESTATUSWINDOWW )
 {
   wa_ret_HWND(CreateStatusWindowW(hb_parnl(1), wa_par_LPCWSTR(2), wa_par_HWND(3), wa_par_UINT(4)));
+}
+#endif
+
+HB_FUNC( WACREATESTATUSWINDOW )
+{
+  void * str{};
+  wa_ret_HWND(CreateStatusWindow(hb_parnl(1), HB_PARSTR(2, &str, nullptr), wa_par_HWND(3), wa_par_UINT(4)));
+  hb_strfree(str);
 }
 
 /*
 WINCOMMCTRLAPI void WINAPI MenuHelp(UINT uMsg,WPARAM wParam,LPARAM lParam,HMENU hMainMenu,HINSTANCE hInst,HWND hwndStatus,UINT *lpwIDs)
 */
+HB_FUNC( WAMENUHELP )
+{
+  std::vector<UINT> vec{};
+  auto pArray = hb_param(7, Harbour::Item::ARRAY);
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(static_cast<UINT>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  MenuHelp(wa_par_UINT(1), wa_par_WPARAM(2), wa_par_LPARAM(3), wa_par_HMENU(4), wa_par_HINSTANCE(5), wa_par_HWND(6), vec.data());
+}
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ShowHideMenuCtl(HWND hWnd,UINT_PTR uFlags,LPINT lpInfo)
 */
+HB_FUNC( WASHOWHIDEMENUCTL )
+{
+  std::vector<INT> vec{};
+  auto pArray = hb_param(3, Harbour::Item::ARRAY);
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  wa_ret_BOOL(ShowHideMenuCtl(wa_par_HWND(1), wa_par_UINT_PTR(2), vec.data()));
+}
 
 /*
 WINCOMMCTRLAPI void WINAPI GetEffectiveClientRect(HWND hWnd,LPRECT lprc,const INT *lpInfo)
 */
+HB_FUNC( WAGETEFFECTIVECLIENTRECT )
+{
+  std::vector<INT> vec{};
+  auto pArray = hb_param(3, Harbour::Item::ARRAY);
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  GetEffectiveClientRect(wa_par_HWND(1), wa_par_RECT(2), vec.data());
+}
 
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI MakeDragList(HWND hLB)
@@ -459,6 +524,22 @@ WINCOMMCTRLAPI HRESULT WINAPI TaskDialogIndirect (const TASKDIALOGCONFIG *pTaskC
 /*
 WINCOMMCTRLAPI HRESULT WINAPI TaskDialog (HWND hwndOwner, HINSTANCE hInstance, PCWSTR pszWindowTitle, PCWSTR pszMainInstruction, PCWSTR pszContent, TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons, PCWSTR pszIcon, int *pnButton)
 */
+#if 0
+HB_FUNC( WATASKDIALOG )
+{
+  void * str3{};
+  void * str4{};
+  void * str5{};
+  void * str7{};
+  int nButton{};
+  wa_ret_HRESULT(TaskDialog(wa_par_HWND(1), wa_par_HINSTANCE(2), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), static_cast<TASKDIALOG_COMMON_BUTTON_FLAGS>(hb_parni(6)), HB_PARSTR(7, &str7, nullptr), &nButton));
+  hb_strfree(str3);
+  hb_strfree(str4);
+  hb_strfree(str5);
+  hb_strfree(str7);
+  wa_stor_int(nButton, 8);
+}
+#endif
 
 /*
 WINCOMMCTRLAPI HDSA WINAPI DSA_Create (int cbItem, int cItemGrow)

@@ -1942,10 +1942,102 @@ HB_FUNC( WAGDITRANSPARENTBLT )
 /*
 WINGDIAPI WINBOOL WINAPI GradientFill(HDC hdc,PTRIVERTEX pVertex,ULONG nVertex,PVOID pMesh,ULONG nMesh,ULONG ulMode)
 */
+HB_FUNC( WAGRADIENTFILL )
+{
+  std::vector<TRIVERTEX> vec1{};
+  auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
+  if( pArray1 != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray1);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec1.push_back(*static_cast<TRIVERTEX*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+    }
+  }
+  std::vector<GRADIENT_RECT> vec2gr{};
+  std::vector<GRADIENT_TRIANGLE> vec2gt{};
+  auto type = 0; // 1=gradient_rect 2=gradient_triangle
+  auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
+  if( pArray2 != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray2);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
+      if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_RECT") )
+      {
+        type = 1;
+        vec2gr.push_back(*static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_TRIANGLE") )
+      {
+        type = 2;
+        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+      }
+    }
+  }
+  if( type == 1 )
+  {
+    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), (PVOID) vec2gr.data(), wa_par_ULONG(5), wa_par_ULONG(6)));
+  }
+  else if( type == 2 )
+  {
+    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), (PVOID) vec2gt.data(), wa_par_ULONG(5), wa_par_ULONG(6)));
+  }
+  else
+  {
+    wa_ret_BOOL(FALSE);
+  }
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI GdiGradientFill(HDC hdc,PTRIVERTEX pVertex,ULONG nVertex,PVOID pMesh,ULONG nMesh,ULONG ulMode)
 */
+HB_FUNC( WAGDIGRADIENTFILL )
+{
+  std::vector<TRIVERTEX> vec1{};
+  auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
+  if( pArray1 != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray1);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec1.push_back(*static_cast<TRIVERTEX*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
+    }
+  }
+  std::vector<GRADIENT_RECT> vec2gr{};
+  std::vector<GRADIENT_TRIANGLE> vec2gt{};
+  auto type = 0; // 1=gradient_rect 2=gradient_triangle
+  auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
+  if( pArray2 != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray2);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
+      if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_RECT") )
+      {
+        type = 1;
+        vec2gr.push_back(*static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_TRIANGLE") )
+      {
+        type = 2;
+        vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
+      }
+    }
+  }
+  if( type == 1 )
+  {
+    wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
+  }
+  else if( type == 2 )
+  {
+    wa_ret_BOOL(GdiGradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
+  }
+  else
+  {
+    wa_ret_BOOL(FALSE);
+  }
+}
 
 /*
 WINGDIAPI WINBOOL WINAPI PlayMetaFileRecord(HDC hdc,LPHANDLETABLE lpHandleTable,LPMETARECORD lpMR,UINT noObjs)
