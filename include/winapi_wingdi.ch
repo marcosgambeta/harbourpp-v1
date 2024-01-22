@@ -1109,7 +1109,9 @@
 #define FLOODFILLBORDER                                              0
 #define FLOODFILLSURFACE                                             1
 
+#ifndef CCHDEVICENAME
 #define CCHDEVICENAME                                                32
+#endif
 
 #define CCHFORMNAME                                                  32
 
