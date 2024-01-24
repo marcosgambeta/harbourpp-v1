@@ -45,7 +45,7 @@ PROCEDURE Main()
 
    // run the message loop
 
-   msg := wasMSG():new()
+   msg := wasMSG()
    DO WHILE waGetMessage(msg, NIL, 0, 0)
       waTranslateMessage(msg)
       waDispatchMessage(msg)

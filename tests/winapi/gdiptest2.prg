@@ -47,7 +47,7 @@ PROCEDURE Main()
 
    // run the message loop
 
-   msg := wasMSG():new()
+   msg := wasMSG()
    DO WHILE waGetMessage(msg, NIL, 0, 0)
       waTranslateMessage(msg)
       waDispatchMessage(msg)
@@ -76,9 +76,9 @@ FUNCTION WindowProc(hwnd, uMsg, wParam, lParam)
       RETURN 0
 
    CASE WM_PAINT
-      oRect := wasRECT():new()
+      oRect := wasRECT()
       waGetClientRect(hwnd, oRect)
-      oPS := wasPAINTSTRUCT():new()
+      oPS := wasPAINTSTRUCT()
       pDC := waBeginPaint(hwnd, oPS)
       waGdipCreateFromHDC(pDC, @pGraphics)
       waGdipCreateLineBrushI(waGpPoint():new(0, 0), waGpPoint():new(0, oRect:bottom - oRect:top), 0xFFADD8E6, 0xFF000000, NIL, @pBrush)

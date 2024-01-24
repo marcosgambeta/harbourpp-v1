@@ -1,13 +1,13 @@
 /*
  * WinApi test
  *
- * Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+ * Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
  *
  */
 
 PROCEDURE Main()
 
-   LOCAL o := wasSYSTEMTIME():new()
+   LOCAL o := wasSYSTEMTIME()
 
    ? "wYear........:", o:wYear
    ? "wMonth.......:", o:wMonth
@@ -23,7 +23,7 @@ PROCEDURE Main()
    ? "calling waGetSystemTime"
 
    waGetSystemTime(o)
-   
+
    ?
 
    ? "wYear........:", o:wYear

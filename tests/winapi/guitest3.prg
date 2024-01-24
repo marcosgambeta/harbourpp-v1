@@ -51,7 +51,7 @@ PROCEDURE Main()
 
    // run the message loop
 
-   msg := wasMSG():new()
+   msg := wasMSG()
    DO WHILE waGetMessage(msg, NIL, 0, 0)
       waTranslateMessage(msg)
       waDispatchMessage(msg)
@@ -84,7 +84,7 @@ FUNCTION WindowProc(hwnd, uMsg, wParam, lParam)
       RETURN 0
 
    CASE WM_RBUTTONUP
-      point := wasPOINT():new()
+      point := wasPOINT()
       point:x := waLOWORD(lParam)
       point:y := waHIWORD(lParam)
       hMenu := waCreatePopupMenu()
