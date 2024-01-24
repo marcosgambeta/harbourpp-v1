@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASLOGBRUSH
+FUNCTION wasLOGBRUSH()
+RETURN was_LOGBRUSH():new()
+
+CLASS WAS_LOGBRUSH
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -66,7 +69,7 @@ CLASS WASLOGBRUSH
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASLOGBRUSH
+PROCEDURE destroyObject() CLASS WAS_LOGBRUSH
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -80,7 +83,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASLOGBRUSH_NEW )
+HB_FUNC_STATIC( WAS_LOGBRUSH_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new LOGBRUSH());
@@ -88,7 +91,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASLOGBRUSH_DELETE )
+HB_FUNC_STATIC( WAS_LOGBRUSH_DELETE )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -103,7 +106,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_DELETE )
 
 // UINT lbStyle
 
-HB_FUNC_STATIC( WASLOGBRUSH_SETLBSTYLE )
+HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBSTYLE )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -113,7 +116,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_SETLBSTYLE )
   }
 }
 
-HB_FUNC_STATIC( WASLOGBRUSH_GETLBSTYLE )
+HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBSTYLE )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +128,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_GETLBSTYLE )
 
 // COLORREF lbColor
 
-HB_FUNC_STATIC( WASLOGBRUSH_SETLBCOLOR )
+HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBCOLOR )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -135,7 +138,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_SETLBCOLOR )
   }
 }
 
-HB_FUNC_STATIC( WASLOGBRUSH_GETLBCOLOR )
+HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBCOLOR )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +150,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_GETLBCOLOR )
 
 // ULONG_PTR lbHatch
 
-HB_FUNC_STATIC( WASLOGBRUSH_SETLBHATCH )
+HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBHATCH )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -157,7 +160,7 @@ HB_FUNC_STATIC( WASLOGBRUSH_SETLBHATCH )
   }
 }
 
-HB_FUNC_STATIC( WASLOGBRUSH_GETLBHATCH )
+HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBHATCH )
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

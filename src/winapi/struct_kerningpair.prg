@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASKERNINGPAIR
+FUNCTION wasKERNINGPAIR()
+RETURN was_KERNINGPAIR():new()
+
+CLASS WAS_KERNINGPAIR
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -66,7 +69,7 @@ CLASS WASKERNINGPAIR
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASKERNINGPAIR
+PROCEDURE destroyObject() CLASS WAS_KERNINGPAIR
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -80,7 +83,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASKERNINGPAIR_NEW )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new KERNINGPAIR());
@@ -88,7 +91,7 @@ HB_FUNC_STATIC( WASKERNINGPAIR_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASKERNINGPAIR_DELETE )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_DELETE )
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -103,7 +106,7 @@ HB_FUNC_STATIC( WASKERNINGPAIR_DELETE )
 
 // WORD wFirst
 
-HB_FUNC_STATIC( WASKERNINGPAIR_SETWFIRST )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_SETWFIRST )
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -113,7 +116,7 @@ HB_FUNC_STATIC( WASKERNINGPAIR_SETWFIRST )
   }
 }
 
-HB_FUNC_STATIC( WASKERNINGPAIR_GETWFIRST )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_GETWFIRST )
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +128,7 @@ HB_FUNC_STATIC( WASKERNINGPAIR_GETWFIRST )
 
 // WORD wSecond
 
-HB_FUNC_STATIC( WASKERNINGPAIR_SETWSECOND )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_SETWSECOND )
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -135,7 +138,7 @@ HB_FUNC_STATIC( WASKERNINGPAIR_SETWSECOND )
   }
 }
 
-HB_FUNC_STATIC( WASKERNINGPAIR_GETWSECOND )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_GETWSECOND )
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +150,7 @@ HB_FUNC_STATIC( WASKERNINGPAIR_GETWSECOND )
 
 // int iKernAmount
 
-HB_FUNC_STATIC( WASKERNINGPAIR_SETIKERNAMOUNT )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_SETIKERNAMOUNT )
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -157,7 +160,7 @@ HB_FUNC_STATIC( WASKERNINGPAIR_SETIKERNAMOUNT )
   }
 }
 
-HB_FUNC_STATIC( WASKERNINGPAIR_GETIKERNAMOUNT )
+HB_FUNC_STATIC( WAS_KERNINGPAIR_GETIKERNAMOUNT )
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

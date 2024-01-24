@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASINITCOMMONCONTROLSEX
+FUNCTION wasINITCOMMONCONTROLSEX()
+RETURN was_INITCOMMONCONTROLSEX():new()
+
+CLASS WAS_INITCOMMONCONTROLSEX
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +63,7 @@ CLASS WASINITCOMMONCONTROLSEX
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASINITCOMMONCONTROLSEX
+PROCEDURE destroyObject() CLASS WAS_INITCOMMONCONTROLSEX
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -75,7 +78,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_NEW )
+HB_FUNC_STATIC( WAS_INITCOMMONCONTROLSEX_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new INITCOMMONCONTROLSEX());
@@ -83,7 +86,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_DELETE )
+HB_FUNC_STATIC( WAS_INITCOMMONCONTROLSEX_DELETE )
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -98,7 +101,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_DELETE )
 
 // DWORD dwSize
 
-HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_SETDWSIZE )
+HB_FUNC_STATIC( WAS_INITCOMMONCONTROLSEX_SETDWSIZE )
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -108,7 +111,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_SETDWSIZE )
   }
 }
 
-HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_GETDWSIZE )
+HB_FUNC_STATIC( WAS_INITCOMMONCONTROLSEX_GETDWSIZE )
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -120,7 +123,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_GETDWSIZE )
 
 // DWORD dwICC
 
-HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_SETDWICC )
+HB_FUNC_STATIC( WAS_INITCOMMONCONTROLSEX_SETDWICC )
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -130,7 +133,7 @@ HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_SETDWICC )
   }
 }
 
-HB_FUNC_STATIC( WASINITCOMMONCONTROLSEX_GETDWICC )
+HB_FUNC_STATIC( WAS_INITCOMMONCONTROLSEX_GETDWICC )
 {
   auto obj = static_cast<INITCOMMONCONTROLSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

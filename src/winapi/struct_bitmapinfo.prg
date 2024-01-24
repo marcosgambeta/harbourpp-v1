@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASBITMAPINFO
+FUNCTION wasBITMAPINFO()
+RETURN was_BITMAPINFO():new()
+
+CLASS WAS_BITMAPINFO
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -52,7 +55,7 @@ CLASS WASBITMAPINFO
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASBITMAPINFO
+PROCEDURE destroyObject() CLASS WAS_BITMAPINFO
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -66,7 +69,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASBITMAPINFO_NEW )
+HB_FUNC_STATIC( WAS_BITMAPINFO_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new BITMAPINFO());
@@ -74,7 +77,7 @@ HB_FUNC_STATIC( WASBITMAPINFO_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASBITMAPINFO_DELETE )
+HB_FUNC_STATIC( WAS_BITMAPINFO_DELETE )
 {
   auto obj = static_cast<BITMAPINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

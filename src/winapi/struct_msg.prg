@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASMSG
+FUNCTION wasMSG()
+RETURN was_MSG():new()
+
+CLASS WAS_MSG
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -86,7 +89,7 @@ CLASS WASMSG
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASMSG
+PROCEDURE destroyObject() CLASS WAS_MSG
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -100,7 +103,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASMSG_NEW )
+HB_FUNC_STATIC( WAS_MSG_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new MSG());
@@ -108,7 +111,7 @@ HB_FUNC_STATIC( WASMSG_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASMSG_DELETE )
+HB_FUNC_STATIC( WAS_MSG_DELETE )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -123,7 +126,7 @@ HB_FUNC_STATIC( WASMSG_DELETE )
 
 // HWND hwnd
 
-HB_FUNC_STATIC( WASMSG_SETHWND )
+HB_FUNC_STATIC( WAS_MSG_SETHWND )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -133,7 +136,7 @@ HB_FUNC_STATIC( WASMSG_SETHWND )
   }
 }
 
-HB_FUNC_STATIC( WASMSG_GETHWND )
+HB_FUNC_STATIC( WAS_MSG_GETHWND )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -145,7 +148,7 @@ HB_FUNC_STATIC( WASMSG_GETHWND )
 
 // UINT message
 
-HB_FUNC_STATIC( WASMSG_SETMESSAGE )
+HB_FUNC_STATIC( WAS_MSG_SETMESSAGE )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -155,7 +158,7 @@ HB_FUNC_STATIC( WASMSG_SETMESSAGE )
   }
 }
 
-HB_FUNC_STATIC( WASMSG_GETMESSAGE )
+HB_FUNC_STATIC( WAS_MSG_GETMESSAGE )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -167,7 +170,7 @@ HB_FUNC_STATIC( WASMSG_GETMESSAGE )
 
 // WPARAM wParam
 
-HB_FUNC_STATIC( WASMSG_SETWPARAM )
+HB_FUNC_STATIC( WAS_MSG_SETWPARAM )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -177,7 +180,7 @@ HB_FUNC_STATIC( WASMSG_SETWPARAM )
   }
 }
 
-HB_FUNC_STATIC( WASMSG_GETWPARAM )
+HB_FUNC_STATIC( WAS_MSG_GETWPARAM )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -189,7 +192,7 @@ HB_FUNC_STATIC( WASMSG_GETWPARAM )
 
 // LPARAM lParam
 
-HB_FUNC_STATIC( WASMSG_SETLPARAM )
+HB_FUNC_STATIC( WAS_MSG_SETLPARAM )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -199,7 +202,7 @@ HB_FUNC_STATIC( WASMSG_SETLPARAM )
   }
 }
 
-HB_FUNC_STATIC( WASMSG_GETLPARAM )
+HB_FUNC_STATIC( WAS_MSG_GETLPARAM )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -211,7 +214,7 @@ HB_FUNC_STATIC( WASMSG_GETLPARAM )
 
 // DWORD time
 
-HB_FUNC_STATIC( WASMSG_SETTIME )
+HB_FUNC_STATIC( WAS_MSG_SETTIME )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -221,7 +224,7 @@ HB_FUNC_STATIC( WASMSG_SETTIME )
   }
 }
 
-HB_FUNC_STATIC( WASMSG_GETTIME )
+HB_FUNC_STATIC( WAS_MSG_GETTIME )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -233,7 +236,7 @@ HB_FUNC_STATIC( WASMSG_GETTIME )
 
 // POINT pt
 
-HB_FUNC_STATIC( WASMSG_SETPT )
+HB_FUNC_STATIC( WAS_MSG_SETPT )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -243,7 +246,7 @@ HB_FUNC_STATIC( WASMSG_SETPT )
   }
 }
 
-HB_FUNC_STATIC( WASMSG_GETPT )
+HB_FUNC_STATIC( WAS_MSG_GETPT )
 {
   auto obj = static_cast<MSG*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

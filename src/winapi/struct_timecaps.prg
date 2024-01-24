@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASTIMECAPS
+FUNCTION wasTIMECAPS()
+RETURN was_TIMECAPS():new()
+
+CLASS WAS_TIMECAPS
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +63,7 @@ CLASS WASTIMECAPS
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASTIMECAPS
+PROCEDURE destroyObject() CLASS WAS_TIMECAPS
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -74,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASTIMECAPS_NEW )
+HB_FUNC_STATIC( WAS_TIMECAPS_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new TIMECAPS());
@@ -82,7 +85,7 @@ HB_FUNC_STATIC( WASTIMECAPS_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASTIMECAPS_DELETE )
+HB_FUNC_STATIC( WAS_TIMECAPS_DELETE )
 {
   auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -97,7 +100,7 @@ HB_FUNC_STATIC( WASTIMECAPS_DELETE )
 
 // UINT wPeriodMin
 
-HB_FUNC_STATIC( WASTIMECAPS_SETWPERIODMIN )
+HB_FUNC_STATIC( WAS_TIMECAPS_SETWPERIODMIN )
 {
   auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -107,7 +110,7 @@ HB_FUNC_STATIC( WASTIMECAPS_SETWPERIODMIN )
   }
 }
 
-HB_FUNC_STATIC( WASTIMECAPS_GETWPERIODMIN )
+HB_FUNC_STATIC( WAS_TIMECAPS_GETWPERIODMIN )
 {
   auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +122,7 @@ HB_FUNC_STATIC( WASTIMECAPS_GETWPERIODMIN )
 
 // UINT wPeriodMax
 
-HB_FUNC_STATIC( WASTIMECAPS_SETWPERIODMAX )
+HB_FUNC_STATIC( WAS_TIMECAPS_SETWPERIODMAX )
 {
   auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +132,7 @@ HB_FUNC_STATIC( WASTIMECAPS_SETWPERIODMAX )
   }
 }
 
-HB_FUNC_STATIC( WASTIMECAPS_GETWPERIODMAX )
+HB_FUNC_STATIC( WAS_TIMECAPS_GETWPERIODMAX )
 {
   auto obj = static_cast<TIMECAPS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

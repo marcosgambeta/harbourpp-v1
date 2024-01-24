@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASNMHDR
+FUNCTION wasNMHDR()
+RETURN was_NMHDR():new()
+
+CLASS WAS_NMHDR
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -66,7 +69,7 @@ CLASS WASNMHDR
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASNMHDR
+PROCEDURE destroyObject() CLASS WAS_NMHDR
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -80,7 +83,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASNMHDR_NEW )
+HB_FUNC_STATIC( WAS_NMHDR_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new NMHDR());
@@ -88,7 +91,7 @@ HB_FUNC_STATIC( WASNMHDR_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASNMHDR_DELETE )
+HB_FUNC_STATIC( WAS_NMHDR_DELETE )
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -103,7 +106,7 @@ HB_FUNC_STATIC( WASNMHDR_DELETE )
 
 // HWND hwndFrom
 
-HB_FUNC_STATIC( WASNMHDR_SETHWNDFROM )
+HB_FUNC_STATIC( WAS_NMHDR_SETHWNDFROM )
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -113,7 +116,7 @@ HB_FUNC_STATIC( WASNMHDR_SETHWNDFROM )
   }
 }
 
-HB_FUNC_STATIC( WASNMHDR_GETHWNDFROM )
+HB_FUNC_STATIC( WAS_NMHDR_GETHWNDFROM )
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +128,7 @@ HB_FUNC_STATIC( WASNMHDR_GETHWNDFROM )
 
 // UINT_PTR idFrom
 
-HB_FUNC_STATIC( WASNMHDR_SETIDFROM )
+HB_FUNC_STATIC( WAS_NMHDR_SETIDFROM )
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -135,7 +138,7 @@ HB_FUNC_STATIC( WASNMHDR_SETIDFROM )
   }
 }
 
-HB_FUNC_STATIC( WASNMHDR_GETIDFROM )
+HB_FUNC_STATIC( WAS_NMHDR_GETIDFROM )
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +150,7 @@ HB_FUNC_STATIC( WASNMHDR_GETIDFROM )
 
 // UINT code
 
-HB_FUNC_STATIC( WASNMHDR_SETCODE )
+HB_FUNC_STATIC( WAS_NMHDR_SETCODE )
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -157,7 +160,7 @@ HB_FUNC_STATIC( WASNMHDR_SETCODE )
   }
 }
 
-HB_FUNC_STATIC( WASNMHDR_GETCODE )
+HB_FUNC_STATIC( WAS_NMHDR_GETCODE )
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASPOINT
+FUNCTION wasPOINT()
+RETURN was_POINT():new()
+
+CLASS WAS_POINT
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +63,7 @@ CLASS WASPOINT
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASPOINT
+PROCEDURE destroyObject() CLASS WAS_POINT
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -74,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASPOINT_NEW )
+HB_FUNC_STATIC( WAS_POINT_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new POINT());
@@ -82,7 +85,7 @@ HB_FUNC_STATIC( WASPOINT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASPOINT_DELETE )
+HB_FUNC_STATIC( WAS_POINT_DELETE )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -97,7 +100,7 @@ HB_FUNC_STATIC( WASPOINT_DELETE )
 
 // LONG x
 
-HB_FUNC_STATIC( WASPOINT_SETX )
+HB_FUNC_STATIC( WAS_POINT_SETX )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -107,7 +110,7 @@ HB_FUNC_STATIC( WASPOINT_SETX )
   }
 }
 
-HB_FUNC_STATIC( WASPOINT_GETX )
+HB_FUNC_STATIC( WAS_POINT_GETX )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +122,7 @@ HB_FUNC_STATIC( WASPOINT_GETX )
 
 // LONG y
 
-HB_FUNC_STATIC( WASPOINT_SETY )
+HB_FUNC_STATIC( WAS_POINT_SETY )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +132,7 @@ HB_FUNC_STATIC( WASPOINT_SETY )
   }
 }
 
-HB_FUNC_STATIC( WASPOINT_GETY )
+HB_FUNC_STATIC( WAS_POINT_GETY )
 {
   auto obj = static_cast<POINT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

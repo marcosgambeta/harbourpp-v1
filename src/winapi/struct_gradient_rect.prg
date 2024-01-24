@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASGRADIENT_RECT
+FUNCTION wasGRADIENT_RECT()
+RETURN was_GRADIENT_RECT():new()
+
+CLASS WAS_GRADIENT_RECT
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +63,7 @@ CLASS WASGRADIENT_RECT
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASGRADIENT_RECT
+PROCEDURE destroyObject() CLASS WAS_GRADIENT_RECT
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -74,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASGRADIENT_RECT_NEW )
+HB_FUNC_STATIC( WAS_GRADIENT_RECT_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new GRADIENT_RECT());
@@ -82,7 +85,7 @@ HB_FUNC_STATIC( WASGRADIENT_RECT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASGRADIENT_RECT_DELETE )
+HB_FUNC_STATIC( WAS_GRADIENT_RECT_DELETE )
 {
   auto obj = static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -97,7 +100,7 @@ HB_FUNC_STATIC( WASGRADIENT_RECT_DELETE )
 
 // ULONG UpperLeft
 
-HB_FUNC_STATIC( WASGRADIENT_RECT_SETUPPERLEFT )
+HB_FUNC_STATIC( WAS_GRADIENT_RECT_SETUPPERLEFT )
 {
   auto obj = static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -107,7 +110,7 @@ HB_FUNC_STATIC( WASGRADIENT_RECT_SETUPPERLEFT )
   }
 }
 
-HB_FUNC_STATIC( WASGRADIENT_RECT_GETUPPERLEFT )
+HB_FUNC_STATIC( WAS_GRADIENT_RECT_GETUPPERLEFT )
 {
   auto obj = static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +122,7 @@ HB_FUNC_STATIC( WASGRADIENT_RECT_GETUPPERLEFT )
 
 // ULONG LowerRight
 
-HB_FUNC_STATIC( WASGRADIENT_RECT_SETLOWERRIGHT )
+HB_FUNC_STATIC( WAS_GRADIENT_RECT_SETLOWERRIGHT )
 {
   auto obj = static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +132,7 @@ HB_FUNC_STATIC( WASGRADIENT_RECT_SETLOWERRIGHT )
   }
 }
 
-HB_FUNC_STATIC( WASGRADIENT_RECT_GETLOWERRIGHT )
+HB_FUNC_STATIC( WAS_GRADIENT_RECT_GETLOWERRIGHT )
 {
   auto obj = static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

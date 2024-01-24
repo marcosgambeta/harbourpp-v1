@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASIMAGEINFO
+FUNCTION wasIMAGEINFO()
+RETURN was_IMAGEINFO():new()
+
+CLASS WAS_IMAGEINFO
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -74,7 +77,7 @@ CLASS WASIMAGEINFO
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASIMAGEINFO
+PROCEDURE destroyObject() CLASS WAS_IMAGEINFO
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -89,7 +92,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASIMAGEINFO_NEW )
+HB_FUNC_STATIC( WAS_IMAGEINFO_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new IMAGEINFO());
@@ -97,7 +100,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASIMAGEINFO_DELETE )
+HB_FUNC_STATIC( WAS_IMAGEINFO_DELETE )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -112,7 +115,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_DELETE )
 
 // HBITMAP hbmImage
 
-HB_FUNC_STATIC( WASIMAGEINFO_SETHBMIMAGE )
+HB_FUNC_STATIC( WAS_IMAGEINFO_SETHBMIMAGE )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -122,7 +125,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_SETHBMIMAGE )
   }
 }
 
-HB_FUNC_STATIC( WASIMAGEINFO_GETHBMIMAGE )
+HB_FUNC_STATIC( WAS_IMAGEINFO_GETHBMIMAGE )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -134,7 +137,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_GETHBMIMAGE )
 
 // HBITMAP hbmMask
 
-HB_FUNC_STATIC( WASIMAGEINFO_SETHBMMASK )
+HB_FUNC_STATIC( WAS_IMAGEINFO_SETHBMMASK )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -144,7 +147,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_SETHBMMASK )
   }
 }
 
-HB_FUNC_STATIC( WASIMAGEINFO_GETHBMMASK )
+HB_FUNC_STATIC( WAS_IMAGEINFO_GETHBMMASK )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -156,7 +159,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_GETHBMMASK )
 
 // int Unused1
 
-HB_FUNC_STATIC( WASIMAGEINFO_SETUNUSED1 )
+HB_FUNC_STATIC( WAS_IMAGEINFO_SETUNUSED1 )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -166,7 +169,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_SETUNUSED1 )
   }
 }
 
-HB_FUNC_STATIC( WASIMAGEINFO_GETUNUSED1 )
+HB_FUNC_STATIC( WAS_IMAGEINFO_GETUNUSED1 )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -178,7 +181,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_GETUNUSED1 )
 
 // int Unused2
 
-HB_FUNC_STATIC( WASIMAGEINFO_SETUNUSED2 )
+HB_FUNC_STATIC( WAS_IMAGEINFO_SETUNUSED2 )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -188,7 +191,7 @@ HB_FUNC_STATIC( WASIMAGEINFO_SETUNUSED2 )
   }
 }
 
-HB_FUNC_STATIC( WASIMAGEINFO_GETUNUSED2 )
+HB_FUNC_STATIC( WAS_IMAGEINFO_GETUNUSED2 )
 {
   auto obj = static_cast<IMAGEINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

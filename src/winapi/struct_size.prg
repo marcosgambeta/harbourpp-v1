@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASSIZE
+FUNCTION wasSIZE()
+RETURN was_SIZE():new()
+
+CLASS WAS_SIZE
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +63,7 @@ CLASS WASSIZE
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASSIZE
+PROCEDURE destroyObject() CLASS WAS_SIZE
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -74,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASSIZE_NEW )
+HB_FUNC_STATIC( WAS_SIZE_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new SIZE());
@@ -82,7 +85,7 @@ HB_FUNC_STATIC( WASSIZE_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASSIZE_DELETE )
+HB_FUNC_STATIC( WAS_SIZE_DELETE )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -97,7 +100,7 @@ HB_FUNC_STATIC( WASSIZE_DELETE )
 
 // LONG cx
 
-HB_FUNC_STATIC( WASSIZE_SETCX )
+HB_FUNC_STATIC( WAS_SIZE_SETCX )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -107,7 +110,7 @@ HB_FUNC_STATIC( WASSIZE_SETCX )
   }
 }
 
-HB_FUNC_STATIC( WASSIZE_GETCX )
+HB_FUNC_STATIC( WAS_SIZE_GETCX )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +122,7 @@ HB_FUNC_STATIC( WASSIZE_GETCX )
 
 // LONG cy
 
-HB_FUNC_STATIC( WASSIZE_SETCY )
+HB_FUNC_STATIC( WAS_SIZE_SETCY )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +132,7 @@ HB_FUNC_STATIC( WASSIZE_SETCY )
   }
 }
 
-HB_FUNC_STATIC( WASSIZE_GETCY )
+HB_FUNC_STATIC( WAS_SIZE_GETCY )
 {
   auto obj = static_cast<SIZE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

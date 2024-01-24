@@ -1964,11 +1964,11 @@ HB_FUNC( WAGRADIENTFILL )
     for( auto i = 0; i < nLen; i++ )
     {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
-      if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_RECT") )
+      if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT") )
       {
         type = 1;
         vec2gr.push_back(*static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
-      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_TRIANGLE") )
+      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE") )
       {
         type = 2;
         vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
@@ -2014,11 +2014,11 @@ HB_FUNC( WAGDIGRADIENTFILL )
     for( auto i = 0; i < nLen; i++ )
     {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
-      if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_RECT") )
+      if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT") )
       {
         type = 1;
         vec2gr.push_back(*static_cast<GRADIENT_RECT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));
-      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WASGRADIENT_TRIANGLE") )
+      } else if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_TRIANGLE") )
       {
         type = 2;
         vec2gt.push_back(*static_cast<GRADIENT_TRIANGLE*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray2, i + 1), "PTR")));

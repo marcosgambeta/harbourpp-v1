@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASPOINTFLOAT
+FUNCTION wasPOINTFLOAT()
+RETURN was_POINTFLOAT():new()
+
+CLASS WAS_POINTFLOAT
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -60,7 +63,7 @@ CLASS WASPOINTFLOAT
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASPOINTFLOAT
+PROCEDURE destroyObject() CLASS WAS_POINTFLOAT
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -74,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASPOINTFLOAT_NEW )
+HB_FUNC_STATIC( WAS_POINTFLOAT_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new POINTFLOAT());
@@ -82,7 +85,7 @@ HB_FUNC_STATIC( WASPOINTFLOAT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASPOINTFLOAT_DELETE )
+HB_FUNC_STATIC( WAS_POINTFLOAT_DELETE )
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -97,7 +100,7 @@ HB_FUNC_STATIC( WASPOINTFLOAT_DELETE )
 
 // FLOAT x
 
-HB_FUNC_STATIC( WASPOINTFLOAT_SETX )
+HB_FUNC_STATIC( WAS_POINTFLOAT_SETX )
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -107,7 +110,7 @@ HB_FUNC_STATIC( WASPOINTFLOAT_SETX )
   }
 }
 
-HB_FUNC_STATIC( WASPOINTFLOAT_GETX )
+HB_FUNC_STATIC( WAS_POINTFLOAT_GETX )
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +122,7 @@ HB_FUNC_STATIC( WASPOINTFLOAT_GETX )
 
 // FLOAT y
 
-HB_FUNC_STATIC( WASPOINTFLOAT_SETY )
+HB_FUNC_STATIC( WAS_POINTFLOAT_SETY )
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +132,7 @@ HB_FUNC_STATIC( WASPOINTFLOAT_SETY )
   }
 }
 
-HB_FUNC_STATIC( WASPOINTFLOAT_GETY )
+HB_FUNC_STATIC( WAS_POINTFLOAT_GETY )
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

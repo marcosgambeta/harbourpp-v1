@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASICONINFO
+FUNCTION wasICONINFO()
+RETURN was_ICONINFO():new()
+
+CLASS WAS_ICONINFO
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -78,7 +81,7 @@ CLASS WASICONINFO
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASICONINFO
+PROCEDURE destroyObject() CLASS WAS_ICONINFO
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -92,7 +95,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASICONINFO_NEW )
+HB_FUNC_STATIC( WAS_ICONINFO_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new ICONINFO());
@@ -100,7 +103,7 @@ HB_FUNC_STATIC( WASICONINFO_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASICONINFO_DELETE )
+HB_FUNC_STATIC( WAS_ICONINFO_DELETE )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -115,7 +118,7 @@ HB_FUNC_STATIC( WASICONINFO_DELETE )
 
 // BOOL fIcon
 
-HB_FUNC_STATIC( WASICONINFO_SETFICON )
+HB_FUNC_STATIC( WAS_ICONINFO_SETFICON )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +128,7 @@ HB_FUNC_STATIC( WASICONINFO_SETFICON )
   }
 }
 
-HB_FUNC_STATIC( WASICONINFO_GETFICON )
+HB_FUNC_STATIC( WAS_ICONINFO_GETFICON )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -137,7 +140,7 @@ HB_FUNC_STATIC( WASICONINFO_GETFICON )
 
 // DWORD xHotspot
 
-HB_FUNC_STATIC( WASICONINFO_SETXHOTSPOT )
+HB_FUNC_STATIC( WAS_ICONINFO_SETXHOTSPOT )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +150,7 @@ HB_FUNC_STATIC( WASICONINFO_SETXHOTSPOT )
   }
 }
 
-HB_FUNC_STATIC( WASICONINFO_GETXHOTSPOT )
+HB_FUNC_STATIC( WAS_ICONINFO_GETXHOTSPOT )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -159,7 +162,7 @@ HB_FUNC_STATIC( WASICONINFO_GETXHOTSPOT )
 
 // DWORD yHotspot
 
-HB_FUNC_STATIC( WASICONINFO_SETYHOTSPOT )
+HB_FUNC_STATIC( WAS_ICONINFO_SETYHOTSPOT )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -169,7 +172,7 @@ HB_FUNC_STATIC( WASICONINFO_SETYHOTSPOT )
   }
 }
 
-HB_FUNC_STATIC( WASICONINFO_GETYHOTSPOT )
+HB_FUNC_STATIC( WAS_ICONINFO_GETYHOTSPOT )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -181,7 +184,7 @@ HB_FUNC_STATIC( WASICONINFO_GETYHOTSPOT )
 
 // HBITMAP hbmMask
 
-HB_FUNC_STATIC( WASICONINFO_SETHBMMASK )
+HB_FUNC_STATIC( WAS_ICONINFO_SETHBMMASK )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -191,7 +194,7 @@ HB_FUNC_STATIC( WASICONINFO_SETHBMMASK )
   }
 }
 
-HB_FUNC_STATIC( WASICONINFO_GETHBMMASK )
+HB_FUNC_STATIC( WAS_ICONINFO_GETHBMMASK )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -203,7 +206,7 @@ HB_FUNC_STATIC( WASICONINFO_GETHBMMASK )
 
 // HBITMAP hbmColor
 
-HB_FUNC_STATIC( WASICONINFO_SETHBMCOLOR )
+HB_FUNC_STATIC( WAS_ICONINFO_SETHBMCOLOR )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -213,7 +216,7 @@ HB_FUNC_STATIC( WASICONINFO_SETHBMCOLOR )
   }
 }
 
-HB_FUNC_STATIC( WASICONINFO_GETHBMCOLOR )
+HB_FUNC_STATIC( WAS_ICONINFO_GETHBMCOLOR )
 {
   auto obj = static_cast<ICONINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

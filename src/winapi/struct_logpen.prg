@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASLOGPEN
+FUNCTION wasLOGPEN()
+RETURN was_LOGPEN():new()
+
+CLASS WAS_LOGPEN
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -66,7 +69,7 @@ CLASS WASLOGPEN
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASLOGPEN
+PROCEDURE destroyObject() CLASS WAS_LOGPEN
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -80,7 +83,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASLOGPEN_NEW )
+HB_FUNC_STATIC( WAS_LOGPEN_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new LOGPEN());
@@ -88,7 +91,7 @@ HB_FUNC_STATIC( WASLOGPEN_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASLOGPEN_DELETE )
+HB_FUNC_STATIC( WAS_LOGPEN_DELETE )
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -103,7 +106,7 @@ HB_FUNC_STATIC( WASLOGPEN_DELETE )
 
 // UINT lopnStyle
 
-HB_FUNC_STATIC( WASLOGPEN_SETLOPNSTYLE )
+HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNSTYLE )
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -113,7 +116,7 @@ HB_FUNC_STATIC( WASLOGPEN_SETLOPNSTYLE )
   }
 }
 
-HB_FUNC_STATIC( WASLOGPEN_GETLOPNSTYLE )
+HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNSTYLE )
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +128,7 @@ HB_FUNC_STATIC( WASLOGPEN_GETLOPNSTYLE )
 
 // POINT lopnWidth
 
-HB_FUNC_STATIC( WASLOGPEN_SETLOPNWIDTH )
+HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNWIDTH )
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -135,7 +138,7 @@ HB_FUNC_STATIC( WASLOGPEN_SETLOPNWIDTH )
   }
 }
 
-HB_FUNC_STATIC( WASLOGPEN_GETLOPNWIDTH )
+HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNWIDTH )
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +150,7 @@ HB_FUNC_STATIC( WASLOGPEN_GETLOPNWIDTH )
 
 // COLORREF lopnColor
 
-HB_FUNC_STATIC( WASLOGPEN_SETLOPNCOLOR )
+HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNCOLOR )
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -157,7 +160,7 @@ HB_FUNC_STATIC( WASLOGPEN_SETLOPNCOLOR )
   }
 }
 
-HB_FUNC_STATIC( WASLOGPEN_GETLOPNCOLOR )
+HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNCOLOR )
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASABC
+FUNCTION wasABC()
+RETURN was_ABC():new()
+
+CLASS WAS_ABC
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -66,7 +69,7 @@ CLASS WASABC
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASABC
+PROCEDURE destroyObject() CLASS WAS_ABC
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -80,7 +83,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASABC_NEW )
+HB_FUNC_STATIC( WAS_ABC_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new ABC());
@@ -88,7 +91,7 @@ HB_FUNC_STATIC( WASABC_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASABC_DELETE )
+HB_FUNC_STATIC( WAS_ABC_DELETE )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -103,7 +106,7 @@ HB_FUNC_STATIC( WASABC_DELETE )
 
 // int abcA
 
-HB_FUNC_STATIC( WASABC_SETABCA )
+HB_FUNC_STATIC( WAS_ABC_SETABCA )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -113,7 +116,7 @@ HB_FUNC_STATIC( WASABC_SETABCA )
   }
 }
 
-HB_FUNC_STATIC( WASABC_GETABCA )
+HB_FUNC_STATIC( WAS_ABC_GETABCA )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -125,7 +128,7 @@ HB_FUNC_STATIC( WASABC_GETABCA )
 
 // UINT abcB
 
-HB_FUNC_STATIC( WASABC_SETABCB )
+HB_FUNC_STATIC( WAS_ABC_SETABCB )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -135,7 +138,7 @@ HB_FUNC_STATIC( WASABC_SETABCB )
   }
 }
 
-HB_FUNC_STATIC( WASABC_GETABCB )
+HB_FUNC_STATIC( WAS_ABC_GETABCB )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -147,7 +150,7 @@ HB_FUNC_STATIC( WASABC_GETABCB )
 
 // int abcC
 
-HB_FUNC_STATIC( WASABC_SETABCC )
+HB_FUNC_STATIC( WAS_ABC_SETABCC )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -157,7 +160,7 @@ HB_FUNC_STATIC( WASABC_SETABCC )
   }
 }
 
-HB_FUNC_STATIC( WASABC_GETABCC )
+HB_FUNC_STATIC( WAS_ABC_GETABCC )
 {
   auto obj = static_cast<ABC*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

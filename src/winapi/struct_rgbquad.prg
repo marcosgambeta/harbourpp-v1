@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASRGBQUAD
+FUNCTION wasRGBQUAD()
+RETURN was_RGBQUAD():new()
+
+CLASS WAS_RGBQUAD
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -72,7 +75,7 @@ CLASS WASRGBQUAD
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASRGBQUAD
+PROCEDURE destroyObject() CLASS WAS_RGBQUAD
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -86,7 +89,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASRGBQUAD_NEW )
+HB_FUNC_STATIC( WAS_RGBQUAD_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new RGBQUAD());
@@ -94,7 +97,7 @@ HB_FUNC_STATIC( WASRGBQUAD_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASRGBQUAD_DELETE )
+HB_FUNC_STATIC( WAS_RGBQUAD_DELETE )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -109,7 +112,7 @@ HB_FUNC_STATIC( WASRGBQUAD_DELETE )
 
 // BYTE rgbBlue
 
-HB_FUNC_STATIC( WASRGBQUAD_SETRGBBLUE )
+HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBBLUE )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +122,7 @@ HB_FUNC_STATIC( WASRGBQUAD_SETRGBBLUE )
   }
 }
 
-HB_FUNC_STATIC( WASRGBQUAD_GETRGBBLUE )
+HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBBLUE )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -131,7 +134,7 @@ HB_FUNC_STATIC( WASRGBQUAD_GETRGBBLUE )
 
 // BYTE rgbGreen
 
-HB_FUNC_STATIC( WASRGBQUAD_SETRGBGREEN )
+HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBGREEN )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -141,7 +144,7 @@ HB_FUNC_STATIC( WASRGBQUAD_SETRGBGREEN )
   }
 }
 
-HB_FUNC_STATIC( WASRGBQUAD_GETRGBGREEN )
+HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBGREEN )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -153,7 +156,7 @@ HB_FUNC_STATIC( WASRGBQUAD_GETRGBGREEN )
 
 // BYTE rgbRed
 
-HB_FUNC_STATIC( WASRGBQUAD_SETRGBRED )
+HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBRED )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -163,7 +166,7 @@ HB_FUNC_STATIC( WASRGBQUAD_SETRGBRED )
   }
 }
 
-HB_FUNC_STATIC( WASRGBQUAD_GETRGBRED )
+HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBRED )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -175,7 +178,7 @@ HB_FUNC_STATIC( WASRGBQUAD_GETRGBRED )
 
 // BYTE rgbReserved
 
-HB_FUNC_STATIC( WASRGBQUAD_SETRGBRESERVED )
+HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBRESERVED )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -185,7 +188,7 @@ HB_FUNC_STATIC( WASRGBQUAD_SETRGBRESERVED )
   }
 }
 
-HB_FUNC_STATIC( WASRGBQUAD_GETRGBRESERVED )
+HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBRESERVED )
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

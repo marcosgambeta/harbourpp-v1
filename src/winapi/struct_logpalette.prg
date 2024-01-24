@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASLOGPALETTE
+FUNCTION wasLOGPALETTE()
+RETURN was_LOGPALETTE():new()
+
+CLASS WAS_LOGPALETTE
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -64,7 +67,7 @@ CLASS WASLOGPALETTE
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASLOGPALETTE
+PROCEDURE destroyObject() CLASS WAS_LOGPALETTE
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -78,7 +81,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASLOGPALETTE_NEW )
+HB_FUNC_STATIC( WAS_LOGPALETTE_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new LOGPALETTE());
@@ -86,7 +89,7 @@ HB_FUNC_STATIC( WASLOGPALETTE_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASLOGPALETTE_DELETE )
+HB_FUNC_STATIC( WAS_LOGPALETTE_DELETE )
 {
   auto obj = static_cast<LOGPALETTE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -101,7 +104,7 @@ HB_FUNC_STATIC( WASLOGPALETTE_DELETE )
 
 // WORD palVersion
 
-HB_FUNC_STATIC( WASLOGPALETTE_SETPALVERSION )
+HB_FUNC_STATIC( WAS_LOGPALETTE_SETPALVERSION )
 {
   auto obj = static_cast<LOGPALETTE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -111,7 +114,7 @@ HB_FUNC_STATIC( WASLOGPALETTE_SETPALVERSION )
   }
 }
 
-HB_FUNC_STATIC( WASLOGPALETTE_GETPALVERSION )
+HB_FUNC_STATIC( WAS_LOGPALETTE_GETPALVERSION )
 {
   auto obj = static_cast<LOGPALETTE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -123,7 +126,7 @@ HB_FUNC_STATIC( WASLOGPALETTE_GETPALVERSION )
 
 // WORD palNumEntries
 
-HB_FUNC_STATIC( WASLOGPALETTE_SETPALNUMENTRIES )
+HB_FUNC_STATIC( WAS_LOGPALETTE_SETPALNUMENTRIES )
 {
   auto obj = static_cast<LOGPALETTE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -133,7 +136,7 @@ HB_FUNC_STATIC( WASLOGPALETTE_SETPALNUMENTRIES )
   }
 }
 
-HB_FUNC_STATIC( WASLOGPALETTE_GETPALNUMENTRIES )
+HB_FUNC_STATIC( WAS_LOGPALETTE_GETPALNUMENTRIES )
 {
   auto obj = static_cast<LOGPALETTE*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

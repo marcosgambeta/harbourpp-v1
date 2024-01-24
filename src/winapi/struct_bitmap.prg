@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASBITMAP
+FUNCTION wasBITMAP()
+RETURN was_BITMAP():new()
+
+CLASS WAS_BITMAP
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -92,7 +95,7 @@ CLASS WASBITMAP
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASBITMAP
+PROCEDURE destroyObject() CLASS WAS_BITMAP
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -106,7 +109,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASBITMAP_NEW )
+HB_FUNC_STATIC( WAS_BITMAP_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new BITMAP());
@@ -114,7 +117,7 @@ HB_FUNC_STATIC( WASBITMAP_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASBITMAP_DELETE )
+HB_FUNC_STATIC( WAS_BITMAP_DELETE )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +132,7 @@ HB_FUNC_STATIC( WASBITMAP_DELETE )
 
 // LONG bmType
 
-HB_FUNC_STATIC( WASBITMAP_SETBMTYPE )
+HB_FUNC_STATIC( WAS_BITMAP_SETBMTYPE )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -139,7 +142,7 @@ HB_FUNC_STATIC( WASBITMAP_SETBMTYPE )
   }
 }
 
-HB_FUNC_STATIC( WASBITMAP_GETBMTYPE )
+HB_FUNC_STATIC( WAS_BITMAP_GETBMTYPE )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -151,7 +154,7 @@ HB_FUNC_STATIC( WASBITMAP_GETBMTYPE )
 
 // LONG bmWidth
 
-HB_FUNC_STATIC( WASBITMAP_SETBMWIDTH )
+HB_FUNC_STATIC( WAS_BITMAP_SETBMWIDTH )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -161,7 +164,7 @@ HB_FUNC_STATIC( WASBITMAP_SETBMWIDTH )
   }
 }
 
-HB_FUNC_STATIC( WASBITMAP_GETBMWIDTH )
+HB_FUNC_STATIC( WAS_BITMAP_GETBMWIDTH )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -173,7 +176,7 @@ HB_FUNC_STATIC( WASBITMAP_GETBMWIDTH )
 
 // LONG bmHeight
 
-HB_FUNC_STATIC( WASBITMAP_SETBMHEIGHT )
+HB_FUNC_STATIC( WAS_BITMAP_SETBMHEIGHT )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -183,7 +186,7 @@ HB_FUNC_STATIC( WASBITMAP_SETBMHEIGHT )
   }
 }
 
-HB_FUNC_STATIC( WASBITMAP_GETBMHEIGHT )
+HB_FUNC_STATIC( WAS_BITMAP_GETBMHEIGHT )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -195,7 +198,7 @@ HB_FUNC_STATIC( WASBITMAP_GETBMHEIGHT )
 
 // LONG bmWidthBytes
 
-HB_FUNC_STATIC( WASBITMAP_SETBMWIDTHBYTES )
+HB_FUNC_STATIC( WAS_BITMAP_SETBMWIDTHBYTES )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -205,7 +208,7 @@ HB_FUNC_STATIC( WASBITMAP_SETBMWIDTHBYTES )
   }
 }
 
-HB_FUNC_STATIC( WASBITMAP_GETBMWIDTHBYTES )
+HB_FUNC_STATIC( WAS_BITMAP_GETBMWIDTHBYTES )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -217,7 +220,7 @@ HB_FUNC_STATIC( WASBITMAP_GETBMWIDTHBYTES )
 
 // WORD bmPlanes
 
-HB_FUNC_STATIC( WASBITMAP_SETBMPLANES )
+HB_FUNC_STATIC( WAS_BITMAP_SETBMPLANES )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -227,7 +230,7 @@ HB_FUNC_STATIC( WASBITMAP_SETBMPLANES )
   }
 }
 
-HB_FUNC_STATIC( WASBITMAP_GETBMPLANES )
+HB_FUNC_STATIC( WAS_BITMAP_GETBMPLANES )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -239,7 +242,7 @@ HB_FUNC_STATIC( WASBITMAP_GETBMPLANES )
 
 // WORD bmBitsPixel
 
-HB_FUNC_STATIC( WASBITMAP_SETBMBITSPIXEL )
+HB_FUNC_STATIC( WAS_BITMAP_SETBMBITSPIXEL )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -249,7 +252,7 @@ HB_FUNC_STATIC( WASBITMAP_SETBMBITSPIXEL )
   }
 }
 
-HB_FUNC_STATIC( WASBITMAP_GETBMBITSPIXEL )
+HB_FUNC_STATIC( WAS_BITMAP_GETBMBITSPIXEL )
 {
   auto obj = static_cast<BITMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

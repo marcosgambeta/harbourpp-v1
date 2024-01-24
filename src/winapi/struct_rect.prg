@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (c) 2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,10 @@ SOFTWARE.
 
 #include "hbclass.ch"
 
-CLASS WASRECT
+FUNCTION wasRECT()
+RETURN was_RECT():new()
+
+CLASS WAS_RECT
 
    DATA ptr
    DATA self_destruction INIT .F.
@@ -72,7 +75,7 @@ CLASS WASRECT
 
 END CLASS
 
-PROCEDURE destroyObject() CLASS WASRECT
+PROCEDURE destroyObject() CLASS WAS_RECT
    IF ::self_destruction
       ::delete()
    ENDIF
@@ -86,7 +89,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WASRECT_NEW )
+HB_FUNC_STATIC( WAS_RECT_NEW )
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new RECT());
@@ -94,7 +97,7 @@ HB_FUNC_STATIC( WASRECT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WASRECT_DELETE )
+HB_FUNC_STATIC( WAS_RECT_DELETE )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -109,7 +112,7 @@ HB_FUNC_STATIC( WASRECT_DELETE )
 
 // LONG left
 
-HB_FUNC_STATIC( WASRECT_SETLEFT )
+HB_FUNC_STATIC( WAS_RECT_SETLEFT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -119,7 +122,7 @@ HB_FUNC_STATIC( WASRECT_SETLEFT )
   }
 }
 
-HB_FUNC_STATIC( WASRECT_GETLEFT )
+HB_FUNC_STATIC( WAS_RECT_GETLEFT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -131,7 +134,7 @@ HB_FUNC_STATIC( WASRECT_GETLEFT )
 
 // LONG top
 
-HB_FUNC_STATIC( WASRECT_SETTOP )
+HB_FUNC_STATIC( WAS_RECT_SETTOP )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -141,7 +144,7 @@ HB_FUNC_STATIC( WASRECT_SETTOP )
   }
 }
 
-HB_FUNC_STATIC( WASRECT_GETTOP )
+HB_FUNC_STATIC( WAS_RECT_GETTOP )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -153,7 +156,7 @@ HB_FUNC_STATIC( WASRECT_GETTOP )
 
 // LONG right
 
-HB_FUNC_STATIC( WASRECT_SETRIGHT )
+HB_FUNC_STATIC( WAS_RECT_SETRIGHT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -163,7 +166,7 @@ HB_FUNC_STATIC( WASRECT_SETRIGHT )
   }
 }
 
-HB_FUNC_STATIC( WASRECT_GETRIGHT )
+HB_FUNC_STATIC( WAS_RECT_GETRIGHT )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -175,7 +178,7 @@ HB_FUNC_STATIC( WASRECT_GETRIGHT )
 
 // LONG bottom
 
-HB_FUNC_STATIC( WASRECT_SETBOTTOM )
+HB_FUNC_STATIC( WAS_RECT_SETBOTTOM )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -185,7 +188,7 @@ HB_FUNC_STATIC( WASRECT_SETBOTTOM )
   }
 }
 
-HB_FUNC_STATIC( WASRECT_GETBOTTOM )
+HB_FUNC_STATIC( WAS_RECT_GETBOTTOM )
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
