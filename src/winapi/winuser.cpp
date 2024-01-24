@@ -2522,17 +2522,28 @@ HB_FUNC( WAINSERTMENUW )
 /*
 WINUSERAPI WINBOOL WINAPI AppendMenuA(HMENU hMenu,UINT uFlags,UINT_PTR uIDNewItem,LPCSTR lpNewItem)
 */
+#if 0
 HB_FUNC( WAAPPENDMENUA )
 {
   wa_ret_BOOL(AppendMenuA(wa_par_HMENU(1), wa_par_UINT(3), wa_par_UINT_PTR(3), wa_par_LPCSTR(4)));
 }
+#endif
 
 /*
 WINUSERAPI WINBOOL WINAPI AppendMenuW(HMENU hMenu,UINT uFlags,UINT_PTR uIDNewItem,LPCWSTR lpNewItem)
 */
+#if 0
 HB_FUNC( WAAPPENDMENUW )
 {
   wa_ret_BOOL(AppendMenuW(wa_par_HMENU(1), wa_par_UINT(2), wa_par_UINT_PTR(3), wa_par_LPCWSTR(4)));
+}
+#endif
+
+HB_FUNC( WAAPPENDMENU )
+{
+  void * str{};
+  wa_ret_BOOL(AppendMenu(wa_par_HMENU(1), wa_par_UINT(2), wa_par_UINT_PTR(3), HB_PARSTR(4, &str, nullptr)));
+  hb_strfree(str);
 }
 
 /*
