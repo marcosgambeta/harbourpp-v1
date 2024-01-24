@@ -104,7 +104,7 @@ SOFTWARE.
 #define wa_par_SIZE_T(n)       static_cast<SIZE_T>(hb_parnl(n))
 #define wa_par_UCHAR(n)        static_cast<UCHAR>(hb_parni(n))
 #define wa_par_UINT(n)         static_cast<UINT>(hb_parni(n))
-#define wa_par_UINT_PTR(n)     static_cast<UINT_PTR>(hb_parni(n))
+#define wa_par_UINT_PTR(n)     HB_ISNUM(n) ? static_cast<UINT_PTR>(hb_parni(n)) : reinterpret_cast<UINT_PTR>(hb_parptr(n))
 #define wa_par_UINT32(n)       static_cast<UINT32>(hb_parni(n))
 #define wa_par_ULONG(n)        static_cast<ULONG>(hb_parnl(n))
 #define wa_par_ULONG_PTR(n)    static_cast<ULONG_PTR>(hb_parnl(n))
