@@ -30,7 +30,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#define wa_get_ptr(n)          hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "PTR", 0))
+//#define wa_get_ptr(n)          hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "PTR", 0))
+#define wa_get_ptr(n)          HB_ISOBJECT(n) ? hb_objDataGetPtr(hb_param(n, Harbour::Item::OBJECT), "PTR") : nullptr
 // #define wa_par_STRUCT(s, n)    static_cast<s>(hb_itemGetPtr(hb_objSendMsg(hb_param(n, Harbour::Item::OBJECT), "PTR", 0))
 
 #define wa_par_ATOM(n)         static_cast<ATOM>(hb_parni(n))
