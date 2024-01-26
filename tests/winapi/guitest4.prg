@@ -43,6 +43,7 @@ PROCEDURE Main()
                             NIL)
 
    IF Empty(hwnd)
+      waMessageBox(NIL, "Window creation failed", "Error", MB_ICONERROR + MB_OK)
       QUIT
    ENDIF
 
@@ -114,12 +115,12 @@ RETURN waDefWindowProc(hwnd, uMsg, wParam, lParam)
 #include "hbwinuni.hpp"
 #include "guitest4.h"
 
-static PHB_DYNS s_pDynSym = nullptr;
-
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+   static PHB_DYNS s_pDynSym = nullptr;
+   
    if( s_pDynSym == nullptr ) {
       s_pDynSym = hb_dynsymGetCase("WINDOWPROC");
    }

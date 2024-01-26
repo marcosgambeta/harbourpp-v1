@@ -6,7 +6,7 @@
  */
 
 // Compile with:
-// hbmk2 guitest2 -gtgui
+// hbmk2 gdiptest3 -gtgui
 
 #include "winapi_winuser.ch"
 #include "winapi_wingdi.ch"
@@ -71,7 +71,7 @@ FUNCTION WindowProc(hwnd, uMsg, wParam, lParam)
    LOCAL pDC
    LOCAL oRect
    LOCAL pGraphics
-   LOCAL pBrush
+   LOCAL pImage
 
    SWITCH uMsg
 
@@ -89,9 +89,9 @@ FUNCTION WindowProc(hwnd, uMsg, wParam, lParam)
       oPS := wasPAINTSTRUCT()
       pDC := waBeginPaint(hwnd, oPS)
       waGdipCreateFromHDC(pDC, @pGraphics)
-      waGdipCreateLineBrushI(waGpPoint():new(0, 0), waGpPoint():new(0, oRect:bottom - oRect:top), 0xFFADD8E6, 0xFF000000, NIL, @pBrush)
-      waGdipFillRectangleI(pGraphics, pBrush, 0, 0, oRect:right - oRect:left, oRect:bottom - oRect:top)
-      waGdipDeleteBrush(pBrush)
+      waGdipLoadImageFromFile("harbour.gif", @pImage)
+      waGdipDrawImageRect(pGraphics, pImage, 0, 0, oRect:right - oRect:left, oRect:bottom - oRect:top)
+      waGdipDisposeImage(pImage)
       waGdipDeleteGraphics(pGraphics)
       waEndPaint(hwnd, oPS)
       RETURN 0

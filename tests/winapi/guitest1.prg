@@ -13,13 +13,20 @@
 
 PROCEDURE Main()
 
+   LOCAL wc
    LOCAL hwnd
    LOCAL CLASS_NAME := "Sample Window Class"
    LOCAL msg
 
    // register the window class
 
-   RegisterWindowClass()
+   wc := wasWNDCLASS()
+   wc:lpfnWndProc   := GetWindowProc()
+   wc:hInstance     := waGetModuleHandle(NIL)
+   wc:lpszClassName := CLASS_NAME
+   wc:hCursor       := waLoadCursor(NIL, IDC_ARROW)
+   wc:hbrBackground := waNtoP(COLOR_WINDOW + 1)
+   waRegisterClass(wc)
 
    // create the window
 
@@ -37,6 +44,7 @@ PROCEDURE Main()
                             NIL)
 
    IF Empty(hwnd)
+      waMessageBox(NIL, "Window creation failed", "Error", MB_ICONERROR + MB_OK)
       QUIT
    ENDIF
 
@@ -75,12 +83,12 @@ RETURN waDefWindowProc(hwnd, uMsg, wParam, lParam)
 #include "hbapi.hpp"
 #include "hbvm.hpp"
 
-static PHB_DYNS s_pDynSym = nullptr;
-
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+   static PHB_DYNS s_pDynSym = nullptr;
+
    if( s_pDynSym == nullptr ) {
       s_pDynSym = hb_dynsymGetCase("WINDOWPROC");
    }
@@ -99,17 +107,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
    return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-// auxiliary functions
-
-HB_FUNC_STATIC( REGISTERWINDOWCLASS )
+HB_FUNC_STATIC( GETWINDOWPROC )
 {
-   WNDCLASS wc{};
-   wc.lpfnWndProc   = WindowProc;
-   wc.hInstance     = GetModuleHandle(nullptr);
-   wc.lpszClassName = L"Sample Window Class";
-   wc.hCursor       = LoadCursor(nullptr, IDC_ARROW);
-   wc.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-   RegisterClass(&wc);
+   hb_retptr(reinterpret_cast<void*>(WindowProc));
 }
 
 #pragma ENDDUMP
