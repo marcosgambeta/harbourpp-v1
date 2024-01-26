@@ -35,7 +35,7 @@ PROCEDURE Main()
                             CW_USEDEFAULT, ;
                             NIL, ;
                             NIL, ;
-                            GetModuleHandle(), ;
+                            waGetModuleHandle(NIL), ;
                             NIL)
 
    IF Empty(hwnd)
@@ -137,11 +137,6 @@ HB_FUNC_STATIC( REGISTERWINDOWCLASS )
    wc.hCursor       = LoadCursor(nullptr, IDC_ARROW);
    wc.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
    RegisterClass(&wc);
-}
-
-HB_FUNC_STATIC( GETMODULEHANDLE )
-{
-   hb_retptr(GetModuleHandle(nullptr));
 }
 
 #pragma ENDDUMP
