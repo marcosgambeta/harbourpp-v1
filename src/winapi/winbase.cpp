@@ -1569,7 +1569,7 @@ WINBASEAPI HRSRC WINAPI FindResourceA (HMODULE hModule, LPCSTR lpName, LPCSTR lp
 #if 0
 HB_FUNC( WAFINDRESOURCEA )
 {
-  wa_ret_HRSRC(FindResourceA(static_cast<HMODULE>(hb_parptr(1)), wa_par_LPCSTR(2), wa_par_LPCSTR(3)));
+  wa_ret_HRSRC(FindResourceA(wa_par_HMODULE(1), wa_par_LPCSTR(2), wa_par_LPCSTR(3)));
 }
 #endif
 
@@ -1579,7 +1579,7 @@ WINBASEAPI HRSRC WINAPI FindResourceW (HMODULE hModule, LPCWSTR lpName, LPCWSTR 
 #if 0
 HB_FUNC( WAFINDRESOURCEW )
 {
-  wa_ret_HRSRC(FindResourceW(static_cast<HMODULE>(hb_parptr(1)), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3)));
+  wa_ret_HRSRC(FindResourceW(wa_par_HMODULE(1), wa_par_LPCWSTR(2), wa_par_LPCWSTR(3)));
 }
 #endif
 
@@ -1587,7 +1587,7 @@ HB_FUNC( WAFINDRESOURCE )
 {
   void * str2{};
   void * str3{};
-  wa_ret_HRSRC(FindResource(static_cast<HMODULE>(hb_parptr(1)), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
+  wa_ret_HRSRC(FindResource(wa_par_HMODULE(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
 }
@@ -1597,7 +1597,7 @@ WINBASEAPI HRSRC WINAPI FindResourceExA (HMODULE hModule, LPCSTR lpType, LPCSTR 
 */
 HB_FUNC( WAFINDRESOURCEEXA )
 {
-  wa_ret_HRSRC(FindResourceExA(static_cast<HMODULE>(hb_parptr(1)), wa_par_LPCSTR(2), wa_par_LPCSTR(3), wa_par_WORD(4)));
+  wa_ret_HRSRC(FindResourceExA(wa_par_HMODULE(1), wa_par_LPCSTR(2), wa_par_LPCSTR(3), wa_par_WORD(4)));
 }
 
 /*

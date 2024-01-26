@@ -200,6 +200,7 @@ SOFTWARE.
 #define wa_ret_WORD(x)         hb_retni(x)
 #define wa_ret_WPARAM(x)       hb_retnl(x)
 #define wa_ret_WNDPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
+#define wa_ret_FARPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
 
 // #define wa_stor_ATOM(v, n)         hb_storni(v, n)
 #define wa_stor_BOOL(v, n)         hb_storl(v, n)

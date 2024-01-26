@@ -7,6 +7,7 @@ HB_PRGFLAGS += -gc3
 CPP_SOURCES := \
    bcrypt.cpp \
    commctrl.cpp \
+   libloaderapi.cpp \
    mmsystem.cpp \
    sysinfoapi.cpp \
    utils.cpp \
