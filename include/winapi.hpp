@@ -2,14 +2,14 @@
 
   WINAPI for Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2022,2023 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (C) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
 */
 
 /*
 MIT License
 
-Copyright (c) 2022,2023 Marcos Antonio Gambeta
+Copyright (c) 2024 Marcos Antonio Gambeta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -116,6 +116,9 @@ SOFTWARE.
 #define wa_par_DWORDLONG(n)    static_cast<DWORDLONG>(hb_parnll(n))
 #define wa_par_ULONGLONG(n)    static_cast<ULONGLONG>(hb_parnll(n))
 #define wa_par_LANGID(n)       static_cast<LANGID>(hb_parni(n))
+#define wa_par_WNDPROC(n)      reinterpret_cast<WNDPROC>(hb_parptr(n))
+#define wa_par_TIMERPROC(n)    reinterpret_cast<TIMERPROC>(hb_parptr(n))
+#define wa_par_HMONITOR(n)     static_cast<HMONITOR>(hb_parptr(n))
 
 #define wa_ret___LONG32(x)     hb_retnl(x)
 #define wa_ret_ATOM(x)         hb_retni(x)
@@ -196,6 +199,7 @@ SOFTWARE.
 #define wa_ret_ULONGLONG(x)    hb_retnll(x)
 #define wa_ret_WORD(x)         hb_retni(x)
 #define wa_ret_WPARAM(x)       hb_retnl(x)
+#define wa_ret_WNDPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
 
 // #define wa_stor_ATOM(v, n)         hb_storni(v, n)
 #define wa_stor_BOOL(v, n)         hb_storl(v, n)
@@ -276,6 +280,7 @@ SOFTWARE.
 
 #define wa_par_ABC(n)                             static_cast<ABC *>(wa_get_ptr(n))
 #define wa_par_ABCFLOAT(n)                        static_cast<ABCFLOAT *>(wa_get_ptr(n))
+#define wa_par_ACCEL(n)                           static_cast<ACCEL *>(wa_get_ptr(n))
 #define wa_par_BITMAP(n)                          static_cast<BITMAP *>(wa_get_ptr(n))
 #define wa_par_BITMAPINFO(n)                      static_cast<BITMAPINFO *>(wa_get_ptr(n))
 #define wa_par_BLENDFUNCTION(n)                   static_cast<BLENDFUNCTION *>(wa_get_ptr(n))
@@ -294,6 +299,8 @@ SOFTWARE.
 #define wa_par_LOGPALETTE(n)                      static_cast<LOGPALETTE *>(wa_get_ptr(n))
 #define wa_par_LOGPEN(n)                          static_cast<LOGPEN *>(wa_get_ptr(n))
 #define wa_par_MEMORYSTATUSEX(n)                  static_cast<MEMORYSTATUSEX *>(wa_get_ptr(n))
+#define wa_par_MENUINFO(n)                        static_cast<MENUINFO *>(wa_get_ptr(n))
+#define wa_par_MONITORINFO(n)                     static_cast<MONITORINFO *>(wa_get_ptr(n))
 #define wa_par_MOUSEMOVEPOINT(n)                  static_cast<MOUSEMOVEPOINT *>(wa_get_ptr(n))
 #define wa_par_MSG(n)                             static_cast<MSG *>(wa_get_ptr(n))
 #define wa_par_PAINTSTRUCT(n)                     static_cast<PAINTSTRUCT *>(wa_get_ptr(n))
@@ -304,6 +311,10 @@ SOFTWARE.
 #define wa_par_SIZE(n)                            static_cast<SIZE *>(wa_get_ptr(n))
 #define wa_par_SYSTEM_INFO(n)                     static_cast<SYSTEM_INFO *>(wa_get_ptr(n))
 #define wa_par_SYSTEMTIME(n)                      static_cast<SYSTEMTIME *>(wa_get_ptr(n))
+#define wa_par_UPDATELAYEREDWINDOWINFO(n)         static_cast<UPDATELAYEREDWINDOWINFO *>(wa_get_ptr(n))
 #define wa_par_WINDOWINFO(n)                      static_cast<WINDOWINFO *>(wa_get_ptr(n))
 #define wa_par_WINDOWPLACEMENT(n)                 static_cast<WINDOWPLACEMENT *>(wa_get_ptr(n))
+#define wa_par_WINDOWPOS(n)                       static_cast<WINDOWPOS *>(wa_get_ptr(n))
+#define wa_par_WNDCLASS(n)                        static_cast<WNDCLASS *>(wa_get_ptr(n))
+#define wa_par_WNDCLASSEX(n)                      static_cast<WNDCLASSEX *>(wa_get_ptr(n))
 #define wa_par_XFORM(n)                           static_cast<XFORM *>(wa_get_ptr(n))

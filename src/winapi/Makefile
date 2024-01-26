@@ -24,6 +24,7 @@ CPP_SOURCES := \
 PRG_SOURCES := \
    struct_abc.prg \
    struct_abcfloat.prg \
+   struct_accel.prg \
    struct_bitmap.prg \
    struct_bitmapinfo.prg \
    struct_bitmapinfoheader.prg \
@@ -46,6 +47,8 @@ PRG_SOURCES := \
    struct_logpalette.prg \
    struct_logpen.prg \
    struct_memorystatusex.prg \
+   struct_menuinfo.prg \
+   struct_monitorinfo.prg \
    struct_mousemovepoint.prg \
    struct_msg.prg \
    struct_nmhdr.prg \
@@ -63,8 +66,12 @@ PRG_SOURCES := \
    struct_systemtime.prg \
    struct_timecaps.prg \
    struct_trivertex.prg \
+   struct_updatelayeredwindowinfo.prg \
    struct_windowinfo.prg \
    struct_windowplacement.prg \
+   struct_windowpos.prg \
+   struct_wndclass.prg \
+   struct_wndclassex.prg \
    struct_xform.prg \
    gppoint.prg \
    gppointf.prg \
