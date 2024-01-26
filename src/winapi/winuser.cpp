@@ -4616,7 +4616,7 @@ HB_FUNC( WALOADCURSORW )
 HB_FUNC( WALOADCURSOR )
 {
   void * str2{};
-  wa_ret_HCURSOR(LoadCursor(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
+  wa_ret_HCURSOR(LoadCursor(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str2, nullptr) : MAKEINTRESOURCE(hb_parni(2))));
   hb_strfree(str2);
 }
 

@@ -34,8 +34,6 @@ SOFTWARE.
   NOTE: source code generated with the help of a code generator
 */
 
-// WORK IN PROGRESS - not usable yet
-
 #include "hbclass.ch"
 
 FUNCTION wasWNDCLASS()
@@ -45,6 +43,9 @@ CLASS WAS_WNDCLASS
 
    DATA ptr
    DATA self_destruction INIT .F.
+
+   DATA strMenuName
+   DATA strClassName
 
    METHOD new
    METHOD delete
@@ -97,17 +98,17 @@ CLASS WAS_WNDCLASS
    METHOD sethbrBackground
    METHOD gethbrBackground
 
-   // LPCWSTR lpszMenuName // TODO:
+   // LPCWSTR lpszMenuName
    //ASSIGN lpszMenuName(n) INLINE ::setlpszMenuName(n)
    //ACCESS lpszMenuName INLINE ::getlpszMenuName()
    //METHOD setlpszMenuName
    //METHOD getlpszMenuName
 
-   // LPCWSTR lpszClassName // TODO:
-   //ASSIGN lpszClassName(n) INLINE ::setlpszClassName(n)
-   //ACCESS lpszClassName INLINE ::getlpszClassName()
-   //METHOD setlpszClassName
-   //METHOD getlpszClassName
+   // LPCWSTR lpszClassName
+   ASSIGN lpszClassName(n) INLINE ::setlpszClassName(n)
+   ACCESS lpszClassName INLINE ::getlpszClassName()
+   METHOD setlpszClassName
+   METHOD getlpszClassName
 
    DESTRUCTOR destroyObject
 
@@ -133,6 +134,8 @@ HB_FUNC_STATIC( WAS_WNDCLASS_NEW )
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new WNDCLASS());
   hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+  hb_objDataPutPtr(self, "_STRMENUNAME", nullptr);
+  hb_objDataPutPtr(self, "_STRCLASSNAME", nullptr);
   hb_itemReturn(self);
 }
 
@@ -142,8 +145,12 @@ HB_FUNC_STATIC( WAS_WNDCLASS_DELETE )
 
   if( obj != nullptr )
   {
+    hb_strfree(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME"));
+    hb_strfree(hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME"));
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
+    hb_objDataPutPtr(hb_stackSelfItem(), "_STRMENUNAME", nullptr);
+    hb_objDataPutPtr(hb_stackSelfItem(), "_STRCLASSNAME", nullptr);
   }
 
   hb_itemReturn(hb_stackSelfItem());
@@ -327,7 +334,33 @@ HB_FUNC_STATIC( WAS_WNDCLASS_GETHBRBACKGROUND )
 
 // LPCWSTR lpszMenuName // TODO:
 
-// LPCWSTR lpszClassName // TODO:
+// LPCWSTR lpszClassName
+
+HB_FUNC_STATIC( WAS_WNDCLASS_SETLPSZCLASSNAME )
+{
+  auto obj = static_cast<WNDCLASS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+
+  if( obj != nullptr )
+  {
+    void * str = hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME");
+    if( str != nullptr )
+    {
+      hb_strfree(str);
+    }
+    obj->lpszClassName = HB_PARSTR(1, &str, nullptr);
+    hb_objDataPutPtr(hb_stackSelfItem(), "_STRCLASSNAME", str);
+  }
+}
+
+HB_FUNC_STATIC( WAS_WNDCLASS_GETLPSZCLASSNAME )
+{
+  auto obj = static_cast<WNDCLASS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+
+  if( obj != nullptr )
+  {
+    HB_RETSTR(obj->lpszClassName);
+  }
+}
 
 /*
 typedef struct tagWNDCLASSA {
