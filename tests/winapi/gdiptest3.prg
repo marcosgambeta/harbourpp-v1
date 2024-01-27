@@ -38,8 +38,8 @@ PROCEDURE Main()
                             WS_OVERLAPPEDWINDOW, ;
                             CW_USEDEFAULT, ;
                             CW_USEDEFAULT, ;
-                            CW_USEDEFAULT, ;
-                            CW_USEDEFAULT, ;
+                            682, ;
+                            340, ;
                             NIL, ;
                             NIL, ;
                             waGetModuleHandle(NIL), ;
@@ -50,7 +50,7 @@ PROCEDURE Main()
       QUIT
    ENDIF
 
-   waShowWindow(hwnd, SW_SHOWMAXIMIZED)
+   waShowWindow(hwnd, SW_SHOW)
    waUpdateWindow(hwnd)
 
    // run the message loop
