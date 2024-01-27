@@ -2,11 +2,12 @@ ROOT := ../../
 
 include $(TOP)$(ROOT)config/global.mk
 
-HB_PRGFLAGS += -gc3
+HB_PRGFLAGS += -w3 -gc3
 
 CPP_SOURCES := \
    bcrypt.cpp \
    commctrl.cpp \
+   errhandlingapi.cpp \
    libloaderapi.cpp \
    mmsystem.cpp \
    sysinfoapi.cpp \
