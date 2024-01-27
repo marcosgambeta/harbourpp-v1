@@ -13,19 +13,30 @@
 #include "winapi_winuser.ch"
 #include "winapi_wingdi.ch"
 
+#define IDR_MYMENU 101
 #define IDM_FILE_NEW  1
 #define IDM_FILE_OPEN 2
 #define IDM_FILE_QUIT 3
 
+#define MAKEINTRESOURCE(n) (n)
+
 PROCEDURE Main()
 
+   LOCAL wc
    LOCAL hwnd
    LOCAL CLASS_NAME := "Sample Window Class"
    LOCAL msg
 
    // register the window class
 
-   RegisterWindowClass()
+   wc := wasWNDCLASS()
+   wc:lpfnWndProc   := GetWindowProc()
+   wc:hInstance     := waGetModuleHandle(NIL)
+   wc:lpszClassName := CLASS_NAME
+   wc:hCursor       := waLoadCursor(NIL, IDC_ARROW)
+   wc:hbrBackground := waNToP(COLOR_WINDOW + 1)
+   wc:lpszMenuName  := MAKEINTRESOURCE(IDR_MYMENU)
+   waRegisterClass(wc)
 
    // create the window
 
@@ -76,7 +87,9 @@ FUNCTION WindowProc(hwnd, uMsg, wParam, lParam)
          waMessageBox(hwnd, "IDM_FILE_OPEN", "Option", MB_OK)
          EXIT
       CASE IDM_FILE_QUIT
-         waSendMessage(hwnd, WM_CLOSE, 0, 0)
+         IF waMessageBox(hwnd, "Close the application ?", "Question", MB_ICONQUESTION + MB_YESNO) == IDYES
+            waSendMessage(hwnd, WM_CLOSE, 0, 0)
+         ENDIF
       ENDSWITCH
       RETURN 0
 
@@ -120,7 +133,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
    static PHB_DYNS s_pDynSym = nullptr;
-   
+
    if( s_pDynSym == nullptr ) {
       s_pDynSym = hb_dynsymGetCase("WINDOWPROC");
    }
@@ -139,18 +152,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
    return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-// auxiliary functions
-
-HB_FUNC_STATIC( REGISTERWINDOWCLASS )
+HB_FUNC_STATIC( GETWINDOWPROC )
 {
-   WNDCLASS wc{};
-   wc.lpfnWndProc   = WindowProc;
-   wc.hInstance     = GetModuleHandle(nullptr);
-   wc.lpszClassName = L"Sample Window Class";
-   wc.hCursor       = LoadCursor(nullptr, IDC_ARROW);
-   wc.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-   wc.lpszMenuName  = MAKEINTRESOURCE(IDR_MYMENU);
-   RegisterClass(&wc);
+   hb_retptr(reinterpret_cast<void*>(WindowProc));
 }
 
 #pragma ENDDUMP
