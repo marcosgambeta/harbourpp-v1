@@ -46,6 +46,9 @@ CLASS WAS_WNDCLASSEX
    DATA ptr
    DATA self_destruction INIT .F.
 
+   DATA strMenuName
+   DATA strClassName
+
    METHOD new
    METHOD delete
 
@@ -103,9 +106,17 @@ CLASS WAS_WNDCLASSEX
    METHOD sethbrBackground
    METHOD gethbrBackground
 
-   // LPCWSTR lpszMenuName // TODO:
+   // LPCWSTR lpszMenuName
+   ASSIGN lpszMenuName(n) INLINE ::setlpszMenuName(n)
+   ACCESS lpszMenuName INLINE ::getlpszMenuName()
+   METHOD setlpszMenuName
+   METHOD getlpszMenuName
 
-   // LPCWSTR lpszClassName // TODO:
+   // LPCWSTR lpszClassName
+   ASSIGN lpszClassName(n) INLINE ::setlpszClassName(n)
+   ACCESS lpszClassName INLINE ::getlpszClassName()
+   METHOD setlpszClassName
+   METHOD getlpszClassName
 
    // HICON hIconSm
    ASSIGN hIconSm(n) INLINE ::sethIconSm(n)
@@ -139,6 +150,8 @@ HB_FUNC_STATIC( WAS_WNDCLASSEX_NEW )
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", obj);
   hb_objDataPutL(self, "_SELF_DESTRUCTION", true);
+  hb_objDataPutPtr(self, "_STRMENUNAME", nullptr);
+  hb_objDataPutPtr(self, "_STRCLASSNAME", nullptr);
   hb_itemReturn(self);
 }
 
@@ -148,8 +161,15 @@ HB_FUNC_STATIC( WAS_WNDCLASSEX_DELETE )
 
   if( obj != nullptr )
   {
+    if( !IS_INTRESOURCE(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME")) )
+    {
+       hb_strfree(hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME"));
+    }
+    hb_strfree(hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME"));
     delete obj;
     hb_objDataPutPtr(hb_stackSelfItem(), "_PTR", nullptr);
+    hb_objDataPutPtr(hb_stackSelfItem(), "_STRMENUNAME", nullptr);
+    hb_objDataPutPtr(hb_stackSelfItem(), "_STRCLASSNAME", nullptr);
   }
 
   hb_itemReturn(hb_stackSelfItem());
@@ -160,7 +180,7 @@ HB_FUNC_STATIC( WAS_WNDCLASSEX_DELETE )
 // HB_FUNC_STATIC( WAS_WNDCLASSEX_SETCBSIZE )
 // {
 //   auto obj = static_cast<WNDCLASSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
-// 
+//
 //   if( obj != nullptr )
 //   {
 //     obj->cbSize = wa_par_UINT(1);
@@ -353,9 +373,69 @@ HB_FUNC_STATIC( WAS_WNDCLASSEX_GETHBRBACKGROUND )
   }
 }
 
-// LPCWSTR lpszMenuName // TODO:
+// LPCWSTR lpszMenuName
 
-// LPCWSTR lpszClassName // TODO:
+HB_FUNC_STATIC( WAS_WNDCLASSEX_SETLPSZMENUNAME )
+{
+  auto obj = static_cast<WNDCLASSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+
+  if( obj != nullptr )
+  {
+    void * str = hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME");
+    if( str != nullptr && !IS_INTRESOURCE(str) )
+    {
+      hb_strfree(str);
+    }
+    str = nullptr;
+    obj->lpszMenuName = HB_ISCHAR(1) ? HB_PARSTR(1, &str, nullptr) : MAKEINTRESOURCE(hb_parni(1));
+    hb_objDataPutPtr(hb_stackSelfItem(), "_STRMENUNAME", str);
+  }
+}
+
+HB_FUNC_STATIC( WAS_WNDCLASSEX_GETLPSZMENUNAME )
+{
+  auto obj = static_cast<WNDCLASSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+
+  if( obj != nullptr )
+  {
+    if( !IS_INTRESOURCE(obj->lpszMenuName) )
+    {
+      HB_RETSTR(obj->lpszMenuName);
+    }
+    else
+    {
+      hb_retni(reinterpret_cast<int>(obj->lpszMenuName));
+    }
+  }
+}
+
+// LPCWSTR lpszClassName
+
+HB_FUNC_STATIC( WAS_WNDCLASSEX_SETLPSZCLASSNAME )
+{
+  auto obj = static_cast<WNDCLASSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+
+  if( obj != nullptr )
+  {
+    void * str = hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME");
+    if( str != nullptr )
+    {
+      hb_strfree(str);
+    }
+    obj->lpszClassName = HB_PARSTR(1, &str, nullptr);
+    hb_objDataPutPtr(hb_stackSelfItem(), "_STRCLASSNAME", str);
+  }
+}
+
+HB_FUNC_STATIC( WAS_WNDCLASSEX_GETLPSZCLASSNAME )
+{
+  auto obj = static_cast<WNDCLASSEX*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
+
+  if( obj != nullptr )
+  {
+    HB_RETSTR(obj->lpszClassName);
+  }
+}
 
 // HICON hIconSm
 
