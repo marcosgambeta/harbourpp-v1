@@ -10,8 +10,7 @@
 
 // NOTE: do a right click to show the popup menu
 
-#include "winapi_winuser.ch"
-#include "winapi_wingdi.ch"
+#include "winapi_windows.ch"
 
 #define IDR_MYMENU 101
 #define IDM_FILE_NEW  1

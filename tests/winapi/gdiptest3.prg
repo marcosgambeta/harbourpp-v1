@@ -8,8 +8,7 @@
 // Compile with:
 // hbmk2 gdiptest3 -gtgui
 
-#include "winapi_winuser.ch"
-#include "winapi_wingdi.ch"
+#include "winapi_windows.ch"
 
 PROCEDURE Main()
 

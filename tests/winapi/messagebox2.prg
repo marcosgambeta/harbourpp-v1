@@ -5,7 +5,7 @@
  *
  */
 
-#include "winapi_winuser.ch"
+#include "winapi_windows.ch"
 
 PROCEDURE Main()
 
