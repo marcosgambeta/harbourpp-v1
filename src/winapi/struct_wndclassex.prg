@@ -34,8 +34,6 @@ SOFTWARE.
   NOTE: source code generated with the help of a code generator
 */
 
-// WORK IN PROGRESS - not usable yet
-
 #include "hbclass.ch"
 
 FUNCTION wasWNDCLASSEX()
