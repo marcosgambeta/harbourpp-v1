@@ -205,8 +205,16 @@ PRG_HEADERS := \
    std.ch \
    tbrowse.ch \
    winapi_commctrl.ch \
+   winapi_gdiplus.ch \
+   winapi_gdipluscolor.ch \
+   winapi_gdipluscolormatrix.ch \
+   winapi_gdiplusenums.ch \
+   winapi_gdiplusimaging.ch \
+   winapi_gdipluspixelformats.ch \
+   winapi_gdiplustypes.ch \
    winapi_mmsystem.ch \
    winapi_winbase.ch \
+   winapi_windows.ch \
    winapi_wingdi.ch \
    winapi_winhttp.ch \
    winapi_winnetwk.ch \
