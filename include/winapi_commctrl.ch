@@ -2,8 +2,32 @@
 
   WINAPI For Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
+*/
+
+/*
+MIT License
+
+Copyright (c) 2024 Marcos Antonio Gambeta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 /*
@@ -32,9 +56,6 @@
 // #else
 // #define WINCOMMCTRLAPI
 // #endif
-// #endif
-
-// #ifdef __cplusplus
 // #endif
 
 // #ifndef SNDMSG
@@ -3696,17 +3717,10 @@
 #define DA_LAST                                                      (0x7fffffff)
 #define DA_ERR                                                       (-1)
 
-// #ifdef __cplusplus
-// #endif
-// #ifdef __cplusplus
-// #endif
-
 // #define DSA_GetItemCount(hdsa)                                       (*(int*)(hdsa))
 // #define DSA_AppendItem(hdsa,                                         pitem)DSA_InsertItem(hdsa,DA_LAST,pitem)
 
 // #if NTDDI_VERSION >= 0x06000000
-// #ifdef __cplusplus
-// #endif
 // #endif
 #define DSA_APPEND                                                   DA_LAST
 #define DSA_ERR                                                      DA_ERR
@@ -3716,11 +3730,6 @@
 #define PFNDSACOMPARE                                                PFNDACOMPARE
 #define PFNDSACOMPARECONST                                           PFNDACOMPARECONST
 
-// #ifdef __cplusplus
-// #endif
-// #ifdef __cplusplus
-// #endif
-
 // #define DPA_GetPtrCount(hdpa)                                        (*(int*)(hdpa))
 // #define DPA_SetPtrCount(hdpa,                                        cItems)(*(int*)(hdpa)=(cItems))
 // #define DPA_FastDeleteLastPtr(hdpa)                                  (--*(int*)(hdpa))
@@ -3729,8 +3738,6 @@
 // #define DPA_AppendPtr(hdpa,                                          pitem)DPA_InsertPtr(hdpa,DA_LAST,pitem)
 
 // #if NTDDI_VERSION >= 0x06000000
-// #endif
-// #ifdef __cplusplus
 // #endif
 
 #define DPAM_SORTED                                                  0x1
@@ -3742,15 +3749,9 @@
 #define DPAMM_DELETE                                                 2
 #define DPAMM_INSERT                                                 3
 
-// #ifdef __cplusplus
-// #endif
-
 #define DPAS_SORTED                                                  0x1
 #define DPAS_INSERTBEFORE                                            0x2
 #define DPAS_INSERTAFTER                                             0x4
-
-// #ifdef __cplusplus
-// #endif
 
 // #define DPA_SortedInsertPtr(hdpa,                                    pFind,iStart,pfnCompare,lParam,options,pitem)DPA_InsertPtr(hdpa,DPA_Search(hdpa,pFind,iStart,pfnCompare,lParam,(DPAS_SORTED|(options))),(pitem))
 #define DPA_APPEND                                                   DA_LAST
@@ -3809,9 +3810,6 @@
 #endif
 
 // #if NTDDI_VERSION >= 0x06000000
-// #endif
-
-// #ifdef __cplusplus
 // #endif
 
 #endif

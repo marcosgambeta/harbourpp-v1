@@ -2,8 +2,32 @@
 
   WINAPI For Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
+*/
+
+/*
+MIT License
+
+Copyright (c) 2024 Marcos Antonio Gambeta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 /*
@@ -13,9 +37,6 @@
 #ifndef _WINAPI_WINUSER_
 #define _WINAPI_WINUSER_
 
-// #ifdef __cplusplus
-// #endif
-
 // #ifndef WINVER
 // #define WINVER                                                       0x0502
 // #endif
@@ -24,29 +45,13 @@
 // #endif
 
 #ifndef NOUSER
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #ifdef STRICT
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 #else
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 
 // #ifdef STRICT
 // #else
-// #endif
-
 // #endif
 
 // #define IS_INTRESOURCE(_r)                                           ((((ULONG_PTR)(_r))>>16)==0)
@@ -386,12 +391,6 @@
 #define HCBT_SYSCOMMAND                                              8
 #define HCBT_SETFOCUS                                                9
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define WTS_CONSOLE_CONNECT                                          0x1
 #define WTS_CONSOLE_DISCONNECT                                       0x2
 #define WTS_REMOTE_CONNECT                                           0x3
@@ -506,9 +505,6 @@
 // #define GET_FLAGS_LPARAM(lParam)                                     (LOWORD(lParam))
 // #define GET_KEYSTATE_LPARAM(lParam)                                  GET_FLAGS_LPARAM(lParam)
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define LLKHF_EXTENDED                                               (KF_EXTENDED>>8)
 #define LLKHF_INJECTED                                               0x00000010
 #define LLKHF_ALTDOWN                                                (KF_ALTDOWN>>8)
@@ -516,13 +512,6 @@
 
 #define LLMHF_INJECTED                                               0x00000001
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-
-// #ifdef __cplusplus
-// #else
-// #endif
-
-// #endif
 #endif
 
 #define HKL_PREV                                                     0
@@ -603,8 +592,6 @@
 #endif
 
 #ifndef NOSECURITY
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define UOI_FLAGS                                                    1
 #define UOI_NAME                                                     2
@@ -621,12 +608,7 @@
 // #endif
 #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #ifndef NOMSG
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
-// #endif
 
 // #define POINTSTOPOINT(pt,pts)                                        {(pt).x=(LONG)(SHORT)LOWORD(*(LONG*)&pts);(pt).y=(LONG)(SHORT)HIWORD(*(LONG*)&pts);}
 
@@ -734,9 +716,6 @@
 #define WM_QUEUESYNC                                                 0x0023
 #define WM_GETMINMAXINFO                                             0x0024
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define WM_PAINTICON                                                 0x0026
 #define WM_ICONERASEBKGND                                            0x0027
 #define WM_NEXTDLGCTL                                                0x0028
@@ -769,9 +748,6 @@
 
 #define WM_COPYDATA                                                  0x004A
 #define WM_CANCELJOURNAL                                             0x004B
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define WM_NOTIFY                                                    0x004E
 #define WM_INPUTLANGCHANGEREQUEST                                    0x0050
@@ -949,8 +925,6 @@
 #ifndef PBT_POWERSETTINGCHANGE
 #define PBT_POWERSETTINGCHANGE                                       32787
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
 // #endif
 #endif
@@ -1139,9 +1113,6 @@
 #define SIZEZOOMSHOW                                                 SIZE_MAXSHOW
 #define SIZEZOOMHIDE                                                 SIZE_MAXHIDE
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define WVR_ALIGNTOP                                                 0x0010
 #define WVR_ALIGNLEFT                                                0x0020
 #define WVR_ALIGNBOTTOM                                              0x0040
@@ -1172,8 +1143,6 @@
 #define HOVER_DEFAULT                                                0xFFFFFFFF
 #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
 
 #ifndef NOWINSTYLES
@@ -1299,9 +1268,6 @@
 #define BF_FLAT                                                      0x4000
 #define BF_MONO                                                      0x8000
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define DFC_CAPTION                                                  1
 #define DFC_MENU                                                     2
 #define DFC_SCROLL                                                   3
@@ -1344,9 +1310,6 @@
 #define DFCS_FLAT                                                    0x4000
 #define DFCS_MONO                                                    0x8000
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define DC_ACTIVE                                                    0x0001
 #define DC_SMALLCAP                                                  0x0002
 #define DC_ICON                                                      0x0004
@@ -1355,14 +1318,8 @@
 #define DC_GRADIENT                                                  0x0020
 #define DC_BUTTONS                                                   0x1000
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define IDANI_OPEN                                                   1
 #define IDANI_CAPTION                                                3
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #ifndef NOCLIPBOARD
 
@@ -1404,18 +1361,9 @@
 #define FCONTROL                                                     0x08
 #define FALT                                                         0x10
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define WPF_SETMINPOSITION                                           0x0001
 #define WPF_RESTORETOMAXIMIZED                                       0x0002
 #define WPF_ASYNCWINDOWPLACEMENT                                     0x0004
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define ODT_MENU                                                     1
 #define ODT_LISTBOX                                                  2
@@ -1439,9 +1387,6 @@
 #define ODS_NOACCEL                                                  0x0100
 #define ODS_NOFOCUSRECT                                              0x0200
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #ifndef NOMSG
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #define GetMessage                                                   __MINGW_NAME_AW(GetMessage)
@@ -1458,9 +1403,6 @@
 #define PM_QS_PAINT                                                  (QS_PAINT<<16)
 #define PM_QS_SENDMESSAGE                                            (QS_SENDMESSAGE<<16)
 #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define MOD_ALT                                                      0x0001
 #define MOD_CONTROL                                                  0x0002
@@ -1535,9 +1477,6 @@
 #define BSF_LUID                                                     0x00000400
 
 #define BROADCAST_QUERY_DENY                                         0x424D5144
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define DEVICE_NOTIFY_WINDOW_HANDLE                                  0x00000000
 #define DEVICE_NOTIFY_SERVICE_HANDLE                                 0x00000001
@@ -1633,11 +1572,6 @@
 // #endif
 
 // #ifndef NODEFERWINDOWPOS
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #endif
 
 #define SWP_NOSIZE                                                   0x0001
@@ -1663,18 +1597,6 @@
 #define HWND_NOTOPMOST                                               (-2)
 
 #ifndef NOCTLMGR
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #define CreateDialogParam                                            __MINGW_NAME_AW(CreateDialogParam)
@@ -1714,8 +1636,6 @@
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #define RegisterClipboardFormat                                      __MINGW_NAME_AW(RegisterClipboardFormat)
 // #define GetClipboardFormatName                                       __MINGW_NAME_AW(GetClipboardFormatName)
-// #if WINVER >= 0x0600
-// #endif
 // #endif
 // #endif
 
@@ -1893,11 +1813,6 @@
 // #endif
 
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #if WINVER >= 0x0601
-// #endif
-
-// #if WINVER >= 0x0602
-// #endif
 
 // #define MapVirtualKey                                                __MINGW_NAME_AW(MapVirtualKey)
 // #define MapVirtualKeyEx                                              __MINGW_NAME_AW(MapVirtualKeyEx)
@@ -1960,8 +1875,6 @@
 // #define TranslateAccelerator                                         __MINGW_NAME_AW(TranslateAccelerator)
 // #endif
 
-// #if WINVER >= 0x0601
-// #endif
 // #endif
 
 #ifndef NOSYSMETRICS
@@ -2084,8 +1997,6 @@
 #define SM_SYSTEMDOCKED                                              0x2004
 // #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
 
 #ifndef NOMENUS
@@ -2187,9 +2098,6 @@
 // #endif
 #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define DOF_EXECUTABLE                                               0x8001
 #define DOF_DOCUMENT                                                 0x8002
 #define DOF_DIRECTORY                                                0x8003
@@ -2199,9 +2107,6 @@
 
 #define DO_DROPFILE                                                  0x454C4946
 #define DO_PRINTFILE                                                 0x544E5250
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #ifndef NODRAWTEXT
 
@@ -2276,9 +2181,6 @@
 
 #define DCX_VALIDATE                                                 0x00200000
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define RDW_INVALIDATE                                               0x0001
 #define RDW_INTERNALPAINT                                            0x0002
 #define RDW_ERASE                                                    0x0004
@@ -2296,17 +2198,12 @@
 #define RDW_FRAME                                                    0x0400
 #define RDW_NOFRAME                                                  0x0800
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define SW_SCROLLCHILDREN                                            0x0001
 #define SW_INVALIDATE                                                0x0002
 #define SW_ERASE                                                     0x0004
 #define SW_SMOOTHSCROLL                                              0x0010
 
 #ifndef NOSCROLL
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define ESB_ENABLE_BOTH                                              0x0000
 #define ESB_DISABLE_BOTH                                             0x0003
@@ -2333,9 +2230,6 @@
 
 #define HELPINFO_WINDOW                                              0x0001
 #define HELPINFO_MENUITEM                                            0x0002
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #ifndef NOMB
 
@@ -2383,13 +2277,6 @@
 // #define MessageBoxIndirect                                           __MINGW_NAME_AW(MessageBoxIndirect)
 // #endif
 #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #if WINVER >= 0x0600
-// #endif
-// #if WINVER >= 0x0603
-// #endif
-// #endif
 
 #define CWP_ALL                                                      0x0000
 #define CWP_SKIPINVISIBLE                                            0x0001
@@ -2446,8 +2333,6 @@
 #define COLOR_3DHILIGHT                                              COLOR_BTNHIGHLIGHT
 #define COLOR_BTNHILIGHT                                             COLOR_BTNHIGHLIGHT
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
 
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
@@ -3255,8 +3140,6 @@
 #define SIF_TRACKPOS                                                 0x0010
 #define SIF_ALL                                                      hb_bitor(SIF_RANGE, SIF_PAGE, SIF_POS, SIF_TRACKPOS)
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
 #endif
 
@@ -3322,9 +3205,6 @@
 #define GR_USEROBJECTS_PEAK                                          4
 
 #define GR_GLOBAL                                                    (-2)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #endif
 
 #ifndef NOSYSPARAMSINFO
@@ -3601,9 +3481,6 @@
 
 #define MAX_TOUCH_PREDICTION_FILTER_TAPS                             3
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define TOUCHPREDICTIONPARAMETERS_DEFAULT_LATENCY                    8
 #define TOUCHPREDICTIONPARAMETERS_DEFAULT_SAMPLETIME                 8
 #define TOUCHPREDICTIONPARAMETERS_DEFAULT_USE_HW_TIMESTAMP           1
@@ -3627,14 +3504,6 @@
 #define METRICS_USEDEFAULT                                           -1
 #ifdef _WINGDI_
 #ifndef NOGDI
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #if WINVER >= 0x0600
-// #endif
-
-// #if WINVER >= 0x0600
-// #endif
-
-// #endif
 #endif
 #endif
 
@@ -3712,8 +3581,6 @@
 
 #define EDD_GET_DEVICE_INTERFACE_NAME                                0x00000001
 
-// #if WINVER >= 0x0601
-// #endif
 #endif
 #endif
 
@@ -3722,9 +3589,6 @@
 // #endif
 #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define FKF_FILTERKEYSON                                             0x00000001
 #define FKF_AVAILABLE                                                0x00000002
 #define FKF_HOTKEYACTIVE                                             0x00000004
@@ -3732,9 +3596,6 @@
 #define FKF_HOTKEYSOUND                                              0x00000010
 #define FKF_INDICATOR                                                0x00000020
 #define FKF_CLICKON                                                  0x00000040
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define SKF_STICKYKEYSON                                             0x00000001
 #define SKF_AVAILABLE                                                0x00000002
@@ -3762,9 +3623,6 @@
 #define SKF_LWINLOCKED                                               0x00400000
 #define SKF_RWINLOCKED                                               0x00800000
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define MKF_MOUSEKEYSON                                              0x00000001
 #define MKF_AVAILABLE                                                0x00000002
 #define MKF_HOTKEYACTIVE                                             0x00000004
@@ -3778,9 +3636,6 @@
 #define MKF_LEFTBUTTONDOWN                                           0x01000000
 #define MKF_RIGHTBUTTONDOWN                                          0x02000000
 #define MKF_MOUSEMODE                                                0x80000000
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define ATF_TIMEOUTON                                                0x00000001
 #define ATF_ONOFFFEEDBACK                                            0x00000002
@@ -3799,9 +3654,6 @@
 #define SSWF_DISPLAY                                                 3
 #define SSWF_CUSTOM                                                  4
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define SSF_SOUNDSENTRYON                                            0x00000001
 #define SSF_AVAILABLE                                                0x00000002
 #define SSF_INDICATOR                                                0x00000004
@@ -3812,10 +3664,6 @@
 
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #if _WIN32_WINNT >= 0x0600
-// #endif
-
-// #ifdef __cplusplus
-// #else
 // #endif
 
 // #ifdef WINNT
@@ -3845,16 +3693,11 @@
 #define MONITORINFOF_PRIMARY                                         0x00000001
 
 #ifndef NOWINABLE
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define WINEVENT_OUTOFCONTEXT                                        0x0000
 #define WINEVENT_SKIPOWNTHREAD                                       0x0001
 #define WINEVENT_SKIPOWNPROCESS                                      0x0002
 #define WINEVENT_INCONTEXT                                           0x0004
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define CHILDID_SELF                                                 0
 #define INDEXID_OBJECT                                               0
@@ -4016,9 +3859,6 @@
 #define ALERT_SYSTEM_CRITICAL                                        5
 #define CALERT_SYSTEM                                                6
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define GUI_CARETBLINKING                                            0x00000001
 #define GUI_INMOVESIZE                                               0x00000002
 #define GUI_INMENUMODE                                               0x00000004
@@ -4085,9 +3925,6 @@
 
 #define WS_ACTIVECAPTION                                             0x0001
 
-// #if WINVER >= 0x0600
-// #endif
-
 // #endif
 
 #define GA_PARENT                                                    1
@@ -4102,23 +3939,14 @@
 // #endif
 #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 // #define GET_RAWINPUT_CODE_WPARAM(wParam)                             ((wParam)&0xff)
 
 #define RIM_INPUT                                                    0
 #define RIM_INPUTSINK                                                1
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define RIM_TYPEMOUSE                                                0
 #define RIM_TYPEKEYBOARD                                             1
 #define RIM_TYPEHID                                                  2
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define RI_MOUSE_LEFT_BUTTON_DOWN                                    0x0001
 #define RI_MOUSE_LEFT_BUTTON_UP                                      0x0002
@@ -4147,9 +3975,6 @@
 #define MOUSE_MOVE_NOCOALESCE                                        0x08
 // #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define KEYBOARD_OVERRUN_MAKE_CODE                                   0xFF
 
 #define RI_KEY_MAKE                                                  0
@@ -4158,9 +3983,6 @@
 #define RI_KEY_E1                                                    4
 #define RI_KEY_TERMSRV_SET_LED                                       8
 #define RI_KEY_TERMSRV_SHADOW                                        0x10
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 // #ifdef _WIN64
 // #define RAWINPUT_ALIGN(x)                                            (((x)+sizeof(QWORD)-1)&~(sizeof(QWORD)-1))
@@ -4172,9 +3994,6 @@
 
 #define RID_INPUT                                                    0x10000003
 #define RID_HEADER                                                   0x10000005
-
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define RIDI_PREPARSEDDATA                                           0x20000005
 #define RIDI_DEVICENAME                                              0x20000007
@@ -4207,9 +4026,6 @@
 // #define GET_DEVICE_CHANGE_LPARAM(lParam)                             (LOWORD(lParam))
 // #endif
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
-
 // #if WINVER >= 0x0602
 #define POINTER_DEVICE_PRODUCT_STRING_MAX                            520
 #define PDC_ARRIVAL                                                  0x001
@@ -4225,16 +4041,12 @@
 #define PDC_ORIGIN                                                   0x400
 #define PDC_MODE_ASPECTRATIOPRESERVED                                0x800
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 // #endif
 
 // #if WINVER >= 0x0600
 #define MSGFLT_ADD                                                   1
 #define MSGFLT_REMOVE                                                2
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 // #endif
 // #if WINVER >= 0x0601
 #define MSGFLTINFO_NONE                                              (0)
@@ -4246,8 +4058,6 @@
 #define MSGFLT_ALLOW                                                 (1)
 #define MSGFLT_DISALLOW                                              (2)
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 // #endif
 
 // #if WINVER >= 0x0601
@@ -4289,8 +4099,6 @@
 
 #define GCF_INCLUDE_ANCESTORS                                        0x00000001
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
-// #endif
 // #endif
 
 // #if WINVER >= 0x0601
@@ -4304,14 +4112,7 @@
 
 #define MAX_STR_BLOCKREASON                                          256
 
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #if WINVER >= 0x0601
-// #endif
-// #endif
-
-// #if WINVER >= 0x0601
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
-// #endif
 
 // #ifndef __WIDL__
 // #endif
@@ -4319,20 +4120,12 @@
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #ifndef __WIDL__
 // #endif
-// #endif
-// #endif
-
-// #if WINVER >= 0x0601
-// #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #endif
 // #endif
 
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #if (_WIN32_WINNT >= 0x0602)
 // #endif /*(_WIN32_WINNT >= 0x0602)*/
-// #endif
-
-// #ifdef __cplusplus
 // #endif
 
 #endif /* _WINAPI_WINUSER_ */

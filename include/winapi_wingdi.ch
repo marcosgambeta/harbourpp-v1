@@ -2,8 +2,32 @@
 
   WINAPI For Harbour++ - Bindings libraries for Harbour++ and WINAPI
 
-  Copyright (C) 2022 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+  Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
 
+*/
+
+/*
+MIT License
+
+Copyright (c) 2024 Marcos Antonio Gambeta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 /*
@@ -23,9 +47,6 @@
 // #define WINSPOOLAPI
 // #else
 // #define WINSPOOLAPI                                                  DECLSPEC_IMPORT
-// #endif
-
-// #ifdef __cplusplus
 // #endif
 
 // #ifndef WINVER
@@ -226,9 +247,6 @@
 #define META_CREATEBRUSHINDIRECT                                     0x02FC
 #define META_CREATEREGION                                            0x06FF
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #endif
 
 #define NEWFRAME                                                     1
@@ -331,9 +349,6 @@
 #define PSIDENT_GDICENTRIC                                           0
 #define PSIDENT_PSCENTRIC                                            1
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define PSINJECT_BEGINSTREAM                                         1
 #define PSINJECT_PSADOBE                                             2
 #define PSINJECT_PAGESATEND                                          3
@@ -382,9 +397,6 @@
 #define FEATURESETTING_PRIVATE_BEGIN                                 0x1000
 #define FEATURESETTING_PRIVATE_END                                   0x1FFF
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define PSPROTOCOL_ASCII                                             0
 #define PSPROTOCOL_BCP                                               1
 #define PSPROTOCOL_TBCP                                              2
@@ -429,11 +441,6 @@
 #define MWT_MAX                                                      MWT_RIGHTMULTIPLY
 
 #define _XFORM_
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define CS_ENABLE                                                    0x00000001
 #define CS_DISABLE                                                   0x00000002
@@ -471,24 +478,6 @@
 // #define CMYK(c,m,y,k)                                                ((COLORREF)((((BYTE)(k)|((WORD)((BYTE)(y))<<8))|(((DWORD)(BYTE)(m))<<16))|(((DWORD)(BYTE)(c))<<24)))
 
 #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define PROFILE_LINKED                                               'LINK'
 #define PROFILE_EMBEDDED                                             'MBED'
@@ -500,41 +489,19 @@
 #define BI_JPEG                                                      4
 #define BI_PNG                                                       5
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
 // #define MAKEPOINTS(l)                                                (*((POINTS*)&(l)))
 
 #ifndef NOFONTSIG
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define TCI_SRCCHARSET                                               1
 #define TCI_SRCCODEPAGE                                              2
 #define TCI_SRCFONTSIG                                               3
 #define TCI_SRCLOCALE                                                0x1000
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
 #endif
 
 #ifndef NOMETAFILE
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
 #endif
 
 #ifndef NOTEXTMETRIC
@@ -551,8 +518,6 @@
 
 #ifndef _TEXTMETRIC_DEFINED
 #define _TEXTMETRIC_DEFINED
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
 #endif
 
 #define NTM_REGULAR                                                  0x00000040
@@ -566,22 +531,7 @@
 #define NTM_TYPE1                                                    0x00100000
 #define NTM_DSIG                                                     0x00200000
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 
 // #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
 
@@ -1115,9 +1065,6 @@
 
 #define CCHFORMNAME                                                  32
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
 #define DM_SPECVERSION                                               0x0401
 
 #define DM_ORIENTATION                                               0x00000001
@@ -1365,9 +1312,6 @@
 
 #define DMDITHER_USER                                                256
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
 #define DISPLAY_DEVICE_ATTACHED_TO_DESKTOP                           0x00000001
 #define DISPLAY_DEVICE_MULTI_DRIVER                                  0x00000002
 #define DISPLAY_DEVICE_PRIMARY_DEVICE                                0x00000004
@@ -1435,24 +1379,10 @@
 
 #define RDH_RECTANGLES                                               1
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
 #define SYSRGN                                                       4
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #ifndef NOTEXTMETRIC
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define GGO_METRICS                                                  0
 #define GGO_BITMAP                                                   1
@@ -1469,9 +1399,6 @@
 #define TT_PRIM_LINE                                                 1
 #define TT_PRIM_QSPLINE                                              2
 #define TT_PRIM_CSPLINE                                              3
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
 
 #define GCP_DBCS                                                     0x0001
 #define GCP_REORDER                                                  0x0002
@@ -1512,14 +1439,8 @@
 #define GCPGLYPH_LINKBEFORE                                          0x8000
 #define GCPGLYPH_LINKAFTER                                           0x4000
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-
 #define TT_AVAILABLE                                                 0x0001
 #define TT_ENABLED                                                   0x0002
-
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
 
 #define PFD_TYPE_RGBA                                                0
 #define PFD_TYPE_COLORINDEX                                          1
@@ -1686,12 +1607,6 @@
 
 // #endif /* WINAPI_PARTITION_DESKTOP */
 
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif
-// #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-// #endif
 // #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #define AC_SRC_OVER                                                  0x00
 #define AC_SRC_ALPHA                                                 0x01
@@ -1976,8 +1891,5 @@
 // #endif
 
 // #endif /* WINAPI_PARTITION_DESKTOP */
-
-// #ifdef __cplusplus
-// #endif
 
 #endif /* _WINAPI_WINGDI_ */
