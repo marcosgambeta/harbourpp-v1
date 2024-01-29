@@ -1306,10 +1306,29 @@ HB_FUNC( WAISZOOMED )
 /*
 WINUSERAPI HWND WINAPI CreateDialogParamA(HINSTANCE hInstance,LPCSTR lpTemplateName,HWND hWndParent,DLGPROC lpDialogFunc,LPARAM dwInitParam)
 */
+#if 0
+HB_FUNC( WACREATEDIALOGPARAMA )
+{
+  wa_ret_HWND(CreateDialogParamA(wa_par_HINSTANCE(1), wa_par_LPCSTR(2), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
+}
+#endif
 
 /*
 WINUSERAPI HWND WINAPI CreateDialogParamW(HINSTANCE hInstance,LPCWSTR lpTemplateName,HWND hWndParent,DLGPROC lpDialogFunc,LPARAM dwInitParam)
 */
+#if 0
+HB_FUNC( WACREATEDIALOGPARAMW )
+{
+  wa_ret_HWND(CreateDialogParamW(wa_par_HINSTANCE(1), wa_par_LPCWSTR(2), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
+}
+#endif
+
+HB_FUNC( WACREATEDIALOGPARAM )
+{
+  void * str{};
+  wa_ret_HWND(CreateDialogParam(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni(2)), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
+  hb_strfree(str);
+}
 
 /*
 WINUSERAPI HWND WINAPI CreateDialogIndirectParamA(HINSTANCE hInstance,LPCDLGTEMPLATEA lpTemplate,HWND hWndParent,DLGPROC lpDialogFunc,LPARAM dwInitParam)
@@ -1322,10 +1341,29 @@ WINUSERAPI HWND WINAPI CreateDialogIndirectParamW(HINSTANCE hInstance,LPCDLGTEMP
 /*
 WINUSERAPI INT_PTR WINAPI DialogBoxParamA(HINSTANCE hInstance,LPCSTR lpTemplateName,HWND hWndParent,DLGPROC lpDialogFunc,LPARAM dwInitParam)
 */
+#if 0
+HB_FUNC( WADIALOGBOXPARAMA )
+{
+  wa_ret_INT_PTR(DialogBoxParamA(wa_par_HINSTANCE(1), wa_par_LPCSTR(2), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
+}
+#endif
 
 /*
 WINUSERAPI INT_PTR WINAPI DialogBoxParamW(HINSTANCE hInstance,LPCWSTR lpTemplateName,HWND hWndParent,DLGPROC lpDialogFunc,LPARAM dwInitParam)
 */
+#if 0
+HB_FUNC( WADIALOGBOXPARAMW )
+{
+  wa_ret_INT_PTR(DialogBoxParamW(wa_par_HINSTANCE(1), wa_par_LPCWSTR(2), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
+}
+#endif
+
+HB_FUNC( WADIALOGBOXPARAM )
+{
+  void * str{};
+  wa_ret_INT_PTR(DialogBoxParam(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni(2)), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
+  hb_strfree(str);
+}
 
 /*
 WINUSERAPI INT_PTR WINAPI DialogBoxIndirectParamA(HINSTANCE hInstance,LPCDLGTEMPLATEA hDialogTemplate,HWND hWndParent,DLGPROC lpDialogFunc,LPARAM dwInitParam)
