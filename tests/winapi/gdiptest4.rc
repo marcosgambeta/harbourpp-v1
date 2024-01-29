@@ -1,0 +1,36 @@
+/*
+ * WinApi test
+ *
+ * Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+ *
+ */
+
+#include <windows.h>
+#include "gdiptest4.h"
+
+IDR_MYMENU MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "Dialog &1", IDM_FILE_DLG1
+        MENUITEM "Dialog &2", IDM_FILE_DLG2
+		MENUITEM SEPARATOR
+        MENUITEM "&Quit", IDM_FILE_QUIT
+    END
+END
+
+ID_DIALOG1 DIALOG 0, 0, 320, 240
+STYLE WS_POPUP | WS_BORDER | DS_CENTER
+CAPTION "Dialog-1" 
+{
+    PUSHBUTTON "&Ok", IDOK, 50, 200, 60, 20
+    PUSHBUTTON "&Cancel", IDCANCEL, 210, 200, 60, 20
+}
+
+ID_DIALOG2 DIALOG 0, 0, 320, 240
+STYLE WS_POPUP | WS_BORDER | DS_CENTER
+CAPTION "Dialog-2" 
+{
+    PUSHBUTTON "&Ok", IDOK, 50, 200, 60, 20
+    PUSHBUTTON "&Cancel", IDCANCEL, 210, 200, 60, 20
+}
