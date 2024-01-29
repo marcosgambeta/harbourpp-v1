@@ -1,0 +1,17 @@
+/*
+ * WinApi test
+ *
+ * Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+ *
+ */
+
+#include <windows.h>
+#include "guitest7.h"
+
+ID_DIALOG DIALOG 0, 0, 320, 240
+STYLE WS_POPUP | WS_BORDER | DS_CENTER
+CAPTION "Testing Harbour++ and WinApi"
+{
+    PUSHBUTTON "&Ok", IDOK, 50, 200, 60, 20
+    PUSHBUTTON "&Cancel", IDCANCEL, 210, 200, 60, 20
+}
