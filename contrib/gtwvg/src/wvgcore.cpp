@@ -1983,7 +1983,7 @@ HB_FUNC( WVT_DRAWLABELOBJ )
 
    SetTextColor(_s->hdc, fgClr);
    SetBkColor(_s->hdc, bgClr);
-   SelectObject(_s->hdc, reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(10))));
+   SelectObject(_s->hdc, wvg_par_HFONT(10));
 
    GetTextExtentPoint32(_s->hdc, text, lstrlen(text), &sz);
 
@@ -2035,7 +2035,7 @@ HB_FUNC( WVT_DRAWLABELOBJ )
    if( _s->bGui ) {
       SetTextColor(_s->hGuiDC, fgClr);
       SetBkColor(_s->hGuiDC, bgClr);
-      SelectObject(_s->hGuiDC, reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(10))));
+      SelectObject(_s->hGuiDC, wvg_par_HFONT(10));
       SetTextAlign(_s->hGuiDC, iAlignH | iAlignV);
       ExtTextOut(_s->hGuiDC, x, y, uiOptions, &rect, text, lstrlen(text), nullptr);
    }
@@ -2371,7 +2371,7 @@ HB_FUNC( WVT_DRAWTEXTBOX )
    SetTextColor(_s->hdc, fgClr);
    SetBkColor(_s->hdc, bgClr);
    SetBkMode(_s->hdc, hb_parnidef(11, OPAQUE));
-   SelectObject(_s->hdc, reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(12))));
+   SelectObject(_s->hdc, wvg_par_HFONT(12));
 
    DrawText(_s->hdc, text, lstrlen(text), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
    #if defined(__SETGUI__)
@@ -2380,7 +2380,7 @@ HB_FUNC( WVT_DRAWTEXTBOX )
       SetTextColor(_s->hGuiDC, fgClr);
       SetBkColor(_s->hGuiDC, bgClr);
       SetBkMode(_s->hGuiDC, hb_parnidef(11, OPAQUE));
-      SelectObject(_s->hGuiDC, reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(12))));
+      SelectObject(_s->hGuiDC, wvg_par_HFONT(12));
 
       DrawText(_s->hGuiDC, text, lstrlen(text), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
    }

@@ -102,10 +102,10 @@
 #define wvg_parwparam(n)    static_cast<WPARAM>(static_cast<HB_PTRUINT>(hb_parnint(n)))
 #define wvg_parlparam(n)    static_cast<LPARAM>(static_cast<HB_PTRUINT>(hb_parnint(n)))
 #define wvg_parhandle(n)    reinterpret_cast<HANDLE>(static_cast<HB_PTRUINT>(hb_parnint(n)))
-#define wvg_parhwnd(n)      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_parhwnd(n)      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(n)))   // deprecated
 #define wvg_parwndproc(n)   static_cast<WNDPROC>(static_cast<HB_PTRUINT>(hb_parnint(n)))
 #define wvg_parhbrush(n)    reinterpret_cast<HBRUSH>(static_cast<HB_PTRUINT>(hb_parnint(n)))
-#define wvg_parhdc(n)       reinterpret_cast<HDC>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_parhdc(n)       reinterpret_cast<HDC>(static_cast<HB_PTRUINT>(hb_parnint(n)))    // deprecated
 #define wvg_parcolor(n)     static_cast<COLORREF>(static_cast<HB_PTRUINT>(hb_parnint(n)))
 
 #define wvg_rethandle(n)    hb_retnint(reinterpret_cast<HB_PTRUINT>(n))
@@ -362,7 +362,7 @@ HB_FUNC( WVG_PREPAREBITMAPFROMFILE )
 {
    void *  hText;
    auto hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
-      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 0);
+      wvg_par_HWND(5), 0);
    hb_strfree(hText);
    hb_retptr(static_cast<void*>(hBitmap));
 }
@@ -370,7 +370,7 @@ HB_FUNC( WVG_PREPAREBITMAPFROMFILE )
 HB_FUNC( WVG_PREPAREBITMAPFROMRESOURCEID )
 {
    auto hBitmap = hPrepareBitmap(nullptr, hb_parni(1), hb_parni(2), hb_parni(3), hb_parl(4),
-      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 2);
+      wvg_par_HWND(5), 2);
    hb_retptr(static_cast<void*>(hBitmap));
 }
 
@@ -378,14 +378,14 @@ HB_FUNC( WVG_PREPAREBITMAPFROMRESOURCENAME )
 {
    void *  hText;
    auto hBitmap = hPrepareBitmap(HB_PARSTR(1, &hText, nullptr), 0, hb_parni(2), hb_parni(3), hb_parl(4),
-      reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(5))), 1);
+      wvg_par_HWND(5), 1);
    hb_strfree(hText);
    hb_retptr(static_cast<void*>(hBitmap));
 }
 
 HB_FUNC( WVG_STATUSBARCREATEPANEL )
 {
-   auto hWndSB = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hWndSB = wvg_par_HWND(1);
 
    if( hWndSB == nullptr || !IsWindow(hWndSB) ) {
       hb_retl(false);
@@ -428,7 +428,7 @@ HB_FUNC( WVG_STATUSBARCREATEPANEL )
 
 HB_FUNC( WVG_STATUSBARSETTEXT )
 {
-   auto hWndSB = reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hWndSB = wvg_par_HWND(1);
 
    if( hWndSB && IsWindow(hWndSB) ) {
       auto iPart = hb_parnidef(2, 1);
@@ -444,7 +444,7 @@ HB_FUNC( WVG_STATUSBARSETTEXT )
 HB_FUNC( WVG_STATUSBARREFRESH )
 {
    #if 0
-   auto hWndSB = static_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(1)));
+   auto hWndSB = wvg_par_HWND(1);
 
    if( hWndSB && IsWindow(hWndSB) ) {
       int ptArray[WIN_STATUSBAR_MAX_PARTS];
@@ -526,11 +526,11 @@ HB_FUNC( WVG_TREEVIEW_GETSELECTIONINFO )
       item.pszText = text;
       item.cchTextMax = MAX_PATH;
 
-      if( TreeView_GetItem(wvg_parhwnd(1), &item) ) {
+      if( TreeView_GetItem(wvg_par_HWND(1), &item) ) {
          HB_STORSTR(text, 4);
       }
 
-      HTREEITEM hParent = TreeView_GetParent(wvg_parhwnd(1), hSelected);
+      HTREEITEM hParent = TreeView_GetParent(wvg_par_HWND(1), hSelected);
       hb_stornint(reinterpret_cast<HB_PTRUINT>(hParent), 5);
 
       item.mask = TVIF_HANDLE | TVIF_TEXT;
@@ -538,7 +538,7 @@ HB_FUNC( WVG_TREEVIEW_GETSELECTIONINFO )
       item.pszText = Parent;
       item.cchTextMax = MAX_PATH;
 
-      if( TreeView_GetItem(wvg_parhwnd(1), &item) ) {
+      if( TreeView_GetItem(wvg_par_HWND(1), &item) ) {
          HB_STORSTR(Parent, 3);
       }
    }
@@ -560,13 +560,13 @@ HB_FUNC( WVG_TREEVIEW_ADDITEM )
    HB_WIN_V_UNION(tvis, item.state) = 0;        /* TVI_BOLD */
    tvis.hParent = HB_ISNUM(2) ? static_cast<HTREEITEM>(wvg_parhandle(2)) : nullptr;
    HB_WIN_V_UNION(tvis, item.pszText) = const_cast<LPTSTR>(HB_PARSTRDEF(3, &hText, nullptr));
-   hb_retnint(reinterpret_cast<HB_PTRUINT>(TreeView_InsertItem(wvg_parhwnd(1), &tvis)));
+   hb_retnint(reinterpret_cast<HB_PTRUINT>(TreeView_InsertItem(wvg_par_HWND(1), &tvis)));
    hb_strfree(hText);
 }
 
 HB_FUNC( WVG_TREEVIEW_SHOWEXPANDED )
 {
-   HWND      hwnd = wvg_parhwnd(1);
+   HWND      hwnd = wvg_par_HWND(1);
    HTREEITEM hroot, hitem, hitem1, hitem2, hitem3;
    int       iExpand = (hb_parl(2) ? TVE_EXPAND : TVE_COLLAPSE);
    int       iLevels = hb_parni(3) <= 0 ? 5 : hb_parni(3);
@@ -696,7 +696,7 @@ HB_FUNC( WVG_CHOOSEFONT )
    LOGFONT lf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
    DWORD Flags;
    LONG PointSize = 0;
-   HWND hWnd = wvg_parhwnd(1);
+   HWND hWnd = wvg_par_HWND(1);
    TCHAR szStyle[MAX_PATH + 1];
 
    if( HB_ISCHAR(3) ) {
@@ -774,7 +774,7 @@ HB_FUNC( WVG_CHOOSEFONT )
 HB_FUNC( WVG_CHOOSEFONT_GETLOGFONT )
 {
    LOGFONT lf{};
-   SendMessage(wvg_parhwnd(1), WM_CHOOSEFONT_GETLOGFONT, 0, reinterpret_cast<LPARAM>(&lf));
+   SendMessage(wvg_par_HWND(1), WM_CHOOSEFONT_GETLOGFONT, 0, reinterpret_cast<LPARAM>(&lf));
    PHB_ITEM aFont = wvg_logfontTOarray(&lf, false);
    hb_itemReturnRelease(aFont);
 }
@@ -818,7 +818,7 @@ HB_FUNC( WVG_FONTCREATE )
  */
 HB_FUNC( WVG_POINTSIZETOHEIGHT )
 {
-   HDC hdc = HB_ISNUM(1) ? wvg_parhdc(1) : GetDC(GetDesktopWindow());
+   HDC hdc = HB_ISNUM(1) ? wvg_par_HDC(1) : GetDC(GetDesktopWindow());
 
    hb_retnl(static_cast<long>(-MulDiv(static_cast<LONG>(hb_parnl(2)), GetDeviceCaps(hdc, LOGPIXELSY), 72)));
 
@@ -832,7 +832,7 @@ HB_FUNC( WVG_POINTSIZETOHEIGHT )
  */
 HB_FUNC( WVG_HEIGHTTOPOINTSIZE )
 {
-   HDC hdc = HB_ISNUM(1) ? wvg_parhdc(1) : GetDC(GetDesktopWindow());
+   HDC hdc = HB_ISNUM(1) ? wvg_par_HDC(1) : GetDC(GetDesktopWindow());
 
    hb_retnl(static_cast<long>(-MulDiv(static_cast<LONG>(hb_parnl(2)), 72, GetDeviceCaps(hdc, LOGPIXELSY))));
 
@@ -844,9 +844,9 @@ HB_FUNC( WVG_HEIGHTTOPOINTSIZE )
 HB_FUNC( WVG_SETCURRENTBRUSH )
 {
 #if (defined(_MSC_VER) && (_MSC_VER <= 1200)) && !defined(HB_ARCH_64BIT)
-   SetClassLong(wvg_parhwnd(1), GCL_HBRBACKGROUND, static_cast<DWORD>(hb_parnint(2)));
+   SetClassLong(wvg_par_HWND(1), GCL_HBRBACKGROUND, static_cast<DWORD>(hb_parnint(2)));
 #else
-   SetClassLongPtr(wvg_parhwnd(1), GCLP_HBRBACKGROUND, static_cast<LONG_PTR>(hb_parnint(2)));
+   SetClassLongPtr(wvg_par_HWND(1), GCLP_HBRBACKGROUND, static_cast<LONG_PTR>(hb_parnint(2)));
 #endif
 }
 
@@ -941,7 +941,7 @@ HB_FUNC( WVG_FILLRECT )
    rc.top = hb_parvni(2, 2);
    rc.right = hb_parvni(2, 3);
    rc.bottom = hb_parvni(2, 4);
-   FillRect(wvg_parhdc(1), &rc, wvg_parhbrush(3));
+   FillRect(wvg_par_HDC(1), &rc, wvg_parhbrush(3));
 }
 
 HB_FUNC( WVG_BEGINMOUSETRACKING )
@@ -1017,7 +1017,7 @@ HB_FUNC( WVG_CREATETOOLTIPWINDOW )
       CW_USEDEFAULT,
       CW_USEDEFAULT,
       CW_USEDEFAULT,
-      wvg_parhwnd(1),
+      wvg_par_HWND(1),
       nullptr,
       wvg_hInstance(),
       nullptr);
@@ -1027,9 +1027,9 @@ HB_FUNC( WVG_CREATETOOLTIPWINDOW )
 
    TOOLINFO toolInfo{};
    toolInfo.cbSize   = sizeof(toolInfo);
-   toolInfo.hwnd     = static_cast<HWND>(wvg_parhwnd(1));
+   toolInfo.hwnd     = static_cast<HWND>(wvg_par_HWND(1));
    toolInfo.uFlags   = TTF_IDISHWND | TTF_SUBCLASS;
-   toolInfo.uId      = reinterpret_cast<UINT_PTR>(const_cast<HWND>(wvg_parhwnd(1)));
+   toolInfo.uId      = reinterpret_cast<UINT_PTR>(const_cast<HWND>(wvg_par_HWND(1)));
    toolInfo.lpszText = const_cast<LPTSTR>(TEXT(""));
 
    if( SendMessage(hwndTip, TTM_ADDTOOL, 0, reinterpret_cast<LPARAM>(&toolInfo)) ) {
@@ -1044,10 +1044,10 @@ HB_FUNC( WVG_SETTOOLTIPTEXT )
    void * hText;
    TOOLINFO toolInfo{};
    toolInfo.cbSize   = sizeof(toolInfo);
-   toolInfo.hwnd     = static_cast<HWND>(wvg_parhwnd(1));
+   toolInfo.hwnd     = static_cast<HWND>(wvg_par_HWND(1));
    toolInfo.uFlags   = TTF_IDISHWND | TTF_SUBCLASS;
-   toolInfo.uId      = reinterpret_cast<UINT_PTR>(static_cast<HWND>(wvg_parhwnd(1)));
+   toolInfo.uId      = reinterpret_cast<UINT_PTR>(static_cast<HWND>(wvg_par_HWND(1)));
    toolInfo.lpszText = const_cast<LPTSTR>(HB_PARSTRDEF(3, &hText, nullptr));
-   SendMessage(wvg_parhwnd(2), TTM_SETTOOLINFO, 0, reinterpret_cast<LPARAM>(&toolInfo));
+   SendMessage(wvg_par_HWND(2), TTM_SETTOOLINFO, 0, reinterpret_cast<LPARAM>(&toolInfo));
    hb_strfree(hText);
 }

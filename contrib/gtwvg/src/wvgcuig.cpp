@@ -240,21 +240,21 @@ HB_FUNC( WVG_SETGOBJDATA )
                   if( gObj->hFont && gObj->bDestroyFont ) {
                      DeleteObject(gObj->hFont);
                   }
-                  gObj->hFont        = reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(3)));
+                  gObj->hFont        = wvg_par_HFONT(3);
                   gObj->bDestroyFont = false;
                   break;
                case GOBJ_OBJDATA_HPEN:
                   if( gObj->hPen && gObj->bDestroyPen ) {
                      DeleteObject(gObj->hPen);
                   }
-                  gObj->hPen        = reinterpret_cast<HPEN>(static_cast<HB_PTRUINT>(hb_parnint(3)));
+                  gObj->hPen        = wvg_par_HPEN(3);
                   gObj->bDestroyPen = false;
                   break;
                case GOBJ_OBJDATA_HBRUSH:
                   if( gObj->hBrush && gObj->bDestroyBrush ) {
                      DeleteObject(gObj->hBrush);
                   }
-                  gObj->hBrush        = reinterpret_cast<HBRUSH>(static_cast<HB_PTRUINT>(hb_parnint(3)));
+                  gObj->hBrush        = wvg_par_HBRUSH(3);
                   gObj->bDestroyBrush = true;
                   break;
                case GOBJ_OBJDATA_COLORTEXT:
@@ -1258,7 +1258,7 @@ HB_FUNC( WVG_TEXTBOX )
    gObj->crRGBText = static_cast<COLORREF>(hb_parnint(9));
    gObj->crRGBBk   = static_cast<COLORREF>(hb_parnint(10));
 
-   gObj->hFont        = reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(11)));
+   gObj->hFont        = wvg_par_HFONT(11);
    gObj->bDestroyFont = false;
 
    gObj->gObjNext = pWVT->gObjs;

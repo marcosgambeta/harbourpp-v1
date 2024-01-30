@@ -502,4 +502,14 @@ extern void     wvt_Size2ArrayEx(SIZE * siz, PHB_ITEM aSize);
 
 HB_EXTERN_END
 
+// macros for parameters
+#define wvg_par_HWND(n)        reinterpret_cast<HWND>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_par_HDC(n)         reinterpret_cast<HDC>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_par_HFONT(n)       reinterpret_cast<HFONT>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_par_HPEN(n)        reinterpret_cast<HPEN>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_par_HBRUSH(n)      reinterpret_cast<HBRUSH>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_par_HMENU(n)       reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_par_HGDIOBJ(n)     reinterpret_cast<HGDIOBJ>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+#define wvg_par_HINSTANCE(n)   reinterpret_cast<HINSTANCE>(static_cast<HB_PTRUINT>(hb_parnint(n)))
+
 #endif /* HB_WVG_H_ */
