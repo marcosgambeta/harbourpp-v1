@@ -127,6 +127,7 @@ SOFTWARE.
 #define wa_par_LCTYPE(n)       static_cast<LCTYPE>(hb_parnl(n))
 #define wa_par_CALTYPE(n)      static_cast<CALTYPE>(hb_parnl(n))
 #define wa_par_CALID(n)        static_cast<CALID>(hb_parnl(n))
+#define wa_par_WNDENUMPROC(n)  reinterpret_cast<WNDENUMPROC>(hb_parptr(n))
 
 #define wa_ret___LONG32(x)     hb_retnl(x)
 #define wa_ret_ATOM(x)         hb_retni(x)

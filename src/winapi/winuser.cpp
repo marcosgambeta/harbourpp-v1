@@ -582,7 +582,9 @@ HB_FUNC( WASENDMESSAGEW )
 
 HB_FUNC( WASENDMESSAGE )
 {
-  wa_ret_LRESULT(SendMessage(wa_par_HWND(1), wa_par_UINT(2), wa_par_WPARAM(3), wa_par_LPARAM(4)));
+  void * str{};
+  wa_ret_LRESULT(SendMessage(wa_par_HWND(1), wa_par_UINT(2), wa_par_WPARAM(3), HB_ISCHAR(4) ? reinterpret_cast<LPARAM>(HB_PARSTR(4, &str, nullptr)) : wa_par_LPARAM(4)));
+  hb_strfree(str);
 }
 
 /*
@@ -4497,6 +4499,10 @@ HB_FUNC( WADEREGISTERSHELLHOOKWINDOW )
 /*
 WINUSERAPI WINBOOL WINAPI EnumWindows(WNDENUMPROC lpEnumFunc,LPARAM lParam)
 */
+HB_FUNC( WAENUMWINDOWS )
+{
+  wa_ret_BOOL(EnumWindows(wa_par_WNDENUMPROC(1), wa_par_LPARAM(2)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI EnumThreadWindows(DWORD dwThreadId,WNDENUMPROC lpfn,LPARAM lParam)
