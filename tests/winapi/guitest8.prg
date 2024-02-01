@@ -16,12 +16,16 @@
 
 #define MAKEINTRESOURCE(n) (n)
 
+REQUEST HB_CODEPAGE_UTF8EX
+
 PROCEDURE Main()
 
    LOCAL wc
    LOCAL hwnd
    LOCAL CLASS_NAME := "Sample Window Class"
    LOCAL msg
+   
+   hb_cdpSelect("UTF8EX")
 
    // register the window class
 
