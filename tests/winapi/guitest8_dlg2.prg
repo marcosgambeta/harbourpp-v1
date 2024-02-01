@@ -32,13 +32,13 @@ FUNCTION DialogProc2(hwnd, uMsg, wParam, lParam)
    SWITCH uMsg
 
    CASE WM_INITDIALOG
-      // field 1
+      // configure field 1
       waSendMessage(waGetDlgItem(hwnd, ID_EDIT1_DLG2), EM_SETLIMITTEXT, 40, 0)
       waSetDlgItemText(hwnd, ID_EDIT1_DLG2, "field1")
-      // field 2
+      // configure field 2
       waSendMessage(waGetDlgItem(hwnd, ID_EDIT2_DLG2), EM_SETLIMITTEXT, 40, 0)
       waSetDlgItemText(hwnd, ID_EDIT2_DLG2, "field2")
-      // field 3
+      // configure field 3
       handle := waGetDlgItem(hwnd, ID_EDIT3_DLG2)
       waSendMessage(handle, CB_ADDSTRING, 0, "Item 1")
       waSendMessage(handle, CB_ADDSTRING, 0, "Item 2")
@@ -46,7 +46,7 @@ FUNCTION DialogProc2(hwnd, uMsg, wParam, lParam)
       waSendMessage(handle, CB_ADDSTRING, 0, "Item 4")
       waSendMessage(handle, CB_ADDSTRING, 0, "Item 5")
       waSendMessage(handle, CB_SETCURSEL, 0, 0)
-      // field 4
+      // configure field 4
       waSendMessage(waGetDlgItem(hwnd, ID_EDIT4_DLG2), EM_SETLIMITTEXT, 512, 0)
       waSetDlgItemText(hwnd, ID_EDIT4_DLG2, memoread("guitest8.txt"))
       //
