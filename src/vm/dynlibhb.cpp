@@ -57,189 +57,202 @@
 #include "hbwinuni.hpp"
 
 #if defined(HB_OS_WIN)
-#  include <windows.h>
+#include <windows.h>
 #endif
 
 /* NOTE: VxWorks supports dlopen() functionality only in shared
          executables. [vszakats] */
-#if !defined(HB_HAS_DLFCN) && ((defined(HB_OS_LINUX)) || defined(HB_OS_SUNOS) || defined(HB_OS_DARWIN) || \
-    defined(HB_OS_BSD) || defined(HB_OS_BEOS) || defined(HB_OS_QNX) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX))
-#  define HB_HAS_DLFCN
+#if !defined(HB_HAS_DLFCN) &&                                                                                          \
+    ((defined(HB_OS_LINUX)) || defined(HB_OS_SUNOS) || defined(HB_OS_DARWIN) || defined(HB_OS_BSD) ||                  \
+     defined(HB_OS_BEOS) || defined(HB_OS_QNX) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX))
+#define HB_HAS_DLFCN
 #endif
 
 #if defined(HB_HAS_DLFCN)
-#  include <dlfcn.h>
+#include <dlfcn.h>
 #endif
 
 static HB_GARBAGE_FUNC(hb_libRelease)
 {
-   /* do nothing */
-   HB_SYMBOL_UNUSED(Cargo);
+  /* do nothing */
+  HB_SYMBOL_UNUSED(Cargo);
 }
 
-static const HB_GC_FUNCS s_gcDynlibFuncs =
-{
-   hb_libRelease,
-   hb_gcDummyMark
-};
+static const HB_GC_FUNCS s_gcDynlibFuncs = {hb_libRelease, hb_gcDummyMark};
 
 PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 {
-   void * hDynLib = nullptr;
+  void *hDynLib = nullptr;
 
-   if( hb_itemGetCLen(pLibName) > 0 ) {
-      int argc = pArgs ? static_cast<int>(hb_arrayLen(pArgs)) : 0;
-      const char ** argv = nullptr;
+  if (hb_itemGetCLen(pLibName) > 0)
+  {
+    int argc = pArgs ? static_cast<int>(hb_arrayLen(pArgs)) : 0;
+    const char **argv = nullptr;
 
-      if( argc > 0 ) {
-         argv = static_cast<const char**>(hb_xgrab(sizeof(char*) * argc));
-         for( auto i = 0; i < argc; ++i ) {
-            argv[i] = hb_arrayGetCPtr(pArgs, i + 1);
-         }
+    if (argc > 0)
+    {
+      argv = static_cast<const char **>(hb_xgrab(sizeof(char *) * argc));
+      for (auto i = 0; i < argc; ++i)
+      {
+        argv[i] = hb_arrayGetCPtr(pArgs, i + 1);
       }
+    }
 
-      if( hb_vmLockModuleSymbols() ) {
-         /* use stack address as first level marker */
-         hb_vmBeginSymbolGroup(static_cast<void*>(hb_stackId()), true);
+    if (hb_vmLockModuleSymbols())
+    {
+      /* use stack address as first level marker */
+      hb_vmBeginSymbolGroup(static_cast<void *>(hb_stackId()), true);
 #if defined(HB_OS_WIN)
-         {
-            void * hFileName;
-            hDynLib = static_cast<void*>(LoadLibrary(HB_ITEMGETSTR(pLibName, &hFileName, nullptr)));
-            hb_strfree(hFileName);
-         }
+      {
+        void *hFileName;
+        hDynLib = static_cast<void *>(LoadLibrary(HB_ITEMGETSTR(pLibName, &hFileName, nullptr)));
+        hb_strfree(hFileName);
+      }
 #elif defined(HB_HAS_DLFCN)
-         hDynLib = static_cast<void*>(dlopen(hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL));
+      hDynLib = static_cast<void *>(dlopen(hb_itemGetCPtr(pLibName), RTLD_LAZY | RTLD_GLOBAL));
 
-         if( !hDynLib ) {
+      if (!hDynLib)
+      {
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("hb_libLoad(): dlopen(): %s", dlerror()));
 #endif
-         }
+      }
 #elif defined(HB_CAUSEWAY_DLL)
-         hDynLib = LoadLibrary(hb_itemGetCPtr(pLibName));
+      hDynLib = LoadLibrary(hb_itemGetCPtr(pLibName));
 #else
-         {
-            int iTODO;
-         }
+      {
+        int iTODO;
+      }
 #endif
-         /* set real marker */
-         hb_vmInitSymbolGroup(hDynLib, argc, argv);
+      /* set real marker */
+      hb_vmInitSymbolGroup(hDynLib, argc, argv);
 
-         hb_vmUnlockModuleSymbols();
-      }
+      hb_vmUnlockModuleSymbols();
+    }
 
-      if( argv ) {
-         hb_xfree(static_cast<void*>(argv));
-      }
-   }
+    if (argv)
+    {
+      hb_xfree(static_cast<void *>(argv));
+    }
+  }
 
-   if( hDynLib ) {
-      auto pLibPtr = static_cast<void**>(hb_gcAllocate(sizeof(void*), &s_gcDynlibFuncs));
-      *pLibPtr = hDynLib;
-      return hb_itemPutPtrGC(nullptr, pLibPtr);
-   }
+  if (hDynLib)
+  {
+    auto pLibPtr = static_cast<void **>(hb_gcAllocate(sizeof(void *), &s_gcDynlibFuncs));
+    *pLibPtr = hDynLib;
+    return hb_itemPutPtrGC(nullptr, pLibPtr);
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
 HB_BOOL hb_libFree(PHB_ITEM pDynLib)
 {
-   auto fResult = false;
-   auto pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
+  auto fResult = false;
+  auto pDynLibPtr = static_cast<void **>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
 
-   if( pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols() ) {
-      void * hDynLib = *pDynLibPtr;
-      if( hDynLib ) {
-         *pDynLibPtr = nullptr;
-         hb_vmExitSymbolGroup(hDynLib);
+  if (pDynLibPtr && *pDynLibPtr && hb_vmLockModuleSymbols())
+  {
+    void *hDynLib = *pDynLibPtr;
+    if (hDynLib)
+    {
+      *pDynLibPtr = nullptr;
+      hb_vmExitSymbolGroup(hDynLib);
 #if defined(HB_OS_WIN)
-         fResult = FreeLibrary(static_cast<HMODULE>(hDynLib));
+      fResult = FreeLibrary(static_cast<HMODULE>(hDynLib));
 #elif defined(HB_HAS_DLFCN)
-         fResult = dlclose(hDynLib) == 0;
+      fResult = dlclose(hDynLib) == 0;
 #elif defined(HB_CAUSEWAY_DLL)
-         FreeLibrary(hDynLib);
-         fResult = true;
+      FreeLibrary(hDynLib);
+      fResult = true;
 #endif
-      }
-      hb_vmUnlockModuleSymbols();
-   }
+    }
+    hb_vmUnlockModuleSymbols();
+  }
 
-   return fResult;
+  return fResult;
 }
 
-void * hb_libHandle(PHB_ITEM pDynLib)
+void *hb_libHandle(PHB_ITEM pDynLib)
 {
-   auto pDynLibPtr = static_cast<void**>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
-   return pDynLibPtr ? *pDynLibPtr : nullptr;
+  auto pDynLibPtr = static_cast<void **>(hb_itemGetPtrGC(pDynLib, &s_gcDynlibFuncs));
+  return pDynLibPtr ? *pDynLibPtr : nullptr;
 }
 
-void * hb_libSymAddr(PHB_ITEM pDynLib, const char * pszSymbol)
+void *hb_libSymAddr(PHB_ITEM pDynLib, const char *pszSymbol)
 {
-   void * hDynLib = hb_libHandle(pDynLib);
+  void *hDynLib = hb_libHandle(pDynLib);
 
-   if( hDynLib ) {
+  if (hDynLib)
+  {
 #if defined(HB_OS_WIN)
-      return reinterpret_cast<void*>(GetProcAddress(static_cast<HMODULE>(hDynLib), pszSymbol));
+    return reinterpret_cast<void *>(GetProcAddress(static_cast<HMODULE>(hDynLib), pszSymbol));
 #elif defined(HB_HAS_DLFCN)
-      return dlsym(hDynLib, pszSymbol);
+    return dlsym(hDynLib, pszSymbol);
 #elif defined(HB_CAUSEWAY_DLL)
-      return GetProcAddress(hDynLib, pszSymbol);
+    return GetProcAddress(hDynLib, pszSymbol);
 #else
-      HB_SYMBOL_UNUSED(pszSymbol);
+    HB_SYMBOL_UNUSED(pszSymbol);
 #endif
-   }
-   return nullptr;
+  }
+  return nullptr;
 }
 
-HB_FUNC( HB_LIBLOAD )
+HB_FUNC(HB_LIBLOAD)
 {
-   auto iPCount = hb_pcount();
-   PHB_ITEM pArgs = nullptr;
+  auto iPCount = hb_pcount();
+  PHB_ITEM pArgs = nullptr;
 
-   if( iPCount > 1 ) {
-      pArgs = hb_itemArrayNew(iPCount - 1);
-      for( auto i = 2; i <= iPCount; ++i ) {
-         hb_arraySet(pArgs, i, hb_param(i, Harbour::Item::ANY));
-      }
-   }
+  if (iPCount > 1)
+  {
+    pArgs = hb_itemArrayNew(iPCount - 1);
+    for (auto i = 2; i <= iPCount; ++i)
+    {
+      hb_arraySet(pArgs, i, hb_param(i, Harbour::Item::ANY));
+    }
+  }
 
-   hb_itemReturnRelease(hb_libLoad(hb_param(1, Harbour::Item::ANY), pArgs));
+  hb_itemReturnRelease(hb_libLoad(hb_param(1, Harbour::Item::ANY), pArgs));
 
-   if( pArgs ) {
-      hb_itemRelease(pArgs);
-   }
+  if (pArgs)
+  {
+    hb_itemRelease(pArgs);
+  }
 }
 
-HB_FUNC( HB_LIBFREE )
+HB_FUNC(HB_LIBFREE)
 {
-   hb_retl(hb_libFree(hb_param(1, Harbour::Item::ANY)));
+  hb_retl(hb_libFree(hb_param(1, Harbour::Item::ANY)));
 }
 
-HB_FUNC( HB_LIBERROR )
+HB_FUNC(HB_LIBERROR)
 {
 #if defined(HB_HAS_DLFCN)
-   hb_retc(dlerror());
+  hb_retc(dlerror());
 #else
-   hb_retc_null();
+  hb_retc_null();
 #endif
 }
 
 /* Get FUNCTION or PROCEDURE symbol from given library.
  *    hb_libGetFunSym(<pLibHandle>, <cFuncName>) --> <sFuncSym> | NIL
  */
-HB_FUNC( HB_LIBGETFUNSYM )
+HB_FUNC(HB_LIBGETFUNSYM)
 {
-   auto szFuncName = hb_parc(2);
+  auto szFuncName = hb_parc(2);
 
-   if( szFuncName ) {
-      void * hDynLib = hb_libHandle(hb_param(1, Harbour::Item::ANY));
+  if (szFuncName)
+  {
+    void *hDynLib = hb_libHandle(hb_param(1, Harbour::Item::ANY));
 
-      if( hDynLib ) {
-         PHB_SYMB pSym = hb_vmFindFuncSym(szFuncName, hDynLib);
+    if (hDynLib)
+    {
+      PHB_SYMB pSym = hb_vmFindFuncSym(szFuncName, hDynLib);
 
-         if( pSym ) {
-            hb_itemPutSymbol(hb_stackReturnItem(), pSym);
-         }
+      if (pSym)
+      {
+        hb_itemPutSymbol(hb_stackReturnItem(), pSym);
       }
-   }
+    }
+  }
 }

@@ -49,9 +49,9 @@
 #include "hbsetup.hpp"
 
 #if defined(HB_MAIN_STD)
-   #include "mainstd.cpp"
+#include "mainstd.cpp"
 #elif defined(HB_MAIN_WIN)
-   #include "mainwin.cpp"
+#include "mainwin.cpp"
 #else
-   #include "mainstd.cpp" /* Use the standard ANSI C entry point if not specified */
+#include "mainstd.cpp" /* Use the standard ANSI C entry point if not specified */
 #endif

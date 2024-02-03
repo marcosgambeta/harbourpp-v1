@@ -2,7 +2,8 @@
  * The Eval API
  *
  * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour) (hb_itemDo()/hb_itemDoC() (based on HB_DO() by Ryszard Glab))
+ * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour) (hb_itemDo()/hb_itemDoC() (based on HB_DO() by Ryszard
+ * Glab))
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,15 +59,18 @@ HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_evalNew(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
 #endif
 
-   if( pEvalInfo ) {
-      memset(pEvalInfo, 0, sizeof(HB_EVALINFO));
-      pEvalInfo->pItems[0] = pItem;
-      pEvalInfo->paramCount = 0;
+  if (pEvalInfo)
+  {
+    memset(pEvalInfo, 0, sizeof(HB_EVALINFO));
+    pEvalInfo->pItems[0] = pItem;
+    pEvalInfo->paramCount = 0;
 
-      return true;
-   } else {
-      return false;
-   }
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 /* NOTE: CA-Cl*pper is buggy and will not check if more parameters are
@@ -88,12 +92,15 @@ HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_evalPutParam(%p, %p)", static_cast<void*>(pEvalInfo), static_cast<void*>(pItem)));
 #endif
 
-   if( pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_ ) {
-      pEvalInfo->pItems[++pEvalInfo->paramCount] = pItem;
-      return true;
-   } else {
-      return false;
-   }
+  if (pEvalInfo && pItem && pEvalInfo->paramCount < HB_EVAL_PARAM_MAX_)
+  {
+    pEvalInfo->pItems[++pEvalInfo->paramCount] = pItem;
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
@@ -102,48 +109,63 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_evalLaunch(%p)", static_cast<void*>(pEvalInfo)));
 #endif
 
-   PHB_ITEM pResult = nullptr;
+  PHB_ITEM pResult = nullptr;
 
-   if( pEvalInfo ) {
-      PHB_ITEM pItem = pEvalInfo->pItems[0];
-      PHB_SYMB pSymbol = nullptr;
+  if (pEvalInfo)
+  {
+    PHB_ITEM pItem = pEvalInfo->pItems[0];
+    PHB_SYMB pSymbol = nullptr;
 
-      if( HB_IS_STRING(pItem) ) {
-         auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+    if (HB_IS_STRING(pItem))
+    {
+      auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
-         if( pDynSym ) {
-            pSymbol = pDynSym->pSymbol;
-            pItem = nullptr;
-         }
-      } else if( HB_IS_SYMBOL(pItem) ) {
-         pSymbol = pItem->item.asSymbol.value;
-         pItem = nullptr;
-      } else if( HB_IS_BLOCK(pItem) ) {
-         pSymbol = &hb_symEval;
+      if (pDynSym)
+      {
+        pSymbol = pDynSym->pSymbol;
+        pItem = nullptr;
       }
+    }
+    else if (HB_IS_SYMBOL(pItem))
+    {
+      pSymbol = pItem->item.asSymbol.value;
+      pItem = nullptr;
+    }
+    else if (HB_IS_BLOCK(pItem))
+    {
+      pSymbol = &hb_symEval;
+    }
 
-      if( pSymbol ) {
-         HB_USHORT uiParam = 0;
+    if (pSymbol)
+    {
+      HB_USHORT uiParam = 0;
 
-         hb_vmPushSymbol(pSymbol);
-         if( pItem != nullptr ) {
-            hb_vmPush(pItem);
-         } else {
-            hb_vmPushNil();
-         }
-         while( uiParam < pEvalInfo->paramCount ) {
-            hb_vmPush(pEvalInfo->pItems[++uiParam]);
-         }
-         if( pItem != nullptr ) {
-            hb_vmSend(uiParam);
-         } else {
-            hb_vmProc(uiParam);
-         }
-         pResult = hb_itemNew(hb_stackReturnItem());
+      hb_vmPushSymbol(pSymbol);
+      if (pItem != nullptr)
+      {
+        hb_vmPush(pItem);
       }
-   }
+      else
+      {
+        hb_vmPushNil();
+      }
+      while (uiParam < pEvalInfo->paramCount)
+      {
+        hb_vmPush(pEvalInfo->pItems[++uiParam]);
+      }
+      if (pItem != nullptr)
+      {
+        hb_vmSend(uiParam);
+      }
+      else
+      {
+        hb_vmProc(uiParam);
+      }
+      pResult = hb_itemNew(hb_stackReturnItem());
+    }
+  }
 
-   return pResult;
+  return pResult;
 }
 
 /* NOTE: CA-Cl*pper NG states that hb_evalLaunch() must be called at least
@@ -156,16 +178,20 @@ HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
    HB_TRACE(HB_TR_DEBUG, ("hb_evalRelease(%p)", static_cast<void*>(pEvalInfo)));
 #endif
 
-   if( pEvalInfo ) {
-      for( HB_USHORT uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++ ) {
-         hb_itemRelease(pEvalInfo->pItems[uiParam]);
-         pEvalInfo->pItems[uiParam] = nullptr;
-      }
-      pEvalInfo->paramCount = 0;
-      return true;
-   } else {
-      return false;
-   }
+  if (pEvalInfo)
+  {
+    for (HB_USHORT uiParam = 0; uiParam <= pEvalInfo->paramCount; uiParam++)
+    {
+      hb_itemRelease(pEvalInfo->pItems[uiParam]);
+      pEvalInfo->pItems[uiParam] = nullptr;
+    }
+    pEvalInfo->paramCount = 0;
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 /* NOTE: Same purpose as hb_evalLaunch(), but simpler, faster and more flexible.
@@ -184,55 +210,72 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemDo(%p, %lu, ...)", static_cast<void*>(pItem), ulPCount));
 #endif
 
-   PHB_ITEM pResult = nullptr;
+  PHB_ITEM pResult = nullptr;
 
-   if( pItem != nullptr ) {
-      PHB_SYMB pSymbol = nullptr;
+  if (pItem != nullptr)
+  {
+    PHB_SYMB pSymbol = nullptr;
 
-      if( HB_IS_STRING(pItem) ) {
-         auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+    if (HB_IS_STRING(pItem))
+    {
+      auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
-         if( pDynSym ) {
-            pSymbol = pDynSym->pSymbol;
-            pItem = nullptr;
-         }
-      } else if( HB_IS_SYMBOL(pItem) ) {
-         pSymbol = pItem->item.asSymbol.value;
-         pItem = nullptr;
-      } else if( HB_IS_BLOCK(pItem) ) {
-         pSymbol = &hb_symEval;
+      if (pDynSym)
+      {
+        pSymbol = pDynSym->pSymbol;
+        pItem = nullptr;
       }
+    }
+    else if (HB_IS_SYMBOL(pItem))
+    {
+      pSymbol = pItem->item.asSymbol.value;
+      pItem = nullptr;
+    }
+    else if (HB_IS_BLOCK(pItem))
+    {
+      pSymbol = &hb_symEval;
+    }
 
-      if( pSymbol ) {
-         if( hb_vmRequestReenter() ) {
-            hb_vmPushSymbol(pSymbol);
-            if( pItem != nullptr ) {
-               hb_vmPush(pItem);
-            } else {
-               hb_vmPushNil();
-            }
+    if (pSymbol)
+    {
+      if (hb_vmRequestReenter())
+      {
+        hb_vmPushSymbol(pSymbol);
+        if (pItem != nullptr)
+        {
+          hb_vmPush(pItem);
+        }
+        else
+        {
+          hb_vmPushNil();
+        }
 
-            if( ulPCount ) {
-               va_list va;
-               va_start(va, ulPCount);
-               for( HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++ ) {
-                  hb_vmPush(va_arg(va, PHB_ITEM));
-               }
-               va_end(va);
-            }
-            if( pItem != nullptr ) {
-               hb_vmSend(static_cast<HB_USHORT>(ulPCount));
-            } else {
-               hb_vmProc(static_cast<HB_USHORT>(ulPCount));
-            }
+        if (ulPCount)
+        {
+          va_list va;
+          va_start(va, ulPCount);
+          for (HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++)
+          {
+            hb_vmPush(va_arg(va, PHB_ITEM));
+          }
+          va_end(va);
+        }
+        if (pItem != nullptr)
+        {
+          hb_vmSend(static_cast<HB_USHORT>(ulPCount));
+        }
+        else
+        {
+          hb_vmProc(static_cast<HB_USHORT>(ulPCount));
+        }
 
-            pResult = hb_itemNew(hb_stackReturnItem());
-            hb_vmRequestRestore();
-         }
+        pResult = hb_itemNew(hb_stackReturnItem());
+        hb_vmRequestRestore();
       }
-   }
+    }
+  }
 
-   return pResult;
+  return pResult;
 }
 
 /* NOTE: Same as hb_itemDo(), but even simpler, since the function name can be
@@ -242,37 +285,42 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
          being called, you must use '(PHB_ITEM *) 0' as the third parameter.
  */
 
-PHB_ITEM hb_itemDoC(const char * szFunc, HB_ULONG ulPCount, ...)
+PHB_ITEM hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_itemDoC(%s, %lu, ...)", szFunc, ulPCount));
 #endif
 
-   PHB_ITEM pResult = nullptr;
+  PHB_ITEM pResult = nullptr;
 
-   if( szFunc ) {
-      auto pDynSym = hb_dynsymFindName(szFunc);
+  if (szFunc)
+  {
+    auto pDynSym = hb_dynsymFindName(szFunc);
 
-      if( pDynSym ) {
-         if( hb_vmRequestReenter() ) {
-            hb_vmPushSymbol(pDynSym->pSymbol);
-            hb_vmPushNil();
-            if( ulPCount ) {
-               va_list va;
-               va_start(va, ulPCount);
-               for( HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++ ) {
-                  hb_vmPush(va_arg(va, PHB_ITEM));
-               }
-               va_end(va);
-            }
-            hb_vmProc(static_cast<HB_USHORT>(ulPCount));
-            pResult = hb_itemNew(hb_stackReturnItem());
-            hb_vmRequestRestore();
-         }
+    if (pDynSym)
+    {
+      if (hb_vmRequestReenter())
+      {
+        hb_vmPushSymbol(pDynSym->pSymbol);
+        hb_vmPushNil();
+        if (ulPCount)
+        {
+          va_list va;
+          va_start(va, ulPCount);
+          for (HB_ULONG ulParam = 1; ulParam <= ulPCount; ulParam++)
+          {
+            hb_vmPush(va_arg(va, PHB_ITEM));
+          }
+          va_end(va);
+        }
+        hb_vmProc(static_cast<HB_USHORT>(ulPCount));
+        pResult = hb_itemNew(hb_stackReturnItem());
+        hb_vmRequestRestore();
       }
-   }
+    }
+  }
 
-   return pResult;
+  return pResult;
 }
 
 /*
@@ -283,77 +331,84 @@ PHB_ITEM hb_itemDoC(const char * szFunc, HB_ULONG ulPCount, ...)
 /* undocumented Clipper _cEval0() */
 void hb_evalBlock0(PHB_ITEM pCodeBlock)
 {
-   hb_vmPushEvalSym();
-   hb_vmPush(pCodeBlock);
-   hb_vmSend(0);
+  hb_vmPushEvalSym();
+  hb_vmPush(pCodeBlock);
+  hb_vmSend(0);
 }
 
 /* undocumented Clipper _cEval1() */
 void hb_evalBlock1(PHB_ITEM pCodeBlock, PHB_ITEM pParam)
 {
-   hb_vmPushEvalSym();
-   hb_vmPush(pCodeBlock);
-   hb_vmPush(pParam);
-   hb_vmSend(1);
+  hb_vmPushEvalSym();
+  hb_vmPush(pCodeBlock);
+  hb_vmPush(pParam);
+  hb_vmSend(1);
 }
 
 /* same functionality but with a nullptr terminated list of parameters */
 void hb_evalBlock(PHB_ITEM pCodeBlock, ...)
 {
-   va_list args;
-   HB_USHORT uiParams = 0;
-   PHB_ITEM pParam;
+  va_list args;
+  HB_USHORT uiParams = 0;
+  PHB_ITEM pParam;
 
-   hb_vmPushEvalSym();
-   hb_vmPush(pCodeBlock);
+  hb_vmPushEvalSym();
+  hb_vmPush(pCodeBlock);
 
-   va_start(args, pCodeBlock);
-   while( (pParam = va_arg(args, PHB_ITEM)) != nullptr ) {
-      hb_vmPush(pParam);
-      uiParams++;
-   }
-   va_end(args);
+  va_start(args, pCodeBlock);
+  while ((pParam = va_arg(args, PHB_ITEM)) != nullptr)
+  {
+    hb_vmPush(pParam);
+    uiParams++;
+  }
+  va_end(args);
 
-   hb_vmSend(uiParams);
+  hb_vmSend(uiParams);
 }
 
-HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
+HB_FUNC(HB_FORNEXT) /* nStart, nEnd | bEnd, bCode, nStep */
 {
-   auto pCodeBlock = hb_param(3, Harbour::Item::BLOCK);
+  auto pCodeBlock = hb_param(3, Harbour::Item::BLOCK);
 
-   if( pCodeBlock ) {
-      HB_MAXINT nStart = hb_parnint(1), nEnd;
-      HB_MAXINT nStep = (hb_pcount() > 3) ? hb_parnint(4) : 1;
+  if (pCodeBlock)
+  {
+    HB_MAXINT nStart = hb_parnint(1), nEnd;
+    HB_MAXINT nStep = (hb_pcount() > 3) ? hb_parnint(4) : 1;
 
-      auto pEndBlock = hb_param(2, Harbour::Item::BLOCK);
+    auto pEndBlock = hb_param(2, Harbour::Item::BLOCK);
 
-      if( pEndBlock ) {
-         hb_evalBlock0(pEndBlock);
-         nEnd = hb_parnint(-1);
+    if (pEndBlock)
+    {
+      hb_evalBlock0(pEndBlock);
+      nEnd = hb_parnint(-1);
 
-         while( nStart <= nEnd ) {
-            hb_vmPushEvalSym();
-            hb_vmPush(pCodeBlock);
-            hb_vmPushNumInt(nStart);
-            hb_vmSend(1);
+      while (nStart <= nEnd)
+      {
+        hb_vmPushEvalSym();
+        hb_vmPush(pCodeBlock);
+        hb_vmPushNumInt(nStart);
+        hb_vmSend(1);
 
-            nStart += nStep;
+        nStart += nStep;
 
-            hb_evalBlock0(pEndBlock);
-            nEnd = hb_parnint(-1);
-         }
-      } else {
-         nEnd = hb_parnint(2);
-         while( nStart <= nEnd ) {
-            hb_vmPushEvalSym();
-            hb_vmPush(pCodeBlock);
-            hb_vmPushNumInt(nStart);
-            hb_vmSend(1);
-
-            nStart += nStep;
-         }
+        hb_evalBlock0(pEndBlock);
+        nEnd = hb_parnint(-1);
       }
-   }
+    }
+    else
+    {
+      nEnd = hb_parnint(2);
+      while (nStart <= nEnd)
+      {
+        hb_vmPushEvalSym();
+        hb_vmPush(pCodeBlock);
+        hb_vmPushNumInt(nStart);
+        hb_vmSend(1);
+
+        nStart += nStep;
+      }
+    }
+  }
 }
 
 /*
@@ -376,165 +431,216 @@ HB_FUNC( HB_FORNEXT ) /* nStart, nEnd | bEnd, bCode, nStep */
  *    { <oObject>, <cMethodName> [, <params,...>] }
  *    { <oObject>, @<msgName>() [, <params,...>] }
  */
-HB_FUNC( HB_EXECFROMARRAY )
+HB_FUNC(HB_EXECFROMARRAY)
 {
-   PHB_SYMB pExecSym = nullptr;
-   PHB_ITEM pFunc = nullptr;
-   PHB_ITEM pSelf = nullptr;
-   PHB_ITEM pArray = nullptr;
-   PHB_ITEM pItem;
-   HB_ULONG ulParamOffset = 0;
-   auto iPCount = hb_pcount();
+  PHB_SYMB pExecSym = nullptr;
+  PHB_ITEM pFunc = nullptr;
+  PHB_ITEM pSelf = nullptr;
+  PHB_ITEM pArray = nullptr;
+  PHB_ITEM pItem;
+  HB_ULONG ulParamOffset = 0;
+  auto iPCount = hb_pcount();
 
-   /* decode parameters */
-   if( iPCount ) {
-      auto pParam = hb_param(1, Harbour::Item::ANY);
+  /* decode parameters */
+  if (iPCount)
+  {
+    auto pParam = hb_param(1, Harbour::Item::ANY);
 
-      if( iPCount == 1 ) {
-         if( HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam) ) {
-            pArray = pParam;
-            pItem = hb_arrayGetItemPtr(pArray, 1);
-            if( HB_IS_OBJECT(pItem) ) {
-               pSelf = pItem;
-               pFunc = hb_arrayGetItemPtr(pArray, 2);
-               ulParamOffset = 2;
-            } else {
-               pFunc = pItem;
-               ulParamOffset = 1;
-            }
-         } else {
-            pFunc = pParam;
-         }
-      } else if( HB_IS_OBJECT(pParam) && iPCount <= 3 ) {
-         pSelf = pParam;
-         pFunc = hb_param(2, Harbour::Item::ANY);
-         pArray = hb_param(3, Harbour::Item::ANY);
-      } else if( iPCount == 2 ) {
-         pFunc = pParam;
-         pArray = hb_param(2, Harbour::Item::ANY);
+    if (iPCount == 1)
+    {
+      if (HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam))
+      {
+        pArray = pParam;
+        pItem = hb_arrayGetItemPtr(pArray, 1);
+        if (HB_IS_OBJECT(pItem))
+        {
+          pSelf = pItem;
+          pFunc = hb_arrayGetItemPtr(pArray, 2);
+          ulParamOffset = 2;
+        }
+        else
+        {
+          pFunc = pItem;
+          ulParamOffset = 1;
+        }
       }
-   }
-
-   if( pFunc && (!pArray || HB_IS_ARRAY(pArray)) ) {
-      if( HB_IS_SYMBOL(pFunc) ) {
-         pExecSym = hb_itemGetSymbol(pFunc);
-      } else if( HB_IS_STRING(pFunc) ) {
-         pExecSym = hb_dynsymGet(hb_itemGetCPtr(pFunc))->pSymbol;
-      } else if( HB_IS_BLOCK(pFunc) && !pSelf ) {
-         pSelf = pFunc;
-         pExecSym = &hb_symEval;
+      else
+      {
+        pFunc = pParam;
       }
-   }
+    }
+    else if (HB_IS_OBJECT(pParam) && iPCount <= 3)
+    {
+      pSelf = pParam;
+      pFunc = hb_param(2, Harbour::Item::ANY);
+      pArray = hb_param(3, Harbour::Item::ANY);
+    }
+    else if (iPCount == 2)
+    {
+      pFunc = pParam;
+      pArray = hb_param(2, Harbour::Item::ANY);
+    }
+  }
 
-   if( pExecSym ) {
-      pFunc = hb_stackBaseItem();
-      pItem = hb_stackItem(pFunc->item.asSymbol.stackstate->nBaseItem);
-      pFunc->item.asSymbol.stackstate->uiClass = pItem->item.asSymbol.stackstate->uiClass;
-      pFunc->item.asSymbol.stackstate->uiMethod = pItem->item.asSymbol.stackstate->uiMethod;
+  if (pFunc && (!pArray || HB_IS_ARRAY(pArray)))
+  {
+    if (HB_IS_SYMBOL(pFunc))
+    {
+      pExecSym = hb_itemGetSymbol(pFunc);
+    }
+    else if (HB_IS_STRING(pFunc))
+    {
+      pExecSym = hb_dynsymGet(hb_itemGetCPtr(pFunc))->pSymbol;
+    }
+    else if (HB_IS_BLOCK(pFunc) && !pSelf)
+    {
+      pSelf = pFunc;
+      pExecSym = &hb_symEval;
+    }
+  }
 
-      iPCount = 0;
-      hb_vmPushSymbol(pExecSym);
-      if( pSelf ) {
-         hb_vmPush(pSelf);
-      } else {
-         hb_vmPushNil();
+  if (pExecSym)
+  {
+    pFunc = hb_stackBaseItem();
+    pItem = hb_stackItem(pFunc->item.asSymbol.stackstate->nBaseItem);
+    pFunc->item.asSymbol.stackstate->uiClass = pItem->item.asSymbol.stackstate->uiClass;
+    pFunc->item.asSymbol.stackstate->uiMethod = pItem->item.asSymbol.stackstate->uiMethod;
+
+    iPCount = 0;
+    hb_vmPushSymbol(pExecSym);
+    if (pSelf)
+    {
+      hb_vmPush(pSelf);
+    }
+    else
+    {
+      hb_vmPushNil();
+    }
+
+    if (pArray)
+    {
+      pItem = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
+      while (pItem && iPCount < 255)
+      {
+        hb_vmPush(pItem);
+        ++iPCount;
+        pItem = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
       }
+    }
 
-      if( pArray ) {
-         pItem = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
-         while( pItem && iPCount < 255 ) {
-            hb_vmPush(pItem);
-            ++iPCount;
-            pItem = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
-         }
-      }
-
-      if( pSelf ) {
-         hb_vmSend(static_cast<HB_USHORT>(iPCount));
-      } else {
-         hb_vmProc(static_cast<HB_USHORT>(iPCount));
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    if (pSelf)
+    {
+      hb_vmSend(static_cast<HB_USHORT>(iPCount));
+    }
+    else
+    {
+      hb_vmProc(static_cast<HB_USHORT>(iPCount));
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_BOOL hb_execFromArray(PHB_ITEM pParam)
 {
-   PHB_ITEM pArray = nullptr;
-   PHB_ITEM pSelf = nullptr;
-   HB_ULONG ulParamOffset = 0;
+  PHB_ITEM pArray = nullptr;
+  PHB_ITEM pSelf = nullptr;
+  HB_ULONG ulParamOffset = 0;
 
-   if( pParam && HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam) ) {
-      pArray = pParam;
-      pParam = hb_arrayGetItemPtr(pArray, 1);
-      if( HB_IS_OBJECT(pParam) ) {
-         pSelf = pParam;
-         pParam = hb_arrayGetItemPtr(pArray, 2);
-         ulParamOffset = 2;
-      } else {
-         ulParamOffset = 1;
+  if (pParam && HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam))
+  {
+    pArray = pParam;
+    pParam = hb_arrayGetItemPtr(pArray, 1);
+    if (HB_IS_OBJECT(pParam))
+    {
+      pSelf = pParam;
+      pParam = hb_arrayGetItemPtr(pArray, 2);
+      ulParamOffset = 2;
+    }
+    else
+    {
+      ulParamOffset = 1;
+    }
+  }
+
+  if (pParam)
+  {
+    PHB_SYMB pExecSym = nullptr;
+
+    if (HB_IS_SYMBOL(pParam))
+    {
+      pExecSym = hb_itemGetSymbol(pParam);
+    }
+    else if (HB_IS_STRING(pParam))
+    {
+      pExecSym = hb_dynsymGet(hb_itemGetCPtr(pParam))->pSymbol;
+    }
+    else if (HB_IS_BLOCK(pParam) && !pSelf)
+    {
+      pSelf = pParam;
+      pExecSym = &hb_symEval;
+    }
+
+    if (pExecSym)
+    {
+      int iPCount = 0;
+
+      hb_vmPushSymbol(pExecSym);
+      if (pSelf)
+      {
+        hb_vmPush(pSelf);
       }
-   }
-
-   if( pParam ) {
-      PHB_SYMB pExecSym = nullptr;
-
-      if( HB_IS_SYMBOL(pParam) ) {
-         pExecSym = hb_itemGetSymbol(pParam);
-      } else if( HB_IS_STRING(pParam) ) {
-         pExecSym = hb_dynsymGet(hb_itemGetCPtr(pParam))->pSymbol;
-      } else if( HB_IS_BLOCK(pParam) && !pSelf ) {
-         pSelf = pParam;
-         pExecSym = &hb_symEval;
+      else
+      {
+        hb_vmPushNil();
       }
 
-      if( pExecSym ) {
-         int iPCount = 0;
-
-         hb_vmPushSymbol(pExecSym);
-         if( pSelf ) {
-            hb_vmPush(pSelf);
-         } else {
-            hb_vmPushNil();
-         }
-
-         if( pArray ) {
-            pParam = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
-            while( pParam && iPCount < 255 ) {
-               hb_vmPush(pParam);
-               ++iPCount;
-               pParam = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
-            }
-         }
-
-         if( pSelf ) {
-            hb_vmSend(static_cast<HB_USHORT>(iPCount));
-         } else {
-            hb_vmProc(static_cast<HB_USHORT>(iPCount));
-         }
-
-         return true;
+      if (pArray)
+      {
+        pParam = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
+        while (pParam && iPCount < 255)
+        {
+          hb_vmPush(pParam);
+          ++iPCount;
+          pParam = hb_arrayGetItemPtr(pArray, ++ulParamOffset);
+        }
       }
-   }
 
-   hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+      if (pSelf)
+      {
+        hb_vmSend(static_cast<HB_USHORT>(iPCount));
+      }
+      else
+      {
+        hb_vmProc(static_cast<HB_USHORT>(iPCount));
+      }
 
-   return false;
+      return true;
+    }
+  }
+
+  hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+
+  return false;
 }
 
 /* hb_ExecMsg(<sFuncSym>, <object>, [<params,...>]) --> <xResult>
  * Execute <sFuncSym> with <object> set as QSELF() value
  */
-HB_FUNC( HB_EXECMSG )
+HB_FUNC(HB_EXECMSG)
 {
-   auto iParams = hb_pcount();
+  auto iParams = hb_pcount();
 
-   if( iParams >= 2 && HB_ISSYMBOL(1) ) {
-      auto pBase = hb_stackBaseItem();
-      pBase->item.asSymbol.paramcnt = pBase->item.asSymbol.paramdeclcnt = 0;
-      hb_vmProc(static_cast<HB_USHORT>(iParams - 2));
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (iParams >= 2 && HB_ISSYMBOL(1))
+  {
+    auto pBase = hb_stackBaseItem();
+    pBase->item.asSymbol.paramcnt = pBase->item.asSymbol.paramdeclcnt = 0;
+    hb_vmProc(static_cast<HB_USHORT>(iParams - 2));
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

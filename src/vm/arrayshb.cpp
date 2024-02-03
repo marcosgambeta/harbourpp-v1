@@ -59,333 +59,393 @@ static void hb_arrayNewRagged(PHB_ITEM pArray, int iDimension)
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayNewRagged(%p, %d)", pArray, iDimension));
 #endif
 
-   HB_SIZE nElements = hb_parns(iDimension);
+  HB_SIZE nElements = hb_parns(iDimension);
 
-   /* create an array */
-   hb_arrayNew(pArray, nElements);
+  /* create an array */
+  hb_arrayNew(pArray, nElements);
 
-   if( ++iDimension <= hb_pcount() ) {
-      /* call self recursively to create next dimensions
-       */
-      while( nElements ) {
-         hb_arrayNewRagged(hb_arrayGetItemPtr(pArray, nElements--), iDimension);
-      }
-   }
+  if (++iDimension <= hb_pcount())
+  {
+    /* call self recursively to create next dimensions
+     */
+    while (nElements)
+    {
+      hb_arrayNewRagged(hb_arrayGetItemPtr(pArray, nElements--), iDimension);
+    }
+  }
 }
 
-HB_FUNC( ARRAY )
+HB_FUNC(ARRAY)
 {
-   auto iPCount = hb_pcount();
+  auto iPCount = hb_pcount();
 
-   if( iPCount > 0 ) {
-      auto bError = false;
+  if (iPCount > 0)
+  {
+    auto bError = false;
 
-      for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
-         if( !HB_ISNUM(iParam) ) {
-            bError = true;
-            break;
-         }
+    for (auto iParam = 1; iParam <= iPCount; iParam++)
+    {
+      if (!HB_ISNUM(iParam))
+      {
+        bError = true;
+        break;
+      }
 
-         if( hb_parns(iParam) < 0 ) { /* || hb_parns(iParam) <= 4096 */
+      if (hb_parns(iParam) < 0)
+      { /* || hb_parns(iParam) <= 4096 */
 #ifdef HB_CLP_STRICT
-            hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), 0);
+        hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), 0);
 #else
-            hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), HB_ERR_ARGS_BASEPARAMS);
+        hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), HB_ERR_ARGS_BASEPARAMS);
 #endif
-            bError = true;
-            break;
-         }
+        bError = true;
+        break;
       }
+    }
 
-      if( !bError ) {
-         hb_arrayNewRagged(hb_stackReturnItem(), 1);
-      }
-   }
+    if (!bError)
+    {
+      hb_arrayNewRagged(hb_stackReturnItem(), 1);
+    }
+  }
 }
 
-HB_FUNC( AADD )
+HB_FUNC(AADD)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      auto pValue = hb_param(2, Harbour::Item::ANY);
+  if (pArray)
+  {
+    auto pValue = hb_param(2, Harbour::Item::ANY);
 
-      if( pValue && hb_arrayAdd(pArray, pValue) ) {
-         hb_itemReturn(pValue);
-      } else {
-         hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    if (pValue && hb_arrayAdd(pArray, pValue))
+    {
+      hb_itemReturn(pValue);
+    }
+    else
+    {
+      hb_errRT_BASE(EG_BOUND, 1187, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1123, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* NOTE: CA-Cl*pper 5.3 and older will return NIL on bad parameter, 5.3a,b
          will throw a runtime error. [vszakats] */
 
-HB_FUNC( ASIZE )
+HB_FUNC(ASIZE)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray && HB_ISNUM(2) ) {
-      HB_ISIZ nSize = hb_parns(2);
+  if (pArray && HB_ISNUM(2))
+  {
+    HB_ISIZ nSize = hb_parns(2);
 
-      hb_arraySize(pArray, HB_MAX(nSize, 0));
+    hb_arraySize(pArray, HB_MAX(nSize, 0));
 
-      hb_itemReturn(pArray); /* ASize() returns the array itself */
-   }
+    hb_itemReturn(pArray); /* ASize() returns the array itself */
+  }
 #ifdef HB_COMPAT_C53 /* From CA-Cl*pper 5.3a */
-   else
-   {
+  else
+  {
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE(EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, 0);
+    hb_errRT_BASE(EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, 0);
 #else
-      hb_errRT_BASE(EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    hb_errRT_BASE(EG_ARG, 2023, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
-   }
+  }
 #endif
 }
 
-HB_FUNC( ATAIL )
+HB_FUNC(ATAIL)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      hb_arrayLast(pArray, hb_stackReturnItem());
-   }
+  if (pArray)
+  {
+    hb_arrayLast(pArray, hb_stackReturnItem());
+  }
 }
 
-HB_FUNC( AINS )
+HB_FUNC(AINS)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      HB_ISIZ nPos = hb_parns(2);
+  if (pArray)
+  {
+    HB_ISIZ nPos = hb_parns(2);
 
-      if( nPos == 0 ) {
-         nPos = 1;
-      }
+    if (nPos == 0)
+    {
+      nPos = 1;
+    }
 
-      hb_arrayIns(pArray, nPos);
+    hb_arrayIns(pArray, nPos);
 
-      hb_itemReturn(pArray); /* AIns() returns the array itself */
-   }
+    hb_itemReturn(pArray); /* AIns() returns the array itself */
+  }
 }
 
-HB_FUNC( ADEL )
+HB_FUNC(ADEL)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      HB_ISIZ nPos = hb_parns(2);
+  if (pArray)
+  {
+    HB_ISIZ nPos = hb_parns(2);
 
-      if( nPos == 0 ) {
-         nPos = 1;
-      }
+    if (nPos == 0)
+    {
+      nPos = 1;
+    }
 
-      hb_arrayDel(pArray, nPos);
+    hb_arrayDel(pArray, nPos);
 
-      hb_itemReturn(pArray); /* ADel() returns the array itself */
-   }
+    hb_itemReturn(pArray); /* ADel() returns the array itself */
+  }
 }
 
-HB_FUNC( AFILL )
+HB_FUNC(AFILL)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      auto pValue = hb_param(2, Harbour::Item::ANY);
+  if (pArray)
+  {
+    auto pValue = hb_param(2, Harbour::Item::ANY);
 
-      hb_itemReturn(pArray); /* AFill() returns the array itself */
+    hb_itemReturn(pArray); /* AFill() returns the array itself */
 
-      if( pValue ) {
-         HB_ISIZ lStart = hb_parns(3);
-         HB_ISIZ lCount = hb_parns(4);
+    if (pValue)
+    {
+      HB_ISIZ lStart = hb_parns(3);
+      HB_ISIZ lCount = hb_parns(4);
 
-         /* Explicit lCount of 0 - Nothing to do! */
-         if( HB_ISNUM(4) && lCount == 0 ) {
-            return;
-         /* Clipper aborts if negative start. */
-         } else if( lStart < 0 ) {
-            return;
-         /* Clipper allows Start to be of wrong type, or 0, and corrects it to 1. */
-         } else if( lStart == 0 ) {
-            lStart = 1;
-         }
-
-         HB_SIZE nCount;
-
-         if( lCount < 0 ) {
-            /* Clipper allows the Count to be negative, if start is 1, and corrects it to maximum elements. */
-            if( lStart == 1 ) {
-               nCount = 0;
-            /* Clipper aborts if negative count and start is not at 1. */
-            } else {
-               return;
-            }
-         }
-         auto nStart = static_cast<HB_SIZE>(lStart);
-         nCount = static_cast<HB_SIZE>(lCount);
-         hb_arrayFill(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
+      /* Explicit lCount of 0 - Nothing to do! */
+      if (HB_ISNUM(4) && lCount == 0)
+      {
+        return;
+        /* Clipper aborts if negative start. */
       }
-   } else {
+      else if (lStart < 0)
+      {
+        return;
+        /* Clipper allows Start to be of wrong type, or 0, and corrects it to 1. */
+      }
+      else if (lStart == 0)
+      {
+        lStart = 1;
+      }
+
+      HB_SIZE nCount;
+
+      if (lCount < 0)
+      {
+        /* Clipper allows the Count to be negative, if start is 1, and corrects it to maximum elements. */
+        if (lStart == 1)
+        {
+          nCount = 0;
+          /* Clipper aborts if negative count and start is not at 1. */
+        }
+        else
+        {
+          return;
+        }
+      }
+      auto nStart = static_cast<HB_SIZE>(lStart);
+      nCount = static_cast<HB_SIZE>(lCount);
+      hb_arrayFill(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
+    }
+  }
+  else
+  {
 #ifdef HB_CLP_STRICT
-      /* NOTE: In CA-Cl*pper AFill() is written in a manner that it will
-               call AEval() to do the job, so the error (if any) will also be
-               thrown by AEval().  [vszakats] */
-      hb_errRT_BASE(EG_ARG, 2017, nullptr, "AEVAL", 0);
+    /* NOTE: In CA-Cl*pper AFill() is written in a manner that it will
+             call AEval() to do the job, so the error (if any) will also be
+             thrown by AEval().  [vszakats] */
+    hb_errRT_BASE(EG_ARG, 2017, nullptr, "AEVAL", 0);
 #else
-      hb_errRT_BASE(EG_ARG, 6004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    hb_errRT_BASE(EG_ARG, 6004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
-   }
+  }
 }
 
-HB_FUNC( ASCAN )
+HB_FUNC(ASCAN)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-   auto pValue = hb_param(2, Harbour::Item::ANY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pValue = hb_param(2, Harbour::Item::ANY);
 
-   if( pArray && pValue ) {
-      HB_SIZE nStart = hb_parns(3);
-      HB_SIZE nCount = hb_parns(4);
+  if (pArray && pValue)
+  {
+    HB_SIZE nStart = hb_parns(3);
+    HB_SIZE nCount = hb_parns(4);
 
-      hb_retns(hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, false));
-   } else {
-      hb_retni(0);
-   }
+    hb_retns(hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, false));
+  }
+  else
+  {
+    hb_retni(0);
+  }
 }
 
 /* Same as AScan() but has an additional parameter to force exact comparison. */
-HB_FUNC( HB_ASCAN )
+HB_FUNC(HB_ASCAN)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-   auto pValue = hb_param(2, Harbour::Item::ANY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pValue = hb_param(2, Harbour::Item::ANY);
 
-   if( pArray && pValue ) {
-      HB_SIZE nStart = hb_parns(3);
-      HB_SIZE nCount = hb_parns(4);
+  if (pArray && pValue)
+  {
+    HB_SIZE nStart = hb_parns(3);
+    HB_SIZE nCount = hb_parns(4);
 
-      hb_retns(hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5)));
-   } else {
-      hb_retni(0);
-   }
+    hb_retns(
+        hb_arrayScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5)));
+  }
+  else
+  {
+    hb_retni(0);
+  }
 }
 
-HB_FUNC( HB_RASCAN )
+HB_FUNC(HB_RASCAN)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-   auto pValue = hb_param(2, Harbour::Item::ANY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pValue = hb_param(2, Harbour::Item::ANY);
 
-   if( pArray && pValue ) {
-      HB_SIZE nStart = hb_parns(3);
-      HB_SIZE nCount = hb_parns(4);
+  if (pArray && pValue)
+  {
+    HB_SIZE nStart = hb_parns(3);
+    HB_SIZE nCount = hb_parns(4);
 
-      hb_retns(hb_arrayRevScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5)));
-   } else {
-      hb_retni(0);
-   }
+    hb_retns(
+        hb_arrayRevScan(pArray, pValue, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, hb_parl(5)));
+  }
+  else
+  {
+    hb_retni(0);
+  }
 }
 
-HB_FUNC( HB_AINS )
+HB_FUNC(HB_AINS)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      HB_ISIZ nPos = hb_parns(2);
+  if (pArray)
+  {
+    HB_ISIZ nPos = hb_parns(2);
 
-      if( nPos == 0 ) {
-         nPos = 1;
+    if (nPos == 0)
+    {
+      nPos = 1;
+    }
+
+    if (hb_parl(4))
+    {
+      HB_SIZE nLen = hb_arrayLen(pArray) + 1;
+      if (nPos >= 1 && static_cast<HB_SIZE>(nPos) <= nLen)
+      {
+        hb_arraySize(pArray, nLen);
       }
+    }
 
-      if( hb_parl(4) ) {
-         HB_SIZE nLen = hb_arrayLen(pArray) + 1;
-         if( nPos >= 1 && static_cast<HB_SIZE>(nPos) <= nLen ) {
-            hb_arraySize(pArray, nLen);
-         }
+    if (hb_arrayIns(pArray, nPos))
+    {
+      if (!HB_ISNIL(3))
+      {
+        hb_arraySet(pArray, nPos, hb_param(3, Harbour::Item::ANY));
       }
+    }
 
-      if( hb_arrayIns(pArray, nPos) ) {
-         if( !HB_ISNIL(3) ) {
-            hb_arraySet(pArray, nPos, hb_param(3, Harbour::Item::ANY));
-         }
-      }
-
-      hb_itemReturn(pArray); /* AIns() returns the array itself */
-   }
+    hb_itemReturn(pArray); /* AIns() returns the array itself */
+  }
 }
 
-HB_FUNC( HB_ADEL )
+HB_FUNC(HB_ADEL)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      HB_ISIZ nPos = hb_parns(2);
+  if (pArray)
+  {
+    HB_ISIZ nPos = hb_parns(2);
 
-      if( nPos == 0 ) {
-         nPos = 1;
+    if (nPos == 0)
+    {
+      nPos = 1;
+    }
+
+    if (hb_arrayDel(pArray, nPos))
+    {
+      if (hb_parl(3))
+      {
+        hb_arraySize(pArray, hb_arrayLen(pArray) - 1);
       }
+    }
 
-      if( hb_arrayDel(pArray, nPos) ) {
-         if( hb_parl(3) ) {
-            hb_arraySize(pArray, hb_arrayLen(pArray) - 1);
-         }
-      }
-
-      hb_itemReturn(pArray); /* ADel() returns the array itself */
-   }
+    hb_itemReturn(pArray); /* ADel() returns the array itself */
+  }
 }
 
 /* TODO: In Xbase++ fifth parameter determines whether array elements
          are passed by reference to the code block. [vszakats] */
 
-HB_FUNC( AEVAL )
+HB_FUNC(AEVAL)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-   auto pBlock = hb_param(2, Harbour::Item::BLOCK);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pBlock = hb_param(2, Harbour::Item::BLOCK);
 
-   if( pArray && pBlock ) {
-      HB_SIZE nStart = hb_parns(3);
-      HB_SIZE nCount = hb_parns(4);
+  if (pArray && pBlock)
+  {
+    HB_SIZE nStart = hb_parns(3);
+    HB_SIZE nCount = hb_parns(4);
 
-      hb_arrayEval(pArray, pBlock, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
+    hb_arrayEval(pArray, pBlock, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
 
-      hb_itemReturn(pArray); /* AEval() returns the array itself */
-   } else {
-      hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    hb_itemReturn(pArray); /* AEval() returns the array itself */
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2017, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( ACOPY )
+HB_FUNC(ACOPY)
 {
-   auto pSrcArray = hb_param(1, Harbour::Item::ARRAY);
-   auto pDstArray = hb_param(2, Harbour::Item::ARRAY);
+  auto pSrcArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pDstArray = hb_param(2, Harbour::Item::ARRAY);
 
-   if( pSrcArray && pDstArray ) {
-      /* CA-Cl*pper works this way. */
-      if( !hb_arrayIsObject(pSrcArray) && !hb_arrayIsObject(pDstArray) ) {
-         HB_SIZE nStart = hb_parns(3);
-         HB_SIZE nCount = hb_parns(4);
-         HB_SIZE nTarget = hb_parns(5);
+  if (pSrcArray && pDstArray)
+  {
+    /* CA-Cl*pper works this way. */
+    if (!hb_arrayIsObject(pSrcArray) && !hb_arrayIsObject(pDstArray))
+    {
+      HB_SIZE nStart = hb_parns(3);
+      HB_SIZE nCount = hb_parns(4);
+      HB_SIZE nTarget = hb_parns(5);
 
-         hb_arrayCopy(pSrcArray, pDstArray, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr, HB_ISNUM(5) ? &nTarget : nullptr);
-      }
+      hb_arrayCopy(pSrcArray, pDstArray, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr,
+                   HB_ISNUM(5) ? &nTarget : nullptr);
+    }
 
-      hb_itemReturn(pDstArray); /* ACopy() returns the target array */
-   }
+    hb_itemReturn(pDstArray); /* ACopy() returns the target array */
+  }
 }
 
 /* NOTE: Clipper will return NIL if the parameter is not an array. [vszakats] */
 
-HB_FUNC( ACLONE )
+HB_FUNC(ACLONE)
 {
-   auto pSrcArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pSrcArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pSrcArray && !hb_arrayIsObject(pSrcArray) ) {
-      hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); /* AClone() returns the new array */
-   }
+  if (pSrcArray && !hb_arrayIsObject(pSrcArray))
+  {
+    hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); /* AClone() returns the new array */
+  }
 }
 
-HB_FUNC( HB_APARAMS )
+HB_FUNC(HB_APARAMS)
 {
-   hb_itemReturnRelease(hb_arrayFromParams(hb_parni(1) + 1));
+  hb_itemReturnRelease(hb_arrayFromParams(hb_parni(1) + 1));
 }

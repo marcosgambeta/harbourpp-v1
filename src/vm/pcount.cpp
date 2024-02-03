@@ -49,8 +49,8 @@
 #include "hbapiitm.hpp"
 #include "hbstack.hpp"
 
-HB_FUNC( PCOUNT )
+HB_FUNC(PCOUNT)
 {
-   /* Skip current function */
-   hb_retni((hb_stackItem(hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem))->item.asSymbol.paramcnt);
+  /* Skip current function */
+  hb_retni((hb_stackItem(hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem))->item.asSymbol.paramcnt);
 }

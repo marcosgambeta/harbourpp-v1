@@ -51,25 +51,29 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 
-HB_FUNC( EVAL )
+HB_FUNC(EVAL)
 {
-   auto pItem = hb_param(1, Harbour::Item::BLOCK);
+  auto pItem = hb_param(1, Harbour::Item::BLOCK);
 
-   if( pItem != nullptr ) {
-      auto iPCount = hb_pcount();
+  if (pItem != nullptr)
+  {
+    auto iPCount = hb_pcount();
 
-      hb_vmPushEvalSym();
-      hb_vmPush(pItem);
-      /* NOTE: hb_param() function cannot be used for parameter access
-       * because we need to pass the references too.
-       * hb_param() is dereferencing the passed parameters
-       */
-      for( auto iParam = 2; iParam <= iPCount; iParam++ ) {
-         hb_vmPush(hb_stackItemFromBase(iParam));
-      }
+    hb_vmPushEvalSym();
+    hb_vmPush(pItem);
+    /* NOTE: hb_param() function cannot be used for parameter access
+     * because we need to pass the references too.
+     * hb_param() is dereferencing the passed parameters
+     */
+    for (auto iParam = 2; iParam <= iPCount; iParam++)
+    {
+      hb_vmPush(hb_stackItemFromBase(iParam));
+    }
 
-      hb_vmSend(static_cast<HB_USHORT>(iPCount - 1));
-   } else {
-      hb_errRT_BASE_SubstR(EG_NOMETHOD, 1004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    hb_vmSend(static_cast<HB_USHORT>(iPCount - 1));
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_NOMETHOD, 1004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 
 #if defined(HB_OS_WIN)
-   #include <windows.h>
+#include <windows.h>
 #endif
 
 #if defined(HB_OS_WIN)
@@ -59,19 +59,20 @@ BOOL WINAPI HB_DLL_ENTRY_POINT(HINSTANCE hInstance, DWORD fdwReason, PVOID pvRes
    HB_TRACE(HB_TR_DEBUG, ("DllEntryPoint(%p, %lu, %p)", hInstance, fdwReason, pvReserved));
 #endif
 
-   HB_SYMBOL_UNUSED(hInstance);
-   HB_SYMBOL_UNUSED(fdwReason);
-   HB_SYMBOL_UNUSED(pvReserved);
+  HB_SYMBOL_UNUSED(hInstance);
+  HB_SYMBOL_UNUSED(fdwReason);
+  HB_SYMBOL_UNUSED(pvReserved);
 
-   switch( fdwReason ) {
-      case DLL_PROCESS_ATTACH:
-         break;
+  switch (fdwReason)
+  {
+  case DLL_PROCESS_ATTACH:
+    break;
 
-      case DLL_PROCESS_DETACH:
-         break;
-   }
+  case DLL_PROCESS_DETACH:
+    break;
+  }
 
-   return TRUE;
+  return TRUE;
 }
 
 #endif

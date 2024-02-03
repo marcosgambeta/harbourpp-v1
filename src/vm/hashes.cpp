@@ -57,13 +57,13 @@
 #include "hbxvm.hpp"
 #include "hbstack.hpp"
 
-#define HB_HASH_ITEM_ALLOC    16
+#define HB_HASH_ITEM_ALLOC 16
 
 /* internal structures for hashes */
 struct _HB_HASHPAIR
 {
-   HB_ITEM key;
-   HB_ITEM value;
+  HB_ITEM key;
+  HB_ITEM value;
 };
 
 using HB_HASHPAIR = _HB_HASHPAIR;
@@ -71,12 +71,12 @@ using PHB_HASHPAIR = HB_HASHPAIR *;
 
 struct _HB_BASEHASH
 {
-   PHB_HASHPAIR pPairs;       /* pointer to the array of key/value pairs */
-   PHB_ITEM     pDefault;     /* default autoadd value */
-   HB_SIZE *    pnPos;        /* the sort order for HB_HASH_KEEPORDER */
-   HB_SIZE      nSize;        /* size of allocated pair array */
-   HB_SIZE      nLen;         /* number of used items in pair array */
-   int          iFlags;       /* hash item flags */
+  PHB_HASHPAIR pPairs; /* pointer to the array of key/value pairs */
+  PHB_ITEM pDefault;   /* default autoadd value */
+  HB_SIZE *pnPos;      /* the sort order for HB_HASH_KEEPORDER */
+  HB_SIZE nSize;       /* size of allocated pair array */
+  HB_SIZE nLen;        /* number of used items in pair array */
+  int iFlags;          /* hash item flags */
 };
 
 using HB_BASEHASH = _HB_BASEHASH;
@@ -85,419 +85,539 @@ using PHB_BASEHASH = HB_BASEHASH *;
 /* This releases hash when called from the garbage collector */
 static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
 {
-   auto pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
+  auto pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
 
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_hashGarbageRelease(%p)", static_cast<void*>(pBaseHash)));
 #endif
 
-   if( pBaseHash->nSize > 0 ) {
-      while( pBaseHash->nLen ) {
-         pBaseHash->nLen--;
-         PHB_ITEM pKey = &pBaseHash->pPairs[pBaseHash->nLen].key;
-         PHB_ITEM pVal = &pBaseHash->pPairs[pBaseHash->nLen].value;
+  if (pBaseHash->nSize > 0)
+  {
+    while (pBaseHash->nLen)
+    {
+      pBaseHash->nLen--;
+      PHB_ITEM pKey = &pBaseHash->pPairs[pBaseHash->nLen].key;
+      PHB_ITEM pVal = &pBaseHash->pPairs[pBaseHash->nLen].value;
 
-         /* small hack for buggy destructors in hash items */
-         pBaseHash->iFlags |= HB_HASH_RESORT;
+      /* small hack for buggy destructors in hash items */
+      pBaseHash->iFlags |= HB_HASH_RESORT;
 
-         if( HB_IS_GCITEM(pKey) && HB_IS_GCITEM(pVal) ) {
-            HB_STACK_TLS_PRELOAD
-            hb_itemRawMove(hb_stackAllocItem(), pVal);
-            hb_itemClear(pKey);
-            hb_stackPop();
-         } else {
-            if( HB_IS_COMPLEX(pKey) ) {
-               hb_itemClear(pKey);
-            }
-            if( HB_IS_COMPLEX(pVal) ) {
-               hb_itemClear(pVal);
-            }
-         }
+      if (HB_IS_GCITEM(pKey) && HB_IS_GCITEM(pVal))
+      {
+        HB_STACK_TLS_PRELOAD
+        hb_itemRawMove(hb_stackAllocItem(), pVal);
+        hb_itemClear(pKey);
+        hb_stackPop();
       }
-
-      if( pBaseHash->pnPos ) {
-         hb_xfree(pBaseHash->pnPos);
-         pBaseHash->pnPos = nullptr;
+      else
+      {
+        if (HB_IS_COMPLEX(pKey))
+        {
+          hb_itemClear(pKey);
+        }
+        if (HB_IS_COMPLEX(pVal))
+        {
+          hb_itemClear(pVal);
+        }
       }
+    }
 
-      if( pBaseHash->pPairs ) {
-         hb_xfree(pBaseHash->pPairs);
-         pBaseHash->pPairs = nullptr;
-      }
-   }
+    if (pBaseHash->pnPos)
+    {
+      hb_xfree(pBaseHash->pnPos);
+      pBaseHash->pnPos = nullptr;
+    }
 
-   if( pBaseHash->pDefault ) {
-      PHB_ITEM pDefault = pBaseHash->pDefault;
-      pBaseHash->pDefault = nullptr;
-      hb_itemRelease(pDefault);
-   }
+    if (pBaseHash->pPairs)
+    {
+      hb_xfree(pBaseHash->pPairs);
+      pBaseHash->pPairs = nullptr;
+    }
+  }
+
+  if (pBaseHash->pDefault)
+  {
+    PHB_ITEM pDefault = pBaseHash->pDefault;
+    pBaseHash->pDefault = nullptr;
+    hb_itemRelease(pDefault);
+  }
 }
 
 static HB_GARBAGE_FUNC(hb_hashGarbageMark)
 {
-   auto pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
+  auto pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
 
 #if 0
    HB_TRACE(HB_TR_INFO, ("hb_hashMarkGarbage(%p)", static_cast<void*>(pBaseHash)));
 #endif
 
-   if( pBaseHash->nLen > 0 ) {
-      PHB_HASHPAIR pPairs = pBaseHash->pPairs;
-      HB_SIZE nLen = pBaseHash->nLen;
+  if (pBaseHash->nLen > 0)
+  {
+    PHB_HASHPAIR pPairs = pBaseHash->pPairs;
+    HB_SIZE nLen = pBaseHash->nLen;
 
-      while( nLen-- ) {
-         if( HB_IS_GCITEM(&pPairs[nLen].key) ) {
-            hb_gcItemRef(&pPairs[nLen].key);
-         }
-         if( HB_IS_GCITEM(&pPairs[nLen].value) ) {
-            hb_gcItemRef(&pPairs[nLen].value);
-         }
+    while (nLen--)
+    {
+      if (HB_IS_GCITEM(&pPairs[nLen].key))
+      {
+        hb_gcItemRef(&pPairs[nLen].key);
       }
-   }
-   if( pBaseHash->pDefault ) {
-      hb_gcMark(pBaseHash->pDefault);
-   }
+      if (HB_IS_GCITEM(&pPairs[nLen].value))
+      {
+        hb_gcItemRef(&pPairs[nLen].value);
+      }
+    }
+  }
+  if (pBaseHash->pDefault)
+  {
+    hb_gcMark(pBaseHash->pDefault);
+  }
 }
 
-static const HB_GC_FUNCS s_gcHashFuncs =
-{
-   hb_hashGarbageRelease,
-   hb_hashGarbageMark
-};
+static const HB_GC_FUNCS s_gcHashFuncs = {hb_hashGarbageRelease, hb_hashGarbageMark};
 
 static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
 {
-   if( HB_IS_STRING(pKey1) ) {
-      if( HB_IS_STRING(pKey2) ) {
-         if( iFlags & HB_HASH_BINARY ) {
-            return pKey1->item.asString.length < pKey2->item.asString.length ? -1 :
-                 (pKey1->item.asString.length > pKey2->item.asString.length ? 1 :
-                   memcmp(pKey1->item.asString.value, pKey2->item.asString.value, pKey1->item.asString.length));
-         } else if( iFlags & HB_HASH_IGNORECASE ) {
-            return hb_itemStrICmp(pKey1, pKey2, true);
-         } else {
-            return hb_itemStrCmp(pKey1, pKey2, true);
-         }
-      } else {
-         return 1;
+  if (HB_IS_STRING(pKey1))
+  {
+    if (HB_IS_STRING(pKey2))
+    {
+      if (iFlags & HB_HASH_BINARY)
+      {
+        return pKey1->item.asString.length < pKey2->item.asString.length
+                   ? -1
+                   : (pKey1->item.asString.length > pKey2->item.asString.length
+                          ? 1
+                          : memcmp(pKey1->item.asString.value, pKey2->item.asString.value,
+                                   pKey1->item.asString.length));
       }
-   } else if( HB_IS_DATETIME(pKey1) ) {
-      if( HB_IS_DATETIME(pKey2) ) {
-         return pKey1->item.asDateTime.julian < pKey2->item.asDateTime.julian ? -1 :
-              (pKey1->item.asDateTime.julian > pKey2->item.asDateTime.julian ? 1 :
-              (pKey1->item.asDateTime.time < pKey2->item.asDateTime.time ? -1 :
-              (pKey1->item.asDateTime.time > pKey2->item.asDateTime.time ? 1 : 0)));
-      } else if( HB_IS_STRING(pKey2) ) {
-         return -1;
-      } else {
-         return 1;
+      else if (iFlags & HB_HASH_IGNORECASE)
+      {
+        return hb_itemStrICmp(pKey1, pKey2, true);
       }
-   } else if( HB_IS_POINTER(pKey1) ) {
-      if( HB_IS_POINTER(pKey2) ) {
-         return pKey1->item.asPointer.value < pKey2->item.asPointer.value ? -1 : (pKey1->item.asPointer.value > pKey2->item.asPointer.value ? 1 : 0);
-      } else if( HB_IS_STRING(pKey2) || HB_IS_DATETIME(pKey2) ) {
-         return -1;
-      } else {
-         return 1;
+      else
+      {
+        return hb_itemStrCmp(pKey1, pKey2, true);
       }
-   } else if( HB_IS_NUMINT(pKey1) && HB_IS_NUMINT(pKey2) ) {
-      HB_MAXINT n1 = HB_ITEM_GET_NUMINTRAW(pKey1), n2 = HB_ITEM_GET_NUMINTRAW(pKey2);
-      return n1 < n2 ? -1 : (n1 > n2 ? 1 : 0);
-   } else if( HB_IS_NUMERIC(pKey2) ) {
-      double d1 = hb_itemGetND(pKey1), d2 = hb_itemGetND(pKey2);
-      return d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
-   }
-   return -1;
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  else if (HB_IS_DATETIME(pKey1))
+  {
+    if (HB_IS_DATETIME(pKey2))
+    {
+      return pKey1->item.asDateTime.julian < pKey2->item.asDateTime.julian
+                 ? -1
+                 : (pKey1->item.asDateTime.julian > pKey2->item.asDateTime.julian
+                        ? 1
+                        : (pKey1->item.asDateTime.time < pKey2->item.asDateTime.time
+                               ? -1
+                               : (pKey1->item.asDateTime.time > pKey2->item.asDateTime.time ? 1 : 0)));
+    }
+    else if (HB_IS_STRING(pKey2))
+    {
+      return -1;
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  else if (HB_IS_POINTER(pKey1))
+  {
+    if (HB_IS_POINTER(pKey2))
+    {
+      return pKey1->item.asPointer.value < pKey2->item.asPointer.value
+                 ? -1
+                 : (pKey1->item.asPointer.value > pKey2->item.asPointer.value ? 1 : 0);
+    }
+    else if (HB_IS_STRING(pKey2) || HB_IS_DATETIME(pKey2))
+    {
+      return -1;
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  else if (HB_IS_NUMINT(pKey1) && HB_IS_NUMINT(pKey2))
+  {
+    HB_MAXINT n1 = HB_ITEM_GET_NUMINTRAW(pKey1), n2 = HB_ITEM_GET_NUMINTRAW(pKey2);
+    return n1 < n2 ? -1 : (n1 > n2 ? 1 : 0);
+  }
+  else if (HB_IS_NUMERIC(pKey2))
+  {
+    double d1 = hb_itemGetND(pKey1), d2 = hb_itemGetND(pKey2);
+    return d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
+  }
+  return -1;
 }
 
 static void hb_hashResort(PHB_BASEHASH pBaseHash)
 {
-   auto pPairs = static_cast<PHB_HASHPAIR>(hb_xgrab(pBaseHash->nLen * sizeof(HB_HASHPAIR)));
-   for( HB_SIZE nPos = 0; nPos < pBaseHash->nLen; ++nPos ) {
-      memcpy(pPairs + nPos, pBaseHash->pPairs + pBaseHash->pnPos[nPos], sizeof(HB_HASHPAIR));
-      pBaseHash->pnPos[nPos] = nPos;
-   }
+  auto pPairs = static_cast<PHB_HASHPAIR>(hb_xgrab(pBaseHash->nLen * sizeof(HB_HASHPAIR)));
+  for (HB_SIZE nPos = 0; nPos < pBaseHash->nLen; ++nPos)
+  {
+    memcpy(pPairs + nPos, pBaseHash->pPairs + pBaseHash->pnPos[nPos], sizeof(HB_HASHPAIR));
+    pBaseHash->pnPos[nPos] = nPos;
+  }
 
-   hb_xfree(pBaseHash->pPairs);
-   pBaseHash->pPairs = pPairs;
-   pBaseHash->nSize = pBaseHash->nLen;
-   pBaseHash->pnPos = static_cast<HB_SIZE*>(hb_xrealloc(pBaseHash->pnPos, pBaseHash->nSize * sizeof(HB_SIZE)));
+  hb_xfree(pBaseHash->pPairs);
+  pBaseHash->pPairs = pPairs;
+  pBaseHash->nSize = pBaseHash->nLen;
+  pBaseHash->pnPos = static_cast<HB_SIZE *>(hb_xrealloc(pBaseHash->pnPos, pBaseHash->nSize * sizeof(HB_SIZE)));
 }
 
 static void hb_hashSortDo(PHB_BASEHASH pBaseHash)
 {
-   int iFlags = pBaseHash->iFlags;
+  int iFlags = pBaseHash->iFlags;
 
-   if( pBaseHash->pnPos ) {
-      HB_SIZE * pnPos = pBaseHash->pnPos;
+  if (pBaseHash->pnPos)
+  {
+    HB_SIZE *pnPos = pBaseHash->pnPos;
 
-      pnPos[0] = 0;
-      for( HB_SIZE nFrom = 1; nFrom < pBaseHash->nLen; ++nFrom ) {
-         PHB_ITEM pKey = &pBaseHash->pPairs[nFrom].key;
-         HB_SIZE nLeft = 0, nRight = nFrom;
+    pnPos[0] = 0;
+    for (HB_SIZE nFrom = 1; nFrom < pBaseHash->nLen; ++nFrom)
+    {
+      PHB_ITEM pKey = &pBaseHash->pPairs[nFrom].key;
+      HB_SIZE nLeft = 0, nRight = nFrom;
 
-         while( nLeft < nRight ) {
-            HB_SIZE nMiddle = (nLeft + nRight) >> 1;
-            int i = hb_hashItemCmp(&pBaseHash->pPairs[pnPos[nMiddle]].key, pKey, iFlags);
-            if( i > 0 ) {
-               nRight = nMiddle;
-            } else {
-               nLeft = nMiddle + 1;
-            }
-         }
-         if( nLeft < nFrom ) {
-            nRight = nFrom;
-            do {
-               pnPos[nRight] = pnPos[nRight - 1];
-            } while( --nRight > nLeft );
-         }
-         pnPos[nLeft] = nFrom;
+      while (nLeft < nRight)
+      {
+        HB_SIZE nMiddle = (nLeft + nRight) >> 1;
+        int i = hb_hashItemCmp(&pBaseHash->pPairs[pnPos[nMiddle]].key, pKey, iFlags);
+        if (i > 0)
+        {
+          nRight = nMiddle;
+        }
+        else
+        {
+          nLeft = nMiddle + 1;
+        }
       }
-   } else {
-      /* The hash array is probably quite well sorted so this trivial
-       * algorithm is the most efficient one [druzus]
-       */
-
-      for( HB_SIZE nFrom = 1; nFrom < pBaseHash->nLen; ++nFrom ) {
-         HB_SIZE nPos = nFrom;
-         while( nPos > 0 && hb_hashItemCmp(&pBaseHash->pPairs[nPos - 1].key, &pBaseHash->pPairs[nPos].key, iFlags) > 0 ) {
-            HB_HASHPAIR pair;
-            memcpy(&pair, pBaseHash->pPairs + nPos - 1, sizeof(HB_HASHPAIR));
-            memcpy(pBaseHash->pPairs + nPos - 1, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR));
-            memcpy(pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR));
-            --nPos;
-         }
+      if (nLeft < nFrom)
+      {
+        nRight = nFrom;
+        do
+        {
+          pnPos[nRight] = pnPos[nRight - 1];
+        } while (--nRight > nLeft);
       }
-   }
+      pnPos[nLeft] = nFrom;
+    }
+  }
+  else
+  {
+    /* The hash array is probably quite well sorted so this trivial
+     * algorithm is the most efficient one [druzus]
+     */
 
-   pBaseHash->iFlags &= ~HB_HASH_RESORT;
+    for (HB_SIZE nFrom = 1; nFrom < pBaseHash->nLen; ++nFrom)
+    {
+      HB_SIZE nPos = nFrom;
+      while (nPos > 0 && hb_hashItemCmp(&pBaseHash->pPairs[nPos - 1].key, &pBaseHash->pPairs[nPos].key, iFlags) > 0)
+      {
+        HB_HASHPAIR pair;
+        memcpy(&pair, pBaseHash->pPairs + nPos - 1, sizeof(HB_HASHPAIR));
+        memcpy(pBaseHash->pPairs + nPos - 1, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR));
+        memcpy(pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR));
+        --nPos;
+      }
+    }
+  }
+
+  pBaseHash->iFlags &= ~HB_HASH_RESORT;
 }
 
-static bool hb_hashFind(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_SIZE * pnPos)
+static bool hb_hashFind(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, HB_SIZE *pnPos)
 {
-   int iFlags = pBaseHash->iFlags;
+  int iFlags = pBaseHash->iFlags;
 
-   if( iFlags & HB_HASH_RESORT ) {
-      hb_hashSortDo(pBaseHash);
-   }
+  if (iFlags & HB_HASH_RESORT)
+  {
+    hb_hashSortDo(pBaseHash);
+  }
 
-   HB_SIZE nLeft = 0;
-   HB_SIZE nRight = pBaseHash->nLen;
+  HB_SIZE nLeft = 0;
+  HB_SIZE nRight = pBaseHash->nLen;
 
-   while( nLeft < nRight ) {
-      HB_SIZE nMiddle = (nLeft + nRight) >> 1;
-      int i = hb_hashItemCmp(&pBaseHash->pPairs[pBaseHash->pnPos ? pBaseHash->pnPos[nMiddle] : nMiddle].key, pKey, iFlags);
-      if( i == 0 ) {
-         *pnPos = pBaseHash->pnPos ? pBaseHash->pnPos[nMiddle] : nMiddle;
-         return true;
-      } else if( i < 0 ) {
-         nLeft = nMiddle + 1;
-      } else {
-         nRight = nMiddle;
-      }
-   }
+  while (nLeft < nRight)
+  {
+    HB_SIZE nMiddle = (nLeft + nRight) >> 1;
+    int i =
+        hb_hashItemCmp(&pBaseHash->pPairs[pBaseHash->pnPos ? pBaseHash->pnPos[nMiddle] : nMiddle].key, pKey, iFlags);
+    if (i == 0)
+    {
+      *pnPos = pBaseHash->pnPos ? pBaseHash->pnPos[nMiddle] : nMiddle;
+      return true;
+    }
+    else if (i < 0)
+    {
+      nLeft = nMiddle + 1;
+    }
+    else
+    {
+      nRight = nMiddle;
+    }
+  }
 
-   *pnPos = nLeft;
-   return false;
+  *pnPos = nLeft;
+  return false;
 }
 
 static void hb_hashResize(PHB_BASEHASH pBaseHash, HB_SIZE nNewSize)
 {
-   if( pBaseHash->nSize < nNewSize ) {
-      if( pBaseHash->nSize ) {
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>(hb_xrealloc(pBaseHash->pPairs, nNewSize * sizeof(HB_HASHPAIR)));
-         if( pBaseHash->pnPos ) {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>(hb_xrealloc(pBaseHash->pnPos, nNewSize * sizeof(HB_SIZE)));
-         }
-      } else {
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>(hb_xgrab(nNewSize * sizeof(HB_HASHPAIR)));
-         if( pBaseHash->iFlags & HB_HASH_KEEPORDER ) {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>(hb_xgrab(nNewSize * sizeof(HB_SIZE)));
-         }
+  if (pBaseHash->nSize < nNewSize)
+  {
+    if (pBaseHash->nSize)
+    {
+      pBaseHash->pPairs = static_cast<PHB_HASHPAIR>(hb_xrealloc(pBaseHash->pPairs, nNewSize * sizeof(HB_HASHPAIR)));
+      if (pBaseHash->pnPos)
+      {
+        pBaseHash->pnPos = static_cast<HB_SIZE *>(hb_xrealloc(pBaseHash->pnPos, nNewSize * sizeof(HB_SIZE)));
       }
+    }
+    else
+    {
+      pBaseHash->pPairs = static_cast<PHB_HASHPAIR>(hb_xgrab(nNewSize * sizeof(HB_HASHPAIR)));
+      if (pBaseHash->iFlags & HB_HASH_KEEPORDER)
+      {
+        pBaseHash->pnPos = static_cast<HB_SIZE *>(hb_xgrab(nNewSize * sizeof(HB_SIZE)));
+      }
+    }
 
-      do {
-         pBaseHash->pPairs[pBaseHash->nSize].key.type = Harbour::Item::NIL;
-         pBaseHash->pPairs[pBaseHash->nSize].value.type = Harbour::Item::NIL;
-      } while( ++pBaseHash->nSize < nNewSize );
-   } else if( pBaseHash->nSize > nNewSize && pBaseHash->nLen <= nNewSize ) {
-      pBaseHash->nSize = nNewSize;
-      if( nNewSize ) {
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>(hb_xrealloc(pBaseHash->pPairs, nNewSize * sizeof(HB_HASHPAIR)));
-         if( pBaseHash->pnPos ) {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>(hb_xrealloc(pBaseHash->pnPos, nNewSize * sizeof(HB_SIZE)));
-         }
-      } else {
-         hb_xfree(pBaseHash->pPairs);
-         pBaseHash->pPairs = nullptr;
-         if( pBaseHash->pnPos ) {
-            hb_xfree(pBaseHash->pnPos);
-            pBaseHash->pnPos = nullptr;
-         }
+    do
+    {
+      pBaseHash->pPairs[pBaseHash->nSize].key.type = Harbour::Item::NIL;
+      pBaseHash->pPairs[pBaseHash->nSize].value.type = Harbour::Item::NIL;
+    } while (++pBaseHash->nSize < nNewSize);
+  }
+  else if (pBaseHash->nSize > nNewSize && pBaseHash->nLen <= nNewSize)
+  {
+    pBaseHash->nSize = nNewSize;
+    if (nNewSize)
+    {
+      pBaseHash->pPairs = static_cast<PHB_HASHPAIR>(hb_xrealloc(pBaseHash->pPairs, nNewSize * sizeof(HB_HASHPAIR)));
+      if (pBaseHash->pnPos)
+      {
+        pBaseHash->pnPos = static_cast<HB_SIZE *>(hb_xrealloc(pBaseHash->pnPos, nNewSize * sizeof(HB_SIZE)));
       }
-   }
+    }
+    else
+    {
+      hb_xfree(pBaseHash->pPairs);
+      pBaseHash->pPairs = nullptr;
+      if (pBaseHash->pnPos)
+      {
+        hb_xfree(pBaseHash->pnPos);
+        pBaseHash->pnPos = nullptr;
+      }
+    }
+  }
 }
 
 static PHB_ITEM hb_hashValuePtr(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, bool fAdd)
 {
-   HB_SIZE nPos;
+  HB_SIZE nPos;
 
-   if( !hb_hashFind(pBaseHash, pKey, &nPos) ) {
-      if( !fAdd ) {
-         return nullptr;
-      }
+  if (!hb_hashFind(pBaseHash, pKey, &nPos))
+  {
+    if (!fAdd)
+    {
+      return nullptr;
+    }
 
-      if( pBaseHash->nSize == pBaseHash->nLen ) {
-         hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
-      }
+    if (pBaseHash->nSize == pBaseHash->nLen)
+    {
+      hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
+    }
 
-      if( pBaseHash->pnPos ) {
-         memmove(pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_SIZE));
-         nPos = (pBaseHash->pnPos[nPos] = pBaseHash->nLen);
-      } else if( nPos < pBaseHash->nLen ) {
-         memmove(pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
-         pBaseHash->pPairs[nPos].key.type = Harbour::Item::NIL;
-         pBaseHash->pPairs[nPos].value.type = Harbour::Item::NIL;
-      }
+    if (pBaseHash->pnPos)
+    {
+      memmove(pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_SIZE));
+      nPos = (pBaseHash->pnPos[nPos] = pBaseHash->nLen);
+    }
+    else if (nPos < pBaseHash->nLen)
+    {
+      memmove(pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
+      pBaseHash->pPairs[nPos].key.type = Harbour::Item::NIL;
+      pBaseHash->pPairs[nPos].value.type = Harbour::Item::NIL;
+    }
 
-      pBaseHash->nLen++;
-      hb_itemCopy(&pBaseHash->pPairs[nPos].key, pKey);
-      if( pBaseHash->pDefault ) {
-         hb_itemCloneTo(&pBaseHash->pPairs[nPos].value, pBaseHash->pDefault);
-      }
-   }
+    pBaseHash->nLen++;
+    hb_itemCopy(&pBaseHash->pPairs[nPos].key, pKey);
+    if (pBaseHash->pDefault)
+    {
+      hb_itemCloneTo(&pBaseHash->pPairs[nPos].value, pBaseHash->pDefault);
+    }
+  }
 
-   return &pBaseHash->pPairs[nPos].value;
+  return &pBaseHash->pPairs[nPos].value;
 }
 
 static bool hb_hashNewValue(PHB_BASEHASH pBaseHash, PHB_ITEM pKey, PHB_ITEM pValue)
 {
-   HB_SIZE nPos;
+  HB_SIZE nPos;
 
-   if( !hb_hashFind(pBaseHash, pKey, &nPos) ) {
-      if( pBaseHash->nSize == pBaseHash->nLen ) {
-         hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
-      }
+  if (!hb_hashFind(pBaseHash, pKey, &nPos))
+  {
+    if (pBaseHash->nSize == pBaseHash->nLen)
+    {
+      hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
+    }
 
-      if( pBaseHash->pnPos ) {
-         memmove(pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_SIZE));
-         nPos = (pBaseHash->pnPos[nPos] = pBaseHash->nLen);
-      } else if( nPos < pBaseHash->nLen ) {
-         memmove(pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
-         pBaseHash->pPairs[nPos].key.type = Harbour::Item::NIL;
-         pBaseHash->pPairs[nPos].value.type = Harbour::Item::NIL;
-      }
+    if (pBaseHash->pnPos)
+    {
+      memmove(pBaseHash->pnPos + nPos + 1, pBaseHash->pnPos + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_SIZE));
+      nPos = (pBaseHash->pnPos[nPos] = pBaseHash->nLen);
+    }
+    else if (nPos < pBaseHash->nLen)
+    {
+      memmove(pBaseHash->pPairs + nPos + 1, pBaseHash->pPairs + nPos, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
+      pBaseHash->pPairs[nPos].key.type = Harbour::Item::NIL;
+      pBaseHash->pPairs[nPos].value.type = Harbour::Item::NIL;
+    }
 
-      pBaseHash->nLen++;
-      hb_itemCopy(&pBaseHash->pPairs[nPos].key, pKey);
-      hb_itemCopyFromRef(&pBaseHash->pPairs[nPos].value, pValue);
+    pBaseHash->nLen++;
+    hb_itemCopy(&pBaseHash->pPairs[nPos].key, pKey);
+    hb_itemCopyFromRef(&pBaseHash->pPairs[nPos].value, pValue);
 
-      return true;
-   }
+    return true;
+  }
 
-   return false;
+  return false;
 }
 
-static void hb_hashNewPair(PHB_BASEHASH pBaseHash, PHB_ITEM * pKeyPtr, PHB_ITEM * pValPtr)
+static void hb_hashNewPair(PHB_BASEHASH pBaseHash, PHB_ITEM *pKeyPtr, PHB_ITEM *pValPtr)
 {
-   if( pBaseHash->nSize == pBaseHash->nLen ) {
-      hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
-   }
+  if (pBaseHash->nSize == pBaseHash->nLen)
+  {
+    hb_hashResize(pBaseHash, pBaseHash->nSize + HB_HASH_ITEM_ALLOC);
+  }
 
-   if( pBaseHash->pnPos ) {
-      pBaseHash->pnPos[pBaseHash->nLen] = pBaseHash->nLen;
-   }
+  if (pBaseHash->pnPos)
+  {
+    pBaseHash->pnPos[pBaseHash->nLen] = pBaseHash->nLen;
+  }
 
-   *pKeyPtr = &pBaseHash->pPairs[pBaseHash->nLen].key;
-   *pValPtr = &pBaseHash->pPairs[pBaseHash->nLen].value;
+  *pKeyPtr = &pBaseHash->pPairs[pBaseHash->nLen].key;
+  *pValPtr = &pBaseHash->pPairs[pBaseHash->nLen].value;
 
-   pBaseHash->nLen++;
+  pBaseHash->nLen++;
 }
 
 static void hb_hashDelPair(PHB_BASEHASH pBaseHash, HB_SIZE nPos)
 {
-   if( --pBaseHash->nLen == 0 ) {
-      PHB_HASHPAIR pPairs = pBaseHash->pPairs;
-      pBaseHash->pPairs = nullptr;
-      pBaseHash->nSize = 0;
-      if( pBaseHash->pnPos ) {
-         hb_xfree(pBaseHash->pnPos);
-         pBaseHash->pnPos = nullptr;
-      }
-      if( HB_IS_COMPLEX(&pPairs->key) ) {
-         hb_itemClear(&pPairs->key);
-      }
-      if( HB_IS_COMPLEX(&pPairs->value) ) {
-         hb_itemClear(&pPairs->value);
-      }
-      hb_xfree(pPairs);
-   } else {
-      if( pBaseHash->pnPos && (pBaseHash->iFlags & HB_HASH_RESORT) == 0 ) {
+  if (--pBaseHash->nLen == 0)
+  {
+    PHB_HASHPAIR pPairs = pBaseHash->pPairs;
+    pBaseHash->pPairs = nullptr;
+    pBaseHash->nSize = 0;
+    if (pBaseHash->pnPos)
+    {
+      hb_xfree(pBaseHash->pnPos);
+      pBaseHash->pnPos = nullptr;
+    }
+    if (HB_IS_COMPLEX(&pPairs->key))
+    {
+      hb_itemClear(&pPairs->key);
+    }
+    if (HB_IS_COMPLEX(&pPairs->value))
+    {
+      hb_itemClear(&pPairs->value);
+    }
+    hb_xfree(pPairs);
+  }
+  else
+  {
+    if (pBaseHash->pnPos && (pBaseHash->iFlags & HB_HASH_RESORT) == 0)
+    {
 #ifdef HB_FAST_HASH_DEL
-         HB_SIZE * pnLast;
+      HB_SIZE *pnLast;
 
-         HB_SIZE * pnPos = pBaseHash->pnPos + pBaseHash->nLen;
-         HB_SIZE * pnDel = pnLast = nullptr;
-         for( ;; ) {
-            if( *pnPos == nPos ) {
-               pnDel = pnPos;
-               if( pnLast != nullptr ) {
-                  break;
-               }
-            }
-            if( *pnPos == pBaseHash->nLen ) {
-               pnLast = pnPos;
-               if( pnDel != nullptr ) {
-                  break;
-               }
-            }
-            if( pnPos-- == pBaseHash->pnPos ) {
-               hb_errInternal(HB_EI_ERRUNRECOV, "HB_HDEL(): corrupted hash index", nullptr, nullptr);
-            }
-         }
-         *pnLast = *pnDel;
-         if( pnDel < pBaseHash->pnPos + pBaseHash->nLen ) {
-            memmove(pnDel, pnDel + 1, (pBaseHash->pnPos + pBaseHash->nLen - pnDel) * sizeof(HB_SIZE));
-         }
-         if( nPos != pBaseHash->nLen ) {
-            HB_HASHPAIR pair;
-            memcpy(&pair, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR));
-            memcpy(pBaseHash->pPairs + nPos, pBaseHash->pPairs + pBaseHash->nLen, sizeof(HB_HASHPAIR));
-            nPos = pBaseHash->nLen;
-            memcpy(pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR));
-         }
+      HB_SIZE *pnPos = pBaseHash->pnPos + pBaseHash->nLen;
+      HB_SIZE *pnDel = pnLast = nullptr;
+      for (;;)
+      {
+        if (*pnPos == nPos)
+        {
+          pnDel = pnPos;
+          if (pnLast != nullptr)
+          {
+            break;
+          }
+        }
+        if (*pnPos == pBaseHash->nLen)
+        {
+          pnLast = pnPos;
+          if (pnDel != nullptr)
+          {
+            break;
+          }
+        }
+        if (pnPos-- == pBaseHash->pnPos)
+        {
+          hb_errInternal(HB_EI_ERRUNRECOV, "HB_HDEL(): corrupted hash index", nullptr, nullptr);
+        }
+      }
+      *pnLast = *pnDel;
+      if (pnDel < pBaseHash->pnPos + pBaseHash->nLen)
+      {
+        memmove(pnDel, pnDel + 1, (pBaseHash->pnPos + pBaseHash->nLen - pnDel) * sizeof(HB_SIZE));
+      }
+      if (nPos != pBaseHash->nLen)
+      {
+        HB_HASHPAIR pair;
+        memcpy(&pair, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR));
+        memcpy(pBaseHash->pPairs + nPos, pBaseHash->pPairs + pBaseHash->nLen, sizeof(HB_HASHPAIR));
+        nPos = pBaseHash->nLen;
+        memcpy(pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR));
+      }
 #else
-         HB_SIZE n = 0;
-         while( n < pBaseHash->nLen ) {
-            if( pBaseHash->pnPos[n] > nPos ) {
-               pBaseHash->pnPos[n++]--;
-            } else if( pBaseHash->pnPos[n] == nPos ) {
-               memmove(&pBaseHash->pnPos[n], &pBaseHash->pnPos[n + 1], (pBaseHash->nLen - n) * sizeof(HB_SIZE));
-            } else {
-               ++n;
-            }
-         }
+      HB_SIZE n = 0;
+      while (n < pBaseHash->nLen)
+      {
+        if (pBaseHash->pnPos[n] > nPos)
+        {
+          pBaseHash->pnPos[n++]--;
+        }
+        else if (pBaseHash->pnPos[n] == nPos)
+        {
+          memmove(&pBaseHash->pnPos[n], &pBaseHash->pnPos[n + 1], (pBaseHash->nLen - n) * sizeof(HB_SIZE));
+        }
+        else
+        {
+          ++n;
+        }
+      }
 #endif
-      }
+    }
 
-      if( nPos != pBaseHash->nLen ) {
-         HB_HASHPAIR pair;
-         memcpy(&pair, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR));
-         memmove(pBaseHash->pPairs + nPos, pBaseHash->pPairs + nPos + 1, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
-         nPos = pBaseHash->nLen;
-         memcpy(pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR));
-      }
+    if (nPos != pBaseHash->nLen)
+    {
+      HB_HASHPAIR pair;
+      memcpy(&pair, pBaseHash->pPairs + nPos, sizeof(HB_HASHPAIR));
+      memmove(pBaseHash->pPairs + nPos, pBaseHash->pPairs + nPos + 1, (pBaseHash->nLen - nPos) * sizeof(HB_HASHPAIR));
+      nPos = pBaseHash->nLen;
+      memcpy(pBaseHash->pPairs + nPos, &pair, sizeof(HB_HASHPAIR));
+    }
 
-      hb_itemSetNil(&pBaseHash->pPairs[nPos].key);
-      hb_itemSetNil(&pBaseHash->pPairs[nPos].value);
-      if( pBaseHash->nSize - pBaseHash->nLen > (HB_HASH_ITEM_ALLOC << 1) ) {
-         pBaseHash->nSize -= HB_HASH_ITEM_ALLOC;
-         pBaseHash->pPairs = static_cast<PHB_HASHPAIR>(hb_xrealloc(pBaseHash->pPairs, pBaseHash->nSize * sizeof(HB_HASHPAIR)));
-         if( pBaseHash->pnPos ) {
-            pBaseHash->pnPos = static_cast<HB_SIZE*>(hb_xrealloc(pBaseHash->pnPos, pBaseHash->nSize * sizeof(HB_SIZE)));
-         }
+    hb_itemSetNil(&pBaseHash->pPairs[nPos].key);
+    hb_itemSetNil(&pBaseHash->pPairs[nPos].value);
+    if (pBaseHash->nSize - pBaseHash->nLen > (HB_HASH_ITEM_ALLOC << 1))
+    {
+      pBaseHash->nSize -= HB_HASH_ITEM_ALLOC;
+      pBaseHash->pPairs =
+          static_cast<PHB_HASHPAIR>(hb_xrealloc(pBaseHash->pPairs, pBaseHash->nSize * sizeof(HB_HASHPAIR)));
+      if (pBaseHash->pnPos)
+      {
+        pBaseHash->pnPos = static_cast<HB_SIZE *>(hb_xrealloc(pBaseHash->pnPos, pBaseHash->nSize * sizeof(HB_SIZE)));
       }
-   }
+    }
+  }
 }
 
 PHB_ITEM hb_hashNew(PHB_ITEM pItem)
@@ -506,24 +626,27 @@ PHB_ITEM hb_hashNew(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashNew(%p)", static_cast<void*>(pItem)));
 #endif
 
-   if( pItem == nullptr ) {
-      pItem = hb_itemNew(nullptr);
-   } else if( HB_IS_COMPLEX(pItem) ) {
-      hb_itemClear(pItem);
-   }
+  if (pItem == nullptr)
+  {
+    pItem = hb_itemNew(nullptr);
+  }
+  else if (HB_IS_COMPLEX(pItem))
+  {
+    hb_itemClear(pItem);
+  }
 
-   auto pBaseHash = static_cast<PHB_BASEHASH>(hb_gcAllocRaw(sizeof(HB_BASEHASH), &s_gcHashFuncs));
-   pBaseHash->pPairs   = nullptr;
-   pBaseHash->pnPos    = nullptr;
-   pBaseHash->nSize    = 0;
-   pBaseHash->nLen     = 0;
-   pBaseHash->iFlags   = HB_HASH_FLAG_DEFAULT;
-   pBaseHash->pDefault = nullptr;
+  auto pBaseHash = static_cast<PHB_BASEHASH>(hb_gcAllocRaw(sizeof(HB_BASEHASH), &s_gcHashFuncs));
+  pBaseHash->pPairs = nullptr;
+  pBaseHash->pnPos = nullptr;
+  pBaseHash->nSize = 0;
+  pBaseHash->nLen = 0;
+  pBaseHash->iFlags = HB_HASH_FLAG_DEFAULT;
+  pBaseHash->pDefault = nullptr;
 
-   pItem->type = Harbour::Item::HASH;
-   pItem->item.asHash.value = pBaseHash;
+  pItem->type = Harbour::Item::HASH;
+  pItem->item.asHash.value = pBaseHash;
 
-   return pItem;
+  return pItem;
 }
 
 HB_SIZE hb_hashLen(PHB_ITEM pHash)
@@ -532,11 +655,14 @@ HB_SIZE hb_hashLen(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashLen(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      return pHash->item.asHash.value->nLen;
-   } else {
-      return 0;
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    return pHash->item.asHash.value->nLen;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 void hb_hashPreallocate(PHB_ITEM pHash, HB_SIZE nNewSize)
@@ -545,23 +671,27 @@ void hb_hashPreallocate(PHB_ITEM pHash, HB_SIZE nNewSize)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashPreallocate(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nNewSize));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      hb_hashResize(pHash->item.asHash.value, nNewSize);
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    hb_hashResize(pHash->item.asHash.value, nNewSize);
+  }
 }
 
-HB_BOOL hb_hashAllocNewPair(PHB_ITEM pHash, PHB_ITEM * pKeyPtr, PHB_ITEM * pValPtr)
+HB_BOOL hb_hashAllocNewPair(PHB_ITEM pHash, PHB_ITEM *pKeyPtr, PHB_ITEM *pValPtr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashAllocNewPair(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKeyPtr), static_cast<void*>(pValPtr)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      hb_hashNewPair(pHash->item.asHash.value, pKeyPtr, pValPtr);
-      return true;
-   } else {
-      return false;
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    hb_hashNewPair(pHash->item.asHash.value, pKeyPtr, pValPtr);
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 void hb_hashSort(PHB_ITEM pHash)
@@ -570,17 +700,20 @@ void hb_hashSort(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashSort(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      PHB_BASEHASH pBaseHash = pHash->item.asHash.value;
+  if (HB_IS_HASH(pHash))
+  {
+    PHB_BASEHASH pBaseHash = pHash->item.asHash.value;
 
-      if( pBaseHash->iFlags & HB_HASH_RESORT ) {
-         hb_hashSortDo(pBaseHash);
-      }
+    if (pBaseHash->iFlags & HB_HASH_RESORT)
+    {
+      hb_hashSortDo(pBaseHash);
+    }
 
-      if( pBaseHash->pnPos ) {
-         hb_hashResort(pBaseHash);
-      }
-   }
+    if (pBaseHash->pnPos)
+    {
+      hb_hashResort(pBaseHash);
+    }
+  }
 }
 
 PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int iFlags)
@@ -589,62 +722,71 @@ PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int iFlags)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetItemPtr(%p,%p,%d)", static_cast<void*>(pHash), static_cast<void*>(pKey), iFlags));
 #endif
 
-   if( HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey) ) {
-      PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, iFlags && (pHash->item.asHash.value->iFlags & iFlags) == iFlags);
-      if( pDest ) {
-         return HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest;
-      }
-   }
+  if (HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey))
+  {
+    PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey,
+                                     iFlags && (pHash->item.asHash.value->iFlags & iFlags) == iFlags);
+    if (pDest)
+    {
+      return HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest;
+    }
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
-PHB_ITEM hb_hashGetCItemPtr(PHB_ITEM pHash, const char * pszKey)
+PHB_ITEM hb_hashGetCItemPtr(PHB_ITEM pHash, const char *pszKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetCItemPtr(%p,%s)", static_cast<void*>(pHash), pszKey));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      HB_STACK_TLS_PRELOAD
-      /* we will not make any copy of pKey (autoadd is disabled) so it's
-       * safe to use hb_itemPutCConst()
-       */
-      auto pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
-      PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, false);
-      hb_stackPop();
-      if( pDest ) {
-         return HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest;
-      }
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    HB_STACK_TLS_PRELOAD
+    /* we will not make any copy of pKey (autoadd is disabled) so it's
+     * safe to use hb_itemPutCConst()
+     */
+    auto pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
+    PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, false);
+    hb_stackPop();
+    if (pDest)
+    {
+      return HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest;
+    }
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
-HB_SIZE hb_hashGetCItemPos(PHB_ITEM pHash, const char * pszKey)
+HB_SIZE hb_hashGetCItemPos(PHB_ITEM pHash, const char *pszKey)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetCItemPos(%p,%s)", static_cast<void*>(pHash), pszKey));
 #endif
 
-   HB_SIZE nPos = 0;
+  HB_SIZE nPos = 0;
 
-   if( HB_IS_HASH(pHash) ) {
-      HB_STACK_TLS_PRELOAD
-      /* we will not make any copy of pKey (autoadd is disabled) so it's
-       * safe to use hb_itemPutCConst()
-       */
-      auto pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
+  if (HB_IS_HASH(pHash))
+  {
+    HB_STACK_TLS_PRELOAD
+    /* we will not make any copy of pKey (autoadd is disabled) so it's
+     * safe to use hb_itemPutCConst()
+     */
+    auto pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
 
-      if( hb_hashFind(pHash->item.asHash.value, pKey, &nPos) ) {
-         nPos++;
-      } else {
-         nPos = 0;
-      }
-      hb_stackPop();
-   }
+    if (hb_hashFind(pHash->item.asHash.value, pKey, &nPos))
+    {
+      nPos++;
+    }
+    else
+    {
+      nPos = 0;
+    }
+    hb_stackPop();
+  }
 
-   return nPos;
+  return nPos;
 }
 
 PHB_ITEM hb_hashGetItemRefPtr(PHB_ITEM pHash, PHB_ITEM pKey)
@@ -653,81 +795,104 @@ PHB_ITEM hb_hashGetItemRefPtr(PHB_ITEM pHash, PHB_ITEM pKey)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetItemRefPtr(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey)));
 #endif
 
-   if( HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey) ) {
-      PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, (pHash->item.asHash.value->iFlags & HB_HASH_AUTOADD_REFERENCE) == HB_HASH_AUTOADD_REFERENCE);
-      if( pDest ) {
-         if( !HB_IS_BYREF(pDest) ) {
-            pDest = hb_memvarDetachLocal(pDest);
-         }
-         return pDest;
+  if (HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey))
+  {
+    PHB_ITEM pDest =
+        hb_hashValuePtr(pHash->item.asHash.value, pKey,
+                        (pHash->item.asHash.value->iFlags & HB_HASH_AUTOADD_REFERENCE) == HB_HASH_AUTOADD_REFERENCE);
+    if (pDest)
+    {
+      if (!HB_IS_BYREF(pDest))
+      {
+        pDest = hb_memvarDetachLocal(pDest);
       }
-   }
+      return pDest;
+    }
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
-HB_BOOL hb_hashScan(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos)
+HB_BOOL hb_hashScan(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE *pnPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashScan(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pnPos)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      HB_SIZE nPos;
-      if( HB_IS_HASHKEY(pKey) ) {
-         if( hb_hashFind(pHash->item.asHash.value, pKey, &nPos) ) {
-            if( pnPos ) {
-               *pnPos = nPos + 1;
-            }
-            return true;
-         }
-      } else if( HB_IS_HASH(pKey) && pKey->item.asHash.value->nLen == 1 ) {
-         if( hb_hashFind(pHash->item.asHash.value, &pKey->item.asHash.value->pPairs[0].key, &nPos) ) {
-            PHB_ITEM pVal1 = &pHash->item.asHash.value->pPairs[nPos].value;
-            PHB_ITEM pVal2 = &pKey->item.asHash.value->pPairs[0].value;
-
-            if( hb_itemEqual(pVal1, pVal2) ) {
-               if( pnPos ) {
-                  *pnPos = nPos + 1;
-               }
-               return true;
-            }
-         }
+  if (HB_IS_HASH(pHash))
+  {
+    HB_SIZE nPos;
+    if (HB_IS_HASHKEY(pKey))
+    {
+      if (hb_hashFind(pHash->item.asHash.value, pKey, &nPos))
+      {
+        if (pnPos)
+        {
+          *pnPos = nPos + 1;
+        }
+        return true;
       }
-   }
-   if( pnPos ) {
-      *pnPos = 0;
-   }
-   return false;
+    }
+    else if (HB_IS_HASH(pKey) && pKey->item.asHash.value->nLen == 1)
+    {
+      if (hb_hashFind(pHash->item.asHash.value, &pKey->item.asHash.value->pPairs[0].key, &nPos))
+      {
+        PHB_ITEM pVal1 = &pHash->item.asHash.value->pPairs[nPos].value;
+        PHB_ITEM pVal2 = &pKey->item.asHash.value->pPairs[0].value;
+
+        if (hb_itemEqual(pVal1, pVal2))
+        {
+          if (pnPos)
+          {
+            *pnPos = nPos + 1;
+          }
+          return true;
+        }
+      }
+    }
+  }
+  if (pnPos)
+  {
+    *pnPos = 0;
+  }
+  return false;
 }
 
-HB_BOOL hb_hashScanSoft(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE * pnPos)
+HB_BOOL hb_hashScanSoft(PHB_ITEM pHash, PHB_ITEM pKey, HB_SIZE *pnPos)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashScanSoft(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pnPos)));
 #endif
 
-   if( HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey) ) {
-      HB_SIZE nPos;
-      if( hb_hashFind(pHash->item.asHash.value, pKey, &nPos) ) {
-         if( pnPos ) {
-            *pnPos = nPos + 1;
-         }
-         return true;
-      } else {
-         if( pnPos ) {
-            if( nPos != 0 && pHash->item.asHash.value->pnPos ) {
-               nPos = pHash->item.asHash.value->pnPos[nPos - 1] + 1;
-            }
-            *pnPos = nPos;
-         }
-         return false;
+  if (HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey))
+  {
+    HB_SIZE nPos;
+    if (hb_hashFind(pHash->item.asHash.value, pKey, &nPos))
+    {
+      if (pnPos)
+      {
+        *pnPos = nPos + 1;
       }
-   }
-   if( pnPos ) {
-      *pnPos = 0;
-   }
-   return false;
+      return true;
+    }
+    else
+    {
+      if (pnPos)
+      {
+        if (nPos != 0 && pHash->item.asHash.value->pnPos)
+        {
+          nPos = pHash->item.asHash.value->pnPos[nPos - 1] + 1;
+        }
+        *pnPos = nPos;
+      }
+      return false;
+    }
+  }
+  if (pnPos)
+  {
+    *pnPos = 0;
+  }
+  return false;
 }
 
 HB_BOOL hb_hashClear(PHB_ITEM pHash)
@@ -736,35 +901,42 @@ HB_BOOL hb_hashClear(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashClear(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      if( pHash->item.asHash.value->nSize ) {
-         while( pHash->item.asHash.value->nLen ) {
-            pHash->item.asHash.value->nLen--;
-            if( HB_IS_COMPLEX(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key) ) {
-               hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key);
-            }
-            if( HB_IS_COMPLEX(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value) ) {
-               hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value);
-            }
-         }
-         /*
-          * This condition is a protection against recursive call
-          * from .prg object destructor [druzus]
-          */
-         if( pHash->item.asHash.value->nSize ) {
-            hb_xfree(pHash->item.asHash.value->pPairs);
-            pHash->item.asHash.value->pPairs = nullptr;
-            pHash->item.asHash.value->nSize = 0;
-            if( pHash->item.asHash.value->pnPos ) {
-               hb_xfree(pHash->item.asHash.value->pnPos);
-               pHash->item.asHash.value->pnPos = nullptr;
-            }
-         }
+  if (HB_IS_HASH(pHash))
+  {
+    if (pHash->item.asHash.value->nSize)
+    {
+      while (pHash->item.asHash.value->nLen)
+      {
+        pHash->item.asHash.value->nLen--;
+        if (HB_IS_COMPLEX(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key))
+        {
+          hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key);
+        }
+        if (HB_IS_COMPLEX(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value))
+        {
+          hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value);
+        }
       }
-      return true;
-   }
+      /*
+       * This condition is a protection against recursive call
+       * from .prg object destructor [druzus]
+       */
+      if (pHash->item.asHash.value->nSize)
+      {
+        hb_xfree(pHash->item.asHash.value->pPairs);
+        pHash->item.asHash.value->pPairs = nullptr;
+        pHash->item.asHash.value->nSize = 0;
+        if (pHash->item.asHash.value->pnPos)
+        {
+          hb_xfree(pHash->item.asHash.value->pnPos);
+          pHash->item.asHash.value->pnPos = nullptr;
+        }
+      }
+    }
+    return true;
+  }
 
-   return false;
+  return false;
 }
 
 HB_BOOL hb_hashDel(PHB_ITEM pHash, PHB_ITEM pKey)
@@ -773,17 +945,19 @@ HB_BOOL hb_hashDel(PHB_ITEM pHash, PHB_ITEM pKey)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashDel(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey)));
 #endif
 
-   if( HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey) ) {
-      PHB_BASEHASH pBaseHash = pHash->item.asHash.value;
-      HB_SIZE nPos;
+  if (HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey))
+  {
+    PHB_BASEHASH pBaseHash = pHash->item.asHash.value;
+    HB_SIZE nPos;
 
-      if( hb_hashFind(pBaseHash, pKey, &nPos) ) {
-         hb_hashDelPair(pBaseHash, nPos);
-         return true;
-      }
-   }
+    if (hb_hashFind(pBaseHash, pKey, &nPos))
+    {
+      hb_hashDelPair(pBaseHash, nPos);
+      return true;
+    }
+  }
 
-   return false;
+  return false;
 }
 
 HB_BOOL hb_hashRemove(PHB_ITEM pHash, PHB_ITEM pItem)
@@ -792,30 +966,41 @@ HB_BOOL hb_hashRemove(PHB_ITEM pHash, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashRemove(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pItem)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      if( HB_IS_HASHKEY(pItem) ) {
-         hb_hashDel(pHash, pItem);
-         return true;
-      } else if( HB_IS_ARRAY(pItem) ) {
-         HB_SIZE n = 0;
-         PHB_ITEM pKey;
-         while( (pKey = hb_arrayGetItemPtr(pItem, ++n)) != nullptr ) {
-            hb_hashDel(pHash, pKey);
-         }
-         return true;
-      } else if( HB_IS_HASH(pItem) ) {
-         if( pHash->item.asHash.value == pItem->item.asHash.value ) {
-            hb_hashClear(pHash);
-         } else {
-            HB_SIZE nLen = 0;
-            while( nLen < pItem->item.asHash.value->nLen ) {
-               hb_hashDel(pHash, &pItem->item.asHash.value->pPairs[nLen++].key);
-            }
-         }
-         return true;
+  if (HB_IS_HASH(pHash))
+  {
+    if (HB_IS_HASHKEY(pItem))
+    {
+      hb_hashDel(pHash, pItem);
+      return true;
+    }
+    else if (HB_IS_ARRAY(pItem))
+    {
+      HB_SIZE n = 0;
+      PHB_ITEM pKey;
+      while ((pKey = hb_arrayGetItemPtr(pItem, ++n)) != nullptr)
+      {
+        hb_hashDel(pHash, pKey);
       }
-   }
-   return false;
+      return true;
+    }
+    else if (HB_IS_HASH(pItem))
+    {
+      if (pHash->item.asHash.value == pItem->item.asHash.value)
+      {
+        hb_hashClear(pHash);
+      }
+      else
+      {
+        HB_SIZE nLen = 0;
+        while (nLen < pItem->item.asHash.value->nLen)
+        {
+          hb_hashDel(pHash, &pItem->item.asHash.value->pPairs[nLen++].key);
+        }
+      }
+      return true;
+    }
+  }
+  return false;
 }
 
 HB_BOOL hb_hashAdd(PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue)
@@ -824,22 +1009,28 @@ HB_BOOL hb_hashAdd(PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashAdd(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pValue)));
 #endif
 
-   if( HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey) ) {
-      PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, true);
-      if( pDest ) {
-         if( HB_IS_BYREF(pDest) ) {
-            pDest = hb_itemUnRef(pDest);
-         }
-         if( pValue ) {
-            hb_itemCopyFromRef(pDest, pValue);
-         } else {
-            hb_itemSetNil(pDest);
-         }
-         return true;
+  if (HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey))
+  {
+    PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, true);
+    if (pDest)
+    {
+      if (HB_IS_BYREF(pDest))
+      {
+        pDest = hb_itemUnRef(pDest);
       }
-   }
+      if (pValue)
+      {
+        hb_itemCopyFromRef(pDest, pValue);
+      }
+      else
+      {
+        hb_itemSetNil(pDest);
+      }
+      return true;
+    }
+  }
 
-   return false;
+  return false;
 }
 
 HB_BOOL hb_hashAddNew(PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue)
@@ -848,11 +1039,14 @@ HB_BOOL hb_hashAddNew(PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashAddNew(%p,%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pKey), static_cast<void*>(pValue)));
 #endif
 
-   if( HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey) ) {
-      return hb_hashNewValue(pHash->item.asHash.value, pKey, pValue);
-   } else {
-      return false;
-   }
+  if (HB_IS_HASH(pHash) && HB_IS_HASHKEY(pKey))
+  {
+    return hb_hashNewValue(pHash->item.asHash.value, pKey, pValue);
+  }
+  else
+  {
+    return false;
+  }
 }
 
 PHB_ITEM hb_hashGetKeyAt(PHB_ITEM pHash, HB_SIZE nPos)
@@ -861,11 +1055,14 @@ PHB_ITEM hb_hashGetKeyAt(PHB_ITEM pHash, HB_SIZE nPos)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetKeyAt(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nPos));
 #endif
 
-   if( HB_IS_HASH(pHash) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen ) {
-      return &pHash->item.asHash.value->pPairs[nPos - 1].key;
-   } else {
-      return nullptr;
-   }
+  if (HB_IS_HASH(pHash) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen)
+  {
+    return &pHash->item.asHash.value->pPairs[nPos - 1].key;
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
 PHB_ITEM hb_hashGetValueAt(PHB_ITEM pHash, HB_SIZE nPos)
@@ -874,12 +1071,15 @@ PHB_ITEM hb_hashGetValueAt(PHB_ITEM pHash, HB_SIZE nPos)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetValueAt(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nPos));
 #endif
 
-   if( HB_IS_HASH(pHash) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen ) {
-      PHB_ITEM pValue = &pHash->item.asHash.value->pPairs[nPos - 1].value;
-      return HB_IS_BYREF(pValue) ? hb_itemUnRef(pValue) : pValue;
-   } else {
-      return nullptr;
-   }
+  if (HB_IS_HASH(pHash) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen)
+  {
+    PHB_ITEM pValue = &pHash->item.asHash.value->pPairs[nPos - 1].value;
+    return HB_IS_BYREF(pValue) ? hb_itemUnRef(pValue) : pValue;
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
 HB_BOOL hb_hashDelAt(PHB_ITEM pHash, HB_SIZE nPos)
@@ -888,36 +1088,45 @@ HB_BOOL hb_hashDelAt(PHB_ITEM pHash, HB_SIZE nPos)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashDelAt(%p,%" HB_PFS "u)", static_cast<void*>(pHash), nPos));
 #endif
 
-   if( HB_IS_HASH(pHash) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen ) {
-      hb_hashDelPair(pHash->item.asHash.value, nPos - 1);
-      return true;
-   } else {
-      return false;
-   }
+  if (HB_IS_HASH(pHash) && nPos > 0 && nPos <= pHash->item.asHash.value->nLen)
+  {
+    hb_hashDelPair(pHash->item.asHash.value, nPos - 1);
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 /* retrieves the hash unique ID */
-void * hb_hashId(PHB_ITEM pHash)
+void *hb_hashId(PHB_ITEM pHash)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_hashId(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      return static_cast<void*>(pHash->item.asHash.value);
-   } else {
-      return nullptr;
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    return static_cast<void *>(pHash->item.asHash.value);
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
 /* retrieves numer of references to the hash */
 HB_COUNTER hb_hashRefs(PHB_ITEM pHash)
 {
-   if( HB_IS_HASH(pHash) ) {
-      return hb_gcRefCount(pHash->item.asHash.value);
-   } else {
-      return 0;
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    return hb_gcRefCount(pHash->item.asHash.value);
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 void hb_hashCloneBody(PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pClonedList)
@@ -926,25 +1135,30 @@ void hb_hashCloneBody(PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pClonedL
    HB_TRACE(HB_TR_DEBUG, ("hb_hashCloneBody(%p,%p,%p)", static_cast<void*>(pDest), static_cast<void*>(pHash), static_cast<void*>(pClonedList)));
 #endif
 
-   hb_hashNew(pDest);
-   pDest->item.asHash.value->iFlags = pHash->item.asHash.value->iFlags;
-   hb_hashResize(pDest->item.asHash.value, pHash->item.asHash.value->nLen);
-   if( pHash->item.asHash.value->pDefault ) {
-      pDest->item.asHash.value->pDefault = hb_itemNew(pHash->item.asHash.value->pDefault);
-      hb_gcUnlock(pDest->item.asHash.value->pDefault);
-   }
-   if( pHash->item.asHash.value->pnPos ) {
-      memcpy(pDest->item.asHash.value->pnPos, pHash->item.asHash.value->pnPos, pHash->item.asHash.value->nLen * sizeof(HB_SIZE));
-   }
-   for( HB_SIZE nPos = 0; nPos < pHash->item.asHash.value->nLen; ++nPos ) {
-      PHB_ITEM pValue = &pHash->item.asHash.value->pPairs[nPos].value;
-      if( HB_IS_BYREF(pValue) ) {
-         pValue = hb_itemUnRef(pValue);
-      }
-      hb_itemCopy(&pDest->item.asHash.value->pPairs[nPos].key, &pHash->item.asHash.value->pPairs[nPos].key);
-      pDest->item.asHash.value->nLen++;
-      hb_nestedCloneDo(&pDest->item.asHash.value->pPairs[nPos].value, pValue, pClonedList);
-   }
+  hb_hashNew(pDest);
+  pDest->item.asHash.value->iFlags = pHash->item.asHash.value->iFlags;
+  hb_hashResize(pDest->item.asHash.value, pHash->item.asHash.value->nLen);
+  if (pHash->item.asHash.value->pDefault)
+  {
+    pDest->item.asHash.value->pDefault = hb_itemNew(pHash->item.asHash.value->pDefault);
+    hb_gcUnlock(pDest->item.asHash.value->pDefault);
+  }
+  if (pHash->item.asHash.value->pnPos)
+  {
+    memcpy(pDest->item.asHash.value->pnPos, pHash->item.asHash.value->pnPos,
+           pHash->item.asHash.value->nLen * sizeof(HB_SIZE));
+  }
+  for (HB_SIZE nPos = 0; nPos < pHash->item.asHash.value->nLen; ++nPos)
+  {
+    PHB_ITEM pValue = &pHash->item.asHash.value->pPairs[nPos].value;
+    if (HB_IS_BYREF(pValue))
+    {
+      pValue = hb_itemUnRef(pValue);
+    }
+    hb_itemCopy(&pDest->item.asHash.value->pPairs[nPos].key, &pHash->item.asHash.value->pPairs[nPos].key);
+    pDest->item.asHash.value->nLen++;
+    hb_nestedCloneDo(&pDest->item.asHash.value->pPairs[nPos].value, pValue, pClonedList);
+  }
 }
 
 PHB_ITEM hb_hashCloneTo(PHB_ITEM pDest, PHB_ITEM pHash)
@@ -953,15 +1167,16 @@ PHB_ITEM hb_hashCloneTo(PHB_ITEM pDest, PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashCloneTo(%p,%p)", static_cast<void*>(pDest), static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      HB_NESTED_CLONED clonedList;
+  if (HB_IS_HASH(pHash))
+  {
+    HB_NESTED_CLONED clonedList;
 
-      hb_nestedCloneInit(&clonedList, static_cast<void*>(pHash->item.asHash.value), pDest);
-      hb_hashCloneBody(pDest, pHash, &clonedList);
-      hb_nestedCloneFree(&clonedList);
-   }
+    hb_nestedCloneInit(&clonedList, static_cast<void *>(pHash->item.asHash.value), pDest);
+    hb_hashCloneBody(pDest, pHash, &clonedList);
+    hb_nestedCloneFree(&clonedList);
+  }
 
-   return pDest;
+  return pDest;
 }
 
 PHB_ITEM hb_hashClone(PHB_ITEM pHash)
@@ -970,7 +1185,7 @@ PHB_ITEM hb_hashClone(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashClone(%p)", static_cast<void*>(pHash)));
 #endif
 
-   return hb_hashCloneTo(hb_itemNew(nullptr), pHash);
+  return hb_hashCloneTo(hb_itemNew(nullptr), pHash);
 }
 
 void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
@@ -979,72 +1194,93 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashJoin(%p,%p,%d)", static_cast<void*>(pDest), static_cast<void*>(pSource), iType));
 #endif
 
-   if( HB_IS_HASH(pDest) && HB_IS_HASH(pSource) ) {
-      PHB_BASEHASH pBaseHash;
-      HB_SIZE nPos;
+  if (HB_IS_HASH(pDest) && HB_IS_HASH(pSource))
+  {
+    PHB_BASEHASH pBaseHash;
+    HB_SIZE nPos;
 
-      switch( iType ) {
-         case HB_HASH_UNION:        /* OR */
-            pBaseHash = pSource->item.asHash.value;
-            if( pBaseHash != pDest->item.asHash.value ) {
-               for( nPos = 0; nPos < pBaseHash->nLen; ++nPos ) {
-                  PHB_ITEM pVal = &pBaseHash->pPairs[nPos].value;
-                  if( HB_IS_BYREF(pVal) ) {
-                     pVal = hb_itemUnRef(pVal);
-                  }
-                  hb_hashAdd(pDest, &pBaseHash->pPairs[nPos].key, pVal);
-               }
-            }
-            break;
-
-         case HB_HASH_INTERSECT:    /* AND */
-            pBaseHash = pDest->item.asHash.value;
-            if( pBaseHash != pSource->item.asHash.value ) {
-               for( nPos = 0; nPos < pBaseHash->nLen; ) {
-                  HB_SIZE nSrcPos;
-                  if( hb_hashFind(pSource->item.asHash.value, &pBaseHash->pPairs[nPos].key, &nSrcPos) ) {
-                     PHB_ITEM pDestVal = &pBaseHash->pPairs[nPos].value;
-                     if( HB_IS_BYREF(pDestVal) ) {
-                        pDestVal = hb_itemUnRef(pDestVal);
-                     }
-                     hb_itemCopyFromRef(pDestVal, &pSource->item.asHash.value->pPairs[nSrcPos].value);
-                     ++nPos;
-                  } else {
-                     hb_hashDelPair(pBaseHash, nPos);
-                  }
-               }
-            }
-            break;
-
-         case HB_HASH_DIFFERENCE:   /* XOR */
-            pBaseHash = pSource->item.asHash.value;
-            if( pBaseHash == pDest->item.asHash.value ) {
-               hb_hashClear(pDest);
-            } else {
-               for( nPos = 0; nPos < pBaseHash->nLen; ++nPos ) {
-                  if( !hb_hashDel(pDest, &pBaseHash->pPairs[nPos].key) ) {
-                     PHB_ITEM pVal = &pBaseHash->pPairs[nPos].value;
-                     if( HB_IS_BYREF(pVal) ) {
-                        pVal = hb_itemUnRef(pVal);
-                     }
-                     hb_hashAdd(pDest, &pBaseHash->pPairs[nPos].key, pVal);
-                  }
-               }
-            }
-            break;
-
-         case HB_HASH_REMOVE:       /* NOT -> h1 AND (h1 XOR h2) */
-            pBaseHash = pSource->item.asHash.value;
-            if( pBaseHash == pDest->item.asHash.value ) {
-               hb_hashClear(pDest);
-            } else {
-               for( nPos = 0; nPos < pBaseHash->nLen; ++nPos ) {
-                  hb_hashDel(pDest, &pBaseHash->pPairs[nPos].key);
-               }
-            }
-            break;
+    switch (iType)
+    {
+    case HB_HASH_UNION: /* OR */
+      pBaseHash = pSource->item.asHash.value;
+      if (pBaseHash != pDest->item.asHash.value)
+      {
+        for (nPos = 0; nPos < pBaseHash->nLen; ++nPos)
+        {
+          PHB_ITEM pVal = &pBaseHash->pPairs[nPos].value;
+          if (HB_IS_BYREF(pVal))
+          {
+            pVal = hb_itemUnRef(pVal);
+          }
+          hb_hashAdd(pDest, &pBaseHash->pPairs[nPos].key, pVal);
+        }
       }
-   }
+      break;
+
+    case HB_HASH_INTERSECT: /* AND */
+      pBaseHash = pDest->item.asHash.value;
+      if (pBaseHash != pSource->item.asHash.value)
+      {
+        for (nPos = 0; nPos < pBaseHash->nLen;)
+        {
+          HB_SIZE nSrcPos;
+          if (hb_hashFind(pSource->item.asHash.value, &pBaseHash->pPairs[nPos].key, &nSrcPos))
+          {
+            PHB_ITEM pDestVal = &pBaseHash->pPairs[nPos].value;
+            if (HB_IS_BYREF(pDestVal))
+            {
+              pDestVal = hb_itemUnRef(pDestVal);
+            }
+            hb_itemCopyFromRef(pDestVal, &pSource->item.asHash.value->pPairs[nSrcPos].value);
+            ++nPos;
+          }
+          else
+          {
+            hb_hashDelPair(pBaseHash, nPos);
+          }
+        }
+      }
+      break;
+
+    case HB_HASH_DIFFERENCE: /* XOR */
+      pBaseHash = pSource->item.asHash.value;
+      if (pBaseHash == pDest->item.asHash.value)
+      {
+        hb_hashClear(pDest);
+      }
+      else
+      {
+        for (nPos = 0; nPos < pBaseHash->nLen; ++nPos)
+        {
+          if (!hb_hashDel(pDest, &pBaseHash->pPairs[nPos].key))
+          {
+            PHB_ITEM pVal = &pBaseHash->pPairs[nPos].value;
+            if (HB_IS_BYREF(pVal))
+            {
+              pVal = hb_itemUnRef(pVal);
+            }
+            hb_hashAdd(pDest, &pBaseHash->pPairs[nPos].key, pVal);
+          }
+        }
+      }
+      break;
+
+    case HB_HASH_REMOVE: /* NOT -> h1 AND (h1 XOR h2) */
+      pBaseHash = pSource->item.asHash.value;
+      if (pBaseHash == pDest->item.asHash.value)
+      {
+        hb_hashClear(pDest);
+      }
+      else
+      {
+        for (nPos = 0; nPos < pBaseHash->nLen; ++nPos)
+        {
+          hb_hashDel(pDest, &pBaseHash->pPairs[nPos].key);
+        }
+      }
+      break;
+    }
+  }
 }
 
 PHB_ITEM hb_hashGetKeys(PHB_ITEM pHash)
@@ -1053,22 +1289,25 @@ PHB_ITEM hb_hashGetKeys(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetKeys(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      auto pKeys = hb_itemArrayNew(hb_hashLen(pHash));
-      PHB_ITEM pKey;
-      HB_SIZE nPos = 0;
+  if (HB_IS_HASH(pHash))
+  {
+    auto pKeys = hb_itemArrayNew(hb_hashLen(pHash));
+    PHB_ITEM pKey;
+    HB_SIZE nPos = 0;
 
-      while( (pKey = hb_hashGetKeyAt(pHash, ++nPos)) != nullptr ) {
-         auto pDest = hb_arrayGetItemPtr(pKeys, nPos);
-         if( !pDest ) {
-            break;
-         }
-         hb_itemCopy(pDest, pKey);
+    while ((pKey = hb_hashGetKeyAt(pHash, ++nPos)) != nullptr)
+    {
+      auto pDest = hb_arrayGetItemPtr(pKeys, nPos);
+      if (!pDest)
+      {
+        break;
       }
-      return pKeys;
-   }
+      hb_itemCopy(pDest, pKey);
+    }
+    return pKeys;
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
 PHB_ITEM hb_hashGetValues(PHB_ITEM pHash)
@@ -1077,22 +1316,25 @@ PHB_ITEM hb_hashGetValues(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetValues(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      auto pValues = hb_itemArrayNew(hb_hashLen(pHash));
-      PHB_ITEM pVal;
-      HB_SIZE nPos = 0;
+  if (HB_IS_HASH(pHash))
+  {
+    auto pValues = hb_itemArrayNew(hb_hashLen(pHash));
+    PHB_ITEM pVal;
+    HB_SIZE nPos = 0;
 
-      while( (pVal = hb_hashGetValueAt(pHash, ++nPos)) != nullptr ) {
-         auto pDest = hb_arrayGetItemPtr(pValues, nPos);
-         if( !pDest ) {
-            break;
-         }
-         hb_itemCopy(pDest, pVal);
+    while ((pVal = hb_hashGetValueAt(pHash, ++nPos)) != nullptr)
+    {
+      auto pDest = hb_arrayGetItemPtr(pValues, nPos);
+      if (!pDest)
+      {
+        break;
       }
-      return pValues;
-   }
+      hb_itemCopy(pDest, pVal);
+    }
+    return pValues;
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
 void hb_hashSetDefault(PHB_ITEM pHash, PHB_ITEM pValue)
@@ -1101,16 +1343,19 @@ void hb_hashSetDefault(PHB_ITEM pHash, PHB_ITEM pValue)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashSetDefault(%p,%p)", static_cast<void*>(pHash), static_cast<void*>(pValue)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      if( pHash->item.asHash.value->pDefault ) {
-         hb_itemRelease(pHash->item.asHash.value->pDefault);
-         pHash->item.asHash.value->pDefault = nullptr;
-      }
-      if( pValue && !HB_IS_NIL(pValue) && (!HB_IS_HASH(pValue) || pHash->item.asHash.value != pValue->item.asHash.value) ) {
-         pHash->item.asHash.value->pDefault = hb_itemClone(pValue);
-         hb_gcUnlock(pHash->item.asHash.value->pDefault);
-      }
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    if (pHash->item.asHash.value->pDefault)
+    {
+      hb_itemRelease(pHash->item.asHash.value->pDefault);
+      pHash->item.asHash.value->pDefault = nullptr;
+    }
+    if (pValue && !HB_IS_NIL(pValue) && (!HB_IS_HASH(pValue) || pHash->item.asHash.value != pValue->item.asHash.value))
+    {
+      pHash->item.asHash.value->pDefault = hb_itemClone(pValue);
+      hb_gcUnlock(pHash->item.asHash.value->pDefault);
+    }
+  }
 }
 
 PHB_ITEM hb_hashGetDefault(PHB_ITEM pHash)
@@ -1119,11 +1364,14 @@ PHB_ITEM hb_hashGetDefault(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetDefault(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      return pHash->item.asHash.value->pDefault;
-   } else {
-      return nullptr;
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    return pHash->item.asHash.value->pDefault;
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
 void hb_hashSetFlags(PHB_ITEM pHash, int iFlags)
@@ -1132,18 +1380,22 @@ void hb_hashSetFlags(PHB_ITEM pHash, int iFlags)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashSetFlags(%p,%d)", static_cast<void*>(pHash), iFlags));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      pHash->item.asHash.value->iFlags |= iFlags;
-      if( pHash->item.asHash.value->pnPos == nullptr && pHash->item.asHash.value->nSize && (pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER) != 0 ) {
-         HB_SIZE n = pHash->item.asHash.value->nSize;
+  if (HB_IS_HASH(pHash))
+  {
+    pHash->item.asHash.value->iFlags |= iFlags;
+    if (pHash->item.asHash.value->pnPos == nullptr && pHash->item.asHash.value->nSize &&
+        (pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER) != 0)
+    {
+      HB_SIZE n = pHash->item.asHash.value->nSize;
 
-         pHash->item.asHash.value->pnPos = static_cast<HB_SIZE*>(hb_xgrab(n * sizeof(HB_SIZE)));
-         do {
-            --n;
-            pHash->item.asHash.value->pnPos[n] = n;
-         } while( n );
-      }
-   }
+      pHash->item.asHash.value->pnPos = static_cast<HB_SIZE *>(hb_xgrab(n * sizeof(HB_SIZE)));
+      do
+      {
+        --n;
+        pHash->item.asHash.value->pnPos[n] = n;
+      } while (n);
+    }
+  }
 }
 
 void hb_hashClearFlags(PHB_ITEM pHash, int iFlags)
@@ -1152,14 +1404,16 @@ void hb_hashClearFlags(PHB_ITEM pHash, int iFlags)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashClearFlags(%p,%d)", static_cast<void*>(pHash), iFlags));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      pHash->item.asHash.value->iFlags &= ~iFlags;
-      if( pHash->item.asHash.value->pnPos != nullptr && (pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER) == 0 ) {
-         hb_hashResort(pHash->item.asHash.value);
-         hb_xfree(pHash->item.asHash.value->pnPos);
-         pHash->item.asHash.value->pnPos = nullptr;
-      }
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    pHash->item.asHash.value->iFlags &= ~iFlags;
+    if (pHash->item.asHash.value->pnPos != nullptr && (pHash->item.asHash.value->iFlags & HB_HASH_KEEPORDER) == 0)
+    {
+      hb_hashResort(pHash->item.asHash.value);
+      hb_xfree(pHash->item.asHash.value->pnPos);
+      pHash->item.asHash.value->pnPos = nullptr;
+    }
+  }
 }
 
 int hb_hashGetFlags(PHB_ITEM pHash)
@@ -1168,9 +1422,12 @@ int hb_hashGetFlags(PHB_ITEM pHash)
    HB_TRACE(HB_TR_DEBUG, ("hb_hashGetFlags(%p)", static_cast<void*>(pHash)));
 #endif
 
-   if( HB_IS_HASH(pHash) ) {
-      return pHash->item.asHash.value->iFlags;
-   } else {
-      return 0;
-   }
+  if (HB_IS_HASH(pHash))
+  {
+    return pHash->item.asHash.value->iFlags;
+  }
+  else
+  {
+    return 0;
+  }
 }

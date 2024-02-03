@@ -48,15 +48,16 @@
 #include "hbapi.hpp"
 #include "hbstack.hpp"
 
-HB_FUNC( HB_PISBYREF )
+HB_FUNC(HB_PISBYREF)
 {
-   auto uiParam = static_cast<HB_USHORT>(hb_parni(1));
-   HB_SIZE nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
-   PHB_ITEM pItem = nullptr;
+  auto uiParam = static_cast<HB_USHORT>(hb_parni(1));
+  HB_SIZE nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
+  PHB_ITEM pItem = nullptr;
 
-   if( uiParam && uiParam <= hb_stackItem(nOffset)->item.asSymbol.paramcnt ) {
-      pItem = hb_stackItem(nOffset + 1 + uiParam);
-   }
+  if (uiParam && uiParam <= hb_stackItem(nOffset)->item.asSymbol.paramcnt)
+  {
+    pItem = hb_stackItem(nOffset + 1 + uiParam);
+  }
 
-   hb_retl(pItem && HB_IS_BYREF(pItem));
+  hb_retl(pItem && HB_IS_BYREF(pItem));
 }

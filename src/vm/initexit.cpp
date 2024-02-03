@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbvm.hpp"
 
-HB_FUNC( __QUIT )
+HB_FUNC(__QUIT)
 {
-   hb_vmRequestQuit();
+  hb_vmRequestQuit();
 }
