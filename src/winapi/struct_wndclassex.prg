@@ -402,7 +402,7 @@ HB_FUNC_STATIC( WAS_WNDCLASSEX_GETLPSZMENUNAME )
     }
     else
     {
-      hb_retni(reinterpret_cast<int>(obj->lpszMenuName));
+      hb_retni(reinterpret_cast<UINT_PTR>(obj->lpszMenuName));
     }
   }
 }
