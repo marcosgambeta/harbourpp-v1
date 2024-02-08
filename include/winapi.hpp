@@ -132,6 +132,11 @@ SOFTWARE.
 #define wa_par_WINSTAENUMPROC(n)  reinterpret_cast<WINSTAENUMPROC>(hb_parptr(n))
 #define wa_par_SENDASYNCPROC(n)   reinterpret_cast<SENDASYNCPROC>(hb_parptr(n))
 #define wa_par_LPCDLGTEMPLATE(n)  static_cast<LPCDLGTEMPLATE>(hb_parptr(n))
+#define wa_par_FONTENUMPROC(n) reinterpret_cast<FONTENUMPROC>(hb_parptr(n))
+#define wa_par_GOBJENUMPROC(n) reinterpret_cast<GOBJENUMPROC>(hb_parptr(n))
+#define wa_par_LINEDDAPROC(n) reinterpret_cast<LINEDDAPROC>(hb_parptr(n))
+#define wa_par_MFENUMPROC(n) reinterpret_cast<MFENUMPROC>(hb_parptr(n))
+#define wa_par_ENHMFENUMPROC(n) reinterpret_cast<ENHMFENUMPROC>(hb_parptr(n))
 
 #define wa_ret___LONG32(x)     hb_retnl(x)
 #define wa_ret_ATOM(x)         hb_retni(x)
@@ -338,3 +343,4 @@ SOFTWARE.
 #define wa_par_WNDCLASS(n)                        static_cast<WNDCLASS *>(wa_get_ptr(n))
 #define wa_par_WNDCLASSEX(n)                      static_cast<WNDCLASSEX *>(wa_get_ptr(n))
 #define wa_par_XFORM(n)                           static_cast<XFORM *>(wa_get_ptr(n))
+#define wa_par_METAFILEPICT(n)                    static_cast<METAFILEPICT *>(wa_get_ptr(n))
