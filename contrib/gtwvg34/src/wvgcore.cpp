@@ -60,760 +60,850 @@
 
 #define __SETGUI__
 
-HB_FUNC( WVT_CORE )
+HB_FUNC(WVT_CORE)
 {
-   /* Retained for legacy code. */
+  /* Retained for legacy code. */
 }
 
-void hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib)
+void hb_wvt_GetStringAttrib(int top, int left, int bottom, int right, HB_BYTE *sBuffer, HB_BYTE *sAttrib)
 {
-   HB_TRACE(HB_TR_DEBUG, ("hb_wvt_GetStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right, static_cast<void *>(sBuffer), static_cast<void *>(sAttrib)));
+  HB_TRACE(HB_TR_DEBUG, ("hb_wvt_GetStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right,
+                         static_cast<void *>(sBuffer), static_cast<void *>(sAttrib)));
 
-   int irow, j;
+  int irow, j;
 
-   for( j = 0, irow = top; irow <= bottom; ++irow ) {
-      for( int icol = left; icol <= right; ++icol, ++j ) {
-         int iColor;
-         HB_BYTE bAttr;
-         HB_USHORT usChar;
+  for (j = 0, irow = top; irow <= bottom; ++irow)
+  {
+    for (int icol = left; icol <= right; ++icol, ++j)
+    {
+      int iColor;
+      HB_BYTE bAttr;
+      HB_USHORT usChar;
 
-         if( hb_gtGetScrChar(irow, icol, &iColor, &bAttr, &usChar) == Harbour::SUCCESS ) {
-            sBuffer[j] = static_cast<HB_BYTE>(usChar);
-            sAttrib[j] = static_cast<HB_BYTE>(iColor);
-         } else {
-            sBuffer[j] = sAttrib[j] = 0;
-         }
+      if (hb_gtGetScrChar(irow, icol, &iColor, &bAttr, &usChar) == Harbour::SUCCESS)
+      {
+        sBuffer[j] = static_cast<HB_BYTE>(usChar);
+        sAttrib[j] = static_cast<HB_BYTE>(iColor);
       }
-   }
+      else
+      {
+        sBuffer[j] = sAttrib[j] = 0;
+      }
+    }
+  }
 }
 
-void hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE * sBuffer, HB_BYTE * sAttrib)
+void hb_wvt_PutStringAttrib(int top, int left, int bottom, int right, HB_BYTE *sBuffer, HB_BYTE *sAttrib)
 {
-   HB_TRACE(HB_TR_DEBUG, ("hb_wvt_PutStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right, static_cast<void *>(sBuffer), static_cast<void *>(sAttrib)));
+  HB_TRACE(HB_TR_DEBUG, ("hb_wvt_PutStringAttrib( %d, %d, %d, %d, %p, %p )", top, left, bottom, right,
+                         static_cast<void *>(sBuffer), static_cast<void *>(sAttrib)));
 
-   int irow, j;
+  int irow, j;
 
-   hb_gtBeginWrite();
-   for( j = 0, irow = top; irow <= bottom; ++irow ) {
-      for( int icol = left; icol <= right; ++icol, ++j ) {
-         hb_gtPutScrChar(irow, icol, sAttrib[j], 0, sBuffer[j]);
-      }
-   }
-   hb_gtEndWrite();
+  hb_gtBeginWrite();
+  for (j = 0, irow = top; irow <= bottom; ++irow)
+  {
+    for (int icol = left; icol <= right; ++icol, ++j)
+    {
+      hb_gtPutScrChar(irow, icol, sAttrib[j], 0, sBuffer[j]);
+    }
+  }
+  hb_gtEndWrite();
 }
 
 /* Courtesy - Augusto Infante - Thanks */
-IPicture * hb_wvt_gtLoadPicture(const char * pszFileName)
+IPicture *hb_wvt_gtLoadPicture(const char *pszFileName)
 {
-   IPicture * pPicture = nullptr;
+  IPicture *pPicture = nullptr;
 
-   if( pszFileName ) {
-      PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
-      if( pFile ) {
-         auto nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
+  if (pszFileName)
+  {
+    PHB_FILE pFile = hb_fileExtOpen(pszFileName, nullptr,
+                                    FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
+    if (pFile)
+    {
+      auto nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
 
-         if( nFileSize < (32 * 1024 * 1024) ) {
-            HGLOBAL hGlobal = GlobalAlloc(GPTR, static_cast<DWORD>(nFileSize));
+      if (nFileSize < (32 * 1024 * 1024))
+      {
+        HGLOBAL hGlobal = GlobalAlloc(GPTR, static_cast<DWORD>(nFileSize));
 
-            if( hGlobal ) {
-               if( hb_fileRead(pFile, hGlobal, nFileSize, -1) == nFileSize ) {
-                  IStream * pStream = nullptr;
+        if (hGlobal)
+        {
+          if (hb_fileRead(pFile, hGlobal, nFileSize, -1) == nFileSize)
+          {
+            IStream *pStream = nullptr;
 
-                  if( CreateStreamOnHGlobal(hGlobal, FALSE, &pStream) == S_OK && pStream ) {
-                     OleLoadPicture(pStream, static_cast<LONG>(nFileSize), TRUE, HB_ID_REF(IID_IPicture), reinterpret_cast<LPVOID *>(&pPicture));
-                     HB_VTBL(pStream)->Release(HB_THIS(pStream));
-                  }
-               }
-               GlobalFree(hGlobal);
+            if (CreateStreamOnHGlobal(hGlobal, FALSE, &pStream) == S_OK && pStream)
+            {
+              OleLoadPicture(pStream, static_cast<LONG>(nFileSize), TRUE, HB_ID_REF(IID_IPicture),
+                             reinterpret_cast<LPVOID *>(&pPicture));
+              HB_VTBL(pStream)->Release(HB_THIS(pStream));
             }
-         }
-         hb_fileClose(pFile);
+          }
+          GlobalFree(hGlobal);
+        }
       }
-   }
+      hb_fileClose(pFile);
+    }
+  }
 
-   return static_cast<IPicture *>(pPicture);
+  return static_cast<IPicture *>(pPicture);
 }
 
-IPicture * hb_wvt_gtLoadPictureFromResource(LPCTSTR resource, LPCTSTR section)
+IPicture *hb_wvt_gtLoadPictureFromResource(LPCTSTR resource, LPCTSTR section)
 {
-   IPicture * pPicture = nullptr;
+  IPicture *pPicture = nullptr;
 
-   HINSTANCE hInstance = GetModuleHandle(nullptr);
-   HRSRC res = hInstance ? FindResource(hInstance, resource, section) : 0;
+  HINSTANCE hInstance = GetModuleHandle(nullptr);
+  HRSRC res = hInstance ? FindResource(hInstance, resource, section) : 0;
 
-   if( res ) {
-      HGLOBAL mem = LoadResource(GetModuleHandle(nullptr), res);
+  if (res)
+  {
+    HGLOBAL mem = LoadResource(GetModuleHandle(nullptr), res);
 
-      if( mem ) {
-         void * data = LockResource(mem);
+    if (mem)
+    {
+      void *data = LockResource(mem);
 
-         if( data ) {
-            DWORD nFileSize = SizeofResource(GetModuleHandle(nullptr), res);
-            HGLOBAL hGlobal = GlobalAlloc(GMEM_MOVEABLE, nFileSize);
+      if (data)
+      {
+        DWORD nFileSize = SizeofResource(GetModuleHandle(nullptr), res);
+        HGLOBAL hGlobal = GlobalAlloc(GMEM_MOVEABLE, nFileSize);
 
-            if( hGlobal ) {
-               LPVOID pvData = GlobalLock(hGlobal);
+        if (hGlobal)
+        {
+          LPVOID pvData = GlobalLock(hGlobal);
 
-               if( pvData ) {
-                  memcpy(pvData, data, nFileSize);
-               }
+          if (pvData)
+          {
+            memcpy(pvData, data, nFileSize);
+          }
 
-               GlobalUnlock(hGlobal);
+          GlobalUnlock(hGlobal);
 
-               if( pvData ) {
-                  IStream * pStream = nullptr;
+          if (pvData)
+          {
+            IStream *pStream = nullptr;
 
-                  if( CreateStreamOnHGlobal(hGlobal, FALSE, &pStream) == S_OK && pStream ) {
-                     OleLoadPicture(pStream, nFileSize, TRUE, HB_ID_REF(IID_IPicture), reinterpret_cast<LPVOID *>(&pPicture));
-                     HB_VTBL(pStream)->Release(HB_THIS(pStream));
-                  }
-               }
-
-               GlobalFree(hGlobal);
+            if (CreateStreamOnHGlobal(hGlobal, FALSE, &pStream) == S_OK && pStream)
+            {
+              OleLoadPicture(pStream, nFileSize, TRUE, HB_ID_REF(IID_IPicture), reinterpret_cast<LPVOID *>(&pPicture));
+              HB_VTBL(pStream)->Release(HB_THIS(pStream));
             }
-         }
+          }
 
-         FreeResource(mem);
+          GlobalFree(hGlobal);
+        }
       }
-   }
 
-   return static_cast<IPicture *>(pPicture);
+      FreeResource(mem);
+    }
+  }
+
+  return static_cast<IPicture *>(pPicture);
 }
 
-static bool hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture * pPicture, bool bDoNotScale)
+static bool hb_wvt_gtRenderPicture(int x, int y, int wd, int ht, IPicture *pPicture, bool bDoNotScale)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
-   bool bResult = false;
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  bool bResult = false;
 
-   if( _s ) {
-      if( pPicture ) {
-         OLE_XSIZE_HIMETRIC nWidth = 0;
-         OLE_YSIZE_HIMETRIC nHeight = 0;
+  if (_s)
+  {
+    if (pPicture)
+    {
+      OLE_XSIZE_HIMETRIC nWidth = 0;
+      OLE_YSIZE_HIMETRIC nHeight = 0;
 
-         int xe, ye;
-         HRGN hrgn1;
-         POINT lpp = { 0, 0 };
-         HDC hdc = _s->hdc;
+      int xe, ye;
+      HRGN hrgn1;
+      POINT lpp = {0, 0};
+      HDC hdc = _s->hdc;
 
-         RECT rc_dummy{};
+      RECT rc_dummy{};
 
-         if( HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) &nWidth) != S_OK ) {
-            nWidth = 0;
-         }
-         if( HB_VTBL(pPicture)->get_Height(HB_THIS_(pPicture) &nHeight) != S_OK ) {
-            nHeight = 0;
-         }
-
-         if( bDoNotScale ) {
-            int iHt;
-            int iWd;
-            if( nHeight > nWidth ) {
-               iWd = static_cast<int>(static_cast<double>(ht) * nWidth / nHeight);
-               iWd = HB_MIN(iWd, wd);
-               iHt = static_cast<int>(static_cast<double>(iWd) * nHeight / nWidth);
-            } else {
-               iHt = static_cast<int>(static_cast<double>(wd) * nHeight / nWidth);
-               iHt = HB_MIN(iHt, ht);
-               iWd = static_cast<int>(static_cast<double>(iHt) * nWidth / nHeight);
-            }
-            x  += abs((iWd - wd) / 2);
-            y  += abs((iHt - ht) / 2);
-            wd  = iWd;
-            ht  = iHt;
-         }
-         xe = x + wd - 1;
-         ye = y + ht - 1;
-
-         GetViewportOrgEx(hdc, &lpp);
-
-         hrgn1 = CreateRectRgn(lpp.x + x, lpp.y + y, lpp.x + xe, lpp.y + ye);
-         SelectClipRgn(hdc, hrgn1);
-
-         HB_VTBL(pPicture)->Render(HB_THIS_(pPicture) hdc, x, y, wd, ht, 0, nHeight, nWidth, -nHeight, &rc_dummy);
-
-         SelectClipRgn(hdc, nullptr);
-         DeleteObject(hrgn1);
-
-         if( _s->bGui ) {
-            hdc = _s->hGuiDC;
-
-            GetViewportOrgEx(hdc, &lpp);
-
-            hrgn1 = CreateRectRgn(lpp.x + x, lpp.y + y, lpp.x + xe, lpp.y + ye);
-            SelectClipRgn(hdc, hrgn1);
-
-            HB_VTBL(pPicture)->Render(HB_THIS_(pPicture) hdc, x, y, wd, ht, 0, nHeight, nWidth, -nHeight, &rc_dummy);
-
-            SelectClipRgn(hdc, nullptr);
-            DeleteObject(hrgn1);
-         }
-
-         bResult = true;
+      if (HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) & nWidth) != S_OK)
+      {
+        nWidth = 0;
       }
-   }
+      if (HB_VTBL(pPicture)->get_Height(HB_THIS_(pPicture) & nHeight) != S_OK)
+      {
+        nHeight = 0;
+      }
 
-   return bResult;
+      if (bDoNotScale)
+      {
+        int iHt;
+        int iWd;
+        if (nHeight > nWidth)
+        {
+          iWd = static_cast<int>(static_cast<double>(ht) * nWidth / nHeight);
+          iWd = HB_MIN(iWd, wd);
+          iHt = static_cast<int>(static_cast<double>(iWd) * nHeight / nWidth);
+        }
+        else
+        {
+          iHt = static_cast<int>(static_cast<double>(wd) * nHeight / nWidth);
+          iHt = HB_MIN(iHt, ht);
+          iWd = static_cast<int>(static_cast<double>(iHt) * nWidth / nHeight);
+        }
+        x += abs((iWd - wd) / 2);
+        y += abs((iHt - ht) / 2);
+        wd = iWd;
+        ht = iHt;
+      }
+      xe = x + wd - 1;
+      ye = y + ht - 1;
+
+      GetViewportOrgEx(hdc, &lpp);
+
+      hrgn1 = CreateRectRgn(lpp.x + x, lpp.y + y, lpp.x + xe, lpp.y + ye);
+      SelectClipRgn(hdc, hrgn1);
+
+      HB_VTBL(pPicture)->Render(HB_THIS_(pPicture) hdc, x, y, wd, ht, 0, nHeight, nWidth, -nHeight, &rc_dummy);
+
+      SelectClipRgn(hdc, nullptr);
+      DeleteObject(hrgn1);
+
+      if (_s->bGui)
+      {
+        hdc = _s->hGuiDC;
+
+        GetViewportOrgEx(hdc, &lpp);
+
+        hrgn1 = CreateRectRgn(lpp.x + x, lpp.y + y, lpp.x + xe, lpp.y + ye);
+        SelectClipRgn(hdc, hrgn1);
+
+        HB_VTBL(pPicture)->Render(HB_THIS_(pPicture) hdc, x, y, wd, ht, 0, nHeight, nWidth, -nHeight, &rc_dummy);
+
+        SelectClipRgn(hdc, nullptr);
+        DeleteObject(hrgn1);
+      }
+
+      bResult = true;
+    }
+  }
+
+  return bResult;
 }
 
-static bool hb_wvt_gtDestroyPicture(IPicture * pPicture)
+static bool hb_wvt_gtDestroyPicture(IPicture *pPicture)
 {
-   if( pPicture ) {
-      HB_VTBL(pPicture)->Release(HB_THIS(pPicture));
-      return true;
-   } else {
-      return false;
-   }
+  if (pPicture)
+  {
+    HB_VTBL(pPicture)->Release(HB_THIS(pPicture));
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 POINT hb_wvt_gtGetXYFromColRow(int col, int row)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
-   POINT xy;
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  POINT xy;
 
-   if( _s ) {
-      xy.x = col * _s->PTEXTSIZE.x;
-      xy.y = row * _s->PTEXTSIZE.y;
-   } else {
-      xy.x = 0;
-      xy.y = 0;
-   }
+  if (_s)
+  {
+    xy.x = col * _s->PTEXTSIZE.x;
+    xy.y = row * _s->PTEXTSIZE.y;
+  }
+  else
+  {
+    xy.x = 0;
+    xy.y = 0;
+  }
 
-   return xy;
+  return xy;
 }
 
-static bool hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, const char * pszImage, bool bDoNotScale)
+static bool hb_wvt_DrawImage(HDC hdc, int x, int y, int wd, int ht, const char *pszImage, bool bDoNotScale)
 {
-   bool bResult = false;
+  bool bResult = false;
 
-   if( pszImage ) {
-      PHB_FILE pFile = hb_fileExtOpen(pszImage, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
+  if (pszImage)
+  {
+    PHB_FILE pFile = hb_fileExtOpen(pszImage, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK,
+                                    nullptr, nullptr);
 
-      if( pFile ) {
-         auto nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
+    if (pFile)
+    {
+      auto nFileSize = static_cast<HB_SIZE>(hb_fileSize(pFile));
 
-         if( nFileSize < (32 * 1024 * 1024) ) {
-            HGLOBAL hGlobal = GlobalAlloc(GPTR, static_cast<DWORD>(nFileSize));
+      if (nFileSize < (32 * 1024 * 1024))
+      {
+        HGLOBAL hGlobal = GlobalAlloc(GPTR, static_cast<DWORD>(nFileSize));
 
-            if( hGlobal ) {
-               if( hb_fileRead(pFile, hGlobal, nFileSize, -1) == nFileSize ) {
-                  IStream * pStream;
-                  IPicture * pPicture = nullptr;
+        if (hGlobal)
+        {
+          if (hb_fileRead(pFile, hGlobal, nFileSize, -1) == nFileSize)
+          {
+            IStream *pStream;
+            IPicture *pPicture = nullptr;
 
-                  if( CreateStreamOnHGlobal(hGlobal, FALSE, &pStream) == S_OK && pStream ) {
-                     OleLoadPicture(pStream, static_cast<LONG>(nFileSize), TRUE, HB_ID_REF(IID_IPicture), reinterpret_cast<LPVOID *>(&pPicture));
-                  }
-
-                  if( pPicture ) {
-                     OLE_XSIZE_HIMETRIC nWidth = 0;
-                     OLE_YSIZE_HIMETRIC nHeight = 0;
-
-                     POINT lpp = { 0, 0 };
-
-                     RECT rc_dummy{};
-
-                     if( HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) &nWidth) != S_OK ) {
-                        nWidth = 0;
-                     }
-                     if( HB_VTBL(pPicture)->get_Height(HB_THIS_(pPicture) &nHeight) != S_OK ) {
-                        nHeight = 0;
-                     }
-
-                     if( nWidth && nHeight ) {
-                        int xe, ye;
-                        HRGN hrgn1;
-
-                        if( bDoNotScale ) {
-                           int iHt;
-                           int iWd;
-                           if( nHeight > nWidth ) {
-                              iWd = static_cast<int>(static_cast<double>(ht) * nWidth / nHeight);
-                              iWd = HB_MIN(iWd, wd);
-                              iHt = static_cast<int>(static_cast<double>(iWd) * nHeight / nWidth);
-                           } else {
-                              iHt = static_cast<int>(static_cast<double>(wd) * nHeight / nWidth);
-                              iHt = HB_MIN(iHt, ht);
-                              iWd = static_cast<int>(static_cast<double>(iHt) * nWidth / nHeight);
-                           }
-                           x  += abs((iWd - wd) / 2);
-                           y  += abs((iHt - ht) / 2);
-                           wd  = iWd;
-                           ht  = iHt;
-                        }
-                        xe = x + wd - 1;
-                        ye = y + ht - 1;
-
-                        GetViewportOrgEx(hdc, &lpp);
-
-                        hrgn1 = CreateRectRgn(lpp.x + x, lpp.y + y, lpp.x + xe, lpp.y + ye);
-                        SelectClipRgn(hdc, hrgn1);
-
-                        HB_VTBL(pPicture)->Render(HB_THIS_(pPicture) hdc, x, y, wd, ht, 0, nHeight, nWidth, -nHeight, &rc_dummy);
-
-                        SelectClipRgn(hdc, nullptr);
-                        DeleteObject(hrgn1);
-
-                        bResult = true;
-                     }
-
-                     HB_VTBL(pPicture)->Release(HB_THIS(pPicture));
-                  }
-
-                  if( pStream ) {
-                     HB_VTBL(pStream)->Release(HB_THIS(pStream));
-                  }
-               }
-               GlobalFree(hGlobal);
+            if (CreateStreamOnHGlobal(hGlobal, FALSE, &pStream) == S_OK && pStream)
+            {
+              OleLoadPicture(pStream, static_cast<LONG>(nFileSize), TRUE, HB_ID_REF(IID_IPicture),
+                             reinterpret_cast<LPVOID *>(&pPicture));
             }
-         }
-         hb_fileClose(pFile);
-      }
-   }
 
-   return bResult;
+            if (pPicture)
+            {
+              OLE_XSIZE_HIMETRIC nWidth = 0;
+              OLE_YSIZE_HIMETRIC nHeight = 0;
+
+              POINT lpp = {0, 0};
+
+              RECT rc_dummy{};
+
+              if (HB_VTBL(pPicture)->get_Width(HB_THIS_(pPicture) & nWidth) != S_OK)
+              {
+                nWidth = 0;
+              }
+              if (HB_VTBL(pPicture)->get_Height(HB_THIS_(pPicture) & nHeight) != S_OK)
+              {
+                nHeight = 0;
+              }
+
+              if (nWidth && nHeight)
+              {
+                int xe, ye;
+                HRGN hrgn1;
+
+                if (bDoNotScale)
+                {
+                  int iHt;
+                  int iWd;
+                  if (nHeight > nWidth)
+                  {
+                    iWd = static_cast<int>(static_cast<double>(ht) * nWidth / nHeight);
+                    iWd = HB_MIN(iWd, wd);
+                    iHt = static_cast<int>(static_cast<double>(iWd) * nHeight / nWidth);
+                  }
+                  else
+                  {
+                    iHt = static_cast<int>(static_cast<double>(wd) * nHeight / nWidth);
+                    iHt = HB_MIN(iHt, ht);
+                    iWd = static_cast<int>(static_cast<double>(iHt) * nWidth / nHeight);
+                  }
+                  x += abs((iWd - wd) / 2);
+                  y += abs((iHt - ht) / 2);
+                  wd = iWd;
+                  ht = iHt;
+                }
+                xe = x + wd - 1;
+                ye = y + ht - 1;
+
+                GetViewportOrgEx(hdc, &lpp);
+
+                hrgn1 = CreateRectRgn(lpp.x + x, lpp.y + y, lpp.x + xe, lpp.y + ye);
+                SelectClipRgn(hdc, hrgn1);
+
+                HB_VTBL(pPicture)->Render(HB_THIS_(pPicture) hdc, x, y, wd, ht, 0, nHeight, nWidth, -nHeight,
+                                          &rc_dummy);
+
+                SelectClipRgn(hdc, nullptr);
+                DeleteObject(hrgn1);
+
+                bResult = true;
+              }
+
+              HB_VTBL(pPicture)->Release(HB_THIS(pPicture));
+            }
+
+            if (pStream)
+            {
+              HB_VTBL(pStream)->Release(HB_THIS(pStream));
+            }
+          }
+          GlobalFree(hGlobal);
+        }
+      }
+      hb_fileClose(pFile);
+    }
+  }
+
+  return bResult;
 }
 
 static void hb_wvt_DrawBoxRaised(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penWhiteDim);
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Top Inner */
-   LineTo(hdc, iRight, iTop);
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Left Inner */
-   LineTo(hdc, iLeft, iBottom);
+  SelectObject(hdc, _s->pGUI->penWhiteDim);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top Inner */
+  LineTo(hdc, iRight, iTop);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left Inner */
+  LineTo(hdc, iLeft, iBottom);
 
-   SelectObject(hdc, _s->pGUI->penWhite);
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Top Outer */
-   LineTo(hdc, iRight + 1, iTop - 1);
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Left Outer */
-   LineTo(hdc, iLeft - 1, iBottom + 1);
+  SelectObject(hdc, _s->pGUI->penWhite);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Top Outer */
+  LineTo(hdc, iRight + 1, iTop - 1);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Left Outer */
+  LineTo(hdc, iLeft - 1, iBottom + 1);
 
-   SelectObject(hdc, _s->pGUI->penDarkGray);
-   MoveToEx(hdc, iLeft, iBottom, nullptr);          /* Bottom Inner */
-   LineTo(hdc, iRight, iBottom);
-   MoveToEx(hdc, iRight, iBottom, nullptr);         /* Right Inner */
-   LineTo(hdc, iRight, iTop);
+  SelectObject(hdc, _s->pGUI->penDarkGray);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom Inner */
+  LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iRight, iBottom, nullptr); /* Right Inner */
+  LineTo(hdc, iRight, iTop);
 
-   SelectObject(hdc, _s->pGUI->penBlack);
-   MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr);  /* Bottom Outer */
-   LineTo(hdc, iRight + 1 + 1, iBottom + 1);
-   MoveToEx(hdc, iRight + 1, iTop - 1, nullptr);    /* Right Outer */
-   LineTo(hdc, iRight + 1, iBottom + 1);
+  SelectObject(hdc, _s->pGUI->penBlack);
+  MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr); /* Bottom Outer */
+  LineTo(hdc, iRight + 1 + 1, iBottom + 1);
+  MoveToEx(hdc, iRight + 1, iTop - 1, nullptr); /* Right Outer */
+  LineTo(hdc, iRight + 1, iBottom + 1);
 }
 
 static void hb_wvt_DrawBoxRecessed(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penWhiteDim);
-   MoveToEx(hdc, iRight, iTop, nullptr);            /* Right Inner */
-   LineTo(hdc, iRight, iBottom);
-   MoveToEx(hdc, iLeft, iBottom, nullptr);          /* Bottom Inner */
-   LineTo(hdc, iRight, iBottom);
+  SelectObject(hdc, _s->pGUI->penWhiteDim);
+  MoveToEx(hdc, iRight, iTop, nullptr); /* Right Inner */
+  LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom Inner */
+  LineTo(hdc, iRight, iBottom);
 
-   SelectObject(hdc, _s->pGUI->penWhite);
-   MoveToEx(hdc, iRight + 1, iTop - 1, nullptr);    /* Right Outer */
-   LineTo(hdc, iRight + 1, iBottom + 1);
-   MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr);  /* Bottom Outer */
-   LineTo(hdc, iRight + 2, iBottom + 1);
+  SelectObject(hdc, _s->pGUI->penWhite);
+  MoveToEx(hdc, iRight + 1, iTop - 1, nullptr); /* Right Outer */
+  LineTo(hdc, iRight + 1, iBottom + 1);
+  MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr); /* Bottom Outer */
+  LineTo(hdc, iRight + 2, iBottom + 1);
 
-   SelectObject(hdc, _s->pGUI->penBlack);
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Left Inner */
-   LineTo(hdc, iLeft, iBottom);
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Top Inner */
-   LineTo(hdc, iRight, iTop);
+  SelectObject(hdc, _s->pGUI->penBlack);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left Inner */
+  LineTo(hdc, iLeft, iBottom);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top Inner */
+  LineTo(hdc, iRight, iTop);
 
-   SelectObject(hdc, _s->pGUI->penDarkGray);
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Left Outer */
-   LineTo(hdc, iLeft - 1, iBottom + 1);
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Top Outer */
-   LineTo(hdc, iRight + 1, iTop - 1);
+  SelectObject(hdc, _s->pGUI->penDarkGray);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Left Outer */
+  LineTo(hdc, iLeft - 1, iBottom + 1);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Top Outer */
+  LineTo(hdc, iRight + 1, iTop - 1);
 }
 
 static void hb_wvt_DrawOutline(HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Top */
-   LineTo(hdc, iRight, iTop);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top */
+  LineTo(hdc, iRight, iTop);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Left */
-   LineTo(hdc, iLeft, iBottom);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left */
+  LineTo(hdc, iLeft, iBottom);
 
-   MoveToEx(hdc, iLeft, iBottom, nullptr);          /* Bottom */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom */
+  LineTo(hdc, iRight, iBottom);
 
-   MoveToEx(hdc, iRight, iTop, nullptr);            /* Right */
-   LineTo(hdc, iRight, iBottom + 1);
+  MoveToEx(hdc, iRight, iTop, nullptr); /* Right */
+  LineTo(hdc, iRight, iBottom + 1);
 }
 
 static void hb_wvt_DrawBoxGet(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penBlack);
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Top Inner */
-   LineTo(hdc, iRight - 1, iTop - 1);
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Left Inner */
-   LineTo(hdc, iLeft - 1, iBottom - 1);
+  SelectObject(hdc, _s->pGUI->penBlack);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Top Inner */
+  LineTo(hdc, iRight - 1, iTop - 1);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Left Inner */
+  LineTo(hdc, iLeft - 1, iBottom - 1);
 
-   SelectObject(hdc, _s->pGUI->penDarkGray);
-   MoveToEx(hdc, iLeft - 2, iTop - 2, nullptr);     /* Top Outer */
-   LineTo(hdc, iRight, iTop - 2);
-   MoveToEx(hdc, iLeft - 2, iTop - 2, nullptr);     /* Left Outer */
-   LineTo(hdc, iLeft - 2, iBottom);
+  SelectObject(hdc, _s->pGUI->penDarkGray);
+  MoveToEx(hdc, iLeft - 2, iTop - 2, nullptr); /* Top Outer */
+  LineTo(hdc, iRight, iTop - 2);
+  MoveToEx(hdc, iLeft - 2, iTop - 2, nullptr); /* Left Outer */
+  LineTo(hdc, iLeft - 2, iBottom);
 }
 
 static void hb_wvt_DrawBoxGroup(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penDarkGray);
+  SelectObject(hdc, _s->pGUI->penDarkGray);
 
-   MoveToEx(hdc, iRight, iTop, nullptr);            /* Right Inner */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iRight, iTop, nullptr); /* Right Inner */
+  LineTo(hdc, iRight, iBottom);
 
-   MoveToEx(hdc, iLeft, iBottom, nullptr);          /* Bottom Inner */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom Inner */
+  LineTo(hdc, iRight, iBottom);
 
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Left Outer */
-   LineTo(hdc, iLeft - 1, iBottom + 1);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Left Outer */
+  LineTo(hdc, iLeft - 1, iBottom + 1);
 
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Top Outer */
-   LineTo(hdc, iRight + 1, iTop - 1);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Top Outer */
+  LineTo(hdc, iRight + 1, iTop - 1);
 
-   SelectObject(hdc, _s->pGUI->penWhite);
+  SelectObject(hdc, _s->pGUI->penWhite);
 
-   MoveToEx(hdc, iRight + 1, iTop, nullptr);        /* Right Outer */
-   LineTo(hdc, iRight + 1, iBottom + 1);
+  MoveToEx(hdc, iRight + 1, iTop, nullptr); /* Right Outer */
+  LineTo(hdc, iRight + 1, iBottom + 1);
 
-   MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr);  /* Bottom Outer */
-   LineTo(hdc, iRight + 1 + 1, iBottom + 1);
+  MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr); /* Bottom Outer */
+  LineTo(hdc, iRight + 1 + 1, iBottom + 1);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Left Inner */
-   LineTo(hdc, iLeft, iBottom);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left Inner */
+  LineTo(hdc, iLeft, iBottom);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Top Inner */
-   LineTo(hdc, iRight, iTop);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top Inner */
+  LineTo(hdc, iRight, iTop);
 }
 
 static void hb_wvt_DrawBoxGroupRaised(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penWhite);
+  SelectObject(hdc, _s->pGUI->penWhite);
 
-   MoveToEx(hdc, iRight, iTop, nullptr);            /* Right Inner */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iRight, iTop, nullptr); /* Right Inner */
+  LineTo(hdc, iRight, iBottom);
 
-   MoveToEx(hdc, iLeft, iBottom, nullptr);          /* Bottom Inner */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom Inner */
+  LineTo(hdc, iRight, iBottom);
 
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Left Outer */
-   LineTo(hdc, iLeft - 1, iBottom + 1);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Left Outer */
+  LineTo(hdc, iLeft - 1, iBottom + 1);
 
-   MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr);     /* Top Outer */
-   LineTo(hdc, iRight + 1, iTop - 1);
+  MoveToEx(hdc, iLeft - 1, iTop - 1, nullptr); /* Top Outer */
+  LineTo(hdc, iRight + 1, iTop - 1);
 
-   SelectObject(hdc, _s->pGUI->penDarkGray);
+  SelectObject(hdc, _s->pGUI->penDarkGray);
 
-   MoveToEx(hdc, iRight + 1, iTop, nullptr);        /* Right Outer */
-   LineTo(hdc, iRight + 1, iBottom + 1);
+  MoveToEx(hdc, iRight + 1, iTop, nullptr); /* Right Outer */
+  LineTo(hdc, iRight + 1, iBottom + 1);
 
-   MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr);  /* Bottom Outer */
-   LineTo(hdc, iRight + 1 + 1, iBottom + 1);
+  MoveToEx(hdc, iLeft - 1, iBottom + 1, nullptr); /* Bottom Outer */
+  LineTo(hdc, iRight + 1 + 1, iBottom + 1);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Left Inner */
-   LineTo(hdc, iLeft, iBottom);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left Inner */
+  LineTo(hdc, iLeft, iBottom);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);             /* Top Inner */
-   LineTo(hdc, iRight, iTop);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top Inner */
+  LineTo(hdc, iRight, iTop);
 }
 
 static void hb_wvt_DrawToolButtonFlat(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penGray);
+  SelectObject(hdc, _s->pGUI->penGray);
 
-   MoveToEx(hdc, iRight, iTop, nullptr);      /* Right */
-   LineTo(hdc, iRight, iBottom + 1);
+  MoveToEx(hdc, iRight, iTop, nullptr); /* Right */
+  LineTo(hdc, iRight, iBottom + 1);
 
-   MoveToEx(hdc, iLeft, iBottom, nullptr);    /* Bottom */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom */
+  LineTo(hdc, iRight, iBottom);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);       /* Left */
-   LineTo(hdc, iLeft, iBottom);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left */
+  LineTo(hdc, iLeft, iBottom);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);       /* Top */
-   LineTo(hdc, iRight, iTop);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top */
+  LineTo(hdc, iRight, iTop);
 }
 
 static void hb_wvt_DrawToolButtonUp(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penBlack);
+  SelectObject(hdc, _s->pGUI->penBlack);
 
-   MoveToEx(hdc, iRight, iTop, nullptr);      /* Right */
-   LineTo(hdc, iRight, iBottom + 1);
+  MoveToEx(hdc, iRight, iTop, nullptr); /* Right */
+  LineTo(hdc, iRight, iBottom + 1);
 
-   MoveToEx(hdc, iLeft, iBottom, nullptr);    /* Bottom */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom */
+  LineTo(hdc, iRight, iBottom);
 
-   SelectObject(hdc, _s->pGUI->penWhite);
+  SelectObject(hdc, _s->pGUI->penWhite);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);       /* Left */
-   LineTo(hdc, iLeft, iBottom);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left */
+  LineTo(hdc, iLeft, iBottom);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);       /* Top */
-   LineTo(hdc, iRight, iTop);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top */
+  LineTo(hdc, iRight, iTop);
 }
 
 static void hb_wvt_DrawToolButtonDown(PHB_GTWVT _s, HDC hdc, int iTop, int iLeft, int iBottom, int iRight)
 {
-   SelectObject(hdc, _s->pGUI->penWhite);
+  SelectObject(hdc, _s->pGUI->penWhite);
 
-   MoveToEx(hdc, iRight, iTop, nullptr);      /* Right */
-   LineTo(hdc, iRight, iBottom + 1);
+  MoveToEx(hdc, iRight, iTop, nullptr); /* Right */
+  LineTo(hdc, iRight, iBottom + 1);
 
-   MoveToEx(hdc, iLeft, iBottom, nullptr);    /* Bottom */
-   LineTo(hdc, iRight, iBottom);
+  MoveToEx(hdc, iLeft, iBottom, nullptr); /* Bottom */
+  LineTo(hdc, iRight, iBottom);
 
-   SelectObject(hdc, _s->pGUI->penBlack);
+  SelectObject(hdc, _s->pGUI->penBlack);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);       /* Left */
-   LineTo(hdc, iLeft, iBottom);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Left */
+  LineTo(hdc, iLeft, iBottom);
 
-   MoveToEx(hdc, iLeft, iTop, nullptr);       /* Top */
-   LineTo(hdc, iRight, iTop);
+  MoveToEx(hdc, iLeft, iTop, nullptr); /* Top */
+  LineTo(hdc, iRight, iTop);
 }
 
 static COLORREF hb_wvt_BgColorParam(PHB_GTWVT _s, int iParam)
 {
-   COLORREF color;
+  COLORREF color;
 
-   if( HB_ISNUM(iParam) ) {
-      color = hbwapi_par_COLORREF(iParam);
-   } else {
-      int iColor = HB_ISCHAR(iParam) ? hb_gtColorToN(hb_parc(iParam)) : -1;
-      if( iColor == -1 ) {
-         iColor = hb_gtGetCurrColor();
-      }
-      color = _s->COLORS[(iColor >> 4) & 0x0f];
-   }
+  if (HB_ISNUM(iParam))
+  {
+    color = hbwapi_par_COLORREF(iParam);
+  }
+  else
+  {
+    int iColor = HB_ISCHAR(iParam) ? hb_gtColorToN(hb_parc(iParam)) : -1;
+    if (iColor == -1)
+    {
+      iColor = hb_gtGetCurrColor();
+    }
+    color = _s->COLORS[(iColor >> 4) & 0x0f];
+  }
 
-   return color;
+  return color;
 }
 
 static COLORREF hb_wvt_FgColorParam(PHB_GTWVT _s, int iParam)
 {
-   COLORREF color;
+  COLORREF color;
 
-   if( HB_ISNUM(iParam) ) {
-      color = hbwapi_par_COLORREF(iParam);
-   } else {
-      int iColor = HB_ISCHAR(iParam) ? hb_gtColorToN(hb_parc(iParam)) : -1;
-      if( iColor == -1 ) {
-         iColor = hb_gtGetCurrColor();
-      }
-      color = _s->COLORS[(iColor >> 4) & 0x0f];
-   }
+  if (HB_ISNUM(iParam))
+  {
+    color = hbwapi_par_COLORREF(iParam);
+  }
+  else
+  {
+    int iColor = HB_ISCHAR(iParam) ? hb_gtColorToN(hb_parc(iParam)) : -1;
+    if (iColor == -1)
+    {
+      iColor = hb_gtGetCurrColor();
+    }
+    color = _s->COLORS[(iColor >> 4) & 0x0f];
+  }
 
-   return color;
+  return color;
 }
 
 /* wvt_SetPen(nPenStyle, nWidth, nColor) */
-HB_FUNC( WVT_SETPEN )
+HB_FUNC(WVT_SETPEN)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      if( HB_ISNUM(1) ) {
-         auto hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
+  if (_s)
+  {
+    if (HB_ISNUM(1))
+    {
+      auto hPen = CreatePen(hb_parni(1), hb_parni(2), hbwapi_par_COLORREF(3));
 
-         if( hPen ) {
-            if( _s->currentPen ) {
-               DeleteObject(_s->currentPen);
-            }
-            _s->currentPen = hPen;
+      if (hPen)
+      {
+        if (_s->currentPen)
+        {
+          DeleteObject(_s->currentPen);
+        }
+        _s->currentPen = hPen;
 
-            hb_retl(true);
-            return;
-         }
+        hb_retl(true);
+        return;
       }
-   }
+    }
+  }
 
-   hb_retl(false);
+  hb_retl(false);
 }
 
 /*
 wvt_SetBrush(nStyle, nColor, [nHatch])
 */
-HB_FUNC( WVT_SETBRUSH )
+HB_FUNC(WVT_SETBRUSH)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      if( HB_ISNUM(1) ) {
-         LOGBRUSH lb{};
+  if (_s)
+  {
+    if (HB_ISNUM(1))
+    {
+      LOGBRUSH lb{};
 
-         lb.lbStyle = hb_parnl(1);
-         lb.lbColor = hbwapi_par_COLORREF(2);
-         lb.lbHatch = hb_parnl(3);
+      lb.lbStyle = hb_parnl(1);
+      lb.lbColor = hbwapi_par_COLORREF(2);
+      lb.lbHatch = hb_parnl(3);
 
-         auto hBrush = CreateBrushIndirect(&lb);
+      auto hBrush = CreateBrushIndirect(&lb);
 
-         if( hBrush ) {
-            if( _s->currentBrush ) {
-               DeleteObject(_s->currentBrush);
-            }
+      if (hBrush)
+      {
+        if (_s->currentBrush)
+        {
+          DeleteObject(_s->currentBrush);
+        }
 
-            _s->currentBrush = hBrush;
+        _s->currentBrush = hBrush;
 
-            hb_retl(true);
-            return;
-         }
+        hb_retl(true);
+        return;
       }
-   }
+    }
+  }
 
-   hb_retl(false);
+  hb_retl(false);
 }
 
 /*
 wvt_DrawBoxGet(nRow, nCol, nWidth)
 */
-HB_FUNC( WVT_DRAWBOXGET )
+HB_FUNC(WVT_DRAWBOXGET)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-      POINT yz = hb_wvt_gtGetXYFromColRow(hb_parni(2) + hb_parni(3), hb_parni(1) + 1);
+  if (_s)
+  {
+    POINT xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+    POINT yz = hb_wvt_gtGetXYFromColRow(hb_parni(2) + hb_parni(3), hb_parni(1) + 1);
 
-      hb_wvt_DrawBoxGet(_s, _s->hdc, xy.y, xy.x, yz.y, yz.x);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_wvt_DrawBoxGet(_s, _s->hGuiDC, xy.y, xy.x, yz.y, yz.x);
-      }
-      #endif
-   }
+    hb_wvt_DrawBoxGet(_s, _s->hdc, xy.y, xy.x, yz.y, yz.x);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_wvt_DrawBoxGet(_s, _s->hGuiDC, xy.y, xy.x, yz.y, yz.x);
+    }
+#endif
+  }
 }
 
 /*
 wvt_DrawBoxRaised(nTop, nLeft, nBottom, nRight, aPxlOff)
 */
-HB_FUNC( WVT_DRAWBOXRAISED )
+HB_FUNC(WVT_DRAWBOXRAISED)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
-      }
-      #endif
-   }
+    hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
+    }
+#endif
+  }
 }
 
 /*
 wvt_DrawBoxRecessed(nTop, nLeft, nBottom, nRight, aPxlOff)
 */
-HB_FUNC( WVT_DRAWBOXRECESSED )
+HB_FUNC(WVT_DRAWBOXRECESSED)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      hb_wvt_DrawBoxRecessed(_s, _s->hdc, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_wvt_DrawBoxRecessed(_s, _s->hGuiDC, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
-      }
-      #endif
-   }
+    hb_wvt_DrawBoxRecessed(_s, _s->hdc, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_wvt_DrawBoxRecessed(_s, _s->hGuiDC, iTop - 1, iLeft - 1, iBottom + 1, iRight + 1);
+    }
+#endif
+  }
 }
 
 /*
 wvt_DrawBoxGroup(nTop, nLeft, nBottom, nRight, aPxlOff)
 */
-HB_FUNC( WVT_DRAWBOXGROUP )
+HB_FUNC(WVT_DRAWBOXGROUP)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      hb_wvt_DrawBoxGroup(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_wvt_DrawBoxGroup(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
-      }
-      #endif
-   }
+    hb_wvt_DrawBoxGroup(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_wvt_DrawBoxGroup(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
+    }
+#endif
+  }
 }
 
 /*
 wvt_DrawBoxRaised(nTop, nLeft, nBottom, nRight, aPxlOff)
 */
-HB_FUNC( WVT_DRAWBOXGROUPRAISED )
+HB_FUNC(WVT_DRAWBOXGROUPRAISED)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      hb_wvt_DrawBoxGroupRaised(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_wvt_DrawBoxGroupRaised(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
-      }
-      #endif
-   }
+    hb_wvt_DrawBoxGroupRaised(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_wvt_DrawBoxGroupRaised(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
+    }
+#endif
+  }
 }
 
 /*
 wvg_DrawImage(hdc, nLeft, nTop, nWidth, nHeight, cImage, lDoNotScale) in Pixels
 */
-HB_FUNC( WVG_DRAWIMAGE )
+HB_FUNC(WVG_DRAWIMAGE)
 {
-   hb_retl(hb_wvt_DrawImage(hbwapi_par_raw_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parc(6), hb_parl(7)));
+  hb_retl(hb_wvt_DrawImage(hbwapi_par_raw_HDC(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parc(6),
+                           hb_parl(7)));
 }
 
 /*
 wvt_DrawImage(nTop, nLeft, nBottom, nRight, cImage/nPictureSlot, aPxlOff, lDoNotScale)
 */
-HB_FUNC( WVT_DRAWIMAGE )
+HB_FUNC(WVT_DRAWIMAGE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      POINT xy;
-      int iLeft, iTop, iRight, iBottom;
+  if (_s)
+  {
+    POINT xy;
+    int iLeft, iTop, iRight, iBottom;
 
-      xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-      iTop  = xy.y + hb_parvni(6, 1);
-      iLeft = xy.x + hb_parvni(6, 2);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+    iTop = xy.y + hb_parvni(6, 1);
+    iLeft = xy.x + hb_parvni(6, 2);
 
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-      iBottom = xy.y - 1 + hb_parvni(6, 3);
-      iRight  = xy.x - 1 + hb_parvni(6, 4);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+    iBottom = xy.y - 1 + hb_parvni(6, 3);
+    iRight = xy.x - 1 + hb_parvni(6, 4);
 
-      if( HB_ISNUM(5) ) {
-         hb_wvt_gtRenderPicture(iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1, _s->pGUI->pPicture[hb_parni(5) - 1], hb_parl(7));
-      } else {
-         hb_wvt_DrawImage(_s->hdc, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1, hb_parc(5), hb_parl(7));
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            hb_wvt_DrawImage(_s->hGuiDC, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1, hb_parc(5), hb_parl(7));
-         }
-         #endif
+    if (HB_ISNUM(5))
+    {
+      hb_wvt_gtRenderPicture(iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1,
+                             _s->pGUI->pPicture[hb_parni(5) - 1], hb_parl(7));
+    }
+    else
+    {
+      hb_wvt_DrawImage(_s->hdc, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1, hb_parc(5), hb_parl(7));
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawImage(_s->hGuiDC, iLeft, iTop, (iRight - iLeft) + 1, (iBottom - iTop) + 1, hb_parc(5), hb_parl(7));
       }
+#endif
+    }
 
-      hb_retl(true);
-      return;
-   }
-   hb_retl(false);
+    hb_retl(true);
+    return;
+  }
+  hb_retl(false);
 }
 
 /*
@@ -821,829 +911,935 @@ wvt_DrawLabel(nRow, nCol, cLabel, nAlign, nEscapement, nTextColor, nBkColor, ;
               cFontFace, nFontHeight, nFontWidth, nFontWeight, nQuality, ;
               nCharSet, lItalics, lUnderline, lStrikeOut, aPxlOff)
 */
-HB_FUNC( WVT_DRAWLABEL )
+HB_FUNC(WVT_DRAWLABEL)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      HFONT hFont;
-      LOGFONT lf{};
-      void * hText = nullptr;
+  if (_s)
+  {
+    HFONT hFont;
+    LOGFONT lf{};
+    void *hText = nullptr;
 
-      lf.lfEscapement     = hb_parni(5) * 10;
-      lf.lfOrientation    = 0;
-      lf.lfWeight         = hb_parni(11);
-      lf.lfItalic         = static_cast<BYTE>(hb_parl(14));
-      lf.lfUnderline      = static_cast<BYTE>(hb_parl(15));
-      lf.lfStrikeOut      = static_cast<BYTE>(hb_parl(16));
-      lf.lfCharSet        = static_cast<BYTE>(hb_parnidef(13, _s->CodePage));
-      lf.lfOutPrecision   = 0;
-      lf.lfClipPrecision  = 0;
-      lf.lfQuality        = static_cast<BYTE>(hb_parnidef(12, DEFAULT_QUALITY));
-      lf.lfPitchAndFamily = FF_DONTCARE;
-      lf.lfHeight         = hb_parnidef(9, _s->fontHeight);
-      lf.lfWidth = hb_parnidef(10, _s->fontWidth < 0 ? -_s->fontWidth : _s->fontWidth);
+    lf.lfEscapement = hb_parni(5) * 10;
+    lf.lfOrientation = 0;
+    lf.lfWeight = hb_parni(11);
+    lf.lfItalic = static_cast<BYTE>(hb_parl(14));
+    lf.lfUnderline = static_cast<BYTE>(hb_parl(15));
+    lf.lfStrikeOut = static_cast<BYTE>(hb_parl(16));
+    lf.lfCharSet = static_cast<BYTE>(hb_parnidef(13, _s->CodePage));
+    lf.lfOutPrecision = 0;
+    lf.lfClipPrecision = 0;
+    lf.lfQuality = static_cast<BYTE>(hb_parnidef(12, DEFAULT_QUALITY));
+    lf.lfPitchAndFamily = FF_DONTCARE;
+    lf.lfHeight = hb_parnidef(9, _s->fontHeight);
+    lf.lfWidth = hb_parnidef(10, _s->fontWidth < 0 ? -_s->fontWidth : _s->fontWidth);
 
-      HB_STRNCPY(lf.lfFaceName, HB_ISCHAR(8) ? HB_PARSTR(8, &hText, nullptr) : _s->fontFace, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
+    HB_STRNCPY(lf.lfFaceName, HB_ISCHAR(8) ? HB_PARSTR(8, &hText, nullptr) : _s->fontFace,
+               HB_SIZEOFARRAY(lf.lfFaceName) - 1);
+    hb_strfree(hText);
+
+    hFont = CreateFontIndirect(&lf);
+    if (hFont)
+    {
+      HB_SIZE nLen;
+      LPCTSTR text = HB_PARSTR(3, &hText, &nLen);
+      COLORREF fgClr = hb_wvt_FgColorParam(_s, 6);
+      COLORREF bgClr = hb_wvt_BgColorParam(_s, 7);
+
+      POINT xy;
+
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+      xy.x += hb_parvni(17, 2);
+      xy.y += hb_parvni(17, 1);
+
+      SetBkColor(_s->hdc, bgClr);
+      SetTextColor(_s->hdc, fgClr);
+      SetTextAlign(_s->hdc, hb_parnidef(4, TA_LEFT));
+      auto hOldFont = static_cast<HFONT>(SelectObject(_s->hdc, hFont));
+
+      ExtTextOut(_s->hdc, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
+
+      SelectObject(_s->hdc, hOldFont);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        SetBkColor(_s->hGuiDC, bgClr);
+        SetTextColor(_s->hGuiDC, fgClr);
+        SetTextAlign(_s->hGuiDC, hb_parnidef(4, TA_LEFT));
+        auto hOldFontGui = static_cast<HFONT>(SelectObject(_s->hGuiDC, hFont));
+
+        ExtTextOut(_s->hGuiDC, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
+        SelectObject(_s->hGuiDC, hOldFontGui);
+      }
+#endif
       hb_strfree(hText);
 
-      hFont = CreateFontIndirect(&lf);
-      if( hFont ) {
-         HB_SIZE nLen;
-         LPCTSTR text = HB_PARSTR(3, &hText, &nLen);
-         COLORREF fgClr = hb_wvt_FgColorParam(_s, 6);
-         COLORREF bgClr = hb_wvt_BgColorParam(_s, 7);
+      DeleteObject(hFont);
 
-         POINT xy;
+      hb_retl(true);
+      return;
+    }
+  }
 
-         xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-         xy.x += hb_parvni(17, 2);
-         xy.y += hb_parvni(17, 1);
-
-         SetBkColor(_s->hdc, bgClr);
-         SetTextColor(_s->hdc, fgClr);
-         SetTextAlign(_s->hdc, hb_parnidef(4, TA_LEFT));
-         auto hOldFont = static_cast<HFONT>(SelectObject(_s->hdc, hFont));
-
-         ExtTextOut(_s->hdc, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
-
-         SelectObject(_s->hdc, hOldFont);
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            SetBkColor(_s->hGuiDC, bgClr);
-            SetTextColor(_s->hGuiDC, fgClr);
-            SetTextAlign(_s->hGuiDC, hb_parnidef(4, TA_LEFT));
-            auto hOldFontGui = static_cast<HFONT>(SelectObject(_s->hGuiDC, hFont));
-
-            ExtTextOut(_s->hGuiDC, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
-            SelectObject(_s->hGuiDC, hOldFontGui);
-         }
-         #endif
-         hb_strfree(hText);
-
-         DeleteObject(hFont);
-
-         hb_retl(true);
-         return;
-      }
-   }
-
-   hb_retl(false);
+  hb_retl(false);
 }
 
 /*
 wvt_DrawLabelEx(nRow, nCol, cLabel, nAlign, nTextColor, nBkColor, nSlotFont, aPxlOff)
 */
-HB_FUNC( WVT_DRAWLABELEX )
+HB_FUNC(WVT_DRAWLABELEX)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(7) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(7) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserFonts)) && _s->pGUI->hUserFonts[iSlot] ) {
-         POINT    xy;
-         void *   hText;
-         HB_SIZE  nLen;
-         LPCTSTR  text  = HB_PARSTR(3, &hText, &nLen);
-         COLORREF fgClr = hb_wvt_FgColorParam(_s, 5);
-         COLORREF bgClr = hb_wvt_BgColorParam(_s, 6);
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserFonts)) && _s->pGUI->hUserFonts[iSlot])
+    {
+      POINT xy;
+      void *hText;
+      HB_SIZE nLen;
+      LPCTSTR text = HB_PARSTR(3, &hText, &nLen);
+      COLORREF fgClr = hb_wvt_FgColorParam(_s, 5);
+      COLORREF bgClr = hb_wvt_BgColorParam(_s, 6);
 
-         xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-         xy.x += hb_parvni(8, 2);
-         xy.y += hb_parvni(8, 1);
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+      xy.x += hb_parvni(8, 2);
+      xy.y += hb_parvni(8, 1);
 
-         SetBkColor(_s->hdc, bgClr);
-         SetTextColor(_s->hdc, fgClr);
-         SetTextAlign(_s->hdc, hb_parnidef(4, TA_LEFT));
-         SelectObject(_s->hdc, _s->pGUI->hUserFonts[iSlot]);
+      SetBkColor(_s->hdc, bgClr);
+      SetTextColor(_s->hdc, fgClr);
+      SetTextAlign(_s->hdc, hb_parnidef(4, TA_LEFT));
+      SelectObject(_s->hdc, _s->pGUI->hUserFonts[iSlot]);
 
-         ExtTextOut(_s->hdc, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            SetBkColor(_s->hGuiDC, bgClr);
-            SetTextColor(_s->hGuiDC, fgClr);
-            SetTextAlign(_s->hGuiDC, hb_parnidef(4, TA_LEFT));
-            SelectObject(_s->hGuiDC, _s->pGUI->hUserFonts[iSlot]);
+      ExtTextOut(_s->hdc, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        SetBkColor(_s->hGuiDC, bgClr);
+        SetTextColor(_s->hGuiDC, fgClr);
+        SetTextAlign(_s->hGuiDC, hb_parnidef(4, TA_LEFT));
+        SelectObject(_s->hGuiDC, _s->pGUI->hUserFonts[iSlot]);
 
-            ExtTextOut(_s->hGuiDC, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
-         }
-         #endif
-         hb_strfree(hText);
-
-         hb_retl(true);
-         return;
+        ExtTextOut(_s->hGuiDC, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
       }
-   }
+#endif
+      hb_strfree(hText);
 
-   hb_retl(false);
+      hb_retl(true);
+      return;
+    }
+  }
+
+  hb_retl(false);
 }
 
 /*
                     1      2        3       4       5           6           7           8         9     10       11
 wvt_DrawLabelObj(nTop, nLeft, nBottom, nRight, cLabel, nAlignHorz, nAlignVert, nTextColor, nBkColor, hFont, aPxlOff)
 */
-HB_FUNC( WVT_DRAWLABELOBJ )
+HB_FUNC(WVT_DRAWLABELOBJ)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      POINT    xy;
-      RECT     rc = { 0, 0, 0, 0 };
-      int      iTop, iLeft, iBottom, iRight, x, y;
-      int      iAlignHorz, iAlignVert, iAlignH, iAlignV;
-      UINT     uiOptions;
-      SIZE     sz = { 0, 0 };
-      void *   hText;
-      HB_SIZE  nLen;
-      LPCTSTR  text  = HB_PARSTR(5, &hText, &nLen);
-      COLORREF fgClr = hb_wvt_FgColorParam(_s, 8);
-      COLORREF bgClr = hb_wvt_BgColorParam(_s, 9);
+  if (_s)
+  {
+    POINT xy;
+    RECT rc = {0, 0, 0, 0};
+    int iTop, iLeft, iBottom, iRight, x, y;
+    int iAlignHorz, iAlignVert, iAlignH, iAlignV;
+    UINT uiOptions;
+    SIZE sz = {0, 0};
+    void *hText;
+    HB_SIZE nLen;
+    LPCTSTR text = HB_PARSTR(5, &hText, &nLen);
+    COLORREF fgClr = hb_wvt_FgColorParam(_s, 8);
+    COLORREF bgClr = hb_wvt_BgColorParam(_s, 9);
 
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-      iTop    = xy.y + hb_parvni(11, 1);
-      iLeft   = xy.x + hb_parvni(11, 2);
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-      iBottom = xy.y - 1 + hb_parvni(11, 3);
-      iRight  = xy.x - 1 + hb_parvni(11, 4);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+    iTop = xy.y + hb_parvni(11, 1);
+    iLeft = xy.x + hb_parvni(11, 2);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+    iBottom = xy.y - 1 + hb_parvni(11, 3);
+    iRight = xy.x - 1 + hb_parvni(11, 4);
 
-      iAlignHorz = hb_parni(6);   /* default is 0 */
-      iAlignVert = hb_parni(7);   /* default is 0 */
+    iAlignHorz = hb_parni(6); /* default is 0 */
+    iAlignVert = hb_parni(7); /* default is 0 */
 
-      SetTextColor(_s->hdc, fgClr);
-      SetBkColor(_s->hdc, bgClr);
-      SelectObject(_s->hdc, hbwapi_par_raw_HFONT(10));
+    SetTextColor(_s->hdc, fgClr);
+    SetBkColor(_s->hdc, bgClr);
+    SelectObject(_s->hdc, hbwapi_par_raw_HFONT(10));
 
-      GetTextExtentPoint32(_s->hdc, text, static_cast<int>(nLen), &sz);
+    GetTextExtentPoint32(_s->hdc, text, static_cast<int>(nLen), &sz);
 
-      x = iLeft;
-      y = iTop;
+    x = iLeft;
+    y = iTop;
 
-      switch( iAlignHorz ) {
-         case 0:
-            iAlignH = TA_LEFT;
-            break;
+    switch (iAlignHorz)
+    {
+    case 0:
+      iAlignH = TA_LEFT;
+      break;
 
-         case 1:
-            iAlignH = TA_RIGHT;
-            x = iRight;
-            break;
+    case 1:
+      iAlignH = TA_RIGHT;
+      x = iRight;
+      break;
 
-         case 2:
-            iAlignH = TA_CENTER;
-            x = iLeft + ((iRight - iLeft + 1) / 2);
-            break;
+    case 2:
+      iAlignH = TA_CENTER;
+      x = iLeft + ((iRight - iLeft + 1) / 2);
+      break;
 
-         default:
-            iAlignH = 0;
-      }
+    default:
+      iAlignH = 0;
+    }
 
-      iAlignV = TA_TOP;
+    iAlignV = TA_TOP;
 
-      switch( iAlignVert ) {
-         case 1:
-            y = iBottom - sz.cy;
-            break;
+    switch (iAlignVert)
+    {
+    case 1:
+      y = iBottom - sz.cy;
+      break;
 
-         case 2:
-            y = iTop + ((iBottom - iTop + 1 - sz.cy) / 2);
-            break;
-      }
+    case 2:
+      y = iTop + ((iBottom - iTop + 1 - sz.cy) / 2);
+      break;
+    }
 
-      SetTextAlign(_s->hdc, iAlignH | iAlignV);
+    SetTextAlign(_s->hdc, iAlignH | iAlignV);
 
-      rc.top    = iTop;
-      rc.left   = iLeft;
-      rc.bottom = iBottom;
-      rc.right  = iRight;
+    rc.top = iTop;
+    rc.left = iLeft;
+    rc.bottom = iBottom;
+    rc.right = iRight;
 
-      uiOptions = ETO_CLIPPED | ETO_OPAQUE;
+    uiOptions = ETO_CLIPPED | ETO_OPAQUE;
 
-      ExtTextOut(_s->hdc, x, y, uiOptions, &rc, text, static_cast<UINT>(nLen), nullptr);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         SetTextColor(_s->hGuiDC, fgClr);
-         SetBkColor(_s->hGuiDC, bgClr);
-         SelectObject(_s->hGuiDC, hbwapi_par_raw_HFONT(10));
-         SetTextAlign(_s->hGuiDC, iAlignH | iAlignV);
+    ExtTextOut(_s->hdc, x, y, uiOptions, &rc, text, static_cast<UINT>(nLen), nullptr);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      SetTextColor(_s->hGuiDC, fgClr);
+      SetBkColor(_s->hGuiDC, bgClr);
+      SelectObject(_s->hGuiDC, hbwapi_par_raw_HFONT(10));
+      SetTextAlign(_s->hGuiDC, iAlignH | iAlignV);
 
-         ExtTextOut(_s->hGuiDC, x, y, uiOptions, &rc, text, static_cast<UINT>(nLen), nullptr);
-      }
-      #endif
-      hb_strfree(hText);
+      ExtTextOut(_s->hGuiDC, x, y, uiOptions, &rc, text, static_cast<UINT>(nLen), nullptr);
+    }
+#endif
+    hb_strfree(hText);
 
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
                    1      2        3       4       5       6          7        8
 wvt_DrawOutline(nTop, nLeft, nBottom, nRight, nThick, nShape, nRGBColor, aPxlOff)
 */
-HB_FUNC( WVT_DRAWOUTLINE )
+HB_FUNC(WVT_DRAWOUTLINE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      HPEN hPen, hOldPen, hOldPenGUI;
-      POINT xy;
-      int iTop, iLeft, iBottom, iRight;
+  if (_s)
+  {
+    HPEN hPen, hOldPen, hOldPenGUI;
+    POINT xy;
+    int iTop, iLeft, iBottom, iRight;
 
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-      iTop    = xy.y - 1 + hb_parvni(8, 1);
-      iLeft   = xy.x - 1 + hb_parvni(8, 2);
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-      iBottom = xy.y + hb_parvni(8, 3);
-      iRight  = xy.x + hb_parvni(8, 4);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+    iTop = xy.y - 1 + hb_parvni(8, 1);
+    iLeft = xy.x - 1 + hb_parvni(8, 2);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+    iBottom = xy.y + hb_parvni(8, 3);
+    iRight = xy.x + hb_parvni(8, 4);
 
-      hOldPenGUI = hOldPen = 0;
+    hOldPenGUI = hOldPen = 0;
 
-      if( HB_ISNUM(5) ) {
-         hPen = CreatePen(hb_parni(5), 0, hbwapi_par_COLORREF(7));
-         if( hPen ) {
-            hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
-         }
-      } else {
-         hPen = 0;
-         SelectObject(_s->hdc, _s->pGUI->penBlack);
+    if (HB_ISNUM(5))
+    {
+      hPen = CreatePen(hb_parni(5), 0, hbwapi_par_COLORREF(7));
+      if (hPen)
+      {
+        hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
       }
+    }
+    else
+    {
+      hPen = 0;
+      SelectObject(_s->hdc, _s->pGUI->penBlack);
+    }
 
-      hb_wvt_DrawOutline(_s->hdc, iTop, iLeft, iBottom, iRight);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         if( hPen )
-         {
-            hOldPenGUI = static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen));
-         } else {
-            hOldPenGUI = static_cast<HPEN>(SelectObject(_s->hGuiDC, _s->pGUI->penBlack));
-            hb_wvt_DrawOutline(_s->hGuiDC, iTop, iLeft, iBottom, iRight);
-         }
+    hb_wvt_DrawOutline(_s->hdc, iTop, iLeft, iBottom, iRight);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      if (hPen)
+      {
+        hOldPenGUI = static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen));
       }
-      #endif
+      else
+      {
+        hOldPenGUI = static_cast<HPEN>(SelectObject(_s->hGuiDC, _s->pGUI->penBlack));
+        hb_wvt_DrawOutline(_s->hGuiDC, iTop, iLeft, iBottom, iRight);
+      }
+    }
+#endif
 
-      if( hPen ) {
-         SelectObject(_s->hdc, hOldPen);
-         if( hOldPenGUI ) {
-            SelectObject(_s->hGuiDC, hOldPenGUI);
-         }
-         DeleteObject(hPen);
+    if (hPen)
+    {
+      SelectObject(_s->hdc, hOldPen);
+      if (hOldPenGUI)
+      {
+        SelectObject(_s->hGuiDC, hOldPenGUI);
       }
-   }
+      DeleteObject(hPen);
+    }
+  }
 }
 
 /*
 wvt_DrawOutlineEx(nTop, nLeft, nBottom, nRight, nSlotPen, aPxlOff)
 */
-HB_FUNC( WVT_DRAWOUTLINEEX )
+HB_FUNC(WVT_DRAWOUTLINEEX)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(5) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(5) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)) ) {
-         POINT xy;
-         int iTop, iLeft, iBottom, iRight;
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)))
+    {
+      POINT xy;
+      int iTop, iLeft, iBottom, iRight;
 
-         xy      = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-         iTop    = xy.y - 1 + hb_parvni(6, 1);
-         iLeft   = xy.x - 1 + hb_parvni(6, 2);
-         xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-         iBottom = xy.y + hb_parvni(6, 3);
-         iRight  = xy.x + hb_parvni(6, 4);
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+      iTop = xy.y - 1 + hb_parvni(6, 1);
+      iLeft = xy.x - 1 + hb_parvni(6, 2);
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+      iBottom = xy.y + hb_parvni(6, 3);
+      iRight = xy.x + hb_parvni(6, 4);
 
-         if( _s->pGUI->hUserPens[iSlot] ) {
-            SelectObject(_s->hdc, _s->pGUI->hUserPens[iSlot]);
-         } else {
-            SelectObject(_s->hdc, _s->pGUI->penBlack);
-         }
-
-         hb_wvt_DrawOutline(_s->hdc, iTop, iLeft, iBottom, iRight);
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            hb_wvt_DrawOutline(_s->hGuiDC, iTop, iLeft, iBottom, iRight);
-         }
-         #endif
+      if (_s->pGUI->hUserPens[iSlot])
+      {
+        SelectObject(_s->hdc, _s->pGUI->hUserPens[iSlot]);
       }
-   }
+      else
+      {
+        SelectObject(_s->hdc, _s->pGUI->penBlack);
+      }
+
+      hb_wvt_DrawOutline(_s->hdc, iTop, iLeft, iBottom, iRight);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawOutline(_s->hGuiDC, iTop, iLeft, iBottom, iRight);
+      }
+#endif
+    }
+  }
 }
 
 /*
                 1      2        3       4        5        6       7       8       9      10       11
 wvt_DrawLine(nTop, nLeft, nBottom, nRight, nOrient, nFormat, nAlign, nStyle, nThick, nColor, aPxlOff)
 */
-HB_FUNC( WVT_DRAWLINE )
+HB_FUNC(WVT_DRAWLINE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(11, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(11, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(11, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(11, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(11, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(11, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(11, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(11, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      auto iOrient = hb_parni(5);
-      auto iFormat = hb_parni(6);
-      auto iAlign  = hb_parni(7);
-      auto iStyle  = hb_parni(8);
-      auto iThick  = hb_parni(9);
-      COLORREF cr      = hbwapi_par_COLORREF(10);
+    auto iOrient = hb_parni(5);
+    auto iFormat = hb_parni(6);
+    auto iAlign = hb_parni(7);
+    auto iStyle = hb_parni(8);
+    auto iThick = hb_parni(9);
+    COLORREF cr = hbwapi_par_COLORREF(10);
 
-      int iOffset;
-      HPEN hOldPenGUI;
+    int iOffset;
+    HPEN hOldPenGUI;
 
-      int x = iLeft;
-      int y = iTop;
+    int x = iLeft;
+    int y = iTop;
 
-      switch( iAlign ) {
-         case 0:  /* Center */
-            if( iOrient == 0 ) { /* Horizontal */
-               iOffset = (iBottom - iTop) / 2;
-               y = iTop + iOffset;
-            } else {
-               iOffset = (iRight - iLeft) / 2;
-               x = iLeft + iOffset;
-            }
-            break;
-
-         case 1:  /* Top */
-            break;
-
-         case 2:  /* Bottom */
-            if( iFormat == 0 || iFormat == 1 ) { /* Raised/Recessed */
-               y = iBottom - 1;
-            } else {
-               y = iBottom;
-            }
-            break;
-
-         case 3:  /* Left */
-            break;
-
-         case 4:  /* Right */
-            if( iFormat == 0 || iFormat == 1 ) { /* Raised/Recessed */
-               x = iRight - 1;
-            } else {
-               x = iRight;
-            }
-            break;
+    switch (iAlign)
+    {
+    case 0: /* Center */
+      if (iOrient == 0)
+      { /* Horizontal */
+        iOffset = (iBottom - iTop) / 2;
+        y = iTop + iOffset;
       }
-
-      auto hPen = CreatePen(iStyle, iThick, cr);
-      auto hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
-      hOldPenGUI = _s->bGui ? static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen)) : 0;
-
-      switch( iFormat ) {
-         case 0:  /* Raised */
-            if( iOrient == 0 ) { /* Horizontal */
-               SelectObject(_s->hdc, _s->pGUI->penWhite);
-               MoveToEx(_s->hdc, x, y, nullptr);
-               LineTo(_s->hdc, iRight, y);
-               SelectObject(_s->hdc, hPen);
-               MoveToEx(_s->hdc, x, y + 1, nullptr);
-               LineTo(_s->hdc, iRight, y + 1);
-               #if defined(__SETGUI__)
-               if( _s->bGui ) {
-                  SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                  MoveToEx(_s->hGuiDC, x, y, nullptr);
-                  LineTo(_s->hGuiDC, iRight, y);
-                  SelectObject(_s->hGuiDC, hPen);
-                  MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
-                  LineTo(_s->hGuiDC, iRight, y + 1);
-               }
-               #endif
-            } else { /* Vertical */
-               SelectObject(_s->hdc, _s->pGUI->penWhite);
-               MoveToEx(_s->hdc, x, y, nullptr);
-               LineTo(_s->hdc, x, iBottom);
-               SelectObject(_s->hdc, hPen);
-               MoveToEx(_s->hdc, x + 1, y, nullptr);
-               LineTo(_s->hdc, x + 1, iBottom);
-               #if defined(__SETGUI__)
-               if( _s->bGui ) {
-                  SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                  MoveToEx(_s->hGuiDC, x, y, nullptr);
-                  LineTo(_s->hGuiDC, x, iBottom);
-                  SelectObject(_s->hGuiDC, hPen);
-                  MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
-                  LineTo(_s->hGuiDC, x + 1, iBottom);
-               }
-               #endif
-            }
-            break;
-
-         case 1:  /* Recessed */
-            if( iOrient == 0 ) { /* Horizontal */
-               SelectObject(_s->hdc, hPen);
-               MoveToEx(_s->hdc, x, y, nullptr);
-               LineTo(_s->hdc, iRight, y);
-               SelectObject(_s->hdc, _s->pGUI->penWhite);
-               MoveToEx(_s->hdc, x, y + 1, nullptr);
-               LineTo(_s->hdc, iRight, y + 1);
-               #if defined(__SETGUI__)
-               if( _s->bGui ) {
-                  SelectObject(_s->hGuiDC, hPen);
-                  MoveToEx(_s->hGuiDC, x, y, nullptr);
-                  LineTo(_s->hGuiDC, iRight, y);
-                  SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                  MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
-                  LineTo(_s->hGuiDC, iRight, y + 1);
-               }
-               #endif
-            } else { /* Vertical */
-               SelectObject(_s->hdc, hPen);
-               MoveToEx(_s->hdc, x, y, nullptr);
-               LineTo(_s->hdc, x, iBottom);
-               SelectObject(_s->hdc, _s->pGUI->penWhite);
-               MoveToEx(_s->hdc, x + 1, y, nullptr);
-               LineTo(_s->hdc, x + 1, iBottom);
-               #if defined(__SETGUI__)
-               if( _s->bGui ) {
-                  SelectObject(_s->hGuiDC, hPen);
-                  MoveToEx(_s->hGuiDC, x, y, nullptr);
-                  LineTo(_s->hGuiDC, x, iBottom);
-                  SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                  MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
-                  LineTo(_s->hGuiDC, x + 1, iBottom);
-               }
-               #endif
-            }
-            break;
-
-         case 2:  /* Plain */
-            if( iOrient == 0 ) { /* Horizontal */
-               SelectObject(_s->hdc, hPen);
-               MoveToEx(_s->hdc, x, y, nullptr);
-               LineTo(_s->hdc, iRight, y);
-               #if defined(__SETGUI__)
-               if( _s->bGui ) {
-                  SelectObject(_s->hGuiDC, hPen);
-                  MoveToEx(_s->hGuiDC, x, y, nullptr);
-                  LineTo(_s->hGuiDC, iRight, y);
-               }
-               #endif
-            } else { /* Vertical */
-               SelectObject(_s->hdc, hPen);
-               MoveToEx(_s->hdc, x, y, nullptr);
-               LineTo(_s->hdc, x, iBottom);
-               #if defined(__SETGUI__)
-               if( _s->bGui ) {
-                  SelectObject(_s->hGuiDC, hPen);
-                  MoveToEx(_s->hGuiDC, x, y, nullptr);
-                  LineTo(_s->hGuiDC, x, iBottom);
-               }
-               #endif
-            }
-            break;
+      else
+      {
+        iOffset = (iRight - iLeft) / 2;
+        x = iLeft + iOffset;
       }
+      break;
 
-      SelectObject(_s->hdc, hOldPen);
-      if( hOldPenGUI ) {
-         SelectObject(_s->hGuiDC, hOldPenGUI);
+    case 1: /* Top */
+      break;
+
+    case 2: /* Bottom */
+      if (iFormat == 0 || iFormat == 1)
+      { /* Raised/Recessed */
+        y = iBottom - 1;
       }
-      DeleteObject(hPen);
+      else
+      {
+        y = iBottom;
+      }
+      break;
 
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
+    case 3: /* Left */
+      break;
+
+    case 4: /* Right */
+      if (iFormat == 0 || iFormat == 1)
+      { /* Raised/Recessed */
+        x = iRight - 1;
+      }
+      else
+      {
+        x = iRight;
+      }
+      break;
+    }
+
+    auto hPen = CreatePen(iStyle, iThick, cr);
+    auto hOldPen = static_cast<HPEN>(SelectObject(_s->hdc, hPen));
+    hOldPenGUI = _s->bGui ? static_cast<HPEN>(SelectObject(_s->hGuiDC, hPen)) : 0;
+
+    switch (iFormat)
+    {
+    case 0: /* Raised */
+      if (iOrient == 0)
+      { /* Horizontal */
+        SelectObject(_s->hdc, _s->pGUI->penWhite);
+        MoveToEx(_s->hdc, x, y, nullptr);
+        LineTo(_s->hdc, iRight, y);
+        SelectObject(_s->hdc, hPen);
+        MoveToEx(_s->hdc, x, y + 1, nullptr);
+        LineTo(_s->hdc, iRight, y + 1);
+#if defined(__SETGUI__)
+        if (_s->bGui)
+        {
+          SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+          MoveToEx(_s->hGuiDC, x, y, nullptr);
+          LineTo(_s->hGuiDC, iRight, y);
+          SelectObject(_s->hGuiDC, hPen);
+          MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
+          LineTo(_s->hGuiDC, iRight, y + 1);
+        }
+#endif
+      }
+      else
+      { /* Vertical */
+        SelectObject(_s->hdc, _s->pGUI->penWhite);
+        MoveToEx(_s->hdc, x, y, nullptr);
+        LineTo(_s->hdc, x, iBottom);
+        SelectObject(_s->hdc, hPen);
+        MoveToEx(_s->hdc, x + 1, y, nullptr);
+        LineTo(_s->hdc, x + 1, iBottom);
+#if defined(__SETGUI__)
+        if (_s->bGui)
+        {
+          SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+          MoveToEx(_s->hGuiDC, x, y, nullptr);
+          LineTo(_s->hGuiDC, x, iBottom);
+          SelectObject(_s->hGuiDC, hPen);
+          MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
+          LineTo(_s->hGuiDC, x + 1, iBottom);
+        }
+#endif
+      }
+      break;
+
+    case 1: /* Recessed */
+      if (iOrient == 0)
+      { /* Horizontal */
+        SelectObject(_s->hdc, hPen);
+        MoveToEx(_s->hdc, x, y, nullptr);
+        LineTo(_s->hdc, iRight, y);
+        SelectObject(_s->hdc, _s->pGUI->penWhite);
+        MoveToEx(_s->hdc, x, y + 1, nullptr);
+        LineTo(_s->hdc, iRight, y + 1);
+#if defined(__SETGUI__)
+        if (_s->bGui)
+        {
+          SelectObject(_s->hGuiDC, hPen);
+          MoveToEx(_s->hGuiDC, x, y, nullptr);
+          LineTo(_s->hGuiDC, iRight, y);
+          SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+          MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
+          LineTo(_s->hGuiDC, iRight, y + 1);
+        }
+#endif
+      }
+      else
+      { /* Vertical */
+        SelectObject(_s->hdc, hPen);
+        MoveToEx(_s->hdc, x, y, nullptr);
+        LineTo(_s->hdc, x, iBottom);
+        SelectObject(_s->hdc, _s->pGUI->penWhite);
+        MoveToEx(_s->hdc, x + 1, y, nullptr);
+        LineTo(_s->hdc, x + 1, iBottom);
+#if defined(__SETGUI__)
+        if (_s->bGui)
+        {
+          SelectObject(_s->hGuiDC, hPen);
+          MoveToEx(_s->hGuiDC, x, y, nullptr);
+          LineTo(_s->hGuiDC, x, iBottom);
+          SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+          MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
+          LineTo(_s->hGuiDC, x + 1, iBottom);
+        }
+#endif
+      }
+      break;
+
+    case 2: /* Plain */
+      if (iOrient == 0)
+      { /* Horizontal */
+        SelectObject(_s->hdc, hPen);
+        MoveToEx(_s->hdc, x, y, nullptr);
+        LineTo(_s->hdc, iRight, y);
+#if defined(__SETGUI__)
+        if (_s->bGui)
+        {
+          SelectObject(_s->hGuiDC, hPen);
+          MoveToEx(_s->hGuiDC, x, y, nullptr);
+          LineTo(_s->hGuiDC, iRight, y);
+        }
+#endif
+      }
+      else
+      { /* Vertical */
+        SelectObject(_s->hdc, hPen);
+        MoveToEx(_s->hdc, x, y, nullptr);
+        LineTo(_s->hdc, x, iBottom);
+#if defined(__SETGUI__)
+        if (_s->bGui)
+        {
+          SelectObject(_s->hGuiDC, hPen);
+          MoveToEx(_s->hGuiDC, x, y, nullptr);
+          LineTo(_s->hGuiDC, x, iBottom);
+        }
+#endif
+      }
+      break;
+    }
+
+    SelectObject(_s->hdc, hOldPen);
+    if (hOldPenGUI)
+    {
+      SelectObject(_s->hGuiDC, hOldPenGUI);
+    }
+    DeleteObject(hPen);
+
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
                   1      2        3       4        5        6       7         8        9
 wvt_DrawLineEx(nTop, nLeft, nBottom, nRight, nOrient, nFormat, nAlign, nSlotPen, aPxlOff)
 */
-HB_FUNC( WVT_DRAWLINEEX )
+HB_FUNC(WVT_DRAWLINEEX)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(8) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(8) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)) ) {
-         POINT xy;
-         int iTop, iLeft, iBottom, iRight, iOffset;
-         int x, y;
-         HPEN hPen;
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)))
+    {
+      POINT xy;
+      int iTop, iLeft, iBottom, iRight, iOffset;
+      int x, y;
+      HPEN hPen;
 
-         xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-         iTop = xy.y + hb_parvni(9, 1);
-         iLeft = xy.x + hb_parvni(9, 2);
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+      iTop = xy.y + hb_parvni(9, 1);
+      iLeft = xy.x + hb_parvni(9, 2);
 
-         xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-         iBottom = xy.y - 1 + hb_parvni(9, 4);
-         iRight = xy.x - 1 + hb_parvni(9, 4);
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+      iBottom = xy.y - 1 + hb_parvni(9, 4);
+      iRight = xy.x - 1 + hb_parvni(9, 4);
 
-         /* Resolve Parameters */
-         auto iOrient = hb_parni(5);
-         auto iFormat = hb_parni(6);
-         auto iAlign  = hb_parni(7);
+      /* Resolve Parameters */
+      auto iOrient = hb_parni(5);
+      auto iFormat = hb_parni(6);
+      auto iAlign = hb_parni(7);
 
-         x = iLeft;
-         y = iTop;
+      x = iLeft;
+      y = iTop;
 
-         switch( iAlign ) {
-            case 0:  /* Center */
-               if( iOrient == 0 ) { /* Horizontal */
-                  iOffset = (iBottom - iTop) / 2;
-                  y = iTop + iOffset;
-               } else {
-                  iOffset = (iRight - iLeft) / 2;
-                  x = iLeft + iOffset;
-               }
-               break;
+      switch (iAlign)
+      {
+      case 0: /* Center */
+        if (iOrient == 0)
+        { /* Horizontal */
+          iOffset = (iBottom - iTop) / 2;
+          y = iTop + iOffset;
+        }
+        else
+        {
+          iOffset = (iRight - iLeft) / 2;
+          x = iLeft + iOffset;
+        }
+        break;
 
-            case 1:  /* Top */
-               break;
+      case 1: /* Top */
+        break;
 
-            case 2:  /* Bottom */
-               if( iFormat == 0 || iFormat == 1 ) { /* Raised/Recessed */
-                  y = iBottom - 1;
-               } else {
-                  y = iBottom;
-               }
-               break;
+      case 2: /* Bottom */
+        if (iFormat == 0 || iFormat == 1)
+        { /* Raised/Recessed */
+          y = iBottom - 1;
+        }
+        else
+        {
+          y = iBottom;
+        }
+        break;
 
-            case 3:  /* Left */
-               break;
+      case 3: /* Left */
+        break;
 
-            case 4:  /* Right */
-               if( iFormat == 0 || iFormat == 1 ) { /* Raised/Recessed */
-                  x = iRight - 1;
-               } else {
-                  x = iRight;
-               }
-               break;
-         }
-
-         hPen = _s->pGUI->hUserPens[iSlot];
-
-         switch( iFormat ) {
-            case 0:  /* Raised */
-               if( iOrient == 0 ) { /* Horizontal */
-                  SelectObject(_s->hdc, _s->pGUI->penWhite);
-                  MoveToEx(_s->hdc, x, y, nullptr);
-                  LineTo(_s->hdc, iRight, y);
-                  SelectObject(_s->hdc, hPen);
-                  MoveToEx(_s->hdc, x, y + 1, nullptr);
-                  LineTo(_s->hdc, iRight, y + 1);
-                  #if defined(__SETGUI__)
-                  if( _s->bGui ) {
-                     SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                     MoveToEx(_s->hGuiDC, x, y, nullptr);
-                     LineTo(_s->hGuiDC, iRight, y);
-                     SelectObject(_s->hGuiDC, hPen);
-                     MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
-                     LineTo(_s->hGuiDC, iRight, y + 1);
-                  }
-                  #endif
-               } else { /* Vertical */
-                  SelectObject(_s->hdc, _s->pGUI->penWhite);
-                  MoveToEx(_s->hdc, x, y, nullptr);
-                  LineTo(_s->hdc, x, iBottom);
-                  SelectObject(_s->hdc, hPen);
-                  MoveToEx(_s->hdc, x + 1, y, nullptr);
-                  LineTo(_s->hdc, x + 1, iBottom);
-                  #if defined(__SETGUI__)
-                  if( _s->bGui ) {
-                     SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                     MoveToEx(_s->hGuiDC, x, y, nullptr);
-                     LineTo(_s->hGuiDC, x, iBottom);
-                     SelectObject(_s->hGuiDC, hPen);
-                     MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
-                     LineTo(_s->hGuiDC, x + 1, iBottom);
-                  }
-                  #endif
-               }
-               break;
-
-            case 1:  /* Recessed */
-               if( iOrient == 0 ) { /* Horizontal */
-                  SelectObject(_s->hdc, hPen);
-                  MoveToEx(_s->hdc, x, y, nullptr);
-                  LineTo(_s->hdc, iRight, y);
-                  SelectObject(_s->hdc, _s->pGUI->penWhite);
-                  MoveToEx(_s->hdc, x, y + 1, nullptr);
-                  LineTo(_s->hdc, iRight, y + 1);
-                  #if defined(__SETGUI__)
-                  if( _s->bGui ) {
-                     SelectObject(_s->hGuiDC, hPen);
-                     MoveToEx(_s->hGuiDC, x, y, nullptr);
-                     LineTo(_s->hGuiDC, iRight, y);
-                     SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                     MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
-                     LineTo(_s->hGuiDC, iRight, y + 1);
-                  }
-                  #endif
-               } else { /* Vertical */
-                  SelectObject(_s->hdc, hPen);
-                  MoveToEx(_s->hdc, x, y, nullptr);
-                  LineTo(_s->hdc, x, iBottom);
-                  SelectObject(_s->hdc, _s->pGUI->penWhite);
-                  MoveToEx(_s->hdc, x + 1, y, nullptr);
-                  LineTo(_s->hdc, x + 1, iBottom);
-                  #if defined(__SETGUI__)
-                  if( _s->bGui ) {
-                     SelectObject(_s->hGuiDC, hPen);
-                     MoveToEx(_s->hGuiDC, x, y, nullptr);
-                     LineTo(_s->hGuiDC, x, iBottom);
-                     SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
-                     MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
-                     LineTo(_s->hGuiDC, x + 1, iBottom);
-                  }
-                  #endif
-               }
-               break;
-
-            case 2:  /* Plain */
-               if( iOrient == 0 ) { /* Horizontal */
-                  SelectObject(_s->hdc, hPen);
-                  MoveToEx(_s->hdc, x, y, nullptr);
-                  LineTo(_s->hdc, iRight, y);
-                  #if defined(__SETGUI__)
-                  if( _s->bGui ) {
-                     SelectObject(_s->hGuiDC, hPen);
-                     MoveToEx(_s->hGuiDC, x, y, nullptr);
-                     LineTo(_s->hGuiDC, iRight, y);
-                  }
-                  #endif
-               } else { /* Vertical */
-                  SelectObject(_s->hdc, hPen);
-                  MoveToEx(_s->hdc, x, y, nullptr);
-                  LineTo(_s->hdc, x, iBottom);
-                  #if defined(__SETGUI__)
-                  if( _s->bGui ) {
-                     SelectObject(_s->hGuiDC, hPen);
-                     MoveToEx(_s->hGuiDC, x, y, nullptr);
-                     LineTo(_s->hGuiDC, x, iBottom);
-                  }
-                  #endif
-               }
-               break;
-         }
-
-         hb_retl(true);
-         return;
+      case 4: /* Right */
+        if (iFormat == 0 || iFormat == 1)
+        { /* Raised/Recessed */
+          x = iRight - 1;
+        }
+        else
+        {
+          x = iRight;
+        }
+        break;
       }
-   }
 
-   hb_retl(false);
+      hPen = _s->pGUI->hUserPens[iSlot];
+
+      switch (iFormat)
+      {
+      case 0: /* Raised */
+        if (iOrient == 0)
+        { /* Horizontal */
+          SelectObject(_s->hdc, _s->pGUI->penWhite);
+          MoveToEx(_s->hdc, x, y, nullptr);
+          LineTo(_s->hdc, iRight, y);
+          SelectObject(_s->hdc, hPen);
+          MoveToEx(_s->hdc, x, y + 1, nullptr);
+          LineTo(_s->hdc, iRight, y + 1);
+#if defined(__SETGUI__)
+          if (_s->bGui)
+          {
+            SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+            MoveToEx(_s->hGuiDC, x, y, nullptr);
+            LineTo(_s->hGuiDC, iRight, y);
+            SelectObject(_s->hGuiDC, hPen);
+            MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
+            LineTo(_s->hGuiDC, iRight, y + 1);
+          }
+#endif
+        }
+        else
+        { /* Vertical */
+          SelectObject(_s->hdc, _s->pGUI->penWhite);
+          MoveToEx(_s->hdc, x, y, nullptr);
+          LineTo(_s->hdc, x, iBottom);
+          SelectObject(_s->hdc, hPen);
+          MoveToEx(_s->hdc, x + 1, y, nullptr);
+          LineTo(_s->hdc, x + 1, iBottom);
+#if defined(__SETGUI__)
+          if (_s->bGui)
+          {
+            SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+            MoveToEx(_s->hGuiDC, x, y, nullptr);
+            LineTo(_s->hGuiDC, x, iBottom);
+            SelectObject(_s->hGuiDC, hPen);
+            MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
+            LineTo(_s->hGuiDC, x + 1, iBottom);
+          }
+#endif
+        }
+        break;
+
+      case 1: /* Recessed */
+        if (iOrient == 0)
+        { /* Horizontal */
+          SelectObject(_s->hdc, hPen);
+          MoveToEx(_s->hdc, x, y, nullptr);
+          LineTo(_s->hdc, iRight, y);
+          SelectObject(_s->hdc, _s->pGUI->penWhite);
+          MoveToEx(_s->hdc, x, y + 1, nullptr);
+          LineTo(_s->hdc, iRight, y + 1);
+#if defined(__SETGUI__)
+          if (_s->bGui)
+          {
+            SelectObject(_s->hGuiDC, hPen);
+            MoveToEx(_s->hGuiDC, x, y, nullptr);
+            LineTo(_s->hGuiDC, iRight, y);
+            SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+            MoveToEx(_s->hGuiDC, x, y + 1, nullptr);
+            LineTo(_s->hGuiDC, iRight, y + 1);
+          }
+#endif
+        }
+        else
+        { /* Vertical */
+          SelectObject(_s->hdc, hPen);
+          MoveToEx(_s->hdc, x, y, nullptr);
+          LineTo(_s->hdc, x, iBottom);
+          SelectObject(_s->hdc, _s->pGUI->penWhite);
+          MoveToEx(_s->hdc, x + 1, y, nullptr);
+          LineTo(_s->hdc, x + 1, iBottom);
+#if defined(__SETGUI__)
+          if (_s->bGui)
+          {
+            SelectObject(_s->hGuiDC, hPen);
+            MoveToEx(_s->hGuiDC, x, y, nullptr);
+            LineTo(_s->hGuiDC, x, iBottom);
+            SelectObject(_s->hGuiDC, _s->pGUI->penWhite);
+            MoveToEx(_s->hGuiDC, x + 1, y, nullptr);
+            LineTo(_s->hGuiDC, x + 1, iBottom);
+          }
+#endif
+        }
+        break;
+
+      case 2: /* Plain */
+        if (iOrient == 0)
+        { /* Horizontal */
+          SelectObject(_s->hdc, hPen);
+          MoveToEx(_s->hdc, x, y, nullptr);
+          LineTo(_s->hdc, iRight, y);
+#if defined(__SETGUI__)
+          if (_s->bGui)
+          {
+            SelectObject(_s->hGuiDC, hPen);
+            MoveToEx(_s->hGuiDC, x, y, nullptr);
+            LineTo(_s->hGuiDC, iRight, y);
+          }
+#endif
+        }
+        else
+        { /* Vertical */
+          SelectObject(_s->hdc, hPen);
+          MoveToEx(_s->hdc, x, y, nullptr);
+          LineTo(_s->hdc, x, iBottom);
+#if defined(__SETGUI__)
+          if (_s->bGui)
+          {
+            SelectObject(_s->hGuiDC, hPen);
+            MoveToEx(_s->hGuiDC, x, y, nullptr);
+            LineTo(_s->hGuiDC, x, iBottom);
+          }
+#endif
+        }
+        break;
+      }
+
+      hb_retl(true);
+      return;
+    }
+  }
+
+  hb_retl(false);
 }
 
 /*
 Inside the area requested!
 wvt_DrawEllipse(nTop, nLeft, nBottom, nRight, aPxlOff)
 */
-HB_FUNC( WVT_DRAWELLIPSE )
+HB_FUNC(WVT_DRAWELLIPSE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      SelectObject(_s->hdc, _s->currentBrush);
-      SelectObject(_s->hdc, _s->currentPen);
+    SelectObject(_s->hdc, _s->currentBrush);
+    SelectObject(_s->hdc, _s->currentPen);
 
-      hb_retl(Ellipse(_s->hdc, iLeft, iTop, iRight, iBottom));
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_retl(Ellipse(_s->hGuiDC, iLeft, iTop, iRight, iBottom));
-      }
-      #endif
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(Ellipse(_s->hdc, iLeft, iTop, iRight, iBottom));
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_retl(Ellipse(_s->hGuiDC, iLeft, iTop, iRight, iBottom));
+    }
+#endif
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvt_DrawRectangle(nTop, nLeft, nBottom, nRight, aPxlOff)
 */
-HB_FUNC( WVT_DRAWRECTANGLE )
+HB_FUNC(WVT_DRAWRECTANGLE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      SelectObject(_s->hdc, _s->currentBrush);
-      SelectObject(_s->hdc, _s->currentPen);
+    SelectObject(_s->hdc, _s->currentBrush);
+    SelectObject(_s->hdc, _s->currentPen);
 
-      hb_retl(Rectangle(_s->hdc, iLeft, iTop, iRight, iBottom));
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_retl(Rectangle(_s->hGuiDC, iLeft, iTop, iRight, iBottom));
-      }
-      #endif
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(Rectangle(_s->hdc, iLeft, iTop, iRight, iBottom));
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_retl(Rectangle(_s->hGuiDC, iLeft, iTop, iRight, iBottom));
+    }
+#endif
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvt_DrawRoundRect(nTop, nLeft, nBottom, nRight, aPxlOff, nRoundHeight, nRoundWidth)
 */
-HB_FUNC( WVT_DRAWROUNDRECT )
+HB_FUNC(WVT_DRAWROUNDRECT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      auto iHt = hb_parni(6);
-      auto iWd = hb_parni(7);
+    auto iHt = hb_parni(6);
+    auto iWd = hb_parni(7);
 
-      SelectObject(_s->hdc, _s->currentBrush);
-      SelectObject(_s->hdc, _s->currentPen);
+    SelectObject(_s->hdc, _s->currentBrush);
+    SelectObject(_s->hdc, _s->currentPen);
 
-      hb_retl(RoundRect(_s->hdc, iLeft, iTop, iRight, iBottom, iWd, iHt));
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_retl(RoundRect(_s->hGuiDC, iLeft, iTop, iRight, iBottom, iWd, iHt));
-      }
-      #endif
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(RoundRect(_s->hdc, iLeft, iTop, iRight, iBottom, iWd, iHt));
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_retl(RoundRect(_s->hGuiDC, iLeft, iTop, iRight, iBottom, iWd, iHt));
+    }
+#endif
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvt_DrawFocusRect(nTop, nLeft, nBottom, nRight, aPxlOff)
 */
-HB_FUNC( WVT_DRAWFOCUSRECT )
+HB_FUNC(WVT_DRAWFOCUSRECT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      RECT rc;
+    RECT rc;
 
-      rc.left   = iLeft;
-      rc.top    = iTop;
-      rc.right  = iRight;
-      rc.bottom = iBottom;
+    rc.left = iLeft;
+    rc.top = iTop;
+    rc.right = iRight;
+    rc.bottom = iBottom;
 
-      hb_retl(DrawFocusRect(_s->hdc, &rc));
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_retl(DrawFocusRect(_s->hGuiDC, &rc));
-      }
-      #endif
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(DrawFocusRect(_s->hdc, &rc));
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_retl(DrawFocusRect(_s->hGuiDC, &rc));
+    }
+#endif
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvt_DrawColorRect(nTop, nLeft, nBottom, nRight, aPxlOff, nRGB)
 */
-HB_FUNC( WVT_DRAWCOLORRECT )
+HB_FUNC(WVT_DRAWCOLORRECT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      auto hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
+  if (_s)
+  {
+    auto hBrush = CreateSolidBrush(hbwapi_par_COLORREF(6));
 
-      if( hBrush ) {
-         int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-         int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-         int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-         int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+    if (hBrush)
+    {
+      int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+      int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+      int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-         RECT rc;
+      RECT rc;
 
-         rc.left   = iLeft;
-         rc.top    = iTop;
-         rc.right  = iRight;
-         rc.bottom = iBottom;
+      rc.left = iLeft;
+      rc.top = iTop;
+      rc.right = iRight;
+      rc.bottom = iBottom;
 
-         hb_retl(FillRect(_s->hdc, &rc, hBrush));
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            hb_retl(FillRect(_s->hGuiDC, &rc, hBrush));
-         }
-         #endif
-         DeleteObject(hBrush);
-
-         return;
+      hb_retl(FillRect(_s->hdc, &rc, hBrush));
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_retl(FillRect(_s->hGuiDC, &rc, hBrush));
       }
-   }
+#endif
+      DeleteObject(hBrush);
 
-   hb_retl(false);
+      return;
+    }
+  }
+
+  hb_retl(false);
 }
 
 /*
@@ -1651,1100 +1847,1228 @@ HB_FUNC( WVT_DRAWCOLORRECT )
 wvt_DrawGridHorz(nTop, nLeft, nRight, nRows, aPxlOff)
 aPxlOff[2] and aPxlOff[4] used
 */
-HB_FUNC( WVT_DRAWGRIDHORZ )
+HB_FUNC(WVT_DRAWGRIDHORZ)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      auto iAtRow = hb_parni(1);
-      auto iRows  = hb_parni(4);
-      int i, y;
+  if (_s)
+  {
+    auto iAtRow = hb_parni(1);
+    auto iRows = hb_parni(4);
+    int i, y;
 
-      int iLeft  = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(3) + 1) - 1;
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(3) + 1) - 1;
 
-      SelectObject(_s->hdc, _s->currentPen);
+    SelectObject(_s->hdc, _s->currentPen);
 
-      for( i = 0; i < iRows; i++, iAtRow++ ) {
-         y = iAtRow * _s->PTEXTSIZE.y;
+    for (i = 0; i < iRows; i++, iAtRow++)
+    {
+      y = iAtRow * _s->PTEXTSIZE.y;
 
-         MoveToEx(_s->hdc, iLeft, y, nullptr);
-         LineTo(_s->hdc, iRight, y);
+      MoveToEx(_s->hdc, iLeft, y, nullptr);
+      LineTo(_s->hdc, iRight, y);
+    }
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      iAtRow = hb_parni(1);
+
+      SelectObject(_s->hGuiDC, _s->currentPen);
+
+      for (i = 0; i < iRows; i++, iAtRow++)
+      {
+        y = iAtRow * _s->PTEXTSIZE.y;
+
+        MoveToEx(_s->hGuiDC, iLeft, y, nullptr);
+        LineTo(_s->hGuiDC, iRight, y);
       }
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         iAtRow = hb_parni(1);
-
-         SelectObject(_s->hGuiDC, _s->currentPen);
-
-         for( i = 0; i < iRows; i++, iAtRow++ ) {
-            y = iAtRow * _s->PTEXTSIZE.y;
-
-            MoveToEx(_s->hGuiDC, iLeft, y, nullptr);
-            LineTo(_s->hGuiDC, iRight, y);
-         }
-      }
-      #endif
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
+    }
+#endif
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvt_DrawGridVert(nTop, nBottom, aCols, nCols, aPxlOff)
 aPxlOff[1] and aPxlOff[3] used
 */
-HB_FUNC( WVT_DRAWGRIDVERT )
+HB_FUNC(WVT_DRAWGRIDVERT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      auto iTabs = hb_parni(4);
+  if (_s)
+  {
+    auto iTabs = hb_parni(4);
 
-      if( iTabs ) {
-         int i, x;
+    if (iTabs)
+    {
+      int i, x;
 
-         int iCharWidth  = _s->PTEXTSIZE.x;
-         int iCharHeight = _s->PTEXTSIZE.y;
+      int iCharWidth = _s->PTEXTSIZE.x;
+      int iCharHeight = _s->PTEXTSIZE.y;
 
-         int iTop    = hb_parvni(5, 1) + iCharHeight * hb_parni(1);
-         int iBottom = hb_parvni(5, 3) + iCharHeight * (hb_parni(2) + 1) - 1;
+      int iTop = hb_parvni(5, 1) + iCharHeight * hb_parni(1);
+      int iBottom = hb_parvni(5, 3) + iCharHeight * (hb_parni(2) + 1) - 1;
 
-         SelectObject(_s->hdc, _s->currentPen);
+      SelectObject(_s->hdc, _s->currentPen);
 
-         for( i = 1; i <= iTabs; i++ ) {
-            x = hb_parvni(3, i) * iCharWidth;
+      for (i = 1; i <= iTabs; i++)
+      {
+        x = hb_parvni(3, i) * iCharWidth;
 
-            MoveToEx(_s->hdc, x, iTop, nullptr);
-            LineTo(_s->hdc, x, iBottom);
-         }
-
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            SelectObject(_s->hGuiDC, _s->currentPen);
-            for( i = 1; i <= iTabs; i++ ) {
-               x = hb_parvni(3, i) * iCharWidth;
-
-               MoveToEx(_s->hGuiDC, x, iTop, nullptr);
-               LineTo(_s->hGuiDC, x, iBottom);
-            }
-         }
-         #endif
-
-         hb_retl(true);
-         return;
+        MoveToEx(_s->hdc, x, iTop, nullptr);
+        LineTo(_s->hdc, x, iBottom);
       }
-   }
 
-   hb_retl(false);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        SelectObject(_s->hGuiDC, _s->currentPen);
+        for (i = 1; i <= iTabs; i++)
+        {
+          x = hb_parvni(3, i) * iCharWidth;
+
+          MoveToEx(_s->hGuiDC, x, iTop, nullptr);
+          LineTo(_s->hGuiDC, x, iBottom);
+        }
+      }
+#endif
+
+      hb_retl(true);
+      return;
+    }
+  }
+
+  hb_retl(false);
 }
 
 /*
 wvt_DrawButton(nTop, nLeft, nBottom, nRight, cText, cnImage, nFormat, nTextColor, nBkColor, nImageAt, aPxlOff)
 */
-HB_FUNC( WVT_DRAWBUTTON )
+HB_FUNC(WVT_DRAWBUTTON)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      SIZE  sz = { 0, 0 };
-      POINT xy;
-      RECT  rc;
-      int   iTop, iLeft, iBottom, iRight;
-      int   iTextHeight;
+  if (_s)
+  {
+    SIZE sz = {0, 0};
+    POINT xy;
+    RECT rc;
+    int iTop, iLeft, iBottom, iRight;
+    int iTextHeight;
 
-      LOGBRUSH lb;
+    LOGBRUSH lb;
 
-      bool     bImage    = HB_ISNUM(6) || HB_ISCHAR(6);
-      auto iFormat = hb_parni(7);
-      COLORREF textColor = hbwapi_par_COLORREF_def(8, _s->COLORS[0]);
-      COLORREF bkColor   = hbwapi_par_COLORREF_def(9, _s->COLORS[7]);
+    bool bImage = HB_ISNUM(6) || HB_ISCHAR(6);
+    auto iFormat = hb_parni(7);
+    COLORREF textColor = hbwapi_par_COLORREF_def(8, _s->COLORS[0]);
+    COLORREF bkColor = hbwapi_par_COLORREF_def(9, _s->COLORS[7]);
 
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-      iTop    = xy.y + hb_parvni(11, 1);
-      iLeft   = xy.x + hb_parvni(11, 2);
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-      iBottom = xy.y - 1 + hb_parvni(11, 3);
-      iRight  = xy.x - 1 + hb_parvni(11, 4);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+    iTop = xy.y + hb_parvni(11, 1);
+    iLeft = xy.x + hb_parvni(11, 2);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+    iBottom = xy.y - 1 + hb_parvni(11, 3);
+    iRight = xy.x - 1 + hb_parvni(11, 4);
 
-      lb.lbStyle = BS_SOLID;
-      lb.lbColor = bkColor;
-      lb.lbHatch = 0;
-      auto hBrush = CreateBrushIndirect(&lb);
-      rc.left   = iLeft;
-      rc.top    = iTop;
-      rc.right  = iRight + 1;
-      rc.bottom = iBottom + 1;
+    lb.lbStyle = BS_SOLID;
+    lb.lbColor = bkColor;
+    lb.lbHatch = 0;
+    auto hBrush = CreateBrushIndirect(&lb);
+    rc.left = iLeft;
+    rc.top = iTop;
+    rc.right = iRight + 1;
+    rc.bottom = iBottom + 1;
 
-      FillRect(_s->hdc, &rc, hBrush);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         FillRect(_s->hGuiDC, &rc, hBrush);
+    FillRect(_s->hdc, &rc, hBrush);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      FillRect(_s->hGuiDC, &rc, hBrush);
+    }
+#endif
+    DeleteObject(hBrush);
+
+    switch (iFormat)
+    {
+    case 1:
+      hb_wvt_DrawBoxRecessed(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
+      if (_s->bGui)
+      {
+        hb_wvt_DrawBoxRecessed(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
       }
-      #endif
-      DeleteObject(hBrush);
-
-      switch( iFormat ) {
-         case 1:
-            hb_wvt_DrawBoxRecessed(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
-            if( _s->bGui ) {
-               hb_wvt_DrawBoxRecessed(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
-            }
-            break;
-         case 2:
-            break;
-         case 3:
-            hb_wvt_DrawOutline(_s->hdc, iTop, iLeft, iBottom, iRight);
-            if( _s->bGui ) {
-               hb_wvt_DrawOutline(_s->hGuiDC, iTop, iLeft, iBottom, iRight);
-            }
-            break;
-         case 4:
-            break;
-         default:
-            hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
-            if( _s->bGui ) {
-               hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
-            }
-            break;
+      break;
+    case 2:
+      break;
+    case 3:
+      hb_wvt_DrawOutline(_s->hdc, iTop, iLeft, iBottom, iRight);
+      if (_s->bGui)
+      {
+        hb_wvt_DrawOutline(_s->hGuiDC, iTop, iLeft, iBottom, iRight);
       }
+      break;
+    case 4:
+      break;
+    default:
+      hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
+      if (_s->bGui)
+      {
+        hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 1, iRight - 1);
+      }
+      break;
+    }
 
-      if( HB_ISCHAR(5) ) {
-         int iAlign;
-         void * hText;
-         HB_SIZE nLen;
-         LPCTSTR text = HB_PARSTR(5, &hText, &nLen);
-         SelectObject(_s->hdc, GetStockObject(DEFAULT_GUI_FONT));
-         GetTextExtentPoint32(_s->hdc, text, static_cast<int>(nLen), &sz);
+    if (HB_ISCHAR(5))
+    {
+      int iAlign;
+      void *hText;
+      HB_SIZE nLen;
+      LPCTSTR text = HB_PARSTR(5, &hText, &nLen);
+      SelectObject(_s->hdc, GetStockObject(DEFAULT_GUI_FONT));
+      GetTextExtentPoint32(_s->hdc, text, static_cast<int>(nLen), &sz);
 
-         iTextHeight = sz.cy;
+      iTextHeight = sz.cy;
 
-         xy.x = iLeft + ((iRight - iLeft + 1) / 2);
+      xy.x = iLeft + ((iRight - iLeft + 1) / 2);
 
-         if( bImage ) {
-            xy.y = iBottom - 2 - iTextHeight;
-         } else {
-            xy.y = iTop + ((iBottom - iTop + 1 - iTextHeight) / 2);
-         }
-
-         if( iFormat == 1 ) {
-            xy.x = xy.x + 2;
-            xy.y = xy.y + 2;
-         }
-
-         iAlign = TA_CENTER | TA_TOP;
-
-         SetTextAlign(_s->hdc, iAlign);
-         SetBkMode(_s->hdc, TRANSPARENT);
-         SetTextColor(_s->hdc, textColor);
-
-         ExtTextOut(_s->hdc, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
-         if( _s->bGui ) {
-            SelectObject(_s->hGuiDC, GetStockObject(DEFAULT_GUI_FONT));
-            SetTextAlign(_s->hGuiDC, iAlign);
-            SetBkMode(_s->hGuiDC, TRANSPARENT);
-            SetTextColor(_s->hGuiDC, textColor);
-
-            ExtTextOut(_s->hGuiDC, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
-         }
-         hb_strfree(hText);
-      } else {
-         iTextHeight = -1;
+      if (bImage)
+      {
+        xy.y = iBottom - 2 - iTextHeight;
+      }
+      else
+      {
+        xy.y = iTop + ((iBottom - iTop + 1 - iTextHeight) / 2);
       }
 
-      if( bImage ) {
-         int iImageWidth  = iRight - iLeft + 1 - 8;
-         int iImageHeight = iBottom - iTop + 1 - 8 - iTextHeight;
-
-         if( HB_ISNUM(6) ) {
-            IPicture * pPicture = _s->pGUI->pPicture[hb_parni(6) - 1];
-            hb_wvt_gtRenderPicture(iLeft + 4, iTop + 4, iImageWidth, iImageHeight, pPicture, false);
-         } else {
-            hb_wvt_DrawImage(_s->hdc, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, hb_parc(6), false);
-            if( _s->bGui ) {
-               hb_wvt_DrawImage(_s->hGuiDC, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, hb_parc(6), false);
-            }
-         }
+      if (iFormat == 1)
+      {
+        xy.x = xy.x + 2;
+        xy.y = xy.y + 2;
       }
 
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
+      iAlign = TA_CENTER | TA_TOP;
+
+      SetTextAlign(_s->hdc, iAlign);
+      SetBkMode(_s->hdc, TRANSPARENT);
+      SetTextColor(_s->hdc, textColor);
+
+      ExtTextOut(_s->hdc, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
+      if (_s->bGui)
+      {
+        SelectObject(_s->hGuiDC, GetStockObject(DEFAULT_GUI_FONT));
+        SetTextAlign(_s->hGuiDC, iAlign);
+        SetBkMode(_s->hGuiDC, TRANSPARENT);
+        SetTextColor(_s->hGuiDC, textColor);
+
+        ExtTextOut(_s->hGuiDC, xy.x, xy.y, 0, nullptr, text, static_cast<UINT>(nLen), nullptr);
+      }
+      hb_strfree(hText);
+    }
+    else
+    {
+      iTextHeight = -1;
+    }
+
+    if (bImage)
+    {
+      int iImageWidth = iRight - iLeft + 1 - 8;
+      int iImageHeight = iBottom - iTop + 1 - 8 - iTextHeight;
+
+      if (HB_ISNUM(6))
+      {
+        IPicture *pPicture = _s->pGUI->pPicture[hb_parni(6) - 1];
+        hb_wvt_gtRenderPicture(iLeft + 4, iTop + 4, iImageWidth, iImageHeight, pPicture, false);
+      }
+      else
+      {
+        hb_wvt_DrawImage(_s->hdc, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, hb_parc(6), false);
+        if (_s->bGui)
+        {
+          hb_wvt_DrawImage(_s->hGuiDC, iLeft + 4, iTop + 4, iImageWidth, iImageHeight, hb_parc(6), false);
+        }
+      }
+    }
+
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvt_DrawStatusBar(nNumPanels, aTLBRofPanels)
 */
-HB_FUNC( WVT_DRAWSTATUSBAR )
+HB_FUNC(WVT_DRAWSTATUSBAR)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      auto iPanels = hb_parni(1);
-      int   i, iNext;
-      int   iTop, iLeft, iBottom, iRight;
-      POINT xy;
+  if (_s)
+  {
+    auto iPanels = hb_parni(1);
+    int i, iNext;
+    int iTop, iLeft, iBottom, iRight;
+    POINT xy;
 
-      iNext = 0;
+    iNext = 0;
 
-      for( i = 0; i < iPanels; i++ ) {
-         xy    = hb_wvt_gtGetXYFromColRow(hb_parvni(2, iNext + 2), hb_parvni(2, iNext + 1));
-         iTop  = xy.y;
-         iLeft = xy.x + 1;
+    for (i = 0; i < iPanels; i++)
+    {
+      xy = hb_wvt_gtGetXYFromColRow(hb_parvni(2, iNext + 2), hb_parvni(2, iNext + 1));
+      iTop = xy.y;
+      iLeft = xy.x + 1;
 
-         xy      = hb_wvt_gtGetXYFromColRow(hb_parvni(2, iNext + 4), hb_parvni(2, iNext + 3) + 1);
-         iBottom = xy.y - 1;
-         iRight  = xy.x - 2;
-
-         SelectObject(_s->hdc, _s->pGUI->penWhite);
-
-         MoveToEx(_s->hdc, iRight, iTop, nullptr);            /* Right  */
-         LineTo(_s->hdc, iRight, iBottom);
-
-         MoveToEx(_s->hdc, iLeft, iBottom, nullptr);          /* Bottom */
-         LineTo(_s->hdc, iRight, iBottom);
-
-         SelectObject(_s->hdc, _s->pGUI->penDarkGray);
-
-         MoveToEx(_s->hdc, iLeft, iTop, nullptr);             /* Left   */
-         LineTo(_s->hdc, iLeft, iBottom);
-
-         MoveToEx(_s->hdc, iLeft, iTop, nullptr);             /* Top    */
-         LineTo(_s->hdc, iRight, iTop);
-
-         iNext = iNext + 4;
-      }
-
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parvni(2, 4 * iPanels), hb_parvni(2, (4 * iPanels) - 1) + 1);
-      iTop    = xy.y - 2;
-      iLeft   = xy.x - 2;
-      iBottom = iTop;
-      iRight  = iLeft;
-
-      SelectObject(_s->hdc, _s->pGUI->penBlack);
-
-      MoveToEx(_s->hdc, iLeft - 4, iBottom, nullptr);
-      LineTo(_s->hdc, iRight, iTop - 4);
-      MoveToEx(_s->hdc, iLeft - 7, iBottom, nullptr);
-      LineTo(_s->hdc, iRight, iTop - 7);
-      MoveToEx(_s->hdc, iLeft - 10, iBottom, nullptr);
-      LineTo(_s->hdc, iRight, iTop - 10);
+      xy = hb_wvt_gtGetXYFromColRow(hb_parvni(2, iNext + 4), hb_parvni(2, iNext + 3) + 1);
+      iBottom = xy.y - 1;
+      iRight = xy.x - 2;
 
       SelectObject(_s->hdc, _s->pGUI->penWhite);
 
-      MoveToEx(_s->hdc, iLeft - 5, iBottom, nullptr);
-      LineTo(_s->hdc, iRight, iTop - 5);
-      MoveToEx(_s->hdc, iLeft - 8, iBottom, nullptr);
-      LineTo(_s->hdc, iRight, iTop - 8);
-      MoveToEx(_s->hdc, iLeft - 11, iBottom, nullptr);
-      LineTo(_s->hdc, iRight, iTop - 11);
-   }
+      MoveToEx(_s->hdc, iRight, iTop, nullptr); /* Right  */
+      LineTo(_s->hdc, iRight, iBottom);
+
+      MoveToEx(_s->hdc, iLeft, iBottom, nullptr); /* Bottom */
+      LineTo(_s->hdc, iRight, iBottom);
+
+      SelectObject(_s->hdc, _s->pGUI->penDarkGray);
+
+      MoveToEx(_s->hdc, iLeft, iTop, nullptr); /* Left   */
+      LineTo(_s->hdc, iLeft, iBottom);
+
+      MoveToEx(_s->hdc, iLeft, iTop, nullptr); /* Top    */
+      LineTo(_s->hdc, iRight, iTop);
+
+      iNext = iNext + 4;
+    }
+
+    xy = hb_wvt_gtGetXYFromColRow(hb_parvni(2, 4 * iPanels), hb_parvni(2, (4 * iPanels) - 1) + 1);
+    iTop = xy.y - 2;
+    iLeft = xy.x - 2;
+    iBottom = iTop;
+    iRight = iLeft;
+
+    SelectObject(_s->hdc, _s->pGUI->penBlack);
+
+    MoveToEx(_s->hdc, iLeft - 4, iBottom, nullptr);
+    LineTo(_s->hdc, iRight, iTop - 4);
+    MoveToEx(_s->hdc, iLeft - 7, iBottom, nullptr);
+    LineTo(_s->hdc, iRight, iTop - 7);
+    MoveToEx(_s->hdc, iLeft - 10, iBottom, nullptr);
+    LineTo(_s->hdc, iRight, iTop - 10);
+
+    SelectObject(_s->hdc, _s->pGUI->penWhite);
+
+    MoveToEx(_s->hdc, iLeft - 5, iBottom, nullptr);
+    LineTo(_s->hdc, iRight, iTop - 5);
+    MoveToEx(_s->hdc, iLeft - 8, iBottom, nullptr);
+    LineTo(_s->hdc, iRight, iTop - 8);
+    MoveToEx(_s->hdc, iLeft - 11, iBottom, nullptr);
+    LineTo(_s->hdc, iRight, iTop - 11);
+  }
 }
 
 /*
 wvt_DrawPicture(nTop, nLeft, nBottom, nRight, nSlot, aPxlOff, lDoNotScale) --> lOk
 nSlot <= 20  aAdj == { 0,0,-2,-2 } To Adjust the pixels for { Top,Left,Bottom,Right }
 */
-HB_FUNC( WVT_DRAWPICTURE )
+HB_FUNC(WVT_DRAWPICTURE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(5) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(5) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->pPicture)) ) {
-         if( _s->pGUI->pPicture[iSlot] ) {
-            POINT xy;
-            int   iTop, iLeft, iBottom, iRight;
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->pPicture)))
+    {
+      if (_s->pGUI->pPicture[iSlot])
+      {
+        POINT xy;
+        int iTop, iLeft, iBottom, iRight;
 
-            xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-            iTop  = xy.y + hb_parvni(6, 1);
-            iLeft = xy.x + hb_parvni(6, 2);
+        xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+        iTop = xy.y + hb_parvni(6, 1);
+        iLeft = xy.x + hb_parvni(6, 2);
 
-            xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-            iBottom = xy.y - 1 + hb_parvni(6, 3);
-            iRight  = xy.x - 1 + hb_parvni(6, 4);
+        xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+        iBottom = xy.y - 1 + hb_parvni(6, 3);
+        iRight = xy.x - 1 + hb_parvni(6, 4);
 
-            hb_retl(hb_wvt_gtRenderPicture(iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, _s->pGUI->pPicture[iSlot], hb_parl(7)));
-            return;
-         }
+        hb_retl(hb_wvt_gtRenderPicture(iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, _s->pGUI->pPicture[iSlot],
+                                       hb_parl(7)));
+        return;
       }
-   }
-   hb_retl(false);
+    }
+  }
+  hb_retl(false);
 }
 
 /*
 wvt_DrawPictureEx(nTop, nLeft, nBottom, nRight, hPicture, aPxlOff, lDoNotScale) --> lOk
 */
-HB_FUNC( WVT_DRAWPICTUREEX )  /* Not in WVW */
+HB_FUNC(WVT_DRAWPICTUREEX) /* Not in WVW */
 {
-   if( hbwapi_is_HANDLE(5) ) {
-      POINT xy;
-      int   iTop, iLeft, iBottom, iRight;
+  if (hbwapi_is_HANDLE(5))
+  {
+    POINT xy;
+    int iTop, iLeft, iBottom, iRight;
 
-      xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-      iTop  = xy.y + hb_parvni(6, 1);
-      iLeft = xy.x + hb_parvni(6, 2);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+    iTop = xy.y + hb_parvni(6, 1);
+    iLeft = xy.x + hb_parvni(6, 2);
 
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-      iBottom = xy.y - 1 + hb_parvni(6, 3);
-      iRight  = xy.x - 1 + hb_parvni(6, 4);
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+    iBottom = xy.y - 1 + hb_parvni(6, 3);
+    iRight = xy.x - 1 + hb_parvni(6, 4);
 
-      hb_retl(hb_wvt_gtRenderPicture(iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1, static_cast<IPicture *>(hbwapi_par_raw_HANDLE(5)), hb_parl(7)));
-      return;
-   }
-   hb_retl(false);
+    hb_retl(hb_wvt_gtRenderPicture(iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1,
+                                   static_cast<IPicture *>(hbwapi_par_raw_HANDLE(5)), hb_parl(7)));
+    return;
+  }
+  hb_retl(false);
 }
 
 /*
 nState 0 Flat, 1 Raised, 2 Recessed
 wvt_DrawToolButtonState(nTop, nLeft, nBottom, nRight, aPxlOff, nState)
 */
-HB_FUNC( WVT_DRAWTOOLBUTTONSTATE )
+HB_FUNC(WVT_DRAWTOOLBUTTONSTATE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      switch( hb_parni(6) ) {
-         case 0:     /* Flat */
-            hb_wvt_DrawToolButtonFlat(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
-            #if defined(__SETGUI__)
-            if( _s->bGui ) {
-               hb_wvt_DrawToolButtonFlat(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
-            }
-            #endif
-            break;
-
-         case 1:     /* Raised */
-            hb_wvt_DrawToolButtonUp(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
-            #if defined(__SETGUI__)
-            if( _s->bGui ) {
-               hb_wvt_DrawToolButtonUp(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
-            }
-            #endif
-            break;
-
-         case 2:     /* Recessed */
-            hb_wvt_DrawToolButtonDown(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
-            #if defined(__SETGUI__)
-            if( _s->bGui ) {
-               hb_wvt_DrawToolButtonDown(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
-            }
-            #endif
-            break;
+    switch (hb_parni(6))
+    {
+    case 0: /* Flat */
+      hb_wvt_DrawToolButtonFlat(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawToolButtonFlat(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
       }
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
+#endif
+      break;
+
+    case 1: /* Raised */
+      hb_wvt_DrawToolButtonUp(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawToolButtonUp(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
+      }
+#endif
+      break;
+
+    case 2: /* Recessed */
+      hb_wvt_DrawToolButtonDown(_s, _s->hdc, iTop, iLeft, iBottom, iRight);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawToolButtonDown(_s, _s->hGuiDC, iTop, iLeft, iBottom, iRight);
+      }
+#endif
+      break;
+    }
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvt_DrawScrollButton(nTop, nLeft, nBottom, nRight, aPxlOff, nTLBR, lDepressed)
 */
-HB_FUNC( WVT_DRAWSCROLLBUTTON )
+HB_FUNC(WVT_DRAWSCROLLBUTTON)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      POINT Point[3];
-      POINT xy = { 0, 0 };
-      int   iOff = 6;
-      int   iHeight = iBottom - iTop + 1;
+    POINT Point[3];
+    POINT xy = {0, 0};
+    int iOff = 6;
+    int iHeight = iBottom - iTop + 1;
 
-      if( hb_parl(7) /* bDepressed */ ) {
-         hb_wvt_DrawBoxRecessed(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
-         #if defined(__SETGUI__)
-         if( _s->bGui )
-         {
-            hb_wvt_DrawBoxRecessed(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
-         }
-         #endif
-      } else {
-         hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
-         }
-         #endif
+    if (hb_parl(7) /* bDepressed */)
+    {
+      hb_wvt_DrawBoxRecessed(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawBoxRecessed(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
       }
-
-      switch( hb_parni(6) ) {
-         case 1:   /* Top */
-            xy.y       = iTop + iOff - 1;
-            xy.x       = iLeft + ((iRight - iLeft + 1) / 2);
-            Point[0] = xy;
-            xy.y       = iBottom - iOff - 1;
-            xy.x       = iLeft + iOff - 1;
-            Point[1] = xy;
-            xy.x       = iRight - iOff + 1;
-            Point[2] = xy;
-            break;
-
-         case 2:  /* Left */
-            xy.y       = iTop + ((iBottom - iTop + 1) / 2);
-            xy.x       = iLeft + iOff;
-            Point[0] = xy;
-            xy.x       = iRight - iOff - 1;
-            xy.y       = iTop + iOff - 1;
-            Point[1] = xy;
-            xy.y       = iBottom - iOff + 1;
-            Point[2] = xy;
-            break;
-
-         case 3:  /* Bottom */
-            xy.x       = iLeft + ((iRight - iLeft + 1) / 2);
-            xy.y       = iBottom - iOff;
-            Point[0] = xy;
-            xy.x       = iLeft + iOff - 1;
-            xy.y       = iBottom - iHeight + iOff + 1;
-            Point[1] = xy;
-            xy.x       = iRight - iOff + 1;
-            Point[2] = xy;
-            break;
-
-         case 4:  /* Right */
-            xy.x       = iRight - iOff - 1;
-            xy.y       = iTop + ((iBottom - iTop + 1) / 2);
-            Point[0] = xy;
-            xy.x       = iLeft + iOff + 1;
-            xy.y       = iTop + iOff - 1;
-            Point[1] = xy;
-            xy.y       = iBottom - iOff + 1;
-            Point[2] = xy;
-            break;
-
-         default:
-            memset(&Point, 0, sizeof(Point));
+#endif
+    }
+    else
+    {
+      hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop + 1, iLeft + 1, iBottom - 2, iRight - 2);
       }
+#endif
+    }
 
-      SelectObject(_s->hdc, _s->pGUI->solidBrush);
-      Polygon(_s->hdc, Point, HB_SIZEOFARRAY(Point));
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         SelectObject(_s->hGuiDC, _s->pGUI->solidBrush);
-         Polygon(_s->hGuiDC, Point, HB_SIZEOFARRAY(Point));
-      }
-      #endif
-   }
+    switch (hb_parni(6))
+    {
+    case 1: /* Top */
+      xy.y = iTop + iOff - 1;
+      xy.x = iLeft + ((iRight - iLeft + 1) / 2);
+      Point[0] = xy;
+      xy.y = iBottom - iOff - 1;
+      xy.x = iLeft + iOff - 1;
+      Point[1] = xy;
+      xy.x = iRight - iOff + 1;
+      Point[2] = xy;
+      break;
+
+    case 2: /* Left */
+      xy.y = iTop + ((iBottom - iTop + 1) / 2);
+      xy.x = iLeft + iOff;
+      Point[0] = xy;
+      xy.x = iRight - iOff - 1;
+      xy.y = iTop + iOff - 1;
+      Point[1] = xy;
+      xy.y = iBottom - iOff + 1;
+      Point[2] = xy;
+      break;
+
+    case 3: /* Bottom */
+      xy.x = iLeft + ((iRight - iLeft + 1) / 2);
+      xy.y = iBottom - iOff;
+      Point[0] = xy;
+      xy.x = iLeft + iOff - 1;
+      xy.y = iBottom - iHeight + iOff + 1;
+      Point[1] = xy;
+      xy.x = iRight - iOff + 1;
+      Point[2] = xy;
+      break;
+
+    case 4: /* Right */
+      xy.x = iRight - iOff - 1;
+      xy.y = iTop + ((iBottom - iTop + 1) / 2);
+      Point[0] = xy;
+      xy.x = iLeft + iOff + 1;
+      xy.y = iTop + iOff - 1;
+      Point[1] = xy;
+      xy.y = iBottom - iOff + 1;
+      Point[2] = xy;
+      break;
+
+    default:
+      memset(&Point, 0, sizeof(Point));
+    }
+
+    SelectObject(_s->hdc, _s->pGUI->solidBrush);
+    Polygon(_s->hdc, Point, HB_SIZEOFARRAY(Point));
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      SelectObject(_s->hGuiDC, _s->pGUI->solidBrush);
+      Polygon(_s->hGuiDC, Point, HB_SIZEOFARRAY(Point));
+    }
+#endif
+  }
 }
 
 /*
 wvt_DrawScrollThumbVert(nTop, nLeft, nBottom, nRight, aPxlOff, nThumbPos)
 */
-HB_FUNC( WVT_DRAWSCROLLTHUMBVERT )
+HB_FUNC(WVT_DRAWSCROLLTHUMBVERT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      int iTabTop, iTabLft, iTabBtm, iTabRgt;
+    int iTabTop, iTabLft, iTabBtm, iTabRgt;
 
-      /* Background */
-      SetBkMode(_s->hdc, OPAQUE);
-      SetBkColor(_s->hdc, RGB(230, 230, 230));
-      SelectObject(_s->hdc, _s->pGUI->diagonalBrush);
-      SelectObject(_s->hdc, _s->pGUI->penNull);
-      Rectangle(_s->hdc, iLeft, iTop, iRight + 1, iBottom + 1);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         SetBkMode(_s->hGuiDC, OPAQUE);
-         SetBkColor(_s->hGuiDC, RGB(230, 230, 230));
-         SelectObject(_s->hGuiDC, _s->pGUI->diagonalBrush);
-         SelectObject(_s->hGuiDC, _s->pGUI->penNull);
-         Rectangle(_s->hGuiDC, iLeft, iTop, iRight + 1, iBottom + 1);
-      }
-      #endif
-      /* Thumb */
-      iTabTop = _s->PTEXTSIZE.y * hb_parni(6);
-      iTabLft = iLeft;
-      iTabBtm = iTabTop + _s->PTEXTSIZE.y - 1;
-      iTabRgt = iRight;
+    /* Background */
+    SetBkMode(_s->hdc, OPAQUE);
+    SetBkColor(_s->hdc, RGB(230, 230, 230));
+    SelectObject(_s->hdc, _s->pGUI->diagonalBrush);
+    SelectObject(_s->hdc, _s->pGUI->penNull);
+    Rectangle(_s->hdc, iLeft, iTop, iRight + 1, iBottom + 1);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      SetBkMode(_s->hGuiDC, OPAQUE);
+      SetBkColor(_s->hGuiDC, RGB(230, 230, 230));
+      SelectObject(_s->hGuiDC, _s->pGUI->diagonalBrush);
+      SelectObject(_s->hGuiDC, _s->pGUI->penNull);
+      Rectangle(_s->hGuiDC, iLeft, iTop, iRight + 1, iBottom + 1);
+    }
+#endif
+    /* Thumb */
+    iTabTop = _s->PTEXTSIZE.y * hb_parni(6);
+    iTabLft = iLeft;
+    iTabBtm = iTabTop + _s->PTEXTSIZE.y - 1;
+    iTabRgt = iRight;
 
-      SelectObject(_s->hdc, _s->pGUI->whiteBrush);
-      SelectObject(_s->hdc, _s->pGUI->penGray);
-      Rectangle(_s->hdc, iTabLft, iTabTop, iTabRgt + 1, iTabBtm);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         SelectObject(_s->hGuiDC, _s->pGUI->whiteBrush);
-         SelectObject(_s->hGuiDC, _s->pGUI->penGray);
-         Rectangle(_s->hGuiDC, iTabLft, iTabTop, iTabRgt + 1, iTabBtm);
-      }
-      #endif
-      hb_wvt_DrawBoxRaised(_s, _s->hdc, iTabTop + 1, iTabLft + 1, iTabBtm - 2, iTabRgt - 2);
-      #if defined(__SETGUI__)
-      if( _s->bGui )
-         hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTabTop + 1, iTabLft + 1, iTabBtm - 2, iTabRgt - 2);
-      #endif
-   }
+    SelectObject(_s->hdc, _s->pGUI->whiteBrush);
+    SelectObject(_s->hdc, _s->pGUI->penGray);
+    Rectangle(_s->hdc, iTabLft, iTabTop, iTabRgt + 1, iTabBtm);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      SelectObject(_s->hGuiDC, _s->pGUI->whiteBrush);
+      SelectObject(_s->hGuiDC, _s->pGUI->penGray);
+      Rectangle(_s->hGuiDC, iTabLft, iTabTop, iTabRgt + 1, iTabBtm);
+    }
+#endif
+    hb_wvt_DrawBoxRaised(_s, _s->hdc, iTabTop + 1, iTabLft + 1, iTabBtm - 2, iTabRgt - 2);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+      hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTabTop + 1, iTabLft + 1, iTabBtm - 2, iTabRgt - 2);
+#endif
+  }
 }
 
 /*
 wvt_DrawScrollThumbHorz(nTop, nLeft, nBottom, nRight, aPxlOff, nThumbPos)
 */
-HB_FUNC( WVT_DRAWSCROLLTHUMBHORZ )
+HB_FUNC(WVT_DRAWSCROLLTHUMBHORZ)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      int iThumbLeft  = _s->PTEXTSIZE.x * hb_parni(6);
-      int iThumbRight = iThumbLeft + (_s->PTEXTSIZE.x * 2) - 1;
+    int iThumbLeft = _s->PTEXTSIZE.x * hb_parni(6);
+    int iThumbRight = iThumbLeft + (_s->PTEXTSIZE.x * 2) - 1;
 
-      /* Background */
-      SetBkMode(_s->hdc, OPAQUE);
-      SetBkColor(_s->hdc, RGB(230, 230, 230));
-      SelectObject(_s->hdc, _s->pGUI->diagonalBrush);
-      SelectObject(_s->hdc, _s->pGUI->penNull);
-      Rectangle(_s->hdc, iLeft, iTop, iRight + 1, iBottom + 1);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         SetBkMode(_s->hGuiDC, OPAQUE);
-         SetBkColor(_s->hGuiDC, RGB(230, 230, 230));
-         SelectObject(_s->hGuiDC, _s->pGUI->diagonalBrush);
-         SelectObject(_s->hGuiDC, _s->pGUI->penNull);
-         Rectangle(_s->hGuiDC, iLeft, iTop, iRight + 1, iBottom + 1);
-      }
-      #endif
-      /* Thumb */
-      SelectObject(_s->hdc, _s->pGUI->whiteBrush);
-      SelectObject(_s->hdc, _s->pGUI->penGray);
-      Rectangle(_s->hdc, iThumbLeft, iTop, iThumbRight, iBottom);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         SelectObject(_s->hGuiDC, _s->pGUI->whiteBrush);
-         SelectObject(_s->hGuiDC, _s->pGUI->penGray);
-         Rectangle(_s->hGuiDC, iThumbLeft, iTop, iThumbRight, iBottom);
-      }
-      #endif
-      hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop + 1, iThumbLeft + 1, iBottom - 2, iThumbRight - 2);
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop + 1, iThumbLeft + 1, iBottom - 2, iThumbRight - 2);
-      }
-      #endif
-   }
+    /* Background */
+    SetBkMode(_s->hdc, OPAQUE);
+    SetBkColor(_s->hdc, RGB(230, 230, 230));
+    SelectObject(_s->hdc, _s->pGUI->diagonalBrush);
+    SelectObject(_s->hdc, _s->pGUI->penNull);
+    Rectangle(_s->hdc, iLeft, iTop, iRight + 1, iBottom + 1);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      SetBkMode(_s->hGuiDC, OPAQUE);
+      SetBkColor(_s->hGuiDC, RGB(230, 230, 230));
+      SelectObject(_s->hGuiDC, _s->pGUI->diagonalBrush);
+      SelectObject(_s->hGuiDC, _s->pGUI->penNull);
+      Rectangle(_s->hGuiDC, iLeft, iTop, iRight + 1, iBottom + 1);
+    }
+#endif
+    /* Thumb */
+    SelectObject(_s->hdc, _s->pGUI->whiteBrush);
+    SelectObject(_s->hdc, _s->pGUI->penGray);
+    Rectangle(_s->hdc, iThumbLeft, iTop, iThumbRight, iBottom);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      SelectObject(_s->hGuiDC, _s->pGUI->whiteBrush);
+      SelectObject(_s->hGuiDC, _s->pGUI->penGray);
+      Rectangle(_s->hGuiDC, iThumbLeft, iTop, iThumbRight, iBottom);
+    }
+#endif
+    hb_wvt_DrawBoxRaised(_s, _s->hdc, iTop + 1, iThumbLeft + 1, iBottom - 2, iThumbRight - 2);
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      hb_wvt_DrawBoxRaised(_s, _s->hGuiDC, iTop + 1, iThumbLeft + 1, iBottom - 2, iThumbRight - 2);
+    }
+#endif
+  }
 }
 
 /*
 wvt_DrawShadedRect(nTop, nLeft, nBottom, nRight, aPxlOff, nHorVert, aRGBb, aRGBe)
 */
-HB_FUNC( WVT_DRAWSHADEDRECT )
+HB_FUNC(WVT_DRAWSHADEDRECT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      bool bGF = false;
+  if (_s)
+  {
+    bool bGF = false;
 
-      if( _s->pGUI->hMSImg32 ) {
-         TRIVERTEX     vert[2];
-         GRADIENT_RECT gRect;
+    if (_s->pGUI->hMSImg32)
+    {
+      TRIVERTEX vert[2];
+      GRADIENT_RECT gRect;
 
-         int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-         int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-         int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-         int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+      int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+      int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+      int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-         auto iMode = hb_parnidef(6, GRADIENT_FILL_RECT_H);
+      auto iMode = hb_parnidef(6, GRADIENT_FILL_RECT_H);
 
-         vert[0].x     = iLeft;
-         vert[0].y     = iTop;
-         vert[0].Red   = static_cast<COLOR16>(hb_parvni(7, 1));
-         vert[0].Green = static_cast<COLOR16>(hb_parvni(7, 2));
-         vert[0].Blue  = static_cast<COLOR16>(hb_parvni(7, 3));
-         vert[0].Alpha = static_cast<COLOR16>(hb_parvni(7, 4));
+      vert[0].x = iLeft;
+      vert[0].y = iTop;
+      vert[0].Red = static_cast<COLOR16>(hb_parvni(7, 1));
+      vert[0].Green = static_cast<COLOR16>(hb_parvni(7, 2));
+      vert[0].Blue = static_cast<COLOR16>(hb_parvni(7, 3));
+      vert[0].Alpha = static_cast<COLOR16>(hb_parvni(7, 4));
 
-         vert[1].x     = iRight;
-         vert[1].y     = iBottom;
-         vert[1].Red   = static_cast<COLOR16>(hb_parvni(8, 1));
-         vert[1].Green = static_cast<COLOR16>(hb_parvni(8, 2));
-         vert[1].Blue  = static_cast<COLOR16>(hb_parvni(8, 3));
-         vert[1].Alpha = static_cast<COLOR16>(hb_parvni(8, 4));
+      vert[1].x = iRight;
+      vert[1].y = iBottom;
+      vert[1].Red = static_cast<COLOR16>(hb_parvni(8, 1));
+      vert[1].Green = static_cast<COLOR16>(hb_parvni(8, 2));
+      vert[1].Blue = static_cast<COLOR16>(hb_parvni(8, 3));
+      vert[1].Alpha = static_cast<COLOR16>(hb_parvni(8, 4));
 
-         gRect.UpperLeft = 0;
-         gRect.LowerRight = 1;
+      gRect.UpperLeft = 0;
+      gRect.LowerRight = 1;
 
-         bGF = static_cast<bool>(_s->pGUI->pfnGF( _s->hdc, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            bGF = static_cast<bool>(_s->pGUI->pfnGF(_s->hGuiDC, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
-         }
-         #endif
+      bGF = static_cast<bool>(_s->pGUI->pfnGF(_s->hdc, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        bGF = static_cast<bool>(_s->pGUI->pfnGF(_s->hGuiDC, vert, HB_SIZEOFARRAY(vert), &gRect, 1, iMode));
       }
-      hb_retl(bGF);
-   } else {
-      hb_retl(false);
-   }
+#endif
+    }
+    hb_retl(bGF);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
-wvt_DrawTextBox(nTop, nLeft, nBottom, nRight, aPxlOff, cText, nAlignHorz, nAlignVert, nTextColor, nBackColor, nBackMode, hFont)
+wvt_DrawTextBox(nTop, nLeft, nBottom, nRight, aPxlOff, cText, nAlignHorz, nAlignVert, nTextColor, nBackColor, nBackMode,
+hFont)
 */
-HB_FUNC( WVT_DRAWTEXTBOX )
+HB_FUNC(WVT_DRAWTEXTBOX)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      int iAlignH = 0;
+    int iAlignH = 0;
 
-      RECT rc;
-      COLORREF fgClr = hb_wvt_FgColorParam(_s, 9);
-      COLORREF bgClr = hb_wvt_BgColorParam(_s, 10);
+    RECT rc;
+    COLORREF fgClr = hb_wvt_FgColorParam(_s, 9);
+    COLORREF bgClr = hb_wvt_BgColorParam(_s, 10);
 
-      switch( hb_parni(7) /* default to 0 */ ) {
-         case 0:
-            iAlignH = DT_LEFT;
-            break;
+    switch (hb_parni(7) /* default to 0 */)
+    {
+    case 0:
+      iAlignH = DT_LEFT;
+      break;
 
-         case 1:
-            iAlignH = DT_RIGHT;
-            break;
+    case 1:
+      iAlignH = DT_RIGHT;
+      break;
 
-         case 2:
-            iAlignH = DT_CENTER;
-            break;
-      }
+    case 2:
+      iAlignH = DT_CENTER;
+      break;
+    }
 
-      rc.top    = iTop;
-      rc.left   = iLeft;
-      rc.bottom = iBottom;
-      rc.right  = iRight;
+    rc.top = iTop;
+    rc.left = iLeft;
+    rc.bottom = iBottom;
+    rc.right = iRight;
 
-      SetTextAlign(_s->hdc, TA_TOP | TA_LEFT | TA_NOUPDATECP);
-      SetTextColor(_s->hdc, fgClr);
-      SetBkColor(_s->hdc, bgClr);
-      SetBkMode(_s->hdc, hb_parnidef(11, OPAQUE));
-      SelectObject(_s->hdc, hbwapi_par_raw_HFONT(12));
+    SetTextAlign(_s->hdc, TA_TOP | TA_LEFT | TA_NOUPDATECP);
+    SetTextColor(_s->hdc, fgClr);
+    SetBkColor(_s->hdc, bgClr);
+    SetBkMode(_s->hdc, hb_parnidef(11, OPAQUE));
+    SelectObject(_s->hdc, hbwapi_par_raw_HFONT(12));
+
+    {
+      void *hText;
+      HB_SIZE nLen;
+      LPCTSTR text = HB_PARSTR(6, &hText, &nLen);
+      DrawText(_s->hdc, text, static_cast<int>(nLen), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
+      hb_strfree(hText);
+    }
+
+#if defined(__SETGUI__)
+    if (_s->bGui)
+    {
+      SetTextAlign(_s->hGuiDC, TA_TOP | TA_LEFT | TA_NOUPDATECP);
+      SetTextColor(_s->hGuiDC, fgClr);
+      SetBkColor(_s->hGuiDC, bgClr);
+      SetBkMode(_s->hGuiDC, hb_parnidef(11, OPAQUE));
+      SelectObject(_s->hGuiDC, hbwapi_par_raw_HFONT(12));
 
       {
-         void * hText;
-         HB_SIZE nLen;
-         LPCTSTR text = HB_PARSTR(6, &hText, &nLen);
-         DrawText(_s->hdc, text, static_cast<int>(nLen), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
-         hb_strfree(hText);
+        void *hText;
+        HB_SIZE nLen;
+        LPCTSTR text = HB_PARSTR(6, &hText, &nLen);
+        DrawText(_s->hGuiDC, text, static_cast<int>(nLen), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
+        hb_strfree(hText);
       }
-
-      #if defined(__SETGUI__)
-      if( _s->bGui ) {
-         SetTextAlign(_s->hGuiDC, TA_TOP | TA_LEFT | TA_NOUPDATECP);
-         SetTextColor(_s->hGuiDC, fgClr);
-         SetBkColor(_s->hGuiDC, bgClr);
-         SetBkMode(_s->hGuiDC, hb_parnidef(11, OPAQUE));
-         SelectObject(_s->hGuiDC, hbwapi_par_raw_HFONT(12));
-
-         {
-            void * hText;
-            HB_SIZE nLen;
-            LPCTSTR text = HB_PARSTR(6, &hText, &nLen);
-            DrawText(_s->hGuiDC, text, static_cast<int>(nLen), &rc, iAlignH | DT_WORDBREAK | DT_TOP);
-            hb_strfree(hText);
-         }
-      }
-      #endif
-   }
+    }
+#endif
+  }
 }
 
 /*
-wvt_DrawProgressBar(nTop, nLeft, nBottom, nRight, aPxlOff, nPercent, nBackColor, nBarColor, cImage, lVertical, nDirection)
+wvt_DrawProgressBar(nTop, nLeft, nBottom, nRight, aPxlOff, nPercent, nBackColor, nBarColor, cImage, lVertical,
+nDirection)
 */
-HB_FUNC( WVT_DRAWPROGRESSBAR )
+HB_FUNC(WVT_DRAWPROGRESSBAR)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iTop    = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
-      int iLeft   = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
-      int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
-      int iRight  = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
+  if (_s)
+  {
+    int iTop = hb_parvni(5, 1) + _s->PTEXTSIZE.y * hb_parni(1);
+    int iLeft = hb_parvni(5, 2) + _s->PTEXTSIZE.x * hb_parni(2);
+    int iBottom = hb_parvni(5, 3) + _s->PTEXTSIZE.y * (hb_parni(3) + 1) - 1;
+    int iRight = hb_parvni(5, 4) + _s->PTEXTSIZE.x * (hb_parni(4) + 1) - 1;
 
-      auto iPercent   = hb_parni(6);
-      auto iDirection = hb_parni(11);
+    auto iPercent = hb_parni(6);
+    auto iDirection = hb_parni(11);
 
-      int iBarUpto;
-      RECT rc = { 0, 0, 0, 0 };
+    int iBarUpto;
+    RECT rc = {0, 0, 0, 0};
 
-      if( hb_parl(10) /* bVertical */ ) {
-         if( iDirection == 0 ) {
-            iBarUpto  = iTop + ((iBottom - iTop) * iPercent / 100);
-            rc.top    = iTop;
-            rc.left   = iLeft;
-            rc.bottom = iBarUpto;
-            rc.right  = iRight;
-         } else {
-            iBarUpto  = iBottom - ((iBottom - iTop) * iPercent / 100);
-            rc.top    = iBarUpto;
-            rc.left   = iLeft;
-            rc.bottom = iBottom;
-            rc.right  = iRight;
-         }
-      } else {
-         if( iDirection == 0 ) {
-            iBarUpto  = iLeft + ((iRight - iLeft) * iPercent / 100);
-            rc.top    = iTop;
-            rc.left   = iLeft;
-            rc.bottom = iBottom;
-            rc.right  = iBarUpto;
-         } else {
-            iBarUpto  = iRight - ((iRight - iLeft) * iPercent / 100);
-            rc.top    = iTop;
-            rc.left   = iBarUpto;
-            rc.bottom = iBottom;
-            rc.right  = iRight;
-         }
+    if (hb_parl(10) /* bVertical */)
+    {
+      if (iDirection == 0)
+      {
+        iBarUpto = iTop + ((iBottom - iTop) * iPercent / 100);
+        rc.top = iTop;
+        rc.left = iLeft;
+        rc.bottom = iBarUpto;
+        rc.right = iRight;
       }
-
-      if( HB_ISCHAR(9) ) {
-         hb_wvt_DrawImage(_s->hdc, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(9), false);
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            hb_wvt_DrawImage(_s->hGuiDC, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(9), false);
-         }
-         #endif
-      } else {
-         LOGBRUSH lb = { 0, 0, 0 };
-
-         lb.lbStyle = BS_SOLID;
-         lb.lbColor = hbwapi_par_COLORREF_def(8, _s->COLORS[0]);
-         lb.lbHatch = 0;
-         auto hBrush = CreateBrushIndirect(&lb);
-         rc.bottom++;
-         rc.right++;
-
-         FillRect(_s->hdc, &rc, hBrush);
-         #if defined(__SETGUI__)
-         if( _s->bGui ) {
-            FillRect(_s->hGuiDC, &rc, hBrush);
-         }
-         #endif
-         DeleteObject(hBrush);
+      else
+      {
+        iBarUpto = iBottom - ((iBottom - iTop) * iPercent / 100);
+        rc.top = iBarUpto;
+        rc.left = iLeft;
+        rc.bottom = iBottom;
+        rc.right = iRight;
       }
-   }
+    }
+    else
+    {
+      if (iDirection == 0)
+      {
+        iBarUpto = iLeft + ((iRight - iLeft) * iPercent / 100);
+        rc.top = iTop;
+        rc.left = iLeft;
+        rc.bottom = iBottom;
+        rc.right = iBarUpto;
+      }
+      else
+      {
+        iBarUpto = iRight - ((iRight - iLeft) * iPercent / 100);
+        rc.top = iTop;
+        rc.left = iBarUpto;
+        rc.bottom = iBottom;
+        rc.right = iRight;
+      }
+    }
+
+    if (HB_ISCHAR(9))
+    {
+      hb_wvt_DrawImage(_s->hdc, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(9), false);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        hb_wvt_DrawImage(_s->hGuiDC, rc.left, rc.top, rc.right - rc.left + 1, rc.bottom - rc.top + 1, hb_parc(9),
+                         false);
+      }
+#endif
+    }
+    else
+    {
+      LOGBRUSH lb = {0, 0, 0};
+
+      lb.lbStyle = BS_SOLID;
+      lb.lbColor = hbwapi_par_COLORREF_def(8, _s->COLORS[0]);
+      lb.lbHatch = 0;
+      auto hBrush = CreateBrushIndirect(&lb);
+      rc.bottom++;
+      rc.right++;
+
+      FillRect(_s->hdc, &rc, hBrush);
+#if defined(__SETGUI__)
+      if (_s->bGui)
+      {
+        FillRect(_s->hGuiDC, &rc, hBrush);
+      }
+#endif
+      DeleteObject(hBrush);
+    }
+  }
 }
 
 /*
 wvt_CreateFont(cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline, lStrikeout, nCharSet, nQuality, nEscapement)
 */
-HB_FUNC( WVT_CREATEFONT )
+HB_FUNC(WVT_CREATEFONT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      LOGFONT lf{};
-      void * hText = nullptr;
+  if (_s)
+  {
+    LOGFONT lf{};
+    void *hText = nullptr;
 
-      lf.lfEscapement     = hb_parni(10) * 10;
-      lf.lfOrientation    = 0;
-      lf.lfWeight         = hb_parni(4);
-      lf.lfItalic         = static_cast<BYTE>(hb_parl(5));
-      lf.lfUnderline      = static_cast<BYTE>(hb_parl(6));
-      lf.lfStrikeOut      = static_cast<BYTE>(hb_parl(7));
-      lf.lfCharSet        = static_cast<BYTE>( hb_parnidef(8, _s->CodePage));
-      lf.lfOutPrecision   = 0;
-      lf.lfClipPrecision  = 0;
-      lf.lfQuality        = static_cast<BYTE>(hb_parnidef(9, DEFAULT_QUALITY));
-      lf.lfPitchAndFamily = FF_DONTCARE;
-      lf.lfHeight         = hb_parnidef(2, _s->fontHeight);
-      lf.lfWidth          = hb_parnidef(3, _s->fontWidth < 0 ? -_s->fontWidth : _s->fontWidth);
+    lf.lfEscapement = hb_parni(10) * 10;
+    lf.lfOrientation = 0;
+    lf.lfWeight = hb_parni(4);
+    lf.lfItalic = static_cast<BYTE>(hb_parl(5));
+    lf.lfUnderline = static_cast<BYTE>(hb_parl(6));
+    lf.lfStrikeOut = static_cast<BYTE>(hb_parl(7));
+    lf.lfCharSet = static_cast<BYTE>(hb_parnidef(8, _s->CodePage));
+    lf.lfOutPrecision = 0;
+    lf.lfClipPrecision = 0;
+    lf.lfQuality = static_cast<BYTE>(hb_parnidef(9, DEFAULT_QUALITY));
+    lf.lfPitchAndFamily = FF_DONTCARE;
+    lf.lfHeight = hb_parnidef(2, _s->fontHeight);
+    lf.lfWidth = hb_parnidef(3, _s->fontWidth < 0 ? -_s->fontWidth : _s->fontWidth);
 
-      HB_STRNCPY(lf.lfFaceName, HB_ISCHAR(1) ? HB_PARSTR(1, &hText, nullptr) : _s->fontFace, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
-      hb_strfree(hText);
+    HB_STRNCPY(lf.lfFaceName, HB_ISCHAR(1) ? HB_PARSTR(1, &hText, nullptr) : _s->fontFace,
+               HB_SIZEOFARRAY(lf.lfFaceName) - 1);
+    hb_strfree(hText);
 
-      hbwapi_ret_raw_HANDLE(CreateFontIndirect(&lf));
-   } else {
-      hbwapi_ret_raw_HANDLE(0);
-   }
+    hbwapi_ret_raw_HANDLE(CreateFontIndirect(&lf));
+  }
+  else
+  {
+    hbwapi_ret_raw_HANDLE(0);
+  }
 }
 
 /*
 wvt_LoadPicture(nSlot, cFilePic)
 */
-HB_FUNC( WVT_LOADPICTURE )
+HB_FUNC(WVT_LOADPICTURE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(1) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(1) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->pPicture)) ) {
-         IPicture * pPicture = hb_wvt_gtLoadPicture(hb_parc(2));
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->pPicture)))
+    {
+      IPicture *pPicture = hb_wvt_gtLoadPicture(hb_parc(2));
 
-         if( pPicture ) {
-            if( _s->pGUI->pPicture[iSlot] ) {
-               hb_wvt_gtDestroyPicture(_s->pGUI->pPicture[iSlot]);
-            }
-            _s->pGUI->pPicture[iSlot] = pPicture;
+      if (pPicture)
+      {
+        if (_s->pGUI->pPicture[iSlot])
+        {
+          hb_wvt_gtDestroyPicture(_s->pGUI->pPicture[iSlot]);
+        }
+        _s->pGUI->pPicture[iSlot] = pPicture;
 
-            hb_retl(true);
-            return;
-         }
+        hb_retl(true);
+        return;
       }
-   }
-   hb_retl(false);
+    }
+  }
+  hb_retl(false);
 }
 
-HB_FUNC( WVT_DESTROYPICTURE )
+HB_FUNC(WVT_DESTROYPICTURE)
 {
-   hb_retl(hb_wvt_gtDestroyPicture(static_cast<IPicture *>(hbwapi_par_raw_HANDLE(1))));
+  hb_retl(hb_wvt_gtDestroyPicture(static_cast<IPicture *>(hbwapi_par_raw_HANDLE(1))));
 }
 
 /*
 wvt_LoadPictureEx(cFilePic)
 */
-HB_FUNC( WVT_LOADPICTUREEX )
+HB_FUNC(WVT_LOADPICTUREEX)
 {
-   hbwapi_ret_raw_HANDLE(hb_wvt_gtLoadPicture(hb_parc(1)));
+  hbwapi_ret_raw_HANDLE(hb_wvt_gtLoadPicture(hb_parc(1)));
 }
 
-HB_FUNC( WVT_LOADPICTUREFROMRESOURCE )
+HB_FUNC(WVT_LOADPICTUREFROMRESOURCE)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(1) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(1) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->pPicture)) ) {
-         void * hResource;
-         void * hSection;
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->pPicture)))
+    {
+      void *hResource;
+      void *hSection;
 
-         IPicture * pPicture = hb_wvt_gtLoadPictureFromResource(HB_PARSTR(2, &hResource, nullptr), HB_PARSTR(3, &hSection, nullptr));
+      IPicture *pPicture =
+          hb_wvt_gtLoadPictureFromResource(HB_PARSTR(2, &hResource, nullptr), HB_PARSTR(3, &hSection, nullptr));
 
-         hb_strfree(hResource);
-         hb_strfree(hSection);
+      hb_strfree(hResource);
+      hb_strfree(hSection);
 
-         if( pPicture ) {
-            if( _s->pGUI->pPicture[iSlot] ) {
-               hb_wvt_gtDestroyPicture(_s->pGUI->pPicture[iSlot]);
-            }
-            _s->pGUI->pPicture[iSlot] = pPicture;
+      if (pPicture)
+      {
+        if (_s->pGUI->pPicture[iSlot])
+        {
+          hb_wvt_gtDestroyPicture(_s->pGUI->pPicture[iSlot]);
+        }
+        _s->pGUI->pPicture[iSlot] = pPicture;
 
-            hb_retl(true);
-            return;
-         }
+        hb_retl(true);
+        return;
       }
-   }
-   hb_retl(false);
+    }
+  }
+  hb_retl(false);
 }
 
-HB_FUNC( WVT_LOADPICTUREFROMRESOURCEEX )
+HB_FUNC(WVT_LOADPICTUREFROMRESOURCEEX)
 {
-   void * hResource;
-   void * hSection;
+  void *hResource;
+  void *hSection;
 
-   hbwapi_ret_raw_HANDLE(hb_wvt_gtLoadPictureFromResource(HB_PARSTR(1, &hResource, nullptr), HB_PARSTR(2, &hSection, nullptr)));
+  hbwapi_ret_raw_HANDLE(
+      hb_wvt_gtLoadPictureFromResource(HB_PARSTR(1, &hResource, nullptr), HB_PARSTR(2, &hSection, nullptr)));
 
-   hb_strfree(hResource);
-   hb_strfree(hSection);
+  hb_strfree(hResource);
+  hb_strfree(hSection);
 }
 
 /*
-wvt_LoadFont(nSlotFont, cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline, lStrikeout, nCharSet, nQuality, nEscapement)
+wvt_LoadFont(nSlotFont, cFontFace, nHeight, nWidth, nWeight, lItalic, lUnderline, lStrikeout, nCharSet, nQuality,
+nEscapement)
 */
-HB_FUNC( WVT_LOADFONT )
+HB_FUNC(WVT_LOADFONT)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(1) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(1) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserFonts)) ) {
-         LOGFONT lf{};
-         HFONT hFont;
-         void * hF = nullptr;
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserFonts)))
+    {
+      LOGFONT lf{};
+      HFONT hFont;
+      void *hF = nullptr;
 
-         lf.lfEscapement     = hb_parni(11) * 10;
-         lf.lfOrientation    = 0;
-         lf.lfWeight         = hb_parni(5);
-         lf.lfItalic         = static_cast<BYTE>(hb_parl(6));
-         lf.lfUnderline      = static_cast<BYTE>(hb_parl(7));
-         lf.lfStrikeOut      = static_cast<BYTE>(hb_parl(8));
-         lf.lfCharSet        = static_cast<BYTE>(hb_parnidef(9, _s->CodePage));
-         lf.lfOutPrecision   = 0;
-         lf.lfClipPrecision  = 0;
-         lf.lfQuality        = static_cast<BYTE>(hb_parnidef(10, DEFAULT_QUALITY));
-         lf.lfPitchAndFamily = FF_DONTCARE;
-         lf.lfHeight         = hb_parnidef(3, _s->fontHeight);
-         lf.lfWidth          = hb_parnidef(4, _s->fontWidth < 0 ? -_s->fontWidth : _s->fontWidth);
+      lf.lfEscapement = hb_parni(11) * 10;
+      lf.lfOrientation = 0;
+      lf.lfWeight = hb_parni(5);
+      lf.lfItalic = static_cast<BYTE>(hb_parl(6));
+      lf.lfUnderline = static_cast<BYTE>(hb_parl(7));
+      lf.lfStrikeOut = static_cast<BYTE>(hb_parl(8));
+      lf.lfCharSet = static_cast<BYTE>(hb_parnidef(9, _s->CodePage));
+      lf.lfOutPrecision = 0;
+      lf.lfClipPrecision = 0;
+      lf.lfQuality = static_cast<BYTE>(hb_parnidef(10, DEFAULT_QUALITY));
+      lf.lfPitchAndFamily = FF_DONTCARE;
+      lf.lfHeight = hb_parnidef(3, _s->fontHeight);
+      lf.lfWidth = hb_parnidef(4, _s->fontWidth < 0 ? -_s->fontWidth : _s->fontWidth);
 
-         HB_STRNCPY(lf.lfFaceName, HB_ISCHAR(2) ? HB_PARSTR(2, &hF, nullptr) : _s->fontFace, HB_SIZEOFARRAY(lf.lfFaceName) - 1);
-         hb_strfree(hF);
+      HB_STRNCPY(lf.lfFaceName, HB_ISCHAR(2) ? HB_PARSTR(2, &hF, nullptr) : _s->fontFace,
+                 HB_SIZEOFARRAY(lf.lfFaceName) - 1);
+      hb_strfree(hF);
 
-         hFont = CreateFontIndirect(&lf);
-         if( hFont ) {
-            if( _s->pGUI->hUserFonts[iSlot] ) {
-               DeleteObject(_s->pGUI->hUserFonts[iSlot]);
-            }
-            _s->pGUI->hUserFonts[iSlot] = hFont;
-         }
+      hFont = CreateFontIndirect(&lf);
+      if (hFont)
+      {
+        if (_s->pGUI->hUserFonts[iSlot])
+        {
+          DeleteObject(_s->pGUI->hUserFonts[iSlot]);
+        }
+        _s->pGUI->hUserFonts[iSlot] = hFont;
       }
-   }
+    }
+  }
 }
 
 /*
 wvt_LoadPen(nSlot, nStyle, nWidth, nRGBColor)
 */
-HB_FUNC( WVT_LOADPEN )
+HB_FUNC(WVT_LOADPEN)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      int iSlot = hb_parni(1) - 1;
+  if (_s)
+  {
+    int iSlot = hb_parni(1) - 1;
 
-      if( iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)) ) {
-         auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
+    if (iSlot >= 0 && iSlot < static_cast<int>(HB_SIZEOFARRAY(_s->pGUI->hUserPens)))
+    {
+      auto hPen = CreatePen(hb_parni(2), hb_parni(3), hbwapi_par_COLORREF(4));
 
-         if( hPen ) {
-            if( _s->pGUI->hUserPens[iSlot] ) {
-               DeleteObject(_s->pGUI->hUserPens[iSlot]);
-            }
-            _s->pGUI->hUserPens[iSlot] = hPen;
+      if (hPen)
+      {
+        if (_s->pGUI->hUserPens[iSlot])
+        {
+          DeleteObject(_s->pGUI->hUserPens[iSlot]);
+        }
+        _s->pGUI->hUserPens[iSlot] = hPen;
 
-            hb_retl(true);
-            return;
-         }
+        hb_retl(true);
+        return;
       }
-   }
+    }
+  }
 
-   hb_retl(false);
+  hb_retl(false);
 }
 
 /*
 wvt_SaveScreen(nTop, nLeft, nBottom, nRight) --> aSrc
 */
-HB_FUNC( WVT_SAVESCREEN )
+HB_FUNC(WVT_SAVESCREEN)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      HDC      hCompDC;
-      HBITMAP  hBmp;
-      POINT    xy;
-      int      iTop, iLeft, iBottom, iRight, iWidth, iHeight;
-      auto info = hb_itemArrayNew(3);
+  if (_s)
+  {
+    HDC hCompDC;
+    HBITMAP hBmp;
+    POINT xy;
+    int iTop, iLeft, iBottom, iRight, iWidth, iHeight;
+    auto info = hb_itemArrayNew(3);
 
-      xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-      iTop  = xy.y;
-      iLeft = xy.x;
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+    iTop = xy.y;
+    iLeft = xy.x;
 
-      xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-      iBottom = xy.y - 1;
-      iRight  = xy.x - 1;
+    xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+    iBottom = xy.y - 1;
+    iRight = xy.x - 1;
 
-      iWidth  = iRight - iLeft + 1;
-      iHeight = iBottom - iTop + 1;
+    iWidth = iRight - iLeft + 1;
+    iHeight = iBottom - iTop + 1;
 
-      hBmp = CreateCompatibleBitmap(_s->hdc, iWidth, iHeight);
+    hBmp = CreateCompatibleBitmap(_s->hdc, iWidth, iHeight);
 
-      hCompDC = CreateCompatibleDC(_s->hdc);
-      auto oldBmp  = static_cast<HBITMAP>(SelectObject(hCompDC, hBmp));
-      BitBlt(hCompDC, 0, 0, iWidth, iHeight, _s->hdc, iLeft, iTop, SRCCOPY);
-      SelectObject(hCompDC, oldBmp);
-      DeleteDC(hCompDC);
+    hCompDC = CreateCompatibleDC(_s->hdc);
+    auto oldBmp = static_cast<HBITMAP>(SelectObject(hCompDC, hBmp));
+    BitBlt(hCompDC, 0, 0, iWidth, iHeight, _s->hdc, iLeft, iTop, SRCCOPY);
+    SelectObject(hCompDC, oldBmp);
+    DeleteDC(hCompDC);
 
-      hb_arraySetNI(info, 1, iWidth);
-      hb_arraySetNI(info, 2, iHeight);
-      hbwapi_arraySet_HANDLE(info, 3, hBmp);
+    hb_arraySetNI(info, 1, iWidth);
+    hb_arraySetNI(info, 2, iHeight);
+    hbwapi_arraySet_HANDLE(info, 3, hBmp);
 
-      hb_itemReturnRelease(info);
-   }
+    hb_itemReturnRelease(info);
+  }
 }
 
 /*
 wvt_RestScreen(nTop, nLeft, nBottom, nRight, aScr, lDoNotDestroyBMP)
 */
-HB_FUNC( WVT_RESTSCREEN )
+HB_FUNC(WVT_RESTSCREEN)
 {
-   PHB_GTWVT _s = hb_wvt_gtGetWVT();
+  PHB_GTWVT _s = hb_wvt_gtGetWVT();
 
-   if( _s ) {
-      bool bResult = false;
+  if (_s)
+  {
+    bool bResult = false;
 
-      HDC hCompDC = CreateCompatibleDC(_s->hdc);
-      auto hBmp = static_cast<HBITMAP>(SelectObject(hCompDC, static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(5, 3))));
+    HDC hCompDC = CreateCompatibleDC(_s->hdc);
+    auto hBmp = static_cast<HBITMAP>(SelectObject(hCompDC, static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(5, 3))));
 
-      if( hBmp ) {
-         POINT xy;
-         int iTop, iLeft, iBottom, iRight, iWidth, iHeight;
+    if (hBmp)
+    {
+      POINT xy;
+      int iTop, iLeft, iBottom, iRight, iWidth, iHeight;
 
-         xy    = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
-         iTop  = xy.y;
-         iLeft = xy.x;
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
+      iTop = xy.y;
+      iLeft = xy.x;
 
-         xy      = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
-         iBottom = xy.y - 1;
-         iRight  = xy.x - 1;
+      xy = hb_wvt_gtGetXYFromColRow(hb_parni(4) + 1, hb_parni(3) + 1);
+      iBottom = xy.y - 1;
+      iRight = xy.x - 1;
 
-         iWidth  = iRight - iLeft + 1;
-         iHeight = iBottom - iTop + 1;
+      iWidth = iRight - iLeft + 1;
+      iHeight = iBottom - iTop + 1;
 
-         if( iWidth == hb_parvni(5, 1) && iHeight == hb_parvni(5, 2) ) {
-            if( BitBlt(_s->hdc, iLeft, iTop, iWidth, iHeight, hCompDC, 0, 0, SRCCOPY) ) {
-               bResult = true;
-            }
-         } else {
-            if( StretchBlt(_s->hdc, iLeft, iTop, iWidth, iHeight, hCompDC, 0, 0, hb_parvni(5, 1), hb_parvni(5, 2), SRCCOPY) ) {
-               bResult = true;
-            }
-         }
+      if (iWidth == hb_parvni(5, 1) && iHeight == hb_parvni(5, 2))
+      {
+        if (BitBlt(_s->hdc, iLeft, iTop, iWidth, iHeight, hCompDC, 0, 0, SRCCOPY))
+        {
+          bResult = true;
+        }
       }
-      DeleteDC(hCompDC);
-
-      if( !hb_parl(6) /* bDoNotDestroyBMP */ ) {
-         if( hBmp ) {
-            SelectObject(hCompDC, hBmp);
-         }
-         DeleteObject(static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(5, 3)));
+      else
+      {
+        if (StretchBlt(_s->hdc, iLeft, iTop, iWidth, iHeight, hCompDC, 0, 0, hb_parvni(5, 1), hb_parvni(5, 2), SRCCOPY))
+        {
+          bResult = true;
+        }
       }
-      hb_retl(bResult);
-   } else {
-      hb_retl(false);
-   }
+    }
+    DeleteDC(hCompDC);
+
+    if (!hb_parl(6) /* bDoNotDestroyBMP */)
+    {
+      if (hBmp)
+      {
+        SelectObject(hCompDC, hBmp);
+      }
+      DeleteObject(static_cast<HBITMAP>(hbwapi_parv_raw_HANDLE(5, 3)));
+    }
+    hb_retl(bResult);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
-HB_FUNC( WVG_GTINFOEX )
+HB_FUNC(WVG_GTINFOEX)
 {
-   if( HB_ISPOINTER(1) && HB_ISNUM(2) ) {
-      PHB_GT pGT = hb_gt_ItemBase(hb_param(1, Harbour::Item::ANY));
+  if (HB_ISPOINTER(1) && HB_ISNUM(2))
+  {
+    PHB_GT pGT = hb_gt_ItemBase(hb_param(1, Harbour::Item::ANY));
 
-      if( pGT ) {
-         HB_GT_INFO gtInfo;
+    if (pGT)
+    {
+      HB_GT_INFO gtInfo;
 
-         gtInfo.pNewVal  = hb_param(3, Harbour::Item::ANY);
-         gtInfo.pNewVal2 = hb_param(4, Harbour::Item::ANY);
-         gtInfo.pResult  = nullptr;
+      gtInfo.pNewVal = hb_param(3, Harbour::Item::ANY);
+      gtInfo.pNewVal2 = hb_param(4, Harbour::Item::ANY);
+      gtInfo.pResult = nullptr;
 
-         HB_GTSELF_INFO(pGT, hb_parni(2), &gtInfo);
-         hb_gt_BaseFree(pGT);
+      HB_GTSELF_INFO(pGT, hb_parni(2), &gtInfo);
+      hb_gt_BaseFree(pGT);
 
-         if( gtInfo.pResult ) {
-            hb_itemReturnRelease(gtInfo.pResult);
-         }
+      if (gtInfo.pResult)
+      {
+        hb_itemReturnRelease(gtInfo.pResult);
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
