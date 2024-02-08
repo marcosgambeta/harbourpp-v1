@@ -80,97 +80,96 @@ NOTES:
 ProgressRange is initially set as 0 - 100.
 Initial ProgressPos is 0
 */
-HB_FUNC( WVW_PGCREATE )
+HB_FUNC(WVW_PGCREATE)
 {
-   auto wvw = hb_gt_wvw();
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw = hb_gt_wvw();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win ) {
-      auto iTop    = hb_parni(2);
-      auto iLeft   = hb_parni(3);
-      auto iBottom = hb_parni(4);
-      auto iRight  = hb_parni(5);
+  if (wvw && wvw_win)
+  {
+    auto iTop = hb_parni(2);
+    auto iLeft = hb_parni(3);
+    auto iBottom = hb_parni(4);
+    auto iRight = hb_parni(5);
 
-      int iOffTop    = hb_parvni(6, 1);
-      int iOffLeft   = hb_parvni(6, 2);
-      int iOffBottom = hb_parvni(6, 3);
-      int iOffRight  = hb_parvni(6, 4);
+    int iOffTop = hb_parvni(6, 1);
+    int iOffLeft = hb_parvni(6, 2);
+    int iOffBottom = hb_parvni(6, 3);
+    int iOffRight = hb_parvni(6, 4);
 
-      InitCommonControls();
+    InitCommonControls();
 
-      RECT rXB;
-      rXB.top    = iTop;
-      rXB.left   = iLeft;
-      rXB.bottom = iBottom;
-      rXB.right  = iRight;
+    RECT rXB;
+    rXB.top = iTop;
+    rXB.left = iLeft;
+    rXB.bottom = iBottom;
+    rXB.right = iRight;
 
-      RECT rOffXB;
-      rOffXB.top    = iOffTop;
-      rOffXB.left   = iOffLeft;
-      rOffXB.bottom = iOffBottom;
-      rOffXB.right  = iOffRight;
+    RECT rOffXB;
+    rOffXB.top = iOffTop;
+    rOffXB.left = iOffLeft;
+    rOffXB.bottom = iOffBottom;
+    rOffXB.right = iOffRight;
 
-      hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
+    hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      POINT xy;
+    POINT xy;
 
-      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
-      iTop = xy.y + iOffTop;
-      iLeft = xy.x + iOffLeft;
+    xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
+    iTop = xy.y + iOffTop;
+    iLeft = xy.x + iOffLeft;
 
-      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
-      iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
-      iRight = xy.x - 1 + iOffRight;
+    xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
+    iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
+    iRight = xy.x - 1 + iOffRight;
 
-      int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_PROGRESSBAR);
-      if( nCtrlId == 0 ) {
-         nCtrlId = WVW_ID_BASE_PROGRESSBAR;
-      } else {
-         nCtrlId++;
+    int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_PROGRESSBAR);
+    if (nCtrlId == 0)
+    {
+      nCtrlId = WVW_ID_BASE_PROGRESSBAR;
+    }
+    else
+    {
+      nCtrlId++;
+    }
+
+    DWORD iStyle = 0;
+
+    if (hb_parl(9) /* fSmooth */)
+    {
+      iStyle |= PBS_SMOOTH;
+    }
+    if (hb_parl(10) /* fVertical */)
+    {
+      iStyle |= PBS_VERTICAL;
+    }
+
+    HWND hWnd = CreateWindowEx(
+        0, PROGRESS_CLASS, nullptr, WS_CHILD | WS_VISIBLE | iStyle, iLeft, iTop, iRight - iLeft + 1, iBottom - iTop + 1,
+        wvw_win->hWnd, reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), GetModuleHandle(nullptr), nullptr);
+
+    if (hWnd)
+    {
+      if (HB_ISNUM(7))
+      {
+        SendMessage(hWnd, PBM_SETBKCOLOR, 0, static_cast<LPARAM>(hbwapi_par_COLORREF(7)));
+      }
+      if (HB_ISNUM(8))
+      {
+        SendMessage(hWnd, PBM_SETBARCOLOR, 0, static_cast<LPARAM>(hbwapi_par_COLORREF(8)));
       }
 
-      DWORD iStyle = 0;
+      SendMessage(hWnd, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
+      SendMessage(hWnd, PBM_SETPOS, 0, 0);
 
-      if( hb_parl(9) /* fSmooth */ ) {
-         iStyle |= PBS_SMOOTH;
-      }
-      if( hb_parl(10) /* fVertical */ ) {
-         iStyle |= PBS_VERTICAL;
-      }
+      hb_gt_wvw_AddControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hWnd, nCtrlId, nullptr, rXB, rOffXB, iStyle);
 
-      HWND hWnd = CreateWindowEx(
-         0,
-         PROGRESS_CLASS,
-         nullptr,
-         WS_CHILD | WS_VISIBLE | iStyle,
-         iLeft,
-         iTop,
-         iRight - iLeft + 1,
-         iBottom - iTop + 1,
-         wvw_win->hWnd,
-         reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)),
-         GetModuleHandle(nullptr),
-         nullptr);
+      hb_retni(nCtrlId);
+      return;
+    }
+  }
 
-      if( hWnd ) {
-         if( HB_ISNUM(7) ) {
-            SendMessage(hWnd, PBM_SETBKCOLOR, 0, static_cast<LPARAM>(hbwapi_par_COLORREF(7)));
-         }
-         if( HB_ISNUM(8) ) {
-            SendMessage(hWnd, PBM_SETBARCOLOR, 0, static_cast<LPARAM>(hbwapi_par_COLORREF(8)));
-         }
-
-         SendMessage(hWnd, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
-         SendMessage(hWnd, PBM_SETPOS, 0, 0);
-
-         hb_gt_wvw_AddControlHandle(wvw_win, WVW_CONTROL_PROGRESSBAR, hWnd, nCtrlId, nullptr, rXB, rOffXB, iStyle);
-
-         hb_retni(nCtrlId);
-         return;
-      }
-   }
-
-   hb_retni(0);
+  hb_retni(0);
 }
 
 /*
@@ -178,40 +177,48 @@ wvw_pgDestroy([nWinNum], nPGid)
 destroy progressbar nPGid for window nWinNum
 This function has no return value.
 */
-HB_FUNC( WVW_PGDESTROY )
+HB_FUNC(WVW_PGDESTROY)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      auto nCtrlId = hb_parni(2);
-      auto wvw_ctl = wvw_win->ctlList;
-      PWVW_CTL wvw_ctlPrev = nullptr;
+  if (wvw_win)
+  {
+    auto nCtrlId = hb_parni(2);
+    auto wvw_ctl = wvw_win->ctlList;
+    PWVW_CTL wvw_ctlPrev = nullptr;
 
-      while( wvw_ctl ) {
-         if( wvw_ctl->nClass == WVW_CONTROL_PROGRESSBAR && wvw_ctl->nId == nCtrlId ) {
-            break;
-         }
-
-         wvw_ctlPrev = wvw_ctl;
-         wvw_ctl = wvw_ctl->pNext;
+    while (wvw_ctl)
+    {
+      if (wvw_ctl->nClass == WVW_CONTROL_PROGRESSBAR && wvw_ctl->nId == nCtrlId)
+      {
+        break;
       }
 
-      if( wvw_ctl ) {
-         DestroyWindow(wvw_ctl->hWnd);
+      wvw_ctlPrev = wvw_ctl;
+      wvw_ctl = wvw_ctl->pNext;
+    }
 
-         if( wvw_ctlPrev ) {
-            wvw_ctlPrev->pNext = wvw_ctl->pNext;
-         } else {
-            wvw_win->ctlList = wvw_ctl->pNext;
-         }
+    if (wvw_ctl)
+    {
+      DestroyWindow(wvw_ctl->hWnd);
 
-         if( wvw_ctl->pBlock ) {
-            hb_itemRelease(wvw_ctl->pBlock);
-         }
-
-         hb_xfree(wvw_ctl);
+      if (wvw_ctlPrev)
+      {
+        wvw_ctlPrev->pNext = wvw_ctl->pNext;
       }
-   }
+      else
+      {
+        wvw_win->ctlList = wvw_ctl->pNext;
+      }
+
+      if (wvw_ctl->pBlock)
+      {
+        hb_itemRelease(wvw_ctl->pBlock);
+      }
+
+      hb_xfree(wvw_ctl);
+    }
+  }
 }
 
 /*
@@ -222,20 +229,23 @@ nMax: a number in range of -32767 to +32767
 Remark: progress position is reset to nMin
 returns .T. if operation considered successful
 */
-HB_FUNC( WVW_PGSETRANGE )
+HB_FUNC(WVW_PGSETRANGE)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
-   auto iMin = hb_parni(3);
-   auto iMax = hb_parni(4);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+  auto iMin = hb_parni(3);
+  auto iMax = hb_parni(4);
 
-   if( hWnd && iMin <= iMax ) {
-      SendMessage(hWnd, PBM_SETRANGE, 0, MAKELPARAM(iMin, iMax));
-      SendMessage(hWnd, PBM_SETPOS, static_cast<WPARAM>(iMin), 0);
+  if (hWnd && iMin <= iMax)
+  {
+    SendMessage(hWnd, PBM_SETRANGE, 0, MAKELPARAM(iMin, iMax));
+    SendMessage(hWnd, PBM_SETPOS, static_cast<WPARAM>(iMin), 0);
 
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
@@ -244,24 +254,26 @@ update progressbar position within current range
 nPos: a number in range of current range
 returns .T. if operation considered successful
 */
-HB_FUNC( WVW_PGSETPOS )
+HB_FUNC(WVW_PGSETPOS)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
-   if( hWnd ) {
-      auto iPos = hb_parni(3);
-      PBRANGE pbrange;
+  if (hWnd)
+  {
+    auto iPos = hb_parni(3);
+    PBRANGE pbrange;
 
-      SendMessage(hWnd, PBM_GETRANGE, static_cast<WPARAM>(TRUE), reinterpret_cast<LPARAM>(&pbrange));
+    SendMessage(hWnd, PBM_GETRANGE, static_cast<WPARAM>(TRUE), reinterpret_cast<LPARAM>(&pbrange));
 
-      if( iPos >= pbrange.iLow && iPos <= pbrange.iHigh ) {
-         SendMessage(hWnd, PBM_SETPOS, static_cast<WPARAM>(iPos), 0);
-         hb_retl(true);
-         return;
-      }
-   }
+    if (iPos >= pbrange.iLow && iPos <= pbrange.iHigh)
+    {
+      SendMessage(hWnd, PBM_SETPOS, static_cast<WPARAM>(iPos), 0);
+      hb_retl(true);
+      return;
+    }
+  }
 
-   hb_retl(false);
+  hb_retl(false);
 }
 
 /*
@@ -269,13 +281,16 @@ wvw_pgGetPos(nWinNum, PGid)
 get progressbar current position
 returns 0 if operation failed
 */
-HB_FUNC( WVW_PGGETPOS )
+HB_FUNC(WVW_PGGETPOS)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PROGRESSBAR, hb_parni(2), nullptr);
 
-   if( hWnd ) {
-      hb_retni(static_cast<int>(SendMessage(hWnd, PBM_GETPOS, 0, 0)));
-   } else {
-      hb_retni(0);
-   }
+  if (hWnd)
+  {
+    hb_retni(static_cast<int>(SendMessage(hWnd, PBM_GETPOS, 0, 0)));
+  }
+  else
+  {
+    hb_retni(0);
+  }
 }

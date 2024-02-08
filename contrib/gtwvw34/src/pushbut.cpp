@@ -88,100 +88,106 @@ bBlock:  codeblock to execute on every BN_CLICK event.
 returns control id of newly created pushbutton of windows nWinNum
 returns 0 if failed
 */
-HB_FUNC( WVW_PBCREATE )
+HB_FUNC(WVW_PBCREATE)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = nullptr;
+  HWND hWnd = nullptr;
 
-   if( wvw_win && HB_ISEVALITEM(8) ) {
-      auto iTop    = hb_parni(2);
-      auto iLeft   = hb_parni(3);
-      auto iBottom = hb_parni(4);
-      auto iRight  = hb_parni(5);
+  if (wvw_win && HB_ISEVALITEM(8))
+  {
+    auto iTop = hb_parni(2);
+    auto iLeft = hb_parni(3);
+    auto iBottom = hb_parni(4);
+    auto iRight = hb_parni(5);
 
-      int iOffTop    = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
-      int iOffLeft   = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
-      int iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
-      int iOffRight  = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
+    int iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
+    int iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
+    int iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
+    int iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
 
-      void * hCaption;
+    void *hCaption;
 
-      hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight,
-                                      HB_PARSTR(6, &hCaption, nullptr),
-                                      hb_parc(7),
-                                      static_cast<HB_UINT>(hb_parni(7)),
-                                      hb_param(8, Harbour::Item::EVALITEM),
-                                      iOffTop, iOffLeft, iOffBottom, iOffRight,
-                                      HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
-                                      hb_parl(11) /* bMap3Dcolors */,
-                                      BS_PUSHBUTTON | hb_parni(13) /* nStyle */, &hWnd));
+    hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
+                                    static_cast<HB_UINT>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
+                                    iOffLeft, iOffBottom, iOffRight, HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
+                                    hb_parl(11) /* bMap3Dcolors */, BS_PUSHBUTTON | hb_parni(13) /* nStyle */, &hWnd));
 
-      hb_strfree(hCaption);
-   } else {
-      hb_retni(0);
-   }
+    hb_strfree(hCaption);
+  }
+  else
+  {
+    hb_retni(0);
+  }
 
-   hbwapi_stor_HANDLE(hWnd, 12);
+  hbwapi_stor_HANDLE(hWnd, 12);
 }
 
 /*
 wvw_pbDestroy([nWinNum], nPBid)
 destroy button nPBid for window nWinNum
 */
-HB_FUNC( WVW_PBDESTROY )
+HB_FUNC(WVW_PBDESTROY)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      auto nCtrlId = hb_parni(2);
-      auto wvw_ctl = wvw_win->ctlList;
-      PWVW_CTL wvw_ctlPrev = nullptr;
+  if (wvw_win)
+  {
+    auto nCtrlId = hb_parni(2);
+    auto wvw_ctl = wvw_win->ctlList;
+    PWVW_CTL wvw_ctlPrev = nullptr;
 
-      while( wvw_ctl ) {
-         if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && wvw_ctl->nId == nCtrlId ) {
-            break;
-         }
-         wvw_ctlPrev = wvw_ctl;
-         wvw_ctl = wvw_ctl->pNext;
+    while (wvw_ctl)
+    {
+      if (wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && wvw_ctl->nId == nCtrlId)
+      {
+        break;
+      }
+      wvw_ctlPrev = wvw_ctl;
+      wvw_ctl = wvw_ctl->pNext;
+    }
+
+    if (wvw_ctl)
+    {
+      DestroyWindow(wvw_ctl->hWnd);
+
+      if (wvw_ctlPrev)
+      {
+        wvw_ctlPrev->pNext = wvw_ctl->pNext;
+      }
+      else
+      {
+        wvw_win->ctlList = wvw_ctl->pNext;
       }
 
-      if( wvw_ctl ) {
-         DestroyWindow(wvw_ctl->hWnd);
-
-         if( wvw_ctlPrev ) {
-            wvw_ctlPrev->pNext = wvw_ctl->pNext;
-         } else {
-            wvw_win->ctlList = wvw_ctl->pNext;
-         }
-
-         if( wvw_ctl->pBlock ) {
-            hb_itemRelease(wvw_ctl->pBlock);
-         }
-
-         hb_xfree(wvw_ctl);
+      if (wvw_ctl->pBlock)
+      {
+        hb_itemRelease(wvw_ctl->pBlock);
       }
-   }
+
+      hb_xfree(wvw_ctl);
+    }
+  }
 }
 
 /*
 wvw_pbSetFocus([nWinNum], nButtonId)
 set the focus to button nButtonId in window nWinNum
 */
-HB_FUNC( WVW_PBSETFOCUS )
+HB_FUNC(WVW_PBSETFOCUS)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
-   hb_retl(hWnd && SetFocus(hWnd) != nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
 /*
 wvw_pbIsFocused([nWinNum], nPBid)
 returns .T. if the focus is on button nPBid in window nWinNum
 */
-HB_FUNC( WVW_PBISFOCUSED )
+HB_FUNC(WVW_PBISFOCUSED)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
-   hb_retl(hWnd && GetFocus() == hWnd);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  hb_retl(hWnd && GetFocus() == hWnd);
 }
 
 /*
@@ -191,23 +197,27 @@ enable/disable button nButtonId on window nWinNum
 return previous state of the button (.T.: enabled .F.: disabled)
 (if nButtonId is invalid, this function returns .F. too)
 */
-HB_FUNC( WVW_PBENABLE )
+HB_FUNC(WVW_PBENABLE)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
 
-   if( hWnd ) {
-      bool fEnable = hb_parldef(3, true);
+  if (hWnd)
+  {
+    bool fEnable = hb_parldef(3, true);
 
-      hb_retl(EnableWindow(hWnd, fEnable) == 0);
+    hb_retl(EnableWindow(hWnd, fEnable) == 0);
 
-      if( !fEnable ) {
-         SetFocus(wvw_win->hWnd);
-      }
-   } else {
-      hb_retl(false);
-   }
+    if (!fEnable)
+    {
+      SetFocus(wvw_win->hWnd);
+    }
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
@@ -215,31 +225,35 @@ wvw_pbSetCodeblock([nWinNum], nPBid, bBlock)
 assign (new) codeblock bBlock to button nPBid for window nWinNum
 return .T. if successful
 */
-HB_FUNC( WVW_PBSETCODEBLOCK )
+HB_FUNC(WVW_PBSETCODEBLOCK)
 {
-   auto wvw = hb_gt_wvw();
-   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
-   auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
+  auto wvw = hb_gt_wvw();
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+  auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
 
-   if( pBlock && wvw_ctl && !wvw_ctl->fBusy ) {
-      bool fOldSetting = wvw->fRecurseCBlock;
+  if (pBlock && wvw_ctl && !wvw_ctl->fBusy)
+  {
+    bool fOldSetting = wvw->fRecurseCBlock;
 
-      wvw->fRecurseCBlock = false;
-      wvw_ctl->fBusy      = true;
+    wvw->fRecurseCBlock = false;
+    wvw_ctl->fBusy = true;
 
-      if( wvw_ctl->pBlock ) {
-         hb_itemRelease(wvw_ctl->pBlock);
-      }
+    if (wvw_ctl->pBlock)
+    {
+      hb_itemRelease(wvw_ctl->pBlock);
+    }
 
-      wvw_ctl->pBlock = hb_itemNew(pBlock);
+    wvw_ctl->pBlock = hb_itemNew(pBlock);
 
-      wvw_ctl->fBusy      = false;
-      wvw->fRecurseCBlock = fOldSetting;
+    wvw_ctl->fBusy = false;
+    wvw->fRecurseCBlock = fOldSetting;
 
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
@@ -256,15 +270,16 @@ but I haven't tried that
 
 this function always return .T.
 */
-HB_FUNC( WVW_PBSETSTYLE )
+HB_FUNC(WVW_PBSETSTYLE)
 {
-   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
 
-   if( wvw_ctl && wvw_ctl->hWnd ) {
-      SendMessage(wvw_ctl->hWnd, BM_SETSTYLE, static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(TRUE));
-   }
+  if (wvw_ctl && wvw_ctl->hWnd)
+  {
+    SendMessage(wvw_ctl->hWnd, BM_SETSTYLE, static_cast<WPARAM>(hb_parni(3)), static_cast<LPARAM>(TRUE));
+  }
 
-   hb_retl(true);
+  hb_retl(true);
 }
 
 /*
@@ -273,60 +288,71 @@ wvw_pbSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, ;
 this will initialize font for ALL pushbuttons in window nWinNum
 (including ones created later on)
 */
-HB_FUNC( WVW_PBSETFONT )
+HB_FUNC(WVW_PBSETFONT)
 {
-   auto wvw = hb_gt_wvw();
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw = hb_gt_wvw();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win ) {
-      auto fResult = true;
+  if (wvw && wvw_win)
+  {
+    auto fResult = true;
 
-      wvw->lfPB.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
-      wvw->lfPB.lfWidth          = hb_parnldef(4, wvw->lfPB.lfWidth);
-      wvw->lfPB.lfEscapement     = 0;
-      wvw->lfPB.lfOrientation    = 0;
-      wvw->lfPB.lfWeight         = hb_parnldef(5, wvw->lfPB.lfWeight);
-      wvw->lfPB.lfQuality        = static_cast<BYTE>(hb_parnidef(6, wvw->lfPB.lfQuality));
-      wvw->lfPB.lfItalic         = static_cast<BYTE>(hb_parldef(7, wvw->lfPB.lfItalic));
-      wvw->lfPB.lfUnderline      = static_cast<BYTE>(hb_parldef(8, wvw->lfPB.lfUnderline));
-      wvw->lfPB.lfStrikeOut      = static_cast<BYTE>(hb_parldef(9, wvw->lfPB.lfStrikeOut));
-      wvw->lfPB.lfCharSet        = DEFAULT_CHARSET;
-      wvw->lfPB.lfPitchAndFamily = FF_DONTCARE;
+    wvw->lfPB.lfHeight = hb_parnldef(3, wvw_win->fontHeight - 2);
+    wvw->lfPB.lfWidth = hb_parnldef(4, wvw->lfPB.lfWidth);
+    wvw->lfPB.lfEscapement = 0;
+    wvw->lfPB.lfOrientation = 0;
+    wvw->lfPB.lfWeight = hb_parnldef(5, wvw->lfPB.lfWeight);
+    wvw->lfPB.lfQuality = static_cast<BYTE>(hb_parnidef(6, wvw->lfPB.lfQuality));
+    wvw->lfPB.lfItalic = static_cast<BYTE>(hb_parldef(7, wvw->lfPB.lfItalic));
+    wvw->lfPB.lfUnderline = static_cast<BYTE>(hb_parldef(8, wvw->lfPB.lfUnderline));
+    wvw->lfPB.lfStrikeOut = static_cast<BYTE>(hb_parldef(9, wvw->lfPB.lfStrikeOut));
+    wvw->lfPB.lfCharSet = DEFAULT_CHARSET;
+    wvw->lfPB.lfPitchAndFamily = FF_DONTCARE;
 
-      if( HB_ISCHAR(2) ) {
-         HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfPB.lfFaceName, HB_SIZEOFARRAY(wvw->lfPB.lfFaceName));
-         wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfPB.lfFaceName) - 1] = TEXT('\0');
+    if (HB_ISCHAR(2))
+    {
+      HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfPB.lfFaceName, HB_SIZEOFARRAY(wvw->lfPB.lfFaceName));
+      wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfPB.lfFaceName) - 1] = TEXT('\0');
+    }
+
+    if (wvw_win->hPBfont)
+    {
+      HFONT hOldFont = wvw_win->hPBfont;
+      auto hFont = CreateFontIndirect(&wvw->lfPB);
+      if (hFont)
+      {
+        auto wvw_ctl = wvw_win->ctlList;
+
+        while (wvw_ctl)
+        {
+          if (wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON &&
+              reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont)
+          {
+            SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
+          }
+
+          wvw_ctl = wvw_ctl->pNext;
+        }
+
+        wvw_win->hPBfont = hFont;
+        DeleteObject(hOldFont);
       }
-
-      if( wvw_win->hPBfont ) {
-         HFONT hOldFont = wvw_win->hPBfont;
-         auto hFont = CreateFontIndirect(&wvw->lfPB);
-         if( hFont ) {
-            auto wvw_ctl = wvw_win->ctlList;
-
-            while( wvw_ctl ) {
-               if( wvw_ctl->nClass == WVW_CONTROL_PUSHBUTTON && reinterpret_cast<HFONT>(SendMessage(wvw_ctl->hWnd, WM_GETFONT, 0, 0)) == hOldFont ) {
-                  SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(hFont), static_cast<LPARAM>(TRUE));
-               }
-
-               wvw_ctl = wvw_ctl->pNext;
-            }
-
-            wvw_win->hPBfont = hFont;
-            DeleteObject(hOldFont);
-         } else {
-            fResult = false;
-         }
+      else
+      {
+        fResult = false;
       }
+    }
 
-      hb_retl(fResult);
-   } else {
-      hb_retl(false);
-   }
+    hb_retl(fResult);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
-HB_FUNC( WVW_PBVISIBLE )
+HB_FUNC(WVW_PBVISIBLE)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
-   hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

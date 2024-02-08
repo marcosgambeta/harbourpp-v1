@@ -86,90 +86,97 @@ bBlock:  codeblock to execute on every BN_CLICK event.
 returns control id of newly created CHECKBOX of windows nWinNum
 returns 0 if failed
 */
-HB_FUNC( WVW_CXCREATE )
+HB_FUNC(WVW_CXCREATE)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   HWND hWnd = nullptr;
+  HWND hWnd = nullptr;
 
-   if( wvw_win && HB_ISEVALITEM(8) ) {
-      auto iTop    = hb_parni(2);
-      auto iLeft   = hb_parni(3);
-      auto iBottom = hb_parni(4);
-      auto iRight  = hb_parni(5);
+  if (wvw_win && HB_ISEVALITEM(8))
+  {
+    auto iTop = hb_parni(2);
+    auto iLeft = hb_parni(3);
+    auto iBottom = hb_parni(4);
+    auto iRight = hb_parni(5);
 
-      int iOffTop    = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
-      int iOffLeft   = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
-      int iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
-      int iOffRight  = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
+    int iOffTop = HB_ISARRAY(9) ? hb_parvni(9, 1) : -2;
+    int iOffLeft = HB_ISARRAY(9) ? hb_parvni(9, 2) : -2;
+    int iOffBottom = HB_ISARRAY(9) ? hb_parvni(9, 3) : 2;
+    int iOffRight = HB_ISARRAY(9) ? hb_parvni(9, 4) : 2;
 
-      void * hCaption;
+    void *hCaption;
 
-      hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight,
-                                      HB_PARSTR(6, &hCaption, nullptr),
-                                      hb_parc(7),
-                                      static_cast<HB_UINT>(hb_parni(7)),
-                                      hb_param(8, Harbour::Item::EVALITEM),
-                                      iOffTop, iOffLeft, iOffBottom, iOffRight,
-                                      HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
-                                      hb_parl(11) /* bMap3Dcolors */,
-                                      BS_AUTOCHECKBOX | hb_parni(13) /* nStyle */, &hWnd));
+    hb_retni(hb_gt_wvw_ButtonCreate(wvw_win, iTop, iLeft, iBottom, iRight, HB_PARSTR(6, &hCaption, nullptr), hb_parc(7),
+                                    static_cast<HB_UINT>(hb_parni(7)), hb_param(8, Harbour::Item::EVALITEM), iOffTop,
+                                    iOffLeft, iOffBottom, iOffRight, HB_ISNUM(10) ? hb_parnd(10) : 1 /* dStretch */,
+                                    hb_parl(11) /* bMap3Dcolors */, BS_AUTOCHECKBOX | hb_parni(13) /* nStyle */,
+                                    &hWnd));
 
-      hb_strfree(hCaption);
-   } else {
-      hb_retni(0);
-   }
+    hb_strfree(hCaption);
+  }
+  else
+  {
+    hb_retni(0);
+  }
 
-   hbwapi_stor_HANDLE(hWnd, 12);
+  hbwapi_stor_HANDLE(hWnd, 12);
 }
 
 /*
 wvw_cxDestroy([nWinNum], nCXid)
 destroy checkbox nCXid for window nWinNum
 */
-HB_FUNC( WVW_CXDESTROY )
+HB_FUNC(WVW_CXDESTROY)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      auto nCtrlId = hb_parni(2);
-      auto wvw_ctl = wvw_win->ctlList;
-      PWVW_CTL wvw_ctlPrev = nullptr;
+  if (wvw_win)
+  {
+    auto nCtrlId = hb_parni(2);
+    auto wvw_ctl = wvw_win->ctlList;
+    PWVW_CTL wvw_ctlPrev = nullptr;
 
-      while( wvw_ctl ) {
-         if( wvw_ctl->nClass == WVW_CONTROL_CHECKBOX && wvw_ctl->nId == nCtrlId ) {
-            break;
-         }
-         wvw_ctlPrev = wvw_ctl;
-         wvw_ctl = wvw_ctl->pNext;
+    while (wvw_ctl)
+    {
+      if (wvw_ctl->nClass == WVW_CONTROL_CHECKBOX && wvw_ctl->nId == nCtrlId)
+      {
+        break;
+      }
+      wvw_ctlPrev = wvw_ctl;
+      wvw_ctl = wvw_ctl->pNext;
+    }
+
+    if (wvw_ctl)
+    {
+      DestroyWindow(wvw_ctl->hWnd);
+
+      if (wvw_ctlPrev)
+      {
+        wvw_ctlPrev->pNext = wvw_ctl->pNext;
+      }
+      else
+      {
+        wvw_win->ctlList = wvw_ctl->pNext;
       }
 
-      if( wvw_ctl ) {
-         DestroyWindow(wvw_ctl->hWnd);
-
-         if( wvw_ctlPrev ) {
-            wvw_ctlPrev->pNext = wvw_ctl->pNext;
-         } else {
-            wvw_win->ctlList = wvw_ctl->pNext;
-         }
-
-         if( wvw_ctl->pBlock ) {
-            hb_itemRelease(wvw_ctl->pBlock);
-         }
-
-         hb_xfree(wvw_ctl);
+      if (wvw_ctl->pBlock)
+      {
+        hb_itemRelease(wvw_ctl->pBlock);
       }
-   }
+
+      hb_xfree(wvw_ctl);
+    }
+  }
 }
 
 /*
 wvw_cxSetFocus([nWinNum], nButtonId)
 set the focus to checkbox nButtonId in window nWinNum
 */
-HB_FUNC( WVW_CXSETFOCUS )
+HB_FUNC(WVW_CXSETFOCUS)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
-   hb_retl(hWnd && SetFocus(hWnd) != nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
+  hb_retl(hWnd && SetFocus(hWnd) != nullptr);
 }
 
 /*
@@ -179,22 +186,26 @@ enable/disable checkbox nButtonId on window nWinNum
 return previous state of the checkbox (.T.: enabled .F.: disabled)
 (if nButtonId is invalid, this function returns .F. too)
 */
-HB_FUNC( WVW_CXENABLE )
+HB_FUNC(WVW_CXENABLE)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
-   auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
+  auto wvw_win = hb_gt_wvw_win_par();
+  auto hWnd = hb_gt_wvw_FindControlHandle(wvw_win, WVW_CONTROL_CHECKBOX, hb_parni(2), nullptr);
 
-   if( hWnd ) {
-      bool fEnable = hb_parldef(3, true);
+  if (hWnd)
+  {
+    bool fEnable = hb_parldef(3, true);
 
-      hb_retl(EnableWindow(hWnd, fEnable) == 0);
+    hb_retl(EnableWindow(hWnd, fEnable) == 0);
 
-      if( !fEnable ) {
-         SetFocus(wvw_win->hWnd);
-      }
-   } else {
-      hb_retl(false);
-   }
+    if (!fEnable)
+    {
+      SetFocus(wvw_win->hWnd);
+    }
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
@@ -202,34 +213,37 @@ wvw_cxSetCodeblock([nWinNum], nCXid, bBlock)
 assign (new) codeblock bBlock to button nCXid for window nWinNum
 return .T. if successful
 */
-HB_FUNC( WVW_CXSETCODEBLOCK )
+HB_FUNC(WVW_CXSETCODEBLOCK)
 {
-   auto wvw = hb_gt_wvw();
+  auto wvw = hb_gt_wvw();
 
-   if( wvw ) {
-      auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
-      auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
-      bool fOldSetting = wvw->fRecurseCBlock;
+  if (wvw)
+  {
+    auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+    auto pBlock = hb_param(3, Harbour::Item::EVALITEM);
+    bool fOldSetting = wvw->fRecurseCBlock;
 
-      if( pBlock && wvw_ctl && !wvw_ctl->fBusy ) {
-         wvw->fRecurseCBlock = false;
-         wvw_ctl->fBusy = true;
+    if (pBlock && wvw_ctl && !wvw_ctl->fBusy)
+    {
+      wvw->fRecurseCBlock = false;
+      wvw_ctl->fBusy = true;
 
-         if( wvw_ctl->pBlock ) {
-            hb_itemRelease(wvw_ctl->pBlock);
-         }
-
-         wvw_ctl->pBlock = hb_itemNew(pBlock);
-
-         wvw_ctl->fBusy = false;
-         wvw->fRecurseCBlock = fOldSetting;
-
-         hb_retl(true);
-         return;
+      if (wvw_ctl->pBlock)
+      {
+        hb_itemRelease(wvw_ctl->pBlock);
       }
-   }
 
-   hb_retl(false);
+      wvw_ctl->pBlock = hb_itemNew(pBlock);
+
+      wvw_ctl->fBusy = false;
+      wvw->fRecurseCBlock = fOldSetting;
+
+      hb_retl(true);
+      return;
+    }
+  }
+
+  hb_retl(false);
 }
 
 /*
@@ -240,15 +254,16 @@ assigns check-state of checkbox nCXid
         2==indeterminate BST_INDETERMINATE
 this function always returns .T.
 */
-HB_FUNC( WVW_CXSETCHECK )
+HB_FUNC(WVW_CXSETCHECK)
 {
-   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
 
-   if( wvw_ctl && wvw_ctl->hWnd ) {
-      SendMessage(wvw_ctl->hWnd, BM_SETCHECK, static_cast<WPARAM>(hb_parnidef(3, BST_CHECKED)), 0);
-   }
+  if (wvw_ctl && wvw_ctl->hWnd)
+  {
+    SendMessage(wvw_ctl->hWnd, BM_SETCHECK, static_cast<WPARAM>(hb_parnidef(3, BST_CHECKED)), 0);
+  }
 
-   hb_retl(true);
+  hb_retl(true);
 }
 
 /*
@@ -258,47 +273,54 @@ returns check-state of checkbox nCXid
           1==checked       BST_CHECKED
           2==indeterminate BST_INDETERMINATE
 */
-HB_FUNC( WVW_CXGETCHECK )
+HB_FUNC(WVW_CXGETCHECK)
 {
-   auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
+  auto wvw_ctl = hb_gt_wvw_ctl(hb_gt_wvw_win_par(), WVW_CONTROL_CHECKBOX, nullptr, hb_parni(2));
 
-   if( wvw_ctl && wvw_ctl->hWnd ) {
-      hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, BM_GETCHECK, 0, 0)));
-   } else {
-      hb_retni(0);
-   }
+  if (wvw_ctl && wvw_ctl->hWnd)
+  {
+    hb_retni(static_cast<int>(SendMessage(wvw_ctl->hWnd, BM_GETCHECK, 0, 0)));
+  }
+  else
+  {
+    hb_retni(0);
+  }
 }
 
 /*
 wvw_cxSetFont([nWinNum], cFontFace, nHeight, nWidth, nWeight, nQUality, lItalic, lUnderline, lStrikeout)
 */
-HB_FUNC( WVW_CXSETFONT )
+HB_FUNC(WVW_CXSETFONT)
 {
-   auto wvw = hb_gt_wvw();
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw = hb_gt_wvw();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win ) {
-      wvw->lfCX.lfHeight         = hb_parnldef(3, wvw_win->fontHeight - 2);
-      wvw->lfCX.lfWidth          = hb_parnldef(4, wvw->lfCX.lfWidth);
-      wvw->lfCX.lfEscapement     = 0;
-      wvw->lfCX.lfOrientation    = 0;
-      wvw->lfCX.lfWeight         = hb_parnldef(5, wvw->lfCX.lfWeight);
-      wvw->lfCX.lfQuality        = static_cast<BYTE>(hb_parnidef(6, wvw->lfCX.lfQuality));
-      wvw->lfCX.lfItalic         = static_cast<BYTE>(hb_parldef(7, wvw->lfCX.lfItalic));
-      wvw->lfCX.lfUnderline      = static_cast<BYTE>(hb_parldef(8, wvw->lfCX.lfUnderline));
-      wvw->lfCX.lfStrikeOut      = static_cast<BYTE>(hb_parldef(9, wvw->lfCX.lfStrikeOut));
-      wvw->lfCX.lfCharSet        = DEFAULT_CHARSET;
-      wvw->lfCX.lfPitchAndFamily = FF_DONTCARE;
+  if (wvw && wvw_win)
+  {
+    wvw->lfCX.lfHeight = hb_parnldef(3, wvw_win->fontHeight - 2);
+    wvw->lfCX.lfWidth = hb_parnldef(4, wvw->lfCX.lfWidth);
+    wvw->lfCX.lfEscapement = 0;
+    wvw->lfCX.lfOrientation = 0;
+    wvw->lfCX.lfWeight = hb_parnldef(5, wvw->lfCX.lfWeight);
+    wvw->lfCX.lfQuality = static_cast<BYTE>(hb_parnidef(6, wvw->lfCX.lfQuality));
+    wvw->lfCX.lfItalic = static_cast<BYTE>(hb_parldef(7, wvw->lfCX.lfItalic));
+    wvw->lfCX.lfUnderline = static_cast<BYTE>(hb_parldef(8, wvw->lfCX.lfUnderline));
+    wvw->lfCX.lfStrikeOut = static_cast<BYTE>(hb_parldef(9, wvw->lfCX.lfStrikeOut));
+    wvw->lfCX.lfCharSet = DEFAULT_CHARSET;
+    wvw->lfCX.lfPitchAndFamily = FF_DONTCARE;
 
-      if( HB_ISCHAR(2) ) {
-         HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfCX.lfFaceName, HB_SIZEOFARRAY(wvw->lfCX.lfFaceName));
-         wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfCX.lfFaceName) - 1] = TEXT('\0');
-      }
+    if (HB_ISCHAR(2))
+    {
+      HB_ITEMCOPYSTR(hb_param(2, Harbour::Item::STRING), wvw->lfCX.lfFaceName, HB_SIZEOFARRAY(wvw->lfCX.lfFaceName));
+      wvw_win->fontFace[HB_SIZEOFARRAY(wvw->lfCX.lfFaceName) - 1] = TEXT('\0');
+    }
 
-      if( wvw_win->hCXfont ) {
-         HFONT hOldFont = wvw_win->hCXfont;
-         auto hFont = CreateFontIndirect(&wvw->lfCX);
-         if( hFont ) {
+    if (wvw_win->hCXfont)
+    {
+      HFONT hOldFont = wvw_win->hCXfont;
+      auto hFont = CreateFontIndirect(&wvw->lfCX);
+      if (hFont)
+      {
 #if 0
             auto wvw_ctl = wvw_win->ctlList;
 
@@ -310,32 +332,35 @@ HB_FUNC( WVW_CXSETFONT )
                wvw_ctl = wvw_ctl->pNext;
             }
 #endif
-            wvw_win->hCXfont = hFont;
-            DeleteObject(hOldFont);
+        wvw_win->hCXfont = hFont;
+        DeleteObject(hOldFont);
 
-            hb_retl(true);
-            return;
-         }
+        hb_retl(true);
+        return;
       }
-   }
+    }
+  }
 
-   hb_retl(false);
+  hb_retl(false);
 }
 
-HB_FUNC( WVW_CXSTATUSFONT )
+HB_FUNC(WVW_CXSTATUSFONT)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
-   auto wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
+  auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_ctl = hb_gt_wvw_ctl(wvw_win, WVW_CONTROL_PUSHBUTTON, nullptr, hb_parni(2));
 
-   if( wvw_ctl && wvw_ctl->hWnd ) {
-      SendMessage(wvw_ctl->hWnd, WM_SETFONT, reinterpret_cast<WPARAM>((hb_parldef(3, true) /* fFocus */ ? wvw_win->hCXfont : wvw_win->hPBfont)), static_cast<LPARAM>(TRUE));
-   }
+  if (wvw_ctl && wvw_ctl->hWnd)
+  {
+    SendMessage(wvw_ctl->hWnd, WM_SETFONT,
+                reinterpret_cast<WPARAM>((hb_parldef(3, true) /* fFocus */ ? wvw_win->hCXfont : wvw_win->hPBfont)),
+                static_cast<LPARAM>(TRUE));
+  }
 
-   hb_retl(true);
+  hb_retl(true);
 }
 
-HB_FUNC( WVW_CXVISIBLE )
+HB_FUNC(WVW_CXVISIBLE)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
-   hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_PUSHBUTTON, hb_parni(2), nullptr);
+  hb_retl(hWnd && ShowWindow(hWnd, hb_parldef(3, true) ? SW_SHOW : SW_HIDE) == 0);
 }

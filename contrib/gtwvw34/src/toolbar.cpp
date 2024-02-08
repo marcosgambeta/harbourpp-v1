@@ -54,307 +54,349 @@
 add one button to existing Toolbar
 uiBitmap is resource id
 */
-static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char * szBitmap, HB_UINT uiBitmap, LPCTSTR pszLabel, int iCommand, int iBitmapType, bool fMap3Dcolors, PWVW_WIN wvw_win, bool fDropdown)
+static bool hb_gt_wvw_AddTBButton(HWND hWndToolbar, const char *szBitmap, HB_UINT uiBitmap, LPCTSTR pszLabel,
+                                  int iCommand, int iBitmapType, bool fMap3Dcolors, PWVW_WIN wvw_win, bool fDropdown)
 {
-   TBBUTTON tbb;
-   TBADDBITMAP tbab;
-   TCHAR szBuffer[WVW_TB_LABELMAXLENGTH + 2];
-   int iNewBitmap;
-   int iOffset;
+  TBBUTTON tbb;
+  TBADDBITMAP tbab;
+  TCHAR szBuffer[WVW_TB_LABELMAXLENGTH + 2];
+  int iNewBitmap;
+  int iOffset;
 
-   if( iCommand == 0 ) {
-      tbb.iBitmap   = 0;
-      tbb.idCommand = 0;
-      tbb.fsState   = TBSTATE_ENABLED;
-      tbb.fsStyle   = TBSTYLE_SEP;
-      tbb.dwData    = 0;
-      tbb.iString   = 0;
+  if (iCommand == 0)
+  {
+    tbb.iBitmap = 0;
+    tbb.idCommand = 0;
+    tbb.fsState = TBSTATE_ENABLED;
+    tbb.fsStyle = TBSTYLE_SEP;
+    tbb.dwData = 0;
+    tbb.iString = 0;
 
-      return static_cast<bool>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
-   }
+    return static_cast<bool>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1),
+                                         reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
+  }
 
-   switch( iBitmapType ) {
-      case 0:
-         iOffset = 0;
-         break;
-      case 1:
-         iOffset = wvw_win->iStartStdBitmap;
-         break;
-      case 2:
-         iOffset = wvw_win->iStartViewBitmap;
-         break;
-      case 3:
-         iOffset = wvw_win->iStartHistBitmap;
-         break;
-      default:
-         iOffset = 0;
-   }
+  switch (iBitmapType)
+  {
+  case 0:
+    iOffset = 0;
+    break;
+  case 1:
+    iOffset = wvw_win->iStartStdBitmap;
+    break;
+  case 2:
+    iOffset = wvw_win->iStartViewBitmap;
+    break;
+  case 3:
+    iOffset = wvw_win->iStartHistBitmap;
+    break;
+  default:
+    iOffset = 0;
+  }
 
-   if( iBitmapType == 0 ) {
-      auto hBitmap = hb_gt_wvw_PrepareBitmap(szBitmap, uiBitmap, wvw_win->iTBImgWidth, wvw_win->iTBImgHeight, fMap3Dcolors, hWndToolbar);
+  if (iBitmapType == 0)
+  {
+    auto hBitmap = hb_gt_wvw_PrepareBitmap(szBitmap, uiBitmap, wvw_win->iTBImgWidth, wvw_win->iTBImgHeight,
+                                           fMap3Dcolors, hWndToolbar);
 
-      if( !hBitmap ) {
-         return false;
-      }
+    if (!hBitmap)
+    {
+      return false;
+    }
 
-      tbab.hInst = nullptr;
-      tbab.nID = reinterpret_cast<UINT_PTR>(hBitmap);
-      iNewBitmap = static_cast<int>(SendMessage(hWndToolbar, TB_ADDBITMAP, 1, reinterpret_cast<WPARAM>(&tbab)));
-   } else { /* system bitmap */
-      iNewBitmap = static_cast<int>(uiBitmap) + iOffset;
-   }
+    tbab.hInst = nullptr;
+    tbab.nID = reinterpret_cast<UINT_PTR>(hBitmap);
+    iNewBitmap = static_cast<int>(SendMessage(hWndToolbar, TB_ADDBITMAP, 1, reinterpret_cast<WPARAM>(&tbab)));
+  }
+  else
+  { /* system bitmap */
+    iNewBitmap = static_cast<int>(uiBitmap) + iOffset;
+  }
 
-   HB_STRNCPY(szBuffer, pszLabel, HB_SIZEOFARRAY(szBuffer) - 1);
+  HB_STRNCPY(szBuffer, pszLabel, HB_SIZEOFARRAY(szBuffer) - 1);
 
-   auto iNewString = static_cast<int>(SendMessage(hWndToolbar, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(szBuffer)));
+  auto iNewString = static_cast<int>(SendMessage(hWndToolbar, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(szBuffer)));
 
-   tbb.iBitmap   = iNewBitmap;
-   tbb.idCommand = iCommand;
-   tbb.fsState   = TBSTATE_ENABLED;
-   tbb.fsStyle   = TBSTYLE_BUTTON;
-   if( fDropdown ) {
-      tbb.fsStyle |= BTNS_WHOLEDROPDOWN;
-   }
-   tbb.dwData  = 0;
-   tbb.iString = iNewString;
+  tbb.iBitmap = iNewBitmap;
+  tbb.idCommand = iCommand;
+  tbb.fsState = TBSTATE_ENABLED;
+  tbb.fsStyle = TBSTYLE_BUTTON;
+  if (fDropdown)
+  {
+    tbb.fsStyle |= BTNS_WHOLEDROPDOWN;
+  }
+  tbb.dwData = 0;
+  tbb.iString = iNewString;
 
-   return static_cast<bool>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
+  return static_cast<bool>(SendMessage(hWndToolbar, TB_ADDBUTTONS, static_cast<WPARAM>(1),
+                                       reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
 }
 
 static int hb_gt_wvw_IndexToCommand(HWND hWndTB, int iIndex)
 {
-   TBBUTTON tbb;
+  TBBUTTON tbb;
 
-   if( SendMessage(hWndTB, TB_GETBUTTON, static_cast<WPARAM>(iIndex), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))) ) {
-      return tbb.idCommand;
-   } else {
-      return 0;
-   }
+  if (SendMessage(hWndTB, TB_GETBUTTON, static_cast<WPARAM>(iIndex),
+                  reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))))
+  {
+    return tbb.idCommand;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 static int hb_gt_wvw_CommandToIndex(HWND hWndTB, int iCommand)
 {
-   return static_cast<int>(SendMessage(hWndTB, TB_COMMANDTOINDEX, static_cast<WPARAM>(iCommand), 0));
+  return static_cast<int>(SendMessage(hWndTB, TB_COMMANDTOINDEX, static_cast<WPARAM>(iCommand), 0));
 }
 
 static void hb_gt_wvw_TBinitSize(PWVW_WIN wvw_win, HWND hWndTB)
 {
-   SendMessage(hWndTB, TB_AUTOSIZE, 0, 0);
+  SendMessage(hWndTB, TB_AUTOSIZE, 0, 0);
 
-   RECT rTB{};
+  RECT rTB{};
 
-   if( GetClientRect(hWndTB, &rTB) ) {
-      wvw_win->iTBHeight = rTB.bottom + 2;
-   }
+  if (GetClientRect(hWndTB, &rTB))
+  {
+    wvw_win->iTBHeight = rTB.bottom + 2;
+  }
 }
 
 static POINT hb_gt_wvw_TBGetColRowFromXY(PWVW_WIN wvw_win, int x, int y)
 {
-   POINT colrow;
-   colrow.x = x / wvw_win->PTEXTSIZE.x;
-   colrow.y = y / (wvw_win->PTEXTSIZE.y + wvw_win->iLineSpacing);
-   return colrow;
+  POINT colrow;
+  colrow.x = x / wvw_win->PTEXTSIZE.x;
+  colrow.y = y / (wvw_win->PTEXTSIZE.y + wvw_win->iLineSpacing);
+  return colrow;
 }
 
 static void hb_gt_wvw_TBMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   HB_SYMBOL_UNUSED(hWnd);
-   HB_SYMBOL_UNUSED(wParam);
+  HB_SYMBOL_UNUSED(hWnd);
+  HB_SYMBOL_UNUSED(wParam);
 
-   auto wvw = hb_gt_wvw();
+  auto wvw = hb_gt_wvw();
 
-   if( message == WM_MOUSEMOVE || message == WM_NCMOUSEMOVE ) {
-      if( !wvw_win->MouseMove ) {
-         return;
+  if (message == WM_MOUSEMOVE || message == WM_NCMOUSEMOVE)
+  {
+    if (!wvw_win->MouseMove)
+    {
+      return;
+    }
+  }
+
+  POINT xy;
+  xy.x = LOWORD(lParam);
+  xy.y = HIWORD(lParam);
+
+  POINT colrow = hb_gt_wvw_TBGetColRowFromXY(wvw_win, xy.x, xy.y);
+
+  hb_gt_wvw_SetMouseX(wvw_win, colrow.x);
+  hb_gt_wvw_SetMouseY(wvw_win, colrow.y);
+
+  SHORT keyCode = 0;
+  SHORT keyState = 0;
+
+  switch (message)
+  {
+  case WM_LBUTTONDBLCLK:
+    keyCode = K_LDBLCLK;
+    break;
+
+  case WM_RBUTTONDBLCLK:
+    keyCode = K_RDBLCLK;
+    break;
+
+  case WM_LBUTTONDOWN: {
+    HWND hWndFocus = GetFocus();
+
+    if (hb_gt_wvw_GetControlClass(wvw_win, hWndFocus) > 0)
+    {
+      SetFocus(hWnd);
+    }
+
+    keyCode = K_LBUTTONDOWN;
+    break;
+  }
+
+  case WM_RBUTTONDOWN:
+    keyCode = K_RBUTTONDOWN;
+    break;
+
+  case WM_LBUTTONUP:
+    keyCode = K_LBUTTONUP;
+    break;
+
+  case WM_RBUTTONUP:
+    if (wvw_win->hPopup)
+    {
+      GetCursorPos(&xy);
+      auto nPopupRet = static_cast<int>(
+          TrackPopupMenu(wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr));
+      if (nPopupRet)
+      {
+        hb_gt_wvw_AddCharToInputQueue(nPopupRet);
       }
-   }
+      return;
+    }
+    else
+    {
+      keyCode = K_RBUTTONUP;
+      break;
+    }
 
-   POINT xy;
-   xy.x = LOWORD(lParam);
-   xy.y = HIWORD(lParam);
+  case WM_MBUTTONDOWN:
+    keyCode = K_MBUTTONDOWN;
+    break;
 
-   POINT colrow = hb_gt_wvw_TBGetColRowFromXY(wvw_win, xy.x, xy.y);
+  case WM_MBUTTONUP:
+    keyCode = K_MBUTTONUP;
+    break;
 
-   hb_gt_wvw_SetMouseX(wvw_win, colrow.x);
-   hb_gt_wvw_SetMouseY(wvw_win, colrow.y);
+  case WM_MBUTTONDBLCLK:
+    keyCode = K_MDBLCLK;
+    break;
 
-   SHORT keyCode  = 0;
-   SHORT keyState = 0;
+  case WM_MOUSEMOVE:
+    keyState = static_cast<SHORT>(wParam);
 
-   switch( message ) {
-      case WM_LBUTTONDBLCLK:
-         keyCode = K_LDBLCLK;
-         break;
+    if (keyState == MK_LBUTTON)
+    {
+      keyCode = K_MMLEFTDOWN;
+    }
+    else if (keyState == MK_RBUTTON)
+    {
+      keyCode = K_MMRIGHTDOWN;
+    }
+    else if (keyState == MK_MBUTTON)
+    {
+      keyCode = K_MMMIDDLEDOWN;
+    }
+    else
+    {
+      keyCode = K_MOUSEMOVE;
+    }
+    break;
 
-      case WM_RBUTTONDBLCLK:
-         keyCode = K_RDBLCLK;
-         break;
+  case WM_MOUSEWHEEL:
+    keyState = HIWORD(wParam);
 
-      case WM_LBUTTONDOWN: {
-         HWND hWndFocus = GetFocus();
+    if (keyState > 0)
+    {
+      keyCode = K_MWFORWARD;
+    }
+    else
+    {
+      keyCode = K_MWBACKWARD;
+    }
 
-         if( hb_gt_wvw_GetControlClass(wvw_win, hWndFocus) > 0 ) {
-            SetFocus(hWnd);
-         }
+    break;
 
-         keyCode = K_LBUTTONDOWN;
-         break;
-      }
+  case WM_NCMOUSEMOVE:
+    keyCode = K_NCMOUSEMOVE;
+    break;
+  }
 
-      case WM_RBUTTONDOWN:
-         keyCode = K_RBUTTONDOWN;
-         break;
+  if (wvw->a.pSymWVW_TBMOUSE && keyCode != 0 && hb_vmRequestReenter())
+  {
+    hb_vmPushDynSym(wvw->a.pSymWVW_TBMOUSE);
+    hb_vmPushNil();
+    hb_vmPushInteger(wvw_win->nWinId);
+    hb_vmPushInteger(keyCode);
+    hb_vmPushInteger(colrow.y);
+    hb_vmPushInteger(colrow.x);
+    hb_vmPushInteger(keyState);
+    hb_vmDo(5);
+    hb_vmRequestRestore();
+  }
 
-      case WM_LBUTTONUP:
-         keyCode = K_LBUTTONUP;
-         break;
-
-      case WM_RBUTTONUP:
-         if( wvw_win->hPopup ) {
-            GetCursorPos(&xy);
-            auto nPopupRet = static_cast<int>(TrackPopupMenu(wvw_win->hPopup, TPM_CENTERALIGN + TPM_RETURNCMD, xy.x, xy.y, 0, hWnd, nullptr));
-            if( nPopupRet ) {
-               hb_gt_wvw_AddCharToInputQueue(nPopupRet);
-            }
-            return;
-         } else {
-            keyCode = K_RBUTTONUP;
-            break;
-         }
-
-      case WM_MBUTTONDOWN:
-         keyCode = K_MBUTTONDOWN;
-         break;
-
-      case WM_MBUTTONUP:
-         keyCode = K_MBUTTONUP;
-         break;
-
-      case WM_MBUTTONDBLCLK:
-         keyCode = K_MDBLCLK;
-         break;
-
-      case WM_MOUSEMOVE:
-         keyState = static_cast<SHORT>(wParam);
-
-         if( keyState == MK_LBUTTON ) {
-            keyCode = K_MMLEFTDOWN;
-         } else if( keyState == MK_RBUTTON ) {
-            keyCode = K_MMRIGHTDOWN;
-         } else if( keyState == MK_MBUTTON ) {
-            keyCode = K_MMMIDDLEDOWN;
-         } else {
-            keyCode = K_MOUSEMOVE;
-         }
-         break;
-
-      case WM_MOUSEWHEEL:
-         keyState = HIWORD(wParam);
-
-         if( keyState > 0 ) {
-            keyCode = K_MWFORWARD;
-         } else {
-            keyCode = K_MWBACKWARD;
-         }
-
-         break;
-
-      case WM_NCMOUSEMOVE:
-         keyCode = K_NCMOUSEMOVE;
-         break;
-   }
-
-   if( wvw->a.pSymWVW_TBMOUSE && keyCode != 0 && hb_vmRequestReenter() ) {
-      hb_vmPushDynSym(wvw->a.pSymWVW_TBMOUSE);
-      hb_vmPushNil();
-      hb_vmPushInteger(wvw_win->nWinId);
-      hb_vmPushInteger(keyCode);
-      hb_vmPushInteger(colrow.y);
-      hb_vmPushInteger(colrow.x);
-      hb_vmPushInteger(keyState);
-      hb_vmDo(5);
-      hb_vmRequestRestore();
-   }
-
-   hb_gt_wvw_AddCharToInputQueue(keyCode);
+  hb_gt_wvw_AddCharToInputQueue(keyCode);
 }
 
 static LRESULT CALLBACK hb_gt_wvw_TBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   HWND hWndParent = GetParent(hWnd);
-   auto wvw = hb_gt_wvw();
+  HWND hWndParent = GetParent(hWnd);
+  auto wvw = hb_gt_wvw();
 
-   if( wvw == nullptr || hWndParent == nullptr ) {
-      hb_errInternal(10012, "ToolBar: Parent window is missing", nullptr, nullptr);
-      return DefWindowProc(hWnd, message, wParam, lParam);
-   }
+  if (wvw == nullptr || hWndParent == nullptr)
+  {
+    hb_errInternal(10012, "ToolBar: Parent window is missing", nullptr, nullptr);
+    return DefWindowProc(hWnd, message, wParam, lParam);
+  }
 
-   int nWin;
+  int nWin;
 
-   for( nWin = 0; nWin < wvw->iNumWindows; ++nWin ) {
-      if( wvw->pWin[nWin]->hWnd == hWndParent ) {
-         break;
-      }
-   }
+  for (nWin = 0; nWin < wvw->iNumWindows; ++nWin)
+  {
+    if (wvw->pWin[nWin]->hWnd == hWndParent)
+    {
+      break;
+    }
+  }
 
-   if( nWin >= wvw->iNumWindows ) {
-      hb_errInternal(10013, "ToolBar: Invalid parent Window ID", nullptr, nullptr);
-      return DefWindowProc(hWnd, message, wParam, lParam);
-   }
+  if (nWin >= wvw->iNumWindows)
+  {
+    hb_errInternal(10013, "ToolBar: Invalid parent Window ID", nullptr, nullptr);
+    return DefWindowProc(hWnd, message, wParam, lParam);
+  }
 
-   PWVW_WIN wvw_win = wvw->pWin[nWin];
+  PWVW_WIN wvw_win = wvw->pWin[nWin];
 
-   switch( message ) {
-      case WM_RBUTTONDOWN:
-      case WM_LBUTTONDOWN:
-      case WM_RBUTTONUP:
-      case WM_LBUTTONUP:
-      case WM_RBUTTONDBLCLK:
-      case WM_LBUTTONDBLCLK:
-      case WM_MBUTTONDOWN:
-      case WM_MBUTTONUP:
-      case WM_MBUTTONDBLCLK:
-      case WM_MOUSEMOVE:
-      case WM_MOUSEWHEEL:
-      case WM_NCMOUSEMOVE:
-         if( !hb_gt_wvw_AcceptingInput() || (nWin != wvw->iNumWindows - 1) ) {
-            return 0;
-         }
-         hb_gt_wvw_TBMouseEvent(wvw_win, hWnd, message, wParam, lParam);
-         break;
+  switch (message)
+  {
+  case WM_RBUTTONDOWN:
+  case WM_LBUTTONDOWN:
+  case WM_RBUTTONUP:
+  case WM_LBUTTONUP:
+  case WM_RBUTTONDBLCLK:
+  case WM_LBUTTONDBLCLK:
+  case WM_MBUTTONDOWN:
+  case WM_MBUTTONUP:
+  case WM_MBUTTONDBLCLK:
+  case WM_MOUSEMOVE:
+  case WM_MOUSEWHEEL:
+  case WM_NCMOUSEMOVE:
+    if (!hb_gt_wvw_AcceptingInput() || (nWin != wvw->iNumWindows - 1))
+    {
+      return 0;
+    }
+    hb_gt_wvw_TBMouseEvent(wvw_win, hWnd, message, wParam, lParam);
+    break;
 
-      case WM_PAINT: {
-         CallWindowProc(wvw_win->tbOldProc, hWnd, message, wParam, lParam);
+  case WM_PAINT: {
+    CallWindowProc(wvw_win->tbOldProc, hWnd, message, wParam, lParam);
 
-         RECT rTB{};
-         GetClientRect(hWnd, &rTB);
-         int iTop = rTB.bottom - 3;
-         int iRight = rTB.right;
+    RECT rTB{};
+    GetClientRect(hWnd, &rTB);
+    int iTop = rTB.bottom - 3;
+    int iRight = rTB.right;
 
-         auto hdc = GetDC(hWnd);
+    auto hdc = GetDC(hWnd);
 
-         HGDIOBJ hOldObj = SelectObject(hdc, wvw->a.penWhite);
+    HGDIOBJ hOldObj = SelectObject(hdc, wvw->a.penWhite);
 
-         MoveToEx(hdc, 0, iTop, nullptr);          /* Top */
-         LineTo(hdc, iRight, iTop);
+    MoveToEx(hdc, 0, iTop, nullptr); /* Top */
+    LineTo(hdc, iRight, iTop);
 
-         SelectObject(hdc, wvw->a.penBlack);
+    SelectObject(hdc, wvw->a.penBlack);
 
-         MoveToEx(hdc, 0, iTop + 2, nullptr);      /* Bottom */
-         LineTo(hdc, iRight, iTop + 2);
+    MoveToEx(hdc, 0, iTop + 2, nullptr); /* Bottom */
+    LineTo(hdc, iRight, iTop + 2);
 
-         SelectObject(hdc, wvw->a.penDarkGray);
-         MoveToEx(hdc, 0, iTop + 1, nullptr);      /* Middle */
-         LineTo(hdc, iRight, iTop + 1);
+    SelectObject(hdc, wvw->a.penDarkGray);
+    MoveToEx(hdc, 0, iTop + 1, nullptr); /* Middle */
+    LineTo(hdc, iRight, iTop + 1);
 
-         SelectObject(wvw_win->hdc, hOldObj);
-         ReleaseDC(hWnd, hdc);
+    SelectObject(wvw_win->hdc, hOldObj);
+    ReleaseDC(hWnd, hdc);
 
-         return 0;
-      }
-   }
+    return 0;
+  }
+  }
 
-   return CallWindowProc(wvw_win->tbOldProc, hWnd, message, wParam, lParam);
+  return CallWindowProc(wvw_win->tbOldProc, hWnd, message, wParam, lParam);
 }
 
 /*
@@ -366,105 +408,110 @@ nSystemBitmap: 0:none, 1:small, 2:large (defaults: 1)
               small=16x16 large=24x24
 nImageWidth/Height are in effect only if nSystemBitmap==0
 */
-HB_FUNC( WVW_TBCREATE )
+HB_FUNC(WVW_TBCREATE)
 {
-   auto wvw = hb_gt_wvw();
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw = hb_gt_wvw();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win && wvw_win->hToolBar == nullptr ) {
-      DWORD dwStyle = hb_parnidef(3, TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE);
+  if (wvw && wvw_win && wvw_win->hToolBar == nullptr)
+  {
+    DWORD dwStyle =
+        hb_parnidef(3, TBSTYLE_ALTDRAG | TBSTYLE_FLAT | TBSTYLE_TOOLTIPS | TBSTYLE_TRANSPARENT | TBSTYLE_WRAPABLE);
 
-      auto iSystemBitmap = hb_parnidef(4, 1);
-      int iImageWidth   = iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1;
-      int iImageHeight  = iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1;
+    auto iSystemBitmap = hb_parnidef(4, 1);
+    int iImageWidth = iSystemBitmap == 0 && HB_ISNUM(5) ? hb_parni(5) : -1;
+    int iImageHeight = iSystemBitmap == 0 && HB_ISNUM(6) ? hb_parni(6) : -1;
 
-      InitCommonControls();
+    InitCommonControls();
 
-      if( iImageWidth < 0 ) {
-         switch( iSystemBitmap ) {
-            case 1:
-               iImageWidth = 16;
-               break;
-            case 2:
-               iImageWidth = 24;
-               break;
-            default:
-               iImageWidth = 16;
-         }
+    if (iImageWidth < 0)
+    {
+      switch (iSystemBitmap)
+      {
+      case 1:
+        iImageWidth = 16;
+        break;
+      case 2:
+        iImageWidth = 24;
+        break;
+      default:
+        iImageWidth = 16;
       }
-      if( iImageHeight < 0 ) {
-         switch( iSystemBitmap ) {
-            case 1:
-               iImageHeight = 16;
-               break;
-            case 2:
-               iImageHeight = 24;
-               break;
-            default:
-               iImageHeight = iImageWidth;
-         }
+    }
+    if (iImageHeight < 0)
+    {
+      switch (iSystemBitmap)
+      {
+      case 1:
+        iImageHeight = 16;
+        break;
+      case 2:
+        iImageHeight = 24;
+        break;
+      default:
+        iImageHeight = iImageWidth;
+      }
+    }
+
+    HWND hWnd =
+        CreateToolbarEx(wvw_win->hWnd, WS_CHILD | WS_VISIBLE | dwStyle, WVW_ID_BASE_TOOLBAR + wvw_win->nWinId, 0,
+                        GetModuleHandle(nullptr), 0, nullptr, 0, 0, 0, iImageWidth, iImageHeight, sizeof(TBBUTTON));
+
+    if (hWnd)
+    {
+      wvw_win->tbOldProc =
+          reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvw_TBProc)));
+
+      if (iSystemBitmap > 0)
+      {
+        TBADDBITMAP tbab{};
+        tbab.hInst = HINST_COMMCTRL;
+        tbab.nID = iSystemBitmap == 1 ? IDB_STD_SMALL_COLOR : IDB_STD_LARGE_COLOR;
+        wvw_win->iStartStdBitmap =
+            static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
+        tbab.nID = iSystemBitmap == 1 ? IDB_VIEW_SMALL_COLOR : IDB_VIEW_LARGE_COLOR;
+        wvw_win->iStartViewBitmap =
+            static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
+        tbab.nID = iSystemBitmap == 1 ? IDB_HIST_SMALL_COLOR : IDB_HIST_LARGE_COLOR;
+        wvw_win->iStartHistBitmap =
+            static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
+      }
+      else
+      {
+        wvw_win->iStartStdBitmap = 0;
+        wvw_win->iStartViewBitmap = 0;
+        wvw_win->iStartHistBitmap = 0;
       }
 
-      HWND hWnd = CreateToolbarEx(
-         wvw_win->hWnd,
-         WS_CHILD | WS_VISIBLE | dwStyle,
-         WVW_ID_BASE_TOOLBAR + wvw_win->nWinId,
-         0,
-         GetModuleHandle(nullptr),
-         0,
-         nullptr,
-         0,
-         0,
-         0,
-         iImageWidth,
-         iImageHeight,
-         sizeof(TBBUTTON));
+      wvw_win->iTBImgWidth = iImageWidth;
+      wvw_win->iTBImgHeight = iImageHeight;
 
-      if( hWnd ) {
-         wvw_win->tbOldProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvw_TBProc)));
+      SendMessage(hWnd, TB_SETMAXTEXTROWS, static_cast<WPARAM>(hb_parl(2) ? 1 : 0), 0);
 
-         if( iSystemBitmap > 0 ) {
-            TBADDBITMAP tbab{};
-            tbab.hInst = HINST_COMMCTRL;
-            tbab.nID = iSystemBitmap == 1 ? IDB_STD_SMALL_COLOR : IDB_STD_LARGE_COLOR;
-            wvw_win->iStartStdBitmap = static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
-            tbab.nID = iSystemBitmap == 1 ? IDB_VIEW_SMALL_COLOR : IDB_VIEW_LARGE_COLOR;
-            wvw_win->iStartViewBitmap = static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
-            tbab.nID = iSystemBitmap == 1 ? IDB_HIST_SMALL_COLOR : IDB_HIST_LARGE_COLOR;
-            wvw_win->iStartHistBitmap = static_cast<int>(SendMessage(hWnd, TB_ADDBITMAP, 0, reinterpret_cast<WPARAM>(&tbab)));
-         } else {
-            wvw_win->iStartStdBitmap  = 0;
-            wvw_win->iStartViewBitmap = 0;
-            wvw_win->iStartHistBitmap = 0;
-         }
+      hb_stornl(wvw_win->iStartStdBitmap, 7);
+      hb_stornl(wvw_win->iStartViewBitmap, 8);
+      hb_stornl(wvw_win->iStartHistBitmap, 9);
 
-         wvw_win->iTBImgWidth  = iImageWidth;
-         wvw_win->iTBImgHeight = iImageHeight;
+      hb_gt_wvw_TBinitSize(wvw_win, hWnd);
 
-         SendMessage(hWnd, TB_SETMAXTEXTROWS, static_cast<WPARAM>(hb_parl(2) ? 1 : 0), 0);
+      wvw_win->hToolBar = hWnd;
 
-         hb_stornl(wvw_win->iStartStdBitmap, 7);
-         hb_stornl(wvw_win->iStartViewBitmap, 8);
-         hb_stornl(wvw_win->iStartHistBitmap, 9);
+      hb_gt_wvw_ResetWindow(wvw_win);
 
-         hb_gt_wvw_TBinitSize(wvw_win, hWnd);
+      hbwapi_ret_raw_HANDLE(hWnd);
+      return;
+    }
+    else
+    {
+      hb_errRT_TERM(EG_CREATE, 10001, "Windows API CreateToolbarEx() failed", HB_ERR_FUNCNAME, 0, 0);
+    }
+  }
 
-         wvw_win->hToolBar = hWnd;
+  hb_stornl(0, 7);
+  hb_stornl(0, 8);
+  hb_stornl(0, 9);
 
-         hb_gt_wvw_ResetWindow(wvw_win);
-
-         hbwapi_ret_raw_HANDLE(hWnd);
-         return;
-      } else {
-         hb_errRT_TERM(EG_CREATE, 10001, "Windows API CreateToolbarEx() failed", HB_ERR_FUNCNAME, 0, 0);
-      }
-   }
-
-   hb_stornl(0, 7);
-   hb_stornl(0, 8);
-   hb_stornl(0, 9);
-
-   hbwapi_ret_raw_HANDLE(nullptr);
+  hbwapi_ret_raw_HANDLE(nullptr);
 }
 
 /*
@@ -487,86 +534,101 @@ lMap3Dcolors: defaults to .F.
         This might be desirable to have transparent effect.
         LIMITATION: this will work on 256 colored bitmaps only
 */
-HB_FUNC( WVW_TBADDBUTTON )
+HB_FUNC(WVW_TBADDBUTTON)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      auto iCommand = hb_parni(2);
-      auto uiBitmap = static_cast<HB_UINT>(hb_parni(3));
-      auto szBitmap = hb_parc(3);
-      auto iBitmapType = hb_parni(5);
-      bool fMap3Dcolors = hb_parl(6);
-      bool fDropdown = hb_parl(7);
+  if (wvw_win)
+  {
+    auto iCommand = hb_parni(2);
+    auto uiBitmap = static_cast<HB_UINT>(hb_parni(3));
+    auto szBitmap = hb_parc(3);
+    auto iBitmapType = hb_parni(5);
+    bool fMap3Dcolors = hb_parl(6);
+    bool fDropdown = hb_parl(7);
 
-      HWND hWnd = wvw_win->hToolBar;
+    HWND hWnd = wvw_win->hToolBar;
 
-      if( hWnd == nullptr ) {
-         hb_retl(false);
-         return;
-      }
-
-      if( iCommand >= WVW_ID_BASE_PUSHBUTTON ) {
-         hb_errRT_TERM(EG_ARG, 10001, "ToolBar button command ID too high. Potential conflict with PushButton.", HB_ERR_FUNCNAME, 0, 0);
-         hb_retl(false);
-         return;
-      }
-
-      void * hLabel;
-      HB_SIZE nLen;
-      LPCTSTR szLabel = HB_PARSTRDEF(4, &hLabel, &nLen);
-
-      if( nLen > WVW_TB_LABELMAXLENGTH ) {
-         hb_strfree(hLabel);
-         hb_errRT_TERM(EG_LIMIT, 10001, "ToolBar label too long.", HB_ERR_FUNCNAME, 0, 0);
-         hb_retl(false);
-         return;
-      }
-
-      int iOldHeight = wvw_win->iTBHeight;
-
-      if( !hb_gt_wvw_AddTBButton(hWnd, szBitmap, uiBitmap, szLabel, iCommand, iBitmapType, fMap3Dcolors, wvw_win, fDropdown) ) {
-         if( iBitmapType == 0 ) {
-            if( !hb_gt_wvw_AddTBButton(hWnd, szBitmap, uiBitmap, szLabel, iCommand, 1, fMap3Dcolors, wvw_win, fDropdown) ) {
-               hb_strfree(hLabel);
-               hb_errRT_TERM(EG_CREATE, 10001, "Failed hb_gt_wvw_AddTBButton()", HB_ERR_FUNCNAME, 0, 0);
-               hb_retl(false);
-               return;
-            }
-         } else {
-            hb_strfree(hLabel);
-            hb_errRT_TERM(EG_CREATE, 10002, "Failed hb_gt_wvw_AddTBButton()", HB_ERR_FUNCNAME, 0, 0);
-            hb_retl(false);
-            return;
-         }
-      }
-
-      hb_strfree(hLabel);
-
-      hb_gt_wvw_TBinitSize(wvw_win, hWnd);
-
-      if( wvw_win->iTBHeight != iOldHeight ) {
-         hb_gt_wvw_ResetWindow(wvw_win);
-      }
-
-      hb_retl(true);
-   } else {
+    if (hWnd == nullptr)
+    {
       hb_retl(false);
-   }
+      return;
+    }
+
+    if (iCommand >= WVW_ID_BASE_PUSHBUTTON)
+    {
+      hb_errRT_TERM(EG_ARG, 10001, "ToolBar button command ID too high. Potential conflict with PushButton.",
+                    HB_ERR_FUNCNAME, 0, 0);
+      hb_retl(false);
+      return;
+    }
+
+    void *hLabel;
+    HB_SIZE nLen;
+    LPCTSTR szLabel = HB_PARSTRDEF(4, &hLabel, &nLen);
+
+    if (nLen > WVW_TB_LABELMAXLENGTH)
+    {
+      hb_strfree(hLabel);
+      hb_errRT_TERM(EG_LIMIT, 10001, "ToolBar label too long.", HB_ERR_FUNCNAME, 0, 0);
+      hb_retl(false);
+      return;
+    }
+
+    int iOldHeight = wvw_win->iTBHeight;
+
+    if (!hb_gt_wvw_AddTBButton(hWnd, szBitmap, uiBitmap, szLabel, iCommand, iBitmapType, fMap3Dcolors, wvw_win,
+                               fDropdown))
+    {
+      if (iBitmapType == 0)
+      {
+        if (!hb_gt_wvw_AddTBButton(hWnd, szBitmap, uiBitmap, szLabel, iCommand, 1, fMap3Dcolors, wvw_win, fDropdown))
+        {
+          hb_strfree(hLabel);
+          hb_errRT_TERM(EG_CREATE, 10001, "Failed hb_gt_wvw_AddTBButton()", HB_ERR_FUNCNAME, 0, 0);
+          hb_retl(false);
+          return;
+        }
+      }
+      else
+      {
+        hb_strfree(hLabel);
+        hb_errRT_TERM(EG_CREATE, 10002, "Failed hb_gt_wvw_AddTBButton()", HB_ERR_FUNCNAME, 0, 0);
+        hb_retl(false);
+        return;
+      }
+    }
+
+    hb_strfree(hLabel);
+
+    hb_gt_wvw_TBinitSize(wvw_win, hWnd);
+
+    if (wvw_win->iTBHeight != iOldHeight)
+    {
+      hb_gt_wvw_ResetWindow(wvw_win);
+    }
+
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
 }
 
 /*
 wvw_tbButtonCount([nWinNum])
 returns number of buttons in toolbar on window nWinNum
 */
-HB_FUNC( WVW_TBBUTTONCOUNT )
+HB_FUNC(WVW_TBBUTTONCOUNT)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      HWND hWnd = wvw_win->hToolBar;
-      hb_retni(hWnd ? static_cast<int>(SendMessage(hWnd, TB_BUTTONCOUNT, 0, 0)) : 0);
-   }
+  if (wvw_win)
+  {
+    HWND hWnd = wvw_win->hToolBar;
+    hb_retni(hWnd ? static_cast<int>(SendMessage(hWnd, TB_BUTTONCOUNT, 0, 0)) : 0);
+  }
 }
 
 /*
@@ -575,57 +637,64 @@ nButton is zero based index of button to delete
 index=0 is the leftmost button
 NOTE: button separator is indexed and deleteable too
 */
-HB_FUNC( WVW_TBDELBUTTON )
+HB_FUNC(WVW_TBDELBUTTON)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   auto fResult = false;
+  auto fResult = false;
 
-   if( wvw_win ) {
-      auto iButton = hb_parnidef(2, -1);
-      HWND hWnd = wvw_win->hToolBar;
+  if (wvw_win)
+  {
+    auto iButton = hb_parnidef(2, -1);
+    HWND hWnd = wvw_win->hToolBar;
 
-      if( hWnd && iButton >= 0 ) {
-         int iOldHeight = wvw_win->iTBHeight;
+    if (hWnd && iButton >= 0)
+    {
+      int iOldHeight = wvw_win->iTBHeight;
 
-         if( SendMessage(hWnd, TB_DELETEBUTTON, static_cast<WPARAM>(iButton), 0) ) {
-            hb_gt_wvw_TBinitSize(wvw_win, hWnd);
+      if (SendMessage(hWnd, TB_DELETEBUTTON, static_cast<WPARAM>(iButton), 0))
+      {
+        hb_gt_wvw_TBinitSize(wvw_win, hWnd);
 
-            if( wvw_win->iTBHeight != iOldHeight ) {
-               hb_gt_wvw_ResetWindow(wvw_win);
-            }
+        if (wvw_win->iTBHeight != iOldHeight)
+        {
+          hb_gt_wvw_ResetWindow(wvw_win);
+        }
 
-            fResult = true;
-         }
+        fResult = true;
       }
-   }
+    }
+  }
 
-   hb_retl(fResult);
+  hb_retl(fResult);
 }
 
 /*
 wvw_tbGetButtonRect([nWinNum], nButton)
 return an array {nRowStart, nColStart, nRowStop, nColStop}
 */
-HB_FUNC( WVW_TBGETBUTTONRECT )
+HB_FUNC(WVW_TBGETBUTTONRECT)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      auto iButton = hb_parnidef(2, -1);
-      HWND hWnd = wvw_win->hToolBar;
-      RECT rc;
+  if (wvw_win)
+  {
+    auto iButton = hb_parnidef(2, -1);
+    HWND hWnd = wvw_win->hToolBar;
+    RECT rc;
 
-      if( hWnd && iButton >= 0 && SendMessage(hWnd, TB_GETRECT, static_cast<WPARAM>(iButton), reinterpret_cast<LPARAM>(&rc)) ) {
-         auto aXY = hb_itemArrayNew(4);
-         RECT rcRect = hb_gt_wvw_GetColRowFromXYRect(wvw_win, rc);
-         hb_arraySetNL(aXY, 1, HB_MAX(0, rcRect.top));
-         hb_arraySetNL(aXY, 2, rcRect.left);
-         hb_arraySetNL(aXY, 3, HB_MIN(wvw_win->ROWS - 1, rcRect.bottom));
-         hb_arraySetNL(aXY, 4, rcRect.right);
-         hb_itemReturnRelease(aXY);
-      }
-   }
+    if (hWnd && iButton >= 0 &&
+        SendMessage(hWnd, TB_GETRECT, static_cast<WPARAM>(iButton), reinterpret_cast<LPARAM>(&rc)))
+    {
+      auto aXY = hb_itemArrayNew(4);
+      RECT rcRect = hb_gt_wvw_GetColRowFromXYRect(wvw_win, rc);
+      hb_arraySetNL(aXY, 1, HB_MAX(0, rcRect.top));
+      hb_arraySetNL(aXY, 2, rcRect.left);
+      hb_arraySetNL(aXY, 3, HB_MIN(wvw_win->ROWS - 1, rcRect.bottom));
+      hb_arraySetNL(aXY, 4, rcRect.right);
+      hb_itemReturnRelease(aXY);
+    }
+  }
 }
 
 /*
@@ -635,52 +704,59 @@ index=0 is the leftmost button
 NOTE: button separator is indexed too
 returns .T. if successful
 */
-HB_FUNC( WVW_TBENABLEBUTTON )
+HB_FUNC(WVW_TBENABLEBUTTON)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   auto fResult = false;
+  auto fResult = false;
 
-   if( wvw_win ) {
-      auto iButton = hb_parnidef(2, -1);
-      HWND hWnd = wvw_win->hToolBar;
+  if (wvw_win)
+  {
+    auto iButton = hb_parnidef(2, -1);
+    HWND hWnd = wvw_win->hToolBar;
 
-      if( hWnd && iButton >= 0 ) {
-         int iCommand = hb_gt_wvw_IndexToCommand(hWnd, iButton);
-         if( iCommand >= 0 ) {
-            int iOldHeight = wvw_win->iTBHeight;
+    if (hWnd && iButton >= 0)
+    {
+      int iCommand = hb_gt_wvw_IndexToCommand(hWnd, iButton);
+      if (iCommand >= 0)
+      {
+        int iOldHeight = wvw_win->iTBHeight;
 
-            if( SendMessage(hWnd, TB_ENABLEBUTTON, static_cast<WPARAM>(iCommand), static_cast<LPARAM>(MAKELONG(static_cast<BOOL>(hb_parldef(3, true)) /* fEnable */, 0))) ) {
-               hb_gt_wvw_TBinitSize(wvw_win, hWnd);
+        if (SendMessage(hWnd, TB_ENABLEBUTTON, static_cast<WPARAM>(iCommand),
+                        static_cast<LPARAM>(MAKELONG(static_cast<BOOL>(hb_parldef(3, true)) /* fEnable */, 0))))
+        {
+          hb_gt_wvw_TBinitSize(wvw_win, hWnd);
 
-               if( wvw_win->iTBHeight != iOldHeight ) {
-                  hb_gt_wvw_ResetWindow(wvw_win);
-               }
+          if (wvw_win->iTBHeight != iOldHeight)
+          {
+            hb_gt_wvw_ResetWindow(wvw_win);
+          }
 
-               fResult = true;
-            }
-         }
+          fResult = true;
+        }
       }
-   }
+    }
+  }
 
-   hb_retl(fResult);
+  hb_retl(fResult);
 }
 
 /*
 wvw_tbDestroy([nWinNum])
 destroy toolbar for window nWinNum
 */
-HB_FUNC( WVW_TBDESTROY )
+HB_FUNC(WVW_TBDESTROY)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win && wvw_win->hToolBar ) {
-      DestroyWindow(wvw_win->hToolBar);
-      wvw_win->hToolBar  = nullptr;
-      wvw_win->iTBHeight = 0;
+  if (wvw_win && wvw_win->hToolBar)
+  {
+    DestroyWindow(wvw_win->hToolBar);
+    wvw_win->hToolBar = nullptr;
+    wvw_win->iTBHeight = 0;
 
-      hb_gt_wvw_ResetWindow(wvw_win);
-   }
+    hb_gt_wvw_ResetWindow(wvw_win);
+  }
 }
 
 /*
@@ -688,20 +764,22 @@ wvw_tbIndex2Cmd([nWinNum], nIndex)
 returns Command Id of button nIndex (0 based)
 returns -1 if the button does not exist
 */
-HB_FUNC( WVW_TBINDEX2CMD )
+HB_FUNC(WVW_TBINDEX2CMD)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      int iCmd = hb_gt_wvw_IndexToCommand(wvw_win->hToolBar, hb_parni(2));
+  if (wvw_win)
+  {
+    int iCmd = hb_gt_wvw_IndexToCommand(wvw_win->hToolBar, hb_parni(2));
 
-      if( iCmd > 0 ) {
-         hb_retni(iCmd);
-         return;
-      }
-   }
+    if (iCmd > 0)
+    {
+      hb_retni(iCmd);
+      return;
+    }
+  }
 
-   hb_retni(-1);
+  hb_retni(-1);
 }
 
 /*
@@ -709,60 +787,67 @@ wvw_tbCmd2Index([nWinNum], nCmd)
 returns Index (0 based) of button whose command id is nCmd
 returns -1 if the button does not exist
 */
-HB_FUNC( WVW_TBCMD2INDEX )
+HB_FUNC(WVW_TBCMD2INDEX)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      hb_retni(hb_gt_wvw_CommandToIndex(wvw_win->hToolBar, hb_parni(2)));
-   }
+  if (wvw_win)
+  {
+    hb_retni(hb_gt_wvw_CommandToIndex(wvw_win->hToolBar, hb_parni(2)));
+  }
 }
 
-HB_FUNC( WVW_TOOLBARADDBUTTONS )
+HB_FUNC(WVW_TOOLBARADDBUTTONS)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win && HB_ISARRAY(3) ) {
-      auto pArray = hb_param(3, Harbour::Item::ARRAY);
-      auto iButtons = static_cast<int>(hb_arrayLen(pArray));
+  if (wvw_win && HB_ISARRAY(3))
+  {
+    auto pArray = hb_param(3, Harbour::Item::ARRAY);
+    auto iButtons = static_cast<int>(hb_arrayLen(pArray));
 
-      if( iButtons > 0 ) {
-         HWND hWndCtrl = hbwapi_par_raw_HWND(2);
+    if (iButtons > 0)
+    {
+      HWND hWndCtrl = hbwapi_par_raw_HWND(2);
 
-         auto tb = static_cast<TBBUTTON*>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
-         auto hStr = static_cast<void**>(hb_xgrab(iButtons * sizeof(void*)));
+      auto tb = static_cast<TBBUTTON *>(hb_xgrab(iButtons * sizeof(TBBUTTON)));
+      auto hStr = static_cast<void **>(hb_xgrab(iButtons * sizeof(void *)));
 
-         int iOldHeight = wvw_win->iTBHeight;
+      int iOldHeight = wvw_win->iTBHeight;
 
-         SetWindowLong(hWndCtrl, GWL_STYLE, GetWindowLong( hWndCtrl, GWL_STYLE ) | TBSTYLE_TOOLTIPS | TBSTYLE_FLAT);
-         SendMessage(hWndCtrl, TB_BUTTONSTRUCTSIZE, sizeof(TBBUTTON), 0);
+      SetWindowLong(hWndCtrl, GWL_STYLE, GetWindowLong(hWndCtrl, GWL_STYLE) | TBSTYLE_TOOLTIPS | TBSTYLE_FLAT);
+      SendMessage(hWndCtrl, TB_BUTTONSTRUCTSIZE, sizeof(TBBUTTON), 0);
 
-         for( auto nCount = 0; nCount < iButtons; ++nCount ) {
-            auto pTemp = hb_arrayGetItemPtr(pArray, nCount + 1);
+      for (auto nCount = 0; nCount < iButtons; ++nCount)
+      {
+        auto pTemp = hb_arrayGetItemPtr(pArray, nCount + 1);
 
-            tb[nCount].idCommand = hb_arrayGetNI(pTemp, 2);
-            tb[nCount].fsState   = static_cast<BYTE>(hb_arrayGetNI(pTemp, 3));
-            tb[nCount].fsStyle   = static_cast<BYTE>(hb_arrayGetNI(pTemp, 4));
-            tb[nCount].dwData    = hb_arrayGetNI(pTemp, 5);
-            tb[nCount].iString   = reinterpret_cast<INT_PTR>(HB_ARRAYGETSTR(pTemp, 6, &hStr[nCount], nullptr));
-         }
-
-         SendMessage(hWndCtrl, TB_ADDBUTTONS, static_cast<WPARAM>(iButtons), reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(tb)));
-         SendMessage(hWndCtrl, TB_AUTOSIZE, 0, 0);
-
-         hb_gt_wvw_TBinitSize(wvw_win, hWndCtrl);
-
-         if( wvw_win->iTBHeight != iOldHeight ) {
-            hb_gt_wvw_ResetWindow(wvw_win);
-         }
-
-         hb_xfree(tb);
-
-         for( auto nCount = 0; nCount < iButtons; ++nCount ) {
-            hb_strfree(hStr[nCount]);
-         }
-
-         hb_xfree(hStr);
+        tb[nCount].idCommand = hb_arrayGetNI(pTemp, 2);
+        tb[nCount].fsState = static_cast<BYTE>(hb_arrayGetNI(pTemp, 3));
+        tb[nCount].fsStyle = static_cast<BYTE>(hb_arrayGetNI(pTemp, 4));
+        tb[nCount].dwData = hb_arrayGetNI(pTemp, 5);
+        tb[nCount].iString = reinterpret_cast<INT_PTR>(HB_ARRAYGETSTR(pTemp, 6, &hStr[nCount], nullptr));
       }
-   }
+
+      SendMessage(hWndCtrl, TB_ADDBUTTONS, static_cast<WPARAM>(iButtons),
+                  reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(tb)));
+      SendMessage(hWndCtrl, TB_AUTOSIZE, 0, 0);
+
+      hb_gt_wvw_TBinitSize(wvw_win, hWndCtrl);
+
+      if (wvw_win->iTBHeight != iOldHeight)
+      {
+        hb_gt_wvw_ResetWindow(wvw_win);
+      }
+
+      hb_xfree(tb);
+
+      for (auto nCount = 0; nCount < iButtons; ++nCount)
+      {
+        hb_strfree(hStr[nCount]);
+      }
+
+      hb_xfree(hStr);
+    }
+  }
 }

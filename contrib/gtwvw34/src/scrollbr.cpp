@@ -51,65 +51,75 @@
 
 static LRESULT CALLBACK hb_gt_wvw_XBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   HWND hWndParent = GetParent(hWnd);
-   auto wvw = hb_gt_wvw();
+  HWND hWndParent = GetParent(hWnd);
+  auto wvw = hb_gt_wvw();
 
-   if( wvw == nullptr || hWndParent == nullptr ) {
-      return DefWindowProc(hWnd, message, wParam, lParam);
-   }
+  if (wvw == nullptr || hWndParent == nullptr)
+  {
+    return DefWindowProc(hWnd, message, wParam, lParam);
+  }
 
-   if( message == WM_MOUSEACTIVATE ) {
-      wvw->iScrolling = 1;
-   }
+  if (message == WM_MOUSEACTIVATE)
+  {
+    wvw->iScrolling = 1;
+  }
 
-   int nWin;
+  int nWin;
 
-   for( nWin = 0; nWin < wvw->iNumWindows; nWin++ ) {
-      if( wvw->pWin[nWin]->hWnd == hWndParent ) {
-         break;
-      }
-   }
+  for (nWin = 0; nWin < wvw->iNumWindows; nWin++)
+  {
+    if (wvw->pWin[nWin]->hWnd == hWndParent)
+    {
+      break;
+    }
+  }
 
-   if( nWin >= wvw->iNumWindows ) {
-      return DefWindowProc(hWnd, message, wParam, lParam);
-   }
+  if (nWin >= wvw->iNumWindows)
+  {
+    return DefWindowProc(hWnd, message, wParam, lParam);
+  }
 
-   PWVW_WIN wvw_win = wvw->pWin[nWin];
+  PWVW_WIN wvw_win = wvw->pWin[nWin];
 
-   auto nCtrlId = static_cast<int>(GetWindowLong(hWnd, GWL_ID));
-   if( nCtrlId == 0 ) {
-      hb_errInternal(10010, "ScrollBar: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr);
-      return DefWindowProc(hWnd, message, wParam, lParam);
-   }
+  auto nCtrlId = static_cast<int>(GetWindowLong(hWnd, GWL_ID));
+  if (nCtrlId == 0)
+  {
+    hb_errInternal(10010, "ScrollBar: Control ID not found with hb_gt_wvw_FindControlId()", nullptr, nullptr);
+    return DefWindowProc(hWnd, message, wParam, lParam);
+  }
 
-   WNDPROC OldProc = hb_gt_wvw_GetControlProc(wvw_win, WVW_CONTROL_SCROLLBAR, hWnd);
-   if( OldProc == nullptr ) {
-      hb_errInternal(10011, "ScrollBar: Failed hb_gt_wvw_GetControlProc()", nullptr, nullptr);
-      return DefWindowProc(hWnd, message, wParam, lParam);
-   }
+  WNDPROC OldProc = hb_gt_wvw_GetControlProc(wvw_win, WVW_CONTROL_SCROLLBAR, hWnd);
+  if (OldProc == nullptr)
+  {
+    hb_errInternal(10011, "ScrollBar: Failed hb_gt_wvw_GetControlProc()", nullptr, nullptr);
+    return DefWindowProc(hWnd, message, wParam, lParam);
+  }
 
-   switch( message ) {
-      case WM_LBUTTONUP:
-         CallWindowProc(OldProc, hWnd, message, wParam, lParam);
-         if( GetCapture() == hWnd ) {
-            ReleaseCapture();
-            InvalidateRect(hWnd, nullptr, FALSE);
-         }
-         return 0;
+  switch (message)
+  {
+  case WM_LBUTTONUP:
+    CallWindowProc(OldProc, hWnd, message, wParam, lParam);
+    if (GetCapture() == hWnd)
+    {
+      ReleaseCapture();
+      InvalidateRect(hWnd, nullptr, FALSE);
+    }
+    return 0;
 
-      case WM_RBUTTONDOWN:
-         wvw->iScrolling = 0;
-         return 0;
+  case WM_RBUTTONDOWN:
+    wvw->iScrolling = 0;
+    return 0;
 
-      case WM_RBUTTONUP:
-         return 0;
-   }
+  case WM_RBUTTONUP:
+    return 0;
+  }
 
-   if( message == WM_CAPTURECHANGED ) {
-      wvw->iScrolling = 0;
-   }
+  if (message == WM_CAPTURECHANGED)
+  {
+    wvw->iScrolling = 0;
+  }
 
-   return CallWindowProc(OldProc, hWnd, message, wParam, lParam);
+  return CallWindowProc(OldProc, hWnd, message, wParam, lParam);
 }
 
 /*
@@ -164,149 +174,172 @@ NOTES:
 ScrollRange is always 0 - 100.
 Initial ScrollPos is 0
 */
-HB_FUNC( WVW_XBCREATE )
+HB_FUNC(WVW_XBCREATE)
 {
-   auto wvw = hb_gt_wvw();
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw = hb_gt_wvw();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw && wvw_win ) {
-      auto iTop  = hb_parni(3);
-      auto iLeft = hb_parni(4);
-      int iBottom;
-      int iRight;
+  if (wvw && wvw_win)
+  {
+    auto iTop = hb_parni(3);
+    auto iLeft = hb_parni(4);
+    int iBottom;
+    int iRight;
 
-      int iOffTop;
-      int iOffLeft;
-      int iOffBottom;
-      int iOffRight;
+    int iOffTop;
+    int iOffLeft;
+    int iOffBottom;
+    int iOffRight;
 
-      auto iStyle = hb_parnidef(2, -1);
+    auto iStyle = hb_parnidef(2, -1);
 
-      if( iStyle < SBS_HORZ || iStyle > SBS_VERT || !HB_ISEVALITEM(6) ) {
-         hb_retni(0);
-         return;
-      }
+    if (iStyle < SBS_HORZ || iStyle > SBS_VERT || !HB_ISEVALITEM(6))
+    {
+      hb_retni(0);
+      return;
+    }
 
-      if( iStyle == SBS_VERT ) {
-         iBottom = iTop + hb_parni(5) - 1;
-         iRight  = iLeft;
+    if (iStyle == SBS_VERT)
+    {
+      iBottom = iTop + hb_parni(5) - 1;
+      iRight = iLeft;
 
-         iOffTop    = hb_parvni(7, 1);
-         iOffLeft   = HB_ISARRAY(7) ? hb_parvni(7, 2) : 3;
-         iOffBottom = hb_parvni(7, 3);
-         iOffRight  = hb_parvni(7, 4);
-      } else {
-         iRight  = iLeft + hb_parni(5) - 1;
-         iBottom = iTop;
+      iOffTop = hb_parvni(7, 1);
+      iOffLeft = HB_ISARRAY(7) ? hb_parvni(7, 2) : 3;
+      iOffBottom = hb_parvni(7, 3);
+      iOffRight = hb_parvni(7, 4);
+    }
+    else
+    {
+      iRight = iLeft + hb_parni(5) - 1;
+      iBottom = iTop;
 
-         iOffTop    = HB_ISARRAY(7) ? hb_parvni(7, 1) : 3 - wvw_win->iLineSpacing;
-         iOffLeft   = hb_parvni(7, 2);
-         iOffBottom = hb_parvni(7, 3);
-         iOffRight  = hb_parvni(7, 4);
-      }
+      iOffTop = HB_ISARRAY(7) ? hb_parvni(7, 1) : 3 - wvw_win->iLineSpacing;
+      iOffLeft = hb_parvni(7, 2);
+      iOffBottom = hb_parvni(7, 3);
+      iOffRight = hb_parvni(7, 4);
+    }
 
-      RECT rXB;
-      rXB.top    = iTop;
-      rXB.left   = iLeft;
-      rXB.bottom = iBottom;
-      rXB.right  = iRight;
+    RECT rXB;
+    rXB.top = iTop;
+    rXB.left = iLeft;
+    rXB.bottom = iBottom;
+    rXB.right = iRight;
 
-      RECT rOffXB;
-      rOffXB.top    = iOffTop;
-      rOffXB.left   = iOffLeft;
-      rOffXB.bottom = iOffBottom;
-      rOffXB.right  = iOffRight;
+    RECT rOffXB;
+    rOffXB.top = iOffTop;
+    rOffXB.left = iOffLeft;
+    rOffXB.bottom = iOffBottom;
+    rOffXB.right = iOffRight;
 
-      hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
+    hb_gt_wvw_HBFUNCPrologue(wvw_win, &iTop, &iLeft, &iBottom, &iRight);
 
-      POINT xy;
+    POINT xy;
 
-      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
-      iTop = xy.y + iOffTop;
-      iLeft = xy.x + iOffLeft;
+    xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iLeft, iTop);
+    iTop = xy.y + iOffTop;
+    iLeft = xy.x + iOffLeft;
 
-      xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
+    xy = hb_gt_wvw_GetXYFromColRow(wvw_win, iRight + 1, iBottom + 1);
 
-      if( iStyle == SBS_VERT ) {
-         iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
-         iRight = iLeft + wvw_win->PTEXTSIZE.y - 1 + iOffRight;
-      } else {
-         iRight = xy.x - 1 + iOffRight;
-         iBottom = iTop + wvw_win->PTEXTSIZE.y - 1 + iOffBottom;
-      }
+    if (iStyle == SBS_VERT)
+    {
+      iBottom = xy.y - wvw_win->iLineSpacing - 1 + iOffBottom;
+      iRight = iLeft + wvw_win->PTEXTSIZE.y - 1 + iOffRight;
+    }
+    else
+    {
+      iRight = xy.x - 1 + iOffRight;
+      iBottom = iTop + wvw_win->PTEXTSIZE.y - 1 + iOffBottom;
+    }
 
-      int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_SCROLLBAR);
-      if( nCtrlId == 0 ) {
-         nCtrlId = WVW_ID_BASE_SCROLLBAR;
-      } else {
-         nCtrlId++;
-      }
+    int nCtrlId = hb_gt_wvw_LastControlId(wvw_win, WVW_CONTROL_SCROLLBAR);
+    if (nCtrlId == 0)
+    {
+      nCtrlId = WVW_ID_BASE_SCROLLBAR;
+    }
+    else
+    {
+      nCtrlId++;
+    }
 
-      HWND hWnd = CreateWindowEx(
-         0,                                        /* no extended styles */
-         TEXT("SCROLLBAR"),                      /* scroll bar control class */
-         nullptr,                                     /* text for window title bar */
-         WS_CHILD | WS_VISIBLE | iStyle, /* scroll bar styles */
-         iLeft,                                    /* horizontal position */
-         iTop,                                     /* vertical position */
-         iRight - iLeft + 1,                       /* width of the scroll bar */
-         iBottom - iTop + 1,                       /* height */
-         wvw_win->hWnd,                            /* handle to main window */
-         reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)),         /* id for this scroll bar control */
-         GetModuleHandle(nullptr),                  /* instance owning this window */
-         nullptr);                                   /* pointer not needed */
+    HWND hWnd =
+        CreateWindowEx(0,                                                         /* no extended styles */
+                       TEXT("SCROLLBAR"),                                         /* scroll bar control class */
+                       nullptr,                                                   /* text for window title bar */
+                       WS_CHILD | WS_VISIBLE | iStyle,                            /* scroll bar styles */
+                       iLeft,                                                     /* horizontal position */
+                       iTop,                                                      /* vertical position */
+                       iRight - iLeft + 1,                                        /* width of the scroll bar */
+                       iBottom - iTop + 1,                                        /* height */
+                       wvw_win->hWnd,                                             /* handle to main window */
+                       reinterpret_cast<HMENU>(static_cast<HB_PTRUINT>(nCtrlId)), /* id for this scroll bar control */
+                       GetModuleHandle(nullptr),                                  /* instance owning this window */
+                       nullptr);                                                  /* pointer not needed */
 
-      if( hWnd ) {
-         SetScrollRange(hWnd, SB_CTL, 0, 99, FALSE);
-         SetScrollPos(hWnd, SB_CTL, 0, TRUE);
-         hb_gt_wvw_AddControlHandle(wvw_win, WVW_CONTROL_SCROLLBAR, hWnd, nCtrlId, hb_param(6, Harbour::Item::EVALITEM), rXB, rOffXB, iStyle);
-         hb_gt_wvw_StoreControlProc(wvw_win, WVW_CONTROL_SCROLLBAR, hWnd, reinterpret_cast<WNDPROC>(SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvw_XBProc))));
-         hb_retni(nCtrlId);
-         return;
-      }
-   }
+    if (hWnd)
+    {
+      SetScrollRange(hWnd, SB_CTL, 0, 99, FALSE);
+      SetScrollPos(hWnd, SB_CTL, 0, TRUE);
+      hb_gt_wvw_AddControlHandle(wvw_win, WVW_CONTROL_SCROLLBAR, hWnd, nCtrlId, hb_param(6, Harbour::Item::EVALITEM),
+                                 rXB, rOffXB, iStyle);
+      hb_gt_wvw_StoreControlProc(wvw_win, WVW_CONTROL_SCROLLBAR, hWnd,
+                                 reinterpret_cast<WNDPROC>(SetWindowLongPtr(
+                                     hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(hb_gt_wvw_XBProc))));
+      hb_retni(nCtrlId);
+      return;
+    }
+  }
 
-   hb_retni(0);
+  hb_retni(0);
 }
 
 /*
 wvw_xbDestroy([nWinNum], nXBid)
 destroy scrollbar nXBid for window nWinNum
 */
-HB_FUNC( WVW_XBDESTROY )
+HB_FUNC(WVW_XBDESTROY)
 {
-   auto wvw_win = hb_gt_wvw_win_par();
+  auto wvw_win = hb_gt_wvw_win_par();
 
-   if( wvw_win ) {
-      auto nCtrlId = hb_parni(2);
-      auto wvw_ctl = wvw_win->ctlList;
-      PWVW_CTL wvw_ctlPrev = nullptr;
+  if (wvw_win)
+  {
+    auto nCtrlId = hb_parni(2);
+    auto wvw_ctl = wvw_win->ctlList;
+    PWVW_CTL wvw_ctlPrev = nullptr;
 
-      while( wvw_ctl ) {
-         if( wvw_ctl->nClass == WVW_CONTROL_SCROLLBAR && wvw_ctl->nId == nCtrlId ) {
-            break;
-         }
-
-         wvw_ctlPrev = wvw_ctl;
-         wvw_ctl = wvw_ctl->pNext;
+    while (wvw_ctl)
+    {
+      if (wvw_ctl->nClass == WVW_CONTROL_SCROLLBAR && wvw_ctl->nId == nCtrlId)
+      {
+        break;
       }
 
-      if( wvw_ctl ) {
-         DestroyWindow(wvw_ctl->hWnd);
+      wvw_ctlPrev = wvw_ctl;
+      wvw_ctl = wvw_ctl->pNext;
+    }
 
-         if( wvw_ctlPrev ) {
-            wvw_ctlPrev->pNext = wvw_ctl->pNext;
-         } else {
-            wvw_win->ctlList = wvw_ctl->pNext;
-         }
+    if (wvw_ctl)
+    {
+      DestroyWindow(wvw_ctl->hWnd);
 
-         if( wvw_ctl->pBlock ) {
-            hb_itemRelease(wvw_ctl->pBlock);
-         }
-
-         hb_xfree(wvw_ctl);
+      if (wvw_ctlPrev)
+      {
+        wvw_ctlPrev->pNext = wvw_ctl->pNext;
       }
-   }
+      else
+      {
+        wvw_win->ctlList = wvw_ctl->pNext;
+      }
+
+      if (wvw_ctl->pBlock)
+      {
+        hb_itemRelease(wvw_ctl->pBlock);
+      }
+
+      hb_xfree(wvw_ctl);
+    }
+  }
 }
 
 /*
@@ -317,35 +350,41 @@ however, both nMin & nMax must be supplied, or not at all.
 returns current position of scroll thumb.
 returns -1 if update failed.
 */
-HB_FUNC( WVW_XBUPDATE )
+HB_FUNC(WVW_XBUPDATE)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
 
-   if( hWnd ) {
-      UINT fMask = SIF_DISABLENOSCROLL;
+  if (hWnd)
+  {
+    UINT fMask = SIF_DISABLENOSCROLL;
 
-      if( HB_ISNUM(3) ) {
-         fMask |= SIF_POS;
-      }
-      if( HB_ISNUM(4) ) {
-         fMask |= SIF_PAGE;
-      }
-      if( HB_ISNUM(5) || HB_ISNUM(6) ) {
-         fMask |= SIF_RANGE;
-      }
+    if (HB_ISNUM(3))
+    {
+      fMask |= SIF_POS;
+    }
+    if (HB_ISNUM(4))
+    {
+      fMask |= SIF_PAGE;
+    }
+    if (HB_ISNUM(5) || HB_ISNUM(6))
+    {
+      fMask |= SIF_RANGE;
+    }
 
-      SCROLLINFO si{};
-      si.cbSize = sizeof(si);
-      si.fMask  = fMask;
-      si.nMin   = hb_parni(5);
-      si.nMax   = hb_parni(6);
-      si.nPage  = hbwapi_par_UINT(4);
-      si.nPos   = hb_parni(3);
+    SCROLLINFO si{};
+    si.cbSize = sizeof(si);
+    si.fMask = fMask;
+    si.nMin = hb_parni(5);
+    si.nMax = hb_parni(6);
+    si.nPage = hbwapi_par_UINT(4);
+    si.nPos = hb_parni(3);
 
-      hb_retni(SetScrollInfo(hWnd, SB_CTL, &si, TRUE));
-   } else {
-      hb_retni(-1);
-   }
+    hb_retni(SetScrollInfo(hWnd, SB_CTL, &si, TRUE));
+  }
+  else
+  {
+    hb_retni(-1);
+  }
 }
 
 /*
@@ -353,28 +392,30 @@ wvw_xbInfo([nWinNum], XBid)
 return an array {nMin, nMax, nPageSize, nPos, nTrackPos }
 return an empty array {} if invalid parameter passed.
 */
-HB_FUNC( WVW_XBINFO )
+HB_FUNC(WVW_XBINFO)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
 
-   if( hWnd ) {
-      SCROLLINFO si{};
-      si.cbSize = sizeof(si);
-      si.fMask = SIF_ALL;
+  if (hWnd)
+  {
+    SCROLLINFO si{};
+    si.cbSize = sizeof(si);
+    si.fMask = SIF_ALL;
 
-      if( GetScrollInfo(hWnd, SB_CTL, &si) ) {
-         auto aInfo = hb_itemArrayNew(5);
-         hb_arraySetNI(aInfo, 1, si.nMin);
-         hb_arraySetNI(aInfo, 2, si.nMax);
-         hb_arraySetNInt(aInfo, 3, si.nPage);
-         hb_arraySetNI(aInfo, 4, si.nPos);
-         hb_arraySetNI(aInfo, 5, si.nTrackPos);
-         hb_itemReturnRelease(aInfo);
-         return;
-      }
-   }
+    if (GetScrollInfo(hWnd, SB_CTL, &si))
+    {
+      auto aInfo = hb_itemArrayNew(5);
+      hb_arraySetNI(aInfo, 1, si.nMin);
+      hb_arraySetNI(aInfo, 2, si.nMax);
+      hb_arraySetNInt(aInfo, 3, si.nPage);
+      hb_arraySetNI(aInfo, 4, si.nPos);
+      hb_arraySetNI(aInfo, 5, si.nTrackPos);
+      hb_itemReturnRelease(aInfo);
+      return;
+    }
+  }
 
-   hb_reta(0);
+  hb_reta(0);
 }
 
 /*
@@ -386,11 +427,11 @@ nFlags: ESB_ENABLE_BOTH                    0: enable both arrows
         ESB_DISABLE_BOTH                   3: disable both arrow
 returns .T. if successful
 */
-HB_FUNC( WVW_XBENABLE )
+HB_FUNC(WVW_XBENABLE)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
-   UINT uiFlags = hbwapi_par_UINT(3);
-   hb_retl(hWnd && uiFlags <= ESB_DISABLE_BOTH && EnableScrollBar(hWnd, SB_CTL, uiFlags));
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  UINT uiFlags = hbwapi_par_UINT(3);
+  hb_retl(hWnd && uiFlags <= ESB_DISABLE_BOTH && EnableScrollBar(hWnd, SB_CTL, uiFlags));
 }
 
 /*
@@ -401,8 +442,8 @@ lShow: .T. shows the scrollbar (default)
        .F. hides the scrollbar
 returns .T. if successful
 */
-HB_FUNC( WVW_XBVISIBLE )
+HB_FUNC(WVW_XBVISIBLE)
 {
-   auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
-   hb_retl(hWnd && ShowScrollBar(hWnd, SB_CTL, static_cast<BOOL>(hb_parldef(3, true))));
+  auto hWnd = hb_gt_wvw_FindControlHandle(hb_gt_wvw_win_par(), WVW_CONTROL_SCROLLBAR, hb_parni(2), nullptr);
+  hb_retl(hWnd && ShowScrollBar(hWnd, SB_CTL, static_cast<BOOL>(hb_parldef(3, true))));
 }
