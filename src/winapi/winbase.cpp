@@ -3405,21 +3405,35 @@ WINBASEAPI WINBOOL WINAPI SetDefaultCommConfigW (LPCWSTR lpszName, LPCOMMCONFIG 
 /*
 WINBASEAPI WINBOOL WINAPI GetComputerNameA (LPSTR lpBuffer, LPDWORD nSize)
 */
+#if 0
 HB_FUNC( WAGETCOMPUTERNAMEA ) // TODO: corrigir parametro 1
 {
   DWORD nSize{};
   wa_ret_BOOL(GetComputerNameA(const_cast<LPSTR>(hb_parc(1)), &nSize));
   wa_stor_DWORD(nSize, 2);
 }
+#endif
 
 /*
 WINBASEAPI WINBOOL WINAPI GetComputerNameW (LPWSTR lpBuffer, LPDWORD nSize)
 */
+#if 0
 HB_FUNC( WAGETCOMPUTERNAMEW ) // TODO: corrigir parametro 1
 {
   DWORD nSize{};
   wa_ret_BOOL(GetComputerNameW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), &nSize));
   wa_stor_DWORD(nSize, 2);
+}
+#endif
+
+HB_FUNC( WAGETCOMPUTERNAME )
+{
+  DWORD nSize = wa_par_DWORD(2) + 1;
+  TCHAR * buffer = new TCHAR[nSize];
+  wa_ret_BOOL(GetComputerName(buffer, &nSize));
+  HB_STORSTRLEN(buffer, nSize, 1);
+  wa_stor_DWORD(nSize, 2);
+  delete[] buffer;
 }
 
 /*
