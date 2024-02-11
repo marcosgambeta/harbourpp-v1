@@ -453,7 +453,7 @@ extern HB_EXPORT PHB_FILE     hb_fileItemGet( PHB_ITEM pItem );
 extern HB_EXPORT PHB_ITEM     hb_fileItemPut( PHB_ITEM pItem, PHB_FILE pFile );
 extern HB_EXPORT void         hb_fileItemClear( PHB_ITEM pItem );
 
-#define HB_FILE_ERR_UNSUPPORTED  ( static_cast<HB_ERRCODE>( FS_ERROR ) )
+#define HB_FILE_ERR_UNSUPPORTED  ((HB_ERRCODE)FS_ERROR)
 
 /* wrapper to fopen() which calls hb_fsNameConv() */
 extern HB_EXPORT FILE *       hb_fopen( const char *path, const char *mode );
