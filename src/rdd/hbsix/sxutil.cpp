@@ -51,75 +51,87 @@
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
 
-HB_FUNC( SX_SLIMFAST )
+HB_FUNC(SX_SLIMFAST)
 {
-   auto szExp = hb_parc(1);
+  auto szExp = hb_parc(1);
 
-   if( szExp && *szExp ) {
-      char * szDst, cQuote = 0, c;
-      HB_SIZE nDst;
+  if (szExp && *szExp)
+  {
+    char *szDst, cQuote = 0, c;
+    HB_SIZE nDst;
 
-      szDst = hb_cdpnDupUpper(hb_vmCDP(), szExp, nullptr);
-      szExp = szDst;
-      nDst = 0;
+    szDst = hb_cdpnDupUpper(hb_vmCDP(), szExp, nullptr);
+    szExp = szDst;
+    nDst = 0;
 
-      while( (c = *szExp++) != 0 ) {
-         if( c == cQuote ) {
-            cQuote = 0;
-         } else if( !cQuote ) {
-            if( c == '"' || c == '\'' ) {
-               cQuote = c;
-            } else if( c == ' ' && nDst && szDst[nDst - 1] == ' ' ) {
-               continue;
-            }
-         }
-         szDst[nDst++] = c;
+    while ((c = *szExp++) != 0)
+    {
+      if (c == cQuote)
+      {
+        cQuote = 0;
       }
+      else if (!cQuote)
+      {
+        if (c == '"' || c == '\'')
+        {
+          cQuote = c;
+        }
+        else if (c == ' ' && nDst && szDst[nDst - 1] == ' ')
+        {
+          continue;
+        }
+      }
+      szDst[nDst++] = c;
+    }
 
-      hb_retclen_buffer(szDst, nDst);
-   } else {
-      hb_retc_null();
-   }
+    hb_retclen_buffer(szDst, nDst);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }
 
-HB_FUNC( SX_WILDMATCH )
+HB_FUNC(SX_WILDMATCH)
 {
-   auto szPattern = hb_parc(1);
-   auto szValue = hb_parc(2);
-   auto fMatch = false;
+  auto szPattern = hb_parc(1);
+  auto szValue = hb_parc(2);
+  auto fMatch = false;
 
-   if( szPattern && szPattern[0] && szValue ) {
-      fMatch = hb_strMatchWild(szValue, szPattern);
-   }
+  if (szPattern && szPattern[0] && szValue)
+  {
+    fMatch = hb_strMatchWild(szValue, szPattern);
+  }
 
-   hb_retl(fMatch);
+  hb_retl(fMatch);
 }
 
-#define HB_SX_VER   "1.00.00"
-#define HB_SX_DAY   "20070530"
-#define HB_SX_TIME  "01:00"
-#define HB_SX_FULL  "Harbour SIx3 compatible library, 1.00.00 2007/05/30 01:00"
+#define HB_SX_VER "1.00.00"
+#define HB_SX_DAY "20070530"
+#define HB_SX_TIME "01:00"
+#define HB_SX_FULL "Harbour SIx3 compatible library, 1.00.00 2007/05/30 01:00"
 
-HB_FUNC( SX_VERSION )
+HB_FUNC(SX_VERSION)
 {
-   switch( hb_parni(1) ) {
-      case 1:
-         hb_retds(HB_SX_DAY);
-         break;
-      case 2:
-         hb_retc(HB_SX_TIME);
-         break;
-      case 3:
-         hb_retc(HB_SX_FULL);
-         break;
-      default:
-         hb_retc(HB_SX_VER);
-         break;
-   }
+  switch (hb_parni(1))
+  {
+  case 1:
+    hb_retds(HB_SX_DAY);
+    break;
+  case 2:
+    hb_retc(HB_SX_TIME);
+    break;
+  case 3:
+    hb_retc(HB_SX_FULL);
+    break;
+  default:
+    hb_retc(HB_SX_VER);
+    break;
+  }
 }
 
-HB_FUNC( SX_ERROR )
+HB_FUNC(SX_ERROR)
 {
-   /* not use by Harbour */
-   hb_retni(0);
+  /* not use by Harbour */
+  hb_retni(0);
 }

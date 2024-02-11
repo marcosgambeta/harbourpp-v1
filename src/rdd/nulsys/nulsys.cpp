@@ -47,70 +47,70 @@
 #include "hbapi.hpp"
 #include "hbapirdd.hpp"
 
-HB_ERRCODE hb_rddSelectWorkAreaAlias(const char * szName)
+HB_ERRCODE hb_rddSelectWorkAreaAlias(const char *szName)
 {
-   HB_SYMBOL_UNUSED(szName);
+  HB_SYMBOL_UNUSED(szName);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_rddSelectWorkAreaNumber(int iArea)
 {
-   HB_SYMBOL_UNUSED(iArea);
+  HB_SYMBOL_UNUSED(iArea);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
 {
-   HB_SYMBOL_UNUSED(pSymAlias);
+  HB_SYMBOL_UNUSED(pSymAlias);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
 int hb_rddGetCurrentWorkAreaNumber(void)
 {
-   return 0;
+  return 0;
 }
 
 HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
-   HB_SYMBOL_UNUSED(pItem);
-   HB_SYMBOL_UNUSED(pFieldSymbol);
+  HB_SYMBOL_UNUSED(pItem);
+  HB_SYMBOL_UNUSED(pFieldSymbol);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
-   HB_SYMBOL_UNUSED(pItem);
-   HB_SYMBOL_UNUSED(pFieldSymbol);
+  HB_SYMBOL_UNUSED(pItem);
+  HB_SYMBOL_UNUSED(pFieldSymbol);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
-   HB_SYMBOL_UNUSED(pItem);
-   HB_SYMBOL_UNUSED(pFieldSymbol);
+  HB_SYMBOL_UNUSED(pItem);
+  HB_SYMBOL_UNUSED(pFieldSymbol);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
-   HB_SYMBOL_UNUSED(pItem);
-   HB_SYMBOL_UNUSED(pFieldSymbol);
+  HB_SYMBOL_UNUSED(pItem);
+  HB_SYMBOL_UNUSED(pFieldSymbol);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
-HB_ERRCODE hb_rddGetAliasNumber(const char * szAlias, int * iArea)
+HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int *iArea)
 {
-   HB_SYMBOL_UNUSED(szAlias);
-   HB_SYMBOL_UNUSED(iArea);
+  HB_SYMBOL_UNUSED(szAlias);
+  HB_SYMBOL_UNUSED(iArea);
 
-   return Harbour::FAILURE;
+  return Harbour::FAILURE;
 }
 
 void hb_rddCloseAll(void)
@@ -121,235 +121,235 @@ void hb_rddShutDown(void)
 {
 }
 
-HB_FUNC( RDDSYS )
+HB_FUNC(RDDSYS)
 {
 }
 
-HB_FUNC( RDDNAME )
+HB_FUNC(RDDNAME)
 {
-   hb_retc_null();
+  hb_retc_null();
 }
 
-HB_FUNC( RDDLIST )
+HB_FUNC(RDDLIST)
 {
-   hb_reta(0);
+  hb_reta(0);
 }
 
-HB_FUNC( FIELDGET )
+HB_FUNC(FIELDGET)
 {
-   hb_retc_null();
+  hb_retc_null();
 }
 
-HB_FUNC( FIELDPUT )
+HB_FUNC(FIELDPUT)
 {
-   hb_retc_null();
+  hb_retc_null();
 }
 
-HB_FUNC( FIELDPOS )
+HB_FUNC(FIELDPOS)
 {
-   hb_retni(0);
+  hb_retni(0);
 }
 
-HB_FUNC( FIELDNAME )
+HB_FUNC(FIELDNAME)
 {
-   hb_retc_null();
+  hb_retc_null();
 }
 
-HB_FUNC( DBCREATE )
-{
-}
-
-HB_FUNC( DBUSEAREA )
+HB_FUNC(DBCREATE)
 {
 }
 
-HB_FUNC( DBCLOSEAREA )
+HB_FUNC(DBUSEAREA)
 {
 }
 
-HB_FUNC( DBSELECTAREA )
+HB_FUNC(DBCLOSEAREA)
 {
 }
 
-HB_FUNC( DBSTRUCT )
+HB_FUNC(DBSELECTAREA)
 {
 }
 
-HB_FUNC( DBGOTO )
-{
-   hb_retni(0);
-}
-
-HB_FUNC( DBGOTOP )
+HB_FUNC(DBSTRUCT)
 {
 }
 
-HB_FUNC( DBGOBOTTOM )
+HB_FUNC(DBGOTO)
+{
+  hb_retni(0);
+}
+
+HB_FUNC(DBGOTOP)
 {
 }
 
-HB_FUNC( DBSEEK )
-{
-   hb_retl(false);
-}
-
-HB_FUNC( DBSKIP )
-{
-   hb_retni(0);
-}
-
-HB_FUNC( DBAPPEND )
+HB_FUNC(DBGOBOTTOM)
 {
 }
 
-HB_FUNC( DBRECALL )
+HB_FUNC(DBSEEK)
+{
+  hb_retl(false);
+}
+
+HB_FUNC(DBSKIP)
+{
+  hb_retni(0);
+}
+
+HB_FUNC(DBAPPEND)
 {
 }
 
-HB_FUNC( DBDELETE )
+HB_FUNC(DBRECALL)
 {
 }
 
-HB_FUNC( DBRLOCK )
-{
-   hb_retl(false);
-}
-
-HB_FUNC( DBUNLOCK )
-{
-   hb_retl(false);
-}
-
-HB_FUNC( DBRELATION )
-{
-   hb_retc_null();
-}
-
-HB_FUNC( DBRSELECT )
-{
-   hb_retni(0);
-}
-
-HB_FUNC( DBFILTER )
-{
-   hb_retc_null();
-}
-
-HB_FUNC( DBEVAL )
+HB_FUNC(DBDELETE)
 {
 }
 
-HB_FUNC( SELECT )
+HB_FUNC(DBRLOCK)
 {
-   hb_retni(0);
+  hb_retl(false);
 }
 
-HB_FUNC( ALIAS )
+HB_FUNC(DBUNLOCK)
 {
-   hb_retc_null();
+  hb_retl(false);
 }
 
-HB_FUNC( USED )
+HB_FUNC(DBRELATION)
 {
-   hb_retl(false);
+  hb_retc_null();
 }
 
-HB_FUNC( NETERR )
+HB_FUNC(DBRSELECT)
 {
-   hb_retl(false);
+  hb_retni(0);
 }
 
-HB_FUNC( LOCK )
+HB_FUNC(DBFILTER)
 {
-   hb_retl(false);
+  hb_retc_null();
 }
 
-HB_FUNC( FLOCK )
+HB_FUNC(DBEVAL)
 {
-   hb_retl(false);
 }
 
-HB_FUNC( RLOCK )
+HB_FUNC(SELECT)
 {
-   hb_retl(false);
+  hb_retni(0);
 }
 
-HB_FUNC( BOF )
+HB_FUNC(ALIAS)
 {
-   hb_retl(false);
+  hb_retc_null();
 }
 
-HB_FUNC( EOF )
+HB_FUNC(USED)
 {
-   hb_retl(false);
+  hb_retl(false);
 }
 
-HB_FUNC( FOUND )
+HB_FUNC(NETERR)
 {
-   hb_retl(false);
+  hb_retl(false);
 }
 
-HB_FUNC( DELETED )
+HB_FUNC(LOCK)
 {
-   hb_retl(false);
+  hb_retl(false);
 }
 
-HB_FUNC( RECNO )
+HB_FUNC(FLOCK)
 {
-   hb_retni(0);
+  hb_retl(false);
 }
 
-HB_FUNC( RECCOUNT )
+HB_FUNC(RLOCK)
 {
-   hb_parni(0);
+  hb_retl(false);
 }
 
-HB_FUNC( LASTREC )
+HB_FUNC(BOF)
 {
-   hb_retni(0);
+  hb_retl(false);
 }
 
-HB_FUNC( FCOUNT )
+HB_FUNC(EOF)
 {
-   hb_parni(0);
+  hb_retl(false);
 }
 
-HB_FUNC( RECSIZE )
+HB_FUNC(FOUND)
 {
-   hb_retni(0);
+  hb_retl(false);
 }
 
-HB_FUNC( HEADER )
+HB_FUNC(DELETED)
 {
-   hb_retni(0);
+  hb_retl(false);
 }
 
-HB_FUNC( LUPDATE )
+HB_FUNC(RECNO)
 {
-   hb_retds(NULL);
+  hb_retni(0);
 }
 
-HB_FUNC( INDEXORD )
+HB_FUNC(RECCOUNT)
 {
-   hb_parni(1);
+  hb_parni(0);
 }
 
-HB_FUNC( INDEXKEY )
+HB_FUNC(LASTREC)
 {
-   hb_retc_null();
+  hb_retni(0);
 }
 
-HB_FUNC( ORDNAME )
+HB_FUNC(FCOUNT)
 {
-   hb_retc_null();
+  hb_parni(0);
 }
 
-HB_FUNC( ORDKEY )
+HB_FUNC(RECSIZE)
 {
-   hb_retc_null();
+  hb_retni(0);
 }
 
-HB_FUNC( ORDFOR )
+HB_FUNC(HEADER)
 {
-   hb_retc_null();
+  hb_retni(0);
+}
+
+HB_FUNC(LUPDATE)
+{
+  hb_retds(NULL);
+}
+
+HB_FUNC(INDEXORD)
+{
+  hb_parni(1);
+}
+
+HB_FUNC(INDEXKEY)
+{
+  hb_retc_null();
+}
+
+HB_FUNC(ORDNAME)
+{
+  hb_retc_null();
+}
+
+HB_FUNC(ORDKEY)
+{
+  hb_retc_null();
+}
+
+HB_FUNC(ORDFOR)
+{
+  hb_retc_null();
 }

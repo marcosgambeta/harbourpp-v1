@@ -49,47 +49,56 @@
 #include "hbapifs.hpp"
 #include "hbset.hpp"
 
-HB_FUNC( SX_FNAMEPARSER )
+HB_FUNC(SX_FNAMEPARSER)
 {
-   auto szFileName = hb_parc(1);
+  auto szFileName = hb_parc(1);
 
-   if( szFileName ) {
-      char szPathBuf[HB_PATH_MAX];
-      PHB_FNAME pFileName;
-      HB_SIZE nLen;
-      char * pszFree;
+  if (szFileName)
+  {
+    char szPathBuf[HB_PATH_MAX];
+    PHB_FNAME pFileName;
+    HB_SIZE nLen;
+    char *pszFree;
 
-      szFileName = hb_fsNameConv(szFileName, &pszFree);
-      pFileName = hb_fsFNameSplit(szFileName);
-      if( pszFree ) {
-         hb_xfree(pszFree);
+    szFileName = hb_fsNameConv(szFileName, &pszFree);
+    pFileName = hb_fsFNameSplit(szFileName);
+    if (pszFree)
+    {
+      hb_xfree(pszFree);
+    }
+
+    if (!hb_parl(2))
+    {
+      pFileName->szPath = nullptr;
+    }
+    if (!hb_parl(3))
+    {
+      pFileName->szExtension = nullptr;
+    }
+
+    if (!hb_setGetTrimFileName())
+    {
+      if (pFileName->szName)
+      {
+        nLen = strlen(pFileName->szName);
+        nLen = hb_strRTrimLen(pFileName->szName, nLen, false);
+        pFileName->szName = hb_strLTrim(pFileName->szName, &nLen);
+        (const_cast<char *>(pFileName->szName))[nLen] = '\0';
       }
-
-      if( !hb_parl(2) ) {
-         pFileName->szPath = nullptr;
+      if (pFileName->szExtension)
+      {
+        nLen = strlen(pFileName->szExtension);
+        nLen = hb_strRTrimLen(pFileName->szExtension, nLen, false);
+        pFileName->szExtension = hb_strLTrim(pFileName->szExtension, &nLen);
+        (const_cast<char *>(pFileName->szExtension))[nLen] = '\0';
       }
-      if( !hb_parl(3) ) {
-         pFileName->szExtension = nullptr;
-      }
+    }
 
-      if( !hb_setGetTrimFileName() ) {
-         if( pFileName->szName ) {
-            nLen = strlen(pFileName->szName);
-            nLen = hb_strRTrimLen(pFileName->szName, nLen, false);
-            pFileName->szName = hb_strLTrim(pFileName->szName, &nLen);
-            ( const_cast<char*>(pFileName->szName) )[nLen] = '\0';
-         }
-         if( pFileName->szExtension ) {
-            nLen = strlen(pFileName->szExtension);
-            nLen = hb_strRTrimLen(pFileName->szExtension, nLen, false);
-            pFileName->szExtension = hb_strLTrim(pFileName->szExtension, &nLen);
-            ( const_cast<char*>(pFileName->szExtension) )[nLen] = '\0';
-         }
-      }
-
-      hb_retc(hb_fsFNameMerge(szPathBuf, pFileName));
-      hb_xfree(pFileName);
-   } else {
-      hb_retc_null();
-   }
+    hb_retc(hb_fsFNameMerge(szPathBuf, pFileName));
+    hb_xfree(pFileName);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

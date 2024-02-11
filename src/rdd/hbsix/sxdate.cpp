@@ -51,50 +51,51 @@
 
 #include "hbsxfunc.hpp"
 
-char * hb_sxDtoP(char * pDate, long lJulian)
+char *hb_sxDtoP(char *pDate, long lJulian)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sxDtoP(%p, %ld)", static_cast<void*>(pDate), lJulian));
 #endif
 
-   int iYear, iMonth, iDay;
-   long lPDate;
+  int iYear, iMonth, iDay;
+  long lPDate;
 
-   hb_dateDecode( lJulian, &iYear, &iMonth, &iDay );
-   lPDate = (((iYear << 1) | (iMonth >> 3)) << 8) | ((iMonth & 7) << 5) | iDay;
-   HB_PUT_BE_UINT24(pDate, lPDate);
+  hb_dateDecode(lJulian, &iYear, &iMonth, &iDay);
+  lPDate = (((iYear << 1) | (iMonth >> 3)) << 8) | ((iMonth & 7) << 5) | iDay;
+  HB_PUT_BE_UINT24(pDate, lPDate);
 
-   return pDate;
+  return pDate;
 }
 
-long hb_sxPtoD( const char * pDate )
+long hb_sxPtoD(const char *pDate)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sxPtoD(%p)", static_cast<const void*>(pDate)));
 #endif
 
-   if( pDate ) {
-      int iYear, iMonth, iDay;
-      long lPDate;
+  if (pDate)
+  {
+    int iYear, iMonth, iDay;
+    long lPDate;
 
-      lPDate = HB_GET_BE_UINT24(pDate);
-      iDay = lPDate & 0x1f;
-      iMonth = (lPDate >> 5) & 0x0f;
-      iYear = (lPDate >> 9);
+    lPDate = HB_GET_BE_UINT24(pDate);
+    iDay = lPDate & 0x1f;
+    iMonth = (lPDate >> 5) & 0x0f;
+    iYear = (lPDate >> 9);
 
-      return hb_dateEncode(iYear, iMonth, iDay);
-   }
-   return 0;
+    return hb_dateEncode(iYear, iMonth, iDay);
+  }
+  return 0;
 }
 
-HB_FUNC( SX_DTOP )
+HB_FUNC(SX_DTOP)
 {
-   char pDate[3];
+  char pDate[3];
 
-   hb_retclen(hb_sxDtoP(pDate, hb_pardl(1)), 3);
+  hb_retclen(hb_sxDtoP(pDate, hb_pardl(1)), 3);
 }
 
-HB_FUNC( SX_PTOD )
+HB_FUNC(SX_PTOD)
 {
-   hb_retdl(hb_sxPtoD(hb_parclen(1) < 3 ? nullptr : hb_parc(1)));
+  hb_retdl(hb_sxPtoD(hb_parclen(1) < 3 ? nullptr : hb_parc(1)));
 }

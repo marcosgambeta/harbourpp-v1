@@ -53,6 +53,6 @@
          original CA-Cl*pper namespace. This should have been
          marked as HB_EXTENSION, but it's not. */
 
-HB_FUNC_TRANSLATE( RDDINFO, HB_RDDINFO )
+HB_FUNC_TRANSLATE(RDDINFO, HB_RDDINFO)
 
 #endif

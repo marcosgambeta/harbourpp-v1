@@ -55,19 +55,22 @@
          original CA-Cl*pper namespace. This should have been
          marked as HB_EXTENSION, but it's not. */
 
-HB_FUNC( ORDCOUNT )
+HB_FUNC(ORDCOUNT)
 {
-   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+  auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr ) {
-      DBORDERINFO pOrderInfo{};
-      pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
-      pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
-      SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
-      hb_itemReturnRelease(pOrderInfo.itmResult);
-   } else {
-      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
-   }
+  if (pArea != nullptr)
+  {
+    DBORDERINFO pOrderInfo{};
+    pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
+    pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
+    SELF_ORDINFO(pArea, DBOI_ORDERCOUNT, &pOrderInfo);
+    hb_itemReturnRelease(pOrderInfo.itmResult);
+  }
+  else
+  {
+    hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
+  }
 }
 
 #endif

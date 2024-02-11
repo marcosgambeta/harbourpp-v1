@@ -56,49 +56,63 @@
          original CA-Cl*pper namespace. This should have been
          marked as HB_EXTENSION, but it's not. */
 
-HB_FUNC( ORDWILDSEEK )
+HB_FUNC(ORDWILDSEEK)
 {
-   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+  auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-   if( pArea != nullptr ) {
-      auto szPattern = hb_parc(1);
+  if (pArea != nullptr)
+  {
+    auto szPattern = hb_parc(1);
 
-      if( szPattern ) {
-         bool fCont = hb_parl(2), fBack = hb_parl(3);
-         auto fFound = false;
-         DBORDERINFO OrderInfo{};
-         HB_ERRCODE errCode = Harbour::SUCCESS;
+    if (szPattern)
+    {
+      bool fCont = hb_parl(2), fBack = hb_parl(3);
+      auto fFound = false;
+      DBORDERINFO OrderInfo{};
+      HB_ERRCODE errCode = Harbour::SUCCESS;
 
-         OrderInfo.itmResult = hb_itemNew(nullptr);
+      OrderInfo.itmResult = hb_itemNew(nullptr);
 
-         if( !fCont ) {
-            if( fBack ) {
-               errCode = SELF_GOBOTTOM(pArea);
-            } else {
-               errCode = SELF_GOTOP(pArea);
-            }
+      if (!fCont)
+      {
+        if (fBack)
+        {
+          errCode = SELF_GOBOTTOM(pArea);
+        }
+        else
+        {
+          errCode = SELF_GOTOP(pArea);
+        }
 
-            if( errCode == Harbour::SUCCESS ) {
-               errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &OrderInfo);
-               if( errCode == Harbour::SUCCESS ) {
-                  fFound = hb_strMatchWild(hb_itemGetCPtr(OrderInfo.itmResult), szPattern);
-               }
-            }
-         }
-         if( !fFound && errCode == Harbour::SUCCESS ) {
-            OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
-            if( SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo) == Harbour::SUCCESS ) {
-               fFound = hb_itemGetL(OrderInfo.itmResult);
-            }
-         }
-         hb_itemRelease(OrderInfo.itmResult);
-         hb_retl(fFound);
-      } else {
-         hb_errRT_DBCMD(EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+        if (errCode == Harbour::SUCCESS)
+        {
+          errCode = SELF_ORDINFO(pArea, DBOI_KEYVAL, &OrderInfo);
+          if (errCode == Harbour::SUCCESS)
+          {
+            fFound = hb_strMatchWild(hb_itemGetCPtr(OrderInfo.itmResult), szPattern);
+          }
+        }
       }
-   } else {
-      hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
-   }
+      if (!fFound && errCode == Harbour::SUCCESS)
+      {
+        OrderInfo.itmNewVal = hb_param(1, Harbour::Item::STRING);
+        if (SELF_ORDINFO(pArea, fBack ? DBOI_SKIPWILDBACK : DBOI_SKIPWILD, &OrderInfo) == Harbour::SUCCESS)
+        {
+          fFound = hb_itemGetL(OrderInfo.itmResult);
+        }
+      }
+      hb_itemRelease(OrderInfo.itmResult);
+      hb_retl(fFound);
+    }
+    else
+    {
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_SEEK_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+    }
+  }
+  else
+  {
+    hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
+  }
 }
 
 #endif
