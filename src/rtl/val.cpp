@@ -51,50 +51,62 @@
 /* returns the numeric value of a character string representation of a number */
 static void hb_val(HB_BOOL fExt)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto szText = hb_itemGetCPtr(pText);
-      auto iLen = static_cast<int>(hb_itemGetCLen(pText));
-      HB_MAXINT lValue;
-      double dValue;
-      int iDec;
-      int iWidth;
-      bool fDbl = hb_valStrnToNum(szText, iLen, &lValue, &dValue, &iDec, &iWidth);
+  if (pText)
+  {
+    auto szText = hb_itemGetCPtr(pText);
+    auto iLen = static_cast<int>(hb_itemGetCLen(pText));
+    HB_MAXINT lValue;
+    double dValue;
+    int iDec;
+    int iWidth;
+    bool fDbl = hb_valStrnToNum(szText, iLen, &lValue, &dValue, &iDec, &iWidth);
 
-      if( fExt ) {
-         iLen = hb_parnidef(2, iLen);
+    if (fExt)
+    {
+      iLen = hb_parnidef(2, iLen);
 
-         if( fDbl && iDec > 0 ) {
-            iLen -= iDec + 1;
-         }
-
-         if( iLen > iWidth ) {
-            iWidth = iLen;
-         } else if( iLen > 0 ) {
-            while( iWidth > iLen && *szText == ' ' ) {
-               iWidth--;
-               szText++;
-            }
-         }
+      if (fDbl && iDec > 0)
+      {
+        iLen -= iDec + 1;
       }
 
-      if( fDbl ) {
-         hb_retndlen(dValue, iWidth, iDec);
-      } else {
-         hb_retnintlen(lValue, iWidth);
+      if (iLen > iWidth)
+      {
+        iWidth = iLen;
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1098, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      else if (iLen > 0)
+      {
+        while (iWidth > iLen && *szText == ' ')
+        {
+          iWidth--;
+          szText++;
+        }
+      }
+    }
+
+    if (fDbl)
+    {
+      hb_retndlen(dValue, iWidth, iDec);
+    }
+    else
+    {
+      hb_retnintlen(lValue, iWidth);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1098, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( VAL )
+HB_FUNC(VAL)
 {
-   hb_val(false);
+  hb_val(false);
 }
 
-HB_FUNC( HB_VAL )
+HB_FUNC(HB_VAL)
 {
-   hb_val(true);
+  hb_val(true);
 }

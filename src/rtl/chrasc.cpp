@@ -50,51 +50,63 @@
 #include "hbapierr.hpp"
 
 /* converts an ASCII code to a character value */
-HB_FUNC( CHR )
+HB_FUNC(CHR)
 {
-   if( HB_ISNUM(1) ) {
-      /* NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
-               Chr() cases where the passed parameter is a constant which
-               can be divided by 256 but it's not zero, in this case it
-               will return an empty string instead of a Chr(0). [vszakats] */
+  if (HB_ISNUM(1))
+  {
+    /* NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
+             Chr() cases where the passed parameter is a constant which
+             can be divided by 256 but it's not zero, in this case it
+             will return an empty string instead of a Chr(0). [vszakats] */
 
-      /* Believe it or not, Cl*pper does this! */
+    /* Believe it or not, Cl*pper does this! */
 #ifdef HB_CLP_STRICT
-      char szChar[2];
-      szChar[0] = hb_parnl(1) % 256;
-      szChar[1] = '\0';
-      hb_retclen(szChar, 1);
+    char szChar[2];
+    szChar[0] = hb_parnl(1) % 256;
+    szChar[1] = '\0';
+    hb_retclen(szChar, 1);
 #else
-      auto cdp = hb_vmCDP();
-      if( HB_CDP_ISCHARUNI(cdp) ) {
-         char szChar[HB_MAX_CHAR_LEN];
-         HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
-         hb_retclen(szChar, nLen);
-      } else {
-         hb_retclen(hb_szAscii[hb_parni(1) & 0xFF], 1);
-      }
+    auto cdp = hb_vmCDP();
+    if (HB_CDP_ISCHARUNI(cdp))
+    {
+      char szChar[HB_MAX_CHAR_LEN];
+      HB_SIZE nLen = hb_cdpTextPutU16(hb_vmCDP(), szChar, sizeof(szChar), static_cast<HB_WCHAR>(hb_parni(1)));
+      hb_retclen(szChar, nLen);
+    }
+    else
+    {
+      hb_retclen(hb_szAscii[hb_parni(1) & 0xFF], 1);
+    }
 #endif
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1104, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* converts a character value to an ASCII code */
-HB_FUNC( ASC )
+HB_FUNC(ASC)
 {
-   auto szValue = hb_parc(1);
+  auto szValue = hb_parc(1);
 
-   if( szValue ) {
-      int iChar;
-      auto cdp = hb_vmCDP();
-      if( HB_CDP_ISCHARUNI(cdp) ) {
-         iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));
-      } else {
-         iChar = static_cast<HB_UCHAR>(szValue[0]);
-      }
+  if (szValue)
+  {
+    int iChar;
+    auto cdp = hb_vmCDP();
+    if (HB_CDP_ISCHARUNI(cdp))
+    {
+      iChar = hb_cdpTextGetU16(cdp, szValue, hb_parclen(1));
+    }
+    else
+    {
+      iChar = static_cast<HB_UCHAR>(szValue[0]);
+    }
 
-      hb_retni(iChar);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    hb_retni(iChar);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1107, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

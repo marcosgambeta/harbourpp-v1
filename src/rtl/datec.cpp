@@ -52,70 +52,82 @@
 #include "hbdate.hpp"
 
 #if defined(__CODEGUARD__)
-   static const char s_nullStr[4] = { 0 };
+static const char s_nullStr[4] = {0};
 #else
-   #define s_nullStr     ""
+#define s_nullStr ""
 #endif
 
-const char * hb_dateCMonth(int iMonth)
+const char *hb_dateCMonth(int iMonth)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateCMonth(%d)", iMonth));
 #endif
 
-   return (iMonth >= 1 && iMonth <= 12) ? hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1) : s_nullStr;
+  return (iMonth >= 1 && iMonth <= 12) ? hb_langDGetItem(HB_LANG_ITEM_BASE_MONTH + iMonth - 1) : s_nullStr;
 }
 
-const char * hb_dateCDOW(int iDay)
+const char *hb_dateCDOW(int iDay)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dateCDOW(%d)", iDay));
 #endif
 
-   return (iDay >= 1 && iDay <= 7) ? hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + iDay - 1) : s_nullStr;
+  return (iDay >= 1 && iDay <= 7) ? hb_langDGetItem(HB_LANG_ITEM_BASE_DAY + iDay - 1) : s_nullStr;
 }
 
-HB_FUNC( CMONTH )
+HB_FUNC(CMONTH)
 {
-   auto pDate = hb_param(1, Harbour::Item::DATETIME);
+  auto pDate = hb_param(1, Harbour::Item::DATETIME);
 
-   if( pDate ) {
+  if (pDate)
+  {
+    int iYear, iMonth, iDay;
+
+    hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
+    hb_retc_const(hb_dateCMonth(iMonth));
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1116, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
+}
+
+HB_FUNC(CDOW)
+{
+  auto pDate = hb_param(1, Harbour::Item::DATETIME);
+
+  if (pDate)
+  {
+    long lDate = hb_itemGetDL(pDate);
+
+    if (lDate)
+    {
       int iYear, iMonth, iDay;
 
-      hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
-      hb_retc_const(hb_dateCMonth(iMonth));
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1116, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
+      hb_retc_const(hb_dateCDOW(hb_dateDOW(iYear, iMonth, iDay)));
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( CDOW )
+HB_FUNC(HB_CDAY)
 {
-   auto pDate = hb_param(1, Harbour::Item::DATETIME);
+  auto pDay = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pDate ) {
-      long lDate = hb_itemGetDL(pDate);
-
-      if( lDate ) {
-         int iYear, iMonth, iDay;
-
-         hb_dateDecode(lDate, &iYear, &iMonth, &iDay);
-         hb_retc_const(hb_dateCDOW(hb_dateDOW(iYear, iMonth, iDay)));
-      } else {
-         hb_retc_null();
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
-}
-
-HB_FUNC( HB_CDAY )
-{
-   auto pDay = hb_param(1, Harbour::Item::NUMERIC);
-
-   if( pDay ) {
-      hb_retc_const(hb_dateCDOW(hb_itemGetNI(pDay)));
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pDay)
+  {
+    hb_retc_const(hb_dateCDOW(hb_itemGetNI(pDay)));
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1117, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

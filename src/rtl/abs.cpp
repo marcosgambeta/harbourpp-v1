@@ -48,54 +48,68 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( ABS )
+HB_FUNC(ABS)
 {
-   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+  auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pNumber ) {
-      int iWidth;
-      int iDec;
+  if (pNumber)
+  {
+    int iWidth;
+    int iDec;
 
-      hb_itemGetNLen(pNumber, &iWidth, &iDec);
+    hb_itemGetNLen(pNumber, &iWidth, &iDec);
 
-      if( HB_IS_INTEGER(pNumber) ) {
-         int iNumber = hb_itemGetNI(pNumber);
+    if (HB_IS_INTEGER(pNumber))
+    {
+      int iNumber = hb_itemGetNI(pNumber);
 
-         if( iNumber >= 0 ) {
-            hb_retnilen(iNumber, iWidth);
-         }
-#if -HB_VMINT_MAX > HB_VMINT_MIN
-         else if( iNumber < -INT_MAX ) {
-#if HB_VMLONG_MAX > HB_VMINT_MAX
-            hb_retnint(-static_cast<HB_MAXINT>(iNumber));
-#else
-            hb_retndlen(-static_cast<double>(iNumber), 0, iDec);
-#endif
-         }
-#endif
-         else {
-            hb_retni(-iNumber);
-         }
-      } else if( HB_IS_LONG(pNumber) ) {
-         HB_MAXINT lNumber = hb_itemGetNInt(pNumber);
-
-         if( lNumber >= 0 ) {
-            hb_retnintlen(lNumber, iWidth);
-         }
-#if -HB_VMLONG_MAX > HB_VMLONG_MIN
-         else if( lNumber < -HB_VMLONG_MAX ) {
-            hb_retndlen(-static_cast<double>(lNumber), 0, iDec);
-         }
-#endif
-         else {
-            hb_retnint(-lNumber);
-         }
-      } else {
-         double dNumber = hb_itemGetND(pNumber);
-
-         hb_retndlen(dNumber >= 0.0 ? dNumber : -dNumber, 0, iDec);
+      if (iNumber >= 0)
+      {
+        hb_retnilen(iNumber, iWidth);
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+#if - HB_VMINT_MAX > HB_VMINT_MIN
+      else if (iNumber < -INT_MAX)
+      {
+#if HB_VMLONG_MAX > HB_VMINT_MAX
+        hb_retnint(-static_cast<HB_MAXINT>(iNumber));
+#else
+        hb_retndlen(-static_cast<double>(iNumber), 0, iDec);
+#endif
+      }
+#endif
+      else
+      {
+        hb_retni(-iNumber);
+      }
+    }
+    else if (HB_IS_LONG(pNumber))
+    {
+      HB_MAXINT lNumber = hb_itemGetNInt(pNumber);
+
+      if (lNumber >= 0)
+      {
+        hb_retnintlen(lNumber, iWidth);
+      }
+#if - HB_VMLONG_MAX > HB_VMLONG_MIN
+      else if (lNumber < -HB_VMLONG_MAX)
+      {
+        hb_retndlen(-static_cast<double>(lNumber), 0, iDec);
+      }
+#endif
+      else
+      {
+        hb_retnint(-lNumber);
+      }
+    }
+    else
+    {
+      double dNumber = hb_itemGetND(pNumber);
+
+      hb_retndlen(dNumber >= 0.0 ? dNumber : -dNumber, 0, iDec);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

@@ -47,23 +47,27 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( HB_STRCLEAR )
+HB_FUNC(HB_STRCLEAR)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
+  auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   /* NOTE: clear RETURN value before calling hb_itemGetWriteCL(),
-            it's possible that it contains copy of passed item [druzus] */
-   hb_retl(false);
+  /* NOTE: clear RETURN value before calling hb_itemGetWriteCL(),
+           it's possible that it contains copy of passed item [druzus] */
+  hb_retl(false);
 
-   if( pItem && HB_ISBYREF(1) ) {
-      auto pszPtr = hb_itemGetCPtr(pItem);
-      char * pBuffer;
-      HB_SIZE nSize;
-      if( hb_itemGetWriteCL(pItem, &pBuffer, &nSize) ) {
-         memset(pBuffer, '\0', nSize + 1);
-         hb_retl(pszPtr == pBuffer);
-      } else {
-         hb_retl(false);
-      }
-   }
+  if (pItem && HB_ISBYREF(1))
+  {
+    auto pszPtr = hb_itemGetCPtr(pItem);
+    char *pBuffer;
+    HB_SIZE nSize;
+    if (hb_itemGetWriteCL(pItem, &pBuffer, &nSize))
+    {
+      memset(pBuffer, '\0', nSize + 1);
+      hb_retl(pszPtr == pBuffer);
+    }
+    else
+    {
+      hb_retl(false);
+    }
+  }
 }

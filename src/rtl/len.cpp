@@ -50,31 +50,38 @@
 #include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
 
-HB_FUNC( LEN )
+HB_FUNC(LEN)
 {
-   auto pItem = hb_param(1, Harbour::Item::ANY);
+  auto pItem = hb_param(1, Harbour::Item::ANY);
 
-   /* NOTE: Double safety to ensure that a parameter was really passed,
-            compiler checks this, but a direct hb_vmDo() call
-            may not do so. [vszakats] */
+  /* NOTE: Double safety to ensure that a parameter was really passed,
+           compiler checks this, but a direct hb_vmDo() call
+           may not do so. [vszakats] */
 
-   if( pItem != nullptr ) {
-      if( HB_IS_STRING(pItem) ) {
-         auto nLen = hb_itemGetCLen(pItem);
-         auto cdp = hb_vmCDP();
-         if( HB_CDP_ISCHARIDX(cdp) ) {
-            nLen = hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen);
-         }
-         hb_retns(nLen);
-         return;
-      } else if( HB_IS_ARRAY(pItem) ) {
-         hb_retns(hb_arrayLen(pItem));
-         return;
-      } else if( HB_IS_HASH(pItem) ) {
-         hb_retns(hb_hashLen(pItem));
-         return;
+  if (pItem != nullptr)
+  {
+    if (HB_IS_STRING(pItem))
+    {
+      auto nLen = hb_itemGetCLen(pItem);
+      auto cdp = hb_vmCDP();
+      if (HB_CDP_ISCHARIDX(cdp))
+      {
+        nLen = hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen);
       }
-   }
+      hb_retns(nLen);
+      return;
+    }
+    else if (HB_IS_ARRAY(pItem))
+    {
+      hb_retns(hb_arrayLen(pItem));
+      return;
+    }
+    else if (HB_IS_HASH(pItem))
+    {
+      hb_retns(hb_hashLen(pItem));
+      return;
+    }
+  }
 
-   hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

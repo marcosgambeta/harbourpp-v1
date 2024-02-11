@@ -58,8 +58,8 @@
             Set(_SET_TRIMFILENAME, .T.)
          [druzus] */
 
-HB_FUNC( FILE )
+HB_FUNC(FILE)
 {
-   auto szFile = hb_parc(1);
-   hb_retl(szFile ? hb_spFile(szFile, nullptr) : false);
+  auto szFile = hb_parc(1);
+  hb_retl(szFile ? hb_spFile(szFile, nullptr) : false);
 }

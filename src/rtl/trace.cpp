@@ -51,113 +51,121 @@
 
 static int s_traceLogLevel = HB_TR_DEFAULT;
 
-static void hb_trace_message( char * buffer, HB_SIZE nSize, int iParam, int iCount )
+static void hb_trace_message(char *buffer, HB_SIZE nSize, int iParam, int iCount)
 {
-   int iFirst = iParam;
+  int iFirst = iParam;
 
-   buffer[0] = '\0';
+  buffer[0] = '\0';
 
-   while( iParam <= iCount && nSize > 1 ) {
-      char * pszString;
-      HB_SIZE nLen;
-      HB_BOOL fFree;
+  while (iParam <= iCount && nSize > 1)
+  {
+    char *pszString;
+    HB_SIZE nLen;
+    HB_BOOL fFree;
 
-      if( iParam > iFirst ) {
-         *buffer++ = ' ';
-         --nSize;
-      }
-      pszString = hb_itemString(hb_param(iParam, Harbour::Item::ANY), &nLen, &fFree);
-      hb_strncpy(buffer, pszString, nSize);
-      nLen = strlen(buffer);
-      nSize -= nLen;
-      buffer += nLen;
-      if( fFree ) {
-         hb_xfree(pszString);
-      }
-      iParam++;
-   }
+    if (iParam > iFirst)
+    {
+      *buffer++ = ' ';
+      --nSize;
+    }
+    pszString = hb_itemString(hb_param(iParam, Harbour::Item::ANY), &nLen, &fFree);
+    hb_strncpy(buffer, pszString, nSize);
+    nLen = strlen(buffer);
+    nSize -= nLen;
+    buffer += nLen;
+    if (fFree)
+    {
+      hb_xfree(pszString);
+    }
+    iParam++;
+  }
 }
 
-HB_FUNC( HB_TRACESTATE )
+HB_FUNC(HB_TRACESTATE)
 {
-   hb_retl(hb_tracestate(HB_ISLOG(1) ? hb_parl(1) : hb_parnidef(1, -1)));
+  hb_retl(hb_tracestate(HB_ISLOG(1) ? hb_parl(1) : hb_parnidef(1, -1)));
 }
 
-HB_FUNC( HB_TRACESYSOUT )
+HB_FUNC(HB_TRACESYSOUT)
 {
-   hb_retl(hb_tracesysout(HB_ISLOG(1) ? hb_parl(1) : hb_parnidef(1, -1)));
+  hb_retl(hb_tracesysout(HB_ISLOG(1) ? hb_parl(1) : hb_parnidef(1, -1)));
 }
 
-HB_FUNC( HB_TRACEFLUSH )
+HB_FUNC(HB_TRACEFLUSH)
 {
-   hb_retl(hb_traceflush(HB_ISLOG(1) ? hb_parl(1) : hb_parnidef(1, -1)));
+  hb_retl(hb_traceflush(HB_ISLOG(1) ? hb_parl(1) : hb_parnidef(1, -1)));
 }
 
-HB_FUNC( HB_TRACEMODE )
+HB_FUNC(HB_TRACEMODE)
 {
-   hb_retc(hb_tracemode(hb_parc(1)));
+  hb_retc(hb_tracemode(hb_parc(1)));
 }
 
-HB_FUNC( HB_TRACEFILE )
+HB_FUNC(HB_TRACEFILE)
 {
-   hb_retl(hb_tracefile(hb_parc(1)));
+  hb_retl(hb_tracefile(hb_parc(1)));
 }
 
-HB_FUNC( HB_TRACELEVEL )
+HB_FUNC(HB_TRACELEVEL)
 {
-   hb_retni(hb_tracelevel(hb_parnidef(1, -1)));
+  hb_retni(hb_tracelevel(hb_parnidef(1, -1)));
 }
 
-HB_FUNC( HB_TRACELOGLEVEL )
+HB_FUNC(HB_TRACELOGLEVEL)
 {
-   int iOldLevel = s_traceLogLevel;
+  int iOldLevel = s_traceLogLevel;
 
-   if( HB_ISNUM(1) ) {
-      auto iLevel = hb_parni(1);
-      if( iLevel >= HB_TR_ALWAYS && iLevel < HB_TR_LAST ) {
-         s_traceLogLevel = iLevel;
-      }
-   }
-   hb_retni(iOldLevel);
+  if (HB_ISNUM(1))
+  {
+    auto iLevel = hb_parni(1);
+    if (iLevel >= HB_TR_ALWAYS && iLevel < HB_TR_LAST)
+    {
+      s_traceLogLevel = iLevel;
+    }
+  }
+  hb_retni(iOldLevel);
 }
 
-HB_FUNC( HB_TRACELOG )
+HB_FUNC(HB_TRACELOG)
 {
-   char message[1024];
-   char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
-   char file[HB_PATH_MAX];
-   HB_USHORT line;
+  char message[1024];
+  char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
+  char file[HB_PATH_MAX];
+  HB_USHORT line;
 
-   hb_trace_message( message, sizeof(message) - 1, 1, hb_pcount() );
-   hb_procinfo(1, procname, &line, file);
-   hb_tracelog(s_traceLogLevel, file, line, procname, "%s", message);
+  hb_trace_message(message, sizeof(message) - 1, 1, hb_pcount());
+  hb_procinfo(1, procname, &line, file);
+  hb_tracelog(s_traceLogLevel, file, line, procname, "%s", message);
 }
 
-HB_FUNC( HB_TRACELOGAT )
+HB_FUNC(HB_TRACELOGAT)
 {
-   if( HB_ISNUM(1) ) {
-      auto iLevel = hb_parni(1);
+  if (HB_ISNUM(1))
+  {
+    auto iLevel = hb_parni(1);
 
-      if( iLevel <= hb_tr_level() ) {
-         char message[1024];
-         char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
-         char file[HB_PATH_MAX];
-         HB_USHORT line;
-
-         hb_trace_message( message, sizeof(message) - 1, 2, hb_pcount() );
-         hb_procinfo(1, procname, &line, file);
-         hb_tracelog(iLevel, file, line, procname, "%s", message);
-      }
-   }
-}
-
-HB_FUNC( HB_TRACESTRING )
-{
-   auto iPCount = hb_pcount();
-
-   if( iPCount > 0 ) {
+    if (iLevel <= hb_tr_level())
+    {
       char message[1024];
-      hb_trace_message( message, sizeof(message) - 1, 1, iPCount );
-      HB_TRACE(HB_TR_ALWAYS, ("%s", message));
-   }
+      char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
+      char file[HB_PATH_MAX];
+      HB_USHORT line;
+
+      hb_trace_message(message, sizeof(message) - 1, 2, hb_pcount());
+      hb_procinfo(1, procname, &line, file);
+      hb_tracelog(iLevel, file, line, procname, "%s", message);
+    }
+  }
+}
+
+HB_FUNC(HB_TRACESTRING)
+{
+  auto iPCount = hb_pcount();
+
+  if (iPCount > 0)
+  {
+    char message[1024];
+    hb_trace_message(message, sizeof(message) - 1, 1, iPCount);
+    HB_TRACE(HB_TR_ALWAYS, ("%s", message));
+  }
 }

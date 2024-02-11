@@ -48,39 +48,46 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( GETENV )
+HB_FUNC(GETENV)
 {
-   auto pName = hb_param(1, Harbour::Item::STRING);
+  auto pName = hb_param(1, Harbour::Item::STRING);
 
-   if( pName && hb_pcount() == 1 ) {
+  if (pName && hb_pcount() == 1)
+  {
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      char * pszName = hb_cdpnDupUpper(hb_vmCDP(), hb_itemGetCPtr(pName), nullptr);
+    char *pszName = hb_cdpnDupUpper(hb_vmCDP(), hb_itemGetCPtr(pName), nullptr);
 #else
-      auto pszName = hb_itemGetCPtr(pName);
+    auto pszName = hb_itemGetCPtr(pName);
 #endif
-      char * pszValue = nullptr;
+    char *pszValue = nullptr;
 
-      if( pszName[0] != '\0' ) {
-         pszValue = hb_getenv(pszName);
-      }
+    if (pszName[0] != '\0')
+    {
+      pszValue = hb_getenv(pszName);
+    }
 
-      if( pszValue ) {
-         hb_retc_buffer(pszValue);
-      } else {
-         hb_retc_null();
-      }
+    if (pszValue)
+    {
+      hb_retc_buffer(pszValue);
+    }
+    else
+    {
+      hb_retc_null();
+    }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      hb_xfree(pszName);
+    hb_xfree(pszName);
 #endif
-   } else {
-      hb_retc_null();
-   }
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }
 
 /* NOTE: Undocumented Clipper function. [vszakats] */
 #ifdef HB_CLP_UNDOC
-HB_FUNC_TRANSLATE( GETE, GETENV )
+HB_FUNC_TRANSLATE(GETE, GETENV)
 #endif
 
 /* NOTE: Harbour extended version of GetEnv(). The 2nd parameter
@@ -88,44 +95,52 @@ HB_FUNC_TRANSLATE( GETE, GETENV )
          requested envvar doesn't exist.
          [vszakats] */
 
-HB_FUNC( HB_GETENV )
+HB_FUNC(HB_GETENV)
 {
-   auto pName = hb_param(1, Harbour::Item::STRING);
+  auto pName = hb_param(1, Harbour::Item::STRING);
 
-   if( pName ) {
+  if (pName)
+  {
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      char * pszName = hb_cdpnDupUpper(hb_vmCDP(), hb_itemGetCPtr(pName), nullptr);
+    char *pszName = hb_cdpnDupUpper(hb_vmCDP(), hb_itemGetCPtr(pName), nullptr);
 #else
-      auto pszName = hb_itemGetCPtr(pName);
+    auto pszName = hb_itemGetCPtr(pName);
 #endif
-      char * pszValue = nullptr;
+    char *pszValue = nullptr;
 
-      if( pszName[0] != '\0' ) {
-         pszValue = hb_getenv(pszName);
-      }
+    if (pszName[0] != '\0')
+    {
+      pszValue = hb_getenv(pszName);
+    }
 
-      if( pszValue ) {
-         hb_retc_buffer(pszValue);
-      } else {
-         hb_retc(hb_parc(2));
-      }
+    if (pszValue)
+    {
+      hb_retc_buffer(pszValue);
+    }
+    else
+    {
+      hb_retc(hb_parc(2));
+    }
 
 #ifdef _HB_GETENV_REQUIRES_UPPERCASE
-      hb_xfree(pszName);
+    hb_xfree(pszName);
 #endif
-   } else {
-      hb_retc(hb_parc(2));
-   }
+  }
+  else
+  {
+    hb_retc(hb_parc(2));
+  }
 }
 
-HB_FUNC( HB_SETENV )
+HB_FUNC(HB_SETENV)
 {
-   auto pszName = hb_parc(1);
-   auto fResult = false;
+  auto pszName = hb_parc(1);
+  auto fResult = false;
 
-   if( pszName ) {
-      fResult = hb_setenv(pszName, hb_parc(2));
-   }
+  if (pszName)
+  {
+    fResult = hb_setenv(pszName, hb_parc(2));
+  }
 
-   hb_retl(fResult);
+  hb_retl(fResult);
 }

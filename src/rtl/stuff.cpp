@@ -49,58 +49,79 @@
 #include "hbapicdp.hpp"
 
 /* replaces characters in a string */
-HB_FUNC( STUFF )
+HB_FUNC(STUFF)
 {
-   auto szText = hb_parc(1);
-   auto szIns = hb_parc(4);
+  auto szText = hb_parc(1);
+  auto szIns = hb_parc(4);
 
-   if( szText && szIns && HB_ISNUM(2) && HB_ISNUM(3) ) {
-      auto cdp = hb_vmCDP();
-      auto nLen = hb_parclen(1);
-      HB_SIZE nPos = hb_parns(2);
-      HB_SIZE nDel = hb_parns(3);
-      auto nIns = hb_parclen(4);
-      HB_SIZE nTot;
+  if (szText && szIns && HB_ISNUM(2) && HB_ISNUM(3))
+  {
+    auto cdp = hb_vmCDP();
+    auto nLen = hb_parclen(1);
+    HB_SIZE nPos = hb_parns(2);
+    HB_SIZE nDel = hb_parns(3);
+    auto nIns = hb_parclen(4);
+    HB_SIZE nTot;
 
-      if( HB_CDP_ISCHARIDX(cdp) ) {
-         if( nPos ) {
-            nPos = nPos < 1 ? nLen : hb_cdpTextPos(cdp, szText, nLen, nPos - 1);
-         }
-         if( nDel ) {
-            if( nPos < nLen ) {
-               nDel = hb_cdpTextPos(cdp, szText + nPos, nLen - nPos, nDel);
-               if( nDel == 0 ) {
-                  nDel = nLen - nPos;
-               }
-            } else {
-               nDel = 0;
-            }
-         }
-      } else {
-         if( nPos ) {
-            if( nPos < 1 || nPos > nLen ) {
-               nPos = nLen;
-            } else {
-               nPos--;
-            }
-         }
-         if( nDel ) {
-            if( nDel < 1 || nDel > nLen - nPos ) {
-               nDel = nLen - nPos;
-            }
-         }
+    if (HB_CDP_ISCHARIDX(cdp))
+    {
+      if (nPos)
+      {
+        nPos = nPos < 1 ? nLen : hb_cdpTextPos(cdp, szText, nLen, nPos - 1);
       }
-
-      if( (nTot = nLen + nIns - nDel) > 0 ) {
-         auto szResult = static_cast<char*>(hb_xgrab(nTot + 1));
-         hb_xmemcpy(szResult, szText, nPos);
-         hb_xmemcpy(szResult + nPos, szIns, nIns);
-         hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - ( nPos + nDel ));
-         hb_retclen_buffer(szResult, nTot);
-      } else {
-         hb_retc_null();
+      if (nDel)
+      {
+        if (nPos < nLen)
+        {
+          nDel = hb_cdpTextPos(cdp, szText + nPos, nLen - nPos, nDel);
+          if (nDel == 0)
+          {
+            nDel = nLen - nPos;
+          }
+        }
+        else
+        {
+          nDel = 0;
+        }
       }
-   } else {
+    }
+    else
+    {
+      if (nPos)
+      {
+        if (nPos < 1 || nPos > nLen)
+        {
+          nPos = nLen;
+        }
+        else
+        {
+          nPos--;
+        }
+      }
+      if (nDel)
+      {
+        if (nDel < 1 || nDel > nLen - nPos)
+        {
+          nDel = nLen - nPos;
+        }
+      }
+    }
+
+    if ((nTot = nLen + nIns - nDel) > 0)
+    {
+      auto szResult = static_cast<char *>(hb_xgrab(nTot + 1));
+      hb_xmemcpy(szResult, szText, nPos);
+      hb_xmemcpy(szResult + nPos, szIns, nIns);
+      hb_xmemcpy(szResult + nPos + nIns, szText + nPos + nDel, nLen - (nPos + nDel));
+      hb_retclen_buffer(szResult, nTot);
+    }
+    else
+    {
       hb_retc_null();
-   }
+    }
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

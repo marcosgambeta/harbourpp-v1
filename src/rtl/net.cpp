@@ -49,20 +49,20 @@
 
 #if defined(HB_OS_WIN)
 
-   #include <windows.h>
-   #include "hbwinuni.hpp"
+#include <windows.h>
+#include "hbwinuni.hpp"
 
 #elif defined(HB_OS_UNIX)
 
-   #if defined(HB_OS_VXWORKS)
-      #include <hostLib.h>
-   #endif
-   #include <unistd.h>
+#if defined(HB_OS_VXWORKS)
+#include <hostLib.h>
+#endif
+#include <unistd.h>
 
 #endif
 
 #if !defined(MAXGETHOSTNAME) && (defined(HB_OS_UNIX))
-   #define MAXGETHOSTNAME 256      /* should be enough for a host name */
+#define MAXGETHOSTNAME 256 /* should be enough for a host name */
 #endif
 
 /* NOTE: Clipper will only return a maximum of 15 bytes from this function.
@@ -72,42 +72,47 @@
 
 /* NOTE: The caller must free the returned buffer. [vszakats] */
 
-char * hb_netname(void)
+char *hb_netname(void)
 {
 #if defined(HB_OS_WIN)
 
-   DWORD dwLen = MAX_COMPUTERNAME_LENGTH + 1;
-   TCHAR lpValue[MAX_COMPUTERNAME_LENGTH + 1];
+  DWORD dwLen = MAX_COMPUTERNAME_LENGTH + 1;
+  TCHAR lpValue[MAX_COMPUTERNAME_LENGTH + 1];
 
-   lpValue[0] = TEXT('\0');
-   GetComputerName(lpValue, &dwLen);
-   lpValue[MAX_COMPUTERNAME_LENGTH] = TEXT('\0');
+  lpValue[0] = TEXT('\0');
+  GetComputerName(lpValue, &dwLen);
+  lpValue[MAX_COMPUTERNAME_LENGTH] = TEXT('\0');
 
-   if( lpValue[0] ) {
-      return HB_OSSTRDUP(lpValue);
-   }
+  if (lpValue[0])
+  {
+    return HB_OSSTRDUP(lpValue);
+  }
 
 #elif (defined(HB_OS_UNIX))
 
-   char szValue[MAXGETHOSTNAME + 1];
-   szValue[0] = szValue[MAXGETHOSTNAME] = '\0';
-   gethostname(szValue, MAXGETHOSTNAME);
-   if( szValue[0] ) {
-      return hb_osStrDecode(szValue);
-   }
+  char szValue[MAXGETHOSTNAME + 1];
+  szValue[0] = szValue[MAXGETHOSTNAME] = '\0';
+  gethostname(szValue, MAXGETHOSTNAME);
+  if (szValue[0])
+  {
+    return hb_osStrDecode(szValue);
+  }
 
 #endif
 
-   return hb_getenv("HOSTNAME");
+  return hb_getenv("HOSTNAME");
 }
 
-HB_FUNC( NETNAME )
+HB_FUNC(NETNAME)
 {
-   char * buffer = hb_netname();
+  char *buffer = hb_netname();
 
-   if( buffer ) {
-      hb_retc_buffer(buffer);
-   } else {
-      hb_retc_null();
-   }
+  if (buffer)
+  {
+    hb_retc_buffer(buffer);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

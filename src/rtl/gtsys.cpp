@@ -47,26 +47,26 @@
 /* NOTE: User programs should never call this layer directly! */
 
 /* This definition has to be placed before #include "hbapigt.hpp" */
-#define HB_GT_NAME  NUL
+#define HB_GT_NAME NUL
 
 #include "hbgtcore.hpp"
 
 /* NOTE: Must be in sync with hbgtcore.c */
 #if defined(HB_GT_LIB)
-   HB_GT_REQUEST(HB_GT_LIB)
+HB_GT_REQUEST(HB_GT_LIB)
 #elif defined(HB_OS_WIN)
-   HB_GT_REQUEST(WIN)
+HB_GT_REQUEST(WIN)
 #elif defined(HB_OS_VXWORKS)
-   HB_GT_REQUEST(STD)
+HB_GT_REQUEST(STD)
 #elif defined(HB_OS_UNIX)
-   HB_GT_REQUEST(TRM)
+HB_GT_REQUEST(TRM)
 #else
-   HB_GT_REQUEST(STD)
+HB_GT_REQUEST(STD)
 #endif
 
-HB_FUNC( HB_GTSYS )
+HB_FUNC(HB_GTSYS)
 {
 #if defined(HB_OS_WIN) && defined(__BORLANDC__) && defined(__cplusplus)
-   hb_gt_ForceLink_HB_GT_WIN();
+  hb_gt_ForceLink_HB_GT_WIN();
 #endif
 }

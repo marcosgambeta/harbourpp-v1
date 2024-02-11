@@ -57,16 +57,16 @@
  * in CT3, [druzus]
  */
 
-HB_FUNC( HB_SCRMAXROW ) /* Return the maximum screen row number (zero origin) */
+HB_FUNC(HB_SCRMAXROW) /* Return the maximum screen row number (zero origin) */
 {
-   int iRows, iCols;
-   hb_gtScrDim(&iRows, &iCols);
-   hb_retni(iRows - 1);
+  int iRows, iCols;
+  hb_gtScrDim(&iRows, &iCols);
+  hb_retni(iRows - 1);
 }
 
-HB_FUNC( HB_SCRMAXCOL ) /* Return the maximum screen column number (zero origin) */
+HB_FUNC(HB_SCRMAXCOL) /* Return the maximum screen column number (zero origin) */
 {
-   int iRows, iCols;
-   hb_gtScrDim(&iRows, &iCols);
-   hb_retni(iCols - 1);
+  int iRows, iCols;
+  hb_gtScrDim(&iRows, &iCols);
+  hb_retni(iCols - 1);
 }

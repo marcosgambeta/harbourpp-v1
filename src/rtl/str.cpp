@@ -48,34 +48,45 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( STR )
+HB_FUNC(STR)
 {
-   auto iParams = hb_pcount();
-   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
-   PHB_ITEM pWidth  = nullptr;
-   PHB_ITEM pDec    = nullptr;
+  auto iParams = hb_pcount();
+  auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+  PHB_ITEM pWidth = nullptr;
+  PHB_ITEM pDec = nullptr;
 
-   if( iParams >= 2 ) {
-      pWidth = hb_param(2, Harbour::Item::NUMERIC);
-      if( pWidth == nullptr ) {
-         pNumber = nullptr;
-      } else if( iParams >= 3 ) {
-         pDec = hb_param(3, Harbour::Item::NUMERIC);
-         if( pDec == nullptr ) {
-            pNumber = nullptr;
-         }
+  if (iParams >= 2)
+  {
+    pWidth = hb_param(2, Harbour::Item::NUMERIC);
+    if (pWidth == nullptr)
+    {
+      pNumber = nullptr;
+    }
+    else if (iParams >= 3)
+    {
+      pDec = hb_param(3, Harbour::Item::NUMERIC);
+      if (pDec == nullptr)
+      {
+        pNumber = nullptr;
       }
-   }
+    }
+  }
 
-   if( pNumber ) {
-      char * szResult = hb_itemStr(pNumber, pWidth, pDec);
+  if (pNumber)
+  {
+    char *szResult = hb_itemStr(pNumber, pWidth, pDec);
 
-      if( szResult ) {
-         hb_retc_buffer(szResult);
-      } else {
-         hb_retc_null();
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    if (szResult)
+    {
+      hb_retc_buffer(szResult);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

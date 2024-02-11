@@ -48,53 +48,58 @@
 
 #if defined(HB_OS_WIN)
 
-   #include <windows.h>
-   #include "hbwinuni.hpp"
+#include <windows.h>
+#include "hbwinuni.hpp"
 
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
 
-   #include <pwd.h>
-   #include <sys/types.h>
-   #include <unistd.h>
+#include <pwd.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #endif
 
 /* NOTE: The caller must free the returned buffer. [vszakats] */
 
-char * hb_username(void)
+char *hb_username(void)
 {
 #if defined(HB_OS_WIN)
 
-   DWORD dwLen = 256;
-   TCHAR lpValue[256];
+  DWORD dwLen = 256;
+  TCHAR lpValue[256];
 
-   lpValue[0] = TEXT('\0');
-   GetUserName(lpValue, &dwLen);
-   lpValue[255] = TEXT('\0');
+  lpValue[0] = TEXT('\0');
+  GetUserName(lpValue, &dwLen);
+  lpValue[255] = TEXT('\0');
 
-   if( lpValue[0] ) {
-      return HB_OSSTRDUP(lpValue);
-   }
+  if (lpValue[0])
+  {
+    return HB_OSSTRDUP(lpValue);
+  }
 
 #elif (defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS))
 
-   struct passwd * pwd = getpwuid(getuid());
-   if( pwd && pwd->pw_name ) {
-      return hb_osStrDecode( pwd->pw_name );
-   }
+  struct passwd *pwd = getpwuid(getuid());
+  if (pwd && pwd->pw_name)
+  {
+    return hb_osStrDecode(pwd->pw_name);
+  }
 
 #endif
 
-   return hb_getenv("USER");
+  return hb_getenv("USER");
 }
 
-HB_FUNC( HB_USERNAME )
+HB_FUNC(HB_USERNAME)
 {
-   char * buffer = hb_username();
+  char *buffer = hb_username();
 
-   if( buffer ) {
-      hb_retc_buffer(buffer);
-   } else {
-      hb_retc_null();
-   }
+  if (buffer)
+  {
+    hb_retc_buffer(buffer);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

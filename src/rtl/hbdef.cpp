@@ -47,32 +47,35 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( HB_DEFAULT )
+HB_FUNC(HB_DEFAULT)
 {
-   auto pDefault = hb_param(2, Harbour::Item::ANY);
+  auto pDefault = hb_param(2, Harbour::Item::ANY);
 
-   if( pDefault && !hb_itemTypeCmp(hb_param(1, Harbour::Item::ANY), pDefault) ) {
-      hb_itemParamStore(1, pDefault);
-   }
+  if (pDefault && !hb_itemTypeCmp(hb_param(1, Harbour::Item::ANY), pDefault))
+  {
+    hb_itemParamStore(1, pDefault);
+  }
 }
 
-HB_FUNC( HB_DEFAULTVALUE )
+HB_FUNC(HB_DEFAULTVALUE)
 {
-   auto pParam = hb_param(1, Harbour::Item::ANY);
-   auto pDefault = hb_param(2, Harbour::Item::ANY);
+  auto pParam = hb_param(1, Harbour::Item::ANY);
+  auto pDefault = hb_param(2, Harbour::Item::ANY);
 
-   if( pDefault && !hb_itemTypeCmp(pParam, pDefault) ) {
-      pParam = pDefault;
-   }
+  if (pDefault && !hb_itemTypeCmp(pParam, pDefault))
+  {
+    pParam = pDefault;
+  }
 
-   hb_itemReturn(pParam);
+  hb_itemReturn(pParam);
 }
 
 /* For compatibility with legacy DEFAULT ... TO ... command.
    Not recommended for new code. */
-HB_FUNC( __DEFAULTNIL )
+HB_FUNC(__DEFAULTNIL)
 {
-   if( hb_pcount() >= 2 && HB_IS_NIL(hb_param(1, Harbour::Item::ANY)) ) {
-      hb_itemParamStore(1, hb_param(2, Harbour::Item::ANY));
-   }
+  if (hb_pcount() >= 2 && HB_IS_NIL(hb_param(1, Harbour::Item::ANY)))
+  {
+    hb_itemParamStore(1, hb_param(2, Harbour::Item::ANY));
+  }
 }

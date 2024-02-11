@@ -48,116 +48,122 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( VALTYPE )
+HB_FUNC(VALTYPE)
 {
-   hb_retc(hb_itemTypeStr(hb_param(1, Harbour::Item::ANY)));
+  hb_retc(hb_itemTypeStr(hb_param(1, Harbour::Item::ANY)));
 }
 
 #if defined(HB_LEGACY_LEVEL5)
 
-HB_FUNC( HB_ISNIL )
+HB_FUNC(HB_ISNIL)
 {
-   hb_retl(HB_ISNIL(1));
+  hb_retl(HB_ISNIL(1));
 }
 
 #endif
 
-HB_FUNC( HB_ISNUMERIC )
+HB_FUNC(HB_ISNUMERIC)
 {
-   hb_retl(HB_ISNUM(1));
+  hb_retl(HB_ISNUM(1));
 }
 
-HB_FUNC( HB_ISLOGICAL )
+HB_FUNC(HB_ISLOGICAL)
 {
-   hb_retl(HB_ISLOG(1));
+  hb_retl(HB_ISLOG(1));
 }
 
-HB_FUNC( HB_ISDATE )
+HB_FUNC(HB_ISDATE)
 {
-   hb_retl(HB_ISDATE(1));
+  hb_retl(HB_ISDATE(1));
 }
 
-HB_FUNC( HB_ISDATETIME )
+HB_FUNC(HB_ISDATETIME)
 {
-   hb_retl(HB_ISDATETIME(1));
+  hb_retl(HB_ISDATETIME(1));
 }
 
-HB_FUNC( HB_ISTIMESTAMP )
+HB_FUNC(HB_ISTIMESTAMP)
 {
-   hb_retl(HB_ISTIMESTAMP(1));
+  hb_retl(HB_ISTIMESTAMP(1));
 }
 
-HB_FUNC( HB_ISBLOCK )
+HB_FUNC(HB_ISBLOCK)
 {
-   hb_retl(HB_ISBLOCK(1));
+  hb_retl(HB_ISBLOCK(1));
 }
 
-HB_FUNC( HB_ISPOINTER )
+HB_FUNC(HB_ISPOINTER)
 {
-   hb_retl(HB_ISPOINTER(1));
+  hb_retl(HB_ISPOINTER(1));
 }
 
-HB_FUNC( HB_ISSYMBOL )
+HB_FUNC(HB_ISSYMBOL)
 {
-   hb_retl(HB_ISSYMBOL(1));
+  hb_retl(HB_ISSYMBOL(1));
 }
 
-HB_FUNC( HB_ISSTRING )
+HB_FUNC(HB_ISSTRING)
 {
-   hb_retl(HB_ISCHAR(1));
+  hb_retl(HB_ISCHAR(1));
 }
 
-HB_FUNC( HB_ISCHAR )
+HB_FUNC(HB_ISCHAR)
 {
-   hb_retl((hb_parinfo(1) & (Harbour::Item::MEMO | Harbour::Item::STRING)) == Harbour::Item::STRING);
+  hb_retl((hb_parinfo(1) & (Harbour::Item::MEMO | Harbour::Item::STRING)) == Harbour::Item::STRING);
 }
 
-HB_FUNC( HB_ISMEMO )
+HB_FUNC(HB_ISMEMO)
 {
-   hb_retl(HB_ISMEMO(1));
+  hb_retl(HB_ISMEMO(1));
 }
 
-HB_FUNC( HB_ISARRAY )
+HB_FUNC(HB_ISARRAY)
 {
-   hb_retl(hb_extIsArray(1));
+  hb_retl(hb_extIsArray(1));
 }
 
-HB_FUNC( HB_ISOBJECT )
+HB_FUNC(HB_ISOBJECT)
 {
-   hb_retl(HB_ISOBJECT(1));
+  hb_retl(HB_ISOBJECT(1));
 }
 
-HB_FUNC( HB_ISHASH )
+HB_FUNC(HB_ISHASH)
 {
-   hb_retl(HB_ISHASH(1));
+  hb_retl(HB_ISHASH(1));
 }
 
-HB_FUNC( HB_ISHASHKEY )
+HB_FUNC(HB_ISHASHKEY)
 {
-   hb_retl((hb_parinfo(1) & Harbour::Item::HASHKEY) != 0);
+  hb_retl((hb_parinfo(1) & Harbour::Item::HASHKEY) != 0);
 }
 
-HB_FUNC( HB_ISEVALITEM )
+HB_FUNC(HB_ISEVALITEM)
 {
-   auto pItem = hb_param(1, Harbour::Item::ANY);
-   hb_retl(pItem && HB_IS_EVALITEM(pItem));
+  auto pItem = hb_param(1, Harbour::Item::ANY);
+  hb_retl(pItem && HB_IS_EVALITEM(pItem));
 }
 
-HB_FUNC( HB_ISNULL )
+HB_FUNC(HB_ISNULL)
 {
-   auto pItem = hb_param(1, Harbour::Item::ANY);
+  auto pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem != nullptr ) {
-      if( HB_IS_STRING(pItem) ) {
-         hb_retl(hb_itemGetCLen(pItem) == 0);
-         return;
-      } else if( HB_IS_ARRAY(pItem) ) {
-         hb_retl(hb_arrayLen(pItem) == 0);
-         return;
-      } else if( HB_IS_HASH(pItem) ) {
-         hb_retl(hb_hashLen(pItem) == 0);
-         return;
-      }
-   }
-   hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  if (pItem != nullptr)
+  {
+    if (HB_IS_STRING(pItem))
+    {
+      hb_retl(hb_itemGetCLen(pItem) == 0);
+      return;
+    }
+    else if (HB_IS_ARRAY(pItem))
+    {
+      hb_retl(hb_arrayLen(pItem) == 0);
+      return;
+    }
+    else if (HB_IS_HASH(pItem))
+    {
+      hb_retl(hb_hashLen(pItem) == 0);
+      return;
+    }
+  }
+  hb_errRT_BASE_SubstR(EG_ARG, 1111, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

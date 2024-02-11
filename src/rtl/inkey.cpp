@@ -54,180 +54,213 @@
 #include "hbstack.hpp"
 #include "hbvm.hpp"
 
-static void hb_inkeySetTextKeys(const char * pszText, HB_SIZE nSize, HB_BOOL fInsert)
+static void hb_inkeySetTextKeys(const char *pszText, HB_SIZE nSize, HB_BOOL fInsert)
 {
-   auto cdp = hb_vmCDP();
-   HB_SIZE nIndex = 0;
-   HB_WCHAR wc;
+  auto cdp = hb_vmCDP();
+  HB_SIZE nIndex = 0;
+  HB_WCHAR wc;
 
-   if( fInsert ) {
-      HB_WCHAR buffer[32], * keys;
-      HB_SIZE n = 0;
+  if (fInsert)
+  {
+    HB_WCHAR buffer[32], *keys;
+    HB_SIZE n = 0;
 
-      keys = nSize <= HB_SIZEOFARRAY(buffer) ? buffer : static_cast<HB_WCHAR*>(hb_xgrab(nSize * sizeof(HB_WCHAR)));
-      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) ) {
-         keys[n++] = wc;
+    keys = nSize <= HB_SIZEOFARRAY(buffer) ? buffer : static_cast<HB_WCHAR *>(hb_xgrab(nSize * sizeof(HB_WCHAR)));
+    while (HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc))
+    {
+      keys[n++] = wc;
+    }
+
+    while (n--)
+    {
+      int iKey = keys[n] >= 128 ? HB_INKEY_NEW_UNICODE(keys[n]) : keys[n];
+      hb_inkeyIns(iKey);
+    }
+    if (nSize > HB_SIZEOFARRAY(buffer))
+    {
+      hb_xfree(keys);
+    }
+  }
+  else
+  {
+    while (HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc))
+    {
+      int iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE(wc) : wc;
+      hb_inkeyPut(iKey);
+    }
+  }
+}
+
+HB_FUNC(INKEY)
+{
+  auto iPCount = hb_pcount();
+
+  hb_retni(hb_inkey(iPCount == 1 || (iPCount > 1 && HB_ISNUM(1)), hb_parnd(1), hb_parnidef(2, hb_setGetEventMask())));
+}
+
+HB_FUNC(__KEYBOARD)
+{
+  /* Clear the typeahead buffer without reallocating the keyboard buffer */
+  hb_inkeyReset();
+
+  if (HB_ISCHAR(1))
+  {
+    hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
+  }
+}
+
+HB_FUNC(HB_KEYCLEAR)
+{
+  hb_inkeyReset();
+}
+
+HB_FUNC(HB_KEYPUT)
+{
+  if (HB_ISNUM(1))
+  {
+    hb_inkeyPut(hb_parni(1));
+  }
+  else if (HB_ISCHAR(1))
+  {
+    hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), false);
+  }
+  else if (HB_ISARRAY(1))
+  {
+    auto pArray = hb_param(1, Harbour::Item::ARRAY);
+    HB_SIZE nElements = hb_arrayLen(pArray);
+
+    for (HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex)
+    {
+      HB_TYPE type = hb_arrayGetType(pArray, nIndex);
+
+      if (type & Harbour::Item::NUMERIC)
+      {
+        hb_inkeyPut(hb_arrayGetNI(pArray, nIndex));
       }
-
-      while( n-- ) {
-         int iKey = keys[n] >= 128 ? HB_INKEY_NEW_UNICODE( keys[n] ) : keys[n];
-         hb_inkeyIns(iKey);
+      else if (type & Harbour::Item::STRING)
+      {
+        hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false);
       }
-      if( nSize > HB_SIZEOFARRAY(buffer) ) {
-         hb_xfree(keys);
+    }
+  }
+}
+
+HB_FUNC(HB_KEYINS)
+{
+  if (HB_ISNUM(1))
+  {
+    hb_inkeyIns(hb_parni(1));
+  }
+  else if (HB_ISCHAR(1))
+  {
+    hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), true);
+  }
+  else if (HB_ISARRAY(1))
+  {
+    auto pArray = hb_param(1, Harbour::Item::ARRAY);
+    HB_SIZE nElements = hb_arrayLen(pArray);
+
+    for (HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex)
+    {
+      HB_TYPE type = hb_arrayGetType(pArray, nIndex);
+
+      if (type & Harbour::Item::NUMERIC)
+      {
+        hb_inkeyIns(hb_arrayGetNI(pArray, nIndex));
       }
-   } else {
-      while( HB_CDPCHAR_GET(cdp, pszText, nSize, &nIndex, &wc) ) {
-         int iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
-         hb_inkeyPut(iKey);
+      else if (type & Harbour::Item::STRING)
+      {
+        hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true);
       }
-   }
+    }
+  }
 }
 
-HB_FUNC( INKEY )
+HB_FUNC(HB_KEYNEXT)
 {
-   auto iPCount = hb_pcount();
-
-   hb_retni(hb_inkey(iPCount == 1 || (iPCount > 1 && HB_ISNUM(1)), hb_parnd(1), hb_parnidef(2, hb_setGetEventMask())));
+  hb_retni(hb_inkeyNext(HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask()));
 }
 
-HB_FUNC( __KEYBOARD )
+HB_FUNC(NEXTKEY)
 {
-   /* Clear the typeahead buffer without reallocating the keyboard buffer */
-   hb_inkeyReset();
-
-   if( HB_ISCHAR(1) ) {
-      hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
-   }
+  hb_retni(hb_inkeyNext(hb_setGetEventMask()));
 }
 
-HB_FUNC( HB_KEYCLEAR )
+HB_FUNC(HB_KEYLAST)
 {
-   hb_inkeyReset();
+  hb_retni(hb_inkeyLast(HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask()));
 }
 
-HB_FUNC( HB_KEYPUT )
+HB_FUNC(LASTKEY)
 {
-   if( HB_ISNUM(1) ) {
-      hb_inkeyPut(hb_parni(1));
-   } else if( HB_ISCHAR(1) ) {
-      hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), false);
-   } else if( HB_ISARRAY(1) ) {
-      auto pArray = hb_param(1, Harbour::Item::ARRAY);
-      HB_SIZE nElements = hb_arrayLen(pArray);
-
-      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex ) {
-         HB_TYPE type = hb_arrayGetType(pArray, nIndex);
-
-         if( type & Harbour::Item::NUMERIC ) {
-            hb_inkeyPut(hb_arrayGetNI(pArray, nIndex));
-         } else if( type & Harbour::Item::STRING ) {
-            hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), false);
-         }
-      }
-   }
+  hb_retni(hb_inkeyLast(HB_INKEY_ALL));
 }
 
-HB_FUNC( HB_KEYINS )
+HB_FUNC(HB_KEYSETLAST)
 {
-   if( HB_ISNUM(1) ) {
-      hb_inkeyIns(hb_parni(1));
-   } else if( HB_ISCHAR(1) ) {
-      hb_inkeySetTextKeys(hb_parc(1), hb_parclen(1), true);
-   } else if( HB_ISARRAY(1) ) {
-      auto pArray = hb_param(1, Harbour::Item::ARRAY);
-      HB_SIZE nElements = hb_arrayLen(pArray);
-
-      for( HB_SIZE nIndex = 1; nIndex <= nElements; ++nIndex ) {
-         HB_TYPE type = hb_arrayGetType(pArray, nIndex);
-
-         if( type & Harbour::Item::NUMERIC ) {
-            hb_inkeyIns(hb_arrayGetNI(pArray, nIndex));
-         } else if( type & Harbour::Item::STRING ) {
-            hb_inkeySetTextKeys(hb_arrayGetCPtr(pArray, nIndex), hb_arrayGetCLen(pArray, nIndex), true);
-         }
-      }
-   }
-}
-
-HB_FUNC( HB_KEYNEXT )
-{
-   hb_retni(hb_inkeyNext(HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask()));
-}
-
-HB_FUNC( NEXTKEY )
-{
-   hb_retni(hb_inkeyNext(hb_setGetEventMask()));
-}
-
-HB_FUNC( HB_KEYLAST )
-{
-   hb_retni(hb_inkeyLast(HB_ISNUM(1) ? hb_parni(1) : hb_setGetEventMask()));
-}
-
-HB_FUNC( LASTKEY )
-{
-   hb_retni(hb_inkeyLast(HB_INKEY_ALL));
-}
-
-HB_FUNC( HB_KEYSETLAST )
-{
-   if( HB_ISNUM(1) ) {
-      hb_retni(hb_inkeySetLast(hb_parni(1)));
-   }
+  if (HB_ISNUM(1))
+  {
+    hb_retni(hb_inkeySetLast(hb_parni(1)));
+  }
 }
 
 #if defined(HB_LEGACY_LEVEL5)
 
-HB_FUNC_TRANSLATE( HB_SETLASTKEY, HB_KEYSETLAST )
+HB_FUNC_TRANSLATE(HB_SETLASTKEY, HB_KEYSETLAST)
 
 #endif
 
-HB_FUNC( HB_KEYCODE )
+HB_FUNC(HB_KEYCODE)
 {
-   auto szValue = hb_parc(1);
-   int iKey;
+  auto szValue = hb_parc(1);
+  int iKey;
 
-   if( szValue ) {
-      auto cdp = hb_vmCDP();
-      HB_SIZE nIndex = 0;
-      HB_WCHAR wc;
+  if (szValue)
+  {
+    auto cdp = hb_vmCDP();
+    HB_SIZE nIndex = 0;
+    HB_WCHAR wc;
 
-      if( HB_CDPCHAR_GET(cdp, szValue, hb_parclen(1), &nIndex, &wc) ) {
-         iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE( wc ) : wc;
-      } else {
-         iKey = 0;
-      }
-   } else {
+    if (HB_CDPCHAR_GET(cdp, szValue, hb_parclen(1), &nIndex, &wc))
+    {
+      iKey = wc >= 128 ? HB_INKEY_NEW_UNICODE(wc) : wc;
+    }
+    else
+    {
       iKey = 0;
-   }
+    }
+  }
+  else
+  {
+    iKey = 0;
+  }
 
-   hb_retni(iKey);
+  hb_retni(iKey);
 }
 
-HB_FUNC( HB_KEYCHAR )
+HB_FUNC(HB_KEYCHAR)
 {
-   char szKeyChr[HB_MAX_CHAR_LEN];
-   HB_SIZE nLen = hb_inkeyKeyString(hb_parni(1), szKeyChr, sizeof(szKeyChr));
-   hb_retclen(szKeyChr, nLen);
+  char szKeyChr[HB_MAX_CHAR_LEN];
+  HB_SIZE nLen = hb_inkeyKeyString(hb_parni(1), szKeyChr, sizeof(szKeyChr));
+  hb_retclen(szKeyChr, nLen);
 }
 
-HB_FUNC( HB_KEYSTD )
+HB_FUNC(HB_KEYSTD)
 {
-   hb_retni(hb_inkeyKeyStd(hb_parni(1)));
+  hb_retni(hb_inkeyKeyStd(hb_parni(1)));
 }
 
-HB_FUNC( HB_KEYEXT )
+HB_FUNC(HB_KEYEXT)
 {
-   hb_retni(hb_inkeyKeyExt(hb_parni(1)));
+  hb_retni(hb_inkeyKeyExt(hb_parni(1)));
 }
 
-HB_FUNC( HB_KEYMOD )
+HB_FUNC(HB_KEYMOD)
 {
-   hb_retni(hb_inkeyKeyMod(hb_parni(1)));
+  hb_retni(hb_inkeyKeyMod(hb_parni(1)));
 }
 
-HB_FUNC( HB_KEYVAL )
+HB_FUNC(HB_KEYVAL)
 {
-   hb_retni(hb_inkeyKeyVal(hb_parni(1)));
+  hb_retni(hb_inkeyKeyVal(hb_parni(1)));
 }

@@ -48,47 +48,59 @@
 #include "hbapiitm.hpp"
 #include "hbapicdp.hpp"
 
-static char * hb_strHardCR(char * pszString, HB_SIZE nStringLen)
+static char *hb_strHardCR(char *pszString, HB_SIZE nStringLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strHardCR(%s, %" HB_PFS "u)", pszString, nStringLen));
 #endif
 
-   HB_SIZE nStringPos;
+  HB_SIZE nStringPos;
 
-   auto cdp = hb_vmCDP();
-   if( HB_CDP_ISCUSTOM(cdp) ) {
-      HB_WCHAR wc;
+  auto cdp = hb_vmCDP();
+  if (HB_CDP_ISCUSTOM(cdp))
+  {
+    HB_WCHAR wc;
 
-      nStringPos = 0;
-      while( nStringPos < nStringLen ) {
-         if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 ) {
-            pszString[nStringPos] = HB_CHAR_HARD1;
-            nStringPos += 2;
-         } else if( !HB_CDPCHAR_GET(cdp, pszString, nStringLen, &nStringPos, &wc) ) {
-            break;
-         }
+    nStringPos = 0;
+    while (nStringPos < nStringLen)
+    {
+      if (pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2)
+      {
+        pszString[nStringPos] = HB_CHAR_HARD1;
+        nStringPos += 2;
       }
-   } else {
-      for( nStringPos = 0; nStringPos < nStringLen; nStringPos++ ) {
-         if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 ) {
-            pszString[nStringPos++] = HB_CHAR_HARD1;
-         }
+      else if (!HB_CDPCHAR_GET(cdp, pszString, nStringLen, &nStringPos, &wc))
+      {
+        break;
       }
-   }
-   return pszString;
+    }
+  }
+  else
+  {
+    for (nStringPos = 0; nStringPos < nStringLen; nStringPos++)
+    {
+      if (pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2)
+      {
+        pszString[nStringPos++] = HB_CHAR_HARD1;
+      }
+    }
+  }
+  return pszString;
 }
 
-HB_FUNC( HARDCR )
+HB_FUNC(HARDCR)
 {
-   auto pString = hb_param(1, Harbour::Item::STRING);
+  auto pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString ) {
-      char * pszBuffer = hb_itemGetC(pString);
-      auto nStringLen = hb_itemGetCLen(pString);
+  if (pString)
+  {
+    char *pszBuffer = hb_itemGetC(pString);
+    auto nStringLen = hb_itemGetCLen(pString);
 
-      hb_retclen_buffer(hb_strHardCR(pszBuffer, nStringLen), nStringLen);
-   } else {
-      hb_retc_null();
-   }
+    hb_retclen_buffer(hb_strHardCR(pszBuffer, nStringLen), nStringLen);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

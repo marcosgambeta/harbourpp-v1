@@ -54,92 +54,109 @@
 /* NOTE: Use as minimal calls from here, as possible.
          Don't allocate memory from this function. [vszakats] */
 
-void hb_errInternalRaw(HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2)
+void hb_errInternalRaw(HB_ERRCODE errCode, const char *szText, const char *szPar1, const char *szPar2)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_errInternal(%d, %s, %s, %s)", errCode, szText, szPar1, szPar2));
 #endif
 
-   char buffer[8192];
-   char file[HB_PATH_MAX];
+  char buffer[8192];
+  char file[HB_PATH_MAX];
 
-   if( szPar1 == nullptr ) {
-      szPar1 = "";
-   }
+  if (szPar1 == nullptr)
+  {
+    szPar1 = "";
+  }
 
-   if( szPar2 == nullptr ) {
-      szPar2 = "";
-   }
+  if (szPar2 == nullptr)
+  {
+    szPar2 = "";
+  }
 
-   bool fStack = hb_stackId() != nullptr;
-   bool fLang = fStack && hb_langID() != nullptr;
+  bool fStack = hb_stackId() != nullptr;
+  bool fLang = fStack && hb_langID() != nullptr;
 
-   const char * szFile = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOG) : nullptr;
-   if( !szFile ) {
-      szFile = "hb_out.log";
-   }
+  const char *szFile = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOG) : nullptr;
+  if (!szFile)
+  {
+    szFile = "hb_out.log";
+  }
 
-   auto hLog = hb_fopen(szFile, "a+");
-   if( hLog ) {
-      int iYear, iMonth, iDay;
-      hb_dateToday(&iYear, &iMonth, &iDay);
-      char szTime[9];
-      hb_dateTimeStr(szTime);
+  auto hLog = hb_fopen(szFile, "a+");
+  if (hLog)
+  {
+    int iYear, iMonth, iDay;
+    hb_dateToday(&iYear, &iMonth, &iDay);
+    char szTime[9];
+    hb_dateTimeStr(szTime);
 
-      fprintf(hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0));
-      fprintf(hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime);
-      const char * szInfo = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOGINFO) : nullptr;
-      if( szInfo && *szInfo ) {
-         fprintf(hLog, "Info: %s\n", szInfo);
+    fprintf(hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0));
+    fprintf(hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime);
+    const char *szInfo = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOGINFO) : nullptr;
+    if (szInfo && *szInfo)
+    {
+      fprintf(hLog, "Info: %s\n", szInfo);
+    }
+  }
+
+  hb_conOutErr(hb_conNewLine(), 0);
+  if (fLang)
+  {
+    hb_snprintf(buffer, sizeof(buffer), hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR), errCode);
+  }
+  else
+  {
+    hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
+  }
+
+  hb_conOutErr(buffer, 0);
+  if (hLog)
+  {
+    fprintf(hLog, "%s", buffer);
+  }
+
+  if (!szText && fLang)
+  {
+    szText = hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR + errCode - 9000);
+  }
+
+  if (szText)
+  {
+    hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
+  }
+  else
+  {
+    buffer[0] = '\0';
+  }
+
+  hb_conOutErr(buffer, 0);
+  hb_conOutErr(hb_conNewLine(), 0);
+  if (hLog)
+  {
+    fprintf(hLog, "%s\n", buffer);
+  }
+
+  if (fStack && hb_stackTotalItems())
+  {
+    int iLevel = 0;
+    HB_USHORT uiLine;
+    while (hb_procinfo(iLevel++, buffer, &uiLine, file))
+    {
+      char msg[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 32];
+
+      hb_snprintf(msg, sizeof(msg), "Called from %s(%hu)%s%s\n", buffer, uiLine, *file ? " in " : "", file);
+
+      hb_conOutErr(msg, 0);
+      if (hLog)
+      {
+        fprintf(hLog, "%s", msg);
       }
-   }
+    }
+  }
 
-   hb_conOutErr(hb_conNewLine(), 0);
-   if( fLang ) {
-      hb_snprintf(buffer, sizeof(buffer), hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR), errCode);
-   } else {
-      hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
-   }
-
-   hb_conOutErr(buffer, 0);
-   if( hLog ) {
-      fprintf(hLog, "%s", buffer);
-   }
-
-   if( !szText && fLang ) {
-      szText = hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR + errCode - 9000);
-   }
-
-   if( szText ) {
-      hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
-   } else {
-      buffer[0] = '\0';
-   }
-
-   hb_conOutErr(buffer, 0);
-   hb_conOutErr(hb_conNewLine(), 0);
-   if( hLog ) {
-      fprintf(hLog, "%s\n", buffer);
-   }
-
-
-   if( fStack && hb_stackTotalItems() ) {
-      int iLevel = 0;
-      HB_USHORT uiLine;
-      while( hb_procinfo(iLevel++, buffer, &uiLine, file) ) {
-         char msg[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 32];
-
-         hb_snprintf(msg, sizeof(msg), "Called from %s(%hu)%s%s\n", buffer, uiLine, *file ? " in " : "", file);
-
-         hb_conOutErr(msg, 0);
-         if( hLog ) {
-            fprintf(hLog, "%s", msg);
-         }
-      }
-   }
-
-   if( hLog ) {
-      fprintf(hLog, "------------------------------------------------------------------------\n");
-      fclose(hLog);
-   }
+  if (hLog)
+  {
+    fprintf(hLog, "------------------------------------------------------------------------\n");
+    fclose(hLog);
+  }
 }

@@ -49,27 +49,29 @@
 
 /* Dumb function to maintain dBase III+ and CA-Cl*pper compatibility */
 
-HB_FUNC( FKMAX )
+HB_FUNC(FKMAX)
 {
-   hb_retni(40); /* IBM specific */
+  hb_retni(40); /* IBM specific */
 }
 
 /* Dumb function to maintain dBase III+ and CA-Cl*pper compatibility */
 
-HB_FUNC( FKLABEL )
+HB_FUNC(FKLABEL)
 {
-   auto pPar1 = hb_param(1, Harbour::Item::NUMERIC);
+  auto pPar1 = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pPar1 ) {
-      int iFKey = hb_itemGetNI(pPar1);
+  if (pPar1)
+  {
+    int iFKey = hb_itemGetNI(pPar1);
 
-      if( iFKey > 0 && iFKey <= 40 ) {
-         char szName[4];
-         hb_snprintf(szName, sizeof(szName), "F%d", iFKey);
-         hb_retc(szName);
-         return;
-      }
-   }
+    if (iFKey > 0 && iFKey <= 40)
+    {
+      char szName[4];
+      hb_snprintf(szName, sizeof(szName), "F%d", iFKey);
+      hb_retc(szName);
+      return;
+    }
+  }
 
-   hb_retc_null();
+  hb_retc_null();
 }

@@ -30,48 +30,50 @@
 #include "hbdefs.hpp"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-/* Define this if your machine is LITTLE_ENDIAN, otherwise #undef it: */
-/* Disabled to avoid conflicts with the same macro defined in system header
- * files in some OS-es. HB_LITTLE_ENDIAN used instead.
- */
-/* #define LITTLE_ENDIAN */
+  /* Define this if your machine is LITTLE_ENDIAN, otherwise #undef it: */
+  /* Disabled to avoid conflicts with the same macro defined in system header
+   * files in some OS-es. HB_LITTLE_ENDIAN used instead.
+   */
+  /* #define LITTLE_ENDIAN */
 
-/* Make sure you define these types for your architecture: */
-typedef unsigned int sha1_quadbyte;     /* 4 byte type */
-typedef unsigned char sha1_byte;        /* single byte type */
+  /* Make sure you define these types for your architecture: */
+  typedef unsigned int sha1_quadbyte; /* 4 byte type */
+  typedef unsigned char sha1_byte;    /* single byte type */
 
-/*
- * Be sure to get the above definitions right.  For instance, on my
- * x86 based FreeBSD box, I define LITTLE_ENDIAN and use the type
- * "unsigned long" for the quadbyte.  On FreeBSD on the Alpha, however,
- * while I still use LITTLE_ENDIAN, I must define the quadbyte type
- * as "unsigned int" instead.
- */
+  /*
+   * Be sure to get the above definitions right.  For instance, on my
+   * x86 based FreeBSD box, I define LITTLE_ENDIAN and use the type
+   * "unsigned long" for the quadbyte.  On FreeBSD on the Alpha, however,
+   * while I still use LITTLE_ENDIAN, I must define the quadbyte type
+   * as "unsigned int" instead.
+   */
 
-#define SHA1_BLOCK_LENGTH       64
-#define SHA1_DIGEST_LENGTH      20
+#define SHA1_BLOCK_LENGTH 64
+#define SHA1_DIGEST_LENGTH 20
 
-/* The SHA1 structure: */
-typedef struct _SHA_CTX {
-    sha1_quadbyte   state[5];
-    sha1_quadbyte   count[2];
-    sha1_byte       buffer[SHA1_BLOCK_LENGTH];
-} SHA_CTX;
+  /* The SHA1 structure: */
+  typedef struct _SHA_CTX
+  {
+    sha1_quadbyte state[5];
+    sha1_quadbyte count[2];
+    sha1_byte buffer[SHA1_BLOCK_LENGTH];
+  } SHA_CTX;
 
 #ifndef NOPROTO
-void hb_SHA1_Init(SHA_CTX *context);
-void hb_SHA1_Update(SHA_CTX *context, const void *data, unsigned int len);
-void hb_SHA1_Final(sha1_byte digest[SHA1_DIGEST_LENGTH], SHA_CTX* context);
+  void hb_SHA1_Init(SHA_CTX *context);
+  void hb_SHA1_Update(SHA_CTX *context, const void *data, unsigned int len);
+  void hb_SHA1_Final(sha1_byte digest[SHA1_DIGEST_LENGTH], SHA_CTX *context);
 #else
 void hb_SHA1_Init();
 void hb_SHA1_Update();
 void hb_SHA1_Final();
 #endif
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 }
 #endif
 

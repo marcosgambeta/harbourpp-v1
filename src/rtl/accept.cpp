@@ -51,80 +51,91 @@
 #include "hbstack.hpp"
 #include "inkey.ch"
 
-HB_FUNC_EXTERN( QOUT );
+HB_FUNC_EXTERN(QOUT);
 
-#define ACCEPT_BUFFER_LEN  256  /* length of input buffer for ACCEPT command */
+#define ACCEPT_BUFFER_LEN 256 /* length of input buffer for ACCEPT command */
 
 #ifdef HB_CLP_UNDOC
 
 static HB_TSD_NEW(s_szAcceptResult, ACCEPT_BUFFER_LEN, nullptr, nullptr);
 
-static char * hb_acceptBuffer(void)
+static char *hb_acceptBuffer(void)
 {
-   return static_cast<char*>(hb_stackGetTSD(&s_szAcceptResult));
+  return static_cast<char *>(hb_stackGetTSD(&s_szAcceptResult));
 }
 
-HB_FUNC( __ACCEPTSTR )
+HB_FUNC(__ACCEPTSTR)
 {
-   hb_retc(hb_acceptBuffer());
+  hb_retc(hb_acceptBuffer());
 }
 
 #endif
 
-HB_FUNC( __ACCEPT )
+HB_FUNC(__ACCEPT)
 {
-   auto cdp = hb_vmCDP();
-   char         szAcceptResult[ACCEPT_BUFFER_LEN];
-   char         szKey[HB_MAX_CHAR_LEN];
-   HB_SIZE      nLen  = 0, nChar;
-   int          input = 0;
+  auto cdp = hb_vmCDP();
+  char szAcceptResult[ACCEPT_BUFFER_LEN];
+  char szKey[HB_MAX_CHAR_LEN];
+  HB_SIZE nLen = 0, nChar;
+  int input = 0;
 
-   /* cPrompt(s) passed ? */
-   if( hb_pcount() >= 1 ) {
-      HB_FUNC_EXEC( QOUT );
-   }
+  /* cPrompt(s) passed ? */
+  if (hb_pcount() >= 1)
+  {
+    HB_FUNC_EXEC(QOUT);
+  }
 
-   szAcceptResult[0] = '\0';
+  szAcceptResult[0] = '\0';
 
-   while( input != K_ENTER && hb_vmRequestQuery() == 0 ) {
-      /* Wait forever, for keyboard events only */
-      input = hb_inkey(true, 0.0, INKEY_KEYBOARD);
-      switch( input ) {
-         case K_BS:
-         case K_LEFT:
-            if( nLen > 0 ) {
-               nChar = hb_cdpTextLen(cdp, szAcceptResult, nLen);
-               if( nChar > 0 ) {
-                  nLen = hb_cdpTextPos(cdp, szAcceptResult, nLen, nChar - 1);
-               } else {
-                  nLen = 0;
-               }
+  while (input != K_ENTER && hb_vmRequestQuery() == 0)
+  {
+    /* Wait forever, for keyboard events only */
+    input = hb_inkey(true, 0.0, INKEY_KEYBOARD);
+    switch (input)
+    {
+    case K_BS:
+    case K_LEFT:
+      if (nLen > 0)
+      {
+        nChar = hb_cdpTextLen(cdp, szAcceptResult, nLen);
+        if (nChar > 0)
+        {
+          nLen = hb_cdpTextPos(cdp, szAcceptResult, nLen, nChar - 1);
+        }
+        else
+        {
+          nLen = 0;
+        }
 
-               szKey[0] = HB_CHAR_BS;
+        szKey[0] = HB_CHAR_BS;
 
-               nChar = 1;
-            } else {
-               nChar = 0;
-            }
-            break;
-
-         default:
-            nChar = hb_inkeyKeyString(input, szKey, sizeof(szKey));
-            if( nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN ) {
-               memcpy(&szAcceptResult[nLen], szKey, nChar);
-               nLen += nChar;
-            }
+        nChar = 1;
       }
-      if( nChar > 0 ) {
-         hb_conOutAlt(szKey, nChar);
+      else
+      {
+        nChar = 0;
       }
-   }
+      break;
 
-   szAcceptResult[nLen] = '\0';
+    default:
+      nChar = hb_inkeyKeyString(input, szKey, sizeof(szKey));
+      if (nChar > 0 && nLen + nChar < ACCEPT_BUFFER_LEN)
+      {
+        memcpy(&szAcceptResult[nLen], szKey, nChar);
+        nLen += nChar;
+      }
+    }
+    if (nChar > 0)
+    {
+      hb_conOutAlt(szKey, nChar);
+    }
+  }
+
+  szAcceptResult[nLen] = '\0';
 
 #ifdef HB_CLP_UNDOC
-   hb_strncpy(hb_acceptBuffer(), szAcceptResult, ACCEPT_BUFFER_LEN - 1);
+  hb_strncpy(hb_acceptBuffer(), szAcceptResult, ACCEPT_BUFFER_LEN - 1);
 #endif
 
-   hb_retclen(szAcceptResult, nLen);
+  hb_retclen(szAcceptResult, nLen);
 }

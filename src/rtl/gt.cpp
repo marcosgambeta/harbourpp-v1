@@ -47,17 +47,17 @@
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
 
-HB_FUNC( DISPBEGIN )
+HB_FUNC(DISPBEGIN)
 {
-   hb_gtDispBegin();
+  hb_gtDispBegin();
 }
 
-HB_FUNC( DISPEND )
+HB_FUNC(DISPEND)
 {
-   hb_gtDispEnd();
+  hb_gtDispEnd();
 }
 
-HB_FUNC( DISPCOUNT )
+HB_FUNC(DISPCOUNT)
 {
-   hb_retni(hb_gtDispCount());
+  hb_retni(hb_gtDispCount());
 }

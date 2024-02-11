@@ -52,34 +52,48 @@
 
 /* returns the right-most n characters in string */
 
-HB_FUNC( RIGHT )
+HB_FUNC(RIGHT)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText && HB_ISNUM(2) ) {
-      HB_ISIZ nLen = hb_parns(2);
-      if( nLen <= 0 ) {
-         hb_retc_null();
-      } else {
-         auto nText = hb_itemGetCLen(pText);
-         if( static_cast<HB_SIZE>(nLen) < nText ) {
-            auto cdp = hb_vmCDP();
-            if( HB_CDP_ISCHARIDX(cdp) ) {
-               HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
-               if( nChars > static_cast<HB_SIZE>(nLen) ) {
-                  nLen = nText - hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nChars - nLen);
-               } else {
-                  nLen = nText;
-               }
-            }
-         }
-         if( static_cast<HB_SIZE>(nLen) >= nText ) {
-            hb_itemReturn(pText);
-         } else {
-            hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
-         }
+  if (pText && HB_ISNUM(2))
+  {
+    HB_ISIZ nLen = hb_parns(2);
+    if (nLen <= 0)
+    {
+      hb_retc_null();
+    }
+    else
+    {
+      auto nText = hb_itemGetCLen(pText);
+      if (static_cast<HB_SIZE>(nLen) < nText)
+      {
+        auto cdp = hb_vmCDP();
+        if (HB_CDP_ISCHARIDX(cdp))
+        {
+          HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
+          if (nChars > static_cast<HB_SIZE>(nLen))
+          {
+            nLen = nText - hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nChars - nLen);
+          }
+          else
+          {
+            nLen = nText;
+          }
+        }
       }
-   } else {
-      hb_retc_null();  /* Clipper doesn't error */
-   }
+      if (static_cast<HB_SIZE>(nLen) >= nText)
+      {
+        hb_itemReturn(pText);
+      }
+      else
+      {
+        hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
+      }
+    }
+  }
+  else
+  {
+    hb_retc_null(); /* Clipper doesn't error */
+  }
 }

@@ -48,101 +48,110 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( HB_SETDISPCP )
+HB_FUNC(HB_SETDISPCP)
 {
-   if( HB_ISCHAR(1) ) {
-      if( hb_pcount() == 2 && HB_ISLOG(2) ) {
-         hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
-      } else {
-         hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
-      }
-   } else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) ) {
-      hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (HB_ISCHAR(1))
+  {
+    if (hb_pcount() == 2 && HB_ISLOG(2))
+    {
+      hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
+    }
+    else
+    {
+      hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
+    }
+  }
+  else if (!(hb_pcount() >= 1 && HB_ISNIL(1)))
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_SETKEYCP )
+HB_FUNC(HB_SETKEYCP)
 {
-   if( HB_ISCHAR(1) ) {
+  if (HB_ISCHAR(1))
+  {
+    hb_gtSetKeyCP(hb_parc(1), hb_parc(2));
+  }
+  else if (!(hb_pcount() >= 1 && HB_ISNIL(1)))
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
+}
+
+HB_FUNC(HB_SETTERMCP)
+{
+  if (HB_ISCHAR(1))
+  {
+    if (hb_pcount() == 2 && HB_ISLOG(2))
+    {
+      hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
+      hb_gtSetKeyCP(hb_parc(1), nullptr);
+    }
+    else
+    {
+      hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
       hb_gtSetKeyCP(hb_parc(1), hb_parc(2));
-   } else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) ) {
-      hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    }
+  }
+  else if (!(hb_pcount() >= 1 && HB_ISNIL(1)))
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_SETTERMCP )
+HB_FUNC(HB_GTINFO)
 {
-   if( HB_ISCHAR(1) ) {
-      if( hb_pcount() == 2 && HB_ISLOG(2) ) {
-         hb_gtSetDispCP(hb_parc(1), nullptr, hb_parl(2));
-         hb_gtSetKeyCP(hb_parc(1), nullptr);
-      } else {
-         hb_gtSetDispCP(hb_parc(1), hb_parc(2), hb_parl(3));
-         hb_gtSetKeyCP(hb_parc(1), hb_parc(2));
-      }
-   } else if( !( hb_pcount() >= 1 && HB_ISNIL(1) ) ) {
-      hb_errRT_BASE_SubstR(EG_ARG, 1089, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (HB_ISNUM(1))
+  {
+    HB_GT_INFO gtInfo;
+
+    gtInfo.pNewVal = hb_param(2, Harbour::Item::ANY);
+    gtInfo.pNewVal2 = hb_param(3, Harbour::Item::ANY);
+    gtInfo.pResult = nullptr;
+
+    hb_gtInfo(hb_parni(1), &gtInfo);
+    if (gtInfo.pResult)
+    {
+      hb_itemReturnRelease(gtInfo.pResult);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_GTINFO )
+HB_FUNC(HB_GTVERSION)
 {
-   if( HB_ISNUM(1) ) {
-      HB_GT_INFO gtInfo;
-
-      gtInfo.pNewVal  = hb_param(2, Harbour::Item::ANY);
-      gtInfo.pNewVal2 = hb_param(3, Harbour::Item::ANY);
-      gtInfo.pResult  = nullptr;
-
-      hb_gtInfo(hb_parni(1), &gtInfo);
-      if( gtInfo.pResult ) {
-         hb_itemReturnRelease(gtInfo.pResult);
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  hb_retc_const(hb_gtVersion(hb_parni(1)));
 }
 
-HB_FUNC( HB_GTVERSION )
+HB_FUNC(HB_GTALERT)
 {
-   hb_retc_const(hb_gtVersion(hb_parni(1)));
+  hb_retni(hb_gtAlert(hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY),
+                      HB_ISCHAR(3) ? hb_gtColorToN(hb_parc(3)) : hb_parni(3) /* iClrNorm */,
+                      HB_ISCHAR(4) ? hb_gtColorToN(hb_parc(4)) : hb_parni(4) /* iClrHigh */, hb_parnd(5)));
 }
 
-HB_FUNC( HB_GTALERT )
+HB_FUNC(HB_GFXPRIMITIVE)
 {
-   hb_retni(hb_gtAlert(hb_param(1, Harbour::Item::ANY),
-                       hb_param(2, Harbour::Item::ANY),
-                       HB_ISCHAR(3) ? hb_gtColorToN(hb_parc(3)) : hb_parni(3) /* iClrNorm */,
-                       HB_ISCHAR(4) ? hb_gtColorToN(hb_parc(4)) : hb_parni(4) /* iClrHigh */,
-                       hb_parnd(5)));
+  hb_retni(hb_gtGfxPrimitive(hb_parni(1) /* nType   */, hb_parni(2) /* nTop    */, hb_parni(3) /* nLeft   */,
+                             hb_parni(4) /* nBottom */, hb_parni(5) /* nRight  */, hb_parni(6) /* nColor  */));
 }
 
-HB_FUNC( HB_GFXPRIMITIVE )
+HB_FUNC(HB_GFXTEXT)
 {
-   hb_retni(hb_gtGfxPrimitive(hb_parni(1) /* nType   */,
-                              hb_parni(2) /* nTop    */,
-                              hb_parni(3) /* nLeft   */,
-                              hb_parni(4) /* nBottom */,
-                              hb_parni(5) /* nRight  */,
-                              hb_parni(6) /* nColor  */));
+  hb_gtGfxText(hb_parni(1) /* nTop   */, hb_parni(2) /* nLeft  */, hb_parc(3) /* cText  */, hb_parni(4) /* nColor */,
+               hb_parni(5) /* nSize  */, hb_parni(6) /* nWidth */);
 }
 
-HB_FUNC( HB_GFXTEXT )
+HB_FUNC(HB_GTLOCK)
 {
-   hb_gtGfxText(hb_parni(1) /* nTop   */,
-                hb_parni(2) /* nLeft  */,
-                hb_parc(3)  /* cText  */,
-                hb_parni(4) /* nColor */,
-                hb_parni(5) /* nSize  */,
-                hb_parni(6) /* nWidth */);
+  hb_retl(hb_gtLock());
 }
 
-HB_FUNC( HB_GTLOCK )
+HB_FUNC(HB_GTUNLOCK)
 {
-   hb_retl(hb_gtLock());
-}
-
-HB_FUNC( HB_GTUNLOCK )
-{
-   hb_gtUnlock();
+  hb_gtUnlock();
 }

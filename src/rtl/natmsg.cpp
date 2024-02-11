@@ -54,98 +54,116 @@
          These should be named properly if exported outside this file.
          [vszakats] */
 
-#define _DIR_HEADER      1              /* "Database Files    # Records    Last Update     Size" */
-#define _LF_SAMPLES      2              /* "Do you want more samples?" */
-#define _RF_PAGENO       3              /* "Page No." */
-#define _RF_SUBTOTAL     4              /* "** Subtotal **" */
-#define _RF_SUBSUBTOTAL  5              /* "* Subsubtotal *" */
-#define _RF_TOTAL        6              /* "*** Total ***" */
-#define _GET_INSERT_ON   7              /* "Ins" */
-#define _GET_INSERT_OFF  8              /* "   " */
-#define _GET_INVD_DATE   9              /* "Invalid Date" */
-#define _GET_RANGE_FROM  10             /* "Range: " */
-#define _GET_RANGE_TO    11             /* " - " */
-#define _LF_YN           12             /* "Y/N" */ /* NOTE: This must be in uppercase. [vszakats] */
-#define _INVALID_EXPR    13             /* "INVALID EXPRESSION" */
+#define _DIR_HEADER 1         /* "Database Files    # Records    Last Update     Size" */
+#define _LF_SAMPLES 2         /* "Do you want more samples?" */
+#define _RF_PAGENO 3          /* "Page No." */
+#define _RF_SUBTOTAL 4        /* "** Subtotal **" */
+#define _RF_SUBSUBTOTAL 5     /* "* Subsubtotal *" */
+#define _RF_TOTAL 6           /* "*** Total ***" */
+#define _GET_INSERT_ON 7      /* "Ins" */
+#define _GET_INSERT_OFF 8     /* "   " */
+#define _GET_INVD_DATE 9      /* "Invalid Date" */
+#define _GET_RANGE_FROM 10    /* "Range: " */
+#define _GET_RANGE_TO 11      /* " - " */
+#define _LF_YN 12 /* "Y/N" */ /* NOTE: This must be in uppercase. [vszakats] */
+#define _INVALID_EXPR 13      /* "INVALID EXPRESSION" */
 
-static const char * hb_nationGetMsg(int iMsg)
+static const char *hb_nationGetMsg(int iMsg)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_nationGetMsg(%u)", iMsg));
 #endif
 
-   return (iMsg >= 1 && iMsg <= 13) ? hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + iMsg - 1) : "";
+  return (iMsg >= 1 && iMsg <= 13) ? hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + iMsg - 1) : "";
 }
 
-HB_FUNC( __NATISAFFIRM )
+HB_FUNC(__NATISAFFIRM)
 {
-   auto nLen = hb_parclen(1);
-   HB_BOOL fIS = false;
+  auto nLen = hb_parclen(1);
+  HB_BOOL fIS = false;
 
-   if( nLen > 0 ) {
-      const char * szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
-      HB_SIZE nStr = 0;
+  if (nLen > 0)
+  {
+    const char *szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
+    HB_SIZE nStr = 0;
 
-      while( szYesNo[nStr] && szYesNo[nStr] != '/' ) {
-         ++nStr;
+    while (szYesNo[nStr] && szYesNo[nStr] != '/')
+    {
+      ++nStr;
+    }
+
+    if (nStr && nLen >= nStr)
+    {
+      auto cdp = hb_vmCDP();
+      if (cdp)
+      {
+        fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
       }
-
-      if( nStr && nLen >= nStr ) {
-         auto cdp = hb_vmCDP();
-         if( cdp ) {
-            fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
-         } else {
-            fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
-         }
+      else
+      {
+        fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
       }
-   }
-   hb_retl(fIS);
+    }
+  }
+  hb_retl(fIS);
 }
 
-HB_FUNC( __NATISNEGATIVE )
+HB_FUNC(__NATISNEGATIVE)
 {
-   auto nLen = hb_parclen(1);
-   HB_BOOL fIS = false;
+  auto nLen = hb_parclen(1);
+  HB_BOOL fIS = false;
 
-   if( nLen > 0 ) {
-      const char * szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
-      HB_SIZE nStr;
+  if (nLen > 0)
+  {
+    const char *szYesNo = hb_langDGetItem(HB_LANG_ITEM_BASE_NATMSG + _LF_YN - 1);
+    HB_SIZE nStr;
 
-      while( *szYesNo ) {
-         if( *szYesNo++ == '/' ) {
-            break;
-         }
+    while (*szYesNo)
+    {
+      if (*szYesNo++ == '/')
+      {
+        break;
       }
-      nStr = strlen(szYesNo);
+    }
+    nStr = strlen(szYesNo);
 
-      if( nStr && nLen >= nStr ) {
-         auto cdp = hb_vmCDP();
-         if( cdp ) {
-            fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
-         } else {
-            fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
-         }
+    if (nStr && nLen >= nStr)
+    {
+      auto cdp = hb_vmCDP();
+      if (cdp)
+      {
+        fIS = hb_cdpicmp(hb_parc(1), nLen, szYesNo, nStr, cdp, false) == 0;
       }
-   }
-   hb_retl(fIS);
+      else
+      {
+        fIS = hb_strnicmp(hb_parc(1), szYesNo, nStr) == 0;
+      }
+    }
+  }
+  hb_retl(fIS);
 }
 
-HB_FUNC( __NATMSG )
+HB_FUNC(__NATMSG)
 {
-   if( hb_pcount() == 0 ) {
-      /* TODO: Replace this with Language API call. */
-      hb_retc_const("Invalid argument");
-   } else if( HB_ISNUM(1) ) {
-      hb_retc_const(hb_nationGetMsg(hb_parni(1)));
-   } else {
-      hb_retc_null();
-   }
+  if (hb_pcount() == 0)
+  {
+    /* TODO: Replace this with Language API call. */
+    hb_retc_const("Invalid argument");
+  }
+  else if (HB_ISNUM(1))
+  {
+    hb_retc_const(hb_nationGetMsg(hb_parni(1)));
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }
 
-HB_FUNC( __NATMSGVER )
+HB_FUNC(__NATMSGVER)
 {
-   /* NOTE: CA-Cl*pper 5.2e Intl. will return: "NATMSGS v1.2i x14 19/Mar/93" */
-   /* NOTE: CA-Cl*pper 5.3  Intl. will return: "NATMSGS v1.3i x19 06/Mar/95" */
+  /* NOTE: CA-Cl*pper 5.2e Intl. will return: "NATMSGS v1.2i x14 19/Mar/93" */
+  /* NOTE: CA-Cl*pper 5.3  Intl. will return: "NATMSGS v1.3i x19 06/Mar/95" */
 
-   hb_retc_const("NATMSGS (Harbour)");
+  hb_retc_const("NATMSGS (Harbour)");
 }

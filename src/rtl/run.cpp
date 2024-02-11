@@ -51,38 +51,42 @@
 #include "hbapifs.hpp"
 
 #if defined(HB_OS_WIN)
-   #include "hbwinuni.hpp"
-   #include <windows.h>
+#include "hbwinuni.hpp"
+#include <windows.h>
 #endif
 
 /* FIXME: The screen buffer handling is not right for all platforms (Windows)
           The output of the launched (MS-DOS?) app is not visible. */
 
-HB_FUNC( __RUN )
+HB_FUNC(__RUN)
 {
-   auto pszCommand = hb_parc(1);
+  auto pszCommand = hb_parc(1);
 
-   if( pszCommand && hb_gtSuspend() == Harbour::SUCCESS ) {
+  if (pszCommand && hb_gtSuspend() == Harbour::SUCCESS)
+  {
 #if defined(HB_OS_WIN)
-      LPTSTR lpCommand = HB_CHARDUP(pszCommand);
-      ( void ) HB_WINAPI_SYSTEM(lpCommand); // TODO: C++ cast
-      hb_xfree(lpCommand);
+    LPTSTR lpCommand = HB_CHARDUP(pszCommand);
+    (void)HB_WINAPI_SYSTEM(lpCommand); // TODO: C++ cast
+    hb_xfree(lpCommand);
 #else
-      char * pszFree = nullptr;
+    char *pszFree = nullptr;
 
-      if( system(hb_osEncodeCP(pszCommand, &pszFree, nullptr)) != 0 ) {
-      }
+    if (system(hb_osEncodeCP(pszCommand, &pszFree, nullptr)) != 0)
+    {
+    }
 
-      if( pszFree ) {
-         hb_xfree(pszFree);
-      }
+    if (pszFree)
+    {
+      hb_xfree(pszFree);
+    }
 #endif
 
-      if( hb_gtResume() != Harbour::SUCCESS ) {
-         /* an error should be generated here !! Something like */
-         #if 0
+    if (hb_gtResume() != Harbour::SUCCESS)
+    {
+/* an error should be generated here !! Something like */
+#if 0
          hb_errRT_BASE_Ext1(EG_GTRESUME, 6002, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT);
-         #endif
-      }
-   }
+#endif
+    }
+  }
 }

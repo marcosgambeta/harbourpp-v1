@@ -50,39 +50,54 @@
 
 /* returns n copies of given string */
 
-HB_FUNC( REPLICATE )
+HB_FUNC(REPLICATE)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
+  auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem && HB_ISNUM(2) ) {
-      auto nLen = hb_itemGetCLen(pItem);
-      HB_ISIZ nTimes = hb_parns(2);
+  if (pItem && HB_ISNUM(2))
+  {
+    auto nLen = hb_itemGetCLen(pItem);
+    HB_ISIZ nTimes = hb_parns(2);
 
-      if( nLen > 0 && nTimes > 0 ) {
-         if( nTimes == 1 ) {
-            hb_itemReturn(pItem);
-         } else if( static_cast<double>(nLen) * nTimes < static_cast<double>(HB_SIZE_MAX) ) {
-            auto szText = hb_itemGetCPtr(pItem);
-            HB_SIZE nSize = nLen * nTimes;
-            char * szResult, * szPtr;
-
-            szResult = szPtr = static_cast<char*>(hb_xgrab(nSize + 1));
-            if( nLen == 1 ) {
-               memset(szResult, szText[0], nSize);
-            } else {
-               while( nTimes-- > 0 ) {
-                  hb_xmemcpy(szPtr, szText, nLen);
-                  szPtr += nLen;
-               }
-            }
-            hb_retclen_buffer(szResult, nSize);
-         } else {
-            hb_errRT_BASE_SubstR(EG_STROVERFLOW, 1234, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-         }
-      } else {
-         hb_retc_null();
+    if (nLen > 0 && nTimes > 0)
+    {
+      if (nTimes == 1)
+      {
+        hb_itemReturn(pItem);
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      else if (static_cast<double>(nLen) * nTimes < static_cast<double>(HB_SIZE_MAX))
+      {
+        auto szText = hb_itemGetCPtr(pItem);
+        HB_SIZE nSize = nLen * nTimes;
+        char *szResult, *szPtr;
+
+        szResult = szPtr = static_cast<char *>(hb_xgrab(nSize + 1));
+        if (nLen == 1)
+        {
+          memset(szResult, szText[0], nSize);
+        }
+        else
+        {
+          while (nTimes-- > 0)
+          {
+            hb_xmemcpy(szPtr, szText, nLen);
+            szPtr += nLen;
+          }
+        }
+        hb_retclen_buffer(szResult, nSize);
+      }
+      else
+      {
+        hb_errRT_BASE_SubstR(EG_STROVERFLOW, 1234, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+      }
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1106, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

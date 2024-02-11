@@ -48,29 +48,32 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 
-HB_FUNC( __XHELP )
+HB_FUNC(__XHELP)
 {
-   static PHB_DYNS s_pDynSym = nullptr;
+  static PHB_DYNS s_pDynSym = nullptr;
 
-   if( s_pDynSym == nullptr ) {
-      s_pDynSym = hb_dynsymGetCase("HELP");
-   }
+  if (s_pDynSym == nullptr)
+  {
+    s_pDynSym = hb_dynsymGetCase("HELP");
+  }
 
-   if( hb_dynsymIsFunction(s_pDynSym) ) {
-      /* NOTE: push the existing params after the dynamic symbol. [awhite] */
+  if (hb_dynsymIsFunction(s_pDynSym))
+  {
+    /* NOTE: push the existing params after the dynamic symbol. [awhite] */
 
-      auto iPCount = hb_pcount();
+    auto iPCount = hb_pcount();
 
-      hb_vmPushDynSym(s_pDynSym);
-      hb_vmPushNil();
-      /* CA-Cl*pper respects references so hb_stackItemFromBase() is
-       * used instead of hb_param() [druzus]
-       */
-      for( auto iParam = 1; iParam <= iPCount; iParam++ ) {
-         hb_vmPush(hb_stackItemFromBase(iParam));
-      }
+    hb_vmPushDynSym(s_pDynSym);
+    hb_vmPushNil();
+    /* CA-Cl*pper respects references so hb_stackItemFromBase() is
+     * used instead of hb_param() [druzus]
+     */
+    for (auto iParam = 1; iParam <= iPCount; iParam++)
+    {
+      hb_vmPush(hb_stackItemFromBase(iParam));
+    }
 
-      hb_vmProc(static_cast<HB_USHORT>(iPCount));
-      /* NOTE: Leave the return value as it is. */
-   }
+    hb_vmProc(static_cast<HB_USHORT>(iPCount));
+    /* NOTE: Leave the return value as it is. */
+  }
 }

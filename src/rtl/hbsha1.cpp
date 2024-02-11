@@ -48,46 +48,53 @@
 
 #include "sha1.hpp"
 
-HB_FUNC( HB_SHA1 )
+HB_FUNC(HB_SHA1)
 {
-   sha1_byte digest[SHA1_DIGEST_LENGTH];
-   SHA_CTX ctx;
+  sha1_byte digest[SHA1_DIGEST_LENGTH];
+  SHA_CTX ctx;
 
-   hb_SHA1_Init(&ctx);
+  hb_SHA1_Init(&ctx);
 
-   #if HB_SIZE_MAX > UINT_MAX
-   {
-      auto buffer = hb_parcx(1);
-      auto nCount = hb_parclen(1);
-      HB_SIZE nDone = 0;
+#if HB_SIZE_MAX > UINT_MAX
+  {
+    auto buffer = hb_parcx(1);
+    auto nCount = hb_parclen(1);
+    HB_SIZE nDone = 0;
 
-      while( nCount ) {
-         unsigned int uiChunk;
+    while (nCount)
+    {
+      unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>(UINT_MAX) ) {
-            uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>(uiChunk);
-         } else {
-            uiChunk = static_cast<unsigned int>(nCount);
-            nCount = 0;
-         }
-
-         hb_SHA1_Update( &ctx, buffer + nDone, uiChunk );
-
-         nDone += static_cast<HB_SIZE>(uiChunk);
+      if (nCount > static_cast<HB_SIZE>(UINT_MAX))
+      {
+        uiChunk = UINT_MAX;
+        nCount -= static_cast<HB_SIZE>(uiChunk);
       }
-   }
-   #else
-      hb_SHA1_Update( &ctx, hb_parcx(1), hb_parclen(1) );
-   #endif
+      else
+      {
+        uiChunk = static_cast<unsigned int>(nCount);
+        nCount = 0;
+      }
 
-   hb_SHA1_Final(digest, &ctx);
+      hb_SHA1_Update(&ctx, buffer + nDone, uiChunk);
 
-   if( !hb_parl(2) ) {
-      char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
-      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
-   } else {
-      hb_retclen(reinterpret_cast<char*>(digest), sizeof(digest));
-   }
+      nDone += static_cast<HB_SIZE>(uiChunk);
+    }
+  }
+#else
+  hb_SHA1_Update(&ctx, hb_parcx(1), hb_parclen(1));
+#endif
+
+  hb_SHA1_Final(digest, &ctx);
+
+  if (!hb_parl(2))
+  {
+    char hex[(sizeof(digest) * 2) + 1];
+    hb_strtohex(reinterpret_cast<char *>(digest), sizeof(digest), hex);
+    hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
+  }
+  else
+  {
+    hb_retclen(reinterpret_cast<char *>(digest), sizeof(digest));
+  }
 }

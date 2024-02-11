@@ -50,29 +50,35 @@
 #include "hbapierr.hpp"
 
 /* converts string to lower case */
-HB_FUNC( LOWER )
+HB_FUNC(LOWER)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto nLen = hb_itemGetCLen(pText);
-      char * pszBuffer = hb_cdpnDupLower(hb_vmCDP(), hb_itemGetCPtr(pText), &nLen);
-      hb_retclen_buffer(pszBuffer, nLen);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pText)
+  {
+    auto nLen = hb_itemGetCLen(pText);
+    char *pszBuffer = hb_cdpnDupLower(hb_vmCDP(), hb_itemGetCPtr(pText), &nLen);
+    hb_retclen_buffer(pszBuffer, nLen);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* converts string to upper case */
-HB_FUNC( UPPER )
+HB_FUNC(UPPER)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto nLen = hb_itemGetCLen(pText);
-      char * pszBuffer = hb_cdpnDupUpper(hb_vmCDP(), hb_itemGetCPtr(pText), &nLen);
-      hb_retclen_buffer(pszBuffer, nLen);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pText)
+  {
+    auto nLen = hb_itemGetCLen(pText);
+    char *pszBuffer = hb_cdpnDupUpper(hb_vmCDP(), hb_itemGetCPtr(pText), &nLen);
+    hb_retclen_buffer(pszBuffer, nLen);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

@@ -55,114 +55,151 @@
           string is too large. Example:
           StrTran("...", ".", Replicate("A", 32000)) [vszakats] */
 
-HB_FUNC( STRTRAN )
+HB_FUNC(STRTRAN)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
-   auto pSeek = hb_param(2, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pSeek = hb_param(2, Harbour::Item::STRING);
 
-   if( pText && pSeek ) {
-      HB_SIZE nStart, nCount;
+  if (pText && pSeek)
+  {
+    HB_SIZE nStart, nCount;
 
-      nStart = hb_parnsdef(4, 1);
-      nCount = hb_parnsdef(5, -1);
+    nStart = hb_parnsdef(4, 1);
+    nCount = hb_parnsdef(5, -1);
 
-      if( nStart && nCount ) {
-         auto nText = hb_itemGetCLen(pText);
-         auto nSeek = hb_itemGetCLen(pSeek);
+    if (nStart && nCount)
+    {
+      auto nText = hb_itemGetCLen(pText);
+      auto nSeek = hb_itemGetCLen(pSeek);
 
-         if( nSeek && nSeek <= nText && nStart > 0 ) {
-            auto pReplace = hb_param(3, Harbour::Item::STRING);
-            auto nReplace = hb_itemGetCLen(pReplace);
-            auto szReplace = hb_itemGetCPtr(pReplace);
-            auto szText = hb_itemGetCPtr(pText);
-            auto szSeek = hb_itemGetCPtr(pSeek);
-            HB_SIZE nFound = 0;
-            HB_SIZE nReplaced = 0;
-            HB_SIZE nT = 0;
-            HB_SIZE nS = 0;
+      if (nSeek && nSeek <= nText && nStart > 0)
+      {
+        auto pReplace = hb_param(3, Harbour::Item::STRING);
+        auto nReplace = hb_itemGetCLen(pReplace);
+        auto szReplace = hb_itemGetCPtr(pReplace);
+        auto szText = hb_itemGetCPtr(pText);
+        auto szSeek = hb_itemGetCPtr(pSeek);
+        HB_SIZE nFound = 0;
+        HB_SIZE nReplaced = 0;
+        HB_SIZE nT = 0;
+        HB_SIZE nS = 0;
 
-            while( nT < nText && nText - nT >= nSeek - nS ) {
-               if( szText[nT] == szSeek[nS] ) {
-                  ++nT;
-                  if( ++nS == nSeek ) {
-                     if( ++nFound >= nStart ) {
-                        nReplaced++;
-                        if( --nCount == 0 ) {
-                           nT = nText;
-                        }
-                     }
-                     nS = 0;
+        while (nT < nText && nText - nT >= nSeek - nS)
+        {
+          if (szText[nT] == szSeek[nS])
+          {
+            ++nT;
+            if (++nS == nSeek)
+            {
+              if (++nFound >= nStart)
+              {
+                nReplaced++;
+                if (--nCount == 0)
+                {
+                  nT = nText;
+                }
+              }
+              nS = 0;
+            }
+          }
+          else if (nS)
+          {
+            nT -= nS - 1;
+            nS = 0;
+          }
+          else
+          {
+            ++nT;
+          }
+        }
+
+        if (nReplaced)
+        {
+          HB_SIZE nLength = nText;
+
+          if (nSeek > nReplace)
+          {
+            nLength -= (nSeek - nReplace) * nReplaced;
+          }
+          else
+          {
+            nLength += (nReplace - nSeek) * nReplaced;
+          }
+
+          if (nLength)
+          {
+            auto szResult = static_cast<char *>(hb_xgrab(nLength + 1));
+            char *szPtr = szResult;
+
+            nFound -= nReplaced;
+            nT = nS = 0;
+            do
+            {
+              if (nReplaced && szText[nT] == szSeek[nS])
+              {
+                ++nT;
+                if (++nS == nSeek)
+                {
+                  const char *szCopy;
+
+                  if (nFound)
+                  {
+                    nFound--;
+                    szCopy = szSeek;
                   }
-               } else if( nS ) {
-                  nT -= nS - 1;
+                  else
+                  {
+                    nReplaced--;
+                    szCopy = szReplace;
+                    nS = nReplace;
+                  }
+                  while (nS)
+                  {
+                    *szPtr++ = *szCopy++;
+                    --nS;
+                  }
+                }
+              }
+              else
+              {
+                if (nS)
+                {
+                  nT -= nS;
                   nS = 0;
-               } else {
-                  ++nT;
-               }
-            }
+                }
+                *szPtr++ = szText[nT++];
+              }
+            } while (nT < nText);
 
-            if( nReplaced ) {
-               HB_SIZE nLength = nText;
-
-               if( nSeek > nReplace ) {
-                  nLength -= ( nSeek - nReplace ) * nReplaced;
-               } else {
-                  nLength += ( nReplace - nSeek ) * nReplaced;
-               }
-
-               if( nLength ) {
-                  auto szResult = static_cast<char*>(hb_xgrab(nLength + 1));
-                  char * szPtr = szResult;
-
-                  nFound -= nReplaced;
-                  nT = nS = 0;
-                  do {
-                     if( nReplaced && szText[nT] == szSeek[nS] ) {
-                        ++nT;
-                        if( ++nS == nSeek ) {
-                           const char * szCopy;
-
-                           if( nFound ) {
-                              nFound--;
-                              szCopy = szSeek;
-                           } else {
-                              nReplaced--;
-                              szCopy = szReplace;
-                              nS = nReplace;
-                           }
-                           while( nS ) {
-                              *szPtr++ = *szCopy++;
-                              --nS;
-                           }
-                        }
-                     } else {
-                        if( nS ) {
-                           nT -= nS;
-                           nS = 0;
-                        }
-                        *szPtr++ = szText[nT++];
-                     }
-                  } while( nT < nText );
-
-                  hb_retclen_buffer(szResult, nLength);
-               } else {
-                  hb_retc_null();
-               }
-            } else {
-               hb_itemReturn(pText);
-            }
-         } else {
-            hb_itemReturn(pText);
-         }
-      } else {
-         hb_retc_null();
+            hb_retclen_buffer(szResult, nLength);
+          }
+          else
+          {
+            hb_retc_null();
+          }
+        }
+        else
+        {
+          hb_itemReturn(pText);
+        }
       }
-   } else {
-      /* NOTE: Undocumented but existing Clipper Run-time error [vszakats] */
+      else
+      {
+        hb_itemReturn(pText);
+      }
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
+  else
+  {
+    /* NOTE: Undocumented but existing Clipper Run-time error [vszakats] */
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE_SubstR(EG_ARG, 1126, nullptr, HB_ERR_FUNCNAME, 0);
+    hb_errRT_BASE_SubstR(EG_ARG, 1126, nullptr, HB_ERR_FUNCNAME, 0);
 #else
-      hb_errRT_BASE_SubstR(EG_ARG, 1126, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    hb_errRT_BASE_SubstR(EG_ARG, 1126, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
-   }
+  }
 }

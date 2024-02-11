@@ -47,16 +47,18 @@
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
 
-HB_FUNC( HB_SHADOW )
+HB_FUNC(HB_SHADOW)
 {
-   if( hb_pcount() >= 4 ) {
-      hb_gtDrawShadow(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parnidef(5, 7));
-   }
+  if (hb_pcount() >= 4)
+  {
+    hb_gtDrawShadow(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parnidef(5, 7));
+  }
 }
 
-HB_FUNC( HB_CLRAREA )
+HB_FUNC(HB_CLRAREA)
 {
-   if( hb_pcount() > 4 ) {
-      hb_gtSetAttribute( hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5) );
-   }
+  if (hb_pcount() > 4)
+  {
+    hb_gtSetAttribute(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5));
+  }
 }

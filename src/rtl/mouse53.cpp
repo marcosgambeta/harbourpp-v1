@@ -50,119 +50,131 @@
 
 #ifdef HB_COMPAT_C53
 
-HB_FUNC( MPRESENT )
+HB_FUNC(MPRESENT)
 {
-   hb_retl(hb_mouseIsPresent());
+  hb_retl(hb_mouseIsPresent());
 }
 
-HB_FUNC( MHIDE )
+HB_FUNC(MHIDE)
 {
-   hb_mouseSetCursor(false);
+  hb_mouseSetCursor(false);
 }
 
-HB_FUNC( MSHOW )
+HB_FUNC(MSHOW)
 {
-   hb_mouseSetCursor(true);
+  hb_mouseSetCursor(true);
 }
 
-HB_FUNC( MSETCURSOR )
+HB_FUNC(MSETCURSOR)
 {
-   hb_retl(hb_mouseGetCursor());
+  hb_retl(hb_mouseGetCursor());
 
-   if( HB_ISLOG(1) ) {
-      hb_mouseSetCursor(hb_parl(1));
-   }
+  if (HB_ISLOG(1))
+  {
+    hb_mouseSetCursor(hb_parl(1));
+  }
 }
 
-HB_FUNC( MROW )
+HB_FUNC(MROW)
 {
-   if( hb_parl(1) ) {
-      int iRow, iCol;
-      hb_mouseGetPos(&iRow, &iCol);
-      hb_retni(iRow);
-   } else {
-      hb_retni(hb_mouseRow());
-   }
+  if (hb_parl(1))
+  {
+    int iRow, iCol;
+    hb_mouseGetPos(&iRow, &iCol);
+    hb_retni(iRow);
+  }
+  else
+  {
+    hb_retni(hb_mouseRow());
+  }
 }
 
-HB_FUNC( MCOL )
+HB_FUNC(MCOL)
 {
-   if( hb_parl(1) ) {
-      int iRow, iCol;
-      hb_mouseGetPos(&iRow, &iCol);
-      hb_retni(iCol);
-   } else {
-      hb_retni(hb_mouseCol());
-   }
+  if (hb_parl(1))
+  {
+    int iRow, iCol;
+    hb_mouseGetPos(&iRow, &iCol);
+    hb_retni(iCol);
+  }
+  else
+  {
+    hb_retni(hb_mouseCol());
+  }
 }
 
-HB_FUNC( MSETPOS )
+HB_FUNC(MSETPOS)
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) ) {
-      hb_mouseSetPos(hb_parni(1), hb_parni(2));
-   }
+  if (HB_ISNUM(1) && HB_ISNUM(2))
+  {
+    hb_mouseSetPos(hb_parni(1), hb_parni(2));
+  }
 }
 
-HB_FUNC( MLEFTDOWN )
+HB_FUNC(MLEFTDOWN)
 {
-   hb_retl(hb_mouseButtonState(HB_MBUTTON_LEFT));
+  hb_retl(hb_mouseButtonState(HB_MBUTTON_LEFT));
 }
 
-HB_FUNC( MRIGHTDOWN )
+HB_FUNC(MRIGHTDOWN)
 {
-   hb_retl(hb_mouseButtonState(HB_MBUTTON_RIGHT));
+  hb_retl(hb_mouseButtonState(HB_MBUTTON_RIGHT));
 }
 
-HB_FUNC( MDBLCLK )
+HB_FUNC(MDBLCLK)
 {
-   hb_retni(hb_mouseGetDoubleClickSpeed());
+  hb_retni(hb_mouseGetDoubleClickSpeed());
 
-   if( HB_ISNUM(1) ) {
-      hb_mouseSetDoubleClickSpeed(hb_parni(1));
-   }
+  if (HB_ISNUM(1))
+  {
+    hb_mouseSetDoubleClickSpeed(hb_parni(1));
+  }
 }
 
-HB_FUNC( MSAVESTATE )
+HB_FUNC(MSAVESTATE)
 {
-   int iLen = hb_mouseStorageSize();
+  int iLen = hb_mouseStorageSize();
 
-   if( iLen > 0 ) {
-      auto pBuffer = hb_xgrab(iLen + 1);
-      hb_mouseSaveState( pBuffer );
-      hb_retclen_buffer(static_cast<char*>(pBuffer), iLen);
-   } else {
-      hb_retc_null();
-   }
+  if (iLen > 0)
+  {
+    auto pBuffer = hb_xgrab(iLen + 1);
+    hb_mouseSaveState(pBuffer);
+    hb_retclen_buffer(static_cast<char *>(pBuffer), iLen);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }
 
-HB_FUNC( MRESTSTATE )
+HB_FUNC(MRESTSTATE)
 {
-   if( hb_parclen(1) == static_cast<HB_SIZE>(hb_mouseStorageSize()) ) {
-      hb_mouseRestoreState(hb_parc(1));
-   }
+  if (hb_parclen(1) == static_cast<HB_SIZE>(hb_mouseStorageSize()))
+  {
+    hb_mouseRestoreState(hb_parc(1));
+  }
 }
 
-HB_FUNC( MSETBOUNDS )
+HB_FUNC(MSETBOUNDS)
 {
-   hb_mouseSetBounds(hb_parni(1), /* Defaults to zero on bad type */
-                     hb_parni(2), /* Defaults to zero on bad type */
-                     HB_ISNUM(3) ? hb_parni(3) : hb_gtMaxRow(),
-                     HB_ISNUM(4) ? hb_parni(4) : hb_gtMaxCol());
+  hb_mouseSetBounds(hb_parni(1), /* Defaults to zero on bad type */
+                    hb_parni(2), /* Defaults to zero on bad type */
+                    HB_ISNUM(3) ? hb_parni(3) : hb_gtMaxRow(), HB_ISNUM(4) ? hb_parni(4) : hb_gtMaxCol());
 }
 
 #endif
 
-HB_FUNC( HB_MGETBOUNDS )
+HB_FUNC(HB_MGETBOUNDS)
 {
-   int iTop, iLeft, iBottom, iRight;
-   hb_mouseGetBounds(&iTop, &iLeft, &iBottom, &iRight);
-   hb_storni(iTop, 1);
-   hb_storni(iLeft, 2);
-   hb_storni(iBottom, 3);
-   hb_storni(iRight, 4);
+  int iTop, iLeft, iBottom, iRight;
+  hb_mouseGetBounds(&iTop, &iLeft, &iBottom, &iRight);
+  hb_storni(iTop, 1);
+  hb_storni(iLeft, 2);
+  hb_storni(iBottom, 3);
+  hb_storni(iRight, 4);
 }
 
-HB_FUNC( HB_MMIDDLEDOWN )
+HB_FUNC(HB_MMIDDLEDOWN)
 {
-   hb_retl(hb_mouseButtonState(HB_MBUTTON_MIDDLE));
+  hb_retl(hb_mouseButtonState(HB_MBUTTON_MIDDLE));
 }

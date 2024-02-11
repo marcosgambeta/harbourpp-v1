@@ -53,792 +53,911 @@
 /* extended FILE IO handle destructor */
 static HB_GARBAGE_FUNC(hb_file_Destructor)
 {
-   auto fileHolder = static_cast<PHB_FILE*>(Cargo);
+  auto fileHolder = static_cast<PHB_FILE *>(Cargo);
 
-   if( *fileHolder ) {
-      PHB_FILE pFile = *fileHolder;
-      *fileHolder = nullptr;
-      hb_fileClose(pFile);
-   }
+  if (*fileHolder)
+  {
+    PHB_FILE pFile = *fileHolder;
+    *fileHolder = nullptr;
+    hb_fileClose(pFile);
+  }
 }
 
-static const HB_GC_FUNCS s_gcFileFuncs =
-{
-   hb_file_Destructor,
-   hb_gcDummyMark
-};
+static const HB_GC_FUNCS s_gcFileFuncs = {hb_file_Destructor, hb_gcDummyMark};
 
 PHB_FILE hb_fileParam(int iParam)
 {
-   auto fileHolder = static_cast<PHB_FILE*>(hb_parptrGC(&s_gcFileFuncs, iParam));
+  auto fileHolder = static_cast<PHB_FILE *>(hb_parptrGC(&s_gcFileFuncs, iParam));
 
-   if( fileHolder && *fileHolder ) {
-      return * fileHolder;
-   }
+  if (fileHolder && *fileHolder)
+  {
+    return *fileHolder;
+  }
 
-   hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   return nullptr;
+  hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  return nullptr;
 }
 
 PHB_FILE hb_fileParamGet(int iParam)
 {
-   auto fileHolder = static_cast<PHB_FILE*>(hb_parptrGC(&s_gcFileFuncs, iParam));
-   return fileHolder ? *fileHolder : nullptr;
+  auto fileHolder = static_cast<PHB_FILE *>(hb_parptrGC(&s_gcFileFuncs, iParam));
+  return fileHolder ? *fileHolder : nullptr;
 }
 
 PHB_FILE hb_fileItemGet(PHB_ITEM pItem)
 {
-   auto fileHolder = static_cast<PHB_FILE*>(hb_itemGetPtrGC(pItem, &s_gcFileFuncs));
-   return fileHolder ? *fileHolder : nullptr;
+  auto fileHolder = static_cast<PHB_FILE *>(hb_itemGetPtrGC(pItem, &s_gcFileFuncs));
+  return fileHolder ? *fileHolder : nullptr;
 }
 
 PHB_ITEM hb_fileItemPut(PHB_ITEM pItem, PHB_FILE pFile)
 {
-   auto fileHolder = static_cast<PHB_FILE*>(hb_gcAllocate( sizeof(PHB_FILE), &s_gcFileFuncs ));
-   *fileHolder = pFile;
-   return hb_itemPutPtrGC(pItem, fileHolder);
+  auto fileHolder = static_cast<PHB_FILE *>(hb_gcAllocate(sizeof(PHB_FILE), &s_gcFileFuncs));
+  *fileHolder = pFile;
+  return hb_itemPutPtrGC(pItem, fileHolder);
 }
 
 void hb_fileItemClear(PHB_ITEM pItem)
 {
-   auto fileHolder = static_cast<PHB_FILE*>(hb_itemGetPtrGC(pItem, &s_gcFileFuncs));
+  auto fileHolder = static_cast<PHB_FILE *>(hb_itemGetPtrGC(pItem, &s_gcFileFuncs));
 
-   if( fileHolder ) {
-      *fileHolder = nullptr;
-   }
+  if (fileHolder)
+  {
+    *fileHolder = nullptr;
+  }
 }
 
-static PHB_FILE * hb_fileParamPtr(int iParam)
+static PHB_FILE *hb_fileParamPtr(int iParam)
 {
-   auto fileHolder = static_cast<PHB_FILE*>(hb_parptrGC(&s_gcFileFuncs, iParam));
+  auto fileHolder = static_cast<PHB_FILE *>(hb_parptrGC(&s_gcFileFuncs, iParam));
 
-   if( fileHolder && *fileHolder ) {
-      return fileHolder;
-   }
+  if (fileHolder && *fileHolder)
+  {
+    return fileHolder;
+  }
 
-   hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   return nullptr;
+  hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  return nullptr;
 }
 
 static void hb_fileReturn(PHB_FILE pFile)
 {
-   if( pFile ) {
-      hb_fileItemPut(hb_param(-1, Harbour::Item::ANY), pFile);
-   } else {
-      hb_ret();
-   }
+  if (pFile)
+  {
+    hb_fileItemPut(hb_param(-1, Harbour::Item::ANY), pFile);
+  }
+  else
+  {
+    hb_ret();
+  }
 }
 
 /* hb_vfIsLocal( <cFileName> ) --> <lOK> */
-HB_FUNC( HB_VFISLOCAL )
+HB_FUNC(HB_VFISLOCAL)
 {
-   hb_retl(hb_fileIsLocalName(hb_parc(1)));
+  hb_retl(hb_fileIsLocalName(hb_parc(1)));
 }
 
 /* hb_vfExists(<cFileName>, [ @<cDestFileName> ]) --> <lOK> */
-HB_FUNC( HB_VFEXISTS )
+HB_FUNC(HB_VFEXISTS)
 {
-   auto pszFileName = hb_parc(1);
-   auto fResult = false;
-   HB_ERRCODE uiError = 2;
+  auto pszFileName = hb_parc(1);
+  auto fResult = false;
+  HB_ERRCODE uiError = 2;
 
-   if( pszFileName ) {
-      if( HB_ISBYREF(2) ) {
-         char szName[HB_PATH_MAX];
-         szName[0] = '\0';
-         fResult = hb_fileExists(pszFileName, szName);
-         hb_storc(szName, 2);
-      } else {
-         fResult = hb_fileExists(pszFileName, nullptr);
-      }
+  if (pszFileName)
+  {
+    if (HB_ISBYREF(2))
+    {
+      char szName[HB_PATH_MAX];
+      szName[0] = '\0';
+      fResult = hb_fileExists(pszFileName, szName);
+      hb_storc(szName, 2);
+    }
+    else
+    {
+      fResult = hb_fileExists(pszFileName, nullptr);
+    }
 
-      uiError = hb_fsError();
-   }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retl(fResult);
+  hb_fsSetFError(uiError);
+  hb_retl(fResult);
 }
 
 /* hb_vfErase( <cFileName> ) --> <nResult> */
-HB_FUNC( HB_VFERASE )
+HB_FUNC(HB_VFERASE)
 {
-   auto pszFile = hb_parc(1);
-   HB_ERRCODE uiError = 3;
-   int iResult = F_ERROR;
+  auto pszFile = hb_parc(1);
+  HB_ERRCODE uiError = 3;
+  int iResult = F_ERROR;
 
-   if( pszFile ) {
-      if( hb_fileDelete(pszFile) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (pszFile)
+  {
+    if (hb_fileDelete(pszFile))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfRename( <cFileSrc>, <cFileDst> ) --> <nResult> */
-HB_FUNC( HB_VFRENAME )
+HB_FUNC(HB_VFRENAME)
 {
-   auto szFileOld = hb_parc(1);
-   auto szFileNew = hb_parc(2);
-   HB_ERRCODE uiError = 2;
-   int iResult = F_ERROR;
+  auto szFileOld = hb_parc(1);
+  auto szFileNew = hb_parc(2);
+  HB_ERRCODE uiError = 2;
+  int iResult = F_ERROR;
 
-   if( szFileOld && szFileNew ) {
-      if( hb_fileRename( szFileOld, szFileNew ) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (szFileOld && szFileNew)
+  {
+    if (hb_fileRename(szFileOld, szFileNew))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfCopyFile(<cFileSrc>, <cFileDst>) --> <nResult> */
-HB_FUNC( HB_VFCOPYFILE )
+HB_FUNC(HB_VFCOPYFILE)
 {
-   auto pszSource = hb_parc(1);
-   auto pszDestin = hb_parc(2);
-   HB_ERRCODE uiError = 2;
-   int iResult = F_ERROR;
+  auto pszSource = hb_parc(1);
+  auto pszDestin = hb_parc(2);
+  HB_ERRCODE uiError = 2;
+  int iResult = F_ERROR;
 
-   if( pszSource && pszDestin ) {
-      if( hb_fileCopy(pszSource, pszDestin) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (pszSource && pszDestin)
+  {
+    if (hb_fileCopy(pszSource, pszDestin))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfMoveFile(<cFileSrc>, <cFileDst>) --> <nResult> */
-HB_FUNC( HB_VFMOVEFILE )
+HB_FUNC(HB_VFMOVEFILE)
 {
-   auto pszSource = hb_parc(1);
-   auto pszDestin = hb_parc(2);
-   HB_ERRCODE uiError = 2;
-   int iResult = F_ERROR;
+  auto pszSource = hb_parc(1);
+  auto pszDestin = hb_parc(2);
+  HB_ERRCODE uiError = 2;
+  int iResult = F_ERROR;
 
-   if( pszSource && pszDestin ) {
-      if( hb_fileMove( pszSource, pszDestin ) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (pszSource && pszDestin)
+  {
+    if (hb_fileMove(pszSource, pszDestin))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfDirExists(<cDirName>) --> <lExists> */
-HB_FUNC( HB_VFDIREXISTS )
+HB_FUNC(HB_VFDIREXISTS)
 {
-   auto pszDirName = hb_parc(1);
-   auto fResult = false;
-   HB_ERRCODE uiError = 2;
+  auto pszDirName = hb_parc(1);
+  auto fResult = false;
+  HB_ERRCODE uiError = 2;
 
-   if( pszDirName ) {
-      fResult = hb_fileDirExists(pszDirName);
-      uiError = hb_fsError();
-   }
+  if (pszDirName)
+  {
+    fResult = hb_fileDirExists(pszDirName);
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retl(fResult);
+  hb_fsSetFError(uiError);
+  hb_retl(fResult);
 }
 
 /* hb_vfDirMake( <cDirName> ) --> <nSuccess> */
-HB_FUNC( HB_VFDIRMAKE )
+HB_FUNC(HB_VFDIRMAKE)
 {
-   auto pszDirName = hb_parc(1);
-   HB_ERRCODE uiError = 2;
-   int iResult = F_ERROR;
+  auto pszDirName = hb_parc(1);
+  HB_ERRCODE uiError = 2;
+  int iResult = F_ERROR;
 
-   if( pszDirName ) {
-      if( hb_fileDirMake( pszDirName ) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (pszDirName)
+  {
+    if (hb_fileDirMake(pszDirName))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfDirRemove( <cDirName> ) --> <nSuccess> */
-HB_FUNC( HB_VFDIRREMOVE )
+HB_FUNC(HB_VFDIRREMOVE)
 {
-   auto pszDirName = hb_parc(1);
-   HB_ERRCODE uiError = 2;
-   int iResult = F_ERROR;
+  auto pszDirName = hb_parc(1);
+  HB_ERRCODE uiError = 2;
+  int iResult = F_ERROR;
 
-   if( pszDirName ) {
-      if( hb_fileDirRemove( pszDirName ) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (pszDirName)
+  {
+    if (hb_fileDirRemove(pszDirName))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfDirectory([ <cDirSpec> ], [ <cAttr> ]) --> <aDirectory> */
-HB_FUNC( HB_VFDIRECTORY )
+HB_FUNC(HB_VFDIRECTORY)
 {
-   hb_itemReturnRelease(hb_fileDirectory(hb_parc(1), hb_parc(2)));
-   hb_fsSetFError(hb_fsError());
+  hb_itemReturnRelease(hb_fileDirectory(hb_parc(1), hb_parc(2)));
+  hb_fsSetFError(hb_fsError());
 }
 
 /* hb_vfDirSpace( <cDirName>, [ <nInfoType> ] ) --> <nFreeSpace> */
-HB_FUNC( HB_VFDIRSPACE )
+HB_FUNC(HB_VFDIRSPACE)
 {
-   auto uiType = static_cast<HB_USHORT>(hb_parnidef(2, HB_DISK_AVAIL));
-   hb_retnlen(hb_fileDirSpace(hb_parc(1), uiType), -1, 0);
-   hb_fsSetFError(hb_fsError());
+  auto uiType = static_cast<HB_USHORT>(hb_parnidef(2, HB_DISK_AVAIL));
+  hb_retnlen(hb_fileDirSpace(hb_parc(1), uiType), -1, 0);
+  hb_fsSetFError(hb_fsError());
 }
 
 /* hb_vfAttrGet(<cFileName>, @<nAttr>) --> <lOK> */
-HB_FUNC( HB_VFATTRGET )
+HB_FUNC(HB_VFATTRGET)
 {
-   HB_FATTR nAttr = 0;
-   hb_retl(hb_fileAttrGet(hb_parcx(1), &nAttr));
-   hb_fsSetFError(hb_fsError());
-   hb_stornl(nAttr, 2);
+  HB_FATTR nAttr = 0;
+  hb_retl(hb_fileAttrGet(hb_parcx(1), &nAttr));
+  hb_fsSetFError(hb_fsError());
+  hb_stornl(nAttr, 2);
 }
 
 /* hb_vfAttrSet(<cFileName>, <nAttr>) --> <lOK> */
-HB_FUNC( HB_VFATTRSET )
+HB_FUNC(HB_VFATTRSET)
 {
-   hb_retl(hb_fileAttrSet(hb_parcx(1), static_cast<HB_FATTR>(hb_parnl(2))));
-   hb_fsSetFError(hb_fsError());
+  hb_retl(hb_fileAttrSet(hb_parcx(1), static_cast<HB_FATTR>(hb_parnl(2))));
+  hb_fsSetFError(hb_fsError());
 }
 
 /* hb_vfTimeGet(<cFileName>, @<tsDateTime>) --> <lOK> */
-HB_FUNC( HB_VFTIMEGET )
+HB_FUNC(HB_VFTIMEGET)
 {
-   long lJulian, lMillisec;
-   bool fOK = hb_fileTimeGet(hb_parcx(1), &lJulian, &lMillisec);
-   hb_fsSetFError(hb_fsError());
+  long lJulian, lMillisec;
+  bool fOK = hb_fileTimeGet(hb_parcx(1), &lJulian, &lMillisec);
+  hb_fsSetFError(hb_fsError());
 
-   if( fOK ) {
-      if( HB_ISBYREF(3) ) {
-         char buf[13];
-         hb_timeStr(buf, lMillisec);
-         if( lMillisec % 1000 == 0 ) {
-            buf[8] = '\0';
-         }
-         hb_storc(buf, 3);
-         hb_stordl(lJulian, 2);
-      } else {
-         hb_stortdt(lJulian, lMillisec, 2);
+  if (fOK)
+  {
+    if (HB_ISBYREF(3))
+    {
+      char buf[13];
+      hb_timeStr(buf, lMillisec);
+      if (lMillisec % 1000 == 0)
+      {
+        buf[8] = '\0';
       }
+      hb_storc(buf, 3);
+      hb_stordl(lJulian, 2);
+    }
+    else
+    {
+      hb_stortdt(lJulian, lMillisec, 2);
+    }
 
-      hb_retl(true);
-   } else {
-      if( HB_ISBYREF(3) ) {
-         hb_storc(nullptr, 3);
-         hb_stordl(0, 2);
-      } else {
-         hb_stortdt(0, 0, 2);
-      }
+    hb_retl(true);
+  }
+  else
+  {
+    if (HB_ISBYREF(3))
+    {
+      hb_storc(nullptr, 3);
+      hb_stordl(0, 2);
+    }
+    else
+    {
+      hb_stortdt(0, 0, 2);
+    }
 
-      hb_retl(false);
-   }
+    hb_retl(false);
+  }
 }
 
 /* hb_vfTimeSet(<cFileName>, <tsDateTime>) --> <lOK> */
-HB_FUNC( HB_VFTIMESET )
+HB_FUNC(HB_VFTIMESET)
 {
-   long lDate = -1, lTime = -1;
+  long lDate = -1, lTime = -1;
 
-   if( HB_ISTIMESTAMP(2) ) {
-      hb_partdt(&lDate, &lTime, 2);
-   } else {
-      if( HB_ISDATE(2) ) {
-         lDate = hb_pardl(2);
+  if (HB_ISTIMESTAMP(2))
+  {
+    hb_partdt(&lDate, &lTime, 2);
+  }
+  else
+  {
+    if (HB_ISDATE(2))
+    {
+      lDate = hb_pardl(2);
+    }
+    if (HB_ISCHAR(3))
+    {
+      int iHour, iMinutes, iSeconds, iMSec;
+      if (hb_timeStrGet(hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec))
+      {
+        lTime = hb_timeEncode(iHour, iMinutes, iSeconds, iMSec);
       }
-      if( HB_ISCHAR(3) ) {
-         int iHour, iMinutes, iSeconds, iMSec;
-         if( hb_timeStrGet(hb_parc(3), &iHour, &iMinutes, &iSeconds, &iMSec) ) {
-            lTime = hb_timeEncode( iHour, iMinutes, iSeconds, iMSec );
-         }
-      }
-   }
+    }
+  }
 
-   hb_retl(hb_fileTimeSet(hb_parcx(1), lDate, lTime));
-   hb_fsSetFError(hb_fsError());
+  hb_retl(hb_fileTimeSet(hb_parcx(1), lDate, lTime));
+  hb_fsSetFError(hb_fsError());
 }
 
 /* hb_vfLink(<cExistingFileName>, <cNewFileName>) --> <nSuccess> */
-HB_FUNC( HB_VFLINK )
+HB_FUNC(HB_VFLINK)
 {
-   auto pszExisting = hb_parc(1);
-   auto pszNewFile = hb_parc(2);
-   HB_ERRCODE uiError = 2;
-   int iResult = F_ERROR;
+  auto pszExisting = hb_parc(1);
+  auto pszNewFile = hb_parc(2);
+  HB_ERRCODE uiError = 2;
+  int iResult = F_ERROR;
 
-   if( pszExisting && pszNewFile ) {
-      if( hb_fileLink(pszExisting, pszNewFile) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (pszExisting && pszNewFile)
+  {
+    if (hb_fileLink(pszExisting, pszNewFile))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfLinkSym(<cTargetFileName>, <cNewFileName>) --> <nSuccess> */
-HB_FUNC( HB_VFLINKSYM )
+HB_FUNC(HB_VFLINKSYM)
 {
-   auto pszTarget = hb_parc(1);
-   auto pszNewFile = hb_parc(2);
-   HB_ERRCODE uiError = 2;
-   int iResult = F_ERROR;
+  auto pszTarget = hb_parc(1);
+  auto pszNewFile = hb_parc(2);
+  HB_ERRCODE uiError = 2;
+  int iResult = F_ERROR;
 
-   if( pszTarget && pszNewFile ) {
-      if( hb_fileLinkSym(pszTarget, pszNewFile) ) {
-         iResult = 0;
-      }
-      uiError = hb_fsError();
-   }
+  if (pszTarget && pszNewFile)
+  {
+    if (hb_fileLinkSym(pszTarget, pszNewFile))
+    {
+      iResult = 0;
+    }
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retni(iResult);
+  hb_fsSetFError(uiError);
+  hb_retni(iResult);
 }
 
 /* hb_vfLinkRead(<cFileName>) --> <cDestFileName> | "" */
-HB_FUNC( HB_VFLINKREAD )
+HB_FUNC(HB_VFLINKREAD)
 {
-   auto pszFile = hb_parc(1);
-   char * pszResult = nullptr;
-   HB_ERRCODE uiError = 2;
+  auto pszFile = hb_parc(1);
+  char *pszResult = nullptr;
+  HB_ERRCODE uiError = 2;
 
-   if( pszFile ) {
-      pszResult = hb_fileLinkRead(pszFile);
-      uiError = hb_fsError();
-   }
+  if (pszFile)
+  {
+    pszResult = hb_fileLinkRead(pszFile);
+    uiError = hb_fsError();
+  }
 
-   hb_fsSetFError(uiError);
-   hb_retc_buffer(pszResult);
+  hb_fsSetFError(uiError);
+  hb_retc_buffer(pszResult);
 }
 
 /* hb_vfOpen([@]<cFileName>, [ <nModeAttr> ]) --> <pHandle> | NIL */
-HB_FUNC( HB_VFOPEN )
+HB_FUNC(HB_VFOPEN)
 {
-   auto pszFile = hb_parc(1);
+  auto pszFile = hb_parc(1);
 
-   if( pszFile ) {
-      char szName[HB_PATH_MAX];
-      HB_FATTR nModeAttr = 0;
+  if (pszFile)
+  {
+    char szName[HB_PATH_MAX];
+    HB_FATTR nModeAttr = 0;
 
-      int iMode = hb_parnidef(2, FO_READWRITE | FO_DENYNONE | FO_PRIVATE) & (0xFF | FO_CREAT | FO_TRUNC | FO_EXCL | FO_DEFAULTS);
+    int iMode =
+        hb_parnidef(2, FO_READWRITE | FO_DENYNONE | FO_PRIVATE) & (0xFF | FO_CREAT | FO_TRUNC | FO_EXCL | FO_DEFAULTS);
 
-      if( iMode & FO_CREAT ) {
-         if( iMode & FO_TRUNC ) {
-            nModeAttr |= FXO_TRUNCATE;
-         } else {
-            nModeAttr |= FXO_APPEND;
-         }
-         if( iMode & FO_EXCL ) {
-            nModeAttr |= FXO_UNIQUE;
-         }
+    if (iMode & FO_CREAT)
+    {
+      if (iMode & FO_TRUNC)
+      {
+        nModeAttr |= FXO_TRUNCATE;
       }
-
-      if( iMode & FO_DEFAULTS ) {
-         nModeAttr |= FXO_DEFAULTS;
+      else
+      {
+        nModeAttr |= FXO_APPEND;
       }
-
-      if( iMode & ( FO_EXCLUSIVE | FO_DENYWRITE | FO_DENYREAD | FO_DENYNONE ) ) {
-         nModeAttr |= FXO_SHARELOCK;
+      if (iMode & FO_EXCL)
+      {
+        nModeAttr |= FXO_UNIQUE;
       }
+    }
 
-      nModeAttr |= static_cast<HB_FATTR>(iMode & 0xFF);
+    if (iMode & FO_DEFAULTS)
+    {
+      nModeAttr |= FXO_DEFAULTS;
+    }
 
-      if( HB_ISBYREF(1) ) {
-         hb_strncpy(szName, pszFile, sizeof(szName) - 1);
-         nModeAttr |= FXO_COPYNAME;
-         pszFile = szName;
-      } else {
-         nModeAttr &= static_cast<HB_FATTR>(~FXO_COPYNAME);
-      }
+    if (iMode & (FO_EXCLUSIVE | FO_DENYWRITE | FO_DENYREAD | FO_DENYNONE))
+    {
+      nModeAttr |= FXO_SHARELOCK;
+    }
 
-      PHB_FILE pFile = hb_fileExtOpen(pszFile, nullptr /* pDefExt */, nModeAttr, nullptr /* pPaths */, nullptr /* pError */);
+    nModeAttr |= static_cast<HB_FATTR>(iMode & 0xFF);
 
-      if( pszFile == szName ) {
-         hb_storc(szName, 1);
-      }
+    if (HB_ISBYREF(1))
+    {
+      hb_strncpy(szName, pszFile, sizeof(szName) - 1);
+      nModeAttr |= FXO_COPYNAME;
+      pszFile = szName;
+    }
+    else
+    {
+      nModeAttr &= static_cast<HB_FATTR>(~FXO_COPYNAME);
+    }
 
-      hb_fsSetFError(hb_fsError());
-      hb_fileReturn(pFile);
-   } else {
-      hb_fsSetFError(0);
-      hb_errRT_BASE(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    PHB_FILE pFile =
+        hb_fileExtOpen(pszFile, nullptr /* pDefExt */, nModeAttr, nullptr /* pPaths */, nullptr /* pError */);
+
+    if (pszFile == szName)
+    {
+      hb_storc(szName, 1);
+    }
+
+    hb_fsSetFError(hb_fsError());
+    hb_fileReturn(pFile);
+  }
+  else
+  {
+    hb_fsSetFError(0);
+    hb_errRT_BASE(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* hb_vfClose(<pHandle>) --> <lOK> */
-HB_FUNC( HB_VFCLOSE )
+HB_FUNC(HB_VFCLOSE)
 {
-   auto pFilePtr = hb_fileParamPtr(1);
+  auto pFilePtr = hb_fileParamPtr(1);
 
-   if( pFilePtr ) {
-      PHB_FILE pFile = *pFilePtr;
-      *pFilePtr = nullptr;
-      hb_fileClose(pFile);
-      hb_fsSetFError(hb_fsError());
-      hb_retl(true);
-   }
+  if (pFilePtr)
+  {
+    PHB_FILE pFile = *pFilePtr;
+    *pFilePtr = nullptr;
+    hb_fileClose(pFile);
+    hb_fsSetFError(hb_fsError());
+    hb_retl(true);
+  }
 }
 
 /* hb_vfLock(<pHandle>, <nStart>, <nLen>, [ <nType> ]) --> <lOK> */
-HB_FUNC( HB_VFLOCK )
+HB_FUNC(HB_VFLOCK)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      HB_ERRCODE uiError = 0;
-      auto fResult = false;
+  if (pFile)
+  {
+    HB_ERRCODE uiError = 0;
+    auto fResult = false;
 
-      if( HB_ISNUM(2) && HB_ISNUM(3) ) {
-         fResult = hb_fileLock(pFile,
-                               static_cast<HB_FOFFSET>(hb_parnint(2)),
-                               static_cast<HB_FOFFSET>(hb_parnint(3)),
-                               FL_LOCK | (hb_parni(4) & ~FL_MASK));
-         uiError = hb_fsError();
-      }
-      hb_fsSetFError(uiError);
-      hb_retl(fResult);
-   }
+    if (HB_ISNUM(2) && HB_ISNUM(3))
+    {
+      fResult = hb_fileLock(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_FOFFSET>(hb_parnint(3)),
+                            FL_LOCK | (hb_parni(4) & ~FL_MASK));
+      uiError = hb_fsError();
+    }
+    hb_fsSetFError(uiError);
+    hb_retl(fResult);
+  }
 }
 
 /* hb_vfUnlock(<pHandle>, <nStart>, <nLen>) --> <lOK> */
-HB_FUNC( HB_VFUNLOCK )
+HB_FUNC(HB_VFUNLOCK)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      HB_ERRCODE uiError = 0;
-      auto fResult = false;
+  if (pFile)
+  {
+    HB_ERRCODE uiError = 0;
+    auto fResult = false;
 
-      if( HB_ISNUM(2) && HB_ISNUM(3) ) {
-         fResult = hb_fileLock(pFile,
-                               static_cast<HB_FOFFSET>(hb_parnint(2)),
-                               static_cast<HB_FOFFSET>(hb_parnint(3)),
-                               FL_UNLOCK);
-         uiError = hb_fsError();
-      }
-      hb_fsSetFError(uiError);
-      hb_retl(fResult);
-   }
+    if (HB_ISNUM(2) && HB_ISNUM(3))
+    {
+      fResult =
+          hb_fileLock(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_FOFFSET>(hb_parnint(3)), FL_UNLOCK);
+      uiError = hb_fsError();
+    }
+    hb_fsSetFError(uiError);
+    hb_retl(fResult);
+  }
 }
 
 /* hb_vfLockTest(<pHandle>, <nStart>, <nLen>, [ <nType> ]) --> <nPID> | 0 (nolock) | -1 (err) */
-HB_FUNC( HB_VFLOCKTEST )
+HB_FUNC(HB_VFLOCKTEST)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      HB_ERRCODE uiError = 0;
-      auto iResult = -1;
+  if (pFile)
+  {
+    HB_ERRCODE uiError = 0;
+    auto iResult = -1;
 
-      if( HB_ISNUM(2) && HB_ISNUM(3) ) {
-         iResult = hb_fileLockTest(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_FOFFSET>(hb_parnint(3)), FL_LOCK | (hb_parni(4) & ~FL_MASK));
-         uiError = hb_fsError();
-      }
-      hb_fsSetFError(uiError);
-      hb_retni(iResult);
-   }
+    if (HB_ISNUM(2) && HB_ISNUM(3))
+    {
+      iResult = hb_fileLockTest(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_FOFFSET>(hb_parnint(3)),
+                                FL_LOCK | (hb_parni(4) & ~FL_MASK));
+      uiError = hb_fsError();
+    }
+    hb_fsSetFError(uiError);
+    hb_retni(iResult);
+  }
 }
 
 /* hb_vfRead(<pHandle>, @<cBuff>, [ <nToRead> ], [ <nTimeOut> ]) --> <nRead> */
-HB_FUNC( HB_VFREAD )
+HB_FUNC(HB_VFREAD)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      auto pBuffer = hb_param(2, Harbour::Item::STRING);
-      HB_ERRCODE uiError = 0;
-      HB_SIZE nRead = 0;
-      HB_SIZE nSize;
-      char * buffer;
+  if (pFile)
+  {
+    auto pBuffer = hb_param(2, Harbour::Item::STRING);
+    HB_ERRCODE uiError = 0;
+    HB_SIZE nRead = 0;
+    HB_SIZE nSize;
+    char *buffer;
 
-      if( pBuffer && HB_ISBYREF(2) &&
-          hb_itemGetWriteCL(pBuffer, &buffer, &nSize) ) {
-         if( HB_ISNUM(3) ) {
-            nRead = hb_parns(3);
-            if( nRead < nSize ) {
-               nSize = nRead;
-            }
-         }
-         nRead = hb_fileRead(pFile, buffer, nSize, hb_parnintdef(4, -1));
-         uiError = hb_fsError();
+    if (pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL(pBuffer, &buffer, &nSize))
+    {
+      if (HB_ISNUM(3))
+      {
+        nRead = hb_parns(3);
+        if (nRead < nSize)
+        {
+          nSize = nRead;
+        }
       }
+      nRead = hb_fileRead(pFile, buffer, nSize, hb_parnintdef(4, -1));
+      uiError = hb_fsError();
+    }
 
-      if( nRead == static_cast<HB_SIZE>(FS_ERROR) ) {
-         hb_retni(FS_ERROR);
-      } else {
-         hb_retns(nRead);
-      }
-      hb_fsSetFError(uiError);
-   }
+    if (nRead == static_cast<HB_SIZE>(FS_ERROR))
+    {
+      hb_retni(FS_ERROR);
+    }
+    else
+    {
+      hb_retns(nRead);
+    }
+    hb_fsSetFError(uiError);
+  }
 }
 
 /* hb_vfReadLen(<pHandle>, <nToRead>, [ <nTimeOut> ]) --> <cBuffer> */
-HB_FUNC( HB_VFREADLEN )
+HB_FUNC(HB_VFREADLEN)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile && HB_ISNUM(2) ) {
-      HB_ERRCODE uiError = 0;
-      HB_SIZE nToRead = hb_parns(2);
+  if (pFile && HB_ISNUM(2))
+  {
+    HB_ERRCODE uiError = 0;
+    HB_SIZE nToRead = hb_parns(2);
 
-      if( nToRead > 0 ) {
-         auto buffer = static_cast<char*>(hb_xgrab(nToRead + 1));
+    if (nToRead > 0)
+    {
+      auto buffer = static_cast<char *>(hb_xgrab(nToRead + 1));
 
-         HB_SIZE nRead = hb_fileRead(pFile, buffer, nToRead, hb_parnintdef(3, -1));
-         uiError = hb_fsError();
+      HB_SIZE nRead = hb_fileRead(pFile, buffer, nToRead, hb_parnintdef(3, -1));
+      uiError = hb_fsError();
 
-         if( nRead == static_cast<HB_SIZE>(FS_ERROR) ) {
-            nRead = 0;
-         }
-         hb_retclen_buffer(buffer, nRead);
-      } else {
-         hb_retc_null();
+      if (nRead == static_cast<HB_SIZE>(FS_ERROR))
+      {
+        nRead = 0;
       }
+      hb_retclen_buffer(buffer, nRead);
+    }
+    else
+    {
+      hb_retc_null();
+    }
 
-      hb_fsSetFError(uiError);
-   }
+    hb_fsSetFError(uiError);
+  }
 }
 
 /* hb_vfWrite(<pHandle>, <cBuff>, [ <nToWrite> ], [ <nTimeOut> ]) --> <nWritten> */
-HB_FUNC( HB_VFWRITE )
+HB_FUNC(HB_VFWRITE)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      HB_ERRCODE uiError = 0;
+  if (pFile)
+  {
+    HB_ERRCODE uiError = 0;
 
-      if( HB_ISCHAR(2) ) {
-         auto nLen = hb_parclen(2);
+    if (HB_ISCHAR(2))
+    {
+      auto nLen = hb_parclen(2);
 
-         if( HB_ISNUM(3) ) {
-            HB_SIZE nWrite = hb_parns(3);
-            if( nWrite < nLen ) {
-               nLen = nWrite;
-            }
-         }
-
-         nLen = hb_fileWrite(pFile, hb_parc(2), nLen, hb_parnintdef(4, -1));
-         if( nLen == static_cast<HB_SIZE>(FS_ERROR) ) {
-            hb_retni(FS_ERROR);
-         } else {
-            hb_retns(nLen);
-         }
-         uiError = hb_fsError();
-      } else {
-         hb_retni(0);
+      if (HB_ISNUM(3))
+      {
+        HB_SIZE nWrite = hb_parns(3);
+        if (nWrite < nLen)
+        {
+          nLen = nWrite;
+        }
       }
 
-      hb_fsSetFError(uiError);
-   }
+      nLen = hb_fileWrite(pFile, hb_parc(2), nLen, hb_parnintdef(4, -1));
+      if (nLen == static_cast<HB_SIZE>(FS_ERROR))
+      {
+        hb_retni(FS_ERROR);
+      }
+      else
+      {
+        hb_retns(nLen);
+      }
+      uiError = hb_fsError();
+    }
+    else
+    {
+      hb_retni(0);
+    }
+
+    hb_fsSetFError(uiError);
+  }
 }
 
 /* hb_vfReadAt(<pHandle>, @<cBuff>, [ <nToRead> ], [ <nAtOffset> ]) --> <nRead> */
-HB_FUNC( HB_VFREADAT )
+HB_FUNC(HB_VFREADAT)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      auto pBuffer = hb_param(2, Harbour::Item::STRING);
-      HB_ERRCODE uiError = 0;
-      HB_SIZE nRead = 0;
-      HB_SIZE nSize;
-      char * buffer;
+  if (pFile)
+  {
+    auto pBuffer = hb_param(2, Harbour::Item::STRING);
+    HB_ERRCODE uiError = 0;
+    HB_SIZE nRead = 0;
+    HB_SIZE nSize;
+    char *buffer;
 
-      if( pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL(pBuffer, &buffer, &nSize) ) {
-         if( HB_ISNUM(3) ) {
-            nRead = hb_parns(3);
-            if( nRead < nSize ) {
-               nSize = nRead;
-            }
-         }
-         nRead = hb_fileReadAt(pFile, buffer, nSize, static_cast<HB_FOFFSET>(hb_parnintdef(4, -1)));
-         uiError = hb_fsError();
+    if (pBuffer && HB_ISBYREF(2) && hb_itemGetWriteCL(pBuffer, &buffer, &nSize))
+    {
+      if (HB_ISNUM(3))
+      {
+        nRead = hb_parns(3);
+        if (nRead < nSize)
+        {
+          nSize = nRead;
+        }
       }
+      nRead = hb_fileReadAt(pFile, buffer, nSize, static_cast<HB_FOFFSET>(hb_parnintdef(4, -1)));
+      uiError = hb_fsError();
+    }
 
-      if( nRead == static_cast<HB_SIZE>(FS_ERROR) ) {
-         hb_retni(FS_ERROR);
-      } else {
-         hb_retns(nRead);
-      }
-      hb_fsSetFError(uiError);
-   }
+    if (nRead == static_cast<HB_SIZE>(FS_ERROR))
+    {
+      hb_retni(FS_ERROR);
+    }
+    else
+    {
+      hb_retns(nRead);
+    }
+    hb_fsSetFError(uiError);
+  }
 }
 
 /* hb_vfWriteAt(<pHandle>, <cBuff>, [ <nToWrite> ], [ <nAtOffset> ]) --> <nWritten> */
-HB_FUNC( HB_VFWRITEAT )
+HB_FUNC(HB_VFWRITEAT)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      HB_ERRCODE uiError = 0;
-      auto pszData = hb_parc(2);
+  if (pFile)
+  {
+    HB_ERRCODE uiError = 0;
+    auto pszData = hb_parc(2);
 
-      if( pszData ) {
-         auto nLen = hb_parclen(2);
+    if (pszData)
+    {
+      auto nLen = hb_parclen(2);
 
-         if( HB_ISNUM(3) ) {
-            HB_SIZE nWrite = hb_parns(3);
-            if( nWrite < nLen ) {
-               nLen = nWrite;
-            }
-         }
-
-         nLen = hb_fileWriteAt(pFile, pszData, nLen, static_cast<HB_FOFFSET>(hb_parnintdef(4, -1)));
-         if( nLen == static_cast<HB_SIZE>(FS_ERROR) ) {
-            hb_retni(FS_ERROR);
-         } else {
-            hb_retns(nLen);
-         }
-         uiError = hb_fsError();
-      } else {
-         hb_retni(0);
+      if (HB_ISNUM(3))
+      {
+        HB_SIZE nWrite = hb_parns(3);
+        if (nWrite < nLen)
+        {
+          nLen = nWrite;
+        }
       }
 
-      hb_fsSetFError(uiError);
-   }
+      nLen = hb_fileWriteAt(pFile, pszData, nLen, static_cast<HB_FOFFSET>(hb_parnintdef(4, -1)));
+      if (nLen == static_cast<HB_SIZE>(FS_ERROR))
+      {
+        hb_retni(FS_ERROR);
+      }
+      else
+      {
+        hb_retns(nLen);
+      }
+      uiError = hb_fsError();
+    }
+    else
+    {
+      hb_retni(0);
+    }
+
+    hb_fsSetFError(uiError);
+  }
 }
 
 /* hb_vfSeek(<pHandle>, <nOffset>, [ <nWhence> ]) --> <nOffset> */
-HB_FUNC( HB_VFSEEK )
+HB_FUNC(HB_VFSEEK)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      HB_ERRCODE uiError = 0;
+  if (pFile)
+  {
+    HB_ERRCODE uiError = 0;
 
-      if( HB_ISNUM(2) ) {
-         hb_retnint(hb_fileSeek(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_USHORT>(hb_parnidef(3, FS_SET))));
-         uiError = hb_fsError();
-      } else {
-         hb_retni(0);
-      }
+    if (HB_ISNUM(2))
+    {
+      hb_retnint(
+          hb_fileSeek(pFile, static_cast<HB_FOFFSET>(hb_parnint(2)), static_cast<HB_USHORT>(hb_parnidef(3, FS_SET))));
+      uiError = hb_fsError();
+    }
+    else
+    {
+      hb_retni(0);
+    }
 
-      hb_fsSetFError(uiError);
-   }
+    hb_fsSetFError(uiError);
+  }
 }
 
 /* hb_vfTrunc( <pHandle>, [ <nAtOffset> ] ) --> <lOK> */
-HB_FUNC( HB_VFTRUNC )
+HB_FUNC(HB_VFTRUNC)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      hb_retl(hb_fileTruncAt(pFile, static_cast<HB_FOFFSET>(hb_parnint(2))));
-      hb_fsSetFError(hb_fsError());
-   }
+  if (pFile)
+  {
+    hb_retl(hb_fileTruncAt(pFile, static_cast<HB_FOFFSET>(hb_parnint(2))));
+    hb_fsSetFError(hb_fsError());
+  }
 }
 
 /* hb_vfSize(<pHandle> | <cFileName> [, <lUseDirEntry> ]) --> <nSize> */
-HB_FUNC( HB_VFSIZE )
+HB_FUNC(HB_VFSIZE)
 {
-   auto pszFile = hb_parc(1);
+  auto pszFile = hb_parc(1);
 
-   if( pszFile ) {
-      hb_retnint(hb_fileSizeGet(pszFile, hb_parldef(2, true)));
+  if (pszFile)
+  {
+    hb_retnint(hb_fileSizeGet(pszFile, hb_parldef(2, true)));
+    hb_fsSetFError(hb_fsError());
+  }
+  else
+  {
+    auto pFile = hb_fileParam(1);
+    if (pFile)
+    {
+      hb_retnint(hb_fileSize(pFile));
       hb_fsSetFError(hb_fsError());
-   } else {
-      auto pFile = hb_fileParam(1);
-      if( pFile ) {
-         hb_retnint(hb_fileSize(pFile));
-         hb_fsSetFError(hb_fsError());
-      }
-   }
+    }
+  }
 }
 
 /* hb_vfEof( <pHandle> ) --> <lEOF> */
-HB_FUNC( HB_VFEOF )
+HB_FUNC(HB_VFEOF)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      hb_retl(hb_fileEof(pFile));
-      hb_fsSetFError(hb_fsError());
-   }
+  if (pFile)
+  {
+    hb_retl(hb_fileEof(pFile));
+    hb_fsSetFError(hb_fsError());
+  }
 }
 
 /* hb_vfFlush(<pHandle>, [ <lDirtyOnly> ]) --> NIL */
-HB_FUNC( HB_VFFLUSH )
+HB_FUNC(HB_VFFLUSH)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      hb_fileFlush(pFile, hb_parl(2));
-      hb_fsSetFError(hb_fsError());
-   }
+  if (pFile)
+  {
+    hb_fileFlush(pFile, hb_parl(2));
+    hb_fsSetFError(hb_fsError());
+  }
 }
 
 /* hb_vfCommit(<pHandle>) --> NIL */
-HB_FUNC( HB_VFCOMMIT )
+HB_FUNC(HB_VFCOMMIT)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      hb_fileCommit(pFile);
-      hb_fsSetFError(hb_fsError());
-   }
+  if (pFile)
+  {
+    hb_fileCommit(pFile);
+    hb_fsSetFError(hb_fsError());
+  }
 }
 
 /* hb_vfConfig(<pHandle>, <nSet>, [ <nParam> ]) --> <nResult> */
-HB_FUNC( HB_VFCONFIG )
+HB_FUNC(HB_VFCONFIG)
 {
-   auto pFile = hb_fileParam(1);
+  auto pFile = hb_fileParam(1);
 
-   if( pFile ) {
-      if( HB_ISNUM(2) ) {
-         auto pValue = hb_itemNew(hb_param(3, Harbour::Item::ANY));
-         hb_fileConfigure( pFile, hb_parni(2), pValue );
-         hb_fsSetFError(hb_fsError());
-         hb_itemReturnRelease(pValue);
-      } else {
-         hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-      }
-   }
+  if (pFile)
+  {
+    if (HB_ISNUM(2))
+    {
+      auto pValue = hb_itemNew(hb_param(3, Harbour::Item::ANY));
+      hb_fileConfigure(pFile, hb_parni(2), pValue);
+      hb_fsSetFError(hb_fsError());
+      hb_itemReturnRelease(pValue);
+    }
+    else
+    {
+      hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    }
+  }
 }
 
 /* hb_vfHandle(<pHandle>) --> <nOsHandle> */
-HB_FUNC( HB_VFHANDLE )
+HB_FUNC(HB_VFHANDLE)
 {
-   auto pFile = hb_fileParam(1);
-   hb_retnint(static_cast<HB_NHANDLE>(pFile ? hb_fileHandle(pFile) : FS_ERROR));
+  auto pFile = hb_fileParam(1);
+  hb_retnint(static_cast<HB_NHANDLE>(pFile ? hb_fileHandle(pFile) : FS_ERROR));
 }
 
 /* hb_vfTempFile(@<cFileName>, [ <cDir> ], [ <cPrefix> ], [ <cExt> ], [ <nAttr> ]) --> <pHandle> | NIL */
-HB_FUNC( HB_VFTEMPFILE )
+HB_FUNC(HB_VFTEMPFILE)
 {
-   char szName[HB_PATH_MAX];
-   hb_fileReturn(hb_fileCreateTempEx(szName, hb_parc(2) /* pszDir */, hb_parc(3) /* pszPrefix */, hb_parc(4) /* pszExt */, static_cast<HB_FATTR>(hb_parnldef(5, FC_NORMAL))));
-   hb_fsSetFError(hb_fsError());
-   hb_storc(szName, 1);
+  char szName[HB_PATH_MAX];
+  hb_fileReturn(hb_fileCreateTempEx(szName, hb_parc(2) /* pszDir */, hb_parc(3) /* pszPrefix */,
+                                    hb_parc(4) /* pszExt */, static_cast<HB_FATTR>(hb_parnldef(5, FC_NORMAL))));
+  hb_fsSetFError(hb_fsError());
+  hb_storc(szName, 1);
 }
 
 /* hb_vfLoad(<cFileName>, [ <nMaxSize> ]) --> <cFileBody> | NIL */
-HB_FUNC( HB_VFLOAD )
+HB_FUNC(HB_VFLOAD)
 {
-   auto pszFileName = hb_parc(1);
+  auto pszFileName = hb_parc(1);
 
-   if( pszFileName ) {
-      HB_SIZE nSize;
-      auto pBuffer = reinterpret_cast<char*>(hb_fileLoad(pszFileName, hb_parns(2), &nSize));
-      if( pBuffer ) {
-         hb_retclen_buffer(pBuffer, nSize);
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pszFileName)
+  {
+    HB_SIZE nSize;
+    auto pBuffer = reinterpret_cast<char *>(hb_fileLoad(pszFileName, hb_parns(2), &nSize));
+    if (pBuffer)
+    {
+      hb_retclen_buffer(pBuffer, nSize);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 2021, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

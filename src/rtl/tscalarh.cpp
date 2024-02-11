@@ -47,19 +47,21 @@
 #include "hbapi.hpp"
 #include "hbvm.hpp"
 
-HB_FUNC_EXTERN( __HBHASH );
+HB_FUNC_EXTERN(__HBHASH);
 
-HB_FUNC( HBHASH )
+HB_FUNC(HBHASH)
 {
-   HB_FUNC_EXEC( __HBHASH );
+  HB_FUNC_EXEC(__HBHASH);
 
-   if( hb_vmRequestQuery() == 0 ) {
-      auto pItem = hb_param(-1, Harbour::Item::ANY);
+  if (hb_vmRequestQuery() == 0)
+  {
+    auto pItem = hb_param(-1, Harbour::Item::ANY);
 
-      if( HB_IS_OBJECT(pItem) ) {
-         hb_vmPushDynSym(hb_dynsymGetCase("NEW"));
-         hb_vmPush(pItem);
-         hb_vmSend(0);
-      }
-   }
+    if (HB_IS_OBJECT(pItem))
+    {
+      hb_vmPushDynSym(hb_dynsymGetCase("NEW"));
+      hb_vmPush(pItem);
+      hb_vmSend(0);
+    }
+  }
 }

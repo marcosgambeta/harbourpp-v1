@@ -50,25 +50,26 @@
 /* NOTE: Use as minimal calls from here, as possible.
          Don't allocate memory from this function. [vszakats] */
 
-void hb_errInternal(HB_ERRCODE errCode, const char * szText, const char * szPar1, const char * szPar2)
+void hb_errInternal(HB_ERRCODE errCode, const char *szText, const char *szPar1, const char *szPar2)
 {
-   hb_errInternalRaw(errCode, szText, szPar1, szPar2);
+  hb_errInternalRaw(errCode, szText, szPar1, szPar2);
 
-   /* release console settings */
-   hb_conRelease();
+  /* release console settings */
+  hb_conRelease();
 
-   if( hb_cmdargCheck("ERRGPF") ) {
+  if (hb_cmdargCheck("ERRGPF"))
+  {
 #if defined(_MSC_VER) && _MSC_VER >= 1800
-#  pragma warning(push)
-#  pragma warning(disable:6011)
+#pragma warning(push)
+#pragma warning(disable : 6011)
 #endif
-      int * pGPF = nullptr;
-      *pGPF = 0;
-      *(--pGPF) = 0;
+    int *pGPF = nullptr;
+    *pGPF = 0;
+    *(--pGPF) = 0;
 #if defined(_MSC_VER) && _MSC_VER >= 1800
-#  pragma warning(pop)
+#pragma warning(pop)
 #endif
-   }
+  }
 
-   exit(EXIT_FAILURE);
+  exit(EXIT_FAILURE);
 }

@@ -46,47 +46,47 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( HB_LIBEXT )
+HB_FUNC(HB_LIBEXT)
 {
 #if defined(HB_OS_WIN)
-   hb_retc_const(".dll");
+  hb_retc_const(".dll");
 #elif defined(HB_OS_DARWIN)
-   hb_retc_const(".dylib");
+  hb_retc_const(".dylib");
 #elif defined(HB_OS_HPUX)
-   hb_retc_const(".sl");
+  hb_retc_const(".sl");
 #else
-   hb_retc_const(".so");
+  hb_retc_const(".so");
 #endif
 }
 
-HB_FUNC( HB_LIBPREFIX )
+HB_FUNC(HB_LIBPREFIX)
 {
 #if !defined(HB_OS_UNIX)
-   hb_retc_null();
+  hb_retc_null();
 #else
-   hb_retc_const("lib");
+  hb_retc_const("lib");
 #endif
 }
 
 #if defined(HB_OS_WIN)
-   #define HB_DLL_VER      "-" HB_MACRO2STRING(HB_VER_MAJOR) HB_MACRO2STRING(HB_VER_MINOR)
+#define HB_DLL_VER "-" HB_MACRO2STRING(HB_VER_MAJOR) HB_MACRO2STRING(HB_VER_MINOR)
 #else
-   #define HB_DLL_VER      ""
+#define HB_DLL_VER ""
 #endif
 
 #if defined(__BORLANDC__)
-   #define HB_DLL_SUFFIX  HB_DLL_VER "-bcc"
+#define HB_DLL_SUFFIX HB_DLL_VER "-bcc"
 #elif defined(HB_OS_WIN_64) && defined(HB_CPU_X86_64)
-   #define HB_DLL_SUFFIX  HB_DLL_VER "-x64"
+#define HB_DLL_SUFFIX HB_DLL_VER "-x64"
 #elif defined(HB_OS_WIN_64) && defined(HB_CPU_IA_64)
-   #define HB_DLL_SUFFIX  HB_DLL_VER "-ia64"
+#define HB_DLL_SUFFIX HB_DLL_VER "-ia64"
 #else
-   #define HB_DLL_SUFFIX  HB_DLL_VER
+#define HB_DLL_SUFFIX HB_DLL_VER
 #endif
 
-HB_FUNC( HB_LIBSUFFIX )
+HB_FUNC(HB_LIBSUFFIX)
 {
-   hb_retc_const(HB_DLL_SUFFIX);
+  hb_retc_const(HB_DLL_SUFFIX);
 }
 
-HB_FUNC_TRANSLATE( HB_LIBPOSTFIX, HB_LIBSUFFIX )  /* Deprecated */
+HB_FUNC_TRANSLATE(HB_LIBPOSTFIX, HB_LIBSUFFIX) /* Deprecated */

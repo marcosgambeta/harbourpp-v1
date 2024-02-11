@@ -48,13 +48,13 @@
 #include "hbdate.hpp"
 
 #if defined(HB_OS_UNIX)
-   #if !defined(HB_OS_VXWORKS)
-      #include <sys/times.h>
-   #endif
-   #include <unistd.h>
+#if !defined(HB_OS_VXWORKS)
+#include <sys/times.h>
+#endif
+#include <unistd.h>
 #endif
 #if defined(HB_OS_WIN)
-   #include <windows.h>
+#include <windows.h>
 #endif
 
 /*
@@ -71,67 +71,81 @@
 
 double hb_secondsCPU(int n)
 {
-   double d = 0.0;
+  double d = 0.0;
 
 #if defined(HB_OS_WIN) && !defined(HB_OS_UNIX)
-   FILETIME Create, Exit, Kernel, User;
+  FILETIME Create, Exit, Kernel, User;
 #endif
 
-   if( (n < 1 || n > 3) && (n < 11 || n > 13) ) {
-      n = 3;
-   }
+  if ((n < 1 || n > 3) && (n < 11 || n > 13))
+  {
+    n = 3;
+  }
 
 #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
-   {
-      struct tms tm;
+  {
+    struct tms tm;
 
-      times(&tm);
+    times(&tm);
 
-      if( n > 10 ) {
-         n -= 10;
-         if( n & 1 ) {
-            d += tm.tms_cutime;
-         }
-         if( n & 2 ) {
-            d += tm.tms_cstime;
-         }
-      }
-      if( n & 1 ) {
-         d += tm.tms_utime;
-      }
-      if( n & 2 ) {
-         d += tm.tms_stime;
-      }
-
-      /* In POSIX-1996 the CLK_TCK symbol is mentioned as obsolescent */
-      #if 0
-      d /= CLK_TCK;
-      #endif
-      d /= static_cast<double>(sysconf( _SC_CLK_TCK ));
-   }
-#else
-   if( n > 10 ) {
+    if (n > 10)
+    {
       n -= 10;
-   }
-#if defined(HB_OS_WIN)
-   if( hb_iswinnt() && GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User) ) {
-      if( n & 1 ) {
-         d += static_cast<double>(( static_cast<HB_MAXINT>(User.dwHighDateTime) << 32 ) + static_cast<HB_MAXINT>(User.dwLowDateTime));
+      if (n & 1)
+      {
+        d += tm.tms_cutime;
       }
-      if( n & 2 ) {
-         d += static_cast<double>(( static_cast<HB_MAXINT>(Kernel.dwHighDateTime) << 32 ) + static_cast<HB_MAXINT>(Kernel.dwLowDateTime));
+      if (n & 2)
+      {
+        d += tm.tms_cstime;
       }
-      d /= 10000000.0;
-   } else
-#endif
-   {
-      /* TODO: this code is only for DOS and other platforms which cannot
-               calculate process time */
+    }
+    if (n & 1)
+    {
+      d += tm.tms_utime;
+    }
+    if (n & 2)
+    {
+      d += tm.tms_stime;
+    }
 
-      if( n & 1 ) {
-         d = hb_dateSeconds();
-      }
-   }
+/* In POSIX-1996 the CLK_TCK symbol is mentioned as obsolescent */
+#if 0
+      d /= CLK_TCK;
 #endif
-   return d;
+    d /= static_cast<double>(sysconf(_SC_CLK_TCK));
+  }
+#else
+  if (n > 10)
+  {
+    n -= 10;
+  }
+#if defined(HB_OS_WIN)
+  if (hb_iswinnt() && GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User))
+  {
+    if (n & 1)
+    {
+      d += static_cast<double>((static_cast<HB_MAXINT>(User.dwHighDateTime) << 32) +
+                               static_cast<HB_MAXINT>(User.dwLowDateTime));
+    }
+    if (n & 2)
+    {
+      d += static_cast<double>((static_cast<HB_MAXINT>(Kernel.dwHighDateTime) << 32) +
+                               static_cast<HB_MAXINT>(Kernel.dwLowDateTime));
+    }
+    d /= 10000000.0;
+  }
+  else
+#endif
+  {
+    /* TODO: this code is only for DOS and other platforms which cannot
+             calculate process time */
+
+    if (n & 1)
+    {
+      d = hb_dateSeconds();
+    }
+  }
+#endif
+  return d;
 }

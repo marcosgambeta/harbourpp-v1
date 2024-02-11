@@ -50,41 +50,44 @@
 
 #ifdef HB_CLP_UNDOC
 
-HB_FUNC( __BOX )
+HB_FUNC(__BOX)
 {
-   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
-   auto pszBox  = hb_parc(5);
+  auto pTop = hb_param(1, Harbour::Item::NUMERIC);
+  auto pLeft = hb_param(2, Harbour::Item::NUMERIC);
+  auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+  auto pRight = hb_param(4, Harbour::Item::NUMERIC);
+  auto pszBox = hb_parc(5);
 
-   if( pTop && pLeft && pBottom && pRight && pszBox ) {
-      hb_gtBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox);
-   }
+  if (pTop && pLeft && pBottom && pRight && pszBox)
+  {
+    hb_gtBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox);
+  }
 }
 
-HB_FUNC( __BOXD )
+HB_FUNC(__BOXD)
 {
-   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
+  auto pTop = hb_param(1, Harbour::Item::NUMERIC);
+  auto pLeft = hb_param(2, Harbour::Item::NUMERIC);
+  auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+  auto pRight = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight ) {
-      hb_gtBoxD( hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight) );
-   }
+  if (pTop && pLeft && pBottom && pRight)
+  {
+    hb_gtBoxD(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
+  }
 }
 
-HB_FUNC( __BOXS )
+HB_FUNC(__BOXS)
 {
-   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
+  auto pTop = hb_param(1, Harbour::Item::NUMERIC);
+  auto pLeft = hb_param(2, Harbour::Item::NUMERIC);
+  auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+  auto pRight = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight ) {
-      hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
-   }
+  if (pTop && pLeft && pBottom && pRight)
+  {
+    hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
+  }
 }
 
 #endif

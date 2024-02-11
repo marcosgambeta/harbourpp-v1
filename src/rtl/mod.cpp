@@ -59,44 +59,53 @@
 /* NOTE: This C version fully emulates the behaviour of the original
          CA-Cl*pper version, including bugs/side-effects. [vszakats] */
 
-HB_FUNC( MOD )
+HB_FUNC(MOD)
 {
-   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
-   auto pBase   = hb_param(2, Harbour::Item::NUMERIC);
+  auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+  auto pBase = hb_param(2, Harbour::Item::NUMERIC);
 
-   if( pNumber && pBase ) {
-      double dNumber = hb_itemGetND(pNumber);
-      double dBase   = hb_itemGetND(pBase); /* dBase! Cool! */
+  if (pNumber && pBase)
+  {
+    double dNumber = hb_itemGetND(pNumber);
+    double dBase = hb_itemGetND(pBase); /* dBase! Cool! */
 
-      if( dBase ) {
-         double dResult = fmod(dNumber, dBase);
+    if (dBase)
+    {
+      double dResult = fmod(dNumber, dBase);
 
-         if( dResult && (dNumber > 0 ? dBase < 0 : dBase > 0) ) {
-            dResult += dBase;
-         }
-         hb_retnd(dResult);
-      } else {
-         PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", HB_ERR_ARGS_BASEPARAMS);
-
-         /* In CA-Cl*pper Mod() function ignores substitution result
-          * and return original numeric item keeping its internal
-          * representation: integer or double, size and number of
-          * decimal places, it can be seen in code like:
-          *    PROCEDURE Main()
-          *       Set(_SET_FIXED, .T.)
-          *       ? Transform(Mod(12345, 0), "")
-          *       RETURN
-          *
-          * [druzus]
-          */
-         if( pResult ) {
-            hb_itemReturn(pNumber);
-            hb_itemRelease(pResult);
-         }
+      if (dResult && (dNumber > 0 ? dBase < 0 : dBase > 0))
+      {
+        dResult += dBase;
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1085, nullptr, "%", 2, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY));
-   }
+      hb_retnd(dResult);
+    }
+    else
+    {
+      PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", HB_ERR_ARGS_BASEPARAMS);
+
+      /* In CA-Cl*pper Mod() function ignores substitution result
+       * and return original numeric item keeping its internal
+       * representation: integer or double, size and number of
+       * decimal places, it can be seen in code like:
+       *    PROCEDURE Main()
+       *       Set(_SET_FIXED, .T.)
+       *       ? Transform(Mod(12345, 0), "")
+       *       RETURN
+       *
+       * [druzus]
+       */
+      if (pResult)
+      {
+        hb_itemReturn(pNumber);
+        hb_itemRelease(pResult);
+      }
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1085, nullptr, "%", 2, hb_param(1, Harbour::Item::ANY),
+                         hb_param(2, Harbour::Item::ANY));
+  }
 }
 
 /*

@@ -48,61 +48,76 @@
 #include "hbapigt.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( DISPBOX )
+HB_FUNC(DISPBOX)
 {
-   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
+  auto pTop = hb_param(1, Harbour::Item::NUMERIC);
+  auto pLeft = hb_param(2, Harbour::Item::NUMERIC);
+  auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+  auto pRight = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight ) {
-      auto pszBox   = hb_parc(5);
-      auto pszColor = hb_parc(6);
+  if (pTop && pLeft && pBottom && pRight)
+  {
+    auto pszBox = hb_parc(5);
+    auto pszColor = hb_parc(6);
 
-      if( pszBox ) {
-         int iColor;
+    if (pszBox)
+    {
+      int iColor;
 
-         if( pszColor ) {
-            iColor = hb_gtColorToN(pszColor);
-         } else if( HB_ISNUM(6) ) {
-            iColor = hb_parni(6);
-         } else {
-            iColor = -1;
-         }
-         hb_gtBoxEx(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
-      } else {
-         char szOldColor[HB_CLRSTR_LEN];
-
-         if( pszColor ) {
-            hb_gtGetColorStr(szOldColor);
-            hb_gtSetColorStr(pszColor);
-         }
-
-         if( hb_parni(5) == 2 ) {
-            hb_gtBoxD(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
-         } else {
-            hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
-         }
-
-         if( pszColor ) {
-            hb_gtSetColorStr(szOldColor);
-         }
+      if (pszColor)
+      {
+        iColor = hb_gtColorToN(pszColor);
       }
-   }
+      else if (HB_ISNUM(6))
+      {
+        iColor = hb_parni(6);
+      }
+      else
+      {
+        iColor = -1;
+      }
+      hb_gtBoxEx(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
+    }
+    else
+    {
+      char szOldColor[HB_CLRSTR_LEN];
+
+      if (pszColor)
+      {
+        hb_gtGetColorStr(szOldColor);
+        hb_gtSetColorStr(pszColor);
+      }
+
+      if (hb_parni(5) == 2)
+      {
+        hb_gtBoxD(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
+      }
+      else
+      {
+        hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
+      }
+
+      if (pszColor)
+      {
+        hb_gtSetColorStr(szOldColor);
+      }
+    }
+  }
 }
 
-HB_FUNC( HB_DISPBOX )
+HB_FUNC(HB_DISPBOX)
 {
-   auto pTop    = hb_param(1, Harbour::Item::NUMERIC);
-   auto pLeft   = hb_param(2, Harbour::Item::NUMERIC);
-   auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
-   auto pRight  = hb_param(4, Harbour::Item::NUMERIC);
+  auto pTop = hb_param(1, Harbour::Item::NUMERIC);
+  auto pLeft = hb_param(2, Harbour::Item::NUMERIC);
+  auto pBottom = hb_param(3, Harbour::Item::NUMERIC);
+  auto pRight = hb_param(4, Harbour::Item::NUMERIC);
 
-   if( pTop && pLeft && pBottom && pRight ) {
-      auto pszBox   = hb_parc(5);
-      auto pszColor = hb_parc(6);
-      int          iColor   = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
+  if (pTop && pLeft && pBottom && pRight)
+  {
+    auto pszBox = hb_parc(5);
+    auto pszColor = hb_parc(6);
+    int iColor = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
 
-      hb_gtDrawBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
-   }
+    hb_gtDrawBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
+  }
 }

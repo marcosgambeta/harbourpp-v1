@@ -52,6 +52,6 @@
          original CA-Cl*pper namespace. It should have been marked as
          HB_EXTENSION, but it's not. */
 
-HB_FUNC_TRANSLATE( MMIDDLEDOWN, HB_MMIDDLEDOWN )
+HB_FUNC_TRANSLATE(MMIDDLEDOWN, HB_MMIDDLEDOWN)
 
 #endif

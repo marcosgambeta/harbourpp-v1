@@ -52,14 +52,14 @@
 
 /* NOTE: Clipper 5.x undocumented */
 
-HB_FUNC( SETPOSBS ) /* Move the screen position to the right by one column */
+HB_FUNC(SETPOSBS) /* Move the screen position to the right by one column */
 {
-   int iRow;
-   int iCol;
+  int iRow;
+  int iCol;
 
-   /* NOTE: CA-Cl*pper does no checks about reaching the border or anything.
-            [vszakats] */
+  /* NOTE: CA-Cl*pper does no checks about reaching the border or anything.
+           [vszakats] */
 
-   hb_gtGetPos(&iRow, &iCol);
-   hb_gtSetPos(iRow, iCol + 1);
+  hb_gtGetPos(&iRow, &iCol);
+  hb_gtSetPos(iRow, iCol + 1);
 }

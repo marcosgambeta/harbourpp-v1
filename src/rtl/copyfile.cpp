@@ -50,120 +50,146 @@
 #include "hbapifs.hpp"
 
 #if defined(HB_OS_UNIX)
-   #include <sys/stat.h>
-   #include <unistd.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #endif
 
 #ifdef HB_CLP_STRICT
-   #define BUFFER_SIZE  8192
+#define BUFFER_SIZE 8192
 #else
-   #define BUFFER_SIZE  65536
+#define BUFFER_SIZE 65536
 #endif
 
-static bool hb_copyfile( const char * pszSource, const char * pszDest )
+static bool hb_copyfile(const char *pszSource, const char *pszDest)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_copyfile(%s, %s)", pszSource, pszDest));
 #endif
 
-   auto bRetVal = false;
-   PHB_FILE pSource;
-   PHB_ITEM pError = nullptr;
+  auto bRetVal = false;
+  PHB_FILE pSource;
+  PHB_ITEM pError = nullptr;
 
-   do {
-      pSource = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, pError);
-      if( pSource == nullptr ) {
-         pError = hb_errRT_FileError(pError, nullptr, EG_OPEN, 2012, pszSource);
-         if( hb_errLaunch(pError) != E_RETRY ) {
-            break;
-         }
+  do
+  {
+    pSource = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK,
+                             nullptr, pError);
+    if (pSource == nullptr)
+    {
+      pError = hb_errRT_FileError(pError, nullptr, EG_OPEN, 2012, pszSource);
+      if (hb_errLaunch(pError) != E_RETRY)
+      {
+        break;
       }
-   } while( pSource == nullptr );
+    }
+  } while (pSource == nullptr);
 
-   if( pError ) {
+  if (pError)
+  {
+    hb_itemRelease(pError);
+    pError = nullptr;
+  }
+
+  if (pSource != nullptr)
+  {
+    PHB_FILE pDest;
+
+    do
+    {
+      pDest = hb_fileExtOpen(pszDest, nullptr,
+                             FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_DEFAULTS | FXO_SHARELOCK,
+                             nullptr, pError);
+      if (pDest == nullptr)
+      {
+        pError = hb_errRT_FileError(pError, nullptr, EG_CREATE, 2012, pszDest);
+        if (hb_errLaunch(pError) != E_RETRY)
+        {
+          break;
+        }
+      }
+    } while (pDest == nullptr);
+
+    if (pError)
+    {
       hb_itemRelease(pError);
       pError = nullptr;
-   }
+    }
 
-   if( pSource != nullptr ) {
-      PHB_FILE pDest;
+    if (pDest != nullptr)
+    {
+      HB_SIZE nRead;
 
-      do {
-         pDest = hb_fileExtOpen(pszDest, nullptr, FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, pError);
-         if( pDest == nullptr ) {
-            pError = hb_errRT_FileError(pError, nullptr, EG_CREATE, 2012, pszDest);
-            if( hb_errLaunch(pError) != E_RETRY ) {
-               break;
+      auto buffer = static_cast<HB_UCHAR *>(hb_xgrab(BUFFER_SIZE));
+      bRetVal = true;
+
+      while ((nRead = hb_fileRead(pSource, buffer, BUFFER_SIZE, -1)) != 0 && nRead != static_cast<HB_SIZE>(FS_ERROR))
+      {
+        HB_SIZE nWritten = 0;
+
+        while (nWritten < nRead)
+        {
+          HB_SIZE nDone = hb_fileWrite(pDest, buffer + nWritten, nRead - nWritten, -1);
+          if (nDone != static_cast<HB_SIZE>(FS_ERROR))
+          {
+            nWritten += nDone;
+          }
+          if (nWritten < nRead)
+          {
+            pError = hb_errRT_FileError(pError, nullptr, EG_WRITE, 2016, pszDest);
+            if (hb_errLaunch(pError) != E_RETRY)
+            {
+              bRetVal = false;
+              break;
             }
-         }
-      } while( pDest == nullptr );
-
-      if( pError ) {
-         hb_itemRelease(pError);
-         pError = nullptr;
+          }
+        }
       }
 
-      if( pDest != nullptr ) {
-         HB_SIZE nRead;
-
-         auto buffer = static_cast<HB_UCHAR*>(hb_xgrab(BUFFER_SIZE));
-         bRetVal = true;
-
-         while( (nRead = hb_fileRead(pSource, buffer, BUFFER_SIZE, -1)) != 0 && nRead != static_cast<HB_SIZE>(FS_ERROR) ) {
-            HB_SIZE nWritten = 0;
-
-            while( nWritten < nRead ) {
-               HB_SIZE nDone = hb_fileWrite(pDest, buffer + nWritten, nRead - nWritten, -1);
-               if( nDone != static_cast<HB_SIZE>(FS_ERROR) ) {
-                  nWritten += nDone;
-               }
-               if( nWritten < nRead ) {
-                  pError = hb_errRT_FileError(pError, nullptr, EG_WRITE, 2016, pszDest);
-                  if( hb_errLaunch(pError) != E_RETRY ) {
-                     bRetVal = false;
-                     break;
-                  }
-               }
-            }
-         }
-
-         if( pError ) {
-            hb_itemRelease(pError);
-         }
-
-         hb_xfree(buffer);
-
-         hb_fileClose(pDest);
+      if (pError)
+      {
+        hb_itemRelease(pError);
       }
 
-      hb_fileClose(pSource);
+      hb_xfree(buffer);
+
+      hb_fileClose(pDest);
+    }
+
+    hb_fileClose(pSource);
 
 #if defined(HB_OS_UNIX)
-      if( bRetVal ) {
-         HB_FATTR ulAttr;
+    if (bRetVal)
+    {
+      HB_FATTR ulAttr;
 
-         if( hb_fileAttrGet(pszSource, &ulAttr) ) {
-            hb_fileAttrSet(pszDest, ulAttr);
-         }
+      if (hb_fileAttrGet(pszSource, &ulAttr))
+      {
+        hb_fileAttrSet(pszDest, ulAttr);
       }
+    }
 #endif
-   }
+  }
 
-   return bRetVal;
+  return bRetVal;
 }
 
 /* Clipper returns .F. on failure and NIL on success */
 
-HB_FUNC( __COPYFILE )
+HB_FUNC(__COPYFILE)
 {
-   auto szSource = hb_parc(1);
-   auto szDest = hb_parc(2);
+  auto szSource = hb_parc(1);
+  auto szDest = hb_parc(2);
 
-   if( szSource && szDest ) {
-      if( !hb_copyfile( szSource, szDest ) ) {
-         hb_retl(false);
-      }
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);  /* NOTE: Undocumented but existing Clipper Run-time error */
-   }
+  if (szSource && szDest)
+  {
+    if (!hb_copyfile(szSource, szDest))
+    {
+      hb_retl(false);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME,
+                  HB_ERR_ARGS_BASEPARAMS); /* NOTE: Undocumented but existing Clipper Run-time error */
+  }
 }

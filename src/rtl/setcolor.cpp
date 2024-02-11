@@ -48,65 +48,74 @@
 #include "hbapigt.hpp"
 #include "hbset.hpp"
 
-const char * hb_conSetColor(const char * szColor)
+const char *hb_conSetColor(const char *szColor)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_conSetColor(%s)", szColor));
 #endif
 
-   char * szOldColor = hb_setGetColor();
-   hb_gtGetColorStr(szOldColor);
+  char *szOldColor = hb_setGetColor();
+  hb_gtGetColorStr(szOldColor);
 
-   if( szColor != nullptr ) {
-      hb_gtSetColorStr(szColor);
-   }
+  if (szColor != nullptr)
+  {
+    hb_gtSetColorStr(szColor);
+  }
 
-   return szOldColor;
+  return szOldColor;
 }
 
-HB_FUNC( SETCOLOR )
+HB_FUNC(SETCOLOR)
 {
-   hb_retc(hb_conSetColor(hb_parc(1)));
+  hb_retc(hb_conSetColor(hb_parc(1)));
 }
 
-HB_FUNC( COLORSELECT )
+HB_FUNC(COLORSELECT)
 {
-   if( HB_ISNUM(1) ) {
-      hb_gtColorSelect(hb_parni(1));
-   }
+  if (HB_ISNUM(1))
+  {
+    hb_gtColorSelect(hb_parni(1));
+  }
 }
 
-HB_FUNC( SETBLINK )
+HB_FUNC(SETBLINK)
 {
-   HB_BOOL bPreviousBlink;
+  HB_BOOL bPreviousBlink;
 
-   hb_gtGetBlink(&bPreviousBlink);
+  hb_gtGetBlink(&bPreviousBlink);
 
-   if( HB_ISLOG(1) ) {
-      hb_gtSetBlink(hb_parl(1));
-   }
+  if (HB_ISLOG(1))
+  {
+    hb_gtSetBlink(hb_parl(1));
+  }
 
-   hb_retl(bPreviousBlink);
+  hb_retl(bPreviousBlink);
 }
 
-HB_FUNC( HB_COLORTON )
+HB_FUNC(HB_COLORTON)
 {
-   if( HB_ISCHAR(1) ) {
-      hb_retni(hb_gtColorToN(hb_parc(1)));
-   } else {
-      hb_retni(0);
-   }
+  if (HB_ISCHAR(1))
+  {
+    hb_retni(hb_gtColorToN(hb_parc(1)));
+  }
+  else
+  {
+    hb_retni(0);
+  }
 }
 
-HB_FUNC( HB_NTOCOLOR )
+HB_FUNC(HB_NTOCOLOR)
 {
-   if( HB_ISNUM(1) ) {
-      char szColorString[10];
-      int colors[1];
-      colors[0] = hb_parni(1);
-      hb_gtColorsToString(colors, HB_SIZEOFARRAY(colors), szColorString, sizeof(szColorString));
-      hb_retc(szColorString);
-   } else {
-      hb_retc_const("N/N");
-   }
+  if (HB_ISNUM(1))
+  {
+    char szColorString[10];
+    int colors[1];
+    colors[0] = hb_parni(1);
+    hb_gtColorsToString(colors, HB_SIZEOFARRAY(colors), szColorString, sizeof(szColorString));
+    hb_retc(szColorString);
+  }
+  else
+  {
+    hb_retc_const("N/N");
+  }
 }

@@ -48,170 +48,198 @@
 
 #include "sha2.hpp"
 
-HB_FUNC( HB_SHA224 )
+HB_FUNC(HB_SHA224)
 {
-   unsigned char digest[SHA224_DIGEST_SIZE];
-   sha224_ctx ctx;
+  unsigned char digest[SHA224_DIGEST_SIZE];
+  sha224_ctx ctx;
 
-   hb_sha224_init(&ctx);
-   #if HB_SIZE_MAX > UINT_MAX
-   {
-      auto buffer = hb_parcx(1);
-      auto nCount = hb_parclen(1);
-      HB_SIZE nDone = 0;
+  hb_sha224_init(&ctx);
+#if HB_SIZE_MAX > UINT_MAX
+  {
+    auto buffer = hb_parcx(1);
+    auto nCount = hb_parclen(1);
+    HB_SIZE nDone = 0;
 
-      while( nCount ) {
-         unsigned int uiChunk;
+    while (nCount)
+    {
+      unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>(UINT_MAX) ) {
-            uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>(uiChunk);
-         } else {
-            uiChunk = static_cast<unsigned int>(nCount);
-            nCount = 0;
-         }
-
-         hb_sha224_update( &ctx, buffer + nDone, uiChunk );
-
-         nDone += static_cast<HB_SIZE>(uiChunk);
+      if (nCount > static_cast<HB_SIZE>(UINT_MAX))
+      {
+        uiChunk = UINT_MAX;
+        nCount -= static_cast<HB_SIZE>(uiChunk);
       }
-   }
-   #else
-      hb_sha224_update( &ctx, hb_parcx(1), hb_parclen(1) );
-   #endif
-   hb_sha224_final(&ctx, digest);
+      else
+      {
+        uiChunk = static_cast<unsigned int>(nCount);
+        nCount = 0;
+      }
 
-   if( !hb_parl(2) ) {
-      char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
-      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
-   } else {
-      hb_retclen(reinterpret_cast<char*>(digest), sizeof(digest));
-   }
+      hb_sha224_update(&ctx, buffer + nDone, uiChunk);
+
+      nDone += static_cast<HB_SIZE>(uiChunk);
+    }
+  }
+#else
+  hb_sha224_update(&ctx, hb_parcx(1), hb_parclen(1));
+#endif
+  hb_sha224_final(&ctx, digest);
+
+  if (!hb_parl(2))
+  {
+    char hex[(sizeof(digest) * 2) + 1];
+    hb_strtohex(reinterpret_cast<char *>(digest), sizeof(digest), hex);
+    hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
+  }
+  else
+  {
+    hb_retclen(reinterpret_cast<char *>(digest), sizeof(digest));
+  }
 }
 
-HB_FUNC( HB_SHA256 )
+HB_FUNC(HB_SHA256)
 {
-   unsigned char digest[SHA256_DIGEST_SIZE];
-   sha256_ctx ctx;
+  unsigned char digest[SHA256_DIGEST_SIZE];
+  sha256_ctx ctx;
 
-   hb_sha256_init(&ctx);
-   #if HB_SIZE_MAX > UINT_MAX
-   {
-      auto buffer = hb_parcx(1);
-      auto nCount = hb_parclen(1);
-      HB_SIZE nDone = 0;
+  hb_sha256_init(&ctx);
+#if HB_SIZE_MAX > UINT_MAX
+  {
+    auto buffer = hb_parcx(1);
+    auto nCount = hb_parclen(1);
+    HB_SIZE nDone = 0;
 
-      while( nCount ) {
-         unsigned int uiChunk;
+    while (nCount)
+    {
+      unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>(UINT_MAX) ) {
-            uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>(uiChunk);
-         } else {
-            uiChunk = static_cast<unsigned int>(nCount);
-            nCount = 0;
-         }
-
-         hb_sha256_update( &ctx, buffer + nDone, uiChunk );
-
-         nDone += static_cast<HB_SIZE>(uiChunk);
+      if (nCount > static_cast<HB_SIZE>(UINT_MAX))
+      {
+        uiChunk = UINT_MAX;
+        nCount -= static_cast<HB_SIZE>(uiChunk);
       }
-   }
-   #else
-      hb_sha256_update( &ctx, hb_parcx(1), hb_parclen(1) );
-   #endif
-   hb_sha256_final(&ctx, digest);
+      else
+      {
+        uiChunk = static_cast<unsigned int>(nCount);
+        nCount = 0;
+      }
 
-   if( !hb_parl(2) ) {
-      char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
-      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
-   } else {
-      hb_retclen(reinterpret_cast<char*>(digest), sizeof(digest));
-   }
+      hb_sha256_update(&ctx, buffer + nDone, uiChunk);
+
+      nDone += static_cast<HB_SIZE>(uiChunk);
+    }
+  }
+#else
+  hb_sha256_update(&ctx, hb_parcx(1), hb_parclen(1));
+#endif
+  hb_sha256_final(&ctx, digest);
+
+  if (!hb_parl(2))
+  {
+    char hex[(sizeof(digest) * 2) + 1];
+    hb_strtohex(reinterpret_cast<char *>(digest), sizeof(digest), hex);
+    hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
+  }
+  else
+  {
+    hb_retclen(reinterpret_cast<char *>(digest), sizeof(digest));
+  }
 }
 
-HB_FUNC( HB_SHA384 )
+HB_FUNC(HB_SHA384)
 {
-   unsigned char digest[SHA384_DIGEST_SIZE];
-   sha384_ctx ctx;
+  unsigned char digest[SHA384_DIGEST_SIZE];
+  sha384_ctx ctx;
 
-   hb_sha384_init(&ctx);
-   #if HB_SIZE_MAX > UINT_MAX
-   {
-      auto buffer = hb_parcx(1);
-      auto nCount = hb_parclen(1);
-      HB_SIZE nDone = 0;
+  hb_sha384_init(&ctx);
+#if HB_SIZE_MAX > UINT_MAX
+  {
+    auto buffer = hb_parcx(1);
+    auto nCount = hb_parclen(1);
+    HB_SIZE nDone = 0;
 
-      while( nCount ) {
-         unsigned int uiChunk;
+    while (nCount)
+    {
+      unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>(UINT_MAX) ) {
-            uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>(uiChunk);
-         } else {
-            uiChunk = static_cast<unsigned int>(nCount);
-            nCount = 0;
-         }
-
-         hb_sha384_update( &ctx, buffer + nDone, uiChunk );
-
-         nDone += static_cast<HB_SIZE>(uiChunk);
+      if (nCount > static_cast<HB_SIZE>(UINT_MAX))
+      {
+        uiChunk = UINT_MAX;
+        nCount -= static_cast<HB_SIZE>(uiChunk);
       }
-   }
-   #else
-      hb_sha384_update( &ctx, hb_parcx(1), hb_parclen(1) );
-   #endif
-   hb_sha384_final(&ctx, digest);
+      else
+      {
+        uiChunk = static_cast<unsigned int>(nCount);
+        nCount = 0;
+      }
 
-   if( !hb_parl(2) ) {
-      char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
-      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
-   } else {
-      hb_retclen(reinterpret_cast<char*>(digest), sizeof(digest));
-   }
+      hb_sha384_update(&ctx, buffer + nDone, uiChunk);
+
+      nDone += static_cast<HB_SIZE>(uiChunk);
+    }
+  }
+#else
+  hb_sha384_update(&ctx, hb_parcx(1), hb_parclen(1));
+#endif
+  hb_sha384_final(&ctx, digest);
+
+  if (!hb_parl(2))
+  {
+    char hex[(sizeof(digest) * 2) + 1];
+    hb_strtohex(reinterpret_cast<char *>(digest), sizeof(digest), hex);
+    hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
+  }
+  else
+  {
+    hb_retclen(reinterpret_cast<char *>(digest), sizeof(digest));
+  }
 }
 
-HB_FUNC( HB_SHA512 )
+HB_FUNC(HB_SHA512)
 {
-   unsigned char digest[SHA512_DIGEST_SIZE];
-   sha512_ctx ctx;
+  unsigned char digest[SHA512_DIGEST_SIZE];
+  sha512_ctx ctx;
 
-   hb_sha512_init(&ctx);
-   #if HB_SIZE_MAX > UINT_MAX
-   {
-      auto buffer = hb_parcx(1);
-      auto nCount = hb_parclen(1);
-      HB_SIZE nDone = 0;
+  hb_sha512_init(&ctx);
+#if HB_SIZE_MAX > UINT_MAX
+  {
+    auto buffer = hb_parcx(1);
+    auto nCount = hb_parclen(1);
+    HB_SIZE nDone = 0;
 
-      while( nCount ) {
-         unsigned int uiChunk;
+    while (nCount)
+    {
+      unsigned int uiChunk;
 
-         if( nCount > static_cast<HB_SIZE>(UINT_MAX) ) {
-            uiChunk = UINT_MAX;
-            nCount -= static_cast<HB_SIZE>(uiChunk);
-         } else {
-            uiChunk = static_cast<unsigned int>(nCount);
-            nCount = 0;
-         }
-
-         hb_sha512_update( &ctx, buffer + nDone, uiChunk );
-
-         nDone += static_cast<HB_SIZE>(uiChunk);
+      if (nCount > static_cast<HB_SIZE>(UINT_MAX))
+      {
+        uiChunk = UINT_MAX;
+        nCount -= static_cast<HB_SIZE>(uiChunk);
       }
-   }
-   #else
-      hb_sha512_update( &ctx, hb_parcx(1), hb_parclen(1) );
-   #endif
-   hb_sha512_final(&ctx, digest);
+      else
+      {
+        uiChunk = static_cast<unsigned int>(nCount);
+        nCount = 0;
+      }
 
-   if( !hb_parl(2) ) {
-      char hex[( sizeof(digest) * 2 ) + 1];
-      hb_strtohex(reinterpret_cast<char*>(digest), sizeof(digest), hex);
-      hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
-   } else {
-      hb_retclen(reinterpret_cast<char*>(digest), sizeof(digest));
-   }
+      hb_sha512_update(&ctx, buffer + nDone, uiChunk);
+
+      nDone += static_cast<HB_SIZE>(uiChunk);
+    }
+  }
+#else
+  hb_sha512_update(&ctx, hb_parcx(1), hb_parclen(1));
+#endif
+  hb_sha512_final(&ctx, digest);
+
+  if (!hb_parl(2))
+  {
+    char hex[(sizeof(digest) * 2) + 1];
+    hb_strtohex(reinterpret_cast<char *>(digest), sizeof(digest), hex);
+    hb_retclen(hex, HB_SIZEOFARRAY(hex) - 1);
+  }
+  else
+  {
+    hb_retclen(reinterpret_cast<char *>(digest), sizeof(digest));
+  }
 }

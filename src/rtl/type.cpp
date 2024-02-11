@@ -47,14 +47,17 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( TYPE )
+HB_FUNC(TYPE)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
+  auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem != nullptr ) {
-      hb_retc(hb_macroGetType(pItem));
-      hb_memvarUpdatePrivatesBase();
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1121, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pItem != nullptr)
+  {
+    hb_retc(hb_macroGetType(pItem));
+    hb_memvarUpdatePrivatesBase();
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1121, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

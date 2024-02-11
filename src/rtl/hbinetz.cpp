@@ -52,26 +52,34 @@
 /* this function is intentionally not in hbinet.c to not create binding
  * to ZLIB if user does not use it
  */
-HB_FUNC( HB_INETCOMPRESS )
+HB_FUNC(HB_INETCOMPRESS)
 {
-   auto pItem = hb_param(1, Harbour::Item::POINTER);
-   auto iLevel = hb_parnidef(2, HB_ZLIB_COMPRESSION_DEFAULT);
-   auto iStrategy = hb_parnidef(3, HB_ZLIB_STRATEGY_DEFAULT);
+  auto pItem = hb_param(1, Harbour::Item::POINTER);
+  auto iLevel = hb_parnidef(2, HB_ZLIB_COMPRESSION_DEFAULT);
+  auto iStrategy = hb_parnidef(3, HB_ZLIB_STRATEGY_DEFAULT);
 
-   if( iLevel == HB_ZLIB_COMPRESSION_DISABLE ) {
-      hb_znetInetInitialize(pItem, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
-   } else {
-      PHB_ZNETSTREAM pStream = hb_znetOpen(iLevel, iStrategy);
-      if( pStream == nullptr ) {
-         pItem = nullptr;  /* to force RTE */
+  if (iLevel == HB_ZLIB_COMPRESSION_DISABLE)
+  {
+    hb_znetInetInitialize(pItem, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
+  }
+  else
+  {
+    PHB_ZNETSTREAM pStream = hb_znetOpen(iLevel, iStrategy);
+    if (pStream == nullptr)
+    {
+      pItem = nullptr; /* to force RTE */
+    }
+    if (hb_znetInetInitialize(pItem, pStream, hb_znetRead, hb_znetWrite, hb_znetFlush, hb_znetClose, nullptr, nullptr))
+    {
+      auto keylen = static_cast<int>(hb_parclen(4));
+      if (keylen)
+      {
+        hb_znetEncryptKey(pStream, hb_parc(4), keylen);
       }
-      if( hb_znetInetInitialize(pItem, pStream, hb_znetRead, hb_znetWrite, hb_znetFlush, hb_znetClose, nullptr, nullptr) ) {
-         auto keylen = static_cast<int>(hb_parclen(4));
-         if( keylen ) {
-            hb_znetEncryptKey(pStream, hb_parc(4), keylen);
-         }
-      } else if( pStream ) {
-         hb_znetClose(pStream);
-      }
-   }
+    }
+    else if (pStream)
+    {
+      hb_znetClose(pStream);
+    }
+  }
 }

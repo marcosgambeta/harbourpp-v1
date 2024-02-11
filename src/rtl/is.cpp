@@ -48,32 +48,32 @@
 
 /* determines if first char of string is letter */
 
-HB_FUNC( ISALPHA )
+HB_FUNC(ISALPHA)
 {
-   auto szString = hb_parc(1);
-   hb_retl(szString && hb_strIsAlpha(szString));
+  auto szString = hb_parc(1);
+  hb_retl(szString && hb_strIsAlpha(szString));
 }
 
 /* determines if first char of string is digit */
 
-HB_FUNC( ISDIGIT )
+HB_FUNC(ISDIGIT)
 {
-   auto szString = hb_parc(1);
-   hb_retl(szString && hb_strIsDigit(szString));
+  auto szString = hb_parc(1);
+  hb_retl(szString && hb_strIsDigit(szString));
 }
 
 /* determines if first char of string is upper-case */
 
-HB_FUNC( ISUPPER )
+HB_FUNC(ISUPPER)
 {
-   auto szString = hb_parc(1);
-   hb_retl(szString && hb_strIsUpper(szString));
+  auto szString = hb_parc(1);
+  hb_retl(szString && hb_strIsUpper(szString));
 }
 
 /* determines if first char of string is lower-case */
 
-HB_FUNC( ISLOWER )
+HB_FUNC(ISLOWER)
 {
-   auto szString = hb_parc(1);
-   hb_retl(szString && hb_strIsLower(szString));
+  auto szString = hb_parc(1);
+  hb_retl(szString && hb_strIsLower(szString));
 }

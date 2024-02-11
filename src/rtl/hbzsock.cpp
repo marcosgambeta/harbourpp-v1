@@ -55,493 +55,565 @@
 
 #include <zlib.h>
 
-#define HB_ZSOCK_ERROR_BASE   100
+#define HB_ZSOCK_ERROR_BASE 100
 
-#define HB_ZSOCK_READAHEAD    0x40
-#define HB_ZSOCK_RDBUFSIZE    4096
-#define HB_ZSOCK_WRBUFSIZE    4096
+#define HB_ZSOCK_READAHEAD 0x40
+#define HB_ZSOCK_RDBUFSIZE 4096
+#define HB_ZSOCK_WRBUFSIZE 4096
 
 #if MAX_MEM_LEVEL >= 8
-#  define HB_ZSOCK_MEM_LEVEL  8
+#define HB_ZSOCK_MEM_LEVEL 8
 #else
-#  define HB_ZSOCK_MEM_LEVEL  MAX_MEM_LEVEL
+#define HB_ZSOCK_MEM_LEVEL MAX_MEM_LEVEL
 #endif
 
-#define HB_ZSOCK_GET(p)     ( static_cast<PHB_SOCKEX_Z>(p->cargo) )
+#define HB_ZSOCK_GET(p) (static_cast<PHB_SOCKEX_Z>(p->cargo))
 
 struct HB_SOCKEX_Z
 {
-   PHB_SOCKEX     sock;
+  PHB_SOCKEX sock;
 
-   HB_BOOL        fDecompressIn;
-   HB_BOOL        fCompressOut;
+  HB_BOOL fDecompressIn;
+  HB_BOOL fCompressOut;
 
-   z_stream       z_read;
-   z_stream       z_write;
+  z_stream z_read;
+  z_stream z_write;
 
-   HB_BYTE *      rdbuf;
-   HB_BYTE *      wrbuf;
+  HB_BYTE *rdbuf;
+  HB_BYTE *wrbuf;
 };
 
 using PHB_SOCKEX_Z = HB_SOCKEX_Z *;
 
 static voidpf s_zsock_zalloc(voidpf opaque, uInt items, uInt size)
 {
-   HB_SYMBOL_UNUSED(opaque);
-   return hb_xalloc(static_cast<HB_SIZE>(items) * size);
+  HB_SYMBOL_UNUSED(opaque);
+  return hb_xalloc(static_cast<HB_SIZE>(items) * size);
 }
 
-static void s_zsock_zfree( voidpf opaque, voidpf address )
+static void s_zsock_zfree(voidpf opaque, voidpf address)
 {
-   HB_SYMBOL_UNUSED(opaque);
-   hb_xfree(address);
+  HB_SYMBOL_UNUSED(opaque);
+  hb_xfree(address);
 }
 
 static long s_zsock_write(PHB_SOCKEX_Z pZ, HB_MAXINT timeout)
 {
-   long lSent = 0, len = HB_ZSOCK_WRBUFSIZE - pZ->z_write.avail_out;
+  long lSent = 0, len = HB_ZSOCK_WRBUFSIZE - pZ->z_write.avail_out;
 
-   while( lSent < len ) {
-      long l = hb_sockexWrite(pZ->sock, pZ->wrbuf + lSent, len - lSent, timeout);
-      if( l <= 0 ) {
-         switch( hb_socketGetError() ) {
-            case HB_SOCKET_ERR_TIMEOUT:
-            case HB_SOCKET_ERR_AGAIN:
-            case HB_SOCKET_ERR_TRYAGAIN:
-               break;
-            default:
-               lSent = -1;
-               break;
-         }
-         break;
+  while (lSent < len)
+  {
+    long l = hb_sockexWrite(pZ->sock, pZ->wrbuf + lSent, len - lSent, timeout);
+    if (l <= 0)
+    {
+      switch (hb_socketGetError())
+      {
+      case HB_SOCKET_ERR_TIMEOUT:
+      case HB_SOCKET_ERR_AGAIN:
+      case HB_SOCKET_ERR_TRYAGAIN:
+        break;
+      default:
+        lSent = -1;
+        break;
       }
+      break;
+    }
 
-      lSent += l;
-      if( timeout > 0 ) {
-         timeout = 0;
-      }
-   }
+    lSent += l;
+    if (timeout > 0)
+    {
+      timeout = 0;
+    }
+  }
 
-   if( lSent > 0 ) {
-      if( lSent < len ) {
-         memmove(pZ->wrbuf, pZ->wrbuf + lSent, len - lSent);
-      }
-      pZ->z_write.avail_out += lSent;
-      pZ->z_write.next_out -= lSent;
-   }
+  if (lSent > 0)
+  {
+    if (lSent < len)
+    {
+      memmove(pZ->wrbuf, pZ->wrbuf + lSent, len - lSent);
+    }
+    pZ->z_write.avail_out += lSent;
+    pZ->z_write.next_out -= lSent;
+  }
 
-   return lSent;
+  return lSent;
 }
 
 static int s_zsock_inbuffer(PHB_SOCKEX pSock)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
+  PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
 
-   if( pSock->inbuffer == 0 && pZ->fDecompressIn ) {
-      int err;
+  if (pSock->inbuffer == 0 && pZ->fDecompressIn)
+  {
+    int err;
 
-      if( pSock->buffer == nullptr ) {
-         if( pSock->readahead <= 0 ) {
-            pSock->readahead = HB_ZSOCK_READAHEAD;
-         }
-         pSock->buffer = static_cast<HB_BYTE*>(hb_xgrab(pSock->readahead));
+    if (pSock->buffer == nullptr)
+    {
+      if (pSock->readahead <= 0)
+      {
+        pSock->readahead = HB_ZSOCK_READAHEAD;
       }
+      pSock->buffer = static_cast<HB_BYTE *>(hb_xgrab(pSock->readahead));
+    }
 
-      pZ->z_read.next_out  = static_cast<Bytef*>(pSock->buffer);
-      pZ->z_read.avail_out = static_cast<uInt>(pSock->readahead);
+    pZ->z_read.next_out = static_cast<Bytef *>(pSock->buffer);
+    pZ->z_read.avail_out = static_cast<uInt>(pSock->readahead);
 
-      err = inflate( &pZ->z_read, Z_SYNC_FLUSH );
-      if( err != Z_OK && err != Z_BUF_ERROR ) {
-         hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
-      }
-      pSock->inbuffer = pSock->readahead - pZ->z_read.avail_out;
-   }
-   return pSock->inbuffer > 0 ? 1 : 0;
+    err = inflate(&pZ->z_read, Z_SYNC_FLUSH);
+    if (err != Z_OK && err != Z_BUF_ERROR)
+    {
+      hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
+    }
+    pSock->inbuffer = pSock->readahead - pZ->z_read.avail_out;
+  }
+  return pSock->inbuffer > 0 ? 1 : 0;
 }
 
 /* socket filter */
 
-static long s_sockexRead(PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout)
+static long s_sockexRead(PHB_SOCKEX pSock, void *data, long len, HB_MAXINT timeout)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
-   long lRecv = 0;
+  PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
+  long lRecv = 0;
 
-   if( pSock->inbuffer > 0 && len > 0 ) {
-      lRecv = HB_MIN(pSock->inbuffer, len);
-      memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
-      if( (pSock->inbuffer -= lRecv) > 0 ) {
-         pSock->posbuffer += lRecv;
-      } else {
-         pSock->posbuffer = 0;
+  if (pSock->inbuffer > 0 && len > 0)
+  {
+    lRecv = HB_MIN(pSock->inbuffer, len);
+    memcpy(data, pSock->buffer + pSock->posbuffer, lRecv);
+    if ((pSock->inbuffer -= lRecv) > 0)
+    {
+      pSock->posbuffer += lRecv;
+    }
+    else
+    {
+      pSock->posbuffer = 0;
+    }
+    return lRecv;
+  }
+  else if (pZ->fDecompressIn)
+  {
+    int err = Z_OK;
+
+    pZ->z_read.next_out = static_cast<Bytef *>(data);
+    pZ->z_read.avail_out = static_cast<uInt>(len);
+    pZ->z_read.total_out = 0;
+
+    while (pZ->z_read.avail_out)
+    {
+      if (err == Z_BUF_ERROR && pZ->z_read.avail_in == 0)
+      {
+        lRecv = hb_sockexRead(pZ->sock, pZ->rdbuf, HB_ZSOCK_RDBUFSIZE, pZ->z_read.total_out == 0 ? timeout : 0);
+        if (lRecv <= 0)
+        {
+          break;
+        }
+        pZ->z_read.next_in = static_cast<Bytef *>(pZ->rdbuf);
+        pZ->z_read.avail_in = static_cast<uInt>(lRecv);
       }
-      return lRecv;
-   } else if( pZ->fDecompressIn ) {
-      int err = Z_OK;
-
-      pZ->z_read.next_out  = static_cast<Bytef*>(data);
-      pZ->z_read.avail_out = static_cast<uInt>(len);
-      pZ->z_read.total_out = 0;
-
-      while( pZ->z_read.avail_out ) {
-         if( err == Z_BUF_ERROR && pZ->z_read.avail_in == 0 ) {
-            lRecv = hb_sockexRead(pZ->sock, pZ->rdbuf, HB_ZSOCK_RDBUFSIZE, pZ->z_read.total_out == 0 ? timeout : 0);
-            if( lRecv <= 0 ) {
-               break;
-            }
-            pZ->z_read.next_in = static_cast<Bytef*>(pZ->rdbuf);
-            pZ->z_read.avail_in = static_cast<uInt>(lRecv);
-         } else if( err != Z_OK ) {
-            hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
-            lRecv = -1;
-            break;
-         }
-         err = inflate( &pZ->z_read, Z_SYNC_FLUSH );
+      else if (err != Z_OK)
+      {
+        hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
+        lRecv = -1;
+        break;
       }
+      err = inflate(&pZ->z_read, Z_SYNC_FLUSH);
+    }
 
-      if( pZ->z_read.total_out != 0 ) {
-         lRecv = static_cast<long>(pZ->z_read.total_out);
-      }
+    if (pZ->z_read.total_out != 0)
+    {
+      lRecv = static_cast<long>(pZ->z_read.total_out);
+    }
 
-      return lRecv;
-   } else {
-      return hb_sockexRead(pZ->sock, data, len, timeout);
-   }
+    return lRecv;
+  }
+  else
+  {
+    return hb_sockexRead(pZ->sock, data, len, timeout);
+  }
 }
 
-static long s_sockexWrite(PHB_SOCKEX pSock, const void * data, long len, HB_MAXINT timeout)
+static long s_sockexWrite(PHB_SOCKEX pSock, const void *data, long len, HB_MAXINT timeout)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
+  PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
 
-   if( pZ->fCompressOut ) {
-      long lWritten = 0;
+  if (pZ->fCompressOut)
+  {
+    long lWritten = 0;
 
-      pZ->z_write.next_in  = static_cast<Bytef*>(const_cast<void*>(data));
-      pZ->z_write.avail_in = static_cast<uInt>(len);
+    pZ->z_write.next_in = static_cast<Bytef *>(const_cast<void *>(data));
+    pZ->z_write.avail_in = static_cast<uInt>(len);
 
-      while( pZ->z_write.avail_in ) {
-         int err;
+    while (pZ->z_write.avail_in)
+    {
+      int err;
 
-         if( pZ->z_write.avail_out == 0 ) {
-            lWritten = s_zsock_write(pZ, timeout);
-            if( lWritten <= 0 ) {
-               break;
-            }
-            timeout = 0;
-         }
-         err = deflate( &pZ->z_write, Z_NO_FLUSH );
-         if( err != Z_OK ) {
-            if( err != Z_BUF_ERROR ) {
-               hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
-               lWritten = -1;
-            }
-            break;
-         }
+      if (pZ->z_write.avail_out == 0)
+      {
+        lWritten = s_zsock_write(pZ, timeout);
+        if (lWritten <= 0)
+        {
+          break;
+        }
+        timeout = 0;
       }
+      err = deflate(&pZ->z_write, Z_NO_FLUSH);
+      if (err != Z_OK)
+      {
+        if (err != Z_BUF_ERROR)
+        {
+          hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
+          lWritten = -1;
+        }
+        break;
+      }
+    }
 
-      return lWritten >= 0 ? static_cast<long>(len - pZ->z_write.avail_in) : lWritten;
-   } else {
-      return hb_sockexWrite(pZ->sock, data, len, timeout);
-   }
+    return lWritten >= 0 ? static_cast<long>(len - pZ->z_write.avail_in) : lWritten;
+  }
+  else
+  {
+    return hb_sockexWrite(pZ->sock, data, len, timeout);
+  }
 }
 
 static long s_sockexFlush(PHB_SOCKEX pSock, HB_MAXINT timeout, HB_BOOL fSync)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
-   long lResult = 0;
+  PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
+  long lResult = 0;
 
-   if( pZ->fCompressOut &&
-       ( !fSync || pZ->z_write.avail_out != HB_ZSOCK_WRBUFSIZE ||
-         pZ->z_write.total_in != 0 || pZ->z_write.total_out != 0 ) ) {
-      int err;
+  if (pZ->fCompressOut && (!fSync || pZ->z_write.avail_out != HB_ZSOCK_WRBUFSIZE || pZ->z_write.total_in != 0 ||
+                           pZ->z_write.total_out != 0))
+  {
+    int err;
 
-      if( pZ->z_write.avail_out > 0 ) {
-         err = deflate( &pZ->z_write, fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH );
-      } else {
-         err = Z_OK;
-      }
+    if (pZ->z_write.avail_out > 0)
+    {
+      err = deflate(&pZ->z_write, fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH);
+    }
+    else
+    {
+      err = Z_OK;
+    }
 
-      while( pZ->z_write.avail_out < HB_ZSOCK_WRBUFSIZE ) {
-         if( s_zsock_write(pZ, timeout) <= 0 ) {
-            break;
-         }
-         if( err == Z_OK || err == Z_BUF_ERROR ) {
-            err = deflate( &pZ->z_write, fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH );
-         }
+    while (pZ->z_write.avail_out < HB_ZSOCK_WRBUFSIZE)
+    {
+      if (s_zsock_write(pZ, timeout) <= 0)
+      {
+        break;
       }
-      if( err != Z_OK && err != Z_BUF_ERROR ) {
-         hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
+      if (err == Z_OK || err == Z_BUF_ERROR)
+      {
+        err = deflate(&pZ->z_write, fSync ? Z_FULL_FLUSH : Z_PARTIAL_FLUSH);
       }
-      lResult = HB_ZSOCK_WRBUFSIZE - pZ->z_write.avail_out;
-   }
-   return lResult + hb_sockexFlush(pZ->sock, timeout, fSync);
+    }
+    if (err != Z_OK && err != Z_BUF_ERROR)
+    {
+      hb_socketSetError(HB_ZSOCK_ERROR_BASE - err);
+    }
+    lResult = HB_ZSOCK_WRBUFSIZE - pZ->z_write.avail_out;
+  }
+  return lResult + hb_sockexFlush(pZ->sock, timeout, fSync);
 }
 
 static int s_sockexCanRead(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
-   return s_zsock_inbuffer(pSock) ? 1 : hb_sockexCanRead(HB_ZSOCK_GET(pSock)->sock, fBuffer, timeout);
+  return s_zsock_inbuffer(pSock) ? 1 : hb_sockexCanRead(HB_ZSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
 
 static int s_sockexCanWrite(PHB_SOCKEX pSock, HB_BOOL fBuffer, HB_MAXINT timeout)
 {
-   return hb_sockexCanWrite(HB_ZSOCK_GET(pSock)->sock, fBuffer, timeout);
+  return hb_sockexCanWrite(HB_ZSOCK_GET(pSock)->sock, fBuffer, timeout);
 }
 
-static char * s_sockexName(PHB_SOCKEX pSock)
+static char *s_sockexName(PHB_SOCKEX pSock)
 {
-   char * pszName = hb_sockexIsRaw(HB_ZSOCK_GET(pSock)->sock ) ? nullptr : hb_sockexName(HB_ZSOCK_GET(pSock)->sock);
-   if( pszName ) {
-      char * pszFree = pszName;
-      pszName = hb_xstrcpy(nullptr, pSock->pFilter->pszName, "|", pszName, nullptr);
-      hb_xfree(pszFree);
-   } else {
-      pszName = hb_strdup(pSock->pFilter->pszName);
-   }
+  char *pszName = hb_sockexIsRaw(HB_ZSOCK_GET(pSock)->sock) ? nullptr : hb_sockexName(HB_ZSOCK_GET(pSock)->sock);
+  if (pszName)
+  {
+    char *pszFree = pszName;
+    pszName = hb_xstrcpy(nullptr, pSock->pFilter->pszName, "|", pszName, nullptr);
+    hb_xfree(pszFree);
+  }
+  else
+  {
+    pszName = hb_strdup(pSock->pFilter->pszName);
+  }
 
-   return pszName;
+  return pszName;
 }
 
-static const char * s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
+static const char *s_sockexErrorStr(PHB_SOCKEX pSock, int iError)
 {
-   switch( HB_ZSOCK_ERROR_BASE - iError ) {
-      case Z_STREAM_END:
-         return "Z_STREAM_END";
-      case Z_NEED_DICT:
-         return "Z_NEED_DICT";
-      case Z_ERRNO:
-         return "Z_ERRNO";
-      case Z_STREAM_ERROR:
-         return "Z_STREAM_ERROR";
-      case Z_DATA_ERROR:
-         return "Z_DATA_ERROR";
-      case Z_MEM_ERROR:
-         return "Z_MEM_ERROR";
-      case Z_BUF_ERROR:
-         return "Z_BUF_ERROR";
-      case Z_VERSION_ERROR:
-         return "Z_VERSION_ERROR";
-   }
+  switch (HB_ZSOCK_ERROR_BASE - iError)
+  {
+  case Z_STREAM_END:
+    return "Z_STREAM_END";
+  case Z_NEED_DICT:
+    return "Z_NEED_DICT";
+  case Z_ERRNO:
+    return "Z_ERRNO";
+  case Z_STREAM_ERROR:
+    return "Z_STREAM_ERROR";
+  case Z_DATA_ERROR:
+    return "Z_DATA_ERROR";
+  case Z_MEM_ERROR:
+    return "Z_MEM_ERROR";
+  case Z_BUF_ERROR:
+    return "Z_BUF_ERROR";
+  case Z_VERSION_ERROR:
+    return "Z_VERSION_ERROR";
+  }
 
-   return hb_sockexErrorStr(HB_ZSOCK_GET(pSock)->sock, iError);
+  return hb_sockexErrorStr(HB_ZSOCK_GET(pSock)->sock, iError);
 }
 
 static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 {
-   PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
-   int iResult = 0;
+  PHB_SOCKEX_Z pZ = HB_ZSOCK_GET(pSock);
+  int iResult = 0;
 
-   if( pZ ) {
-      if( pZ->sock ) {
-         s_sockexFlush(pSock, HB_MAX(15000, pSock->iAutoFlush), true);
-      }
+  if (pZ)
+  {
+    if (pZ->sock)
+    {
+      s_sockexFlush(pSock, HB_MAX(15000, pSock->iAutoFlush), true);
+    }
 
-      if( pZ->fDecompressIn ) {
-         inflateEnd(&pZ->z_read);
-      }
-      if( pZ->rdbuf ) {
-         hb_xfree(pZ->rdbuf);
-      }
-      if( pZ->fCompressOut ) {
-         deflateEnd(&pZ->z_write);
-      }
-      if( pZ->wrbuf ) {
-         hb_xfree(pZ->wrbuf);
-      }
+    if (pZ->fDecompressIn)
+    {
+      inflateEnd(&pZ->z_read);
+    }
+    if (pZ->rdbuf)
+    {
+      hb_xfree(pZ->rdbuf);
+    }
+    if (pZ->fCompressOut)
+    {
+      deflateEnd(&pZ->z_write);
+    }
+    if (pZ->wrbuf)
+    {
+      hb_xfree(pZ->wrbuf);
+    }
 
-      if( pZ->sock ) {
-         if( pSock->fShutDown ) {
-            pZ->sock->fShutDown = true;
-         }
-         if( pSock->iAutoFlush != 0 && pZ->sock->iAutoFlush == 0 ) {
-            pZ->sock->iAutoFlush = pSock->iAutoFlush;
-         }
-         iResult = hb_sockexClose(pZ->sock, fClose);
+    if (pZ->sock)
+    {
+      if (pSock->fShutDown)
+      {
+        pZ->sock->fShutDown = true;
       }
+      if (pSock->iAutoFlush != 0 && pZ->sock->iAutoFlush == 0)
+      {
+        pZ->sock->iAutoFlush = pSock->iAutoFlush;
+      }
+      iResult = hb_sockexClose(pZ->sock, fClose);
+    }
 
-      hb_xfree(pZ);
-   }
-   /* call hb_sockexRawClear() with fClose = HB_FALSE because
-      hb_sockexClose() already closed real socket */
-   hb_sockexRawClear(pSock, false);
-   hb_xfree(pSock);
+    hb_xfree(pZ);
+  }
+  /* call hb_sockexRawClear() with fClose = HB_FALSE because
+     hb_sockexClose() already closed real socket */
+  hb_sockexRawClear(pSock, false);
+  hb_xfree(pSock);
 
-   return iResult;
+  return iResult;
 }
 
 static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams);
 
 static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
 {
-   PHB_SOCKEX pSock, pSockNew = nullptr;
+  PHB_SOCKEX pSock, pSockNew = nullptr;
 
-   pSock = hb_sockexNew(sd, nullptr, pParams);
-   if( pSock ) {
-      pSockNew = s_sockexNext(pSock, pParams);
-      if( pSockNew == nullptr ) {
-         hb_sockexClose(pSock, false);
-      }
-   }
+  pSock = hb_sockexNew(sd, nullptr, pParams);
+  if (pSock)
+  {
+    pSockNew = s_sockexNext(pSock, pParams);
+    if (pSockNew == nullptr)
+    {
+      hb_sockexClose(pSock, false);
+    }
+  }
 
-   return pSockNew;
+  return pSockNew;
 }
 
-static const HB_SOCKET_FILTER s_sockFilter =
-{
-   "ZSOCK",
-   s_sockexNew,
-   s_sockexNext,
-   s_sockexClose,
-   s_sockexRead,
-   s_sockexWrite,
-   s_sockexFlush,
-   s_sockexCanRead,
-   s_sockexCanWrite,
-   s_sockexName,
-   s_sockexErrorStr
-};
+static const HB_SOCKET_FILTER s_sockFilter = {"ZSOCK",          s_sockexNew,   s_sockexNext,    s_sockexClose,
+                                              s_sockexRead,     s_sockexWrite, s_sockexFlush,   s_sockexCanRead,
+                                              s_sockexCanWrite, s_sockexName,  s_sockexErrorStr};
 
 static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 {
-   PHB_SOCKEX pSockNew = nullptr;
+  PHB_SOCKEX pSockNew = nullptr;
 
-   if( pSock ) {
-      HB_BOOL fDecompressIn = true, fCompressOut = true;
-      int level = HB_ZLIB_COMPRESSION_DEFAULT,
-          strategy = HB_ZLIB_STRATEGY_DEFAULT,
-          windowBitsIn = MAX_WBITS, windowBitsOut = MAX_WBITS;
+  if (pSock)
+  {
+    HB_BOOL fDecompressIn = true, fCompressOut = true;
+    int level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT, windowBitsIn = MAX_WBITS,
+        windowBitsOut = MAX_WBITS;
 
-      if( pParams && HB_IS_HASH(pParams) ) {
-         PHB_ITEM pItem;
+    if (pParams && HB_IS_HASH(pParams))
+    {
+      PHB_ITEM pItem;
 
-         if( (pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && HB_IS_NUMERIC(pItem) ) {
-            level = hb_itemGetNI(pItem);
-         }
-         if( (pItem = hb_hashGetCItemPtr(pParams, "zs")) != nullptr && HB_IS_NUMERIC(pItem) ) {
-            strategy = hb_itemGetNI(pItem);
-         }
-
-         if( (pItem = hb_hashGetCItemPtr(pParams, "gzin")) != nullptr && HB_IS_LOGICAL(pItem) ) {
-            fDecompressIn = hb_itemGetL(pItem);
-            if( fDecompressIn ) {
-               windowBitsIn += 16;
-            }
-         }
-         if( (pItem = hb_hashGetCItemPtr(pParams, "zin")) != nullptr && HB_IS_LOGICAL(pItem) ) {
-            if( windowBitsIn == MAX_WBITS ) {
-               fDecompressIn = hb_itemGetL(pItem);
-            } else if( hb_itemGetL(pItem) ) {
-               windowBitsIn += 16;
-            }
-         }
-
-         if( (pItem = hb_hashGetCItemPtr(pParams, "gzout")) != nullptr && HB_IS_LOGICAL(pItem) ) {
-            fCompressOut = hb_itemGetL(pItem);
-            if( fCompressOut ) {
-               windowBitsOut += 16;
-            }
-         }
-         if( (pItem = hb_hashGetCItemPtr(pParams, "zout")) != nullptr && HB_IS_LOGICAL(pItem) && windowBitsOut == MAX_WBITS ) {
-            fCompressOut = hb_itemGetL(pItem);
-         }
+      if ((pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && HB_IS_NUMERIC(pItem))
+      {
+        level = hb_itemGetNI(pItem);
+      }
+      if ((pItem = hb_hashGetCItemPtr(pParams, "zs")) != nullptr && HB_IS_NUMERIC(pItem))
+      {
+        strategy = hb_itemGetNI(pItem);
       }
 
-      if( level != HB_ZLIB_COMPRESSION_DISABLE && (fDecompressIn || fCompressOut) ) {
-         auto pZ = static_cast<PHB_SOCKEX_Z>(hb_xgrabz(sizeof(HB_SOCKEX_Z)));
+      if ((pItem = hb_hashGetCItemPtr(pParams, "gzin")) != nullptr && HB_IS_LOGICAL(pItem))
+      {
+        fDecompressIn = hb_itemGetL(pItem);
+        if (fDecompressIn)
+        {
+          windowBitsIn += 16;
+        }
+      }
+      if ((pItem = hb_hashGetCItemPtr(pParams, "zin")) != nullptr && HB_IS_LOGICAL(pItem))
+      {
+        if (windowBitsIn == MAX_WBITS)
+        {
+          fDecompressIn = hb_itemGetL(pItem);
+        }
+        else if (hb_itemGetL(pItem))
+        {
+          windowBitsIn += 16;
+        }
+      }
 
-         pSockNew = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
-         pSockNew->sd = HB_NO_SOCKET;
-         pSockNew->fRedirAll = true;
-         pSockNew->pFilter = &s_sockFilter;
+      if ((pItem = hb_hashGetCItemPtr(pParams, "gzout")) != nullptr && HB_IS_LOGICAL(pItem))
+      {
+        fCompressOut = hb_itemGetL(pItem);
+        if (fCompressOut)
+        {
+          windowBitsOut += 16;
+        }
+      }
+      if ((pItem = hb_hashGetCItemPtr(pParams, "zout")) != nullptr && HB_IS_LOGICAL(pItem) &&
+          windowBitsOut == MAX_WBITS)
+      {
+        fCompressOut = hb_itemGetL(pItem);
+      }
+    }
 
-         pSockNew->cargo = static_cast<void*>(pZ);
-         pZ->z_read.zalloc = s_zsock_zalloc;
-         pZ->z_read.zfree  = s_zsock_zfree;
-         pZ->z_read.opaque = Z_NULL;
+    if (level != HB_ZLIB_COMPRESSION_DISABLE && (fDecompressIn || fCompressOut))
+    {
+      auto pZ = static_cast<PHB_SOCKEX_Z>(hb_xgrabz(sizeof(HB_SOCKEX_Z)));
 
-         pZ->z_write.zalloc = s_zsock_zalloc;
-         pZ->z_write.zfree  = s_zsock_zfree;
-         pZ->z_write.opaque = Z_NULL;
+      pSockNew = static_cast<PHB_SOCKEX>(hb_xgrabz(sizeof(HB_SOCKEX)));
+      pSockNew->sd = HB_NO_SOCKET;
+      pSockNew->fRedirAll = true;
+      pSockNew->pFilter = &s_sockFilter;
 
-         pZ->z_read.next_in  = nullptr;
-         pZ->z_read.avail_in = 0;
+      pSockNew->cargo = static_cast<void *>(pZ);
+      pZ->z_read.zalloc = s_zsock_zalloc;
+      pZ->z_read.zfree = s_zsock_zfree;
+      pZ->z_read.opaque = Z_NULL;
 
-         if( level != Z_DEFAULT_COMPRESSION && !( level >= Z_NO_COMPRESSION && level <= Z_BEST_COMPRESSION ) ) {
-            level = Z_DEFAULT_COMPRESSION;
-         }
+      pZ->z_write.zalloc = s_zsock_zalloc;
+      pZ->z_write.zfree = s_zsock_zfree;
+      pZ->z_write.opaque = Z_NULL;
 
-         if( strategy != Z_FILTERED    &&
+      pZ->z_read.next_in = nullptr;
+      pZ->z_read.avail_in = 0;
+
+      if (level != Z_DEFAULT_COMPRESSION && !(level >= Z_NO_COMPRESSION && level <= Z_BEST_COMPRESSION))
+      {
+        level = Z_DEFAULT_COMPRESSION;
+      }
+
+      if (strategy != Z_FILTERED &&
 #if defined(Z_RLE)
-             strategy != Z_RLE         &&
+          strategy != Z_RLE &&
 #endif
 #if defined(Z_FIXED)
-             strategy != Z_FIXED       &&
+          strategy != Z_FIXED &&
 #endif
-             strategy != Z_HUFFMAN_ONLY ) {
-            strategy = Z_DEFAULT_STRATEGY;
-         }
-
-         if( fDecompressIn && level != HB_ZLIB_COMPRESSION_DISABLE ) {
-            /* MAX_WBITS=15, decompression - support for formats:
-             * -15: raw, 15: ZLIB, 31: GZIP, 47: ZLIB+GZIP
-             */
-            if( inflateInit2(&pZ->z_read, windowBitsIn) == Z_OK ) {
-               pZ->fDecompressIn = true;
-               pZ->rdbuf = static_cast<HB_BYTE*>(hb_xgrab(HB_ZSOCK_RDBUFSIZE));
-            } else {
-               level = HB_ZLIB_COMPRESSION_DISABLE;
-            }
-         }
-
-         if( fCompressOut && level != HB_ZLIB_COMPRESSION_DISABLE ) {
-            /* MAX_WBITS=15, compression format:
-             * -15: raw, 15: ZLIB (+6 bytes), 31: GZIP(+18 bytes)
-             */
-            if( deflateInit2(&pZ->z_write, level, Z_DEFLATED, windowBitsOut, HB_ZSOCK_MEM_LEVEL, strategy) == Z_OK ) {
-               pZ->fCompressOut = true;
-               pZ->wrbuf = static_cast<HB_BYTE*>(hb_xgrab(HB_ZSOCK_WRBUFSIZE));
-               pZ->z_write.next_out  = static_cast<Bytef*>(pZ->wrbuf);
-               pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;
-            } else {
-               level = HB_ZLIB_COMPRESSION_DISABLE;
-            }
-         }
-
-         if( level != HB_ZLIB_COMPRESSION_DISABLE ) {
-            pSockNew->sd = pSock->sd;
-            pSockNew->fShutDown = pSock->fShutDown;
-            pSockNew->iAutoFlush = pSock->iAutoFlush;
-            pZ->sock = pSock;
-            hb_socekxParamsInit(pSockNew, pParams);
-         } else {
-            s_sockexClose(pSockNew, false);
-            pSockNew = nullptr;
-         }
+          strategy != Z_HUFFMAN_ONLY)
+      {
+        strategy = Z_DEFAULT_STRATEGY;
       }
-   }
 
-   return pSockNew;
+      if (fDecompressIn && level != HB_ZLIB_COMPRESSION_DISABLE)
+      {
+        /* MAX_WBITS=15, decompression - support for formats:
+         * -15: raw, 15: ZLIB, 31: GZIP, 47: ZLIB+GZIP
+         */
+        if (inflateInit2(&pZ->z_read, windowBitsIn) == Z_OK)
+        {
+          pZ->fDecompressIn = true;
+          pZ->rdbuf = static_cast<HB_BYTE *>(hb_xgrab(HB_ZSOCK_RDBUFSIZE));
+        }
+        else
+        {
+          level = HB_ZLIB_COMPRESSION_DISABLE;
+        }
+      }
+
+      if (fCompressOut && level != HB_ZLIB_COMPRESSION_DISABLE)
+      {
+        /* MAX_WBITS=15, compression format:
+         * -15: raw, 15: ZLIB (+6 bytes), 31: GZIP(+18 bytes)
+         */
+        if (deflateInit2(&pZ->z_write, level, Z_DEFLATED, windowBitsOut, HB_ZSOCK_MEM_LEVEL, strategy) == Z_OK)
+        {
+          pZ->fCompressOut = true;
+          pZ->wrbuf = static_cast<HB_BYTE *>(hb_xgrab(HB_ZSOCK_WRBUFSIZE));
+          pZ->z_write.next_out = static_cast<Bytef *>(pZ->wrbuf);
+          pZ->z_write.avail_out = HB_ZSOCK_WRBUFSIZE;
+        }
+        else
+        {
+          level = HB_ZLIB_COMPRESSION_DISABLE;
+        }
+      }
+
+      if (level != HB_ZLIB_COMPRESSION_DISABLE)
+      {
+        pSockNew->sd = pSock->sd;
+        pSockNew->fShutDown = pSock->fShutDown;
+        pSockNew->iAutoFlush = pSock->iAutoFlush;
+        pZ->sock = pSock;
+        hb_socekxParamsInit(pSockNew, pParams);
+      }
+      else
+      {
+        s_sockexClose(pSockNew, false);
+        pSockNew = nullptr;
+      }
+    }
+  }
+
+  return pSockNew;
 }
 
 /* hb_socketNewZSock(<pSocket>, [<hParams>]) --> <pSocket> */
-HB_FUNC( HB_SOCKETNEWZSOCK )
+HB_FUNC(HB_SOCKETNEWZSOCK)
 {
-   PHB_SOCKEX pSock = hb_sockexParam(1);
+  PHB_SOCKEX pSock = hb_sockexParam(1);
 
-   if( pSock ) {
-      pSock = s_sockexNext(pSock, hb_param(2, Harbour::Item::HASH));
-      if( pSock ) {
-         hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
-         hb_sockexItemPut(hb_param(-1, Harbour::Item::ANY), pSock);
-      }
-   }
+  if (pSock)
+  {
+    pSock = s_sockexNext(pSock, hb_param(2, Harbour::Item::HASH));
+    if (pSock)
+    {
+      hb_sockexItemClear(hb_param(1, Harbour::Item::POINTER));
+      hb_sockexItemPut(hb_param(-1, Harbour::Item::ANY), pSock);
+    }
+  }
 }
 
 HB_CALL_ON_STARTUP_BEGIN(_hb_zsock_init_)
-   hb_sockexRegister(&s_sockFilter);
+hb_sockexRegister(&s_sockFilter);
 HB_CALL_ON_STARTUP_END(_hb_zsock_init_)
 
 #if defined(HB_PRAGMA_STARTUP)
-   #pragma startup _hb_zsock_init_
+#pragma startup _hb_zsock_init_
 #elif defined(HB_DATASEG_STARTUP)
-   #define HB_DATASEG_BODY  HB_DATASEG_FUNC( _hb_zsock_init_ )
-   #include "hbiniseg.hpp"
+#define HB_DATASEG_BODY HB_DATASEG_FUNC(_hb_zsock_init_)
+#include "hbiniseg.hpp"
 #endif

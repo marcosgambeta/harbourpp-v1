@@ -56,25 +56,27 @@
 
 struct HB_IDLEDATA
 {
-   HB_BOOL    fCollectGarbage;      /* flag to force GC activation in idle state */
-   HB_BOOL    fIamIdle;             /* flag to prevent recursive calls of hb_idleState() */
-   int        iIdleTask;            /* current task to be executed */
-   int        iIdleMaxTask;         /* number of tasks in the list */
-   PHB_ITEM * pIdleTasks;           /* list of background tasks */
+  HB_BOOL fCollectGarbage; /* flag to force GC activation in idle state */
+  HB_BOOL fIamIdle;        /* flag to prevent recursive calls of hb_idleState() */
+  int iIdleTask;           /* current task to be executed */
+  int iIdleMaxTask;        /* number of tasks in the list */
+  PHB_ITEM *pIdleTasks;    /* list of background tasks */
 };
 
 using PHB_IDLEDATA = HB_IDLEDATA *;
 
-static void hb_idleDataRelease(void * Cargo)
+static void hb_idleDataRelease(void *Cargo)
 {
-   auto pIdleData = static_cast<PHB_IDLEDATA>(Cargo);
+  auto pIdleData = static_cast<PHB_IDLEDATA>(Cargo);
 
-   if( pIdleData->pIdleTasks ) {
-      do {
-         hb_itemRelease(pIdleData->pIdleTasks[--pIdleData->iIdleMaxTask]);
-      } while( pIdleData->iIdleMaxTask );
-      hb_xfree(pIdleData->pIdleTasks);
-   }
+  if (pIdleData->pIdleTasks)
+  {
+    do
+    {
+      hb_itemRelease(pIdleData->pIdleTasks[--pIdleData->iIdleMaxTask]);
+    } while (pIdleData->iIdleMaxTask);
+    hb_xfree(pIdleData->pIdleTasks);
+  }
 }
 
 static HB_TSD_NEW(s_idleData, sizeof(HB_IDLEDATA), nullptr, hb_idleDataRelease);
@@ -85,148 +87,171 @@ void hb_releaseCPU(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_releaseCPU()"));
 #endif
 
-   hb_threadReleaseCPU();
+  hb_threadReleaseCPU();
 }
 
 /* performs all tasks defined for idle state */
 void hb_idleState(void)
 {
-   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+  auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   if( !pIdleData->fIamIdle ) {
-      pIdleData->fIamIdle = true;
+  if (!pIdleData->fIamIdle)
+  {
+    pIdleData->fIamIdle = true;
 
-      hb_releaseCPU();
-      if( hb_vmRequestQuery() == 0 ) {
-         if( pIdleData->fCollectGarbage ) {
-            hb_gcCollectAll(false);
-            pIdleData->fCollectGarbage = false;
-         }
-
-         if( pIdleData->pIdleTasks && pIdleData->iIdleTask < pIdleData->iIdleMaxTask ) {
-            hb_itemRelease(hb_itemDo(pIdleData->pIdleTasks[pIdleData->iIdleTask], 0));
-            ++pIdleData->iIdleTask;
-            if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && hb_setGetIdleRepeat() ) {
-               pIdleData->iIdleTask = 0;    /* restart processing of idle tasks */
-               pIdleData->fCollectGarbage = true;
-            }
-         }
+    hb_releaseCPU();
+    if (hb_vmRequestQuery() == 0)
+    {
+      if (pIdleData->fCollectGarbage)
+      {
+        hb_gcCollectAll(false);
+        pIdleData->fCollectGarbage = false;
       }
-      pIdleData->fIamIdle = false;
-   }
+
+      if (pIdleData->pIdleTasks && pIdleData->iIdleTask < pIdleData->iIdleMaxTask)
+      {
+        hb_itemRelease(hb_itemDo(pIdleData->pIdleTasks[pIdleData->iIdleTask], 0));
+        ++pIdleData->iIdleTask;
+        if (pIdleData->iIdleTask == pIdleData->iIdleMaxTask && hb_setGetIdleRepeat())
+        {
+          pIdleData->iIdleTask = 0; /* restart processing of idle tasks */
+          pIdleData->fCollectGarbage = true;
+        }
+      }
+    }
+    pIdleData->fIamIdle = false;
+  }
 }
 
 void hb_idleReset(void)
 {
-   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+  auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   if( pIdleData->iIdleTask == pIdleData->iIdleMaxTask && !hb_setGetIdleRepeat() ) {
-      pIdleData->iIdleTask = 0;
-   }
+  if (pIdleData->iIdleTask == pIdleData->iIdleMaxTask && !hb_setGetIdleRepeat())
+  {
+    pIdleData->iIdleTask = 0;
+  }
 
-   pIdleData->fCollectGarbage = true;
+  pIdleData->fCollectGarbage = true;
 }
 
 void hb_idleSleep(double dSeconds)
 {
-   if( dSeconds >= 0 ) {
-      HB_MAXINT timeout = dSeconds > 0 ? static_cast<HB_MAXINT>(dSeconds * 1000) : 0;
-      HB_MAXUINT timer = hb_timerInit(timeout);
+  if (dSeconds >= 0)
+  {
+    HB_MAXINT timeout = dSeconds > 0 ? static_cast<HB_MAXINT>(dSeconds * 1000) : 0;
+    HB_MAXUINT timer = hb_timerInit(timeout);
 
-      do {
-         hb_idleState();
-      } while( (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0 );
+    do
+    {
+      hb_idleState();
+    } while ((timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0);
 
-      hb_idleReset();
-   }
+    hb_idleReset();
+  }
 }
 
 /* signal that the user code is in idle state */
-HB_FUNC( HB_IDLESTATE )
+HB_FUNC(HB_IDLESTATE)
 {
-   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+  auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-   pIdleData->fCollectGarbage = true;
-   hb_idleState();
+  pIdleData->fCollectGarbage = true;
+  hb_idleState();
 }
 
 /* call from user code to reset idle state */
-HB_FUNC( HB_IDLERESET )
+HB_FUNC(HB_IDLERESET)
 {
-   hb_idleReset();
+  hb_idleReset();
 }
 
 /* call from user code to stay in idle state for given period */
-HB_FUNC( HB_IDLESLEEP )
+HB_FUNC(HB_IDLESLEEP)
 {
-   hb_idleSleep(hb_parnd(1));
+  hb_idleSleep(hb_parnd(1));
 }
 
 /* add a new background task and return its handle */
-HB_FUNC( HB_IDLEADD )
+HB_FUNC(HB_IDLEADD)
 {
-   auto pBlock = hb_param(1, Harbour::Item::EVALITEM);
+  auto pBlock = hb_param(1, Harbour::Item::EVALITEM);
 
-   if( pBlock ) {
-      auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
+  if (pBlock)
+  {
+    auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackGetTSD(&s_idleData));
 
-      ++pIdleData->iIdleMaxTask;
+    ++pIdleData->iIdleMaxTask;
 
-      if( !pIdleData->pIdleTasks ) {
-         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xgrab(sizeof(PHB_ITEM)));
-      } else {
-         pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
-      }
+    if (!pIdleData->pIdleTasks)
+    {
+      pIdleData->pIdleTasks = static_cast<PHB_ITEM *>(hb_xgrab(sizeof(PHB_ITEM)));
+    }
+    else
+    {
+      pIdleData->pIdleTasks =
+          static_cast<PHB_ITEM *>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
+    }
 
-      /* store a copy of passed codeblock
-       */
-      pIdleData->pIdleTasks[pIdleData->iIdleMaxTask - 1] = hb_itemNew(pBlock);
+    /* store a copy of passed codeblock
+     */
+    pIdleData->pIdleTasks[pIdleData->iIdleMaxTask - 1] = hb_itemNew(pBlock);
 
-      /* return a pointer as a handle to this idle task
-       */
-      hb_retptr(static_cast<void*>(hb_codeblockId(pBlock)));    /* TODO: access to pointers from Harbour code */
-   }
+    /* return a pointer as a handle to this idle task
+     */
+    hb_retptr(static_cast<void *>(hb_codeblockId(pBlock))); /* TODO: access to pointers from Harbour code */
+  }
 }
 
 /* Delete a task with given handle and return a codeblock with this task */
-HB_FUNC( HB_IDLEDEL )
+HB_FUNC(HB_IDLEDEL)
 {
-   auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackTestTSD(&s_idleData));
-   auto pID = hb_parptr(1);
+  auto pIdleData = static_cast<PHB_IDLEDATA>(hb_stackTestTSD(&s_idleData));
+  auto pID = hb_parptr(1);
 
-   if( pID && pIdleData && pIdleData->pIdleTasks ) {
-      int iTask = 0;
+  if (pID && pIdleData && pIdleData->pIdleTasks)
+  {
+    int iTask = 0;
 
-      while( iTask < pIdleData->iIdleMaxTask ) {
-         PHB_ITEM pItem = pIdleData->pIdleTasks[iTask];
+    while (iTask < pIdleData->iIdleMaxTask)
+    {
+      PHB_ITEM pItem = pIdleData->pIdleTasks[iTask];
 
-         if( pID == hb_codeblockId(pItem) ) {
-            hb_itemClear(hb_itemReturn(pItem));  /* return a codeblock */
-            hb_itemRelease(pItem);
+      if (pID == hb_codeblockId(pItem))
+      {
+        hb_itemClear(hb_itemReturn(pItem)); /* return a codeblock */
+        hb_itemRelease(pItem);
 
-            --pIdleData->iIdleMaxTask;
-            if( pIdleData->iIdleMaxTask ) {
-               if( iTask != pIdleData->iIdleMaxTask ) {
-                  memmove(&pIdleData->pIdleTasks[iTask], &pIdleData->pIdleTasks[iTask + 1], sizeof(PHB_ITEM) * (pIdleData->iIdleMaxTask - iTask));
-               }
-               pIdleData->pIdleTasks = static_cast<PHB_ITEM*>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
-               if( pIdleData->iIdleTask >= pIdleData->iIdleMaxTask ) {
-                  pIdleData->iIdleTask = 0;
-               }
-            } else {
-               hb_xfree(pIdleData->pIdleTasks);
-               pIdleData->pIdleTasks = nullptr;
-               pIdleData->iIdleTask  = 0;
-            }
-            break;
-         }
-         ++iTask;
+        --pIdleData->iIdleMaxTask;
+        if (pIdleData->iIdleMaxTask)
+        {
+          if (iTask != pIdleData->iIdleMaxTask)
+          {
+            memmove(&pIdleData->pIdleTasks[iTask], &pIdleData->pIdleTasks[iTask + 1],
+                    sizeof(PHB_ITEM) * (pIdleData->iIdleMaxTask - iTask));
+          }
+          pIdleData->pIdleTasks =
+              static_cast<PHB_ITEM *>(hb_xrealloc(pIdleData->pIdleTasks, sizeof(PHB_ITEM) * pIdleData->iIdleMaxTask));
+          if (pIdleData->iIdleTask >= pIdleData->iIdleMaxTask)
+          {
+            pIdleData->iIdleTask = 0;
+          }
+        }
+        else
+        {
+          hb_xfree(pIdleData->pIdleTasks);
+          pIdleData->pIdleTasks = nullptr;
+          pIdleData->iIdleTask = 0;
+        }
+        break;
       }
-   }
+      ++iTask;
+    }
+  }
 }
 
 /* Release a CPU time slice */
-HB_FUNC( HB_RELEASECPU )
+HB_FUNC(HB_RELEASECPU)
 {
-   hb_releaseCPU();
+  hb_releaseCPU();
 }

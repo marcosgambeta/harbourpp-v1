@@ -47,23 +47,26 @@
 #include "hbapi.hpp"
 #include "hbregex.hpp"
 
-HB_BOOL hb_strMatchRegExp(const char * szString, const char * szPattern)
+HB_BOOL hb_strMatchRegExp(const char *szString, const char *szPattern)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strMatchRegExp(%s, %s)", szString, szPattern));
 #endif
 
-   PHB_REGEX pRegEx;
+  PHB_REGEX pRegEx;
 
-   pRegEx = hb_regexCompile( szPattern, strlen(szPattern), HBREG_EXTENDED );
-   if( pRegEx ) {
-      HB_BOOL fMatch;
-      fMatch = hb_regexMatch( pRegEx, szString, strlen(szString), true );
-      hb_regexFree(pRegEx);
-      return fMatch;
-   } else {
-      return hb_strMatchWildExact(szString, szPattern);
-   }
+  pRegEx = hb_regexCompile(szPattern, strlen(szPattern), HBREG_EXTENDED);
+  if (pRegEx)
+  {
+    HB_BOOL fMatch;
+    fMatch = hb_regexMatch(pRegEx, szString, strlen(szString), true);
+    hb_regexFree(pRegEx);
+    return fMatch;
+  }
+  else
+  {
+    return hb_strMatchWildExact(szString, szPattern);
+  }
 }
 
 /*
@@ -77,23 +80,24 @@ HB_BOOL hb_strMatchRegExp(const char * szString, const char * szPattern)
          the pattern is an empty string where hb_WildMatch() returns
          .T., while sx_WildMatch() returns .F. [vszakats] */
 
-HB_FUNC( HB_WILDMATCH )
+HB_FUNC(HB_WILDMATCH)
 {
-   auto szPattern = hb_parc(1);
-   auto szText = hb_parc(2);
-   hb_retl(szText && szPattern && (hb_parl(3) ? hb_strMatchWildExact(szText, szPattern) : hb_strMatchWild(szText, szPattern)));
+  auto szPattern = hb_parc(1);
+  auto szText = hb_parc(2);
+  hb_retl(szText && szPattern &&
+          (hb_parl(3) ? hb_strMatchWildExact(szText, szPattern) : hb_strMatchWild(szText, szPattern)));
 }
 
-HB_FUNC( HB_WILDMATCHI )
+HB_FUNC(HB_WILDMATCHI)
 {
-   auto szPattern = hb_parc(1);
-   auto szText = hb_parc(2);
-   hb_retl(szText && szPattern && hb_strMatchCaseWildExact(szText, szPattern));
+  auto szPattern = hb_parc(1);
+  auto szText = hb_parc(2);
+  hb_retl(szText && szPattern && hb_strMatchCaseWildExact(szText, szPattern));
 }
 
-HB_FUNC( HB_FILEMATCH )
+HB_FUNC(HB_FILEMATCH)
 {
-   auto szText = hb_parc(1);
-   auto szPattern = hb_parc(2);
-   hb_retl(szText && szPattern && hb_strMatchFile(szText, szPattern));
+  auto szText = hb_parc(1);
+  auto szPattern = hb_parc(2);
+  hb_retl(szText && szPattern && hb_strMatchFile(szText, szPattern));
 }

@@ -46,46 +46,57 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( HB_COLORINDEX )
+HB_FUNC(HB_COLORINDEX)
 {
-   if( HB_ISCHAR(1) && HB_ISNUM(2) ) {
-      auto pszColor = hb_parc(1);
-      HB_SIZE      nColorPos;
-      auto iColorIndex = hb_parni(2);
+  if (HB_ISCHAR(1) && HB_ISNUM(2))
+  {
+    auto pszColor = hb_parc(1);
+    HB_SIZE nColorPos;
+    auto iColorIndex = hb_parni(2);
 
-      /* Skip the given number of commas */
-      for( nColorPos = 0; pszColor[nColorPos] != '\0' && iColorIndex > 0; nColorPos++ ) {
-         if( pszColor[nColorPos] == ',' ) {
-            iColorIndex--;
-         }
+    /* Skip the given number of commas */
+    for (nColorPos = 0; pszColor[nColorPos] != '\0' && iColorIndex > 0; nColorPos++)
+    {
+      if (pszColor[nColorPos] == ',')
+      {
+        iColorIndex--;
+      }
+    }
+
+    /* if found, continue */
+    if (iColorIndex == 0)
+    {
+      HB_SIZE nColorLen;
+
+      /* Skip the spaces after the comma */
+      while (pszColor[nColorPos] == ' ')
+      {
+        nColorPos++;
       }
 
-      /* if found, continue */
-      if( iColorIndex == 0 ) {
-         HB_SIZE nColorLen;
-
-         /* Skip the spaces after the comma */
-         while( pszColor[nColorPos] == ' ' ) {
-            nColorPos++;
-         }
-
-         /* Search for next comma or end of string */
-         nColorLen = 0;
-         while( pszColor[nColorPos + nColorLen] != '\0' && pszColor[nColorPos + nColorLen] != ',' ) {
-            nColorLen++;
-         }
-
-         /* Skip the trailing spaces */
-         while( nColorLen > 0 && pszColor[nColorPos + nColorLen - 1] == ' ' ) {
-            nColorLen--;
-         }
-
-         /* Return the string */
-         hb_retclen(pszColor + nColorPos, nColorLen);
-      } else {
-         hb_retc_null();
+      /* Search for next comma or end of string */
+      nColorLen = 0;
+      while (pszColor[nColorPos + nColorLen] != '\0' && pszColor[nColorPos + nColorLen] != ',')
+      {
+        nColorLen++;
       }
-   } else {
+
+      /* Skip the trailing spaces */
+      while (nColorLen > 0 && pszColor[nColorPos + nColorLen - 1] == ' ')
+      {
+        nColorLen--;
+      }
+
+      /* Return the string */
+      hb_retclen(pszColor + nColorPos, nColorLen);
+    }
+    else
+    {
       hb_retc_null();
-   }
+    }
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

@@ -51,36 +51,41 @@
 #include "hbapifs.hpp"
 
 #if defined(HB_OS_WIN)
-   #include "hbwinuni.hpp"
-   #include <windows.h>
+#include "hbwinuni.hpp"
+#include <windows.h>
 #endif
 
-HB_FUNC( HB_RUN )
+HB_FUNC(HB_RUN)
 {
-   auto pszCommand = hb_parc(1);
+  auto pszCommand = hb_parc(1);
 
-   if( pszCommand ) {
-      int iResult = -1;
+  if (pszCommand)
+  {
+    int iResult = -1;
 
-      if( hb_gtSuspend() == Harbour::SUCCESS ) {
+    if (hb_gtSuspend() == Harbour::SUCCESS)
+    {
 #if defined(HB_OS_WIN)
-         LPTSTR lpCommand = HB_CHARDUP(pszCommand);
-         iResult = HB_WINAPI_SYSTEM(lpCommand);
-         hb_xfree(lpCommand);
+      LPTSTR lpCommand = HB_CHARDUP(pszCommand);
+      iResult = HB_WINAPI_SYSTEM(lpCommand);
+      hb_xfree(lpCommand);
 #else
-         char * pszFree = nullptr;
+      char *pszFree = nullptr;
 
-         iResult = system(hb_osEncodeCP(pszCommand, &pszFree, nullptr));
+      iResult = system(hb_osEncodeCP(pszCommand, &pszFree, nullptr));
 
-         if( pszFree ) {
-            hb_xfree(pszFree);
-         }
+      if (pszFree)
+      {
+        hb_xfree(pszFree);
+      }
 #endif
 
-         hb_gtResume();
-      }
-      hb_retni(iResult);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      hb_gtResume();
+    }
+    hb_retni(iResult);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

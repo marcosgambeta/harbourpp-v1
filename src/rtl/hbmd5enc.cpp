@@ -49,82 +49,95 @@
 #include "hbapiitm.hpp"
 #include "hbchksum.h"
 
-static void hb_md5_init_seed(char * vect, const char * pszKey, int iLen)
+static void hb_md5_init_seed(char *vect, const char *pszKey, int iLen)
 {
-   hb_md5(pszKey, iLen, vect);
+  hb_md5(pszKey, iLen, vect);
 }
 
-static void hb_md5_next_seed(char * vect, const char * pszKey, int iLen)
+static void hb_md5_next_seed(char *vect, const char *pszKey, int iLen)
 {
-   for( auto i = 0; i < 16; ++i ) {
-      vect[i] ^= pszKey[i % iLen];
-   }
-   hb_md5(vect, 16, vect);
+  for (auto i = 0; i < 16; ++i)
+  {
+    vect[i] ^= pszKey[i % iLen];
+  }
+  hb_md5(vect, 16, vect);
 }
 
 /* hb_MD5Encrypt(<cText>, <cPasswd>) --> <cCipher>
  */
-HB_FUNC( HB_MD5ENCRYPT )
+HB_FUNC(HB_MD5ENCRYPT)
 {
-   auto pData = hb_param(1, Harbour::Item::STRING);
+  auto pData = hb_param(1, Harbour::Item::STRING);
 
-   if( pData && hb_parclen(2) > 0 ) {
-      auto nLen = hb_itemGetCLen(pData);
+  if (pData && hb_parclen(2) > 0)
+  {
+    auto nLen = hb_itemGetCLen(pData);
 
-      if( nLen ) {
-         auto pszSource = hb_itemGetCPtr(pData);
-         auto pszData = static_cast<char*>(hb_xgrab(nLen + 1));
-         auto pszKey = hb_parc(2);
-         auto iLen = static_cast<int>(hb_parclen(2));
-         char vect[16];
-         HB_SIZE n;
+    if (nLen)
+    {
+      auto pszSource = hb_itemGetCPtr(pData);
+      auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
+      auto pszKey = hb_parc(2);
+      auto iLen = static_cast<int>(hb_parclen(2));
+      char vect[16];
+      HB_SIZE n;
 
-         hb_md5_init_seed(vect, pszKey, iLen);
+      hb_md5_init_seed(vect, pszKey, iLen);
 
-         for( n = 0; n < nLen; ++n ) {
-            auto i = static_cast<int>(n & 0x0F);
-            if( i == 0 ) {
-               hb_md5_next_seed(vect, pszKey, iLen);
-            }
-            pszData[n] = (vect[i] ^= pszSource[n]);
-         }
-         hb_retclen_buffer(pszData, nLen);
-      } else {
-         hb_retc_null();
+      for (n = 0; n < nLen; ++n)
+      {
+        auto i = static_cast<int>(n & 0x0F);
+        if (i == 0)
+        {
+          hb_md5_next_seed(vect, pszKey, iLen);
+        }
+        pszData[n] = (vect[i] ^= pszSource[n]);
       }
-   }
+      hb_retclen_buffer(pszData, nLen);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
 
 /* hb_MD5Decrypt(<cCipher>, <cPasswd> ]) --> <cText>
  */
-HB_FUNC( HB_MD5DECRYPT )
+HB_FUNC(HB_MD5DECRYPT)
 {
-   auto pData = hb_param(1, Harbour::Item::STRING);
+  auto pData = hb_param(1, Harbour::Item::STRING);
 
-   if( pData && hb_parclen(2) > 0 ) {
-      auto nLen = hb_itemGetCLen(pData);
+  if (pData && hb_parclen(2) > 0)
+  {
+    auto nLen = hb_itemGetCLen(pData);
 
-      if( nLen ) {
-         auto pszSource = hb_itemGetCPtr(pData);
-         auto pszData = static_cast<char*>(hb_xgrab(nLen + 1));
-         auto pszKey = hb_parc(2);
-         auto iLen = static_cast<int>(hb_parclen(2));
-         char vect[16];
-         HB_SIZE n;
+    if (nLen)
+    {
+      auto pszSource = hb_itemGetCPtr(pData);
+      auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
+      auto pszKey = hb_parc(2);
+      auto iLen = static_cast<int>(hb_parclen(2));
+      char vect[16];
+      HB_SIZE n;
 
-         hb_md5_init_seed(vect, pszKey, iLen);
+      hb_md5_init_seed(vect, pszKey, iLen);
 
-         for( n = 0; n < nLen; ++n ) {
-            auto i = static_cast<int>(n & 0x0F);
-            if( i == 0 ) {
-               hb_md5_next_seed(vect, pszKey, iLen);
-            }
-            pszData[n] = (vect[i] ^ pszSource[n]);
-            vect[i] = pszSource[n];
-         }
-         hb_retclen_buffer(pszData, nLen);
-      } else {
-         hb_retc_null();
+      for (n = 0; n < nLen; ++n)
+      {
+        auto i = static_cast<int>(n & 0x0F);
+        if (i == 0)
+        {
+          hb_md5_next_seed(vect, pszKey, iLen);
+        }
+        pszData[n] = (vect[i] ^ pszSource[n]);
+        vect[i] = pszSource[n];
       }
-   }
+      hb_retclen_buffer(pszData, nLen);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }

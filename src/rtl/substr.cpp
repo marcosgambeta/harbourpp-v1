@@ -52,59 +52,79 @@
 
 /* returns l characters from n characters into string */
 
-HB_FUNC( SUBSTR )
+HB_FUNC(SUBSTR)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
-   auto iPCount = hb_pcount();
+  auto pText = hb_param(1, Harbour::Item::STRING);
+  auto iPCount = hb_pcount();
 
-   if( pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)) ) {
-      auto cdp = hb_vmCDP();
-      auto pszText = hb_itemGetCPtr(pText);
-      HB_ISIZ nSize = hb_itemGetCLen(pText);
-      HB_ISIZ nFrom = hb_parns(2);
-      HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
+  if (pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))
+  {
+    auto cdp = hb_vmCDP();
+    auto pszText = hb_itemGetCPtr(pText);
+    HB_ISIZ nSize = hb_itemGetCLen(pText);
+    HB_ISIZ nFrom = hb_parns(2);
+    HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
 
-      if( nFrom > 0 ) {
-         if( --nFrom > nSize ) {
-            nCount = 0;
-         }
+    if (nFrom > 0)
+    {
+      if (--nFrom > nSize)
+      {
+        nCount = 0;
       }
+    }
 
-      if( nCount > 0 ) {
-         if( HB_CDP_ISCHARIDX(cdp) ) {
-            if( nFrom < 0 ) {
-               nFrom += hb_cdpTextLen(cdp, pszText, nSize);
-            }
-            if( nFrom > 0 ) {
-               nFrom = hb_cdpTextPos(cdp, pszText, nSize, nFrom);
-               pszText += nFrom;
-               nSize -= nFrom;
-            }
-            nCount = hb_cdpTextPos(cdp, pszText, nSize, nCount);
-         } else {
-            if( nFrom < 0 ) {
-               nFrom += nSize;
-            }
-            if( nFrom > 0 ) {
-               pszText += nFrom;
-               nSize -= nFrom;
-            }
-            if( nCount > nSize ) {
-               nCount = nSize;
-            }
-         }
+    if (nCount > 0)
+    {
+      if (HB_CDP_ISCHARIDX(cdp))
+      {
+        if (nFrom < 0)
+        {
+          nFrom += hb_cdpTextLen(cdp, pszText, nSize);
+        }
+        if (nFrom > 0)
+        {
+          nFrom = hb_cdpTextPos(cdp, pszText, nSize, nFrom);
+          pszText += nFrom;
+          nSize -= nFrom;
+        }
+        nCount = hb_cdpTextPos(cdp, pszText, nSize, nCount);
       }
+      else
+      {
+        if (nFrom < 0)
+        {
+          nFrom += nSize;
+        }
+        if (nFrom > 0)
+        {
+          pszText += nFrom;
+          nSize -= nFrom;
+        }
+        if (nCount > nSize)
+        {
+          nCount = nSize;
+        }
+      }
+    }
 
-      if( nCount > 0 ) {
-         if( nFrom <= 0 && nCount == nSize ) {
-            hb_itemReturn(pText);
-         } else {
-            hb_retclen(pszText, nCount);
-         }
-      } else {
-         hb_retc_null();
+    if (nCount > 0)
+    {
+      if (nFrom <= 0 && nCount == nSize)
+      {
+        hb_itemReturn(pText);
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      else
+      {
+        hb_retclen(pszText, nCount);
+      }
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1110, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

@@ -47,85 +47,102 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 
-HB_FUNC( HB_DIRCREATE )
+HB_FUNC(HB_DIRCREATE)
 {
-   if( HB_ISCHAR(1) ) {
-      hb_retni(hb_fsMkDir(hb_parc(1)) ? 0 : hb_fsError());
-   } else {
-      hb_retni(F_ERROR);
-   }
+  if (HB_ISCHAR(1))
+  {
+    hb_retni(hb_fsMkDir(hb_parc(1)) ? 0 : hb_fsError());
+  }
+  else
+  {
+    hb_retni(F_ERROR);
+  }
 }
 
-HB_FUNC( HB_DIRDELETE )
+HB_FUNC(HB_DIRDELETE)
 {
-   if( HB_ISCHAR(1) ) {
-      hb_retni(hb_fsRmDir(hb_parc(1)) ? 0 : hb_fsError());
-   } else {
-      hb_retni(F_ERROR);
-   }
+  if (HB_ISCHAR(1))
+  {
+    hb_retni(hb_fsRmDir(hb_parc(1)) ? 0 : hb_fsError());
+  }
+  else
+  {
+    hb_retni(F_ERROR);
+  }
 }
 
 /* NOTE: Clipper 5.3 functions */
 
 #ifdef HB_COMPAT_C53
 
-HB_FUNC( DIRCHANGE )
+HB_FUNC(DIRCHANGE)
 {
-   if( HB_ISCHAR(1) ) {
-      hb_retni(hb_fsChDir(hb_parc(1)) ? 0 : hb_fsError());
-   } else {
-      hb_retni(F_ERROR);
-   }
+  if (HB_ISCHAR(1))
+  {
+    hb_retni(hb_fsChDir(hb_parc(1)) ? 0 : hb_fsError());
+  }
+  else
+  {
+    hb_retni(F_ERROR);
+  }
 }
 
 /* NOTE: Clipper 5.3 NG incorrectly states that the name of this function is
          DirMake(), in reality it's not. */
 
-HB_FUNC_TRANSLATE( MAKEDIR, HB_DIRCREATE )
-HB_FUNC_TRANSLATE( DIRREMOVE, HB_DIRDELETE )
+HB_FUNC_TRANSLATE(MAKEDIR, HB_DIRCREATE)
+HB_FUNC_TRANSLATE(DIRREMOVE, HB_DIRDELETE)
 
 /* NOTE: Clipper 5.3 undocumented */
 
 #ifdef HB_CLP_UNDOC
 
-HB_FUNC( ISDISK )
+HB_FUNC(ISDISK)
 {
-   auto fResult = false;
-   auto szDrive = hb_parc(1);
+  auto fResult = false;
+  auto szDrive = hb_parc(1);
 
-   if( szDrive ) {
-      if( *szDrive >= 'A' && *szDrive <= 'Z' ) {
-         fResult = hb_fsIsDrv(*szDrive - 'A') == 0;
-      } else if( *szDrive >= 'a' && *szDrive <= 'z' ) {
-         fResult = hb_fsIsDrv(*szDrive - 'a') == 0;
-      }
-   }
-   hb_retl(fResult);
+  if (szDrive)
+  {
+    if (*szDrive >= 'A' && *szDrive <= 'Z')
+    {
+      fResult = hb_fsIsDrv(*szDrive - 'A') == 0;
+    }
+    else if (*szDrive >= 'a' && *szDrive <= 'z')
+    {
+      fResult = hb_fsIsDrv(*szDrive - 'a') == 0;
+    }
+  }
+  hb_retl(fResult);
 }
 
-HB_FUNC( DISKCHANGE )
+HB_FUNC(DISKCHANGE)
 {
-   auto fResult = false;
-   auto szDrive = hb_parc(1);
+  auto fResult = false;
+  auto szDrive = hb_parc(1);
 
-   if( szDrive ) {
-      if( *szDrive >= 'A' && *szDrive <= 'Z' ) {
-         fResult = hb_fsChDrv(*szDrive - 'A') == 0;
-      } else if( *szDrive >= 'a' && *szDrive <= 'z' ) {
-         fResult = hb_fsChDrv(*szDrive - 'a') == 0;
-      }
-   }
-   hb_retl(fResult);
+  if (szDrive)
+  {
+    if (*szDrive >= 'A' && *szDrive <= 'Z')
+    {
+      fResult = hb_fsChDrv(*szDrive - 'A') == 0;
+    }
+    else if (*szDrive >= 'a' && *szDrive <= 'z')
+    {
+      fResult = hb_fsChDrv(*szDrive - 'a') == 0;
+    }
+  }
+  hb_retl(fResult);
 }
 
-HB_FUNC( DISKNAME )
+HB_FUNC(DISKNAME)
 {
 #if defined(HB_OS_HAS_DRIVE_LETTER)
-   char szDrive[1];
-   szDrive[0] = (static_cast<char>(hb_fsCurDrv())) + 'A';
-   hb_retclen(szDrive, 1);
+  char szDrive[1];
+  szDrive[0] = (static_cast<char>(hb_fsCurDrv())) + 'A';
+  hb_retclen(szDrive, 1);
 #else
-   hb_retc_null();
+  hb_retc_null();
 #endif
 }
 

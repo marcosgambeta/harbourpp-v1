@@ -47,16 +47,19 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 
-HB_FUNC( HB_FEOF )
+HB_FUNC(HB_FEOF)
 {
-   HB_ERRCODE uiError = 6;
+  HB_ERRCODE uiError = 6;
 
-   if( HB_ISNUM(1) ) {
-      hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
-      uiError = hb_fsError();
-   } else {
-      hb_retl(true);
-   }
+  if (HB_ISNUM(1))
+  {
+    hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
+    uiError = hb_fsError();
+  }
+  else
+  {
+    hb_retl(true);
+  }
 
-   hb_fsSetFError(uiError);
+  hb_fsSetFError(uiError);
 }

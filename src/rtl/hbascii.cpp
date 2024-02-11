@@ -48,76 +48,88 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( HB_ASCIIUPPER )
+HB_FUNC(HB_ASCIIUPPER)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto pszText = hb_itemGetCPtr(pText);
-      auto nLen = hb_itemGetCLen(pText);
+  if (pText)
+  {
+    auto pszText = hb_itemGetCPtr(pText);
+    auto nLen = hb_itemGetCLen(pText);
 
-      for( HB_SIZE u = 0; u < nLen; u++ ) {
-         if( HB_ISLOWER(pszText[u]) ) {
-            char * pszBuff = hb_itemGetC(pText);
+    for (HB_SIZE u = 0; u < nLen; u++)
+    {
+      if (HB_ISLOWER(pszText[u]))
+      {
+        char *pszBuff = hb_itemGetC(pText);
 
-            do {
-               pszBuff[u] = HB_TOUPPER(pszBuff[u]);
-            } while( ++u < nLen );
-            hb_retclen_buffer(pszBuff, nLen);
-            return;
-         }
+        do
+        {
+          pszBuff[u] = HB_TOUPPER(pszBuff[u]);
+        } while (++u < nLen);
+        hb_retclen_buffer(pszBuff, nLen);
+        return;
       }
-      hb_itemReturn(pText);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    }
+    hb_itemReturn(pText);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1102, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_ASCIILOWER )
+HB_FUNC(HB_ASCIILOWER)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto pszText = hb_itemGetCPtr(pText);
-      auto nLen = hb_itemGetCLen(pText);
+  if (pText)
+  {
+    auto pszText = hb_itemGetCPtr(pText);
+    auto nLen = hb_itemGetCLen(pText);
 
-      for( HB_SIZE u = 0; u < nLen; u++ ) {
-         if( HB_ISUPPER(pszText[u]) ) {
-            char * pszBuff = hb_itemGetC(pText);
+    for (HB_SIZE u = 0; u < nLen; u++)
+    {
+      if (HB_ISUPPER(pszText[u]))
+      {
+        char *pszBuff = hb_itemGetC(pText);
 
-            do {
-               pszBuff[u] = HB_TOLOWER(pszBuff[u]);
-            } while( ++u < nLen );
-            hb_retclen_buffer(pszBuff, nLen);
-            return;
-         }
+        do
+        {
+          pszBuff[u] = HB_TOLOWER(pszBuff[u]);
+        } while (++u < nLen);
+        hb_retclen_buffer(pszBuff, nLen);
+        return;
       }
-      hb_itemReturn(pText);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    }
+    hb_itemReturn(pText);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1103, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_ASCIIISALPHA )
+HB_FUNC(HB_ASCIIISALPHA)
 {
-   auto pszText = hb_parc(1);
-   hb_retl(pszText && HB_ISALPHA(static_cast<unsigned char>(*pszText)));
+  auto pszText = hb_parc(1);
+  hb_retl(pszText && HB_ISALPHA(static_cast<unsigned char>(*pszText)));
 }
 
-HB_FUNC( HB_ASCIIISUPPER )
+HB_FUNC(HB_ASCIIISUPPER)
 {
-   auto pszText = hb_parc(1);
-   hb_retl(pszText && HB_ISUPPER(static_cast<unsigned char>(*pszText)));
+  auto pszText = hb_parc(1);
+  hb_retl(pszText && HB_ISUPPER(static_cast<unsigned char>(*pszText)));
 }
 
-HB_FUNC( HB_ASCIIISLOWER )
+HB_FUNC(HB_ASCIIISLOWER)
 {
-   auto pszText = hb_parc(1);
-   hb_retl(pszText && HB_ISLOWER(static_cast<unsigned char>(*pszText)));
+  auto pszText = hb_parc(1);
+  hb_retl(pszText && HB_ISLOWER(static_cast<unsigned char>(*pszText)));
 }
 
-HB_FUNC( HB_ASCIIISDIGIT )
+HB_FUNC(HB_ASCIIISDIGIT)
 {
-   auto pszText = hb_parc(1);
-   hb_retl(pszText && HB_ISDIGIT(static_cast<unsigned char>(*pszText)));
+  auto pszText = hb_parc(1);
+  hb_retl(pszText && HB_ISDIGIT(static_cast<unsigned char>(*pszText)));
 }

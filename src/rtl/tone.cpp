@@ -47,9 +47,10 @@
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
 
-HB_FUNC( TONE )
+HB_FUNC(TONE)
 {
-   if( HB_ISNUM(1) ) {
-      hb_gtTone(hb_parnd(1), (HB_ISNUM(2) ? hb_parnd(2) : 1.0));
-   }
+  if (HB_ISNUM(1))
+  {
+    hb_gtTone(hb_parnd(1), (HB_ISNUM(2) ? hb_parnd(2) : 1.0));
+  }
 }

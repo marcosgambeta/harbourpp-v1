@@ -59,38 +59,42 @@
          into Harbour core. [vszakats] */
 #define HB_COMPAT_CT3
 
-HB_FUNC( MAXROW ) /* Return the maximum screen/window row number (zero origin) */
+HB_FUNC(MAXROW) /* Return the maximum screen/window row number (zero origin) */
 {
 #ifdef HB_COMPAT_CT3
-   /*
-    * if called with logical .T. parameter then return real screen high - 1
-    * It gives exactly the same result in all standard GT drivers so we
-    * are still Clipper compatible. The difference can appear in some extended
-    * GT drivers which have additional functionality, f.e. CTW GT which
-    * is upper level GT and add CTIII Window support. When it's activated
-    * then MaxRow() will return current window max row and MaxRow(.T.) real
-    * screen (window 0) max row what is the exact behavior of MaxRow()
-    * in CT3, [druzus]
-    */
+  /*
+   * if called with logical .T. parameter then return real screen high - 1
+   * It gives exactly the same result in all standard GT drivers so we
+   * are still Clipper compatible. The difference can appear in some extended
+   * GT drivers which have additional functionality, f.e. CTW GT which
+   * is upper level GT and add CTIII Window support. When it's activated
+   * then MaxRow() will return current window max row and MaxRow(.T.) real
+   * screen (window 0) max row what is the exact behavior of MaxRow()
+   * in CT3, [druzus]
+   */
 
-   if( hb_parl(1) ) {
-      int iRows, iCols;
-      hb_gtScrDim(&iRows, &iCols);
-      hb_retni(iRows - 1);
-   } else
+  if (hb_parl(1))
+  {
+    int iRows, iCols;
+    hb_gtScrDim(&iRows, &iCols);
+    hb_retni(iRows - 1);
+  }
+  else
 #endif
-      hb_retni(hb_gtMaxRow());
+    hb_retni(hb_gtMaxRow());
 }
 
-HB_FUNC( MAXCOL ) /* Return the maximum screen/window column number (zero origin) */
+HB_FUNC(MAXCOL) /* Return the maximum screen/window column number (zero origin) */
 {
 #ifdef HB_COMPAT_CT3
-   /* See notes about MaxRow(.T.) above */
-   if( hb_parl(1) ) {
-      int iRows, iCols;
-      hb_gtScrDim(&iRows, &iCols);
-      hb_retni(iCols - 1);
-   } else
+  /* See notes about MaxRow(.T.) above */
+  if (hb_parl(1))
+  {
+    int iRows, iCols;
+    hb_gtScrDim(&iRows, &iCols);
+    hb_retni(iCols - 1);
+  }
+  else
 #endif
-      hb_retni(hb_gtMaxCol());
+    hb_retni(hb_gtMaxCol());
 }

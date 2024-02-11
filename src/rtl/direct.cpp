@@ -97,82 +97,93 @@
          this issue is very much platform specific, and this is
          not the only place which may need the conversion [vszakats]. */
 
-PHB_ITEM hb_fsDirectory(const char * pszDirSpec, const char * pszAttributes, HB_BOOL fDateTime)
+PHB_ITEM hb_fsDirectory(const char *pszDirSpec, const char *pszAttributes, HB_BOOL fDateTime)
 {
-   auto pDir = hb_itemArrayNew(0);
-   char *    pszFree = nullptr;
-   PHB_FFIND ffind;
-   HB_FATTR  ulMask;
+  auto pDir = hb_itemArrayNew(0);
+  char *pszFree = nullptr;
+  PHB_FFIND ffind;
+  HB_FATTR ulMask;
 
-   /* Get the passed attributes and convert them to Harbour Flags */
+  /* Get the passed attributes and convert them to Harbour Flags */
 
-   ulMask = HB_FA_ARCHIVE | HB_FA_READONLY;
+  ulMask = HB_FA_ARCHIVE | HB_FA_READONLY;
 
-   if( pszAttributes && *pszAttributes ) {
-      ulMask |= hb_fsAttrEncode(pszAttributes);
-   }
+  if (pszAttributes && *pszAttributes)
+  {
+    ulMask |= hb_fsAttrEncode(pszAttributes);
+  }
 
-   if( pszDirSpec && *pszDirSpec ) {
-      if( ulMask != HB_FA_LABEL ) {
-         /* CA-Cl*pper compatible behavior - add all file mask when
-          * last character is directory or drive separator
-          */
-         HB_SIZE nLen = strlen(pszDirSpec) - 1;
+  if (pszDirSpec && *pszDirSpec)
+  {
+    if (ulMask != HB_FA_LABEL)
+    {
+      /* CA-Cl*pper compatible behavior - add all file mask when
+       * last character is directory or drive separator
+       */
+      HB_SIZE nLen = strlen(pszDirSpec) - 1;
 #ifdef HB_OS_HAS_DRIVE_LETTER
-         if( pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR || pszDirSpec[nLen] == HB_OS_DRIVE_DELIM_CHR )
+      if (pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR || pszDirSpec[nLen] == HB_OS_DRIVE_DELIM_CHR)
 #else
-         if( pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR )
+      if (pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR)
 #endif
-         {
-            pszDirSpec = pszFree = hb_xstrcpy(nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr);
-         }
+      {
+        pszDirSpec = pszFree = hb_xstrcpy(nullptr, pszDirSpec, HB_OS_ALLFILE_MASK, nullptr);
       }
-   } else {
-      pszDirSpec = HB_OS_ALLFILE_MASK;
-   }
+    }
+  }
+  else
+  {
+    pszDirSpec = HB_OS_ALLFILE_MASK;
+  }
 
-   /* Get the file list */
+  /* Get the file list */
 
-   if( (ffind = hb_fsFindFirst(pszDirSpec, ulMask)) != nullptr ) {
-      auto pSubarray = hb_itemNew(nullptr);
+  if ((ffind = hb_fsFindFirst(pszDirSpec, ulMask)) != nullptr)
+  {
+    auto pSubarray = hb_itemNew(nullptr);
 
-      do {
-         char buffer[32];
+    do
+    {
+      char buffer[32];
 
-         hb_arrayNew    (pSubarray, F_LEN);
-         hb_arraySetC   (pSubarray, F_NAME, ffind->szName);
-         hb_arraySetNInt(pSubarray, F_SIZE, ffind->size);
-         hb_arraySetC   (pSubarray, F_TIME, ffind->szTime);
-         hb_arraySetC   (pSubarray, F_ATTR, hb_fsAttrDecode(ffind->attr, buffer));
+      hb_arrayNew(pSubarray, F_LEN);
+      hb_arraySetC(pSubarray, F_NAME, ffind->szName);
+      hb_arraySetNInt(pSubarray, F_SIZE, ffind->size);
+      hb_arraySetC(pSubarray, F_TIME, ffind->szTime);
+      hb_arraySetC(pSubarray, F_ATTR, hb_fsAttrDecode(ffind->attr, buffer));
 
-         if( fDateTime ) {
-            hb_arraySetTDT(pSubarray, F_DATE, ffind->lDate, ffind->lTime);
-         } else {
-            hb_arraySetDL ( pSubarray, F_DATE, ffind->lDate );
-         }
+      if (fDateTime)
+      {
+        hb_arraySetTDT(pSubarray, F_DATE, ffind->lDate, ffind->lTime);
+      }
+      else
+      {
+        hb_arraySetDL(pSubarray, F_DATE, ffind->lDate);
+      }
 
-         /* Don't exit when array limit is reached */
-         hb_arrayAddForward(pDir, pSubarray);
-      } while( hb_fsFindNext(ffind) );
+      /* Don't exit when array limit is reached */
+      hb_arrayAddForward(pDir, pSubarray);
+    } while (hb_fsFindNext(ffind));
 
-      hb_itemRelease(pSubarray);
+    hb_itemRelease(pSubarray);
 
-      hb_fsFindClose(ffind);
-   }
+    hb_fsFindClose(ffind);
+  }
 
-   if( pszFree ) {
-      hb_xfree(pszFree);
-   }
+  if (pszFree)
+  {
+    hb_xfree(pszFree);
+  }
 
-   return pDir;
+  return pDir;
 }
 
-HB_FUNC( DIRECTORY )
+HB_FUNC(DIRECTORY)
 {
-   hb_itemReturnRelease(hb_fsDirectory(hb_parc(1), hb_parc(2), false));
+  hb_itemReturnRelease(hb_fsDirectory(hb_parc(1), hb_parc(2), false));
 }
 
-HB_FUNC( HB_DIRECTORY )
+HB_FUNC(HB_DIRECTORY)
 {
-   hb_itemReturnRelease(hb_fsDirectory(hb_parc(1), hb_parc(2), true));
+  hb_itemReturnRelease(hb_fsDirectory(hb_parc(1), hb_parc(2), true));
 }

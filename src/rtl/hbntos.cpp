@@ -48,61 +48,74 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( HB_NTOS )
+HB_FUNC(HB_NTOS)
 {
-   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+  auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pNumber ) {
-      char * szResult = hb_itemStr(pNumber, nullptr, nullptr);
+  if (pNumber)
+  {
+    char *szResult = hb_itemStr(pNumber, nullptr, nullptr);
 
-      if( szResult ) {
-         HB_SIZE nToTrim = 0;
+    if (szResult)
+    {
+      HB_SIZE nToTrim = 0;
 
-         while( szResult[nToTrim] == ' ' ) {
-            ++nToTrim;
-         }
-
-         if( nToTrim ) {
-            memmove(szResult, szResult + nToTrim, strlen(szResult + nToTrim) + 1);
-         }
-
-         hb_retc_buffer(szResult);
-         return;
+      while (szResult[nToTrim] == ' ')
+      {
+        ++nToTrim;
       }
-   }
 
-   hb_retc_null();
+      if (nToTrim)
+      {
+        memmove(szResult, szResult + nToTrim, strlen(szResult + nToTrim) + 1);
+      }
+
+      hb_retc_buffer(szResult);
+      return;
+    }
+  }
+
+  hb_retc_null();
 }
 
-HB_FUNC( HB_NTOC )
+HB_FUNC(HB_NTOC)
 {
-   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+  auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
 
-   if( pNumber ) {
-      char szBuffer[HB_MAX_DOUBLE_LENGTH];
+  if (pNumber)
+  {
+    char szBuffer[HB_MAX_DOUBLE_LENGTH];
 
-      if( !HB_IS_DOUBLE(pNumber) ) {
-         HB_MAXINT nNumber = hb_itemGetNInt(pNumber);
-         int iPos = sizeof(szBuffer);
-         bool fNeg = nNumber < 0;
+    if (!HB_IS_DOUBLE(pNumber))
+    {
+      HB_MAXINT nNumber = hb_itemGetNInt(pNumber);
+      int iPos = sizeof(szBuffer);
+      bool fNeg = nNumber < 0;
 
-         if( fNeg ) {
-            nNumber = -nNumber;
-         }
-         szBuffer[--iPos] = '\0';
-         do {
-            szBuffer[--iPos] = '0' + static_cast<char>(nNumber % 10);
-            nNumber /= 10;
-         } while( nNumber != 0 );
-         if( fNeg ) {
-            szBuffer[--iPos] = '-';
-         }
-
-         hb_retc(szBuffer + iPos);
-      } else {
-         hb_retc(hb_dblToStr(szBuffer, sizeof(szBuffer), hb_itemGetND(pNumber), hb_parnidef(2, -1)));
+      if (fNeg)
+      {
+        nNumber = -nNumber;
       }
-   } else {
-      hb_retc_null();
-   }
+      szBuffer[--iPos] = '\0';
+      do
+      {
+        szBuffer[--iPos] = '0' + static_cast<char>(nNumber % 10);
+        nNumber /= 10;
+      } while (nNumber != 0);
+      if (fNeg)
+      {
+        szBuffer[--iPos] = '-';
+      }
+
+      hb_retc(szBuffer + iPos);
+    }
+    else
+    {
+      hb_retc(hb_dblToStr(szBuffer, sizeof(szBuffer), hb_itemGetND(pNumber), hb_parnidef(2, -1)));
+    }
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

@@ -53,69 +53,71 @@
 #ifdef HB_LEGACY_LEVEL4
 
 #if defined(HB_OS_WIN)
-   #include <windows.h>
+#include <windows.h>
 #endif
 
-HB_FUNC( HB_ANSITOOEM )
+HB_FUNC(HB_ANSITOOEM)
 {
-   auto pString = hb_param(1, Harbour::Item::STRING);
+  auto pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
+  if (pString)
 #if defined(HB_OS_WIN)
-   {
-      auto nLen = static_cast<int>(hb_itemGetCLen(pString));
-      auto pszSrc = hb_itemGetCPtr(pString);
+  {
+    auto nLen = static_cast<int>(hb_itemGetCLen(pString));
+    auto pszSrc = hb_itemGetCPtr(pString);
 
-      int nWideLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
-      auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
+    int nWideLen = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
+    auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
-      MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);
+    MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);
 
-      nLen = WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
-      auto pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
+    nLen = WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
+    auto pszDst = static_cast<char *>(hb_xgrab(nLen + 1));
 
-      WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
+    WideCharToMultiByte(CP_OEMCP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 
-      hb_xfree(pszWide);
-      hb_retclen_buffer(pszDst, nLen);
-   }
+    hb_xfree(pszWide);
+    hb_retclen_buffer(pszDst, nLen);
+  }
 #else
-      hb_itemReturn(pString);
+    hb_itemReturn(pString);
 #endif
-   else {
-      hb_retc_null();
-   }
+  else
+  {
+    hb_retc_null();
+  }
 }
 
-HB_FUNC( HB_OEMTOANSI )
+HB_FUNC(HB_OEMTOANSI)
 {
-   auto pString = hb_param(1, Harbour::Item::STRING);
+  auto pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString )
+  if (pString)
 #if defined(HB_OS_WIN)
-   {
-      auto nLen = static_cast<int>(hb_itemGetCLen(pString));
-      auto pszSrc = hb_itemGetCPtr(pString);
+  {
+    auto nLen = static_cast<int>(hb_itemGetCLen(pString));
+    auto pszSrc = hb_itemGetCPtr(pString);
 
-      int nWideLen = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
-      auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
+    int nWideLen = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, nullptr, 0);
+    auto pszWide = static_cast<LPWSTR>(hb_xgrab((nWideLen + 1) * sizeof(wchar_t)));
 
-      MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);
+    MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, pszSrc, nLen, pszWide, nWideLen);
 
-      nLen = WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
-      auto pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
+    nLen = WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, nullptr, 0, nullptr, nullptr);
+    auto pszDst = static_cast<char *>(hb_xgrab(nLen + 1));
 
-      WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
+    WideCharToMultiByte(CP_ACP, 0, pszWide, nWideLen, pszDst, nLen, nullptr, nullptr);
 
-      hb_xfree(pszWide);
-      hb_retclen_buffer(pszDst, nLen);
-   }
+    hb_xfree(pszWide);
+    hb_retclen_buffer(pszDst, nLen);
+  }
 #else
-      hb_itemReturn(pString);
+    hb_itemReturn(pString);
 #endif
-   else {
-      hb_retc_null();
-   }
+  else
+  {
+    hb_retc_null();
+  }
 }
 
 #endif

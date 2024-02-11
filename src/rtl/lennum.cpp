@@ -47,20 +47,22 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( LENNUM )
+HB_FUNC(LENNUM)
 {
-   auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
-   HB_SIZE nLen = 0;
+  auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+  HB_SIZE nLen = 0;
 
-   if( pNumber ) {
-      char * pszString = hb_itemStr(pNumber, nullptr, nullptr);
+  if (pNumber)
+  {
+    char *pszString = hb_itemStr(pNumber, nullptr, nullptr);
 
-      if( pszString ) {
-         nLen = strlen(pszString);
-         hb_strLTrim(pszString, &nLen);
-         hb_xfree(pszString);
-      }
-   }
+    if (pszString)
+    {
+      nLen = strlen(pszString);
+      hb_strLTrim(pszString, &nLen);
+      hb_xfree(pszString);
+    }
+  }
 
-   hb_retns(nLen);
+  hb_retns(nLen);
 }

@@ -52,63 +52,71 @@
 /* NOTE: core random generator algorithm is the work of Steve Park
          https://web.archive.org/web/www.cs.wm.edu/~va/software/park/ */
 
-#define MODULUS     2147483647 /* DON'T CHANGE THIS VALUE */
-#define MULTIPLIER  48271      /* DON'T CHANGE THIS VALUE */
+#define MODULUS 2147483647 /* DON'T CHANGE THIS VALUE */
+#define MULTIPLIER 48271   /* DON'T CHANGE THIS VALUE */
 
 static HB_TSD_NEW(s_seed, sizeof(HB_I32), nullptr, nullptr);
-#define SEED_PTR    ( static_cast<HB_I32*>(hb_stackGetTSD(&s_seed)) )
+#define SEED_PTR (static_cast<HB_I32 *>(hb_stackGetTSD(&s_seed)))
 
 /* Returns a double value between 0 and 1 */
 double hb_random_num(void)
 {
-   HB_I32 * seed = SEED_PTR;
+  HB_I32 *seed = SEED_PTR;
 
-   HB_I32 t = *seed;
-   if( t == 0 ) {
-      t = static_cast<HB_I32>(( hb_dateMilliSeconds() ^ reinterpret_cast<HB_PTRUINT>(hb_stackId()) ) % MODULUS);
-   }
+  HB_I32 t = *seed;
+  if (t == 0)
+  {
+    t = static_cast<HB_I32>((hb_dateMilliSeconds() ^ reinterpret_cast<HB_PTRUINT>(hb_stackId())) % MODULUS);
+  }
 
 #if !defined(HB_LONG_LONG_OFF)
-   t = static_cast<HB_I32>(static_cast<HB_LONGLONG>(t) * MULTIPLIER % MODULUS);
+  t = static_cast<HB_I32>(static_cast<HB_LONGLONG>(t) * MULTIPLIER % MODULUS);
 #else
-   {
-      const HB_I32 Q = MODULUS / MULTIPLIER;
-      const HB_I32 R = MODULUS % MULTIPLIER;
+  {
+    const HB_I32 Q = MODULUS / MULTIPLIER;
+    const HB_I32 R = MODULUS % MULTIPLIER;
 
-      t = MULTIPLIER * ( t % Q ) - R * ( t / Q );
-      if( t < 0 ) {
-         t += MODULUS;
-      }
-   }
+    t = MULTIPLIER * (t % Q) - R * (t / Q);
+    if (t < 0)
+    {
+      t += MODULUS;
+    }
+  }
 #endif
 
-   *seed = t;
+  *seed = t;
 
-   return static_cast<double>(t - 1) / ( MODULUS - 1 );
+  return static_cast<double>(t - 1) / (MODULUS - 1);
 }
 
 void hb_random_seed(HB_I32 seed)
 {
-   seed %= MODULUS;
-   * SEED_PTR = (seed < 0) ? seed + MODULUS : seed;
+  seed %= MODULUS;
+  *SEED_PTR = (seed < 0) ? seed + MODULUS : seed;
 }
 
 static void hb_random(double dRnd)
 {
-   if( !HB_ISNUM(1) ) {
-      hb_retnd(dRnd);
-   } else if( !HB_ISNUM(2) ) {
-      hb_retnd(dRnd * hb_parnd(1));
-   } else {
-      double dX = hb_parnd(2);
-      double dY = hb_parnd(1);
-      if( dX > dY ) {
-         double dZ = dY;
-         dY = dX;
-         dX = dZ;
-      }
-      hb_retnd(dRnd * (dY - dX) + dX);
-   }
+  if (!HB_ISNUM(1))
+  {
+    hb_retnd(dRnd);
+  }
+  else if (!HB_ISNUM(2))
+  {
+    hb_retnd(dRnd * hb_parnd(1));
+  }
+  else
+  {
+    double dX = hb_parnd(2);
+    double dY = hb_parnd(1);
+    if (dX > dY)
+    {
+      double dZ = dY;
+      dY = dX;
+      dX = dZ;
+    }
+    hb_retnd(dRnd * (dY - dX) + dX);
+  }
 }
 
 /*
@@ -116,32 +124,38 @@ static void hb_random(double dRnd)
  * hb_Random(x) --> returns a real number n so that 0 <= n < x
  * hb_Random(x, y) --> Returns a real number n so that x <= n < y
  */
-HB_FUNC( HB_RANDOM )
+HB_FUNC(HB_RANDOM)
 {
-   hb_random(hb_random_num());
+  hb_random(hb_random_num());
 }
 
-HB_FUNC( HB_RANDNUM )
+HB_FUNC(HB_RANDNUM)
 {
-   hb_random(hb_random_num_secure());
+  hb_random(hb_random_num_secure());
 }
 
 static void hb_randomint(double dRnd)
 {
-   if( !HB_ISNUM(1) ) {
-      hb_retni(dRnd >= 0.5 ? 0 : 1);
-   } else if( !HB_ISNUM(2) ) {
-      hb_retnint(static_cast<HB_MAXINT>(1 + (dRnd * hb_parnint(1))));
-   } else {
-      HB_MAXINT lX = hb_parnint(1);
-      HB_MAXINT lY = hb_parnint(2);
-      if( lX > lY ) {
-         HB_MAXINT lZ = lY;
-         lY = lX;
-         lX = lZ;
-      }
-      hb_retnint(static_cast<HB_MAXINT>(lX + (dRnd * (lY - lX + 1))));
-   }
+  if (!HB_ISNUM(1))
+  {
+    hb_retni(dRnd >= 0.5 ? 0 : 1);
+  }
+  else if (!HB_ISNUM(2))
+  {
+    hb_retnint(static_cast<HB_MAXINT>(1 + (dRnd * hb_parnint(1))));
+  }
+  else
+  {
+    HB_MAXINT lX = hb_parnint(1);
+    HB_MAXINT lY = hb_parnint(2);
+    if (lX > lY)
+    {
+      HB_MAXINT lZ = lY;
+      lY = lX;
+      lX = lZ;
+    }
+    hb_retnint(static_cast<HB_MAXINT>(lX + (dRnd * (lY - lX + 1))));
+  }
 }
 
 /*
@@ -150,22 +164,22 @@ static void hb_randomint(double dRnd)
  * hb_RandomInt(x, y) --> Returns an integer number between x and y (inclusive)
  * The integer returned is of the longest type available
  */
-HB_FUNC( HB_RANDOMINT )
+HB_FUNC(HB_RANDOMINT)
 {
-   hb_randomint(hb_random_num());
+  hb_randomint(hb_random_num());
 }
 
-HB_FUNC( HB_RANDINT )
+HB_FUNC(HB_RANDINT)
 {
-   hb_randomint(hb_random_num_secure());
+  hb_randomint(hb_random_num_secure());
 }
 
-HB_FUNC( HB_RANDOMSEED )
+HB_FUNC(HB_RANDOMSEED)
 {
-   hb_random_seed(hb_parni(1));
+  hb_random_seed(hb_parni(1));
 }
 
-HB_FUNC( HB_RANDOMINTMAX )
+HB_FUNC(HB_RANDOMINTMAX)
 {
-   hb_retnint(MODULUS - 2);
+  hb_retnint(MODULUS - 2);
 }

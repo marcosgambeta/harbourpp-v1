@@ -48,40 +48,55 @@
 #include "hbapicdp.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( HB_STRSHRINK )
+HB_FUNC(HB_STRSHRINK)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      HB_ISIZ nShrinkBy = hb_parnldef(2, 1);
+  if (pText)
+  {
+    HB_ISIZ nShrinkBy = hb_parnldef(2, 1);
 
-      if( nShrinkBy > 0 ) {
-         auto pszText = hb_itemGetCPtr(pText);
-         HB_ISIZ nText = hb_itemGetCLen(pText);
-         HB_ISIZ nLen;
-         auto cdp = hb_vmCDP();
+    if (nShrinkBy > 0)
+    {
+      auto pszText = hb_itemGetCPtr(pText);
+      HB_ISIZ nText = hb_itemGetCLen(pText);
+      HB_ISIZ nLen;
+      auto cdp = hb_vmCDP();
 
-         if( HB_CDP_ISCHARIDX(cdp) ) {
-            nLen = hb_cdpTextLen(cdp, pszText, nText);
-         } else {
-            nLen = nText;
-         }
-
-         if( nShrinkBy < nLen ) {
-            if( HB_CDP_ISCHARIDX(cdp) ) {
-               nLen = hb_cdpTextPos(cdp, pszText, nText, nLen - nShrinkBy);
-            } else {
-               nLen -= nShrinkBy;
-            }
-         } else {
-            nLen = 0;
-         }
-
-         hb_retclen(pszText, nLen);
-      } else {
-         hb_itemReturn(pText);
+      if (HB_CDP_ISCHARIDX(cdp))
+      {
+        nLen = hb_cdpTextLen(cdp, pszText, nText);
       }
-   } else {
-      hb_retc_null();
-   }
+      else
+      {
+        nLen = nText;
+      }
+
+      if (nShrinkBy < nLen)
+      {
+        if (HB_CDP_ISCHARIDX(cdp))
+        {
+          nLen = hb_cdpTextPos(cdp, pszText, nText, nLen - nShrinkBy);
+        }
+        else
+        {
+          nLen -= nShrinkBy;
+        }
+      }
+      else
+      {
+        nLen = 0;
+      }
+
+      hb_retclen(pszText, nLen);
+    }
+    else
+    {
+      hb_itemReturn(pText);
+    }
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

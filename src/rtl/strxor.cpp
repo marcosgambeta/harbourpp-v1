@@ -48,57 +48,70 @@
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( HB_STRXOR )
+HB_FUNC(HB_STRXOR)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
+  auto pItem = hb_param(1, Harbour::Item::STRING);
 
-   if( pItem != nullptr ) {
-      PHB_ITEM     pItem2;
-      HB_SIZE      n;
-      char *       pRet;
+  if (pItem != nullptr)
+  {
+    PHB_ITEM pItem2;
+    HB_SIZE n;
+    char *pRet;
 
-      auto pStr1 = hb_itemGetCPtr(pItem);
-      auto nLen1 = hb_itemGetCLen(pItem);
+    auto pStr1 = hb_itemGetCPtr(pItem);
+    auto nLen1 = hb_itemGetCLen(pItem);
 
-      if( (pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr ) {
-         auto nLen2 = hb_itemGetCLen(pItem2);
-         if( nLen2 ) {
-            auto pStr2 = hb_itemGetCPtr(pItem2);
-            HB_SIZE n2;
+    if ((pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr)
+    {
+      auto nLen2 = hb_itemGetCLen(pItem2);
+      if (nLen2)
+      {
+        auto pStr2 = hb_itemGetCPtr(pItem2);
+        HB_SIZE n2;
 
-            pRet = static_cast<char*>(hb_xgrab(nLen1 + 1));
-            memcpy(pRet, pStr1, nLen1 + 1);
+        pRet = static_cast<char *>(hb_xgrab(nLen1 + 1));
+        memcpy(pRet, pStr1, nLen1 + 1);
+        n2 = 0;
+        for (n = 0; n < nLen1; n++)
+        {
+          pRet[n] ^= pStr2[n2];
+          if (++n2 == nLen2)
+          {
             n2 = 0;
-            for( n = 0; n < nLen1; n++ ) {
-               pRet[n] ^= pStr2[n2];
-               if( ++n2 == nLen2 ) {
-                  n2 = 0;
-               }
-            }
-            hb_retclen_buffer(pRet, nLen1);
-         } else {
-            hb_itemReturn(pItem);
-         }
-
-         return;
-      } else if( (pItem2 = hb_param(2, Harbour::Item::NUMERIC)) != nullptr ) {
-         auto bChar = static_cast<char>(hb_itemGetNI(pItem2));
-
-         if( bChar ) {
-            pRet = static_cast<char*>(hb_xgrab(nLen1 + 1));
-            memcpy(pRet, pStr1, nLen1 + 1);
-            for( n = 0; n < nLen1; n++ ) {
-               pRet[n] ^= bChar;
-            }
-
-            hb_retclen_buffer(pRet, nLen1);
-         } else {
-            hb_itemReturn(pItem);
-         }
-
-         return;
+          }
+        }
+        hb_retclen_buffer(pRet, nLen1);
       }
-   }
+      else
+      {
+        hb_itemReturn(pItem);
+      }
 
-   hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+      return;
+    }
+    else if ((pItem2 = hb_param(2, Harbour::Item::NUMERIC)) != nullptr)
+    {
+      auto bChar = static_cast<char>(hb_itemGetNI(pItem2));
+
+      if (bChar)
+      {
+        pRet = static_cast<char *>(hb_xgrab(nLen1 + 1));
+        memcpy(pRet, pStr1, nLen1 + 1);
+        for (n = 0; n < nLen1; n++)
+        {
+          pRet[n] ^= bChar;
+        }
+
+        hb_retclen_buffer(pRet, nLen1);
+      }
+      else
+      {
+        hb_itemReturn(pItem);
+      }
+
+      return;
+    }
+  }
+
+  hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }

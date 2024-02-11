@@ -47,31 +47,34 @@
 #include "hbapi.hpp"
 #include "arc4.hpp"
 
-void hb_random_block(void * data, HB_SIZE len)
+void hb_random_block(void *data, HB_SIZE len)
 {
-   hb_arc4random_buf( data, len );
+  hb_arc4random_buf(data, len);
 }
 
 /* Returns a double value between 0 and 1 */
 double hb_random_num_secure(void)
 {
-   return static_cast<double>(hb_arc4random()) / HB_U32_MAX;
+  return static_cast<double>(hb_arc4random()) / HB_U32_MAX;
 }
 
-HB_FUNC( HB_RAND32 ) /* returns an integer between 0 and 0xFFFFFFFF (inclusive) */
+HB_FUNC(HB_RAND32) /* returns an integer between 0 and 0xFFFFFFFF (inclusive) */
 {
-   hb_retnint(hb_arc4random());
+  hb_retnint(hb_arc4random());
 }
 
-HB_FUNC( HB_RANDSTR )
+HB_FUNC(HB_RANDSTR)
 {
-   HB_ISIZ len = hb_parns(1);
+  HB_ISIZ len = hb_parns(1);
 
-   if( len > 0 ) {
-      auto data = hb_xgrab(len + 1);
-      hb_random_block(data, len);
-      hb_retclen_buffer(static_cast<char*>(data), len);
-   } else {
-      hb_retc_null();
-   }
+  if (len > 0)
+  {
+    auto data = hb_xgrab(len + 1);
+    hb_random_block(data, len);
+    hb_retclen_buffer(static_cast<char *>(data), len);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

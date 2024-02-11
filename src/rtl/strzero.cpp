@@ -48,69 +48,86 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( STRZERO )
+HB_FUNC(STRZERO)
 {
-   auto iParams = hb_pcount();
+  auto iParams = hb_pcount();
 
-   if( iParams >= 1 && iParams <= 3 ) {
-      auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
-      PHB_ITEM pWidth = nullptr;
-      PHB_ITEM pDec   = nullptr;
+  if (iParams >= 1 && iParams <= 3)
+  {
+    auto pNumber = hb_param(1, Harbour::Item::NUMERIC);
+    PHB_ITEM pWidth = nullptr;
+    PHB_ITEM pDec = nullptr;
 
-      if( iParams >= 2 ) {
-         pWidth = hb_param(2, Harbour::Item::NUMERIC);
-         if( pWidth == nullptr ) {
-            pNumber = nullptr;
-         } else if( iParams >= 3 ) {
-            pDec = hb_param(3, Harbour::Item::NUMERIC);
-            if( pDec == nullptr ) {
-               pNumber = nullptr;
-            }
-         }
+    if (iParams >= 2)
+    {
+      pWidth = hb_param(2, Harbour::Item::NUMERIC);
+      if (pWidth == nullptr)
+      {
+        pNumber = nullptr;
       }
+      else if (iParams >= 3)
+      {
+        pDec = hb_param(3, Harbour::Item::NUMERIC);
+        if (pDec == nullptr)
+        {
+          pNumber = nullptr;
+        }
+      }
+    }
 
-      if( pNumber ) {
-         char * szResult = hb_itemStr(pNumber, pWidth, pDec);
+    if (pNumber)
+    {
+      char *szResult = hb_itemStr(pNumber, pWidth, pDec);
 
-         if( szResult ) {
-            HB_SIZE nPos = 0;
+      if (szResult)
+      {
+        HB_SIZE nPos = 0;
 
-            while( szResult[nPos] != '\0' && szResult[nPos] != '-' ) {
-               nPos++;
-            }
+        while (szResult[nPos] != '\0' && szResult[nPos] != '-')
+        {
+          nPos++;
+        }
 
-            if( szResult[nPos] == '-' ) {
-               /* NOTE: Negative sign found, put it to the first position */
+        if (szResult[nPos] == '-')
+        {
+          /* NOTE: Negative sign found, put it to the first position */
 
-               szResult[nPos] = ' ';
+          szResult[nPos] = ' ';
 
-               nPos = 0;
-               while( szResult[nPos] != '\0' && szResult[nPos] == ' ' ) {
-                  szResult[nPos++] = '0';
-               }
+          nPos = 0;
+          while (szResult[nPos] != '\0' && szResult[nPos] == ' ')
+          {
+            szResult[nPos++] = '0';
+          }
 
-               szResult[0] = '-';
-            } else {
-               /* Negative sign not found */
+          szResult[0] = '-';
+        }
+        else
+        {
+          /* Negative sign not found */
 
-               nPos = 0;
-               while( szResult[nPos] != '\0' && szResult[nPos] == ' ' ) {
-                  szResult[nPos++] = '0';
-               }
-            }
+          nPos = 0;
+          while (szResult[nPos] != '\0' && szResult[nPos] == ' ')
+          {
+            szResult[nPos++] = '0';
+          }
+        }
 
-            hb_retc_buffer(szResult);
-         } else {
-            hb_retc_null();
-         }
-      } else
+        hb_retc_buffer(szResult);
+      }
+      else
+      {
+        hb_retc_null();
+      }
+    }
+    else
 #ifdef HB_CLP_STRICT
-         /* NOTE: In CA-Cl*pper StrZero() is written in Clipper, and will call
-                  Str() to do the job, the error (if any) will also be thrown
-                  by Str().  [vszakats] */
-         hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, "STR", HB_ERR_ARGS_BASEPARAMS);
+      /* NOTE: In CA-Cl*pper StrZero() is written in Clipper, and will call
+               Str() to do the job, the error (if any) will also be thrown
+               by Str().  [vszakats] */
+      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, "STR", HB_ERR_ARGS_BASEPARAMS);
 #else
-         hb_errRT_BASE_SubstR(EG_ARG, 6003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+      hb_errRT_BASE_SubstR(EG_ARG, 6003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
-   }
+  }
 }

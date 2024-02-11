@@ -47,166 +47,208 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( HB_HEXTONUM )
+HB_FUNC(HB_HEXTONUM)
 {
-   auto szHex = hb_parc(1);
+  auto szHex = hb_parc(1);
 
-   if( szHex ) {
-      HB_MAXUINT nNum = 0;
+  if (szHex)
+  {
+    HB_MAXUINT nNum = 0;
 
-      while( *szHex == ' ' ) {
-         szHex++;
+    while (*szHex == ' ')
+    {
+      szHex++;
+    }
+    while (*szHex)
+    {
+      int iDigit;
+      char c = *szHex++;
+      if (c >= '0' && c <= '9')
+      {
+        iDigit = c - '0';
       }
-      while( *szHex ) {
-         int iDigit;
-         char c = *szHex++;
-         if( c >= '0' && c <= '9' ) {
-            iDigit = c - '0';
-         } else if( c >= 'A' && c <= 'F' ) {
-            iDigit = c - ( 'A' - 10 );
-         } else if( c >= 'a' && c <= 'f' ) {
-            iDigit = c - ( 'a' - 10 );
-         } else {
-            nNum = 0;
-            break;
-         }
-         nNum = (nNum << 4) + iDigit;
+      else if (c >= 'A' && c <= 'F')
+      {
+        iDigit = c - ('A' - 10);
       }
-      hb_retnint(nNum);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      else if (c >= 'a' && c <= 'f')
+      {
+        iDigit = c - ('a' - 10);
+      }
+      else
+      {
+        nNum = 0;
+        break;
+      }
+      nNum = (nNum << 4) + iDigit;
+    }
+    hb_retnint(nNum);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_NUMTOHEX )
+HB_FUNC(HB_NUMTOHEX)
 {
-   HB_MAXUINT nNum;
-   int        iLen;
-   bool       fDefaultLen;
-   char       ret[33];
+  HB_MAXUINT nNum;
+  int iLen;
+  bool fDefaultLen;
+  char ret[33];
 
-   if( HB_ISNUM(2) ) {
-      iLen = hb_parni(2);
-      iLen = (iLen < 1) ? 1 : ((iLen > 32) ? 32 : iLen);
-      fDefaultLen = false;
-   } else {
-      iLen = 32;
-      fDefaultLen = true;
-   }
+  if (HB_ISNUM(2))
+  {
+    iLen = hb_parni(2);
+    iLen = (iLen < 1) ? 1 : ((iLen > 32) ? 32 : iLen);
+    fDefaultLen = false;
+  }
+  else
+  {
+    iLen = 32;
+    fDefaultLen = true;
+  }
 
-   if( HB_ISNUM(1) ) {
-      nNum = hb_parnint(1);
-   } else if( HB_ISPOINTER(1) ) {
-      nNum = reinterpret_cast<HB_PTRUINT>(hb_parptr(1));
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-      return;
-   }
+  if (HB_ISNUM(1))
+  {
+    nNum = hb_parnint(1);
+  }
+  else if (HB_ISPOINTER(1))
+  {
+    nNum = reinterpret_cast<HB_PTRUINT>(hb_parptr(1));
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    return;
+  }
 
-   ret[iLen] = '\0';
-   do {
-      auto iDigit = static_cast<int>(nNum & 0x0F);
-      ret[--iLen] = static_cast<char>(iDigit + ( iDigit < 10 ? '0' : 'A' - 10 ));
-      nNum >>= 4;
-   } while( fDefaultLen ? nNum != 0 : iLen != 0 );
+  ret[iLen] = '\0';
+  do
+  {
+    auto iDigit = static_cast<int>(nNum & 0x0F);
+    ret[--iLen] = static_cast<char>(iDigit + (iDigit < 10 ? '0' : 'A' - 10));
+    nNum >>= 4;
+  } while (fDefaultLen ? nNum != 0 : iLen != 0);
 
-   hb_retc(&ret[iLen]);
+  hb_retc(&ret[iLen]);
 }
 
-HB_FUNC( HB_STRTOHEX )
+HB_FUNC(HB_STRTOHEX)
 {
-   auto szStr = hb_parc(1);
-   const char * szSep = "";
-   HB_SIZE nSep = 0;
+  auto szStr = hb_parc(1);
+  const char *szSep = "";
+  HB_SIZE nSep = 0;
 
-   if( hb_pcount() > 1 ) {
-      szSep = hb_parc(2);
-      nSep = hb_parclen(2);
-   }
+  if (hb_pcount() > 1)
+  {
+    szSep = hb_parc(2);
+    nSep = hb_parclen(2);
+  }
 
-   if( !szStr || !szSep ) {
-      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-      return;
-   }
+  if (!szStr || !szSep)
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    return;
+  }
 
-   auto nStr = hb_parclen(1);
-   if( nStr ) {
-      HB_SIZE nDest = (nStr << 1) + (nStr - 1) * nSep;
-      char * szDest, * szPtr;
+  auto nStr = hb_parclen(1);
+  if (nStr)
+  {
+    HB_SIZE nDest = (nStr << 1) + (nStr - 1) * nSep;
+    char *szDest, *szPtr;
 
-      szPtr = szDest = static_cast<char*>(hb_xgrab(nDest + 1));
-      do {
-         auto uc = static_cast<HB_UCHAR>(*szStr++);
-         HB_UCHAR ud;
-         ud = uc >> 4;
-         *szPtr++ = ud + ( ud < 10 ? '0' : 'A' - 10 );
-         ud = uc & 0x0F;
-         *szPtr++ = ud + ( ud < 10 ? '0' : 'A' - 10 );
-         if( --nStr && nSep ) {
-            memcpy(szPtr, szSep, nSep);
-            szPtr += nSep;
-         }
-      } while( nStr );
+    szPtr = szDest = static_cast<char *>(hb_xgrab(nDest + 1));
+    do
+    {
+      auto uc = static_cast<HB_UCHAR>(*szStr++);
+      HB_UCHAR ud;
+      ud = uc >> 4;
+      *szPtr++ = ud + (ud < 10 ? '0' : 'A' - 10);
+      ud = uc & 0x0F;
+      *szPtr++ = ud + (ud < 10 ? '0' : 'A' - 10);
+      if (--nStr && nSep)
+      {
+        memcpy(szPtr, szSep, nSep);
+        szPtr += nSep;
+      }
+    } while (nStr);
+    hb_retclen_buffer(szDest, nDest);
+  }
+  else
+  {
+    hb_retc_null();
+  }
+}
+
+HB_FUNC(HB_HEXTOSTR)
+{
+  auto szStr = hb_parc(1);
+
+  if (!szStr)
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    return;
+  }
+
+  auto nStr = hb_parclen(1);
+  if (nStr > 1)
+  {
+    HB_SIZE nDest, ul;
+    const char *szPtr;
+
+    szPtr = szStr;
+    ul = nStr;
+    nDest = 0;
+    do
+    {
+      char c = *szPtr++;
+      if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f'))
+      {
+        ++nDest;
+      }
+    } while (--ul);
+
+    nDest >>= 1;
+    if (nDest)
+    {
+      int iVal = 0x10;
+
+      auto szDest = static_cast<char *>(hb_xgrab(nDest + 1));
+
+      /* ul = 0; see above stop condition */
+      do
+      {
+        char c = *szStr++;
+        if (c >= '0' && c <= '9')
+        {
+          iVal += c - '0';
+        }
+        else if (c >= 'A' && c <= 'F')
+        {
+          iVal += c - ('A' - 10);
+        }
+        else if (c >= 'a' && c <= 'f')
+        {
+          iVal += c - ('a' - 10);
+        }
+        else
+        {
+          continue;
+        }
+
+        if (iVal & 0x100)
+        {
+          szDest[ul++] = static_cast<char>(iVal) & 0xff;
+          iVal = 0x1;
+        }
+        iVal <<= 4;
+      } while (--nStr);
+
       hb_retclen_buffer(szDest, nDest);
-   } else {
-      hb_retc_null();
-   }
-}
-
-HB_FUNC( HB_HEXTOSTR )
-{
-   auto szStr = hb_parc(1);
-
-   if( !szStr ) {
-      hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
       return;
-   }
+    }
+  }
 
-   auto nStr = hb_parclen(1);
-   if( nStr > 1 ) {
-      HB_SIZE nDest, ul;
-      const char * szPtr;
-
-      szPtr = szStr;
-      ul = nStr;
-      nDest = 0;
-      do {
-         char c = *szPtr++;
-         if( (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f') ) {
-            ++nDest;
-         }
-      } while( --ul );
-
-      nDest >>= 1;
-      if( nDest ) {
-         int iVal = 0x10;
-
-         auto szDest = static_cast<char*>(hb_xgrab(nDest + 1));
-
-         /* ul = 0; see above stop condition */
-         do {
-            char c = *szStr++;
-            if( c >= '0' && c <= '9' ) {
-               iVal += c - '0';
-            } else if( c >= 'A' && c <= 'F' ) {
-               iVal += c - ( 'A' - 10 );
-            } else if( c >= 'a' && c <= 'f' ) {
-               iVal += c - ( 'a' - 10 );
-            } else {
-               continue;
-            }
-
-            if( iVal & 0x100 ) {
-               szDest[ul++] = static_cast<char>(iVal) & 0xff;
-               iVal = 0x1;
-            }
-            iVal <<= 4;
-         } while( --nStr );
-
-         hb_retclen_buffer(szDest, nDest);
-         return;
-      }
-   }
-
-   hb_retc_null();
+  hb_retc_null();
 }

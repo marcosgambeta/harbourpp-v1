@@ -52,53 +52,72 @@
 
 /* returns the left-most n characters in string */
 
-HB_FUNC( LEFT )
+HB_FUNC(LEFT)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText && HB_ISNUM(2) ) {
-      HB_ISIZ nLen = hb_parns(2);
-      if( nLen <= 0 ) {
-         hb_retc_null();
-      } else {
-         auto nText = hb_itemGetCLen(pText);
-         if( static_cast<HB_SIZE>(nLen) < nText ) {
-            auto cdp = hb_vmCDP();
-            if( HB_CDP_ISCHARIDX(cdp) ) {
-               nLen = hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nLen);
-            }
-         }
-         if( static_cast<HB_SIZE>(nLen) >= nText ) {
-            hb_itemReturn(pText);
-         } else {
-            hb_retclen(hb_itemGetCPtr(pText), nLen);
-         }
+  if (pText && HB_ISNUM(2))
+  {
+    HB_ISIZ nLen = hb_parns(2);
+    if (nLen <= 0)
+    {
+      hb_retc_null();
+    }
+    else
+    {
+      auto nText = hb_itemGetCLen(pText);
+      if (static_cast<HB_SIZE>(nLen) < nText)
+      {
+        auto cdp = hb_vmCDP();
+        if (HB_CDP_ISCHARIDX(cdp))
+        {
+          nLen = hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nLen);
+        }
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      if (static_cast<HB_SIZE>(nLen) >= nText)
+      {
+        hb_itemReturn(pText);
+      }
+      else
+      {
+        hb_retclen(hb_itemGetCPtr(pText), nLen);
+      }
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1124, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_LEFTEQ )
+HB_FUNC(HB_LEFTEQ)
 {
-   auto pItem1 = hb_param(1, Harbour::Item::STRING);
-   auto pItem2 = hb_param(2, Harbour::Item::STRING);
+  auto pItem1 = hb_param(1, Harbour::Item::STRING);
+  auto pItem2 = hb_param(2, Harbour::Item::STRING);
 
-   if( pItem1 && pItem2 ) {
-      hb_retl(hb_cdpcmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), false) == 0);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pItem1 && pItem2)
+  {
+    hb_retl(hb_cdpcmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2),
+                      hb_vmCDP(), false) == 0);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( HB_LEFTEQI )
+HB_FUNC(HB_LEFTEQI)
 {
-   auto pItem1 = hb_param(1, Harbour::Item::STRING);
-   auto pItem2 = hb_param(2, Harbour::Item::STRING);
+  auto pItem1 = hb_param(1, Harbour::Item::STRING);
+  auto pItem2 = hb_param(2, Harbour::Item::STRING);
 
-   if( pItem1 && pItem2 ) {
-      hb_retl(hb_cdpicmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2), hb_vmCDP(), false) == 0);
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pItem1 && pItem2)
+  {
+    hb_retl(hb_cdpicmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2),
+                       hb_vmCDP(), false) == 0);
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1071, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

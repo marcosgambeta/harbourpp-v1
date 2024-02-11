@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( MEMORY )
+HB_FUNC(MEMORY)
 {
-   hb_retns(hb_xquery(hb_parni(1)));
+  hb_retns(hb_xquery(hb_parni(1)));
 }

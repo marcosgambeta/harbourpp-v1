@@ -49,32 +49,33 @@
 #include "hbapigt.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( SETPOS )  /* Sets the screen position */
+HB_FUNC(SETPOS) /* Sets the screen position */
 {
-   if( HB_ISNUM(1) && HB_ISNUM(2) ) {
-      hb_gtSetPos(hb_parni(1), hb_parni(2));
-   }
+  if (HB_ISNUM(1) && HB_ISNUM(2))
+  {
+    hb_gtSetPos(hb_parni(1), hb_parni(2));
+  }
 
 #if defined(HB_COMPAT_C53) || defined(HB_CLP_UNDOC)
-   /* NOTE: Both C5.2e and C5.3 does that, but it's only documented
-            in C5.3. C5.2 documentation says it would return NIL.
-            [vszakats] */
-   hb_itemReturn(hb_param(1, Harbour::Item::ANY));
+  /* NOTE: Both C5.2e and C5.3 does that, but it's only documented
+           in C5.3. C5.2 documentation says it would return NIL.
+           [vszakats] */
+  hb_itemReturn(hb_param(1, Harbour::Item::ANY));
 #endif
 }
 
-HB_FUNC( ROW )  /* Return the current screen row position (zero origin) */
+HB_FUNC(ROW) /* Return the current screen row position (zero origin) */
 {
-   int iRow;
-   int iCol;
-   hb_gtGetPos(&iRow, &iCol);
-   hb_retni(iRow);
+  int iRow;
+  int iCol;
+  hb_gtGetPos(&iRow, &iCol);
+  hb_retni(iRow);
 }
 
-HB_FUNC( COL )  /* Return the current screen column position (zero origin) */
+HB_FUNC(COL) /* Return the current screen column position (zero origin) */
 {
-   int iRow;
-   int iCol;
-   hb_gtGetPos(&iRow, &iCol);
-   hb_retni(iCol);
+  int iRow;
+  int iCol;
+  hb_gtGetPos(&iRow, &iCol);
+  hb_retni(iCol);
 }

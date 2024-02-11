@@ -47,57 +47,66 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-#define SOUNDEX_LEN_MAX  4
+#define SOUNDEX_LEN_MAX 4
 
-HB_FUNC( SOUNDEX )
+HB_FUNC(SOUNDEX)
 {
-   auto pString = hb_param(1, Harbour::Item::STRING);
-   char szResult[SOUNDEX_LEN_MAX + 1];
+  auto pString = hb_param(1, Harbour::Item::STRING);
+  char szResult[SOUNDEX_LEN_MAX + 1];
 
-   /* NOTE: The result will always be a zero terminated string without any
-            embedded zeros and special characters. [vszakats] */
+  /* NOTE: The result will always be a zero terminated string without any
+           embedded zeros and special characters. [vszakats] */
 
-   memset(szResult, '0', SOUNDEX_LEN_MAX);
-   szResult[SOUNDEX_LEN_MAX] = '\0';
+  memset(szResult, '0', SOUNDEX_LEN_MAX);
+  szResult[SOUNDEX_LEN_MAX] = '\0';
 
-   if( pString ) {
-      auto pszString = hb_itemGetCPtr(pString);
-      auto nLen = hb_itemGetCLen(pString);
-      HB_SIZE nPos = 0;
-      HB_SIZE nResultPos = 0;
-      char cCharPrev = '0';
+  if (pString)
+  {
+    auto pszString = hb_itemGetCPtr(pString);
+    auto nLen = hb_itemGetCLen(pString);
+    HB_SIZE nPos = 0;
+    HB_SIZE nResultPos = 0;
+    char cCharPrev = '0';
 
-      while( nPos < nLen && nResultPos < SOUNDEX_LEN_MAX ) {
-         char cChar = pszString[nPos];
+    while (nPos < nLen && nResultPos < SOUNDEX_LEN_MAX)
+    {
+      char cChar = pszString[nPos];
 
-         /* NOTE: Intentionally not using toupper()/IsAlpha() to be 100%
-                  Clipper compatible here, these ANSI C functions may behave
-                  differently for accented and national characters. It's also
-                  faster this way. [vszakats] */
+      /* NOTE: Intentionally not using toupper()/IsAlpha() to be 100%
+               Clipper compatible here, these ANSI C functions may behave
+               differently for accented and national characters. It's also
+               faster this way. [vszakats] */
 
-         /* Convert to uppercase: HB_TOUPPER() */
-         if( cChar >= 'a' && cChar <= 'z' ) {
-            cChar -= ( 'a' - 'A' );
-         }
-
-         /* Check if IsAlpha() */
-         if( cChar >= 'A' && cChar <= 'Z' ) {
-            static const char s_szTable[] = "01230120022455012623010202"; /* NOTE: SoundEx result codes for letters from "A" to "Z" */
-                                         /* "ABCDEFGHIJKLMNOPQRSTUVWXYZ" */
-            char cCharConverted = ((cChar - 'A') > (static_cast<int>(sizeof(s_szTable)) - 1)) ? '9' : s_szTable[cChar - 'A'];
-
-            if( nResultPos == 0 ) {
-               szResult[nResultPos++] = cChar;
-            } else if( cCharConverted != '0' && cCharConverted != cCharPrev ) {
-               szResult[nResultPos++] = cCharConverted;
-            }
-
-            cCharPrev = cCharConverted;
-         }
-
-         nPos++;
+      /* Convert to uppercase: HB_TOUPPER() */
+      if (cChar >= 'a' && cChar <= 'z')
+      {
+        cChar -= ('a' - 'A');
       }
-   }
 
-   hb_retc(szResult);
+      /* Check if IsAlpha() */
+      if (cChar >= 'A' && cChar <= 'Z')
+      {
+        static const char s_szTable[] =
+            "01230120022455012623010202"; /* NOTE: SoundEx result codes for letters from "A" to "Z" */
+                                          /* "ABCDEFGHIJKLMNOPQRSTUVWXYZ" */
+        char cCharConverted =
+            ((cChar - 'A') > (static_cast<int>(sizeof(s_szTable)) - 1)) ? '9' : s_szTable[cChar - 'A'];
+
+        if (nResultPos == 0)
+        {
+          szResult[nResultPos++] = cChar;
+        }
+        else if (cCharConverted != '0' && cCharConverted != cCharPrev)
+        {
+          szResult[nResultPos++] = cCharConverted;
+        }
+
+        cCharPrev = cCharConverted;
+      }
+
+      nPos++;
+    }
+  }
+
+  hb_retc(szResult);
 }

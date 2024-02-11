@@ -60,10 +60,10 @@
 
 #ifndef HB_CLP_STRICT
 
-HB_FUNC( STOD )
+HB_FUNC(STOD)
 {
-   auto pDateString = hb_param(1, Harbour::Item::STRING);
-   hb_retds(hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr);
+  auto pDateString = hb_param(1, Harbour::Item::STRING);
+  hb_retds(hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr);
 }
 
 #endif

@@ -48,29 +48,32 @@
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
 
-HB_FUNC( ISCOLOR )
+HB_FUNC(ISCOLOR)
 {
-   hb_retl(hb_gtIsColor());
+  hb_retl(hb_gtIsColor());
 }
 
-HB_FUNC( NOSNOW )
+HB_FUNC(NOSNOW)
 {
-   if( HB_ISLOG(1) ) {
-      hb_gtSetSnowFlag(hb_parl(1));
-   }
+  if (HB_ISLOG(1))
+  {
+    hb_gtSetSnowFlag(hb_parl(1));
+  }
 }
 
-HB_FUNC( SETMODE )
+HB_FUNC(SETMODE)
 {
-   int iRows, iCols;
+  int iRows, iCols;
 
-   hb_gtScrDim(&iRows, &iCols);
-   if( HB_ISNUM(1) ) {
-      iRows = hb_parni(1);
-   }
-   if( HB_ISNUM(2) ) {
-      iCols = hb_parni(2);
-   }
+  hb_gtScrDim(&iRows, &iCols);
+  if (HB_ISNUM(1))
+  {
+    iRows = hb_parni(1);
+  }
+  if (HB_ISNUM(2))
+  {
+    iCols = hb_parni(2);
+  }
 
-   hb_retl(hb_gtSetMode(iRows, iCols) == Harbour::SUCCESS);
+  hb_retl(hb_gtSetMode(iRows, iCols) == Harbour::SUCCESS);
 }

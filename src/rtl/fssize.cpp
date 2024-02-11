@@ -46,7 +46,7 @@
  */
 
 #if !defined(_LARGEFILE64_SOURCE)
-#  define _LARGEFILE64_SOURCE  1
+#define _LARGEFILE64_SOURCE 1
 #endif
 
 #include "hbapi.hpp"
@@ -54,87 +54,98 @@
 #include "hbvm.hpp"
 
 #if defined(HB_OS_WIN)
-#  include <windows.h>
-#  include "hbwinuni.hpp"
+#include <windows.h>
+#include "hbwinuni.hpp"
 #else
-#  include <sys/types.h>
-#  include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #endif
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
-   #if defined(__USE_LARGEFILE64)
-      /*
-       * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
-       * defined and effectively enables lseek64()/flock64()/ftruncate64()
-       * functions on 32-bit machines.
-       */
-      #define HB_USE_LARGEFILE64
-   #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
-      #define HB_USE_LARGEFILE64
-   #endif
+#if defined(__USE_LARGEFILE64)
+/*
+ * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
+ * defined and effectively enables lseek64()/flock64()/ftruncate64()
+ * functions on 32-bit machines.
+ */
+#define HB_USE_LARGEFILE64
+#elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
+#define HB_USE_LARGEFILE64
+#endif
 #endif
 
-HB_FOFFSET hb_fsFSize(const char * pszFileName, HB_BOOL bUseDirEntry)
+HB_FOFFSET hb_fsFSize(const char *pszFileName, HB_BOOL bUseDirEntry)
 {
-   if( bUseDirEntry ) {
+  if (bUseDirEntry)
+  {
 #if defined(HB_OS_WIN)
-      LPTSTR lpFree;
-      LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
-      WIN32_FILE_ATTRIBUTE_DATA attrex{};
-      bool fResult = GetFileAttributesEx(lpFileName, GetFileExInfoStandard, &attrex) && (attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0;
-      hb_fsSetIOError(fResult, 0);
-      if( lpFree ) {
-         hb_xfree(lpFree);
-      }
-      if( fResult ) {
-         return static_cast<HB_FOFFSET>(attrex.nFileSizeLow) + ( static_cast<HB_FOFFSET>(attrex.nFileSizeHigh) << 32 );
-      }
+    LPTSTR lpFree;
+    LPCTSTR lpFileName = HB_FSNAMECONV(pszFileName, &lpFree);
+    WIN32_FILE_ATTRIBUTE_DATA attrex{};
+    bool fResult = GetFileAttributesEx(lpFileName, GetFileExInfoStandard, &attrex) &&
+                   (attrex.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0;
+    hb_fsSetIOError(fResult, 0);
+    if (lpFree)
+    {
+      hb_xfree(lpFree);
+    }
+    if (fResult)
+    {
+      return static_cast<HB_FOFFSET>(attrex.nFileSizeLow) + (static_cast<HB_FOFFSET>(attrex.nFileSizeHigh) << 32);
+    }
 #elif defined(HB_USE_LARGEFILE64)
-      char * pszFree;
-      pszFileName = hb_fsNameConv(pszFileName, &pszFree);
-      struct stat64 statbuf;
-      statbuf.st_size = 0;
-      hb_vmUnlock();
-      bool fResult = stat64(pszFileName, &statbuf) == 0;
-      hb_fsSetIOError(fResult, 0);
-      hb_vmLock();
-      if( pszFree ) {
-         hb_xfree(pszFree);
-      }
-      if( fResult ) {
-         return static_cast<HB_FOFFSET>(statbuf.st_size);
-      }
+    char *pszFree;
+    pszFileName = hb_fsNameConv(pszFileName, &pszFree);
+    struct stat64 statbuf;
+    statbuf.st_size = 0;
+    hb_vmUnlock();
+    bool fResult = stat64(pszFileName, &statbuf) == 0;
+    hb_fsSetIOError(fResult, 0);
+    hb_vmLock();
+    if (pszFree)
+    {
+      hb_xfree(pszFree);
+    }
+    if (fResult)
+    {
+      return static_cast<HB_FOFFSET>(statbuf.st_size);
+    }
 #else
-      char * pszFree;
-      pszFileName = hb_fsNameConv(pszFileName, &pszFree);
-      struct stat statbuf;
-      statbuf.st_size = 0;
-      hb_vmUnlock();
-      bool fResult = stat(const_cast<char*>(pszFileName), &statbuf) == 0;
-      hb_fsSetIOError(fResult, 0);
-      hb_vmLock();
-      if( pszFree ) {
-         hb_xfree(pszFree);
-      }
-      if( fResult ) {
-         return static_cast<HB_FOFFSET>(statbuf.st_size);
-      }
+    char *pszFree;
+    pszFileName = hb_fsNameConv(pszFileName, &pszFree);
+    struct stat statbuf;
+    statbuf.st_size = 0;
+    hb_vmUnlock();
+    bool fResult = stat(const_cast<char *>(pszFileName), &statbuf) == 0;
+    hb_fsSetIOError(fResult, 0);
+    hb_vmLock();
+    if (pszFree)
+    {
+      hb_xfree(pszFree);
+    }
+    if (fResult)
+    {
+      return static_cast<HB_FOFFSET>(statbuf.st_size);
+    }
 #endif
-   } else {
-      HB_FHANDLE hFileHandle = hb_fsOpen(pszFileName, FO_READ | FO_COMPAT);
+  }
+  else
+  {
+    HB_FHANDLE hFileHandle = hb_fsOpen(pszFileName, FO_READ | FO_COMPAT);
 
-      if( hFileHandle != FS_ERROR ) {
-         HB_FOFFSET nPos = hb_fsSeekLarge(hFileHandle, 0, FS_END);
-         hb_fsClose(hFileHandle);
-         return nPos;
-      }
-   }
+    if (hFileHandle != FS_ERROR)
+    {
+      HB_FOFFSET nPos = hb_fsSeekLarge(hFileHandle, 0, FS_END);
+      hb_fsClose(hFileHandle);
+      return nPos;
+    }
+  }
 
-   return 0;
+  return 0;
 }
 
-HB_FUNC( HB_FSIZE )
+HB_FUNC(HB_FSIZE)
 {
-   auto pszFile = hb_parc(1);
-   hb_retnint(pszFile ? hb_fsFSize(pszFile, hb_parldef(2, true)) : 0);
+  auto pszFile = hb_parc(1);
+  hb_retnint(pszFile ? hb_fsFSize(pszFile, hb_parldef(2, true)) : 0);
 }

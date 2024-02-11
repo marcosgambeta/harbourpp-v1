@@ -49,34 +49,36 @@
 
 /* XXX: Check and possibly extend this to other Unix-like platforms */
 #if (defined(HB_OS_BSD) && !defined(HB_OS_DARWIN)) || (defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID))
-   /*
-    * sysctl() on Linux has fallen into depreciation. Not available in current
-    * runtime C libraries, like musl and glibc >= 2.30.
-    */
-#  if (!defined(HB_OS_LINUX) || ((defined(__GLIBC__) && !((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 30))))) || defined(__UCLIBC__))
-#     define HAVE_SYS_SYSCTL_H
-#  endif
-#  define HAVE_DECL_CTL_KERN
-#  define HAVE_DECL_KERN_RANDOM
-#  if defined(HB_OS_LINUX)
-#     define HAVE_DECL_RANDOM_UUID
-#  endif
+/*
+ * sysctl() on Linux has fallen into depreciation. Not available in current
+ * runtime C libraries, like musl and glibc >= 2.30.
+ */
+#if (!defined(HB_OS_LINUX) ||                                                                                          \
+     ((defined(__GLIBC__) && !((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 30))))) ||                  \
+     defined(__UCLIBC__))
+#define HAVE_SYS_SYSCTL_H
+#endif
+#define HAVE_DECL_CTL_KERN
+#define HAVE_DECL_KERN_RANDOM
+#if defined(HB_OS_LINUX)
+#define HAVE_DECL_RANDOM_UUID
+#endif
 #endif
 
 #if defined(HB_OS_WIN)
-#  include <wincrypt.h>
+#include <wincrypt.h>
 #else
-#  include <sys/param.h>
-#  include <sys/time.h>
-#  include <sys/types.h>
-#  ifdef HAVE_SYS_SYSCTL_H
-#     include <sys/sysctl.h>
-#     if !defined(HB_OS_LINUX) && defined(KERN_ARND)
-#        define HAVE_DECL_KERN_ARND
-#     endif
-#  endif
-#  include <fcntl.h>
-#  include <unistd.h>
+#include <sys/param.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#if !defined(HB_OS_LINUX) && defined(KERN_ARND)
+#define HAVE_DECL_KERN_ARND
+#endif
+#endif
+#include <fcntl.h>
+#include <unistd.h>
 #endif
 
 #include <limits.h>
@@ -84,20 +86,20 @@
 #include <string.h>
 
 /* Add platform entropy 32 bytes (256 bits) at a time. */
-#define ADD_ENTROPY          32
+#define ADD_ENTROPY 32
 
 /* Re-seed from the platform RNG after generating this many bytes. */
-#define BYTES_BEFORE_RESEED  1600000
+#define BYTES_BEFORE_RESEED 1600000
 
 struct arc4_stream
 {
-   HB_U8 i;
-   HB_U8 j;
-   HB_U8 s[256];
+  HB_U8 i;
+  HB_U8 j;
+  HB_U8 s[256];
 };
 
 #if !defined(HB_OS_UNIX)
-#  define NO_PID_CHECK
+#define NO_PID_CHECK
 #else
 static pid_t arc4_stir_pid;
 #endif
@@ -107,8 +109,8 @@ static struct arc4_stream rs;
 static HB_I32 arc4_count;
 
 static HB_CRITICAL_NEW(arc4_lock);
-#define ARC4_LOCK()    hb_threadEnterCriticalSection(&arc4_lock)
-#define ARC4_UNLOCK()  hb_threadLeaveCriticalSection(&arc4_lock)
+#define ARC4_LOCK() hb_threadEnterCriticalSection(&arc4_lock)
+#define ARC4_UNLOCK() hb_threadLeaveCriticalSection(&arc4_lock)
 
 #if defined(__BORLANDC__) && defined(_HB_INLINE_)
 #undef _HB_INLINE_
@@ -119,45 +121,51 @@ static _HB_INLINE_ HB_U8 arc4_getbyte(void);
 
 static _HB_INLINE_ void arc4_init(void)
 {
-   for( auto n = 0; n < 256; ++n ) {
-      rs.s[n] = static_cast<HB_U8>(n);
-   }
+  for (auto n = 0; n < 256; ++n)
+  {
+    rs.s[n] = static_cast<HB_U8>(n);
+  }
 
-   rs.i = rs.j = 0;
+  rs.i = rs.j = 0;
 }
 
-static _HB_INLINE_ void arc4_addrandom(const HB_U8 * dat, int datlen)
+static _HB_INLINE_ void arc4_addrandom(const HB_U8 *dat, int datlen)
 {
-   rs.i--;
-   for( auto n = 0; n < 256; ++n ) {
-      HB_U8 si;
-      rs.i         = (rs.i + 1);
-      si           = rs.s[rs.i];
-      rs.j         = rs.j + si + dat[n % datlen];
-      rs.s[rs.i]   = rs.s[rs.j];
-      rs.s[rs.j]   = si;
-   }
-   rs.j = rs.i;
+  rs.i--;
+  for (auto n = 0; n < 256; ++n)
+  {
+    HB_U8 si;
+    rs.i = (rs.i + 1);
+    si = rs.s[rs.i];
+    rs.j = rs.j + si + dat[n % datlen];
+    rs.s[rs.i] = rs.s[rs.j];
+    rs.s[rs.j] = si;
+  }
+  rs.j = rs.i;
 }
 
 #if defined(HB_OS_UNIX)
-static HB_ISIZ read_all(int fd, HB_U8 * buf, size_t count)
+static HB_ISIZ read_all(int fd, HB_U8 *buf, size_t count)
 {
-   HB_SIZE numread = 0;
+  HB_SIZE numread = 0;
 
-   while( numread < count ) {
-      HB_ISIZ result = read(fd, buf + numread, count - numread);
+  while (numread < count)
+  {
+    HB_ISIZ result = read(fd, buf + numread, count - numread);
 
-      if( result < 0 ) {
-         return -1;
-      } else if( result == 0 ) {
-         break;
-      }
+    if (result < 0)
+    {
+      return -1;
+    }
+    else if (result == 0)
+    {
+      break;
+    }
 
-      numread += result;
-   }
+    numread += result;
+  }
 
-   return static_cast<HB_ISIZ>(numread);
+  return static_cast<HB_ISIZ>(numread);
 }
 #endif /* HB_OS_UNIX */
 
@@ -166,27 +174,29 @@ static HB_ISIZ read_all(int fd, HB_U8 * buf, size_t count)
 #define TRY_SEED_MS_CRYPTOAPI
 static int arc4_seed_win(void)
 {
-   /* This is adapted from Tor's crypto_seed_rng() */
-   static int        s_provider_set = 0;
-   static HCRYPTPROV s_provider;
-   unsigned char     buf[ADD_ENTROPY];
+  /* This is adapted from Tor's crypto_seed_rng() */
+  static int s_provider_set = 0;
+  static HCRYPTPROV s_provider;
+  unsigned char buf[ADD_ENTROPY];
 
-   if( !s_provider_set &&
-       !CryptAcquireContext(&s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) &&
-       GetLastError() != static_cast<DWORD>(NTE_BAD_KEYSET) ) {
-      return -1;
-   }
+  if (!s_provider_set &&
+      !CryptAcquireContext(&s_provider, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) &&
+      GetLastError() != static_cast<DWORD>(NTE_BAD_KEYSET))
+  {
+    return -1;
+  }
 
-   s_provider_set = 1;
+  s_provider_set = 1;
 
-   if( !CryptGenRandom(s_provider, sizeof(buf), buf) ) {
-      return -1;
-   }
+  if (!CryptGenRandom(s_provider, sizeof(buf), buf))
+  {
+    return -1;
+  }
 
-   arc4_addrandom(buf, sizeof(buf));
-   memset(buf, 0, sizeof(buf));
+  arc4_addrandom(buf, sizeof(buf));
+  memset(buf, 0, sizeof(buf));
 
-   return 0;
+  return 0;
 }
 #endif /* HB_OS_WIN */
 
@@ -197,40 +207,44 @@ static int arc4_seed_win(void)
 #define TRY_SEED_SYSCTL_LINUX
 static int arc4_seed_sysctl_linux(void)
 {
-   /*
-    * Based on code by William Ahern, this function tries to use the
-    * RANDOM_UUID sysctl to get entropy from the kernel. This can work
-    * even if /dev/urandom is inaccessible for some reason (e.g., we're
-    * running in a chroot).
-    */
-   int          mib[] = { CTL_KERN, KERN_RANDOM, RANDOM_UUID };
-   HB_U8        buf[ADD_ENTROPY];
-   size_t       n;
-   int          any_set;
+  /*
+   * Based on code by William Ahern, this function tries to use the
+   * RANDOM_UUID sysctl to get entropy from the kernel. This can work
+   * even if /dev/urandom is inaccessible for some reason (e.g., we're
+   * running in a chroot).
+   */
+  int mib[] = {CTL_KERN, KERN_RANDOM, RANDOM_UUID};
+  HB_U8 buf[ADD_ENTROPY];
+  size_t n;
+  int any_set;
 
-   memset(buf, 0, sizeof(buf));
+  memset(buf, 0, sizeof(buf));
 
-   for( size_t len = 0; len < sizeof(buf); len += n ) {
-      n = sizeof(buf) - len;
+  for (size_t len = 0; len < sizeof(buf); len += n)
+  {
+    n = sizeof(buf) - len;
 
-      if( sysctl(mib, 3, &buf[len], &n, nullptr, 0) != 0 ) {
-         return -1;
-      }
-   }
-
-   /* make sure that the buffer actually got set. */
-   for( unsigned int i = 0, any_set = 0; i < sizeof(buf); ++i ) {
-      any_set |= buf[i];
-   }
-
-   if( !any_set ) {
+    if (sysctl(mib, 3, &buf[len], &n, nullptr, 0) != 0)
+    {
       return -1;
-   }
+    }
+  }
 
-   arc4_addrandom(buf, sizeof(buf));
-   memset(buf, 0, sizeof(buf));
+  /* make sure that the buffer actually got set. */
+  for (unsigned int i = 0, any_set = 0; i < sizeof(buf); ++i)
+  {
+    any_set |= buf[i];
+  }
 
-   return 0;
+  if (!any_set)
+  {
+    return -1;
+  }
+
+  arc4_addrandom(buf, sizeof(buf));
+  memset(buf, 0, sizeof(buf));
+
+  return 0;
 }
 #endif /* HAVE_DECL_CTL_KERN && HAVE_DECL_KERN_RANDOM && HAVE_DECL_RANDOM_UUID */
 
@@ -239,131 +253,169 @@ static int arc4_seed_sysctl_linux(void)
 #define TRY_SEED_SYSCTL_BSD
 static int arc4_seed_sysctl_bsd(void)
 {
-   /*
-    * Based on code from William Ahern and from OpenBSD, this function
-    * tries to use the KERN_ARND syscall to get entropy from the kernel.
-    * This can work even if /dev/urandom is inaccessible for some reason
-    * (e.g., we're running in a chroot).
-    */
-   int    mib[] = { CTL_KERN, KERN_ARND };
-   HB_U8  buf[ADD_ENTROPY];
-   size_t len, n;
-   int    any_set;
+  /*
+   * Based on code from William Ahern and from OpenBSD, this function
+   * tries to use the KERN_ARND syscall to get entropy from the kernel.
+   * This can work even if /dev/urandom is inaccessible for some reason
+   * (e.g., we're running in a chroot).
+   */
+  int mib[] = {CTL_KERN, KERN_ARND};
+  HB_U8 buf[ADD_ENTROPY];
+  size_t len, n;
+  int any_set;
 
-   memset(buf, 0, sizeof(buf));
+  memset(buf, 0, sizeof(buf));
 
-   len = sizeof(buf);
-   if( sysctl(mib, 2, buf, &len, nullptr, 0) == -1 ) {
-      for( len = 0; len < sizeof(buf); len += sizeof(unsigned) ) {
-         n = sizeof(unsigned);
+  len = sizeof(buf);
+  if (sysctl(mib, 2, buf, &len, nullptr, 0) == -1)
+  {
+    for (len = 0; len < sizeof(buf); len += sizeof(unsigned))
+    {
+      n = sizeof(unsigned);
 
-         if( n + len > sizeof(buf) ) {
-            n = len - sizeof(buf);
-         }
-
-         if( sysctl(mib, 2, &buf[len], &n, nullptr, 0) == -1 ) {
-            return -1;
-         }
+      if (n + len > sizeof(buf))
+      {
+        n = len - sizeof(buf);
       }
-   }
 
-   /* make sure that the buffer actually got set. */
-   for( int i = any_set = 0; i < static_cast<int>(sizeof(buf)); ++i ) {
-      any_set |= buf[i];
-   }
+      if (sysctl(mib, 2, &buf[len], &n, nullptr, 0) == -1)
+      {
+        return -1;
+      }
+    }
+  }
 
-   if( !any_set ) {
-      return -1;
-   }
+  /* make sure that the buffer actually got set. */
+  for (int i = any_set = 0; i < static_cast<int>(sizeof(buf)); ++i)
+  {
+    any_set |= buf[i];
+  }
 
-   arc4_addrandom(buf, sizeof(buf));
-   memset(buf, 0, sizeof(buf));
+  if (!any_set)
+  {
+    return -1;
+  }
 
-   return 0;
+  arc4_addrandom(buf, sizeof(buf));
+  memset(buf, 0, sizeof(buf));
+
+  return 0;
 }
-#endif   /* HAVE_DECL_CTL_KERN && HAVE_DECL_KERN_ARND */
+#endif /* HAVE_DECL_CTL_KERN && HAVE_DECL_KERN_ARND */
 
-#endif   /* defined(HAVE_SYS_SYSCTL_H) */
+#endif /* defined(HAVE_SYS_SYSCTL_H) */
 
 #if defined(HB_OS_LINUX)
 
 #define TRY_SEED_PROC_SYS_KERNEL_RANDOM_UUID
 static _HB_INLINE_ int hex_char_to_int(char c)
 {
-   switch( c ) {
-      case '0':           return 0;
-      case '1':           return 1;
-      case '2':           return 2;
-      case '3':           return 3;
-      case '4':           return 4;
-      case '5':           return 5;
-      case '6':           return 6;
-      case '7':           return 7;
-      case '8':           return 8;
-      case '9':           return 9;
-      case 'A': case 'a': return 10;
-      case 'B': case 'b': return 11;
-      case 'C': case 'c': return 12;
-      case 'D': case 'd': return 13;
-      case 'E': case 'e': return 14;
-      case 'F': case 'f': return 15;
-   }
+  switch (c)
+  {
+  case '0':
+    return 0;
+  case '1':
+    return 1;
+  case '2':
+    return 2;
+  case '3':
+    return 3;
+  case '4':
+    return 4;
+  case '5':
+    return 5;
+  case '6':
+    return 6;
+  case '7':
+    return 7;
+  case '8':
+    return 8;
+  case '9':
+    return 9;
+  case 'A':
+  case 'a':
+    return 10;
+  case 'B':
+  case 'b':
+    return 11;
+  case 'C':
+  case 'c':
+    return 12;
+  case 'D':
+  case 'd':
+    return 13;
+  case 'E':
+  case 'e':
+    return 14;
+  case 'F':
+  case 'f':
+    return 15;
+  }
 
-   return -1;
+  return -1;
 }
 
 static int arc4_seed_proc_sys_kernel_random_uuid(void)
 {
-   /*
-    * Occasionally, somebody will make /proc/sys accessible in a chroot,
-    * but not /dev/urandom.  Let's try /proc/sys/kernel/random/uuid.
-    * Its format is stupid, so we need to decode it from hex.
-    */
-   char  buf[128];
-   HB_U8 entropy[64];
-   int   i, nybbles;
+  /*
+   * Occasionally, somebody will make /proc/sys accessible in a chroot,
+   * but not /dev/urandom.  Let's try /proc/sys/kernel/random/uuid.
+   * Its format is stupid, so we need to decode it from hex.
+   */
+  char buf[128];
+  HB_U8 entropy[64];
+  int i, nybbles;
 
-   for( auto bytes = 0; bytes < ADD_ENTROPY; ) {
-      int fd = open("/proc/sys/kernel/random/uuid", O_RDONLY, 0);
-      int n;
+  for (auto bytes = 0; bytes < ADD_ENTROPY;)
+  {
+    int fd = open("/proc/sys/kernel/random/uuid", O_RDONLY, 0);
+    int n;
 
-      if( fd < 0 ) {
-         return -1;
+    if (fd < 0)
+    {
+      return -1;
+    }
+
+    n = read(fd, buf, sizeof(buf));
+    close(fd);
+
+    if (n <= 0)
+    {
+      return -1;
+    }
+
+    memset(entropy, 0, sizeof(entropy));
+    for (i = nybbles = 0; i < n; ++i)
+    {
+      if (HB_ISXDIGIT(buf[i]))
+      {
+        int nyb = hex_char_to_int(buf[i]);
+
+        if (nybbles & 1)
+        {
+          entropy[nybbles / 2] |= nyb;
+        }
+        else
+        {
+          entropy[nybbles / 2] |= nyb << 4;
+        }
+
+        ++nybbles;
       }
+    }
+    if (nybbles < 2)
+    {
+      return -1;
+    }
 
-      n = read(fd, buf, sizeof(buf));
-      close(fd);
+    arc4_addrandom(entropy, nybbles / 2);
+    bytes += nybbles / 2;
+  }
 
-      if( n <= 0 ) {
-         return -1;
-      }
+  memset(entropy, 0, sizeof(entropy));
+  memset(buf, 0, sizeof(buf));
 
-      memset(entropy, 0, sizeof(entropy));
-      for( i = nybbles = 0; i < n; ++i ) {
-         if( HB_ISXDIGIT(buf[i]) ) {
-            int nyb = hex_char_to_int(buf[i]);
-
-            if( nybbles & 1 ) {
-               entropy[nybbles / 2] |= nyb;
-            } else {
-               entropy[nybbles / 2] |= nyb << 4;
-            }
-
-            ++nybbles;
-         }
-      }
-      if( nybbles < 2 ) {
-         return -1;
-      }
-
-      arc4_addrandom(entropy, nybbles / 2);
-      bytes += nybbles / 2;
-   }
-
-   memset(entropy, 0, sizeof(entropy));
-   memset(buf, 0, sizeof(buf));
-
-   return 0;
+  return 0;
 }
 #endif /* HB_OS_LINUX */
 
@@ -372,183 +424,197 @@ static int arc4_seed_proc_sys_kernel_random_uuid(void)
 #define TRY_SEED_URANDOM
 static int arc4_seed_urandom(void)
 {
-   /* This is adapted from Tor's crypto_seed_rng() */
-   static const char * filenames[] = {"/dev/srandom", "/dev/urandom", "/dev/random", nullptr};
+  /* This is adapted from Tor's crypto_seed_rng() */
+  static const char *filenames[] = {"/dev/srandom", "/dev/urandom", "/dev/random", nullptr};
 
-   for( auto i = 0; filenames[i]; ++i ) {
-      HB_U8 buf[ADD_ENTROPY];
-      HB_SIZE n;
+  for (auto i = 0; filenames[i]; ++i)
+  {
+    HB_U8 buf[ADD_ENTROPY];
+    HB_SIZE n;
 
-      int fd = open(filenames[i], O_RDONLY, 0);
+    int fd = open(filenames[i], O_RDONLY, 0);
 
-      if( fd < 0 ) {
-         continue;
-      }
+    if (fd < 0)
+    {
+      continue;
+    }
 
-      n = read_all(fd, buf, sizeof(buf));
-      close(fd);
+    n = read_all(fd, buf, sizeof(buf));
+    close(fd);
 
-      if( n != sizeof(buf) ) {
-         return -1;
-      }
+    if (n != sizeof(buf))
+    {
+      return -1;
+    }
 
-      arc4_addrandom(buf, sizeof(buf));
-      memset(buf, 0, sizeof(buf));
+    arc4_addrandom(buf, sizeof(buf));
+    memset(buf, 0, sizeof(buf));
 
-      return 0;
-   }
+    return 0;
+  }
 
-   return -1;
+  return -1;
 }
 #endif /* HB_OS_UNIX */
 
 static int arc4_seed_rand(void)
 {
-   HB_U8 buf[ADD_ENTROPY];
+  HB_U8 buf[ADD_ENTROPY];
 
-   srand(static_cast<unsigned>(hb_dateMilliSeconds()));
+  srand(static_cast<unsigned>(hb_dateMilliSeconds()));
 
-   for( HB_SIZE i = 0; i < sizeof(buf); i++ ) {
-      buf[i] = static_cast<HB_U8>(rand() % 256);  /* not biased */
-   }
+  for (HB_SIZE i = 0; i < sizeof(buf); i++)
+  {
+    buf[i] = static_cast<HB_U8>(rand() % 256); /* not biased */
+  }
 
-   arc4_addrandom(buf, sizeof(buf));
-   memset(buf, 0, sizeof(buf));
+  arc4_addrandom(buf, sizeof(buf));
+  memset(buf, 0, sizeof(buf));
 
-   return 0;
+  return 0;
 }
 
 static void arc4_seed(void)
 {
-   int ok = 0;
+  int ok = 0;
 
-   /*
-    * We try every method that might work, and don't give up even if one
-    * does seem to work. There's no real harm in over-seeding, and if
-    * one of these sources turns out to be broken, that would be bad.
-    */
+  /*
+   * We try every method that might work, and don't give up even if one
+   * does seem to work. There's no real harm in over-seeding, and if
+   * one of these sources turns out to be broken, that would be bad.
+   */
 
 #if defined(TRY_SEED_MS_CRYPTOAPI)
-   if( arc4_seed_win() == 0 ) {
-      ok = 1;
-   }
+  if (arc4_seed_win() == 0)
+  {
+    ok = 1;
+  }
 #endif
 
 #if defined(TRY_SEED_URANDOM)
-   if( arc4_seed_urandom() == 0 ) {
-      ok = 1;
-   }
+  if (arc4_seed_urandom() == 0)
+  {
+    ok = 1;
+  }
 #endif
 
 #if defined(TRY_SEED_PROC_SYS_KERNEL_RANDOM_UUID)
-   if( arc4_seed_proc_sys_kernel_random_uuid() == 0 ) {
-      ok = 1;
-   }
+  if (arc4_seed_proc_sys_kernel_random_uuid() == 0)
+  {
+    ok = 1;
+  }
 #endif
 
 #if defined(TRY_SEED_SYSCTL_LINUX)
-   /*
-    * Apparently Linux is deprecating sysctl, and spewing warning
-    * messages when you try to use it. To avoid dmesg spamming,
-    * only try this if no previous method worked.
-    */
-   if( !ok && arc4_seed_sysctl_linux() == 0 ) {
-      ok = 1;
-   }
+  /*
+   * Apparently Linux is deprecating sysctl, and spewing warning
+   * messages when you try to use it. To avoid dmesg spamming,
+   * only try this if no previous method worked.
+   */
+  if (!ok && arc4_seed_sysctl_linux() == 0)
+  {
+    ok = 1;
+  }
 #endif
 
 #if defined(TRY_SEED_SYSCTL_BSD)
-   if( arc4_seed_sysctl_bsd() == 0 ) {
-      ok = 1;
-   }
+  if (arc4_seed_sysctl_bsd() == 0)
+  {
+    ok = 1;
+  }
 #endif
 
-   /*
-    * If nothing else worked or there is no specific seeding
-    * method for the current platform, fall back to rand().
-    * In case an existing platform-specific method had a
-    * (transient) failure, it will be re-tried at the next
-    * seeding cycle.
-    */
-   if( !ok ) {
-      arc4_seed_rand();
-   }
+  /*
+   * If nothing else worked or there is no specific seeding
+   * method for the current platform, fall back to rand().
+   * In case an existing platform-specific method had a
+   * (transient) failure, it will be re-tried at the next
+   * seeding cycle.
+   */
+  if (!ok)
+  {
+    arc4_seed_rand();
+  }
 }
 
 static void arc4_stir(void)
 {
-   if( !rs_initialized ) {
-      arc4_init();
-      rs_initialized = 1;
-   }
+  if (!rs_initialized)
+  {
+    arc4_init();
+    rs_initialized = 1;
+  }
 
-   arc4_seed();
+  arc4_seed();
 
-   /*
-    * Discard early keystream, as per recommendations in
-    * "Weaknesses in the Key Scheduling Algorithm of RC4" by
-    * Scott Fluhrer, Itsik Mantin, and Adi Shamir.
-    * https://web.archive.org/web/www.wisdom.weizmann.ac.il/~itsik/RC4/Papers/Rc4_ksa.ps
-    *
-    * Ilya Mironov's "(Not So) Random Shuffles of RC4" suggests that
-    * we drop at least 2*256 bytes, with 12*256 as a conservative
-    * value.
-    *
-    * RFC4345 says to drop 6*256.
-    *
-    * At least some versions of this code drop 4*256, in a mistaken
-    * belief that "words" in the Fluhrer/Mantin/Shamir paper refers
-    * to processor words.
-    *
-    * We add another sect to the cargo cult, and choose 12*256.
-    */
-   for( auto i = 0; i < 12 * 256; i++ ) {
-      ( void ) arc4_getbyte(); // TODO: C++ cast
-   }
+  /*
+   * Discard early keystream, as per recommendations in
+   * "Weaknesses in the Key Scheduling Algorithm of RC4" by
+   * Scott Fluhrer, Itsik Mantin, and Adi Shamir.
+   * https://web.archive.org/web/www.wisdom.weizmann.ac.il/~itsik/RC4/Papers/Rc4_ksa.ps
+   *
+   * Ilya Mironov's "(Not So) Random Shuffles of RC4" suggests that
+   * we drop at least 2*256 bytes, with 12*256 as a conservative
+   * value.
+   *
+   * RFC4345 says to drop 6*256.
+   *
+   * At least some versions of this code drop 4*256, in a mistaken
+   * belief that "words" in the Fluhrer/Mantin/Shamir paper refers
+   * to processor words.
+   *
+   * We add another sect to the cargo cult, and choose 12*256.
+   */
+  for (auto i = 0; i < 12 * 256; i++)
+  {
+    (void)arc4_getbyte(); // TODO: C++ cast
+  }
 
-   arc4_count = BYTES_BEFORE_RESEED;
+  arc4_count = BYTES_BEFORE_RESEED;
 }
 
 static void arc4_stir_if_needed(void)
 {
 #if defined(NO_PID_CHECK)
-   if( arc4_count <= 0 || !rs_initialized ) {
-      arc4_stir();
-   }
+  if (arc4_count <= 0 || !rs_initialized)
+  {
+    arc4_stir();
+  }
 #else
-   pid_t pid = getpid();
+  pid_t pid = getpid();
 
-   if( arc4_count <= 0 || !rs_initialized || arc4_stir_pid != pid ) {
-      arc4_stir_pid = pid;
-      arc4_stir();
-   }
+  if (arc4_count <= 0 || !rs_initialized || arc4_stir_pid != pid)
+  {
+    arc4_stir_pid = pid;
+    arc4_stir();
+  }
 #endif
 }
 
 static _HB_INLINE_ HB_U8 arc4_getbyte(void)
 {
-   HB_U8 si, sj;
+  HB_U8 si, sj;
 
-   rs.i         = rs.i + 1;
-   si           = rs.s[rs.i];
-   rs.j         = rs.j + si;
-   sj           = rs.s[rs.j];
-   rs.s[rs.i] = sj;
-   rs.s[rs.j] = si;
+  rs.i = rs.i + 1;
+  si = rs.s[rs.i];
+  rs.j = rs.j + si;
+  sj = rs.s[rs.j];
+  rs.s[rs.i] = sj;
+  rs.s[rs.j] = si;
 
-   return rs.s[( si + sj ) & 0xff];
+  return rs.s[(si + sj) & 0xff];
 }
 
 static _HB_INLINE_ HB_U32 arc4_getword(void)
 {
-   HB_U32 val;
+  HB_U32 val;
 
-   val  = arc4_getbyte() << 24;
-   val |= arc4_getbyte() << 16;
-   val |= arc4_getbyte() << 8;
-   val |= arc4_getbyte();
+  val = arc4_getbyte() << 24;
+  val |= arc4_getbyte() << 16;
+  val |= arc4_getbyte() << 8;
+  val |= arc4_getbyte();
 
-   return val;
+  return val;
 }
 
 #if 0
@@ -585,36 +651,38 @@ void arc4random_addrandom(const unsigned char * dat, int datlen)
 
 HB_U32 hb_arc4random(void)
 {
-   HB_U32 val;
+  HB_U32 val;
 
-   ARC4_LOCK();
+  ARC4_LOCK();
 
-   arc4_count -= 4;
-   arc4_stir_if_needed();
-   val = arc4_getword();
+  arc4_count -= 4;
+  arc4_stir_if_needed();
+  val = arc4_getword();
 
-   ARC4_UNLOCK();
+  ARC4_UNLOCK();
 
-   return val;
+  return val;
 }
 
-void hb_arc4random_buf(void * _buf, HB_SIZE n)
+void hb_arc4random_buf(void *_buf, HB_SIZE n)
 {
-   auto buf = static_cast<HB_U8*>(_buf);
+  auto buf = static_cast<HB_U8 *>(_buf);
 
-   ARC4_LOCK();
+  ARC4_LOCK();
 
-   arc4_stir_if_needed();
+  arc4_stir_if_needed();
 
-   while( n-- ) {
-      if( --arc4_count <= 0 ) {
-         arc4_stir();
-      }
+  while (n--)
+  {
+    if (--arc4_count <= 0)
+    {
+      arc4_stir();
+    }
 
-      buf[n] = arc4_getbyte();
-   }
+    buf[n] = arc4_getbyte();
+  }
 
-   ARC4_UNLOCK();
+  ARC4_UNLOCK();
 }
 
 /*
@@ -629,37 +697,43 @@ void hb_arc4random_buf(void * _buf, HB_SIZE n)
  */
 HB_U32 hb_arc4random_uniform(HB_U32 upper_bound)
 {
-   HB_U32 r, min;
+  HB_U32 r, min;
 
-   if( upper_bound < 2 ) {
-      return 0;
-   }
+  if (upper_bound < 2)
+  {
+    return 0;
+  }
 
 #if (HB_U32_MAX > 0xffffffffUL)
-   min = 0x100000000UL % upper_bound;
+  min = 0x100000000UL % upper_bound;
 #else
-   /* Calculate (2**32 % upper_bound) avoiding 64-bit math */
-   if( upper_bound > 0x80000000 ) {
-      /* 2**32 - upper_bound */
-      min = 1 + ~upper_bound;
-   } else {
-      /* (2**32 - (x * 2)) % x == 2**32 % x when x <= 2**31 */
-      min = ((0xffffffff - (upper_bound * 2)) + 1) % upper_bound;
-   }
+  /* Calculate (2**32 % upper_bound) avoiding 64-bit math */
+  if (upper_bound > 0x80000000)
+  {
+    /* 2**32 - upper_bound */
+    min = 1 + ~upper_bound;
+  }
+  else
+  {
+    /* (2**32 - (x * 2)) % x == 2**32 % x when x <= 2**31 */
+    min = ((0xffffffff - (upper_bound * 2)) + 1) % upper_bound;
+  }
 #endif
 
-   /*
-    * This could theoretically loop forever but each retry has
-    * p > 0.5 (worst case, usually far better) of selecting a
-    * number inside the range we need, so it should rarely need
-    * to re-roll.
-    */
-   for( ;; ) {
-      r = hb_arc4random();
-      if( r >= min ) {
-         break;
-      }
-   }
+  /*
+   * This could theoretically loop forever but each retry has
+   * p > 0.5 (worst case, usually far better) of selecting a
+   * number inside the range we need, so it should rarely need
+   * to re-roll.
+   */
+  for (;;)
+  {
+    r = hb_arc4random();
+    if (r >= min)
+    {
+      break;
+    }
+  }
 
-   return r % upper_bound;
+  return r % upper_bound;
 }

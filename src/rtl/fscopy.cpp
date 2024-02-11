@@ -47,71 +47,86 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 
-#define HB_FSCOPY_BUFFERSIZE  65536
+#define HB_FSCOPY_BUFFERSIZE 65536
 
-HB_BOOL hb_fsCopy(const char * pszSource, const char * pszDest)
+HB_BOOL hb_fsCopy(const char *pszSource, const char *pszDest)
 {
-   auto fResult = false;
-   PHB_FILE pSrcFile;
+  auto fResult = false;
+  PHB_FILE pSrcFile;
 
-   if( (pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr ) {
-      PHB_FILE pDstFile;
-      HB_ERRCODE errCode;
+  if ((pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr)
+  {
+    PHB_FILE pDstFile;
+    HB_ERRCODE errCode;
 
-      if( (pDstFile = hb_fileExtOpen(pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, nullptr, nullptr)) != nullptr ) {
-         auto pbyBuffer = hb_xgrab(HB_FSCOPY_BUFFERSIZE);
+    if ((pDstFile = hb_fileExtOpen(pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK,
+                                   nullptr, nullptr)) != nullptr)
+    {
+      auto pbyBuffer = hb_xgrab(HB_FSCOPY_BUFFERSIZE);
 
-         for( ;; ) {
-            HB_SIZE nBytesRead;
-            if( (nBytesRead = hb_fileRead(pSrcFile, pbyBuffer, HB_FSCOPY_BUFFERSIZE, -1)) > 0 &&
-                nBytesRead != static_cast<HB_SIZE>(FS_ERROR) ) {
-               if( nBytesRead != hb_fileWrite(pDstFile, pbyBuffer, nBytesRead, -1) ) {
-                  errCode = hb_fsError();
-                  break;
-               }
-            } else {
-               errCode = hb_fsError();
-               fResult = errCode == 0;
-               break;
-            }
-         }
-
-         hb_xfree(pbyBuffer);
-
-         hb_fileClose(pDstFile);
-      } else {
-         errCode = hb_fsError();
+      for (;;)
+      {
+        HB_SIZE nBytesRead;
+        if ((nBytesRead = hb_fileRead(pSrcFile, pbyBuffer, HB_FSCOPY_BUFFERSIZE, -1)) > 0 &&
+            nBytesRead != static_cast<HB_SIZE>(FS_ERROR))
+        {
+          if (nBytesRead != hb_fileWrite(pDstFile, pbyBuffer, nBytesRead, -1))
+          {
+            errCode = hb_fsError();
+            break;
+          }
+        }
+        else
+        {
+          errCode = hb_fsError();
+          fResult = errCode == 0;
+          break;
+        }
       }
 
-      hb_fileClose(pSrcFile);
+      hb_xfree(pbyBuffer);
 
-      if( fResult ) {
-         HB_FATTR ulAttr;
+      hb_fileClose(pDstFile);
+    }
+    else
+    {
+      errCode = hb_fsError();
+    }
 
-         if( hb_fileAttrGet(pszSource, &ulAttr) ) {
-            hb_fileAttrSet(pszDest, ulAttr);
-         }
+    hb_fileClose(pSrcFile);
+
+    if (fResult)
+    {
+      HB_FATTR ulAttr;
+
+      if (hb_fileAttrGet(pszSource, &ulAttr))
+      {
+        hb_fileAttrSet(pszDest, ulAttr);
       }
-      hb_fsSetError(errCode);
-   }
+    }
+    hb_fsSetError(errCode);
+  }
 
-   return fResult;
+  return fResult;
 }
 
-HB_FUNC( HB_FCOPY )
+HB_FUNC(HB_FCOPY)
 {
-   HB_ERRCODE errCode = 2; /* file not found */
-   auto fResult = false;
-   auto pszSource = hb_parc(1);
-   auto pszDest = hb_parc(2);
+  HB_ERRCODE errCode = 2; /* file not found */
+  auto fResult = false;
+  auto pszSource = hb_parc(1);
+  auto pszDest = hb_parc(2);
 
-   if( pszSource && pszDest ) {
-      fResult = hb_fsCopy(pszSource, pszDest);
-      errCode = hb_fsError();
-   } else {
-      hb_fsSetFError(2); /* file not found */
-      hb_retni(F_ERROR);
-   }
-   hb_fsSetFError(errCode);
-   hb_retni(fResult ? 0 : F_ERROR);
+  if (pszSource && pszDest)
+  {
+    fResult = hb_fsCopy(pszSource, pszDest);
+    errCode = hb_fsError();
+  }
+  else
+  {
+    hb_fsSetFError(2); /* file not found */
+    hb_retni(F_ERROR);
+  }
+  hb_fsSetFError(errCode);
+  hb_retni(fResult ? 0 : F_ERROR);
 }

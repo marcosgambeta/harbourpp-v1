@@ -48,67 +48,76 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( BIN2W )
+HB_FUNC(BIN2W)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
-   HB_U16 uiResult = 0;
+  auto pItem = hb_param(1, Harbour::Item::STRING);
+  HB_U16 uiResult = 0;
 
-   if( pItem != nullptr ) {
-      auto nLen = hb_itemGetCLen(pItem);
-      if( nLen ) {
-         auto pszString = hb_itemGetCPtr(pItem);
-         uiResult = HB_GET_LE_INT16(pszString);
+  if (pItem != nullptr)
+  {
+    auto nLen = hb_itemGetCLen(pItem);
+    if (nLen)
+    {
+      auto pszString = hb_itemGetCPtr(pItem);
+      uiResult = HB_GET_LE_INT16(pszString);
+    }
+  }
+  hb_retnint(uiResult);
+}
+
+HB_FUNC(BIN2I)
+{
+  auto pItem = hb_param(1, Harbour::Item::STRING);
+  HB_I16 iResult = 0;
+
+  if (pItem != nullptr)
+  {
+    auto nLen = hb_itemGetCLen(pItem);
+    if (nLen)
+    {
+      auto pszString = hb_itemGetCPtr(pItem);
+      iResult = HB_GET_LE_UINT16(pszString);
+    }
+  }
+  hb_retnint(iResult);
+}
+
+HB_FUNC(BIN2L)
+{
+  auto pItem = hb_param(1, Harbour::Item::STRING);
+  HB_I32 iResult = 0;
+
+  if (pItem != nullptr)
+  {
+    auto nLen = hb_itemGetCLen(pItem);
+    if (nLen)
+    {
+      auto pszString = hb_itemGetCPtr(pItem);
+      if (nLen >= 3)
+      {
+        iResult = HB_GET_LE_INT32(pszString);
       }
-   }
-   hb_retnint(uiResult);
-}
-
-HB_FUNC( BIN2I )
-{
-   auto pItem = hb_param(1, Harbour::Item::STRING);
-   HB_I16 iResult = 0;
-
-   if( pItem != nullptr ) {
-      auto nLen = hb_itemGetCLen(pItem);
-      if( nLen ) {
-         auto pszString = hb_itemGetCPtr(pItem);
-         iResult = HB_GET_LE_UINT16(pszString);
+      else
+      {
+        iResult = HB_GET_LE_UINT16(pszString);
       }
-   }
-   hb_retnint(iResult);
+    }
+  }
+  hb_retnint(iResult);
 }
 
-HB_FUNC( BIN2L )
+HB_FUNC(I2BIN)
 {
-   auto pItem = hb_param(1, Harbour::Item::STRING);
-   HB_I32 iResult = 0;
-
-   if( pItem != nullptr ) {
-      auto nLen = hb_itemGetCLen(pItem);
-      if( nLen ) {
-         auto pszString = hb_itemGetCPtr(pItem);
-         if( nLen >= 3 ) {
-            iResult = HB_GET_LE_INT32(pszString);
-         } else {
-            iResult = HB_GET_LE_UINT16(pszString);
-         }
-      }
-   }
-   hb_retnint(iResult);
+  char szResult[2];
+  auto iValue = static_cast<HB_I16>(hb_parni(1));
+  HB_PUT_LE_UINT16(szResult, iValue);
+  hb_retclen(szResult, 2);
 }
 
-HB_FUNC( I2BIN )
+HB_FUNC(L2BIN)
 {
-   char szResult[2];
-   auto iValue = static_cast<HB_I16>(hb_parni(1));
-   HB_PUT_LE_UINT16(szResult, iValue);
-   hb_retclen(szResult, 2);
-}
-
-HB_FUNC( L2BIN )
-{
-   char szResult[4];
-   auto iValue = static_cast<HB_I32>(hb_parnl(1));
-   HB_PUT_LE_UINT32(szResult, iValue);
-   hb_retclen(szResult, 4);
+  char szResult[4];
+  auto iValue = static_cast<HB_I32>(hb_parnl(1));
+  HB_PUT_LE_UINT32(szResult, iValue);
+  hb_retclen(szResult, 4);
 }

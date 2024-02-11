@@ -50,121 +50,144 @@
 
 /* trims from the left, and returns a new pointer to szText */
 /* also returns the new length in lLen */
-const char * hb_strLTrim(const char * szText, HB_SIZE * nLen)
+const char *hb_strLTrim(const char *szText, HB_SIZE *nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strLTrim(%s, %p)", szText, static_cast<void*>(nLen)));
 #endif
 
-   while( *nLen && HB_ISSPACE(*szText) ) {
-      szText++;
-      (*nLen)--;
-   }
+  while (*nLen && HB_ISSPACE(*szText))
+  {
+    szText++;
+    (*nLen)--;
+  }
 
-   return szText;
+  return szText;
 }
 
 /* return length of szText ignoring trailing white space (or true spaces) */
-HB_SIZE hb_strRTrimLen(const char * szText, HB_SIZE nLen, HB_BOOL bAnySpace)
+HB_SIZE hb_strRTrimLen(const char *szText, HB_SIZE nLen, HB_BOOL bAnySpace)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strRTrimLen(%s, %" HB_PFS "u, %d)", szText, nLen, static_cast<int>(bAnySpace)));
 #endif
 
-   if( bAnySpace ) {
-      while( nLen && HB_ISSPACE(szText[nLen - 1]) ) {
-         nLen--;
-      }
-   } else {
-      while( nLen && szText[nLen - 1] == ' ' ) {
-         nLen--;
-      }
-   }
+  if (bAnySpace)
+  {
+    while (nLen && HB_ISSPACE(szText[nLen - 1]))
+    {
+      nLen--;
+    }
+  }
+  else
+  {
+    while (nLen && szText[nLen - 1] == ' ')
+    {
+      nLen--;
+    }
+  }
 
-   return nLen;
+  return nLen;
 }
 
 /* trims leading spaces from a string */
 
-HB_FUNC( LTRIM )
+HB_FUNC(LTRIM)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      HB_SIZE nLen, nSrc;
-      const char * szText;
+  if (pText)
+  {
+    HB_SIZE nLen, nSrc;
+    const char *szText;
 
-      nLen = nSrc = hb_itemGetCLen(pText);
-      szText = hb_strLTrim(hb_itemGetCPtr(pText), &nLen);
+    nLen = nSrc = hb_itemGetCLen(pText);
+    szText = hb_strLTrim(hb_itemGetCPtr(pText), &nLen);
 
-      if( nLen == nSrc ) {
-         hb_itemReturn(pText);
-      } else {
-         hb_retclen(szText, nLen);
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    if (nLen == nSrc)
+    {
+      hb_itemReturn(pText);
+    }
+    else
+    {
+      hb_retclen(szText, nLen);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1101, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* trims trailing spaces from a string */
 
 /* NOTE: The second parameter is a Harbour extension. */
 
-HB_FUNC( RTRIM )
+HB_FUNC(RTRIM)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto szText = hb_itemGetCPtr(pText);
+  if (pText)
+  {
+    auto szText = hb_itemGetCPtr(pText);
 
-      auto nSrc = hb_itemGetCLen(pText);
-      HB_SIZE nLen = hb_strRTrimLen(szText, nSrc, false);
+    auto nSrc = hb_itemGetCLen(pText);
+    HB_SIZE nLen = hb_strRTrimLen(szText, nSrc, false);
 
-      if( nLen == nSrc ) {
-         hb_itemReturn(pText);
-      } else {
-         hb_retclen(szText, nLen);
-      }
-   } else {
-      /* NOTE: "TRIM" is correct here [vszakats] */
-      hb_errRT_BASE_SubstR(EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS);
-   }
+    if (nLen == nSrc)
+    {
+      hb_itemReturn(pText);
+    }
+    else
+    {
+      hb_retclen(szText, nLen);
+    }
+  }
+  else
+  {
+    /* NOTE: "TRIM" is correct here [vszakats] */
+    hb_errRT_BASE_SubstR(EG_ARG, 1100, nullptr, "TRIM", HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* synonymn for RTRIM */
-HB_FUNC_TRANSLATE( TRIM, RTRIM )
+HB_FUNC_TRANSLATE(TRIM, RTRIM)
 
 /* trims leading and trailing spaces from a string */
 
 /* NOTE: The second parameter is a Harbour extension. */
 
-HB_FUNC( ALLTRIM )
+HB_FUNC(ALLTRIM)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      HB_SIZE nLen;
-      auto szText = hb_itemGetCPtr(pText);
+  if (pText)
+  {
+    HB_SIZE nLen;
+    auto szText = hb_itemGetCPtr(pText);
 
-      auto nSrc = hb_itemGetCLen(pText);
-      nLen = hb_strRTrimLen(szText, nSrc, false);
-      szText = hb_strLTrim(szText, &nLen);
+    auto nSrc = hb_itemGetCLen(pText);
+    nLen = hb_strRTrimLen(szText, nSrc, false);
+    szText = hb_strLTrim(szText, &nLen);
 
-      if( nLen == nSrc ) {
-         hb_itemReturn(pText);
-      } else {
-         hb_retclen(szText, nLen);
-      }
-   } else
+    if (nLen == nSrc)
+    {
+      hb_itemReturn(pText);
+    }
+    else
+    {
+      hb_retclen(szText, nLen);
+    }
+  }
+  else
 #ifdef HB_COMPAT_C53
-      /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
+  /* NOTE: This runtime error appeared in CA-Cl*pper 5.3 [vszakats] */
 #ifdef HB_CLP_STRICT
-      hb_errRT_BASE_SubstR(EG_ARG, 2022, nullptr, HB_ERR_FUNCNAME, 0);
+    hb_errRT_BASE_SubstR(EG_ARG, 2022, nullptr, HB_ERR_FUNCNAME, 0);
 #else
-      hb_errRT_BASE_SubstR(EG_ARG, 2022, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    hb_errRT_BASE_SubstR(EG_ARG, 2022, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
 #else
-      hb_retc_null();
+    hb_retc_null();
 #endif
 }

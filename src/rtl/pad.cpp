@@ -47,4 +47,4 @@
 #include "hbapi.hpp"
 
 /* synonymn for PADR */
-HB_FUNC_TRANSLATE( PAD, PADR )
+HB_FUNC_TRANSLATE(PAD, PADR)

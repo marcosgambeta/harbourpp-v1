@@ -47,34 +47,37 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 
-HB_BOOL hb_printerIsReady(const char * pszPrinterName)
+HB_BOOL hb_printerIsReady(const char *pszPrinterName)
 {
-   bool bIsPrinter;
+  bool bIsPrinter;
 
-   /* NOTE: Platform independent method, at least it will compile and run
-            on any platform, but the result may not be the expected one,
-            since Unix/Linux doesn't support LPT/COM by nature, other OSs
-            may not reflect the actual physical presence of the printer when
-            trying to open it, since we are talking to the spooler.
-            [vszakats] */
+  /* NOTE: Platform independent method, at least it will compile and run
+           on any platform, but the result may not be the expected one,
+           since Unix/Linux doesn't support LPT/COM by nature, other OSs
+           may not reflect the actual physical presence of the printer when
+           trying to open it, since we are talking to the spooler.
+           [vszakats] */
 
-   {
-      if( pszPrinterName == nullptr ) {
+  {
+    if (pszPrinterName == nullptr)
+    {
 #if defined(HB_OS_UNIX)
-         pszPrinterName = "/dev/lp0";
+      pszPrinterName = "/dev/lp0";
 #else
-         pszPrinterName = "LPT1";
+      pszPrinterName = "LPT1";
 #endif
-      }
+    }
 
-      PHB_FILE pFile = hb_fileExtOpen(pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr);
-      bIsPrinter = (pFile != nullptr);
-      if( bIsPrinter ) {
-         hb_fileClose(pFile);
-      }
-   }
+    PHB_FILE pFile =
+        hb_fileExtOpen(pszPrinterName, nullptr, FXO_APPEND | FO_WRITE | FO_SHARED | FO_PRIVATE, nullptr, nullptr);
+    bIsPrinter = (pFile != nullptr);
+    if (bIsPrinter)
+    {
+      hb_fileClose(pFile);
+    }
+  }
 
-   return bIsPrinter;
+  return bIsPrinter;
 }
 
 /* Contrary to popular beliefs and such (mis)feature implemented
@@ -98,12 +101,12 @@ HB_BOOL hb_printerIsReady(const char * pszPrinterName)
    like a .pdf). As for these ones, regard them as legacy functions
    for compatibility. [vszakats] */
 
-HB_FUNC( HB_ISPRINTER )
+HB_FUNC(HB_ISPRINTER)
 {
-   hb_retl(hb_printerIsReady(hb_parc(1)));
+  hb_retl(hb_printerIsReady(hb_parc(1)));
 }
 
-HB_FUNC( ISPRINTER )
+HB_FUNC(ISPRINTER)
 {
-   hb_retl(hb_printerIsReady(nullptr));
+  hb_retl(hb_printerIsReady(nullptr));
 }

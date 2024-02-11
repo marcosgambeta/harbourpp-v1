@@ -51,11 +51,14 @@
          in CALL commands parameter list, otherwise it will return
          NIL, in Harbour it will work anywhere. */
 
-HB_FUNC( WORD )
+HB_FUNC(WORD)
 {
-   if( HB_ISNUM(1) ) {
-      hb_retni(hb_parni(1));
-   } else {
-      hb_errRT_BASE(EG_ARG, 1091, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (HB_ISNUM(1))
+  {
+    hb_retni(hb_parni(1));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 1091, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

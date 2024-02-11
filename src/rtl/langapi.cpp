@@ -49,151 +49,61 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-static HB_LANG s_lang_en =
-{
-   {
-      /* Identification */
+static HB_LANG s_lang_en = {
+    {/* Identification */
 
-      "en",                        /* ISO ID (2 chars) */
-      "English",                   /* Name (in English) */
-      "English",                   /* Name (in native language) */
-      "EN",                        /* RFC ID */
-      "UTF8",                      /* Codepage */
-      "",                          /* Version */
+     "en",      /* ISO ID (2 chars) */
+     "English", /* Name (in English) */
+     "English", /* Name (in native language) */
+     "EN",      /* RFC ID */
+     "UTF8",    /* Codepage */
+     "",        /* Version */
 
-      /* Month names */
+     /* Month names */
 
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+     "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
+     "December",
 
-      /* Day names */
+     /* Day names */
 
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
 
-      /* CA-Cl*pper compatible natmsg items */
+     /* CA-Cl*pper compatible natmsg items */
 
-      "Database Files    # Records    Last Update     Size",
-      "Do you want more samples?",
-      "Page No.",
-      "** Subtotal **",
-      "* Subsubtotal *",
-      "*** Total ***",
-      "Ins",
-      "   ",
-      "Invalid date",
-      "Range: ",
-      " - ",
-      "Y/N",
-      "INVALID EXPRESSION",
+     "Database Files    # Records    Last Update     Size", "Do you want more samples?", "Page No.", "** Subtotal **",
+     "* Subsubtotal *", "*** Total ***", "Ins", "   ", "Invalid date", "Range: ", " - ", "Y/N", "INVALID EXPRESSION",
 
-      /* Error description names */
+     /* Error description names */
 
-      "Unknown error",
-      "Argument error",
-      "Bound error",
-      "String overflow",
-      "Numeric overflow",
-      "Zero divisor",
-      "Numeric error",
-      "Syntax error",
-      "Operation too complex",
-      "",
-      "",
-      "Memory low",
-      "Undefined function",
-      "No exported method",
-      "Variable does not exist",
-      "Alias does not exist",
-      "No exported variable",
-      "Illegal characters in alias",
-      "Alias already in use",
-      "",
-      "Create error",
-      "Open error",
-      "Close error",
-      "Read error",
-      "Write error",
-      "Print error",
-      "",
-      "",
-      "",
-      "",
-      "Operation not supported",
-      "Limit exceeded",
-      "Corruption detected",
-      "Data type error",
-      "Data width error",
-      "Workarea not in use",
-      "Workarea not indexed",
-      "Exclusive required",
-      "Lock required",
-      "Write not allowed",
-      "Append lock failed",
-      "Lock Failure",
-      "",
-      "",
-      "",
-      "Object destructor failure",
-      "array access",
-      "array assign",
-      "array dimension",
-      "not an array",
-      "conditional",
+     "Unknown error", "Argument error", "Bound error", "String overflow", "Numeric overflow", "Zero divisor",
+     "Numeric error", "Syntax error", "Operation too complex", "", "", "Memory low", "Undefined function",
+     "No exported method", "Variable does not exist", "Alias does not exist", "No exported variable",
+     "Illegal characters in alias", "Alias already in use", "", "Create error", "Open error", "Close error",
+     "Read error", "Write error", "Print error", "", "", "", "", "Operation not supported", "Limit exceeded",
+     "Corruption detected", "Data type error", "Data width error", "Workarea not in use", "Workarea not indexed",
+     "Exclusive required", "Lock required", "Write not allowed", "Append lock failed", "Lock Failure", "", "", "",
+     "Object destructor failure", "array access", "array assign", "array dimension", "not an array", "conditional",
 
-      /* Internal error names */
+     /* Internal error names */
 
-      "Unrecoverable error %d: ",
-      "Error recovery failure",
-      "No ERRORBLOCK() for error",
-      "Too many recursive error handler calls",
-      "RDD invalid or failed to load",
-      "Invalid method type from %s",
-      "hb_xgrab can't allocate memory",
-      "hb_xrealloc called with a NULL pointer",
-      "hb_xrealloc called with an invalid pointer",
-      "hb_xrealloc can't reallocate memory",
-      "hb_xfree called with an invalid pointer",
-      "hb_xfree called with a NULL pointer",
-      "Can\'t locate the starting procedure: \'%s\'",
-      "No starting procedure",
-      "Unsupported VM opcode",
-      "Symbol item expected from %s",
-      "Invalid symbol type for self from %s",
-      "Codeblock expected from %s",
-      "Incorrect item type on the stack trying to pop from %s",
-      "Stack underflow",
-      "An item was going to be copied to itself from %s",
-      "Invalid symbol item passed as memvar %s",
-      "Memory buffer overflow",
-      "hb_xgrab requested to allocate zero bytes",
-      "hb_xrealloc requested to resize to zero bytes",
-      "hb_xalloc requested to allocate zero bytes",
+     "Unrecoverable error %d: ", "Error recovery failure", "No ERRORBLOCK() for error",
+     "Too many recursive error handler calls", "RDD invalid or failed to load", "Invalid method type from %s",
+     "hb_xgrab can't allocate memory", "hb_xrealloc called with a NULL pointer",
+     "hb_xrealloc called with an invalid pointer", "hb_xrealloc can't reallocate memory",
+     "hb_xfree called with an invalid pointer", "hb_xfree called with a NULL pointer",
+     "Can\'t locate the starting procedure: \'%s\'", "No starting procedure", "Unsupported VM opcode",
+     "Symbol item expected from %s", "Invalid symbol type for self from %s", "Codeblock expected from %s",
+     "Incorrect item type on the stack trying to pop from %s", "Stack underflow",
+     "An item was going to be copied to itself from %s", "Invalid symbol item passed as memvar %s",
+     "Memory buffer overflow", "hb_xgrab requested to allocate zero bytes",
+     "hb_xrealloc requested to resize to zero bytes", "hb_xalloc requested to allocate zero bytes",
 
-      /* Texts */
+     /* Texts */
 
-      "YYYY/MM/DD", /* NOTE: Use YYYY for year, MM for month and DD for days. */
-      "Y",
-      "N"
-   }
-};
+     "YYYY/MM/DD", /* NOTE: Use YYYY for year, MM for month and DD for days. */
+     "Y", "N"}};
 
-HB_LANG_ANNOUNCE( EN )
+HB_LANG_ANNOUNCE(EN)
 
 /* Always link in the default language */
 #if 0
@@ -202,24 +112,24 @@ HB_LANG_REQUEST(HB_LANG_DEFAULT);
 
 /* NOTE: This is the maximum number of registered languages, later this can be
          made dynamic. */
-#define HB_LANG_MAX_              128
+#define HB_LANG_MAX_ 128
 
-#define HB_LANG_ITEM_ID_ID        0
-#define HB_LANG_ITEM_ID_NAME      1
-#define HB_LANG_ITEM_ID_NAMENAT   2
-#define HB_LANG_ITEM_ID_CODEPAGE  4
+#define HB_LANG_ITEM_ID_ID 0
+#define HB_LANG_ITEM_ID_NAME 1
+#define HB_LANG_ITEM_ID_NAMENAT 2
+#define HB_LANG_ITEM_ID_CODEPAGE 4
 
 struct HB_LANG_TRANS
 {
-   const char * pItemList[HB_LANG_ITEM_MAX_];
+  const char *pItemList[HB_LANG_ITEM_MAX_];
 };
 
 using PHB_LANG_TRANS = HB_LANG_TRANS *;
 
 struct HB_LANG_BASE
 {
-   PHB_LANG lang;
-   void *   buffer;
+  PHB_LANG lang;
+  void *buffer;
 };
 
 using PHB_LANG_BASE = HB_LANG_BASE *;
@@ -228,86 +138,109 @@ static HB_LANG_BASE s_langList[HB_LANG_MAX_] = {{&s_lang_en, nullptr}};
 
 static void hb_langRelease(PHB_LANG_BASE pBase)
 {
-   if( pBase->lang ) {
-      if( pBase->buffer ) {
-         hb_xfree(pBase->buffer);
-         pBase->buffer = nullptr;
-      }
-      pBase->lang = pBase == s_langList ? &s_lang_en : nullptr;
-   }
+  if (pBase->lang)
+  {
+    if (pBase->buffer)
+    {
+      hb_xfree(pBase->buffer);
+      pBase->buffer = nullptr;
+    }
+    pBase->lang = pBase == s_langList ? &s_lang_en : nullptr;
+  }
 }
 
-static PHB_LANG_BASE hb_langFindBase( const char * pszID )
+static PHB_LANG_BASE hb_langFindBase(const char *pszID)
 {
-   PHB_LANG_BASE pBase = nullptr;
+  PHB_LANG_BASE pBase = nullptr;
 
-   if( pszID ) {
-      for( auto iPos = 0; iPos < HB_LANG_MAX_; iPos++ ) {
-         if( s_langList[iPos].lang != nullptr ) {
-            if( hb_stricmp(s_langList[iPos].lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID], pszID) == 0 ) {
-               return &s_langList[iPos];
-            }
-         } else if( pBase == nullptr ) {
-            pBase = &s_langList[iPos];
-         }
+  if (pszID)
+  {
+    for (auto iPos = 0; iPos < HB_LANG_MAX_; iPos++)
+    {
+      if (s_langList[iPos].lang != nullptr)
+      {
+        if (hb_stricmp(s_langList[iPos].lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID], pszID) == 0)
+        {
+          return &s_langList[iPos];
+        }
       }
-   }
+      else if (pBase == nullptr)
+      {
+        pBase = &s_langList[iPos];
+      }
+    }
+  }
 
-   return pBase;
+  return pBase;
 }
 
-static HB_BOOL hb_langTranslate( const char * szNewId, PHB_LANG lang, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut )
+static HB_BOOL hb_langTranslate(const char *szNewId, PHB_LANG lang, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
 {
-   if( !szNewId || *szNewId == 0 || !lang || !cdpIn || !cdpOut || cdpIn == cdpOut ) {
-      return false;
-   }
+  if (!szNewId || *szNewId == 0 || !lang || !cdpIn || !cdpOut || cdpIn == cdpOut)
+  {
+    return false;
+  }
 
-   HB_LANG_TRANS trans{};
-   HB_SIZE nSize = sizeof(trans);
+  HB_LANG_TRANS trans{};
+  HB_SIZE nSize = sizeof(trans);
 
-   for( auto i = 0; i < HB_LANG_ITEM_MAX_; ++i ) {
-      char * pszTrans;
+  for (auto i = 0; i < HB_LANG_ITEM_MAX_; ++i)
+  {
+    char *pszTrans;
 
-      if( i == HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID ) {
-         pszTrans = hb_strdup(szNewId);
-      } else if( i == HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_CODEPAGE ) {
-         pszTrans = hb_strdup(cdpOut->id);
-      } else {
-         pszTrans = hb_cdpDup(lang->pItemList[i], cdpIn, cdpOut);
-      }
+    if (i == HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID)
+    {
+      pszTrans = hb_strdup(szNewId);
+    }
+    else if (i == HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_CODEPAGE)
+    {
+      pszTrans = hb_strdup(cdpOut->id);
+    }
+    else
+    {
+      pszTrans = hb_cdpDup(lang->pItemList[i], cdpIn, cdpOut);
+    }
 
-      if( strcmp(pszTrans, lang->pItemList[i]) != 0 ) {
-         trans.pItemList[i] = pszTrans;
-         nSize += strlen(pszTrans) + 1;
-      } else {
-         hb_xfree(pszTrans);
-      }
-   }
+    if (strcmp(pszTrans, lang->pItemList[i]) != 0)
+    {
+      trans.pItemList[i] = pszTrans;
+      nSize += strlen(pszTrans) + 1;
+    }
+    else
+    {
+      hb_xfree(pszTrans);
+    }
+  }
 
-   auto buffer = static_cast<char*>(hb_xgrab(nSize));
-   char * ptr    = buffer + sizeof(trans);
-   for( auto i = 0; i < HB_LANG_ITEM_MAX_; ++i ) {
-      if( trans.pItemList[i] != nullptr ) {
-         HB_SIZE nLen = strlen(trans.pItemList[i]) + 1;
-         memcpy(ptr, trans.pItemList[i], nLen);
-         hb_xfree(HB_UNCONST(trans.pItemList[i]));
-         trans.pItemList[i] = ptr;
-         ptr += nLen;
-      } else {
-         trans.pItemList[i] = lang->pItemList[i];
-      }
-   }
-   memcpy(buffer, &trans, sizeof(trans));
+  auto buffer = static_cast<char *>(hb_xgrab(nSize));
+  char *ptr = buffer + sizeof(trans);
+  for (auto i = 0; i < HB_LANG_ITEM_MAX_; ++i)
+  {
+    if (trans.pItemList[i] != nullptr)
+    {
+      HB_SIZE nLen = strlen(trans.pItemList[i]) + 1;
+      memcpy(ptr, trans.pItemList[i], nLen);
+      hb_xfree(HB_UNCONST(trans.pItemList[i]));
+      trans.pItemList[i] = ptr;
+      ptr += nLen;
+    }
+    else
+    {
+      trans.pItemList[i] = lang->pItemList[i];
+    }
+  }
+  memcpy(buffer, &trans, sizeof(trans));
 
-   PHB_LANG_BASE pBase = hb_langFindBase( szNewId );
-   if( pBase && pBase->lang == nullptr ) {
-      pBase->lang   = reinterpret_cast<PHB_LANG>(buffer);
-      pBase->buffer = static_cast<void*>(buffer);
-      return true;
-   }
+  PHB_LANG_BASE pBase = hb_langFindBase(szNewId);
+  if (pBase && pBase->lang == nullptr)
+  {
+    pBase->lang = reinterpret_cast<PHB_LANG>(buffer);
+    pBase->buffer = static_cast<void *>(buffer);
+    return true;
+  }
 
-   hb_xfree(buffer);
-   return false;
+  hb_xfree(buffer);
+  return false;
 }
 
 void hb_langReleaseAll(void)
@@ -316,9 +249,10 @@ void hb_langReleaseAll(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_langReleaseAll()"));
 #endif
 
-   for( auto iPos = 0; iPos < HB_LANG_MAX_; iPos++ ) {
-      hb_langRelease(&s_langList[iPos]);
-   }
+  for (auto iPos = 0; iPos < HB_LANG_MAX_; iPos++)
+  {
+    hb_langRelease(&s_langList[iPos]);
+  }
 }
 
 HB_BOOL hb_langRegister(PHB_LANG lang)
@@ -327,26 +261,28 @@ HB_BOOL hb_langRegister(PHB_LANG lang)
    HB_TRACE(HB_TR_DEBUG, ("hb_langRegister(%p)", static_cast<const void*>(lang)));
 #endif
 
-   if( lang ) {
-      PHB_LANG_BASE pBase = hb_langFindBase( lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID] );
+  if (lang)
+  {
+    PHB_LANG_BASE pBase = hb_langFindBase(lang->pItemList[HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID]);
 
-      if( pBase && pBase->lang == nullptr ) {
-         pBase->lang = lang;
-         return true;
-      }
-   }
+    if (pBase && pBase->lang == nullptr)
+    {
+      pBase->lang = lang;
+      return true;
+    }
+  }
 
-   return false;
+  return false;
 }
 
-PHB_LANG hb_langFind(const char * pszID)
+PHB_LANG hb_langFind(const char *pszID)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langFind(%s)", pszID));
 #endif
 
-   PHB_LANG_BASE pBase = hb_langFindBase( pszID );
-   return pBase ? pBase->lang : nullptr;
+  PHB_LANG_BASE pBase = hb_langFindBase(pszID);
+  return pBase ? pBase->lang : nullptr;
 }
 
 PHB_LANG hb_langSelect(PHB_LANG lang)
@@ -355,129 +291,143 @@ PHB_LANG hb_langSelect(PHB_LANG lang)
    HB_TRACE(HB_TR_DEBUG, ("hb_langSelect(%p)", static_cast<const void*>(lang)));
 #endif
 
-   PHB_LANG langOld = hb_vmLang();
-   if( lang ) {
-      hb_vmSetLang(lang);
-   }
+  PHB_LANG langOld = hb_vmLang();
+  if (lang)
+  {
+    hb_vmSetLang(lang);
+  }
 
-   return langOld;
+  return langOld;
 }
 
-const char * hb_langSelectID(const char * pszID)
+const char *hb_langSelectID(const char *pszID)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langSelectID(%s)", pszID));
 #endif
 
-   const char * pszIDOld = hb_langID();
+  const char *pszIDOld = hb_langID();
 
-   PHB_LANG lang = hb_langFind(pszID);
-   if( lang ) {
-      hb_langSelect(lang);
-   } else {
-      hb_errRT_BASE(EG_ARG, 1303, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  PHB_LANG lang = hb_langFind(pszID);
+  if (lang)
+  {
+    hb_langSelect(lang);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 1303, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 
-   return pszIDOld;
+  return pszIDOld;
 }
 
-const char * hb_langGetItem(const char * pszID, int iIndex)
+const char *hb_langGetItem(const char *pszID, int iIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langGetItem(%s,%i)", pszID, iIndex));
 #endif
 
-   PHB_LANG lang = pszID ? hb_langFind(pszID) : hb_vmLang();
-   if( lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_ ) {
-      return lang->pItemList[iIndex];
-   } else {
-      return nullptr;
-   }
+  PHB_LANG lang = pszID ? hb_langFind(pszID) : hb_vmLang();
+  if (lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_)
+  {
+    return lang->pItemList[iIndex];
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
-const char * hb_langID(void)
+const char *hb_langID(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langID()"));
 #endif
 
-   return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID);
+  return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID);
 }
 
 /* NOTE: Caller must free the pointer. */
 
-char * hb_langName(const char * pszID)
+char *hb_langName(const char *pszID)
 {
 
-   PHB_LANG lang = pszID ? hb_langFind(pszID) : hb_vmLang();
-   char * pszName;
-   if( lang ) {
-      pszName = static_cast<char*>(hb_xgrab(128));
-      hb_snprintf(pszName, 128, "Harbour++ Language: %s %s (%s)",
-                   hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID),
-                   hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAME),
-                   hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAMENAT));
-   } else {
-      pszName = hb_strdup("Harbour++ Language: (not installed)");
-   }
+  PHB_LANG lang = pszID ? hb_langFind(pszID) : hb_vmLang();
+  char *pszName;
+  if (lang)
+  {
+    pszName = static_cast<char *>(hb_xgrab(128));
+    hb_snprintf(pszName, 128, "Harbour++ Language: %s %s (%s)",
+                hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_ID),
+                hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAME),
+                hb_langGetItem(pszID, HB_LANG_ITEM_BASE_ID + HB_LANG_ITEM_ID_NAMENAT));
+  }
+  else
+  {
+    pszName = hb_strdup("Harbour++ Language: (not installed)");
+  }
 
-   return pszName;
+  return pszName;
 }
 
 /* Compatibility interfaces */
 
-const char * hb_langDGetErrorDesc(int iIndex)
+const char *hb_langDGetErrorDesc(int iIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langDGetErrorDesc(%i)", iIndex));
 #endif
 
-   return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex);
+  return hb_langGetItem(nullptr, HB_LANG_ITEM_BASE_ERRDESC + iIndex);
 }
 
-const char * hb_langDGetItem(int iIndex)
+const char *hb_langDGetItem(int iIndex)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_langDGetItem(%i)", iIndex));
 #endif
 
-   PHB_LANG lang = hb_vmLang();
-   if( lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_ ) {
-      return lang->pItemList[iIndex];
-   } else {
-      return nullptr;
-   }
+  PHB_LANG lang = hb_vmLang();
+  if (lang && iIndex >= 0 && iIndex < HB_LANG_ITEM_MAX_)
+  {
+    return lang->pItemList[iIndex];
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
 /* Harbour interface */
 
-HB_FUNC( __HB_LANGSELECT )
+HB_FUNC(__HB_LANGSELECT)
 {
-   hb_retc(hb_langID());
+  hb_retc(hb_langID());
 
-   auto szNewLang = hb_parc(1);
-   if( szNewLang ) {
-      hb_langSelectID(szNewLang);
-   }
+  auto szNewLang = hb_parc(1);
+  if (szNewLang)
+  {
+    hb_langSelectID(szNewLang);
+  }
 }
 
-HB_FUNC( HB_LANGNAME )
+HB_FUNC(HB_LANGNAME)
 {
-   hb_retc_buffer(hb_langName(hb_parc(1)));
+  hb_retc_buffer(hb_langName(hb_parc(1)));
 }
 
-HB_FUNC( HB_LANGERRMSG )
+HB_FUNC(HB_LANGERRMSG)
 {
-   hb_retc_const(hb_langDGetErrorDesc(hb_parnl(1)));
+  hb_retc_const(hb_langDGetErrorDesc(hb_parnl(1)));
 }
 
-HB_FUNC( HB_LANGMESSAGE )
+HB_FUNC(HB_LANGMESSAGE)
 {
-   hb_retc_const(hb_langGetItem(hb_parc(2), hb_parnl(1)));
+  hb_retc_const(hb_langGetItem(hb_parc(2), hb_parnl(1)));
 }
 
 /* hb_langNew(<cNewLangId>, <cNewLangCpId>, <cLangId>, <cLangCpId>) --> <lOK> */
-HB_FUNC( HB_LANGNEW )
+HB_FUNC(HB_LANGNEW)
 {
-   hb_retl(hb_langTranslate(hb_parc(1), hb_langFind(hb_parc(3)), hb_cdpFindExt(hb_parc(4)), hb_cdpFindExt(hb_parc(2))));
+  hb_retl(hb_langTranslate(hb_parc(1), hb_langFind(hb_parc(3)), hb_cdpFindExt(hb_parc(4)), hb_cdpFindExt(hb_parc(2))));
 }

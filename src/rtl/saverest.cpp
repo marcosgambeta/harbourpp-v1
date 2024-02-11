@@ -47,79 +47,94 @@
 #include "hbapi.hpp"
 #include "hbapigt.hpp"
 
-static void hb_getScreenRange(int * piMin, int * piMax, HB_BOOL fNoCheck, HB_BOOL fVertical)
+static void hb_getScreenRange(int *piMin, int *piMax, HB_BOOL fNoCheck, HB_BOOL fVertical)
 {
-   int iFrom, iTo, iMax;
+  int iFrom, iTo, iMax;
 
-   if( fVertical ) {
-      iMax  = hb_gtMaxRow();
-      iFrom = hb_parni(1);
-      iTo   = hb_parnidef(3, iMax);
-   } else {
-      iMax  = hb_gtMaxCol();
-      iFrom = hb_parni(2);
-      iTo   = hb_parnidef(4, iMax);
-   }
+  if (fVertical)
+  {
+    iMax = hb_gtMaxRow();
+    iFrom = hb_parni(1);
+    iTo = hb_parnidef(3, iMax);
+  }
+  else
+  {
+    iMax = hb_gtMaxCol();
+    iFrom = hb_parni(2);
+    iTo = hb_parnidef(4, iMax);
+  }
 
-   if( iFrom < 0 ) {
-      iFrom = 0;
-   } else if( iFrom > iMax && !fNoCheck ) {
-      iFrom = iMax;
-   }
+  if (iFrom < 0)
+  {
+    iFrom = 0;
+  }
+  else if (iFrom > iMax && !fNoCheck)
+  {
+    iFrom = iMax;
+  }
 
-   if( iTo < 0 ) {
-      iTo = 0;
-   } else if( iTo > iMax && !fNoCheck ) {
-      iTo = iMax;
-   }
+  if (iTo < 0)
+  {
+    iTo = 0;
+  }
+  else if (iTo > iMax && !fNoCheck)
+  {
+    iTo = iMax;
+  }
 
-   if( iFrom > iTo ) {
-      *piMin = iTo;
-      *piMax = iFrom;
-   } else {
-      *piMin = iFrom;
-      *piMax = iTo;
-   }
+  if (iFrom > iTo)
+  {
+    *piMin = iTo;
+    *piMax = iFrom;
+  }
+  else
+  {
+    *piMin = iFrom;
+    *piMax = iTo;
+  }
 }
 
-HB_FUNC( SAVESCREEN )
+HB_FUNC(SAVESCREEN)
 {
-   int iTop, iLeft, iBottom, iRight;
-   auto fNoCheck = false;
-   hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
-   hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
-   HB_SIZE nSize;
-   hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
-   auto pBuffer = hb_xgrab(nSize + 1);
-   hb_gtSave( iTop, iLeft, iBottom, iRight, pBuffer );
-   hb_retclen_buffer(static_cast<char*>(pBuffer), nSize);
+  int iTop, iLeft, iBottom, iRight;
+  auto fNoCheck = false;
+  hb_getScreenRange(&iTop, &iBottom, fNoCheck, true);
+  hb_getScreenRange(&iLeft, &iRight, fNoCheck, false);
+  HB_SIZE nSize;
+  hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
+  auto pBuffer = hb_xgrab(nSize + 1);
+  hb_gtSave(iTop, iLeft, iBottom, iRight, pBuffer);
+  hb_retclen_buffer(static_cast<char *>(pBuffer), nSize);
 }
 
-HB_FUNC( RESTSCREEN )
+HB_FUNC(RESTSCREEN)
 {
-   if( HB_ISCHAR(5) ) {
-      int iTop, iLeft, iBottom, iRight;
-      void * pBuffer = nullptr;
-      auto pBufStr = hb_parc(5);
-      auto fNoCheck = false;
+  if (HB_ISCHAR(5))
+  {
+    int iTop, iLeft, iBottom, iRight;
+    void *pBuffer = nullptr;
+    auto pBufStr = hb_parc(5);
+    auto fNoCheck = false;
 
-      hb_getScreenRange( &iTop, &iBottom, fNoCheck, true );
-      hb_getScreenRange( &iLeft, &iRight, fNoCheck, false );
+    hb_getScreenRange(&iTop, &iBottom, fNoCheck, true);
+    hb_getScreenRange(&iLeft, &iRight, fNoCheck, false);
 
-      auto nLen = hb_parclen(5);
-      HB_SIZE nSize;
-      hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
-      if( nLen < nSize ) {
-         pBuffer = hb_xgrab(nSize);
-         memcpy(pBuffer, pBufStr, nLen);
-         memset(static_cast<char*>(pBuffer) + nLen, 0, nSize - nLen);
-         pBufStr = static_cast<const char*>(pBuffer);
-      }
+    auto nLen = hb_parclen(5);
+    HB_SIZE nSize;
+    hb_gtRectSize(iTop, iLeft, iBottom, iRight, &nSize);
+    if (nLen < nSize)
+    {
+      pBuffer = hb_xgrab(nSize);
+      memcpy(pBuffer, pBufStr, nLen);
+      memset(static_cast<char *>(pBuffer) + nLen, 0, nSize - nLen);
+      pBufStr = static_cast<const char *>(pBuffer);
+    }
 
-      hb_gtRest(iTop, iLeft, iBottom, iRight, pBufStr);
+    hb_gtRest(iTop, iLeft, iBottom, iRight, pBufStr);
 
-      if( pBuffer ) {
-         hb_xfree(pBuffer);
-      }
-   }
+    if (pBuffer)
+    {
+      hb_xfree(pBuffer);
+    }
+  }
 }

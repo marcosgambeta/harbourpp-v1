@@ -47,57 +47,64 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 
-HB_BOOL hb_fsFile(const char * pszFileName)
+HB_BOOL hb_fsFile(const char *pszFileName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsFile(%s)", pszFileName));
 #endif
 
-   PHB_FFIND ffind;
+  PHB_FFIND ffind;
 
-   if( (ffind = hb_fsFindFirst(pszFileName, HB_FA_ALL)) != nullptr ) {
-      hb_fsFindClose(ffind);
-      return true;
-   }
+  if ((ffind = hb_fsFindFirst(pszFileName, HB_FA_ALL)) != nullptr)
+  {
+    hb_fsFindClose(ffind);
+    return true;
+  }
 
-   return false;
+  return false;
 }
 
-HB_BOOL hb_fsIsDirectory(const char * pszFileName)
+HB_BOOL hb_fsIsDirectory(const char *pszFileName)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsIsDirectory(%s)", pszFileName));
 #endif
 
-   auto bResult = false;
-   char * pszFree = nullptr;
+  auto bResult = false;
+  char *pszFree = nullptr;
 
-   auto iLen = static_cast<int>(strlen(pszFileName));
-   while( iLen && strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen - 1]) ) {
-      --iLen;
-   }
+  auto iLen = static_cast<int>(strlen(pszFileName));
+  while (iLen && strchr(HB_OS_PATH_DELIM_CHR_LIST, pszFileName[iLen - 1]))
+  {
+    --iLen;
+  }
 
-   if( pszFileName[iLen] ) {
-      pszFileName = pszFree = hb_strndup(pszFileName, iLen);
-   }
+  if (pszFileName[iLen])
+  {
+    pszFileName = pszFree = hb_strndup(pszFileName, iLen);
+  }
 
-   if( iLen && iLen <= (HB_PATH_MAX - 1) ) {
-      PHB_FFIND ffind;
-      if( (ffind = hb_fsFindFirst(pszFileName, HB_FA_DIRECTORY)) != nullptr ) {
-         do {
-            if( (ffind->attr & HB_FA_DIRECTORY) == HB_FA_DIRECTORY ) {
-               bResult = true;
-               break;
-            }
-         }
-         while( hb_fsFindNext(ffind) );
-         hb_fsFindClose(ffind);
-      }
-   }
+  if (iLen && iLen <= (HB_PATH_MAX - 1))
+  {
+    PHB_FFIND ffind;
+    if ((ffind = hb_fsFindFirst(pszFileName, HB_FA_DIRECTORY)) != nullptr)
+    {
+      do
+      {
+        if ((ffind->attr & HB_FA_DIRECTORY) == HB_FA_DIRECTORY)
+        {
+          bResult = true;
+          break;
+        }
+      } while (hb_fsFindNext(ffind));
+      hb_fsFindClose(ffind);
+    }
+  }
 
-   if( pszFree ) {
-      hb_xfree(pszFree);
-   }
+  if (pszFree)
+  {
+    hb_xfree(pszFree);
+  }
 
-   return bResult;
+  return bResult;
 }

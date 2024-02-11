@@ -49,62 +49,73 @@
 
 /* NOTE: pszResult must have an allocated buffer of at least nStringLen */
 
-static HB_SIZE hb_strMemotran(char * pszResult, const char * pszString, HB_SIZE nStringLen, char cHardCR, char cSoftCR)
+static HB_SIZE hb_strMemotran(char *pszResult, const char *pszString, HB_SIZE nStringLen, char cHardCR, char cSoftCR)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_strMemotran(%p, %s, %" HB_PFS "u, %x, %x)", static_cast<void*>(pszResult), pszString, nStringLen, cHardCR, cSoftCR));
 #endif
 
-   HB_SIZE nStringPos = 0;
-   HB_SIZE nResultPos = 0;
+  HB_SIZE nStringPos = 0;
+  HB_SIZE nResultPos = 0;
 
-   while( nStringPos < nStringLen ) {
-      if( pszString[nStringPos] == HB_CHAR_HARD1 && pszString[nStringPos + 1] == HB_CHAR_HARD2 ) {
-         pszResult[nResultPos++] = cHardCR;
-         nStringPos += 2;
-      } else if( pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2 ) {
-         pszResult[nResultPos++] = cSoftCR;
-         nStringPos += 2;
-      } else {
-         pszResult[nResultPos++] = pszString[nStringPos++];
-      }
-   }
+  while (nStringPos < nStringLen)
+  {
+    if (pszString[nStringPos] == HB_CHAR_HARD1 && pszString[nStringPos + 1] == HB_CHAR_HARD2)
+    {
+      pszResult[nResultPos++] = cHardCR;
+      nStringPos += 2;
+    }
+    else if (pszString[nStringPos] == HB_CHAR_SOFT1 && pszString[nStringPos + 1] == HB_CHAR_SOFT2)
+    {
+      pszResult[nResultPos++] = cSoftCR;
+      nStringPos += 2;
+    }
+    else
+    {
+      pszResult[nResultPos++] = pszString[nStringPos++];
+    }
+  }
 
-   pszResult[nResultPos] = '\0';
+  pszResult[nResultPos] = '\0';
 
-   return nResultPos;
+  return nResultPos;
 }
 
-HB_FUNC( MEMOTRAN )
+HB_FUNC(MEMOTRAN)
 {
-   auto pString = hb_param(1, Harbour::Item::STRING);
+  auto pString = hb_param(1, Harbour::Item::STRING);
 
-   if( pString ) {
-      auto nLen = hb_itemGetCLen(pString);
-      auto pszResult = static_cast<char*>(hb_xgrab(nLen + 1));
-      const char * pszRepl;
-      char cHardCR = ';';
-      char cSoftCR = ' ';
+  if (pString)
+  {
+    auto nLen = hb_itemGetCLen(pString);
+    auto pszResult = static_cast<char *>(hb_xgrab(nLen + 1));
+    const char *pszRepl;
+    char cHardCR = ';';
+    char cSoftCR = ' ';
 
-      pszRepl = hb_parc(2);
-      if( pszRepl ) {
-         cHardCR = *pszRepl;
-      }
+    pszRepl = hb_parc(2);
+    if (pszRepl)
+    {
+      cHardCR = *pszRepl;
+    }
 
-      /* CA-Cl*pper checks 3rd cSoftCR parameter only
-       * if 2nd one cHardCR is specified [druzus]
-       */
+    /* CA-Cl*pper checks 3rd cSoftCR parameter only
+     * if 2nd one cHardCR is specified [druzus]
+     */
 #ifdef HB_CLP_STRICT
-      if( pszRepl )
+    if (pszRepl)
 #endif
       pszRepl = hb_parc(3);
-      if( pszRepl ) {
-         cSoftCR = *pszRepl;
-      }
+    if (pszRepl)
+    {
+      cSoftCR = *pszRepl;
+    }
 
-      nLen = hb_strMemotran(pszResult, hb_itemGetCPtr(pString), nLen, cHardCR, cSoftCR);
-      hb_retclen_buffer(pszResult, nLen);
-   } else {
-      hb_retc_null();
-   }
+    nLen = hb_strMemotran(pszResult, hb_itemGetCPtr(pString), nLen, cHardCR, cSoftCR);
+    hb_retclen_buffer(pszResult, nLen);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

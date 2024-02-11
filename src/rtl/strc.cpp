@@ -52,23 +52,29 @@
 /* hb_StrDecodEscape( <cEscSeqStr> ) --> <cStr>
  * decode string with \ escape sequences
  */
-HB_FUNC( HB_STRDECODESCAPE )
+HB_FUNC(HB_STRDECODESCAPE)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto nLen = hb_itemGetCLen(pText);
-      if( nLen > 0 ) {
-         auto str = static_cast<char*>(hb_xgrab(nLen + 1));
-         hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
-         hb_strRemEscSeq(str, &nLen);
-         hb_retclen_buffer(str, nLen);
-      } else {
-         hb_itemReturn(pText);
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pText)
+  {
+    auto nLen = hb_itemGetCLen(pText);
+    if (nLen > 0)
+    {
+      auto str = static_cast<char *>(hb_xgrab(nLen + 1));
+      hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
+      hb_strRemEscSeq(str, &nLen);
+      hb_retclen_buffer(str, nLen);
+    }
+    else
+    {
+      hb_itemReturn(pText);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* hb_StrCDecode( <cStr> [, @<lCont> ] ) --> <cResult> | NIL
@@ -78,68 +84,87 @@ HB_FUNC( HB_STRDECODESCAPE )
  * if string ends with unclosed "" quoting.
  * Function returns decoded string or NIL on syntax error.
  */
-HB_FUNC( HB_STRCDECODE )
+HB_FUNC(HB_STRCDECODE)
 {
-   auto pText = hb_param(1, Harbour::Item::STRING);
+  auto pText = hb_param(1, Harbour::Item::STRING);
 
-   if( pText ) {
-      auto nLen = hb_itemGetCLen(pText);
-      HB_BOOL fCont = hb_parl(2);
-      if( nLen > 0 ) {
-         auto pszSrc = hb_itemGetCPtr(pText);
-         auto pszDst = static_cast<char*>(hb_xgrab(nLen + 1));
-         HB_SIZE nDst = 0, n;
+  if (pText)
+  {
+    auto nLen = hb_itemGetCLen(pText);
+    HB_BOOL fCont = hb_parl(2);
+    if (nLen > 0)
+    {
+      auto pszSrc = hb_itemGetCPtr(pText);
+      auto pszDst = static_cast<char *>(hb_xgrab(nLen + 1));
+      HB_SIZE nDst = 0, n;
 
-         for( ;; ) {
-            if( !fCont ) {
-               while( nLen && HB_ISSPACE(*pszSrc) ) {
-                  ++pszSrc;
-                  --nLen;
-               }
-               if( nLen && *pszSrc == '"' ) {
-                  ++pszSrc;
-                  --nLen;
-                  fCont = true;
-               }
-            }
-            if( !fCont || !nLen ) {
-               break;
-            }
+      for (;;)
+      {
+        if (!fCont)
+        {
+          while (nLen && HB_ISSPACE(*pszSrc))
+          {
+            ++pszSrc;
+            --nLen;
+          }
+          if (nLen && *pszSrc == '"')
+          {
+            ++pszSrc;
+            --nLen;
+            fCont = true;
+          }
+        }
+        if (!fCont || !nLen)
+        {
+          break;
+        }
 
-            n = 0;
-            while( n < nLen ) {
-               char c = pszSrc[n];
-               if( c == '"' ) {
-                  fCont = false;
-                  break;
-               }
-               pszDst[nDst + n] = c;
-               if( ++n < nLen && c == '\\' ) {
-                  pszDst[nDst + n] = pszSrc[n];
-                  ++n;
-               }
-            }
-            if( n > 0 ) {
-               pszSrc += n;
-               nLen -= n;
-               hb_strRemEscSeq(pszDst + nDst, &n);
-               nDst += n;
-            }
-            if( !fCont ) {
-               ++pszSrc;
-               --nLen;
-            }
-         }
-         if( nLen == 0 && (!fCont || HB_ISBYREF(2)) ) {
-            hb_retclen_buffer(pszDst, nDst);
-            hb_storl(fCont, 2);
-         } else {
-            hb_xfree(pszDst);
-         }
-      } else if( fCont ) {
-         hb_itemReturn(pText);
+        n = 0;
+        while (n < nLen)
+        {
+          char c = pszSrc[n];
+          if (c == '"')
+          {
+            fCont = false;
+            break;
+          }
+          pszDst[nDst + n] = c;
+          if (++n < nLen && c == '\\')
+          {
+            pszDst[nDst + n] = pszSrc[n];
+            ++n;
+          }
+        }
+        if (n > 0)
+        {
+          pszSrc += n;
+          nLen -= n;
+          hb_strRemEscSeq(pszDst + nDst, &n);
+          nDst += n;
+        }
+        if (!fCont)
+        {
+          ++pszSrc;
+          --nLen;
+        }
       }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      if (nLen == 0 && (!fCont || HB_ISBYREF(2)))
+      {
+        hb_retclen_buffer(pszDst, nDst);
+        hb_storl(fCont, 2);
+      }
+      else
+      {
+        hb_xfree(pszDst);
+      }
+    }
+    else if (fCont)
+    {
+      hb_itemReturn(pText);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
