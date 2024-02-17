@@ -56,6 +56,7 @@ struct _HB_FUNCID
 
 /* NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
  */
+// clang-format off
 static _HB_FUNCID s_funcId[] =
 {
    { "AADD",                    0, HB_FN_RESERVED, HB_F_AADD                 },
@@ -148,6 +149,7 @@ static _HB_FUNCID s_funcId[] =
    { "YEAR",                    0, HB_FN_RESERVED, HB_F_YEAR                 },
    { "_GET_",                   0, HB_FN_UDF,      HB_F__GET_                }
 };
+// clang-format on
 
 const char * hb_compGetFuncID(const char * szFuncName, HB_FUNC_ID * pFunID, int * piFlags)
 {

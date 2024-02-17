@@ -52,6 +52,7 @@
 #include "hbmacro.hpp"
 #include "hbcomp.hpp"
 
+// clang-format off
 static const char * s_OperTable[HB_EXPR_COUNT] = {
    "",
    "NIL",
@@ -112,12 +113,14 @@ static const char * s_OperTable[HB_EXPR_COUNT] = {
    "++",
    "--"
 };
+// clang-format on
 
 /* Table with operators precedence
  * NOTE:
  *    HB_ET_NIL is used for an ordinary values and post- operators
  *    HB_ET_NONE is used for invalid syntax, e.g. var := var1 += 2
  */
+// clang-format off
 static const HB_BYTE s_PrecedTable[HB_EXPR_COUNT] = {
    HB_ET_NIL,                 /* HB_ET_NONE = 0,    */
    HB_ET_NIL,                 /* HB_ET_NIL,         */
@@ -178,6 +181,7 @@ static const HB_BYTE s_PrecedTable[HB_EXPR_COUNT] = {
    HB_ET_NIL,                 /* HB_EO_PREINC,      */
    HB_ET_NIL                  /* HB_EO_PREDEC,      pre-operators */
 };
+// clang-format on
 
 /* ************************************************************************* */
 

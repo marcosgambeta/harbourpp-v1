@@ -48,6 +48,7 @@
 #include "hbapi.hpp"
 #include "hbmath.hpp"
 
+// clang-format off
 const char * const hb_szAscii[256] = {
    "\x00", "\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08", "\x09", "\x0A", "\x0B", "\x0C", "\x0D", "\x0E", "\x0F",
    "\x10", "\x11", "\x12", "\x13", "\x14", "\x15", "\x16", "\x17", "\x18", "\x19", "\x1A", "\x1B", "\x1C", "\x1D", "\x1E", "\x1F",
@@ -66,6 +67,7 @@ const char * const hb_szAscii[256] = {
    "\xE0", "\xE1", "\xE2", "\xE3", "\xE4", "\xE5", "\xE6", "\xE7", "\xE8", "\xE9", "\xEA", "\xEB", "\xEC", "\xED", "\xEE", "\xEF",
    "\xF0", "\xF1", "\xF2", "\xF3", "\xF4", "\xF5", "\xF6", "\xF7", "\xF8", "\xF9", "\xFA", "\xFB", "\xFC", "\xFD", "\xFE", "\xFF"
 };
+// clang-format on
 
 HB_SIZE hb_strAt(const char * szSub, HB_SIZE nSubLen, const char * szText, HB_SIZE nLen)
 {
