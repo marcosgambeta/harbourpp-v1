@@ -50,10 +50,10 @@
 #include "hbapi.hpp"
 
 #if defined(HB_OS_WIN)
-   #include <windows.h>
-   #include "hbwinuni.hpp"
+#include <windows.h>
+#include "hbwinuni.hpp"
 #elif defined(__FreeBSD__)
-   #include <sys/param.h>
+#include <sys/param.h>
 #endif
 
 /* NOTE: Warning, this function _may_ return nullptr as a result if
@@ -61,173 +61,197 @@
          If the return value is not nullptr, the caller must free
          the pointer. [vszakats] */
 
-char * hb_getenv(const char * szName)
+char *hb_getenv(const char *szName)
 {
-   char * pszBuffer = nullptr;
+  char *pszBuffer = nullptr;
 
 #if defined(HB_OS_WIN)
-   {
-      LPTSTR lpName = HB_CHARDUP(szName);
-      DWORD size = GetEnvironmentVariable(lpName, nullptr, 0);
+  {
+    LPTSTR lpName = HB_CHARDUP(szName);
+    DWORD size = GetEnvironmentVariable(lpName, nullptr, 0);
 
-      if( size != 0 ) {
-         LPTSTR lpBuffer = static_cast<LPTSTR>(hb_xgrab(size * sizeof(TCHAR)));
-         GetEnvironmentVariable(lpName, lpBuffer, size);
-         pszBuffer = HB_OSSTRDUP(lpBuffer);
-         hb_xfree(lpBuffer);
-      }
-      hb_xfree(lpName);
-   }
+    if (size != 0)
+    {
+      LPTSTR lpBuffer = static_cast<LPTSTR>(hb_xgrab(size * sizeof(TCHAR)));
+      GetEnvironmentVariable(lpName, lpBuffer, size);
+      pszBuffer = HB_OSSTRDUP(lpBuffer);
+      hb_xfree(lpBuffer);
+    }
+    hb_xfree(lpName);
+  }
 #else
-   {
-      char * pszTemp, * pszNameFree = nullptr;
+  {
+    char *pszTemp, *pszNameFree = nullptr;
 
-      szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
-      pszTemp = getenv(szName);
-      if( pszNameFree ) {
-         hb_xfree(pszNameFree);
-      }
+    szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
+    pszTemp = getenv(szName);
+    if (pszNameFree)
+    {
+      hb_xfree(pszNameFree);
+    }
 
-      if( pszTemp != nullptr ) {
-         pszBuffer = hb_osStrDecode(pszTemp);
-      }
-   }
+    if (pszTemp != nullptr)
+    {
+      pszBuffer = hb_osStrDecode(pszTemp);
+    }
+  }
 #endif
 
-   return pszBuffer;
+  return pszBuffer;
 }
 
-HB_BOOL hb_getenv_buffer(const char * szName, char * szBuffer, int nSize)
+HB_BOOL hb_getenv_buffer(const char *szName, char *szBuffer, int nSize)
 {
-   bool fRetVal;
+  bool fRetVal;
 
 #if defined(HB_OS_WIN)
-   {
-      TCHAR lpNameBuffer[64], lpDestBuffer[HB_PATH_MAX];
-      LPTSTR lpName = lpNameBuffer, lpBuffer = lpDestBuffer;
+  {
+    TCHAR lpNameBuffer[64], lpDestBuffer[HB_PATH_MAX];
+    LPTSTR lpName = lpNameBuffer, lpBuffer = lpDestBuffer;
 
-      if( szBuffer == nullptr || nSize == 0 ) {
-         lpBuffer = nullptr;
-      } else if( static_cast<HB_SIZE>(nSize) > HB_SIZEOFARRAY(lpDestBuffer) ) {
-         lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
+    if (szBuffer == nullptr || nSize == 0)
+    {
+      lpBuffer = nullptr;
+    }
+    else if (static_cast<HB_SIZE>(nSize) > HB_SIZEOFARRAY(lpDestBuffer))
+    {
+      lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
+    }
+
+    if (strlen(szName) >= HB_SIZEOFARRAY(lpNameBuffer))
+    {
+      lpName = HB_CHARDUP(szName);
+    }
+
+    fRetVal = GetEnvironmentVariable(lpName, lpBuffer, nSize) != 0;
+
+    if (lpName != lpNameBuffer)
+    {
+      hb_xfree(lpName);
+    }
+
+    if (lpBuffer)
+    {
+      if (fRetVal)
+      {
+        lpBuffer[nSize - 1] = TEXT('\0');
+        HB_OSSTRDUP2(lpBuffer, szBuffer, nSize - 1);
       }
-
-      if( strlen(szName) >= HB_SIZEOFARRAY(lpNameBuffer) ) {
-         lpName = HB_CHARDUP(szName);
+      if (lpBuffer != lpDestBuffer)
+      {
+        hb_xfree(lpBuffer);
       }
-
-      fRetVal = GetEnvironmentVariable(lpName, lpBuffer, nSize) != 0;
-
-      if( lpName != lpNameBuffer ) {
-         hb_xfree(lpName);
-      }
-
-      if( lpBuffer ) {
-         if( fRetVal ) {
-            lpBuffer[nSize - 1] = TEXT('\0');
-            HB_OSSTRDUP2(lpBuffer, szBuffer, nSize - 1);
-         }
-         if( lpBuffer != lpDestBuffer ) {
-            hb_xfree( lpBuffer );
-         }
-      }
-   }
+    }
+  }
 #else
-   {
-      char * pszTemp, * pszNameFree = nullptr;
+  {
+    char *pszTemp, *pszNameFree = nullptr;
 
-      szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
-      pszTemp = getenv(szName);
-      if( pszNameFree ) {
-         hb_xfree(pszNameFree);
-      }
+    szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
+    pszTemp = getenv(szName);
+    if (pszNameFree)
+    {
+      hb_xfree(pszNameFree);
+    }
 
-      if( pszTemp != nullptr ) {
-         fRetVal = true;
-         if( szBuffer != nullptr && nSize != 0 ) {
-            hb_osStrDecode2(pszTemp, szBuffer, nSize - 1);
-         }
-      } else {
-         fRetVal = false;
+    if (pszTemp != nullptr)
+    {
+      fRetVal = true;
+      if (szBuffer != nullptr && nSize != 0)
+      {
+        hb_osStrDecode2(pszTemp, szBuffer, nSize - 1);
       }
-   }
+    }
+    else
+    {
+      fRetVal = false;
+    }
+  }
 #endif
 
-   if( !fRetVal && szBuffer != nullptr && nSize != 0 ) {
-      szBuffer[ 0 ] = '\0';
-   }
+  if (!fRetVal && szBuffer != nullptr && nSize != 0)
+  {
+    szBuffer[0] = '\0';
+  }
 
-   return fRetVal;
+  return fRetVal;
 }
 
 /* set current process environment variable, if szValue is nullptr delete
  * environment variable
  */
-HB_BOOL hb_setenv(const char * szName, const char * szValue)
+HB_BOOL hb_setenv(const char *szName, const char *szValue)
 {
-   if( szName == nullptr ) {
-      return false;
-   }
+  if (szName == nullptr)
+  {
+    return false;
+  }
 
 #if defined(HB_OS_WIN)
-   {
-      LPTSTR lpName = HB_CHARDUP(szName);
-      LPTSTR lpValue = szValue ? HB_CHARDUP(szValue) : nullptr;
-      bool fResult = (SetEnvironmentVariable(lpName, lpValue) != 0);
-      if( lpValue ) {
-         hb_xfree(lpValue);
-      }
-      hb_xfree(lpName);
-      return fResult;
-   }
-#elif defined(_BSD_SOURCE) || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600 || defined(HB_OS_SUNOS) || defined(HB_OS_BSD) || \
-   defined(HB_OS_DARWIN) || defined(HB_OS_BEOS) || defined(HB_OS_QNX) || defined(HB_OS_VXWORKS) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX) || \
-   defined(HB_OS_ANDROID)
-   {
-      bool fResult;
-      char * pszNameFree = nullptr, * pszValueFree = nullptr;
+  {
+    LPTSTR lpName = HB_CHARDUP(szName);
+    LPTSTR lpValue = szValue ? HB_CHARDUP(szValue) : nullptr;
+    bool fResult = (SetEnvironmentVariable(lpName, lpValue) != 0);
+    if (lpValue)
+    {
+      hb_xfree(lpValue);
+    }
+    hb_xfree(lpName);
+    return fResult;
+  }
+#elif defined(_BSD_SOURCE) || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600 || defined(HB_OS_SUNOS) ||            \
+    defined(HB_OS_BSD) || defined(HB_OS_DARWIN) || defined(HB_OS_BEOS) || defined(HB_OS_QNX) ||                        \
+    defined(HB_OS_VXWORKS) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX) || defined(HB_OS_ANDROID)
+  {
+    bool fResult;
+    char *pszNameFree = nullptr, *pszValueFree = nullptr;
 
-      szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
-      if( szValue ) {
-         szValue = hb_osEncodeCP(szValue, &pszValueFree, nullptr);
-         fResult = setenv(szName, szValue, 1) == 0;
-         if( pszValueFree ) {
-            hb_xfree(pszValueFree);
-         }
-      } else {
-#  if defined(__OpenBSD__) || defined(HB_OS_QNX) || (defined(__FreeBSD_version) && __FreeBSD_version < 700050 ) || \
-        (defined(HB_OS_DARWIN) && !(defined(__DARWIN_UNIX03) && __DARWIN_UNIX03))
-         unsetenv(szName);
-         fResult = true;
-#  else
-         fResult = unsetenv(szName) == 0;
-#  endif
+    szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
+    if (szValue)
+    {
+      szValue = hb_osEncodeCP(szValue, &pszValueFree, nullptr);
+      fResult = setenv(szName, szValue, 1) == 0;
+      if (pszValueFree)
+      {
+        hb_xfree(pszValueFree);
       }
+    }
+    else
+    {
+#if defined(__OpenBSD__) || defined(HB_OS_QNX) || (defined(__FreeBSD_version) && __FreeBSD_version < 700050) ||        \
+    (defined(HB_OS_DARWIN) && !(defined(__DARWIN_UNIX03) && __DARWIN_UNIX03))
+      unsetenv(szName);
+      fResult = true;
+#else
+      fResult = unsetenv(szName) == 0;
+#endif
+    }
 
-      if( pszNameFree ) {
-         hb_xfree(pszNameFree);
-      }
+    if (pszNameFree)
+    {
+      hb_xfree(pszNameFree);
+    }
 
-      return fResult;
-   }
+    return fResult;
+  }
 #elif defined(_HB_NO_SETENV_)
 
-   HB_SYMBOL_UNUSED(szValue);
+  HB_SYMBOL_UNUSED(szValue);
 
-   return false;
+  return false;
 
 #else
-   /* please add support for other C compilers
-    * if such functionality does not exists for given platform/C compiler
-    * then please simply added C compiler with necessary OS/version checking
-    * to the above #elif ... to eliminate warning [druzus]
-    */
+  /* please add support for other C compilers
+   * if such functionality does not exists for given platform/C compiler
+   * then please simply added C compiler with necessary OS/version checking
+   * to the above #elif ... to eliminate warning [druzus]
+   */
 
-   int iTODO;
+  int iTODO;
 
-   HB_SYMBOL_UNUSED(szValue);
+  HB_SYMBOL_UNUSED(szValue);
 
-   return false;
+  return false;
 
 #endif
 }

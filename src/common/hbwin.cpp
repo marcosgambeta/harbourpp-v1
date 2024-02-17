@@ -50,80 +50,81 @@
 
 #include <windows.h>
 
-static HB_SIZE hb_wcnlen(const wchar_t * szText, HB_SIZE nCount)
+static HB_SIZE hb_wcnlen(const wchar_t *szText, HB_SIZE nCount)
 {
-   HB_SIZE nLen = 0;
+  HB_SIZE nLen = 0;
 
-   while( nCount-- && szText[nLen] ) {
-      ++nLen;
-   }
+  while (nCount-- && szText[nLen])
+  {
+    ++nLen;
+  }
 
-   return nLen;
+  return nLen;
 }
 
-int hb_wctomblen(const wchar_t * szText)
+int hb_wctomblen(const wchar_t *szText)
 {
-   return WideCharToMultiByte(CP_ACP, 0, szText, -1, nullptr, 0, nullptr, nullptr) - 1;
+  return WideCharToMultiByte(CP_ACP, 0, szText, -1, nullptr, 0, nullptr, nullptr) - 1;
 }
 
-void hb_wcntombcpy(char * dstA, const wchar_t * srcW, HB_SIZE nLen)
+void hb_wcntombcpy(char *dstA, const wchar_t *srcW, HB_SIZE nLen)
 {
-   WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, static_cast<int>(nLen), nullptr, nullptr);
-   dstA[static_cast<int>(nLen)] = '\0';
+  WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, static_cast<int>(nLen), nullptr, nullptr);
+  dstA[static_cast<int>(nLen)] = '\0';
 }
 
-void hb_mbntowccpy(wchar_t * dstW, const char * srcA, HB_SIZE nLen)
+void hb_mbntowccpy(wchar_t *dstW, const char *srcA, HB_SIZE nLen)
 {
-   MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, static_cast<int>(nLen));
-   dstW[static_cast<int>(nLen)] = L'\0';
+  MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, static_cast<int>(nLen));
+  dstW[static_cast<int>(nLen)] = L'\0';
 }
 
-wchar_t * hb_mbtowc(const char * srcA)
+wchar_t *hb_mbtowc(const char *srcA)
 {
-   int length;
+  int length;
 
-   length = MultiByteToWideChar(CP_ACP, 0, srcA, -1, nullptr, 0);
-   auto dstW = static_cast<wchar_t*>(hb_xgrab(length * sizeof(wchar_t)));
-   MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, length);
+  length = MultiByteToWideChar(CP_ACP, 0, srcA, -1, nullptr, 0);
+  auto dstW = static_cast<wchar_t *>(hb_xgrab(length * sizeof(wchar_t)));
+  MultiByteToWideChar(CP_ACP, 0, srcA, -1, dstW, length);
 
-   return dstW;
+  return dstW;
 }
 
-char * hb_wctomb(const wchar_t * srcW)
+char *hb_wctomb(const wchar_t *srcW)
 {
-   int length;
+  int length;
 
-   length = WideCharToMultiByte(CP_ACP, 0, srcW, -1, nullptr, 0, nullptr, nullptr);
-   auto dstA = static_cast<char*>(hb_xgrab(length));
-   WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, length, nullptr, nullptr);
+  length = WideCharToMultiByte(CP_ACP, 0, srcW, -1, nullptr, 0, nullptr, nullptr);
+  auto dstA = static_cast<char *>(hb_xgrab(length));
+  WideCharToMultiByte(CP_ACP, 0, srcW, -1, dstA, length, nullptr, nullptr);
 
-   return dstA;
+  return dstA;
 }
 
-wchar_t * hb_mbntowc(const char * srcA, HB_SIZE nLen)
+wchar_t *hb_mbntowc(const char *srcA, HB_SIZE nLen)
 {
-   int length;
+  int length;
 
-   nLen = hb_strnlen(srcA, nLen);
-   length = MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), nullptr, 0);
-   auto dstW = static_cast<wchar_t*>(hb_xgrab((length + 1) * sizeof(wchar_t)));
-   MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), dstW, length);
-   dstW[length] = L'\0';
+  nLen = hb_strnlen(srcA, nLen);
+  length = MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), nullptr, 0);
+  auto dstW = static_cast<wchar_t *>(hb_xgrab((length + 1) * sizeof(wchar_t)));
+  MultiByteToWideChar(CP_ACP, 0, srcA, static_cast<int>(nLen), dstW, length);
+  dstW[length] = L'\0';
 
-   return dstW;
+  return dstW;
 }
 
-char * hb_wcntomb(const wchar_t * srcW, HB_SIZE nLen)
+char *hb_wcntomb(const wchar_t *srcW, HB_SIZE nLen)
 {
-   int length;
+  int length;
 
-   nLen = hb_wcnlen(srcW, nLen);
-   length = WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
-   auto dstA = static_cast<char*>(hb_xgrab(length + 1));
-   WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), dstA, length, nullptr, nullptr);
-   dstA[length] = '\0';
+  nLen = hb_wcnlen(srcW, nLen);
+  length = WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
+  auto dstA = static_cast<char *>(hb_xgrab(length + 1));
+  WideCharToMultiByte(CP_ACP, 0, srcW, static_cast<int>(nLen), dstA, length, nullptr, nullptr);
+  dstA[length] = '\0';
 
-   return dstA;
+  return dstA;
 }
 
 #endif /* HB_OS_WIN */

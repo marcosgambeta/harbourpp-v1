@@ -58,66 +58,74 @@
    #if UINT_MAX != ULONG_MAX
  */
 #ifndef hb_xmemcpy
-void * hb_xmemcpy(void * pDestArg, const void * pSourceArg, HB_SIZE nLen)
+void *hb_xmemcpy(void *pDestArg, const void *pSourceArg, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xmemcpy(%p, %p, %" HB_PFS "u)", pDestArg, pSourceArg, nLen));
 #endif
 
-   HB_BYTE * pDest;
-   const HB_BYTE * pSource;
-   HB_SIZE nRemaining;
-   int iCopySize;
+  HB_BYTE *pDest;
+  const HB_BYTE *pSource;
+  HB_SIZE nRemaining;
+  int iCopySize;
 
-   pDest = static_cast<HB_BYTE*>(pDestArg);
-   pSource = static_cast<const HB_BYTE*>(pSourceArg);
-   nRemaining = nLen;
+  pDest = static_cast<HB_BYTE *>(pDestArg);
+  pSource = static_cast<const HB_BYTE *>(pSourceArg);
+  nRemaining = nLen;
 
-   while( nRemaining ) {
-      /* Overcome the memcpy() size_t limitation */
-      if( nRemaining > UINT_MAX ) {
-         iCopySize = UINT_MAX;
-         nRemaining -= static_cast<HB_SIZE>(iCopySize);
-      } else {
-         iCopySize = static_cast<int>(nRemaining);
-         nRemaining = 0;
-      }
-      memcpy(pDest, pSource, iCopySize);
-      pDest += iCopySize;
-      pSource += iCopySize;
-   }
+  while (nRemaining)
+  {
+    /* Overcome the memcpy() size_t limitation */
+    if (nRemaining > UINT_MAX)
+    {
+      iCopySize = UINT_MAX;
+      nRemaining -= static_cast<HB_SIZE>(iCopySize);
+    }
+    else
+    {
+      iCopySize = static_cast<int>(nRemaining);
+      nRemaining = 0;
+    }
+    memcpy(pDest, pSource, iCopySize);
+    pDest += iCopySize;
+    pSource += iCopySize;
+  }
 
-   return pDestArg;
+  return pDestArg;
 }
 #endif
 
 #ifndef hb_xmemset
-void * hb_xmemset(void * pDestArg, int iFill, HB_SIZE nLen)
+void *hb_xmemset(void *pDestArg, int iFill, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_xmemset(%p, %d, %" HB_PFS "u)", pDestArg, iFill, nLen));
 #endif
 
-   HB_BYTE * pDest;
-   HB_SIZE nRemaining;
-   int iSetSize;
+  HB_BYTE *pDest;
+  HB_SIZE nRemaining;
+  int iSetSize;
 
-   pDest = static_cast<HB_BYTE*>(pDestArg);
-   nRemaining = nLen;
+  pDest = static_cast<HB_BYTE *>(pDestArg);
+  nRemaining = nLen;
 
-   while( nRemaining ) {
-      /* Overcome the memset() size_t limitation */
-      if( nRemaining > UINT_MAX ) {
-         iSetSize = UINT_MAX;
-         nRemaining -= static_cast<HB_SIZE>(iSetSize);
-      } else {
-         iSetSize = static_cast<int>(nRemaining);
-         nRemaining = 0;
-      }
-      memset(pDest, iFill, iSetSize);
-      pDest += iSetSize;
-   }
+  while (nRemaining)
+  {
+    /* Overcome the memset() size_t limitation */
+    if (nRemaining > UINT_MAX)
+    {
+      iSetSize = UINT_MAX;
+      nRemaining -= static_cast<HB_SIZE>(iSetSize);
+    }
+    else
+    {
+      iSetSize = static_cast<int>(nRemaining);
+      nRemaining = 0;
+    }
+    memset(pDest, iFill, iSetSize);
+    pDest += iSetSize;
+  }
 
-   return pDestArg;
+  return pDestArg;
 }
 #endif

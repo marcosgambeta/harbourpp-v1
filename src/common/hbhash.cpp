@@ -46,24 +46,25 @@
 
 #include "hbhash.hpp"
 
-static PHB_HASH_ITEM hb_hashItemNew(HB_SIZE nKey, const void * pKey, const void * pValue)
+static PHB_HASH_ITEM hb_hashItemNew(HB_SIZE nKey, const void *pKey, const void *pValue)
 {
-   auto pItem = static_cast<PHB_HASH_ITEM>(hb_xgrab(sizeof(HB_HASH_ITEM)));
+  auto pItem = static_cast<PHB_HASH_ITEM>(hb_xgrab(sizeof(HB_HASH_ITEM)));
 
-   pItem->key = nKey;
-   pItem->KeyPtr = pKey;
-   pItem->ValPtr = pValue;
-   pItem->next = nullptr;
+  pItem->key = nKey;
+  pItem->KeyPtr = pKey;
+  pItem->ValPtr = pValue;
+  pItem->next = nullptr;
 
-   return pItem;
+  return pItem;
 }
 
 static void hb_hashItemDelete(PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem)
 {
-   if( pTable->pDeleteItemFunc ) {
-      (pTable->pDeleteItemFunc)(pTable, pItem->KeyPtr, pItem->ValPtr);
-   }
-   hb_xfree(pItem);
+  if (pTable->pDeleteItemFunc)
+  {
+    (pTable->pDeleteItemFunc)(pTable, pItem->KeyPtr, pItem->ValPtr);
+  }
+  hb_xfree(pItem);
 }
 
 /* create a new  hash table
@@ -78,172 +79,199 @@ static void hb_hashItemDelete(PHB_HASH_TABLE pTable, PHB_HASH_ITEM pItem)
  */
 PHB_HASH_TABLE hb_hashTableCreate(HB_SIZE nSize, PHB_HASH_FUNC pHashFunc, PHB_HASH_FUNC pDelete, PHB_HASH_FUNC pComp)
 {
-   auto pTable = static_cast<PHB_HASH_TABLE>(hb_xgrab(sizeof(HB_HASH_TABLE)));
+  auto pTable = static_cast<PHB_HASH_TABLE>(hb_xgrab(sizeof(HB_HASH_TABLE)));
 
-   pTable->nTableSize = nSize;
-   pTable->pKeyFunc = pHashFunc;
-   pTable->pDeleteItemFunc = pDelete;
-   pTable->pCompFunc = pComp;
-   pTable->nCount = pTable->nUsed = 0;
+  pTable->nTableSize = nSize;
+  pTable->pKeyFunc = pHashFunc;
+  pTable->pDeleteItemFunc = pDelete;
+  pTable->pCompFunc = pComp;
+  pTable->nCount = pTable->nUsed = 0;
 
-   pTable->pItems = static_cast<PHB_HASH_ITEM*>(hb_xgrabz(sizeof(PHB_HASH_ITEM) * nSize));
+  pTable->pItems = static_cast<PHB_HASH_ITEM *>(hb_xgrabz(sizeof(PHB_HASH_ITEM) * nSize));
 
-   return pTable;
+  return pTable;
 }
 
 /* Delete all items in the hash table and next delete the table
  */
 void hb_hashTableKill(PHB_HASH_TABLE pTable)
 {
-   HB_SIZE nSize = 0;
+  HB_SIZE nSize = 0;
 
-   while( nSize < pTable->nTableSize ) {
-      if( pTable->pItems[nSize] ) {
-         PHB_HASH_ITEM pItem = pTable->pItems[nSize];
-         while( pItem ) {
-            PHB_HASH_ITEM pFree = pItem;
-            pItem = pItem->next;
-            hb_hashItemDelete(pTable, pFree);
-         }
+  while (nSize < pTable->nTableSize)
+  {
+    if (pTable->pItems[nSize])
+    {
+      PHB_HASH_ITEM pItem = pTable->pItems[nSize];
+      while (pItem)
+      {
+        PHB_HASH_ITEM pFree = pItem;
+        pItem = pItem->next;
+        hb_hashItemDelete(pTable, pFree);
       }
-      ++nSize;
-   }
-   hb_xfree(pTable->pItems);
-   hb_xfree(pTable);
+    }
+    ++nSize;
+  }
+  hb_xfree(pTable->pItems);
+  hb_xfree(pTable);
 }
 
 /* resize table */
 PHB_HASH_TABLE hb_hashTableResize(PHB_HASH_TABLE pTable, HB_SIZE nNewSize)
 {
-   PHB_HASH_TABLE pNew;
-   HB_SIZE nSize = 0;
+  PHB_HASH_TABLE pNew;
+  HB_SIZE nSize = 0;
 
-   if( nNewSize == 0 ) {
-      nNewSize = 2 * pTable->nTableSize + 1;
-   }
-   pNew = hb_hashTableCreate(nNewSize, pTable->pKeyFunc, pTable->pDeleteItemFunc, pTable->pCompFunc);
+  if (nNewSize == 0)
+  {
+    nNewSize = 2 * pTable->nTableSize + 1;
+  }
+  pNew = hb_hashTableCreate(nNewSize, pTable->pKeyFunc, pTable->pDeleteItemFunc, pTable->pCompFunc);
 
-   while( nSize < pTable->nTableSize ) {
-      if( pTable->pItems[nSize] ) {
-         PHB_HASH_ITEM pItem = pTable->pItems[nSize];
+  while (nSize < pTable->nTableSize)
+  {
+    if (pTable->pItems[nSize])
+    {
+      PHB_HASH_ITEM pItem = pTable->pItems[nSize];
 
-         while( pItem ) {
-            HB_SIZE nKey;
-            PHB_HASH_ITEM pNewItem, pNext;
+      while (pItem)
+      {
+        HB_SIZE nKey;
+        PHB_HASH_ITEM pNewItem, pNext;
 
-            pNext = pItem->next;
-            nKey = (pTable->pKeyFunc)(pNew, pItem->KeyPtr, pItem->ValPtr);
-            pNewItem = pNew->pItems[nKey];
-            if( pNewItem ) {
-               while( pNewItem->next ) {
-                  pNewItem = pNewItem->next;
-               }
-               pNewItem->next = pItem;
-            } else {
-               pNew->pItems[nKey] = pItem;
-               ++pNew->nUsed;
-            }
-            pItem->key = nKey;
-            pItem->next = nullptr;
-            ++pNew->nCount;
-            pItem = pNext;
-         }
+        pNext = pItem->next;
+        nKey = (pTable->pKeyFunc)(pNew, pItem->KeyPtr, pItem->ValPtr);
+        pNewItem = pNew->pItems[nKey];
+        if (pNewItem)
+        {
+          while (pNewItem->next)
+          {
+            pNewItem = pNewItem->next;
+          }
+          pNewItem->next = pItem;
+        }
+        else
+        {
+          pNew->pItems[nKey] = pItem;
+          ++pNew->nUsed;
+        }
+        pItem->key = nKey;
+        pItem->next = nullptr;
+        ++pNew->nCount;
+        pItem = pNext;
       }
-      ++nSize;
-   }
-   hb_xfree(pTable->pItems);
-   hb_xfree(pTable);
+    }
+    ++nSize;
+  }
+  hb_xfree(pTable->pItems);
+  hb_xfree(pTable);
 
-   return pNew;
+  return pNew;
 }
 
 /* add a new value into the hash table */
-HB_BOOL hb_hashTableAdd(PHB_HASH_TABLE pTable, const void * pKey, const void * pValue)
+HB_BOOL hb_hashTableAdd(PHB_HASH_TABLE pTable, const void *pKey, const void *pValue)
 {
-   HB_SIZE nKey;
-   PHB_HASH_ITEM pItem;
+  HB_SIZE nKey;
+  PHB_HASH_ITEM pItem;
 
-   nKey = (pTable->pKeyFunc)(pTable, pKey, pValue);
-   pItem = pTable->pItems[nKey];
-   if( pItem != nullptr ) {
-      while( pItem->next ) {
-         pItem = pItem->next;
-      }
-      pItem->next = hb_hashItemNew(nKey, pKey, pValue);
-   } else {
-      pTable->pItems[nKey] = hb_hashItemNew(nKey, pKey, pValue);
-      ++pTable->nUsed;
-   }
-   ++pTable->nCount;
+  nKey = (pTable->pKeyFunc)(pTable, pKey, pValue);
+  pItem = pTable->pItems[nKey];
+  if (pItem != nullptr)
+  {
+    while (pItem->next)
+    {
+      pItem = pItem->next;
+    }
+    pItem->next = hb_hashItemNew(nKey, pKey, pValue);
+  }
+  else
+  {
+    pTable->pItems[nKey] = hb_hashItemNew(nKey, pKey, pValue);
+    ++pTable->nUsed;
+  }
+  ++pTable->nCount;
 
-   return true;
+  return true;
 }
 
 /* return the pointer to item's value or nullptr if not found
  */
-const void * hb_hashTableFind(PHB_HASH_TABLE pTable, const void * pKey)
+const void *hb_hashTableFind(PHB_HASH_TABLE pTable, const void *pKey)
 {
-   HB_SIZE nKey;
-   PHB_HASH_ITEM pItem;
-   const void * pFound = nullptr;
+  HB_SIZE nKey;
+  PHB_HASH_ITEM pItem;
+  const void *pFound = nullptr;
 
-   nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
-   pItem = pTable->pItems[nKey];
-   if( pItem != nullptr ) {
-      while( pItem && ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) != 0) ) {
-         pItem = pItem->next;
-      }
+  nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
+  pItem = pTable->pItems[nKey];
+  if (pItem != nullptr)
+  {
+    while (pItem && ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) != 0))
+    {
+      pItem = pItem->next;
+    }
 
-      if( pItem != nullptr ) {
-         pFound = pItem->ValPtr;
-      }
-   }
+    if (pItem != nullptr)
+    {
+      pFound = pItem->ValPtr;
+    }
+  }
 
-   return pFound;
+  return pFound;
 }
 
 /* Delete an item from the table
  * Returns HB_TRUE if item was found and returns HB_FALSE when passed item
  * is not stored in the table
  */
-HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void * pKey)
+HB_BOOL hb_hashTableDel(PHB_HASH_TABLE pTable, const void *pKey)
 {
-   HB_SIZE nKey;
-   PHB_HASH_ITEM pItem;
-   PHB_HASH_ITEM pPrev = nullptr;
-   auto bFound = false;
+  HB_SIZE nKey;
+  PHB_HASH_ITEM pItem;
+  PHB_HASH_ITEM pPrev = nullptr;
+  auto bFound = false;
 
-   nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
-   if( nKey > pTable->nTableSize ) {
-      return false;
-   }
+  nKey = (pTable->pKeyFunc)(pTable, pKey, nullptr);
+  if (nKey > pTable->nTableSize)
+  {
+    return false;
+  }
 
-   pItem = pTable->pItems[nKey];
-   while( pItem && !bFound ) {
-      if( (pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) == 0 ) {
-         if( pPrev ) {
-            pPrev->next = pItem->next;
-         } else {
-            pTable->pItems[nKey] = pItem->next;
-            if( !pItem->next ) {
-               --pTable->nUsed;
-               pTable->pItems[nKey] = nullptr;
-            }
-         }
-         --pTable->nCount;
-         hb_hashItemDelete(pTable, pItem);
-         bFound = true;
-      } else {
-         pPrev = pItem;
-         pItem = pItem->next;
+  pItem = pTable->pItems[nKey];
+  while (pItem && !bFound)
+  {
+    if ((pTable->pCompFunc)(pTable, pItem->KeyPtr, pKey) == 0)
+    {
+      if (pPrev)
+      {
+        pPrev->next = pItem->next;
       }
-   }
+      else
+      {
+        pTable->pItems[nKey] = pItem->next;
+        if (!pItem->next)
+        {
+          --pTable->nUsed;
+          pTable->pItems[nKey] = nullptr;
+        }
+      }
+      --pTable->nCount;
+      hb_hashItemDelete(pTable, pItem);
+      bFound = true;
+    }
+    else
+    {
+      pPrev = pItem;
+      pItem = pItem->next;
+    }
+  }
 
-   return bFound;
+  return bFound;
 }
 
 /* return the hash table size */
 HB_SIZE hb_hashTableSize(PHB_HASH_TABLE pTable)
 {
-   return pTable->nTableSize;
+  return pTable->nTableSize;
 }

@@ -53,68 +53,74 @@
 #include "hbapifs.hpp"
 #include "hbvm.hpp"
 #if defined(HB_OS_WIN)
-   #include <windows.h>
-   #include "hbwinuni.hpp"
+#include <windows.h>
+#include "hbwinuni.hpp"
 #endif
 
-#if (defined(HB_OS_WIN)) && (defined(_MSC_VER) || defined(__MINGW32__) || defined(__BORLANDC__) ) && !defined(__MINGW32CE__)
-   #define HB_USE_FSOPEN
-   #include <share.h>
-   #if !defined(SH_DENYNO) && defined(_SH_DENYNO)
-      #define SH_DENYNO _SH_DENYNO
-   #endif
+#if (defined(HB_OS_WIN)) && (defined(_MSC_VER) || defined(__MINGW32__) || defined(__BORLANDC__)) &&                    \
+    !defined(__MINGW32CE__)
+#define HB_USE_FSOPEN
+#include <share.h>
+#if !defined(SH_DENYNO) && defined(_SH_DENYNO)
+#define SH_DENYNO _SH_DENYNO
+#endif
 #endif
 
-FILE * hb_fopen(const char * path, const char * mode)
+FILE *hb_fopen(const char *path, const char *mode)
 {
-   FILE * file;
+  FILE *file;
 
 #if defined(HB_OS_WIN) && defined(UNICODE)
-   LPCTSTR lpPath, lpMode;
-   LPTSTR lpFreeP, lpFreeM;
+  LPCTSTR lpPath, lpMode;
+  LPTSTR lpFreeP, lpFreeM;
 
-   lpPath = HB_FSNAMECONV(path, &lpFreeP);
-   lpMode = HB_FSNAMECONV(mode, &lpFreeM);
+  lpPath = HB_FSNAMECONV(path, &lpFreeP);
+  lpMode = HB_FSNAMECONV(mode, &lpFreeM);
 
-   hb_vmUnlock();
-   #if defined(HB_USE_FSOPEN)
-      file = _wfsopen(lpPath, lpMode, SH_DENYNO);
-   #elif defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(_CRT_SECURE_NO_WARNINGS)
-      if( _wfopen_s(&file, lpPath, lpMode) != 0 ) {
-         file = nullptr;
-      }
-   #else
-      file = _wfopen(lpPath, lpMode);
-   #endif
-   hb_vmLock();
-
-   if( lpFreeP ) {
-      hb_xfree(lpFreeP);
-   }
-   if( lpFreeM ) {
-      hb_xfree(lpFreeM);
-   }
+  hb_vmUnlock();
+#if defined(HB_USE_FSOPEN)
+  file = _wfsopen(lpPath, lpMode, SH_DENYNO);
+#elif defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(_CRT_SECURE_NO_WARNINGS)
+  if (_wfopen_s(&file, lpPath, lpMode) != 0)
+  {
+    file = nullptr;
+  }
 #else
-   char * pszFree = nullptr;
+  file = _wfopen(lpPath, lpMode);
+#endif
+  hb_vmLock();
 
-   path = hb_fsNameConv(path, &pszFree);
+  if (lpFreeP)
+  {
+    hb_xfree(lpFreeP);
+  }
+  if (lpFreeM)
+  {
+    hb_xfree(lpFreeM);
+  }
+#else
+  char *pszFree = nullptr;
 
-   hb_vmUnlock();
-   #if defined(HB_USE_FSOPEN)
-      file = _fsopen(path, mode, SH_DENYNO);
-   #elif defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(_CRT_SECURE_NO_WARNINGS)
-      if( fopen_s(&file, path, mode) != 0 ) {
-         file = nullptr;
-      }
-   #else
-      file = fopen(path, mode);
-   #endif
-   hb_vmLock();
+  path = hb_fsNameConv(path, &pszFree);
 
-   if( pszFree ) {
-      hb_xfree(pszFree);
-   }
+  hb_vmUnlock();
+#if defined(HB_USE_FSOPEN)
+  file = _fsopen(path, mode, SH_DENYNO);
+#elif defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(_CRT_SECURE_NO_WARNINGS)
+  if (fopen_s(&file, path, mode) != 0)
+  {
+    file = nullptr;
+  }
+#else
+  file = fopen(path, mode);
+#endif
+  hb_vmLock();
+
+  if (pszFree)
+  {
+    hb_xfree(pszFree);
+  }
 #endif
 
-   return file;
+  return file;
 }
