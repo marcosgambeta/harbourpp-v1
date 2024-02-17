@@ -123,24 +123,20 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 /* List of compatibility/features modes */
 void hb_compPrintModes(HB_COMP_DECL)
 {
-   std::array<std::string, 13> options =
-   {
-      "\nOptions:  c               clear all flags (strict Clipper mode)",
-      "\n          h[-]            Harbour++ mode",
-      "\n          o[-]            allow operator optimizations",
-      "\n          i[-]            enable support for HB_INLINE",
-      "\n          r[-]            runtime settings enabled",
-      "\n          s[-]            allow indexed assignment on all types",
-      "\n          x[-]            extended Xbase++ mode",
-      "\n          u[-]            strings in user encoding",
-      "\n          d[-]            accept macros with declared symbols",
-      "\n          m[+]            turn off macrotext substitution",
-      "\n          j[+]            turn off jump optimization in pcode",
-      "\n          ?               this info",
-      "\n"
-   };
-   std::array<int, 11> flags =
-   {
+  std::array<std::string, 13> options = {"\nOptions:  c               clear all flags (strict Clipper mode)",
+                                         "\n          h[-]            Harbour++ mode",
+                                         "\n          o[-]            allow operator optimizations",
+                                         "\n          i[-]            enable support for HB_INLINE",
+                                         "\n          r[-]            runtime settings enabled",
+                                         "\n          s[-]            allow indexed assignment on all types",
+                                         "\n          x[-]            extended Xbase++ mode",
+                                         "\n          u[-]            strings in user encoding",
+                                         "\n          d[-]            accept macros with declared symbols",
+                                         "\n          m[+]            turn off macrotext substitution",
+                                         "\n          j[+]            turn off jump optimization in pcode",
+                                         "\n          ?               this info",
+                                         "\n"};
+  std::array<int, 11> flags = {
       0,
       HB_COMPFLAG_HARBOUR,
       HB_COMPFLAG_EXTOPT,
@@ -152,16 +148,19 @@ void hb_compPrintModes(HB_COMP_DECL)
       HB_COMPFLAG_MACRODECL,
       ~HB_COMPFLAG_MACROTEXT,
       ~HB_COMPFLAG_OPTJUMP,
-   };
+  };
 
-   hb_compOutStd(HB_COMP_PARAM, "\nCompatibility flags: -k[options]\n");
+  hb_compOutStd(HB_COMP_PARAM, "\nCompatibility flags: -k[options]\n");
 
-   for( unsigned int iLine = 0; iLine < options.size(); iLine++ ) {
-      hb_compOutStd(HB_COMP_PARAM, options.at(iLine).data());
-      if( iLine < flags.size() && (flags.at(iLine) < 0 ? HB_COMP_ISSUPPORTED(~flags.at(iLine)) == 0 : HB_COMP_ISSUPPORTED(flags.at(iLine)) != 0) ) {
-         hb_compOutStd(HB_COMP_PARAM, " (default)");
-      }
-   }
+  for (unsigned int iLine = 0; iLine < options.size(); iLine++)
+  {
+    hb_compOutStd(HB_COMP_PARAM, options.at(iLine).data());
+    if (iLine < flags.size() &&
+        (flags.at(iLine) < 0 ? HB_COMP_ISSUPPORTED(~flags.at(iLine)) == 0 : HB_COMP_ISSUPPORTED(flags.at(iLine)) != 0))
+    {
+      hb_compOutStd(HB_COMP_PARAM, " (default)");
+    }
+  }
 }
 
 // clang-format off
@@ -265,12 +264,12 @@ void hb_compPrintCredits(HB_COMP_DECL)
 
 void hb_compPrintLogo(HB_COMP_DECL)
 {
-   char * szVer = hb_verHarbour();
+  char *szVer = hb_verHarbour();
 
-   #define HB_VER_COMMIT_YEAR  "2023"
-   #define HB_VER_ORIGIN_URL   "https://harbour.github.io/"
+#define HB_VER_COMMIT_YEAR "2023"
+#define HB_VER_ORIGIN_URL "https://harbour.github.io/"
 
-   hb_compOutStd(HB_COMP_PARAM, szVer);
-   hb_compOutStd(HB_COMP_PARAM, "\nCopyright (c) 1999-" HB_VER_COMMIT_YEAR ", " HB_VER_ORIGIN_URL "\n");
-   hb_xfree(szVer);
+  hb_compOutStd(HB_COMP_PARAM, szVer);
+  hb_compOutStd(HB_COMP_PARAM, "\nCopyright (c) 1999-" HB_VER_COMMIT_YEAR ", " HB_VER_ORIGIN_URL "\n");
+  hb_xfree(szVer);
 }

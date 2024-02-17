@@ -28,9 +28,9 @@
 
 struct HB_FUNCINFO
 {
-   const char * cFuncName;                /* function name                   */
-   int          iMinParam;                /* min number of parameters needed */
-   int          iMaxParam;                /* max number of parameters needed */
+  const char *cFuncName; /* function name                   */
+  int iMinParam;         /* min number of parameters needed */
+  int iMaxParam;         /* max number of parameters needed */
 };
 
 using PHB_FUNCINFO = HB_FUNCINFO *;
@@ -110,58 +110,77 @@ static const HB_FUNCINFO s_stdFunc[] =
 };
 // clang-format on
 
-HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char * szFuncCall, int iArgs)
+HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char *szFuncCall, int iArgs)
 {
-   unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_stdFunc) - 1, uiMiddle;
-   auto iLen = static_cast<int>(strlen(szFuncCall));
-   int iCmp;
+  unsigned int uiFirst = 0, uiLast = HB_SIZEOFARRAY(s_stdFunc) - 1, uiMiddle;
+  auto iLen = static_cast<int>(strlen(szFuncCall));
+  int iCmp;
 
-   /* Respect 4 or more letters shortcuts
-    * SECO() is not allowed because of Clipper function Seconds()
-    * however SECO32() is a valid name.
-    */
-   if( iLen < 4 ) {
-      iLen = 4;
-   }
-   do {
-      uiMiddle = (uiFirst + uiLast) >> 1;
-      iCmp = strncmp(szFuncCall, s_stdFunc[uiMiddle].cFuncName, iLen);
-      if( iCmp <= 0 ) {
-         uiLast = uiMiddle;
-      } else {
-         uiFirst = uiMiddle + 1;
+  /* Respect 4 or more letters shortcuts
+   * SECO() is not allowed because of Clipper function Seconds()
+   * however SECO32() is a valid name.
+   */
+  if (iLen < 4)
+  {
+    iLen = 4;
+  }
+  do
+  {
+    uiMiddle = (uiFirst + uiLast) >> 1;
+    iCmp = strncmp(szFuncCall, s_stdFunc[uiMiddle].cFuncName, iLen);
+    if (iCmp <= 0)
+    {
+      uiLast = uiMiddle;
+    }
+    else
+    {
+      uiFirst = uiMiddle + 1;
+    }
+  } while (uiFirst < uiLast);
+
+  if (uiFirst != uiMiddle)
+  {
+    iCmp = strncmp(szFuncCall, s_stdFunc[uiFirst].cFuncName, iLen);
+  }
+
+  if (iCmp == 0)
+  {
+    const HB_FUNCINFO *pFunc = &s_stdFunc[uiFirst];
+
+    if ((pFunc->iMinParam != -1 && iArgs < pFunc->iMinParam) || (pFunc->iMaxParam != -1 && iArgs > pFunc->iMaxParam))
+    {
+      char szMsg[64];
+
+      if (HB_COMP_ISSUPPORTED(HB_COMPFLAG_HARBOUR))
+      {
+        if (pFunc->iMinParam == pFunc->iMaxParam)
+        {
+          hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected: %i", iArgs, pFunc->iMinParam);
+        }
+        else if (pFunc->iMaxParam == -1)
+        {
+          hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected at least: %i", iArgs, pFunc->iMinParam);
+        }
+        else if (pFunc->iMinParam == -1)
+        {
+          hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected less than: %i", iArgs, pFunc->iMaxParam);
+        }
+        else
+        {
+          hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected from: %i to: %i", iArgs, pFunc->iMinParam,
+                      pFunc->iMaxParam);
+        }
       }
-   } while( uiFirst < uiLast );
-
-   if( uiFirst != uiMiddle ) {
-      iCmp = strncmp(szFuncCall, s_stdFunc[uiFirst].cFuncName, iLen);
-   }
-
-   if( iCmp == 0 ) {
-      const HB_FUNCINFO * pFunc = &s_stdFunc[uiFirst];
-
-      if( (pFunc->iMinParam != -1 && iArgs < pFunc->iMinParam) || (pFunc->iMaxParam != -1 && iArgs > pFunc->iMaxParam) ) {
-         char szMsg[64];
-
-         if( HB_COMP_ISSUPPORTED(HB_COMPFLAG_HARBOUR) ) {
-            if( pFunc->iMinParam == pFunc->iMaxParam ) {
-               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected: %i", iArgs, pFunc->iMinParam);
-            } else if( pFunc->iMaxParam == -1 ) {
-               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected at least: %i", iArgs, pFunc->iMinParam);
-            } else if( pFunc->iMinParam == -1 ) {
-               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected less than: %i", iArgs, pFunc->iMaxParam);
-            } else {
-               hb_snprintf(szMsg, sizeof(szMsg), "\nPassed: %i, expected from: %i to: %i", iArgs, pFunc->iMinParam, pFunc->iMaxParam);
-            }
-         } else {
-            szMsg[0] = '\0';
-         }
-
-         hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CHECKING_ARGS, szFuncCall, szMsg);
-
-         return false;
+      else
+      {
+        szMsg[0] = '\0';
       }
-   }
 
-   return true;
+      hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CHECKING_ARGS, szFuncCall, szMsg);
+
+      return false;
+    }
+  }
+
+  return true;
 }

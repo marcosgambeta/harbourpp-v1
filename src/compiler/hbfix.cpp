@@ -50,88 +50,90 @@
 /* helper structure to pass information */
 struct HB_stru_fix_info
 {
-   HB_COMP_DECL;
+  HB_COMP_DECL;
 };
 
 using HB_FIX_INFO = HB_stru_fix_info;
 using PHB_FIX_INFO = HB_FIX_INFO *;
 
-#define HB_FIX_FUNC(func)  HB_PCODE_FUNC(func, PHB_FIX_INFO)
+#define HB_FIX_FUNC(func) HB_PCODE_FUNC(func, PHB_FIX_INFO)
 typedef HB_FIX_FUNC(HB_FIX_FUNC_);
 using PHB_FIX_FUNC = HB_FIX_FUNC_ *;
 
 static HB_FIX_FUNC(hb_p_pushblock)
 {
-   HB_BYTE * pLocal = &pFunc->pCode[nPCodePos + 7];
+  HB_BYTE *pLocal = &pFunc->pCode[nPCodePos + 7];
 
-   HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(cargo);
 
-   /* opcode + codeblock size + number of parameters + number of local variables */
-   HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
+  /* opcode + codeblock size + number of parameters + number of local variables */
+  HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 5]);
 
-   /* fix local variable's reference */
-   while( wVar-- ) {
-      HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
-      pLocal[0] = HB_LOBYTE(wLocal);
-      pLocal[1] = HB_HIBYTE(wLocal);
-      pLocal += 2;
-   }
+  /* fix local variable's reference */
+  while (wVar--)
+  {
+    HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
+    pLocal[0] = HB_LOBYTE(wLocal);
+    pLocal[1] = HB_HIBYTE(wLocal);
+    pLocal += 2;
+  }
 
-   /* only local variables used outside of a codeblock need fixing
-    * skip the codeblock body
-    */
-   return HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
+  /* only local variables used outside of a codeblock need fixing
+   * skip the codeblock body
+   */
+  return HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
 }
 
 static HB_FIX_FUNC(hb_p_pushblocklarge)
 {
-   HB_BYTE * pLocal = &pFunc->pCode[nPCodePos + 8];
+  HB_BYTE *pLocal = &pFunc->pCode[nPCodePos + 8];
 
-   HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(cargo);
 
-   /* opcode + codeblock size + number of parameters + number of local variables */
-   HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
+  /* opcode + codeblock size + number of parameters + number of local variables */
+  HB_USHORT wVar = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 6]);
 
-   /* fix local variable's reference */
-   while( wVar-- ) {
-      HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
-      pLocal[0] = HB_LOBYTE(wLocal);
-      pLocal[1] = HB_HIBYTE(wLocal);
-      pLocal += 2;
-   }
+  /* fix local variable's reference */
+  while (wVar--)
+  {
+    HB_USHORT wLocal = HB_PCODE_MKUSHORT(pLocal) + pFunc->wParamCount;
+    pLocal[0] = HB_LOBYTE(wLocal);
+    pLocal[1] = HB_HIBYTE(wLocal);
+    pLocal += 2;
+  }
 
-   /* only local variables used outside of a codeblock need fixing
-    * skip the codeblock body
-    */
-   return HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]);
+  /* only local variables used outside of a codeblock need fixing
+   * skip the codeblock body
+   */
+  return HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]);
 }
 
 static HB_FIX_FUNC(hb_p_localfix)
 {
-   HB_BYTE * pVar = &pFunc->pCode[nPCodePos + 1];
-   HB_SHORT iVar = HB_PCODE_MKSHORT(pVar);
+  HB_BYTE *pVar = &pFunc->pCode[nPCodePos + 1];
+  HB_SHORT iVar = HB_PCODE_MKSHORT(pVar);
 
-   HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(cargo);
 
-   iVar += pFunc->wParamCount;
-   pVar[0] = HB_LOBYTE(iVar);
-   pVar[1] = HB_HIBYTE(iVar);
+  iVar += pFunc->wParamCount;
+  pVar[0] = HB_LOBYTE(iVar);
+  pVar[1] = HB_HIBYTE(iVar);
 
-   return 0;
+  return 0;
 }
 
 static HB_FIX_FUNC(hb_p_localnearerr)
 {
-   HB_SYMBOL_UNUSED(pFunc);
-   HB_SYMBOL_UNUSED(nPCodePos);
-   /*
-    * this code should never be executed because compiler should
-    * generate only non size optimized HB_P_POPLOCAL pcodes
-    * for function body
-    */
-   hb_compGenError(cargo->HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_OPTIMIZEDLOCAL_OUT_OF_RANGE, "", "");
+  HB_SYMBOL_UNUSED(pFunc);
+  HB_SYMBOL_UNUSED(nPCodePos);
+  /*
+   * this code should never be executed because compiler should
+   * generate only non size optimized HB_P_POPLOCAL pcodes
+   * for function body
+   */
+  hb_compGenError(cargo->HB_COMP_PARAM, hb_comp_szErrors, 'F', HB_COMP_ERR_OPTIMIZEDLOCAL_OUT_OF_RANGE, "", "");
 
-   return 0;
+  return 0;
 }
 
 /* NOTE: The  order of functions have to match the order of opcodes
@@ -328,12 +330,12 @@ static const PHB_FIX_FUNC s_fixlocals_table[] =
 
 void hb_compFixFuncPCode(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
-   const PHB_FIX_FUNC * pFuncTable = s_fixlocals_table;
+  const PHB_FIX_FUNC *pFuncTable = s_fixlocals_table;
 
-   HB_FIX_INFO fix_info;
-   fix_info.HB_COMP_PARAM = HB_COMP_PARAM;
+  HB_FIX_INFO fix_info;
+  fix_info.HB_COMP_PARAM = HB_COMP_PARAM;
 
-   assert(HB_P_LAST_PCODE == sizeof(s_fixlocals_table) / sizeof(PHB_FIX_FUNC));
+  assert(HB_P_LAST_PCODE == sizeof(s_fixlocals_table) / sizeof(PHB_FIX_FUNC));
 
-   hb_compPCodeEval(pFunc, reinterpret_cast<const PHB_PCODE_FUNC*>(pFuncTable), static_cast<void*>(&fix_info));
+  hb_compPCodeEval(pFunc, reinterpret_cast<const PHB_PCODE_FUNC *>(pFuncTable), static_cast<void *>(&fix_info));
 }
