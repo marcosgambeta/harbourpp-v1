@@ -50,51 +50,50 @@
 /* Source repository revision number */
 HB_MAXINT hb_verRevision(void)
 {
-   return HB_VER_REVID;
+  return HB_VER_REVID;
 }
 
 /* ChangeLog ID string */
-const char * hb_verChangeLogID(void)
+const char *hb_verChangeLogID(void)
 {
-   return HB_VER_CHLID;
+  return HB_VER_CHLID;
 }
 
 /* ChangeLog last entry string */
-const char * hb_verChangeLogLastEntry(void)
+const char *hb_verChangeLogLastEntry(void)
 {
-   return HB_VER_LENTRY;
+  return HB_VER_LENTRY;
 }
 
 /* build time C compiler flags in HB_USER_CFLAGS envvar */
-const char * hb_verFlagsC(void)
+const char *hb_verFlagsC(void)
 {
 #ifdef HB_VER_HB_USER_CFLAGS
-   return HB_VER_HB_USER_CFLAGS;
+  return HB_VER_HB_USER_CFLAGS;
 #else
-   return "";
+  return "";
 #endif
 }
 
 /* build time linker flags in HB_USER_LDFLAGS envvar */
-const char * hb_verFlagsL(void)
+const char *hb_verFlagsL(void)
 {
 #ifdef HB_VER_HB_USER_LDFLAGS
-   return HB_VER_HB_USER_LDFLAGS;
+  return HB_VER_HB_USER_LDFLAGS;
 #else
-   return "";
+  return "";
 #endif
 }
 
 /* build time Harbour compiler flags in HB_USER_PRGFLAGS envvar */
-const char * hb_verFlagsPRG(void)
+const char *hb_verFlagsPRG(void)
 {
 #ifdef HB_VER_HB_USER_PRGFLAGS
-   return HB_VER_HB_USER_PRGFLAGS;
+  return HB_VER_HB_USER_PRGFLAGS;
 #else
-   return "";
+  return "";
 #endif
 }
-
 
 #if 0
 /* build time Harbour platform setting */
@@ -118,13 +117,13 @@ const char * hb_verHB_COMP(void)
 }
 #endif
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
-   int iResult;
+  int iResult;
 
-   iResult = hb_compMain(argc, static_cast<const char* const*>(argv));
+  iResult = hb_compMain(argc, static_cast<const char *const *>(argv));
 
-   hb_xexit();
+  hb_xexit();
 
-   return iResult;
+  return iResult;
 }
