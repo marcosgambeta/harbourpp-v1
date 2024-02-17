@@ -318,6 +318,7 @@ static HB_CODETRACE_FUNC(hb_p_endproc)
 /* NOTE: The  order of functions have to match the order of opcodes
  *       mnemonics
  */
+// clang-format off
 static const PHB_CODETRACE_FUNC s_codeTraceFuncTable[] =
 {
    hb_p_default,               /* HB_P_AND                   */
@@ -505,6 +506,7 @@ static const PHB_CODETRACE_FUNC s_codeTraceFuncTable[] =
    hb_p_default,               /* HB_P_THREADSTATICS         */
    hb_p_default                /* HB_P_PUSHAPARAMS           */
 };
+// clang-format on
 
 void hb_compCodeTraceMarkDead(HB_COMP_DECL, PHB_HFUNC pFunc)
 {

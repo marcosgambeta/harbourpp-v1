@@ -92,6 +92,7 @@ static HB_STRIP_FUNC(hb_p_line)
 /* NOTE: The  order of functions have to match the order of opcodes
  *       mnemonics
  */
+// clang-format off
 static const PHB_STRIP_FUNC s_stripLines_table[] =
 {
    nullptr,                    /* HB_P_AND                   */
@@ -279,6 +280,7 @@ static const PHB_STRIP_FUNC s_stripLines_table[] =
    nullptr,                    /* HB_P_THREADSTATICS         */
    nullptr                     /* HB_P_PUSHAPARAMS           */
 };
+// clang-format on
 
 void hb_compStripFuncLines(HB_COMP_DECL, PHB_HFUNC pFunc)
 {

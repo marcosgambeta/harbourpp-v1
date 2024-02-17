@@ -115,6 +115,7 @@ static HB_PSIZE_FUNC(hb_p_threadstatics)
    return 3 + (static_cast<HB_SIZE>(HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1])) << 1);
 }
 
+// clang-format off
 const HB_BYTE hb_comp_pcode_len[] = {
    1,        /* HB_P_AND                   */
    1,        /* HB_P_ARRAYPUSH             */
@@ -301,11 +302,13 @@ const HB_BYTE hb_comp_pcode_len[] = {
    0,        /* HB_P_THREADSTATICS         */
    1         /* HB_P_PUSHAPARAMS           */
 };
+// clang-format on
 
 /*
  * this table has pointers to functions which count
  * real size of variable size PCODEs
  */
+// clang-format off
 static PHB_PCODE_FUNC s_psize_table[] =
 {
    nullptr,                    /* HB_P_AND                   */
@@ -493,6 +496,7 @@ static PHB_PCODE_FUNC s_psize_table[] =
    hb_p_threadstatics,         /* HB_P_THREADSTATICS         */
    nullptr                     /* HB_P_PUSHAPARAMS           */
 };
+// clang-format on
 
 HB_ISIZ hb_compPCodeSize(PHB_HFUNC pFunc, HB_SIZE nOffset)
 {

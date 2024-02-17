@@ -173,6 +173,7 @@ static HB_LABEL_FUNC(hb_p_seqend)
 /* NOTE: The  order of functions have to match the order of opcodes
  *       mnemonics
  */
+// clang-format off
 static const PHB_LABEL_FUNC s_GenLabelFuncTable[] =
 {
    nullptr,                       /* HB_P_AND                   */
@@ -360,6 +361,7 @@ static const PHB_LABEL_FUNC s_GenLabelFuncTable[] =
    nullptr,                       /* HB_P_THREADSTATICS         */
    nullptr                        /* HB_P_PUSHAPARAMS           */
 };
+// clang-format on
 
 void hb_compGenLabelTable(PHB_HFUNC pFunc, PHB_LABEL_INFO label_info)
 {

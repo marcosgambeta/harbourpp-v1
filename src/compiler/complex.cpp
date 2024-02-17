@@ -97,6 +97,7 @@ struct HB_LEX_KEY
    int          type;         /* terminal symbol code */
 };
 
+// clang-format off
 static const HB_LEX_KEY s_keytable[] =
 {
    { "ALWAYS",      4,  6, ALWAYS         },
@@ -153,6 +154,7 @@ static const HB_LEX_KEY s_keytable[] =
    { "_HB_MEMBER", 10, 10, DECLARE_MEMBER },
    { "_PROCREQ_",   9,  9, PROCREQ        }
 };
+// clang-format on
 
 #define _AS_ARRAY      1
 #define _AS_BLOCK      2
@@ -196,6 +198,7 @@ static const int s_asArrayTypes[] =
    AS_ARRAY
 };
 
+// clang-format off
 static const HB_LEX_KEY s_typetable[] =
 {
    { "ANYTYPE",   4, 7, _AS_VARIANT   },
@@ -216,6 +219,7 @@ static const HB_LEX_KEY s_typetable[] =
    { "TIMESTAMP", 4, 8, _AS_DATETIME  },
    { "USUAL",     4, 5, _AS_VARIANT   }
 };
+// clang-format on
 
 static int hb_comp_asType(PHB_PP_TOKEN pToken, bool fArray)
 {

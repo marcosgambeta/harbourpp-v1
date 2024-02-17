@@ -23,6 +23,7 @@
 #include "hbcomp.hpp"
 
 /* Table with parse errors */
+// clang-format off
 const char * const hb_comp_szErrors[] =
 {
    "Statement not allowed outside of procedure or function",
@@ -106,11 +107,13 @@ const char * const hb_comp_szErrors[] =
    "Ford Maverick error number",
    "Something terrible has happened"
 };
+// clang-format on
 
 /* Table with parse warnings */
 /* NOTE: The first character stores the warning's level that triggers this
  * warning. The warning's level is set by -w<n> command-line option.
  */
+// clang-format off
 const char * const hb_comp_szWarnings[] =
 {
    "1Ambiguous reference '%s'",
@@ -148,6 +151,7 @@ const char * const hb_comp_szWarnings[] =
    "3Variable '%s' is never assigned in function '%s'",
    "2STATIC Function '%s' defined but never used"
 };
+// clang-format on
 
 static void hb_compDispMessage(HB_COMP_DECL, char cPrefix, int iValue, const char * szText, const char * szPar1, const char * szPar2 )
 {

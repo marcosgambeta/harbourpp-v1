@@ -1864,6 +1864,7 @@ static HB_GENC_FUNC(hb_p_pushaparams)
 /* NOTE: The  order of functions have to match the order of opcodes
  *       mnemonics
  */
+// clang-format off
 static const PHB_GENC_FUNC s_verbose_table[] = {
    hb_p_and,
    hb_p_arraypush,
@@ -2052,6 +2053,7 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
    hb_p_threadstatics,
    hb_p_pushaparams
 };
+// clang-format on
 
 void hb_compGenCRealCode(HB_COMP_DECL, PHB_HFUNC pFunc, FILE * yyc)
 {

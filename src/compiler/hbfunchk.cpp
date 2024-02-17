@@ -37,6 +37,7 @@ using PHB_FUNCINFO = HB_FUNCINFO *;
 
 /* NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
  */
+// clang-format off
 static const HB_FUNCINFO s_stdFunc[] =
 {
    { "AADD"      , 2,  2 },
@@ -107,6 +108,7 @@ static const HB_FUNCINFO s_stdFunc[] =
    { "WORD"      , 1,  1 },
    { "YEAR"      , 1,  1 }
 };
+// clang-format on
 
 HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char * szFuncCall, int iArgs)
 {

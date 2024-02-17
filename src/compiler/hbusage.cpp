@@ -48,6 +48,7 @@
 #include <array>
 #include "hbcomp.hpp"
 
+// clang-format off
 void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 {
 #ifdef YYDEBUG
@@ -117,6 +118,7 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
       hb_compOutStd(HB_COMP_PARAM, option.data());
    }
 }
+// clang-format on
 
 /* List of compatibility/features modes */
 void hb_compPrintModes(HB_COMP_DECL)
@@ -162,6 +164,7 @@ void hb_compPrintModes(HB_COMP_DECL)
    }
 }
 
+// clang-format off
 void hb_compPrintCredits(HB_COMP_DECL)
 {
    hb_compOutStd(HB_COMP_PARAM,
@@ -258,6 +261,7 @@ void hb_compPrintCredits(HB_COMP_DECL)
          "Xavi (jarabal gmail com)\n"
       );
 }
+// clang-format on
 
 void hb_compPrintLogo(HB_COMP_DECL)
 {

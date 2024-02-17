@@ -137,6 +137,7 @@ static HB_FIX_FUNC(hb_p_localnearerr)
 /* NOTE: The  order of functions have to match the order of opcodes
  *       mnemonics
  */
+// clang-format off
 static const PHB_FIX_FUNC s_fixlocals_table[] =
 {
    nullptr,                    /* HB_P_AND                   */
@@ -323,6 +324,7 @@ static const PHB_FIX_FUNC s_fixlocals_table[] =
    nullptr,                    /* HB_P_THREADSTATICS         */
    nullptr                     /* HB_P_PUSHAPARAMS           */
 };
+// clang-format on
 
 void hb_compFixFuncPCode(HB_COMP_DECL, PHB_HFUNC pFunc)
 {
