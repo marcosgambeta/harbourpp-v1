@@ -101,9 +101,9 @@ else
 endif
 
 # ORIGIN http://www.ijg.org/
-# VER    9a
-# URL    http://www.ijg.org/files/jpegsrc.v9a.tar.gz
-# DIFF   jpeg.diff
+# VER    9f
+# URL    http://www.ijg.org/files/jpegsrc.v9f.tar.gz
+# DIFF   jpeg.diff (NOT USED)
 #
 # MAP    README
 # MAP    cderror.h

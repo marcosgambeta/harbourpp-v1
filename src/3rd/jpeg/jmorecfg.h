@@ -2,7 +2,7 @@
  * jmorecfg.h
  *
  * Copyright (C) 1991-1997, Thomas G. Lane.
- * Modified 1997-2013 by Guido Vollbeding.
+ * Modified 1997-2022 by Guido Vollbeding.
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
@@ -189,9 +189,7 @@ typedef unsigned char UINT8;
 #ifdef CHAR_IS_UNSIGNED
 typedef char UINT8;
 #else /* not CHAR_IS_UNSIGNED */
-#ifndef __INCvxTypesOldh /* VxWorks defines this */
 typedef short UINT8;
-#endif
 #endif /* CHAR_IS_UNSIGNED */
 #endif /* HAVE_UNSIGNED_CHAR */
 
@@ -200,9 +198,7 @@ typedef short UINT8;
 #ifdef HAVE_UNSIGNED_SHORT
 typedef unsigned short UINT16;
 #else /* not HAVE_UNSIGNED_SHORT */
-#ifndef __INCvxTypesOldh /* VxWorks defines this */
 typedef unsigned int UINT16;
-#endif
 #endif /* HAVE_UNSIGNED_SHORT */
 
 /* INT16 must hold at least the values -32768..32767. */
@@ -217,9 +213,7 @@ typedef short INT16;
 #ifndef _BASETSD_H_		/* Microsoft defines it in basetsd.h */
 #ifndef _BASETSD_H		/* MinGW is slightly different */
 #ifndef QGLOBAL_H		/* Qt defines it in qglobal.h */
-#ifndef __INCvxTypesOldh /* VxWorks defines this */
 typedef long INT32;
-#endif
 #endif
 #endif
 #endif
@@ -247,9 +241,6 @@ typedef unsigned int JDIMENSION;
 /* a function called through method pointers: */
 #define METHODDEF(type)		static type
 /* a function used only in its module: */
-#ifdef __INCvxTypesOldh /* VxWorks defines this */
-#undef LOCAL
-#endif
 #define LOCAL(type)		static type
 /* a function referenced thru EXTERNs: */
 #define GLOBAL(type)		type
@@ -360,8 +351,8 @@ typedef enum { FALSE = 0, TRUE = 1 } boolean;
 
 #define C_ARITH_CODING_SUPPORTED    /* Arithmetic coding back end? */
 #define C_MULTISCAN_FILES_SUPPORTED /* Multiple-scan JPEG files? */
-#define C_PROGRESSIVE_SUPPORTED	    /* Progressive JPEG? (Requires MULTISCAN)*/
-#define DCT_SCALING_SUPPORTED	    /* Input rescaling via DCT? (Requires DCT_ISLOW)*/
+#define C_PROGRESSIVE_SUPPORTED	    /* Progressive JPEG? (Requires MULTISCAN) */
+#define DCT_SCALING_SUPPORTED	/* Input rescaling via DCT? (Requires DCT_ISLOW) */
 #define ENTROPY_OPT_SUPPORTED	    /* Optimization of entropy coding parms? */
 /* Note: if you selected more than 8-bit data precision, it is dangerous to
  * turn off ENTROPY_OPT_SUPPORTED.  The standard Huffman tables are only
@@ -378,8 +369,8 @@ typedef enum { FALSE = 0, TRUE = 1 } boolean;
 
 #define D_ARITH_CODING_SUPPORTED    /* Arithmetic coding back end? */
 #define D_MULTISCAN_FILES_SUPPORTED /* Multiple-scan JPEG files? */
-#define D_PROGRESSIVE_SUPPORTED	    /* Progressive JPEG? (Requires MULTISCAN)*/
-#define IDCT_SCALING_SUPPORTED	    /* Output rescaling via IDCT? (Requires DCT_ISLOW)*/
+#define D_PROGRESSIVE_SUPPORTED	    /* Progressive JPEG? (Requires MULTISCAN) */
+#define IDCT_SCALING_SUPPORTED	/* Output rescaling via IDCT? (Requires DCT_ISLOW) */
 #define SAVE_MARKERS_SUPPORTED	    /* jpeg_save_markers() needed? */
 #define BLOCK_SMOOTHING_SUPPORTED   /* Block smoothing? (Progressive only) */
 #undef  UPSAMPLE_SCALING_SUPPORTED  /* Output rescaling at upsample stage? */
@@ -393,20 +384,31 @@ typedef enum { FALSE = 0, TRUE = 1 } boolean;
 /*
  * Ordering of RGB data in scanlines passed to or from the application.
  * If your application wants to deal with data in the order B,G,R, just
- * change these macros.  You can also deal with formats such as R,G,B,X
- * (one extra byte per pixel) by changing RGB_PIXELSIZE.  Note that changing
- * the offsets will also change the order in which colormap data is organized.
+ * #define JPEG_USE_RGB_CUSTOM in jconfig.h, or define your own custom
+ * order in jconfig.h and #define JPEG_HAVE_RGB_CUSTOM.
+ * You can also deal with formats such as R,G,B,X (one extra byte per pixel)
+ * by changing RGB_PIXELSIZE.
+ * Note that changing the offsets will also change
+ * the order in which colormap data is organized.
  * RESTRICTIONS:
  * 1. The sample applications cjpeg,djpeg do NOT support modified RGB formats.
  * 2. The color quantizer modules will not behave desirably if RGB_PIXELSIZE
- *    is not 3 (they don't understand about dummy color components!).  So you
- *    can't use color quantization if you change that value.
+ *    is not 3 (they don't understand about dummy color components!).
+ *    So you can't use color quantization if you change that value.
  */
 
+#ifndef JPEG_HAVE_RGB_CUSTOM
+#ifdef JPEG_USE_RGB_CUSTOM
+#define RGB_RED		2	/* Offset of Red in an RGB scanline element */
+#define RGB_GREEN	1	/* Offset of Green */
+#define RGB_BLUE	0	/* Offset of Blue */
+#else
 #define RGB_RED		0	/* Offset of Red in an RGB scanline element */
 #define RGB_GREEN	1	/* Offset of Green */
 #define RGB_BLUE	2	/* Offset of Blue */
+#endif
 #define RGB_PIXELSIZE	3	/* JSAMPLEs per RGB scanline element */
+#endif
 
 
 /* Definitions for speed-related optimizations. */
