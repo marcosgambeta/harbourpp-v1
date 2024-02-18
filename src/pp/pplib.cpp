@@ -53,88 +53,93 @@
 
 HB_EXTERN_BEGIN
 
-static void hb_pp_ErrorMessage(void * cargo, const char * const szMsgTable[], char cPrefix, int iCode, const char * szParam1, const char * szParam2)
+static void hb_pp_ErrorMessage(void *cargo, const char *const szMsgTable[], char cPrefix, int iCode,
+                               const char *szParam1, const char *szParam2)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_pp_ErrorGen(%p, %p, %c, %d, %s, %s)", cargo, static_cast<const void*>(szMsgTable), cPrefix, iCode, szParam1, szParam2));
 #endif
 
-   HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(cargo);
 
-   /* ignore all warning messages and errors when break or quit request */
-   if( cPrefix != 'W' && hb_vmRequestQuery() == 0 ) {
-      char szMsgBuf[1024];
-      hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[iCode - 1], szParam1, szParam2);
-      auto pError = hb_errRT_New(ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>(iCode), szMsgBuf, nullptr, 0, EF_NONE | EF_CANDEFAULT);
-      hb_errLaunch(pError);
-      hb_errRelease(pError);
-   }
+  /* ignore all warning messages and errors when break or quit request */
+  if (cPrefix != 'W' && hb_vmRequestQuery() == 0)
+  {
+    char szMsgBuf[1024];
+    hb_snprintf(szMsgBuf, sizeof(szMsgBuf), szMsgTable[iCode - 1], szParam1, szParam2);
+    auto pError = hb_errRT_New(ES_ERROR, "PP", 1001, static_cast<HB_ERRCODE>(iCode), szMsgBuf, nullptr, 0,
+                               EF_NONE | EF_CANDEFAULT);
+    hb_errLaunch(pError);
+    hb_errRelease(pError);
+  }
 }
 
-static void hb_pp_Disp(void * cargo, const char * szMessage)
+static void hb_pp_Disp(void *cargo, const char *szMessage)
 {
-   /* ignore stdout messages when PP used as library */
-   HB_SYMBOL_UNUSED(cargo);
-   HB_SYMBOL_UNUSED(szMessage);
+  /* ignore stdout messages when PP used as library */
+  HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(szMessage);
 }
 
-static HB_BOOL hb_pp_CompilerSwitch(void * cargo, const char * szSwitch, int * piValue, HB_BOOL fSet)
+static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piValue, HB_BOOL fSet)
 {
-   /* ignore all compiler switches */
-   HB_SYMBOL_UNUSED(cargo);
-   HB_SYMBOL_UNUSED(szSwitch);
-   HB_SYMBOL_UNUSED(piValue);
-   HB_SYMBOL_UNUSED(fSet);
+  /* ignore all compiler switches */
+  HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(szSwitch);
+  HB_SYMBOL_UNUSED(piValue);
+  HB_SYMBOL_UNUSED(fSet);
 
-   return false;
+  return false;
 }
 
 /* PP destructor */
 static HB_GARBAGE_FUNC(hb_pp_Destructor)
 {
-   PHB_PP_STATE * pStatePtr = static_cast<PHB_PP_STATE*>(Cargo);
+  PHB_PP_STATE *pStatePtr = static_cast<PHB_PP_STATE *>(Cargo);
 
-   if( *pStatePtr ) {
-      hb_pp_free(*pStatePtr);
-      *pStatePtr = nullptr;
-   }
+  if (*pStatePtr)
+  {
+    hb_pp_free(*pStatePtr);
+    *pStatePtr = nullptr;
+  }
 }
 
 HB_EXTERN_END
 
-static const HB_GC_FUNCS s_gcPPFuncs =
-{
-   hb_pp_Destructor,
-   hb_gcDummyMark
-};
+static const HB_GC_FUNCS s_gcPPFuncs = {hb_pp_Destructor, hb_gcDummyMark};
 
 static void hb_pp_StdRules(PHB_ITEM ppItem)
 {
-   static auto s_fInit = true;
-   static PHB_DYNS s_pDynSym;
+  static auto s_fInit = true;
+  static PHB_DYNS s_pDynSym;
 
-   if( s_fInit ) {
-      s_pDynSym = hb_dynsymFind("__PP_STDRULES");
-      s_fInit = false;
-   }
+  if (s_fInit)
+  {
+    s_pDynSym = hb_dynsymFind("__PP_STDRULES");
+    s_fInit = false;
+  }
 
-   if( s_pDynSym ) {
-      hb_vmPushDynSym(s_pDynSym);
-      hb_vmPushNil();
-      hb_vmPush(ppItem);
-      hb_vmProc(1);
-   }
+  if (s_pDynSym)
+  {
+    hb_vmPushDynSym(s_pDynSym);
+    hb_vmPushNil();
+    hb_vmPush(ppItem);
+    hb_vmProc(1);
+  }
 }
 
 PHB_PP_STATE hb_pp_Param(int iParam)
 {
-   PHB_PP_STATE * pStatePtr = static_cast<PHB_PP_STATE*>(hb_parptrGC(&s_gcPPFuncs, iParam));
+  PHB_PP_STATE *pStatePtr = static_cast<PHB_PP_STATE *>(hb_parptrGC(&s_gcPPFuncs, iParam));
 
-   if( pStatePtr ) {
-      return *pStatePtr;
-   } else {
-      return nullptr;
-   }
+  if (pStatePtr)
+  {
+    return *pStatePtr;
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
 /*
@@ -143,121 +148,139 @@ PHB_PP_STATE hb_pp_Param(int iParam)
  * when <cStdChFile> is empty string ("") then no default rules are used
  * only the dynamically created #defines like __HARBOUR__, __DATE__, __TIME__
  */
-HB_FUNC( __PP_INIT )
+HB_FUNC(__PP_INIT)
 {
-   PHB_PP_STATE pState = hb_pp_new();
+  PHB_PP_STATE pState = hb_pp_new();
 
-   if( pState ) {
-      PHB_PP_STATE * pStatePtr;
-      auto szPath = hb_parc(1);
-      auto szStdCh = hb_parc(2);
-      bool fArchDefs = hb_parldef(3, true);
+  if (pState)
+  {
+    PHB_PP_STATE *pStatePtr;
+    auto szPath = hb_parc(1);
+    auto szStdCh = hb_parc(2);
+    bool fArchDefs = hb_parldef(3, true);
 
-      pStatePtr = static_cast<PHB_PP_STATE*>(hb_gcAllocate(sizeof(PHB_PP_STATE), &s_gcPPFuncs));
-      *pStatePtr = pState;
-      auto ppItem = hb_itemPutPtrGC(nullptr, static_cast<void*>(pStatePtr));
+    pStatePtr = static_cast<PHB_PP_STATE *>(hb_gcAllocate(sizeof(PHB_PP_STATE), &s_gcPPFuncs));
+    *pStatePtr = pState;
+    auto ppItem = hb_itemPutPtrGC(nullptr, static_cast<void *>(pStatePtr));
 
-      hb_pp_init(pState, true, false, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr, hb_pp_CompilerSwitch);
+    hb_pp_init(pState, true, false, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr,
+               hb_pp_CompilerSwitch);
 
-      if( szPath ) {
-         hb_pp_addSearchPath(pState, szPath, true);
-      }
+    if (szPath)
+    {
+      hb_pp_addSearchPath(pState, szPath, true);
+    }
 
-      if( !szStdCh ) {
-         hb_pp_StdRules(ppItem);
-      } else if( *szStdCh ) {
-         hb_pp_readRules(pState, szStdCh);
-      }
+    if (!szStdCh)
+    {
+      hb_pp_StdRules(ppItem);
+    }
+    else if (*szStdCh)
+    {
+      hb_pp_readRules(pState, szStdCh);
+    }
 
-      hb_pp_initDynDefines(pState, fArchDefs);
-      hb_pp_setStdBase(pState);
+    hb_pp_initDynDefines(pState, fArchDefs);
+    hb_pp_setStdBase(pState);
 
-      hb_itemReturnRelease(ppItem);
-   } else {
-      hb_ret();
-   }
+    hb_itemReturnRelease(ppItem);
+  }
+  else
+  {
+    hb_ret();
+  }
 }
 
 /*
  * add new (or replace previous) include paths.
  * __pp_Path(<pPP>, <cPath> [, <lClearPrev>]) --> NIL
  */
-HB_FUNC( __PP_PATH )
+HB_FUNC(__PP_PATH)
 {
-   PHB_PP_STATE pState = hb_pp_Param(1);
+  PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState ) {
-      hb_pp_addSearchPath(pState, hb_parc(2), hb_parl(3));
-   }
+  if (pState)
+  {
+    hb_pp_addSearchPath(pState, hb_parc(2), hb_parl(3));
+  }
 }
 
 /*
  * reset the PP context (remove all rules added by user or preprocessed code)
  * __pp_Reset(<pPP>) --> NIL
  */
-HB_FUNC( __PP_RESET )
+HB_FUNC(__PP_RESET)
 {
-   PHB_PP_STATE pState = hb_pp_Param(1);
+  PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState ) {
-      hb_pp_reset(pState);
-   }
+  if (pState)
+  {
+    hb_pp_reset(pState);
+  }
 }
 
 /*
  * preprocess and execute new preprocessor directive
  * __pp_AddRule(<pPP>, <cDirective>) --> <lOK>
  */
-HB_FUNC( __PP_ADDRULE )
+HB_FUNC(__PP_ADDRULE)
 {
-   PHB_PP_STATE pState = hb_pp_Param(1);
+  PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState ) {
-      auto szText = hb_parc(2);
-      auto nLen = hb_parclen(2);
+  if (pState)
+  {
+    auto szText = hb_parc(2);
+    auto nLen = hb_parclen(2);
 
-      if( szText ) {
-         while( nLen && (szText[0] == ' ' || szText[0] == '\t') ) {
-            ++szText;
-            --nLen;
-         }
+    if (szText)
+    {
+      while (nLen && (szText[0] == ' ' || szText[0] == '\t'))
+      {
+        ++szText;
+        --nLen;
       }
+    }
 
-      if( szText && nLen && szText[0] == '#' ) {
-         hb_pp_parseLine(pState, szText, &nLen);
+    if (szText && nLen && szText[0] == '#')
+    {
+      hb_pp_parseLine(pState, szText, &nLen);
 
-         /* probably for parsing #included files the old code was making
-            something like that */
-         do {
-            if( hb_vmRequestQuery() != 0 ) {
-               return;
-            }
-         } while( hb_pp_nextLine(pState, nullptr) );
+      /* probably for parsing #included files the old code was making
+         something like that */
+      do
+      {
+        if (hb_vmRequestQuery() != 0)
+        {
+          return;
+        }
+      } while (hb_pp_nextLine(pState, nullptr));
 
-         hb_retl(true);
-         return;
-      }
-   }
-   hb_retl(false);
+      hb_retl(true);
+      return;
+    }
+  }
+  hb_retl(false);
 }
 
 /*
  * preprocess given code and return result
  * __pp_Process(<pPP>, <cCode>) --> <cPreprocessedCode>
  */
-HB_FUNC( __PP_PROCESS )
+HB_FUNC(__PP_PROCESS)
 {
-   PHB_PP_STATE pState = hb_pp_Param(1);
+  PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState ) {
-      auto nLen = hb_parclen(2);
+  if (pState)
+  {
+    auto nLen = hb_parclen(2);
 
-      if( nLen ) {
-         char * szText = hb_pp_parseLine(pState, hb_parc(2), &nLen);
-         hb_retclen(szText, nLen);
-         return;
-      }
-   }
+    if (nLen)
+    {
+      char *szText = hb_pp_parseLine(pState, hb_parc(2), &nLen);
+      hb_retclen(szText, nLen);
+      return;
+    }
+  }
 
-   hb_retc_null();
+  hb_retc_null();
 }

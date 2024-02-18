@@ -50,11 +50,12 @@
 #include "hbapi.hpp"
 #include "hbpp.hpp"
 
-HB_FUNC( __PP_STDRULES )
+HB_FUNC(__PP_STDRULES)
 {
-   PHB_PP_STATE pState = hb_pp_Param(1);
+  PHB_PP_STATE pState = hb_pp_Param(1);
 
-   if( pState ) {
-      hb_pp_setStdRules(pState);
-   }
+  if (pState)
+  {
+    hb_pp_setStdRules(pState);
+  }
 }
