@@ -52,6 +52,8 @@
 #include "hbpp.hpp"
 #include "hbdate.hpp"
 
+// clang-format off
+
 #define HB_PP_WARN_EXPLICIT                     1     /* C10?? */
 #define HB_PP_WARN_DEFINE_REDEF                 2     /* C1005 */
 
@@ -194,6 +196,8 @@ static const HB_PP_OPERATOR s_operators[] =
 /* not accessible: " ' `  */
 /* illegal in Clipper: ~ */
 };
+
+// clang-format on
 
 static const char s_pp_dynamicResult = 0;
 
