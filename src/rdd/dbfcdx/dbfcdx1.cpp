@@ -7968,7 +7968,7 @@ static HB_ERRCODE hb_cdxOpen(CDXAREAP pArea, LPDBOPENINFO pOpenInfo)
 #if defined(HB_SIXCDX)
         hb_fileExists(szFileName, szFileName))
 #else
-         hb_fileExists(szFileName, nullptr))
+        hb_fileExists(szFileName, nullptr))
 #endif
     {
       DBORDERINFO pOrderInfo;
