@@ -844,21 +844,21 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
       case 0: {
         void *hTemplate;
         hDlg = CreateDialog(static_cast<HINSTANCE>(wvg_hInstance()), HB_PARSTR(1, &hTemplate, nullptr),
-                            hb_parl(2) ? _s->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_wvt_gtDlgProcMLess));
+                            hb_parl(2) ? _s->hWnd : nullptr, hb_wvt_gtDlgProcMLess);
         hb_strfree(hTemplate);
       }
       break;
 
       case 1:
         hDlg = CreateDialog(static_cast<HINSTANCE>(wvg_hInstance()), MAKEINTRESOURCE(static_cast<WORD>(hb_parni(1))),
-                            hb_parl(2) ? _s->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_wvt_gtDlgProcMLess));
+                            hb_parl(2) ? _s->hWnd : nullptr, hb_wvt_gtDlgProcMLess);
         break;
 
       case 2:
         /* argument 1 is already unicode compliant, so no conversion */
         hDlg = CreateDialogIndirect(static_cast<HINSTANCE>(wvg_hInstance()),
                                     reinterpret_cast<LPDLGTEMPLATE>(const_cast<char *>(hb_parc(1))),
-                                    hb_parl(2) ? _s->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_wvt_gtDlgProcMLess));
+                                    hb_parl(2) ? _s->hWnd : nullptr, hb_wvt_gtDlgProcMLess);
         break;
       }
     }
@@ -954,7 +954,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
   case 0: {
     void *hTemplate;
     iResult = DialogBoxParam(static_cast<HINSTANCE>(wvg_hInstance()), HB_PARSTR(1, &hTemplate, nullptr), hParent,
-                             reinterpret_cast<DLGPROC>(hb_wvt_gtDlgProcModal),
+                             hb_wvt_gtDlgProcModal,
                              static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
     hb_strfree(hTemplate);
   }
@@ -962,7 +962,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
 
   case 1:
     iResult = DialogBoxParam(static_cast<HINSTANCE>(wvg_hInstance()), MAKEINTRESOURCE(static_cast<WORD>(hb_parni(1))),
-                             hParent, reinterpret_cast<DLGPROC>(hb_wvt_gtDlgProcModal),
+                             hParent, hb_wvt_gtDlgProcModal,
                              static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
     break;
 
@@ -970,7 +970,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
     /* argument 1 is already unicode compliant, so no conversion */
     iResult = DialogBoxIndirectParam(
         static_cast<HINSTANCE>(wvg_hInstance()), reinterpret_cast<LPDLGTEMPLATE>(const_cast<char *>(hb_parc(1))),
-        hParent, reinterpret_cast<DLGPROC>(hb_wvt_gtDlgProcModal), static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
+        hParent, hb_wvt_gtDlgProcModal, static_cast<LPARAM>(static_cast<DWORD>(iIndex)) + 1);
     break;
   }
 
