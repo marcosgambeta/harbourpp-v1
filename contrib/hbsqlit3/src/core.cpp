@@ -171,7 +171,7 @@ static HB_GARBAGE_FUNC(hb_sqlite3_destructor)
     if (pStructHolder->hbsqlite3->cbTraceHandler)
     {
       hb_itemRelease(pStructHolder->hbsqlite3->cbTraceHandler);
-      pStructHolder->hbsqlite3->cbTraceHandler = NULL;
+      pStructHolder->hbsqlite3->cbTraceHandler = nullptr;
     }
 #else
     if (pStructHolder->hbsqlite3->sProfileFileName)
@@ -1032,13 +1032,16 @@ HB_FUNC(SQLITE3_STMT_READONLY)
 #if 0
 HB_FUNC( SQLITE3_DB_HANDLE )
 {
-   auto pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
+  auto pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
 
-   if( pStmt != nullptr ) {
-      /* ... */
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if( pStmt != nullptr )
+  {
+    /* ... */
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 #endif
 
@@ -1997,7 +2000,7 @@ HB_FUNC(SQLITE3_ENABLE_SHARED_CACHE)
 #if SQLITE_VERSION_NUMBER >= 3014000
 static int trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
 {
-  PHB_ITEM pCallback = (PHB_ITEM)cbTraceHandler;
+  PHB_ITEM pCallback = static_cast<PHB_ITEM>(cbTraceHandler);
   int iRes = 0;
 
   if (pCallback && hb_vmRequestReenter())
@@ -2023,8 +2026,8 @@ static int trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
       hb_vmSend(2);
       break;
     case SQLITE_TRACE_CLOSE: {
-      PHB_ITEM pItem = hb_itemNew(NULL);
-      HB_SQLITE3 *hbsqlite3 = (HB_SQLITE3 *)hb_xgrabz(sizeof(HB_SQLITE3));
+      PHB_ITEM pItem = hb_itemNew(nullptr);
+      HB_SQLITE3 *hbsqlite3 = static_cast<HB_SQLITE3 *>(hb_xgrabz(sizeof(HB_SQLITE3)));
       HB_SYMBOL_UNUSED(x);
 
       hbsqlite3->db = static_cast<sqlite3 *>(p);
@@ -2035,7 +2038,7 @@ static int trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
       /* We don't want sqlite3_close() called recursively
        * and don't want to implement a weak reference engine yet
        * so we just clear the pointer before hb_itemRelease(). */
-      hbsqlite3->db = NULL;
+      hbsqlite3->db = nullptr;
       hb_itemRelease(pItem);
       break;
     }
@@ -2050,35 +2053,39 @@ static int trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
 HB_FUNC(SQLITE3_TRACE_V2)
 {
 #if SQLITE_VERSION_NUMBER >= 3014000
-  HB_SQLITE3 *pHbSqlite3 = (HB_SQLITE3 *)hb_sqlite3_param(1, HB_SQLITE3_DB, HB_TRUE);
+  HB_SQLITE3 *pHbSqlite3 = static_cast<HB_SQLITE3 *>(hb_sqlite3_param(1, HB_SQLITE3_DB, true));
 
   if (pHbSqlite3 && pHbSqlite3->db)
   {
-    unsigned uMask = (unsigned int)hb_parnint(2);
+    unsigned uMask = static_cast<unsigned int>(hb_parnint(2));
     int iRes;
 
     if (pHbSqlite3->cbTraceHandler)
     {
       hb_itemRelease(pHbSqlite3->cbTraceHandler);
-      pHbSqlite3->cbTraceHandler = NULL;
+      pHbSqlite3->cbTraceHandler = nullptr;
     }
 
     if (HB_ISEVALITEM(3))
     {
-      pHbSqlite3->cbTraceHandler = hb_itemNew(hb_param(3, HB_IT_EVALITEM));
+      pHbSqlite3->cbTraceHandler = hb_itemNew(hb_param(3, Harbour::Item::EVALITEM));
       hb_gcUnlock(pHbSqlite3->cbTraceHandler);
 
-      iRes = sqlite3_trace_v2(pHbSqlite3->db, uMask, uMask ? trace_handler : NULL,
-                              uMask ? (void *)pHbSqlite3->cbTraceHandler : NULL);
+      iRes = sqlite3_trace_v2(pHbSqlite3->db, uMask, uMask ? trace_handler : nullptr,
+                              uMask ? (void *)pHbSqlite3->cbTraceHandler : nullptr);
     }
     else
-      iRes = sqlite3_trace_v2(pHbSqlite3->db, 0, NULL, NULL);
+    {
+      iRes = sqlite3_trace_v2(pHbSqlite3->db, 0, nullptr, nullptr);
+    }
     hb_retni(iRes);
   }
   else
-    hb_errRT_BASE_SubstR(EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 #else
-  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
 }
 
@@ -2140,7 +2147,7 @@ HB_FUNC(SQLITE3_PROFILE)
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 #else
-  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
 }
 
@@ -2172,7 +2179,7 @@ HB_FUNC(SQLITE3_TRACE)
     hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
   }
 #else
-  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
 }
 
@@ -2719,14 +2726,18 @@ HB_FUNC(SQLITE3_CREATE_FUNCTION)
 HB_FUNC(SQLITE3_DB_FILENAME)
 {
 #if SQLITE_VERSION_NUMBER >= 3007010
-  HB_SQLITE3 *pHbSqlite3 = (HB_SQLITE3 *)hb_sqlite3_param(1, HB_SQLITE3_DB, HB_TRUE);
+  auto pHbSqlite3 = static_cast<HB_SQLITE3 *>(hb_sqlite3_param(1, HB_SQLITE3_DB, true));
 
   if (pHbSqlite3 && pHbSqlite3->db && HB_ISCHAR(2))
-    hb_retc((const char *)sqlite3_db_filename(pHbSqlite3->db, hb_parc(2)));
+  {
+    hb_retc(static_cast<const char *>(sqlite3_db_filename(pHbSqlite3->db, hb_parc(2))));
+  }
   else
-    hb_errRT_BASE_SubstR(EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 #else
-  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
 }
 
@@ -2738,7 +2749,7 @@ HB_FUNC(SQLITE3_DB_FILENAME)
 HB_FUNC(SQLITE3_EXPANDED_SQL)
 {
 #if SQLITE_VERSION_NUMBER >= 3014000
-  psqlite3_stmt pStmt = (psqlite3_stmt)hb_parptr(1);
+  auto pStmt = static_cast<psqlite3_stmt>(hb_parptr(1));
   if (pStmt)
   {
     char *sql = sqlite3_expanded_sql(pStmt);
@@ -2746,8 +2757,10 @@ HB_FUNC(SQLITE3_EXPANDED_SQL)
     sqlite3_free(sql);
   }
   else
-    hb_errRT_BASE_SubstR(EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 #else
-  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  hb_errRT_BASE_SubstR(EG_UNSUPPORTED, 0, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif
 }
