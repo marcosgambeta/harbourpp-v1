@@ -6700,6 +6700,10 @@ PHB_ITEM hb_vmEvalBlockOrMacro(PHB_ITEM pItem)
  */
 void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
 {
+#if 0
+  HB_TRACE(HB_TR_DEBUG, ("hb_vmDestroyBlockOrMacro(%p)", static_cast<void*>(pItem)));
+#endif
+
   if (HB_IS_POINTER(pItem))
   {
     auto pMacro = static_cast<PHB_MACRO>(hb_itemGetPtr(pItem));
@@ -6709,6 +6713,30 @@ void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
     }
   }
   hb_itemRelease(pItem);
+}
+
+/*
+ * compile given expression and return macro pointer item or NULL
+ */
+PHB_ITEM hb_vmCompileMacro(const char * szExpr, PHB_ITEM pDest)
+{
+#if 0
+  HB_TRACE(HB_TR_DEBUG, ("hb_vmCompileMacro(%s,%p)", szExpr, pDest));
+#endif
+
+  if (szExpr)
+  {
+    PHB_MACRO pMacro = hb_macroCompile(szExpr);
+    if (pMacro)
+    {
+      return hb_itemPutPtr(pDest, static_cast<void *>(pMacro));
+    }
+  }
+  if (pDest)
+  {
+    hb_itemClear(pDest);
+  }
+  return nullptr;
 }
 
 void hb_vmFunction(HB_USHORT uiParams)

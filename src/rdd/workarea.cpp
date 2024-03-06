@@ -2027,24 +2027,17 @@ static HB_ERRCODE hb_waSetLocate(AREAP pArea, LPDBSCOPEINFO pScopeInfo)
 /*
  * Compile a character expression.
  */
-static HB_ERRCODE hb_waCompile(AREAP pArea, const char *pExpr)
+static HB_ERRCODE hb_waCompile(AREAP pArea, const char * szExpr)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_waCompile(%p, %p)", static_cast<void*>(pArea), static_cast<const void*>(pExpr)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_waCompile(%p, %p)", static_cast<void*>(pArea), static_cast<const void *>(szExpr)));
 #endif
 
-  PHB_MACRO pMacro;
-
-  pMacro = hb_macroCompile(pExpr);
-  if (pMacro)
+  if (!pArea->valResult)
   {
-    pArea->valResult = hb_itemPutPtr(pArea->valResult, static_cast<void *>(pMacro));
-    return Harbour::SUCCESS;
+    pArea->valResult = hb_itemNew(nullptr);
   }
-  else
-  {
-    return Harbour::FAILURE;
-  }
+  return hb_vmCompileMacro(szExpr, pArea->valResult) ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 /*
