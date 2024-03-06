@@ -328,7 +328,8 @@ void hb_rddCloseAll(void)
     hb_xfree(pRddInfo->waNums);
     pRddInfo->waList = nullptr;
     pRddInfo->waNums = nullptr;
-    HB_SET_WA(1);
+    pRddInfo->uiCurrArea = 1;
+    pRddInfo->pCurrArea = nullptr;
   }
 }
 

@@ -107,7 +107,7 @@ HB_FUNC( RSA_PUBLIC_ENCRYPT )
 
       auto buffer = static_cast<unsigned char*>(hb_xgrab(RSA_size(rsa) + 1));
 
-      int ret = RSA_public_encrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, padding);
+      int ret = RSA_public_encrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
       if( ret > 0 ) {
          if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), ret, 3) ) {
             ret = 0;
@@ -136,7 +136,7 @@ HB_FUNC( RSA_PRIVATE_DECRYPT )
 
       auto buffer = static_cast<unsigned char*>(hb_xgrab(RSA_size(rsa) + 1));
 
-      int ret = RSA_private_decrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, padding);
+      int ret = RSA_private_decrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
       if( ret > 0 ) {
          buffer = static_cast<unsigned char*>(hb_xrealloc(buffer, ret + 1));
          if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), ret, 3) ) {
@@ -166,7 +166,7 @@ HB_FUNC( RSA_PRIVATE_ENCRYPT )
 
       auto buffer = static_cast<unsigned char*>(hb_xgrab(RSA_size(rsa) + 1));
 
-      int ret = RSA_private_encrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, padding);
+      int ret = RSA_private_encrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
       if( ret > 0 ) {
          if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), ret, 3) ) {
             ret = 0;
@@ -195,7 +195,7 @@ HB_FUNC( RSA_PUBLIC_DECRYPT )
 
       auto buffer = static_cast<unsigned char*>(hb_xgrab(RSA_size(rsa) + 1));
 
-      int ret = RSA_public_decrypt(flen, const_cast<unsigned char*>(from), buffer, rsa, padding);
+      int ret = RSA_public_decrypt(flen, HB_SSL_CONST_BYTE(from), buffer, rsa, padding);
       if( ret > 0 ) {
          buffer = static_cast<unsigned char*>(hb_xrealloc(buffer, ret + 1));
          if( !hb_storclen_buffer(reinterpret_cast<char*>(buffer), ret, 3) ) {

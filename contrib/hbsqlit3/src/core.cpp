@@ -2012,7 +2012,7 @@ static int trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
     {
     case SQLITE_TRACE_STMT:
       hb_vmPushPointer(p);
-      hb_vmPushString(reinterpret_cast<const char *>(x), strlen(reinterpret_cast<const char *>(x)));
+      hb_vmPushString(reinterpret_cast<const char *>(x), strlen(reinterpret_cast<char *>(x)));
       hb_vmSend(3);
       break;
     case SQLITE_TRACE_PROFILE:
