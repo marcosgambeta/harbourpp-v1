@@ -53,66 +53,77 @@
 
 /* NOTE: szTime must be 9 chars large. */
 
-static HB_ULONG hb_TimeStrToSec(const char * pszTime)
+static HB_ULONG hb_TimeStrToSec(const char *pszTime)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_TimeStrToSec(%s)", pszTime));
 #endif
 
-   HB_SIZE  nLen;
-   HB_ULONG ulTime = 0;
+  HB_SIZE nLen;
+  HB_ULONG ulTime = 0;
 
-   nLen = strlen(pszTime);
+  nLen = strlen(pszTime);
 
-   if( nLen >= 1 ) {
-      ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime, nLen)) * 3600;
-   }
+  if (nLen >= 1)
+  {
+    ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime, nLen)) * 3600;
+  }
 
-   if( nLen >= 4 ) {
-      ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime + 3, nLen - 3)) * 60;
-   }
+  if (nLen >= 4)
+  {
+    ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime + 3, nLen - 3)) * 60;
+  }
 
-   if( nLen >= 7 ) {
-      ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime + 6, nLen - 6));
-   }
+  if (nLen >= 7)
+  {
+    ulTime += static_cast<HB_ULONG>(hb_strVal(pszTime + 6, nLen - 6));
+  }
 
-   return ulTime;
+  return ulTime;
 }
 
-HB_FUNC( TSSECS )
+HB_FUNC(TSSECS)
 {
-   hb_retnl(hb_TimeStrToSec(hb_parcx(1)));
+  hb_retnl(hb_TimeStrToSec(hb_parcx(1)));
 }
 
-HB_FUNC( TIMEOFDAY )
+HB_FUNC(TIMEOFDAY)
 {
-   char szResult[9];
+  char szResult[9];
 
-   if( hb_pcount() == 0 ) {
-      hb_dateTimeStr(szResult);
-   } else {
-      auto iSeconds = hb_parni(1);
-      iSeconds %= 3600 * 24;
-      hb_snprintf(szResult, sizeof(szResult), "%02d:%02d:%02d", iSeconds / 3600, (iSeconds % 3600) / 60, iSeconds % 60);
-   }
+  if (hb_pcount() == 0)
+  {
+    hb_dateTimeStr(szResult);
+  }
+  else
+  {
+    auto iSeconds = hb_parni(1);
+    iSeconds %= 3600 * 24;
+    hb_snprintf(szResult, sizeof(szResult), "%02d:%02d:%02d", iSeconds / 3600, (iSeconds % 3600) / 60, iSeconds % 60);
+  }
 
-   hb_retclen(szResult, 8);
+  hb_retclen(szResult, 8);
 }
 
-HB_FUNC( HMS2D )
+HB_FUNC(HMS2D)
 {
-   auto iHour = hb_parni(1);
-   auto iMin  = hb_parni(2);
-   auto dSec  = hb_parnd(3);
+  auto iHour = hb_parni(1);
+  auto iMin = hb_parni(2);
+  auto dSec = hb_parnd(3);
 
-   hb_retnd(hb_timeEncode(iHour, iMin, static_cast<int>(dSec), static_cast<int>((static_cast<double>(dSec - static_cast<double>(static_cast<int>(dSec)))) * 1000)));
+  hb_retnd(hb_timeEncode(
+      iHour, iMin, static_cast<int>(dSec),
+      static_cast<int>((static_cast<double>(dSec - static_cast<double>(static_cast<int>(dSec)))) * 1000)));
 }
 
-HB_FUNC( TTOD )
+HB_FUNC(TTOD)
 {
-   if( HB_ISDATE(1) ) {
-      hb_retdl(hb_pardl(1));
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1120, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (HB_ISDATE(1))
+  {
+    hb_retdl(hb_pardl(1));
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1120, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

@@ -48,147 +48,175 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-#define XHB_AND   0
-#define XHB_OR    1
-#define XHB_XOR   2
+#define XHB_AND 0
+#define XHB_OR 1
+#define XHB_XOR 2
 
 static void s_xhb_bitOper(int iOper)
 {
-   auto pItem1 = hb_param(1, Harbour::Item::ANY);
-   auto pItem2 = hb_param(2, Harbour::Item::ANY);
-   auto nLen1 = hb_itemGetCLen(pItem1);
-   auto nLen2 = hb_itemGetCLen(pItem2);
+  auto pItem1 = hb_param(1, Harbour::Item::ANY);
+  auto pItem2 = hb_param(2, Harbour::Item::ANY);
+  auto nLen1 = hb_itemGetCLen(pItem1);
+  auto nLen2 = hb_itemGetCLen(pItem2);
 
-   if( pItem1 && pItem2 ) {
-      if( HB_IS_NUMERIC(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) ) {
-         HB_MAXINT nVal1 = hb_itemGetNInt(pItem1),
-                   nVal2 = nLen2 == 1 ? static_cast<HB_BYTE>(hb_itemGetCPtr(pItem1)[0]) : hb_itemGetNInt(pItem2);
-         switch( iOper ) {
-            case XHB_AND:
-               nVal1 &= nVal2;
-               break;
-            case XHB_OR:
-               nVal1 |= nVal2;
-               break;
-            default: /* XHB_XOR */
-               nVal1 ^= nVal2;
-               break;
-         }
-         hb_retnint(nVal1);
-         return;
+  if (pItem1 && pItem2)
+  {
+    if (HB_IS_NUMERIC(pItem1) && (HB_IS_NUMERIC(pItem2) || nLen2 == 1))
+    {
+      HB_MAXINT nVal1 = hb_itemGetNInt(pItem1),
+                nVal2 = nLen2 == 1 ? static_cast<HB_BYTE>(hb_itemGetCPtr(pItem1)[0]) : hb_itemGetNInt(pItem2);
+      switch (iOper)
+      {
+      case XHB_AND:
+        nVal1 &= nVal2;
+        break;
+      case XHB_OR:
+        nVal1 |= nVal2;
+        break;
+      default: /* XHB_XOR */
+        nVal1 ^= nVal2;
+        break;
       }
+      hb_retnint(nVal1);
+      return;
+    }
 
-      if( HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2) ) {
-         if( (nLen1 | nLen2) != 0 ) {
-            auto pStr1 = hb_itemGetCPtr(pItem1);
-            auto pStr2 = hb_itemGetCPtr(pItem2);
-            auto pRet = static_cast<char*>(hb_xmemdup(pStr1, nLen1 + 1));
-            HB_SIZE n1, n2;
+    if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+    {
+      if ((nLen1 | nLen2) != 0)
+      {
+        auto pStr1 = hb_itemGetCPtr(pItem1);
+        auto pStr2 = hb_itemGetCPtr(pItem2);
+        auto pRet = static_cast<char *>(hb_xmemdup(pStr1, nLen1 + 1));
+        HB_SIZE n1, n2;
 
-            switch( iOper ) {
-               case XHB_AND:
-                  for( n1 = n2 = 0; n1 < nLen1; n1++ ) {
-                     pRet[n1] &= pStr2[n2];
-                     if( ++n2 == nLen2 ) {
-                        n2 = 0;
-                     }
-                  }
-                  break;
-               case XHB_OR:
-                  for( n1 = n2 = 0; n1 < nLen1; n1++ ) {
-                     pRet[n1] |= pStr2[n2];
-                     if( ++n2 == nLen2 ) {
-                        n2 = 0;
-                     }   
-                  }
-                  break;
-               default: /* XHB_XOR */
-                  for( n1 = n2 = 0; n1 < nLen1; n1++ ) {
-                     pRet[n1] ^= pStr2[n2];
-                     if( ++n2 == nLen2 ) {
-                        n2 = 0;
-                     }   
-                  }
-                  break;
+        switch (iOper)
+        {
+        case XHB_AND:
+          for (n1 = n2 = 0; n1 < nLen1; n1++)
+          {
+            pRet[n1] &= pStr2[n2];
+            if (++n2 == nLen2)
+            {
+              n2 = 0;
             }
-            hb_retclen_buffer(pRet, nLen1);
-         } else {
-            hb_itemReturn(pItem1);
-         }
-         return;
-      }
-
-      if( HB_IS_STRING(pItem1) && ( HB_IS_NUMERIC(pItem2) || nLen2 == 1 ) ) {
-         if( nLen1 ) {
-            auto pStr = hb_itemGetCPtr(pItem1);
-            auto pRet = static_cast<char*>(hb_xmemdup(pStr, nLen1 + 1));
-            char cVal = nLen2 == 1 ? hb_itemGetCPtr(pItem2)[0] : static_cast<char>(hb_itemGetNI(pItem2));
-
-            nLen2 = nLen1;
-            switch( iOper ) {
-               case XHB_AND:
-                  while( nLen2-- ) {
-                     pRet[nLen2] &= cVal;
-                  }
-                  break;
-               case XHB_OR:
-                  while( nLen2-- ) {
-                     pRet[nLen2] |= cVal;
-                  }
-                  break;
-               default: /* XHB_XOR */
-                  while( nLen2-- ) {
-                     pRet[nLen2] ^= cVal;
-                  }
-                  break;
+          }
+          break;
+        case XHB_OR:
+          for (n1 = n2 = 0; n1 < nLen1; n1++)
+          {
+            pRet[n1] |= pStr2[n2];
+            if (++n2 == nLen2)
+            {
+              n2 = 0;
             }
-            hb_retclen_buffer(pRet, nLen1);
-         } else {
-            hb_itemReturn(pItem1);
-         }
-         return;
+          }
+          break;
+        default: /* XHB_XOR */
+          for (n1 = n2 = 0; n1 < nLen1; n1++)
+          {
+            pRet[n1] ^= pStr2[n2];
+            if (++n2 == nLen2)
+            {
+              n2 = 0;
+            }
+          }
+          break;
+        }
+        hb_retclen_buffer(pRet, nLen1);
       }
-
-      if( (HB_IS_NUMERIC(pItem1) || nLen1 == 1) && HB_IS_STRING(pItem2) ) {
-         auto pStr = hb_itemGetCPtr(pItem2);
-         int iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);
-
-         switch( iOper ) {
-            case XHB_AND:
-               while( nLen2 ) {
-                  iVal &= static_cast<HB_UCHAR>(pStr[--nLen2]);
-               }
-               break;
-            case XHB_OR:
-               while( nLen2 ) {
-                  iVal |= static_cast<HB_UCHAR>(pStr[--nLen2]);
-               }
-               break;
-            default: /* XHB_XOR */
-               while( nLen2 ) {
-                  iVal ^= static_cast<HB_UCHAR>(pStr[--nLen2]);
-               }
-               break;
-         }
-         hb_retni(iVal);
-         return;
+      else
+      {
+        hb_itemReturn(pItem1);
       }
-   }
+      return;
+    }
 
-   hb_errRT_BASE_SubstR(EG_ARG, 1088, nullptr, iOper == XHB_AND ? "&" : (iOper == XHB_OR ? "|" : "^^"), 2, pItem1, pItem2);
+    if (HB_IS_STRING(pItem1) && (HB_IS_NUMERIC(pItem2) || nLen2 == 1))
+    {
+      if (nLen1)
+      {
+        auto pStr = hb_itemGetCPtr(pItem1);
+        auto pRet = static_cast<char *>(hb_xmemdup(pStr, nLen1 + 1));
+        char cVal = nLen2 == 1 ? hb_itemGetCPtr(pItem2)[0] : static_cast<char>(hb_itemGetNI(pItem2));
+
+        nLen2 = nLen1;
+        switch (iOper)
+        {
+        case XHB_AND:
+          while (nLen2--)
+          {
+            pRet[nLen2] &= cVal;
+          }
+          break;
+        case XHB_OR:
+          while (nLen2--)
+          {
+            pRet[nLen2] |= cVal;
+          }
+          break;
+        default: /* XHB_XOR */
+          while (nLen2--)
+          {
+            pRet[nLen2] ^= cVal;
+          }
+          break;
+        }
+        hb_retclen_buffer(pRet, nLen1);
+      }
+      else
+      {
+        hb_itemReturn(pItem1);
+      }
+      return;
+    }
+
+    if ((HB_IS_NUMERIC(pItem1) || nLen1 == 1) && HB_IS_STRING(pItem2))
+    {
+      auto pStr = hb_itemGetCPtr(pItem2);
+      int iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);
+
+      switch (iOper)
+      {
+      case XHB_AND:
+        while (nLen2)
+        {
+          iVal &= static_cast<HB_UCHAR>(pStr[--nLen2]);
+        }
+        break;
+      case XHB_OR:
+        while (nLen2)
+        {
+          iVal |= static_cast<HB_UCHAR>(pStr[--nLen2]);
+        }
+        break;
+      default: /* XHB_XOR */
+        while (nLen2)
+        {
+          iVal ^= static_cast<HB_UCHAR>(pStr[--nLen2]);
+        }
+        break;
+      }
+      hb_retni(iVal);
+      return;
+    }
+  }
+
+  hb_errRT_BASE_SubstR(EG_ARG, 1088, nullptr, iOper == XHB_AND ? "&" : (iOper == XHB_OR ? "|" : "^^"), 2, pItem1,
+                       pItem2);
 }
 
-HB_FUNC( XHB_BITAND )
+HB_FUNC(XHB_BITAND)
 {
-   s_xhb_bitOper(XHB_AND);
+  s_xhb_bitOper(XHB_AND);
 }
 
-HB_FUNC( XHB_BITOR )
+HB_FUNC(XHB_BITOR)
 {
-   s_xhb_bitOper(XHB_OR);
+  s_xhb_bitOper(XHB_OR);
 }
 
-HB_FUNC( XHB_BITXOR )
+HB_FUNC(XHB_BITXOR)
 {
-   s_xhb_bitOper(XHB_XOR);
+  s_xhb_bitOper(XHB_XOR);
 }

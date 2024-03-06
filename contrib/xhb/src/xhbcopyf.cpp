@@ -51,130 +51,160 @@
 #include "hbvm.hpp"
 
 #if defined(HB_OS_UNIX)
-   #include <sys/stat.h>
-   #include <unistd.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #endif
 
-#define BUFFER_SIZE  8192
+#define BUFFER_SIZE 8192
 
-static HB_BOOL hb_copyfile(const char * pszSource, const char * pszDest, PHB_ITEM pBlock)
+static HB_BOOL hb_copyfile(const char *pszSource, const char *pszDest, PHB_ITEM pBlock)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_copyfile(%s, %s, %p)", pszSource, pszDest, static_cast<void*>(pBlock)));
 #endif
 
-   HB_BOOL bRetVal = false;
-   PHB_FILE pSource;
-   PHB_ITEM pError = nullptr;
+  HB_BOOL bRetVal = false;
+  PHB_FILE pSource;
+  PHB_ITEM pError = nullptr;
 
-   do {
-      pSource = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, pError);
-      if( pSource == nullptr ) {
-         pError = hb_errRT_FileError(pError, nullptr, EG_OPEN, 2012, pszSource);
-         if( hb_errLaunch(pError) != E_RETRY ) {
-            break;
-         }
+  do
+  {
+    pSource = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FO_PRIVATE | FXO_DEFAULTS | FXO_SHARELOCK,
+                             nullptr, pError);
+    if (pSource == nullptr)
+    {
+      pError = hb_errRT_FileError(pError, nullptr, EG_OPEN, 2012, pszSource);
+      if (hb_errLaunch(pError) != E_RETRY)
+      {
+        break;
       }
-   } while( pSource == nullptr );
+    }
+  } while (pSource == nullptr);
 
-   if( pError ) {
+  if (pError)
+  {
+    hb_itemRelease(pError);
+    pError = nullptr;
+  }
+
+  if (pSource != nullptr)
+  {
+    PHB_FILE pDest;
+
+    do
+    {
+      pDest = hb_fileExtOpen(pszDest, nullptr,
+                             FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_DEFAULTS | FXO_SHARELOCK,
+                             nullptr, pError);
+      if (pDest == nullptr)
+      {
+        pError = hb_errRT_FileError(pError, nullptr, EG_CREATE, 2012, pszDest);
+        if (hb_errLaunch(pError) != E_RETRY)
+        {
+          break;
+        }
+      }
+    } while (pDest == nullptr);
+
+    if (pError)
+    {
       hb_itemRelease(pError);
       pError = nullptr;
-   }
+    }
 
-   if( pSource != nullptr ) {
-      PHB_FILE pDest;
+    if (pDest != nullptr)
+    {
+      PHB_ITEM pCount = nullptr;
+      HB_SIZE nRead;
 
-      do {
-         pDest = hb_fileExtOpen(pszDest, nullptr, FO_READWRITE | FO_EXCLUSIVE | FO_PRIVATE | FXO_TRUNCATE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, pError);
-         if( pDest == nullptr ) {
-            pError = hb_errRT_FileError(pError, nullptr, EG_CREATE, 2012, pszDest);
-            if( hb_errLaunch(pError) != E_RETRY ) {
-               break;
+      auto buffer = static_cast<HB_UCHAR *>(hb_xgrab(BUFFER_SIZE));
+      bRetVal = true;
+      if (pBlock && HB_IS_EVALITEM(pBlock))
+      {
+        pCount = hb_itemNew(nullptr);
+      }
+
+      while ((nRead = hb_fileRead(pSource, buffer, BUFFER_SIZE, -1)) != 0 && nRead != static_cast<HB_SIZE>(FS_ERROR))
+      {
+        HB_SIZE nWritten = 0;
+
+        while (nWritten < nRead)
+        {
+          HB_SIZE nDone = hb_fileWrite(pDest, buffer + nWritten, nRead - nWritten, -1);
+          if (nDone != static_cast<HB_SIZE>(FS_ERROR))
+          {
+            nWritten += nDone;
+          }
+          if (nWritten < nRead)
+          {
+            pError = hb_errRT_FileError(pError, nullptr, EG_WRITE, 2016, pszDest);
+            if (hb_errLaunch(pError) != E_RETRY)
+            {
+              bRetVal = false;
+              break;
             }
-         }
-      } while( pDest == nullptr );
+          }
+        }
 
-      if( pError ) {
-         hb_itemRelease(pError);
-         pError = nullptr;
+        if (pCount)
+        {
+          hb_vmEvalBlockV(pBlock, 1, hb_itemPutNInt(pCount, nRead));
+        }
       }
 
-      if( pDest != nullptr ) {
-         PHB_ITEM pCount = nullptr;
-         HB_SIZE nRead;
-
-         auto buffer = static_cast<HB_UCHAR*>(hb_xgrab(BUFFER_SIZE));
-         bRetVal = true;
-         if( pBlock && HB_IS_EVALITEM(pBlock) ) {
-            pCount = hb_itemNew(nullptr);
-         }   
-
-         while( (nRead = hb_fileRead(pSource, buffer, BUFFER_SIZE, -1)) != 0 && nRead != static_cast<HB_SIZE>(FS_ERROR) ) {
-            HB_SIZE nWritten = 0;
-
-            while( nWritten < nRead ) {
-               HB_SIZE nDone = hb_fileWrite(pDest, buffer + nWritten, nRead - nWritten, -1);
-               if( nDone != static_cast<HB_SIZE>(FS_ERROR) ) {
-                  nWritten += nDone;
-               }   
-               if( nWritten < nRead ) {
-                  pError = hb_errRT_FileError(pError, nullptr, EG_WRITE, 2016, pszDest);
-                  if( hb_errLaunch(pError) != E_RETRY ) {
-                     bRetVal = false;
-                     break;
-                  }
-               }
-            }
-
-            if( pCount ) {
-               hb_vmEvalBlockV(pBlock, 1, hb_itemPutNInt(pCount, nRead));
-            }   
-         }
-
-         if( pError ) {
-            hb_itemRelease(pError);
-         }
-
-         if( pCount ) {
-            hb_itemRelease(pCount);
-         }   
-
-         hb_xfree(buffer);
-
-         hb_fileClose(pDest);
+      if (pError)
+      {
+        hb_itemRelease(pError);
       }
 
-      hb_fileClose(pSource);
-
-      if( bRetVal ) {
-         long lJulian, lMillisec;
-         HB_FATTR ulAttr;
-
-         if( hb_fileAttrGet(pszSource, &ulAttr) ) {
-            hb_fileAttrSet(pszDest, ulAttr);
-         }
-         if( hb_fileTimeGet(pszSource, &lJulian, &lMillisec) ) {
-            hb_fileTimeSet(pszDest, lJulian, lMillisec);
-         }   
+      if (pCount)
+      {
+        hb_itemRelease(pCount);
       }
-   }
 
-   return bRetVal;
+      hb_xfree(buffer);
+
+      hb_fileClose(pDest);
+    }
+
+    hb_fileClose(pSource);
+
+    if (bRetVal)
+    {
+      long lJulian, lMillisec;
+      HB_FATTR ulAttr;
+
+      if (hb_fileAttrGet(pszSource, &ulAttr))
+      {
+        hb_fileAttrSet(pszDest, ulAttr);
+      }
+      if (hb_fileTimeGet(pszSource, &lJulian, &lMillisec))
+      {
+        hb_fileTimeSet(pszDest, lJulian, lMillisec);
+      }
+    }
+  }
+
+  return bRetVal;
 }
 
 /* Clipper returns .F. on failure and NIL on success */
 
-HB_FUNC( XHB_COPYFILE )
+HB_FUNC(XHB_COPYFILE)
 {
-   auto szSource = hb_parc(1);
-   auto szDest = hb_parc(2);
+  auto szSource = hb_parc(1);
+  auto szDest = hb_parc(2);
 
-   if( szSource && szDest ) {
-      if( !hb_copyfile(szSource, szDest, hb_param(3, Harbour::Item::EVALITEM)) ) {
-         hb_retl(false);
-      }
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);  /* NOTE: Undocumented but existing Clipper Run-time error */
-   }
+  if (szSource && szDest)
+  {
+    if (!hb_copyfile(szSource, szDest, hb_param(3, Harbour::Item::EVALITEM)))
+    {
+      hb_retl(false);
+    }
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME,
+                  HB_ERR_ARGS_BASEPARAMS); /* NOTE: Undocumented but existing Clipper Run-time error */
+  }
 }

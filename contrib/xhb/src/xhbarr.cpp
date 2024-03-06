@@ -52,192 +52,243 @@
 /* ASplice(<aArray> [, <nPos>] [, <nCount>] [, <xVal1>] [, ...] [, <xValN>]) --> <aDeleted>
  * Removes elements and return them as array, optionally add items
  */
-HB_FUNC( ASPLICE )
+HB_FUNC(ASPLICE)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      HB_SIZE  nStart, nRemove, nIndex;
-      HB_SIZE  nLen    = hb_arrayLen(pArray);
-      PHB_ITEM pReturn = hb_stackReturnItem();
+  if (pArray)
+  {
+    HB_SIZE nStart, nRemove, nIndex;
+    HB_SIZE nLen = hb_arrayLen(pArray);
+    PHB_ITEM pReturn = hb_stackReturnItem();
 
-      if( nLen == 0 ) {
-         hb_arrayNew(pReturn, 0);
-         return;
+    if (nLen == 0)
+    {
+      hb_arrayNew(pReturn, 0);
+      return;
+    }
+
+    if (HB_ISNUM(2))
+    {
+      nStart = hb_parns(2);
+    }
+    else
+    {
+      nStart = nLen + (hb_pcount() > 3 && !HB_ISNUM(3) ? 1 : 0);
+    }
+
+    if (HB_ISNUM(3))
+    {
+      nRemove = hb_parns(3);
+    }
+    else
+    {
+      nRemove = (hb_pcount() > 3 && nStart == nLen + 1) ? 0 : 1;
+    }
+
+    if (nStart == 0 || nStart > nLen)
+    {
+      if (!(nStart == nLen + 1 && hb_pcount() > 3 && nRemove == 0))
+      {
+        hb_errRT_BASE(EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+        return;
       }
+    }
 
-      if( HB_ISNUM(2) ) {
-         nStart = hb_parns(2);
-      } else {
-         nStart = nLen + ( hb_pcount() > 3 && !HB_ISNUM(3) ? 1 : 0 );
+    if (nStart + nRemove - 1 > nLen)
+    {
+      nRemove = nLen - nStart + 1;
+    }
+
+    hb_arrayNew(pReturn, nRemove);
+
+    /* 0 Based */
+    nStart--;
+
+    for (nIndex = nStart + 1; (nIndex - nStart) <= nRemove; nIndex++)
+    {
+      hb_itemMove(hb_arrayGetItemPtr(pReturn, nIndex - nStart), hb_arrayGetItemPtr(pArray, nIndex));
+    }
+
+    if (hb_pcount() > 3)
+    {
+      auto nNew = 0;
+      int nAdd = hb_pcount() - 3;
+
+      if (static_cast<HB_SIZE>(nAdd) > nRemove)
+      {
+        HB_SIZE nMore = nAdd - nRemove;
+        HB_SIZE nShift = nLen - (nStart + nRemove);
+
+        hb_arraySize(pArray, nLen + nMore);
+
+        /* Shift right BEFORE adding, so that new items will not override existing values. */
+        for (nIndex = nLen; nIndex && --nShift; --nIndex)
+        {
+          hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + nMore), hb_arrayGetItemPtr(pArray, nIndex));
+        }
+
+        /* Now insert new values into emptied space. */
+        for (nIndex = nStart; ++nNew <= nAdd; nIndex++)
+        {
+          hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + 1), hb_param(3 + nNew, Harbour::Item::ANY));
+        }
       }
+      else
+      {
+        /* Insert over the space emptied by removed items */
+        for (nIndex = nStart; ++nNew <= nAdd; nIndex++)
+        {
+          hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + 1), hb_param(3 + nNew, Harbour::Item::ANY));
+        }
 
-      if( HB_ISNUM(3) ) {
-         nRemove = hb_parns(3);
-      } else {
-         nRemove = ( hb_pcount() > 3 && nStart == nLen + 1 ) ? 0 : 1;
-      }
+        if (nRemove > static_cast<HB_SIZE>(nAdd))
+        {
+          nRemove -= nAdd;
 
-      if( nStart == 0 || nStart > nLen ) {
-         if( !( nStart == nLen + 1 && hb_pcount() > 3 && nRemove == 0 ) ) {
-            hb_errRT_BASE(EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-            return;
-         }
-      }
-
-      if( nStart + nRemove - 1 > nLen ) {
-         nRemove = nLen - nStart + 1;
-      }
-
-      hb_arrayNew(pReturn, nRemove);
-
-      /* 0 Based */
-      nStart--;
-
-      for( nIndex = nStart + 1; ( nIndex - nStart ) <= nRemove; nIndex++ ) {
-         hb_itemMove(hb_arrayGetItemPtr(pReturn, nIndex - nStart), hb_arrayGetItemPtr(pArray, nIndex));
-      }
-
-      if( hb_pcount() > 3 ) {
-         auto nNew = 0;
-         int nAdd = hb_pcount() - 3;
-
-         if( static_cast<HB_SIZE>(nAdd) > nRemove ) {
-            HB_SIZE nMore  = nAdd - nRemove;
-            HB_SIZE nShift = nLen - ( nStart + nRemove );
-
-            hb_arraySize(pArray, nLen + nMore);
-
-            /* Shift right BEFORE adding, so that new items will not override existing values. */
-            for( nIndex = nLen; nIndex && --nShift; --nIndex ) {
-               hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + nMore), hb_arrayGetItemPtr(pArray, nIndex));
-            }
-
-            /* Now insert new values into emptied space. */
-            for( nIndex = nStart; ++nNew <= nAdd; nIndex++ ) {
-               hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + 1), hb_param(3 + nNew, Harbour::Item::ANY));
-            }
-         } else {
-            /* Insert over the space emptied by removed items */
-            for( nIndex = nStart; ++nNew <= nAdd; nIndex++ ) {
-               hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex + 1), hb_param(3 + nNew, Harbour::Item::ANY));
-            }
-
-            if( nRemove > static_cast<HB_SIZE>(nAdd) ) {
-               nRemove -= nAdd;
-
-               /* Shift left to compact the emptied hole. */
-               for( nIndex = nStart + nAdd + 1; nIndex + nRemove <= nLen; nIndex++ ) {
-                  hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex), hb_arrayGetItemPtr(pArray, nIndex + nRemove));
-               }
-            }
-         }
-      } else {
-         for( nIndex = nStart + 1; nIndex + nRemove <= nLen; nIndex++ ) {
+          /* Shift left to compact the emptied hole. */
+          for (nIndex = nStart + nAdd + 1; nIndex + nRemove <= nLen; nIndex++)
+          {
             hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex), hb_arrayGetItemPtr(pArray, nIndex + nRemove));
-         }
-
-         hb_arraySize(pArray, nLen - nRemove);
+          }
+        }
       }
-   }
+    }
+    else
+    {
+      for (nIndex = nStart + 1; nIndex + nRemove <= nLen; nIndex++)
+      {
+        hb_itemMove(hb_arrayGetItemPtr(pArray, nIndex), hb_arrayGetItemPtr(pArray, nIndex + nRemove));
+      }
+
+      hb_arraySize(pArray, nLen - nRemove);
+    }
+  }
 }
 
 /* FIXME: Move this to hbxpp library */
 /* Synonym of ASplice() Xbase++ compatibility (extended with optional replacemenet values) */
-HB_FUNC_TRANSLATE( AREMOVE, ASPLICE )
+HB_FUNC_TRANSLATE(AREMOVE, ASPLICE)
 
 /* AMerge(<aTarget>, <aSource> [, <nPos>]) --> aTarget */
-HB_FUNC( AMERGE )
+HB_FUNC(AMERGE)
 {
-   auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
-   auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
+  auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
 
-   if( pArray1 && pArray2 ) {
-      HB_SIZE nLen = hb_arrayLen(pArray1);
-      HB_SIZE nAdd = hb_arrayLen(pArray2);
-      HB_SIZE nIndex, nStart;
+  if (pArray1 && pArray2)
+  {
+    HB_SIZE nLen = hb_arrayLen(pArray1);
+    HB_SIZE nAdd = hb_arrayLen(pArray2);
+    HB_SIZE nIndex, nStart;
 
-      hb_arraySize(pArray1, nLen + nAdd);
+    hb_arraySize(pArray1, nLen + nAdd);
 
-      if( HB_ISNUM(3) ) {
-         nStart = hb_parns(3) - 1;
-         if( nStart > nLen ) {
-            hb_errRT_BASE(EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-            return;
-         }
-
-         /* Shift right BEFORE merging, so that merged items will not override existing values. */
-         for( nIndex = nLen; nIndex > nStart; --nIndex ) {
-            hb_itemMove(hb_arrayGetItemPtr(pArray1, nIndex + nAdd), hb_arrayGetItemPtr(pArray1, nIndex));
-         }   
-      } else {
-         nStart = nLen;
+    if (HB_ISNUM(3))
+    {
+      nStart = hb_parns(3) - 1;
+      if (nStart > nLen)
+      {
+        hb_errRT_BASE(EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+        return;
       }
 
-      for( nIndex = 1; nIndex <= nAdd; nIndex++ ) {
-         hb_itemCopy(hb_arrayGetItemPtr(pArray1, nStart + nIndex), hb_arrayGetItemPtr(pArray2, nIndex));
-      }   
+      /* Shift right BEFORE merging, so that merged items will not override existing values. */
+      for (nIndex = nLen; nIndex > nStart; --nIndex)
+      {
+        hb_itemMove(hb_arrayGetItemPtr(pArray1, nIndex + nAdd), hb_arrayGetItemPtr(pArray1, nIndex));
+      }
+    }
+    else
+    {
+      nStart = nLen;
+    }
 
-      hb_itemCopy(hb_stackReturnItem(), pArray1);
-   } else {
-      hb_errRT_BASE(EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+    for (nIndex = 1; nIndex <= nAdd; nIndex++)
+    {
+      hb_itemCopy(hb_arrayGetItemPtr(pArray1, nStart + nIndex), hb_arrayGetItemPtr(pArray2, nIndex));
+    }
+
+    hb_itemCopy(hb_stackReturnItem(), pArray1);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 1003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( XHB_ADEL )
+HB_FUNC(XHB_ADEL)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      HB_ISIZ nPos = hb_parns(2);
+  if (pArray)
+  {
+    HB_ISIZ nPos = hb_parns(2);
 
-      if( nPos == 0 ) {
-         nPos = 1;
-      } else if( nPos < 0 ) {
-         nPos += hb_arrayLen(pArray) + 1;
+    if (nPos == 0)
+    {
+      nPos = 1;
+    }
+    else if (nPos < 0)
+    {
+      nPos += hb_arrayLen(pArray) + 1;
+    }
+
+    if (hb_arrayDel(pArray, nPos))
+    {
+      if (hb_parl(3))
+      {
+        hb_arraySize(pArray, hb_arrayLen(pArray) - 1);
       }
+    }
 
-      if( hb_arrayDel(pArray, nPos) ) {
-         if( hb_parl(3) ) {
-            hb_arraySize(pArray, hb_arrayLen(pArray) - 1);
-         }   
-      }
-
-      hb_itemReturn(pArray); /* ADel() returns the array itself */
-   }
+    hb_itemReturn(pArray); /* ADel() returns the array itself */
+  }
 }
 
-HB_FUNC( XHB_AINS )
+HB_FUNC(XHB_AINS)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      HB_ISIZ nPos = hb_parns(2);
+  if (pArray)
+  {
+    HB_ISIZ nPos = hb_parns(2);
 
-      if( hb_parl(4) ) {
-         HB_SIZE nLen = hb_arrayLen(pArray) + 1;
-         if( nPos == 0 ) {
-            nPos = 1;
-         } else if( nPos < 0 ) {
-            nPos += nLen + 1;
-         }
-         if( nPos >= 1 && static_cast<HB_SIZE>(nPos) <= nLen ) {
-            hb_arraySize(pArray, nLen);
-         }
-      } else if( nPos == 0 ) {
-         nPos = 1;
-      } else if( nPos < 0 ) {
-         nPos += hb_arrayLen(pArray) + 1;
+    if (hb_parl(4))
+    {
+      HB_SIZE nLen = hb_arrayLen(pArray) + 1;
+      if (nPos == 0)
+      {
+        nPos = 1;
       }
-
-      if( hb_arrayIns(pArray, nPos) ) {
-         if( !HB_ISNIL(3) ) {
-            hb_arraySet(pArray, nPos, hb_param(3, Harbour::Item::ANY));
-         }
+      else if (nPos < 0)
+      {
+        nPos += nLen + 1;
       }
+      if (nPos >= 1 && static_cast<HB_SIZE>(nPos) <= nLen)
+      {
+        hb_arraySize(pArray, nLen);
+      }
+    }
+    else if (nPos == 0)
+    {
+      nPos = 1;
+    }
+    else if (nPos < 0)
+    {
+      nPos += hb_arrayLen(pArray) + 1;
+    }
 
-      hb_itemReturn(pArray); /* AIns() returns the array itself */
-   }
+    if (hb_arrayIns(pArray, nPos))
+    {
+      if (!HB_ISNIL(3))
+      {
+        hb_arraySet(pArray, nPos, hb_param(3, Harbour::Item::ANY));
+      }
+    }
+
+    hb_itemReturn(pArray); /* AIns() returns the array itself */
+  }
 }
 
-HB_FUNC_TRANSLATE( RASCAN, HB_RASCAN )
+HB_FUNC_TRANSLATE(RASCAN, HB_RASCAN)

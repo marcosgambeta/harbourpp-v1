@@ -53,34 +53,35 @@
 #include "error.ch"
 
 #if defined(HB_OS_UNIX)
-   #if defined(HB_OS_DARWIN)
-      #include <unistd.h>  /* We need usleep() in Darwin */
-   #else
-      #include <time.h>
-   #endif
+#if defined(HB_OS_DARWIN)
+#include <unistd.h> /* We need usleep() in Darwin */
+#else
+#include <time.h>
+#endif
 #endif
 
 HB_EXTERN_BEGIN
 
 typedef struct
 {
-   HB_ULONG ulTaskID;      /* task identifier */
-   PHB_ITEM pTask;         /* pointer to the task item */
-   double   dSeconds;      /* internal - last time this task has gone */
-   int      millisec;      /* milliseconds after this task must run */
-   HB_BOOL  bActive;       /* task is active ? */
-} HB_BACKGROUNDTASK, * PHB_BACKGROUNDTASK;
+  HB_ULONG ulTaskID; /* task identifier */
+  PHB_ITEM pTask;    /* pointer to the task item */
+  double dSeconds;   /* internal - last time this task has gone */
+  int millisec;      /* milliseconds after this task must run */
+  HB_BOOL bActive;   /* task is active ? */
+} HB_BACKGROUNDTASK, *PHB_BACKGROUNDTASK;
 
-extern void     hb_backgroundRunSingle(HB_ULONG ulID);                                  /* run a single background routine */
-extern void     hb_backgroundRunForced(void);                                           /* run all background routines also if them are not active*/
-extern void     hb_backgroundRun(void);                                                 /* run all background routines but only if them are active*/
-extern void     hb_backgroundReset(void);                                               /* reset internal counter */
-extern void     hb_backgroundShutDown(void);                                            /* closes all background tasks */
-extern HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive);  /* Adds a codeblock or an executable array */
-extern PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID);                                    /* Deletes a prevuiously added task */
+extern void hb_backgroundRunSingle(HB_ULONG ulID); /* run a single background routine */
+extern void hb_backgroundRunForced(void);          /* run all background routines also if them are not active*/
+extern void hb_backgroundRun(void);                /* run all background routines but only if them are active*/
+extern void hb_backgroundReset(void);              /* reset internal counter */
+extern void hb_backgroundShutDown(void);           /* closes all background tasks */
+extern HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec,
+                                     HB_BOOL bActive); /* Adds a codeblock or an executable array */
+extern PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID);   /* Deletes a prevuiously added task */
 extern PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID);
-extern HB_BOOL  hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive);
-extern int      hb_backgroundTime(HB_ULONG ulID, int nMillisec);
+extern HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive);
+extern int hb_backgroundTime(HB_ULONG ulID, int nMillisec);
 
 HB_EXTERN_END
 
@@ -92,7 +93,7 @@ static HB_ULONG s_ulBackgroundID = 0;
 /* list of background tasks
  * A pointer into an array of pointers to items with a codeblock
  */
-static PHB_BACKGROUNDTASK * s_pBackgroundTasks = nullptr;
+static PHB_BACKGROUNDTASK *s_pBackgroundTasks = nullptr;
 
 static HB_BOOL s_bEnabled = false;
 
@@ -106,11 +107,11 @@ static HB_USHORT s_uiBackgroundTask = 0;
 static HB_USHORT s_uiBackgroundMaxTask = 0;
 #else
 
-#define s_ulBackgroundID       HB_VM_STACK.ulBackgroundID
-#define s_pBackgroundTasks     (HB_VM_STACK.pBackgroundTasks)
-#define s_bIamBackground       HB_VM_STACK.bIamBackground
-#define s_uiBackgroundTask     HB_VM_STACK.uiBackgroundTask
-#define s_uiBackgroundMaxTask  HB_VM_STACK.uiBackgroundMaxTask
+#define s_ulBackgroundID HB_VM_STACK.ulBackgroundID
+#define s_pBackgroundTasks (HB_VM_STACK.pBackgroundTasks)
+#define s_bIamBackground HB_VM_STACK.bIamBackground
+#define s_uiBackgroundTask HB_VM_STACK.uiBackgroundTask
+#define s_uiBackgroundMaxTask HB_VM_STACK.uiBackgroundMaxTask
 
 #endif
 
@@ -118,300 +119,348 @@ static HB_USHORT s_uiBackgroundMaxTask = 0;
 
 HB_ULONG hb_backgroundAddFunc(PHB_ITEM pBlock, int nMillisec, HB_BOOL bActive)
 {
-   /* store a copy of passed codeblock
-    */
+  /* store a copy of passed codeblock
+   */
 
-   auto pBkgTask = static_cast<PHB_BACKGROUNDTASK>(hb_xgrab(sizeof(HB_BACKGROUNDTASK)));
+  auto pBkgTask = static_cast<PHB_BACKGROUNDTASK>(hb_xgrab(sizeof(HB_BACKGROUNDTASK)));
 
-   pBkgTask->pTask    = hb_itemNew(pBlock);
-   pBkgTask->dSeconds = hb_dateSeconds();
-   pBkgTask->millisec = nMillisec;
-   pBkgTask->bActive  = bActive;
+  pBkgTask->pTask = hb_itemNew(pBlock);
+  pBkgTask->dSeconds = hb_dateSeconds();
+  pBkgTask->millisec = nMillisec;
+  pBkgTask->bActive = bActive;
 
-   if( !s_pBackgroundTasks ) {
-      pBkgTask->ulTaskID = s_ulBackgroundID = 1;
-      s_pBackgroundTasks = static_cast<PHB_BACKGROUNDTASK*>(hb_xgrab(sizeof(HB_BACKGROUNDTASK)));
-   } else {
-      pBkgTask->ulTaskID = ++s_ulBackgroundID;
-      if( pBkgTask->ulTaskID == 0 ) { /* the counter reach maximum value */
-         /* find unique task ID and set the counter for next */
-         auto iTask = 0;
-         while( iTask < s_uiBackgroundMaxTask ) {
-            if( s_pBackgroundTasks[iTask]->ulTaskID == pBkgTask->ulTaskID ) {
-               pBkgTask->ulTaskID++;
-               /* This list is unsorted so we have to scan from the begining again */
-               iTask = 0;
-            } else {
-               iTask++;
-               if( s_ulBackgroundID < pBkgTask->ulTaskID ) {
-                  s_ulBackgroundID = pBkgTask->ulTaskID;
-               }
-            }
-         }
+  if (!s_pBackgroundTasks)
+  {
+    pBkgTask->ulTaskID = s_ulBackgroundID = 1;
+    s_pBackgroundTasks = static_cast<PHB_BACKGROUNDTASK *>(hb_xgrab(sizeof(HB_BACKGROUNDTASK)));
+  }
+  else
+  {
+    pBkgTask->ulTaskID = ++s_ulBackgroundID;
+    if (pBkgTask->ulTaskID == 0)
+    { /* the counter reach maximum value */
+      /* find unique task ID and set the counter for next */
+      auto iTask = 0;
+      while (iTask < s_uiBackgroundMaxTask)
+      {
+        if (s_pBackgroundTasks[iTask]->ulTaskID == pBkgTask->ulTaskID)
+        {
+          pBkgTask->ulTaskID++;
+          /* This list is unsorted so we have to scan from the begining again */
+          iTask = 0;
+        }
+        else
+        {
+          iTask++;
+          if (s_ulBackgroundID < pBkgTask->ulTaskID)
+          {
+            s_ulBackgroundID = pBkgTask->ulTaskID;
+          }
+        }
       }
-      s_pBackgroundTasks = static_cast<PHB_BACKGROUNDTASK*>(hb_xrealloc(s_pBackgroundTasks, sizeof(HB_BACKGROUNDTASK) * (s_uiBackgroundMaxTask)));
-   }
-   s_pBackgroundTasks[s_uiBackgroundMaxTask] = pBkgTask;
-   ++s_uiBackgroundMaxTask;
+    }
+    s_pBackgroundTasks = static_cast<PHB_BACKGROUNDTASK *>(
+        hb_xrealloc(s_pBackgroundTasks, sizeof(HB_BACKGROUNDTASK) * (s_uiBackgroundMaxTask)));
+  }
+  s_pBackgroundTasks[s_uiBackgroundMaxTask] = pBkgTask;
+  ++s_uiBackgroundMaxTask;
 
-   return pBkgTask->ulTaskID;
+  return pBkgTask->ulTaskID;
 }
 
 /* RUN all tasks defined in background state but only if SET BACKGROUND TASKS is ON*/
 void hb_backgroundRun(void)
 {
-   PHB_BACKGROUNDTASK pBkgTask;
+  PHB_BACKGROUNDTASK pBkgTask;
 
-   if( !s_bIamBackground && s_bEnabled ) {
-      s_bIamBackground = true;
+  if (!s_bIamBackground && s_bEnabled)
+  {
+    s_bIamBackground = true;
 
-      if( s_uiBackgroundTask < s_uiBackgroundMaxTask ) {
-         double dCurrSeconds = hb_dateSeconds();
-         pBkgTask = static_cast<PHB_BACKGROUNDTASK>(s_pBackgroundTasks[s_uiBackgroundTask]);
+    if (s_uiBackgroundTask < s_uiBackgroundMaxTask)
+    {
+      double dCurrSeconds = hb_dateSeconds();
+      pBkgTask = static_cast<PHB_BACKGROUNDTASK>(s_pBackgroundTasks[s_uiBackgroundTask]);
 
-         /* check if hb_dateSeconds() is lower than pBkgTask->dSeconds, if so midnight is reached */
-         if( !(pBkgTask->dSeconds) || dCurrSeconds < pBkgTask->dSeconds ) {
-            pBkgTask->dSeconds = dCurrSeconds;
-         }
-
-         /* Check if a task can run */
-         if( pBkgTask->bActive && (pBkgTask->millisec == 0 || (((hb_dateSeconds() - pBkgTask->dSeconds) * 1000) >= pBkgTask->millisec)) ) {
-            hb_itemRelease(hb_itemDo(pBkgTask->pTask, 0));
-            pBkgTask->dSeconds = hb_dateSeconds();
-         }
-         ++s_uiBackgroundTask;
-      } else {
-         if( s_uiBackgroundMaxTask && s_uiBackgroundTask == s_uiBackgroundMaxTask ) {
-            s_uiBackgroundTask = 0;
-         }
+      /* check if hb_dateSeconds() is lower than pBkgTask->dSeconds, if so midnight is reached */
+      if (!(pBkgTask->dSeconds) || dCurrSeconds < pBkgTask->dSeconds)
+      {
+        pBkgTask->dSeconds = dCurrSeconds;
       }
-      s_bIamBackground = false;
-   }
+
+      /* Check if a task can run */
+      if (pBkgTask->bActive &&
+          (pBkgTask->millisec == 0 || (((hb_dateSeconds() - pBkgTask->dSeconds) * 1000) >= pBkgTask->millisec)))
+      {
+        hb_itemRelease(hb_itemDo(pBkgTask->pTask, 0));
+        pBkgTask->dSeconds = hb_dateSeconds();
+      }
+      ++s_uiBackgroundTask;
+    }
+    else
+    {
+      if (s_uiBackgroundMaxTask && s_uiBackgroundTask == s_uiBackgroundMaxTask)
+      {
+        s_uiBackgroundTask = 0;
+      }
+    }
+    s_bIamBackground = false;
+  }
 }
 
 /* RUN all tasks also if SET BACKGROUND TASKS is OFF */
 void hb_backgroundRunForced(void)
 {
-   HB_BOOL bOldSet = s_bEnabled;
+  HB_BOOL bOldSet = s_bEnabled;
 
-   s_bEnabled = true;
+  s_bEnabled = true;
 
-   hb_backgroundRun();
+  hb_backgroundRun();
 
-   s_bEnabled = bOldSet;
+  s_bEnabled = bOldSet;
 }
 
 /* RUN only one tasks, intentionally no check if bacground are active is done */
 void hb_backgroundRunSingle(HB_ULONG ulID)
 {
-   PHB_BACKGROUNDTASK pBkgTask;
+  PHB_BACKGROUNDTASK pBkgTask;
 
-   if( !s_bIamBackground ) {
-      s_bIamBackground = true;
+  if (!s_bIamBackground)
+  {
+    s_bIamBackground = true;
 
-      pBkgTask = hb_backgroundFind(ulID);
-      if( pBkgTask ) {
-         hb_itemRelease(hb_itemDo(pBkgTask->pTask, 0));
-      }
+    pBkgTask = hb_backgroundFind(ulID);
+    if (pBkgTask)
+    {
+      hb_itemRelease(hb_itemDo(pBkgTask->pTask, 0));
+    }
 
-      s_bIamBackground = false;
-   }
+    s_bIamBackground = false;
+  }
 }
 
 /* reset background counter to 0 */
 void hb_backgroundReset(void)
 {
-   if( s_uiBackgroundTask == s_uiBackgroundMaxTask ) {
-      s_uiBackgroundTask = 0;
-   }
+  if (s_uiBackgroundTask == s_uiBackgroundMaxTask)
+  {
+    s_uiBackgroundTask = 0;
+  }
 }
 
 /* close all active background tasks on program exit */
 void hb_backgroundShutDown(void)
 {
-   if( s_pBackgroundTasks ) {
-      do {
-         PHB_BACKGROUNDTASK pBkgTask;
-         pBkgTask = s_pBackgroundTasks[--s_uiBackgroundMaxTask];
-         hb_itemRelease(pBkgTask->pTask);
-         pBkgTask->pTask = nullptr;
-         hb_xfree(pBkgTask);
-      } while( s_uiBackgroundMaxTask );
-      hb_xfree(s_pBackgroundTasks);
+  if (s_pBackgroundTasks)
+  {
+    do
+    {
+      PHB_BACKGROUNDTASK pBkgTask;
+      pBkgTask = s_pBackgroundTasks[--s_uiBackgroundMaxTask];
+      hb_itemRelease(pBkgTask->pTask);
+      pBkgTask->pTask = nullptr;
+      hb_xfree(pBkgTask);
+    } while (s_uiBackgroundMaxTask);
+    hb_xfree(s_pBackgroundTasks);
 
-      s_pBackgroundTasks = nullptr;
-   }
+    s_pBackgroundTasks = nullptr;
+  }
 }
 
 /* caller have to free return ITEM by hb_itemRelease() if it's not nullptr */
 PHB_ITEM hb_backgroundDelFunc(HB_ULONG ulID)
 {
-   PHB_BACKGROUNDTASK pBkgTask;
-   PHB_ITEM pItem   = nullptr;
-   HB_BOOL  bOldSet = s_bEnabled;
+  PHB_BACKGROUNDTASK pBkgTask;
+  PHB_ITEM pItem = nullptr;
+  HB_BOOL bOldSet = s_bEnabled;
 
-   s_bEnabled = false;
+  s_bEnabled = false;
 
-   auto iTask = 0;
-   while( iTask < s_uiBackgroundMaxTask ) {
-      pBkgTask = s_pBackgroundTasks[iTask];
+  auto iTask = 0;
+  while (iTask < s_uiBackgroundMaxTask)
+  {
+    pBkgTask = s_pBackgroundTasks[iTask];
 
-      if( ulID == pBkgTask->ulTaskID ) {
-         pItem = pBkgTask->pTask;
-         hb_xfree(pBkgTask);
+    if (ulID == pBkgTask->ulTaskID)
+    {
+      pItem = pBkgTask->pTask;
+      hb_xfree(pBkgTask);
 
-         if( --s_uiBackgroundMaxTask ) {
-            if( iTask != s_uiBackgroundMaxTask ) {
-               memmove(&s_pBackgroundTasks[iTask], &s_pBackgroundTasks[iTask + 1], sizeof(HB_BACKGROUNDTASK) * (s_uiBackgroundMaxTask - iTask));
-            }
-            s_pBackgroundTasks = static_cast<PHB_BACKGROUNDTASK*>(hb_xrealloc(s_pBackgroundTasks, sizeof(HB_BACKGROUNDTASK) * s_uiBackgroundMaxTask));
-         } else {
-            hb_xfree(s_pBackgroundTasks);
-            s_pBackgroundTasks = nullptr;
-         }
-         /* Pitem has now a valid value */
-         break;
+      if (--s_uiBackgroundMaxTask)
+      {
+        if (iTask != s_uiBackgroundMaxTask)
+        {
+          memmove(&s_pBackgroundTasks[iTask], &s_pBackgroundTasks[iTask + 1],
+                  sizeof(HB_BACKGROUNDTASK) * (s_uiBackgroundMaxTask - iTask));
+        }
+        s_pBackgroundTasks = static_cast<PHB_BACKGROUNDTASK *>(
+            hb_xrealloc(s_pBackgroundTasks, sizeof(HB_BACKGROUNDTASK) * s_uiBackgroundMaxTask));
       }
-      ++iTask;
-   }
+      else
+      {
+        hb_xfree(s_pBackgroundTasks);
+        s_pBackgroundTasks = nullptr;
+      }
+      /* Pitem has now a valid value */
+      break;
+    }
+    ++iTask;
+  }
 
-   s_bEnabled = bOldSet;
+  s_bEnabled = bOldSet;
 
-   return pItem;
+  return pItem;
 }
 
 /* Find a task */
 PHB_BACKGROUNDTASK hb_backgroundFind(HB_ULONG ulID)
 {
-   PHB_BACKGROUNDTASK pBkgTask;
+  PHB_BACKGROUNDTASK pBkgTask;
 
-   auto iTask = 0;
-   while( iTask < s_uiBackgroundMaxTask ) {
-      pBkgTask = s_pBackgroundTasks[iTask];
+  auto iTask = 0;
+  while (iTask < s_uiBackgroundMaxTask)
+  {
+    pBkgTask = s_pBackgroundTasks[iTask];
 
-      if( ulID == pBkgTask->ulTaskID ) {
-         return pBkgTask;
-      }
+    if (ulID == pBkgTask->ulTaskID)
+    {
+      return pBkgTask;
+    }
 
-      ++iTask;
-   }
-   return nullptr;
+    ++iTask;
+  }
+  return nullptr;
 }
 
 /* Set task as active */
 HB_BOOL hb_backgroundActive(HB_ULONG ulID, HB_BOOL bActive)
 {
-   PHB_BACKGROUNDTASK pBkgTask;
-   HB_BOOL bOldState = false;
+  PHB_BACKGROUNDTASK pBkgTask;
+  HB_BOOL bOldState = false;
 
-   pBkgTask = hb_backgroundFind(ulID);
+  pBkgTask = hb_backgroundFind(ulID);
 
-   if( pBkgTask ) {
-      bOldState         = pBkgTask->bActive;
-      pBkgTask->bActive = bActive;
-   }
-   return bOldState;
-
+  if (pBkgTask)
+  {
+    bOldState = pBkgTask->bActive;
+    pBkgTask->bActive = bActive;
+  }
+  return bOldState;
 }
 
 /* Set task time */
 int hb_backgroundTime(HB_ULONG ulID, int nMillisec)
 {
-   PHB_BACKGROUNDTASK pBkgTask;
-   auto nOldState = 0;
+  PHB_BACKGROUNDTASK pBkgTask;
+  auto nOldState = 0;
 
-   pBkgTask = hb_backgroundFind(ulID);
+  pBkgTask = hb_backgroundFind(ulID);
 
-   if( pBkgTask ) {
-      nOldState = pBkgTask->millisec;
-      pBkgTask->millisec = nMillisec;
-   }
-   return nOldState;
+  if (pBkgTask)
+  {
+    nOldState = pBkgTask->millisec;
+    pBkgTask->millisec = nMillisec;
+  }
+  return nOldState;
 }
 
 /* ------------------------ PRG LEVEL ------------------------------ */
 
 /* forces to run Background functions */
-HB_FUNC( HB_BACKGROUNDRUN )
+HB_FUNC(HB_BACKGROUNDRUN)
 {
-   if( s_pBackgroundTasks ) {
-      if( HB_ISNUM(1) ) {
-         /* TODO: access to pointers from harbour code */
-         hb_backgroundRunSingle(hb_parnl(1));
-      } else {
-         hb_backgroundRun();
-      }
-   }
+  if (s_pBackgroundTasks)
+  {
+    if (HB_ISNUM(1))
+    {
+      /* TODO: access to pointers from harbour code */
+      hb_backgroundRunSingle(hb_parnl(1));
+    }
+    else
+    {
+      hb_backgroundRun();
+    }
+  }
 }
 
 /* forces to run Background functions */
-HB_FUNC( HB_BACKGROUNDRUNFORCED )
+HB_FUNC(HB_BACKGROUNDRUNFORCED)
 {
-   if( HB_ISNUM(1) ) {
-      hb_backgroundRunSingle(hb_parnl(1));
-   } else {
-      hb_backgroundRunForced();
-   }
+  if (HB_ISNUM(1))
+  {
+    hb_backgroundRunSingle(hb_parnl(1));
+  }
+  else
+  {
+    hb_backgroundRunForced();
+  }
 }
 
 /* call from user code to reset Background state */
-HB_FUNC( HB_BACKGROUNDRESET )
+HB_FUNC(HB_BACKGROUNDRESET)
 {
-   hb_backgroundReset();
+  hb_backgroundReset();
 }
 
 /* add a new background task and return its handle */
-HB_FUNC( HB_BACKGROUNDADD )
+HB_FUNC(HB_BACKGROUNDADD)
 {
-   auto pBlock = hb_param(1, Harbour::Item::ANY);
-   auto pMillisec = hb_param(2, Harbour::Item::NUMERIC);
-   auto pActive = hb_param(3, Harbour::Item::LOGICAL);
+  auto pBlock = hb_param(1, Harbour::Item::ANY);
+  auto pMillisec = hb_param(2, Harbour::Item::NUMERIC);
+  auto pActive = hb_param(3, Harbour::Item::LOGICAL);
 
-   if( HB_IS_BLOCK(pBlock) || HB_IS_ARRAY(pBlock) ) {
-      hb_retnl(hb_backgroundAddFunc(pBlock, (pMillisec == nullptr ? 0 : hb_itemGetNI(pMillisec)), (pActive == nullptr ? HB_TRUE : hb_itemGetL(pActive))));
-   } else {
-      hb_retnl(-1);    /* error - a codeblock is required */
-   }
+  if (HB_IS_BLOCK(pBlock) || HB_IS_ARRAY(pBlock))
+  {
+    hb_retnl(hb_backgroundAddFunc(pBlock, (pMillisec == nullptr ? 0 : hb_itemGetNI(pMillisec)),
+                                  (pActive == nullptr ? HB_TRUE : hb_itemGetL(pActive))));
+  }
+  else
+  {
+    hb_retnl(-1); /* error - a codeblock is required */
+  }
 }
 
 /* Delete a task with given handle and return a codeblock with this task */
-HB_FUNC( HB_BACKGROUNDDEL )
+HB_FUNC(HB_BACKGROUNDDEL)
 {
-   PHB_ITEM pItem = nullptr;
+  PHB_ITEM pItem = nullptr;
 
-   if( s_pBackgroundTasks && HB_ISNUM(1) ) {
-      /* TODO: access to pointers from harbour code */
-      pItem = hb_backgroundDelFunc(hb_parnl(1));
-   }
+  if (s_pBackgroundTasks && HB_ISNUM(1))
+  {
+    /* TODO: access to pointers from harbour code */
+    pItem = hb_backgroundDelFunc(hb_parnl(1));
+  }
 
-   if( pItem != nullptr ) {
-      hb_itemReturnRelease(pItem);  /* return a codeblock */
-   }
+  if (pItem != nullptr)
+  {
+    hb_itemReturnRelease(pItem); /* return a codeblock */
+  }
 }
 
 /* Set a task as active or not */
-HB_FUNC( HB_BACKGROUNDACTIVE )
+HB_FUNC(HB_BACKGROUNDACTIVE)
 {
-   HB_BOOL bOldActive = false;
+  HB_BOOL bOldActive = false;
 
-   if( s_pBackgroundTasks && HB_ISNUM(1) ) {
-      /* TODO: access to pointers from harbour code */
-      bOldActive = hb_backgroundActive(hb_parnl(1), hb_parldef(2, true));
-   }
+  if (s_pBackgroundTasks && HB_ISNUM(1))
+  {
+    /* TODO: access to pointers from harbour code */
+    bOldActive = hb_backgroundActive(hb_parnl(1), hb_parldef(2, true));
+  }
 
-   hb_retl(bOldActive); /* return old active value */
-
+  hb_retl(bOldActive); /* return old active value */
 }
 
 /* Set milliseconds after which a task will be executed */
-HB_FUNC( HB_BACKGROUNDTIME )
+HB_FUNC(HB_BACKGROUNDTIME)
 {
-   auto nOldMillisec = 0;
+  auto nOldMillisec = 0;
 
-   if( s_pBackgroundTasks && HB_ISNUM(1) ) {
-      /* TODO: access to pointers from harbour code */
-      nOldMillisec = hb_backgroundTime(hb_parnl(1), hb_parnidef(2, 1000));
-   }
+  if (s_pBackgroundTasks && HB_ISNUM(1))
+  {
+    /* TODO: access to pointers from harbour code */
+    nOldMillisec = hb_backgroundTime(hb_parnl(1), hb_parnidef(2, 1000));
+  }
 
-   hb_retni(nOldMillisec); /* return old millisecond value */
+  hb_retni(nOldMillisec); /* return old millisecond value */
 }

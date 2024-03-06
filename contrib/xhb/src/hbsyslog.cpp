@@ -51,119 +51,150 @@
 
 #if defined(HB_OS_WIN)
 
-#  include <windows.h>
+#include <windows.h>
 
 static HANDLE s_RegHandle;
 
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS) && !defined(HB_OS_SYMBIAN)
 
-#  include <syslog.h>
+#include <syslog.h>
 
 #endif
 
-HB_FUNC( HB_SYSLOGOPEN )
+HB_FUNC(HB_SYSLOGOPEN)
 {
 #if defined(HB_OS_WIN)
 
-#  if (WINVER >= 0x0400)
+#if (WINVER >= 0x0400)
 
-   /* Ok, we compiled under NT, but we must not use this function
-      when RUNNING on a win98. */
-   if( hb_iswinnt() ) {
-      void * hSourceName;
-      s_RegHandle = RegisterEventSource(nullptr, HB_PARSTRDEF(1, &hSourceName, nullptr));
-      hb_strfree(hSourceName);
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }   
-#  else
-   s_RegHandle = nullptr;
-   hb_retl(false);
-#  endif
+  /* Ok, we compiled under NT, but we must not use this function
+     when RUNNING on a win98. */
+  if (hb_iswinnt())
+  {
+    void *hSourceName;
+    s_RegHandle = RegisterEventSource(nullptr, HB_PARSTRDEF(1, &hSourceName, nullptr));
+    hb_strfree(hSourceName);
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
+#else
+  s_RegHandle = nullptr;
+  hb_retl(false);
+#endif
 
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
-   openlog(hb_parcx(1), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER);
-   hb_retl(true);
+  openlog(hb_parcx(1), LOG_NDELAY | LOG_NOWAIT | LOG_PID, LOG_USER);
+  hb_retl(true);
 #else
-   hb_retl(false);
+  hb_retl(false);
 #endif
 }
 
-HB_FUNC( HB_SYSLOGCLOSE )
+HB_FUNC(HB_SYSLOGCLOSE)
 {
 #if defined(HB_OS_WIN)
 
-#  if (WINVER >= 0x0400)
+#if (WINVER >= 0x0400)
 
-   if( hb_iswinnt() ) {
-      DeregisterEventSource(s_RegHandle);
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
-#  else
-   hb_retl(false);
-#  endif
+  if (hb_iswinnt())
+  {
+    DeregisterEventSource(s_RegHandle);
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
+#else
+  hb_retl(false);
+#endif
 
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
-   closelog();
-   hb_retl(true);
+  closelog();
+  hb_retl(true);
 #else
-   hb_retl(false);
+  hb_retl(false);
 #endif
 }
 
-HB_FUNC( HB_SYSLOGMESSAGE )
+HB_FUNC(HB_SYSLOGMESSAGE)
 {
 #if defined(HB_OS_WIN)
 
-#  if (WINVER >= 0x0400)
-   if( hb_iswinnt() ) {
-      WORD    logval;
-      void *  hMsg;
-      LPCTSTR lpMsg = HB_PARSTRDEF(1, &hMsg, nullptr);
-      switch( hb_parni(2) ) {
-         case HB_LOG_CRITICAL: logval = EVENTLOG_ERROR_TYPE; break;
-         case HB_LOG_ERROR:    logval = EVENTLOG_ERROR_TYPE; break;
-         case HB_LOG_WARN:     logval = EVENTLOG_WARNING_TYPE; break;
-         case HB_LOG_INFO:     logval = EVENTLOG_INFORMATION_TYPE; break;
-         default:              logval = EVENTLOG_AUDIT_SUCCESS;
-      }
-      hb_retl(ReportEvent(s_RegHandle,             /* event log handle */
-                          logval,                  /* event type */
-                          0,                       /* category zero */
-                          static_cast<DWORD>(hb_parnl(3)), /* event identifier */
-                          nullptr,                    /* no user security identifier */
-                          1,                       /* one substitution string */
-                          0,                       /* no data */
-                          &lpMsg,                  /* pointer to string array */
-                          nullptr                     /* pointer to data */
-                          ) ? true : false);
+#if (WINVER >= 0x0400)
+  if (hb_iswinnt())
+  {
+    WORD logval;
+    void *hMsg;
+    LPCTSTR lpMsg = HB_PARSTRDEF(1, &hMsg, nullptr);
+    switch (hb_parni(2))
+    {
+    case HB_LOG_CRITICAL:
+      logval = EVENTLOG_ERROR_TYPE;
+      break;
+    case HB_LOG_ERROR:
+      logval = EVENTLOG_ERROR_TYPE;
+      break;
+    case HB_LOG_WARN:
+      logval = EVENTLOG_WARNING_TYPE;
+      break;
+    case HB_LOG_INFO:
+      logval = EVENTLOG_INFORMATION_TYPE;
+      break;
+    default:
+      logval = EVENTLOG_AUDIT_SUCCESS;
+    }
+    hb_retl(ReportEvent(s_RegHandle,                     /* event log handle */
+                        logval,                          /* event type */
+                        0,                               /* category zero */
+                        static_cast<DWORD>(hb_parnl(3)), /* event identifier */
+                        nullptr,                         /* no user security identifier */
+                        1,                               /* one substitution string */
+                        0,                               /* no data */
+                        &lpMsg,                          /* pointer to string array */
+                        nullptr                          /* pointer to data */
+                        )
+                ? true
+                : false);
 
-      hb_strfree(hMsg);
-   } else {
-      hb_retl(false);
-   }
-#  else
-   hb_retl(false);
-#  endif
+    hb_strfree(hMsg);
+  }
+  else
+  {
+    hb_retl(false);
+  }
+#else
+  hb_retl(false);
+#endif
 
 #elif defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS) && !defined(HB_OS_SYMBIAN)
 
-   int logval;
+  int logval;
 
-   switch( hb_parni(2) ) {
-      case HB_LOG_CRITICAL: logval = LOG_CRIT; break;
-      case HB_LOG_ERROR:    logval = LOG_ERR; break;
-      case HB_LOG_WARN:     logval = LOG_WARNING; break;
-      case HB_LOG_INFO:     logval = LOG_INFO; break;
-      default:              logval = LOG_DEBUG;
-   }
+  switch (hb_parni(2))
+  {
+  case HB_LOG_CRITICAL:
+    logval = LOG_CRIT;
+    break;
+  case HB_LOG_ERROR:
+    logval = LOG_ERR;
+    break;
+  case HB_LOG_WARN:
+    logval = LOG_WARNING;
+    break;
+  case HB_LOG_INFO:
+    logval = LOG_INFO;
+    break;
+  default:
+    logval = LOG_DEBUG;
+  }
 
-   syslog(logval, "[%lX]: %s", hb_parnl(3), hb_parcx(1));
-   hb_retl(true);
+  syslog(logval, "[%lX]: %s", hb_parnl(3), hb_parcx(1));
+  hb_retl(true);
 #else
-   hb_retl(false);
+  hb_retl(false);
 #endif
 }

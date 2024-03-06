@@ -51,74 +51,83 @@
 #include "xhb.hpp"
 
 static HB_BOOL s_bToOutputDebug = true;
-static HB_BOOL s_bToLogFile     = true;
+static HB_BOOL s_bToLogFile = true;
 
 static HB_BOOL s_bEmptyLogFile = true;
 
 HB_BOOL hb_ToOutDebugOnOff(HB_BOOL bOnOff)
 {
-   HB_BOOL bOld = s_bToOutputDebug;
+  HB_BOOL bOld = s_bToOutputDebug;
 
-   s_bToOutputDebug = bOnOff;
-   return bOld;
+  s_bToOutputDebug = bOnOff;
+  return bOld;
 }
 
-void hb_ToOutDebug(const char * sTraceMsg, ...)
+void hb_ToOutDebug(const char *sTraceMsg, ...)
 {
-   if( sTraceMsg && s_bToOutputDebug ) {
-      char    buffer[1024];
-      va_list ap;
+  if (sTraceMsg && s_bToOutputDebug)
+  {
+    char buffer[1024];
+    va_list ap;
 
-      va_start(ap, sTraceMsg);
-      hb_vsnprintf(buffer, sizeof(buffer), sTraceMsg, ap);
-      va_end(ap);
+    va_start(ap, sTraceMsg);
+    hb_vsnprintf(buffer, sizeof(buffer), sTraceMsg, ap);
+    va_end(ap);
 
-      hb_OutDebug(static_cast<const char*>(buffer), strlen(buffer));
-   }
+    hb_OutDebug(static_cast<const char *>(buffer), strlen(buffer));
+  }
 }
 
 HB_BOOL hb_ToLogFileOnOff(HB_BOOL bOnOff)
 {
-   HB_BOOL bOld = s_bToLogFile;
+  HB_BOOL bOld = s_bToLogFile;
 
-   s_bToLogFile = bOnOff;
-   return bOld;
+  s_bToLogFile = bOnOff;
+  return bOld;
 }
 
 HB_BOOL hb_EmptyLogFile(HB_BOOL bOnOff)
 {
-   HB_BOOL bOld = s_bEmptyLogFile;
+  HB_BOOL bOld = s_bEmptyLogFile;
 
-   s_bEmptyLogFile = bOnOff;
-   return bOld;
+  s_bEmptyLogFile = bOnOff;
+  return bOld;
 }
 
-void hb_ToLogFile(const char * sFile, const char * sTraceMsg, ...)
+void hb_ToLogFile(const char *sFile, const char *sTraceMsg, ...)
 {
-   if( s_bToLogFile ) {
-      FILE * hFile;
+  if (s_bToLogFile)
+  {
+    FILE *hFile;
 
-      if( sFile == nullptr ) {
-         if( s_bEmptyLogFile ) {
-            s_bEmptyLogFile = false;
+    if (sFile == nullptr)
+    {
+      if (s_bEmptyLogFile)
+      {
+        s_bEmptyLogFile = false;
 
-            /* Empty the file if it exists. */
-            hFile = hb_fopen("logfile.log", "w");
-         } else {
-            hFile = hb_fopen("logfile.log", "a");
-         }   
-      } else {
-         hFile = hb_fopen(sFile, "a");
-      }   
-
-      if( hFile ) {
-         va_list ap;
-
-         va_start(ap, sTraceMsg);
-         vfprintf(hFile, sTraceMsg, ap);
-         va_end(ap);
-
-         fclose(hFile);
+        /* Empty the file if it exists. */
+        hFile = hb_fopen("logfile.log", "w");
       }
-   }
+      else
+      {
+        hFile = hb_fopen("logfile.log", "a");
+      }
+    }
+    else
+    {
+      hFile = hb_fopen(sFile, "a");
+    }
+
+    if (hFile)
+    {
+      va_list ap;
+
+      va_start(ap, sTraceMsg);
+      vfprintf(hFile, sTraceMsg, ap);
+      va_end(ap);
+
+      fclose(hFile);
+    }
+  }
 }

@@ -49,16 +49,18 @@
 #include "hbapiitm.hpp"
 #include "hbstack.hpp"
 
-HB_FUNC( HB_ENUMINDEX )
+HB_FUNC(HB_ENUMINDEX)
 {
-   HB_ISIZ nFuncOffset = hb_stackBaseOffset() - 1, nIndex = 0;
+  HB_ISIZ nFuncOffset = hb_stackBaseOffset() - 1, nIndex = 0;
 
-   while( --nFuncOffset > 0 ) {
-      PHB_ITEM pItem = hb_stackItem(nFuncOffset);
-      if( HB_IS_ENUM(pItem) ) {
-         nIndex = pItem->item.asEnum.offset;
-         break;
-      }
-   }
-   hb_retns(nIndex);
+  while (--nFuncOffset > 0)
+  {
+    PHB_ITEM pItem = hb_stackItem(nFuncOffset);
+    if (HB_IS_ENUM(pItem))
+    {
+      nIndex = pItem->item.asEnum.offset;
+      break;
+    }
+  }
+  hb_retns(nIndex);
 }

@@ -54,62 +54,71 @@ static int hb_inkeyKeyXHB(int iKey)
    HB_TRACE(HB_TR_DEBUG, ("hb_inkeyKeyXHB(%d)", iKey));
 #endif
 
-   if( HB_INKEY_ISEXT(iKey) ) {
-      int iFlags = HB_INKEY_FLAGS(iKey),
-          iValue = HB_INKEY_VALUE(iKey);
+  if (HB_INKEY_ISEXT(iKey))
+  {
+    int iFlags = HB_INKEY_FLAGS(iKey), iValue = HB_INKEY_VALUE(iKey);
 
-      if( HB_INKEY_ISKEY(iKey) ) {
-         if( (iFlags & (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT)) == HB_KF_SHIFT && iValue >= 0 && iValue < 32 ) {
-            switch( iValue ) {
-               case HB_KX_LEFT:
-                  return XHB_K_SH_LEFT;
-               case HB_KX_UP:
-                  return XHB_K_SH_UP;
-               case HB_KX_RIGHT:
-                  return XHB_K_SH_RIGHT;
-               case HB_KX_DOWN:
-                  return XHB_K_SH_DOWN;
-               case HB_KX_INS:
-                  return XHB_K_SH_INS;
-               case HB_KX_DEL:
-                  return XHB_K_SH_DEL;
-               case HB_KX_HOME:
-                  return XHB_K_SH_HOME;
-               case HB_KX_END:
-                  return XHB_K_SH_END;
-               case HB_KX_PGUP:
-                  return XHB_K_SH_PGUP;
-               case HB_KX_PGDN:
-                  return XHB_K_SH_PGDN;
-               case HB_KX_ENTER:
-                  return XHB_K_SH_ENTER;
-            }
-         }
+    if (HB_INKEY_ISKEY(iKey))
+    {
+      if ((iFlags & (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT)) == HB_KF_SHIFT && iValue >= 0 && iValue < 32)
+      {
+        switch (iValue)
+        {
+        case HB_KX_LEFT:
+          return XHB_K_SH_LEFT;
+        case HB_KX_UP:
+          return XHB_K_SH_UP;
+        case HB_KX_RIGHT:
+          return XHB_K_SH_RIGHT;
+        case HB_KX_DOWN:
+          return XHB_K_SH_DOWN;
+        case HB_KX_INS:
+          return XHB_K_SH_INS;
+        case HB_KX_DEL:
+          return XHB_K_SH_DEL;
+        case HB_KX_HOME:
+          return XHB_K_SH_HOME;
+        case HB_KX_END:
+          return XHB_K_SH_END;
+        case HB_KX_PGUP:
+          return XHB_K_SH_PGUP;
+        case HB_KX_PGDN:
+          return XHB_K_SH_PGDN;
+        case HB_KX_ENTER:
+          return XHB_K_SH_ENTER;
+        }
       }
-      if( HB_INKEY_ISKEY(iKey) || HB_INKEY_ISCHAR(iKey) || HB_INKEY_ISUNICODE(iKey) ) {
-         if( (iFlags & (HB_KF_CTRL | HB_KF_ALT)) == HB_KF_CTRL ) {
-            if( iValue >= 'A' && iValue <= 'Z' ) {
-               return 512 + ( iValue - 'A' ) + 1;
-            } else if( iValue >= 'a' && iValue <= 'z' ) {
-               return 512 + ( iValue - 'a' ) + 1;
-            }   
-         }
+    }
+    if (HB_INKEY_ISKEY(iKey) || HB_INKEY_ISCHAR(iKey) || HB_INKEY_ISUNICODE(iKey))
+    {
+      if ((iFlags & (HB_KF_CTRL | HB_KF_ALT)) == HB_KF_CTRL)
+      {
+        if (iValue >= 'A' && iValue <= 'Z')
+        {
+          return 512 + (iValue - 'A') + 1;
+        }
+        else if (iValue >= 'a' && iValue <= 'z')
+        {
+          return 512 + (iValue - 'a') + 1;
+        }
       }
-   }
-   return hb_inkeyKeyStd(iKey);
+    }
+  }
+  return hb_inkeyKeyStd(iKey);
 }
 
-HB_FUNC( XHB_KEYTRANS )
+HB_FUNC(XHB_KEYTRANS)
 {
-   hb_retni(hb_inkeyKeyXHB(hb_parni(1)));
+  hb_retni(hb_inkeyKeyXHB(hb_parni(1)));
 }
 
-HB_FUNC( XHB_INKEY )
+HB_FUNC(XHB_INKEY)
 {
-   auto iPCount = hb_pcount();
-   int iKey;
+  auto iPCount = hb_pcount();
+  int iKey;
 
-   iKey = hb_inkey(iPCount == 1 || (iPCount > 1 && HB_ISNUM(1)), hb_parnd(1), hb_parnidef(2, hb_setGetEventMask()) | HB_INKEY_EXT);
+  iKey = hb_inkey(iPCount == 1 || (iPCount > 1 && HB_ISNUM(1)), hb_parnd(1),
+                  hb_parnidef(2, hb_setGetEventMask()) | HB_INKEY_EXT);
 
-   hb_retni(hb_inkeyKeyXHB(iKey));
+  hb_retni(hb_inkeyKeyXHB(iKey));
 }

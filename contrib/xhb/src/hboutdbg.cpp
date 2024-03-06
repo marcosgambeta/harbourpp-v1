@@ -57,8 +57,8 @@
 #include "xhb.hpp"
 
 #if defined(HB_OS_WIN)
-   #include <windows.h>
-   #include "hbwinuni.hpp"
+#include <windows.h>
+#include "hbwinuni.hpp"
 #endif
 
 #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
@@ -78,147 +78,173 @@ static auto s_iXtermPid = 0;
 
 static void debugInit(void)
 {
-   int       iFifoResult;
-   PHB_FNAME pFileName = nullptr;
-   char      szDebugName[128];
+  int iFifoResult;
+  PHB_FNAME pFileName = nullptr;
+  char szDebugName[128];
 
-   if( !s_iUseDebugName ) {
-      auto iRand = static_cast<int>(hb_random_num() * 1000000);
-      pFileName = hb_fsFNameSplit(hb_cmdargARGVN(0));
-      hb_snprintf( szDebugName, sizeof(szDebugName) - 1, "/tmp/%s%d_dbg", pFileName->szName, iRand );
-   } else {
-      hb_snprintf( szDebugName, sizeof(szDebugName), "/tmp/%s_dbg", s_szDebugName );
-      pFileName = hb_fsFNameSplit(szDebugName);
-   }
+  if (!s_iUseDebugName)
+  {
+    auto iRand = static_cast<int>(hb_random_num() * 1000000);
+    pFileName = hb_fsFNameSplit(hb_cmdargARGVN(0));
+    hb_snprintf(szDebugName, sizeof(szDebugName) - 1, "/tmp/%s%d_dbg", pFileName->szName, iRand);
+  }
+  else
+  {
+    hb_snprintf(szDebugName, sizeof(szDebugName), "/tmp/%s_dbg", s_szDebugName);
+    pFileName = hb_fsFNameSplit(szDebugName);
+  }
 
-   iFifoResult = mkfifo(szDebugName, 0666);
-   if( iFifoResult == -1 ) {
-      iFifoResult = errno;
-   }   
+  iFifoResult = mkfifo(szDebugName, 0666);
+  if (iFifoResult == -1)
+  {
+    iFifoResult = errno;
+  }
 
-   if( iFifoResult == 0 || iFifoResult == EEXIST ) {
-      char szDebugTitle[30];
-      int  iPid;
+  if (iFifoResult == 0 || iFifoResult == EEXIST)
+  {
+    char szDebugTitle[30];
+    int iPid;
 
-      hb_snprintf( szDebugTitle, sizeof(szDebugTitle), "%s - Debug", pFileName->szName );
+    hb_snprintf(szDebugTitle, sizeof(szDebugTitle), "%s - Debug", pFileName->szName);
 
-      iPid = fork();
-      if( iPid != 0 ) {
-         s_iDebugFd  = open(szDebugName, O_WRONLY);
-         s_iXtermPid = iPid;
-      } else {
-         if( iFifoResult != EEXIST ) {
-            s_iXtermPid = execlp("xterm", "xterm", "-T", szDebugTitle, "-e", "cat", szDebugName, nullptr);
+    iPid = fork();
+    if (iPid != 0)
+    {
+      s_iDebugFd = open(szDebugName, O_WRONLY);
+      s_iXtermPid = iPid;
+    }
+    else
+    {
+      if (iFifoResult != EEXIST)
+      {
+        s_iXtermPid = execlp("xterm", "xterm", "-T", szDebugTitle, "-e", "cat", szDebugName, nullptr);
 
-            if( s_iXtermPid <= 0 ) {
-               int lastresort = open(szDebugName, O_RDONLY);
+        if (s_iXtermPid <= 0)
+        {
+          int lastresort = open(szDebugName, O_RDONLY);
 
-               if( lastresort >= 0 ) {
-                  close(lastresort);
-               }   
-            }
-
-         }
+          if (lastresort >= 0)
+          {
+            close(lastresort);
+          }
+        }
       }
-   }
-   hb_xfree(pFileName);
+    }
+  }
+  hb_xfree(pFileName);
 }
 
 #endif
 
 HB_BOOL hb_OutDebugName(PHB_ITEM pName)
 {
-   HB_BOOL bRet;
+  HB_BOOL bRet;
 
 #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
-   if( s_iDebugFd == 0 && pName != nullptr ) {
-      hb_strncpy(s_szDebugName, hb_itemGetCPtr(pName), sizeof(s_szDebugName) - 1);
-      s_iUseDebugName = 1;
+  if (s_iDebugFd == 0 && pName != nullptr)
+  {
+    hb_strncpy(s_szDebugName, hb_itemGetCPtr(pName), sizeof(s_szDebugName) - 1);
+    s_iUseDebugName = 1;
 
-      bRet = true;
-   } else if( pName == nullptr ) {
-      s_iUseDebugName = 0;
-      bRet = true;
-   } else {
-      bRet = false;
-   }   
+    bRet = true;
+  }
+  else if (pName == nullptr)
+  {
+    s_iUseDebugName = 0;
+    bRet = true;
+  }
+  else
+  {
+    bRet = false;
+  }
 
 #else
-   HB_SYMBOL_UNUSED(pName);
+  HB_SYMBOL_UNUSED(pName);
 
-   bRet = false;
+  bRet = false;
 #endif
 
-   return bRet;
+  return bRet;
 }
 
-void hb_OutDebug(const char * szMsg, HB_SIZE nMsgLen)
+void hb_OutDebug(const char *szMsg, HB_SIZE nMsgLen)
 {
 #if defined(HB_OS_UNIX) && !defined(HB_OS_VXWORKS)
-   int iStatus;
+  int iStatus;
 
-   /* Are we under X? */
-   if( getenv("DISPLAY") != nullptr ) {
-      if( s_iDebugFd <= 0 || s_iXtermPid == 0 ) {
-         debugInit();
-      }   
+  /* Are we under X? */
+  if (getenv("DISPLAY") != nullptr)
+  {
+    if (s_iDebugFd <= 0 || s_iXtermPid == 0)
+    {
+      debugInit();
+    }
 
-      /* On error, drop it */
-      if( s_iDebugFd <= 0 || s_iXtermPid == 0 ) {
-         return;
-      }   
+    /* On error, drop it */
+    if (s_iDebugFd <= 0 || s_iXtermPid == 0)
+    {
+      return;
+    }
 
-      /* Check if display process has terminated in the meanwhile */
-      if( !s_iUseDebugName ) {
-         int iPid = waitpid(s_iXtermPid, &iStatus, WNOHANG);
-         if( iPid == s_iXtermPid || iPid == -1 ) {
-            s_iXtermPid = 0;
-            #if 0
+    /* Check if display process has terminated in the meanwhile */
+    if (!s_iUseDebugName)
+    {
+      int iPid = waitpid(s_iXtermPid, &iStatus, WNOHANG);
+      if (iPid == s_iXtermPid || iPid == -1)
+      {
+        s_iXtermPid = 0;
+#if 0
             close(s_iDebugFd);
-            #endif
-            s_iDebugFd = 0;
-            return;
-         }
+#endif
+        s_iDebugFd = 0;
+        return;
       }
+    }
 
-      if( s_iDebugFd > 0 && HB_ISCHAR(1) ) {
-         if( hb_fsCanWrite(s_iDebugFd, 100) > 0 ) { /* wait each time a tenth of second */
-            if( static_cast<HB_SIZE>(write(s_iDebugFd, szMsg, nMsgLen)) == nMsgLen ) {
-               if( hb_fsCanWrite(s_iDebugFd, 100) > 0 ) {
-                  if( write(s_iDebugFd, "\n", 1) != 1 ) {
-                  }
-               }
+    if (s_iDebugFd > 0 && HB_ISCHAR(1))
+    {
+      if (hb_fsCanWrite(s_iDebugFd, 100) > 0)
+      { /* wait each time a tenth of second */
+        if (static_cast<HB_SIZE>(write(s_iDebugFd, szMsg, nMsgLen)) == nMsgLen)
+        {
+          if (hb_fsCanWrite(s_iDebugFd, 100) > 0)
+          {
+            if (write(s_iDebugFd, "\n", 1) != 1)
+            {
             }
-         }
+          }
+        }
       }
-   }
+    }
+  }
 
 #elif defined(HB_OS_WIN)
 
-   {
-      LPTSTR lpMsg = HB_CHARDUPN(szMsg, nMsgLen);
-      OutputDebugString(lpMsg);
-      hb_xfree(lpMsg);
-   }
+  {
+    LPTSTR lpMsg = HB_CHARDUPN(szMsg, nMsgLen);
+    OutputDebugString(lpMsg);
+    hb_xfree(lpMsg);
+  }
 
 #else
 
-   HB_SYMBOL_UNUSED(szMsg);
-   HB_SYMBOL_UNUSED(nMsgLen);
+  HB_SYMBOL_UNUSED(szMsg);
+  HB_SYMBOL_UNUSED(nMsgLen);
 
 #endif
 }
 
-HB_FUNC( HB_OUTDEBUGNAME )
+HB_FUNC(HB_OUTDEBUGNAME)
 {
-   auto pName = hb_param(1, Harbour::Item::STRING);
+  auto pName = hb_param(1, Harbour::Item::STRING);
 
-   hb_retl(hb_OutDebugName(pName));
+  hb_retl(hb_OutDebugName(pName));
 }
 
-HB_FUNC( HB_OUTDEBUG )
+HB_FUNC(HB_OUTDEBUG)
 {
-   if( HB_ISCHAR(1) ) {
-      hb_OutDebug(hb_parcx(1), hb_parclen(1));
-   }
+  if (HB_ISCHAR(1))
+  {
+    hb_OutDebug(hb_parcx(1), hb_parclen(1));
+  }
 }

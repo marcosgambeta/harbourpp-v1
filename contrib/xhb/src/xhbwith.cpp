@@ -52,55 +52,60 @@
 
 static PHB_ITEM hb_vmWithObjectItem(HB_ISIZ nLevel)
 {
-   HB_ISIZ nOffset = hb_stackWithObjectOffset();
+  HB_ISIZ nOffset = hb_stackWithObjectOffset();
 
-   while( nOffset && nLevel > 0 ) {
-      HB_ISIZ * pnOffset = ( HB_ISIZ * ) hb_itemGetPtr(hb_stackItem(nOffset + 1));
-      if( !pnOffset ) {
-         break;
-      }
-      --nLevel;
-      nOffset = *pnOffset;
-   }
+  while (nOffset && nLevel > 0)
+  {
+    HB_ISIZ *pnOffset = (HB_ISIZ *)hb_itemGetPtr(hb_stackItem(nOffset + 1));
+    if (!pnOffset)
+    {
+      break;
+    }
+    --nLevel;
+    nOffset = *pnOffset;
+  }
 
-   return ( nOffset && !nLevel ) ? hb_stackItem(nOffset) : nullptr;
+  return (nOffset && !nLevel) ? hb_stackItem(nOffset) : nullptr;
 }
 
 static HB_ISIZ hb_vmWithObjectCount(void)
 {
-   HB_ISIZ nOffset = hb_stackWithObjectOffset(), nCount = 0;
+  HB_ISIZ nOffset = hb_stackWithObjectOffset(), nCount = 0;
 
-   while( nOffset ) {
-      HB_ISIZ * pnOffset = ( HB_ISIZ * ) hb_itemGetPtr(hb_stackItem(nOffset + 1));
-      if( !pnOffset ) {
-         break;
-      }   
-      ++nCount;
-      nOffset = *pnOffset;
-   }
+  while (nOffset)
+  {
+    HB_ISIZ *pnOffset = (HB_ISIZ *)hb_itemGetPtr(hb_stackItem(nOffset + 1));
+    if (!pnOffset)
+    {
+      break;
+    }
+    ++nCount;
+    nOffset = *pnOffset;
+  }
 
-   return nCount;
+  return nCount;
 }
 
-
-
-HB_FUNC( HB_QWITH )
+HB_FUNC(HB_QWITH)
 {
-   hb_itemReturn(hb_vmWithObjectItem(hb_parns(1)));
+  hb_itemReturn(hb_vmWithObjectItem(hb_parns(1)));
 }
 
-HB_FUNC( HB_WITHOBJECTCOUNTER )
+HB_FUNC(HB_WITHOBJECTCOUNTER)
 {
-   hb_retns(hb_vmWithObjectCount());
+  hb_retns(hb_vmWithObjectCount());
 }
 
-HB_FUNC( HB_RESETWITH )
+HB_FUNC(HB_RESETWITH)
 {
-   PHB_ITEM pItem = hb_vmWithObjectItem(0);
+  PHB_ITEM pItem = hb_vmWithObjectItem(0);
 
-   if( hb_pcount() >= 1 && pItem ) {
-      hb_itemMove(pItem, hb_stackItemFromBase(1));
-   } else {
-      hb_errRT_BASE(EG_ARG, 1607, nullptr, HB_ERR_FUNCNAME, 0, nullptr);
-   }
+  if (hb_pcount() >= 1 && pItem)
+  {
+    hb_itemMove(pItem, hb_stackItemFromBase(1));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 1607, nullptr, HB_ERR_FUNCNAME, 0, nullptr);
+  }
 }

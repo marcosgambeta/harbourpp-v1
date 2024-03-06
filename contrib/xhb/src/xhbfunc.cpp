@@ -93,215 +93,253 @@ HB_FUNC( HB_STRING2POINTER )
  *       hb_retc(hb_cmdargARGVN(0));
  * probably typo - replicated here by hb_ProgName()
  */
-HB_FUNC_TRANSLATE( HB_CMDARGARGV, HB_PROGNAME )
+HB_FUNC_TRANSLATE(HB_CMDARGARGV, HB_PROGNAME)
 
-
-HB_FUNC( HB_VMMODE )
+HB_FUNC(HB_VMMODE)
 {
-#if   defined(HB_NO_PROFILER) && defined(HB_NO_TRACE) && !defined(HB_GUI)
-   hb_retni(2); /* optimized for console applications */
+#if defined(HB_NO_PROFILER) && defined(HB_NO_TRACE) && !defined(HB_GUI)
+  hb_retni(2); /* optimized for console applications */
 #elif defined(HB_NO_PROFILER) && defined(HB_NO_TRACE) && defined(HB_GUI)
-   hb_retni(1); /* optimized for GUI applications */
+  hb_retni(1); /* optimized for GUI applications */
 #else
-   hb_retni(0); /* no optimization */
+  hb_retni(0); /* no optimization */
 #endif
 }
 
-HB_FUNC( XHB__KEYBOARD )
+HB_FUNC(XHB__KEYBOARD)
 {
-   /* Clear the typeahead buffer without reallocating the keyboard buffer */
-   if( !hb_parl(2) ) {
-      hb_inkeyReset();
-   }
+  /* Clear the typeahead buffer without reallocating the keyboard buffer */
+  if (!hb_parl(2))
+  {
+    hb_inkeyReset();
+  }
 
-   if( HB_ISNUM(1) ) {
-      hb_inkeyPut(hb_parni(1));
-   } else if( HB_ISCHAR(1) ) {
-      hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
-   } else if( HB_ISARRAY(1) ) {
-      auto pArray = hb_param(1, Harbour::Item::ARRAY);
-      HB_SIZE  nIndex;
-      HB_SIZE  nElements = hb_arrayLen(pArray);
+  if (HB_ISNUM(1))
+  {
+    hb_inkeyPut(hb_parni(1));
+  }
+  else if (HB_ISCHAR(1))
+  {
+    hb_inkeySetText(hb_parc(1), hb_parclen(1), false);
+  }
+  else if (HB_ISARRAY(1))
+  {
+    auto pArray = hb_param(1, Harbour::Item::ARRAY);
+    HB_SIZE nIndex;
+    HB_SIZE nElements = hb_arrayLen(pArray);
 
-      for( nIndex = 1; nIndex <= nElements; nIndex++ ) {
-         auto pItem = hb_arrayGetItemPtr(pArray, nIndex);
+    for (nIndex = 1; nIndex <= nElements; nIndex++)
+    {
+      auto pItem = hb_arrayGetItemPtr(pArray, nIndex);
 
-         if( HB_IS_NUMBER(pItem) ) {
-            hb_inkeyPut(hb_itemGetNI(pItem));
-         } else if( HB_IS_STRING(pItem) ) {
-            hb_inkeySetText(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false);
-         }
+      if (HB_IS_NUMBER(pItem))
+      {
+        hb_inkeyPut(hb_itemGetNI(pItem));
       }
-   }
-}
-
-HB_FUNC( HB_CREATELEN8 )
-{
-   char      buffer[8];
-   HB_MAXINT nValue;
-
-   if( HB_ISNUM(1) ) {
-      nValue = hb_parnint(1);
-      HB_PUT_LE_UINT64(buffer, nValue);
-      hb_retclen(buffer, 8);
-   } else if( HB_ISBYREF(1) && HB_ISNUM(2) ) {
-      nValue = hb_parnint(2);
-      HB_PUT_LE_UINT64(buffer, nValue);
-      hb_storclen(buffer, 8, 1);
-   }
-}
-
-HB_FUNC( HB_GETLEN8 )
-{
-   auto buffer = hb_parc(1);
-
-   if( buffer && hb_parclen(1) >= 8 ) {
-      hb_retnint(HB_GET_LE_UINT64(buffer));
-   } else {
-      hb_retni(-1);
-   }   
-}
-
-HB_FUNC( HB_DESERIALBEGIN )
-{
-   auto pItem = hb_param(1, Harbour::Item::STRING);
-
-   if( pItem != nullptr ) {
-      hb_itemReturn(pItem);
-   }   
-}
-
-HB_FUNC_TRANSLATE( HB_DESERIALNEXT, HB_DESERIALIZE )
-HB_FUNC_TRANSLATE( WILDMATCH, HB_WILDMATCH )
-HB_FUNC_TRANSLATE( HB_CHECKSUM, HB_ADLER32 )
-
-HB_FUNC( HB_F_EOF )
-{
-   HB_ERRCODE uiError = 6;
-
-   if( HB_ISNUM(1) ) {
-      hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
-      uiError = hb_fsError();
-   } else {
-      hb_retl(true);
-   }
-
-   hb_fsSetFError(uiError);
-}
-
-HB_FUNC( CURDIRX )
-{
-   HB_ERRCODE uiErrorOld = hb_fsError();
-   auto pbyBuffer  = static_cast<char*>(hb_xgrab(HB_PATH_MAX));
-   auto pDrv = hb_param(1, Harbour::Item::STRING);
-   int        iCurDrv    = hb_fsCurDrv();
-   int        iDrv;
-
-   if( pDrv && hb_parclen(1) > 0 ) {
-      iDrv = static_cast<int>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
-      if( iDrv != iCurDrv ) {
-         hb_fsChDrv(iDrv);
+      else if (HB_IS_STRING(pItem))
+      {
+        hb_inkeySetText(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false);
       }
-   } else {
-      iDrv = iCurDrv;
-   }   
-
-   /* NOTE: hb_fsCurDirBuffEx() in xHarbour, but I couldn't decipher the
-            difference. [vszakats] */
-   hb_fsCurDirBuff(iDrv, pbyBuffer, HB_PATH_MAX);
-
-   hb_retc_buffer(pbyBuffer);
-
-   hb_fsChDrv(iCurDrv);
-
-   hb_fsSetError(uiErrorOld);
+    }
+  }
 }
 
-HB_FUNC_TRANSLATE( CSTR, HB_CSTR )
-
-HB_FUNC( HB_ARRAYID )  /* for debugging: returns the array's "address" so dual references to same array can be seen */
+HB_FUNC(HB_CREATELEN8)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  char buffer[8];
+  HB_MAXINT nValue;
 
-   hb_retptr(pArray ? hb_arrayId(pArray) : nullptr);
+  if (HB_ISNUM(1))
+  {
+    nValue = hb_parnint(1);
+    HB_PUT_LE_UINT64(buffer, nValue);
+    hb_retclen(buffer, 8);
+  }
+  else if (HB_ISBYREF(1) && HB_ISNUM(2))
+  {
+    nValue = hb_parnint(2);
+    HB_PUT_LE_UINT64(buffer, nValue);
+    hb_storclen(buffer, 8, 1);
+  }
 }
 
-HB_FUNC( HB_HASHID )  /* for debugging: returns the array's "address" so dual references to same array can be seen */
+HB_FUNC(HB_GETLEN8)
 {
-   auto pHash = hb_param(1, Harbour::Item::HASH);
+  auto buffer = hb_parc(1);
 
-   hb_retptr(pHash ? hb_hashId(pHash) : nullptr);
+  if (buffer && hb_parclen(1) >= 8)
+  {
+    hb_retnint(HB_GET_LE_UINT64(buffer));
+  }
+  else
+  {
+    hb_retni(-1);
+  }
 }
 
-HB_FUNC( __SENDRAWMSG )
+HB_FUNC(HB_DESERIALBEGIN)
 {
-   hb_dbg_objSendMessage(0, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY), 3);
+  auto pItem = hb_param(1, Harbour::Item::STRING);
+
+  if (pItem != nullptr)
+  {
+    hb_itemReturn(pItem);
+  }
 }
 
-HB_FUNC( HB_EXEC )
-{
-   if( HB_ISSYMBOL(1) ) {
-      HB_BOOL fSend   = false;
-      int     iParams = hb_pcount() - 1;
+HB_FUNC_TRANSLATE(HB_DESERIALNEXT, HB_DESERIALIZE)
+HB_FUNC_TRANSLATE(WILDMATCH, HB_WILDMATCH)
+HB_FUNC_TRANSLATE(HB_CHECKSUM, HB_ADLER32)
 
-      if( iParams >= 1 ) {
-         fSend = iParams > 1 && !HB_IS_NIL(hb_param(2, Harbour::Item::ANY));
-         iParams--;
-      } else {
-         hb_vmPushNil();
-      }   
-      if( fSend ) {
-         hb_vmSend(static_cast<HB_USHORT>(iParams));
-      } else {
-         hb_vmDo(static_cast<HB_USHORT>(iParams));
-      }
-   } else {
-      hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }   
+HB_FUNC(HB_F_EOF)
+{
+  HB_ERRCODE uiError = 6;
+
+  if (HB_ISNUM(1))
+  {
+    hb_retl(hb_fsEof(hb_numToHandle(hb_parnint(1))));
+    uiError = hb_fsError();
+  }
+  else
+  {
+    hb_retl(true);
+  }
+
+  hb_fsSetFError(uiError);
 }
 
-HB_FUNC_EXTERN( HB_USERNAME );
-HB_FUNC_EXTERN( NETNAME );
-
-HB_FUNC( XHB_NETNAME )
+HB_FUNC(CURDIRX)
 {
-   if( hb_parni(1) == 1 ) {
-      HB_FUNC_EXEC( HB_USERNAME );
-   } else {
-      HB_FUNC_EXEC( NETNAME );
-   }   
+  HB_ERRCODE uiErrorOld = hb_fsError();
+  auto pbyBuffer = static_cast<char *>(hb_xgrab(HB_PATH_MAX));
+  auto pDrv = hb_param(1, Harbour::Item::STRING);
+  int iCurDrv = hb_fsCurDrv();
+  int iDrv;
+
+  if (pDrv && hb_parclen(1) > 0)
+  {
+    iDrv = static_cast<int>(HB_TOUPPER(*hb_itemGetCPtr(pDrv)) - 'A');
+    if (iDrv != iCurDrv)
+    {
+      hb_fsChDrv(iDrv);
+    }
+  }
+  else
+  {
+    iDrv = iCurDrv;
+  }
+
+  /* NOTE: hb_fsCurDirBuffEx() in xHarbour, but I couldn't decipher the
+           difference. [vszakats] */
+  hb_fsCurDirBuff(iDrv, pbyBuffer, HB_PATH_MAX);
+
+  hb_retc_buffer(pbyBuffer);
+
+  hb_fsChDrv(iCurDrv);
+
+  hb_fsSetError(uiErrorOld);
 }
 
-HB_FUNC_EXTERN( HB_MEMOWRIT );
-HB_FUNC_EXTERN( MEMOWRIT );
+HB_FUNC_TRANSLATE(CSTR, HB_CSTR)
 
-HB_FUNC( XHB_MEMOWRIT )
+HB_FUNC(HB_ARRAYID) /* for debugging: returns the array's "address" so dual references to same array can be seen */
 {
-   if( HB_ISLOG(3) && !hb_parl(3) ) {
-      HB_FUNC_EXEC( HB_MEMOWRIT );
-   } else {
-      HB_FUNC_EXEC( MEMOWRIT );
-   }   
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+
+  hb_retptr(pArray ? hb_arrayId(pArray) : nullptr);
+}
+
+HB_FUNC(HB_HASHID) /* for debugging: returns the array's "address" so dual references to same array can be seen */
+{
+  auto pHash = hb_param(1, Harbour::Item::HASH);
+
+  hb_retptr(pHash ? hb_hashId(pHash) : nullptr);
+}
+
+HB_FUNC(__SENDRAWMSG)
+{
+  hb_dbg_objSendMessage(0, hb_param(1, Harbour::Item::ANY), hb_param(2, Harbour::Item::ANY), 3);
+}
+
+HB_FUNC(HB_EXEC)
+{
+  if (HB_ISSYMBOL(1))
+  {
+    HB_BOOL fSend = false;
+    int iParams = hb_pcount() - 1;
+
+    if (iParams >= 1)
+    {
+      fSend = iParams > 1 && !HB_IS_NIL(hb_param(2, Harbour::Item::ANY));
+      iParams--;
+    }
+    else
+    {
+      hb_vmPushNil();
+    }
+    if (fSend)
+    {
+      hb_vmSend(static_cast<HB_USHORT>(iParams));
+    }
+    else
+    {
+      hb_vmDo(static_cast<HB_USHORT>(iParams));
+    }
+  }
+  else
+  {
+    hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
+}
+
+HB_FUNC_EXTERN(HB_USERNAME);
+HB_FUNC_EXTERN(NETNAME);
+
+HB_FUNC(XHB_NETNAME)
+{
+  if (hb_parni(1) == 1)
+  {
+    HB_FUNC_EXEC(HB_USERNAME);
+  }
+  else
+  {
+    HB_FUNC_EXEC(NETNAME);
+  }
+}
+
+HB_FUNC_EXTERN(HB_MEMOWRIT);
+HB_FUNC_EXTERN(MEMOWRIT);
+
+HB_FUNC(XHB_MEMOWRIT)
+{
+  if (HB_ISLOG(3) && !hb_parl(3))
+  {
+    HB_FUNC_EXEC(HB_MEMOWRIT);
+  }
+  else
+  {
+    HB_FUNC_EXEC(MEMOWRIT);
+  }
 }
 
 #if !defined(HB_LEGACY_LEVEL4)
 
 #if defined(HB_OS_UNIX) && !defined(HB_EOL_CRLF)
-   static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_LF, 0};
-   static const int  s_iCrLfLen = 1;
+static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_LF, 0};
+static const int s_iCrLfLen = 1;
 #else
-   static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_CR, HB_CHAR_LF, 0};
-   static const int  s_iCrLfLen = 2;
+static const char s_szCrLf[CRLF_BUFFER_LEN] = {HB_CHAR_CR, HB_CHAR_LF, 0};
+static const int s_iCrLfLen = 2;
 #endif
 
-HB_FUNC( HB_OSNEWLINE )
+HB_FUNC(HB_OSNEWLINE)
 {
-   hb_retc_const(s_szCrLf);
+  hb_retc_const(s_szCrLf);
 }
 
-HB_FUNC( HB_OSPATHSEPARATOR )
+HB_FUNC(HB_OSPATHSEPARATOR)
 {
-   hb_retc_const(HB_OS_PATH_DELIM_CHR_STRING);
+  hb_retc_const(HB_OS_PATH_DELIM_CHR_STRING);
 }
 
 #endif
@@ -320,18 +358,18 @@ HB_FUNC( HB_ISBYREF )
 
 #endif
 
-HB_FUNC_TRANSLATE( METHODNAME     , HB_METHODNAME )
-HB_FUNC_TRANSLATE( LIBLOAD        , HB_LIBLOAD    )
-HB_FUNC_TRANSLATE( LIBFREE        , HB_LIBFREE    )
-HB_FUNC_TRANSLATE( HB_LIBDO       , DO            )
-HB_FUNC_TRANSLATE( HB_BITISSET    , HB_BITTEST    )
-HB_FUNC_TRANSLATE( SECONDSSLEEP   , HB_IDLESLEEP  )
-HB_FUNC_TRANSLATE( HB_FUNCPTR     , __DYNSN2SYM   )
-HB_FUNC_TRANSLATE( VALTOPRGEXP    , HB_VALTOEXP   )
-HB_FUNC_TRANSLATE( HEXTONUM       , HB_HEXTONUM   )
-HB_FUNC_TRANSLATE( NUMTOHEX       , HB_NUMTOHEX   )
-HB_FUNC_TRANSLATE( HEXTOSTR       , HB_HEXTOSTR   )
-HB_FUNC_TRANSLATE( STRTOHEX       , HB_STRTOHEX   )
-HB_FUNC_TRANSLATE( ISPOINTER      , HB_ISPOINTER  )
-HB_FUNC_TRANSLATE( HB_SETCODEPAGE , HB_CDPSELECT  )
-HB_FUNC_TRANSLATE( DEFAULT        , __DEFAULTNIL  )
+HB_FUNC_TRANSLATE(METHODNAME, HB_METHODNAME)
+HB_FUNC_TRANSLATE(LIBLOAD, HB_LIBLOAD)
+HB_FUNC_TRANSLATE(LIBFREE, HB_LIBFREE)
+HB_FUNC_TRANSLATE(HB_LIBDO, DO)
+HB_FUNC_TRANSLATE(HB_BITISSET, HB_BITTEST)
+HB_FUNC_TRANSLATE(SECONDSSLEEP, HB_IDLESLEEP)
+HB_FUNC_TRANSLATE(HB_FUNCPTR, __DYNSN2SYM)
+HB_FUNC_TRANSLATE(VALTOPRGEXP, HB_VALTOEXP)
+HB_FUNC_TRANSLATE(HEXTONUM, HB_HEXTONUM)
+HB_FUNC_TRANSLATE(NUMTOHEX, HB_NUMTOHEX)
+HB_FUNC_TRANSLATE(HEXTOSTR, HB_HEXTOSTR)
+HB_FUNC_TRANSLATE(STRTOHEX, HB_STRTOHEX)
+HB_FUNC_TRANSLATE(ISPOINTER, HB_ISPOINTER)
+HB_FUNC_TRANSLATE(HB_SETCODEPAGE, HB_CDPSELECT)
+HB_FUNC_TRANSLATE(DEFAULT, __DEFAULTNIL)

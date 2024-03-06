@@ -58,102 +58,123 @@ static PHB_SYMB s_pFuncSymbol = nullptr;
 static PHB_DYNS s_pHbCStructDyn = nullptr;
 static PHB_DYNS s_pBufferMsg = nullptr;
 
-LONG WINAPI PRGUnhandledExceptionFilter(EXCEPTION_POINTERS * ExceptionInfo)
+LONG WINAPI PRGUnhandledExceptionFilter(EXCEPTION_POINTERS *ExceptionInfo)
 {
-   LONG lResult = EXCEPTION_CONTINUE_SEARCH;
+  LONG lResult = EXCEPTION_CONTINUE_SEARCH;
 
-   if( s_pFuncSymbol && hb_vmRequestReenter() ) {
-      PHB_ITEM pException = nullptr;
-      HB_USHORT uiParams = 0;
+  if (s_pFuncSymbol && hb_vmRequestReenter())
+  {
+    PHB_ITEM pException = nullptr;
+    HB_USHORT uiParams = 0;
 
-      if( s_pHbCStructDyn ) {
-         hb_vmPushSymbol(hb_dynsymSymbol(s_pHbCStructDyn));
-         hb_vmPushNil();
-         hb_vmPushStringPcode("EXCEPTION_POINTERS", 18);
-         hb_vmPushLong(8);
-         hb_vmDo(2);
-         if( HB_IS_OBJECT(hb_stackReturnItem()) ) {
-            pException = hb_itemNew(hb_stackReturnItem());
-            if( s_pBufferMsg ) {
-               hb_vmPushDynSym(s_pBufferMsg);
-               hb_vmPush(pException);
-               if( (reinterpret_cast<const char*>(ExceptionInfo))[sizeof(EXCEPTION_POINTERS)] == '\0' ) {
-                  hb_itemPutCLConst(hb_stackAllocItem(), reinterpret_cast<const char*>(ExceptionInfo), sizeof(EXCEPTION_POINTERS));
-               } else {
-                  hb_itemPutCL(hb_stackAllocItem(), reinterpret_cast<const char*>(ExceptionInfo), sizeof(EXCEPTION_POINTERS));
-               }
-               hb_vmPushLogical(false);
-               hb_vmSend(2);
-            }
-         }
-      }
-
-      hb_vmPushSymbol(s_pFuncSymbol);
+    if (s_pHbCStructDyn)
+    {
+      hb_vmPushSymbol(hb_dynsymSymbol(s_pHbCStructDyn));
       hb_vmPushNil();
-      if( pException ) {
-         hb_vmPush(pException);
-         hb_itemRelease(pException);
-         uiParams = 1;
+      hb_vmPushStringPcode("EXCEPTION_POINTERS", 18);
+      hb_vmPushLong(8);
+      hb_vmDo(2);
+      if (HB_IS_OBJECT(hb_stackReturnItem()))
+      {
+        pException = hb_itemNew(hb_stackReturnItem());
+        if (s_pBufferMsg)
+        {
+          hb_vmPushDynSym(s_pBufferMsg);
+          hb_vmPush(pException);
+          if ((reinterpret_cast<const char *>(ExceptionInfo))[sizeof(EXCEPTION_POINTERS)] == '\0')
+          {
+            hb_itemPutCLConst(hb_stackAllocItem(), reinterpret_cast<const char *>(ExceptionInfo),
+                              sizeof(EXCEPTION_POINTERS));
+          }
+          else
+          {
+            hb_itemPutCL(hb_stackAllocItem(), reinterpret_cast<const char *>(ExceptionInfo),
+                         sizeof(EXCEPTION_POINTERS));
+          }
+          hb_vmPushLogical(false);
+          hb_vmSend(2);
+        }
       }
-      hb_vmDo(uiParams);
-      lResult = hb_parnldef(-1, EXCEPTION_CONTINUE_SEARCH);
+    }
 
-      hb_vmRequestRestore();
-   }
+    hb_vmPushSymbol(s_pFuncSymbol);
+    hb_vmPushNil();
+    if (pException)
+    {
+      hb_vmPush(pException);
+      hb_itemRelease(pException);
+      uiParams = 1;
+    }
+    hb_vmDo(uiParams);
+    lResult = hb_parnldef(-1, EXCEPTION_CONTINUE_SEARCH);
 
-   return lResult;
+    hb_vmRequestRestore();
+  }
+
+  return lResult;
 }
 #endif
 
-HB_FUNC( SETUNHANDLEDEXCEPTIONFILTER )
+HB_FUNC(SETUNHANDLEDEXCEPTIONFILTER)
 {
 #if defined(HB_OS_WIN)
-   LPTOP_LEVEL_EXCEPTION_FILTER pDefaultHandler = nullptr;
-   auto pFuncItm = hb_param(1, Harbour::Item::ANY);
-   PHB_SYMB pFuncSym = s_pFuncSymbol;
+  LPTOP_LEVEL_EXCEPTION_FILTER pDefaultHandler = nullptr;
+  auto pFuncItm = hb_param(1, Harbour::Item::ANY);
+  PHB_SYMB pFuncSym = s_pFuncSymbol;
 
-   if( pFuncItm && HB_IS_SYMBOL(pFuncItm) ) {
-      s_pFuncSymbol = hb_itemGetSymbol(pFuncItm);
-      pDefaultHandler = PRGUnhandledExceptionFilter;
-      /* intentionally no protection for repeated initialization,
-       * it's possible that HB_CSTRUCTURE() has been loaded from
-       * dynamic library [druzus]
-       */
-      if( s_pHbCStructDyn == nullptr ) {
-         PHB_DYNS pDyn = hb_dynsymFind("HB_CSTRUCTURE");
-         if( pDyn && hb_dynsymIsFunction(pDyn) ) {
-            s_pHbCStructDyn = pDyn;
-            if( s_pBufferMsg == nullptr ) {
-               s_pBufferMsg = hb_dynsymFind("BUFFER");
-            }
-         }
+  if (pFuncItm && HB_IS_SYMBOL(pFuncItm))
+  {
+    s_pFuncSymbol = hb_itemGetSymbol(pFuncItm);
+    pDefaultHandler = PRGUnhandledExceptionFilter;
+    /* intentionally no protection for repeated initialization,
+     * it's possible that HB_CSTRUCTURE() has been loaded from
+     * dynamic library [druzus]
+     */
+    if (s_pHbCStructDyn == nullptr)
+    {
+      PHB_DYNS pDyn = hb_dynsymFind("HB_CSTRUCTURE");
+      if (pDyn && hb_dynsymIsFunction(pDyn))
+      {
+        s_pHbCStructDyn = pDyn;
+        if (s_pBufferMsg == nullptr)
+        {
+          s_pBufferMsg = hb_dynsymFind("BUFFER");
+        }
       }
-   } else {
-      s_pFuncSymbol = nullptr;
-      if( pFuncItm && HB_IS_POINTER(pFuncItm) ) {
-         pDefaultHandler = reinterpret_cast<LPTOP_LEVEL_EXCEPTION_FILTER>(hb_itemGetPtr(pFuncItm));
-         if( pDefaultHandler == PRGUnhandledExceptionFilter ) {
-            pDefaultHandler = nullptr;
-         }
+    }
+  }
+  else
+  {
+    s_pFuncSymbol = nullptr;
+    if (pFuncItm && HB_IS_POINTER(pFuncItm))
+    {
+      pDefaultHandler = reinterpret_cast<LPTOP_LEVEL_EXCEPTION_FILTER>(hb_itemGetPtr(pFuncItm));
+      if (pDefaultHandler == PRGUnhandledExceptionFilter)
+      {
+        pDefaultHandler = nullptr;
       }
-   }
+    }
+  }
 
-   pDefaultHandler = SetUnhandledExceptionFilter(pDefaultHandler);
+  pDefaultHandler = SetUnhandledExceptionFilter(pDefaultHandler);
 
-   if( pFuncSym ) {
-      hb_itemPutSymbol(hb_stackReturnItem(), pFuncSym);
-   } else if( pDefaultHandler ) {
-      hb_retptr(reinterpret_cast<void*>(pDefaultHandler));
-   }
-   /* else hb_ret(); -> NIL is default */
+  if (pFuncSym)
+  {
+    hb_itemPutSymbol(hb_stackReturnItem(), pFuncSym);
+  }
+  else if (pDefaultHandler)
+  {
+    hb_retptr(reinterpret_cast<void *>(pDefaultHandler));
+  }
+  /* else hb_ret(); -> NIL is default */
 #endif
 }
 
-HB_FUNC( SETERRORMODE )
+HB_FUNC(SETERRORMODE)
 {
 #if defined(HB_OS_WIN)
-   hb_retni(SetErrorMode(hb_parni(1)));
+  hb_retni(SetErrorMode(hb_parni(1)));
 #else
-   hb_retni(0);
+  hb_retni(0);
 #endif
 }

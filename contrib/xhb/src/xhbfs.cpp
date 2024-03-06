@@ -47,29 +47,32 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 
-HB_FUNC( ISDIRECTORY )
+HB_FUNC(ISDIRECTORY)
 {
-   HB_BOOL bRetVal;
+  HB_BOOL bRetVal;
 
 #if defined(HB_OS_WIN) && 0 /* Document, but don't replicate xHarbour bug. */
-   bRetVal = hb_fsDirExists(hb_parcx(1));
+  bRetVal = hb_fsDirExists(hb_parcx(1));
 #else
-   {
-      PHB_FFIND ffind = hb_fsFindFirst(hb_parcx(1), HB_FA_DIRECTORY);
+  {
+    PHB_FFIND ffind = hb_fsFindFirst(hb_parcx(1), HB_FA_DIRECTORY);
 
-      if( ffind ) {
-         bRetVal = ( ffind->attr & HB_FA_DIRECTORY );
-         hb_fsFindClose(ffind);
-      } else {
-         bRetVal = false;
-      }
-   }
+    if (ffind)
+    {
+      bRetVal = (ffind->attr & HB_FA_DIRECTORY);
+      hb_fsFindClose(ffind);
+    }
+    else
+    {
+      bRetVal = false;
+    }
+  }
 #endif
 
-   hb_fsSetError(0);
+  hb_fsSetError(0);
 
-   hb_retl(bRetVal);
+  hb_retl(bRetVal);
 }
 
-HB_FUNC_TRANSLATE( ISDIR, ISDIRECTORY )
-HB_FUNC_TRANSLATE( DISABLEWAITLOCKS, HB_DISABLEWAITLOCKS )
+HB_FUNC_TRANSLATE(ISDIR, ISDIRECTORY)
+HB_FUNC_TRANSLATE(DISABLEWAITLOCKS, HB_DISABLEWAITLOCKS)

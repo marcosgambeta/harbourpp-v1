@@ -48,28 +48,30 @@
 #include "hbapiitm.hpp"
 
 /* ASizeAlloc(<array>, <num>) --> <array> - Set the pre-alloc step. */
-HB_FUNC( ASIZEALLOC )
+HB_FUNC(ASIZEALLOC)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
-   auto pPreAlloc = hb_param(2, Harbour::Item::NUMERIC);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pPreAlloc = hb_param(2, Harbour::Item::NUMERIC);
 
-   if( pArray && pPreAlloc ) {
-      /* do nothing Harbour uses dynamically updated preallocation size */
-      hb_itemReturn(pArray);
-   }
+  if (pArray && pPreAlloc)
+  {
+    /* do nothing Harbour uses dynamically updated preallocation size */
+    hb_itemReturn(pArray);
+  }
 }
 
 /* ALenAlloc( <array> ) --> <num> - Get the pre-alloc step. */
-HB_FUNC( ALENALLOC )
+HB_FUNC(ALENALLOC)
 {
-   auto pArray = hb_param(1, Harbour::Item::ARRAY);
+  auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-   if( pArray ) {
-      /* Harbour uses dynamically updated preallocation size
-       * let's approximate some value
-       */
-      HB_SIZE nLen = hb_arrayLen(pArray);
-      nLen = ( nLen >> 1 ) + 1;
-      hb_retns(nLen);
-   }
+  if (pArray)
+  {
+    /* Harbour uses dynamically updated preallocation size
+     * let's approximate some value
+     */
+    HB_SIZE nLen = hb_arrayLen(pArray);
+    nLen = (nLen >> 1) + 1;
+    hb_retns(nLen);
+  }
 }

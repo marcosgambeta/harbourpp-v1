@@ -48,25 +48,29 @@
 #include "hbapiitm.hpp"
 #include "hbmemvar.ch"
 
-HB_FUNC( __MVSYMBOLINFO )
+HB_FUNC(__MVSYMBOLINFO)
 {
-   PHB_ITEM pArray;
+  PHB_ITEM pArray;
 
-   pArray = hb_memvarSaveInArray(HB_MV_PUBLIC | HB_MV_PRIVATE, true);
-   if( pArray ) {
-      HB_SIZE nLen = hb_arrayLen(pArray), n;
-      auto pValue = hb_itemNew(nullptr);
+  pArray = hb_memvarSaveInArray(HB_MV_PUBLIC | HB_MV_PRIVATE, true);
+  if (pArray)
+  {
+    HB_SIZE nLen = hb_arrayLen(pArray), n;
+    auto pValue = hb_itemNew(nullptr);
 
-      for( n = 1; n <= nLen; ++n ) {
-         auto pItem = hb_arrayGetItemPtr(pArray, n);
-         PHB_SYMB pSym  = hb_arrayGetSymbol(pItem, 1);
-         hb_itemCopyFromRef(pValue, hb_arrayGetItemPtr(pItem, 2));
-         hb_arraySetC(pItem, 1, pSym->szName);
-         hb_arraySetForward(pItem, 2, pValue);
-      }
-      hb_itemRelease(pValue);
-      hb_itemReturnRelease(pArray);
-   } else {
-      hb_reta(0);
-   }
+    for (n = 1; n <= nLen; ++n)
+    {
+      auto pItem = hb_arrayGetItemPtr(pArray, n);
+      PHB_SYMB pSym = hb_arrayGetSymbol(pItem, 1);
+      hb_itemCopyFromRef(pValue, hb_arrayGetItemPtr(pItem, 2));
+      hb_arraySetC(pItem, 1, pSym->szName);
+      hb_arraySetForward(pItem, 2, pValue);
+    }
+    hb_itemRelease(pValue);
+    hb_itemReturnRelease(pArray);
+  }
+  else
+  {
+    hb_reta(0);
+  }
 }

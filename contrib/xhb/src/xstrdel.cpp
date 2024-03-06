@@ -47,36 +47,44 @@
 #include "hbapi.hpp"
 
 /* replaces characters in a string */
-HB_FUNC( STRDEL )
+HB_FUNC(STRDEL)
 {
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
-      auto szText = hb_parcx(1);
-      auto nText  = hb_parclen(1);
-      auto nDel   = hb_parclen(2);
+  if (HB_ISCHAR(1) && HB_ISCHAR(2))
+  {
+    auto szText = hb_parcx(1);
+    auto nText = hb_parclen(1);
+    auto nDel = hb_parclen(2);
 
-      if( nDel > 0 && nText > 0 ) {
-         auto szDel = hb_parcx(2);
-         HB_SIZE      nPosTxt  = 0;
-         HB_SIZE      nResult  = 0;
-         HB_SIZE      nPosDel  = 0;
-         auto szResult = static_cast<char*>(hb_xgrab(nText + 1));
+    if (nDel > 0 && nText > 0)
+    {
+      auto szDel = hb_parcx(2);
+      HB_SIZE nPosTxt = 0;
+      HB_SIZE nResult = 0;
+      HB_SIZE nPosDel = 0;
+      auto szResult = static_cast<char *>(hb_xgrab(nText + 1));
 
-         for(; ( nPosDel < nText && nPosDel < nDel ); nPosDel++ ) {
-            if( szDel[nPosDel] != ' ' ) {
-               hb_xmemcpy(szResult + nResult, szText + nPosTxt, nPosDel - nPosTxt);
-               nResult += nPosDel - nPosTxt;
-               nPosTxt  = nPosDel + 1;
-            }
-         }
-         hb_xmemcpy(szResult + nResult, szText + nPosTxt, nText - nPosTxt);
-         nResult += nText - nPosTxt;
-
-         szResult[nResult] = '\0';
-         hb_retclen_buffer(szResult, nResult);
-      } else {
-         hb_retc(szText);
+      for (; (nPosDel < nText && nPosDel < nDel); nPosDel++)
+      {
+        if (szDel[nPosDel] != ' ')
+        {
+          hb_xmemcpy(szResult + nResult, szText + nPosTxt, nPosDel - nPosTxt);
+          nResult += nPosDel - nPosTxt;
+          nPosTxt = nPosDel + 1;
+        }
       }
-   } else {
-      hb_retc_null();
-   }
+      hb_xmemcpy(szResult + nResult, szText + nPosTxt, nText - nPosTxt);
+      nResult += nText - nPosTxt;
+
+      szResult[nResult] = '\0';
+      hb_retclen_buffer(szResult, nResult);
+    }
+    else
+    {
+      hb_retc(szText);
+    }
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }
