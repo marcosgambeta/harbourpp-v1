@@ -140,10 +140,12 @@ typedef struct _HB_CURL
 static HB_HASH_FUNC(hb_curl_HashKey) /* HB_SIZE func( const void * Value, const void * Cargo ) */
 {
   HB_SIZE ulSum = 0;
-  const char *szName = (const char *)Value;
+  auto szName = static_cast<const char *>(Value);
 
   while (*szName)
+  {
     ulSum += *szName++;
+  }
 
   HB_SYMBOL_UNUSED(HashPtr);
   HB_SYMBOL_UNUSED(Cargo);
@@ -154,7 +156,7 @@ static HB_HASH_FUNC(hb_curl_HashKey) /* HB_SIZE func( const void * Value, const 
 /* deletes a string */
 static HB_HASH_FUNC(hb_curl_HashDel)
 {
-  hb_xfree((void *)Value);
+  hb_xfree(static_cast<void *>(Value));
   HB_SYMBOL_UNUSED(HashPtr);
   HB_SYMBOL_UNUSED(Cargo);
   return 1;
@@ -164,19 +166,19 @@ static HB_HASH_FUNC(hb_curl_HashDel)
 static HB_HASH_FUNC(hb_curl_HashCmp)
 {
   HB_SYMBOL_UNUSED(HashPtr);
-  return strcmp((const char *)Value, (const char *)Cargo);
+  return strcmp(static_cast<const char *>(Value), static_cast<const char *>(Cargo));
 }
 
 static const char *hb_curl_StrHashNew(PHB_CURL hb_curl, const char *szValue)
 {
-  if (szValue)
+  if (szValue != nullptr)
   {
-    char *szHash;
-
     if (!hb_curl->pHash)
+    {
       hb_curl->pHash = hb_hashTableCreate(HB_CURL_HASH_TABLE_SIZE, hb_curl_HashKey, hb_curl_HashDel, hb_curl_HashCmp);
+    }
 
-    szHash = (char *)hb_hashTableFind(hb_curl->pHash, szValue);
+    auto szHash = static_cast<char *>(hb_hashTableFind(hb_curl->pHash, szValue));
     if (!szHash)
     {
       szHash = hb_strdup(szValue);
@@ -185,7 +187,9 @@ static const char *hb_curl_StrHashNew(PHB_CURL hb_curl, const char *szValue)
     return szHash;
   }
   else
+  {
     return nullptr;
+  }
 }
 
 #define hb_curl_StrHash(c, s) hb_curl_StrHashNew((c), (s))
@@ -202,7 +206,7 @@ static char *hb_curl_protnames(unsigned long bitmask)
 {
   /* now we need 166 bytes for 30 protocol names and trailing 0 so 200 is enough */
   HB_SIZE nLen = 200, nDst = 0;
-  char *buffer = (char *)hb_xgrab(nLen);
+  auto buffer = static_cast<char *>(hb_xgrab(nLen));
   unsigned long prot;
 
   for (prot = 1; prot != 0 && prot <= bitmask; prot <<= 1)
@@ -303,13 +307,15 @@ static char *hb_curl_protnames(unsigned long bitmask)
         szProt = "GOPHERS";
         break;
       }
-      if (szProt)
+      if (szProt != nullptr)
       {
         HB_SIZE l = strlen(szProt);
         if (nDst + l + (nDst ? 1 : 0) < nLen)
         {
           if (nDst)
+          {
             buffer[nDst++] = ',';
+          }
           memcpy(&buffer[nDst], szProt, l);
           nDst += l;
         }
@@ -331,8 +337,10 @@ static void *hb_curl_xgrab(size_t size)
 
 static void hb_curl_xfree(void *p)
 {
-  if (p)
+  if (p != nullptr)
+  {
     hb_xfree(p);
+  }
 }
 
 static void *hb_curl_xrealloc(void *p, size_t size)
@@ -357,7 +365,7 @@ static void *hb_curl_calloc(size_t nelem, size_t elsize)
 
 static void hb_curl_retcode(CURLcode code)
 {
-  hb_retni((int)code);
+  hb_retni(static_cast<int>(code));
 }
 
 HB_FUNC(CURL_GLOBAL_INIT)
@@ -390,58 +398,60 @@ static size_t hb_curl_read_dummy_callback(void *buffer, size_t size, size_t nmem
 
 static size_t hb_curl_read_file_callback(void *buffer, size_t size, size_t nmemb, void *Cargo)
 {
-  PHB_CURL hb_curl = (PHB_CURL)Cargo;
+  auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
-  if (hb_curl)
+  if (hb_curl != nullptr)
   {
-    size_t ret;
-
     if (hb_curl->ul_handle == FS_ERROR)
     {
       hb_curl->ul_handle = hb_fsOpen(hb_curl->ul_name, FO_READ);
 
       if (hb_curl->ul_handle == FS_ERROR)
-        return (size_t)-1;
+      {
+        return static_cast<size_t>(-1);
+      }
     }
 
-    ret = (size_t)hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb);
+    auto ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
 
     return hb_fsError() ? CURL_READFUNC_ABORT : ret;
   }
 
-  return (size_t)-1;
+  return static_cast<size_t>(-1);
 }
 
 static size_t hb_curl_read_fhandle_callback(void *buffer, size_t size, size_t nmemb, void *Cargo)
 {
-  PHB_CURL hb_curl = (PHB_CURL)Cargo;
+  auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
-  if (hb_curl)
+  if (hb_curl != nullptr)
   {
-    size_t ret;
-
     if (hb_curl->ul_handle == FS_ERROR)
-      return (size_t)-1;
+    {
+      return static_cast<size_t>(-1);
+    }
 
-    ret = (size_t)hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb);
+    auto ret = static_cast<size_t>(hb_fsReadLarge(hb_curl->ul_handle, buffer, size * nmemb));
 
     return hb_fsError() ? CURL_READFUNC_ABORT : ret;
   }
 
-  return (size_t)-1;
+  return static_cast<size_t>(-1);
 }
 
 static size_t hb_curl_read_buff_callback(void *buffer, size_t size, size_t nmemb, void *Cargo)
 {
-  PHB_CURL hb_curl = (PHB_CURL)Cargo;
+  auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
-  if (hb_curl)
+  if (hb_curl != nullptr)
   {
     size_t nTodo = size * nmemb;
     size_t nLeft = hb_curl->ul_len - hb_curl->ul_pos;
 
     if (nTodo > nLeft)
+    {
       nTodo = nLeft;
+    }
 
     hb_xmemcpy(buffer, hb_curl->ul_ptr + hb_curl->ul_pos, nTodo);
 
@@ -455,37 +465,41 @@ static size_t hb_curl_read_buff_callback(void *buffer, size_t size, size_t nmemb
 
 static size_t hb_curl_write_file_callback(void *buffer, size_t size, size_t nmemb, void *Cargo)
 {
-  PHB_CURL hb_curl = (PHB_CURL)Cargo;
+  auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
-  if (hb_curl)
+  if (hb_curl != nullptr)
   {
     if (hb_curl->dl_handle == FS_ERROR)
     {
       hb_curl->dl_handle = hb_fsCreate(hb_curl->dl_name, FC_NORMAL);
 
       if (hb_curl->dl_handle == FS_ERROR)
-        return (size_t)-1;
+      {
+        return static_cast<size_t>(-1);
+      }
     }
 
     return hb_fsWriteLarge(hb_curl->dl_handle, buffer, size * nmemb);
   }
 
-  return (size_t)-1;
+  return static_cast<size_t>(-1);
 }
 
 static size_t hb_curl_write_fhandle_callback(void *buffer, size_t size, size_t nmemb, void *Cargo)
 {
-  PHB_CURL hb_curl = (PHB_CURL)Cargo;
+  auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
-  if (hb_curl)
+  if (hb_curl != nullptr)
   {
     if (hb_curl->dl_handle == FS_ERROR)
-      return (size_t)-1;
+    {
+      return static_cast<size_t>(-1);
+    }
 
     return hb_fsWriteLarge(hb_curl->dl_handle, buffer, size * nmemb);
   }
 
-  return (size_t)-1;
+  return static_cast<size_t>(-1);
 }
 
 #define HB_CURL_DL_BUFF_SIZE_INIT (CURL_MAX_WRITE_SIZE * 4)
@@ -493,9 +507,9 @@ static size_t hb_curl_write_fhandle_callback(void *buffer, size_t size, size_t n
 
 static size_t hb_curl_write_buff_callback(void *buffer, size_t size, size_t nmemb, void *Cargo)
 {
-  PHB_CURL hb_curl = (PHB_CURL)Cargo;
+  auto hb_curl = static_cast<PHB_CURL>(Cargo);
 
-  if (hb_curl)
+  if (hb_curl != nullptr)
   {
     size_t nTodo = size * nmemb;
     size_t nLeft = hb_curl->dl_len - hb_curl->dl_pos;
@@ -503,7 +517,7 @@ static size_t hb_curl_write_buff_callback(void *buffer, size_t size, size_t nmem
     if (nTodo > nLeft)
     {
       hb_curl->dl_len += HB_CURL_DL_BUFF_SIZE_INCR;
-      hb_curl->dl_ptr = (unsigned char *)hb_xrealloc(hb_curl->dl_ptr, hb_curl->dl_len);
+      hb_curl->dl_ptr = static_cast<unsigned char *>(hb_xrealloc(hb_curl->dl_ptr, hb_curl->dl_len));
     }
 
     hb_xmemcpy(hb_curl->dl_ptr + hb_curl->dl_pos, buffer, nTodo);
@@ -513,7 +527,7 @@ static size_t hb_curl_write_buff_callback(void *buffer, size_t size, size_t nmem
     return nTodo;
   }
 
-  return (size_t)-1;
+  return static_cast<size_t>(-1);
 }
 
 #if LIBCURL_VERSION_NUM >= 0x072000
@@ -528,10 +542,10 @@ static int hb_curl_progress_callback(void *Cargo, double dltotal, double dlnow, 
     if (hb_vmRequestReenter())
     {
       hb_vmPushEvalSym();
-      hb_vmPush((PHB_ITEM)Cargo);
+      hb_vmPush(static_cast<PHB_ITEM>(Cargo));
 #if LIBCURL_VERSION_NUM >= 0x072000
-      hb_vmPushNumInt((HB_MAXINT)(ulnow > 0 ? ulnow : dlnow));
-      hb_vmPushNumInt((HB_MAXINT)(ultotal > 0 ? ultotal : dltotal));
+      hb_vmPushNumInt(static_cast<HB_MAXINT>(ulnow > 0 ? ulnow : dlnow));
+      hb_vmPushNumInt(static_cast<HB_MAXINT>(ultotal > 0 ? ultotal : dltotal));
 #else
       hb_vmPushDouble(ulnow > 0 ? ulnow : dlnow, HB_DEFAULT_DECIMALS);
       hb_vmPushDouble(ultotal > 0 ? ultotal : dltotal, HB_DEFAULT_DECIMALS);
@@ -539,7 +553,9 @@ static int hb_curl_progress_callback(void *Cargo, double dltotal, double dlnow, 
       hb_vmSend(2);
 
       if (hb_parl(-1))
+      {
         return 1; /* Abort */
+      }
 
       hb_vmRequestRestore();
     }
@@ -554,7 +570,7 @@ static int hb_curl_debug_callback(CURL *handle, curl_infotype type, char *data, 
 
   if (Cargo)
   {
-    PHB_CURL hb_curl = (PHB_CURL)Cargo;
+    auto hb_curl = static_cast<PHB_CURL>(Cargo);
     if (hb_curl->pDebugCallback && hb_vmRequestReenter())
     {
       hb_vmPushEvalSym();
@@ -595,7 +611,7 @@ static void hb_curl_slist_free(struct curl_slist **ptr)
 
 static void hb_curl_file_ul_free(PHB_CURL hb_curl)
 {
-  if (hb_curl && hb_curl->ul_name)
+  if (hb_curl != nullptr && hb_curl->ul_name)
   {
     hb_xfree(hb_curl->ul_name);
     hb_curl->ul_name = nullptr;
@@ -610,7 +626,7 @@ static void hb_curl_file_ul_free(PHB_CURL hb_curl)
 
 static void hb_curl_file_dl_free(PHB_CURL hb_curl)
 {
-  if (hb_curl && hb_curl->dl_name)
+  if (hb_curl != nullptr && hb_curl->dl_name)
   {
     hb_xfree(hb_curl->dl_name);
     hb_curl->dl_name = nullptr;
@@ -625,7 +641,7 @@ static void hb_curl_file_dl_free(PHB_CURL hb_curl)
 
 static void hb_curl_buff_ul_free(PHB_CURL hb_curl)
 {
-  if (hb_curl && hb_curl->ul_ptr)
+  if (hb_curl != nullptr && hb_curl->ul_ptr)
   {
     hb_xfree(hb_curl->ul_ptr);
     hb_curl->ul_ptr = nullptr;
@@ -636,7 +652,7 @@ static void hb_curl_buff_ul_free(PHB_CURL hb_curl)
 
 static void hb_curl_buff_dl_free(PHB_CURL hb_curl)
 {
-  if (hb_curl && hb_curl->dl_ptr)
+  if (hb_curl != nullptr && hb_curl->dl_ptr)
   {
     hb_xfree(hb_curl->dl_ptr);
     hb_curl->dl_ptr = nullptr;
@@ -728,7 +744,9 @@ static void PHB_CURL_free(PHB_CURL hb_curl, HB_BOOL bFree)
   }
 #if LIBCURL_VERSION_NUM >= 0x070C01
   else
+  {
     curl_easy_reset(hb_curl->curl);
+  }
 #endif
 }
 
@@ -741,7 +759,7 @@ static PHB_CURL PHB_CURL_create(CURL *from)
 
   if (curl)
   {
-    PHB_CURL hb_curl = (PHB_CURL)hb_xgrab(sizeof(HB_CURL));
+    auto hb_curl = static_cast<PHB_CURL>(hb_xgrab(sizeof(HB_CURL)));
 
     memset(hb_curl, 0, sizeof(HB_CURL));
     hb_curl->curl = curl;
@@ -749,12 +767,14 @@ static PHB_CURL PHB_CURL_create(CURL *from)
     return hb_curl;
   }
   else
+  {
     return nullptr;
+  }
 }
 
 static HB_GARBAGE_FUNC(PHB_CURL_release)
 {
-  PHB_CURL *hb_curl_ptr = (PHB_CURL *)Cargo;
+  auto hb_curl_ptr = static_cast<PHB_CURL *>(Cargo);
 
   /* Check if pointer is not NULL to avoid multiple freeing */
   if (hb_curl_ptr && *hb_curl_ptr)
@@ -767,17 +787,21 @@ static HB_GARBAGE_FUNC(PHB_CURL_release)
 
 static HB_GARBAGE_FUNC(PHB_CURL_mark)
 {
-  PHB_CURL *hb_curl_ptr = (PHB_CURL *)Cargo;
+  auto hb_curl_ptr = static_cast<PHB_CURL *>(Cargo);
 
   if (hb_curl_ptr && *hb_curl_ptr)
   {
     PHB_CURL hb_curl = *hb_curl_ptr;
 
     if (hb_curl->pProgressCallback)
+    {
       hb_gcMark(hb_curl->pProgressCallback);
+    }
 
     if (hb_curl->pDebugCallback)
+    {
       hb_gcMark(hb_curl->pDebugCallback);
+    }
   }
 }
 
@@ -785,7 +809,7 @@ static const HB_GC_FUNCS s_gcCURLFuncs = {PHB_CURL_release, PHB_CURL_mark};
 
 static void PHB_CURL_ret(PHB_CURL from)
 {
-  void **ph = (void **)hb_gcAllocate(sizeof(PHB_CURL), &s_gcCURLFuncs);
+  auto ph = static_cast<void **>(hb_gcAllocate(sizeof(PHB_CURL), &s_gcCURLFuncs));
 
   *ph = PHB_CURL_create(from);
 
@@ -799,9 +823,9 @@ static void *PHB_CURL_is(int iParam)
 
 static PHB_CURL PHB_CURL_par(int iParam)
 {
-  void **ph = (void **)hb_parptrGC(&s_gcCURLFuncs, iParam);
+  auto ph = static_cast<void **>(hb_parptrGC(&s_gcCURLFuncs, iParam));
 
-  return ph ? (PHB_CURL)*ph : nullptr;
+  return ph ? static_cast<PHB_CURL>(*ph) : nullptr;
 }
 
 /* Harbour interface */
@@ -815,39 +839,49 @@ HB_FUNC(CURL_EASY_INIT)
 HB_FUNC(CURL_EASY_DUPLICATE)
 {
   if (PHB_CURL_is(1))
+  {
     PHB_CURL_ret(PHB_CURL_par(1));
+  }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(CURL_EASY_CLEANUP)
 {
   if (PHB_CURL_is(1))
   {
-    void **ph = (void **)hb_parptrGC(&s_gcCURLFuncs, 1);
+    auto ph = static_cast<void **>(hb_parptrGC(&s_gcCURLFuncs, 1));
 
     if (ph && *ph)
     {
       /* Destroy the object */
-      PHB_CURL_free((PHB_CURL)*ph, true);
+      PHB_CURL_free(static_cast<PHB_CURL>(*ph), true);
       *ph = nullptr;
     }
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(CURL_EASY_RESET)
 {
   if (PHB_CURL_is(1))
   {
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    if (hb_curl)
+    if (hb_curl != nullptr)
+    {
       PHB_CURL_free(hb_curl, false);
+    }
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(CURL_EASY_PAUSE)
@@ -855,27 +889,31 @@ HB_FUNC(CURL_EASY_PAUSE)
   if (PHB_CURL_is(1))
   {
 #if LIBCURL_VERSION_NUM >= 0x071200
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    hb_curl_retcode(hb_curl ? curl_easy_pause(hb_curl->curl, hb_parni(2)) : (CURLcode)HB_CURLE_ERROR);
+    hb_curl_retcode(hb_curl ? curl_easy_pause(hb_curl->curl, hb_parni(2)) : static_cast<CURLcode>(HB_CURLE_ERROR));
 #else
-    hb_curl_retcode((CURLcode)HB_CURLE_ERROR);
+    hb_curl_retcode(static_cast<CURLcode>(HB_CURLE_ERROR));
 #endif
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(CURL_EASY_PERFORM)
 {
   if (PHB_CURL_is(1))
   {
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    hb_curl_retcode(hb_curl ? curl_easy_perform(hb_curl->curl) : (CURLcode)HB_CURLE_ERROR);
+    hb_curl_retcode(hb_curl ? curl_easy_perform(hb_curl->curl) : static_cast<CURLcode>(HB_CURLE_ERROR));
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* NOTE: curl_easy_send( curl, cBuffer, @nSentBytes ) -> nResult */
@@ -883,15 +921,15 @@ HB_FUNC(CURL_EASY_SEND)
 {
   if (PHB_CURL_is(1))
   {
-    CURLcode res = (CURLcode)HB_CURLE_ERROR;
+    auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 #if LIBCURL_VERSION_NUM >= 0x071202
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    if (hb_curl)
+    if (hb_curl != nullptr)
     {
       size_t size = 0;
 
-      res = curl_easy_send(hb_curl->curl, hb_parcx(2), (size_t)hb_parclen(2), &size);
+      res = curl_easy_send(hb_curl->curl, hb_parcx(2), static_cast<size_t>(hb_parclen(2)), &size);
 
       hb_storns(size, 3);
     }
@@ -899,7 +937,9 @@ HB_FUNC(CURL_EASY_SEND)
     hb_curl_retcode(res);
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* NOTE: curl_easy_recv( curl, @cBuffer ) -> nResult */
@@ -907,40 +947,46 @@ HB_FUNC(CURL_EASY_RECV)
 {
   if (PHB_CURL_is(1))
   {
-    CURLcode res = (CURLcode)HB_CURLE_ERROR;
+    auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 #if LIBCURL_VERSION_NUM >= 0x071202
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    if (hb_curl)
+    if (hb_curl != nullptr)
     {
-      size_t size = (size_t)hb_parclen(2);
+      auto size = static_cast<size_t>(hb_parclen(2));
       void *buffer;
 
       if (size < 1024)
+      {
         size = 1024;
+      }
 
       buffer = hb_xgrab(size + 1);
 
       res = curl_easy_recv(hb_curl->curl, buffer, size, &size);
 
-      if (!hb_storclen_buffer((char *)buffer, size, 2))
+      if (!hb_storclen_buffer(static_cast<char *>(buffer), size, 2))
+      {
         hb_xfree(buffer);
+      }
     }
 #endif
     hb_curl_retcode(res);
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(CURL_EASY_SETOPT)
 {
   if (PHB_CURL_is(1) && HB_ISNUM(2))
   {
-    PHB_CURL hb_curl = PHB_CURL_par(1);
-    CURLcode res = (CURLcode)HB_CURLE_ERROR;
+    auto hb_curl = PHB_CURL_par(1);
+    auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 
-    if (hb_curl)
+    if (hb_curl != nullptr)
     {
       switch (hb_parni(2))
       {
@@ -1085,7 +1131,9 @@ HB_FUNC(CURL_EASY_SETOPT)
 #if LIBCURL_VERSION_NUM >= 0x075500
       case HB_CURLOPT_PROTOCOLS_STR:
         if (HB_ISCHAR(3))
+        {
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_PROTOCOLS_STR, hb_parc(3));
+        }
         break;
 #endif
       case HB_CURLOPT_REDIR_PROTOCOLS:
@@ -1102,7 +1150,9 @@ HB_FUNC(CURL_EASY_SETOPT)
 #if LIBCURL_VERSION_NUM >= 0x075500
       case HB_CURLOPT_REDIR_PROTOCOLS_STR:
         if (HB_ISCHAR(3))
+        {
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_REDIR_PROTOCOLS_STR, hb_parc(3));
+        }
         break;
 #endif
       case HB_CURLOPT_NOPROXY:
@@ -1242,9 +1292,9 @@ HB_FUNC(CURL_EASY_SETOPT)
 #endif
       case HB_CURLOPT_HTTPPOST:
       case HB_CURLOPT_MIMEPOST: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
@@ -1253,7 +1303,9 @@ HB_FUNC(CURL_EASY_SETOPT)
           if (hb_curl->mime || nLen > 0)
           {
             if (!hb_curl->mime)
+            {
               hb_curl->mime = curl_mime_init(hb_curl->curl);
+            }
 
             for (nPos = 1; nPos <= nLen; ++nPos)
             {
@@ -1286,18 +1338,20 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_USERAGENT, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
       case HB_CURLOPT_HTTPHEADER: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPHEADER, nullptr);
         hb_curl_slist_free(&hb_curl->pHTTPHEADER);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pHTTPHEADER = curl_slist_append(hb_curl->pHTTPHEADER, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPHEADER, hb_curl->pHTTPHEADER);
         }
@@ -1305,18 +1359,20 @@ HB_FUNC(CURL_EASY_SETOPT)
       break;
 #if LIBCURL_VERSION_NUM >= 0x070A03
       case HB_CURLOPT_HTTP200ALIASES: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr);
         hb_curl_slist_free(&hb_curl->pHTTP200ALIASES);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pHTTP200ALIASES = curl_slist_append(hb_curl->pHTTP200ALIASES, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_HTTP200ALIASES, hb_curl->pHTTP200ALIASES);
         }
@@ -1367,18 +1423,20 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_FROM, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
       case HB_CURLOPT_MAIL_RCPT: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr);
         hb_curl_slist_free(&hb_curl->pMAIL_RCPT);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pMAIL_RCPT = curl_slist_append(hb_curl->pMAIL_RCPT, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_RCPT, hb_curl->pMAIL_RCPT);
         }
@@ -1405,54 +1463,60 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_FTPPORT, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
       case HB_CURLOPT_QUOTE: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_QUOTE, nullptr);
         hb_curl_slist_free(&hb_curl->pQUOTE);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pQUOTE = curl_slist_append(hb_curl->pQUOTE, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_QUOTE, hb_curl->pQUOTE);
         }
       }
       break;
       case HB_CURLOPT_POSTQUOTE: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_POSTQUOTE, nullptr);
         hb_curl_slist_free(&hb_curl->pPOSTQUOTE);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pPOSTQUOTE = curl_slist_append(hb_curl->pPOSTQUOTE, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_POSTQUOTE, hb_curl->pPOSTQUOTE);
         }
       }
       break;
       case HB_CURLOPT_PREQUOTE: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_PREQUOTE, nullptr);
         hb_curl_slist_free(&hb_curl->pPREQUOTE);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pQUOTE = curl_slist_append(hb_curl->pPREQUOTE, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_PREQUOTE, hb_curl->pPREQUOTE);
         }
@@ -1676,18 +1740,20 @@ HB_FUNC(CURL_EASY_SETOPT)
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071503
       case HB_CURLOPT_RESOLVE: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_RESOLVE, nullptr);
         hb_curl_slist_free(&hb_curl->pRESOLVE);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pRESOLVE = curl_slist_append(hb_curl->pRESOLVE, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_RESOLVE, hb_curl->pRESOLVE);
         }
@@ -1842,18 +1908,20 @@ HB_FUNC(CURL_EASY_SETOPT)
         /* Telnet options */
 
       case HB_CURLOPT_TELNETOPTIONS: {
-        PHB_ITEM pArray = hb_param(3, Harbour::Item::ARRAY);
+        auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr);
         hb_curl_slist_free(&hb_curl->pTELNETOPTIONS);
 
-        if (pArray)
+        if (pArray != nullptr)
         {
           HB_SIZE nPos;
           HB_SIZE nLen = hb_arrayLen(pArray);
 
           for (nPos = 0; nPos < nLen; ++nPos)
+          {
             hb_curl->pTELNETOPTIONS = curl_slist_append(hb_curl->pTELNETOPTIONS, hb_arrayGetCPtr(pArray, nPos + 1));
+          }
 
           res = curl_easy_setopt(hb_curl->curl, CURLOPT_TELNETOPTIONS, hb_curl->pTELNETOPTIONS);
         }
@@ -1867,7 +1935,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         /* Harbour specials */
 
       case HB_CURLOPT_PROGRESSBLOCK: {
-        PHB_ITEM pProgressCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+        auto pProgressCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
         if (hb_curl->pProgressCallback)
         {
@@ -1968,7 +2036,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         {
           hb_curl->ul_pos = 0;
           hb_curl->ul_len = hb_parclen(3);
-          hb_curl->ul_ptr = (unsigned char *)hb_xgrab(hb_curl->ul_len);
+          hb_curl->ul_ptr = static_cast<unsigned char *>(hb_xgrab(hb_curl->ul_len));
 
           hb_xmemcpy(hb_curl->ul_ptr, hb_parc(3), hb_curl->ul_len);
 
@@ -1982,16 +2050,18 @@ HB_FUNC(CURL_EASY_SETOPT)
 
         hb_curl->dl_pos = 0;
         hb_curl->dl_len = hb_parnldef(3, HB_CURL_DL_BUFF_SIZE_INIT);
-        hb_curl->dl_ptr = (unsigned char *)hb_xgrab(hb_curl->dl_len);
+        hb_curl->dl_ptr = static_cast<unsigned char *>(hb_xgrab(hb_curl->dl_len));
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_WRITEFUNCTION, hb_curl_write_buff_callback);
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_WRITEDATA, hb_curl);
         break;
 
       case HB_CURLOPT_DL_BUFF_GET:
-        hb_storclen((char *)hb_curl->dl_ptr, hb_curl->dl_pos, 3);
+        hb_storclen(reinterpret_cast<char *>(hb_curl->dl_ptr), hb_curl->dl_pos, 3);
         if (hb_curl->dl_ptr)
+        {
           res = CURLE_OK;
+        }
         break;
 
       case HB_CURLOPT_UL_NULL_SETUP:
@@ -2003,7 +2073,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 
       case HB_CURLOPT_DEBUGBLOCK: {
-        PHB_ITEM pDebugCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
+        auto pDebugCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
         if (hb_curl->pDebugCallback)
         {
@@ -2037,7 +2107,9 @@ HB_FUNC(CURL_EASY_SETOPT)
     hb_curl_retcode(res);
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* Harbour extension. */
@@ -2045,15 +2117,21 @@ HB_FUNC(CURL_EASY_DL_BUFF_GET)
 {
   if (PHB_CURL_is(1))
   {
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    if (hb_curl)
-      hb_retclen((char *)hb_curl->dl_ptr, hb_curl->dl_pos);
+    if (hb_curl != nullptr)
+    {
+      hb_retclen(reinterpret_cast<char *>(hb_curl->dl_ptr), hb_curl->dl_pos);
+    }
     else
+    {
       hb_retc_null();
+    }
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 #define HB_CURL_INFO_TYPE_INVALID 0
@@ -2066,15 +2144,15 @@ HB_FUNC(CURL_EASY_DL_BUFF_GET)
 #define HB_CURL_INFO_TYPE_SLIST 7
 
 #define HB_CURL_EASY_GETINFO(hb_curl, n, p)                                                                            \
-  (hb_curl ? curl_easy_getinfo(hb_curl->curl, n, p) : (CURLcode)HB_CURLE_ERROR)
+  (hb_curl ? curl_easy_getinfo(hb_curl->curl, n, p) : static_cast<CURLcode>(HB_CURLE_ERROR))
 
 /* NOTE: curl_easy_getinfo( curl, x, @nError ) -> xValue */
 HB_FUNC(CURL_EASY_GETINFO)
 {
   if (PHB_CURL_is(1) && HB_ISNUM(2))
   {
-    PHB_CURL hb_curl = PHB_CURL_par(1);
-    CURLcode res = (CURLcode)HB_CURLE_ERROR;
+    auto hb_curl = PHB_CURL_par(1);
+    auto res = static_cast<CURLcode>(HB_CURLE_ERROR);
 
     int type = HB_CURL_INFO_TYPE_INVALID;
 
@@ -2381,7 +2459,9 @@ HB_FUNC(CURL_EASY_GETINFO)
 
         /* Count */
         for (walk_ret_slist = ret_slist, nCount = 0; walk_ret_slist->next; nCount++)
+        {
           walk_ret_slist = walk_ret_slist->next;
+        }
 
         /* Fill */
         pArray = hb_itemArrayNew(nCount);
@@ -2395,14 +2475,18 @@ HB_FUNC(CURL_EASY_GETINFO)
         curl_slist_free_all(ret_slist);
       }
       else
+      {
         hb_reta(0);
+      }
       break;
     }
 
-    hb_stornl((long)res, 3);
+    hb_stornl(static_cast<long>(res), 3);
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(CURL_EASY_ESCAPE)
@@ -2410,11 +2494,11 @@ HB_FUNC(CURL_EASY_ESCAPE)
   if (PHB_CURL_is(1))
   {
 #if LIBCURL_VERSION_NUM >= 0x070F04
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    if (hb_curl)
+    if (hb_curl != nullptr)
     {
-      char *buffer = curl_easy_escape(hb_curl->curl, hb_parcx(2), (int)hb_parclen(2));
+      char *buffer = curl_easy_escape(hb_curl->curl, hb_parcx(2), static_cast<int>(hb_parclen(2)));
       hb_retc(buffer);
       curl_free(buffer);
     }
@@ -2423,7 +2507,9 @@ HB_FUNC(CURL_EASY_ESCAPE)
       hb_retc_null();
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 HB_FUNC(CURL_EASY_UNESCAPE)
@@ -2431,12 +2517,12 @@ HB_FUNC(CURL_EASY_UNESCAPE)
   if (PHB_CURL_is(1))
   {
 #if LIBCURL_VERSION_NUM >= 0x070F04
-    PHB_CURL hb_curl = PHB_CURL_par(1);
+    auto hb_curl = PHB_CURL_par(1);
 
-    if (hb_curl)
+    if (hb_curl != nullptr)
     {
       int nLen = 0;
-      char *buffer = curl_easy_unescape(hb_curl->curl, hb_parcx(2), (int)hb_parclen(2), &nLen);
+      char *buffer = curl_easy_unescape(hb_curl->curl, hb_parcx(2), static_cast<int>(hb_parclen(2)), &nLen);
       hb_retclen(buffer, nLen);
       curl_free(buffer);
     }
@@ -2445,7 +2531,9 @@ HB_FUNC(CURL_EASY_UNESCAPE)
       hb_retc_null();
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* Harbour interface (session independent) */
@@ -2503,40 +2591,52 @@ HB_FUNC(CURL_VERSION_INFO)
       const char *const *prot = data->protocols;
 
       while (*(prot++))
+      {
         nCount++;
+      }
 
       pProtocols = hb_arrayGetItemPtr(pArray, 8);
       hb_arrayNew(pProtocols, nCount);
 
       for (prot = data->protocols, nCount = 1; *prot; prot++)
+      {
         hb_arraySetC(pProtocols, nCount++, *prot);
+      }
     }
 
     hb_itemReturnRelease(pArray);
   }
   else
+  {
     hb_reta(0);
+  }
 }
 
 HB_FUNC(CURL_EASY_STRERROR)
 {
   if (HB_ISNUM(1))
 #if LIBCURL_VERSION_NUM >= 0x070C00
-    hb_retc(curl_easy_strerror((CURLcode)hb_parnl(1)));
+    hb_retc(curl_easy_strerror(static_cast<CURLcode>(hb_parnl(1))));
 #else
     hb_retc_null();
 #endif
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* NOTE: This returns the number of seconds since January 1st 1970 in the UTC time zone. */
 HB_FUNC(CURL_GETDATE)
 {
   if (HB_ISCHAR(1))
-    hb_retnint((HB_MAXINT)curl_getdate(hb_parc(1), nullptr));
+  {
+    hb_retnint(static_cast<HB_MAXINT>(curl_getdate(hb_parc(1), nullptr)));
+  }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* Harbour interface (session independent) */
@@ -2546,12 +2646,14 @@ HB_FUNC(CURL_ESCAPE)
 {
   if (HB_ISCHAR(1))
   {
-    char *buffer = curl_escape(hb_parc(1), (int)hb_parclen(1));
+    char *buffer = curl_escape(hb_parc(1), static_cast<int>(hb_parclen(1)));
     hb_retc(buffer);
     curl_free(buffer);
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /* NOTE: Obsolete, superceded by curl_easy_unescape() */
@@ -2559,10 +2661,12 @@ HB_FUNC(CURL_UNESCAPE)
 {
   if (HB_ISCHAR(1))
   {
-    char *buffer = curl_unescape(hb_parc(1), (int)hb_parclen(1));
+    char *buffer = curl_unescape(hb_parc(1), static_cast<int>(hb_parclen(1)));
     hb_retc(buffer);
     curl_free(buffer);
   }
   else
+  {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
