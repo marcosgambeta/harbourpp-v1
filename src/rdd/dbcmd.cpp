@@ -800,6 +800,19 @@ HB_FUNC(DBSELECTAREA)
   {
     auto iNewArea = hb_parni(1);
 
+    if (iNewArea == 0)
+    {
+      auto pItem = hb_param(1, Harbour::Item::SYMBOL);
+      if (pItem)
+      {
+        PHB_SYMB pSymAlias = hb_itemGetSymbol(pItem);
+        if (pSymAlias->pDynSym)
+        {
+          iNewArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
+        }
+      }
+    }
+
     /*
      * NOTE: iNewArea >= HB_RDD_MAX_AREA_NUM used intentionally
      * In Clipper area 65535 is reserved for "M" alias [druzus]
@@ -1309,7 +1322,7 @@ HB_FUNC(ORDBAGNAME)
       }
       else
       {
-        hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+        hb_errRT_DBCMD(EG_ARG, EDBCMD_ORD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
         return;
       }
     }
@@ -1414,7 +1427,7 @@ HB_FUNC(ORDCREATE)
          (dbOrderInfo.atomBagName == nullptr || dbOrderInfo.atomBagName[0] == 0)) ||
         !dbOrderInfo.abExpr)
     {
-      hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_ORD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
     }
     dbOrderInfo.itmCobExpr = hb_param(4, Harbour::Item::BLOCK);
@@ -1497,7 +1510,7 @@ HB_FUNC(ORDFOR)
       }
       else
       {
-        hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+        hb_errRT_DBCMD(EG_ARG, EDBCMD_ORD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
         return;
       }
     }
@@ -1538,7 +1551,7 @@ HB_FUNC(ORDKEY)
       }
       else
       {
-        hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+        hb_errRT_DBCMD(EG_ARG, EDBCMD_ORD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
         return;
       }
     }
@@ -1648,7 +1661,7 @@ HB_FUNC(ORDNAME)
       }
       else
       {
-        hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+        hb_errRT_DBCMD(EG_ARG, EDBCMD_ORD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
         return;
       }
     }
@@ -1675,7 +1688,7 @@ HB_FUNC(ORDNUMBER)
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
     if (!(pOrderInfo.itmOrder || HB_ISNIL(1)) || !(pOrderInfo.atomBagName || HB_ISNIL(2)))
     {
-      hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_ORD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
       return;
     }
     pOrderInfo.itmResult = hb_itemPutNI(nullptr, 0);
@@ -1828,6 +1841,18 @@ HB_FUNC(SELECT)
 #endif
         hb_rddGetAliasNumber(szAlias, &iArea);
     }
+    else
+    {
+      auto pItem = hb_param(1, Harbour::Item::SYMBOL);
+      if (pItem)
+      {
+        PHB_SYMB pSymAlias = hb_itemGetSymbol(pItem);
+        if (pSymAlias->pDynSym)
+        {
+          iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
+        }
+      }
+    }
     hb_retni(iArea);
   }
 }
@@ -1960,54 +1985,55 @@ HB_FUNC(DBSETRELATION)
 
   if (pArea != nullptr)
   {
-    if (hb_pcount() < 2 || hb_param(1, Harbour::Item::NUMERIC | Harbour::Item::STRING) == nullptr ||
-        !(HB_ISNIL(4) || HB_ISLOG(4)))
-    {
-      hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
-      return;
-    }
+    auto iArea = hb_rddGetCurrentWorkAreaNumber();
+    auto szAlias = hb_parc(1);
+    auto pBlock = hb_param(2, Harbour::Item::BLOCK);
+    auto pText = hb_param(3, Harbour::Item::STRING);
+    AREAP pChildArea = nullptr;
 
-    HB_AREANO uiChildArea;
-
-    if (HB_ISNUM(1))
+    if (szAlias != nullptr)
     {
-      uiChildArea = static_cast<HB_AREANO>(hb_parni(1));
-    }
-    else
-    {
-      auto iArea = hb_rddGetCurrentWorkAreaNumber();
-
-      hb_rddSelectWorkAreaAlias(hb_parcx(1));
+      if (hb_rddSelectWorkAreaAlias(szAlias) == HB_SUCCESS)
+      {
+        pChildArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
+      }
       if (hb_vmRequestQuery())
       {
         return;
       }
-      uiChildArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
       hb_rddSelectWorkAreaNumber(iArea);
     }
-
-    AREAP pChildArea = uiChildArea ? static_cast<AREAP>(hb_rddGetWorkAreaPointer(uiChildArea)) : nullptr;
-
-    if (!pChildArea)
+    else
     {
-      hb_errRT_BASE(EG_NOALIAS, EDBCMD_NOALIAS, nullptr, nullptr, 0);
-      return;
+      pChildArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(hb_parni(1)));
     }
 
-    DBRELINFO dbRelations;
-    dbRelations.itmCobExpr = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
-    dbRelations.abKey = hb_itemNew(hb_param(3, Harbour::Item::STRING));
-    dbRelations.isScoped = hb_parl(4);
-    dbRelations.isOptimized = false;
-    dbRelations.lpaChild = pChildArea;
-    dbRelations.lpaParent = pArea;
-    dbRelations.lpdbriNext = nullptr;
+    if (pArea == pChildArea)
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_SAMEALIAS, nullptr, HB_ERR_FUNCNAME);
+#ifdef HB_CLP_STRICT
+    else if (!pChildArea || !pBlock)
+#else
+    else if (!pChildArea || !(pBlock || hb_itemGetCLen(pText) > 0))
+#endif
+      hb_errRT_DBCMD(EG_ARG, EDBCMD_REL_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
+    else
+    {
+      DBRELINFO dbRelations{};
 
-    SELF_SETREL(pArea, &dbRelations);
+      dbRelations.itmCobExpr = hb_itemNew(pBlock);
+      dbRelations.abKey = hb_itemNew(pText);
+      dbRelations.isScoped = hb_parl(4);
+      dbRelations.isOptimized = false;
+      dbRelations.lpaChild = pChildArea;
+      dbRelations.lpaParent = pArea;
+      dbRelations.lpdbriNext = nullptr;
+
+      SELF_SETREL(pArea, &dbRelations);
+    }
   }
   else
   {
-    hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, nullptr, HB_ERR_FUNCNAME);
+    hb_errRT_DBCMD(EG_NOTABLE, EDBCMD_NOTABLE, NULL, HB_ERR_FUNCNAME);
   }
 }
 

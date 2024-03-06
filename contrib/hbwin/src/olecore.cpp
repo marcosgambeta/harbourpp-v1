@@ -2009,16 +2009,23 @@ HB_FUNC( WIN_OLEAUTO___ONERROR )
 
       if( lOleError == S_OK ) {
          DISPID lPropPut = DISPID_PROPERTYPUT;
+         WORD wFlags;
 
          memset(&excep, 0, sizeof(excep));
          GetParams(&dispparam, 0, false, 0, nullptr, nullptr);
          dispparam.rgdispidNamedArgs = &lPropPut;
          dispparam.cNamedArgs = 1;
+         wFlags = V_VT(&dispparam.rgvarg[0]) == VT_DISPATCH ? DISPATCH_PROPERTYPUTREF : DISPATCH_PROPERTYPUT;
 
-         lOleError = HB_VTBL(pDisp)->Invoke(HB_THIS_(pDisp) dispid, HB_ID_REF(IID_NULL),
-                                            LOCALE_USER_DEFAULT,
-                                            DISPATCH_PROPERTYPUT, &dispparam,
-                                            nullptr, &excep, &uiArgErr);
+         lOleError = HB_VTBL(pDisp)->Invoke(HB_THIS_(pDisp) dispid, HB_ID_REF(IID_NULL), LOCALE_USER_DEFAULT,
+            wFlags, &dispparam, nullptr, &excep, &uiArgErr);
+
+         if( lOleError == DISP_E_MEMBERNOTFOUND && wFlags == DISPATCH_PROPERTYPUTREF )
+         {
+            lOleError = HB_VTBL(pDisp)->Invoke(HB_THIS_(pDisp) dispid, HB_ID_REF(IID_NULL), LOCALE_USER_DEFAULT,
+               DISPATCH_PROPERTYPUT, &dispparam, nullptr, &excep, &uiArgErr);
+         }
+
          FreeParams(&dispparam);
 
          /* assign method should return assigned value */
