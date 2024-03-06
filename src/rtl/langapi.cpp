@@ -324,7 +324,7 @@ const char *hb_langSelectID(const char *pszID)
 const char *hb_langGetItem(const char *pszID, int iIndex)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_langGetItem(%s,%i)", pszID, iIndex));
+   HB_TRACE(HB_TR_DEBUG, ("hb_langGetItem(%s,%i)", pszID ? pszID : "(null)", iIndex));
 #endif
 
   PHB_LANG lang = pszID ? hb_langFind(pszID) : hb_vmLang();

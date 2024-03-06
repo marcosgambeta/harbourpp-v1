@@ -484,7 +484,7 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
 PHB_EXPR hb_compExprNewCodeBlock(char *string, HB_SIZE nLen, int iFlags, HB_COMP_DECL)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewCodeBlock(%s,%" HB_PFS "u,%d,%p)", string, nLen, iFlags, static_cast<void*>(HB_COMP_PARAM)));
+   HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewCodeBlock(%s,%" HB_PFS "u,%d,%p)", string ? string : "(null)", nLen, iFlags, static_cast<void*>(HB_COMP_PARAM)));
 #endif
 
   PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_CODEBLOCK);

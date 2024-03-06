@@ -357,7 +357,7 @@ static int hb_pp_generateVerInfo(char *szVerFile, HB_MAXINT nRevID, char *szChan
                   " * and is covered by the same license as Harbour PP\n"
                   " */\n\n");
 
-    fprintf(fout, "#define HB_VER_REVID %" PFHL "ulu\n", nRevID);
+    fprintf(fout, "#define HB_VER_REVID %lulu\n", static_cast<HB_ULONG>(nRevID));
 
     if (szChangeLogID)
     {
