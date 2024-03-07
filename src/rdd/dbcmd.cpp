@@ -788,7 +788,7 @@ HB_FUNC(DBSEEK)
   }
 }
 
-HB_FUNC(DBSELECTAREA)
+HB_FUNC( DBSELECTAREA )
 {
   auto szAlias = hb_parc(1);
 
@@ -803,31 +803,16 @@ HB_FUNC(DBSELECTAREA)
     if (iNewArea == 0)
     {
       auto pItem = hb_param(1, Harbour::Item::SYMBOL);
-      if (pItem)
+      if (pItem != nullptr)
       {
-        PHB_SYMB pSymAlias = hb_itemGetSymbol(pItem);
-        if (pSymAlias->pDynSym)
+        auto pSymAlias = hb_itemGetSymbol(pItem);
+        if (pSymAlias->pDynSym != nullptr)
         {
           iNewArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
         }
       }
     }
-
-    /*
-     * NOTE: iNewArea >= HB_RDD_MAX_AREA_NUM used intentionally
-     * In Clipper area 65535 is reserved for "M" alias [druzus]
-     */
-    if (iNewArea < 1 || iNewArea >= HB_RDD_MAX_AREA_NUM)
-    {
-      if (hb_rddSelectFirstAvailable() != Harbour::SUCCESS)
-      {
-        hb_rddSelectWorkAreaNumber(0);
-      }
-    }
-    else
-    {
-      hb_rddSelectWorkAreaNumber(iNewArea);
-    }
+    hb_rddSelectWorkAreaNumber(iNewArea);
   }
 }
 

@@ -38,6 +38,7 @@
 {HBMK_HAS_QT5}-deppkgname=qt5:qt5
 {HBMK_HAS_QT5}-depkeyhead=qt5:QtCore/QJsonObject
 {HBMK_HAS_QT5}-depcontrol=qt5:${HB_WITH_QT}
+{HBMK_HAS_QT5&HB_BUILD_3RDEXT='no'}-depoptional=qt5:no
 {HBMK_HAS_QT5}-depoptional=qt5:yes
 {HBMK_HAS_QT5}-depincpath=qt5:/usr/include/x86_64-linux-gnu/qt5{linux}
 {HBMK_HAS_QT5}-depincpath=qt5:/usr/local/opt/qt5/include{darwin}
@@ -47,6 +48,7 @@
 {HBMK_HAS_QT6}-deppkgname=qt6:qt6
 {HBMK_HAS_QT6}-depkeyhead=qt6:QtCore/QJsonObject
 {HBMK_HAS_QT6}-depcontrol=qt6:${HB_WITH_QT}
+{HBMK_HAS_QT6&HB_BUILD_3RDEXT='no'}-depoptional=qt6:no
 {HBMK_HAS_QT6}-depoptional=qt6:yes
 {HBMK_HAS_QT6}-depincpath=qt6:/usr/include/x86_64-linux-gnu/qt6{linux}
 {HBMK_HAS_QT6}-depincpath=qt6:/usr/local/opt/qt6/include{darwin}

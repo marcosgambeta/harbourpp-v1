@@ -2207,7 +2207,6 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
 
          if( pSelf->value.asFunCall.pFunName->ExprType == HB_ET_FUNNAME )
          {
-#if 0 // disabled until Harbour bug is fixed
             if( pSelf->value.asFunCall.pFunName->value.asSymbol.funcid == HB_F_DBSELECTAREA && usCount == 1 &&
                 ( pSelf->value.asFunCall.pParms->value.asList.pExprList->ExprType == HB_ET_FUNREF ||
                   hb_compExprIsInteger( pSelf->value.asFunCall.pParms->value.asList.pExprList ) ) )
@@ -2216,7 +2215,6 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
                HB_GEN_FUNC1( PCode1, HB_P_POPALIAS );
                break;
             }
-#endif
             HB_GEN_FUNC2( PushFunCall, pSelf->value.asFunCall.pFunName->value.asSymbol.name,
                                        pSelf->value.asFunCall.pFunName->value.asSymbol.flags );
          }

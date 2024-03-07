@@ -549,19 +549,17 @@ int hb_rddGetCurrentWorkAreaNumber(void)
 HB_ERRCODE hb_rddSelectWorkAreaNumber(int iArea)
 {
 #if 0
-   HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaNumber(%d)", iArea));
+  HB_TRACE(HB_TR_DEBUG, ("hb_rddSelectWorkAreaNumber(%d)", iArea));
 #endif
+  PHB_STACKRDD pRddInfo = hb_stackRDD();
 
-  PHB_STACKRDD pRddInfo;
-
-  pRddInfo = hb_stackRDD();
-  if (iArea < 1 || iArea > HB_RDD_MAX_AREA_NUM)
-  {
-    HB_SET_WA(0);
-  }
-  else
+  if (iArea >= 1 && iArea <= HB_RDD_MAX_AREA_NUM)
   {
     HB_SET_WA(static_cast<HB_AREANO>(iArea));
+  }
+  else if (hb_rddSelectFirstAvailable() != Harbour::SUCCESS)
+  {
+    HB_SET_WA(0);
   }
 
   return (pRddInfo->pCurrArea == nullptr) ? Harbour::FAILURE : Harbour::SUCCESS;
