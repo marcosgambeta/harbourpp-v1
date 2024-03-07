@@ -2207,7 +2207,7 @@ static HB_EXPR_FUNC( hb_compExprUseFunCall )
 
          if( pSelf->value.asFunCall.pFunName->ExprType == HB_ET_FUNNAME )
          {
-#if 0 // disabled until Harbour bug is not fixed
+#if 0 // disabled until Harbour bug is fixed
             if( pSelf->value.asFunCall.pFunName->value.asSymbol.funcid == HB_F_DBSELECTAREA && usCount == 1 &&
                 ( pSelf->value.asFunCall.pParms->value.asList.pExprList->ExprType == HB_ET_FUNREF ||
                   hb_compExprIsInteger( pSelf->value.asFunCall.pParms->value.asList.pExprList ) ) )
