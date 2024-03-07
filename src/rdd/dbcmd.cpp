@@ -178,6 +178,10 @@ HB_FUNC(AFIELDS)
   hb_retni(uiFields);
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate ALIAS
+// change ALIAS to DBALIAS
+// maintain ALIAS using HB_FUNC_TRANSLATE
 HB_FUNC(ALIAS)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
@@ -269,6 +273,10 @@ HB_FUNC(DBF)
   hb_retc_null();
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate BOF
+// change BOF to DBBOF
+// maintain BOF using HB_FUNC_TRANSLATE
 HB_FUNC(BOF)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1025,6 +1033,10 @@ HB_FUNC(__DBZAP)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate DELETED
+// change DELETED to DBDELETED
+// maintain DELETED using HB_FUNC_TRANSLATE
 HB_FUNC(DELETED)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1037,6 +1049,10 @@ HB_FUNC(DELETED)
   hb_retl(bDeleted);
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate EOF
+// change EOF to DBEOF
+// maintain EOF using HB_FUNC_TRANSLATE
 HB_FUNC(EOF)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1049,6 +1065,10 @@ HB_FUNC(EOF)
   hb_retl(bEof);
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate FCOUNT
+// change FCOUNT to DBFCOUNT
+// maintain FCOUNT using HB_FUNC_TRANSLATE
 HB_FUNC(FCOUNT)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1061,6 +1081,10 @@ HB_FUNC(FCOUNT)
   hb_retni(uiFields);
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate FIELDGET
+// change FIELDGET to DBFIELDGET
+// maintain FIELDGET using HB_FUNC_TRANSLATE
 HB_FUNC(FIELDGET)
 {
   auto pItem = hb_itemNew(nullptr);
@@ -1075,6 +1099,10 @@ HB_FUNC(FIELDGET)
   hb_itemReturnRelease(pItem);
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate FIELDNAME
+// change FIELDNAME to DBFIELDNAME
+// maintain FIELDNAME using HB_FUNC_TRANSLATE
 HB_FUNC(FIELDNAME)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1098,6 +1126,10 @@ HB_FUNC(FIELDNAME)
   hb_retc_null();
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate FIELDPOS
+// change FIELDPOS to DBFIELDPOS
+// maintain FIELDPOS using HB_FUNC_TRANSLATE
 HB_FUNC(FIELDPOS)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1112,6 +1144,10 @@ HB_FUNC(FIELDPOS)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate FIELDPUT
+// change FIELDPUT to DBFIELDPUT
+// maintain FIELDPUT using HB_FUNC_TRANSLATE
 HB_FUNC(FIELDPUT)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1134,6 +1170,10 @@ HB_FUNC(FIELDPUT)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate FLOCK
+// change FLOCK to DBFLOCK
+// maintain FLOCK using HB_FUNC_TRANSLATE
 HB_FUNC(FLOCK)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1153,6 +1193,10 @@ HB_FUNC(FLOCK)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate FOUND
+// change FOUND to DBFOUND
+// maintain FOUND using HB_FUNC_TRANSLATOR
 HB_FUNC(FOUND)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1165,6 +1209,10 @@ HB_FUNC(FOUND)
   hb_retl(bFound);
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate HEADER
+// change HEADER to DBHEADER
+// maintain HEADER using HB_FUNC_TRANSLATE
 HB_FUNC(HEADER)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1181,6 +1229,10 @@ HB_FUNC(HEADER)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate INDEXORD
+// change INDEXORD to DBINDEXORD
+// maintain INDEXORD using HB_FUNC_TRANSLATE
 HB_FUNC(INDEXORD)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1199,6 +1251,10 @@ HB_FUNC(INDEXORD)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate LASTREC
+// change LASTREC to DBLASTREC
+// maintain LASTREC using HB_FUNC_TRANSLATE
 HB_FUNC(LASTREC)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1231,6 +1287,10 @@ HB_FUNC(LOCK)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate LUPDATE
+// change LUPDATE to DBLUPDATE
+// maintain LUPDATE using HB_FUNC_TRANSLATE
 HB_FUNC(LUPDATE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1247,6 +1307,10 @@ HB_FUNC(LUPDATE)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate NETERR
+// change NETERR to DBNETERR
+// maintain NETERR using HB_FUNC_TRANSLATE
 HB_FUNC(NETERR)
 {
   hb_retl(hb_rddGetNetErr());
@@ -1757,6 +1821,10 @@ HB_FUNC(RDDREGISTER)
 /* Same as LastRec() */
 HB_FUNC_TRANSLATE(RECCOUNT, LASTREC)
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate RECNO
+// change RECNO to DBRECNO
+// maintain RECNO using HB_FUNC_TRANSLATE
 HB_FUNC(RECNO)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1769,6 +1837,10 @@ HB_FUNC(RECNO)
   hb_itemReturnRelease(pRecNo);
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate RECSIZE
+// change RECSIZE to DBRECSIZE
+// maintain RECSIZE using HB_FUNC_TRANSLATE
 HB_FUNC(RECSIZE)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1785,6 +1857,10 @@ HB_FUNC(RECSIZE)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate RLOCK
+// join with DBRLOCK
+// maintain RLOCK using HB_FUNC_TRANSLATE
 HB_FUNC(RLOCK)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1804,6 +1880,10 @@ HB_FUNC(RLOCK)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate SELECT
+// change SELECT to DBSELECT
+// maintain SELECT using HB_FUNC_TRANSLATE
 HB_FUNC(SELECT)
 {
   if (hb_pcount() == 0)
@@ -1842,6 +1922,10 @@ HB_FUNC(SELECT)
   }
 }
 
+// NOTES FOR HARBOUR++ V2:
+// deprecate USED
+// change USED to DBUSED
+// maintain USED using HB_FUNC_TRANSLATE
 HB_FUNC(USED)
 {
   hb_retl(hb_rddGetCurrentWorkAreaPointer() != nullptr);
