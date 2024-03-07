@@ -363,6 +363,10 @@ HB_FUNC(HB_AINS)
   }
 }
 
+// NOTES FOR HARBOUR++ V2
+// deprecate HB_ADEL
+// join ADEL and HB_ADEL
+// maintain HB_ADEL using HB_FUNC_TRANSLATE
 HB_FUNC(HB_ADEL)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
