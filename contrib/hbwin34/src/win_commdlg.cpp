@@ -58,83 +58,83 @@
 BOOL WINAPI ChooseColor(LPCHOOSECOLORW);
 #endif
 
-#define _HB_CHOOSECOLOR_CB_PROP_  TEXT("__hbwin_win_ChooseColor_CB")
+#define _HB_CHOOSECOLOR_CB_PROP_ TEXT("__hbwin_win_ChooseColor_CB")
 
 static UINT_PTR CALLBACK CCHookProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   UINT_PTR res;
-   bool fInit = false;
-   PHB_ITEM pBlock;
+  UINT_PTR res;
+  bool fInit = false;
+  PHB_ITEM pBlock;
 
-   if( msg == WM_INITDIALOG )
-   {
-      auto cc = reinterpret_cast<CHOOSECOLOR*>(lParam);
-      SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(reinterpret_cast<PHB_ITEM>(cc->lCustData)));
-      fInit = true;
-   }
+  if (msg == WM_INITDIALOG)
+  {
+    auto cc = reinterpret_cast<CHOOSECOLOR *>(lParam);
+    SetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_, hb_itemNew(reinterpret_cast<PHB_ITEM>(cc->lCustData)));
+    fInit = true;
+  }
 
-   if( (pBlock = static_cast<PHB_ITEM>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter() )
-   {
-      PHB_ITEM pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
-      auto pMsg = hb_itemPutNInt(nullptr, msg);
-      auto pLPa = hb_itemPutNInt(nullptr, wParam);
-      auto pWPa = hb_itemPutNInt(nullptr, lParam);
+  if ((pBlock = static_cast<PHB_ITEM>(GetProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_))) != nullptr && hb_vmRequestReenter())
+  {
+    PHB_ITEM pWnd = hbwapi_itemPut_HANDLE(nullptr, hWnd);
+    auto pMsg = hb_itemPutNInt(nullptr, msg);
+    auto pLPa = hb_itemPutNInt(nullptr, wParam);
+    auto pWPa = hb_itemPutNInt(nullptr, lParam);
 
-      hb_evalBlock(pBlock, pWnd, pMsg, pLPa, pWPa);
+    hb_evalBlock(pBlock, pWnd, pMsg, pLPa, pWPa);
 
-      res = static_cast<UINT_PTR>(hbwapi_par_RESULT(-1));
+    res = static_cast<UINT_PTR>(hbwapi_par_RESULT(-1));
 
-      hb_itemRelease(pWnd);
-      hb_itemRelease(pMsg);
-      hb_itemRelease(pLPa);
-      hb_itemRelease(pWPa);
+    hb_itemRelease(pWnd);
+    hb_itemRelease(pMsg);
+    hb_itemRelease(pLPa);
+    hb_itemRelease(pWPa);
 
-      if( msg == WM_NCDESTROY )
-      {
-         RemoveProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_);
-         hb_itemRelease(pBlock);
-      }
+    if (msg == WM_NCDESTROY)
+    {
+      RemoveProp(hWnd, _HB_CHOOSECOLOR_CB_PROP_);
+      hb_itemRelease(pBlock);
+    }
 
-      hb_vmRequestRestore();
-   }
-   else
-   {
-      res = 0;
-   }
+    hb_vmRequestRestore();
+  }
+  else
+  {
+    res = 0;
+  }
 
-   return fInit ? 1 : res;
+  return fInit ? 1 : res;
 }
 
-HB_FUNC( WIN_CHOOSECOLOR )
+HB_FUNC(WIN_CHOOSECOLOR)
 {
-   COLORREF crCustClr[16];
+  COLORREF crCustClr[16];
 
-   void * hTpl;
+  void *hTpl;
 
-   for( auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); ++i )
-   {
-      crCustClr[i] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
-   }
+  for (auto i = 0; i < static_cast<int>(HB_SIZEOFARRAY(crCustClr)); ++i)
+  {
+    crCustClr[i] = HB_ISARRAY(4) ? hbwapi_parv_COLORREF(4, i + 1) : RGB(0, 0, 0);
+  }
 
-   CHOOSECOLOR cc{};
-   cc.lStructSize    = sizeof(cc);
-   cc.hwndOwner      = hbwapi_par_raw_HWND(1);
-   cc.hInstance      = hbwapi_par_raw_HWND(2);
-   cc.rgbResult      = hbwapi_par_COLORREF(3);
-   cc.lpCustColors   = crCustClr;
-   cc.Flags          = hbwapi_par_WORD(5);
-   cc.lCustData      = static_cast<LPARAM>(reinterpret_cast<HB_PTRUINT>(hb_param(6, Harbour::Item::EVALITEM)));
-   cc.lpfnHook       = cc.lCustData ? CCHookProc : nullptr;
-   cc.lpTemplateName = HB_PARSTR(7, &hTpl, nullptr);
+  CHOOSECOLOR cc{};
+  cc.lStructSize = sizeof(cc);
+  cc.hwndOwner = hbwapi_par_raw_HWND(1);
+  cc.hInstance = hbwapi_par_raw_HWND(2);
+  cc.rgbResult = hbwapi_par_COLORREF(3);
+  cc.lpCustColors = crCustClr;
+  cc.Flags = hbwapi_par_WORD(5);
+  cc.lCustData = static_cast<LPARAM>(reinterpret_cast<HB_PTRUINT>(hb_param(6, Harbour::Item::EVALITEM)));
+  cc.lpfnHook = cc.lCustData ? CCHookProc : nullptr;
+  cc.lpTemplateName = HB_PARSTR(7, &hTpl, nullptr);
 
-   if( ChooseColor(&cc) )
-   {
-      hbwapi_ret_COLORREF(cc.rgbResult);
-   }
-   else
-   {
-      hbwapi_ret_COLORREF(-1);
-   }
+  if (ChooseColor(&cc))
+  {
+    hbwapi_ret_COLORREF(cc.rgbResult);
+  }
+  else
+  {
+    hbwapi_ret_COLORREF(-1);
+  }
 
-   hb_strfree(hTpl);
+  hb_strfree(hTpl);
 }

@@ -46,17 +46,17 @@
 
 #include "hbwapi.hpp"
 
-HB_FUNC( WAPI_GETACP )
+HB_FUNC(WAPI_GETACP)
 {
-   hbwapi_ret_UINT(GetACP());
+  hbwapi_ret_UINT(GetACP());
 }
 
-HB_FUNC( WAPI_GETOEMCP )
+HB_FUNC(WAPI_GETOEMCP)
 {
-   hbwapi_ret_UINT(GetOEMCP());
+  hbwapi_ret_UINT(GetOEMCP());
 }
 
-HB_FUNC( WAPI_ISVALIDCODEPAGE )
+HB_FUNC(WAPI_ISVALIDCODEPAGE)
 {
-   hbwapi_ret_L(IsValidCodePage(hbwapi_par_UINT(1)));
+  hbwapi_ret_L(IsValidCodePage(hbwapi_par_UINT(1)));
 }

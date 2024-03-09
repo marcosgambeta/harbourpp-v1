@@ -58,175 +58,175 @@ static TCHAR s_lpServiceName[256];
 /* Control handler function */
 static VOID WINAPI hbwin_SvcControlHandler(DWORD fdwControl)
 {
-   if( s_pHarbourControlFunc )
-   {
-      if( hb_vmRequestReenterExt() )
+  if (s_pHarbourControlFunc)
+  {
+    if (hb_vmRequestReenterExt())
+    {
+      hb_vmPushEvalSym();
+      hb_vmPush(s_pHarbourControlFunc);
+      hb_vmPushNumInt(static_cast<HB_MAXINT>(fdwControl));
+      hb_vmSend(1);
+      hb_vmRequestRestore();
+    }
+    else
+    {
+      HB_TRACE(HB_TR_DEBUG, ("HVM stack not available"));
+    }
+    return;
+  }
+
+  switch (fdwControl)
+  {
+  case SERVICE_CONTROL_STOP:
+    s_ServiceStatus.dwWin32ExitCode = 0;
+    s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
+    break;
+
+  case SERVICE_CONTROL_SHUTDOWN:
+    s_ServiceStatus.dwWin32ExitCode = 0;
+    s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
+    break;
+
+  default:
+    return;
+  }
+
+  SetServiceStatus(s_hStatus, &s_ServiceStatus); /* Report current status */
+}
+
+static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR *lpszArgv)
+{
+  s_ServiceStatus.dwServiceType = SERVICE_WIN32;
+  s_ServiceStatus.dwCurrentState = SERVICE_START_PENDING;
+  s_ServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
+  s_ServiceStatus.dwWin32ExitCode = 0;
+  s_ServiceStatus.dwServiceSpecificExitCode = 0;
+  s_ServiceStatus.dwCheckPoint = 0;
+  s_ServiceStatus.dwWaitHint = 0;
+
+  s_hStatus = RegisterServiceCtrlHandler(s_lpServiceName, static_cast<LPHANDLER_FUNCTION>(hbwin_SvcControlHandler));
+
+  if (s_hStatus != static_cast<SERVICE_STATUS_HANDLE>(0))
+  {
+    if (s_pHarbourEntryFunc != nullptr)
+    {
+      if (hb_vmRequestReenterExt())
       {
-         hb_vmPushEvalSym();
-         hb_vmPush(s_pHarbourControlFunc);
-         hb_vmPushNumInt(static_cast<HB_MAXINT>(fdwControl));
-         hb_vmSend(1);
-         hb_vmRequestRestore();
+        int iArgCount = 0;
+
+        if (!s_pHarbourControlFunc)
+        {
+          /* We report the running status to SCM. */
+          s_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
+          SetServiceStatus(s_hStatus, &s_ServiceStatus);
+        }
+
+        hb_vmPushEvalSym();
+        hb_vmPush(s_pHarbourEntryFunc);
+
+        for (DWORD i = 1; i < dwArgc; ++i)
+        {
+          auto pItem = hb_stackAllocItem();
+
+          HB_ITEMPUTSTR(pItem, lpszArgv[i]);
+          if (hb_cmdargIsInternal(hb_itemGetCPtr(pItem), nullptr))
+          {
+            hb_stackPop();
+          }
+          else
+          {
+            ++iArgCount;
+          }
+        }
+
+        hb_vmSend(static_cast<HB_USHORT>(iArgCount));
+
+        hb_vmRequestRestore();
       }
       else
       {
-         HB_TRACE(HB_TR_DEBUG, ("HVM stack not available"));
+        HB_TRACE(HB_TR_DEBUG, ("HVM stack not available"));
       }
-      return;
-   }
-
-   switch( fdwControl )
-   {
-      case SERVICE_CONTROL_STOP:
-         s_ServiceStatus.dwWin32ExitCode = 0;
-         s_ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
-         break;
-
-      case SERVICE_CONTROL_SHUTDOWN:
-         s_ServiceStatus.dwWin32ExitCode = 0;
-         s_ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
-         break;
-
-      default:
-         return;
-   }
-
-   SetServiceStatus(s_hStatus, &s_ServiceStatus);  /* Report current status */
+    }
+    else
+    {
+      HB_TRACE(HB_TR_DEBUG, ("Harbour service entry function not found"));
+    }
+  }
+  else
+  {
+    HB_TRACE(HB_TR_DEBUG, ("Error registering service"));
+  }
 }
 
-static VOID WINAPI hbwin_SvcMainFunction(DWORD dwArgc, LPTSTR * lpszArgv)
+HB_FUNC(WIN_SERVICEGETSTATUS)
 {
-   s_ServiceStatus.dwServiceType             = SERVICE_WIN32;
-   s_ServiceStatus.dwCurrentState            = SERVICE_START_PENDING;
-   s_ServiceStatus.dwControlsAccepted        = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
-   s_ServiceStatus.dwWin32ExitCode           = 0;
-   s_ServiceStatus.dwServiceSpecificExitCode = 0;
-   s_ServiceStatus.dwCheckPoint              = 0;
-   s_ServiceStatus.dwWaitHint                = 0;
-
-   s_hStatus = RegisterServiceCtrlHandler(s_lpServiceName, static_cast<LPHANDLER_FUNCTION>(hbwin_SvcControlHandler));
-
-   if( s_hStatus != static_cast<SERVICE_STATUS_HANDLE>(0) )
-   {
-      if( s_pHarbourEntryFunc != nullptr )
-      {
-         if( hb_vmRequestReenterExt() )
-         {
-            int iArgCount = 0;
-
-            if( !s_pHarbourControlFunc )
-            {
-               /* We report the running status to SCM. */
-               s_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
-               SetServiceStatus(s_hStatus, &s_ServiceStatus);
-            }
-
-            hb_vmPushEvalSym();
-            hb_vmPush(s_pHarbourEntryFunc);
-
-            for( DWORD i = 1; i < dwArgc; ++i )
-            {
-               auto pItem = hb_stackAllocItem();
-
-               HB_ITEMPUTSTR(pItem, lpszArgv[i]);
-               if( hb_cmdargIsInternal(hb_itemGetCPtr(pItem), nullptr) )
-               {
-                  hb_stackPop();
-               }
-               else
-               {
-                  ++iArgCount;
-               }
-            }
-
-            hb_vmSend(static_cast<HB_USHORT>(iArgCount));
-
-            hb_vmRequestRestore();
-         }
-         else
-         {
-            HB_TRACE(HB_TR_DEBUG, ("HVM stack not available"));
-         }
-      }
-      else
-      {
-         HB_TRACE(HB_TR_DEBUG, ("Harbour service entry function not found"));
-      }
-   }
-   else
-   {
-      HB_TRACE(HB_TR_DEBUG, ("Error registering service"));
-   }
+  hb_retnint(s_ServiceStatus.dwCurrentState);
 }
 
-HB_FUNC( WIN_SERVICEGETSTATUS )
+HB_FUNC(WIN_SERVICESETSTATUS)
 {
-   hb_retnint(s_ServiceStatus.dwCurrentState);
+  s_ServiceStatus.dwCurrentState = static_cast<DWORD>(hb_parnl(1));
+  bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
+  hbwapi_SetLastError(GetLastError());
+  hb_retl(bRetVal);
 }
 
-HB_FUNC( WIN_SERVICESETSTATUS )
+HB_FUNC(WIN_SERVICESETEXITCODE)
 {
-   s_ServiceStatus.dwCurrentState = static_cast<DWORD>(hb_parnl(1));
-   bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
-   hbwapi_SetLastError(GetLastError());
-   hb_retl(bRetVal);
+  s_ServiceStatus.dwWin32ExitCode = static_cast<DWORD>(hb_parnl(1));
+  bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
+  hbwapi_SetLastError(GetLastError());
+  hb_retl(bRetVal);
 }
 
-HB_FUNC( WIN_SERVICESETEXITCODE )
+HB_FUNC(WIN_SERVICESTOP)
 {
-   s_ServiceStatus.dwWin32ExitCode = static_cast<DWORD>(hb_parnl(1));
-   bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
-   hbwapi_SetLastError(GetLastError());
-   hb_retl(bRetVal);
+  s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
+  bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
+  hbwapi_SetLastError(GetLastError());
+  hb_retl(bRetVal);
 }
 
-HB_FUNC( WIN_SERVICESTOP )
+HB_FUNC(WIN_SERVICESTART)
 {
-   s_ServiceStatus.dwCurrentState = SERVICE_STOPPED;
-   bool bRetVal = static_cast<HB_BOOL>(SetServiceStatus(s_hStatus, &s_ServiceStatus));
-   hbwapi_SetLastError(GetLastError());
-   hb_retl(bRetVal);
-}
+  SERVICE_TABLE_ENTRY lpServiceTable[2];
 
-HB_FUNC( WIN_SERVICESTART )
-{
-   SERVICE_TABLE_ENTRY lpServiceTable[2];
+  HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), s_lpServiceName, HB_SIZEOFARRAY(s_lpServiceName));
 
-   HB_ITEMCOPYSTR(hb_param(1, Harbour::Item::STRING), s_lpServiceName, HB_SIZEOFARRAY(s_lpServiceName));
+  if (s_pHarbourEntryFunc)
+  {
+    hb_itemRelease(s_pHarbourEntryFunc);
+    s_pHarbourEntryFunc = nullptr;
+  }
 
-   if( s_pHarbourEntryFunc )
-   {
-      hb_itemRelease(s_pHarbourEntryFunc);
-      s_pHarbourEntryFunc = nullptr;
-   }
+  auto pEntryFunc = hb_param(2, Harbour::Item::EVALITEM);
 
-   auto pEntryFunc = hb_param(2, Harbour::Item::EVALITEM);
+  if (pEntryFunc)
+  {
+    s_pHarbourEntryFunc = hb_itemNew(pEntryFunc);
+  }
 
-   if( pEntryFunc )
-   {
-      s_pHarbourEntryFunc = hb_itemNew(pEntryFunc);
-   }
+  if (s_pHarbourControlFunc)
+  {
+    hb_itemRelease(s_pHarbourControlFunc);
+    s_pHarbourControlFunc = nullptr;
+  }
 
-   if( s_pHarbourControlFunc )
-   {
-      hb_itemRelease(s_pHarbourControlFunc);
-      s_pHarbourControlFunc = nullptr;
-   }
+  pEntryFunc = hb_param(3, Harbour::Item::EVALITEM);
 
-   pEntryFunc = hb_param(3, Harbour::Item::EVALITEM);
+  if (pEntryFunc)
+  {
+    s_pHarbourControlFunc = hb_itemNew(pEntryFunc);
+  }
 
-   if( pEntryFunc )
-   {
-      s_pHarbourControlFunc = hb_itemNew(pEntryFunc);
-   }
+  lpServiceTable[0].lpServiceName = s_lpServiceName;
+  lpServiceTable[0].lpServiceProc = static_cast<LPSERVICE_MAIN_FUNCTION>(hbwin_SvcMainFunction);
 
-   lpServiceTable[0].lpServiceName = s_lpServiceName;
-   lpServiceTable[0].lpServiceProc = static_cast<LPSERVICE_MAIN_FUNCTION>(hbwin_SvcMainFunction);
+  lpServiceTable[1].lpServiceName = nullptr;
+  lpServiceTable[1].lpServiceProc = nullptr;
 
-   lpServiceTable[1].lpServiceName = nullptr;
-   lpServiceTable[1].lpServiceProc = nullptr;
-
-   auto bRetVal = static_cast<bool>(StartServiceCtrlDispatcher(lpServiceTable));
-   hbwapi_SetLastError(GetLastError());
-   hb_retl(bRetVal);
+  auto bRetVal = static_cast<bool>(StartServiceCtrlDispatcher(lpServiceTable));
+  hbwapi_SetLastError(GetLastError());
+  hb_retl(bRetVal);
 }

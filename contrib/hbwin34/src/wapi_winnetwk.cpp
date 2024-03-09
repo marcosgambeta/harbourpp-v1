@@ -47,15 +47,16 @@
 #include "hbwapi.hpp"
 #include <winnetwk.h>
 
-HB_FUNC( WAPI_WNETGETLASTERROR )
+HB_FUNC(WAPI_WNETGETLASTERROR)
 {
-   DWORD dwLastError = 0;
-   TCHAR lpDescription[256];
-   TCHAR lpProvider[256];
+  DWORD dwLastError = 0;
+  TCHAR lpDescription[256];
+  TCHAR lpProvider[256];
 
-   hb_retnint(WNetGetLastError(&dwLastError, lpDescription, HB_SIZEOFARRAY(lpDescription), lpProvider, HB_SIZEOFARRAY(lpProvider)));
+  hb_retnint(WNetGetLastError(&dwLastError, lpDescription, HB_SIZEOFARRAY(lpDescription), lpProvider,
+                              HB_SIZEOFARRAY(lpProvider)));
 
-   hb_stornint(dwLastError, 1);
-   HB_STORSTR(lpDescription, 2);
-   HB_STORSTR(lpProvider, 3);
+  hb_stornint(dwLastError, 1);
+  HB_STORSTR(lpDescription, 2);
+  HB_STORSTR(lpProvider, 3);
 }

@@ -49,26 +49,26 @@
 #include "hbwin.ch"
 #include <rpc.h>
 
-HB_FUNC( WIN_UUIDCREATESTRING )
+HB_FUNC(WIN_UUIDCREATESTRING)
 {
-   RPC_STATUS lRPCStatus = HB_RPC_S_ERROR;
-   TCHAR * tszUuid = nullptr;
-   UUID uuid{};
+  RPC_STATUS lRPCStatus = HB_RPC_S_ERROR;
+  TCHAR *tszUuid = nullptr;
+  UUID uuid{};
 
-   lRPCStatus = UuidCreate(&uuid);
+  lRPCStatus = UuidCreate(&uuid);
 
-   UuidToString(&uuid, reinterpret_cast<short unsigned int**>(&tszUuid));
+  UuidToString(&uuid, reinterpret_cast<short unsigned int **>(&tszUuid));
 
-   if( tszUuid != nullptr )
-   {
-      HB_RETSTR(tszUuid);
+  if (tszUuid != nullptr)
+  {
+    HB_RETSTR(tszUuid);
 
-      RpcStringFree(reinterpret_cast<short unsigned **>(&tszUuid));
-   }
-   else
-   {
-      hb_retc_null();
-   }
+    RpcStringFree(reinterpret_cast<short unsigned **>(&tszUuid));
+  }
+  else
+  {
+    hb_retc_null();
+  }
 
-   hb_stornl(lRPCStatus, 1);
+  hb_stornl(lRPCStatus, 1);
 }

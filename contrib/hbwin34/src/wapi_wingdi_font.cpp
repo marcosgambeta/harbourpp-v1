@@ -46,45 +46,46 @@
 
 #include "hbwapi.hpp"
 
-HB_FUNC( WAPI_ADDFONTRESOURCE )
+HB_FUNC(WAPI_ADDFONTRESOURCE)
 {
-   void * hFileName;
-   hb_retni(AddFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
-   hb_strfree(hFileName);
+  void *hFileName;
+  hb_retni(AddFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
+  hb_strfree(hFileName);
 }
 
-HB_FUNC( WAPI_ADDFONTMEMRESOURCEEX )
+HB_FUNC(WAPI_ADDFONTMEMRESOURCEEX)
 {
-   DWORD dwFonts = 0;
-   HANDLE hResult = AddFontMemResourceEx(static_cast<PVOID>(const_cast<char*>(hb_parcx(1))), static_cast<DWORD>(hb_parclen(1)), nullptr, &dwFonts);
-   hb_stornint(dwFonts, 3);
-   hbwapi_ret_raw_HANDLE(hResult);
+  DWORD dwFonts = 0;
+  HANDLE hResult = AddFontMemResourceEx(static_cast<PVOID>(const_cast<char *>(hb_parcx(1))),
+                                        static_cast<DWORD>(hb_parclen(1)), nullptr, &dwFonts);
+  hb_stornint(dwFonts, 3);
+  hbwapi_ret_raw_HANDLE(hResult);
 }
 
-HB_FUNC( WAPI_REMOVEFONTRESOURCE )
+HB_FUNC(WAPI_REMOVEFONTRESOURCE)
 {
-   void * hFileName;
-   hbwapi_ret_L(RemoveFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
-   hb_strfree(hFileName);
+  void *hFileName;
+  hbwapi_ret_L(RemoveFontResource(HB_PARSTRDEF(1, &hFileName, nullptr)));
+  hb_strfree(hFileName);
 }
 
-HB_FUNC( WAPI_ADDFONTRESOURCEEX )
+HB_FUNC(WAPI_ADDFONTRESOURCEEX)
 {
-   void * hFileName;
-   int iResult = AddFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
-   hb_strfree(hFileName);
-   hb_retni(iResult);
+  void *hFileName;
+  int iResult = AddFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
+  hb_strfree(hFileName);
+  hb_retni(iResult);
 }
 
-HB_FUNC( WAPI_REMOVEFONTRESOURCEEX )
+HB_FUNC(WAPI_REMOVEFONTRESOURCEEX)
 {
-   void * hFileName;
-   bool fResult = RemoveFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
-   hb_strfree(hFileName);
-   hbwapi_ret_L(fResult);
+  void *hFileName;
+  bool fResult = RemoveFontResourceEx(HB_PARSTRDEF(1, &hFileName, nullptr), static_cast<DWORD>(hb_parnl(2)), nullptr);
+  hb_strfree(hFileName);
+  hbwapi_ret_L(fResult);
 }
 
-HB_FUNC( WAPI_REMOVEFONTMEMRESOURCEEX )
+HB_FUNC(WAPI_REMOVEFONTMEMRESOURCEEX)
 {
-   hbwapi_ret_L(RemoveFontMemResourceEx(hbwapi_par_raw_HANDLE(1)));
+  hbwapi_ret_L(RemoveFontMemResourceEx(hbwapi_par_raw_HANDLE(1)));
 }

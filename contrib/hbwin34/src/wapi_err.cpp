@@ -49,21 +49,21 @@
 
 typedef struct
 {
-   DWORD dwLastError;
-} HB_WAPIERRDATA, * PHB_WAPIERRDATA;
+  DWORD dwLastError;
+} HB_WAPIERRDATA, *PHB_WAPIERRDATA;
 
 static HB_TSD_NEW(s_wapierrData, sizeof(HB_WAPIERRDATA), nullptr, nullptr);
 
 void hbwapi_SetLastError(DWORD dwLastError)
 {
-   auto pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
+  auto pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
 
-   pWinErrData->dwLastError = dwLastError;
+  pWinErrData->dwLastError = dwLastError;
 }
 
 DWORD hbwapi_GetLastError(void)
 {
-   auto pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
+  auto pWinErrData = static_cast<PHB_WAPIERRDATA>(hb_stackGetTSD(&s_wapierrData));
 
-   return pWinErrData->dwLastError;
+  return pWinErrData->dwLastError;
 }

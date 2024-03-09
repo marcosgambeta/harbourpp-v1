@@ -46,87 +46,88 @@
 
 #include "hbwapi.hpp"
 
-HB_SIZE hbwapi_tstrlen(const TCHAR * pText)
+HB_SIZE hbwapi_tstrlen(const TCHAR *pText)
 {
-   HB_SIZE nLen = 0;
+  HB_SIZE nLen = 0;
 
-   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrlen(%p)", static_cast<const void*>(pText)));
+  HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrlen(%p)", static_cast<const void *>(pText)));
 
-   while( pText[nLen] != TEXT('\0') )
-   {
-      ++nLen;
-   }
+  while (pText[nLen] != TEXT('\0'))
+  {
+    ++nLen;
+  }
 
-   return nLen;
+  return nLen;
 }
 
 /* NOTE: Based on hb_strdup() */
-TCHAR * hbwapi_tstrdup(const TCHAR * pszText)
+TCHAR *hbwapi_tstrdup(const TCHAR *pszText)
 {
-   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrdup(%p)", static_cast<const void*>(pszText)));
+  HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrdup(%p)", static_cast<const void *>(pszText)));
 
-   HB_SIZE nLen = (hbwapi_tstrlen(pszText) + 1) * sizeof(TCHAR);
+  HB_SIZE nLen = (hbwapi_tstrlen(pszText) + 1) * sizeof(TCHAR);
 
-   auto pszDup = static_cast<TCHAR*>(hb_xgrab(nLen));
-   memcpy(pszDup, pszText, nLen);
+  auto pszDup = static_cast<TCHAR *>(hb_xgrab(nLen));
+  memcpy(pszDup, pszText, nLen);
 
-   return pszDup;
+  return pszDup;
 }
 
 /* NOTE: Based on hb_strncat() */
-TCHAR * hbwapi_tstrncat(TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen)
+TCHAR *hbwapi_tstrncat(TCHAR *pDest, const TCHAR *pSource, HB_SIZE nLen)
 {
-   TCHAR * pBuf = pDest;
+  TCHAR *pBuf = pDest;
 
-   HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<const void*>(pSource), nLen));
+  HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", static_cast<void *>(pDest),
+                         static_cast<const void *>(pSource), nLen));
 
-   pDest[nLen] = TEXT('\0');
+  pDest[nLen] = TEXT('\0');
 
-   while( nLen && *pDest )
-   {
-      pDest++;
-      nLen--;
-   }
+  while (nLen && *pDest)
+  {
+    pDest++;
+    nLen--;
+  }
 
-   while( nLen && (*pDest++ = *pSource++) != TEXT('\0') )
-   {
-      nLen--;
-   }
+  while (nLen && (*pDest++ = *pSource++) != TEXT('\0'))
+  {
+    nLen--;
+  }
 
-   return pBuf;
+  return pBuf;
 }
 
-static TCHAR * hbwapi_FileNameAtSystemDir(const TCHAR * pFileName)
+static TCHAR *hbwapi_FileNameAtSystemDir(const TCHAR *pFileName)
 {
-   UINT nLen = GetSystemDirectory(nullptr, 0);
+  UINT nLen = GetSystemDirectory(nullptr, 0);
 
-   if( nLen )
-   {
-      if( pFileName )
-      {
-         nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
-      }
+  if (nLen)
+  {
+    if (pFileName)
+    {
+      nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
+    }
 
-      auto buffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
+    auto buffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
 
-      GetSystemDirectory(buffer, nLen);
+    GetSystemDirectory(buffer, nLen);
 
-      if( pFileName )
-      {
-         hbwapi_tstrncat(buffer, TEXT("\\"), nLen - 1);
-         hbwapi_tstrncat(buffer, pFileName, nLen - 1);
-      }
+    if (pFileName)
+    {
+      hbwapi_tstrncat(buffer, TEXT("\\"), nLen - 1);
+      hbwapi_tstrncat(buffer, pFileName, nLen - 1);
+    }
 
-      return buffer;
-   }
-   else
-   {
-      return hbwapi_tstrdup(pFileName);
-   }
+    return buffer;
+  }
+  else
+  {
+    return hbwapi_tstrdup(pFileName);
+  }
 }
 
 #ifndef LOAD_LIBRARY_SEARCH_SYSTEM32
-#define LOAD_LIBRARY_SEARCH_SYSTEM32  0x00000800
+#define LOAD_LIBRARY_SEARCH_SYSTEM32 0x00000800
 #endif
 
 /* LOAD_LIBRARY_SEARCH_SYSTEM32 is supported on Windows 8 or above,
@@ -135,70 +136,71 @@ static TCHAR * hbwapi_FileNameAtSystemDir(const TCHAR * pFileName)
       https://support.microsoft.com/kb/2533623 */
 static HB_BOOL hbwapi_has_search_system32()
 {
-   if( hb_iswin8() )
-   {
-      return true;
-   }
-   else
-   {
-      HMODULE hKernel32 = GetModuleHandle(TEXT("kernel32.dll"));
+  if (hb_iswin8())
+  {
+    return true;
+  }
+  else
+  {
+    HMODULE hKernel32 = GetModuleHandle(TEXT("kernel32.dll"));
 
-      if( hKernel32 )
-      {
-         return HB_WINAPI_GETPROCADDRESS(hKernel32, "AddDllDirectory") != nullptr;  /* Detect KB2533623 */
-      }
-   }
+    if (hKernel32)
+    {
+      return HB_WINAPI_GETPROCADDRESS(hKernel32, "AddDllDirectory") != nullptr; /* Detect KB2533623 */
+    }
+  }
 
-   return false;
+  return false;
 }
 
 HMODULE hbwapi_LoadLibrarySystem(LPCTSTR pFileName)
 {
-   TCHAR * pLibPath = hbwapi_FileNameAtSystemDir(pFileName);
-   HMODULE h = LoadLibraryEx(pLibPath, nullptr, hbwapi_has_search_system32() ? LOAD_LIBRARY_SEARCH_SYSTEM32 : LOAD_WITH_ALTERED_SEARCH_PATH);
-   hb_xfree(pLibPath);
-   return h;
+  TCHAR *pLibPath = hbwapi_FileNameAtSystemDir(pFileName);
+  HMODULE h = LoadLibraryEx(
+      pLibPath, nullptr, hbwapi_has_search_system32() ? LOAD_LIBRARY_SEARCH_SYSTEM32 : LOAD_WITH_ALTERED_SEARCH_PATH);
+  hb_xfree(pLibPath);
+  return h;
 }
 
 /* Version of the above that is exposed as a public API */
-HMODULE hbwapi_LoadLibrarySystemVM(const char * szFileName)
+HMODULE hbwapi_LoadLibrarySystemVM(const char *szFileName)
 {
-   LPTSTR lpFree;
+  LPTSTR lpFree;
 
-   HMODULE h = hbwapi_LoadLibrarySystem(HB_FSNAMECONV(szFileName, &lpFree));
+  HMODULE h = hbwapi_LoadLibrarySystem(HB_FSNAMECONV(szFileName, &lpFree));
 
-   if( lpFree )
-   {
-      hb_xfree(lpFree);
-   }
+  if (lpFree)
+  {
+    hb_xfree(lpFree);
+  }
 
-   return h;
+  return h;
 }
 
 HINSTANCE hbwapi_Instance(void)
 {
-   HINSTANCE hInstance;
-   hb_winmainArgGet(&hInstance, nullptr, nullptr);
-   return hInstance;
+  HINSTANCE hInstance;
+  hb_winmainArgGet(&hInstance, nullptr, nullptr);
+  return hInstance;
 }
 
 HKEY hbwapi_get_HKEY(HB_PTRUINT nKey)
 {
-   switch( nKey )
-   {
-      case 1:
-         return static_cast<HKEY>(HKEY_CLASSES_ROOT);
-      /* NOTE: In xHarbour, zero value means HKEY_LOCAL_MACHINE. */
-      case 0:
-      case 2:
-         return static_cast<HKEY>(HKEY_CURRENT_USER);
-      case 3:
-         return static_cast<HKEY>(HKEY_CURRENT_CONFIG);
-      case 4:
-         return static_cast<HKEY>(HKEY_LOCAL_MACHINE);
-      case 5:
-         return static_cast<HKEY>(HKEY_USERS);
-   }
+  switch (nKey)
+  {
+  case 1:
+    return static_cast<HKEY>(HKEY_CLASSES_ROOT);
+  /* NOTE: In xHarbour, zero value means HKEY_LOCAL_MACHINE. */
+  case 0:
+  case 2:
+    return static_cast<HKEY>(HKEY_CURRENT_USER);
+  case 3:
+    return static_cast<HKEY>(HKEY_CURRENT_CONFIG);
+  case 4:
+    return static_cast<HKEY>(HKEY_LOCAL_MACHINE);
+  case 5:
+    return static_cast<HKEY>(HKEY_USERS);
+  }
 
-   return reinterpret_cast<HKEY>(nKey);
+  return reinterpret_cast<HKEY>(nKey);
 }

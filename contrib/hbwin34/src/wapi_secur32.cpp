@@ -52,35 +52,35 @@
 
 #include <security.h>
 
-HB_FUNC( WAPI_GETUSERNAMEEX )
+HB_FUNC(WAPI_GETUSERNAMEEX)
 {
-   auto nFormat = static_cast<EXTENDED_NAME_FORMAT>(hb_parnl(1));
-   ULONG nLen = 256 + 1;
-   DWORD dwError;
-   auto pBuffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
-   SetLastError(ERROR_SUCCESS);  /* This API call fails to reset the error code on success */
-   bool fResult = GetUserNameEx(nFormat, pBuffer, &nLen);
-   hbwapi_SetLastError(dwError = GetLastError());
-   if( !fResult && dwError == ERROR_MORE_DATA )
-   {
-      pBuffer = static_cast<LPTSTR>(hb_xrealloc(pBuffer, nLen * sizeof(TCHAR)));
-      fResult = GetUserNameEx(nFormat, pBuffer, &nLen);
-      hbwapi_SetLastError(dwError = GetLastError());
-   }
-   if( dwError != ERROR_SUCCESS )
-   {
-      fResult = false;
-   }
-   if( fResult )
-   {
-      HB_STORSTRLEN(pBuffer, nLen, 2);
-   }
-   hb_xfree(pBuffer);
+  auto nFormat = static_cast<EXTENDED_NAME_FORMAT>(hb_parnl(1));
+  ULONG nLen = 256 + 1;
+  DWORD dwError;
+  auto pBuffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
+  SetLastError(ERROR_SUCCESS); /* This API call fails to reset the error code on success */
+  bool fResult = GetUserNameEx(nFormat, pBuffer, &nLen);
+  hbwapi_SetLastError(dwError = GetLastError());
+  if (!fResult && dwError == ERROR_MORE_DATA)
+  {
+    pBuffer = static_cast<LPTSTR>(hb_xrealloc(pBuffer, nLen * sizeof(TCHAR)));
+    fResult = GetUserNameEx(nFormat, pBuffer, &nLen);
+    hbwapi_SetLastError(dwError = GetLastError());
+  }
+  if (dwError != ERROR_SUCCESS)
+  {
+    fResult = false;
+  }
+  if (fResult)
+  {
+    HB_STORSTRLEN(pBuffer, nLen, 2);
+  }
+  hb_xfree(pBuffer);
 
-   if( !fResult )
-   {
-      hb_storc(nullptr, 2);
-   }
+  if (!fResult)
+  {
+    hb_storc(nullptr, 2);
+  }
 
-   hb_retl(fResult);
+  hb_retl(fResult);
 }

@@ -47,43 +47,42 @@
 #include "hbwapi.hpp"
 #include <shellapi.h>
 
-HB_FUNC( WAPI_SHELLEXECUTE )
+HB_FUNC(WAPI_SHELLEXECUTE)
 {
-   void * hOperation;
-   void * hFile;
-   void * hParameters;
-   void * hDirectory;
+  void *hOperation;
+  void *hFile;
+  void *hParameters;
+  void *hDirectory;
 
-   hb_retnint(reinterpret_cast<HB_PTRUINT>(ShellExecute(hbwapi_par_raw_HWND(1),
-                                      HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
-                                      HB_PARSTRDEF(3, &hFile, nullptr),
-                                      HB_PARSTR(4, &hParameters, nullptr),
-                                      HB_PARSTR(5, &hDirectory, nullptr),
-                                      hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */)));
+  hb_retnint(reinterpret_cast<HB_PTRUINT>(ShellExecute(
+      hbwapi_par_raw_HWND(1), HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
+      HB_PARSTRDEF(3, &hFile, nullptr), HB_PARSTR(4, &hParameters, nullptr), HB_PARSTR(5, &hDirectory, nullptr),
+      hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */)));
 
-   hb_strfree(hOperation);
-   hb_strfree(hFile);
-   hb_strfree(hParameters);
-   hb_strfree(hDirectory);
+  hb_strfree(hOperation);
+  hb_strfree(hFile);
+  hb_strfree(hParameters);
+  hb_strfree(hDirectory);
 }
 
-HB_FUNC( WAPI_ISUSERANADMIN )
+HB_FUNC(WAPI_ISUSERANADMIN)
 {
-   BOOL bResult = FALSE;
+  BOOL bResult = FALSE;
 
-   HMODULE hLib = hbwapi_LoadLibrarySystem(TEXT("shell32.dll"));
+  HMODULE hLib = hbwapi_LoadLibrarySystem(TEXT("shell32.dll"));
 
-   if( hLib )
-   {
-      typedef int (WINAPI * ISUSERANADMIN)(void);
-      auto pIsUserAnAdmin = reinterpret_cast<ISUSERANADMIN>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin")));
-      if( pIsUserAnAdmin )
-      {
-         bResult = (pIsUserAnAdmin)();
-      }
+  if (hLib)
+  {
+    typedef int(WINAPI * ISUSERANADMIN)(void);
+    auto pIsUserAnAdmin =
+        reinterpret_cast<ISUSERANADMIN>(reinterpret_cast<void *>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin")));
+    if (pIsUserAnAdmin)
+    {
+      bResult = (pIsUserAnAdmin)();
+    }
 
-      FreeLibrary(hLib);
-   }
+    FreeLibrary(hLib);
+  }
 
-   hbwapi_ret_L(bResult);
+  hbwapi_ret_L(bResult);
 }

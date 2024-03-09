@@ -46,46 +46,46 @@
 
 #include "hbwapi.hpp"
 
-HB_FUNC( WIN_RUNDETACHED )
+HB_FUNC(WIN_RUNDETACHED)
 {
-   void * hCommandName;
-   void * hCommandLine;
+  void *hCommandName;
+  void *hCommandLine;
 
-   HB_SIZE nLen;
-   LPCTSTR lpCommandRO = HB_PARSTR(2, &hCommandLine, &nLen);
+  HB_SIZE nLen;
+  LPCTSTR lpCommandRO = HB_PARSTR(2, &hCommandLine, &nLen);
 
-   STARTUPINFO si{};
-   PROCESS_INFORMATION pi{};
+  STARTUPINFO si{};
+  PROCESS_INFORMATION pi{};
 
-   si.cb = sizeof(si);
+  si.cb = sizeof(si);
 
-   if( CreateProcess(
-          HB_PARSTR(1, &hCommandName, nullptr),               /* Command name */
-          HB_STRUNSHARE(&hCommandLine, lpCommandRO, nLen),    /* Command-line (Unicode version needs an non-const buffer) */
-          nullptr,                                            /* Process handle not inheritable */
-          nullptr,                                            /* Thread handle not inheritable */
-          FALSE,                                              /* Set handle inheritance to FALSE */
-          hb_parl(4) ? CREATE_NO_WINDOW : CREATE_NEW_CONSOLE, /* Creation flags */
-          nullptr,                                            /* Use parent's environment block */
-          nullptr,                                            /* Use parent's starting directory */
-          &si,                                                /* Pointer to STARTUPINFO structure */
-          &pi )                                               /* Pointer to PROCESS_INFORMATION structure */
-       )
-   {
-      hb_retl(true);
+  if (CreateProcess(HB_PARSTR(1, &hCommandName, nullptr), /* Command name */
+                    HB_STRUNSHARE(&hCommandLine, lpCommandRO,
+                                  nLen), /* Command-line (Unicode version needs an non-const buffer) */
+                    nullptr,             /* Process handle not inheritable */
+                    nullptr,             /* Thread handle not inheritable */
+                    FALSE,               /* Set handle inheritance to FALSE */
+                    hb_parl(4) ? CREATE_NO_WINDOW : CREATE_NEW_CONSOLE, /* Creation flags */
+                    nullptr,                                            /* Use parent's environment block */
+                    nullptr,                                            /* Use parent's starting directory */
+                    &si,                                                /* Pointer to STARTUPINFO structure */
+                    &pi)                                                /* Pointer to PROCESS_INFORMATION structure */
+  )
+  {
+    hb_retl(true);
 
-      hb_stornint(pi.dwProcessId, 3);
+    hb_stornint(pi.dwProcessId, 3);
 
-      /* Close process and thread handles. */
-      CloseHandle(pi.hProcess);
-      CloseHandle(pi.hThread);
-   }
-   else
-   {
-      hb_stornint(-1, 3);
-      hb_retl(false);
-   }
+    /* Close process and thread handles. */
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+  }
+  else
+  {
+    hb_stornint(-1, 3);
+    hb_retl(false);
+  }
 
-   hb_strfree(hCommandName);
-   hb_strfree(hCommandLine);
+  hb_strfree(hCommandName);
+  hb_strfree(hCommandLine);
 }

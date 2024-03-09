@@ -49,38 +49,41 @@
 
 static bool hb_SetDefaultPrinter(LPCTSTR lpPrinterName)
 {
-   using DEFPRINTER = BOOL (WINAPI *)(LPCTSTR); /* stops warnings */
+  using DEFPRINTER = BOOL(WINAPI *)(LPCTSTR); /* stops warnings */
 
-   HMODULE hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
-   if( !hWinSpool ) {
-      return false;
-   }
+  HMODULE hWinSpool = hbwapi_LoadLibrarySystem(TEXT("winspool.drv"));
+  if (!hWinSpool)
+  {
+    return false;
+  }
 
-   auto fnSetDefaultPrinter = reinterpret_cast<DEFPRINTER>(HB_WINAPI_GETPROCADDRESST(hWinSpool, "SetDefaultPrinter"));
+  auto fnSetDefaultPrinter = reinterpret_cast<DEFPRINTER>(HB_WINAPI_GETPROCADDRESST(hWinSpool, "SetDefaultPrinter"));
 
-   if( !fnSetDefaultPrinter ) {
-      FreeLibrary(hWinSpool);
-      return false;
-   }
+  if (!fnSetDefaultPrinter)
+  {
+    FreeLibrary(hWinSpool);
+    return false;
+  }
 
-   BOOL bFlag = (*fnSetDefaultPrinter)(lpPrinterName);
-   FreeLibrary(hWinSpool);
-   if( !bFlag ) {
-      return false;
-   }
+  BOOL bFlag = (*fnSetDefaultPrinter)(lpPrinterName);
+  FreeLibrary(hWinSpool);
+  if (!bFlag)
+  {
+    return false;
+  }
 
-   /* Tell all open programs that this change occurred.
-      Allow each app 1 second to handle this message. */
-   SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, 0, SMTO_NORMAL, 1000, nullptr);
+  /* Tell all open programs that this change occurred.
+     Allow each app 1 second to handle this message. */
+  SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, 0, SMTO_NORMAL, 1000, nullptr);
 
-   return true;
+  return true;
 }
 
-HB_FUNC( WIN_PRINTERSETDEFAULT )
+HB_FUNC(WIN_PRINTERSETDEFAULT)
 {
-   void * hPrinterName;
-   HB_SIZE nLen;
-   LPCTSTR pszPrinterName = HB_PARSTR(1, &hPrinterName, &nLen);
-   hb_retl(nLen > 0 ? hb_SetDefaultPrinter(pszPrinterName) : false);
-   hb_strfree(hPrinterName);
+  void *hPrinterName;
+  HB_SIZE nLen;
+  LPCTSTR pszPrinterName = HB_PARSTR(1, &hPrinterName, &nLen);
+  hb_retl(nLen > 0 ? hb_SetDefaultPrinter(pszPrinterName) : false);
+  hb_strfree(hPrinterName);
 }

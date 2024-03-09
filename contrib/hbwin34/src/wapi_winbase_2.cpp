@@ -46,115 +46,112 @@
 
 #include "hbwapi.hpp"
 
-HB_FUNC( WAPI_GETLASTERROR )
+HB_FUNC(WAPI_GETLASTERROR)
 {
-   hb_retnint(hbwapi_GetLastError());
+  hb_retnint(hbwapi_GetLastError());
 }
 
-HB_FUNC( WAPI_GETCURRENTPROCESSID )
+HB_FUNC(WAPI_GETCURRENTPROCESSID)
 {
-   hb_retnint(GetCurrentProcessId());
+  hb_retnint(GetCurrentProcessId());
 }
 
-HB_FUNC( WAPI_GETCURRENTTHREADID )
+HB_FUNC(WAPI_GETCURRENTTHREADID)
 {
-   hb_retnint(GetCurrentThreadId());
+  hb_retnint(GetCurrentThreadId());
 }
 
-HB_FUNC( WAPI_FORMATMESSAGE )
+HB_FUNC(WAPI_FORMATMESSAGE)
 {
-   void * hSource = nullptr;
-   LPTSTR lpAllocBuff = nullptr;
-   LPTSTR lpBuffer = nullptr;
-   HB_SIZE nSize = 0;
+  void *hSource = nullptr;
+  LPTSTR lpAllocBuff = nullptr;
+  LPTSTR lpBuffer = nullptr;
+  HB_SIZE nSize = 0;
 
-   auto dwFlags = static_cast<DWORD>(hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM));
+  auto dwFlags = static_cast<DWORD>(hb_parnldef(1, FORMAT_MESSAGE_FROM_SYSTEM));
 
-   if( HB_ISBYREF(5) )
-   {
-      nSize = hb_parns(6);
-      if( (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0 )
+  if (HB_ISBYREF(5))
+  {
+    nSize = hb_parns(6);
+    if ((dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0)
+    {
+      if (nSize == 0 && !HB_ISNUM(6))
       {
-         if( nSize == 0 && !HB_ISNUM(6) )
-         {
-            nSize = hb_parclen(5);
-         }
-         if( nSize > 0 )
-         {
-            lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
-         }
-         else
-         {
-            dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
-         }
+        nSize = hb_parclen(5);
       }
-   }
-   else
-   {
-      dwFlags = static_cast<DWORD>(~FORMAT_MESSAGE_ALLOCATE_BUFFER);
-   }
-
-   if( dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER )
-   {
-      lpBuffer = reinterpret_cast<LPTSTR>(&lpAllocBuff);
-   }
-
-   if( lpBuffer )
-   {
-      DWORD dwRetVal =
-         FormatMessage(dwFlags,
-                       HB_ISCHAR(2) ? static_cast<LPCVOID>(HB_PARSTR(2, &hSource, nullptr)) : hb_parptr(2),
-                       HB_ISNUM(3) ? static_cast<DWORD>(hb_parnl(3)) : hbwapi_GetLastError() /* dwMessageId */,
-                       static_cast<DWORD>(hb_parnldef(4, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT))) /* dwLanguageId */,
-                       lpBuffer,
-                       static_cast<DWORD>(nSize),
-                       nullptr /* TODO: Add support for this parameter. */);
-
-      hbwapi_SetLastError(GetLastError());
-      hb_retnint(dwRetVal);
-
-      if( lpBuffer )
+      if (nSize > 0)
       {
-         if( dwRetVal && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) )
-         {
-            lpBuffer = lpAllocBuff;
-         }
-         else
-         {
-            lpBuffer[nSize - 1] = '\0';
-         }
+        lpBuffer = static_cast<LPTSTR>(hb_xgrab(nSize * sizeof(TCHAR)));
+      }
+      else
+      {
+        dwFlags |= FORMAT_MESSAGE_ALLOCATE_BUFFER;
+      }
+    }
+  }
+  else
+  {
+    dwFlags = static_cast<DWORD>(~FORMAT_MESSAGE_ALLOCATE_BUFFER);
+  }
 
-         HB_STORSTR(dwRetVal ? lpBuffer : nullptr, 5);
+  if (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER)
+  {
+    lpBuffer = reinterpret_cast<LPTSTR>(&lpAllocBuff);
+  }
 
-         if( lpAllocBuff )
-         {
-            LocalFree(lpAllocBuff);
-         }
-         else if( lpBuffer && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0 )
-         {
-            hb_xfree(lpBuffer);
-         }
+  if (lpBuffer)
+  {
+    DWORD dwRetVal =
+        FormatMessage(dwFlags, HB_ISCHAR(2) ? static_cast<LPCVOID>(HB_PARSTR(2, &hSource, nullptr)) : hb_parptr(2),
+                      HB_ISNUM(3) ? static_cast<DWORD>(hb_parnl(3)) : hbwapi_GetLastError() /* dwMessageId */,
+                      static_cast<DWORD>(hb_parnldef(4, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT))) /* dwLanguageId */,
+                      lpBuffer, static_cast<DWORD>(nSize), nullptr /* TODO: Add support for this parameter. */);
+
+    hbwapi_SetLastError(GetLastError());
+    hb_retnint(dwRetVal);
+
+    if (lpBuffer)
+    {
+      if (dwRetVal && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER))
+      {
+        lpBuffer = lpAllocBuff;
+      }
+      else
+      {
+        lpBuffer[nSize - 1] = '\0';
       }
 
-      hb_strfree(hSource);
-   }
-   else
-   {
-      hb_storc(nullptr, 5);
-      hbwapi_SetLastError(ERROR_EMPTY);
-      hb_retnint(-1);
-   }
+      HB_STORSTR(dwRetVal ? lpBuffer : nullptr, 5);
+
+      if (lpAllocBuff)
+      {
+        LocalFree(lpAllocBuff);
+      }
+      else if (lpBuffer && (dwFlags & FORMAT_MESSAGE_ALLOCATE_BUFFER) == 0)
+      {
+        hb_xfree(lpBuffer);
+      }
+    }
+
+    hb_strfree(hSource);
+  }
+  else
+  {
+    hb_storc(nullptr, 5);
+    hbwapi_SetLastError(ERROR_EMPTY);
+    hb_retnint(-1);
+  }
 }
 
 /* VOID WINAPI Sleep(__in DWORD dwMilliseconds); */
-HB_FUNC( WAPI_SLEEP )
+HB_FUNC(WAPI_SLEEP)
 {
-   Sleep(static_cast<DWORD>(hb_parnl(1)));
+  Sleep(static_cast<DWORD>(hb_parnl(1)));
 }
 
-HB_FUNC( WAPI_OUTPUTDEBUGSTRING )
+HB_FUNC(WAPI_OUTPUTDEBUGSTRING)
 {
-   void * hOutputString;
-   OutputDebugString(HB_PARSTR(1, &hOutputString, nullptr));
-   hb_strfree(hOutputString);
+  void *hOutputString;
+  OutputDebugString(HB_PARSTR(1, &hOutputString, nullptr));
+  hb_strfree(hOutputString);
 }
