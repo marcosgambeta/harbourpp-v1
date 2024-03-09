@@ -49,162 +49,174 @@
 #include "hbapiitm.hpp"
 
 #ifndef QS_ALLPOSTMESSAGE
-#define QS_ALLPOSTMESSAGE  0x0100
+#define QS_ALLPOSTMESSAGE 0x0100
 #endif
 
-HB_FUNC( WIN_LOADRESOURCE )
+HB_FUNC(WIN_LOADRESOURCE)
 {
-   HANDLE hInstance = nullptr;
+  HANDLE hInstance = nullptr;
 
-   /* Set default return value */
-   hb_retc_null();
+  /* Set default return value */
+  hb_retc_null();
 
-   if( hb_winmainArgGet(&hInstance, nullptr, nullptr) ) {
-      void * hName;
-      void * hType;
+  if (hb_winmainArgGet(&hInstance, nullptr, nullptr))
+  {
+    void *hName;
+    void *hType;
 
-      HRSRC hRes = FindResource(static_cast<HMODULE>(hInstance), HB_PARSTRDEF(1, &hName, nullptr), HB_PARSTRDEF(2, &hType, nullptr));
+    HRSRC hRes = FindResource(static_cast<HMODULE>(hInstance), HB_PARSTRDEF(1, &hName, nullptr),
+                              HB_PARSTRDEF(2, &hType, nullptr));
 
-      if( hRes ) {
-         HGLOBAL hMem = LoadResource(nullptr, hRes);
+    if (hRes)
+    {
+      HGLOBAL hMem = LoadResource(nullptr, hRes);
 
-         if( hMem ) {
-            void * pMem = LockResource(hMem);
+      if (hMem)
+      {
+        void *pMem = LockResource(hMem);
 
-            if( pMem ) {
-               hb_retclen(static_cast<char*>(pMem), SizeofResource(nullptr, hRes));
-            }
-         }
+        if (pMem)
+        {
+          hb_retclen(static_cast<char *>(pMem), SizeofResource(nullptr, hRes));
+        }
       }
+    }
 
-      hb_strfree(hName);
-      hb_strfree(hType);
-   }
+    hb_strfree(hName);
+    hb_strfree(hType);
+  }
 }
 
-HB_FUNC( WIN_GETCOMMANDLINEPARAM )
+HB_FUNC(WIN_GETCOMMANDLINEPARAM)
 {
-   LPCTSTR lpCmdLine = GetCommandLine();
-   HB_BOOL fQuote = false;
-   long pos;
+  LPCTSTR lpCmdLine = GetCommandLine();
+  HB_BOOL fQuote = false;
+  long pos;
 
-   /* Skip application path */
-   pos = 0;
-   while( lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos])) ) {
-      if( lpCmdLine[pos] == '"' ) {
-         fQuote = !fQuote;
-      }
-      pos++;
-   }
-   while( HB_ISSPACE(lpCmdLine[pos]) ) {
-      pos++;
-   }
+  /* Skip application path */
+  pos = 0;
+  while (lpCmdLine[pos] && (fQuote || !HB_ISSPACE(lpCmdLine[pos])))
+  {
+    if (lpCmdLine[pos] == '"')
+    {
+      fQuote = !fQuote;
+    }
+    pos++;
+  }
+  while (HB_ISSPACE(lpCmdLine[pos]))
+  {
+    pos++;
+  }
 
-   HB_RETSTR(lpCmdLine + pos);
+  HB_RETSTR(lpCmdLine + pos);
 }
 
-HB_FUNC( WIN_ANSITOWIDE )
+HB_FUNC(WIN_ANSITOWIDE)
 {
-   auto nLen = hb_parclen(1);
-   LPCSTR lpSrcMB = hb_parcx(1);
-   DWORD dwLength = MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), nullptr, 0);
-   auto lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
+  auto nLen = hb_parclen(1);
+  LPCSTR lpSrcMB = hb_parcx(1);
+  DWORD dwLength = MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), nullptr, 0);
+  auto lpDstWide = static_cast<LPWSTR>(hb_xgrab((dwLength + 1) * sizeof(wchar_t)));
 
-   MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), lpDstWide, dwLength + 1);
+  MultiByteToWideChar(CP_ACP, 0, lpSrcMB, static_cast<int>(nLen), lpDstWide, dwLength + 1);
 
-   hb_retclen_buffer(reinterpret_cast<char*>(lpDstWide), static_cast<HB_SIZE>(dwLength * sizeof(wchar_t)));
+  hb_retclen_buffer(reinterpret_cast<char *>(lpDstWide), static_cast<HB_SIZE>(dwLength * sizeof(wchar_t)));
 }
 
-HB_FUNC( WIN_WIDETOANSI )
+HB_FUNC(WIN_WIDETOANSI)
 {
-   auto nLen = hb_parclen(1);
-   auto lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
-   DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
-   auto lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
+  auto nLen = hb_parclen(1);
+  auto lpSrcWide = reinterpret_cast<LPCWSTR>(hb_parcx(1));
+  DWORD dwLength = WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), nullptr, 0, nullptr, nullptr);
+  auto lpDstMB = static_cast<LPSTR>(hb_xgrab(dwLength + 1));
 
-   WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), lpDstMB, dwLength + 1, nullptr, nullptr);
+  WideCharToMultiByte(CP_ACP, 0, lpSrcWide, static_cast<int>(nLen), lpDstMB, dwLength + 1, nullptr, nullptr);
 
-   hb_retclen_buffer(lpDstMB, static_cast<HB_SIZE>(dwLength));
+  hb_retclen_buffer(lpDstMB, static_cast<HB_SIZE>(dwLength));
 }
 
-HB_FUNC( WIN_UNICODE )
+HB_FUNC(WIN_UNICODE)
 {
 #if defined(UNICODE)
-   hb_retl(true);
+  hb_retl(true);
 #else
-   hb_retl(false);
+  hb_retl(false);
 #endif
 }
 
-HB_FUNC( WIN_N2P )
+HB_FUNC(WIN_N2P)
 {
-   hb_retptr(reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hb_parnint(1))));
+  hb_retptr(reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hb_parnint(1))));
 }
 
-HB_FUNC( WIN_P2N )
+HB_FUNC(WIN_P2N)
 {
-   hb_retnint(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
+  hb_retnint(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
 }
 
-HB_FUNC( WIN_HINSTANCE )
+HB_FUNC(WIN_HINSTANCE)
 {
-   HANDLE hInstance;
+  HANDLE hInstance;
 
-   hb_winmainArgGet(&hInstance, nullptr, nullptr);
+  hb_winmainArgGet(&hInstance, nullptr, nullptr);
 
-   hb_retptr(hInstance);
+  hb_retptr(hInstance);
 }
 
-HB_FUNC( WIN_HPREVINSTANCE )
+HB_FUNC(WIN_HPREVINSTANCE)
 {
-   HANDLE hPrevInstance;
+  HANDLE hPrevInstance;
 
-   hb_winmainArgGet(nullptr, &hPrevInstance, nullptr);
+  hb_winmainArgGet(nullptr, &hPrevInstance, nullptr);
 
-   hb_retptr(hPrevInstance);
+  hb_retptr(hPrevInstance);
 }
 
-HB_FUNC( WIN_NCMDSHOW )
+HB_FUNC(WIN_NCMDSHOW)
 {
-   int nCmdShow;
+  int nCmdShow;
 
-   hb_winmainArgGet(nullptr, nullptr, &nCmdShow);
+  hb_winmainArgGet(nullptr, nullptr, &nCmdShow);
 
-   hb_retni(nCmdShow);
+  hb_retni(nCmdShow);
 }
 
-HB_FUNC( WIN_LOWORD )
+HB_FUNC(WIN_LOWORD)
 {
-   hb_retni(static_cast<int>(LOWORD(static_cast<DWORD>(hb_parnl(1)))));
+  hb_retni(static_cast<int>(LOWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
-HB_FUNC( WIN_HIWORD )
+HB_FUNC(WIN_HIWORD)
 {
-   hb_retni(static_cast<int>(HIWORD(static_cast<DWORD>(hb_parnl(1)))));
+  hb_retni(static_cast<int>(HIWORD(static_cast<DWORD>(hb_parnl(1)))));
 }
 
-HB_FUNC( WIN_SYSREFRESH )
+HB_FUNC(WIN_SYSREFRESH)
 {
-   auto dwMsec = static_cast<DWORD>(hb_parnl(1));
+  auto dwMsec = static_cast<DWORD>(hb_parnl(1));
 
-   HANDLE hDummyEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+  HANDLE hDummyEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 
-   /* Begin the operation and continue until it is complete
-      or until the user clicks the mouse or presses a key. */
+  /* Begin the operation and continue until it is complete
+     or until the user clicks the mouse or presses a key. */
 
-   if( MsgWaitForMultipleObjects(1, &hDummyEvent, FALSE, (dwMsec == 0 ? INFINITE : dwMsec), QS_ALLINPUT | QS_ALLPOSTMESSAGE ) == WAIT_OBJECT_0 + 1 ) {
-      MSG msg;
+  if (MsgWaitForMultipleObjects(1, &hDummyEvent, FALSE, (dwMsec == 0 ? INFINITE : dwMsec),
+                                QS_ALLINPUT | QS_ALLPOSTMESSAGE) == WAIT_OBJECT_0 + 1)
+  {
+    MSG msg;
 
-      while( PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE) ) {
-         switch( msg.message ) {
-            case WM_CLOSE:
-               CloseHandle(hDummyEvent);
-               hb_retni(1);
-               return;
-            case WM_QUIT:
-               CloseHandle(hDummyEvent);
-               hb_retnint(msg.wParam);
-               return;
+    while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+    {
+      switch (msg.message)
+      {
+      case WM_CLOSE:
+        CloseHandle(hDummyEvent);
+        hb_retni(1);
+        return;
+      case WM_QUIT:
+        CloseHandle(hDummyEvent);
+        hb_retnint(msg.wParam);
+        return;
 #if 0
             case WM_LBUTTONDOWN:
             case WM_RBUTTONDOWN:
@@ -215,28 +227,30 @@ HB_FUNC( WIN_SYSREFRESH )
                /* Perform any required cleanup. */
                break;
 #endif
-            default:
-               TranslateMessage(&msg);
-               DispatchMessage(&msg);
-         }
+      default:
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
       }
-   }
+    }
+  }
 
-   CloseHandle(hDummyEvent);
-   hb_retni(0);
+  CloseHandle(hDummyEvent);
+  hb_retni(0);
 }
 
-HB_FUNC( WIN_QPCOUNTER2SEC )
+HB_FUNC(WIN_QPCOUNTER2SEC)
 {
-   static HB_MAXDBL s_dFrequence = 0;
+  static HB_MAXDBL s_dFrequence = 0;
 
-   if( s_dFrequence == 0 ) {
-      LARGE_INTEGER frequency;
-      if( !QueryPerformanceFrequency(&frequency) ) {
-         hb_retnd(0);
-         return;
-      }
-      s_dFrequence = static_cast<HB_MAXDBL>(HBWAPI_GET_LARGEUINT(frequency));
-   }
-   hb_retnd(static_cast<double>(static_cast<HB_MAXDBL>(hb_parnint(1)) / static_cast<HB_MAXDBL>(s_dFrequence)));
+  if (s_dFrequence == 0)
+  {
+    LARGE_INTEGER frequency;
+    if (!QueryPerformanceFrequency(&frequency))
+    {
+      hb_retnd(0);
+      return;
+    }
+    s_dFrequence = static_cast<HB_MAXDBL>(HBWAPI_GET_LARGEUINT(frequency));
+  }
+  hb_retnd(static_cast<double>(static_cast<HB_MAXDBL>(hb_parnint(1)) / static_cast<HB_MAXDBL>(s_dFrequence)));
 }

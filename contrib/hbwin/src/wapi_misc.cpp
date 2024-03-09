@@ -46,93 +46,101 @@
 
 #include "hbwapi.hpp"
 
-HB_SIZE hbwapi_tstrlen(const TCHAR * pText)
+HB_SIZE hbwapi_tstrlen(const TCHAR *pText)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrlen(%p)", static_cast<const void*>(pText)));
 #endif
 
-   HB_SIZE nLen = 0;
+  HB_SIZE nLen = 0;
 
-   while( pText[nLen] != TEXT('\0') ) {
-      ++nLen;
-   }
+  while (pText[nLen] != TEXT('\0'))
+  {
+    ++nLen;
+  }
 
-   return nLen;
+  return nLen;
 }
 
 /* NOTE: Based on hb_strdup() */
-TCHAR * hbwapi_tstrdup(const TCHAR * pszText)
+TCHAR *hbwapi_tstrdup(const TCHAR *pszText)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrdup(%p)", static_cast<const void*>(pszText)));
 #endif
 
-   HB_SIZE nLen = (hbwapi_tstrlen(pszText) + 1) * sizeof(TCHAR);
-   auto pszDup = static_cast<TCHAR*>(hb_xgrab(nLen));
-   memcpy(pszDup, pszText, nLen);
-   return pszDup;
+  HB_SIZE nLen = (hbwapi_tstrlen(pszText) + 1) * sizeof(TCHAR);
+  auto pszDup = static_cast<TCHAR *>(hb_xgrab(nLen));
+  memcpy(pszDup, pszText, nLen);
+  return pszDup;
 }
 
 /* NOTE: Based on hb_strncat() */
-TCHAR * hbwapi_tstrncat(TCHAR * pDest, const TCHAR * pSource, HB_SIZE nLen)
+TCHAR *hbwapi_tstrncat(TCHAR *pDest, const TCHAR *pSource, HB_SIZE nLen)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hbwapi_tstrncat(%p, %p, %" HB_PFS "u)", static_cast<void*>(pDest), static_cast<const void*>(pSource), nLen));
 #endif
 
-   TCHAR * pBuf = pDest;
+  TCHAR *pBuf = pDest;
 
-   pDest[nLen] = TEXT('\0');
+  pDest[nLen] = TEXT('\0');
 
-   while( nLen && *pDest ) {
-      pDest++;
-      nLen--;
-   }
+  while (nLen && *pDest)
+  {
+    pDest++;
+    nLen--;
+  }
 
-   while( nLen && (*pDest++ = *pSource++) != TEXT('\0') ) {
-      nLen--;
-   }
+  while (nLen && (*pDest++ = *pSource++) != TEXT('\0'))
+  {
+    nLen--;
+  }
 
-   return pBuf;
+  return pBuf;
 }
 
-static TCHAR * hbwapi_FileNameAtSystemDir(const TCHAR * pFileName)
+static TCHAR *hbwapi_FileNameAtSystemDir(const TCHAR *pFileName)
 {
-   UINT nLen = GetSystemDirectory(nullptr, 0);
+  UINT nLen = GetSystemDirectory(nullptr, 0);
 
-   if( nLen ) {
-      if( pFileName ) {
-         nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
-      }
+  if (nLen)
+  {
+    if (pFileName)
+    {
+      nLen += static_cast<UINT>(hbwapi_tstrlen(pFileName)) + 1;
+    }
 
-      auto buffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
+    auto buffer = static_cast<LPTSTR>(hb_xgrab(nLen * sizeof(TCHAR)));
 
-      GetSystemDirectory(buffer, nLen);
+    GetSystemDirectory(buffer, nLen);
 
-      if( pFileName ) {
-         hbwapi_tstrncat(buffer, TEXT("\\"), nLen - 1);
-         hbwapi_tstrncat(buffer, pFileName, nLen - 1);
-      }
+    if (pFileName)
+    {
+      hbwapi_tstrncat(buffer, TEXT("\\"), nLen - 1);
+      hbwapi_tstrncat(buffer, pFileName, nLen - 1);
+    }
 
-      return buffer;
-   } else {
-      return hbwapi_tstrdup(pFileName);
-   }
+    return buffer;
+  }
+  else
+  {
+    return hbwapi_tstrdup(pFileName);
+  }
 }
 
 #ifndef LOAD_LIBRARY_SEARCH_SYSTEM32
-#define LOAD_LIBRARY_SEARCH_SYSTEM32  0x00000800
+#define LOAD_LIBRARY_SEARCH_SYSTEM32 0x00000800
 #endif
 
 HMODULE hbwapi_LoadLibrarySystem(LPCTSTR pFileName)
 {
-   TCHAR * pLibPath = hbwapi_FileNameAtSystemDir(pFileName);
+  TCHAR *pLibPath = hbwapi_FileNameAtSystemDir(pFileName);
 
-   /* TODO: Replace flag with LOAD_LIBRARY_SEARCH_SYSTEM32 in the future [vszakats] */
-   HMODULE h = LoadLibraryEx(pLibPath, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
+  /* TODO: Replace flag with LOAD_LIBRARY_SEARCH_SYSTEM32 in the future [vszakats] */
+  HMODULE h = LoadLibraryEx(pLibPath, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 
-   hb_xfree(pLibPath);
+  hb_xfree(pLibPath);
 
-   return h;
+  return h;
 }

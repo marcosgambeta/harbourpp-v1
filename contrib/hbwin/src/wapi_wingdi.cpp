@@ -55,843 +55,993 @@
 /* For Arc() */
 #include <winspool.h>
 
-static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char * pszKey, long v)
+static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char *pszKey, long v)
 {
-   auto pKey = hb_itemPutC(nullptr, pszKey);
-   auto pValue = hb_itemPutNL(nullptr, v);
+  auto pKey = hb_itemPutC(nullptr, pszKey);
+  auto pValue = hb_itemPutNL(nullptr, v);
 
-   hb_hashAdd(pHash, pKey, pValue);
+  hb_hashAdd(pHash, pKey, pValue);
 
-   hb_itemRelease(pValue);
-   hb_itemRelease(pKey);
+  hb_itemRelease(pValue);
+  hb_itemRelease(pKey);
 }
 
-POINT * hbwapi_par_POINT(POINT * p, int iParam, HB_BOOL bMandatory)
+POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
 {
-   auto pStru = hb_param(iParam, Harbour::Item::ANY);
+  auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
-   memset(p, 0, sizeof(POINT));
+  memset(p, 0, sizeof(POINT));
 
-   if( pStru && HB_IS_HASH(pStru) ) {
-      p->x = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "x")));
-      p->y = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "y")));
+  if (pStru && HB_IS_HASH(pStru))
+  {
+    p->x = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "x")));
+    p->y = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "y")));
 
-      return p;
-   } else if( pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 2 ) {
-      p->x = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
-      p->y = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
+    return p;
+  }
+  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 2)
+  {
+    p->x = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
+    p->y = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
 
-      return p;
-   } else if( bMandatory ) {
-      return p;
-   }
+    return p;
+  }
+  else if (bMandatory)
+  {
+    return p;
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
-void hbwapi_stor_POINT(POINT * p, int iParam)
+void hbwapi_stor_POINT(POINT *p, int iParam)
 {
-   auto pStru = hb_param(iParam, Harbour::Item::ANY);
+  auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
-   if( pStru && HB_IS_HASH(pStru) ) {
-      s_hb_hashSetCItemNL(pStru, "x", p->x);
-      s_hb_hashSetCItemNL(pStru, "y", p->y);
-   } else if( pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 2 ) {
-      hb_arraySetNL(pStru, 1, p->x);
-      hb_arraySetNL(pStru, 2, p->y);
-   }
+  if (pStru && HB_IS_HASH(pStru))
+  {
+    s_hb_hashSetCItemNL(pStru, "x", p->x);
+    s_hb_hashSetCItemNL(pStru, "y", p->y);
+  }
+  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 2)
+  {
+    hb_arraySetNL(pStru, 1, p->x);
+    hb_arraySetNL(pStru, 2, p->y);
+  }
 }
 
-RECT * hbwapi_par_RECT(RECT * p, int iParam, HB_BOOL bMandatory)
+RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
 {
-   auto pStru = hb_param(iParam, Harbour::Item::ANY);
+  auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
-   memset(p, 0, sizeof(RECT));
+  memset(p, 0, sizeof(RECT));
 
-   if( pStru && HB_IS_HASH(pStru) ) {
-      p->left   = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "left")));
-      p->top    = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "top")));
-      p->right  = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "right")));
-      p->bottom = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "bottom")));
+  if (pStru && HB_IS_HASH(pStru))
+  {
+    p->left = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "left")));
+    p->top = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "top")));
+    p->right = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "right")));
+    p->bottom = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "bottom")));
 
-      return p;
-   } else if( pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 4 ) {
-      p->left   = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
-      p->top    = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
-      p->right  = static_cast<LONG>(hb_arrayGetNL(pStru, 3));
-      p->bottom = static_cast<LONG>(hb_arrayGetNL(pStru, 4));
+    return p;
+  }
+  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 4)
+  {
+    p->left = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
+    p->top = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
+    p->right = static_cast<LONG>(hb_arrayGetNL(pStru, 3));
+    p->bottom = static_cast<LONG>(hb_arrayGetNL(pStru, 4));
 
-      return p;
-   } else if( bMandatory ) {
-      return p;
-   }
+    return p;
+  }
+  else if (bMandatory)
+  {
+    return p;
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
-void hbwapi_stor_RECT(RECT * p, int iParam)
+void hbwapi_stor_RECT(RECT *p, int iParam)
 {
-   auto pStru = hb_param(iParam, Harbour::Item::ANY);
+  auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
-   if( pStru && HB_IS_HASH(pStru) ) {
-      s_hb_hashSetCItemNL(pStru, "left", p->left);
-      s_hb_hashSetCItemNL(pStru, "top", p->top);
-      s_hb_hashSetCItemNL(pStru, "right", p->right);
-      s_hb_hashSetCItemNL(pStru, "bottom", p->bottom);
-   } else if( pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 4 ) {
-      hb_arraySetNL(pStru, 1, p->left);
-      hb_arraySetNL(pStru, 2, p->top);
-      hb_arraySetNL(pStru, 3, p->right);
-      hb_arraySetNL(pStru, 4, p->bottom);
-   }
+  if (pStru && HB_IS_HASH(pStru))
+  {
+    s_hb_hashSetCItemNL(pStru, "left", p->left);
+    s_hb_hashSetCItemNL(pStru, "top", p->top);
+    s_hb_hashSetCItemNL(pStru, "right", p->right);
+    s_hb_hashSetCItemNL(pStru, "bottom", p->bottom);
+  }
+  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 4)
+  {
+    hb_arraySetNL(pStru, 1, p->left);
+    hb_arraySetNL(pStru, 2, p->top);
+    hb_arraySetNL(pStru, 3, p->right);
+    hb_arraySetNL(pStru, 4, p->bottom);
+  }
 }
 
-LOGFONT * hbwapi_par_LOGFONT(LOGFONT * p, int iParam, HB_BOOL bMandatory)
+LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
 {
-   auto pStru = hb_param(iParam, Harbour::Item::ANY);
+  auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
-   void * hfFaceName;
-   LPCTSTR pfFaceName;
-   HB_SIZE nLen;
+  void *hfFaceName;
+  LPCTSTR pfFaceName;
+  HB_SIZE nLen;
 
-   memset(p, 0, sizeof(LOGFONT));
+  memset(p, 0, sizeof(LOGFONT));
 
-   if( pStru && HB_IS_HASH(pStru) ) {
-      p->lfHeight         = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfHeight")));
-      p->lfWidth          = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfWidth")));
-      p->lfEscapement     = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfEscapement")));
-      p->lfOrientation    = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfOrientation")));
-      p->lfWeight         = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfWeight")));
-      p->lfItalic         = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfItalic")));
-      p->lfUnderline      = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfUnderline")));
-      p->lfStrikeOut      = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfStrikeOut")));
-      p->lfCharSet        = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfCharSet")));
-      p->lfOutPrecision   = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfOutPrecision")));
-      p->lfClipPrecision  = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfClipPrecision")));
-      p->lfQuality        = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfQuality")));
-      p->lfPitchAndFamily = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfPitchAndFamily")));
+  if (pStru && HB_IS_HASH(pStru))
+  {
+    p->lfHeight = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfHeight")));
+    p->lfWidth = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfWidth")));
+    p->lfEscapement = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfEscapement")));
+    p->lfOrientation = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfOrientation")));
+    p->lfWeight = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfWeight")));
+    p->lfItalic = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfItalic")));
+    p->lfUnderline = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfUnderline")));
+    p->lfStrikeOut = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfStrikeOut")));
+    p->lfCharSet = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfCharSet")));
+    p->lfOutPrecision = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfOutPrecision")));
+    p->lfClipPrecision = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfClipPrecision")));
+    p->lfQuality = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfQuality")));
+    p->lfPitchAndFamily = static_cast<BYTE>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lfPitchAndFamily")));
 
-      pfFaceName = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lfFaceName"), &hfFaceName, &nLen);
+    pfFaceName = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lfFaceName"), &hfFaceName, &nLen);
 
-      if( nLen > (LF_FACESIZE - 1) ) {
-         nLen = LF_FACESIZE - 1;
-      }
+    if (nLen > (LF_FACESIZE - 1))
+    {
+      nLen = LF_FACESIZE - 1;
+    }
 
-      memcpy(p->lfFaceName, pfFaceName, nLen * sizeof(TCHAR));
-      p->lfFaceName[nLen] = TEXT('\0');
+    memcpy(p->lfFaceName, pfFaceName, nLen * sizeof(TCHAR));
+    p->lfFaceName[nLen] = TEXT('\0');
 
-      hb_strfree(hfFaceName);
+    hb_strfree(hfFaceName);
 
-      return p;
-   } else if( pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 14 ) {
-      p->lfHeight         = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
-      p->lfWidth          = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
-      p->lfEscapement     = static_cast<LONG>(hb_arrayGetNL(pStru, 3));
-      p->lfOrientation    = static_cast<LONG>(hb_arrayGetNL(pStru, 4));
-      p->lfWeight         = static_cast<LONG>(hb_arrayGetNL(pStru, 5));
-      p->lfItalic         = static_cast<BYTE>(hb_arrayGetNI(pStru, 6));
-      p->lfUnderline      = static_cast<BYTE>(hb_arrayGetNI(pStru, 7));
-      p->lfStrikeOut      = static_cast<BYTE>(hb_arrayGetNI(pStru, 8));
-      p->lfCharSet        = static_cast<BYTE>(hb_arrayGetNI(pStru, 9));
-      p->lfOutPrecision   = static_cast<BYTE>(hb_arrayGetNI(pStru, 10));
-      p->lfClipPrecision  = static_cast<BYTE>(hb_arrayGetNI(pStru, 11));
-      p->lfQuality        = static_cast<BYTE>(hb_arrayGetNI(pStru, 12));
-      p->lfPitchAndFamily = static_cast<BYTE>(hb_arrayGetNI(pStru, 13));
+    return p;
+  }
+  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 14)
+  {
+    p->lfHeight = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
+    p->lfWidth = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
+    p->lfEscapement = static_cast<LONG>(hb_arrayGetNL(pStru, 3));
+    p->lfOrientation = static_cast<LONG>(hb_arrayGetNL(pStru, 4));
+    p->lfWeight = static_cast<LONG>(hb_arrayGetNL(pStru, 5));
+    p->lfItalic = static_cast<BYTE>(hb_arrayGetNI(pStru, 6));
+    p->lfUnderline = static_cast<BYTE>(hb_arrayGetNI(pStru, 7));
+    p->lfStrikeOut = static_cast<BYTE>(hb_arrayGetNI(pStru, 8));
+    p->lfCharSet = static_cast<BYTE>(hb_arrayGetNI(pStru, 9));
+    p->lfOutPrecision = static_cast<BYTE>(hb_arrayGetNI(pStru, 10));
+    p->lfClipPrecision = static_cast<BYTE>(hb_arrayGetNI(pStru, 11));
+    p->lfQuality = static_cast<BYTE>(hb_arrayGetNI(pStru, 12));
+    p->lfPitchAndFamily = static_cast<BYTE>(hb_arrayGetNI(pStru, 13));
 
-      pfFaceName = HB_ARRAYGETSTR(pStru, 14, &hfFaceName, &nLen);
+    pfFaceName = HB_ARRAYGETSTR(pStru, 14, &hfFaceName, &nLen);
 
-      if( nLen > (LF_FACESIZE - 1) ) {
-         nLen = LF_FACESIZE - 1;
-      }
+    if (nLen > (LF_FACESIZE - 1))
+    {
+      nLen = LF_FACESIZE - 1;
+    }
 
-      memcpy(p->lfFaceName, pfFaceName, nLen * sizeof(TCHAR));
-      p->lfFaceName[nLen] = TEXT('\0');
+    memcpy(p->lfFaceName, pfFaceName, nLen * sizeof(TCHAR));
+    p->lfFaceName[nLen] = TEXT('\0');
 
-      hb_strfree(hfFaceName);
+    hb_strfree(hfFaceName);
 
-      return p;
-   } else if( bMandatory ) {
-      return p;
-   }
+    return p;
+  }
+  else if (bMandatory)
+  {
+    return p;
+  }
 
-   return nullptr;
+  return nullptr;
 }
 
-DOCINFO * hbwapi_par_DOCINFO(DOCINFO * p, int iParam, HB_BOOL bMandatory, void *** ph)
+DOCINFO *hbwapi_par_DOCINFO(DOCINFO *p, int iParam, HB_BOOL bMandatory, void ***ph)
 {
-   auto pStru = hb_param(iParam, Harbour::Item::ANY);
-   auto h = static_cast<void**>(hb_xgrabz(3 * sizeof(void*)));
+  auto pStru = hb_param(iParam, Harbour::Item::ANY);
+  auto h = static_cast<void **>(hb_xgrabz(3 * sizeof(void *)));
 
-   *ph = h;
+  *ph = h;
 
-   memset(p, 0, sizeof(DOCINFO));
+  memset(p, 0, sizeof(DOCINFO));
 
-   p->cbSize = sizeof(DOCINFO);
+  p->cbSize = sizeof(DOCINFO);
 
-   if( pStru && HB_IS_HASH(pStru) ) {
-      p->lpszDocName  = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszDocName"), &h[0], nullptr);
-      p->lpszOutput   = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszOutput"), &h[1], nullptr);
-      p->lpszDatatype = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszDatatype"), &h[2], nullptr);
-      p->fwType       = static_cast<DWORD>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "fwType")));
+  if (pStru && HB_IS_HASH(pStru))
+  {
+    p->lpszDocName = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszDocName"), &h[0], nullptr);
+    p->lpszOutput = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszOutput"), &h[1], nullptr);
+    p->lpszDatatype = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszDatatype"), &h[2], nullptr);
+    p->fwType = static_cast<DWORD>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "fwType")));
 
-      return p;
-   } else if( bMandatory ) {
-      return p;
-   }
+    return p;
+  }
+  else if (bMandatory)
+  {
+    return p;
+  }
 
-   hb_xfree(h);
-   *ph = nullptr;
+  hb_xfree(h);
+  *ph = nullptr;
 
-   return nullptr;
+  return nullptr;
 }
 
-void hbwapi_strfree_DOCINFO(void ** h)
+void hbwapi_strfree_DOCINFO(void **h)
 {
-   if( h ) {
-      for( auto i = 0; i < 3; ++i ) {
-         hb_strfree(h[i]);
-      }
-   }
+  if (h)
+  {
+    for (auto i = 0; i < 3; ++i)
+    {
+      hb_strfree(h[i]);
+    }
+  }
 }
 
-HB_FUNC( __WAPI_DEVMODE_NEW )
+HB_FUNC(__WAPI_DEVMODE_NEW)
 {
-   HANDLE hPrinter;
-   void * hDeviceName;
-   LPCTSTR lpDeviceName = HB_PARSTR(1, &hDeviceName, nullptr);
+  HANDLE hPrinter;
+  void *hDeviceName;
+  LPCTSTR lpDeviceName = HB_PARSTR(1, &hDeviceName, nullptr);
 
-   hb_retptr(nullptr);
+  hb_retptr(nullptr);
 
-   if( OpenPrinter(const_cast<LPTSTR>(lpDeviceName), &hPrinter, nullptr) ) {
-      LONG lSize = DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), nullptr, nullptr, 0);
+  if (OpenPrinter(const_cast<LPTSTR>(lpDeviceName), &hPrinter, nullptr))
+  {
+    LONG lSize = DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), nullptr, nullptr, 0);
 
-      if( lSize > 0 ) {
-         auto pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
+    if (lSize > 0)
+    {
+      auto pDevMode = static_cast<PDEVMODE>(hb_xgrabz(lSize));
 
-         if( DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) == IDOK ) {
-            hbwapi_ret_PDEVMODE(pDevMode);
-         } else {
-            hb_xfree(pDevMode);
-         }
+      if (DocumentProperties(0, hPrinter, const_cast<LPTSTR>(lpDeviceName), pDevMode, pDevMode, DM_OUT_BUFFER) == IDOK)
+      {
+        hbwapi_ret_PDEVMODE(pDevMode);
       }
+      else
+      {
+        hb_xfree(pDevMode);
+      }
+    }
 
-      ClosePrinter(hPrinter);
-   }
+    ClosePrinter(hPrinter);
+  }
 
-   hb_strfree(hDeviceName);
+  hb_strfree(hDeviceName);
 }
 
-HB_FUNC( __WAPI_DEVMODE_SET )
+HB_FUNC(__WAPI_DEVMODE_SET)
 {
-   PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
-   auto pStru = hb_param(2, Harbour::Item::ANY);
+  PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
+  auto pStru = hb_param(2, Harbour::Item::ANY);
 
-   if( pDevMode && pStru && HB_IS_HASH(pStru) ) {
-      pDevMode->dmOrientation = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmOrientation")));
-      pDevMode->dmPaperSize = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperSize")));
-      pDevMode->dmPaperLength = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperLength")));
-      pDevMode->dmPaperWidth = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperWidth")));
-      pDevMode->dmScale = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmScale")));
-      pDevMode->dmCopies = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmCopies")));
-      pDevMode->dmDefaultSource = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDefaultSource")));
-      pDevMode->dmPrintQuality = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPrintQuality")));
-      pDevMode->dmDuplex = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDuplex")));
+  if (pDevMode && pStru && HB_IS_HASH(pStru))
+  {
+    pDevMode->dmOrientation = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmOrientation")));
+    pDevMode->dmPaperSize = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperSize")));
+    pDevMode->dmPaperLength = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperLength")));
+    pDevMode->dmPaperWidth = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperWidth")));
+    pDevMode->dmScale = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmScale")));
+    pDevMode->dmCopies = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmCopies")));
+    pDevMode->dmDefaultSource = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDefaultSource")));
+    pDevMode->dmPrintQuality = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPrintQuality")));
+    pDevMode->dmDuplex = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmDuplex")));
 
-      pDevMode->dmFields = 0;
-      if( hb_hashGetCItemPtr(pStru, "dmOrientation") ) {
-         pDevMode->dmFields |= DM_ORIENTATION;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmPaperSize") ) {
-         pDevMode->dmFields |= DM_PAPERSIZE;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmPaperLength") ) {
-         pDevMode->dmFields |= DM_PAPERLENGTH;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmPaperWidth") ) {
-         pDevMode->dmFields |= DM_PAPERWIDTH;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmScale") ) {
-         pDevMode->dmFields |= DM_SCALE;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmCopies") ) {
-         pDevMode->dmFields |= DM_COPIES;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmDefaultSource") ) {
-         pDevMode->dmFields |= DM_DEFAULTSOURCE;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmPrintQuality") ) {
-         pDevMode->dmFields |= DM_PRINTQUALITY;
-      }
-      if( hb_hashGetCItemPtr(pStru, "dmDuplex") ) {
-         pDevMode->dmFields |= DM_DUPLEX;
-      }
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    pDevMode->dmFields = 0;
+    if (hb_hashGetCItemPtr(pStru, "dmOrientation"))
+    {
+      pDevMode->dmFields |= DM_ORIENTATION;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmPaperSize"))
+    {
+      pDevMode->dmFields |= DM_PAPERSIZE;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmPaperLength"))
+    {
+      pDevMode->dmFields |= DM_PAPERLENGTH;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmPaperWidth"))
+    {
+      pDevMode->dmFields |= DM_PAPERWIDTH;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmScale"))
+    {
+      pDevMode->dmFields |= DM_SCALE;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmCopies"))
+    {
+      pDevMode->dmFields |= DM_COPIES;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmDefaultSource"))
+    {
+      pDevMode->dmFields |= DM_DEFAULTSOURCE;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmPrintQuality"))
+    {
+      pDevMode->dmFields |= DM_PRINTQUALITY;
+    }
+    if (hb_hashGetCItemPtr(pStru, "dmDuplex"))
+    {
+      pDevMode->dmFields |= DM_DUPLEX;
+    }
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( __WAPI_DEVMODE_GET )
+HB_FUNC(__WAPI_DEVMODE_GET)
 {
-   PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
-   auto pStru = hb_param(2, Harbour::Item::ANY);
+  PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
+  auto pStru = hb_param(2, Harbour::Item::ANY);
 
-   if( pDevMode && pStru && HB_IS_HASH(pStru) ) {
-      s_hb_hashSetCItemNL(pStru, "dmOrientation", pDevMode->dmOrientation);
-      s_hb_hashSetCItemNL(pStru, "dmPaperSize", pDevMode->dmPaperSize);
-      s_hb_hashSetCItemNL(pStru, "dmPaperLength", pDevMode->dmPaperLength);
-      s_hb_hashSetCItemNL(pStru, "dmPaperWidth", pDevMode->dmPaperWidth);
-      s_hb_hashSetCItemNL(pStru, "dmScale", pDevMode->dmScale);
-      s_hb_hashSetCItemNL(pStru, "dmCopies", pDevMode->dmCopies);
-      s_hb_hashSetCItemNL(pStru, "dmDefaultSource", pDevMode->dmDefaultSource);
-      s_hb_hashSetCItemNL(pStru, "dmPrintQuality", pDevMode->dmPrintQuality);
-      s_hb_hashSetCItemNL(pStru, "dmDuplex", pDevMode->dmDuplex);
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (pDevMode && pStru && HB_IS_HASH(pStru))
+  {
+    s_hb_hashSetCItemNL(pStru, "dmOrientation", pDevMode->dmOrientation);
+    s_hb_hashSetCItemNL(pStru, "dmPaperSize", pDevMode->dmPaperSize);
+    s_hb_hashSetCItemNL(pStru, "dmPaperLength", pDevMode->dmPaperLength);
+    s_hb_hashSetCItemNL(pStru, "dmPaperWidth", pDevMode->dmPaperWidth);
+    s_hb_hashSetCItemNL(pStru, "dmScale", pDevMode->dmScale);
+    s_hb_hashSetCItemNL(pStru, "dmCopies", pDevMode->dmCopies);
+    s_hb_hashSetCItemNL(pStru, "dmDefaultSource", pDevMode->dmDefaultSource);
+    s_hb_hashSetCItemNL(pStru, "dmPrintQuality", pDevMode->dmPrintQuality);
+    s_hb_hashSetCItemNL(pStru, "dmDuplex", pDevMode->dmDuplex);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_CREATEDC(cDriver, cDevice, cOutput, PDEVMODE) -> HDC
 */
-HB_FUNC( WAPI_CREATEDC )
+HB_FUNC(WAPI_CREATEDC)
 {
-   void * hDriver;
-   void * hDevice;
-   void * hOutput;
+  void *hDriver;
+  void *hDevice;
+  void *hOutput;
 
-   hbwapi_ret_HDC(CreateDC(HB_PARSTRDEF(1, &hDriver, nullptr), HB_PARSTRDEF(2, &hDevice, nullptr), HB_PARSTR(3, &hOutput, nullptr), hbwapi_par_PDEVMODE(4)));
+  hbwapi_ret_HDC(CreateDC(HB_PARSTRDEF(1, &hDriver, nullptr), HB_PARSTRDEF(2, &hDevice, nullptr),
+                          HB_PARSTR(3, &hOutput, nullptr), hbwapi_par_PDEVMODE(4)));
 
-   hb_strfree(hDriver);
-   hb_strfree(hDevice);
-   hb_strfree(hOutput);
+  hb_strfree(hDriver);
+  hb_strfree(hDevice);
+  hb_strfree(hOutput);
 }
 
 /*
 WAPI_RESETDC(hDC, PDEVMODE) -> .T./.F.
 */
-HB_FUNC( WAPI_RESETDC )
+HB_FUNC(WAPI_RESETDC)
 {
-   HDC hDC = hbwapi_par_HDC(1);
-   PDEVMODE pDEVMODE = hbwapi_par_PDEVMODE(2);
+  HDC hDC = hbwapi_par_HDC(1);
+  PDEVMODE pDEVMODE = hbwapi_par_PDEVMODE(2);
 
-   if( hDC ) {
-      hb_retl(ResetDC(hDC, pDEVMODE) == hDC);
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retl(ResetDC(hDC, pDEVMODE) == hDC);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_STARTDOC(hDC, DOCINFO) -> numeric
 */
-HB_FUNC( WAPI_STARTDOC )
+HB_FUNC(WAPI_STARTDOC)
 {
-   HDC hDC = hbwapi_par_HDC(1);
-   void ** hDOCINFO = nullptr;
-   DOCINFO di;
+  HDC hDC = hbwapi_par_HDC(1);
+  void **hDOCINFO = nullptr;
+  DOCINFO di;
 
-   if( hDC && hbwapi_par_DOCINFO(&di, 2, false, &hDOCINFO) ) {
-      hb_retni(StartDoc(hDC, &di));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC && hbwapi_par_DOCINFO(&di, 2, false, &hDOCINFO))
+  {
+    hb_retni(StartDoc(hDC, &di));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 
-   hbwapi_strfree_DOCINFO(hDOCINFO);
+  hbwapi_strfree_DOCINFO(hDOCINFO);
 }
 
 /*
 WAPI_ENDDOC(hDC) -> numeric
 */
-HB_FUNC( WAPI_ENDDOC )
+HB_FUNC(WAPI_ENDDOC)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(EndDoc(hDC));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(EndDoc(hDC));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_ABORTDOC(hDC) -> numeric
 */
-HB_FUNC( WAPI_ABORTDOC )
+HB_FUNC(WAPI_ABORTDOC)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(AbortDoc(hDC));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(AbortDoc(hDC));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_STARTPAGE(hDC) -> numeric
 */
-HB_FUNC( WAPI_STARTPAGE )
+HB_FUNC(WAPI_STARTPAGE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(StartPage(hDC));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(StartPage(hDC));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_ENDPAGE(hDC) -> numeric
 */
-HB_FUNC( WAPI_ENDPAGE )
+HB_FUNC(WAPI_ENDPAGE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(EndPage(hDC));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(EndPage(hDC));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_SETBKMODE(hDC, n) -> numeric
 */
-HB_FUNC( WAPI_SETBKMODE )
+HB_FUNC(WAPI_SETBKMODE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(SetBkMode(hDC, hb_parni(2)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(SetBkMode(hDC, hb_parni(2)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_GETBKMODE(hDC) -> numeric
 */
-HB_FUNC( WAPI_GETBKMODE )
+HB_FUNC(WAPI_GETBKMODE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(GetBkMode(hDC));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(GetBkMode(hDC));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_GETDEVICECAPS(hDC, n) -> numeric
 */
-HB_FUNC( WAPI_GETDEVICECAPS )
+HB_FUNC(WAPI_GETDEVICECAPS)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(GetDeviceCaps(hDC, hb_parni(2)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(GetDeviceCaps(hDC, hb_parni(2)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_SETMAPMODE(hDC, n) -> numeric
 */
-HB_FUNC( WAPI_SETMAPMODE )
+HB_FUNC(WAPI_SETMAPMODE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(SetMapMode(hDC, hb_parni(2)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(SetMapMode(hDC, hb_parni(2)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_GETMAPMODE(hDC) -> numeric
 */
-HB_FUNC( WAPI_GETMAPMODE )
+HB_FUNC(WAPI_GETMAPMODE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(GetMapMode(hDC));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(GetMapMode(hDC));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_SETTEXTALIGN(hDC, n) -> numeric
 */
-HB_FUNC( WAPI_SETTEXTALIGN )
+HB_FUNC(WAPI_SETTEXTALIGN)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(static_cast<int>(SetTextAlign(hDC, static_cast<UINT>(hb_parni(2)))));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(static_cast<int>(SetTextAlign(hDC, static_cast<UINT>(hb_parni(2)))));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_GETTEXTALIGN(hDC) -> numeric
 */
-HB_FUNC( WAPI_GETTEXTALIGN )
+HB_FUNC(WAPI_GETTEXTALIGN)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retni(static_cast<int>(GetTextAlign(hDC)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retni(static_cast<int>(GetTextAlign(hDC)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_TEXTOUT(hDC, nRow, nCol, cData) -> .T./.F.
 */
-HB_FUNC( WAPI_TEXTOUT )
+HB_FUNC(WAPI_TEXTOUT)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      void * hData;
-      HB_SIZE nDataLen;
-      LPCTSTR lpData = HB_PARSTR(4, &hData, &nDataLen);
+  if (hDC)
+  {
+    void *hData;
+    HB_SIZE nDataLen;
+    LPCTSTR lpData = HB_PARSTR(4, &hData, &nDataLen);
 
-      hb_retl(TextOut(hDC, hb_parni(2), hb_parni(3), lpData, static_cast<int>(nDataLen)));
+    hb_retl(TextOut(hDC, hb_parni(2), hb_parni(3), lpData, static_cast<int>(nDataLen)));
 
-      hb_strfree(hData);
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    hb_strfree(hData);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 
-   hb_retnl(false);
+  hb_retnl(false);
 }
 
 /*
 WAPI_EXTTEXTOUT(hDC, nRow, nCol, nOptions, RECT, cData, aFontWidths) -> .T./.F.
 */
-HB_FUNC( WAPI_EXTTEXTOUT )
+HB_FUNC(WAPI_EXTTEXTOUT)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      void * hData;
-      HB_SIZE nDataLen;
-      LPCTSTR lpData = HB_PARSTR(6, &hData, &nDataLen);
-      RECT rect;
-      auto pFontWidths = hb_param(7, Harbour::Item::ARRAY);
-      INT * lpFontWidths;
+  if (hDC)
+  {
+    void *hData;
+    HB_SIZE nDataLen;
+    LPCTSTR lpData = HB_PARSTR(6, &hData, &nDataLen);
+    RECT rect;
+    auto pFontWidths = hb_param(7, Harbour::Item::ARRAY);
+    INT *lpFontWidths;
 
-      if( pFontWidths ) {
-         HB_SIZE nFontWidthsLen = hb_arrayLen(pFontWidths);
-         INT iWidth = 0;
+    if (pFontWidths)
+    {
+      HB_SIZE nFontWidthsLen = hb_arrayLen(pFontWidths);
+      INT iWidth = 0;
 
-         lpFontWidths = static_cast<INT*>(hb_xgrab(nDataLen * sizeof(INT)));
+      lpFontWidths = static_cast<INT *>(hb_xgrab(nDataLen * sizeof(INT)));
 
-         for( HB_SIZE tmp = 0; tmp < nDataLen; ++tmp ) {
-            /* Pad width array with last known value if passed array was smaller than length of the string. */
-            if( tmp < nFontWidthsLen ) {
-               iWidth = static_cast<INT>(hb_arrayGetNI(pFontWidths, tmp + 1));
-            }
+      for (HB_SIZE tmp = 0; tmp < nDataLen; ++tmp)
+      {
+        /* Pad width array with last known value if passed array was smaller than length of the string. */
+        if (tmp < nFontWidthsLen)
+        {
+          iWidth = static_cast<INT>(hb_arrayGetNI(pFontWidths, tmp + 1));
+        }
 
-            lpFontWidths[tmp] = iWidth;
-         }
-      } else {
-         lpFontWidths = nullptr;
+        lpFontWidths[tmp] = iWidth;
       }
+    }
+    else
+    {
+      lpFontWidths = nullptr;
+    }
 
-      hb_retl(ExtTextOut(hDC, hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parni(4)), hbwapi_par_RECT(&rect, 5, false), lpData, static_cast<UINT>(nDataLen), lpFontWidths));
+    hb_retl(ExtTextOut(hDC, hb_parni(2), hb_parni(3), static_cast<UINT>(hb_parni(4)), hbwapi_par_RECT(&rect, 5, false),
+                       lpData, static_cast<UINT>(nDataLen), lpFontWidths));
 
-      if( lpFontWidths ) {
-         hb_xfree(lpFontWidths);
-      }
+    if (lpFontWidths)
+    {
+      hb_xfree(lpFontWidths);
+    }
 
-      hb_strfree(hData);
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    hb_strfree(hData);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_SETTEXTCOLOR(hDC, nColor) -> numeric
 */
-HB_FUNC( WAPI_SETTEXTCOLOR )
+HB_FUNC(WAPI_SETTEXTCOLOR)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retnl(static_cast<long>(SetTextColor(hDC, static_cast<COLORREF>(hb_parnl(2)))));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retnl(static_cast<long>(SetTextColor(hDC, static_cast<COLORREF>(hb_parnl(2)))));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_GETTEXTCOLOR(hDC) -> numeric
 */
-HB_FUNC( WAPI_GETTEXTCOLOR )
+HB_FUNC(WAPI_GETTEXTCOLOR)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retnl(static_cast<long>(GetTextColor(hDC)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retnl(static_cast<long>(GetTextColor(hDC)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_GETTEXTFACE(hDC) -> cFontName
 */
-HB_FUNC( WAPI_GETTEXTFACE )
+HB_FUNC(WAPI_GETTEXTFACE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      TCHAR tszFontName[128];
+  if (hDC)
+  {
+    TCHAR tszFontName[128];
 
-      GetTextFace(hDC, HB_SIZEOFARRAY(tszFontName) - 1, tszFontName);
+    GetTextFace(hDC, HB_SIZEOFARRAY(tszFontName) - 1, tszFontName);
 
-      HB_RETSTR(tszFontName);
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    HB_RETSTR(tszFontName);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_SETBKCOLOR(hDC, nColor) -> numeric
 */
-HB_FUNC( WAPI_SETBKCOLOR )
+HB_FUNC(WAPI_SETBKCOLOR)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retnl(static_cast<long>(SetBkColor(hDC, static_cast<COLORREF>(hb_parnl(2)))));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retnl(static_cast<long>(SetBkColor(hDC, static_cast<COLORREF>(hb_parnl(2)))));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_GETBKCOLOR(hDC) -> numeric
 */
-HB_FUNC( WAPI_GETBKCOLOR )
+HB_FUNC(WAPI_GETBKCOLOR)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retnl(static_cast<long>(GetBkColor(hDC)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retnl(static_cast<long>(GetBkColor(hDC)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_CREATEPEN(nPenStyle, nWidth, nColor) -> HPEN
 */
-HB_FUNC( WAPI_CREATEPEN )
+HB_FUNC(WAPI_CREATEPEN)
 {
-   hbwapi_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), static_cast<COLORREF>(hb_parnl(3))));
+  hbwapi_ret_HPEN(CreatePen(hb_parni(1), hb_parni(2), static_cast<COLORREF>(hb_parnl(3))));
 }
 
 /*
 WAPI_CREATESOLIDBRUSH(nColor) -> HBRUSH
 */
-HB_FUNC( WAPI_CREATESOLIDBRUSH )
+HB_FUNC(WAPI_CREATESOLIDBRUSH)
 {
-   auto h = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(1)));
+  auto h = CreateSolidBrush(static_cast<COLORREF>(hb_parnl(1)));
 
-   hbwapi_ret_HBRUSH(h);
+  hbwapi_ret_HBRUSH(h);
 }
 
 /*
 WAPI_CREATEHATCHBRUSH(nStyle, nColor) -> HBRUSH
 */
-HB_FUNC( WAPI_CREATEHATCHBRUSH )
+HB_FUNC(WAPI_CREATEHATCHBRUSH)
 {
-   hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni(1), static_cast<COLORREF>(hb_parnl(2))));
+  hbwapi_ret_HBRUSH(CreateHatchBrush(hb_parni(1), static_cast<COLORREF>(hb_parnl(2))));
 }
 
 /*
-WAPI_CREATEFONT(nHeight, nWidth, nEscapement, nOrientation, nWeight, lItalic, lUnderline, lStrikeOut, nCharSet, [nOutputPrecision], [nClipPrecision], [nQuality], [nPitchAndFamily], cFontFace) -> HFONT
+WAPI_CREATEFONT(nHeight, nWidth, nEscapement, nOrientation, nWeight, lItalic, lUnderline, lStrikeOut, nCharSet,
+[nOutputPrecision], [nClipPrecision], [nQuality], [nPitchAndFamily], cFontFace) -> HFONT
 */
-HB_FUNC( WAPI_CREATEFONT )
+HB_FUNC(WAPI_CREATEFONT)
 {
-   void * hFontFace;
+  void *hFontFace;
 
-   hbwapi_ret_HFONT(CreateFont(hb_parni(1),
-                               hb_parni(2),
-                               hb_parni(3),
-                               hb_parni(4),
-                               hb_parni(5),
-                               static_cast<DWORD>(hb_parl(6)),
-                               static_cast<DWORD>(hb_parl(7)),
-                               static_cast<DWORD>(hb_parl(8)),
-                               static_cast<DWORD>(hb_parnl(9)),
-                               static_cast<DWORD>(hb_parnldef(10, OUT_DEFAULT_PRECIS)),
-                               static_cast<DWORD>(hb_parnldef(11, CLIP_DEFAULT_PRECIS)),
-                               static_cast<DWORD>(hb_parnldef(12, DEFAULT_QUALITY)),
-                               static_cast<DWORD>(hb_parnldef(13, DEFAULT_PITCH | FF_DONTCARE)),
-                               HB_PARSTR(14, &hFontFace, nullptr)));
+  hbwapi_ret_HFONT(CreateFont(
+      hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), static_cast<DWORD>(hb_parl(6)),
+      static_cast<DWORD>(hb_parl(7)), static_cast<DWORD>(hb_parl(8)), static_cast<DWORD>(hb_parnl(9)),
+      static_cast<DWORD>(hb_parnldef(10, OUT_DEFAULT_PRECIS)), static_cast<DWORD>(hb_parnldef(11, CLIP_DEFAULT_PRECIS)),
+      static_cast<DWORD>(hb_parnldef(12, DEFAULT_QUALITY)),
+      static_cast<DWORD>(hb_parnldef(13, DEFAULT_PITCH | FF_DONTCARE)), HB_PARSTR(14, &hFontFace, nullptr)));
 
-   hb_strfree(hFontFace);
+  hb_strfree(hFontFace);
 }
 
 /*
 WAPI_CREATEFONTINDIRECT(LOGFONT) -> HFONT
 */
-HB_FUNC( WAPI_CREATEFONTINDIRECT )
+HB_FUNC(WAPI_CREATEFONTINDIRECT)
 {
-   LOGFONT p;
+  LOGFONT p;
 
-   if( hbwapi_par_LOGFONT(&p, 1, true) ) {
-      hbwapi_ret_HFONT(CreateFontIndirect(&p));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hbwapi_par_LOGFONT(&p, 1, true))
+  {
+    hbwapi_ret_HFONT(CreateFontIndirect(&p));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_SELECTOBJECT(hDC, hGDIOBJ) -> numeric/.T./.F.
 */
-HB_FUNC( WAPI_SELECTOBJECT )
+HB_FUNC(WAPI_SELECTOBJECT)
 {
-   HDC hDC = hbwapi_par_HDC(1);
-   HB_BOOL bRegion = false;
-   HGDIOBJ h;
+  HDC hDC = hbwapi_par_HDC(1);
+  HB_BOOL bRegion = false;
+  HGDIOBJ h;
 
-   if( (h = hbwapi_par_HPEN(2)) != nullptr ) {
-   } else if( (h = hbwapi_par_HBRUSH(2)) != nullptr ) {
-   } else if( (h = hbwapi_par_HFONT(2)) != nullptr ) {
-   /* TODO: Add BITMAP, REGION */
-   } else {
-      h = nullptr;
-   }
+  if ((h = hbwapi_par_HPEN(2)) != nullptr)
+  {
+  }
+  else if ((h = hbwapi_par_HBRUSH(2)) != nullptr)
+  {
+  }
+  else if ((h = hbwapi_par_HFONT(2)) != nullptr)
+  {
+    /* TODO: Add BITMAP, REGION */
+  }
+  else
+  {
+    h = nullptr;
+  }
 
-   if( hDC && h ) {
-      /* TODO: Solve reference counting to 'h' handle. Also for returned one. */
-      if( bRegion ) {
-         hb_retnint(reinterpret_cast<HB_PTRUINT>(SelectObject(hDC, h)));
-      } else {
-         hb_retl(SelectObject(hDC, h) != nullptr);  /* NOTE: We don't return a raw pointer. */
-      }
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC && h)
+  {
+    /* TODO: Solve reference counting to 'h' handle. Also for returned one. */
+    if (bRegion)
+    {
+      hb_retnint(reinterpret_cast<HB_PTRUINT>(SelectObject(hDC, h)));
+    }
+    else
+    {
+      hb_retl(SelectObject(hDC, h) != nullptr); /* NOTE: We don't return a raw pointer. */
+    }
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_MOVETOEX(hDC, nX, nY, [POINT]) -> .T./.F.
 */
-HB_FUNC( WAPI_MOVETOEX )
+HB_FUNC(WAPI_MOVETOEX)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      POINT p;
+  if (hDC)
+  {
+    POINT p;
 
-      if( hbwapi_par_POINT(&p, 4, false) ) {
-         hb_retl(MoveToEx(hDC, hb_parni(2), hb_parni(3), &p));
+    if (hbwapi_par_POINT(&p, 4, false))
+    {
+      hb_retl(MoveToEx(hDC, hb_parni(2), hb_parni(3), &p));
 
-         hbwapi_stor_POINT(&p, 4);
-      } else {
-         hb_retl(MoveToEx(hDC, hb_parni(2), hb_parni(3), nullptr));
-      }
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+      hbwapi_stor_POINT(&p, 4);
+    }
+    else
+    {
+      hb_retl(MoveToEx(hDC, hb_parni(2), hb_parni(3), nullptr));
+    }
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_LINETO(hDC, nXEnd, nYEnd) -> .T./.F.
 */
-HB_FUNC( WAPI_LINETO )
+HB_FUNC(WAPI_LINETO)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retl(LineTo(hDC, hb_parni(2), hb_parni(3)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retl(LineTo(hDC, hb_parni(2), hb_parni(3)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_FILLRECT(hDC, RECT, hBrush) -> numeric
 */
-HB_FUNC( WAPI_FILLRECT )
+HB_FUNC(WAPI_FILLRECT)
 {
-   HDC hDC = hbwapi_par_HDC(1);
-   RECT rect;
-   HBRUSH hBrush = hbwapi_par_HBRUSH(3);
+  HDC hDC = hbwapi_par_HDC(1);
+  RECT rect;
+  HBRUSH hBrush = hbwapi_par_HBRUSH(3);
 
-   if( hDC && hbwapi_par_RECT(&rect, 2, true) && hBrush ) {
-      hb_retni(FillRect(hDC, &rect, hBrush));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC && hbwapi_par_RECT(&rect, 2, true) && hBrush)
+  {
+    hb_retni(FillRect(hDC, &rect, hBrush));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_ROUNDRECT(hDC, nX1, nY1, nX2, nY2, nWidth, nHeight) -> .T./.F.
 */
-HB_FUNC( WAPI_ROUNDRECT )
+HB_FUNC(WAPI_ROUNDRECT)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retl(RoundRect(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retl(RoundRect(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_RECTANGLE(hDC, nX1, nY1, nX2, nY2) -> .T./.F.
 */
-HB_FUNC( WAPI_RECTANGLE )
+HB_FUNC(WAPI_RECTANGLE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retl(Rectangle(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retl(Rectangle(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_ARC(hDC, nLeftRect, nTopRect, nRightRect, nBottomRect, nXStartArc, nYStartArc, nXEndArc, nYEndArc) -> .T./.F.
 */
-HB_FUNC( WAPI_ARC )
+HB_FUNC(WAPI_ARC)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retl(Arc(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8), hb_parni(9)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retl(Arc(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5), hb_parni(6), hb_parni(7), hb_parni(8),
+                hb_parni(9)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
 /*
 WAPI_ELLIPSE(hDC, nLeftRect, nTopRect, nRightRect, nBottomRect) -> .T./.F.
 */
-HB_FUNC( WAPI_ELLIPSE )
+HB_FUNC(WAPI_ELLIPSE)
 {
-   HDC hDC = hbwapi_par_HDC(1);
+  HDC hDC = hbwapi_par_HDC(1);
 
-   if( hDC ) {
-      hb_retl(Ellipse(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (hDC)
+  {
+    hb_retl(Ellipse(hDC, hb_parni(2), hb_parni(3), hb_parni(4), hb_parni(5)));
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

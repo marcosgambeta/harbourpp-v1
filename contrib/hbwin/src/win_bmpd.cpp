@@ -48,286 +48,342 @@
 #include "hbapiitm.hpp"
 
 #if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
-   #include "png.h"
+#include "png.h"
 #endif
 
 /* .jpeg size detection code. [vszakats] */
 
-#define _JPEG_RET_OK           0
-#define _JPEG_RET_OVERRUN      1
-#define _JPEG_RET_INVALID      2
-#define _JPEG_RET_UNSUPPORTED  3
+#define _JPEG_RET_OK 0
+#define _JPEG_RET_OVERRUN 1
+#define _JPEG_RET_INVALID 2
+#define _JPEG_RET_UNSUPPORTED 3
 
-#define _JPEG_CS_GRAY          1
-#define _JPEG_CS_RGB           2
-#define _JPEG_CS_CMYK          3
+#define _JPEG_CS_GRAY 1
+#define _JPEG_CS_RGB 2
+#define _JPEG_CS_CMYK 3
 
-static int hb_jpeg_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * piHeight, int * piWidth, int * piColorSpace, int * piBPC)
+static int hb_jpeg_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
+                             int *piBPC)
 {
-   HB_SIZE nPos = 0;
+  HB_SIZE nPos = 0;
 
-   HB_U16 tag;
-   HB_U16 height = 0;
-   HB_U16 width = 0;
-   HB_BYTE colorspace = 0;
-   HB_BYTE bpc = 0;
+  HB_U16 tag;
+  HB_U16 height = 0;
+  HB_U16 width = 0;
+  HB_BYTE colorspace = 0;
+  HB_BYTE bpc = 0;
 
-   if( piHeight ) {
-      *piHeight = static_cast<int>(height);
-   }
-   if( piWidth ) {
-      *piWidth = static_cast<int>(width);
-   }
-   if( piColorSpace ) {
-      *piColorSpace = static_cast<int>(colorspace);
-   }
-   if( piBPC ) {
-      *piBPC = static_cast<int>(bpc);
-   }
+  if (piHeight)
+  {
+    *piHeight = static_cast<int>(height);
+  }
+  if (piWidth)
+  {
+    *piWidth = static_cast<int>(width);
+  }
+  if (piColorSpace)
+  {
+    *piColorSpace = static_cast<int>(colorspace);
+  }
+  if (piBPC)
+  {
+    *piBPC = static_cast<int>(bpc);
+  }
 
-   if( nPos >= nBufferSize ) {
+  if (nPos >= nBufferSize)
+  {
+    return _JPEG_RET_OVERRUN;
+  }
+
+  tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+  nPos += 2;
+
+  /* SOI marker */
+  if (tag != 0xFFD8)
+  {
+    return _JPEG_RET_INVALID;
+  }
+
+  for (;;)
+  {
+    HB_U16 size;
+
+    if (nPos >= nBufferSize)
+    {
       return _JPEG_RET_OVERRUN;
-   }
+    }
 
-   tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
-   nPos += 2;
+    tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+    nPos += 2;
 
-   /* SOI marker */
-   if( tag != 0xFFD8 ) {
-      return _JPEG_RET_INVALID;
-   }
+    if (nPos >= nBufferSize)
+    {
+      return _JPEG_RET_OVERRUN;
+    }
 
-   for( ;; ) {
-      HB_U16 size;
+    size = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+    nPos += 2;
 
-      if( nPos >= nBufferSize ) {
-         return _JPEG_RET_OVERRUN;
+    /* SOF markers */
+    if (tag == 0xFFC0 || tag == 0xFFC1 || tag == 0xFFC2 || tag == 0xFFC9)
+    {
+      if (nPos >= nBufferSize)
+      {
+        return _JPEG_RET_OVERRUN;
       }
 
-      tag = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+      colorspace = *(buffer + nPos);
+      nPos += 1;
+
+      if (nPos >= nBufferSize)
+      {
+        return _JPEG_RET_OVERRUN;
+      }
+
+      height = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
       nPos += 2;
 
-      if( nPos >= nBufferSize ) {
-         return _JPEG_RET_OVERRUN;
+      if (nPos >= nBufferSize)
+      {
+        return _JPEG_RET_OVERRUN;
       }
 
-      size = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
+      width = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
       nPos += 2;
 
-      /* SOF markers */
-      if( tag == 0xFFC0 || tag == 0xFFC1 || tag == 0xFFC2 || tag == 0xFFC9 ) {
-         if( nPos >= nBufferSize ) {
-            return _JPEG_RET_OVERRUN;
-         }
-
-         colorspace = *(buffer + nPos); nPos += 1;
-
-         if( nPos >= nBufferSize ) {
-            return _JPEG_RET_OVERRUN;
-         }
-
-         height = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
-         nPos += 2;
-
-         if( nPos >= nBufferSize ) {
-            return _JPEG_RET_OVERRUN;
-         }
-
-         width = HB_SWAP_UINT16(static_cast<HB_U16>(HB_GET_LE_UINT16(buffer + nPos)));
-         nPos += 2;
-
-         if( nPos >= nBufferSize ) {
-            return _JPEG_RET_OVERRUN;
-         }
-
-         bpc = *(buffer + nPos);
-
-         break;
-      } else if( (tag | 0x00FF) != 0xFFFF ) { /* lost marker */
-         return _JPEG_RET_UNSUPPORTED;
+      if (nPos >= nBufferSize)
+      {
+        return _JPEG_RET_OVERRUN;
       }
 
-      nPos += size - 2;
+      bpc = *(buffer + nPos);
 
-      if( nPos >= nBufferSize ) {
-         return _JPEG_RET_OVERRUN;
-      }
-   }
+      break;
+    }
+    else if ((tag | 0x00FF) != 0xFFFF)
+    { /* lost marker */
+      return _JPEG_RET_UNSUPPORTED;
+    }
 
-   if( piHeight ) {
-      *piHeight = static_cast<int>(height);
-   }
-   if( piWidth ) {
-      *piWidth = static_cast<int>(width);
-   }
-   if( piBPC ) {
-      *piBPC = static_cast<int>(bpc);
-   }
-   if( piColorSpace ) {
-      switch( colorspace ) {
-         case 1: *piColorSpace = _JPEG_CS_GRAY; break;
-         case 3: *piColorSpace = _JPEG_CS_RGB; break;
-         case 4: *piColorSpace = _JPEG_CS_CMYK; break;
-      }
-   }
+    nPos += size - 2;
 
-   return _JPEG_RET_OK;
+    if (nPos >= nBufferSize)
+    {
+      return _JPEG_RET_OVERRUN;
+    }
+  }
+
+  if (piHeight)
+  {
+    *piHeight = static_cast<int>(height);
+  }
+  if (piWidth)
+  {
+    *piWidth = static_cast<int>(width);
+  }
+  if (piBPC)
+  {
+    *piBPC = static_cast<int>(bpc);
+  }
+  if (piColorSpace)
+  {
+    switch (colorspace)
+    {
+    case 1:
+      *piColorSpace = _JPEG_CS_GRAY;
+      break;
+    case 3:
+      *piColorSpace = _JPEG_CS_RGB;
+      break;
+    case 4:
+      *piColorSpace = _JPEG_CS_CMYK;
+      break;
+    }
+  }
+
+  return _JPEG_RET_OK;
 }
 
 /* .png size detection code. [vszakats] */
 
 #if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
 
-#define _PNG_RET_OK            0
-#define _PNG_RET_ERR_INVALID1  1
-#define _PNG_RET_ERR_INVALID2  2
-#define _PNG_RET_ERR_INIT1     3
-#define _PNG_RET_ERR_INIT2     4
-#define _PNG_RET_ERR_INIT3     5
-#define _PNG_RET_ERR_READ      6
+#define _PNG_RET_OK 0
+#define _PNG_RET_ERR_INVALID1 1
+#define _PNG_RET_ERR_INVALID2 2
+#define _PNG_RET_ERR_INIT1 3
+#define _PNG_RET_ERR_INIT2 4
+#define _PNG_RET_ERR_INIT3 5
+#define _PNG_RET_ERR_READ 6
 
 typedef struct
 {
-   const HB_BYTE * buffer;
-   HB_SIZE nLen;
-   HB_SIZE nPos;
-   HB_BOOL bOk;
+  const HB_BYTE *buffer;
+  HB_SIZE nLen;
+  HB_SIZE nPos;
+  HB_BOOL bOk;
 } HB_PNG_READ;
 
 static void hb_png_read_func(png_structp png_ptr, png_bytep data, png_uint_32 length)
 {
-   auto hb_png_read_data = static_cast<HB_PNG_READ*>(png_get_io_ptr(png_ptr));
-   png_uint_32 pos;
+  auto hb_png_read_data = static_cast<HB_PNG_READ *>(png_get_io_ptr(png_ptr));
+  png_uint_32 pos;
 
-   for( pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen; ) {
-      data[pos++] = hb_png_read_data->buffer[hb_png_read_data->nPos++];
-   }
+  for (pos = 0; pos < length && hb_png_read_data->nPos < hb_png_read_data->nLen;)
+  {
+    data[pos++] = hb_png_read_data->buffer[hb_png_read_data->nPos++];
+  }
 
-   hb_png_read_data->bOk = (length == pos);
+  hb_png_read_data->bOk = (length == pos);
 }
 
-static int hb_png_get_param(const HB_BYTE * buffer, HB_SIZE nBufferSize, int * piHeight, int * piWidth, int * piColorSpace, int * piBPC)
+static int hb_png_get_param(const HB_BYTE *buffer, HB_SIZE nBufferSize, int *piHeight, int *piWidth, int *piColorSpace,
+                            int *piBPC)
 {
-   png_structp png_ptr;
-   png_infop info_ptr;
-   png_byte header[8];
+  png_structp png_ptr;
+  png_infop info_ptr;
+  png_byte header[8];
 
-   HB_PNG_READ hb_png_read_data;
-   int iResult;
+  HB_PNG_READ hb_png_read_data;
+  int iResult;
 
-   if( piHeight ) {
-      *piHeight = 0;
-   }
-   if( piWidth ) {
-      *piWidth = 0;
-   }
-   if( piColorSpace ) {
-      *piColorSpace = 0;
-   }
-   if( piBPC ) {
-      *piBPC = 0;
-   }
+  if (piHeight)
+  {
+    *piHeight = 0;
+  }
+  if (piWidth)
+  {
+    *piWidth = 0;
+  }
+  if (piColorSpace)
+  {
+    *piColorSpace = 0;
+  }
+  if (piBPC)
+  {
+    *piBPC = 0;
+  }
 
-   if( nBufferSize < sizeof(header) ) {
-      return _PNG_RET_ERR_INVALID1;
-   }
+  if (nBufferSize < sizeof(header))
+  {
+    return _PNG_RET_ERR_INVALID1;
+  }
 
-   memcpy(header, buffer, sizeof(header));
+  memcpy(header, buffer, sizeof(header));
 
-   if( png_sig_cmp(header, static_cast<png_size_t>(0), sizeof(header)) ) {
-      return _PNG_RET_ERR_INVALID2;
-   }
+  if (png_sig_cmp(header, static_cast<png_size_t>(0), sizeof(header)))
+  {
+    return _PNG_RET_ERR_INVALID2;
+  }
 
-   png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
-   if( !png_ptr ) {
-      return _PNG_RET_ERR_INIT1;
-   }
+  png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+  if (!png_ptr)
+  {
+    return _PNG_RET_ERR_INIT1;
+  }
 
-   info_ptr = png_create_info_struct(png_ptr);
-   if( !info_ptr ) {
-      png_destroy_read_struct(&png_ptr, static_cast<png_infopp>(nullptr), static_cast<png_infopp>(nullptr));
-      return _PNG_RET_ERR_INIT2;
-   }
+  info_ptr = png_create_info_struct(png_ptr);
+  if (!info_ptr)
+  {
+    png_destroy_read_struct(&png_ptr, static_cast<png_infopp>(nullptr), static_cast<png_infopp>(nullptr));
+    return _PNG_RET_ERR_INIT2;
+  }
 
-   hb_png_read_data.buffer = buffer;
-   hb_png_read_data.nLen = nBufferSize;
-   hb_png_read_data.nPos = sizeof(header);
-   hb_png_read_data.bOk = true;
+  hb_png_read_data.buffer = buffer;
+  hb_png_read_data.nLen = nBufferSize;
+  hb_png_read_data.nPos = sizeof(header);
+  hb_png_read_data.bOk = true;
 
-   png_set_sig_bytes(png_ptr, sizeof(header));
-   png_set_read_fn(png_ptr, static_cast<void*>(&hb_png_read_data), static_cast<png_rw_ptr>(hb_png_read_func));
+  png_set_sig_bytes(png_ptr, sizeof(header));
+  png_set_read_fn(png_ptr, static_cast<void *>(&hb_png_read_data), static_cast<png_rw_ptr>(hb_png_read_func));
 
-   png_read_info(png_ptr, info_ptr);
+  png_read_info(png_ptr, info_ptr);
 
-   if( hb_png_read_data.bOk ) {
-      png_uint_32 width;
-      png_uint_32 height;
-      int bit_depth;
-      int color_type;
+  if (hb_png_read_data.bOk)
+  {
+    png_uint_32 width;
+    png_uint_32 height;
+    int bit_depth;
+    int color_type;
 
-      png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr);
+    png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr);
 
-      if( piHeight ) {
-         *piHeight = static_cast<int>(height);
-      }
-      if( piWidth ) {
-         *piWidth = static_cast<int>(width);
-      }
-      if( piBPC ) {
-         *piBPC = bit_depth;
-      }
-      if( piColorSpace ) {
-         *piColorSpace = color_type;
-      }
+    if (piHeight)
+    {
+      *piHeight = static_cast<int>(height);
+    }
+    if (piWidth)
+    {
+      *piWidth = static_cast<int>(width);
+    }
+    if (piBPC)
+    {
+      *piBPC = bit_depth;
+    }
+    if (piColorSpace)
+    {
+      *piColorSpace = color_type;
+    }
 
-      iResult = _PNG_RET_OK;
-   } else {
-      iResult = _PNG_RET_ERR_READ;
-   }
+    iResult = _PNG_RET_OK;
+  }
+  else
+  {
+    iResult = _PNG_RET_ERR_READ;
+  }
 
-   png_destroy_read_struct(&png_ptr, &info_ptr, static_cast<png_infopp>(nullptr));
+  png_destroy_read_struct(&png_ptr, &info_ptr, static_cast<png_infopp>(nullptr));
 
-   return iResult;
+  return iResult;
 }
 
 #endif
 
-HB_FUNC( WIN_BITMAPDIMENSIONS )
+HB_FUNC(WIN_BITMAPDIMENSIONS)
 {
-   const void * buffer = hb_parc(1);
-   auto nSize = hb_parclen(1);
+  const void *buffer = hb_parc(1);
+  auto nSize = hb_parclen(1);
 
-   int iType = hbwin_bitmapType(buffer, nSize);
+  int iType = hbwin_bitmapType(buffer, nSize);
 
-   int iHeight = 0;
-   int iWidth = 0;
-   HB_BOOL bRetVal = false;
+  int iHeight = 0;
+  int iWidth = 0;
+  HB_BOOL bRetVal = false;
 
-   if( iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER) ) {
-      auto pbmfh = static_cast<BITMAPFILEHEADER*>(const_cast<void*>(buffer));
-      auto pbmi = reinterpret_cast<BITMAPINFO*>(pbmfh + 1);
+  if (iType == HB_WIN_BITMAP_BMP && nSize >= sizeof(BITMAPCOREHEADER))
+  {
+    auto pbmfh = static_cast<BITMAPFILEHEADER *>(const_cast<void *>(buffer));
+    auto pbmi = reinterpret_cast<BITMAPINFO *>(pbmfh + 1);
 
-      /* Remember there are 2 types of BitMap File */
-      if( pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER) ) {
-         iWidth = (reinterpret_cast<BITMAPCOREHEADER*>(pbmi))->bcWidth;
-         iHeight = (reinterpret_cast<BITMAPCOREHEADER*>(pbmi))->bcHeight;
-      } else {
-         iWidth = pbmi->bmiHeader.biWidth;
-         iHeight = abs(pbmi->bmiHeader.biHeight);
-      }
+    /* Remember there are 2 types of BitMap File */
+    if (pbmi->bmiHeader.biSize == sizeof(BITMAPCOREHEADER))
+    {
+      iWidth = (reinterpret_cast<BITMAPCOREHEADER *>(pbmi))->bcWidth;
+      iHeight = (reinterpret_cast<BITMAPCOREHEADER *>(pbmi))->bcHeight;
+    }
+    else
+    {
+      iWidth = pbmi->bmiHeader.biWidth;
+      iHeight = abs(pbmi->bmiHeader.biHeight);
+    }
 
-      bRetVal = true;
-   } else if( iType == HB_WIN_BITMAP_JPEG ) {
-      bRetVal = (hb_jpeg_get_param(static_cast<const HB_BYTE*>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) == _JPEG_RET_OK);
-   }
+    bRetVal = true;
+  }
+  else if (iType == HB_WIN_BITMAP_JPEG)
+  {
+    bRetVal = (hb_jpeg_get_param(static_cast<const HB_BYTE *>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) ==
+               _JPEG_RET_OK);
+  }
 #if defined(HB_HAS_PNG) && defined(HB_HAS_ZLIB)
-   else if( iType == HB_WIN_BITMAP_PNG ) {
-      bRetVal = (hb_png_get_param(static_cast<const HB_BYTE*>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) == _PNG_RET_OK);
-   }
+  else if (iType == HB_WIN_BITMAP_PNG)
+  {
+    bRetVal = (hb_png_get_param(static_cast<const HB_BYTE *>(buffer), nSize, &iHeight, &iWidth, nullptr, nullptr) ==
+               _PNG_RET_OK);
+  }
 #endif
 
-   hb_storni(iWidth, 2);
-   hb_storni(iHeight, 3);
+  hb_storni(iWidth, 2);
+  hb_storni(iHeight, 3);
 
-   hb_retl(bRetVal);
+  hb_retl(bRetVal);
 }

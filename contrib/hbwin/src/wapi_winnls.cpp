@@ -46,12 +46,12 @@
 
 #include "hbwapi.hpp"
 
-HB_FUNC( WAPI_GETACP )
+HB_FUNC(WAPI_GETACP)
 {
-   hb_retnl(GetACP());
+  hb_retnl(GetACP());
 }
 
-HB_FUNC( WAPI_GETOEMCP )
+HB_FUNC(WAPI_GETOEMCP)
 {
-   hb_retnl(GetOEMCP());
+  hb_retnl(GetOEMCP());
 }

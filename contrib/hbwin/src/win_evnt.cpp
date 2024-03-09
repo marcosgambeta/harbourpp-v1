@@ -47,66 +47,69 @@
 #include "hbwapi.hpp"
 #include "hbapierr.hpp"
 
-HB_FUNC( WIN_REPORTEVENT )
+HB_FUNC(WIN_REPORTEVENT)
 {
-   HB_BOOL bRetVal = false;
+  HB_BOOL bRetVal = false;
 
-   HANDLE hEventLog;
+  HANDLE hEventLog;
 
-   void * hServerName;
-   void * hSourceName;
+  void *hServerName;
+  void *hSourceName;
 
-   hEventLog = RegisterEventSource(HB_PARSTR(1, &hServerName, nullptr), HB_PARSTRDEF(2, &hSourceName, nullptr));
+  hEventLog = RegisterEventSource(HB_PARSTR(1, &hServerName, nullptr), HB_PARSTRDEF(2, &hSourceName, nullptr));
 
-   hb_strfree(hServerName);
-   hb_strfree(hSourceName);
+  hb_strfree(hServerName);
+  hb_strfree(hSourceName);
 
-   if( hEventLog != nullptr && hEventLog != reinterpret_cast<HANDLE>(ERROR_ACCESS_DENIED) ) {
-      WORD wNumStrings = 0;
-      LPCTSTR * lpStrings = nullptr;
-      void ** hStrings = nullptr;
+  if (hEventLog != nullptr && hEventLog != reinterpret_cast<HANDLE>(ERROR_ACCESS_DENIED))
+  {
+    WORD wNumStrings = 0;
+    LPCTSTR *lpStrings = nullptr;
+    void **hStrings = nullptr;
 
-      auto pStrings = hb_param(6, Harbour::Item::ARRAY);
+    auto pStrings = hb_param(6, Harbour::Item::ARRAY);
 
-      if( pStrings && (wNumStrings = static_cast<WORD>(hb_arrayLen(pStrings))) > 0 ) {
-         lpStrings = static_cast<LPCTSTR*>(hb_xgrab(sizeof(LPCTSTR) * wNumStrings));
-         hStrings = static_cast<void**>(hb_xgrab(sizeof(void*) * wNumStrings));
+    if (pStrings && (wNumStrings = static_cast<WORD>(hb_arrayLen(pStrings))) > 0)
+    {
+      lpStrings = static_cast<LPCTSTR *>(hb_xgrab(sizeof(LPCTSTR) * wNumStrings));
+      hStrings = static_cast<void **>(hb_xgrab(sizeof(void *) * wNumStrings));
 
-         for( WORD i = 0; i < wNumStrings; ++i ) {
-            lpStrings[i] = static_cast<LPCTSTR>(HB_ARRAYGETSTR(pStrings, i + 1, &hStrings[i], nullptr));
-         }
-      } else if( HB_ISCHAR(6) ) {
-         wNumStrings = 1;
+      for (WORD i = 0; i < wNumStrings; ++i)
+      {
+        lpStrings[i] = static_cast<LPCTSTR>(HB_ARRAYGETSTR(pStrings, i + 1, &hStrings[i], nullptr));
+      }
+    }
+    else if (HB_ISCHAR(6))
+    {
+      wNumStrings = 1;
 
-         lpStrings = static_cast<LPCTSTR*>(hb_xgrab(sizeof(LPCTSTR)));
-         hStrings = static_cast<void**>(hb_xgrab(sizeof(void*)));
+      lpStrings = static_cast<LPCTSTR *>(hb_xgrab(sizeof(LPCTSTR)));
+      hStrings = static_cast<void **>(hb_xgrab(sizeof(void *)));
 
-         lpStrings[0] = static_cast<LPCTSTR>(HB_ITEMGETSTR(hb_param(6, Harbour::Item::STRING), &hStrings[0], nullptr));
+      lpStrings[0] = static_cast<LPCTSTR>(HB_ITEMGETSTR(hb_param(6, Harbour::Item::STRING), &hStrings[0], nullptr));
+    }
+
+    if (ReportEvent(hEventLog, static_cast<WORD>(hb_parni(3)) /* wType */,
+                    static_cast<WORD>(hb_parni(4)) /* wCategory */, static_cast<DWORD>(hb_parnint(5)) /* dwEventID */,
+                    nullptr /* lpUserSid */, wNumStrings, static_cast<DWORD>(hb_parclen(7)), lpStrings,
+                    static_cast<LPVOID>(const_cast<char *>(hb_parc(7)))))
+    {
+      bRetVal = true;
+    }
+
+    if (lpStrings)
+    {
+      while (wNumStrings)
+      {
+        hb_strfree(hStrings[--wNumStrings]);
       }
 
-      if( ReportEvent(hEventLog,
-                      static_cast<WORD>(hb_parni(3)) /* wType */,
-                      static_cast<WORD>(hb_parni(4)) /* wCategory */,
-                      static_cast<DWORD>(hb_parnint(5)) /* dwEventID */,
-                      nullptr /* lpUserSid */,
-                      wNumStrings,
-                      static_cast<DWORD>(hb_parclen(7)),
-                      lpStrings,
-                      static_cast<LPVOID>(const_cast<char*>(hb_parc(7)))) ) {
-         bRetVal = true;
-      }
+      hb_xfree(hStrings);
+      hb_xfree(static_cast<void *>(lpStrings));
+    }
 
-      if( lpStrings ) {
-         while( wNumStrings ) {
-            hb_strfree(hStrings[--wNumStrings]);
-         }
+    DeregisterEventSource(hEventLog);
+  }
 
-         hb_xfree(hStrings);
-         hb_xfree(static_cast<void*>(lpStrings));
-      }
-
-      DeregisterEventSource(hEventLog);
-   }
-
-   hb_retl(bRetVal);
+  hb_retl(bRetVal);
 }

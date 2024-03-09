@@ -46,60 +46,55 @@
 
 #include "hbwin.hpp"
 
-HB_FUNC( WCE_SMSSENDMESSAGE ) /* cMessage, cNumber */
+HB_FUNC(WCE_SMSSENDMESSAGE) /* cMessage, cNumber */
 {
 #ifdef __HB_COMPONENT_SUPPORTED__
-   SMS_HANDLE smshHandle = 0;
-   HRESULT hr = SmsOpen(SMS_MSGTYPE_TEXT, SMS_MODE_SEND, &smshHandle, nullptr); /* try to open an SMS Handle */
+  SMS_HANDLE smshHandle = 0;
+  HRESULT hr = SmsOpen(SMS_MSGTYPE_TEXT, SMS_MODE_SEND, &smshHandle, nullptr); /* try to open an SMS Handle */
 
-   /* Set default return value */
-   hb_retnl(-1);
+  /* Set default return value */
+  hb_retnl(-1);
 
-   if( hr == ERROR_SUCCESS ) {
-      SMS_ADDRESS smsaDestination;
+  if (hr == ERROR_SUCCESS)
+  {
+    SMS_ADDRESS smsaDestination;
 
-      void * hMessage;
-      void * hPhoneNumber;
+    void *hMessage;
+    void *hPhoneNumber;
 
-      HB_SIZE nMessageLen;
-      HB_SIZE nPhoneNumberLen;
+    HB_SIZE nMessageLen;
+    HB_SIZE nPhoneNumberLen;
 
-      LPCTSTR sztMessage     = HB_PARSTRDEF(1, &hMessage, &nMessageLen);
-      LPCTSTR sztPhoneNumber = HB_PARSTRDEF(2, &hPhoneNumber, &nPhoneNumberLen);
+    LPCTSTR sztMessage = HB_PARSTRDEF(1, &hMessage, &nMessageLen);
+    LPCTSTR sztPhoneNumber = HB_PARSTRDEF(2, &hPhoneNumber, &nPhoneNumberLen);
 
-      if( nPhoneNumberLen <= HB_SIZEOFARRAY(smsaDestination.ptsAddress) ) {
-         TEXT_PROVIDER_SPECIFIC_DATA tpsd;
-         SMS_MESSAGE_ID smsmidMessageID = 0;
+    if (nPhoneNumberLen <= HB_SIZEOFARRAY(smsaDestination.ptsAddress))
+    {
+      TEXT_PROVIDER_SPECIFIC_DATA tpsd;
+      SMS_MESSAGE_ID smsmidMessageID = 0;
 
-         /* Create the destination address */
-         memset(&smsaDestination, 0, sizeof(smsaDestination));
-         smsaDestination.smsatAddressType = (*sztPhoneNumber == _T('+')) ? SMSAT_INTERNATIONAL : SMSAT_NATIONAL;
-         memcpy(smsaDestination.ptsAddress, sztPhoneNumber, HB_SIZEOFARRAY(smsaDestination.ptsAddress));
+      /* Create the destination address */
+      memset(&smsaDestination, 0, sizeof(smsaDestination));
+      smsaDestination.smsatAddressType = (*sztPhoneNumber == _T('+')) ? SMSAT_INTERNATIONAL : SMSAT_NATIONAL;
+      memcpy(smsaDestination.ptsAddress, sztPhoneNumber, HB_SIZEOFARRAY(smsaDestination.ptsAddress));
 
-         /* Set up provider specific data */
-         tpsd.dwMessageOptions = PS_MESSAGE_OPTION_NONE;
-         tpsd.psMessageClass   = PS_MESSAGE_CLASS0;
-         tpsd.psReplaceOption  = PSRO_NONE;
+      /* Set up provider specific data */
+      tpsd.dwMessageOptions = PS_MESSAGE_OPTION_NONE;
+      tpsd.psMessageClass = PS_MESSAGE_CLASS0;
+      tpsd.psReplaceOption = PSRO_NONE;
 
-         /* Send the message, indicating success or failure */
-         hb_retnl(SmsSendMessage(smshHandle,
-                                 nullptr,
-                                 &smsaDestination,
-                                 nullptr,
-                                 static_cast<PBYTE>(sztMessage),
-                                 nMessageLen * sizeof(TCHAR),
-                                 static_cast<PBYTE>(&tpsd), 12,
-                                 SMSDE_OPTIMAL,
-                                 SMS_OPTION_DELIVERY_NONE,
-                                 &smsmidMessageID));
-      }
+      /* Send the message, indicating success or failure */
+      hb_retnl(SmsSendMessage(smshHandle, nullptr, &smsaDestination, nullptr, static_cast<PBYTE>(sztMessage),
+                              nMessageLen * sizeof(TCHAR), static_cast<PBYTE>(&tpsd), 12, SMSDE_OPTIMAL,
+                              SMS_OPTION_DELIVERY_NONE, &smsmidMessageID));
+    }
 
-      hb_strfree(hMessage);
-      hb_strfree(hPhoneNumber);
+    hb_strfree(hMessage);
+    hb_strfree(hPhoneNumber);
 
-      SmsClose(smshHandle);
-   }
+    SmsClose(smshHandle);
+  }
 #else
-   hb_retnl(-1);
+  hb_retnl(-1);
 #endif
 }

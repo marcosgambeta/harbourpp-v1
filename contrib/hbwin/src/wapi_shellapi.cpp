@@ -48,75 +48,79 @@
 
 #include <shellapi.h>
 
-HB_FUNC( WAPI_SHELLEXECUTE )
+HB_FUNC(WAPI_SHELLEXECUTE)
 {
-   void * hOperation;
-   void * hFile;
-   void * hParameters;
-   void * hDirectory;
+  void *hOperation;
+  void *hFile;
+  void *hParameters;
+  void *hDirectory;
 
-   hb_retnint(reinterpret_cast<HB_PTRUINT>(ShellExecute(static_cast<HWND>(hb_parptr(1)),
-                                           HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
-                                           HB_PARSTRDEF(3, &hFile, nullptr),
-                                           HB_PARSTR(4, &hParameters, nullptr),
-                                           HB_PARSTR(5, &hDirectory, nullptr),
-                                           hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */)));
+  hb_retnint(reinterpret_cast<HB_PTRUINT>(
+      ShellExecute(static_cast<HWND>(hb_parptr(1)),
+                   HB_PARSTR(2, &hOperation, nullptr), /* edit, explore, open, print, play?, properties? */
+                   HB_PARSTRDEF(3, &hFile, nullptr), HB_PARSTR(4, &hParameters, nullptr),
+                   HB_PARSTR(5, &hDirectory, nullptr), hb_parnidef(6, SW_SHOWNORMAL) /* nShowCmd */)));
 
-   hb_strfree(hOperation);
-   hb_strfree(hFile);
-   hb_strfree(hParameters);
-   hb_strfree(hDirectory);
+  hb_strfree(hOperation);
+  hb_strfree(hFile);
+  hb_strfree(hParameters);
+  hb_strfree(hDirectory);
 }
 
 /* Code by Antonino Perricone */
 
-HB_FUNC( WAPI_SHELLEXECUTE_WAIT )
+HB_FUNC(WAPI_SHELLEXECUTE_WAIT)
 {
-   void * hOperation;
-   void * hFile;
-   void * hParameters;
-   void * hDirectory;
-   BOOL retVal;
-   MSG msg;
-   SHELLEXECUTEINFO ShExecInfo{};
-   ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-   ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-   ShExecInfo.hwnd = static_cast<HWND>(hb_parptr(1));
-   ShExecInfo.lpVerb = HB_PARSTR(2, &hOperation, nullptr);
-   ShExecInfo.lpFile = HB_PARSTRDEF(3, &hFile, nullptr);
-   ShExecInfo.lpParameters =  HB_PARSTR(4, &hParameters, nullptr);
-   ShExecInfo.lpDirectory = HB_PARSTR(5, &hDirectory, nullptr);
-   ShExecInfo.nShow = hb_parnidef(6, SW_SHOWNORMAL);
-   ShExecInfo.hInstApp = nullptr;
-   retVal = ShellExecuteEx(&ShExecInfo);
-   hb_retl(retVal);
-   while( WaitForSingleObject(ShExecInfo.hProcess, 1000) != WAIT_OBJECT_0 ) {
-      while( PeekMessage(&msg, static_cast<HWND>(nullptr), 0, 0, PM_REMOVE) ) {
-         TranslateMessage(&msg);
-         DispatchMessage(&msg);
-      }
-   }
-   hb_strfree(hOperation);
-   hb_strfree(hFile);
-   hb_strfree(hParameters);
-   hb_strfree(hDirectory);
+  void *hOperation;
+  void *hFile;
+  void *hParameters;
+  void *hDirectory;
+  BOOL retVal;
+  MSG msg;
+  SHELLEXECUTEINFO ShExecInfo{};
+  ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+  ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+  ShExecInfo.hwnd = static_cast<HWND>(hb_parptr(1));
+  ShExecInfo.lpVerb = HB_PARSTR(2, &hOperation, nullptr);
+  ShExecInfo.lpFile = HB_PARSTRDEF(3, &hFile, nullptr);
+  ShExecInfo.lpParameters = HB_PARSTR(4, &hParameters, nullptr);
+  ShExecInfo.lpDirectory = HB_PARSTR(5, &hDirectory, nullptr);
+  ShExecInfo.nShow = hb_parnidef(6, SW_SHOWNORMAL);
+  ShExecInfo.hInstApp = nullptr;
+  retVal = ShellExecuteEx(&ShExecInfo);
+  hb_retl(retVal);
+  while (WaitForSingleObject(ShExecInfo.hProcess, 1000) != WAIT_OBJECT_0)
+  {
+    while (PeekMessage(&msg, static_cast<HWND>(nullptr), 0, 0, PM_REMOVE))
+    {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+    }
+  }
+  hb_strfree(hOperation);
+  hb_strfree(hFile);
+  hb_strfree(hParameters);
+  hb_strfree(hDirectory);
 }
 
-HB_FUNC( WAPI_ISUSERANADMIN )
+HB_FUNC(WAPI_ISUSERANADMIN)
 {
-   BOOL bResult = FALSE;
+  BOOL bResult = FALSE;
 
-   HMODULE hLib = hbwapi_LoadLibrarySystem(TEXT("shell32.dll"));
+  HMODULE hLib = hbwapi_LoadLibrarySystem(TEXT("shell32.dll"));
 
-   if( hLib ) {
-      using ISUSERANADMIN = int(WINAPI *)(void);
-      auto pIsUserAnAdmin = reinterpret_cast<ISUSERANADMIN>(reinterpret_cast<void*>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin")));
-      if( pIsUserAnAdmin ) {
-         bResult = (pIsUserAnAdmin)();
-      }
+  if (hLib)
+  {
+    using ISUSERANADMIN = int(WINAPI *)(void);
+    auto pIsUserAnAdmin =
+        reinterpret_cast<ISUSERANADMIN>(reinterpret_cast<void *>(HB_WINAPI_GETPROCADDRESS(hLib, "IsUserAnAdmin")));
+    if (pIsUserAnAdmin)
+    {
+      bResult = (pIsUserAnAdmin)();
+    }
 
-      FreeLibrary(hLib);
-   }
+    FreeLibrary(hLib);
+  }
 
-   hb_retl(bResult);
+  hb_retl(bResult);
 }
