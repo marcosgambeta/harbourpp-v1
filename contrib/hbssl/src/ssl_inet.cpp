@@ -51,80 +51,86 @@
 #include "hbdate.hpp"
 #include "hbznet.h"
 
-static long hb_inetReadSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void * buffer, long len, HB_MAXINT timeout)
+static long hb_inetReadSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void *buffer, long len, HB_MAXINT timeout)
 {
-   return hb_ssl_socketRead(reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout);
+  return hb_ssl_socketRead(reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout);
 }
 
-static long hb_inetWriteSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void * buffer, long len, HB_MAXINT timeout, long * plast)
+static long hb_inetWriteSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, const void *buffer, long len, HB_MAXINT timeout,
+                            long *plast)
 {
-   return hb_ssl_socketWrite(reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout, plast);
+  return hb_ssl_socketWrite(reinterpret_cast<PHB_SSLSTREAM>(pStream), sd, buffer, len, timeout, plast);
 }
 
 static void hb_inetCloseSSL(PHB_ZNETSTREAM pStream)
 {
-   hb_ssl_socketClose(reinterpret_cast<PHB_SSLSTREAM>(pStream));
+  hb_ssl_socketClose(reinterpret_cast<PHB_SSLSTREAM>(pStream));
 }
 
 static long hb_inetFlushSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, HB_MAXINT timeout, HB_BOOL fSync)
 {
-   HB_SYMBOL_UNUSED(pStream);
-   HB_SYMBOL_UNUSED(sd);
-   HB_SYMBOL_UNUSED(timeout);
-   HB_SYMBOL_UNUSED(fSync);
-   return 0;
+  HB_SYMBOL_UNUSED(pStream);
+  HB_SYMBOL_UNUSED(sd);
+  HB_SYMBOL_UNUSED(timeout);
+  HB_SYMBOL_UNUSED(fSync);
+  return 0;
 }
 
 static int hb_inetErrorSSL(PHB_ZNETSTREAM pStream)
 {
-   HB_SYMBOL_UNUSED(pStream);
-   return hb_socketGetError();
+  HB_SYMBOL_UNUSED(pStream);
+  return hb_socketGetError();
 }
 
-static const char * hb_inetErrStrSSL(PHB_ZNETSTREAM pStream, int iError)
+static const char *hb_inetErrStrSSL(PHB_ZNETSTREAM pStream, int iError)
 {
-   HB_SYMBOL_UNUSED(pStream);
-   return hb_ssl_socketErrorStr(iError);
+  HB_SYMBOL_UNUSED(pStream);
+  return hb_ssl_socketErrorStr(iError);
 }
 
 static void hb_inetStartSSL(HB_BOOL fServer)
 {
-   auto pItem = hb_param(1, Harbour::Item::POINTER);
-   HB_SOCKET sd = hb_znetInetFD(pItem, true);
+  auto pItem = hb_param(1, Harbour::Item::POINTER);
+  HB_SOCKET sd = hb_znetInetFD(pItem, true);
 
-   if( sd != HB_NO_SOCKET ) {
-      if( hb_SSL_is(2) ) {
-         int iResult = -2;
-         auto ssl = hb_SSL_par(2);
+  if (sd != HB_NO_SOCKET)
+  {
+    if (hb_SSL_is(2))
+    {
+      int iResult = -2;
+      auto ssl = hb_SSL_par(2);
 
-         if( ssl != nullptr ) {
-            HB_MAXINT timeout = HB_ISNUM(3) ? hb_parnint(3) : hb_znetInetTimeout(pItem, false);
-            auto pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult);
-            if( pStream != nullptr ) {
-               if( !hb_znetInetInitialize(pItem, reinterpret_cast<PHB_ZNETSTREAM>(pStream),
-                                          hb_inetReadSSL, hb_inetWriteSSL,
-                                          hb_inetFlushSSL, hb_inetCloseSSL,
-                                          hb_inetErrorSSL, hb_inetErrStrSSL) ) {
-                  hb_ssl_socketClose(pStream);
-                  iResult = -3;
-               }
-            }
-         }
-         hb_retni(iResult);
-      } else {
-         hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+      if (ssl != nullptr)
+      {
+        HB_MAXINT timeout = HB_ISNUM(3) ? hb_parnint(3) : hb_znetInetTimeout(pItem, false);
+        auto pStream = hb_ssl_socketNew(sd, ssl, fServer, timeout, hb_param(2, Harbour::Item::POINTER), &iResult);
+        if (pStream != nullptr)
+        {
+          if (!hb_znetInetInitialize(pItem, reinterpret_cast<PHB_ZNETSTREAM>(pStream), hb_inetReadSSL, hb_inetWriteSSL,
+                                     hb_inetFlushSSL, hb_inetCloseSSL, hb_inetErrorSSL, hb_inetErrStrSSL))
+          {
+            hb_ssl_socketClose(pStream);
+            iResult = -3;
+          }
+        }
       }
-   }
+      hb_retni(iResult);
+    }
+    else
+    {
+      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+    }
+  }
 }
 
 /* hb_inetSSL_connect(<pSocket>, <pSSL> [, <nTimeout> ]) */
-HB_FUNC( HB_INETSSL_CONNECT )
+HB_FUNC(HB_INETSSL_CONNECT)
 {
-   hb_inetStartSSL(false);
+  hb_inetStartSSL(false);
 }
 
 /* hb_inetSSL_accept(<pSocket>, <pSSL> [, <nTimeout> ]) */
-HB_FUNC( HB_INETSSL_ACCEPT )
+HB_FUNC(HB_INETSSL_ACCEPT)
 {
-   hb_inetStartSSL(true);
+  hb_inetStartSSL(true);
 }

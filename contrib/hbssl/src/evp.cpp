@@ -47,63 +47,65 @@
 #include "hbssl.h"
 #include <openssl/evp.h>
 
-char * hb_openssl_strdup(const char * pszText)
+char *hb_openssl_strdup(const char *pszText)
 {
-   size_t len = strlen(pszText) + 1;
-   auto pszDup = static_cast<char*>(OPENSSL_malloc(len));
-   memcpy(pszDup, pszText, len);
-   return pszDup;
+  size_t len = strlen(pszText) + 1;
+  auto pszDup = static_cast<char *>(OPENSSL_malloc(len));
+  memcpy(pszDup, pszText, len);
+  return pszDup;
 }
 
-HB_FUNC( OPENSSL_ADD_ALL_ALGORITHMS )
+HB_FUNC(OPENSSL_ADD_ALL_ALGORITHMS)
 {
-   OpenSSL_add_all_algorithms();
+  OpenSSL_add_all_algorithms();
 }
 
-HB_FUNC( EVP_CLEANUP )
+HB_FUNC(EVP_CLEANUP)
 {
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
-   EVP_cleanup();
+  EVP_cleanup();
 #endif
 }
 
-HB_FUNC( ERR_LOAD_EVP_STRINGS )
+HB_FUNC(ERR_LOAD_EVP_STRINGS)
 {
-   ERR_load_EVP_strings();
+  ERR_load_EVP_strings();
 }
 
-HB_FUNC( EVP_PKEY_FREE )
+HB_FUNC(EVP_PKEY_FREE)
 {
-   auto key = static_cast<EVP_PKEY*>(hb_parptr(1));
+  auto key = static_cast<EVP_PKEY *>(hb_parptr(1));
 
-   if( key != nullptr ) {
-      EVP_PKEY_free(key);
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+  if (key != nullptr)
+  {
+    EVP_PKEY_free(key);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }
 
-HB_FUNC( EVP_BYTESTOKEY )
+HB_FUNC(EVP_BYTESTOKEY)
 {
-   auto cipher = hb_EVP_CIPHER_par(1);
-   auto md = hb_EVP_MD_par(2);
+  auto cipher = hb_EVP_CIPHER_par(1);
+  auto md = hb_EVP_MD_par(2);
 
-   if( cipher != nullptr && md != nullptr && (!HB_ISCHAR(3) || hb_parclen(3) == 8) ) {
-      unsigned char key[EVP_MAX_KEY_LENGTH];
-      unsigned char iv[EVP_MAX_IV_LENGTH];
+  if (cipher != nullptr && md != nullptr && (!HB_ISCHAR(3) || hb_parclen(3) == 8))
+  {
+    unsigned char key[EVP_MAX_KEY_LENGTH];
+    unsigned char iv[EVP_MAX_IV_LENGTH];
 
-      hb_retni(EVP_BytesToKey(cipher,
-                              static_cast<HB_SSL_CONST EVP_MD*>(md),
-                              reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parc(3)) /* salt */,
-                              reinterpret_cast<HB_SSL_CONST unsigned char*>(hb_parcx(4)) /* data */,
-                              static_cast<int>(hb_parclen(4)),
-                              hb_parni(5) /* count */,
-                              key,
-                              iv));
+    hb_retni(EVP_BytesToKey(cipher, static_cast<HB_SSL_CONST EVP_MD *>(md),
+                            reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parc(3)) /* salt */,
+                            reinterpret_cast<HB_SSL_CONST unsigned char *>(hb_parcx(4)) /* data */,
+                            static_cast<int>(hb_parclen(4)), hb_parni(5) /* count */, key, iv));
 
-      hb_storc(reinterpret_cast<char*>(key), 6);
-      hb_storc(reinterpret_cast<char*>(iv), 7);
-   } else {
-      hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
-   }
+    hb_storc(reinterpret_cast<char *>(key), 6);
+    hb_storc(reinterpret_cast<char *>(iv), 7);
+  }
+  else
+  {
+    hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
+  }
 }

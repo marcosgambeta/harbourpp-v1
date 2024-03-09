@@ -48,47 +48,47 @@
 
 #include <openssl/rand.h>
 
-HB_FUNC( RAND_SEED )
+HB_FUNC(RAND_SEED)
 {
-   RAND_seed(hb_parcx(1), static_cast<int>(hb_parclen(1)));
+  RAND_seed(hb_parcx(1), static_cast<int>(hb_parclen(1)));
 }
 
-HB_FUNC( RAND_ADD )
+HB_FUNC(RAND_ADD)
 {
-   RAND_add(hb_parcx(1), static_cast<int>(hb_parclen(1)), hb_parnd(2));
+  RAND_add(hb_parcx(1), static_cast<int>(hb_parclen(1)), hb_parnd(2));
 }
 
-HB_FUNC( RAND_POLL )
+HB_FUNC(RAND_POLL)
 {
-   RAND_poll();
+  RAND_poll();
 }
 
-HB_FUNC( RAND_STATUS )
+HB_FUNC(RAND_STATUS)
 {
-   hb_retni(RAND_status());
+  hb_retni(RAND_status());
 }
 
-HB_FUNC( RAND_EVENT )
+HB_FUNC(RAND_EVENT)
 {
 #if defined(HB_OS_WIN) && !defined(__CYGWIN__)
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-   RAND_poll();
-   hb_retni(RAND_status());
+  RAND_poll();
+  hb_retni(RAND_status());
 #else
-   hb_retni(RAND_event(hb_parni(1), static_cast<WPARAM>(hb_parnint(2)), static_cast<LPARAM>(hb_parnint(3))));
+  hb_retni(RAND_event(hb_parni(1), static_cast<WPARAM>(hb_parnint(2)), static_cast<LPARAM>(hb_parnint(3))));
 #endif
 #else
-   hb_retni(1);
+  hb_retni(1);
 #endif
 }
 
-HB_FUNC( RAND_SCREEN )
+HB_FUNC(RAND_SCREEN)
 {
 #if defined(HB_OS_WIN) && !defined(__CYGWIN__)
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-   RAND_poll();
+  RAND_poll();
 #else
-   RAND_screen();
+  RAND_screen();
 #endif
 #endif
 }
