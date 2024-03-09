@@ -46,17 +46,20 @@
 
 #include "hbapigt.hpp"
 
-HB_FUNC( SETRC )
+HB_FUNC(SETRC)
 {
-   HB_BOOL fRow = HB_ISNUM(1), fCol = HB_ISNUM(2);
+  HB_BOOL fRow = HB_ISNUM(1), fCol = HB_ISNUM(2);
 
-   if( fRow && fCol ) {
-      hb_gtSetPos(hb_parni(1), hb_parni(2));
-   } else {
-      int iRow, iCol;
-      hb_gtGetPos(&iRow, &iCol);
-      hb_gtSetPos(fRow ? hb_parni(1) : iRow, fCol ? hb_parni(2) : iCol);
-   }
+  if (fRow && fCol)
+  {
+    hb_gtSetPos(hb_parni(1), hb_parni(2));
+  }
+  else
+  {
+    int iRow, iCol;
+    hb_gtGetPos(&iRow, &iCol);
+    hb_gtSetPos(fRow ? hb_parni(1) : iRow, fCol ? hb_parni(2) : iCol);
+  }
 
-   hb_retc_null();
+  hb_retc_null();
 }

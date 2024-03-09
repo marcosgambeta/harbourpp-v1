@@ -52,67 +52,81 @@
 /* helper function for the list function */
 void ct_charlist(int iMode)
 {
-   auto pcString = hb_parc(1);
-   auto sStrLen = hb_parclen(1);
-   HB_SIZE sCnt;
+  auto pcString = hb_parc(1);
+  auto sStrLen = hb_parclen(1);
+  HB_SIZE sCnt;
 
-   if( iMode == CT_CHARLIST_CHARHIST ) {
-      HB_SIZE asCharCnt[UCHAR_MAX];
-      auto pArray = hb_itemArrayNew(HB_SIZEOFARRAY(asCharCnt));
+  if (iMode == CT_CHARLIST_CHARHIST)
+  {
+    HB_SIZE asCharCnt[UCHAR_MAX];
+    auto pArray = hb_itemArrayNew(HB_SIZEOFARRAY(asCharCnt));
 
-      for( sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt ) {
-         asCharCnt[sCnt] = 0;
+    for (sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt)
+    {
+      asCharCnt[sCnt] = 0;
+    }
+
+    for (sCnt = 0; sCnt < sStrLen; ++sCnt)
+    {
+      asCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])]++;
+    }
+
+    for (sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt)
+    {
+      hb_arraySetNS(pArray, sCnt + 1, asCharCnt[sCnt]);
+    }
+
+    hb_itemReturnRelease(pArray);
+  }
+  else
+  {
+    char acCharCnt[UCHAR_MAX];
+    HB_SIZE sRetStrLen = 0;
+
+    if (iMode == CT_CHARLIST_CHARLIST)
+    {
+      char acMark[UCHAR_MAX];
+
+      memset(acMark, 0, sizeof(acMark));
+
+      for (sCnt = 0; sCnt < sStrLen; ++sCnt)
+      {
+        auto uc = static_cast<HB_UCHAR>(pcString[sCnt]);
+
+        if (acMark[uc] == 0)
+        {
+          acCharCnt[sRetStrLen++] = uc;
+          acMark[uc] = 1;
+        }
+      }
+    }
+    else if (iMode == CT_CHARLIST_CHARSLIST || iMode == CT_CHARLIST_CHARNOLIST)
+    {
+      char cScan = iMode == CT_CHARLIST_CHARSLIST ? 1 : 0;
+
+      for (sCnt = 0; sCnt < sStrLen; ++sCnt)
+      {
+        acCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])] = 1;
       }
 
-      for( sCnt = 0; sCnt < sStrLen; ++sCnt ) {
-         asCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])]++;
+      for (sCnt = 0; sCnt < HB_SIZEOFARRAY(acCharCnt); ++sCnt)
+      {
+        if (acCharCnt[sCnt] == cScan)
+        {
+          acCharCnt[sRetStrLen++] = static_cast<HB_UCHAR>(sCnt);
+        }
       }
-
-      for( sCnt = 0; sCnt < HB_SIZEOFARRAY(asCharCnt); ++sCnt ) {
-         hb_arraySetNS(pArray, sCnt + 1, asCharCnt[sCnt]);
-      }
-
-      hb_itemReturnRelease(pArray);
-   } else {
-      char acCharCnt[UCHAR_MAX];
-      HB_SIZE sRetStrLen = 0;
-
-      if( iMode == CT_CHARLIST_CHARLIST ) {
-         char acMark[UCHAR_MAX];
-
-         memset(acMark, 0, sizeof(acMark));
-
-         for( sCnt = 0; sCnt < sStrLen; ++sCnt ) {
-            auto uc = static_cast<HB_UCHAR>(pcString[sCnt]);
-
-            if( acMark[uc] == 0 ) {
-               acCharCnt[sRetStrLen++] = uc;
-               acMark[uc] = 1;
-            }
-         }
-      } else if( iMode == CT_CHARLIST_CHARSLIST || iMode == CT_CHARLIST_CHARNOLIST ) {
-         char cScan = iMode == CT_CHARLIST_CHARSLIST ? 1 : 0;
-
-         for( sCnt = 0; sCnt < sStrLen; ++sCnt ) {
-            acCharCnt[static_cast<HB_UCHAR>(pcString[sCnt])] = 1;
-         }
-
-         for( sCnt = 0; sCnt < HB_SIZEOFARRAY(acCharCnt); ++sCnt ) {
-            if( acCharCnt[sCnt] == cScan ) {
-               acCharCnt[sRetStrLen++] = static_cast<HB_UCHAR>(sCnt);
-            }
-         }
-      }
-      hb_retclen(acCharCnt, sRetStrLen);
-   }
+    }
+    hb_retclen(acCharCnt, sRetStrLen);
+  }
 }
 
-HB_FUNC( CHARLIST )
+HB_FUNC(CHARLIST)
 {
-   ct_charlist(CT_CHARLIST_CHARLIST);
+  ct_charlist(CT_CHARLIST_CHARLIST);
 }
 
-HB_FUNC( CHARNOLIST )
+HB_FUNC(CHARNOLIST)
 {
-   ct_charlist(CT_CHARLIST_CHARNOLIST);
+  ct_charlist(CT_CHARLIST_CHARNOLIST);
 }

@@ -47,47 +47,67 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-HB_FUNC( COMPLEMENT )
+HB_FUNC(COMPLEMENT)
 {
-   auto pItem = hb_param(1, Harbour::Item::ANY);
+  auto pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem != nullptr ) {
-      if( HB_IS_STRING(pItem) ) {
-         auto nLen = hb_itemGetCLen(pItem);
+  if (pItem != nullptr)
+  {
+    if (HB_IS_STRING(pItem))
+    {
+      auto nLen = hb_itemGetCLen(pItem);
 
-         if( nLen > 0 ) {
-            auto szSrc = hb_itemGetCPtr(pItem);
-            auto szBuffer = static_cast<char*>(hb_xgrab(nLen + 1));
+      if (nLen > 0)
+      {
+        auto szSrc = hb_itemGetCPtr(pItem);
+        auto szBuffer = static_cast<char *>(hb_xgrab(nLen + 1));
 
-            for( HB_SIZE nPos = 0; nPos < nLen; nPos++ ) {
-               szBuffer[nPos] = ~szSrc[nPos];
-            }
-            hb_retclen_buffer(szBuffer, nLen);
-         } else {
-            hb_retc_null();
-         }
-      } else if( HB_IS_DATE(pItem) ) {
-         hb_retdl(4537847 - hb_itemGetDL(pItem));
-      } else if( HB_IS_TIMESTAMP(pItem) ) {
-         hb_rettd(4537847.0 - hb_itemGetTD(pItem));
-      } else if( HB_IS_NUMINT(pItem) ) {
-         hb_retnint(-hb_itemGetNInt(pItem));
-      } else if( HB_IS_NUMERIC(pItem) ) {
-         int iWidth, iDec;
-         auto dValue = hb_itemGetND(pItem);
-         hb_itemGetNLen(pItem, &iWidth, &iDec);
-         hb_retndlen(-dValue, iWidth, iDec);
-      } else if( HB_IS_LOGICAL(pItem) ) {
-         hb_retl(!hb_itemGetL(pItem));
-      } else {
-         hb_ret();
+        for (HB_SIZE nPos = 0; nPos < nLen; nPos++)
+        {
+          szBuffer[nPos] = ~szSrc[nPos];
+        }
+        hb_retclen_buffer(szBuffer, nLen);
       }
-   } else {
+      else
+      {
+        hb_retc_null();
+      }
+    }
+    else if (HB_IS_DATE(pItem))
+    {
+      hb_retdl(4537847 - hb_itemGetDL(pItem));
+    }
+    else if (HB_IS_TIMESTAMP(pItem))
+    {
+      hb_rettd(4537847.0 - hb_itemGetTD(pItem));
+    }
+    else if (HB_IS_NUMINT(pItem))
+    {
+      hb_retnint(-hb_itemGetNInt(pItem));
+    }
+    else if (HB_IS_NUMERIC(pItem))
+    {
+      int iWidth, iDec;
+      auto dValue = hb_itemGetND(pItem);
+      hb_itemGetNLen(pItem, &iWidth, &iDec);
+      hb_retndlen(-dValue, iWidth, iDec);
+    }
+    else if (HB_IS_LOGICAL(pItem))
+    {
+      hb_retl(!hb_itemGetL(pItem));
+    }
+    else
+    {
       hb_ret();
-   }
+    }
+  }
+  else
+  {
+    hb_ret();
+  }
 }
 
-HB_FUNC( NUL )
+HB_FUNC(NUL)
 {
-   hb_retc_null();
+  hb_retc_null();
 }

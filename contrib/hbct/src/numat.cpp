@@ -47,76 +47,94 @@
 
 #include "ct.h"
 
-HB_FUNC( NUMAT )
+HB_FUNC(NUMAT)
 {
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
-      auto pcStringToMatch = hb_parc(1);
-      auto sStrToMatchLen = hb_parclen(1);
-      auto pcString = hb_parc(2);
-      auto sStrLen = hb_parclen(2);
-      int iMultiPass = ct_getatmupa();
-      int iAtLike = ct_getatlike();
-      char cAtLike = ct_getatlikechar();
-      HB_SIZE sIgnore, sMatchStrLen = 0, sSubStrLen;
-      HB_SIZE nCounter;
-      const char * pc, * pcSubStr;
+  if (HB_ISCHAR(1) && HB_ISCHAR(2))
+  {
+    auto pcStringToMatch = hb_parc(1);
+    auto sStrToMatchLen = hb_parclen(1);
+    auto pcString = hb_parc(2);
+    auto sStrLen = hb_parclen(2);
+    int iMultiPass = ct_getatmupa();
+    int iAtLike = ct_getatlike();
+    char cAtLike = ct_getatlikechar();
+    HB_SIZE sIgnore, sMatchStrLen = 0, sSubStrLen;
+    HB_SIZE nCounter;
+    const char *pc, *pcSubStr;
 
-      /* eventually ignore some characters */
-      sIgnore = hb_parnsdef(3, 0);
+    /* eventually ignore some characters */
+    sIgnore = hb_parnsdef(3, 0);
 
-      if( sIgnore >= sStrLen ) {
-         int iArgErrorMode = ct_getargerrormode();
-
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-         }
-
-         hb_retni(0);
-         return;
-      } else {
-         pcString += sIgnore;
-         sStrLen  -= sIgnore;
-      }
-
-      nCounter = 0;
-      pcSubStr = pcString;
-      sSubStrLen = sStrLen;
-
-      do {
-         switch( iAtLike ) {
-            case CT_SETATLIKE_EXACT:
-               pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
-               break;
-
-            case CT_SETATLIKE_WILDCARD:
-               pc = ct_at_wildcard_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
-               break;
-
-            default:
-               pc = nullptr;
-         }
-         nCounter++;
-         if( iMultiPass ) {
-            pcSubStr = pc + 1;
-         } else {
-            pcSubStr = pc + sMatchStrLen;
-         }
-         sSubStrLen = sStrLen - (pcSubStr - pcString);
-      } while( pc != nullptr );
-
-      hb_retns(nCounter - 1);
-   } else {
-      PHB_ITEM pSubst = nullptr;
+    if (sIgnore >= sStrLen)
+    {
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME, 0,
+                 EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retni(0);
+      hb_retni(0);
+      return;
+    }
+    else
+    {
+      pcString += sIgnore;
+      sStrLen -= sIgnore;
+    }
+
+    nCounter = 0;
+    pcSubStr = pcString;
+    sSubStrLen = sStrLen;
+
+    do
+    {
+      switch (iAtLike)
+      {
+      case CT_SETATLIKE_EXACT:
+        pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
+        break;
+
+      case CT_SETATLIKE_WILDCARD:
+        pc = ct_at_wildcard_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
+        break;
+
+      default:
+        pc = nullptr;
       }
-   }
+      nCounter++;
+      if (iMultiPass)
+      {
+        pcSubStr = pc + 1;
+      }
+      else
+      {
+        pcSubStr = pc + sMatchStrLen;
+      }
+      sSubStrLen = sStrLen - (pcSubStr - pcString);
+    } while (pc != nullptr);
+
+    hb_retns(nCounter - 1);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_NUMAT, nullptr, HB_ERR_FUNCNAME,
+                              0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retni(0);
+    }
+  }
 }

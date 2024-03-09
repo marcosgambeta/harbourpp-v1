@@ -47,31 +47,37 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( NUMLINE )
+HB_FUNC(NUMLINE)
 {
-   HB_ISIZ nLines = 0;
+  HB_ISIZ nLines = 0;
 
-   if( HB_ISCHAR(1) ) {
-      HB_ISIZ nStrLen = hb_parclen(1);
-      auto pcString = hb_parc(1);
-      HB_ISIZ nLineLength = hb_parnsdef(2, 80);
+  if (HB_ISCHAR(1))
+  {
+    HB_ISIZ nStrLen = hb_parclen(1);
+    auto pcString = hb_parc(1);
+    HB_ISIZ nLineLength = hb_parnsdef(2, 80);
 
-      while( nStrLen > 0 ) {
-         auto pBuffer = static_cast<const char*>(memchr(pcString, HB_CHAR_LF, nStrLen));
+    while (nStrLen > 0)
+    {
+      auto pBuffer = static_cast<const char *>(memchr(pcString, HB_CHAR_LF, nStrLen));
 
-         if( !pBuffer || (pBuffer - pcString) > nLineLength) {
-            pBuffer = pcString + nLineLength;
-         } else {
-            ++pBuffer;
-         }
-         nStrLen -= pBuffer - pcString;
-         pcString = pBuffer;
-         ++nLines;
-         if( nStrLen == 0 ) {
-            ++nLines;
-         }
+      if (!pBuffer || (pBuffer - pcString) > nLineLength)
+      {
+        pBuffer = pcString + nLineLength;
       }
-   }
+      else
+      {
+        ++pBuffer;
+      }
+      nStrLen -= pBuffer - pcString;
+      pcString = pBuffer;
+      ++nLines;
+      if (nStrLen == 0)
+      {
+        ++nLines;
+      }
+    }
+  }
 
-   hb_retns(nLines);
+  hb_retns(nLines);
 }

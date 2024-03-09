@@ -47,86 +47,114 @@
 
 #include "ct.h"
 
-HB_FUNC( CHARREPL )
+HB_FUNC(CHARREPL)
 {
-   /* suppressing return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF(2);
+  /* suppressing return value ? */
+  int iNoRet = ct_getref() && HB_ISBYREF(2);
 
-   HB_SIZE sSearchLen, sReplaceLen;
+  HB_SIZE sSearchLen, sReplaceLen;
 
-   /* param check */
-   if( (sSearchLen = hb_parclen(1)) > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) > 0 ) {
-      /* get parameters */
-      auto pcSearch = hb_parc(1);
-      auto pcString = hb_parc(2);
-      auto sStrLen = hb_parclen(2);
-      auto pcReplace = hb_parc(3);
-      int iMode = hb_parldef(4, 0);
+  /* param check */
+  if ((sSearchLen = hb_parclen(1)) > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) > 0)
+  {
+    /* get parameters */
+    auto pcSearch = hb_parc(1);
+    auto pcString = hb_parc(2);
+    auto sStrLen = hb_parclen(2);
+    auto pcReplace = hb_parc(3);
+    int iMode = hb_parldef(4, 0);
 
-      /* if sStrLen == 0, we can return immediately */
-      if( sStrLen == 0 ) {
-         if( iNoRet ) {
-            hb_retl(false);
-         } else {
-            hb_retc_null();
-         }
-         return;
+    /* if sStrLen == 0, we can return immediately */
+    if (sStrLen == 0)
+    {
+      if (iNoRet)
+      {
+        hb_retl(false);
+      }
+      else
+      {
+        hb_retc_null();
+      }
+      return;
+    }
+
+    auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + 1));
+    hb_xmemcpy(pcRet, pcString, sStrLen);
+
+    for (HB_SIZE sIndex = 0; sIndex < sSearchLen; sIndex++)
+    {
+      HB_SIZE sMatchStrLen;
+      HB_SIZE sReplIndex = sIndex;
+
+      if (sReplIndex > sReplaceLen - 1)
+      {
+        sReplIndex = sReplaceLen - 1;
       }
 
-      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
-      hb_xmemcpy(pcRet, pcString, sStrLen);
+      if (iMode)
+      {
+        /* no multiple replacements: searching in pcString,
+           replacing in pcRet */
+        const char *pc = pcString;
 
-      for( HB_SIZE sIndex = 0; sIndex < sSearchLen; sIndex++ ) {
-         HB_SIZE sMatchStrLen;
-         HB_SIZE sReplIndex = sIndex;
-
-         if( sReplIndex > sReplaceLen - 1 ) {
-            sReplIndex = sReplaceLen - 1;
-         }
-
-         if( iMode ) {
-            /* no multiple replacements: searching in pcString,
-               replacing in pcRet */
-            const char * pc = pcString;
-
-            while( (pc = ct_at_exact_forward(pc, sStrLen - (pc - pcString), pcSearch + sIndex, 1, &sMatchStrLen)) != nullptr ) {
-               *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
-               pc++;
-            }
-         } else {
-            /* multiple replacements: searching & replacing in pcRet */
-            char * pcw = pcRet;
-            while( (pcw = const_cast<char*>(ct_at_exact_forward(pcw, sStrLen - (pcw - pcRet), pcSearch + sIndex, 1, &sMatchStrLen))) != nullptr ) {
-               *pcw++ = *(pcReplace + sReplIndex);
-            }
-         }
+        while ((pc = ct_at_exact_forward(pc, sStrLen - (pc - pcString), pcSearch + sIndex, 1, &sMatchStrLen)) !=
+               nullptr)
+        {
+          *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
+          pc++;
+        }
       }
-
-      /* return string */
-      hb_storclen(pcRet, sStrLen, 2);
-
-      if( iNoRet ) {
-         hb_retl(false);
-         hb_xfree(pcRet);
-      } else {
-         hb_retclen_buffer(pcRet, sStrLen);
+      else
+      {
+        /* multiple replacements: searching & replacing in pcRet */
+        char *pcw = pcRet;
+        while ((pcw = const_cast<char *>(
+                    ct_at_exact_forward(pcw, sStrLen - (pcw - pcRet), pcSearch + sIndex, 1, &sMatchStrLen))) != nullptr)
+        {
+          *pcw++ = *(pcReplace + sReplIndex);
+        }
       }
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+    }
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
+    /* return string */
+    hb_storclen(pcRet, sStrLen, 2);
 
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else if( iNoRet ) {
-         hb_retl(false);
-      } else if( HB_ISCHAR(2) ) {
-         hb_retclen(hb_parc(2), hb_parclen(2));
-      } else {
-         hb_retc_null();
-      }
-   }
+    if (iNoRet)
+    {
+      hb_retl(false);
+      hb_xfree(pcRet);
+    }
+    else
+    {
+      hb_retclen_buffer(pcRet, sStrLen);
+    }
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARREPL, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else if (iNoRet)
+    {
+      hb_retl(false);
+    }
+    else if (HB_ISCHAR(2))
+    {
+      hb_retclen(hb_parc(2), hb_parclen(2));
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }

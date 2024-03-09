@@ -50,49 +50,53 @@
 
 static void SetGet(int iFlag)
 {
-   int iState = 0;
-   HB_GT_INFO gtInfo;
+  int iState = 0;
+  HB_GT_INFO gtInfo;
 
-   memset(&gtInfo, 0, sizeof(gtInfo));
+  memset(&gtInfo, 0, sizeof(gtInfo));
 
-   hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
-   if( gtInfo.pResult ) {
-      iState = hb_itemGetNI(gtInfo.pResult);
-      gtInfo.pNewVal = gtInfo.pResult;
-      gtInfo.pResult = nullptr;
-   }
+  hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
+  if (gtInfo.pResult)
+  {
+    iState = hb_itemGetNI(gtInfo.pResult);
+    gtInfo.pNewVal = gtInfo.pResult;
+    gtInfo.pResult = nullptr;
+  }
 
-   if( HB_ISLOG(1) ) {
-      gtInfo.pNewVal = hb_itemPutNI(gtInfo.pNewVal, hb_parl(1) ? (iState | iFlag) : (iState & ~iFlag));
-      hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
-   }
+  if (HB_ISLOG(1))
+  {
+    gtInfo.pNewVal = hb_itemPutNI(gtInfo.pNewVal, hb_parl(1) ? (iState | iFlag) : (iState & ~iFlag));
+    hb_gtInfo(HB_GTI_KBDSHIFTS, &gtInfo);
+  }
 
-   if( gtInfo.pNewVal ) {
-      hb_itemRelease(gtInfo.pNewVal);
-   }
-   if( gtInfo.pResult ) {
-      hb_itemRelease(gtInfo.pResult);
-   }
+  if (gtInfo.pNewVal)
+  {
+    hb_itemRelease(gtInfo.pNewVal);
+  }
+  if (gtInfo.pResult)
+  {
+    hb_itemRelease(gtInfo.pResult);
+  }
 
-   hb_retl((iState & iFlag) != 0);
+  hb_retl((iState & iFlag) != 0);
 }
 
-HB_FUNC( KSETINS )
+HB_FUNC(KSETINS)
 {
-   SetGet(HB_GTI_KBD_INSERT);
+  SetGet(HB_GTI_KBD_INSERT);
 }
 
-HB_FUNC( KSETCAPS )
+HB_FUNC(KSETCAPS)
 {
-   SetGet(HB_GTI_KBD_CAPSLOCK);
+  SetGet(HB_GTI_KBD_CAPSLOCK);
 }
 
-HB_FUNC( KSETNUM )
+HB_FUNC(KSETNUM)
 {
-   SetGet(HB_GTI_KBD_NUMLOCK);
+  SetGet(HB_GTI_KBD_NUMLOCK);
 }
 
-HB_FUNC( KSETSCROLL )
+HB_FUNC(KSETSCROLL)
 {
-   SetGet(HB_GTI_KBD_SCROLOCK);
+  SetGet(HB_GTI_KBD_SCROLOCK);
 }

@@ -48,75 +48,88 @@
 #include "ct.h"
 
 /* defines */
-#define DO_COUNT_COUNTLEFT   0
-#define DO_COUNT_COUNTRIGHT  1
+#define DO_COUNT_COUNTLEFT 0
+#define DO_COUNT_COUNTRIGHT 1
 
 /* helper function for the Count*() functions */
 static void do_count(int iSwitch)
 {
-   /* param check */
-   if( HB_ISCHAR(1) ) {
-      auto pcString = hb_parc(1);
-      auto sStrLen = hb_parclen(1);
-      HB_SIZE sRetVal;
-      const char * pc;
-      char cSearch;
+  /* param check */
+  if (HB_ISCHAR(1))
+  {
+    auto pcString = hb_parc(1);
+    auto sStrLen = hb_parclen(1);
+    HB_SIZE sRetVal;
+    const char *pc;
+    char cSearch;
 
-      if( hb_parclen(2) > 0 ) {
-         cSearch = *(hb_parc(2));
-      } else if( HB_ISNUM(2) ) {
-         cSearch = static_cast<char>(hb_parnl(2) % 256);
-      } else {
-         cSearch = 0x20;
+    if (hb_parclen(2) > 0)
+    {
+      cSearch = *(hb_parc(2));
+    }
+    else if (HB_ISNUM(2))
+    {
+      cSearch = static_cast<char>(hb_parnl(2) % 256);
+    }
+    else
+    {
+      cSearch = 0x20;
+    }
+
+    sRetVal = 0;
+
+    switch (iSwitch)
+    {
+    case DO_COUNT_COUNTLEFT:
+      pc = pcString;
+      while (*pc == cSearch && pc < (pcString + sStrLen))
+      {
+        sRetVal++;
+        pc++;
       }
+      break;
 
-      sRetVal = 0;
-
-      switch( iSwitch ) {
-         case DO_COUNT_COUNTLEFT:
-            pc = pcString;
-            while( *pc == cSearch && pc < (pcString + sStrLen) ) {
-               sRetVal++;
-               pc++;
-            }
-            break;
-
-         case DO_COUNT_COUNTRIGHT:
-            pc = pcString + sStrLen - 1;
-            while( *pc == cSearch && pc >= pcString ) {
-               sRetVal++;
-               pc--;
-            }
-            break;
+    case DO_COUNT_COUNTRIGHT:
+      pc = pcString + sStrLen - 1;
+      while (*pc == cSearch && pc >= pcString)
+      {
+        sRetVal++;
+        pc--;
       }
+      break;
+    }
 
-      hb_retns(sRetVal);
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+    hb_retns(sRetVal);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                 iSwitch == DO_COUNT_COUNTLEFT ?
-                                 CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT,
-                                 nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                 HB_ERR_ARGS_BASEPARAMS);
-      }
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                              iSwitch == DO_COUNT_COUNTLEFT ? CT_ERROR_COUNTLEFT : CT_ERROR_COUNTRIGHT, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
 
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retns(0);
-      }
-   }
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retns(0);
+    }
+  }
 }
 
-HB_FUNC( COUNTLEFT )
+HB_FUNC(COUNTLEFT)
 {
-   do_count(DO_COUNT_COUNTLEFT);
+  do_count(DO_COUNT_COUNTLEFT);
 }
 
-HB_FUNC( COUNTRIGHT )
+HB_FUNC(COUNTRIGHT)
 {
-   do_count(DO_COUNT_COUNTRIGHT);
+  do_count(DO_COUNT_COUNTRIGHT);
 }

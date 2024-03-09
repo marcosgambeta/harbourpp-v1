@@ -46,10 +46,10 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( LIKE )
+HB_FUNC(LIKE)
 {
-   auto szPattern = hb_parc(1);
-   auto szString = hb_parc(2);
+  auto szPattern = hb_parc(1);
+  auto szString = hb_parc(2);
 
-   hb_retl(szPattern && szString && hb_strMatchWildExact(szString, szPattern));
+  hb_retl(szPattern && szString && hb_strMatchWildExact(szString, szPattern));
 }

@@ -48,102 +48,126 @@
 #include "ct.h"
 #include <limits.h>
 
-#define MATRIXELEMENT(__row, __col)  *(piPenalty + ((__row) * (sStrLen2 + 1)) + (__col))
+#define MATRIXELEMENT(__row, __col) *(piPenalty + ((__row) * (sStrLen2 + 1)) + (__col))
 
 static int min3(int a, int b, int c)
 {
-   if( a < b ) {
-      return a < c ? a : c;
-   }
+  if (a < b)
+  {
+    return a < c ? a : c;
+  }
 
-   return b < c ? b : c;
+  return b < c ? b : c;
 }
 
-HB_FUNC( STRDIFF )
+HB_FUNC(STRDIFF)
 {
-   /* param check */
-   if( HB_ISCHAR(1) || HB_ISCHAR(2) ) {
-      /* get parameters */
-      const char * pcStr1, * pcStr2;
-      HB_SIZE      sStrLen1, sStrLen2;
-      int          iAtLike = ct_getatlike();
-      char         cAtLike = ct_getatlikechar();
-      HB_SIZE      sRowCnt, sColCnt;
+  /* param check */
+  if (HB_ISCHAR(1) || HB_ISCHAR(2))
+  {
+    /* get parameters */
+    const char *pcStr1, *pcStr2;
+    HB_SIZE sStrLen1, sStrLen2;
+    int iAtLike = ct_getatlike();
+    char cAtLike = ct_getatlikechar();
+    HB_SIZE sRowCnt, sColCnt;
 
-      if( HB_ISCHAR(1) ) {
-         pcStr1   = hb_parc(1);
-         sStrLen1 = hb_parclen(1);
-      } else {
-         pcStr1   = "";
-         sStrLen1 = 0;
-      }
+    if (HB_ISCHAR(1))
+    {
+      pcStr1 = hb_parc(1);
+      sStrLen1 = hb_parclen(1);
+    }
+    else
+    {
+      pcStr1 = "";
+      sStrLen1 = 0;
+    }
 
-      if( HB_ISCHAR(2) ) {
-         pcStr2   = hb_parc(2);
-         sStrLen2 = hb_parclen(2);
-      } else {
-         pcStr2   = "";
-         sStrLen2 = 0;
-      }
+    if (HB_ISCHAR(2))
+    {
+      pcStr2 = hb_parc(2);
+      sStrLen2 = hb_parclen(2);
+    }
+    else
+    {
+      pcStr2 = "";
+      sStrLen2 = 0;
+    }
 
-      /* check for memory consumption */
-      if( (static_cast<double>(sStrLen1) + 1.0) * (static_cast<double>(sStrLen2) + 1.0) * (static_cast<double>(sizeof(int))) >= static_cast<double>(UINT_MAX) )
+    /* check for memory consumption */
+    if ((static_cast<double>(sStrLen1) + 1.0) * (static_cast<double>(sStrLen2) + 1.0) *
+            (static_cast<double>(sizeof(int))) >=
+        static_cast<double>(UINT_MAX))
+    {
+      int iArgErrorMode = ct_getargerrormode();
+
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
       {
-         int iArgErrorMode = ct_getargerrormode();
-
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-         }
-
-         hb_retni(-1);
-         return;
+        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0,
+                 EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      /* get penalty points */
-      auto iReplace = hb_parnidef(3, 3);
-      auto iDelete = hb_parnidef(4, 6);
-      auto iInsert = hb_parnidef(5, 1);
+      hb_retni(-1);
+      return;
+    }
 
-      auto piPenalty = static_cast<int*>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int)));
+    /* get penalty points */
+    auto iReplace = hb_parnidef(3, 3);
+    auto iDelete = hb_parnidef(4, 6);
+    auto iInsert = hb_parnidef(5, 1);
 
-      MATRIXELEMENT(0, 0) = 0;
-      for( sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++ ) {
-         MATRIXELEMENT(0, sColCnt + 1) = MATRIXELEMENT(0, sColCnt) + iInsert;
+    auto piPenalty = static_cast<int *>(hb_xgrab((sStrLen1 + 1) * (sStrLen2 + 1) * sizeof(int)));
+
+    MATRIXELEMENT(0, 0) = 0;
+    for (sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++)
+    {
+      MATRIXELEMENT(0, sColCnt + 1) = MATRIXELEMENT(0, sColCnt) + iInsert;
+    }
+
+    for (sRowCnt = 0; sRowCnt <= sStrLen1 - 1; sRowCnt++)
+    {
+      MATRIXELEMENT(sRowCnt + 1, 0) = MATRIXELEMENT(sRowCnt, 0) + iDelete;
+      for (sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++)
+      {
+        int iReplaceCost;
+
+        if (pcStr1[sRowCnt] == pcStr2[sColCnt] ||
+            (iAtLike == CT_SETATLIKE_WILDCARD && (pcStr1[sRowCnt] == cAtLike || pcStr2[sColCnt] == cAtLike)))
+        {
+          iReplaceCost = 0;
+        }
+        else
+        {
+          iReplaceCost = iReplace;
+        }
+
+        MATRIXELEMENT(sRowCnt + 1, sColCnt + 1) =
+            min3(MATRIXELEMENT(sRowCnt, sColCnt) + iReplaceCost, MATRIXELEMENT(sRowCnt, sColCnt + 1) + iDelete,
+                 MATRIXELEMENT(sRowCnt + 1, sColCnt) + iInsert);
       }
+    }
 
-      for( sRowCnt = 0; sRowCnt <= sStrLen1 - 1; sRowCnt++ ) {
-         MATRIXELEMENT(sRowCnt + 1, 0) = MATRIXELEMENT(sRowCnt, 0) + iDelete;
-         for( sColCnt = 0; sColCnt <= sStrLen2 - 1; sColCnt++ ) {
-            int iReplaceCost;
+    hb_retni(MATRIXELEMENT(sStrLen1, sStrLen2));
+    hb_xfree(piPenalty);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
 
-            if( pcStr1[sRowCnt] == pcStr2[sColCnt] || (iAtLike == CT_SETATLIKE_WILDCARD &&
-                  (pcStr1[sRowCnt] == cAtLike || pcStr2[sColCnt] == cAtLike)) ) {
-               iReplaceCost = 0;
-            } else {
-               iReplaceCost = iReplace;
-            }
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME,
+                              0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
 
-            MATRIXELEMENT(sRowCnt + 1, sColCnt + 1) =
-               min3(MATRIXELEMENT(sRowCnt, sColCnt) + iReplaceCost,
-                    MATRIXELEMENT(sRowCnt, sColCnt + 1) + iDelete,
-                    MATRIXELEMENT(sRowCnt + 1, sColCnt) + iInsert);
-         }
-      }
-
-      hb_retni(MATRIXELEMENT(sStrLen1, sStrLen2));
-      hb_xfree(piPenalty);
-   } else {
-      PHB_ITEM pSubst        = nullptr;
-      int      iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_STRDIFF, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retni(0);
-      }
-   }
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retni(0);
+    }
+  }
 }

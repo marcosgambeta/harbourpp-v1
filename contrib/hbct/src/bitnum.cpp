@@ -50,276 +50,336 @@
 #include "hbapi.hpp"
 #include "ct.h"
 
-HB_BOOL ct_numParam(int iParam, HB_MAXINT * plNum)
+HB_BOOL ct_numParam(int iParam, HB_MAXINT *plNum)
 {
-   auto szHex = hb_parc(iParam);
+  auto szHex = hb_parc(iParam);
 
-   if( szHex ) {
-      *plNum = 0;
-      while( *szHex == ' ' ) {
-         szHex++;
-      }
-      while( *szHex ) {
-         char c = *szHex++;
+  if (szHex)
+  {
+    *plNum = 0;
+    while (*szHex == ' ')
+    {
+      szHex++;
+    }
+    while (*szHex)
+    {
+      char c = *szHex++;
 
-         if( c >= '0' && c <= '9' ) {
-            c -= '0';
-         } else if( c >= 'A' && c <= 'F' ) {
-            c -= 'A' - 10;
-         } else if( c >= 'a' && c <= 'f' ) {
-            c -= 'a' - 10;
-         } else {
-            break;
-         }
-         *plNum = (*plNum << 4) | c;
-         iParam = 0;
+      if (c >= '0' && c <= '9')
+      {
+        c -= '0';
       }
-      if( !iParam ) {
-         return true;
+      else if (c >= 'A' && c <= 'F')
+      {
+        c -= 'A' - 10;
       }
-   } else if( HB_ISNUM(iParam) ) {
-      *plNum = hb_parnint(iParam);
+      else if (c >= 'a' && c <= 'f')
+      {
+        c -= 'a' - 10;
+      }
+      else
+      {
+        break;
+      }
+      *plNum = (*plNum << 4) | c;
+      iParam = 0;
+    }
+    if (!iParam)
+    {
       return true;
-   }
+    }
+  }
+  else if (HB_ISNUM(iParam))
+  {
+    *plNum = hb_parnint(iParam);
+    return true;
+  }
 
-   *plNum = -1;
-   return false;
+  *plNum = -1;
+  return false;
 }
 
-HB_FUNC( NUMAND )
+HB_FUNC(NUMAND)
 {
-   auto iPCount = hb_pcount();
-   HB_MAXINT lValue = -1, lNext = 0;
+  auto iPCount = hb_pcount();
+  HB_MAXINT lValue = -1, lNext = 0;
 
-   if( iPCount && ct_numParam(1, &lValue) ) {
-      int i = 1;
+  if (iPCount && ct_numParam(1, &lValue))
+  {
+    int i = 1;
 
-      while( --iPCount && ct_numParam(++i, &lNext) ) {
-         lValue &= lNext;
-      }
+    while (--iPCount && ct_numParam(++i, &lNext))
+    {
+      lValue &= lNext;
+    }
 
-      if( iPCount ) {
-         lValue = -1;
-      }
-   }
-   hb_retnint(lValue);
-}
-
-HB_FUNC( NUMOR )
-{
-   auto iPCount = hb_pcount();
-   HB_MAXINT lValue = -1, lNext = 0;
-
-   if( iPCount && ct_numParam(1, &lValue) ) {
-      int i = 1;
-
-      while( --iPCount && ct_numParam(++i, &lNext) ) {
-         lValue |= lNext;
-      }
-
-      if( iPCount ) {
-         lValue = -1;
-      }
-   }
-   hb_retnint(lValue);
-}
-
-HB_FUNC( NUMXOR )
-{
-   auto iPCount = hb_pcount();
-   HB_MAXINT lValue = -1, lNext = 0;
-
-   if( iPCount && ct_numParam(1, &lValue) ) {
-      int i = 1;
-
-      while( --iPCount && ct_numParam(++i, &lNext) ) {
-         lValue ^= lNext;
-      }
-
-      if( iPCount ) {
-         lValue = -1;
-      }
-   }
-   hb_retnint(lValue);
-}
-
-HB_FUNC( NUMNOT )
-{
-   HB_MAXINT lValue;
-
-   if( ct_numParam(1, &lValue) ) {
-      lValue = (~lValue) & 0xffff;
-   }
-
-   hb_retnint(lValue);
-}
-
-HB_FUNC( NUMLOW )
-{
-   HB_MAXINT lValue;
-
-   if( ct_numParam(1, &lValue) ) {
-      lValue &= 0xff;
-   }
-
-   hb_retnint(lValue);
-}
-
-HB_FUNC( NUMHIGH )
-{
-   HB_MAXINT lValue;
-
-   if( ct_numParam(1, &lValue) /* && lValue == lValue & 0xffff */ ) {
-      lValue = (lValue >> 8) & 0xff;
-   }
-
-   hb_retnint(lValue);
-}
-
-HB_FUNC( NUMROL )
-{
-   HB_MAXINT lValue, lShift;
-
-   if( ct_numParam(1, &lValue) && lValue == (lValue & 0xffff) && ct_numParam(2, &lShift) && lShift == (lShift & 0xffff) ) {
-      if( hb_parl(3) ) {
-         auto us = static_cast<HB_USHORT>((lValue & 0xff) << (lShift & 0x07));
-
-         lValue = (lValue & 0xff00) | (us & 0xff) | (us >> 8);
-      } else {
-         lValue <<= (lShift & 0x0f);
-         lValue = (lValue & 0xffff) | (lValue >> 16);
-      }
-   } else {
+    if (iPCount)
+    {
       lValue = -1;
-   }
-
-   hb_retnint(lValue);
+    }
+  }
+  hb_retnint(lValue);
 }
 
-HB_FUNC( NUMMIRR )
+HB_FUNC(NUMOR)
 {
-   HB_MAXINT lValue;
+  auto iPCount = hb_pcount();
+  HB_MAXINT lValue = -1, lNext = 0;
 
-   if( ct_numParam(1, &lValue) && lValue == (lValue & 0xffff) ) {
-      HB_USHORT usBits = hb_parl(2) ? 8 : 16;
-      auto usResult = static_cast<HB_USHORT>(lValue >> usBits);
+  if (iPCount && ct_numParam(1, &lValue))
+  {
+    int i = 1;
 
-      do {
-         usResult <<= 1;
-         if( lValue & 1 ) {
-            usResult |= 1;
-         }
-         lValue >>= 1;
-      } while( --usBits );
+    while (--iPCount && ct_numParam(++i, &lNext))
+    {
+      lValue |= lNext;
+    }
 
-      lValue = usResult;
-   } else {
+    if (iPCount)
+    {
       lValue = -1;
-   }
-
-   hb_retnint(lValue);
+    }
+  }
+  hb_retnint(lValue);
 }
 
-HB_FUNC( CLEARBIT )
+HB_FUNC(NUMXOR)
 {
-   auto iPCount = hb_pcount();
-   HB_MAXINT lValue;
+  auto iPCount = hb_pcount();
+  HB_MAXINT lValue = -1, lNext = 0;
 
-   if( ct_numParam(1, &lValue) ) {
-      int i = 1;
+  if (iPCount && ct_numParam(1, &lValue))
+  {
+    int i = 1;
 
-      while( --iPCount ) {
-         auto iBit = hb_parni(++i);
-         if( iBit < 1 || iBit > 64 ) {
-            break;
-         }
-         lValue &= ~((static_cast<HB_MAXINT >(1)) << (iBit - 1));
-      }
+    while (--iPCount && ct_numParam(++i, &lNext))
+    {
+      lValue ^= lNext;
+    }
 
-      if( iPCount ) {
-         lValue = -1;
-      }
-   }
-
-   hb_retnint(lValue);
+    if (iPCount)
+    {
+      lValue = -1;
+    }
+  }
+  hb_retnint(lValue);
 }
 
-HB_FUNC( SETBIT )
+HB_FUNC(NUMNOT)
 {
-   auto iPCount = hb_pcount();
-   HB_MAXINT lValue;
+  HB_MAXINT lValue;
 
-   if( ct_numParam(1, &lValue) ) {
-      int i = 1;
+  if (ct_numParam(1, &lValue))
+  {
+    lValue = (~lValue) & 0xffff;
+  }
 
-      while( --iPCount ) {
-         auto iBit = hb_parni(++i);
-         if( iBit < 1 || iBit > 64 ) {
-            break;
-         }
-         lValue |= (static_cast<HB_MAXINT>(1)) << (iBit - 1);
-      }
-
-      if( iPCount ) {
-         lValue = -1;
-      }
-   }
-
-   hb_retnint(lValue);
+  hb_retnint(lValue);
 }
 
-HB_FUNC( ISBIT )
+HB_FUNC(NUMLOW)
 {
-   HB_MAXINT lValue;
+  HB_MAXINT lValue;
 
-   if( ct_numParam(1, &lValue) ) {
-      auto iBit = hb_parni(2);
+  if (ct_numParam(1, &lValue))
+  {
+    lValue &= 0xff;
+  }
 
-      if( iBit ) {
-         --iBit;
-      }
-      lValue &= (static_cast<HB_MAXINT>(1)) << iBit;
-   } else {
-      lValue = 0;
-   }
-
-   hb_retl(lValue != 0);
+  hb_retnint(lValue);
 }
 
-HB_FUNC( INTNEG )
+HB_FUNC(NUMHIGH)
 {
-   HB_MAXINT lValue;
+  HB_MAXINT lValue;
 
-   if( ct_numParam(1, &lValue) ) {
-      HB_BOOL f32Bit = hb_parl(2);
+  if (ct_numParam(1, &lValue) /* && lValue == lValue & 0xffff */)
+  {
+    lValue = (lValue >> 8) & 0xff;
+  }
 
-      if( f32Bit ) {
-         hb_retnint(static_cast<HB_I32>(lValue));
-      } else {
-         hb_retnint(static_cast<HB_I16>(lValue));
-      }
-   } else {
-      hb_retni(0);
-   }
+  hb_retnint(lValue);
 }
 
-HB_FUNC( INTPOS )
+HB_FUNC(NUMROL)
 {
-   HB_MAXINT lValue;
+  HB_MAXINT lValue, lShift;
 
-   if( ct_numParam(1, &lValue) ) {
-      HB_BOOL f32Bit = hb_parl(2);
+  if (ct_numParam(1, &lValue) && lValue == (lValue & 0xffff) && ct_numParam(2, &lShift) && lShift == (lShift & 0xffff))
+  {
+    if (hb_parl(3))
+    {
+      auto us = static_cast<HB_USHORT>((lValue & 0xff) << (lShift & 0x07));
 
-      if( f32Bit ) {
+      lValue = (lValue & 0xff00) | (us & 0xff) | (us >> 8);
+    }
+    else
+    {
+      lValue <<= (lShift & 0x0f);
+      lValue = (lValue & 0xffff) | (lValue >> 16);
+    }
+  }
+  else
+  {
+    lValue = -1;
+  }
+
+  hb_retnint(lValue);
+}
+
+HB_FUNC(NUMMIRR)
+{
+  HB_MAXINT lValue;
+
+  if (ct_numParam(1, &lValue) && lValue == (lValue & 0xffff))
+  {
+    HB_USHORT usBits = hb_parl(2) ? 8 : 16;
+    auto usResult = static_cast<HB_USHORT>(lValue >> usBits);
+
+    do
+    {
+      usResult <<= 1;
+      if (lValue & 1)
+      {
+        usResult |= 1;
+      }
+      lValue >>= 1;
+    } while (--usBits);
+
+    lValue = usResult;
+  }
+  else
+  {
+    lValue = -1;
+  }
+
+  hb_retnint(lValue);
+}
+
+HB_FUNC(CLEARBIT)
+{
+  auto iPCount = hb_pcount();
+  HB_MAXINT lValue;
+
+  if (ct_numParam(1, &lValue))
+  {
+    int i = 1;
+
+    while (--iPCount)
+    {
+      auto iBit = hb_parni(++i);
+      if (iBit < 1 || iBit > 64)
+      {
+        break;
+      }
+      lValue &= ~((static_cast<HB_MAXINT>(1)) << (iBit - 1));
+    }
+
+    if (iPCount)
+    {
+      lValue = -1;
+    }
+  }
+
+  hb_retnint(lValue);
+}
+
+HB_FUNC(SETBIT)
+{
+  auto iPCount = hb_pcount();
+  HB_MAXINT lValue;
+
+  if (ct_numParam(1, &lValue))
+  {
+    int i = 1;
+
+    while (--iPCount)
+    {
+      auto iBit = hb_parni(++i);
+      if (iBit < 1 || iBit > 64)
+      {
+        break;
+      }
+      lValue |= (static_cast<HB_MAXINT>(1)) << (iBit - 1);
+    }
+
+    if (iPCount)
+    {
+      lValue = -1;
+    }
+  }
+
+  hb_retnint(lValue);
+}
+
+HB_FUNC(ISBIT)
+{
+  HB_MAXINT lValue;
+
+  if (ct_numParam(1, &lValue))
+  {
+    auto iBit = hb_parni(2);
+
+    if (iBit)
+    {
+      --iBit;
+    }
+    lValue &= (static_cast<HB_MAXINT>(1)) << iBit;
+  }
+  else
+  {
+    lValue = 0;
+  }
+
+  hb_retl(lValue != 0);
+}
+
+HB_FUNC(INTNEG)
+{
+  HB_MAXINT lValue;
+
+  if (ct_numParam(1, &lValue))
+  {
+    HB_BOOL f32Bit = hb_parl(2);
+
+    if (f32Bit)
+    {
+      hb_retnint(static_cast<HB_I32>(lValue));
+    }
+    else
+    {
+      hb_retnint(static_cast<HB_I16>(lValue));
+    }
+  }
+  else
+  {
+    hb_retni(0);
+  }
+}
+
+HB_FUNC(INTPOS)
+{
+  HB_MAXINT lValue;
+
+  if (ct_numParam(1, &lValue))
+  {
+    HB_BOOL f32Bit = hb_parl(2);
+
+    if (f32Bit)
+    {
 #ifndef HB_LONG_LONG_OFF
-         hb_retnint(static_cast<HB_U32>(lValue));
+      hb_retnint(static_cast<HB_U32>(lValue));
 #else
-         hb_retnlen(static_cast<HB_U32>(lValue), 0, 0);
+      hb_retnlen(static_cast<HB_U32>(lValue), 0, 0);
 #endif
-      } else {
-         hb_retnint(static_cast<HB_U16>(lValue));
-      }
-   } else {
-      hb_retni(0);
-   }
+    }
+    else
+    {
+      hb_retnint(static_cast<HB_U16>(lValue));
+    }
+  }
+  else
+  {
+    hb_retni(0);
+  }
 }

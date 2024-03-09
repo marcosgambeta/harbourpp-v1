@@ -57,7 +57,7 @@ int ct_math_init(void)
    HB_TRACE(HB_TR_DEBUG, ("ct_math_init()"));
 #endif
 
-   return 1;
+  return 1;
 }
 
 int ct_math_exit(void)
@@ -66,7 +66,7 @@ int ct_math_exit(void)
    HB_TRACE(HB_TR_DEBUG, ("ct_math_exit()"));
 #endif
 
-   return 1;
+  return 1;
 }
 
 /* ---------------- */
@@ -80,7 +80,7 @@ void ct_setprecision(int iPrecision)
    HB_TRACE(HB_TR_DEBUG, ("ct_setprecision (%i)", iPrecision));
 #endif
 
-   s_iPrecision = iPrecision;
+  s_iPrecision = iPrecision;
 }
 
 int ct_getprecision(void)
@@ -89,33 +89,41 @@ int ct_getprecision(void)
    HB_TRACE(HB_TR_DEBUG, ("ct_getprecision()"));
 #endif
 
-   return s_iPrecision;
+  return s_iPrecision;
 }
 
-HB_FUNC( SETPREC )
+HB_FUNC(SETPREC)
 {
-   auto iPrec = hb_parni(1);
+  auto iPrec = hb_parni(1);
 
-   if( iPrec >= 1 && iPrec <= 16 ) {
-      ct_setprecision(iPrec);
-   } else {
-      int iArgErrorMode = ct_getargerrormode();
+  if (iPrec >= 1 && iPrec <= 16)
+  {
+    ct_setprecision(iPrec);
+  }
+  else
+  {
+    int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-      }
-   }
-   hb_retc_null();
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_SETPREC, nullptr, HB_ERR_FUNCNAME, 0,
+               EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+    }
+  }
+  hb_retc_null();
 }
 
-HB_FUNC( GETPREC )
+HB_FUNC(GETPREC)
 {
-   hb_retni(ct_getprecision());
-   if( hb_pcount() > 0 ) {
-      int iArgErrorMode = ct_getargerrormode();
+  hb_retni(ct_getprecision());
+  if (hb_pcount() > 0)
+  {
+    int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_GETPREC, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-      }
-   }
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_GETPREC, nullptr, HB_ERR_FUNCNAME, 0,
+               EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+    }
+  }
 }

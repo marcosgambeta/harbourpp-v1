@@ -46,26 +46,36 @@
 
 #include "ct.h"
 
-HB_FUNC( XTOC )
+HB_FUNC(XTOC)
 {
-   auto pItem = hb_param(1, Harbour::Item::ANY);
+  auto pItem = hb_param(1, Harbour::Item::ANY);
 
-   if( pItem != nullptr ) {
-      if( HB_IS_DATE(pItem) ) {
-         char szDate[9];
-         hb_retc(hb_itemGetDS(pItem, szDate));
-      } else if( HB_IS_TIMESTAMP(pItem) ) {
-         char szDateTime[18];
-         hb_retc(hb_itemGetTS(pItem, szDateTime));
-      } else if( HB_IS_NUMERIC(pItem) ) {
-         char buf[sizeof(double)];
-         auto d = hb_parnd(1);
-         HB_PUT_LE_DOUBLE(buf, d);
-         hb_retclen(buf, sizeof(buf));
-      } else if( HB_IS_LOGICAL(pItem) ) {
-         hb_retclen(hb_itemGetL(pItem) ? "T" : "F", 1);
-      } else {
-         hb_itemReturn(pItem);
-      }
-   }
+  if (pItem != nullptr)
+  {
+    if (HB_IS_DATE(pItem))
+    {
+      char szDate[9];
+      hb_retc(hb_itemGetDS(pItem, szDate));
+    }
+    else if (HB_IS_TIMESTAMP(pItem))
+    {
+      char szDateTime[18];
+      hb_retc(hb_itemGetTS(pItem, szDateTime));
+    }
+    else if (HB_IS_NUMERIC(pItem))
+    {
+      char buf[sizeof(double)];
+      auto d = hb_parnd(1);
+      HB_PUT_LE_DOUBLE(buf, d);
+      hb_retclen(buf, sizeof(buf));
+    }
+    else if (HB_IS_LOGICAL(pItem))
+    {
+      hb_retclen(hb_itemGetL(pItem) ? "T" : "F", 1);
+    }
+    else
+    {
+      hb_itemReturn(pItem);
+    }
+  }
 }

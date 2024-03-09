@@ -46,77 +46,87 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( CHARPACK )
+HB_FUNC(CHARPACK)
 {
-   auto len = hb_parclen(1);
-   auto in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
+  auto len = hb_parclen(1);
+  auto in = reinterpret_cast<const HB_UCHAR *>(hb_parcx(1));
 
-   if( hb_parni(2) == 0 ) {
-      auto out = static_cast<HB_UCHAR*>(hb_xgrab(len * 3 + 2));
-      HB_SIZE n_in = 0, n_out = 0;
+  if (hb_parni(2) == 0)
+  {
+    auto out = static_cast<HB_UCHAR *>(hb_xgrab(len * 3 + 2));
+    HB_SIZE n_in = 0, n_out = 0;
 
-      out[n_out++] = 158;
-      out[n_out++] = 158;
+    out[n_out++] = 158;
+    out[n_out++] = 158;
 
-      while( n_in < len ) {
-         HB_ISIZ n_count = 1, n_max = HB_MIN(255, len - n_in);
-         HB_UCHAR c = in[n_in];
+    while (n_in < len)
+    {
+      HB_ISIZ n_count = 1, n_max = HB_MIN(255, len - n_in);
+      HB_UCHAR c = in[n_in];
 
-         while( n_count < n_max && in[n_in + n_count] == c ) {
-            n_count++;
-         }
-         out[n_out++] = 0;
-         out[n_out++] = static_cast<HB_UCHAR>(n_count);
-         out[n_out++] = c;
-         n_in += n_count;
+      while (n_count < n_max && in[n_in + n_count] == c)
+      {
+        n_count++;
       }
-      if( n_out < len ) {
-         hb_retclen(reinterpret_cast<const char*>(out), n_out);
-      }
-      hb_xfree(out);
-      if( n_out < len ) {
-         return;
-      }
-   }
-   hb_retclen(reinterpret_cast<const char*>(in), len);
-}
-
-static HB_UCHAR * buf_append(HB_UCHAR * buf, HB_SIZE * buf_size, HB_SIZE count, HB_UCHAR c, HB_SIZE * buf_len)
-{
-   if( *buf_len + count > *buf_size ) {
-      *buf_size = HB_MAX(*buf_len + count, *buf_size + 32768);
-      buf = static_cast<HB_UCHAR*>(hb_xrealloc(buf, *buf_size));
-   }
-   memset(buf + *buf_len, c, count);
-   *buf_len += count;
-   return buf;
-}
-
-HB_FUNC( CHARUNPACK )
-{
-   auto len = hb_parclen(1);
-   auto in = reinterpret_cast<const HB_UCHAR*>(hb_parcx(1));
-
-   if( hb_parni(2) == 0 ) {
-      HB_SIZE out_len = 0;
-      HB_SIZE buf_size = 32768;
-
-      if( !(in[0] == 158 && in[1] == 158) ) {
-         hb_retclen(reinterpret_cast<const char*>(in), len);
-         return;
-      }
-      auto out = static_cast<HB_UCHAR*>(hb_xgrab(buf_size));
-      for( HB_SIZE i = 2; i <= len - 3; i += 3 ) {
-         if( in[i] != 0 ) {
-            hb_xfree(out);
-            hb_retclen(reinterpret_cast<const char*>(in), len);
-            return;
-         }
-         out = buf_append(out, &buf_size, in[i + 1], in[i + 2], &out_len);
-      }
-      hb_retclen(reinterpret_cast<const char*>(out), out_len);
-      hb_xfree(out);
+      out[n_out++] = 0;
+      out[n_out++] = static_cast<HB_UCHAR>(n_count);
+      out[n_out++] = c;
+      n_in += n_count;
+    }
+    if (n_out < len)
+    {
+      hb_retclen(reinterpret_cast<const char *>(out), n_out);
+    }
+    hb_xfree(out);
+    if (n_out < len)
+    {
       return;
-   }
-   hb_retclen(reinterpret_cast<const char*>(in), len);
+    }
+  }
+  hb_retclen(reinterpret_cast<const char *>(in), len);
+}
+
+static HB_UCHAR *buf_append(HB_UCHAR *buf, HB_SIZE *buf_size, HB_SIZE count, HB_UCHAR c, HB_SIZE *buf_len)
+{
+  if (*buf_len + count > *buf_size)
+  {
+    *buf_size = HB_MAX(*buf_len + count, *buf_size + 32768);
+    buf = static_cast<HB_UCHAR *>(hb_xrealloc(buf, *buf_size));
+  }
+  memset(buf + *buf_len, c, count);
+  *buf_len += count;
+  return buf;
+}
+
+HB_FUNC(CHARUNPACK)
+{
+  auto len = hb_parclen(1);
+  auto in = reinterpret_cast<const HB_UCHAR *>(hb_parcx(1));
+
+  if (hb_parni(2) == 0)
+  {
+    HB_SIZE out_len = 0;
+    HB_SIZE buf_size = 32768;
+
+    if (!(in[0] == 158 && in[1] == 158))
+    {
+      hb_retclen(reinterpret_cast<const char *>(in), len);
+      return;
+    }
+    auto out = static_cast<HB_UCHAR *>(hb_xgrab(buf_size));
+    for (HB_SIZE i = 2; i <= len - 3; i += 3)
+    {
+      if (in[i] != 0)
+      {
+        hb_xfree(out);
+        hb_retclen(reinterpret_cast<const char *>(in), len);
+        return;
+      }
+      out = buf_append(out, &buf_size, in[i + 1], in[i + 2], &out_len);
+    }
+    hb_retclen(reinterpret_cast<const char *>(out), out_len);
+    hb_xfree(out);
+    return;
+  }
+  hb_retclen(reinterpret_cast<const char *>(in), len);
 }

@@ -47,68 +47,85 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( CTOBIT )
+HB_FUNC(CTOBIT)
 {
-   auto nString = hb_parclen(1);
-   int iResult = 0;
+  auto nString = hb_parclen(1);
+  int iResult = 0;
 
-   if( nString > 0 ) {
-      auto nPattern = hb_parclen(2);
+  if (nString > 0)
+  {
+    auto nPattern = hb_parclen(2);
 
-      if( nPattern >= 1 && nPattern <= 16 ) {
-         auto pszString = hb_parc(1);
-         auto pszPattern = hb_parc(2);
+    if (nPattern >= 1 && nPattern <= 16)
+    {
+      auto pszString = hb_parc(1);
+      auto pszPattern = hb_parc(2);
 
-         for( HB_SIZE n = 0; n < nString; ++n ) {
-            char c = pszString[n];
-            int i = 0;
+      for (HB_SIZE n = 0; n < nString; ++n)
+      {
+        char c = pszString[n];
+        int i = 0;
 
-            do {
-               if( pszPattern[i] == c ) {
-                  iResult |= 1 << (static_cast<int>(nPattern) - i - 1);
-                  break;
-               }
-            } while( ++i < static_cast<int>(nPattern) );
-         }
-      } else {
-         iResult = -1;
+        do
+        {
+          if (pszPattern[i] == c)
+          {
+            iResult |= 1 << (static_cast<int>(nPattern) - i - 1);
+            break;
+          }
+        } while (++i < static_cast<int>(nPattern));
       }
-   }
-   hb_retni(iResult);
+    }
+    else
+    {
+      iResult = -1;
+    }
+  }
+  hb_retni(iResult);
 }
 
-HB_FUNC( BITTOC )
+HB_FUNC(BITTOC)
 {
-   auto nPattern = hb_parclen(2);
+  auto nPattern = hb_parclen(2);
 
-   if( nPattern >= 1 && nPattern <= 16 ) {
-      auto pszPattern = hb_parc(2);
-      char szBuffer[16];
-      char * pszResult = &szBuffer[sizeof(szBuffer)];
-      auto iLen = 0;
+  if (nPattern >= 1 && nPattern <= 16)
+  {
+    auto pszPattern = hb_parc(2);
+    char szBuffer[16];
+    char *pszResult = &szBuffer[sizeof(szBuffer)];
+    auto iLen = 0;
 
-      auto iValue = hb_parnidef(1, -1);
-      if( iValue > 0xFFFF || iValue < 0 ) {
-         iValue = 0;
+    auto iValue = hb_parnidef(1, -1);
+    if (iValue > 0xFFFF || iValue < 0)
+    {
+      iValue = 0;
+    }
+
+    if (hb_parl(3))
+    {
+      while (nPattern-- > 0)
+      {
+        *--pszResult = (iValue & 1) ? pszPattern[nPattern] : ' ';
+        ++iLen;
+        iValue >>= 1;
       }
-
-      if( hb_parl(3) ) {
-         while( nPattern-- > 0 ) {
-            *--pszResult = (iValue & 1) ? pszPattern[nPattern] : ' ';
-            ++iLen;
-            iValue >>= 1;
-         }
-      } else {
-         while( iValue != 0 && nPattern-- > 0 ) {
-            if( iValue & 1 ) {
-               *--pszResult = pszPattern[nPattern];
-               ++iLen;
-            }
-            iValue >>= 1;
-         }
+    }
+    else
+    {
+      while (iValue != 0 && nPattern-- > 0)
+      {
+        if (iValue & 1)
+        {
+          *--pszResult = pszPattern[nPattern];
+          ++iLen;
+        }
+        iValue >>= 1;
       }
-      hb_retclen(pszResult, iLen);
-   } else {
-      hb_retc_null();
-   }
+    }
+    hb_retclen(pszResult, iLen);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 }

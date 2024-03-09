@@ -48,92 +48,111 @@
 #include "ct.h"
 
 /* defines */
-#define DO_PAD_PADLEFT   0
-#define DO_PAD_PADRIGHT  1
+#define DO_PAD_PADLEFT 0
+#define DO_PAD_PADRIGHT 1
 
 /* helper function for the pad functions */
 static void do_pad(int iSwitch)
 {
-   if( HB_ISCHAR(1) && HB_ISNUM(2) ) {
-      auto pcString = hb_parc(1);
-      auto sStrLen = hb_parclen(1);
-      char * pc;
-      HB_ISIZ nRetLen;
-      char cFill;
+  if (HB_ISCHAR(1) && HB_ISNUM(2))
+  {
+    auto pcString = hb_parc(1);
+    auto sStrLen = hb_parclen(1);
+    char *pc;
+    HB_ISIZ nRetLen;
+    char cFill;
 
-      nRetLen = hb_parns(2);
-      if( nRetLen <= 0 ) {
-         int iArgErrorMode = ct_getargerrormode();
-
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                     iSwitch == DO_PAD_PADLEFT ?
-                     CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr,
-                     HB_ERR_FUNCNAME, 0, EF_CANDEFAULT,
-                     HB_ERR_ARGS_BASEPARAMS);
-         }
-
-         hb_retc_null();
-         return;
-      }
-      auto sRetLen = static_cast<HB_SIZE>(nRetLen);
-
-      if( hb_parclen(3) > 0 ) {
-         cFill = *(hb_parc(3));
-      } else if( HB_ISNUM(3) ) {
-         cFill = static_cast<char>(hb_parnl(3) % 256);
-      } else {
-         cFill = 0x20;
-      }
-
-      auto pcRet = static_cast<char*>(hb_xgrab(sRetLen + 1));
-
-      if( iSwitch == DO_PAD_PADLEFT ) {
-         if( sRetLen > sStrLen ) {
-            /* fill with cFill */
-            for( pc = pcRet; pc < pcRet + (sRetLen - sStrLen); pc++ ) {
-               *pc = cFill;
-            }
-            hb_xmemcpy(pcRet + (sRetLen - sStrLen), pcString, sStrLen);
-         } else {
-            hb_xmemcpy(pcRet, pcString + (sStrLen - sRetLen), sRetLen);
-         }
-      } else {
-         hb_xmemcpy(pcRet, pcString, (sRetLen < sStrLen ? sRetLen : sStrLen));
-         if( sRetLen > sStrLen ) {
-            /* fill with cFill */
-            for( pc = pcRet + sStrLen; pc < pcRet + sRetLen; pc++ ) {
-               *pc = cFill;
-            }
-         }
-      }
-      hb_retclen_buffer(pcRet, sRetLen);
-   } else {
-      PHB_ITEM pSubst = nullptr;
+    nRetLen = hb_parns(2);
+    if (nRetLen <= 0)
+    {
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                 iSwitch == DO_PAD_PADLEFT ?
-                                 CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr,
-                                 HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                 HB_ERR_ARGS_BASEPARAMS);
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                 iSwitch == DO_PAD_PADLEFT ? CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr, HB_ERR_FUNCNAME, 0,
+                 EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retc_null();
+      hb_retc_null();
+      return;
+    }
+    auto sRetLen = static_cast<HB_SIZE>(nRetLen);
+
+    if (hb_parclen(3) > 0)
+    {
+      cFill = *(hb_parc(3));
+    }
+    else if (HB_ISNUM(3))
+    {
+      cFill = static_cast<char>(hb_parnl(3) % 256);
+    }
+    else
+    {
+      cFill = 0x20;
+    }
+
+    auto pcRet = static_cast<char *>(hb_xgrab(sRetLen + 1));
+
+    if (iSwitch == DO_PAD_PADLEFT)
+    {
+      if (sRetLen > sStrLen)
+      {
+        /* fill with cFill */
+        for (pc = pcRet; pc < pcRet + (sRetLen - sStrLen); pc++)
+        {
+          *pc = cFill;
+        }
+        hb_xmemcpy(pcRet + (sRetLen - sStrLen), pcString, sStrLen);
       }
-   }
+      else
+      {
+        hb_xmemcpy(pcRet, pcString + (sStrLen - sRetLen), sRetLen);
+      }
+    }
+    else
+    {
+      hb_xmemcpy(pcRet, pcString, (sRetLen < sStrLen ? sRetLen : sStrLen));
+      if (sRetLen > sStrLen)
+      {
+        /* fill with cFill */
+        for (pc = pcRet + sStrLen; pc < pcRet + sRetLen; pc++)
+        {
+          *pc = cFill;
+        }
+      }
+    }
+    hb_retclen_buffer(pcRet, sRetLen);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                              iSwitch == DO_PAD_PADLEFT ? CT_ERROR_PADLEFT : CT_ERROR_PADRIGHT, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
 
-HB_FUNC( PADLEFT )
+HB_FUNC(PADLEFT)
 {
-   do_pad(DO_PAD_PADLEFT);
+  do_pad(DO_PAD_PADLEFT);
 }
 
-HB_FUNC( PADRIGHT )
+HB_FUNC(PADRIGHT)
 {
-   do_pad(DO_PAD_PADRIGHT);
+  do_pad(DO_PAD_PADRIGHT);
 }

@@ -60,12 +60,12 @@
 
 /* static functions for token environment management */
 
-#define TOKEN_ENVIRONMENT_STEP  100
+#define TOKEN_ENVIRONMENT_STEP 100
 
 struct TOKEN_POSITION
 {
-   HB_SIZE sStartPos;            /* relative 0-based index of first char of token */
-   HB_SIZE sEndPos;              /* relative 0-based index of first char BEHIND token, so that length = sEndPos-sStartPos */
+  HB_SIZE sStartPos; /* relative 0-based index of first char of token */
+  HB_SIZE sEndPos;   /* relative 0-based index of first char BEHIND token, so that length = sEndPos-sStartPos */
 };
 
 using TOKEN_ENVIRONMENT = TOKEN_POSITION *;
@@ -73,95 +73,106 @@ using TOKEN_ENVIRONMENT = TOKEN_POSITION *;
 /* alloc new token environment */
 static TOKEN_ENVIRONMENT sTokEnvNew(void)
 {
-   auto env = static_cast<TOKEN_ENVIRONMENT>(hb_xalloc(sizeof(TOKEN_POSITION) * (2 + TOKEN_ENVIRONMENT_STEP) + 1));
+  auto env = static_cast<TOKEN_ENVIRONMENT>(hb_xalloc(sizeof(TOKEN_POSITION) * (2 + TOKEN_ENVIRONMENT_STEP) + 1));
 
-   if( env == nullptr ) {
-      return nullptr;
-   }
+  if (env == nullptr)
+  {
+    return nullptr;
+  }
 
-   /* use the first element to store current length and use of token env */
-   env[0].sStartPos = 0;                    /* 0-based index to next free, unused element */
-   env[0].sEndPos = TOKEN_ENVIRONMENT_STEP; /* but there are 100 elements ready for use */
+  /* use the first element to store current length and use of token env */
+  env[0].sStartPos = 0;                    /* 0-based index to next free, unused element */
+  env[0].sEndPos = TOKEN_ENVIRONMENT_STEP; /* but there are 100 elements ready for use */
 
-   /* use second element to store actual index with TokenNext() */
-   env[1].sStartPos = 0;        /* 0-based index value that is to be used NEXT */
+  /* use second element to store actual index with TokenNext() */
+  env[1].sStartPos = 0; /* 0-based index value that is to be used NEXT */
 
-   return env;
+  return env;
 }
 
 /* add a tokenizing position to a token environment */
-static int sTokEnvAddPos(TOKEN_ENVIRONMENT * pEnv, TOKEN_POSITION * pPos)
+static int sTokEnvAddPos(TOKEN_ENVIRONMENT *pEnv, TOKEN_POSITION *pPos)
 {
-   HB_SIZE nIndex;
-   TOKEN_ENVIRONMENT env = *pEnv;
+  HB_SIZE nIndex;
+  TOKEN_ENVIRONMENT env = *pEnv;
 
-   /* new memory needed? */
-   if( env[0].sStartPos == env[0].sEndPos ) {
-      env = *pEnv = static_cast<TOKEN_ENVIRONMENT>(hb_xrealloc(env, sizeof(TOKEN_POSITION) * (2 + env[0].sEndPos + TOKEN_ENVIRONMENT_STEP) + 1));
+  /* new memory needed? */
+  if (env[0].sStartPos == env[0].sEndPos)
+  {
+    env = *pEnv = static_cast<TOKEN_ENVIRONMENT>(
+        hb_xrealloc(env, sizeof(TOKEN_POSITION) * (2 + env[0].sEndPos + TOKEN_ENVIRONMENT_STEP) + 1));
 
-      env[0].sEndPos += TOKEN_ENVIRONMENT_STEP;
-   }
+    env[0].sEndPos += TOKEN_ENVIRONMENT_STEP;
+  }
 
-   nIndex = env[0].sStartPos + 2;        /* +2  because of extra elements */
-   env[nIndex].sStartPos = pPos->sStartPos;
-   env[nIndex].sEndPos = pPos->sEndPos;
-   env[0].sStartPos++;
+  nIndex = env[0].sStartPos + 2; /* +2  because of extra elements */
+  env[nIndex].sStartPos = pPos->sStartPos;
+  env[nIndex].sEndPos = pPos->sEndPos;
+  env[0].sStartPos++;
 
-   return 1;
+  return 1;
 }
 
 /* check to see if token pointer is at end of environment */
 static int sTokEnvEnd(TOKEN_ENVIRONMENT env)
 {
-   return env[1].sStartPos >= env[0].sStartPos;
+  return env[1].sStartPos >= env[0].sStartPos;
 }
 
 /* get size of token environment in memory */
 static HB_SIZE sTokEnvGetSize(TOKEN_ENVIRONMENT env)
 {
-   return sizeof(TOKEN_POSITION) * (2 + env[0].sEndPos);
+  return sizeof(TOKEN_POSITION) * (2 + env[0].sEndPos);
 }
 
 /* get position element pointed to by tokenizing pointer */
-static TOKEN_POSITION * sTokEnvGetPos(TOKEN_ENVIRONMENT env)
+static TOKEN_POSITION *sTokEnvGetPos(TOKEN_ENVIRONMENT env)
 {
-   if( env[1].sStartPos >= env[0].sStartPos ) {
-      return nullptr;
-   }
+  if (env[1].sStartPos >= env[0].sStartPos)
+  {
+    return nullptr;
+  }
 
-   return env + 2 + (env[1].sStartPos); /* "+2" because of extra elements */
+  return env + 2 + (env[1].sStartPos); /* "+2" because of extra elements */
 }
 
 /* get position element pointed to by given 0-based index */
-static TOKEN_POSITION * sTokEnvGetPosIndex(TOKEN_ENVIRONMENT env, HB_SIZE nIndex)
+static TOKEN_POSITION *sTokEnvGetPosIndex(TOKEN_ENVIRONMENT env, HB_SIZE nIndex)
 {
-   if( nIndex >= env[0].sStartPos ) {
-      return nullptr;
-   }
+  if (nIndex >= env[0].sStartPos)
+  {
+    return nullptr;
+  }
 
-   return env + 2 + nIndex; /* "+2" because of extra elements */
+  return env + 2 + nIndex; /* "+2" because of extra elements */
 }
 
 /* increment tokenizing pointer by one */
 static int sTokEnvIncPtr(TOKEN_ENVIRONMENT env)
 {
-   if( env[1].sStartPos >= env[0].sStartPos ) {
-      return 0;
-   } else {
-      env[1].sStartPos++;
-      return 1;
-   }
+  if (env[1].sStartPos >= env[0].sStartPos)
+  {
+    return 0;
+  }
+  else
+  {
+    env[1].sStartPos++;
+    return 1;
+  }
 }
 
 /* set tokenizing pointer to 0-based value */
 static int sTokEnvSetPtr(TOKEN_ENVIRONMENT env, HB_SIZE sCnt)
 {
-   if( sCnt >= env[0].sStartPos ) {
-      return 0;
-   } else {
-      env[1].sStartPos = sCnt;
-      return 1;
-   }
+  if (sCnt >= env[0].sStartPos)
+  {
+    return 0;
+  }
+  else
+  {
+    env[1].sStartPos = sCnt;
+    return 1;
+  }
 }
 
 /* decrement tokenizing pointer by one */
@@ -182,418 +193,537 @@ static int sTokEnvDecPtr(TOKEN_ENVIRONMENT env)
 /* get value of tokenizing pointer */
 static HB_SIZE sTokEnvGetPtr(TOKEN_ENVIRONMENT env)
 {
-   return env[1].sStartPos;
+  return env[1].sStartPos;
 }
 
 /* get token count */
 static HB_SIZE sTokEnvGetCnt(TOKEN_ENVIRONMENT env)
 {
-   return env[0].sStartPos;
+  return env[0].sStartPos;
 }
 
 /* free token environment */
 static void sTokEnvDel(TOKEN_ENVIRONMENT env)
 {
-   hb_xfree(env);
+  hb_xfree(env);
 }
 
 /* Harbour functions */
 
 /* static data */
-static const char sc_spcSeparatorStr[] =
-   "\x00" "\x09" "\x0A" "\x0C" "\x1A" "\x20" "\x8A" "\x8C" ",.;:!\?/\\<>()#&%+-*";
+static const char sc_spcSeparatorStr[] = "\x00"
+                                         "\x09"
+                                         "\x0A"
+                                         "\x0C"
+                                         "\x1A"
+                                         "\x20"
+                                         "\x8A"
+                                         "\x8C"
+                                         ",.;:!\?/\\<>()#&%+-*";
 
-static void s_token_exit(void * cargo)
+static void s_token_exit(void *cargo)
 {
-   auto penv = static_cast<TOKEN_ENVIRONMENT*>(cargo);
+  auto penv = static_cast<TOKEN_ENVIRONMENT *>(cargo);
 
-   if( *penv ) {
-      sTokEnvDel(*penv);
-      *penv = nullptr;
-   }
+  if (*penv)
+  {
+    sTokEnvDel(*penv);
+    *penv = nullptr;
+  }
 }
 
-static HB_TSD_NEW(s_token, sizeof(TOKEN_ENVIRONMENT*), nullptr, s_token_exit);
+static HB_TSD_NEW(s_token, sizeof(TOKEN_ENVIRONMENT *), nullptr, s_token_exit);
 
 static void sTokSet(TOKEN_ENVIRONMENT env)
 {
-   auto penv = static_cast<TOKEN_ENVIRONMENT*>(hb_stackGetTSD(&s_token));
+  auto penv = static_cast<TOKEN_ENVIRONMENT *>(hb_stackGetTSD(&s_token));
 
-   if( *penv != env ) {
-      if( *penv ) {
-         sTokEnvDel(*penv);
-      }
-      *penv = env;
-   }
+  if (*penv != env)
+  {
+    if (*penv)
+    {
+      sTokEnvDel(*penv);
+    }
+    *penv = env;
+  }
 }
 
 static TOKEN_ENVIRONMENT sTokGet(int iParam, HB_BOOL fReadOnly)
 {
-   if( iParam < 0 || (iParam > 0 && HB_ISCHAR(iParam)) ) {
-      if( iParam < 0 || fReadOnly || HB_ISBYREF(iParam) ) {
-         if( iParam < 0 ) {
-            iParam = -iParam;
-         }
-
-         auto nLen = hb_parclen(iParam);
-         if( nLen >= sizeof(TOKEN_POSITION) * 2 ) {
-            auto env = reinterpret_cast<TOKEN_ENVIRONMENT>(const_cast<char*>(hb_parc(iParam)));
-
-            if( sTokEnvGetSize(env) == nLen ) {
-               return fReadOnly ? env : static_cast<TOKEN_ENVIRONMENT>(hb_xmemdup(env, nLen + 1));
-            }
-         }
+  if (iParam < 0 || (iParam > 0 && HB_ISCHAR(iParam)))
+  {
+    if (iParam < 0 || fReadOnly || HB_ISBYREF(iParam))
+    {
+      if (iParam < 0)
+      {
+        iParam = -iParam;
       }
-      return nullptr;
-   } else {
-      return * static_cast<TOKEN_ENVIRONMENT*>(hb_stackGetTSD(&s_token));
-   }
+
+      auto nLen = hb_parclen(iParam);
+      if (nLen >= sizeof(TOKEN_POSITION) * 2)
+      {
+        auto env = reinterpret_cast<TOKEN_ENVIRONMENT>(const_cast<char *>(hb_parc(iParam)));
+
+        if (sTokEnvGetSize(env) == nLen)
+        {
+          return fReadOnly ? env : static_cast<TOKEN_ENVIRONMENT>(hb_xmemdup(env, nLen + 1));
+        }
+      }
+    }
+    return nullptr;
+  }
+  else
+  {
+    return *static_cast<TOKEN_ENVIRONMENT *>(hb_stackGetTSD(&s_token));
+  }
 }
 
 static int sTokSave(TOKEN_ENVIRONMENT sTokenEnvironment, int iParam)
 {
-   if( iParam != 0 && HB_ISBYREF(iParam) ) {
-      if( !hb_storclen_buffer(reinterpret_cast<char*>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment), iParam) ) {
-         sTokEnvDel(sTokenEnvironment);
-         return 0;
-      }
-   } else {
-      sTokSet(sTokenEnvironment);
-   }
-   return 1;
+  if (iParam != 0 && HB_ISBYREF(iParam))
+  {
+    if (!hb_storclen_buffer(reinterpret_cast<char *>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment), iParam))
+    {
+      sTokEnvDel(sTokenEnvironment);
+      return 0;
+    }
+  }
+  else
+  {
+    sTokSet(sTokenEnvironment);
+  }
+  return 1;
 }
 
-HB_FUNC( TOKENINIT )
+HB_FUNC(TOKENINIT)
 {
-   if( HB_ISCHAR(1) ) {
-      auto pcString = hb_parc(1);
-      auto sStrLen = hb_parclen(1);
-      const char * pcSeparatorStr;
-      HB_SIZE nSkip;
-      const char * pcSubStr, * pc;
-      HB_SIZE sSubStrLen;
-      TOKEN_ENVIRONMENT sTokenEnvironment;
-      TOKEN_POSITION sTokenPosition;
+  if (HB_ISCHAR(1))
+  {
+    auto pcString = hb_parc(1);
+    auto sStrLen = hb_parclen(1);
+    const char *pcSeparatorStr;
+    HB_SIZE nSkip;
+    const char *pcSubStr, *pc;
+    HB_SIZE sSubStrLen;
+    TOKEN_ENVIRONMENT sTokenEnvironment;
+    TOKEN_POSITION sTokenPosition;
 
-      /* separator string */
-      auto sSeparatorStrLen = hb_parclen(2);
-      if( sSeparatorStrLen > 0 ) {
-         pcSeparatorStr = hb_parc(2);
-      } else {
-         pcSeparatorStr = sc_spcSeparatorStr;
-         sSeparatorStrLen = sizeof(sc_spcSeparatorStr) - 1;
+    /* separator string */
+    auto sSeparatorStrLen = hb_parclen(2);
+    if (sSeparatorStrLen > 0)
+    {
+      pcSeparatorStr = hb_parc(2);
+    }
+    else
+    {
+      pcSeparatorStr = sc_spcSeparatorStr;
+      sSeparatorStrLen = sizeof(sc_spcSeparatorStr) - 1;
+    }
+
+    /* skip width */
+    if (HB_ISNUM(3))
+    {
+      nSkip = hb_parns(3);
+    }
+    else
+    {
+      nSkip = HB_SIZE_MAX;
+    }
+    if (nSkip == 0)
+    {
+      nSkip = HB_SIZE_MAX;
+    }
+
+    /* allocate new token environment */
+    if ((sTokenEnvironment = sTokEnvNew()) == nullptr)
+    {
+      int iArgErrorMode = ct_getargerrormode();
+
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_MEM, CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0,
+                 EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      /* skip width */
-      if( HB_ISNUM(3) ) {
-         nSkip = hb_parns(3);
-      } else {
-         nSkip = HB_SIZE_MAX;
-      }
-      if( nSkip == 0 ) {
-         nSkip = HB_SIZE_MAX;
-      }
+      hb_retl(false);
+      return;
+    }
 
-      /* allocate new token environment */
-      if( (sTokenEnvironment = sTokEnvNew()) == nullptr ) {
-         int iArgErrorMode = ct_getargerrormode();
+    pcSubStr = pcString;
+    sSubStrLen = sStrLen;
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_MEM, CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-         }
+    /* scan start condition */
+    pc = pcSubStr - 1;
 
-         hb_retl(false);
-         return;
-      }
+    for (;;)
+    {
+      HB_SIZE sMatchedPos = sSeparatorStrLen;
+      HB_SIZE nSkipCnt;
 
-      pcSubStr = pcString;
-      sSubStrLen = sStrLen;
+      /* nSkip */
+      nSkipCnt = 0;
+      do
+      {
+        sSubStrLen -= (pc - pcSubStr) + 1;
+        pcSubStr = pc + 1;
+        pc = ct_at_charset_forward(pcSubStr, sSubStrLen, pcSeparatorStr, sSeparatorStrLen, &sMatchedPos);
+        nSkipCnt++;
+      } while (nSkipCnt < nSkip && pc == pcSubStr);
 
-      /* scan start condition */
-      pc = pcSubStr - 1;
-
-      for( ;; ) {
-         HB_SIZE sMatchedPos = sSeparatorStrLen;
-         HB_SIZE nSkipCnt;
-
-         /* nSkip */
-         nSkipCnt = 0;
-         do {
-            sSubStrLen -= (pc - pcSubStr) + 1;
-            pcSubStr = pc + 1;
-            pc = ct_at_charset_forward(pcSubStr, sSubStrLen, pcSeparatorStr, sSeparatorStrLen, &sMatchedPos);
-            nSkipCnt++;
-         } while( nSkipCnt < nSkip && pc == pcSubStr );
-
-         if( sSubStrLen == 0 ) {
-            break;
-         }
-
-         sTokenPosition.sStartPos = pcSubStr - pcString;
-         if( pc == nullptr ) {
-            sTokenPosition.sEndPos = pcSubStr - pcString + sSubStrLen;
-         } else {
-            sTokenPosition.sEndPos = pc - pcString;
-         }
-
-         if( !sTokEnvAddPos(&sTokenEnvironment, &sTokenPosition) ) {
-            int iArgErrorMode = ct_getargerrormode();
-
-            if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-               ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_MEM, CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-            }
-
-            sTokEnvDel(sTokenEnvironment);
-            hb_retl(false);
-            return;
-         }
-
-         if( pc == nullptr ) {
-            break;
-         }
+      if (sSubStrLen == 0)
+      {
+        break;
       }
 
-      /* save token environment to 4th parameter OR to the static */
-      hb_retl(sTokSave(sTokenEnvironment, 4));
-   } else {
-      /* if there is a token environment stored in either the 4th parameter or
-         in the static variable -> rewind to first token */
-      TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(4, false);
-
-      if( sTokenEnvironment != nullptr ) {
-         /* rewind to first token */
-         int iResult = sTokEnvSetPtr(sTokenEnvironment, 0);
-
-         if( !sTokSave(sTokenEnvironment, 4) ) {
-            iResult = false;
-         }
-         hb_retl(iResult);
-      } else {
-         /* nothing to rewind -> return .F. */
-         PHB_ITEM pSubst = nullptr;
-         int iArgErrorMode = ct_getargerrormode();
-
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-         }
-
-         if( pSubst != nullptr ) {
-            hb_itemReturnRelease(pSubst);
-         } else {
-            hb_retl(false);
-         }
+      sTokenPosition.sStartPos = pcSubStr - pcString;
+      if (pc == nullptr)
+      {
+        sTokenPosition.sEndPos = pcSubStr - pcString + sSubStrLen;
       }
-   }
+      else
+      {
+        sTokenPosition.sEndPos = pc - pcString;
+      }
+
+      if (!sTokEnvAddPos(&sTokenEnvironment, &sTokenPosition))
+      {
+        int iArgErrorMode = ct_getargerrormode();
+
+        if (iArgErrorMode != CT_ARGERR_IGNORE)
+        {
+          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_MEM, CT_ERROR_TOKENINIT, nullptr, HB_ERR_FUNCNAME, 0,
+                   EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+        }
+
+        sTokEnvDel(sTokenEnvironment);
+        hb_retl(false);
+        return;
+      }
+
+      if (pc == nullptr)
+      {
+        break;
+      }
+    }
+
+    /* save token environment to 4th parameter OR to the static */
+    hb_retl(sTokSave(sTokenEnvironment, 4));
+  }
+  else
+  {
+    /* if there is a token environment stored in either the 4th parameter or
+       in the static variable -> rewind to first token */
+    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(4, false);
+
+    if (sTokenEnvironment != nullptr)
+    {
+      /* rewind to first token */
+      int iResult = sTokEnvSetPtr(sTokenEnvironment, 0);
+
+      if (!sTokSave(sTokenEnvironment, 4))
+      {
+        iResult = false;
+      }
+      hb_retl(iResult);
+    }
+    else
+    {
+      /* nothing to rewind -> return .F. */
+      PHB_ITEM pSubst = nullptr;
+      int iArgErrorMode = ct_getargerrormode();
+
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENINIT, nullptr,
+                                HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+      }
+
+      if (pSubst != nullptr)
+      {
+        hb_itemReturnRelease(pSubst);
+      }
+      else
+      {
+        hb_retl(false);
+      }
+    }
+  }
 }
 
-HB_FUNC( TOKENNEXT )
+HB_FUNC(TOKENNEXT)
 {
-   if( HB_ISCHAR(1) ) {
-      auto pcString = hb_parc(1);
-      auto sStrLen = hb_parclen(1);
+  if (HB_ISCHAR(1))
+  {
+    auto pcString = hb_parc(1);
+    auto sStrLen = hb_parclen(1);
 
-      TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(3, false);
-      TOKEN_POSITION * psTokenPosition;
+    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(3, false);
+    TOKEN_POSITION *psTokenPosition;
 
-      /* token environment by parameter ... */
-      if( sTokenEnvironment == nullptr ) {
-         int iArgErrorMode = ct_getargerrormode();
+    /* token environment by parameter ... */
+    if (sTokenEnvironment == nullptr)
+    {
+      int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-         }
-         hb_retc_null();
-         return;
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0,
+                 EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
+      hb_retc_null();
+      return;
+    }
 
-      /* nth token or next token ?  */
-      if( HB_ISNUM(2) ) {
-         psTokenPosition = sTokEnvGetPosIndex(sTokenEnvironment, hb_parns(2) - 1);
-         /* no increment here */
-      } else {
-         psTokenPosition = sTokEnvGetPos(sTokenEnvironment);
-         /* increment counter */
-         sTokEnvIncPtr(sTokenEnvironment);
-      }
+    /* nth token or next token ?  */
+    if (HB_ISNUM(2))
+    {
+      psTokenPosition = sTokEnvGetPosIndex(sTokenEnvironment, hb_parns(2) - 1);
+      /* no increment here */
+    }
+    else
+    {
+      psTokenPosition = sTokEnvGetPos(sTokenEnvironment);
+      /* increment counter */
+      sTokEnvIncPtr(sTokenEnvironment);
+    }
 
-      if( psTokenPosition == nullptr || sStrLen <= psTokenPosition->sStartPos ) {
-         int iArgErrorMode = ct_getargerrormode();
+    if (psTokenPosition == nullptr || sStrLen <= psTokenPosition->sStartPos)
+    {
+      int iArgErrorMode = ct_getargerrormode();
 
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-         }
-
-         sTokSave(sTokenEnvironment, 3);
-         hb_retc_null();
-         return;
-      }
-
-      if( sStrLen < psTokenPosition->sEndPos ) {
-         hb_retclen(pcString + psTokenPosition->sStartPos, sStrLen - (psTokenPosition->sStartPos));
-      } else {
-         hb_retclen(pcString + psTokenPosition->sStartPos, (psTokenPosition->sEndPos) - (psTokenPosition->sStartPos));
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0,
+                 EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
       sTokSave(sTokenEnvironment, 3);
-   } else {
-      /* no string given, no token returns */
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retc_null();
-      }
-   }
-}
-
-HB_FUNC( TOKENNUM )
-{
-   TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(1, true);
-
-   if( sTokenEnvironment != nullptr ) {
-      hb_retns(sTokEnvGetCnt(sTokenEnvironment));
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNUM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retns(0);
-      }
-   }
-}
-
-HB_FUNC( TOKENEND )
-{
-   TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(1, true);
-
-   if( sTokenEnvironment != nullptr ) {
-      hb_retl(sTokEnvEnd(sTokenEnvironment));
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENEND, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         /* it is CT3 behaviour to return .T. if there's no string TokenInit()'ed */
-         hb_retl(true);
-      }
-   }
-}
-
-HB_FUNC( TOKENEXIT )
-{
-   TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(0, true);
-
-   if( sTokenEnvironment != nullptr ) {
-      sTokSet(nullptr);
-      hb_retl(true);
-   } else {
-      hb_retl(false);
-   }
-}
-
-HB_FUNC( TOKENAT )
-{
-   int iSeparatorPos = 0;
-   HB_SIZE sCurrentIndex;
-   TOKEN_ENVIRONMENT sTokenEnvironment;
-   TOKEN_POSITION *psTokenPosition;
-
-   if( HB_ISLOG(1) ) {
-      iSeparatorPos = hb_parl(1);
-   }
-
-   sTokenEnvironment = sTokGet(3, true);
-   if( sTokenEnvironment == nullptr ) {
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENAT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      hb_retns(0);
-      return;
-   }
-
-   if( HB_ISNUM(2) ) {
-      sCurrentIndex = hb_parns(2) - 1;
-   } else {
-      sCurrentIndex = sTokEnvGetPtr(sTokenEnvironment);
-   }
-
-   psTokenPosition = sTokEnvGetPosIndex(sTokenEnvironment, sCurrentIndex);
-   if( psTokenPosition == nullptr ) {
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENAT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      hb_retns(0);
-      return;
-   }
-
-   if( iSeparatorPos ) {
-      hb_retns(psTokenPosition->sEndPos + 1);
-   } else {
-      hb_retns(psTokenPosition->sStartPos + 1);
-   }
-}
-
-HB_FUNC( SAVETOKEN )
-{
-   TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(0, true);
-
-   if( sTokenEnvironment != nullptr ) {
-      hb_retclen(reinterpret_cast<char*>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment));
-   } else {
       hb_retc_null();
-   }
+      return;
+    }
+
+    if (sStrLen < psTokenPosition->sEndPos)
+    {
+      hb_retclen(pcString + psTokenPosition->sStartPos, sStrLen - (psTokenPosition->sStartPos));
+    }
+    else
+    {
+      hb_retclen(pcString + psTokenPosition->sStartPos, (psTokenPosition->sEndPos) - (psTokenPosition->sStartPos));
+    }
+
+    sTokSave(sTokenEnvironment, 3);
+  }
+  else
+  {
+    /* no string given, no token returns */
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNEXT, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
 
-HB_FUNC( RESTTOKEN )
+HB_FUNC(TOKENNUM)
 {
-   TOKEN_ENVIRONMENT sNewTokEnv = sTokGet(1, false);
+  TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(1, true);
 
-   if( sNewTokEnv != nullptr || (HB_ISCHAR(1) && hb_parclen(1) == 0) ) {
-      TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(0, false);
+  if (sTokenEnvironment != nullptr)
+  {
+    hb_retns(sTokEnvGetCnt(sTokenEnvironment));
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
 
-      if( sTokenEnvironment != nullptr ) {
-         hb_retclen(reinterpret_cast<char*>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment));
-      } else {
-         hb_retc_null();
-      }
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENNUM, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
 
-      sTokSet(sNewTokEnv);
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retns(0);
+    }
+  }
+}
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RESTTOKEN, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
+HB_FUNC(TOKENEND)
+{
+  TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(1, true);
 
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retc_null();
-      }
-   }
+  if (sTokenEnvironment != nullptr)
+  {
+    hb_retl(sTokEnvEnd(sTokenEnvironment));
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENEND, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      /* it is CT3 behaviour to return .T. if there's no string TokenInit()'ed */
+      hb_retl(true);
+    }
+  }
+}
+
+HB_FUNC(TOKENEXIT)
+{
+  TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(0, true);
+
+  if (sTokenEnvironment != nullptr)
+  {
+    sTokSet(nullptr);
+    hb_retl(true);
+  }
+  else
+  {
+    hb_retl(false);
+  }
+}
+
+HB_FUNC(TOKENAT)
+{
+  int iSeparatorPos = 0;
+  HB_SIZE sCurrentIndex;
+  TOKEN_ENVIRONMENT sTokenEnvironment;
+  TOKEN_POSITION *psTokenPosition;
+
+  if (HB_ISLOG(1))
+  {
+    iSeparatorPos = hb_parl(1);
+  }
+
+  sTokenEnvironment = sTokGet(3, true);
+  if (sTokenEnvironment == nullptr)
+  {
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENAT, nullptr, HB_ERR_FUNCNAME, 0,
+               EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    hb_retns(0);
+    return;
+  }
+
+  if (HB_ISNUM(2))
+  {
+    sCurrentIndex = hb_parns(2) - 1;
+  }
+  else
+  {
+    sCurrentIndex = sTokEnvGetPtr(sTokenEnvironment);
+  }
+
+  psTokenPosition = sTokEnvGetPosIndex(sTokenEnvironment, sCurrentIndex);
+  if (psTokenPosition == nullptr)
+  {
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_TOKENAT, nullptr, HB_ERR_FUNCNAME, 0,
+               EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    hb_retns(0);
+    return;
+  }
+
+  if (iSeparatorPos)
+  {
+    hb_retns(psTokenPosition->sEndPos + 1);
+  }
+  else
+  {
+    hb_retns(psTokenPosition->sStartPos + 1);
+  }
+}
+
+HB_FUNC(SAVETOKEN)
+{
+  TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(0, true);
+
+  if (sTokenEnvironment != nullptr)
+  {
+    hb_retclen(reinterpret_cast<char *>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment));
+  }
+  else
+  {
+    hb_retc_null();
+  }
+}
+
+HB_FUNC(RESTTOKEN)
+{
+  TOKEN_ENVIRONMENT sNewTokEnv = sTokGet(1, false);
+
+  if (sNewTokEnv != nullptr || (HB_ISCHAR(1) && hb_parclen(1) == 0))
+  {
+    TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(0, false);
+
+    if (sTokenEnvironment != nullptr)
+    {
+      hb_retclen(reinterpret_cast<char *>(sTokenEnvironment), sTokEnvGetSize(sTokenEnvironment));
+    }
+    else
+    {
+      hb_retc_null();
+    }
+
+    sTokSet(sNewTokEnv);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RESTTOKEN, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }

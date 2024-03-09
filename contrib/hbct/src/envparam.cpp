@@ -47,84 +47,100 @@
 #include "hbapi.hpp"
 
 #if defined(HB_OS_UNIX) && !defined(HB_OS_IOS)
-#  include <unistd.h>
-#  if defined(HB_OS_DARWIN)
-#     include <crt_externs.h>
-#     define environ  (*_NSGetEnviron())
-#  else
-      extern char ** environ;
-#  endif
+#include <unistd.h>
+#if defined(HB_OS_DARWIN)
+#include <crt_externs.h>
+#define environ (*_NSGetEnviron())
+#else
+extern char **environ;
+#endif
 #elif defined(HB_OS_WIN)
-#  include "hbwinuni.hpp"
-#  include <windows.h>
+#include "hbwinuni.hpp"
+#include <windows.h>
 #endif
 
-HB_FUNC( ENVPARAM )
+HB_FUNC(ENVPARAM)
 {
 #if (defined(HB_OS_UNIX) && !defined(HB_OS_IOS))
-   char * const * pEnviron = environ, * const * pEnv;
-   char * pResult = nullptr, * pDst;
+  char *const *pEnviron = environ, *const * pEnv;
+  char *pResult = nullptr, *pDst;
 
-   if( pEnviron ) {
-      HB_SIZE nSize = 0;
+  if (pEnviron)
+  {
+    HB_SIZE nSize = 0;
 
-      for( pEnv = pEnviron; *pEnv; pEnv++ ) {
-         nSize += strlen(*pEnv) + 2;
+    for (pEnv = pEnviron; *pEnv; pEnv++)
+    {
+      nSize += strlen(*pEnv) + 2;
+    }
+
+    if (nSize > 0)
+    {
+      pResult = static_cast<char *>(hb_xgrab((nSize + 1) * sizeof(char)));
+      for (pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++)
+      {
+        HB_SIZE n = strlen(*pEnv);
+        memcpy(pDst, *pEnv, n);
+        pDst += n;
+        *pDst++ = '\r';
+        *pDst++ = '\n';
       }
+      *pDst++ = '\0';
+    }
+  }
 
-      if( nSize > 0 ) {
-         pResult = static_cast<char*>(hb_xgrab((nSize + 1) * sizeof(char)));
-         for( pEnv = pEnviron, pDst = pResult; *pEnv; pEnv++ ) {
-            HB_SIZE n = strlen(*pEnv);
-            memcpy(pDst, *pEnv, n);
-            pDst += n;
-            *pDst++ = '\r';
-            *pDst++ = '\n';
-         }
-         *pDst++ = '\0';
-      }
-   }
-
-   if( pResult ) {
-      hb_retc_buffer(const_cast<char*>(hb_osDecodeCP(pResult, nullptr, nullptr)));
-   } else {
-      hb_retc_null();
-   }
+  if (pResult)
+  {
+    hb_retc_buffer(const_cast<char *>(hb_osDecodeCP(pResult, nullptr, nullptr)));
+  }
+  else
+  {
+    hb_retc_null();
+  }
 #elif defined(HB_OS_WIN)
-   LPTCH lpEnviron = GetEnvironmentStrings(), lpEnv;
-   LPTSTR lpResult = nullptr;
-   HB_SIZE nSize = 0;
+  LPTCH lpEnviron = GetEnvironmentStrings(), lpEnv;
+  LPTSTR lpResult = nullptr;
+  HB_SIZE nSize = 0;
 
-   if( lpEnviron ) {
-      for( lpEnv = lpEnviron; *lpEnv; lpEnv++ ) {
-         while( *++lpEnv ) {
-            ++nSize;
-         }
-         nSize += 3;
+  if (lpEnviron)
+  {
+    for (lpEnv = lpEnviron; *lpEnv; lpEnv++)
+    {
+      while (*++lpEnv)
+      {
+        ++nSize;
       }
-      if( nSize > 0 ) {
-         LPTSTR lpDst;
+      nSize += 3;
+    }
+    if (nSize > 0)
+    {
+      LPTSTR lpDst;
 
-         lpResult = static_cast<LPTSTR>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
-         for( lpEnv = lpEnviron, lpDst = lpResult; *lpEnv; lpEnv++ ) {
-            do {
-               *lpDst++ = *lpEnv++;
-            } while( *lpEnv );
-            *lpDst++ = '\r';
-            *lpDst++ = '\n';
-         }
+      lpResult = static_cast<LPTSTR>(hb_xgrab((nSize + 1) * sizeof(TCHAR)));
+      for (lpEnv = lpEnviron, lpDst = lpResult; *lpEnv; lpEnv++)
+      {
+        do
+        {
+          *lpDst++ = *lpEnv++;
+        } while (*lpEnv);
+        *lpDst++ = '\r';
+        *lpDst++ = '\n';
       }
+    }
 
-      FreeEnvironmentStrings(lpEnviron);
-   }
+    FreeEnvironmentStrings(lpEnviron);
+  }
 
-   if( lpResult ) {
-      HB_RETSTRLEN(lpResult, nSize);
-      hb_xfree(lpResult);
-   } else {
-      hb_retc_null();
-   }
+  if (lpResult)
+  {
+    HB_RETSTRLEN(lpResult, nSize);
+    hb_xfree(lpResult);
+  }
+  else
+  {
+    hb_retc_null();
+  }
 #else
-   hb_retc_null();
+  hb_retc_null();
 #endif
 }

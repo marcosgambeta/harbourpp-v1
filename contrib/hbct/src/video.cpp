@@ -50,75 +50,86 @@
 
 #include "ctvideo.ch"
 
-HB_FUNC( CHARPIX )
+HB_FUNC(CHARPIX)
 {
-   hb_retni(0);
+  hb_retni(0);
 }
 
-HB_FUNC( VGAPALETTE )
+HB_FUNC(VGAPALETTE)
 {
-   int attr;
+  int attr;
 
-   if( hb_pcount() < 4 ) {
-      /* Resetting palette registers to default values is not supported yet */
-      hb_retl(false);
-      return;
-   }
+  if (hb_pcount() < 4)
+  {
+    /* Resetting palette registers to default values is not supported yet */
+    hb_retl(false);
+    return;
+  }
 
-   auto color_string = hb_parc(1);
-   if( color_string ) {
-      attr = hb_gtColorToN(color_string);
-   } else if( HB_ISNUM(1) ) {
-      attr = hb_parni(1);
-   } else {
-      attr = -1;
-   }
+  auto color_string = hb_parc(1);
+  if (color_string)
+  {
+    attr = hb_gtColorToN(color_string);
+  }
+  else if (HB_ISNUM(1))
+  {
+    attr = hb_parni(1);
+  }
+  else
+  {
+    attr = -1;
+  }
 
-   if( attr < 0 || attr >= 16 ) {
-      /* An invalid argument */
-      hb_retl(false);
-      return;
-   }
+  if (attr < 0 || attr >= 16)
+  {
+    /* An invalid argument */
+    hb_retl(false);
+    return;
+  }
 
-   auto red = static_cast<char>(hb_parni(2));
-   auto green = static_cast<char>(hb_parni(3));
-   auto blue = static_cast<char>(hb_parni(4));
+  auto red = static_cast<char>(hb_parni(2));
+  auto green = static_cast<char>(hb_parni(3));
+  auto blue = static_cast<char>(hb_parni(4));
 
-   HB_SYMBOL_UNUSED(blue);
-   HB_SYMBOL_UNUSED(green);
-   HB_SYMBOL_UNUSED(red);
-   hb_retl(false);
+  HB_SYMBOL_UNUSED(blue);
+  HB_SYMBOL_UNUSED(green);
+  HB_SYMBOL_UNUSED(red);
+  hb_retl(false);
 }
 
-HB_FUNC( VIDEOTYPE )
+HB_FUNC(VIDEOTYPE)
 {
 }
 
-HB_FUNC( SETFONT )
+HB_FUNC(SETFONT)
 {
-   auto font = hb_parcx(1);
-   auto len = static_cast<unsigned>(hb_parclen(1));
-   auto area = hb_parni(2);
-   int offset = 0;
-   int count = 256;
-   int height = 16;
+  auto font = hb_parcx(1);
+  auto len = static_cast<unsigned>(hb_parclen(1));
+  auto area = hb_parni(2);
+  int offset = 0;
+  int count = 256;
+  int height = 16;
 
-   if( !area ) {
-      area = 1;
-   }
-   if( HB_ISNUM(3) ) {
-      offset = hb_parni(3);
-   }
-   if( HB_ISNUM(4) ) {
-      count = hb_parni(4);
-   }
-   if( HB_ISLOG(3) && hb_parl(3) && count != 0 ) {
-      height = len / count;
-   }
+  if (!area)
+  {
+    area = 1;
+  }
+  if (HB_ISNUM(3))
+  {
+    offset = hb_parni(3);
+  }
+  if (HB_ISNUM(4))
+  {
+    count = hb_parni(4);
+  }
+  if (HB_ISLOG(3) && hb_parl(3) && count != 0)
+  {
+    height = len / count;
+  }
 
-   HB_SYMBOL_UNUSED(font);
-   HB_SYMBOL_UNUSED(height);
-   HB_SYMBOL_UNUSED(offset);
-   HB_SYMBOL_UNUSED(area);
-   hb_retni(-2);
+  HB_SYMBOL_UNUSED(font);
+  HB_SYMBOL_UNUSED(height);
+  HB_SYMBOL_UNUSED(offset);
+  HB_SYMBOL_UNUSED(area);
+  hb_retni(-2);
 }

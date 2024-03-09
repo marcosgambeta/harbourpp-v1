@@ -50,117 +50,142 @@
 #include "ct.h"
 
 /* defines */
-#define DO_CHARSWAP_CHARSWAP           0
-#define DO_CHARSWAP_WORDSWAP           1
-#define DO_CHARSWAP_WORDSWAP_CHARSWAP  2
+#define DO_CHARSWAP_CHARSWAP 0
+#define DO_CHARSWAP_WORDSWAP 1
+#define DO_CHARSWAP_WORDSWAP_CHARSWAP 2
 
 /* helper function for the CharSwap() and WordSwap() functions */
 static void do_charswap(int iSwitch)
 {
-   /* suppress return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF(1);
+  /* suppress return value ? */
+  int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-   /* param check */
-   if( HB_ISCHAR(1) ) {
-      auto pcString = hb_parc(1);
-      auto sStrLen = hb_parclen(1);
-      HB_SIZE sRetIndex = 0;
-      int iShift, iMod;
-      const char * pcSub;
+  /* param check */
+  if (HB_ISCHAR(1))
+  {
+    auto pcString = hb_parc(1);
+    auto sStrLen = hb_parclen(1);
+    HB_SIZE sRetIndex = 0;
+    int iShift, iMod;
+    const char *pcSub;
 
-      if( sStrLen == 0 ) {
-         if( iNoRet ) {
-            hb_ret();
-         } else {
-            hb_retc_null();
-         }
-         return;
+    if (sStrLen == 0)
+    {
+      if (iNoRet)
+      {
+        hb_ret();
       }
-
-      if( iSwitch == DO_CHARSWAP_WORDSWAP ) {
-         iShift = 4;
-         if( hb_parl(2) ) {
-            iSwitch = DO_CHARSWAP_WORDSWAP_CHARSWAP;
-         }
-      } else {
-         iShift = 2;
+      else
+      {
+        hb_retc_null();
       }
+      return;
+    }
 
-      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
-
-      for( pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift ) {
-         switch( iSwitch ) {
-            case DO_CHARSWAP_WORDSWAP:
-               pcRet[sRetIndex++] = pcSub[2];
-               pcRet[sRetIndex++] = pcSub[3];
-               pcRet[sRetIndex++] = pcSub[0];
-               pcRet[sRetIndex++] = pcSub[1];
-               break;
-
-            case DO_CHARSWAP_WORDSWAP_CHARSWAP:
-               pcRet[sRetIndex++] = pcSub[3];
-               pcRet[sRetIndex++] = pcSub[2];
-               /* fallthrough */
-            case DO_CHARSWAP_CHARSWAP:
-               pcRet[sRetIndex++] = pcSub[1];
-               pcRet[sRetIndex++] = pcSub[0];
-         }
+    if (iSwitch == DO_CHARSWAP_WORDSWAP)
+    {
+      iShift = 4;
+      if (hb_parl(2))
+      {
+        iSwitch = DO_CHARSWAP_WORDSWAP_CHARSWAP;
       }
+    }
+    else
+    {
+      iShift = 2;
+    }
 
-      /* copy rest of string */
-      if( iSwitch == DO_CHARSWAP_WORDSWAP || iSwitch == DO_CHARSWAP_WORDSWAP_CHARSWAP ) {
-         iMod = sStrLen % 4;
-      } else {
-         iMod = sStrLen % 2;
+    auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
+
+    for (pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift)
+    {
+      switch (iSwitch)
+      {
+      case DO_CHARSWAP_WORDSWAP:
+        pcRet[sRetIndex++] = pcSub[2];
+        pcRet[sRetIndex++] = pcSub[3];
+        pcRet[sRetIndex++] = pcSub[0];
+        pcRet[sRetIndex++] = pcSub[1];
+        break;
+
+      case DO_CHARSWAP_WORDSWAP_CHARSWAP:
+        pcRet[sRetIndex++] = pcSub[3];
+        pcRet[sRetIndex++] = pcSub[2];
+        /* fallthrough */
+      case DO_CHARSWAP_CHARSWAP:
+        pcRet[sRetIndex++] = pcSub[1];
+        pcRet[sRetIndex++] = pcSub[0];
       }
+    }
 
-      for( pcSub = pcString + sStrLen - iMod; pcSub < pcString + sStrLen; pcSub++ ) {
-         pcRet[sRetIndex++] = *pcSub;
+    /* copy rest of string */
+    if (iSwitch == DO_CHARSWAP_WORDSWAP || iSwitch == DO_CHARSWAP_WORDSWAP_CHARSWAP)
+    {
+      iMod = sStrLen % 4;
+    }
+    else
+    {
+      iMod = sStrLen % 2;
+    }
+
+    for (pcSub = pcString + sStrLen - iMod; pcSub < pcString + sStrLen; pcSub++)
+    {
+      pcRet[sRetIndex++] = *pcSub;
+    }
+
+    /* return string */
+    hb_storclen(pcRet, sRetIndex, 1);
+
+    if (iNoRet)
+    {
+      hb_retl(false);
+    }
+    else
+    {
+      hb_retclen(pcRet, sRetIndex);
+    }
+    hb_xfree(pcRet);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      if (iSwitch == DO_CHARSWAP_CHARSWAP)
+      {
+        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSWAP, nullptr,
+                                HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
-
-      /* return string */
-      hb_storclen(pcRet, sRetIndex, 1);
-
-      if( iNoRet ) {
-         hb_retl(false);
-      } else {
-         hb_retclen(pcRet, sRetIndex);
+      else
+      {
+        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_WORDSWAP, nullptr,
+                                HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
       }
-      hb_xfree(pcRet);
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+    }
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         if( iSwitch == DO_CHARSWAP_CHARSWAP ) {
-            pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                    CT_ERROR_CHARSWAP,
-                                    nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                    HB_ERR_ARGS_BASEPARAMS);
-         } else {
-            pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                    CT_ERROR_WORDSWAP,
-                                    nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                    HB_ERR_ARGS_BASEPARAMS);
-         }
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else if( iNoRet ) {
-         hb_retl(false);
-      } else {
-         hb_retc_null();
-      }
-   }
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else if (iNoRet)
+    {
+      hb_retl(false);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
 
-HB_FUNC( CHARSWAP )
+HB_FUNC(CHARSWAP)
 {
-   do_charswap(DO_CHARSWAP_CHARSWAP);
+  do_charswap(DO_CHARSWAP_CHARSWAP);
 }
 
-HB_FUNC( WORDSWAP )
+HB_FUNC(WORDSWAP)
 {
-   do_charswap(DO_CHARSWAP_WORDSWAP);
+  do_charswap(DO_CHARSWAP_WORDSWAP);
 }

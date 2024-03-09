@@ -46,7 +46,7 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( LTON )
+HB_FUNC(LTON)
 {
-   hb_retni(hb_parl(1));
+  hb_retni(hb_parl(1));
 }

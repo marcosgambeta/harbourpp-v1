@@ -50,225 +50,265 @@
 
 #include "ct.h"
 
-#define DO_ATNUM_AFTERATNUM  0
-#define DO_ATNUM_BEFORATNUM  1
-#define DO_ATNUM_ATNUM       2
+#define DO_ATNUM_AFTERATNUM 0
+#define DO_ATNUM_BEFORATNUM 1
+#define DO_ATNUM_ATNUM 2
 
 /* helper function */
 static void do_atnum(int iSwitch)
 {
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
-      auto pcStringToMatch = hb_parc(1);
-      auto sStrToMatchLen = hb_parclen(1);
-      auto pcString = hb_parc(2);
-      auto sStrLen = hb_parclen(2);
-      int iMultiPass = ct_getatmupa();
-      int iAtLike = ct_getatlike();
-      char cAtLike = ct_getatlikechar();
-      HB_SIZE sIgnore = hb_parnsdef(4, 0); /* eventually ignore some characters */
-      HB_SIZE sMatchStrLen = 0;
-      HB_SIZE nCounter;
-      const char * pc = nullptr;
+  if (HB_ISCHAR(1) && HB_ISCHAR(2))
+  {
+    auto pcStringToMatch = hb_parc(1);
+    auto sStrToMatchLen = hb_parclen(1);
+    auto pcString = hb_parc(2);
+    auto sStrLen = hb_parclen(2);
+    int iMultiPass = ct_getatmupa();
+    int iAtLike = ct_getatlike();
+    char cAtLike = ct_getatlikechar();
+    HB_SIZE sIgnore = hb_parnsdef(4, 0); /* eventually ignore some characters */
+    HB_SIZE sMatchStrLen = 0;
+    HB_SIZE nCounter;
+    const char *pc = nullptr;
 
-      if( sIgnore >= sStrLen ) {
-         switch( iSwitch ) {
-            case DO_ATNUM_AFTERATNUM: {
-               /* AFTERATNUM */
-               int iArgErrorMode = ct_getargerrormode();
+    if (sIgnore >= sStrLen)
+    {
+      switch (iSwitch)
+      {
+      case DO_ATNUM_AFTERATNUM: {
+        /* AFTERATNUM */
+        int iArgErrorMode = ct_getargerrormode();
 
-               if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_AFTERATNUM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-               }
+        if (iArgErrorMode != CT_ARGERR_IGNORE)
+        {
+          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_AFTERATNUM, nullptr, HB_ERR_FUNCNAME, 0,
+                   EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+        }
 
-               hb_retc_null();
-               break;
-            }
-            case DO_ATNUM_BEFORATNUM: {
-               /* BEFORATNUM */
-               int iArgErrorMode = ct_getargerrormode();
-
-               if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_BEFORATNUM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-               }
-
-               hb_retc_null();
-               break;
-            }
-            case DO_ATNUM_ATNUM: {
-               /* ATNUM */
-               int iArgErrorMode = ct_getargerrormode();
-
-               if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-                  ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-               }
-
-               hb_retns(0);
-               break;
-            }
-         }
-         return;
-      } else {
-         pcString += sIgnore;
-         sStrLen -= sIgnore;
+        hb_retc_null();
+        break;
       }
+      case DO_ATNUM_BEFORATNUM: {
+        /* BEFORATNUM */
+        int iArgErrorMode = ct_getargerrormode();
 
-      /* nth match or last match ? */
-      if( HB_ISNUM(3) && (nCounter = hb_parns(3)) != 0 ) {
-         /* find the <nCounter>th match */
-         const char * pcSubStr;
-         HB_SIZE sSubStrLen;
-         HB_SIZE nMatchCounter = 0;
+        if (iArgErrorMode != CT_ARGERR_IGNORE)
+        {
+          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_BEFORATNUM, nullptr, HB_ERR_FUNCNAME, 0,
+                   EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+        }
 
-         pcSubStr = pcString;
-         sSubStrLen = sStrLen;
-
-         while( nMatchCounter < nCounter ) {
-            switch( iAtLike ) {
-               case CT_SETATLIKE_EXACT:
-                  pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
-                  break;
-
-               case CT_SETATLIKE_WILDCARD:
-                  pc = ct_at_wildcard_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
-                  break;
-
-               default:
-                  pc = nullptr;
-            }
-
-            if( pc == nullptr ) {
-               /* no match found; if this happens at this point,
-                  there are no <nCounter> matches, so return an empty string */
-               switch( iSwitch ) {
-                  case DO_ATNUM_AFTERATNUM:
-                  case DO_ATNUM_BEFORATNUM:
-                     /* AFTERATNUM */
-                     /* BEFORATNUM */
-                     hb_retc_null();
-                     break;
-
-                  case DO_ATNUM_ATNUM:
-                     /* ATNUM */
-                     hb_retns(0);
-                     break;
-               }
-               return;
-            }
-            nMatchCounter++;
-
-            if( iMultiPass ) {
-               pcSubStr = pc + 1;
-            } else {
-               pcSubStr = pc + sMatchStrLen;
-            }
-            sSubStrLen = sStrLen - (pcSubStr - pcString);
-         }
-      } else {
-         /* we have to find the last match and return the
-            string after that last match */
-         switch( iAtLike ) {
-            case CT_SETATLIKE_EXACT:
-               pc = ct_at_exact_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
-               break;
-
-            case CT_SETATLIKE_WILDCARD:
-               pc = ct_at_wildcard_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
-               break;
-
-            default:
-               pc = nullptr;
-         }
-         if( pc == nullptr ) {
-            /* no matches found */
-            switch( iSwitch ) {
-               case DO_ATNUM_AFTERATNUM:
-               case DO_ATNUM_BEFORATNUM:
-                  /* AFTERATNUM */
-                  /* BEFORATNUM */
-                  hb_retc_null();
-                  break;
-
-               case DO_ATNUM_ATNUM:
-                  /* ATNUM */
-                  hb_retns(0);
-                  break;
-            }
-            return;
-         }
+        hb_retc_null();
+        break;
       }
+      case DO_ATNUM_ATNUM: {
+        /* ATNUM */
+        int iArgErrorMode = ct_getargerrormode();
 
-      switch( iSwitch ) {
-         case DO_ATNUM_AFTERATNUM:
+        if (iArgErrorMode != CT_ARGERR_IGNORE)
+        {
+          ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME, 0,
+                   EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
+        }
+
+        hb_retns(0);
+        break;
+      }
+      }
+      return;
+    }
+    else
+    {
+      pcString += sIgnore;
+      sStrLen -= sIgnore;
+    }
+
+    /* nth match or last match ? */
+    if (HB_ISNUM(3) && (nCounter = hb_parns(3)) != 0)
+    {
+      /* find the <nCounter>th match */
+      const char *pcSubStr;
+      HB_SIZE sSubStrLen;
+      HB_SIZE nMatchCounter = 0;
+
+      pcSubStr = pcString;
+      sSubStrLen = sStrLen;
+
+      while (nMatchCounter < nCounter)
+      {
+        switch (iAtLike)
+        {
+        case CT_SETATLIKE_EXACT:
+          pc = ct_at_exact_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
+          break;
+
+        case CT_SETATLIKE_WILDCARD:
+          pc = ct_at_wildcard_forward(pcSubStr, sSubStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
+          break;
+
+        default:
+          pc = nullptr;
+        }
+
+        if (pc == nullptr)
+        {
+          /* no match found; if this happens at this point,
+             there are no <nCounter> matches, so return an empty string */
+          switch (iSwitch)
+          {
+          case DO_ATNUM_AFTERATNUM:
+          case DO_ATNUM_BEFORATNUM:
             /* AFTERATNUM */
-            if( pc + sMatchStrLen >= pcString + sStrLen ) {
-               hb_retc_null();
-            } else {
-               hb_retclen(pc + sMatchStrLen, sStrLen - (pc + sMatchStrLen - pcString));
-            }
-            break;
-
-         case DO_ATNUM_BEFORATNUM:
             /* BEFORATNUM */
-            hb_retclen(pcString - sIgnore, pc - (pcString - sIgnore));
+            hb_retc_null();
             break;
 
-         case DO_ATNUM_ATNUM:
+          case DO_ATNUM_ATNUM:
             /* ATNUM */
-            hb_retns(pc - (pcString - sIgnore) + 1);
+            hb_retns(0);
             break;
+          }
+          return;
+        }
+        nMatchCounter++;
+
+        if (iMultiPass)
+        {
+          pcSubStr = pc + 1;
+        }
+        else
+        {
+          pcSubStr = pc + sMatchStrLen;
+        }
+        sSubStrLen = sStrLen - (pcSubStr - pcString);
       }
-   } else {
-      switch( iSwitch ) {
-         case DO_ATNUM_AFTERATNUM:
-         case DO_ATNUM_BEFORATNUM: {
-            /* AFTERATNUM */
-            PHB_ITEM pSubst = nullptr;
-            int iArgErrorMode = ct_getargerrormode();
+    }
+    else
+    {
+      /* we have to find the last match and return the
+         string after that last match */
+      switch (iAtLike)
+      {
+      case CT_SETATLIKE_EXACT:
+        pc = ct_at_exact_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, &sMatchStrLen);
+        break;
 
-            if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-               pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                       iSwitch == DO_ATNUM_AFTERATNUM ? CT_ERROR_AFTERATNUM : CT_ERROR_BEFORATNUM,
-                                       nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-            }
+      case CT_SETATLIKE_WILDCARD:
+        pc = ct_at_wildcard_backward(pcString, sStrLen, pcStringToMatch, sStrToMatchLen, cAtLike, &sMatchStrLen);
+        break;
 
-            if( pSubst != nullptr ) {
-               hb_itemReturnRelease(pSubst);
-            } else {
-               hb_retc_null();
-            }
-            break;
-         }
-         case DO_ATNUM_ATNUM: {
-            /* ATNUM */
-            PHB_ITEM pSubst = nullptr;
-            int iArgErrorMode = ct_getargerrormode();
-
-            if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-               pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-            }
-
-            if( pSubst != nullptr ) {
-               hb_itemReturnRelease(pSubst);
-            } else {
-               hb_retns(0);
-            }
-            break;
-         }
+      default:
+        pc = nullptr;
       }
-   }
+      if (pc == nullptr)
+      {
+        /* no matches found */
+        switch (iSwitch)
+        {
+        case DO_ATNUM_AFTERATNUM:
+        case DO_ATNUM_BEFORATNUM:
+          /* AFTERATNUM */
+          /* BEFORATNUM */
+          hb_retc_null();
+          break;
+
+        case DO_ATNUM_ATNUM:
+          /* ATNUM */
+          hb_retns(0);
+          break;
+        }
+        return;
+      }
+    }
+
+    switch (iSwitch)
+    {
+    case DO_ATNUM_AFTERATNUM:
+      /* AFTERATNUM */
+      if (pc + sMatchStrLen >= pcString + sStrLen)
+      {
+        hb_retc_null();
+      }
+      else
+      {
+        hb_retclen(pc + sMatchStrLen, sStrLen - (pc + sMatchStrLen - pcString));
+      }
+      break;
+
+    case DO_ATNUM_BEFORATNUM:
+      /* BEFORATNUM */
+      hb_retclen(pcString - sIgnore, pc - (pcString - sIgnore));
+      break;
+
+    case DO_ATNUM_ATNUM:
+      /* ATNUM */
+      hb_retns(pc - (pcString - sIgnore) + 1);
+      break;
+    }
+  }
+  else
+  {
+    switch (iSwitch)
+    {
+    case DO_ATNUM_AFTERATNUM:
+    case DO_ATNUM_BEFORATNUM: {
+      /* AFTERATNUM */
+      PHB_ITEM pSubst = nullptr;
+      int iArgErrorMode = ct_getargerrormode();
+
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
+                                iSwitch == DO_ATNUM_AFTERATNUM ? CT_ERROR_AFTERATNUM : CT_ERROR_BEFORATNUM, nullptr,
+                                HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+      }
+
+      if (pSubst != nullptr)
+      {
+        hb_itemReturnRelease(pSubst);
+      }
+      else
+      {
+        hb_retc_null();
+      }
+      break;
+    }
+    case DO_ATNUM_ATNUM: {
+      /* ATNUM */
+      PHB_ITEM pSubst = nullptr;
+      int iArgErrorMode = ct_getargerrormode();
+
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_ATNUM, nullptr, HB_ERR_FUNCNAME,
+                                0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+      }
+
+      if (pSubst != nullptr)
+      {
+        hb_itemReturnRelease(pSubst);
+      }
+      else
+      {
+        hb_retns(0);
+      }
+      break;
+    }
+    }
+  }
 }
 
-HB_FUNC( AFTERATNUM )
+HB_FUNC(AFTERATNUM)
 {
-   do_atnum(DO_ATNUM_AFTERATNUM);
+  do_atnum(DO_ATNUM_AFTERATNUM);
 }
 
-HB_FUNC( BEFORATNUM )
+HB_FUNC(BEFORATNUM)
 {
-   do_atnum(DO_ATNUM_BEFORATNUM);
+  do_atnum(DO_ATNUM_BEFORATNUM);
 }
 
-HB_FUNC( ATNUM )
+HB_FUNC(ATNUM)
 {
-   do_atnum(DO_ATNUM_ATNUM);
+  do_atnum(DO_ATNUM_ATNUM);
 }

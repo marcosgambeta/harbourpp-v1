@@ -52,125 +52,143 @@
 #include "ct.h"
 
 /* defines */
-#define DO_CHARONLY_CHARONLY  0
-#define DO_CHARONLY_WORDONLY  1
-#define DO_CHARONLY_CHARREM   2
-#define DO_CHARONLY_WORDREM   3
+#define DO_CHARONLY_CHARONLY 0
+#define DO_CHARONLY_WORDONLY 1
+#define DO_CHARONLY_CHARREM 2
+#define DO_CHARONLY_WORDREM 3
 
 /* helper function for the *one functions */
 static void do_charonly(int iSwitch)
 {
-   /* param check */
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) ) {
-      auto pcString = hb_parc(2);
-      auto sStrLen = hb_parclen(2);
-      auto pcOnlySet = hb_parc(1);
-      auto sOnlySetLen = hb_parclen(1);
-      HB_SIZE sRetStrLen = 0;
-      int iShift;
+  /* param check */
+  if (HB_ISCHAR(1) && HB_ISCHAR(2))
+  {
+    auto pcString = hb_parc(2);
+    auto sStrLen = hb_parclen(2);
+    auto pcOnlySet = hb_parc(1);
+    auto sOnlySetLen = hb_parclen(1);
+    HB_SIZE sRetStrLen = 0;
+    int iShift;
 
-      /* check for zero-length strings */
-      switch( iSwitch ) {
-         case DO_CHARONLY_CHARONLY:
-         case DO_CHARONLY_WORDONLY:
-            if( sStrLen == 0 || sOnlySetLen == 0 ) {
-               hb_retc_null();
-               return;
-            }
-            break;
-
-         case DO_CHARONLY_CHARREM:
-         case DO_CHARONLY_WORDREM:
-            if( sStrLen == 0 ) {
-               hb_retc_null();
-               return;
-            }
-            if( sOnlySetLen == 0 ) {
-               hb_retclen(pcString, sStrLen);
-               return;
-            }
-            break;
+    /* check for zero-length strings */
+    switch (iSwitch)
+    {
+    case DO_CHARONLY_CHARONLY:
+    case DO_CHARONLY_WORDONLY:
+      if (sStrLen == 0 || sOnlySetLen == 0)
+      {
+        hb_retc_null();
+        return;
       }
+      break;
 
-      if( iSwitch == DO_CHARONLY_WORDONLY || iSwitch == DO_CHARONLY_WORDREM ) {
-         iShift = 2;
-      } else {
-         iShift = 1;
+    case DO_CHARONLY_CHARREM:
+    case DO_CHARONLY_WORDREM:
+      if (sStrLen == 0)
+      {
+        hb_retc_null();
+        return;
       }
-
-      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen));
-
-      for( const char * pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift ) {
-         const char * pc = ct_at_exact_forward(pcOnlySet, sOnlySetLen, pcSub, iShift, nullptr);
-         HB_BOOL fBool = (pc != nullptr && ((pc - pcOnlySet) % iShift) == 0);
-         if( fBool ? iSwitch == DO_CHARONLY_CHARONLY || iSwitch == DO_CHARONLY_WORDONLY
-                   : iSwitch == DO_CHARONLY_CHARREM  || iSwitch == DO_CHARONLY_WORDREM ) {
-            for( pc = pcSub; pc < pcSub + iShift; pc++ ) {
-               pcRet[sRetStrLen++] = *pc;
-            }
-         }
+      if (sOnlySetLen == 0)
+      {
+        hb_retclen(pcString, sStrLen);
+        return;
       }
+      break;
+    }
 
-      /* copy last character if string length is odd */
-      if( iShift == 2 && sStrLen % 2 == 1 ) {
-         pcRet[sRetStrLen++] = pcString[sStrLen - 1];
+    if (iSwitch == DO_CHARONLY_WORDONLY || iSwitch == DO_CHARONLY_WORDREM)
+    {
+      iShift = 2;
+    }
+    else
+    {
+      iShift = 1;
+    }
+
+    auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
+
+    for (const char *pcSub = pcString; pcSub < pcString + sStrLen + 1 - iShift; pcSub += iShift)
+    {
+      const char *pc = ct_at_exact_forward(pcOnlySet, sOnlySetLen, pcSub, iShift, nullptr);
+      HB_BOOL fBool = (pc != nullptr && ((pc - pcOnlySet) % iShift) == 0);
+      if (fBool ? iSwitch == DO_CHARONLY_CHARONLY || iSwitch == DO_CHARONLY_WORDONLY
+                : iSwitch == DO_CHARONLY_CHARREM || iSwitch == DO_CHARONLY_WORDREM)
+      {
+        for (pc = pcSub; pc < pcSub + iShift; pc++)
+        {
+          pcRet[sRetStrLen++] = *pc;
+        }
       }
+    }
 
-      hb_retclen(pcRet, sRetStrLen);
-      hb_xfree(pcRet);
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
+    /* copy last character if string length is odd */
+    if (iShift == 2 && sStrLen % 2 == 1)
+    {
+      pcRet[sRetStrLen++] = pcString[sStrLen - 1];
+    }
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         int iError = 0;
+    hb_retclen(pcRet, sRetStrLen);
+    hb_xfree(pcRet);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
 
-         switch( iSwitch ) {
-            case DO_CHARONLY_CHARONLY:
-               iError = CT_ERROR_CHARONLY;
-               break;
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      int iError = 0;
 
-            case DO_CHARONLY_WORDONLY:
-               iError = CT_ERROR_WORDONLY;
-               break;
+      switch (iSwitch)
+      {
+      case DO_CHARONLY_CHARONLY:
+        iError = CT_ERROR_CHARONLY;
+        break;
 
-            case DO_CHARONLY_CHARREM:
-               iError = CT_ERROR_CHARREM;
-               break;
+      case DO_CHARONLY_WORDONLY:
+        iError = CT_ERROR_WORDONLY;
+        break;
 
-            case DO_CHARONLY_WORDREM:
-               iError = CT_ERROR_WORDREM;
-               break;
-         }
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError,
-                                 nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE,
-                                 HB_ERR_ARGS_BASEPARAMS);
+      case DO_CHARONLY_CHARREM:
+        iError = CT_ERROR_CHARREM;
+        break;
+
+      case DO_CHARONLY_WORDREM:
+        iError = CT_ERROR_WORDREM;
+        break;
       }
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, iError, nullptr, HB_ERR_FUNCNAME, 0,
+                              EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
 
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retc_null();
-      }
-   }
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
 
-HB_FUNC( CHARONLY )
+HB_FUNC(CHARONLY)
 {
-   do_charonly(DO_CHARONLY_CHARONLY);
+  do_charonly(DO_CHARONLY_CHARONLY);
 }
 
-HB_FUNC( WORDONLY )
+HB_FUNC(WORDONLY)
 {
-   do_charonly(DO_CHARONLY_WORDONLY);
+  do_charonly(DO_CHARONLY_WORDONLY);
 }
 
-HB_FUNC( CHARREM )
+HB_FUNC(CHARREM)
 {
-   do_charonly(DO_CHARONLY_CHARREM);
+  do_charonly(DO_CHARONLY_CHARREM);
 }
 
-HB_FUNC( WORDREM )
+HB_FUNC(WORDREM)
 {
-   do_charonly(DO_CHARONLY_WORDREM);
+  do_charonly(DO_CHARONLY_WORDREM);
 }

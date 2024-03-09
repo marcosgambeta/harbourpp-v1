@@ -49,83 +49,121 @@
 
 #include "ct.h"
 
-HB_FUNC( BLANK )
+HB_FUNC(BLANK)
 {
-   auto pItem = hb_param(1, Harbour::Item::ANY);
-   HB_BOOL bRef = HB_ISBYREF(1);
-   HB_BOOL bRet = !ct_getref();
+  auto pItem = hb_param(1, Harbour::Item::ANY);
+  HB_BOOL bRef = HB_ISBYREF(1);
+  HB_BOOL bRet = !ct_getref();
 
-   if( !pItem ) {
-      if( bRet ) {
-         hb_retl(false);
-      }
-   } else if( HB_IS_TIMESTAMP(pItem) ) {
-      if( bRef ) {
-         hb_stortdt(0, 0, 1);
-      }
-      if( bRet ) {
-         hb_rettdt(0, 0);
-      }
-   } else if( HB_IS_DATE(pItem) ) {
-      if( bRef ) {
-         hb_stordl(0, 1);
-      }
-      if( bRet ) {
-         hb_retdl(0);
-      }
-   } else if( HB_IS_NUMBER(pItem) ) {
-      if( bRef ) {
-         hb_stornl(0, 1);
-      }
-      if( bRet ) {
-         hb_retnl(0);
-      }
-   } else if( HB_IS_STRING(pItem) ) {
-      auto pMode = hb_param(2, Harbour::Item::LOGICAL);
+  if (!pItem)
+  {
+    if (bRet)
+    {
+      hb_retl(false);
+    }
+  }
+  else if (HB_IS_TIMESTAMP(pItem))
+  {
+    if (bRef)
+    {
+      hb_stortdt(0, 0, 1);
+    }
+    if (bRet)
+    {
+      hb_rettdt(0, 0);
+    }
+  }
+  else if (HB_IS_DATE(pItem))
+  {
+    if (bRef)
+    {
+      hb_stordl(0, 1);
+    }
+    if (bRet)
+    {
+      hb_retdl(0);
+    }
+  }
+  else if (HB_IS_NUMBER(pItem))
+  {
+    if (bRef)
+    {
+      hb_stornl(0, 1);
+    }
+    if (bRet)
+    {
+      hb_retnl(0);
+    }
+  }
+  else if (HB_IS_STRING(pItem))
+  {
+    auto pMode = hb_param(2, Harbour::Item::LOGICAL);
 
-      if( pMode && hb_itemGetL(pMode) ) {
-         auto nLen = hb_itemGetCLen(pItem);
-         auto szResult = static_cast<char*>(hb_xgrab(nLen + 1));
+    if (pMode && hb_itemGetL(pMode))
+    {
+      auto nLen = hb_itemGetCLen(pItem);
+      auto szResult = static_cast<char *>(hb_xgrab(nLen + 1));
 
-         if( nLen > 0 ) {
-            hb_xmemset(szResult, ' ', nLen);
-         }
-         if( bRef ) {
-            hb_storclen(szResult, nLen, 1);
-         }
-         if( bRet ) {
-            hb_retclen_buffer(szResult, nLen);
-         } else {
-            hb_xfree(szResult);
-         }
-      } else {
-         if( bRef ) {
-            hb_storc(nullptr, 1);
-         }
-         if( bRet ) {
-            hb_retc_null();
-         }
+      if (nLen > 0)
+      {
+        hb_xmemset(szResult, ' ', nLen);
       }
-   } else if( HB_IS_ARRAY(pItem) ) {
-      if( bRef ) {
-         hb_arraySize(pItem, 0);
+      if (bRef)
+      {
+        hb_storclen(szResult, nLen, 1);
       }
-      if( bRet ) {
-         hb_reta(0);
+      if (bRet)
+      {
+        hb_retclen_buffer(szResult, nLen);
       }
-   } else if( HB_IS_LOGICAL(pItem) ) {
-      if( bRef ) {
-         hb_storl(false, 1);
+      else
+      {
+        hb_xfree(szResult);
       }
-      if( bRet ) {
-         hb_retl(false);
+    }
+    else
+    {
+      if (bRef)
+      {
+        hb_storc(nullptr, 1);
       }
-   } else {
-      if( bRet ) {
-         hb_retl(false);
+      if (bRet)
+      {
+        hb_retc_null();
       }
-   }
-   if( !bRet ) {
-      hb_ret();
-   }
+    }
+  }
+  else if (HB_IS_ARRAY(pItem))
+  {
+    if (bRef)
+    {
+      hb_arraySize(pItem, 0);
+    }
+    if (bRet)
+    {
+      hb_reta(0);
+    }
+  }
+  else if (HB_IS_LOGICAL(pItem))
+  {
+    if (bRef)
+    {
+      hb_storl(false, 1);
+    }
+    if (bRet)
+    {
+      hb_retl(false);
+    }
+  }
+  else
+  {
+    if (bRet)
+    {
+      hb_retl(false);
+    }
+  }
+  if (!bRet)
+  {
+    hb_ret();
+  }
 }

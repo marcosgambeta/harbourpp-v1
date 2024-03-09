@@ -48,90 +48,102 @@
 #include "ct.h"
 
 /* defines */
-#define DO_REMOVE_REMALL    0
-#define DO_REMOVE_REMLEFT   1
-#define DO_REMOVE_REMRIGHT  2
+#define DO_REMOVE_REMALL 0
+#define DO_REMOVE_REMLEFT 1
+#define DO_REMOVE_REMRIGHT 2
 
-static const HB_ERRCODE sulErrorSubcodes[] =
-{
-   CT_ERROR_REMALL,
-   CT_ERROR_REMLEFT,
-   CT_ERROR_REMRIGHT
-};
+static const HB_ERRCODE sulErrorSubcodes[] = {CT_ERROR_REMALL, CT_ERROR_REMLEFT, CT_ERROR_REMRIGHT};
 
 /* helper function for the Rem*() functions */
 static void do_remove(int iSwitch)
 {
-   /* param check */
-   if( HB_ISCHAR(1) ) {
-      auto pcString = hb_parc(1);
-      auto sStrLen = hb_parclen(1);
-      const char * pcRet;
-      HB_SIZE sRetLen;
-      char cSearch;
+  /* param check */
+  if (HB_ISCHAR(1))
+  {
+    auto pcString = hb_parc(1);
+    auto sStrLen = hb_parclen(1);
+    const char *pcRet;
+    HB_SIZE sRetLen;
+    char cSearch;
 
-      if( hb_parclen(2) > 0 ) {
-         cSearch = *(hb_parc(2));
-      } else if( HB_ISNUM(2) ) {
-         cSearch = static_cast<char>(hb_parnl(2) % 256);
-      } else {
-         cSearch = 0x20;
+    if (hb_parclen(2) > 0)
+    {
+      cSearch = *(hb_parc(2));
+    }
+    else if (HB_ISNUM(2))
+    {
+      cSearch = static_cast<char>(hb_parnl(2) % 256);
+    }
+    else
+    {
+      cSearch = 0x20;
+    }
+
+    sRetLen = sStrLen;
+    pcRet = pcString;
+
+    if (iSwitch != DO_REMOVE_REMRIGHT)
+    {
+      while (*pcRet == cSearch && pcRet < (pcString + sStrLen))
+      {
+        pcRet++;
+        sRetLen--;
       }
+    }
 
-      sRetLen = sStrLen;
-      pcRet = pcString;
+    if (iSwitch != DO_REMOVE_REMLEFT)
+    {
+      const char *pc = pcString + sStrLen - 1;
 
-      if( iSwitch != DO_REMOVE_REMRIGHT ) {
-         while( *pcRet == cSearch && pcRet < (pcString + sStrLen) ) {
-            pcRet++;
-            sRetLen--;
-         }
+      while (*pc == cSearch && pc >= pcRet)
+      {
+        pc--;
+        sRetLen--;
       }
+    }
 
-      if( iSwitch != DO_REMOVE_REMLEFT ) {
-         const char * pc = pcString + sStrLen - 1;
+    if (sRetLen == 0)
+    {
+      hb_retc_null();
+    }
+    else
+    {
+      hb_retclen(pcRet, sRetLen);
+    }
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
 
-         while( *pc == cSearch && pc >= pcRet ) {
-            pc--;
-            sRetLen--;
-         }
-      }
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, sulErrorSubcodes[iSwitch], nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
 
-      if( sRetLen == 0 ) {
-         hb_retc_null();
-      } else {
-         hb_retclen(pcRet, sRetLen);
-      }
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG,
-                                 sulErrorSubcodes[iSwitch],
-                                 nullptr, HB_ERR_FUNCNAME, 0,
-                                 EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else {
-         hb_retc_null();
-      }
-   }
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
 
-HB_FUNC( REMALL )
+HB_FUNC(REMALL)
 {
-   do_remove(DO_REMOVE_REMALL);
+  do_remove(DO_REMOVE_REMALL);
 }
 
-HB_FUNC( REMLEFT )
+HB_FUNC(REMLEFT)
 {
-   do_remove(DO_REMOVE_REMLEFT);
+  do_remove(DO_REMOVE_REMLEFT);
 }
 
-HB_FUNC( REMRIGHT )
+HB_FUNC(REMRIGHT)
 {
-   do_remove(DO_REMOVE_REMRIGHT);
+  do_remove(DO_REMOVE_REMRIGHT);
 }

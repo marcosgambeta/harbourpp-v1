@@ -53,8 +53,8 @@
 
 struct CT_CHARSORT
 {
-   HB_SIZE sCompareLen;
-   HB_SIZE sElementPos;
+  HB_SIZE sCompareLen;
+  HB_SIZE sElementPos;
 };
 
 using PCT_CHARSORT = CT_CHARSORT *;
@@ -67,11 +67,12 @@ int extern _LNK_CONV
 #else
 static int
 #endif
-_hb_do_sortascend(const void * p1, const void * p2)
+_hb_do_sortascend(const void *p1, const void *p2)
 {
-   auto charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
+  auto charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-   return strncmp(static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen);
+  return strncmp(static_cast<const char *>(p1) + charsort->sElementPos,
+                 static_cast<const char *>(p2) + charsort->sElementPos, charsort->sCompareLen);
 }
 
 #ifdef __IBMCPP__
@@ -79,86 +80,106 @@ int extern _LNK_CONV
 #else
 static int
 #endif
-_hb_do_sortdescend(const void * p1, const void * p2)
+_hb_do_sortdescend(const void *p1, const void *p2)
 {
-   auto charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
+  auto charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-   return -strncmp(static_cast<const char*>(p1) + charsort->sElementPos, static_cast<const char*>(p2) + charsort->sElementPos, charsort->sCompareLen);
+  return -strncmp(static_cast<const char *>(p1) + charsort->sElementPos,
+                  static_cast<const char *>(p2) + charsort->sElementPos, charsort->sCompareLen);
 }
 
-HB_FUNC( CHARSORT )
+HB_FUNC(CHARSORT)
 {
-   /* suppressing return value ? */
-   int iNoRet = ct_getref() && HB_ISBYREF(1);
+  /* suppressing return value ? */
+  int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-   /* param check I */
-   if( HB_ISCHAR(1) ) {
-      auto charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
+  /* param check I */
+  if (HB_ISCHAR(1))
+  {
+    auto charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-      /* get parameters */
-      auto pcString = hb_parc(1);
+    /* get parameters */
+    auto pcString = hb_parc(1);
 
-      auto sStrLen = hb_parclen(1);
-      HB_SIZE sElementLen = hb_parnsdef(2, 1);
-      HB_SIZE sIgnore     = hb_parnsdef(4, 0);
-      HB_SIZE sSortLen    = hb_parnsdef(6, sStrLen - sIgnore);
-      int     iDescend    = hb_parldef(7, 0);
+    auto sStrLen = hb_parclen(1);
+    HB_SIZE sElementLen = hb_parnsdef(2, 1);
+    HB_SIZE sIgnore = hb_parnsdef(4, 0);
+    HB_SIZE sSortLen = hb_parnsdef(6, sStrLen - sIgnore);
+    int iDescend = hb_parldef(7, 0);
 
-      charsort->sCompareLen = hb_parnsdef(3, sElementLen);
-      charsort->sElementPos = hb_parnsdef(5, 0);
+    charsort->sCompareLen = hb_parnsdef(3, sElementLen);
+    charsort->sElementPos = hb_parnsdef(5, 0);
 
-      /* param check II */
-      if(    sElementLen == 0
-          || charsort->sCompareLen > sElementLen
-          || sIgnore + sElementLen > sStrLen
-          || charsort->sElementPos + charsort->sCompareLen > sElementLen
-          || sSortLen + sIgnore > sStrLen ) {
-         int iArgErrorMode = ct_getargerrormode();
-
-         if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-            ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
-         }
-
-         if( iNoRet ) {
-            hb_retl(false);
-         } else {
-            hb_retc_null();
-         }
-         return;
-      }
-
-      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
-      hb_xmemcpy(pcRet, pcString, sStrLen);
-
-      if( iDescend ) {
-         qsort(pcRet + sIgnore, (sSortLen / sElementLen), sElementLen, _hb_do_sortdescend);
-      } else {
-         qsort(pcRet + sIgnore, (sSortLen / sElementLen), sElementLen, _hb_do_sortascend);
-      }
-
-      /* return string */
-      hb_storclen(pcRet, sStrLen, 1);
-
-      if( iNoRet ) {
-         hb_retl(false);
-         hb_xfree(pcRet);
-      } else {
-         hb_retclen_buffer(pcRet, sStrLen);
-      }
-   } else {
-      PHB_ITEM pSubst = nullptr;
+    /* param check II */
+    if (sElementLen == 0 || charsort->sCompareLen > sElementLen || sIgnore + sElementLen > sStrLen ||
+        charsort->sElementPos + charsort->sCompareLen > sElementLen || sSortLen + sIgnore > sStrLen)
+    {
       int iArgErrorMode = ct_getargerrormode();
 
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+      if (iArgErrorMode != CT_ARGERR_IGNORE)
+      {
+        ct_error(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr, HB_ERR_FUNCNAME, 0,
+                 EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else if( iNoRet ) {
-         hb_retl(false);
-      } else {
-         hb_retc_null();
+      if (iNoRet)
+      {
+        hb_retl(false);
       }
-   }
+      else
+      {
+        hb_retc_null();
+      }
+      return;
+    }
+
+    auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + 1));
+    hb_xmemcpy(pcRet, pcString, sStrLen);
+
+    if (iDescend)
+    {
+      qsort(pcRet + sIgnore, (sSortLen / sElementLen), sElementLen, _hb_do_sortdescend);
+    }
+    else
+    {
+      qsort(pcRet + sIgnore, (sSortLen / sElementLen), sElementLen, _hb_do_sortascend);
+    }
+
+    /* return string */
+    hb_storclen(pcRet, sStrLen, 1);
+
+    if (iNoRet)
+    {
+      hb_retl(false);
+      hb_xfree(pcRet);
+    }
+    else
+    {
+      hb_retclen_buffer(pcRet, sStrLen);
+    }
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
+
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_CHARSORT, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
+
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else if (iNoRet)
+    {
+      hb_retl(false);
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }

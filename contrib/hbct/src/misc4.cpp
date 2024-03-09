@@ -46,12 +46,12 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( ISAT )
+HB_FUNC(ISAT)
 {
-   hb_retl(true);
+  hb_retl(true);
 }
 
-HB_FUNC( TOOLVER )
+HB_FUNC(TOOLVER)
 {
-   hb_retc_const("5.20 - 3.0b");
+  hb_retc_const("5.20 - 3.0b");
 }

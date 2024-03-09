@@ -46,32 +46,37 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( MAXLINE )
+HB_FUNC(MAXLINE)
 {
-   HB_ISIZ nLength = 0;
+  HB_ISIZ nLength = 0;
 
-   if( HB_ISCHAR(1) ) {
-      auto pcString = hb_parc(1);
-      const char * pBuffer;
-      HB_ISIZ nStrLen = hb_parclen(1);
+  if (HB_ISCHAR(1))
+  {
+    auto pcString = hb_parc(1);
+    const char *pBuffer;
+    HB_ISIZ nStrLen = hb_parclen(1);
 
-      while( nStrLen > 0 ) {
-         pBuffer = static_cast<char*>(const_cast<void*>(memchr(pcString, 13, nStrLen)));
-         if( !pBuffer ) {
-            pBuffer = pcString + nStrLen;
-         }
-
-         if( pBuffer - pcString > nLength ) {
-            nLength = pBuffer - pcString;
-         }
-
-         pBuffer++;
-         if( *pBuffer == 10 ) {
-            pBuffer++;
-         }
-         nStrLen -= pBuffer - pcString;
-         pcString = pBuffer;
+    while (nStrLen > 0)
+    {
+      pBuffer = static_cast<char *>(const_cast<void *>(memchr(pcString, 13, nStrLen)));
+      if (!pBuffer)
+      {
+        pBuffer = pcString + nStrLen;
       }
-   }
-   hb_retns(nLength);
+
+      if (pBuffer - pcString > nLength)
+      {
+        nLength = pBuffer - pcString;
+      }
+
+      pBuffer++;
+      if (*pBuffer == 10)
+      {
+        pBuffer++;
+      }
+      nStrLen -= pBuffer - pcString;
+      pcString = pBuffer;
+    }
+  }
+  hb_retns(nLength);
 }

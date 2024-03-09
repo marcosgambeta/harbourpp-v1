@@ -47,147 +47,202 @@
 
 #include "ct.h"
 
-HB_FUNC( RANGEREM )
+HB_FUNC(RANGEREM)
 {
-   if( (hb_parclen(1) > 0 || HB_ISNUM(1)) && (hb_parclen(2) > 0 || HB_ISNUM(2)) && HB_ISCHAR(3) ) {
-      auto pcString = hb_parc(3);
-      auto sStrLen = hb_parclen(3);
-      const unsigned char * pc;
-      unsigned char ucChar1, ucChar2;
-      HB_SIZE sRetIndex;
-      int iMode;
+  if ((hb_parclen(1) > 0 || HB_ISNUM(1)) && (hb_parclen(2) > 0 || HB_ISNUM(2)) && HB_ISCHAR(3))
+  {
+    auto pcString = hb_parc(3);
+    auto sStrLen = hb_parclen(3);
+    const unsigned char *pc;
+    unsigned char ucChar1, ucChar2;
+    HB_SIZE sRetIndex;
+    int iMode;
 
-      if( HB_ISCHAR(1) ) {
-         ucChar1 = *(reinterpret_cast<const unsigned char*>(hb_parc(1)));
-      } else {
-         ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
+    if (HB_ISCHAR(1))
+    {
+      ucChar1 = *(reinterpret_cast<const unsigned char *>(hb_parc(1)));
+    }
+    else
+    {
+      ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
+    }
+
+    if (HB_ISCHAR(2))
+    {
+      ucChar2 = *(reinterpret_cast<const unsigned char *>(hb_parc(2)));
+    }
+    else
+    {
+      ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
+    }
+
+    iMode = (ucChar2 < ucChar1);
+
+    auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + 1));
+    sRetIndex = 0;
+    for (pc = reinterpret_cast<const unsigned char *>(pcString);
+         pc < reinterpret_cast<const unsigned char *>(pcString) + sStrLen; pc++)
+    {
+      int iBool = ((*pc) >= ucChar1);
+
+      if (iMode)
+      {
+        iBool |= ((*pc) <= ucChar2);
+      }
+      else
+      {
+        iBool &= ((*pc) <= ucChar2);
       }
 
-      if( HB_ISCHAR(2) ) {
-         ucChar2 = *(reinterpret_cast<const unsigned char*>(hb_parc(2)));
-      } else {
-         ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
+      if (!iBool)
+      {
+        *(pcRet + sRetIndex) = *pc;
+        sRetIndex++;
       }
+    }
 
-      iMode = (ucChar2 < ucChar1);
+    hb_retclen(pcRet, sRetIndex);
+    hb_xfree(pcRet);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
 
-      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
-      sRetIndex = 0;
-      for( pc = reinterpret_cast<const unsigned char*>(pcString); pc < reinterpret_cast<const unsigned char*>(pcString) + sStrLen; pc++) {
-         int iBool = ((*pc) >= ucChar1);
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREM, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
 
-         if( iMode ) {
-            iBool |= ((*pc) <= ucChar2);
-         } else {
-            iBool &= ((*pc) <= ucChar2);
-         }
-
-         if( !iBool ) {
-            *(pcRet + sRetIndex) = *pc;
-            sRetIndex++;
-         }
-      }
-
-      hb_retclen(pcRet, sRetIndex);
-      hb_xfree(pcRet);
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREM, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else if( HB_ISCHAR(3) ) {
-         hb_retclen(hb_parc(3), hb_parclen(3));
-      } else {
-         hb_retc_null();
-      }
-   }
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else if (HB_ISCHAR(3))
+    {
+      hb_retclen(hb_parc(3), hb_parclen(3));
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
 
-HB_FUNC( RANGEREPL )
+HB_FUNC(RANGEREPL)
 {
-   int iNoRef = ct_getref() && HB_ISBYREF(3);
+  int iNoRef = ct_getref() && HB_ISBYREF(3);
 
-   if( (hb_parclen(1) > 0 || HB_ISNUM(1)) && (hb_parclen(2) > 0 || HB_ISNUM(2)) && HB_ISCHAR(3) && (hb_parclen(4) > 0 || HB_ISNUM(4)) ) {
-      auto pcString = hb_parc(3);
-      auto sStrLen = hb_parclen(3);
-      const unsigned char * pc;
-      unsigned char ucChar1, ucChar2, ucReplace;
-      HB_SIZE sRetIndex;
-      int iMode;
+  if ((hb_parclen(1) > 0 || HB_ISNUM(1)) && (hb_parclen(2) > 0 || HB_ISNUM(2)) && HB_ISCHAR(3) &&
+      (hb_parclen(4) > 0 || HB_ISNUM(4)))
+  {
+    auto pcString = hb_parc(3);
+    auto sStrLen = hb_parclen(3);
+    const unsigned char *pc;
+    unsigned char ucChar1, ucChar2, ucReplace;
+    HB_SIZE sRetIndex;
+    int iMode;
 
-      if( HB_ISCHAR(1) ) {
-         ucChar1 = *(reinterpret_cast<const unsigned char*>(hb_parc(1)));
-      } else {
-         ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
+    if (HB_ISCHAR(1))
+    {
+      ucChar1 = *(reinterpret_cast<const unsigned char *>(hb_parc(1)));
+    }
+    else
+    {
+      ucChar1 = static_cast<unsigned char>(hb_parni(1) % 256);
+    }
+
+    if (HB_ISCHAR(2))
+    {
+      ucChar2 = *(reinterpret_cast<const unsigned char *>(hb_parc(2)));
+    }
+    else
+    {
+      ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
+    }
+
+    if (HB_ISCHAR(4))
+    {
+      ucReplace = *(reinterpret_cast<const unsigned char *>(hb_parc(4)));
+    }
+    else
+    {
+      ucReplace = static_cast<unsigned char>(hb_parni(4) % 256);
+    }
+
+    iMode = (ucChar2 < ucChar1);
+
+    auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + 1));
+    sRetIndex = 0;
+    for (pc = reinterpret_cast<const unsigned char *>(pcString);
+         pc < reinterpret_cast<const unsigned char *>(pcString) + sStrLen; pc++)
+    {
+      int iBool = ((*pc) >= ucChar1);
+
+      if (iMode)
+      {
+        iBool |= ((*pc) <= ucChar2);
+      }
+      else
+      {
+        iBool &= ((*pc) <= ucChar2);
       }
 
-      if( HB_ISCHAR(2) ) {
-         ucChar2 = *(reinterpret_cast<const unsigned char*>(hb_parc(2)));
-      } else {
-         ucChar2 = static_cast<unsigned char>(hb_parni(2) % 256);
+      if (iBool)
+      {
+        *(pcRet + sRetIndex) = ucReplace;
+        sRetIndex++;
       }
-
-      if( HB_ISCHAR(4) ) {
-         ucReplace = *(reinterpret_cast<const unsigned char*>(hb_parc(4)));
-      } else {
-         ucReplace = static_cast<unsigned char>(hb_parni(4) % 256);
+      else
+      {
+        *(pcRet + sRetIndex) = *pc;
+        sRetIndex++;
       }
+    }
 
-      iMode = (ucChar2 < ucChar1);
+    hb_storclen(pcRet, sStrLen, 3);
 
-      auto pcRet = static_cast<char*>(hb_xgrab(sStrLen + 1));
-      sRetIndex = 0;
-      for( pc = reinterpret_cast<const unsigned char*>(pcString); pc < reinterpret_cast<const unsigned char*>(pcString) + sStrLen; pc++ ) {
-         int iBool = ((*pc) >= ucChar1);
+    if (iNoRef)
+    {
+      /* Contrary to the official documentation, RangeRepl() returns NIL instead of .F.
+       * in this situation. If the string is not passed by reference, it returns the
+       * string regardless of iNoRef. */
+      hb_ret();
+    }
+    else
+    {
+      hb_retclen(pcRet, sStrLen);
+    }
 
-         if( iMode ) {
-            iBool |= ((*pc) <= ucChar2);
-         } else {
-            iBool &= ((*pc) <= ucChar2);
-         }
+    hb_xfree(pcRet);
+  }
+  else
+  {
+    PHB_ITEM pSubst = nullptr;
+    int iArgErrorMode = ct_getargerrormode();
 
-         if( iBool ) {
-            *( pcRet + sRetIndex ) = ucReplace;
-            sRetIndex++;
-         } else {
-            *( pcRet + sRetIndex ) = *pc;
-            sRetIndex++;
-         }
-      }
+    if (iArgErrorMode != CT_ARGERR_IGNORE)
+    {
+      pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREPL, nullptr,
+                              HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
+    }
 
-      hb_storclen(pcRet, sStrLen, 3);
-
-      if( iNoRef ) {
-         /* Contrary to the official documentation, RangeRepl() returns NIL instead of .F.
-          * in this situation. If the string is not passed by reference, it returns the
-          * string regardless of iNoRef. */
-         hb_ret();
-      } else {
-         hb_retclen(pcRet, sStrLen);
-      }
-
-      hb_xfree(pcRet);
-   } else {
-      PHB_ITEM pSubst = nullptr;
-      int iArgErrorMode = ct_getargerrormode();
-
-      if( iArgErrorMode != CT_ARGERR_IGNORE ) {
-         pSubst = ct_error_subst(static_cast<HB_USHORT>(iArgErrorMode), EG_ARG, CT_ERROR_RANGEREPL, nullptr, HB_ERR_FUNCNAME, 0, EF_CANSUBSTITUTE, HB_ERR_ARGS_BASEPARAMS);
-      }
-
-      if( pSubst != nullptr ) {
-         hb_itemReturnRelease(pSubst);
-      } else if( iNoRef ) {
-         hb_ret();
-      } else if( HB_ISCHAR(3) ) {
-         hb_retclen(hb_parc(3), hb_parclen(3));
-      } else {
-         hb_retc_null();
-      }
-   }
+    if (pSubst != nullptr)
+    {
+      hb_itemReturnRelease(pSubst);
+    }
+    else if (iNoRef)
+    {
+      hb_ret();
+    }
+    else if (HB_ISCHAR(3))
+    {
+      hb_retclen(hb_parc(3), hb_parclen(3));
+    }
+    else
+    {
+      hb_retc_null();
+    }
+  }
 }
