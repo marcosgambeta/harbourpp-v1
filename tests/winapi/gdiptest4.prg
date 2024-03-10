@@ -212,7 +212,7 @@ RETURN 0
 #include "hbapi.hpp"
 #include "hbvm.hpp"
 #include "hbwinuni.hpp"
-#include "guitest6.h"
+#include "gdiptest4.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
