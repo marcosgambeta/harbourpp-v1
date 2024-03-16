@@ -136,6 +136,9 @@ FUNCTION WindowProc(hwnd, uMsg, wParam, lParam)
       waInvalidateRgn(hwnd, NIL, .T.)
       RETURN 0
 
+   CASE WM_ERASEBKGND
+      RETURN 1
+
    CASE WM_PAINT
       oRect := wasRECT()
       waGetClientRect(hwnd, oRect)
@@ -246,7 +249,7 @@ HB_FUNC_STATIC(GETWINDOWPROC)
   hb_retptr(reinterpret_cast<void*>(WindowProc));
 }
 
-INT_PTR DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   static PHB_DYNS s_pDynSym = nullptr;
 
