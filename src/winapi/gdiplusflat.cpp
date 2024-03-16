@@ -124,6 +124,14 @@ SOFTWARE.
 using namespace Gdiplus;
 using namespace Gdiplus::DllExports;
 
+static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray);
+static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray);
+static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray);
+static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray);
+static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray);
+static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray);
+static std::vector<BYTE> BYTEArrayToVector(const PHB_ITEM pArray);
+
 ///////////////////////////////////////////////////////////////////////////////
 // AdjustableArrowCap functions
 ///////////////////////////////////////////////////////////////////////////////
@@ -1492,16 +1500,7 @@ GpStatus WINGDIPAPI GdipDrawLines(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPDRAWLINES )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawLines(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1510,16 +1509,7 @@ GpStatus WINGDIPAPI GdipDrawLinesI(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPDRAWLINESI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawLinesI(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1560,16 +1550,7 @@ GpStatus WINGDIPAPI GdipDrawBeziers(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPDRAWBEZIERS )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawBeziers(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1578,16 +1559,7 @@ GpStatus WINGDIPAPI GdipDrawBeziersI(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPDRAWBEZIERSI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawBeziersI(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1612,16 +1584,7 @@ GpStatus WINGDIPAPI GdipDrawRectangles(GpGraphics*,GpPen*,GDIPCONST GpRectF*,INT
 */
 HB_FUNC( WAGDIPDRAWRECTANGLES )
 {
-  std::vector<GpRectF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpRectF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpRectF> vec = GpRectFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawRectangles(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1630,16 +1593,7 @@ GpStatus WINGDIPAPI GdipDrawRectanglesI(GpGraphics*,GpPen*,GDIPCONST GpRect*,INT
 */
 HB_FUNC( WAGDIPDRAWRECTANGLESI )
 {
-  std::vector<GpRect> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpRect*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpRect> vec = GpRectArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawRectanglesI(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1680,16 +1634,7 @@ GpStatus WINGDIPAPI GdipDrawPolygon(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPDRAWPOLYGON )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawPolygon(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1698,16 +1643,7 @@ GpStatus WINGDIPAPI GdipDrawPolygonI(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPDRAWPOLYGONI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawPolygonI(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1724,16 +1660,7 @@ GpStatus WINGDIPAPI GdipDrawCurve(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPDRAWCURVE )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawCurve(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1742,16 +1669,7 @@ GpStatus WINGDIPAPI GdipDrawCurveI(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPDRAWCURVEI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawCurveI(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1760,16 +1678,7 @@ GpStatus WINGDIPAPI GdipDrawCurve2(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT,RE
 */
 HB_FUNC( WAGDIPDRAWCURVE2 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawCurve2(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
 }
 
@@ -1778,16 +1687,7 @@ GpStatus WINGDIPAPI GdipDrawCurve2I(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT,RE
 */
 HB_FUNC( WAGDIPDRAWCURVE2I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawCurve2I(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
 }
 
@@ -1796,16 +1696,7 @@ GpStatus WINGDIPAPI GdipDrawCurve3(GpGraphics*,GpPen*,GDIPCONST GpPointF*,INT,IN
 */
 HB_FUNC( WAGDIPDRAWCURVE3 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawCurve3(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_REAL(7)));
 }
 
@@ -1814,16 +1705,7 @@ GpStatus WINGDIPAPI GdipDrawCurve3I(GpGraphics*,GpPen*,GDIPCONST GpPoint*,INT,IN
 */
 HB_FUNC( WAGDIPDRAWCURVE3I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawCurve3I(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_REAL(7)));
 }
 
@@ -1832,16 +1714,7 @@ GpStatus WINGDIPAPI GdipDrawClosedCurve(GpGraphics*,GpPen*,GDIPCONST GpPointF*,I
 */
 HB_FUNC( WAGDIPDRAWCLOSEDCURVE )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawClosedCurve(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1850,16 +1723,7 @@ GpStatus WINGDIPAPI GdipDrawClosedCurveI(GpGraphics*,GpPen*,GDIPCONST GpPoint*,I
 */
 HB_FUNC( WAGDIPDRAWCLOSEDCURVEI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawClosedCurveI(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1868,16 +1732,7 @@ GpStatus WINGDIPAPI GdipDrawClosedCurve2(GpGraphics*,GpPen*,GDIPCONST GpPointF*,
 */
 HB_FUNC( WAGDIPDRAWCLOSEDCURVE2 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawClosedCurve2(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
 }
 
@@ -1886,16 +1741,7 @@ GpStatus WINGDIPAPI GdipDrawClosedCurve2I(GpGraphics*,GpPen*,GDIPCONST GpPoint*,
 */
 HB_FUNC( WAGDIPDRAWCLOSEDCURVE2I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawClosedCurve2I(wa_par_GpGraphics(1), wa_par_GpPen(2), vec.data(), wa_par_INT(4), wa_par_REAL(5)));
 }
 
@@ -1928,16 +1774,7 @@ GpStatus WINGDIPAPI GdipFillRectangles(GpGraphics*,GpBrush*,GDIPCONST GpRectF*,I
 */
 HB_FUNC( WAGDIPFILLRECTANGLES )
 {
-  std::vector<GpRectF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpRectF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpRectF> vec = GpRectFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillRectangles(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1946,16 +1783,7 @@ GpStatus WINGDIPAPI GdipFillRectanglesI(GpGraphics*,GpBrush*,GDIPCONST GpRect*,I
 */
 HB_FUNC( WAGDIPFILLRECTANGLESI )
 {
-  std::vector<GpRect> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpRect*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpRect> vec = GpRectArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillRectanglesI(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -1964,16 +1792,7 @@ GpStatus WINGDIPAPI GdipFillPolygon(GpGraphics*,GpBrush*,GDIPCONST GpPointF*,INT
 */
 HB_FUNC( WAGDIPFILLPOLYGON )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillPolygon(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_GpFillMode(5)));
 }
 
@@ -1982,16 +1801,7 @@ GpStatus WINGDIPAPI GdipFillPolygonI(GpGraphics*,GpBrush*,GDIPCONST GpPoint*,INT
 */
 HB_FUNC( WAGDIPFILLPOLYGONI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillPolygonI(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_GpFillMode(5)));
 }
 
@@ -2000,16 +1810,7 @@ GpStatus WINGDIPAPI GdipFillPolygon2(GpGraphics*,GpBrush*,GDIPCONST GpPointF*,IN
 */
 HB_FUNC( WAGDIPFILLPOLYGON2 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillPolygon2(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -2018,16 +1819,7 @@ GpStatus WINGDIPAPI GdipFillPolygon2I(GpGraphics*,GpBrush*,GDIPCONST GpPoint*,IN
 */
 HB_FUNC( WAGDIPFILLPOLYGON2I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillPolygon2I(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -2076,16 +1868,7 @@ GpStatus WINGDIPAPI GdipFillClosedCurve(GpGraphics*,GpBrush*,GDIPCONST GpPointF*
 */
 HB_FUNC( WAGDIPFILLCLOSEDCURVE )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillClosedCurve(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -2094,16 +1877,7 @@ GpStatus WINGDIPAPI GdipFillClosedCurveI(GpGraphics*,GpBrush*,GDIPCONST GpPoint*
 */
 HB_FUNC( WAGDIPFILLCLOSEDCURVEI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillClosedCurveI(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -2112,16 +1886,7 @@ GpStatus WINGDIPAPI GdipFillClosedCurve2(GpGraphics*,GpBrush*,GDIPCONST GpPointF
 */
 HB_FUNC( WAGDIPFILLCLOSEDCURVE2 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillClosedCurve2(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_GpFillMode(6)));
 }
 
@@ -2130,16 +1895,7 @@ GpStatus WINGDIPAPI GdipFillClosedCurve2I(GpGraphics*,GpBrush*,GDIPCONST GpPoint
 */
 HB_FUNC( WAGDIPFILLCLOSEDCURVE2I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipFillClosedCurve2I(wa_par_GpGraphics(1), wa_par_GpBrush(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_GpFillMode(6)));
 }
 
@@ -2188,16 +1944,7 @@ GpStatus WINGDIPAPI GdipDrawImagePoints(GpGraphics*,GpImage*,GDIPCONST GpPointF*
 */
 HB_FUNC( WAGDIPDRAWIMAGEPOINTS )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawImagePoints(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -2206,16 +1953,7 @@ GpStatus WINGDIPAPI GdipDrawImagePointsI(GpGraphics*,GpImage*,GDIPCONST GpPoint*
 */
 HB_FUNC( WAGDIPDRAWIMAGEPOINTSI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawImagePointsI(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(4)));
 }
 
@@ -2256,16 +1994,7 @@ GpStatus WINGDIPAPI GdipDrawImagePointsRect(GpGraphics*,GpImage*,GDIPCONST GpPoi
 */
 HB_FUNC( WAGDIPDRAWIMAGEPOINTSRECT ) // TODO: parameters 11 and 12
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawImagePointsRect(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_GpUnit(9), wa_par_GpImageAttributes(10), nullptr, nullptr));
 }
 
@@ -2274,16 +2003,7 @@ GpStatus WINGDIPAPI GdipDrawImagePointsRectI(GpGraphics*,GpImage*,GDIPCONST GpPo
 */
 HB_FUNC( WAGDIPDRAWIMAGEPOINTSRECTI ) // TODO: parameters 10 and 11
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipDrawImagePointsRectI(wa_par_GpGraphics(1), wa_par_GpImage(2), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_INT(6), wa_par_INT(7), wa_par_GpUnit(8), wa_par_GpImageAttributes(9), nullptr, nullptr));
 }
 
@@ -2604,26 +2324,8 @@ GpStatus WINGDIPAPI GdipCreatePath2(GDIPCONST GpPointF*,GDIPCONST BYTE*,INT,GpFi
 */
 HB_FUNC( WAGDIPCREATEPATH2 )
 {
-  std::vector<GpPointF> vec1{};
-  auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec1.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
-    }
-  }
-  std::vector<BYTE> vec2{};
-  auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec2.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray2, i + 1)));
-    }
-  }
+  std::vector<GpPointF> vec1 = GpPointFArrayToVector(hb_param(1, Harbour::Item::ARRAY));
+  std::vector<BYTE> vec2 = BYTEArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   GpPath * p{};
   wa_ret_GpStatus(GdipCreatePath2(vec1.data(), vec2.data(), wa_par_INT(3), wa_par_GpFillMode(4), &p));
   hb_storptr(p, 5);
@@ -2634,26 +2336,8 @@ GpStatus WINGDIPAPI GdipCreatePath2I(GDIPCONST GpPoint*,GDIPCONST BYTE*,INT,GpFi
 */
 HB_FUNC( WAGDIPCREATEPATH2I )
 {
-  std::vector<GpPoint> vec1{};
-  auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec1.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
-    }
-  }
-  std::vector<BYTE> vec2{};
-  auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec2.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray2, i + 1)));
-    }
-  }
+  std::vector<GpPoint> vec1 = GpPointArrayToVector(hb_param(1, Harbour::Item::ARRAY));
+  std::vector<BYTE> vec2 = BYTEArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   GpPath * p{};
   wa_ret_GpStatus(GdipCreatePath2I(vec1.data(), vec2.data(), wa_par_INT(3), wa_par_GpFillMode(4), &p));
   hb_storptr(p, 5);
@@ -2806,16 +2490,7 @@ GpStatus WINGDIPAPI GdipAddPathLine2(GpPath*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPADDPATHLINE2 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathLine2(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -2824,16 +2499,7 @@ GpStatus WINGDIPAPI GdipAddPathLine2I(GpPath*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPADDPATHLINE2I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathLine2I(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -2874,16 +2540,7 @@ GpStatus WINGDIPAPI GdipAddPathBeziers(GpPath*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPADDPATHBEZIERS )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathBeziers(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -2892,16 +2549,7 @@ GpStatus WINGDIPAPI GdipAddPathBeziersI(GpPath*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPADDPATHBEZIERSI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathBeziersI(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -2910,16 +2558,7 @@ GpStatus WINGDIPAPI GdipAddPathCurve(GpPath*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPADDPATHCURVE )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathCurve(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -2928,16 +2567,7 @@ GpStatus WINGDIPAPI GdipAddPathCurveI(GpPath*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPADDPATHCURVEI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathCurveI(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -2946,16 +2576,7 @@ GpStatus WINGDIPAPI GdipAddPathCurve2(GpPath*,GDIPCONST GpPointF*,INT,REAL)
 */
 HB_FUNC( WAGDIPADDPATHCURVE2 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathCurve2(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_REAL(4)));
 }
 
@@ -2964,16 +2585,7 @@ GpStatus WINGDIPAPI GdipAddPathCurve2I(GpPath*,GDIPCONST GpPoint*,INT,REAL)
 */
 HB_FUNC( WAGDIPADDPATHCURVE2I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathCurve2I(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_REAL(4)));
 }
 
@@ -2982,16 +2594,7 @@ GpStatus WINGDIPAPI GdipAddPathCurve3(GpPath*,GDIPCONST GpPointF*,INT,INT,INT,RE
 */
 HB_FUNC( WAGDIPADDPATHCURVE3 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathCurve3(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6)));
 }
 
@@ -3000,16 +2603,7 @@ GpStatus WINGDIPAPI GdipAddPathCurve3I(GpPath*,GDIPCONST GpPoint*,INT,INT,INT,RE
 */
 HB_FUNC( WAGDIPADDPATHCURVE3I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathCurve3I(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_INT(4), wa_par_INT(5), wa_par_REAL(6)));
 }
 
@@ -3018,16 +2612,7 @@ GpStatus WINGDIPAPI GdipAddPathClosedCurve(GpPath*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPADDPATHCLOSEDCURVE )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathClosedCurve(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -3036,16 +2621,7 @@ GpStatus WINGDIPAPI GdipAddPathClosedCurveI(GpPath*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPADDPATHCLOSEDCURVEI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathClosedCurveI(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -3054,16 +2630,7 @@ GpStatus WINGDIPAPI GdipAddPathClosedCurve2(GpPath*,GDIPCONST GpPointF*,INT,REAL
 */
 HB_FUNC( WAGDIPADDPATHCLOSEDCURVE2 )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathClosedCurve2(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_REAL(4)));
 }
 
@@ -3072,16 +2639,7 @@ GpStatus WINGDIPAPI GdipAddPathClosedCurve2I(GpPath*,GDIPCONST GpPoint*,INT,REAL
 */
 HB_FUNC( WAGDIPADDPATHCLOSEDCURVE2I )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathClosedCurve2I(wa_par_GpPath(1), vec.data(), wa_par_INT(3), wa_par_REAL(4)));
 }
 
@@ -3110,16 +2668,7 @@ GpStatus WINGDIPAPI GdipAddPathRectangles(GpPath*,GDIPCONST GpRectF*,INT)
 */
 HB_FUNC( WAGDIPADDPATHRECTANGLES )
 {
-  std::vector<GpRectF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpRectF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpRectF> vec = GpRectFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathRectangles(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -3128,16 +2677,7 @@ GpStatus WINGDIPAPI GdipAddPathRectanglesI(GpPath*,GDIPCONST GpRect*,INT)
 */
 HB_FUNC( WAGDIPADDPATHRECTANGLESI )
 {
-  std::vector<GpRect> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpRect*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpRect> vec = GpRectArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathRectanglesI(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -3178,16 +2718,7 @@ GpStatus WINGDIPAPI GdipAddPathPolygon(GpPath*,GDIPCONST GpPointF*,INT)
 */
 HB_FUNC( WAGDIPADDPATHPOLYGON )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathPolygon(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -3196,16 +2727,7 @@ GpStatus WINGDIPAPI GdipAddPathPolygonI(GpPath*,GDIPCONST GpPoint*,INT)
 */
 HB_FUNC( WAGDIPADDPATHPOLYGONI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipAddPathPolygonI(wa_par_GpPath(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -3266,16 +2788,7 @@ GpStatus WINGDIPAPI GdipWarpPath(GpPath*,GpMatrix*,GDIPCONST GpPointF*,INT,REAL,
 */
 HB_FUNC( WAGDIPWARPPATH )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipWarpPath(wa_par_GpPath(1), wa_par_GpMatrix(2), vec.data(), wa_par_INT(4), wa_par_REAL(5), wa_par_REAL(6), wa_par_REAL(7), wa_par_REAL(8), wa_par_GpWarpMode(9), wa_par_REAL(10)));
 }
 
@@ -4076,26 +3589,8 @@ GpStatus WINGDIPAPI GdipSetLineBlend(GpLineGradient*,GDIPCONST REAL*,GDIPCONST R
 */
 HB_FUNC( WAGDIPSETLINEBLEND )
 {
-  std::vector<REAL> vec1{};
-  auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec1.push_back(static_cast<REAL>(hb_arrayGetND(pArray1, i + 1)));
-    }
-  }
-  std::vector<REAL> vec2{};
-  auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec2.push_back(static_cast<REAL>(hb_arrayGetND(pArray2, i + 1)));
-    }
-  }
+  std::vector<REAL> vec1 = REALArrayToVector(hb_param(2, Harbour::Item::ARRAY));
+  std::vector<REAL> vec2 = REALArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipSetLineBlend(wa_par_GpLineGradient(1), vec1.data(), vec2.data(), wa_par_INT(4)));
 }
 
@@ -4118,26 +3613,8 @@ GpStatus WINGDIPAPI GdipSetLinePresetBlend(GpLineGradient*,GDIPCONST ARGB*,GDIPC
 */
 HB_FUNC( WAGDIPSETLINEPRESETBLEND )
 {
-  std::vector<ARGB> vec1{};
-  auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec1.push_back(static_cast<ARGB>(hb_arrayGetNL(pArray1, i + 1)));
-    }
-  }
-  std::vector<REAL> vec2{};
-  auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec2.push_back(static_cast<REAL>(hb_arrayGetND(pArray2, i + 1)));
-    }
-  }
+  std::vector<ARGB> vec1 = ARGBArrayToVector(hb_param(2, Harbour::Item::ARRAY));
+  std::vector<REAL> vec2 = REALArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipSetLinePresetBlend(wa_par_GpLineGradient(1), vec1.data(), vec2.data(), wa_par_INT(4)));
 }
 
@@ -4355,16 +3832,7 @@ GpStatus WINGDIPAPI GdipTransformMatrixPoints(GpMatrix*,GpPointF*,INT)
 #if 0
 HB_FUNC( WAGDIPTRANSFORMMATRIXPOINTS )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipTransformMatrixPoints(wa_par_GpMatrix(1), vec.data(), wa_par_INT(3)));
   // TODO: copy values from vector to array
 }
@@ -4376,16 +3844,7 @@ GpStatus WINGDIPAPI GdipTransformMatrixPointsI(GpMatrix*,GpPoint*,INT)
 #if 0
 HB_FUNC( WAGDIPTRANSFORMMATRIXPOINTSI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipTransformMatrixPointsI(wa_par_GpMatrix(1), vec.data(), wa_par_INT(3)));
   // TODO: copy values from vector to array
 }
@@ -4608,16 +4067,7 @@ GpStatus WINGDIPAPI GdipCreatePathGradient(GDIPCONST GpPointF*,INT,GpWrapMode,Gp
 */
 HB_FUNC( WAGDIPCREATEPATHGRADIENT )
 {
-  std::vector<GpPointF> vec{};
-  auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPointF> vec = GpPointFArrayToVector(hb_param(1, Harbour::Item::ARRAY));
   GpPathGradient * p{};
   wa_ret_GpStatus(GdipCreatePathGradient(vec.data(), wa_par_INT(2), wa_par_GpWrapMode(3), &p));
   hb_storptr(p, 4);
@@ -4628,16 +4078,7 @@ GpStatus WINGDIPAPI GdipCreatePathGradientI(GDIPCONST GpPoint*,INT,GpWrapMode,Gp
 */
 HB_FUNC( WAGDIPCREATEPATHGRADIENTI )
 {
-  std::vector<GpPoint> vec{};
-  auto pArray = hb_param(1, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
-    }
-  }
+  std::vector<GpPoint> vec = GpPointArrayToVector(hb_param(1, Harbour::Item::ARRAY));
   GpPathGradient * p{};
   wa_ret_GpStatus(GdipCreatePathGradientI(vec.data(), wa_par_INT(2), wa_par_GpWrapMode(3), &p));
   hb_storptr(p, 4);
@@ -4680,16 +4121,7 @@ GpStatus WINGDIPAPI GdipSetPathGradientSurroundColorsWithCount(GpPathGradient*,G
 */
 HB_FUNC( WAGDIPSETPATHGRADIENTSURROUNDCOLORSWITHCOUNT )
 {
-  std::vector<ARGB> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(static_cast<ARGB>(hb_arrayGetNL(pArray, i + 1)));
-    }
-  }
+  std::vector<ARGB> vec = ARGBArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   INT i = wa_par_INT(3);
   wa_ret_GpStatus(GdipSetPathGradientSurroundColorsWithCount(wa_par_GpPathGradient(1), vec.data(), &i));
   wa_stor_INT(i, 3);
@@ -4816,26 +4248,8 @@ GpStatus WINGDIPAPI GdipSetPathGradientBlend(GpPathGradient*,GDIPCONST REAL*,GDI
 */
 HB_FUNC( WAGDIPSETPATHGRADIENTBLEND )
 {
-  std::vector<REAL> vec1{};
-  auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec1.push_back(static_cast<REAL>(hb_arrayGetND(pArray1, i + 1)));
-    }
-  }
-  std::vector<REAL> vec2{};
-  auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec2.push_back(static_cast<REAL>(hb_arrayGetND(pArray2, i + 1)));
-    }
-  }
+  std::vector<REAL> vec1 = REALArrayToVector(hb_param(2, Harbour::Item::ARRAY));
+  std::vector<REAL> vec2 = REALArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipSetPathGradientBlend(wa_par_GpPathGradient(1), vec1.data(), vec2.data(), wa_par_INT(4)));
 }
 
@@ -4858,26 +4272,8 @@ GpStatus WINGDIPAPI GdipSetPathGradientPresetBlend(GpPathGradient*,GDIPCONST ARG
 */
 HB_FUNC( WAGDIPSETPATHGRADIENTPRESETBLEND )
 {
-  std::vector<ARGB> vec1{};
-  auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray1 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec1.push_back(static_cast<ARGB>(hb_arrayGetNL(pArray1, i + 1)));
-    }
-  }
-  std::vector<REAL> vec2{};
-  auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
-  if( pArray2 != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec2.push_back(static_cast<REAL>(hb_arrayGetND(pArray2, i + 1)));
-    }
-  }
+  std::vector<ARGB> vec1 = ARGBArrayToVector(hb_param(2, Harbour::Item::ARRAY));
+  std::vector<REAL> vec2 = REALArrayToVector(hb_param(3, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipSetPathGradientPresetBlend(wa_par_GpPathGradient(1), vec1.data(), vec2.data(), wa_par_INT(3)));
 }
 
@@ -5520,16 +4916,7 @@ GpStatus WINGDIPAPI GdipSetPenDashArray(GpPen*,GDIPCONST REAL*,INT)
 */
 HB_FUNC( WAGDIPSETPENDASHARRAY )
 {
-  std::vector<REAL> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(static_cast<REAL>(hb_arrayGetND(pArray, i + 1)));
-    }
-  }
+  std::vector<REAL> vec = REALArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipSetPenDashArray(wa_par_GpPen(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -5552,16 +4939,7 @@ GpStatus WINGDIPAPI GdipSetPenCompoundArray(GpPen*,GDIPCONST REAL*,INT)
 */
 HB_FUNC( WAGDIPSETPENCOMPOUNDARRAY )
 {
-  std::vector<REAL> vec{};
-  auto pArray = hb_param(2, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(static_cast<REAL>(hb_arrayGetND(pArray, i + 1)));
-    }
-  }
+  std::vector<REAL> vec = REALArrayToVector(hb_param(2, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipSetPenCompoundArray(wa_par_GpPen(1), vec.data(), wa_par_INT(3)));
 }
 
@@ -6024,16 +5402,7 @@ GpStatus WINGDIPAPI GdipSetStringFormatTabStops(GpStringFormat*,REAL,INT,GDIPCON
 */
 HB_FUNC( WAGDIPSETSTRINGFORMATTABSTOPS )
 {
-  std::vector<REAL> vec{};
-  auto pArray = hb_param(4, Harbour::Item::ARRAY);
-  if( pArray != nullptr )
-  {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
-    {
-      vec.push_back(static_cast<REAL>(hb_arrayGetND(pArray, i + 1)));
-    }
-  }
+  std::vector<REAL> vec = REALArrayToVector(hb_param(4, Harbour::Item::ARRAY));
   wa_ret_GpStatus(GdipSetStringFormatTabStops(wa_par_GpStringFormat(1), wa_par_REAL(2), wa_par_INT(3), vec.data()));
 }
 
@@ -6288,3 +5657,105 @@ HB_FUNC( WAGDIPGETTEXTUREIMAGE )
 /*
 GpStatus WINGDIPAPI GdipTestControl(GpTestControlEnum,void*)
 */
+
+///////////////////////////////////////////////////////////////////////////////
+// auxiliary functions
+///////////////////////////////////////////////////////////////////////////////
+
+static std::vector<GpPoint> GpPointArrayToVector(const PHB_ITEM pArray)
+{
+  std::vector<GpPoint> vec{};
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(*static_cast<GpPoint*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+    }
+  }
+  return vec;
+}
+
+static std::vector<GpPointF> GpPointFArrayToVector(const PHB_ITEM pArray)
+{
+  std::vector<GpPointF> vec{};
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(*static_cast<GpPointF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+    }
+  }
+  return vec;
+}
+
+static std::vector<GpRect> GpRectArrayToVector(const PHB_ITEM pArray)
+{
+  std::vector<GpRect> vec{};
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(*static_cast<GpRect*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+    }
+  }
+  return vec;
+}
+
+static std::vector<GpRectF> GpRectFArrayToVector(const PHB_ITEM pArray)
+{
+  std::vector<GpRectF> vec{};
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(*static_cast<GpRectF*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
+    }
+  }
+  return vec;
+}
+
+static std::vector<REAL> REALArrayToVector(const PHB_ITEM pArray)
+{
+  std::vector<REAL> vec{};
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(static_cast<REAL>(hb_arrayGetND(pArray, i + 1)));
+    }
+  }
+  return vec;
+}
+
+static std::vector<ARGB> ARGBArrayToVector(const PHB_ITEM pArray)
+{
+  std::vector<ARGB> vec{};
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(static_cast<ARGB>(hb_arrayGetNL(pArray, i + 1)));
+    }
+  }
+  return vec;
+}
+
+static std::vector<BYTE> BYTEArrayToVector(const PHB_ITEM pArray)
+{
+  std::vector<BYTE> vec{};
+  if( pArray != nullptr )
+  {
+    const int nLen = hb_arrayLen(pArray);
+    for( auto i = 0; i < nLen; i++ )
+    {
+      vec.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray, i + 1)));
+    }
+  }
+  return vec;
+}
