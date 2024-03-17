@@ -3037,6 +3037,7 @@ hb_parnll
 hb_parns
 hb_parnsdef
 hb_parptr
+hb_parptrx
 hb_parptrGC
 hb_parstr
 hb_parstr_u16

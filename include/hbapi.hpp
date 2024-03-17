@@ -710,6 +710,7 @@ extern HB_EXPORT HB_ISIZ      hb_parnsdef(int iParam, HB_ISIZ nDefValue); /* ret
 extern HB_EXPORT HB_MAXINT    hb_parnint(int iParam); /* retrieve a numeric parameter as a HB_MAXINT */
 extern HB_EXPORT HB_MAXINT    hb_parnintdef(int iParam, HB_MAXINT nDefValue); /* retrieve a numeric parameter as a HB_MAXINT, return default value if parameter isn't numeric */
 extern HB_EXPORT void *       hb_parptr(int iParam); /* retrieve a parameter as a pointer */
+extern HB_EXPORT void *       hb_parptrx(int iParam); /* retrieve a parameter (NIL, pointer, number and string) as a pointer */
 extern HB_EXPORT void *       hb_parptrGC(const HB_GC_FUNCS * pFuncs, int iParam); /* retrieve a parameter as a pointer if it's a pointer to GC allocated block */
 #ifndef HB_LONG_LONG_OFF
 extern HB_EXPORT HB_LONGLONG  hb_parnll(int iParam); /* retrieve a numeric parameter as a long long */

@@ -920,6 +920,44 @@ void *hb_parptr(int iParam)
   return nullptr;
 }
 
+void *hb_parptrx(int iParam)
+{
+#if 0
+   HB_TRACE(HB_TR_DEBUG, ("hb_parptrx(%d)", iParam));
+#endif
+
+  HB_STACK_TLS_PRELOAD
+
+  if (iParam >= -1 && iParam <= hb_pcount())
+  {
+    PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
+
+    if (HB_IS_BYREF(pItem))
+    {
+      pItem = hb_itemUnRef(pItem);
+    }
+
+    if (HB_IS_POINTER(pItem))
+    {
+      return pItem->item.asPointer.value;
+    }
+    else if (HB_IS_LONG(pItem))
+    {
+      return reinterpret_cast<void *>(pItem->item.asLong.value);
+    }
+    else if (HB_IS_INTEGER(pItem))
+    {
+      return reinterpret_cast<void *>(pItem->item.asInteger.value);
+    }
+    else if (HB_IS_STRING(pItem))
+    {
+      return static_cast<void *>(pItem->item.asString.value);
+    }
+  }
+
+  return nullptr;
+}
+
 void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int iParam)
 {
 #if 0
