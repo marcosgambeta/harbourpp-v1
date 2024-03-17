@@ -58,10 +58,10 @@
 
 CREATE CLASS WvgDialog INHERIT WvgWindow
 
-   VAR    oMenu
-   VAR    aRect
-   VAR    drawingArea
-   VAR    tasklist                              INIT .T.
+   VAR oMenu
+   VAR aRect
+   VAR drawingArea
+   VAR tasklist INIT .T.
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -71,11 +71,11 @@ CREATE CLASS WvgDialog INHERIT WvgWindow
    METHOD getFrameState()
    METHOD menuBar()
 
-   METHOD showModal()                           INLINE NIL
-   METHOD setTitle(cTitle)                    INLINE ::title := cTitle, hb_gtInfo(HB_GTI_WINTITLE, cTitle)
-   METHOD getTitle()                            INLINE hb_gtInfo(HB_GTI_WINTITLE)
-   METHOD calcClientRect()                      INLINE ::aRect := wvg_GetClientRect(::hWnd), {0, 0, ::aRect[3], ::aRect[4]}
-   METHOD calcFrameRect()                       INLINE ::aRect := wvg_GetWindowRect(::hWnd), {::aRect[1], ::aRect[2], ::aRect[3] - ::aRect[1], ::aRect[4] - ::aRect[2]}
+   METHOD showModal() INLINE NIL
+   METHOD setTitle(cTitle) INLINE ::title := cTitle, hb_gtInfo(HB_GTI_WINTITLE, cTitle)
+   METHOD getTitle() INLINE hb_gtInfo(HB_GTI_WINTITLE)
+   METHOD calcClientRect() INLINE ::aRect := wvg_GetClientRect(::hWnd), {0, 0, ::aRect[3], ::aRect[4]}
+   METHOD calcFrameRect() INLINE ::aRect := wvg_GetWindowRect(::hWnd), {::aRect[1], ::aRect[2], ::aRect[3] - ::aRect[1], ::aRect[4] - ::aRect[2]}
 
 ENDCLASS
 
@@ -83,12 +83,12 @@ METHOD WvgDialog:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::className   := "WVGDIALOG"
-   ::resizeMode  := 0
-   ::mouseMode   := 0
-   ::objType     := objTypeDialog
+   ::className := "WVGDIALOG"
+   ::resizeMode := 0
+   ::mouseMode := 0
+   ::objType := objTypeDialog
 
-   ::style       := WS_THICKFRAME + WS_OVERLAPPED + WS_CAPTION + WS_SYSMENU + WS_MINIMIZEBOX + WS_MAXIMIZEBOX
+   ::style := WS_THICKFRAME + WS_OVERLAPPED + WS_CAPTION + WS_SYSMENU + WS_MINIMIZEBOX + WS_MAXIMIZEBOX
 
    RETURN Self
 
@@ -99,7 +99,7 @@ METHOD WvgDialog:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ::WvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    IF ::lModal
-      ::pGT  := hb_gtCreate("WGU")
+      ::pGT := hb_gtCreate("WGU")
       ::pGTp := hb_gtSelect(::pGT)
    ELSE
       hb_gtReload("WGU")
@@ -169,7 +169,7 @@ METHOD WvgDialog:destroy()
       wvg_DeleteObject(::hBrushBG)
    ENDIF
 
-   ::pGT  := NIL
+   ::pGT := NIL
    ::pGTp := NIL
 
    RETURN Self

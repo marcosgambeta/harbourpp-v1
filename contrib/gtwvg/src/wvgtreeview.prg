@@ -58,14 +58,14 @@
 
 CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
 
-   VAR    alwaysShowSelection                   INIT .F.
-   VAR    hasButtons                            INIT .F.
-   VAR    hasLines                              INIT .F.
+   VAR alwaysShowSelection INIT .F.
+   VAR hasButtons INIT .F.
+   VAR hasLines INIT .F.
 
-   VAR    aItems                                INIT {}
+   VAR aItems INIT {}
 
-   VAR    oRootItem
-   ACCESS rootItem()                            INLINE ::oRootItem
+   VAR oRootItem
+   ACCESS rootItem() INLINE ::oRootItem
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -75,29 +75,29 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
 
    METHOD itemFromPos(aPos)
 
-   VAR    sl_itemCollapsed
-   VAR    sl_itemExpanded
-   VAR    sl_itemMarked
-   VAR    sl_itemSelected
+   VAR sl_itemCollapsed
+   VAR sl_itemExpanded
+   VAR sl_itemMarked
+   VAR sl_itemSelected
 
-   METHOD itemCollapsed(xParam)               SETGET
-   METHOD itemExpanded(xParam)                SETGET
-   METHOD itemMarked(xParam)                  SETGET
+   METHOD itemCollapsed(xParam) SETGET
+   METHOD itemExpanded(xParam) SETGET
+   METHOD itemMarked(xParam) SETGET
 
-   VAR    oItemSelected
-   ACCESS itemSelected                          INLINE ::sl_itemSelected
-   ASSIGN itemSelected(bBlock)                INLINE ::sl_itemSelected := bBlock
+   VAR oItemSelected
+   ACCESS itemSelected INLINE ::sl_itemSelected
+   ASSIGN itemSelected(bBlock) INLINE ::sl_itemSelected := bBlock
 
-   VAR    hParentSelected
-   VAR    hItemSelected
-   VAR    textParentSelected                    INIT ""
-   VAR    textItemSelected                      INIT ""
+   VAR hParentSelected
+   VAR hItemSelected
+   VAR textParentSelected INIT ""
+   VAR textItemSelected INIT ""
 
    METHOD getSelectionInfo(nlParam)
-   METHOD setColorFG(nRGB)                    INLINE wvg_TreeView_SetTextColor(::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB))
-   METHOD setColorBG(nRGB)                    INLINE wvg_TreeView_SetBkColor(::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 1), nRGB))
-   METHOD setColorLines(nRGB)                 INLINE wvg_TreeView_SetLineColor(::hWnd, nRGB)
-   METHOD showExpanded(lExpanded, nLevels)    INLINE wvg_TreeView_ShowExpanded(::hWnd, iif(HB_ISNIL(lExpanded), .F., lExpanded), nLevels)
+   METHOD setColorFG(nRGB) INLINE wvg_TreeView_SetTextColor(::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB))
+   METHOD setColorBG(nRGB) INLINE wvg_TreeView_SetBkColor(::hWnd, iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 1), nRGB))
+   METHOD setColorLines(nRGB) INLINE wvg_TreeView_SetLineColor(::hWnd, nRGB)
+   METHOD showExpanded(lExpanded, nLevels) INLINE wvg_TreeView_ShowExpanded(::hWnd, iif(HB_ISNIL(lExpanded), .F., lExpanded), nLevels)
 
 ENDCLASS
 
@@ -105,11 +105,11 @@ METHOD WvgTreeView:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD + WS_TABSTOP + WS_CLIPSIBLINGS
-   ::exStyle     := WS_EX_CLIENTEDGE // WS_EX_STATICEDGE /*+ TVS_EX_FADEINOUTEXPANDOS */
+   ::style := WS_CHILD + WS_TABSTOP + WS_CLIPSIBLINGS
+   ::exStyle := WS_EX_CLIENTEDGE // WS_EX_STATICEDGE /*+ TVS_EX_FADEINOUTEXPANDOS */
 
-   ::className   := "SysTreeView32"
-   ::objType     := objTypeTreeView
+   ::className := "SysTreeView32"
+   ::objType := objTypeTreeView
 
    RETURN Self
 
@@ -135,9 +135,9 @@ METHOD WvgTreeView:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ::SetWindowProcCallback()  /* Let parent control the events because all notifications are posted via WM_NOTIFY */
 #endif
 
-   ::oRootItem       := WvgTreeViewItem():New()
+   ::oRootItem := WvgTreeViewItem():New()
    ::oRootItem:hTree := ::hWnd
-   ::oRootItem:oWnd  := Self
+   ::oRootItem:oWnd := Self
 
    IF ::visible
       ::show()
@@ -258,18 +258,18 @@ METHOD WvgTreeView:getSelectionInfo(nlParam)
    LOCAL hItemSelected
    LOCAL hParentOfSelected
    LOCAL cParent := Space(20)
-   LOCAL cText   := Space(20)
+   LOCAL cText := Space(20)
    LOCAL n
 
    wvg_TreeView_GetSelectionInfo(::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected)
 
-   ::hParentSelected    := hParentOfSelected
-   ::hItemSelected      := hItemSelected
+   ::hParentSelected := hParentOfSelected
+   ::hItemSelected := hItemSelected
    ::textParentSelected := RTrim(cParent)
-   ::textItemSelected   := RTrim(cText)
+   ::textItemSelected := RTrim(cText)
 
    IF (n := AScan(::aItems, {|o|o:hItem == hItemSelected})) > 0
-      ::oItemSelected      := ::aItems[n]
+      ::oItemSelected := ::aItems[n]
    ENDIF
 
    RETURN Self

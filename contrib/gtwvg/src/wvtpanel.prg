@@ -80,12 +80,12 @@
 /* Class WvtPanel */
 CREATE CLASS WvtPanel INHERIT WvtObject
 
-   VAR    cColor
-   VAR    cTxt
-   VAR    cIconFile
+   VAR cColor
+   VAR cTxt
+   VAR cIconFile
 
-   ACCESS TEXT                                    INLINE ::cTxt
-   ASSIGN TEXT(cText)                             INLINE ::cTxt := PadR(cText, ::nRight - ::nLeft - 2)
+   ACCESS TEXT INLINE ::cTxt
+   ASSIGN TEXT(cText) INLINE ::cTxt := PadR(cText, ::nRight - ::nLeft - 2)
 
    METHOD New(oParent, nId, nTop, nLeft)
    METHOD Refresh()

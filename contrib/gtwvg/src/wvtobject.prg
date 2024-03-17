@@ -84,83 +84,83 @@
  */
 CREATE CLASS WvtObject
 
-   VAR    oParent
-   VAR    nType
-   VAR    nId
+   VAR oParent
+   VAR nType
+   VAR nId
 
-   VAR    nTop
-   VAR    nLeft
-   VAR    nBottom
-   VAR    nRight
-   VAR    aPxlTLBR                                INIT {}
+   VAR nTop
+   VAR nLeft
+   VAR nBottom
+   VAR nRight
+   VAR aPxlTLBR INIT {}
 
-   VAR    aObjects                                INIT {}
-   VAR    aParent                                 INIT {}
-   VAR    aChildren                               INIT {}
-   VAR    aPaint                                  INIT {}
-   VAR    bPaint
-   VAR    ClassName                               INIT ""
+   VAR aObjects INIT {}
+   VAR aParent INIT {}
+   VAR aChildren INIT {}
+   VAR aPaint INIT {}
+   VAR bPaint
+   VAR ClassName INIT ""
 
-   VAR    nObjID                                  INIT 900000
-   VAR    nPointer
-   VAR    cargo
-   VAR    xSettings
-   VAR    cText
-   VAR    cToolTip
-   VAR    lActive                                 INIT .T.
-   VAR    lAnimate                                INIT .F.
-   VAR    lTabStop                                INIT .T.
-   VAR    hFont
+   VAR nObjID INIT 900000
+   VAR nPointer
+   VAR cargo
+   VAR xSettings
+   VAR cText
+   VAR cToolTip
+   VAR lActive INIT .T.
+   VAR lAnimate INIT .F.
+   VAR lTabStop INIT .T.
+   VAR hFont
 
-   VAR    aPopup                                  INIT {}
-   VAR    hPopup                                  INIT NIL
-   VAR    nPopupItemID                            INIT 700000
+   VAR aPopup INIT {}
+   VAR hPopup INIT NIL
+   VAR nPopupItemID INIT 700000
 
-   VAR    nMRow                                   INIT 0
-   VAR    nMCol                                   INIT 0
-   VAR    cColorHilite                            INIT "W+/B*"
-   VAR    cColorDehilite                          INIT "W/N*"
+   VAR nMRow INIT 0
+   VAR nMCol INIT 0
+   VAR cColorHilite INIT "W+/B*"
+   VAR cColorDehilite INIT "W/N*"
 
-   VAR    nTextColor
-   VAR    nBackColor
-   VAR    nBackMode                               INIT 0 /* OPAQUE 1-TRANSPARENT */
-   VAR    nTextColorHoverOn
-   VAR    nTextColorHoverOff
-   VAR    nBackColorHoverOn
-   VAR    nBackColorHoverOff
-   VAR    cFont
-   VAR    nFontHeight
-   VAR    nFontWidth
-   VAR    nFontWeight
-   VAR    nFontQuality
-   VAR    nCharSet
-   VAR    lItalic
-   VAR    lUnderline
-   VAR    lStrikeOut
-   VAR    nAlignHorz
-   VAR    nAlignVert
-   VAR    nAngle
+   VAR nTextColor
+   VAR nBackColor
+   VAR nBackMode INIT 0 /* OPAQUE 1-TRANSPARENT */
+   VAR nTextColorHoverOn
+   VAR nTextColorHoverOff
+   VAR nBackColorHoverOn
+   VAR nBackColorHoverOff
+   VAR cFont
+   VAR nFontHeight
+   VAR nFontWidth
+   VAR nFontWeight
+   VAR nFontQuality
+   VAR nCharSet
+   VAR lItalic
+   VAR lUnderline
+   VAR lStrikeOut
+   VAR nAlignHorz
+   VAR nAlignVert
+   VAR nAngle
 
-   ACCESS ToolTip                                 INLINE iif(::cTooltip == NIL, "", ::cTooltip)
-   ASSIGN ToolTip(cTip)                           INLINE ::cToolTip := cTip
+   ACCESS ToolTip INLINE iif(::cTooltip == NIL, "", ::cTooltip)
+   ASSIGN ToolTip(cTip) INLINE ::cToolTip := cTip
 
-   VAR    bHandleEvent
-   VAR    bOnCreate                               INIT {||NIL}
-   VAR    bOnSelect                               INIT {||NIL}
-   VAR    bOnFocus                                INIT {||NIL}
-   VAR    bOnRefresh                              INIT {||NIL}
-   VAR    bOnLeftUp                               INIT {||NIL}
-   VAR    bOnLeftDown                             INIT {||.F.}
-   VAR    bOnMMLeftDown                           INIT {||NIL}
-   VAR    bOnLeftPressed                          INIT {||NIL}
-   VAR    bTooltip                                INIT {||NIL}
-   VAR    bSaveSettings                           INIT {||NIL}
-   VAR    bRestSettings                           INIT {||NIL}
-   VAR    bOnHilite                               INIT {||NIL}
-   VAR    bOnDeHilite                             INIT {||NIL}
+   VAR bHandleEvent
+   VAR bOnCreate INIT {||NIL}
+   VAR bOnSelect INIT {||NIL}
+   VAR bOnFocus INIT {||NIL}
+   VAR bOnRefresh INIT {||NIL}
+   VAR bOnLeftUp INIT {||NIL}
+   VAR bOnLeftDown INIT {||.F.}
+   VAR bOnMMLeftDown INIT {||NIL}
+   VAR bOnLeftPressed INIT {||NIL}
+   VAR bTooltip INIT {||NIL}
+   VAR bSaveSettings INIT {||NIL}
+   VAR bRestSettings INIT {||NIL}
+   VAR bOnHilite INIT {||NIL}
+   VAR bOnDeHilite INIT {||NIL}
 
-   ACCESS nChildren                               INLINE Len(::aChildren)
-   VAR    nIndexOrder
+   ACCESS nChildren INLINE Len(::aChildren)
+   VAR nIndexOrder
 
    METHOD New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -168,28 +168,28 @@ CREATE CLASS WvtObject
    METHOD CreatePopup()
    METHOD ShowPopup()
 
-   METHOD SetToolTip()                            INLINE wvt_SetToolTip(::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip)
-   METHOD Refresh()                               INLINE wvt_InvalidateRect(::nTop, ::nLeft, ::nTop, ::nLeft)
-   METHOD Eval(bBlock)                            INLINE iif(HB_ISEVALITEM(bBlock), Eval(bBlock, Self), NIL)
-   METHOD AddChild(aChild)                        INLINE AAdd(::aChildren, aChild)
-   METHOD AddParent(aParent)                      INLINE AAdd(::aParent, aParent)
+   METHOD SetToolTip() INLINE wvt_SetToolTip(::nTop, ::nLeft, ::nBottom, ::nRight, ::Tooltip)
+   METHOD Refresh() INLINE wvt_InvalidateRect(::nTop, ::nLeft, ::nTop, ::nLeft)
+   METHOD Eval(bBlock) INLINE iif(HB_ISEVALITEM(bBlock), Eval(bBlock, Self), NIL)
+   METHOD AddChild(aChild) INLINE AAdd(::aChildren, aChild)
+   METHOD AddParent(aParent) INLINE AAdd(::aParent, aParent)
 
-   METHOD PaintBlock()                            INLINE NIL
-   METHOD Hilite()                                INLINE NIL
-   METHOD DeHilite()                              INLINE NIL
-   METHOD HandleEvent()                           INLINE .F.
-   METHOD LeftDown()                              INLINE .F.
-   METHOD LeftUp()                                INLINE .F.
-   METHOD MMLeftDown()                            INLINE .F.
-   METHOD LeftPressed()                           INLINE .F.
-   METHOD HoverOn()                               INLINE NIL
-   METHOD HoverOff()                              INLINE NIL
-   METHOD OnTimer()                               INLINE NIL
-   METHOD SaveSettings()                          INLINE NIL
-   METHOD RestSettings()                          INLINE NIL
-   METHOD Activate()                              INLINE NIL
-   METHOD DeActivate()                            INLINE NIL
-   METHOD NotifyChild(/* nChild */)               INLINE NIL
+   METHOD PaintBlock() INLINE NIL
+   METHOD Hilite() INLINE NIL
+   METHOD DeHilite() INLINE NIL
+   METHOD HandleEvent() INLINE .F.
+   METHOD LeftDown() INLINE .F.
+   METHOD LeftUp() INLINE .F.
+   METHOD MMLeftDown() INLINE .F.
+   METHOD LeftPressed() INLINE .F.
+   METHOD HoverOn() INLINE NIL
+   METHOD HoverOff() INLINE NIL
+   METHOD OnTimer() INLINE NIL
+   METHOD SaveSettings() INLINE NIL
+   METHOD RestSettings() INLINE NIL
+   METHOD Activate() INLINE NIL
+   METHOD DeActivate() INLINE NIL
+   METHOD NotifyChild(/* nChild */) INLINE NIL
 
 ENDCLASS
 
@@ -199,13 +199,13 @@ METHOD WvtObject:New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
       nID := ++::nObjID
    ENDIF
 
-   ::oParent   :=  oParent
-   ::nType     :=  nType
-   ::nId       :=  nID
-   ::nTop      :=  nTop
-   ::nLeft     :=  nLeft
-   ::nBottom   :=  nBottom
-   ::nRight    :=  nRight
+   ::oParent := oParent
+   ::nType := nType
+   ::nId := nID
+   ::nTop := nTop
+   ::nLeft := nLeft
+   ::nBottom := nBottom
+   ::nRight := nRight
 
    SWITCH nType
 
@@ -215,7 +215,7 @@ METHOD WvtObject:New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
 
    CASE DLG_OBJ_STATIC
       ::ClassName := "WVTSTATIC"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_GETS
@@ -224,7 +224,7 @@ METHOD WvtObject:New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
 
    CASE DLG_OBJ_IMAGE
       ::ClassName := "WVTIMAGE"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_PUSHBUTTON
@@ -233,42 +233,42 @@ METHOD WvtObject:New(oParent, nType, nID, nTop, nLeft, nBottom, nRight)
 
    CASE DLG_OBJ_BUTTON
       ::ClassName := "WVTBUTTON"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_TOOLBAR
       ::ClassName := "WVTTOOLBAR"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_LABEL
       ::ClassName := "WVTLABEL"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_SCROLLBAR
       ::ClassName := "WVTSCROLLBAR"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_STATUSBAR
       ::ClassName := "WVTSTATUSBAR"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_BANNER
       ::ClassName := "WVTBANNER"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_TEXTBOX
       ::ClassName := "WVTTEXTBOX"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    CASE DLG_OBJ_PROGRESSBAR
       ::ClassName := "WVTPROGRESSBAR"
-      ::lTabStop  := .F.
+      ::lTabStop := .F.
       EXIT
 
    ENDSWITCH

@@ -66,103 +66,103 @@
 CREATE CLASS WvgWindow INHERIT WvgPartHandler
 
    /* Configuration */
-   VAR    animate                               INIT .F.
-   VAR    clipChildren                          INIT .F.
-   VAR    clipParent                            INIT .F.
-   VAR    clipSiblings                          INIT .T.
-   VAR    group                                 INIT 0    /* XBP_NO_GROUP */
-   VAR    sizeRedraw                            INIT .F.
-   VAR    tabStop                               INIT .F.
-   VAR    visible                               INIT .T.
+   VAR animate INIT .F.
+   VAR clipChildren INIT .F.
+   VAR clipParent INIT .F.
+   VAR clipSiblings INIT .T.
+   VAR group INIT 0    /* XBP_NO_GROUP */
+   VAR sizeRedraw INIT .F.
+   VAR tabStop INIT .F.
+   VAR visible INIT .T.
 
-   VAR    pointerFocus                          INIT .T.
+   VAR pointerFocus INIT .T.
 
    /* Runtime variables */
-   VAR    dropZone                              INIT .F.
-   VAR    helpLink
-   VAR    s_tooltipText                         INIT ""
-   METHOD tooltipText(cText)                  SETGET
+   VAR dropZone INIT .F.
+   VAR helpLink
+   VAR s_tooltipText INIT ""
+   METHOD tooltipText(cText) SETGET
 
-   VAR    clr_FG
-   VAR    clr_BG
-   VAR    fnt_COMMPOUNDNAME
-   VAR    fnt_hFont
+   VAR clr_FG
+   VAR clr_BG
+   VAR fnt_COMMPOUNDNAME
+   VAR fnt_hFont
 
    /* Callback slots */
-   VAR    sl_enter
-   VAR    sl_leave
-   VAR    sl_lbClick
-   VAR    sl_lbDblClick
-   VAR    sl_lbDown
-   VAR    sl_lbUp
-   VAR    sl_mbClick
-   VAR    sl_mbDblClick
-   VAR    sl_mbDown
-   VAR    sl_mbUp
-   VAR    sl_motion
-   VAR    sl_rbClick
-   VAR    sl_rbDblClick
-   VAR    sl_rbDown
-   VAR    sl_rbUp
-   VAR    sl_wheel
+   VAR sl_enter
+   VAR sl_leave
+   VAR sl_lbClick
+   VAR sl_lbDblClick
+   VAR sl_lbDown
+   VAR sl_lbUp
+   VAR sl_mbClick
+   VAR sl_mbDblClick
+   VAR sl_mbDown
+   VAR sl_mbUp
+   VAR sl_motion
+   VAR sl_rbClick
+   VAR sl_rbDblClick
+   VAR sl_rbDown
+   VAR sl_rbUp
+   VAR sl_wheel
 
-   VAR    sl_helpRequest
-   VAR    sl_keyboard
-   VAR    sl_killInputFocus
-   VAR    sl_move
-   VAR    sl_paint
-   VAR    sl_quit
-   VAR    sl_resize
-   VAR    sl_setInputFocus
-   VAR    sl_dragEnter
-   VAR    sl_dragMotion
-   VAR    sl_dragLeave
-   VAR    sl_dragDrop
+   VAR sl_helpRequest
+   VAR sl_keyboard
+   VAR sl_killInputFocus
+   VAR sl_move
+   VAR sl_paint
+   VAR sl_quit
+   VAR sl_resize
+   VAR sl_setInputFocus
+   VAR sl_dragEnter
+   VAR sl_dragMotion
+   VAR sl_dragLeave
+   VAR sl_dragDrop
 
-   VAR    sl_close
-   VAR    sl_setDisplayFocus
-   VAR    sl_killDisplayFocus
+   VAR sl_close
+   VAR sl_setDisplayFocus
+   VAR sl_killDisplayFocus
 
-   VAR    hBrushBG
-   VAR    is_hidden                             INIT .F.
-   VAR    is_enabled                            INIT .T.
-   VAR    title                                 INIT " "
-   VAR    icon                                  INIT 0
-   VAR    closable                              INIT .T.
-   VAR    resizable                             INIT .T.
-   VAR    resizeMode                            INIT 0
-   VAR    style                                 INIT WIN_WS_OVERLAPPEDWINDOW
-   VAR    exStyle                               INIT 0
-   VAR    lModal                                INIT .F.
-   VAR    pGTp
-   VAR    pGT
-   VAR    objType                               INIT objTypeNone
-   VAR    className                             INIT ""
+   VAR hBrushBG
+   VAR is_hidden INIT .F.
+   VAR is_enabled INIT .T.
+   VAR title INIT " "
+   VAR icon INIT 0
+   VAR closable INIT .T.
+   VAR resizable INIT .T.
+   VAR resizeMode INIT 0
+   VAR style INIT WIN_WS_OVERLAPPEDWINDOW
+   VAR exStyle INIT 0
+   VAR lModal INIT .F.
+   VAR pGTp
+   VAR pGT
+   VAR objType INIT objTypeNone
+   VAR className INIT ""
 
-   VAR    hWnd
-   VAR    pWnd
-   VAR    aPos                                  INIT {0, 0}
-   VAR    aSize                                 INIT {0, 0}
-   VAR    aPresParams                           INIT {}
-   VAR    lHasInputFocus                        INIT .F.
-   VAR    nFrameState                           INIT 0       /* normal */
+   VAR hWnd
+   VAR pWnd
+   VAR aPos INIT {0, 0}
+   VAR aSize INIT {0, 0}
+   VAR aPresParams INIT {}
+   VAR lHasInputFocus INIT .F.
+   VAR nFrameState INIT 0       /* normal */
 
-   VAR    maxCol                                INIT 79
-   VAR    maxRow                                INIT 24
-   VAR    mouseMode                             INIT 1
+   VAR maxCol INIT 79
+   VAR maxRow INIT 24
+   VAR mouseMode INIT 1
 
-   VAR    nID                                   INIT   0
-   VAR    nControlID                            INIT   5000
-   VAR    nOldProc                              INIT   0
+   VAR nID INIT 0
+   VAR nControlID INIT 5000
+   VAR nOldProc INIT 0
 
-   VAR    oMenu
+   VAR oMenu
 
-   VAR    nTop
-   VAR    nLeft
-   VAR    nBottom
-   VAR    nRight
+   VAR nTop
+   VAR nLeft
+   VAR nBottom
+   VAR nRight
 
-   VAR    hWndTT
+   VAR hWndTT
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -204,48 +204,48 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    METHOD sendMessage(nMessage, nlParam, nwParam)
    METHOD findObjectByHandle(hWnd)
 
-   METHOD getControlID()                        INLINE ++::nControlID
-   METHOD HandleEvent()                         INLINE EVENT_UNHANDELLED
-   METHOD isEnabled()                           INLINE ::is_enabled
-   METHOD isVisible()                           INLINE !::is_hidden
-   METHOD setColorFG(nRGB)                    INLINE ::clr_FG := iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB), ::invalidateRect()
+   METHOD getControlID() INLINE ++::nControlID
+   METHOD HandleEvent() INLINE EVENT_UNHANDELLED
+   METHOD isEnabled() INLINE ::is_enabled
+   METHOD isVisible() INLINE !::is_hidden
+   METHOD setColorFG(nRGB) INLINE ::clr_FG := iif(HB_ISSTRING(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB), ::invalidateRect()
 
-   METHOD enter(xParam)                       SETGET
-   METHOD leave(xParam)                       SETGET
-   METHOD lbClick(xParam)                     SETGET
-   METHOD lbDblClick(xParam)                  SETGET
-   METHOD lbDown(xParam)                      SETGET
-   METHOD lbUp(xParam)                        SETGET
-   METHOD mbClick(xParam)                     SETGET
-   METHOD mbDblClick(xParam)                  SETGET
-   METHOD mbDown(xParam)                      SETGET
-   METHOD mbUp(xParam)                        SETGET
-   METHOD motion(xParam)                      SETGET
-   METHOD rbClick(xParam)                     SETGET
-   METHOD rbDblClick(xParam)                  SETGET
-   METHOD rbDown(xParam)                      SETGET
-   METHOD rbUp(xParam)                        SETGET
-   METHOD wheel(xParam)                       SETGET
-   METHOD close(xParam)                       SETGET
-   METHOD helpRequest(xParam)                 SETGET
-   METHOD keyboard(xParam)                    SETGET
-   METHOD killDisplayFocus(xParam)            SETGET
-   METHOD killInputFocus(xParam)              SETGET
-   METHOD move(xParam)                        SETGET
-   METHOD paint(xParam)                       SETGET
-   METHOD quit(xParam, xParam1)               SETGET
-   METHOD resize(xParam, xParam1)             SETGET
-   METHOD setDisplayFocus(xParam)             SETGET
-   METHOD setInputFocus(xParam)               SETGET
-   METHOD dragEnter(xParam, xParam1)          SETGET
-   METHOD dragMotion(xParam)                  SETGET
-   METHOD dragLeave(xParam)                   SETGET
-   METHOD dragDrop(xParam, xParam1)           SETGET
+   METHOD enter(xParam) SETGET
+   METHOD leave(xParam) SETGET
+   METHOD lbClick(xParam) SETGET
+   METHOD lbDblClick(xParam) SETGET
+   METHOD lbDown(xParam) SETGET
+   METHOD lbUp(xParam) SETGET
+   METHOD mbClick(xParam) SETGET
+   METHOD mbDblClick(xParam) SETGET
+   METHOD mbDown(xParam) SETGET
+   METHOD mbUp(xParam) SETGET
+   METHOD motion(xParam) SETGET
+   METHOD rbClick(xParam) SETGET
+   METHOD rbDblClick(xParam) SETGET
+   METHOD rbDown(xParam) SETGET
+   METHOD rbUp(xParam) SETGET
+   METHOD wheel(xParam) SETGET
+   METHOD close(xParam) SETGET
+   METHOD helpRequest(xParam) SETGET
+   METHOD keyboard(xParam) SETGET
+   METHOD killDisplayFocus(xParam) SETGET
+   METHOD killInputFocus(xParam) SETGET
+   METHOD move(xParam) SETGET
+   METHOD paint(xParam) SETGET
+   METHOD quit(xParam, xParam1) SETGET
+   METHOD resize(xParam, xParam1) SETGET
+   METHOD setDisplayFocus(xParam) SETGET
+   METHOD setInputFocus(xParam) SETGET
+   METHOD dragEnter(xParam, xParam1) SETGET
+   METHOD dragMotion(xParam) SETGET
+   METHOD dragLeave(xParam) SETGET
+   METHOD dragDrop(xParam, xParam1) SETGET
 
    PROTECTED:
 
    METHOD getPosAndSize(aPs, aSz)
-   METHOD isParentCrt()                         INLINE (iif(HB_ISOBJECT(::oParent), ::oParent:objType == objTypeCrt, .F.))
+   METHOD isParentCrt() INLINE (iif(HB_ISOBJECT(::oParent), ::oParent:objType == objTypeCrt, .F.))
    METHOD rePosition()
    METHOD createControl()
 
@@ -260,12 +260,12 @@ METHOD WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible   , ::visible)
 
-   ::oParent     := oParent
-   ::oOwner      := oOwner
-   ::aPos        := aPos
-   ::aSize       := aSize
+   ::oParent := oParent
+   ::oOwner := oOwner
+   ::aPos := aPos
+   ::aSize := aSize
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    ::WvgPartHandler:new(oParent, oOwner)
 
@@ -280,12 +280,12 @@ METHOD WvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible   , ::visible)
 
-   ::oParent     := oParent
-   ::oOwner      := oOwner
-   ::aPos        := aPos
-   ::aSize       := aSize
+   ::oParent := oParent
+   ::oOwner := oOwner
+   ::aPos := aPos
+   ::aSize := aSize
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    IF Empty(::oParent)
       IF !::ClassName() $ "WVGCRT,WVGDIALOG"
@@ -332,67 +332,67 @@ METHOD WvgWindow:destroy()
       wvg_DeleteObject(::hBrushBG)
    ENDIF
 
-   ::hWnd                   := NIL
-   ::hWndTT                 := NIL
-   ::pWnd                   := NIL
-   ::aPos                   := NIL
-   ::aSize                  := NIL
-   ::aPresParams            := NIL
-   ::lHasInputFocus         := NIL
-   ::nFrameState            := NIL
-   ::maxCol                 := NIL
-   ::maxRow                 := NIL
-   ::mouseMode              := NIL
-   ::nID                    := NIL
-   ::nControlID             := NIL
-   ::nOldProc               := NIL
-   ::oMenu                  := NIL
-   ::animate                := NIL
-   ::clipChildren           := NIL
-   ::clipParent             := NIL
-   ::clipSiblings           := NIL
-   ::group                  := NIL
-   ::sizeRedraw             := NIL
-   ::tabStop                := NIL
-   ::visible                := NIL
-   ::dropZone               := NIL
-   ::helpLink               := NIL
-   ::tooltipText            := NIL
-   ::clr_FG                 := NIL
-   ::clr_BG                 := NIL
-   ::fnt_COMMPOUNDNAME      := NIL
-   ::fnt_hFont              := NIL
-   ::sl_enter               := NIL
-   ::sl_leave               := NIL
-   ::sl_lbClick             := NIL
-   ::sl_lbDblClick          := NIL
-   ::sl_lbDown              := NIL
-   ::sl_lbUp                := NIL
-   ::sl_mbClick             := NIL
-   ::sl_mbDblClick          := NIL
-   ::sl_mbDown              := NIL
-   ::sl_mbUp                := NIL
-   ::sl_motion              := NIL
-   ::sl_rbClick             := NIL
-   ::sl_rbDblClick          := NIL
-   ::sl_rbDown              := NIL
-   ::sl_rbUp                := NIL
-   ::sl_wheel               := NIL
-   ::sl_helpRequest         := NIL
-   ::sl_keyboard            := NIL
-   ::sl_killInputFocus      := NIL
-   ::sl_move                := NIL
-   ::sl_paint               := NIL
-   ::sl_quit                := NIL
-   ::sl_resize              := NIL
-   ::sl_setInputFocus       := NIL
-   ::sl_dragEnter           := NIL
-   ::sl_dragMotion          := NIL
-   ::sl_dragLeave           := NIL
-   ::sl_dragDrop            := NIL
-   ::sl_close               := NIL
-   ::sl_setDisplayFocus     := NIL
-   ::sl_killDisplayFocus    := NIL
+   ::hWnd := NIL
+   ::hWndTT := NIL
+   ::pWnd := NIL
+   ::aPos := NIL
+   ::aSize := NIL
+   ::aPresParams := NIL
+   ::lHasInputFocus := NIL
+   ::nFrameState := NIL
+   ::maxCol := NIL
+   ::maxRow := NIL
+   ::mouseMode := NIL
+   ::nID := NIL
+   ::nControlID := NIL
+   ::nOldProc := NIL
+   ::oMenu := NIL
+   ::animate := NIL
+   ::clipChildren := NIL
+   ::clipParent := NIL
+   ::clipSiblings := NIL
+   ::group := NIL
+   ::sizeRedraw := NIL
+   ::tabStop := NIL
+   ::visible := NIL
+   ::dropZone := NIL
+   ::helpLink := NIL
+   ::tooltipText := NIL
+   ::clr_FG := NIL
+   ::clr_BG := NIL
+   ::fnt_COMMPOUNDNAME := NIL
+   ::fnt_hFont := NIL
+   ::sl_enter := NIL
+   ::sl_leave := NIL
+   ::sl_lbClick := NIL
+   ::sl_lbDblClick := NIL
+   ::sl_lbDown := NIL
+   ::sl_lbUp := NIL
+   ::sl_mbClick := NIL
+   ::sl_mbDblClick := NIL
+   ::sl_mbDown := NIL
+   ::sl_mbUp := NIL
+   ::sl_motion := NIL
+   ::sl_rbClick := NIL
+   ::sl_rbDblClick := NIL
+   ::sl_rbDown := NIL
+   ::sl_rbUp := NIL
+   ::sl_wheel := NIL
+   ::sl_helpRequest := NIL
+   ::sl_keyboard := NIL
+   ::sl_killInputFocus := NIL
+   ::sl_move := NIL
+   ::sl_paint := NIL
+   ::sl_quit := NIL
+   ::sl_resize := NIL
+   ::sl_setInputFocus := NIL
+   ::sl_dragEnter := NIL
+   ::sl_dragMotion := NIL
+   ::sl_dragLeave := NIL
+   ::sl_dragDrop := NIL
+   ::sl_close := NIL
+   ::sl_setDisplayFocus := NIL
+   ::sl_killDisplayFocus := NIL
 
    RETURN NIL
 
@@ -564,7 +564,7 @@ METHOD WvgWindow:isDerivedFrom(cClassORoObject)
 METHOD WvgWindow:show()
 
    wvg_ShowWindow(::hWnd, SW_NORMAL)
-   ::is_hidden      := .F.
+   ::is_hidden := .F.
    ::lHasInputFocus := .T.
 
    RETURN Self
@@ -614,7 +614,7 @@ METHOD WvgWindow:setFontCompoundName(xFont)
 
          IF (n := At(".", cFont)) > 0
             nPoint := Val(SubStr(cFont, 1, n - 1))
-            cFont  := SubStr(cFont, n + 1)
+            cFont := SubStr(cFont, n + 1)
          ELSE
             nPoint := 0
          ENDIF
@@ -1104,12 +1104,12 @@ METHOD WvgWindow:Initialize(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible   , ::visible)
 
-   ::oParent     := oParent
-   ::oOwner      := oOwner
-   ::aPos        := aPos
-   ::aSize       := aSize
+   ::oParent := oParent
+   ::oOwner := oOwner
+   ::aPos := aPos
+   ::aSize := aSize
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    RETURN Self
 
@@ -1147,7 +1147,7 @@ METHOD WvgWindow:getPosAndSize(aPs, aSz)
    __defaultNIL(@aPs, AClone(::aPos))
    __defaultNIL(@aSz, AClone(::aSize))
 
-   aPos  := AClone(aPs)
+   aPos := AClone(aPs)
    aSize := AClone(aSz)
 
    IF ::isParentCrt()

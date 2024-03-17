@@ -80,10 +80,10 @@
 /* Class WvtImage */
 CREATE CLASS WvtImage INHERIT WvtObject
 
-   VAR    cImageFile
+   VAR cImageFile
 
-   ACCESS cImage                                  INLINE ::cImageFile
-   ASSIGN cImage(cImg)                            INLINE ::cImageFile := cImg
+   ACCESS cImage INLINE ::cImageFile
+   ASSIGN cImage(cImg) INLINE ::cImageFile := cImg
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()

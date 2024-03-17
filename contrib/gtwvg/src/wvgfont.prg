@@ -59,41 +59,41 @@
 /* Class WvgFont() */
 CREATE CLASS WvgFont
 
-   VAR    hFont
-   VAR    oPS
-   VAR    hdc
+   VAR hFont
+   VAR oPS
+   VAR hdc
 
-   VAR    familyName                            INIT ""
-   VAR    height                                INIT 0
-   VAR    nominalPointSize                      INIT 0
+   VAR familyName INIT ""
+   VAR height INIT 0
+   VAR nominalPointSize INIT 0
 
-   VAR    width                                 INIT 0
-   VAR    widthClass                            INIT .F.
+   VAR width INIT 0
+   VAR widthClass INIT .F.
 
-   VAR    bold                                  INIT .F.
-   VAR    weightClass                           INIT WIN_FW_DONTCARE
+   VAR bold INIT .F.
+   VAR weightClass INIT WIN_FW_DONTCARE
 
-   VAR    italic                                INIT .F.
-   VAR    strikeout                             INIT .F.
-   VAR    underscore                            INIT .F.
-   VAR    codePage                              INIT WIN_DEFAULT_CHARSET
+   VAR italic INIT .F.
+   VAR strikeout INIT .F.
+   VAR underscore INIT .F.
+   VAR codePage INIT WIN_DEFAULT_CHARSET
 
-   VAR    fixed                                 INIT .F.
-   VAR    antiAliased                           INIT .F.
+   VAR fixed INIT .F.
+   VAR antiAliased INIT .F.
 
-   VAR    compoundName                          INIT ""
-   METHOD setCompoundName(cName)                INLINE ::compoundName := cName
+   VAR compoundName INIT ""
+   METHOD setCompoundName(cName) INLINE ::compoundName := cName
 
-   VAR    generic                               INIT .T.
+   VAR generic INIT .T.
 
-   VAR    baseLine                              INIT 0 READONLY
-   VAR    dbcs                                  INIT .F.
-   VAR    kerning                               INIT .F.
-   VAR    mbcs                                  INIT .F.
-   VAR    vector                                INIT .F.
-   VAR    outlined                              INIT .F.
+   VAR baseLine INIT 0 READONLY
+   VAR dbcs INIT .F.
+   VAR kerning INIT .F.
+   VAR mbcs INIT .F.
+   VAR vector INIT .F.
+   VAR outlined INIT .F.
 
-   VAR    aFontInfo                             INIT {}
+   VAR aFontInfo INIT {}
 
    METHOD new(oPS)
    METHOD create(cFontName)
@@ -180,7 +180,7 @@ METHOD WvgFont:createFont()
       RETURN NIL
    ENDIF
 
-   ::hFont     := aFont[15]
+   ::hFont := aFont[15]
    ::aFontInfo := aFont
 
    RETURN ::hFont

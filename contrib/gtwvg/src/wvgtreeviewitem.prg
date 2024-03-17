@@ -58,26 +58,26 @@
 
 CREATE CLASS WvgTreeViewItem
 
-   VAR    caption                               INIT ""
-   VAR    dllName                               INIT NIL
-   VAR    expandedImage                         INIT -1
-   VAR    image                                 INIT -1
-   VAR    markedImage                           INIT -1
+   VAR caption INIT ""
+   VAR dllName INIT NIL
+   VAR expandedImage INIT -1
+   VAR image INIT -1
+   VAR markedImage INIT -1
 
-   VAR    hTree
-   VAR    hItem
-   VAR    oParent
-   VAR    oWnd
+   VAR hTree
+   VAR hItem
+   VAR oParent
+   VAR oWnd
 
-   VAR    className                              INIT "TREEVIEWITEM"
-   VAR    objType                                INIT objTypeTreeViewItem
+   VAR className INIT "TREEVIEWITEM"
+   VAR objType INIT objTypeTreeViewItem
 
    METHOD new()
    METHOD create()
    METHOD configure()
    METHOD destroy()
 
-   METHOD Expand(lExpand)                        INLINE wvg_TreeView_Expand(::hTree, ::hItem, iif(HB_ISLOGICAL(lExpand), lExpand, .T.))
+   METHOD Expand(lExpand) INLINE wvg_TreeView_Expand(::hTree, ::hItem, iif(HB_ISLOGICAL(lExpand), lExpand, .T.))
    METHOD isExpanded()
    METHOD setCaption(cCaption)
    METHOD setExpandedImage(nResIdoBitmap)
@@ -138,10 +138,10 @@ METHOD WvgTreeViewItem:addItem(cCaption)
 
    oItem := WvgTreeViewItem():New()
 
-   oItem:hTree   := ::hTree
+   oItem:hTree := ::hTree
    oItem:oParent := Self
    oItem:caption := cCaption
-   oItem:oWnd    := ::oWnd
+   oItem:oWnd := ::oWnd
 
    hParent := iif(HB_ISOBJECT(oItem:oParent), oItem:oParent:hItem, NIL)
 

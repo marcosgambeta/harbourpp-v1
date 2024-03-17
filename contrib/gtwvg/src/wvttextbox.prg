@@ -80,7 +80,7 @@
 /* Class WvtTextBox */
 CREATE CLASS WvtTextBox INHERIT WvtObject
 
-   VAR    cText                                   INIT ""
+   VAR cText INIT ""
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()

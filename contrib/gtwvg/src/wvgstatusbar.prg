@@ -58,12 +58,12 @@
 
 CREATE CLASS WvgStatusBar INHERIT WvgWindow /* WvgActiveXControl */
 
-   VAR    caption                               INIT ""
-   VAR    sizeGrip                              INIT .T.
+   VAR caption INIT ""
+   VAR sizeGrip INIT .T.
 
-   VAR    aItems                                INIT {}
+   VAR aItems INIT {}
 
-   METHOD numItems()                            INLINE Len(::aItems)
+   METHOD numItems() INLINE Len(::aItems)
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -75,8 +75,8 @@ CREATE CLASS WvgStatusBar INHERIT WvgWindow /* WvgActiveXControl */
    METHOD delItem(nItemORcKey)
    METHOD getItem(nItemORcKey)
    METHOD clear()
-   METHOD panelClick(xParam)                  SETGET
-   METHOD panelDblClick(xParam)               SETGET
+   METHOD panelClick(xParam) SETGET
+   METHOD panelDblClick(xParam) SETGET
 
 ENDCLASS
 
@@ -84,9 +84,9 @@ METHOD WvgStatusBar:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD + WS_BORDER + SBARS_TOOLTIPS
-   ::className   := STATUSCLASSNAME
-   ::objType     := objTypeStatusBar
+   ::style := WS_CHILD + WS_BORDER + SBARS_TOOLTIPS
+   ::className := STATUSCLASSNAME
+   ::objType := objTypeStatusBar
 
    RETURN Self
 

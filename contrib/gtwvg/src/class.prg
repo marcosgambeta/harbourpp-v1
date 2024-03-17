@@ -96,7 +96,7 @@
 
 CREATE CLASS TBrowseWvg INHERIT TBrowse
 
-   VAR    aColumnsSep                             INIT {}
+   VAR aColumnsSep INIT {}
 
    METHOD SetVisible()
 

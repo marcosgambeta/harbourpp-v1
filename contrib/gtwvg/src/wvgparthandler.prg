@@ -58,7 +58,7 @@
 
 CREATE CLASS WvgPartHandler
 
-   VAR    cargo
+   VAR cargo
 
    METHOD new(oParent, oOwner)
    METHOD create(oParent, oOwner)
@@ -79,22 +79,22 @@ CREATE CLASS WvgPartHandler
    METHOD notifier(nEvent, xParams)
    METHOD controlWndProc(hWnd, nMessage, nwParam, nlParam)
 
-   VAR    aChildren                             INIT {}
-   VAR    nNameId
-   VAR    oParent
-   VAR    oOwner
-   VAR    nStatus                               INIT 0
+   VAR aChildren INIT {}
+   VAR nNameId
+   VAR oParent
+   VAR oOwner
+   VAR nStatus INIT 0
 
    /* Application Level Notifier */
-   VAR    sb_notifier
-   METHOD notifierBlock(...)                  SETGET
+   VAR sb_notifier
+   METHOD notifierBlock(...) SETGET
 
 ENDCLASS
 
 METHOD WvgPartHandler:new(oParent, oOwner)
 
    ::oParent := oParent
-   ::oOwner  := oOwner
+   ::oOwner := oOwner
 
    RETURN Self
 
@@ -104,7 +104,7 @@ METHOD WvgPartHandler:create(oParent, oOwner)
    __defaultNIL(@oOwner, ::oOwner)
 
    ::oParent := oParent
-   ::oOwner  := oOwner
+   ::oOwner := oOwner
 
    RETURN Self
 
@@ -114,16 +114,16 @@ METHOD WvgPartHandler:configure(oParent, oOwner)
    __defaultNIL(@oOwner, ::oOwner)
 
    ::oParent := oParent
-   ::oOwner  := oOwner
+   ::oOwner := oOwner
 
    RETURN Self
 
 METHOD WvgPartHandler:destroy()
 
-   ::hChildren  := NIL
-   ::nNameId    := NIL
-   ::oParent    := NIL
-   ::oOwner     := NIL
+   ::hChildren := NIL
+   ::nNameId := NIL
+   ::oParent := NIL
+   ::oOwner := NIL
 
    RETURN Self
 
@@ -481,9 +481,9 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       EXIT
 
    CASE WM_COMMAND
-      nCtrlID   := wvg_LOWORD(nwParam)
+      nCtrlID := wvg_LOWORD(nwParam)
       nNotifctn := wvg_HIWORD(nwParam)
-      hWndCtrl  := nlParam
+      hWndCtrl := nlParam
 
       IF hWndCtrl == 0                            /* It is menu */
          IF HB_ISOBJECT(::oMenu)

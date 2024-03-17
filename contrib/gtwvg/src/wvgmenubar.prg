@@ -58,31 +58,31 @@
 
 CREATE CLASS WvgMenuBar INHERIT wvgWindow
 
-   CLASS VAR nMenuItemID                         INIT 0
+   CLASS VAR nMenuItemID INIT 0
 
-   VAR    hMenu
-   VAR    pMenu
+   VAR hMenu
+   VAR pMenu
 
    /* Event CallBack Slots */
-   VAR    sl_beginMenu
-   VAR    sl_endMenu
-   VAR    sl_itemMarked
-   VAR    sl_itemSelected
-   VAR    sl_drawItem
-   VAR    sl_measureItem
-   VAR    sl_onMenuKey
+   VAR sl_beginMenu
+   VAR sl_endMenu
+   VAR sl_itemMarked
+   VAR sl_itemSelected
+   VAR sl_drawItem
+   VAR sl_measureItem
+   VAR sl_onMenuKey
 
-   VAR    aMenuItems                             INIT {}
+   VAR aMenuItems INIT {}
 
-   VAR    nPass                                  INIT 0
+   VAR nPass INIT 0
 
-   VAR    caption                                INIT ""
-   VAR    nItemID                                INIT 0
-   VAR    aIds                                   INIT {}
+   VAR caption INIT ""
+   VAR nItemID INIT 0
+   VAR aIds INIT {}
 
-   VAR    className                              INIT "MENUBAR"
+   VAR className INIT "MENUBAR"
 
-   METHOD numItems()                             INLINE Len(::aMenuItems)
+   METHOD numItems() INLINE Len(::aMenuItems)
 
    METHOD new(oParent, aPresParams, lVisible)
    METHOD create(oParent, aPresParams, lVisible)
@@ -105,13 +105,13 @@ CREATE CLASS WvgMenuBar INHERIT wvgWindow
    METHOD setItem(nItemNum, aItem)
 
    /* Event Callback Methods */
-   METHOD beginMenu(xParam)                   SETGET
-   METHOD endMenu(xParam)                     SETGET
-   METHOD itemMarked(xParam)                  SETGET
-   METHOD itemSelected(xParam)                SETGET
-   METHOD drawItem(xParam)                    SETGET
-   METHOD measureItem(xParam)                 SETGET
-   METHOD onMenuKey(xParam)                   SETGET
+   METHOD beginMenu(xParam) SETGET
+   METHOD endMenu(xParam) SETGET
+   METHOD itemMarked(xParam) SETGET
+   METHOD itemSelected(xParam) SETGET
+   METHOD drawItem(xParam) SETGET
+   METHOD measureItem(xParam) SETGET
+   METHOD onMenuKey(xParam) SETGET
 
    PROTECTED:
    METHOD putItem(aItem, nPos, lInsert)
@@ -124,9 +124,9 @@ METHOD WvgMenuBar:new(oParent, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible, ::visible)
 
-   ::oParent     := oParent
+   ::oParent := oParent
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    ::wvgWindow:new(::oParent, , , , ::aPresParams, ::visible)
 
@@ -138,9 +138,9 @@ METHOD WvgMenuBar:create(oParent, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible, ::visible)
 
-   ::oParent     := oParent
+   ::oParent := oParent
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    ::wvgWindow:create(::oParent, , , , ::aPresParams, ::visible)
 
@@ -175,9 +175,9 @@ METHOD WvgMenuBar:configure(oParent, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible, ::visible)
 
-   ::oParent     := oParent
+   ::oParent := oParent
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    RETURN Self
 
@@ -241,14 +241,14 @@ METHOD WvgMenuBar:addItem(aItem, p2, p3, p4)
    IF PCount() == 1 .AND. HB_ISARRAY(aItem)
       ASize(aItem, 4)
       xCaption := aItem[1]
-      bAction  := aItem[2]
-      nStyle   := aItem[3]
-      nAttrib  := aItem[4]
+      bAction := aItem[2]
+      nStyle := aItem[3]
+      nAttrib := aItem[4]
    ELSE
       xCaption := aItem
-      bAction  := p2
-      nStyle   := p3
-      nAttrib  := p4
+      bAction := p2
+      nStyle := p3
+      nAttrib := p4
    ENDIF
 
    RETURN ::putItem({xCaption, bAction, nStyle, nAttrib}, -1, .T.)
@@ -267,9 +267,9 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
    ASize(aItem, 4)
 
    xCaption := aItem[1]
-   bAction  := aItem[2]
-   nStyle   := aItem[3]
-   nAttrib  := aItem[4]
+   bAction := aItem[2]
+   nStyle := aItem[3]
+   nAttrib := aItem[4]
 
    /* xCaption : NIL | cPrompt | ncResource | oMenu */
    SWITCH ValType(xCaption)
@@ -287,7 +287,7 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
 
    CASE "O"
       cCaption := iif(bAction == NIL, xCaption:title, bAction)
-      aItem    := {MF_POPUP, xCaption:hMenu, cCaption, xCaption, nStyle, nAttrib}
+      aItem := {MF_POPUP, xCaption:hMenu, cCaption, xCaption, nStyle, nAttrib}
       EXIT
 
    CASE "N"  /* Resource ID */

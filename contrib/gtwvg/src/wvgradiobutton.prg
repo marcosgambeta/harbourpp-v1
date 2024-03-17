@@ -58,10 +58,10 @@
 
 CREATE CLASS WvgRadioButton INHERIT WvgWindow, WvgDataRef
 
-   VAR    autosize                              INIT .F.
-   VAR    caption                               INIT ""
-   VAR    pointerFocus                          INIT .T.
-   VAR    selection                             INIT .F.
+   VAR autosize INIT .F.
+   VAR caption INIT ""
+   VAR pointerFocus INIT .T.
+   VAR selection INIT .F.
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -71,8 +71,8 @@ CREATE CLASS WvgRadioButton INHERIT WvgWindow, WvgDataRef
 
    METHOD setCaption(xCaption)
 
-   ACCESS selected                              INLINE ::sl_lbClick
-   ASSIGN selected(bBlock)                    INLINE ::sl_lbClick := bBlock
+   ACCESS selected INLINE ::sl_lbClick
+   ASSIGN selected(bBlock) INLINE ::sl_lbClick := bBlock
 
 ENDCLASS
 
@@ -80,9 +80,9 @@ METHOD WvgRadioButton:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD + BS_AUTORADIOBUTTON
-   ::className   := "BUTTON"
-   ::objType     := objTypeRadioButton
+   ::style := WS_CHILD + BS_AUTORADIOBUTTON
+   ::className := "BUTTON"
+   ::objType := objTypeRadioButton
 
    RETURN Self
 

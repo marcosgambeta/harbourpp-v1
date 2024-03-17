@@ -80,11 +80,11 @@
 /* Class WvtPushButton */
 CREATE CLASS WvtPushButton INHERIT WvtObject
 
-   VAR    cCaption
-   VAR    cFileImage
+   VAR cCaption
+   VAR cFileImage
 
-   ACCESS block                                   INLINE ::bOnLeftUp
-   ASSIGN block(bBlock)                           INLINE ::bOnLeftUp := bBlock
+   ACCESS block INLINE ::bOnLeftUp
+   ASSIGN block(bBlock) INLINE ::bOnLeftUp := bBlock
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()

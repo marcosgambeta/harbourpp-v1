@@ -59,25 +59,25 @@
 /* WvgToolBarButton() Class compatible with XbpToolbarButton() */
 CREATE CLASS WvgStatusBarPanel
 
-   VAR    alignment                             INIT WVGALIGN_LEFT
-   VAR    autosize                              INIT WVGSTATUSBAR_AUTOSIZE_NONE
-   VAR    bevel                                 INIT WVGSTATUSBAR_BEVEL_INSET
-   VAR    enabled                               INIT .T.
-   VAR    index                                 INIT 0
-   VAR    key                                   INIT ""
-   VAR    style                                 INIT WVGSTATUSBAR_PANEL_TEXT
-   VAR    sl_caption                            INIT ""
-   VAR    image                                 INIT NIL
-   VAR    tooltipText                           INIT ""
-   VAR    visible                               INIT .T.
-   VAR    left                                  INIT 0
-   VAR    width                                 INIT 0
-   VAR    minWidth                              INIT 0
+   VAR alignment INIT WVGALIGN_LEFT
+   VAR autosize INIT WVGSTATUSBAR_AUTOSIZE_NONE
+   VAR bevel INIT WVGSTATUSBAR_BEVEL_INSET
+   VAR enabled INIT .T.
+   VAR index INIT 0
+   VAR key INIT ""
+   VAR style INIT WVGSTATUSBAR_PANEL_TEXT
+   VAR sl_caption INIT ""
+   VAR image INIT NIL
+   VAR tooltipText INIT ""
+   VAR visible INIT .T.
+   VAR left INIT 0
+   VAR width INIT 0
+   VAR minWidth INIT 0
 
    METHOD new(cCaption, nStyle, cKey)
-   METHOD caption(cCaption)                     SETGET
+   METHOD caption(cCaption) SETGET
 
-   VAR    oParent
+   VAR oParent
 
 ENDCLASS
 
@@ -87,9 +87,9 @@ METHOD WvgStatusBarPanel:new(cCaption, nStyle, cKey)
    __defaultNIL(@nStyle, ::style)
    __defaultNIL(@cKey, ::key)
 
-   ::sl_caption     := cCaption
-   ::style          := nStyle
-   ::key            := cKey
+   ::sl_caption := cCaption
+   ::style := nStyle
+   ::key := cKey
 
    RETURN Self
 

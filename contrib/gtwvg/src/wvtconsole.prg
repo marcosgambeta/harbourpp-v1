@@ -100,8 +100,8 @@ METHOD WvtConsole:Say(nRow, nCol, xExp, cColor)
 
    IF nRow >= 0 .AND. nCol >= 0 .AND. xExp != NIL
       nCursor := SetCursor(SC_NONE)
-      nCRow   := Row()
-      nCCol   := Col()
+      nCRow := Row()
+      nCCol := Col()
       hb_DispOutAt(nRow, nCol, xExp, cColor)
       SetPos(nCRow, nCCol)
       SetCursor(nCursor)
@@ -117,8 +117,8 @@ METHOD WvtConsole:Box(nRow, nCol, n2Row, n2Col, cBoxChars, cColor)
 
    IF nRow >= 0 .AND. nCol >= 0
       nCursor := SetCursor(SC_NONE)
-      nCRow   := Row()
-      nCCol   := Col()
+      nCRow := Row()
+      nCCol := Col()
       hb_DispBox(nRow, nCol, n2Row, n2Col, cBoxChars, cColor)
       SetPos(nCRow, nCCol)
       SetCursor(nCursor)

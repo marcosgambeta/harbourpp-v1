@@ -62,10 +62,10 @@
 
 CREATE CLASS Wvg3State INHERIT WvgWindow, WvgDataRef
 
-   VAR    autosize                              INIT .F.
-   VAR    caption                               INIT ""
-   VAR    pointerFocus                          INIT .T.
-   VAR    selection                             INIT .F.
+   VAR autosize INIT .F.
+   VAR caption INIT ""
+   VAR pointerFocus INIT .T.
+   VAR selection INIT .F.
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -74,8 +74,8 @@ CREATE CLASS Wvg3State INHERIT WvgWindow, WvgDataRef
 
    METHOD setCaption(xCaption)
 
-   ACCESS selected                              INLINE ::sl_lbClick
-   ASSIGN selected(bBlock)                    INLINE ::sl_lbClick := bBlock
+   ACCESS selected INLINE ::sl_lbClick
+   ASSIGN selected(bBlock) INLINE ::sl_lbClick := bBlock
 
    METHOD handleEvent(nMessage, aNM)
 
@@ -85,9 +85,9 @@ METHOD Wvg3State:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD + BS_AUTO3STATE
-   ::className   := "BUTTON"
-   ::objType     := objType3State
+   ::style := WS_CHILD + BS_AUTO3STATE
+   ::className := "BUTTON"
+   ::objType := objType3State
 
    RETURN Self
 

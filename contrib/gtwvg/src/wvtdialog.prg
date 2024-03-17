@@ -80,67 +80,67 @@
 CREATE CLASS WvtDialog
 
    /* To hold previous settings */
-   VAR    nOldRows
-   VAR    nOldCols
-   VAR    aOldFont
-   VAR    cOldTitle
-   VAR    cOldColor
-   VAR    nOldCursor
-   VAR    aPalette
-   VAR    cScreen
-   VAR    aWvtScreen
-   VAR    aOldPnt
-   VAR    oldTooltipActive
-   VAR    oldTooltipWidth
-   VAR    oldTooltipBkColor
-   VAR    oldTooltipTextColor
-   VAR    oldMenuHandle
-   VAR    oldMenuBlock
-   VAR    lGui
+   VAR nOldRows
+   VAR nOldCols
+   VAR aOldFont
+   VAR cOldTitle
+   VAR cOldColor
+   VAR nOldCursor
+   VAR aPalette
+   VAR cScreen
+   VAR aWvtScreen
+   VAR aOldPnt
+   VAR oldTooltipActive
+   VAR oldTooltipWidth
+   VAR oldTooltipBkColor
+   VAR oldTooltipTextColor
+   VAR oldMenuHandle
+   VAR oldMenuBlock
+   VAR lGui
 
    /* Dialog parameters */
-   VAR    nRows
-   VAR    nCols
-   VAR    cFont
-   VAR    nFontHeight
-   VAR    nFontWidth
-   VAR    nFontBold
-   VAR    nFontQuality
-   VAR    cTitle
-   VAR    cColor
+   VAR nRows
+   VAR nCols
+   VAR cFont
+   VAR nFontHeight
+   VAR nFontWidth
+   VAR nFontBold
+   VAR nFontQuality
+   VAR cTitle
+   VAR cColor
 
    /* Objects handling */
-   VAR    aObjects                                INIT {}
-   VAR    oCurObj
-   VAR    oLastObj
-   VAR    oObjOver
-   VAR    oLastOver
-   VAR    nCurObj                                 INIT 1
-   VAR    nLastObj                                INIT 0
-   VAR    nObjOver                                INIT 0
-   VAR    nLastOver                               INIT -1
-   VAR    nUseObj
-   VAR    oMenu
-   VAR    aDialogKeys                             INIT {}
-   VAR    cDialogID                               INIT ""
+   VAR aObjects INIT {}
+   VAR oCurObj
+   VAR oLastObj
+   VAR oObjOver
+   VAR oLastOver
+   VAR nCurObj INIT 1
+   VAR nLastObj INIT 0
+   VAR nObjOver INIT 0
+   VAR nLastOver INIT -1
+   VAR nUseObj
+   VAR oMenu
+   VAR aDialogKeys INIT {}
+   VAR cDialogID INIT ""
 
    /* Tooltip Management */
-   VAR    nTooltipWidth
-   VAR    nTooltipBkColor
-   VAR    nTooltipTextColor
+   VAR nTooltipWidth
+   VAR nTooltipBkColor
+   VAR nTooltipTextColor
 
    /* Miscellaneous */
-   VAR    ClassName                               INIT "WVTDIALOG"
-   VAR    cPaintBlockID
-   VAR    nPaintID                                INIT 1
-   VAR    nObjID                                  INIT 5000
-   VAR    nKey
-   VAR    hFonts                                  INIT {}
-   VAR    lEventHandled
-   VAR    lTabStops                               INIT .F.
-   VAR    bOnCreate
+   VAR ClassName INIT "WVTDIALOG"
+   VAR cPaintBlockID
+   VAR nPaintID INIT 1
+   VAR nObjID INIT 5000
+   VAR nKey
+   VAR hFonts INIT {}
+   VAR lEventHandled
+   VAR lTabStops INIT .F.
+   VAR bOnCreate
 
-   ACCESS nObjects                                INLINE Len(::aObjects)
+   ACCESS nObjects INLINE Len(::aObjects)
 
    METHOD New(nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFontBold, nFontQuality)
    METHOD create()
@@ -154,10 +154,10 @@ CREATE CLASS WvtDialog
    METHOD Eval(bBlock, p1, p2, p3, p4, p5)
    METHOD ActivateMenu()
 
-   METHOD AddObject(oObject)                    INLINE AAdd(::aObjects, oObject)
-   METHOD MaxRow()                                INLINE ::nRows - 1
-   METHOD MaxCol()                                INLINE ::nCols - 1
-   METHOD OnTimer()                               INLINE AEval(::aObjects, {|o|o:OnTimer()})
+   METHOD AddObject(oObject) INLINE AAdd(::aObjects, oObject)
+   METHOD MaxRow() INLINE ::nRows - 1
+   METHOD MaxCol() INLINE ::nCols - 1
+   METHOD OnTimer() INLINE AEval(::aObjects, {|o|o:OnTimer()})
 
 ENDCLASS
 
@@ -184,36 +184,36 @@ METHOD WvtDialog:New(nRows, nCols, cTitle, cFont, nFontHeight, nFontWidth, nFont
       nFontWidth := fnt_[3]
    ENDIF
 
-   ::nOldRows            := MaxRow() + 1
-   ::nOldCols            := MaxCol() + 1
-   ::aOldFont            := wvt_GetFontInfo()
-   ::cOldTitle           := wvt_GetTitle()
-   ::cOldColor           := SetColor()
-   ::nOldCursor          := SetCursor()
-   ::aPalette            := wvt_GetPalette()
+   ::nOldRows := MaxRow() + 1
+   ::nOldCols := MaxCol() + 1
+   ::aOldFont := wvt_GetFontInfo()
+   ::cOldTitle := wvt_GetTitle()
+   ::cOldColor := SetColor()
+   ::nOldCursor := SetCursor()
+   ::aPalette := wvt_GetPalette()
 
-   ::oldMenuHandle       := wvt_GetMenu()
-   ::oldMenuBlock        := SetKey(wvt_SetMenuKeyEvent())
+   ::oldMenuHandle := wvt_GetMenu()
+   ::oldMenuBlock := SetKey(wvt_SetMenuKeyEvent())
 
-   ::oldTooltipWidth     := wvt_GetToolTipWidth()
-   ::oldTooltipBkColor   := wvt_GetToolTipBkColor()
+   ::oldTooltipWidth := wvt_GetToolTipWidth()
+   ::oldTooltipBkColor := wvt_GetToolTipBkColor()
    ::oldTooltipTextColor := wvt_GetToolTipTextColor()
 
-   ::nRows               := nRows
-   ::nCols               := nCols
-   ::cTitle              := cTitle
-   ::cFont               := cFont
-   ::nFontHeight         := nFontHeight
-   ::nFontWidth          := nFontWidth
-   ::nFontBold           := nFontBold
-   ::nFontQuality        := nFontQuality
+   ::nRows := nRows
+   ::nCols := nCols
+   ::cTitle := cTitle
+   ::cFont := cFont
+   ::nFontHeight := nFontHeight
+   ::nFontWidth := nFontWidth
+   ::nFontBold := nFontBold
+   ::nFontQuality := nFontQuality
 
-   ::cPaintBlockID       := StrZero(hb_Random(99999998), 8)
-   ::nObjOver            := 0
-   ::nKey                := 0
-   ::cColor              := "N/W"
-   ::nUseObj             := 0
-   ::lGui                := wvt_SetGUI(.F.)
+   ::cPaintBlockID := StrZero(hb_Random(99999998), 8)
+   ::nObjOver := 0
+   ::nKey := 0
+   ::cColor := "N/W"
+   ::nUseObj := 0
+   ::lGui := wvt_SetGUI(.F.)
 
    RETURN Self
 
@@ -234,13 +234,13 @@ METHOD WvtDialog:Create()
       wvt_SetToolTipTextColor(::nTooltipTextColor)
    ENDIF
 
-   aPalette      := wvt_GetPalette()
+   aPalette := wvt_GetPalette()
    aPalette[9] := RGB(175, 175, 175)
    wvt_SetPalette(aPalette)
 
-   ::cScreen     := SaveScreen(0, 0, MaxRow(), MaxCol())
-   ::aWvtScreen  := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
-   ::aOldPnt     := WvtSetPaint({})
+   ::cScreen := SaveScreen(0, 0, MaxRow(), MaxCol())
+   ::aWvtScreen := wvt_SaveScreen(0, 0, MaxRow(), MaxCol())
+   ::aOldPnt := WvtSetPaint({})
 
    SetMode(::nRows, ::nCols)
    DO WHILE .T.
@@ -361,7 +361,7 @@ METHOD WvtDialog:Inkey()
    LOCAL i
 
    ::lEventHandled := .F.
-   ::nUseObj       := 0
+   ::nUseObj := 0
 
    ::nKey := ::Event()
    ::OnTimer()
@@ -481,7 +481,7 @@ METHOD WvtDialog:Inkey()
          ENDIF
 
          ::nLastObj := ::nCurObj
-         ::oCurObj  := ::aObjects[::nCurObj]
+         ::oCurObj := ::aObjects[::nCurObj]
          ::oLastObj := ::aObjects[::nCurObj]
 
          IF ::oCurObj:nType == DLG_OBJ_BROWSE

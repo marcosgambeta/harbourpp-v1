@@ -80,8 +80,8 @@
 /* WvtStatusBar */
 CREATE CLASS WvtStatusBar INHERIT WvtObject
 
-   VAR    aPanels
-   VAR    cColor
+   VAR aPanels
+   VAR cColor
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -103,7 +103,7 @@ METHOD WvtStatusBar:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
    ::Super:New(oParent, DLG_OBJ_STATUSBAR, nID, nTop, nLeft, nBottom, nRight)
 
-   ::cColor  := "N/W"
+   ::cColor := "N/W"
 
    RETURN Self
 
@@ -126,7 +126,7 @@ METHOD WvtStatusBar:PaintBlock()
    a_[Len(a_)]++
    nPanels := Len(::aPanels)
 
-   ::bPaint  := {||wvt_DrawStatusBar(nPanels, a_)}
+   ::bPaint := {||wvt_DrawStatusBar(nPanels, a_)}
    AAdd(::aPaint, {::bPaint, {WVT_BLOCK_STATUSBAR, ::nTop, ::nLeft, ::nBottom, ::nRight}})
 
    RETURN Self
@@ -158,7 +158,7 @@ METHOD WvtStatusBar:SetPanels(aPanels)
    ATail(::aPanels):nRight := nLastCol
 
    FOR i := Len(::aPanels) - 1 TO 1 STEP -1
-      oPanel        := ::aPanels[i]
+      oPanel := ::aPanels[i]
       oPanel:nRight := ::aPanels[i + 1]:nLeft
       oPanel:cColor := ::cColor
    NEXT
@@ -170,8 +170,8 @@ METHOD WvtStatusBar:Update(nPanel, cText, cColor)
    LOCAL oPanel
 
    IF nPanel > 0 .AND. nPanel <= Len(::aPanels)
-      oPanel        := ::aPanels[nPanel]
-      oPanel:Text   := cText
+      oPanel := ::aPanels[nPanel]
+      oPanel:Text := cText
       oPanel:cColor := iif(cColor == NIL, "N/W", cColor)
       oPanel:Refresh()
    ENDIF
@@ -185,8 +185,8 @@ METHOD WvtStatusBar:SetText(nPanel, cText, cColor)
    __defaultNIL(@cColor, ::cColor)
 
    IF nPanel > 0 .AND. nPanel <= Len(::aPanels)
-      oPanel        := ::aPanels[nPanel]
-      oPanel:Text   := cText
+      oPanel := ::aPanels[nPanel]
+      oPanel:Text := cText
       oPanel:cColor := cColor
    ENDIF
 

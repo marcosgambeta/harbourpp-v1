@@ -80,18 +80,18 @@
 /* Class WvtToolBar */
 CREATE CLASS WvtToolBar INHERIT WvtObject
 
-   VAR    nPaintID
-   VAR    aObjects                                INIT {}
-   VAR    lHidden                                 INIT .F.
-   VAR    nCurButton                              INIT 0
-   VAR    lActive
-   VAR    lFloating
-   VAR    wScreen
-   VAR    cScreen
-   VAR    nBtnLeft                                INIT 0
-   VAR    nRGBSep                                 INIT RGB(150, 150, 150)
+   VAR nPaintID
+   VAR aObjects INIT {}
+   VAR lHidden INIT .F.
+   VAR nCurButton INIT 0
+   VAR lActive
+   VAR lFloating
+   VAR wScreen
+   VAR cScreen
+   VAR nBtnLeft INIT 0
+   VAR nRGBSep INIT RGB(150, 150, 150)
 
-   ACCESS nButtons                                INLINE Len(::aButtons)
+   ACCESS nButtons INLINE Len(::aButtons)
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -105,16 +105,16 @@ ENDCLASS
 
 METHOD WvtToolBar:New(oParent, nID, nTop, nLeft, nBottom, nRight)
 
-   nTop    := 0
-   nLeft   := 0
+   nTop := 0
+   nLeft := 0
    __defaultNIL(@nBottom, 1)
-   nRight  := oParent:MaxCol()
+   nRight := oParent:MaxCol()
 
    ::Super:New(oParent, DLG_OBJ_TOOLBAR, nID, nTop, nLeft, nBottom, nRight)
 
-   ::lActive   := .T.
+   ::lActive := .T.
    ::lFloating := .F.
-   ::nPaintID  := ::oParent:nPaintID++
+   ::nPaintID := ::oParent:nPaintID++
 
    RETURN Self
 
@@ -161,25 +161,25 @@ METHOD WvtToolBar:AddButton(cFileImage, bBlock, cTooltip)
 
    oObj := WvtToolButton():New(Self)
 
-   oObj:lActive    := ::lActive
-   oObj:nTop       := ::nTop
-   oObj:nLeft      := ::nBtnLeft + 1
-   oObj:nBottom    := ::nBottom
+   oObj:lActive := ::lActive
+   oObj:nTop := ::nTop
+   oObj:nLeft := ::nBtnLeft + 1
+   oObj:nBottom := ::nBottom
 
    IF HB_ISSTRING(cFileImage)
-      oObj:nBtnType   := TLB_BUTTON_TYPE_IMAGE
-      oObj:nRight     := oObj:nLeft + nCol - 1
+      oObj:nBtnType := TLB_BUTTON_TYPE_IMAGE
+      oObj:nRight := oObj:nLeft + nCol - 1
       oObj:cFileImage := cFileImage
-      oObj:bOnLeftUp  := bBlock
-      oObj:Tooltip    := cTooltip
+      oObj:bOnLeftUp := bBlock
+      oObj:Tooltip := cTooltip
    ELSE
-      oObj:nBtnType   := TLB_BUTTON_TYPE_SEPARATOR
-      oObj:nRight     := oObj:nLeft
+      oObj:nBtnType := TLB_BUTTON_TYPE_SEPARATOR
+      oObj:nRight := oObj:nLeft
    ENDIF
 
    AAdd(::aObjects, oObj)
 
-   ::nBtnLeft         := oObj:nRight + 1
+   ::nBtnLeft := oObj:nRight + 1
    ::nCurButton++
 
    ::oParent:AddObject(oObj)
@@ -189,11 +189,11 @@ METHOD WvtToolBar:AddButton(cFileImage, bBlock, cTooltip)
 METHOD WvtToolBar:HoverOn()
 
    IF ::lFloating .AND. ::lHidden
-      ::lHidden   := .F.
-      ::lActive   := .T.
+      ::lHidden := .F.
+      ::lActive := .T.
 #if 0
-      ::cScreen   := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
-      ::wScreen   := wvt_SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
+      ::cScreen := SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
+      ::wScreen := wvt_SaveScreen(::nTop, ::nLeft, ::nBottom, ::nRight)
 #endif
       AEval(::aObjects, {|o|o:lActive := ::lActive})
 

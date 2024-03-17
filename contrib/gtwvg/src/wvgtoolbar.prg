@@ -58,29 +58,29 @@
 
 CREATE CLASS WvgToolBar INHERIT WvgWindow /*WvgActiveXControl*/
 
-   VAR    appearance
-   VAR    style                                 INIT WVGTOOLBAR_STYLE_STANDARD
-   VAR    allowCustomize                        INIT .T.
-   VAR    enabled                               INIT .T.
-   VAR    showToolTips                          INIT .T.
-   VAR    borderStyle                           INIT WVGFRAME_NONE
-   VAR    wrappable                             INIT .T.
-   VAR    buttonWidth                           INIT 0
-   VAR    buttonHeight                          INIT 0
-   VAR    textAlign                             INIT WVGALIGN_BOTTOM
-   VAR    imageWidth                            INIT 0
-   VAR    imageHeight                           INIT 0
-   VAR    transparentColor                      INIT 0
+   VAR appearance
+   VAR style INIT WVGTOOLBAR_STYLE_STANDARD
+   VAR allowCustomize INIT .T.
+   VAR enabled INIT .T.
+   VAR showToolTips INIT .T.
+   VAR borderStyle INIT WVGFRAME_NONE
+   VAR wrappable INIT .T.
+   VAR buttonWidth INIT 0
+   VAR buttonHeight INIT 0
+   VAR textAlign INIT WVGALIGN_BOTTOM
+   VAR imageWidth INIT 0
+   VAR imageHeight INIT 0
+   VAR transparentColor INIT 0
 
-   VAR    aItems                                INIT {}
-   VAR    hImageList
-   VAR    lSized                                INIT .F.
+   VAR aItems INIT {}
+   VAR hImageList
+   VAR lSized INIT .F.
 
-   VAR    sl_change
-   VAR    sl_buttonMenuClick
-   VAR    sl_buttonDropDown
+   VAR sl_change
+   VAR sl_buttonMenuClick
+   VAR sl_buttonDropDown
 
-   METHOD numItems()                            INLINE Len(::aItems)
+   METHOD numItems() INLINE Len(::aItems)
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -100,10 +100,10 @@ CREATE CLASS WvgToolBar INHERIT WvgWindow /*WvgActiveXControl*/
    METHOD setPosAndSize()
    METHOD setSize()
 
-   METHOD buttonClick(xParam)                 SETGET
-   METHOD change(xParam)                      SETGET
-   METHOD buttonMenuClick(xParam)             SETGET
-   METHOD buttonDropDown(xParam)              SETGET
+   METHOD buttonClick(xParam) SETGET
+   METHOD change(xParam) SETGET
+   METHOD buttonMenuClick(xParam) SETGET
+   METHOD buttonDropDown(xParam) SETGET
 
 ENDCLASS
 
@@ -113,12 +113,12 @@ METHOD WvgToolBar:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 #if 0
    /* + TBSTYLE_LIST   caption to the right, otherwise caption to the bottom */
-   ::style       := WIN_WS_CHILD + TBSTYLE_FLAT + CCS_ADJUSTABLE + CCS_NODIVIDER + CCS_VERT
+   ::style := WIN_WS_CHILD + TBSTYLE_FLAT + CCS_ADJUSTABLE + CCS_NODIVIDER + CCS_VERT
 #endif
 
-   ::exStyle     := TBSTYLE_EX_DOUBLEBUFFER + TBSTYLE_EX_MIXEDBUTTONS
-   ::className   := TOOLBARCLASSNAME
-   ::objType     := objTypeToolBar
+   ::exStyle := TBSTYLE_EX_DOUBLEBUFFER + TBSTYLE_EX_MIXEDBUTTONS
+   ::className := TOOLBARCLASSNAME
+   ::objType := objTypeToolBar
 
    RETURN Self
 
@@ -278,7 +278,7 @@ METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nSt
 
    oBtn := WvgToolBarButton():new(cCaption, nStyle, cKey)
 
-   oBtn:index   := ::numItems + 1
+   oBtn:index := ::numItems + 1
    oBtn:command := 100 + oBtn:index
 
    SWITCH ValType(xImage)

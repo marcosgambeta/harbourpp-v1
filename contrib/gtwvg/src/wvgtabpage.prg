@@ -58,13 +58,13 @@
 
 CREATE CLASS WvgTabPage INHERIT WvgWindow
 
-   VAR    caption                               INIT NIL /* Character string, Numeric, Object ("")                                                                           */
-   VAR    clipChildren                          INIT .T. /* Determines whether Xbase Parts in the child list are clipped during graphic output.                              */
-   VAR    minimized                             INIT .T. /* Determines whether the XbpTabPage is minimized after it is created (the page is not visible).                    */
-   VAR    postOffset                            INIT 80  /* Determines the distance between the end of the tab and the end of the page as a percentage of the page width.    */
-   VAR    preOffset                             INIT 0   /* Determines the distance between the start of the tab and the start of the page as a percentage of the page width.*/
-   VAR    tabHeight                             INIT -1  /* Determines the height of the tab.                                                                                */
-   VAR    type                                  INIT WVGTABPAGE_TAB_TOP /* Determines the position of the tab.                                                               */
+   VAR caption INIT NIL /* Character string, Numeric, Object ("")                                                                           */
+   VAR clipChildren INIT .T. /* Determines whether Xbase Parts in the child list are clipped during graphic output.                              */
+   VAR minimized INIT .T. /* Determines whether the XbpTabPage is minimized after it is created (the page is not visible).                    */
+   VAR postOffset INIT 80  /* Determines the distance between the end of the tab and the end of the page as a percentage of the page width.    */
+   VAR preOffset INIT 0   /* Determines the distance between the start of the tab and the start of the page as a percentage of the page width.*/
+   VAR tabHeight INIT -1  /* Determines the height of the tab.                                                                                */
+   VAR type INIT WVGTABPAGE_TAB_TOP /* Determines the position of the tab.                                                               */
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -75,8 +75,8 @@ CREATE CLASS WvgTabPage INHERIT WvgWindow
    METHOD Minimize()
    METHOD Maximize()
 
-   VAR    sl_tabActivate
-   METHOD tabActivate(xParam)                  SETGET
+   VAR sl_tabActivate
+   METHOD tabActivate(xParam) SETGET
 
 ENDCLASS
 
@@ -84,9 +84,9 @@ METHOD WvgTabPage:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD
-   ::className   := "SysTabControl32"
-   ::objType     := objTypeTabPage
+   ::style := WS_CHILD
+   ::className := "SysTabControl32"
+   ::objType := objTypeTabPage
 
    RETURN Self
 

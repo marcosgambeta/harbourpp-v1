@@ -89,7 +89,7 @@ FUNCTION WvtPaintObjects()
                IF Len(b:aColumnsSep) == 0
                   lExe := .F.
                ELSE
-                  nLeft  := b:aColumnsSep[1]
+                  nLeft := b:aColumnsSep[1]
                   nRight := b:aColumnsSep[Len(b:aColumnsSep)]
                   IF      tlbr_[1] > aBlocks[i][3][4] ; /* top    > bottom */
                      .OR. tlbr_[3] < aBlocks[i][3][2] ; /* bottom < top    */
@@ -274,7 +274,7 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
       __defaultNIL(@aOffSet[3], 0)
       __defaultNIL(@aOffSet[4], 0)
 
-      nBaseUnits  := wvg_GetDialogBaseUnits()
+      nBaseUnits := wvg_GetDialogBaseUnits()
       nBaseUnitsX := wvg_LOWORD(nBaseUnits)
       nBaseUnitsY := wvg_HIWORD(nBaseUnits)
 
@@ -284,15 +284,15 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
       /* Position it exactly where user has requested */
 
       aXY := wvt_ClientToScreen(nTop, nLeft)
-      nX  := aXY[1] + aOffSet[2]
-      nY  := aXY[2] + aOffSet[1]
+      nX := aXY[1] + aOffSet[2]
+      nY := aXY[2] + aOffSet[1]
 
       /* MSDN says DlgBaseUnits and Screen Coordinates has multiplier of 4,8 for X and Y.
        * But in my practice, the values below are 99% accurate.
        * I have tested it on many fonts but on 1280/800 resolution.
        * Please feel free to experiment if you find these values inappropriate.
        */
-      nXM :=  5.25
+      nXM := 5.25
       nYM := 10.25
 
       nX := nX * nXM / nBaseUnitsX
@@ -349,7 +349,7 @@ FUNCTION wvt_AddDlgItem(aDlg, nTop, nLeft, nRows, nCols, aOffSet, cnId, cnDlgCla
 
    IF nMode == 0
       nBottom := nTop  + nRows - 1
-      nRight  := nLeft + nCols - 1
+      nRight := nLeft + nCols - 1
 
       __defaultNIL(@aOffSet, {})
 
@@ -360,19 +360,19 @@ FUNCTION wvt_AddDlgItem(aDlg, nTop, nLeft, nRows, nCols, aOffSet, cnId, cnDlgCla
       __defaultNIL(@aOffSet[3], 0)
       __defaultNIL(@aOffSet[4], 0)
 
-      nBaseUnits  := wvg_GetDialogBaseUnits()
+      nBaseUnits := wvg_GetDialogBaseUnits()
       nBaseUnitsX := wvg_LOWORD(nBaseUnits)
       nBaseUnitsY := wvg_HIWORD(nBaseUnits)
 
       aXY := wvt_GetXYFromRowCol(nTop, nLeft)
-      nX  := aXY[1] + aOffSet[2]
-      nY  := aXY[2] + aOffSet[1]
+      nX := aXY[1] + aOffSet[2]
+      nY := aXY[2] + aOffSet[1]
 
       aXY := wvt_GetXYFromRowCol(nBottom + 1, nRight + 1)
-      nW  := aXY[1] + aOffSet[4] - nX
-      nH  := aXY[2] + aOffSet[3] - nY
+      nW := aXY[1] + aOffSet[4] - nX
+      nH := aXY[2] + aOffSet[3] - nY
 
-      nXM :=  5.25
+      nXM := 5.25
       nYM := 10.25
 
       nX := nX * nXM / nBaseUnitsX
@@ -413,7 +413,7 @@ FUNCTION wvt_CreateDialog(acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu)
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   cType    := ValType(acnDlg)
+   cType := ValType(acnDlg)
    nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
 
    IF cType == "A"
@@ -451,7 +451,7 @@ FUNCTION wvt_DialogBox(acnDlg, cbDlgProc, hWndParent)
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   cType    := ValType(acnDlg)
+   cType := ValType(acnDlg)
    nDlgMode := iif(cType == "C", 0, iif(cType == "N", 1, 2))
 
    IF cType == "A"

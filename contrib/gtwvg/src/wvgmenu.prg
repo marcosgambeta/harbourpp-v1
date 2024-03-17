@@ -59,7 +59,7 @@
 /* Xbase++ compatible xbpMenu class */
 CREATE CLASS WvgMenu INHERIT WvgMenuBar
 
-   VAR    title                                 INIT ""
+   VAR title INIT ""
 
    METHOD new(oParent, aPresParams, lVisible)
    METHOD create(oParent, aPresParams, lVisible)
@@ -76,9 +76,9 @@ METHOD WvgMenu:new(oParent, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible, ::visible)
 
-   ::oParent     := oParent
+   ::oParent := oParent
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    RETURN Self
 
@@ -88,9 +88,9 @@ METHOD WvgMenu:create(oParent, aPresParams, lVisible)
    __defaultNIL(@aPresParams, ::aPresParams)
    __defaultNIL(@lVisible, ::visible)
 
-   ::oParent     := oParent
+   ::oParent := oParent
    ::aPresParams := aPresParams
-   ::visible     := lVisible
+   ::visible := lVisible
 
    ::className := "POPUPMENU"
 

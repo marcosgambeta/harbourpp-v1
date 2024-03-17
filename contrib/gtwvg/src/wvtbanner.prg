@@ -80,20 +80,20 @@
 /* CLASS WvtBanner */
 CREATE CLASS WvtBanner INHERIT WvtObject
 
-   VAR    nTimeDelay                              INIT 0.5    /* One-half Second */
-   VAR    nDirection                              INIT 0      /* LEFT 1-RIGHT */
-   VAR    nCharToSkip                             INIT 1
-   VAR    cText                                   INIT ""
-   VAR    cDispText                               INIT ""
-   VAR    nTextLen                                INIT 0
-   VAR    nTextIndex                              INIT 0
+   VAR nTimeDelay INIT 0.5    /* One-half Second */
+   VAR nDirection INIT 0      /* LEFT 1-RIGHT */
+   VAR nCharToSkip INIT 1
+   VAR cText INIT ""
+   VAR cDispText INIT ""
+   VAR nTextLen INIT 0
+   VAR nTextIndex INIT 0
 
-   VAR    oLabel
+   VAR oLabel
 
-   VAR    nAlignVert                              INIT 2     /* Center */
+   VAR nAlignVert INIT 2     /* Center */
 
-   VAR    nCurSeconds                             INIT 0
-   VAR    nCurAlign
+   VAR nCurSeconds INIT 0
+   VAR nCurAlign
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -118,28 +118,28 @@ METHOD WvtBanner:Create()
    ::cDispText := ::cText
 
    ::oLabel := WvtLabel():New(::oParent, , ::nTop, ::nLeft, ::nBottom, ::nRight)
-   ::oLabel:Text              := ::cDispText
-   ::oLabel:cFont             := ::cFont
-   ::oLabel:nFontHeight       := ::nFontHeight
-   ::oLabel:nFontWidth        := ::nFontWidth
-   ::oLabel:nFontWeight       := ::nFontWeight
-   ::oLabel:nFontQuality      := ::nFontQuality
-   ::oLabel:lItalic           := ::lItalic
-   ::oLabel:lStrikeout        := ::lStrikeout
-   ::oLabel:lUnderline        := ::lUnderline
-   ::oLabel:nAlignVert        := ::nAlignVert
-   ::oLabel:nAlignHorz        := iif(::nDirection == 0, 0, 1)
-   ::oLabel:nTextColor        := ::nTextColor
-   ::oLabel:nBackColor        := ::nBackColor
+   ::oLabel:Text := ::cDispText
+   ::oLabel:cFont := ::cFont
+   ::oLabel:nFontHeight := ::nFontHeight
+   ::oLabel:nFontWidth := ::nFontWidth
+   ::oLabel:nFontWeight := ::nFontWeight
+   ::oLabel:nFontQuality := ::nFontQuality
+   ::oLabel:lItalic := ::lItalic
+   ::oLabel:lStrikeout := ::lStrikeout
+   ::oLabel:lUnderline := ::lUnderline
+   ::oLabel:nAlignVert := ::nAlignVert
+   ::oLabel:nAlignHorz := iif(::nDirection == 0, 0, 1)
+   ::oLabel:nTextColor := ::nTextColor
+   ::oLabel:nBackColor := ::nBackColor
    ::oLabel:nTextColorHoverOn := ::nTextColorHoverOn
    ::oLabel:nBackColorHoverOn := ::nBackColorHoverOn
 
    ::oLabel:Create()
 
    ::nCurSeconds := Seconds()
-   ::nTextLen    := Len(::cText)
-   ::nTextIndex  := iif(::nDirection == 0, 1, ::nTextLen)
-   ::nCurAlign   := ::nDirection
+   ::nTextLen := Len(::cText)
+   ::nTextIndex := iif(::nDirection == 0, 1, ::nTextLen)
+   ::nCurAlign := ::nDirection
 
    ::Super:Create()
 
@@ -180,7 +180,7 @@ METHOD WvtBanner:Refresh()
          ::nTextIndex++
          IF ::nTextIndex > ::nTextLen
             ::nTextIndex := 1
-            ::nCurAlign  := iif(::nCurAlign == 0, 1, 0)
+            ::nCurAlign := iif(::nCurAlign == 0, 1, 0)
          ENDIF
 
          IF ::nCurAlign == 0   /* Left */

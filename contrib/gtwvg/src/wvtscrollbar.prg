@@ -80,48 +80,48 @@
 /* Class WvtScrollBar */
 CREATE CLASS WvtScrollBar INHERIT WvtObject
 
-   VAR    nBarType                                INIT WVT_SCROLLBAR_VERT
+   VAR nBarType INIT WVT_SCROLLBAR_VERT
 
-   VAR    nTotal                                  INIT 100
-   VAR    nCurrent                                INIT 1
-   VAR    nThumbPos                               INIT 0
-   VAR    nBlockNo                                INIT 1
+   VAR nTotal INIT 100
+   VAR nCurrent INIT 1
+   VAR nThumbPos INIT 0
+   VAR nBlockNo INIT 1
 
-   VAR    nSTop
-   VAR    nSLeft
-   VAR    nSBottom
-   VAR    nSRight
+   VAR nSTop
+   VAR nSLeft
+   VAR nSBottom
+   VAR nSRight
 
-   VAR    nBtn1Top
-   VAR    nBtn1Left
-   VAR    nBtn1Bottom
-   VAR    nBtn1Right
+   VAR nBtn1Top
+   VAR nBtn1Left
+   VAR nBtn1Bottom
+   VAR nBtn1Right
 
-   VAR    nBtn2Top
-   VAR    nBtn2Left
-   VAR    nBtn2Bottom
-   VAR    nBtn2Right
-   VAR    bBtnLeftTop
-   VAR    bBtnLeftTopDep
-   VAR    bBtnRightBottom
-   VAR    bBtnRightBottomDep
-   VAR    bBtnScroll
-   VAR    bTotal
-   VAR    bCurrent
-   VAR    lHidden                                 INIT .T.
+   VAR nBtn2Top
+   VAR nBtn2Left
+   VAR nBtn2Bottom
+   VAR nBtn2Right
+   VAR bBtnLeftTop
+   VAR bBtnLeftTopDep
+   VAR bBtnRightBottom
+   VAR bBtnRightBottomDep
+   VAR bBtnScroll
+   VAR bTotal
+   VAR bCurrent
+   VAR lHidden INIT .T.
 
-   VAR    aPxlBtnTop                              INIT {0, 0, 0, 0}
-   VAR    aPxlBtnLft                              INIT {0, 0, 0, 0}
-   VAR    aPxlBtnBtm                              INIT {0, 0, 0, 0}
-   VAR    aPxlBtnRgt                              INIT {0, 0, 0, 0}
-   VAR    aPxlScroll                              INIT {0, 0, 0, 0}
+   VAR aPxlBtnTop INIT {0, 0, 0, 0}
+   VAR aPxlBtnLft INIT {0, 0, 0, 0}
+   VAR aPxlBtnBtm INIT {0, 0, 0, 0}
+   VAR aPxlBtnRgt INIT {0, 0, 0, 0}
+   VAR aPxlScroll INIT {0, 0, 0, 0}
 
-   VAR    lLeftDown                               INIT .F.
-   VAR    lOnThumb                                INIT .F.
-   VAR    lAnchored                               INIT .F.
-   VAR    lOnLeftDown                             INIT .F.
+   VAR lLeftDown INIT .F.
+   VAR lOnThumb INIT .F.
+   VAR lAnchored INIT .F.
+   VAR lOnLeftDown INIT .F.
 
-   VAR    nScrollUnits                            INIT 0
+   VAR nScrollUnits INIT 0
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -151,28 +151,28 @@ METHOD wvtScrollbar:Create()
       __defaultNIL(@::nBottom, ::nTop + 5)
       __defaultNIL(@::nRight, ::nLeft + 1)
 
-      ::nRight       := ::nLeft + 1
-      ::nBottom      := Max(7, ::nBottom)
+      ::nRight := ::nLeft + 1
+      ::nBottom := Max(7, ::nBottom)
 
-      ::nBtn1Top     := ::nTop
-      ::nBtn1Left    := ::nLeft
-      ::nBtn1Bottom  := ::nTop
-      ::nBtn1Right   := ::nRight
+      ::nBtn1Top := ::nTop
+      ::nBtn1Left := ::nLeft
+      ::nBtn1Bottom := ::nTop
+      ::nBtn1Right := ::nRight
 
-      ::nBtn2Top     := ::nBottom
-      ::nBtn2Left    := ::nLeft
-      ::nBtn2Bottom  := ::nBottom
-      ::nBtn2Right   := ::nRight
+      ::nBtn2Top := ::nBottom
+      ::nBtn2Left := ::nLeft
+      ::nBtn2Bottom := ::nBottom
+      ::nBtn2Right := ::nRight
 
-      ::nSTop        := ::nTop + 1
-      ::nSLeft       := ::nLeft
-      ::nSBottom     := ::nBottom - 1
-      ::nSRight      := ::nRight
+      ::nSTop := ::nTop + 1
+      ::nSLeft := ::nLeft
+      ::nSBottom := ::nBottom - 1
+      ::nSRight := ::nRight
 
       ::nScrollUnits := ::nSBottom - ::nSTop + 1
 
-      ::nTotal       := Eval(::bTotal)
-      ::nCurrent     := Eval(::bCurrent)
+      ::nTotal := Eval(::bTotal)
+      ::nCurrent := Eval(::bCurrent)
       ::ThumbPos()
 
       ::bBtnLeftTop := {||wvt_DrawScrollButton(::nBtn1Top, ::nBtn1Left, ::nBtn1Bottom, ::nBtn1Right, ::aPxlBtnTop, 1)}
@@ -185,28 +185,28 @@ METHOD wvtScrollbar:Create()
       __defaultNIL(@::nBottom, ::nTop)
       __defaultNIL(@::nRight, ::nLeft + 11)
 
-      ::nBottom      := ::nTop
-      ::nRight       := Max(11, ::nRight)
+      ::nBottom := ::nTop
+      ::nRight := Max(11, ::nRight)
 
-      ::nBtn1Top     := ::nTop
-      ::nBtn1Left    := ::nLeft
-      ::nBtn1Bottom  := ::nBottom
-      ::nBtn1Right   := ::nLeft + 1
+      ::nBtn1Top := ::nTop
+      ::nBtn1Left := ::nLeft
+      ::nBtn1Bottom := ::nBottom
+      ::nBtn1Right := ::nLeft + 1
 
-      ::nBtn2Top     := ::nTop
-      ::nBtn2Left    := ::nRight - 1
-      ::nBtn2Bottom  := ::nBottom
-      ::nBtn2Right   := ::nRight
+      ::nBtn2Top := ::nTop
+      ::nBtn2Left := ::nRight - 1
+      ::nBtn2Bottom := ::nBottom
+      ::nBtn2Right := ::nRight
 
-      ::nSTop        := ::nTop
-      ::nSLeft       := ::nLeft + 2
-      ::nSBottom     := ::nBottom
-      ::nSRight      := ::nRight - 2
+      ::nSTop := ::nTop
+      ::nSLeft := ::nLeft + 2
+      ::nSBottom := ::nBottom
+      ::nSRight := ::nRight - 2
 
       ::nScrollUnits := ::nSRight - ::nSLeft + 1
 
-      ::nTotal       := Eval(::bTotal)
-      ::nCurrent     := Eval(::bCurrent)
+      ::nTotal := Eval(::bTotal)
+      ::nCurrent := Eval(::bCurrent)
 
       ::ThumbPos()
 
@@ -218,9 +218,9 @@ METHOD wvtScrollbar:Create()
 
    ENDIF
 
-   ::bOnLeftUp      := {||::HandleEvent(K_LBUTTONUP)}
-   ::bOnLeftDown    := {||::HandleEvent(K_LBUTTONDOWN), .F.}
-   ::bOnMMLeftDown  := {||::HandleEvent(K_MMLEFTDOWN)}
+   ::bOnLeftUp := {||::HandleEvent(K_LBUTTONUP)}
+   ::bOnLeftDown := {||::HandleEvent(K_LBUTTONDOWN), .F.}
+   ::bOnMMLeftDown := {||::HandleEvent(K_MMLEFTDOWN)}
    ::bOnLeftPressed := {||::HandleEvent(K_LBUTTONPRESSED)}
 
    Eval(::bBtnLeftTop)
@@ -232,58 +232,58 @@ METHOD wvtScrollbar:Create()
 
 METHOD wvtScrollbar:Configure(nTop, nLeft, nBottom, nRight)
 
-   ::nTop     := nTop
-   ::nLeft    := nLeft
-   ::nBottom  := nBottom
-   ::nRight   := nRight
+   ::nTop := nTop
+   ::nLeft := nLeft
+   ::nBottom := nBottom
+   ::nRight := nRight
 
    IF ::nBarType == WVT_SCROLLBAR_VERT
-      ::nRight       := ::nLeft + 1
-      ::nBottom      := Max(7, ::nBottom)
+      ::nRight := ::nLeft + 1
+      ::nBottom := Max(7, ::nBottom)
 
-      ::nBtn1Top     := ::nTop
-      ::nBtn1Left    := ::nLeft
-      ::nBtn1Bottom  := ::nTop
-      ::nBtn1Right   := ::nRight
+      ::nBtn1Top := ::nTop
+      ::nBtn1Left := ::nLeft
+      ::nBtn1Bottom := ::nTop
+      ::nBtn1Right := ::nRight
 
-      ::nBtn2Top     := ::nBottom
-      ::nBtn2Left    := ::nLeft
-      ::nBtn2Bottom  := ::nBottom
-      ::nBtn2Right   := ::nRight
+      ::nBtn2Top := ::nBottom
+      ::nBtn2Left := ::nLeft
+      ::nBtn2Bottom := ::nBottom
+      ::nBtn2Right := ::nRight
 
-      ::nSTop        := ::nTop + 1
-      ::nSLeft       := ::nLeft
-      ::nSBottom     := ::nBottom - 1
-      ::nSRight      := ::nRight
+      ::nSTop := ::nTop + 1
+      ::nSLeft := ::nLeft
+      ::nSBottom := ::nBottom - 1
+      ::nSRight := ::nRight
 
       ::nScrollUnits := ::nSBottom - ::nSTop + 1
 
-      ::nTotal       := Eval(::bTotal)
-      ::nCurrent     := Eval(::bCurrent)
+      ::nTotal := Eval(::bTotal)
+      ::nCurrent := Eval(::bCurrent)
       ::ThumbPos()
    ELSE
-      ::nBottom      := ::nTop
-      ::nRight       := Max(11, ::nRight)
+      ::nBottom := ::nTop
+      ::nRight := Max(11, ::nRight)
 
-      ::nBtn1Top     := ::nTop
-      ::nBtn1Left    := ::nLeft
-      ::nBtn1Bottom  := ::nBottom
-      ::nBtn1Right   := ::nLeft + 1
+      ::nBtn1Top := ::nTop
+      ::nBtn1Left := ::nLeft
+      ::nBtn1Bottom := ::nBottom
+      ::nBtn1Right := ::nLeft + 1
 
-      ::nBtn2Top     := ::nTop
-      ::nBtn2Left    := ::nRight - 1
-      ::nBtn2Bottom  := ::nBottom
-      ::nBtn2Right   := ::nRight
+      ::nBtn2Top := ::nTop
+      ::nBtn2Left := ::nRight - 1
+      ::nBtn2Bottom := ::nBottom
+      ::nBtn2Right := ::nRight
 
-      ::nSTop        := ::nTop
-      ::nSLeft       := ::nLeft + 2
-      ::nSBottom     := ::nBottom
-      ::nSRight      := ::nRight - 2
+      ::nSTop := ::nTop
+      ::nSLeft := ::nLeft + 2
+      ::nSBottom := ::nBottom
+      ::nSRight := ::nRight - 2
 
       ::nScrollUnits := ::nSRight - ::nSLeft + 1
 
-      ::nTotal       := Eval(::bTotal)
-      ::nCurrent     := Eval(::bCurrent)
+      ::nTotal := Eval(::bTotal)
+      ::nCurrent := Eval(::bCurrent)
 
       ::ThumbPos()
    ENDIF
@@ -303,7 +303,7 @@ METHOD wvtScrollbar:SetPos(nTotal, nCurrent)
    __defaultNIL(@nTotal, Eval(::bTotal))
    __defaultNIL(@nCurrent, Eval(::bCurrent))
 
-   ::nTotal   := nTotal
+   ::nTotal := nTotal
    ::nCurrent := nCurrent
 
    ::ThumbPos()
@@ -319,7 +319,7 @@ METHOD wvtScrollbar:ThumbPos()
 
    IF ::nBarType == WVT_SCROLLBAR_VERT
       nRecPerUnit := ::nTotal / ::nScrollUnits
-      nCurUnit    := Int(::nCurrent / nRecPerUnit)
+      nCurUnit := Int(::nCurrent / nRecPerUnit)
 
       DO CASE
       CASE ::nCurrent == 1
@@ -327,13 +327,13 @@ METHOD wvtScrollbar:ThumbPos()
       CASE ::nCurrent == ::nTotal
          nCurUnit := ::nScrollUnits
       ENDCASE
-      nNewPos     := ::nSTop + nCurUnit
+      nNewPos := ::nSTop + nCurUnit
 
       DO CASE
       CASE nNewPos < ::nSTop
-         nNewPos  := ::nSTop
+         nNewPos := ::nSTop
       CASE nNewPos > ::nSBottom
-         nNewPos  := ::nSBottom
+         nNewPos := ::nSBottom
       ENDCASE
 
    ELSE
@@ -341,7 +341,7 @@ METHOD wvtScrollbar:ThumbPos()
          nCurUnit := ::nCurrent * Int(::nScrollUnits / ::nTotal)
       ELSE
          nRecPerUnit := ::nTotal / ::nScrollUnits
-         nCurUnit    := Int(::nCurrent / nRecPerUnit)
+         nCurUnit := Int(::nCurrent / nRecPerUnit)
       ENDIF
 
       DO CASE
@@ -382,7 +382,7 @@ METHOD wvtScrollbar:HandleEvent(nKey)
    LOCAL nmRow
    LOCAL nmCol
    LOCAL nOff
-   LOCAL lHit  := .F.
+   LOCAL lHit := .F.
    LOCAL mKeys_ := {K_LBUTTONDOWN, K_LBUTTONUP, K_MMLEFTDOWN, K_LBUTTONPRESSED}
 
    IF AScan(mKeys_, nKey) == 0

@@ -92,12 +92,12 @@ CREATE CLASS wvtMenu
    METHOD FindMenuItemById(nId)
    METHOD DrawMenuBar()
 
-   CLASS VAR MenuItemId                            INIT 1
+   CLASS VAR MenuItemId INIT 1
 
-   VAR    aItems
-   VAR    hMenu
-   VAR    Caption
-   VAR    IdNumber
+   VAR aItems
+   VAR hMenu
+   VAR Caption
+   VAR IdNumber
 
 ENDCLASS
 

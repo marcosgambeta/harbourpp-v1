@@ -58,11 +58,11 @@
 
 CREATE CLASS WvgComboBox INHERIT WvgWindow, WvgDataRef
 
-   VAR    type                                  INIT WVGCOMBO_DROPDOWN
-   VAR    drawMode                              INIT WVG_DRAW_NORMAL
-   VAR    nCurSelected                          INIT 0
+   VAR type INIT WVGCOMBO_DROPDOWN
+   VAR drawMode INIT WVG_DRAW_NORMAL
+   VAR nCurSelected INIT 0
 
-   VAR    aInfo                                 INIT    NIL
+   VAR aInfo INIT NIL
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -76,25 +76,25 @@ CREATE CLASS WvgComboBox INHERIT WvgWindow, WvgDataRef
    METHOD sleSize()
 
    METHOD addItem(cItem)
-   METHOD clear()                               INLINE ::sendCBMessage(CB_RESETCONTENT)
-   METHOD delItem(nIndex)                     INLINE ::sendCBMessage(CB_DELETESTRING, nIndex - 1)
-   METHOD getItem(nIndex)                     INLINE ::sendCBMessage(CB_GETLBTEXT, nIndex - 1)
-   METHOD insItem(nIndex, cItem)              INLINE ::sendCBMessage(CB_INSERTSTRING, nIndex - 1, cItem)
-   METHOD setItem(nIndex, cItem)              VIRTUAL
+   METHOD clear() INLINE ::sendCBMessage(CB_RESETCONTENT)
+   METHOD delItem(nIndex) INLINE ::sendCBMessage(CB_DELETESTRING, nIndex - 1)
+   METHOD getItem(nIndex) INLINE ::sendCBMessage(CB_GETLBTEXT, nIndex - 1)
+   METHOD insItem(nIndex, cItem) INLINE ::sendCBMessage(CB_INSERTSTRING, nIndex - 1, cItem)
+   METHOD setItem(nIndex, cItem) VIRTUAL
    METHOD setIcon(nItem, cIcon)
 
-   VAR    oSLE
-   VAR    oListBox
-   ACCESS XbpSLE                                INLINE ::oSLE
-   ACCESS XbpListBox                            INLINE ::oListBox
+   VAR oSLE
+   VAR oListBox
+   ACCESS XbpSLE INLINE ::oSLE
+   ACCESS XbpListBox INLINE ::oListBox
 
-   VAR    sl_itemMarked
-   VAR    sl_itemSelected
-   VAR    sl_drawItem
+   VAR sl_itemMarked
+   VAR sl_itemSelected
+   VAR sl_drawItem
 
-   METHOD itemMarked(...)                     SETGET
-   METHOD itemSelected(...)                   SETGET
-   METHOD drawItem(...)                       SETGET
+   METHOD itemMarked(...) SETGET
+   METHOD itemSelected(...) SETGET
+   METHOD drawItem(...) SETGET
 
 ENDCLASS
 
@@ -102,13 +102,13 @@ METHOD WvgComboBox:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD + WS_TABSTOP + WS_BORDER + WS_VSCROLL + CBS_NOINTEGRALHEIGHT + CBS_AUTOHSCROLL
+   ::style := WS_CHILD + WS_TABSTOP + WS_BORDER + WS_VSCROLL + CBS_NOINTEGRALHEIGHT + CBS_AUTOHSCROLL
 #if 0
-   ::exStyle     := WS_EX_CLIENTEDGE
+   ::exStyle := WS_EX_CLIENTEDGE
 #endif
 
-   ::className   := "COMBOBOX"
-   ::objType     := objTypeComboBox
+   ::className := "COMBOBOX"
+   ::objType := objTypeComboBox
 
    RETURN Self
 

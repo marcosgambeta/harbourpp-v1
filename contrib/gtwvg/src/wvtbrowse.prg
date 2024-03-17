@@ -80,19 +80,19 @@
 /* Class WvtBrowse */
 CREATE CLASS WvtBrowse INHERIT WvtObject
 
-   VAR    cAlias
-   VAR    oBrw
-   VAR    lHSBar                                  INIT .T.
-   VAR    lVSBar                                  INIT .T.
-   VAR    oHBar
-   VAR    oVBar
-   VAR    bTotalRecords
-   VAR    bCurrentRecord
-   VAR    bTotalColumns
-   VAR    bCurrentColumn
+   VAR cAlias
+   VAR oBrw
+   VAR lHSBar INIT .T.
+   VAR lVSBar INIT .T.
+   VAR oHBar
+   VAR oVBar
+   VAR bTotalRecords
+   VAR bCurrentRecord
+   VAR bTotalColumns
+   VAR bCurrentColumn
 
-   ACCESS cDesc                                   INLINE iif(::cText == NIL, "", ::cText)
-   ASSIGN cDesc(cText)                          INLINE ::cText := cText
+   ACCESS cDesc INLINE iif(::cText == NIL, "", ::cText)
+   ASSIGN cDesc(cText) INLINE ::cText := cText
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -120,15 +120,15 @@ METHOD WvtBrowse:Create()
 
    dbSelectArea(::cAlias)
 #if 0
-   ::nTop    := ::oBrw:nTop - 2
-   ::nLeft   := ::oBrw:nLeft - 2
+   ::nTop := ::oBrw:nTop - 2
+   ::nLeft := ::oBrw:nLeft - 2
    ::nBottom := iif(::lHSBar, ::oBrw:nBottom, ::oBrw:nBottom + 1)
-   ::nRight  := iif(::lVSBar, ::oBrw:nRight, ::oBrw:nRight + 2)
+   ::nRight := iif(::lVSBar, ::oBrw:nRight, ::oBrw:nRight + 2)
 #else
-   ::nTop    := ::oBrw:nTop
-   ::nLeft   := ::oBrw:nLeft
+   ::nTop := ::oBrw:nTop
+   ::nLeft := ::oBrw:nLeft
    ::nBottom := ::oBrw:nBottom
-   ::nRight  := ::oBrw:nRight
+   ::nRight := ::oBrw:nRight
 #endif
    ::PaintBlock(1)
    ::PaintBlock(2)
@@ -154,9 +154,9 @@ METHOD WvtBrowse:SetVBar()
 
    IF ::lVSBar
       ::oVBar := WvtScrollBar():New(Self, 999991, ::oBrw:nTop, ::oBrw:nRight + 1, ::oBrw:nBottom, ::oBrw:nRight + 2)
-      ::oVBar:nBarType   := WVT_SCROLLBAR_VERT
-      ::oVBar:bTotal     := ::bTotalRecords
-      ::oVBar:bCurrent   := ::bCurrentRecord
+      ::oVBar:nBarType := WVT_SCROLLBAR_VERT
+      ::oVBar:bTotal := ::bTotalRecords
+      ::oVBar:bCurrent := ::bCurrentRecord
       ::oVBar:aPxlBtnTop := {-2, 2, 0, 0}
       ::oVBar:aPxlBtnBtm := {0, 2, 2, 0}
       ::oVBar:aPxlScroll := {0, 2, 0, 0}
@@ -177,9 +177,9 @@ METHOD WvtBrowse:SetHBar()
 
    IF ::lHSBar
       ::oHBar := WvtScrollBar():New(Self, 999990, ::oBrw:nBottom + 1, ::oBrw:nLeft, ::oBrw:nBottom + 1, ::oBrw:nRight)
-      ::oHBar:nBarType   := 2
-      ::oHBar:bTotal     := ::bTotalColumns
-      ::oHBar:bCurrent   := ::bCurrentColumn
+      ::oHBar:nBarType := 2
+      ::oHBar:bTotal := ::bTotalColumns
+      ::oHBar:bCurrent := ::bCurrentColumn
       ::oHBar:aPxlBtnLft := {2, -2, 0, 0}
       ::oHBar:aPxlBtnRgt := {2, 0, 0, 2}
       ::oHBar:aPxlScroll := {2, 0, 0, 0}

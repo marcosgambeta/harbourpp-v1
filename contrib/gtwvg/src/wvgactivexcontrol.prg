@@ -63,23 +63,23 @@
 
 CREATE CLASS WvgActiveXControl INHERIT WvgWindow
 
-   VAR    oOLE
-   VAR    CLSID                              INIT ""
-   VAR    server                             INIT NIL
-   VAR    license                            INIT NIL
-   VAR    controlFlags                       INIT 0
-   VAR    default                            INIT .F.
-   VAR    cancel                             INIT .F.
+   VAR oOLE
+   VAR CLSID INIT ""
+   VAR server INIT NIL
+   VAR license INIT NIL
+   VAR controlFlags INIT 0
+   VAR default INIT .F.
+   VAR cancel INIT .F.
 
-   VAR    interface
-   VAR    interfaceName
+   VAR interface
+   VAR interfaceName
 
-   VAR    lSubStdEvents                      INIT .F.
+   VAR lSubStdEvents INIT .F.
 
-   VAR    hEvents                            INIT {=>}
-   VAR    hContainer
+   VAR hEvents INIT {=>}
+   VAR hContainer
 
-   VAR    ClassName
+   VAR ClassName
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible, cCLSID, cLicense)
@@ -109,10 +109,10 @@ METHOD WvgActiveXControl:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style      := WS_CHILD + WS_VISIBLE + WS_CLIPCHILDREN + WS_CLIPSIBLINGS
-   ::exStyle    := WS_EX_CLIENTEDGE
-   ::objType    := objTypeActiveX
-   ::className  := "WIN_OLEAUTO"
+   ::style := WS_CHILD + WS_VISIBLE + WS_CLIPCHILDREN + WS_CLIPSIBLINGS
+   ::exStyle := WS_EX_CLIENTEDGE
+   ::objType := objTypeActiveX
+   ::className := "WIN_OLEAUTO"
 
    RETURN Self
 
@@ -126,8 +126,8 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
    __defaultNIL(@cCLSID, ::CLSID)
    __defaultNIL(@cLicense, ::license)
 
-   ::CLSID      := cCLSID
-   ::license    := cLicense
+   ::CLSID := cCLSID
+   ::license := cLicense
    ::hContainer := iif(HB_ISOBJECT(::oParent), ::oParent:getHWND(), ::oParent)
 
    IF !HB_ISNUMERIC(::hContainer) .OR. !HB_ISSTRING(::CLSID)
@@ -135,7 +135,7 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
    ENDIF
 
    ::hWnd := NIL
-   ::nID  := iif(HB_ISOBJECT(::oParent), ::oParent:GetControlId(), ::getControlID())
+   ::nID := iif(HB_ISOBJECT(::oParent), ::oParent:GetControlId(), ::getControlID())
    ::oOLE := win_oleAuto()
 
    win_axInit()

@@ -59,25 +59,25 @@
 /* WvgToolBarButton() Class compatible with XbpToolbarButton() */
 CREATE CLASS WvgToolBarButton
 
-   VAR    enabled                               INIT .T.
-   VAR    index                                 INIT 0
-   VAR    key                                   INIT ""
-   VAR    style                                 INIT WVGTOOLBAR_BUTTON_DEFAULT
-   VAR    caption                               INIT ""
-   VAR    image                                 INIT NIL
-   VAR    disabledImage                         INIT NIL
-   VAR    hotImage                              INIT NIL
-   VAR    mixedState                            INIT .F.
-   VAR    pressed                               INIT .F.
-   VAR    visible                               INIT .T.
-   VAR    left                                  INIT 0
-   VAR    bottom                                INIT 0
-   VAR    top                                   INIT 0
-   VAR    width                                 INIT 0
-   VAR    height                                INIT 0
-   VAR    description                           INIT ""
-   VAR    tooltipText                           INIT ""
-   VAR    command                               INIT 0
+   VAR enabled INIT .T.
+   VAR index INIT 0
+   VAR key INIT ""
+   VAR style INIT WVGTOOLBAR_BUTTON_DEFAULT
+   VAR caption INIT ""
+   VAR image INIT NIL
+   VAR disabledImage INIT NIL
+   VAR hotImage INIT NIL
+   VAR mixedState INIT .F.
+   VAR pressed INIT .F.
+   VAR visible INIT .T.
+   VAR left INIT 0
+   VAR bottom INIT 0
+   VAR top INIT 0
+   VAR width INIT 0
+   VAR height INIT 0
+   VAR description INIT ""
+   VAR tooltipText INIT ""
+   VAR command INIT 0
 
    METHOD new(cCaption, nStyle, cKey)
 
@@ -89,8 +89,8 @@ METHOD WvgToolBarButton:new(cCaption, nStyle, cKey)
    __defaultNIL(@nStyle, ::style)
    __defaultNIL(@cKey, ::key)
 
-   ::caption        := cCaption
-   ::style          := nStyle
-   ::key            := cKey
+   ::caption := cCaption
+   ::style := nStyle
+   ::key := cKey
 
    RETURN Self

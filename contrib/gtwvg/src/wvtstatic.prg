@@ -80,24 +80,24 @@
 /* Class WvtStatic */
 CREATE CLASS WvtStatic INHERIT WvtObject
 
-   VAR    nStatic
-   VAR    nOrient
-   VAR    nFormat
-   VAR    nAlign
-   VAR    nStyle
-   VAR    nThick
-   VAR    nColor
+   VAR nStatic
+   VAR nOrient
+   VAR nFormat
+   VAR nAlign
+   VAR nStyle
+   VAR nThick
+   VAR nColor
 
-   VAR    nfTop
-   VAR    nfLeft
-   VAR    nfBottom
-   VAR    nfRight
+   VAR nfTop
+   VAR nfLeft
+   VAR nfBottom
+   VAR nfRight
 
-   VAR    nHorzVert                               INIT 0
-   VAR    aRGBb
-   VAR    aRGBe
+   VAR nHorzVert INIT 0
+   VAR aRGBb
+   VAR aRGBe
 
-   VAR    aPxlOffSet                              INIT {}
+   VAR aPxlOffSet INIT {}
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -121,7 +121,7 @@ METHOD WvtStatic:Create()
 
    CASE WVT_STATIC_LINE
       lInside := .T.
-      ::bPaint  := {||wvt_DrawLine(::nTop, ::nLeft, ::nBottom, ::nRight, ::nOrient, ::nFormat, ::nAlign, ::nStyle, ::nThick, ::nColor)}
+      ::bPaint := {||wvt_DrawLine(::nTop, ::nLeft, ::nBottom, ::nRight, ::nOrient, ::nFormat, ::nAlign, ::nStyle, ::nThick, ::nColor)}
       EXIT
 
    CASE WVT_STATIC_BOXRAISED
@@ -172,15 +172,15 @@ METHOD WvtStatic:Create()
    ENDSWITCH
 
    IF lInside
-      ::nfTop    := ::nTop
-      ::nfLeft   := ::nLeft
+      ::nfTop := ::nTop
+      ::nfLeft := ::nLeft
       ::nfBottom := ::nBottom
-      ::nfRight  := ::nRight
+      ::nfRight := ::nRight
    ELSE
-      ::nfTop    := ::nTop    - 1
-      ::nfLeft   := ::nLeft   - 1
+      ::nfTop := ::nTop - 1
+      ::nfLeft := ::nLeft - 1
       ::nfBottom := ::nBottom + 1
-      ::nfRight  := ::nRight  + 1
+      ::nfRight := ::nRight + 1
    ENDIF
 
    AAdd(::aPaint, {::bPaint, {WVT_BLOCK_STATIC, ::nfTop, ::nfLeft, ::nfBottom, ::nfRight}})

@@ -58,14 +58,14 @@
 
 CREATE CLASS WvgStatic INHERIT WvgWindow
 
-   VAR    autoSize                              INIT .F.
-   VAR    caption                               INIT ""
-   VAR    clipParent                            INIT .T.
-   VAR    clipSiblings                          INIT .F.
-   VAR    options                               INIT -1 /* WVGSTATIC_TEXT_LEFT */
-   VAR    TYPE                                  INIT -1 /* WVGSTATIC_TYPE_TEXT */
+   VAR autoSize INIT .F.
+   VAR caption INIT ""
+   VAR clipParent INIT .T.
+   VAR clipSiblings INIT .F.
+   VAR options INIT -1 /* WVGSTATIC_TEXT_LEFT */
+   VAR TYPE INIT -1 /* WVGSTATIC_TYPE_TEXT */
 
-   VAR    hBitmap
+   VAR hBitmap
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -83,9 +83,9 @@ METHOD WvgStatic:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    /* SS_NOTIFY  SS_ETCHEDFRAME  SS_SUNKEN  SS_WHITERECT */
 
-   ::style       := WS_CHILD + WS_CLIPCHILDREN
-   ::className   := "STATIC"
-   ::objType     := objTypeStatic
+   ::style := WS_CHILD + WS_CLIPCHILDREN
+   ::className := "STATIC"
+   ::objType := objTypeStatic
 
    RETURN Self
 

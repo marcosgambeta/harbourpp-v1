@@ -72,24 +72,24 @@ CREATE CLASS WvgSysWindow INHERIT WvgPartHandler
    METHOD currentPos()
    METHOD currentSize()
 
-   VAR    aPos                                  INIT {0, 0}
+   VAR aPos INIT {0, 0}
 
-   VAR    hWnd                                  PROTECTED
-   VAR    nOldProc                              PROTECTED
-   VAR    nWndProc                              PROTECTED
+   VAR hWnd PROTECTED
+   VAR nOldProc PROTECTED
+   VAR nWndProc PROTECTED
 
 
-   VAR    sl_helpRequest
-   ACCESS helpRequest                           INLINE ::sl_helpRequest
-   ASSIGN helpRequest(bBlock)                 INLINE ::sl_helpRequest := bBlock
+   VAR sl_helpRequest
+   ACCESS helpRequest INLINE ::sl_helpRequest
+   ASSIGN helpRequest(bBlock) INLINE ::sl_helpRequest := bBlock
 
-   VAR    sl_move
-   ACCESS move                                  INLINE ::sl_move
-   ASSIGN move(bBlock)                        INLINE ::sl_move := bBlock
+   VAR sl_move
+   ACCESS move INLINE ::sl_move
+   ASSIGN move(bBlock) INLINE ::sl_move := bBlock
 
-   VAR    sl_quit
-   ACCESS quit                                  INLINE ::sl_quit
-   ASSIGN quit(bBlock)                        INLINE ::sl_quit := bBlock
+   VAR sl_quit
+   ACCESS quit INLINE ::sl_quit
+   ASSIGN quit(bBlock) INLINE ::sl_quit := bBlock
 
 ENDCLASS
 
@@ -100,8 +100,8 @@ METHOD WvgSysWindow:new(oParent, oOwner, aPos)
    __defaultNIL(@aPos, ::aPos)
 
    ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
+   ::oOwner := oOwner
+   ::aPos := aPos
 
    ::WvgPartHandler:new(oParent, oOwner)
 
@@ -114,8 +114,8 @@ METHOD WvgSysWindow:create(oParent, oOwner, aPos)
    __defaultNIL(@aPos, ::aPos)
 
    ::oParent := oParent
-   ::oOwner  := oOwner
-   ::aPos    := aPos
+   ::oOwner := oOwner
+   ::aPos := aPos
 
    ::WvgPartHandler:create(oParent, oOwner)
 

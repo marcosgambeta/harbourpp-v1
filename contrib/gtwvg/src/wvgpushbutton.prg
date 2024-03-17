@@ -58,14 +58,14 @@
 
 CREATE CLASS WvgPushButton INHERIT WvgWindow
 
-   VAR    autosize                              INIT .F.
-   VAR    border                                INIT .T.
-   VAR    caption                               INIT NIL
-   VAR    pointerFocus                          INIT .T.
-   VAR    preSelect                             INIT .F.
-   VAR    drawMode                              INIT WVG_DRAW_NORMAL
-   VAR    default                               INIT .F.
-   VAR    cancel                                INIT .F.
+   VAR autosize INIT .F.
+   VAR border INIT .T.
+   VAR caption INIT NIL
+   VAR pointerFocus INIT .T.
+   VAR preSelect INIT .F.
+   VAR drawMode INIT WVG_DRAW_NORMAL
+   VAR default INIT .F.
+   VAR cancel INIT .F.
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -74,11 +74,11 @@ CREATE CLASS WvgPushButton INHERIT WvgWindow
    METHOD handleEvent(nMessage, aNM)
 
    METHOD setCaption(xCaption, cDll)
-   METHOD activate(xParam)                    SETGET
-   METHOD draw(xParam)                        SETGET
+   METHOD activate(xParam) SETGET
+   METHOD draw(xParam) SETGET
 
-   METHOD setColorFG()                          INLINE NIL
-   METHOD setColorBG()                          INLINE NIL
+   METHOD setColorFG() INLINE NIL
+   METHOD setColorBG() INLINE NIL
 
 ENDCLASS
 
@@ -86,9 +86,9 @@ METHOD WvgPushButton:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD + BS_PUSHBUTTON  + BS_NOTIFY /* + BS_PUSHLIKE */
-   ::className   := "BUTTON"
-   ::objType     := objTypePushButton
+   ::style := WS_CHILD + BS_PUSHBUTTON  + BS_NOTIFY /* + BS_PUSHLIKE */
+   ::className := "BUTTON"
+   ::objType := objTypePushButton
 
    RETURN Self
 
@@ -210,8 +210,8 @@ METHOD WvgPushButton:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisib
 METHOD WvgPushButton:setCaption(xCaption, cDll)
 
    LOCAL nLoadFromResByIdNumber := 0
-   LOCAL nLoadFromResByIdName   := 1
-   LOCAL nLoadFromDiskFile      := 2
+   LOCAL nLoadFromResByIdName := 1
+   LOCAL nLoadFromDiskFile := 2
 
    __defaultNIL(@xCaption, ::caption)
    HB_SYMBOL_UNUSED(cDll)

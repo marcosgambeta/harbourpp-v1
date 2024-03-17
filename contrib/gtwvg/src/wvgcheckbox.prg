@@ -58,10 +58,10 @@
 
 CREATE CLASS WvgCheckBox INHERIT WvgWindow, WvgDataRef
 
-   VAR    autosize                              INIT .F.
-   VAR    caption                               INIT ""
-   VAR    pointerFocus                          INIT .T.
-   VAR    selection                             INIT .F.
+   VAR autosize INIT .F.
+   VAR caption INIT ""
+   VAR pointerFocus INIT .T.
+   VAR selection INIT .F.
 
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
@@ -70,14 +70,14 @@ CREATE CLASS WvgCheckBox INHERIT WvgWindow, WvgDataRef
    METHOD handleEvent(nMessage, aNM)
 
 #if 0
-   METHOD editBuffer()                          INLINE wvg_Button_GetCheck(::hWnd) == BST_CHECKED
-   METHOD getData()                             INLINE wvg_Button_GetCheck(::hWnd) == BST_CHECKED
-   METHOD setData(lCheck)                     INLINE ::sendMessage(BM_SETCHECK, iif(lCheck, BST_CHECKED, BST_UNCHECKED), 0)
+   METHOD editBuffer() INLINE wvg_Button_GetCheck(::hWnd) == BST_CHECKED
+   METHOD getData() INLINE wvg_Button_GetCheck(::hWnd) == BST_CHECKED
+   METHOD setData(lCheck) INLINE ::sendMessage(BM_SETCHECK, iif(lCheck, BST_CHECKED, BST_UNCHECKED), 0)
 #endif
    METHOD setCaption(xCaption)
 
-   ACCESS selected                              INLINE ::sl_lbClick
-   ASSIGN selected(bBlock)                    INLINE ::sl_lbClick := bBlock
+   ACCESS selected INLINE ::sl_lbClick
+   ASSIGN selected(bBlock) INLINE ::sl_lbClick := bBlock
 
 ENDCLASS
 
@@ -85,9 +85,9 @@ METHOD WvgCheckBox:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   ::style       := WS_CHILD + BS_PUSHBUTTON + BS_AUTOCHECKBOX + BS_NOTIFY
-   ::className   := "BUTTON"
-   ::objType     := objTypeCheckBox
+   ::style := WS_CHILD + BS_PUSHBUTTON + BS_AUTOCHECKBOX + BS_NOTIFY
+   ::className := "BUTTON"
+   ::objType := objTypeCheckBox
 
    RETURN Self
 

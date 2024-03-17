@@ -80,10 +80,10 @@
 /* Class WvtToolButton */
 CREATE CLASS WvtToolButton INHERIT WvtObject
 
-   VAR    cFileImage
-   VAR    nCurState             INIT 0
-   VAR    nBtnType              INIT TLB_BUTTON_TYPE_IMAGE
-   VAR    aPxlOffSet            INIT {0, -1, -3, 1}
+   VAR cFileImage
+   VAR nCurState INIT 0
+   VAR nBtnType INIT TLB_BUTTON_TYPE_IMAGE
+   VAR aPxlOffSet INIT {0, -1, -3, 1}
 
    METHOD New(oParent)
    METHOD create()

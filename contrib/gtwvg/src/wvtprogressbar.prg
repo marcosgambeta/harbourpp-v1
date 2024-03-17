@@ -80,19 +80,19 @@
 /* Class WvtProgressBar */
 CREATE CLASS WvtProgressBar INHERIT WvtObject
 
-   VAR    cImage
-   VAR    nDirection                              INIT 0      /* 0-Left-Right,Top-Bottom  1-Right-Left,Bottom-Top */
-   VAR    nStyle                                  INIT 0
-   VAR    lVertical                               INIT .F.
-   VAR    lActive                                 INIT .F.
+   VAR cImage
+   VAR nDirection INIT 0      /* 0-Left-Right,Top-Bottom  1-Right-Left,Bottom-Top */
+   VAR nStyle INIT 0
+   VAR lVertical INIT .F.
+   VAR lActive INIT .F.
 
-   VAR    nBarColor                               INIT RGB(0, 0, 128)
-   VAR    nCurrent                                INIT 0
-   VAR    nTotal                                  INIT 1
-   VAR    nPercent                                INIT 0
-   VAR    cBackColor                              INIT "W/W"
+   VAR nBarColor INIT RGB(0, 0, 128)
+   VAR nCurrent INIT 0
+   VAR nTotal INIT 1
+   VAR nPercent INIT 0
+   VAR cBackColor INIT "W/W"
 
-   VAR    cScreen
+   VAR cScreen
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -134,7 +134,7 @@ METHOD WvtProgressBar:Display(nCurrent, nTotal)
    __defaultNIL(@nTotal, ::nTotal)
 
    ::nCurrent := nCurrent
-   ::nTotal   := nTotal
+   ::nTotal := nTotal
 
    IF ::nCurrent > ::nTotal
       ::nCurrent := ::nTotal
@@ -156,9 +156,9 @@ METHOD WvtProgressBar:Activate()
 
 METHOD WvtProgressBar:DeActivate()
 
-   ::lActive  := .F.
+   ::lActive := .F.
    ::nCurrent := 0
-   ::nTotal   := 1
+   ::nTotal := 1
    RestScreen(::nTop, ::nLeft, ::nBottom, ::nRight, ::cScreen)
    ::cScreen := NIL
 

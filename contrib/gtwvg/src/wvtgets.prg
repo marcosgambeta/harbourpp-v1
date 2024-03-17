@@ -80,11 +80,11 @@
 /* Class WvtGets */
 CREATE CLASS WvtGets INHERIT WvtObject
 
-   VAR    aGetList                                INIT {}
-   VAR    nLastGet                                INIT 1
-   VAR    nCurGet                                 INIT 1
-   VAR    GetList                                 INIT {}
-   VAR    cDesc                                   INIT ""
+   VAR aGetList INIT {}
+   VAR nLastGet INIT 1
+   VAR nCurGet INIT 1
+   VAR GetList INIT {}
+   VAR cDesc INIT ""
 
    METHOD New(oParent, nID, nTop, nLeft, nBottom, nRight)
    METHOD create()
@@ -136,7 +136,7 @@ METHOD WvtGets:PaintBlock(nIndex)
    LOCAL nLen
    LOCAL bPaint
 
-   nLen   := Len(Transform(::aGetList[nIndex][3], ::aGetList[nIndex][4]))
+   nLen := Len(Transform(::aGetList[nIndex][3], ::aGetList[nIndex][4]))
 
    bPaint := {||wvt_DrawBoxGet(::aGetList[nIndex][1], ::aGetList[nIndex][2], nLen)}
 
