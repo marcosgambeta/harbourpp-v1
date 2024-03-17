@@ -2867,7 +2867,7 @@ HB_FUNC( WAGDIPCREATEHATCHBRUSH )
 {
   GpHatch * p{};
   wa_ret_GpStatus(GdipCreateHatchBrush(wa_par_GpHatchStyle(1), wa_par_ARGB(2), wa_par_ARGB(3), &p));
-  hb_storptr(p, 3);
+  hb_storptr(p, 4);
 }
 
 /*
