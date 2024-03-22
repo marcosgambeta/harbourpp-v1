@@ -68,6 +68,7 @@ SOFTWARE.
 #define wa_par_GpImageAttributes(n)               static_cast<GpImageAttributes*>(hb_parptr(n))
 #define wa_par_GpLineGradient(n)                  static_cast<GpLineGradient*>(hb_parptr(n))
 #define wa_par_GpMatrix(n)                        static_cast<GpMatrix*>(hb_parptr(n))
+#define wa_par_GpMetafile(n)                      static_cast<GpMetafile*>(hb_parptr(n))
 #define wa_par_GpPath(n)                          static_cast<GpPath*>(hb_parptr(n))
 #define wa_par_GpPathGradient(n)                  static_cast<GpPathGradient*>(hb_parptr(n))
 #define wa_par_GpPathIterator(n)                  static_cast<GpPathIterator*>(hb_parptr(n))
@@ -82,6 +83,7 @@ SOFTWARE.
 #define wa_par_GpStringFormat(n)                  static_cast<GpStringFormat*>(hb_parptr(n))
 #define wa_par_GpTexture(n)                       static_cast<GpTexture*>(hb_parptr(n))
 #define wa_par_IStream(n)                         static_cast<IStream*>(hb_parptr(n))
+#define wa_par_WmfPlaceableFileHeader(n)          static_cast<WmfPlaceableFileHeader*>(hb_parptr(n))
 
 #define wa_par_GpColorAdjustType(n)               static_cast<ColorAdjustType>(hb_parni(n))
 #define wa_par_GpColorChannelFlags(n)             static_cast<ColorChannelFlags>(hb_parni(n))
@@ -120,6 +122,7 @@ SOFTWARE.
 #define wa_par_GpUnit(n)                          static_cast<GpUnit>(hb_parni(n))
 #define wa_par_GpWarpMode(n)                      static_cast<WarpMode>(hb_parni(n))
 #define wa_par_GpWrapMode(n)                      static_cast<GpWrapMode>(hb_parni(n))
+#define wa_par_MetafileFrameUnit(n)               static_cast<MetafileFrameUnit>(hb_parni(n))
 
 using namespace Gdiplus;
 using namespace Gdiplus::DllExports;
@@ -228,7 +231,7 @@ GpStatus WINGDIPAPI GdipCreateBitmapFromStream(IStream*,GpBitmap**)
 HB_FUNC( WAGDIPCREATEBITMAPFROMSTREAM )
 {
   GpBitmap * p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromStream((IStream*) hb_parptr(1), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromStream(wa_par_IStream(1), &p));
   hb_storptr(p, 2);
 }
 
@@ -250,7 +253,7 @@ GpStatus WINGDIPAPI GdipCreateBitmapFromStreamICM(IStream*,GpBitmap**)
 HB_FUNC( WAGDIPCREATEBITMAPFROMSTREAMICM )
 {
   GpBitmap * p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromStreamICM((IStream*) hb_parptr(1), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromStreamICM(wa_par_IStream(1), &p));
   hb_storptr(p, 2);
 }
 
@@ -3915,108 +3918,180 @@ GpStatus WINGDIPAPI GdipGetMetafileHeaderFromMetafile(GpMetafile*,MetafileHeader
 /*
 GpStatus WINGDIPAPI GdipGetHemfFromMetafile(GpMetafile*,HENHMETAFILE*)
 */
+HB_FUNC( WAGDIPGETHEMFFROMMETAFILE )
+{
+  HENHMETAFILE p{};
+  wa_ret_GpStatus(GdipGetHemfFromMetafile(wa_par_GpMetafile(1), &p));
+  hb_storptr(p, 2);
+}
 
 /*
 GpStatus WINGDIPAPI GdipCreateStreamOnFile(GDIPCONST WCHAR*,UINT,IStream**)
 */
+HB_FUNC( WAGDIPCREATESTREAMONFILE )
+{
+  IStream * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipCreateStreamOnFile(HB_PARSTR(1, &str, nullptr), wa_par_UINT(2), &p));
+  hb_strfree(str);
+  hb_storptr(p, 3);
+}
 
 /*
 GpStatus WINGDIPAPI GdipCreateMetafileFromWmf(HMETAFILE,BOOL,GDIPCONST WmfPlaceableFileHeader*,GpMetafile**)
 */
+HB_FUNC( WAGDIPCREATEMETAFILEFROMWMF )
+{
+  GpMetafile * p{};
+  wa_ret_GpStatus(GdipCreateMetafileFromWmf(wa_par_HMETAFILE(1), wa_par_BOOL(2), wa_par_WmfPlaceableFileHeader(3), &p));
+  hb_storptr(p, 4);
+}
 
 /*
 GpStatus WINGDIPAPI GdipCreateMetafileFromEmf(HENHMETAFILE,BOOL,GpMetafile**)
 */
+HB_FUNC( WAGDIPCREATEMETAFILEFROMEMF )
+{
+  GpMetafile * p{};
+  wa_ret_GpStatus(GdipCreateMetafileFromEmf(wa_par_HENHMETAFILE(1), wa_par_BOOL(2), &p));
+  hb_storptr(p, 3);
+}
 
 /*
 GpStatus WINGDIPAPI GdipCreateMetafileFromFile(GDIPCONST WCHAR*,GpMetafile**)
 */
+HB_FUNC( WAGDIPCREATEMETAFILEFROMFILE )
+{
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipCreateMetafileFromFile(HB_PARSTR(1, &str, nullptr), &p));
+  hb_strfree(str);
+  hb_storptr(p, 2);
+}
 
 /*
 GpStatus WINGDIPAPI GdipCreateMetafileFromWmfFile(GDIPCONST WCHAR*,GDIPCONST WmfPlaceableFileHeader*,GpMetafile**)
 */
+HB_FUNC( WAGDIPCREATEMETAFILEFROMWMFFILE )
+{
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipCreateMetafileFromWmfFile(HB_PARSTR(1, &str, nullptr), wa_par_WmfPlaceableFileHeader(2), &p));
+  hb_strfree(str);
+  hb_storptr(p, 3);
+}
 
 /*
 GpStatus WINGDIPAPI GdipCreateMetafileFromStream(IStream*,GpMetafile**)
 */
+HB_FUNC( WAGDIPCREATEMETAFILEFROMSTREAM )
+{
+  GpMetafile * p{};
+  wa_ret_GpStatus(GdipCreateMetafileFromStream(wa_par_IStream(1), &p));
+  hb_storptr(p, 2);
+}
 
 /*
 GpStatus WINGDIPAPI GdipRecordMetafile(HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 */
-#if 0
 HB_FUNC( WAGDIPRECORDMETAFILE )
 {
-  wa_ret_GpStatus(GdipRecordMetafile(wa_par_HDC(1), wa_par_GpEmfType(2), GDIPCONST GpRectF*, MetafileFrameUnit, GDIPCONST WCHAR*, GpMetafile**));
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipRecordMetafile(wa_par_HDC(1), wa_par_GpEmfType(2), wa_par_GpRectF(3), wa_par_MetafileFrameUnit(4), HB_PARSTR(5, &str, nullptr), &p));
+  hb_strfree(str);
+  hb_storptr(p, 6);
 }
-#endif
 
 /*
 GpStatus WINGDIPAPI GdipRecordMetafileI(HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 */
-#if 0
-HB_FUNC( WAGDIPRECORDMETAFILE )
+HB_FUNC( WAGDIPRECORDMETAFILEI )
 {
-  wa_ret_GpStatus(GdipRecordMetafileI(wa_par_HDC(1), wa_par_GpEmfType(2), GDIPCONST GpRect*, MetafileFrameUnit, GDIPCONST WCHAR*, GpMetafile**));
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipRecordMetafileI(wa_par_HDC(1), wa_par_GpEmfType(2), wa_par_GpRect(3), wa_par_MetafileFrameUnit(4), HB_PARSTR(5, &str, nullptr), &p));
+  hb_strfree(str);
+  hb_storptr(p, 6);
 }
-#endif
 
 /*
 GpStatus WINGDIPAPI GdipRecordMetafileFileName(GDIPCONST WCHAR*,HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 */
-#if 0
 HB_FUNC( WAGDIPRECORDMETAFILEFILENAME )
 {
-  wa_ret_GpStatus(GdipRecordMetafileFileName(GDIPCONST WCHAR*, wa_par_HDC(2), wa_par_GpEmfType(3), GDIPCONST GpRectF*, MetafileFrameUnit, GDIPCONST WCHAR*, GpMetafile**));
+  GpMetafile * p{};
+  void * str1{};
+  void * str2{};
+  wa_ret_GpStatus(GdipRecordMetafileFileName(HB_PARSTR(1, &str1, nullptr), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRectF(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str2, nullptr), &p));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_storptr(p, 7);
 }
-#endif
 
 /*
 GpStatus WINGDIPAPI GdipRecordMetafileFileNameI(GDIPCONST WCHAR*,HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 */
-#if 0
 HB_FUNC( WAGDIPRECORDMETAFILEFILENAMEI )
 {
-  wa_ret_GpStatus(GdipRecordMetafileFileNameI(GDIPCONST WCHAR*, wa_par_HDC(2), wa_par_GpEmfType(3), GDIPCONST GpRect*, MetafileFrameUnit, GDIPCONST WCHAR*, GpMetafile**));
+  GpMetafile * p{};
+  void * str1{};
+  void * str2{};
+  wa_ret_GpStatus(GdipRecordMetafileFileNameI(HB_PARSTR(1, &str1, nullptr), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRect(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str2, nullptr), &p));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  hb_storptr(p, 7);
 }
-#endif
 
 /*
 GpStatus WINGDIPAPI GdipRecordMetafileStream(IStream*,HDC,EmfType,GDIPCONST GpRectF*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 */
-#if 0
 HB_FUNC( WAGDIPRECORDMETAFILESTREAM )
 {
-  wa_ret_GpStatus(GdipRecordMetafileStream(IStream*, wa_par_HDC(2), wa_par_GpEmfType(3), GDIPCONST GpRectF*, MetafileFrameUnit, GDIPCONST WCHAR*, GpMetafile**));
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipRecordMetafileStream(wa_par_IStream(1), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRectF(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str, nullptr), &p));
+  hb_strfree(str);
+  hb_storptr(p, 7);
 }
-#endif
 
 /*
 GpStatus WINGDIPAPI GdipRecordMetafileStreamI(IStream*,HDC,EmfType,GDIPCONST GpRect*,MetafileFrameUnit,GDIPCONST WCHAR*,GpMetafile**)
 */
-#if 0
 HB_FUNC( WAGDIPRECORDMETAFILESTREAMI )
 {
-  wa_ret_GpStatus(GdipRecordMetafileStreamI(IStream*, wa_par_HDC(2), wa_par_GpEmfType(3), GDIPCONST GpRect*, MetafileFrameUnit, GDIPCONST WCHAR*, GpMetafile**));
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipRecordMetafileStreamI(wa_par_IStream(1), wa_par_HDC(2), wa_par_GpEmfType(3), wa_par_GpRect(4), wa_par_MetafileFrameUnit(5), HB_PARSTR(6, &str, nullptr), &p));
+  hb_strfree(str);
+  hb_storptr(p, 7);
 }
-#endif
 
 /*
 GpStatus WINGDIPAPI GdipPlayMetafileRecord(GDIPCONST GpMetafile*,EmfPlusRecordType,UINT,UINT,GDIPCONST BYTE*)
 */
-#if 0
 HB_FUNC( WAGDIPPLAYMETAFILERECORD )
 {
-  wa_ret_GpStatus(GdipPlayMetafileRecord(GDIPCONST GpMetafile*, wa_par_GpEmfPlusRecordType(1), wa_par_UINT(2), wa_par_UINT(3), GDIPCONST BYTE*));
+  wa_ret_GpStatus(GdipPlayMetafileRecord(wa_par_GpMetafile(1), wa_par_GpEmfPlusRecordType(2), wa_par_UINT(3), wa_par_UINT(4), static_cast<GDIPCONST BYTE *>(hb_parptr(5))));
 }
-#endif
 
 /*
 GpStatus WINGDIPAPI GdipSetMetafileDownLevelRasterizationLimit(GpMetafile*,UINT)
 */
+HB_FUNC( WAGDIPSETMETAFILEDOWNLEVELRASTERIZATIONLIMIT )
+{
+  wa_ret_GpStatus(GdipSetMetafileDownLevelRasterizationLimit(wa_par_GpMetafile(1), wa_par_UINT(2)));
+}
 
 /*
 GpStatus WINGDIPAPI GdipGetMetafileDownLevelRasterizationLimit(GDIPCONST GpMetafile*,UINT*)
 */
+HB_FUNC( WAGDIPGETMETAFILEDOWNLEVELRASTERIZATIONLIMIT )
+{
+  UINT ui{};
+  wa_ret_GpStatus(GdipGetMetafileDownLevelRasterizationLimit(wa_par_GpMetafile(1), &ui));
+  wa_stor_UINT(ui, 2);
+}
 
 /*
 GpStatus WINGDIPAPI GdipConvertToEmfPlus(GDIPCONST GpGraphics*,GpMetafile*,BOOL*,EmfType,GDIPCONST WCHAR*,GpMetafile**)
@@ -4024,7 +4099,13 @@ GpStatus WINGDIPAPI GdipConvertToEmfPlus(GDIPCONST GpGraphics*,GpMetafile*,BOOL*
 #if 0
 HB_FUNC( WAGDIPCONVERTTOEMFPLUS )
 {
-  wa_ret_GpStatus(GdipConvertToEmfPlus(GDIPCONST GpGraphics*, GpMetafile*, BOOL*, wa_par_GpEmfType(4), GDIPCONST WCHAR*, GpMetafile**));
+  BOOL b{};
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipConvertToEmfPlus(wa_par_GpGraphics(1), wa_par_GpMetafile(2), &b, wa_par_GpEmfType(4), HB_PARSTR(5, &str, nullptr), &p));
+  hb_strfree(str);
+  wa_stor_BOOL(b, 3);
+  hb_storptr(p, 6);
 }
 #endif
 
@@ -4034,7 +4115,15 @@ GpStatus WINGDIPAPI GdipConvertToEmfPlusToFile(GDIPCONST GpGraphics*,GpMetafile*
 #if 0
 HB_FUNC( WAGDIPCONVERTTOEMFPLUSTOFILE )
 {
-  wa_ret_GpStatus(GdipConvertToEmfPlusToFile(GDIPCONST GpGraphics*, GpMetafile*, BOOL*, GDIPCONST WCHAR*, wa_par_GpEmfType(5), GDIPCONST WCHAR*, GpMetafile**));
+  BOOL b{};
+  GpMetafile * p{};
+  void * str1{};
+  void * str2{};
+  wa_ret_GpStatus(GdipConvertToEmfPlusToFile(wa_par_GpGraphics(1), wa_par_GpMetafile(2), &b, HB_PARSTR(4, &str1, nullptr), wa_par_GpEmfType(5), HB_PARSTR(6, &str2, nullptr), &p));
+  hb_strfree(str1);
+  hb_strfree(str2);
+  wa_stor_BOOL(b, 3);
+  hb_storptr(p, 7);
 }
 #endif
 
@@ -4044,7 +4133,13 @@ GpStatus WINGDIPAPI GdipConvertToEmfPlusToStream(GDIPCONST GpGraphics*,GpMetafil
 #if 0
 HB_FUNC( WAGDIPCONVERTTOEMFPLUSTOSTREAM )
 {
-  wa_ret_GpStatus(GdipConvertToEmfPlusToStream(GDIPCONST GpGraphics*, GpMetafile*, BOOL*, IStream*, wa_par_GpEmfType(5), GDIPCONST WCHAR*, GpMetafile**));
+  BOOL b{};
+  GpMetafile * p{};
+  void * str{};
+  wa_ret_GpStatus(GdipConvertToEmfPlusToStream(wa_par_GpGraphics(1), wa_par_GpMetafile(2), &b, wa_par_IStream(4), wa_par_GpEmfType(5), HB_PARSTR(6, &str, nullptr), &p));
+  hb_strfree(str);
+  wa_stor_BOOL(b, 3);
+  hb_storptr(p, 7);
 }
 #endif
 
