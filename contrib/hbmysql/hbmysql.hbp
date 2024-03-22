@@ -13,6 +13,7 @@
 -depincpath=mysql:/opt/local/include/mysql5/mysql
 -depimplibs=mysql:../lib/opt/libmySQL.dll
 -depimplibs=mysql:../lib/libmySQL.dll
+-depimplibs=mysql:../bin/libmySQL.dll
 
 ${hb_name}.hbx
 

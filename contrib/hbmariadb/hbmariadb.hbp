@@ -13,6 +13,7 @@
 -depincpath=mariadb:/opt/local/include/mysql5/mysql
 -depimplibs=mariadb:../lib/opt/libmariadb.dll
 -depimplibs=mariadb:../lib/libmariadb.dll
+-depimplibs=mariadb:../bin/libmariadb.dll
 
 ${hb_name}.hbx
 

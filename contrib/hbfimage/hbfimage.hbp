@@ -15,6 +15,7 @@
 -depincpath=freeimage:/opt/local/include
 -depimplibs=freeimage:FreeImage.dll
 -depimplibs=freeimage:../Dist/FreeImage.dll
+-depimplibs=freeimage:../bin/FreeImage.dll
 
 # For FreeImage headers
 -c=gnu90

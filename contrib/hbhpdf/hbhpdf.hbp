@@ -13,6 +13,7 @@
 -depincpathlocal=libharu:3rd/libhpdf/include
 -depimplibs=libharu:../libhpdf.dll
 -depimplibs=libharu:../lib_dll/libhpdf.dll
+-depimplibs=libharu:../bin/libhpdf.dll
 -depfinish=libharu
 
 ${hb_name}.hbx
