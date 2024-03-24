@@ -30,7 +30,7 @@ src/toolbar.cpp
 
 -hbx=${hb_name}.hbx
 ${hb_name}.hbx
-$hb_pkg_dynlib.hbm
-$hb_pkg_install.hbm
+#$hb_pkg_dynlib.hbm
+#$hb_pkg_install.hbm
 
 {allmsvc}-cflag=/D_CRT_SECURE_NO_WARNINGS
