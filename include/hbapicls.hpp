@@ -86,68 +86,84 @@ HB_EXTERN_BEGIN
 
 #define HB_OO_MAX_OPERATOR    29
 
-extern void       hb_clsInit( void );           /* initialize Classy/OO system at HVM startup */
-extern void       hb_clsDoInit( void );         /* initialize Classy/OO system .prg functions */
-extern void       hb_clsReleaseAll( void );     /* releases all defined classes */
-extern void       hb_clsIsClassRef( void );     /* classes.c - mark all class internals as used */
-extern HB_BOOL    hb_clsHasDestructor( HB_USHORT uiClass );
-extern PHB_SYMB   hb_clsMethodSym( PHB_ITEM pBaseSymbol ); /* returns the real method symbol for given stack symbol */
+// initialize Classy/OO system at HVM startup
+extern void hb_clsInit(void);
+// initialize Classy/OO system .prg functions
+extern void hb_clsDoInit(void);
+// releases all defined classes
+extern void hb_clsReleaseAll(void);
+// classes.c - mark all class internals as used
+extern void hb_clsIsClassRef(void);
+extern HB_BOOL hb_clsHasDestructor(HB_USHORT uiClass);
+// returns the real method symbol for given stack symbol
+extern PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol);
 
-extern PHB_SYMB   hb_objGetMethod( PHB_ITEM pObject, PHB_SYMB pSymMsg, PHB_STACK_STATE pStack ); /* returns the method pointer of an object class */
-extern HB_BOOL    hb_objGetVarRef( PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack ); /* create object variable reference */
-extern HB_BOOL    hb_objHasOperator( PHB_ITEM pObject, HB_USHORT uiOperator );
-extern HB_BOOL    hb_objOperatorCall( HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2 );
-extern void       hb_objDestructorCall( PHB_ITEM pObject );
-extern PHB_ITEM   hb_objCloneTo( PHB_ITEM pDest, PHB_ITEM pObject );
-extern void       hb_objCloneBody( PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClonedList );
+// returns the method pointer of an object class
+extern PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pSymMsg, PHB_STACK_STATE pStack);
+// create object variable reference
+extern HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack);
+extern HB_BOOL hb_objHasOperator(PHB_ITEM pObject, HB_USHORT uiOperator);
+extern HB_BOOL hb_objOperatorCall(HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1, PHB_ITEM pMsgArg2);
+extern void hb_objDestructorCall(PHB_ITEM pObject);
+extern PHB_ITEM hb_objCloneTo(PHB_ITEM pDest, PHB_ITEM pObject);
+extern void hb_objCloneBody(PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClonedList);
 
 #ifndef HB_NO_PROFILER
-/* profiler for object management */
-extern void       hb_mthAddTime( HB_ULONG ulClockTicks );       /* profiler from classes.c */
+// profiler for object management
+extern void hb_mthAddTime(HB_ULONG ulClockTicks); // profiler from classes.c
 #endif
 
-#endif   /* _HB_API_INTERNAL_ */
+#endif // _HB_API_INTERNAL_
 
-/* class management */
-extern HB_EXPORT const char * hb_clsName( HB_USHORT uiClass );
-extern HB_EXPORT const char * hb_clsFuncName( HB_USHORT uiClass );
-extern HB_EXPORT const char * hb_clsMethodName( HB_USHORT uiClass, HB_USHORT uiMethod );
-extern HB_EXPORT PHB_SYMB   hb_clsFuncSym( HB_USHORT uiClass );
-extern HB_EXPORT HB_BOOL    hb_clsIsParent( HB_USHORT uiClass, const char * szParentName ); /* is a class handle inherited from szParentName Class ? */
-extern HB_EXPORT HB_SIZE    hb_clsGetVarIndex( HB_USHORT uiClass, PHB_DYNS pVarSym );
-extern HB_EXPORT HB_USHORT  hb_clsFindClass( const char * szClass, const char * szClassFunc );
+// class management
+extern HB_EXPORT const char *hb_clsName(HB_USHORT uiClass);
+extern HB_EXPORT const char *hb_clsFuncName(HB_USHORT uiClass);
+extern HB_EXPORT const char *hb_clsMethodName(HB_USHORT uiClass, HB_USHORT uiMethod);
+extern HB_EXPORT PHB_SYMB hb_clsFuncSym(HB_USHORT uiClass);
+// is a class handle inherited from szParentName Class ?
+extern HB_EXPORT HB_BOOL hb_clsIsParent(HB_USHORT uiClass, const char *szParentName);
+extern HB_EXPORT HB_SIZE hb_clsGetVarIndex(HB_USHORT uiClass, PHB_DYNS pVarSym);
+extern HB_EXPORT HB_USHORT hb_clsFindClass(const char *szClass, const char *szClassFunc);
 
-/* object management */
-extern HB_EXPORT HB_USHORT  hb_objGetClass( PHB_ITEM pItem );      /* get object class handle */
-extern HB_EXPORT HB_USHORT  hb_objSetClass( PHB_ITEM pItem, const char * szClass, const char * szFunc );    /* set object class handle using class name and class function name */
-extern HB_EXPORT const char * hb_objGetClsName( PHB_ITEM pObject );  /* retrieves an object class name */
-extern HB_EXPORT const char * hb_objGetRealClsName( PHB_ITEM pObject, const char * szString  ); /* retrieves an object class name for a specific message */
+// object management
+// get object class handle
+extern HB_EXPORT HB_USHORT hb_objGetClass(PHB_ITEM pItem);
+// set object class handle using class name and class function name
+extern HB_EXPORT HB_USHORT hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc);
+// retrieves an object class name
+extern HB_EXPORT const char *hb_objGetClsName(PHB_ITEM pObject);
+// retrieves an object class name for a specific message
+extern HB_EXPORT const char *hb_objGetRealClsName(PHB_ITEM pObject, const char *szString);
 
-extern HB_EXPORT HB_BOOL    hb_objHasMsg( PHB_ITEM pObject, const char * szString ); /* returns HB_TRUE/HB_FALSE whether szString is an existing message for object */
-extern HB_EXPORT HB_BOOL    hb_objHasMessage( PHB_ITEM pObject, PHB_DYNS pMessage );
-extern HB_EXPORT PHB_ITEM   hb_objSendMsg( PHB_ITEM pObj, const char *sMsg, HB_ULONG ulArg, ... );
-extern HB_EXPORT PHB_ITEM   hb_objSendMessage( PHB_ITEM pObj, PHB_DYNS pMessage, HB_ULONG ulArg, ... );
+// returns HB_TRUE/HB_FALSE whether szString is an existing message for object
+extern HB_EXPORT HB_BOOL hb_objHasMsg(PHB_ITEM pObject, const char *szString);
+extern HB_EXPORT HB_BOOL hb_objHasMessage(PHB_ITEM pObject, PHB_DYNS pMessage);
+extern HB_EXPORT PHB_ITEM hb_objSendMsg(PHB_ITEM pObj, const char *sMsg, HB_ULONG ulArg, ...);
+extern HB_EXPORT PHB_ITEM hb_objSendMessage(PHB_ITEM pObj, PHB_DYNS pMessage, HB_ULONG ulArg, ...);
 
 // DATA Put/Get (experimental/work in progress)
-extern HB_EXPORT PHB_ITEM   hb_objDataPutPtr( PHB_ITEM pObj, const char *sMsg, void *value );
-extern HB_EXPORT void *     hb_objDataGetPtr( PHB_ITEM pObj, const char *sMsg );
-extern HB_EXPORT PHB_ITEM   hb_objDataPutL( PHB_ITEM pObj, const char *sMsg, HB_BOOL value );
-extern HB_EXPORT HB_BOOL    hb_objDataGetL( PHB_ITEM pObj, const char *sMsg );
-extern HB_EXPORT PHB_ITEM   hb_objDataPutNI( PHB_ITEM pObj, const char *sMsg, int value );
-extern HB_EXPORT int        hb_objDataGetNI( PHB_ITEM pObj, const char *sMsg );
-extern HB_EXPORT PHB_ITEM   hb_objDataPutNL( PHB_ITEM pObj, const char *sMsg, long value );
-extern HB_EXPORT long       hb_objDataGetNL( PHB_ITEM pObj, const char *sMsg );
+extern HB_EXPORT PHB_ITEM hb_objDataPutPtr(PHB_ITEM pObj, const char *sMsg, void *value);
+extern HB_EXPORT void *hb_objDataGetPtr(PHB_ITEM pObj, const char *sMsg);
+extern HB_EXPORT PHB_ITEM hb_objDataPutL(PHB_ITEM pObj, const char *sMsg, HB_BOOL value);
+extern HB_EXPORT HB_BOOL hb_objDataGetL(PHB_ITEM pObj, const char *sMsg);
+extern HB_EXPORT PHB_ITEM hb_objDataPutNI(PHB_ITEM pObj, const char *sMsg, int value);
+extern HB_EXPORT int hb_objDataGetNI(PHB_ITEM pObj, const char *sMsg);
+extern HB_EXPORT PHB_ITEM hb_objDataPutNL(PHB_ITEM pObj, const char *sMsg, long value);
+extern HB_EXPORT long hb_objDataGetNL(PHB_ITEM pObj, const char *sMsg);
 //
 
-extern HB_EXPORT PHB_ITEM   hb_objGetVarPtr( PHB_ITEM pObject, PHB_DYNS pVarMsg );
+extern HB_EXPORT PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg);
 
-/* send message which allows to set execution context for debugger */
-extern HB_EXPORT void       hb_dbg_objSendMessage( int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int iParamOffset );
+// send message which allows to set execution context for debugger
+extern HB_EXPORT void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int iParamOffset);
 
-extern HB_EXPORT HB_USHORT  hb_clsCreate( HB_USHORT usSize, const char * szClassName ); /* Harbour equivalent for Clipper internal __mdCreate() */
-extern HB_EXPORT void       hb_clsAdd( HB_USHORT usClassH, const char * szMethodName, PHB_FUNC pFuncPtr ); /* Harbour equivalent for Clipper internal __mdAdd() */
-extern HB_EXPORT void       hb_clsAssociate( HB_USHORT usClassH ); /* Harbour equivalent for Clipper internal __mdAssociate() */
+// Harbour equivalent for Clipper internal __mdCreate()
+extern HB_EXPORT HB_USHORT hb_clsCreate(HB_USHORT usSize, const char *szClassName);
+// Harbour equivalent for Clipper internal __mdAdd()
+extern HB_EXPORT void hb_clsAdd(HB_USHORT usClassH, const char *szMethodName, PHB_FUNC pFuncPtr);
+// Harbour equivalent for Clipper internal __mdAssociate()
+extern HB_EXPORT void hb_clsAssociate(HB_USHORT usClassH);
 
 HB_EXTERN_END
 
-#endif /* HB_APICLS_H_ */
+#endif // HB_APICLS_H_
