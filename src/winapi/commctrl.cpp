@@ -198,17 +198,28 @@ HB_FUNC( WAIMAGELIST_GETICON )
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageA(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLORREF crMask,UINT uType,UINT uFlags)
 */
+#if 0
 HB_FUNC( WAIMAGELIST_LOADIMAGEA )
 {
   wa_ret_HIMAGELIST(ImageList_LoadImageA(wa_par_HINSTANCE(1), wa_par_LPCSTR(2), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5), wa_par_UINT(6), wa_par_UINT(7)));
 }
+#endif
 
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_LoadImageW(HINSTANCE hi,LPCWSTR lpbmp,int cx,int cGrow,COLORREF crMask,UINT uType,UINT uFlags)
 */
+#if 0
 HB_FUNC( WAIMAGELIST_LOADIMAGEW )
 {
   wa_ret_HIMAGELIST(ImageList_LoadImageW(wa_par_HINSTANCE(1), wa_par_LPCWSTR(2), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5), wa_par_UINT(6), wa_par_UINT(7)));
+}
+#endif
+
+HB_FUNC( WAIMAGELIST_LOADIMAGE )
+{
+  void * str{};
+  wa_ret_HIMAGELIST(ImageList_LoadImageW(wa_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5), wa_par_UINT(6), wa_par_UINT(7)));
+  hb_strfree(str);
 }
 
 /*
@@ -348,6 +359,10 @@ HB_FUNC( WAIMAGELIST_SETICONSIZE )
 /*
 WINCOMMCTRLAPI WINBOOL WINAPI ImageList_GetImageInfo(HIMAGELIST himl,int i,IMAGEINFO *pImageInfo)
 */
+HB_FUNC( WAIMAGELIST_GETIMAGEINFO )
+{
+  wa_ret_BOOL(ImageList_GetImageInfo(wa_par_HIMAGELIST(1), wa_par_int(2), wa_par_IMAGEINFO(3)));
+}
 
 /*
 WINCOMMCTRLAPI HIMAGELIST WINAPI ImageList_Merge(HIMAGELIST himl1,int i1,HIMAGELIST himl2,int i2,int dx,int dy)
@@ -376,6 +391,10 @@ WINCOMMCTRLAPI HWND WINAPI CreateToolbarEx(HWND hwnd,DWORD ws,UINT wID,int nBitm
 /*
 WINCOMMCTRLAPI HBITMAP WINAPI CreateMappedBitmap(HINSTANCE hInstance,INT_PTR idBitmap,UINT wFlags,LPCOLORMAP lpColorMap,int iNumMaps)
 */
+HB_FUNC( WACREATEMAPPEDBITMAP )
+{
+  wa_ret_HBITMAP(CreateMappedBitmap(wa_par_HINSTANCE(1),wa_par_INT_PTR(2), wa_par_UINT(3), wa_par_COLORMAP(3), wa_par_int(4)));
+}
 
 /*
 WINCOMMCTRLAPI void WINAPI DrawStatusTextA(HDC hDC,LPCRECT lprc,LPCSTR pszText,UINT uFlags)
