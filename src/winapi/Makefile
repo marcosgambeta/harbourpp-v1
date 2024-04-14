@@ -65,6 +65,7 @@ PRG_SOURCES := \
    struct_rect.prg \
    struct_rgbquad.prg \
    struct_scrollinfo.prg \
+   struct_security_attributes.prg \
    struct_size.prg \
    struct_system_info.prg \
    struct_systemtime.prg \
