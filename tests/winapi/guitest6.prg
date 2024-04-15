@@ -182,7 +182,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
       hb_vmPushPointer(hwnd);
       hb_vmPushInteger(uMsg);
       hb_vmPushLong(wParam);
-      hb_vmPushLong(lParam);
+      hb_vmPushNumInt(lParam);
       hb_vmDo(4);
       return hb_parnl(-1);
    }
@@ -209,7 +209,7 @@ INT_PTR DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
       hb_vmPushPointer(hwnd);
       hb_vmPushInteger(uMsg);
       hb_vmPushLong(wParam);
-      hb_vmPushLong(lParam);
+      hb_vmPushNumInt(lParam);
       hb_vmDo(4);
       return hb_parnl(-1);
    }
