@@ -96,8 +96,8 @@ SOFTWARE.
 #define wa_par_GpDashCap(n)                       static_cast<GpDashCap>(hb_parni(n))
 #define wa_par_GpDashStyle(n)                     static_cast<GpDashStyle>(hb_parni(n))
 #define wa_par_GpDitherType(n)                    static_cast<DitherType>(hb_parni(n))
-#define wa_par_GpEmfPlusRecordType(n)             static_cast<GpEmfPlusRecordType>(hb_parni(n))
-#define wa_par_GpEmfType(n)                       static_cast<GpEmfType>(hb_parni(n))
+#define wa_par_GpEmfPlusRecordType(n)             static_cast<EmfPlusRecordType>(hb_parni(n))
+#define wa_par_GpEmfType(n)                       static_cast<EmfType>(hb_parni(n))
 #define wa_par_GpFillMode(n)                      static_cast<GpFillMode>(hb_parni(n))
 #define wa_par_GpFlushIntention(n)                static_cast<GpFlushIntention>(hb_parni(n))
 #define wa_par_GpGraphicsContainer(n)             static_cast<GraphicsContainer>(hb_parni(n))
@@ -5854,3 +5854,11 @@ static std::vector<BYTE> BYTEArrayToVector(const PHB_ITEM pArray)
   }
   return vec;
 }
+
+// ../../../gdiplusflat.cpp(4001): error C2061: erro de sintaxe: identificador 'GpEmfType'
+// ../../../gdiplusflat.cpp(4013): error C2061: erro de sintaxe: identificador 'GpEmfType'
+// ../../../gdiplusflat.cpp(4026): error C2061: erro de sintaxe: identificador 'GpEmfType'
+// ../../../gdiplusflat.cpp(4040): error C2061: erro de sintaxe: identificador 'GpEmfType'
+// ../../../gdiplusflat.cpp(4053): error C2061: erro de sintaxe: identificador 'GpEmfType'
+// ../../../gdiplusflat.cpp(4065): error C2061: erro de sintaxe: identificador 'GpEmfType'
+// ../../../gdiplusflat.cpp(4075): error C2061: erro de sintaxe: identificador 'GpEmfPlusRecordType'
