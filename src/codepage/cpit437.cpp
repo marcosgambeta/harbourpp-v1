@@ -48,8 +48,13 @@
 #define HB_CP_INFO      "Italian CP-437"
 #define HB_CP_UNITB     HB_UNITB_437
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
+#if defined(__BORLANDC__)
+#define HB_CP_UPPER     "AAAA\xC3\x84\xC3\x85" "BCDEE\xC3\x89" "FGHIIIJKLMNOOOPQRSTUUUVWXYZ"
+#define HB_CP_LOWER     "a\xC3\xA0\xC3\xA1\xC3\xA2\xC3\xA4\xC3\xA5" "bcde\xC3\xA8\xC3\xA9" "fghi\xC3\xAC\xC3\xAD" "jklmno\xC3\xB2\xC3\xB3" "pqrstu\xC3\xB9\xC3\xBA" "vwxyz"
+#else
 #define HB_CP_UPPER     "AAAAÄÅBCDEEÉFGHIIIJKLMNOOOPQRSTUUUVWXYZ"
 #define HB_CP_LOWER     "aàáâäåbcdeèéfghiìíjklmnoòópqrstuùúvwxyz"
+#endif
 #define HB_CP_UTF8
 
 /* include CP registration code */

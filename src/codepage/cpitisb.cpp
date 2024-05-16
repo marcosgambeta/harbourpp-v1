@@ -48,8 +48,13 @@
 #define HB_CP_INFO      "Italian ISO-8859-1b (with BOX characters)"
 #define HB_CP_UNITB     HB_UNITB_8859_1B
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
+#if defined(__BORLANDC__)
+#define HB_CP_UPPER     "A\xE2\x94\x94\xE2\x94\xB4\xE2\x94\xAC\xE2\x94\x9C\xE2\x94\x80\xE2\x94\xBC" "BCDE\xE2\x95\x9A\xE2\x95\x94" "FGHI\xE2\x95\xA0\xE2\x95\x90" "JKLMNO\xE2\x95\xA5\xE2\x95\x99" "PQRSTU\xE2\x94\x98\xE2\x94\x8C" "VWXYZ"
+#define HB_CP_LOWER     "a\xC3\xA0\xC3\xA1\xC3\xA2\xC3\xA3\xC3\xA4\xC3\xA5" "bcde\xC3\xA8\xC3\xA9" "fghi\xC3\xAC\xC3\xAD" "jklmno\xC3\xB2\xC3\xB3" "pqrstu\xC3\xB9\xC3\xBA" "vwxyz"
+#else
 #define HB_CP_UPPER     "A└┴┬├─┼BCDE╚╔FGHI╠═JKLMNO╥╙PQRSTU┘┌VWXYZ"
 #define HB_CP_LOWER     "aàáâãäåbcdeèéfghiìíjklmnoòópqrstuùúvwxyz"
+#endif
 #define HB_CP_UTF8
 
 /* include CP registration code */

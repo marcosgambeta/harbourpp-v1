@@ -10,8 +10,13 @@
 #define HB_CP_INFO      "Hungarian CP-852 (ntxhu852.obj compatible)"
 #define HB_CP_UNITB     HB_UNITB_852
 #define HB_CP_ACSORT    HB_CDP_ACSORT_NONE
+#if defined(__BORLANDC__)
+#define HB_CP_UPPER     "A\xC4\x86\xC3\x81\xC3\x84" "BCDE\xC3\x89" "FGHI\xC5\xB9\xC3\x8D" "JKLMNO\xC4\xBD\xC3\x93\xC3\x96\xC5\xBE \xC5\x90" "PQRSTU\xC5\x9A\xC3\x9A\xC3\x9C\xC5\x9B \xC5\xB0" "VWXYZ"
+#define HB_CP_LOWER     "a \xC3\xA1\xC3\xA4" "bcde\xC3\xA9" "fghi \xC3\xAD" "jklmno \xC3\xB3\xC3\xB6 \xC3\xB4\xC5\x91" "pqrstu \xC3\xBA\xC3\xBC \xC4\xBE\xC5\xB1" "vwxyz"
+#else
 #define HB_CP_UPPER     "AĆÁÄBCDEÉFGHIŹÍJKLMNOĽÓÖž ŐPQRSTUŚÚÜś ŰVWXYZ"
 #define HB_CP_LOWER     "a áäbcdeéfghi íjklmno óö ôőpqrstu úü ľűvwxyz"
+#endif
 #define HB_CP_UTF8
 
 #if 0 /* VERIFIED: 20091116 */
