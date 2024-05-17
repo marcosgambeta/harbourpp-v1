@@ -152,7 +152,34 @@
                                  } while( 0 )
 #  endif
 
-#elif defined( __BORLANDC__ )
+#elif defined( __BORLANDC__ ) && defined( __clang__ )
+
+#include <cmath>
+
+#  define hb_isfinite( d )       _finite( d )
+#  if defined( hb_fpclassify )
+#     define HB_NUMTYPE( v, d )  do { \
+                                    int t = hb_fpclassify( d ); \
+                                    v = ( ( t & ( _FPCLASS_UNSUP | _FPCLASS_SNAN | _FPCLASS_QNAN ) ) ? _HB_NUM_NAN : \
+                                          ( ( t & _FPCLASS_NINF ) ? _HB_NUM_NINF : \
+                                            ( ( t & _FPCLASS_PINF ) ? _HB_NUM_PINF : 0 ) ) ); \
+                                 } while( 0 )
+#  else
+#     define HB_NUMTYPE( v, d )  do { \
+                                    v = ( _finite( d ) ? 0 : \
+                                          ( _isnan( d ) ? _HB_NUM_NAN : \
+                                              _HB_NUM_PINF ) ); \
+                                 } while( 0 )
+#     if ! defined( __NO_LONGDOUBLE__ )
+#        define HB_NUMTYPEL( v, d ) do { \
+                                       v = ( _finitel( d ) ? 0 : \
+                                             ( std::_isnan( d ) ? _HB_NUM_NAN : \
+                                                 _HB_NUM_PINF ) ); \
+                                    } while( 0 )
+#     endif
+#  endif
+
+#elif defined( __BORLANDC__ ) // TODO: deprecated
 
 #  define hb_isfinite( d )       _finite( d )
 #  if defined( hb_fpclassify )
