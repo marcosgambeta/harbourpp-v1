@@ -1834,7 +1834,11 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       cOptPrefix := "-/"
       /* NOTE: Some targets need kernel32 explicitly. */
       l_aLIBSYSCORE := { "winmm", "kernel32", "user32", "gdi32", "advapi32", "ws2_32", "iphlpapi" }
-      l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "uuid", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32", "gdiplus" }
+      IF hbmk[_HBMK_cCOMP] == "bcc64"
+         l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32", "gdiplus" }
+      ELSE
+         l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32", "gdiplus" }
+      ENDIF
    OTHERWISE
       _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Platform value unrecognized: %1$s"), hbmk[_HBMK_cPLAT]))
       RETURN _EXIT_UNKNPLAT
@@ -4338,13 +4342,14 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          cOpt_CompC := "-c -q -CP437"
          IF hbmk[_HBMK_lOPTIM]
             IF hbmk[_HBMK_cCOMP] == "bcc64"
-               cOpt_CompC += " -d -O2 -OS -Ov -Oc"
+               //cOpt_CompC += " -d -O2 -OS -Ov -Oc"
+               cOpt_CompC += " -d -O2"
             ELSE
                cOpt_CompC += " -d -O2 -OS -Ov -Oc -Oi -6"
             ENDIF
          ENDIF
          IF hbmk[_HBMK_cCOMP] == "bcc64"
-            cLibBCC_CRTL := "cw64mt.lib"
+            cLibBCC_CRTL := "cw64mt.a"
          ELSE
             cLibBCC_CRTL := "cw32mt.lib"
          ENDIF
@@ -4357,7 +4362,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                AAdd(hbmk[_HBMK_aOPTC], "-tWM")
             ELSE
                IF hbmk[_HBMK_cCOMP] == "bcc64"
-                  cLibBCC_CRTL := "cw64.lib"
+                  cLibBCC_CRTL := "cw64.a"
                ELSE
                   cLibBCC_CRTL := "cw32.lib"
                ENDIF
@@ -4383,8 +4388,8 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDIF
          cBin_Dyn := cBin_Link
          IF hbmk[_HBMK_cCOMP] == "bcc64"
-            cOpt_Link := "-Gn -Tpe -L{DL} {FL} " + iif(hbmk[_HBMK_lGUI], "c0w64.obj", "c0x64.obj") + " {LO}, {OE}, " + iif(hbmk[_HBMK_lMAP], "{OM}", "nul") + ", {LL} {LB} {LF} " + cLibBCC_CRTL + " import64.lib, {IM}, {LS}{SCRIPT}"
-            cOpt_Dyn  := "-Gn -Tpd -L{DL} {FD} " +                          "c0d64.obj"                + " {LO}, {OD}, " + iif(hbmk[_HBMK_lMAP], "{OM}", "nul") + ", {LL} {LB} {LF} " + cLibBCC_CRTL + " import64.lib, {IM}, {LS}{SCRIPT}"
+            cOpt_Link := "-Gn -Tpe -L{DL} {FL} " + iif(hbmk[_HBMK_lGUI], "c0w64.o", "c0x64.o") + " {LO}, {OE}, " + iif(hbmk[_HBMK_lMAP], "{OM}", "nul") + ", {LL} {LB} {LF} " + cLibBCC_CRTL + " import64.a, {IM}, {LS}{SCRIPT}"
+            cOpt_Dyn  := "-Gn -Tpd -L{DL} {FD} " +                          "c0d64.o"                + " {LO}, {OD}, " + iif(hbmk[_HBMK_lMAP], "{OM}", "nul") + ", {LL} {LB} {LF} " + cLibBCC_CRTL + " import64.a, {IM}, {LS}{SCRIPT}"
          ELSE
             cOpt_Link := "-Gn -Tpe -L{DL} {FL} " + iif(hbmk[_HBMK_lGUI], "c0w32.obj", "c0x32.obj") + " {LO}, {OE}, " + iif(hbmk[_HBMK_lMAP], "{OM}", "nul") + ", {LL} {LB} {LF} " + cLibBCC_CRTL + " import32.lib, {IM}, {LS}{SCRIPT}"
             cOpt_Dyn  := "-Gn -Tpd -L{DL} {FD} " +                          "c0d32.obj"                + " {LO}, {OD}, " + iif(hbmk[_HBMK_lMAP], "{OM}", "nul") + ", {LL} {LB} {LF} " + cLibBCC_CRTL + " import32.lib, {IM}, {LS}{SCRIPT}"
