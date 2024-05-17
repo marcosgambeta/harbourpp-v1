@@ -85,6 +85,30 @@ set HB_COMPILER=clang
 win-make install 1>log1.log 2>log2.log
 ```
 
+#### Embarcadero C++ 7.x for Win64
+
+* A utilização do Harbour++ em conjunto com este compilador é um trabalho em progresso.
+* Siga os exemplos abaixo como base para seus testes.
+* Se desejar, poderá usar a seção 'Issues' para relatar problemas encontrados.
+* A compilação das bibliotecas da pasta 'contrib' ainda não foi testada.
+
+##### Exemplos
+```Batch
+set PATH=C:\BCC64\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HarbourPP
+set HB_BUILD_CONTRIB_DYN=no
+set HB_BUILD_CONTRIBS=no
+set HB_CPU=x86_64
+set HB_COMPILER=bcc64
+set HB_USER_LDFLAGS=-LC:\BCC64\lib;C:\BCC64\lib\psdk
+set HB_USER_DFLAGS=-LC:\BCC64\lib;C:\BCC64\lib\psdk
+set HB_USER_RESFLAGS=-IC:\BCC64\include -IC:\BCC64\include\windows\crtl -IC:\BCC64\include\dinkumware64 -IC:\BCC64\include\windows\rtl -IC:\BCC64\include\windows\sdk
+win-make install 1>log1.log 2>log2.log
+```
+
+```Batch
+hbmk2 program -ldflag=-LC:\BCC64\lib -ldflag=-LC:\BCC64\lib\psdk
+```
 ### Projetos relacionados
 
 https://github.com/marcosgambeta/hwguipp  
