@@ -47,7 +47,8 @@ Este projeto é um trabalho em progresso.
 
 ### Compilação
 
-O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW), Microsoft Visual C++ (MSVC) e LLVM/Clang C++.
+O projeto está sendo desenvolvido e testado com os compiladores GCC (MinGW), Microsoft Visual C++ (MSVC),
+LLVM/Clang C++ e 'Embarcadero C++ 7.x for Win64' (BCC64).
 
 #### MinGW
 * Definir o padrão, conforme exemplo abaixo:  
