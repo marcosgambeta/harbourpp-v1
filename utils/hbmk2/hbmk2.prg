@@ -1837,7 +1837,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
       IF hbmk[_HBMK_cCOMP] == "bcc64"
          l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32", "gdiplus" }
       ELSE
-         l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32", "gdiplus" }
+         l_aLIBSYSMISC := { "winspool", "comctl32", "comdlg32", "shell32", "uuid", "ole32", "oleaut32", "mpr", "mapi32", "imm32", "msimg32", "wininet", "rpcrt4", "winhttp", "secur32", "opengl32", "gdiplus" }
       ENDIF
    OTHERWISE
       _hbmk_OutErr(hbmk, hb_StrFormat(I_("Error: Platform value unrecognized: %1$s"), hbmk[_HBMK_cPLAT]))
