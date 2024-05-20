@@ -49,6 +49,9 @@ ifneq ($(HB_HAS_ZLIB_LOCAL),)
          HB_CFLAGS += -DHAVE_UNISTD_H
       endif
    endif
+   ifeq ($(HB_COMPILER),bcc64)
+      HB_CFLAGS += -std=c11
+   endif
    include $(TOP)$(ROOT)config/lib.mk
 else
    HB_SKIP_REASON := unused
