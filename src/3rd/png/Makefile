@@ -37,10 +37,6 @@ ifeq ($(filter $(HB_COMPILER),poccarm xcc tcc),)
    _DET_INC_HEAD := /png.h
    include $(TOP)$(ROOT)config/detfun.mk
 
-   ifeq ($(HB_COMPILER),bcc64)
-      HB_CFLAGS += -std=c11 -Wno-visibility -Wno-missing-declarations
-   endif
-
    ifneq ($(HB_HAS_PNG_LOCAL),)
 
       ifneq ($(HB_HAS_ZLIB),)
@@ -54,6 +50,10 @@ ifeq ($(filter $(HB_COMPILER),poccarm xcc tcc),)
             HB_CFLAGS += -DPNG_ALLOCATED
          endif
          HB_CFLAGS += -DPNG_ARM_NEON_OPT=0
+
+         ifeq ($(HB_COMPILER),bcc64)
+            HB_CFLAGS += -std=c11 -Wno-visibility -Wno-missing-declarations -Wno-tautological-constant-out-of-range-compare
+         endif
 
          include $(TOP)$(ROOT)config/lib.mk
       else
