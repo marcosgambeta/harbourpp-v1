@@ -68,9 +68,9 @@ ifneq ($(HB_HAS_PCRE_LOCAL),)
    endif
 
    # suppress bcc warnings
-   ifeq ($(HB_COMPILER),bcc)
-      HB_CFLAGS += -w-use -w-csu -w-aus -w-sig
-   endif
+   #ifeq ($(HB_COMPILER),bcc)
+   #   HB_CFLAGS += -w-use -w-csu -w-aus -w-sig
+   #endif
 
    include $(TOP)$(ROOT)config/lib.mk
 else
