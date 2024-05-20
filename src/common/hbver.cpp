@@ -868,7 +868,7 @@ char *hb_verCompiler(void)
 #endif
   iVerPatch = __OPENCC_PATCHLEVEL__;
 
-#elif defined(__clang__) && defined(__clang_major__)
+#elif defined(__clang__) && defined(__clang_major__) && !defined(__BORLANDC__)
 
   /* NOTE: keep clang detection before msvc detection. */
 
@@ -882,7 +882,7 @@ char *hb_verCompiler(void)
   iVerMinor = __clang_minor__;
   iVerPatch = __clang_patchlevel__;
 
-#elif defined(__clang__)
+#elif defined(__clang__) && !defined(__BORLANDC__)
 
   pszName = "LLVM/Clang C";
 
@@ -1071,7 +1071,7 @@ char *hb_verCompiler(void)
     hb_strncpy(pszCompiler, "(unknown)", COMPILER_BUF_SIZE - 1);
   }
 
-#if defined(__clang_version__)
+#if defined(__clang_version__) && !defined(__BORLANDC__)
   if (strstr(__clang_version__, "("))
   {
     /* "2.0 (trunk 103176)" -> "(trunk 103176)" */
