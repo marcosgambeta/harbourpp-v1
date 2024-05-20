@@ -111,92 +111,101 @@ HB_BOOL hb_fsCopy(const char *pszSource, const char *pszDest)
   return fResult;
 }
 
-HB_BOOL hb_fileCopyEx( const char * pszSource, const char * pszDest, HB_SIZE nBufSize, HB_BOOL fTime, PHB_ITEM pCallBack )
+HB_BOOL hb_fileCopyEx(const char *pszSource, const char *pszDest, HB_SIZE nBufSize, HB_BOOL fTime, PHB_ITEM pCallBack)
 {
-   HB_BOOL fResult = HB_FALSE;
-   PHB_FILE pSrcFile;
+  auto fResult = false;
+  PHB_FILE pSrcFile;
 
-   if( pCallBack && ! HB_IS_EVALITEM( pCallBack ) )
-      pCallBack = NULL;
+  if (pCallBack && !HB_IS_EVALITEM(pCallBack))
+  {
+    pCallBack = nullptr;
+  }
 
-   if( ( pSrcFile = hb_fileExtOpen( pszSource, NULL, FO_READ | FO_SHARED | FXO_SHARELOCK, NULL, NULL ) ) != NULL )
-   {
-      PHB_FILE pDstFile;
-      HB_ERRCODE errCode = 0;
+  if ((pSrcFile = hb_fileExtOpen(pszSource, nullptr, FO_READ | FO_SHARED | FXO_SHARELOCK, nullptr, nullptr)) != nullptr)
+  {
+    PHB_FILE pDstFile;
+    HB_ERRCODE errCode = 0;
 
-      if( ( pDstFile = hb_fileExtOpen( pszDest, NULL, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK, NULL, NULL ) ) != NULL )
+    if ((pDstFile = hb_fileExtOpen(pszDest, nullptr, FXO_TRUNCATE | FO_READWRITE | FO_EXCLUSIVE | FXO_SHARELOCK,
+                                   nullptr, nullptr)) != nullptr)
+    {
+      HB_SIZE nTotal = pCallBack ? hb_fileSize(pSrcFile) : 0, nWritten = 0,
+              nSize = nBufSize > 0 ? nBufSize : HB_FSCOPY_BUFFERSIZE;
+      void *pbyBuffer = hb_xgrab(nSize);
+
+      if (pCallBack)
       {
-         HB_SIZE nTotal = pCallBack ? hb_fileSize( pSrcFile ) : 0, nWritten = 0,
-                 nSize = nBufSize > 0 ? nBufSize : HB_FSCOPY_BUFFERSIZE;
-         void * pbyBuffer = hb_xgrab( nSize );
+        hb_vmPushEvalSym();
+        hb_vmPush(pCallBack);
+        hb_vmPushInteger(0);
+        hb_vmPushNumInt(static_cast<HB_MAXINT>(nTotal));
+        hb_vmSend(2);
+      }
 
-         if( pCallBack )
-         {
+      while (pCallBack == nullptr || hb_vmRequestQuery() == 0)
+      {
+        HB_SIZE nBytesRead;
+
+        if ((nBytesRead = hb_fileRead(pSrcFile, pbyBuffer, nSize, -1)) > 0 &&
+            nBytesRead != static_cast<HB_SIZE>(FS_ERROR))
+        {
+          if (nBytesRead != hb_fileWrite(pDstFile, pbyBuffer, nBytesRead, -1))
+          {
+            errCode = hb_fsError();
+            break;
+          }
+          nWritten += nBytesRead;
+          if (pCallBack)
+          {
             hb_vmPushEvalSym();
-            hb_vmPush( pCallBack );
-            hb_vmPushInteger( 0 );
-            hb_vmPushNumInt( ( HB_MAXINT ) nTotal );
-            hb_vmSend( 2 );
-         }
-
-         while( pCallBack == NULL || hb_vmRequestQuery() == 0 )
-         {
-            HB_SIZE nBytesRead;
-
-            if( ( nBytesRead = hb_fileRead( pSrcFile, pbyBuffer, nSize, -1 ) ) > 0 &&
-                nBytesRead != ( HB_SIZE ) FS_ERROR )
-            {
-               if( nBytesRead != hb_fileWrite( pDstFile, pbyBuffer, nBytesRead, -1 ) )
-               {
-                  errCode = hb_fsError();
-                  break;
-               }
-               nWritten += nBytesRead;
-               if( pCallBack )
-               {
-                  hb_vmPushEvalSym();
-                  hb_vmPush( pCallBack );
-                  hb_vmPushNumInt( ( HB_MAXINT ) nWritten );
-                  hb_vmPushNumInt( ( HB_MAXINT ) nTotal );
-                  hb_vmSend( 2 );
-               }
-            }
-            else
-            {
-               errCode = hb_fsError();
-               fResult = errCode == 0;
-               break;
-            }
-         }
-
-         hb_xfree( pbyBuffer );
-
-         hb_fileClose( pDstFile );
+            hb_vmPush(pCallBack);
+            hb_vmPushNumInt(static_cast<HB_MAXINT>(nWritten));
+            hb_vmPushNumInt(static_cast<HB_MAXINT>(nTotal));
+            hb_vmSend(2);
+          }
+        }
+        else
+        {
+          errCode = hb_fsError();
+          fResult = errCode == 0;
+          break;
+        }
       }
-      else
-         errCode = hb_fsError();
 
-      hb_fileClose( pSrcFile );
+      hb_xfree(pbyBuffer);
 
-      if( fResult )
+      hb_fileClose(pDstFile);
+    }
+    else
+    {
+      errCode = hb_fsError();
+    }
+
+    hb_fileClose(pSrcFile);
+
+    if (fResult)
+    {
+      HB_FATTR ulAttr;
+
+      if (hb_fileAttrGet(pszSource, &ulAttr))
       {
-         HB_FATTR ulAttr;
-
-         if( hb_fileAttrGet( pszSource, &ulAttr ) )
-            hb_fileAttrSet( pszDest, ulAttr );
-
-         if( fTime )
-         {
-            long lJulian, lMillisec;
-
-            if( hb_fileTimeGet( pszSource, &lJulian, &lMillisec ) )
-               hb_fileTimeSet( pszDest, lJulian, lMillisec );
-         }
+        hb_fileAttrSet(pszDest, ulAttr);
       }
-      hb_fsSetError( errCode );
-   }
 
-   return fResult;
+      if (fTime)
+      {
+        long lJulian, lMillisec;
+
+        if (hb_fileTimeGet(pszSource, &lJulian, &lMillisec))
+        {
+          hb_fileTimeSet(pszDest, lJulian, lMillisec);
+        }
+      }
+    }
+    hb_fsSetError(errCode);
+  }
+
+  return fResult;
 }
 
 HB_FUNC(HB_FCOPY)
