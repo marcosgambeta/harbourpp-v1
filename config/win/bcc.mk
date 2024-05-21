@@ -15,26 +15,33 @@ HB_DYN_COPT := -DHB_DYNLIB
 ifeq ($(HB_COMPILER),bcc64)
    CC := bcc64.exe
 else
-   CC := bcc32.exe
+   CC := bcc32c.exe
 endif
 CC_IN := -c
 CC_OUT := -o
 
 CFLAGS += -I. -I$(HB_HOST_INC)
 
-#CFLAGS += -q -tWM -CP437
-CFLAGS += -q -tWM
+ifeq ($(HB_COMPILER),bcc64)
+   CFLAGS += -q -tWM
+else
+   CFLAGS += -q -tWM -CP437
+endif
 
 ifeq ($(HB_BUILD_WARN),no)
    #CFLAGS += -w-aus -w-ccc -w-csu -w-ovf -w-par -w-rch -w-spa
 else
-   CFLAGS += -w -Q -w-sig
+   ifeq ($(HB_COMPILER),bcc64)
+      CFLAGS += -w -Q
+   else
+      CFLAGS += -w -Q -w-sig
+   endif
 endif
 
 ifneq ($(HB_BUILD_OPTIM),no)
    ifeq ($(HB_COMPILER),bcc64)
       #CFLAGS += -d -O2 -OS -Ov -Oc
-	  CFLAGS += -O2
+      CFLAGS += -O2
    else
       # for some reason -6 generates the exact same code as -4 with both 5.5 and 5.8.
       # -5 seems to be significantly slower than both. [vszakats]
@@ -68,20 +75,20 @@ endif
 
 # Hack to autoconfig bcc, and not require properly set .cfg files in its bin dir.
 # It only works if we know compiler location.
-ifneq ($(HB_COMP_PATH_PUB),)
-   HB_CFLAGS += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include")
-   RCFLAGS   += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include")
-   ifneq ($(wildcard $(HB_COMP_PATH_PUB)../Include/windows/crtl),)
-      HB_CFLAGS += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/crtl")
-      RCFLAGS   += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/crtl")
-   endif
-   ifneq ($(wildcard $(HB_COMP_PATH_PUB)../Include/windows/sdk),)
-      HB_CFLAGS += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/sdk")
-      RCFLAGS   += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/sdk")
-   endif
-   LDFLAGS   += $(subst /,$(BACKSLASH),-L"$(HB_COMP_PATH_PUB)../Lib" -L"$(HB_COMP_PATH_PUB)../Lib/PSDK")
-   DFLAGS    += $(subst /,$(BACKSLASH),-L"$(HB_COMP_PATH_PUB)../Lib" -L"$(HB_COMP_PATH_PUB)../Lib/PSDK")
-endif
+# ifneq ($(HB_COMP_PATH_PUB),)
+#    HB_CFLAGS += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include")
+#    RCFLAGS   += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include")
+#    ifneq ($(wildcard $(HB_COMP_PATH_PUB)../Include/windows/crtl),)
+#       HB_CFLAGS += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/crtl")
+#       RCFLAGS   += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/crtl")
+#    endif
+#    ifneq ($(wildcard $(HB_COMP_PATH_PUB)../Include/windows/sdk),)
+#       HB_CFLAGS += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/sdk")
+#       RCFLAGS   += $(subst /,$(BACKSLASH),-I"$(HB_COMP_PATH_PUB)../Include/windows/sdk")
+#    endif
+#    LDFLAGS   += $(subst /,$(BACKSLASH),-L"$(HB_COMP_PATH_PUB)../Lib" -L"$(HB_COMP_PATH_PUB)../Lib/PSDK")
+#    DFLAGS    += $(subst /,$(BACKSLASH),-L"$(HB_COMP_PATH_PUB)../Lib" -L"$(HB_COMP_PATH_PUB)../Lib/PSDK")
+# endif
 
 RC := brcc32.exe
 RC_OUT := -fo
@@ -95,6 +102,7 @@ endif
 LIBPATHS := $(foreach dir,$(LIB_DIR) $(3RDLIB_DIR),$(subst /,$(BACKSLASH),-L"$(dir)"))
 LDFLAGS += $(LIBPATHS) -Gn -Tpe
 ifeq ($(HB_COMPILER),bcc64)
+   #ILINK objfiles, exefile, mapfile, libfiles, deffile, resfiles
    LD_RULE = $(LD) $(LDFLAGS) $(HB_LDFLAGS) $(HB_USER_LDFLAGS) c0x64.o $(filter-out %$(RES_EXT),$(^F)), "$(subst /,$(BACKSLASH),$(BIN_DIR)/$@)", nul, $(LDLIBS) cw64mt import64,, $(filter %$(RES_EXT),$(^F)) $(LDSTRIP)
 else
    LD_RULE = $(LD) $(LDFLAGS) $(HB_LDFLAGS) $(HB_USER_LDFLAGS) c0x32.obj $(filter-out %$(RES_EXT),$(^F)), "$(subst /,$(BACKSLASH),$(BIN_DIR)/$@)", nul, $(LDLIBS) cw32mt import32,, $(filter %$(RES_EXT),$(^F)) $(LDSTRIP)
