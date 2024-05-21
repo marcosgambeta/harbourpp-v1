@@ -303,7 +303,7 @@ EXTERNAL hbmk_KEYW
 #define _WORKDIR_BASE_          ".hbmk"
 #define _WORKDIR_DEF_           ( _WORKDIR_BASE_ + hb_ps() + hbmk[_HBMK_cPLAT] + hb_ps() + hbmk[_HBMK_cCOMP] )
 
-#define _BCC_BIN_DETECT()       FindInPath( "bcc32.exe" )
+#define _BCC_BIN_DETECT()       FindInPath( "bcc32c.exe" )
 
 #define HB_ISALPHA(c)           hb_asciiIsAlpha(c)
 #define HB_ISFIRSTIDCHAR( c )   ( HB_ISALPHA(c) .OR. ( c ) == "_" )
@@ -2022,7 +2022,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
                   Permanently enabled. Apparently this is still top problem for bcc users. It is
                   also in sync this way with Harbour core build system. */
          IF .T. .OR. ;
-            !hb_FileExists( hb_FNameDir(cPath_CompC) + ".." + hb_ps() + "Bin" + hb_ps() + "bcc32.cfg" ) .OR. ;
+            !hb_FileExists( hb_FNameDir(cPath_CompC) + ".." + hb_ps() + "Bin" + hb_ps() + "bcc32c.cfg" ) .OR. ;
             !hb_FileExists( hb_FNameDir(cPath_CompC) + ".." + hb_ps() + "Bin" + hb_ps() + "ilink32.cfg" )
             /* NOTE: BCC 5.8 has different casing: 'include', 'lib', 'psdk' respectively. */
             AAdd(hbmk[_HBMK_aINCPATH], hb_PathNormalize(hb_FNameDir(cPath_CompC) + ".." + hb_ps() + "Include"))
@@ -4336,10 +4336,14 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          IF hbmk[_HBMK_cCOMP] == "bcc64"
             cBin_CompC := "bcc64.exe"
          ELSE
-            cBin_CompC := "bcc32.exe"
+            cBin_CompC := "bcc32c.exe"
          ENDIF
          cBin_CompCPP := cBin_CompC
-         cOpt_CompC := "-c -q -CP437"
+         IF hbmk[_HBMK_cCOMP] == "bcc64"
+            cOpt_CompC := "-c -q"
+         ELSE
+            cOpt_CompC := "-c -q -CP437"
+         ENDIF
          IF hbmk[_HBMK_lOPTIM]
             IF hbmk[_HBMK_cCOMP] == "bcc64"
                //cOpt_CompC += " -d -O2 -OS -Ov -Oc"
@@ -4370,13 +4374,24 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ELSE
             AAdd(hbmk[_HBMK_aOPTC], "-tWM")
          ENDIF
-         SWITCH hbmk[_HBMK_nWARN]
-         CASE _WARN_MAX ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q")         ; EXIT
-         CASE _WARN_YES ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q -w-sig") ; EXIT
-         // The following line differs from the line in config/win/bcc.mk because Make needs to build core, and hbmk2 needs to build contrib
-         CASE _WARN_LOW ; AAdd(hbmk[_HBMK_aOPTC], "-w-sig -w-aus -w-ccc -w-csu -w-ovf -w-par -w-rch -w-spa -w-sus -w-pia") ; EXIT
-         CASE _WARN_NO  ; AAdd(hbmk[_HBMK_aOPTC], "-w-")           ; EXIT
-         ENDSWITCH
+         IF hbmk[_HBMK_cCOMP] == "bcc64"
+            SWITCH hbmk[_HBMK_nWARN]
+            CASE _WARN_MAX ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q")         ; EXIT
+            CASE _WARN_YES ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q") ; EXIT
+            // The following line differs from the line in config/win/bcc.mk because Make needs to build core, and hbmk2 needs to build contrib
+            CASE _WARN_LOW ; AAdd(hbmk[_HBMK_aOPTC], "-w-aus -w-ccc -w-csu -w-ovf -w-par -w-rch -w-spa -w-sus -w-pia") ; EXIT
+            CASE _WARN_NO  ; AAdd(hbmk[_HBMK_aOPTC], "-w-")           ; EXIT
+            ENDSWITCH
+         ELSE
+            SWITCH hbmk[_HBMK_nWARN]
+            CASE _WARN_MAX ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q")         ; EXIT
+            CASE _WARN_YES ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q -w-sig") ; EXIT
+            // The following line differs from the line in config/win/bcc.mk because Make needs to build core, and hbmk2 needs to build contrib
+            CASE _WARN_LOW ; AAdd(hbmk[_HBMK_aOPTC], "-w-sig -w-aus -w-ccc -w-csu -w-ovf -w-par -w-rch -w-spa -w-sus -w-pia") ; EXIT
+            CASE _WARN_NO  ; AAdd(hbmk[_HBMK_aOPTC], "-w-")           ; EXIT
+            ENDSWITCH
+         ENDIF
+
          cOpt_CompC += " {FC} {LC}"
          cBin_Res := "brcc32.exe"
          cOpt_Res := "{FR} {IR} -fo{OS}"
@@ -4428,7 +4443,12 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             ENDIF
          ENDIF
          IF !Empty(hbmk[_HBMK_cWorkDir])
-            AAdd(hbmk[_HBMK_aOPTC], "-n" + FNameEscape(hbmk[_HBMK_cWorkDir], hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]))
+            IF hbmk[_HBMK_cCOMP] == "bcc64"
+               // TODO:
+               //AAdd(hbmk[_HBMK_aOPTC], "-output-dir " + FNameEscape(hbmk[_HBMK_cWorkDir], hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]))
+            ELSE
+               AAdd(hbmk[_HBMK_aOPTC], "-n" + FNameEscape(hbmk[_HBMK_cWorkDir], hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]))
+            ENDIF
          ELSE
             IF lStopAfterCComp .AND. !hbmk[_HBMK_lCreateLib] .AND. !hbmk[_HBMK_lCreateDyn]
                IF ( Len(hbmk[_HBMK_aPRG]) + Len(hbmk[_HBMK_aC]) + Len(hbmk[_HBMK_aCPP]) ) == 1
