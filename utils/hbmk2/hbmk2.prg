@@ -4414,6 +4414,10 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             /* TODO: Add support for bcc64/mkexp */
             bBlk_ImpLib := {| cSourceDLL, cTargetLib, cFlags | win_implib_command_bcc(hbmk, "implib.exe -c {FI} {OL} {ID}", cSourceDLL, cTargetLib, cFlags) }
          ENDIF
+         IF hbmk[_HBMK_cCOMP] == "bcc64"
+            /* TODO: Add support for bcc64/mkexp */
+            bBlk_ImpLib := {| cSourceDLL, cTargetLib, cFlags | win_implib_command_bcc(hbmk, "mkexp.exe {FI} {OL} {ID}", cSourceDLL, cTargetLib, cFlags) }
+         ENDIF
          cLibPathPrefix := ""
          cLibPathSep := ";"
          IF hbmk[_HBMK_lMAP]
@@ -4460,6 +4464,9 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDIF
          IF hbmk[_HBMK_cCOMP] == "bcc"
             l_aLIBSHARED := { cHarbourDyn + cDL_Version_Alter + "-bcc" + cLibExt }
+         ENDIF
+         IF hbmk[_HBMK_cCOMP] == "bcc64"
+            l_aLIBSHARED := { cHarbourDyn + cDL_Version_Alter + "-x64" + cLibExt }
          ENDIF
          l_aLIBSHAREDPOST := { "hbmainstd", "hbmainwin" }
          l_aLIBSYS := ArrayAJoin( { l_aLIBSYS, l_aLIBSYSCORE, l_aLIBSYSMISC } )
