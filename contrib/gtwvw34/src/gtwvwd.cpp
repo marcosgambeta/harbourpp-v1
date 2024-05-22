@@ -6051,7 +6051,11 @@ static int PackedDibGetHeight(BITMAPINFO *pPackedDib)
   }
   else
   {
+    #if defined(__BORLANDC__) && defined(__clang__)
+    return abs(static_cast<int>(pPackedDib->bmiHeader.biHeight));
+    #else
     return abs(pPackedDib->bmiHeader.biHeight);
+    #endif
   }
 }
 
