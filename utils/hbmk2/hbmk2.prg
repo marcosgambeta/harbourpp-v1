@@ -4347,7 +4347,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          IF hbmk[_HBMK_lOPTIM]
             IF hbmk[_HBMK_cCOMP] == "bcc64"
                //cOpt_CompC += " -d -O2 -OS -Ov -Oc"
-               cOpt_CompC += " -d -O2"
+               cOpt_CompC += " -O2"
             ELSE
                cOpt_CompC += " -d -O2 -OS -Ov -Oc -Oi -6"
             ENDIF
@@ -4380,7 +4380,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
             CASE _WARN_MAX ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q")         ; EXIT
             CASE _WARN_YES ; AAdd(hbmk[_HBMK_aOPTC], "-w -Q") ; EXIT
             // The following line differs from the line in config/win/bcc.mk because Make needs to build core, and hbmk2 needs to build contrib
-            CASE _WARN_LOW ; AAdd(hbmk[_HBMK_aOPTC], "-w-aus -w-ccc -w-csu -w-ovf -w-par -w-rch -w-spa -w-sus -w-pia") ; EXIT
+            CASE _WARN_LOW ; AAdd(hbmk[_HBMK_aOPTC], "" /*"-w-aus -w-ccc -w-csu -w-ovf -w-par -w-rch -w-spa -w-sus -w-pia"*/) ; EXIT
             CASE _WARN_NO  ; AAdd(hbmk[_HBMK_aOPTC], "-w-")           ; EXIT
             ENDSWITCH
          ELSE
