@@ -41,6 +41,10 @@
 # mingw 4.5.0/4.5.1 revisions fail compiling in iso90 mode. It's fixed in 4.5.2.
 -c=gnu90{allgcc&HB_COMP_VER='45'}
 
+{bcc64}-cflag=-Wno-typedef-redefinition
+{bcc64}-cflag=-Wno-visibility
+{bcc64}-cflag=-Wno-missing-declarations
+
 sqlite3.c
 
 # ORIGIN http://www.sqlite.org/

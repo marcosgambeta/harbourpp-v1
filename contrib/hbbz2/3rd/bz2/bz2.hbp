@@ -13,6 +13,10 @@
 -cpp=no
 -pic
 
+{bcc64}-cflag=-Wno-typedef-redefinition
+{bcc64}-cflag=-Wno-visibility
+{bcc64}-cflag=-Wno-missing-declarations
+
 blocksor.c
 bzlib.c
 compress.c

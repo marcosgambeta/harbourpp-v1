@@ -35,6 +35,9 @@
 #-cflag=-fpermissive{allmingw}
 #-cflag=-Wno-narrowing{allmingw}
 
+{bcc64}-cflag=-Wno-tautological-compare
+{bcc64}-cflag=-Wno-typedef-redefinition
+
 -iinclude
 
 src/_hbhbpdf.c

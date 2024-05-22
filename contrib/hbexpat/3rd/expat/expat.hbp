@@ -30,6 +30,10 @@ xmltok.c
 {bcc}-cflag=-w-8008
 {bcc}-cflag=-w-8066
 
+{bcc64}-cflag=-Wno-typedef-redefinition
+{bcc64}-cflag=-Wno-visibility
+{bcc64}-cflag=-Wno-missing-declarations
+
 # ORIGIN https://libexpat.github.io/
 # URL    https://downloads.sourceforge.net/project/expat/expat/2.2.5/expat-2.2.5.tar.bz2
 # DIFF   expat.diff
