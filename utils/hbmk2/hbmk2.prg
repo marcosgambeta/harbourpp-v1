@@ -4444,8 +4444,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDIF
          IF !Empty(hbmk[_HBMK_cWorkDir])
             IF hbmk[_HBMK_cCOMP] == "bcc64"
-               // TODO:
-               //AAdd(hbmk[_HBMK_aOPTC], "-output-dir " + FNameEscape(hbmk[_HBMK_cWorkDir], hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]))
+               AAdd(hbmk[_HBMK_aOPTC], "-n " + FNameEscape(hbmk[_HBMK_cWorkDir], hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]))
             ELSE
                AAdd(hbmk[_HBMK_aOPTC], "-n" + FNameEscape(hbmk[_HBMK_cWorkDir], hbmk[_HBMK_nCmd_Esc], hbmk[_HBMK_nCmd_FNF]))
             ENDIF
