@@ -4359,6 +4359,7 @@ STATIC FUNCTION __hbmk(aArgs, nArgTarget, nLevel, /* @ */ lPause, /* @ */ lExitS
          ENDIF
          IF hbmk[_HBMK_lWINUNI]
             AAdd(hbmk[_HBMK_aOPTC], "-DUNICODE")
+            AAdd(hbmk[_HBMK_aOPTC], "-D_UNICODE")
          ENDIF
          IF _HBMODE_IS_XHB(hbmk[_HBMK_nHBMODE])
             /* Adding weird hack for xHarbour to make it possible to force ST C mode. */
