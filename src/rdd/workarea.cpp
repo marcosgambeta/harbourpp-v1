@@ -1169,7 +1169,7 @@ static HB_ERRCODE hb_waEval(AREAP pArea, LPDBEVALINFO pEvalInfo)
 
   HB_LONG lNext = 1;
   HB_BOOL fEof;
-  bool fFor;
+  auto fFor = false;
 
   if (pEvalInfo->dbsci.itmRecID)
   {
@@ -1374,7 +1374,7 @@ static HB_ERRCODE hb_waTrans(AREAP pArea, LPDBTRANSINFO pTransInfo)
 
   HB_LONG lNext = 1;
   HB_BOOL fEof;
-  bool fFor;
+  auto fFor = false;
 
   if (pTransInfo->dbsci.itmRecID)
   {
@@ -2109,7 +2109,7 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCon
    HB_TRACE(HB_TR_DEBUG, ("hb_rddInfo(%p, %hu, %lu, %p)", static_cast<void*>(pRDD), uiIndex, ulConnection, static_cast<void*>(pItem)));
 #endif
 
-  bool fResult;
+  auto fResult = false;
   int iResult;
 
   HB_SYMBOL_UNUSED(pRDD);

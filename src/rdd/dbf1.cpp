@@ -796,7 +796,8 @@ static bool hb_dbfPasswordSet(DBFAREAP pArea, PHB_ITEM pPasswd, bool fRaw)
 #endif
 
   char pKeyBuffer[8];
-  bool fKeySet = false, fSet;
+  auto fKeySet = false;
+  auto fSet = false;
 
   auto nLen = hb_itemGetCLen(pPasswd);
 
@@ -1523,7 +1524,7 @@ static bool hb_dbfLockIdxRepeatFail(DBFAREAP pArea, PHB_DBFLOCKDATA pLockData)
 HB_BOOL hb_dbfLockIdxFile(DBFAREAP pArea, PHB_FILE pFile, int iType, HB_BOOL fLateWrlck, PHB_DBFLOCKDATA pLockData)
 {
   HB_FOFFSET tolock;
-  bool fOK;
+  auto fOK = false;
 
   switch (iType & FL_MASK)
   {
@@ -2034,7 +2035,8 @@ static HB_ERRCODE hb_dbfSkipRaw(DBFAREAP pArea, HB_LONG lToSkip)
 
   if (lToSkip == 0)
   {
-    bool bBof, bEof;
+    auto bBof = false;
+    auto bEof = false;
 
     /* Save flags */
     bBof = pArea->area.fBof;
@@ -2365,7 +2367,7 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
 #endif
 
   LPFIELD pField;
-  bool fError;
+  auto fError = false;
   char *pszVal;
   double dVal;
   HB_SIZE nLen;
@@ -3468,7 +3470,7 @@ static HB_ERRCODE hb_dbfCreate(DBFAREAP pArea, LPDBOPENINFO pCreateInfo)
   HB_ERRCODE errCode = Harbour::SUCCESS, errSubCode = 0;
   HB_SIZE nSize;
   HB_USHORT uiCount, uiLen;
-  bool fRawBlob;
+  auto fRawBlob = false;
   DBFFIELD *pThisField;
   PHB_FNAME pFileName;
   PHB_ITEM pItem = nullptr, pError;
@@ -4322,7 +4324,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
 #endif
 
   LPFIELD pField;
-  bool fLck;
+  auto fLck = false;
 
   if (uiIndex > pArea->area.uiFieldCount)
   {
@@ -4606,7 +4608,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
   HB_ERRCODE errCode;
   HB_USHORT uiFields, uiCount, uiSkip, uiDecimals, uiLen, uiFlags, uiFlagsMask;
-  bool fRawBlob;
+  auto fRawBlob = false;
   PHB_ITEM pError, pItem;
   PHB_FNAME pFileName;
   HB_BYTE *pBuffer;
@@ -6163,7 +6165,7 @@ static HB_ERRCODE hb_dbfSort(DBFAREAP pArea, LPDBSORTINFO pSortInfo)
 
   DBSORTREC dbSortRec;
   HB_BOOL fEof;
-  bool fFor;
+  auto fFor = false;
   HB_LONG lNext = 1;
 
   if (SELF_GOCOLD(&pArea->area) != Harbour::SUCCESS)
@@ -6539,7 +6541,7 @@ static HB_ERRCODE hb_dbfRawLock(DBFAREAP pArea, HB_USHORT uiAction, HB_ULONG ulR
   {
     HB_FOFFSET nPos, nFlSize, nRlSize;
     int iDir;
-    bool fLck;
+    auto fLck = false;
 
     if (hb_dbfLockData(pArea, &nPos, &nFlSize, &nRlSize, &iDir) == Harbour::FAILURE)
     {

@@ -168,7 +168,7 @@ static int hb_memoDefaultType(LPRDDNODE pRDD, HB_ULONG ulConnect)
  */
 static bool hb_fptFileLockEx(FPTAREAP pArea, bool fWait)
 {
-  bool fRet;
+  auto fRet = false;
 
   if (!pArea->fShared)
   {
@@ -194,7 +194,7 @@ static bool hb_fptFileLockEx(FPTAREAP pArea, bool fWait)
  */
 static bool hb_fptFileLockSh(FPTAREAP pArea, bool fWait)
 {
-  bool fRet;
+  auto fRet = false;
 
   if (!pArea->fShared)
   {
@@ -261,7 +261,7 @@ static bool hb_fptHasDirectAccess(FPTAREAP pArea)
  */
 static bool hb_fptRootBlockLock(FPTAREAP pArea)
 {
-  bool fRet;
+  auto fRet = false;
 
   if (!pArea->fShared)
   {
@@ -429,7 +429,7 @@ static void hb_fptSortGCitems(LPMEMOGCTABLE pGCtable)
       if (pGCtable->pGCitems[i].ulSize > pGCtable->pGCitems[i + 1].ulSize)
       {
         HB_ULONG ulOffset, ulSize;
-        bool fChanged;
+        auto fChanged = false;
 
         ulOffset = pGCtable->pGCitems[i + 1].ulOffset;
         ulSize = pGCtable->pGCitems[i + 1].ulSize;
@@ -2985,7 +2985,7 @@ static HB_ERRCODE hb_fptWriteMemo(FPTAREAP pArea, HB_ULONG ulBlock, HB_ULONG ulS
 #endif
 
   MEMOGCTABLE fptGCtable;
-  bool bWrite;
+  auto bWrite = false;
 
   bWrite = (ulLen != 0 || (pArea->bMemoType == DB_MEMO_FPT && ulType != FPTIT_TEXT && ulType != FPTIT_BINARY &&
                            ulType != FPTIT_DUMMY));
@@ -4082,7 +4082,7 @@ static HB_ERRCODE hb_fptGetVarLen(FPTAREAP pArea, HB_USHORT uiIndex, HB_ULONG *p
        pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::BLOB ||
        pArea->area.lpFields[uiIndex - 1].uiType == Harbour::DB::Field::OLE))
   {
-    bool fUnLock;
+    auto fUnLock = false;
 
     HB_ERRCODE errCode = hb_fptLockForRead(pArea, uiIndex, &fUnLock);
     if (errCode == Harbour::SUCCESS)
@@ -4180,7 +4180,7 @@ static HB_ERRCODE hb_fptCreateMemFile(FPTAREAP pArea, LPDBOPENINFO pCreateInfo)
     char szFileName[HB_PATH_MAX];
     PHB_FNAME pFileName;
     PHB_ITEM pError = nullptr, pItem = nullptr;
-    bool bRetry;
+    auto bRetry = false;
 
     if (!pArea->bMemoType)
     {
@@ -4437,7 +4437,7 @@ static HB_ERRCODE hb_fptOpenMemFile(FPTAREAP pArea, LPDBOPENINFO pOpenInfo)
   PHB_FNAME pFileName;
   PHB_ITEM pError;
   HB_FATTR nFlags;
-  bool bRetry;
+  auto bRetry = false;
 
   if (pArea->area.rddID == s_uiRddIdBLOB)
   {

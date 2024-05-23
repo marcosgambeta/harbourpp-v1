@@ -291,7 +291,7 @@ void hb_rddCloseAll(void)
   pRddInfo = hb_stackRDD();
   if (pRddInfo->uiWaMax > 0)
   {
-    bool isParents;
+    auto isParents = false;
     auto isFinish = false;
     AREAP pArea;
 

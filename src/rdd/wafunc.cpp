@@ -337,7 +337,7 @@ HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int *iArea)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddGetAliasNumber(%s, %p)", szAlias, static_cast<void*>(iArea)));
 #endif
 
-  bool fOneLetter;
+  auto fOneLetter = false;
   char c;
 
   while (*szAlias == ' ')
@@ -952,7 +952,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
 {
   HB_USHORT uiFields, uiSize, uiCount, uiPosSrc, uiPosDst, uiSizeSrc, uiSizeDst;
   const char *szField;
-  bool fAll;
+  auto fAll = false;
 
   HB_ERRCODE errCode = SELF_FIELDCOUNT(lpaSource, &uiSizeSrc);
   if (errCode != Harbour::SUCCESS)

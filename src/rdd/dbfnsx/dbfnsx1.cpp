@@ -882,7 +882,7 @@ static LPKEYINFO hb_nsxEvalKey(LPKEYINFO pKey, LPTAGINFO pTag)
 static bool hb_nsxEvalCond(NSXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 {
   auto iCurrArea = 0;
-  bool fRet;
+  auto fRet = false;
 
   if (fSetWA)
   {
@@ -912,7 +912,7 @@ static bool hb_nsxEvalCond(NSXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
  */
 static bool hb_nsxEvalSeekCond(LPTAGINFO pTag, PHB_ITEM pCondItem)
 {
-  bool fRet;
+  auto fRet = false;
   PHB_ITEM pKeyVal;
 
   pKeyVal = hb_nsxKeyGetItem(nullptr, pTag->CurKeyInfo, pTag, true);
@@ -2360,7 +2360,7 @@ static void hb_nsxIndexFlush(LPNSXINDEX pIndex)
  */
 static bool hb_nsxIndexLockRead(LPNSXINDEX pIndex)
 {
-  bool fOK;
+  auto fOK = false;
 
   if (pIndex->lockRead > 0 || pIndex->lockWrite > 0 || !pIndex->fShared || HB_DIRTYREAD(&pIndex->pArea->dbfarea))
   {
@@ -2398,7 +2398,7 @@ static bool hb_nsxIndexLockRead(LPNSXINDEX pIndex)
  */
 static bool hb_nsxIndexLockWrite(LPNSXINDEX pIndex, bool fCheck)
 {
-  bool fOK;
+  auto fOK = false;
 
   if (pIndex->fReadonly)
   {
@@ -2446,7 +2446,7 @@ static bool hb_nsxIndexLockWrite(LPNSXINDEX pIndex, bool fCheck)
  */
 static bool hb_nsxIndexUnLockRead(LPNSXINDEX pIndex)
 {
-  bool fOK;
+  auto fOK = false;
 
 #ifdef HB_NSX_DEBUG
   for (auto i = 0; i < pIndex->iTags; i++)
@@ -2483,7 +2483,7 @@ static bool hb_nsxIndexUnLockRead(LPNSXINDEX pIndex)
  */
 static bool hb_nsxIndexUnLockWrite(LPNSXINDEX pIndex)
 {
-  bool fOK;
+  auto fOK = false;
 
 #ifdef HB_NSX_DEBUG
   for (auto i = 0; i < pIndex->iTags; i++)
@@ -2773,7 +2773,7 @@ static LPPAGEINFO hb_nsxPageBottomMove(LPTAGINFO pTag, HB_ULONG ulPage)
 static bool hb_nsxTagTopKey(LPTAGINFO pTag)
 {
   LPPAGEINFO pPage;
-  bool fFound;
+  auto fFound = false;
 
   pTag->stackLevel = 0;
   pPage = hb_nsxPageTopMove(pTag, hb_nsxTagRootBlock(pTag));
@@ -2792,7 +2792,7 @@ static bool hb_nsxTagTopKey(LPTAGINFO pTag)
 static bool hb_nsxTagBottomKey(LPTAGINFO pTag)
 {
   LPPAGEINFO pPage;
-  bool fFound;
+  auto fFound = false;
 
   pTag->stackLevel = 0;
   pPage = hb_nsxPageBottomMove(pTag, hb_nsxTagRootBlock(pTag));
@@ -2816,7 +2816,7 @@ static bool hb_nsxTagNextKey(LPTAGINFO pTag)
   {
     LPPAGEINFO pPage;
     HB_ULONG ulPage;
-    bool fFound;
+    auto fFound = false;
 
     pPage = hb_nsxPageLoad(pTag, pTag->stack[iLevel].page);
     if (!pPage)
@@ -2884,7 +2884,7 @@ static bool hb_nsxTagPrevKey(LPTAGINFO pTag)
   {
     LPPAGEINFO pPage;
     HB_ULONG ulPage;
-    bool fFound;
+    auto fFound = false;
 
     pPage = hb_nsxPageLoad(pTag, pTag->stack[iLevel].page);
     if (!pPage)
@@ -3065,7 +3065,9 @@ static bool hb_nsxTagKeyFind(LPTAGINFO pTag, LPKEYINFO pKey, HB_USHORT uiLen)
   LPPAGEINFO pPage;
   HB_ULONG ulPage, ulRecNo = 0;
   int iKey;
-  bool fStop = false, fLast = false, fOut;
+  auto fStop = false;
+  auto fLast = false;
+  auto fOut = false;
 
   if (pKey->rec == NSX_MAX_REC_NUM)
   { /* for seek last */
@@ -3456,7 +3458,7 @@ static bool hb_nsxTagInsertKey(LPTAGINFO pTag, LPPAGEINFO pPage, LPKEYINFO pKey,
 static bool hb_nsxTagKeyAdd(LPTAGINFO pTag, LPKEYINFO pKey)
 {
   LPPAGEINFO pPage;
-  bool fFound;
+  auto fFound = false;
   auto fBottom = false;
 
   if (pTag->UniqueKey)
@@ -3529,7 +3531,7 @@ static void hb_nsxPageLeafKeyDel(LPTAGINFO pTag, LPPAGEINFO pPage, HB_USHORT uiK
   HB_UCHAR pKeyVal[NSX_MAXKEYLEN], pKeyVal2[NSX_MAXKEYLEN];
   HB_ULONG ulRecNo;
   HB_USHORT uiOffset = NSX_LEAFKEYOFFSET, u;
-  bool fPrev;
+  auto fPrev = false;
 
   fPrev = hb_nsxTagGetPrevKey(pTag, pKeyVal, pTag->stackLevel - 1);
   for (u = 0; u < uiKey; ++u)
@@ -3727,7 +3729,8 @@ static bool hb_nsxTagKeyDel(LPTAGINFO pTag, LPKEYINFO pKey)
  */
 static void hb_nsxTagSkipFilter(LPTAGINFO pTag, bool fForward)
 {
-  bool fBack, fEof = fForward ? pTag->TagEOF : pTag->TagBOF;
+  auto fBack = false;
+  bool fEof = fForward ? pTag->TagEOF : pTag->TagBOF;
 
   fBack = pTag->fUsrDescend ? fForward : !fForward;
 
@@ -4247,7 +4250,7 @@ static LPNSXINDEX hb_nsxFindBag(NSXAREAP pArea, const char *szBagName)
   pIndex = pArea->lpIndexes;
   while (pIndex)
   {
-    bool fFound;
+    auto fFound = false;
     PHB_FNAME pName = hb_fsFNameSplit(pIndex->IndexName);
     if (!pName->szName)
     {
@@ -4288,7 +4291,7 @@ static int hb_nsxFindTagByName(LPNSXINDEX pIndex, const char *szTag)
 static LPTAGINFO hb_nsxFindTag(NSXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagItem)
 {
   LPNSXINDEX pIndex;
-  bool fBag;
+  auto fBag = false;
 
   if (!pTagItem || (hb_itemType(pTagItem) & (Harbour::Item::STRING | Harbour::Item::NUMERIC)) == 0)
   {
@@ -4569,7 +4572,8 @@ static bool hb_nsxOrdKeyGoto(LPTAGINFO pTag, HB_ULONG ulKeyNo)
   else
   {
     int iLevel = pTag->stackLevel - 1;
-    bool fBack = pTag->fUsrDescend, fFirst = true;
+    bool fBack = pTag->fUsrDescend;
+    auto fFirst = true;
     LPPAGEINFO pPage;
     HB_ULONG ulPage;
 
@@ -4698,7 +4702,8 @@ static bool hb_nsxOrdKeyGoto(LPTAGINFO pTag, HB_ULONG ulKeyNo)
 static double hb_nsxOrdGetRelKeyPos(LPTAGINFO pTag)
 {
   double dPos = 0.0, dStart = 0.0, dStop = 1.0, dFact = 0.0000000000001;
-  bool fOK = true, fFilter = pTag->pIndex->pArea->dbfarea.area.dbfi.fFilter;
+  auto fOK = true;
+  bool fFilter = pTag->pIndex->pArea->dbfarea.area.dbfi.fFilter;
 
   if (!hb_nsxTagLockRead(pTag))
   {
@@ -4772,7 +4777,8 @@ static void hb_nsxOrdSetRelKeyPos(LPTAGINFO pTag, double dPos)
   {
     NSXAREAP pArea = pTag->pIndex->pArea;
     double dStart = 0.0, dStop = 1.0, dFact = 0.0000000000001;
-    bool fOK = true, fFilter = pArea->dbfarea.area.dbfi.fFilter;
+    auto fOK = true;
+    bool fFilter = pArea->dbfarea.area.dbfi.fFilter;
     auto fForward = true;
     auto fTop = false;
 
@@ -4908,7 +4914,9 @@ static bool hb_nsxOrdSkipUnique(LPTAGINFO pTag, HB_LONG lToSkip)
 
   if (hb_nsxTagLockRead(pTag))
   {
-    bool fOut = false, fEof = false, fForward = (lToSkip >= 0);
+    auto fOut = false;
+    auto fEof = false;
+    bool fForward = (lToSkip >= 0);
 
     LPTAGINFO pSavedTag = pArea->lpCurTag;
     pArea->lpCurTag = pTag;
@@ -5582,7 +5590,8 @@ static bool hb_nsxQSort(LPNSXSORTINFO pSort, HB_UCHAR *pSrc, HB_UCHAR *pBuf, HB_
     int iLen = pSort->keyLen + 4;
     HB_LONG l1, l2;
     HB_UCHAR *pPtr1, *pPtr2, *pDst;
-    bool f1, f2;
+    auto f1 = false;
+    auto f2 = false;
 
     l1 = lKeys >> 1;
     l2 = lKeys - l1;
@@ -6145,7 +6154,8 @@ static void hb_nsxSortFree(LPNSXSORTINFO pSort, bool fFull)
 
 static void hb_nsxSortOut(LPNSXSORTINFO pSort)
 {
-  bool fUnique = pSort->fUnique, fNext;
+  bool fUnique = pSort->fUnique;
+  auto fNext = false;
   LPTAGINFO pTag = pSort->pTag;
   HB_ULONG ulLastPage = 0, ulPage, ulRec, ulKey;
   HB_UCHAR *pKeyVal = nullptr;
@@ -6455,7 +6465,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
   {
     LPTAGINFO pSaveTag = pArea->lpCurTag;
     HB_ULONG ulStartRec = 0, ulNextCount = 0;
-    bool fDirectRead;
+    auto fDirectRead = false;
     auto fUseFilter = false;
     HB_BYTE *pSaveRecBuff = pArea->dbfarea.pRecord;
     char szBuffer[NSX_MAXKEYLEN];
@@ -6893,7 +6903,8 @@ static HB_ERRCODE hb_nsxSeek(NSXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
   {
     LPKEYINFO pKey;
     HB_ERRCODE retval = Harbour::SUCCESS;
-    bool fEOF = false, fLast;
+    auto fEOF = false;
+    auto fLast = false;
     HB_USHORT uiLen;
     HB_ULONG ulRec;
 
@@ -6985,7 +6996,8 @@ static HB_ERRCODE hb_nsxSkipRaw(NSXAREAP pArea, HB_LONG lToSkip)
 #endif
 
   HB_ERRCODE retval;
-  bool fOut = false, fForward;
+  auto fOut = false;
+  auto fForward = false;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE)
   {
@@ -7115,7 +7127,8 @@ static HB_ERRCODE hb_nsxGoCold(NSXAREAP pArea)
         LPNSXINDEX pIndex = pArea->lpIndexes;
         LPTAGINFO pTag;
         LPKEYINFO pKey;
-        bool fAdd, fDel;
+        auto fAdd = false;
+        auto fDel = false;
         auto fLck = false;
 
         /* The pending relation may move the record pointer so we should
@@ -7434,7 +7447,8 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   LPNSXINDEX pIndex, *pIndexPtr;
   LPTAGINFO pTag = nullptr;
   HB_ULONG ulRecNo;
-  bool fProd, fNewFile;
+  auto fProd = false;
+  auto fNewFile = false;
   auto fLocked = false;
   auto fAscend = true;
   auto fCustom = false;
@@ -7563,7 +7577,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   /* Test conditional expression */
   if (pForExp)
   {
-    bool fOK;
+    auto fOK = false;
 
     errCode = SELF_EVALBLOCK(&pArea->dbfarea.area, pForExp);
     if (errCode != Harbour::SUCCESS)
@@ -7629,7 +7643,8 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   else
   {
     PHB_FILE pFile;
-    bool bRetry, fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
+    auto bRetry = false;
+    bool fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
     PHB_ITEM pError = nullptr;
     char szSpFile[HB_PATH_MAX];
 
@@ -8663,7 +8678,7 @@ static HB_ERRCODE hb_nsxOrderListAdd(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
   PHB_FILE pFile;
   char szFileName[HB_PATH_MAX];
   LPNSXINDEX pIndex;
-  bool fProd;
+  auto fProd = false;
 
   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
   if (errCode != Harbour::SUCCESS)
@@ -8684,7 +8699,9 @@ static HB_ERRCODE hb_nsxOrderListAdd(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
   {
     PHB_ITEM pError = nullptr;
     LPNSXINDEX *pIndexPtr;
-    bool fRetry, fReadonly, fShared;
+    auto fRetry = false;
+    auto fReadonly = false;
+    auto fShared = false;
 
     fReadonly = pArea->dbfarea.fReadonly;
     fShared = pArea->dbfarea.fShared;
@@ -8793,7 +8810,7 @@ static HB_ERRCODE hb_nsxOrderListDelete(NSXAREAP pArea, LPDBORDERINFO pOrderInfo
   char szTagName[NSX_TAGNAME + 1];
   char szFileName[HB_PATH_MAX];
   LPNSXINDEX pIndex;
-  bool fProd;
+  auto fProd = false;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE)
   {

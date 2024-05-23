@@ -602,7 +602,7 @@ static PHB_ITEM hb_ntxKeyGetItem(PHB_ITEM pItem, LPKEYINFO pKey, LPTAGINFO pTag,
 static bool hb_ntxEvalCond(NTXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
 {
   auto iCurrArea = 0;
-  bool fRet;
+  auto fRet = false;
 
   if (fSetWA)
   {
@@ -632,7 +632,7 @@ static bool hb_ntxEvalCond(NTXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
  */
 static bool hb_ntxEvalSeekCond(LPTAGINFO pTag, PHB_ITEM pCondItem)
 {
-  bool fRet;
+  auto fRet = false;
   PHB_ITEM pKeyVal;
 
   pKeyVal = hb_ntxKeyGetItem(nullptr, pTag->CurKeyInfo, pTag, true);
@@ -1701,7 +1701,7 @@ static LPTAGINFO hb_ntxTagLoad(LPNTXINDEX pIndex, HB_ULONG ulBlock, const char *
   LPTAGINFO pTag;
   PHB_ITEM pKeyExp, pForExp = nullptr;
   HB_USHORT usType;
-  bool fName;
+  auto fName = false;
 
   usType = HB_GET_LE_UINT16(lpNTX->type);
 
@@ -2225,7 +2225,7 @@ static void hb_ntxIndexFlush(LPNTXINDEX pIndex)
  */
 static bool hb_ntxIndexLockRead(LPNTXINDEX pIndex)
 {
-  bool fOK;
+  auto fOK = false;
 
   if (pIndex->lockRead > 0 || pIndex->lockWrite > 0 || !pIndex->fShared || HB_DIRTYREAD(&pIndex->pArea->dbfarea))
   {
@@ -2263,7 +2263,7 @@ static bool hb_ntxIndexLockRead(LPNTXINDEX pIndex)
  */
 static bool hb_ntxIndexLockWrite(LPNTXINDEX pIndex, bool fCheck)
 {
-  bool fOK;
+  auto fOK = false;
 
   if (pIndex->fReadonly)
   {
@@ -2311,7 +2311,7 @@ static bool hb_ntxIndexLockWrite(LPNTXINDEX pIndex, bool fCheck)
  */
 static bool hb_ntxIndexUnLockRead(LPNTXINDEX pIndex)
 {
-  bool fOK;
+  auto fOK = false;
 
 #ifdef HB_NTX_DEBUG
   for (auto i = 0; i < pIndex->iTags; i++)
@@ -2348,7 +2348,7 @@ static bool hb_ntxIndexUnLockRead(LPNTXINDEX pIndex)
  */
 static bool hb_ntxIndexUnLockWrite(LPNTXINDEX pIndex)
 {
-  bool fOK;
+  auto fOK = false;
 
 #ifdef HB_NTX_DEBUG
   for (auto i = 0; i < pIndex->iTags; i++)
@@ -3147,7 +3147,7 @@ static bool hb_ntxTagKeyAdd(LPTAGINFO pTag, LPKEYINFO pKey)
   int iLevel, iKey;
   LPPAGEINFO pPage = nullptr;
   LPKEYINFO pNewKey = nullptr;
-  bool fFound;
+  auto fFound = false;
   auto fBottom = false;
 
   if (pTag->UniqueKey)
@@ -3505,7 +3505,8 @@ static bool hb_ntxTagKeyDel(LPTAGINFO pTag, LPKEYINFO pKey)
  */
 static void hb_ntxTagSkipFilter(LPTAGINFO pTag, bool fForward)
 {
-  bool fBack, fEof = fForward ? pTag->TagEOF : pTag->TagBOF;
+  auto fBack = false;
+  bool fEof = fForward ? pTag->TagEOF : pTag->TagBOF;
 
   fBack = pTag->fUsrDescend == pTag->AscendKey ? fForward : !fForward;
 
@@ -4009,7 +4010,7 @@ static LPNTXINDEX hb_ntxFindBag(NTXAREAP pArea, const char *szBagName)
   pIndex = pArea->lpIndexes;
   while (pIndex)
   {
-    bool fFound;
+    auto fFound = false;
     PHB_FNAME pName = hb_fsFNameSplit(pIndex->IndexName);
     if (!pName->szName)
     {
@@ -4050,7 +4051,7 @@ static int hb_ntxFindTagByName(LPNTXINDEX pIndex, const char *szTag)
 static LPTAGINFO hb_ntxFindTag(NTXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagItem)
 {
   LPNTXINDEX pIndex;
-  bool fBag;
+  auto fBag = false;
 
   if (!pTagItem || (hb_itemType(pTagItem) & (Harbour::Item::STRING | Harbour::Item::NUMERIC)) == 0)
   {
@@ -4338,7 +4339,8 @@ static bool hb_ntxOrdKeyGoto(LPTAGINFO pTag, HB_ULONG ulKeyNo)
 static double hb_ntxOrdGetRelKeyPos(LPTAGINFO pTag)
 {
   double dPos = 0.0, dStart = 0.0, dStop = 1.0, dFact = 0.0000000000001;
-  bool fOK = true, fFilter = pTag->pIndex->pArea->dbfarea.area.dbfi.fFilter;
+  auto fOK = true;
+  bool fFilter = pTag->pIndex->pArea->dbfarea.area.dbfi.fFilter;
 
   if (!hb_ntxTagLockRead(pTag))
   {
@@ -4412,7 +4414,8 @@ static void hb_ntxOrdSetRelKeyPos(LPTAGINFO pTag, double dPos)
   {
     NTXAREAP pArea = pTag->pIndex->pArea;
     double dStart = 0.0, dStop = 1.0, dFact = 0.0000000000001;
-    bool fOK = true, fFilter = pArea->dbfarea.area.dbfi.fFilter;
+    auto fOK = true;
+    bool fFilter = pArea->dbfarea.area.dbfi.fFilter;
     auto fForward = true;
     auto fTop = false;
 
@@ -4548,7 +4551,9 @@ static bool hb_ntxOrdSkipUnique(LPTAGINFO pTag, HB_LONG lToSkip)
 
   if (hb_ntxTagLockRead(pTag))
   {
-    bool fOut = false, fEof = false, fForward = (lToSkip >= 0);
+    auto fOut = false;
+    auto fEof = false;
+    bool fForward = (lToSkip >= 0);
 
     LPTAGINFO pSavedTag = pArea->lpCurTag;
     pArea->lpCurTag = pTag;
@@ -5218,7 +5223,8 @@ static bool hb_ntxQSort(LPNTXSORTINFO pSort, HB_BYTE *pSrc, HB_BYTE *pBuf, HB_LO
     int iLen = pSort->keyLen + 4;
     HB_LONG l1, l2;
     HB_BYTE *pPtr1, *pPtr2, *pDst;
-    bool f1, f2;
+    auto f1 = false;
+    auto f2 = false;
 
     l1 = lKeys >> 1;
     l2 = lKeys - l1;
@@ -5736,7 +5742,9 @@ static void hb_ntxSortFree(LPNTXSORTINFO pSort, bool fFull)
 
 static void hb_ntxSortOut(LPNTXSORTINFO pSort)
 {
-  bool fUnique = pSort->fUnique, fBalance, fNext;
+  bool fUnique = pSort->fUnique;
+  auto fBalance = false;
+  auto fNext = false;
   LPTAGINFO pTag = pSort->pTag;
   HB_ULONG ulPage, ulRec, ulKey;
   HB_USHORT uiHalf;
@@ -5968,7 +5976,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
   {
     LPTAGINFO pSaveTag = pArea->lpCurTag;
     HB_ULONG ulStartRec = 0, ulNextCount = 0;
-    bool fDirectRead;
+    auto fDirectRead = false;
     auto fUseFilter = false;
     HB_BYTE *pSaveRecBuff = pArea->dbfarea.pRecord;
     char szBuffer[NTX_MAX_KEY];
@@ -6409,7 +6417,8 @@ static HB_ERRCODE hb_ntxSeek(NTXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, 
   {
     LPKEYINFO pKey;
     HB_ERRCODE retval = Harbour::SUCCESS;
-    bool fEOF = false, fLast;
+    auto fEOF = false;
+    auto fLast = false;
     HB_USHORT uiLen;
     HB_ULONG ulRec;
 
@@ -6504,7 +6513,8 @@ static HB_ERRCODE hb_ntxSkipRaw(NTXAREAP pArea, HB_LONG lToSkip)
 #endif
 
   HB_ERRCODE retval;
-  bool fOut = false, fForward;
+  auto fOut = false;
+  auto fForward = false;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE)
   {
@@ -6648,7 +6658,8 @@ static HB_ERRCODE hb_ntxGoCold(NTXAREAP pArea)
         LPNTXINDEX pIndex = pArea->lpIndexes;
         LPTAGINFO pTag;
         LPKEYINFO pKey;
-        bool fAdd, fDel;
+        auto fAdd = false;
+        auto fDel = false;
         auto fLck = false;
         int i;
 
@@ -6992,7 +7003,10 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   LPTAGINFO pTag = nullptr;
   LPDBFDATA pData;
   HB_ULONG ulRecNo;
-  bool fProd, fCompound, fTagName, fBagName;
+  auto fProd = false;
+  auto fCompound = false;
+  auto fTagName = false;
+  auto fBagName = false;
   auto fLocked = false;
   auto fAscend = true;
   auto fCustom = false;
@@ -7127,7 +7141,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   /* Test conditional expression */
   if (pForExp)
   {
-    bool fOK;
+    auto fOK = false;
 
     errCode = SELF_EVALBLOCK(&pArea->dbfarea.area, pForExp);
     if (errCode != Harbour::SUCCESS)
@@ -7219,7 +7233,9 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
   else
   {
     PHB_FILE pFile;
-    bool bRetry, fOld, fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
+    auto bRetry = false;
+    auto fOld = false;
+    bool fShared = pArea->dbfarea.fShared && !fTemporary && !fExclusive;
     PHB_ITEM pError = nullptr;
     char szSpFile[HB_PATH_MAX];
 
@@ -8277,7 +8293,7 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
   PHB_FILE pFile;
   char szFileName[HB_PATH_MAX], szTagName[NTX_MAX_TAGNAME + 1];
   LPNTXINDEX pIndex;
-  bool fProd;
+  auto fProd = false;
 
   HB_ERRCODE errCode = SELF_GOCOLD(&pArea->dbfarea.area);
   if (errCode != Harbour::SUCCESS)
@@ -8304,7 +8320,9 @@ static HB_ERRCODE hb_ntxOrderListAdd(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
   {
     PHB_ITEM pError = nullptr;
     LPNTXINDEX *pIndexPtr;
-    bool fRetry, fReadonly, fShared;
+    auto fRetry = false;
+    auto fReadonly = false;
+    auto fShared = false;
 
     fReadonly = pArea->dbfarea.fReadonly;
     fShared = pArea->dbfarea.fShared;
@@ -8414,7 +8432,7 @@ static HB_ERRCODE hb_ntxOrderListDelete(NTXAREAP pArea, LPDBORDERINFO pOrderInfo
   char szTagName[NTX_MAX_TAGNAME + 1];
   char szFileName[HB_PATH_MAX];
   LPNTXINDEX pIndex;
-  bool fProd;
+  auto fProd = false;
 
   if (SELF_GOCOLD(&pArea->dbfarea.area) == Harbour::FAILURE)
   {

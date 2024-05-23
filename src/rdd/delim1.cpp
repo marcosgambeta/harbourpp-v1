@@ -449,7 +449,7 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
         {
           HB_MAXINT lVal;
           double dVal;
-          bool fDbl;
+          auto fDbl = false;
 
           fDbl = hb_strnToNum(reinterpret_cast<const char *>(buffer), uiSize, &lVal, &dVal);
           if (fDbl)
@@ -822,7 +822,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
   case Harbour::DB::Field::LONG: {
     HB_MAXINT lVal;
     double dVal;
-    bool fDbl;
+    auto fDbl = false;
 
     fDbl = hb_strnToNum(reinterpret_cast<const char *>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pField->uiLen,
                         &lVal, &dVal);
@@ -1550,7 +1550,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 #endif
 
   PHB_ITEM pError = nullptr;
-  bool fRetry;
+  auto fRetry = false;
   PHB_FNAME pFileName;
   char szFileName[HB_PATH_MAX];
 
@@ -1665,7 +1665,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
   PHB_ITEM pError = nullptr;
   PHB_FNAME pFileName;
   HB_USHORT uiFlags;
-  bool fRetry;
+  auto fRetry = false;
   char szFileName[HB_PATH_MAX];
   char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
