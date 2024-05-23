@@ -3318,7 +3318,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
     }
 
     PHB_SYMB pFuncSym = nullptr;
-    bool fOK;
+    auto fOK = false;
 
     /* basic parameter validation */
     switch (uiType)

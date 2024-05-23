@@ -206,7 +206,7 @@ static void hb_hrbInit(PHRB_BODY pHrbBody, int iPCount, PHB_ITEM *pParams)
   {
     if (hb_vmRequestReenter())
     {
-      bool fRepeat;
+      auto fRepeat = false;
       auto fClipInit = true;
 
       pHrbBody->fInit = false;

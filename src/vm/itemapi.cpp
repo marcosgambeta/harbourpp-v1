@@ -3123,7 +3123,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
     iDot = 0;
   }
 
-  bool fNeg;
+  auto fNeg = false;
 
   if (HB_IS_DOUBLE(pNumber))
   {

@@ -660,7 +660,7 @@ HB_BOOL hb_threadCondWait(HB_COND_T *cond, HB_CRITICAL_T *mutex)
 
 #else
 
-  bool fResult;
+  auto fResult = false;
 
   if (!cond->fInit)
   {
@@ -725,7 +725,7 @@ HB_BOOL hb_threadCondTimedWait(HB_COND_T *cond, HB_CRITICAL_T *mutex, HB_ULONG u
 
 #else
 
-  bool fResult;
+  auto fResult = false;
 
   if (!cond->fInit)
   {
@@ -1545,7 +1545,7 @@ HB_FUNC(HB_THREADWAIT)
 
   if (iThreads > 0)
   {
-    bool fAll;
+    auto fAll = false;
 
     if (HB_ISNUM(2))
     {

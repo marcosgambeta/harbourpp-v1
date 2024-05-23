@@ -277,7 +277,7 @@ static void *s_hDynLibID = nullptr;      /* unique identifier to mark symbol tab
 static auto s_fCloneSym = false;         /* clone registered symbol tables */
 
 #ifndef HB_GUI
-bool s_fKeyPool = true;
+auto s_fKeyPool = true;
 #endif
 
 /* main VM thread stack ID */
@@ -4752,7 +4752,7 @@ static void hb_vmForTest(void) /* Test to check the end point of the FOR */
 #endif
 
   HB_STACK_TLS_PRELOAD
-  bool fBack;
+  auto fBack = false;
 
   auto pStep = hb_stackItemFromTop(-1);
   if (HB_IS_NUMERIC(pStep))
@@ -6148,7 +6148,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
 
   HB_STACK_TLS_PRELOAD
   HB_ERRCODE errCode;
-  bool fRepeat;
+  auto fRepeat = false;
 
   /* NOTE: Clipper doesn't generate an error if an workarea specified
    * as numeric value cannot be selected
@@ -8499,7 +8499,7 @@ PHB_SYMBOLS hb_vmRegisterSymbols(PHB_SYMB pModuleSymbols, HB_USHORT uiSymbols, c
    HB_TRACE(HB_TR_DEBUG, ("hb_vmRegisterSymbols(%p,%hu,%s,%lu,%d,%d,%d)", static_cast<void*>(pModuleSymbols), uiSymbols, szModuleName, ulID, static_cast<int>(fDynLib), static_cast<int>(fClone), static_cast<int>(fOverLoad)));
 #endif
 
-  bool fRecycled;
+  auto fRecycled = false;
   auto fInitStatics = false;
   HB_USHORT ui;
 
