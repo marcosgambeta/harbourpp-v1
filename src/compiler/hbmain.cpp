@@ -1925,8 +1925,8 @@ static void hb_compOptimizeFrames(HB_COMP_DECL, PHB_HFUNC pFunc)
   {
     PHB_HVAR pLocal;
     int iLocals = 0, iOffset = 0;
-    bool bSkipFRAME;
-    bool bSkipSFRAME;
+    auto bSkipFRAME = false;
+    auto bSkipSFRAME = false;
 
     pLocal = pFunc->pLocals;
 
@@ -2839,7 +2839,7 @@ static void hb_compGenVarPCode(HB_BYTE bPCode, const char *szVarName, HB_COMP_DE
  */
 static void hb_compGenVariablePCode(HB_COMP_DECL, HB_BYTE bPCode, const char *szVarName)
 {
-  bool bGenCode;
+  auto bGenCode = false;
 
   /*
    * NOTE:
