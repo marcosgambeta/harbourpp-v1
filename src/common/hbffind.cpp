@@ -376,7 +376,7 @@ char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
 
 static bool hb_fsFindNextLow(PHB_FFIND ffind)
 {
-  bool bFound;
+  auto bFound = false;
 
   int iYear = 0;
   int iMonth = 0;

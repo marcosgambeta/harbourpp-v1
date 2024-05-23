@@ -102,7 +102,7 @@ char *hb_getenv(const char *szName)
 
 HB_BOOL hb_getenv_buffer(const char *szName, char *szBuffer, int nSize)
 {
-  bool fRetVal;
+  auto fRetVal = false;
 
 #if defined(HB_OS_WIN)
   {
@@ -203,7 +203,7 @@ HB_BOOL hb_setenv(const char *szName, const char *szValue)
     defined(HB_OS_BSD) || defined(HB_OS_DARWIN) || defined(HB_OS_BEOS) || defined(HB_OS_QNX) ||                        \
     defined(HB_OS_VXWORKS) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX) || defined(HB_OS_ANDROID)
   {
-    bool fResult;
+    auto fResult = false;
     char *pszNameFree = nullptr, *pszValueFree = nullptr;
 
     szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);

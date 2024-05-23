@@ -1017,7 +1017,7 @@ PHB_EXPR hb_compExprReduceIN(PHB_EXPR pSelf, HB_COMP_DECL)
     if (!HB_SUPPORT_MACROTEXT || (!hb_compExprHasMacro(pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM) &&
                                   !hb_compExprHasMacro(pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM)))
     {
-      bool bResult;
+      auto bResult = false;
 
       /* NOTE: CA-Cl*pper has a bug where the $ operator returns .T.
        *       when an empty string is searched [vszakats]
@@ -1093,7 +1093,7 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
       break;
 
     case HB_ET_NUMERIC: {
-      bool bResult;
+      auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
       {
@@ -1236,7 +1236,7 @@ PHB_EXPR hb_compExprReduceGE(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_NUMERIC: {
-      bool bResult;
+      auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
       {
@@ -1321,7 +1321,7 @@ PHB_EXPR hb_compExprReduceLE(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_NUMERIC: {
-      bool bResult;
+      auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
       {
@@ -1406,7 +1406,7 @@ PHB_EXPR hb_compExprReduceGT(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_NUMERIC: {
-      bool bResult;
+      auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
       {
@@ -1491,7 +1491,7 @@ PHB_EXPR hb_compExprReduceLT(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_NUMERIC: {
-      bool bResult;
+      auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
       {
@@ -1597,7 +1597,7 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
       break;
 
     case HB_ET_NUMERIC: {
-      bool bResult;
+      auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
       {
@@ -2402,7 +2402,7 @@ HB_BOOL hb_compExprReduceUPPER(PHB_EXPR pSelf, HB_COMP_DECL)
     {
       PHB_EXPR pExpr;
       char *szValue;
-      bool fDealloc;
+      auto fDealloc = false;
 
       if (fLower)
       {

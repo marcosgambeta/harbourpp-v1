@@ -499,7 +499,7 @@ double hb_numRound(double dNum, int iDec)
    */
   {
     int iPrec;
-    bool fNeg;
+    auto fNeg = false;
 
     if (dNum < 0)
     {
@@ -631,7 +631,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
 
   auto fDbl = false;
   auto fDec = false;
-  bool fNeg;
+  auto fNeg = false;
   auto fHex = false;
   int iPos = 0;
   int c, iWidth, iDec = 0, iDecR = 0;
@@ -954,7 +954,7 @@ char *hb_dblToStr(char *szBuf, HB_SIZE nSize, double dNumber, int iMaxDec)
   double dInt, dFract, dDig, doBase = 10.0;
   int iPos, iPrec;
   char *szResult;
-  bool fFirst;
+  auto fFirst = false;
 
   auto iLen = static_cast<int>(nSize - 1);
   if (iLen <= 0)
