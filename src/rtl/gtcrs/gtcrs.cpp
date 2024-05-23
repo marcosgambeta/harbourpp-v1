@@ -375,7 +375,7 @@ static void set_sig_handler(int iSig)
 
 static bool write_ttyseq(InOutBase *ioBase, const char *seq)
 {
-  bool success;
+  auto success = false;
 
   if (ioBase->baseout != nullptr)
   {
@@ -1414,7 +1414,7 @@ static void gt_ttyrestore(InOutBase *ioBase)
 
 static bool gt_outstr(InOutBase *ioBase, int fd, const char *str, int len)
 {
-  bool success;
+  auto success = false;
 
   if (ioBase->out_transtbl != nullptr)
   {

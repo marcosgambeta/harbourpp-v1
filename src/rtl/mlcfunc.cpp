@@ -648,7 +648,8 @@ HB_FUNC(HB_MLEVAL)
     bool fWordWrap = hb_parldef(5, true);
     auto cdp = hb_vmCDP();
     PHB_ITEM pLineItem = nullptr, pSoftItem = nullptr;
-    bool fSoftCR, fEOL;
+    auto fSoftCR = false;
+    auto fEOL = false;
 
     if (!HB_CDP_ISCHARIDX(cdp))
     {

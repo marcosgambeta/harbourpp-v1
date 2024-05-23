@@ -467,7 +467,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
   struct stat statbuf;
 #endif
 #endif
-  bool fResult;
+  auto fResult = false;
 
   HB_SYMBOL_UNUSED(pFuncs);
 

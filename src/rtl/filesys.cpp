@@ -326,7 +326,7 @@ static void fs_win_set_drive(int iDrive)
   if (iDrive >= 0 && iDrive <= 25)
   {
     TCHAR szBuffer[3];
-    bool fResult;
+    auto fResult = false;
     UINT uiErrMode;
 
     szBuffer[0] = static_cast<TCHAR>(iDrive + 'A');
@@ -990,7 +990,7 @@ HB_FHANDLE hb_fsPOpen(const char *pszFileName, const char *pszMode)
     HB_FHANDLE hPipeHandle[2];
     pid_t pid;
     char *pszTmp;
-    bool fRead;
+    auto fRead = false;
     HB_SIZE nLen;
 
     nLen = strlen(pszFileName);
@@ -1146,7 +1146,7 @@ HB_BOOL hb_fsPipeCreate(HB_FHANDLE hPipe[2])
    HB_TRACE(HB_TR_DEBUG, ("hb_fsPipeCreate(%p)", static_cast<void*>(hPipe)));
 #endif
 
-  bool fResult;
+  auto fResult = false;
 
 #if defined(HB_OS_WIN)
   {
@@ -1232,7 +1232,7 @@ HB_BOOL hb_fsPipeUnblock(HB_FHANDLE hPipeHandle)
 #if defined(HB_OS_WIN)
   {
     DWORD dwMode = PIPE_NOWAIT;
-    bool fResult;
+    auto fResult = false;
 
     fResult = SetNamedPipeHandleState(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(hPipeHandle)), &dwMode, nullptr,
                                       nullptr) != 0;
@@ -3252,7 +3252,7 @@ HB_FOFFSET hb_fsGetSize(HB_FHANDLE hFileHandle)
 #if defined(HB_OS_WIN)
   {
     DWORD dwFileSizeLow, dwFileSizeHigh = 0;
-    bool fOK;
+    auto fOK = false;
 
     dwFileSizeLow = GetFileSize(DosToWinHandle(hFileHandle), &dwFileSizeHigh);
     fOK = dwFileSizeLow != INVALID_FILE_SIZE || GetLastError() == NO_ERROR;

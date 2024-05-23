@@ -94,7 +94,7 @@ HB_FUNC(HB_NUMTOHEX)
 {
   HB_MAXUINT nNum;
   int iLen;
-  bool fDefaultLen;
+  auto fDefaultLen = false;
   char ret[33];
 
   if (HB_ISNUM(2))

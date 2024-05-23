@@ -983,7 +983,8 @@ int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStd
     {
 #if defined(HB_OS_WIN)
 
-      bool fFinished = false, fBlocked;
+      auto fFinished = false;
+      auto fBlocked = false;
       int iPipeCount = 0;
 
       if (nStdInLen == 0 && hStdin != FS_ERROR)
@@ -1327,7 +1328,9 @@ int hb_fsProcessRun(const char *pszFileName, const char *pStdInBuf, HB_SIZE nStd
 
       for (;;)
       {
-        bool fStdout, fStderr, fStdin;
+        auto fStdout = false;
+        auto fStderr = false;
+        auto fStdin = false;
         HB_SIZE nLen;
 
 #if defined(HB_HAS_POLL)

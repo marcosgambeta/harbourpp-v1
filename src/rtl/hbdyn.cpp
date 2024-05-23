@@ -1296,7 +1296,7 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
 
         HB_U32 r1;
         HB_U32 r2;
-        bool b64;
+        auto b64 = false;
 
         if (piArgFlags)
         {

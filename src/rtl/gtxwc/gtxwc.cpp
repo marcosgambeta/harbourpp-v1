@@ -5558,7 +5558,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       wnd->fontHeight = iVal;
       if (wnd->fInit)
       {
-        bool fInit;
+        auto fInit = false;
         HB_XWC_XLIB_LOCK(wnd->dpy);
         fInit = hb_gt_xwc_SetFont(wnd, wnd->szFontName, wnd->fontWeight, wnd->fontHeight, wnd->szFontEncoding);
         HB_XWC_XLIB_UNLOCK(wnd->dpy);
@@ -5593,7 +5593,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutC(pInfo->pResult, wnd->szFontSel);
     if (pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal))
     {
-      bool fInit;
+      auto fInit = false;
       HB_XWC_XLIB_LOCK(wnd->dpy);
       fInit = hb_gt_xwc_SetFont(wnd, hb_itemGetCPtr(pInfo->pNewVal), 0, 0, nullptr) && wnd->fInit;
       HB_XWC_XLIB_UNLOCK(wnd->dpy);

@@ -110,10 +110,10 @@ static const char *s_szCrLf;
 static HB_SIZE s_nCrLf;
 static int s_iCurrentSGR, s_iFgColor, s_iBgColor, s_iBold, s_iBlink, s_iAM;
 static int s_iCursorStyle;
-static bool s_bStdinConsole;
-static bool s_bStdoutConsole;
-static bool s_bStderrConsole;
-static bool s_fDispTrans;
+static auto s_bStdinConsole = false;
+static auto s_bStdoutConsole = false;
+static auto s_bStderrConsole = false;
+static auto s_fDispTrans = false;
 static PHB_CODEPAGE s_cdpTerm;
 static PHB_CODEPAGE s_cdpHost;
 

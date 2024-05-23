@@ -146,16 +146,16 @@ static const COLORREF s_colorsDef[16] = {
     RGB(0x80, 0x80, 0x80), RGB(0x00, 0x00, 0xFF), RGB(0x00, 0xFF, 0x00), RGB(0x00, 0xFF, 0xFF),
     RGB(0xFF, 0x00, 0x00), RGB(0xFF, 0x00, 0xFF), RGB(0xFF, 0xFF, 0x00), RGB(0xFF, 0xFF, 0xFF)};
 
-static bool s_fWin9x;
+static auto s_fWin9x = false;
 static COLORREF s_colorsOld[16];
-static bool s_fResetColors;
-static bool s_fOldClosable;
-static bool s_fClosable;
-static bool s_fMouseEnable;
-static bool s_fSpecialKeyHandling;
-static bool s_fAltKeyHandling;
-static bool s_fBreak;
-static bool s_fSuspend;
+static auto s_fResetColors = false;
+static auto s_fOldClosable = false;
+static auto s_fClosable = false;
+static auto s_fMouseEnable = false;
+static auto s_fSpecialKeyHandling = false;
+static auto s_fAltKeyHandling = false;
+static auto s_fBreak = false;
+static auto s_fSuspend = false;
 static int s_iCursorStyle;
 static int s_iOldCurStyle;
 static int s_iCurRow;

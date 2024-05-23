@@ -61,7 +61,7 @@ static auto s_fStdOutTTY = false;
 static auto s_fStdErrTTY = false;
 
 /* does terminal works in Unicode (UTF-8) mode? */
-bool hb_sln_Is_Unicode = false;
+auto hb_sln_Is_Unicode = false;
 
 /* Slang color names */
 static const char *s_colorNames[] = {
@@ -101,7 +101,7 @@ static const char *hb_NationCharsEnvName = "HRBNATIONCHARS";
 
 /* *********************************************************************** */
 
-volatile bool hb_sln_bScreen_Size_Changed = false;
+volatile auto hb_sln_bScreen_Size_Changed = false;
 
 /* window's resize handler */
 static void sigwinch_handler(int iSig)

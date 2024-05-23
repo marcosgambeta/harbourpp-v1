@@ -49,7 +49,7 @@
 
 HB_BOOL hb_printerIsReady(const char *pszPrinterName)
 {
-  bool bIsPrinter;
+  auto bIsPrinter = false;
 
   /* NOTE: Platform independent method, at least it will compile and run
            on any platform, but the result may not be the expected one,

@@ -3305,7 +3305,7 @@ static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iE
   HB_MAXUINT timer;
   HB_MAXINT timeout;
   PHB_ITEM pKey;
-  bool fPop;
+  auto fPop = false;
 
   pKey = nullptr;
 
