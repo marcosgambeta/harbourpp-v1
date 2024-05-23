@@ -4035,7 +4035,7 @@ static bool hb_pp_tokenSkipExp(PHB_PP_TOKEN *pTokenPtr, PHB_PP_TOKEN pStop, HB_U
   HB_USHORT curtype, prevtype = 0, lbrtype = 0, rbrtype = 0;
   PHB_PP_TOKEN pToken = *pTokenPtr, pPrev;
   int iBraces = 0;
-  bool fMatch;
+  auto fMatch = false;
 
   if (pfStop)
   {
@@ -4923,7 +4923,8 @@ static void hb_pp_processCondDefined(PHB_PP_STATE pState, PHB_PP_TOKEN pToken)
 static bool hb_pp_processDefine(PHB_PP_STATE pState, PHB_PP_TOKEN *pFirstPtr)
 {
   PHB_PP_TOKEN *pPrevPtr;
-  bool fSubst = false, fRepeat;
+  auto fSubst = false;
+  auto fRepeat = false;
   int iCycle = 0;
 
   do
@@ -4967,7 +4968,8 @@ static bool hb_pp_processDefine(PHB_PP_STATE pState, PHB_PP_TOKEN *pFirstPtr)
 
 static bool hb_pp_processTranslate(PHB_PP_STATE pState, PHB_PP_TOKEN *pFirstPtr)
 {
-  bool fSubst = false, fRepeat;
+  auto fSubst = false;
+  auto fRepeat = false;
   int iCycle = 0;
 
   do
@@ -5631,7 +5633,8 @@ static void hb_pp_preprocessToken(PHB_PP_STATE pState)
 
     if (HB_PP_TOKEN_ISDIRECTIVE(pState->pFile->pTokenList))
     {
-      bool fError = false, fDirect;
+      auto fError = false;
+      auto fDirect = false;
       /* Store it here to avoid possible problems after #INCLUDE */
       PHB_PP_TOKEN *pFreePtr = &pState->pFile->pTokenList;
       PHB_PP_TOKEN pToken = *pFreePtr;
