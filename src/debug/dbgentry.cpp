@@ -419,7 +419,7 @@ static PHB_ITEM hb_dbgActivateWatchArray(HB_DEBUGINFO *info)
         break;
       }
     }
-    bool fValid;
+    auto fValid = false;
     auto xValue = hb_dbgEval(info, &info->aWatch[i], &fValid);
     hb_arrayNew(pWatch, HB_DBG_WP_LEN);
     hb_arraySetC(pWatch, HB_DBG_WP_EXPR, info->aWatch[i].szExpr);
