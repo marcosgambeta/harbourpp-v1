@@ -1355,7 +1355,7 @@ GRANDP := $(subst $(subst x,x, ),,$(foreach item, $(subst /, ,$(OBJ_DIR)), ../))
 # TODO: Set this in <plat>/<comp>.mk (compiler switches may influence it)
 ifeq ($(HB_CPU),)
    ifeq ($(HB_PLATFORM),win)
-      ifneq ($(filter $(HB_COMPILER),msvc64 mingw64),)
+      ifneq ($(filter $(HB_COMPILER),msvc64 mingw64 bcc64 clang64),)
          HB_CPU := x86_64
       else
       ifneq ($(filter $(HB_COMPILER),msvcia64 iccia64),)
