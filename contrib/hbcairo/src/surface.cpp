@@ -46,11 +46,12 @@
 
 #include "hbcairo.hpp"
 
-HB_FUNC( CAIRO_SURFACE_STATUS )
+HB_FUNC(CAIRO_SURFACE_STATUS)
 {
-   cairo_surface_t * pSurface = hb_cairo_surface_param(1);
+  cairo_surface_t *pSurface = hb_cairo_surface_param(1);
 
-   if( pSurface != nullptr ) {
-      hb_retni(cairo_surface_status(pSurface));
-   }
+  if (pSurface != nullptr)
+  {
+    hb_retni(cairo_surface_status(pSurface));
+  }
 }
