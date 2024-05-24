@@ -1891,7 +1891,7 @@ PHB_ITEM hb_threadMutexCreate(void)
 #if defined(HB_MT_VM)
 void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItemMtx);
+  auto pMutex = hb_mutexPtr(pItemMtx);
 
   if (pMutex)
   {
@@ -1919,7 +1919,8 @@ void hb_threadMutexSyncSignal(PHB_ITEM pItemMtx)
 
 HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM pItemSync)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItemMtx), pSyncMutex = nullptr;
+  auto pMutex = hb_mutexPtr(pItemMtx);
+  PHB_MUTEX pSyncMutex = nullptr;
   auto fResult = false;
 
   if (pMutex)
@@ -2058,7 +2059,7 @@ HB_BOOL hb_threadMutexSyncWait(PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM 
 
 HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItem);
+  auto pMutex = hb_mutexPtr(pItem);
   auto fResult = false;
 
   if (pMutex)
@@ -2096,7 +2097,7 @@ HB_BOOL hb_threadMutexUnlock(PHB_ITEM pItem)
 
 HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItem);
+  auto pMutex = hb_mutexPtr(pItem);
   auto fResult = false;
 
   if (pMutex)
@@ -2161,7 +2162,7 @@ HB_BOOL hb_threadMutexLock(PHB_ITEM pItem)
 
 HB_BOOL hb_threadMutexTimedLock(PHB_ITEM pItem, HB_ULONG ulMilliSec)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItem);
+  auto pMutex = hb_mutexPtr(pItem);
   auto fResult = false;
 
   if (pMutex)
@@ -2270,7 +2271,7 @@ static void hb_thredMutexEventInit(PHB_MUTEX pMutex)
 
 void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItem);
+  auto pMutex = hb_mutexPtr(pItem);
 
   if (pMutex)
   {
@@ -2392,7 +2393,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
 
 PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItem);
+  auto pMutex = hb_mutexPtr(pItem);
   PHB_ITEM pResult = nullptr;
 
   if (pMutex)
@@ -2510,7 +2511,7 @@ PHB_ITEM hb_threadMutexSubscribe(PHB_ITEM pItem, HB_BOOL fClear)
 
 PHB_ITEM hb_threadMutexTimedSubscribe(PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear)
 {
-  PHB_MUTEX pMutex = hb_mutexPtr(pItem);
+  auto pMutex = hb_mutexPtr(pItem);
   PHB_ITEM pResult = nullptr;
 
   if (pMutex)
@@ -2824,7 +2825,7 @@ HB_FUNC(HB_MUTEXQUEUEINFO)
 
   if (pItem != nullptr)
   {
-    PHB_MUTEX pMutex = hb_mutexPtr(pItem);
+    auto pMutex = hb_mutexPtr(pItem);
 
     if (pMutex)
     {
