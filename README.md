@@ -15,7 +15,7 @@ This project is a work in progress.
 
 ### Requisites
 * C++ compiler
-* C++11 or upper (C++14, C++17, C++20, ...)
+* C++11 or upper (C++14, C++17, C++20, C++23, ...)
 
 ### Related projects
 
@@ -43,7 +43,7 @@ Este projeto é um trabalho em progresso.
 
 ### Requisitos
 * Compilador C++
-* Padrão C++11 ou superior (C++14, C++17, C++20, ...)
+* Padrão C++11 ou superior (C++14, C++17, C++20, C++23, ...)
 
 ### Compilação
 
@@ -54,10 +54,16 @@ LLVM/Clang C++ e 'Embarcadero C++ 7.x for Win64' (BCC64).
 * Definir o padrão, conforme exemplo abaixo:  
 set HB_USER_CFLAGS=-std=c++11
 
-##### Exemplo
+##### Exemplos
 ```Batch
-set PATH=C:\MinGW810\bin;%PATH%
-set HB_INSTALL_PREFIX=C:\HarbourPP
+set PATH=C:\MinGW32\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPMINGW32
+set HB_USER_CFLAGS=-std=c++11
+win-make install 1>log1.log 2>log2.log
+```
+```Batch
+set PATH=C:\MinGW64\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPMINGW64
 set HB_USER_CFLAGS=-std=c++11
 win-make install 1>log1.log 2>log2.log
 ```
@@ -66,10 +72,16 @@ win-make install 1>log1.log 2>log2.log
 * Se necessário, definir o padrão conforme exemplo abaixo:  
 set HB_USER_CFLAGS=/std=c++11
 
-##### Exemplo
+##### Exemplos
 ```Batch
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
-set HB_INSTALL_PREFIX=C:\HarbourPP
+set HB_INSTALL_PREFIX=C:\HBPPMSVC32
+set HB_USER_CFLAGS=/std=c++11
+win-make install 1>log1.log 2>log2.log
+```
+```Batch
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+set HB_INSTALL_PREFIX=C:\HBPPMSVC64
 set HB_USER_CFLAGS=/std=c++11
 win-make install 1>log1.log 2>log2.log
 ```
@@ -78,11 +90,17 @@ win-make install 1>log1.log 2>log2.log
 * Se necessário, definir o padrão conforme exemplo abaixo:  
 set HB_USER_CFLAGS=-std=c++11
 
-##### Exemplo
+##### Exemplos
 ```Batch
 set PATH=C:\MinGW32\bin;%PATH%
-set HB_INSTALL_PREFIX=C:\HarbourPP
+set HB_INSTALL_PREFIX=C:\HBPPCLANG32
 set HB_COMPILER=clang
+win-make install 1>log1.log 2>log2.log
+```
+```Batch
+set PATH=C:\MinGW64\bin;%PATH%
+set HB_INSTALL_PREFIX=C:\HBPPCLANG64
+set HB_COMPILER=clang64
 win-make install 1>log1.log 2>log2.log
 ```
 
@@ -96,14 +114,13 @@ win-make install 1>log1.log 2>log2.log
 ##### Exemplos
 ```Batch
 set PATH=C:\BCC64\bin;%PATH%
-set HB_INSTALL_PREFIX=C:\HarbourPP
+set HB_INSTALL_PREFIX=C:\HBPPBCC64
 set HB_BUILD_CONTRIB_DYN=no
 set HB_BUILD_CONTRIBS=no
-set HB_CPU=x86_64
 set HB_COMPILER=bcc64
 set HB_USER_LDFLAGS=-LC:\BCC64\lib;C:\BCC64\lib\psdk
 set HB_USER_DFLAGS=-LC:\BCC64\lib;C:\BCC64\lib\psdk
-set HB_USER_RESFLAGS=-IC:\BCC64\include -IC:\BCC64\include\windows\crtl -IC:\BCC64\include\dinkumware64 -IC:\BCC64\include\windows\rtl -IC:\BCC64\include\windows\sdk
+set HB_USER_RESFLAGS=-IC:\BCC64\include\windows\sdk
 win-make install 1>log1.log 2>log2.log
 ```
 
