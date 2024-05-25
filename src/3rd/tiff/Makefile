@@ -76,6 +76,10 @@ ifeq ($(filter $(HB_COMPILER),<>),)
          HB_CFLAGS += -DZIP_SUPPORT
          HB_CFLAGS += $(foreach d,$(HB_HAS_ZLIB),-I$(d))
       endif
+  
+      ifeq ($(HB_COMPILER),clang64)
+         HB_CFLAGS += -Wno-implicit-const-int-float-conversion
+      endif
 
       include $(TOP)$(ROOT)config/lib.mk
    else
