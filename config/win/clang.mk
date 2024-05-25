@@ -29,6 +29,10 @@ else
    endif
 endif
 
+# supress the warning:
+# arithmetic on a null pointer treated as a cast from integer to pointer is a GNU extension [-Wgnu-null-pointer-arithmetic]
+CFLAGS += -Wno-gnu-null-pointer-arithmetic
+
 ifneq ($(HB_BUILD_OPTIM),no)
    CFLAGS += -O3
 endif
