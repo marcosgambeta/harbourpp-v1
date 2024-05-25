@@ -39,6 +39,7 @@
 #-c=gnu90
 
 {allmingw}-cflag=-fpermissive
+{clang64}-cflag=-fpermissive
 
 hbssl.hbx
 
