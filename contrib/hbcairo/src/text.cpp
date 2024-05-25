@@ -50,11 +50,11 @@
 
 HB_FUNC(CAIRO_FONT_EXTENTS)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
-    PHB_ITEM pItem = hb_stackReturnItem();
+    auto pItem = hb_stackReturnItem();
     cairo_font_extents_t fe;
     cairo_font_extents(pCairo, &fe);
     hb_arrayNew(pItem, 5);
@@ -68,11 +68,11 @@ HB_FUNC(CAIRO_FONT_EXTENTS)
 
 HB_FUNC(CAIRO_GET_FONT_MATRIX)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
-    PHB_ITEM pItem = hb_stackReturnItem();
+    auto pItem = hb_stackReturnItem();
     cairo_matrix_t m;
     cairo_get_font_matrix(pCairo, &m);
     hb_arrayNew(pItem, 6);
@@ -87,7 +87,7 @@ HB_FUNC(CAIRO_GET_FONT_MATRIX)
 
 HB_FUNC(CAIRO_SELECT_FONT_FACE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -100,7 +100,7 @@ HB_FUNC(CAIRO_SELECT_FONT_FACE)
 
 HB_FUNC(CAIRO_SET_FONT_MATRIX)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -125,7 +125,7 @@ HB_FUNC(CAIRO_SET_FONT_MATRIX)
 
 HB_FUNC(CAIRO_SET_FONT_SIZE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -135,7 +135,7 @@ HB_FUNC(CAIRO_SET_FONT_SIZE)
 
 HB_FUNC(CAIRO_SHOW_TEXT)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -147,12 +147,12 @@ HB_FUNC(CAIRO_SHOW_TEXT)
 
 HB_FUNC(CAIRO_TEXT_EXTENTS)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
     void *hText;
-    PHB_ITEM pItem = hb_stackReturnItem();
+    auto pItem = hb_stackReturnItem();
     cairo_text_extents_t te;
     cairo_text_extents(pCairo, hb_parstr_utf8(2, &hText, nullptr), &te);
     hb_strfree(hText);

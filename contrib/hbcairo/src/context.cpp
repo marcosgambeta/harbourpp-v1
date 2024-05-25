@@ -50,7 +50,7 @@
 
 HB_FUNC(CAIRO_CLIP)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -60,11 +60,11 @@ HB_FUNC(CAIRO_CLIP)
 
 HB_FUNC(CAIRO_CLIP_EXTENTS)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
-    PHB_ITEM pItem = hb_stackReturnItem();
+    auto pItem = hb_stackReturnItem();
     double x1, y1, x2, y2;
     cairo_clip_extents(pCairo, &x1, &y1, &x2, &y2);
     hb_arrayNew(pItem, 4);
@@ -77,7 +77,7 @@ HB_FUNC(CAIRO_CLIP_EXTENTS)
 
 HB_FUNC(CAIRO_CLIP_PRESERVE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -87,7 +87,7 @@ HB_FUNC(CAIRO_CLIP_PRESERVE)
 
 HB_FUNC(CAIRO_COPY_PAGE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -97,7 +97,7 @@ HB_FUNC(CAIRO_COPY_PAGE)
 
 HB_FUNC(CAIRO_CREATE)
 {
-  cairo_surface_t *pSurface = hb_cairo_surface_param(1);
+  auto pSurface = hb_cairo_surface_param(1);
 
   if (pSurface != nullptr)
   {
@@ -107,7 +107,7 @@ HB_FUNC(CAIRO_CREATE)
 
 HB_FUNC(CAIRO_FILL)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -117,7 +117,7 @@ HB_FUNC(CAIRO_FILL)
 
 HB_FUNC(CAIRO_FILL_PRESERVE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -127,7 +127,7 @@ HB_FUNC(CAIRO_FILL_PRESERVE)
 
 HB_FUNC(CAIRO_GET_DASH)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -149,7 +149,7 @@ HB_FUNC(CAIRO_GET_DASH)
 
 HB_FUNC(CAIRO_GET_LINE_WIDTH)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -159,7 +159,7 @@ HB_FUNC(CAIRO_GET_LINE_WIDTH)
 
 HB_FUNC(CAIRO_IN_FILL)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -169,7 +169,7 @@ HB_FUNC(CAIRO_IN_FILL)
 
 HB_FUNC(CAIRO_IN_STROKE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -179,7 +179,7 @@ HB_FUNC(CAIRO_IN_STROKE)
 
 HB_FUNC(CAIRO_PAINT)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -189,7 +189,7 @@ HB_FUNC(CAIRO_PAINT)
 
 HB_FUNC(CAIRO_PAINT_WITH_ALPHA)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -199,7 +199,7 @@ HB_FUNC(CAIRO_PAINT_WITH_ALPHA)
 
 HB_FUNC(CAIRO_RESET_CLIP)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -209,7 +209,7 @@ HB_FUNC(CAIRO_RESET_CLIP)
 
 HB_FUNC(CAIRO_RESTORE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -219,7 +219,7 @@ HB_FUNC(CAIRO_RESTORE)
 
 HB_FUNC(CAIRO_SAVE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -229,7 +229,7 @@ HB_FUNC(CAIRO_SAVE)
 
 HB_FUNC(CAIRO_SET_DASH)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -265,7 +265,7 @@ HB_FUNC(CAIRO_SET_DASH)
 
 HB_FUNC(CAIRO_SET_FILL_RULE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -275,7 +275,7 @@ HB_FUNC(CAIRO_SET_FILL_RULE)
 
 HB_FUNC(CAIRO_SET_LINE_CAP)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -285,7 +285,7 @@ HB_FUNC(CAIRO_SET_LINE_CAP)
 
 HB_FUNC(CAIRO_SET_LINE_JOIN)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -295,7 +295,7 @@ HB_FUNC(CAIRO_SET_LINE_JOIN)
 
 HB_FUNC(CAIRO_SET_LINE_WIDTH)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -305,7 +305,7 @@ HB_FUNC(CAIRO_SET_LINE_WIDTH)
 
 HB_FUNC(CAIRO_SET_MITER_LIMIT)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -315,7 +315,7 @@ HB_FUNC(CAIRO_SET_MITER_LIMIT)
 
 HB_FUNC(CAIRO_SET_OPERATOR)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -325,7 +325,7 @@ HB_FUNC(CAIRO_SET_OPERATOR)
 
 HB_FUNC(CAIRO_SET_SOURCE_RGB)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -335,7 +335,7 @@ HB_FUNC(CAIRO_SET_SOURCE_RGB)
 
 HB_FUNC(CAIRO_SET_SOURCE_RGBA)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -345,7 +345,7 @@ HB_FUNC(CAIRO_SET_SOURCE_RGBA)
 
 HB_FUNC(CAIRO_SET_TOLERANCE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -355,7 +355,7 @@ HB_FUNC(CAIRO_SET_TOLERANCE)
 
 HB_FUNC(CAIRO_SHOW_PAGE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -365,7 +365,7 @@ HB_FUNC(CAIRO_SHOW_PAGE)
 
 HB_FUNC(CAIRO_STROKE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -375,7 +375,7 @@ HB_FUNC(CAIRO_STROKE)
 
 HB_FUNC(CAIRO_STATUS)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -385,11 +385,11 @@ HB_FUNC(CAIRO_STATUS)
 
 HB_FUNC(CAIRO_STROKE_EXTENTS)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
-    PHB_ITEM pItem = hb_stackReturnItem();
+    auto pItem = hb_stackReturnItem();
     double x1, y1, x2, y2;
     cairo_stroke_extents(pCairo, &x1, &y1, &x2, &y2);
     hb_arrayNew(pItem, 4);
@@ -402,7 +402,7 @@ HB_FUNC(CAIRO_STROKE_EXTENTS)
 
 HB_FUNC(CAIRO_STROKE_PRESERVE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -412,7 +412,7 @@ HB_FUNC(CAIRO_STROKE_PRESERVE)
 
 HB_FUNC(CAIRO_PUSH_GROUP)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -422,7 +422,7 @@ HB_FUNC(CAIRO_PUSH_GROUP)
 
 HB_FUNC(CAIRO_POP_GROUP_TO_SOURCE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -432,15 +432,15 @@ HB_FUNC(CAIRO_POP_GROUP_TO_SOURCE)
 
 HB_FUNC(CAIRO_SET_SOURCE_SURFACE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
-  cairo_surface_t *pSurface = hb_cairo_surface_param(2);
+  auto pCairo = hb_cairo_param(1);
+  auto pSurface = hb_cairo_surface_param(2);
   cairo_set_source_surface(pCairo, pSurface, hb_parnd(3), hb_parnd(4));
 }
 
 HB_FUNC(CAIRO_SET_SOURCE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(2);
+  auto pCairo = hb_cairo_param(1);
+  auto pPattern = hb_cairo_pattern_param(2);
 
   if (pCairo != nullptr)
   {

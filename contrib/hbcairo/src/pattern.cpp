@@ -112,7 +112,7 @@ HB_FUNC(CAIRO_PATTERN_DESTROY)
 
 HB_FUNC(CAIRO_PATTERN_ADD_COLOR_STOP_RGB)
 {
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -122,7 +122,7 @@ HB_FUNC(CAIRO_PATTERN_ADD_COLOR_STOP_RGB)
 
 HB_FUNC(CAIRO_PATTERN_ADD_COLOR_STOP_RGBA)
 {
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -133,7 +133,7 @@ HB_FUNC(CAIRO_PATTERN_ADD_COLOR_STOP_RGBA)
 HB_FUNC(CAIRO_PATTERN_GET_COLOR_STOP_COUNT)
 {
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -154,7 +154,7 @@ HB_FUNC(CAIRO_PATTERN_GET_COLOR_STOP_COUNT)
 HB_FUNC(CAIRO_PATTERN_GET_COLOR_STOP_RGBA)
 {
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -193,7 +193,7 @@ HB_FUNC(CAIRO_PATTERN_CREATE_RGBA)
 HB_FUNC(CAIRO_PATTERN_GET_RGBA)
 {
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -225,7 +225,7 @@ HB_FUNC(CAIRO_PATTERN_CREATE_FOR_SURFACE)
 HB_FUNC(CAIRO_PATTERN_GET_SURFACE)
 {
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -251,7 +251,7 @@ HB_FUNC(CAIRO_PATTERN_CREATE_LINEAR)
 HB_FUNC(CAIRO_PATTERN_GET_LINEAR_POINTS)
 {
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -284,7 +284,7 @@ HB_FUNC(CAIRO_PATTERN_CREATE_RADIAL)
 HB_FUNC(CAIRO_PATTERN_GET_RADIAL_CIRCLES)
 {
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 4, 0)
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {
@@ -314,7 +314,7 @@ HB_FUNC(CAIRO_PATTERN_GET_RADIAL_CIRCLES)
 
 HB_FUNC(CAIRO_PATTERN_STATUS)
 {
-  cairo_pattern_t *pPattern = hb_cairo_pattern_param(1);
+  auto pPattern = hb_cairo_pattern_param(1);
 
   if (pPattern != nullptr)
   {

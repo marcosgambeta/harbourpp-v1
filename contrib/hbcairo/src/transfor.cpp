@@ -50,11 +50,11 @@
 
 HB_FUNC(CAIRO_GET_MATRIX)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
-    PHB_ITEM pItem = hb_stackReturnItem();
+    auto pItem = hb_stackReturnItem();
     cairo_matrix_t m;
     cairo_get_matrix(pCairo, &m);
     hb_arrayNew(pItem, 6);
@@ -69,7 +69,7 @@ HB_FUNC(CAIRO_GET_MATRIX)
 
 HB_FUNC(CAIRO_IDENTITY_MATRIX)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -79,7 +79,7 @@ HB_FUNC(CAIRO_IDENTITY_MATRIX)
 
 HB_FUNC(CAIRO_ROTATE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -89,7 +89,7 @@ HB_FUNC(CAIRO_ROTATE)
 
 HB_FUNC(CAIRO_SET_MATRIX)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -114,7 +114,7 @@ HB_FUNC(CAIRO_SET_MATRIX)
 
 HB_FUNC(CAIRO_SCALE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -124,7 +124,7 @@ HB_FUNC(CAIRO_SCALE)
 
 HB_FUNC(CAIRO_TRANSFORM)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
@@ -149,7 +149,7 @@ HB_FUNC(CAIRO_TRANSFORM)
 
 HB_FUNC(CAIRO_TRANSLATE)
 {
-  cairo_t *pCairo = hb_cairo_param(1);
+  auto pCairo = hb_cairo_param(1);
 
   if (pCairo != nullptr)
   {
