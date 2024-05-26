@@ -81,6 +81,10 @@ ifeq ($(filter $(HB_COMPILER),<>),)
          HB_CFLAGS += -Wno-implicit-const-int-float-conversion
       endif
 
+      ifeq ($(HB_COMPILER),clang)
+         HB_CFLAGS += -Wno-implicit-const-int-float-conversion
+      endif
+
       include $(TOP)$(ROOT)config/lib.mk
    else
       HB_SKIP_REASON := unused
