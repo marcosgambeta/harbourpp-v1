@@ -85,29 +85,31 @@ INT_PTR CALLBACK DialogProc2(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 INT_PTR CALLBACK DialogProc2(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-   static PHB_DYNS s_pDynSym = nullptr;
+  static PHB_DYNS s_pDynSym = nullptr;
 
-   if( s_pDynSym == nullptr ) {
-      s_pDynSym = hb_dynsymGetCase("DIALOGPROC2");
-   }
+  if (s_pDynSym == nullptr)
+  {
+    s_pDynSym = hb_dynsymGetCase("DIALOGPROC2");
+  }
 
-   if( hb_dynsymIsFunction(s_pDynSym) ) {
-      hb_vmPushDynSym(s_pDynSym);
-      hb_vmPushNil();
-      hb_vmPushPointer(hwnd);
-      hb_vmPushInteger(uMsg);
-      hb_vmPushNumInt(wParam);
-      hb_vmPushNumInt(lParam);
-      hb_vmDo(4);
-      return hb_parnl(-1);
-   }
+  if (hb_dynsymIsFunction(s_pDynSym))
+  {
+    hb_vmPushDynSym(s_pDynSym);
+    hb_vmPushNil();
+    hb_vmPushPointer(hwnd);
+    hb_vmPushInteger(uMsg);
+    hb_vmPushNumInt(wParam);
+    hb_vmPushNumInt(lParam);
+    hb_vmDo(4);
+    return hb_parnl(-1);
+  }
 
-   return 0;
+  return 0;
 }
 
-HB_FUNC_STATIC( GETDIALOGPROC2 )
+HB_FUNC_STATIC(GETDIALOGPROC2)
 {
-   hb_retptr(reinterpret_cast<void*>(DialogProc2));
+  hb_retptr(reinterpret_cast<void *>(DialogProc2));
 }
 
 #pragma ENDDUMP

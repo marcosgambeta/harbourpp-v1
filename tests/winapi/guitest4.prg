@@ -131,29 +131,31 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-   static PHB_DYNS s_pDynSym = nullptr;
+  static PHB_DYNS s_pDynSym = nullptr;
 
-   if( s_pDynSym == nullptr ) {
-      s_pDynSym = hb_dynsymGetCase("WINDOWPROC");
-   }
+  if (s_pDynSym == nullptr)
+  {
+    s_pDynSym = hb_dynsymGetCase("WINDOWPROC");
+  }
 
-   if( hb_dynsymIsFunction(s_pDynSym) ) {
-      hb_vmPushDynSym(s_pDynSym);
-      hb_vmPushNil();
-      hb_vmPushPointer(hwnd);
-      hb_vmPushInteger(uMsg);
-      hb_vmPushLong(wParam);
-      hb_vmPushNumInt(lParam);
-      hb_vmDo(4);
-      return hb_parnl(-1);
-   }
+  if (hb_dynsymIsFunction(s_pDynSym))
+  {
+    hb_vmPushDynSym(s_pDynSym);
+    hb_vmPushNil();
+    hb_vmPushPointer(hwnd);
+    hb_vmPushInteger(uMsg);
+    hb_vmPushLong(wParam);
+    hb_vmPushNumInt(lParam);
+    hb_vmDo(4);
+    return hb_parnl(-1);
+  }
 
-   return DefWindowProc(hwnd, uMsg, wParam, lParam);
+  return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-HB_FUNC_STATIC( GETWINDOWPROC )
+HB_FUNC_STATIC(GETWINDOWPROC)
 {
-   hb_retptr(reinterpret_cast<void*>(WindowProc));
+  hb_retptr(reinterpret_cast<void *>(WindowProc));
 }
 
 #pragma ENDDUMP

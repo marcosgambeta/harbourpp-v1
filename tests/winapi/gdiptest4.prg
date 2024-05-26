@@ -246,7 +246,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 HB_FUNC_STATIC(GETWINDOWPROC)
 {
-  hb_retptr(reinterpret_cast<void*>(WindowProc));
+  hb_retptr(reinterpret_cast<void *>(WindowProc));
 }
 
 INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -275,7 +275,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 HB_FUNC_STATIC(GETDIALOGPROC)
 {
-  hb_retptr(reinterpret_cast<void*>(DialogProc));
+  hb_retptr(reinterpret_cast<void *>(DialogProc));
 }
 
 #pragma ENDDUMP
