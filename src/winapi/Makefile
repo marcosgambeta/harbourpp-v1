@@ -70,6 +70,7 @@ PRG_SOURCES := \
    struct_system_info.prg \
    struct_systemtime.prg \
    struct_timecaps.prg \
+   struct_trackmouseevent.prg \
    struct_trivertex.prg \
    struct_updatelayeredwindowinfo.prg \
    struct_windowinfo.prg \

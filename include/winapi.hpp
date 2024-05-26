@@ -337,6 +337,7 @@ SOFTWARE.
 #define wa_par_SIZE(n)                            static_cast<SIZE *>(wa_get_ptr(n))
 #define wa_par_SYSTEM_INFO(n)                     static_cast<SYSTEM_INFO *>(wa_get_ptr(n))
 #define wa_par_SYSTEMTIME(n)                      static_cast<SYSTEMTIME *>(wa_get_ptr(n))
+#define wa_par_TRACKMOUSEEVENT(n)                 static_cast<TRACKMOUSEEVENT *>(wa_get_ptr(n))
 #define wa_par_UPDATELAYEREDWINDOWINFO(n)         static_cast<UPDATELAYEREDWINDOWINFO *>(wa_get_ptr(n))
 #define wa_par_WINDOWINFO(n)                      static_cast<WINDOWINFO *>(wa_get_ptr(n))
 #define wa_par_WINDOWPLACEMENT(n)                 static_cast<WINDOWPLACEMENT *>(wa_get_ptr(n))
