@@ -311,6 +311,7 @@ SOFTWARE.
 #define wa_par_BLENDFUNCTION(n)                   static_cast<BLENDFUNCTION *>(wa_get_ptr(n))
 #define wa_par_COLORADJUSTMENT(n)                 static_cast<COLORADJUSTMENT *>(wa_get_ptr(n))
 #define wa_par_COLORMAP(n)                        static_cast<COLORMAP *>(wa_get_ptr(n))
+#define wa_par_COMBOBOXINFO(n)                    static_cast<COMBOBOXINFO *>(wa_get_ptr(n))
 #define wa_par_COMSTAT(n)                         static_cast<COMSTAT *>(wa_get_ptr(n))
 #define wa_par_DCB(n)                             static_cast<DCB *>(wa_get_ptr(n))
 #define wa_par_DRAWTEXTPARAMS(n)                  static_cast<DRAWTEXTPARAMS *>(wa_get_ptr(n))

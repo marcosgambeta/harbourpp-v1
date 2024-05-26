@@ -35,6 +35,7 @@ PRG_SOURCES := \
    struct_capdrivercaps.prg \
    struct_coloradjustment.prg \
    struct_colormap.prg \
+   struct_comboboxinfo.prg \
    struct_comstat.prg \
    struct_dcb.prg \
    struct_drawtextparams.prg \
