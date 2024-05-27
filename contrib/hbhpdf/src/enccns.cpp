@@ -45,7 +45,7 @@
 #include "hbhpdf.hpp"
 
 /* HPDF_UseCNSEncodings( hDoc ) --> hStatus */
-HB_FUNC( HPDF_USECNSENCODINGS )
+HB_FUNC(HPDF_USECNSENCODINGS)
 {
-   hb_retnl(static_cast<long>(HPDF_UseCNSEncodings(hb_HPDF_Doc_par(1))));
+  hb_retnl(static_cast<long>(HPDF_UseCNSEncodings(hb_HPDF_Doc_par(1))));
 }

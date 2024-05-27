@@ -45,7 +45,7 @@
 #include "hbhpdf.hpp"
 
 /* HPDF_UseJPEncodings( hDoc ) --> hStatus */
-HB_FUNC( HPDF_USEJPENCODINGS )
+HB_FUNC(HPDF_USEJPENCODINGS)
 {
-   hb_retnl(static_cast<long>(HPDF_UseJPEncodings(hb_HPDF_Doc_par(1))));
+  hb_retnl(static_cast<long>(HPDF_UseJPEncodings(hb_HPDF_Doc_par(1))));
 }

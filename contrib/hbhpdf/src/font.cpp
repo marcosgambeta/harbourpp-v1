@@ -45,50 +45,50 @@
 #include "hbhpdf.hpp"
 
 /* HPDF_LoadTypeIFontFromFile( hDoc, cAFMFileName, cPFA_PFBFileName ) --> cFontName */
-HB_FUNC( HPDF_LOADTYPE1FONTFROMFILE )
+HB_FUNC(HPDF_LOADTYPE1FONTFROMFILE)
 {
-   char *       pszFree1;
-   auto pszFileName1 = hb_fsNameConv(hb_parcx(2), &pszFree1);
-   char *       pszFree2;
-   auto pszFileName2 = hb_fsNameConv(hb_parcx(3), &pszFree2);
+  char *pszFree1;
+  auto pszFileName1 = hb_fsNameConv(hb_parcx(2), &pszFree1);
+  char *pszFree2;
+  auto pszFileName2 = hb_fsNameConv(hb_parcx(3), &pszFree2);
 
-   hb_retc(HPDF_LoadType1FontFromFile(hb_HPDF_Doc_par(1), pszFileName1, pszFileName2));
+  hb_retc(HPDF_LoadType1FontFromFile(hb_HPDF_Doc_par(1), pszFileName1, pszFileName2));
 
-   if( pszFree1 )
-   {
-      hb_xfree(pszFree1);
-   }
+  if (pszFree1)
+  {
+    hb_xfree(pszFree1);
+  }
 
-   if( pszFree2 )
-   {
-      hb_xfree(pszFree2);
-   }
+  if (pszFree2)
+  {
+    hb_xfree(pszFree2);
+  }
 }
 
 /* HPDF_LoadTTFontFromFile( hDoc, cTTFontFileName, lEmbed ) --> cFontName */
-HB_FUNC( HPDF_LOADTTFONTFROMFILE )
+HB_FUNC(HPDF_LOADTTFONTFROMFILE)
 {
-   char *       pszFree;
-   auto pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
+  char *pszFree;
+  auto pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
 
-   hb_retc(HPDF_LoadTTFontFromFile(hb_HPDF_Doc_par(1), pszFileName, hb_parl(3) ? HPDF_TRUE : HPDF_FALSE));
+  hb_retc(HPDF_LoadTTFontFromFile(hb_HPDF_Doc_par(1), pszFileName, hb_parl(3) ? HPDF_TRUE : HPDF_FALSE));
 
-   if( pszFree )
-   {
-      hb_xfree(pszFree);
-   }
+  if (pszFree)
+  {
+    hb_xfree(pszFree);
+  }
 }
 
 /* HPDF_LoadTTFontFromFile2(hDoc, cTTFontFileName, nIndexInFile, lEmbed) --> cFontName */
-HB_FUNC( HPDF_LOADTTFONTFROMFILE2 )
+HB_FUNC(HPDF_LOADTTFONTFROMFILE2)
 {
-   char *       pszFree;
-   auto pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
+  char *pszFree;
+  auto pszFileName = hb_fsNameConv(hb_parcx(2), &pszFree);
 
-   hb_retc(HPDF_LoadTTFontFromFile2(hb_HPDF_Doc_par(1), pszFileName, hb_parni(3), hb_parl(4) ? HPDF_TRUE : HPDF_FALSE));
+  hb_retc(HPDF_LoadTTFontFromFile2(hb_HPDF_Doc_par(1), pszFileName, hb_parni(3), hb_parl(4) ? HPDF_TRUE : HPDF_FALSE));
 
-   if( pszFree )
-   {
-      hb_xfree(pszFree);
-   }
+  if (pszFree)
+  {
+    hb_xfree(pszFree);
+  }
 }
