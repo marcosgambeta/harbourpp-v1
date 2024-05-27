@@ -348,3 +348,4 @@ SOFTWARE.
 #define wa_par_XFORM(n)                           static_cast<XFORM *>(wa_get_ptr(n))
 #define wa_par_METAFILEPICT(n)                    static_cast<METAFILEPICT *>(wa_get_ptr(n))
 #define wa_par_TITLEBARINFO(n)                    static_cast<TITLEBARINFO *>(wa_get_ptr(n))
+#define wa_par_CURSORINFO(n)                      static_cast<CURSORINFO *>(wa_get_ptr(n))
