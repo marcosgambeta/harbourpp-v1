@@ -5635,6 +5635,10 @@ HB_FUNC( WAGETTITLEBARINFO )
 /*
 WINUSERAPI WINBOOL WINAPI GetMenuBarInfo(HWND hwnd,LONG idObject,LONG idItem,PMENUBARINFO pmbi)
 */
+HB_FUNC( WAGETMENUBARINFO )
+{
+  wa_ret_BOOL(GetMenuBarInfo(wa_par_HWND(1), wa_par_LONG(2), wa_par_LONG(3), wa_par_MENUBARINFO(4)));
+}
 
 /*
 WINUSERAPI WINBOOL WINAPI GetScrollBarInfo(HWND hwnd,LONG idObject,PSCROLLBARINFO psbi)

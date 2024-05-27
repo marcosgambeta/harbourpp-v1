@@ -53,6 +53,7 @@ PRG_SOURCES := \
    struct_logpalette.prg \
    struct_logpen.prg \
    struct_memorystatusex.prg \
+   struct_menubarinfo.prg \
    struct_menuinfo.prg \
    struct_monitorinfo.prg \
    struct_mousemovepoint.prg \
