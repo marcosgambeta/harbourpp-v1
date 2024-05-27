@@ -346,9 +346,7 @@ HB_FUNC(HPDF_GETINFOATTR)
  */
 HB_FUNC(HPDF_SETINFODATEATTR)
 {
-  HPDF_Date date;
-
-  memset(&date, 0, sizeof(date));
+  HPDF_Date date{};
 
   date.year = hb_parvni(3, 1);
   date.month = hb_parvni(3, 2);

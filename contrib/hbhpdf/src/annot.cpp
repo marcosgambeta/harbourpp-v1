@@ -427,9 +427,7 @@ HB_FUNC(HPDF_MARKUPANNOT_SETSUBJECT)
 HB_FUNC(HPDF_MARKUPANNOT_SETCREATIONDATE)
 {
 #if HB_HPDF_VERS(2, 2, 0)
-  HPDF_Date date;
-
-  memset(&date, 0, sizeof(date));
+  HPDF_Date date{};
 
   date.year = hb_parvni(2, 1);
   date.month = hb_parvni(2, 2);
