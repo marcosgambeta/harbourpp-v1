@@ -67,6 +67,7 @@ PRG_SOURCES := \
    struct_pointfloat.prg \
    struct_rect.prg \
    struct_rgbquad.prg \
+   struct_scrollbarinfo.prg \
    struct_scrollinfo.prg \
    struct_security_attributes.prg \
    struct_size.prg \
