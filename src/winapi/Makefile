@@ -36,6 +36,7 @@ PRG_SOURCES := \
    struct_coloradjustment.prg \
    struct_colormap.prg \
    struct_comboboxinfo.prg \
+   struct_compareitemstruct.prg \
    struct_comstat.prg \
    struct_cursorinfo.prg \
    struct_dcb.prg \
