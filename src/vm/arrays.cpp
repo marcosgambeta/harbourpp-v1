@@ -70,7 +70,7 @@ static void hb_arrayReleaseItems(PHB_BASEARRAY pBaseArray)
       }
     } while (pBaseArray->nLen);
 
-    /* protection against possible base array resizing in user destructors */
+    // protection against possible base array resizing in user destructors
     if (pBaseArray->pItems)
     {
       hb_xfree(pBaseArray->pItems);
@@ -88,16 +88,14 @@ void hb_arrayPushBase(PHB_BASEARRAY pBaseArray)
   hb_gcRefInc(pBaseArray);
 }
 
-/* This releases array when called from the garbage collector */
+// This releases array when called from the garbage collector
 static HB_GARBAGE_FUNC(hb_arrayGarbageRelease)
 {
   auto pBaseArray = static_cast<PHB_BASEARRAY>(Cargo);
 
   if (pBaseArray->uiClass)
   {
-    /*
-     * do not execute destructor for supercasted objects [druzus]
-     */
+    // do not execute destructor for supercasted objects [druzus]
     if (pBaseArray->uiPrevCls == 0 && hb_clsHasDestructor(pBaseArray->uiClass))
     {
       HB_STACK_TLS_PRELOAD
@@ -106,13 +104,11 @@ static HB_GARBAGE_FUNC(hb_arrayGarbageRelease)
       hb_stackPop();
     }
 
-    /*
-     * This is only some additional protection for buggy code
-     * which can store reference to this object in other class
-     * destructor when executed from GC and it will only cause
-     * RT error when user will try to send any message to this
-     * object [druzus]
-     */
+    // This is only some additional protection for buggy code
+    // which can store reference to this object in other class
+    // destructor when executed from GC and it will only cause
+    // RT error when user will try to send any message to this
+    // object [druzus]
     pBaseArray->uiClass = 0;
   }
 
@@ -140,7 +136,7 @@ static HB_GARBAGE_FUNC(hb_arrayGarbageMark)
 
 static const HB_GC_FUNCS s_gcArrayFuncs = {hb_arrayGarbageRelease, hb_arrayGarbageMark};
 
-HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) /* creates a new array */
+HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) // creates a new array
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayNew(%p, %" HB_PFS "u)", static_cast<void*>(pItem), nLen));
@@ -153,11 +149,9 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) /* creates a new array */
 
   PHB_ITEM pItems;
 
-  /*
-   * allocate memory for items before hb_gcAllocRaw() to be
-   * safe for automatic GC activation in hb_xgrab() without
-   * calling hb_gcLock()/hb_gcUnlock(). [druzus]
-   */
+  // allocate memory for items before hb_gcAllocRaw() to be
+  // safe for automatic GC activation in hb_xgrab() without
+  // calling hb_gcLock()/hb_gcUnlock(). [druzus]
   if (nLen > 0)
   {
     pItems = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM) * nLen));
@@ -229,23 +223,21 @@ HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
         {
           if (pBaseArray->nAllocated < nLen)
           {
-            /*
-               A common practice is to double allocation buffer size. Thus, making
-               reallocation count logarithmic to total number of added numbers.
-               I've used here a little different formula. ulAllocated is divided by
-               factor 2 ( >> 1 ) and 1 is added to requested size. This algorithm
-               has properties:
-                 - reallocation count remains asymptotically logarithmic;
-                 - saves memory for large arrays, because reallocation buffer
-                   size is not doubled, but multiplied by 1.5;
-                 - adding of 1, allows reduce reallocation count for small arrays.
-             */
+            // A common practice is to double allocation buffer size. Thus, making
+            // reallocation count logarithmic to total number of added numbers.
+            // I've used here a little different formula. ulAllocated is divided by
+            // factor 2 ( >> 1 ) and 1 is added to requested size. This algorithm
+            // has properties:
+            //   - reallocation count remains asymptotically logarithmic;
+            //   - saves memory for large arrays, because reallocation buffer
+            //     size is not doubled, but multiplied by 1.5;
+            //   - adding of 1, allows reduce reallocation count for small arrays.
             pBaseArray->nAllocated = (pBaseArray->nAllocated >> 1) + 1 + nLen;
             pBaseArray->pItems =
                 static_cast<PHB_ITEM>(hb_xrealloc(pBaseArray->pItems, sizeof(HB_ITEM) * pBaseArray->nAllocated));
           }
 
-          /* set value for new items */
+          // set value for new items
           for (nPos = pBaseArray->nLen; nPos < nLen; nPos++)
           {
             (pBaseArray->pItems + nPos)->type = Harbour::Item::NIL;
@@ -253,7 +245,7 @@ HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
         }
         else if (pBaseArray->nLen > nLen)
         {
-          /* release old items */
+          // release old items
           for (nPos = nLen; nPos < pBaseArray->nLen; nPos++)
           {
             if (HB_IS_COMPLEX(pBaseArray->pItems + nPos))
@@ -318,7 +310,7 @@ HB_BOOL hb_arrayIsObject(PHB_ITEM pArray)
   }
 }
 
-/* retrieves the array unique ID */
+// retrieves the array unique ID
 void *hb_arrayId(PHB_ITEM pArray)
 {
   if (pArray && HB_IS_ARRAY(pArray))
@@ -331,7 +323,7 @@ void *hb_arrayId(PHB_ITEM pArray)
   }
 }
 
-/* retrieves numer of references to the array */
+// retrieves numer of references to the array
 HB_COUNTER hb_arrayRefs(PHB_ITEM pArray)
 {
   if (pArray && HB_IS_ARRAY(pArray))
@@ -426,7 +418,7 @@ HB_BOOL hb_arrayDel(PHB_ITEM pArray, HB_SIZE nIndex)
       else
       {
         for (; nIndex < nLen; ++nIndex)
-        { /* move items */
+        { // move items
           hb_itemMoveRef(pBaseArray->pItems + nIndex - 1, pBaseArray->pItems + nIndex);
         }
       }
@@ -459,7 +451,7 @@ HB_BOOL hb_arrayIns(PHB_ITEM pArray, HB_SIZE nIndex)
       else
       {
         while (--nLen >= nIndex)
-        { /* move items */
+        { // move items
           hb_itemMoveRef(pBaseArray->pItems + nLen, pBaseArray->pItems + nLen - 1);
         }
       }
@@ -553,10 +545,8 @@ HB_BOOL hb_arrayGetItemRef(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
   }
 }
 
-/*
- * This function returns a pointer to an item occupied by the specified
- * array element - it doesn't return an item's value
- */
+// This function returns a pointer to an item occupied by the specified
+// array element - it doesn't return an item's value
 PHB_ITEM hb_arrayGetItemPtr(PHB_ITEM pArray, HB_SIZE nIndex)
 {
 #if 0
@@ -585,8 +575,8 @@ char *hb_arrayGetDS(PHB_ITEM pArray, HB_SIZE nIndex, char *szDate)
   }
   else
   {
-    /* NOTE: Intentionally calling it with a bad parameter in order to get
-             the default value from hb_itemGetDS(). [vszakats] */
+    // NOTE: Intentionally calling it with a bad parameter in order to get
+    //       the default value from hb_itemGetDS(). [vszakats]
     return hb_itemGetDS(nullptr, szDate);
   }
 }
@@ -603,8 +593,8 @@ long hb_arrayGetDL(PHB_ITEM pArray, HB_SIZE nIndex)
   }
   else
   {
-    /* NOTE: Intentionally calling it with a bad parameter in order to get
-             the default value from hb_itemGetDL(). [vszakats] */
+    // NOTE: Intentionally calling it with a bad parameter in order to get
+    //       the default value from hb_itemGetDL(). [vszakats]
     return hb_itemGetDL(nullptr);
   }
 }
@@ -1311,8 +1301,8 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
 
       if (nCount > 0)
       {
-        /* Make separate search loops for different types to find, so that
-           the loop can be faster. */
+        // Make separate search loops for different types to find, so that
+        // the loop can be faster.
 
         if (HB_IS_BLOCK(pValue))
         {
@@ -1337,8 +1327,8 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            /* NOTE: The order of the pItem and pValue parameters passed to
-                     hb_itemStrCmp() is significant, please don't change it. [vszakats] */
+            // NOTE: The order of the pItem and pValue parameters passed to
+            //       hb_itemStrCmp() is significant, please don't change it. [vszakats]
             if (HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0)
             {
               return nStart;
@@ -1502,8 +1492,8 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
 
       if (nCount > 0)
       {
-        /* Make separate search loops for different types to find, so that
-           the loop can be faster. */
+        // Make separate search loops for different types to find, so that
+        // the loop can be faster.
 
         if (HB_IS_BLOCK(pValue))
         {
@@ -1535,8 +1525,8 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            /* NOTE: The order of the pItem and pValue parameters passed to
-                     hb_itemStrCmp() is significant, please don't change it. [vszakats] */
+            // NOTE: The order of the pItem and pValue parameters passed to
+            //       hb_itemStrCmp() is significant, please don't change it. [vszakats]
             if (HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0)
             {
               return nStart + 1;
@@ -1708,10 +1698,8 @@ HB_BOOL hb_arrayEval(PHB_ITEM pArray, PHB_ITEM bBlock, HB_SIZE *pnStart, HB_SIZE
           hb_vmPushSize(nStart + 1);
           hb_vmEval(2);
         } while (--nCount > 0 && ++nStart < pBaseArray->nLen);
-        /*
-         * checking for nStart < pBaseArray->nLen is fix for
-         * possible GPF when codeblock decrease array size
-         */
+        // checking for nStart < pBaseArray->nLen is fix for
+        // possible GPF when codeblock decrease array size
       }
     }
 
@@ -1723,8 +1711,8 @@ HB_BOOL hb_arrayEval(PHB_ITEM pArray, PHB_ITEM bBlock, HB_SIZE *pnStart, HB_SIZE
   }
 }
 
-/* NOTE: CA-Cl*pper 5.3a has a fix for the case when the starting position
-         is greater than the length of the array. [vszakats] */
+// NOTE: CA-Cl*pper 5.3a has a fix for the case when the starting position
+//       is greater than the length of the array. [vszakats]
 
 HB_BOOL hb_arrayCopy(PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE *pnStart, HB_SIZE *pnCount, HB_SIZE *pnTarget)
 {
@@ -1759,7 +1747,7 @@ HB_BOOL hb_arrayCopy(PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE *pnStart, H
       nTarget = 1;
     }
 
-#ifdef HB_COMPAT_C53 /* From CA-Cl*pper 5.3a */
+#ifdef HB_COMPAT_C53 // From CA-Cl*pper 5.3a
     if (nStart <= nSrcLen)
     {
 #else
@@ -1767,7 +1755,7 @@ HB_BOOL hb_arrayCopy(PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE *pnStart, H
     {
 #endif
       HB_SIZE nCount;
-#ifndef HB_COMPAT_C53 /* From CA-Cl*pper 5.3a */
+#ifndef HB_COMPAT_C53 // From CA-Cl*pper 5.3a
       if (nStart > nSrcLen)
       {
         nStart = nSrcLen;
@@ -1782,7 +1770,7 @@ HB_BOOL hb_arrayCopy(PHB_ITEM pSrcArray, PHB_ITEM pDstArray, HB_SIZE *pnStart, H
         nCount = nSrcLen - nStart + 1;
       }
 
-/* This is probably a bug, present in all versions of CA-Cl*pper. */
+// This is probably a bug, present in all versions of CA-Cl*pper.
 #if defined(HB_CLP_STRICT) || 1
       if (nDstLen > 0)
       {
@@ -1912,7 +1900,7 @@ static bool hb_nestedCloneFind(PHB_NESTED_CLONED pClonedList, void *pValue, PHB_
 
 void hb_nestedCloneDo(PHB_ITEM pDstItem, PHB_ITEM pSrcItem, PHB_NESTED_CLONED pClonedList)
 {
-  /* Clipper clones nested array ONLY if NOT an Object!!! */
+  // Clipper clones nested array ONLY if NOT an Object!!!
   if (HB_IS_ARRAY(pSrcItem))
   {
     if (!hb_nestedCloneFind(pClonedList, static_cast<void *>(pSrcItem->item.asArray.value), pDstItem))
