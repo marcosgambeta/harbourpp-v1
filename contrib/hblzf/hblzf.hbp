@@ -9,7 +9,7 @@
 -depcontrol=lzf:local{HB_BUILD_3RDEXT='no'}
 -depcontrol=lzf:${HB_WITH_LZF}
 -depincpath=lzf:/usr/include
--depincpathlocal=lzf:3rd/liblzf
+-depincpathlocal=lzf:../3rd/liblzf
 -depfinish=lzf
 
 ${hb_name}.hbx
@@ -18,4 +18,4 @@ ${hb_name}.hbx
 
 src/core.cpp
 
-3rd/liblzf/lzf.hbc{HBMK_HAS_LZF_LOCAL}
+../3rd/liblzf/lzf.hbc{HBMK_HAS_LZF_LOCAL}
