@@ -18,7 +18,7 @@
 -depcontrol=png:${HB_WITH_PNG}
 -depincpath=png:/usr/include
 -depincpath=png:/opt/local/include
--depincpathlocal=png:../../../../src/3rd/png
+-depincpathlocal=png:../../../src/3rd/png
 
 -depkeyhead=zlib:zlib.h
 -depcontrol=zlib:local{HB_BUILD_3RDEXT='no'}
@@ -26,7 +26,7 @@
 -depincpath=zlib:/usr/include
 -depincpath=zlib:/usr/local/include
 -depincpath=zlib:/boot/develop/headers/3rdparty
--depincpathlocal=zlib:../../../../src/3rd/zlib
+-depincpathlocal=zlib:../../../src/3rd/zlib
 
 -cflag=-DHPDF_DLL_MAKE_CDECL{allwin&hbdyn}
 -cflag=-U__COREDLL__{mingwarm}

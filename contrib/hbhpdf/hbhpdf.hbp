@@ -10,7 +10,7 @@
 -depcontrol=libharu:${HB_WITH_LIBHARU}
 -depincpath=libharu:/usr/include
 -depincpath=libharu:/usr/local/include
--depincpathlocal=libharu:3rd/libhpdf/include
+-depincpathlocal=libharu:../3rd/libhpdf/include
 -depimplibs=libharu:../libhpdf.dll
 -depimplibs=libharu:../lib_dll/libhpdf.dll
 -depimplibs=libharu:../bin/libhpdf.dll
@@ -37,4 +37,4 @@ src/pdfa.cpp
 src/errstr.prg
 src/misc.prg
 
-3rd/libhpdf/libhpdf.hbc{HBMK_HAS_LIBHARU_LOCAL}
+../3rd/libhpdf/libhpdf.hbc{HBMK_HAS_LIBHARU_LOCAL}
