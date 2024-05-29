@@ -12,7 +12,7 @@
 -depcontrol=bzip2:${HB_WITH_BZIP2}
 -depincpath=bzip2:/usr/include
 -depincpath=bzip2:/usr/local/include
--depincpathlocal=bzip2:3rd/bz2
+-depincpathlocal=bzip2:../3rd/bz2
 -depfinish=bzip2
 
 ${hb_name}.hbx
@@ -22,4 +22,4 @@ ${hb_name}.hbx
 src/core.cpp
 src/errint.cpp
 
-3rd/bz2/bz2.hbc{HBMK_HAS_BZIP2_LOCAL}
+../3rd/bz2/bz2.hbc{HBMK_HAS_BZIP2_LOCAL}
