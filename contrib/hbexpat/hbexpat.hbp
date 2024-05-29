@@ -9,7 +9,7 @@
 -depcontrol=expat:local{HB_BUILD_3RDEXT='no'}
 -depcontrol=expat:${HB_WITH_EXPAT}
 -depincpath=expat:/usr/include
--depincpathlocal=expat:3rd/expat
+-depincpathlocal=expat:../3rd/expat
 -depfinish=expat
 
 -cflag=-DXML_STATIC
@@ -22,4 +22,4 @@ src/core.cpp
 src/internal.cpp
 src/unitable.prg
 
-3rd/expat/expat.hbc{HBMK_HAS_EXPAT_LOCAL}
+../3rd/expat/expat.hbc{HBMK_HAS_EXPAT_LOCAL}
