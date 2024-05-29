@@ -40,6 +40,7 @@ PRG_SOURCES := \
    struct_comstat.prg \
    struct_cursorinfo.prg \
    struct_dcb.prg \
+   struct_deleteitemstruct.prg \
    struct_drawtextparams.prg \
    struct_filetime.prg \
    struct_flashwinfo.prg \
