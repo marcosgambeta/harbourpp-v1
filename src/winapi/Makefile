@@ -55,6 +55,7 @@ PRG_SOURCES := \
    struct_logbrush.prg \
    struct_logpalette.prg \
    struct_logpen.prg \
+   struct_measureitemstruct.prg \
    struct_memorystatusex.prg \
    struct_menubarinfo.prg \
    struct_menuinfo.prg \
