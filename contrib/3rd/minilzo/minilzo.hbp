@@ -10,7 +10,9 @@
 -warn=low
 -pic
 
-minilzo.c
+-Iinclude
+
+src/minilzo.c
 
 # ORIGIN http://www.oberhumer.com/opensource/lzo/
 # VER    2.06

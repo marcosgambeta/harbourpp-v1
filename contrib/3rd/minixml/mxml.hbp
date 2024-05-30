@@ -17,16 +17,18 @@
 {win}-cflag=-DWIN32 -DWIN
 {win|dos|os2}-cflag=-D_EOL_CRLF
 
-mxml-attr.c
-mxml-entity.c
-mxml-file.c
-mxml-get.c
-mxml-index.c
-mxml-node.c
-mxml-private.c
-mxml-search.c
-mxml-set.c
-mxml-string.c
+-Iinclude
+
+src/mxml-attr.c
+src/mxml-entity.c
+src/mxml-file.c
+src/mxml-get.c
+src/mxml-index.c
+src/mxml-node.c
+src/mxml-private.c
+src/mxml-search.c
+src/mxml-set.c
+src/mxml-string.c
 
 # ORIGIN http://www.minixml.org
 # VER    3.3.1

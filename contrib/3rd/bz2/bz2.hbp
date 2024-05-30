@@ -17,13 +17,15 @@
 {bcc64}-cflag=-Wno-visibility
 {bcc64}-cflag=-Wno-missing-declarations
 
-blocksor.c
-bzlib.c
-compress.c
-crctable.c
-decompre.c
-huffman.c
-randtabl.c
+-Iinclude
+
+src/blocksor.c
+src/bzlib.c
+src/compress.c
+src/crctable.c
+src/decompre.c
+src/huffman.c
+src/randtabl.c
 
 {bcc}-aflag=/C
 

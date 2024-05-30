@@ -15,8 +15,10 @@
 -cflag=-DVERY_FAST=1
 -cflag=-DAVOID_ERRNO=1{wce}
 
-lzf_c.c
-lzf_d.c
+-Iinclude
+
+src/lzf_c.c
+src/lzf_d.c
 
 # ORIGIN http://liblzf.plan9.de
 # VER    3.6

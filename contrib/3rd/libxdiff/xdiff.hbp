@@ -11,20 +11,22 @@
 
 -cflag=-DHAVE_HBCONFIG_H
 
-xadler32.c
-xalloc.c
-xbdiff.c
-xbpatchi.c
-xdiffi.c
-xemit.c
-xmerge3.c
-xmissing.c
-xpatchi.c
-xprepare.c
-xrabdiff.c
-xrabply.c
-xutils.c
-xversion.c
+-Iinclude
+
+src/xadler32.c
+src/xalloc.c
+src/xbdiff.c
+src/xbpatchi.c
+src/xdiffi.c
+src/xemit.c
+src/xmerge3.c
+src/xmissing.c
+src/xpatchi.c
+src/xprepare.c
+src/xrabdiff.c
+src/xrabply.c
+src/xutils.c
+src/xversion.c
 
 # ORIGIN http://www.xmailserver.org/xdiff-lib.html
 # VER    0.23

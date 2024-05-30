@@ -45,7 +45,9 @@
 {bcc64}-cflag=-Wno-visibility
 {bcc64}-cflag=-Wno-missing-declarations
 
-sqlite3.c
+-Iinclude
+
+src/sqlite3.c
 
 # ORIGIN http://www.sqlite.org/
 # VER    3.46.0

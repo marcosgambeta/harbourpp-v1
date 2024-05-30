@@ -16,9 +16,11 @@
 
 {bcc64}-cflag=-Wno-typedef-redefinition
 
-ioapi.c
-zip.c
-unzip.c
+-Iinclude
+
+src/ioapi.c
+src/zip.c
+src/unzip.c
 
 -depkeyhead=zlib:zlib.h
 -depcontrol=zlib:local{HB_BUILD_3RDEXT='no'}
