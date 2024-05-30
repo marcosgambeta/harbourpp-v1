@@ -15,7 +15,7 @@
 -depcontrol=minizip:${HB_WITH_MINIZIP}
 -depincpath=minizip:/usr/include
 -depincpath=minizip:/usr/local/include
--depincpathlocal=minizip:3rd/minizip
+-depincpathlocal=minizip:../3rd/minizip
 -depfinish=minizip
 
 # This is a dependency of minizip
@@ -34,4 +34,4 @@ ${hb_name}.hbx
 src/mzip.cpp
 src/mziperr.prg
 
-3rd/minizip/minizip.hbc{HBMK_HAS_MINIZIP_LOCAL}
+../3rd/minizip/minizip.hbc{HBMK_HAS_MINIZIP_LOCAL}
