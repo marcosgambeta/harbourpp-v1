@@ -9,7 +9,7 @@
 -depcontrol=minilzo:local{HB_BUILD_3RDEXT='no'}
 -depcontrol=minilzo:${HB_WITH_MINILZO}
 -depincpath=minilzo:/usr/include
--depincpathlocal=minilzo:../3rd/minilzo
+-depincpathlocal=minilzo:../3rd/minilzo/include
 -depfinish=minilzo
 
 ${hb_name}.hbx

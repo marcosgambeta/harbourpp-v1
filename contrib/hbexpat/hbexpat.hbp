@@ -9,7 +9,7 @@
 -depcontrol=expat:local{HB_BUILD_3RDEXT='no'}
 -depcontrol=expat:${HB_WITH_EXPAT}
 -depincpath=expat:/usr/include
--depincpathlocal=expat:../3rd/expat
+-depincpathlocal=expat:../3rd/expat/include
 -depfinish=expat
 
 -cflag=-DXML_STATIC

@@ -10,7 +10,7 @@
 -depcontrol=sqlite3:${HB_WITH_SQLITE3}
 -depincpath=sqlite3:/usr/include
 -depincpath=sqlite3:/boot/common/include
--depincpathlocal=sqlite3:../3rd/sqlite3
+-depincpathlocal=sqlite3:../3rd/sqlite3/include
 -depfinish=sqlite3
 
 ${hb_name}.hbx
