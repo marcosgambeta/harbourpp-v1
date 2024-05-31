@@ -46,8 +46,8 @@
 
 #define HB_STACK_PRELOAD
 
-/* NOTE: Need to have these before Harbour headers,
-         because in MT mode, they will automatically #include <os2.h>. */
+// NOTE: Need to have these before Harbour headers,
+//       because in MT mode, they will automatically #include <os2.h>.
 #define INCL_DOSPROCESS
 
 #include "hbvmopt.hpp"
@@ -59,7 +59,7 @@
 #include "hbapirdd.hpp"
 #include "hbdate.hpp"
 
-/* --- */
+// ---
 
 #if !defined(STACK_INITHB_ITEMS)
 #define STACK_INITHB_ITEMS 200
@@ -68,7 +68,7 @@
 #define STACK_EXPANDHB_ITEMS 20
 #endif
 
-/* --- */
+// ---
 
 #if defined(HB_MT_VM)
 
@@ -79,7 +79,7 @@ static int s_iTSDCounter = 0;
 
 #ifdef HB_USE_TLS
 
-/* compiler has native support for TLS */
+// compiler has native support for TLS
 #if !defined(_HB_STACK_MACROS_)
 #if defined(__BORLANDC__)
 static PHB_STACK HB_TLS_ATTR hb_stack_ptr;
@@ -109,7 +109,7 @@ HB_TLS_ATTR PHB_STACK hb_stack_ptr = nullptr;
 
 #else
 
-/* compiler has no native TLS support, we have to implement it ourselves */
+// compiler has no native TLS support, we have to implement it ourselves
 #if !defined(_HB_STACK_MACROS_)
 static HB_TLS_KEY hb_stack_key;
 #define hb_stack_ptr (static_cast<PHB_STACK>(hb_tls_get(hb_stack_key)))
@@ -135,7 +135,7 @@ static volatile auto s_fInited = false;
   } while (false)
 #define hb_stack_ready() (s_fInited && hb_tls_get(hb_stack_key))
 
-#endif /* HB_USE_TLS */
+#endif // HB_USE_TLS
 
 #if !defined(HB_STACK_PRELOAD)
 #undef hb_stack
@@ -144,7 +144,7 @@ static volatile auto s_fInited = false;
 
 #else
 
-/* no MT mode */
+// no MT mode
 #if !defined(_HB_STACK_MACROS_)
 static HB_STACK hb_stack;
 #elif !defined(_HB_STACK_LOCAL_MACROS_)
@@ -155,19 +155,19 @@ HB_STACK hb_stack;
 #define hb_stack_dealloc()
 #define hb_stack_ready() (true)
 
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
-/* --- */
+// ---
 
 static char s_szDirBuffer[HB_PATH_MAX];
 static HB_IOERRORS s_IOErrors;
 static HB_TRACEINFO s_traceInfo;
 
-/* --- */
+// ---
 
 static HB_SYMB s_initSymbol = {"hb_stackInit", {HB_FS_STATIC}, {nullptr}, nullptr};
 
-/* --- */
+// ---
 
 static void hb_stack_init(PHB_STACK pStack)
 {
@@ -179,7 +179,7 @@ static void hb_stack_init(PHB_STACK pStack)
 
   pStack->pItems = static_cast<PHB_ITEM *>(hb_xgrab(sizeof(PHB_ITEM) * STACK_INITHB_ITEMS));
   pStack->pBase = pStack->pItems;
-  pStack->pPos = pStack->pItems; /* points to the first stack item */
+  pStack->pPos = pStack->pItems; // points to the first stack item
   pStack->nItems = STACK_INITHB_ITEMS;
   pStack->pEnd = pStack->pItems + pStack->nItems;
 
@@ -286,7 +286,7 @@ void *hb_stackGetTSD(PHB_TSD pTSD)
     if (pTSD->iHandle == 0)
     {
       hb_threadEnterCriticalSection(&TSD_counter);
-      /* repeated test protected by mutex to avoid race condition */
+      // repeated test protected by mutex to avoid race condition
       if (pTSD->iHandle == 0)
       {
         pTSD->iHandle = ++s_iTSDCounter;
@@ -359,10 +359,9 @@ void hb_stackReleaseTSD(PHB_TSD pTSD)
     hb_stack.pTSD[pTSD->iHandle].value = nullptr;
     hb_stack.pTSD[pTSD->iHandle].pTSD = nullptr;
     pTSD->iHandle = 0;
-    /* TODO: add recovery system to not lose TSD handles and
-     *       make this functionality more general and public
-     *       for 3rd party developers
-     */
+    // TODO: add recovery system to not lose TSD handles and
+    //       make this functionality more general and public
+    //       for 3rd party developers
   }
 }
 
@@ -515,7 +514,7 @@ int hb_stackLockCount(void)
   return hb_stack.iUnlocked;
 }
 
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
 #undef hb_stackKeyPolls
 int *hb_stackKeyPolls(void)
@@ -678,7 +677,7 @@ void hb_stackPush(void)
 
   HB_STACK_TLS_PRELOAD
 
-  /* enough room for another item ? */
+  // enough room for another item ?
   if (++hb_stack.pPos == hb_stack.pEnd)
   {
     hb_stackIncrease();
@@ -714,7 +713,7 @@ void hb_stackPushReturn(void)
   HB_STACK_TLS_PRELOAD
   hb_itemRawMove(*hb_stack.pPos, &hb_stack.Return);
 
-  /* enough room for another item ? */
+  // enough room for another item ?
   if (++hb_stack.pPos == hb_stack.pEnd)
   {
     hb_stackIncrease();
@@ -729,15 +728,15 @@ void hb_stackIncrease(void)
 
   HB_STACK_TLS_PRELOAD
 
-  HB_ISIZ nBaseIndex = hb_stack.pBase - hb_stack.pItems; /* index of stack base */
-  HB_ISIZ nCurrIndex = hb_stack.pPos - hb_stack.pItems;  /* index of current top item */
-  HB_ISIZ nEndIndex = hb_stack.pEnd - hb_stack.pItems;   /* index of current top item */
+  HB_ISIZ nBaseIndex = hb_stack.pBase - hb_stack.pItems; // index of stack base
+  HB_ISIZ nCurrIndex = hb_stack.pPos - hb_stack.pItems;  // index of current top item
+  HB_ISIZ nEndIndex = hb_stack.pEnd - hb_stack.pItems;   // index of current top item
 
-  /* no, make more headroom: */
+  // no, make more headroom:
   hb_stack.pItems = static_cast<PHB_ITEM *>(
       hb_xrealloc(static_cast<void *>(hb_stack.pItems), sizeof(PHB_ITEM) * (hb_stack.nItems + STACK_EXPANDHB_ITEMS)));
 
-  /* fix possibly modified by realloc pointers: */
+  // fix possibly modified by realloc pointers:
   hb_stack.pPos = hb_stack.pItems + nCurrIndex;
   hb_stack.pBase = hb_stack.pItems + nBaseIndex;
   hb_stack.nItems += STACK_EXPANDHB_ITEMS;
@@ -868,7 +867,7 @@ PHB_ITEM hb_stackNewFrame(PHB_STACK_STATE pFrame, HB_USHORT uiParams)
   HB_STACK_TLS_PRELOAD
 
   PHB_ITEM *pBase = hb_stack.pPos - uiParams - 2;
-  PHB_ITEM pItem = *pBase; /* procedure symbol */
+  PHB_ITEM pItem = *pBase; // procedure symbol
 
   if (!HB_IS_SYMBOL(pItem))
   {
@@ -880,16 +879,15 @@ PHB_ITEM hb_stackNewFrame(PHB_STACK_STATE pFrame, HB_USHORT uiParams)
 
   pFrame->nBaseItem = hb_stack.pBase - hb_stack.pItems;
   pFrame->pStatics = hb_stack.pStatics;
-  /* as some type of protection we can set hb_stack.pStatics to nullptr here */
+  // as some type of protection we can set hb_stack.pStatics to nullptr here
   pFrame->nPrivateBase = hb_memvarGetPrivatesBase();
   pFrame->uiClass = pFrame->uiMethod = pFrame->uiLineNo = 0;
   pFrame->fDebugging = false;
 
   pItem->item.asSymbol.stackstate = pFrame;
   pItem->item.asSymbol.paramcnt = uiParams;
-  /* set default value of 'paramdeclcnt' - it will be updated
-   * in hb_vm[V]Frame only
-   */
+  // set default value of 'paramdeclcnt' - it will be updated
+  // in hb_vm[V]Frame only
   pItem->item.asSymbol.paramdeclcnt = uiParams;
   hb_stack.pBase = pBase;
 
@@ -960,18 +958,15 @@ PHB_ITEM hb_stackLocalVariable(int iLocal)
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pBase = *hb_stack.pBase;
 
-  /*
-     if( iLocal <= 0 )
-        hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
-   */
+  // if( iLocal <= 0 )
+  //    hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   if (pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt)
   {
-    /* function with variable number of parameters:
-     * FUNCTION foo(a,b,c,...)
-     * LOCAL x,y,z
-     * number of passed parameters is bigger then number of declared
-     * parameters - skip additional parameters only for local variables
-     */
+    // function with variable number of parameters:
+    // FUNCTION foo(a,b,c,...)
+    // LOCAL x,y,z
+    // number of passed parameters is bigger then number of declared
+    // parameters - skip additional parameters only for local variables
     if (iLocal > pBase->item.asSymbol.paramdeclcnt)
     {
       iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
@@ -986,18 +981,15 @@ PHB_ITEM hb_stackLocalVariableAt(int *piFromBase)
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pBase = *hb_stack.pBase;
 
-  /*
-     if( *piFromBase <= 0 )
-        hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
-   */
+  // if( *piFromBase <= 0 )
+  //    hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   if (pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt)
   {
-    /* function with variable number of parameters:
-     * FUNCTION foo(a,b,c,...)
-     * LOCAL x,y,z
-     * number of passed parameters is bigger then number of declared
-     * parameters - skip additional parameters only for local variables
-     */
+    // function with variable number of parameters:
+    // FUNCTION foo(a,b,c,...)
+    // LOCAL x,y,z
+    // number of passed parameters is bigger then number of declared
+    // parameters - skip additional parameters only for local variables
     if (*piFromBase > pBase->item.asSymbol.paramdeclcnt)
     {
       *piFromBase += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
@@ -1013,8 +1005,7 @@ PHB_ITEM hb_stackBaseItem(void)
   return *hb_stack.pBase;
 }
 
-/* Returns SELF object, an evaluated codeblock or NIL for normal func/proc
- */
+// Returns SELF object, an evaluated codeblock or NIL for normal func/proc
 #undef hb_stackSelfItem
 PHB_ITEM hb_stackSelfItem(void)
 {
@@ -1324,11 +1315,9 @@ HB_ISIZ hb_stackBaseSymbolOffset(PHB_SYMB pSymbol)
 
 void hb_stackBaseProcInfo(char *szProcName, HB_USHORT *puiProcLine)
 {
-  /*
-   * This function is called by FM module and has to be ready for execution
-   * before hb_stack initialization, [druzus]
-   * szProcName should be at least HB_SYMBOL_NAME_LEN + 1 bytes buffer
-   */
+  // This function is called by FM module and has to be ready for execution
+  // before hb_stack initialization, [druzus]
+  // szProcName should be at least HB_SYMBOL_NAME_LEN + 1 bytes buffer
 
 #if defined(HB_MT_VM)
   if (!hb_stack_ready())
@@ -1360,7 +1349,7 @@ void hb_stackDispCall(void)
 #endif
 
   int iLevel = 0;
-  char buffer[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 + 10]; /* additional 10 bytes for line info (%hu) overhead */
+  char buffer[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 + 10]; // additional 10 bytes for line info (%hu) overhead
   HB_USHORT uiLine;
   char file[HB_PATH_MAX];
 
@@ -1374,13 +1363,12 @@ void hb_stackDispCall(void)
   }
 }
 
-/* ------------------------------------------------------------------------ */
-/* The garbage collector interface */
-/* ------------------------------------------------------------------------ */
+// ------------------------------------------------------------------------
+// The garbage collector interface
+// ------------------------------------------------------------------------
 
 #if !defined(HB_MT_VM)
-/* helper function to scan all visible memvar variables
- */
+// helper function to scan all visible memvar variables
 static HB_DYNS_FUNC(hb_stackMemvarScan)
 {
   PHB_ITEM pMemvar;
@@ -1397,10 +1385,10 @@ static HB_DYNS_FUNC(hb_stackMemvarScan)
 }
 #endif
 
-/* Mark all memvars (PRIVATEs and PUBLICs) */
+// Mark all memvars (PRIVATEs and PUBLICs)
 static void hb_stackIsMemvarRef(PHB_STACK pStack)
 {
-  /* 1. Mark all hidden memvars (PRIVATEs and PUBLICs) */
+  // 1. Mark all hidden memvars (PRIVATEs and PUBLICs)
   PHB_PRIVATE_STACK pPrivateStack = &pStack->privates;
   HB_SIZE nCount = pPrivateStack->count;
 
@@ -1412,7 +1400,7 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
       hb_gcItemRef(pMemvar);
     }
   }
-  /* 2. Mark all visible memvars (PRIVATEs and PUBLICs) */
+  // 2. Mark all visible memvars (PRIVATEs and PUBLICs)
 #if defined(HB_MT_VM)
   {
     HB_SYMCNT uiDynSym = pStack->uiDynH;
@@ -1431,7 +1419,7 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
 #endif
 }
 
-/* Mark all thread static variables */
+// Mark all thread static variables
 static void hb_stackIsTsdRef(PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc)
 {
   int iTSD = pStack->iTSD;
@@ -1450,9 +1438,8 @@ static void hb_stackIsTsdRef(PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc)
   }
 }
 
-/* Mark all locals as used so they will not be released by the
- * garbage collector
- */
+// Mark all locals as used so they will not be released by the
+// garbage collector
 void hb_stackIsStackRef(void *pStackId, PHB_TSD_FUNC pCleanFunc)
 {
 #if 0

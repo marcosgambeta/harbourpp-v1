@@ -175,7 +175,7 @@ static HB_SYMB symbols[] = {{"AADD", {HB_FS_PUBLIC}, {HB_FUNCNAME(AADD)}, nullpt
                             {"WORD", {HB_FS_PUBLIC}, {HB_FUNCNAME(WORD)}, nullptr},
                             {"YEAR", {HB_FS_PUBLIC}, {HB_FUNCNAME(YEAR)}, nullptr}};
 
-/* NOTE: The system symbol table with runtime functions HAVE TO be called last */
+// NOTE: The system symbol table with runtime functions HAVE TO be called last
 
 void hb_vmSymbolInit_RT(void)
 {

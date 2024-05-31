@@ -44,8 +44,8 @@
  *
  */
 
-/* NOTE: Need to have these before Harbour headers,
-         because in MT mode, they will automatically #include <os2.h>. */
+// NOTE: Need to have these before Harbour headers,
+//       because in MT mode, they will automatically #include <os2.h>.
 #define INCL_DOSMODULEMGR
 #define INCL_ERRORS
 
@@ -60,8 +60,8 @@
 #include <windows.h>
 #endif
 
-/* NOTE: VxWorks supports dlopen() functionality only in shared
-         executables. [vszakats] */
+// NOTE: VxWorks supports dlopen() functionality only in shared
+//       executables. [vszakats]
 #if !defined(HB_HAS_DLFCN) &&                                                                                          \
     ((defined(HB_OS_LINUX)) || defined(HB_OS_SUNOS) || defined(HB_OS_DARWIN) || defined(HB_OS_BSD) ||                  \
      defined(HB_OS_BEOS) || defined(HB_OS_QNX) || defined(HB_OS_CYGWIN) || defined(HB_OS_MINIX))
@@ -74,7 +74,7 @@
 
 static HB_GARBAGE_FUNC(hb_libRelease)
 {
-  /* do nothing */
+  // do nothing
   HB_SYMBOL_UNUSED(Cargo);
 }
 
@@ -100,7 +100,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
 
     if (hb_vmLockModuleSymbols())
     {
-      /* use stack address as first level marker */
+      // use stack address as first level marker
       hb_vmBeginSymbolGroup(static_cast<void *>(hb_stackId()), true);
 #if defined(HB_OS_WIN)
       {
@@ -124,7 +124,7 @@ PHB_ITEM hb_libLoad(PHB_ITEM pLibName, PHB_ITEM pArgs)
         int iTODO;
       }
 #endif
-      /* set real marker */
+      // set real marker
       hb_vmInitSymbolGroup(hDynLib, argc, argv);
 
       hb_vmUnlockModuleSymbols();
@@ -234,9 +234,8 @@ HB_FUNC(HB_LIBERROR)
 #endif
 }
 
-/* Get FUNCTION or PROCEDURE symbol from given library.
- *    hb_libGetFunSym(<pLibHandle>, <cFuncName>) --> <sFuncSym> | NIL
- */
+// Get FUNCTION or PROCEDURE symbol from given library.
+//    hb_libGetFunSym(<pLibHandle>, <cFuncName>) --> <sFuncSym> | NIL
 HB_FUNC(HB_LIBGETFUNSYM)
 {
   auto szFuncName = hb_parc(2);

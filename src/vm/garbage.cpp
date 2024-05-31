@@ -44,8 +44,8 @@
  *
  */
 
-/* NOTE: Need to have these before Harbour headers,
-         because in MT mode, they will automatically #include <os2.h>. */
+// NOTE: Need to have these before Harbour headers,
+//       because in MT mode, they will automatically #include <os2.h>.
 #define INCL_DOSPROCESS
 
 #include "hbvmopt.hpp"
@@ -65,7 +65,7 @@
 #include "hbthread.hpp"
 #include "hbatomic.hpp"
 
-/* Use spinlock instead of mutex */
+// Use spinlock instead of mutex
 
 #if defined(HB_SPINLOCK_INIT) && !defined(HB_HELGRIND_FRIENDLY)
 
@@ -92,19 +92,18 @@ static HB_CRITICAL_NEW(s_gcMtx);
   {                                                                                                                    \
   } while (false)
 
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
-/* holder of memory block information */
-/* NOTE: HB_USHORT is used intentionally to fill up the structure to
- * full 16 bytes (on 16/32-bit environment)
- */
+// holder of memory block information
+// NOTE: HB_USHORT is used intentionally to fill up the structure to
+// full 16 bytes (on 16/32-bit environment)
 struct HB_GARBAGE_
 {
-  struct HB_GARBAGE_ *pNext; /* next memory block */
-  struct HB_GARBAGE_ *pPrev; /* previous memory block */
-  const HB_GC_FUNCS *pFuncs; /* cleanup function called before memory releasing */
-  HB_USHORT locked;          /* locking counter */
-  HB_USHORT used;            /* used/unused block */
+  struct HB_GARBAGE_ *pNext; // next memory block
+  struct HB_GARBAGE_ *pPrev; // previous memory block
+  const HB_GC_FUNCS *pFuncs; // cleanup function called before memory releasing
+  HB_USHORT locked;          // locking counter
+  HB_USHORT used;            // used/unused block
 };
 
 using HB_GARBAGE = HB_GARBAGE_;
@@ -119,29 +118,29 @@ using PHB_GARBAGE = HB_GARBAGE *;
 
 #define HB_GC_PTR(p) (reinterpret_cast<PHB_GARBAGE>(reinterpret_cast<HB_BYTE *>(p) - HB_GARBAGE_SIZE))
 
-#endif /* !defined(HB_GC_PTR) */
+#endif // !defined(HB_GC_PTR)
 
 #define HB_BLOCK_PTR(p) (static_cast<void *>(reinterpret_cast<HB_BYTE *>(p) + HB_GARBAGE_SIZE))
 
-/* we may use a cache later */
+// we may use a cache later
 #define HB_GARBAGE_NEW(nSize) (static_cast<PHB_GARBAGE>(hb_xgrab(HB_GARBAGE_SIZE + (nSize))))
 #define HB_GARBAGE_FREE(pAlloc) hb_xfree(static_cast<void *>(pAlloc))
 
-/* status of memory block */
-/* flags stored in 'used' slot */
-#define HB_GC_USED_FLAG 1 /* the bit for used/unused flag */
-#define HB_GC_DELETE 2    /* item marked to delete */
-#define HB_GC_DELETELST 4 /* item will be deleted during finalization */
+// status of memory block
+// flags stored in 'used' slot
+#define HB_GC_USED_FLAG 1 // the bit for used/unused flag
+#define HB_GC_DELETE 2    // item marked to delete
+#define HB_GC_DELETELST 4 // item will be deleted during finalization
 
 #ifdef HB_GC_AUTO
 #define HB_GC_AUTO_MAX (static_cast<HB_PTRUINT>(-1))
-/* number of allocated memory blocks */
+// number of allocated memory blocks
 static HB_PTRUINT s_ulBlocks = 0;
-/* number of allocated memory blocks after last GC activation */
+// number of allocated memory blocks after last GC activation
 static HB_PTRUINT s_ulBlocksMarked = 0;
-/* number of memory blocks between automatic GC activation */
+// number of memory blocks between automatic GC activation
 static HB_PTRUINT s_ulBlocksAuto = 0;
-/* number of allocated memory blocks which should force next GC activation */
+// number of allocated memory blocks which should force next GC activation
 static HB_PTRUINT s_ulBlocksCheck = 0;
 
 #define HB_GC_AUTO_INC() ++s_ulBlocks
@@ -157,29 +156,28 @@ static HB_PTRUINT s_ulBlocksCheck = 0;
   } while (false)
 #endif
 
-/* pointer to memory block that will be checked in next step */
+// pointer to memory block that will be checked in next step
 static PHB_GARBAGE s_pCurrBlock = nullptr;
-/* memory blocks are stored in linked list with a loop */
+// memory blocks are stored in linked list with a loop
 
-/* pointer to locked memory blocks */
+// pointer to locked memory blocks
 static PHB_GARBAGE s_pLockedBlock = nullptr;
 
-/* pointer to memory blocks that will be deleted */
+// pointer to memory blocks that will be deleted
 static PHB_GARBAGE s_pDeletedBlock = nullptr;
 
-/* marks if block releasing is requested during garbage collecting */
+// marks if block releasing is requested during garbage collecting
 static auto volatile s_bCollecting = false;
 
-/* flag for used/unused blocks - the meaning of the HB_GC_USED_FLAG bit
- * is reversed on every collecting attempt
- */
+// flag for used/unused blocks - the meaning of the HB_GC_USED_FLAG bit
+// is reversed on every collecting attempt
 static HB_USHORT s_uUsedFlag = HB_GC_USED_FLAG;
 
 static void hb_gcLink(PHB_GARBAGE *pList, PHB_GARBAGE pAlloc)
 {
   if (*pList)
   {
-    /* add new block at the logical end of list */
+    // add new block at the logical end of list
     pAlloc->pNext = *pList;
     pAlloc->pPrev = (*pList)->pPrev;
     pAlloc->pPrev->pNext = pAlloc;
@@ -200,12 +198,12 @@ static void hb_gcUnlink(PHB_GARBAGE *pList, PHB_GARBAGE pAlloc)
     *pList = pAlloc->pNext;
     if (*pList == pAlloc)
     {
-      *pList = nullptr; /* this was the last block */
+      *pList = nullptr; // this was the last block
     }
   }
 }
 
-/* allocates a memory block */
+// allocates a memory block
 void *hb_gcAllocate(HB_SIZE nSize, const HB_GC_FUNCS *pFuncs)
 {
   PHB_GARBAGE pAlloc = HB_GARBAGE_NEW(nSize);
@@ -216,10 +214,10 @@ void *hb_gcAllocate(HB_SIZE nSize, const HB_GC_FUNCS *pFuncs)
   hb_gcLink(&s_pLockedBlock, pAlloc);
   HB_GC_UNLOCK();
 
-  return HB_BLOCK_PTR(pAlloc); /* hide the internal data */
+  return HB_BLOCK_PTR(pAlloc); // hide the internal data
 }
 
-/* allocates a memory block */
+// allocates a memory block
 void *hb_gcAllocRaw(HB_SIZE nSize, const HB_GC_FUNCS *pFuncs)
 {
   PHB_GARBAGE pAlloc = HB_GARBAGE_NEW(nSize);
@@ -241,17 +239,17 @@ void *hb_gcAllocRaw(HB_SIZE nSize, const HB_GC_FUNCS *pFuncs)
   hb_gcLink(&s_pCurrBlock, pAlloc);
   HB_GC_UNLOCK();
 
-  return HB_BLOCK_PTR(pAlloc); /* hide the internal data */
+  return HB_BLOCK_PTR(pAlloc); // hide the internal data
 }
 
-/* release a memory block allocated with hb_gcAlloc*() */
+// release a memory block allocated with hb_gcAlloc*()
 void hb_gcFree(void *pBlock)
 {
   if (pBlock)
   {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
-    /* Don't release the block that will be deleted during finalization */
+    // Don't release the block that will be deleted during finalization
     if (!(pAlloc->used & HB_GC_DELETE))
     {
       HB_GC_LOCK();
@@ -275,20 +273,20 @@ void hb_gcFree(void *pBlock)
   }
 }
 
-/* return cleanup function pointer */
+// return cleanup function pointer
 const HB_GC_FUNCS *hb_gcFuncs(void *pBlock)
 {
   return HB_GC_PTR(pBlock)->pFuncs;
 }
 
-/* increment reference counter */
+// increment reference counter
 #undef hb_gcRefInc
 void hb_gcRefInc(void *pBlock)
 {
   hb_xRefInc(HB_GC_PTR(pBlock));
 }
 
-/* decrement reference counter and free the block when 0 reached */
+// decrement reference counter and free the block when 0 reached
 #undef hb_gcRefFree
 void hb_gcRefFree(void *pBlock)
 {
@@ -298,12 +296,12 @@ void hb_gcRefFree(void *pBlock)
 
     if (hb_xRefDec(pAlloc))
     {
-      /* Don't release the block that will be deleted during finalization */
+      // Don't release the block that will be deleted during finalization
       if (!(pAlloc->used & HB_GC_DELETE))
       {
         pAlloc->used |= HB_GC_DELETE;
 
-        /* execute clean-up function */
+        // execute clean-up function
         pAlloc->pFuncs->clear(pBlock);
 
         if (hb_xRefCount(pAlloc) != 0)
@@ -341,7 +339,7 @@ void hb_gcRefFree(void *pBlock)
   }
 }
 
-/* return number of references */
+// return number of references
 #undef hb_gcRefCount
 HB_COUNTER hb_gcRefCount(void *pBlock)
 {
@@ -401,9 +399,8 @@ void hb_gcGripDrop(PHB_ITEM pItem)
   hb_gcRefFree(pItem);
 }
 
-/* Lock a memory pointer so it will not be released if stored
-   outside of Harbour variables
- */
+// Lock a memory pointer so it will not be released if stored
+// outside of Harbour variables
 void *hb_gcLock(void *pBlock)
 {
   if (pBlock)
@@ -424,9 +421,8 @@ void *hb_gcLock(void *pBlock)
   return pBlock;
 }
 
-/* Unlock a memory pointer so it can be released if there is no
-   references inside of Harbour variables
- */
+// Unlock a memory pointer so it can be released if there is no
+// references inside of Harbour variables
 void *hb_gcUnlock(void *pBlock)
 {
   if (pBlock)
@@ -480,20 +476,19 @@ void hb_gcAttach(void *pBlock)
   }
 }
 
-/* mark passed memory block as used so it will be not released by the GC */
+// mark passed memory block as used so it will be not released by the GC
 void hb_gcMark(void *pBlock)
 {
   PHB_GARBAGE pAlloc = HB_GC_PTR(pBlock);
 
   if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
   {
-    pAlloc->used ^= HB_GC_USED_FLAG; /* mark this codeblock as used */
+    pAlloc->used ^= HB_GC_USED_FLAG; // mark this codeblock as used
     pAlloc->pFuncs->mark(pBlock);
   }
 }
 
-/* Mark a passed item as used so it will be not released by the GC
- */
+// Mark a passed item as used so it will be not released by the GC
 void hb_gcItemRef(PHB_ITEM pItem)
 {
   while (HB_IS_BYREF(pItem))
@@ -509,13 +504,13 @@ void hb_gcItemRef(PHB_ITEM pItem)
     }
     else if (!HB_IS_MEMVAR(pItem) && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0)
     {
-      /* array item reference */
+      // array item reference
       PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asRefer.BasePtr.array);
       if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
       {
-        /* mark this array as used */
+        // mark this array as used
         pAlloc->used ^= HB_GC_USED_FLAG;
-        /* mark also all array elements */
+        // mark also all array elements
         pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
       }
       return;
@@ -527,14 +522,13 @@ void hb_gcItemRef(PHB_ITEM pItem)
   {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asArray.value);
 
-    /* Check this array only if it was not checked yet */
+    // Check this array only if it was not checked yet
     if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
     {
-      /* mark this array as used so it will be no re-checked from
-       * other references
-       */
+      // mark this array as used so it will be no re-checked from
+      // other references
       pAlloc->used ^= HB_GC_USED_FLAG;
-      /* mark also all array elements */
+      // mark also all array elements
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
   }
@@ -542,12 +536,12 @@ void hb_gcItemRef(PHB_ITEM pItem)
   {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asHash.value);
 
-    /* Check this hash table only if it was not checked yet */
+    // Check this hash table only if it was not checked yet
     if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
     {
-      /* mark this hash table as used */
+      // mark this hash table as used
       pAlloc->used ^= HB_GC_USED_FLAG;
-      /* mark also all hash elements */
+      // mark also all hash elements
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
   }
@@ -557,9 +551,9 @@ void hb_gcItemRef(PHB_ITEM pItem)
 
     if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
     {
-      /* mark this codeblock as used */
+      // mark this codeblock as used
       pAlloc->used ^= HB_GC_USED_FLAG;
-      /* mark as used all detached variables in a codeblock */
+      // mark as used all detached variables in a codeblock
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
   }
@@ -571,31 +565,29 @@ void hb_gcItemRef(PHB_ITEM pItem)
 
       if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
       {
-        /* mark this memory block as used */
+        // mark this memory block as used
         pAlloc->used ^= HB_GC_USED_FLAG;
-        /* mark also all internal user blocks attached to this block */
+        // mark also all internal user blocks attached to this block
         pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
       }
     }
   }
-  /* all other data types don't need the GC */
+  // all other data types don't need the GC
 }
 
 void hb_gcCollect(void)
 {
-  /* TODO: decrease the amount of time spend collecting */
+  // TODO: decrease the amount of time spend collecting
   hb_gcCollectAll(false);
 }
 
-/* Check all memory block if they can be released
- */
+// Check all memory block if they can be released
 void hb_gcCollectAll(HB_BOOL fForce)
 {
-  /* MTNOTE: it's not necessary to protect s_bCollecting with mutex
-   *         because it can be changed at RT only inside this procedure
-   *         when all other threads are stoped by hb_vmSuspendThreads(),
-   *         [druzus]
-   */
+  // MTNOTE: it's not necessary to protect s_bCollecting with mutex
+  //         because it can be changed at RT only inside this procedure
+  //         when all other threads are stoped by hb_vmSuspendThreads(),
+  //         [druzus]
   if (!s_bCollecting && hb_vmSuspendThreads(fForce))
   {
     PHB_GARBAGE pAlloc, pDelete;
@@ -608,20 +600,18 @@ void hb_gcCollectAll(HB_BOOL fForce)
 
     s_bCollecting = true;
 
-    /* Step 1 - mark */
-    /* All blocks are already marked because we are flipping
-     * the used/unused flag
-     */
+    // Step 1 - mark
+    // All blocks are already marked because we are flipping
+    // the used/unused flag
 
-    /* Step 2 - sweep */
-    /* check all known places for blocks they are referring */
+    // Step 2 - sweep
+    // check all known places for blocks they are referring
     hb_vmIsStackRef();
     hb_vmIsStaticRef();
     hb_clsIsClassRef();
 
-    /* check list of locked block for blocks referenced from
-     * locked block
-     */
+    // check list of locked block for blocks referenced from
+    // locked block
     if (s_pLockedBlock)
     {
       pAlloc = s_pLockedBlock;
@@ -632,22 +622,20 @@ void hb_gcCollectAll(HB_BOOL fForce)
       } while (s_pLockedBlock != pAlloc);
     }
 
-    /* Step 3 - finalize */
-    /* Release all blocks that are still marked as unused */
+    // Step 3 - finalize
+    // Release all blocks that are still marked as unused
 
-    /*
-     * infinite loop can appear when we are executing clean-up functions
-     * scanning s_pCurrBlock. It's possible that one of them will free
-     * the GC block which we are using as stop condition. Only blocks
-     * for which we set HB_GC_DELETE flag are guarded against releasing.
-     * To avoid such situation first we are moving blocks which will be
-     * deleted to separate list. It's additional operation but it can
-     * even increase the speed when we are deleting only few percent
-     * of all allocated blocks because in next passes we will scan only
-     * deleted block list. [druzus]
-     */
+    // infinite loop can appear when we are executing clean-up functions
+    // scanning s_pCurrBlock. It's possible that one of them will free
+    // the GC block which we are using as stop condition. Only blocks
+    // for which we set HB_GC_DELETE flag are guarded against releasing.
+    // To avoid such situation first we are moving blocks which will be
+    // deleted to separate list. It's additional operation but it can
+    // even increase the speed when we are deleting only few percent
+    // of all allocated blocks because in next passes we will scan only
+    // deleted block list. [druzus]
 
-    pAlloc = nullptr; /* for stop condition */
+    pAlloc = nullptr; // for stop condition
     do
     {
       if (s_pCurrBlock->used == s_uUsedFlag)
@@ -660,7 +648,7 @@ void hb_gcCollectAll(HB_BOOL fForce)
       }
       else
       {
-        /* at least one block will not be deleted, set new stop condition */
+        // at least one block will not be deleted, set new stop condition
         if (!pAlloc)
         {
           pAlloc = s_pCurrBlock;
@@ -669,14 +657,13 @@ void hb_gcCollectAll(HB_BOOL fForce)
       }
     } while (pAlloc != s_pCurrBlock);
 
-    /* Step 4 - flip flag */
-    /* Reverse used/unused flag so we don't have to mark all blocks
-     * during next collecting
-     */
+    // Step 4 - flip flag
+    // Reverse used/unused flag so we don't have to mark all blocks
+    // during next collecting
     s_uUsedFlag ^= HB_GC_USED_FLAG;
 
 #ifdef HB_GC_AUTO
-    /* store number of marked blocks for automatic GC activation */
+    // store number of marked blocks for automatic GC activation
     s_ulBlocksMarked = s_ulBlocks;
     if (s_ulBlocksAuto == 0)
     {
@@ -692,16 +679,16 @@ void hb_gcCollectAll(HB_BOOL fForce)
     }
 #endif
 
-    /* call memory manager cleanup function */
+    // call memory manager cleanup function
     hb_xclean();
 
-    /* resume suspended threads */
+    // resume suspended threads
     hb_vmResumeThreads();
 
-    /* do we have any deleted blocks? */
+    // do we have any deleted blocks?
     if (s_pDeletedBlock)
     {
-      /* call a cleanup function */
+      // call a cleanup function
       pAlloc = s_pDeletedBlock;
       do
       {
@@ -710,7 +697,7 @@ void hb_gcCollectAll(HB_BOOL fForce)
         s_pDeletedBlock = s_pDeletedBlock->pNext;
       } while (pAlloc != s_pDeletedBlock);
 
-      /* release all deleted blocks */
+      // release all deleted blocks
       do
       {
         pDelete = s_pDeletedBlock;
@@ -739,10 +726,9 @@ void hb_gcCollectAll(HB_BOOL fForce)
   }
 }
 
-/* MTNOTE: It's executed at the end of HVM cleanup code just before
- *         application exit when other threads are destroyed, so it
- *         does not need additional protection code for MT mode, [druzus]
- */
+// MTNOTE: It's executed at the end of HVM cleanup code just before
+//         application exit when other threads are destroyed, so it
+//         does not need additional protection code for MT mode, [druzus]
 void hb_gcReleaseAll(void)
 {
   if (s_pCurrBlock)
@@ -752,7 +738,7 @@ void hb_gcReleaseAll(void)
     PHB_GARBAGE pAlloc = s_pCurrBlock;
     do
     {
-      /* call a cleanup function */
+      // call a cleanup function
       s_pCurrBlock->used |= HB_GC_DELETE | HB_GC_DELETELST;
       s_pCurrBlock->pFuncs->clear(HB_BLOCK_PTR(s_pCurrBlock));
 
@@ -774,30 +760,27 @@ void hb_gcReleaseAll(void)
   s_bCollecting = false;
 }
 
-/* service a single garbage collector step
- * Check a single memory block if it can be released
- */
+// service a single garbage collector step
+// Check a single memory block if it can be released
 HB_FUNC(HB_GCSTEP)
 {
   hb_gcCollect();
 }
 
-/* Check all memory blocks if they can be released
- */
+// Check all memory blocks if they can be released
 HB_FUNC(HB_GCALL)
 {
 #if defined(hb_ret)
   HB_STACK_TLS_PRELOAD
 #endif
 
-  /* call hb_ret() to clear stack return item, HVM does not clean
-   * it before calling functions/procedures if caller does not
-   * try to retrieve returned value. It's safe and cost nearly
-   * nothing in whole GC scan process. It may help when previously
-   * called function returned complex item with cross references.
-   * It's quite common situation that people executes hb_gcAll()
-   * immediately after such function. [druzus]
-   */
+  // call hb_ret() to clear stack return item, HVM does not clean
+  // it before calling functions/procedures if caller does not
+  // try to retrieve returned value. It's safe and cost nearly
+  // nothing in whole GC scan process. It may help when previously
+  // called function returned complex item with cross references.
+  // It's quite common situation that people executes hb_gcAll()
+  // immediately after such function. [druzus]
   hb_ret();
 
   hb_gcCollectAll(hb_parldef(1, true));

@@ -45,8 +45,7 @@
  *
  */
 
-/* this #define HAVE TO be placed before all #include directives
- */
+// this #define HAVE TO be placed before all #include directives
 #define _HB_HASH_INTERNAL_
 #define HB_MACRO_SUPPORT
 
@@ -64,14 +63,13 @@
 #define INCL_DOSMEMMGR
 #define INCL_NOPMAPI
 
-/* For Linux and mremap() function */
+// For Linux and mremap() function
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
 
-/* Warning: the order of included files is important
- * due to macros used to overload some functions
- */
+// Warning: the order of included files is important
+// due to macros used to overload some functions
 
 #include "hbvmopt.hpp"
 #include "hbfloat.hpp"

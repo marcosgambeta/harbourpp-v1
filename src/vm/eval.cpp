@@ -73,18 +73,18 @@ HB_BOOL hb_evalNew(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
   }
 }
 
-/* NOTE: CA-Cl*pper is buggy and will not check if more parameters are
-         added than the maximum (9). [vszakats] */
+// NOTE: CA-Cl*pper is buggy and will not check if more parameters are
+//       added than the maximum (9). [vszakats]
 
-/* NOTE: CA-Cl*pper NG suggests that the Items passed as parameters should/may
-         be released by the programmer explicitly. But in fact hb_evalRelease()
-         will automatically release them all. The sample programs in the
-         NG are doing it that way. Releasing the parameters explicitly in
-         Harbour will cause an internal error, while it will be silently
-         ignored (?) in CA-Cl*pper. This is due to the different internal
-         handling of the Items, but IIRC it causes leak in CA-Cl*pper. All in
-         all, don't release the eval parameter Items explicitly to make both
-         Harbour and CA-Cl*pper happy. [vszakats] */
+// NOTE: CA-Cl*pper NG suggests that the Items passed as parameters should/may
+//       be released by the programmer explicitly. But in fact hb_evalRelease()
+//       will automatically release them all. The sample programs in the
+//       NG are doing it that way. Releasing the parameters explicitly in
+//       Harbour will cause an internal error, while it will be silently
+//       ignored (?) in CA-Cl*pper. This is due to the different internal
+//       handling of the Items, but IIRC it causes leak in CA-Cl*pper. All in
+//       all, don't release the eval parameter Items explicitly to make both
+//       Harbour and CA-Cl*pper happy. [vszakats]
 
 HB_BOOL hb_evalPutParam(PHB_EVALINFO pEvalInfo, PHB_ITEM pItem)
 {
@@ -168,9 +168,9 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
   return pResult;
 }
 
-/* NOTE: CA-Cl*pper NG states that hb_evalLaunch() must be called at least
-         once and only once before calling hb_evalRelease(). Harbour doesn't
-         have these requirements. [vszakats] */
+// NOTE: CA-Cl*pper NG states that hb_evalLaunch() must be called at least
+//       once and only once before calling hb_evalRelease(). Harbour doesn't
+//       have these requirements. [vszakats]
 
 HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
 {
@@ -194,15 +194,14 @@ HB_BOOL hb_evalRelease(PHB_EVALINFO pEvalInfo)
   }
 }
 
-/* NOTE: Same purpose as hb_evalLaunch(), but simpler, faster and more flexible.
-         It can be used to call symbols, functions names, or blocks, the items
-         don't need to be duplicated when passed as argument, one line is
-         enough to initiate a call, the number of parameters is not limited.
-         [vszakats]
+// NOTE: Same purpose as hb_evalLaunch(), but simpler, faster and more flexible.
+//       It can be used to call symbols, functions names, or blocks, the items
+//       don't need to be duplicated when passed as argument, one line is
+//       enough to initiate a call, the number of parameters is not limited.
+//       [vszakats]
 
-   NOTE: When calling hb_itemDo() with no arguments for the Harbour item being
-         evaluated, you must use '(PHB_ITEM *) 0' as the third parameter.
- */
+// NOTE: When calling hb_itemDo() with no arguments for the Harbour item being
+//       evaluated, you must use '(PHB_ITEM *) 0' as the third parameter.
 
 PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
 {
@@ -278,12 +277,11 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
   return pResult;
 }
 
-/* NOTE: Same as hb_itemDo(), but even simpler, since the function name can be
-         directly passed as a zero terminated string. [vszakats]
+// NOTE: Same as hb_itemDo(), but even simpler, since the function name can be
+//       directly passed as a zero terminated string. [vszakats]
 
-   NOTE: When calling hb_itemDoC() with no arguments for the Harbour function
-         being called, you must use '(PHB_ITEM *) 0' as the third parameter.
- */
+// NOTE: When calling hb_itemDoC() with no arguments for the Harbour function
+//       being called, you must use '(PHB_ITEM *) 0' as the third parameter.
 
 PHB_ITEM hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
 {
@@ -323,12 +321,10 @@ PHB_ITEM hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
   return pResult;
 }
 
-/*
- * Notice that these two functions place the result at hb_stackReturnItem(),
- * that you may access its value using a hb_par...(-1).
- */
+// Notice that these two functions place the result at hb_stackReturnItem(),
+// that you may access its value using a hb_par...(-1).
 
-/* undocumented Clipper _cEval0() */
+// undocumented Clipper _cEval0()
 void hb_evalBlock0(PHB_ITEM pCodeBlock)
 {
   hb_vmPushEvalSym();
@@ -336,7 +332,7 @@ void hb_evalBlock0(PHB_ITEM pCodeBlock)
   hb_vmSend(0);
 }
 
-/* undocumented Clipper _cEval1() */
+// undocumented Clipper _cEval1()
 void hb_evalBlock1(PHB_ITEM pCodeBlock, PHB_ITEM pParam)
 {
   hb_vmPushEvalSym();
@@ -345,7 +341,7 @@ void hb_evalBlock1(PHB_ITEM pCodeBlock, PHB_ITEM pParam)
   hb_vmSend(1);
 }
 
-/* same functionality but with a nullptr terminated list of parameters */
+// same functionality but with a nullptr terminated list of parameters
 void hb_evalBlock(PHB_ITEM pCodeBlock, ...)
 {
   va_list args;
@@ -366,7 +362,7 @@ void hb_evalBlock(PHB_ITEM pCodeBlock, ...)
   hb_vmSend(uiParams);
 }
 
-HB_FUNC(HB_FORNEXT) /* nStart, nEnd | bEnd, bCode, nStep */
+HB_FUNC(HB_FORNEXT) // nStart, nEnd | bEnd, bCode, nStep
 {
   auto pCodeBlock = hb_param(3, Harbour::Item::BLOCK);
 
@@ -411,26 +407,25 @@ HB_FUNC(HB_FORNEXT) /* nStart, nEnd | bEnd, bCode, nStep */
   }
 }
 
-/*
- * based on xHarbour's hb_ExecFromArray() by Giancarlo Niccolai
- * This version supports the same syntax though it's independent
- * implementation [druzus]
- *
- * The following syntax is supported:
- *    hb_ExecFromArray(<cFuncName> [, <aParams> ])
- *    hb_ExecFromArray(@<funcName>() [, <aParams> ])
- *    hb_ExecFromArray(<bCodeBlock> [, <aParams> ])
- *    hb_ExecFromArray(<oObject>, <cMethodName> [, <aParams> ])
- *    hb_ExecFromArray(<oObject>, @<msgName>() [, <aParams> ])
- * or:
- *    hb_ExecFromArray(<aExecArray>)
- * where <aExecArray> is in one of the following format:
- *    { <cFuncName> [, <params,...>] }
- *    { @<funcName>() [, <params,...>] }
- *    { <bCodeBlock> [, <params,...>] }
- *    { <oObject>, <cMethodName> [, <params,...>] }
- *    { <oObject>, @<msgName>() [, <params,...>] }
- */
+// based on xHarbour's hb_ExecFromArray() by Giancarlo Niccolai
+// This version supports the same syntax though it's independent
+// implementation [druzus]
+//
+// The following syntax is supported:
+//    hb_ExecFromArray(<cFuncName> [, <aParams> ])
+//    hb_ExecFromArray(@<funcName>() [, <aParams> ])
+//    hb_ExecFromArray(<bCodeBlock> [, <aParams> ])
+//    hb_ExecFromArray(<oObject>, <cMethodName> [, <aParams> ])
+//    hb_ExecFromArray(<oObject>, @<msgName>() [, <aParams> ])
+// or:
+//    hb_ExecFromArray(<aExecArray>)
+// where <aExecArray> is in one of the following format:
+//    { <cFuncName> [, <params,...>] }
+//    { @<funcName>() [, <params,...>] }
+//    { <bCodeBlock> [, <params,...>] }
+//    { <oObject>, <cMethodName> [, <params,...>] }
+//    { <oObject>, @<msgName>() [, <params,...>] }
+
 HB_FUNC(HB_EXECFROMARRAY)
 {
   PHB_SYMB pExecSym = nullptr;
@@ -441,7 +436,7 @@ HB_FUNC(HB_EXECFROMARRAY)
   HB_ULONG ulParamOffset = 0;
   auto iPCount = hb_pcount();
 
-  /* decode parameters */
+  // decode parameters
   if (iPCount)
   {
     auto pParam = hb_param(1, Harbour::Item::ANY);
@@ -626,9 +621,8 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
   return false;
 }
 
-/* hb_ExecMsg(<sFuncSym>, <object>, [<params,...>]) --> <xResult>
- * Execute <sFuncSym> with <object> set as QSELF() value
- */
+// hb_ExecMsg(<sFuncSym>, <object>, [<params,...>]) --> <xResult>
+// Execute <sFuncSym> with <object> set as QSELF() value
 HB_FUNC(HB_EXECMSG)
 {
   auto iParams = hb_pcount();

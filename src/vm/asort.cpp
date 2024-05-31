@@ -45,12 +45,12 @@
  *
  */
 
-/* FIXME: The sorting engine requires signed indexes to work, this means
-          that arrays larger than 2^31 elements cannot be sorted. [vszakats] */
+// FIXME: The sorting engine requires signed indexes to work, this means
+//        that arrays larger than 2^31 elements cannot be sorted. [vszakats]
 
-/* NOTE: Based on PD code found in
-         SORTING AND SEARCHING ALGORITHMS: A COOKBOOK, BY THOMAS NIEMANN
-         https://www.cs.auckland.ac.nz/~jmor159/PLDS210/niemann/s_man.htm */
+// NOTE: Based on PD code found in
+//       SORTING AND SEARCHING ALGORITHMS: A COOKBOOK, BY THOMAS NIEMANN
+//       https://www.cs.auckland.ac.nz/~jmor159/PLDS210/niemann/s_man.htm
 
 #include "hbvmint.hpp"
 #include "hbapiitm.hpp"
@@ -78,13 +78,12 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
 
     pRet = hb_param(-1, Harbour::Item::ANY);
 
-    /* CA-Cl*pper always takes return value as logical item
-     * accepting 0, 1 as numeric representation of HB_FALSE/HB_TRUE
-     */
+    // CA-Cl*pper always takes return value as logical item
+    // accepting 0, 1 as numeric representation of HB_FALSE/HB_TRUE
     return (HB_IS_LOGICAL(pRet) || HB_IS_NUMERIC(pRet)) ? hb_itemGetL(pRet) : true;
   }
 
-  /* Do native compare when no codeblock is supplied */
+  // Do native compare when no codeblock is supplied
 
   if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
   {
@@ -92,8 +91,8 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   }
   else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
   {
-    /* intentionally separate comparison for integer numbers
-       to avoid precision lose in 64-bit integer to double conversion */
+    // intentionally separate comparison for integer numbers
+    // to avoid precision lose in 64-bit integer to double conversion
     return hb_itemGetNInt(pItem1) < hb_itemGetNInt(pItem2);
   }
   else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
@@ -109,7 +108,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    /* it's not exact comparison, compare only Julian date */
+    // it's not exact comparison, compare only Julian date
     return hb_itemGetDL(pItem1) < hb_itemGetDL(pItem2);
   }
   else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
@@ -118,8 +117,8 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   }
   else
   {
-    /* NOTE: For non-matching types CA-Cl*pper sorts always like this:
-             Array/Object Block String Logical Date Numeric NIL [jlalin] */
+    // NOTE: For non-matching types CA-Cl*pper sorts always like this:
+    //       Array/Object Block String Logical Date Numeric NIL [jlalin]
 
     int iWeight1;
     int iWeight2;
@@ -188,18 +187,18 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
 
 #ifdef HB_CLP_STRICT
 
-/* partition array pItems[lb..ub] */
+// partition array pItems[lb..ub]
 
 static HB_ISIZ hb_arraySortQuickPartition(PHB_BASEARRAY pBaseArray, HB_ISIZ lb, HB_ISIZ ub, PHB_ITEM pBlock)
 {
-  /* select pivot and exchange with 1st element */
+  // select pivot and exchange with 1st element
   HB_ISIZ i = lb + ((ub - lb) >> 1);
   if (i != lb)
   {
     hb_itemRawSwap(pBaseArray->pItems + lb, pBaseArray->pItems + i);
   }
 
-  /* sort lb+1..ub based on pivot */
+  // sort lb+1..ub based on pivot
   i = lb + 1;
   HB_ISIZ j = ub;
 
@@ -220,13 +219,13 @@ static HB_ISIZ hb_arraySortQuickPartition(PHB_BASEARRAY pBaseArray, HB_ISIZ lb, 
       break;
     }
 
-    /* Swap the items */
+    // Swap the items
     hb_itemRawSwap(pBaseArray->pItems + i, pBaseArray->pItems + j);
     j--;
     i++;
   }
 
-  /* pivot belongs in pBaseArray->pItems[j] */
+  // pivot belongs in pBaseArray->pItems[j]
   if (j > lb && pBaseArray->nLen > static_cast<HB_SIZE>(j))
   {
     hb_itemRawSwap(pBaseArray->pItems + lb, pBaseArray->pItems + j);
@@ -235,7 +234,7 @@ static HB_ISIZ hb_arraySortQuickPartition(PHB_BASEARRAY pBaseArray, HB_ISIZ lb, 
   return j;
 }
 
-/* sort array pBaseArray->pItems[lb..ub] */
+// sort array pBaseArray->pItems[lb..ub]
 
 static void hb_arraySortQuick(PHB_BASEARRAY pBaseArray, HB_ISIZ lb, HB_ISIZ ub, PHB_ITEM pBlock)
 {
@@ -250,10 +249,10 @@ static void hb_arraySortQuick(PHB_BASEARRAY pBaseArray, HB_ISIZ lb, HB_ISIZ ub, 
       }
     }
 
-    /* partition into two segments */
+    // partition into two segments
     HB_ISIZ m = hb_arraySortQuickPartition(pBaseArray, lb, ub, pBlock);
 
-    /* sort the smallest partition to minimize stack requirements */
+    // sort the smallest partition to minimize stack requirements
     if (m - lb <= ub - m)
     {
       hb_arraySortQuick(pBaseArray, lb, m - 1, pBlock);
@@ -352,7 +351,7 @@ static void hb_arraySortStart(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
     pDest = (pPos = pBuffer) + nCount;
   }
 
-  /* protection against array resizing by user codeblock */
+  // protection against array resizing by user codeblock
   if (nStart + nCount > pBaseArray->nLen)
   {
     if (pBaseArray->nLen > nStart)
@@ -391,7 +390,7 @@ static void hb_arraySortStart(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE
 
   hb_xfree(pBuffer);
 }
-#endif /* HB_CLP_STRICT */
+#endif // HB_CLP_STRICT
 
 HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, PHB_ITEM pBlock)
 {
@@ -428,11 +427,11 @@ HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, PHB_IT
       }
 
       if (nStart + nCount > nLen)
-      { /* check range */
+      { // check range
         nCount = nLen - nStart + 1;
       }
 
-      /* Optimize when only one or no element is to be sorted */
+      // Optimize when only one or no element is to be sorted
       if (nCount > 1)
       {
         hb_arraySortStart(pBaseArray, pBlock, nStart - 1, nCount);
@@ -459,6 +458,6 @@ HB_FUNC(ASORT)
     hb_arraySort(pArray, HB_ISNUM(2) ? &nStart : nullptr, HB_ISNUM(3) ? &nCount : nullptr,
                  hb_param(4, Harbour::Item::EVALITEM));
 
-    hb_itemReturn(pArray); /* ASort() returns the array itself */
+    hb_itemReturn(pArray); // ASort() returns the array itself
   }
 }

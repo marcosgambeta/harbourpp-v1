@@ -61,10 +61,9 @@ HB_FUNC(EVAL)
 
     hb_vmPushEvalSym();
     hb_vmPush(pItem);
-    /* NOTE: hb_param() function cannot be used for parameter access
-     * because we need to pass the references too.
-     * hb_param() is dereferencing the passed parameters
-     */
+    // NOTE: hb_param() function cannot be used for parameter access
+    // because we need to pass the references too.
+    // hb_param() is dereferencing the passed parameters
     for (auto iParam = 2; iParam <= iPCount; iParam++)
     {
       hb_vmPush(hb_stackItemFromBase(iParam));

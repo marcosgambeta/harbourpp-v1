@@ -50,9 +50,8 @@
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
 
-/* This function creates an array item using 'iDimension' as an index
- * to retrieve the number of elements from the parameter list.
- */
+// This function creates an array item using 'iDimension' as an index
+// to retrieve the number of elements from the parameter list.
 static void hb_arrayNewRagged(PHB_ITEM pArray, int iDimension)
 {
 #if 0
@@ -61,13 +60,12 @@ static void hb_arrayNewRagged(PHB_ITEM pArray, int iDimension)
 
   HB_SIZE nElements = hb_parns(iDimension);
 
-  /* create an array */
+  // create an array
   hb_arrayNew(pArray, nElements);
 
   if (++iDimension <= hb_pcount())
   {
-    /* call self recursively to create next dimensions
-     */
+    // call self recursively to create next dimensions
     while (nElements)
     {
       hb_arrayNewRagged(hb_arrayGetItemPtr(pArray, nElements--), iDimension);
@@ -92,7 +90,7 @@ HB_FUNC(ARRAY)
       }
 
       if (hb_parns(iParam) < 0)
-      { /* || hb_parns(iParam) <= 4096 */
+      { // || hb_parns(iParam) <= 4096
 #ifdef HB_CLP_STRICT
         hb_errRT_BASE(EG_BOUND, 1131, nullptr, hb_langDGetErrorDesc(EG_ARRDIMENSION), 0);
 #else
@@ -133,8 +131,8 @@ HB_FUNC(AADD)
   }
 }
 
-/* NOTE: CA-Cl*pper 5.3 and older will return NIL on bad parameter, 5.3a,b
-         will throw a runtime error. [vszakats] */
+// NOTE: CA-Cl*pper 5.3 and older will return NIL on bad parameter, 5.3a,b
+//       will throw a runtime error. [vszakats] */
 
 HB_FUNC(ASIZE)
 {
@@ -146,9 +144,9 @@ HB_FUNC(ASIZE)
 
     hb_arraySize(pArray, HB_MAX(nSize, 0));
 
-    hb_itemReturn(pArray); /* ASize() returns the array itself */
+    hb_itemReturn(pArray); // ASize() returns the array itself
   }
-#ifdef HB_COMPAT_C53 /* From CA-Cl*pper 5.3a */
+#ifdef HB_COMPAT_C53 // From CA-Cl*pper 5.3a
   else
   {
 #ifdef HB_CLP_STRICT
@@ -185,7 +183,7 @@ HB_FUNC(AINS)
 
     hb_arrayIns(pArray, nPos);
 
-    hb_itemReturn(pArray); /* AIns() returns the array itself */
+    hb_itemReturn(pArray); // AIns() returns the array itself
   }
 }
 
@@ -204,7 +202,7 @@ HB_FUNC(ADEL)
 
     hb_arrayDel(pArray, nPos);
 
-    hb_itemReturn(pArray); /* ADel() returns the array itself */
+    hb_itemReturn(pArray); // ADel() returns the array itself
   }
 }
 
@@ -216,23 +214,23 @@ HB_FUNC(AFILL)
   {
     auto pValue = hb_param(2, Harbour::Item::ANY);
 
-    hb_itemReturn(pArray); /* AFill() returns the array itself */
+    hb_itemReturn(pArray); // AFill() returns the array itself
 
     if (pValue)
     {
       HB_ISIZ lStart = hb_parns(3);
       HB_ISIZ lCount = hb_parns(4);
 
-      /* Explicit lCount of 0 - Nothing to do! */
+      // Explicit lCount of 0 - Nothing to do!
       if (HB_ISNUM(4) && lCount == 0)
       {
         return;
-        /* Clipper aborts if negative start. */
+        // Clipper aborts if negative start.
       }
       else if (lStart < 0)
       {
         return;
-        /* Clipper allows Start to be of wrong type, or 0, and corrects it to 1. */
+        // Clipper allows Start to be of wrong type, or 0, and corrects it to 1.
       }
       else if (lStart == 0)
       {
@@ -243,11 +241,11 @@ HB_FUNC(AFILL)
 
       if (lCount < 0)
       {
-        /* Clipper allows the Count to be negative, if start is 1, and corrects it to maximum elements. */
+        // Clipper allows the Count to be negative, if start is 1, and corrects it to maximum elements.
         if (lStart == 1)
         {
           nCount = 0;
-          /* Clipper aborts if negative count and start is not at 1. */
+          // Clipper aborts if negative count and start is not at 1.
         }
         else
         {
@@ -262,9 +260,9 @@ HB_FUNC(AFILL)
   else
   {
 #ifdef HB_CLP_STRICT
-    /* NOTE: In CA-Cl*pper AFill() is written in a manner that it will
-             call AEval() to do the job, so the error (if any) will also be
-             thrown by AEval().  [vszakats] */
+    // NOTE: In CA-Cl*pper AFill() is written in a manner that it will
+    //       call AEval() to do the job, so the error (if any) will also be
+    //       thrown by AEval().  [vszakats]
     hb_errRT_BASE(EG_ARG, 2017, nullptr, "AEVAL", 0);
 #else
     hb_errRT_BASE(EG_ARG, 6004, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
@@ -294,7 +292,8 @@ HB_FUNC(ASCAN)
 // deprecate HB_ASCAN
 // join ASCAN and HB_ASCAN
 // maintain HB_ASCAN using HB_FUNC_TRANSLATE
-/* Same as AScan() but has an additional parameter to force exact comparison. */
+
+// Same as AScan() but has an additional parameter to force exact comparison.
 HB_FUNC(HB_ASCAN)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
@@ -367,7 +366,7 @@ HB_FUNC(HB_AINS)
       }
     }
 
-    hb_itemReturn(pArray); /* AIns() returns the array itself */
+    hb_itemReturn(pArray); // AIns() returns the array itself
   }
 }
 
@@ -396,12 +395,12 @@ HB_FUNC(HB_ADEL)
       }
     }
 
-    hb_itemReturn(pArray); /* ADel() returns the array itself */
+    hb_itemReturn(pArray); // ADel() returns the array itself
   }
 }
 
-/* TODO: In Xbase++ fifth parameter determines whether array elements
-         are passed by reference to the code block. [vszakats] */
+// TODO: In Xbase++ fifth parameter determines whether array elements
+//       are passed by reference to the code block. [vszakats]
 
 HB_FUNC(AEVAL)
 {
@@ -415,7 +414,7 @@ HB_FUNC(AEVAL)
 
     hb_arrayEval(pArray, pBlock, HB_ISNUM(3) ? &nStart : nullptr, HB_ISNUM(4) ? &nCount : nullptr);
 
-    hb_itemReturn(pArray); /* AEval() returns the array itself */
+    hb_itemReturn(pArray); // AEval() returns the array itself
   }
   else
   {
@@ -430,7 +429,7 @@ HB_FUNC(ACOPY)
 
   if (pSrcArray && pDstArray)
   {
-    /* CA-Cl*pper works this way. */
+    // CA-Cl*pper works this way.
     if (!hb_arrayIsObject(pSrcArray) && !hb_arrayIsObject(pDstArray))
     {
       HB_SIZE nStart = hb_parns(3);
@@ -441,11 +440,11 @@ HB_FUNC(ACOPY)
                    HB_ISNUM(5) ? &nTarget : nullptr);
     }
 
-    hb_itemReturn(pDstArray); /* ACopy() returns the target array */
+    hb_itemReturn(pDstArray); // ACopy() returns the target array
   }
 }
 
-/* NOTE: Clipper will return NIL if the parameter is not an array. [vszakats] */
+// NOTE: Clipper will return NIL if the parameter is not an array. [vszakats]
 
 HB_FUNC(ACLONE)
 {
@@ -453,7 +452,7 @@ HB_FUNC(ACLONE)
 
   if (pSrcArray && !hb_arrayIsObject(pSrcArray))
   {
-    hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); /* AClone() returns the new array */
+    hb_arrayCloneTo(hb_stackReturnItem(), pSrcArray); // AClone() returns the new array
   }
 }
 

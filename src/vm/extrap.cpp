@@ -64,7 +64,7 @@
 #include <windows.h>
 #include <tlhelp32.h>
 #include "hbwinuni.hpp"
-/* BCC and MinGW doesn't seem to #define this */
+// BCC and MinGW doesn't seem to #define this
 #ifndef TH32CS_SNAPMODULE32
 #define TH32CS_SNAPMODULE32 0
 #endif
@@ -93,7 +93,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
     PCONTEXT pCtx = pExceptionInfo->ContextRecord;
     const char *szCode;
 
-    /* two most common codes */
+    // two most common codes
     switch (pExceptionInfo->ExceptionRecord->ExceptionCode)
     {
     case EXCEPTION_ACCESS_VIOLATION:
@@ -140,9 +140,9 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
       hb_strncat(errmsg, "\n", errmsglen);
     }
 
-    /* TODO: 64-bit stack trace.
-             See: - StackWalk64()
-                  - https://www.codeproject.com/KB/threads/StackWalker.aspx?fid=202364 */
+    // TODO: 64-bit stack trace.
+    //       See: - StackWalk64()
+    //            - https://www.codeproject.com/KB/threads/StackWalker.aspx?fid=202364
   }
 #elif defined(HB_OS_WIN_64) && defined(HB_CPU_IA_64)
   {
@@ -174,7 +174,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
     PCONTEXT pCtx = pExceptionInfo->ContextRecord;
     const char *szCode;
 
-    /* two most common codes */
+    // two most common codes
     switch (pExceptionInfo->ExceptionRecord->ExceptionCode)
     {
     case EXCEPTION_ACCESS_VIOLATION:
@@ -225,7 +225,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
       auto pc = reinterpret_cast<unsigned char *>(pCtx->Eip);
       for (auto i = 0; i < 16; i++)
       {
-        /* FIXME: Unsafe function. */
+        // FIXME: Unsafe function.
         if (IsBadReadPtr(pc, 1))
         {
           break;
@@ -237,7 +237,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
       auto sc = reinterpret_cast<unsigned int *>(pCtx->Esp);
       for (auto i = 0; i < 16; i++)
       {
-        /* FIXME: Unsafe function. */
+        // FIXME: Unsafe function.
         if (IsBadReadPtr(sc, 4))
         {
           break;
@@ -250,12 +250,12 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
       hb_strncat(errmsg, "    EIP:     EBP:       Frame: OldEBP, RetAddr, Params...\n", errmsglen);
       unsigned int eip = pCtx->Eip;
       auto ebp = reinterpret_cast<unsigned int *>(pCtx->Ebp);
-      /* FIXME: Unsafe function. */
+      // FIXME: Unsafe function.
       if (!IsBadWritePtr(ebp, 8))
       {
         for (auto i = 0; i < 20; i++)
         {
-          /* FIXME: Unsafe function. */
+          // FIXME: Unsafe function.
           if (reinterpret_cast<unsigned int>(ebp) % 4 != 0 || IsBadWritePtr(ebp, 40) ||
               reinterpret_cast<unsigned int>(ebp) >= ebp[0])
           {
@@ -279,27 +279,27 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
 #endif
 
   {
-    /* Take a snapshot of all modules in the specified process. */
+    // Take a snapshot of all modules in the specified process.
     HANDLE hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
 
     if (hModuleSnap != INVALID_HANDLE_VALUE)
     {
       MODULEENTRY32 me32;
 
-      /* Set the size of the structure before using it. */
+      // Set the size of the structure before using it.
       me32.dwSize = sizeof(MODULEENTRY32);
 
-      /* Retrieve information about the first module, and exit if unsuccessful */
+      // Retrieve information about the first module, and exit if unsuccessful
       if (Module32First(hModuleSnap, &me32))
       {
         hb_strncat(errmsg, "\nModules:\n", errmsglen);
 
-        /* Now walk the module list of the process, and display information about each module */
+        // Now walk the module list of the process, and display information about each module
         do
         {
           char buf[256];
 #if defined(HB_OS_WIN_64)
-          /* FIXME: me32.szExePath seemed trashed in some (standalone) tests. */
+          // FIXME: me32.szExePath seemed trashed in some (standalone) tests.
           hb_snprintf(buf, sizeof(buf), "%016" PFLL "X %016" PFLL "X %s\n",
                       reinterpret_cast<HB_PTRUINT>(me32.modBaseAddr), static_cast<HB_PTRUINT>(me32.modBaseSize),
                       me32.szExePath);
@@ -313,7 +313,7 @@ static LONG WINAPI hb_winExceptionHandler(struct _EXCEPTION_POINTERS *pException
         } while (Module32Next(hModuleSnap, &me32));
       }
 
-      /* Do not forget to clean up the snapshot object. */
+      // Do not forget to clean up the snapshot object.
       CloseHandle(hModuleSnap);
     }
   }
@@ -380,13 +380,13 @@ void hb_vmSetExceptionHandler(void)
     ss.ss_sp = static_cast<void *>(s_signal_stack);
     ss.ss_size = SIGSTKSZ;
     ss.ss_flags = 0;
-    /* set alternative stack for SIGSEGV executed on stack overflow */
+    // set alternative stack for SIGSEGV executed on stack overflow
     if (sigaltstack(&ss, nullptr) == 0)
     {
       struct sigaction act;
       int sigs[] = {SIGSEGV, SIGILL, SIGFPE, SIGBUS, 0};
 
-      /* Ignore SIGPIPEs so they don't kill us. */
+      // Ignore SIGPIPEs so they don't kill us.
       signal(SIGPIPE, SIG_IGN);
       for (auto i = 0; sigs[i]; ++i)
       {
@@ -404,15 +404,14 @@ void hb_vmUnsetExceptionHandler(void)
 {
 #if defined(HB_SIGNAL_EXCEPTION_HANDLER)
   {
-    /* we are using static buffer for alternative stack so we do not
-     * have to deallocate it to free the memory on application exit
-     */
+    // we are using static buffer for alternative stack so we do not
+    // have to deallocate it to free the memory on application exit
 #if 0
       stack_t ss, oss;
       ss.ss_sp = nullptr;
       ss.ss_size = SIGSTKSZ;
       ss.ss_flags = SS_DISABLE;
-      /* set alternative stack for SIGSEGV executed on stack overflow */
+      // set alternative stack for SIGSEGV executed on stack overflow
       if( sigaltstack(&ss, &oss) == 0 ) {
          if( oss.ss_sp && SS_DISABLE ) {
             free(oss.ss_sp);

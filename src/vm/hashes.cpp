@@ -59,7 +59,7 @@
 
 #define HB_HASH_ITEM_ALLOC 16
 
-/* internal structures for hashes */
+// internal structures for hashes
 struct _HB_HASHPAIR
 {
   HB_ITEM key;
@@ -71,18 +71,18 @@ using PHB_HASHPAIR = HB_HASHPAIR *;
 
 struct _HB_BASEHASH
 {
-  PHB_HASHPAIR pPairs; /* pointer to the array of key/value pairs */
-  PHB_ITEM pDefault;   /* default autoadd value */
-  HB_SIZE *pnPos;      /* the sort order for HB_HASH_KEEPORDER */
-  HB_SIZE nSize;       /* size of allocated pair array */
-  HB_SIZE nLen;        /* number of used items in pair array */
-  int iFlags;          /* hash item flags */
+  PHB_HASHPAIR pPairs; // pointer to the array of key/value pairs
+  PHB_ITEM pDefault;   // default autoadd value
+  HB_SIZE *pnPos;      // the sort order for HB_HASH_KEEPORDER
+  HB_SIZE nSize;       // size of allocated pair array
+  HB_SIZE nLen;        // number of used items in pair array
+  int iFlags;          // hash item flags
 };
 
 using HB_BASEHASH = _HB_BASEHASH;
 using PHB_BASEHASH = HB_BASEHASH *;
 
-/* This releases hash when called from the garbage collector */
+// This releases hash when called from the garbage collector
 static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
 {
   auto pBaseHash = static_cast<PHB_BASEHASH>(Cargo);
@@ -99,7 +99,7 @@ static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
       PHB_ITEM pKey = &pBaseHash->pPairs[pBaseHash->nLen].key;
       PHB_ITEM pVal = &pBaseHash->pPairs[pBaseHash->nLen].value;
 
-      /* small hack for buggy destructors in hash items */
+      // small hack for buggy destructors in hash items
       pBaseHash->iFlags |= HB_HASH_RESORT;
 
       if (HB_IS_GCITEM(pKey) && HB_IS_GCITEM(pVal))
@@ -311,9 +311,8 @@ static void hb_hashSortDo(PHB_BASEHASH pBaseHash)
   }
   else
   {
-    /* The hash array is probably quite well sorted so this trivial
-     * algorithm is the most efficient one [druzus]
-     */
+    // The hash array is probably quite well sorted so this trivial
+    // algorithm is the most efficient one [druzus]
 
     for (HB_SIZE nFrom = 1; nFrom < pBaseHash->nLen; ++nFrom)
     {
@@ -744,9 +743,8 @@ PHB_ITEM hb_hashGetCItemPtr(PHB_ITEM pHash, const char *pszKey)
   if (HB_IS_HASH(pHash))
   {
     HB_STACK_TLS_PRELOAD
-    /* we will not make any copy of pKey (autoadd is disabled) so it's
-     * safe to use hb_itemPutCConst()
-     */
+    // we will not make any copy of pKey (autoadd is disabled) so it's
+    // safe to use hb_itemPutCConst()
     auto pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
     PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, false);
     hb_stackPop();
@@ -770,9 +768,8 @@ HB_SIZE hb_hashGetCItemPos(PHB_ITEM pHash, const char *pszKey)
   if (HB_IS_HASH(pHash))
   {
     HB_STACK_TLS_PRELOAD
-    /* we will not make any copy of pKey (autoadd is disabled) so it's
-     * safe to use hb_itemPutCConst()
-     */
+    // we will not make any copy of pKey (autoadd is disabled) so it's
+    // safe to use hb_itemPutCConst()
     auto pKey = hb_itemPutCConst(hb_stackAllocItem(), pszKey);
 
     if (hb_hashFind(pHash->item.asHash.value, pKey, &nPos))
@@ -917,10 +914,8 @@ HB_BOOL hb_hashClear(PHB_ITEM pHash)
           hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value);
         }
       }
-      /*
-       * This condition is a protection against recursive call
-       * from .prg object destructor [druzus]
-       */
+      // This condition is a protection against recursive call
+      // from .prg object destructor [druzus]
       if (pHash->item.asHash.value->nSize)
       {
         hb_xfree(pHash->item.asHash.value->pPairs);
@@ -1099,7 +1094,7 @@ HB_BOOL hb_hashDelAt(PHB_ITEM pHash, HB_SIZE nPos)
   }
 }
 
-/* retrieves the hash unique ID */
+// retrieves the hash unique ID
 void *hb_hashId(PHB_ITEM pHash)
 {
 #if 0
@@ -1116,7 +1111,7 @@ void *hb_hashId(PHB_ITEM pHash)
   }
 }
 
-/* retrieves numer of references to the hash */
+// retrieves numer of references to the hash
 HB_COUNTER hb_hashRefs(PHB_ITEM pHash)
 {
   if (HB_IS_HASH(pHash))
@@ -1201,7 +1196,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
 
     switch (iType)
     {
-    case HB_HASH_UNION: /* OR */
+    case HB_HASH_UNION: // OR
       pBaseHash = pSource->item.asHash.value;
       if (pBaseHash != pDest->item.asHash.value)
       {
@@ -1217,7 +1212,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
       }
       break;
 
-    case HB_HASH_INTERSECT: /* AND */
+    case HB_HASH_INTERSECT: // AND
       pBaseHash = pDest->item.asHash.value;
       if (pBaseHash != pSource->item.asHash.value)
       {
@@ -1242,7 +1237,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
       }
       break;
 
-    case HB_HASH_DIFFERENCE: /* XOR */
+    case HB_HASH_DIFFERENCE: // XOR
       pBaseHash = pSource->item.asHash.value;
       if (pBaseHash == pDest->item.asHash.value)
       {
@@ -1265,7 +1260,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
       }
       break;
 
-    case HB_HASH_REMOVE: /* NOT -> h1 AND (h1 XOR h2) */
+    case HB_HASH_REMOVE: // NOT -> h1 AND (h1 XOR h2)
       pBaseHash = pSource->item.asHash.value;
       if (pBaseHash == pDest->item.asHash.value)
       {

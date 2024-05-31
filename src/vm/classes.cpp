@@ -113,34 +113,34 @@ using PHB_CLSCAST = HB_CLSCAST *;
 
 struct INITDATA
 {
-  PHB_ITEM pInitValue;  /* Init Value for data */
-  HB_USHORT uiType;     /* HB_OO_MSG_DATA, HB_OO_MSG_CLASSDATA or HB_OO_MSG_INITIALIZED */
-  HB_USHORT uiData;     /* Item position in instance area or class data */
-  HB_USHORT uiOffset;   /* Super cast instance area offset for HB_OO_MSG_DATA or real class item position */
-  HB_USHORT uiSprClass; /* The real class where method were defined */
+  PHB_ITEM pInitValue;  // Init Value for data
+  HB_USHORT uiType;     // HB_OO_MSG_DATA, HB_OO_MSG_CLASSDATA or HB_OO_MSG_INITIALIZED
+  HB_USHORT uiData;     // Item position in instance area or class data
+  HB_USHORT uiOffset;   // Super cast instance area offset for HB_OO_MSG_DATA or real class item position
+  HB_USHORT uiSprClass; // The real class where method were defined
 };
 
 using PINITDATA = INITDATA *;
 
 struct METHOD
 {
-  PHB_DYNS pMessage;    /* Method symbolic name */
-  PHB_DYNS pAccMsg;     /* Corresponding access method symbolic name */
-  PHB_SYMB pFuncSym;    /* Function symbol */
-  PHB_SYMB pRealSym;    /* Real function symbol when wrapper is used */
-  HB_TYPE itemType;     /* Type of item in restricted assignment */
-  HB_USHORT uiSprClass; /* Original class handle (super or current class handle if not inherited). [RAC&JF] */
-  HB_USHORT uiScope;    /* Scoping value */
-  HB_USHORT uiData;     /* Item position for instance data, class data and shared data (Harbour like, begin from 1),
-                           supercast class or delegated message index object */
-  HB_USHORT uiOffset; /* position in pInitData for class datas (from 1) or offset to instance area in inherited instance
-                         data and supercast messages (from 0) */
+  PHB_DYNS pMessage;    // Method symbolic name
+  PHB_DYNS pAccMsg;     // Corresponding access method symbolic name
+  PHB_SYMB pFuncSym;    // Function symbol
+  PHB_SYMB pRealSym;    // Real function symbol when wrapper is used
+  HB_TYPE itemType;     // Type of item in restricted assignment
+  HB_USHORT uiSprClass; // Original class handle (super or current class handle if not inherited). [RAC&JF]
+  HB_USHORT uiScope;    // Scoping value
+  HB_USHORT uiData;     // Item position for instance data, class data and shared data (Harbour like, begin from 1),
+                        // supercast class or delegated message index object
+  HB_USHORT uiOffset; // position in pInitData for class datas (from 1) or offset to instance area in inherited instance
+                      // data and supercast messages (from 0)
   HB_USHORT uiPrevCls;
   HB_USHORT uiPrevMth;
 #ifndef HB_NO_PROFILER
-  HB_ULONG ulCalls;   /* profiler support */
-  HB_ULONG ulTime;    /* profiler support */
-  HB_ULONG ulRecurse; /* profiler support */
+  HB_ULONG ulCalls;   // profiler support
+  HB_ULONG ulTime;    // profiler support
+  HB_ULONG ulRecurse; // profiler support
 #endif
 };
 
@@ -149,31 +149,31 @@ using PMETHOD = METHOD *;
 #define HB_MSG_POOL
 struct CLASS
 {
-  char *szName;              /* Class name */
-  PHB_DYNS pClassSym;        /* Class symbolic name */
-  PMETHOD pMethods;          /* Class methods */
-  PHB_SYMB pClassFuncSym;    /* Class function symbol */
-  PHB_SYMB pFriendModule;    /* Class friend symbols */
-  PINITDATA pInitData;       /* Class/instance Initialization data */
-  PHB_ITEM pClassDatas;      /* Harbour Array for Class Datas */
-  PHB_ITEM pSharedDatas;     /* Harbour Array for Class Shared Datas */
-  PHB_ITEM pInlines;         /* Array for inline codeblocks */
-  PHB_ITEM pMutex;           /* Class sync method mutex */
-  PHB_SYMB *pFriendSyms;     /* Friend functions' symbols */
-  PHB_CLSCAST pSuperClasses; /* Super classes */
-  HB_U32 nOpFlags;           /* Flags for overloaded operators */
-  HB_USHORT uiClass;         /* This class handle */
-  HB_USHORT fHasDestructor;  /* has the class destructor message? */
-  HB_USHORT fHasOnError;     /* has the class OnError message? */
-  HB_USHORT fLocked;         /* Class is locked against modifications */
-  HB_USHORT uiMethods;       /* Total Method initialized Counter */
-  HB_USHORT uiInitDatas;     /* Total Method initialized Counter */
-  HB_USHORT uiDatas;         /* Total Data Counter */
-  HB_USHORT uiDataFirst;     /* First instance item from this class */
-  HB_USHORT uiSuperClasses;  /* Number of super classes */
-  HB_USHORT uiFriendSyms;    /* Number of friend function's symbols */
-  HB_USHORT uiFriendModule;  /* Number of friend symbols in pFriendModule */
-  HB_USHORT uiMutexOffset;   /* Offset in instance area to SYNC method mutex */
+  char *szName;              // Class name
+  PHB_DYNS pClassSym;        // Class symbolic name
+  PMETHOD pMethods;          // Class methods
+  PHB_SYMB pClassFuncSym;    // Class function symbol
+  PHB_SYMB pFriendModule;    // Class friend symbols
+  PINITDATA pInitData;       // Class/instance Initialization data
+  PHB_ITEM pClassDatas;      // Harbour Array for Class Datas
+  PHB_ITEM pSharedDatas;     // Harbour Array for Class Shared Datas
+  PHB_ITEM pInlines;         // Array for inline codeblocks
+  PHB_ITEM pMutex;           // Class sync method mutex
+  PHB_SYMB *pFriendSyms;     // Friend functions' symbols
+  PHB_CLSCAST pSuperClasses; // Super classes
+  HB_U32 nOpFlags;           // Flags for overloaded operators
+  HB_USHORT uiClass;         // This class handle
+  HB_USHORT fHasDestructor;  // has the class destructor message?
+  HB_USHORT fHasOnError;     // has the class OnError message?
+  HB_USHORT fLocked;         // Class is locked against modifications
+  HB_USHORT uiMethods;       // Total Method initialized Counter
+  HB_USHORT uiInitDatas;     // Total Method initialized Counter
+  HB_USHORT uiDatas;         // Total Data Counter
+  HB_USHORT uiDataFirst;     // First instance item from this class
+  HB_USHORT uiSuperClasses;  // Number of super classes
+  HB_USHORT uiFriendSyms;    // Number of friend function's symbols
+  HB_USHORT uiFriendModule;  // Number of friend symbols in pFriendModule
+  HB_USHORT uiMutexOffset;   // Offset in instance area to SYNC method mutex
   HB_SYMCNT uiHashKey;
 #ifdef HB_MSG_POOL
   HB_USHORT uiMethodCount;
@@ -235,46 +235,44 @@ HB_FUNC_STATIC( msgClass );
 HB_FUNC_STATIC( msgClassParent );
 #endif
 
-/* --- */
+// ---
 
-/* static variables and structures initialized at HVM startup which
- * do not need any synchronization mechanism in MT mode, [druzus]
- */
+// static variables and structures initialized at HVM startup which
+// do not need any synchronization mechanism in MT mode, [druzus]
 
-/* The positions of items in symbol table below have to correspond
- * to HB_OO_OP_* constants in hbapicls.h, [druzus]
- */
+// The positions of items in symbol table below have to correspond
+// to HB_OO_OP_* constants in hbapicls.h, [druzus]
 static HB_SYMB s_opSymbols[HB_OO_MAX_OPERATOR + 1] = {
-    {"__OPPLUS", {HB_FS_MESSAGE}, {nullptr}, nullptr},         /* 00 */
-    {"__OPMINUS", {HB_FS_MESSAGE}, {nullptr}, nullptr},        /* 01 */
-    {"__OPMULT", {HB_FS_MESSAGE}, {nullptr}, nullptr},         /* 02 */
-    {"__OPDIVIDE", {HB_FS_MESSAGE}, {nullptr}, nullptr},       /* 03 */
-    {"__OPMOD", {HB_FS_MESSAGE}, {nullptr}, nullptr},          /* 04 */
-    {"__OPPOWER", {HB_FS_MESSAGE}, {nullptr}, nullptr},        /* 05 */
-    {"__OPINC", {HB_FS_MESSAGE}, {nullptr}, nullptr},          /* 06 */
-    {"__OPDEC", {HB_FS_MESSAGE}, {nullptr}, nullptr},          /* 07 */
-    {"__OPEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},        /* 08 */
-    {"__OPEXACTEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},   /* 09 */
-    {"__OPNOTEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},     /* 10 */
-    {"__OPLESS", {HB_FS_MESSAGE}, {nullptr}, nullptr},         /* 11 */
-    {"__OPLESSEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},    /* 12 */
-    {"__OPGREATER", {HB_FS_MESSAGE}, {nullptr}, nullptr},      /* 13 */
-    {"__OPGREATEREQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr}, /* 14 */
-    {"__OPASSIGN", {HB_FS_MESSAGE}, {nullptr}, nullptr},       /* 15 */
-    {"__OPINSTRING", {HB_FS_MESSAGE}, {nullptr}, nullptr},     /* 16 */
-    {"__OPINCLUDE", {HB_FS_MESSAGE}, {nullptr}, nullptr},      /* 17 */
-    {"__OPNOT", {HB_FS_MESSAGE}, {nullptr}, nullptr},          /* 18 */
-    {"__OPAND", {HB_FS_MESSAGE}, {nullptr}, nullptr},          /* 19 */
-    {"__OPOR", {HB_FS_MESSAGE}, {nullptr}, nullptr},           /* 20 */
-    {"__OPARRAYINDEX", {HB_FS_MESSAGE}, {nullptr}, nullptr},   /* 21 */
-    {"__ENUMINDEX", {HB_FS_MESSAGE}, {nullptr}, nullptr},      /* 22 */
-    {"__ENUMBASE", {HB_FS_MESSAGE}, {nullptr}, nullptr},       /* 23 */
-    {"__ENUMVALUE", {HB_FS_MESSAGE}, {nullptr}, nullptr},      /* 24 */
-    {"__ENUMSTART", {HB_FS_MESSAGE}, {nullptr}, nullptr},      /* 25 */
-    {"__ENUMSKIP", {HB_FS_MESSAGE}, {nullptr}, nullptr},       /* 26 */
-    {"__ENUMSTOP", {HB_FS_MESSAGE}, {nullptr}, nullptr},       /* 27 */
-    {"__ENUMISFIRST", {HB_FS_MESSAGE}, {nullptr}, nullptr},    /* 28 */
-    {"__ENUMISLAST", {HB_FS_MESSAGE}, {nullptr}, nullptr},     /* 29 */
+    {"__OPPLUS", {HB_FS_MESSAGE}, {nullptr}, nullptr},         // 00
+    {"__OPMINUS", {HB_FS_MESSAGE}, {nullptr}, nullptr},        // 01
+    {"__OPMULT", {HB_FS_MESSAGE}, {nullptr}, nullptr},         // 02
+    {"__OPDIVIDE", {HB_FS_MESSAGE}, {nullptr}, nullptr},       // 03
+    {"__OPMOD", {HB_FS_MESSAGE}, {nullptr}, nullptr},          // 04
+    {"__OPPOWER", {HB_FS_MESSAGE}, {nullptr}, nullptr},        // 05
+    {"__OPINC", {HB_FS_MESSAGE}, {nullptr}, nullptr},          // 06
+    {"__OPDEC", {HB_FS_MESSAGE}, {nullptr}, nullptr},          // 07
+    {"__OPEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},        // 08
+    {"__OPEXACTEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},   // 09
+    {"__OPNOTEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},     // 10
+    {"__OPLESS", {HB_FS_MESSAGE}, {nullptr}, nullptr},         // 11
+    {"__OPLESSEQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr},    // 12
+    {"__OPGREATER", {HB_FS_MESSAGE}, {nullptr}, nullptr},      // 13
+    {"__OPGREATEREQUAL", {HB_FS_MESSAGE}, {nullptr}, nullptr}, // 14
+    {"__OPASSIGN", {HB_FS_MESSAGE}, {nullptr}, nullptr},       // 15
+    {"__OPINSTRING", {HB_FS_MESSAGE}, {nullptr}, nullptr},     // 16
+    {"__OPINCLUDE", {HB_FS_MESSAGE}, {nullptr}, nullptr},      // 17
+    {"__OPNOT", {HB_FS_MESSAGE}, {nullptr}, nullptr},          // 18
+    {"__OPAND", {HB_FS_MESSAGE}, {nullptr}, nullptr},          // 19
+    {"__OPOR", {HB_FS_MESSAGE}, {nullptr}, nullptr},           // 20
+    {"__OPARRAYINDEX", {HB_FS_MESSAGE}, {nullptr}, nullptr},   // 21
+    {"__ENUMINDEX", {HB_FS_MESSAGE}, {nullptr}, nullptr},      // 22
+    {"__ENUMBASE", {HB_FS_MESSAGE}, {nullptr}, nullptr},       // 23
+    {"__ENUMVALUE", {HB_FS_MESSAGE}, {nullptr}, nullptr},      // 24
+    {"__ENUMSTART", {HB_FS_MESSAGE}, {nullptr}, nullptr},      // 25
+    {"__ENUMSKIP", {HB_FS_MESSAGE}, {nullptr}, nullptr},       // 26
+    {"__ENUMSTOP", {HB_FS_MESSAGE}, {nullptr}, nullptr},       // 27
+    {"__ENUMISFIRST", {HB_FS_MESSAGE}, {nullptr}, nullptr},    // 28
+    {"__ENUMISLAST", {HB_FS_MESSAGE}, {nullptr}, nullptr},     // 29
 };
 
 static HB_SYMB s___msgDestructor = {"__msgDestructor", {HB_FS_MESSAGE}, {nullptr}, nullptr};
@@ -306,14 +304,14 @@ static HB_SYMB s___msgClassH = {"CLASSH", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgClass
 static HB_SYMB s___msgClassSel = {"CLASSSEL", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgClassSel)}, nullptr};
 static HB_SYMB s___msgExec = {"EXEC", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 static HB_SYMB s___msgName = {"NAME", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
-/*
-static HB_SYMB s___msgClsParent   = { "ISDERIVEDFROM",   {HB_FS_MESSAGE}, {HB_FUNCNAME( msgClassParent )},NULL };
-static HB_SYMB s___msgClass       = { "CLASS",           {HB_FS_MESSAGE}, {HB_FUNCNAME( msgClass )},      NULL };
-*/
+
+// static HB_SYMB s___msgClsParent   = { "ISDERIVEDFROM",   {HB_FS_MESSAGE}, {HB_FUNCNAME( msgClassParent )},NULL };
+// static HB_SYMB s___msgClass       = { "CLASS",           {HB_FS_MESSAGE}, {HB_FUNCNAME( msgClass )},      NULL };
+
 static HB_SYMB s___msgKeys = {"KEYS", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 static HB_SYMB s___msgValues = {"VALUES", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 
-/* Default enumerator methods (FOR EACH) */
+// Default enumerator methods (FOR EACH)
 static HB_SYMB s___msgEnumIndex = {"__ENUMINDEX", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 static HB_SYMB s___msgEnumBase = {"__ENUMBASE", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 static HB_SYMB s___msgEnumKey = {"__ENUMKEY", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
@@ -321,17 +319,16 @@ static HB_SYMB s___msgEnumValue = {"__ENUMVALUE", {HB_FS_MESSAGE}, {HB_FUNCNAME(
 static HB_SYMB s___msgEnumIsFirst = {"__ENUMISFIRST", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 static HB_SYMB s___msgEnumIsLast = {"__ENUMISLAST", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 
-/* WITH OBJECT base value access/assign methods (:__withobject) */
+// WITH OBJECT base value access/assign methods (:__withobject)
 static HB_SYMB s___msgWithObjectPush = {"__WITHOBJECT", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 static HB_SYMB s___msgWithObjectPop = {"___WITHOBJECT", {HB_FS_MESSAGE}, {HB_FUNCNAME(msgNull)}, nullptr};
 
-/* --- */
+// ---
 
-/* Scalar classes' handles */
+// Scalar classes' handles
 
-/* If user wants to change scalar classes at runtime in MT mode then
- * he must resolve thread synchronization problem himself, [druzus]
- */
+// If user wants to change scalar classes at runtime in MT mode then
+// he must resolve thread synchronization problem himself, [druzus]
 static HB_USHORT s_uiArrayClass = 0;
 static HB_USHORT s_uiBlockClass = 0;
 static HB_USHORT s_uiCharacterClass = 0;
@@ -346,14 +343,13 @@ static HB_USHORT s_uiPointerClass = 0;
 
 static HB_USHORT s_uiObjectClass = 0;
 
-/* --- */
+// ---
 
-/* Class definition holder */
+// Class definition holder
 
-/* In MT mode we are allocating array big enough to hold all
- * class definitions so we do not have to worry about runtime
- * s_pClasses reallocation, [druzus]
- */
+// In MT mode we are allocating array big enough to hold all
+// class definitions so we do not have to worry about runtime
+// s_pClasses reallocation, [druzus]
 #if defined(HB_MT_VM)
 
 #include "hbthread.hpp"
@@ -385,38 +381,33 @@ static HB_USHORT s_uiClasses = 0;
 
 static PHB_ITEM s_pClassMtx = nullptr;
 
-/* --- */
+// ---
 
 #if 0
 static HB_SYMCNT hb_clsBucketPos(PHB_DYNS pMsg, HB_SYMCNT uiMask)
 {
-   /* we can use PHB_DYNS address as base for hash key.
-    * This value is perfectly unique and we do not need anything more
-    * but it's not continuous so we will have to add dynamic BUCKETSIZE
-    * modification to be 100% sure that we can resolve all symbol name
-    * conflicts (though even without it it's rather theoretical problem).
-    * [druzus]
-    */
+   // we can use PHB_DYNS address as base for hash key.
+   // This value is perfectly unique and we do not need anything more
+   // but it's not continuous so we will have to add dynamic BUCKETSIZE
+   // modification to be 100% sure that we can resolve all symbol name
+   // conflicts (though even without it it's rather theoretical problem).
+   // [druzus]
 
-   /* Safely divide it by 16 - it's minimum memory allocated for single
-    * HB_DYNS structure
-    */
-   /*
-      return (static_cast<HB_USHORT>(static_cast<HB_PTRUINT>(pMsg) >> 4) & uiMask) << BUCKETBITS;
-    */
+   // Safely divide it by 16 - it's minimum memory allocated for single
+   // HB_DYNS structure
 
-   /* Using continuous symbol numbers we are 100% sure that we will cover
-    * the whole 16-bit area and we will never have any problems until number
-    * of symbols is limited to 2^16. [druzus]
-    */
+   // return (static_cast<HB_USHORT>(static_cast<HB_PTRUINT>(pMsg) >> 4) & uiMask) << BUCKETBITS;
+
+   // Using continuous symbol numbers we are 100% sure that we will cover
+   // the whole 16-bit area and we will never have any problems until number
+   // of symbols is limited to 2^16. [druzus]
    return (pMsg->uiSymNum & uiMask) << BUCKETBITS;
 }
 #endif
 
-/* hb_clsDictRealloc(PCLASS)
- *
- * Realloc (widen) class
- */
+// hb_clsDictRealloc(PCLASS)
+//
+// Realloc (widen) class
 static bool hb_clsDictRealloc(PCLASS pClass)
 {
 #if 0
@@ -455,14 +446,14 @@ static bool hb_clsDictRealloc(PCLASS pClass)
         do
         {
           if (*puiIdx == 0)
-          { /* this message position is empty */
+          { // this message position is empty
             *puiIdx = uiMsg;
             break;
           }
           ++puiIdx;
         } while (--uiBucket);
 
-        /* Not enough go back to the beginning */
+        // Not enough go back to the beginning
         if (!uiBucket)
         {
           hb_xfree(puiMsgIdx);
@@ -492,14 +483,14 @@ static bool hb_clsDictRealloc(PCLASS pClass)
         do
         {
           if (!pMethod->pMessage)
-          { /* this message position is empty */
+          { // this message position is empty
             memcpy(pMethod, pClass->pMethods + n, sizeof(METHOD));
             break;
           }
           ++pMethod;
         } while (--uiBucket);
 
-        /* Not enough go back to the beginning */
+        // Not enough go back to the beginning
         if (!uiBucket)
         {
           hb_xfree(pNewMethods);
@@ -665,7 +656,7 @@ static void hb_clsFreeMsg(PCLASS pClass, PHB_DYNS pMsg)
       {
         memset(&pClass->pMethods[*puiMsgIdx], 0, sizeof(METHOD));
         *puiMsgIdx = 0;
-        pClass->uiMethods--; /* Decrease number of messages */
+        pClass->uiMethods--; // Decrease number of messages
       }
       return;
     }
@@ -683,14 +674,14 @@ static void hb_clsFreeMsg(PCLASS pClass, PHB_DYNS pMsg)
     {
       if (hb_clsCanClearMethod(pMethod, true))
       {
-        /* Move messages */
+        // Move messages
         while (--uiBucket)
         {
           memcpy(pMethod, pMethod + 1, sizeof(METHOD));
           pMethod++;
         }
         memset(pMethod, 0, sizeof(METHOD));
-        pClass->uiMethods--; /* Decrease number of messages */
+        pClass->uiMethods--; // Decrease number of messages
       }
       return;
     }
@@ -713,13 +704,11 @@ static bool hb_clsHasParentClass(PCLASS pClass, HB_USHORT uiParentCls)
   }
   return false;
 
-  /* alternative method but can give wrong results
-   * if user overloads super casting method, [druzus].
-   */
-  /*
-  PMETHOD pMethod = hb_clsFindMsg(pClass, s_pClasses[uiParentCls]->pClassSym);
-  return pMethod && pMethod->pFuncSym == &s___msgSuper;
-  */
+  // alternative method but can give wrong results
+  // if user overloads super casting method, [druzus].
+
+  // PMETHOD pMethod = hb_clsFindMsg(pClass, s_pClasses[uiParentCls]->pClassSym);
+  // return pMethod && pMethod->pFuncSym == &s___msgSuper;
 }
 
 static HB_USHORT hb_clsGetParent(PCLASS pClass, PHB_DYNS pParentSym)
@@ -736,13 +725,11 @@ static HB_USHORT hb_clsGetParent(PCLASS pClass, PHB_DYNS pParentSym)
   }
   return 0;
 
-  /* alternative method but can give wrong results
-   * if user overloads super casting method, [druzus].
-   */
-  /*
-  PMETHOD pMethod = hb_clsFindMsg(pClass, pParentSym);
-  return pMethod && pMethod->pFuncSym == &s___msgSuper;
-  */
+  // alternative method but can give wrong results
+  // if user overloads super casting method, [druzus].
+
+  // PMETHOD pMethod = hb_clsFindMsg(pClass, pParentSym);
+  // return pMethod && pMethod->pFuncSym == &s___msgSuper;
 }
 
 static HB_USHORT hb_clsParentInstanceOffset(PCLASS pClass, HB_USHORT uiParentCls)
@@ -900,9 +887,8 @@ static bool hb_clsUpdateHiddenMessages(PMETHOD pSrcMethod, PMETHOD pDstMethod, P
         PCLASS pSrcClass = s_pClasses[pDstMethod->uiSprClass];
         HB_USHORT uiData;
 
-        /* check if we already have corresponding access or assign
-         * message for this class var to reuse its index
-         */
+        // check if we already have corresponding access or assign
+        // message for this class var to reuse its index
         uiData = hb_clsFindClassDataOffset(pDstClass, pDstMethod);
 
         if (uiData == 0)
@@ -994,17 +980,16 @@ static void hb_clsCopyClass(PCLASS pClsDst, PCLASS pClsSrc)
   pClsDst->fHasOnError = pClsSrc->fHasOnError;
   pClsDst->fHasDestructor = pClsSrc->fHasDestructor;
 
-  /* CLASS DATA Not Shared (new array, new value) */
+  // CLASS DATA Not Shared (new array, new value)
 #if 0
-   /* enable this code if you want to inherit class variables values
-    * from ancestor classes when new class is dynamically created.
-    * (compatibility with older [x]Harbour versions)
-    */
+   // enable this code if you want to inherit class variables values
+   // from ancestor classes when new class is dynamically created.
+   // (compatibility with older [x]Harbour versions)
    pClsDst->pClassDatas = hb_arrayClone(pClsSrc->pClassDatas);
 #else
   pClsDst->pClassDatas = hb_itemArrayNew(hb_arrayLen(pClsSrc->pClassDatas));
 #endif
-  /* do not copy shared data array - just simply create new one */
+  // do not copy shared data array - just simply create new one
   pClsDst->pSharedDatas = hb_itemArrayNew(0);
   pClsDst->pInlines = hb_arrayClone(pClsSrc->pInlines);
   pClsDst->uiDatas = pClsSrc->uiDatas;
@@ -1107,7 +1092,7 @@ static void hb_clsAddFriendSymbol(PCLASS pClass, PHB_SYMB pSym)
   }
 }
 
-/* initialize Classy/OO system at HVM startup */
+// initialize Classy/OO system at HVM startup
 void hb_clsInit(void)
 {
 #if 0
@@ -1125,8 +1110,8 @@ void hb_clsInit(void)
   s___msgDestructor.pDynSym = hb_dynsymGetCase(s___msgDestructor.szName);
   s___msgOnError.pDynSym = hb_dynsymGetCase(s___msgOnError.szName);
 
-  s___msgClassName.pDynSym = hb_dynsymGetCase(s___msgClassName.szName); /* Standard messages */
-  s___msgClassH.pDynSym = hb_dynsymGetCase(s___msgClassH.szName);       /* Not present in classdef. */
+  s___msgClassName.pDynSym = hb_dynsymGetCase(s___msgClassName.szName); // Standard messages
+  s___msgClassH.pDynSym = hb_dynsymGetCase(s___msgClassH.szName);       // Not present in classdef.
   s___msgClassSel.pDynSym = hb_dynsymGetCase(s___msgClassSel.szName);
   s___msgExec.pDynSym = hb_dynsymGetCase(s___msgExec.szName);
   s___msgName.pDynSym = hb_dynsymGetCase(s___msgName.szName);
@@ -1134,10 +1119,10 @@ void hb_clsInit(void)
   s___msgSymbol.pDynSym = hb_dynsymGetCase(s___msgSymbol.szName);
   s___msgKeys.pDynSym = hb_dynsymGetCase(s___msgKeys.szName);
   s___msgValues.pDynSym = hb_dynsymGetCase(s___msgValues.szName);
-  /*
-     s___msgClsParent.pDynSym   = hb_dynsymGetCase(s___msgClsParent.szName);
-     s___msgClass.pDynSym       = hb_dynsymGetCase(s___msgClass.szName);
-  */
+
+  // s___msgClsParent.pDynSym   = hb_dynsymGetCase(s___msgClsParent.szName);
+  // s___msgClass.pDynSym       = hb_dynsymGetCase(s___msgClass.szName);
+
   s___msgEnumIndex.pDynSym = hb_dynsymGetCase(s___msgEnumIndex.szName);
   s___msgEnumBase.pDynSym = hb_dynsymGetCase(s___msgEnumBase.szName);
   s___msgEnumKey.pDynSym = hb_dynsymGetCase(s___msgEnumKey.szName);
@@ -1158,7 +1143,7 @@ void hb_clsInit(void)
 #endif
 }
 
-/* initialize Classy/OO system .prg functions */
+// initialize Classy/OO system .prg functions
 void hb_clsDoInit(void)
 {
 #if 0
@@ -1191,10 +1176,9 @@ void hb_clsDoInit(void)
   }
 }
 
-/* hb_clsRelease(<pClass>)
- *
- * Release a class from memory
- */
+// hb_clsRelease(<pClass>)
+//
+// Release a class from memory
 static void hb_clsRelease(PCLASS pClass)
 {
 #if 0
@@ -1252,10 +1236,9 @@ static void hb_clsRelease(PCLASS pClass)
   hb_xfree(pClass);
 }
 
-/* hb_clsReleaseAll()
- *
- * Release all classes
- */
+// hb_clsReleaseAll()
+//
+// Release all classes
 void hb_clsReleaseAll(void)
 {
 #if 0
@@ -1266,7 +1249,7 @@ void hb_clsReleaseAll(void)
   {
     HB_USHORT uiClass = s_uiClasses;
 
-    /* It blocks destructor execution - don't move. [druzus] */
+    // It blocks destructor execution - don't move. [druzus]
     s_uiClasses = 0;
 
     do
@@ -1289,19 +1272,17 @@ void hb_clsReleaseAll(void)
   }
 }
 
-/* Mark all internal data as used so it will not be released by the
- * garbage collector
- */
+// Mark all internal data as used so it will not be released by the
+// garbage collector
 void hb_clsIsClassRef(void)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_clsIsClassRef()"));
 #endif
 
-  /* All internal items are allocated with hb_itemNew()
-   * GC knows them and scan itself so it's not necessary
-   * to repeat scanning here [druzus].
-   */
+  // All internal items are allocated with hb_itemNew()
+  // GC knows them and scan itself so it's not necessary
+  // to repeat scanning here [druzus].
 #if 0
    HB_USHORT uiClass = s_uiClasses;
 
@@ -1371,7 +1352,7 @@ HB_USHORT hb_objGetClass(PHB_ITEM pItem)
   }
 }
 
-/* get object class handle using class name and class function name */
+// get object class handle using class name and class function name
 HB_USHORT hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc)
 {
   HB_USHORT uiClass = 0;
@@ -1383,9 +1364,9 @@ HB_USHORT hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc
   return uiClass;
 }
 
-/* --- */
+// ---
 
-/* Get the class handle */
+// Get the class handle
 static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
 {
 #if 0
@@ -1402,7 +1383,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
     {
       return s_uiArrayClass;
     }
-    /* built in types */
+    // built in types
   }
   else if (HB_IS_NIL(pObject))
   {
@@ -1448,7 +1429,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   return 0;
 }
 
-/* Get the class name of an object */
+// Get the class name of an object
 const char *hb_objGetClsName(PHB_ITEM pObject)
 {
 #if 0
@@ -1465,7 +1446,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
     {
       return "ARRAY";
     }
-    /* built in types */
+    // built in types
   }
   else if (HB_IS_NIL(pObject))
   {
@@ -1623,7 +1604,7 @@ static HB_USHORT hb_clsFindClassByFunc(PHB_SYMB pClassFuncSym)
   return 0;
 }
 
-/* Get the real method symbol for given stack symbol */
+// Get the real method symbol for given stack symbol
 PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol)
 {
   PHB_STACK_STATE pStack = pBaseSymbol->item.asSymbol.stackstate;
@@ -1643,9 +1624,7 @@ PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol)
       auto pItem = hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData);
       return pItem ? pItem->item.asBlock.value->pDefSymb : nullptr;
     }
-    /*
-          else if( pFuncSym == &s___msgPerform )
-     */
+    // else if( pFuncSym == &s___msgPerform )
     else if (pFuncSym == &s___msgDelegate)
     {
       return s_pClasses[pStack->uiClass]->pMethods[pMethod->uiData].pFuncSym;
@@ -1659,10 +1638,9 @@ PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol)
   return pBaseSymbol->item.asSymbol.value;
 }
 
-/* Get the real class name of an object message
- * Will return the class name from wich the message is inherited in case
- * of inheritance.
- */
+// Get the real class name of an object message
+// Will return the class name from wich the message is inherited in case
+// of inheritance.
 const char *hb_objGetRealClsName(PHB_ITEM pObject, const char *szName)
 {
 #if 0
@@ -1698,14 +1676,14 @@ static HB_ISIZ hb_clsSenderOffset(void)
 
   if (nOffset > 0)
   {
-    /* Is it inline method? */
+    // Is it inline method?
     if (nOffset > 0 && HB_IS_BLOCK(hb_stackItem(nOffset + 1)) &&
         (hb_stackItem(nOffset)->item.asSymbol.value == &hb_symEval ||
          hb_stackItem(nOffset)->item.asSymbol.value->pDynSym == hb_symEval.pDynSym))
     {
       nOffset = hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem;
 
-      /* I do not like it but Class(y) makes something like that. [druzus] */
+      // I do not like it but Class(y) makes something like that. [druzus]
       while (nOffset > 0 && hb_stackItem(nOffset)->item.asSymbol.stackstate->uiClass == 0)
       {
         nOffset = hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem;
@@ -1800,9 +1778,8 @@ static PHB_SYMB hb_clsValidScope(PMETHOD pMethod, PHB_STACK_STATE pStack)
     }
     else if (uiSenderClass)
     {
-      /* Warning!!! Friends cannot access overloaded non virtual methods.
-       * This feature is available _ONLY_ for real class members, [druzus]
-       */
+      // Warning!!! Friends cannot access overloaded non virtual methods.
+      // This feature is available _ONLY_ for real class members, [druzus]
       if (pMethod->uiScope & HB_OO_CLSTP_OVERLOADED && hb_clsHasParentClass(s_pClasses[pStack->uiClass], uiSenderClass))
       {
         PCLASS pClass = s_pClasses[uiSenderClass];
@@ -1877,21 +1854,20 @@ static void hb_clsMakeSuperObject(PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT ui
    HB_TRACE(HB_TR_DEBUG, ("hb_clsMakeSuperObject(%p, %p, %hu)", static_cast<void*>(pDest), static_cast<void*>(pObject), uiSuperClass));
 #endif
 
-  /* create a fake object array */
+  // create a fake object array
   hb_arrayNew(pDest, 1);
-  /* Now save the Self object as the 1st elem. */
+  // Now save the Self object as the 1st elem.
   hb_arraySet(pDest, 1, pObject);
-  /* And transform it into a fake object */
-  /* backup of actual handle */
+  // And transform it into a fake object
+  // backup of actual handle
   pDest->item.asArray.value->uiPrevCls = hb_objGetClassH(pObject);
-  /* superclass handle casting */
+  // superclass handle casting
   pDest->item.asArray.value->uiClass = uiSuperClass;
 }
 
-/* <pFuncSym> = hb_objGetMethod(<pObject>, <pMessage>, <pStackState>)
- *
- * Internal function to the function pointer of a message of an object
- */
+// <pFuncSym> = hb_objGetMethod(<pObject>, <pMessage>, <pStackState>)
+//
+// Internal function to the function pointer of a message of an object
 PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack)
 {
 #if 0
@@ -1915,17 +1891,16 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         {
           if (pObject->item.asArray.value->nLen)
           {
-            /* Copy real object - do not move! the same super casted
-             * object can be used more then once and we mustn't
-             * destroy it. We can safely use hb_stackReturnItem() here.
-             */
+            // Copy real object - do not move! the same super casted
+            // object can be used more then once and we mustn't
+            // destroy it. We can safely use hb_stackReturnItem() here.
             hb_itemCopy(hb_stackReturnItem(), pObject->item.asArray.value->pItems);
-            /* move real object back to the stack */
+            // move real object back to the stack
             hb_itemMove(pObject, hb_stackReturnItem());
           }
           else
           {
-            /* Someone tried to manipulate with supercast array */
+            // Someone tried to manipulate with supercast array
             hb_itemClear(pObject);
           }
         }
@@ -1998,17 +1973,15 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
   {
     if (pStack)
     {
-      /* method of enumerator variable from FOR EACH statement
-       */
+      // method of enumerator variable from FOR EACH statement
       auto pEnum = hb_itemUnRefOnce(pObject);
 
       if (HB_IS_ENUM(pEnum))
       {
-        /* Do actions here - we already have unreferenced pEnum so
-         * it will be a little bit faster but in the future it's
-         * possible that I'll move it to separate function when
-         * I'll add enumerators overloading. [druzus]
-         */
+        // Do actions here - we already have unreferenced pEnum so
+        // it will be a little bit faster but in the future it's
+        // possible that I'll move it to separate function when
+        // I'll add enumerators overloading. [druzus]
         if (pMsg == s___msgEnumIndex.pDynSym)
         {
           hb_itemPutNS(hb_stackReturnItem(), pEnum->item.asEnum.offset);
@@ -2156,7 +2129,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     else
     {
       if (hb_pcount() == 1 && pMessage->szName[0] == '_')
-      { /* ASSIGN */
+      { // ASSIGN
         auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);
         auto pDest = hb_hashGetItemPtr(pObject, pIndex, HB_HASH_AUTOADD_ASSIGN);
         hb_stackPop();
@@ -2169,7 +2142,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         }
       }
       else if (hb_pcount() == 0)
-      { /* ACCESS */
+      { // ACCESS
         auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName);
         auto pValue = hb_hashGetItemPtr(pObject, pIndex, HB_HASH_AUTOADD_ACCESS);
         hb_stackPop();
@@ -2281,7 +2254,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     }
   }
 
-  /* Default messages here */
+  // Default messages here
   if (pMsg == s___msgWithObjectPush.pDynSym)
   {
     if (pStack)
@@ -2289,7 +2262,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       PHB_ITEM pItem = hb_stackWithObjectItem();
       if (pItem != nullptr)
       {
-        /* push current WITH OBJECT object */
+        // push current WITH OBJECT object
         hb_itemCopy(hb_stackReturnItem(), pItem);
         return &s___msgWithObjectPush;
       }
@@ -2302,7 +2275,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       PHB_ITEM pItem = hb_stackWithObjectItem();
       if (pItem != nullptr)
       {
-        /* replace current WITH OBJECT object */
+        // replace current WITH OBJECT object
         hb_itemCopy(pItem, hb_stackItemFromBase(1));
         hb_itemCopy(hb_stackReturnItem(), pItem);
         return &s___msgWithObjectPop;
@@ -2321,13 +2294,11 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
   {
     return &s___msgClassSel;
   }
-  /*
-     else if( pMsg == s___msgClsParent.pDynSym ) {
-        return &s___msgClsParent;
-     } else if( pMsg == s___msgClass.pDynSym ) {
-        return &s___msgClass;
-     }
-   */
+  // else if( pMsg == s___msgClsParent.pDynSym ) {
+  //    return &s___msgClsParent;
+  // } else if( pMsg == s___msgClass.pDynSym ) {
+  //    return &s___msgClass;
+  // }
   if (pStack)
   {
     if (pClass && pClass->fHasOnError)
@@ -2340,7 +2311,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
 
-    /* remove this line if you want default HVM error message */
+    // remove this line if you want default HVM error message
     return &s___msgNoMethod;
   }
   return nullptr;
@@ -2383,10 +2354,10 @@ HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pSt
         nIndex += pMethod->uiOffset;
       }
 
-      /* will arise only if the class has been modified after first instance */
+      // will arise only if the class has been modified after first instance
       if (nIndex > hb_arrayLen(pObject))
-      {                                /* Resize needed */
-        hb_arraySize(pObject, nIndex); /* Make large enough */
+      {                                // Resize needed
+        hb_arraySize(pObject, nIndex); // Make large enough
       }
 
       return hb_arrayGetItemRef(pObject, nIndex, hb_stackReturnItem());
@@ -2431,7 +2402,7 @@ HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pSt
   return false;
 }
 
-/* Check if class has object destructors */
+// Check if class has object destructors
 HB_BOOL hb_clsHasDestructor(HB_USHORT uiClass)
 {
   if (uiClass && uiClass <= s_uiClasses)
@@ -2444,7 +2415,7 @@ HB_BOOL hb_clsHasDestructor(HB_USHORT uiClass)
   }
 }
 
-/* Call all known super destructors */
+// Call all known super destructors
 static void hb_objSuperDestructorCall(PHB_ITEM pObject, PCLASS pClass)
 {
 #if 0
@@ -2518,7 +2489,7 @@ static void hb_objSuperDestructorCall(PHB_ITEM pObject, PCLASS pClass)
 #endif
 }
 
-/* Call object destructor */
+// Call object destructor
 void hb_objDestructorCall(PHB_ITEM pObject)
 {
   if (HB_IS_OBJECT(pObject) && pObject->item.asArray.value->uiClass <= s_uiClasses)
@@ -2542,7 +2513,7 @@ void hb_objDestructorCall(PHB_ITEM pObject)
   }
 }
 
-/* Check if object has a given operator */
+// Check if object has a given operator
 HB_BOOL hb_objHasOperator(PHB_ITEM pObject, HB_USHORT uiOperator)
 {
 #if 0
@@ -2558,10 +2529,9 @@ HB_BOOL hb_objHasOperator(PHB_ITEM pObject, HB_USHORT uiOperator)
   return false;
 }
 
-/* Call object operator. If pMsgArg is nullptr then operator is unary.
- * Function return true when object class overloads given operator
- * and HB_FALSE otherwise. [druzus]
- */
+// Call object operator. If pMsgArg is nullptr then operator is unary.
+// Function return true when object class overloads given operator
+// and HB_FALSE otherwise. [druzus]
 HB_BOOL hb_objOperatorCall(HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObject, PHB_ITEM pMsgArg1,
                            PHB_ITEM pMsgArg2)
 {
@@ -2593,25 +2563,24 @@ HB_BOOL hb_objOperatorCall(HB_USHORT uiOperator, PHB_ITEM pResult, PHB_ITEM pObj
       hb_vmSend(0);
     }
 
-    /* store the return value */
+    // store the return value
     hb_itemMove(pResult, hb_stackReturnItem());
     return true;
   }
   return false;
 }
 
-/* return true if object has a given message */
+// return true if object has a given message
 HB_BOOL hb_objHasMessage(PHB_ITEM pObject, PHB_DYNS pMessage)
 {
   return hb_objGetMethod(pObject, pMessage->pSymbol, nullptr) != nullptr;
 }
 
-/* <bool> = hb_objHasMsg(<pObject>, <szString>)
- *
- * Check whether <szString> is an existing message for object.
- *
- * <uPtr> should be read as a boolean
- */
+// <bool> = hb_objHasMsg(<pObject>, <szString>)
+//
+// Check whether <szString> is an existing message for object.
+//
+// <uPtr> should be read as a boolean
 HB_BOOL hb_objHasMsg(PHB_ITEM pObject, const char *szString)
 {
 #if 0
@@ -2873,7 +2842,7 @@ static PHB_SYMB hb_objGetFuncSym(PHB_ITEM pItem)
   return nullptr;
 }
 
-/* clone object if user defined clone method or copy it */
+// clone object if user defined clone method or copy it
 void hb_objCloneBody(PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pClonedList)
 {
 #if 0
@@ -2882,12 +2851,12 @@ void hb_objCloneBody(PHB_ITEM pDest, PHB_ITEM pObject, PHB_NESTED_CLONED pCloned
 
   HB_SYMBOL_UNUSED(pClonedList);
 
-  /* TODO: add support for user defined clone operation */
+  // TODO: add support for user defined clone operation
 
   hb_itemCopy(pDest, pObject);
 }
 
-/* clone object if user defined clone method or copy it */
+// clone object if user defined clone method or copy it
 PHB_ITEM hb_objCloneTo(PHB_ITEM pDest, PHB_ITEM pObject)
 {
 #if 0
@@ -2899,7 +2868,7 @@ PHB_ITEM hb_objCloneTo(PHB_ITEM pDest, PHB_ITEM pObject)
   return pDest;
 }
 
-/* send message which allows to set execution context for debugger */
+// send message which allows to set execution context for debugger
 void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, int iParamOffset)
 {
   HB_STACK_TLS_PRELOAD
@@ -2909,7 +2878,7 @@ void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, 
   {
     HB_USHORT uiParams = 0;
 
-    /* set requested sender class and method id for scope verification */
+    // set requested sender class and method id for scope verification
     if (iProcLevel > 0)
     {
       int iLevel = hb_stackCallDepth();
@@ -2927,8 +2896,8 @@ void hb_dbg_objSendMessage(int iProcLevel, PHB_ITEM pObject, PHB_ITEM pMessage, 
     }
     else if (iProcLevel == 0)
     {
-      /* set scope like for internal object messages to any visible
-         method without respecting overloaded methods */
+      // set scope like for internal object messages to any visible
+      // method without respecting overloaded methods
       HB_USHORT uiClass = hb_objGetClassH(pObject);
 
       if (uiClass && uiClass <= s_uiClasses)
@@ -2978,8 +2947,8 @@ static HB_USHORT hb_clsUpdateScope(HB_USHORT uiScope, bool fAssign)
 
     if ((uiScope & HB_OO_CLSTP_READONLY) && !(uiScope & HB_OO_CLSTP_HIDDEN))
     {
-      /* Class(y) does not allow to write to HIDDEN+READONLY
-         instance variables, [druzus] */
+      // Class(y) does not allow to write to HIDDEN+READONLY
+      // instance variables, [druzus]
 
       uiScope &= ~HB_OO_CLSTP_READONLY;
       uiScope |= (uiScope & HB_OO_CLSTP_PROTECTED) ? HB_OO_CLSTP_HIDDEN : HB_OO_CLSTP_PROTECTED;
@@ -3002,7 +2971,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
         {
           return Harbour::Item::BLOCK;
         }
-        /* fallthrough */
+        // fallthrough
       case '\0':
         return Harbour::Item::STRING;
 
@@ -3116,54 +3085,54 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
   return nDefault;
 }
 
-/* --- */
+// ---
 
-/*
- * <uiType>    HB_OO_MSG_METHOD     : standard method
- *             HB_OO_MSG_ONERROR    : error handler method
- *             HB_OO_MSG_DESTRUCTOR : destructor method
- *             HB_OO_MSG_INLINE     : inline (codeblock) method
- *             HB_OO_MSG_ASSIGN     : assign instance data
- *             HB_OO_MSG_ACCESS     : access instance data
- *             HB_OO_MSG_CLSASSIGN  : assign class data
- *             HB_OO_MSG_CLSACCESS  : access class data
- *             HB_OO_MSG_SUPER      : supercasting
- *             HB_OO_MSG_REALCLASS  : caller method real class casting
- *             HB_OO_MSG_PERFORM    : perform method
- *             HB_OO_MSG_VIRTUAL    : virtual method
- *             HB_OO_MSG_DELEGATE   : delegate method
- *
- * <uiScope>   HB_OO_CLSTP_EXPORTED        1 : default for data and method
- *             HB_OO_CLSTP_PROTECTED       2 : method or data protected
- *             HB_OO_CLSTP_HIDDEN          4 : method or data hidden
- *           * HB_OO_CLSTP_CTOR            8 : method constructor
- *             HB_OO_CLSTP_READONLY       16 : data read only
- *             HB_OO_CLSTP_SHARED         32 : (method or) data shared
- *             HB_OO_CLSTP_CLASS          64 : message is class message not object
- *           * HB_OO_CLSTP_SUPER         128 : message is inherited
- *             HB_OO_CLSTP_PERSIST       256 : message is persistent (PROPERTY)
- *             HB_OO_CLSTP_NONVIRTUAL    512 : Non Virtual message - should not be covered by subclass(es) messages with
- * the same name when executed from a given class message HB_OO_CLSTP_OVERLOADED   1024 : message overload NONVIRTUAL
- * one HB_OO_CLSTP_SYNC         2048 : message synchronized by object or class mutex
- *
- * <pFunction> HB_OO_MSG_METHOD     : \
- *             HB_OO_MSG_ONERROR    :  > Pointer to function
- *             HB_OO_MSG_DESTRUCTOR : /
- *             HB_OO_MSG_INLINE     : Code block
- *             HB_OO_MSG_ASSIGN     :  Index to instance area array 1 based (without offset)
- *             HB_OO_MSG_ACCESS     : /
- *             HB_OO_MSG_CLSASSIGN  :  Index class data array
- *             HB_OO_MSG_CLSACCESS  : /
- *             HB_OO_MSG_SUPER      : Instance area offset for class casting
- *             HB_OO_MSG_DELEGATE   : Delegated message symbol
- *
- * <pInit>     HB_OO_MSG_ACCESS     :  Optional initializer for (Class)DATA
- *             HB_OO_MSG_CLSACCESS  : /
- *             HB_OO_MSG_ASSIGN     :  Item type restriction in assignment
- *             HB_OO_MSG_CLSASSIGN  : /
- *             HB_OO_MSG_SUPER      : Superclass handle
- *             HB_OO_MSG_DELEGATE   : Object symbol for delegated message
- */
+//
+// <uiType>    HB_OO_MSG_METHOD     : standard method
+//             HB_OO_MSG_ONERROR    : error handler method
+//             HB_OO_MSG_DESTRUCTOR : destructor method
+//             HB_OO_MSG_INLINE     : inline (codeblock) method
+//             HB_OO_MSG_ASSIGN     : assign instance data
+//             HB_OO_MSG_ACCESS     : access instance data
+//             HB_OO_MSG_CLSASSIGN  : assign class data
+//             HB_OO_MSG_CLSACCESS  : access class data
+//             HB_OO_MSG_SUPER      : supercasting
+//             HB_OO_MSG_REALCLASS  : caller method real class casting
+//             HB_OO_MSG_PERFORM    : perform method
+//             HB_OO_MSG_VIRTUAL    : virtual method
+//             HB_OO_MSG_DELEGATE   : delegate method
+//
+// <uiScope>   HB_OO_CLSTP_EXPORTED        1 : default for data and method
+//             HB_OO_CLSTP_PROTECTED       2 : method or data protected
+//             HB_OO_CLSTP_HIDDEN          4 : method or data hidden
+//           * HB_OO_CLSTP_CTOR            8 : method constructor
+//             HB_OO_CLSTP_READONLY       16 : data read only
+//             HB_OO_CLSTP_SHARED         32 : (method or) data shared
+//             HB_OO_CLSTP_CLASS          64 : message is class message not object
+//           * HB_OO_CLSTP_SUPER         128 : message is inherited
+//             HB_OO_CLSTP_PERSIST       256 : message is persistent (PROPERTY)
+//             HB_OO_CLSTP_NONVIRTUAL    512 : Non Virtual message - should not be covered by subclass(es) messages with
+// the same name when executed from a given class message HB_OO_CLSTP_OVERLOADED   1024 : message overload NONVIRTUAL
+// one HB_OO_CLSTP_SYNC         2048 : message synchronized by object or class mutex
+//
+// <pFunction> HB_OO_MSG_METHOD     : \
+//             HB_OO_MSG_ONERROR    :  > Pointer to function
+//             HB_OO_MSG_DESTRUCTOR : /
+//             HB_OO_MSG_INLINE     : Code block
+//             HB_OO_MSG_ASSIGN     :  Index to instance area array 1 based (without offset)
+//             HB_OO_MSG_ACCESS     : /
+//             HB_OO_MSG_CLSASSIGN  :  Index class data array
+//             HB_OO_MSG_CLSACCESS  : /
+//             HB_OO_MSG_SUPER      : Instance area offset for class casting
+//             HB_OO_MSG_DELEGATE   : Delegated message symbol
+//
+// <pInit>     HB_OO_MSG_ACCESS     :  Optional initializer for (Class)DATA
+//             HB_OO_MSG_CLSACCESS  : /
+//             HB_OO_MSG_ASSIGN     :  Item type restriction in assignment
+//             HB_OO_MSG_CLSASSIGN  : /
+//             HB_OO_MSG_SUPER      : Superclass handle
+//             HB_OO_MSG_DELEGATE   : Object symbol for delegated message
+//
 static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiType, HB_USHORT uiScope,
                          PHB_ITEM pFunction, PHB_ITEM pInit)
 {
@@ -3186,7 +3155,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
 
     PHB_DYNS pMessage;
 
-    /* translate names of operator overloading messages */
+    // translate names of operator overloading messages
     if (uiType == HB_OO_MSG_DESTRUCTOR)
     {
       pMessage = s___msgDestructor.pDynSym;
@@ -3320,7 +3289,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
     PHB_SYMB pFuncSym = nullptr;
     auto fOK = false;
 
-    /* basic parameter validation */
+    // basic parameter validation
     switch (uiType)
     {
     case HB_OO_MSG_METHOD:
@@ -3343,10 +3312,9 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
     case HB_OO_MSG_ASSIGN:
     case HB_OO_MSG_ACCESS:
       uiIndex = static_cast<HB_USHORT>(hb_itemGetNI(pFunction));
-      /* This validation can break buggy .prg code which wrongly
-       * sets data offsets but IMHO it will help to clean the code.
-       * [druzus]
-       */
+      // This validation can break buggy .prg code which wrongly
+      // sets data offsets but IMHO it will help to clean the code.
+      // [druzus]
       fOK = uiIndex && uiIndex <= pClass->uiDatas - pClass->uiDataFirst;
       break;
 
@@ -3412,7 +3380,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
 
     if (!pNewMeth->pMessage)
     {
-      pClass->uiMethods++; /* One more message */
+      pClass->uiMethods++; // One more message
     }
     else
     {
@@ -3448,8 +3416,8 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
     case HB_OO_MSG_ASSIGN:
 
       pNewMeth->uiScope = hb_clsUpdateScope(uiScope, true);
-      /* Class(y) does not allow to write to HIDDEN+READONLY
-         instance variables, [druzus] */
+      // Class(y) does not allow to write to HIDDEN+READONLY
+      // instance variables, [druzus]
       if (pNewMeth->uiScope & HB_OO_CLSTP_READONLY && pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN)
       {
         pNewMeth->pFuncSym = &s___msgScopeErr;
@@ -3477,8 +3445,8 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
       pNewMeth->uiData = uiIndex;
       pNewMeth->itemType = hb_clsGetItemType(pInit, 0);
       pNewMeth->uiScope = hb_clsUpdateScope(uiScope, true);
-      /* Class(y) does not allow to write to HIDDEN+READONLY
-         instance variables, [druzus] */
+      // Class(y) does not allow to write to HIDDEN+READONLY
+      // instance variables, [druzus]
       if (pNewMeth->uiScope & HB_OO_CLSTP_READONLY && pNewMeth->uiScope & HB_OO_CLSTP_HIDDEN)
       {
         pNewMeth->pFuncSym = &s___msgScopeErr;
@@ -3513,12 +3481,11 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
         }
 
         if (pInit && !HB_IS_NIL(pInit))
-        { /* Initializer found */
-          /* Shared Classdata need to be initialized only once
-           * ACCESS/ASSIGN methods will be inherited by subclasses
-           * and will operate on this value so it's not necessary
-           * to keep the init value. [druzus]
-           */
+        { // Initializer found
+          // Shared Classdata need to be initialized only once
+          // ACCESS/ASSIGN methods will be inherited by subclasses
+          // and will operate on this value so it's not necessary
+          // to keep the init value. [druzus]
           hb_itemCloneTo(hb_arrayGetItemPtr(pClass->pSharedDatas, pNewMeth->uiData), pInit);
         }
         pNewMeth->pFuncSym = &s___msgGetShrData;
@@ -3529,9 +3496,8 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
         {
           hb_arraySize(pClass->pClassDatas, pNewMeth->uiData);
         }
-        /* uiOffset is used to copy ancestor class data initializers when
-         * new class is created
-         */
+        // uiOffset is used to copy ancestor class data initializers when
+        // new class is created
         pNewMeth->uiOffset = hb_clsAddInitValue(pClass, pInit, HB_OO_MSG_CLASSDATA, pNewMeth->uiData, 0, uiClass);
         pNewMeth->pFuncSym = &s___msgGetClsData;
       }
@@ -3553,8 +3519,8 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
 
     case HB_OO_MSG_SUPER:
 
-      pNewMeth->uiData = uiSprClass; /* store the super handle */
-      pNewMeth->uiOffset = uiIndex;  /* offset to instance area */
+      pNewMeth->uiData = uiSprClass; // store the super handle
+      pNewMeth->uiOffset = uiIndex;  // offset to instance area
       pNewMeth->uiScope = uiScope;
       pNewMeth->pFuncSym = &s___msgSuper;
       break;
@@ -3621,56 +3587,55 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
   return true;
 }
 
-/* __clsAddMsg(<hClass>, <cMessage>, <pFunction>, <nType>, [xInit], <uiScope>, [xType])
- *
- * Add a message to the class.
- *
- * <hClass>    Class handle
- * <cMessage>  Message
- * <pFunction> HB_OO_MSG_METHOD     : \
- *             HB_OO_MSG_ONERROR    :  > Pointer to function
- *             HB_OO_MSG_DESTRUCTOR : /
- *             HB_OO_MSG_INLINE     : Code block
- *             HB_OO_MSG_DATA       : \
- *             HB_OO_MSG_ASSIGN     :  > Index to instance area array
- *             HB_OO_MSG_ACCESS     : /
- *             HB_OO_MSG_CLASSDATA  : \
- *             HB_OO_MSG_CLSASSIGN  :  > Index class data array
- *             HB_OO_MSG_CLSACCESS  : /
- *             HB_OO_MSG_SUPER      : Handle of super class
- *             HB_OO_MSG_DELEGATE   : delegated message symbol
- *
- * <nType>     see HB_OO_MSG_* above and:
- *             HB_OO_MSG_REALCLASS  : caller method real class casting
- *             HB_OO_MSG_PERFORM    : perform message
- *             HB_OO_MSG_VIRTUAL    : virtual message
- *             HB_OO_MSG_DELEGATE   : delegate method
- *
- * <xInit>     HB_OO_MSG_ACCESS     : \
- *             HB_OO_MSG_CLSACCESS  :   > Optional initializer for DATA
- *             HB_OO_MSG_DATA       :  /
- *             HB_OO_MSG_CLASSDATA  : /
- *             HB_OO_MSG_SUPER      : Superclass handle
- *             HB_OO_MSG_ASSIGN     : \ item type restriction in assignment not
- *             HB_OO_MSG_CLSASSIGN: :   empty character value where first letter
- *                                      is item type or item of a given value
- *
- * <uiScope>   HB_OO_CLSTP_EXPORTED        1 : default for data and method
- *             HB_OO_CLSTP_PROTECTED       2 : method or data protected
- *             HB_OO_CLSTP_HIDDEN          4 : method or data hidden
- *           * HB_OO_CLSTP_CTOR            8 : method constructor
- *             HB_OO_CLSTP_READONLY       16 : data read only
- *             HB_OO_CLSTP_SHARED         32 : (method or) data shared
- *           * HB_OO_CLSTP_CLASS          64 : message is class message not object
- *           * HB_OO_CLSTP_SUPER         128 : message is inherited
- *             HB_OO_CLSTP_PERSIST       256 : message is persistent (PROPERTY)
- *             HB_OO_CLSTP_NONVIRTUAL    512 : Class method constructor
- *             HB_OO_CLSTP_OVERLOADED   1024 : Class method constructor
- *             HB_OO_CLSTP_SYNC         2048 : message synchronized by object or class mutex
- *
- * <xType>     HB_OO_MSG_PROPERTY      :  > optional item type restriction in assignment
- *             HB_OO_MSG_CLASSPROPERTY : /
- */
+// __clsAddMsg(<hClass>, <cMessage>, <pFunction>, <nType>, [xInit], <uiScope>, [xType])
+//
+// Add a message to the class.
+//
+// <hClass>    Class handle
+// <cMessage>  Message
+// <pFunction> HB_OO_MSG_METHOD     : \
+//             HB_OO_MSG_ONERROR    :  > Pointer to function
+//             HB_OO_MSG_DESTRUCTOR : /
+//             HB_OO_MSG_INLINE     : Code block
+//             HB_OO_MSG_DATA       : \
+//             HB_OO_MSG_ASSIGN     :  > Index to instance area array
+//             HB_OO_MSG_ACCESS     : /
+//             HB_OO_MSG_CLASSDATA  : \
+//             HB_OO_MSG_CLSASSIGN  :  > Index class data array
+//             HB_OO_MSG_CLSACCESS  : /
+//             HB_OO_MSG_SUPER      : Handle of super class
+//             HB_OO_MSG_DELEGATE   : delegated message symbol
+//
+// <nType>     see HB_OO_MSG_* above and:
+//             HB_OO_MSG_REALCLASS  : caller method real class casting
+//             HB_OO_MSG_PERFORM    : perform message
+//             HB_OO_MSG_VIRTUAL    : virtual message
+//             HB_OO_MSG_DELEGATE   : delegate method
+//
+// <xInit>     HB_OO_MSG_ACCESS     : \
+//             HB_OO_MSG_CLSACCESS  :   > Optional initializer for DATA
+//             HB_OO_MSG_DATA       :  /
+//             HB_OO_MSG_CLASSDATA  : /
+//             HB_OO_MSG_SUPER      : Superclass handle
+//             HB_OO_MSG_ASSIGN     : \ item type restriction in assignment not
+//             HB_OO_MSG_CLSASSIGN: :   empty character value where first letter
+//                                      is item type or item of a given value
+//
+// <uiScope>   HB_OO_CLSTP_EXPORTED        1 : default for data and method
+//             HB_OO_CLSTP_PROTECTED       2 : method or data protected
+//             HB_OO_CLSTP_HIDDEN          4 : method or data hidden
+//           * HB_OO_CLSTP_CTOR            8 : method constructor
+//             HB_OO_CLSTP_READONLY       16 : data read only
+//             HB_OO_CLSTP_SHARED         32 : (method or) data shared
+//           * HB_OO_CLSTP_CLASS          64 : message is class message not object
+//           * HB_OO_CLSTP_SUPER         128 : message is inherited
+//             HB_OO_CLSTP_PERSIST       256 : message is persistent (PROPERTY)
+//             HB_OO_CLSTP_NONVIRTUAL    512 : Class method constructor
+//             HB_OO_CLSTP_OVERLOADED   1024 : Class method constructor
+//             HB_OO_CLSTP_SYNC         2048 : message synchronized by object or class mutex
+//
+// <xType>     HB_OO_MSG_PROPERTY      :  > optional item type restriction in assignment
+//             HB_OO_MSG_CLASSPROPERTY : /
 
 HB_FUNC(__CLSADDMSG)
 {
@@ -3691,7 +3656,7 @@ HB_FUNC(__CLSADDMSG)
     else if (nType == HB_OO_MSG_CLASSDATA)
     {
       nType = szMessage[0] == '_' ? HB_OO_MSG_CLSASSIGN : HB_OO_MSG_CLSACCESS;
-      /* to make xHarbour users happy ;-) */
+      // to make xHarbour users happy ;-)
     }
     else if (nType == HB_OO_MSG_PROPERTY || nType == HB_OO_MSG_CLASSPROPERTY)
     {
@@ -3725,20 +3690,19 @@ HB_FUNC(__CLSADDMSG)
   }
 }
 
-/* __clsNew(<szClassName>, <uiDatas>,
- *          [<pSuperArray>], [<pClassFunc>],
- *          [<fModuleFriendly>]) --> <hClass>
- *
- * Create a new class
- *
- * <szClassName>     Name of the class
- * <uiDatas>         Number of DATAs in the class
- * <pSuperArray>     Optional array with handle(s) of superclass(es)
- * <pClassFunc>      Class function symbol, when nullptr public function
- *                   with the same name as szClassName is used
- * <fModuleFriendly> when true all functions and classes from the same
- *                   module as pClassFunc are defined as friends
- */
+// __clsNew(<szClassName>, <uiDatas>,
+//          [<pSuperArray>], [<pClassFunc>],
+//          [<fModuleFriendly>]) --> <hClass>
+//
+// Create a new class
+//
+// <szClassName>     Name of the class
+// <uiDatas>         Number of DATAs in the class
+// <pSuperArray>     Optional array with handle(s) of superclass(es)
+// <pClassFunc>      Class function symbol, when nullptr public function
+//                   with the same name as szClassName is used
+// <fModuleFriendly> when true all functions and classes from the same
+//                   module as pClassFunc are defined as friends
 static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM pSuperArray, PHB_SYMB pClassFunc,
                            bool fModuleFriendly)
 {
@@ -3787,7 +3751,7 @@ static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM 
 
       pSprCls = s_pClasses[uiSuperCls];
       if (!hb_clsInited(pNewCls))
-      { /* This is the first superclass */
+      { // This is the first superclass
         hb_clsCopyClass(pNewCls, pSprCls);
       }
       else if (!hb_clsHasParentClass(pNewCls, uiSuperCls))
@@ -3795,7 +3759,7 @@ static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM 
         HB_SIZE nLimit;
         HB_USHORT nLenClsDatas;
 
-        /* create class data translation tables */
+        // create class data translation tables
         nLenClsDatas = static_cast<HB_USHORT>(hb_itemSize(pSprCls->pClassDatas));
         if (nLenClsDatas)
         {
@@ -3807,14 +3771,14 @@ static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM 
           memset(puiClassData, 0, sizeof(HB_USHORT) * nLenClsDatas);
         }
 
-        /* Copy super class handles */
+        // Copy super class handles
         for (HB_USHORT uiCount = 0; uiCount < pSprCls->uiSuperClasses; ++uiCount)
         {
           hb_clsDefineSuperClass(pNewCls, pSprCls->pSuperClasses[uiCount].uiClass, true);
         }
         hb_clsDefineSuperClass(pNewCls, uiSuperCls, true);
 
-        /* Copy instance area init data */
+        // Copy instance area init data
         if (pSprCls->uiInitDatas)
         {
           for (HB_USHORT u = 0; u < pSprCls->uiInitDatas; ++u)
@@ -3828,7 +3792,7 @@ static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM 
           }
         }
 
-        /* Now working on other methods */
+        // Now working on other methods
         nLimit = hb_clsMthNum(pSprCls);
         for (HB_SIZE n = 0; n < nLimit; ++n)
         {
@@ -3836,20 +3800,20 @@ static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM 
           {
             pMethod = hb_clsAllocMsg(pNewCls, pSprCls->pMethods[n].pMessage);
 
-            /* update instance area offset */
+            // update instance area offset
             if (pMethod->pMessage && pMethod->pFuncSym == &s___msgSuper)
             {
               pMethod->uiOffset = hb_clsParentInstanceOffset(pNewCls, pMethod->uiData);
             }
 
-            /* Ok, this bucket is empty */
+            // Ok, this bucket is empty
             if (pMethod->pMessage == nullptr || (hb_clsCanClearMethod(pMethod, false) &&
                                                  (pMethod->pFuncSym == &s___msgVirtual ||
                                                   (s_uiObjectClass != 0 && pMethod->uiSprClass == s_uiObjectClass))))
             {
               if (pMethod->pMessage == nullptr)
               {
-                /* Now, we can increment the msg count */
+                // Now, we can increment the msg count
                 pNewCls->uiMethods++;
               }
 
@@ -3934,7 +3898,7 @@ static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM 
     pNewCls->pInlines = hb_itemArrayNew(0);
   }
 
-  /* add self class casting */
+  // add self class casting
   pNewCls->uiDataFirst = pNewCls->uiDatas;
   hb_clsDefineSuperClass(pNewCls, pNewCls->uiClass, false);
   pNewCls->uiDatas += uiDatas;
@@ -3950,17 +3914,16 @@ static HB_USHORT hb_clsNew(const char *szClassName, HB_USHORT uiDatas, PHB_ITEM 
   return pNewCls->uiClass;
 }
 
-/* __clsNew(<cClassName>, <nDatas>, [<ahSuper>], [<pClassFunc>], [<lModuleFriendly>]) --> <hClass>
- *
- * Create a new class
- *
- * <cClassName> Name of the class
- * <nDatas>     Number of DATAs in the class
- * <ahSuper>    Optional array with handle(s) of superclass(es)
- * <pClassFunc> Class function symbol
- * <lModuleFriendly> when true all functions and classes from the same
- *                   module as pClassFunc are defined as friends
- */
+// __clsNew(<cClassName>, <nDatas>, [<ahSuper>], [<pClassFunc>], [<lModuleFriendly>]) --> <hClass>
+//
+// Create a new class
+//
+// <cClassName> Name of the class
+// <nDatas>     Number of DATAs in the class
+// <ahSuper>    Optional array with handle(s) of superclass(es)
+// <pClassFunc> Class function symbol
+// <lModuleFriendly> when true all functions and classes from the same
+//                   module as pClassFunc are defined as friends
 HB_FUNC(__CLSNEW)
 {
   auto szClassName = hb_parc(1);
@@ -4000,10 +3963,9 @@ HB_FUNC(__CLSNEW)
   }
 }
 
-/* __clsAddFriend(<hClass>, <sFuncSym>)
- *
- * Add friend function
- */
+// __clsAddFriend(<hClass>, <sFuncSym>)
+//
+// Add friend function
 HB_FUNC(__CLSADDFRIEND)
 {
   auto uiClass = static_cast<HB_USHORT>(hb_parni(1));
@@ -4023,13 +3985,12 @@ HB_FUNC(__CLSADDFRIEND)
   }
 }
 
-/* __clsDelMsg(<hClass>, <cMessage>)
- *
- * Delete message (only for INLINE and METHOD)
- *
- * <hClass>   class handle
- * <cMessage> message
- */
+// __clsDelMsg(<hClass>, <cMessage>)
+//
+// Delete message (only for INLINE and METHOD)
+//
+// <hClass>   class handle
+// <cMessage> message
 HB_FUNC(__CLSDELMSG)
 {
   auto uiClass = static_cast<HB_USHORT>(hb_parni(1));
@@ -4046,10 +4007,9 @@ HB_FUNC(__CLSDELMSG)
   }
 }
 
-/* hb_clsInst(<hClass>) --> <pObjectItm>
- *
- * Create a new object from class definition <hClass>
- */
+// hb_clsInst(<hClass>) --> <pObjectItm>
+//
+// Create a new object from class definition <hClass>
 static PHB_ITEM hb_clsInst(HB_USHORT uiClass)
 {
   PHB_ITEM pSelf = nullptr;
@@ -4073,7 +4033,7 @@ static PHB_ITEM hb_clsInst(HB_USHORT uiClass)
       hb_arraySet(pSelf, pClass->uiMutexOffset, pMutex);
       hb_itemRelease(pMutex);
     }
-    /* Initialise value if initialisation was requested */
+    // Initialise value if initialisation was requested
     if (pClass->uiInitDatas)
     {
       PINITDATA pInitData = pClass->pInitData;
@@ -4089,7 +4049,7 @@ static PHB_ITEM hb_clsInst(HB_USHORT uiClass)
         else if (pInitData->uiType == HB_OO_MSG_CLASSDATA)
         {
           pDestItm = hb_arrayGetItemPtr(pClass->pClassDatas, pInitData->uiData);
-          /* do not initialize it again */
+          // do not initialize it again
           pInitData->uiType = HB_OO_MSG_INITIALIZED;
         }
         else
@@ -4110,10 +4070,9 @@ static PHB_ITEM hb_clsInst(HB_USHORT uiClass)
   return pSelf;
 }
 
-/* __clsInst(<hClass>) --> <oNewObject>
- *
- * Create a new object from class definition <hClass>
- */
+// __clsInst(<hClass>) --> <oNewObject>
+//
+// Create a new object from class definition <hClass>
 HB_FUNC(__CLSINST)
 {
   PHB_ITEM pSelf = hb_clsInst(static_cast<HB_USHORT>(hb_parni(1)));
@@ -4124,10 +4083,9 @@ HB_FUNC(__CLSINST)
   }
 }
 
-/* __clsLock(<hClass>)
- *
- * Block farther class modifications
- */
+// __clsLock(<hClass>)
+//
+// Block farther class modifications
 HB_FUNC(__CLSLOCK)
 {
   auto uiClass = static_cast<HB_USHORT>(hb_parni(1));
@@ -4138,10 +4096,9 @@ HB_FUNC(__CLSLOCK)
   }
 }
 
-/* __clsModMsg(<hClass>, <cMessage>, <pFunc>)
- *
- * Modify message (only for INLINE and METHOD)
- */
+// __clsModMsg(<hClass>, <cMessage>, <pFunc>)
+//
+// Modify message (only for INLINE and METHOD)
 HB_FUNC(__CLSMODMSG)
 {
   auto uiClass = static_cast<HB_USHORT>(hb_parni(1));
@@ -4238,10 +4195,9 @@ HB_FUNC(__CLSMODMSG)
   }
 }
 
-/* __objGetClsName(<hClass> | <oObj>) --> <cClassName>
- *
- * Returns class name of <oObj> or <hClass>
- */
+// __objGetClsName(<hClass> | <oObj>) --> <cClassName>
+//
+// Returns class name of <oObj> or <hClass>
 HB_FUNC(__OBJGETCLSNAME)
 {
   HB_STACK_TLS_PRELOAD
@@ -4260,10 +4216,9 @@ HB_FUNC(__OBJGETCLSNAME)
   hb_retc(hb_clsName(uiClass));
 }
 
-/* __objHasMsg(<oObj>, <cMsgName> | <sMsgName>) --> <lRet>
- *
- * Is <cSymbol> a valid message for the <oObj>
- */
+// __objHasMsg(<oObj>, <cMsgName> | <sMsgName>) --> <lRet>
+//
+// Is <cSymbol> a valid message for the <oObj>
 HB_FUNC(__OBJHASMSG)
 {
   PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
@@ -4279,10 +4234,9 @@ HB_FUNC(__OBJHASMSG)
   }
 }
 
-/* __objHasMsgAssigned(<oObj>, <cMsgName> | <sMsgName>) --> <lExists>
- *
- * checks if function exists and is not virtual
- */
+// __objHasMsgAssigned(<oObj>, <cMsgName> | <sMsgName>) --> <lExists>
+//
+// checks if function exists and is not virtual
 HB_FUNC(__OBJHASMSGASSIGNED)
 {
   PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
@@ -4299,10 +4253,9 @@ HB_FUNC(__OBJHASMSGASSIGNED)
   }
 }
 
-/* __objSendMsg(<oObj>, <cMsgName> | <sMsgName>, <xArg,..>) --> <xRet>
- *
- * Send a message to an object
- */
+// __objSendMsg(<oObj>, <cMsgName> | <sMsgName>, <xArg,..>) --> <xRet>
+//
+// Send a message to an object
 HB_FUNC(__OBJSENDMSG)
 {
   PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
@@ -4312,15 +4265,15 @@ HB_FUNC(__OBJSENDMSG)
     HB_STACK_TLS_PRELOAD
     HB_USHORT uiPCount = hb_pcount();
 
-    hb_vmPushSymbol(pMessage->pSymbol);         /* Push message symbol */
-    hb_vmPush(hb_param(1, Harbour::Item::ANY)); /* Push object */
+    hb_vmPushSymbol(pMessage->pSymbol);         // Push message symbol
+    hb_vmPush(hb_param(1, Harbour::Item::ANY)); // Push object
 
     for (HB_USHORT uiParam = 3; uiParam <= uiPCount; ++uiParam)
-    { /* Push arguments on stack */
+    { // Push arguments on stack
       hb_vmPush(hb_stackItemFromBase(uiParam));
     }
 
-    hb_vmSend(static_cast<HB_USHORT>(uiPCount - 2)); /* Execute message */
+    hb_vmSend(static_cast<HB_USHORT>(uiPCount - 2)); // Execute message
   }
   else
   {
@@ -4328,10 +4281,9 @@ HB_FUNC(__OBJSENDMSG)
   }
 }
 
-/* __objClone( <oSource> ) --> <oNew>
- *
- * Clone an object. Note the similarity with aClone ;-)
- */
+// __objClone( <oSource> ) --> <oNew>
+//
+// Clone an object. Note the similarity with aClone ;-)
 HB_FUNC(__OBJCLONE)
 {
   HB_STACK_TLS_PRELOAD
@@ -4347,10 +4299,9 @@ HB_FUNC(__OBJCLONE)
   }
 }
 
-/* __clsInstSuper(<cClassName> | <sClassFunc>) --> <hClass>
- *
- * Instance super class and return class handle
- */
+// __clsInstSuper(<cClassName> | <sClassFunc>) --> <hClass>
+//
+// Instance super class and return class handle
 HB_FUNC(__CLSINSTSUPER)
 {
   HB_STACK_TLS_PRELOAD
@@ -4383,7 +4334,7 @@ HB_FUNC(__CLSINSTSUPER)
     {
       hb_vmPushSymbol(pClassFuncSym);
       hb_vmPushNil();
-      hb_vmProc(0); /* Execute super class */
+      hb_vmProc(0); // Execute super class
 
       if (hb_vmRequestQuery() == 0)
       {
@@ -4400,7 +4351,7 @@ HB_FUNC(__CLSINSTSUPER)
           else
           {
             uiClassH = hb_clsFindClassByFunc(pClassFuncSym);
-            /* still not found, try to send NEW() message */
+            // still not found, try to send NEW() message
             if (uiClassH == 0)
             {
               hb_vmPushSymbol(&s___msgNew);
@@ -4420,7 +4371,7 @@ HB_FUNC(__CLSINSTSUPER)
           }
         }
 
-        /* This disables destructor execution for this object */
+        // This disables destructor execution for this object
         if (uiClassH && HB_IS_OBJECT(pObject))
         {
           pObject->item.asArray.value->uiClass = 0;
@@ -4453,10 +4404,9 @@ HB_FUNC(__CLSINSTSUPER)
   hb_retni(uiClassH);
 }
 
-/* __clsAssocType(<hClass>, <cType>) --> <lOK>
- *
- * Associate class with given basic type
- */
+// __clsAssocType(<hClass>, <cType>) --> <lOK>
+//
+// Associate class with given basic type
 HB_FUNC(__CLSASSOCTYPE)
 {
   HB_STACK_TLS_PRELOAD
@@ -4520,20 +4470,18 @@ HB_FUNC(__CLSASSOCTYPE)
   hb_retl(fResult);
 }
 
-/* __clsCntClasses() --> <nCount>
- *
- * Return number of classes
- */
+// __clsCntClasses() --> <nCount>
+//
+// Return number of classes
 HB_FUNC(__CLSCNTCLASSES)
 {
   HB_STACK_TLS_PRELOAD
   hb_retni(static_cast<int>(s_uiClasses));
 }
 
-/* __cls_CntClsData(<hClass>) --> <nCount>
- *
- * Return number of class datas
- */
+// __cls_CntClsData(<hClass>) --> <nCount>
+//
+// Return number of class datas
 HB_FUNC(__CLS_CNTCLSDATA)
 {
   HB_STACK_TLS_PRELOAD
@@ -4542,10 +4490,9 @@ HB_FUNC(__CLS_CNTCLSDATA)
                                              : 0);
 }
 
-/* __cls_CntShrData(<hClass>) --> <nCount>
- *
- * Return number of class datas
- */
+// __cls_CntShrData(<hClass>) --> <nCount>
+//
+// Return number of class datas
 HB_FUNC(__CLS_CNTSHRDATA)
 {
   HB_STACK_TLS_PRELOAD
@@ -4554,10 +4501,9 @@ HB_FUNC(__CLS_CNTSHRDATA)
                                              : 0);
 }
 
-/* __cls_CntData(<hClass>) --> <nCount>
- *
- * Return number of datas
- */
+// __cls_CntData(<hClass>) --> <nCount>
+//
+// Return number of datas
 HB_FUNC(__CLS_CNTDATA)
 {
   HB_STACK_TLS_PRELOAD
@@ -4565,10 +4511,9 @@ HB_FUNC(__CLS_CNTDATA)
   hb_retni(uiClass && uiClass <= s_uiClasses ? s_pClasses[uiClass]->uiDatas : 0);
 }
 
-/* __cls_DecData(<hClass>) --> <nCount>
- *
- * Decrease number of datas and return new value
- */
+// __cls_DecData(<hClass>) --> <nCount>
+//
+// Decrease number of datas and return new value
 HB_FUNC(__CLS_DECDATA)
 {
   HB_STACK_TLS_PRELOAD
@@ -4588,10 +4533,9 @@ HB_FUNC(__CLS_DECDATA)
   }
 }
 
-/* __cls_IncData(<hClass>) --> <nCount>
- *
- * Increase number of datas and return offset to new value
- */
+// __cls_IncData(<hClass>) --> <nCount>
+//
+// Increase number of datas and return offset to new value
 HB_FUNC(__CLS_INCDATA)
 {
   HB_STACK_TLS_PRELOAD
@@ -4611,20 +4555,20 @@ HB_FUNC(__CLS_INCDATA)
   }
 }
 
-/* NOTE: Undocumented Clipper function */
-/* see for parameter compatibility with Clipper. */
+// NOTE: Undocumented Clipper function
+// see for parameter compatibility with Clipper.
 
 HB_FUNC_TRANSLATE(__CLASSNEW, __CLSNEW)
 
-/* NOTE: Undocumented Clipper function */
+// NOTE: Undocumented Clipper function
 
 HB_FUNC_TRANSLATE(__CLASSINSTANCE, __CLSINST)
 
-/* NOTE: Undocumented Clipper function */
+// NOTE: Undocumented Clipper function
 
 HB_FUNC_TRANSLATE(__CLASSADD, __CLSADDMSG)
 
-/* NOTE: Undocumented Clipper function */
+// NOTE: Undocumented Clipper function
 
 HB_FUNC(__CLASSNAME)
 {
@@ -4632,7 +4576,7 @@ HB_FUNC(__CLASSNAME)
   hb_retc(hb_clsName(static_cast<HB_USHORT>(hb_parni(1))));
 }
 
-/* NOTE: Undocumented Clipper function */
+// NOTE: Undocumented Clipper function
 
 HB_FUNC(__CLASSSEL)
 {
@@ -4645,12 +4589,12 @@ HB_FUNC(__CLASSSEL)
     PMETHOD pMethod = pClass->pMethods;
     HB_SIZE nLimit = hb_clsMthNum(pClass), nPos = 0;
 
-    hb_arrayNew(pReturn, pClass->uiMethods); /* Create a transfer array */
+    hb_arrayNew(pReturn, pClass->uiMethods); // Create a transfer array
 
     do
     {
       if (pMethod->pMessage)
-      { /* Hash Entry used ? */
+      { // Hash Entry used ?
         hb_arraySetC(pReturn, ++nPos, pMethod->pMessage->pSymbol->szName);
       }
       ++pMethod;
@@ -4665,16 +4609,15 @@ HB_FUNC(__CLASSSEL)
   hb_itemReturnRelease(pReturn);
 }
 
-/* to be used from Classes ERROR HANDLER method */
+// to be used from Classes ERROR HANDLER method
 HB_FUNC(__GETMESSAGE)
 {
   HB_STACK_TLS_PRELOAD
   hb_retc(hb_stackItem(hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem)->item.asSymbol.value->szName);
 }
 
-/* __clsParent(<hClass>, <cParentClass>) --> <lIsParent>
- * Checks if <cParentClass> is parent of <hClass>
- */
+// __clsParent(<hClass>, <cParentClass>) --> <lIsParent>
+// Checks if <cParentClass> is parent of <hClass>
 HB_FUNC(__CLSPARENT)
 {
   HB_STACK_TLS_PRELOAD
@@ -4682,9 +4625,8 @@ HB_FUNC(__CLSPARENT)
   hb_retl(szParentName && hb_clsIsParent(static_cast<HB_USHORT>(hb_parni(1)), szParentName));
 }
 
-/* __Sender() --> <obj> | NIL
- * returns sender object
- */
+// __Sender() --> <obj> | NIL
+// returns sender object
 HB_FUNC(__SENDER)
 {
   HB_STACK_TLS_PRELOAD
@@ -4694,7 +4636,7 @@ HB_FUNC(__SENDER)
   {
     auto pSelf = hb_stackItem(nOffset + 1);
 
-    /* Is it inline method? */
+    // Is it inline method?
     if (nOffset > 0 && HB_IS_BLOCK(pSelf) && hb_stackItem(nOffset)->item.asSymbol.value == &hb_symEval)
     {
       pSelf = hb_stackItem(hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem + 1);
@@ -4711,7 +4653,7 @@ HB_FUNC(__CLSSYNCSIGNAL)
 {
 #if defined(HB_MT_VM)
   hb_threadMutexSyncSignal(hb_param(1, Harbour::Item::ANY));
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 }
 
 HB_FUNC(__CLSSYNCWAIT)
@@ -4737,7 +4679,7 @@ HB_FUNC(__CLSSYNCWAIT)
       {
         auto pSelf = hb_stackItem(nOffset + 1);
 
-        /* Is it inline method? */
+        // Is it inline method?
         if (HB_IS_BLOCK(pSelf) && pBase->item.asSymbol.value == &hb_symEval)
         {
           pSelf = hb_stackItem(pBase->item.asSymbol.stackstate->nBaseItem + 1);
@@ -4766,13 +4708,12 @@ HB_FUNC(__CLSSYNCWAIT)
   }
 
   hb_retl(hb_threadMutexSyncWait(hb_param(1, Harbour::Item::ANY), ulMilliSec, pMutex));
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 }
 
-/* __classH( <obj> ) --> <hClass>
- *
- * Returns class handle of <obj>
- */
+// __classH( <obj> ) --> <hClass>
+//
+// Returns class handle of <obj>
 HB_FUNC(__CLASSH)
 {
   HB_STACK_TLS_PRELOAD
@@ -4780,22 +4721,20 @@ HB_FUNC(__CLASSH)
   hb_retni(pObject ? hb_objGetClassH(pObject) : 0);
 }
 
-/* --- */
+// ---
 
-/* <hClass> := <obj>:ClassH()
- *
- * Returns class handle of <obj>
- */
+// <hClass> := <obj>:ClassH()
+//
+// Returns class handle of <obj>
 HB_FUNC_STATIC(msgClassH)
 {
   HB_STACK_TLS_PRELOAD
   hb_retni(hb_stackBaseItem()->item.asSymbol.stackstate->uiClass);
 }
 
-/* <cClassName> := <obj>:ClassName()
- *
- * Return class name of <obj>. Can also be used for all types.
- */
+// <cClassName> := <obj>:ClassName()
+//
+// Return class name of <obj>. Can also be used for all types.
 HB_FUNC_STATIC(msgClassName)
 {
   HB_STACK_TLS_PRELOAD
@@ -4867,10 +4806,9 @@ static int hb_methodType(PMETHOD pMethod)
   }
 }
 
-/* <aMessages> := <obj>:ClassSel()
- *
- * Returns all the messages in <obj>
- */
+// <aMessages> := <obj>:ClassSel()
+//
+// Returns all the messages in <obj>
 HB_FUNC_STATIC(msgClassSel)
 {
   HB_STACK_TLS_PRELOAD
@@ -4890,7 +4828,7 @@ HB_FUNC_STATIC(msgClassSel)
     do
     {
       if (pMethod->pMessage)
-      { /* Hash Entry used ? */
+      { // Hash Entry used ?
         if ((nParam == HB_MSGLISTALL) || (nParam == HB_MSGLISTCLASS && hb_methodType(pMethod) == HB_OO_MSG_CLASSDATA) ||
             (nParam == HB_MSGLISTPURE && hb_methodType(pMethod) != HB_OO_MSG_CLASSDATA))
         {
@@ -4927,21 +4865,19 @@ HB_FUNC_STATIC(msgClassSel)
 
 #if 0
 
-/* __msgClass()
- *
- * Internal function to return Self at Self:Class call (classy compatibility)
- */
+// __msgClass()
+//
+// Internal function to return Self at Self:Class call (classy compatibility)
 HB_FUNC_STATIC( msgClass )
 {
    hb_itemReturnForward(hb_stackSelfItem());
 }
 
-/* Added by JfL&RaC
- * <logical> <= <obj>:IsDerivedFrom(xParam)
- *
- * Return true if <obj> is derived from xParam.
- * xParam can be either an obj or a classname
- */
+// Added by JfL&RaC
+// <logical> <= <obj>:IsDerivedFrom(xParam)
+//
+// Return true if <obj> is derived from xParam.
+// xParam can be either an obj or a classname
 HB_FUNC_STATIC( msgClassParent )
 {
    auto fHasParent = false;
@@ -4963,10 +4899,9 @@ HB_FUNC_STATIC( msgClassParent )
 
 #endif
 
-/* __msgEvalInline()
- *
- * Internal function executed for inline methods
- */
+// __msgEvalInline()
+//
+// Internal function executed for inline methods
 HB_FUNC_STATIC(msgEvalInline)
 {
   HB_STACK_TLS_PRELOAD
@@ -4978,11 +4913,11 @@ HB_FUNC_STATIC(msgEvalInline)
   hb_vmPushEvalSym();
 
   hb_vmPush(hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData));
-  auto pBlock = hb_stackItemFromTop(-1); /* Push block */
+  auto pBlock = hb_stackItemFromTop(-1); // Push block
   pBlock->item.asBlock.hclass = pStack->uiClass;
   pBlock->item.asBlock.method = pStack->uiMethod;
 
-  hb_vmPush(hb_stackSelfItem()); /* Push self as first argument */
+  hb_vmPush(hb_stackSelfItem()); // Push self as first argument
 
   for (HB_USHORT uiParam = 1; uiParam <= uiPCount; uiParam++)
   {
@@ -5008,7 +4943,7 @@ HB_FUNC_STATIC(msgPerform)
     }
     else if (HB_IS_OBJECT(pItem) && s_pClasses[pItem->item.asArray.value->uiClass]->pClassSym == s___msgSymbol.pDynSym)
     {
-      /* Dirty hack */
+      // Dirty hack
       pItem = hb_arrayGetItemPtr(pItem, 1);
       if (pItem && HB_IS_SYMBOL(pItem))
       {
@@ -5118,16 +5053,15 @@ HB_FUNC_STATIC(msgSyncClass)
   }
 }
 
-/* __msgNoMethod()
- *
- * Internal function for generating error when not existing message is sent
- */
+// __msgNoMethod()
+//
+// Internal function for generating error when not existing message is sent
 HB_FUNC_STATIC(msgNoMethod)
 {
   HB_STACK_TLS_PRELOAD
   PHB_SYMB pSym = hb_itemGetSymbol(hb_stackBaseItem());
 
-#if 1 /* Clipper compatible error message */
+#if 1 // Clipper compatible error message
   if (pSym->szName[0] == '_')
   {
     hb_errRT_BASE_SubstR(EG_NOVARMETHOD, 1005, nullptr, pSym->szName + 1, HB_ERR_ARGS_SELFPARAMS);
@@ -5152,10 +5086,9 @@ HB_FUNC_STATIC(msgNoMethod)
 #endif
 }
 
-/* __msgScopeErr()
- *
- * Internal function for generating error when not existing message is sent
- */
+// __msgScopeErr()
+//
+// Internal function for generating error when not existing message is sent
 HB_FUNC_STATIC(msgScopeErr)
 {
   HB_STACK_TLS_PRELOAD
@@ -5187,10 +5120,9 @@ HB_FUNC_STATIC(msgTypeErr)
   hb_xfree(pszProcName);
 }
 
-/* __msgSuper()
- *
- * Internal function to return a superobject
- */
+// __msgSuper()
+//
+// Internal function to return a superobject
 HB_FUNC_STATIC(msgSuper)
 {
   HB_STACK_TLS_PRELOAD
@@ -5199,11 +5131,10 @@ HB_FUNC_STATIC(msgSuper)
                         s_pClasses[pStack->uiClass]->pMethods[pStack->uiMethod].uiData);
 }
 
-/* __msgRealClass()
- *
- * Internal function to return a superobject of class where the method was
- * defined
- */
+// __msgRealClass()
+//
+// Internal function to return a superobject of class where the method was
+// defined
 HB_FUNC_STATIC(msgRealClass)
 {
   HB_STACK_TLS_PRELOAD
@@ -5221,10 +5152,9 @@ HB_FUNC_STATIC(msgRealClass)
   }
 }
 
-/* __msgGetClsData()
- *
- * Internal function to return a CLASSDATA
- */
+// __msgGetClsData()
+//
+// Internal function to return a CLASSDATA
 HB_FUNC_STATIC(msgGetClsData)
 {
   HB_STACK_TLS_PRELOAD
@@ -5233,10 +5163,9 @@ HB_FUNC_STATIC(msgGetClsData)
   hb_arrayGet(pClass->pClassDatas, pMethod->uiData, hb_stackReturnItem());
 }
 
-/* __msgSetClsData()
- *
- * Internal function to set a CLASSDATA
- */
+// __msgSetClsData()
+//
+// Internal function to set a CLASSDATA
 HB_FUNC_STATIC(msgSetClsData)
 {
   HB_STACK_TLS_PRELOAD
@@ -5268,10 +5197,9 @@ HB_FUNC_STATIC(msgSetClsData)
   }
 }
 
-/* __msgGetShrData()
- *
- * Internal function to return a SHAREDDATA
- */
+// __msgGetShrData()
+//
+// Internal function to return a SHAREDDATA
 HB_FUNC_STATIC(msgGetShrData)
 {
   HB_STACK_TLS_PRELOAD
@@ -5280,10 +5208,9 @@ HB_FUNC_STATIC(msgGetShrData)
   hb_arrayGet(s_pClasses[pMethod->uiSprClass]->pSharedDatas, pMethod->uiData, hb_stackReturnItem());
 }
 
-/* __msgSetShrData()
- *
- * Internal function to set a SHAREDDATA
- */
+// __msgSetShrData()
+//
+// Internal function to set a SHAREDDATA
 HB_FUNC_STATIC(msgSetShrData)
 {
   HB_STACK_TLS_PRELOAD
@@ -5315,10 +5242,9 @@ HB_FUNC_STATIC(msgSetShrData)
   }
 }
 
-/* __msgGetData()
- *
- * Internal function to return a DATA
- */
+// __msgGetData()
+//
+// Internal function to return a DATA
 HB_FUNC_STATIC(msgGetData)
 {
   HB_STACK_TLS_PRELOAD
@@ -5345,10 +5271,9 @@ HB_FUNC_STATIC(msgGetData)
   }
 }
 
-/* __msgSetData()
- *
- * Internal function to set a DATA
- */
+// __msgSetData()
+//
+// Internal function to set a DATA
 HB_FUNC_STATIC(msgSetData)
 {
   HB_STACK_TLS_PRELOAD
@@ -5391,10 +5316,10 @@ HB_FUNC_STATIC(msgSetData)
         }
       }
 
-      /* will arise only if the class has been modified after first instance */
+      // will arise only if the class has been modified after first instance
       if (nIndex > hb_arrayLen(pObject))
-      {                                /* Resize needed ? */
-        hb_arraySize(pObject, nIndex); /* Make large enough */
+      {                                // Resize needed ?
+        hb_arraySize(pObject, nIndex); // Make large enough
       }
       hb_arraySet(pObject, nIndex, pReturn);
       hb_itemReturn(pReturn);
@@ -5402,11 +5327,11 @@ HB_FUNC_STATIC(msgSetData)
   }
 }
 
-/* No comment :-) */
+// No comment :-)
 HB_FUNC_STATIC(msgVirtual)
 {
 #if 0
-   hb_ret(); /* NOTE: It's safe to have this commented out. */
+   hb_ret(); // NOTE: It's safe to have this commented out.
 #endif
 }
 
@@ -5446,8 +5371,8 @@ void hb_mthAddTime(HB_ULONG ulClockTicks)
 }
 #endif
 
-/* __GetMsgPrf(<hClass>, <cMsg>) --> <aMethodInfo> { { <nTimes>, <nTime> }, ... } */
-HB_FUNC(__GETMSGPRF) /* profiler: returns a method called and consumed times */
+// __GetMsgPrf(<hClass>, <cMsg>) --> <aMethodInfo> { { <nTimes>, <nTime> }, ... }
+HB_FUNC(__GETMSGPRF) // profiler: returns a method called and consumed times
 {
   HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
@@ -5685,9 +5610,8 @@ static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
   }
 }
 
-/* __objGetIVars(<oObject>, [<nScope>], [<lChanged>])
- *          --> <aIVars> { { <cName>, <xVal> }, ... }
- */
+// __objGetIVars(<oObject>, [<nScope>], [<lChanged>])
+//          --> <aIVars> { { <cName>, <xVal> }, ... }
 HB_FUNC(__OBJGETIVARS)
 {
   auto pObject = hb_param(1, Harbour::Item::OBJECT);
@@ -5696,9 +5620,8 @@ HB_FUNC(__OBJGETIVARS)
   hb_itemReturnRelease(hb_objGetIVars(pObject, uiScope, fChanged));
 }
 
-/* __objSetIVars(<oObject> | <hClass> | <cClassName> | <sClassFunc>,
- *                <aIVars>) --> <oObject>
- */
+// __objSetIVars(<oObject> | <hClass> | <cClassName> | <sClassFunc>,
+//                <aIVars>) --> <oObject>
 HB_FUNC(__OBJSETIVARS)
 {
   auto pObject = hb_param(1, Harbour::Item::ANY);
@@ -5738,9 +5661,8 @@ HB_FUNC(__OBJSETIVARS)
   }
 }
 
-/* __objRestoreIVars(<aIVars>, <hClass> | <sClassFunc> |
-                                <cClassName>[, <cClassFuncName>]) --> <oObject>
- */
+// __objRestoreIVars(<aIVars>, <hClass> | <sClassFunc> |
+//                              <cClassName>[, <cClassFuncName>]) --> <oObject>
 HB_FUNC(__OBJRESTOREIVARS)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
@@ -5774,13 +5696,12 @@ HB_FUNC(__OBJRESTOREIVARS)
   hb_itemReturn(pArray);
 }
 
-/* __clsGetProperties(<nClassHandle>, [<lAllExported>]) --> <acProperties>
- * Notice that this function works quite similar to __classSel()
- * except that just returns the name of the datas and methods
- * that have been declared as PROPERTY (PERSISTENT) or also EXPORTED
- * if second parameter <lAllExported> is true and message has corresponding
- * assign message (with "_" prefix)
- */
+// __clsGetProperties(<nClassHandle>, [<lAllExported>]) --> <acProperties>
+// Notice that this function works quite similar to __classSel()
+// except that just returns the name of the datas and methods
+// that have been declared as PROPERTY (PERSISTENT) or also EXPORTED
+// if second parameter <lAllExported> is true and message has corresponding
+// assign message (with "_" prefix)
 HB_FUNC(__CLSGETPROPERTIES)
 {
   auto uiClass = static_cast<HB_USHORT>(hb_parni(1));
@@ -5853,7 +5774,7 @@ HB_FUNC(__CLSGETPROPERTIES)
   hb_itemReturnRelease(pReturn);
 }
 
-/* __clsGetAncestors(<nClass> ) --> { <nSuper1>, <nSuper2>, ...} */
+// __clsGetAncestors(<nClass> ) --> { <nSuper1>, <nSuper2>, ...}
 HB_FUNC(__CLSGETANCESTORS)
 {
   auto uiClass = static_cast<HB_USHORT>(hb_parni(1));
@@ -5880,12 +5801,11 @@ HB_FUNC(__CLSGETANCESTORS)
   }
 }
 
-/* __clsMsgType(<hClass>, <cMsgName> | <sMsgName>) --> <nType>
- *
- * return type of method attached to given message,
- * <nType> is one of HB_OO_MSG_* values defined in hboo.ch or
- * -1 if message is not supported.
- */
+// __clsMsgType(<hClass>, <cMsgName> | <sMsgName>) --> <nType>
+//
+// return type of method attached to given message,
+// <nType> is one of HB_OO_MSG_* values defined in hboo.ch or
+// -1 if message is not supported.
 HB_FUNC(__CLSMSGTYPE)
 {
   PHB_DYNS pMessage = hb_objGetMsgSym(hb_param(2, Harbour::Item::ANY));
@@ -5909,13 +5829,12 @@ HB_FUNC(__CLSMSGTYPE)
   }
 }
 
-/* extend the size of classes buffer to given value to avoid later
- * RT reallocations. It may be useful in some very seldom cases
- * for MT programs which will allocate dynamically at runtime
- * more then 16386 classes. In practice rather impossible though
- * who knows ;-)
- * __clsPreallocate([<nMaxClasses>]) --> <nMaxClasses>
- */
+// extend the size of classes buffer to given value to avoid later
+// RT reallocations. It may be useful in some very seldom cases
+// for MT programs which will allocate dynamically at runtime
+// more then 16386 classes. In practice rather impossible though
+// who knows ;-)
+// __clsPreallocate([<nMaxClasses>]) --> <nMaxClasses>
 HB_FUNC(__CLSPREALLOCATE)
 {
   HB_STACK_TLS_PRELOAD
@@ -5940,7 +5859,7 @@ HB_FUNC(__CLSPREALLOCATE)
   hb_retnl(s_uiClsSize);
 }
 
-/* __clsLockDef(<clsItem>) --> <lLocked> */
+// __clsLockDef(<clsItem>) --> <lLocked>
 HB_FUNC(__CLSLOCKDEF)
 {
   HB_STACK_TLS_PRELOAD
@@ -5964,7 +5883,7 @@ HB_FUNC(__CLSLOCKDEF)
   hb_retl(fLocked);
 }
 
-/* __clsUnlockDef(@<clsItem>, <clsDef>) */
+// __clsUnlockDef(@<clsItem>, <clsDef>)
 HB_FUNC(__CLSUNLOCKDEF)
 {
   auto pClsDst = hb_param(1, Harbour::Item::BYREF);
@@ -5972,9 +5891,8 @@ HB_FUNC(__CLSUNLOCKDEF)
 
   if (pClsDst && pClsSrc && HB_IS_NIL(pClsDst) && !HB_ISBYREF(2))
   {
-    /* special core code only macro used to eliminate race condition
-     * in unprotected readonly access to pClsDst variable.
-     */
+    // special core code only macro used to eliminate race condition
+    // in unprotected readonly access to pClsDst variable.
     hb_itemSafeMove(pClsDst, pClsSrc);
   }
 
@@ -5984,9 +5902,8 @@ HB_FUNC(__CLSUNLOCKDEF)
   }
 }
 
-/* Dirty functions which converts array to object of given class
- * __objSetClass(<oObject>, <cClassName> [, <cClassFuncName> ]) --> <oObject>
- */
+// Dirty functions which converts array to object of given class
+// __objSetClass(<oObject>, <cClassName> [, <cClassFuncName> ]) --> <oObject>
 HB_FUNC(__OBJSETCLASS)
 {
   auto pObject = hb_param(1, Harbour::Item::ARRAY);
@@ -6004,12 +5921,11 @@ HB_FUNC(__OBJSETCLASS)
   hb_itemReturn(pObject);
 }
 
-/* Real dirty function, though very useful under certain circumstances:
- * It allows to change the class handle of an object into another class handle,
- * so the object behaves like a different Class of object.
- * Based on objects.lib SetClsHandle()
- * __objSetClassHandle(<oObject>, <nClassHandle>) --> <nPrevClassHandle>
- */
+// Real dirty function, though very useful under certain circumstances:
+// It allows to change the class handle of an object into another class handle,
+// so the object behaves like a different Class of object.
+// Based on objects.lib SetClsHandle()
+// __objSetClassHandle(<oObject>, <nClassHandle>) --> <nPrevClassHandle>
 HB_FUNC(__OBJSETCLASSHANDLE)
 {
   HB_STACK_TLS_PRELOAD
@@ -6034,19 +5950,18 @@ HB_FUNC(__OBJSETCLASSHANDLE)
 HB_FUNC_TRANSLATE(HB_SETCLSHANDLE, __OBJSETCLASSHANDLE)
 #endif
 
-/* Harbour equivalent for Clipper internal __mdCreate() */
+// Harbour equivalent for Clipper internal __mdCreate()
 HB_USHORT hb_clsCreate(HB_USHORT usSize, const char *szClassName)
 {
   return hb_clsNew(szClassName, usSize, nullptr, nullptr, false);
 }
 
-/* Harbour equivalent for Clipper internal __mdAdd() */
+// Harbour equivalent for Clipper internal __mdAdd()
 void hb_clsAdd(HB_USHORT usClassH, const char *szMethodName, PHB_FUNC pFuncPtr)
 {
-  /* We can use empty name "" for this symbol in hb_symbolNew()
-   * It's only envelop for function with additional execution
-   * information for HVM not registered symbol. [druzus]
-   */
+  // We can use empty name "" for this symbol in hb_symbolNew()
+  // It's only envelop for function with additional execution
+  // information for HVM not registered symbol. [druzus]
   PHB_SYMB pExecSym = hb_symbolNew("");
   pExecSym->value.pFunPtr = pFuncPtr;
   auto pFuncItem = hb_itemPutSymbol(nullptr, pExecSym);
@@ -6056,7 +5971,7 @@ void hb_clsAdd(HB_USHORT usClassH, const char *szMethodName, PHB_FUNC pFuncPtr)
   hb_itemRelease(pFuncItem);
 }
 
-/* Harbour equivalent for Clipper internal __mdAssociate() */
+// Harbour equivalent for Clipper internal __mdAssociate()
 void hb_clsAssociate(HB_USHORT usClassH)
 {
   PHB_ITEM pSelf = hb_clsInst(usClassH);
@@ -6108,7 +6023,7 @@ HB_FUNC(__CLSVERIFY)
 }
 
 #if 0
-/* return real function name ignoring aliasing */
+// return real function name ignoring aliasing
 const char * hb_clsRealMethodName(void)
 {
    HB_ISIZ nOffset = hb_stackBaseProcOffset(1);

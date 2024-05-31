@@ -52,7 +52,7 @@
 
 struct DYNHB_ITEM
 {
-  PHB_DYNS pDynSym; /* Pointer to dynamic symbol */
+  PHB_DYNS pDynSym; // Pointer to dynamic symbol
 };
 
 struct HB_SYM_HOLDER
@@ -85,20 +85,19 @@ static HB_CRITICAL_NEW(s_dynsMtx);
 
 #define hb_dynsymHandles(p) (p)
 
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
-static DYNHB_ITEM *s_pDynItems = nullptr; /* Pointer to dynamic items */
-static HB_SYMCNT s_uiDynSymbols = 0;      /* Number of symbols present */
+static DYNHB_ITEM *s_pDynItems = nullptr; // Pointer to dynamic items
+static HB_SYMCNT s_uiDynSymbols = 0;      // Number of symbols present
 
-static HB_SYM_HOLDER *s_pAllocSyms = nullptr; /* symbols allocated dynamically */
+static HB_SYM_HOLDER *s_pAllocSyms = nullptr; // symbols allocated dynamically
 
-/* table index for dynamic symbol to number conversions */
+// table index for dynamic symbol to number conversions
 static DYNHB_ITEM *s_pDynIndex = nullptr;
 static HB_SYMCNT s_uiDynIdxSize = 0;
 
-/* Insert new symbol into dynamic symbol table.
- * In MT mode caller should protected it by HB_DYNSYM_LOCK()
- */
+// Insert new symbol into dynamic symbol table.
+// In MT mode caller should protected it by HB_DYNSYM_LOCK()
 static PHB_DYNS hb_dynsymInsert(PHB_SYMB pSymbol, HB_SYMCNT uiPos)
 {
 #if 0
@@ -129,10 +128,9 @@ static PHB_DYNS hb_dynsymInsert(PHB_SYMB pSymbol, HB_SYMCNT uiPos)
   return pDynSym;
 }
 
-/* Find symbol in dynamic symbol table and set it's position.
- * If not found set position for insert operation.
- * In MT mode caller should protected it by HB_DYNSYM_LOCK()
- */
+// Find symbol in dynamic symbol table and set it's position.
+// If not found set position for insert operation.
+// In MT mode caller should protected it by HB_DYNSYM_LOCK()
 static PHB_DYNS hb_dynsymPos(const char *szName, HB_SYMCNT *puiPos)
 {
 #if 0
@@ -157,7 +155,7 @@ static PHB_DYNS hb_dynsymPos(const char *szName, HB_SYMCNT *puiPos)
       uiLast = uiMiddle;
     }
     else
-    { /* if( iCmp > 0 ) */
+    { // if( iCmp > 0 )
       uiFirst = uiMiddle + 1;
     }
     uiMiddle = (uiFirst + uiLast) >> 1;
@@ -168,9 +166,8 @@ static PHB_DYNS hb_dynsymPos(const char *szName, HB_SYMCNT *puiPos)
   return nullptr;
 }
 
-/* Create new symbol.
- * In MT mode caller should protected it by HB_DYNSYM_LOCK()
- */
+// Create new symbol.
+// In MT mode caller should protected it by HB_DYNSYM_LOCK()
 static PHB_SYMB hb_symbolAlloc(const char *szName)
 {
 #if 0
@@ -191,7 +188,7 @@ static PHB_SYMB hb_symbolAlloc(const char *szName)
   return &pHolder->symbol;
 }
 
-/* Find symbol in dynamic symbol table */
+// Find symbol in dynamic symbol table
 PHB_DYNS hb_dynsymFind(const char *szName)
 {
 #if 0
@@ -218,7 +215,7 @@ PHB_DYNS hb_dynsymFind(const char *szName)
       uiLast = uiMiddle;
     }
     else
-    { /* if( iCmp > 0 ) */
+    { // if( iCmp > 0 )
       uiFirst = uiMiddle + 1;
     }
   }
@@ -228,7 +225,7 @@ PHB_DYNS hb_dynsymFind(const char *szName)
   return nullptr;
 }
 
-/* Create new symbol */
+// Create new symbol
 PHB_SYMB hb_symbolNew(const char *szName)
 {
 #if 0
@@ -246,7 +243,7 @@ PHB_SYMB hb_symbolNew(const char *szName)
   return pSymbol;
 }
 
-/* creates a new dynamic symbol */
+// creates a new dynamic symbol
 PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol)
 {
 #if 0
@@ -257,7 +254,7 @@ PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol)
 
   HB_SYMCNT uiPos;
 
-  PHB_DYNS pDynSym = hb_dynsymPos(pSymbol->szName, &uiPos); /* Find position */
+  PHB_DYNS pDynSym = hb_dynsymPos(pSymbol->szName, &uiPos); // Find position
   if (!pDynSym)
   {
     pDynSym = hb_dynsymInsert(pSymbol, uiPos);
@@ -268,81 +265,75 @@ PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol)
 
     if ((pDynSym->pSymbol->scope.value & pSymbol->scope.value & HB_FS_LOCAL) != 0 && pDynSym->pSymbol != pSymbol)
     {
-      /* Someone is using linker which allows to create binaries
-       * with multiple function definitions. It's a big chance that
-       * wrong binaries are created in such case, f.e both functions
-       * linked and not all references updated. Anyhow now we will
-       * have to guess which symbol is the real local one [druzus]
-       */
-      /* Let's check if linker updated function address so both symbols
-       * refer to the same function
-       */
+      // Someone is using linker which allows to create binaries
+      // with multiple function definitions. It's a big chance that
+      // wrong binaries are created in such case, f.e both functions
+      // linked and not all references updated. Anyhow now we will
+      // have to guess which symbol is the real local one [druzus]
+
+      // Let's check if linker updated function address so both symbols
+      // refer to the same function
       if (pDynSym->pSymbol->value.pFunPtr == pSymbol->value.pFunPtr)
       {
-        /* The addresses have been updated, f.e. in such way works GCC
-         * in Linux (but not MinGW and DJGPP) if user allows to create
-         * binaries with multiple symbols by
-         *    -Wl,--allow-multiple-definition
-         * when whole module cannot be cleanly replaced.
-         * OpenWatcom for Linux, MS-DOS and Windows (I haven't tested OS2
-         * version), POCC and XCC (with /FORCE:MULTIPLE) also update
-         * addresses in such case.
-         *
-         * We are guessing that symbols are registered in reverted order
-         * so we remove the HB_FS_LOCAL flag from previously registered
-         * symbol but some linkers may use different order so it does
-         * not have to be true in all cases
-         */
+        // The addresses have been updated, f.e. in such way works GCC
+        // in Linux (but not MinGW and DJGPP) if user allows to create
+        // binaries with multiple symbols by
+        //    -Wl,--allow-multiple-definition
+        // when whole module cannot be cleanly replaced.
+        // OpenWatcom for Linux, MS-DOS and Windows (I haven't tested OS2
+        // version), POCC and XCC (with /FORCE:MULTIPLE) also update
+        // addresses in such case.
+        //
+        // We are guessing that symbols are registered in reverted order
+        // so we remove the HB_FS_LOCAL flag from previously registered
+        // symbol but some linkers may use different order so it does
+        // not have to be true in all cases
         pDynSym->pSymbol->scope.value &= ~HB_FS_LOCAL;
       }
       else
       {
-        /* We have multiple symbol with the same name which refer
-         * to different public functions inside this single binary
-         * Let's check if this symbol is loaded from dynamic library
-         * (.so, .dll, .dyn, ...) or .hrb file
-         */
+        // We have multiple symbol with the same name which refer
+        // to different public functions inside this single binary
+        // Let's check if this symbol is loaded from dynamic library
+        // (.so, .dll, .dyn, ...) or .hrb file
         if (pSymbol->scope.value & HB_FS_PCODEFUNC)
         {
-          /* It's dynamic module so we are guessing that HVM
-           * intentionally not updated function address allowing
-           * multiple functions, f.e. programmer asked about keeping
-           * local references using hb_libLoad()/hb_hrbLoad() parameter.
-           * In such case update pDynSym address in the new symbol but
-           * do not register it as the main one
-           */
+          // It's dynamic module so we are guessing that HVM
+          // intentionally not updated function address allowing
+          // multiple functions, f.e. programmer asked about keeping
+          // local references using hb_libLoad()/hb_hrbLoad() parameter.
+          // In such case update pDynSym address in the new symbol but
+          // do not register it as the main one
           HB_DYNSYM_UNLOCK();
-          return pDynSym; /* Return pointer to DynSym */
+          return pDynSym; // Return pointer to DynSym
         }
-        /* The multiple symbols comes from single binaries - we have to
-         * decide what to do with them. We can leave it as is or we can
-         * try to overload one symbol so both will point to the same
-         * function. For .prg code such overloading will work but not
-         * for C code which makes something like: HB_FUNC_EXEC( funcname );
-         * In such case we cannot do anything - we cannot even detect
-         * such situation. In some cases even linker cannot detect it
-         * because C compiler can make auto-inlining or some bindings
-         * which are not visible for linker
-         */
-        /* Let's try to overload one of the functions. Simple:
-         *    pDynSym->pSymbol->value.pFunPtr = pSymbol->value.pFunPtr;
-         * is not good idea because it's possible that this symbol will
-         * be overloaded yet another time after preprocessing rest of
-         * symbols so we will use HB_FS_DEFERRED flag which is updated
-         * dynamically in hb_vmSend()/hb_vmDo() functions
-         */
+        // The multiple symbols comes from single binaries - we have to
+        // decide what to do with them. We can leave it as is or we can
+        // try to overload one symbol so both will point to the same
+        // function. For .prg code such overloading will work but not
+        // for C code which makes something like: HB_FUNC_EXEC( funcname );
+        // In such case we cannot do anything - we cannot even detect
+        // such situation. In some cases even linker cannot detect it
+        // because C compiler can make auto-inlining or some bindings
+        // which are not visible for linker
+
+        // Let's try to overload one of the functions. Simple:
+        //    pDynSym->pSymbol->value.pFunPtr = pSymbol->value.pFunPtr;
+        // is not good idea because it's possible that this symbol will
+        // be overloaded yet another time after preprocessing rest of
+        // symbols so we will use HB_FS_DEFERRED flag which is updated
+        // dynamically in hb_vmSend()/hb_vmDo() functions
 #define HB_OVERLOAD_MULTIPLE_FUNC
 
 #if defined(HB_OVERLOAD_MULTIPLE_FUNC)
-        /* In such way works MinGW, DJGPP, BCC */
+        // In such way works MinGW, DJGPP, BCC
 #if defined(__GNUC__)
-        /* MinGW (like most of other GCC ports) uses reverted order for
-         * initialization functions
-         */
+        // MinGW (like most of other GCC ports) uses reverted order for
+        // initialization functions
         pDynSym->pSymbol->scope.value &= ~HB_FS_LOCAL;
         pDynSym->pSymbol->scope.value |= HB_FS_DEFERRED;
 #else
-        /* BCC, DJGPP, ... */
+        // BCC, DJGPP, ...
         pSymbol->scope.value &= ~HB_FS_LOCAL;
         pSymbol->scope.value |= HB_FS_DEFERRED;
 #endif
@@ -366,7 +357,7 @@ PHB_DYNS hb_dynsymNew(PHB_SYMB pSymbol)
   return pDynSym;
 }
 
-/* finds and creates a symbol if not found */
+// finds and creates a symbol if not found
 PHB_DYNS hb_dynsymGetCase(const char *szName)
 {
 #if 0
@@ -388,7 +379,7 @@ PHB_DYNS hb_dynsymGetCase(const char *szName)
   return pDynSym;
 }
 
-PHB_DYNS hb_dynsymGet(const char *szName) /* finds and creates a symbol if not found */
+PHB_DYNS hb_dynsymGet(const char *szName) // finds and creates a symbol if not found
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymGet(%s)", szName));
@@ -396,8 +387,8 @@ PHB_DYNS hb_dynsymGet(const char *szName) /* finds and creates a symbol if not f
 
   char szUprName[HB_SYMBOL_NAME_LEN + 1];
 
-  /* make a copy as we may get a const string, then turn it to uppercase */
-  /* NOTE: This block is optimized for speed [vszakats] */
+  // make a copy as we may get a const string, then turn it to uppercase
+  // NOTE: This block is optimized for speed [vszakats]
   {
     int iLen = HB_SYMBOL_NAME_LEN;
     char *pDest = szUprName;
@@ -424,7 +415,7 @@ PHB_DYNS hb_dynsymGet(const char *szName) /* finds and creates a symbol if not f
   return hb_dynsymGetCase(szUprName);
 }
 
-PHB_DYNS hb_dynsymFindName(const char *szName) /* finds a symbol */
+PHB_DYNS hb_dynsymFindName(const char *szName) // finds a symbol
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_dynsymFindName(%s)", szName));
@@ -432,8 +423,8 @@ PHB_DYNS hb_dynsymFindName(const char *szName) /* finds a symbol */
 
   char szUprName[HB_SYMBOL_NAME_LEN + 1];
 
-  /* make a copy as we may get a const string, then turn it to uppercase */
-  /* NOTE: This block is optimized for speed [vszakats] */
+  // make a copy as we may get a const string, then turn it to uppercase
+  // NOTE: This block is optimized for speed [vszakats]
   {
     int iLen = HB_SYMBOL_NAME_LEN;
     char *pDest = szUprName;
@@ -634,9 +625,8 @@ void hb_dynsymEval(PHB_DYNS_FUNC pFunction, void *Cargo)
 
     if (pDynSym)
     {
-      /* protection against resizing dynamic symbol by
-       * user function or other thread in MT mode
-       */
+      // protection against resizing dynamic symbol by
+      // user function or other thread in MT mode
       while (s_pDynItems[uiPos].pDynSym != pDynSym)
       {
         if (++uiPos >= s_uiDynSymbols)
@@ -719,20 +709,20 @@ void hb_dynsymRelease(void)
   HB_DYNSYM_UNLOCK();
 }
 
-HB_FUNC(__DYNSCOUNT) /* How much symbols do we have: dsCount = __dynsymCount() */
+HB_FUNC(__DYNSCOUNT) // How much symbols do we have: dsCount = __dynsymCount()
 {
   HB_STACK_TLS_PRELOAD
   hb_retnint(s_uiDynSymbols);
 }
 
-HB_FUNC(__DYNSGETNAME) /* Get name of symbol: cSymbol = __dynsymGetName(dsIndex) */
+HB_FUNC(__DYNSGETNAME) // Get name of symbol: cSymbol = __dynsymGetName(dsIndex)
 {
   HB_STACK_TLS_PRELOAD
   auto pDynSym = hb_dynsymGetByIndex(hb_parnl(1));
   hb_retc(pDynSym ? pDynSym->pSymbol->szName : nullptr);
 }
 
-HB_FUNC(__DYNSGETINDEX) /* Gimme index number of symbol: dsIndex = __dynsymGetIndex(cSymbol) */
+HB_FUNC(__DYNSGETINDEX) // Gimme index number of symbol: dsIndex = __dynsymGetIndex(cSymbol)
 {
   HB_STACK_TLS_PRELOAD
   HB_SYMCNT uiPos = 0;
@@ -759,7 +749,7 @@ HB_FUNC(__DYNSGETINDEX) /* Gimme index number of symbol: dsIndex = __dynsymGetIn
   hb_retnint(uiPos);
 }
 
-HB_FUNC(HB_ISFUNCTION) /* returns .T. if a symbol has a function/procedure pointer, given its name */
+HB_FUNC(HB_ISFUNCTION) // returns .T. if a symbol has a function/procedure pointer, given its name
 {
   HB_STACK_TLS_PRELOAD
   auto szProc = hb_parc(1);
@@ -777,7 +767,7 @@ HB_FUNC(HB_ISFUNCTION) /* returns .T. if a symbol has a function/procedure point
   hb_retl(fResult);
 }
 
-HB_FUNC(__DYNSISFUN) /* returns .T. if a symbol has a function/procedure pointer, given its symbol index or name */
+HB_FUNC(__DYNSISFUN) // returns .T. if a symbol has a function/procedure pointer, given its symbol index or name
 {
   HB_STACK_TLS_PRELOAD
   auto szName = hb_parc(1);
@@ -785,8 +775,8 @@ HB_FUNC(__DYNSISFUN) /* returns .T. if a symbol has a function/procedure pointer
   hb_retl(pDynSym && hb_dynsymIsFunction(pDynSym));
 }
 
-HB_FUNC(__DYNSGETPRF) /* profiler: It returns an array with a function or procedure called and consumed times { nTimes,
-                         nTime }, given the dynamic symbol index */
+HB_FUNC(__DYNSGETPRF) // profiler: It returns an array with a function or procedure called and consumed times { nTimes,
+                      // nTime }, given the dynamic symbol index
 {
   HB_STACK_TLS_PRELOAD
 #ifndef HB_NO_PROFILER
@@ -801,7 +791,7 @@ HB_FUNC(__DYNSGETPRF) /* profiler: It returns an array with a function or proced
   if (pDynSym)
   {
     if (hb_dynsymIsFunction(pDynSym))
-    { /* it is a function or procedure */
+    { // it is a function or procedure
       hb_storvnl(pDynSym->ulCalls, -1, 1);
       hb_storvnl(pDynSym->ulTime, -1, 2);
     }
@@ -834,7 +824,7 @@ HB_FUNC(__DYNSP2NAME)
   hb_retc(pDynSym != nullptr ? pDynSym->pSymbol->szName : nullptr);
 }
 
-/* internal function used to debug dynamic symbol integrity */
+// internal function used to debug dynamic symbol integrity
 static int hb_dynsymVerify(void)
 {
 #if 0

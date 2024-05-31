@@ -53,8 +53,8 @@
 #include "hbdate.hpp"
 #include "hbstack.hpp"
 
-/* NOTE: iParam = -1 can be used to access the return value. */
-/* NOTE: iParam = 0 can be used to access the SELF object. */
+// NOTE: iParam = -1 can be used to access the return value.
+// NOTE: iParam = 0 can be used to access the SELF object.
 
 PHB_ITEM hb_param(int iParam, long lMask)
 {
@@ -189,8 +189,8 @@ HB_BOOL hb_extIsNil(int iParam)
   return HB_IS_NIL(pItem);
 }
 
-/* function to be called from pcode DLLs to detect if the extend system
- * is going to use an array item */
+// function to be called from pcode DLLs to detect if the extend system
+// is going to use an array item
 
 HB_BOOL hb_extIsArray(int iParam)
 {
@@ -218,8 +218,8 @@ HB_BOOL hb_extIsArray(int iParam)
   return HB_IS_ARRAY(pItem) && !HB_ARRAY_OBJ(pItem);
 }
 
-/* function to be called from pcode DLLs to detect if the extend system
- * is going to use an object item */
+// function to be called from pcode DLLs to detect if the extend system
+// is going to use an object item
 
 HB_BOOL hb_extIsObject(int iParam)
 {
@@ -247,8 +247,8 @@ HB_BOOL hb_extIsObject(int iParam)
   return HB_IS_OBJECT(pItem);
 }
 
-/* NOTE: Caller should not modify the buffer returned by this function.
-         [vszakats] */
+// NOTE: Caller should not modify the buffer returned by this function.
+//       [vszakats]
 
 const char *hb_parc(int iParam)
 {
@@ -328,9 +328,9 @@ HB_SIZE hb_parclen(int iParam)
   return 0;
 }
 
-/* NOTE: Similar to _parclen() but returns the length including the
-         terminating zero byte, and it only works for parameters passed by
-         reference. [vszakats] */
+// NOTE: Similar to _parclen() but returns the length including the
+//       terminating zero byte, and it only works for parameters passed by
+//       reference. [vszakats]
 
 HB_SIZE hb_parcsiz(int iParam)
 {
@@ -344,8 +344,8 @@ HB_SIZE hb_parcsiz(int iParam)
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    /* NOTE: hb_parcsiz() will only work for strings passed by reference.
-             CA-Cl*pper works like this. [vszakats] */
+    // NOTE: hb_parcsiz() will only work for strings passed by reference.
+    //       CA-Cl*pper works like this. [vszakats]
 
     if (HB_IS_BYREF(pItem))
     {
@@ -361,8 +361,8 @@ HB_SIZE hb_parcsiz(int iParam)
   return 0;
 }
 
-/* NOTE: Using hb_stackDateBuffer() a temporary date buffer guaranties
-         good behavior when multithreading. */
+// NOTE: Using hb_stackDateBuffer() a temporary date buffer guaranties
+//       good behavior when multithreading.
 
 const char *hb_pards(int iParam)
 {
@@ -390,7 +390,7 @@ const char *hb_pards(int iParam)
   return hb_dateDecStr(hb_stackDateBuffer(), 0);
 }
 
-/* NOTE: szDate must be a 9 chars wide buffer. [vszakats] */
+// NOTE: szDate must be a 9 chars wide buffer. [vszakats]
 
 char *hb_pardsbuff(char *szDate, int iParam)
 {
@@ -418,7 +418,7 @@ char *hb_pardsbuff(char *szDate, int iParam)
   return hb_dateDecStr(szDate, 0);
 }
 
-/* retrieve a date as long integer - number of days from Julian's day */
+// retrieve a date as long integer - number of days from Julian's day
 
 long hb_pardl(int iParam)
 {
@@ -984,8 +984,8 @@ void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int iParam)
   return nullptr;
 }
 
-/* NOTE: Caller should not modify the buffer returned by this function.
-         [vszakats] */
+// NOTE: Caller should not modify the buffer returned by this function.
+//       [vszakats]
 
 const char *hb_parvc(int iParam, ...)
 {
@@ -1099,9 +1099,9 @@ HB_SIZE hb_parvclen(int iParam, ...)
   return 0;
 }
 
-/* NOTE: Similar to _parclen() but returns the length including the
-         terminating zero byte, and it only works for parameters passed by
-         reference. [vszakats] */
+// NOTE: Similar to _parclen() but returns the length including the
+//       terminating zero byte, and it only works for parameters passed by
+//       reference. [vszakats]
 
 HB_SIZE hb_parvcsiz(int iParam, ...)
 {
@@ -1115,8 +1115,8 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    /* NOTE: hb_parvcsiz() will only work for strings passed by reference.
-             CA-Cl*pper works like this. [vszakats] */
+    // NOTE: hb_parvcsiz() will only work for strings passed by reference.
+    //       CA-Cl*pper works like this. [vszakats]
 
     if (HB_IS_BYREF(pItem))
     {
@@ -1143,8 +1143,8 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
   return 0;
 }
 
-/* NOTE: Using hb_stackDateBuffer() a temporary date buffer guaranties
-         good behavior when multithreading. */
+// NOTE: Using hb_stackDateBuffer() a temporary date buffer guaranties
+//       good behavior when multithreading. */
 
 const char *hb_parvds(int iParam, ...)
 {
@@ -1183,7 +1183,7 @@ const char *hb_parvds(int iParam, ...)
   return hb_dateDecStr(hb_stackDateBuffer(), 0);
 }
 
-/* NOTE: szDate must be a 9 chars wide buffer. [vszakats] */
+// NOTE: szDate must be a 9 chars wide buffer. [vszakats]
 
 char *hb_parvdsbuff(char *szDate, int iParam, ...)
 {
@@ -1222,7 +1222,7 @@ char *hb_parvdsbuff(char *szDate, int iParam, ...)
   return hb_dateDecStr(szDate, 0);
 }
 
-/* retrieve a date as long integer - number of days from Julian's day */
+// retrieve a date as long integer - number of days from Julian's day
 
 long hb_parvdl(int iParam, ...)
 {
@@ -1504,7 +1504,7 @@ long hb_parvnl(int iParam, ...)
     else if (HB_IS_DOUBLE(pItem))
     {
       return HB_CAST_LONG(pItem->item.asDouble.value);
-      /* CA-Cl*pper does it */
+      // CA-Cl*pper does it
     }
     else if (HB_IS_DATETIME(pItem))
     {
@@ -1757,7 +1757,7 @@ void hb_ret(void)
 }
 
 #undef hb_reta
-void hb_reta(HB_SIZE nLen) /* undocumented hb_reta() */
+void hb_reta(HB_SIZE nLen) // undocumented hb_reta()
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_reta(%" HB_PFS "u)", nLen));
@@ -1844,7 +1844,7 @@ void hb_retclen_const(const char *szText, HB_SIZE nLen)
   hb_itemPutCLConst(hb_stackReturnItem(), szText, nLen);
 }
 
-/* szDate must have YYYYMMDD format */
+// szDate must have YYYYMMDD format
 
 #undef hb_retds
 void hb_retds(const char *szDate)
@@ -2178,7 +2178,7 @@ int hb_storclen_buffer(char *szText, HB_SIZE nLen, int iParam)
   return 0;
 }
 
-/* szDate must have YYYYMMDD format */
+// szDate must have YYYYMMDD format
 
 int hb_stords(const char *szDate, int iParam)
 {
@@ -2533,9 +2533,8 @@ int hb_storptrGC(void *pointer, int iParam)
   return 0;
 }
 
-/* hb_storv*() similar to hb_stor*() but they accepts optional array index
- * just like Cl*pper's _stor*() functions
- */
+// hb_storv*() similar to hb_stor*() but they accepts optional array index
+// just like Cl*pper's _stor*() functions
 
 int hb_storvc(const char *szText, int iParam, ...)
 {
@@ -2648,7 +2647,7 @@ int hb_storvclen_buffer(char *szText, HB_SIZE nLen, int iParam, ...)
   return 0;
 }
 
-/* szDate must have YYYYMMDD format */
+// szDate must have YYYYMMDD format
 
 int hb_storvds(const char *szDate, int iParam, ...)
 {

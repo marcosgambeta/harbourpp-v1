@@ -48,10 +48,10 @@
 #include "hbapi.hpp"
 #include "hbvm.hpp"
 
-/* NOTE: This function should normally have a parameter count check. But
-         since in Harbour we cannot distinguish between Break() function and
-         the BREAK statement, because both generate a Break() function
-         call on the pcode level, we should drop the checking. [vszakats] */
+// NOTE: This function should normally have a parameter count check. But
+//       since in Harbour we cannot distinguish between Break() function and
+//       the BREAK statement, because both generate a Break() function
+//       call on the pcode level, we should drop the checking. [vszakats]
 
 HB_FUNC(BREAK)
 {

@@ -44,8 +44,8 @@
  *
  */
 
-/* NOTE: Need to have these before Harbour headers,
-         because in MT mode, they will automatically #include <os2.h>. */
+// NOTE: Need to have these before Harbour headers,
+//       because in MT mode, they will automatically #include <os2.h>.
 #define INCL_DOSPROCESS
 #define INCL_DOSERRORS
 #define INCL_DOSMODULEMGR
@@ -59,7 +59,7 @@
 #include "hbstack.hpp"
 #include "hbverbld.h"
 
-/* Command-line argument management */
+// Command-line argument management
 static int s_argc = 0;
 static char **s_argv = nullptr;
 
@@ -88,7 +88,7 @@ static auto s_WinMainParam = false;
 void hb_winmainArgVBuild(void)
 {
 
-  /* NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH */
+  // NOTE: MAX_PATH used intentionally instead of HB_MAX_PATH
   auto lpModuleName = static_cast<LPTSTR>(HB_WINARG_ALLOC((MAX_PATH + 1) * sizeof(TCHAR)));
   HB_SIZE nModuleName = GetModuleFileName(nullptr, lpModuleName, MAX_PATH + 1);
   if (nModuleName)
@@ -208,13 +208,13 @@ void hb_winmainArgVBuild(void)
   }
   if (iArgC > 0 && nModuleName != 0)
   {
-    /* NOTE: Manually setup the executable name in Windows,
-             because in console apps the name may be truncated
-             in some cases, and in GUI apps it's not filled
-             at all. [vszakats] */
+    // NOTE: Manually setup the executable name in Windows,
+    //       because in console apps the name may be truncated
+    //       in some cases, and in GUI apps it's not filled
+    //       at all. [vszakats]
     if (GetModuleFileName(nullptr, lpArgV[0], static_cast<DWORD>(nModuleName)) != 0)
     {
-      /* Windows XP does not set trailing 0 if buffer is not large enough [druzus] */
+      // Windows XP does not set trailing 0 if buffer is not large enough [druzus]
       lpArgV[0][nModuleName - 1] = 0;
     }
   }
@@ -347,7 +347,7 @@ const char *hb_cmdargARGVN(int argc)
   return argc >= 0 && argc < s_argc ? s_argv[argc] : nullptr;
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
+// NOTE: Pointer must be freed with hb_xfree() if not nullptr
 
 static char *hb_cmdargDup(int argc)
 {
@@ -369,7 +369,7 @@ void hb_cmdargUpdate(void)
 #if !defined(HB_OS_WIN)
   if (s_argc > 0)
   {
-    /* NOTE: try to create absolute path from s_argv[0] if necessary */
+    // NOTE: try to create absolute path from s_argv[0] if necessary
     {
       PHB_FNAME pFName = hb_fsFNameSplit(s_argv[0]);
       auto fInPath = false;
@@ -390,12 +390,11 @@ void hb_cmdargUpdate(void)
             hb_fsFNameMerge(s_szAppName, pFName);
             if (hb_fsFileExists(s_szAppName))
             {
-              /* even if the file is located using PATH then it does
-               * not mean we will have absolute path here. It's not
-               * good idea but PATH envvar can also contain relative
-               * directories, f.e. "." or "bin" so we should add
-               * current directory if necessary in code below.
-               */
+              // even if the file is located using PATH then it does
+              // not mean we will have absolute path here. It's not
+              // good idea but PATH envvar can also contain relative
+              // directories, f.e. "." or "bin" so we should add
+              // current directory if necessary in code below.
               hb_xfree(pFName);
               pFName = hb_fsFNameSplit(s_szAppName);
               fInPath = true;
@@ -450,7 +449,7 @@ void hb_cmdargUpdate(void)
 #endif
 }
 
-/* places application parameters on the HVM stack */
+// places application parameters on the HVM stack
 
 int hb_cmdargPushArgs(void)
 {
@@ -458,7 +457,7 @@ int hb_cmdargPushArgs(void)
 
   for (auto i = 1; i < s_argc; i++)
   {
-    /* Filter out any parameters beginning with //, like //INFO */
+    // Filter out any parameters beginning with //, like //INFO
     if (!hb_cmdargIsInternal(s_argv[i], nullptr))
     {
 #if defined(HB_OS_WIN)
@@ -484,8 +483,8 @@ HB_BOOL hb_cmdargIsInternal(const char *szArg, int *piLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_cmdargIsInternal(%s, %p)", szArg, static_cast<void*>(piLen)));
 #endif
 
-  /* NOTE: Not checking for '--' here, as it would filter out
-           valid command-line options used by applications. [vszakats] */
+  // NOTE: Not checking for '--' here, as it would filter out
+  //       valid command-line options used by applications. [vszakats]
 
   if (hb_strnicmp(szArg, "--hb:", 5) == 0 || hb_strnicmp(szArg, "//hb:", 5) == 0)
   {
@@ -517,7 +516,7 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
 
   int iPrefixLen;
 
-  /* Check the command-line first */
+  // Check the command-line first
 
   for (auto i = 1; i < s_argc; i++)
   {
@@ -557,7 +556,7 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
     }
   }
 
-  /* Check the environment variable */
+  // Check the environment variable
   char *pszEnvVar = hb_getenv("HARBOUR");
   if (!pszEnvVar || pszEnvVar[0] == '\0')
   {
@@ -575,11 +574,11 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
   {
     char *pszNext = pszEnvVar;
 
-    /* Step through all envvar switches. */
+    // Step through all envvar switches.
 
-    /* NOTE: CA-Cl*pper doesn't need the switches to be separated by any
-             chars at all, Harbour is more strict/standard in this respect,
-             it requires the switches to be separated. */
+    // NOTE: CA-Cl*pper doesn't need the switches to be separated by any
+    //       chars at all, Harbour is more strict/standard in this respect,
+    //       it requires the switches to be separated.
 
     auto i = static_cast<int>(strlen(pszName));
     while (*pszNext)
@@ -587,26 +586,26 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
       static const char *s_szSeparator = " ;,\t";
       char *pszEnd;
 
-      /* Skip the separators */
+      // Skip the separators
       while (*pszNext && strchr(s_szSeparator, *pszNext))
       {
         pszNext++;
       }
 
-      /* The // is optional in the envvar */
+      // The // is optional in the envvar
       if (hb_cmdargIsInternal(pszNext, &iPrefixLen))
       {
         pszNext += iPrefixLen;
       }
 
       pszEnd = pszNext;
-      /* Search for the end of this switch */
+      // Search for the end of this switch
       while (*pszEnd && strchr(s_szSeparator, *pszEnd) == nullptr)
       {
         pszEnd++;
       }
 
-      /* Check the switch */
+      // Check the switch
       if (hb_strnicmp(pszNext, pszName, i) == 0)
       {
         if (bRetValue)
@@ -614,7 +613,7 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
           HB_SIZE nLen;
           pszNext += i;
 
-          /* Skip value separator colon. */
+          // Skip value separator colon.
           if (*pszNext == ':')
           {
             pszNext++;
@@ -631,7 +630,7 @@ static char *hb_cmdargGet(const char *pszName, bool bRetValue)
         break;
       }
 
-      /* Step to the next switch */
+      // Step to the next switch
       pszNext = pszEnd;
     }
   }
@@ -649,7 +648,7 @@ HB_BOOL hb_cmdargCheck(const char *pszName)
   return hb_cmdargGet(pszName, false) != nullptr;
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
+// NOTE: Pointer must be freed with hb_xfree() if not nullptr
 
 char *hb_cmdargString(const char *pszName)
 {
@@ -675,14 +674,14 @@ int hb_cmdargNum(const char *pszName)
   }
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
+// NOTE: Pointer must be freed with hb_xfree() if not nullptr
 
 char *hb_cmdargProgName(void)
 {
   return hb_cmdargDup(0);
 }
 
-/* NOTE: Pointer must be freed with hb_xfree() if not nullptr */
+// NOTE: Pointer must be freed with hb_xfree() if not nullptr
 
 char *hb_cmdargBaseProgName(void)
 {
@@ -701,14 +700,14 @@ char *hb_cmdargBaseProgName(void)
   return pszBaseProgName;
 }
 
-/* Check if an internal switch has been set */
+// Check if an internal switch has been set
 
 HB_FUNC(HB_ARGCHECK)
 {
   hb_retl(HB_ISCHAR(1) ? hb_cmdargCheck(hb_parc(1)) : false);
 }
 
-/* Returns the value of an internal switch */
+// Returns the value of an internal switch
 
 HB_FUNC(HB_ARGSTRING)
 {
@@ -728,17 +727,17 @@ HB_FUNC(HB_ARGSTRING)
   hb_retc_null();
 }
 
-/* Returns the number of command-line arguments passed to the application, this
-   also includes the internal arguments. */
+// Returns the number of command-line arguments passed to the application, this
+// also includes the internal arguments.
 
 HB_FUNC(HB_ARGC)
 {
   hb_retni(s_argc - 1);
 }
 
-/* Returns a command-line argument passed to the application. Calling it with
-   the parameter zero or no parameter, it will return the name of the executable,
-   as written in the command-line. */
+// Returns a command-line argument passed to the application. Calling it with
+// the parameter zero or no parameter, it will return the name of the executable,
+// as written in the command-line.
 
 HB_FUNC(HB_ARGV)
 {
@@ -840,7 +839,7 @@ HB_FUNC(HB_CMDLINE)
       }
       *--ptr = TEXT('\0');
 
-      /* Convert from OS codepage */
+      // Convert from OS codepage
 #if defined(UNICODE)
       HB_RETSTR(lpBuffer);
       hb_xfree(lpBuffer);
@@ -868,7 +867,7 @@ HB_FUNC(HB_CMDLINE)
       }
       *--ptr = '\0';
 
-      /* Convert from OS codepage */
+      // Convert from OS codepage
       hb_retc_buffer(const_cast<char *>(hb_osDecodeCP(pszBuffer, nullptr, nullptr)));
     }
   }
@@ -878,7 +877,7 @@ HB_FUNC(HB_CMDLINE)
   }
 }
 
-/* Check for command-line internal arguments */
+// Check for command-line internal arguments
 void hb_cmdargProcess(void)
 {
 #if 0
@@ -930,19 +929,19 @@ void hb_cmdargProcess(void)
 #endif
 }
 
-/* Source repository revision number */
+// Source repository revision number
 HB_MAXINT hb_verRevision(void)
 {
   return HB_VER_REVID;
 }
 
-/* ChangeLog ID string */
+// ChangeLog ID string
 const char *hb_verChangeLogID(void)
 {
   return HB_VER_CHLID;
 }
 
-/* ChangeLog last entry string */
+// ChangeLog last entry string
 const char *hb_verChangeLogLastEntry(void)
 {
   return HB_VER_LENTRY;
@@ -950,19 +949,19 @@ const char *hb_verChangeLogLastEntry(void)
 
 #if defined(HB_LEGACY_LEVEL4)
 
-/* Source repository revision number */
+// Source repository revision number
 HB_MAXINT hb_verSvnID(void)
 {
   return HB_VER_REVID;
 }
 
-/* ChangeLog ID string */
+// ChangeLog ID string
 const char *hb_verSvnChangeLogID(void)
 {
   return HB_VER_CHLID;
 }
 
-/* ChangeLog last entry string */
+// ChangeLog last entry string
 const char *hb_verSvnLastEntry(void)
 {
   return HB_VER_LENTRY;
@@ -970,7 +969,7 @@ const char *hb_verSvnLastEntry(void)
 
 #endif
 
-/* build time C compiler flags in HB_USER_CFLAGS envvar */
+// build time C compiler flags in HB_USER_CFLAGS envvar
 const char *hb_verFlagsC(void)
 {
 #ifdef HB_VER_HB_USER_CFLAGS
@@ -980,7 +979,7 @@ const char *hb_verFlagsC(void)
 #endif
 }
 
-/* build time linker flags in HB_USER_LDFLAGS envvar */
+// build time linker flags in HB_USER_LDFLAGS envvar
 const char *hb_verFlagsL(void)
 {
 #ifdef HB_VER_HB_USER_LDFLAGS
@@ -990,7 +989,7 @@ const char *hb_verFlagsL(void)
 #endif
 }
 
-/* build time Harbour compiler flags in HB_USER_PRGFLAGS envvar */
+// build time Harbour compiler flags in HB_USER_PRGFLAGS envvar
 const char *hb_verFlagsPRG(void)
 {
 #ifdef HB_VER_HB_USER_PRGFLAGS
@@ -1000,7 +999,7 @@ const char *hb_verFlagsPRG(void)
 #endif
 }
 
-/* build time Harbour platform setting */
+// build time Harbour platform setting
 const char *hb_verHB_PLAT(void)
 {
 #ifdef HB_PLATFORM
@@ -1010,7 +1009,7 @@ const char *hb_verHB_PLAT(void)
 #endif
 }
 
-/* build time Harbour compiler setting */
+// build time Harbour compiler setting
 const char *hb_verHB_COMP(void)
 {
 #ifdef HB_COMPILER
