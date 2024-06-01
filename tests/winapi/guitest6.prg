@@ -181,10 +181,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
   {
     hb_vmPushDynSym(s_pDynSym);
     hb_vmPushNil();
-    hb_vmPushPointer(hwnd);
-    hb_vmPushInteger(uMsg);
-    hb_vmPushNumInt(wParam);
-    hb_vmPushNumInt(lParam);
+    wa_vmPushHWND(hwnd);
+    wa_vmPushUINT(uMsg);
+    wa_vmPushWPARAM(wParam);
+    wa_vmPushLPARAM(lParam);
     hb_vmDo(4);
     return wa_par_LRESULT(-1);
   }
@@ -210,10 +210,10 @@ INT_PTR DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
   {
     hb_vmPushDynSym(s_pDynSym);
     hb_vmPushNil();
-    hb_vmPushPointer(hwnd);
-    hb_vmPushInteger(uMsg);
-    hb_vmPushNumInt(wParam);
-    hb_vmPushNumInt(lParam);
+    wa_vmPushHWND(hwnd);
+    wa_vmPushUINT(uMsg);
+    wa_vmPushWPARAM(wParam);
+    wa_vmPushLPARAM(lParam);
     hb_vmDo(4);
     return wa_par_INT_PTR(-1);
   }
