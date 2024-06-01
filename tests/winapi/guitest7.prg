@@ -93,7 +93,7 @@ INT_PTR DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 HB_FUNC_STATIC(GETDIALOGPROC)
 {
-  hb_retptr(reinterpret_cast<void *>(DialogProc));
+  wa_ret_DLGPROC(DialogProc);
 }
 
 #pragma ENDDUMP

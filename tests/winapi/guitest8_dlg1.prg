@@ -118,7 +118,7 @@ INT_PTR CALLBACK DialogProc1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 HB_FUNC_STATIC(GETDIALOGPROC1)
 {
-  hb_retptr(reinterpret_cast<void *>(DialogProc1));
+  wa_ret_DLGPROC(DialogProc1);
 }
 
 #pragma ENDDUMP
