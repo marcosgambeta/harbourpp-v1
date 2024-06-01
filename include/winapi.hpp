@@ -352,3 +352,9 @@ SOFTWARE.
 #define wa_par_CURSORINFO(n)                      static_cast<CURSORINFO *>(wa_get_ptr(n))
 #define wa_par_MENUBARINFO(n)                     static_cast<MENUBARINFO *>(wa_get_ptr(n))
 #define wa_par_SCROLLBARINFO(n)                   static_cast<SCROLLBARINFO *>(wa_get_ptr(n))
+
+// auxiliary macros
+#define wa_vmPushHWND(hwnd)     hb_vmPushPointer(hwnd)
+#define wa_vmPushUINT(uMsg)     hb_vmPushInteger(uMsg)
+#define wa_vmPushWPARAM(wParam) hb_vmPushNumInt(wParam)
+#define wa_vmPushLPARAM(lParam) hb_vmPushNumInt(lParam)
