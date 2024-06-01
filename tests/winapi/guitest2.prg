@@ -141,7 +141,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
       hb_vmPushNumInt(wParam);
       hb_vmPushNumInt(lParam);
       hb_vmDo(4);
-      return hb_parnl(-1);
+      return wa_par_LRESULT(-1);
    }
 
    return DefWindowProc(hwnd, uMsg, wParam, lParam);
