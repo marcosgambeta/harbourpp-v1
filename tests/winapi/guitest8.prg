@@ -156,7 +156,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 HB_FUNC_STATIC(GETWINDOWPROC)
 {
-  hb_retptr(reinterpret_cast<void *>(WindowProc));
+  wa_ret_WNDPROC(WindowProc);
 }
 
 #pragma ENDDUMP

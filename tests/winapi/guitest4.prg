@@ -125,6 +125,7 @@ RETURN waDefWindowProc(hwnd, uMsg, wParam, lParam)
 #include "hbapi.hpp"
 #include "hbvm.hpp"
 #include "hbwinuni.hpp"
+#include "winapi.hpp"
 #include "guitest4.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -155,7 +156,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 HB_FUNC_STATIC(GETWINDOWPROC)
 {
-  hb_retptr(reinterpret_cast<void *>(WindowProc));
+  wa_ret_WNDPROC(WindowProc);
 }
 
 #pragma ENDDUMP
