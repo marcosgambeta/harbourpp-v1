@@ -101,7 +101,7 @@ INT_PTR CALLBACK DialogProc2(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     hb_vmPushNumInt(wParam);
     hb_vmPushNumInt(lParam);
     hb_vmDo(4);
-    return hb_parnl(-1);
+    return wa_par_INT_PTR(-1);
   }
 
   return 0;
