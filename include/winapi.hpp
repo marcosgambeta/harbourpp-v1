@@ -219,6 +219,7 @@ SOFTWARE.
 #define wa_ret_WORD(x)         hb_retni(x)
 #define wa_ret_WPARAM(x)       hb_retnl(x)
 #define wa_ret_WNDPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
+#define wa_ret_DLGPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
 #define wa_ret_FARPROC(x)      hb_retptr(reinterpret_cast<void*>(x))
 #define wa_ret_LANGID(x)       hb_parni(x)
 #define wa_ret_LCID(x)         hb_parnl(x)
