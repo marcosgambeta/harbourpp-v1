@@ -8,5 +8,7 @@
 PROCEDURE Main()
 
    ? waGetTickCount()
+   
+   WAIT
 
 RETURN

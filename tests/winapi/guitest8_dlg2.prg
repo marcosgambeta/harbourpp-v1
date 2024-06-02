@@ -5,7 +5,7 @@
  *
  */
 
-#include "winapi_windows.ch"
+#include <winapi_windows.ch>
 
 #include "guitest8.h"
 
@@ -75,10 +75,10 @@ RETURN 0
 #endif
 
 #include <windows.h>
-#include "winapi.hpp"
-#include "hbapi.hpp"
-#include "hbvm.hpp"
-#include "hbwinuni.hpp"
+#include <winapi.hpp>
+#include <hbapi.hpp>
+#include <hbvm.hpp>
+#include <hbwinuni.hpp>
 #include "guitest6.h"
 
 INT_PTR CALLBACK DialogProc2(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

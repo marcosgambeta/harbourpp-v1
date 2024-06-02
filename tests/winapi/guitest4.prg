@@ -6,11 +6,11 @@
  */
 
 // Compile with:
-// hbmk2 guitest4 guitest4.rc -gtgui -i.
+// hbmk2 guitest4
 
 // NOTE: do a right click to show the popup menu
 
-#include "winapi_windows.ch"
+#include <winapi_windows.ch>
 
 #define IDR_MYMENU 101
 #define IDM_FILE_NEW  1
@@ -121,11 +121,11 @@ RETURN waDefWindowProc(hwnd, uMsg, wParam, lParam)
 #endif
 
 #include <windows.h>
-#include "winapi.hpp"
-#include "hbapi.hpp"
-#include "hbvm.hpp"
-#include "hbwinuni.hpp"
-#include "winapi.hpp"
+#include <winapi.hpp>
+#include <hbapi.hpp>
+#include <hbvm.hpp>
+#include <hbwinuni.hpp>
+#include <winapi.hpp>
 #include "guitest4.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

@@ -42,5 +42,7 @@ PROCEDURE Main()
    ? "dwAllocationGranularity....:", o:dwAllocationGranularity
    ? "wProcessorLevel............:", o:wProcessorLevel
    ? "wProcessorRevision.........:", o:wProcessorRevision
+   
+   WAIT
 
 RETURN

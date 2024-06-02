@@ -36,5 +36,7 @@ PROCEDURE Main()
    ? "ullTotalVirtual........:", o:ullTotalVirtual
    ? "ullAvailVirtual........:", o:ullAvailVirtual
    ? "ullAvailExtendedVirtual:", o:ullAvailExtendedVirtual
+   
+   WAIT
 
 RETURN

@@ -5,7 +5,7 @@
  *
  */
 
-#include "winapi_windows.ch"
+#include <winapi_windows.ch>
 
 PROCEDURE Main()
 
@@ -16,5 +16,7 @@ PROCEDURE Main()
   ? waMessageBox(NIL, "message", "title", MB_YESNO)
   ? waMessageBox(NIL, "message", "title", MB_RETRYCANCEL)
   ? waMessageBox(NIL, "message", "title", MB_CANCELTRYCONTINUE)
+  
+  WAIT
 
 RETURN

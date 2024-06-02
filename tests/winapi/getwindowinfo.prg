@@ -6,11 +6,11 @@
  */
 
 // Compile with:
-// hbmk2 getwindowinfo -lopengl32
+// hbmk2 getwindowinfo
+
+#include <hbgtinfo.ch>
 
 REQUEST HB_GT_WVT_DEFAULT
-
-#include "hbgtinfo.ch"
 
 PROCEDURE Main()
 

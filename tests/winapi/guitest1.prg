@@ -8,7 +8,7 @@
 // Compile with:
 // hbmk2 guitest1 -gtgui
 
-#include "winapi_windows.ch"
+#include <winapi_windows.ch>
 
 PROCEDURE Main()
 
@@ -79,9 +79,9 @@ RETURN waDefWindowProc(hwnd, uMsg, wParam, lParam)
 #endif
 
 #include <windows.h>
-#include "hbapi.hpp"
-#include "hbvm.hpp"
-#include "winapi.hpp"
+#include <hbapi.hpp>
+#include <hbvm.hpp>
+#include <winapi.hpp>
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

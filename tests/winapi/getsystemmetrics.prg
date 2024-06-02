@@ -5,7 +5,7 @@
  *
  */
 
-#include "winapi_winuser.ch"
+#include <winapi_winuser.ch>
 
 PROCEDURE Main()
 
@@ -110,5 +110,7 @@ PROCEDURE Main()
    ? "SM_CARETBLINKINGENABLED.......=", waGetSystemMetrics(SM_CARETBLINKINGENABLED)
    ? "SM_CONVERTIBLESLATEMODE.......=", waGetSystemMetrics(SM_CONVERTIBLESLATEMODE)
    ? "SM_SYSTEMDOCKED...............=", waGetSystemMetrics(SM_SYSTEMDOCKED)
+   
+   WAIT
 
 RETURN

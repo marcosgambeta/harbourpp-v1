@@ -5,7 +5,7 @@
  *
  */
 
-#include "winapi_winuser.ch"
+#include <winapi_winuser.ch>
 
 PROCEDURE Main()
 
@@ -39,5 +39,7 @@ PROCEDURE Main()
    ? "COLOR_GRADIENTINACTIVECAPTION=", waGetSysColor(COLOR_GRADIENTINACTIVECAPTION)
    ? "COLOR_MENUHILIGHT............=", waGetSysColor(COLOR_MENUHILIGHT)
    ? "COLOR_MENUBAR................=", waGetSysColor(COLOR_MENUBAR)
+   
+   WAIT
 
 RETURN

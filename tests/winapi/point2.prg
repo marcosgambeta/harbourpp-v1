@@ -17,5 +17,7 @@ PROCEDURE Main()
 
    ? "X=", oPoint:GetX()
    ? "Y=", oPoint:GetY()
+   
+   WAIT
 
 RETURN

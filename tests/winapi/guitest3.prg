@@ -10,7 +10,7 @@
 
 // NOTE: do a right click to show the popup menu
 
-#include "winapi_windows.ch"
+#include <winapi_windows.ch>
 
 #define IDM_FILE_NEW  1
 #define IDM_FILE_OPEN 2
@@ -137,11 +137,11 @@ RETURN NIL
 #endif
 
 #include <windows.h>
-#include "winapi.hpp"
-#include "hbapi.hpp"
-#include "hbvm.hpp"
-#include "hbwinuni.hpp"
-#include "winapi.hpp"
+#include <winapi.hpp>
+#include <hbapi.hpp>
+#include <hbvm.hpp>
+#include <hbwinuni.hpp>
+#include <winapi.hpp>
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

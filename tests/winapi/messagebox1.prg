@@ -10,5 +10,7 @@ PROCEDURE Main()
   ? waMessageBox(NIL, "message", "title", 0)
   ? waMessageBox(NIL, NIL, "title", 0)
   ? waMessageBox(NIL, "message", NIL, 0)
+  
+  WAIT
 
 RETURN

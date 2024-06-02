@@ -6,11 +6,11 @@
  */
 
 // Compile with:
-// hbmk2 guitest8.hbp
+// hbmk2 guitest8
 
 // NOTE: do a right click to show the popup menu
 
-#include "winapi_windows.ch"
+#include <winapi_windows.ch>
 
 #include "guitest8.h"
 
@@ -24,7 +24,7 @@ PROCEDURE Main()
    LOCAL hwnd
    LOCAL CLASS_NAME := "Sample Window Class"
    LOCAL msg
-   
+
    hb_cdpSelect("UTF8EX")
 
    // register the window class
@@ -122,10 +122,10 @@ RETURN waDefWindowProc(hwnd, uMsg, wParam, lParam)
 #endif
 
 #include <windows.h>
-#include "winapi.hpp"
-#include "hbapi.hpp"
-#include "hbvm.hpp"
-#include "hbwinuni.hpp"
+#include <winapi.hpp>
+#include <hbapi.hpp>
+#include <hbvm.hpp>
+#include <hbwinuni.hpp>
 #include "guitest6.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

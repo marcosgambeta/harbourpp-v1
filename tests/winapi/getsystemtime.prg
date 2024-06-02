@@ -34,5 +34,7 @@ PROCEDURE Main()
    ? "wMinute......:", o:wMinute
    ? "wSecond......:", o:wSecond
    ? "wMilliseconds:", o:wMilliseconds
+   
+   WAIT
 
 RETURN

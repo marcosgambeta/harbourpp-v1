@@ -6,12 +6,12 @@
  */
 
 // Compile with:
-// hbmk2 getdevicecaps -lopengl32
+// hbmk2 getdevicecaps
 
 REQUEST HB_GT_WVT_DEFAULT
 
-#include "hbgtinfo.ch"
-#include "winapi_wingdi.ch"
+#include <hbgtinfo.ch>
+#include <winapi_wingdi.ch>
 
 PROCEDURE Main()
 

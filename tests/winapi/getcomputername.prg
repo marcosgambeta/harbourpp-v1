@@ -5,19 +5,21 @@
  *
  */
 
-#include "winapi_winbase.ch"
+#include <winapi_winbase.ch>
 
 PROCEDURE Main()
 
    ? "test1"
    test1()
-   
+
    ?
    ?
    ?
 
    ? "test2"
    test2()
+   
+   WAIT
 
 RETURN
 

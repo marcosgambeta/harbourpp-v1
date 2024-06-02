@@ -8,7 +8,7 @@
 // Compile with:
 // hbmk2 guitest2 -gtgui
 
-#include "winapi_windows.ch"
+#include <winapi_windows.ch>
 
 #define IDM_FILE_NEW  1
 #define IDM_FILE_OPEN 2
@@ -118,38 +118,40 @@ RETURN NIL
 #endif
 
 #include <windows.h>
-#include "winapi.hpp"
-#include "hbapi.hpp"
-#include "hbvm.hpp"
-#include "hbwinuni.hpp"
+#include <winapi.hpp>
+#include <hbapi.hpp>
+#include <hbvm.hpp>
+#include <hbwinuni.hpp>
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-   static PHB_DYNS s_pDynSym = nullptr;
+  static PHB_DYNS s_pDynSym = nullptr;
 
-   if( s_pDynSym == nullptr ) {
-      s_pDynSym = hb_dynsymGetCase("WINDOWPROC");
-   }
+  if (s_pDynSym == nullptr)
+  {
+    s_pDynSym = hb_dynsymGetCase("WINDOWPROC");
+  }
 
-   if( hb_dynsymIsFunction(s_pDynSym) ) {
-      hb_vmPushDynSym(s_pDynSym);
-      hb_vmPushNil();
-      wa_vmPushHWND(hwnd);
-      wa_vmPushUINT(uMsg);
-      wa_vmPushWPARAM(wParam);
-      wa_vmPushLPARAM(lParam);
-      hb_vmDo(4);
-      return wa_par_LRESULT(-1);
-   }
+  if (hb_dynsymIsFunction(s_pDynSym))
+  {
+    hb_vmPushDynSym(s_pDynSym);
+    hb_vmPushNil();
+    wa_vmPushHWND(hwnd);
+    wa_vmPushUINT(uMsg);
+    wa_vmPushWPARAM(wParam);
+    wa_vmPushLPARAM(lParam);
+    hb_vmDo(4);
+    return wa_par_LRESULT(-1);
+  }
 
-   return DefWindowProc(hwnd, uMsg, wParam, lParam);
+  return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-HB_FUNC_STATIC( GETWINDOWPROC )
+HB_FUNC_STATIC(GETWINDOWPROC)
 {
-   wa_ret_WNDPROC(WindowProc);
+  wa_ret_WNDPROC(WindowProc);
 }
 
 #pragma ENDDUMP
