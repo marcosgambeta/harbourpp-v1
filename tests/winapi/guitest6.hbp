@@ -1,0 +1,12 @@
+#
+# WinApi test
+#
+# Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+#
+
+guitest6.prg
+guitest6.rc
+
+-gtgui
+
+-i.
