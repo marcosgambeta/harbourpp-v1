@@ -117,8 +117,8 @@ int hb_sln_escDelay = 250;
 int hb_sln_escDelay = 0;
 #endif
 
-auto hb_sln_UnderLinuxConsole = false;
-auto hb_sln_UnderXterm = false;
+bool hb_sln_UnderLinuxConsole = false;
+bool hb_sln_UnderXterm = false;
 
 static int hb_sln_try_get_Kbd_State(void);
 
