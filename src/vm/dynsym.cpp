@@ -799,13 +799,6 @@ HB_FUNC(__DYNSGETPRF) // profiler: It returns an array with a function or proced
 #endif
 }
 
-HB_FUNC(__DYNSN2PTR)
-{
-  HB_STACK_TLS_PRELOAD
-  auto szName = hb_parc(1);
-  hb_retptr(szName ? hb_dynsymGet(szName) : nullptr);
-}
-
 HB_FUNC(__DYNSN2SYM)
 {
   HB_STACK_TLS_PRELOAD
@@ -815,6 +808,13 @@ HB_FUNC(__DYNSN2SYM)
   {
     hb_itemPutSymbol(hb_stackReturnItem(), hb_dynsymGet(szName)->pSymbol);
   }
+}
+
+HB_FUNC(__DYNSN2PTR)
+{
+  HB_STACK_TLS_PRELOAD
+  auto szName = hb_parc(1);
+  hb_retptr(szName ? hb_dynsymGet(szName) : nullptr);
 }
 
 HB_FUNC(__DYNSP2NAME)
