@@ -6718,7 +6718,7 @@ void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
 /*
  * compile given expression and return macro pointer item or NULL
  */
-PHB_ITEM hb_vmCompileMacro(const char * szExpr, PHB_ITEM pDest)
+PHB_ITEM hb_vmCompileMacro(const char *szExpr, PHB_ITEM pDest)
 {
 #if 0
   HB_TRACE(HB_TR_DEBUG, ("hb_vmCompileMacro(%s,%p)", szExpr, pDest));
