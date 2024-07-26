@@ -64,7 +64,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   {
     PHB_ITEM pRet;
 
-    /* protection against array resizing by user codeblock */
+    // protection against array resizing by user codeblock
     if (pBaseArray->nLen <= nItem1 || pBaseArray->nLen <= nItem2)
     {
       return false;
