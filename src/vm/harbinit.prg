@@ -48,23 +48,22 @@
 
 ANNOUNCE SYSINIT
 
-/* NOTE: For complete compatibility */
+// NOTE: For complete compatibility
 PROCEDURE CLIPPER520()
    RETURN
 
 #ifdef HB_COMPAT_C53
 
-/* NOTE: For complete compatibility */
+// NOTE: For complete compatibility
 PROCEDURE CLIPPER530()
    RETURN
 
 #endif
 
-/* This functions is called when new HVM stack is created at application
- * startup or in MT mode when new HVM thread is registered to initialize
- * basic VM settings like public variable GetList and ErrorBlock() by
- * calling ErrorSys() function.
- */
+// This functions is called when new HVM stack is created at application
+// startup or in MT mode when new HVM thread is registered to initialize
+// basic VM settings like public variable GetList and ErrorBlock() by
+// calling ErrorSys() function.
 PROCEDURE __HBVMInit()
 
    MEMVAR GetList
