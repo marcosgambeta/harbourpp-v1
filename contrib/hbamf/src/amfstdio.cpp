@@ -55,77 +55,93 @@
 
 static int s_nCount = 0;
 
-static void countCheck(int n)
+static void countCheck(int n, int nFlowCtrl)
 {
-   /* yes, this is flow-control */
+  // implements flow control for interacting with ill-strange non-configurable
+  //  environments that lose data when writing too much into such STDIN pipe.
+  //  specify nFlowCtrl = 0 to disable
+  if (!nFlowCtrl)
+  {
+    return;
+  }
 
-   s_nCount += n;
+  s_nCount += n;
 
-   while( s_nCount >= SINGLEBUF ) {
-      hb_conOutStd("\0\0\0\0", 4);
-      s_nCount -= SINGLEBUF;
-   }
+  while (s_nCount >= nFlowCtrl)
+  {
+    // this 32-bit uint 'zero' should be discarded from buffer every
+    // nFlowCtrl bytes, when received on the other side - after such
+    // notification other process is allowed to send more data
+    hb_conOutStd("\0\0\0\0", 4);
+    s_nCount -= nFlowCtrl;
+  }
 }
 
 HB_FUNC( AMFSTDIO_READ )
 {
-   auto pszStrIn = static_cast<char*>(hb_xgrab(SINGLEBUF));
-   auto pszLenPrefix = static_cast<char*>(hb_xgrab(5));
-   #if 0
-   char *     pszBuf;      = static_cast<char*>(hb_xgrab(SINGLEBUF));
-   #endif
-   char *     pszTmp = pszLenPrefix;
-   HB_USHORT  nBytes;
-   int        nTotal = 0;
-   int        nLen;
-   int        nToRead;
-   HB_FHANDLE hStdIn = hb_fsGetOsHandle(HB_STDIN_HANDLE);
+  auto pszStrIn = static_cast<char *>(hb_xgrab(SINGLEBUF));
+  auto pszLenPrefix = static_cast<char *>(hb_xgrab(5));
+  char * pszBuf;
+  char * pszTmp = pszLenPrefix;
+  HB_USHORT nBytes;
+  int nTotal = 0;
+  int nLen;
+  int nToRead;
+  HB_FHANDLE hStdIn = hb_fsGetOsHandle(HB_STDIN_HANDLE);
+  int nFlowCtrl = hb_parnidef(1, SINGLEBUF);
+  // 0 - disable flow control, 32768 - by default
 
-   while( nTotal < 4 ) {
-      nToRead = (s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal);
-      nBytes  = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
-
-      countCheck(nBytes);
-
-      memcpy(pszTmp, pszStrIn, nBytes);
-      nTotal += nBytes;
-      pszTmp  = pszLenPrefix + nTotal;
-   }
-
-   pszLenPrefix[4] = '\0';
-   nLen = HB_GET_LE_UINT32(pszLenPrefix);
-
-   if( nLen >= MAXLEN ) {
+  while (nTotal < 4)
+  {
+    nToRead = (s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal);
+    nBytes  = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
+    if (!nBytes)
+    {
+      hb_xfree(pszStrIn);
+      hb_xfree(pszLenPrefix);
       hb_ret();
       return;
-   }
+    }
+    countCheck(nBytes, nFlowCtrl);
 
-   nTotal = 0;
-   auto pszBuf = static_cast<char*>(hb_xgrab(nLen + 1));
-   pszTmp = pszBuf;
+    memcpy(pszTmp, pszStrIn, nBytes);
+    nTotal += nBytes;
+    pszTmp = pszLenPrefix + nTotal;
+  }
+  pszLenPrefix[4] = '\0';
+  nLen = HB_GET_LE_UINT32(pszLenPrefix);
 
-   while( nTotal < nLen ) {
-      /*
-       * here it's being decided that nToRead is never over 32768 bytes long,
-       * so hb_fsRead() is fine, no hb_fsReadLarge() needed
-       */
+  if (nLen >= MAXLEN)
+  {
+    hb_xfree(pszStrIn);
+    hb_xfree(pszLenPrefix);
+    hb_ret();
+    return;
+  }
+  nTotal = 0;
+  pszBuf = static_cast<char *>(hb_xgrab(nLen + 1));
+  pszTmp = pszBuf;
+  while (nTotal < nLen)
+  {
+    // here it's being decided that nToRead is never over 32768 bytes long,
+    // so hb_fsRead() is fine, no hb_fsReadLarge() needed
+    if (nLen - nTotal > SINGLEBUF)
+    {
+      nToRead = SINGLEBUF - s_nCount;
+    }
+    else
+    {
+      nToRead = (s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal);
+    }
+    nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
 
-      if( nLen - nTotal > SINGLEBUF ) {
-         nToRead = SINGLEBUF - s_nCount;
-      } else {
-         nToRead = (s_nCount + nLen - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : nLen - nTotal);
-      }
+    countCheck(nBytes, nFlowCtrl);
 
-      nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
-
-      countCheck(nBytes);
-
-      memcpy(pszTmp, pszStrIn, nBytes);
-      nTotal += nBytes;
-      pszTmp  = pszBuf + nTotal;
-   }
-
-   hb_xfree(pszStrIn);
-   hb_xfree(pszLenPrefix);
-   hb_retclen_buffer(pszBuf, nLen);
+    memcpy(pszTmp, pszStrIn, nBytes);
+    nTotal += nBytes;
+    pszTmp = pszBuf + nTotal;
+  }
+  hb_xfree(pszStrIn);
+  hb_xfree(pszLenPrefix);
+  hb_retclen_buffer(pszBuf, nLen);
 }

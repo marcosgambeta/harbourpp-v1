@@ -437,7 +437,7 @@ HB_FUNC(HB_PQCOPYFROMWA)
             if (SELF_GETVALUE(pArea, static_cast<HB_USHORT>(hb_arrayGetNI(pFields, uiIter)), pItem) !=
                     Harbour::SUCCESS ||
                 !exportBufSqlVar(context, pItem, sc_szQuote, sc_szEsc) ||
-                !addStrToContext(context, uiIter == uiFields ? "\n" : sc_szDelim))
+                !addStrToContext(context, uiIter == uiFieldCopy ? "\n" : sc_szDelim))
             {
               bFail = true;
               break;
