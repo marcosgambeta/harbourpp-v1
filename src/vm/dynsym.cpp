@@ -50,8 +50,7 @@
 #include "hbapierr.hpp"
 #include "hbstack.hpp"
 
-// Note for Harbour++ v2: use only std::mutex 
-
+// Note for Harbour++ v2: use only std::mutex
 #if defined(HB_USE_CPP_MUTEX)
 #include <iostream>
 #include <thread>
@@ -72,10 +71,10 @@ struct HB_SYM_HOLDER
 
 #if defined(HB_USE_CPP_MUTEX)
 
-std::mutex mtx;
+std::mutex dynsMtx;
 
-#define HB_DYNSYM_LOCK() mtx.lock()
-#define HB_DYNSYM_UNLOCK() mtx.unlock()
+#define HB_DYNSYM_LOCK() dynsMtx.lock()
+#define HB_DYNSYM_UNLOCK() dynsMtx.unlock()
 
 #if defined(HB_MT_VM)
 #define hb_dynsymHandles(p) hb_stackGetDynHandle(p)
