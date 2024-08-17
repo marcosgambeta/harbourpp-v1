@@ -50,6 +50,14 @@
 #include "hbapierr.hpp"
 #include "hbstack.hpp"
 
+// Note for Harbour++ v2: use only std::mutex 
+
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 struct DYNHB_ITEM
 {
   PHB_DYNS pDynSym; // Pointer to dynamic symbol
@@ -61,6 +69,21 @@ struct HB_SYM_HOLDER
   struct HB_SYM_HOLDER *pNext;
   char szName[1];
 };
+
+#if defined(HB_USE_CPP_MUTEX)
+
+std::mutex mtx;
+
+#define HB_DYNSYM_LOCK() mtx.lock()
+#define HB_DYNSYM_UNLOCK() mtx.unlock()
+
+#if defined(HB_MT_VM)
+#define hb_dynsymHandles(p) hb_stackGetDynHandle(p)
+#else
+#define hb_dynsymHandles(p) (p)
+#endif
+
+#else
 
 #if defined(HB_MT_VM)
 
@@ -86,6 +109,8 @@ static HB_CRITICAL_NEW(s_dynsMtx);
 #define hb_dynsymHandles(p) (p)
 
 #endif // HB_MT_VM
+
+#endif // HB_USE_CPP_MUTEX
 
 static DYNHB_ITEM *s_pDynItems = nullptr; // Pointer to dynamic items
 static HB_SYMCNT s_uiDynSymbols = 0;      // Number of symbols present
