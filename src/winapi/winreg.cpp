@@ -28,9 +28,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/*
-  NOTE: source code generated with the help of a code generator
-*/
+// NOTE: source code generated with the help of a code generator
 
 #define _WIN32_WINNT 0x0600
 
