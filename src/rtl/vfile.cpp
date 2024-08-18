@@ -228,7 +228,7 @@ HB_FUNC(HB_VFCOPYFILE)
   hb_retni(iResult);
 }
 
-/* hb_vfCopyFile( <cFileSrc>, <cFileDst>, [<nBufSize>], [<lTimePreserve>=.t.], [<bCallBack>] ) --> <nResult> */
+/* hb_vfCopyFileEx( <cFileSrc>, <cFileDst>, [<nBufSize>], [<lTimePreserve>=.t.], [<bCallBack>] ) --> <nResult> */
 HB_FUNC(HB_VFCOPYFILEEX)
 {
   auto pszSource = hb_parc(1);

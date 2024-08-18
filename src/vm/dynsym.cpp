@@ -582,6 +582,32 @@ static PHB_DYNS hb_dynsymGetByIndex(HB_LONG lIndex)
   return pDynSym;
 }
 
+static PHB_DYNS hb_dynsymByItem(PHB_ITEM pItem)
+{
+  PHB_DYNS pDynSym = nullptr;
+
+  if (pItem)
+  {
+    if (HB_IS_STRING(pItem))
+    {
+      pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+    }
+    else if (HB_IS_SYMBOL(pItem))
+    {
+      pDynSym = pItem->item.asSymbol.value->pDynSym;
+      if (pDynSym == nullptr)
+      {
+        pDynSym = hb_dynsymFind(pItem->item.asSymbol.value->szName);
+      }
+    }
+    else if (HB_IS_NUMERIC(pItem))
+    {
+      pDynSym = hb_dynsymGetByIndex(hb_itemGetNL(pItem));
+    }
+  }
+  return pDynSym;
+}
+
 HB_LONG hb_dynsymCount(void)
 {
 #if 0
@@ -746,56 +772,41 @@ HB_FUNC(__DYNSGETNAME) // Get name of symbol: cSymbol = __dynsymGetName(dsIndex)
   hb_retc(pDynSym ? pDynSym->pSymbol->szName : nullptr);
 }
 
-HB_FUNC(__DYNSGETINDEX) // Gimme index number of symbol: dsIndex = __dynsymGetIndex(cSymbol)
+HB_FUNC(__DYNSGETINDEX) // Gimme index number of symbol: dsIndex = __dynsymGetIndex( cSymbol | sSymbol )
 {
   HB_STACK_TLS_PRELOAD
   HB_SYMCNT uiPos = 0;
-  auto szName = hb_parc(1);
+  PHB_DYNS pDynSym = hb_dynsymByItem(hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL));
 
-  if (szName)
+  if (pDynSym)
   {
-    auto pDynSym = hb_dynsymFindName(szName);
-    if (pDynSym)
+    HB_DYNSYM_LOCK();
+    if (hb_dynsymPos(pDynSym->pSymbol->szName, &uiPos))
     {
-      HB_DYNSYM_LOCK();
-      if (hb_dynsymPos(pDynSym->pSymbol->szName, &uiPos))
-      {
-        ++uiPos;
-      }
-      else
-      {
-        uiPos = 0;
-      }
-      HB_DYNSYM_UNLOCK();
+      ++uiPos;
     }
+    else
+    {
+      uiPos = 0;
+    }
+    HB_DYNSYM_UNLOCK();
   }
-
   hb_retnint(uiPos);
 }
 
-HB_FUNC(HB_ISFUNCTION) // returns .T. if a symbol has a function/procedure pointer, given its name
+HB_FUNC(HB_ISFUNCTION) // returns .T. if a symbol has a function/procedure pointer, given its symbol or name
 {
   HB_STACK_TLS_PRELOAD
-  auto szProc = hb_parc(1);
-  auto fResult = false;
+  PHB_DYNS pDynSym = hb_dynsymByItem(hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL));
 
-  if (szProc)
-  {
-    auto pDynSym = hb_dynsymFindName(szProc);
-    if (pDynSym)
-    {
-      fResult = hb_dynsymIsFunction(pDynSym);
-    }
-  }
-
-  hb_retl(fResult);
+  hb_retl(pDynSym && hb_dynsymIsFunction(pDynSym));
 }
 
 HB_FUNC(__DYNSISFUN) // returns .T. if a symbol has a function/procedure pointer, given its symbol index or name
 {
   HB_STACK_TLS_PRELOAD
-  auto szName = hb_parc(1);
-  PHB_DYNS pDynSym = szName ? hb_dynsymFindName(szName) : hb_dynsymGetByIndex(hb_parnl(1));
+  PHB_DYNS pDynSym = hb_dynsymByItem(hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL | Harbour::Item::NUMERIC));
+
   hb_retl(pDynSym && hb_dynsymIsFunction(pDynSym));
 }
 
