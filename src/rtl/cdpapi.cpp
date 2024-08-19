@@ -50,10 +50,26 @@
 #include "hbapicdp.hpp"
 #include "hbthread.hpp"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+
+#include <iostream>
+#include <thread>
+#include <mutex>
+
+std::mutex cdpMtx;
+
+#define HB_CDP_LOCK() cdpMtx.lock()
+#define HB_CDP_UNLOCK() cdpMtx.unlock()
+
+#else
+
 /* MT macros */
 #define HB_CDP_LOCK() hb_threadEnterCriticalSection(&s_cdpMtx)
 #define HB_CDP_UNLOCK() hb_threadLeaveCriticalSection(&s_cdpMtx)
 static HB_CRITICAL_NEW(s_cdpMtx);
+
+#endif // HB_USE_CPP_MUTEX
 
 #define NUMBER_OF_CHARS 256
 
