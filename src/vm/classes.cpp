@@ -103,6 +103,13 @@
 #include "hbthread.hpp"
 #include "hboo.ch"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 struct HB_CLSCAST
 {
   HB_USHORT uiClass;
@@ -347,6 +354,16 @@ static HB_USHORT s_uiObjectClass = 0;
 
 // Class definition holder
 
+#if defined(HB_USE_CPP_MUTEX)
+
+std::mutex clsMtx;
+
+#define HB_CLASS_POOL_SIZE 16382
+#define HB_CLASS_LOCK() clsMtx.lock()
+#define HB_CLASS_UNLOCK() clsMtx.unlock()
+
+#else
+
 // In MT mode we are allocating array big enough to hold all
 // class definitions so we do not have to worry about runtime
 // s_pClasses reallocation, [druzus]
@@ -371,7 +388,9 @@ static HB_CRITICAL_NEW(s_clsMtx);
   {                                                                                                                    \
   } while (false)
 
-#endif
+#endif // HB_MT_VM
+
+#endif // HB_USE_CPP_MUTEX
 
 #define HB_CLASS_POOL_RESIZE 64
 
