@@ -37,26 +37,16 @@ SOFTWARE.
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-/*
-DWORD WINAPI VerFindFileA(DWORD uFlags,LPSTR szFileName,LPSTR szWinDir,LPSTR szAppDir,LPSTR szCurDir,PUINT lpuCurDirLen,LPSTR szDestDir,PUINT lpuDestDirLen)
-*/
+// DWORD WINAPI VerFindFileA(DWORD uFlags,LPSTR szFileName,LPSTR szWinDir,LPSTR szAppDir,LPSTR szCurDir,PUINT lpuCurDirLen,LPSTR szDestDir,PUINT lpuDestDirLen)
 
-/*
-DWORD WINAPI VerFindFileW(DWORD uFlags,LPWSTR szFileName,LPWSTR szWinDir,LPWSTR szAppDir,LPWSTR szCurDir,PUINT lpuCurDirLen,LPWSTR szDestDir,PUINT lpuDestDirLen)
-*/
+// DWORD WINAPI VerFindFileW(DWORD uFlags,LPWSTR szFileName,LPWSTR szWinDir,LPWSTR szAppDir,LPWSTR szCurDir,PUINT lpuCurDirLen,LPWSTR szDestDir,PUINT lpuDestDirLen)
 
-/*
-DWORD WINAPI VerInstallFileA(DWORD uFlags,LPSTR szSrcFileName,LPSTR szDestFileName,LPSTR szSrcDir,LPSTR szDestDir,LPSTR szCurDir,LPSTR szTmpFile,PUINT lpuTmpFileLen)
-*/
+// DWORD WINAPI VerInstallFileA(DWORD uFlags,LPSTR szSrcFileName,LPSTR szDestFileName,LPSTR szSrcDir,LPSTR szDestDir,LPSTR szCurDir,LPSTR szTmpFile,PUINT lpuTmpFileLen)
 
-/*
-DWORD WINAPI VerInstallFileW(DWORD uFlags,LPWSTR szSrcFileName,LPWSTR szDestFileName,LPWSTR szSrcDir,LPWSTR szDestDir,LPWSTR szCurDir,LPWSTR szTmpFile,PUINT lpuTmpFileLen)
-*/
+// DWORD WINAPI VerInstallFileW(DWORD uFlags,LPWSTR szSrcFileName,LPWSTR szDestFileName,LPWSTR szSrcDir,LPWSTR szDestDir,LPWSTR szCurDir,LPWSTR szTmpFile,PUINT lpuTmpFileLen)
 
-/*
-DWORD WINAPI GetFileVersionInfoSizeA(LPCSTR lptstrFilename,LPDWORD lpdwHandle)
-DWORD GetFileVersionInfoSizeA([in] LPCSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
-*/
+// DWORD WINAPI GetFileVersionInfoSizeA(LPCSTR lptstrFilename,LPDWORD lpdwHandle)
+// DWORD GetFileVersionInfoSizeA([in] LPCSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
 {
@@ -66,10 +56,8 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
 }
 #endif
 
-/*
-DWORD WINAPI GetFileVersionInfoSizeW(LPCWSTR lptstrFilename,LPDWORD lpdwHandle)
-DWORD GetFileVersionInfoSizeW([in] LPCWSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
-*/
+// DWORD WINAPI GetFileVersionInfoSizeW(LPCWSTR lptstrFilename,LPDWORD lpdwHandle)
+// DWORD GetFileVersionInfoSizeW([in] LPCWSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEW )
 {
@@ -88,10 +76,8 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZE )
   hb_strfree(str1);
 }
 
-/*
-WINBOOL WINAPI GetFileVersionInfoA(LPCSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
-BOOL GetFileVersionInfoA([in] LPCSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
-*/
+// WINBOOL WINAPI GetFileVersionInfoA(LPCSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
+// BOOL GetFileVersionInfoA([in] LPCSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOA )
 {
@@ -99,10 +85,8 @@ HB_FUNC( WAGETFILEVERSIONINFOA )
 }
 #endif
 
-/*
-WINBOOL WINAPI GetFileVersionInfoW(LPCWSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
-BOOL GetFileVersionInfoW([in] LPCWSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
-*/
+// WINBOOL WINAPI GetFileVersionInfoW(LPCWSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
+// BOOL GetFileVersionInfoW([in] LPCWSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOW )
 {
@@ -117,25 +101,15 @@ HB_FUNC( WAGETFILEVERSIONINFO )
   hb_strfree(str1);
 }
 
-/*
-DWORD WINAPI VerLanguageNameA(DWORD wLang,LPSTR szLang,DWORD nSize)
-*/
+// DWORD WINAPI VerLanguageNameA(DWORD wLang,LPSTR szLang,DWORD nSize)
 
-/*
-DWORD WINAPI VerLanguageNameW(DWORD wLang,LPWSTR szLang,DWORD nSize)
-*/
+// DWORD WINAPI VerLanguageNameW(DWORD wLang,LPWSTR szLang,DWORD nSize)
 
-/*
-WINBOOL WINAPI VerQueryValueA(LPCVOID pBlock,LPCSTR lpSubBlock,LPVOID *lplpBuffer,PUINT puLen)
-*/
+// WINBOOL WINAPI VerQueryValueA(LPCVOID pBlock,LPCSTR lpSubBlock,LPVOID *lplpBuffer,PUINT puLen)
 
-/*
-WINBOOL WINAPI VerQueryValueW(LPCVOID pBlock,LPCWSTR lpSubBlock,LPVOID *lplpBuffer,PUINT puLen)
-*/
+// WINBOOL WINAPI VerQueryValueW(LPCVOID pBlock,LPCWSTR lpSubBlock,LPVOID *lplpBuffer,PUINT puLen)
 
-/*
-BOOL GetFileVersionInfoExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
-*/
+// BOOL GetFileVersionInfoExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOEXA )
 {
@@ -143,9 +117,7 @@ HB_FUNC( WAGETFILEVERSIONINFOEXA )
 }
 #endif
 
-/*
-BOOL GetFileVersionInfoExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
-*/
+// BOOL GetFileVersionInfoExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOEXW )
 {
@@ -162,9 +134,7 @@ HB_FUNC( WAGETFILEVERSIONINFOEX )
 }
 #endif
 
-/*
-DWORD GetFileVersionInfoSizeExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, [out] LPDWORD lpdwHandle)
-*/
+// DWORD GetFileVersionInfoSizeExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, [out] LPDWORD lpdwHandle)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEEXA )
 {
@@ -174,9 +144,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEXA )
 }
 #endif
 
-/*
-DWORD GetFileVersionInfoSizeExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, [out] LPDWORD lpdwHandle)
-*/
+// DWORD GetFileVersionInfoSizeExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, [out] LPDWORD lpdwHandle)
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEEXW )
 {

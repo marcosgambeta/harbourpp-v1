@@ -38,9 +38,7 @@ SOFTWARE.
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-/*
-NTSTATUS WINAPI BCryptOpenAlgorithmProvider (BCRYPT_ALG_HANDLE *phAlgorithm, LPCWSTR pszAlgId, LPCWSTR pszImplementation, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptOpenAlgorithmProvider (BCRYPT_ALG_HANDLE *phAlgorithm, LPCWSTR pszAlgId, LPCWSTR pszImplementation, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTOPENALGORITHMPROVIDER )
 {
@@ -52,9 +50,7 @@ HB_FUNC( WABCRYPTOPENALGORITHMPROVIDER )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptEnumAlgorithms (ULONG dwAlgOperations, ULONG *pAlgCount, BCRYPT_ALGORITHM_IDENTIFIER **ppAlgList, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptEnumAlgorithms (ULONG dwAlgOperations, ULONG *pAlgCount, BCRYPT_ALGORITHM_IDENTIFIER **ppAlgList, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTENUMALGORITHMS )
 {
@@ -64,9 +60,7 @@ HB_FUNC( WABCRYPTENUMALGORITHMS )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptEnumProviders (LPCWSTR pszAlgId, ULONG *pImplCount, BCRYPT_PROVIDER_NAME **ppImplList, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptEnumProviders (LPCWSTR pszAlgId, ULONG *pImplCount, BCRYPT_PROVIDER_NAME **ppImplList, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTENUMPROVIDERS )
 {
@@ -78,9 +72,7 @@ HB_FUNC( WABCRYPTENUMPROVIDERS )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptGetProperty(BCRYPT_HANDLE hObject, LPCWSTR pszProperty, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptGetProperty(BCRYPT_HANDLE hObject, LPCWSTR pszProperty, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTGETPROPERTY )
 {
@@ -94,9 +86,7 @@ HB_FUNC( WABCRYPTGETPROPERTY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptSetProperty (BCRYPT_HANDLE hObject, LPCWSTR pszProperty, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptSetProperty (BCRYPT_HANDLE hObject, LPCWSTR pszProperty, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTSETPROPERTY )
 {
@@ -108,9 +98,7 @@ HB_FUNC( WABCRYPTSETPROPERTY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptCloseAlgorithmProvider (BCRYPT_ALG_HANDLE hAlgorithm, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptCloseAlgorithmProvider (BCRYPT_ALG_HANDLE hAlgorithm, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTCLOSEALGORITHMPROVIDER )
 {
@@ -118,9 +106,7 @@ HB_FUNC( WABCRYPTCLOSEALGORITHMPROVIDER )
 }
 #endif
 
-/*
-VOID WINAPI BCryptFreeBuffer (PVOID pvBuffer)
-*/
+// VOID WINAPI BCryptFreeBuffer (PVOID pvBuffer)
 #if 0
 HB_FUNC( WABCRYPTFREEBUFFER )
 {
@@ -128,9 +114,7 @@ HB_FUNC( WABCRYPTFREEBUFFER )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptGenerateSymmetricKey (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE *phKey, PUCHAR pbKeyObject, ULONG cbKeyObject, PUCHAR pbSecret, ULONG cbSecret, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptGenerateSymmetricKey (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE *phKey, PUCHAR pbKeyObject, ULONG cbKeyObject, PUCHAR pbSecret, ULONG cbSecret, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTGENERATESYMMETRICKEY )
 {
@@ -142,9 +126,7 @@ HB_FUNC( WABCRYPTGENERATESYMMETRICKEY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptGenerateKeyPair (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE *phKey, ULONG dwLength, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptGenerateKeyPair (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE *phKey, ULONG dwLength, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTGENERATEKEYPAIR )
 {
@@ -152,9 +134,7 @@ HB_FUNC( WABCRYPTGENERATEKEYPAIR )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptEncrypt (BCRYPT_KEY_HANDLE hKey, PUCHAR pbInput, ULONG cbInput, VOID *pPaddingInfo, PUCHAR pbIV, ULONG cbIV, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptEncrypt (BCRYPT_KEY_HANDLE hKey, PUCHAR pbInput, ULONG cbInput, VOID *pPaddingInfo, PUCHAR pbIV, ULONG cbIV, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTENCRYPT )
 {
@@ -168,9 +148,7 @@ HB_FUNC( WABCRYPTENCRYPT )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDecrypt (BCRYPT_KEY_HANDLE hKey, PUCHAR pbInput, ULONG cbInput, VOID *pPaddingInfo, PUCHAR pbIV, ULONG cbIV, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptDecrypt (BCRYPT_KEY_HANDLE hKey, PUCHAR pbInput, ULONG cbInput, VOID *pPaddingInfo, PUCHAR pbIV, ULONG cbIV, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTDECRYPT )
 {
@@ -184,9 +162,7 @@ HB_FUNC( WABCRYPTDECRYPT )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptExportKey (BCRYPT_KEY_HANDLE hKey, BCRYPT_KEY_HANDLE hExportKey, LPCWSTR pszBlobType, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptExportKey (BCRYPT_KEY_HANDLE hKey, BCRYPT_KEY_HANDLE hExportKey, LPCWSTR pszBlobType, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTEXPORTKEY )
 {
@@ -196,9 +172,7 @@ HB_FUNC( WABCRYPTEXPORTKEY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptImportKey (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE hImportKey, LPCWSTR pszBlobType, BCRYPT_KEY_HANDLE *phKey, PUCHAR pbKeyObject, ULONG cbKeyObject, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptImportKey (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE hImportKey, LPCWSTR pszBlobType, BCRYPT_KEY_HANDLE *phKey, PUCHAR pbKeyObject, ULONG cbKeyObject, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTIMPORTKEY )
 {
@@ -208,9 +182,7 @@ HB_FUNC( WABCRYPTIMPORTKEY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptImportKeyPair (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE hImportKey, LPCWSTR pszBlobType, BCRYPT_KEY_HANDLE *phKey, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptImportKeyPair (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_KEY_HANDLE hImportKey, LPCWSTR pszBlobType, BCRYPT_KEY_HANDLE *phKey, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTIMPORTKEYPAIR )
 {
@@ -220,9 +192,7 @@ HB_FUNC( WABCRYPTIMPORTKEYPAIR )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDuplicateKey (BCRYPT_KEY_HANDLE hKey, BCRYPT_KEY_HANDLE *phNewKey, PUCHAR pbKeyObject, ULONG cbKeyObject, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptDuplicateKey (BCRYPT_KEY_HANDLE hKey, BCRYPT_KEY_HANDLE *phNewKey, PUCHAR pbKeyObject, ULONG cbKeyObject, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTDUPLICATEKEY )
 {
@@ -230,9 +200,7 @@ HB_FUNC( WABCRYPTDUPLICATEKEY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptFinalizeKeyPair (BCRYPT_KEY_HANDLE hKey, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptFinalizeKeyPair (BCRYPT_KEY_HANDLE hKey, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTFINALIZEKEYPAIR )
 {
@@ -240,9 +208,7 @@ HB_FUNC( WABCRYPTFINALIZEKEYPAIR )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDestroyKey (BCRYPT_KEY_HANDLE hKey)
-*/
+// NTSTATUS WINAPI BCryptDestroyKey (BCRYPT_KEY_HANDLE hKey)
 #if 0
 HB_FUNC( WABCRYPTDESTROYKEY )
 {
@@ -250,9 +216,7 @@ HB_FUNC( WABCRYPTDESTROYKEY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDestroySecret (BCRYPT_SECRET_HANDLE hSecret)
-*/
+// NTSTATUS WINAPI BCryptDestroySecret (BCRYPT_SECRET_HANDLE hSecret)
 #if 0
 HB_FUNC( WABCRYPTDESTROYSECRET )
 {
@@ -260,9 +224,7 @@ HB_FUNC( WABCRYPTDESTROYSECRET )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptSignHash (BCRYPT_KEY_HANDLE hKey, VOID *pPaddingInfo, PUCHAR pbInput, ULONG cbInput, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptSignHash (BCRYPT_KEY_HANDLE hKey, VOID *pPaddingInfo, PUCHAR pbInput, ULONG cbInput, PUCHAR pbOutput, ULONG cbOutput, ULONG *pcbResult, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTSIGNHASH )
 {
@@ -270,9 +232,7 @@ HB_FUNC( WABCRYPTSIGNHASH )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptVerifySignature (BCRYPT_KEY_HANDLE hKey, VOID *pPaddingInfo, PUCHAR pbHash, ULONG cbHash, PUCHAR pbSignature, ULONG cbSignature, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptVerifySignature (BCRYPT_KEY_HANDLE hKey, VOID *pPaddingInfo, PUCHAR pbHash, ULONG cbHash, PUCHAR pbSignature, ULONG cbSignature, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTVERIFYSIGNATURE )
 {
@@ -280,9 +240,7 @@ HB_FUNC( WABCRYPTVERIFYSIGNATURE )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptSecretAgreement (BCRYPT_KEY_HANDLE hPrivKey, BCRYPT_KEY_HANDLE hPubKey, BCRYPT_SECRET_HANDLE *phAgreedSecret, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptSecretAgreement (BCRYPT_KEY_HANDLE hPrivKey, BCRYPT_KEY_HANDLE hPubKey, BCRYPT_SECRET_HANDLE *phAgreedSecret, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTSECRETAGREEMENT )
 {
@@ -290,9 +248,7 @@ HB_FUNC( WABCRYPTSECRETAGREEMENT )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDeriveKey (BCRYPT_SECRET_HANDLE hSharedSecret, LPCWSTR pwszKDF, BCryptBufferDesc *pParameterList, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG *pcbResult, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptDeriveKey (BCRYPT_SECRET_HANDLE hSharedSecret, LPCWSTR pwszKDF, BCryptBufferDesc *pParameterList, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG *pcbResult, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTDERIVEKEY )
 {
@@ -302,9 +258,7 @@ HB_FUNC( WABCRYPTDERIVEKEY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptKeyDerivation (BCRYPT_KEY_HANDLE hKey, BCryptBufferDesc *pParameterList, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG *pcbResult, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptKeyDerivation (BCRYPT_KEY_HANDLE hKey, BCryptBufferDesc *pParameterList, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG *pcbResult, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTKEYDERIVATION )
 {
@@ -312,9 +266,7 @@ HB_FUNC( WABCRYPTKEYDERIVATION )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptCreateHash (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_HASH_HANDLE *phHash, PUCHAR pbHashObject, ULONG cbHashObject, PUCHAR pbSecret, ULONG cbSecret, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptCreateHash (BCRYPT_ALG_HANDLE hAlgorithm, BCRYPT_HASH_HANDLE *phHash, PUCHAR pbHashObject, ULONG cbHashObject, PUCHAR pbSecret, ULONG cbSecret, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTCREATEHASH )
 {
@@ -322,9 +274,7 @@ HB_FUNC( WABCRYPTCREATEHASH )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptHashData (BCRYPT_HASH_HANDLE hHash, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptHashData (BCRYPT_HASH_HANDLE hHash, PUCHAR pbInput, ULONG cbInput, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTHASHDATA )
 {
@@ -332,9 +282,7 @@ HB_FUNC( WABCRYPTHASHDATA )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptFinishHash (BCRYPT_HASH_HANDLE hHash, PUCHAR pbOutput, ULONG cbOutput, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptFinishHash (BCRYPT_HASH_HANDLE hHash, PUCHAR pbOutput, ULONG cbOutput, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTFINISHHASH )
 {
@@ -342,9 +290,7 @@ HB_FUNC( WABCRYPTFINISHHASH )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDuplicateHash (BCRYPT_HASH_HANDLE hHash, BCRYPT_HASH_HANDLE *phNewHash, PUCHAR pbHashObject, ULONG cbHashObject, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptDuplicateHash (BCRYPT_HASH_HANDLE hHash, BCRYPT_HASH_HANDLE *phNewHash, PUCHAR pbHashObject, ULONG cbHashObject, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTDUPLICATEHASH )
 {
@@ -352,9 +298,7 @@ HB_FUNC( WABCRYPTDUPLICATEHASH )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDestroyHash (BCRYPT_HASH_HANDLE hHash)
-*/
+// NTSTATUS WINAPI BCryptDestroyHash (BCRYPT_HASH_HANDLE hHash)
 #if 0
 HB_FUNC( WABCRYPTDESTROYHASH )
 {
@@ -362,9 +306,7 @@ HB_FUNC( WABCRYPTDESTROYHASH )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptGenRandom (BCRYPT_ALG_HANDLE hAlgorithm, PUCHAR pbBuffer, ULONG cbBuffer, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptGenRandom (BCRYPT_ALG_HANDLE hAlgorithm, PUCHAR pbBuffer, ULONG cbBuffer, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTGENRANDOM )
 {
@@ -372,9 +314,7 @@ HB_FUNC( WABCRYPTGENRANDOM )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDeriveKeyCapi (BCRYPT_HASH_HANDLE hHash, BCRYPT_ALG_HANDLE hTargetAlg, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptDeriveKeyCapi (BCRYPT_HASH_HANDLE hHash, BCRYPT_ALG_HANDLE hTargetAlg, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTDERIVEKEYCAPI )
 {
@@ -382,9 +322,7 @@ HB_FUNC( WABCRYPTDERIVEKEYCAPI )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDeriveKeyPBKDF2 (BCRYPT_ALG_HANDLE hPrf, PUCHAR pbPassword, ULONG cbPassword, PUCHAR pbSalt, ULONG cbSalt, ULONGLONG cIterations, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG dwFlags)
-*/
+// NTSTATUS WINAPI BCryptDeriveKeyPBKDF2 (BCRYPT_ALG_HANDLE hPrf, PUCHAR pbPassword, ULONG cbPassword, PUCHAR pbSalt, ULONG cbSalt, ULONGLONG cIterations, PUCHAR pbDerivedKey, ULONG cbDerivedKey, ULONG dwFlags)
 #if 0
 HB_FUNC( WABCRYPTDERIVEKEYPBKDF2 )
 {
@@ -392,9 +330,7 @@ HB_FUNC( WABCRYPTDERIVEKEYPBKDF2 )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptResolveProviders (LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, LPCWSTR pszProvider, ULONG dwMode, ULONG dwFlags, ULONG *pcbBuffer, PCRYPT_PROVIDER_REFS *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptResolveProviders (LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, LPCWSTR pszProvider, ULONG dwMode, ULONG dwFlags, ULONG *pcbBuffer, PCRYPT_PROVIDER_REFS *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTRESOLVEPROVIDERS )
 {
@@ -408,9 +344,7 @@ HB_FUNC( WABCRYPTRESOLVEPROVIDERS )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptGetFipsAlgorithmMode (BOOLEAN *pfEnabled)
-*/
+// NTSTATUS WINAPI BCryptGetFipsAlgorithmMode (BOOLEAN *pfEnabled)
 #if 0
 HB_FUNC( WABCRYPTGETFIPSALGORITHMMODE )
 {
@@ -418,9 +352,7 @@ HB_FUNC( WABCRYPTGETFIPSALGORITHMMODE )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptQueryProviderRegistration (LPCWSTR pszProvider, ULONG dwMode, ULONG dwInterface, ULONG *pcbBuffer, PCRYPT_PROVIDER_REG *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptQueryProviderRegistration (LPCWSTR pszProvider, ULONG dwMode, ULONG dwInterface, ULONG *pcbBuffer, PCRYPT_PROVIDER_REG *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTQUERYPROVIDERREGISTRATION )
 {
@@ -430,9 +362,7 @@ HB_FUNC( WABCRYPTQUERYPROVIDERREGISTRATION )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptEnumRegisteredProviders (ULONG *pcbBuffer, PCRYPT_PROVIDERS *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptEnumRegisteredProviders (ULONG *pcbBuffer, PCRYPT_PROVIDERS *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTENUMREGISTEREDPROVIDERS )
 {
@@ -440,9 +370,7 @@ HB_FUNC( WABCRYPTENUMREGISTEREDPROVIDERS )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptCreateContext (ULONG dwTable, LPCWSTR pszContext, PCRYPT_CONTEXT_CONFIG pConfig)
-*/
+// NTSTATUS WINAPI BCryptCreateContext (ULONG dwTable, LPCWSTR pszContext, PCRYPT_CONTEXT_CONFIG pConfig)
 #if 0
 HB_FUNC( WABCRYPTCREATECONTEXT )
 {
@@ -452,9 +380,7 @@ HB_FUNC( WABCRYPTCREATECONTEXT )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptDeleteContext (ULONG dwTable, LPCWSTR pszContext)
-*/
+// NTSTATUS WINAPI BCryptDeleteContext (ULONG dwTable, LPCWSTR pszContext)
 #if 0
 HB_FUNC( WABCRYPTDELETECONTEXT )
 {
@@ -464,9 +390,7 @@ HB_FUNC( WABCRYPTDELETECONTEXT )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptEnumContexts (ULONG dwTable, ULONG *pcbBuffer, PCRYPT_CONTEXTS *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptEnumContexts (ULONG dwTable, ULONG *pcbBuffer, PCRYPT_CONTEXTS *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTENUMCONTEXTS )
 {
@@ -474,9 +398,7 @@ HB_FUNC( WABCRYPTENUMCONTEXTS )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptConfigureContext (ULONG dwTable, LPCWSTR pszContext, PCRYPT_CONTEXT_CONFIG pConfig)
-*/
+// NTSTATUS WINAPI BCryptConfigureContext (ULONG dwTable, LPCWSTR pszContext, PCRYPT_CONTEXT_CONFIG pConfig)
 #if 0
 HB_FUNC( WABCRYPTCONFIGURECONTEXT )
 {
@@ -486,9 +408,7 @@ HB_FUNC( WABCRYPTCONFIGURECONTEXT )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptQueryContextConfiguration (ULONG dwTable, LPCWSTR pszContext, ULONG *pcbBuffer, PCRYPT_CONTEXT_CONFIG *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptQueryContextConfiguration (ULONG dwTable, LPCWSTR pszContext, ULONG *pcbBuffer, PCRYPT_CONTEXT_CONFIG *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTQUERYCONTEXTCONFIGURATION )
 {
@@ -498,9 +418,7 @@ HB_FUNC( WABCRYPTQUERYCONTEXTCONFIGURATION )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptAddContextFunction (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, ULONG dwPosition)
-*/
+// NTSTATUS WINAPI BCryptAddContextFunction (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, ULONG dwPosition)
 #if 0
 HB_FUNC( WABCRYPTADDCONTEXTFUNCTION )
 {
@@ -512,9 +430,7 @@ HB_FUNC( WABCRYPTADDCONTEXTFUNCTION )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptRemoveContextFunction (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction)
-*/
+// NTSTATUS WINAPI BCryptRemoveContextFunction (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction)
 #if 0
 HB_FUNC( WABCRYPTREMOVECONTEXTFUNCTION )
 {
@@ -526,9 +442,7 @@ HB_FUNC( WABCRYPTREMOVECONTEXTFUNCTION )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptEnumContextFunctions (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, ULONG *pcbBuffer, PCRYPT_CONTEXT_FUNCTIONS *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptEnumContextFunctions (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, ULONG *pcbBuffer, PCRYPT_CONTEXT_FUNCTIONS *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONS )
 {
@@ -538,9 +452,7 @@ HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONS )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptConfigureContextFunction (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, PCRYPT_CONTEXT_FUNCTION_CONFIG pConfig)
-*/
+// NTSTATUS WINAPI BCryptConfigureContextFunction (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, PCRYPT_CONTEXT_FUNCTION_CONFIG pConfig)
 #if 0
 HB_FUNC( WABCRYPTCONFIGURECONTEXTFUNCTION )
 {
@@ -552,9 +464,7 @@ HB_FUNC( WABCRYPTCONFIGURECONTEXTFUNCTION )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptQueryContextFunctionConfiguration (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, ULONG *pcbBuffer, PCRYPT_CONTEXT_FUNCTION_CONFIG *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptQueryContextFunctionConfiguration (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, ULONG *pcbBuffer, PCRYPT_CONTEXT_FUNCTION_CONFIG *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTQUERYCONTEXTFUNCTIONCONFIGURATION )
 {
@@ -566,9 +476,7 @@ HB_FUNC( WABCRYPTQUERYCONTEXTFUNCTIONCONFIGURATION )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptEnumContextFunctionProviders (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, ULONG *pcbBuffer, PCRYPT_CONTEXT_FUNCTION_PROVIDERS *ppBuffer)
-*/
+// NTSTATUS WINAPI BCryptEnumContextFunctionProviders (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, ULONG *pcbBuffer, PCRYPT_CONTEXT_FUNCTION_PROVIDERS *ppBuffer)
 #if 0
 HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONPROVIDERS )
 {
@@ -580,9 +488,7 @@ HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONPROVIDERS )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptSetContextFunctionProperty (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, LPCWSTR pszProperty, ULONG cbValue, PUCHAR pbValue)
-*/
+// NTSTATUS WINAPI BCryptSetContextFunctionProperty (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, LPCWSTR pszProperty, ULONG cbValue, PUCHAR pbValue)
 #if 0
 HB_FUNC( WABCRYPTSETCONTEXTFUNCTIONPROPERTY )
 {
@@ -594,9 +500,7 @@ HB_FUNC( WABCRYPTSETCONTEXTFUNCTIONPROPERTY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptQueryContextFunctionProperty (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, LPCWSTR pszProperty, ULONG *pcbValue, PUCHAR *ppbValue)
-*/
+// NTSTATUS WINAPI BCryptQueryContextFunctionProperty (ULONG dwTable, LPCWSTR pszContext, ULONG dwInterface, LPCWSTR pszFunction, LPCWSTR pszProperty, ULONG *pcbValue, PUCHAR *ppbValue)
 #if 0
 HB_FUNC( WABCRYPTQUERYCONTEXTFUNCTIONPROPERTY )
 {
@@ -608,9 +512,7 @@ HB_FUNC( WABCRYPTQUERYCONTEXTFUNCTIONPROPERTY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptRegisterConfigChangeNotify (HANDLE *phEvent)
-*/
+// NTSTATUS WINAPI BCryptRegisterConfigChangeNotify (HANDLE *phEvent)
 #if 0
 HB_FUNC( WABCRYPTREGISTERCONFIGCHANGENOTIFY )
 {
@@ -618,9 +520,7 @@ HB_FUNC( WABCRYPTREGISTERCONFIGCHANGENOTIFY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptRegisterConfigChangeNotify (PRKEVENT pEvent)
-*/
+// NTSTATUS WINAPI BCryptRegisterConfigChangeNotify (PRKEVENT pEvent)
 #if 0
 HB_FUNC( WABCRYPTREGISTERCONFIGCHANGENOTIFY )
 {
@@ -628,9 +528,7 @@ HB_FUNC( WABCRYPTREGISTERCONFIGCHANGENOTIFY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptUnregisterConfigChangeNotify (PRKEVENT pEvent)
-*/
+// NTSTATUS WINAPI BCryptUnregisterConfigChangeNotify (PRKEVENT pEvent)
 #if 0
 HB_FUNC( WABCRYPTUNREGISTERCONFIGCHANGENOTIFY )
 {
@@ -638,9 +536,7 @@ HB_FUNC( WABCRYPTUNREGISTERCONFIGCHANGENOTIFY )
 }
 #endif
 
-/*
-NTSTATUS WINAPI BCryptUnregisterConfigChangeNotify (HANDLE hEvent)
-*/
+// NTSTATUS WINAPI BCryptUnregisterConfigChangeNotify (HANDLE hEvent)
 #if 0
 HB_FUNC( WABCRYPTUNREGISTERCONFIGCHANGENOTIFY )
 {

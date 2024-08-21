@@ -45,26 +45,18 @@ using namespace Gdiplus;
 static ULONG_PTR gdiplusToken{};
 static GdiplusStartupInput gdiplusStartupInput{};
 
-/*
-GpStatus WINGDIPAPI GdiplusStartup(ULONG_PTR*,GDIPCONST GdiplusStartupInput*,GdiplusStartupOutput*)
-*/
+// GpStatus WINGDIPAPI GdiplusStartup(ULONG_PTR*,GDIPCONST GdiplusStartupInput*,GdiplusStartupOutput*)
 HB_FUNC( WAGDIPLUSSTARTUP ) // TODO: parameters not used
 {
   wa_ret_GpStatus(GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr));
 }
 
-/*
-VOID WINGDIPAPI GdiplusShutdown(ULONG_PTR)
-*/
+// VOID WINGDIPAPI GdiplusShutdown(ULONG_PTR)
 HB_FUNC( WAGDIPLUSSHUTDOWN ) // TODO: parameters not used
 {
   GdiplusShutdown(gdiplusToken);
 }
 
-/*
-GpStatus WINGDIPAPI GdiplusNotificationHook(ULONG_PTR*)
-*/
+// GpStatus WINGDIPAPI GdiplusNotificationHook(ULONG_PTR*)
 
-/*
-VOID WINGDIPAPI GdiplusNotificationUnhook(ULONG_PTR)
-*/
+// VOID WINGDIPAPI GdiplusNotificationUnhook(ULONG_PTR)
