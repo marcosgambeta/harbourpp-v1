@@ -48,9 +48,9 @@
 
 #ifndef HB_CLP_STRICT
 
-/* NOTE: This function is a new Harbour function implemented in the
-         original CA-Cl*pper namespace. This should have been
-         marked as HB_EXTENSION, but it's not. */
+// NOTE: This function is a new Harbour function implemented in the
+//       original CA-Cl*pper namespace. This should have been
+//       marked as HB_EXTENSION, but it's not.
 
 HB_FUNC_TRANSLATE(DBRENAME, HB_DBRENAME)
 

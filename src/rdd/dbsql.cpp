@@ -133,7 +133,7 @@ static PHB_FILEBUF hb_createFBuffer(PHB_FILE pFile, HB_SIZE nSize)
   return pFileBuf;
 }
 
-/* Export field value into the buffer in SQL format */
+// Export field value into the buffer in SQL format
 static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char *szDelim, const char *szEsc)
 {
   switch (hb_itemType(pValue))
@@ -235,15 +235,15 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
     }
     break;
   }
-  /* an "M" field or the other, might be a "V" in SixDriver */
+  // an "M" field or the other, might be a "V" in SixDriver
   default:
-    /* We do not want MEMO contents */
+    // We do not want MEMO contents
     return false;
   }
   return true;
 }
 
-/* Export DBF content to a SQL script file */
+// Export DBF content to a SQL script file
 static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_ITEM pWhile, PHB_ITEM pFor,
                           const char *szDelim, const char *szSep, const char *szEsc, const char *szTable,
                           PHB_FILE pFile, HB_BOOL fInsert, HB_BOOL fRecno)
@@ -339,7 +339,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_I
       }
       else
       {
-        /* TODO: exporting only some fields */
+        // TODO: exporting only some fields
       }
 
       if (szInsert)
@@ -369,16 +369,16 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_I
   hb_itemRelease(pTmp);
 
 #if 0
-   /* Writing EOF */
+   // Writing EOF
    hb_fileWrite(pFile, "\x1A", 1, -1);
 #endif
 
   return ulRecords;
 }
 
-/* __dbSQL(.T., <cFileName>, <cTable>, [<bFor>], [<bWhile>], ;
-           [<nNext>], [<nRec>], [<lRest>], [<lAppend>], [<lInsert>], ;
-           [<lRecNo>], [<cSep>], [<cDelim>], [<cEsc>]) -> <nRecords> */
+// __dbSQL(.T., <cFileName>, <cTable>, [<bFor>], [<bWhile>], ;
+//         [<nNext>], [<nRec>], [<lRest>], [<lAppend>], [<lInsert>], ;
+//         [<lRecNo>], [<cSep>], [<cDelim>], [<cEsc>]) -> <nRecords>
 HB_FUNC(__DBSQL)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -409,11 +409,11 @@ HB_FUNC(__DBSQL)
       hb_errRT_DBCMD(EG_ARG, EDBCMD_DBCMDBADPARAMETER, nullptr, HB_ERR_FUNCNAME);
     }
     else if (fExport)
-    { /* COPY TO SQL */
+    { // COPY TO SQL
       PHB_ITEM pError = nullptr;
       HB_BOOL fRetry;
 
-      /* Try to create Dat file */
+      // Try to create Dat file
       do
       {
         pFile = hb_fileExtOpen(
@@ -486,7 +486,7 @@ HB_FUNC(__DBSQL)
     }
     else
     {
-      /* TODO: import code */
+      // TODO: import code
     }
   }
   else

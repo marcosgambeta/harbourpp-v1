@@ -66,10 +66,10 @@ static void hb_sdfInitArea(SDFAREAP pArea, char *szFileName)
 {
   const char *szEol;
 
-  /* Allocate only after successfully open file */
+  // Allocate only after successfully open file
   pArea->szFileName = hb_strdup(szFileName);
 
-  /* set line separator: EOL */
+  // set line separator: EOL
   szEol = hb_setGetEOL();
   if (!szEol || !szEol[0])
   {
@@ -81,15 +81,15 @@ static void hb_sdfInitArea(SDFAREAP pArea, char *szFileName)
                    (pArea->uiEolLen == 1 ||
                     (pArea->uiEolLen == 2 && szEol[0] != szEol[1] && (szEol[1] == '\n' || szEol[1] == '\r')));
 
-  /* allocate record buffer, one additional byte is for deleted flag */
+  // allocate record buffer, one additional byte is for deleted flag
   pArea->pRecord = static_cast<HB_BYTE *>(hb_xgrab(pArea->uiRecordLen + pArea->uiEolLen + 1));
-  /* pseudo deleted flag */
+  // pseudo deleted flag
   *pArea->pRecord++ = ' ';
   memcpy(pArea->pRecord + pArea->uiRecordLen, pArea->szEol, pArea->uiEolLen);
 
   if (pArea->fReadonly)
   {
-    /* allocate IO buffer */
+    // allocate IO buffer
     pArea->nBufferSize += pArea->fAnyEol ? 2 : pArea->uiEolLen;
     if (pArea->nBufferSize < 8192)
     {
@@ -204,13 +204,9 @@ static HB_ERRCODE hb_sdfNextRecord(SDFAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * -- SDF METHODS --
- */
+// -- SDF METHODS --
 
-/*
- * Position cursor at a specific physical record.
- */
+// Position cursor at a specific physical record.
 static HB_ERRCODE hb_sdfGoTo(SDFAREAP pArea, HB_ULONG ulRecNo)
 {
 #if 0
@@ -230,13 +226,11 @@ static HB_ERRCODE hb_sdfGoTo(SDFAREAP pArea, HB_ULONG ulRecNo)
     return Harbour::SUCCESS;
   }
 #endif
-  /* generate RTE */
+  // generate RTE
   return SUPER_GOTO(&pArea->area, ulRecNo);
 }
 
-/*
- * Position the cursor to a specific, physical identity.
- */
+// Position the cursor to a specific, physical identity.
 static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, PHB_ITEM pItem)
 {
 #if 0
@@ -249,13 +243,11 @@ static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, PHB_ITEM pItem)
     return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
   }
 #endif
-  /* generate RTE */
+  // generate RTE
   return SUPER_GOTOID(&pArea->area, pItem);
 }
 
-/*
- * Position cursor at the first record.
- */
+// Position cursor at the first record.
 static HB_ERRCODE hb_sdfGoTop(SDFAREAP pArea)
 {
 #if 0
@@ -274,7 +266,7 @@ static HB_ERRCODE hb_sdfGoTop(SDFAREAP pArea)
   {
     if (pArea->ulRecNo != 0 || !pArea->fReadonly)
     {
-      /* generate RTE */
+      // generate RTE
       return SUPER_GOTOP(&pArea->area);
     }
 
@@ -288,9 +280,7 @@ static HB_ERRCODE hb_sdfGoTop(SDFAREAP pArea)
   return SELF_SKIPFILTER(&pArea->area, 1);
 }
 
-/*
- * Reposition cursor, regardless of filter.
- */
+// Reposition cursor, regardless of filter.
 static HB_ERRCODE hb_sdfSkipRaw(SDFAREAP pArea, HB_LONG lToSkip)
 {
 #if 0
@@ -304,7 +294,7 @@ static HB_ERRCODE hb_sdfSkipRaw(SDFAREAP pArea, HB_LONG lToSkip)
 
   if (lToSkip != 1 || !pArea->fReadonly)
   {
-    /* generate RTE */
+    // generate RTE
     return SUPER_SKIPRAW(&pArea->area, lToSkip);
   }
   else
@@ -313,9 +303,7 @@ static HB_ERRCODE hb_sdfSkipRaw(SDFAREAP pArea, HB_LONG lToSkip)
   }
 }
 
-/*
- * Determine deleted status for a record.
- */
+// Determine deleted status for a record.
 static HB_ERRCODE hb_sdfDeleted(SDFAREAP pArea, HB_BOOL *pDeleted)
 {
 #if 0
@@ -329,9 +317,7 @@ static HB_ERRCODE hb_sdfDeleted(SDFAREAP pArea, HB_BOOL *pDeleted)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain number of records in WorkArea.
- */
+// Obtain number of records in WorkArea.
 static HB_ERRCODE hb_sdfRecCount(SDFAREAP pArea, HB_ULONG *pRecCount)
 {
 #if 0
@@ -343,9 +329,7 @@ static HB_ERRCODE hb_sdfRecCount(SDFAREAP pArea, HB_ULONG *pRecCount)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain physical row number at current WorkArea cursor position.
- */
+// Obtain physical row number at current WorkArea cursor position.
 static HB_ERRCODE hb_sdfRecNo(SDFAREAP pArea, HB_ULONG *pulRecNo)
 {
 #if 0
@@ -357,9 +341,7 @@ static HB_ERRCODE hb_sdfRecNo(SDFAREAP pArea, HB_ULONG *pulRecNo)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain physical row ID at current WorkArea cursor position.
- */
+// Obtain physical row ID at current WorkArea cursor position.
 static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, PHB_ITEM pRecNo)
 {
 #if 0
@@ -371,8 +353,8 @@ static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, PHB_ITEM pRecNo)
   HB_ERRCODE errCode = SELF_RECNO(&pArea->area, &ulRecNo);
 
 #ifdef HB_CLP_STRICT
-  /* this is for strict Clipper compatibility but IMHO Clipper should not
-     do that and always set fixed size independent to the record number */
+  // this is for strict Clipper compatibility but IMHO Clipper should not
+  // do that and always set fixed size independent to the record number
   if (ulRecNo < 10000000)
   {
     hb_itemPutNLLen(pRecNo, ulRecNo, 7);
@@ -387,9 +369,7 @@ static HB_ERRCODE hb_sdfRecId(SDFAREAP pArea, PHB_ITEM pRecNo)
   return errCode;
 }
 
-/*
- * Append a record to the WorkArea.
- */
+// Append a record to the WorkArea.
 static HB_ERRCODE hb_sdfAppend(SDFAREAP pArea, HB_BOOL fUnLockAll)
 {
 #if 0
@@ -416,9 +396,7 @@ static HB_ERRCODE hb_sdfAppend(SDFAREAP pArea, HB_BOOL fUnLockAll)
   return Harbour::SUCCESS;
 }
 
-/*
- * Delete a record.
- */
+// Delete a record.
 static HB_ERRCODE hb_sdfDeleteRec(SDFAREAP pArea)
 {
 #if 0
@@ -427,7 +405,7 @@ static HB_ERRCODE hb_sdfDeleteRec(SDFAREAP pArea)
 
   HB_SYMBOL_UNUSED(pArea);
 
-  /* It's not Cl*pper compatible so I had to disable it [druzus] */
+  // It's not Cl*pper compatible so I had to disable it [druzus]
 #if 0
    if( pArea->fRecordChanged ) {
       pArea->ulRecCount--;
@@ -440,9 +418,7 @@ static HB_ERRCODE hb_sdfDeleteRec(SDFAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Undelete the current record.
- */
+// Undelete the current record.
 static HB_ERRCODE hb_sdfRecall(SDFAREAP pArea)
 {
 #if 0
@@ -454,9 +430,7 @@ static HB_ERRCODE hb_sdfRecall(SDFAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain the current value of a field.
- */
+// Obtain the current value of a field.
 static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
@@ -565,9 +539,7 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   return Harbour::SUCCESS;
 }
 
-/*
- * Assign a value to a field.
- */
+// Assign a value to a field.
 static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
@@ -708,9 +680,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   return Harbour::SUCCESS;
 }
 
-/*
- * Replace the current record.
- */
+// Replace the current record.
 static HB_ERRCODE hb_sdfPutRec(SDFAREAP pArea, HB_BYTE *pBuffer)
 {
 #if 0
@@ -727,15 +697,13 @@ static HB_ERRCODE hb_sdfPutRec(SDFAREAP pArea, HB_BYTE *pBuffer)
     return Harbour::FAILURE;
   }
 
-  /* Copy data to buffer */
+  // Copy data to buffer
   memcpy(pArea->pRecord, pBuffer + 1, pArea->uiRecordLen);
 
   return Harbour::SUCCESS;
 }
 
-/*
- * Retrieve current record buffer
- */
+// Retrieve current record buffer
 static HB_ERRCODE hb_sdfGetRec(SDFAREAP pArea, HB_BYTE **pBufferPtr)
 {
 #if 0
@@ -747,9 +715,7 @@ static HB_ERRCODE hb_sdfGetRec(SDFAREAP pArea, HB_BYTE **pBufferPtr)
   return Harbour::SUCCESS;
 }
 
-/*
- * Copy one or more records from one WorkArea to another.
- */
+// Copy one or more records from one WorkArea to another.
 static HB_ERRCODE hb_sdfTrans(SDFAREAP pArea, LPDBTRANSINFO pTransInfo)
 {
 #if 0
@@ -788,9 +754,7 @@ static HB_ERRCODE hb_sdfTrans(SDFAREAP pArea, LPDBTRANSINFO pTransInfo)
   return SUPER_TRANS(&pArea->area, pTransInfo);
 }
 
-/*
- * Perform a write of WorkArea memory to the data store.
- */
+// Perform a write of WorkArea memory to the data store.
 static HB_ERRCODE hb_sdfGoCold(SDFAREAP pArea)
 {
 #if 0
@@ -820,9 +784,7 @@ static HB_ERRCODE hb_sdfGoCold(SDFAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Mark the WorkArea data buffer as hot.
- */
+// Mark the WorkArea data buffer as hot.
 static HB_ERRCODE hb_sdfGoHot(SDFAREAP pArea)
 {
 #if 0
@@ -843,9 +805,7 @@ static HB_ERRCODE hb_sdfGoHot(SDFAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Write data buffer to the data store.
- */
+// Write data buffer to the data store.
 static HB_ERRCODE hb_sdfFlush(SDFAREAP pArea)
 {
 #if 0
@@ -863,9 +823,7 @@ static HB_ERRCODE hb_sdfFlush(SDFAREAP pArea)
   return errCode;
 }
 
-/*
- * Retrieve information about the current table/driver.
- */
+// Retrieve information about the current table/driver.
 static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
@@ -930,9 +888,7 @@ static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   return Harbour::SUCCESS;
 }
 
-/*
- * Add a field to the WorkArea.
- */
+// Add a field to the WorkArea.
 static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 {
 #if 0
@@ -1040,16 +996,14 @@ static HB_ERRCODE hb_sdfAddField(SDFAREAP pArea, LPDBFIELDINFO pFieldInfo)
 
   pFieldInfo->uiFlags &= ~HB_FF_AUTOINC;
 
-  /* Update field offset */
+  // Update field offset
   pArea->pFieldOffset[pArea->area.uiFieldCount] = pArea->uiRecordLen;
   pArea->uiRecordLen += pFieldInfo->uiLen;
 
   return SUPER_ADDFIELD(&pArea->area, pFieldInfo);
 }
 
-/*
- * Establish the extent of the array of fields for a WorkArea.
- */
+// Establish the extent of the array of fields for a WorkArea.
 static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, HB_USHORT uiFieldExtent)
 {
 #if 0
@@ -1061,7 +1015,7 @@ static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, HB_USHORT uiFieldExtent)
     return Harbour::FAILURE;
   }
 
-  /* Alloc field offsets array */
+  // Alloc field offsets array
   if (uiFieldExtent)
   {
     pArea->pFieldOffset = static_cast<HB_USHORT *>(hb_xgrabz(uiFieldExtent * sizeof(HB_USHORT)));
@@ -1070,9 +1024,7 @@ static HB_ERRCODE hb_sdfSetFieldExtent(SDFAREAP pArea, HB_USHORT uiFieldExtent)
   return Harbour::SUCCESS;
 }
 
-/*
- * Clear the WorkArea for use.
- */
+// Clear the WorkArea for use.
 static HB_ERRCODE hb_sdfNewArea(SDFAREAP pArea)
 {
 #if 0
@@ -1092,9 +1044,7 @@ static HB_ERRCODE hb_sdfNewArea(SDFAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Retrieve the size of the WorkArea structure.
- */
+// Retrieve the size of the WorkArea structure.
 static HB_ERRCODE hb_sdfStructSize(SDFAREAP pArea, HB_USHORT *uiSize)
 {
 #if 0
@@ -1106,16 +1056,14 @@ static HB_ERRCODE hb_sdfStructSize(SDFAREAP pArea, HB_USHORT *uiSize)
   return Harbour::SUCCESS;
 }
 
-/*
- * Close the table in the WorkArea.
- */
+// Close the table in the WorkArea.
 static HB_ERRCODE hb_sdfClose(SDFAREAP pArea)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_sdfClose(%p)", static_cast<void*>(pArea)));
 #endif
 
-  /* Update record and unlock records */
+  // Update record and unlock records
   if (pArea->pFile)
   {
     SELF_GOCOLD(&pArea->area);
@@ -1161,9 +1109,7 @@ static HB_ERRCODE hb_sdfClose(SDFAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Create a data store in the specified WorkArea.
- */
+// Create a data store in the specified WorkArea.
 static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
 {
 #if 0
@@ -1175,8 +1121,8 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
   PHB_FNAME pFileName;
   char szFileName[HB_PATH_MAX];
 
-  pArea->fShared = false;   /* pCreateInfo->fShared; */
-  pArea->fReadonly = false; /* pCreateInfo->fReadonly */
+  pArea->fShared = false;   // pCreateInfo->fShared;
+  pArea->fReadonly = false; // pCreateInfo->fReadonly
 
   if (pCreateInfo->cdpId)
   {
@@ -1208,7 +1154,7 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
   }
   hb_xfree(pFileName);
 
-  /* Try create */
+  // Try create
   do
   {
     pArea->pFile = hb_fileExtOpen(
@@ -1260,9 +1206,7 @@ static HB_ERRCODE hb_sdfCreate(SDFAREAP pArea, LPDBOPENINFO pCreateInfo)
   return Harbour::SUCCESS;
 }
 
-/*
- * Open a data store in the WorkArea.
- */
+// Open a data store in the WorkArea.
 static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
 #if 0
@@ -1276,8 +1220,8 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
   char szFileName[HB_PATH_MAX];
   char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
-  pArea->fShared = true;   /* pOpenInfo->fShared; */
-  pArea->fReadonly = true; /* pOpenInfo->fReadonly; */
+  pArea->fShared = true;   // pOpenInfo->fShared;
+  pArea->fReadonly = true; // pOpenInfo->fReadonly;
 
   if (pOpenInfo->cdpId)
   {
@@ -1295,7 +1239,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
   uiFlags = (pArea->fReadonly ? FO_READ : FO_READWRITE) | (pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE);
 
   pFileName = hb_fsFNameSplit(pOpenInfo->abName);
-  /* Add default file name extension if necessary */
+  // Add default file name extension if necessary
   if (hb_setGetDefExtension() && !pFileName->szExtension)
   {
     auto pFileExt = hb_itemNew(nullptr);
@@ -1311,7 +1255,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
     hb_strncpy(szFileName, pOpenInfo->abName, sizeof(szFileName) - 1);
   }
 
-  /* Create default alias if necessary */
+  // Create default alias if necessary
   if (!pOpenInfo->atomAlias && pFileName->szName)
   {
     const char *szName = strrchr(pFileName->szName, ':');
@@ -1328,7 +1272,7 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
   }
   hb_xfree(pFileName);
 
-  /* Try open */
+  // Try open
   do
   {
     pArea->pFile =
@@ -1372,13 +1316,11 @@ static HB_ERRCODE hb_sdfOpen(SDFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
   hb_sdfInitArea(pArea, szFileName);
 
-  /* Position cursor at the first record */
+  // Position cursor at the first record
   return SELF_GOTOP(&pArea->area);
 }
 
-/*
- * Retrieve information about the current driver.
- */
+// Retrieve information about the current driver.
 static HB_ERRCODE hb_sdfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0

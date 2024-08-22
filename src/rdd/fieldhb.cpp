@@ -49,9 +49,9 @@
 
 #ifndef HB_CLP_STRICT
 
-/* NOTE: These functions are a new Harbour functions implemented in the
-         original CA-Cl*pper namespace. These should have been marked as
-         HB_EXTENSION, but they're not. */
+// NOTE: These functions are a new Harbour functions implemented in the
+//       original CA-Cl*pper namespace. These should have been marked as
+//       HB_EXTENSION, but they're not.
 
 HB_FUNC_TRANSLATE(FIELDLEN, HB_FIELDLEN)
 HB_FUNC_TRANSLATE(FIELDDEC, HB_FIELDDEC)

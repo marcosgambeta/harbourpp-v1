@@ -76,8 +76,8 @@ FUNCTION __dbCopyXStruct(cFileName)
          FIELD->FIELD_LEN := aField[DBS_LEN], ;
          FIELD->FIELD_DEC := aField[DBS_DEC] })
 
-   /* NOTE: CA-Cl*pper has a bug, where only a plain RECOVER statement is
-            used here (without the USING keyword), so oError will always be NIL. */
+   // NOTE: CA-Cl*pper has a bug, where only a plain RECOVER statement is
+   //       used here (without the USING keyword), so oError will always be NIL.
    RECOVER USING oError
       lError := .T.
    END SEQUENCE
@@ -93,8 +93,8 @@ FUNCTION __dbCopyXStruct(cFileName)
 
    RETURN .T.
 
-/* NOTE: Compared to CA-Cl*pper, Harbour:
-         (cCodePage, nConnection). */
+// NOTE: Compared to CA-Cl*pper, Harbour:
+//       (cCodePage, nConnection).
 
 FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnection)
 
@@ -136,8 +136,8 @@ FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
             dbSelectArea(nOldArea)
          ENDIF
 
-         /* Type detection is more in sync with dbCreate() logic in Harbour, as lowercase "C"
-            and padded/continued strings ("C ", "C...") are also accepted. */
+         // Type detection is more in sync with dbCreate() logic in Harbour, as lowercase "C"
+         // and padded/continued strings ("C ", "C...") are also accepted.
 
          AEval(aStruct, {| aField | iif(hb_LeftEqI(aField[DBS_TYPE], "C") .AND. aField[DBS_DEC] != 0, ;
             (aField[DBS_LEN] += aField[DBS_DEC] * 256, aField[DBS_DEC] := 0), NIL) })
@@ -153,7 +153,7 @@ FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
 
    RETURN Used()
 
-/* NOTE: Internal helper function, CA-Cl*pper name is: __FLedit() */
+// NOTE: Internal helper function, CA-Cl*pper name is: __FLedit()
 
 FUNCTION __dbStructFilter(aStruct, aFieldList)
 
@@ -165,7 +165,7 @@ FUNCTION __dbStructFilter(aStruct, aFieldList)
       RETURN aStruct
    ENDIF
 
-   /* Build a filtered list of the requested fields. */
+   // Build a filtered list of the requested fields.
 
    aStructFiltered := {}
    bFindName := {| aField | aField[DBS_NAME] == cName }

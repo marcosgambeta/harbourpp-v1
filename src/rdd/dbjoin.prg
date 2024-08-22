@@ -46,8 +46,8 @@
 
 #include "dbstruct.ch"
 
-/* NOTE: Compared to CA-Cl*pper, Harbour has three extra parameters
-         (cRDD, nConnection, cCodePage). */
+// NOTE: Compared to CA-Cl*pper, Harbour has three extra parameters
+//       (cRDD, nConnection, cCodePage).
 
 FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
@@ -61,8 +61,8 @@ FUNCTION __dbJoin(cAlias, cFile, aFields, bFor, cRDD, nConnection, cCodePage)
 
    dbSelectArea(nMaster)
    IF Empty(aStruct := __FieldTwo(cAlias, aFields))
-      /* NOTE: CA-Cl*pper will leave the wrong workarea (cAlias) selected here.
-               Harbour is bug compatible. [vszakats] */
+      // NOTE: CA-Cl*pper will leave the wrong workarea (cAlias) selected here.
+      //       Harbour is bug compatible. [vszakats]
       RETURN .F.
    ENDIF
 

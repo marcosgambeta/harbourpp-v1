@@ -44,7 +44,7 @@
  *
  */
 
-/* NOTE: lAll is a dummy parameter, nothing seems to depend on it. [vszakats] */
+// NOTE: lAll is a dummy parameter, nothing seems to depend on it. [vszakats]
 
 PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToPrint, cToFileName)
 
@@ -55,16 +55,16 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
    LOCAL lError := .F.
    LOCAL bOutBlock
 
-   /* Choose the output style */
+   // Choose the output style
    IF lOff
       bOutBlock := {||QOut(iif(Deleted(), "*", " ")), AEval(abEval, {|bEval|QQOut(Eval(bEval), "")})}
    ELSE
       bOutBlock := {||QOut(Str(RecNo(), 7), iif(Deleted(), "*", " ")), AEval(abEval, {|bEval|QQOut(Eval(bEval), "")})}
    ENDIF
 
-   /* Save SETs */
+   // Save SETs
 
-   IF !Empty(lToPrint)  /* => hb_defaultValue(lToPrint, .F.) */
+   IF !Empty(lToPrint)  // => hb_defaultValue(lToPrint, .F.)
       lOldPrinter := Set(_SET_PRINTER, .T.)
    ENDIF
    IF !Empty(cToFileName)
@@ -72,16 +72,16 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
       cOldExtraFile := Set(_SET_EXTRAFILE, iif(Set(_SET_DEFEXTENSIONS), hb_FNameExtSetDef(cToFileName, ".txt"), cToFileName))
    ENDIF
 
-   /* Do the job */
+   // Do the job
 
    BEGIN SEQUENCE
 
-      IF Empty(lAll) .AND. ;  /* => hb_defaultValue(lAll, .F.) */
+      IF Empty(lAll) .AND. ;  // => hb_defaultValue(lAll, .F.)
          Empty(bFor) .AND. ;
          Empty(bWhile) .AND. ;
-         Empty(nNext) .AND. ;  /* => nNext == NIL .OR. nNext == 0 */
-         Empty(nRecord) .AND. ;  /* => nRecord == NIL .OR. nRecord == 0 */
-         Empty(lRest)  /* => hb_defaultValue(lRest, .F.) */
+         Empty(nNext) .AND. ;  // => nNext == NIL .OR. nNext == 0
+         Empty(nRecord) .AND. ;  // => nRecord == NIL .OR. nRecord == 0
+         Empty(lRest)  // => hb_defaultValue(lRest, .F.)
 
          Eval(bOutBlock)
       ELSE
@@ -92,7 +92,7 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
       lError := .T.
    END SEQUENCE
 
-   /* Restore SETs */
+   // Restore SETs
 
    IF !Empty(lToPrint)
       Set(_SET_PRINTER, lOldPrinter)
@@ -102,7 +102,7 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
       Set(_SET_EXTRA, lOldExtra)
    ENDIF
 
-   /* On error signal the error for the higher level error handler or quit */
+   // On error signal the error for the higher level error handler or quit
 
    IF lError
       Break(oError)

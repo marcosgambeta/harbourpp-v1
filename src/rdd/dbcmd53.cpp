@@ -64,7 +64,7 @@ HB_FUNC(ORDKEYCOUNT)
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-    /* Either or both may be NIL */
+    // Either or both may be NIL
 
     pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_KEYCOUNT, &pOrderInfo);
@@ -85,7 +85,7 @@ HB_FUNC(ORDKEYNO)
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-    /* Either or both may be NIL */
+    // Either or both may be NIL
     pOrderInfo.itmNewVal = nullptr;
     pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_POSITION, &pOrderInfo);
@@ -209,7 +209,7 @@ HB_FUNC(ORDKEYADD)
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-    /* Either or both may be NIL */
+    // Either or both may be NIL
     pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::ANY);
     pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_KEYADD, &pOrderInfo);
@@ -230,7 +230,7 @@ HB_FUNC(ORDKEYDEL)
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-    /* Either or both may be NIL */
+    // Either or both may be NIL
     pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::ANY);
     pOrderInfo.itmResult = hb_itemPutNL(nullptr, 0);
     SELF_ORDINFO(pArea, DBOI_KEYDELETE, &pOrderInfo);
@@ -251,7 +251,7 @@ HB_FUNC(ORDDESCEND)
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-    /* Either or both may be NIL */
+    // Either or both may be NIL
     pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::LOGICAL);
     pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
     SELF_ORDINFO(pArea, DBOI_ISDESC, &pOrderInfo);
@@ -272,7 +272,7 @@ HB_FUNC(ORDISUNIQUE)
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-    /* Harbour extension: NewVal to set/reset unique flag */
+    // Harbour extension: NewVal to set/reset unique flag
     pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::LOGICAL);
     pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
     SELF_ORDINFO(pArea, DBOI_UNIQUE, &pOrderInfo);
@@ -293,7 +293,7 @@ HB_FUNC(ORDCUSTOM)
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::STRING | Harbour::Item::NUMERIC);
     pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING);
-    /* Either or both may be NIL */
+    // Either or both may be NIL
     pOrderInfo.itmNewVal = hb_param(3, Harbour::Item::LOGICAL);
     pOrderInfo.itmResult = hb_itemPutL(nullptr, false);
     SELF_ORDINFO(pArea, DBOI_CUSTOM, &pOrderInfo);
@@ -341,7 +341,7 @@ HB_FUNC(DBORDERINFO)
     {
       DBORDERINFO pOrderInfo;
 
-      /* atomBagName may be NIL */
+      // atomBagName may be NIL
       pOrderInfo.atomBagName = hb_param(2, Harbour::Item::STRING | Harbour::Item::NUMERIC);
       pOrderInfo.itmOrder = hb_param(3, Harbour::Item::STRING | Harbour::Item::NUMERIC);
 
@@ -414,9 +414,7 @@ HB_FUNC(DBRECORDINFO)
   }
 }
 
-/*
- * dbFileGet()/Blob2File() - retrieve memo contents into file
- */
+// dbFileGet()/Blob2File() - retrieve memo contents into file
 HB_FUNC(DBFILEGET)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -453,9 +451,7 @@ HB_FUNC(DBFILEGET)
   }
 }
 
-/*
- * dbFilePut()/File2Blob() - store file contents in MEMO
- */
+// dbFilePut()/File2Blob() - store file contents in MEMO
 HB_FUNC(DBFILEPUT)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());

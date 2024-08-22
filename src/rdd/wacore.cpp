@@ -62,9 +62,7 @@
                                                        : nullptr);                                                     \
   } while (false)
 
-/*
- * Insert new WorkArea node at current WA position
- */
+// Insert new WorkArea node at current WA position
 static void hb_waNodeInsert(PHB_STACKRDD pRddInfo, AREAP pArea)
 {
   HB_USHORT uiWaPos;
@@ -130,9 +128,7 @@ static void hb_waNodeInsert(PHB_STACKRDD pRddInfo, AREAP pArea)
   pArea->uiArea = pRddInfo->uiCurrArea;
 }
 
-/*
- * Remove current WorkArea node
- */
+// Remove current WorkArea node
 static void hb_waNodeDelete(PHB_STACKRDD pRddInfo)
 {
   HB_USHORT uiWaPos;
@@ -173,9 +169,7 @@ static void hb_waNodeDelete(PHB_STACKRDD pRddInfo)
   pRddInfo->pCurrArea = nullptr;
 }
 
-/*
- * Return the next free WorkArea for later use.
- */
+// Return the next free WorkArea for later use.
 HB_ERRCODE hb_rddSelectFirstAvailable(void)
 {
 #if 0
@@ -204,9 +198,7 @@ HB_ERRCODE hb_rddSelectFirstAvailable(void)
   return Harbour::SUCCESS;
 }
 
-/*
- * Create and insert the new WorkArea node
- */
+// Create and insert the new WorkArea node
 HB_USHORT hb_rddInsertAreaNode(const char *szDriver)
 {
 #if 0
@@ -248,10 +240,8 @@ HB_USHORT hb_rddInsertAreaNode(const char *szDriver)
   return pRddInfo->uiCurrArea;
 }
 
-/*
- * Closes and releases the current WorkArea preparing it
- * to be used with a new database.
- */
+// Closes and releases the current WorkArea preparing it
+// to be used with a new database.
 void hb_rddReleaseCurrentArea(void)
 {
 #if 0
@@ -277,9 +267,7 @@ void hb_rddReleaseCurrentArea(void)
   hb_waNodeDelete(pRddInfo);
 }
 
-/*
- * Closes all WorkAreas.
- */
+// Closes all WorkAreas.
 void hb_rddCloseAll(void)
 {
 #if 0
@@ -359,9 +347,7 @@ void hb_rddUnLockAll(void)
   hb_rddSelectWorkAreaNumber(uiArea);
 }
 
-/*
- * call a pCallBack function with all open workareas ###
- */
+// call a pCallBack function with all open workareas ###
 HB_ERRCODE hb_rddIterateWorkAreas(WACALLBACK pCallBack, void *cargo)
 {
 #if 0
@@ -398,9 +384,7 @@ void hb_rddSetNetErr(HB_BOOL fNetErr)
   hb_stackRDD()->fNetError = fNetErr;
 }
 
-/*
- * Get (/set) default RDD driver
- */
+// Get (/set) default RDD driver
 const char *hb_rddDefaultDrv(const char *szDriver)
 {
 #if 0
@@ -443,9 +427,7 @@ const char *hb_rddDefaultDrv(const char *szDriver)
   return pRddInfo->szDefaultRDD;
 }
 
-/*
- * Get default RDD driver respecting passed table/file name
- */
+// Get default RDD driver respecting passed table/file name
 const char *hb_rddFindDrv(const char *szDriver, const char *szFileName)
 {
 #if 0
@@ -492,9 +474,7 @@ const char *hb_rddFindDrv(const char *szDriver, const char *szFileName)
   return pRddNode ? hb_rddFindFileNode(pRddNode, szFileName)->szName : nullptr;
 }
 
-/*
- * Function for getting given workarea pointer
- */
+// Function for getting given workarea pointer
 void *hb_rddGetWorkAreaPointer(int iArea)
 {
 #if 0
@@ -519,9 +499,7 @@ void *hb_rddGetWorkAreaPointer(int iArea)
   }
 }
 
-/*
- * Function for getting current workarea pointer
- */
+// Function for getting current workarea pointer
 void *hb_rddGetCurrentWorkAreaPointer(void)
 {
 #if 0
@@ -531,9 +509,7 @@ void *hb_rddGetCurrentWorkAreaPointer(void)
   return hb_stackRDD()->pCurrArea;
 }
 
-/*
- * Return the current WorkArea number.
- */
+// Return the current WorkArea number.
 int hb_rddGetCurrentWorkAreaNumber(void)
 {
 #if 0
@@ -543,9 +519,7 @@ int hb_rddGetCurrentWorkAreaNumber(void)
   return hb_stackRDD()->uiCurrArea;
 }
 
-/*
- * Select a WorkArea by the number.
- */
+// Select a WorkArea by the number.
 HB_ERRCODE hb_rddSelectWorkAreaNumber(int iArea)
 {
 #if 0
@@ -565,7 +539,7 @@ HB_ERRCODE hb_rddSelectWorkAreaNumber(int iArea)
   return (pRddInfo->pCurrArea == nullptr) ? Harbour::FAILURE : Harbour::SUCCESS;
 }
 
-/* Moving workareas between threads */
+// Moving workareas between threads
 
 static HB_CRITICAL_NEW(s_waMtx);
 static HB_COND_NEW(s_waCond);
@@ -586,9 +560,9 @@ static HB_GARBAGE_FUNC(hb_waHolderDestructor)
 
     if (hb_rddSelectFirstAvailable() != Harbour::SUCCESS)
     {
-      /* workarea number HB_RDD_MAX_AREA_NUM is reserved
-         for this destructor and used when all other workareas
-         are active [druzus] */
+      // workarea number HB_RDD_MAX_AREA_NUM is reserved
+      // for this destructor and used when all other workareas
+      // are active [druzus]
       hb_rddSelectWorkAreaNumber(HB_RDD_MAX_AREA_NUM);
     }
     hb_waNodeInsert(hb_stackRDD(), pArea);
@@ -604,13 +578,13 @@ void hb_rddCloseDetachedAreas(void)
 {
   PHB_ITEM pDetachedArea;
 
-  /* protect by critical section access to s_pDetachedAreas array */
+  // protect by critical section access to s_pDetachedAreas array
   hb_threadEnterCriticalSectionGC(&s_waMtx);
   pDetachedArea = s_pDetachedAreas;
   s_pDetachedAreas = nullptr;
-  /* leave critical section */
+  // leave critical section
   hb_threadLeaveCriticalSection(&s_waMtx);
-  /* release detached areas */
+  // release detached areas
   if (pDetachedArea)
   {
     hb_itemRelease(pDetachedArea);
@@ -626,27 +600,26 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
   AREAP *pHolder;
   HB_SIZE nPos;
 
-  /* save current WA number */
+  // save current WA number
   auto iArea = hb_rddGetCurrentWorkAreaNumber();
-  /* select given WA */
+  // select given WA
   hb_rddSelectWorkAreaNumber(pArea->uiArea);
-  /* flush buffers */
+  // flush buffers
   SELF_GOCOLD(pArea);
 
-/* tests shows that Xbase++ does not remove locks */
+// tests shows that Xbase++ does not remove locks
 #if 0
    SELF_UNLOCK(pArea, nullptr);
 #endif
 
-  /* Xbase++ documentation says that child areas are also detached but
-   * but tests shows that it's not true and either child or parent relations
-   * are still active and corresponding WA are not detached together.
-   * Harbour clears all child and parent relations.
-   */
+  // Xbase++ documentation says that child areas are also detached but
+  // but tests shows that it's not true and either child or parent relations
+  // are still active and corresponding WA are not detached together.
+  // Harbour clears all child and parent relations.
   SELF_CLEARREL(pArea);
   hb_rddCloseAllParentRelations(pArea);
 
-  /* detach WA and alias */
+  // detach WA and alias
   hb_waNodeDelete(hb_stackRDD());
   pArea->uiArea = 0;
   if (pArea->atomAlias)
@@ -654,10 +627,10 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
     hb_dynsymSetAreaHandle(static_cast<PHB_DYNS>(pArea->atomAlias), 0);
   }
 
-  /* restore previous WA number */
+  // restore previous WA number
   hb_rddSelectWorkAreaNumber(iArea);
 
-  /* protect by critical section access to s_pDetachedAreas array */
+  // protect by critical section access to s_pDetachedAreas array
   hb_threadEnterCriticalSectionGC(&s_waMtx);
   if (!s_pDetachedAreas)
   {
@@ -678,9 +651,9 @@ HB_ERRCODE hb_rddDetachArea(AREAP pArea, PHB_ITEM pCargo)
   pHolder = static_cast<AREAP *>(hb_gcAllocate(sizeof(AREAP), &s_gcWAFuncs));
   *pHolder = pArea;
   hb_arraySetPtrGC(pDetachedArea, 1, pHolder);
-  /* siagnal waiting processes that new area is available */
+  // siagnal waiting processes that new area is available
   hb_threadCondBroadcast(&s_waCond);
-  /* leave critical section */
+  // leave critical section
   hb_threadLeaveCriticalSection(&s_waMtx);
 
   return Harbour::SUCCESS;
@@ -696,7 +669,7 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
     hb_itemClear(pCargo);
   }
 
-  /* close current WA or chose 1st free available */
+  // close current WA or chose 1st free available
   if (!fNewArea)
   {
     hb_rddReleaseCurrentArea();
@@ -711,13 +684,13 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
   {
     pSymAlias = hb_dynsymGet(szAlias);
 
-    /* verify if the alias name is valid symbol */
+    // verify if the alias name is valid symbol
     if (hb_rddVerifyAliasName(szAlias) != Harbour::SUCCESS)
     {
       hb_errRT_DBCMD_Ext(EG_BADALIAS, EDBCMD_BADALIAS, nullptr, szAlias, EF_CANDEFAULT);
       return nullptr;
     }
-    /* verify if the alias is already in use */
+    // verify if the alias is already in use
     if (hb_dynsymAreaHandle(pSymAlias) != 0)
     {
       hb_errRT_DBCMD_Ext(EG_DUPALIAS, EDBCMD_DUPALIAS, nullptr, szAlias, EF_CANDEFAULT);
@@ -725,7 +698,7 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
     }
   }
 
-  /* protect by critical section access to s_pDetachedAreas array */
+  // protect by critical section access to s_pDetachedAreas array
   hb_threadEnterCriticalSectionGC(&s_waMtx);
   for (;;)
   {
@@ -766,7 +739,7 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
     }
 
     hb_vmUnlock();
-    /* wait for detached workareas */
+    // wait for detached workareas
     if (ulMilliSec == HB_THREAD_INFINITE_WAIT)
     {
       hb_threadCondWait(&s_waCond, &s_waMtx);
@@ -782,10 +755,10 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
       break;
     }
   }
-  /* leave critical section */
+  // leave critical section
   hb_threadLeaveCriticalSection(&s_waMtx);
 
-  /* attach WA and set alias */
+  // attach WA and set alias
   if (pArea != nullptr)
   {
     hb_waNodeInsert(hb_stackRDD(), pArea);
@@ -808,7 +781,7 @@ PHB_ITEM hb_rddDetachedList(void)
 #endif
 
   auto pArray = hb_itemArrayNew(0);
-  /* protect by critical section access to s_pDetachedAreas array */
+  // protect by critical section access to s_pDetachedAreas array
   hb_threadEnterCriticalSectionGC(&s_waMtx);
   if (s_pDetachedAreas)
   {
@@ -823,7 +796,7 @@ PHB_ITEM hb_rddDetachedList(void)
       hb_arraySetC(pArray, nPos, hb_dynsymName(pAlias));
     }
   }
-  /* leave critical section */
+  // leave critical section
   hb_threadLeaveCriticalSection(&s_waMtx);
 
   return pArray;

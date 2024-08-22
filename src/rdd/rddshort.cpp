@@ -50,8 +50,8 @@ HB_FUNC_TRANSLATE(__DBARRANG, __DBARRANGE)
 HB_FUNC_TRANSLATE(__DBCLEARI, __DBCLEARINDEX)
 HB_FUNC_TRANSLATE(__DBCLEARR, __DBCLEARRELATION)
 HB_FUNC_TRANSLATE(__DBCLOSEA, __DBCLOSEAREA)
-HB_FUNC_TRANSLATE(__DBCOMMIT, __DBCOMMITALL) /* NOTE: Cl*pper does exactly that, __dbCommit() will call __dbCommitAll().
-                                                This may have been unintended. */
+HB_FUNC_TRANSLATE(__DBCOMMIT, __DBCOMMITALL) // NOTE: Cl*pper does exactly that, __dbCommit() will call __dbCommitAll().
+                                             // This may have been unintended.
 HB_FUNC_TRANSLATE(__DBCONTIN, __DBCONTINUE)
 HB_FUNC_TRANSLATE(__DBCOPYST, __DBCOPYSTRUCT)
 HB_FUNC_TRANSLATE(__DBCOPYXS, __DBCOPYXSTRUCT)

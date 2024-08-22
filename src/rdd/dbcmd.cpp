@@ -53,7 +53,7 @@
 #include "hbvm.hpp"
 #include "hbset.hpp"
 
-/* The 5th parameter is Harbour extension */
+// The 5th parameter is Harbour extension
 HB_FUNC(AFIELDS)
 {
   HB_USHORT uiFields;
@@ -282,7 +282,7 @@ HB_FUNC(BOF)
   hb_retl(bBof);
 }
 
-/* dbAppend([<lUnLockAll>=.T.]) --> <lSuccess> */
+// dbAppend([<lUnLockAll>=.T.]) --> <lSuccess>
 HB_FUNC(DBAPPEND)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -291,7 +291,7 @@ HB_FUNC(DBAPPEND)
   {
     bool bUnLockAll = hb_parldef(1, true);
 
-    /* Clipper clears NETERR flag before APPEND */
+    // Clipper clears NETERR flag before APPEND
     hb_rddSetNetErr(false);
     HB_ERRCODE errCode = SELF_APPEND(pArea, bUnLockAll);
     hb_retl(errCode == Harbour::SUCCESS);
@@ -331,22 +331,18 @@ HB_FUNC(DBCOMMITALL)
   hb_rddFlushAll();
 }
 
-/*
- * In Clipper the arguments are:
- *    dbCreate(cFile, aStruct, cRDD, lKeepOpen, cAlias, cDelimArg) --> NIL
- * In Harbour (HB_EXTENSION):
- *    dbCreate(cFile, aStruct, cRDD, lKeepOpen, cAlias, cDelimArg, ;
- *              cCodePage, nConnection) --> <lSuccess>
- */
+// In Clipper the arguments are:
+//    dbCreate(cFile, aStruct, cRDD, lKeepOpen, cAlias, cDelimArg) --> NIL
+// In Harbour (HB_EXTENSION):
+//    dbCreate(cFile, aStruct, cRDD, lKeepOpen, cAlias, cDelimArg, ;
+//             cCodePage, nConnection) --> <lSuccess>
 HB_FUNC(DBCREATE)
 {
-  /*
-   * NOTE: 4th, 5th and 6th parameters are undocumented Clipper ones
-   * 4th is boolean flag indicating if file should stay open (any boolean
-   *     value will enable this behavior)
-   * 5th is alias - if not given then WA is open without alias
-   * 6th is optional DELIMITED value used by some RDDs like DELIM
-   */
+  // NOTE: 4th, 5th and 6th parameters are undocumented Clipper ones
+  // 4th is boolean flag indicating if file should stay open (any boolean
+  //     value will enable this behavior)
+  // 5th is alias - if not given then WA is open without alias
+  // 6th is optional DELIMITED value used by some RDDs like DELIM
 
   auto szFileName = hb_parc(1);
   auto pStruct = hb_param(2, Harbour::Item::ARRAY);
@@ -358,13 +354,11 @@ HB_FUNC(DBCREATE)
   auto szCpId = hb_parc(7);
   HB_ULONG ulConnection = hb_parnl(8);
 
-  /*
-   * Clipper allows to use empty struct array for RDDs which does not
-   * support fields, f.e.: DBFBLOB in CL5.3
-   * In CL5.3 it's also possible to create DBF file without fields.
-   * if some RDD wants to block it then they should serve it in lower
-   * level, [druzus]
-   */
+  // Clipper allows to use empty struct array for RDDs which does not
+  // support fields, f.e.: DBFBLOB in CL5.3
+  // In CL5.3 it's also possible to create DBF file without fields.
+  // if some RDD wants to block it then they should serve it in lower
+  // level, [druzus]
   if (!pStruct ||
 #ifdef HB_CLP_STRICT
       hb_arrayLen(pStruct) == 0 ||
@@ -381,7 +375,7 @@ HB_FUNC(DBCREATE)
   {
     auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
-    /* Validate items types of fields */
+    // Validate items types of fields
     if (hb_arrayLen(pFieldDesc) < 4 || !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
         !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
         !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
@@ -397,9 +391,7 @@ HB_FUNC(DBCREATE)
                             fKeepOpen, szCpId, ulConnection, pStruct, pDelim) == Harbour::SUCCESS);
 }
 
-/*
- * hb_dbCreateTemp(<cAlias>, <aStruct>, <cRDD>, <cCodePage>, <nConnection>) --> <lSuccess>
- */
+// hb_dbCreateTemp(<cAlias>, <aStruct>, <cRDD>, <cCodePage>, <nConnection>) --> <lSuccess>
 HB_FUNC(HB_DBCREATETEMP)
 {
   auto szAlias = hb_parc(1);
@@ -408,13 +400,11 @@ HB_FUNC(HB_DBCREATETEMP)
   auto szCpId = hb_parc(4);
   HB_ULONG ulConnection = hb_parnl(5);
 
-  /*
-   * Clipper allows to use empty struct array for RDDs which does not
-   * support fields, f.e.: DBFBLOB in CL5.3
-   * In CL5.3 it's also possible to create DBF file without fields.
-   * if some RDD wants to block it then they should serve it in lower
-   * level, [druzus]
-   */
+  // Clipper allows to use empty struct array for RDDs which does not
+  // support fields, f.e.: DBFBLOB in CL5.3
+  // In CL5.3 it's also possible to create DBF file without fields.
+  // if some RDD wants to block it then they should serve it in lower
+  // level, [druzus]
   if (!szAlias || !pStruct
 #ifdef HB_CLP_STRICT
       || hb_arrayLen(pStruct) == 0
@@ -431,7 +421,7 @@ HB_FUNC(HB_DBCREATETEMP)
   {
     auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
-    /* Validate items types of fields */
+    // Validate items types of fields
     if (hb_arrayLen(pFieldDesc) < 4 || !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
         !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
         !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
@@ -445,25 +435,21 @@ HB_FUNC(HB_DBCREATETEMP)
   hb_retl(hb_rddCreateTableTemp(szDriver, szAlias, szCpId, ulConnection, pStruct) == Harbour::SUCCESS);
 }
 
-/*
- * I'm not sure if lKeepOpen open works exactly like in dbCreate(), I haven't
- * tested it with Clipper yet. If it doesn't then please inform me about it
- * and I'll update the code. [druzus]
- */
+// I'm not sure if lKeepOpen open works exactly like in dbCreate(), I haven't
+// tested it with Clipper yet. If it doesn't then please inform me about it
+// and I'll update the code. [druzus]
 
-/* NOTE: The created table will be kept open if lOpenMode parameter
-         is of logical type. If .T. it will be opened in a new workarea,
-         if .F. it will be opened in the current one. */
-/* NOTE: Has an identical parameter list with dbCreate() */
+// NOTE: The created table will be kept open if lOpenMode parameter
+//       is of logical type. If .T. it will be opened in a new workarea,
+//       if .F. it will be opened in the current one.
+// NOTE: Has an identical parameter list with dbCreate()
 
-/* __dbOpenSDF( cFile, aStruct, cRDD, lKeepOpen, cAlias, cDelimArg, cCodePage, nConnection ) --> <lSuccess> */
+// __dbOpenSDF( cFile, aStruct, cRDD, lKeepOpen, cAlias, cDelimArg, cCodePage, nConnection ) --> <lSuccess>
 HB_FUNC(__DBOPENSDF)
 {
-  /*
-   * NOTE: 4th and 5th parameters are undocumented Clipper ones
-   * 4th is boolean flag indicating if file should stay open and
-   * 5th is alias - if not given then WA is open without alias
-   */
+  // NOTE: 4th and 5th parameters are undocumented Clipper ones
+  // 4th is boolean flag indicating if file should stay open and
+  // 5th is alias - if not given then WA is open without alias
 
   auto szFileName = hb_parc(1);
   auto pStruct = hb_param(2, Harbour::Item::ARRAY);
@@ -487,7 +473,7 @@ HB_FUNC(__DBOPENSDF)
   {
     auto pFieldDesc = hb_arrayGetItemPtr(pStruct, uiSize);
 
-    /* Validate items types of fields */
+    // Validate items types of fields
     if (hb_arrayLen(pFieldDesc) < 4 || !(hb_arrayGetType(pFieldDesc, 1) & Harbour::Item::STRING) ||
         !(hb_arrayGetType(pFieldDesc, 2) & Harbour::Item::STRING) ||
         !(hb_arrayGetType(pFieldDesc, 3) & Harbour::Item::NUMERIC) ||
@@ -657,10 +643,8 @@ HB_FUNC(__DBPACK)
 
   if (pArea != nullptr)
   {
-    /*
-     * Additional feature: __dbPack([<bBlock>, [<nEvery>])
-     * Code Block to execute for every record.
-     */
+    // Additional feature: __dbPack([<bBlock>, [<nEvery>])
+    // Code Block to execute for every record.
     auto pBlock = hb_param(1, Harbour::Item::BLOCK);
     if (pBlock)
     {
@@ -840,13 +824,13 @@ HB_FUNC(DBSETFILTER)
 
     auto pBlock = hb_param(1, Harbour::Item::BLOCK);
     auto pText = hb_param(2, Harbour::Item::STRING);
-    /* Cl*pper allows to set text filter without codeblock. In local
-       RDDs it effectively does nothing and only dbFilter() returns it
-       but RDDs with automatic filter optimization like CL53/DBFCDX /
-       COMIX/ClipMore or RDDs working with remote data base servers
-       may use only text version of filter and ignore or use with
-       lower priority the codeblock so Harbour has to work like
-       Cl*pper here. [druzus] */
+    // Cl*pper allows to set text filter without codeblock. In local
+    // RDDs it effectively does nothing and only dbFilter() returns it
+    // but RDDs with automatic filter optimization like CL53/DBFCDX /
+    // COMIX/ClipMore or RDDs working with remote data base servers
+    // may use only text version of filter and ignore or use with
+    // lower priority the codeblock so Harbour has to work like
+    // Cl*pper here. [druzus]
     if (pBlock || hb_itemGetCLen(pText) > 0)
     {
       pFilterInfo.itmCobExpr = pBlock;
@@ -908,7 +892,7 @@ HB_FUNC(DBFILTER)
   }
 }
 
-/* Harbour extension to retrieve filter codeblock */
+// Harbour extension to retrieve filter codeblock
 HB_FUNC(HB_DBGETFILTER)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1000,9 +984,9 @@ HB_FUNC(DBUNLOCKALL)
   hb_rddUnLockAll();
 }
 
-/* dbUseArea([<lNewArea>], [<cDriver>], <cName>, [<xcAlias>], ;
-             [<lShared>], [<lReadonly>], [<cCodePage>], ;
-             [<nConnection>]) --> <lSuccess> */
+// dbUseArea([<lNewArea>], [<cDriver>], <cName>, [<xcAlias>], ;
+//           [<lShared>], [<lReadonly>], [<cCodePage>], ;
+//           [<nConnection>]) --> <lSuccess>
 HB_FUNC(DBUSEAREA)
 {
   hb_retl(hb_rddOpenTable(hb_parc(3), hb_parc(2),
@@ -1090,7 +1074,7 @@ HB_FUNC(FIELDNAME)
       hb_retc_buffer(szName);
       return;
     }
-    /* This is not Clipper compatible! - David G. Holm <dholm@jsd-llc.com> */
+    // This is not Clipper compatible! - David G. Holm <dholm@jsd-llc.com>
 #if 0
       hb_errRT_DBCMD(EG_ARG, EDBCMD_FIELDNAME_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
 #endif
@@ -1347,26 +1331,26 @@ HB_FUNC(ORDCONDSET)
     lpdbOrdCondInfo->itmRecID = HB_ISNIL(9) ? nullptr : hb_itemNew(hb_param(9, Harbour::Item::ANY));
     lpdbOrdCondInfo->fRest = hb_parl(10);
     lpdbOrdCondInfo->fDescending = hb_parl(11);
-    /* 12th parameter is always nil in CL5.3, in CL5.2 it's compound flag */
+    // 12th parameter is always nil in CL5.3, in CL5.2 it's compound flag
     lpdbOrdCondInfo->fCompound = hb_parl(12);
     lpdbOrdCondInfo->fAdditive = hb_parl(13);
     lpdbOrdCondInfo->fUseCurrent = hb_parl(14);
     lpdbOrdCondInfo->fCustom = hb_parl(15);
     lpdbOrdCondInfo->fNoOptimize = hb_parl(16);
-    /* 18th parameter in [x]Harbour is MEMORY flag added by Alexander for
-       DBFNTX, so far it was served in hacked way inside SELF_ORDSETCOND()
-       so it was working only if this method was called from ordCondSet()
-       function. I also do not like the idea that it was called MEMORY.
-       It should be RDD decision how such index will be served on low
-       level and it should be IMHO called TEMPORARY - if RDD wants then
-       it can make it fully in memory or in temporary file which will
-       be removed on index close operation */
+    // 18th parameter in [x]Harbour is MEMORY flag added by Alexander for
+    // DBFNTX, so far it was served in hacked way inside SELF_ORDSETCOND()
+    // so it was working only if this method was called from ordCondSet()
+    // function. I also do not like the idea that it was called MEMORY.
+    // It should be RDD decision how such index will be served on low
+    // level and it should be IMHO called TEMPORARY - if RDD wants then
+    // it can make it fully in memory or in temporary file which will
+    // be removed on index close operation
     lpdbOrdCondInfo->fTemporary = hb_parl(18);
-    /* 19th parameter is CL5.2 USEFILTER parameter which means
-       that RDD should respect SET FILTER and SET DELETED flag */
+    // 19th parameter is CL5.2 USEFILTER parameter which means
+    // that RDD should respect SET FILTER and SET DELETED flag
     lpdbOrdCondInfo->fUseFilter = hb_parl(19);
-    /* 20th parameter is Harbour extension and informs RDD that
-       index is not shared between other clients */
+    // 20th parameter is Harbour extension and informs RDD that
+    // index is not shared between other clients
     lpdbOrdCondInfo->fExclusive = hb_parl(20);
 
     if (lpdbOrdCondInfo->itmCobWhile)
@@ -1559,7 +1543,7 @@ HB_FUNC(ORDLISTADD)
   {
     DBORDERINFO pOrderInfo{};
 
-    /* Clipper clears NETERR flag when index is open */
+    // Clipper clears NETERR flag when index is open
     hb_rddSetNetErr(false);
 
     pOrderInfo.atomBagName = hb_param(1, Harbour::Item::STRING);
@@ -1740,13 +1724,11 @@ HB_FUNC(RDDREGISTER)
     }
 
     hb_strncpyUpper(szDriver, hb_parc(1), uiLen);
-    /*
-     * hb_rddRegister returns:
-     *
-     * 0: Ok, RDD registered
-     * 1: RDD already registerd
-     * > 1: error
-     */
+    // hb_rddRegister returns:
+    //
+    // 0: Ok, RDD registered
+    // 1: RDD already registerd
+    // > 1: error
     if (hb_rddRegister(szDriver, static_cast<HB_USHORT>(hb_parni(2))) > 1)
     {
       hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
@@ -1754,7 +1736,7 @@ HB_FUNC(RDDREGISTER)
   }
 }
 
-/* Same as LastRec() */
+// Same as LastRec()
 HB_FUNC_TRANSLATE(RECCOUNT, LASTREC)
 
 HB_FUNC(RECNO)
@@ -1818,10 +1800,8 @@ HB_FUNC(SELECT)
     if (szAlias != nullptr)
     {
 #if defined(HB_CLP_STRICT) || 1
-      /*
-       * I do not like this Clipper behavior, in some constructions
-       * programmer may use "<aliasNum>" in some others not. [Druzus]
-       */
+      // I do not like this Clipper behavior, in some constructions
+      // programmer may use "<aliasNum>" in some others not. [Druzus]
       if (hb_rddVerifyAliasName(szAlias) == Harbour::SUCCESS)
 #endif
         hb_rddGetAliasNumber(szAlias, &iArea);
@@ -1919,7 +1899,7 @@ HB_FUNC(ORDSCOPE)
   }
 }
 
-HB_FUNC(DBRELATION) /* (<nRelation>) --> cLinkExp */
+HB_FUNC(DBRELATION) // (<nRelation>) --> cLinkExp
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
@@ -1936,7 +1916,7 @@ HB_FUNC(DBRELATION) /* (<nRelation>) --> cLinkExp */
   }
 }
 
-HB_FUNC(DBRSELECT) /* (<nRelation>) --> nWorkArea */
+HB_FUNC(DBRSELECT) // (<nRelation>) --> nWorkArea
 {
   auto uiRelation = static_cast<HB_USHORT>(hb_parni(1));
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
@@ -1944,10 +1924,9 @@ HB_FUNC(DBRSELECT) /* (<nRelation>) --> nWorkArea */
   HB_USHORT uiWorkArea = 0;
   if (pArea != nullptr)
   {
-    /* undocumented CA-Cl*pper behavior:
-     * When parameter is missing, wrong or 0 then 1 is used as
-     * relation number [druzus]
-     */
+    // undocumented CA-Cl*pper behavior:
+    // When parameter is missing, wrong or 0 then 1 is used as
+    // relation number [druzus]
     SELF_RELAREA(pArea, uiRelation ? uiRelation : 1, &uiWorkArea);
   }
 
@@ -2022,7 +2001,7 @@ HB_FUNC(DBSETRELATION)
   }
 }
 
-/* __dbArrange( nToArea, aStruct, bFor, bWhile, nNext, nRecord, lRest, aFields ) */
+// __dbArrange( nToArea, aStruct, bFor, bWhile, nNext, nRecord, lRest, aFields )
 HB_FUNC(__DBARRANGE)
 {
   HB_ERRCODE errCode = Harbour::FAILURE;
@@ -2030,13 +2009,13 @@ HB_FUNC(__DBARRANGE)
   auto pSrcArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   auto pDstArea = static_cast<AREAP>(hb_rddGetWorkAreaPointer(static_cast<HB_AREANO>(hb_parni(1))));
 
-  /* TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea */
+  // TODO: check what Clipper does when pDstArea == nullptr or pSrcArea == pDstArea
   if (pSrcArea && pDstArea && pSrcArea != pDstArea)
   {
     DBSORTINFO dbSortInfo{};
-    /* structure with fields copied copied from source WorkArea */
+    // structure with fields copied copied from source WorkArea
     auto pStruct = hb_param(2, Harbour::Item::ARRAY);
-    /* array with sorted fields in source WorkArea */
+    // array with sorted fields in source WorkArea
     auto pFields = hb_param(8, Harbour::Item::ARRAY);
 
     errCode = hb_dbTransStruct(pSrcArea, pDstArea, &dbSortInfo.dbtri, nullptr, pStruct);
@@ -2054,7 +2033,7 @@ HB_FUNC(__DBARRANGE)
           dbSortInfo.dbtri.dbsci.fBackward = dbSortInfo.dbtri.dbsci.fOptimized = false;
       dbSortInfo.dbtri.dbsci.fIncludeDeleted = true;
 
-      /* do not transfer record deleted flag to destination area */
+      // do not transfer record deleted flag to destination area
       dbSortInfo.dbtri.uiFlags |= DBTF_RECALL;
 
       dbSortInfo.uiItemCount = pFields ? static_cast<HB_USHORT>(hb_arrayLen(pFields)) : 0;
@@ -2082,8 +2061,8 @@ HB_FUNC(__DBARRANGE)
           if (szPos != nullptr)
           {
             *szPos++ = 0;
-            /* It's not Cl*pper compatible, Cl*pper checks only
-               for /D flag and ignores any /A flags [druzus] */
+            // It's not Cl*pper compatible, Cl*pper checks only
+            // for /D flag and ignores any /A flags [druzus]
             if (strchr(szPos, 'D') > strchr(szPos, 'A'))
             {
               dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_DESCEND;
@@ -2102,11 +2081,11 @@ HB_FUNC(__DBARRANGE)
             dbSortInfo.lpdbsItem[uiDest].uiFlags |= SF_ASCEND;
           }
 
-          /* Cl*pper sorts records using field values from source
-             area only, destination area may not contain sorted
-             fields at all [druzus] */
+          // Cl*pper sorts records using field values from source
+          // area only, destination area may not contain sorted
+          // fields at all [druzus]
           dbSortInfo.lpdbsItem[uiDest].uiField = hb_rddFieldExpIndex(pSrcArea, szFieldLine);
-          /* Field found */
+          // Field found
           if (dbSortInfo.lpdbsItem[uiDest].uiField != 0)
           {
             ++uiDest;
@@ -2133,7 +2112,7 @@ HB_FUNC(__DBARRANGE)
       hb_itemRelease(pTransItm);
     }
 
-    /* Free items */
+    // Free items
     if (dbSortInfo.lpdbsItem)
     {
       hb_xfree(dbSortInfo.lpdbsItem);
@@ -2147,7 +2126,7 @@ HB_FUNC(__DBARRANGE)
   hb_retl(errCode == Harbour::SUCCESS);
 }
 
-/* __dbTrans(nDstArea, aFieldsStru, bFor, bWhile, nNext, nRecord, lRest) --> <lSuccess> */
+// __dbTrans(nDstArea, aFieldsStru, bFor, bWhile, nNext, nRecord, lRest) --> <lSuccess>
 HB_FUNC(__DBTRANS)
 {
   if (HB_ISNUM(1))
@@ -2185,11 +2164,10 @@ HB_FUNC(__DBTRANS)
         if (errCode == Harbour::SUCCESS)
         {
           errCode = dbTransInfo.uiItemCount == 0 ? Harbour::FAILURE : SELF_TRANS(dbTransInfo.lpaSource, &dbTransInfo);
-          /* we always call DBI_TRANSREC second time after TRANS() method
-           * even if TRANS() failed - it's for RDDs which may need to store
-           * pointer to dbTransInfo in first call and then release it and/or
-           * clean some structures allocated for transfer operation [druzus]
-           */
+          // we always call DBI_TRANSREC second time after TRANS() method
+          // even if TRANS() failed - it's for RDDs which may need to store
+          // pointer to dbTransInfo in first call and then release it and/or
+          // clean some structures allocated for transfer operation [druzus]
           SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
           if (errCode == Harbour::SUCCESS && (dbTransInfo.uiFlags & DBTF_CPYCTR))
           {
@@ -2219,30 +2197,30 @@ HB_FUNC(__DBTRANS)
   }
 }
 
-/* __dbApp(<cNameName>, [<aFields>], ;
-           [<bFor>], [<bWhile>], [<nNext>], [<nRecord>], [<lRest>], ;
-           [<cRDD>], [<nConnection>], [<cCodePage>], ;
-           [<xDelimiter>]) --> <lSuccess> */
+// __dbApp(<cNameName>, [<aFields>], ;
+//         [<bFor>], [<bWhile>], [<nNext>], [<nRecord>], [<lRest>], ;
+//         [<cRDD>], [<nConnection>], [<cCodePage>], ;
+//         [<xDelimiter>]) --> <lSuccess>
 HB_FUNC(__DBAPP)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   if (pArea != nullptr)
   {
-    hb_retl(Harbour::SUCCESS == hb_rddTransRecords(pArea, hb_parc(1),                   /* file name */
-                                                   hb_parc(8),                          /* RDD */
-                                                   hb_parnl(9),                         /* connection */
-                                                   hb_param(2, Harbour::Item::ARRAY),   /* Fields */
-                                                   false,                               /* Export? */
-                                                   hb_param(3, Harbour::Item::BLOCK),   /* cobFor */
-                                                   nullptr,                             /* lpStrFor */
-                                                   hb_param(4, Harbour::Item::BLOCK),   /* cobWhile */
-                                                   nullptr,                             /* lpStrWhile */
-                                                   hb_param(5, Harbour::Item::NUMERIC), /* Next */
-                                                   HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), /* RecID */
-                                                   hb_param(7, Harbour::Item::LOGICAL),                     /* Rest */
-                                                   hb_parc(10),                        /* Codepage */
-                                                   hb_param(11, Harbour::Item::ANY))); /* Delimiter */
+    hb_retl(Harbour::SUCCESS == hb_rddTransRecords(pArea, hb_parc(1),                   // file name
+                                                   hb_parc(8),                          // RDD
+                                                   hb_parnl(9),                         // connection
+                                                   hb_param(2, Harbour::Item::ARRAY),   // Fields
+                                                   false,                               // Export?
+                                                   hb_param(3, Harbour::Item::BLOCK),   // cobFor
+                                                   nullptr,                             // lpStrFor
+                                                   hb_param(4, Harbour::Item::BLOCK),   // cobWhile
+                                                   nullptr,                             // lpStrWhile
+                                                   hb_param(5, Harbour::Item::NUMERIC), // Next
+                                                   HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), // RecID
+                                                   hb_param(7, Harbour::Item::LOGICAL),                     // Rest
+                                                   hb_parc(10),                        // Codepage
+                                                   hb_param(11, Harbour::Item::ANY))); // Delimiter
   }
   else
   {
@@ -2250,30 +2228,30 @@ HB_FUNC(__DBAPP)
   }
 }
 
-/* __dbCoppy(<cNameName>, [<aFields>], ;
-             [<bFor>], [<bWhile>], [<nNext>], [<nRecord>], [<lRest>], ;
-             [<cRDD>], [<nConnection>], [<cCodePage>], ;
-             [<xDelimiter>]) --> <lSuccess> */
+// __dbCoppy(<cNameName>, [<aFields>], ;
+//           [<bFor>], [<bWhile>], [<nNext>], [<nRecord>], [<lRest>], ;
+//           [<cRDD>], [<nConnection>], [<cCodePage>], ;
+//           [<xDelimiter>]) --> <lSuccess>
 HB_FUNC(__DBCOPY)
 {
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
   if (pArea != nullptr)
   {
-    hb_retl(Harbour::SUCCESS == hb_rddTransRecords(pArea, hb_parc(1),                   /* file name */
-                                                   hb_parc(8),                          /* RDD */
-                                                   hb_parnl(9),                         /* connection */
-                                                   hb_param(2, Harbour::Item::ARRAY),   /* Fields */
-                                                   true,                                /* Export? */
-                                                   hb_param(3, Harbour::Item::BLOCK),   /* cobFor */
-                                                   nullptr,                             /* lpStrFor */
-                                                   hb_param(4, Harbour::Item::BLOCK),   /* cobWhile */
-                                                   nullptr,                             /* lpStrWhile */
-                                                   hb_param(5, Harbour::Item::NUMERIC), /* Next */
-                                                   HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), /* RecID */
-                                                   hb_param(7, Harbour::Item::LOGICAL),                     /* Rest */
-                                                   hb_parc(10),                        /* Codepage */
-                                                   hb_param(11, Harbour::Item::ANY))); /* Delimiter */
+    hb_retl(Harbour::SUCCESS == hb_rddTransRecords(pArea, hb_parc(1),                   // file name
+                                                   hb_parc(8),                          // RDD
+                                                   hb_parnl(9),                         // connection
+                                                   hb_param(2, Harbour::Item::ARRAY),   // Fields
+                                                   true,                                // Export?
+                                                   hb_param(3, Harbour::Item::BLOCK),   // cobFor
+                                                   nullptr,                             // lpStrFor
+                                                   hb_param(4, Harbour::Item::BLOCK),   // cobWhile
+                                                   nullptr,                             // lpStrWhile
+                                                   hb_param(5, Harbour::Item::NUMERIC), // Next
+                                                   HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), // RecID
+                                                   hb_param(7, Harbour::Item::LOGICAL),                     // Rest
+                                                   hb_parc(10),                        // Codepage
+                                                   hb_param(11, Harbour::Item::ANY))); // Delimiter
   }
   else
   {
@@ -2295,14 +2273,14 @@ HB_FUNC(HB_RDDINFO)
 {
   auto szDriver = hb_parc(3);
   if (!szDriver)
-  { /* no VIA RDD parameter, use default */
+  { // no VIA RDD parameter, use default
     szDriver = hb_rddDefaultDrv(nullptr);
   }
 
   HB_ULONG ulConnection = hb_parnl(4);
 
   HB_USHORT uiRddID;
-  auto pRDDNode = hb_rddFindNode(szDriver, &uiRddID); /* find the RDDNODE */
+  auto pRDDNode = hb_rddFindNode(szDriver, &uiRddID); // find the RDDNODE
   auto pIndex = hb_param(1, Harbour::Item::NUMERIC);
 
   if (pRDDNode && pIndex)
@@ -2332,7 +2310,7 @@ HB_FUNC(HB_DBDROP)
     auto szDriver = hb_rddFindDrv(hb_parc(3), szName);
     if (szDriver != nullptr)
     {
-      pRDDNode = hb_rddFindNode(szDriver, nullptr); /* find the RDDNODE */
+      pRDDNode = hb_rddFindNode(szDriver, nullptr); // find the RDDNODE
     }
   }
 
@@ -2362,7 +2340,7 @@ HB_FUNC(HB_DBEXISTS)
     auto szDriver = hb_rddFindDrv(hb_parc(3), szName);
     if (szDriver != nullptr)
     {
-      pRDDNode = hb_rddFindNode(szDriver, nullptr); /* find the RDDNODE */
+      pRDDNode = hb_rddFindNode(szDriver, nullptr); // find the RDDNODE
     }
   }
   if (pRDDNode)
@@ -2391,7 +2369,7 @@ HB_FUNC(HB_DBRENAME)
     auto szDriver = hb_rddFindDrv(hb_parc(4), szName);
     if (szDriver != nullptr)
     {
-      pRDDNode = hb_rddFindNode(szDriver, nullptr); /* find the RDDNODE */
+      pRDDNode = hb_rddFindNode(szDriver, nullptr); // find the RDDNODE
     }
   }
 
@@ -2616,12 +2594,11 @@ HB_FUNC(__DBSKIPPER)
       }
       else if (lRecs > 0)
       {
-        /* the condition below is exact Clipper behavior anyhow
-         * we cannot replicate it without introducing serious problem:
-         * some RDDs use non continuous record numbers (i.e. ADT) and
-         * the condition: ulRecNo != ulRecords + 1 can be true also for
-         * normal records not only for the phantom EOF record. [druzus]
-         */
+        // the condition below is exact Clipper behavior anyhow
+        // we cannot replicate it without introducing serious problem:
+        // some RDDs use non continuous record numbers (i.e. ADT) and
+        // the condition: ulRecNo != ulRecords + 1 can be true also for
+        // normal records not only for the phantom EOF record. [druzus]
 #if 0
             HB_ULONG ulRecNo = 0;
             if( SELF_RECNO(pArea, &ulRecNo) == Harbour::SUCCESS && ulRecNo != ulRecords + 1 )
@@ -2646,7 +2623,7 @@ HB_FUNC(__DBSKIPPER)
           }
         }
       }
-      else /* if( lRecs < 0 ) */
+      else // if( lRecs < 0 )
       {
         while (lSkipped > lRecs)
         {

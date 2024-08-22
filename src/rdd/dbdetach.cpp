@@ -50,13 +50,11 @@
 #include "hbapierr.hpp"
 #include "hbthread.hpp"
 
-/*
- * hb_dbDetach( [<nWorkArea>|<cAlias>], [<xCargo>] ) --> <lSuccess>
- */
+// hb_dbDetach( [<nWorkArea>|<cAlias>], [<xCargo>] ) --> <lSuccess>
 HB_FUNC(HB_DBDETACH)
 {
   auto pAlias = hb_param(1, Harbour::Item::ANY);
-  auto pCargo = hb_param(2, Harbour::Item::ANY); /* Harbour::Item::BLOCK in Xbase++ */
+  auto pCargo = hb_param(2, Harbour::Item::ANY); // Harbour::Item::BLOCK in Xbase++
   AREAP pArea = nullptr;
   int iArea;
 
@@ -97,10 +95,8 @@ HB_FUNC(HB_DBDETACH)
   }
 }
 
-/*
- * hb_dbRequest([<cAlias>], [<lFreeArea>], [<@xCargo>], [<nTimeOut>|<lWait>])
- *          --> <lSuccess>
- */
+// hb_dbRequest([<cAlias>], [<lFreeArea>], [<@xCargo>], [<nTimeOut>|<lWait>])
+//          --> <lSuccess>
 HB_FUNC(HB_DBREQUEST)
 {
   if (HB_ISNIL(1) || HB_ISCHAR(1))

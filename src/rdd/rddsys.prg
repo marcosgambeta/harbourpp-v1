@@ -44,7 +44,7 @@
  *
  */
 
-/* Standard Harbour RDDSys system */
+// Standard Harbour RDDSys system
 
 ANNOUNCE RDDSYS
 

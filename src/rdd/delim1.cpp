@@ -67,10 +67,10 @@ static void hb_delimInitArea(DELIMAREAP pArea, char *szFileName)
 {
   const char *szEol;
 
-  /* Allocate only after successfully open file */
+  // Allocate only after successfully open file
   pArea->szFileName = hb_strdup(szFileName);
 
-  /* set line separator: EOL */
+  // set line separator: EOL
   szEol = hb_setGetEOL();
   if (!szEol || !szEol[0])
   {
@@ -82,12 +82,12 @@ static void hb_delimInitArea(DELIMAREAP pArea, char *szFileName)
                    (pArea->uiEolLen == 1 ||
                     (pArea->uiEolLen == 2 && szEol[0] != szEol[1] && (szEol[1] == '\n' || szEol[1] == '\r')));
 
-  /* allocate record buffer, one additional byte is for deleted flag */
+  // allocate record buffer, one additional byte is for deleted flag
   pArea->pRecord = static_cast<HB_BYTE *>(hb_xgrab(pArea->uiRecordLen + 1));
-  /* pseudo deleted flag */
+  // pseudo deleted flag
   *pArea->pRecord++ = ' ';
 
-  /* allocate IO buffer */
+  // allocate IO buffer
   pArea->nBufferSize += pArea->fAnyEol ? 2 : pArea->uiEolLen;
   if (pArea->fReadonly && pArea->nBufferSize < 8192)
   {
@@ -183,7 +183,7 @@ static HB_SIZE hb_delimEncodeBuffer(DELIMAREAP pArea)
   LPFIELD pField;
   HB_BYTE *pBuffer;
 
-  /* mark the read buffer as empty */
+  // mark the read buffer as empty
   pArea->nBufferRead = pArea->nBufferIndex = 0;
 
   pBuffer = pArea->pBuffer;
@@ -336,8 +336,8 @@ static int hb_delimNextChar(DELIMAREAP pArea)
       return ch;
     }
 
-    /* Cl*pper stops farther file processing when first EOF
-       character is read [druzus] */
+    // Cl*pper stops farther file processing when first EOF
+    // character is read [druzus]
 #ifdef HB_CLP_STRICT
     pArea->nBufferRead = pArea->nBufferIndex = 0;
     return -2;
@@ -345,9 +345,7 @@ static int hb_delimNextChar(DELIMAREAP pArea)
   }
 }
 
-/*
- * Read record, decode it to buffer and set next record offset
- */
+// Read record, decode it to buffer and set next record offset
 static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
 {
 #if 0
@@ -358,7 +356,7 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
 
   pArea->area.fEof = true;
 
-  /* clear the record buffer */
+  // clear the record buffer
   hb_delimClearRecordBuffer(pArea);
 
   for (HB_USHORT uiField = 0; uiField < pArea->area.uiFieldCount; ++uiField)
@@ -380,13 +378,13 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
         pArea->area.fEof = false;
       }
 
-      /* ignore leading spaces */
+      // ignore leading spaces
       while (ch == ' ')
       {
         ch = hb_delimNextChar(pArea);
       }
 
-      /* set the stop character */
+      // set the stop character
       if (pArea->cDelim && ch == pArea->cDelim)
       {
         cStop = pArea->cDelim;
@@ -397,11 +395,9 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
         cStop = pArea->cSeparator;
       }
 
-      /*
-       * Clipper uses different rules for character fields, they
-       * can be terminated only with valid stop character when
-       * other fields also by length
-       */
+      // Clipper uses different rules for character fields, they
+      // can be terminated only with valid stop character when
+      // other fields also by length
       if (pField->uiType == Harbour::DB::Field::STRING ||
           (pField->uiType == Harbour::DB::Field::TIMESTAMP && cStop == pArea->cDelim))
       {
@@ -462,25 +458,25 @@ static HB_ERRCODE hb_delimReadRecord(DELIMAREAP pArea)
             pArea->area.valResult = hb_itemPutNIntLen(pArea->area.valResult, lVal, uiLen);
           }
           hb_itemStrBuf(reinterpret_cast<char *>(buffer), pArea->area.valResult, uiLen, pField->uiDec);
-          /* TODO: RT error on width range */
+          // TODO: RT error on width range
           memcpy(pFieldBuf, buffer, uiLen);
         }
       }
 
-      /* ignore all character to the next field separator */
+      // ignore all character to the next field separator
       while (ch >= 0 && ch != pArea->cSeparator)
       {
         ch = hb_delimNextChar(pArea);
       }
 
-      /* stop reading on EOL */
+      // stop reading on EOL
       if (ch < 0)
       {
         break;
       }
     }
   }
-  /* ignore all character to the end of line */
+  // ignore all character to the end of line
   while (ch >= 0)
   {
     ch = hb_delimNextChar(pArea);
@@ -505,13 +501,9 @@ static HB_ERRCODE hb_delimNextRecord(DELIMAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * -- DELIM METHODS --
- */
+// -- DELIM METHODS --
 
-/*
- * Position cursor at a specific physical record.
- */
+// Position cursor at a specific physical record.
 static HB_ERRCODE hb_delimGoTo(DELIMAREAP pArea, HB_ULONG ulRecNo)
 {
 #if 0
@@ -531,13 +523,11 @@ static HB_ERRCODE hb_delimGoTo(DELIMAREAP pArea, HB_ULONG ulRecNo)
     return Harbour::SUCCESS;
   }
 #endif
-  /* generate RTE */
+  // generate RTE
   return SUPER_GOTO(&pArea->area, ulRecNo);
 }
 
-/*
- * Position the cursor to a specific, physical identity.
- */
+// Position the cursor to a specific, physical identity.
 static HB_ERRCODE hb_delimGoToId(DELIMAREAP pArea, PHB_ITEM pItem)
 {
 #if 0
@@ -550,13 +540,11 @@ static HB_ERRCODE hb_delimGoToId(DELIMAREAP pArea, PHB_ITEM pItem)
     return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
   }
 #endif
-  /* generate RTE */
+  // generate RTE
   return SUPER_GOTOID(&pArea->area, pItem);
 }
 
-/*
- * Position cursor at the first record.
- */
+// Position cursor at the first record.
 static HB_ERRCODE hb_delimGoTop(DELIMAREAP pArea)
 {
 #if 0
@@ -575,7 +563,7 @@ static HB_ERRCODE hb_delimGoTop(DELIMAREAP pArea)
   {
     if (pArea->ulRecNo != 0 || !pArea->fReadonly)
     {
-      /* generate RTE */
+      // generate RTE
       return SUPER_GOTOP(&pArea->area);
     }
 
@@ -589,9 +577,7 @@ static HB_ERRCODE hb_delimGoTop(DELIMAREAP pArea)
   return SELF_SKIPFILTER(&pArea->area, 1);
 }
 
-/*
- * Reposition cursor, regardless of filter.
- */
+// Reposition cursor, regardless of filter.
 static HB_ERRCODE hb_delimSkipRaw(DELIMAREAP pArea, HB_LONG lToSkip)
 {
 #if 0
@@ -605,7 +591,7 @@ static HB_ERRCODE hb_delimSkipRaw(DELIMAREAP pArea, HB_LONG lToSkip)
 
   if (lToSkip != 1 || !pArea->fReadonly)
   {
-    /* generate RTE */
+    // generate RTE
     return SUPER_SKIPRAW(&pArea->area, lToSkip);
   }
   else
@@ -614,9 +600,7 @@ static HB_ERRCODE hb_delimSkipRaw(DELIMAREAP pArea, HB_LONG lToSkip)
   }
 }
 
-/*
- * Determine deleted status for a record.
- */
+// Determine deleted status for a record.
 static HB_ERRCODE hb_delimDeleted(DELIMAREAP pArea, HB_BOOL *pDeleted)
 {
 #if 0
@@ -630,9 +614,7 @@ static HB_ERRCODE hb_delimDeleted(DELIMAREAP pArea, HB_BOOL *pDeleted)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain number of records in WorkArea.
- */
+// Obtain number of records in WorkArea.
 static HB_ERRCODE hb_delimRecCount(DELIMAREAP pArea, HB_ULONG *pRecCount)
 {
 #if 0
@@ -644,9 +626,7 @@ static HB_ERRCODE hb_delimRecCount(DELIMAREAP pArea, HB_ULONG *pRecCount)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain physical row number at current WorkArea cursor position.
- */
+// Obtain physical row number at current WorkArea cursor position.
 static HB_ERRCODE hb_delimRecNo(DELIMAREAP pArea, HB_ULONG *pulRecNo)
 {
 #if 0
@@ -658,9 +638,7 @@ static HB_ERRCODE hb_delimRecNo(DELIMAREAP pArea, HB_ULONG *pulRecNo)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain physical row ID at current WorkArea cursor position.
- */
+// Obtain physical row ID at current WorkArea cursor position.
 static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, PHB_ITEM pRecNo)
 {
 #if 0
@@ -672,8 +650,8 @@ static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, PHB_ITEM pRecNo)
   HB_ERRCODE errCode = SELF_RECNO(&pArea->area, &ulRecNo);
 
 #ifdef HB_CLP_STRICT
-  /* this is for strict Clipper compatibility but IMHO Clipper should not
-     do that and always set fixed size independent to the record number */
+  // this is for strict Clipper compatibility but IMHO Clipper should not
+  // do that and always set fixed size independent to the record number
   if (ulRecNo < 10000000)
   {
     hb_itemPutNLLen(pRecNo, ulRecNo, 7);
@@ -688,9 +666,7 @@ static HB_ERRCODE hb_delimRecId(DELIMAREAP pArea, PHB_ITEM pRecNo)
   return errCode;
 }
 
-/*
- * Append a record to the WorkArea.
- */
+// Append a record to the WorkArea.
 static HB_ERRCODE hb_delimAppend(DELIMAREAP pArea, HB_BOOL fUnLockAll)
 {
 #if 0
@@ -717,9 +693,7 @@ static HB_ERRCODE hb_delimAppend(DELIMAREAP pArea, HB_BOOL fUnLockAll)
   return Harbour::SUCCESS;
 }
 
-/*
- * Delete a record.
- */
+// Delete a record.
 static HB_ERRCODE hb_delimDeleteRec(DELIMAREAP pArea)
 {
 #if 0
@@ -728,7 +702,7 @@ static HB_ERRCODE hb_delimDeleteRec(DELIMAREAP pArea)
 
   HB_SYMBOL_UNUSED(pArea);
 
-  /* It's not Cl*pper compatible so I had to disable it [druzus] */
+  // It's not Cl*pper compatible so I had to disable it [druzus]
 #if 0
    if( pArea->fRecordChanged ) {
       pArea->ulRecCount--;
@@ -741,9 +715,7 @@ static HB_ERRCODE hb_delimDeleteRec(DELIMAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Undelete the current record.
- */
+// Undelete the current record.
 static HB_ERRCODE hb_delimRecall(DELIMAREAP pArea)
 {
 #if 0
@@ -755,9 +727,7 @@ static HB_ERRCODE hb_delimRecall(DELIMAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Obtain the current value of a field.
- */
+// Obtain the current value of a field.
 static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
@@ -866,9 +836,7 @@ static HB_ERRCODE hb_delimGetValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
   return Harbour::SUCCESS;
 }
 
-/*
- * Assign a value to a field.
- */
+// Assign a value to a field.
 static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
@@ -1008,9 +976,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
   return Harbour::SUCCESS;
 }
 
-/*
- * Replace the current record.
- */
+// Replace the current record.
 static HB_ERRCODE hb_delimPutRec(DELIMAREAP pArea, HB_BYTE *pBuffer)
 {
 #if 0
@@ -1027,15 +993,13 @@ static HB_ERRCODE hb_delimPutRec(DELIMAREAP pArea, HB_BYTE *pBuffer)
     return Harbour::FAILURE;
   }
 
-  /* Copy data to buffer */
+  // Copy data to buffer
   memcpy(pArea->pRecord, pBuffer + 1, pArea->uiRecordLen);
 
   return Harbour::SUCCESS;
 }
 
-/*
- * Retrieve current record buffer
- */
+// Retrieve current record buffer
 static HB_ERRCODE hb_delimGetRec(DELIMAREAP pArea, HB_BYTE **pBufferPtr)
 {
 #if 0
@@ -1047,9 +1011,7 @@ static HB_ERRCODE hb_delimGetRec(DELIMAREAP pArea, HB_BYTE **pBufferPtr)
   return Harbour::SUCCESS;
 }
 
-/*
- * Copy one or more records from one WorkArea to another.
- */
+// Copy one or more records from one WorkArea to another.
 static HB_ERRCODE hb_delimTrans(DELIMAREAP pArea, LPDBTRANSINFO pTransInfo)
 {
 #if 0
@@ -1088,9 +1050,7 @@ static HB_ERRCODE hb_delimTrans(DELIMAREAP pArea, LPDBTRANSINFO pTransInfo)
   return SUPER_TRANS(&pArea->area, pTransInfo);
 }
 
-/*
- * Perform a write of WorkArea memory to the data store.
- */
+// Perform a write of WorkArea memory to the data store.
 static HB_ERRCODE hb_delimGoCold(DELIMAREAP pArea)
 {
 #if 0
@@ -1111,9 +1071,7 @@ static HB_ERRCODE hb_delimGoCold(DELIMAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Mark the WorkArea data buffer as hot.
- */
+// Mark the WorkArea data buffer as hot.
 static HB_ERRCODE hb_delimGoHot(DELIMAREAP pArea)
 {
 #if 0
@@ -1134,9 +1092,7 @@ static HB_ERRCODE hb_delimGoHot(DELIMAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Write data buffer to the data store.
- */
+// Write data buffer to the data store.
 static HB_ERRCODE hb_delimFlush(DELIMAREAP pArea)
 {
 #if 0
@@ -1154,9 +1110,7 @@ static HB_ERRCODE hb_delimFlush(DELIMAREAP pArea)
   return errCode;
 }
 
-/*
- * Retrieve information about the current table/driver.
- */
+// Retrieve information about the current table/driver.
 static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 {
 #if 0
@@ -1209,12 +1163,10 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         pArea->cDelim = *szDelim;
       }
     }
-    /*
-     * a small trick which allow to set character field delimiter and
-     * field separator in COPY TO ... and APPEND FROM ... commands as
-     * array. F.e.:
-     *    COPY TO test DELIMITED WITH ({"","|"})
-     */
+    // a small trick which allow to set character field delimiter and
+    // field separator in COPY TO ... and APPEND FROM ... commands as
+    // array. F.e.:
+    //    COPY TO test DELIMITED WITH ({"","|"})
 #ifndef HB_CLP_STRICT
     else if (hb_itemType(pItem) & Harbour::Item::ARRAY)
     {
@@ -1294,9 +1246,7 @@ static HB_ERRCODE hb_delimInfo(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   return Harbour::SUCCESS;
 }
 
-/*
- * Add a field to the WorkArea.
- */
+// Add a field to the WorkArea.
 static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
 {
 #if 0
@@ -1412,7 +1362,7 @@ static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
 
   pFieldInfo->uiFlags &= ~HB_FF_AUTOINC;
 
-  /* Update field offset */
+  // Update field offset
   pArea->pFieldOffset[pArea->area.uiFieldCount] = pArea->uiRecordLen;
   pArea->uiRecordLen += pFieldInfo->uiLen;
   pArea->nBufferSize += pFieldInfo->uiLen + uiDelim + 1;
@@ -1420,9 +1370,7 @@ static HB_ERRCODE hb_delimAddField(DELIMAREAP pArea, LPDBFIELDINFO pFieldInfo)
   return SUPER_ADDFIELD(&pArea->area, pFieldInfo);
 }
 
-/*
- * Establish the extent of the array of fields for a WorkArea.
- */
+// Establish the extent of the array of fields for a WorkArea.
 static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExtent)
 {
 #if 0
@@ -1434,7 +1382,7 @@ static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExte
     return Harbour::FAILURE;
   }
 
-  /* Alloc field offsets array */
+  // Alloc field offsets array
   if (uiFieldExtent)
   {
     pArea->pFieldOffset = static_cast<HB_USHORT *>(hb_xgrabz(uiFieldExtent * sizeof(HB_USHORT)));
@@ -1443,9 +1391,7 @@ static HB_ERRCODE hb_delimSetFieldExtent(DELIMAREAP pArea, HB_USHORT uiFieldExte
   return Harbour::SUCCESS;
 }
 
-/*
- * Clear the WorkArea for use.
- */
+// Clear the WorkArea for use.
 static HB_ERRCODE hb_delimNewArea(DELIMAREAP pArea)
 {
 #if 0
@@ -1462,18 +1408,16 @@ static HB_ERRCODE hb_delimNewArea(DELIMAREAP pArea)
   pArea->uiRecordLen = 0;
   pArea->nBufferSize = 0;
 
-  /* set character field delimiter */
+  // set character field delimiter
   pArea->cDelim = '"';
 
-  /* set field separator */
+  // set field separator
   pArea->cSeparator = ',';
 
   return Harbour::SUCCESS;
 }
 
-/*
- * Retrieve the size of the WorkArea structure.
- */
+// Retrieve the size of the WorkArea structure.
 static HB_ERRCODE hb_delimStructSize(DELIMAREAP pArea, HB_USHORT *uiSize)
 {
 #if 0
@@ -1485,16 +1429,14 @@ static HB_ERRCODE hb_delimStructSize(DELIMAREAP pArea, HB_USHORT *uiSize)
   return Harbour::SUCCESS;
 }
 
-/*
- * Close the table in the WorkArea.
- */
+// Close the table in the WorkArea.
 static HB_ERRCODE hb_delimClose(DELIMAREAP pArea)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_delimClose(%p)", static_cast<void*>(pArea)));
 #endif
 
-  /* Update record and unlock records */
+  // Update record and unlock records
   if (pArea->pFile)
   {
     SELF_GOCOLD(&pArea->area);
@@ -1540,9 +1482,7 @@ static HB_ERRCODE hb_delimClose(DELIMAREAP pArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Create a data store in the specified WorkArea.
- */
+// Create a data store in the specified WorkArea.
 static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
 {
 #if 0
@@ -1554,8 +1494,8 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
   PHB_FNAME pFileName;
   char szFileName[HB_PATH_MAX];
 
-  pArea->fShared = false;   /* pCreateInfo->fShared; */
-  pArea->fReadonly = false; /* pCreateInfo->fReadonly */
+  pArea->fShared = false;   // pCreateInfo->fShared;
+  pArea->fReadonly = false; // pCreateInfo->fReadonly
 
   if (pCreateInfo->cdpId)
   {
@@ -1587,7 +1527,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
   }
   hb_xfree(pFileName);
 
-  /* Try create */
+  // Try create
   do
   {
     pArea->pFile = hb_fileExtOpen(
@@ -1653,9 +1593,7 @@ static HB_ERRCODE hb_delimCreate(DELIMAREAP pArea, LPDBOPENINFO pCreateInfo)
   return errCode;
 }
 
-/*
- * Open a data store in the WorkArea.
- */
+// Open a data store in the WorkArea.
 static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 {
 #if 0
@@ -1669,8 +1607,8 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
   char szFileName[HB_PATH_MAX];
   char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
 
-  pArea->fShared = true;   /* pOpenInfo->fShared; */
-  pArea->fReadonly = true; /* pOpenInfo->fReadonly; */
+  pArea->fShared = true;   // pOpenInfo->fShared;
+  pArea->fReadonly = true; // pOpenInfo->fReadonly;
 
   if (pOpenInfo->cdpId)
   {
@@ -1688,7 +1626,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
   uiFlags = (pArea->fReadonly ? FO_READ : FO_READWRITE) | (pArea->fShared ? FO_DENYNONE : FO_EXCLUSIVE);
 
   pFileName = hb_fsFNameSplit(pOpenInfo->abName);
-  /* Add default file name extension if necessary */
+  // Add default file name extension if necessary
   if (hb_setGetDefExtension() && !pFileName->szExtension)
   {
     auto pFileExt = hb_itemNew(nullptr);
@@ -1704,7 +1642,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
     hb_strncpy(szFileName, pOpenInfo->abName, sizeof(szFileName) - 1);
   }
 
-  /* Create default alias if necessary */
+  // Create default alias if necessary
   if (!pOpenInfo->atomAlias && pFileName->szName)
   {
     const char *szName = strrchr(pFileName->szName, ':');
@@ -1721,7 +1659,7 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
   }
   hb_xfree(pFileName);
 
-  /* Try open */
+  // Try open
   do
   {
     pArea->pFile =
@@ -1765,13 +1703,11 @@ static HB_ERRCODE hb_delimOpen(DELIMAREAP pArea, LPDBOPENINFO pOpenInfo)
 
   hb_delimInitArea(pArea, szFileName);
 
-  /* Position cursor at the first record */
+  // Position cursor at the first record
   return SELF_GOTOP(&pArea->area);
 }
 
-/*
- * RDD init
- */
+// RDD init
 static HB_ERRCODE hb_delimInit(LPRDDNODE pRDD)
 {
 #if 0
@@ -1792,9 +1728,7 @@ static HB_ERRCODE hb_delimInit(LPRDDNODE pRDD)
   }
 }
 
-/*
- * RDD exit
- */
+// RDD exit
 static HB_ERRCODE hb_delimExit(LPRDDNODE pRDD)
 {
 #if 0
@@ -1818,9 +1752,7 @@ static HB_ERRCODE hb_delimExit(LPRDDNODE pRDD)
   }
 }
 
-/*
- * Retrieve information about the current driver.
- */
+// Retrieve information about the current driver.
 static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConnect, PHB_ITEM pItem)
 {
 #if 0

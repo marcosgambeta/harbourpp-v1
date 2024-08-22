@@ -46,7 +46,7 @@
 
 #include "dbinfo.ch"
 
-/* NOTE: The fifth parameters (cOrderName) is undocumented. */
+// NOTE: The fifth parameters (cOrderName) is undocumented.
 
 FUNCTION dbCreateIndex(cOrderBagName, cKeyExpr, bKeyExpr, lUnique, cOrderName)
    RETURN ordCreate(cOrderBagName, cOrderName, cKeyExpr, bKeyExpr, lUnique)

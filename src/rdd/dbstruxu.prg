@@ -44,7 +44,7 @@
  *
  */
 
-/* NOTE: Undocumented, internal Clipper function */
+// NOTE: Undocumented, internal Clipper function
 
 #ifdef HB_CLP_UNDOC
 

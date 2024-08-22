@@ -47,12 +47,12 @@
 #include "dbstruct.ch"
 #include "error.ch"
 
-/* NOTE: Compared to CA-Cl*pper, Harbour:
-         - will accept character expressions and symbols for xKey, xFor and xWhile.
-         - has three extra parameters (cRDD, nConnection, cCodePage).
-         - will default to active index key for xKey parameter.
-         - won't crash with "No exported method: EVAL" if xKey is not
-           block and table is not indexed. */
+// NOTE: Compared to CA-Cl*pper, Harbour:
+//       - will accept character expressions and symbols for xKey, xFor and xWhile.
+//       - has three extra parameters (cRDD, nConnection, cCodePage).
+//       - will default to active index key for xKey parameter.
+//       - won't crash with "No exported method: EVAL" if xKey is not
+//         block and table is not indexed.
 
 FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD, nConnection, cCodePage)
 
@@ -130,7 +130,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
       AEval(aFields, {| cField | AAdd(aGetField, __GetField(cField)) })
       aFieldsSum := Array(Len(aGetField))
 
-      /* Keep it open after creating it. */
+      // Keep it open after creating it.
       dbCreate(cFile, aNewDbStruct, cRDD, .T., "", NIL, cCodePage, nConnection)
       nNewArea := Select()
 
@@ -189,7 +189,7 @@ STATIC FUNCTION __GetField(cField)
    LOCAL nPos
    LOCAL oError
 
-   /* Is the field aliased? */
+   // Is the field aliased?
    IF (nPos := At("->", cField)) > 0
 
       IF Select(Left(cField, nPos - 1)) != nCurrArea
