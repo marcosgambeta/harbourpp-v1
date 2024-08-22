@@ -53,16 +53,14 @@
 #include "rddsys.ch"
 #include "hbset.hpp"
 
-/*
- * check if a given name can be used as alias expression
- */
+// check if a given name can be used as alias expression
 HB_ERRCODE hb_rddVerifyAliasName(const char *szAlias)
 {
   if (szAlias)
   {
     char c;
 
-    /* Clipper ignores only trailing spaces */
+    // Clipper ignores only trailing spaces
 #if 0
       while( *szAlias == ' ' ) {
          szAlias++;
@@ -98,9 +96,7 @@ HB_ERRCODE hb_rddVerifyAliasName(const char *szAlias)
   return Harbour::FAILURE;
 }
 
-/*
- * Prepares a new WorkArea node.
- */
+// Prepares a new WorkArea node.
 void *hb_rddNewAreaNode(LPRDDNODE pRddNode, HB_USHORT uiRddID)
 {
 #if 0
@@ -110,7 +106,7 @@ void *hb_rddNewAreaNode(LPRDDNODE pRddNode, HB_USHORT uiRddID)
   AREAP pArea;
 
   if (pRddNode->uiAreaSize == 0)
-  { /* Calculate the size of WorkArea */
+  { // Calculate the size of WorkArea
     HB_USHORT uiSize;
 
     pArea = static_cast<AREAP>(hb_xgrabz(sizeof(AREA)));
@@ -122,16 +118,16 @@ void *hb_rddNewAreaNode(LPRDDNODE pRddNode, HB_USHORT uiRddID)
       return nullptr;
     }
 
-    /* Need more space? */
+    // Need more space?
     if (uiSize > sizeof(AREA))
-    { /* Size of Area changed */
+    { // Size of Area changed
       pArea = static_cast<AREAP>(hb_xrealloc(pArea, uiSize));
       memset(pArea, 0, uiSize);
       pArea->lprfsHost = &pRddNode->pTable;
       pArea->rddID = uiRddID;
     }
 
-    pRddNode->uiAreaSize = uiSize; /* Update the size of WorkArea */
+    pRddNode->uiAreaSize = uiSize; // Update the size of WorkArea
   }
   else
   {
@@ -165,9 +161,7 @@ HB_ERRCODE hb_rddGetTempAlias(char *szAliasTmp)
   return Harbour::FAILURE;
 }
 
-/*
- * allocate and return atomAlias for new workarea or nullptr if alias already exist
- */
+// allocate and return atomAlias for new workarea or nullptr if alias already exist
 void *hb_rddAllocWorkAreaAlias(const char *szAlias, int iArea)
 {
 #if 0
@@ -176,11 +170,11 @@ void *hb_rddAllocWorkAreaAlias(const char *szAlias, int iArea)
 
   int iDummyArea;
 
-  /* Verify if the alias name is valid symbol */
+  // Verify if the alias name is valid symbol
   if (hb_rddVerifyAliasName(szAlias) != Harbour::SUCCESS)
   {
     hb_errRT_DBCMD_Ext(EG_BADALIAS, EDBCMD_BADALIAS, nullptr, szAlias, EF_CANDEFAULT);
-    /* Verify if the alias is already in use */
+    // Verify if the alias is already in use
   }
   else if (hb_rddGetAliasNumber(szAlias, &iDummyArea) == Harbour::SUCCESS)
   {
@@ -201,9 +195,7 @@ void *hb_rddAllocWorkAreaAlias(const char *szAlias, int iArea)
   return nullptr;
 }
 
-/*
- * Find a field index by name
- */
+// Find a field index by name
 HB_USHORT hb_rddFieldIndex(AREAP pArea, const char *szName)
 {
 #if 0
@@ -255,10 +247,8 @@ HB_USHORT hb_rddFieldIndex(AREAP pArea, const char *szName)
   return 0;
 }
 
-/*
- * find a field expression index, this function strips _FIELD->, FIELD->,
- * alias-> prefixes
- */
+// find a field expression index, this function strips _FIELD->, FIELD->,
+// alias-> prefixes
 HB_USHORT hb_rddFieldExpIndex(AREAP pArea, const char *szField)
 {
   while (HB_ISSPACE(*szField))
@@ -281,10 +271,8 @@ HB_USHORT hb_rddFieldExpIndex(AREAP pArea, const char *szField)
       l = 0;
     }
 
-    /*
-     * strip the _FIELD-> and FIELD-> prefix, it could be nested
-     * so repeat this process until all prefixes will be removed
-     */
+    // strip the _FIELD-> and FIELD-> prefix, it could be nested
+    // so repeat this process until all prefixes will be removed
     do
     {
       int i;
@@ -328,9 +316,7 @@ HB_USHORT hb_rddFieldExpIndex(AREAP pArea, const char *szField)
   return hb_rddFieldIndex(pArea, szField);
 }
 
-/*
- * Find a WorkArea by the alias, return Harbour::FAILURE if not found
- */
+// Find a WorkArea by the alias, return Harbour::FAILURE if not found
 HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int *iArea)
 {
 #if 0
@@ -379,9 +365,7 @@ HB_ERRCODE hb_rddGetAliasNumber(const char *szAlias, int *iArea)
   return Harbour::SUCCESS;
 }
 
-/*
- * Select a WorkArea by the symbol name.
- */
+// Select a WorkArea by the symbol name.
 HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
 {
 #if 0
@@ -418,10 +402,8 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
     }
   }
 
-  /*
-   * generate an error with retry possibility
-   * (user created error handler can open a missing database)
-   */
+  // generate an error with retry possibility
+  // (user created error handler can open a missing database)
 
   auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, pSymAlias->szName, 0, EF_CANRETRY);
   HB_ERRCODE errCode = Harbour::FAILURE;
@@ -445,9 +427,7 @@ HB_ERRCODE hb_rddSelectWorkAreaSymbol(PHB_SYMB pSymAlias)
   return errCode;
 }
 
-/*
- * Select a WorkArea by the name.
- */
+// Select a WorkArea by the name.
 HB_ERRCODE hb_rddSelectWorkAreaAlias(const char *szAlias)
 {
 #if 0
@@ -460,10 +440,8 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias(const char *szAlias)
 
   if (errCode == Harbour::FAILURE)
   {
-    /*
-     * generate an error with retry possibility
-     * (user created error handler can open a missing database)
-     */
+    // generate an error with retry possibility
+    // (user created error handler can open a missing database)
     auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOALIAS, EDBCMD_NOALIAS, nullptr, szAlias, 0, EF_CANRETRY);
 
     do
@@ -493,9 +471,7 @@ HB_ERRCODE hb_rddSelectWorkAreaAlias(const char *szAlias)
   return errCode;
 }
 
-/*
- * Obtain the current value of a field.
- */
+// Obtain the current value of a field.
 HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
@@ -522,9 +498,7 @@ HB_ERRCODE hb_rddFieldGet(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return Harbour::FAILURE;
 }
 
-/*
- * Assign a value to a field.
- */
+// Assign a value to a field.
 HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
@@ -551,9 +525,7 @@ HB_ERRCODE hb_rddFieldPut(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return Harbour::FAILURE;
 }
 
-/*
- * Obtain the current value of a field.
- */
+// Obtain the current value of a field.
 HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
@@ -564,10 +536,8 @@ HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 
   if (errCode == Harbour::FAILURE && hb_vmRequestQuery() == 0)
   {
-    /*
-     * generate an error with retry possibility
-     * (user created error handler can make this field accessible)
-     */
+    // generate an error with retry possibility
+    // (user created error handler can make this field accessible)
     auto pError =
         hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
     hb_itemClear(pItem);
@@ -587,9 +557,7 @@ HB_ERRCODE hb_rddGetFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
   return errCode;
 }
 
-/*
- * Assign a value to a field.
- */
+// Assign a value to a field.
 HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 {
 #if 0
@@ -600,10 +568,8 @@ HB_ERRCODE hb_rddPutFieldValue(PHB_ITEM pItem, PHB_SYMB pFieldSymbol)
 
   if (errCode == Harbour::FAILURE && hb_vmRequestQuery() == 0)
   {
-    /*
-     * generate an error with retry possibility
-     * (user created error handler can make this field accessible)
-     */
+    // generate an error with retry possibility
+    // (user created error handler can make this field accessible)
     auto pError =
         hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, EDBCMD_NOVAR, nullptr, pFieldSymbol->szName, 0, EF_CANRETRY);
 
@@ -628,13 +594,12 @@ HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, HB_USHO
 {
   DBOPENINFO pInfo;
 
-  /* uiArea = 0 in hb_rddInsertAreaNode() means chose first
-   * available free area, otherwise we should close table in
-   * current WA and it should be done before parameter validation
-   * RT errors below. This breaks xHarbour like MT code which
-   * shares WA between threads so dbUseArea() should be covered
-   * by external mutex to make lNewArea MT safe, [druzus]
-   */
+  // uiArea = 0 in hb_rddInsertAreaNode() means chose first
+  // available free area, otherwise we should close table in
+  // current WA and it should be done before parameter validation
+  // RT errors below. This breaks xHarbour like MT code which
+  // shares WA between threads so dbUseArea() should be covered
+  // by external mutex to make lNewArea MT safe, [druzus]
   if (uiArea && uiArea < HB_RDD_MAX_AREA_NUM)
   {
     hb_rddSelectWorkAreaNumber(uiArea);
@@ -646,27 +611,24 @@ HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, HB_USHO
     return Harbour::FAILURE;
   }
 
-  /* Clipper clears NETERR flag before parameter validation, [druzus]
-   */
+  // Clipper clears NETERR flag before parameter validation, [druzus]
   hb_rddSetNetErr(false);
 
-  /* Now check parameters, first RDD name.
-   * Clipper seems to make something like:
-   *    if( szDriver && strlen(szDriver) > 1 )
-   * but I do not think we should replicate it, [druzus]
-   */
+  // Now check parameters, first RDD name.
+  // Clipper seems to make something like:
+  //    if( szDriver && strlen(szDriver) > 1 )
+  // but I do not think we should replicate it, [druzus]
   szDriver = hb_rddFindDrv(szDriver, szFileName);
 
-  /* First try to create new area node and validate RDD name */
+  // First try to create new area node and validate RDD name
   if (!szDriver || !hb_rddInsertAreaNode(szDriver))
   {
     hb_errRT_DBCMD(EG_ARG, EDBCMD_BADPARAMETER, nullptr, HB_ERR_FUNCNAME);
     return Harbour::FAILURE;
   }
 
-  /* Then check if valid file name was given - Clipper allows to use empty
-   * ("") file name
-   */
+  // Then check if valid file name was given - Clipper allows to use empty
+  // ("") file name
   if (!szFileName)
   {
     hb_rddReleaseCurrentArea();
@@ -676,7 +638,7 @@ HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, HB_USHO
 
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  /* Fill pInfo structure */
+  // Fill pInfo structure
   pInfo.uiArea = pArea->uiArea;
   pInfo.abName = szFileName;
   pInfo.atomAlias = szAlias;
@@ -695,7 +657,7 @@ HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, HB_USHO
     }
     if (errCode == Harbour::SUCCESS)
     {
-      /* Open file */
+      // Open file
       errCode = SELF_OPEN(pArea, &pInfo);
     }
   }
@@ -724,7 +686,7 @@ HB_ERRCODE hb_rddCreateTable(const char *szFileName, const char *szDriver, HB_US
 
   uiPrevArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
-  /* 0 means chose first available in hb_rddInsertAreaNode() */
+  // 0 means chose first available in hb_rddInsertAreaNode()
   hb_rddSelectWorkAreaNumber(uiArea);
   if (uiArea)
   {
@@ -733,7 +695,7 @@ HB_ERRCODE hb_rddCreateTable(const char *szFileName, const char *szDriver, HB_US
 
   szDriver = hb_rddFindDrv(szDriver, szFileName);
 
-  /* Create a new WorkArea node */
+  // Create a new WorkArea node
   if (!szDriver || !hb_rddInsertAreaNode(szDriver))
   {
     hb_rddSelectWorkAreaNumber(uiPrevArea);
@@ -742,7 +704,7 @@ HB_ERRCODE hb_rddCreateTable(const char *szFileName, const char *szDriver, HB_US
   }
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  /* Fill pInfo structure */
+  // Fill pInfo structure
   pInfo.uiArea = pArea->uiArea;
   pInfo.abName = szFileName;
   pInfo.atomAlias = szAlias;
@@ -788,7 +750,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char *szDriver, const char *szAlias, cons
 
   uiPrevArea = static_cast<HB_AREANO>(hb_rddGetCurrentWorkAreaNumber());
 
-  /* 0 means chose first available in hb_rddInsertAreaNode() */
+  // 0 means chose first available in hb_rddInsertAreaNode()
   hb_rddSelectWorkAreaNumber(0);
 
   if (szDriver && szDriver[0])
@@ -801,7 +763,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char *szDriver, const char *szAlias, cons
     szDriver = hb_rddDefaultDrv(nullptr);
   }
 
-  /* Create a new WorkArea node */
+  // Create a new WorkArea node
   if (!hb_rddInsertAreaNode(szDriver))
   {
     hb_rddSelectWorkAreaNumber(uiPrevArea);
@@ -810,7 +772,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char *szDriver, const char *szAlias, cons
   }
   auto pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
 
-  /* Fill pInfo structure */
+  // Fill pInfo structure
   pInfo.uiArea = pArea->uiArea;
   pInfo.abName = nullptr;
   pInfo.atomAlias = szAlias;
@@ -922,7 +884,7 @@ LPDBTRANSINFO hb_dbTransInfoGet(PHB_ITEM pItem)
   return pHolder ? *pHolder : nullptr;
 }
 
-/* update counters for autoinc and rowver fields */
+// update counters for autoinc and rowver fields
 HB_ERRCODE hb_dbTransCounters(LPDBTRANSINFO lpdbTransInfo)
 {
   auto pItem = hb_itemNew(nullptr);
@@ -1026,7 +988,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
         {
           HB_USHORT ui;
 
-          /* check for replicated field names in source area */
+          // check for replicated field names in source area
           for (ui = 0; ui < uiSize; ++ui)
           {
             if (lpdbTransInfo->lpTransItems[ui].uiDest == uiPosDst)
@@ -1101,11 +1063,9 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
   {
     auto pSrcItm = hb_itemNew(nullptr);
     auto pDstItm = hb_itemNew(nullptr);
-    /*
-     * if fAll is HB_TRUE here then it means that all fields are included
-     * and they are on the same positions in both tables, so now check
-     * if their types and sizes are also equal
-     */
+    // if fAll is HB_TRUE here then it means that all fields are included
+    // and they are on the same positions in both tables, so now check
+    // if their types and sizes are also equal
     for (uiCount = 1; uiCount <= uiSize; ++uiCount)
     {
       if (SELF_FIELDINFO(lpaSource, uiCount, DBS_TYPE, pSrcItm) != Harbour::SUCCESS ||
@@ -1206,7 +1166,7 @@ HB_ERRCODE hb_rddTransRecords(AREAP pArea, const char *szFileName, const char *s
     {
       errCode = hb_dbTransStruct(pArea, nullptr, &dbTransInfo, &pStruct, pFields);
 
-      /* revert area and items */
+      // revert area and items
       dbTransInfo.lpaDest = dbTransInfo.lpaSource;
       for (HB_USHORT uiCount = 0; uiCount < dbTransInfo.uiItemCount; ++uiCount)
       {
@@ -1265,11 +1225,10 @@ HB_ERRCODE hb_rddTransRecords(AREAP pArea, const char *szFileName, const char *s
     if (errCode == Harbour::SUCCESS)
     {
       errCode = dbTransInfo.uiItemCount == 0 ? Harbour::FAILURE : SELF_TRANS(dbTransInfo.lpaSource, &dbTransInfo);
-      /* we always call DBI_TRANSREC second time after TRANS() method
-       * even if TRANS() failed - it's for RDDs which may need to store
-       * pointer to dbTransInfo in first call and then release it and/or
-       * clean some structures allocated for transfer operation [druzus]
-       */
+      // we always call DBI_TRANSREC second time after TRANS() method
+      // even if TRANS() failed - it's for RDDs which may need to store
+      // pointer to dbTransInfo in first call and then release it and/or
+      // clean some structures allocated for transfer operation [druzus]
       SELF_INFO(dbTransInfo.lpaDest, DBI_TRANSREC, pTransItm);
       if (errCode == Harbour::SUCCESS && (dbTransInfo.uiFlags & DBTF_CPYCTR))
       {
@@ -1306,7 +1265,7 @@ static HB_ERRCODE hb_rddCloseParentRel(AREAP pArea, void *pChildArea)
 
       if (lpdbRelation->lpaChild->uiArea == uiArea)
       {
-        /* Clear this relation */
+        // Clear this relation
         hb_rddSelectWorkAreaNumber(lpdbRelation->lpaChild->uiArea);
         SELF_CHILDEND(lpdbRelation->lpaChild, lpdbRelation);
         if (lpdbRelation->itmCobExpr)
@@ -1330,7 +1289,7 @@ static HB_ERRCODE hb_rddCloseParentRel(AREAP pArea, void *pChildArea)
   return Harbour::SUCCESS;
 }
 
-/* close all parent relations */
+// close all parent relations
 HB_ERRCODE hb_rddCloseAllParentRelations(AREAP pArea)
 {
 #if 0
