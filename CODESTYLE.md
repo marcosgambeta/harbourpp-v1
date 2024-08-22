@@ -59,6 +59,11 @@ Despite the verbosity, the type of cast used in each conversion is explicit and 
 
 For xBase developers, the casting operators used in the Harbour++ source code are irrelevant.
 
+## nullptr
+
+The Harbour++ source code use `nullptr` in place of `NULL`, because `nullptr` is safer while `NULL` is ambiguous
+and can result in errors in some contexts.
+
 ## More info
 
 This document is a work in progress. You can use the section below to discuss about the topics above or related topics:
