@@ -59,6 +59,12 @@
 #include "hbapirdd.hpp"
 #include "hbdate.hpp"
 
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 // ---
 
 #if !defined(STACK_INITHB_ITEMS)
@@ -74,7 +80,11 @@
 
 #include "hbthread.hpp"
 
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex TSD_counter;
+#else
 static HB_CRITICAL_NEW(TSD_counter);
+#endif
 static int s_iTSDCounter = 0;
 
 #ifdef HB_USE_TLS
@@ -285,13 +295,21 @@ void *hb_stackGetTSD(PHB_TSD pTSD)
   {
     if (pTSD->iHandle == 0)
     {
+      #if defined(HB_USE_CPP_MUTEX)
+      TSD_counter.lock();
+      #else
       hb_threadEnterCriticalSection(&TSD_counter);
+      #endif
       // repeated test protected by mutex to avoid race condition
       if (pTSD->iHandle == 0)
       {
         pTSD->iHandle = ++s_iTSDCounter;
       }
+      #if defined(HB_USE_CPP_MUTEX)
+      TSD_counter.unlock();
+      #else
       hb_threadLeaveCriticalSection(&TSD_counter);
+      #endif
     }
 
     if (pTSD->iHandle > hb_stack.iTSD)
