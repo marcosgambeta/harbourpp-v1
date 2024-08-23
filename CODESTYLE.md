@@ -59,10 +59,14 @@ Despite the verbosity, the type of cast used in each conversion is explicit and 
 
 For xBase developers, the casting operators used in the Harbour++ source code are irrelevant.
 
-## nullptr
+## nullptr keyword
 
 The Harbour++ source code use `nullptr` in place of `NULL`, because `nullptr` is safer while `NULL` is ambiguous
 and can result in errors in some contexts.
+
+## bool type
+
+Whenever possible, the `bool` type (`true` and `false`) is used instead of `HB_BOOL` (`HB TRUE` and `HB_FALSE`).
 
 ## More info
 
