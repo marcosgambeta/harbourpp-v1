@@ -1,14 +1,13 @@
-/*
- * Copies the contents of a database to a delimited text file.
- * Appends the contents of a delimited text file to a database.
- *
- * Copyright 2001-2003 David G. Holm <dholm@jsd-llc.com>
- * APPEND FROM code submitted by Marco Braida <marcobra@elart.it>
- * Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *    function __dbDelim() replaced by the new one which uses
- *    DELIM RDD I've just created
- *
- */
+//
+// Copies the contents of a database to a delimited text file.
+// Appends the contents of a delimited text file to a database.
+//
+// Copyright 2001-2003 David G. Holm <dholm@jsd-llc.com>
+// APPEND FROM code submitted by Marco Braida <marcobra@elart.it>
+// Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//    function __dbDelim() replaced by the new one which uses
+//    DELIM RDD I've just created
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

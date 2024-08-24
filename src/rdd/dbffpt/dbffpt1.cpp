@@ -1,14 +1,13 @@
-/*
- * DBFFPT RDD
- *
- * Copyright 2003 Przemyslaw Czerpak <druzus@acn.waw.pl>
- *
- * The SIX memo conversion algorithms and some piece of code taken from
- * DBFCDX and DBFFPT
- *    Copyright 1999-2002 Bruno Cantero <bruno@issnet.net>
- *    Copyright 2000-2003 Horacio Roldan <harbour_ar@yahoo.com.ar> (portions)
- *
- */
+//
+// DBFFPT RDD
+//
+// Copyright 2003 Przemyslaw Czerpak <druzus@acn.waw.pl>
+//
+// The SIX memo conversion algorithms and some piece of code taken from
+// DBFCDX and DBFFPT
+//    Copyright 1999-2002 Bruno Cantero <bruno@issnet.net>
+//    Copyright 2000-2003 Horacio Roldan <harbour_ar@yahoo.com.ar> (portions)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

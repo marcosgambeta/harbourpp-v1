@@ -1,16 +1,15 @@
-/*
- * HiPer-SEEK / CFTS compatible library
- * Cfts*() functions
- *
- * Copyright 2005 Przemyslaw Czerpak <druzus@acn.waw.pl>
- *
- * Credits:
- *    Many thanks for Mindaugas Kavaliauskas for his assistance,
- *    information about HSX internals, code checking and general
- *    help in many things when this library was written.
- *                                                          Przemek.
- *
- */
+//
+// HiPer-SEEK / CFTS compatible library
+// Cfts*() functions
+//
+// Copyright 2005 Przemyslaw Czerpak <druzus@acn.waw.pl>
+//
+// Credits:
+//    Many thanks for Mindaugas Kavaliauskas for his assistance,
+//    information about HSX internals, code checking and general
+//    help in many things when this library was written.
+//                                                          Przemek.
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

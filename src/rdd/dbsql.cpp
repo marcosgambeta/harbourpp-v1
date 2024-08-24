@@ -1,10 +1,9 @@
-/*
- * __dbSQL()
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 2007 Lorenzo Fiorini <lorenzo.fiorini / at / gmail.com>
- *
- */
+//
+// __dbSQL()
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 2007 Lorenzo Fiorini <lorenzo.fiorini / at / gmail.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

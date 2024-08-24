@@ -1,13 +1,12 @@
-/*
- * DBFCDX RDD (ver.2)
- *
- * Copyright 1999-2002 Bruno Cantero <bruno@issnet.net>
- * Copyright 2000-2003 Horacio Roldan <harbour_ar@yahoo.com.ar> (portions)
- * Copyright 2003 Przemyslaw Czerpak <druzus@priv.onet.pl> - all code except
- * hb_cdxTagDoIndex and related hb_cdxSort* rewritten.
- * Copyright 2004 Przemyslaw Czerpak <druzus@priv.onet.pl> - rest of code rewritten
- *
- */
+//
+// DBFCDX RDD (ver.2)
+//
+// Copyright 1999-2002 Bruno Cantero <bruno@issnet.net>
+// Copyright 2000-2003 Horacio Roldan <harbour_ar@yahoo.com.ar> (portions)
+// Copyright 2003 Przemyslaw Czerpak <druzus@priv.onet.pl> - all code except
+// hb_cdxTagDoIndex and related hb_cdxSort* rewritten.
+// Copyright 2004 Przemyslaw Czerpak <druzus@priv.onet.pl> - rest of code rewritten
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

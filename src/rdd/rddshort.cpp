@@ -1,9 +1,8 @@
-/*
- * Short (10 chars long) version of some functions for Cl*pper compatibility
- *
- * Copyright 2014 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Short (10 chars long) version of some functions for Cl*pper compatibility
+//
+// Copyright 2014 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

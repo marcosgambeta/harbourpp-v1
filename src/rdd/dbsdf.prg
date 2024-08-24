@@ -1,13 +1,12 @@
-/*
- * Copies the contents of a database to an SDF text file.
- * Appends the contents of an SDF text file to a database.
- *
- * Copyright 2001-2002 David G. Holm <dholm@jsd-llc.com>
- * Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *    function __dbSDF() replaced by the new one which uses
- *    SDF RDD I've just created
- *
- */
+//
+// Copies the contents of a database to an SDF text file.
+// Appends the contents of an SDF text file to a database.
+//
+// Copyright 2001-2002 David G. Holm <dholm@jsd-llc.com>
+// Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//    function __dbSDF() replaced by the new one which uses
+//    SDF RDD I've just created
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

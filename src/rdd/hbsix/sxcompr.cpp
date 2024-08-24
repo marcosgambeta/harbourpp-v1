@@ -1,18 +1,17 @@
-/*
- * SIX compatible functions:
- *       hb_LZSSxCompressMem()
- *       hb_LZSSxDecompressMem()
- *       hb_LZSSxCompressFile()
- *       hb_LZSSxDecompressFile()
- *
- *       sx_FCompress()
- *       sx_FDecompress()
- *       _sx_StrDecompress()
- *       _sx_StrCompress()
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// SIX compatible functions:
+//       hb_LZSSxCompressMem()
+//       hb_LZSSxDecompressMem()
+//       hb_LZSSxCompressFile()
+//       hb_LZSSxDecompressFile()
+//
+//       sx_FCompress()
+//       sx_FDecompress()
+//       _sx_StrDecompress()
+//       _sx_StrCompress()
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

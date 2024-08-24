@@ -1,11 +1,10 @@
-/*
- * Default RDD module
- *
- * Copyright 1999 Bruno Cantero <bruno@issnet.net>
- * Copyright 2004-2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 2002 Horacio Roldan <harbour_ar@yahoo.com.ar> (hb_waCloseAux())
- *
- */
+//
+// Default RDD module
+//
+// Copyright 1999 Bruno Cantero <bruno@issnet.net>
+// Copyright 2004-2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 2002 Horacio Roldan <harbour_ar@yahoo.com.ar> (hb_waCloseAux())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
