@@ -86,6 +86,12 @@
 #include "hbatomic.hpp"
 #endif
 
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 #if defined(HB_FM_STD_ALLOC)
 #undef HB_FM_DL_ALLOC
 #undef HB_FM_DLMT_ALLOC
@@ -210,6 +216,11 @@ static HANDLE s_hProcessHeap = nullptr;
 #if defined(HB_MT_VM) &&                                                                                               \
     (defined(HB_FM_STATISTICS) || defined(HB_FM_DLMT_ALLOC) || !defined(HB_ATOM_INC) || !defined(HB_ATOM_DEC))
 
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex fmMtx;
+#define HB_FM_LOCK() fmMtx.lock()
+#define HB_FM_UNLOCK() fmMtx.unlock()
+#else
 static HB_CRITICAL_NEW(s_fmMtx);
 #define HB_FM_LOCK()                                                                                                   \
   do                                                                                                                   \
@@ -219,6 +230,7 @@ static HB_CRITICAL_NEW(s_fmMtx);
   hb_threadLeaveCriticalSection(&s_fmMtx);                                                                             \
   }                                                                                                                    \
   while (false)
+#endif // HB_USE_CPP_MUTEX
 
 #else
 
