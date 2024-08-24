@@ -34,3 +34,10 @@
   Deprecate RLOCK, join with DBRLOCK and maintain RLOCK using HB_FUNC_TRANSLATE.  
   Deprecate SELECT, change SELECT to DBSELECT and maintain SELECT using HB_FUNC_TRANSLATE.  
   Deprecate USED, change USED to DBUSED and maintain USED using HB_FUNC_TRANSLATE.  
+
+## src/vm/arrayshb.cpp
+
+  Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
+  Deprecate HB_ASCAN, join ASCAN and HB_ASCAN and maintain HB_ASCAN using HB_FUNC_TRANSLATE.  
+  Deprecate HB_AINS, join AINS and HB_AINS and maintain HB_AINS using HB_FUNC_TRANSLATE.  
+  Deprecate HB_ADEL, join ADEL and HB_ADEL and maintain HB_ADEL using HB_FUNC_TRANSLATE.  
