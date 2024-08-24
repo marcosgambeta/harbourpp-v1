@@ -287,11 +287,6 @@ HB_FUNC(ASCAN)
   }
 }
 
-// NOTES FOR HARBOUR++ V2
-// deprecate HB_ASCAN
-// join ASCAN and HB_ASCAN
-// maintain HB_ASCAN using HB_FUNC_TRANSLATE
-
 // Same as AScan() but has an additional parameter to force exact comparison.
 HB_FUNC(HB_ASCAN)
 {
@@ -331,10 +326,6 @@ HB_FUNC(HB_RASCAN)
   }
 }
 
-// NOTES FOR HARBOUR++ V2
-// deprecate HB_AINS
-// join AINS and HB_AINS
-// maintain HB_AINS using HB_FUNC_TRANSLATE
 HB_FUNC(HB_AINS)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
@@ -369,10 +360,6 @@ HB_FUNC(HB_AINS)
   }
 }
 
-// NOTES FOR HARBOUR++ V2
-// deprecate HB_ADEL
-// join ADEL and HB_ADEL
-// maintain HB_ADEL using HB_FUNC_TRANSLATE
 HB_FUNC(HB_ADEL)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
