@@ -1,58 +1,57 @@
-/*
- * Base-routines for OOPS system
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 1999 Eddie Runia <eddie@runia.com>
- *    :CLASSSEL()
- *    __clsDelMsg()
- *    __clsModMsg()
- *    __clsInstSuper()
- *    __cls_CntClsData()
- *    __cls_CntData()
- *    __cls_DecData()
- *    __cls_IncData()
- *    __objClone()
- *    __objHasMsg()
- *    __objSendMsg()
- *
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
- *    __classNew()
- *    __classInstance()
- *    __classAdd()
- *    __className()
- *    __classSel() (based on hb___msgClsSel())
- *
- * Copyright 1999 Janica Lubos <janica@fornax.elf.stuba.sk>
- *    hb_clsDictRealloc()
- *
- * Copyright 2000-2007 JF. Lefebvre <jfl@mafact.com> & RA. Cuylen <cakiral@altern.org
- *    Multiple inheritance fully implemented
- *    Forwarding, delegating
- *    Data initialization & Autoinit for Bool and Numeric
- *    Scoping: PROTECTED / EXPORTED
- *
- * Copyright 2008- JF. Lefebvre <jfl@mafact.com>
- *    hb_clsDictRealloc()   New version
- *    Now support of shared and not shared class data
- *    Multiple data declarations fully supported
- *
- * Copyright 2000 Ryszard Glab <rglab@imid.med.pl>
- *    Garbage collector fixes
- *
- * Copyright 2001 JF. Lefebvre <jfl@mafact.com>
- *    Super msg corrected
- *    Scoping: working for PROTECTED, HIDDEN and READONLY
- *    To Many enhancement and correction to give a full list :-)
- *    Improved Class(y) compatibility
- *    Improved TopClass compatibility
- *    __CLS_PAR00() (Allow the creation of class which not autoinherit of the default HBObject())
- *    Adding HB_CLS_ENFORCERO FLAG to disable Write access to RO VAR
- *    outside of Constructors /!\ Could be related to some incompatibility
- *    Added hb_objGetRealClsName() to keep a full class tree (for 99% cases)
- *    Fixed hb_clsIsParent()
- *    hb_objGetMthd() & __clsAddMsg() modified to translate operators
- *
- */
+//
+// Base-routines for OOPS system
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 1999 Eddie Runia <eddie@runia.com>
+//    :CLASSSEL()
+//    __clsDelMsg()
+//    __clsModMsg()
+//    __clsInstSuper()
+//    __cls_CntClsData()
+//    __cls_CntData()
+//    __cls_DecData()
+//    __cls_IncData()
+//    __objClone()
+//    __objHasMsg()
+//    __objSendMsg()
+//
+// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+//    __classNew()
+//    __classInstance()
+//    __classAdd()
+//    __className()
+//    __classSel() (based on hb___msgClsSel())
+//
+// Copyright 1999 Janica Lubos <janica@fornax.elf.stuba.sk>
+//    hb_clsDictRealloc()
+//
+// Copyright 2000-2007 JF. Lefebvre <jfl@mafact.com> & RA. Cuylen <cakiral@altern.org
+//    Multiple inheritance fully implemented
+//    Forwarding, delegating
+//    Data initialization & Autoinit for Bool and Numeric
+//    Scoping: PROTECTED / EXPORTED
+//
+// Copyright 2008- JF. Lefebvre <jfl@mafact.com>
+//    hb_clsDictRealloc()   New version
+//    Now support of shared and not shared class data
+//    Multiple data declarations fully supported
+//
+// Copyright 2000 Ryszard Glab <rglab@imid.med.pl>
+//    Garbage collector fixes
+//
+// Copyright 2001 JF. Lefebvre <jfl@mafact.com>
+//    Super msg corrected
+//    Scoping: working for PROTECTED, HIDDEN and READONLY
+//    To Many enhancement and correction to give a full list :-)
+//    Improved Class(y) compatibility
+//    Improved TopClass compatibility
+//    __CLS_PAR00() (Allow the creation of class which not autoinherit of the default HBObject())
+//    Adding HB_CLS_ENFORCERO FLAG to disable Write access to RO VAR
+//    outside of Constructors /!\ Could be related to some incompatibility
+//    Added hb_objGetRealClsName() to keep a full class tree (for 99% cases)
+//    Fixed hb_clsIsParent()
+//    hb_objGetMthd() & __clsAddMsg() modified to translate operators
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

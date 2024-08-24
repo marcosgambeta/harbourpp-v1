@@ -1,9 +1,8 @@
-/*
- * Debugging functions for LOCAL, STATIC variables and the stack
- *
- * Copyright 1999 Eddie Runia <eddie@runia.com>
- *
- */
+//
+// Debugging functions for LOCAL, STATIC variables and the stack
+//
+// Copyright 1999 Eddie Runia <eddie@runia.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,18 +1,17 @@
-/*
- * The Item API
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 1999-2007 Viktor Szakats (vszakats.net/harbour)
- *    hb_itemPCount(), hb_itemParamPtr(), hb_itemReturnPtr()
- *    hb_itemPutDL(), hb_itemPutNI(), hb_itemGetDL(), hb_itemGetNI(),
- *    hb_itemGetCPtr(), hb_itemPutCLPtr(), hb_itemGetCLen(), hb_itemGetNLen()
- *    hb_itemPutCConst(), hb_itemPutCLConst()
- *    hb_itemPutNLen(), hb_itemPutNDLen(), hb_itemPutNILen(), hb_itemPutNLLen()
- *    hb_itemPutD(), hb_itemSetCMemo()
- * Copyright 1999 Eddie Runia <eddie@runia.com> (hb_itemStrCmp())
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com> (hb_itemStr(), hb_itemString(), hb_itemValToStr())
- *
- */
+//
+// The Item API
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 1999-2007 Viktor Szakats (vszakats.net/harbour)
+//    hb_itemPCount(), hb_itemParamPtr(), hb_itemReturnPtr()
+//    hb_itemPutDL(), hb_itemPutNI(), hb_itemGetDL(), hb_itemGetNI(),
+//    hb_itemGetCPtr(), hb_itemPutCLPtr(), hb_itemGetCLen(), hb_itemGetNLen()
+//    hb_itemPutCConst(), hb_itemPutCLConst()
+//    hb_itemPutNLen(), hb_itemPutNDLen(), hb_itemPutNILen(), hb_itemPutNLLen()
+//    hb_itemPutD(), hb_itemSetCMemo()
+// Copyright 1999 Eddie Runia <eddie@runia.com> (hb_itemStrCmp())
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com> (hb_itemStr(), hb_itemString(), hb_itemValToStr())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

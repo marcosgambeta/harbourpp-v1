@@ -1,11 +1,10 @@
-/*
- * Import library for PCODE DLLs
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * This code uses HB_DLL_NAME* macros defined by
- *    Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Import library for PCODE DLLs
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// This code uses HB_DLL_NAME* macros defined by
+//    Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
