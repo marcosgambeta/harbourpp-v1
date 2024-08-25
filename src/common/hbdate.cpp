@@ -1,14 +1,13 @@
-/*
- * The Date conversion module
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
- *   (hb_dateEncStr(), hb_dateDecStr(), hb_dateStrPut(), hb_dateStrGet())
- * Copyright 1999 Jose Lalin <dezac@corevia.com> (hb_dateDOW())
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *   (time/timestamp functions)
- *
- */
+//
+// The Date conversion module
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+//   (hb_dateEncStr(), hb_dateDecStr(), hb_dateStrPut(), hb_dateStrGet())
+// Copyright 1999 Jose Lalin <dezac@corevia.com> (hb_dateDOW())
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//   (time/timestamp functions)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

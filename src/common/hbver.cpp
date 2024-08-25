@@ -1,17 +1,16 @@
-/*
- * Version detection functions
- *
- * Copyright 1999 {list of individual authors and e-mail addresses}
- * Copyright 1999 Luiz Rafael Culik <culik@sl.conex.net>
- *    hb_verPlatform() (support for determining the Windows version)
- * Copyright 1999 Jose Lalin <dezac@corevia.com>
- *    hb_verPlatform() (support for determining many Windows flavours)
- *    hb_verCompiler() (support for determining some compiler version/revision)
- * Copyright 2000-2014 Viktor Szakats (vszakats.net/harbour)
- *    hb_verCPU(), hb_verHostBitWidth(), hb_iswinver(), hb_iswinsp()
- *    hb_verPlatform() (support for detecting Windows NT on DOS, Wine, post-Windows 8, cleanups)
- *
- */
+//
+// Version detection functions
+//
+// Copyright 1999 {list of individual authors and e-mail addresses}
+// Copyright 1999 Luiz Rafael Culik <culik@sl.conex.net>
+//    hb_verPlatform() (support for determining the Windows version)
+// Copyright 1999 Jose Lalin <dezac@corevia.com>
+//    hb_verPlatform() (support for determining many Windows flavours)
+//    hb_verCompiler() (support for determining some compiler version/revision)
+// Copyright 2000-2014 Viktor Szakats (vszakats.net/harbour)
+//    hb_verCPU(), hb_verHostBitWidth(), hb_iswinver(), hb_iswinsp()
+//    hb_verPlatform() (support for detecting Windows NT on DOS, Wine, post-Windows 8, cleanups)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,9 +1,8 @@
-/*
- * Architecture dependent conversions
- *
- * Copyright 2005 Przemyslaw Czerpak <druzus@acn.waw.pl>
- *
- */
+//
+// Architecture dependent conversions
+//
+// Copyright 2005 Przemyslaw Czerpak <druzus@acn.waw.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

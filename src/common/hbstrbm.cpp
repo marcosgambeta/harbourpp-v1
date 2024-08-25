@@ -1,13 +1,12 @@
-/*
- * Turbo Boyer-Moore (Crochemore) string search
- *    Based on this code:
- *       https://web.archive.org/web/www-igm.univ-mlv.fr/~lecroq/string/node15.html
- *    Authors:
- *       Christian Charras, Thierry Lecroq
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Turbo Boyer-Moore (Crochemore) string search
+//    Based on this code:
+//       https://web.archive.org/web/www-igm.univ-mlv.fr/~lecroq/string/node15.html
+//    Authors:
+//       Christian Charras, Thierry Lecroq
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
