@@ -374,9 +374,7 @@ char *hb_verPlatform(void)
   {
     const char *pszName = "";
 
-    OSVERSIONINFO osvi;
-
-    memset(&osvi, 0, sizeof(osvi));
+    OSVERSIONINFO osvi{};
 
     /* Detection of legacy Windows versions */
     switch (hb_iswin9x())
@@ -563,11 +561,10 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
 #if defined(HB_OS_WIN)
   if (s_hb_winVerifyVersionInit())
   {
-    OSVERSIONINFOEXW ver;
+    OSVERSIONINFOEXW ver{};
     DWORD dwTypeMask = VER_MAJORVERSION | VER_MINORVERSION;
     DWORDLONG dwlConditionMask = 0;
 
-    memset(&ver, 0, sizeof(ver));
     ver.dwOSVersionInfoSize = sizeof(ver);
     ver.dwMajorVersion = static_cast<DWORD>(iMajor);
     ver.dwMinorVersion = static_cast<DWORD>(iMinor);
@@ -618,10 +615,9 @@ HB_BOOL hb_iswinsp(int iServicePackMajor, HB_BOOL fOrUpper)
 #if defined(HB_OS_WIN)
   if (s_hb_winVerifyVersionInit())
   {
-    OSVERSIONINFOEXW ver;
+    OSVERSIONINFOEXW ver{};
     DWORDLONG dwlConditionMask = 0;
 
-    memset(&ver, 0, sizeof(ver));
     ver.dwOSVersionInfoSize = sizeof(ver);
     ver.wServicePackMajor = static_cast<WORD>(iServicePackMajor);
 
