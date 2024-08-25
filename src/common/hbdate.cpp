@@ -1051,10 +1051,9 @@ long hb_timeUTCOffset(void) /* in seconds */
 {
 #if defined(HB_OS_WIN)
   {
-    TIME_ZONE_INFORMATION tzInfo;
+    TIME_ZONE_INFORMATION tzInfo{};
     DWORD retval;
 
-    memset(&tzInfo, 0, sizeof(tzInfo));
     retval = GetTimeZoneInformation(&tzInfo);
 
     /* disabled because users reported that in some
