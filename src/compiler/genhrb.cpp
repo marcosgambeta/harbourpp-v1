@@ -1,11 +1,10 @@
-/*
- * Compiler Harbour Portable Object (.hrb) generation
- *
- * Copyright 1999 Eddie Runia <eddie@runia.com>
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *    rewritten to work on memory buffers and with new compiler code
- *
- */
+//
+// Compiler Harbour Portable Object (.hrb) generation
+//
+// Copyright 1999 Eddie Runia <eddie@runia.com>
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//    rewritten to work on memory buffers and with new compiler code
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

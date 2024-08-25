@@ -1,10 +1,9 @@
-/*
- * Compiler PCODE optimizer
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 2008 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt>
- *
- */
+//
+// Compiler PCODE optimizer
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 2008 Mindaugas Kavaliauskas <dbtopas / at / dbtopas.lt>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
