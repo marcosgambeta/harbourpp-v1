@@ -57,7 +57,7 @@
 #include "hbdate.hpp"
 #include "hb_io.hpp"
 
-/* --- */
+// ---
 
 #if defined(HB_OS_WIN)
 
@@ -106,18 +106,16 @@ using PHB_FFIND_INFO = void *;
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
 #if defined(__USE_LARGEFILE64)
-/*
- * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
- * defined and effectively enables lseek64()/flock64()/ftruncate64()
- * functions on 32-bit machines.
- */
+// The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
+// defined and effectively enables lseek64()/flock64()/ftruncate64()
+// functions on 32-bit machines.
 #define HB_USE_LARGEFILE64
 #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
 #define HB_USE_LARGEFILE64
 #endif
 #endif
 
-/* --- */
+// ---
 
 HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
 {
@@ -143,9 +141,9 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
   if (raw_attr & FILE_ATTRIBUTE_NORMAL)
     nAttr |= HB_FA_NORMAL;
 
-  /* Note that FILE_ATTRIBUTE_NORMAL is not needed
-     HB_FA_DEVICE not supported
-     HB_FA_VOLCOMP needs to be checked */
+  // Note that FILE_ATTRIBUTE_NORMAL is not needed
+  // HB_FA_DEVICE not supported
+  // HB_FA_VOLCOMP needs to be checked
   if (raw_attr & FILE_ATTRIBUTE_ENCRYPTED)
     nAttr |= HB_FA_ENCRYPTED;
   if (raw_attr & FILE_ATTRIBUTE_TEMPORARY)
@@ -158,8 +156,8 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
     nAttr |= HB_FA_COMPRESSED;
   if (raw_attr & FILE_ATTRIBUTE_OFFLINE)
     nAttr |= HB_FA_OFFLINE;
-  /* FILE_ATTRIBUTE_NOT_CONTENT_INDEXED */
-  /* not defined in some older winnt.h  */
+  // FILE_ATTRIBUTE_NOT_CONTENT_INDEXED
+  // not defined in some older winnt.h
   if (raw_attr & 0x00002000)
     nAttr |= HB_FA_NOTINDEXED;
   if (raw_attr & 0x00008000)
@@ -240,9 +238,9 @@ HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
   if (nAttr & HB_FA_NORMAL)
     raw_attr |= FILE_ATTRIBUTE_NORMAL;
 
-  /* Note that FILE_ATTRIBUTE_NORMAL is not needed
-     HB_FA_DEVICE not supported
-     HB_FA_VOLCOMP needs to be checked */
+  // Note that FILE_ATTRIBUTE_NORMAL is not needed
+  // HB_FA_DEVICE not supported
+  // HB_FA_VOLCOMP needs to be checked
   if (nAttr & HB_FA_ENCRYPTED)
     raw_attr |= FILE_ATTRIBUTE_ENCRYPTED;
   if (nAttr & HB_FA_TEMPORARY)
@@ -256,7 +254,7 @@ HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
   if (nAttr & HB_FA_OFFLINE)
     raw_attr |= FILE_ATTRIBUTE_OFFLINE;
   if (nAttr & HB_FA_NOTINDEXED)
-    raw_attr |= 0x00002000; /* FILE_ATTRIBUTE_NOT_CONTENT_INDEXED not defined in some older winnt.h */
+    raw_attr |= 0x00002000; // FILE_ATTRIBUTE_NOT_CONTENT_INDEXED not defined in some older winnt.h
   if (nAttr & HB_FA_VOLCOMP)
     raw_attr |= 0x00008000;
 
@@ -289,8 +287,8 @@ HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
   return raw_attr;
 }
 
-/* Converts a CA-Cl*pper compatible file attribute string
-   to the internal representation. */
+// Converts a CA-Cl*pper compatible file attribute string
+// to the internal representation.
 
 HB_FATTR hb_fsAttrEncode(const char *szAttr)
 {
@@ -335,10 +333,10 @@ HB_FATTR hb_fsAttrEncode(const char *szAttr)
   return nAttr;
 }
 
-/* Converts a file attribute (ffind->attr) to the CA-Cl*pper
-   compatible file attribute string format. */
+// Converts a file attribute (ffind->attr) to the CA-Cl*pper
+// compatible file attribute string format.
 
-/* NOTE: szAttr buffer must be at least 16 chars long */
+// NOTE: szAttr buffer must be at least 16 chars long
 
 char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
 {
@@ -348,7 +346,7 @@ char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
 
   char *ptr = szAttr;
 
-  /* Using the same order as CA-Cl*pper did: RHSVDA. */
+  // Using the same order as CA-Cl*pper did: RHSVDA.
   if (nAttr & HB_FA_READONLY)
     *ptr++ = 'R';
   if (nAttr & HB_FA_HIDDEN)
@@ -369,9 +367,9 @@ char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
   return szAttr;
 }
 
-/* Finds the first then the next matching file on
-   each call. Does low-level (platform dependent
-   filtering if needed. */
+// Finds the first then the next matching file on
+// each call. Does low-level (platform dependent
+// filtering if needed.
 
 static bool hb_fsFindNextLow(PHB_FFIND ffind)
 {
@@ -388,13 +386,13 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
   HB_FATTR raw_attr = 0, nAttr = 0;
 
-  /* Set the default values in case some platforms don't
-     support some of these, or they may fail on them. */
+  // Set the default values in case some platforms don't
+  // support some of these, or they may fail on them.
 
   ffind->szName[0] = '\0';
   ffind->size = 0;
 
-  /* Do platform dependent first/next search */
+  // Do platform dependent first/next search
 
   hb_vmUnlock();
 
@@ -476,7 +474,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
         }
       }
 
-      /* Fill Harbour found file info */
+      // Fill Harbour found file info
 
       if (bFound)
       {
@@ -494,8 +492,8 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
         raw_attr = static_cast<HB_FATTR>(info->pFindFileData.dwFileAttributes);
 
-        /* NOTE: One of these may fail when searching on an UNC path, I
-                 don't know yet what's the reason. [vszakats] */
+        // NOTE: One of these may fail when searching on an UNC path, I
+        //       don't know yet what's the reason. [vszakats]
 
         {
           FILETIME ft;
@@ -526,7 +524,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
     bFound = false;
 
-    /* TODO: HB_FA_LABEL handling */
+    // TODO: HB_FA_LABEL handling
 
     if (ffind->bFirst)
     {
@@ -573,7 +571,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
       }
     }
 
-    /* Fill Harbour found file info */
+    // Fill Harbour found file info
     if (bFound)
     {
       hb_strncpy(dirname, info->path, sizeof(dirname) - 1);
@@ -656,7 +654,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 #else
 
   {
-    int iTODO; /* TODO: for given platform */
+    int iTODO; // TODO: for given platform
 
 #if 0
       HB_SYMBOL_UNUSED(ffind);
@@ -678,15 +676,15 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 
 #endif
 
-  /* Fill common Harbour found file info */
+  // Fill common Harbour found file info
 
   if (bFound)
   {
-    /* Do the conversions common for all platforms */
+    // Do the conversions common for all platforms
     ffind->szName[sizeof(ffind->szName) - 1] = '\0';
 
 #if !defined(HB_OS_WIN)
-    /* Convert from OS codepage */
+    // Convert from OS codepage
     {
       char *pszFree = nullptr;
       HB_SIZE nSize = sizeof(ffind->szName);
@@ -717,41 +715,41 @@ PHB_FFIND hb_fsFindFirst(const char *pszFileMask, HB_FATTR attrmask)
 {
   auto ffind = static_cast<PHB_FFIND>(hb_xgrabz(sizeof(HB_FFIND)));
 
-  /* Allocate platform dependent file find info storage */
+  // Allocate platform dependent file find info storage
   ffind->info = static_cast<void *>(hb_xgrabz(sizeof(HB_FFIND_INFO)));
 
-  /* Store search parameters */
+  // Store search parameters
 #if defined(HB_OS_WIN)
   ffind->pszFileMask = pszFileMask;
 #else
-  /* Convert to OS codepage */
+  // Convert to OS codepage
   ffind->pszFileMask = hb_fsNameConv(pszFileMask, &ffind->pszFree);
 #endif
   ffind->attrmask = attrmask;
   ffind->bFirst = true;
 
-  /* Find first/next matching file */
+  // Find first/next matching file
 
   if (hb_fsFindNext(ffind))
   {
     return ffind;
   }
 
-  /* If no file found at all, free stuff allocated so far and return nullptr. */
+  // If no file found at all, free stuff allocated so far and return nullptr.
 
   hb_fsFindClose(ffind);
 
   return nullptr;
 }
 
-/* Finds next matching file, and applies a filter which makes
-   searching CA-Cl*pper/MS-DOS compatible. */
+// Finds next matching file, and applies a filter which makes
+// searching CA-Cl*pper/MS-DOS compatible.
 
 HB_BOOL hb_fsFindNext(PHB_FFIND ffind)
 {
   while (hb_fsFindNextLow(ffind))
   {
-    /* Filter the result to stay MS-DOS and CA-Cl*pper compatible. */
+    // Filter the result to stay MS-DOS and CA-Cl*pper compatible.
 
     if (!(((ffind->attrmask & HB_FA_HIDDEN) == 0 && (ffind->attr & HB_FA_HIDDEN) != 0) ||
           ((ffind->attrmask & HB_FA_SYSTEM) == 0 && (ffind->attr & HB_FA_SYSTEM) != 0) ||
@@ -774,7 +772,7 @@ void hb_fsFindClose(PHB_FFIND ffind)
       hb_xfree(ffind->pszFree);
     }
 
-    /* Do platform dependent cleanup */
+    // Do platform dependent cleanup
 
     if (ffind->info)
     {
@@ -800,8 +798,8 @@ void hb_fsFindClose(PHB_FFIND ffind)
 
 #else
         {
-          /* Intentionally do nothing */
-          int iTODO; /* TODO: for given platform */
+          // Intentionally do nothing
+          int iTODO; // TODO: for given platform
         }
 #endif
 

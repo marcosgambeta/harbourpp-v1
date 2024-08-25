@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: This must be the first definition
- *    This is a common code shared by macro and standalone compiler
- */
+// NOTE: This must be the first definition
+//    This is a common code shared by macro and standalone compiler
 #define HB_COMMON_SUPPORT
 
 #include "hbmacro.hpp"
@@ -173,8 +172,7 @@ PHB_EXPR hb_compExprReduceMod(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else
   {
-    /* TODO: Check for incompatible types e.g.  3 % "txt"
-     */
+    // TODO: Check for incompatible types e.g.  3 % "txt"
   }
   return pSelf;
 }
@@ -196,14 +194,14 @@ PHB_EXPR hb_compExprReduceDiv(PHB_EXPR pSelf, HB_COMP_DECL)
       {
         if (pLeft->value.asNum.val.l % pRight->value.asNum.val.l == 0)
         {
-          /* Return integer results as long */
+          // Return integer results as long
           pSelf->value.asNum.val.l = pLeft->value.asNum.val.l / pRight->value.asNum.val.l;
           pSelf->value.asNum.bDec = 0;
           pSelf->value.asNum.NumType = HB_ET_LONG;
         }
         else
         {
-          /* Return non-integer results as double */
+          // Return non-integer results as double
           pSelf->value.asNum.val.d =
               static_cast<double>(pLeft->value.asNum.val.l) / static_cast<double>(pRight->value.asNum.val.l);
           pSelf->value.asNum.bDec = HB_DEFAULT_DECIMALS;
@@ -251,11 +249,11 @@ PHB_EXPR hb_compExprReduceDiv(PHB_EXPR pSelf, HB_COMP_DECL)
         }
       }
 
-    } /* switch bType */
+    } // switch bType
 
     if (pSelf->ExprType == HB_ET_NUMERIC)
     {
-      /* The expression was reduced - delete old components */
+      // The expression was reduced - delete old components
       pSelf->ValType = HB_EV_NUMERIC;
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
@@ -263,8 +261,7 @@ PHB_EXPR hb_compExprReduceDiv(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else
   {
-    /* TODO: Check for incompatible types e.g.  3 / "txt"
-     */
+    // TODO: Check for incompatible types e.g.  3 / "txt"
   }
   return pSelf;
 }
@@ -330,8 +327,7 @@ PHB_EXPR hb_compExprReduceMult(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else
   {
-    /* TODO: Check for incompatible types e.g. 3 * "txt"
-     */
+    // TODO: Check for incompatible types e.g. 3 * "txt"
   }
   return pSelf;
 }
@@ -377,15 +373,14 @@ PHB_EXPR hb_compExprReducePower(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else
   {
-    /* TODO: Check for incompatible types e.g. 3 * "txt"
-     */
+    // TODO: Check for incompatible types e.g. 3 * "txt"
   }
   return pSelf;
 }
 
 static void hb_compExprReduceTimeStampPut(PHB_EXPR pExpr, long lJulian, long lMilliSec)
 {
-  /* timestamp normalization */
+  // timestamp normalization
   if (lJulian < 0)
   {
     if (lMilliSec <= -HB_MILLISECS_PER_DAY)
@@ -565,14 +560,14 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     if (pRight->nLength == 0)
     {
-      pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+      pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pLeft;
       HB_COMP_EXPR_FREE(pRight);
     }
     else if (pLeft->nLength == 0)
     {
-      pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+      pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pRight;
       HB_COMP_EXPR_FREE(pLeft);
@@ -581,8 +576,7 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
     {
       auto fReduce = true;
 
-      /* Do not reduce strings with the macro operator '&'
-       */
+      // Do not reduce strings with the macro operator '&'
       if (HB_SUPPORT_MACROTEXT)
       {
         char *szText = pLeft->value.asString.string;
@@ -607,7 +601,7 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
 
       if (fReduce)
       {
-        pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+        pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
         HB_COMP_EXPR_FREE(pSelf);
         pSelf = hb_compExprReduceMinusStrings(pLeft, pRight, HB_COMP_PARAM);
       }
@@ -615,8 +609,7 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else
   {
-    /* TODO: Check for incompatible types e.g. "txt" - 3
-     */
+    // TODO: Check for incompatible types e.g. "txt" - 3
   }
   return pSelf;
 }
@@ -791,10 +784,9 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     else if (HB_SUPPORT_EXTOPT &&
              (pLeft->value.asNum.NumType == HB_ET_LONG ? pLeft->value.asNum.val.l == 0 : pLeft->value.asNum.val.d == 0))
     {
-      /* NOTE: This will not generate a runtime error if incompatible
-       * data type is used
-       */
-      pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+      // NOTE: This will not generate a runtime error if incompatible
+      // data type is used
+      pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pRight;
       HB_COMP_EXPR_FREE(pLeft);
@@ -803,7 +795,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     {
       if (hb_compExprReducePlusNums(pRight, pLeft))
       {
-        pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+        pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
         HB_COMP_EXPR_FREE(pSelf);
         pSelf = pRight;
         HB_COMP_EXPR_FREE(pLeft);
@@ -811,8 +803,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     else
     {
-      /* TODO: Check for incompatible types e.g. "txt" + 3
-       */
+      // TODO: Check for incompatible types e.g. "txt" + 3
     }
   }
   else if (pRight->ExprType == HB_ET_NUMERIC)
@@ -850,10 +841,9 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     else if (HB_SUPPORT_EXTOPT && (pRight->value.asNum.NumType == HB_ET_LONG ? pRight->value.asNum.val.l == 0
                                                                              : pRight->value.asNum.val.d == 0))
     {
-      /* NOTE: This will not generate a runtime error if incompatible
-       * data type is used
-       */
-      pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+      // NOTE: This will not generate a runtime error if incompatible
+      // data type is used
+      pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pLeft;
       HB_COMP_EXPR_FREE(pRight);
@@ -862,7 +852,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     {
       if (hb_compExprReducePlusNums(pLeft, pRight))
       {
-        pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+        pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
         HB_COMP_EXPR_FREE(pSelf);
         pSelf = pLeft;
         HB_COMP_EXPR_FREE(pRight);
@@ -870,8 +860,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     else
     {
-      /* TODO: Check for incompatible types e.g. "txt" + 3
-       */
+      // TODO: Check for incompatible types e.g. "txt" + 3
     }
   }
   else if ((pLeft->ExprType == HB_ET_DATE || pLeft->ExprType == HB_ET_TIMESTAMP) &&
@@ -884,7 +873,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     else
     {
-      /* NOTE: This is not a bug. CA-Cl*pper does exactly that for DATEs. */
+      // NOTE: This is not a bug. CA-Cl*pper does exactly that for DATEs.
       pSelf->value.asDate.lDate = pLeft->value.asDate.lDate + pRight->value.asDate.lDate;
       pSelf->value.asDate.lTime = 0;
       pSelf->ExprType = HB_ET_DATE;
@@ -897,14 +886,14 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     if (pRight->nLength == 0)
     {
-      pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+      pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pLeft;
       HB_COMP_EXPR_FREE(pRight);
     }
     else if (pLeft->nLength == 0)
     {
-      pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+      pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pRight;
       HB_COMP_EXPR_FREE(pLeft);
@@ -913,8 +902,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
     {
       auto fReduce = true;
 
-      /* Do not reduce strings with the macro operator '&'
-       */
+      // Do not reduce strings with the macro operator '&'
       if (HB_SUPPORT_MACROTEXT)
       {
         char *szText = pLeft->value.asString.string;
@@ -935,7 +923,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
       }
       if (fReduce)
       {
-        pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+        pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
         HB_COMP_EXPR_FREE(pSelf);
         pSelf = hb_compExprReducePlusStrings(pLeft, pRight, HB_COMP_PARAM);
       }
@@ -943,8 +931,7 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else
   {
-    /* TODO: Check for incompatible types e.g. "txt" + 3
-     */
+    // TODO: Check for incompatible types e.g. "txt" + 3
   }
   return pSelf;
 }
@@ -976,25 +963,23 @@ PHB_EXPR hb_compExprReduceNegate(PHB_EXPR pSelf, HB_COMP_DECL)
       }
       pExpr->value.asNum.bWidth = HB_DEFAULT_WIDTH;
     }
-    pSelf->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+    pSelf->ExprType = HB_ET_NONE; // suppress deletion of operator components
     HB_COMP_EXPR_FREE(pSelf);
     pSelf = pExpr;
   }
   else if (pExpr->ExprType == HB_EO_NEGATE && HB_SUPPORT_EXTOPT)
   {
-    /* NOTE: This will not generate a runtime error if incompatible
-     * data type is used
-     */
-    pExpr->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+    // NOTE: This will not generate a runtime error if incompatible
+    // data type is used
+    pExpr->ExprType = HB_ET_NONE; // suppress deletion of operator components
     pExpr = pExpr->value.asOperator.pLeft;
     HB_COMP_EXPR_FREE(pSelf);
     pSelf = pExpr;
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  //   else
+  //   {
+  //   }
 
   return pSelf;
 }
@@ -1006,27 +991,24 @@ PHB_EXPR hb_compExprReduceIN(PHB_EXPR pSelf, HB_COMP_DECL)
 
   if (pLeft->ExprType == pRight->ExprType && pLeft->ExprType == HB_ET_STRING)
   {
-    /* Both arguments are literal strings
-     */
+    // Both arguments are literal strings
 
-    /* NOTE: If macro substitution is not disabled (-kM compiler
-     *       switch) then we cannot reduce also strings which
-     *       have macro operator '&'
-     */
+    // NOTE: If macro substitution is not disabled (-kM compiler
+    //       switch) then we cannot reduce also strings which
+    //       have macro operator '&'
     if (!HB_SUPPORT_MACROTEXT || (!hb_compExprHasMacro(pLeft->value.asString.string, pLeft->nLength, HB_COMP_PARAM) &&
                                   !hb_compExprHasMacro(pRight->value.asString.string, pRight->nLength, HB_COMP_PARAM)))
     {
       auto bResult = false;
 
-      /* NOTE: CA-Cl*pper has a bug where the $ operator returns .T.
-       *       when an empty string is searched [vszakats]
-       *
-       *       But this bug exist only in compiler and CA-Cl*pper macro
-       *       compiler does not have optimizer. This bug is replicated
-       *       by us only when Harbour extensions in compiler (-kh) are
-       *       not enabled f.e. in strict Clipper compatible mode (-kc)
-       *       [druzus]
-       */
+      // NOTE: CA-Cl*pper has a bug where the $ operator returns .T.
+      //       when an empty string is searched [vszakats]
+      //
+      //       But this bug exist only in compiler and CA-Cl*pper macro
+      //       compiler does not have optimizer. This bug is replicated
+      //       by us only when Harbour extensions in compiler (-kh) are
+      //       not enabled f.e. in strict Clipper compatible mode (-kc)
+      //       [druzus]
       if (pLeft->nLength == 0)
       {
         bResult = HB_COMP_PARAM->mode == HB_MODE_COMPILER && !HB_SUPPORT_HARBOUR;
@@ -1044,8 +1026,7 @@ PHB_EXPR hb_compExprReduceIN(PHB_EXPR pSelf, HB_COMP_DECL)
       pSelf->value.asLogical = bResult;
     }
   }
-  /* TODO: add checking for incompatible types
-   */
+  // TODO: add checking for incompatible types
   return pSelf;
 }
 
@@ -1059,11 +1040,10 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
     switch (pLeft->ExprType)
     {
     case HB_ET_LOGICAL: {
-      /* .F. != .T.  = .T.
-       * .T. != .T.  = .F.
-       * .F. != .F.  = .F.
-       * .T. != .F.  = .T.
-       */
+      // .F. != .T.  = .T.
+      // .T. != .T.  = .F.
+      // .F. != .F.  = .F.
+      // .T. != .F.  = .T.
       bool bResult = (pLeft->value.asLogical != pRight->value.asLogical);
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
@@ -1074,11 +1054,10 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_STRING:
-      /* NOTE: the result depends on SET EXACT setting then it
-       * cannot be optimized except the case when null strings are
-       * compared - "" != "" is always HB_FALSE regardless of EXACT
-       * setting
-       */
+      // NOTE: the result depends on SET EXACT setting then it
+      // cannot be optimized except the case when null strings are
+      // compared - "" != "" is always HB_FALSE regardless of EXACT
+      // setting
       if ((pLeft->nLength | pRight->nLength) == 0)
       {
         HB_COMP_EXPR_FREE(pLeft);
@@ -1087,7 +1066,7 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
         pSelf->ValType = HB_EV_LOGICAL;
         pSelf->value.asLogical = false;
 
-        /* NOTE: COMPATIBILITY: Clipper doesn't optimize this */
+        // NOTE: COMPATIBILITY: Clipper doesn't optimize this
       }
       break;
 
@@ -1153,9 +1132,8 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else if (HB_SUPPORT_EXTOPT && (pLeft->ExprType == HB_ET_LOGICAL || pRight->ExprType == HB_ET_LOGICAL))
   {
-    /* NOTE: This will not generate a runtime error if incompatible
-     * data type is used
-     */
+    // NOTE: This will not generate a runtime error if incompatible
+    // data type is used
 
     if (pLeft->ExprType == HB_ET_LOGICAL)
     {
@@ -1202,11 +1180,10 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
     pSelf->ValType = HB_EV_LOGICAL;
     pSelf->value.asLogical = true;
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1220,11 +1197,10 @@ PHB_EXPR hb_compExprReduceGE(PHB_EXPR pSelf, HB_COMP_DECL)
     switch (pLeft->ExprType)
     {
     case HB_ET_LOGICAL: {
-      /* .T. >= .F.  = .T.
-       * .T. >= .T.  = .T.
-       * .F. >= .F.  = .T.
-       * .F. >= .T.  = .f.
-       */
+      // .T. >= .F.  = .T.
+      // .T. >= .T.  = .T.
+      // .F. >= .F.  = .T.
+      // .F. >= .T.  = .f.
       bool bResult = !(!pLeft->value.asLogical && pRight->value.asLogical);
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
@@ -1287,11 +1263,10 @@ PHB_EXPR hb_compExprReduceGE(PHB_EXPR pSelf, HB_COMP_DECL)
     HB_COMP_EXPR_FREE(pLeft);
     HB_COMP_EXPR_FREE(pRight);
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1305,11 +1280,10 @@ PHB_EXPR hb_compExprReduceLE(PHB_EXPR pSelf, HB_COMP_DECL)
     switch (pLeft->ExprType)
     {
     case HB_ET_LOGICAL: {
-      /* .T. <= .F.  = .F.
-       * .T. <= .T.  = .T.
-       * .F. <= .F.  = .T.
-       * .F. <= .T.  = .T.
-       */
+      // .T. <= .F.  = .F.
+      // .T. <= .T.  = .T.
+      // .F. <= .F.  = .T.
+      // .F. <= .T.  = .T.
       bool bResult = !(pLeft->value.asLogical && !pRight->value.asLogical);
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
@@ -1372,11 +1346,10 @@ PHB_EXPR hb_compExprReduceLE(PHB_EXPR pSelf, HB_COMP_DECL)
     HB_COMP_EXPR_FREE(pLeft);
     HB_COMP_EXPR_FREE(pRight);
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1390,11 +1363,10 @@ PHB_EXPR hb_compExprReduceGT(PHB_EXPR pSelf, HB_COMP_DECL)
     switch (pLeft->ExprType)
     {
     case HB_ET_LOGICAL: {
-      /* .T. > .F.  = .T.
-       * .T. > .T.  = .F.
-       * .F. > .F.  = .F.
-       * .F. > .T.  = .F.
-       */
+      // .T. > .F.  = .T.
+      // .T. > .T.  = .F.
+      // .F. > .F.  = .F.
+      // .F. > .T.  = .F.
       bool bResult = (pLeft->value.asLogical && !pRight->value.asLogical);
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
@@ -1457,11 +1429,10 @@ PHB_EXPR hb_compExprReduceGT(PHB_EXPR pSelf, HB_COMP_DECL)
     HB_COMP_EXPR_FREE(pLeft);
     HB_COMP_EXPR_FREE(pRight);
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1475,11 +1446,10 @@ PHB_EXPR hb_compExprReduceLT(PHB_EXPR pSelf, HB_COMP_DECL)
     switch (pLeft->ExprType)
     {
     case HB_ET_LOGICAL: {
-      /* .F. < .T.  = .T.
-       * .T. < .T.  = .F.
-       * .F. < .F.  = .F.
-       * .T. < .F.  = .F.
-       */
+      // .F. < .T.  = .T.
+      // .T. < .T.  = .F.
+      // .F. < .F.  = .F.
+      // .T. < .F.  = .F.
       bool bResult = (!pLeft->value.asLogical && pRight->value.asLogical);
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
@@ -1542,11 +1512,10 @@ PHB_EXPR hb_compExprReduceLT(PHB_EXPR pSelf, HB_COMP_DECL)
     HB_COMP_EXPR_FREE(pLeft);
     HB_COMP_EXPR_FREE(pRight);
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1570,15 +1539,14 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
     }
 
     case HB_ET_STRING:
-      /* NOTE: when not exact comparison (==) is used
-       * the result depends on SET EXACT setting then it
-       * cannot be optimized except the case when null strings are
-       * compared - "" = "" is always TRUE regardless of EXACT
-       * setting.
-       * If macro substitution is not disabled (-kM compiler
-       * switch) then we cannot reduce also strings which
-       * have macro operator '&'
-       */
+      // NOTE: when not exact comparison (==) is used
+      // the result depends on SET EXACT setting then it
+      // cannot be optimized except the case when null strings are
+      // compared - "" = "" is always TRUE regardless of EXACT
+      // setting.
+      // If macro substitution is not disabled (-kM compiler
+      // switch) then we cannot reduce also strings which
+      // have macro operator '&'
       if ((pLeft->nLength | pRight->nLength) == 0 ||
           (pSelf->ExprType == HB_EO_EQ &&
            (!HB_SUPPORT_MACROTEXT ||
@@ -1658,9 +1626,8 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
   }
   else if (HB_SUPPORT_EXTOPT && (pLeft->ExprType == HB_ET_LOGICAL || pRight->ExprType == HB_ET_LOGICAL))
   {
-    /* NOTE: This will not generate a runtime error if incompatible
-     * data type is used
-     */
+    // NOTE: This will not generate a runtime error if incompatible
+    // data type is used
 
     if (pLeft->ExprType == HB_ET_LOGICAL)
     {
@@ -1707,11 +1674,10 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
     pSelf->ValType = HB_EV_LOGICAL;
     pSelf->value.asLogical = false;
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1733,19 +1699,17 @@ PHB_EXPR hb_compExprReduceAnd(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     if (pLeft->value.asLogical)
     {
-      /* .T. .AND. expr => expr
-       */
+      // .T. .AND. expr => expr
       HB_COMP_EXPR_FREE(pLeft);
-      pSelf->ExprType = HB_ET_NONE; /* don't delete expression components */
+      pSelf->ExprType = HB_ET_NONE; // don't delete expression components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pRight;
     }
     else
     {
-      /* .F. .AND. expr => .F.
-       */
+      // .F. .AND. expr => .F.
       HB_COMP_EXPR_FREE(pLeft);
-      HB_COMP_EXPR_FREE(pRight); /* discard expression */
+      HB_COMP_EXPR_FREE(pRight); // discard expression
       pSelf->ExprType = HB_ET_LOGICAL;
       pSelf->ValType = HB_EV_LOGICAL;
       pSelf->value.asLogical = false;
@@ -1756,29 +1720,26 @@ PHB_EXPR hb_compExprReduceAnd(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     if (pRight->value.asLogical)
     {
-      /* expr .AND. .T. => expr
-       */
+      // expr .AND. .T. => expr
       HB_COMP_EXPR_FREE(pRight);
-      pSelf->ExprType = HB_ET_NONE; /* don't delete expression components */
+      pSelf->ExprType = HB_ET_NONE; // don't delete expression components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pLeft;
     }
     else
     {
-      /* expr .AND. .F. => .F.
-       */
-      HB_COMP_EXPR_FREE(pLeft); /* discard expression */
+      // expr .AND. .F. => .F.
+      HB_COMP_EXPR_FREE(pLeft); // discard expression
       HB_COMP_EXPR_FREE(pRight);
       pSelf->ExprType = HB_ET_LOGICAL;
       pSelf->ValType = HB_EV_LOGICAL;
       pSelf->value.asLogical = false;
     }
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1800,20 +1761,18 @@ PHB_EXPR hb_compExprReduceOr(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     if (pLeft->value.asLogical)
     {
-      /* .T. .OR. expr => .T.
-       */
+      // .T. .OR. expr => .T.
       HB_COMP_EXPR_FREE(pLeft);
-      HB_COMP_EXPR_FREE(pRight); /* discard expression */
+      HB_COMP_EXPR_FREE(pRight); // discard expression
       pSelf->ExprType = HB_ET_LOGICAL;
       pSelf->ValType = HB_EV_LOGICAL;
       pSelf->value.asLogical = true;
     }
     else
     {
-      /* .F. .OR. expr => expr
-       */
+      // .F. .OR. expr => expr
       HB_COMP_EXPR_FREE(pLeft);
-      pSelf->ExprType = HB_ET_NONE; /* don't delete expression components */
+      pSelf->ExprType = HB_ET_NONE; // don't delete expression components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pRight;
     }
@@ -1823,9 +1782,8 @@ PHB_EXPR hb_compExprReduceOr(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     if (pRight->value.asLogical)
     {
-      /* expr .OR. .T. => .T.
-       */
-      HB_COMP_EXPR_FREE(pLeft); /* discard expression */
+      // expr .OR. .T. => .T.
+      HB_COMP_EXPR_FREE(pLeft); // discard expression
       HB_COMP_EXPR_FREE(pRight);
       pSelf->ExprType = HB_ET_LOGICAL;
       pSelf->ValType = HB_EV_LOGICAL;
@@ -1833,19 +1791,17 @@ PHB_EXPR hb_compExprReduceOr(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     else
     {
-      /* expr .OR. .F. => expr
-       */
+      // expr .OR. .F. => expr
       HB_COMP_EXPR_FREE(pRight);
-      pSelf->ExprType = HB_ET_NONE; /* don't delete expression components */
+      pSelf->ExprType = HB_ET_NONE; // don't delete expression components
       HB_COMP_EXPR_FREE(pSelf);
       pSelf = pLeft;
     }
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
   return pSelf;
 }
 
@@ -1856,89 +1812,78 @@ PHB_EXPR hb_compExprReduceNot(PHB_EXPR pSelf, HB_COMP_DECL)
   if (pExpr->ExprType == HB_ET_LOGICAL)
   {
     pExpr->value.asLogical = !pExpr->value.asLogical;
-    HB_COMP_EXPR_CLEAR(pSelf); /* suppress deletion of operator components */
+    HB_COMP_EXPR_CLEAR(pSelf); // suppress deletion of operator components
     pSelf = pExpr;
   }
   else if (pExpr->ExprType == HB_EO_NOT && HB_SUPPORT_EXTOPT)
   {
-    /* NOTE: This will not generate a runtime error if incompatible
-     * data type is used
-     */
-    pExpr->ExprType = HB_ET_NONE; /* suppress deletion of operator components */
+    // NOTE: This will not generate a runtime error if incompatible
+    // data type is used
+    pExpr->ExprType = HB_ET_NONE; // suppress deletion of operator components
     pExpr = pExpr->value.asOperator.pLeft;
     HB_COMP_EXPR_FREE(pSelf);
     pSelf = pExpr;
   }
-  /* TODO: add checking of incompatible types
-     else
-     {
-     }
-   */
+  // TODO: add checking of incompatible types
+  // else
+  // {
+  // }
 
   return pSelf;
 }
 
 PHB_EXPR hb_compExprReduceIIF(PHB_EXPR pSelf, HB_COMP_DECL)
 {
-  /* get conditional expression */
+  // get conditional expression
   PHB_EXPR pExpr = pSelf->value.asList.pExprList;
 
   if (pExpr->ExprType == HB_ET_LOGICAL)
   {
-    /* the condition was reduced to a logical value: .T. or .F.
-     */
+    // the condition was reduced to a logical value: .T. or .F.
     if (pExpr->value.asLogical)
     {
-      /* .T. was specified
-       */
-      pExpr = pExpr->pNext; /* skip to TRUE expression */
-      /* delete condition  - it is no longer needed
-       */
+      // .T. was specified
+      pExpr = pExpr->pNext; // skip to TRUE expression
+      // delete condition  - it is no longer needed
       HB_COMP_EXPR_FREE(pSelf->value.asList.pExprList);
-      /* assign nullptr to a start of expressions list to suppress
-       * deletion of expression's components - we are deleting them
-       * here
-       */
+      // assign nullptr to a start of expressions list to suppress
+      // deletion of expression's components - we are deleting them
+      // here
       pSelf->value.asList.pExprList = nullptr;
       HB_COMP_EXPR_FREE(pSelf);
-      /* store the TRUE expression as a result of reduction
-       */
+      // store the TRUE expression as a result of reduction
       pSelf = pExpr;
-      pExpr = pExpr->pNext;     /* skip to FALSE expression */
-      HB_COMP_EXPR_FREE(pExpr); /* delete FALSE expression */
+      pExpr = pExpr->pNext;     // skip to FALSE expression
+      HB_COMP_EXPR_FREE(pExpr); // delete FALSE expression
       pSelf->pNext = nullptr;
     }
     else
     {
-      /* .F. was specified
-       */
-      pExpr = pExpr->pNext; /* skip to TRUE expression */
-      /* delete condition  - it is no longer needed
-       */
+      // .F. was specified
+      pExpr = pExpr->pNext; // skip to TRUE expression
+      // delete condition  - it is no longer needed
       HB_COMP_EXPR_FREE(pSelf->value.asList.pExprList);
-      /* assign nullptr to a start of expressions list to suppress
-       * deletion of expression's components - we are deleting them
-       * here
-       */
+      // assign nullptr to a start of expressions list to suppress
+      // deletion of expression's components - we are deleting them
+      // here
       pSelf->value.asList.pExprList = nullptr;
       HB_COMP_EXPR_FREE(pSelf);
-      /* store the FALSE expression as a result of reduction
-       */
+      // store the FALSE expression as a result of reduction
       pSelf = pExpr->pNext;
-      HB_COMP_EXPR_FREE(pExpr); /* delete TRUE expression */
+      HB_COMP_EXPR_FREE(pExpr); // delete TRUE expression
       pSelf->pNext = nullptr;
     }
 
-    /* this will cause warning when IIF is used as statement */
-    /*
-    if( pSelf->ExprType == HB_ET_NONE ) {
-       pSelf->ExprType = HB_ET_NIL;
-       pSelf->ValType = HB_EV_NIL;
+    // this will cause warning when IIF is used as statement
+#if 0
+    if (pSelf->ExprType == HB_ET_NONE)
+    {
+      pSelf->ExprType = HB_ET_NIL;
+      pSelf->ValType = HB_EV_NIL;
     }
-    */
+#endif
   }
-  /* check if valid expression is passed
-   */
+  // check if valid expression is passed
   else if (pExpr->ExprType == HB_ET_NIL || pExpr->ExprType == HB_ET_NUMERIC || pExpr->ExprType == HB_ET_DATE ||
            pExpr->ExprType == HB_ET_TIMESTAMP || pExpr->ExprType == HB_ET_STRING ||
            pExpr->ExprType == HB_ET_CODEBLOCK || pExpr->ExprType == HB_ET_ARRAY || pExpr->ExprType == HB_ET_HASH ||
@@ -1949,19 +1894,17 @@ PHB_EXPR hb_compExprReduceIIF(PHB_EXPR pSelf, HB_COMP_DECL)
   return pSelf;
 }
 
-/* replace the list containing a single expression with a simple expression
- * - strips parenthesis
- *  ( EXPR ) -> EXPR
- */
+// replace the list containing a single expression with a simple expression
+// - strips parenthesis
+//  ( EXPR ) -> EXPR
 PHB_EXPR hb_compExprListStrip(PHB_EXPR pSelf, HB_COMP_DECL)
 {
   while (pSelf->ExprType == HB_ET_LIST && hb_compExprListLen(pSelf) == 1 &&
          pSelf->value.asList.pExprList->ExprType <= HB_ET_VARIABLE &&
          !hb_compExprIsArrayToParams(pSelf->value.asList.pExprList))
   {
-    /* replace the list with a simple expression
-     *  ( EXPR ) -> EXPR
-     */
+    // replace the list with a simple expression
+    //  ( EXPR ) -> EXPR
     PHB_EXPR pExpr = pSelf;
     pSelf = pSelf->value.asList.pExprList;
     pExpr->value.asList.pExprList = nullptr;
@@ -1981,14 +1924,13 @@ HB_BOOL hb_compExprReduceAT(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     PHB_EXPR pReduced;
 
-    /* NOTE: CA-Cl*pper has a bug in At("", cText) compile time
-     *       optimization and always set 1 as result in such cases.
-     *       This bug exist only in compiler and CA-Cl*pper macro
-     *       compiler does not have optimizer. This bug is replicated
-     *       by us only when Harbour extensions in compiler (-kh) are
-     *       not enabled f.e. in strict Clipper compatible mode (-kc)
-     *       [druzus]
-     */
+    // NOTE: CA-Cl*pper has a bug in At("", cText) compile time
+    //       optimization and always set 1 as result in such cases.
+    //       This bug exist only in compiler and CA-Cl*pper macro
+    //       compiler does not have optimizer. This bug is replicated
+    //       by us only when Harbour extensions in compiler (-kh) are
+    //       not enabled f.e. in strict Clipper compatible mode (-kc)
+    //       [druzus]
     if (pSub->nLength == 0)
     {
       pReduced =
@@ -2034,20 +1976,19 @@ HB_BOOL hb_compExprReduceCHR(PHB_EXPR pSelf, HB_COMP_DECL)
     }
   }
 
-  /* try to change it into a string */
+  // try to change it into a string
   if (fDoOpt)
   {
-    /* NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
-     *       Chr() cases where the passed parameter is a constant which
-     *       can be divided by 256 but it's not zero, in this case it
-     *       will return an empty string instead of a Chr(0). [vszakats]
-     *
-     *       But this bug exist only in compiler and CA-Cl*pper macro
-     *       compiler does not have optimizer. This bug is replicated
-     *       by us only when Harbour extensions in compiler (-kh) are
-     *       not enabled f.e. in strict Clipper compatible mode (-kc)
-     *       [druzus]
-     */
+    // NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
+    //       Chr() cases where the passed parameter is a constant which
+    //       can be divided by 256 but it's not zero, in this case it
+    //       will return an empty string instead of a Chr(0). [vszakats]
+    //
+    //       But this bug exist only in compiler and CA-Cl*pper macro
+    //       compiler does not have optimizer. This bug is replicated
+    //       by us only when Harbour extensions in compiler (-kh) are
+    //       not enabled f.e. in strict Clipper compatible mode (-kc)
+    //       [druzus]
 
     PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_STRING);
 
@@ -2117,7 +2058,7 @@ HB_BOOL hb_compExprReduceLEN(PHB_EXPR pSelf, HB_COMP_DECL)
   PHB_EXPR pParms = pSelf->value.asFunCall.pParms;
   PHB_EXPR pArg = pParms->value.asList.pExprList;
 
-  /* FIXME: do not optimize when array/hash args have user expressions */
+  // FIXME: do not optimize when array/hash args have user expressions
   if ((pArg->ExprType == HB_ET_STRING && !HB_SUPPORT_USERCP) || pArg->ExprType == HB_ET_ARRAY ||
       pArg->ExprType == HB_ET_HASH)
   {
@@ -2148,7 +2089,7 @@ HB_BOOL hb_compExprReduceEMPTY(PHB_EXPR pSelf, HB_COMP_DECL)
 
   case HB_ET_ARRAY:
   case HB_ET_HASH:
-    /* FIXME: do not optimize when array/hash args have user expressions */
+    // FIXME: do not optimize when array/hash args have user expressions
     fResult = pArg->nLength == 0;
     break;
 
@@ -2182,7 +2123,7 @@ HB_BOOL hb_compExprReduceEMPTY(PHB_EXPR pSelf, HB_COMP_DECL)
   case HB_ET_CODEBLOCK:
     break;
 
-  /* case HB_ET_FUNREF: */
+  // case HB_ET_FUNREF:
   default:
     fReduced = false;
   }

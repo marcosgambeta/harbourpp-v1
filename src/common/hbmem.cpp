@@ -45,17 +45,16 @@
 
 #include "hbapi.hpp"
 
-/* hb_xmemcpy() and hb_xmemset() are only needed when
-   unsigned int and unsigned long differ in length */
+// hb_xmemcpy() and hb_xmemset() are only needed when
+// unsigned int and unsigned long differ in length
 
-/* unfortunately it's not true - on 64-bit platforms int is 32 bits
-   and long is 64.
-   we need these functions only when max(size_t) < max(long)
-   what could be detected and set in header files. Here check
-   only for hb_xmem* macro definition
-
-   #if UINT_MAX != ULONG_MAX
- */
+// unfortunately it's not true - on 64-bit platforms int is 32 bits
+// and long is 64.
+// we need these functions only when max(size_t) < max(long)
+// what could be detected and set in header files. Here check
+// only for hb_xmem* macro definition
+//
+// #if UINT_MAX != ULONG_MAX
 #ifndef hb_xmemcpy
 void *hb_xmemcpy(void *pDestArg, const void *pSourceArg, HB_SIZE nLen)
 {
@@ -74,7 +73,7 @@ void *hb_xmemcpy(void *pDestArg, const void *pSourceArg, HB_SIZE nLen)
 
   while (nRemaining)
   {
-    /* Overcome the memcpy() size_t limitation */
+    // Overcome the memcpy() size_t limitation
     if (nRemaining > UINT_MAX)
     {
       iCopySize = UINT_MAX;
@@ -110,7 +109,7 @@ void *hb_xmemset(void *pDestArg, int iFill, HB_SIZE nLen)
 
   while (nRemaining)
   {
-    /* Overcome the memset() size_t limitation */
+    // Overcome the memset() size_t limitation
     if (nRemaining > UINT_MAX)
     {
       iSetSize = UINT_MAX;

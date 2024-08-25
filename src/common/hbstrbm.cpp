@@ -69,7 +69,7 @@ static void suffixes(const char *needle, HB_ISIZ m, HB_ISIZ *suff)
 {
   HB_ISIZ f, g, i;
 
-  f = 0; /* NOTE: Fix added by me [vszakats] */
+  f = 0; // NOTE: Fix added by me [vszakats]
   suff[m - 1] = m;
   g = m - 1;
   for (i = m - 2; i >= 0; --i)
@@ -138,11 +138,11 @@ HB_ISIZ hb_strAtTBM(const char *needle, HB_ISIZ m, const char *haystack, HB_ISIZ
 
   auto bmGs = static_cast<HB_ISIZ *>(hb_xgrab(m * sizeof(HB_ISIZ)));
 
-  /* Preprocessing */
+  // Preprocessing
   preBmGs(needle, m, bmGs);
   preBmBc(needle, m, bmBc);
 
-  /* Searching */
+  // Searching
   j = u = 0;
   shift = m;
   while (j <= n - m)
@@ -161,7 +161,7 @@ HB_ISIZ hb_strAtTBM(const char *needle, HB_ISIZ m, const char *haystack, HB_ISIZ
     {
       r = j + 1;
       break;
-#if 0 /* To continue search */
+#if 0 // To continue search
          shift = bmGs[0];
          u = m - shift;
 #endif

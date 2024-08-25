@@ -43,8 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: Notice that this code is needed as ANSI C getenv() crashes
-         badly when used from a Windows DLL. */
+// NOTE: Notice that this code is needed as ANSI C getenv() crashes
+//       badly when used from a Windows DLL.
 
 #include "hbapi.hpp"
 
@@ -55,10 +55,10 @@
 #include <sys/param.h>
 #endif
 
-/* NOTE: Warning, this function _may_ return nullptr as a result if
-         the environment variable reading fails form some reason.
-         If the return value is not nullptr, the caller must free
-         the pointer. [vszakats] */
+// NOTE: Warning, this function _may_ return nullptr as a result if
+//       the environment variable reading fails form some reason.
+//       If the return value is not nullptr, the caller must free
+//       the pointer. [vszakats]
 
 char *hb_getenv(const char *szName)
 {
@@ -176,9 +176,8 @@ HB_BOOL hb_getenv_buffer(const char *szName, char *szBuffer, int nSize)
   return fRetVal;
 }
 
-/* set current process environment variable, if szValue is nullptr delete
- * environment variable
- */
+// set current process environment variable, if szValue is nullptr delete
+// environment variable
 HB_BOOL hb_setenv(const char *szName, const char *szValue)
 {
   if (szName == nullptr)
@@ -240,11 +239,10 @@ HB_BOOL hb_setenv(const char *szName, const char *szValue)
   return false;
 
 #else
-  /* please add support for other C compilers
-   * if such functionality does not exists for given platform/C compiler
-   * then please simply added C compiler with necessary OS/version checking
-   * to the above #elif ... to eliminate warning [druzus]
-   */
+  // please add support for other C compilers
+  // if such functionality does not exists for given platform/C compiler
+  // then please simply added C compiler with necessary OS/version checking
+  // to the above #elif ... to eliminate warning [druzus]
 
   int iTODO;
 

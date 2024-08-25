@@ -46,17 +46,15 @@
 #include "hbapi.hpp"
 #include "hbmath.hpp"
 
-/*
- * functions hb_put_ieee754() and hb_get_ieee754() stores / retrieve
- * IEEE754 double value making conversion from/to native C double type.
- * They should be used on platforms which does not use IEEE754 double
- * and user needs binary compatibility, f.e. he wants to share CDXs or
- * or DBFs with "B" fields with other station or use common .hrb files
- * functions hb_put_ord_ieee754() and hb_get_ord_ieee754() converts
- * to/from special modified IEEE754 double form used by some index formats
- * like CDX or NSX to create index keys. In this form double numbers can
- * be sorted as 8-bytes character values (f.e. with memcmp())
- */
+// functions hb_put_ieee754() and hb_get_ieee754() stores / retrieve
+// IEEE754 double value making conversion from/to native C double type.
+// They should be used on platforms which does not use IEEE754 double
+// and user needs binary compatibility, f.e. he wants to share CDXs or
+// or DBFs with "B" fields with other station or use common .hrb files
+// functions hb_put_ord_ieee754() and hb_get_ord_ieee754() converts
+// to/from special modified IEEE754 double form used by some index formats
+// like CDX or NSX to create index keys. In this form double numbers can
+// be sorted as 8-bytes character values (f.e. with memcmp())
 
 #define HB_MANTISSA_BITS 52
 #define HB_MANTISSA_MASK ((static_cast<HB_U64>(1) << HB_MANTISSA_BITS) - 1)
@@ -146,10 +144,10 @@ double hb_get_ieee754(const HB_BYTE *ptr)
   {
     ll |= static_cast<HB_U64>(1) << HB_MANTISSA_BITS;
   }
-  /* the casting form HB_U64 to HB_I64 is necessary for some
-     compilers which does not support HB_U64 -> double conversion
-     It will not change results because there is only up to 53bits
-     set in mantissa */
+  // the casting form HB_U64 to HB_I64 is necessary for some
+  // compilers which does not support HB_U64 -> double conversion
+  // It will not change results because there is only up to 53bits
+  // set in mantissa
   return ldexp(iSig ? -static_cast<double>(static_cast<HB_I64>(ll)) : static_cast<double>(static_cast<HB_I64>(ll)),
                iExp - HB_MANTISSA_BITS - HB_EXPONENT_ADD);
 #endif
@@ -220,11 +218,9 @@ double hb_get_ord_ieee754(const HB_BYTE *ptr)
   return ldexp(iSig ? -d : d, iExp - HB_MANTISSA_BITS - HB_EXPONENT_ADD);
 }
 
-/*
- * I added function hb_get_rev_double() and hb_get_std_double() because
- * some compilers does not like construction used by in HB_GET_LE_DOUBLE()
- * macro => d = { ... }
- */
+// I added function hb_get_rev_double() and hb_get_std_double() because
+// some compilers does not like construction used by in HB_GET_LE_DOUBLE()
+// macro => d = { ... }
 double hb_get_rev_double(const HB_BYTE *ptr)
 {
 #if 0
@@ -285,12 +281,10 @@ double hb_get_std_double(const HB_BYTE *ptr)
 
 #if defined(HB_LONG_LONG_OFF)
 
-/*
- * The function below are only for platforms which do not support
- * 64 but integer values. So the convert them to/from 'double'
- * values. They are necessary for extracting such number from PCODE,
- * databases or serialization streams in RPC
- */
+// The function below are only for platforms which do not support
+// 64 but integer values. So the convert them to/from 'double'
+// values. They are necessary for extracting such number from PCODE,
+// databases or serialization streams in RPC
 double hb_get_le_uint64(const HB_BYTE *ptr)
 {
 #if 0

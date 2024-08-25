@@ -163,7 +163,7 @@ static bool s_win_iswow64(void)
 
   if (!IsWow64Process(GetCurrentProcess(), &bIsWow64))
   {
-    /* Try alternative method? */
+    // Try alternative method?
   }
 
   if (bIsWow64)
@@ -193,7 +193,7 @@ int hb_verHostBitWidth(void)
 {
   int nBits;
 
-/* Inherit the bit width we're building for */
+// Inherit the bit width we're building for
 #if defined(HB_ARCH_64BIT)
   nBits = 64;
 #elif defined(HB_ARCH_32BIT)
@@ -212,23 +212,23 @@ int hb_verHostBitWidth(void)
   return nBits;
 }
 
-/* NOTE: OS() function, as a primary goal will detect the version number
-         of the target platform. As an extra it may also detect the host OS.
-         The latter is mainly an issue in DOS, where the host OS can be OS/2
-         WinNT/2K, Win3x, Win9x, DOSEMU, Desqview, etc. [vszakats] */
+// NOTE: OS() function, as a primary goal will detect the version number
+//       of the target platform. As an extra it may also detect the host OS.
+//       The latter is mainly an issue in DOS, where the host OS can be OS/2
+//       WinNT/2K, Win3x, Win9x, DOSEMU, Desqview, etc. [vszakats]
 
-/* NOTE: The caller must free the returned buffer. [vszakats] */
+// NOTE: The caller must free the returned buffer. [vszakats]
 
-/* NOTE: The first word of the returned string must describe
-         the OS family as used in __PLATFORM__*. Latter macro
-         will in fact be formed from the string returned
-         by this function. [vszakats] */
+// NOTE: The first word of the returned string must describe
+//       the OS family as used in __PLATFORM__*. Latter macro
+//       will in fact be formed from the string returned
+//       by this function. [vszakats]
 
-/* NOTE: As it appears in __PLATFORM__* macro */
+// NOTE: As it appears in __PLATFORM__* macro
 const char *hb_verPlatformMacro(void)
 {
 #if defined(HB_OS_WIN)
-  return "WINDOWS"; /* TODO: Change this to WIN for consistency? */
+  return "WINDOWS"; // TODO: Change this to WIN for consistency?
 #elif defined(HB_OS_LINUX)
   return "LINUX";
 #elif defined(HB_OS_DARWIN)
@@ -299,22 +299,22 @@ static void s_hb_winVerInit(void)
     osvi.dwOSVersionInfoSize = sizeof(osvi);
     if (GetVersionEx(&osvi))
     {
-      /* NOTE: Value is VER_PLATFORM_WIN32_CE on WinCE */
+      // NOTE: Value is VER_PLATFORM_WIN32_CE on WinCE
       if (osvi.dwPlatformId != VER_PLATFORM_WIN32_WINDOWS)
       {
         s_iWin9x = 0;
       }
       else if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion < 10)
       {
-        s_iWin9x = 5; /* 95 */
+        s_iWin9x = 5; // 95
       }
       else if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10)
       {
-        s_iWin9x = 8; /* 98 */
+        s_iWin9x = 8; // 98
       }
       else
       {
-        s_iWin9x = 9; /* ME */
+        s_iWin9x = 9; // ME
       }
 
       if (osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
@@ -323,23 +323,23 @@ static void s_hb_winVerInit(void)
       }
       else if (osvi.dwMajorVersion == 3 && osvi.dwMinorVersion == 51)
       {
-        s_iWinNT = 3; /* 3.51 */
+        s_iWinNT = 3; // 3.51
       }
       else if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 0)
       {
-        s_iWinNT = 4; /* 4.0 */
+        s_iWinNT = 4; // 4.0
       }
       else
       {
-        s_iWinNT = 5; /* newer */
+        s_iWinNT = 5; // newer
       }
     }
   }
 #endif
 
   {
-    /* NOTE: Unofficial Wine detection.
-             https://www.mail-archive.com/wine-devel@winehq.org/msg48659.html */
+    // NOTE: Unofficial Wine detection.
+    //       https://www.mail-archive.com/wine-devel@winehq.org/msg48659.html
     HMODULE hntdll = GetModuleHandle(TEXT("ntdll.dll"));
     if (hntdll && HB_WINAPI_GETPROCADDRESS(hntdll, "wine_get_version"))
     {
@@ -357,8 +357,8 @@ static void s_hb_winVerInit(void)
 
 #endif
 
-/* NOTE: Must be larger than 128, which is the maximum size of
-         osvi.szCSDVersion (Windows). [vszakats] */
+// NOTE: Must be larger than 128, which is the maximum size of
+//       osvi.szCSDVersion (Windows). [vszakats]
 #define PLATFORM_BUF_SIZE 255
 
 char *hb_verPlatform(void)
@@ -376,7 +376,7 @@ char *hb_verPlatform(void)
 
     OSVERSIONINFO osvi{};
 
-    /* Detection of legacy Windows versions */
+    // Detection of legacy Windows versions
     switch (hb_iswin9x())
     {
     case 5:
@@ -510,7 +510,7 @@ char *hb_verPlatform(void)
     hb_snprintf(pszPlatform, PLATFORM_BUF_SIZE + 1, "Windows%s%s %lu.%lu", pszName, s_iWine ? " (Wine)" : "",
                 osvi.dwMajorVersion, osvi.dwMinorVersion);
 
-    /* Add service pack/other info */
+    // Add service pack/other info
 
     if (hb_iswin2k())
     {
@@ -574,17 +574,17 @@ HB_BOOL hb_iswinver(int iMajor, int iMinor, int iType, HB_BOOL fOrUpper)
     dwlConditionMask =
         VerSetConditionMask(dwlConditionMask, VER_MINORVERSION, fOrUpper ? VER_GREATER_EQUAL : VER_EQUAL);
 
-    /* MSDN says in https://msdn.microsoft.com/library/ms725492
-         "If you are testing the major version, you must also test the
-          minor version and the service pack major and minor versions."
-       However, Wine (as of 1.7.53) breaks on this. Since native Windows
-       apparently doesn't care, we're not doing it for now.
-       Wine (emulating Windows 7) will erroneously return false from
-       these calls:
-         hb_iswinver(6, 1, 0, false);
-         hb_iswinver(6, 1, VER_NT_WORKSTATION, false);
-       Removing the Service Pack check, or changing HB_FALSE to HB_TRUE
-       in above calls, both fixes the problem. [vszakats] */
+    // MSDN says in https://msdn.microsoft.com/library/ms725492
+    //   "If you are testing the major version, you must also test the
+    //    minor version and the service pack major and minor versions."
+    // However, Wine (as of 1.7.53) breaks on this. Since native Windows
+    // apparently doesn't care, we're not doing it for now.
+    // Wine (emulating Windows 7) will erroneously return false from
+    // these calls:
+    //   hb_iswinver(6, 1, 0, false);
+    //   hb_iswinver(6, 1, VER_NT_WORKSTATION, false);
+    // Removing the Service Pack check, or changing HB_FALSE to HB_TRUE
+    // in above calls, both fixes the problem. [vszakats]
 #if defined(__HB_DISABLE_WINE_VERIFYVERSIONINFO_BUG_WORKAROUND)
     ver.wServicePackMajor = ver.wServicePackMinor = static_cast<WORD>(0);
     dwTypeMask |= VER_SERVICEPACKMAJOR | VER_SERVICEPACKMINOR;
@@ -769,7 +769,7 @@ HB_BOOL hb_iswince(void)
   return false;
 }
 
-/* NOTE: The caller must free the returned buffer. [vszakats] */
+// NOTE: The caller must free the returned buffer. [vszakats]
 
 #define COMPILER_BUF_SIZE 80
 
@@ -865,7 +865,7 @@ char *hb_verCompiler(void)
 
 #elif defined(__clang__) && defined(__clang_major__) && !defined(__BORLANDC__)
 
-  /* NOTE: keep clang detection before msvc detection. */
+  // NOTE: keep clang detection before msvc detection.
 
   pszName = "LLVM/Clang C";
 
@@ -932,8 +932,8 @@ char *hb_verCompiler(void)
 
 #elif defined(__BORLANDC__)
 
-#if __BORLANDC__ >= 0x0590 /* Version 5.9 */
-#if __BORLANDC__ >= 0x0620 /* Version 6.2 */
+#if __BORLANDC__ >= 0x0590 // Version 5.9
+#if __BORLANDC__ >= 0x0620 // Version 6.2
   pszName = "Borland/Embarcadero C++";
 #else
   pszName = "Borland/CodeGear C++";
@@ -941,27 +941,27 @@ char *hb_verCompiler(void)
 #else
   pszName = "Borland C++";
 #endif
-#if __BORLANDC__ == 0x0400   /* Version 3.0 */
+#if __BORLANDC__ == 0x0400   // Version 3.0
   iVerMajor = 3;
   iVerMinor = 0;
   iVerPatch = 0;
-#elif __BORLANDC__ == 0x0410 /* Version 3.1 */
+#elif __BORLANDC__ == 0x0410 // Version 3.1
   iVerMajor = 3;
   iVerMinor = 1;
   iVerPatch = 0;
-#elif __BORLANDC__ == 0x0452 /* Version 4.0 */
+#elif __BORLANDC__ == 0x0452 // Version 4.0
   iVerMajor = 4;
   iVerMinor = 0;
   iVerPatch = 0;
-#elif __BORLANDC__ == 0x0460 /* Version 4.5 */
+#elif __BORLANDC__ == 0x0460 // Version 4.5
   iVerMajor = 4;
   iVerMinor = 5;
   iVerPatch = 0;
-#elif __BORLANDC__ >= 0x0500 /* Version 5.x */
+#elif __BORLANDC__ >= 0x0500 // Version 5.x
   iVerMajor = __BORLANDC__ >> 8;
   iVerMinor = (__BORLANDC__ & 0xFF) >> 4;
   iVerPatch = __BORLANDC__ & 0xF;
-#else                        /* Version 4.x */
+#else                        // Version 4.x
   iVerMajor = __BORLANDC__ >> 8;
   iVerMinor = (__BORLANDC__ - 1 & 0xFF) >> 4;
   iVerPatch = 0;
@@ -1069,7 +1069,7 @@ char *hb_verCompiler(void)
 #if defined(__clang_version__) && !defined(__BORLANDC__)
   if (strstr(__clang_version__, "("))
   {
-    /* "2.0 (trunk 103176)" -> "(trunk 103176)" */
+    // "2.0 (trunk 103176)" -> "(trunk 103176)"
     hb_snprintf(szSub, sizeof(szSub), " %s", strstr(__clang_version__, "("));
   }
   else
@@ -1090,12 +1090,11 @@ char *hb_verCompiler(void)
   return pszCompiler;
 }
 
-/* NOTE: The caller must free the returned buffer. [vszakats] */
+// NOTE: The caller must free the returned buffer. [vszakats]
 
-/* NOTE:
-   CA-Cl*pper 5.2e returns: "Clipper (R) 5.2e Intl. (x216)  (1995.02.07)"
-   CA-Cl*pper 5.3b returns: "Clipper (R) 5.3b Intl. (Rev. 338) (1997.04.25)"
- */
+// NOTE:
+// CA-Cl*pper 5.2e returns: "Clipper (R) 5.2e Intl. (x216)  (1995.02.07)"
+// CA-Cl*pper 5.3b returns: "Clipper (R) 5.3b Intl. (Rev. 338) (1997.04.25)"
 
 char *hb_verHarbour(void)
 {

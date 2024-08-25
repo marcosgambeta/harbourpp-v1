@@ -174,7 +174,7 @@ int hb_tr_level(void)
     char env[HB_PATH_MAX];
     int enabled = s_enabled;
 
-    /* protection against recursive or concurrent calls */
+    // protection against recursive or concurrent calls
     s_enabled = 0;
 
     s_level = HB_TR_DEFAULT;
@@ -230,15 +230,13 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
 {
   const char *pszLevel;
 
-  /*
-   * Clean up the file, so that instead of showing
-   *
-   *   ../../../foo/bar/baz.c
-   *
-   * we just show
-   *
-   *   foo/bar/baz.c
-   */
+  // Clean up the file, so that instead of showing
+  //
+  //   ../../../foo/bar/baz.c
+  //
+  // we just show
+  //
+  //   foo/bar/baz.c
   if (file)
   {
     while (*file == '.' || *file == '/' || *file == '\\')
@@ -262,8 +260,8 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
     va_list vargs;
     va_copy(vargs, ap);
 
-    /* NOTE: This is protection against recursive call to trace engine when
-             there is more than 16 parameters in format string */
+    // NOTE: This is protection against recursive call to trace engine when
+    //       there is more than 16 parameters in format string
     if (hb_xtraced() && hb_printf_params(fmt) > 16)
     {
       hb_snprintf(message, sizeof(message), "more then 16 parameters in message '%s'", fmt);
@@ -282,7 +280,7 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
         TCHAR lp[1024];
       } buf;
 
-      /* We add \n at the end of the buffer to make WinDbg display look readable. */
+      // We add \n at the end of the buffer to make WinDbg display look readable.
       if (proc)
       {
         hb_snprintf(buf.psz, sizeof(buf.psz), "%s:%d:%s() %s %s\n", file, line, proc, pszLevel, message);
@@ -340,9 +338,7 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
 #endif
   }
 
-  /*
-   * Print file and line.
-   */
+  // Print file and line.
   if (proc)
   {
     fprintf(s_fp, "%s:%d:%s(): %s ", file, line, proc, pszLevel);
@@ -352,14 +348,10 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
     fprintf(s_fp, "%s:%d: %s ", file, line, pszLevel);
   }
 
-  /*
-   * Print the name and arguments for the function.
-   */
+  // Print the name and arguments for the function.
   vfprintf(s_fp, fmt, ap);
 
-  /*
-   * Print a new-line.
-   */
+  // Print a new-line.
   fprintf(s_fp, "\n");
 
   if (s_flush > 0)
@@ -370,9 +362,7 @@ static void hb_tracelog_(int level, const char *file, int line, const char *proc
 
 void hb_tracelog(int level, const char *file, int line, const char *proc, const char *fmt, ...)
 {
-  /*
-   * If tracing is disabled, do nothing.
-   */
+  // If tracing is disabled, do nothing.
   if (s_enabled && level <= hb_tr_level())
   {
     va_list ap;
@@ -384,9 +374,7 @@ void hb_tracelog(int level, const char *file, int line, const char *proc, const 
 
 void hb_tr_trace(const char *fmt, ...)
 {
-  /*
-   * If tracing is disabled, do nothing.
-   */
+  // If tracing is disabled, do nothing.
   if (s_enabled)
   {
     PHB_TRACEINFO pTrace = hb_traceinfo();
@@ -396,14 +384,11 @@ void hb_tr_trace(const char *fmt, ...)
     hb_tracelog_(pTrace->level, pTrace->file, pTrace->line, pTrace->proc, fmt, ap);
     va_end(ap);
 
-    /*
-     * Reset file and line.
-     */
+    // Reset file and line.
     pTrace->level = -1;
-    /* NOTE: resetting file name/line number will cause that we will unable
-     * to report the location of code that allocated unreleased memory blocks
-     * See hb_xalloc()/hb_xgrab() in src/vm/fm.c
-     */
+    // NOTE: resetting file name/line number will cause that we will unable
+    // to report the location of code that allocated unreleased memory blocks
+    // See hb_xalloc()/hb_xgrab() in src/vm/fm.c
     if (hb_tr_level() < HB_TR_DEBUG)
     {
       pTrace->file = "";

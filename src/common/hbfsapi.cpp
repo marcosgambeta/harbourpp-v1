@@ -72,20 +72,16 @@
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
 #if defined(__USE_LARGEFILE64)
-/*
- * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
- * defined and effectively enables lseek64/flock64/ftruncate64 functions
- * on 32-bit machines.
- */
+// The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
+// defined and effectively enables lseek64/flock64/ftruncate64 functions
+// on 32-bit machines.
 #define HB_USE_LARGEFILE64
 #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
 #define HB_USE_LARGEFILE64
 #endif
 #endif
 
-/*
- * Function that adds zero or more paths to a list of pathnames to search
- */
+// Function that adds zero or more paths to a list of pathnames to search
 void hb_fsAddSearchPath(const char *szPath, HB_PATHNAMES **pSearchList)
 {
   char *pPath;
@@ -114,16 +110,14 @@ void hb_fsAddSearchPath(const char *szPath, HB_PATHNAMES **pSearchList)
   (*pSearchList)->fFree = fFree;
 }
 
-/*
- * free list of pathnames to search
- */
+// free list of pathnames to search
 void hb_fsFreeSearchPath(HB_PATHNAMES *pSearchList)
 {
   HB_PATHNAMES *pNext;
 
-  /* Only the first path holds an allocated string.
-     All of the other paths in the list are part of
-     that first string. */
+  // Only the first path holds an allocated string.
+  // All of the other paths in the list are part of
+  // that first string.
 
   while (pSearchList)
   {
@@ -137,7 +131,7 @@ void hb_fsFreeSearchPath(HB_PATHNAMES *pSearchList)
   }
 }
 
-/* Split given filename into path, name and extension, plus determine drive */
+// Split given filename into path, name and extension, plus determine drive
 PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
 {
 #if 0
@@ -147,7 +141,7 @@ PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
    HB_TRACE(HB_TR_INFO, ("hb_fsFNameSplit: Filename: |%s|", pszFileName));
 #endif
 
-  /* Grab memory, set defaults */
+  // Grab memory, set defaults
   auto pFileName = static_cast<PHB_FNAME>(hb_xgrab(sizeof(HB_FNAME)));
 
   pFileName->szPath = pFileName->szName = pFileName->szExtension = pFileName->szDrive = nullptr;
@@ -162,8 +156,8 @@ PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
 
     pszPos = pFileName->szBuffer;
 
-    /* Find the end of the path part, and find out where the
-       name+ext starts */
+    // Find the end of the path part, and find out where the
+    // name+ext starts
 
     while (--iPos >= 0)
     {
@@ -178,8 +172,8 @@ PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
       }
     }
 
-    /* From this point pszFileName will point to the name+ext part of the path */
-    /* Split the filename part to name and extension */
+    // From this point pszFileName will point to the name+ext part of the path
+    // Split the filename part to name and extension
     iPos = iSize;
     while (--iPos > 0)
     {
@@ -199,9 +193,9 @@ PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
       pszPos += iSize + 1;
     }
 
-    /* Duplicate the drive letter from the path for easy access on
-       platforms where applicable. Note that the drive info is always
-       present also in the path itself. */
+    // Duplicate the drive letter from the path for easy access on
+    // platforms where applicable. Note that the drive info is always
+    // present also in the path itself.
 
     if (pFileName->szPath)
     {
@@ -229,13 +223,12 @@ PHB_FNAME hb_fsFNameSplit(const char *pszFileName)
   return pFileName;
 }
 
-/* NOTE: szFileName buffer must be at least HB_PATH_MAX long.
- *       Because some foreign code may not be updated yet then
- *       hb_fsFNameMerge() effectively uses only HB_PATH_MAX buffer
- *       but it will be changed in the future.
- */
+// NOTE: szFileName buffer must be at least HB_PATH_MAX long.
+//       Because some foreign code may not be updated yet then
+//       hb_fsFNameMerge() effectively uses only HB_PATH_MAX buffer
+//       but it will be changed in the future.
 
-/* This function joins path, name and extension into a string with a filename */
+// This function joins path, name and extension into a string with a filename
 char *hb_fsFNameMerge(char *pszFileName, PHB_FNAME pFileName)
 {
 #if 0
@@ -247,13 +240,13 @@ char *hb_fsFNameMerge(char *pszFileName, PHB_FNAME pFileName)
     const char *pszName;
     char cDirSep;
 
-    /* dir separator set by user */
+    // dir separator set by user
     cDirSep = static_cast<char>(hb_setGetDirSeparator());
 
-    /* Set the result to an empty string */
+    // Set the result to an empty string
     pszFileName[0] = '\0';
 
-    /* Strip preceding path separators from the filename */
+    // Strip preceding path separators from the filename
     pszName = pFileName->szName;
     if (pszName && pszName[0] != '\0' &&
         (pszName[0] == cDirSep || strchr(HB_OS_PATH_DELIM_CHR_LIST, pszName[0]) != nullptr))
@@ -261,14 +254,14 @@ char *hb_fsFNameMerge(char *pszFileName, PHB_FNAME pFileName)
       pszName++;
     }
 
-    /* Add path if specified */
+    // Add path if specified
     if (pFileName->szPath)
     {
       hb_strncat(pszFileName, pFileName->szPath, HB_PATH_MAX - 1 - 1);
     }
 
-    /* If we have a path, append a path separator to the path if there
-       was none. */
+    // If we have a path, append a path separator to the path if there
+    // was none.
     if (pszFileName[0] != '\0' && (pszName || pFileName->szExtension))
     {
       int iLen = static_cast<int>(strlen(pszFileName)) - 1;
@@ -281,16 +274,16 @@ char *hb_fsFNameMerge(char *pszFileName, PHB_FNAME pFileName)
       }
     }
 
-    /* Add filename (without extension) if specified */
+    // Add filename (without extension) if specified
     if (pszName)
     {
       hb_strncat(pszFileName, pszName, HB_PATH_MAX - 1 - 1);
     }
 
-    /* Add extension if specified */
+    // Add extension if specified
     if (pFileName->szExtension)
     {
-      /* Add a dot if the extension doesn't have it */
+      // Add a dot if the extension doesn't have it
       if (pFileName->szExtension[0] != '\0' && pFileName->szExtension[0] != '.')
       {
         hb_strncat(pszFileName, ".", HB_PATH_MAX - 1 - 1);
@@ -345,7 +338,7 @@ HB_BOOL hb_fsNameExists(const char *pszFileName)
       fExist = stat(pszFileName, &statbuf) == 0;
 #endif
 #else
-      int iTODO; /* To force warning */
+      int iTODO; // To force warning
 #endif
     }
 
@@ -396,7 +389,7 @@ HB_BOOL hb_fsFileExists(const char *pszFileName)
       fExist = stat(pszFileName, &statbuf) == 0 && S_ISREG(statbuf.st_mode);
 #endif
 #else
-      int iTODO; /* To force warning */
+      int iTODO; // To force warning
 #endif
     }
 
@@ -447,7 +440,7 @@ HB_BOOL hb_fsDirExists(const char *pszDirName)
       fExist = stat(pszDirName, &statbuf) == 0 && S_ISDIR(statbuf.st_mode);
 #endif
 #else
-      int iTODO; /* To force warning */
+      int iTODO; // To force warning
 #endif
     }
 

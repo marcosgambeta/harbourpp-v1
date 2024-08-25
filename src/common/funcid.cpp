@@ -53,8 +53,8 @@ struct _HB_FUNCID
   HB_FUNC_ID funcID;
 };
 
-/* NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
- */
+// NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
+
 // clang-format off
 static _HB_FUNCID s_funcId[] =
 {
@@ -196,7 +196,7 @@ const char *hb_compGetFuncID(const char *szFuncName, HB_FUNC_ID *pFunID, int *pi
   *piFlags = HB_FN_UDF;
   *pFunID = HB_F_UDF;
 
-  /* hack for HB_I18N_GETTEXT_[NOOP_|STRICT_]* functions */
+  // hack for HB_I18N_GETTEXT_[NOOP_|STRICT_]* functions
   if (strncmp(szFuncName, "HB_I18N_", 8) == 0)
   {
     const char *szName = szFuncName + 8;

@@ -43,8 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: To avoid warnings with MSVC. For our purpose fopen_s() is not a good
-         alternative because it only opens files in non-shared mode. [vszakats] */
+// NOTE: To avoid warnings with MSVC. For our purpose fopen_s() is not a good
+//       alternative because it only opens files in non-shared mode. [vszakats]
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 #endif

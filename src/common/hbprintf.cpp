@@ -43,48 +43,44 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*
-   pattern format:
-   '%' [<flags>*] [<field width>] [.<precision>] [<length modifier>]
-       <conversion specifier>
- */
+// pattern format:
+// '%' [<flags>*] [<field width>] [.<precision>] [<length modifier>]
+//     <conversion specifier>
 
-/*
-   The following conversions are not explicitly supported:
-      A, a
-      E, e
-      G, g
-   These are (long) double conversions. If necessary they can be easy added.
-   Now they are simply redirected to F, f conversions.
+// The following conversions are not explicitly supported:
+//    A, a
+//    E, e
+//    G, g
+// These are (long) double conversions. If necessary they can be easy added.
+// Now they are simply redirected to F, f conversions.
+//
+//    C (or Lc)
+//    S (or Ls)
+// These are wide character conversions and needs locale settings.
+//
+// double conversion if not necessary can be disabled to not create unnecessary
+// overhead and/or references to math library by
+//    #define __NO_DOUBLE__
+// It can be also greatly optimized anyhow it will increase dependences list and
+// reduce portability.
+// Internally 'long double' is used for all calculations. If some platforms do
+// not support it then it can be eliminated by
+//    #define __NO_LONGDOUBLE__
+//
+// If positional parameters are not necessary then support for them can be
+// disabled by
+//    #define __NO_ARGPOS__
+// In such case this code neither allocates memory nor extensively use stack
+// as memory buffer. All conversions are done "on the fly". If memory
+// allocations or stack size is not a problem then some parts can be easy
+// optimized.
 
-      C (or Lc)
-      S (or Ls)
-   These are wide character conversions and needs locale settings.
+// #define __NO_DOUBLE__
+// #define __NO_LONGDOUBLE__
+// #define __NO_LONGLONG__
+// #define __NO_ARGPOS__
 
-   double conversion if not necessary can be disabled to not create unnecessary
-   overhead and/or references to math library by
-      #define __NO_DOUBLE__
-   It can be also greatly optimized anyhow it will increase dependences list and
-   reduce portability.
-   Internally 'long double' is used for all calculations. If some platforms do
-   not support it then it can be eliminated by
-      #define __NO_LONGDOUBLE__
-
-   If positional parameters are not necessary then support for them can be
-   disabled by
-      #define __NO_ARGPOS__
-   In such case this code neither allocates memory nor extensively use stack
-   as memory buffer. All conversions are done "on the fly". If memory
-   allocations or stack size is not a problem then some parts can be easy
-   optimized.
- */
-
-/* #define __NO_DOUBLE__ */
-/* #define __NO_LONGDOUBLE__ */
-/* #define __NO_LONGLONG__ */
-/* #define __NO_ARGPOS__ */
-
-/* hbfloat.h have to be included first */
+// hbfloat.h have to be included first
 #include "hbfloat.hpp"
 #include "hbapicdp.hpp"
 #include <stddef.h>
@@ -103,14 +99,13 @@
 
 #if !defined(HB_USE_CRTL_SNPRINTF)
 
-/* few macros for some platform dependent floating point functions/macros */
+// few macros for some platform dependent floating point functions/macros
 
 #if (defined(__BORLANDC__) && __BORLANDC__ < 0x0582) || defined(HB_OS_QNX) || defined(__DCC__) || (defined(_MSC_VER))
-/* TODO: add other C compilers which does not support [u]intmax_t
- *       definitions (check C compiler version number).
- *       If compiler supports stdint.h then it should be added
- *       to hbdefs.h.
- */
+// TODO: add other C compilers which does not support [u]intmax_t
+//       definitions (check C compiler version number).
+//       If compiler supports stdint.h then it should be added
+//       to hbdefs.h.
 #define intmax_t _x_longlong
 #define uintmax_t _x_ulonglong
 #endif
@@ -126,11 +121,11 @@
 #define _ARGBUF_SIZE 16
 #define _ARGBUF_ALLOC 16
 
-#define _F_ALTERNATE 0x01    /* only for: o xX aA eE fF gG  */
-#define _F_ZEROPADED 0x02    /* only for: d i o u xX aA eE fF gG */
-#define _F_LEFTADJUSTED 0x04 /* clears _F_ZEROPADED */
-#define _F_SPACE 0x08        /* only for signed num conversions: d i fF aA eE gG */
-#define _F_SIGN 0x10         /* only for signed num conversions: d i fF aA eE gG, clears _F_SPACE */
+#define _F_ALTERNATE 0x01    // only for: o xX aA eE fF gG
+#define _F_ZEROPADED 0x02    // only for: d i o u xX aA eE fF gG
+#define _F_LEFTADJUSTED 0x04 // clears _F_ZEROPADED
+#define _F_SPACE 0x08        // only for signed num conversions: d i fF aA eE gG
+#define _F_SIGN 0x10         // only for signed num conversions: d i fF aA eE gG, clears _F_SPACE
 
 #define _L_UNDEF_ 0
 #define _L_CHAR_ 1
@@ -238,21 +233,19 @@ struct v_paramlst
 
 #ifdef __NO_ARGPOS__
 
-/* this version does not support positional parameters (f.e. '%1$d')
- * they can be added but it will force allocating additional
- * memory block in heap or stack and making second pass for
- * format decoding/coping.
- * so we will use only this simple macro which ignores parameter
- * positions.
- */
+// this version does not support positional parameters (f.e. '%1$d')
+// they can be added but it will force allocating additional
+// memory block in heap or stack and making second pass for
+// format decoding/coping.
+// so we will use only this simple macro which ignores parameter
+// positions.
 #define va_arg_n(va, type, n) va_arg(va, type)
 
-/* on some systems where each parameter allocates memory with
- * the same size in function stack frame this simple macro can
- * be used.
- */
+// on some systems where each parameter allocates memory with
+// the same size in function stack frame this simple macro can
+// be used.
 
-/*
+#if 0
 #define va_arg_n(va, type, n)     \
    ( { \
       type result; \
@@ -269,8 +262,7 @@ struct v_paramlst
       } \
       result; \
    } )
-*/
-
+#endif
 #else
 
 #define va_arg_n(va, type, n) (n == 0 ? va_arg(va, type) : va_arg_get(n, &params, v##type)->value.as##type)
@@ -548,11 +540,10 @@ static size_t put_dbl(char *buffer, size_t bufsize, size_t size, _x_long_dbl val
     value = -value;
   }
 
-  /* Round the number to given precision.
-   * powl() is of course faster when precision is big but it is libm
-   * (-lm link switch) function so we will make small trick here and
-   * calculate it in a loop
-   */
+  // Round the number to given precision.
+  // powl() is of course faster when precision is big but it is libm
+  // (-lm link switch) function so we will make small trick here and
+  // calculate it in a loop
 #if 0
    value += _POWD(10, -precision) / 2;
 #else
@@ -893,7 +884,7 @@ int hb_printf_params(const char *format)
       c = *format++;
       if (c != 0 && c != '%')
       {
-        /* parameter position */
+        // parameter position
         if (c >= '0' && c <= '9')
         {
           c = get_decimal(c, &format, &param);
@@ -904,7 +895,7 @@ int hb_printf_params(const char *format)
           c = *format++;
         }
 
-        /* flags */
+        // flags
         value = 0;
         while (!value)
         {
@@ -916,7 +907,7 @@ int hb_printf_params(const char *format)
           case ' ':
           case '+':
 #ifdef _SUSV2_COMPAT_
-          case '\'': /* group with locale thousands' grouping characters */
+          case '\'': // group with locale thousands' grouping characters
 #endif
             c = *format++;
             break;
@@ -926,7 +917,7 @@ int hb_printf_params(const char *format)
           }
         }
 
-        /* field width */
+        // field width
         if (c == '*')
         {
           c = *format++;
@@ -941,7 +932,7 @@ int hb_printf_params(const char *format)
               }
               c = *format++;
             }
-            /* else error, wrong format */
+            // else error, wrong format
           }
           else
           {
@@ -953,7 +944,7 @@ int hb_printf_params(const char *format)
           c = get_decimal(c, &format, &value);
         }
 
-        /* precision */
+        // precision
         if (c == '.')
         {
           c = *format++;
@@ -971,7 +962,7 @@ int hb_printf_params(const char *format)
                 }
                 c = *format++;
               }
-              /* else error, wrong format */
+              // else error, wrong format
             }
             else
             {
@@ -984,7 +975,7 @@ int hb_printf_params(const char *format)
           }
         }
 
-        /* length modifier */
+        // length modifier
         switch (c)
         {
         case 'h':
@@ -1013,7 +1004,7 @@ int hb_printf_params(const char *format)
         case 't':
           c = *format++;
           break;
-        case 'I': /* MS-Windows extension */
+        case 'I': // MS-Windows extension
           if (format[0] == '6' && format[1] == '4')
           {
             format += 2;
@@ -1031,12 +1022,12 @@ int hb_printf_params(const char *format)
             format += 2;
             c = *format++;
           }
-          /* fallthrough */
+          // fallthrough
         default:
           break;
         }
 
-        /* conversion specifier */
+        // conversion specifier
         switch (c)
         {
 #ifndef __NO_DOUBLE__
@@ -1046,19 +1037,19 @@ int hb_printf_params(const char *format)
         case 'E':
         case 'g':
         case 'G':
-        case 'f': /* double decimal notation */
-        case 'F': /* double decimal notation */
+        case 'f': // double decimal notation
+        case 'F': // double decimal notation
 #endif
         case 'd':
-        case 'i': /* signed int decimal conversion */
-        case 'o': /* unsigned int octal conversion */
-        case 'u': /* unsigned int decimal conversion */
-        case 'x': /* unsigned int hexadecimal conversion */
-        case 'X': /* unsigned int hexadecimal conversion */
-        case 'p': /* void * pointer */
-        case 'c': /* signed int casted to unsigned char */
-        case 's': /* const char * */
-        case 'n': /* store current result size in int * arg */
+        case 'i': // signed int decimal conversion
+        case 'o': // unsigned int octal conversion
+        case 'u': // unsigned int decimal conversion
+        case 'x': // unsigned int hexadecimal conversion
+        case 'X': // unsigned int hexadecimal conversion
+        case 'p': // void * pointer
+        case 'c': // signed int casted to unsigned char
+        case 's': // const char *
+        case 'n': // store current result size in int * arg
           if (param == 0)
           {
             ++iParam;
@@ -1068,9 +1059,9 @@ int hb_printf_params(const char *format)
             iMax = param;
           }
           break;
-        case '%': /* store % consuming arguments % */
+        case '%': // store % consuming arguments %
           break;
-        default: /* error, wrong format, store pattern */
+        default: // error, wrong format, store pattern
           format = pattern;
           c = '%';
           break;
@@ -1123,11 +1114,11 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
         c = *format++;
         if (c != 0 && c != '%')
         {
-          /* decode pattern */
+          // decode pattern
           v_param argval;
           int param = 0, flags = 0, width = -1, precision = -1, length, value, stop = 0;
 
-          /* parameter position */
+          // parameter position
           if (c >= '0' && c <= '9')
           {
             c = get_decimal(c, &format, &value);
@@ -1142,7 +1133,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
             c = *format++;
           }
 
-          /* flags */
+          // flags
           while (!stop)
           {
             switch (c)
@@ -1168,7 +1159,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
               c = *format++;
               break;
 #ifdef _SUSV2_COMPAT_
-            case '\'': /* group with locale thousands' grouping characters */
+            case '\'': // group with locale thousands' grouping characters
               c = *format++;
               break;
 #endif
@@ -1178,7 +1169,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
             }
           }
 
-          /* field width */
+          // field width
           if (c == '*')
           {
             c = *format++;
@@ -1190,7 +1181,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
                 width = va_arg_n(args, _x_int, value);
                 c = *format++;
               }
-              /* else error, wrong format */
+              // else error, wrong format
             }
             else
             {
@@ -1202,7 +1193,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
             c = get_decimal(c, &format, &width);
           }
 
-          /* precision */
+          // precision
           if (c == '.')
           {
             precision = 0;
@@ -1218,7 +1209,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
                   precision = va_arg_n(args, _x_int, value);
                   c = *format++;
                 }
-                /* else error, wrong format */
+                // else error, wrong format
               }
               else
               {
@@ -1231,7 +1222,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
             }
           }
 
-          /* length modifier */
+          // length modifier
           switch (c)
           {
           case 'h':
@@ -1274,7 +1265,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
             length = _L_PTRDIFF_;
             c = *format++;
             break;
-          case 'I': /* MS-Windows extension */
+          case 'I': // MS-Windows extension
             if (format[0] == '6' && format[1] == '4')
             {
               length = _L_LONGLONG_;
@@ -1294,13 +1285,13 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
               format += 2;
               c = *format++;
             }
-            /* fallthrough */
+            // fallthrough
           default:
             length = _L_UNDEF_;
             break;
           }
 
-          /* conversion specifier */
+          // conversion specifier
           switch (c)
           {
 #ifndef __NO_DOUBLE__
@@ -1310,13 +1301,12 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
           case 'E':
           case 'g':
           case 'G':
-            /* redirect above conversion to 'f' or 'F' type to keep
-             * valid parameters order
-             */
+            // redirect above conversion to 'f' or 'F' type to keep
+            // valid parameters order
             c = (c == 'a' || c == 'e' || c == 'g') ? 'f' : 'F';
-            /* fallthrough */
-          case 'f': /* double decimal notation */
-          case 'F': /* double decimal notation */
+            // fallthrough
+          case 'f': // double decimal notation
+          case 'F': // double decimal notation
             if (length == _L_LONGDOUBLE_)
             {
               argval.value.as_x_long_dbl = va_arg_n(args, _x_long_dbl, param);
@@ -1352,7 +1342,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
             continue;
 #endif
           case 'd':
-          case 'i': /* signed int decimal conversion */
+          case 'i': // signed int decimal conversion
             if (length == _L_CHAR_)
             {
               argval.value.as_x_intmax_t = static_cast<unsigned char>(va_arg_n(args, _x_int, param));
@@ -1389,10 +1379,10 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
             argval.value.as_x_uintmax_t = value ? -argval.value.as_x_intmax_t : argval.value.as_x_intmax_t;
             size = put_dec(buffer, bufsize, size, argval.value.as_x_uintmax_t, flags, width, precision, value);
             continue;
-          case 'o': /* unsigned int octal conversion */
-          case 'u': /* unsigned int decimal conversion */
-          case 'x': /* unsigned int hexadecimal conversion */
-          case 'X': /* unsigned int hexadecimal conversion */
+          case 'o': // unsigned int octal conversion
+          case 'u': // unsigned int decimal conversion
+          case 'x': // unsigned int hexadecimal conversion
+          case 'X': // unsigned int hexadecimal conversion
             if (length == _L_CHAR_)
             {
               argval.value.as_x_uintmax_t = static_cast<unsigned char>(va_arg_n(args, _x_int, param));
@@ -1440,7 +1430,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
               size = put_hex(buffer, bufsize, size, argval.value.as_x_uintmax_t, flags, width, precision, c == 'X');
             }
             continue;
-          case 'p': /* void * pointer */
+          case 'p': // void * pointer
             argval.value.as_x_ptr = va_arg_n(args, _x_ptr, param);
             if (argval.value.as_x_ptr)
             {
@@ -1452,7 +1442,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
               size = put_str(buffer, bufsize, size, "(nil)", flags, width, -1);
             }
             continue;
-          case 'c': /* signed int casted to unsigned char */
+          case 'c': // signed int casted to unsigned char
             if ((flags & _F_LEFTADJUSTED) == 0)
             {
               while (--width > 0)
@@ -1479,7 +1469,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
               ++size;
             }
             continue;
-          case 's': /* const char * */
+          case 's': // const char *
             if (length == _L_LONG_)
             {
               argval.value.as_x_wstr = va_arg_n(args, _x_wstr, param);
@@ -1491,18 +1481,17 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
               size = put_str(buffer, bufsize, size, argval.value.as_x_str, flags, width, precision);
             }
             continue;
-          case 'n': /* store current result size in int * arg */
-            /* This is very danger feature in *printf() functions
-             * family very often used by hackers to create buffer
-             * overflows. It can also cause unintentional memory
-             * corruption by programmers typo in pattern so if it's
-             * not strictly necessary it's good to disable it.
-             */
+          case 'n': // store current result size in int * arg
+            // This is very danger feature in *printf() functions
+            // family very often used by hackers to create buffer
+            // overflows. It can also cause unintentional memory
+            // corruption by programmers typo in pattern so if it's
+            // not strictly necessary it's good to disable it.
             *(va_arg_n(args, _x_intptr, param)) = static_cast<int>(size);
             continue;
-          case '%': /* store % consuming arguments % */
+          case '%': // store % consuming arguments %
             break;
-          default: /* error, wrong format, store pattern */
+          default: // error, wrong format, store pattern
             format = pattern;
             c = '%';
             break;
@@ -1510,14 +1499,13 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
         }
       }
 
-      /* ISO C99 defines that when size is 0 and buffer is nullptr we should
-       * return number of characters that would have been written in case
-       * the output string has been large enough without trailing 0.
-       * Many implementations always returns number of characters necessary
-       * to hold the string even if the above condition is not true so the
-       * returned value can be used to check if buffer was large enough
-       * and if not to allocate bigger buffer. Let's do the same.
-       */
+      // ISO C99 defines that when size is 0 and buffer is nullptr we should
+      // return number of characters that would have been written in case
+      // the output string has been large enough without trailing 0.
+      // Many implementations always returns number of characters necessary
+      // to hold the string even if the above condition is not true so the
+      // returned value can be used to check if buffer was large enough
+      // and if not to allocate bigger buffer. Let's do the same.
       if (size < bufsize)
       {
         buffer[size] = c;
@@ -1536,7 +1524,7 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
   }
 #endif
 
-  /* always set trailing \0 !!! */
+  // always set trailing \0 !!!
   if (bufsize)
   {
     buffer[bufsize - 1] = 0;
@@ -1545,11 +1533,11 @@ int hb_vsnprintf(char *buffer, size_t bufsize, const char *format, va_list ap)
   return static_cast<int>(size - 1);
 }
 
-#else /* defined(HB_USE_CRTL_SNPRINTF) */
+#else // defined(HB_USE_CRTL_SNPRINTF)
 
 #undef _HB_SNPRINTF_ADD_EOS
 
-/* NOTE: The full size of the buffer is expected as nSize. [vszakats] */
+// NOTE: The full size of the buffer is expected as nSize. [vszakats]
 int hb_vsnprintf(char *buffer, size_t nSize, const char *format, va_list arglist)
 {
   int result;
@@ -1573,7 +1561,7 @@ int hb_vsnprintf(char *buffer, size_t nSize, const char *format, va_list arglist
   return result;
 }
 
-#endif /* HB_USE_CRTL_SNPRINTF */
+#endif // HB_USE_CRTL_SNPRINTF
 
 int hb_snprintf(char *buffer, size_t bufsize, const char *format, ...)
 {

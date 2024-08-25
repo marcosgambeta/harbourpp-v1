@@ -77,8 +77,8 @@
 #define HB_DATE_YEAR_LIMIT 9999
 #endif
 
-#define HB_STR_DATE_BASE 1721060 /* 0000-01-01 */
-#define HB_SYS_DATE_BASE 2440588 /* 1970-01-01 */
+#define HB_STR_DATE_BASE 1721060 // 0000-01-01
+#define HB_SYS_DATE_BASE 2440588 // 1970-01-01
 
 void hb_timeStampGetLocal(int *piYear, int *piMonth, int *piDay, int *piHour, int *piMinutes, int *piSeconds,
                           int *piMSec)
@@ -135,7 +135,7 @@ void hb_timeStampGetLocal(int *piYear, int *piMonth, int *piDay, int *piHour, in
 #endif
 }
 
-/* return UTC Julian timestamp in milliseconds */
+// return UTC Julian timestamp in milliseconds
 HB_MAXUINT hb_dateMilliSeconds(void)
 {
 #if 0
@@ -167,7 +167,7 @@ HB_MAXUINT hb_dateMilliSeconds(void)
 #endif
 }
 
-/* return local timestamp */
+// return local timestamp
 void hb_timeStampGet(long *plJulian, long *plMilliSec)
 {
 #if 0
@@ -199,11 +199,11 @@ long hb_dateEncode(int iYear, int iMonth, int iDay)
    HB_TRACE(HB_TR_DEBUG, ("hb_dateEncode(%d, %d, %d)", iYear, iMonth, iDay));
 #endif
 
-  /* Perform date validation */
+  // Perform date validation
   if (iYear >= 0 && iYear <= HB_DATE_YEAR_LIMIT && iMonth >= 1 && iMonth <= 12 && iDay >= 1)
   {
-    /* Month, year, and lower day limits are simple,
-       but upper day limit is dependent upon month and leap year */
+    // Month, year, and lower day limits are simple,
+    // but upper day limit is dependent upon month and leap year
     static const int auiDayLimit[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     if (iDay <= auiDayLimit[iMonth - 1] ||
@@ -289,7 +289,7 @@ void hb_dateStrGet(const char *szDate, int *piYear, int *piMonth, int *piDay)
       szDate[7] <= '9')
 #endif
   {
-    /* Date string has correct length, so attempt to convert */
+    // Date string has correct length, so attempt to convert
     *piYear = ((static_cast<int>(szDate[0] - '0') * 10 + static_cast<int>(szDate[1] - '0')) * 10 +
                static_cast<int>(szDate[2] - '0')) *
                   10 +
@@ -299,13 +299,13 @@ void hb_dateStrGet(const char *szDate, int *piYear, int *piMonth, int *piDay)
   }
   else
   {
-    /* Date string missing or bad length, so force an empty date */
+    // Date string missing or bad length, so force an empty date
     *piYear = *piMonth = *piDay = 0;
   }
 }
 
-/* This function always closes the date with a zero byte, so it needs a
-   9 character long buffer. */
+// This function always closes the date with a zero byte, so it needs a
+// 9 character long buffer.
 
 char *hb_dateDecStr(char *szDate, long lJulian)
 {
@@ -428,7 +428,7 @@ void hb_dateToday(int *piYear, int *piMonth, int *piDay)
   hb_timeStampGetLocal(piYear, piMonth, piDay, &iHour, &iMinute, &iSeconds, &iMillisec);
 }
 
-/* NOTE: The passed buffer must be at least 9 chars long */
+// NOTE: The passed buffer must be at least 9 chars long
 
 void hb_dateTimeStr(char *pszTime)
 {
@@ -442,7 +442,7 @@ void hb_dateTimeStr(char *pszTime)
   hb_snprintf(pszTime, 9, "%02d:%02d:%02d", iHour, iMinute, iSeconds);
 }
 
-/* functions to operate on time and timestamp values */
+// functions to operate on time and timestamp values
 
 long hb_timeEncode(int iHour, int iMinutes, int iSeconds, int iMSec)
 {
@@ -454,7 +454,7 @@ long hb_timeEncode(int iHour, int iMinutes, int iSeconds, int iMSec)
 
   if (iHour >= 0 && iHour < 24 && iMinutes >= 0 && iMinutes < 60 && iSeconds >= 0 && iSeconds < 60 && iMSec >= 0 &&
       iMSec < 1000)
-  { /* <= intentionally for rounded milliseconds values */
+  { // <= intentionally for rounded milliseconds values
     lMilliSec = (static_cast<long>(iHour * 60 + iMinutes) * 60 + iSeconds) * 1000 + iMSec;
   }
   else
@@ -494,9 +494,8 @@ void hb_timeDecode(long lMilliSec, int *piHour, int *piMinutes, int *piSeconds, 
   }
 }
 
-/* This function always closes the time with a zero byte, so it needs a
- * 13 character long buffer to store time in format "hh:mm:ss.fff"
- */
+// This function always closes the time with a zero byte, so it needs a
+// 13 character long buffer to store time in format "hh:mm:ss.fff"
 char *hb_timeStr(char *szTime, long lMilliSec)
 {
 #if 0
@@ -590,7 +589,7 @@ HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
           szTime += 2;
           if (iHour == 0)
           {
-            iHour = 24; /* wrong time */
+            iHour = 24; // wrong time
           }
           else if (iHour != 12)
           {
@@ -603,7 +602,7 @@ HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
           szTime += 2;
           if (iHour == 0)
           {
-            iHour = 24; /* wrong time */
+            iHour = 24; // wrong time
           }
           else if (iHour == 12)
           {
@@ -698,10 +697,9 @@ void hb_timeStrRawGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
   }
 }
 
-/* This function always closes the time with a zero byte, so it needs a
- * 18 character long buffer to store time in format "YYYYMMDDhhmmssfff"
- * with trailing 0 byte.
- */
+// This function always closes the time with a zero byte, so it needs a
+// 18 character long buffer to store time in format "YYYYMMDDhhmmssfff"
+// with trailing 0 byte.
 char *hb_timeStampStrRawPut(char *szDateTime, long lJulian, long lMilliSec)
 {
 #if 0
@@ -749,10 +747,9 @@ void hb_timeStampStrRawGet(const char *szDateTime, long *plJulian, long *plMilli
   }
 }
 
-/* This function always closes the time with a zero byte.
- * It needs a 24 character long buffer for full datetime representation
- * "YYYY-MM-DD hh:mm:ss.fff"
- */
+// This function always closes the time with a zero byte.
+// It needs a 24 character long buffer for full datetime representation
+// "YYYY-MM-DD hh:mm:ss.fff"
 char *hb_timeStampStr(char *szDateTime, long lJulian, long lMilliSec)
 {
 #if 0
@@ -795,7 +792,7 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
                static_cast<int>(szDateTime[2] - '0')) *
                   10 +
               static_cast<int>(szDateTime[3] - '0');
-      /* ISO 8601 Calendar dates: YYYY-MM-DD */
+      // ISO 8601 Calendar dates: YYYY-MM-DD
       if (HB_ISDIGIT(szDateTime[5]) && HB_ISDIGIT(szDateTime[6]) && szDateTime[7] == szDateTime[4] &&
           HB_ISDIGIT(szDateTime[8]) && HB_ISDIGIT(szDateTime[9]) && !HB_ISDIGIT(szDateTime[10]))
       {
@@ -808,7 +805,7 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
           fValid = true;
         }
       }
-      else if ((szDateTime[5] == 'W' || szDateTime[5] == 'w') && /* ISO 8601 Week dates: YYYY-Www-D */
+      else if ((szDateTime[5] == 'W' || szDateTime[5] == 'w') && // ISO 8601 Week dates: YYYY-Www-D
                HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) && szDateTime[8] == szDateTime[4] &&
                HB_ISDIGIT(szDateTime[9]) && !HB_ISDIGIT(szDateTime[10]))
       {
@@ -820,7 +817,7 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
           fValid = true;
         }
       }
-      else if (szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) && /* ISO 8601 Ordinal dates: YYYY-DDD */
+      else if (szDateTime[4] == '-' && HB_ISDIGIT(szDateTime[5]) && // ISO 8601 Ordinal dates: YYYY-DDD
                HB_ISDIGIT(szDateTime[6]) && HB_ISDIGIT(szDateTime[7]) && !HB_ISDIGIT(szDateTime[8]))
       {
         iDay = (static_cast<int>(szDateTime[5] - '0') * 10 + static_cast<int>(szDateTime[6] - '0')) * 10 +
@@ -1047,7 +1044,7 @@ void hb_timeStampUnpackD(double dTimeStamp, int *piYear, int *piMonth, int *piDa
   }
 }
 
-long hb_timeUTCOffset(void) /* in seconds */
+long hb_timeUTCOffset(void) // in seconds
 {
 #if defined(HB_OS_WIN)
   {
@@ -1056,14 +1053,14 @@ long hb_timeUTCOffset(void) /* in seconds */
 
     retval = GetTimeZoneInformation(&tzInfo);
 
-    /* disabled because users reported that in some
-     * countries/windows versions GetTimeZoneInformation()
-     * returns TIME_ZONE_ID_INVALID but sets correct
-     * tzInfo.StandardBias field.
-     */
+    // disabled because users reported that in some
+    // countries/windows versions GetTimeZoneInformation()
+    // returns TIME_ZONE_ID_INVALID but sets correct
+    // tzInfo.StandardBias field.
 #if 0
-      if( retval == TIME_ZONE_ID_INVALID ) {
-         return 0;
+      if (retval == TIME_ZONE_ID_INVALID)
+      {
+        return 0;
       }
 #endif
 
@@ -1124,13 +1121,13 @@ long hb_timeStampUTCOffset(int iYear, int iMonth, int iDay, int iHour, int iMinu
   struct tm timeinfo;
   time_t utc, local;
 
-  timeinfo.tm_sec = iSeconds;      /* seconds */
-  timeinfo.tm_min = iMinutes;      /* minutes */
-  timeinfo.tm_hour = iHour;        /* hours */
-  timeinfo.tm_mday = iDay;         /* day of the month */
-  timeinfo.tm_mon = iMonth - 1;    /* month */
-  timeinfo.tm_year = iYear - 1900; /* year */
-  timeinfo.tm_isdst = -1;          /* daylight saving time */
+  timeinfo.tm_sec = iSeconds;      // seconds
+  timeinfo.tm_min = iMinutes;      // minutes
+  timeinfo.tm_hour = iHour;        // hours
+  timeinfo.tm_mday = iDay;         // day of the month
+  timeinfo.tm_mon = iMonth - 1;    // month
+  timeinfo.tm_year = iYear - 1900; // year
+  timeinfo.tm_isdst = -1;          // daylight saving time
 
   local = mktime(&timeinfo);
 
@@ -1269,9 +1266,9 @@ HB_MAXINT hb_timerTest(HB_MAXINT nTimeOut, HB_MAXUINT *pnTimer)
 
 #if defined(HB_OS_VXWORKS)
 
-/* NOTE: This function is declared, but not present in
-         libs in VxWorks 6.8. So here we emulate its
-         base functionality. [vszakats] */
+// NOTE: This function is declared, but not present in
+//       libs in VxWorks 6.8. So here we emulate its
+//       base functionality. [vszakats]
 
 int gettimeofday(struct timeval *tv, void *tz)
 {

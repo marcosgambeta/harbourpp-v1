@@ -299,7 +299,7 @@ int hb_stricmp(const char *s1, const char *s2)
   return rc;
 }
 
-/* Warning: It is not case sensitive */
+// Warning: It is not case sensitive
 int hb_strnicmp(const char *s1, const char *s2, HB_SIZE count)
 {
 #if 0
@@ -327,11 +327,9 @@ int hb_strnicmp(const char *s1, const char *s2, HB_SIZE count)
   return rc;
 }
 
-/*
-   AJ: 2004-02-23
-   Concatenates multiple strings into a single result.
-   Eg. hb_xstrcat(buffer, "A", "B", nullptr) stores "AB" in buffer.
- */
+// AJ: 2004-02-23
+// Concatenates multiple strings into a single result.
+// Eg. hb_xstrcat(buffer, "A", "B", nullptr) stores "AB" in buffer.
 char *hb_xstrcat(char *szDest, const char *szSrc, ...)
 {
 #if 0
@@ -361,16 +359,14 @@ char *hb_xstrcat(char *szDest, const char *szSrc, ...)
   return szResult;
 }
 
-/*
-   AJ: 2004-02-23
-   Concatenates multiple strings into a single result.
-   Eg. hb_xstrcpy(buffer, "A", "B", nullptr) stores "AB" in buffer.
-   Returns szDest.
-   Any existing contents of szDest are cleared. If the szDest buffer is nullptr,
-   allocates a new buffer with the required length and returns that. The
-   buffer is allocated using hb_xgrab(), and should eventually be freed
-   using hb_xfree().
- */
+// AJ: 2004-02-23
+// Concatenates multiple strings into a single result.
+// Eg. hb_xstrcpy(buffer, "A", "B", nullptr) stores "AB" in buffer.
+// Returns szDest.
+// Any existing contents of szDest are cleared. If the szDest buffer is nullptr,
+// allocates a new buffer with the required length and returns that. The
+// buffer is allocated using hb_xgrab(), and should eventually be freed
+// using hb_xfree().
 char *hb_xstrcpy(char *szDest, const char *szSrc, ...)
 {
 #if 0
@@ -411,22 +407,22 @@ char *hb_xstrcpy(char *szDest, const char *szSrc, ...)
 
 static double hb_numPow10(int nPrecision)
 {
-  static const double s_dPow10[16] = {1.0,                 /* 0 */
-                                      10.0,                /* 1 */
-                                      100.0,               /* 2 */
-                                      1000.0,              /* 3 */
-                                      10000.0,             /* 4 */
-                                      100000.0,            /* 5 */
-                                      1000000.0,           /* 6 */
-                                      10000000.0,          /* 7 */
-                                      100000000.0,         /* 8 */
-                                      1000000000.0,        /* 9 */
-                                      10000000000.0,       /* 10 */
-                                      100000000000.0,      /* 11 */
-                                      1000000000000.0,     /* 12 */
-                                      10000000000000.0,    /* 13 */
-                                      100000000000000.0,   /* 14 */
-                                      1000000000000000.0}; /* 15 */
+  static const double s_dPow10[16] = {1.0,                 // 0
+                                      10.0,                // 1
+                                      100.0,               // 2
+                                      1000.0,              // 3
+                                      10000.0,             // 4
+                                      100000.0,            // 5
+                                      1000000.0,           // 6
+                                      10000000.0,          // 7
+                                      100000000.0,         // 8
+                                      1000000000.0,        // 9
+                                      10000000000.0,       // 10
+                                      100000000000.0,      // 11
+                                      1000000000000.0,     // 12
+                                      10000000000000.0,    // 13
+                                      100000000000000.0,   // 14
+                                      1000000000000000.0}; // 15
 
   if (nPrecision < 16)
   {
@@ -468,34 +464,30 @@ double hb_numRound(double dNum, int iDec)
     doComplete5 = dNum * dPow * doBase;
   }
 
-  /*
-   * double precision if 15 digit the 16th one is usually wrong but
-   * can give some information about number,
-   * Clipper display 16 digit only others are set to 0
-   * many people don't know/understand FL arithmetic. They expect
-   * that it will behaves in the same way as real numbers. It's not
-   * true but in business application we can try to hide this problem
-   * for them. Usually they not need such big precision in presented
-   * numbers so we can decrease the precision to 15 digits and use
-   * the cut part for proper rounding. It should resolve
-   * most of problems. But if someone totally  not understand FL
-   * and will try to convert big matrix or something like that it's quite
-   * possible that he chose one of the natural school algorithm which
-   * works nice with real numbers but can give very bad results in FL.
-   * In such case it could be good to decrease precision even more.
-   * It not fixes the used algorithm of course but will make many users
-   * happy because they can see nice (proper) result.
-   * So maybe it will be good to add SET PRECISION TO <n> for them and
-   * use the similar hack in ==, >=, <=, <, > operations if it's set.
-   */
+  // double precision if 15 digit the 16th one is usually wrong but
+  // can give some information about number,
+  // Clipper display 16 digit only others are set to 0
+  // many people don't know/understand FL arithmetic. They expect
+  // that it will behaves in the same way as real numbers. It's not
+  // true but in business application we can try to hide this problem
+  // for them. Usually they not need such big precision in presented
+  // numbers so we can decrease the precision to 15 digits and use
+  // the cut part for proper rounding. It should resolve
+  // most of problems. But if someone totally  not understand FL
+  // and will try to convert big matrix or something like that it's quite
+  // possible that he chose one of the natural school algorithm which
+  // works nice with real numbers but can give very bad results in FL.
+  // In such case it could be good to decrease precision even more.
+  // It not fixes the used algorithm of course but will make many users
+  // happy because they can see nice (proper) result.
+  // So maybe it will be good to add SET PRECISION TO <n> for them and
+  // use the similar hack in ==, >=, <=, <, > operations if it's set.
 
-  /* #define HB_NUM_PRECISION  16 */
+  // #define HB_NUM_PRECISION  16
 
 #ifdef HB_NUM_PRECISION
-  /*
-   * this is a hack for people who cannot live without hacked FL values
-   * in rounding
-   */
+  // this is a hack for people who cannot live without hacked FL values
+  // in rounding
   {
     int iPrec;
     auto fNeg = false;
@@ -559,8 +551,8 @@ double hb_numRound(double dNum, int iDec)
   doComplete5 /= doBase;
 
 #if defined(HB_DBLFL_PREC_FACTOR) && !defined(HB_CLP_STRICT)
-  /* similar operation is done by Cl5.3
-     it's a hack to force rounding FL values UP */
+  // similar operation is done by Cl5.3
+  //  it's a hack to force rounding FL values UP
   doComplete5 *= HB_DBLFL_PREC_FACTOR;
 #endif
 
@@ -581,7 +573,7 @@ double hb_numInt(double dNum)
   double dInt;
 
 #if defined(HB_DBLFL_PREC_FACTOR) && !defined(HB_CLP_STRICT)
-  /* Similar hack as in round to make this functions compatible */
+  // Similar hack as in round to make this functions compatible
   dNum *= HB_DBLFL_PREC_FACTOR;
 #endif
   (void)modf(dNum, &dInt); // TODO: C++ cast
@@ -663,7 +655,7 @@ static bool hb_str2number(bool fPCode, const char *szNum, HB_SIZE nLen, HB_MAXIN
   *dVal = 0;
   *lVal = 0;
 
-  /* Hex Number */
+  // Hex Number
   if (fPCode && iPos + 1 < iLen && szNum[iPos] == '0' && (szNum[iPos + 1] == 'X' || szNum[iPos + 1] == 'x'))
   {
     iPos += 2;
@@ -862,7 +854,7 @@ HB_BOOL hb_strnToNum(const char *szNum, HB_SIZE nLen, HB_MAXINT *plVal, double *
   return hb_str2number(false, szNum, nLen, plVal, pdVal, nullptr, nullptr);
 }
 
-/* returns the numeric value of a character string representation of a number */
+// returns the numeric value of a character string representation of a number
 double hb_strVal(const char *szText, HB_SIZE nLen)
 {
 #if 0
@@ -940,10 +932,10 @@ char *hb_numToStr(char *szBuf, HB_SIZE nSize, HB_MAXINT lNumber)
   return &szBuf[iPos];
 }
 
-/* if you want to be sure that size of buffer is enough to hold each
-   double number with '\0' terminating character then it should have
-   at least HB_MAX_DOUBLE_LENGTH bytes. If buffer is not large enough
-   then nullptr is returned */
+// if you want to be sure that size of buffer is enough to hold each
+// double number with '\0' terminating character then it should have
+// at least HB_MAX_DOUBLE_LENGTH bytes. If buffer is not large enough
+// then nullptr is returned
 char *hb_dblToStr(char *szBuf, HB_SIZE nSize, double dNumber, int iMaxDec)
 {
 #if 0
@@ -1103,10 +1095,9 @@ char *hb_dblToStr(char *szBuf, HB_SIZE nSize, double dNumber, int iMaxDec)
   return iPos == 1 && *szResult == '-' && *szBuf == '0' ? szBuf : szResult;
 }
 
-/* This function copies szText to destination buffer.
- * NOTE: Unlike the documentation for strncpy, this routine will always append
- *       a null and the nLen param is pDest size not pSource limit
- */
+// This function copies szText to destination buffer.
+// NOTE: Unlike the documentation for strncpy, this routine will always append
+//       a null and the nLen param is pDest size not pSource limit
 char *hb_strncpy(char *pDest, const char *pSource, HB_SIZE nLen)
 {
 #if 0
@@ -1125,10 +1116,9 @@ char *hb_strncpy(char *pDest, const char *pSource, HB_SIZE nLen)
   return pBuf;
 }
 
-/* This function copies szText to destination buffer.
- * NOTE: Unlike the documentation for strncat, this routine will always append
- *       a null and the nLen param is pDest size not pSource limit
- */
+// This function copies szText to destination buffer.
+// NOTE: Unlike the documentation for strncat, this routine will always append
+//       a null and the nLen param is pDest size not pSource limit
 char *hb_strncat(char *pDest, const char *pSource, HB_SIZE nLen)
 {
 #if 0
@@ -1153,11 +1143,10 @@ char *hb_strncat(char *pDest, const char *pSource, HB_SIZE nLen)
   return pBuf;
 }
 
-/* This function copies and converts szText to lower case. */
+// This function copies and converts szText to lower case.
 
-/* NOTE: Unlike the documentation for strncpy, this routine will always append
- *       a null [pt]
- */
+// NOTE: Unlike the documentation for strncpy, this routine will always append
+//       a null [pt]
 char *hb_strncpyLower(char *pDest, const char *pSource, HB_SIZE nLen)
 {
 #if 0
@@ -1177,11 +1166,10 @@ char *hb_strncpyLower(char *pDest, const char *pSource, HB_SIZE nLen)
   return pBuf;
 }
 
-/* This function copies and converts szText to upper case. */
+// This function copies and converts szText to upper case.
 
-/* NOTE: Unlike the documentation for strncpy, this routine will always append
- *       a null [pt]
- */
+// NOTE: Unlike the documentation for strncpy, this routine will always append
+//       a null [pt]
 char *hb_strncpyUpper(char *pDest, const char *pSource, HB_SIZE nLen)
 {
 #if 0
@@ -1201,11 +1189,10 @@ char *hb_strncpyUpper(char *pDest, const char *pSource, HB_SIZE nLen)
   return pBuf;
 }
 
-/* This function copies and converts szText to upper case AND Trims it */
+// This function copies and converts szText to upper case AND Trims it
 
-/* NOTE: Unlike the documentation for strncpy, this routine will always append
- *       a null [pt]
- */
+// NOTE: Unlike the documentation for strncpy, this routine will always append
+//       a null [pt]
 char *hb_strncpyUpperTrim(char *pDest, const char *pSource, HB_SIZE nLen)
 {
 #if 0
@@ -1238,11 +1225,10 @@ char *hb_strncpyUpperTrim(char *pDest, const char *pSource, HB_SIZE nLen)
   return pBuf;
 }
 
-/* This function copies trimed szText to destination buffer. */
+// This function copies trimed szText to destination buffer.
 
-/* NOTE: Unlike the documentation for strncpy, this routine will always append
- *       a null
- */
+// NOTE: Unlike the documentation for strncpy, this routine will always append
+//       a null
 char *hb_strncpyTrim(char *pDest, const char *pSource, HB_SIZE nLen)
 {
 #if 0
@@ -1423,7 +1409,7 @@ char *hb_compDecodeString(int iMethod, const char *szText, HB_SIZE *pnLen)
   return pBuffer;
 }
 
-/* 'pDest' must be double the size of 'size'. [vszakats] */
+// 'pDest' must be double the size of 'size'. [vszakats]
 void hb_strtohex(const char *pSource, HB_SIZE size, char *pDest)
 {
   for (HB_SIZE i = 0; i < size; i++)

@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: This must be the first definition
- *    This is a common code shared by macro and standalone compiler
- */
+// NOTE: This must be the first definition
+//    This is a common code shared by macro and standalone compiler
 #define HB_COMMON_SUPPORT
 
 #include "hbmacro.hpp"
@@ -76,25 +75,25 @@ static const char * s_OperTable[HB_EXPR_COUNT] = {
    "()",
    "->",
    "->",
-   "(:=)",     /* setget */
+   "(:=)",     // setget
    ":",
-   "",         /* symbol */
-   "",         /* alias */
-   "",         /* RunTime variable */
-   "",         /* variable */
-   "++",       /* post-operators -> lowest precedence */
+   "",         // symbol
+   "",         // alias
+   "",         // RunTime variable
+   "",         // variable
+   "++",       // post-operators -> lowest precedence
    "--",
-   ":=",       /* assignments */
+   ":=",       // assignments
    "+=",
    "-=",
    "*=",
    "/=",
    "%=",
    "^=",
-   ".OR.",     /* logical operators */
+   ".OR.",     // logical operators
    ".AND.",
    ".NOT.",
-   "=",        /* relational operators */
+   "=",        // relational operators
    "==",
    "!=",
    "$",
@@ -102,87 +101,87 @@ static const char * s_OperTable[HB_EXPR_COUNT] = {
    ">",
    "<=",
    ">=",
-   "+",        /* addition */
+   "+",        // addition
    "-",
-   "*",        /* multiple */
+   "*",        // multiple
    "/",
    "%",
    "^",
-   "-",        /* sign operator */
+   "-",        // sign operator
    "++",
    "--"
 };
 // clang-format on
 
-/* Table with operators precedence
- * NOTE:
- *    HB_ET_NIL is used for an ordinary values and post- operators
- *    HB_ET_NONE is used for invalid syntax, e.g. var := var1 += 2
- */
+// Table with operators precedence
+// NOTE:
+//    HB_ET_NIL is used for an ordinary values and post- operators
+//    HB_ET_NONE is used for invalid syntax, e.g. var := var1 += 2
+
 // clang-format off
 static const HB_BYTE s_PrecedTable[HB_EXPR_COUNT] = {
-   HB_ET_NIL,                 /* HB_ET_NONE = 0,    */
-   HB_ET_NIL,                 /* HB_ET_NIL,         */
-   HB_ET_NIL,                 /* HB_ET_NUMERIC,     */
-   HB_ET_NIL,                 /* HB_ET_DATE,        */
-   HB_ET_NIL,                 /* HB_ET_TIMESTAMP,   */
-   HB_ET_NIL,                 /* HB_ET_STRING,      */
-   HB_ET_NIL,                 /* HB_ET_CODEBLOCK,   */
-   HB_ET_NIL,                 /* HB_ET_LOGICAL,     */
-   HB_ET_NIL,                 /* HB_ET_SELF,        */
-   HB_ET_NIL,                 /* HB_ET_ARRAY,       */
-   HB_ET_NIL,                 /* HB_ET_HASH,        */
-   HB_ET_NIL,                 /* HB_ET_FUNREF,      */
-   HB_ET_NIL,                 /* HB_ET_VARREF,      */
-   HB_ET_NIL,                 /* HB_ET_REFERENCE,   */
-   HB_ET_NIL,                 /* HB_ET_IIF,         */
-   HB_ET_NIL,                 /* HB_ET_LIST,        */
-   HB_ET_NIL,                 /* HB_ET_ARGLIST,     */
-   HB_ET_NIL,                 /* HB_ET_MACROARGLIST,*/
-   HB_ET_NIL,                 /* HB_ET_ARRAYAT,     */
-   HB_ET_NIL,                 /* HB_ET_MACRO,       */
-   HB_ET_NIL,                 /* HB_ET_FUNCALL,     */
-   HB_ET_NIL,                 /* HB_ET_ALIASVAR,    */
-   HB_ET_NIL,                 /* HB_ET_ALIASEXPR,   */
-   HB_ET_NIL,                 /* HB_ET_SETGET,      */
-   HB_ET_NIL,                 /* HB_ET_SEND,        */
-   HB_ET_NIL,                 /* HB_ET_FUNNAME,     */
-   HB_ET_NIL,                 /* HB_ET_ALIAS,       */
-   HB_ET_NIL,                 /* HB_ET_RTVARIABLE,  */
-   HB_ET_NIL,                 /* HB_ET_VARIABLE,    */
-   HB_ET_NIL,                 /* HB_EO_POSTINC,     post-operators */
-   HB_ET_NIL,                 /* HB_EO_POSTDEC,     */
-   HB_ET_NONE,                /* HB_EO_ASSIGN,      assignments */
-   HB_ET_NONE,                /* HB_EO_PLUSEQ,      Invalid syntax */
-   HB_ET_NONE,                /* HB_EO_MINUSEQ,     */
-   HB_ET_NONE,                /* HB_EO_MULTEQ,      */
-   HB_ET_NONE,                /* HB_EO_DIVEQ,       */
-   HB_ET_NONE,                /* HB_EO_MODEQ,       */
-   HB_ET_NONE,                /* HB_EO_EXPEQ,       */
-   HB_EO_OR,                  /* HB_EO_OR,          logical operators */
-   HB_EO_AND,                 /* HB_EO_AND,         */
-   HB_ET_NIL,                 /* HB_EO_NOT,         */
-   HB_EO_EQUAL,               /* HB_EO_EQUAL,       relational operators */
-   HB_EO_EQUAL,               /* HB_EO_EQ,          */
-   HB_EO_EQUAL,               /* HB_EO_NE,          */
-   HB_EO_LT,                  /* HB_EO_IN,          */
-   HB_EO_LT,                  /* HB_EO_LT,          */
-   HB_EO_LT,                  /* HB_EO_GT,          */
-   HB_EO_LT,                  /* HB_EO_LE,          */
-   HB_EO_LT,                  /* HB_EO_GE,          */
-   HB_EO_PLUS,                /* HB_EO_PLUS,        addition */
-   HB_EO_PLUS,                /* HB_EO_MINUS,       */
-   HB_EO_MULT,                /* HB_EO_MULT,        multiple */
-   HB_EO_MULT,                /* HB_EO_DIV,         */
-   HB_EO_MULT,                /* HB_EO_MOD,         */
-   HB_EO_POWER,               /* HB_EO_POWER,       */
-   HB_ET_NIL,                 /* HB_EO_NEGATE,      sign operator */
-   HB_ET_NIL,                 /* HB_EO_PREINC,      */
-   HB_ET_NIL                  /* HB_EO_PREDEC,      pre-operators */
+   HB_ET_NIL,                 // HB_ET_NONE = 0,
+   HB_ET_NIL,                 // HB_ET_NIL,
+   HB_ET_NIL,                 // HB_ET_NUMERIC,
+   HB_ET_NIL,                 // HB_ET_DATE,
+   HB_ET_NIL,                 // HB_ET_TIMESTAMP,
+   HB_ET_NIL,                 // HB_ET_STRING,
+   HB_ET_NIL,                 // HB_ET_CODEBLOCK,
+   HB_ET_NIL,                 // HB_ET_LOGICAL,
+   HB_ET_NIL,                 // HB_ET_SELF,
+   HB_ET_NIL,                 // HB_ET_ARRAY,
+   HB_ET_NIL,                 // HB_ET_HASH,
+   HB_ET_NIL,                 // HB_ET_FUNREF,
+   HB_ET_NIL,                 // HB_ET_VARREF,
+   HB_ET_NIL,                 // HB_ET_REFERENCE,
+   HB_ET_NIL,                 // HB_ET_IIF,
+   HB_ET_NIL,                 // HB_ET_LIST,
+   HB_ET_NIL,                 // HB_ET_ARGLIST,
+   HB_ET_NIL,                 // HB_ET_MACROARGLIST,
+   HB_ET_NIL,                 // HB_ET_ARRAYAT,
+   HB_ET_NIL,                 // HB_ET_MACRO,
+   HB_ET_NIL,                 // HB_ET_FUNCALL,
+   HB_ET_NIL,                 // HB_ET_ALIASVAR,
+   HB_ET_NIL,                 // HB_ET_ALIASEXPR,
+   HB_ET_NIL,                 // HB_ET_SETGET,
+   HB_ET_NIL,                 // HB_ET_SEND,
+   HB_ET_NIL,                 // HB_ET_FUNNAME,
+   HB_ET_NIL,                 // HB_ET_ALIAS,
+   HB_ET_NIL,                 // HB_ET_RTVARIABLE,
+   HB_ET_NIL,                 // HB_ET_VARIABLE,
+   HB_ET_NIL,                 // HB_EO_POSTINC,     post-operators
+   HB_ET_NIL,                 // HB_EO_POSTDEC,
+   HB_ET_NONE,                // HB_EO_ASSIGN,      assignments
+   HB_ET_NONE,                // HB_EO_PLUSEQ,      Invalid syntax
+   HB_ET_NONE,                // HB_EO_MINUSEQ,
+   HB_ET_NONE,                // HB_EO_MULTEQ,
+   HB_ET_NONE,                // HB_EO_DIVEQ,
+   HB_ET_NONE,                // HB_EO_MODEQ,
+   HB_ET_NONE,                // HB_EO_EXPEQ,
+   HB_EO_OR,                  // HB_EO_OR,          logical operators
+   HB_EO_AND,                 // HB_EO_AND,
+   HB_ET_NIL,                 // HB_EO_NOT,
+   HB_EO_EQUAL,               // HB_EO_EQUAL,       relational operators
+   HB_EO_EQUAL,               // HB_EO_EQ,
+   HB_EO_EQUAL,               // HB_EO_NE,
+   HB_EO_LT,                  // HB_EO_IN,
+   HB_EO_LT,                  // HB_EO_LT,
+   HB_EO_LT,                  // HB_EO_GT,
+   HB_EO_LT,                  // HB_EO_LE,
+   HB_EO_LT,                  // HB_EO_GE,
+   HB_EO_PLUS,                // HB_EO_PLUS,        addition
+   HB_EO_PLUS,                // HB_EO_MINUS,
+   HB_EO_MULT,                // HB_EO_MULT,        multiple
+   HB_EO_MULT,                // HB_EO_DIV,
+   HB_EO_MULT,                // HB_EO_MOD,
+   HB_EO_POWER,               // HB_EO_POWER,
+   HB_ET_NIL,                 // HB_EO_NEGATE,      sign operator
+   HB_ET_NIL,                 // HB_EO_PREINC,
+   HB_ET_NIL                  // HB_EO_PREDEC,      pre-operators
 };
 // clang-format on
 
-/* ************************************************************************* */
+// *************************************************************************
 
 const char *hb_compExprDescription(PHB_EXPR pExpr)
 {
@@ -314,7 +313,7 @@ const char *hb_compExprAsSymbol(PHB_EXPR pExpr)
   return nullptr;
 }
 
-/* ************************************************************************* */
+// *************************************************************************
 
 PHB_EXPR hb_compExprNewEmpty(HB_COMP_DECL)
 {
@@ -391,9 +390,8 @@ PHB_EXPR hb_compExprNewString(const char *szValue, HB_SIZE nLen, HB_BOOL fDeallo
   return pExpr;
 }
 
-/* Creates a new literal array { item1, item2, ... itemN }
- *    'pArrList' is a list of array elements
- */
+// Creates a new literal array { item1, item2, ... itemN }
+//    'pArrList' is a list of array elements
 PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
 {
 #if 0
@@ -402,16 +400,15 @@ PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
 
   PHB_EXPR pExpr;
 
-  pArrList->ExprType = HB_ET_ARRAY; /* change type from ET_LIST */
+  pArrList->ExprType = HB_ET_ARRAY; // change type from ET_LIST
   pArrList->ValType = HB_EV_ARRAY;
   pArrList->nLength = 0;
   pArrList->value.asList.reference = false;
 
-  pExpr = pArrList->value.asList.pExprList; /* get first element on the list */
-  /* Now we need to replace all EO_NONE expressions with ET_NIL expressions
-   * If EO_NONE is the first expression and there is no more expressions
-   * then it is an empty array {} and ET_NIL cannot be used
-   */
+  pExpr = pArrList->value.asList.pExprList; // get first element on the list
+  // Now we need to replace all EO_NONE expressions with ET_NIL expressions
+  // If EO_NONE is the first expression and there is no more expressions
+  // then it is an empty array {} and ET_NIL cannot be used
   if (pExpr->ExprType == HB_ET_NONE && pExpr->pNext == nullptr)
   {
     pArrList->value.asList.pExprList = nullptr;
@@ -419,11 +416,10 @@ PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
   }
   else
   {
-    /* there are at least one non-empty element specified
-     */
+    // there are at least one non-empty element specified
     while (pExpr)
     {
-      /* if empty element was specified replace it with NIL value */
+      // if empty element was specified replace it with NIL value
       if (pExpr->ExprType == HB_ET_NONE)
       {
         pExpr->ExprType = HB_ET_NIL;
@@ -437,9 +433,8 @@ PHB_EXPR hb_compExprNewArray(PHB_EXPR pArrList, HB_COMP_DECL)
   return pArrList;
 }
 
-/* Creates a new literal hash { key1=>val1, key2=>val2, ... keyN=>valN }
- *    'pHashList' is a list of hash items
- */
+// Creates a new literal hash { key1=>val1, key2=>val2, ... keyN=>valN }
+//    'pHashList' is a list of hash items
 PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
 {
 #if 0
@@ -450,7 +445,7 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
 
   if (pHashList)
   {
-    pHashList->ExprType = HB_ET_HASH; /* change type from ET_LIST */
+    pHashList->ExprType = HB_ET_HASH; // change type from ET_LIST
   }
   else
   {
@@ -462,10 +457,8 @@ PHB_EXPR hb_compExprNewHash(PHB_EXPR pHashList, HB_COMP_DECL)
   pHashList->value.asList.reference = false;
   pHashList->value.asList.pIndex = nullptr;
 
-  /*
-   * replace all EO_NONE expressions with ET_NIL expressions and
-   * calculate the list length
-   */
+  // replace all EO_NONE expressions with ET_NIL expressions and
+  // calculate the list length
   pExpr = pHashList->value.asList.pExprList;
   while (pExpr)
   {
@@ -488,7 +481,7 @@ PHB_EXPR hb_compExprNewCodeBlock(char *string, HB_SIZE nLen, int iFlags, HB_COMP
 
   PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_CODEBLOCK);
   pExpr->value.asCodeblock.pExprList = nullptr;
-  pExpr->value.asCodeblock.pLocals = nullptr; /* this will hold local variables declarations */
+  pExpr->value.asCodeblock.pLocals = nullptr; // this will hold local variables declarations
   pExpr->ValType = HB_EV_CODEBLOCK;
   pExpr->value.asCodeblock.flags = static_cast<HB_USHORT>(iFlags);
   pExpr->value.asCodeblock.string = string;
@@ -502,7 +495,7 @@ PHB_EXPR hb_compExprAddCodeblockExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
   {
     PHB_EXPR pExpr;
 
-    /* add new item to the end of the list */
+    // add new item to the end of the list
     pExpr = pList->value.asCodeblock.pExprList;
     while (pExpr->pNext)
     {
@@ -588,8 +581,7 @@ PHB_EXPR hb_compExprNewRef(PHB_EXPR pRefer, HB_COMP_DECL)
   return pExpr;
 }
 
-/* Creates new macro expression
- */
+// Creates new macro expression
 PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const char *szName, HB_COMP_DECL)
 {
   PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_MACRO);
@@ -600,21 +592,19 @@ PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const 
       HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewMacro(%s)", szName));
 #endif
 
-    /* Macro variable is used:  &identifier
-     * or macro text: [text]&variable[more_macro_text]
-     */
-    /*
-     * NOTE: Clipper assumes that all variables used in macro expressions
-     * are memvar variables
-     * NOTE: Clipper pushes the complete macro expression converted
-     * to string in case complex expression is used, e.g.
-     * My&var.1
-     * is pushed as:
-     * "MY&VAR.1"
-     */
-    pExpr->value.asMacro.cMacroOp = cMacroOp; /* '&' if variable or 0 if text */
-    pExpr->value.asMacro.szMacro = szName;    /* variable name or macro text */
-    pExpr->value.asMacro.pExprList = nullptr; /* this is not a parenthesized expressions */
+    // Macro variable is used:  &identifier
+    // or macro text: [text]&variable[more_macro_text]
+
+    // NOTE: Clipper assumes that all variables used in macro expressions
+    // are memvar variables
+    // NOTE: Clipper pushes the complete macro expression converted
+    // to string in case complex expression is used, e.g.
+    // My&var.1
+    // is pushed as:
+    // "MY&VAR.1"
+    pExpr->value.asMacro.cMacroOp = cMacroOp; // '&' if variable or 0 if text
+    pExpr->value.asMacro.szMacro = szName;    // variable name or macro text
+    pExpr->value.asMacro.pExprList = nullptr; // this is not a parenthesized expressions
     pExpr->value.asMacro.SubType = HB_ET_MACRO_VAR;
   }
   else
@@ -623,10 +613,9 @@ PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const 
       HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewMacro(&)"));
 #endif
 
-    /* Macro expression:  &( expression_list )
-     */
+    // Macro expression:  &( expression_list )
     pExpr->value.asMacro.cMacroOp = 0;
-    pExpr->value.asMacro.szMacro = nullptr; /* this is used to distinguish &(...) from &ident */
+    pExpr->value.asMacro.szMacro = nullptr; // this is used to distinguish &(...) from &ident
     pExpr->value.asMacro.pExprList = pMacroExpr;
     pExpr->value.asMacro.SubType = HB_ET_MACRO_EXPR;
   }
@@ -634,9 +623,8 @@ PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const 
   return pExpr;
 }
 
-/* Creates new aliased variable
- *    aliasexpr -> identifier
- */
+// Creates new aliased variable
+//    aliasexpr -> identifier
 PHB_EXPR hb_compExprNewAliasVar(PHB_EXPR pAlias, PHB_EXPR pVariable, HB_COMP_DECL)
 {
 #if 0
@@ -648,8 +636,7 @@ PHB_EXPR hb_compExprNewAliasVar(PHB_EXPR pAlias, PHB_EXPR pVariable, HB_COMP_DEC
   pExpr->value.asAlias.pVar = pVariable;
   pExpr->value.asAlias.pExpList = nullptr;
 
-  /* macro expressions in alias context require a special handling
-   */
+  // macro expressions in alias context require a special handling
   if (pAlias->ExprType == HB_ET_MACRO)
   {
     pAlias->value.asMacro.SubType = HB_ET_MACRO_ALIASED;
@@ -662,9 +649,8 @@ PHB_EXPR hb_compExprNewAliasVar(PHB_EXPR pAlias, PHB_EXPR pVariable, HB_COMP_DEC
   return pExpr;
 }
 
-/* Creates new aliased expression
- *    alias_expr -> ( expression )
- */
+// Creates new aliased expression
+//    alias_expr -> ( expression )
 PHB_EXPR hb_compExprNewAliasExpr(PHB_EXPR pAlias, PHB_EXPR pExpList, HB_COMP_DECL)
 {
 #if 0
@@ -678,7 +664,7 @@ PHB_EXPR hb_compExprNewAliasExpr(PHB_EXPR pAlias, PHB_EXPR pExpList, HB_COMP_DEC
 
   if (pAlias->ExprType == HB_ET_MACRO)
   {
-    /* Is it a special case &variable->(expressionList) */
+    // Is it a special case &variable->(expressionList)
     if (pAlias->value.asMacro.SubType & (HB_ET_MACRO_VAR | HB_ET_MACRO_EXPR))
     {
       pAlias->value.asMacro.SubType = HB_ET_MACRO_ALIASED;
@@ -688,9 +674,8 @@ PHB_EXPR hb_compExprNewAliasExpr(PHB_EXPR pAlias, PHB_EXPR pExpList, HB_COMP_DEC
   return pExpr;
 }
 
-/* Creates new send expression
- *    : <msgid> -> ( expression )
- */
+// Creates new send expression
+//    : <msgid> -> ( expression )
 PHB_EXPR hb_compExprNewSend(const char *szMessage, HB_COMP_DECL)
 {
 #if 0
@@ -706,9 +691,8 @@ PHB_EXPR hb_compExprNewSend(const char *szMessage, HB_COMP_DECL)
   return pExpr;
 }
 
-/* Creates new macro send expression
- *    : &<msg> -> ( expression )
- */
+// Creates new macro send expression
+//    : &<msg> -> ( expression )
 PHB_EXPR hb_compExprNewMacroSend(PHB_EXPR pMessage, HB_COMP_DECL)
 {
 #if 0
@@ -724,21 +708,19 @@ PHB_EXPR hb_compExprNewMacroSend(PHB_EXPR pMessage, HB_COMP_DECL)
 
   if (pMessage->ExprType == HB_ET_MACRO)
   {
-    /* Signal that macro compiler have to generate a pcode that will
-     * return function name as symbol instead of usual value
-     */
+    // Signal that macro compiler have to generate a pcode that will
+    // return function name as symbol instead of usual value
     pMessage->value.asMacro.SubType = HB_ET_MACRO_SYMBOL;
   }
 
   return pExpr;
 }
 
-/* Set object in send expression
- *    pObject : pExpr
- *
- *    pExpr   = is an expression returned by hb_compExprNewSend()
- *    pObject = is an object
- */
+// Set object in send expression
+//    pObject : pExpr
+//
+//    pExpr   = is an expression returned by hb_compExprNewSend()
+//    pObject = is an object
 PHB_EXPR hb_compExprNewMethodObject(PHB_EXPR pExpr, PHB_EXPR pObject)
 {
 #if 0
@@ -750,13 +732,12 @@ PHB_EXPR hb_compExprNewMethodObject(PHB_EXPR pExpr, PHB_EXPR pObject)
   return pExpr;
 }
 
-/* Creates new method call
- *    pObject : identifier ( pArgList )
- *
- *    pObject  = is an expression returned by hb_compExprNewSend()
- *    pArgList = list of passed arguments - it will be HB_ET_NONE if no arguments
- *                are passed
- */
+// Creates new method call
+//    pObject : identifier ( pArgList )
+//
+//    pObject  = is an expression returned by hb_compExprNewSend()
+//    pArgList = list of passed arguments - it will be HB_ET_NONE if no arguments
+//                are passed
 PHB_EXPR hb_compExprNewMethodCall(PHB_EXPR pObject, PHB_EXPR pArgList)
 {
   pObject->value.asMessage.pParms = pArgList;
@@ -764,9 +745,8 @@ PHB_EXPR hb_compExprNewMethodCall(PHB_EXPR pObject, PHB_EXPR pArgList)
   return pObject;
 }
 
-/* Create a new iif() expression
- * pExpr is a list of three expressions
- */
+// Create a new iif() expression
+// pExpr is a list of three expressions
 PHB_EXPR hb_compExprNewIIF(PHB_EXPR pExpr)
 {
   pExpr->ExprType = HB_ET_IIF;
@@ -774,9 +754,8 @@ PHB_EXPR hb_compExprNewIIF(PHB_EXPR pExpr)
   return pExpr;
 }
 
-/* Creates a list - all elements will be used
- * This list can be used to create an array or function's call arguments
- */
+// Creates a list - all elements will be used
+// This list can be used to create an array or function's call arguments
 PHB_EXPR hb_compExprNewList(PHB_EXPR pFirstItem, HB_COMP_DECL)
 {
 #if 0
@@ -789,8 +768,7 @@ PHB_EXPR hb_compExprNewList(PHB_EXPR pFirstItem, HB_COMP_DECL)
   return pExpr;
 }
 
-/* Creates a list of function call arguments
- */
+// Creates a list of function call arguments
 PHB_EXPR hb_compExprNewArgList(PHB_EXPR pFirstItem, HB_COMP_DECL)
 {
 #if 0
@@ -803,8 +781,7 @@ PHB_EXPR hb_compExprNewArgList(PHB_EXPR pFirstItem, HB_COMP_DECL)
   return pExpr;
 }
 
-/* Creates a reference to variable arguments
- */
+// Creates a reference to variable arguments
 PHB_EXPR hb_compExprNewArgRef(HB_COMP_DECL)
 {
 #if 0
@@ -817,15 +794,14 @@ PHB_EXPR hb_compExprNewArgRef(HB_COMP_DECL)
   return pExpr;
 }
 
-/* Adds new element to the list
- */
+// Adds new element to the list
 PHB_EXPR hb_compExprAddListExpr(PHB_EXPR pList, PHB_EXPR pNewItem)
 {
   if (pList->value.asList.pExprList)
   {
     PHB_EXPR pExpr;
 
-    /* add new item to the end of the list */
+    // add new item to the end of the list
     pExpr = pList->value.asList.pExprList;
     while (pExpr->pNext)
     {
@@ -852,11 +828,10 @@ PHB_EXPR hb_compExprNewVar(const char *szName, HB_COMP_DECL)
   return pExpr;
 }
 
-/* Create a new declaration of PUBLIC or PRIVATE variable.
- *
- * szName is a string with variable name if 'PUBLIC varname' context
- * pMacroVar is a macro expression if 'PUBLIC &varname' context
- */
+// Create a new declaration of PUBLIC or PRIVATE variable.
+//
+// szName is a string with variable name if 'PUBLIC varname' context
+// pMacroVar is a macro expression if 'PUBLIC &varname' context
 PHB_EXPR hb_compExprNewRTVar(const char *szName, PHB_EXPR pMacroVar, HB_COMP_DECL)
 {
 #if 0
@@ -873,8 +848,7 @@ PHB_EXPR hb_compExprNewRTVar(const char *szName, PHB_EXPR pMacroVar, HB_COMP_DEC
   return pExpr;
 }
 
-/* Create a new symbol used in function calls
- */
+// Create a new symbol used in function calls
 PHB_EXPR hb_compExprNewFunName(const char *szName, HB_COMP_DECL)
 {
 #if 0
@@ -886,8 +860,7 @@ PHB_EXPR hb_compExprNewFunName(const char *szName, HB_COMP_DECL)
   return pExpr;
 }
 
-/* Create a new symbol used in an alias expressions
- */
+// Create a new symbol used in an alias expressions
 PHB_EXPR hb_compExprNewAlias(const char *szName, HB_COMP_DECL)
 {
 #if 0
@@ -899,7 +872,7 @@ PHB_EXPR hb_compExprNewAlias(const char *szName, HB_COMP_DECL)
   return pExpr;
 }
 
-/* ************************************************************************* */
+// *************************************************************************
 
 PHB_EXPR hb_compExprNewEqual(PHB_EXPR pLeftExpr, HB_COMP_DECL)
 {
@@ -1128,8 +1101,7 @@ PHB_EXPR hb_compExprNewIN(PHB_EXPR pLeftExpr, HB_COMP_DECL)
   return pExpr;
 }
 
-/* NOTE: all invalid cases are handled by yacc rules
- */
+// NOTE: all invalid cases are handled by yacc rules
 PHB_EXPR hb_compExprNewNegate(PHB_EXPR pNegExpr, HB_COMP_DECL)
 {
   PHB_EXPR pExpr;
@@ -1169,8 +1141,7 @@ PHB_EXPR hb_compExprNewNegate(PHB_EXPR pNegExpr, HB_COMP_DECL)
   return pExpr;
 }
 
-/* Handles (expression := expression) syntax
- */
+// Handles (expression := expression) syntax
 PHB_EXPR hb_compExprAssign(PHB_EXPR pLeftExpr, PHB_EXPR pRightExpr, HB_COMP_DECL)
 {
 #if 0
@@ -1195,26 +1166,23 @@ void hb_compExprDelOperator(PHB_EXPR pExpr, HB_COMP_DECL)
   }
 }
 
-/* Sets the argument of an operation found previously
- */
+// Sets the argument of an operation found previously
 PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
 {
   HB_BYTE ucRight = s_PrecedTable[pItem->ExprType];
 
   if (ucRight == HB_ET_NIL)
   {
-    /* the right side of an operator is an ordinary value
-     * e.g. a := 1
-     */
+    // the right side of an operator is an ordinary value
+    // e.g. a := 1
     pExpr->value.asOperator.pRight = pItem;
   }
   else if (ucRight == HB_ET_NONE)
   {
-    /* the right side of an operator is an invalid expression
-     * e.g.
-     *    a := 1 + b:=2
-     *    a := 1 + b += 2
-     */
+    // the right side of an operator is an invalid expression
+    // e.g.
+    //    a := 1 + b:=2
+    //    a := 1 + b += 2
 
     if (pExpr->ExprType >= HB_EO_PLUSEQ && pExpr->ExprType <= HB_EO_EXPEQ)
     {
@@ -1223,43 +1191,40 @@ PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
     {
       HB_COMP_ERROR_SYNTAX(pItem);
     }
-    pExpr->value.asOperator.pRight = pItem; /* set it anyway */
+    pExpr->value.asOperator.pRight = pItem; // set it anyway
   }
   else
   {
-    /* the right side of an operator is an expression with other operator
-     * e.g. a := 2 + b * 3
-     *   We have to set the proper order of evaluation using
-     * precedence rules
-     */
+    // the right side of an operator is an expression with other operator
+    // e.g. a := 2 + b * 3
+    //   We have to set the proper order of evaluation using
+    // precedence rules
     HB_BYTE ucLeft = s_PrecedTable[pExpr->ExprType];
     if (ucLeft < ucRight || (ucLeft == ucRight && HB_COMP_ISSUPPORTED(HB_COMPFLAG_SHORTCUTS) &&
                              (ucLeft == HB_EO_OR || ucLeft == HB_EO_AND)))
     {
-      /* Left operator has a lower precedence then the right one
-       * e.g.  a + b * c
-       *    pItem -> b * c    -> L=b  R=c  O=*
-       *    pExpr -> a +      -> l=a  r=   o=+
-       *
-       *    -> a + (b * c)    -> Left=a  Right=(b * c)  Oper=+
-       *             Left  := l
-       *             Right := L (O) R  := pItem
-       *             Oper  := o
-       */
+      // Left operator has a lower precedence then the right one
+      // e.g.  a + b * c
+      //    pItem -> b * c    -> L=b  R=c  O=*
+      //    pExpr -> a +      -> l=a  r=   o=+
+      //
+      //    -> a + (b * c)    -> Left=a  Right=(b * c)  Oper=+
+      //             Left  := l
+      //             Right := L (O) R  := pItem
+      //             Oper  := o
       pExpr->value.asOperator.pRight = pItem;
     }
     else
     {
-      /* Left operator has the same or higher precedence then the right one
-       * e.g.  a * b + c
-       *    pItem -> b + c   -> L=b  R=c  O=+
-       *    pExpr -> a *     -> l=a  r=   o=*
-       *
-       *    -> (a * b) + c    -> Lelf=(a * b)  Right=c  Oper=+
-       *             Left  := l (o) L
-       *             Right := R
-       *             Oper  := O
-       */
+      // Left operator has the same or higher precedence then the right one
+      // e.g.  a * b + c
+      //    pItem -> b + c   -> L=b  R=c  O=+
+      //    pExpr -> a *     -> l=a  r=   o=*
+      //
+      //    -> (a * b) + c    -> Lelf=(a * b)  Right=c  Oper=+
+      //             Left  := l (o) L
+      //             Right := R
+      //             Oper  := O
       pItem->value.asOperator.pLeft = hb_compExprSetOperand(pExpr, pItem->value.asOperator.pLeft, HB_COMP_PARAM);
       pExpr = pItem;
     }
@@ -1268,11 +1233,10 @@ PHB_EXPR hb_compExprSetOperand(PHB_EXPR pExpr, PHB_EXPR pItem, HB_COMP_DECL)
   return pExpr;
 }
 
-/* ************************************************************************* */
+// *************************************************************************
 
-/* Handles prefix&macro-> and &macro.sufix-> in macro compiler
- * Clipper uses macro var directly as alias name in such case
- */
+// Handles prefix&macro-> and &macro.sufix-> in macro compiler
+// Clipper uses macro var directly as alias name in such case
 PHB_EXPR hb_compExprMacroAsAlias(PHB_EXPR pExpr)
 {
 #if 0
@@ -1287,8 +1251,7 @@ PHB_EXPR hb_compExprMacroAsAlias(PHB_EXPR pExpr)
   return pExpr;
 }
 
-/* Return a number of elements on the linked list
- */
+// Return a number of elements on the linked list
 HB_ULONG hb_compExprListLen(PHB_EXPR pExpr)
 {
   HB_ULONG nLen = 0;
@@ -1322,8 +1285,7 @@ HB_BOOL hb_compExprListTypeCheck(PHB_EXPR pExpr, HB_EXPRTYPE ExprType)
   return false;
 }
 
-/* Return a number of parameters passed to function or method
- */
+// Return a number of parameters passed to function or method
 HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
 {
   HB_ULONG nLen = 0;
@@ -1336,10 +1298,9 @@ HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
       pParam = pParam->pNext;
       ++nLen;
     }
-    /* NOTE: if method or function with no parameters is called then the
-     * list of parameters contain only one expression of type HB_ET_NONE
-     * There is no need to calculate this parameter
-     */
+    // NOTE: if method or function with no parameters is called then the
+    // list of parameters contain only one expression of type HB_ET_NONE
+    // There is no need to calculate this parameter
     if (nLen == 1 && pExpr->value.asList.pExprList->ExprType == HB_ET_NONE)
     {
       nLen = 0;
@@ -1349,8 +1310,7 @@ HB_ULONG hb_compExprParamListLen(PHB_EXPR pExpr)
   return nLen;
 }
 
-/* Check if expression is hb_ArrayToParams(aParams) function call
- */
+// Check if expression is hb_ArrayToParams(aParams) function call
 HB_BOOL hb_compExprIsArrayToParams(PHB_EXPR pExpr)
 {
   return pExpr->ExprType == HB_ET_FUNCALL && pExpr->value.asFunCall.pFunName->ExprType == HB_ET_FUNNAME &&
@@ -1372,10 +1332,10 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
            (pElem->value.asMacro.SubType & HB_ET_MACRO_NOLIST) == 0) ||
           (pElem->ExprType == HB_ET_ARGLIST && pElem->value.asList.reference) || hb_compExprIsArrayToParams(pElem))
       {
-        /* &macro was passed
-           or optional parameters list passed, f.e.: f(a,b,...)
-           or hb_ArrayToParams(aParams)
-           - handle it differently then in a normal statement */
+        // &macro was passed
+        // or optional parameters list passed, f.e.: f(a,b,...)
+        // or hb_ArrayToParams(aParams)
+        // - handle it differently then in a normal statement
         if (pElem->ExprType == HB_ET_MACRO)
         {
           pElem->value.asMacro.SubType |= HB_ET_MACRO_LIST;
@@ -1404,13 +1364,12 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
       {
         ++nLen;
       }
-      /* Note: direct type change */
+      // Note: direct type change
       pExpr->ExprType = HB_ET_MACROARGLIST;
     }
-    /* NOTE: if method or function with no parameters is called then the
-     * list of parameters contain only one expression of type HB_ET_NONE
-     * There is no need to calculate this parameter
-     */
+    // NOTE: if method or function with no parameters is called then the
+    // list of parameters contain only one expression of type HB_ET_NONE
+    // There is no need to calculate this parameter
     else if (nItems == 1 && pExpr->value.asList.pExprList->ExprType == HB_ET_NONE)
     {
       nLen = 0;
@@ -1424,8 +1383,7 @@ HB_SIZE hb_compExprParamListCheck(HB_COMP_DECL, PHB_EXPR pExpr)
   return nLen;
 }
 
-/* Create a new declaration for codeblock local variable
- */
+// Create a new declaration for codeblock local variable
 static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, HB_BYTE bType)
 {
 #if 0
@@ -1440,8 +1398,7 @@ static PHB_CBVAR hb_compExprCBVarNew(const char *szVarName, HB_BYTE bType)
   return pVar;
 }
 
-/* Add a new local variable declaration
- */
+// Add a new local variable declaration
 PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char *szVarName, HB_BYTE bType, HB_COMP_DECL)
 {
 #if 0
@@ -1452,8 +1409,7 @@ PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char *szVarName, HB_BYTE bType,
 
   if (pCB->value.asCodeblock.pLocals)
   {
-    /* add it to the end of the list
-     */
+    // add it to the end of the list
     pVar = pCB->value.asCodeblock.pLocals;
     while (pVar)
     {
@@ -1481,8 +1437,7 @@ PHB_EXPR hb_compExprCBVarAdd(PHB_EXPR pCB, const char *szVarName, HB_BYTE bType,
   return pCB;
 }
 
-/* NOTE: This deletes all linked variables
- */
+// NOTE: This deletes all linked variables
 void hb_compExprCBVarDel(PHB_CBVAR pVars)
 {
   while (pVars)
@@ -1493,21 +1448,20 @@ void hb_compExprCBVarDel(PHB_CBVAR pVars)
   }
 }
 
-/* Creates a set/get codeblock for passed expression used in __GET
- *
- * {| ~1 | iif( ~1 == NIL, <pExpr>, <pExpr> := ~1 ) }
- *
- * NOTE: "~1" is not a valid variable name so there will be no collisions
- */
+// Creates a set/get codeblock for passed expression used in __GET
+//
+// {| ~1 | iif( ~1 == NIL, <pExpr>, <pExpr> := ~1 ) }
+//
+// NOTE: "~1" is not a valid variable name so there will be no collisions
 PHB_EXPR hb_compExprSetGetBlock(PHB_EXPR pExpr, HB_COMP_DECL)
 {
   PHB_EXPR pSet;
 
-  /* create setget expression: IIF( var==NIL, <pExpr>, <pExpr>:=var ) */
+  // create setget expression: IIF( var==NIL, <pExpr>, <pExpr>:=var )
   pSet = HB_COMP_EXPR_NEW(HB_ET_SETGET);
   pSet->value.asSetGet.pVar = hb_compExprNewVar("~1", HB_COMP_PARAM);
   pSet->value.asSetGet.pExpr = pExpr;
-  /* create a codeblock */
+  // create a codeblock
   return hb_compExprAddCodeblockExpr(
       hb_compExprCBVarAdd(hb_compExprNewCodeBlock(nullptr, 0, 0, HB_COMP_PARAM), "~1", ' ', HB_COMP_PARAM), pSet);
 }
