@@ -1,4 +1,4 @@
-/* Mindaugas Kavaliauskas <dbtopas@dbtopas.lt> */
+// Mindaugas Kavaliauskas <dbtopas@dbtopas.lt>
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC4\x84" "BC\xC4\x8C" "DE\xC4\x98\xC4\x96" "FGHI\xC4\xAE" "YJKLMNOPQRS\xC5\xA0" "TU\xC5\xB2\xC5\xAA" "VWXZ\xC5\xBD"

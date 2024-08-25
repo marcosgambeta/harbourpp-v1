@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (SR646)
- *
- * Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// National Collation Support Module (SR646)
+//
+// Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,5 +50,5 @@
 #include "l_sr_lat.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

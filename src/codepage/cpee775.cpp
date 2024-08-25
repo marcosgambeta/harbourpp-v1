@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (EE775)
- *
- * Copyright 2019 Pavel Tsarenko <tpe2@mail.ru>
- *
- */
+//
+// National Collation Support Module (EE775)
+//
+// Copyright 2019 Pavel Tsarenko <tpe2@mail.ru>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,5 +50,5 @@
 #include "l_ee.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

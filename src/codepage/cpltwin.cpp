@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (LTWIN)
- *
- * Copyright 2003 Mindaugas Kavaliauskas <dbtopas@dbtopas.lt>
- *
- */
+//
+// National Collation Support Module (LTWIN)
+//
+// Copyright 2003 Mindaugas Kavaliauskas <dbtopas@dbtopas.lt>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,5 +50,5 @@
 #include "l_lt.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

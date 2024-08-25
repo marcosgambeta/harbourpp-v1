@@ -1,4 +1,4 @@
-/* Pavel Tsarenko <tpe2@mail.ru> */
+// Pavel Tsarenko <tpe2@mail.ru>
 
 
 #if defined(__BORLANDC__)

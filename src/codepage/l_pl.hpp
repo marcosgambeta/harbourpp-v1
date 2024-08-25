@@ -1,4 +1,4 @@
-/* Jacek Kubica <kubica@wssk.wroc.pl> */
+// Jacek Kubica <kubica@wssk.wroc.pl>
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC4\x84" "BC\xC4\x86" "DE\xC4\x98" "FGHIJKL\xC5\x81" "MN\xC5\x83" "O\xC3\x93" "PQRS\xC5\x9A" "TUVWXYZ\xC5\xB9\xC5\xBB"

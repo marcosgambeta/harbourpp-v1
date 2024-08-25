@@ -1,10 +1,9 @@
-/*
- * Unicode character tables
- *    code generated automatically by tests/uc_gen.prg
- *
- * Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Unicode character tables
+//    code generated automatically by tests/uc_gen.prg
+//
+// Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #include "hbapi.hpp"
 

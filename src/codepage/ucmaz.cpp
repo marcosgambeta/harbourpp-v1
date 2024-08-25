@@ -1,9 +1,8 @@
-/*
- * Mazowia <-> Unicode conversion table
- *
- * Copyright 2003 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Mazowia <-> Unicode conversion table
+//
+// Copyright 2003 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,4 +1,4 @@
-/* Viktor Szakats (vszakats.net/harbour) */
+// Viktor Szakats (vszakats.net/harbour)
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC4\x82\xC3\x82" "BCDEFGHI\xC3\x8E" "JKLMNOPQRS\xC5\x9E" "T\xC5\xA2" "UVWXYZ"

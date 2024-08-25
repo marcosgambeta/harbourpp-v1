@@ -1,9 +1,8 @@
-/*
- * Example of Harbour codepage using UTF-16 little endian encoding
- *
- * Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Example of Harbour codepage using UTF-16 little endian encoding
+//
+// Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -132,5 +131,5 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
 
 #define HB_CP_INIT hb_cp_init
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

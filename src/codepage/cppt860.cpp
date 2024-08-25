@@ -1,10 +1,10 @@
-/*
- * National Collation Support Module (PT860)
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- * This file is generated automatically by cpinfo.prg
- */
+//
+// National Collation Support Module (PT860)
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
+// This file is generated automatically by cpinfo.prg
+//
 
 #define HB_CP_ID        PT860
 #define HB_CP_INFO      "Portuguese CP-860 (ntxpor.obj compatible)"
@@ -14,5 +14,5 @@
 #define HB_CP_LOWER     "abcdefghijklmnopqrstuvwxyz"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

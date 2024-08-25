@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (HR646)
- *
- * Copyright 2003 Vlado Miholic <Vladimir.MiholicŽsk.hinet.hr>
- *
- */
+//
+// National Collation Support Module (HR646)
+//
+// Copyright 2003 Vlado Miholic <Vladimir.MiholicŽsk.hinet.hr>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -44,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: this CP is CL5.2 ntxcro.obj compatible */
+// NOTE: this CP is CL5.2 ntxcro.obj compatible
 
 #define HB_CP_ID        HR646
 #define HB_CP_INFO      "Croatian ISO-646 (CROSCII)"
@@ -53,5 +52,5 @@
 #include "l_hr.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

@@ -1,10 +1,10 @@
-/*
- * National Collation Support Module (FI850)
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- * This file is generated automatically by cpinfo.prg
- */
+//
+// National Collation Support Module (FI850)
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
+// This file is generated automatically by cpinfo.prg
+//
 
 #define HB_CP_ID        FI850
 #define HB_CP_INFO      "Finnish CP-850 (ntxfin.obj compatible)"
@@ -19,5 +19,5 @@
 #endif
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

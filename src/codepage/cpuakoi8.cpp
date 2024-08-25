@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (UAKOI8)
- *
- * Copyright 2004 Pavel Tsarenko <tpe2@mail.ru>
- *
- */
+//
+// National Collation Support Module (UAKOI8)
+//
+// Copyright 2004 Pavel Tsarenko <tpe2@mail.ru>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,5 +50,5 @@
 #include "l_uk.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

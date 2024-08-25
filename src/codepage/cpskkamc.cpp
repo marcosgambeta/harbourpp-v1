@@ -1,10 +1,10 @@
-/*
- * National Collation Support Module (SKKAMC)
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- * This file is generated automatically by cpinfo.prg
- */
+//
+// National Collation Support Module (SKKAMC)
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
+// This file is generated automatically by cpinfo.prg
+//
 
 #define HB_CP_ID        SKKAMC
 #define HB_CP_INFO      "Slovak Kamenicky (ntxsl895.obj compatible)"
@@ -20,5 +20,5 @@
 #endif
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (ESWIN - Modern Spanish)
- *
- * Copyright 2002 Antonio Linares <alinares@fivetechsoft.com>
- *
- */
+//
+// National Collation Support Module (ESWIN - Modern Spanish)
+//
+// Copyright 2002 Antonio Linares <alinares@fivetechsoft.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,5 +50,5 @@
 #include "l_es.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

@@ -1,10 +1,10 @@
-/*
- * National Collation Support Module (FR850C)
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- * This file is generated automatically by cpinfo.prg
- */
+//
+// National Collation Support Module (FR850C)
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
+// This file is generated automatically by cpinfo.prg
+//
 
 #define HB_CP_ID        FR850C
 #define HB_CP_INFO      "French CP-850 (ntxfre.obj compatible)"
@@ -18,7 +18,7 @@
 #endif
 #define HB_CP_UTF8
 
-#if 0 /* VERIFIED: 20091116 */
+#if 0 // VERIFIED: 20091116
 
 #define HB_CP_RAW
 
@@ -29,5 +29,5 @@ static const unsigned char s_sort [256] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
 
 #endif
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

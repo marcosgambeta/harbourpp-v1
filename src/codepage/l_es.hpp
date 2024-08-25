@@ -1,4 +1,4 @@
-/* Antonio Linares <alinares@fivetechsoft.com> */
+// Antonio Linares <alinares@fivetechsoft.com>
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC3\x81\xC3\x80\xC3\x84" "BC\xC3\x87" "DE\xC3\x89\xC3\x88\xC3\x8B" "FGHI\xC3\x8D\xC3\x8C\xC3\x8F" "JKLMN\xC3\x91" "O\xC3\x93\xC3\x92\xC3\x96" "PQRSTU\xC3\x9A\xC3\x99\xC3\x9C" "VWXYZ"

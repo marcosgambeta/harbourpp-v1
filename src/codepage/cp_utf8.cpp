@@ -1,9 +1,8 @@
-/*
- * Example of Harbour codepage using UTF-8 encoding
- *
- * Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Example of Harbour codepage using UTF-8 encoding
+//
+// Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -268,11 +267,11 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
 #define HB_CP_INFO            "UTF-8 extended"
 #define HB_CP_UNITB           HB_UNITB_437
 
-/* use character indexes instead of bytes ones */
+// use character indexes instead of bytes ones
 #define HB_CP_CHARIDX
-/* Chr(), Asc() and similar functions operates on Unicode values instead of bytes */
+// Chr(), Asc() and similar functions operates on Unicode values instead of bytes
 #define HB_CP_CHARUNI
-/* UTF-8 string encoding */
+// UTF-8 string encoding
 #define HB_CP_UTF8
 
 #define HB_CP_GET_FUNC        UTF8_get
@@ -293,5 +292,5 @@ static void hb_cp_init(PHB_CODEPAGE cdp)
 
 #define HB_CP_INIT hb_cp_init
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

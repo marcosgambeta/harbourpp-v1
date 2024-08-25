@@ -1,10 +1,9 @@
-/*
- * National Collation Support Module (ES850 - Modern Spanish)
- *
- * Copyright 2008 Viktor Szakats (vszakats.net/harbour)
- * Copyright Antonio Linares <alinares@fivetechsoft.com> (Spanish Windows support)
- *
- */
+//
+// National Collation Support Module (ES850 - Modern Spanish)
+//
+// Copyright 2008 Viktor Szakats (vszakats.net/harbour)
+// Copyright Antonio Linares <alinares@fivetechsoft.com> (Spanish Windows support)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,5 +51,5 @@
 #include "l_es.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

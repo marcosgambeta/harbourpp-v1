@@ -1,9 +1,8 @@
-/* Viktor Szakats (vszakats.net/harbour) */
+// Viktor Szakats (vszakats.net/harbour)
 
-/* NOTE: Ä/ä have been added to work like sixhu852.obj
-         for S*ccessWare SIx Driver, but they're not part
-         of the Hungarian alphabet. [vszakats] */
-
+// NOTE: Ä/ä have been added to work like sixhu852.obj
+//       for S*ccessWare SIx Driver, but they're not part
+//       of the Hungarian alphabet. [vszakats]
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC3\x81\xC3\x84" "BCDE\xC3\x89" "FGHI\xC3\x8D" "JKLMNO\xC3\x93\xC3\x96\xC5\x90" "PQRSTU\xC3\x9A\xC3\x9C\xC5\xB0" "VWXYZ"

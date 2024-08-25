@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (UA866)
- *
- * Copyright 2004 Pavel Tsarenko <tpe2@mail.ru>
- *
- */
+//
+// National Collation Support Module (UA866)
+//
+// Copyright 2004 Pavel Tsarenko <tpe2@mail.ru>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -44,15 +43,15 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: This collation misses two characters (Ґґ) from
-         the Ukrainian alphabet and uses non-cyrillic
-         versions for another two (Іі), because the
-         originals cannot be encoded in CP-866:
-           Ґ - U+0490 - https://codepoints.net/U+0490
-           ґ - U+0491 - https://codepoints.net/U+0491
-           І - U+0406 - https://codepoints.net/U+0406
-           і - U+0456 - https://codepoints.net/U+0456
-         [druzus/vszakats] */
+// NOTE: This collation misses two characters (Ґґ) from
+//       the Ukrainian alphabet and uses non-cyrillic
+//       versions for another two (Іі), because the
+//       originals cannot be encoded in CP-866:
+//         Ґ - U+0490 - https://codepoints.net/U+0490
+//         ґ - U+0491 - https://codepoints.net/U+0491
+//         І - U+0406 - https://codepoints.net/U+0406
+//         і - U+0456 - https://codepoints.net/U+0456
+//       [druzus/vszakats]
 
 #define HB_CP_ID        UA866
 #define HB_CP_INFO      "Ukrainian CP-866"
@@ -67,5 +66,5 @@
 #endif
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

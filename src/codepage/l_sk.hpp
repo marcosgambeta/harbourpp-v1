@@ -1,5 +1,5 @@
-/* Przemyslaw Czerpak <druzus / at / priv.onet.pl> */
-/* Viktor Szakats (vszakats.net/harbour) */
+// Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Viktor Szakats (vszakats.net/harbour)
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC3\x81\xC3\x84" "BC\xC4\x8C" "D\xC4\x8E.DZ..D\xC5\xBD.E\xC3\x89\xC4\x9A\xC3\x8B" "FGH.CH.I\xC3\x8D" "JKL\xC4\xB9\xC4\xBD" "MN\xC5\x87" "O\xC3\x93\xC3\x94\xC3\x96\xC5\x90" "PQR\xC5\x94\xC5\x98" "S\xC5\xA0" "T\xC5\xA4" "U\xC3\x9A\xC5\xAE\xC3\x9C\xC5\xB0" "VWXY\xC3\x9D" "Z\xC5\xBD"

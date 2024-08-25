@@ -1,4 +1,4 @@
-/* Mitja Podgornik <Mitja.Podgornik@zgs.gov.si> */
+// Mitja Podgornik <Mitja.Podgornik@zgs.gov.si>
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "ABC\xC4\x8C\xC4\x86" "D\xC4\x90" "EFGHIJKLMNOPQRS\xC5\xA0" "TUVWXYZ\xC5\xBD"

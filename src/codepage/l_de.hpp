@@ -1,4 +1,4 @@
-/* Guenther Steiner <byte-one@aon.at> */
+// Guenther Steiner <byte-one@aon.at>
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC3\x84" "BCDEFGHIJKLMNO\xC3\x96" "PQRS TU\xC3\x9C" "VWXYZ"

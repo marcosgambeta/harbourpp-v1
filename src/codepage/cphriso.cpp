@@ -1,10 +1,9 @@
-/*
- * National Collation Support Module (HRISO)
- *
- * Copyright 2003 Mitja Podgornik <Mitja.Podgornik@zgs.gov.si>
- * Copyright 2003 Vlado Miholic <Vladimir.Miholic@sk.hinet.hr>
- *
- */
+//
+// National Collation Support Module (HRISO)
+//
+// Copyright 2003 Mitja Podgornik <Mitja.Podgornik@zgs.gov.si>
+// Copyright 2003 Vlado Miholic <Vladimir.Miholic@sk.hinet.hr>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,5 +51,5 @@
 #include "l_hr.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

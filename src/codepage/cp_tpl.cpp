@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (template)
- *
- * Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
- *
- */
+//
+// National Collation Support Module (template)
+//
+// Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -44,27 +43,25 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*
-   If accented characters need special sorting ( HB_CDP_ACSORT_EQUAL or
-   HB_CDP_ACSORT_INTERLEAVE ) then you need to mark the accented characters
-   with the symbol '~' before each of them, for example:
-      a~Ç
-   If there is two-character sequence, which is considered as one, it should
-   be marked with '.' before and after it, for example:
-      ... h.ch.i ...
-   if such multibyte character has its own Unicode representation then
-   this Unicode value can be set using '=' symbol, for example:
-      ....h.ch=2A7C.i
-   and it will be used in translations.
-
-   The Upper case string and the Lower case string should use the same
-   letters. If some characters does not have corresponding upper or lower
-   letter then space ' ' can be used as dummy character, for example in
-   German CPs there is no upper case 'scharfes S' letter so space is used
-   as dummy character.
-
-   otherwise 0
- */
+// If accented characters need special sorting ( HB_CDP_ACSORT_EQUAL or
+// HB_CDP_ACSORT_INTERLEAVE ) then you need to mark the accented characters
+// with the symbol '~' before each of them, for example:
+//    a~Ç
+// If there is two-character sequence, which is considered as one, it should
+// be marked with '.' before and after it, for example:
+//    ... h.ch.i ...
+// if such multibyte character has its own Unicode representation then
+// this Unicode value can be set using '=' symbol, for example:
+//    ....h.ch=2A7C.i
+// and it will be used in translations.
+//
+// The Upper case string and the Lower case string should use the same
+// letters. If some characters does not have corresponding upper or lower
+// letter then space ' ' can be used as dummy character, for example in
+// German CPs there is no upper case 'scharfes S' letter so space is used
+// as dummy character.
+//
+// otherwise 0
 
 #define HB_CP_ID        EN
 #define HB_CP_INFO      "English CP-437"
@@ -74,5 +71,5 @@
 #define HB_CP_LOWER     "abcdefghijklmnopqrstuvwxyz"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"

@@ -1,4 +1,4 @@
-/* Bicahi Esgici <esgici@yahoo.com> */
+// Bicahi Esgici <esgici@yahoo.com>
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC3\x82" "BC\xC3\x87" "DE\xC3\x8A" "FG\xC4\x9E" "HI\xC4\xB0\xC3\x8E" "JKLMNO\xC3\x94\xC3\x96" "PRS\xC5\x9E" "TU\xC3\x9B\xC3\x9C" "VYZ"

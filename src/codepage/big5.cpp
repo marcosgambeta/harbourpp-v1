@@ -1,10 +1,9 @@
-/*
- * BIG5 <-> UCS16 conversion tables
- * code generated automatically by tests/big5_gen.prg
- *
- * Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// BIG5 <-> UCS16 conversion tables
+// code generated automatically by tests/big5_gen.prg
+//
+// Copyright 2011 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 #include "hbapi.hpp"
 

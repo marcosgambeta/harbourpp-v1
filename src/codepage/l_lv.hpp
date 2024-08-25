@@ -1,4 +1,4 @@
-/* Pavel Tsarenko <tpe2@mail.ru> */
+// Pavel Tsarenko <tpe2@mail.ru>
 
 #if defined(__BORLANDC__)
 #define HB_CP_UPPER     "A\xC4\x80" "BC\xC4\x8C" "DE\xC4\x92" "FG\xC4\xA2" "HI\xC4\xAA" "JK\xC4\xB6" "L\xC4\xBB" "MN\xC5\x85" "OPQRS\xC5\xA0" "TU\xC5\xAA" "VWXYZ\xC5\xBD"

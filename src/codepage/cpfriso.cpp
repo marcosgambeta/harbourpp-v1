@@ -1,9 +1,8 @@
-/*
- * National Collation Support Module (FRISO)
- *
- * Copyright 2008 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// National Collation Support Module (FRISO)
+//
+// Copyright 2008 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,5 +50,5 @@
 #include "l_fr.hpp"
 #define HB_CP_UTF8
 
-/* include CP registration code */
+// include CP registration code
 #include "hbcdpreg.hpp"
