@@ -1,9 +1,8 @@
-/*
- * Header file for trace macros and functions.
- *
- * Copyright 1999 Gonzalo Diethelm <gonzalo.diethelm@iname.com>
- *
- */
+//
+// Header file for trace macros and functions.
+//
+// Copyright 1999 Gonzalo Diethelm <gonzalo.diethelm@iname.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

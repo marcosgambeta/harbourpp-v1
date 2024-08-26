@@ -1,9 +1,8 @@
-/*
- * IOUSRD - module to create new FILE IO redirectors at .prg level
- *
- * Copyright 2014 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// IOUSRD - module to create new FILE IO redirectors at .prg level
+//
+// Copyright 2014 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

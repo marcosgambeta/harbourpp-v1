@@ -1,9 +1,8 @@
-/*
- * GT Graphics functions
- *
- * Copyright 2004 Mauricio Abre <maurifull@datafull.com>
- *
- */
+//
+// GT Graphics functions
+//
+// Copyright 2004 Mauricio Abre <maurifull@datafull.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

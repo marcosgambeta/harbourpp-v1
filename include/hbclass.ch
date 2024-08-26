@@ -1,13 +1,12 @@
-/*
- * Header file for Class commands
- *
- * Copyright 1999 Antonio Linares <alinares@fivetechsoft.com>
- * Copyright 2000-07 JF. Lefebvre <jfl@mafact.com> & RA. Cuylen <rac@mafact.com> (Class(y), TopClass and Visual Object compatibility, multiple inheritance)
- * Copyright 2000-08-2001 JF. Lefebvre <jfl@mafact.com> (Scoping, Delegating, DATA Shared, Support of 10 Chars limits)
- * Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *    most of rules rewritten
- *
- */
+//
+// Header file for Class commands
+//
+// Copyright 1999 Antonio Linares <alinares@fivetechsoft.com>
+// Copyright 2000-07 JF. Lefebvre <jfl@mafact.com> & RA. Cuylen <rac@mafact.com> (Class(y), TopClass and Visual Object compatibility, multiple inheritance)
+// Copyright 2000-08-2001 JF. Lefebvre <jfl@mafact.com> (Scoping, Delegating, DATA Shared, Support of 10 Chars limits)
+// Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//    most of rules rewritten
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

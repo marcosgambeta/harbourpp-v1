@@ -1,9 +1,8 @@
-/*
- * ZIP header file
- *
- * Copyright 2008 Mindaugas Kavaliauskas <dbtopas.at.dbtopas.lt>
- *
- */
+//
+// ZIP header file
+//
+// Copyright 2008 Mindaugas Kavaliauskas <dbtopas.at.dbtopas.lt>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

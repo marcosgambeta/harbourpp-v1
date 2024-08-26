@@ -1,10 +1,9 @@
-/*
- * Header file with trace constants and PP rules
- *
- * Copyright 1999 Gonzalo Diethelm <gonzalo.diethelm@iname.com>
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Header file with trace constants and PP rules
+//
+// Copyright 1999 Gonzalo Diethelm <gonzalo.diethelm@iname.com>
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

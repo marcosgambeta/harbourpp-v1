@@ -1,9 +1,8 @@
-/*
- * Header file for language API (Harbour Level)
- *
- * Copyright 2001-2002 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Header file for language API (Harbour Level)
+//
+// Copyright 2001-2002 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

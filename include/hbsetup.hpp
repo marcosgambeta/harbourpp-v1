@@ -1,10 +1,9 @@
-/*
- * Header file for compiler and runtime configuration
- *
- * Copyright 2000-2009 Viktor Szakats (vszakats.net/harbour)
- * Copyright 1999 Ryszard Glab <rglab@imid.med.pl>
- *
- */
+//
+// Header file for compiler and runtime configuration
+//
+// Copyright 2000-2009 Viktor Szakats (vszakats.net/harbour)
+// Copyright 1999 Ryszard Glab <rglab@imid.med.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

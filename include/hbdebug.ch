@@ -1,9 +1,8 @@
-/*
- * Header file for debugger
- *
- * Copyright 1999 Ryszard Glab <rglab@imid.med.pl>
- *
- */
+//
+// Header file for debugger
+//
+// Copyright 1999 Ryszard Glab <rglab@imid.med.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

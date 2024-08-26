@@ -1,9 +1,8 @@
-/*
- * Platform independent include file to include unistd.h and/or io.h
- *
- * Copyright 2001 {list of individual authors and e-mail addresses}
- *
- */
+//
+// Platform independent include file to include unistd.h and/or io.h
+//
+// Copyright 2001 {list of individual authors and e-mail addresses}
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

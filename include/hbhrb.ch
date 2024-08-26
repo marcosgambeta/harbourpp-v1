@@ -1,9 +1,8 @@
-/*
- * Header file for dynamic PCODE modules (HRB) options
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Header file for dynamic PCODE modules (HRB) options
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,9 +1,8 @@
-/*
- * Header file for Inkey() function
- *
- * Copyright 2001 David G. Holm
- *
- */
+//
+// Header file for Inkey() function
+//
+// Copyright 2001 David G. Holm
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

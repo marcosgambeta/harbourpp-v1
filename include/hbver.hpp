@@ -1,9 +1,8 @@
-/*
- * Header file for version information
- *
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com>
- *
- */
+//
+// Header file for version information
+//
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
