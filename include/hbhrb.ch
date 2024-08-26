@@ -77,4 +77,4 @@
 #define HB_HRB_FUNC_EXTERN       0x4   /* external functions used in HRB module */
 
 
-#endif /* HB_HRB_CH_ */
+#endif // HB_HRB_CH_

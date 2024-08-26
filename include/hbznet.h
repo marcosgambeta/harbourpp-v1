@@ -96,4 +96,4 @@ extern HB_EXPORT PHB_SOCKEX hb_sockexNewZNet( HB_SOCKET sd, const void * keydata
 
 HB_EXTERN_END
 
-#endif /* HB_ZNET_H_ */
+#endif // HB_ZNET_H_

@@ -49,4 +49,4 @@
 #define __HBEXTERN__HBLANG__REQUEST
 #include "hblang.hbx"
 
-#endif /* HB_EXTLNG_CH_ */
+#endif // HB_EXTLNG_CH_

@@ -49,4 +49,4 @@
 
 #include <math.h>
 
-#endif /* HB_MATH_H_ */
+#endif // HB_MATH_H_

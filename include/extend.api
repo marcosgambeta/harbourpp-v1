@@ -118,4 +118,4 @@ typedef PHB_ITEM  ITEM;
 #define _storni         hb_storvni
 #define _stornl         hb_storvnl
 
-#endif /* _EXTEND_API */
+#endif // _EXTEND_API

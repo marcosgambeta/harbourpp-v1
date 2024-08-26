@@ -65,6 +65,6 @@
        ;    QUIT                                        ;
        ; END
 
-#endif /* NDEBUG */
+#endif // NDEBUG
 
-#endif /* HB_ASSERT_CH_ */
+#endif // HB_ASSERT_CH_

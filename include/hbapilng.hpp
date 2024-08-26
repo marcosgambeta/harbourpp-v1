@@ -96,4 +96,4 @@ extern HB_EXPORT const char * hb_langDGetErrorDesc    ( int iIndex );
 
 HB_EXTERN_END
 
-#endif /* HB_APILNG_H_ */
+#endif // HB_APILNG_H_

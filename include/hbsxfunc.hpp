@@ -68,4 +68,4 @@ HB_BOOL hb_LZSSxDecompressFile( PHB_FILE pInput, PHB_FILE pOutput );
 
 HB_EXTERN_END
 
-#endif /* HB_SXFUNC_H_ */
+#endif // HB_SXFUNC_H_

@@ -57,4 +57,4 @@
 #define HB_SM_RT_MACRO   64   /* disable automatic setup of macro flag */
 #define HB_SM_PARSER     128  /* address of macro parser (TODO) */
 
-#endif /* HB_MACRO_CH_ */
+#endif // HB_MACRO_CH_

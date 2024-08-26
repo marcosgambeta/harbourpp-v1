@@ -83,4 +83,4 @@ typedef PEVALINFO EVALINFOP;
 #define _itemSize       hb_itemSize
 #define _itemType       hb_itemType
 
-#endif /* _ITEM_API */
+#endif // _ITEM_API

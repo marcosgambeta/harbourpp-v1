@@ -174,7 +174,7 @@
       #endif
    #endif
 
-#endif /* HB_LONG_LONG_OFF */
+#endif // HB_LONG_LONG_OFF
 
 /* Basic types */
 #define HB_FALSE 0
@@ -1248,7 +1248,7 @@ typedef HB_U32 HB_FATTR;
                                        } while( 0 )
 #  endif
 
-#endif /* ! __GNUC__ */
+#endif // ! __GNUC__
 
 /*
  * HB_FORCE_IEEE754_DOUBLE will can be used on platforms which use different
@@ -1374,7 +1374,7 @@ typedef HB_U32 HB_FATTR;
       } } while( 0 )
 #  endif
 
-#endif /* ! defined( HB_FORCE_IEEE754_DOUBLE ) */
+#endif // ! defined( HB_FORCE_IEEE754_DOUBLE )
 
 
 /* Now the rest of endian macros */
@@ -1638,4 +1638,4 @@ typedef int           HB_COLOR;
 
 #include "hbtrace.hpp"
 
-#endif /* HB_DEFS_H_ */
+#endif // HB_DEFS_H_

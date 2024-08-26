@@ -195,4 +195,4 @@ extern HB_EXPORT void *   hb_vmThreadState( void );
 
 HB_EXTERN_END
 
-#endif /* HB_VM_H_ */
+#endif // HB_VM_H_

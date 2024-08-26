@@ -48,4 +48,4 @@
 
 /* TODO: Fill this file. */
 
-#endif /* HB_RESERVED_CH_ */
+#endif // HB_RESERVED_CH_

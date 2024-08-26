@@ -59,4 +59,4 @@
 #define HB_HMERGE_DIFFERENCE    2  /* logical XOR on items in two hash tables */
 #define HB_HMERGE_REMOVE        3  /* h1 & ( h1 ^ h2 ) */
 
-#endif /* HB_HASH_CH_ */
+#endif // HB_HASH_CH_

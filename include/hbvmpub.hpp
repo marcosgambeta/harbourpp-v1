@@ -192,7 +192,7 @@ struct _HB_SYMB;
    typedef void *  PHB_DYNS;
 #endif
 
-#endif /* ! _HB_API_INTERNAL_ */
+#endif // ! _HB_API_INTERNAL_
 
 /* symbol support structure */
 typedef struct _HB_SYMB
@@ -251,4 +251,4 @@ extern HB_EXPORT void hb_vmExecute( const HB_BYTE * pCode, PHB_SYMB pSymbols ) H
 
 HB_EXTERN_END
 
-#endif /* HB_VMPUB_H_ */
+#endif // HB_VMPUB_H_

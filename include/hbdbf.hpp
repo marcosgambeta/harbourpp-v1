@@ -108,4 +108,4 @@ typedef SMTFIELD * LPSMTFIELD;
 
 HB_EXTERN_END
 
-#endif /* HB_DBF_H_ */
+#endif // HB_DBF_H_

@@ -221,7 +221,7 @@ extern PHB_SET_STRUCT hb_setClone( PHB_SET_STRUCT pSet );
 
 typedef void * PHB_SET_STRUCT;
 
-#endif /* _HB_SET_INTERNAL_ || _HB_API_INTERNAL_ */
+#endif // _HB_SET_INTERNAL_ || _HB_API_INTERNAL_
 
 #define HB_SET_CASE_MIXED  0
 #define HB_SET_CASE_LOWER  1
@@ -341,4 +341,4 @@ extern HB_EXPORT const char * hb_setGetDBCODEPAGE( void );
 
 HB_EXTERN_END
 
-#endif /* HB_SET_H_ */
+#endif // HB_SET_H_

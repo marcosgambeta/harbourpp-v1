@@ -212,4 +212,4 @@
 #define HB_SOCKET_ADINFO_PATH             2     /* HB_SOCKET_AF_LOCAL */
 #define HB_SOCKET_ADINFO_PORT             3     /* HB_SOCKET_AF_INET, HB_SOCKET_AF_INET6 */
 
-#endif /* HB_SOCKET_CH_ */
+#endif // HB_SOCKET_CH_

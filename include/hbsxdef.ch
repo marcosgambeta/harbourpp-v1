@@ -73,4 +73,4 @@
 #define BLOB_FILECOMPRESS     1
 #define BLOB_FILEENCRYPT      2
 
-#endif /* HB_SIX_DEF_CH_ */
+#endif // HB_SIX_DEF_CH_

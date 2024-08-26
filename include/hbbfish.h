@@ -78,4 +78,4 @@ extern HB_EXPORT void hb_blowfishDecrypt( const HB_BLOWFISH * bf, HB_U32 * xl, H
 
 HB_EXTERN_END
 
-#endif /* HB_BLOWFISH_H_ */
+#endif // HB_BLOWFISH_H_

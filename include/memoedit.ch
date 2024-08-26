@@ -72,4 +72,4 @@
 /* NOTE: Return codes 1-31 cause MemoEdit() to perform the */
 /*       edit action corresponding to the key whose value is returned. */
 
-#endif /* _MEMOEDIT_CH */
+#endif // _MEMOEDIT_CH

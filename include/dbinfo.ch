@@ -411,4 +411,4 @@
 /* update in GOCOLD after any record modification */
 #define DB_SETHEADER_FULL        ( DB_SETHEADER_WRITE + DB_SETHEADER_REPLACE )
 
-#endif /* HB_DBINFO_CH_ */
+#endif // HB_DBINFO_CH_

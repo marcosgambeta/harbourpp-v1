@@ -78,4 +78,4 @@
 #define _xvheaplock( h, offset )     hb_xvheaplock( h, offset )
 #define _xvheapunlock( h, offset )   hb_xvheapunlock( h, offset )
 
-#endif /* _VM_API */
+#endif // _VM_API

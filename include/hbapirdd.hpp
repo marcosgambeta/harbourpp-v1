@@ -1284,4 +1284,4 @@ extern HB_EXPORT HB_ERRCODE   hb_rddGetTempAlias( char * szAliasTmp );
 
 HB_EXTERN_END
 
-#endif /* HB_APIRDD_H_ */
+#endif // HB_APIRDD_H_

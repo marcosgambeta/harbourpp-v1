@@ -95,4 +95,4 @@
 #xtranslate HB_TRACE( <l>, <x,...> )         => ;
             iif( HB_TR_LEVEL >= <l>, hb_traceLogAt( <l>, <x> ), )
 
-#endif /* HB_TRACE_CH_ */
+#endif // HB_TRACE_CH_

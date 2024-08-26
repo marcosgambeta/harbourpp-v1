@@ -53,4 +53,4 @@
 #define RDT_TRANSFER    2
 #define RDT_HIDDEN      255
 
-#endif /* _RDDSYS_CH */
+#endif // _RDDSYS_CH

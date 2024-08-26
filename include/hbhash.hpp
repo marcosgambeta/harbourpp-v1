@@ -88,4 +88,4 @@ extern HB_EXPORT_INT HB_SIZE hb_hashTableSize( PHB_HASH_TABLE pTable ); /* retur
 
 HB_EXTERN_END
 
-#endif /* HB_HASH_H_ */
+#endif // HB_HASH_H_

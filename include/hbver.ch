@@ -91,4 +91,4 @@
 #define HB_VERSION_ENDIAN_BIG           2
 #define HB_VERSION_ENDIAN_PDP           3
 
-#endif /* HB_VER_CH_ */
+#endif // HB_VER_CH_

@@ -817,7 +817,7 @@
 // #if _WIN32_WINNT >= 0x0601
 #define WM_GESTURE                                                   0x0119
 #define WM_GESTURENOTIFY                                             0x011A
-// #endif /* _WIN32_WINNT >= 0x0601 */
+// #endif // _WIN32_WINNT >= 0x0601
 #define WM_MENUCHAR                                                  0x0120
 #define WM_ENTERIDLE                                                 0x0121
 #ifndef _WIN32_WCE
@@ -4119,7 +4119,7 @@
 
 // #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 // #if (_WIN32_WINNT >= 0x0602)
-// #endif /*(_WIN32_WINNT >= 0x0602)*/
+// #endif //(_WIN32_WINNT >= 0x0602)
 // #endif
 
-#endif /* _WINAPI_WINUSER_ */
+#endif // _WINAPI_WINUSER_

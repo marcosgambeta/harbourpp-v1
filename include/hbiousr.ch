@@ -87,4 +87,4 @@
 
 #define IOUSR_METHODCOUNT           33
 
-#endif /* _HBIOUSR_CH */
+#endif // _HBIOUSR_CH

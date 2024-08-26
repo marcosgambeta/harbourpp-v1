@@ -153,4 +153,4 @@
 #define HB_VF_WRHANDLE     6
 #define HB_VF_IONAME       7
 
-#endif /* _FILEIO_CH */
+#endif // _FILEIO_CH

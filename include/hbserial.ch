@@ -53,4 +53,4 @@
 #define HB_SERIALIZE_COMPRESS       0x04
 #define HB_SERIALIZE_IGNOREREF      0x08
 
-#endif /* HB_SERIAL_CH_ */
+#endif // HB_SERIAL_CH_

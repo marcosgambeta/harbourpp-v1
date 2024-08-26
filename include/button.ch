@@ -108,4 +108,4 @@
 #define HTREDUCE                 HTMINBUTTON
 #define HTZOOM                   HTMAXBUTTON
 
-#endif /* HB_BUTTON_CH_ */
+#endif // HB_BUTTON_CH_

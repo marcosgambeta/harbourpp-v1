@@ -75,4 +75,4 @@
 
 #define HB_ZLIB_RES_UNSUPPORTED           ( -10 )
 
-#endif /* HB_ZLIB_CH_ */
+#endif // HB_ZLIB_CH_

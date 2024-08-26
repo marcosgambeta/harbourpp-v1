@@ -487,6 +487,6 @@
 
 // #define UploadPrinterDriverPackage                                   __MINGW_NAME_AW(UploadPrinterDriverPackage)
 
-// #endif /*(_WIN32_WINNT >= 0x0600)*/
+// #endif //(_WIN32_WINNT >= 0x0600)
 
-#endif /* _WINAPI_WINSPOOL_ */
+#endif // _WINAPI_WINSPOOL_

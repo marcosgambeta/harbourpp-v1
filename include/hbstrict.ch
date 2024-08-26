@@ -49,4 +49,4 @@
 /* force compiler error */
 #translate if( <x>, <y>, <z> ) => iif()
 
-#endif /* HB_STRICT_CH_ */
+#endif // HB_STRICT_CH_

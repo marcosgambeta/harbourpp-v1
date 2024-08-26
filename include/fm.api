@@ -62,4 +62,4 @@
 #define _exmgrab                hb_xgrab
 #define _exmback( p, s )        hb_xfree( p )
 
-#endif /* _FM_API */
+#endif // _FM_API

@@ -102,4 +102,4 @@
 #define _bcmp           memcmp
 #define _bscan(p,cnt,c) memchr( p, c, cnt )
 
-#endif /* HB_UNDOC_API_ */
+#endif // HB_UNDOC_API_

@@ -36,4 +36,4 @@
 #include "winapi_gdipluspixelformats.ch"
 #include "winapi_gdiplustypes.ch"
 
-#endif /* __GDIPLUS_cH */
+#endif // __GDIPLUS_CH

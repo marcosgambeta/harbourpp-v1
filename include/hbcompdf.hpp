@@ -873,7 +873,7 @@ typedef struct
 extern PHB_COMP hb_comp_new( void );
 extern void hb_comp_free( PHB_COMP );
 
-#endif /* ! HB_MACRO_SUPPORT */
+#endif // ! HB_MACRO_SUPPORT
 
 typedef struct _HB_COMP_FUNCS
 {
@@ -904,4 +904,4 @@ typedef HB_COMP_CARGO2_FUNC( ( * PHB_COMP_CARGO2_FUNC ) );
 
 HB_EXTERN_END
 
-#endif /* HB_COMPDF_H_ */
+#endif // HB_COMPDF_H_

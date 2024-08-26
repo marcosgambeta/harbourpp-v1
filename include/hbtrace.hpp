@@ -229,4 +229,4 @@ extern HB_EXPORT void          hb_tr_stealth( const char * fmt, ... ) HB_PRINTF_
 
 HB_EXTERN_END
 
-#endif /* HB_TRACE_H_ */
+#endif // HB_TRACE_H_

@@ -674,7 +674,7 @@
             _GET_( <v>, <"v">, <pic>, <{valid}>, <{when}> ):Display() ) ;
       [; ATail( GetList ):<snd>]
 
-#endif /* HB_COMPAT_C53 */
+#endif // HB_COMPAT_C53
 
 
 /* Harbour extensions */
@@ -689,4 +689,4 @@
 #command SET HARDCOMMIT (<x>)          => Set( _SET_HARDCOMMIT, <x> )
 #command SET EOL <x>                   => Set( _SET_EOL, <x> )
 
-#endif /* HB_STD_CH_ */
+#endif // HB_STD_CH_

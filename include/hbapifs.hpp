@@ -216,7 +216,7 @@ typedef struct
 extern HB_EXPORT int        hb_fsPoll        ( PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut );
 extern HB_EXPORT int        hb_fsCanRead     ( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut );
 extern HB_EXPORT int        hb_fsCanWrite    ( HB_FHANDLE hFileHandle, HB_MAXINT nTimeOut );
-#endif /* HB_OS_UNIX */
+#endif // HB_OS_UNIX
 
 
 #define hb_fsFLock( h, s, l )   hb_fsLock( h, s, l, FL_LOCK )
@@ -461,4 +461,4 @@ extern HB_EXPORT FILE *       hb_fopen( const char *path, const char *mode );
 
 HB_EXTERN_END
 
-#endif /* HB_APIFS_H_ */
+#endif // HB_APIFS_H_

@@ -103,4 +103,4 @@ typedef SDFAREA * LPSDFAREA;
 
 HB_EXTERN_END
 
-#endif /* HB_RDDSDF_H_ */
+#endif // HB_RDDSDF_H_

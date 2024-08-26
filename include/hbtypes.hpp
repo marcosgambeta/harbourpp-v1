@@ -118,4 +118,4 @@ typedef void     ( * HB_MACROTEXTVALUE )( PHB_ITEM pItem );
 
 HB_EXTERN_END
 
-#endif /* HB_TYPES_H_ */
+#endif // HB_TYPES_H_

@@ -123,4 +123,4 @@
 #define HB_OO_DELEG_OBJECT      3
 #define HB_OO_DELEG_SCOPE       4
 
-#endif /* HB_OO_CH_ */
+#endif // HB_OO_CH_

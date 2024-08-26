@@ -1528,9 +1528,9 @@
 #define PBST_NORMAL                                                  1
 #define PBST_ERROR                                                   2
 #define PBST_PAUSED                                                  3
-// #endif /* (_WIN32_WINNT >= 0x0600) */
+// #endif // (_WIN32_WINNT >= 0x0600)
 
-#endif /* !NOPROGRESS */
+#endif // !NOPROGRESS
 
 #ifndef NOHOTKEY
 
@@ -2805,7 +2805,7 @@
 #define TV_DISPINFOEXA                                               NMTVDISPINFOEXA
 #define TV_DISPINFOEXW                                               NMTVDISPINFOEXW
 #define TV_DISPINFOEX                                                NMTVDISPINFOEX
-// #endif /* (_WIN32_IE >= 0x0600) */
+// #endif // (_WIN32_IE >= 0x0600)
 
 #define TVN_ITEMEXPANDINGA                                           (TVN_FIRST-5)
 #define TVN_ITEMEXPANDINGW                                           (TVN_FIRST-54)
@@ -3809,4 +3809,4 @@
 #endif
 // #endif
 
-#endif /* _WINAPI_COMMCTRL_ */
+#endif // _WINAPI_COMMCTRL_

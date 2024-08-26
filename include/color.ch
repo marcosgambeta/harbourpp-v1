@@ -53,4 +53,4 @@
 #define CLR_BACKGROUND  3
 #define CLR_UNSELECTED  4
 
-#endif /* _COLOR_CH */
+#endif // _COLOR_CH

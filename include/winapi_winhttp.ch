@@ -460,4 +460,4 @@
 // #ifdef _WS2DEF_
 // #endif
 
-#endif /* _WINAPI_WINHTTP_ */
+#endif // _WINAPI_WINHTTP_

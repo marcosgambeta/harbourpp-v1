@@ -569,4 +569,4 @@
    #define HB_FORCEINLINE     _HB_INLINE_
 #endif
 
-#endif /* HB_SETUP_H_ */
+#endif // HB_SETUP_H_

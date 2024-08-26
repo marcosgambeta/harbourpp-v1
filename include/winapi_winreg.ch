@@ -134,6 +134,6 @@
 
 // #define InitiateShutdown                                             __MINGW_NAME_AW(InitiateShutdown)
 
-// #endif /* (_WIN32_WINNT >= 0x0600) */
+// #endif // (_WIN32_WINNT >= 0x0600)
 
-#endif /* _WINAPI_WINREG_ */
+#endif // _WINAPI_WINREG_

@@ -48,4 +48,4 @@
 
 /* TODO: remover este arquivo */
 
-#endif /* HB_WINCE_H_ */
+#endif // HB_WINCE_H_

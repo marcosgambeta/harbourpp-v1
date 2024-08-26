@@ -110,4 +110,4 @@ extern HB_EXPORT HB_MATH_HANDLERPROC hb_mathGetHandler( void );
 
 HB_EXTERN_END
 
-#endif /* HB_MATHER_H_ */
+#endif // HB_MATHER_H_

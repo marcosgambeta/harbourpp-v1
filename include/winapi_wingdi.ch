@@ -541,12 +541,12 @@
 #define LF_FACESIZE                                                  32
 #endif
 
-// #endif /* WINAPI_PARTITION_APP */
+// #endif // WINAPI_PARTITION_APP
 
 #define LF_FULLFACESIZE                                              64
 
 // #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif /* WINAPI_PARTITION_DESKTOP */
+// #endif // WINAPI_PARTITION_DESKTOP
 
 #define OUT_DEFAULT_PRECIS                                           0
 #define OUT_STRING_PRECIS                                            1
@@ -775,7 +775,7 @@
 
 #define ELF_VENDOR_SIZE                                              4
 
-// #endif /* WINAPI_PARTITION_APP */
+// #endif // WINAPI_PARTITION_APP
 
 #define ELF_VERSION                                                  0
 #define ELF_CULTURE_LATIN                                            0
@@ -1343,10 +1343,10 @@
 
 #define DISPLAYCONFIG_PATH_ACTIVE                                    0x1
 
-// #endif /* WINAPI_PARTITION_APP */
+// #endif // WINAPI_PARTITION_APP
 
 // #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-// #endif /* WINAPI_PARTITION_DESKTOP */
+// #endif // WINAPI_PARTITION_DESKTOP
 
 #define QDC_ALL_PATHS                                                0x00000001
 #define QDC_ONLY_ACTIVE_PATHS                                        0x00000002
@@ -1369,7 +1369,7 @@
 #define SDC_FORCE_MODE_ENUMERATION                                   0x00001000
 #define SDC_ALLOW_PATH_ORDER_CHANGES                                 0x00002000
 
-// #endif /* WINVER >= 0x0601 */
+// #endif // WINVER >= 0x0601
 
 #define RDH_RECTANGLES                                               1
 
@@ -1481,7 +1481,7 @@
 // #define CreateMetaFile                                               __MINGW_NAME_AW(CreateMetaFile)
 // #define CreateScalableFontResource                                   __MINGW_NAME_AW(CreateScalableFontResource)
 
-// #endif /* WINAPI_PARTITION_DESKTOP */
+// #endif // WINAPI_PARTITION_DESKTOP
 
 #define DM_UPDATE                                                    1
 #define DM_COPY                                                      2
@@ -1599,7 +1599,7 @@
 #define GDIREGISTERDDRAWPACKETVERSION                                0x1
 // #endif
 
-// #endif /* WINAPI_PARTITION_DESKTOP */
+// #endif // WINAPI_PARTITION_DESKTOP
 
 // #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #define AC_SRC_OVER                                                  0x00
@@ -1884,6 +1884,6 @@
 
 // #endif
 
-// #endif /* WINAPI_PARTITION_DESKTOP */
+// #endif // WINAPI_PARTITION_DESKTOP
 
-#endif /* _WINAPI_WINGDI_ */
+#endif // _WINAPI_WINGDI_

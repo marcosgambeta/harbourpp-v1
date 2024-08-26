@@ -262,7 +262,7 @@ HB_EXTERN_BEGIN
       } critical;
    } HB_CRITICAL_T;
 #  define HB_CRITICAL_NEW( name )   HB_CRITICAL_T name = { HB_FALSE, { 0 } }
-#endif /* HB_CRITICAL_NEED_INIT */
+#endif // HB_CRITICAL_NEED_INIT
 
 #ifdef HB_COND_NEED_INIT
 #  if defined( HB_COND_OS_SUPPORT )
@@ -294,7 +294,7 @@ HB_EXTERN_BEGIN
       } HB_COND_T;
 #     define HB_COND_NEW( name )       HB_COND_T name = { HB_FALSE, 0, { 0 }, { 0 } }
 #  endif
-#endif /* HB_COND_NEED_INIT */
+#endif // HB_COND_NEED_INIT
 
 #ifndef HB_THREAD_EQUAL
 #  define HB_THREAD_EQUAL( x, y )   ( (x) == (y) )
@@ -413,7 +413,7 @@ extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, P
 #     undef HB_USE_TLS
 #     error "TLS support undefined for this compiler" /* */
 #  endif
-#endif /* HB_USE_TLS */
+#endif // HB_USE_TLS
 
 #ifndef HB_USE_TLS
 #  if defined( HB_TASK_THREAD )
@@ -432,12 +432,12 @@ extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, P
 #     define hb_tls_set(k,v)  TlsSetValue( k, ( void * ) (v) )
 #     define hb_tls_get(k)    TlsGetValue( k )
 #  endif
-#endif /* ! HB_USE_TLS */
+#endif // ! HB_USE_TLS
 
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
-#endif /* _HB_API_INTERNAL_ */
+#endif // _HB_API_INTERNAL_
 
 HB_EXTERN_END
 
-#endif /* HB_THREAD_H_ */
+#endif // HB_THREAD_H_

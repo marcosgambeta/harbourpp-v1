@@ -235,4 +235,4 @@
 #  define HB_NUMTYPEL( v, d ) HB_NUMTYPE( v, d )
 #endif
 
-#endif /* HB_FLOAT_H_ */
+#endif // HB_FLOAT_H_

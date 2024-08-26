@@ -311,4 +311,4 @@
 #define Gdiplus_PropertyTagTypeSLONG                        9
 #define Gdiplus_PropertyTagTypeSRational                    10
 
-#endif /* __GDIPLUS_IMAGING_CH */
+#endif // __GDIPLUS_IMAGING_CH

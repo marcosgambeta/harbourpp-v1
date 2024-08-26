@@ -70,4 +70,4 @@
 #define Gdiplus_PaletteTypeFixedHalftone252                 8
 #define Gdiplus_PaletteTypeFixedHalftone256                 9
 
-#endif /* __GDIPLUS_PIXELFORMATS_CH */
+#endif // __GDIPLUS_PIXELFORMATS_CH

@@ -587,4 +587,4 @@ typedef NSXAREA * LPNSXAREA;
 
 HB_EXTERN_END
 
-#endif /* HB_RDDNSX_H_ */
+#endif // HB_RDDNSX_H_

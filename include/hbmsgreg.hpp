@@ -65,4 +65,4 @@ HB_CALL_ON_STARTUP_END( HB_MACRONAME_JOIN( _hb_lang_Init_, HB_LANG_ID ) )
    #include "hbiniseg.hpp"
 #endif
 
-#endif /* HB_LANG_ID */
+#endif // HB_LANG_ID

@@ -198,6 +198,6 @@
 
 // #define MultinetGetConnectionPerformance                             __MINGW_NAME_AW(MultinetGetConnectionPerformance)
 
-// #endif /* WINAPI_PARTITION_DESKTOP.  */
+// #endif // WINAPI_PARTITION_DESKTOP.
 
-#endif /* _WINAPI_WINNETWK_ */
+#endif // _WINAPI_WINNETWK_

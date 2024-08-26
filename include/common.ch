@@ -75,4 +75,4 @@
 #command UPDATE <v1> IF <exp> TO <v2> => ;
                                 IF <exp> ; <v1> := <v2> ; END
 
-#endif /* HB_COMMON_CH_ */
+#endif // HB_COMMON_CH_

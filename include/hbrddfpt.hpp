@@ -242,4 +242,4 @@ typedef FPTAREA * LPFPTAREA;
 
 HB_EXTERN_END
 
-#endif /* HB_RDDFPT_H_ */
+#endif // HB_RDDFPT_H_

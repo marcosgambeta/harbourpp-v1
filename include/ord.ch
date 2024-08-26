@@ -91,4 +91,4 @@
 
 #include "dbinfo.ch"
 
-#endif /* HB_ORD_CH_ */
+#endif // HB_ORD_CH_

@@ -141,4 +141,4 @@ typedef BYTE    byte;
 typedef USHORT  quant;
 typedef BOOL    Boolean;
 
-#endif /* _CLIPDEFS_H */
+#endif // _CLIPDEFS_H

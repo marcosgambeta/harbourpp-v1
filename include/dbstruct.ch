@@ -60,4 +60,4 @@
 /* Length of the field structure array */
 #define DBS_ALEN        4
 
-#endif /* _DBSTRUCT_CH */
+#endif // _DBSTRUCT_CH

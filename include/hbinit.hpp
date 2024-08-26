@@ -270,4 +270,4 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
 
 HB_EXTERN_END
 
-#endif /* HB_INIT_H_ */
+#endif // HB_INIT_H_

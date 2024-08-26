@@ -58,4 +58,4 @@
 /* Length of Directory() array */
 #define F_LEN           5
 
-#endif /* _DIRECTRY_CH */
+#endif // _DIRECTRY_CH

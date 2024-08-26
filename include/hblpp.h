@@ -77,4 +77,4 @@ extern HB_EXPORT HB_SIZE hb_lppRecvLen( PHB_LPP pSocket );
 
 HB_EXTERN_END
 
-#endif /* HB_LPP_H_ */
+#endif // HB_LPP_H_

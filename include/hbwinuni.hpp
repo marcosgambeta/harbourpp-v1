@@ -124,6 +124,6 @@
    #define HB_WINAPI_GETPROCADDRESST( h, n )     ( void * ) GetProcAddress( h, n "A" )
 #endif
 
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN
 
-#endif /* HB_WINUNI_H_ */
+#endif // HB_WINUNI_H_

@@ -163,4 +163,4 @@ HB_EXTERN_END
 #  endif
 #endif
 
-#endif /* HB_DATE_H_ */
+#endif // HB_DATE_H_

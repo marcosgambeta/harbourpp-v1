@@ -53,4 +53,4 @@
 #define Gdiplus_HistogramFormatR                            6
 #define Gdiplus_HistogramFormatA                            7
 
-#endif /* __GDIPLUS_COLORMATRIX_CH */
+#endif // __GDIPLUS_COLORMATRIX_CH

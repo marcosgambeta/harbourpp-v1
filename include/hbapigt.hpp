@@ -346,4 +346,4 @@ extern HB_EXPORT int        hb_inkeyKeyVal( int iKey );     /* extract key/chara
 
 HB_EXTERN_END
 
-#endif /* HB_APIGT_H_ */
+#endif // HB_APIGT_H_

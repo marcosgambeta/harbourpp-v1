@@ -61,4 +61,4 @@
    #define DE_APPEND       3       /* Undocumented CA-Cl*pper append mode in DBEdit */
 #endif
 
-#endif /* _DBEDIT_CH */
+#endif // _DBEDIT_CH

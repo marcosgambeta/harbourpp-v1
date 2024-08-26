@@ -104,4 +104,4 @@
 #define HB_DBG_SET_VALUE         3  /* is valid expression? */
 #define HB_DBG_SET_LEN           3
 
-#endif /* HB_DEBUGGER_CH_ */
+#endif // HB_DEBUGGER_CH_

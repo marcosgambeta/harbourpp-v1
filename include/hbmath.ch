@@ -72,4 +72,4 @@
 #define HB_MATHERRORBLOCK_RETVAL   1
 #define HB_MATHERRORBLOCK_HANDLED  2
 
-#endif /* HB_MATH_CH */
+#endif // HB_MATH_CH

@@ -58,7 +58,7 @@ typedef int     ( * HB_ZLIB_UNCMPS )( char *, HB_SIZE *, const char *, HB_SIZE )
 
 extern void hb_zlibInit( HB_ZLIB_CBOUND, HB_ZLIB_UNSIZE, HB_ZLIB_COMPRS, HB_ZLIB_UNCMPS );
 
-#endif /* _HB_ZLIB_INTERNAL_ */
+#endif // _HB_ZLIB_INTERNAL_
 
 HB_EXTERN_BEGIN
 
@@ -69,4 +69,4 @@ extern HB_EXPORT int     hb_zlibUncompress( char * pDst, HB_SIZE * pnDst, const 
 
 HB_EXTERN_END
 
-#endif /* HB_ZLIB_H_ */
+#endif // HB_ZLIB_H_

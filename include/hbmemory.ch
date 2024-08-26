@@ -73,4 +73,4 @@
 #define HB_MEM_BLOCKS        1007   /* Total number of memory blocks allocated */
 #define HB_MEM_STATISTICS    1008   /* Return non 0 value if FM statistic is enabled */
 #define HB_MEM_CANLIMIT      1009   /* Return non 0 value if used memory limit is supported */
-#endif /* HB_MEMORY_CH_ */
+#endif // HB_MEMORY_CH_

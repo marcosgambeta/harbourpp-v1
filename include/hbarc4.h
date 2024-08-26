@@ -62,4 +62,4 @@ extern HB_EXPORT HB_U32 hb_arc4random_uniform( HB_U32 upper_bound );
 
 HB_EXTERN_END
 
-#endif /* ARC4_H */
+#endif // ARC4_H

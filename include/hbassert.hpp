@@ -56,4 +56,4 @@
    #include <assert.h>
 #endif
 
-#endif /* HB_ASSERT_H_ */
+#endif // HB_ASSERT_H_

@@ -254,4 +254,4 @@ extern HB_EXPORT void hb_xvmCopyLocals( int iDest, int iSource );
 
 HB_EXTERN_END
 
-#endif /* HB_XVM_H_ */
+#endif // HB_XVM_H_

@@ -115,7 +115,7 @@ extern HB_BOOL hb_regexIs( PHB_ITEM pItem );
 
 typedef void * PHB_REGEX;
 
-#endif /* _HB_REGEX_INTERNAL_ */
+#endif // _HB_REGEX_INTERNAL_
 
 #define HBREG_ICASE     0x01
 #define HBREG_NEWLINE   0x02
@@ -138,4 +138,4 @@ extern HB_EXPORT HB_BOOL   hb_regexMatch( PHB_REGEX pRegEx, const char * szStrin
 
 HB_EXTERN_END
 
-#endif /* HB_REGEX_H_ */
+#endif // HB_REGEX_H_

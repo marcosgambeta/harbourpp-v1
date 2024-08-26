@@ -57,4 +57,4 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-#endif /* HB_CH_ */
+#endif // HB_CH_

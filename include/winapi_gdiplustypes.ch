@@ -55,4 +55,4 @@
 #define GpStatus_PropertyNotSupported                       20
 #define GpStatus_ProfileNotFound                            21
 
-#endif /* __GDIPLUS_TYPES_CH */
+#endif // __GDIPLUS_TYPES_CH

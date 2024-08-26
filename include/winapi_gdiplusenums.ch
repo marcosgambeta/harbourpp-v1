@@ -681,4 +681,4 @@
 #define Gdiplus_TestControlForceNoICM                       1
 #define Gdiplus_TestControlGetBuildNumber                   2
 
-#endif /* __GDIPLUS_ENUMS_CH */
+#endif // __GDIPLUS_ENUMS_CH

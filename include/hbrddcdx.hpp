@@ -477,4 +477,4 @@ typedef struct _CDXAREA
 
 HB_EXTERN_END
 
-#endif /* HB_RDDCDX_H_ */
+#endif // HB_RDDCDX_H_

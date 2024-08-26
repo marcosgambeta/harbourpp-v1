@@ -57,4 +57,4 @@
 #define HB_LANG_ITEM_BASE_TEXT          115
 #define HB_LANG_ITEM_MAX_               118
 
-#endif /* HB_LANG_CH_ */
+#endif // HB_LANG_CH_

@@ -53,4 +53,4 @@
 #include "hbextcdp.ch"
 #include "hbextlng.ch"
 
-#endif /* HB_EXTERN_CH_ */
+#endif // HB_EXTERN_CH_

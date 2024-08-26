@@ -169,4 +169,4 @@ HB_EXTERN_BEGIN
 
 HB_EXTERN_END
 
-#endif /* HB_ERRORS_H_ */
+#endif // HB_ERRORS_H_

@@ -180,4 +180,4 @@
 #define Gdiplus_ColorYellow                                 0xFFFFFF00
 #define Gdiplus_ColorYellowGreen                            0xFF9ACD32
 
-#endif /* __GDIPLUS_COLOR_CH */
+#endif // __GDIPLUS_COLOR_CH

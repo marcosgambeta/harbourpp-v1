@@ -188,4 +188,4 @@ extern HB_EXPORT PHB_ITEM hb_errorBlock( void );
 
 HB_EXTERN_END
 
-#endif /* HB_APIERR_H_ */
+#endif // HB_APIERR_H_

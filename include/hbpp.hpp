@@ -640,7 +640,7 @@ extern void hb_pp_initRules( PHB_PP_RULE * pRulesPtr, int * piRules,
 
 typedef void * PHB_PP_STATE;
 
-#endif /* _HB_PP_INTERNAL */
+#endif // _HB_PP_INTERNAL
 
 /* public functions */
 extern HB_EXPORT PHB_PP_STATE hb_pp_new( void );
@@ -690,4 +690,4 @@ extern PHB_PP_STATE hb_pp_Param( int iParam );
 
 HB_EXTERN_END
 
-#endif /* HB_PP_H_ */
+#endif // HB_PP_H_

@@ -271,4 +271,4 @@ extern HB_EXPORT void hb_dbfTranslateRec( DBFAREAP pArea, HB_BYTE * pBuffer, PHB
 
 HB_EXTERN_END
 
-#endif /* HB_RDDDBF_H_ */
+#endif // HB_RDDDBF_H_

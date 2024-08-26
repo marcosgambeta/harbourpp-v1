@@ -50,4 +50,4 @@
 
 #define HB_LPP_ERR_TOOLARGE   1001
 
-#endif /* HB_LPP_CH_ */
+#endif // HB_LPP_CH_

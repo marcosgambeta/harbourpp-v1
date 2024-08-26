@@ -58,4 +58,4 @@ extern HB_EXPORT HB_SIZE hb_jsonDecodeCP( const char * szSource, PHB_ITEM pValue
 
 HB_EXTERN_END
 
-#endif /* HB_JSON_H_ */
+#endif // HB_JSON_H_

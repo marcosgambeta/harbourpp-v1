@@ -69,4 +69,4 @@
 #define HB_B_SINGLE_DOUBLE_UNI hb_UTF8ToStrBox( "╓─╖║╜─╙║" )
 #define HB_B_DOUBLE_SINGLE_UNI hb_UTF8ToStrBox( "╒═╕│╛═╘│" )
 
-#endif /* _BOX_CH */
+#endif // _BOX_CH

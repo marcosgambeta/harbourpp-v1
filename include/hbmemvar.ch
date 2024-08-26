@@ -57,4 +57,4 @@
 #define HB_MV_PRIVATE_LOCAL     4   /* PRIVATE created in current function/procedure */
 #define HB_MV_PRIVATE           6   /* PRIVATE variable */
 
-#endif /* HB_MEMVAR_CH_ */
+#endif // HB_MEMVAR_CH_

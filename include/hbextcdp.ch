@@ -49,4 +49,4 @@
 #define __HBEXTERN__HBCPAGE__REQUEST
 #include "hbcpage.hbx"
 
-#endif /* HB_EXTCDP_CH_ */
+#endif // HB_EXTCDP_CH_

@@ -88,4 +88,4 @@ HB_EXTERN_BEGIN
 
 HB_EXTERN_END
 
-#endif /* HB_DBFERR_H_ */
+#endif // HB_DBFERR_H_

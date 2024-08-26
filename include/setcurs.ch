@@ -55,4 +55,4 @@
 #define SC_SPECIAL1     3
 #define SC_SPECIAL2     4
 
-#endif /* _SETCURS_CH */
+#endif // _SETCURS_CH

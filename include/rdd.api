@@ -62,4 +62,4 @@
 #define _rddFieldType        hb_rddFieldType
 #endif
 
-#endif /* _RDD_API */
+#endif // _RDD_API

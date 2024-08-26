@@ -77,4 +77,4 @@ typedef PHB_ITEM  ERRORP;
 #define _errPutTries       hb_errPutTries
 #define _errRelease        hb_errRelease
 
-#endif /* _ERROR_API */
+#endif // _ERROR_API

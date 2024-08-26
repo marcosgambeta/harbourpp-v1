@@ -267,7 +267,7 @@ typedef struct
 #  endif
 #endif
 
-#endif /* _HB_API_INTERNAL_ */
+#endif // _HB_API_INTERNAL_
 
 extern HB_EXPORT void *      hb_stackId( void );
 extern HB_EXPORT PHB_ITEM    hb_stackItemFromTop( int nFromTop );
@@ -368,7 +368,7 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
    extern void *           hb_stackAllocator( void );
 #endif
 
-#endif /* _HB_API_INTERNAL_ */
+#endif // _HB_API_INTERNAL_
 
 #if defined( _HB_API_INTERNAL_ ) || defined( _HB_SET_INTERNAL_ )
    extern PHB_SET_STRUCT hb_stackSetStruct( void );
@@ -462,7 +462,7 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
                                        hb_itemRawMove( &hb_stack.Return, * hb_stack.pPos ); \
                                     } while( 0 )
 
-#endif /* HB_STACK_SAFEMACROS */
+#endif // HB_STACK_SAFEMACROS
 
 #define hb_stackPush( )             do { \
                                        if( ++hb_stack.pPos == hb_stack.pEnd ) \
@@ -501,4 +501,4 @@ extern void        hb_stackUpdateAllocator( void *, PHB_ALLOCUPDT_FUNC, int );
 
 HB_EXTERN_END
 
-#endif /* HB_STACK_H_ */
+#endif // HB_STACK_H_

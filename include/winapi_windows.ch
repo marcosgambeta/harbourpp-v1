@@ -35,4 +35,4 @@
 #include "winapi_wingdi.ch"
 #include "winapi_winuser.ch"
 
-#endif /* _WINAPI_WINDOWS_ */
+#endif // _WINAPI_WINDOWS_

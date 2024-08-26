@@ -60,4 +60,4 @@
 #define AC_GOTO         3       /* Search first chars for the last pressed key */
 #define AC_REDRAW       4       /* Redraw AChoice() */
 
-#endif /* _ACHOICE_CH */
+#endif // _ACHOICE_CH

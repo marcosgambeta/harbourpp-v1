@@ -58,7 +58,7 @@
 
 // #ifndef MAKEFOURCC
 // #define MAKEFOURCC(ch0,ch1,ch2,ch3)				\
-// #endif /* MAKEFOURCC */
+// #endif // MAKEFOURCC
 
 #define MM_JOY1MOVE                                                  0x3A0
 #define MM_JOY2MOVE                                                  0x3A1
@@ -1234,4 +1234,4 @@
 // #define SC_SCREENSAVE                                                0xF140
 // #endif
 
-#endif /* _WINAPI_MMSYSTEM_ */
+#endif // _WINAPI_MMSYSTEM_

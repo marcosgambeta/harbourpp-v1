@@ -133,4 +133,4 @@
 #define HB_SET_CASE_LOWER     1
 #define HB_SET_CASE_UPPER     2
 
-#endif /* _SET_CH */
+#endif // _SET_CH

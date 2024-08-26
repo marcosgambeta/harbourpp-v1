@@ -248,4 +248,4 @@ typedef enum
    HB_P_LAST_PCODE             /* 181 this defines the number of defined pcodes */
 } HB_PCODE;
 
-#endif /* HB_PCODE_H_ */
+#endif // HB_PCODE_H_

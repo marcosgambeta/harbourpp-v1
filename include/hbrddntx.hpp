@@ -366,4 +366,4 @@ typedef NTXAREA * LPNTXAREA;
 
 HB_EXTERN_END
 
-#endif /* HB_RDDNTX_H_ */
+#endif // HB_RDDNTX_H_

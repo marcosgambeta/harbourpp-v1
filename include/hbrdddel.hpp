@@ -117,4 +117,4 @@ typedef DELIMAREA * LPDELIMAREA;
 
 HB_EXTERN_END
 
-#endif /* HB_RDDDEL_H_ */
+#endif // HB_RDDDEL_H_

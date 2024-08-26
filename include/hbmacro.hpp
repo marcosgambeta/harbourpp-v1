@@ -147,8 +147,8 @@ extern void hb_macroCodeBlockEnd( HB_COMP_DECL );
 extern int hb_macroLocalVarGetPos( const char * szVarName, HB_COMP_DECL );
 extern HB_BOOL hb_macroIsValidMacroText( const char * szText, HB_SIZE nLen );
 
-#endif /* HB_MACRO_SUPPORT */
+#endif // HB_MACRO_SUPPORT
 
 HB_EXTERN_END
 
-#endif /* HB_MACRO_H_ */
+#endif // HB_MACRO_H_

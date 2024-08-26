@@ -232,8 +232,8 @@ extern PHB_ITEM hb_itemPutPtrRawGC( PHB_ITEM pItem, void * pValue );
 
 #  define hb_itemRawMove( dst, src )      hb_itemMove( (dst), (src) )
 
-#endif /* _HB_API_INTERNAL_ */
+#endif // _HB_API_INTERNAL_
 
 HB_EXTERN_END
 
-#endif /* HB_APIITM_H_ */
+#endif // HB_APIITM_H_

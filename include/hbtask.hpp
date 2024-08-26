@@ -83,4 +83,4 @@ extern void    hb_taskDestroyCond( void ** );
 
 HB_EXTERN_END
 
-#endif /* HB_TASK_H_ */
+#endif // HB_TASK_H_

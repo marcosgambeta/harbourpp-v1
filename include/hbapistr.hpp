@@ -124,4 +124,4 @@ extern HB_EXPORT int hb_storstrlen_u16( int iEndian, const HB_WCHAR * szText, HB
 
 HB_EXTERN_END
 
-#endif /* HB_APISTR_H_ */
+#endif // HB_APISTR_H_

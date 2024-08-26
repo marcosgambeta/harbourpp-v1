@@ -367,4 +367,4 @@
 #define HB_KX_PRTSCR            28
 #define HB_KX_PAUSE             29
 
-#endif /* HB_INKEY_CH_ */
+#endif // HB_INKEY_CH_

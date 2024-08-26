@@ -62,4 +62,4 @@
 /* Future level of legacy cleanup */
 #define HB_LEGACY_LEVEL5
 
-#endif /* HB_SETUP_CH_ */
+#endif // HB_SETUP_CH_

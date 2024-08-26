@@ -338,4 +338,4 @@
 #define HB_K_SHIFT_INS                  1490
 #define HB_K_SHIFT_DEL                  1491
 
-#endif /* HB_HBINKEY_CH_ */
+#endif // HB_HBINKEY_CH_

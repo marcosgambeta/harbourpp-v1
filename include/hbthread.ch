@@ -53,4 +53,4 @@
 #define HB_THREAD_INHERIT_MEMVARS   3
 #define HB_THREAD_MEMVARS_COPY      4
 
-#endif /* HB_THREAD_CH_ */
+#endif // HB_THREAD_CH_

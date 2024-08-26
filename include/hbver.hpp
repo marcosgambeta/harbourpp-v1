@@ -63,4 +63,4 @@
 #define __HARBOUR__     0x030200 /* Three bytes: Major + Minor + Release. This is recommented for 3rd party .c and .prg level code. */
 #define __HARBOURPP__   0x010000 /* Three bytes: Major + Minor + Release. This is recommented for 3rd party .c and .prg level code. */
 
-#endif /* HB_VER_H_ */
+#endif // HB_VER_H_

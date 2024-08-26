@@ -96,4 +96,4 @@
 #define HB_DYN_CTYPE_STRUCTURE              0x000000A
 #define HB_DYN_CTYPE_STRUCTURE_PTR          0x000010A
 
-#endif /* HBDYN_CH_ */
+#endif // HBDYN_CH_

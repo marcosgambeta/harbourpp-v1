@@ -132,4 +132,4 @@
 #define HB_EI_COMPBADOPCODE     9100 /* "Unsupported VM opcode" */
 #define HB_EI_COMPBADOPSIZE     9101 /* "Invalid opcode size" */
 
-#endif /* _ERROR_CH */
+#endif // _ERROR_CH

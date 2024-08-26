@@ -91,4 +91,4 @@ typedef FHANDLE * FHANDLEP;
 #define _fsSeek                 hb_fsSeek
 #define _fsWrite                hb_fsWrite
 
-#endif /* _FILESYS_API */
+#endif // _FILESYS_API

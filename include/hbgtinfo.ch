@@ -203,4 +203,4 @@
 #define HB_GTI_RESIZEMODE_FONT  0   /* Default */
 #define HB_GTI_RESIZEMODE_ROWS  1
 
-#endif /* HB_GTINFO_CH_ */
+#endif // HB_GTINFO_CH_

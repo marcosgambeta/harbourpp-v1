@@ -509,8 +509,8 @@ HB_EXTERN_BEGIN
 #     define HB_SPINLOCK_RELEASE_R(l)  hb_spinlock_release_r(l)
 #     define HB_SPINLOCK_ACQUIRE_R(l)  hb_spinlock_acquire_r(l)
 #  endif /* ! HB_SPINLOCK_R */
-#endif /* HB_SPINLOCK_T */
+#endif // HB_SPINLOCK_T
 
 HB_EXTERN_END
 
-#endif /* HB_ATOMIC_H_ */
+#endif // HB_ATOMIC_H_

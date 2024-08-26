@@ -88,4 +88,4 @@
 #define HB_GFX_MODE_ALPHA      3  /* Use alpha for translucent effect (SLOW) */
 /* TODO: add patterned mode drawings */
 
-#endif /* _HBGFXDEF_CH_ */
+#endif // _HBGFXDEF_CH_

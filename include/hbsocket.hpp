@@ -162,7 +162,7 @@ HB_SOCKEX;
 
 extern HB_EXPORT int  hb_sockexRegister( const HB_SOCKET_FILTER * pFilter );
 
-#endif /* _HB_SOCKEX_IMPLEMENTATION_ */
+#endif // _HB_SOCKEX_IMPLEMENTATION_
 
 extern HB_EXPORT int  hb_sockexClose( PHB_SOCKEX pSock, HB_BOOL fClose );
 extern HB_EXPORT long hb_sockexRead ( PHB_SOCKEX pSock, void * data, long len, HB_MAXINT timeout );
@@ -203,4 +203,4 @@ extern HB_EXPORT HB_BOOL    hb_sockexItemSetFilter( PHB_ITEM pItem, const char *
 
 HB_EXTERN_END
 
-#endif /* HB_SOCKET_H_ */
+#endif // HB_SOCKET_H_

@@ -498,7 +498,7 @@ DECLARE HBClass ;
       oClass:AddInline( <(DataName1)>, {|Self| Self:<oObject>:<DataName2> }, HB_OO_CLSTP_EXPORTED + HB_OO_CLSTP_READONLY ) ;;
       oClass:AddInline( "_" + <(DataName1)>, {|Self, param| Self:<oObject>:<DataName2> := param }, HB_OO_CLSTP_EXPORTED )
 
-#endif /* HB_CLS_CSY */
+#endif // HB_CLS_CSY
 
 /* FWOBJECT SYNTAX */
 #ifdef HB_CLS_FWO
@@ -513,7 +513,7 @@ DECLARE HBClass ;
       _HB_MEMBER {[ AS <type>] <DataName1> [, <DataNameN>] } ;;
       oClass:AddMultiClsData( <(type)>, <uValue>, __HB_CLS_SCOPE( <.export.>, <.protect.>, <.hidde.> ) + iif( <.ro.>, HB_OO_CLSTP_READONLY, 0 ) + iif( /* <.share.> */ .T., HB_OO_CLSTP_SHARED, 0 ) + iif( <.persistent.>, HB_OO_CLSTP_PERSIST, 0 ) + iif( <.sync.>, HB_OO_CLSTP_SYNC, 0 ), {<(DataName1)> [, <(DataNameN)>]}, __HB_CLS_NOINI )
 
-#endif /* HB_CLS_FWO */
+#endif // HB_CLS_FWO
 
 /* VO SYNTAX */
 #ifdef HB_CLS_VO
@@ -523,7 +523,7 @@ DECLARE HBClass ;
    #xtranslate  , <!name!>{ [<p,...>] }        =>  , <name>():New( <p> )
    #xtranslate  = <!name!>{ [<p,...>] }        =>  = <name>():New( <p> )
    #xtranslate := <!name!>{ [<p,...>] }        => := <name>():New( <p> )
-#endif /* HB_VO_CONSTRUCTOR */
+#endif // HB_VO_CONSTRUCTOR
 
 #xcommand EXPORT <!DataName1!> [, <!DataNameN!>] [ <tp: TYPE, AS> <type> ] [ <as: ASSIGN, INIT> <uValue> ] [<ro: READONLY, RO>] [<persistent: PERSISTENT, PROPERTY>] => ;
    _HB_MEMBER {[ AS <type>] <DataName1> [, <DataNameN>] } ;;
@@ -537,7 +537,7 @@ DECLARE HBClass ;
    _HB_MEMBER {[ AS <type>] <DataName1> [, <DataNameN>] } ;;
    oClass:AddMultiData( <(type)>, <uValue>, HB_OO_CLSTP_HIDDEN + iif( <.ro.>, HB_OO_CLSTP_READONLY, 0 ) + iif( <.persistent.>, HB_OO_CLSTP_PERSIST, 0 ), {<(DataName1)> [, <(DataNameN)>]}, __HB_CLS_NOINI )
 
-#endif /* HB_CLS_VO */
+#endif // HB_CLS_VO
 
 /* Xbase++ syntax */
 #ifdef HB_CLS_XPP
@@ -554,7 +554,7 @@ DECLARE HBClass ;
    #xcommand METHOD [<type: FUNCTION, PROCEDURE>] <!className!>:<!methodName!>[([<params,...>])] => ;
              METHOD <type> <methodName>( <params> ) CLASS <className>
 
-#endif /* HB_CLS_XPP */
+#endif // HB_CLS_XPP
 
 /* Class datas and messages - we do not support real class messages yet */
 #xcommand CLASSMETHOD <MethodName> [ AS <type> ] [<ctor: CONSTRUCTOR>] [<export: EXPORTED, VISIBLE>] [<protect: PROTECTED>] [<hidde: HIDDEN>] [<share: SHARED>] [<persistent: PERSISTENT, PROPERTY>] [<sync: SYNC>] => ;
@@ -582,4 +582,4 @@ DECLARE HBClass ;
       REQUEST HBArray, HBBlock, HBCharacter, HBDate, HBHash, ;
               HBLogical, HBNil, HBNumeric, HBSymbol, HBTimeStamp, HBPointer
 
-#endif /* HB_CLASS_CH_ */
+#endif // HB_CLASS_CH_

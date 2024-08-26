@@ -52,4 +52,4 @@
 #command ACCEPT TO <idVar> => <idVar> := StrTran( FReadStr( hb_GetStdIn(), 256 ), hb_eol() )
 #command ACCEPT <cPrompt> TO <idVar> => ? <cPrompt> ; ACCEPT TO <idVar>
 
-#endif /* _SIMPLEIO_CH */
+#endif // _SIMPLEIO_CH

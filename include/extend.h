@@ -58,4 +58,4 @@
 #include "extend.api"
 #include "fm.api"
 
-#endif /* HB_EXTEND_H_ */
+#endif // HB_EXTEND_H_

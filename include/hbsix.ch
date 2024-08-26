@@ -203,4 +203,4 @@
                      <"while">, [<.mem.>], [<.filter.>], [<.ex.>] ) ;;
          ordCreate( <(bag)>, <(tag)>, <"key">, <{key}>, [<.unique.>] )
 
-#endif /* HB_SIX_CH_ */
+#endif // HB_SIX_CH_
