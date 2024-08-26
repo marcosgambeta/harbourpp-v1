@@ -60,6 +60,13 @@
 #include "hbvm.hpp"
 #include "directry.ch"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 #if defined(HB_OS_UNIX)
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -113,8 +120,13 @@ static const HB_FILE_FUNCS *s_fileMethods(void);
 static PHB_FILE hb_fileposNew(PHB_FILE pFile);
 #endif
 
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex fileMtx;
+std::mutex lockMtx;
+#else
 static HB_CRITICAL_NEW(s_fileMtx);
 static HB_CRITICAL_NEW(s_lockMtx);
+#endif
 
 static PHB_FILE s_openFiles = nullptr;
 
@@ -502,7 +514,11 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
   }
 #endif
 
+  #if defined(HB_USE_CPP_MUTEX)
+  fileMtx.lock();
+  #else
   hb_threadEnterCriticalSection(&s_fileMtx);
+  #endif
 
 #if defined(HB_USE_LARGEFILE64)
   fResult = stat64(pszFile, &statbuf) == 0;
@@ -554,7 +570,11 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
     {
       HB_ULONG device = 0, inode = 0;
 #if !defined(HB_OS_UNIX)
+      #if defined(HB_USE_CPP_MUTEX)
+      fileMtx.lock();
+      #else
       hb_threadEnterCriticalSection(&s_fileMtx);
+      #endif
 #else
 #if defined(HB_USE_LARGEFILE64)
       if (fstat64(hFile, &statbuf) == 0)
@@ -634,13 +654,21 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
         }
       }
 #if !defined(HB_OS_UNIX)
+      #if defined(HB_USE_CPP_MUTEX)
+      fileMtx.unlock();
+      #else
       hb_threadLeaveCriticalSection(&s_fileMtx);
+      #endif
 #endif
     }
   }
 
 #if defined(HB_OS_UNIX)
+  #if defined(HB_USE_CPP_MUTEX)
+  fileMtx.unlock();
+  #else
   hb_threadLeaveCriticalSection(&s_fileMtx);
+  #endif
   if (pFile && fSeek)
   {
     pFile = hb_fileposNew(pFile);
@@ -676,7 +704,11 @@ static void s_fileClose(PHB_FILE pFile)
 {
   hb_vmUnlock();
   hb_fsSetError(0);
+  #if defined(HB_USE_CPP_MUTEX)
+  fileMtx.lock();
+  #else
   hb_threadEnterCriticalSection(&s_fileMtx);
+  #endif
 
   if (--pFile->used == 0)
   {
@@ -710,7 +742,11 @@ static void s_fileClose(PHB_FILE pFile)
     hb_xfree(pFile);
   }
 
+  #if defined(HB_USE_CPP_MUTEX)
+  fileMtx.unlock();
+  #else
   hb_threadLeaveCriticalSection(&s_fileMtx);
+  #endif
   hb_vmLock();
 }
 
@@ -722,15 +758,31 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
   hb_vmUnlock();
   if ((iType & FL_MASK) == FL_UNLOCK)
   {
+    #if defined(HB_USE_CPP_MUTEX)
+    lockMtx.lock();
+    #else
     hb_threadEnterCriticalSection(&s_lockMtx);
+    #endif
     fResult = hb_fileUnlock(pFile, &fLockFS, nStart, nLen);
+    #if defined(HB_USE_CPP_MUTEX)
+    lockMtx.unlock();
+    #else
     hb_threadLeaveCriticalSection(&s_lockMtx);
+    #endif
     if (fLockFS)
     {
       hb_fsLockLarge(pFile->hFile, nStart, nLen, static_cast<HB_USHORT>(iType));
+      #if defined(HB_USE_CPP_MUTEX)
+      lockMtx.lock();
+      #else
       hb_threadEnterCriticalSection(&s_lockMtx);
+      #endif
       hb_fileUnlock(pFile, nullptr, nStart, nLen);
+      #if defined(HB_USE_CPP_MUTEX)
+      lockMtx.unlock();
+      #else
       hb_threadLeaveCriticalSection(&s_lockMtx);
+      #endif
     }
     else
     {
@@ -739,9 +791,17 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
   }
   else
   {
+    #if defined(HB_USE_CPP_MUTEX)
+    lockMtx.lock();
+    #else
     hb_threadEnterCriticalSection(&s_lockMtx);
+    #endif
     fResult = hb_fileSetLock(pFile, &fLockFS, nStart, nLen);
+    #if defined(HB_USE_CPP_MUTEX)
+    lockMtx.unlock();
+    #else
     hb_threadLeaveCriticalSection(&s_lockMtx);
+    #endif
     if (fLockFS)
     {
 #if defined(HB_OS_UNIX)
@@ -757,9 +817,17 @@ static HB_BOOL s_fileLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
       fResult = hb_fsLockLarge(pFile->hFile, nStart, nLen, static_cast<HB_USHORT>(iType));
       if (!fResult)
       {
+        #if defined(HB_USE_CPP_MUTEX)
+        lockMtx.lock();
+        #else
         hb_threadEnterCriticalSection(&s_lockMtx);
+        #endif
         hb_fileUnlock(pFile, nullptr, nStart, nLen);
+        #if defined(HB_USE_CPP_MUTEX)
+        lockMtx.unlock();
+        #else
         hb_threadLeaveCriticalSection(&s_lockMtx);
+        #endif
       }
     }
     else
@@ -778,9 +846,17 @@ static int s_fileLockTest(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen, in
 
   hb_vmUnlock();
 
+  #if defined(HB_USE_CPP_MUTEX)
+  lockMtx.lock();
+  #else
   hb_threadEnterCriticalSection(&s_lockMtx);
+  #endif
   bool fLocked = hb_fileTestLock(pFile, nStart, nLen);
+  #if defined(HB_USE_CPP_MUTEX)
+  lockMtx.unlock();
+  #else
   hb_threadLeaveCriticalSection(&s_lockMtx);
+  #endif
   if (fLocked)
   {
 #if defined(HB_OS_UNIX)
@@ -1079,7 +1155,11 @@ HB_BOOL hb_fileRegisterFull(const HB_FILE_FUNCS *pFuncs)
   auto fResult = false;
 
   hb_vmUnlock();
+  #if defined(HB_USE_CPP_MUTEX)
+  lockMtx.lock();
+  #else
   hb_threadEnterCriticalSection(&s_lockMtx);
+  #endif
 
   if (s_iFileTypes < HB_FILE_TYPE_MAX)
   {
@@ -1088,7 +1168,11 @@ HB_BOOL hb_fileRegisterFull(const HB_FILE_FUNCS *pFuncs)
     fResult = true;
   }
 
+  #if defined(HB_USE_CPP_MUTEX)
+  lockMtx.unlock();
+  #else
   hb_threadLeaveCriticalSection(&s_lockMtx);
+  #endif
   hb_vmLock();
 
   return fResult;
