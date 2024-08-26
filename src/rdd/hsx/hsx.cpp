@@ -221,6 +221,13 @@
 #include "hbset.hpp"
 #include "hbapicdp.hpp"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 /* error codes */
 #define HSX_SUCCESSFALSE 0    /* operation finished successfully with false value */
 #define HSX_SUCCESS 1         /* operation finished successfully with true value */
@@ -389,9 +396,15 @@ static LPHSXTABLE hb_hsxTable(void)
 static HSXTABLE s_hsxTable;
 #define hb_hsxTable() (&s_hsxTable)
 
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex hsxMtx;
+#define HB_HSX_LOCK() hsxMtx.lock()
+#define HB_HSX_UNLOCK() hsxMtx.unlock()
+#else
 static HB_CRITICAL_NEW(s_hsxMtx);
 #define HB_HSX_LOCK() hb_threadEnterCriticalSection(&s_hsxMtx)
 #define HB_HSX_UNLOCK() hb_threadLeaveCriticalSection(&s_hsxMtx)
+#endif
 
 #endif
 
