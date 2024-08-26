@@ -47,6 +47,13 @@
 #include "hbdate.hpp"
 #include "hbthread.hpp"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 /* XXX: Check and possibly extend this to other Unix-like platforms */
 #if (defined(HB_OS_BSD) && !defined(HB_OS_DARWIN)) || (defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID))
 /*
@@ -108,9 +115,15 @@ static int rs_initialized;
 static struct arc4_stream rs;
 static HB_I32 arc4_count;
 
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex arc4_lock;
+#define ARC4_LOCK() arc4_lock.lock()
+#define ARC4_UNLOCK() arc4_lock.unlock()
+#else
 static HB_CRITICAL_NEW(arc4_lock);
 #define ARC4_LOCK() hb_threadEnterCriticalSection(&arc4_lock)
 #define ARC4_UNLOCK() hb_threadLeaveCriticalSection(&arc4_lock)
+#endif
 
 #if defined(__BORLANDC__) && defined(_HB_INLINE_)
 #undef _HB_INLINE_
