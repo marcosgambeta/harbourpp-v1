@@ -54,6 +54,13 @@
 #include "hbthread.hpp"
 #include "hbset.hpp"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 // -- BASIC RDD METHODS --
 
 // Determine logical beginning of file.
@@ -2425,7 +2432,11 @@ static const RDDFUNCS waTable = {
 
 #define HB_RDD_POOL_ALLOCSIZE 128
 // common for all threads list of registered RDDs
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex rddMtx;
+#else
 static HB_CRITICAL_NEW(s_rddMtx);
+#endif
 static LPRDDNODE *s_RddList = nullptr; // Registered RDDs pool
 static HB_USHORT s_uiRddMax = 0;       // Size of RDD pool
 static HB_USHORT s_uiRddCount = 0;     // Number of registered RDD
@@ -2537,7 +2548,11 @@ void hb_rddSetFileRedirector(HB_RDDACCEPT funcAccept, HB_BOOL fEnable)
 
   HB_USHORT uiFree;
 
+  #if defined(HB_USE_CPP_MUTEX)
+  rddMtx.lock();
+  #else
   hb_threadEnterCriticalSection(&s_rddMtx);
+  #endif
   uiFree = s_uiRddRedirCount + 1;
   for (HB_USHORT uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++)
   {
@@ -2569,7 +2584,11 @@ void hb_rddSetFileRedirector(HB_RDDACCEPT funcAccept, HB_BOOL fEnable)
     s_rddRedirAccept[s_uiRddRedirCount] = funcAccept;
     s_uiRddRedirCount++;
   }
+  #if defined(HB_USE_CPP_MUTEX)
+  rddMtx.unlock();
+  #else
   hb_threadLeaveCriticalSection(&s_rddMtx);
+  #endif
 }
 
 // Shutdown the RDD system.
@@ -2650,7 +2669,11 @@ int hb_rddRegister(const char *szDriver, HB_USHORT uiType)
   }
   else
   {
+    #if defined(HB_USE_CPP_MUTEX)
+    rddMtx.lock();
+    #else
     hb_threadEnterCriticalSection(&s_rddMtx);
+    #endif
     // repeat the test to protect against possible registering RDD by
     //  <szDriver>_GETFUNCTABLE()
     if (!hb_rddFindNode(szDriver, nullptr))
@@ -2668,7 +2691,11 @@ int hb_rddRegister(const char *szDriver, HB_USHORT uiType)
     {
       iResult = 1;
     }
+    #if defined(HB_USE_CPP_MUTEX)
+    rddMtx.unlock();
+    #else
     hb_threadLeaveCriticalSection(&s_rddMtx);
+    #endif
   }
 
   if (iResult != 0)
