@@ -129,39 +129,67 @@ HB_FATTR hb_fsAttrFromRaw(HB_FATTR raw_attr)
 
   nAttr = 0;
   if (raw_attr & FILE_ATTRIBUTE_ARCHIVE)
+  {
     nAttr |= HB_FA_ARCHIVE;
+  }
   if (raw_attr & FILE_ATTRIBUTE_DIRECTORY)
+  {
     nAttr |= HB_FA_DIRECTORY;
+  }
   if (raw_attr & FILE_ATTRIBUTE_HIDDEN)
+  {
     nAttr |= HB_FA_HIDDEN;
+  }
   if (raw_attr & FILE_ATTRIBUTE_READONLY)
+  {
     nAttr |= HB_FA_READONLY;
+  }
   if (raw_attr & FILE_ATTRIBUTE_SYSTEM)
+  {
     nAttr |= HB_FA_SYSTEM;
+  }
   if (raw_attr & FILE_ATTRIBUTE_NORMAL)
+  {
     nAttr |= HB_FA_NORMAL;
+  }
 
   // Note that FILE_ATTRIBUTE_NORMAL is not needed
   // HB_FA_DEVICE not supported
   // HB_FA_VOLCOMP needs to be checked
   if (raw_attr & FILE_ATTRIBUTE_ENCRYPTED)
+  {
     nAttr |= HB_FA_ENCRYPTED;
+  }
   if (raw_attr & FILE_ATTRIBUTE_TEMPORARY)
+  {
     nAttr |= HB_FA_TEMPORARY;
+  }
   if (raw_attr & FILE_ATTRIBUTE_SPARSE_FILE)
+  {
     nAttr |= HB_FA_SPARSE;
+  }
   if (raw_attr & FILE_ATTRIBUTE_REPARSE_POINT)
+  {
     nAttr |= HB_FA_REPARSE;
+  }
   if (raw_attr & FILE_ATTRIBUTE_COMPRESSED)
+  {
     nAttr |= HB_FA_COMPRESSED;
+  }
   if (raw_attr & FILE_ATTRIBUTE_OFFLINE)
+  {
     nAttr |= HB_FA_OFFLINE;
+  }
   // FILE_ATTRIBUTE_NOT_CONTENT_INDEXED
   // not defined in some older winnt.h
   if (raw_attr & 0x00002000)
+  {
     nAttr |= HB_FA_NOTINDEXED;
+  }
   if (raw_attr & 0x00008000)
+  {
     nAttr |= HB_FA_VOLCOMP;
+  }
 
 #elif defined(HB_OS_UNIX)
 
@@ -226,56 +254,98 @@ HB_FATTR hb_fsAttrToRaw(HB_FATTR nAttr)
   raw_attr = 0;
 
   if (nAttr & HB_FA_ARCHIVE)
+  {
     raw_attr |= FILE_ATTRIBUTE_ARCHIVE;
+  }
   if (nAttr & HB_FA_DIRECTORY)
+  {
     raw_attr |= FILE_ATTRIBUTE_DIRECTORY;
+  }
   if (nAttr & HB_FA_HIDDEN)
+  {
     raw_attr |= FILE_ATTRIBUTE_HIDDEN;
+  }
   if (nAttr & HB_FA_READONLY)
+  {
     raw_attr |= FILE_ATTRIBUTE_READONLY;
+  }
   if (nAttr & HB_FA_SYSTEM)
+  {
     raw_attr |= FILE_ATTRIBUTE_SYSTEM;
+  }
   if (nAttr & HB_FA_NORMAL)
+  {
     raw_attr |= FILE_ATTRIBUTE_NORMAL;
+  }
 
   // Note that FILE_ATTRIBUTE_NORMAL is not needed
   // HB_FA_DEVICE not supported
   // HB_FA_VOLCOMP needs to be checked
   if (nAttr & HB_FA_ENCRYPTED)
+  {
     raw_attr |= FILE_ATTRIBUTE_ENCRYPTED;
+  }
   if (nAttr & HB_FA_TEMPORARY)
+  {
     raw_attr |= FILE_ATTRIBUTE_TEMPORARY;
+  }
   if (nAttr & HB_FA_SPARSE)
+  {
     raw_attr |= FILE_ATTRIBUTE_SPARSE_FILE;
+  }
   if (nAttr & HB_FA_REPARSE)
+  {
     raw_attr |= FILE_ATTRIBUTE_REPARSE_POINT;
+  }
   if (nAttr & HB_FA_COMPRESSED)
+  {
     raw_attr |= FILE_ATTRIBUTE_COMPRESSED;
+  }
   if (nAttr & HB_FA_OFFLINE)
+  {
     raw_attr |= FILE_ATTRIBUTE_OFFLINE;
+  }
   if (nAttr & HB_FA_NOTINDEXED)
+  {
     raw_attr |= 0x00002000; // FILE_ATTRIBUTE_NOT_CONTENT_INDEXED not defined in some older winnt.h
+  }
   if (nAttr & HB_FA_VOLCOMP)
+  {
     raw_attr |= 0x00008000;
+  }
 
 #elif defined(HB_OS_UNIX)
 
   raw_attr = HB_FA_POSIX_ATTR(nAttr);
 
   if (nAttr & HB_FA_FILE)
+  {
     raw_attr |= S_IFREG;
+  }
   if (nAttr & HB_FA_DIRECTORY)
+  {
     raw_attr |= S_IFDIR;
+  }
   if (nAttr & HB_FA_LINK)
+  {
     raw_attr |= S_IFLNK;
+  }
   if (nAttr & HB_FA_CHRDEVICE)
+  {
     raw_attr |= S_IFCHR;
+  }
   if (nAttr & HB_FA_BLKDEVICE)
+  {
     raw_attr |= S_IFBLK;
+  }
   if (nAttr & HB_FA_FIFO)
+  {
     raw_attr |= S_IFIFO;
+  }
   if (nAttr & HB_FA_SOCKET)
+  {
     raw_attr |= S_IFSOCK;
+  }
 
 #else
 
@@ -348,19 +418,33 @@ char *hb_fsAttrDecode(HB_FATTR nAttr, char *szAttr)
 
   // Using the same order as CA-Cl*pper did: RHSVDA.
   if (nAttr & HB_FA_READONLY)
+  {
     *ptr++ = 'R';
+  }
   if (nAttr & HB_FA_HIDDEN)
+  {
     *ptr++ = 'H';
+  }
   if (nAttr & HB_FA_SYSTEM)
+  {
     *ptr++ = 'S';
+  }
   if (nAttr & HB_FA_ARCHIVE)
+  {
     *ptr++ = 'A';
+  }
   if (nAttr & HB_FA_DIRECTORY)
+  {
     *ptr++ = 'D';
+  }
   if (nAttr & HB_FA_LABEL)
+  {
     *ptr++ = 'V';
+  }
   if (nAttr & HB_FA_LINK)
+  {
     *ptr++ = 'L';
+  }
 
   *ptr = '\0';
 
@@ -399,7 +483,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 #if defined(HB_OS_WIN)
 
   {
-    PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>(ffind->info);
+    auto info = static_cast<PHB_FFIND_INFO>(ffind->info);
 
     bFound = false;
 
@@ -518,7 +602,7 @@ static bool hb_fsFindNextLow(PHB_FFIND ffind)
 #elif defined(HB_OS_UNIX)
 
   {
-    PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>(ffind->info);
+    auto info = static_cast<PHB_FFIND_INFO>(ffind->info);
 
     char dirname[HB_PATH_MAX];
 
@@ -776,7 +860,7 @@ void hb_fsFindClose(PHB_FFIND ffind)
 
     if (ffind->info)
     {
-      PHB_FFIND_INFO info = static_cast<PHB_FFIND_INFO>(ffind->info);
+      auto info = static_cast<PHB_FFIND_INFO>(ffind->info);
 
       if (!ffind->bFirst)
       {
