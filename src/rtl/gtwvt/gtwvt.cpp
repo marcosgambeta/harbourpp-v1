@@ -86,9 +86,22 @@ static HB_GT_FUNCS SuperTable;
 
 #define HB_GTWVT_GET(p) (static_cast<PHB_GTWVT>(HB_GTLOCAL(p)))
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex wvtMtx;
+#define HB_WVT_LOCK() wvtMtx.lock()
+#define HB_WVT_UNLOCK() wvtMtx.unlock()
+#else
 static HB_CRITICAL_NEW(s_wvtMtx);
 #define HB_WVT_LOCK() hb_threadEnterCriticalSection(&s_wvtMtx)
 #define HB_WVT_UNLOCK() hb_threadLeaveCriticalSection(&s_wvtMtx)
+#endif
 
 #if ((defined(_MSC_VER) && (_MSC_VER <= 1200))) && !defined(HB_ARCH_64BIT)
 #ifndef GetWindowLongPtr
