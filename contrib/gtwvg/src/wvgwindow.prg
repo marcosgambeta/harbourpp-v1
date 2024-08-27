@@ -1,9 +1,8 @@
-/*
- * Xbase++ Compatible xbpWindow Class
- *
- * Copyright 2008-2019 Pritpal Bedi <bedipritpal@hotmail.com>
- *
- */
+//
+// Xbase++ Compatible xbpWindow Class
+//
+// Copyright 2008-2019 Pritpal Bedi <bedipritpal@hotmail.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
