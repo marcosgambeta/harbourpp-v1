@@ -53,7 +53,7 @@
 // If you do not wish that, delete this exception notice.
 
 #include "hbvmopt.hpp"
-/* hbfloat.h have to be included before other header files */
+// hbfloat.h have to be included before other header files
 #include "hbfloat.hpp"
 
 #include "hbvm.hpp"
@@ -87,7 +87,7 @@ PHB_ITEM hb_itemParam(HB_USHORT uiParam)
   return hb_gcGripGet(hb_param(uiParam, Harbour::Item::ANY));
 }
 
-/* Internal Item API. Use this with care. */
+// Internal Item API. Use this with care.
 
 PHB_ITEM hb_itemParamPtr(HB_USHORT uiParam, long lMask)
 {
@@ -332,9 +332,9 @@ PHB_ITEM hb_itemPutCL(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
     pItem = hb_itemNew(nullptr);
   }
 
-  /* NOTE: CA-Cl*pper seems to be buggy here, it will return nLen bytes of
-           trash if the szText buffer is nullptr, at least with hb_retclen().
-           [vszakats] */
+  // NOTE: CA-Cl*pper seems to be buggy here, it will return nLen bytes of
+  //       trash if the szText buffer is nullptr, at least with hb_retclen().
+  //       [vszakats]
 
   pItem->type = Harbour::Item::STRING;
   pItem->item.asString.value = szValue;
@@ -495,7 +495,7 @@ void hb_itemSetCMemo(PHB_ITEM pItem)
   }
 }
 
-/* NOTE: The caller should free the pointer if it's not nullptr. [vszakats] */
+// NOTE: The caller should free the pointer if it's not nullptr. [vszakats]
 
 char *hb_itemGetC(PHB_ITEM pItem)
 {
@@ -517,8 +517,8 @@ char *hb_itemGetC(PHB_ITEM pItem)
   }
 }
 
-/* NOTE: Caller should not modify the buffer returned by this function.
-         [vszakats] */
+// NOTE: Caller should not modify the buffer returned by this function.
+//       [vszakats]
 
 const char *hb_itemGetCPtr(PHB_ITEM pItem)
 {
@@ -634,11 +634,11 @@ void hb_itemFreeCRef(void *hRef)
   }
 }
 
-/* NOTE: Clipper is buggy and will not append a trailing zero, although
-         the NG says that it will. Check your buffers, since what may have
-         worked with Clipper could overrun the buffer with Harbour.
-         The correct buffer size is 9 bytes: char szDate[9]
-         [vszakats] */
+// NOTE: Clipper is buggy and will not append a trailing zero, although
+//       the NG says that it will. Check your buffers, since what may have
+//       worked with Clipper could overrun the buffer with Harbour.
+//       The correct buffer size is 9 bytes: char szDate[9]
+//       [vszakats]
 
 char *hb_itemGetDS(PHB_ITEM pItem, char *szDate)
 {
@@ -672,10 +672,9 @@ long hb_itemGetDL(PHB_ITEM pItem)
   }
 }
 
-/* This function always closes the time with a zero byte, so it needs a
- * 18 character long buffer to store time in format "YYYYMMDDhhmmssfff"
- * with trailing 0 byte.
- */
+// This function always closes the time with a zero byte, so it needs a
+// 18 character long buffer to store time in format "YYYYMMDDhhmmssfff"
+// with trailing 0 byte.
 char *hb_itemGetTS(PHB_ITEM pItem, char *szDateTime)
 {
 #if 0
@@ -1310,14 +1309,14 @@ PHB_ITEM hb_itemPutNS(PHB_ITEM pItem, HB_ISIZ nNumber)
 #if HB_SIZE_MAX <= HB_VMUINT_MAX
   pItem->type = Harbour::Item::INTEGER;
   pItem->item.asInteger.value = nNumber;
-  /* EXP limit used intentionally */
+  // EXP limit used intentionally
   pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
 #else
   if (HB_LIM_INT(nNumber))
   {
     pItem->type = Harbour::Item::INTEGER;
     pItem->item.asInteger.value = static_cast<int>(nNumber);
-    /* EXP limit used intentionally */
+    // EXP limit used intentionally
     pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
   }
   else
@@ -1386,7 +1385,7 @@ PHB_ITEM hb_itemPutNInt(PHB_ITEM pItem, HB_MAXINT nNumber)
   {
     pItem->type = Harbour::Item::INTEGER;
     pItem->item.asInteger.value = static_cast<int>(nNumber);
-    /* EXP limit used intentionally */
+    // EXP limit used intentionally
     pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
   }
   else
@@ -2004,7 +2003,7 @@ HB_BOOL hb_itemTypeCmp(PHB_ITEM pItem1, PHB_ITEM pItem2)
   return s_hb_itemTypeBasic(pItem1) == s_hb_itemTypeBasic(pItem2);
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
 void hb_itemInit(PHB_ITEM pItem)
 {
@@ -2027,7 +2026,7 @@ void hb_itemClear(PHB_ITEM pItem)
   HB_TYPE type = HB_ITEM_TYPERAW(pItem);
   pItem->type = Harbour::Item::NIL;
 
-  /* GCLOCK enter */
+  // GCLOCK enter
   if (type & Harbour::Item::STRING)
   {
     if (pItem->item.asString.allocated)
@@ -2054,7 +2053,7 @@ void hb_itemClear(PHB_ITEM pItem)
       hb_memvarValueDecRef(pItem->item.asMemvar.value);
     }
     else if (type & Harbour::Item::ENUM)
-    { /* FOR EACH control variable */
+    { // FOR EACH control variable
       hb_vmEnumRelease(pItem->item.asEnum.basePtr, pItem->item.asEnum.valuePtr);
     }
     else if (type & Harbour::Item::EXTREF)
@@ -2073,10 +2072,10 @@ void hb_itemClear(PHB_ITEM pItem)
       hb_gcRefFree(pItem->item.asPointer.value);
     }
   }
-  /* GCLOCK leave */
+  // GCLOCK leave
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
 void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
 {
@@ -2099,7 +2098,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
 
   if (HB_IS_COMPLEX(pSource))
   {
-    /* GCLOCK enter */
+    // GCLOCK enter
     if (HB_IS_STRING(pSource))
     {
       if (pSource->item.asString.allocated)
@@ -2126,7 +2125,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
         hb_memvarValueIncRef(pSource->item.asMemvar.value);
       }
       else if (HB_IS_ENUM(pSource))
-      { /* enumerators cannot be copied */
+      { // enumerators cannot be copied
         pDest->type = Harbour::Item::NIL;
       }
       else if (HB_IS_EXTREF(pSource))
@@ -2152,11 +2151,11 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
         }
       }
     }
-    /* GCLOCK leave */
+    // GCLOCK leave
   }
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
 void hb_itemCopyToRef(PHB_ITEM pDest, PHB_ITEM pSource)
 {
@@ -2169,8 +2168,8 @@ void hb_itemCopyToRef(PHB_ITEM pDest, PHB_ITEM pSource)
     pDest = hb_itemUnRefWrite(pDest, pSource);
     if (!pDest || pDest == pSource)
     {
-      /* extended reference or pDest is a reference to pSource
-         - do not copy */
+      // extended reference or pDest is a reference to pSource
+      // - do not copy
       return;
     }
   }
@@ -2179,11 +2178,9 @@ void hb_itemCopyToRef(PHB_ITEM pDest, PHB_ITEM pSource)
   {
     if (hb_itemUnRef(pSource) == pDest)
     {
-      /*
-       * assign will create cyclic reference
-       * pSource and pDest reference to the same item
-       * we can simply drop coping
-       */
+      // assign will create cyclic reference
+      // pSource and pDest reference to the same item
+      // we can simply drop coping
       return;
     }
   }
@@ -2196,7 +2193,7 @@ void hb_itemCopyToRef(PHB_ITEM pDest, PHB_ITEM pSource)
   hb_itemCopy(pDest, pSource);
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
 void hb_itemCopyFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
 {
@@ -2209,7 +2206,7 @@ void hb_itemCopyFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
     pSource = hb_itemUnRef(pSource);
     if (pDest == pSource)
     {
-      /* pSource is a reference to pDest - do not copy */
+      // pSource is a reference to pDest - do not copy
       return;
     }
   }
@@ -2217,10 +2214,8 @@ void hb_itemCopyFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
   hb_itemCopy(pDest, pSource);
 }
 
-/*
- * copy (transfer) the value of item without increasing
- * a reference counters, the pSource item is cleared
- */
+// copy (transfer) the value of item without increasing
+// a reference counters, the pSource item is cleared
 void hb_itemMove(PHB_ITEM pDest, PHB_ITEM pSource)
 {
 #if 0
@@ -2237,14 +2232,14 @@ void hb_itemMove(PHB_ITEM pDest, PHB_ITEM pSource)
     hb_itemClear(pDest);
   }
 
-  /* GCLOCK enter */
+  // GCLOCK enter
   hb_itemRawCpy(pDest, pSource);
   pDest->type &= ~Harbour::Item::DEFAULT;
   pSource->type = Harbour::Item::NIL;
-  /* GCLOCK leave */
+  // GCLOCK leave
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
 void hb_itemMoveRef(PHB_ITEM pDest, PHB_ITEM pSource)
 {
@@ -2256,11 +2251,9 @@ void hb_itemMoveRef(PHB_ITEM pDest, PHB_ITEM pSource)
   {
     if (hb_itemUnRef(pSource) == (HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest))
     {
-      /*
-       * assign will create cyclic reference
-       * pSource is a reference to pDest
-       * we can simply drop coping
-       */
+      // assign will create cyclic reference
+      // pSource is a reference to pDest
+      // we can simply drop coping
       hb_itemSetNil(pSource);
       return;
     }
@@ -2271,14 +2264,14 @@ void hb_itemMoveRef(PHB_ITEM pDest, PHB_ITEM pSource)
     hb_itemClear(pDest);
   }
 
-  /* GCLOCK enter */
+  // GCLOCK enter
   hb_itemRawCpy(pDest, pSource);
   pDest->type &= ~Harbour::Item::DEFAULT;
   pSource->type = Harbour::Item::NIL;
-  /* GCLOCK leave */
+  // GCLOCK leave
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
 void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
 {
@@ -2291,8 +2284,8 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
     pDest = hb_itemUnRefWrite(pDest, pSource);
     if (!pDest || pDest == pSource)
     {
-      /* extended reference or pDest is a reference to pSource
-         - do not copy */
+      // extended reference or pDest is a reference to pSource
+      // - do not copy
       hb_itemSetNil(pSource);
       return;
     }
@@ -2302,11 +2295,9 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
   {
     if (hb_itemUnRef(pSource) == pDest)
     {
-      /*
-       * assign will create cyclic reference
-       * pSource and pDest reference to the same item
-       * we can simply drop coping
-       */
+      // assign will create cyclic reference
+      // pSource and pDest reference to the same item
+      // we can simply drop coping
       hb_itemSetNil(pSource);
       return;
     }
@@ -2323,11 +2314,11 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
     hb_itemClear(pDest);
   }
 
-  /* GCLOCK enter */
+  // GCLOCK enter
   hb_itemRawCpy(pDest, pSource);
   pDest->type &= ~Harbour::Item::DEFAULT;
   pSource->type = Harbour::Item::NIL;
-  /* GCLOCK leave */
+  // GCLOCK leave
 }
 
 void hb_itemMoveFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
@@ -2341,7 +2332,7 @@ void hb_itemMoveFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
     auto pUnRef = hb_itemUnRef(pSource);
     if (pDest != pUnRef)
     {
-      /* pSource is not a reference to pDest - make copy */
+      // pSource is not a reference to pDest - make copy
       hb_itemCopy(pDest, pUnRef);
     }
     hb_itemClear(pSource);
@@ -2352,7 +2343,7 @@ void hb_itemMoveFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
   }
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
 void hb_itemSwap(PHB_ITEM pItem1, PHB_ITEM pItem2)
 {
@@ -2362,21 +2353,20 @@ void hb_itemSwap(PHB_ITEM pItem1, PHB_ITEM pItem2)
 
   HB_ITEM temp;
 
-  /*
-   * It's safe to use this version because our GC cannot be
-   * activated inside memcpy()
-   */
-  /* GCLOCK enter */
+  // It's safe to use this version because our GC cannot be
+  // activated inside memcpy()
+
+  // GCLOCK enter
   hb_itemRawCpy(&temp, pItem2);
   hb_itemRawCpy(pItem2, pItem1);
   hb_itemRawCpy(pItem1, &temp);
   pItem1->type &= ~Harbour::Item::DEFAULT;
   pItem2->type &= ~Harbour::Item::DEFAULT;
-  /* GCLOCK leave */
+  // GCLOCK leave
 }
 
-/* Internal API, not standard Clipper */
-/* De-references item passed by the reference */
+// Internal API, not standard Clipper
+// De-references item passed by the reference
 
 PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
 {
@@ -2391,8 +2381,8 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
       pItem = pItem->item.asMemvar.value;
     }
     else if (HB_IS_ENUM(pItem))
-    { /* FOR EACH control variable */
-      /* enumerator variable */
+    { // FOR EACH control variable
+      // enumerator variable
       if (pItem->item.asEnum.valuePtr)
       {
         return pItem->item.asEnum.valuePtr;
@@ -2428,7 +2418,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
           }
         }
 
-        /* put it here to avoid recursive RT error generation */
+        // put it here to avoid recursive RT error generation
         pItem->item.asEnum.valuePtr = hb_itemNew(nullptr);
 
         if (hb_vmRequestQuery() == 0)
@@ -2452,7 +2442,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
       {
         if (pItem->item.asRefer.offset == 0)
         {
-          /* a reference to a static variable or array item */
+          // a reference to a static variable or array item
           if (static_cast<HB_SIZE>(pItem->item.asRefer.value) < pItem->item.asRefer.BasePtr.array->nLen)
           {
             pItem = pItem->item.asRefer.BasePtr.array->pItems + pItem->item.asRefer.value;
@@ -2467,25 +2457,25 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
             hb_stackPop();
             hb_stackPop();
 
-            /* check it again - user error handler can resize the array */
+            // check it again - user error handler can resize the array
             if (static_cast<HB_SIZE>(pItem->item.asRefer.value) < pItem->item.asRefer.BasePtr.array->nLen)
             {
               pItem = pItem->item.asRefer.BasePtr.array->pItems + pItem->item.asRefer.value;
             }
             else
             {
-              /* It's safe to clear the item - if we are here then
-                 the reference chain to this item does not start in
-                 one of the pItem->item.asRefer.BasePtr.array items
-                 or more then one reference to this array exists
-                 so it will not be freed [druzus] */
+              // It's safe to clear the item - if we are here then
+              // the reference chain to this item does not start in
+              // one of the pItem->item.asRefer.BasePtr.array items
+              // or more then one reference to this array exists
+              // so it will not be freed [druzus]
               hb_itemClear(pItem);
             }
           }
         }
         else
         {
-          /* a reference to a local variable */
+          // a reference to a local variable
           PHB_ITEM *pLocal;
 
           pLocal = *(pItem->item.asRefer.BasePtr.itemsbasePtr) + pItem->item.asRefer.offset + pItem->item.asRefer.value;
@@ -2494,7 +2484,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
       }
       else
       {
-        /* local variable referenced in a codeblock */
+        // local variable referenced in a codeblock
         pItem = hb_codeblockGetRef(pItem->item.asRefer.BasePtr.block, static_cast<int>(pItem->item.asRefer.value));
       }
     }
@@ -2503,8 +2493,8 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
   return pItem;
 }
 
-/* Internal API, not standard Clipper */
-/* De-references item passed by the reference */
+// Internal API, not standard Clipper
+// De-references item passed by the reference
 
 PHB_ITEM hb_itemUnRef(PHB_ITEM pItem)
 {
@@ -2520,9 +2510,8 @@ PHB_ITEM hb_itemUnRef(PHB_ITEM pItem)
   return pItem;
 }
 
-/* Unreference passed variable for writing
- * Do not unreference string enumerators
- */
+// Unreference passed variable for writing
+// Do not unreference string enumerators
 PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
 {
 #if 0
@@ -2558,9 +2547,8 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
   return pItem;
 }
 
-/* Unreference passed variable
- * Do not unreference the last reference stored
- */
+// Unreference passed variable
+// Do not unreference the last reference stored
 PHB_ITEM hb_itemUnRefRefer(PHB_ITEM pItem)
 {
 #if 0
@@ -2578,8 +2566,8 @@ PHB_ITEM hb_itemUnRefRefer(PHB_ITEM pItem)
   return pLast;
 }
 
-/* Internal API, not standard Clipper */
-/* Resize string buffer of given string item */
+// Internal API, not standard Clipper
+// Resize string buffer of given string item
 
 PHB_ITEM hb_itemReSizeString(PHB_ITEM pItem, HB_SIZE nSize)
 {
@@ -2609,8 +2597,8 @@ PHB_ITEM hb_itemReSizeString(PHB_ITEM pItem, HB_SIZE nSize)
   return pItem;
 }
 
-/* Internal API, not standard Clipper */
-/* UnShare string buffer of given string item */
+// Internal API, not standard Clipper
+// UnShare string buffer of given string item
 
 PHB_ITEM hb_itemUnShareString(PHB_ITEM pItem)
 {
@@ -2624,9 +2612,9 @@ PHB_ITEM hb_itemUnShareString(PHB_ITEM pItem)
     auto szText = static_cast<char *>(hb_xmemcpy(hb_xgrab(nLen), pItem->item.asString.value, nLen));
     if (pItem->item.asString.allocated)
     {
-      /* GCLOCK enter */
+      // GCLOCK enter
       hb_xRefFree(pItem->item.asString.value);
-      /* GCLOCK leave */
+      // GCLOCK leave
     }
     pItem->item.asString.value = szText;
     pItem->item.asString.allocated = nLen;
@@ -2681,8 +2669,8 @@ HB_BOOL hb_itemGetWriteCL(PHB_ITEM pItem, char **pszValue, HB_SIZE *pnLen)
   return false;
 }
 
-/* Internal API, not standard Clipper */
-/* clone the given item */
+// Internal API, not standard Clipper
+// clone the given item
 PHB_ITEM hb_itemClone(PHB_ITEM pItem)
 {
 #if 0
@@ -2737,7 +2725,7 @@ void hb_itemCloneTo(PHB_ITEM pDest, PHB_ITEM pSource)
   }
 }
 
-/* Check whether two items are exactly equal */
+// Check whether two items are exactly equal
 HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
 {
   auto fResult = false;
@@ -2797,10 +2785,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   return fResult;
 }
 
-/* For compatible types compare pItem1 with pItem2 setting piResult
-   to -1, 0 or 1 if pItem1 is <, == or > then pItem2 and return true
-   otherwise return false.
- */
+// For compatible types compare pItem1 with pItem2 setting piResult
+// to -1, 0 or 1 if pItem1 is <, == or > then pItem2 and return true
+// otherwise return false.
 HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, int *piResult)
 {
   auto fResult = false;
@@ -2914,9 +2901,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   return fResult;
 }
 
-/* Internal API, not standard Clipper */
+// Internal API, not standard Clipper
 
-/* Check whether two strings are equal (0), smaller (-1), or greater (1) */
+// Check whether two strings are equal (0), smaller (-1), or greater (1)
 int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 {
 #if 0
@@ -2937,8 +2924,8 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   if (!bForceExact && hb_stackSetStruct()->HB_SET_EXACT)
   {
-    /* SET EXACT ON and not using == */
-    /* Don't include trailing spaces */
+    // SET EXACT ON and not using ==
+    // Don't include trailing spaces
     while (nLenFirst > nLenSecond && szFirst[nLenFirst - 1] == ' ')
     {
       nLenFirst--;
@@ -2952,9 +2939,9 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   HB_SIZE nMinLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
 
-  int iRet = 0; /* Current status */
+  int iRet = 0; // Current status
 
-  /* Both strings not empty */
+  // Both strings not empty
   if (nMinLen)
   {
     auto cdp = hb_vmCDP();
@@ -2975,10 +2962,10 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
         szSecond++;
       } while (--nMinLen);
 
-      /* If equal and length is different ! */
+      // If equal and length is different !
       if (!iRet && nLenFirst != nLenSecond)
       {
-        /* Force an exact comparison? */
+        // Force an exact comparison?
         if (bForceExact || nLenSecond > nLenFirst)
         {
           iRet = (nLenFirst < nLenSecond) ? -1 : 1;
@@ -2988,7 +2975,7 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
   }
   else
   {
-    /* Both empty ? */
+    // Both empty ?
     if (nLenFirst != nLenSecond)
     {
       if (bForceExact)
@@ -3002,7 +2989,7 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
     }
     else
     {
-      /* Both empty => Equal ! */
+      // Both empty => Equal !
       iRet = 0;
     }
   }
@@ -3010,7 +2997,7 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
   return iRet;
 }
 
-/* Check whether two strings are equal (0), smaller (-1), or greater (1), ignore case */
+// Check whether two strings are equal (0), smaller (-1), or greater (1), ignore case
 int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 {
 #if 0
@@ -3026,8 +3013,8 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   if (!bForceExact && hb_stackSetStruct()->HB_SET_EXACT)
   {
-    /* SET EXACT ON and not using == */
-    /* Don't include trailing spaces */
+    // SET EXACT ON and not using ==
+    // Don't include trailing spaces
     while (nLenFirst > nLenSecond && szFirst[nLenFirst - 1] == ' ')
     {
       nLenFirst--;
@@ -3041,9 +3028,9 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   HB_SIZE nMinLen = nLenFirst < nLenSecond ? nLenFirst : nLenSecond;
 
-  int iRet = 0; /* Current status */
+  int iRet = 0; // Current status
 
-  /* Both strings not empty */
+  // Both strings not empty
   if (nMinLen)
   {
     auto cdp = hb_vmCDP();
@@ -3066,10 +3053,10 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
         szSecond++;
       } while (--nMinLen);
 
-      /* If equal and length is different ! */
+      // If equal and length is different !
       if (!iRet && nLenFirst != nLenSecond)
       {
-        /* Force an exact comparison? */
+        // Force an exact comparison?
         if (bForceExact || nLenSecond > nLenFirst)
         {
           iRet = (nLenFirst < nLenSecond) ? -1 : 1;
@@ -3079,7 +3066,7 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
   }
   else
   {
-    /* Both empty ? */
+    // Both empty ?
     if (nLenFirst != nLenSecond)
     {
       if (bForceExact)
@@ -3093,7 +3080,7 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
     }
     else
     {
-      /* Both empty => Equal ! */
+      // Both empty => Equal !
       iRet = 0;
     }
   }
@@ -3101,7 +3088,7 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
   return iRet;
 }
 
-/* converts a numeric to a string with optional width & precision. */
+// converts a numeric to a string with optional width & precision.
 
 HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
 {
@@ -3130,7 +3117,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
 
     if (!hb_isfinite(dNumber))
     {
-      /* Numeric overflow */
+      // Numeric overflow
       iPos = -1;
     }
     else
@@ -3198,8 +3185,8 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
         }
       }
 
-      /* now try to round the results and set 0 in places over defined
-         precision, the same is done by Clipper */
+      // now try to round the results and set 0 in places over defined
+      // precision, the same is done by Clipper
       if (iPos >= 0)
       {
         int iZer;
@@ -3216,7 +3203,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
         dFract = modf(dFract * doBase, &dDig);
         auto iLast = static_cast<int>(dDig + 0.01);
 
-        /* hack for x.xxxx4999999999, f.e. 8.995 ~FL 8.994999999999999218.. */
+        // hack for x.xxxx4999999999, f.e. 8.995 ~FL 8.994999999999999218..
         if (iLast == 4 && iZer < 0)
         {
           for (iPos = -iZer; iPos > 0; --iPos)
@@ -3258,7 +3245,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
               else
               {
                 if (szResult[iPos] < '0')
-                { /* '-' or ' ' */
+                { // '-' or ' '
                   szResult[iPos] = '1';
                   iFirst = iPos;
                 }
@@ -3336,7 +3323,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
   }
 
   szResult[iSize] = '\0';
-  /* Set to asterisks in case of overflow */
+  // Set to asterisks in case of overflow
   if (iPos < 0)
   {
     memset(szResult, '*', iSize);
@@ -3350,14 +3337,13 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
   return true;
 }
 
-/* converts a numeric to a string with optional width & precision.
-   This function should be used by any function that wants to format numeric
-   data for displaying, printing, or putting in a database.
-
-   Note: The caller is responsible for calling hb_xfree() to free the results
-         buffer, but ONLY if the return value is not a nullptr pointer! (If a nullptr
-         pointer is returned, then there was a conversion error.)
- */
+// converts a numeric to a string with optional width & precision.
+// This function should be used by any function that wants to format numeric
+// data for displaying, printing, or putting in a database.
+//
+// Note: The caller is responsible for calling hb_xfree() to free the results
+//       buffer, but ONLY if the return value is not a nullptr pointer! (If a nullptr
+//       pointer is returned, then there was a conversion error.)
 char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
 {
 #if 0
@@ -3368,8 +3354,8 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
 
   if (pNumber)
   {
-    /* Default to the width and number of decimals specified by the item,
-       with a limit of 90 integer places, plus one space for the sign. */
+    // Default to the width and number of decimals specified by the item,
+    // with a limit of 90 integer places, plus one space for the sign.
     int iWidth, iDec;
 
     hb_itemGetNLen(pNumber, &iWidth, &iDec);
@@ -3381,23 +3367,23 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
 
     if (pWidth && HB_IS_NUMERIC(pWidth))
     {
-      /* If the width parameter is specified, override the default value
-         and set the number of decimals to zero */
+      // If the width parameter is specified, override the default value
+      // and set the number of decimals to zero
       iWidth = hb_itemGetNI(pWidth);
 
       if (iWidth < 1)
       {
-        iWidth = 10; /* If 0 or negative, use default */
+        iWidth = 10; // If 0 or negative, use default
       }
       iDec = 0;
     }
 
-    /* Clipper ignores decimal places when iWidth is 1 */
+    // Clipper ignores decimal places when iWidth is 1
     if (iWidth > 1 && pDec && HB_IS_NUMERIC(pDec))
     {
-      /* This function does not include the decimal places in the width,
-         so the width must be adjusted downwards, if the decimal places
-         parameter is greater than 0  */
+      // This function does not include the decimal places in the width,
+      // so the width must be adjusted downwards, if the decimal places
+      // parameter is greater than 0
       iDec = hb_itemGetNI(pDec);
 
       if (iDec <= 0)
@@ -3422,11 +3408,11 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
   return szResult;
 }
 
-/* NOTE: The caller must free the pointer if the bFreeReq param gets set to
-         HB_TRUE, this trick is required to stay thread safe, while minimize
-         memory allocation and buffer copying.
-         As a side effect the caller should never modify the returned buffer
-         since it may point to a constant value. [vszakats] */
+// NOTE: The caller must free the pointer if the bFreeReq param gets set to
+//       HB_TRUE, this trick is required to stay thread safe, while minimize
+//       memory allocation and buffer copying.
+//       As a side effect the caller should never modify the returned buffer
+//       since it may point to a constant value. [vszakats]
 
 char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
 {
@@ -3477,7 +3463,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     HB_STACK_TLS_PRELOAD
     if (hb_stackSetStruct()->HB_SET_FIXED)
     {
-      /* If fixed mode is enabled, use the default number of decimal places. */
+      // If fixed mode is enabled, use the default number of decimal places.
       hb_itemPutNI(hb_stackAllocItem(), hb_stackSetStruct()->HB_SET_DECIMALS);
       buffer = hb_itemStr(pItem, nullptr, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -3523,7 +3509,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     break;
 
   case Harbour::Item::POINTER: {
-    int size = (sizeof(void *) << 1) + 3; /* n bytes for address + 0x + \0 */
+    int size = (sizeof(void *) << 1) + 3; // n bytes for address + 0x + \0
     auto addr = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pItem));
 
     *nLen = size - 1;
@@ -3549,9 +3535,9 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
   return buffer;
 }
 
-/* This function is used by all of the PAD functions to prepare the argument
-   being padded. If date, convert to string using hb_dateFormat(). If numeric,
-   convert to unpadded string. Return pointer to string and set string length */
+// This function is used by all of the PAD functions to prepare the argument
+// being padded. If date, convert to string using hb_dateFormat(). If numeric,
+// convert to unpadded string. Return pointer to string and set string length
 
 char *hb_itemPadConv(PHB_ITEM pItem, HB_SIZE *pnSize, HB_BOOL *bFreeReq)
 {
@@ -3575,9 +3561,8 @@ char *hb_itemPadConv(PHB_ITEM pItem, HB_SIZE *pnSize, HB_BOOL *bFreeReq)
       int i;
       char *buffer = hb_itemString(pItem, pnSize, bFreeReq);
 
-      /* remove leading spaces if any, a little bit redundant but
-       * I don't want to complicate the API interface more. Druzus
-       */
+      // remove leading spaces if any, a little bit redundant but
+      // I don't want to complicate the API interface more. Druzus
       for (i = 0; buffer[i] == ' '; i++)
       {
         ;
