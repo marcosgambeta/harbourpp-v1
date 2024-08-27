@@ -61,14 +61,29 @@
 
 #include "hbthread.hpp"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex clipMtx;
+#else
 static HB_CRITICAL_NEW(s_clipMtx);
+#endif
 
 static char *s_szClipboardData;
 static HB_SIZE s_nClipboardLen;
 
 HB_BOOL hb_gt_setClipboard(const char *szClipData, HB_SIZE nLen)
 {
+  #if defined(HB_USE_CPP_MUTEX)
+  clipMtx.lock();
+  #else
   hb_threadEnterCriticalSection(&s_clipMtx);
+  #endif
 
   if (s_nClipboardLen)
   {
@@ -82,14 +97,22 @@ HB_BOOL hb_gt_setClipboard(const char *szClipData, HB_SIZE nLen)
     s_szClipboardData[s_nClipboardLen] = '\0';
   }
 
+  #if defined(HB_USE_CPP_MUTEX)
+  clipMtx.unlock();
+  #else
   hb_threadLeaveCriticalSection(&s_clipMtx);
+  #endif
 
   return true;
 }
 
 HB_BOOL hb_gt_getClipboard(char **pszClipData, HB_SIZE *pnLen)
 {
+  #if defined(HB_USE_CPP_MUTEX)
+  clipMtx.lock();
+  #else
   hb_threadEnterCriticalSection(&s_clipMtx);
+  #endif
 
   *pszClipData = nullptr;
   *pnLen = s_nClipboardLen;
@@ -100,7 +123,11 @@ HB_BOOL hb_gt_getClipboard(char **pszClipData, HB_SIZE *pnLen)
     (*pszClipData)[s_nClipboardLen] = '\0';
   }
 
+  #if defined(HB_USE_CPP_MUTEX)
+  clipMtx.unlock();
+  #else
   hb_threadLeaveCriticalSection(&s_clipMtx);
+  #endif
 
   return s_nClipboardLen != 0;
 }
