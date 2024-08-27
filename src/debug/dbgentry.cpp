@@ -1,9 +1,8 @@
-/*
- * Debugger entry routine
- *
- * Copyright 2005 Phil Krylov <phil a t newstar.rinet.ru>
- *
- */
+//
+// Debugger entry routine
+//
+// Copyright 2005 Phil Krylov <phil a t newstar.rinet.ru>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

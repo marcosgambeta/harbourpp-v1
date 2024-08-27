@@ -1,10 +1,9 @@
-/*
- * The Debugger
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 2000 Luiz Rafael Culik <culik@sl.conex.net> (:Move())
- *
- */
+//
+// The Debugger
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 2000 Luiz Rafael Culik <culik@sl.conex.net> (:Move())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

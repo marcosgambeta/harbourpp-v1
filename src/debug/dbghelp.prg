@@ -1,10 +1,9 @@
-/*
- * The Debugger Help
- *
- * Copyright 2002 Antonio Linares <alinares@fivetech.com>
- * Copyright 2014 Viktor Szakats (vszakats.net/harbour) (GetTopics())
- *
- */
+//
+// The Debugger Help
+//
+// Copyright 2002 Antonio Linares <alinares@fivetech.com>
+// Copyright 2014 Viktor Szakats (vszakats.net/harbour) (GetTopics())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

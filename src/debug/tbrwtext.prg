@@ -1,9 +1,8 @@
-/*
- * Text file browser class
- *
- * Copyright 2008 Lorenzo Fiorini <lorenzo.fiorini@gmail.com>
- *
- */
+//
+// Text file browser class
+//
+// Copyright 2008 Lorenzo Fiorini <lorenzo.fiorini@gmail.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
