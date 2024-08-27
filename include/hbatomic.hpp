@@ -48,17 +48,17 @@
 
 #include "hbdefs.hpp"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 #  include <windows.h>
-#elif defined( HB_OS_DARWIN )
+#elif defined(HB_OS_DARWIN)
 #  include <libkern/OSAtomic.h>
-#elif defined( HB_OS_SUNOS )
+#elif defined(HB_OS_SUNOS)
 #  include <atomic.h>
 #endif
-#if defined( __SVR4 )
+#if defined(__SVR4)
 #  include <thread.h>
 #endif
-#if defined( HB_OS_UNIX ) && !( defined( HB_OS_MINIX ) )
+#if defined(HB_OS_UNIX) && !( defined(HB_OS_MINIX) )
 #  include <sched.h>
 #endif
 
@@ -66,13 +66,13 @@
 HB_EXTERN_BEGIN
 
 /* yield the processor */
-#if defined( HB_TASK_THREAD )
+#if defined(HB_TASK_THREAD)
 #  define HB_SCHED_YIELD()    hb_taskYield()
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  define HB_SCHED_YIELD()    Sleep( 0 )
-#elif defined( HB_OS_SUNOS ) || defined( __SVR4 )
+#elif defined(HB_OS_SUNOS) || defined(__SVR4)
 #  define HB_SCHED_YIELD()    thr_yield()
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
 #  define HB_SCHED_YIELD()    sched_yield()
 #else
 #  define HB_SCHED_YIELD()    sleep( 0 );
@@ -80,18 +80,18 @@ HB_EXTERN_BEGIN
 
 
 /* Inline assembler version of atomic operations on memory reference counters */
-#if defined( __GNUC__ ) || ( defined( HB_OS_WIN ) && defined( __clang__ ) )
+#if defined(__GNUC__) || ( defined(HB_OS_WIN) && defined(__clang__) )
 
-#  if defined( HB_USE_GCCATOMIC_OFF )
+#  if defined(HB_USE_GCCATOMIC_OFF)
 #     undef HB_USE_GCCATOMIC
 #  elif ( __GNUC__ > 4 || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 1 ) ) && \
-        ! defined( __MINGW32CE__ ) && ! defined( HB_USE_GCCATOMIC )
+        ! defined(__MINGW32CE__) && ! defined(HB_USE_GCCATOMIC)
 #     define HB_USE_GCCATOMIC
-#  elif defined( HB_OS_WIN ) && defined( __clang__ )
+#  elif defined(HB_OS_WIN) && defined(__clang__)
 #     define HB_USE_GCCATOMIC
 #  endif
 
-#  if defined( HB_USE_GCCATOMIC )
+#  if defined(HB_USE_GCCATOMIC)
 
 #     define HB_ATOM_INC( p )       __sync_add_and_fetch( (p), 1 )
 #     define HB_ATOM_DEC( p )       __sync_sub_and_fetch( (p), 1 )
@@ -119,7 +119,7 @@ HB_EXTERN_BEGIN
 #     define HB_SPINLOCK_RELEASE(l) __sync_lock_release(l)
 #     define HB_SPINLOCK_ACQUIRE(l) hb_spinlock_acquire(l)
 
-#  elif defined( HB_CPU_X86 ) || defined( HB_CPU_X86_64 )
+#  elif defined(HB_CPU_X86) || defined(HB_CPU_X86_64)
 
 #     if HB_COUNTER_SIZE == 4
 
@@ -212,7 +212,7 @@ HB_EXTERN_BEGIN
 #     define HB_SPINLOCK_RELEASE(l) hb_spinlock_release(l)
 #     define HB_SPINLOCK_ACQUIRE(l) hb_spinlock_acquire(l)
 
-#  elif defined( HB_CPU_PPC )
+#  elif defined(HB_CPU_PPC)
 
 #     if HB_COUNTER_SIZE == 4
 
@@ -257,9 +257,9 @@ HB_EXTERN_BEGIN
 
 #  endif  /* ???CPU?? */
 
-#elif defined( _MSC_VER )
+#elif defined(_MSC_VER)
 
-#  if defined( HB_CPU_X86 )
+#  if defined(HB_CPU_X86)
 
 #     if HB_COUNTER_SIZE == 4
 
@@ -296,10 +296,10 @@ HB_EXTERN_BEGIN
 #endif  /* ??? C compiler ??? */
 
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
    /* Atomic operations on memory reference counters */
-#  if ! defined( HB_ATOM_INC ) || ! defined( HB_ATOM_DEC )
+#  if ! defined(HB_ATOM_INC) || ! defined(HB_ATOM_DEC)
 #     undef HB_ATOM_DEC
 #     undef HB_ATOM_INC
 #     undef HB_ATOM_GET
@@ -318,17 +318,17 @@ HB_EXTERN_BEGIN
 #  endif
 
    /* Spin locks */
-#  if ! defined( HB_SPINLOCK_T )
+#  if ! defined(HB_SPINLOCK_T)
 #     define HB_SPINLOCK_T          volatile LONG
 #     define HB_SPINLOCK_INIT       0
 #     define HB_SPINLOCK_TRY(l)     (! InterlockedExchange( (LONG*)(l), 1 ))
 #     define HB_SPINLOCK_RELEASE(l) ( *(l) = 0 )
 #  endif
 
-#elif defined( HB_OS_DARWIN )
+#elif defined(HB_OS_DARWIN)
 
    /* Atomic operations on memory reference counters */
-#  if ! defined( HB_ATOM_INC ) || ! defined( HB_ATOM_DEC )
+#  if ! defined(HB_ATOM_INC) || ! defined(HB_ATOM_DEC)
 #     undef HB_ATOM_DEC
 #     undef HB_ATOM_INC
 #     undef HB_ATOM_GET
@@ -347,7 +347,7 @@ HB_EXTERN_BEGIN
 #  endif
 
    /* Spin locks */
-#  if ! defined( HB_SPINLOCK_T )
+#  if ! defined(HB_SPINLOCK_T)
 #     undef HB_SPINLOCK_T
 #     undef HB_SPINLOCK_INIT
 #     undef HB_SPINLOCK_TRY
@@ -360,10 +360,10 @@ HB_EXTERN_BEGIN
 #     define HB_SPINLOCK_ACQUIRE(l) OSSpinLockLock(l)
 #  endif
 
-#elif defined( HB_OS_SUNOS )
+#elif defined(HB_OS_SUNOS)
 
    /* Atomic operations on memory reference counters */
-#  if ! defined( HB_ATOM_INC ) || ! defined( HB_ATOM_DEC )
+#  if ! defined(HB_ATOM_INC) || ! defined(HB_ATOM_DEC)
 #     undef HB_ATOM_DEC
 #     undef HB_ATOM_INC
 #     undef HB_ATOM_GET
@@ -375,7 +375,7 @@ HB_EXTERN_BEGIN
 #  endif
 
    /* Spin locks */
-#  if ! defined( HB_SPINLOCK_T )
+#  if ! defined(HB_SPINLOCK_T)
 #     define HB_SPINLOCK_T          volatile uint_t
 #     define HB_SPINLOCK_INIT       0
 #     define HB_SPINLOCK_TRY(l)     ( ! atomic_swap_uint( (l), 1 ) )
@@ -384,8 +384,8 @@ HB_EXTERN_BEGIN
 
 #endif  /* HB_OS_??? */
 
-#if defined( HB_SPINLOCK_T )
-#  if ! defined( HB_SPINLOCK_ACQUIRE )
+#if defined(HB_SPINLOCK_T)
+#  if ! defined(HB_SPINLOCK_ACQUIRE)
 #     ifdef HB_SPINLOCK_REPEAT
 #        define HB_SPINLOCK_ACQUIRE(l) do { \
                                           if( HB_SPINLOCK_TRY( l ) ) \
@@ -402,7 +402,7 @@ HB_EXTERN_BEGIN
                                        } while(1)
 #     endif
 #  endif
-#  if ! defined( HB_SPINLOCK_R )
+#  if ! defined(HB_SPINLOCK_R)
       struct hb_spinlock_r
       {
          HB_SPINLOCK_T  lock;
@@ -444,7 +444,7 @@ HB_EXTERN_BEGIN
 #        define HB_SPINLOCK_REPEAT     63
 #     endif
 
-#if defined( __BORLANDC__ )  /* workaround for compiler limitation */
+#if defined(__BORLANDC__)  /* workaround for compiler limitation */
 #     define hb_spinlock_acquire_r( sl ) \
       do { \
          HB_SPINLOCK_T * l = &(sl)->lock; \

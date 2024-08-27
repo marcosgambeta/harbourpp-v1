@@ -645,7 +645,7 @@ typedef struct _HB_LABEL_INFO
 
 struct _HB_COMP_FUNCS;
 
-#if defined( HB_COMMON_SUPPORT )
+#if defined(HB_COMMON_SUPPORT)
 
 typedef struct _HB_COMMON
 {
@@ -658,7 +658,7 @@ typedef struct _HB_COMMON
 #define HB_COMP_PARAM         pCommon
 #define HB_COMP_DECL          PHB_COMMON HB_COMP_PARAM
 
-#elif defined( HB_MACRO_SUPPORT )
+#elif defined(HB_MACRO_SUPPORT)
 
 #define HB_COMP_PARAM         pMacro
 #define HB_COMP_DECL          PHB_MACRO HB_COMP_PARAM

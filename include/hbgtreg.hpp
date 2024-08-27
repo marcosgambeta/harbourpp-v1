@@ -50,7 +50,7 @@ static const HB_GT_INIT gtInit = { HB_GT_DRVNAME( HB_GT_NAME ),
 
 HB_GT_ANNOUNCE( HB_GT_NAME )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
 HB_CALL_ON_STARTUP_BEGIN( _hb_startup_gt_Init_ )
    hb_gtRegister( &gtInit );
 HB_CALL_ON_STARTUP_END( _hb_startup_gt_Init_ )
@@ -60,9 +60,9 @@ HB_CALL_ON_STARTUP_BEGIN( HB_MACRONAME_JOIN( _hb_startup_gt_Init_, HB_GT_NAME ) 
 HB_CALL_ON_STARTUP_END( HB_MACRONAME_JOIN( _hb_startup_gt_Init_, HB_GT_NAME ) )
 #endif
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_startup_gt_Init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    \
       HB_DATASEG_FUNC( HB_MACRONAME_JOIN( _hb_startup_gt_Init_, HB_GT_NAME ) )
    #include "hbiniseg.h"

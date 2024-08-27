@@ -49,7 +49,7 @@
 #include "hbapi.h"
 #include "hbzlib.ch"
 
-#if defined( _HB_ZLIB_INTERNAL_ )
+#if defined(_HB_ZLIB_INTERNAL_)
 
 typedef HB_SIZE ( * HB_ZLIB_CBOUND )( HB_SIZE );
 typedef HB_SIZE ( * HB_ZLIB_UNSIZE )( const char *, HB_SIZE, int * );

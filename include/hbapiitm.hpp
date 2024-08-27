@@ -185,7 +185,7 @@ extern HB_EXPORT void         hb_itemSwap      ( PHB_ITEM pItem1, PHB_ITEM pItem
 extern HB_EXPORT char *       hb_itemSerialize( PHB_ITEM pItem, int iFlags, HB_SIZE * pnSize );
 extern HB_EXPORT PHB_ITEM     hb_itemDeserialize( const char ** pBufferPtr, HB_SIZE * pnSize );
 
-#if defined( _HB_API_INTERNAL_ )
+#if defined(_HB_API_INTERNAL_)
 
 extern PHB_ITEM hb_itemPutPtrRawGC( PHB_ITEM pItem, void * pValue );
 

@@ -21,11 +21,11 @@
 #ifndef __HBEXTERN_CH__HBLANG__
 #define __HBEXTERN_CH__HBLANG__
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__HBLANG__ANNOUNCE )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__HBLANG__ANNOUNCE)
    ANNOUNCE __HBEXTERN__HBLANG__
 #endif
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__HBLANG__REQUEST )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__HBLANG__REQUEST)
    #command DYNAMIC <fncs,...> => EXTERNAL <fncs>
 #endif
 
@@ -69,7 +69,7 @@ DYNAMIC HB_LANG_UK
 DYNAMIC HB_LANG_ZH
 DYNAMIC HB_LANG_ZH_SIM
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__HBLANG__REQUEST )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__HBLANG__REQUEST)
    #uncommand DYNAMIC <fncs,...> => EXTERNAL <fncs>
 #endif
 

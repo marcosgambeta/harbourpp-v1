@@ -101,7 +101,7 @@ extern PHB_EXPR hb_macroExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP
 #define HB_PCODE_SIZE  512
 
 /* Declarations for functions macro.c */
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
 
 extern void hb_macroGenPCode1( HB_BYTE byte, HB_COMP_DECL );
 extern void hb_macroGenPCode2( HB_BYTE byte1, HB_BYTE byte2, HB_COMP_DECL );

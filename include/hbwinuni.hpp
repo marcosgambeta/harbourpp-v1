@@ -48,11 +48,11 @@
 
 #include "hbapistr.hpp"
 
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 
 #include "hbset.hpp"
 
-#if defined( UNICODE )
+#if defined(UNICODE)
    #define HB_PARSTR( n, h, len )                hb_parstr_u16( n, HB_CDP_ENDIAN_NATIVE, h, len )
    #define HB_PARSTRDEF( n, h, len )             hb_wstrnull( hb_parstr_u16( n, HB_CDP_ENDIAN_NATIVE, h, len ) )
    #define HB_PARASTR( n, i, h, len )            hb_parastr_u16( n, i, HB_CDP_ENDIAN_NATIVE, h, len )

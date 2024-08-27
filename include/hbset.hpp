@@ -135,7 +135,7 @@ typedef enum
 
 } HB_set_enum;
 
-#if defined( _HB_SET_INTERNAL_ ) || defined( _HB_API_INTERNAL_ )
+#if defined(_HB_SET_INTERNAL_) || defined(_HB_API_INTERNAL_)
 typedef struct
 {
    /* Lower case members are indirectly related to a SET */

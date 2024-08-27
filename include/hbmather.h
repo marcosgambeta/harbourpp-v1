@@ -51,8 +51,8 @@
 
 HB_EXTERN_BEGIN
 
-#if defined( __BORLANDC__ )
-   #if ( __BORLANDC__ == 0x530 ) && defined( __cplusplus )
+#if defined(__BORLANDC__)
+   #if ( __BORLANDC__ == 0x530 ) && defined(__cplusplus)
       /* NOTE: There seem to be a bug in Borland C++ 5.3 C++ mode which prevents
                the redefinition of matherr, because nor "_exception" neither
                "exception" will work. [vszakats] */
@@ -64,20 +64,20 @@ HB_EXTERN_BEGIN
          #define exception _exception
       #endif
    #endif
-#elif defined( __MINGW32CE__ )
+#elif defined(__MINGW32CE__)
    #define HB_MATH_HANDLER
    #define matherr _matherr
    #define exception _exception
 /* it seems that MinGW has some problem with MATH HANDLER
    use HB_MATH_ERRNO instead */
-#elif defined( __MINGW32__ ) && 0
+#elif defined(__MINGW32__) && 0
    #define HB_MATH_HANDLER
    #define matherr _matherr
    #define exception _exception
 #endif
 
-#if ! defined( HB_MATH_HANDLER ) && \
-    ( defined( __GNUC__ ) || defined( HB_OS_UNIX ) )
+#if ! defined(HB_MATH_HANDLER) && \
+    ( defined(__GNUC__) || defined(HB_OS_UNIX) )
    #define HB_MATH_ERRNO
 #endif
 

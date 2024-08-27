@@ -94,7 +94,7 @@ HB_EXTERN_BEGIN
 #define HB_FA_RWXG            ( HB_FA_RGRP | HB_FA_WGRP | HB_FA_XGRP )
 #define HB_FA_RWXO            ( HB_FA_ROTH | HB_FA_WOTH | HB_FA_XOTH )
 
-#if defined( HB_OS_VXWORKS ) && ! defined( S_ISVTX )
+#if defined(HB_OS_VXWORKS) && ! defined(S_ISVTX)
 #  define S_ISVTX 0
 #endif
 
@@ -194,7 +194,7 @@ extern HB_EXPORT HB_BOOL    hb_fsLink        ( const char * pszExisting, const c
 extern HB_EXPORT HB_BOOL    hb_fsLinkSym     ( const char * pszTarget, const char * pszNewFile ); /* create symbolic (soft) link */
 extern HB_EXPORT char *     hb_fsLinkRead    ( const char * pszFileName ); /* returns the link pointed to */
 
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
 /* for POSIX systems only, hides low-level select()/poll() access,
    intentionally covered by HB_OS_UNIX / __DJGPP__ macros to generate
    compile time error in code which tries to use it on other platforms */
@@ -222,14 +222,14 @@ extern HB_EXPORT int        hb_fsCanWrite    ( HB_FHANDLE hFileHandle, HB_MAXINT
 #define hb_fsFLock( h, s, l )   hb_fsLock( h, s, l, FL_LOCK )
 #define hb_fsFUnlock( h, s, l ) hb_fsLock( h, s, l, FL_UNLOCK )
 
-#if defined( HB_OS_UNIX ) && ! defined( HB_USE_SHARELOCKS_OFF )
+#if defined(HB_OS_UNIX) && ! defined(HB_USE_SHARELOCKS_OFF)
 #  define HB_USE_SHARELOCKS
 #  define HB_SHARELOCK_POS          0x7fffffffUL
 #  define HB_SHARELOCK_SIZE         0x1UL
-#  if defined( HB_USE_BSDLOCKS_OFF )
+#  if defined(HB_USE_BSDLOCKS_OFF)
 #     undef HB_USE_BSDLOCKS
-#  elif defined( HB_OS_LINUX ) && \
-         ! defined( HB_USE_BSDLOCKS )
+#  elif defined(HB_OS_LINUX) && \
+         ! defined(HB_USE_BSDLOCKS)
       /* default usage of BSD locks in *BSD systems for emulating
        * MS-DOS/Windows DENY_* flags has been disabled because tests
        * on FreeBSD 6.2 and macOS shows that this implementation
@@ -285,7 +285,7 @@ typedef struct
    HB_FATTR    attr;
    HB_FOFFSET  size;
 
-#if defined( _HB_FFIND_INTERNAL_ )
+#if defined(_HB_FFIND_INTERNAL_)
    /* Private */
    const char * pszFileMask;
    HB_FATTR     attrmask;
@@ -322,7 +322,7 @@ extern HB_EXPORT char *     hb_fsAttrDecode( HB_FATTR ulAttr, char * szAttr );
 
 extern HB_EXPORT HB_BOOL      hb_fsMaxFilesError( void );
 extern HB_EXPORT const char * hb_fsNameConv( const char * pszFileName, char ** pszFree );
-#if defined( HB_OS_WIN )
+#if defined(HB_OS_WIN)
 extern HB_EXPORT HB_WCHAR *   hb_fsNameConvU16( const char * pszFileName );
 #endif
 
@@ -330,7 +330,7 @@ extern HB_EXPORT HB_WCHAR *   hb_fsNameConvU16( const char * pszFileName );
  * (buffers in the future)
  */
 
-#if defined( _HB_FILE_IMPLEMENTATION_ ) || defined( _HB_FILE_INTERNAL_ )
+#if defined(_HB_FILE_IMPLEMENTATION_) || defined(_HB_FILE_INTERNAL_)
 
 #  define HB_FILE_TYPE_MAX    128
 

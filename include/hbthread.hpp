@@ -49,30 +49,30 @@
 #include "hbapi.hpp"
 #include "hbset.hpp"
 
-#if defined( HB_TASK_THREAD )
+#if defined(HB_TASK_THREAD)
    /* Harbour tasks explicitly requested */
-#elif defined( HB_OS_MINIX )
+#elif defined(HB_OS_MINIX)
 #  define HB_TASK_THREAD
-#elif defined( HB_OS_LINUX ) || defined( HB_OS_DARWIN ) || \
-      defined( HB_OS_SUNOS ) || defined( HB_OS_HPUX ) || \
-      defined( HB_OS_BSD ) || defined( HB_OS_BEOS ) || \
-      defined( HB_OS_QNX ) || defined( HB_OS_VXWORKS ) || \
-      defined( HB_OS_CYGWIN ) || \
-      defined( HB_OS_AIX )
+#elif defined(HB_OS_LINUX) || defined(HB_OS_DARWIN) || \
+      defined(HB_OS_SUNOS) || defined(HB_OS_HPUX) || \
+      defined(HB_OS_BSD) || defined(HB_OS_BEOS) || \
+      defined(HB_OS_QNX) || defined(HB_OS_VXWORKS) || \
+      defined(HB_OS_CYGWIN) || \
+      defined(HB_OS_AIX)
 #  include <pthread.h>
 #  define HB_PTHREAD_API
-#  if defined( HB_OS_VXWORKS )
+#  if defined(HB_OS_VXWORKS)
 #     /* Avoids compiler warnings in mutex initialization. MT still doesn't work though. */
 #     define HB_CRITICAL_NEED_INIT
 #  endif
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 #  include <windows.h>
 #  include <process.h>
 #endif
 
 HB_EXTERN_BEGIN
 
-#if defined( HB_TASK_THREAD )
+#if defined(HB_TASK_THREAD)
 
 #  include "hbtask.hpp"
 
@@ -113,7 +113,7 @@ HB_EXTERN_BEGIN
 #  define HB_COND_WAIT(c,m)         hb_taskWait( (c), (m), HB_TASK_INFINITE_WAIT )
 #  define HB_COND_TIMEDWAIT(c,m,n)  hb_taskWait( (c), (m), (n) )
 
-#elif defined( HB_PTHREAD_API )
+#elif defined(HB_PTHREAD_API)
 
    typedef HB_MAXINT       HB_THREAD_NO;
    typedef pthread_t       HB_THREAD_ID;
@@ -140,42 +140,42 @@ HB_EXTERN_BEGIN
 #  define HB_COND_OS_SUPPORT        /* OS support for conditional variables */
 #  undef  HB_COND_HARBOUR_SUPPORT
 
-#  if defined( PTHREAD_MUTEX_INITIALIZER ) && ! defined( HB_CRITICAL_NEED_INIT )
+#  if defined(PTHREAD_MUTEX_INITIALIZER) && ! defined(HB_CRITICAL_NEED_INIT)
       typedef pthread_mutex_t          HB_CRITICAL_T;
 #     define HB_CRITICAL_NEW( name )   HB_CRITICAL_T name = PTHREAD_MUTEX_INITIALIZER
 #     define HB_CRITICAL_GET(v)        ( v )
 #  else
       /* platform does not support static mutex initialization */
-#     if ! defined( HB_CRITICAL_NEED_INIT )
+#     if ! defined(HB_CRITICAL_NEED_INIT)
 #        define HB_CRITICAL_NEED_INIT
 #     endif
 #     define HB_CRITICAL_GET(v)        ( &( (v)->critical.value ) )
 #  endif
 
-#  if defined( PTHREAD_COND_INITIALIZER ) && ! defined( HB_COND_NEED_INIT )
+#  if defined(PTHREAD_COND_INITIALIZER) && ! defined(HB_COND_NEED_INIT)
       typedef pthread_cond_t           HB_COND_T;
 #     define HB_COND_NEW( name )       HB_COND_T name = PTHREAD_COND_INITIALIZER
 #     define HB_COND_GET(v)            ( v )
 #  else
       /* platform does not support static condition var initialization */
-#     if ! defined( HB_COND_NEED_INIT )
+#     if ! defined(HB_COND_NEED_INIT)
 #        define HB_COND_NEED_INIT
 #     endif
 #     define HB_COND_GET(v)            ( &( (v)->cond.value ) )
 #  endif
 
-#elif defined( HB_OS_WIN )
+#elif defined(HB_OS_WIN)
 
    typedef HB_MAXINT          HB_THREAD_NO;
    typedef HANDLE             HB_THREAD_HANDLE;
    typedef CRITICAL_SECTION   HB_RAWCRITICAL_T;
    typedef HANDLE             HB_OSCOND_T;
 
-#  if ( defined( _MSC_VER ) && ( _MSC_VER <= 1500 ) )
+#  if ( defined(_MSC_VER) && ( _MSC_VER <= 1500 ) )
 #     define HB_THREAD_RAWWINAPI
 #  endif
 
-#  if defined( HB_THREAD_RAWWINAPI )
+#  if defined(HB_THREAD_RAWWINAPI)
       typedef DWORD                       HB_THREAD_ID;
 #     define HB_THREAD_STARTFUNC( func )  DWORD WINAPI func( void * Cargo )
 #     define HB_THREAD_END                ExitThread( 0 ); return 0;
@@ -227,7 +227,7 @@ HB_EXTERN_BEGIN
 
 #endif
 
-#if defined( HB_COND_HARBOUR_SUPPORT )
+#if defined(HB_COND_HARBOUR_SUPPORT)
 
    typedef struct _HB_WAIT_LIST
    {
@@ -265,7 +265,7 @@ HB_EXTERN_BEGIN
 #endif // HB_CRITICAL_NEED_INIT
 
 #ifdef HB_COND_NEED_INIT
-#  if defined( HB_COND_OS_SUPPORT )
+#  if defined(HB_COND_OS_SUPPORT)
       typedef struct
       {
          HB_BOOL        fInit;
@@ -343,7 +343,7 @@ extern HB_EXPORT void     hb_threadMutexNotify( PHB_ITEM pItem, PHB_ITEM pNotifi
 extern HB_EXPORT PHB_ITEM hb_threadMutexSubscribe( PHB_ITEM pItem, HB_BOOL fClear );
 extern HB_EXPORT PHB_ITEM hb_threadMutexTimedSubscribe( PHB_ITEM pItem, HB_ULONG ulMilliSec, HB_BOOL fClear );
 
-#if defined( _HB_API_INTERNAL_ )
+#if defined(_HB_API_INTERNAL_)
 
 typedef struct _HB_THREADSTATE
 {
@@ -367,12 +367,12 @@ typedef struct _HB_THREADSTATE
    HB_THREAD_HANDLE  th_h;
    struct _HB_THREADSTATE * pPrev;
    struct _HB_THREADSTATE * pNext;
-#if defined( HB_COND_HARBOUR_SUPPORT )
+#if defined(HB_COND_HARBOUR_SUPPORT)
    HB_WAIT_LIST   pWaitList;
 #endif
 } HB_THREADSTATE, * PHB_THREADSTATE;
 
-#if defined( HB_MT_VM )
+#if defined(HB_MT_VM)
 
 extern void hb_threadInit( void );
 extern void hb_threadExit( void );
@@ -386,28 +386,28 @@ extern void    hb_threadMutexUnsubscribeAll( void );
 extern void    hb_threadMutexSyncSignal( PHB_ITEM pItemMtx );
 extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, PHB_ITEM pItemSync );
 
-#if defined( HB_NO_TLS ) || defined( HB_TASK_THREAD )
+#if defined(HB_NO_TLS) || defined(HB_TASK_THREAD)
 #  undef HB_USE_TLS
-#elif ! defined( HB_USE_TLS )
+#elif ! defined(HB_USE_TLS)
    /* enable native compiler TLS support by default for this compilers
     * which are known that it will work correctly
     */
-#  if ( defined( _MSC_VER ) && ( _MSC_VER > 1500 ) )
+#  if ( defined(_MSC_VER) && ( _MSC_VER > 1500 ) )
 #     define HB_USE_TLS
-#  elif defined( __GNUC__ ) && __GNUC__ >= 3 && \
-        defined( __GLIBC__ ) && defined( __GLIBC_MINOR__ ) && \
+#  elif defined(__GNUC__) && __GNUC__ >= 3 && \
+        defined(__GLIBC__) && defined(__GLIBC_MINOR__) && \
         ( __GLIBC__ > 2 || ( __GLIBC__ == 2 && __GLIBC_MINOR__ >= 6 ) ) && \
-        defined( HB_OS_LINUX ) && \
-        ( defined( __i386__ ) || defined( __x86_64__ ) ) && \
-        ! defined( __OPENCC__ )
+        defined(HB_OS_LINUX) && \
+        ( defined(__i386__) || defined(__x86_64__) ) && \
+        ! defined(__OPENCC__)
 #     define HB_USE_TLS
 #  endif
 #endif
 
 #ifdef HB_USE_TLS
-#  if ( defined( __GNUC__ ) && __GNUC__ >= 3 ) || defined( __BORLANDC__ )
+#  if ( defined(__GNUC__) && __GNUC__ >= 3 ) || defined(__BORLANDC__)
 #     define HB_TLS_ATTR      __thread
-#  elif defined( _MSC_VER )
+#  elif defined(_MSC_VER)
 #     define HB_TLS_ATTR      __declspec( thread )
 #  else
 #     undef HB_USE_TLS
@@ -416,17 +416,17 @@ extern HB_BOOL hb_threadMutexSyncWait( PHB_ITEM pItemMtx, HB_ULONG ulMilliSec, P
 #endif // HB_USE_TLS
 
 #ifndef HB_USE_TLS
-#  if defined( HB_TASK_THREAD )
+#  if defined(HB_TASK_THREAD)
 #     define HB_TLS_KEY       void *
 #     define hb_tls_init(k)   HB_SYMBOL_UNUSED( k )
 #     define hb_tls_set(k,v)  hb_taskSetData( ( void * ) (v) )
 #     define hb_tls_get(k)    hb_taskGetData()
-#  elif defined( HB_PTHREAD_API )
+#  elif defined(HB_PTHREAD_API)
 #     define HB_TLS_KEY       pthread_key_t
 #     define hb_tls_init(k)   pthread_key_create( &k, NULL )
 #     define hb_tls_set(k,v)  pthread_setspecific( k, ( void * ) (v) )
 #     define hb_tls_get(k)    pthread_getspecific( k )
-#  elif defined( HB_OS_WIN )
+#  elif defined(HB_OS_WIN)
 #     define HB_TLS_KEY       DWORD
 #     define hb_tls_init(k)   do { k = TlsAlloc(); } while( 0 )
 #     define hb_tls_set(k,v)  TlsSetValue( k, ( void * ) (v) )

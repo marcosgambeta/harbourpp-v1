@@ -59,7 +59,7 @@ HB_EXTERN_BEGIN
 
 #define HB_ZNET_SOCK_ERROR_BASE   100
 
-#if defined( _HB_ZNET_INTERNAL_ )
+#if defined(_HB_ZNET_INTERNAL_)
    struct _HB_ZNETSTREAM;
    typedef struct _HB_ZNETSTREAM * PHB_ZNETSTREAM;
 #else

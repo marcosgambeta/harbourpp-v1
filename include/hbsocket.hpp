@@ -51,7 +51,7 @@
 
 HB_EXTERN_BEGIN
 
-#if defined( HB_OS_WIN ) && ! defined( HB_OS_UNIX )
+#if defined(HB_OS_WIN) && ! defined(HB_OS_UNIX)
    typedef HB_PTRUINT   HB_SOCKET;
 #else
    typedef int          HB_SOCKET;
@@ -127,7 +127,7 @@ extern HB_EXPORT void      hb_socketItemClear( PHB_ITEM pItem );
 struct _HB_SOCKEX;
 typedef struct _HB_SOCKEX * PHB_SOCKEX;
 
-#if defined( _HB_SOCKEX_IMPLEMENTATION_ )
+#if defined(_HB_SOCKEX_IMPLEMENTATION_)
 
 typedef struct
 {

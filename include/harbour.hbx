@@ -30,11 +30,11 @@
 #ifndef __HBEXTERN_CH__HARBOUR__
 #define __HBEXTERN_CH__HARBOUR__
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__HARBOUR__ANNOUNCE )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__HARBOUR__ANNOUNCE)
    ANNOUNCE __HBEXTERN__HARBOUR__
 #endif
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__HARBOUR__REQUEST )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__HARBOUR__REQUEST)
    #command DYNAMIC <fncs,...> => EXTERNAL <fncs>
 #endif
 
@@ -1626,7 +1626,7 @@ DYNAMIC __XSaveGetChar
 DYNAMIC __XSaveGetColor
 DYNAMIC __XSaveScreen
 
-#if defined( __HBEXTREQ__ ) .OR. defined( __HBEXTERN__HARBOUR__REQUEST )
+#if defined(__HBEXTREQ__) .OR. defined(__HBEXTERN__HARBOUR__REQUEST)
    #uncommand DYNAMIC <fncs,...> => EXTERNAL <fncs>
 #endif
 

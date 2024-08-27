@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 
-#if ! defined( HB_TR_LEVEL_DEBUG )
+#if ! defined(HB_TR_LEVEL_DEBUG)
    #ifndef assert
       #define assert( exp )   ( ( void ) 0 )
    #endif

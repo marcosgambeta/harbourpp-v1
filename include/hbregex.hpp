@@ -48,16 +48,16 @@
 
 #include "hbapi.hpp"
 
-#if defined( _HB_REGEX_INTERNAL_ )
+#if defined(_HB_REGEX_INTERNAL_)
 
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
 #  include <pcre.h>
 #  undef HB_POSIX_REGEX
-#elif defined( HB_OS_UNIX )
+#elif defined(HB_OS_UNIX)
 #  include <sys/types.h>
 #  include <regex.h>
 #  define HB_POSIX_REGEX
-#elif defined( __BORLANDC__ )
+#elif defined(__BORLANDC__)
 #  include <pcreposi.h>
 #  define HB_POSIX_REGEX
 #else
@@ -69,21 +69,21 @@ typedef struct
    HB_BOOL     fFree;
    int         iFlags;
    int         iEFlags;
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
    pcre        * re_pcre;
-#elif defined( HB_POSIX_REGEX )
+#elif defined(HB_POSIX_REGEX)
    regex_t     reg;
 #endif
 } HB_REGEX;
 typedef HB_REGEX * PHB_REGEX;
 
-#if defined( HB_HAS_PCRE )
+#if defined(HB_HAS_PCRE)
    #define HB_REGMATCH              int
    #define HB_REGMATCH_SIZE( n )    ( ( n ) * 3 )
    #define HB_REGMATCH_SO( p, n )   ( p )[ ( n ) * 2 ]
    #define HB_REGMATCH_EO( p, n )   ( p )[ ( n ) * 2 + 1 ]
    #define HB_REGMATCH_UNSET        ( -1 )
-#elif defined( HB_POSIX_REGEX )
+#elif defined(HB_POSIX_REGEX)
    #define HB_REGMATCH              regmatch_t
    #define HB_REGMATCH_SIZE( n )    ( n )
    #define HB_REGMATCH_SO( p, n )   ( p )[ n ].rm_so

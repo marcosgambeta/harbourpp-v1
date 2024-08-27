@@ -46,8 +46,8 @@
 #ifndef HB__IO_H_
 #define HB__IO_H_
 
-#if defined( HB_OS_UNIX ) || \
-    ( defined( __GNUC__ ) && ! defined( __MINGW32__ ) )
+#if defined(HB_OS_UNIX) || \
+    ( defined(__GNUC__) && ! defined(__MINGW32__) )
    #include <unistd.h>
 #else
    #include <io.h>

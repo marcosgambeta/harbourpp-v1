@@ -56,11 +56,11 @@ HB_EXTERN_BEGIN
 #define  HB_EXPR_FUNC( proc )  PHB_EXPR proc( PHB_EXPR pSelf, HB_EXPR_MESSAGE iMessage, HB_COMP_DECL )
 typedef  HB_EXPR_FUNC( ( * PHB_EXPR_FUNC ) );
 
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
 #define hb_comp_ExprTable     hb_macro_ExprTable
 #endif
 
-#if ! defined( HB_COMMON_SUPPORT )
+#if ! defined(HB_COMMON_SUPPORT)
 extern const PHB_EXPR_FUNC hb_comp_ExprTable[ HB_EXPR_COUNT ];
 #define  HB_EXPR_USE( pSelf, iMessage )  \
          hb_comp_ExprTable[ (pSelf)->ExprType ]( (pSelf), (iMessage), HB_COMP_PARAM )

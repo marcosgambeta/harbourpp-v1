@@ -57,21 +57,21 @@
 /* workaround for some missing C99 math macros in SunOS GCC
  * used in C++ mode
  */
-#if ! defined( __C99FEATURES__ ) && defined( __GNUC__ ) && defined( __sun__ )
+#if ! defined(__C99FEATURES__) && defined(__GNUC__) && defined(__sun__)
 #  define __C99FEATURES__
 #endif
 
 #include "hbapi.hpp"
 
 #include <math.h>
-#if defined( __BORLANDC__ ) || defined( _MSC_VER ) || defined( HB_OS_MINIX )
+#if defined(__BORLANDC__) || defined(_MSC_VER) || defined(HB_OS_MINIX)
 #   include <float.h>
-#elif defined( HB_OS_SUNOS )
+#elif defined(HB_OS_SUNOS)
 #   include <ieeefp.h>    /* for finite() */
 #endif
 
 
-#if defined( HB_LONG_DOUBLE_OFF ) && ! defined( __NO_LONGDOUBLE__ )
+#if defined(HB_LONG_DOUBLE_OFF) && ! defined(__NO_LONGDOUBLE__)
 #  define __NO_LONGDOUBLE__
 #endif
 
@@ -81,7 +81,7 @@
 #define _HB_NUM_NINF    4
 
 
-#if defined( __BORLANDC__ ) && 0
+#if defined(__BORLANDC__) && 0
    /* do not use Borland C _fpclass[l]() function.
     * it switches internal logic used for floating point calculation
     * in this compiler reducing the precision to 'float' type.
@@ -99,11 +99,11 @@
  * If it's not available on given platform then it can be replaced by
  * 'value < 0' but in such case -0.0 will be shown as 0.0
  */
-#if defined( _ISOC99_SOURCE ) || defined( _STDC_C99 ) || defined( signbit )
+#if defined(_ISOC99_SOURCE) || defined(_STDC_C99) || defined(signbit)
 
 #  define hb_signbit( d )     signbit( d )
 
-#elif defined( __BORLANDC__ ) && defined( hb_fpclassify )
+#elif defined(__BORLANDC__) && defined(hb_fpclassify)
 
 #  define hb_signbit( d )     ( ( hb_fpclassify( d ) & ( _FPCLASS_NINF | _FPCLASS_NZ ) ) != 0 )
 
@@ -116,8 +116,8 @@
 
 
 
-#if defined( _ISOC99_SOURCE ) || defined( _STDC_C99 ) || \
-    ( defined( isfinite ) && defined( isnan ) )
+#if defined(_ISOC99_SOURCE) || defined(_STDC_C99) || \
+    ( defined(isfinite) && defined(isnan) )
 
    /* use C99 macros */
 #  define hb_isfinite( d )    isfinite( d )
@@ -128,10 +128,10 @@
                                            _HB_NUM_PINF ) ) ); \
                               } while( 0 )
 
-#elif ( defined( __GNUC__ ) || \
-        defined( __SUNPRO_C ) || defined( __SUNPRO_CC ) ) && \
-      ( defined( _BSD_SOURCE ) || defined( _SVID_SOURCE ) || \
-        defined( _XOPEN_SOURCE ) )
+#elif ( defined(__GNUC__) || \
+        defined(__SUNPRO_C) || defined(__SUNPRO_CC) ) && \
+      ( defined(_BSD_SOURCE) || defined(_SVID_SOURCE) || \
+        defined(_XOPEN_SOURCE) )
 
    /* use BSD floating point functions */
 
@@ -142,7 +142,7 @@
                                          ( isinf( d ) < 0 ? _HB_NUM_NINF : \
                                            _HB_NUM_PINF ) ) ); \
                               } while( 0 )
-#  if ! defined( __NO_LONGDOUBLE__ ) && ! defined( HB_OS_SUNOS )
+#  if ! defined(__NO_LONGDOUBLE__) && ! defined(HB_OS_SUNOS)
 #     define HB_NUMTYPEL( v, d ) do { \
                                     v = ( finitel( d ) ? 0 : \
                                           ( isnanl( d ) ? _HB_NUM_NAN : \
@@ -151,12 +151,12 @@
                                  } while( 0 )
 #  endif
 
-#elif defined( __BORLANDC__ ) && defined( __clang__ )
+#elif defined(__BORLANDC__) && defined(__clang__)
 
 #include <cmath>
 
 #  define hb_isfinite( d )       _finite( d )
-#  if defined( hb_fpclassify )
+#  if defined(hb_fpclassify)
 #     define HB_NUMTYPE( v, d )  do { \
                                     int t = hb_fpclassify( d ); \
                                     v = ( ( t & ( _FPCLASS_UNSUP | _FPCLASS_SNAN | _FPCLASS_QNAN ) ) ? _HB_NUM_NAN : \
@@ -169,7 +169,7 @@
                                           ( _isnan( d ) ? _HB_NUM_NAN : \
                                               _HB_NUM_PINF ) ); \
                                  } while( 0 )
-#     if ! defined( __NO_LONGDOUBLE__ )
+#     if ! defined(__NO_LONGDOUBLE__)
 #        define HB_NUMTYPEL( v, d ) do { \
                                        v = ( _finitel( d ) ? 0 : \
                                              ( std::_isnan( d ) ? _HB_NUM_NAN : \
@@ -178,10 +178,10 @@
 #     endif
 #  endif
 
-#elif defined( __BORLANDC__ ) // TODO: deprecated
+#elif defined(__BORLANDC__) // TODO: deprecated
 
 #  define hb_isfinite( d )       _finite( d )
-#  if defined( hb_fpclassify )
+#  if defined(hb_fpclassify)
 #     define HB_NUMTYPE( v, d )  do { \
                                     int t = hb_fpclassify( d ); \
                                     v = ( ( t & ( _FPCLASS_UNSUP | _FPCLASS_SNAN | _FPCLASS_QNAN ) ) ? _HB_NUM_NAN : \
@@ -194,7 +194,7 @@
                                           ( _isnan( d ) ? _HB_NUM_NAN : \
                                               _HB_NUM_PINF ) ); \
                                  } while( 0 )
-#     if ! defined( __NO_LONGDOUBLE__ )
+#     if ! defined(__NO_LONGDOUBLE__)
 #        define HB_NUMTYPEL( v, d ) do { \
                                        v = ( _finitel( d ) ? 0 : \
                                              ( _isnanl( d ) ? _HB_NUM_NAN : \
@@ -206,18 +206,18 @@
 #elif 0 /* TODO: add other C compilers here (check their version number) */
 #else
 
-#  if defined( __MINGW32__ ) || defined( HB_OS_HPUX ) || defined( HB_OS_MINIX )
+#  if defined(__MINGW32__) || defined(HB_OS_HPUX) || defined(HB_OS_MINIX)
 #     define hb_isfinite( d )       isfinite( d )
-#  elif defined( _MSC_VER )
+#  elif defined(_MSC_VER)
 #     define hb_isfinite( d )       _finite( ( double ) d )
-#  elif defined( __BORLANDC__ )
+#  elif defined(__BORLANDC__)
 #     define hb_isfinite( d )       _finite( d )
-#  elif defined( __GNUC__ ) || \
-      defined( HB_OS_SUNOS )
+#  elif defined(__GNUC__) || \
+      defined(HB_OS_SUNOS)
 #     define hb_isfinite( d )       isfinite( d )
 #  endif
 
-#  if defined( hb_isfinite )
+#  if defined(hb_isfinite)
 #     define HB_NUMTYPE( v, d )  do { \
                                     v = hb_isfinite( d ) ? 0 : _HB_NUM_NAN ; \
                                  } while( 0 )
@@ -231,7 +231,7 @@
 
 #endif
 
-#if ! defined( HB_NUMTYPEL )
+#if ! defined(HB_NUMTYPEL)
 #  define HB_NUMTYPEL( v, d ) HB_NUMTYPE( v, d )
 #endif
 

@@ -43,11 +43,11 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-#if defined( HB_LANG_ID )
+#if defined(HB_LANG_ID)
 
 HB_LANG_ANNOUNCE( HB_LANG_ID )
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
 HB_CALL_ON_STARTUP_BEGIN( _hb_lang_Init_ )
    hb_langRegister( &s_lang );
 HB_CALL_ON_STARTUP_END( _hb_lang_Init_ )
@@ -57,9 +57,9 @@ HB_CALL_ON_STARTUP_BEGIN( HB_MACRONAME_JOIN( _hb_lang_Init_, HB_LANG_ID ) )
 HB_CALL_ON_STARTUP_END( HB_MACRONAME_JOIN( _hb_lang_Init_, HB_LANG_ID ) )
 #endif
 
-#if defined( HB_PRAGMA_STARTUP )
+#if defined(HB_PRAGMA_STARTUP)
    #pragma startup _hb_lang_Init_
-#elif defined( HB_DATASEG_STARTUP )
+#elif defined(HB_DATASEG_STARTUP)
    #define HB_DATASEG_BODY    \
             HB_DATASEG_FUNC( HB_MACRONAME_JOIN( _hb_lang_Init_, HB_LANG_ID ) )
    #include "hbiniseg.hpp"

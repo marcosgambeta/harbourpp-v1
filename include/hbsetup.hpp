@@ -134,122 +134,122 @@
       [vszakats]
  */
 
-#if   defined( __alpha__ ) || \
-      defined( __alpha ) || \
-      defined( alpha ) || \
-      defined( _M_ALPHA )
+#if   defined(__alpha__) || \
+      defined(__alpha) || \
+      defined(alpha) || \
+      defined(_M_ALPHA)
    #define HB_CPU_ALPHA
 
-#elif defined( __amd64__ ) || \
-      defined( __amd64 ) || \
-      defined( __AMD64__ ) || \
-      defined( __x86_64__ ) || \
-      defined( __x86_64 ) || \
-      defined( _M_AMD64 ) || \
-      defined( _M_X64 ) || \
-      defined( __MINGW64__ )
+#elif defined(__amd64__) || \
+      defined(__amd64) || \
+      defined(__AMD64__) || \
+      defined(__x86_64__) || \
+      defined(__x86_64) || \
+      defined(_M_AMD64) || \
+      defined(_M_X64) || \
+      defined(__MINGW64__)
    #define HB_CPU_X86_64
 
-#elif defined( __arm64__ ) || \
-      defined( __aarch64__ )
+#elif defined(__arm64__) || \
+      defined(__aarch64__)
    #define HB_CPU_ARM_64
 
-#elif defined( __arm__ ) || \
-      defined( __arm ) || \
-      defined( ARM ) || \
-      defined( _ARM ) || \
-      defined( _M_ARM )
+#elif defined(__arm__) || \
+      defined(__arm) || \
+      defined(ARM) || \
+      defined(_ARM) || \
+      defined(_M_ARM)
    #define HB_CPU_ARM
 
-#elif defined( __hppa__ ) || \
-      defined( __hppa ) || \
-      defined( hppa )
+#elif defined(__hppa__) || \
+      defined(__hppa) || \
+      defined(hppa)
    #define HB_CPU_PARISC
 
-#elif defined( i386 ) || \
-      defined( __i386__ ) || \
-      defined( __i386 ) || \
-      defined( __386__ ) || \
-      defined( _M_IX86 ) || \
-      defined( _M_I86 ) || \
-      defined( M_I86 ) || \
-      defined( __X86__ ) || \
-      defined( _X86_ ) || \
-      defined( __I86__ ) || \
-      defined( __THW_INTEL__ ) || \
-      defined( __INTEL__ )
+#elif defined(i386) || \
+      defined(__i386__) || \
+      defined(__i386) || \
+      defined(__386__) || \
+      defined(_M_IX86) || \
+      defined(_M_I86) || \
+      defined(M_I86) || \
+      defined(__X86__) || \
+      defined(_X86_) || \
+      defined(__I86__) || \
+      defined(__THW_INTEL__) || \
+      defined(__INTEL__)
    #define HB_CPU_X86
 
-#elif defined( __ia64__ ) || \
-      defined( __ia64 ) || \
-      defined( _IA64 ) || \
-      defined( __IA64__ ) || \
-      defined( _M_IA64 )
+#elif defined(__ia64__) || \
+      defined(__ia64) || \
+      defined(_IA64) || \
+      defined(__IA64__) || \
+      defined(_M_IA64)
    #define HB_CPU_IA_64
 
-#elif defined( __m68k__ ) || \
-      defined( M68000 )
+#elif defined(__m68k__) || \
+      defined(M68000)
    #define HB_CPU_M68K
 
-#elif defined( __mips__ ) || \
-      defined( __mips ) || \
-      defined( __MIPS__ ) || \
-      defined( mips ) || \
-      defined( _MIPS ) || \
-      defined( __MIPS__ ) || \
-      defined( _M_MRX000 ) || \
-      defined( _M_MIPS )
+#elif defined(__mips__) || \
+      defined(__mips) || \
+      defined(__MIPS__) || \
+      defined(mips) || \
+      defined(_MIPS) || \
+      defined(__MIPS__) || \
+      defined(_M_MRX000) || \
+      defined(_M_MIPS)
    #define HB_CPU_MIPS
 
-#elif defined( __powerpc64__ ) || \
-      defined( __ppc64__ ) || \
-      defined( _ARCH_PPC64 )
+#elif defined(__powerpc64__) || \
+      defined(__ppc64__) || \
+      defined(_ARCH_PPC64)
    #define HB_CPU_PPC_64
 
-#elif defined( __powerpc__ ) || \
-      defined( __powerpc ) || \
-      defined( __POWERPC__ ) || \
-      defined( __ppc ) || \
-      defined( __ppc__ ) || \
-      defined( __PPC__ ) || \
-      defined( _ARCH_PPC ) || \
-      defined( _M_MPPC ) || \
-      defined( _M_PPC )
+#elif defined(__powerpc__) || \
+      defined(__powerpc) || \
+      defined(__POWERPC__) || \
+      defined(__ppc) || \
+      defined(__ppc__) || \
+      defined(__PPC__) || \
+      defined(_ARCH_PPC) || \
+      defined(_M_MPPC) || \
+      defined(_M_PPC)
    #define HB_CPU_PPC
 
-#elif defined( __THW_RS6000 ) || \
-      defined( _IBMR2 ) || \
-      defined( _POWER ) || \
-      defined( _ARCH_PWR ) || \
-      defined( _ARCH_PWR2 )
+#elif defined(__THW_RS6000) || \
+      defined(_IBMR2) || \
+      defined(_POWER) || \
+      defined(_ARCH_PWR) || \
+      defined(_ARCH_PWR2)
    #define HB_CPU_POWER
 
-#elif defined( __sparc__ ) || \
-      defined( __sparc )
-   #if defined( __arch64__ ) || \
-       defined( __sparcv9 ) || \
-       defined( __sparc_v9__ )
+#elif defined(__sparc__) || \
+      defined(__sparc)
+   #if defined(__arch64__) || \
+       defined(__sparcv9) || \
+       defined(__sparc_v9__)
       #define HB_CPU_SPARC_64
    #else
       #define HB_CPU_SPARC
    #endif
 
-#elif defined( __sh__ ) || \
-      defined( _SH3 ) || \
-      defined( __sh4__ ) || \
-      defined( __SH4__ ) || \
-      defined( _M_SH )
+#elif defined(__sh__) || \
+      defined(_SH3) || \
+      defined(__sh4__) || \
+      defined(__SH4__) || \
+      defined(_M_SH)
    #define HB_CPU_SH
 
-#elif defined( __370__ ) || \
-      defined( __THW_370__ )
+#elif defined(__370__) || \
+      defined(__THW_370__)
    #define HB_CPU_SYS370
 
-#elif defined( __s390__ ) || \
-      defined( __s390x__ )
+#elif defined(__s390__) || \
+      defined(__s390x__)
    #define HB_CPU_SYS390
 
-#elif defined( __SYSC_ZARCH__ )
+#elif defined(__SYSC_ZARCH__)
    #define HB_CPU_ZARCH
 
 #endif
@@ -296,121 +296,121 @@
  */
 
 #ifndef HB_OS_WIN
-   #if defined( WINNT ) || defined( _Windows ) || defined( __NT__ ) || defined( _WIN32 ) || defined( _WINDOWS_ ) || defined( __WINDOWS_386__ ) || defined( __WIN32__ )
+   #if defined(WINNT) || defined(_Windows) || defined(__NT__) || defined(_WIN32) || defined(_WINDOWS_) || defined(__WINDOWS_386__) || defined(__WIN32__)
       #define HB_OS_WIN
    #endif
 #endif
 
 /* Sub-option inside HB_OS_WIN */
 #ifndef HB_OS_WIN_64
-   #if defined( _WIN64 )
+   #if defined(_WIN64)
       #define HB_OS_WIN_64
    #endif
 #endif
 
 #ifndef HB_OS_LINUX
-   #if defined( linux ) || defined( __linux ) || defined( __linux__ ) || defined( __gnu_linux__ )
+   #if defined(linux) || defined(__linux) || defined(__linux__) || defined(__gnu_linux__)
       #define HB_OS_LINUX
    #endif
 #endif
 
 #ifndef HB_OS_SUNOS
-   #if defined( sun ) || defined( __sun ) || defined( __sun__ )
+   #if defined(sun) || defined(__sun) || defined(__sun__)
       #define HB_OS_SUNOS
    #endif
 #endif
 
 #ifndef HB_OS_HPUX
    /* HP cc in ANSI mode defines __hpux. GCC defines __hpux__ */
-   #if defined( __hpux ) || defined( __hpux__ )
+   #if defined(__hpux) || defined(__hpux__)
       #define HB_OS_HPUX
    #endif
 #endif
 
 #ifndef HB_OS_DARWIN
-   #if defined( __APPLE__ ) || defined( __DARWIN__ )
+   #if defined(__APPLE__) || defined(__DARWIN__)
       #define HB_OS_DARWIN
    #endif
 #endif
 
 /* Sub-option inside HB_OS_DARWIN */
 #ifndef HB_OS_IOS /* Experimental */
-   #if defined( HB_OS_DARWIN ) && \
-       ( defined( HB_CPU_ARM ) || defined( __IPHONE_OS_VERSION_MIN_REQUIRED ) )
+   #if defined(HB_OS_DARWIN) && \
+       ( defined(HB_CPU_ARM) || defined(__IPHONE_OS_VERSION_MIN_REQUIRED) )
       #define HB_OS_IOS
    #endif
 #endif
 
 #ifndef HB_OS_BSD
-   #if defined( __FreeBSD__ ) || defined( __NetBSD__ ) || defined( __OpenBSD__ ) || \
-       defined( HB_OS_DARWIN ) || defined( __DragonFly__ )
+   #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || \
+       defined(HB_OS_DARWIN) || defined(__DragonFly__)
       #define HB_OS_BSD
    #endif
 #endif
 
 #ifndef HB_OS_BEOS
-   #if defined( __HAIKU__ ) || defined( __BEOS__ )
+   #if defined(__HAIKU__) || defined(__BEOS__)
       #define HB_OS_BEOS
    #endif
 #endif
 
 #ifndef HB_OS_QNX
-   #if defined( __QNX__ ) || defined( __QNXNTO__ )
+   #if defined(__QNX__) || defined(__QNXNTO__)
       #define HB_OS_QNX
-      #if defined( __QNXNTO__ ) /* FIXME */
+      #if defined(__QNXNTO__) /* FIXME */
          #define HB_OS_QNX_BB10
       #endif
    #endif
 #endif
 
 #ifndef HB_OS_VXWORKS
-   #if defined( __VXWORKS__ ) || defined( __vxworks )
+   #if defined(__VXWORKS__) || defined(__vxworks)
       #define HB_OS_VXWORKS
    #endif
 #endif
 
 #ifndef HB_OS_ANDROID /* Experimental */
-   #if defined( __ANDROID__ )
+   #if defined(__ANDROID__)
       #define HB_OS_ANDROID
    #endif
 #endif
 
 #ifndef HB_OS_CYGWIN
-   #if defined( __CYGWIN__ )
+   #if defined(__CYGWIN__)
       #define HB_OS_CYGWIN
    #endif
 #endif
 
 #ifndef HB_OS_MINIX
-   #if defined( __minix )
+   #if defined(__minix)
       #define HB_OS_MINIX
    #endif
 #endif
 
 #ifndef HB_OS_AIX
-   #if defined( _AIX ) || defined( __aix__ )
+   #if defined(_AIX) || defined(__aix__)
       #define HB_OS_AIX
    #endif
 #endif
 
 #ifndef HB_OS_UNIX
-   #if defined( HB_OS_LINUX ) || \
-       defined( HB_OS_DARWIN ) || \
-       defined( HB_OS_BSD ) || \
-       defined( HB_OS_SUNOS ) || \
-       defined( HB_OS_HPUX ) || \
-       defined( HB_OS_QNX ) || \
-       defined( HB_OS_VXWORKS ) || \
-       defined( HB_OS_BEOS ) || \
-       defined( HB_OS_ANDROID ) || \
-       defined( HB_OS_CYGWIN ) || \
-       defined( HB_OS_MINIX ) || \
-       defined( HB_OS_AIX )
+   #if defined(HB_OS_LINUX) || \
+       defined(HB_OS_DARWIN) || \
+       defined(HB_OS_BSD) || \
+       defined(HB_OS_SUNOS) || \
+       defined(HB_OS_HPUX) || \
+       defined(HB_OS_QNX) || \
+       defined(HB_OS_VXWORKS) || \
+       defined(HB_OS_BEOS) || \
+       defined(HB_OS_ANDROID) || \
+       defined(HB_OS_CYGWIN) || \
+       defined(HB_OS_MINIX) || \
+       defined(HB_OS_AIX)
       #define HB_OS_UNIX
    #endif
 #endif
 
-#if defined( HB_OS_VXWORKS )
+#if defined(HB_OS_VXWORKS)
    #define HB_NO_FNMATCH
    #define HB_USE_SHARELOCKS_OFF
    /* NOTE: Needed to avoid 'implicit bzero() declaration' warnings */
@@ -420,7 +420,7 @@
 /*
  * Operating system specific definitions
  */
-#if defined( HB_OS_UNIX )
+#if defined(HB_OS_UNIX)
    #define HB_OS_PATH_LIST_SEP_CHR      ':'
    #define HB_OS_PATH_DELIM_CHR         '/'
    #define HB_OS_PATH_DELIM_CHR_STRING  "/"
@@ -468,7 +468,7 @@
  * Extern "C" detection
  */
 
-#if defined( __cplusplus ) && ! defined( __IBMCPP__ )
+#if defined(__cplusplus) && ! defined(__IBMCPP__)
    #define HB_EXTERN_C        extern "C"
    #define HB_EXTERN_BEGIN    extern "C" {
    #define HB_EXTERN_END      }
@@ -478,7 +478,7 @@
    #define HB_EXTERN_END
 #endif
 
-#if defined( __GNUC__ )
+#if defined(__GNUC__)
    #define HB_GCC_VER  ( ( ( __GNUC__ - 0 ) * 100 ) + ( __GNUC_MINOR__ - 0 ) )
 #  if HB_GCC_VER >= 406
       #define HB_GCC_HAS_DIAG
@@ -494,7 +494,7 @@
    #define HB_GCC_VER  0
 #endif
 
-#if defined( __GNUC__ ) && ( __GNUC__ - 0 >= 3 )
+#if defined(__GNUC__) && ( __GNUC__ - 0 >= 3 )
 
    #define HB_DEPRECATED __attribute__ (( __deprecated__ ))
 
@@ -513,16 +513,16 @@
    #define HB_NORETURN_ATTR
 #  endif
 #  if ( ( __GNUC__ > 4 ) || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 1 ) ) && \
-      ! defined( __ICC ) && ! defined( __clang__ ) && \
-      ! defined( HB_OS_ANDROID ) && \
-      ! defined( HB_NO_FLATTEN )
+      ! defined(__ICC) && ! defined(__clang__) && \
+      ! defined(HB_OS_ANDROID) && \
+      ! defined(HB_NO_FLATTEN)
    #define HB_FLATTEN_ATTR \
                      __attribute__ (( flatten ))
 #  else
    #define HB_FLATTEN_ATTR
 #  endif
 #  if ( ( __GNUC__ > 4 ) || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 3 ) ) && \
-      ! defined( __ICC ) && ! defined( __OPENCC__ )
+      ! defined(__ICC) && ! defined(__OPENCC__)
    #define HB_ALLOC_SIZE_ATTR( _nParam ) \
                      __attribute__ (( alloc_size (_nParam)))
    #define HB_HOT_ATTR \
@@ -550,20 +550,20 @@
    #define HB_RESTRICT
 #endif
 
-#if defined( __GNUC__ ) || defined( __SUNPRO_C )
+#if defined(__GNUC__) || defined(__SUNPRO_C)
    #define _HB_INLINE_  __inline__
-#elif defined( __BORLANDC__ ) || defined( _MSC_VER )
+#elif defined(__BORLANDC__) || defined(_MSC_VER)
    #define _HB_INLINE_  __inline
 #else /* __cplusplus */
    #define _HB_INLINE_  inline
 #endif
 
-#if defined( __GNUC__ ) && \
+#if defined(__GNUC__) && \
     ( ( __GNUC__ > 3 ) || ( ( __GNUC__ == 3 ) && ( __GNUC_MINOR__ >= 2 ) ) )
    #define HB_FORCEINLINE     __inline__ __attribute__((always_inline))
-#elif ( defined( _MSC_VER ) && ( _MSC_VER >= 1200 ) )
+#elif ( defined(_MSC_VER) && ( _MSC_VER >= 1200 ) )
    #define HB_FORCEINLINE     __forceinline
-#elif defined( FORCEINLINE )
+#elif defined(FORCEINLINE)
    #define HB_FORCEINLINE     FORCEINLINE
 #else
    #define HB_FORCEINLINE     _HB_INLINE_

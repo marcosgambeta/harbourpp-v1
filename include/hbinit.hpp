@@ -57,16 +57,16 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
 /* By default in all C++ builds use static variable initialization as startup
    code with the exception for GCC which new versions show warning about
    defined but not used static variable initialized with this method. */
-#if defined( __cplusplus ) && ! defined( HB_STATIC_STARTUP ) && \
-    ! defined( HB_PRAGMA_STARTUP ) && ! defined( HB_GNUC_STARTUP ) && \
-    ! defined( HB_INITSEG_STARTUP ) && ! defined( HB_DATASEG_STARTUP ) && \
-    ! defined( __GNUC__ )
+#if defined(__cplusplus) && ! defined(HB_STATIC_STARTUP) && \
+    ! defined(HB_PRAGMA_STARTUP) && ! defined(HB_GNUC_STARTUP) && \
+    ! defined(HB_INITSEG_STARTUP) && ! defined(HB_DATASEG_STARTUP) && \
+    ! defined(__GNUC__)
    #define HB_STATIC_STARTUP
 #endif
 
 #define HB_INIT_SYMBOLS_COUNT ( sizeof( symbols_table ) / sizeof( HB_SYMB ) )
 
-#if defined( HB_STRICT_ANSI_C )
+#if defined(HB_STRICT_ANSI_C)
 
    #define HB_INIT_SYMBOLS_BEGIN( func ) \
       static HB_SYMB symbols_table[] = {
@@ -86,9 +86,9 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
    #define HB_CALL_ON_STARTUP_END( func ) \
       }
 
-#elif defined( HB_STATIC_STARTUP )
+#elif defined(HB_STATIC_STARTUP)
 
-   #if defined( HB_PRAGMA_STARTUP ) || defined( HB_DATASEG_STARTUP )
+   #if defined(HB_PRAGMA_STARTUP) || defined(HB_DATASEG_STARTUP)
       #error Wrong macros set for startup code - clean your make/env settings.
    #endif
 
@@ -113,13 +113,13 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
       } \
       static int static_int_##func = func();
 
-#elif defined( HB_INITSEG_STARTUP )
+#elif defined(HB_INITSEG_STARTUP)
 
-   #if defined( HB_PRAGMA_STARTUP ) || defined( HB_DATASEG_STARTUP )
+   #if defined(HB_PRAGMA_STARTUP) || defined(HB_DATASEG_STARTUP)
       #error Wrong macros set for startup code - clean your make/env settings.
    #endif
 
-   #if defined( _M_COFF )
+   #if defined(_M_COFF)
       #define HB_STARTUP_INITSEGMENT   ".init, \"x\""
    #else
       #define HB_STARTUP_INITSEGMENT   ".init"
@@ -158,20 +158,20 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
          return ( void * ) func; \
       }
 
-#elif defined( HB_GNUC_STARTUP ) || \
-      defined( __GNUC__ ) || \
-      defined( __SUNPRO_C ) || defined( __SUNPRO_CC ) || \
-      defined( __DCC__ ) || \
-      defined( __clang__ )
+#elif defined(HB_GNUC_STARTUP) || \
+      defined(__GNUC__) || \
+      defined(__SUNPRO_C) || defined(__SUNPRO_CC) || \
+      defined(__DCC__) || \
+      defined(__clang__)
 
-   #if defined( HB_PRAGMA_STARTUP ) || defined( HB_DATASEG_STARTUP )
+   #if defined(HB_PRAGMA_STARTUP) || defined(HB_DATASEG_STARTUP)
       #error Wrong macros set for startup code - clean your make/env settings.
    #endif
 
    #define HB_INIT_SYMBOLS_BEGIN( func ) \
       static HB_SYMB symbols_table[] = {
 
-   #if defined( __DCC__ )
+   #if defined(__DCC__)
       #define HB_INIT_SYMBOLS_EX_END( func, module, id, vpcode ) \
          }; \
          static PHB_SYMB symbols = symbols_table; \
@@ -200,9 +200,9 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
    #define HB_CALL_ON_STARTUP_END( func ) \
       }
 
-#elif defined( HB_PRAGMA_STARTUP ) || defined( __BORLANDC__ )
+#elif defined(HB_PRAGMA_STARTUP) || defined(__BORLANDC__)
 
-   #if ! defined( HB_PRAGMA_STARTUP )
+   #if ! defined(HB_PRAGMA_STARTUP)
       #define HB_PRAGMA_STARTUP
    #endif
 
@@ -224,7 +224,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
    #define HB_CALL_ON_STARTUP_END( func ) \
       }
 
-#elif defined( _MSC_VER )
+#elif defined(_MSC_VER)
 
    #define HB_DATASEG_STARTUP
 

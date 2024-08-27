@@ -130,12 +130,12 @@ struct _HB_SYMB;
    typedef struct _HB_DYNS
    {
       struct _HB_SYMB * pSymbol; /* pointer to its relative local symbol */
-#  if ! defined( HB_MT_VM )
+#  if ! defined(HB_MT_VM)
       void *    pMemvar;          /* memvar pointer ( publics & privates ) */
       HB_USHORT uiArea;           /* Workarea number */
 #  endif /* ! HB_MT_VM */
       HB_SYMCNT uiSymNum;         /* dynamic symbol number */
-#  if ! defined( HB_NO_PROFILER )
+#  if ! defined(HB_NO_PROFILER)
       HB_ULONG  ulCalls;          /* profiler support */
       HB_ULONG  ulTime;           /* profiler support */
       HB_ULONG  ulRecurse;        /* profiler support */
@@ -155,7 +155,7 @@ struct _HB_SYMB;
 #  undef _HB_STACK_MACROS_
 
 /* This is ugly trick but works without speed overhead */
-#if defined( __cplusplus )
+#if defined(__cplusplus)
 #     define HB_ITEM_TYPERAW( p )   ( * static_cast< HB_TYPE * >( p ) )
 #else
 #     define HB_ITEM_TYPERAW( p )   ( * ( HB_TYPE * ) ( p ) )

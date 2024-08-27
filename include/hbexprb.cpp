@@ -45,7 +45,7 @@
 
 #include "hbcomp.h"
 
-#if ! defined( HB_HASH_USES_ARRAY_INDEXES )
+#if ! defined(HB_HASH_USES_ARRAY_INDEXES)
 #  define HB_HASH_USES_ARRAY_INDEXES
 #endif
 
@@ -119,7 +119,7 @@ static HB_EXPR_FUNC( hb_compExprUseNegate );
 
 /* other helper functions
  */
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
    static void hb_compExprCodeblockPush( PHB_EXPR, HB_COMP_DECL );
 #else
    static HB_BOOL hb_compExprCodeblockPush( PHB_EXPR, int, HB_COMP_DECL );
@@ -385,7 +385,7 @@ static HB_EXPR_FUNC( hb_compExprUseString )
          hb_compErrorLValue( HB_COMP_PARAM, pSelf );
          break;
       case HB_EA_PUSH_PCODE:
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_MACROTEXT )
             HB_GEN_FUNC2( PushString, pSelf->value.asString.string,
                           pSelf->nLength + 1 );
@@ -460,7 +460,7 @@ static HB_EXPR_FUNC( hb_compExprUseCodeblock )
          hb_compErrorLValue( HB_COMP_PARAM, pSelf );
          break;
       case HB_EA_PUSH_PCODE:
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
          hb_compExprCodeblockPush( pSelf, HB_COMP_PARAM );
 #else
          if( pSelf->value.asCodeblock.flags & HB_BLOCK_EXT )
@@ -993,7 +993,7 @@ static HB_EXPR_FUNC( hb_compExprUseIIF )
             HB_EXPR_USE( pExpr, HB_EA_PUSH_POP );
          pExpr = pExpr->pNext;
 
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
          if( HB_PCODE_DATA->nPCodePos == nPosFalse + 3 )
          {
             HB_PCODE_DATA->pCode[ nPosFalse - 1 ] = HB_P_JUMPTRUEFAR;
@@ -1157,7 +1157,7 @@ static HB_EXPR_FUNC( hb_compExprUseArgList )
       case HB_EA_PUSH_PCODE:
          if( pSelf->value.asList.reference )
          {
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
             if( ! HB_PCODE_DATA->fVParams )
 #else
             if( ! HB_COMP_PARAM->functions.pLast->fVParams )
@@ -1290,7 +1290,7 @@ static HB_EXPR_FUNC( hb_compExprUseArrayAt )
           */
          if( pSelf->value.asList.pExprList->ExprType == HB_ET_VARIABLE )
          {
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
             int iScope;
             hb_compVariableFind( HB_COMP_PARAM, pSelf->value.asList.pExprList->value.asSymbol.name, NULL, &iScope );
             if( iScope == HB_VS_UNDECLARED )
@@ -1593,7 +1593,7 @@ static HB_EXPR_FUNC( hb_compExprUseMacro )
                /* simple macro variable expansion: &variable
                 * 'szMacro' is a variable name
                 */
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
                hb_compPushMacroVar( HB_COMP_PARAM, pSelf->value.asMacro.szMacro );
 #else
                HB_GEN_FUNC1( PushVar, pSelf->value.asMacro.szMacro );
@@ -1609,7 +1609,7 @@ static HB_EXPR_FUNC( hb_compExprUseMacro )
                /* Check if macrotext variable does not refer to
                 * local, static or field.
                 */
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
                hb_compPushMacroText( HB_COMP_PARAM,
                                      pSelf->value.asMacro.szMacro,
                                      strlen( pSelf->value.asMacro.szMacro ), HB_TRUE );
@@ -1685,7 +1685,7 @@ static HB_EXPR_FUNC( hb_compExprUseMacro )
                /* simple macro variable expansion: &variable
                 * 'szMacro' is a variable name
                 */
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
                hb_compPushMacroVar( HB_COMP_PARAM, pSelf->value.asMacro.szMacro );
 #else
                HB_GEN_FUNC1( PushVar, pSelf->value.asMacro.szMacro );
@@ -1701,7 +1701,7 @@ static HB_EXPR_FUNC( hb_compExprUseMacro )
                /* Check if macrotext variable does not refer to
                 * local, static or field.
                 */
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
                hb_compPushMacroText( HB_COMP_PARAM,
                                      pSelf->value.asMacro.szMacro,
                                      strlen( pSelf->value.asMacro.szMacro ), HB_TRUE );
@@ -2544,7 +2544,7 @@ static HB_EXPR_FUNC( hb_compExprUseRTVariable )
       case HB_EA_STATEMENT:
          break;
       case HB_EA_DELETE:
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! pSelf->value.asRTVar.szName )
             HB_COMP_EXPR_FREE( pSelf->value.asRTVar.pMacro );
 #endif
@@ -2563,7 +2563,7 @@ static HB_EXPR_FUNC( hb_compExprUseVariable )
       case HB_EA_LVALUE:
          break;
       case HB_EA_PUSH_PCODE:
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
          /* NOTE: When the following syntax is used:
           *    ( any_expr )->&var2
           * then macro compiler is compiling the right side of alias
@@ -2582,7 +2582,7 @@ static HB_EXPR_FUNC( hb_compExprUseVariable )
          break;
 
       case HB_EA_POP_PCODE:
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
          if( HB_MACRO_DATA->Flags & HB_MACRO_GEN_ALIASED )
             HB_GEN_FUNC4( PopAliasedVar, pSelf->value.asSymbol.name, HB_FALSE, NULL, 0 );
          else
@@ -2612,7 +2612,7 @@ static HB_EXPR_FUNC( hb_compExprUseSetGet )
       case HB_EA_REDUCE:
          pSelf->value.asSetGet.pVar = HB_EXPR_USE( pSelf->value.asSetGet.pVar, HB_EA_REDUCE );
          pSelf->value.asSetGet.pExpr = HB_EXPR_USE( pSelf->value.asSetGet.pExpr, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asSetGet.pVar = hb_compExprListStrip( pSelf->value.asSetGet.pVar, HB_COMP_PARAM );
 #endif
@@ -2803,7 +2803,7 @@ static HB_EXPR_FUNC( hb_compExprUsePostInc )
    {
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -2845,7 +2845,7 @@ static HB_EXPR_FUNC( hb_compExprUsePostDec )
    {
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -2889,7 +2889,7 @@ static HB_EXPR_FUNC( hb_compExprUseAssign )
 
          pSelf->value.asOperator.pLeft  = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
          pSelf->value.asOperator.pRight = HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -3008,7 +3008,7 @@ static HB_EXPR_FUNC( hb_compExprUsePlusEq )
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft  = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
          pSelf->value.asOperator.pRight = HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -3052,7 +3052,7 @@ static HB_EXPR_FUNC( hb_compExprUseMinusEq )
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft  = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
          pSelf->value.asOperator.pRight = HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -3096,7 +3096,7 @@ static HB_EXPR_FUNC( hb_compExprUseMultEq )
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft  = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
          pSelf->value.asOperator.pRight = HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -3140,7 +3140,7 @@ static HB_EXPR_FUNC( hb_compExprUseDivEq )
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft  = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
          pSelf->value.asOperator.pRight = HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -3184,7 +3184,7 @@ static HB_EXPR_FUNC( hb_compExprUseModEq )
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft  = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
          pSelf->value.asOperator.pRight = HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -3228,7 +3228,7 @@ static HB_EXPR_FUNC( hb_compExprUseExpEq )
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft  = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
          pSelf->value.asOperator.pRight = HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -3319,7 +3319,7 @@ static HB_EXPR_FUNC( hb_compExprUseOr )
             /* NOTE: This will not generate a runtime error if incompatible
              * data type is used
              */
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
             HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_PUSH_POP );
 #else
             {
@@ -3404,7 +3404,7 @@ static HB_EXPR_FUNC( hb_compExprUseAnd )
             /* NOTE: This will not generate a runtime error if incompatible
              * data type is used
              */
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
             HB_EXPR_USE( pSelf->value.asOperator.pRight, HB_EA_PUSH_POP );
 #else
             {
@@ -4417,7 +4417,7 @@ static HB_EXPR_FUNC( hb_compExprUsePreInc )
    {
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -4461,7 +4461,7 @@ static HB_EXPR_FUNC( hb_compExprUsePreDec )
    {
       case HB_EA_REDUCE:
          pSelf->value.asOperator.pLeft = HB_EXPR_USE( pSelf->value.asOperator.pLeft, HB_EA_REDUCE );
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
          if( ! HB_SUPPORT_HARBOUR )
             pSelf->value.asOperator.pLeft = hb_compExprListStrip( pSelf->value.asOperator.pLeft, HB_COMP_PARAM );
 #endif
@@ -4504,7 +4504,7 @@ static HB_EXPR_FUNC( hb_compExprUsePreDec )
 /* This generates a push pcode for a codeblock (with no macro expression or
    with late evaluation of a macro)
  */
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
 static void hb_compExprCodeblockPush( PHB_EXPR pSelf, HB_COMP_DECL )
 #else
 static HB_BOOL hb_compExprCodeblockPush( PHB_EXPR pSelf, int iEarlyEvalPass, HB_COMP_DECL )
@@ -4515,7 +4515,7 @@ static HB_BOOL hb_compExprCodeblockPush( PHB_EXPR pSelf, int iEarlyEvalPass, HB_
 
    /* Define requested local variables
     */
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
    hb_macroCodeBlockStart( HB_COMP_PARAM );
    HB_PCODE_DATA->pLocals = pSelf->value.asCodeblock.pLocals;
    HB_PCODE_DATA->fVParams =
@@ -4575,7 +4575,7 @@ static HB_BOOL hb_compExprCodeblockPush( PHB_EXPR pSelf, int iEarlyEvalPass, HB_
        * e.g.
        * Eval( {|| 3+5, func()} )
        */
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
       if( pNext )
          HB_EXPR_USE( pExpr, HB_EA_PUSH_POP );
       else
@@ -4589,7 +4589,7 @@ static HB_BOOL hb_compExprCodeblockPush( PHB_EXPR pSelf, int iEarlyEvalPass, HB_
       pPrev = &pExpr->pNext;
       pExpr = pNext;
    }
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
    hb_macroCodeBlockEnd( HB_COMP_PARAM );
 #else
    if( HB_COMP_PARAM->functions.pLast->iEarlyEvalPass == 0 )
@@ -4607,7 +4607,7 @@ static HB_BOOL hb_compExprCodeblockPush( PHB_EXPR pSelf, int iEarlyEvalPass, HB_
 
 /* This generates a push pcode for early evaluation of a macro
  */
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
 static void hb_compExprCodeblockExtPush( PHB_EXPR pSelf, HB_COMP_DECL )
 {
    hb_compGenPCodeN( ( HB_BYTE * ) pSelf->value.asCodeblock.string,
@@ -4918,7 +4918,7 @@ static void hb_compExprPushOperEq( PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL )
 #endif
       else if( pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE )
       {
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
          {
 #else
          int iVar, iScope;
@@ -5072,7 +5072,7 @@ static void hb_compExprUseOperEq( PHB_EXPR pSelf, HB_BYTE bOpEq, HB_COMP_DECL )
 #endif
       else if( pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE )
       {
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
          {
 #else
          int iVar, iScope;
@@ -5183,7 +5183,7 @@ static void hb_compExprPushPreOp( PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL )
          return;
       }
 #endif
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
       else if( pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE )
       {
          int iVar, iScope;
@@ -5298,7 +5298,7 @@ static void hb_compExprPushPostOp( PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL )
          return;
       }
 #endif
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
       else if( pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE )
       {
          int iVar, iScope;
@@ -5398,7 +5398,7 @@ static void hb_compExprUsePreOp( PHB_EXPR pSelf, HB_BYTE bOper, HB_COMP_DECL )
          return;
       }
 #endif
-#if ! defined( HB_MACRO_SUPPORT )
+#if ! defined(HB_MACRO_SUPPORT)
       else if( pSelf->value.asOperator.pLeft->ExprType == HB_ET_VARIABLE )
       {
          int iVar, iScope;
@@ -5529,7 +5529,7 @@ static PHB_EXPR hb_compExprReduceAliasString( PHB_EXPR pExpr, PHB_EXPR pAlias, H
          }
          if( nLen == 0 )
          {
-#if defined( HB_MACRO_SUPPORT )
+#if defined(HB_MACRO_SUPPORT)
             if( fLower )
                szAlias = hb_macroIdentNew( HB_COMP_PARAM, hb_strupr( hb_strdup( szAlias ) ) );
             else if( pAlias->value.asString.dealloc )

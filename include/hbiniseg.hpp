@@ -45,9 +45,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-#if defined( HB_DATASEG_STARTUP )
+#if defined(HB_DATASEG_STARTUP)
 
-   #if defined( _MSC_VER ) && defined( HB_OS_WIN_64 )
+   #if defined(_MSC_VER) && defined(HB_OS_WIN_64)
       #pragma section( HB_STARTUP_SEGMENT, long, read )
    #endif
 

@@ -54,7 +54,7 @@ int WINAPI WinMain( HINSTANCE hInstance,      /* handle to current instance */
 {
    int iErrorCode;
 
-#if defined( HB_VM_STARTUP )
+#if defined(HB_VM_STARTUP)
 
    HB_SYMBOL_UNUSED( lpCmdLine );
 
