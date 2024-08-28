@@ -63,6 +63,13 @@
 
 #include "gtwgu.hpp"
 
+// Note for Harbour++ v2: use only std::mutex
+#if defined(HB_USE_CPP_MUTEX)
+#include <iostream>
+#include <thread>
+#include <mutex>
+#endif
+
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;
 #define HB_GTSUPER (&SuperTable)
@@ -70,9 +77,15 @@ static HB_GT_FUNCS SuperTable;
 
 #define HB_GTWVT_GET(p) static_cast<PHB_GTWVT>(HB_GTLOCAL(p))
 
+#if defined(HB_USE_CPP_MUTEX)
+std::mutex wvgMtx;
+#define HB_WVT_LOCK() wvgMtx.lock()
+#define HB_WVT_UNLOCK() wvgMtx.unlock()
+#else
 static HB_CRITICAL_NEW(s_wvtMtx);
 #define HB_WVT_LOCK() hb_threadEnterCriticalSection(&s_wvtMtx)
 #define HB_WVT_UNLOCK() hb_threadLeaveCriticalSection(&s_wvtMtx)
+#endif
 
 static PHB_GTWVT s_wvtWindows[WVT_MAX_WINDOWS];
 static int s_wvtCount = 0;
