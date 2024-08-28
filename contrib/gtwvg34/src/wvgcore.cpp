@@ -1,19 +1,18 @@
-/*
- * Copyright 2007-2012 Pritpal Bedi <bedipritpal@hotmail.com>
- * Based on:
- *
- * Video subsystem for Windows using GUI windows instead of Console
- *     Copyright 2003 Peter Rees <peter@rees.co.nz>
- *                    Rees Software & Systems Ltd
- * based on
- *   Bcc ConIO Video subsystem by
- *     Copyright 2002 Marek Paliwoda <paliwoda@inteia.pl>
- *     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
- *   Video subsystem for Windows compilers
- *     Copyright 1999-2000 Paul Tucker <ptucker@sympatico.ca>
- *     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
- *
- */
+//
+// Copyright 2007-2012 Pritpal Bedi <bedipritpal@hotmail.com>
+// Based on:
+//
+// Video subsystem for Windows using GUI windows instead of Console
+//     Copyright 2003 Peter Rees <peter@rees.co.nz>
+//                    Rees Software & Systems Ltd
+// based on
+//   Bcc ConIO Video subsystem by
+//     Copyright 2002 Marek Paliwoda <paliwoda@inteia.pl>
+//     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
+//   Video subsystem for Windows compilers
+//     Copyright 1999-2000 Paul Tucker <ptucker@sympatico.ca>
+//     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

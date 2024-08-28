@@ -1,9 +1,8 @@
-/*
- * Routines to manage Wvt*Classes Gui Painting
- *
- * Copyright 2004 Pritpal Bedi <bedipritpal@hotmail.com>
- *
- */
+//
+// Routines to manage Wvt*Classes Gui Painting
+//
+// Copyright 2004 Pritpal Bedi <bedipritpal@hotmail.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
