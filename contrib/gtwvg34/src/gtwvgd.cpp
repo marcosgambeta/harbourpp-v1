@@ -3099,7 +3099,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bFullScreen);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      if (hb_itemGetL(pInfo->pNewVal) != pWVT->bFullScreen)
+      if (static_cast<bool>(hb_itemGetL(pInfo->pNewVal)) != pWVT->bFullScreen)
       {
         if (pWVT->hWnd)
         {
