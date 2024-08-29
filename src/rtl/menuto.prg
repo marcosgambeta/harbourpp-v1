@@ -1,9 +1,8 @@
-/*
- * PROMPT/MENU TO commands
- *
- * Released to Public Domain by Phil Barnett <philb@iag.net>
- *
- */
+//
+// PROMPT/MENU TO commands
+//
+// Released to Public Domain by Phil Barnett <philb@iag.net>
+//
 
 /* NOTE: Recursive use is supported. */
 

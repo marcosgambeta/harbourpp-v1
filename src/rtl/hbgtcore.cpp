@@ -1,15 +1,14 @@
-/*
- * Harbour Graphic Terminal low-level code
- *
- * Copyright 2006 Przemyslaw Czerpak < druzus /at/ priv.onet.pl >
- *
- * part of the code in hb_gt_def_* functions is based on the code
- * from old hbapi.c copyrighted by:
- * Copyright 1999 Bil Simser <bsimser@home.com>
- * Copyright 1999 Paul Tucker <ptucker@sympatico.ca>
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Harbour Graphic Terminal low-level code
+//
+// Copyright 2006 Przemyslaw Czerpak < druzus /at/ priv.onet.pl >
+//
+// part of the code in hb_gt_def_* functions is based on the code
+// from old hbapi.c copyrighted by:
+// Copyright 1999 Bil Simser <bsimser@home.com>
+// Copyright 1999 Paul Tucker <ptucker@sympatico.ca>
+// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,9 +1,8 @@
-/*
- * Legacy language module definitions (to make old code happy)
- *
- * Copyright 2012 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Legacy language module definitions (to make old code happy)
+//
+// Copyright 2012 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

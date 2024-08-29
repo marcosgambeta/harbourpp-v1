@@ -1,14 +1,13 @@
-/*
- * WARNING: Outdated, insecure algorithm.
- *
- * Harbour MD5 Support
- *
- * Copyright 2004 Dmitry V. Korzhov <dk@april26.spb.ru>
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *    updated for current Harbour code, other then x86@32 machines,
- *    files and buffers longer then 2^32 and some fixes, HMAC-MD5
- *
- */
+//
+// WARNING: Outdated, insecure algorithm.
+//
+// Harbour MD5 Support
+//
+// Copyright 2004 Dmitry V. Korzhov <dk@april26.spb.ru>
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//    updated for current Harbour code, other then x86@32 machines,
+//    files and buffers longer then 2^32 and some fixes, HMAC-MD5
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

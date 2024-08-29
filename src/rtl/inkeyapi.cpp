@@ -1,10 +1,9 @@
-/*
- * Inkey GT API
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 2002 Walter Negro <anegro@overnet.com.ar> (hb_inkeySetLast())
- *
- */
+//
+// Inkey GT API
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 2002 Walter Negro <anegro@overnet.com.ar> (hb_inkeySetLast())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,9 +1,8 @@
-/*
- * memo line functions: MemoLine(), MLCount(), MLPos(), MLCToPos(), MPosToLC()
- *
- * Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// memo line functions: MemoLine(), MLCount(), MLPos(), MLCToPos(), MPosToLC()
+//
+// Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

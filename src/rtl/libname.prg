@@ -1,9 +1,8 @@
-/*
- * hb_libName()
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// hb_libName()
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

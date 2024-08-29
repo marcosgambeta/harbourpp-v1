@@ -1,10 +1,9 @@
-/*
- * NetName() function
- *
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2001 Luiz Rafael Culik <culik@sl.conex.net> (Support for DJGPP/GCC/OS2 for NetName())
- *
- */
+//
+// NetName() function
+//
+// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2001 Luiz Rafael Culik <culik@sl.conex.net> (Support for DJGPP/GCC/OS2 for NetName())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

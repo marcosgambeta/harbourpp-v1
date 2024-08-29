@@ -1,9 +1,8 @@
-/*
- * hb_FEof()
- *
- * Copyright 2000 David G. Holm <dholm@jsd-llc.com>
- *
- */
+//
+// hb_FEof()
+//
+// Copyright 2000 David G. Holm <dholm@jsd-llc.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

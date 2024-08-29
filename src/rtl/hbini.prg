@@ -1,9 +1,8 @@
-/*
- * Handling .ini files
- *
- * Copyright 2002 Giancarlo Niccolai <gian@niccolai.ws>
- *
- */
+//
+// Handling .ini files
+//
+// Copyright 2002 Giancarlo Niccolai <gian@niccolai.ws>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
