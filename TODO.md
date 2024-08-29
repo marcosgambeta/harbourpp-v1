@@ -47,6 +47,11 @@
   Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
   Deprecate HB_AT, join AT and HB_AT and maintain HB_AT using HB_FUNC_TRANSLATE.  
 
+## src/rtl/rat.cpp
+
+  Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
+  Deprecate HB_RAT, join RAT and HB_RAT and maintain HB_RAT using HB_FUNC_TRANSLATE.  
+
 ## contrib
 
   Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
