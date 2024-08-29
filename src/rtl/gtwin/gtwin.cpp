@@ -1,25 +1,24 @@
-/*
- * Video subsystem for Windows compilers ver.2
- * Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
- *
- * based on
- *   Bcc ConIO Video subsystem by
- *     Copyright 2002 Marek Paliwoda <paliwoda@inteia.pl>
- *     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
- *   Video subsystem for Windows compilers
- *     Copyright 1999-2000 Paul Tucker <ptucker@sympatico.ca>
- *     (with 2004 work on Readkey)
- *
- * Copyright 1999-2010 Viktor Szakats (vszakats.net/harbour)
- *    hb_gt_win_CtrlHandler()
- *    hb_gt_win_SetCloseButton()
- *    hb_gt_win_SetPalette*()
- *
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com>
- *    hb_gt_Tone()
- *    hb_gt_ReadKey()
- *
- */
+//
+// Video subsystem for Windows compilers ver.2
+// Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
+//
+// based on
+//   Bcc ConIO Video subsystem by
+//     Copyright 2002 Marek Paliwoda <paliwoda@inteia.pl>
+//     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
+//   Video subsystem for Windows compilers
+//     Copyright 1999-2000 Paul Tucker <ptucker@sympatico.ca>
+//     (with 2004 work on Readkey)
+//
+// Copyright 1999-2010 Viktor Szakats (vszakats.net/harbour)
+//    hb_gt_win_CtrlHandler()
+//    hb_gt_win_SetCloseButton()
+//    hb_gt_win_SetPalette*()
+//
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com>
+//    hb_gt_Tone()
+//    hb_gt_ReadKey()
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

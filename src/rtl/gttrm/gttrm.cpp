@@ -1,21 +1,20 @@
-/*
- * Video subsystem - terminal GT driver
- *
- * Unlike GTSLN and GTCRS this GT driver does not use termcap/terminfo
- * for terminal escape sequences but uses hard coded ones so it
- * can be compiled in any system but supports only terminals which
- * exactly pass given capabilities. To reduce possible problems
- * intentionally only basic capabilities are used. It quite often gives
- * better results then the code using [n]Curses or SLang
- *
- * Now it support the following terminals:
- *   linux, pc-ansi, xterm
- *
- * I used my code from other GT drivers (GTCRS, GTPCA)
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus /at/ priv.onet.pl>
- *
- */
+//
+// Video subsystem - terminal GT driver
+//
+// Unlike GTSLN and GTCRS this GT driver does not use termcap/terminfo
+// for terminal escape sequences but uses hard coded ones so it
+// can be compiled in any system but supports only terminals which
+// exactly pass given capabilities. To reduce possible problems
+// intentionally only basic capabilities are used. It quite often gives
+// better results then the code using [n]Curses or SLang
+//
+// Now it support the following terminals:
+//   linux, pc-ansi, xterm
+//
+// I used my code from other GT drivers (GTCRS, GTPCA)
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus /at/ priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

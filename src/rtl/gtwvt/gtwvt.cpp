@@ -1,30 +1,29 @@
-/*
- * Video subsystem for Windows using GDI windows instead of Console
- *     Copyright 2003 Peter Rees <peter@rees.co.nz>
- *                    Rees Software & Systems Ltd
- * based on
- *   Bcc ConIO Video subsystem by
- *     Copyright 2002 Marek Paliwoda <paliwoda@inteia.pl>
- *     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
- *   Video subsystem for Windows compilers
- *     Copyright 1999-2000 Paul Tucker <ptucker@sympatico.ca>
- *     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
- *
- * Copyright 2006 Przemyslaw Czerpak <druzus /at/ priv.onet.pl>
- *    Adopted to new GT API
- *
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com>
- *    hb_gt_Tone()
- *
- * Copyright 2003-2004 Giancarlo Niccolai <gc@niccolai.ws>
- *         Standard xplatform GT Info system,
- *         Graphical object system and event system.
- *         hb_gtInfo() And GTO_* implementation.
- *
- * Copyright 2004 Mauricio Abre <maurifull@datafull.com>
- *         Cross-GT, multi-platform Graphics API
- *
- */
+//
+// Video subsystem for Windows using GDI windows instead of Console
+//     Copyright 2003 Peter Rees <peter@rees.co.nz>
+//                    Rees Software & Systems Ltd
+// based on
+//   Bcc ConIO Video subsystem by
+//     Copyright 2002 Marek Paliwoda <paliwoda@inteia.pl>
+//     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
+//   Video subsystem for Windows compilers
+//     Copyright 1999-2000 Paul Tucker <ptucker@sympatico.ca>
+//     Copyright 2002 Przemyslaw Czerpak <druzus@polbox.com>
+//
+// Copyright 2006 Przemyslaw Czerpak <druzus /at/ priv.onet.pl>
+//    Adopted to new GT API
+//
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com>
+//    hb_gt_Tone()
+//
+// Copyright 2003-2004 Giancarlo Niccolai <gc@niccolai.ws>
+//         Standard xplatform GT Info system,
+//         Graphical object system and event system.
+//         hb_gtInfo() And GTO_* implementation.
+//
+// Copyright 2004 Mauricio Abre <maurifull@datafull.com>
+//         Cross-GT, multi-platform Graphics API
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

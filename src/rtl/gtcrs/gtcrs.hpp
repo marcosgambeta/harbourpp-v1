@@ -1,9 +1,8 @@
-/*
- * Video subsystem based on ncurses screen library.
- *
- * Copyright 2005 Przemyslaw Czerpak <druzus @polbox.com>
- *
- */
+//
+// Video subsystem based on ncurses screen library.
+//
+// Copyright 2005 Przemyslaw Czerpak <druzus @polbox.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
