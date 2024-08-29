@@ -1,9 +1,8 @@
-/*
- * TBrowse() CA-Cl*pper 5.3 functions
- *
- * Copyright 2007 {list of individual authors and e-mail addresses}
- *
- */
+//
+// TBrowse() CA-Cl*pper 5.3 functions
+//
+// Copyright 2007 {list of individual authors and e-mail addresses}
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

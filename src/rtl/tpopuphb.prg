@@ -1,10 +1,9 @@
-/*
- * POPUP menu class (Harbour extended)
- *
- * Copyright 2011 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2000 Jose Lalin <dezac@corevia.com>
- *
- */
+//
+// POPUP menu class (Harbour extended)
+//
+// Copyright 2011 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2000 Jose Lalin <dezac@corevia.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

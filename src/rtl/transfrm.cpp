@@ -1,11 +1,10 @@
-/*
- * Transform() function
- *
- * Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 1999 Matthew Hamilton <mhamilton@bunge.com.au> (String handling)
- * Copyright 1999 Eddie Runia <eddie@runia.com>
- *
- */
+//
+// Transform() function
+//
+// Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 1999 Matthew Hamilton <mhamilton@bunge.com.au> (String handling)
+// Copyright 1999 Eddie Runia <eddie@runia.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

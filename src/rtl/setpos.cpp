@@ -1,10 +1,9 @@
-/*
- * SetPos(), Row(), Col() functions
- *
- * Copyright 1999 Bil Simser <bsimser@home.com>
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com> (SetPos())
- *
- */
+//
+// SetPos(), Row(), Col() functions
+//
+// Copyright 1999 Bil Simser <bsimser@home.com>
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com> (SetPos())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

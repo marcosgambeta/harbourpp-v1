@@ -1,9 +1,8 @@
-/*
- * hb_Shadow(), hb_ClrArea() functions
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- *
- */
+//
+// hb_Shadow(), hb_ClrArea() functions
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

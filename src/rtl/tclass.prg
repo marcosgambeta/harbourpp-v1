@@ -1,19 +1,18 @@
-/*
- * Base Class for internal handling of class creation
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 2000 J. Lefebvre <jfl@mafact.com> and RA. Cuylen <rac@mafact.com>
- *    Multiple inheritance
- *    Support shared class DATA
- *    scoping (hidden, protected, readOnly)
- *    Use of __cls_param function to allow multiple superclass declaration
- *    Suppress of SetType and SetInit not needed anymore
- *    Delegation and forwarding
- *    Preparing the InitClass class method (not working!)
- * Copyright 1999 Eddie Runia <eddie@runia.com>
- *    Support for inheritance, default DATA values
- *
- */
+//
+// Base Class for internal handling of class creation
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 2000 J. Lefebvre <jfl@mafact.com> and RA. Cuylen <rac@mafact.com>
+//    Multiple inheritance
+//    Support shared class DATA
+//    scoping (hidden, protected, readOnly)
+//    Use of __cls_param function to allow multiple superclass declaration
+//    Suppress of SetType and SetInit not needed anymore
+//    Delegation and forwarding
+//    Preparing the InitClass class method (not working!)
+// Copyright 1999 Eddie Runia <eddie@runia.com>
+//    Support for inheritance, default DATA values
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

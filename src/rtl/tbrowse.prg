@@ -1,11 +1,10 @@
-/*
- * TBrowse Class
- *
- * Copyright 2008 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * This implementation contains code and notes by:
- * Copyright 2008 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// TBrowse Class
+//
+// Copyright 2008 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// This implementation contains code and notes by:
+// Copyright 2008 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

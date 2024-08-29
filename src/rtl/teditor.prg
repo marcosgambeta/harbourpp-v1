@@ -1,11 +1,10 @@
-/*
- * Editor Class (base for MemoEdit(), debugger, etc.)
- *
- * Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
- * Copyright 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *    rewritten whole internal code critical for basic functionality.
- *
- */
+//
+// Editor Class (base for MemoEdit(), debugger, etc.)
+//
+// Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
+// Copyright 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//    rewritten whole internal code critical for basic functionality.
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

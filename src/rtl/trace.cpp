@@ -1,10 +1,9 @@
-/*
- * The Clipper tracing API
- *
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- * Copyright 1999 Gonzalo A. Diethelm <gonzalo.diethelm@iname.com>
- *
- */
+//
+// The Clipper tracing API
+//
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+// Copyright 1999 Gonzalo A. Diethelm <gonzalo.diethelm@iname.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

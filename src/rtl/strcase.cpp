@@ -1,9 +1,8 @@
-/*
- * Uppercase/lowercase string functions
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- *
- */
+//
+// Uppercase/lowercase string functions
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

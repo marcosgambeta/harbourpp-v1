@@ -1,10 +1,9 @@
-/*
- * Get Class
- *
- * Copyright 2007-2008 Viktor Szakats (vszakats.net/harbour)
- * Copyright 1999 Ignacio Ortiz de Zuniga <ignacio@fivetech.com>
- *
- */
+//
+// Get Class
+//
+// Copyright 2007-2008 Viktor Szakats (vszakats.net/harbour)
+// Copyright 1999 Ignacio Ortiz de Zuniga <ignacio@fivetech.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

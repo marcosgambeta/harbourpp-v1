@@ -1,9 +1,8 @@
-/*
- * SaveScreen() buffer helper functions
- *
- * Copyright 2012 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// SaveScreen() buffer helper functions
+//
+// Copyright 2012 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

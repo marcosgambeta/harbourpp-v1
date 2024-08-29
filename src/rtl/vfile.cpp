@@ -1,9 +1,8 @@
-/*
- * PRG level interface to Harbour FILE IO API
- *
- * Copyright 2014 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// PRG level interface to Harbour FILE IO API
+//
+// Copyright 2014 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
