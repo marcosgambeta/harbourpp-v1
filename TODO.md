@@ -4,7 +4,7 @@
 
    Add `std::mutex` under the flag `HB_USE_CPP_MUTEX`.
    Harbour++ v2: remove old code and use only std::mutex.
-   Work in progress.
+   Work in progress (not ready to use).
 
 ## src/vm/dynsym.cpp
 
@@ -41,3 +41,13 @@
   Deprecate HB_ASCAN, join ASCAN and HB_ASCAN and maintain HB_ASCAN using HB_FUNC_TRANSLATE.  
   Deprecate HB_AINS, join AINS and HB_AINS and maintain HB_AINS using HB_FUNC_TRANSLATE.  
   Deprecate HB_ADEL, join ADEL and HB_ADEL and maintain HB_ADEL using HB_FUNC_TRANSLATE.  
+
+## src/rtl/at.cpp
+
+  Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
+  Deprecate HB_AT, join AT and HB_AT and maintain HB_AT using HB_FUNC_TRANSLATE.  
+
+## contrib
+
+  Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
+  Move `contrib` folder to a separate repository.  
