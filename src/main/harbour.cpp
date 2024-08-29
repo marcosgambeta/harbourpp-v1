@@ -1,9 +1,8 @@
-/*
- * Harbour standalone compiler entry point
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Harbour standalone compiler entry point
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

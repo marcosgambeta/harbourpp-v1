@@ -1,9 +1,8 @@
-/*
- * Abs() function
- *
- * Copyright 1999 Matthew Hamilton <mhamilton@bunge.com.au>
- *
- */
+//
+// Abs() function
+//
+// Copyright 1999 Matthew Hamilton <mhamilton@bunge.com.au>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

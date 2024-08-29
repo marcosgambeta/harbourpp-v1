@@ -1,16 +1,15 @@
-/*
- * The Console API
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 1999-2015 Viktor Szakats (vszakats.net/harbour) (hb_conNewLine(), DispOutAt(), hb_StrEOL())
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com>
- *    hb_conOutAlt(), hb_conOutDev(), DevOut(), hb_conDevPos(),
- *    DevPos(), __Eject(),
- *    hb_conOut(), hb_conOutErr(), OutErr(),
- *    hb_conOutStd(), OutStd(), PCol(), PRow(),
- *    SetPRC(), and hb_conInit()
- *
- */
+//
+// The Console API
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 1999-2015 Viktor Szakats (vszakats.net/harbour) (hb_conNewLine(), DispOutAt(), hb_StrEOL())
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com>
+//    hb_conOutAlt(), hb_conOutDev(), DevOut(), hb_conDevPos(),
+//    DevPos(), __Eject(),
+//    hb_conOut(), hb_conOutErr(), OutErr(),
+//    hb_conOutStd(), OutStd(), PCol(), PRow(),
+//    SetPRC(), and hb_conInit()
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

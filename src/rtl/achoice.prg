@@ -1,9 +1,8 @@
-/*
- * AChoice() function
- *
- * Released to Public Domain by Peter Townsend <cephas@tpgi.com.au>
- *
- */
+//
+// AChoice() function
+//
+// Released to Public Domain by Peter Townsend <cephas@tpgi.com.au>
+//
 
 #include "achoice.ch"
 #include "color.ch"

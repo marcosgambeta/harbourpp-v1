@@ -1,11 +1,10 @@
-/*
- * Preprocessor static rules generator.
- * It creates .c file with tables for defines/[x]translates/[x]commands
- * found in given .ch or .prg file
- *
- * Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Preprocessor static rules generator.
+// It creates .c file with tables for defines/[x]translates/[x]commands
+// found in given .ch or .prg file
+//
+// Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

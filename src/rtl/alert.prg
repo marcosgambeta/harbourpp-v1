@@ -1,11 +1,10 @@
-/*
- * Alert(), hb_Alert() functions
- *
- * Released to Public Domain by Vladimir Kazimirchik <v_kazimirchik@yahoo.com>
- * Further modifications 1999-2017 Viktor Szakats (vszakats.net/harbour)
- *    Changes for higher Clipper compatibility, console mode, extensions, __NoNoAlert()
- *
- */
+//
+// Alert(), hb_Alert() functions
+//
+// Released to Public Domain by Vladimir Kazimirchik <v_kazimirchik@yahoo.com>
+// Further modifications 1999-2017 Viktor Szakats (vszakats.net/harbour)
+//    Changes for higher Clipper compatibility, console mode, extensions, __NoNoAlert()
+//
 
 #include "box.ch"
 #include "color.ch"

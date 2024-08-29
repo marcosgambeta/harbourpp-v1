@@ -1,14 +1,13 @@
-/*
- * hb_gt_dos_keyCodeTranslate()
- *       function used by MS-DOS, Windows and OS/2 ports of few GTs which
- *       use getkey()/getch()/_read_kbd()/KbdCharIn() or similar function
- *       for keyboard input
- *
- * Copyright 2006, 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * based on hb_gt_ReadKey() from GTDOS code by:
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com>
- *
- */
+//
+// hb_gt_dos_keyCodeTranslate()
+//       function used by MS-DOS, Windows and OS/2 ports of few GTs which
+//       use getkey()/getch()/_read_kbd()/KbdCharIn() or similar function
+//       for keyboard input
+//
+// Copyright 2006, 2015 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// based on hb_gt_ReadKey() from GTDOS code by:
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

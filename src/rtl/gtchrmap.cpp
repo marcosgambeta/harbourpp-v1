@@ -1,11 +1,10 @@
-/*
- * Video subsystem based on ncurses screen library.
- *
- * Copyright 2003 Przemyslaw Czerpak <druzus@polbox.com>
- * Special thanks to Marek Paliwoda <paliwoda@inetia.pl>
- * author of gtsln from which I borrowed a lot of code and ideas.
- *
- */
+//
+// Video subsystem based on ncurses screen library.
+//
+// Copyright 2003 Przemyslaw Czerpak <druzus@polbox.com>
+// Special thanks to Marek Paliwoda <paliwoda@inetia.pl>
+// author of gtsln from which I borrowed a lot of code and ideas.
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

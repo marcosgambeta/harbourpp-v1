@@ -1,10 +1,9 @@
-/*
- * Functions to access files with shared handles and locks
- * (buffers in the future)
- *
- * Copyright 2008 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Functions to access files with shared handles and locks
+// (buffers in the future)
+//
+// Copyright 2008 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,11 +1,10 @@
-/*
- * hb_AtI() function
- *
- * Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 1999-2009 Viktor Szakats (vszakats.net/harbour)
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- *
- */
+//
+// hb_AtI() function
+//
+// Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 1999-2009 Viktor Szakats (vszakats.net/harbour)
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

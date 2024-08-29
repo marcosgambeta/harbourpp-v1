@@ -1,12 +1,11 @@
-/*
- * hb_base64Decode() function
- *
- * Copyright 2011 Viktor Szakats (vszakats.net/harbour)
- * [ base64_decode_* functions are part of the libb64 project, and has
- *   been placed in the public domain. Author: Chris Venter
- *   For details, see https://libb64.sourceforge.io/ ]
- *
- */
+//
+// hb_base64Decode() function
+//
+// Copyright 2011 Viktor Szakats (vszakats.net/harbour)
+// [ base64_decode_* functions are part of the libb64 project, and has
+//   been placed in the public domain. Author: Chris Venter
+//   For details, see https://libb64.sourceforge.io/ ]
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

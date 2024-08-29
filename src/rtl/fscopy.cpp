@@ -1,9 +1,8 @@
-/*
- * hb_fsCopy(), hb_FCopy() functions
- *
- * Copyright 1991-2008 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// hb_fsCopy(), hb_FCopy() functions
+//
+// Copyright 1991-2008 Viktor Szakats (vszakats.net/harbour)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

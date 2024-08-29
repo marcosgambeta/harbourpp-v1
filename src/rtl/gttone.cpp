@@ -1,16 +1,15 @@
-/*
- * Low-level tone code common to some GT drivers
- *
- * Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- * the body of Tone() function from Windows taken from GTWIN created by
- * the following authors:
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com>
- * Copyright 1999-2006 Paul Tucker <ptucker@sympatico.ca>
- * Copyright 2005 Andi Jahja <andij@aonlippo.co.id>
- * Copyright 2005 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Low-level tone code common to some GT drivers
+//
+// Copyright 2006 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
+// the body of Tone() function from Windows taken from GTWIN created by
+// the following authors:
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com>
+// Copyright 1999-2006 Paul Tucker <ptucker@sympatico.ca>
+// Copyright 2005 Andi Jahja <andij@aonlippo.co.id>
+// Copyright 2005 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

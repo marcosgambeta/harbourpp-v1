@@ -1,9 +1,8 @@
-/*
- * Color functions for Getsys and Menu System
- *
- * Copyright 2003 Walter Negro <anegro@overnet.com.ar>
- *
- */
+//
+// Color functions for Getsys and Menu System
+//
+// Copyright 2003 Walter Negro <anegro@overnet.com.ar>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

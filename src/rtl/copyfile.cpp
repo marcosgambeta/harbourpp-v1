@@ -1,9 +1,8 @@
-/*
- * __CopyFile() function
- *
- * Copyright 1999 Andi Jahja <andij@aonlippo.co.id>
- *
- */
+//
+// __CopyFile() function
+//
+// Copyright 1999 Andi Jahja <andij@aonlippo.co.id>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

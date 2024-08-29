@@ -1,10 +1,9 @@
-/*
- * CMonth(), CDoW(), hb_CDay() functions
- *
- * Copyright 2014 Viktor Szakats (vszakats.net/harbour) (hb_CDay())
- * Copyright 1999 Jose Lalin <dezac@corevia.com>
- *
- */
+//
+// CMonth(), CDoW(), hb_CDay() functions
+//
+// Copyright 2014 Viktor Szakats (vszakats.net/harbour) (hb_CDay())
+// Copyright 1999 Jose Lalin <dezac@corevia.com>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,9 +1,8 @@
-/*
- * Library with all function bindings available for .prg code
- *
- * Copyright 2008 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Library with all function bindings available for .prg code
+//
+// Copyright 2008 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

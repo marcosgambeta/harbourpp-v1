@@ -1,10 +1,9 @@
-/*
- * .prg interface to preprocessor
- * __pp_StdRules() function
- *    intentionally in separate file to not force linking
- *    standard PP rules table when user does not need them
- *
- */
+//
+// .prg interface to preprocessor
+// __pp_StdRules() function
+//    intentionally in separate file to not force linking
+//    standard PP rules table when user does not need them
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
