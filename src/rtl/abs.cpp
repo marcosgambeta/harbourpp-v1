@@ -60,7 +60,7 @@ HB_FUNC(ABS)
 
     if (HB_IS_INTEGER(pNumber))
     {
-      int iNumber = hb_itemGetNI(pNumber);
+      auto iNumber = hb_itemGetNI(pNumber);
 
       if (iNumber >= 0)
       {

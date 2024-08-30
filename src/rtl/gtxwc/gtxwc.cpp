@@ -5917,7 +5917,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
         pInfo->pResult = hb_itemPutNI(pInfo->pResult, wnd->colors[iVal].value);
         if (pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2))
         {
-          int iColor = hb_itemGetNI(pInfo->pNewVal2);
+          auto iColor = hb_itemGetNI(pInfo->pNewVal2);
           if (iColor != wnd->colors[iVal].value)
           {
             wnd->colors[iVal].value = iColor;

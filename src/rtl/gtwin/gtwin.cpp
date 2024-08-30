@@ -2061,7 +2061,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, s_fClosable ? 0 : 2);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      int iVal = hb_itemGetNI(pInfo->pNewVal);
+      auto iVal = hb_itemGetNI(pInfo->pNewVal);
       if (iVal >= 0 && iVal <= 2 && (s_fClosable ? (iVal != 0) : (iVal == 0)))
       {
         s_fClosable = iVal == 0;
@@ -2085,7 +2085,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
   case HB_GTI_PALETTE:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      int iIndex = hb_itemGetNI(pInfo->pNewVal);
+      auto iIndex = hb_itemGetNI(pInfo->pNewVal);
 
       if (iIndex >= 0 && iIndex < 16)
       {

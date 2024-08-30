@@ -4433,7 +4433,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   case HB_GTI_PALETTE:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      int iIndex = hb_itemGetNI(pInfo->pNewVal);
+      auto iIndex = hb_itemGetNI(pInfo->pNewVal);
 
       if (iIndex >= 0 && iIndex < 16)
       {
