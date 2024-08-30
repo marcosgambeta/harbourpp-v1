@@ -137,7 +137,7 @@ PHB_EXPR hb_compExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL )
       HB_TRACE( HB_TR_DEBUG, ( "hb_compExprNewFunCall(%s)", pName->value.asSymbol.name ) );
 #endif
 
-#if ! defined(HB_MACRO_SUPPORT) && defined(HB_USE_ENUM_FUNCTIONS)
+#if !defined(HB_MACRO_SUPPORT) && defined(HB_USE_ENUM_FUNCTIONS)
       {
          int iLen = strlen( pName->value.asSymbol.name );
          if( iLen >= 10 && iLen <= 14 && memcmp( "HB_ENUM", pName->value.asSymbol.name, 7 ) == 0 )
@@ -229,7 +229,7 @@ PHB_EXPR hb_compExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL )
                         hb_compExprNewArgList(
                               pParms->value.asList.pExprList->pNext,
                               HB_COMP_PARAM ) );
-#if ! defined(HB_MACRO_SUPPORT)
+#if !defined(HB_MACRO_SUPPORT)
          /* force reduction */
          pEval->nLength = 1;
 #endif
@@ -478,7 +478,7 @@ PHB_EXPR hb_compExprNewFunCall( PHB_EXPR pName, PHB_EXPR pParms, HB_COMP_DECL )
             pNext = pArg->pNext;
             pArg->pNext = NULL;
             /* replace first argument with a set/get codeblock */
-#if ! defined(HB_MACRO_SUPPORT)
+#if !defined(HB_MACRO_SUPPORT)
             if( pArg->ExprType == HB_ET_VARIABLE &&
                 ! hb_compVariableFind( HB_COMP_PARAM, pArg->value.asSymbol.name, NULL, NULL ) )
             {

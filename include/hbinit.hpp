@@ -57,10 +57,10 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
 /* By default in all C++ builds use static variable initialization as startup
    code with the exception for GCC which new versions show warning about
    defined but not used static variable initialized with this method. */
-#if defined(__cplusplus) && ! defined(HB_STATIC_STARTUP) && \
-    ! defined(HB_PRAGMA_STARTUP) && ! defined(HB_GNUC_STARTUP) && \
-    ! defined(HB_INITSEG_STARTUP) && ! defined(HB_DATASEG_STARTUP) && \
-    ! defined(__GNUC__)
+#if defined(__cplusplus) && !defined(HB_STATIC_STARTUP) && \
+    !defined(HB_PRAGMA_STARTUP) && !defined(HB_GNUC_STARTUP) && \
+    !defined(HB_INITSEG_STARTUP) && !defined(HB_DATASEG_STARTUP) && \
+    !defined(__GNUC__)
    #define HB_STATIC_STARTUP
 #endif
 
@@ -202,7 +202,7 @@ extern HB_EXPORT PHB_SYMB hb_vmProcessSymbols( PHB_SYMB pSymbols, HB_USHORT uiSy
 
 #elif defined(HB_PRAGMA_STARTUP) || defined(__BORLANDC__)
 
-   #if ! defined(HB_PRAGMA_STARTUP)
+   #if !defined(HB_PRAGMA_STARTUP)
       #define HB_PRAGMA_STARTUP
    #endif
 

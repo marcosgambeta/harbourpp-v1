@@ -130,12 +130,12 @@ struct _HB_SYMB;
    typedef struct _HB_DYNS
    {
       struct _HB_SYMB * pSymbol; /* pointer to its relative local symbol */
-#  if ! defined(HB_MT_VM)
+#  if !defined(HB_MT_VM)
       void *    pMemvar;          /* memvar pointer ( publics & privates ) */
       HB_USHORT uiArea;           /* Workarea number */
 #  endif /* ! HB_MT_VM */
       HB_SYMCNT uiSymNum;         /* dynamic symbol number */
-#  if ! defined(HB_NO_PROFILER)
+#  if !defined(HB_NO_PROFILER)
       HB_ULONG  ulCalls;          /* profiler support */
       HB_ULONG  ulTime;           /* profiler support */
       HB_ULONG  ulRecurse;        /* profiler support */

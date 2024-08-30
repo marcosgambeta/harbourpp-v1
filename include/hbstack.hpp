@@ -184,7 +184,7 @@ typedef struct
 #if defined(_HB_STACK_MACROS_)
 #  if defined(HB_MT_VM)
 #     if defined(HB_USE_TLS)
-#        if ! defined(_HB_STACK_LOCAL_MACROS_)
+#        if !defined(_HB_STACK_LOCAL_MACROS_)
 #           if defined(__BORLANDC__)
                extern PHB_STACK HB_TLS_ATTR hb_stack_ptr;
 #           else
@@ -192,11 +192,11 @@ typedef struct
 #           endif
 #        endif
 #     else
-#        if ! defined(_HB_STACK_LOCAL_MACROS_)
+#        if !defined(_HB_STACK_LOCAL_MACROS_)
             extern HB_TLS_KEY hb_stack_key;
 #        endif
 #        if defined(__BORLANDC__) && defined(HB_STACK_PRELOAD) && \
-            ! defined(HB_OS_WIN_64) && \
+            !defined(HB_OS_WIN_64) && \
             defined(HB_ASM_TLS)
 #           if defined(_HB_STACK_LOCAL_MACROS_)
                static HB_TLS_KEY hb_stack_key;
@@ -214,7 +214,7 @@ typedef struct
             }
 #           define hb_stack_ptr_get()    hb_stack_ptr_from_tls()
 #        elif defined(__MINGW32__) && defined(HB_ASM_TLS) && \
-              ! defined(HB_OS_WIN_64) 
+              !defined(HB_OS_WIN_64) 
 #           if defined(_HB_STACK_LOCAL_MACROS_)
                static HB_TLS_KEY hb_stack_key;
 #           endif
@@ -232,11 +232,11 @@ typedef struct
 #           define hb_stack_ptr_get()    hb_stack_ptr_from_tls()
 #           define hb_stack_ptr  ( ( PHB_STACK ) hb_stack_ptr_from_tls() )
 #        endif
-#        if ! defined(hb_stack_ptr)
+#        if !defined(hb_stack_ptr)
 #           define hb_stack_ptr  ( ( PHB_STACK ) hb_tls_get( hb_stack_key ) )
 #        endif
 #     endif
-#     if defined(HB_STACK_PRELOAD) && ! defined(HB_USE_TLS)
+#     if defined(HB_STACK_PRELOAD) && !defined(HB_USE_TLS)
 #        if defined(hb_stack_ptr_get)
 #           define HB_STACK_TLS_RELOAD    _hb_stack_ptr_ = ( PHB_STACK ) hb_stack_ptr_get();
 #           undef hb_stack_ptr
@@ -251,13 +251,13 @@ typedef struct
 #        define hb_stack_ref()      ( hb_stack_ptr )
 #     endif
 #  else
-#     if ! defined(_HB_STACK_LOCAL_MACROS_)
+#     if !defined(_HB_STACK_LOCAL_MACROS_)
          extern HB_STACK hb_stack;
 #     endif
 #     define hb_stack_ref()         ( &hb_stack )
 #  endif
 #endif
-#if ! defined(HB_STACK_TLS_PRELOAD)
+#if !defined(HB_STACK_TLS_PRELOAD)
 #  if defined(HB_STACK_PRELOAD)
 #     define HB_STACK_TLS_PRELOAD
 #     define HB_STACK_TLS_RELOAD

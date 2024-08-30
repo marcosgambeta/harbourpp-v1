@@ -76,7 +76,7 @@ HB_EXTERN_BEGIN
    #define exception _exception
 #endif
 
-#if ! defined(HB_MATH_HANDLER) && \
+#if !defined(HB_MATH_HANDLER) && \
     ( defined(__GNUC__) || defined(HB_OS_UNIX) )
    #define HB_MATH_ERRNO
 #endif

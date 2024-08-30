@@ -85,7 +85,7 @@ HB_EXTERN_BEGIN
 #  if defined(HB_USE_GCCATOMIC_OFF)
 #     undef HB_USE_GCCATOMIC
 #  elif ( __GNUC__ > 4 || ( __GNUC__ == 4 && __GNUC_MINOR__ >= 1 ) ) && \
-        ! defined(__MINGW32CE__) && ! defined(HB_USE_GCCATOMIC)
+        !defined(__MINGW32CE__) && !defined(HB_USE_GCCATOMIC)
 #     define HB_USE_GCCATOMIC
 #  elif defined(HB_OS_WIN) && defined(__clang__)
 #     define HB_USE_GCCATOMIC
@@ -299,7 +299,7 @@ HB_EXTERN_BEGIN
 #if defined(HB_OS_WIN)
 
    /* Atomic operations on memory reference counters */
-#  if ! defined(HB_ATOM_INC) || ! defined(HB_ATOM_DEC)
+#  if !defined(HB_ATOM_INC) || !defined(HB_ATOM_DEC)
 #     undef HB_ATOM_DEC
 #     undef HB_ATOM_INC
 #     undef HB_ATOM_GET
@@ -318,7 +318,7 @@ HB_EXTERN_BEGIN
 #  endif
 
    /* Spin locks */
-#  if ! defined(HB_SPINLOCK_T)
+#  if !defined(HB_SPINLOCK_T)
 #     define HB_SPINLOCK_T          volatile LONG
 #     define HB_SPINLOCK_INIT       0
 #     define HB_SPINLOCK_TRY(l)     (! InterlockedExchange( (LONG*)(l), 1 ))
@@ -328,7 +328,7 @@ HB_EXTERN_BEGIN
 #elif defined(HB_OS_DARWIN)
 
    /* Atomic operations on memory reference counters */
-#  if ! defined(HB_ATOM_INC) || ! defined(HB_ATOM_DEC)
+#  if !defined(HB_ATOM_INC) || !defined(HB_ATOM_DEC)
 #     undef HB_ATOM_DEC
 #     undef HB_ATOM_INC
 #     undef HB_ATOM_GET
@@ -347,7 +347,7 @@ HB_EXTERN_BEGIN
 #  endif
 
    /* Spin locks */
-#  if ! defined(HB_SPINLOCK_T)
+#  if !defined(HB_SPINLOCK_T)
 #     undef HB_SPINLOCK_T
 #     undef HB_SPINLOCK_INIT
 #     undef HB_SPINLOCK_TRY
@@ -363,7 +363,7 @@ HB_EXTERN_BEGIN
 #elif defined(HB_OS_SUNOS)
 
    /* Atomic operations on memory reference counters */
-#  if ! defined(HB_ATOM_INC) || ! defined(HB_ATOM_DEC)
+#  if !defined(HB_ATOM_INC) || !defined(HB_ATOM_DEC)
 #     undef HB_ATOM_DEC
 #     undef HB_ATOM_INC
 #     undef HB_ATOM_GET
@@ -375,7 +375,7 @@ HB_EXTERN_BEGIN
 #  endif
 
    /* Spin locks */
-#  if ! defined(HB_SPINLOCK_T)
+#  if !defined(HB_SPINLOCK_T)
 #     define HB_SPINLOCK_T          volatile uint_t
 #     define HB_SPINLOCK_INIT       0
 #     define HB_SPINLOCK_TRY(l)     ( ! atomic_swap_uint( (l), 1 ) )
@@ -385,7 +385,7 @@ HB_EXTERN_BEGIN
 #endif  /* HB_OS_??? */
 
 #if defined(HB_SPINLOCK_T)
-#  if ! defined(HB_SPINLOCK_ACQUIRE)
+#  if !defined(HB_SPINLOCK_ACQUIRE)
 #     ifdef HB_SPINLOCK_REPEAT
 #        define HB_SPINLOCK_ACQUIRE(l) do { \
                                           if( HB_SPINLOCK_TRY( l ) ) \
@@ -402,7 +402,7 @@ HB_EXTERN_BEGIN
                                        } while(1)
 #     endif
 #  endif
-#  if ! defined(HB_SPINLOCK_R)
+#  if !defined(HB_SPINLOCK_R)
       struct hb_spinlock_r
       {
          HB_SPINLOCK_T  lock;

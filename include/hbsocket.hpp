@@ -51,7 +51,7 @@
 
 HB_EXTERN_BEGIN
 
-#if defined(HB_OS_WIN) && ! defined(HB_OS_UNIX)
+#if defined(HB_OS_WIN) && !defined(HB_OS_UNIX)
    typedef HB_PTRUINT   HB_SOCKET;
 #else
    typedef int          HB_SOCKET;
