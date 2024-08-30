@@ -290,7 +290,7 @@ PHB_ITEM hb_itemDoC(const char *szFunc, HB_ULONG ulPCount, ...)
 
   PHB_ITEM pResult = nullptr;
 
-  if (szFunc)
+  if (szFunc != nullptr)
   {
     auto pDynSym = hb_dynsymFindName(szFunc);
 

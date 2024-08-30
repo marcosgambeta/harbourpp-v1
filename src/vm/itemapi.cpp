@@ -437,7 +437,7 @@ PHB_ITEM hb_itemPutCPtr(PHB_ITEM pItem, char *szText)
   {
     pItem->item.asString.allocated = 0;
     pItem->item.asString.value = const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]);
-    if (szText)
+    if (szText != nullptr)
     {
       hb_xfree(szText);
     }
@@ -579,7 +579,7 @@ HB_BOOL hb_itemFreeC(char *szText)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemFreeC(%s)", szText));
 #endif
 
-  if (szText)
+  if (szText != nullptr)
   {
     hb_xfree(szText);
     return true;

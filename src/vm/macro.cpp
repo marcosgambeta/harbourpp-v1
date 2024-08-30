@@ -349,7 +349,7 @@ static char *hb_macroTextSubst(const char *szString, HB_SIZE *pnStringLen)
          */
         nValLen = nNameLen; /* the length of name */
         szValPtr = hb_memvarGetStrValuePtr(pName, &nValLen);
-        if (szValPtr)
+        if (szValPtr != nullptr)
         {
           if (*pHead == '.')
           {
@@ -735,7 +735,7 @@ char *hb_macroExpandString(const char *szString, HB_SIZE nLength, HB_BOOL *pfNew
 
   char *szResultString;
 
-  if (szString)
+  if (szString != nullptr)
   {
     szResultString = hb_macroTextSubst(szString, &nLength);
   }
@@ -755,7 +755,7 @@ char *hb_macroTextSymbol(const char *szString, HB_SIZE nLength, HB_BOOL *pfNewSt
 
   char *szResult = nullptr;
 
-  if (szString)
+  if (szString != nullptr)
   {
     HB_SIZE nLen = 0;
 
@@ -881,7 +881,7 @@ HB_FUNC(HB_MACROBLOCK)
 {
   auto szMacro = hb_parc(1);
 
-  if (szMacro)
+  if (szMacro != nullptr)
   {
     HB_STACK_TLS_PRELOAD
     hb_macroBlock(szMacro, hb_stackReturnItem());
@@ -964,7 +964,7 @@ HB_FUNC(MEMVARBLOCK)
 {
   auto szName = hb_parc(1);
 
-  if (szName)
+  if (szName != nullptr)
   {
     char szVarName[HB_SYMBOL_NAME_LEN + 1];
 
@@ -991,7 +991,7 @@ HB_FUNC(FIELDBLOCK)
 {
   auto szName = hb_parc(1);
 
-  if (szName)
+  if (szName != nullptr)
   {
     char szFieldName[HB_SYMBOL_NAME_LEN + 1];
 
@@ -1077,7 +1077,7 @@ void hb_macroPushSymbol(PHB_ITEM pItem)
     HB_BOOL fNewBuffer;
 
     char *szString = hb_macroTextSymbol(pItem->item.asString.value, pItem->item.asString.length, &fNewBuffer);
-    if (szString)
+    if (szString != nullptr)
     {
       PHB_DYNS pDynSym = hb_dynsymGetCase(szString);
 
@@ -1577,7 +1577,7 @@ void hb_macroGenPushTimeStamp(long lDate, long lTime, HB_COMP_DECL)
 /* sends a message to an object */
 void hb_macroGenMessage(const char *szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
 {
-  if (szMsgName)
+  if (szMsgName != nullptr)
   {
     HB_BYTE byBuf[sizeof(PHB_DYNS) + 1];
 
@@ -1648,7 +1648,7 @@ void hb_macroGenPopAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, co
 
   if (bPushAliasValue)
   {
-    if (szAlias)
+    if (szAlias != nullptr)
     {
       auto iLen = static_cast<int>(strlen(szAlias));
 
@@ -1737,7 +1737,7 @@ void hb_macroGenPushAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, c
 
   if (bPushAliasValue)
   {
-    if (szAlias)
+    if (szAlias != nullptr)
     {
       /* myalias->var
        * FIELD->var

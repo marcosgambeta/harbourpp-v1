@@ -6723,7 +6723,7 @@ PHB_ITEM hb_vmCompileMacro(const char *szExpr, PHB_ITEM pDest)
   HB_TRACE(HB_TR_DEBUG, ("hb_vmCompileMacro(%s,%p)", szExpr, pDest));
 #endif
 
-  if (szExpr)
+  if (szExpr != nullptr)
   {
     PHB_MACRO pMacro = hb_macroCompile(szExpr);
     if (pMacro)
@@ -8116,7 +8116,7 @@ PHB_SYMB hb_vmFindFuncSym(const char *szFuncName, void *hDynLib)
 {
   static PHB_SYMB pFuncSym = nullptr;
 
-  if (szFuncName)
+  if (szFuncName != nullptr)
   {
     PHB_SYMBOLS pSymbols = s_pSymbols;
 

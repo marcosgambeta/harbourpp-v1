@@ -157,7 +157,7 @@ static char *set_string(PHB_ITEM pItem, char *szOldString)
 
   if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
   {
-    if (szOldString)
+    if (szOldString != nullptr)
     {
       hb_xfree(szOldString);
     }
@@ -341,7 +341,7 @@ static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend
 #endif
     {
       szDevice = is_devicename(file_name);
-      if (szDevice)
+      if (szDevice != nullptr)
       {
         szFileName = hb_strdup(szDevice);
         def_ext = nullptr;

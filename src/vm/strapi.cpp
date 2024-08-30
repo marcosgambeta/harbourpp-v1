@@ -58,7 +58,7 @@ HB_SIZE hb_wstrlen(const HB_WCHAR *szText)
 
   HB_SIZE nLen = 0;
 
-  if (szText)
+  if (szText != nullptr)
   {
     while (szText[nLen])
     {
@@ -77,7 +77,7 @@ HB_SIZE hb_wstrnlen(const HB_WCHAR *szText, HB_SIZE nCount)
 
   HB_SIZE nLen = 0;
 
-  if (szText)
+  if (szText != nullptr)
   {
     while (nCount-- && szText[nLen])
     {

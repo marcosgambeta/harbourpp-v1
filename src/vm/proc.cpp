@@ -223,7 +223,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
 
     PHB_SYMB pSym = pBase->item.asSymbol.value;
 
-    if (szName)
+    if (szName != nullptr)
     {
       szName[0] = '\0';
       if (pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym)
@@ -255,7 +255,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
       *puiLine = pBase->item.asSymbol.stackstate->uiLineNo;
     }
 
-    if (szFile)
+    if (szFile != nullptr)
     {
       if (HB_IS_BLOCK(pSelf) && (pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym))
       {
@@ -268,7 +268,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
 
       const char *szModule = hb_vmFindModuleSymbolName(hb_vmGetRealFuncSym(pSym));
 
-      if (szModule)
+      if (szModule != nullptr)
       {
         hb_strncpy(szFile, szModule, HB_PATH_MAX - 1);
       }
@@ -281,7 +281,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
     return true;
   }
 
-  if (szName)
+  if (szName != nullptr)
   {
     szName[0] = '\0';
   }
@@ -289,7 +289,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
   {
     *puiLine = 0;
   }
-  if (szFile)
+  if (szFile != nullptr)
   {
     szFile[0] = '\0';
   }

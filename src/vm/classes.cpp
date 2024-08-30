@@ -5930,7 +5930,7 @@ HB_FUNC(__OBJSETCLASS)
   {
     auto szClass = hb_parc(2);
 
-    if (szClass)
+    if (szClass != nullptr)
     {
       hb_objSetClass(pObject, szClass, hb_parc(3));
     }

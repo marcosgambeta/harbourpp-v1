@@ -1236,7 +1236,7 @@ HB_FUNC(HB_THREADSTART)
   }
   else
   {
-    if (szFuncName)
+    if (szFuncName != nullptr)
     {
       hb_errRT_BASE_SubstR(EG_NOFUNC, 1001, nullptr, szFuncName, 0);
     }

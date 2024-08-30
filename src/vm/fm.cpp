@@ -550,7 +550,7 @@ void hb_xclean(void)
 void hb_xsetfilename(const char *szValue)
 {
 #ifdef HB_FM_STATISTICS
-  if (szValue)
+  if (szValue != nullptr)
   {
     hb_strncpy(s_szFileName, szValue, sizeof(s_szFileName) - 1);
   }

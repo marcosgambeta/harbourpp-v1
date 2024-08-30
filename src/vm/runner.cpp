@@ -317,7 +317,7 @@ static PHRB_BODY hb_hrbLoad(const char *szHrbBody, HB_SIZE nBodySize, HB_USHORT 
 {
   PHRB_BODY pHrbBody = nullptr;
 
-  if (szHrbBody)
+  if (szHrbBody != nullptr)
   {
     HB_USHORT usBind = (usMode & HB_HRB_BIND_MODEMASK);
 

@@ -239,7 +239,7 @@ HB_FUNC(HB_LIBGETFUNSYM)
 {
   auto szFuncName = hb_parc(2);
 
-  if (szFuncName)
+  if (szFuncName != nullptr)
   {
     void *hDynLib = hb_libHandle(hb_param(1, Harbour::Item::ANY));
 

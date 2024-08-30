@@ -839,7 +839,7 @@ HB_FUNC(__DYNSN2SYM)
   HB_STACK_TLS_PRELOAD
   auto szName = hb_parc(1);
 
-  if (szName)
+  if (szName != nullptr)
   {
     hb_itemPutSymbol(hb_stackReturnItem(), hb_dynsymGet(szName)->pSymbol);
   }
