@@ -294,21 +294,21 @@ void *hb_stackGetTSD(PHB_TSD pTSD)
   {
     if (pTSD->iHandle == 0)
     {
-      #if defined(HB_USE_CPP_MUTEX)
+#if defined(HB_USE_CPP_MUTEX)
       TSD_counter.lock();
-      #else
+#else
       hb_threadEnterCriticalSection(&TSD_counter);
-      #endif
+#endif
       // repeated test protected by mutex to avoid race condition
       if (pTSD->iHandle == 0)
       {
         pTSD->iHandle = ++s_iTSDCounter;
       }
-      #if defined(HB_USE_CPP_MUTEX)
+#if defined(HB_USE_CPP_MUTEX)
       TSD_counter.unlock();
-      #else
+#else
       hb_threadLeaveCriticalSection(&TSD_counter);
-      #endif
+#endif
     }
 
     if (pTSD->iHandle > hb_stack.iTSD)
