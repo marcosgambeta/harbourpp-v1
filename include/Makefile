@@ -66,6 +66,7 @@ C_HEADERS := \
    hbgtcore.h \
    hbgtcore.hpp \
    hbgtreg.h \
+   hbgtreg.hpp \
    hbhash.h \
    hbhash.hpp \
    hbiniseg.h \
@@ -73,11 +74,13 @@ C_HEADERS := \
    hbinit.h \
    hbinit.hpp \
    hbjson.h \
+   hbjson.hpp \
    hbmacro.h \
    hbmacro.hpp \
    hbmath.h \
    hbmath.hpp \
    hbmather.h \
+   hbmather.hpp \
    hbmsgreg.h \
    hbmsgreg.hpp \
    hbpcode.h \
