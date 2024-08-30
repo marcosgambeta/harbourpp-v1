@@ -804,7 +804,8 @@ HB_FUNC(HB_ISFUNCTION) // returns .T. if a symbol has a function/procedure point
 HB_FUNC(__DYNSISFUN) // returns .T. if a symbol has a function/procedure pointer, given its symbol index or name
 {
   HB_STACK_TLS_PRELOAD
-  PHB_DYNS pDynSym = hb_dynsymByItem(hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL | Harbour::Item::NUMERIC));
+  PHB_DYNS pDynSym =
+      hb_dynsymByItem(hb_param(1, Harbour::Item::STRING | Harbour::Item::SYMBOL | Harbour::Item::NUMERIC));
 
   hb_retl(pDynSym && hb_dynsymIsFunction(pDynSym));
 }
