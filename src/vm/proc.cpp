@@ -83,8 +83,8 @@ HB_FUNC(PROCLINE)
 
 #ifdef HB_CLP_UNDOC
 
-/* NOTE: Clipper undocumented function, which always returns an empty
-         string. [vszakats] */
+// NOTE: Clipper undocumented function, which always returns an empty
+//       string. [vszakats]
 
 HB_FUNC(PROCFILE)
 {
@@ -140,8 +140,8 @@ HB_FUNC(PROCFILE)
 
 #endif
 
-/* NOTE: szName size must be an at least:
-         HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 [vszakats] */
+// NOTE: szName size must be an at least:
+//       HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5 [vszakats]
 #define HB_PROCBUF_LEN (HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 4)
 char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
 {
@@ -169,7 +169,7 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
     if (pBase->item.asSymbol.value == &hb_symEval || pBase->item.asSymbol.value->pDynSym == hb_symEval.pDynSym)
     {
       hb_strncat(szName, "(b)", HB_PROCBUF_LEN);
-      /* it is a method name? */
+      // it is a method name?
       if (fMethodName && pBase->item.asSymbol.stackstate->uiClass)
       {
         hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
@@ -194,7 +194,7 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
     }
     else
     {
-      /* it is a method name? */
+      // it is a method name?
       if (pBase->item.asSymbol.stackstate->uiClass)
       {
         hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
@@ -207,11 +207,10 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
   return szName;
 }
 
-/* NOTE: szName size must be an at least:
- *          HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5
- *       szFile size must be an at least:
- *          HB_PATH_MAX
- */
+// NOTE: szName size must be an at least:
+//          HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5
+//       szFile size must be an at least:
+//          HB_PATH_MAX
 HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
 {
   HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel);
@@ -242,7 +241,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
       else
       {
         if (pBase->item.asSymbol.stackstate->uiClass)
-        { /* it is a method name */
+        { // it is a method name
           hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
           hb_strncat(szName, ":", HB_PROCBUF_LEN);
         }

@@ -81,14 +81,14 @@ HB_EXTERN_BEGIN
 
 typedef PHB_FUNC (*HB_PROC_GET)(const char *szFuncName);
 
-/* hb_vmProcessSymbols() */
+// hb_vmProcessSymbols()
 typedef PHB_SYMB (*HB_VM_PROCESS_SYMBOLS)(PHB_SYMB pModuleSymbols, HB_USHORT uiModuleSymbols, const char *szModuleName,
                                           HB_ULONG ulID, HB_USHORT uiPcodeVer);
 static PHB_SYMB s_vmProcessSymbols(PHB_SYMB pSymbols, HB_USHORT uiSymbols, const char *szModuleName, HB_ULONG ulID,
                                    HB_USHORT uiPcodeVer);
 static HB_VM_PROCESS_SYMBOLS s_pProcessSymbols = s_vmProcessSymbols;
 
-/* hb_vmExecute() */
+// hb_vmExecute()
 typedef void (*HB_VM_EXECUTE)(const HB_BYTE *pCode, PHB_SYMB pSymbols);
 static void s_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols);
 static HB_VM_EXECUTE s_pExecute = s_vmExecute;
@@ -206,4 +206,4 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
 HB_EXTERN_END
 
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN

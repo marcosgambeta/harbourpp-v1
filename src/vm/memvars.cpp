@@ -1111,7 +1111,7 @@ void hb_memvarRestoreFromArray(PHB_ITEM pArray)
   }
 }
 
-/* - */
+// -
 
 static const char *hb_memvarGetMask(int iParam)
 {

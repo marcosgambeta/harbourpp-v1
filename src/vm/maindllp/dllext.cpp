@@ -1199,4 +1199,4 @@ void hb_macroTextValue(PHB_ITEM pItem)
   }
 }
 
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN

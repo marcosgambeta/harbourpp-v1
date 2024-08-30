@@ -88,7 +88,7 @@ static char set_char(PHB_ITEM pItem, char oldChar)
 
   if (HB_IS_STRING(pItem))
   {
-    /* Only replace if string has at least one character. */
+    // Only replace if string has at least one character.
     auto nLen = hb_itemGetCLen(pItem);
     if (nLen > 0)
     {
@@ -98,10 +98,8 @@ static char set_char(PHB_ITEM pItem, char oldChar)
   return newChar;
 }
 
-/*
- * Change the setting if the parameter is a logical value, or is
- * either "ON" or "OFF" (regardless of case)
- */
+// Change the setting if the parameter is a logical value, or is
+// either "ON" or "OFF" (regardless of case)
 static bool set_logical(PHB_ITEM pItem, bool bDefault)
 {
 #if 0
@@ -161,7 +159,7 @@ static char *set_string(PHB_ITEM pItem, char *szOldString)
     {
       hb_xfree(szOldString);
     }
-    /* Limit size of SET strings to 64 KiB, truncating if source is longer */
+    // Limit size of SET strings to 64 KiB, truncating if source is longer
     szString = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
   }
   else
@@ -353,9 +351,8 @@ static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend
     }
   }
 
-  /* free the old value before setting the new one (CA-Cl*pper does it).
-   * This code must be executed after setting szFileName, [druzus]
-   */
+  // free the old value before setting the new one (CA-Cl*pper does it).
+  // This code must be executed after setting szFileName, [druzus]
   close_handle(pSet, set_specifier);
   if (*set_value)
   {
@@ -370,10 +367,10 @@ static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend
 
   bool fStripEof = fAppend && szDevice == nullptr && !fPipe;
 
-  /* Open the file either in append (fAppend) or truncate mode (!fAppend), but
-     always use binary mode */
+  // Open the file either in append (fAppend) or truncate mode (!fAppend), but
+  // always use binary mode
 
-  /* QUESTION: What sharing mode does Clipper use ? [vszakats] */
+  // QUESTION: What sharing mode does Clipper use ? [vszakats]
 
   do
   {
@@ -407,32 +404,31 @@ static void open_handle(PHB_SET_STRUCT pSet, const char *file_name, bool fAppend
 
   if (handle != nullptr && fStripEof)
   {
-    /* Position to EOF */
+    // Position to EOF
     if (hb_fileSeek(handle, 0, FS_END) > 0)
     {
-      /* Special binary vs. text file handling - even for UN*X, now
-         that there's an HB_SET_EOF flag. */
+      // Special binary vs. text file handling - even for UN*X, now
+      // that there's an HB_SET_EOF flag.
 
-      /* PRINTFILE is always binary and needs no special handling. */
+      // PRINTFILE is always binary and needs no special handling.
       if (set_specifier != HB_SET_PRINTFILE)
       {
-        /* All other files are text files and may have an EOF
-           ('\x1A') character at the end (both UN*X and non-UN*X,
-           now that theres an HB_SET_EOF flag). */
+        // All other files are text files and may have an EOF
+        // ('\x1A') character at the end (both UN*X and non-UN*X,
+        // now that theres an HB_SET_EOF flag).
         char cEOF = '\0';
-        hb_fileSeek(handle, -1, FS_END);   /* Position to last char. */
-        hb_fileRead(handle, &cEOF, 1, -1); /* Read the last char. */
+        hb_fileSeek(handle, -1, FS_END);   // Position to last char.
+        hb_fileRead(handle, &cEOF, 1, -1); // Read the last char.
         if (cEOF == '\x1A')
-        { /* If it's an EOF, Then write over it. */
+        { // If it's an EOF, Then write over it.
           hb_fileSeek(handle, -1, FS_END);
         }
       }
     }
   }
 
-  /* user RT error handler can open it too so we have to
-   * close it again if necessary
-   */
+  // user RT error handler can open it too so we have to
+  // close it again if necessary
   if (handle == nullptr)
   {
     hb_xfree(szFileName);
@@ -471,15 +467,13 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
   bool old_century_setting = pSet->hb_set_century;
 
   pSet->hb_set_century = new_century_setting;
-  /*
-   * if the setting changed, adjust the current date format to use
-   * the correct number of year digits.
-   */
+  // if the setting changed, adjust the current date format to use
+  // the correct number of year digits.
   if (old_century_setting != new_century_setting)
   {
     int y_start, y_stop;
 
-    /* Convert to upper case and determine where year is */
+    // Convert to upper case and determine where year is
     y_start = y_stop = -1;
     char *szDateFormat = pSet->HB_SET_DATEFORMAT;
     auto size = static_cast<int>(strlen(szDateFormat));
@@ -499,18 +493,18 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
       }
       szDateFormat[count] = static_cast<char>(digit);
     }
-    /* Determine size of year in current format */
+    // Determine size of year in current format
     if (y_start < 0)
     {
-      y_start = 0; /* There is no year in the current format */
+      y_start = 0; // There is no year in the current format
       y_stop = 0;
     }
     else if (y_stop < 0)
     {
-      y_stop = size; /* All digits are year digits */
+      y_stop = size; // All digits are year digits
     }
     int y_size = y_stop - y_start;
-    /* Calculate size of new format */
+    // Calculate size of new format
     size -= y_size;
     if (new_century_setting)
     {
@@ -521,7 +515,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
       size += 2;
     }
 
-    /* Create the new date format */
+    // Create the new date format
     auto szNewFormat = static_cast<char *>(hb_xgrab(size + 1));
 
     {
@@ -540,8 +534,8 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
       {
         hb_strncat(szNewFormat, szDateFormat + y_stop, size);
       }
-      /* DATE FORMAT is under direct control of SET, so notify when it
-         it is changed indirectly via __SetCentury() */
+      // DATE FORMAT is under direct control of SET, so notify when it
+      // it is changed indirectly via __SetCentury()
       hb_setListenerNotify(HB_SET_DATEFORMAT, HB_SET_LISTENER_BEFORE);
       hb_xfree(szDateFormat);
       pSet->HB_SET_DATEFORMAT = szNewFormat;
@@ -549,7 +543,7 @@ HB_BOOL hb_setSetCentury(HB_BOOL new_century_setting)
     }
   }
 
-  /* Return the previous setting */
+  // Return the previous setting
   return old_century_setting;
 }
 
@@ -571,11 +565,11 @@ HB_FUNC(SETCANCEL)
 {
   HB_STACK_TLS_PRELOAD
   hb_retl(hb_setGetCancel());
-  /* SetCancel() accepts only logical parameters */
+  // SetCancel() accepts only logical parameters
   hb_setSetItem(HB_SET_CANCEL, hb_param(1, Harbour::Item::LOGICAL));
 }
 
-/* return default printer device */
+// return default printer device
 static char *hb_set_PRINTFILE_default(void)
 {
 #if defined(HB_OS_UNIX)
@@ -583,7 +577,7 @@ static char *hb_set_PRINTFILE_default(void)
 #elif defined(HB_OS_WIN)
   return hb_strdup("LPT1");
 #else
-  return hb_strdup("PRN"); /* FIXME */
+  return hb_strdup("PRN"); // FIXME
 #endif
 }
 
@@ -703,13 +697,13 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
           year++;
         }
         else if (year)
-        { /* Only count the first set of consecutive "Y"s. */
+        { // Only count the first set of consecutive "Y"s.
           break;
         }
         ++value;
       }
-      /* CENTURY is not controlled directly by SET, so there is no
-         notification for changing it indirectly via DATE FORMAT. */
+      // CENTURY is not controlled directly by SET, so there is no
+      // notification for changing it indirectly via DATE FORMAT.
       pSet->hb_set_century = year >= 4;
     }
     break;
@@ -773,7 +767,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     pResult = hb_itemPutC(pResult, pSet->HB_SET_DEVICE);
     if (pArg1 && HB_IS_STRING(pArg1))
     {
-      /* If the print file is not already open, open it in overwrite mode. */
+      // If the print file is not already open, open it in overwrite mode.
       pSet->HB_SET_DEVICE = set_string(pArg1, pSet->HB_SET_DEVICE);
       pSet->hb_set_prndevice = strlen(pSet->HB_SET_DEVICE) >= 4 && hb_strnicmp(pSet->HB_SET_DEVICE, "PRIN", 4) == 0;
     }
@@ -836,7 +830,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_EXIT:
     pResult = hb_itemPutL(pResult, pSet->HB_SET_EXIT);
-    /* NOTE: Otherwise ReadExit() will always set the value. [vszakats] */
+    // NOTE: Otherwise ReadExit() will always set the value. [vszakats]
     if (pArg1 != nullptr && !HB_IS_NIL(pArg1))
     {
       pSet->HB_SET_EXIT = set_logical(pArg1, pSet->HB_SET_EXIT);
@@ -983,7 +977,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     if (pArg1 && HB_IS_STRING(pArg1))
     {
       open_handle(pSet, hb_itemGetCPtr(pArg1), set_logical(pArg2, false), HB_SET_PRINTFILE);
-      /* With SET PRINTER TO or Set(_SET_PRINTFILE, "") are expected to activate the default printer [jarabal] */
+      // With SET PRINTER TO or Set(_SET_PRINTFILE, "") are expected to activate the default printer [jarabal]
       if (pSet->HB_SET_PRINTFILE == nullptr)
       {
         pSet->HB_SET_PRINTFILE = hb_set_PRINTFILE_default();
@@ -1015,7 +1009,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     pResult = hb_itemPutNI(pResult, pSet->HB_SET_TYPEAHEAD);
     if (pArg1 != nullptr)
     {
-      /* Set the value and limit the range */
+      // Set the value and limit the range
       pSet->HB_SET_TYPEAHEAD = set_number(pArg1, pSet->HB_SET_TYPEAHEAD);
       if (pSet->HB_SET_TYPEAHEAD == 0)
       {
@@ -1029,7 +1023,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       {
         pSet->HB_SET_TYPEAHEAD = 4096;
       }
-      /* reset keyboard buffer */
+      // reset keyboard buffer
       hb_inkeyReset();
     }
     break;
@@ -1231,7 +1225,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       }
       else
       {
-        /* Limit size of SET strings to 64 KiB, truncating if source is longer */
+        // Limit size of SET strings to 64 KiB, truncating if source is longer
         pSet->HB_SET_HBOUTLOG = hb_strndup(hb_itemGetCPtr(pArg1), USHRT_MAX);
       }
       hb_xsetfilename(pSet->HB_SET_HBOUTLOG);
@@ -1313,14 +1307,12 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
 
   case HB_SET_INVALID_:
-    /* Return NIL if called with invalid SET specifier */
+    // Return NIL if called with invalid SET specifier
     break;
 
 #if 0
-      /*
-       * intentionally removed default: clause to enable C compiler warning
-       * when not all HB_SET_* cases are implemented. [druzus]
-       */
+      // intentionally removed default: clause to enable C compiler warning
+      // when not all HB_SET_* cases are implemented. [druzus]
       default:
          break;
 #endif
@@ -1357,26 +1349,24 @@ void hb_setInitialize(PHB_SET_STRUCT pSet)
   pSet->hb_set_century = false;
   pSet->hb_set_prndevice = false;
   pSet->HB_SET_COLOR = static_cast<char *>(hb_xgrab(HB_CLRSTR_LEN + 1));
-  /* NOTE: color must be synced with the one in IsDefColor() function */
+  // NOTE: color must be synced with the one in IsDefColor() function
   hb_strncpy(pSet->HB_SET_COLOR, "W/N,N/W,N/N,N/N,N/W", HB_CLRSTR_LEN);
   pSet->HB_SET_CONFIRM = false;
   pSet->HB_SET_CONSOLE = true;
   pSet->HB_SET_DATEFORMAT = hb_strdup("mm/dd/yy");
   pSet->HB_SET_TIMEFORMAT = hb_strdup("hh:mm:ss.fff");
-/*
- * Tests shows that Clipper has two different flags to control ALT+D
- * and AltD() behavior and on startup these flags are not synchronized.
- * When application starts _SET_DEBUG is set to HB_FALSE but debugger
- * can be activated by hitting K_ALT_D or calling AltD() function without
- * parameter. It means that some other internal flag enables these
- * operations.
- * Because Harbour is using _SET_DEBUG flag only then we have to
- * initialize it to HB_TRUE when debugger is linked to keep real Clipper
- * behavior or we will have to add second flag too and try to replicate
- * exactly unsynchronized behavior of these flags which exists in Clipper.
- * IMHO it's a bug in Clipper (side effect of some internal solutions) and
- * we should not try to emulate it [druzus].
- */
+// Tests shows that Clipper has two different flags to control ALT+D
+// and AltD() behavior and on startup these flags are not synchronized.
+// When application starts _SET_DEBUG is set to HB_FALSE but debugger
+// can be activated by hitting K_ALT_D or calling AltD() function without
+// parameter. It means that some other internal flag enables these
+// operations.
+// Because Harbour is using _SET_DEBUG flag only then we have to
+// initialize it to HB_TRUE when debugger is linked to keep real Clipper
+// behavior or we will have to add second flag too and try to replicate
+// exactly unsynchronized behavior of these flags which exists in Clipper.
+// IMHO it's a bug in Clipper (side effect of some internal solutions) and
+// we should not try to emulate it [druzus].
 #if 0
    pSet->HB_SET_DEBUG = false;
 #endif
@@ -1510,7 +1500,7 @@ void hb_setRelease(PHB_SET_STRUCT pSet)
 
   hb_fsFreeSearchPath(pSet->hb_set_path);
 
-  /* Free all set listeners */
+  // Free all set listeners
   if (pSet->hb_set_listener)
   {
     PHB_SET_LISTENER pListener = (static_cast<PHB_SET_LISTENER_LST>(pSet->hb_set_listener))->first;
@@ -1697,9 +1687,8 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_ALTFILE:
     case HB_SET_EXTRAFILE:
     case HB_SET_PRINTFILE:
-      /* This sets needs 3rd parameter to indicate additive mode
-       * so they cannot be fully supported by this function
-       */
+      // This sets needs 3rd parameter to indicate additive mode
+      // so they cannot be fully supported by this function
       if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
       {
         open_handle(pSet, hb_itemGetCPtr(pItem), false, set_specifier);
@@ -2045,7 +2034,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_TYPEAHEAD:
       if (HB_IS_NUMERIC(pItem))
       {
-        /* Set the value and limit the range */
+        // Set the value and limit the range
         pSet->HB_SET_TYPEAHEAD = hb_itemGetNI(pItem);
         if (pSet->HB_SET_TYPEAHEAD == 0)
         {
@@ -2059,7 +2048,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
         {
           pSet->HB_SET_TYPEAHEAD = 4096;
         }
-        /* reset keyboard buffer */
+        // reset keyboard buffer
         hb_inkeyReset();
         fResult = true;
       }
@@ -2147,13 +2136,13 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
             ++iYear;
           }
           else if (iYear)
-          { /* Only count the first set of consecutive "Y"s. */
+          { // Only count the first set of consecutive "Y"s.
             break;
           }
           ++szValue;
         }
-        /* CENTURY is not controlled directly by SET, so there is no
-           notification for changing it indirectly via DATE FORMAT. */
+        // CENTURY is not controlled directly by SET, so there is no
+        // notification for changing it indirectly via DATE FORMAT.
         pSet->hb_set_century = iYear >= 4;
         fResult = true;
       }
@@ -2324,10 +2313,8 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_INVALID_:
       break;
 #if 0
-         /*
-          * intentionally removed default: clause to enable C compiler warning
-          * when not all HB_SET_* cases are implemented. [druzus]
-          */
+         // intentionally removed default: clause to enable C compiler warning
+         // when not all HB_SET_* cases are implemented. [druzus]
          default:
             break;
 #endif
@@ -2481,10 +2468,8 @@ HB_BOOL hb_setGetL(HB_set_enum set_specifier)
   case HB_SET_INVALID_:
     break;
 #if 0
-      /*
-       * intentionally removed default: clause to enable C compiler warning
-       * when not all HB_SET_* cases are implemented. [druzus]
-       */
+      // intentionally removed default: clause to enable C compiler warning
+      // when not all HB_SET_* cases are implemented. [druzus]
       default:
          break;
 #endif
@@ -2587,10 +2572,8 @@ const char *hb_setGetCPtr(HB_set_enum set_specifier)
   case HB_SET_INVALID_:
     break;
 #if 0
-      /*
-       * intentionally removed default: clause to enable C compiler warning
-       * when not all HB_SET_* cases are implemented. [druzus]
-       */
+      // intentionally removed default: clause to enable C compiler warning
+      // when not all HB_SET_* cases are implemented. [druzus]
       default:
          break;
 #endif
@@ -2690,10 +2673,8 @@ int hb_setGetNI(HB_set_enum set_specifier)
   case HB_SET_INVALID_:
     break;
 #if 0
-      /*
-       * intentionally removed default: clause to enable C compiler warning
-       * when not all HB_SET_* cases are implemented. [druzus]
-       */
+      // intentionally removed default: clause to enable C compiler warning
+      // when not all HB_SET_* cases are implemented. [druzus]
       default:
          break;
 #endif
@@ -3350,7 +3331,7 @@ HB_WCHAR *hb_osStrU16Encode(const char *pszName)
     }
   }
 
-  return hb_mbtowc(pszName); /* No HVM stack */
+  return hb_mbtowc(pszName); // No HVM stack
 }
 
 HB_WCHAR *hb_osStrU16EncodeN(const char *pszName, HB_SIZE nLen)
@@ -3368,7 +3349,7 @@ HB_WCHAR *hb_osStrU16EncodeN(const char *pszName, HB_SIZE nLen)
     }
   }
 
-  return hb_mbntowc(pszName, nLen); /* No HVM stack */
+  return hb_mbntowc(pszName, nLen); // No HVM stack
 }
 
 HB_WCHAR *hb_osStrU16Encode2(const char *pszName, HB_WCHAR *pszBufferW, HB_SIZE nSize)
@@ -3383,7 +3364,7 @@ HB_WCHAR *hb_osStrU16Encode2(const char *pszName, HB_WCHAR *pszBufferW, HB_SIZE 
       return pszBufferW;
     }
   }
-  hb_mbntowccpy(pszBufferW, pszName, nSize); /* No HVM stack */
+  hb_mbntowccpy(pszBufferW, pszName, nSize); // No HVM stack
   return pszBufferW;
 }
 
@@ -3402,7 +3383,7 @@ char *hb_osStrU16Decode(const HB_WCHAR *pszNameW)
     }
   }
 
-  return hb_wctomb(pszNameW); /* No HVM stack */
+  return hb_wctomb(pszNameW); // No HVM stack
 }
 
 char *hb_osStrU16Decode2(const HB_WCHAR *pszNameW, char *pszBuffer, HB_SIZE nSize)
@@ -3418,7 +3399,7 @@ char *hb_osStrU16Decode2(const HB_WCHAR *pszNameW, char *pszBuffer, HB_SIZE nSiz
     }
   }
 
-  hb_wcntombcpy(pszBuffer, pszNameW, nSize); /* No HVM stack */
+  hb_wcntombcpy(pszBuffer, pszNameW, nSize); // No HVM stack
   return pszBuffer;
 }
 #endif

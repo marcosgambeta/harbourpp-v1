@@ -45,7 +45,7 @@
 
 #include "hbapi.hpp"
 
-/* NOTE: Undocumented Clipper internal function. */
+// NOTE: Undocumented Clipper internal function.
 
 #ifdef HB_CLP_UNDOC
 
@@ -53,9 +53,9 @@ HB_FUNC_EXTERN(__MVPUBLIC);
 
 HB_FUNC(__QQPUB)
 {
-  /* In Clipper __QQPUB function does not check number of parameters
-     or parameter type - just simply takes directly the top item from
-     VM stack */
+  // In Clipper __QQPUB function does not check number of parameters
+  // or parameter type - just simply takes directly the top item from
+  // VM stack
   if (hb_pcount() == 1 && hb_param(1, Harbour::Item::STRING))
   {
     HB_FUNC_EXEC(__MVPUBLIC);
@@ -64,7 +64,7 @@ HB_FUNC(__QQPUB)
 
 #endif
 
-/* CA-Cl*pper 5.2e compatibility functions. */
+// CA-Cl*pper 5.2e compatibility functions.
 
 HB_FUNC_TRANSLATE(__MCLEAR, __MVCLEAR)
 HB_FUNC_TRANSLATE(__MRELEASE, __MVRELEASE)

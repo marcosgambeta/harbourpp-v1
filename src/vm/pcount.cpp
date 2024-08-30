@@ -50,6 +50,6 @@
 
 HB_FUNC(PCOUNT)
 {
-  /* Skip current function */
+  // Skip current function
   hb_retni((hb_stackItem(hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem))->item.asSymbol.paramcnt);
 }

@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: This is only a container source file, don't put real program code here. */
+// NOTE: This is only a container source file, don't put real program code here.
 
 #include "hbsetup.hpp"
 
@@ -52,5 +52,5 @@
 #elif defined(HB_MAIN_WIN)
 #include "mainwin.cpp"
 #else
-#include "mainstd.cpp" /* Use the standard ANSI C entry point if not specified */
+#include "mainstd.cpp" // Use the standard ANSI C entry point if not specified
 #endif

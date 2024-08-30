@@ -54,7 +54,7 @@ PHB_FUNC hb_vmProcAddress(const char *szFuncName)
     PHB_FUNC pFuncAddr;
   };
 
-  /* NOTE: this table must be well sorted by function names */
+  // NOTE: this table must be well sorted by function names
   static const HB_FUNC_REF_ADDR s_funcTable[] = {
       {"hb_arrayAdd", reinterpret_cast<PHB_FUNC>(hb_arrayAdd)},
       {"hb_arrayDel", reinterpret_cast<PHB_FUNC>(hb_arrayDel)},
