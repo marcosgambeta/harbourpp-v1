@@ -62,3 +62,9 @@
 
   Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
   Move `contrib` folder to a separate repository.  
+
+## More info
+
+This document is a work in progress. You can use the section below to discuss about the topics above or related topics:
+
+https://github.com/marcosgambeta/harbourpp-v1/discussions
