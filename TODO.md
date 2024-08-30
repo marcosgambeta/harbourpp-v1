@@ -35,6 +35,12 @@
   Deprecate SELECT, change SELECT to DBSELECT and maintain SELECT using HB_FUNC_TRANSLATE.  
   Deprecate USED, change USED to DBUSED and maintain USED using HB_FUNC_TRANSLATE.  
 
+## src/rdd/dbcmd.cpp
+
+  Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
+  Deprecate HB_FIELDGET, join FIELDGET and HB_FIELDGET and maintain HB_FIELDGET using HB_FUNC_TRANSLATE.  
+  Deprecate HB_FIELDPUT, join FIELDPUT and HB_FIELDPUT and maintain HB_FIELDPUT using HB_FUNC_TRANSLATE.  
+
 ## src/vm/arrayshb.cpp
 
   Changes planned for Harbour++ v2, but can be made in v1 (not decided yet):  
