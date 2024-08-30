@@ -45,86 +45,86 @@
 
 #include <windows.h>
 
-#define HB_LPSTR  LPSTR
+#define HB_LPSTR LPSTR
 
-int WINAPI WinMain( HINSTANCE hInstance,      /* handle to current instance */
-                    HINSTANCE hPrevInstance,  /* handle to previous instance */
-                    HB_LPSTR  lpCmdLine,      /* pointer to command-line */
-                    int iCmdShow )            /* show state of window */
+int WINAPI WinMain(HINSTANCE hInstance,     /* handle to current instance */
+                   HINSTANCE hPrevInstance, /* handle to previous instance */
+                   HB_LPSTR lpCmdLine,      /* pointer to command-line */
+                   int iCmdShow)            /* show state of window */
 {
-   int iErrorCode;
+  int iErrorCode;
 
 #if defined(HB_VM_STARTUP)
 
-   HB_SYMBOL_UNUSED( lpCmdLine );
+  HB_SYMBOL_UNUSED(lpCmdLine);
 
-   #if 0
+#if 0
    HB_TRACE( HB_TR_DEBUG, ("WinMain(%p, %p, %s, %d)", hInstance, hPrevInstance, lpCmdLine, iCmdShow ) );
-   #endif
-
-   hb_winmainArgInit( hInstance, hPrevInstance, iCmdShow );
-
-   hb_vmInit( HB_TRUE );
-   iErrorCode = hb_vmQuit();
-
-#else
-#  define HB_MAX_ARGS   256
-
-   int argc = 0;
-   char * argv[ HB_MAX_ARGS ];
-
-   LPSTR pArgs, pArg, pDst, pSrc;
-   HB_BOOL fQuoted;
-   HANDLE hHeap;
-
-   argv[ argc++ ] = const_cast< char * >( "" );
-
-   pArg = NULL;
-
-   pSrc = lpCmdLine;
-   hHeap = GetProcessHeap();
-   pDst = pArgs = ( LPSTR ) HeapAlloc( hHeap, 0, strlen( pSrc ) + 1 );
-   fQuoted = HB_FALSE;
-
-   while( *pSrc != 0 && argc < HB_MAX_ARGS )
-   {
-      if( *pSrc == '"' )
-      {
-         if( pArg == NULL )
-            pArg = pDst;
-         fQuoted = ! fQuoted;
-      }
-      else if( fQuoted || ! HB_ISSPACE( *pSrc ) )
-      {
-         if( pArg == NULL )
-            pArg = pDst;
-         *pDst++ = *pSrc;
-      }
-      else
-      {
-         if( pArg )
-         {
-            *pDst++ = '\0';
-            argv[ argc++ ] = pArg;
-            pArg = NULL;
-         }
-      }
-      ++pSrc;
-   }
-   if( pArg )
-   {
-      *pDst = '\0';
-      argv[ argc++ ] = pArg;
-   }
-
-   HB_SYMBOL_UNUSED( hInstance );
-   HB_SYMBOL_UNUSED( hPrevInstance );
-   HB_SYMBOL_UNUSED( iCmdShow );
-
-   iErrorCode = main( argc, argv );
-
-   HeapFree( hHeap, 0, ( void * ) pArgs );
 #endif
 
-   return iErrorCode;
+  hb_winmainArgInit(hInstance, hPrevInstance, iCmdShow);
+
+  hb_vmInit(HB_TRUE);
+  iErrorCode = hb_vmQuit();
+
+#else
+#define HB_MAX_ARGS 256
+
+  int argc = 0;
+  char *argv[HB_MAX_ARGS];
+
+  LPSTR pArgs, pArg, pDst, pSrc;
+  HB_BOOL fQuoted;
+  HANDLE hHeap;
+
+  argv[argc++] = const_cast<char *>("");
+
+  pArg = NULL;
+
+  pSrc = lpCmdLine;
+  hHeap = GetProcessHeap();
+  pDst = pArgs = (LPSTR)HeapAlloc(hHeap, 0, strlen(pSrc) + 1);
+  fQuoted = HB_FALSE;
+
+  while (*pSrc != 0 && argc < HB_MAX_ARGS)
+  {
+    if (*pSrc == '"')
+    {
+      if (pArg == NULL)
+        pArg = pDst;
+      fQuoted = !fQuoted;
+    }
+    else if (fQuoted || !HB_ISSPACE(*pSrc))
+    {
+      if (pArg == NULL)
+        pArg = pDst;
+      *pDst++ = *pSrc;
+    }
+    else
+    {
+      if (pArg)
+      {
+        *pDst++ = '\0';
+        argv[argc++] = pArg;
+        pArg = NULL;
+      }
+    }
+    ++pSrc;
+  }
+  if (pArg)
+  {
+    *pDst = '\0';
+    argv[argc++] = pArg;
+  }
+
+  HB_SYMBOL_UNUSED(hInstance);
+  HB_SYMBOL_UNUSED(hPrevInstance);
+  HB_SYMBOL_UNUSED(iCmdShow);
+
+  iErrorCode = main(argc, argv);
+
+  HeapFree(hHeap, 0, (void *)pArgs);
+#endif
+
+  return iErrorCode;
 }
