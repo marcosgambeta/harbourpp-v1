@@ -67,7 +67,7 @@
 #include "hbdebug.ch"
 #if defined(HB_MT_VM)
 #include "hbthread.hpp"
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 #include "hbmemory.ch"
 
 #ifndef HB_NO_PROFILER
@@ -77,151 +77,232 @@
 HB_FUNC_EXTERN(SYSINIT);
 HB_FUNC_EXTERN(BREAK);
 
-/* PCode functions */
+// PCode functions
 
-/* Operators (mathematical / character / misc) */
-static void hb_vmNegate(void);        /* negates (-) the latest value on the stack */
-static void hb_vmInc(PHB_ITEM pItem); /* increment the latest numeric value on the stack */
-static void hb_vmDec(PHB_ITEM pItem); /* decrements the latest numeric value on the stack */
-static void hb_vmFuncPtr(void);       /* pushes a function address pointer. Removes the symbol from the stack */
-static void hb_vmAddInt(PHB_ITEM pResult, HB_LONG lAdd);                      /* add integer to given item */
-static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);    /* sums given values */
-static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);   /* subtracts given values */
-static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);    /* multiplies given values */
-static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);  /* divides the given values */
-static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2); /* calculates modulus given values */
-static void hb_vmPower(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);   /* power given values */
+// Operators (mathematical / character / misc)
 
-/* Operators (relational) */
-static void hb_vmEqual(
-    void); /* checks if the two latest values on the stack are equal, removes both and leaves result */
-static void hb_vmExactlyEqual(
-    void); /* checks if the two latest values on the stack are exactly equal, removes both and leaves result */
-static void hb_vmNotEqual(
-    void); /* checks if the two latest values on the stack are not equal, removes both and leaves result */
-static void hb_vmLess(
-    void); /* checks if the latest - 1 value is less than the latest, removes both and leaves result */
-static void hb_vmLessEqual(
-    void); /* checks if the latest - 1 value is less than or equal the latest, removes both and leaves result */
-static void hb_vmGreater(
-    void); /* checks if the latest - 1 value is greater than the latest, removes both and leaves result */
-static void hb_vmGreaterEqual(
-    void); /* checks if the latest - 1 value is greater than or equal the latest, removes both and leaves result */
-static void hb_vmInstring(void);                     /* check whether string 1 is contained in string 2 */
-static void hb_vmForTest(void);                      /* test for end condition of for */
-static void hb_vmSeqBlock(void);                     /* set begin sequence WITH codeblock */
-static void hb_vmWithObjectStart(void);              /* prepare WITH OBJECT block */
-static void hb_vmEnumStart(int nVars, int nDescend); /* prepare FOR EACH loop */
-static void hb_vmEnumNext(void);                     /* increment FOR EACH loop counter */
-static void hb_vmEnumPrev(void);                     /* decrement FOR EACH loop counter */
-static void hb_vmEnumEnd(void);                      /* rewind the stack after FOR EACH loop counter */
-static const HB_BYTE *hb_vmSwitch(const HB_BYTE *pCode, HB_USHORT); /* make a SWITCH statement */
+// negates (-) the latest value on the stack
+static void hb_vmNegate(void);
+// increment the latest numeric value on the stack
+static void hb_vmInc(PHB_ITEM pItem);
+// decrements the latest numeric value on the stack
+static void hb_vmDec(PHB_ITEM pItem);
+// pushes a function address pointer. Removes the symbol from the stack
+static void hb_vmFuncPtr(void);
+// add integer to given item
+static void hb_vmAddInt(PHB_ITEM pResult, HB_LONG lAdd);
+// sums given values
+static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);
+// subtracts given values
+static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);
+// multiplies given values
+static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);
+// divides the given values
+static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);
+// calculates modulus given values
+static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);
+// power given values
+static void hb_vmPower(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2);
 
-/* Operators (logical) */
-static void hb_vmNot(void); /* changes the latest logical value on the stack */
-static void hb_vmAnd(
-    void); /* performs the logical AND on the latest two values, removes them and leaves result on the stack */
-static void hb_vmOr(
-    void); /* performs the logical OR on the latest two values, removes them and leaves result on the stack */
+// Operators (relational)
 
-/* Array */
-static void hb_vmArrayPush(
-    void); /* pushes an array element to the stack, removing the array and the index from the stack */
-static void hb_vmArrayPushRef(
-    void); /* pushes a reference to an array element to the stack, removing the array and the index from the stack */
-static void hb_vmArrayPop(void); /* pops a value from the stack */
-static void hb_vmArrayDim(
-    HB_USHORT uiDimensions); /* generates an uiDimensions Array and initialize those dimensions from the stack values */
-static void hb_vmArrayGen(HB_SIZE nElements); /* generates an nElements Array and fills it from the stack values */
-static void hb_vmHashGen(HB_SIZE nElements);  /* generates an nElements Hash and fills it from the stack values */
+// checks if the two latest values on the stack are equal, removes both and leaves result
+static void hb_vmEqual(void);
+// checks if the two latest values on the stack are exactly equal, removes both and leaves result
+static void hb_vmExactlyEqual(void);
+// checks if the two latest values on the stack are not equal, removes both and leaves result
+static void hb_vmNotEqual(void);
+// checks if the latest - 1 value is less than the latest, removes both and leaves result
+static void hb_vmLess(void);
+// checks if the latest - 1 value is less than or equal the latest, removes both and leaves result
+static void hb_vmLessEqual(void);
+// checks if the latest - 1 value is greater than the latest, removes both and leaves result
+static void hb_vmGreater(void);
+// checks if the latest - 1 value is greater than or equal the latest, removes both and leaves result
+static void hb_vmGreaterEqual(void);
+// check whether string 1 is contained in string 2
+static void hb_vmInstring(void);
+// test for end condition of for
+static void hb_vmForTest(void);
+// set begin sequence WITH codeblock
+static void hb_vmSeqBlock(void);
+// prepare WITH OBJECT block
+static void hb_vmWithObjectStart(void);
+// prepare FOR EACH loop
+static void hb_vmEnumStart(int nVars, int nDescend);
+// increment FOR EACH loop counter
+static void hb_vmEnumNext(void);
+// decrement FOR EACH loop counter
+static void hb_vmEnumPrev(void);
+// rewind the stack after FOR EACH loop counter
+static void hb_vmEnumEnd(void);
+// make a SWITCH statement
+static const HB_BYTE *hb_vmSwitch(const HB_BYTE *pCode, HB_USHORT);
 
-/* macros */
-static void hb_vmMacroDo(HB_USHORT uiArgSets);   /* execute function passing arguments set on HVM stack func(&var) */
-static void hb_vmMacroFunc(HB_USHORT uiArgSets); /* execute procedure passing arguments set on HVM stack func(&var) */
-static void hb_vmMacroSend(HB_USHORT uiArgSets); /* execute procedure passing arguments set on HVM stack func(&var) */
-static void hb_vmMacroArrayGen(HB_USHORT uiArgSets); /* generate array from arguments set on HVM stack { &var } */
-static void hb_vmMacroPushIndex(void);               /* push macro array index {...}[ &var ] */
+// Operators (logical)
 
-/* Database */
-static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM,
-                                      PHB_SYMB); /* select the workarea using a given item or a substituted value */
-static void hb_vmSwapAlias(void);                /* swaps items on the eval stack and pops the workarea number */
+// changes the latest logical value on the stack
+static void hb_vmNot(void);
+// performs the logical AND on the latest two values, removes them and leaves result on the stack
+static void hb_vmAnd(void);
+// performs the logical OR on the latest two values, removes them and leaves result on the stack
+static void hb_vmOr(void);
 
-/* Execution */
-static HARBOUR hb_vmDoBlock(void); /* executes a codeblock */
-static void hb_vmFrame(
-    HB_USHORT usLocals,
-    unsigned char ucParams); /* increases the stack pointer for the amount of locals and params supplied */
-static void hb_vmVFrame(HB_USHORT usLocals, unsigned char ucParams); /* increases the stack pointer for the amount of
-                                                                        locals and variable number of params supplied */
-static void hb_vmSFrame(PHB_SYMB pSym);                              /* sets the statics frame for a function */
-static void hb_vmStatics(PHB_SYMB pSym,
-                         HB_USHORT uiStatics); /* increases the global statics array to hold a PRG statics */
-static void hb_vmInitThreadStatics(HB_USHORT uiCount, const HB_BYTE *pCode); /* mark thread static variables */
-static void hb_vmStaticsClear(void);                                         /* clear complex static variables */
-static void hb_vmStaticsRelease(void);                                       /* release arrays with static variables */
-/* Push */
-static void hb_vmPushAlias(void);            /* pushes the current workarea number */
-static void hb_vmPushAliasedField(PHB_SYMB); /* pushes an aliased field on the eval stack */
-static void hb_vmPushAliasedVar(PHB_SYMB);   /* pushes an aliased variable on the eval stack */
-static void hb_vmPushBlock(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen);      /* creates a codeblock */
-static void hb_vmPushBlockShort(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen); /* creates a codeblock */
-static void hb_vmPushMacroBlock(const HB_BYTE *pCode, HB_SIZE nSize,
-                                HB_USHORT usParams);                    /* creates a macro-compiled codeblock */
-static void hb_vmPushDoubleConst(double dNumber, int iWidth, int iDec); /* Pushes a double constant (pcode) */
-static void hb_vmPushLocal(int iLocal);         /* pushes the content of a local onto the stack */
-static void hb_vmPushLocalByRef(int iLocal);    /* pushes a local by reference onto the stack */
-static void hb_vmPushHBLong(HB_MAXINT nNumber); /* pushes a HB_MAXINT number onto the stack */
+// Array
+
+// pushes an array element to the stack, removing the array and the index from the stack
+static void hb_vmArrayPush(void);
+// pushes a reference to an array element to the stack, removing the array and the index from the stack
+static void hb_vmArrayPushRef(void);
+// pops a value from the stack
+static void hb_vmArrayPop(void);
+// generates an uiDimensions Array and initialize those dimensions from the stack values
+static void hb_vmArrayDim(HB_USHORT uiDimensions);
+// generates an nElements Array and fills it from the stack values
+static void hb_vmArrayGen(HB_SIZE nElements);
+// generates an nElements Hash and fills it from the stack values
+static void hb_vmHashGen(HB_SIZE nElements);
+
+// macros
+
+// execute function passing arguments set on HVM stack func(&var)
+static void hb_vmMacroDo(HB_USHORT uiArgSets);
+// execute procedure passing arguments set on HVM stack func(&var)
+static void hb_vmMacroFunc(HB_USHORT uiArgSets);
+// execute procedure passing arguments set on HVM stack func(&var)
+static void hb_vmMacroSend(HB_USHORT uiArgSets);
+// generate array from arguments set on HVM stack { &var }
+static void hb_vmMacroArrayGen(HB_USHORT uiArgSets);
+// push macro array index {...}[ &var ]
+static void hb_vmMacroPushIndex(void);
+
+// Database
+
+// select the workarea using a given item or a substituted value
+static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM, PHB_SYMB);
+// swaps items on the eval stack and pops the workarea number
+static void hb_vmSwapAlias(void);
+
+// Execution
+
+// executes a codeblock
+static HARBOUR hb_vmDoBlock(void);
+// increases the stack pointer for the amount of locals and params supplied
+static void hb_vmFrame(HB_USHORT usLocals, unsigned char ucParams);
+// increases the stack pointer for the amount of locals and variable number of params supplied
+static void hb_vmVFrame(HB_USHORT usLocals, unsigned char ucParams);
+// sets the statics frame for a function
+static void hb_vmSFrame(PHB_SYMB pSym);
+// increases the global statics array to hold a PRG statics
+static void hb_vmStatics(PHB_SYMB pSym, HB_USHORT uiStatics);
+// mark thread static variables
+static void hb_vmInitThreadStatics(HB_USHORT uiCount, const HB_BYTE *pCode);
+// clear complex static variables
+static void hb_vmStaticsClear(void);
+// release arrays with static variables
+static void hb_vmStaticsRelease(void);
+
+// Push
+
+// pushes the current workarea number
+static void hb_vmPushAlias(void);
+// pushes an aliased field on the eval stack
+static void hb_vmPushAliasedField(PHB_SYMB);
+// pushes an aliased variable on the eval stack
+static void hb_vmPushAliasedVar(PHB_SYMB);
+// creates a codeblock
+static void hb_vmPushBlock(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen);
+// creates a codeblock
+static void hb_vmPushBlockShort(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen);
+// creates a macro-compiled codeblock
+static void hb_vmPushMacroBlock(const HB_BYTE *pCode, HB_SIZE nSize, HB_USHORT usParams);
+// Pushes a double constant (pcode)
+static void hb_vmPushDoubleConst(double dNumber, int iWidth, int iDec);
+// pushes the content of a local onto the stack
+static void hb_vmPushLocal(int iLocal);
+// pushes a local by reference onto the stack
+static void hb_vmPushLocalByRef(int iLocal);
+// pushes a HB_MAXINT number onto the stack
+static void hb_vmPushHBLong(HB_MAXINT nNumber);
 #if !defined(HB_LONG_LONG_OFF)
-static void hb_vmPushLongLongConst(HB_LONGLONG lNumber); /* Pushes a long long constant (pcode) */
+// Pushes a long long constant (pcode)
+static void hb_vmPushLongLongConst(HB_LONGLONG lNumber);
 #endif
 #if HB_VMINT_MAX >= INT32_MAX
-static void hb_vmPushIntegerConst(int iNumber); /* Pushes a int constant (pcode) */
+// Pushes a int constant (pcode)
+static void hb_vmPushIntegerConst(int iNumber);
 #else
-static void hb_vmPushLongConst(long lNumber); /* Pushes a long constant (pcode) */
+// Pushes a long constant (pcode)
+static void hb_vmPushLongConst(long lNumber);
 #endif
-static void hb_vmPushStatic(HB_USHORT uiStatic);      /* pushes the content of a static onto the stack */
-static void hb_vmPushStaticByRef(HB_USHORT uiStatic); /* pushes a static by reference onto the stack */
-static void hb_vmPushVariable(PHB_SYMB pVarSymb);     /* pushes undeclared variable */
-static void hb_vmPushObjectVarRef(void);              /* pushes reference to object variable */
-static void hb_vmPushVParams(void);                   /* pushes variable parameters */
-static void hb_vmPushAParams(void);                   /* pushes array items */
-static void hb_vmPushUnRef(void);                     /* push the unreferenced latest value on the stack */
-static void hb_vmDuplicate(void);                     /* duplicates the latest value on the stack */
-static void hb_vmDuplUnRef(void);  /* duplicates the latest value on the stack and unref the source one */
-static void hb_vmSwap(int iCount); /* swap bCount+1 time two items on HVM stack starting from the most top one */
+// pushes the content of a static onto the stack
+static void hb_vmPushStatic(HB_USHORT uiStatic);
+// pushes a static by reference onto the stack
+static void hb_vmPushStaticByRef(HB_USHORT uiStatic);
+// pushes undeclared variable
+static void hb_vmPushVariable(PHB_SYMB pVarSymb);
+// pushes reference to object variable
+static void hb_vmPushObjectVarRef(void);
+// pushes variable parameters
+static void hb_vmPushVParams(void);
+// pushes array items
+static void hb_vmPushAParams(void);
+// push the unreferenced latest value on the stack
+static void hb_vmPushUnRef(void);
+// duplicates the latest value on the stack
+static void hb_vmDuplicate(void);
+// duplicates the latest value on the stack and unref the source one
+static void hb_vmDuplUnRef(void);
+// swap bCount+1 time two items on HVM stack starting from the most top one
+static void hb_vmSwap(int iCount);
 
-/* Pop */
-static HB_BOOL hb_vmPopLogical(void);           /* pops the stack latest value and returns its logical value */
-static void hb_vmPopAlias(void);                /* pops the workarea number form the eval stack */
-static void hb_vmPopAliasedField(PHB_SYMB);     /* pops an aliased field from the eval stack*/
-static void hb_vmPopAliasedVar(PHB_SYMB);       /* pops an aliased variable from the eval stack*/
-static void hb_vmPopLocal(int iLocal);          /* pops the stack latest value onto a local */
-static void hb_vmPopStatic(HB_USHORT uiStatic); /* pops the stack latest value onto a static */
+// Pop
 
-/* misc */
-static void hb_vmDoInitStatics(void);       /* executes all _INITSTATICS functions */
-static void hb_vmDoInitFunctions(HB_BOOL);  /* executes all defined PRGs INIT functions */
-static void hb_vmDoExitFunctions(void);     /* executes all defined PRGs EXIT functions */
-static void hb_vmReleaseLocalSymbols(void); /* releases the memory of the local symbols linked list */
+// pops the stack latest value and returns its logical value
+static HB_BOOL hb_vmPopLogical(void);
+// pops the workarea number form the eval stack
+static void hb_vmPopAlias(void);
+// pops an aliased field from the eval stack
+static void hb_vmPopAliasedField(PHB_SYMB);
+// pops an aliased variable from the eval stack
+static void hb_vmPopAliasedVar(PHB_SYMB);
+// pops the stack latest value onto a local
+static void hb_vmPopLocal(int iLocal);
+// pops the stack latest value onto a static
+static void hb_vmPopStatic(HB_USHORT uiStatic);
 
-static void hb_vmMsgIndexReference(PHB_ITEM pRefer, PHB_ITEM pObject,
-                                   PHB_ITEM pIndex); /* create object index reference */
+// misc
+
+// executes all _INITSTATICS functions
+static void hb_vmDoInitStatics(void);
+// executes all defined PRGs INIT functions
+static void hb_vmDoInitFunctions(HB_BOOL);
+// executes all defined PRGs EXIT functions
+static void hb_vmDoExitFunctions(void);
+// releases the memory of the local symbols linked list
+static void hb_vmReleaseLocalSymbols(void);
+
+// create object index reference
+static void hb_vmMsgIndexReference(PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM pIndex);
 
 #ifndef HB_NO_DEBUG
-static void hb_vmLocalName(
-    HB_USHORT uiLocal, const char *szLocalName); /* locals and parameters index and name information for the debugger */
-static void hb_vmStaticName(HB_BYTE bIsGlobal, HB_USHORT uiStatic,
-                            const char *szStaticName); /* statics vars information for the debugger */
-static void hb_vmModuleName(const char *szModuleName); /* PRG and function name information for the debugger */
+// locals and parameters index and name information for the debugger
+static void hb_vmLocalName(HB_USHORT uiLocal, const char *szLocalName);
+// statics vars information for the debugger
+static void hb_vmStaticName(HB_BYTE bIsGlobal, HB_USHORT uiStatic, const char *szStaticName);
+// PRG and function name information for the debugger
+static void hb_vmModuleName(const char *szModuleName);
 
 static void hb_vmDebugEntry(int nMode, int nLine, const char *szName, int nIndex, PHB_ITEM pFrame);
-static void hb_vmDebuggerExit(HB_BOOL fRemove);      /* shuts down the debugger */
-static void hb_vmDebuggerShowLine(HB_USHORT uiLine); /* makes the debugger shows a specific source code line */
-static void hb_vmDebuggerEndProc(void);              /* notifies the debugger for an endproc */
+// shuts down the debugger
+static void hb_vmDebuggerExit(HB_BOOL fRemove);
+// makes the debugger shows a specific source code line
+static void hb_vmDebuggerShowLine(HB_USHORT uiLine);
+// notifies the debugger for an endproc
+static void hb_vmDebuggerEndProc(void);
 
-static PHB_DYNS s_pDynsDbgEntry = nullptr; /* Cached __DBGENTRY symbol */
-static HB_DBGENTRY_FUNC s_pFunDbgEntry;    /* C level debugger entry */
+static PHB_DYNS s_pDynsDbgEntry = nullptr; // Cached __DBGENTRY symbol
+static HB_DBGENTRY_FUNC s_pFunDbgEntry;    // C level debugger entry
 #endif
 
 static auto s_fInternalsEnabled = true;
@@ -240,16 +321,16 @@ static HB_CRITICAL_NEW(s_atInitMtx);
 #define HB_ATINIT_LOCK()
 #define HB_ATINIT_UNLOCK()
 #define HB_TASK_SHEDULER()
-#endif /* HB_MT_VM */
+#endif // HB_MT_VM
 
 #ifndef HB_NO_PROFILER
-static HB_ULONG hb_ulOpcodesCalls[HB_P_LAST_PCODE]; /* array to profile opcodes calls */
-static HB_ULONG hb_ulOpcodesTime[HB_P_LAST_PCODE];  /* array to profile opcodes consumed time */
-static auto hb_bProfiler = false;                   /* profiler status is off */
+static HB_ULONG hb_ulOpcodesCalls[HB_P_LAST_PCODE]; // array to profile opcodes calls
+static HB_ULONG hb_ulOpcodesTime[HB_P_LAST_PCODE];  // array to profile opcodes consumed time
+static auto hb_bProfiler = false;                   // profiler status is off
 #endif
 
 #if defined(HB_PRG_TRACE)
-static auto hb_bTracePrgCalls = false; /* prg tracing is off */
+static auto hb_bTracePrgCalls = false; // prg tracing is off
 #define HB_TRACE_PRG(_TRMSG_)                                                                                          \
   if (hb_bTracePrgCalls)                                                                                               \
   HB_TRACE(HB_TR_ALWAYS, _TRMSG_)
@@ -257,33 +338,32 @@ static auto hb_bTracePrgCalls = false; /* prg tracing is off */
 #define HB_TRACE_PRG(_TRMSG_)
 #endif
 
-static const char *s_vm_pszLinkedMain = nullptr; /* name of startup function set by linker */
+static const char *s_vm_pszLinkedMain = nullptr; // name of startup function set by linker
 
-/* virtual machine state */
+// virtual machine state
 
-HB_SYMB hb_symEval = {"EVAL", {HB_FS_PUBLIC}, {hb_vmDoBlock}, nullptr}; /* symbol to evaluate codeblocks */
-static HB_SYMB s_symBreak = {"BREAK", {HB_FS_PUBLIC}, {HB_FUNCNAME(BREAK)}, nullptr}; /* symbol to generate break */
+HB_SYMB hb_symEval = {"EVAL", {HB_FS_PUBLIC}, {hb_vmDoBlock}, nullptr}; // symbol to evaluate codeblocks
+static HB_SYMB s_symBreak = {"BREAK", {HB_FS_PUBLIC}, {HB_FUNCNAME(BREAK)}, nullptr}; // symbol to generate break
 static PHB_ITEM s_breakBlock = nullptr;
 
-static auto s_fHVMActive = false;      /* is HVM ready for PCODE executing */
-static auto s_fDoExitProc = true;      /* execute EXIT procedures */
-static int s_nErrorLevel = 0;          /* application exit status */
-static PHB_SYMB s_pSymStart = nullptr; /* start symbol of the application. MAIN() is not required */
+static auto s_fHVMActive = false;      // is HVM ready for PCODE executing
+static auto s_fDoExitProc = true;      // execute EXIT procedures
+static int s_nErrorLevel = 0;          // application exit status
+static PHB_SYMB s_pSymStart = nullptr; // start symbol of the application. MAIN() is not required
 
-static PHB_SYMBOLS s_pSymbols = nullptr; /* to hold a linked list of all different modules symbol tables */
-static HB_ULONG s_ulFreeSymbols = 0;     /* number of free module symbols */
-static void *s_hDynLibID = nullptr;      /* unique identifier to mark symbol tables loaded from dynamic libraries */
-static auto s_fCloneSym = false;         /* clone registered symbol tables */
+static PHB_SYMBOLS s_pSymbols = nullptr; // to hold a linked list of all different modules symbol tables
+static HB_ULONG s_ulFreeSymbols = 0;     // number of free module symbols
+static void *s_hDynLibID = nullptr;      // unique identifier to mark symbol tables loaded from dynamic libraries
+static auto s_fCloneSym = false;         // clone registered symbol tables
 
 #ifndef HB_GUI
 auto s_fKeyPool = true;
 #endif
 
-/* main VM thread stack ID */
+// main VM thread stack ID
 static void *s_main_thread = nullptr;
 
-/* SEQUENCE envelope items position from stack top active
- */
+// SEQUENCE envelope items position from stack top active
 #define HB_RECOVER_STATE -1
 #define HB_RECOVER_VALUE -2
 
