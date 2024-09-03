@@ -1093,8 +1093,8 @@ PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy)
 
 void hb_memvarRestoreFromArray(PHB_ITEM pArray)
 {
-  HB_SIZE nCount = hb_arrayLen(pArray);
-  for (HB_SIZE nPos = 1; nPos <= nCount; ++nPos)
+  const std::size_t nCount = hb_arrayLen(pArray);
+  for (std::size_t nPos = 1; nPos <= nCount; ++nPos)
   {
     auto pItem = hb_arrayGetItemPtr(pArray, nPos);
     PHB_DYNS pDynSym = hb_arrayGetSymbol(pItem, 1)->pDynSym;
@@ -1140,9 +1140,9 @@ HB_FUNC(__MVPUBLIC)
         if (HB_IS_ARRAY(pMemvar))
         {
           // we are accepting an one-dimensional array of strings only
-          HB_SIZE nLen = hb_arrayLen(pMemvar);
+          const std::size_t nLen = hb_arrayLen(pMemvar);
 
-          for (HB_SIZE n = 1; n <= nLen; n++)
+          for (std::size_t n = 1; n <= nLen; n++)
           {
             hb_memvarCreateFromItem(hb_arrayGetItemPtr(pMemvar, n), HB_VSCOMP_PUBLIC, nullptr);
           }
@@ -1173,9 +1173,9 @@ HB_FUNC(__MVPRIVATE)
         if (HB_IS_ARRAY(pMemvar))
         {
           // we are accepting an one-dimensional array of strings only
-          HB_SIZE nLen = hb_arrayLen(pMemvar);
+          const std::size_t nLen = hb_arrayLen(pMemvar);
 
-          for (HB_SIZE n = 1; n <= nLen; n++)
+          for (std::size_t n = 1; n <= nLen; n++)
           {
             hb_memvarCreateFromItem(hb_arrayGetItemPtr(pMemvar, n), HB_VSCOMP_PRIVATE, nullptr);
           }
@@ -1206,9 +1206,9 @@ HB_FUNC(__MVXRELEASE)
         if (HB_IS_ARRAY(pMemvar))
         {
           // we are accepting an one-dimensional array of strings only
-          HB_SIZE nLen = hb_arrayLen(pMemvar);
+          const std::size_t nLen = hb_arrayLen(pMemvar);
 
-          for (HB_SIZE n = 1; n <= nLen; n++)
+          for (std::size_t n = 1; n <= nLen; n++)
           {
             hb_memvarRelease(hb_arrayGetItemPtr(pMemvar, n));
           }
