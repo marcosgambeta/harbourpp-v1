@@ -66,8 +66,8 @@ HB_FUNC( WAANIMATEPALETTE )
   auto pArray = hb_param(4, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(*static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
@@ -287,8 +287,8 @@ HB_FUNC( WACREATEPOLYPOLYGONRGN )
   auto pArray1 = hb_param(1, Harbour::Item::ARRAY);
   if( pArray1 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray1);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
@@ -297,8 +297,8 @@ HB_FUNC( WACREATEPOLYPOLYGONRGN )
   auto pArray2 = hb_param(2, Harbour::Item::ARRAY);
   if( pArray2 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray2);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
     }
@@ -1160,8 +1160,8 @@ HB_FUNC( WAPLGBLT )
   auto pArray = hb_param(2, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
@@ -1212,8 +1212,8 @@ HB_FUNC( WAPOLYPOLYGON )
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
   if( pArray1 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray1);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
@@ -1222,8 +1222,8 @@ HB_FUNC( WAPOLYPOLYGON )
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
   if( pArray2 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray2);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec2.push_back(static_cast<INT>(hb_arrayGetNI(pArray2, i + 1)));
     }
@@ -1439,8 +1439,8 @@ HB_FUNC( WASETPALETTEENTRIES )
   auto pArray = hb_param(4, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(*static_cast<PALETTEENTRY*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
@@ -1583,8 +1583,8 @@ HB_FUNC( WAGRADIENTFILL )
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
   if( pArray1 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray1);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec1.push_back(*static_cast<TRIVERTEX*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
@@ -1595,8 +1595,8 @@ HB_FUNC( WAGRADIENTFILL )
   auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
   if( pArray2 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray2);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
       if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT") )
@@ -1631,8 +1631,8 @@ HB_FUNC( WAGDIGRADIENTFILL )
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
   if( pArray1 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray1);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec1.push_back(*static_cast<TRIVERTEX*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
@@ -1643,8 +1643,8 @@ HB_FUNC( WAGDIGRADIENTFILL )
   auto pArray2 = hb_param(4, Harbour::Item::ARRAY);
   if( pArray2 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray2);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       PHB_ITEM pItem = hb_arrayGetItemPtr(pArray2, i + 1);
       if( hb_clsIsParent(hb_objGetClass(pItem), "WAS_GRADIENT_RECT") )
@@ -1862,8 +1862,8 @@ HB_FUNC( WAPOLYPOLYLINE )
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
   if( pArray1 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray1);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
@@ -1872,8 +1872,8 @@ HB_FUNC( WAPOLYPOLYLINE )
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
   if( pArray2 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray2);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec2.push_back(static_cast<DWORD>(hb_arrayGetND(pArray2, i + 1)));
     }
@@ -2016,8 +2016,8 @@ HB_FUNC( WAPOLYDRAW )
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
   if( pArray1 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray1);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec1.push_back(*static_cast<POINT*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray1, i + 1), "PTR")));
     }
@@ -2026,8 +2026,8 @@ HB_FUNC( WAPOLYDRAW )
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
   if( pArray2 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray2);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec2.push_back(static_cast<BYTE>(hb_arrayGetNI(pArray2, i + 1)));
     }
