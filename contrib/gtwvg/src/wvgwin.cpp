@@ -1268,9 +1268,9 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
   case CB_GETCOMBOBOXINFO: {
-    PHB_ITEM pCbi = hb_itemNew(nullptr);
-    PHB_ITEM pRc1 = hb_itemNew(nullptr);
-    PHB_ITEM pRc2 = hb_itemNew(nullptr);
+    auto pCbi = hb_itemNew(nullptr);
+    auto pRc1 = hb_itemNew(nullptr);
+    auto pRc2 = hb_itemNew(nullptr);
 
     COMBOBOXINFO cbi{};
     cbi.cbSize = sizeof(COMBOBOXINFO);
@@ -1318,7 +1318,7 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     break;
   case CB_GETDROPPEDCONTROLRECT: {
     RECT rc;
-    PHB_ITEM pRect = hb_itemNew(nullptr);
+    auto pRect = hb_itemNew(nullptr);
 
     SendMessage(hCB, CB_GETDROPPEDCONTROLRECT, 0, (LPARAM)&rc);
 
@@ -1339,7 +1339,7 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     break;
   case CB_GETEDITSEL: {
     DWORD range = (DWORD)SendMessage(hCB, CB_GETEDITSEL, (WPARAM)nullptr, (LPARAM)nullptr);
-    PHB_ITEM pRng = hb_itemNew(nullptr);
+    auto pRng = hb_itemNew(nullptr);
 
     hb_arrayNew(pRng, 2);
     hb_arraySetNI(pRng, 1, LOWORD(range));

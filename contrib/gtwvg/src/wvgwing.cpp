@@ -542,7 +542,7 @@ HB_FUNC(WVG_STATUSBARREFRESH)
 HB_FUNC(WVG_GETNMHDRINFO)
 {
   LPNMHDR lpnmh = (LPNMHDR)wvg_parlparam(1);
-  PHB_ITEM pEvParams = hb_itemNew(nullptr);
+  auto pEvParams = hb_itemNew(nullptr);
 
   hb_arrayNew(pEvParams, 3);
 
@@ -560,7 +560,7 @@ HB_FUNC(WVG_GETNMMOUSEINFO)
 {
   LPNMMOUSE nmm = (LPNMMOUSE)wvg_parlparam(1);
   NMHDR nmh = nmm->hdr;
-  PHB_ITEM pEvParams = hb_itemNew(nullptr);
+  auto pEvParams = hb_itemNew(nullptr);
 
   hb_arrayNew(pEvParams, 4);
 
@@ -580,7 +580,7 @@ HB_FUNC(WVG_GETNMTREEVIEWINFO)
   LPNMTREEVIEW pnmtv = (LPNMTREEVIEW)wvg_parlparam(1);
   NMHDR nmh = pnmtv->hdr;
 
-  PHB_ITEM pEvParams = hb_itemNew(nullptr);
+  auto pEvParams = hb_itemNew(nullptr);
 
   hb_arrayNew(pEvParams, 4);
 
@@ -711,7 +711,7 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
 
 PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
 {
-  PHB_ITEM aFont = hb_itemNew(nullptr);
+  auto aFont = hb_itemNew(nullptr);
 
   hb_arrayNew(aFont, 15);
 
@@ -765,7 +765,7 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
   if (msg == WM_INITDIALOG)
   {
     CHOOSEFONT *cf = (CHOOSEFONT *)lParam;
-    PHB_ITEM pBlock = (PHB_ITEM)hb_itemNew((PHB_ITEM)cf->lCustData);
+    auto pBlock = (PHB_ITEM)hb_itemNew((PHB_ITEM)cf->lCustData);
     SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
     binit = HB_TRUE;
   }
@@ -873,7 +873,7 @@ HB_FUNC(WVG_CHOOSEFONT)
   if (ChooseFont(&cf))
   {
     PHB_ITEM aFont = wvg_logfontTOarray(&lf, HB_FALSE);
-    PHB_ITEM aInfo = hb_itemNew(nullptr);
+    auto aInfo = hb_itemNew(nullptr);
 
     hb_arrayNew(aInfo, 4);
     hb_arraySetNI(aInfo, 1, cf.iPointSize);
@@ -1126,7 +1126,7 @@ HB_FUNC(WVG_SETWINDOWPROCBLOCK)
 {
   WNDPROC oldProc;
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  PHB_ITEM pBlock = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
+  auto pBlock = hb_itemNew(hb_param(2, Harbour::Item::BLOCK));
 
   SetProp(hWnd, TEXT("BLOCKCALLBACK"), pBlock);
 
