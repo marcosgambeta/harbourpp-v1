@@ -353,8 +353,8 @@ HB_FUNC( WAMENUHELP )
   auto pArray = hb_param(7, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<UINT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -369,8 +369,8 @@ HB_FUNC( WASHOWHIDEMENUCTL )
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -385,8 +385,8 @@ HB_FUNC( WAGETEFFECTIVECLIENTRECT )
   auto pArray = hb_param(3, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
