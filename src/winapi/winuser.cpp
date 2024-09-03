@@ -2022,8 +2022,8 @@ HB_FUN( WACREATEACCELERATORTABLEA )
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(*static_cast<ACCEL*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
@@ -2040,8 +2040,8 @@ HB_FUNC( WACREATEACCELERATORTABLEW )
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(*static_cast<ACCEL*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
@@ -2056,8 +2056,8 @@ HB_FUNC( WACREATEACCELERATORTABLE )
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(*static_cast<ACCEL*>(hb_objDataGetPtr(hb_arrayGetItemPtr(pArray, i + 1), "PTR")));
     }
@@ -2495,8 +2495,8 @@ HB_FUNC( WATABBEDTEXTOUTA )
   auto pArray = hb_param(7, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -2513,8 +2513,8 @@ HB_FUNC( WATABBEDTEXTOUTW )
   auto pArray = hb_param(7, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -2529,8 +2529,8 @@ HB_FUNC( WATABBEDTEXTOUT )
   auto pArray = hb_param(7, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -2548,8 +2548,8 @@ HB_FUNC( WAGETTABBEDTEXTEXTENTA )
   auto pArray = hb_param(5, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -2566,8 +2566,8 @@ HB_FUNC( WAGETTABBEDTEXTEXTENTW )
   auto pArray = hb_param(5, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -2582,8 +2582,8 @@ HB_FUNC( WAGETTABBEDTEXTEXTENT )
   auto pArray = hb_param(5, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
@@ -3245,8 +3245,8 @@ HB_FUNC( WASETSYSCOLORS )
   auto pArray1 = hb_param(2, Harbour::Item::ARRAY);
   if( pArray1 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray1);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray1);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec1.push_back(static_cast<INT>(hb_arrayGetNI(pArray1, i + 1)));
     }
@@ -3255,8 +3255,8 @@ HB_FUNC( WASETSYSCOLORS )
   auto pArray2 = hb_param(3, Harbour::Item::ARRAY);
   if( pArray2 != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray2);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray2);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec2.push_back(static_cast<COLORREF>(hb_arrayGetNL(pArray2, i + 1)));
     }
@@ -4109,8 +4109,8 @@ HB_FUNC( WATILEWINDOWS )
   auto pArray = hb_param(5, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<HWND>(hb_arrayGetPtr(pArray, i + 1)));
     }
@@ -4125,8 +4125,8 @@ HB_FUNC( WACASCADEWINDOWS )
   auto pArray = hb_param(5, Harbour::Item::ARRAY);
   if( pArray != nullptr )
   {
-    const int nLen = hb_arrayLen(pArray);
-    for( auto i = 0; i < nLen; i++ )
+    const std::size_t nLen = hb_arrayLen(pArray);
+    for( std::size_t i = 0; i < nLen; i++ )
     {
       vec.push_back(static_cast<HWND>(hb_arrayGetPtr(pArray, i + 1)));
     }
