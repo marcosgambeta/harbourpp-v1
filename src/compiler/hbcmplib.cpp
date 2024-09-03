@@ -176,7 +176,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int *pArgC, const char ***p
     {
       if (HB_IS_ARRAY(pParam))
       {
-        std::size_t nLen = hb_arrayLen(pParam);
+        const std::size_t nLen = hb_arrayLen(pParam);
         for (std::size_t nPos = 1; nPos <= nLen; ++nPos)
         {
           if (hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING)
