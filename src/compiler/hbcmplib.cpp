@@ -44,6 +44,7 @@
 // If you do not wish that, delete this exception notice.
 
 #include "hbcomp.hpp"
+#include <cstddef>
 
 static void s_pp_msg(void *cargo, int iErrorFmt, int iLine, const char *szModule, char cPrefix, int iValue,
                      const char *szText, const char *szPar1, const char *szPar2)
@@ -147,7 +148,7 @@ static void hb_compGenArgList(int iFirst, int iLast, int *pArgC, const char ***p
     {
       if (HB_IS_ARRAY(pParam))
       {
-        HB_SIZE nPos = hb_arrayLen(pParam);
+        std::size_t nPos = hb_arrayLen(pParam);
         if (nPos)
         {
           do
@@ -175,8 +176,8 @@ static void hb_compGenArgList(int iFirst, int iLast, int *pArgC, const char ***p
     {
       if (HB_IS_ARRAY(pParam))
       {
-        HB_SIZE nLen = hb_arrayLen(pParam);
-        for (HB_SIZE nPos = 1; nPos <= nLen; ++nPos)
+        std::size_t nLen = hb_arrayLen(pParam);
+        for (std::size_t nPos = 1; nPos <= nLen; ++nPos)
         {
           if (hb_arrayGetType(pParam, nPos) & Harbour::Item::STRING)
           {
