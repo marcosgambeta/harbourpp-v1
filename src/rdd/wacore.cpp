@@ -394,7 +394,7 @@ const char *hb_rddDefaultDrv(const char *szDriver)
 
   pRddInfo = hb_stackRDD();
 
-  if (szDriver && *szDriver)
+  if (szDriver != nullptr && *szDriver)
   {
     char szNewDriver[HB_RDD_MAX_DRIVERNAME_LEN + 1];
     LPRDDNODE pRddNode;
@@ -435,7 +435,7 @@ const char *hb_rddFindDrv(const char *szDriver, const char *szFileName)
 
   LPRDDNODE pRddNode = nullptr;
 
-  if (szDriver && *szDriver)
+  if (szDriver != nullptr && *szDriver)
   {
     char szNewDriver[HB_RDD_MAX_DRIVERNAME_LEN + 1];
 
@@ -679,7 +679,7 @@ AREAP hb_rddRequestArea(const char *szAlias, PHB_ITEM pCargo, HB_BOOL fNewArea, 
     return nullptr;
   }
 
-  if (szAlias)
+  if (szAlias != nullptr)
   {
     pSymAlias = hb_dynsymGet(szAlias);
 

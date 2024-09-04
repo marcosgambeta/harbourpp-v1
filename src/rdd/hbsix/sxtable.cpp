@@ -523,7 +523,7 @@ HB_FUNC(_SXOPENINIT)
       if (HB_ISCHAR(4))
       {
         auto szAlias = hb_parc(1);
-        if (szAlias && szAlias[0])
+        if (szAlias != nullptr && szAlias[0])
         {
           pInfo->atomAlias = hb_dynsymName(hb_dynsymGet(szAlias));
         }

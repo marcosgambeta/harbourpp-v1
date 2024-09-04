@@ -281,7 +281,7 @@ HB_FUNC(HB_STRTOUTF8)
       }
     }
   }
-  if (szDest)
+  if (szDest != nullptr)
   {
     hb_retclen_buffer(szDest, nDest);
   }
@@ -295,7 +295,7 @@ HB_FUNC(HB_UTF8TOSTR)
 {
   auto szString = hb_parc(1);
 
-  if (szString)
+  if (szString != nullptr)
   {
     auto nLen = hb_parclen(1);
     HB_SIZE nDest = 0;
@@ -323,7 +323,7 @@ HB_FUNC(HB_UTF8TOSTR)
       }
     }
 
-    if (szDest)
+    if (szDest != nullptr)
     {
       hb_retclen_buffer(szDest, nDest);
     }
@@ -403,7 +403,7 @@ HB_FUNC(HB_UTF8SUBSTR)
   auto szString = hb_parc(1);
   auto iPCount = hb_pcount();
 
-  if (szString && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))))
+  if (szString != nullptr && (iPCount < 2 || (HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))))
   {
     char *szDest = nullptr;
     auto nLen = hb_parclen(1);
@@ -428,7 +428,7 @@ HB_FUNC(HB_UTF8SUBSTR)
     {
       szDest = hb_cdpUTF8StringSubstr(szString, nLen, nFrom, nCount, &nDest);
     }
-    if (szDest)
+    if (szDest != nullptr)
     {
       hb_retclen_buffer(szDest, nDest);
     }
@@ -447,7 +447,7 @@ HB_FUNC(HB_UTF8LEFT)
 {
   auto szString = hb_parc(1);
 
-  if (szString && HB_ISNUM(2))
+  if (szString != nullptr && HB_ISNUM(2))
   {
     HB_ISIZ nLenReq = hb_parns(2);
     HB_SIZE nDest = 0;
@@ -458,7 +458,7 @@ HB_FUNC(HB_UTF8LEFT)
       szDest = hb_cdpUTF8StringSubstr(szString, hb_parclen(1), 0, nLenReq, &nDest);
     }
 
-    if (szDest)
+    if (szDest != nullptr)
     {
       hb_retclen_buffer(szDest, nDest);
     }
@@ -477,7 +477,7 @@ HB_FUNC(HB_UTF8RIGHT)
 {
   auto szString = hb_parc(1);
 
-  if (szString && HB_ISNUM(2))
+  if (szString != nullptr && HB_ISNUM(2))
   {
     HB_ISIZ nLenReq = hb_parns(2), nFrom;
     auto nLen = hb_parclen(1);
@@ -494,7 +494,7 @@ HB_FUNC(HB_UTF8RIGHT)
       szDest = hb_cdpUTF8StringSubstr(szString, nLen, nFrom, nLenReq, &nDest);
     }
 
-    if (szDest)
+    if (szDest != nullptr)
     {
       hb_retclen_buffer(szDest, nDest);
     }
@@ -513,7 +513,7 @@ HB_FUNC(HB_UTF8PEEK)
 {
   auto szString = hb_parc(1);
 
-  if (szString && HB_ISNUM(2))
+  if (szString != nullptr && HB_ISNUM(2))
   {
     HB_SIZE nPos = hb_parns(2);
     auto nLen = hb_parclen(1);
@@ -592,7 +592,7 @@ HB_FUNC(HB_UTF8STUFF)
   auto szText = hb_parc(1);
   auto szIns = hb_parc(4);
 
-  if (szText && szIns && HB_ISNUM(2) && HB_ISNUM(3))
+  if (szText != nullptr && szIns != nullptr && HB_ISNUM(2) && HB_ISNUM(3))
   {
     auto nLen = hb_parclen(1);
     HB_SIZE nPos = hb_parns(2);
@@ -656,7 +656,7 @@ HB_FUNC(HB_UTF8LEN)
 {
   auto szText = hb_parc(1);
 
-  if (szText)
+  if (szText != nullptr)
   {
     hb_retnint(hb_cdpUTF8StringLength(szText, hb_parclen(1)));
   }

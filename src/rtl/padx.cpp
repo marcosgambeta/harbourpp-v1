@@ -97,7 +97,7 @@ static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
       HB_BOOL bFreeReq;
       char *szText = hb_itemPadConv(pItem, &nSize, &bFreeReq);
 
-      if (szText)
+      if (szText != nullptr)
       {
         if (cdp)
         {

@@ -55,7 +55,7 @@
 // check if a given name can be used as alias expression
 HB_ERRCODE hb_rddVerifyAliasName(const char *szAlias)
 {
-  if (szAlias)
+  if (szAlias != nullptr)
   {
     char c;
 
@@ -752,7 +752,7 @@ HB_ERRCODE hb_rddCreateTableTemp(const char *szDriver, const char *szAlias, cons
   // 0 means chose first available in hb_rddInsertAreaNode()
   hb_rddSelectWorkAreaNumber(0);
 
-  if (szDriver && szDriver[0])
+  if (szDriver != nullptr && szDriver[0])
   {
     hb_strncpyUpper(szDriverBuffer, szDriver, sizeof(szDriverBuffer) - 1);
     szDriver = szDriverBuffer;
@@ -1020,7 +1020,7 @@ HB_ERRCODE hb_dbTransStruct(AREAP lpaSource, AREAP lpaDest, LPDBTRANSINFO lpdbTr
     for (uiCount = 1; uiCount <= uiFields; ++uiCount)
     {
       szField = hb_dbTransFieldPos(pFields, uiCount);
-      if (szField)
+      if (szField != nullptr)
       {
         uiPosSrc = hb_rddFieldExpIndex(lpaSource, szField);
         if (!uiPosSrc)

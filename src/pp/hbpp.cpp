@@ -277,7 +277,7 @@ static int hb_pp_preprocesfile(PHB_PP_STATE pState, const char *szRuleFile, cons
     ;
   }
 
-  if (szRuleFile)
+  if (szRuleFile != nullptr)
   {
     auto foutr = hb_fopen(szRuleFile, "w");
     if (!foutr)
@@ -358,14 +358,14 @@ static int hb_pp_generateVerInfo(char *szVerFile, HB_MAXINT nRevID, char *szChan
 
     fprintf(fout, "#define HB_VER_REVID %lulu\n", static_cast<HB_ULONG>(nRevID));
 
-    if (szChangeLogID)
+    if (szChangeLogID != nullptr)
     {
       pszEscaped = hb_pp_escapeString(szChangeLogID);
       fprintf(fout, "#define HB_VER_CHLID             \"%s\"\n", pszEscaped);
       hb_xfree(pszEscaped);
     }
 
-    if (szLastEntry)
+    if (szLastEntry != nullptr)
     {
       pszEscaped = hb_pp_escapeString(szLastEntry);
       fprintf(fout, "#define HB_VER_LENTRY            \"%s\"\n", pszEscaped);
@@ -528,11 +528,11 @@ static int hb_pp_parseChangelog(PHB_PP_STATE pState, const char *pszFileName, in
       {
         szFrom = strstr(szLine, "$"
                                 "Id");
-        if (szFrom)
+        if (szFrom != nullptr)
         {
           szFrom += 3;
           szTo = strchr(szFrom, '$');
-          if (szTo)
+          if (szTo != nullptr)
           {
             /* Is it tarball source package? */
             if (szTo == szFrom)
@@ -732,7 +732,7 @@ int main(int argc, char *argv[])
             char *szDefText = hb_strdup(argv[i] + 2), *szAssign;
 
             szAssign = strchr(szDefText, '=');
-            if (szAssign)
+            if (szAssign != nullptr)
             {
               *szAssign++ = '\0';
             }
@@ -836,7 +836,7 @@ int main(int argc, char *argv[])
     printf("Copyright (c) 1999-present, %s\n", _DEFAULT_ORIGIN_URL);
   }
 
-  if (szFile)
+  if (szFile != nullptr)
   {
     if (!szRuleFile && !szVerFile)
     {
@@ -846,7 +846,7 @@ int main(int argc, char *argv[])
     hb_pp_init(pState, iQuiet != 0, true, 0, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 
     szInclude = hb_getenv("INCLUDE");
-    if (szInclude)
+    if (szInclude != nullptr)
     {
       if (szInclude[0])
       {
@@ -855,7 +855,7 @@ int main(int argc, char *argv[])
       hb_xfree(szInclude);
     }
 
-    if (szStdCh)
+    if (szStdCh != nullptr)
     {
       hb_pp_readRules(pState, szStdCh);
     }
@@ -905,11 +905,11 @@ int main(int argc, char *argv[])
     iResult = 1;
   }
 
-  if (szChangeLogID)
+  if (szChangeLogID != nullptr)
   {
     hb_xfree(szChangeLogID);
   }
-  if (szLastEntry)
+  if (szLastEntry != nullptr)
   {
     hb_xfree(szLastEntry);
   }

@@ -55,7 +55,7 @@ HB_FUNC(HB_NTOS)
   {
     char *szResult = hb_itemStr(pNumber, nullptr, nullptr);
 
-    if (szResult)
+    if (szResult != nullptr)
     {
       HB_SIZE nToTrim = 0;
 

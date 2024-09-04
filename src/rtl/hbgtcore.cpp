@@ -1760,7 +1760,7 @@ static void hb_gt_def_BoxW(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
     HB_WCHAR szBoxW[10];
     auto wcPadCh = static_cast<HB_WCHAR>(HB_GTSELF_GETCLEARCHAR(pGT));
 
-    if (szFrame && *szFrame)
+    if (szFrame != nullptr && *szFrame)
     {
       for (i = 0; *szFrame && i < 9; ++i)
       {
@@ -1853,7 +1853,7 @@ static void hb_gt_def_BoxW(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 
 static void hb_gt_def_Box(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRight, const char *szFrame, int iColor)
 {
-  if (szFrame)
+  if (szFrame != nullptr)
   {
     PHB_CODEPAGE cdp = HB_GTSELF_BOXCP(pGT);
     HB_WCHAR szFrameW[10], wc;
@@ -1878,7 +1878,7 @@ static void hb_gt_def_BoxS(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 {
   static const HB_WCHAR s_szFrameW[] = HB_B_SINGLE_W;
 
-  if (szFrame)
+  if (szFrame != nullptr)
   {
     HB_GTSELF_BOX(pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor);
   }
@@ -1892,7 +1892,7 @@ static void hb_gt_def_BoxD(PHB_GT pGT, int iTop, int iLeft, int iBottom, int iRi
 {
   static const HB_WCHAR s_szFrameW[] = HB_B_DOUBLE_W;
 
-  if (szFrame)
+  if (szFrame != nullptr)
   {
     HB_GTSELF_BOX(pGT, iTop, iLeft, iBottom, iRight, szFrame, iColor);
   }
@@ -3404,7 +3404,7 @@ static void hb_gt_def_InkeySetText(PHB_GT pGT, const char *szText, HB_SIZE nLen,
     pGT->StrBuffer = nullptr;
   }
 
-  if (szText && nLen)
+  if (szText != nullptr && nLen)
   {
     auto cdp = hb_vmCDP();
     HB_SIZE nIndex = 0;
@@ -4136,7 +4136,7 @@ HB_BOOL hb_gtRegister(const HB_GT_INIT *gtInit)
 
 PHB_GT hb_gtLoad(const char *szGtName, PHB_GT pGT, PHB_GT_FUNCS pSuperTable)
 {
-  if (szGtName)
+  if (szGtName != nullptr)
   {
     int iPos = hb_gt_FindEntry(szGtName);
 
@@ -4279,7 +4279,7 @@ HB_BOOL hb_gtReload(const char *szGtName, HB_FHANDLE hFilenoStdin, HB_FHANDLE hF
 {
   auto fResult = false;
 
-  if (szGtName && hb_gt_FindEntry(szGtName) >= -1)
+  if (szGtName != nullptr && hb_gt_FindEntry(szGtName) >= -1)
   {
     hb_gtRelease(nullptr);
     hb_stackSetGT(hb_gtLoad(szGtName, nullptr, nullptr));
@@ -4293,7 +4293,7 @@ void *hb_gtCreate(const char *szGtName, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 {
   void *hCurrGT = hb_gtSwap(nullptr);
 
-  if (szGtName && hb_gt_FindEntry(szGtName) >= -1)
+  if (szGtName != nullptr && hb_gt_FindEntry(szGtName) >= -1)
   {
     PHB_GT pGT = hb_gtLoad(szGtName, nullptr, nullptr);
     if (pGT != nullptr)
@@ -4307,7 +4307,7 @@ void *hb_gtCreate(const char *szGtName, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFil
 
 static HB_BOOL hb_gtTryInit(const char *szGtName, HB_BOOL fFree)
 {
-  if (szGtName)
+  if (szGtName != nullptr)
   {
     if (hb_stackGetGT() == nullptr)
     {

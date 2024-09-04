@@ -170,7 +170,7 @@ static void hb_compOutMsg(void *cargo, int iErrorFmt, int iLine, const char *szM
 {
   char buffer[512];
 
-  if (szModule)
+  if (szModule != nullptr)
   {
     if (iErrorFmt == HB_ERRORFMT_CLIPPER)
     {

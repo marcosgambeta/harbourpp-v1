@@ -179,7 +179,7 @@ HB_FUNC(__COPYFILE)
   auto szSource = hb_parc(1);
   auto szDest = hb_parc(2);
 
-  if (szSource && szDest)
+  if (szSource != nullptr && szDest != nullptr)
   {
     if (!hb_copyfile(szSource, szDest))
     {

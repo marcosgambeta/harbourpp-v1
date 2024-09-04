@@ -101,7 +101,7 @@ HB_FUNC(ISDISK)
   auto fResult = false;
   auto szDrive = hb_parc(1);
 
-  if (szDrive)
+  if (szDrive != nullptr)
   {
     if (*szDrive >= 'A' && *szDrive <= 'Z')
     {
@@ -120,7 +120,7 @@ HB_FUNC(DISKCHANGE)
   auto fResult = false;
   auto szDrive = hb_parc(1);
 
-  if (szDrive)
+  if (szDrive != nullptr)
   {
     if (*szDrive >= 'A' && *szDrive <= 'Z')
     {

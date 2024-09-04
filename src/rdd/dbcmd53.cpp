@@ -423,7 +423,7 @@ HB_FUNC(DBFILEGET)
     HB_USHORT uiFields, uiIndex;
     auto szField = hb_parc(1);
 
-    if (szField)
+    if (szField != nullptr)
     {
       uiIndex = hb_rddFieldIndex(pArea, szField);
     }
@@ -460,7 +460,7 @@ HB_FUNC(DBFILEPUT)
     HB_USHORT uiFields, uiIndex;
     auto szField = hb_parc(1);
 
-    if (szField)
+    if (szField != nullptr)
     {
       uiIndex = hb_rddFieldIndex(pArea, szField);
     }

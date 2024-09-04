@@ -599,7 +599,7 @@ static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn,
     if (uiClass)
     {
       const char *szClass = hb_clsName(uiClass), *szFunc = hb_clsFuncName(uiClass);
-      if (szClass && szFunc)
+      if (szClass != nullptr && szFunc != nullptr)
       {
         nSize += strlen(szClass) + strlen(szFunc) + 3;
       }
@@ -924,7 +924,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdp
       if (uiClass)
       {
         const char *szClass = hb_clsName(uiClass), *szFunc = hb_clsFuncName(uiClass);
-        if (szClass && szFunc)
+        if (szClass != nullptr && szFunc != nullptr)
         {
           pBuffer[nOffset++] = HB_SERIAL_OBJ;
           nLen = strlen(szClass) + 1;
@@ -1682,7 +1682,7 @@ static HB_SIZE hb_deserializeItem(PHB_ITEM pItem, PHB_CODEPAGE cdpIn, PHB_CODEPA
       hb_itemClear(pItem);
     }
 
-    if (szVal)
+    if (szVal != nullptr)
     {
       hb_xfree(szVal);
     }

@@ -205,7 +205,7 @@ HB_BOOL hb_setenv(const char *szName, const char *szValue)
     char *pszNameFree = nullptr, *pszValueFree = nullptr;
 
     szName = hb_osEncodeCP(szName, &pszNameFree, nullptr);
-    if (szValue)
+    if (szValue != nullptr)
     {
       szValue = hb_osEncodeCP(szValue, &pszValueFree, nullptr);
       fResult = setenv(szName, szValue, 1) == 0;

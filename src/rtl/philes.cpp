@@ -56,7 +56,7 @@ HB_FUNC(FOPEN)
 {
   auto szFile = hb_parc(1);
 
-  if (szFile)
+  if (szFile != nullptr)
   {
     hb_retnint(static_cast<HB_NHANDLE>(hb_fsOpen(szFile, static_cast<HB_USHORT>(hb_parnidef(2, FO_READ | FO_COMPAT)))));
     hb_fsSetFError(hb_fsError());
@@ -73,7 +73,7 @@ HB_FUNC(FCREATE)
 {
   auto szFile = hb_parc(1);
 
-  if (szFile)
+  if (szFile != nullptr)
   {
     hb_retnint(static_cast<HB_NHANDLE>(hb_fsCreate(szFile, hb_parnidef(2, FC_NORMAL))));
     hb_fsSetFError(hb_fsError());
@@ -89,7 +89,7 @@ HB_FUNC(HB_FCREATE)
 {
   auto szFile = hb_parc(1);
 
-  if (szFile)
+  if (szFile != nullptr)
   {
     hb_retnint(static_cast<HB_NHANDLE>(
         hb_fsCreateEx(szFile, hb_parnidef(2, FC_NORMAL), static_cast<HB_USHORT>(hb_parnidef(3, FO_COMPAT)))));
@@ -189,7 +189,7 @@ HB_FUNC(FERASE)
   HB_ERRCODE uiError = 3;
   auto szFile = hb_parc(1);
 
-  if (szFile)
+  if (szFile != nullptr)
   {
     hb_retni(hb_fsDelete(szFile) ? 0 : F_ERROR);
     uiError = hb_fsError();
@@ -207,7 +207,7 @@ HB_FUNC(FRENAME)
   auto szFileOld = hb_parc(1);
   auto szFileNew = hb_parc(2);
 
-  if (szFileOld && szFileNew)
+  if (szFileOld != nullptr && szFileNew != nullptr)
   {
     hb_retni(hb_fsRename(szFileOld, szFileNew) ? 0 : F_ERROR);
     uiError = hb_fsError();
@@ -305,7 +305,7 @@ HB_FUNC(CURDIR)
   const char *szDrive;
 
   szDrive = hb_parc(1);
-  if (szDrive)
+  if (szDrive != nullptr)
   {
     if (*szDrive >= 'A' && *szDrive <= 'Z')
     {
@@ -331,7 +331,7 @@ HB_FUNC(HB_CURDRIVE)
   hb_retclen(szCurDrive, 1);
 
   szDrive = hb_parc(1);
-  if (szDrive)
+  if (szDrive != nullptr)
   {
     int iDrive = -1;
 
@@ -377,7 +377,7 @@ HB_FUNC(HB_CWD)
   }
 
   szNewWD = hb_parc(1);
-  if (szNewWD)
+  if (szNewWD != nullptr)
   {
     hb_fsSetCWD(szNewWD);
   }

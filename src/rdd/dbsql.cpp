@@ -296,7 +296,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_I
     {
       ++ulRecords;
 
-      if (szInsert)
+      if (szInsert != nullptr)
       {
         hb_addStrToFBuffer(pFileBuf, szInsert);
       }
@@ -341,7 +341,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_I
         // TODO: exporting only some fields
       }
 
-      if (szInsert)
+      if (szInsert != nullptr)
       {
         hb_addStrToFBuffer(pFileBuf, " );");
       }
@@ -360,7 +360,7 @@ static HB_ULONG hb_db2Sql(AREAP pArea, PHB_ITEM pFields, HB_MAXINT llNext, PHB_I
     }
   }
 
-  if (szInsert)
+  if (szInsert != nullptr)
   {
     hb_xfree(szInsert);
   }

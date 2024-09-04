@@ -533,7 +533,7 @@ static HB_ERRCODE hb_nsxErrorRT(NSXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCOD
     hb_errPutSubCode(pError, errSubCode);
     hb_errPutOsCode(pError, errOsCode);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));
-    if (szFileName)
+    if (szFileName != nullptr)
     {
       hb_errPutFileName(pError, szFileName);
     }
@@ -1831,7 +1831,7 @@ static LPTAGINFO hb_nsxTagNew(LPNSXINDEX pIndex, const char *szTagName, const ch
   auto pTag = static_cast<LPTAGINFO>(hb_xgrabz(sizeof(TAGINFO)));
   pTag->TagName = hb_strndup(szTagName, NSX_TAGNAME);
   pTag->pIndex = pIndex;
-  if (szKeyExpr)
+  if (szKeyExpr != nullptr)
   {
     pTag->KeyExpr = hb_strndup(szKeyExpr, NSX_MAXEXPLEN);
   }
@@ -4173,7 +4173,7 @@ static void hb_nsxCreateFName(NSXAREAP pArea, const char *szBagName, bool *fProd
 
   pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
-  if (szTagName)
+  if (szTagName != nullptr)
   {
     if (pFileName->szName)
     {
@@ -5231,7 +5231,7 @@ static bool hb_nsxOrdSkipWild(LPTAGINFO pTag, bool fForward, PHB_ITEM pWildItm)
     pArea->dbfarea.area.fEof = false;
   }
 
-  if (szFree)
+  if (szFree != nullptr)
   {
     hb_xfree(szFree);
   }
@@ -7553,7 +7553,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       /* If we have a codeblock for the conditional expression, use it */
       pForExp = hb_itemNew(pArea->dbfarea.area.lpdbOrdCondInfo->itmCobFor);
     }
-    else if (szFor)
+    else if (szFor != nullptr)
     {
       /* Otherwise, try compiling the conditional expression string */
       errCode = SELF_COMPILE(&pArea->dbfarea.area, szFor);
@@ -8940,7 +8940,7 @@ static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
     szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;
     hb_itemPutC(pItem, pData->szIndexExt[0] ? pData->szIndexExt : NSX_INDEXEXT);
-    if (szNewVal)
+    if (szNewVal != nullptr)
     {
       hb_strncpy(pData->szIndexExt, szNewVal, HB_MAX_FILE_EXT);
       hb_xfree(szNewVal);

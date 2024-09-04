@@ -797,7 +797,7 @@ HB_FUNC(TRANSFORM)
       }
 
 #ifndef HB_CLP_STRICT
-      if (szDateFormat && (uiPicFlags & PF_BRITISH))
+      if (szDateFormat != nullptr && (uiPicFlags & PF_BRITISH))
       {
         /* When @E is used CA-Cl*pper do not update date format
          * pattern but wrongly moves 4th and 5th bytes of
@@ -841,9 +841,9 @@ HB_FUNC(TRANSFORM)
 #endif
 
       hb_itemGetTDT(pValue, &lDate, &lTime);
-      if (szTimeFormat)
+      if (szTimeFormat != nullptr)
       {
-        if (szDateFormat)
+        if (szDateFormat != nullptr)
         {
           hb_timeStampFormat(szResult, szDateFormat, szTimeFormat, lDate, lTime);
         }
@@ -881,7 +881,7 @@ HB_FUNC(TRANSFORM)
         }
       }
 #endif
-      if (szDateFormat && (uiPicFlags & PF_REMAIN))
+      if (szDateFormat != nullptr && (uiPicFlags & PF_REMAIN))
       {
         /* Here we also respect the date format modified for @E [druzus]
          */

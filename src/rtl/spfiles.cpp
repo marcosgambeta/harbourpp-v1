@@ -75,7 +75,7 @@ HB_BOOL hb_spFile(const char *pszFileName, char *pszRetPath)
   else
   {
     const char *szDefault = hb_setGetDefault();
-    if (szDefault)
+    if (szDefault != nullptr)
     {
       pFilepath->szPath = szDefault;
       hb_fsFNameMerge(pszPath, pFilepath);
@@ -147,7 +147,7 @@ HB_BOOL hb_spFileExists(const char *pszFileName, char *pszRetPath)
   else
   {
     const char *szDefault = hb_setGetDefault();
-    if (szDefault)
+    if (szDefault != nullptr)
     {
       pFilepath->szPath = szDefault;
       hb_fsFNameMerge(pszPath, pFilepath);

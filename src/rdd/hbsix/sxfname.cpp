@@ -52,7 +52,7 @@ HB_FUNC(SX_FNAMEPARSER)
 {
   auto szFileName = hb_parc(1);
 
-  if (szFileName)
+  if (szFileName != nullptr)
   {
     char szPathBuf[HB_PATH_MAX];
     PHB_FNAME pFileName;

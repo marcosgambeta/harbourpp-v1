@@ -1772,7 +1772,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
 
     szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;
     hb_itemPutC(pItem, pData->szTableExt[0] ? pData->szTableExt : DELIM_TABLEEXT);
-    if (szNewVal)
+    if (szNewVal != nullptr)
     {
       hb_strncpy(pData->szTableExt, szNewVal, sizeof(pData->szTableExt) - 1);
       hb_xfree(szNewVal);

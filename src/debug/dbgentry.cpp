@@ -791,13 +791,13 @@ static const char *hb_dbgStripModuleName(const char *szName)
 
 void hb_dbgAddBreak(void *handle, const char *szModule, int nLine, const char *szFunction)
 {
-  if (szModule || szFunction)
+  if (szModule != nullptr || szFunction != nullptr)
   {
     auto info = static_cast<HB_DEBUGINFO *>(handle);
     HB_BREAKPOINT *pBreak;
 
     pBreak = ARRAY_ADD(HB_BREAKPOINT, info->aBreak, info->nBreakPoints);
-    if (szModule)
+    if (szModule != nullptr)
     {
       pBreak->szModule = hb_strdup(hb_dbgStripModuleName(szModule));
     }
@@ -807,7 +807,7 @@ void hb_dbgAddBreak(void *handle, const char *szModule, int nLine, const char *s
     }
     pBreak->nLine = nLine;
 
-    if (szFunction)
+    if (szFunction != nullptr)
     {
       pBreak->szFunction = hb_strdup(szFunction);
     }
@@ -857,7 +857,7 @@ static void hb_dbgAddModule(const char *szName)
   }
   HB_DBGCOMMON_UNLOCK();
 
-  if (szModuleName)
+  if (szModuleName != nullptr)
   {
     hb_xfree(szModuleName);
   }
@@ -870,7 +870,7 @@ static void hb_dbgAddStack(HB_DEBUGINFO *info, const char *szName, int nLine, in
   szName = hb_dbgStripModuleName(szName);
 
   const char *szFunction = strrchr(szName, ':');
-  if (szFunction)
+  if (szFunction != nullptr)
   {
     szFunction++;
   }
@@ -884,7 +884,7 @@ static void hb_dbgAddStack(HB_DEBUGINFO *info, const char *szName, int nLine, in
   }
   else
   {
-    if (szFunction)
+    if (szFunction != nullptr)
     {
       top->szFunction = hb_strdup(szFunction);
     }
@@ -896,7 +896,7 @@ static void hb_dbgAddStack(HB_DEBUGINFO *info, const char *szName, int nLine, in
     }
   }
 
-  if (szFunction)
+  if (szFunction != nullptr)
   {
     top->szModule = hb_strndup(szName, szFunction - szName - 1);
   }
@@ -1008,7 +1008,7 @@ static void hb_dbgAddStopLines(PHB_ITEM pItem)
     auto pEntry = hb_arrayGetItemPtr(s_common.pStopLines, i);
     auto szModule = hb_arrayGetCPtr(pEntry, 1);
 
-    if (szModule)
+    if (szModule != nullptr)
     {
       const char *szName = hb_dbgStripModuleName(szModule);
 
@@ -1041,7 +1041,7 @@ static void hb_dbgAddVar(int *nVars, HB_VARINFO **aVars, const char *szName, cha
 
 void hb_dbgAddWatch(void *handle, const char *szExpr, HB_BOOL bTrace)
 {
-  if (szExpr)
+  if (szExpr != nullptr)
   {
     auto info = static_cast<HB_DEBUGINFO *>(handle);
     HB_WATCHPOINT *pWatch = ARRAY_ADD(HB_WATCHPOINT, info->aWatch, info->nWatchPoints);
@@ -1738,7 +1738,7 @@ HB_BOOL hb_dbgIsValidStopLine(void *handle, const char *szModule, int nLine)
 {
   auto fResult = false;
 
-  if (szModule)
+  if (szModule != nullptr)
   {
     HB_ISIZ nModules;
 
@@ -1780,7 +1780,7 @@ const char *hb_dbgGetModuleName(void *handle, const char *szName)
 #endif
   HB_SYMBOL_UNUSED(handle);
 
-  if (szName)
+  if (szName != nullptr)
   {
     szName = hb_dbgStripModuleName(szName);
   }
@@ -1879,7 +1879,7 @@ void hb_dbgSetToCursor(void *handle, const char *szModule, int nLine)
 {
   auto info = static_cast<HB_DEBUGINFO *>(handle);
 
-  if (szModule)
+  if (szModule != nullptr)
   {
     szModule = hb_dbgStripModuleName(szModule);
 

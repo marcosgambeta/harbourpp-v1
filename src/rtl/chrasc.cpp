@@ -89,7 +89,7 @@ HB_FUNC(ASC)
 {
   auto szValue = hb_parc(1);
 
-  if (szValue)
+  if (szValue != nullptr)
   {
     int iChar;
     auto cdp = hb_vmCDP();

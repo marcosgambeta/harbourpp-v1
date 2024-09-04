@@ -107,7 +107,7 @@ HB_FUNC(HB_BCODE)
 {
   auto szText = hb_parc(1);
 
-  if (szText)
+  if (szText != nullptr)
   {
     hb_retni(static_cast<HB_UCHAR>(szText[0]));
   }
@@ -730,7 +730,7 @@ HB_FUNC(HB_BSTUFF)
   auto szText = hb_parc(1);
   auto szIns = hb_parc(4);
 
-  if (szText && szIns && HB_ISNUM(2) && HB_ISNUM(3))
+  if (szText != nullptr && szIns != nullptr && HB_ISNUM(2) && HB_ISNUM(3))
   {
     auto nLen = hb_parclen(1);
     HB_SIZE nPos = hb_parns(2);
@@ -784,7 +784,7 @@ HB_FUNC(HB_USTUFF)
   auto szText = hb_parc(1);
   auto szIns = hb_parc(4);
 
-  if (szText && szIns && HB_ISNUM(2) && HB_ISNUM(3))
+  if (szText != nullptr && szIns != nullptr && HB_ISNUM(2) && HB_ISNUM(3))
   {
     auto cdp = hb_vmCDP();
     auto nLen = hb_parclen(1);

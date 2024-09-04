@@ -5217,7 +5217,7 @@ static void hb_cdxCreateFName(CDXAREAP pArea, const char *szBagName, bool *fProd
 
   pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
-  if (szBaseName)
+  if (szBaseName != nullptr)
   {
     if (pFileName->szName)
     {
@@ -5993,7 +5993,7 @@ static bool hb_cdxDBOISkipWild(CDXAREAP pArea, LPCDXTAG pTag, bool fForward, PHB
     pArea->dbfarea.area.fEof = false;
   }
 
-  if (szFree)
+  if (szFree != nullptr)
   {
     hb_xfree(szFree);
   }
@@ -8235,7 +8235,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
 
     // Check conditional expression
     szFor = pArea->dbfarea.area.lpdbOrdCondInfo->abFor;
-    if (szFor)
+    if (szFor != nullptr)
     {
       if (SELF_COMPILE(&pArea->dbfarea.area, szFor) == Harbour::FAILURE)
       {
@@ -9517,7 +9517,7 @@ static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
     szNewVal = szExt[0] == '.' && szExt[1] ? hb_strdup(szExt) : nullptr;
     hb_itemPutC(pItem, pData->szIndexExt[0] ? pData->szIndexExt : CDX_INDEXEXT);
-    if (szNewVal)
+    if (szNewVal != nullptr)
     {
       hb_strncpy(pData->szIndexExt, szNewVal, sizeof(pData->szIndexExt) - 1);
       hb_xfree(szNewVal);

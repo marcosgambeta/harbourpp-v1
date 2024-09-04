@@ -249,7 +249,7 @@ HB_FUNC(HB_DTOT)
   if (hb_partdt(&lDate, &lTime, 1))
   {
     auto szTime = hb_parc(2);
-    if (szTime)
+    if (szTime != nullptr)
     {
       hb_timeStampStrGetDT(szTime, &lDate2, &lTime);
     }
@@ -283,7 +283,7 @@ HB_FUNC(HB_TTOD)
     if (HB_ISBYREF(2))
     {
       auto szTimeFormat = hb_parc(3);
-      if (szTimeFormat)
+      if (szTimeFormat != nullptr)
       {
         char szBuffer[27];
         if (*szTimeFormat == '\0')
@@ -503,7 +503,7 @@ HB_FUNC(HB_CTOT)
 {
   auto szDateTime = hb_parc(1);
 
-  if (szDateTime)
+  if (szDateTime != nullptr)
   {
     long lDate, lTime;
     auto szDateFormat = hb_parc(2);
@@ -546,7 +546,7 @@ HB_FUNC(HB_STOT)
 {
   auto szDateTime = hb_parc(1);
 
-  if (szDateTime)
+  if (szDateTime != nullptr)
   {
     long lDate, lTime;
     hb_timeStampStrRawGet(szDateTime, &lDate, &lTime);
@@ -668,7 +668,7 @@ HB_FUNC(HB_STRTOTS)
 {
   auto szDateTime = hb_parc(1);
 
-  if (szDateTime)
+  if (szDateTime != nullptr)
   {
     long lDate, lTime;
     hb_timeStampStrGetDT(szDateTime, &lDate, &lTime);

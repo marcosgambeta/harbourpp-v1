@@ -53,7 +53,7 @@ HB_FUNC(STUFF)
   auto szText = hb_parc(1);
   auto szIns = hb_parc(4);
 
-  if (szText && szIns && HB_ISNUM(2) && HB_ISNUM(3))
+  if (szText != nullptr && szIns != nullptr && HB_ISNUM(2) && HB_ISNUM(3))
   {
     auto cdp = hb_vmCDP();
     auto nLen = hb_parclen(1);

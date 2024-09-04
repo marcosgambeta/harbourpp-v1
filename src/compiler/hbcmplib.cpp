@@ -232,7 +232,7 @@ HB_FUNC(HB_COMPILEFROMBUF)
 {
   auto szSource = hb_parc(1);
 
-  if (szSource)
+  if (szSource != nullptr)
   {
     int argc;
     const char **argv;

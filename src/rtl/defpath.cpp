@@ -52,7 +52,7 @@ HB_FUNC(__DEFPATH)
   const char *szDefault = hb_setGetDefault();
   int size = 0;
 
-  if (szDefault)
+  if (szDefault != nullptr)
   {
     /* Leave enough space to append a path delimiter */
     hb_strncpy(buffer, szDefault, sizeof(buffer) - 1);

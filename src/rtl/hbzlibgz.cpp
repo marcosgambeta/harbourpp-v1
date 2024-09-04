@@ -240,7 +240,7 @@ HB_FUNC(HB_GZWRITE)
 #ifndef HB_NO_GZLIB
   auto szData = hb_parc(2);
 
-  if (szData)
+  if (szData != nullptr)
   {
     gzFile gz = hb_gzParam(1);
     if (gz)
@@ -274,7 +274,7 @@ HB_FUNC(HB_GZGETS)
     {
       auto szBuffer = static_cast<char *>(hb_xalloc(iLen + 1));
 
-      if (szBuffer)
+      if (szBuffer != nullptr)
       {
         char *szBuff;
 
@@ -308,7 +308,7 @@ HB_FUNC(HB_GZPUTS)
 #ifndef HB_NO_GZLIB
   auto szData = hb_parc(2);
 
-  if (szData)
+  if (szData != nullptr)
   {
     gzFile gz = hb_gzParam(1);
     if (gz)

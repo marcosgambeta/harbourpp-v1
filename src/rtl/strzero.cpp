@@ -78,7 +78,7 @@ HB_FUNC(STRZERO)
     {
       char *szResult = hb_itemStr(pNumber, pWidth, pDec);
 
-      if (szResult)
+      if (szResult != nullptr)
       {
         HB_SIZE nPos = 0;
 

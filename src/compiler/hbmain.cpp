@@ -123,7 +123,7 @@ int hb_compMainExt(int argc, const char *const argv[], HB_BYTE **pBufPtr, HB_SIZ
     hb_compIdentifierOpen(HB_COMP_PARAM);
   }
 
-  if (szSource)
+  if (szSource != nullptr)
   {
     iFileCount++;
     iStatus = hb_compCompile(HB_COMP_PARAM, "{SOURCE}", szSource, iStartLine);
@@ -433,7 +433,7 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
     default:
       szVarScope = nullptr;
     }
-    if (szVarScope)
+    if (szVarScope != nullptr)
     {
       hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_FOLLOWS_EXEC, szVarScope, nullptr);
       return;
@@ -2530,7 +2530,7 @@ void hb_compFunctionMarkStatic(HB_COMP_DECL, const char *szFunName)
 
 PHB_HINLINE hb_compInlineAdd(HB_COMP_DECL, const char *szFunName, int iLine)
 {
-  if (szFunName)
+  if (szFunName != nullptr)
   {
     PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szFunName, nullptr, HB_SYM_FUNCNAME);
     if (!pSym)
@@ -2764,7 +2764,7 @@ void hb_compGenModuleName(HB_COMP_DECL, const char *szFunName)
   hb_compGenPCodeN(reinterpret_cast<const HB_BYTE *>(HB_COMP_PARAM->currModule), strlen(HB_COMP_PARAM->currModule),
                    HB_COMP_PARAM);
   hb_compGenPCode1(':', HB_COMP_PARAM);
-  if (szFunName && *szFunName)
+  if (szFunName != nullptr && *szFunName)
   {
     hb_compGenPCodeN(reinterpret_cast<const HB_BYTE *>(szFunName), strlen(szFunName) + 1, HB_COMP_PARAM);
   }
@@ -2916,7 +2916,7 @@ void hb_compGenMessage(const char *szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
 {
   HB_USHORT wSym;
 
-  if (szMsgName)
+  if (szMsgName != nullptr)
   {
     PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szMsgName, &wSym, HB_SYM_MSGNAME);
     if (!pSym)
@@ -3224,7 +3224,7 @@ void hb_compGenPopAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, con
 {
   if (bPushAliasValue)
   {
-    if (szAlias)
+    if (szAlias != nullptr)
     {
       auto iLen = static_cast<int>(strlen(szAlias));
       if (szAlias[0] == 'M' && (iLen == 1 || (iLen >= 4 && iLen <= 6 && memcmp(szAlias, "MEMVAR", iLen) == 0)))
@@ -3268,7 +3268,7 @@ void hb_compGenPushAliasedVar(const char *szVarName, HB_BOOL bPushAliasValue, co
 {
   if (bPushAliasValue)
   {
-    if (szAlias)
+    if (szAlias != nullptr)
     {
       auto iLen = static_cast<int>(strlen(szAlias));
       /* myalias->var
@@ -4621,7 +4621,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
     }
     hb_fsFNameMerge(szFileName, pFileName);
 
-    if (szBuffer)
+    if (szBuffer != nullptr)
     {
       if (!hb_pp_inBuffer(HB_COMP_PARAM->pLex->pPP, szFileName, szBuffer, strlen(szBuffer), iStartLine))
       {
@@ -4691,7 +4691,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
         HB_COMP_PARAM->szFile = HB_COMP_PARAM->currModule;
       }
 
-      if (szBuffer)
+      if (szBuffer != nullptr)
       {
         /* Generate the starting procedure frame, lower letters used
          * intentionally to not create name conflicts when -n2 switch
@@ -4738,7 +4738,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
       }
     }
 
-    if (szBuffer)
+    if (szBuffer != nullptr)
     {
       szBuffer = nullptr;
       pModule = HB_COMP_PARAM->modules;
@@ -4888,7 +4888,7 @@ static int hb_compCompile(HB_COMP_DECL, const char *szPrg, const char *szBuffer,
         pFunc = pFunc->pNext;
       }
 
-      if (szFirstFunction)
+      if (szFirstFunction != nullptr)
       {
         PHB_HSYMBOL pSym = hb_compSymbolFind(HB_COMP_PARAM, szFirstFunction, nullptr, HB_SYM_FUNCNAME);
         if (pSym)

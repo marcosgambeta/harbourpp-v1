@@ -112,7 +112,7 @@ static HB_ERRCODE hb_memoErrorRT(FPTAREAP pArea, HB_ERRCODE uiGenCode, HB_ERRCOD
       hb_errPutOsCode(pError, uiOsCode);
     }
     hb_errPutDescription(pError, hb_langDGetErrorDesc(uiGenCode));
-    if (szFileName)
+    if (szFileName != nullptr)
     {
       hb_errPutFileName(pError, szFileName);
     }
@@ -5378,7 +5378,7 @@ static HB_ERRCODE hb_fptRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
         hb_itemPutC(pItem, hb_memoDefaultFileExt(iType ? iType : DB_MEMO_FPT, pRDD->rddID));
       }
     }
-    if (szNewVal)
+    if (szNewVal != nullptr)
     {
       hb_strncpy(pData->szMemoExt, szNewVal, sizeof(pData->szMemoExt) - 1);
       hb_xfree(szNewVal);

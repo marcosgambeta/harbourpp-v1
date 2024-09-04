@@ -56,7 +56,7 @@ HB_FUNC(HB_PROCESSOPEN)
   auto pStdOut = hb_param(3, Harbour::Item::BYREF);
   auto pStdErr = hb_param(4, Harbour::Item::BYREF);
 
-  if (szName && (pStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) &&
+  if (szName != nullptr && (pStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) &&
       (HB_ISLOG(5) || HB_ISNIL(5)) && (HB_ISBYREF(6) || HB_ISNIL(6)) &&
       (!pStdIn || (pStdIn != pStdOut && pStdIn != pStdErr)))
   {
@@ -135,7 +135,7 @@ HB_FUNC(HB_PROCESSRUN)
   auto pStdErr = hb_param(4, Harbour::Item::BYREF);
   bool fDetach = hb_parl(5);
 
-  if (szName && (szStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) &&
+  if (szName != nullptr && (szStdIn || HB_ISNIL(2)) && (pStdOut || HB_ISNIL(3)) && (pStdErr || HB_ISNIL(4)) &&
       (HB_ISLOG(5) || HB_ISNIL(5)))
   {
     HB_SIZE nStdOut, nStdErr;

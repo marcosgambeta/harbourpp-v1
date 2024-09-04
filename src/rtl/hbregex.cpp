@@ -142,7 +142,7 @@ static int hb_regexec(PHB_REGEX pRegEx, const char *szString, HB_SIZE nLen, int 
   {
     iResult = -1;
   }
-  if (szBuffer)
+  if (szBuffer != nullptr)
   {
     hb_xfree(szBuffer);
   }

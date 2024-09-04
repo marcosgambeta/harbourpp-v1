@@ -281,7 +281,7 @@ void hb_dateStrGet(const char *szDate, int *piYear, int *piMonth, int *piDay)
 #endif
 
 #if defined(HB_CLP_STRICT) || 1
-  if (szDate)
+  if (szDate != nullptr)
 #else
   if (szDate && szDate[0] >= '0' && szDate[0] <= '9' && szDate[1] >= '0' && szDate[1] <= '9' && szDate[2] >= '0' &&
       szDate[2] <= '9' && szDate[3] >= '0' && szDate[3] <= '9' && szDate[4] >= '0' && szDate[4] <= '9' &&
@@ -521,7 +521,7 @@ HB_BOOL hb_timeStrGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
   iHour = iMinutes = iSeconds = iMSec = iBlocks = 0;
   auto fValid = false;
 
-  if (szTime)
+  if (szTime != nullptr)
   {
     while (HB_ISSPACE(*szTime))
     {
@@ -653,7 +653,7 @@ void hb_timeStrRawGet(const char *szTime, int *piHour, int *piMinutes, int *piSe
 
   *piHour = *piMinutes = *piSeconds = *piMSec = 0;
 
-  if (szTime)
+  if (szTime != nullptr)
   {
     int iLen = 0;
 
@@ -779,7 +779,7 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
   iYear = iMonth = iDay = 0;
   auto fValid = false;
 
-  if (szDateTime)
+  if (szDateTime != nullptr)
   {
     while (HB_ISSPACE(*szDateTime))
     {
@@ -872,7 +872,7 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
   {
     if (!hb_timeStrGet(szDateTime, piHour, piMinutes, piSeconds, piMSec))
     {
-      if (szDateTime)
+      if (szDateTime != nullptr)
       {
         fValid = false;
       }
@@ -882,7 +882,7 @@ HB_BOOL hb_timeStampStrGet(const char *szDateTime, int *piYear, int *piMonth, in
       fValid = true;
     }
   }
-  else if (szDateTime)
+  else if (szDateTime != nullptr)
   {
     fValid = false;
   }

@@ -115,7 +115,7 @@ static void _hb_jsonCtxAdd(PHB_JSON_ENCODE_CTX pCtx, const char *szString, HB_SI
     pCtx->pBuffer = static_cast<char *>(hb_xrealloc(pCtx->pBuffer, pCtx->nAlloc));
     pCtx->pHead = pCtx->pBuffer + nSize;
   }
-  if (szString)
+  if (szString != nullptr)
   {
     hb_xmemcpy(pCtx->pHead, szString, nLen);
     pCtx->pHead += nLen;
@@ -747,7 +747,7 @@ HB_SIZE hb_jsonDecodeCP(const char *szSource, PHB_ITEM pValue, PHB_CODEPAGE cdp)
   {
     hb_itemRelease(pItem);
   }
-  if (sz)
+  if (sz != nullptr)
   {
     return sz - szSource;
   }
@@ -767,7 +767,7 @@ static PHB_CODEPAGE _hb_jsonCdpPar(int iParam)
   {
     auto szCdp = hb_parc(iParam);
 
-    if (szCdp)
+    if (szCdp != nullptr)
     {
       return hb_cdpFindExt(szCdp);
     }

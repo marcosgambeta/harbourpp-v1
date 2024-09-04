@@ -63,7 +63,7 @@ HB_FUNC(ORDWILDSEEK)
   {
     auto szPattern = hb_parc(1);
 
-    if (szPattern)
+    if (szPattern != nullptr)
     {
       bool fCont = hb_parl(2), fBack = hb_parl(3);
       auto fFound = false;

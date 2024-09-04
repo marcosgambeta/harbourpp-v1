@@ -75,7 +75,7 @@ HB_FUNC(STR)
   {
     char *szResult = hb_itemStr(pNumber, pWidth, pDec);
 
-    if (szResult)
+    if (szResult != nullptr)
     {
       hb_retc_buffer(szResult);
     }

@@ -215,7 +215,7 @@ HB_FUNC(HB_CRC32)
 {
   auto szString = hb_parc(1);
 
-  if (szString)
+  if (szString != nullptr)
   {
     hb_retnint(hb_crc32(static_cast<HB_U32>(hb_parnl(2)), szString, hb_parclen(1)));
   }
@@ -229,7 +229,7 @@ HB_FUNC(HB_CRC16)
 {
   auto szString = hb_parc(1);
 
-  if (szString)
+  if (szString != nullptr)
   {
     hb_retnint(hb_crc16(static_cast<HB_U16>(hb_parnl(2)), szString, hb_parclen(1)));
   }
@@ -243,7 +243,7 @@ HB_FUNC(HB_CRC)
 {
   auto szString = hb_parc(1);
 
-  if (szString)
+  if (szString != nullptr)
   {
     auto ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
     if (ulPolynomial == 0)
@@ -262,7 +262,7 @@ HB_FUNC(HB_CRCCT)
 {
   auto szString = hb_parc(1);
 
-  if (szString)
+  if (szString != nullptr)
   {
     auto ulPolynomial = static_cast<HB_MAXUINT>(hb_parnint(3));
     if (ulPolynomial == 0)

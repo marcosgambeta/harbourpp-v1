@@ -70,7 +70,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
     size = 10;
   }
 
-  if (szDate && strlen(szDate) == 8)
+  if (szDate != nullptr && strlen(szDate) == 8)
   { /* A valid date is always 8 characters */
     auto used_d = false;
     auto used_m = false;
@@ -262,7 +262,7 @@ static int hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long
   int d_value = 0, m_value = 0, y_value = 0;
   int iSize = 0;
 
-  if (szDate)
+  if (szDate != nullptr)
   {
     int d_pos = 0, m_pos = 0, y_pos = 0;
     int count, digit, non_digit, used;
@@ -713,7 +713,7 @@ void hb_timeStampUnformat(const char *szDateTime, const char *szDateFormat, cons
    HB_TRACE(HB_TR_DEBUG, ("hb_timeStampUnformat(%s, %s, %s, %p, %p)", szDateTime, szDateFormat, szTimeFormat, static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
 #endif
 
-  if (szDateTime)
+  if (szDateTime != nullptr)
   {
     if (!szDateFormat)
     {

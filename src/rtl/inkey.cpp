@@ -214,7 +214,7 @@ HB_FUNC(HB_KEYCODE)
   auto szValue = hb_parc(1);
   int iKey;
 
-  if (szValue)
+  if (szValue != nullptr)
   {
     auto cdp = hb_vmCDP();
     HB_SIZE nIndex = 0;

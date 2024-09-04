@@ -701,7 +701,7 @@ HB_FUNC(SX_WILDSEEK)
     DBORDERINFO Info{};
     Info.itmResult = hb_itemNew(nullptr);
 
-    if (szPattern && szPattern[0])
+    if (szPattern != nullptr && szPattern[0])
     {
       if (SELF_ORDINFO(pArea, DBOI_NUMBER, &Info) == Harbour::SUCCESS)
       {

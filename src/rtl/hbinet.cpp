@@ -509,7 +509,7 @@ HB_FUNC(HB_INETADDRESS)
   if (socket)
   {
     char *szAddr = socket->remote ? hb_socketAddrGetName(socket->remote, socket->remotelen) : nullptr;
-    if (szAddr)
+    if (szAddr != nullptr)
     {
       hb_retc_buffer(szAddr);
     }
@@ -1231,7 +1231,7 @@ HB_FUNC(HB_INETGETHOSTS)
 {
   auto szHost = hb_parc(1);
 
-  if (szHost)
+  if (szHost != nullptr)
   {
     HB_INET_INITIALIZE();
     PHB_ITEM pHosts = hb_socketGetHosts(szHost, HB_SOCKET_PF_INET);
@@ -1254,7 +1254,7 @@ HB_FUNC(HB_INETGETALIAS)
 {
   auto szHost = hb_parc(1);
 
-  if (szHost)
+  if (szHost != nullptr)
   {
     HB_INET_INITIALIZE();
     PHB_ITEM pHosts = hb_socketGetAliases(szHost, HB_SOCKET_PF_INET);
@@ -1460,7 +1460,7 @@ static void hb_inetConnectInternal(HB_BOOL fResolve)
           hb_inetGetError(socket);
         }
       }
-      if (szAddr)
+      if (szAddr != nullptr)
       {
         hb_xfree(szAddr);
       }

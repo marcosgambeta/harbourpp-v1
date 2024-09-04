@@ -278,7 +278,7 @@ static HB_ERRCODE hb_ntxErrorRT(NTXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCOD
     hb_errPutSubCode(pError, errSubCode);
     hb_errPutOsCode(pError, errOsCode);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));
-    if (szFileName)
+    if (szFileName != nullptr)
     {
       hb_errPutFileName(pError, szFileName);
     }
@@ -1560,7 +1560,7 @@ static LPTAGINFO hb_ntxTagNew(LPNTXINDEX pIndex, const char *szTagName, bool fTa
   pTag->TagName = hb_strndup(szTagName, NTX_MAX_TAGNAME);
   pTag->fTagName = fTagName;
   pTag->pIndex = pIndex;
-  if (szKeyExpr)
+  if (szKeyExpr != nullptr)
   {
     pTag->KeyExpr = hb_strndup(szKeyExpr, NTX_MAX_EXP);
   }
@@ -3936,7 +3936,7 @@ static void hb_ntxCreateFName(NTXAREAP pArea, const char *szBagName, bool *fProd
 
   pFileName = hb_fsFNameSplit(fName ? szBagName : pArea->dbfarea.szDataFileName);
 
-  if (szTagName)
+  if (szTagName != nullptr)
   {
     if (pFileName->szName)
     {
@@ -4866,7 +4866,7 @@ static bool hb_ntxOrdSkipWild(LPTAGINFO pTag, bool fForward, PHB_ITEM pWildItm)
     pArea->dbfarea.area.fEof = false;
   }
 
-  if (szFree)
+  if (szFree != nullptr)
   {
     hb_xfree(szFree);
   }
@@ -7118,7 +7118,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
       /* If we have a codeblock for the conditional expression, use it */
       pForExp = hb_itemNew(pArea->dbfarea.area.lpdbOrdCondInfo->itmCobFor);
     }
-    else if (szFor)
+    else if (szFor != nullptr)
     {
       /* Otherwise, try compiling the conditional expression string */
       errCode = SELF_COMPILE(&pArea->dbfarea.area, szFor);
@@ -8608,7 +8608,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
     szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;
     hb_itemPutC(pItem, pData->szIndexExt[0] ? pData->szIndexExt : NTX_INDEXEXT);
-    if (szNewVal)
+    if (szNewVal != nullptr)
     {
       hb_strncpy(pData->szIndexExt, szNewVal, sizeof(pData->szIndexExt) - 1);
       hb_xfree(szNewVal);

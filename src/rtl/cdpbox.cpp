@@ -54,7 +54,7 @@ HB_FUNC(HB_UTF8TOSTRBOX)
 {
   auto szString = hb_parc(1);
 
-  if (szString)
+  if (szString != nullptr)
   {
     auto nLen = hb_parclen(1);
     HB_SIZE nDest = 0;
@@ -81,7 +81,7 @@ HB_FUNC(HB_UTF8TOSTRBOX)
       }
     }
 
-    if (szDest)
+    if (szDest != nullptr)
     {
       hb_retclen_buffer(szDest, nDest);
     }

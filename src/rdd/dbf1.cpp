@@ -104,7 +104,7 @@ static HB_ERRCODE hb_dbfErrorRT(DBFAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCOD
     hb_errPutSubCode(pError, errSubCode);
     hb_errPutOsCode(pError, errOsCode);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));
-    if (szFileName)
+    if (szFileName != nullptr)
     {
       hb_errPutFileName(pError, szFileName);
     }
@@ -7349,7 +7349,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
     szNewVal = szNew[0] == '.' && szNew[1] ? hb_strdup(szNew) : nullptr;
     hb_itemPutC(pItem, pData->szTableExt[0] ? pData->szTableExt : DBF_TABLEEXT);
-    if (szNewVal)
+    if (szNewVal != nullptr)
     {
       hb_strncpy(pData->szTableExt, szNewVal, sizeof(pData->szTableExt) - 1);
       hb_xfree(szNewVal);

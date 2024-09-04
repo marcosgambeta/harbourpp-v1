@@ -2134,7 +2134,7 @@ static PHB_PP_FILE hb_pp_FileNew(PHB_PP_STATE pState, const char *szFileName, HB
             }
             pFile = pFile->pPrev;
           }
-          if (szFirstFName)
+          if (szFirstFName != nullptr)
           {
             PHB_FNAME pFirstFName = hb_fsFNameSplit(szFirstFName);
             pFileName->szPath = pFirstFName->szPath;
@@ -4892,7 +4892,7 @@ static void hb_pp_processCondDefined(PHB_PP_STATE pState, PHB_PP_TOKEN pToken)
           szSwitch = pNext->pNext->value;
         }
 
-        if (szSwitch)
+        if (szSwitch != nullptr)
         {
           int iValue = 0;
           if (!hb_pp_getCompilerSwitch(pState, szSwitch, &iValue))
@@ -4906,7 +4906,7 @@ static void hb_pp_processCondDefined(PHB_PP_STATE pState, PHB_PP_TOKEN pToken)
         szValue = hb_pp_defineFind(pState, pNext->pNext) != nullptr ? "1" : "0";
       }
 
-      if (szValue)
+      if (szValue != nullptr)
       {
         hb_pp_tokenSetValue(pToken, szValue, strlen(szValue));
         HB_PP_TOKEN_SETTYPE(pToken, HB_PP_TOKEN_NUMBER);
@@ -5510,7 +5510,7 @@ static void hb_pp_lineTokens(PHB_PP_TOKEN **pTokenPtr, const char *szFileName, i
   hb_pp_tokenAdd(pTokenPtr, "#", 1, 0, HB_PP_TOKEN_DIRECTIVE | HB_PP_TOKEN_STATIC);
   hb_pp_tokenAdd(pTokenPtr, "line", 4, 0, HB_PP_TOKEN_KEYWORD | HB_PP_TOKEN_STATIC);
   hb_pp_tokenAdd(pTokenPtr, szLine, strlen(szLine), 1, HB_PP_TOKEN_NUMBER);
-  if (szFileName)
+  if (szFileName != nullptr)
   {
     hb_pp_tokenAdd(pTokenPtr, szFileName, strlen(szFileName), 1, HB_PP_TOKEN_STRING);
   }
@@ -6082,7 +6082,7 @@ void hb_pp_addSearchPath(PHB_PP_STATE pState, const char *szPath, HB_BOOL fRepla
     pState->pIncludePath = nullptr;
   }
 
-  if (szPath && *szPath)
+  if (szPath != nullptr && *szPath)
   {
     hb_fsAddSearchPath(szPath, &pState->pIncludePath);
   }
@@ -6249,7 +6249,7 @@ HB_BOOL hb_pp_inBuffer(PHB_PP_STATE pState, const char *szFileName, const char *
   pState->fError = false;
 
   pState->pFile = hb_pp_FileBufNew(pBuffer, nLen);
-  if (szFileName)
+  if (szFileName != nullptr)
   {
     pState->pFile->szFileName = hb_strdup(szFileName);
   }
@@ -6289,7 +6289,7 @@ HB_BOOL hb_pp_outFile(PHB_PP_STATE pState, const char *szOutFileName, FILE *file
   pState->fError = false;
   hb_pp_OutFileFree(pState);
 
-  if (szOutFileName)
+  if (szOutFileName != nullptr)
   {
 
     if (file_out)
@@ -6322,7 +6322,7 @@ HB_BOOL hb_pp_traceFile(PHB_PP_STATE pState, const char *szTraceFileName, FILE *
   pState->fError = false;
   hb_pp_TraceFileFree(pState);
 
-  if (szTraceFileName)
+  if (szTraceFileName != nullptr)
   {
 
     if (file_trace)
@@ -6442,7 +6442,7 @@ void hb_pp_addDefine(PHB_PP_STATE pState, const char *szDefName, const char *szD
   pToken = hb_pp_tokenResultEnd(&pMatch, true);
   hb_pp_tokenListFree(&pToken);
 
-  if (szDefValue && !pState->fError)
+  if (szDefValue != nullptr && !pState->fError)
   {
     if (szDefValue == &s_pp_dynamicResult)
     {

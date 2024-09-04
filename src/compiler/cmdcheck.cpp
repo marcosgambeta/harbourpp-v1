@@ -922,14 +922,14 @@ void hb_compChkEnvironment(HB_COMP_DECL)
 
   if (!szEnvCMD || szEnvCMD[0] == '\0')
   {
-    if (szEnvCMD)
+    if (szEnvCMD != nullptr)
     {
       hb_xfree(szEnvCMD);
     }
     szEnvCMD = hb_getenv("CLIPPERCMD");
   }
 
-  if (szEnvCMD)
+  if (szEnvCMD != nullptr)
   {
     const char *szSwitch = szEnvCMD;
 
@@ -952,7 +952,7 @@ void hb_compChkAddIncPaths(HB_COMP_DECL)
 {
   char *szInclude = hb_getenv("INCLUDE");
 
-  if (szInclude)
+  if (szInclude != nullptr)
   {
     if (szInclude[0] != '\0')
     {

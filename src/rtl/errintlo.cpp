@@ -92,7 +92,7 @@ void hb_errInternalRaw(HB_ERRCODE errCode, const char *szText, const char *szPar
     fprintf(hLog, "Application Internal Error - %s\n", hb_cmdargARGVN(0));
     fprintf(hLog, "Terminated at: %04d-%02d-%02d %s\n", iYear, iMonth, iDay, szTime);
     const char *szInfo = fStack ? hb_setGetCPtr(HB_SET_HBOUTLOGINFO) : nullptr;
-    if (szInfo && *szInfo)
+    if (szInfo != nullptr && *szInfo)
     {
       fprintf(hLog, "Info: %s\n", szInfo);
     }
@@ -119,7 +119,7 @@ void hb_errInternalRaw(HB_ERRCODE errCode, const char *szText, const char *szPar
     szText = hb_langDGetItem(HB_LANG_ITEM_BASE_ERRINTR + errCode - 9000);
   }
 
-  if (szText)
+  if (szText != nullptr)
   {
     hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
   }

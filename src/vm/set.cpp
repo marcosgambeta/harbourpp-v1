@@ -206,7 +206,7 @@ static void close_handle(PHB_SET_STRUCT pSet, HB_set_enum set_specifier)
 
 static const char *is_devicename(const char *szFileName)
 {
-  if (szFileName && *szFileName)
+  if (szFileName != nullptr && *szFileName)
   {
 #if defined(HB_OS_WIN)
     const char *szDevices[] = {"NUL",  "PRN",  "CON",  "LPT1", "LPT2", "LPT3", "COM1", "COM2",

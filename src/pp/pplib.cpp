@@ -165,7 +165,7 @@ HB_FUNC(__PP_INIT)
     hb_pp_init(pState, true, false, 0, nullptr, nullptr, nullptr, hb_pp_ErrorMessage, hb_pp_Disp, nullptr, nullptr,
                hb_pp_CompilerSwitch);
 
-    if (szPath)
+    if (szPath != nullptr)
     {
       hb_pp_addSearchPath(pState, szPath, true);
     }
@@ -231,7 +231,7 @@ HB_FUNC(__PP_ADDRULE)
     auto szText = hb_parc(2);
     auto nLen = hb_parclen(2);
 
-    if (szText)
+    if (szText != nullptr)
     {
       while (nLen && (szText[0] == ' ' || szText[0] == '\t'))
       {
@@ -240,7 +240,7 @@ HB_FUNC(__PP_ADDRULE)
       }
     }
 
-    if (szText && nLen && szText[0] == '#')
+    if (szText != nullptr && nLen && szText[0] == '#')
     {
       hb_pp_parseLine(pState, szText, &nLen);
 

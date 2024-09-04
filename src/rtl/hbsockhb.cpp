@@ -1441,7 +1441,7 @@ HB_FUNC(HB_SOCKETRESOLVEADDR)
 
   s_socket_init();
   szAddr = hb_socketResolveAddr(hb_parc(1), hb_parnidef(2, HB_SOCKET_AF_INET));
-  if (szAddr)
+  if (szAddr != nullptr)
   {
     hb_retc_buffer(szAddr);
   }
@@ -1464,7 +1464,7 @@ HB_FUNC(HB_SOCKETGETHOSTNAME)
     {
       hb_xfree(addr);
     }
-    if (szHostName)
+    if (szHostName != nullptr)
     {
       hb_retc_buffer(szHostName);
     }
@@ -1479,7 +1479,7 @@ HB_FUNC(HB_SOCKETGETHOSTS)
 {
   auto szAddr = hb_parc(1);
 
-  if (szAddr)
+  if (szAddr != nullptr)
   {
     PHB_ITEM pItem;
 

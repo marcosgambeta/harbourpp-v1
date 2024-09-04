@@ -397,7 +397,7 @@ void hb_errInternal(HB_ERRCODE errCode, const char *szText, const char *szPar1, 
   hb_conOutErr(hb_conNewLine(), 0);
   hb_snprintf(buffer, sizeof(buffer), "Unrecoverable error %d: ", errCode);
   hb_conOutErr(buffer, 0);
-  if (szText)
+  if (szText != nullptr)
   {
     hb_snprintf(buffer, sizeof(buffer), szText, szPar1, szPar2);
     hb_conOutErr(buffer, 0);

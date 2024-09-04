@@ -98,7 +98,7 @@ static PHB_I18NSTRING hb_compI18nAddSingle(HB_COMP_DECL, const char *szText, con
   PHB_I18NTABLE pI18n = HB_COMP_PARAM->pI18n;
 
   szText = hb_compIdentifierNew(HB_COMP_PARAM, szText, HB_IDENT_COPY);
-  if (szContext)
+  if (szContext != nullptr)
   {
     szContext = hb_compIdentifierNew(HB_COMP_PARAM, szContext, HB_IDENT_COPY);
   }
@@ -208,7 +208,7 @@ void hb_compI18nAddPlural(HB_COMP_DECL, const char **szTexts, HB_ULONG ulCount, 
           break;
         }
       }
-      if (szText)
+      if (szText != nullptr)
       {
         pString->szPlurals[pString->uiPlurals++] = szText;
       }

@@ -2061,7 +2061,7 @@ static void hb_gt_trm_XtermSetTitle(PHB_GTTRM pTerm, const char *szTitle)
 #endif
 
   hb_gt_trm_termOut(pTerm, "\033]0;", 4);
-  if (szTitle)
+  if (szTitle != nullptr)
   {
     hb_gt_trm_termOut(pTerm, szTitle, strlen(szTitle));
   }
@@ -2179,7 +2179,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos(PHB_GTTRM pTerm, int *iRow, int *iCol,
     int i, j, n, d, y, x;
 
     hb_gt_trm_termOut(pTerm, "\x1B[6n", 4);
-    if (szPost)
+    if (szPost != nullptr)
     {
       hb_gt_trm_termOut(pTerm, szPost, strlen(szPost));
     }
@@ -2219,7 +2219,7 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos(PHB_GTTRM pTerm, int *iRow, int *iCol,
             }
             if (i < n && i > d && rdbuf[i] == 'R')
             {
-              if (szPost)
+              if (szPost != nullptr)
               {
                 while (j >= 5)
                 {
@@ -2591,7 +2591,7 @@ static bool hb_trm_isUTF8(PHB_GTTRM pTerm)
   }
 
   szLang = getenv("LANG");
-  if (szLang && strstr(szLang, "UTF-8") != nullptr)
+  if (szLang != nullptr && strstr(szLang, "UTF-8") != nullptr)
   {
     return true;
   }
@@ -4333,7 +4333,7 @@ static HB_BOOL hb_gt_trm_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   case HB_GTI_BOXCP:
     pInfo->pResult = hb_itemPutC(pInfo->pResult, pTerm->cdpBox ? pTerm->cdpBox->id : nullptr);
     szVal = hb_itemGetCPtr(pInfo->pNewVal);
-    if (szVal && *szVal)
+    if (szVal != nullptr && *szVal)
     {
       PHB_CODEPAGE cdpBox = hb_cdpFind(szVal);
       if (cdpBox)
@@ -4358,7 +4358,7 @@ static HB_BOOL hb_gt_trm_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_DELKEYMAP:
     szVal = hb_itemGetCPtr(pInfo->pNewVal);
-    if (szVal && *szVal)
+    if (szVal != nullptr && *szVal)
     {
       removeKeyMap(pTerm, hb_itemGetCPtr(pInfo->pNewVal));
     }

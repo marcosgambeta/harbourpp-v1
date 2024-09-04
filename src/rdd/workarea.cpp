@@ -2515,7 +2515,7 @@ LPRDDNODE hb_rddFindFileNode(LPRDDNODE pRddNode, const char *szFileName)
    HB_TRACE(HB_TR_DEBUG, ("hb_rddFindFileNode(%p, %s)", static_cast<void*>(pRddNode), szFileName));
 #endif
 
-  if (szFileName && szFileName[0] && s_uiRddRedirCount)
+  if (szFileName != nullptr && szFileName[0] && s_uiRddRedirCount)
   {
     for (HB_USHORT uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++)
     {

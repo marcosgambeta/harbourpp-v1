@@ -54,7 +54,7 @@ HB_FUNC(SX_SLIMFAST)
 {
   auto szExp = hb_parc(1);
 
-  if (szExp && *szExp)
+  if (szExp != nullptr && *szExp)
   {
     char *szDst, cQuote = 0, c;
     HB_SIZE nDst;
@@ -97,7 +97,7 @@ HB_FUNC(SX_WILDMATCH)
   auto szValue = hb_parc(2);
   auto fMatch = false;
 
-  if (szPattern && szPattern[0] && szValue)
+  if (szPattern != nullptr && szPattern[0] && szValue != nullptr)
   {
     fMatch = hb_strMatchWild(szValue, szPattern);
   }

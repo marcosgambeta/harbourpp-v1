@@ -612,7 +612,7 @@ static void hb_compGenCLocalName(PHB_HFUNC pFunc, int iLocal, HB_SIZE nPCodePos,
   {
     const char *szName = hb_compLocalVariableName(pFunc, static_cast<HB_USHORT>(iLocal));
 
-    if (szName)
+    if (szName != nullptr)
     {
       fprintf(cargo->yyc, "\t/* %s */", szName);
     }
@@ -627,7 +627,7 @@ static void hb_compGenCStaticName(HB_USHORT uiStatic, PHB_GENC_INFO cargo)
 {
   const char *szName = hb_compStaticVariableName(cargo->HB_COMP_PARAM, uiStatic);
 
-  if (szName)
+  if (szName != nullptr)
   {
     fprintf(cargo->yyc, "\t/* %s */", szName);
   }

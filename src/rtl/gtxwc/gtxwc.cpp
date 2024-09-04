@@ -4358,7 +4358,7 @@ static HB_ULONG hb_gt_xwc_CurrentTime(void)
 
 static void hb_gt_xwc_SetTitle(PXWND_DEF wnd, const char *szTitle)
 {
-  if (szTitle && *szTitle)
+  if (szTitle != nullptr && *szTitle)
   {
     XTextProperty text;
     char *pBuffer;
@@ -4641,7 +4641,7 @@ static bool hb_gt_xwc_isUTF8(void)
   auto fUTF8 = false;
   const char *szLang = setlocale(LC_CTYPE, nullptr);
 
-  if (szLang)
+  if (szLang != nullptr)
   {
     auto i = static_cast<int>(strlen(szLang));
 

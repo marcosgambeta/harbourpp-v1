@@ -2060,7 +2060,7 @@ char *hb_socketAddrGetName(const void *pSockAddr, unsigned len)
       char buf[INET_ADDRSTRLEN];
       szAddr = hb_inet_ntoa(&sa->sin_addr, buf);
 #endif
-      if (szAddr)
+      if (szAddr != nullptr)
       {
         szName = hb_strdup(szAddr);
       }
@@ -2083,7 +2083,7 @@ char *hb_socketAddrGetName(const void *pSockAddr, unsigned len)
         HB_SYMBOL_UNUSED(sa);
       }
 #endif
-      if (szAddr)
+      if (szAddr != nullptr)
       {
         szName = hb_strdup(szAddr);
       }
@@ -2212,7 +2212,7 @@ PHB_ITEM hb_socketAddrToItem(const void *pSockAddr, unsigned len)
       char buf[INET_ADDRSTRLEN];
       szAddr = hb_inet_ntoa(&sa->sin_addr, buf);
 #endif
-      if (szAddr)
+      if (szAddr != nullptr)
       {
         pAddrItm = hb_itemArrayNew(3);
         hb_arraySetNI(pAddrItm, 1, HB_SOCKET_AF_INET);
@@ -2237,7 +2237,7 @@ PHB_ITEM hb_socketAddrToItem(const void *pSockAddr, unsigned len)
         szAddr = nullptr;
       }
 #endif
-      if (szAddr)
+      if (szAddr != nullptr)
       {
         pAddrItm = hb_itemArrayNew(3);
         hb_arraySetNI(pAddrItm, 1, HB_SOCKET_AF_INET6);
@@ -3465,7 +3465,7 @@ PHB_ITEM hb_socketGetHosts(const char *szAddr, int af)
       while (ai)
       {
         char *szResult = hb_socketAddrGetName(res->ai_addr, static_cast<unsigned>(res->ai_addrlen));
-        if (szResult)
+        if (szResult != nullptr)
         {
           int i;
           for (i = 1; i <= iCount; ++i)
@@ -3477,7 +3477,7 @@ PHB_ITEM hb_socketGetHosts(const char *szAddr, int af)
               break;
             }
           }
-          if (szResult)
+          if (szResult != nullptr)
           {
             ++iCount;
             if (!hb_arraySetCLPtr(pItem, iCount, szResult, strlen(szResult)))
@@ -3601,7 +3601,7 @@ char *hb_socketGetHostName(const void *pSockAddr, unsigned len)
     }
 #elif defined(HB_HAS_ADDRINFO)
     char *szAddr = hb_socketAddrGetName(pSockAddr, len);
-    if (szAddr)
+    if (szAddr != nullptr)
     {
       struct addrinfo hints, *res = nullptr;
       int iError;
@@ -3635,7 +3635,7 @@ char *hb_socketGetHostName(const void *pSockAddr, unsigned len)
       hb_vmLock();
 #else
       char *szAddr = hb_socketAddrGetName(pSockAddr, len);
-      if (szAddr)
+      if (szAddr != nullptr)
       {
         hb_vmUnlock();
         he = gethostbyname(szAddr);
@@ -3671,7 +3671,7 @@ static void hb_socketArraySetInetAddr(PHB_ITEM pItem, HB_SIZE nPos, const void *
 {
   char *szAddr = hb_socketAddrGetName(pSockAddr, len);
 
-  if (szAddr)
+  if (szAddr != nullptr)
   {
     if (!hb_arraySetCLPtr(pItem, nPos, szAddr, strlen(szAddr)))
     {

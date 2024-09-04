@@ -253,7 +253,7 @@ HB_FUNC(HB_ZUNCOMPRESSLEN)
 {
   auto szData = hb_parc(1);
 
-  if (szData)
+  if (szData != nullptr)
   {
     auto nLen = hb_parclen(1);
     int iResult = Z_OK;
@@ -288,7 +288,7 @@ HB_FUNC(HB_ZCOMPRESS)
 {
   auto szData = hb_parc(1);
 
-  if (szData)
+  if (szData != nullptr)
   {
     auto nLen = hb_parclen(1);
 
@@ -369,7 +369,7 @@ HB_FUNC(HB_ZUNCOMPRESS)
   PHB_ITEM pBuffer = HB_ISBYREF(2) ? hb_param(2, Harbour::Item::STRING) : nullptr;
   auto szData = hb_parc(1);
 
-  if (szData)
+  if (szData != nullptr)
   {
     auto nLen = hb_parclen(1);
 
@@ -463,7 +463,7 @@ HB_FUNC(HB_GZCOMPRESS)
 {
   auto szData = hb_parc(1);
 
-  if (szData)
+  if (szData != nullptr)
   {
     auto nLen = hb_parclen(1);
 

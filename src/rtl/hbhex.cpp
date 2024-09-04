@@ -50,7 +50,7 @@ HB_FUNC(HB_HEXTONUM)
 {
   auto szHex = hb_parc(1);
 
-  if (szHex)
+  if (szHex != nullptr)
   {
     HB_MAXUINT nNum = 0;
 

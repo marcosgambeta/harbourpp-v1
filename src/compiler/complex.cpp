@@ -1406,7 +1406,7 @@ void hb_compParserRun(HB_COMP_DECL)
           }
           if (iToken == ')')
           {
-            if (szExt && *szExt)
+            if (szExt != nullptr && *szExt)
             {
               szFile = hb_compIdentifierNew(HB_COMP_PARAM, hb_xstrcpy(nullptr, szFile, szExt, nullptr), HB_IDENT_FREE);
             }

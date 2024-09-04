@@ -404,7 +404,7 @@ HB_FUNC(__HB_LANGSELECT)
   hb_retc(hb_langID());
 
   auto szNewLang = hb_parc(1);
-  if (szNewLang)
+  if (szNewLang != nullptr)
   {
     hb_langSelectID(szNewLang);
   }

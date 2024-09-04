@@ -586,7 +586,7 @@ PHB_EXPR hb_compExprNewMacro(PHB_EXPR pMacroExpr, unsigned char cMacroOp, const 
 {
   PHB_EXPR pExpr = HB_COMP_EXPR_NEW(HB_ET_MACRO);
 
-  if (szName)
+  if (szName != nullptr)
   {
 #if 0
       HB_TRACE(HB_TR_DEBUG, ("hb_compExprNewMacro(%s)", szName));

@@ -2829,7 +2829,7 @@ static PHB_DYNS hb_objGetMsgSym(PHB_ITEM pMessage)
       }
     }
 
-    if (szMsg && *szMsg)
+    if (szMsg != nullptr && *szMsg)
     {
       pDynSym = hb_dynsymGet(szMsg);
     }
@@ -3154,7 +3154,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
 static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiType, HB_USHORT uiScope,
                          PHB_ITEM pFunction, PHB_ITEM pInit)
 {
-  if (szMessage && uiClass && uiClass <= s_uiClasses)
+  if (szMessage != nullptr && uiClass && uiClass <= s_uiClasses)
   {
     PCLASS pClass = s_pClasses[uiClass];
 
@@ -3660,7 +3660,7 @@ HB_FUNC(__CLSADDMSG)
   auto uiClass = static_cast<HB_USHORT>(hb_parni(1));
   auto szMessage = hb_parc(2);
 
-  if (szMessage && uiClass && uiClass <= s_uiClasses)
+  if (szMessage != nullptr && uiClass && uiClass <= s_uiClasses)
   {
     auto nType = static_cast<HB_USHORT>(hb_parni(4));
     auto uiScope = static_cast<HB_USHORT>(hb_parni(6));
@@ -3966,7 +3966,7 @@ HB_FUNC(__CLSNEW)
     pModFriend = nullptr;
   }
 
-  if (szClassName && (!pDatas || HB_IS_NUMERIC(pDatas)) && (!pSuperArray || HB_IS_ARRAY(pSuperArray)) &&
+  if (szClassName != nullptr && (!pDatas || HB_IS_NUMERIC(pDatas)) && (!pSuperArray || HB_IS_ARRAY(pSuperArray)) &&
       (!pClassFunc || HB_IS_SYMBOL(pClassFunc)) && (!pModFriend || HB_IS_LOGICAL(pModFriend)))
   {
     HB_STACK_TLS_PRELOAD

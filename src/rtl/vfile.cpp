@@ -193,7 +193,7 @@ HB_FUNC(HB_VFRENAME)
   HB_ERRCODE uiError = 2;
   int iResult = F_ERROR;
 
-  if (szFileOld && szFileNew)
+  if (szFileOld != nullptr && szFileNew != nullptr)
   {
     if (hb_fileRename(szFileOld, szFileNew))
     {

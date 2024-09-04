@@ -56,7 +56,7 @@ static bool hb_sxSemName(char *szFileName)
   auto szName = hb_parc(1);
   auto fResult = false;
 
-  if (szName && szName[0])
+  if (szName != nullptr && szName[0])
   {
     hb_cdpnDup2Lower(hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX);
     szFileName[HB_PATH_MAX - 1] = '\0';
@@ -78,7 +78,7 @@ static bool hb_sxSemName(char *szFileName)
       pOrderInfo.itmResult = hb_itemPutC(nullptr, nullptr);
       SELF_ORDINFO(pArea, DBOI_NAME, &pOrderInfo);
       szName = hb_itemGetCPtr(pOrderInfo.itmResult);
-      if (szName && szName[0])
+      if (szName != nullptr && szName[0])
       {
         hb_cdpnDup2Lower(hb_vmCDP(), szName, strlen(szName), szFileName, HB_PATH_MAX);
         szFileName[HB_PATH_MAX - 1] = '\0';

@@ -676,7 +676,7 @@ HB_FUNC(SX_FCOMPRESS)
   auto szSource = hb_parc(1);
   auto szDestin = hb_parc(2);
 
-  if (szSource && *szSource && szDestin && *szDestin)
+  if (szSource != nullptr && *szSource && szDestin != nullptr && *szDestin)
   {
     PHB_FILE pInput =
         hb_fileExtOpen(szSource, nullptr, FO_READ | FO_DENYNONE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);
@@ -714,7 +714,7 @@ HB_FUNC(SX_FDECOMPRESS)
   auto szSource = hb_parc(1);
   auto szDestin = hb_parc(2);
 
-  if (szSource && *szSource && szDestin && *szDestin)
+  if (szSource != nullptr && *szSource && szDestin != nullptr && *szDestin)
   {
     PHB_FILE pInput =
         hb_fileExtOpen(szSource, nullptr, FO_READ | FO_DENYNONE | FXO_DEFAULTS | FXO_SHARELOCK, nullptr, nullptr);

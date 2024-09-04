@@ -107,7 +107,7 @@ const char *hb_tracemode(const char *szNewMode)
 {
   const char *szPrevMode = s_mode;
 
-  if (szNewMode)
+  if (szNewMode != nullptr)
   {
     switch (*szNewMode)
     {
@@ -125,7 +125,7 @@ const char *hb_tracemode(const char *szNewMode)
 
 HB_BOOL hb_tracefile(const char *szFile)
 {
-  if (szFile && *szFile)
+  if (szFile != nullptr && *szFile)
   {
     auto fp = hb_fopen(szFile, s_mode);
 

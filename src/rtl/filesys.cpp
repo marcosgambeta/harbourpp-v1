@@ -4001,7 +4001,7 @@ char *hb_fsExtName(const char *pszFileName, const char *pDefExt, HB_FATTR nExFla
   else if (nExFlags & FXO_DEFAULTS)
   {
     const char *szDefault = hb_setGetDefault();
-    if (szDefault)
+    if (szDefault != nullptr)
     {
       pFilepath->szPath = szDefault;
       hb_fsFNameMerge(szPath, pFilepath);
@@ -4189,7 +4189,7 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
     hb_strncpy(const_cast<char *>(pszFileName), szPath, HB_PATH_MAX - 1);
   }
 
-  if (szFree)
+  if (szFree != nullptr)
   {
     hb_xfree(szFree);
   }

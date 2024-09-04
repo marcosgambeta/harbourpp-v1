@@ -1689,7 +1689,7 @@ static int hb_hsxCreate(const char *szFile, int iBufSize, int iKeySize, HB_BOOL 
   pHSX->fIgnoreCase = fIgnoreCase;
   pHSX->iFilterType = iFilter;
   pHSX->fUseHash = fIgnoreCase && iKeySize == 2 && iFilter != 3;
-  if (szExpr)
+  if (szExpr != nullptr)
   {
     pHSX->szKeyExpr = hb_strdup(szExpr);
   }

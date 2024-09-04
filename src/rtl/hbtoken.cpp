@@ -345,7 +345,7 @@ HB_FUNC(HB_TOKENPTR)
     HB_SIZE nSkip, nToken;
 
     szToken = hb_tokenGet(szLine, nLen, szDelim, &nDelim, iFlags, 1, &nToken);
-    if (szToken && nLen > nToken)
+    if (szToken != nullptr && nLen > nToken)
     {
       nSkip = szToken - hb_parc(1) + nToken + nDelim;
     }

@@ -2846,7 +2846,7 @@ HB_WCHAR hb_cdpTextGetU16(PHB_CODEPAGE cdp, const char *szText, HB_SIZE nLen)
 {
   HB_WCHAR wc = 0;
 
-  if (szText && nLen > 0)
+  if (szText != nullptr && nLen > 0)
   {
     if (cdp != nullptr)
     {
@@ -2876,7 +2876,7 @@ HB_SIZE hb_cdpTextPutU16(PHB_CODEPAGE cdp, char *szText, HB_SIZE nSize, HB_WCHAR
 {
   HB_SIZE nLen = 0;
 
-  if (szText && nSize > 0)
+  if (szText != nullptr && nSize > 0)
   {
     if (cdp != nullptr)
     {
