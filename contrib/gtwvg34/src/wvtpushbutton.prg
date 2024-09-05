@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtPushButton */
+// Class WvtPushButton
 CREATE CLASS WvtPushButton INHERIT WvtObject
 
    VAR    cCaption

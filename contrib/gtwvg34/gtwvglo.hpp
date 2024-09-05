@@ -58,7 +58,7 @@
 
 #if defined( _MSC_VER )
 #   pragma warning(push)
-#   pragma warning(disable:4201)  /* warning C4201: nonstandard extension used: nameless struct/union */
+#   pragma warning(disable:4201)  // warning C4201: nonstandard extension used: nameless struct/union
 #endif
 #include <olectl.h>
 #if defined( _MSC_VER )
@@ -87,7 +87,7 @@
 
 HB_EXTERN_BEGIN
 
-/* - */
+// -
 
 #define BLACK                       RGB( 0x00, 0x00, 0x00 )
 #define BLUE                        RGB( 0x00, 0x00, 0x85 )
@@ -120,7 +120,7 @@ HB_EXTERN_BEGIN
    #endif
 #endif
 
-/* - */
+// -
 
 using wvtGradientFill = BOOL (WINAPI *)(
                       HDC        hdc,
@@ -136,7 +136,7 @@ using wvtSetLayeredWindowAttributes = BOOL (WINAPI *)(
                       BYTE       bAlpha,
                       DWORD      dwFlags );
 
-/* - */
+// -
 
 enum HB_gt_object_enum
 {
@@ -146,11 +146,11 @@ enum HB_gt_object_enum
    GTO_RECTANGLE      = 4,
    GTO_CIRCLE         = 5,
    GTO_DISK           = 7,
-   /* TODO: add other types */
+   // TODO: add other types
    GTO_TEXT           = 100,
 } ;
 
-/* Event subsystem */
+// Event subsystem
 
 enum HB_gt_event_enum
 {
@@ -164,25 +164,25 @@ enum HB_gt_event_enum
    GTEVENT_SHUTDOWN   = 7
 } ;
 
-/* - */
+// -
 
-/* xHarbour compatible definitions */
+// xHarbour compatible definitions
 #if ! defined( K_SH_LEFT )
-#define K_SH_LEFT           K_LEFT   /* Shift-Left  == Left */
-#define K_SH_UP             K_UP     /* Shift-Up    == Up */
-#define K_SH_RIGHT          K_RIGHT  /* Shift-Right == Right */
-#define K_SH_DOWN           K_DOWN   /* Shift-Down  == Down */
-#define K_SH_INS            K_INS    /* Shift-Ins   == Ins */
-#define K_SH_DEL            K_DEL    /* Shift-Del   == Del */
-#define K_SH_HOME           K_HOME   /* Shift-Home  == Home */
-#define K_SH_END            K_END    /* Shift-End   == End */
-#define K_SH_PGUP           K_PGUP   /* Shift-PgUp  == PgUp */
-#define K_SH_PGDN           K_PGDN   /* Shift-PgDn  == PgDn */
-#define K_SH_RETURN         K_RETURN /* Shift-Enter == Enter */
-#define K_SH_ENTER          K_ENTER  /* Shift-Enter == Enter */
+#define K_SH_LEFT           K_LEFT   // Shift-Left  == Left
+#define K_SH_UP             K_UP     // Shift-Up    == Up
+#define K_SH_RIGHT          K_RIGHT  // Shift-Right == Right
+#define K_SH_DOWN           K_DOWN   // Shift-Down  == Down
+#define K_SH_INS            K_INS    // Shift-Ins   == Ins
+#define K_SH_DEL            K_DEL    // Shift-Del   == Del
+#define K_SH_HOME           K_HOME   // Shift-Home  == Home
+#define K_SH_END            K_END    // Shift-End   == End
+#define K_SH_PGUP           K_PGUP   // Shift-PgUp  == PgUp
+#define K_SH_PGDN           K_PGDN   // Shift-PgDn  == PgDn
+#define K_SH_RETURN         K_RETURN // Shift-Enter == Enter
+#define K_SH_ENTER          K_ENTER  // Shift-Enter == Enter
 #endif
 
-/* - */
+// -
 
 #ifndef WS_EX_LAYERED
 #define WS_EX_LAYERED  0x00080000

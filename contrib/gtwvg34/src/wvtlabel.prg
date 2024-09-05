@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtLabel */
+// Class WvtLabel
 CREATE CLASS WvtLabel INHERIT WvtObject
 
    ACCESS TEXT                                    INLINE iif(::cText == NIL, "", ::cText)

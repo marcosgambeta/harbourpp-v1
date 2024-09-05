@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* WvtStatusBar */
+// WvtStatusBar
 CREATE CLASS WvtStatusBar INHERIT WvtObject
 
    VAR    aPanels

@@ -46,7 +46,7 @@
 #ifndef _HBGTWVG_CH
 #define _HBGTWVG_CH
 
-/* Extended GT Manipulation Constants */
+// Extended GT Manipulation Constants
 
 #ifndef HB_LEGACY_LEVEL4
 #define HB_GTE_ACTIVATE                   1
@@ -87,7 +87,7 @@
 #define HB_GTI_MAXIMIZABLE                ( HB_GTI_EXTENDED + 11 )
 #define HB_GTI_BORDERSIZES                ( HB_GTI_EXTENDED + 12 )
 
-/* Presentation Parameters | HB_GTI_PRESPARAMS */
+// Presentation Parameters | HB_GTI_PRESPARAMS
 #define HB_GTI_PP_EXSTYLE                 1
 #define HB_GTI_PP_STYLE                   2
 #define HB_GTI_PP_X                       3
@@ -104,7 +104,7 @@
 #define HB_WNDTYPE_CRT                    0
 #define HB_WNDTYPE_DIALOG                 1
 
-/* Window Specifications | HB_GTI_SPEC */
+// Window Specifications | HB_GTI_SPEC
 #define HB_GTS_WINDOWHANDLE               1
 #define HB_GTS_CENTERWINDOW               2
 #define HB_GTS_PROCESSMESSAGES            3
@@ -120,7 +120,7 @@
 #define HB_GTS_FACTOR                     13
 
 
-/* Window States | HB_GTS_WNDSTATE */
+// Window States | HB_GTS_WNDSTATE
 #define HB_GTS_WS_SETONTOP                1
 #define HB_GTS_WS_SETASNORMAL             2
 #define HB_GTS_WS_MINIMIZED               3
@@ -128,12 +128,12 @@
 #define HB_GTS_WS_HIDDEN                  5
 #define HB_GTS_WS_NORMAL                  6
 
-/* SysTrayIcon Types | HB_GTS_SYSTRAYICON */
+// SysTrayIcon Types | HB_GTS_SYSTRAYICON
 #define HB_GTS_NIT_FILE                   0
 #define HB_GTS_NIT_RESOURCEBYNAME         1
 #define HB_GTS_NIT_RESOURCEBYID           2
 
-/* ShowWindow modes | HB_GTS_SHOWWINDOW */
+// ShowWindow modes | HB_GTS_SHOWWINDOW
 #define HB_GTS_SW_HIDE                    0
 #define HB_GTS_SW_NORMAL                  1
 #define HB_GTS_SW_MINIMIZED               2
@@ -142,7 +142,7 @@
 
 #define HB_GTI_GUI                        1001
 
-/* Constants to manage CUI-GUI objects  */
+// Constants to manage CUI-GUI objects
 #define GOBJ_OBJSTATE_ENABLED             1
 #define GOBJ_OBJSTATE_DISABLED            2
 #define GOBJ_OBJSTATE_HIDDEN              3
@@ -164,7 +164,7 @@
 #define GOBJ_IMAGESOURCE_FILE             3
 
 
-/* CUI-GUI Draw Objects */
+// CUI-GUI Draw Objects
 #define GOBJ_OBJTYPE_BOXRAISED            1
 #define GOBJ_OBJTYPE_BOXRECESSED          2
 #define GOBJ_OBJTYPE_BOXGET               3
@@ -187,6 +187,6 @@
 #define GOBJ_OBJTYPE_GRIDHORZ             20
 #define GOBJ_OBJTYPE_LABEL_EX2            21
 
-#define GOBJ_OBJTYPE_OBJECT               25  /* One of the above objects */
+#define GOBJ_OBJTYPE_OBJECT               25  // One of the above objects
 
-#endif /* _HBGTWVG_CH */
+#endif // _HBGTWVG_CH

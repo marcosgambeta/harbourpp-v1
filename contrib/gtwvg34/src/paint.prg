@@ -49,12 +49,12 @@
 
 THREAD STATIC t_paint_ := { { "", {} } }
 
-/* This function must have to be defined in your applications */
+// This function must have to be defined in your applications
 #if 0
 
 PROCEDURE wvt_Paint()
 
-   WvtPaintObjects()  /* Call this function from this function */
+   WvtPaintObjects()  // Call this function from this function
 
    RETURN
 
@@ -73,8 +73,8 @@ FUNCTION WvtPaintObjects()
          lExe := .T.
 
          IF blk[ 3 ] != NIL .AND. ! Empty(blk[ 3 ])
-            /* Check parameters against tlbr_ depending upon the
-               type of object and attributes contained in aAttr */
+            // Check parameters against tlbr_ depending upon the
+            // type of object and attributes contained in aAttr
             DO CASE
             CASE blk[ 3 ][ 1 ] == WVT_BLOCK_GRID_V
                b := blk[ 3 ][ 6 ]
@@ -83,30 +83,29 @@ FUNCTION WvtPaintObjects()
                ELSE
                   nLeft  := b:aColumnsSep[ 1 ]
                   nRight := ATail( b:aColumnsSep )
-                  IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  /* top    > bottom */
-                     tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  /* bottom < top    */
-                     tlbr_[ 2 ] > nRight + 1 .OR. ;     /* left   > right  */
-                     tlbr_[ 4 ] < nLeft - 2             /* right  < left   */
+                  IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  // top    > bottom
+                     tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  // bottom < top
+                     tlbr_[ 2 ] > nRight + 1 .OR. ;     // left   > right
+                     tlbr_[ 4 ] < nLeft - 2             // right  < left
                      lExe := .F.
                   ENDIF
                ENDIF
 
             CASE blk[ 3 ][ 1 ] == WVT_BLOCK_GETS
-               IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  /* top    > bottom */
-                  tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  /* bottom < top    */
-                  tlbr_[ 2 ] > blk[ 3 ][ 5 ] .OR. ;  /* left   > right  */
-                  tlbr_[ 4 ] < blk[ 3 ][ 3 ]         /* right  < left   */
+               IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  // top    > bottom
+                  tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  // bottom < top
+                  tlbr_[ 2 ] > blk[ 3 ][ 5 ] .OR. ;  // left   > right
+                  tlbr_[ 4 ] < blk[ 3 ][ 3 ]         // right  < left
                   lExe := .F.
                ENDIF
 
             OTHERWISE
-               /* If refreshing rectangle's top is less than objects' bottom
-                * and left is less than objects' right
-                */
-               IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  /* top    > bottom */
-                  tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  /* bottom < top    */
-                  tlbr_[ 2 ] > blk[ 3 ][ 5 ] .OR. ;  /* left   > right  */
-                  tlbr_[ 4 ] < blk[ 3 ][ 3 ]         /* right  < left   */
+               // If refreshing rectangle's top is less than objects' bottom
+               // and left is less than objects' right
+               IF tlbr_[ 1 ] > blk[ 3 ][ 4 ] .OR. ;  // top    > bottom
+                  tlbr_[ 3 ] < blk[ 3 ][ 2 ] .OR. ;  // bottom < top
+                  tlbr_[ 2 ] > blk[ 3 ][ 5 ] .OR. ;  // left   > right
+                  tlbr_[ 4 ] < blk[ 3 ][ 3 ]         // right  < left
                   lExe := .F.
                ENDIF
             ENDCASE
@@ -213,10 +212,9 @@ PROCEDURE wvg_InsertPaint( cID, aPaint, lSet )
 
    RETURN
 
-/* RunTime Dialog Generation Routines
- * Courtesy hbwhat library
- */
-/* nMode : 0 == Rows/cols - DEFAULT    1 == DlagUnits as from any standard dialog definition */
+// RunTime Dialog Generation Routines
+// Courtesy hbwhat library
+// nMode : 0 == Rows/cols - DEFAULT    1 == DlagUnits as from any standard dialog definition
 FUNCTION wvt_SetDlgCoMode( nMode )
 
    STATIC sMode := 0
@@ -254,17 +252,16 @@ FUNCTION wvt_MakeDlgTemplate( nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle
       nW := aFont[ 7 ] * nCols + aOffSet[ 4 ]
       nH := aFont[ 6 ] * nRows + aOffSet[ 3 ]
 
-      /* Position it exactly where user has requested */
+      // Position it exactly where user has requested
 
       aXY := wvt_ClientToScreen( nTop, nLeft )
       nX  := aXY[ 1 ] + aOffSet[ 2 ]
       nY  := aXY[ 2 ] + aOffSet[ 1 ]
 
-      /* MSDN says DlgBaseUnits and Screen Coordinates has multiplier of 4,8 for X and Y.
-       * But in my practice, the values below are 99% accurate.
-       * I have tested it on many fonts but on 1280/800 resolution.
-       * Please feel free to experiment if you find these values inappropriate.
-       */
+      // MSDN says DlgBaseUnits and Screen Coordinates has multiplier of 4,8 for X and Y.
+      // But in my practice, the values below are 99% accurate.
+      // I have tested it on many fonts but on 1280/800 resolution.
+      // Please feel free to experiment if you find these values inappropriate.
       nXM :=  5.25
       nYM := 10.25
 
@@ -349,7 +346,7 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
       nH := nRows
    ENDIF
 
-   aDlg[ 1 ][ 4 ]++  /* item count */
+   aDlg[ 1 ][ 4 ]++  // item count
 
    AAdd( aDlg[  2 ], hb_defaultValue( nHelpId, 0 ) )
    AAdd( aDlg[  3 ], hb_defaultValue( nExStyle, 0 ) )
@@ -421,20 +418,19 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
 
    RETURN nResult
 
-/* wvt_GetOpenFileName( hWnd, @cPath, cTitle, aFilter, nFlags, cInitDir, cDefExt, nIndex )
-
-hWnd:     Handle to parent window
-cPath:    (optional) if WIN_OFN_ALLOWMULTISELECT the path is stored
-cTitle:   Window Title
-aFilter:  Array of Files Types i.e. { { "Databases", "*.dbf" }, { "Harbour", "*.prg" } }
-nFlags:   WIN_OFN_* values default to WIN_OFN_EXPLORER
-cInitDir: Initial directory
-cDefExt:  Default Extension i.e. "DBF"
-nIndex:   Index position of types
-cDefName: DEFAULT file name
-
-Returns:  If WIN_OFN_ALLOWMULTISELECT ?  Array of files selected : FileName.
-*/
+// wvt_GetOpenFileName( hWnd, @cPath, cTitle, aFilter, nFlags, cInitDir, cDefExt, nIndex )
+//
+// hWnd:     Handle to parent window
+// cPath:    (optional) if WIN_OFN_ALLOWMULTISELECT the path is stored
+// cTitle:   Window Title
+// aFilter:  Array of Files Types i.e. { { "Databases", "*.dbf" }, { "Harbour", "*.prg" } }
+// nFlags:   WIN_OFN_* values default to WIN_OFN_EXPLORER
+// cInitDir: Initial directory
+// cDefExt:  Default Extension i.e. "DBF"
+// nIndex:   Index position of types
+// cDefName: DEFAULT file name
+//
+// Returns:  If WIN_OFN_ALLOWMULTISELECT ?  Array of files selected : FileName.
 FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, cDefExt, nFilterIndex, cDefName )
 
    LOCAL cRet, aTmp, xRet, i
@@ -444,10 +440,9 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
    hb_default( @cPath, "" )
    hb_default( @nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR )
 
-/* win_GetOpenFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
- *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
- */
+// win_GetOpenFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
+//                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
+//    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
    cRet := win_GetOpenFileName( @nFlags, cTitle, cInitDir, cDefExt, acFilter, @nFilterIndex, /* nBufferSize */, cDefName )
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
@@ -464,19 +459,18 @@ FUNCTION wvt_GetOpenFileName( hWnd, cPath, cTitle, acFilter, nFlags, cInitDir, c
 
    RETURN xRet
 
-/* wvt_GetSaveFileName( hWnd, cDefFile, cTitle, acFilter, nFlags, cInitDir, cDefExt, @nFilterIndex )
-
-hWnd:     Handle to parent window
-cDefName: (optional) Default FileName
-cTitle:   Window Title
-aFilter:  Array of Files Types i.e. { { "Databases", "*.dbf" }, { "Harbour", "*.prg" } }
-nFlags:   WIN_OFN_* values default to WIN_OFN_EXPLORER
-cInitDir: Initial directory
-cDefExt:  Default Extension i.e. "DBF"
-nIndex:   Index position of types
-
-Returns:  FileName.
-*/
+// wvt_GetSaveFileName( hWnd, cDefFile, cTitle, acFilter, nFlags, cInitDir, cDefExt, @nFilterIndex )
+//
+// hWnd:     Handle to parent window
+// cDefName: (optional) Default FileName
+// cTitle:   Window Title
+// aFilter:  Array of Files Types i.e. { { "Databases", "*.dbf" }, { "Harbour", "*.prg" } }
+// nFlags:   WIN_OFN_* values default to WIN_OFN_EXPLORER
+// cInitDir: Initial directory
+// cDefExt:  Default Extension i.e. "DBF"
+// nIndex:   Index position of types
+//
+// Returns:  FileName.
 FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir, cDefExt, nFilterIndex )
 
    LOCAL cRet, aTmp, xRet, i, cPath
@@ -485,10 +479,9 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    hb_default( @nFlags, WIN_OFN_EXPLORER + WIN_OFN_NOCHANGEDIR )
 
-/* win_GetSaveFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
- *                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
- *    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
- */
+// win_GetSaveFileName( [[@]<nFlags>], [<cTitle>], [<cInitDir>], [<cDefExt>], ;
+//                      [<acFilter>], [[@]<nFilterIndex>], [<nBufferSize>], [<cDefName>] )
+//    --> <cFilePath> | <cPath> + e"\0" + <cFile1> [ + e"\0" + <cFileN> ] | ""
    cRet := win_GetSaveFileName( @nFlags, cTitle, cInitDir, cDefExt, acFilter, @nFilterIndex, /*nBufferSize*/, cDefName )
 
    IF hb_bitAnd( nFlags, WIN_OFN_ALLOWMULTISELECT ) != 0
@@ -505,7 +498,7 @@ FUNCTION wvt_GetSaveFileName( hWnd, cDefName, cTitle, acFilter, nFlags, cInitDir
 
    RETURN xRet
 
-/* C functions to PRG Ports */
+// C functions to PRG Ports
 
 #include "hbgtinfo.ch"
 #include "hbgtwvg.ch"
@@ -756,7 +749,7 @@ FUNCTION wvg_FindWindow( cTitle )
    RETURN wapi_FindWindow( , cTitle )
 
 #if 0
-FUNCTION wvg_CreateBrush(...)  /* FIXME: causes problems due to the GC collected pointer is returns */
+FUNCTION wvg_CreateBrush(...)  // FIXME: causes problems due to the GC collected pointer is returns
    RETURN wapi_CreateBrushIndirect( {...} )
 #endif
 
@@ -802,7 +795,7 @@ FUNCTION wvg_SetWndProc(hWnd, pWndProc)
 STATIC FUNCTION wvg_hWnd()
    RETURN hb_gtInfo( HB_GTI_WINHANDLE )
 
-/* wvt_MessageBox( cMessage, cTitle, nIcon, hWnd ) */
+// wvt_MessageBox( cMessage, cTitle, nIcon, hWnd )
 FUNCTION wvt_MessageBox(...)
 
    LOCAL hWnd := wvg_hWnd()
@@ -813,7 +806,7 @@ FUNCTION wvt_MessageBox(...)
 
    RETURN wapi_MessageBox(hWnd, ...)
 
-/* wvt_DlgSetIcon( hDlg, ncIcon ) */
+// wvt_DlgSetIcon( hDlg, ncIcon )
 FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
 
    LOCAL hIcon
@@ -825,8 +818,8 @@ FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
    ENDIF
 
    IF !Empty(hIcon)
-      wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_SMALL, hIcon )  /* Titlebar icon */
-      wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_BIG  , hIcon )  /* Tasklist icon */
+      wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_SMALL, hIcon )  // Titlebar icon
+      wapi_SendMessage( hDlg, WIN_WM_SETICON, WIN_ICON_BIG  , hIcon )  // Tasklist icon
    ENDIF
 
    RETURN hIcon
@@ -839,12 +832,12 @@ FUNCTION wvg_LoadIcon( ncIcon )
 
    RETURN wapi_LoadImage( , ncIcon, WIN_IMAGE_ICON,,, WIN_LR_LOADFROMFILE )
 
-/* https://msdn.microsoft.com/library/ms648045
-   Windows 2000 and upper, wapi_LoadImage() can resize image
-
-   nSource: 0 ResourceIdByNumber
-   nSource: 1 ResourceIdByName
-   nSource: 2 ImageFromDiskFile */
+// https://msdn.microsoft.com/library/ms648045
+// Windows 2000 and upper, wapi_LoadImage() can resize image
+//
+// nSource: 0 ResourceIdByNumber
+// nSource: 1 ResourceIdByName
+// nSource: 2 ImageFromDiskFile
 FUNCTION wvg_LoadImage( ncImage, nSource, nBmpOrIcon, nWidth, nHeight )
 
    hb_defaultValue( @nBmpOrIcon, WIN_IMAGE_BITMAP )

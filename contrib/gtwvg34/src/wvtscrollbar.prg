@@ -71,7 +71,7 @@
 #define K_SBTHUMBTRACKVERT      1059
 #define K_SBTHUMBTRACKHORZ      1060
 
-/* Class WvtScrollBar */
+// Class WvtScrollBar
 CREATE CLASS WvtScrollBar INHERIT WvtObject
 
    VAR    nBarType                                INIT WVT_SCROLLBAR_VERT

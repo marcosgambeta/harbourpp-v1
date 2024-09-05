@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                              EkOnkar
+//                         ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -62,7 +61,7 @@ CREATE CLASS WvgMenuBar INHERIT wvgWindow
    VAR    hMenu
    VAR    pMenu
 
-   /* Event CallBack Slots */
+   // Event CallBack Slots
    VAR    sl_beginMenu
    VAR    sl_endMenu
    VAR    sl_itemMarked
@@ -103,7 +102,7 @@ CREATE CLASS WvgMenuBar INHERIT wvgWindow
    METHOD selectItem( nItemNum )
    METHOD setItem( nItemNum, aItem )
 
-   /* Event Callback Methods */
+   // Event Callback Methods
    METHOD beginMenu( xParam )                   SETGET
    METHOD endMenu( xParam )                     SETGET
    METHOD itemMarked( xParam )                  SETGET
@@ -146,15 +145,15 @@ METHOD WvgMenuBar:create( oParent, aPresParams, lVisible )
    ::hMenu := wapi_CreateMenu()
 
    IF !Empty(::hMenu)
-      /* TODO: check for if the parent already has a menu
-               we need to destroy that first */
-      /* finally set the menu */
+      // TODO: check for if the parent already has a menu
+      //       we need to destroy that first
+      // finally set the menu
 #if 0
       wvg_SetMenu( ::oParent:getHWND(), ::hMenu )
 #endif
 
 #if 0
-      /* how to make menu invisible ? */
+      // how to make menu invisible ?
       IF ::visible
          wapi_ShowWindow( ::oParent:getHWND(), SW_MINIMIZE )
          wapi_ShowWindow( ::oParent:getHWND(), SW_NORMAL )
@@ -217,7 +216,7 @@ METHOD WvgMenuBar:delItem( nItemNum )
          ::aMenuItems[ nItemNum ][ WVT_MENU_MENUOBJ ]:Destroy()
       ENDIF
 
-      IF ( lResult := wapi_DeleteMenu( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION ) ) /* Remember ZERO base */
+      IF ( lResult := wapi_DeleteMenu( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION ) ) // Remember ZERO base
          hb_ADel( ::aMenuItems, nItemNum, .T. )
       ELSE
 #if 0
@@ -228,7 +227,7 @@ METHOD WvgMenuBar:delItem( nItemNum )
 
    RETURN lResult
 
-/* { xCaption, bAction, nStyle, nAttrb } */
+// { xCaption, bAction, nStyle, nAttrb }
 METHOD WvgMenuBar:addItem( aItem, p2, p3, p4 )
 
    LOCAL xCaption, bAction, nStyle, nAttrib
@@ -260,9 +259,9 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
    nStyle   := aItem[ 3 ]
    nAttrib  := aItem[ 4 ]
 
-   /* xCaption : NIL | cPrompt | ncResource | oMenu */
+   // xCaption : NIL | cPrompt | ncResource | oMenu
    SWITCH ValType( xCaption )
-   CASE "U"  /* Separator */
+   CASE "U"  // Separator
       aItem := { WIN_MF_SEPARATOR, 0, 0, , nStyle, nAttrib }
       EXIT
 
@@ -279,7 +278,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
       aItem    := { WIN_MF_POPUP, xCaption:hMenu, cCaption, xCaption, nStyle, nAttrib }
       EXIT
 
-   CASE "N"  /* Resource ID */
+   CASE "N"  // Resource ID
       EXIT
 
    ENDSWITCH

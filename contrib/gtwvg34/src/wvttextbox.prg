@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtTextBox */
+// Class WvtTextBox
 CREATE CLASS WvtTextBox INHERIT WvtObject
 
    VAR    cText                                   INIT ""

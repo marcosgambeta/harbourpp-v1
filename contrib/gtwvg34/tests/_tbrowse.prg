@@ -1,11 +1,10 @@
-/* TBrowse Demonstration with GUI Elements
- *
- * This protocol can be clubbed with pure console implementation
- * and can be called in a separate thread as well as modal to
- * current window.
- *
- * Pritpal Bedi <bedipritpal@hotmail.com>
- */
+// TBrowse Demonstration with GUI Elements
+//
+// This protocol can be clubbed with pure console implementation
+// and can be called in a separate thread as well as modal to
+// current window.
+//
+// Pritpal Bedi <bedipritpal@hotmail.com>
 
 #include "button.ch"
 #include "dbstruct.ch"
@@ -77,7 +76,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    oTBar := BrwBuildToolBar( oCrt )
    oTBar:buttonClick := {| oBtn | Vou_ExecTBarAction( oBtn ) }
 
-   SetMode( MaxRow() + 1, MaxCol() + 1 )  /* Necessary because adding menu has reduced the overall size of window */
+   SetMode( MaxRow() + 1, MaxCol() + 1 )  // Necessary because adding menu has reduced the overall size of window
 
    pGT := SetGT( 2, hb_gtSelect() )
 
@@ -135,7 +134,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
    BrwBuildButtons( oCrt, oBrowse )
    oTre := BrwBuildTree( oCrt, oBrowse )
 
-   wvt_Keyboard( HB_K_RESIZE ) /* Refresh All GUI Controls */
+   wvt_Keyboard( HB_K_RESIZE ) // Refresh All GUI Controls
 
    DO WHILE ! lEnd
       DispBegin()
@@ -237,7 +236,7 @@ STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTr
    oChk:setPosAndSize()
 #endif
 
-   BrwReposButtons( oCrt ) /* Because we are repositioning at the center of console width */
+   BrwReposButtons( oCrt ) // Because we are repositioning at the center of console width
 
    IF lActiveX
       aNvg[ 1 ]:show()
@@ -249,7 +248,7 @@ STATIC FUNCTION BrwHandleResize( oCrt, oBrw, oVBar, oHBar, oCom, oSLE, oLBx, oTr
       oCom:hide()
    ENDIF
 
-   /* Why this is needed if WvgActiveXControl is hosted on the GT console */
+   // Why this is needed if WvgActiveXControl is hosted on the GT console
    oCrt:hide()
    oCrt:show()
 
@@ -322,7 +321,7 @@ STATIC FUNCTION BrwBuildActiveX( oCrt, oBrw )
    oCom:mapEvent( 269, {|| uiDebug( "EXPLORER-269" ) } )
 #endif
    oCom:create()
-#if ! defined( __HBSCRIPT__HBSHELL )  /* FIXME: disabled in hbrun due to OLE bugs */
+#if ! defined( __HBSCRIPT__HBSHELL )  // FIXME: disabled in hbrun due to OLE bugs
    oCom:navigate( hb_Version( HB_VERSION_URL_BASE ) )
 #endif
 
@@ -490,7 +489,7 @@ STATIC PROCEDURE BrwBuildButtons( oCrt, oBrw )
 
    FOR i := 1 TO Len(aPmt)
       oPB := WvgPushButton():new( oCrt )
-      IF i == 3  /* We do not want this button to gain focus anytime */
+      IF i == 3  // We do not want this button to gain focus anytime
          oPB:pointerFocus := .F.
       ENDIF
       IF i == Len(aPmt)
@@ -834,7 +833,7 @@ STATIC PROCEDURE Vou_BrwSetVScroll( mp1, oBrowse )
 
    RETURN
 
-/* For brosers inside WvtDialog() */
+// For brosers inside WvtDialog()
 
 STATIC FUNCTION BrwOnEvent( oWvtBrw, cPaintID, oBrowse, nKey )
 

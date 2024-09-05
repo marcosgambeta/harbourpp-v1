@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                               EkOnkar
+//                         ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -84,7 +83,7 @@ METHOD WvgScrollBar:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::WvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::style       := WIN_WS_CHILD  /* + SBS_SIZEBOX + SBS_SIZEGRIP */
+   ::style       := WIN_WS_CHILD  // + SBS_SIZEBOX + SBS_SIZEGRIP
    ::className   := "SCROLLBAR"
    ::objType     := objTypeScrollBar
 

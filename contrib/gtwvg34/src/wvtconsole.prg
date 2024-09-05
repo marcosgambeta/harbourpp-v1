@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtConsole */
+// Class WvtConsole
 CREATE CLASS WvtConsole INHERIT WvtObject
 
    METHOD New( oParent )

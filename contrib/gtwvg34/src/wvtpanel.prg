@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtPanel */
+// Class WvtPanel
 CREATE CLASS WvtPanel INHERIT WvtObject
 
    VAR    cColor

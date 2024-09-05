@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -99,7 +98,7 @@ METHOD WvgCheckBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::createControl()
 
 #if 0
-   ::SetWindowProcCallback() /* Left to the parent for event processing */
+   ::SetWindowProcCallback() // Left to the parent for event processing
 #endif
 
    IF ::visible
@@ -150,7 +149,7 @@ METHOD WvgCheckBox:handleEvent( nMessage, aNM )
          RETURN ::hBrushBG
       ENDIF
 
-#if 0  /* This should never be reached as parent is processing the events */
+#if 0  // This should never be reached as parent is processing the events
    CASE nMessage == HB_GTE_ANY
       IF ::isParentCrt()
          IF aNM[ 1 ] == WIN_WM_LBUTTONUP

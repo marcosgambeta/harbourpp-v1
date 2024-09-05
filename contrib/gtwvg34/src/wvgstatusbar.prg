@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                               EkOnkar
+//                         ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -55,7 +54,7 @@
 #include "wvtwin.ch"
 #include "wvgparts.ch"
 
-CREATE CLASS WvgStatusBar INHERIT WvgWindow /* WvgActiveXControl */
+CREATE CLASS WvgStatusBar INHERIT WvgWindow // WvgActiveXControl
 
    VAR    caption                               INIT ""
    VAR    sizeGrip                              INIT .T.
@@ -166,7 +165,7 @@ METHOD PROCEDURE WvgStatusBar:destroy()
    LOCAL i
 
    FOR EACH i IN ::aItems
-      /* FIXME: Why was this left empty? */
+      // FIXME: Why was this left empty?
    NEXT
 
    ::wvgWindow:destroy()
@@ -208,7 +207,7 @@ METHOD WvgStatusBar:delItem( nItemORcKey )
    ENDCASE
 
    IF nIndex >= 1 .AND. nIndex <= Len(::aItems)
-      hb_ADel( ::aItems, nIndex, .T. )  /* Delete panel by window */
+      hb_ADel( ::aItems, nIndex, .T. )  // Delete panel by window
    ENDIF
 
    RETURN Self
@@ -235,7 +234,7 @@ METHOD WvgStatusBar:clear()
    LOCAL i
 
    FOR i := 1 TO ::numItems
-      /* Remove off window */
+      // Remove off window
    NEXT
 
    ::aItems := {}

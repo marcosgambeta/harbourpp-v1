@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtImage */
+// Class WvtImage
 CREATE CLASS WvtImage INHERIT WvtObject
 
    VAR    cImageFile

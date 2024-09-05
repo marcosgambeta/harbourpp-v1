@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtMenu [Peter Rees] */
+// Class WvtMenu [Peter Rees]
 CREATE CLASS wvtMenu
 
    METHOD create( cCaption )
@@ -113,9 +113,9 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
    IF !Empty(::hMenu) .AND. ( ! Empty(cCaption) .OR. ! Empty(bAction) )
       IF HB_ISOBJECT( bAction )
          cCaption := iif(Empty(cCaption), bAction:Caption, cCaption)
-         aItem := { WIN_MF_POPUP, bAction:hMenu, cCaption, bAction }   /* bAction is a wvtMenu object reference */
+         aItem := { WIN_MF_POPUP, bAction:hMenu, cCaption, bAction }   // bAction is a wvtMenu object reference
       ELSEIF HB_ISEVALITEM( bAction )
-         aItem := { WIN_MF_STRING, ::MenuItemId++, cCaption, bAction } /* bAction is a code block to execute */
+         aItem := { WIN_MF_STRING, ::MenuItemId++, cCaption, bAction } // bAction is a code block to execute
       ELSEIF hb_LeftEq( cCaption, "-" )
          aItem := { WIN_MF_SEPARATOR, 0, 0, NIL }
       ELSE
@@ -158,7 +158,7 @@ METHOD wvtMenu:DelItem( nItemNum )
          ::aItems[ nItemNum ][ WVT_MENU_MENUOBJ ]:Destroy()
       ENDIF
 
-      IF ( lResult := wapi_DeleteMenu( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION ) ) /* Remember ZERO base */
+      IF ( lResult := wapi_DeleteMenu( ::hMenu, nItemNum - 1, WIN_MF_BYPOSITION ) ) // Remember ZERO base
          hb_ADel( ::aItems, nItemNum, .T. )
       ELSE
 #if 0

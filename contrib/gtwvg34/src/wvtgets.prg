@@ -71,7 +71,7 @@
 #define K_SBTHUMBTRACKVERT      1059
 #define K_SBTHUMBTRACKHORZ      1060
 
-/* Class WvtGets */
+// Class WvtGets
 CREATE CLASS WvtGets INHERIT WvtObject
 
    VAR    aGetList                                INIT {}

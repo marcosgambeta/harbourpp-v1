@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -85,7 +84,7 @@ METHOD WvgPushButton:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
    ::wvgWindow:new( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
-   ::style       := WIN_WS_CHILD + BS_PUSHBUTTON + BS_NOTIFY /* + BS_PUSHLIKE */
+   ::style       := WIN_WS_CHILD + BS_PUSHBUTTON + BS_NOTIFY // + BS_PUSHLIKE
    ::className   := "BUTTON"
    ::objType     := objTypePushButton
 
@@ -135,7 +134,7 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
    ::createControl()
 #if 0
-   ::SetWindowProcCallback()  /* Let parent take control of it */
+   ::SetWindowProcCallback()  // Let parent take control of it
 #endif
 
    IF ::visible
@@ -187,7 +186,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
          RETURN ::hBrushBG
       ENDIF
 
-#if 0  /* Must not reach here if WndProc is not installed */
+#if 0  // Must not reach here if WndProc is not installed
    CASE nMessage == HB_GTE_ANY
       IF aNM[ 1 ] == WIN_WM_LBUTTONUP
          IF HB_ISEVALITEM( ::sl_lbClick )
@@ -239,7 +238,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
          ::sendMessage( WIN_WM_SETTEXT, 0, ::caption )
       ENDSWITCH
 
-   CASE HB_ISNUMERIC(xCaption)  /* Handle to the bitmap */
+   CASE HB_ISNUMERIC(xCaption)  // Handle to the bitmap
       ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, ::caption )
 
    CASE HB_ISARRAY( xCaption )

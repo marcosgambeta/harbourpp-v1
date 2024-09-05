@@ -59,7 +59,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtBrowse */
+// Class WvtBrowse
 CREATE CLASS WvtBrowse INHERIT WvtObject
 
    VAR    cAlias
@@ -225,14 +225,14 @@ METHOD WvtBrowse:NotifyChild( nIndex, nKey, oCurObj )
          xData )
 
       IF ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:nChildren > 0
-         /* Pretend IF focus is current on this object */
+         // Pretend IF focus is current on this object
          Eval( ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:bOnFocus, ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ] )
 
          FOR i := 1 to ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:nChildren
             ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ]:NotifyChild( i, nKey, ::aChildren[ nIndex ][ OBJ_CHILD_OBJ ] )
          NEXT
 
-         /* Restore previous environments */
+         // Restore previous environments
          Eval( oCurObj:bOnFocus, oCurObj )
       ENDIF
    ENDIF

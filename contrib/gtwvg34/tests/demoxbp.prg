@@ -27,7 +27,7 @@ PROCEDURE Main()
 
 #if ! defined( __HBSCRIPT__HBSHELL )
 
-PROCEDURE hb_GTSYS()  /* must be a public function */
+PROCEDURE hb_GTSYS()  // must be a public function
 
    REQUEST HB_GT_GUI_DEFAULT
    REQUEST HB_GT_WVG

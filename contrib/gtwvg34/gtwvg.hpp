@@ -84,13 +84,13 @@ struct _tag_GOBJS
    int            iRight;
    HB_GOBJ_OFFSET aOffset;
    int            iHeight;
-   int            iWidth;       /* iThick */
+   int            iWidth;       // iThick
    int            iOrient;
    int            iAlign;
    int            iAlignVert;
    int            iFormat;
-   int            iStyle;       /* iShape */
-   int            iData;        /* iSlot, etc */
+   int            iStyle;       // iShape
+   int            iData;        // iSlot, etc
    COLORREF       crRGB;
    COLORREF       crRGBText;
    COLORREF       crRGBBk;
@@ -115,22 +115,22 @@ using PHB_GOBJS = HB_GOBJS *;
 
 struct HB_GUIDATA
 {
-   HPEN      penWhite;                      /* White pen to draw GDI elements */
-   HPEN      penBlack;                      /* Black pen to draw GDI elements */
-   HPEN      penWhiteDim;                   /* White dim pen to draw GDI elements */
-   HPEN      penDarkGray;                   /* Dark gray pen to draw GDI elements */
-   HPEN      penGray;                       /* Gray pen equivalent to Clipper White */
-   HPEN      penNull;                       /* Null pen */
-   HBRUSH    diagonalBrush;                 /* Handle to diagonal brush to draw scrollbars */
-   HBRUSH    solidBrush;                    /* Handle to solid brush */
-   HBRUSH    whiteBrush;                    /* Wvt specific White colored brush */
-   IPicture * pPicture[ 50 ];               /* Array to hold the Picture Streams to avoid recurring loading and unloading */
-   HFONT     hUserFonts[ 50 ];              /* User defined font handles */
-   HPEN      hUserPens[ 50 ];               /* User defined pens */
-   HINSTANCE hMSImg32;                      /* Handle to the loaded library msimg32.dll */
-   wvtGradientFill pfnGF;                   /* Pointer to Address of the GradientFill function in MSImg32.dll */
-   HINSTANCE hUser32;                       /* Handle to the loaded library user32.dll */
-   wvtSetLayeredWindowAttributes pfnLayered;/* Pointer to set Windows attribute - transparency. */
+   HPEN      penWhite;                      // White pen to draw GDI elements
+   HPEN      penBlack;                      // Black pen to draw GDI elements
+   HPEN      penWhiteDim;                   // White dim pen to draw GDI elements
+   HPEN      penDarkGray;                   // Dark gray pen to draw GDI elements
+   HPEN      penGray;                       // Gray pen equivalent to Clipper White
+   HPEN      penNull;                       // Null pen
+   HBRUSH    diagonalBrush;                 // Handle to diagonal brush to draw scrollbars
+   HBRUSH    solidBrush;                    // Handle to solid brush
+   HBRUSH    whiteBrush;                    // Wvt specific White colored brush
+   IPicture * pPicture[ 50 ];               // Array to hold the Picture Streams to avoid recurring loading and unloading
+   HFONT     hUserFonts[ 50 ];              // User defined font handles
+   HPEN      hUserPens[ 50 ];               // User defined pens
+   HINSTANCE hMSImg32;                      // Handle to the loaded library msimg32.dll
+   wvtGradientFill pfnGF;                   // Pointer to Address of the GradientFill function in MSImg32.dll
+   HINSTANCE hUser32;                       // Handle to the loaded library user32.dll
+   wvtSetLayeredWindowAttributes pfnLayered;// Pointer to set Windows attribute - transparency.
 
 };
 
@@ -138,64 +138,64 @@ using PHB_GUIDATA = HB_GUIDATA *;
 
 struct HB_GTWVG
 {
-   PHB_GT   pGT;                            /* core GT pointer */
-   int      iHandle;                        /* window number */
+   PHB_GT   pGT;                            // core GT pointer
+   int      iHandle;                        // window number
 
-   HINSTANCE hInstance;                     /* parent window instance */
+   HINSTANCE hInstance;                     // parent window instance
    int       iCmdShow;
 
-   int      ROWS;                           /* number of displayable rows in window */
-   int      COLS;                           /* number of displayable columns in window */
+   int      ROWS;                           // number of displayable rows in window
+   int      COLS;                           // number of displayable columns in window
 
-   COLORREF COLORS[ 16 ];                   /* colors */
+   COLORREF COLORS[ 16 ];                   // colors
 
-   HB_BOOL  CaretExist;                     /* HB_TRUE if a caret has been created */
-   HB_BOOL  CaretHidden;                    /* HB_TRUE if a caret has been hidden */
-   int      CaretSize;                      /* Height of solid caret */
-   int      CaretWidth;                     /* Width of solid caret */
+   HB_BOOL  CaretExist;                     // HB_TRUE if a caret has been created
+   HB_BOOL  CaretHidden;                    // HB_TRUE if a caret has been hidden
+   int      CaretSize;                      // Height of solid caret
+   int      CaretWidth;                     // Width of solid caret
 
-   POINT    MousePos;                       /* the last mouse position */
-   HB_BOOL  MouseMove;                      /* Flag to say whether to return mouse movement events */
+   POINT    MousePos;                       // the last mouse position
+   HB_BOOL  MouseMove;                      // Flag to say whether to return mouse movement events
 
-   int      Keys[ WVT_CHAR_QUEUE_SIZE ];    /* Array to hold the characters & events */
-   int      keyPointerIn;                   /* Offset into key array for character to be placed */
-   int      keyPointerOut;                  /* Offset into key array of next character to read */
-   int      keyLast;                        /* last inkey code value in buffer */
+   int      Keys[ WVT_CHAR_QUEUE_SIZE ];    // Array to hold the characters & events
+   int      keyPointerIn;                   // Offset into key array for character to be placed
+   int      keyPointerOut;                  // Offset into key array of next character to read
+   int      keyLast;                        // last inkey code value in buffer
 
-   POINT    PTEXTSIZE;                      /* size of the fixed width font */
-   HB_BOOL  FixedFont;                      /* HB_TRUE if current font is a fixed font */
-   int      FixedSize[ WVT_MAX_COLS ];      /* buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected */
-   int      fontHeight;                     /* requested font height */
-   int      fontWidth;                      /* requested font width */
-   int      fontWeight;                     /* Bold level */
-   int      fontQuality;                    /* requested font quality */
-   TCHAR    fontFace[ LF_FACESIZE ];        /* requested font face name LF_FACESIZE #defined in wingdi.h */
-   HFONT    hFont;                          /* current font handle */
+   POINT    PTEXTSIZE;                      // size of the fixed width font
+   HB_BOOL  FixedFont;                      // HB_TRUE if current font is a fixed font
+   int      FixedSize[ WVT_MAX_COLS ];      // buffer for ExtTextOut() to emulate fixed pitch when Proportional font selected
+   int      fontHeight;                     // requested font height
+   int      fontWidth;                      // requested font width
+   int      fontWeight;                     // Bold level
+   int      fontQuality;                    // requested font quality
+   TCHAR    fontFace[ LF_FACESIZE ];        // requested font face name LF_FACESIZE #defined in wingdi.h
+   HFONT    hFont;                          // current font handle
 #if ! defined( UNICODE )
-   HFONT    hFontBox;                       /* current font handle to draw lines */
+   HFONT    hFontBox;                       // current font handle to draw lines
 #endif
 
-   HWND     hWnd;                           /* the window handle */
-   HB_BOOL  fInit;                          /* logical variable indicating that window should be open */
+   HWND     hWnd;                           // the window handle
+   HB_BOOL  fInit;                          // logical variable indicating that window should be open
 
-   HICON    hIcon;                          /* Title Bar and Task List icon. Can be NULL. */
-   HB_BOOL  bIconToFree;                    /* Do we need to free this icon when it's not NULL? */
+   HICON    hIcon;                          // Title Bar and Task List icon. Can be NULL.
+   HB_BOOL  bIconToFree;                    // Do we need to free this icon when it's not NULL?
 
    void *   hWindowTitle;
    LPCTSTR  lpWindowTitle;
 
-   int      CodePage;                       /* Code page to use for display characters */
+   int      CodePage;                       // Code page to use for display characters
 #if ! defined( UNICODE )
-   int      boxCodePage;                    /* Code page to use for display draw line characters */
+   int      boxCodePage;                    // Code page to use for display draw line characters
 #endif
-   HB_BOOL  Win9X;                          /* Flag to say if running on Win9X not NT/2000/XP */
-   HB_BOOL  AltF4Close;                     /* Can use Alt+F4 to close application */
-   HB_BOOL  CentreWindow;                   /* True if window is to be Reset into centre of window */
+   HB_BOOL  Win9X;                          // Flag to say if running on Win9X not NT/2000/XP
+   HB_BOOL  AltF4Close;                     // Can use Alt+F4 to close application
+   HB_BOOL  CentreWindow;                   // True if window is to be Reset into centre of window
 
    HB_BOOL  IgnoreWM_SYSCHAR;
 
-   HB_BOOL  bMaximized;                     /* Flag is set when window has been maximized */
-   HB_BOOL  bBeingMarked;                   /* Flag to control CUI window like copy operation */
+   HB_BOOL  bMaximized;                     // Flag is set when window has been maximized
+   HB_BOOL  bBeingMarked;                   // Flag to control CUI window like copy operation
    HB_BOOL  bBeginMarked;
 
    HB_BOOL  bResizable;
@@ -207,29 +207,29 @@ struct HB_GTWVG
 
    HB_BOOL  bClosable;
    HB_BOOL  bFullScreen;
-   HB_BOOL  bAltEnter;                      /* Can use Alt+Enter to enter full screen mode */
+   HB_BOOL  bAltEnter;                      // Can use Alt+Enter to enter full screen mode
    int      MarginTop;
    int      MarginLeft;
 
-   int      ResizeMode;                     /* Sets the resizing mode either to FONT or ROWS */
+   int      ResizeMode;                     // Sets the resizing mode either to FONT or ROWS
    RECT     sRectNew;
    RECT     sRectOld;
 
-   /* To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed> */
+   // To Be Split in 2 Structures <1 GUI dynamic> <2 GUI fixed>
 
-   int       rowStart;                      /* Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect() */
-   int       rowStop;                       /* Holds nBottom of last WM_PAINT rectangle */
-   int       colStart;                      /* Holds nLeft   of last WM_PAINT rectangle */
-   int       colStop;                       /* Holds nRight  of last WM_PAINT rectangle */
+   int       rowStart;                      // Holds nTop    of last WM_PAINT rectangle returned by wvt_GetPaintRect()
+   int       rowStop;                       // Holds nBottom of last WM_PAINT rectangle
+   int       colStart;                      // Holds nLeft   of last WM_PAINT rectangle
+   int       colStop;                       // Holds nRight  of last WM_PAINT rectangle
 
-   int       iFactor;                       /* Transparency factor 0~255 */
+   int       iFactor;                       // Transparency factor 0~255
 
-   HDC       hdc;                           /* Handle to Windows Device Context */
+   HDC       hdc;                           // Handle to Windows Device Context
 
-   int       LastMenuEvent;                 /* Last menu item selected */
-   int       MenuKeyEvent;                  /* User definable event number for windows menu command */
-   HB_BOOL   InvalidateWindow;              /* Flag for controlling whether to use ScrollWindowEx() */
-   HB_BOOL   EnableShortCuts;               /* Determines whether ALT key enables menu or system menu */
+   int       LastMenuEvent;                 // Last menu item selected
+   int       MenuKeyEvent;                  // User definable event number for windows menu command
+   HB_BOOL   InvalidateWindow;              // Flag for controlling whether to use ScrollWindowEx()
+   HB_BOOL   EnableShortCuts;               // Determines whether ALT key enables menu or system menu
 
    HB_BOOL   bGui;
    HDC       hGuiDC;
@@ -242,59 +242,59 @@ struct HB_GTWVG
    HB_BOOL   bSetFocus;
    HB_BOOL   bKillFocus;
 
-   PHB_DYNS  pSymWVT_PAINT;                 /* Stores pointer to WVT_PAINT function */
-   PHB_DYNS  pSymWVT_SETFOCUS;              /* Stores pointer to WVT_SETFOCUS function */
-   PHB_DYNS  pSymWVT_KILLFOCUS;             /* Stores pointer to WVT_KILLFOCUS function */
-   PHB_DYNS  pSymWVT_MOUSE;                 /* Stores pointer to WVT_MOUSE function */
-   PHB_DYNS  pSymWVT_TIMER;                 /* Stores pointer to WVT_TIMER function */
+   PHB_DYNS  pSymWVT_PAINT;                 // Stores pointer to WVT_PAINT function
+   PHB_DYNS  pSymWVT_SETFOCUS;              // Stores pointer to WVT_SETFOCUS function
+   PHB_DYNS  pSymWVT_KILLFOCUS;             // Stores pointer to WVT_KILLFOCUS function
+   PHB_DYNS  pSymWVT_MOUSE;                 // Stores pointer to WVT_MOUSE function
+   PHB_DYNS  pSymWVT_TIMER;                 // Stores pointer to WVT_TIMER function
    PHB_DYNS  pSymWVT_KEY;
 
-   HPEN      currentPen;                    /* Handle to current pen settable at runtime */
-   HBRUSH    currentBrush;                  /* Handle to current brush settable by runtime */
+   HPEN      currentPen;                    // Handle to current pen settable at runtime
+   HBRUSH    currentBrush;                  // Handle to current brush settable by runtime
 
-   PHB_GUIDATA  pGUI;                       /* GUI Data Structure */
+   PHB_GUIDATA  pGUI;                       // GUI Data Structure
 
 
-   HMENU     hPopup;                        /* Handle of context menu invokable with right click */
-   HWND      hWndTT;                        /* Handle to hold tooltip information */
-   HB_BOOL   bToolTipActive;                /* Flag to set whether tooltip is active or not */
+   HMENU     hPopup;                        // Handle of context menu invokable with right click
+   HWND      hWndTT;                        // Handle to hold tooltip information
+   HB_BOOL   bToolTipActive;                // Flag to set whether tooltip is active or not
 
-   HWND      hDlgModeless[ WVT_DLGML_MAX ]; /* Handle to a modeless dialog */
-   PHB_ITEM  pFunc[ WVT_DLGML_MAX ];        /* Function pointer for WndProc */
-   /* TODO: pcbFunc is redundant and should be removed */
-   PHB_ITEM  pcbFunc[ WVT_DLGML_MAX ];      /* codeblock for WndProc */
-   int       iType[ WVT_DLGML_MAX ];        /* Type of Function Pointers - Function 1, Block 2, Method 3 */
-   HWND      hDlgModal[ WVT_DLGMD_MAX ];    /* Handle to a modeless dialog */
-   PHB_ITEM  pFuncModal[ WVT_DLGMD_MAX ];   /* Function pointer for WndProc */
-   /* TODO: pcbFuncModal is redundant and should be removed */
-   PHB_ITEM  pcbFuncModal[ WVT_DLGMD_MAX ]; /* codeblock for WndProc */
-   int       iTypeModal[ WVT_DLGMD_MAX ];   /* Type of Function Pointers - Function 1, Block 2, Method 3 */
+   HWND      hDlgModeless[ WVT_DLGML_MAX ]; // Handle to a modeless dialog
+   PHB_ITEM  pFunc[ WVT_DLGML_MAX ];        // Function pointer for WndProc
+   // TODO: pcbFunc is redundant and should be removed
+   PHB_ITEM  pcbFunc[ WVT_DLGML_MAX ];      // codeblock for WndProc
+   int       iType[ WVT_DLGML_MAX ];        // Type of Function Pointers - Function 1, Block 2, Method 3
+   HWND      hDlgModal[ WVT_DLGMD_MAX ];    // Handle to a modeless dialog
+   PHB_ITEM  pFuncModal[ WVT_DLGMD_MAX ];   // Function pointer for WndProc
+   // TODO: pcbFuncModal is redundant and should be removed
+   PHB_ITEM  pcbFuncModal[ WVT_DLGMD_MAX ]; // codeblock for WndProc
+   int       iTypeModal[ WVT_DLGMD_MAX ];   // Type of Function Pointers - Function 1, Block 2, Method 3
 
-   PHB_GT_PARAMS  pPP;                      /* Presentation Parameters */
+   PHB_GT_PARAMS  pPP;                      // Presentation Parameters
 
-   HB_BOOL   bDeferPaint;                   /* To create pure Windows dialogs */
-   HB_BOOL   bTracking;                     /* To track if mouse has entered or left the window area */
+   HB_BOOL   bDeferPaint;                   // To create pure Windows dialogs
+   HB_BOOL   bTracking;                     // To track if mouse has entered or left the window area
 
-   HB_BOOL   bResizing;                     /* To know when it is in resizing mode */
+   HB_BOOL   bResizing;                     // To know when it is in resizing mode
    HB_BOOL   bAlreadySizing;
    HB_BOOL   bComposited;
    int       CloseMode;
 
-   PHB_GOBJS gObjs;                         /* Graphic Objects */
+   PHB_GOBJS gObjs;                         // Graphic Objects
 
-   HWND      hWndParent;                    /* Parent Window Handle, if any */
+   HWND      hWndParent;                    // Parent Window Handle, if any
 
-   PHB_ITEM  pNotifierGUI;                  /* Notifier to Wvg*Parts if embedded into a GT Window */
+   PHB_ITEM  pNotifierGUI;                  // Notifier to Wvg*Parts if embedded into a GT Window
 
-   HB_THREAD_NO threadNO;                   /* Will hold the current THREAD No */
+   HB_THREAD_NO threadNO;                   // Will hold the current THREAD No
 
 };
 
 using PHB_GTWVG = HB_GTWVG *;
 
-/* Trick to avoid warning about structures with the same
-   name having multiple definitions in the same module.
-   Without diverging from mainline codebase too much. */
+// Trick to avoid warning about structures with the same
+// name having multiple definitions in the same module.
+// Without diverging from mainline codebase too much. */
 #define HB_GTWVT   HB_GTWVG
 #define PHB_GTWVT  PHB_GTWVG
 
@@ -314,4 +314,4 @@ HB_EXTERN_END
 #define LWA_ALPHA         0x00000002
 #endif
 
-#endif /* HB_WVG_H_ */
+#endif // HB_WVG_H

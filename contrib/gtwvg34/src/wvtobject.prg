@@ -54,11 +54,11 @@
 
 #include "wvtwin.ch"
 
-/*
- * Class WvtObject
- *
- * Must never be used directly. It is parent class FOR all other objects!
- */
+//
+// Class WvtObject
+//
+// Must never be used directly. It is parent class FOR all other objects!
+//
 CREATE CLASS WvtObject
 
    VAR    oParent
@@ -100,7 +100,7 @@ CREATE CLASS WvtObject
 
    VAR    nTextColor
    VAR    nBackColor
-   VAR    nBackMode                               INIT 0 /* OPAQUE 1-TRANSPARENT */
+   VAR    nBackMode                               INIT 0 // OPAQUE 1-TRANSPARENT
    VAR    nTextColorHoverOn
    VAR    nTextColorHoverOff
    VAR    nBackColorHoverOn

@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -222,7 +221,7 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
                ::oParent:setFocus()
                RETURN EVENT_HANDLED
             ENDIF
-         CASE aNM[ 2 ] == hb_keyCode( "A" )  /* ~ */
+         CASE aNM[ 2 ] == hb_keyCode( "A" )  // ~
             // RETURN EVENT_HANDLED
          ENDCASE
 

@@ -1,4 +1,4 @@
-/* Pritpal Bedi <bedipritpal@hotmail.com> */
+// Pritpal Bedi <bedipritpal@hotmail.com>
 
 #include "inkey.ch"
 #include "setcurs.ch"
@@ -608,7 +608,7 @@ STATIC PROCEDURE ConfigureRMChart( RMChart )
 #define RMC_VLABEL_ABSOLUTE        6
 #define RMC_HATCHBRUSH_OFF         0
 
-   /* The code pulled from freewin sources */
+   // The code pulled from freewin sources
    RMChart:Font             := "Tahoma"
    RMChart:RMCStyle         := RMC_CTRLSTYLEFLAT
 

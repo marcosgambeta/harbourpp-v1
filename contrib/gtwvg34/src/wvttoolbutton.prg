@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtToolButton */
+// Class WvtToolButton
 CREATE CLASS WvtToolButton INHERIT WvtObject
 
    VAR    cFileImage

@@ -58,9 +58,9 @@ PROCEDURE Main()
 
    RETURN
 
-/* This function must be linked with the application */
+// This function must be linked with the application
 
-FUNCTION wvt_Paint()  /* must be a public function */
+FUNCTION wvt_Paint()  // must be a public function
 
    WvtPaintObjects()
 
@@ -132,7 +132,7 @@ STATIC FUNCTION DispStatusMsg( cMsg )
 
    ClearStatusMsg()
 
-   /* NOTE: The GUI function used as such is not subject to auto-painting */
+   // NOTE: The GUI function used as such is not subject to auto-painting
    wvt_DrawLabel( MaxRow(), 60, cMsg, 6, , 0, WIN_RGB(198, 198, 198), "Arial", 18, , 900 )
 
    RETURN .T.
@@ -185,7 +185,7 @@ STATIC PROCEDURE DoModalDialog()
 
 #if ! defined( __HBSCRIPT__HBSHELL )
 
-PROCEDURE hb_GTSYS()  /* must be a public function */
+PROCEDURE hb_GTSYS()  // must be a public function
 
    REQUEST HB_GT_WVG_DEFAULT
    REQUEST HB_GT_WVT

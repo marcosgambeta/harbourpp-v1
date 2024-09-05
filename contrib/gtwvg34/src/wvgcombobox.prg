@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -128,7 +127,7 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ::createControl()
 
 #if 0
-   ::SetWindowProcCallback()   /* Let parent control the events - WIN_WM_COMMAND */
+   ::SetWindowProcCallback()   // Let parent control the events - WIN_WM_COMMAND
 #endif
 
    IF ::visible
@@ -136,7 +135,7 @@ METHOD WvgComboBox:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
    ::setPosAndSize()
 
-   /* Build SLE and ListBox Part - May not be available for all Windows Versions - How to handle then ? */
+   // Build SLE and ListBox Part - May not be available for all Windows Versions - How to handle then ?
    IF !Empty(::aInfo := wvg_SendCBMessage( ::hWnd, CB_GETCOMBOBOXINFO ))
       ::oSLE := WvgSLE():new()
       ::oSLE:oParent := Self

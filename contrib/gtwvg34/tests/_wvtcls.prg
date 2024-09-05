@@ -1,11 +1,10 @@
-/* Wvt*Classes Demonstration
- *
- * This protocol can be clubbed with pure console implementation
- * and can be called in a separate thread as well as modal to
- * current window.
- *
- * Pritpal Bedi <bedipritpal@hotmail.com>
- */
+// Wvt*Classes Demonstration
+//
+// This protocol can be clubbed with pure console implementation
+// and can be called in a separate thread as well as modal to
+// current window.
+//
+// Pritpal Bedi <bedipritpal@hotmail.com>
 
 #include "inkey.ch"
 #include "hbgtinfo.ch"

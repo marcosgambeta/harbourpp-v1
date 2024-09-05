@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtToolBar */
+// Class WvtToolBar
 CREATE CLASS WvtToolBar INHERIT WvtObject
 
    VAR    nPaintID

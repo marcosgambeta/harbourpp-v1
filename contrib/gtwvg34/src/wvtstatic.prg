@@ -54,7 +54,7 @@
 
 #include "wvtwin.ch"
 
-/* Class WvtStatic */
+// Class WvtStatic
 CREATE CLASS WvtStatic INHERIT WvtObject
 
    VAR    nStatic
