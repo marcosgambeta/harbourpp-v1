@@ -56,15 +56,13 @@
 #include "hbwapi.hpp"
 #include "hbwinole.hpp"
 
-#if ! defined( HB_OS_WIN_CE )
-#  if defined( _MSC_VER )
-#     pragma warning(push)
-#     pragma warning(disable:4201)  /* warning C4201: nonstandard extension used: nameless struct/union */
-#  endif
-#  include <olectl.h>
-#  if defined( _MSC_VER )
-#     pragma warning(pop)
-#  endif
+#if defined( _MSC_VER )
+#   pragma warning(push)
+#   pragma warning(disable:4201)  /* warning C4201: nonstandard extension used: nameless struct/union */
+#endif
+#include <olectl.h>
+#if defined( _MSC_VER )
+#   pragma warning(pop)
 #endif
 
 #include <commctrl.h>
@@ -86,10 +84,6 @@
 #include "hbwinuni.hpp"
 
 #include "hbgtwvg.ch"
-
-#if defined( HB_OS_WIN_CE )
-   #include "hbwince.h"
-#endif
 
 HB_EXTERN_BEGIN
 
@@ -122,16 +116,25 @@ HB_EXTERN_BEGIN
    #ifdef __cplusplus
       extern "C" { STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * ); }
    #else
-      #if ! defined( HB_OS_WIN_CE )
-         STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * );
-      #endif
+      STDAPI OleLoadPicture( LPSTREAM, LONG, BOOL, REFIID, PVOID * );
    #endif
 #endif
 
 /* - */
 
-using wvtGradientFill = BOOL (WINAPI *)(HDC hdc, PTRIVERTEX pVertex, ULONG dwNumVertex, PVOID pMesh, ULONG dwNumMesh, ULONG dwMode);
-using wvtSetLayeredWindowAttributes = BOOL (WINAPI *)(HWND hwnd, COLORREF crKey, BYTE bAlpha, DWORD dwFlags);
+using wvtGradientFill = BOOL (WINAPI *)(
+                      HDC        hdc,
+                      PTRIVERTEX pVertex,
+                      ULONG      dwNumVertex,
+                      PVOID      pMesh,
+                      ULONG      dwNumMesh,
+                      ULONG      dwMode );
+
+using wvtSetLayeredWindowAttributes = BOOL (WINAPI *)(
+                      HWND       hwnd,
+                      COLORREF   crKey,
+                      BYTE       bAlpha,
+                      DWORD      dwFlags );
 
 /* - */
 
@@ -145,7 +148,7 @@ enum HB_gt_object_enum
    GTO_DISK           = 7,
    /* TODO: add other types */
    GTO_TEXT           = 100,
-};
+} ;
 
 /* Event subsystem */
 
@@ -244,9 +247,9 @@ struct HB_GT_PARAMS
    int       width;
    int       height;
    PHB_ITEM  pParentGT;
-   bool      bVisible;
-   bool      bRowCols;
-   bool      bConfigured;
+   HB_BOOL   bVisible;
+   HB_BOOL   bRowCols;
+   HB_BOOL   bConfigured;
    int       iWndType;
 };
 

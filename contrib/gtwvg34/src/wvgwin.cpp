@@ -100,7 +100,7 @@ HB_FUNC(WVG_SETMENU)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
 
-  bool bSet = SetMenu(hWnd, hbwapi_par_raw_HMENU(2));
+  HB_BOOL bSet = SetMenu(hWnd, hbwapi_par_raw_HMENU(2));
 
 #if 1
   RECT wi = {0, 0, 0, 0};
@@ -128,13 +128,13 @@ HB_FUNC(WVG_ISMENUITEMCHECKED)
   lpmii.cbSize = sizeof(lpmii);
   lpmii.fMask = MIIM_STATE;
 
-  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii))
+  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni(2), TRUE, &lpmii))
   {
     hb_retl((lpmii.fState & MFS_CHECKED) != 0);
   }
   else
   {
-    hb_retl(false);
+    hb_retl(HB_FALSE);
   }
 }
 
@@ -145,13 +145,13 @@ HB_FUNC(WVG_ISMENUITEMENABLED) /* = grayed */
   lpmii.cbSize = sizeof(lpmii);
   lpmii.fMask = MIIM_STATE;
 
-  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii))
+  if (GetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni(2), TRUE, &lpmii))
   {
     hb_retl((lpmii.fState & MFS_DISABLED /* equivalent to MFS_GRAYED */) == 0);
   }
   else
   {
-    hb_retl(true);
+    hb_retl(HB_TRUE);
   }
 }
 
@@ -164,14 +164,14 @@ HB_FUNC(WVG_SETMENUITEM)
   if (hb_parl(5))
   {
     lpmii.fMask = MIIM_STRING;
-    lpmii.dwTypeData = static_cast<LPTSTR>(HB_UNCONST(HB_PARSTR(4, &hText, nullptr)));
+    lpmii.dwTypeData = (LPTSTR)HB_UNCONST(HB_PARSTR(4, &hText, nullptr));
   }
   else
   {
     lpmii.fMask = MIIM_SUBMENU;
   }
 
-  hb_retl(SetMenuItemInfo(hbwapi_par_raw_HMENU(1), static_cast<UINT>(hb_parni(2)), TRUE, &lpmii));
+  hb_retl(SetMenuItemInfo(hbwapi_par_raw_HMENU(1), (UINT)hb_parni(2), TRUE, &lpmii));
 
   hb_strfree(hText);
 }
@@ -187,7 +187,7 @@ HB_FUNC(WVG_TREEVIEW_EXPAND)
 #if 0
 HB_FUNC( WVG_TREEVIEW_ISEXPANDED )
 {
-   hb_retl(TreeView_GetItemState(hbwapi_par_raw_HWND(1), hbwapi_par_raw_HTREEITEM(2), static_cast<UINT>(TVIS_EXPANDED)));
+   hb_retl( TreeView_GetItemState( hbwapi_par_raw_HWND( 1 ), hbwapi_par_raw_HTREEITEM( 2 ), ( UINT ) TVIS_EXPANDED ) );
 }
 #endif
 
@@ -196,11 +196,11 @@ HB_FUNC( WVG_TREEVIEW_ISEXPANDED )
 HB_FUNC(WVG_LBGETTEXT)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  auto iIndex = hb_parni(2);
+  int iIndex = hb_parni(2);
   int iLen = ListBox_GetTextLen(hWnd, iIndex);
-  auto szText = static_cast<LPTSTR>(hb_xgrab((iLen + 1) * sizeof(TCHAR)));
+  LPTSTR szText = (LPTSTR)hb_xgrab((iLen + 1) * sizeof(TCHAR));
 
-  (void)ListBox_GetText(hWnd, iIndex, szText); // TODO: C++ cast
+  (void)ListBox_GetText(hWnd, iIndex, szText);
 
   HB_RETSTRLEN(szText, iLen);
 }
@@ -222,41 +222,33 @@ HB_FUNC(WVG_BUTTON_GETCHECK)
   hb_retnl(Button_GetCheck(hbwapi_par_raw_HWND(1)));
 }
 
-/*
-wvg_GetCurrentObject(hDC, nObjType)
-*/
+/* wvg_GetCurrentObject( hDC, nObjType ) */
 HB_FUNC(WVG_GETCURRENTOBJECT)
 {
   hbwapi_ret_raw_HANDLE(GetCurrentObject(hbwapi_par_raw_HDC(1), hb_parni(2)));
 }
 
-/*
-wvg_GetCurrentBrush(hDC)
-*/
+/* wvg_GetCurrentBrush( hDC ) */
 HB_FUNC(WVG_GETCURRENTBRUSH)
 {
   hbwapi_ret_raw_HANDLE(GetCurrentObject(hbwapi_par_raw_HDC(1), OBJ_BRUSH));
 }
 
-/*
-wvg_GetCurrentFont(hDC)
-*/
+/* wvg_GetCurrentFont( hDC ) */
 HB_FUNC(WVG_GETCURRENTFONT)
 {
   hbwapi_ret_raw_HANDLE(GetCurrentObject(hbwapi_par_raw_HDC(1), OBJ_FONT));
 }
 
-/*
-wvg_SetLayeredWindowAttributes(hWnd, nRGB, nOpacityFactor [0-255])
-*/
+/* wvg_SetLayeredWindowAttributes( hWnd, nRGB, nOpacityFactor [0-255] ) */
 HB_FUNC(WVG_SETLAYEREDWINDOWATTRIBUTES)
 {
   HINSTANCE h = GetModuleHandle(TEXT("user32.dll"));
 
   if (h)
   {
-    auto pfnLayered = reinterpret_cast<wvtSetLayeredWindowAttributes>(
-        reinterpret_cast<void *>(HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes")));
+    wvtSetLayeredWindowAttributes pfnLayered =
+        (wvtSetLayeredWindowAttributes)HB_WINAPI_GETPROCADDRESS(h, "SetLayeredWindowAttributes");
 
     if (pfnLayered)
     {
@@ -265,7 +257,7 @@ HB_FUNC(WVG_SETLAYEREDWINDOWATTRIBUTES)
 
       SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
 
-      (void)pfnLayered(hWnd, cr, static_cast<BYTE>(hb_parni(3)), /* LWA_COLORKEY | */ LWA_ALPHA); // TODO: C++ cast
+      (void)pfnLayered(hWnd, cr, (BYTE)hb_parni(3), /* LWA_COLORKEY | */ LWA_ALPHA);
     }
     FreeLibrary(h);
   }
@@ -282,12 +274,11 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
 
     tbab.hInst = nullptr;
 #if (_WIN32_IE >= 0x0500)
-    tbab.nID = reinterpret_cast<UINT_PTR>(hbwapi_par_raw_HBITMAP(3));
+    tbab.nID = (UINT_PTR)hbwapi_par_raw_HBITMAP(3);
 #else
-    tbab.nID = static_cast<UINT>(hbwapi_par_raw_HBITMAP(3));
+    tbab.nID = (UINT)hbwapi_par_raw_HBITMAP(3);
 #endif
-    hbwapi_ret_NI(
-        static_cast<int>(SendMessage(hTB, TB_ADDBITMAP, static_cast<WPARAM>(1), reinterpret_cast<LPARAM>(&tbab))));
+    hbwapi_ret_NI((int)SendMessage(hTB, TB_ADDBITMAP, (WPARAM)1, (LPARAM)&tbab));
     break;
   }
   case TB_ADDBUTTONS: {
@@ -300,14 +291,12 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
     tbb.dwData = 0;
     tbb.iString = hbwapi_par_INT(5);
 
-    hbwapi_ret_L(SendMessage(hTB, TB_ADDBUTTONS, static_cast<WPARAM>(1),
-                             reinterpret_cast<LPARAM>(static_cast<LPTBBUTTON>(&tbb))));
+    hbwapi_ret_L(SendMessage(hTB, TB_ADDBUTTONS, (WPARAM)1, (LPARAM)(LPTBBUTTON)&tbb));
     break;
   }
   case TB_ADDSTRING: {
     void *hCaption;
-    hbwapi_ret_NI(static_cast<int>(
-        SendMessage(hTB, TB_ADDSTRING, 0, reinterpret_cast<LPARAM>(HB_PARSTR(3, &hCaption, nullptr)))));
+    hbwapi_ret_NI((int)SendMessage(hTB, TB_ADDSTRING, 0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr)));
     hb_strfree(hCaption);
     break;
   }
@@ -354,24 +343,24 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
   case TB_REPLACEBITMAP:
     break;
   case TB_SETBITMAPSIZE:
-    SendMessage(hTB, TB_SETBITMAPSIZE, 0, static_cast<LPARAM>(MAKELONG(hbwapi_par_INT(3), hbwapi_par_INT(4))));
+    SendMessage(hTB, TB_SETBITMAPSIZE, 0, (LPARAM)MAKELONG(hbwapi_par_INT(3), hbwapi_par_INT(4)));
     break;
   case TB_SETBUTTONINFO:
     break;
   case TB_SETBUTTONSIZE:
-    SendMessage(hTB, TB_SETBUTTONSIZE, 0, static_cast<LPARAM>(MAKELONG(hbwapi_par_INT(3), hbwapi_par_INT(4))));
+    SendMessage(hTB, TB_SETBUTTONSIZE, 0, (LPARAM)MAKELONG(hbwapi_par_INT(3), hbwapi_par_INT(4)));
     break;
   case TB_SETBUTTONWIDTH:
-    SendMessage(hTB, TB_SETBUTTONWIDTH, 0, static_cast<LPARAM>(MAKELONG(hbwapi_par_INT(3), hbwapi_par_INT(4))));
+    SendMessage(hTB, TB_SETBUTTONWIDTH, 0, (LPARAM)MAKELONG(hbwapi_par_INT(3), hbwapi_par_INT(4)));
     break;
   case TB_SETIMAGELIST:
-    SendMessage(hTB, TB_SETIMAGELIST, 0, reinterpret_cast<LPARAM>(hbwapi_par_raw_HIMAGELIST(3)));
+    SendMessage(hTB, TB_SETIMAGELIST, 0, (LPARAM)hbwapi_par_raw_HIMAGELIST(3));
     break;
   case TB_SETINDENT:
-    SendMessage(hTB, TB_SETINDENT, static_cast<WPARAM>(hbwapi_par_INT(3)), 0);
+    SendMessage(hTB, TB_SETINDENT, (WPARAM)hbwapi_par_INT(3), 0);
     break;
   case TB_SETMAXTEXTROWS:
-    SendMessage(hTB, TB_SETMAXTEXTROWS, static_cast<WPARAM>(hbwapi_par_INT(2)), 0);
+    SendMessage(hTB, TB_SETMAXTEXTROWS, (WPARAM)hbwapi_par_INT(2), 0);
     break;
   case TB_SETPARENT:
   case TB_SETROWS:
@@ -400,11 +389,10 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
 #endif
 
   case TB_SETPADDING:
-    SendMessage(hTB, TB_SETPADDING, 0, static_cast<LPARAM>(MAKELPARAM(hbwapi_par_INT(2), hbwapi_par_INT(3))));
+    SendMessage(hTB, TB_SETPADDING, 0, (LPARAM)MAKELPARAM(hbwapi_par_INT(2), hbwapi_par_INT(3)));
     break;
   case TB_MARKBUTTON:
-    SendMessage(hTB, TB_MARKBUTTON, static_cast<WPARAM>(hbwapi_par_INT(3)),
-                static_cast<LPARAM>(MAKELONG(hb_parl(4), 0)));
+    SendMessage(hTB, TB_MARKBUTTON, (WPARAM)hbwapi_par_INT(3), (LPARAM)MAKELONG(hb_parl(4), 0));
     break;
   case TB_SETINSERTMARK:
   case TB_SETINSERTMARKCOLOR:
@@ -418,11 +406,11 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
   case TB_GETINSERTMARK:
     break;
   case TB_GETCOLORSCHEME: {
-    auto info = hb_itemArrayNew(2);
+    PHB_ITEM info = hb_itemArrayNew(2);
     COLORSCHEME colorScheme{};
 
     colorScheme.dwSize = sizeof(colorScheme);
-    SendMessage(hTB, TB_GETCOLORSCHEME, 0, reinterpret_cast<LPARAM>(&colorScheme));
+    SendMessage(hTB, TB_GETCOLORSCHEME, 0, (LPARAM)&colorScheme);
 
     hb_arraySetNInt(info, 1, colorScheme.clrBtnHighlight);
     hb_arraySetNInt(info, 2, colorScheme.clrBtnShadow);
@@ -452,7 +440,7 @@ HB_FUNC(WVG_SENDEDITCONTROLMESSAGE)
   case EM_GETSEL: {
     DWORD min = 0;
     DWORD max = 0;
-    SendMessage(hbwapi_par_raw_HWND(1), EM_GETSEL, reinterpret_cast<WPARAM>(&min), reinterpret_cast<LPARAM>(&max));
+    SendMessage(hbwapi_par_raw_HWND(1), EM_GETSEL, (WPARAM)&min, (LPARAM)&max);
     break;
   }
   }
@@ -466,37 +454,32 @@ HB_FUNC(WVG_SENDCBMESSAGE)
   switch (hbwapi_par_INT(2))
   {
   case CB_ADDSTRING:
-    hb_retnint(SendMessage(hCB, CB_ADDSTRING, 0,
-                           reinterpret_cast<LPARAM>(static_cast<LPCTSTR>(HB_PARSTR(3, &hText, nullptr)))));
+    hb_retnint(SendMessage(hCB, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)HB_PARSTR(3, &hText, nullptr)));
     break;
   case CB_DELETESTRING:
     hb_retnint(SendMessage(hCB, CB_DELETESTRING, hb_parni(3), 0));
     break;
 #if defined(CB_DIR)
   case CB_DIR:
-    hb_retnint(SendMessage(hCB, CB_DIR, static_cast<WPARAM>(hb_parni(3)),
-                           reinterpret_cast<LPARAM>(HB_PARSTR(4, &hText, nullptr))));
+    hb_retnint(SendMessage(hCB, CB_DIR, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
 #endif
   case CB_FINDSTRING:
-    hb_retnint(SendMessage(hCB, CB_FINDSTRING, static_cast<WPARAM>(hb_parni(3)),
-                           reinterpret_cast<LPARAM>(HB_PARSTR(4, &hText, nullptr))));
+    hb_retnint(SendMessage(hCB, CB_FINDSTRING, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
   case CB_FINDSTRINGEXACT:
-    hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, static_cast<WPARAM>(hb_parni(3)),
-                           reinterpret_cast<LPARAM>(HB_PARSTR(4, &hText, nullptr))));
+    hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
 #if defined(CB_GETCOMBOBOXINFO)
   case CB_GETCOMBOBOXINFO: {
     COMBOBOXINFO cbi{};
-
     cbi.cbSize = sizeof(cbi);
 
     if (GetComboBoxInfo(hCB, &cbi))
     {
-      auto pCbi = hb_itemArrayNew(6);
-      auto pRc1 = hb_itemArrayNew(4);
-      auto pRc2 = hb_itemArrayNew(4);
+      PHB_ITEM pCbi = hb_itemArrayNew(6);
+      PHB_ITEM pRc1 = hb_itemArrayNew(4);
+      PHB_ITEM pRc2 = hb_itemArrayNew(4);
 
       hb_arraySetNI(pRc1, 1, cbi.rcItem.left);
       hb_arraySetNI(pRc1, 2, cbi.rcItem.top);
@@ -536,9 +519,9 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     break;
   case CB_GETDROPPEDCONTROLRECT: {
     RECT rc;
-    auto pRect = hb_itemArrayNew(4);
+    PHB_ITEM pRect = hb_itemArrayNew(4);
 
-    SendMessage(hCB, CB_GETDROPPEDCONTROLRECT, 0, reinterpret_cast<LPARAM>(&rc));
+    SendMessage(hCB, CB_GETDROPPEDCONTROLRECT, 0, (LPARAM)&rc);
 
     hb_arraySetNI(pRect, 1, rc.left);
     hb_arraySetNI(pRect, 2, rc.top);
@@ -555,8 +538,8 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     hb_retnint(SendMessage(hCB, CB_GETDROPPEDWIDTH, 0, 0));
     break;
   case CB_GETEDITSEL: {
-    auto range = static_cast<DWORD>(SendMessage(hCB, CB_GETEDITSEL, 0, 0));
-    auto pRng = hb_itemArrayNew(2);
+    DWORD range = (DWORD)SendMessage(hCB, CB_GETEDITSEL, 0, 0);
+    PHB_ITEM pRng = hb_itemArrayNew(2);
 
     hb_arraySetNI(pRng, 1, LOWORD(range));
     hb_arraySetNI(pRng, 1, HIWORD(range));
@@ -571,21 +554,21 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     hb_retnint(SendMessage(hCB, CB_GETHORIZONTALEXTENT, 0, 0));
     break;
   case CB_GETITEMDATA:
-    hb_retnint(SendMessage(hCB, CB_GETITEMDATA, static_cast<WPARAM>(hb_parnint(3)), 0));
+    hb_retnint(SendMessage(hCB, CB_GETITEMDATA, (WPARAM)hb_parnint(3), 0));
     break;
   case CB_GETITEMHEIGHT:
     hb_retnint(SendMessage(hCB, CB_GETITEMHEIGHT, 0, 0));
     break;
   case CB_GETLBTEXT: {
-    HB_ISIZ iSize = SendMessage(hCB, CB_GETLBTEXTLEN, static_cast<WPARAM>(hb_parnint(3)), 0);
-    auto text = static_cast<LPTSTR>(hb_xgrab((iSize + 1) * sizeof(TCHAR)));
-    SendMessage(hCB, CB_GETLBTEXT, iSize, reinterpret_cast<LPARAM>(text));
+    HB_ISIZ iSize = SendMessage(hCB, CB_GETLBTEXTLEN, (WPARAM)hb_parnint(3), 0);
+    LPTSTR text = (LPTSTR)hb_xgrab((iSize + 1) * sizeof(TCHAR));
+    SendMessage(hCB, CB_GETLBTEXT, iSize, (LPARAM)text);
     HB_RETSTRLEN(text, iSize);
     hb_xfree(text);
     break;
   }
   case CB_GETLBTEXTLEN:
-    hb_retnint(SendMessage(hCB, CB_GETLBTEXTLEN, static_cast<WPARAM>(hb_parnint(3)), 0));
+    hb_retnint(SendMessage(hCB, CB_GETLBTEXTLEN, (WPARAM)hb_parnint(3), 0));
     break;
   case CB_GETLOCALE:
 #if defined(CB_GETMINVISIBLE)
@@ -599,8 +582,7 @@ HB_FUNC(WVG_SENDCBMESSAGE)
   case CB_INITSTORAGE:
     break;
   case CB_INSERTSTRING:
-    hb_retnint(SendMessage(hCB, CB_INSERTSTRING, static_cast<WPARAM>(hb_parnint(3)),
-                           reinterpret_cast<LPARAM>(HB_PARSTR(4, &hText, nullptr))));
+    hb_retnint(SendMessage(hCB, CB_INSERTSTRING, (WPARAM)hb_parnint(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
   case CB_LIMITTEXT:
     SendMessage(hCB, CB_LIMITTEXT, hb_parni(3), 0);
@@ -609,18 +591,17 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     SendMessage(hCB, CB_RESETCONTENT, 0, 0);
     break;
   case CB_SELECTSTRING:
-    hb_retnint(SendMessage(hCB, CB_SELECTSTRING, static_cast<WPARAM>(hb_parnint(3)),
-                           reinterpret_cast<LPARAM>(HB_PARSTR(4, &hText, nullptr))));
+    hb_retnint(SendMessage(hCB, CB_SELECTSTRING, (WPARAM)hb_parnint(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
 #if defined(CB_SETCUEBANNER)
   case CB_SETCUEBANNER:
     break;
 #endif
   case CB_SETCURSEL:
-    hb_retnint(SendMessage(hCB, CB_SETCURSEL, static_cast<WPARAM>(hb_parnint(3)), 0));
+    hb_retnint(SendMessage(hCB, CB_SETCURSEL, (WPARAM)hb_parnint(3), 0));
     break;
   case CB_SETDROPPEDWIDTH:
-    hb_retnint(SendMessage(hCB, CB_SETDROPPEDWIDTH, static_cast<WPARAM>(hb_parnint(3)), 0));
+    hb_retnint(SendMessage(hCB, CB_SETDROPPEDWIDTH, (WPARAM)hb_parnint(3), 0));
     break;
   case CB_SETEDITSEL:
     break;
@@ -631,21 +612,21 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     SendMessage(hCB, CB_SETHORIZONTALEXTENT, hb_parl(3), 0);
     break;
   case CB_SETITEMDATA:
-    SendMessage(hCB, CB_SETITEMDATA, hb_parl(3), static_cast<LPARAM>(hb_parnint(4)));
+    SendMessage(hCB, CB_SETITEMDATA, hb_parl(3), (LPARAM)hb_parnint(4));
     break;
   case CB_SETITEMHEIGHT:
-    hb_retnint(SendMessage(hCB, CB_SETITEMHEIGHT, static_cast<WPARAM>(hb_parnint(3)), 0));
+    hb_retnint(SendMessage(hCB, CB_SETITEMHEIGHT, (WPARAM)hb_parnint(3), 0));
     break;
   case CB_SETLOCALE:
-    hb_retnint(SendMessage(hCB, CB_SETLOCALE, static_cast<WPARAM>(hb_parnint(3)), 0));
+    hb_retnint(SendMessage(hCB, CB_SETLOCALE, (WPARAM)hb_parnint(3), 0));
     break;
 #if defined(CB_SETMINVISIBLE)
   case CB_SETMINVISIBLE:
-    hb_retl(static_cast<bool>(SendMessage(hCB, CB_SETMINVISIBLE, static_cast<WPARAM>(hb_parnint(3)), 0)));
+    hb_retl((HB_BOOL)SendMessage(hCB, CB_SETMINVISIBLE, (WPARAM)hb_parnint(3), 0));
     break;
 #endif
   case CB_SETTOPINDEX:
-    hb_retl(SendMessage(hCB, CB_SETTOPINDEX, static_cast<WPARAM>(hb_parnint(3)), 0) ? FALSE : TRUE);
+    hb_retl(SendMessage(hCB, CB_SETTOPINDEX, (WPARAM)hb_parnint(3), 0) ? FALSE : TRUE);
     break;
   case CB_SHOWDROPDOWN:
     SendMessage(hCB, CB_SHOWDROPDOWN, hb_parl(3), 0);
