@@ -58,6 +58,8 @@
 #include "hbset.hpp"
 #include "hbstack.hpp"
 
+#include <cstddef>
+
 #if !defined(HB_MT_VM)
 #define hb_dynsymGetMemvar(p) (static_cast<PHB_ITEM>((p)->pMemvar))
 #define hb_dynsymSetMemvar(p, h)                                                                                       \
