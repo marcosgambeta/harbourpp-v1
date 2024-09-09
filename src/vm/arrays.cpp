@@ -312,7 +312,7 @@ HB_BOOL hb_arrayIsObject(PHB_ITEM pArray)
 // retrieves the array unique ID
 void *hb_arrayId(PHB_ITEM pArray)
 {
-  if (pArray && HB_IS_ARRAY(pArray))
+  if (pArray != nullptr && HB_IS_ARRAY(pArray))
   {
     return static_cast<void *>(pArray->item.asArray.value);
   }
@@ -325,7 +325,7 @@ void *hb_arrayId(PHB_ITEM pArray)
 // retrieves numer of references to the array
 HB_COUNTER hb_arrayRefs(PHB_ITEM pArray)
 {
-  if (pArray && HB_IS_ARRAY(pArray))
+  if (pArray != nullptr && HB_IS_ARRAY(pArray))
   {
     return hb_gcRefCount(pArray->item.asArray.value);
   }
