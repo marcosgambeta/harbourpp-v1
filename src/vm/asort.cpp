@@ -59,7 +59,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
 {
   PHB_ITEM pItem1 = pBaseArray->pItems + nItem1, pItem2 = pBaseArray->pItems + nItem2;
 
-  if (pBlock)
+  if (pBlock != nullptr)
   {
     PHB_ITEM pRet;
 
@@ -449,7 +449,7 @@ HB_FUNC(ASORT)
 {
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
 
-  if (pArray && !hb_arrayIsObject(pArray))
+  if (pArray != nullptr && !hb_arrayIsObject(pArray))
   {
     HB_SIZE nStart = hb_parns(2);
     HB_SIZE nCount = hb_parns(3);
