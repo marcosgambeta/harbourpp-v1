@@ -1291,7 +1291,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPtr
   }
   // fallthrough
   case Harbour::Item::DOUBLE: {
-    double dVal = hb_itemGetND(pItem);
+    auto dVal = hb_itemGetND(pItem);
     int iWidth, iDec;
     hb_itemGetNLen(pItem, &iWidth, &iDec);
     if (iDec)
@@ -1689,7 +1689,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBu
     break;
   }
   case Harbour::Item::DOUBLE: {
-    double dVal = hb_itemGetND(pItem);
+    auto dVal = hb_itemGetND(pItem);
     hb_itemGetNLen(pItem, &iWidth, &iDec);
     HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_DNUM);
     HB_PUT_LE_UINT16(&(*bBufPtr)[2], iWidth);
@@ -2024,7 +2024,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPt
     break;
   }
   case Harbour::Item::DOUBLE: {
-    double dVal = hb_itemGetND(pItem);
+    auto dVal = hb_itemGetND(pItem);
     hb_itemGetNLen(pItem, &iWidth, &iDec);
     if (iDec)
     {
@@ -3189,7 +3189,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
       }
       break;
     case Harbour::Item::DOUBLE: {
-      double d = hb_itemGetND(pItem);
+      auto d = hb_itemGetND(pItem);
       ulType = FPTIT_FLEX_DOUBLE;
       ulSize = 8;
       HB_PUT_LE_DOUBLE(itmBuffer, d);
@@ -3841,7 +3841,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
         }
         else
         {
-          double dVal = hb_itemGetND(pItem);
+          auto dVal = hb_itemGetND(pItem);
           int iWidth, iDec;
 
           hb_itemGetNLen(pItem, &iWidth, &iDec);

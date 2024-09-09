@@ -3894,7 +3894,7 @@ static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
   {
-    double dDivisor = hb_itemGetND(pItem2);
+    auto dDivisor = hb_itemGetND(pItem2);
 
     if (dDivisor == 0.0)
     {
@@ -3958,7 +3958,7 @@ static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
   {
-    double dDivisor = hb_itemGetND(pItem2);
+    auto dDivisor = hb_itemGetND(pItem2);
 
     if (dDivisor == 0.0)
     {

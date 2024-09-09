@@ -1478,7 +1478,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
       }
       else if (HB_IS_NUMERIC(pMemvar))
       {
-        double dNumber = hb_itemGetND(pMemvar);
+        auto dNumber = hb_itemGetND(pMemvar);
         int iWidth;
         int iDec;
         hb_itemGetNLen(pMemvar, &iWidth, &iDec);

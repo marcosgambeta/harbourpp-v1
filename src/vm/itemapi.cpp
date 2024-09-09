@@ -2802,7 +2802,8 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
     }
     else if (HB_IS_NUMERIC(pItem2))
     {
-      double d1 = hb_itemGetND(pItem1), d2 = hb_itemGetND(pItem2);
+      auto d1 = hb_itemGetND(pItem1);
+      auto d2 = hb_itemGetND(pItem2);
       *piResult = d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
       fResult = true;
     }
@@ -3113,7 +3114,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
 
   if (HB_IS_DOUBLE(pNumber))
   {
-    double dNumber = hb_itemGetND(pNumber);
+    auto dNumber = hb_itemGetND(pNumber);
 
     if (!hb_isfinite(dNumber))
     {

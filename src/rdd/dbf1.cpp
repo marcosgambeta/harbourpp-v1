@@ -5562,7 +5562,8 @@ static int hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue
 
     if (uiFlags & SF_DOUBLE)
     {
-      double dValue1 = hb_itemGetND(pItem1), dValue2 = hb_itemGetND(pItem2);
+      auto dValue1 = hb_itemGetND(pItem1);
+      auto dValue2 = hb_itemGetND(pItem2);
       i = dValue1 < dValue2 ? -1 : (dValue1 == dValue2 ? 0 : 1);
     }
     else if (uiFlags & SF_LONG)

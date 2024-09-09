@@ -676,7 +676,7 @@ HB_FUNC(HB_HSCAN)
     }
     else if (HB_IS_NUMERIC(pValue))
     {
-      double dValue = hb_itemGetND(pValue);
+      auto dValue = hb_itemGetND(pValue);
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
