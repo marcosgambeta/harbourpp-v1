@@ -3642,7 +3642,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1) || HB_IS_TIMESTAMP(pItem2))
+    if (pItem1->isTimeStamp() || pItem2->isTimeStamp())
     {
       hb_vmTimeStampPut(pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian,
                         pItem1->item.asDateTime.time + pItem2->item.asDateTime.time);
@@ -3655,7 +3655,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_NUMERIC(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1))
+    if (pItem1->isTimeStamp())
     {
       if (HB_IS_NUMINT(pItem2))
       {
@@ -3674,7 +3674,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (HB_IS_NUMERIC(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem2))
+    if (pItem2->isTimeStamp())
     {
       if (HB_IS_NUMINT(pItem1))
       {
@@ -3760,7 +3760,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_NUMERIC(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1))
+    if (pItem1->isTimeStamp())
     {
       if (HB_IS_NUMINT(pItem2))
       {
@@ -4345,7 +4345,7 @@ static void hb_vmEqual()
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2))
+    if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian) &&
                                      (pItem1->item.asDateTime.time == pItem2->item.asDateTime.time);
@@ -4446,7 +4446,7 @@ static void hb_vmNotEqual()
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2))
+    if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.time != pItem2->item.asDateTime.time);
@@ -4531,7 +4531,7 @@ static void hb_vmLess()
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2))
+    if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
@@ -4599,7 +4599,7 @@ static void hb_vmLessEqual()
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2))
+    if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
@@ -4667,7 +4667,7 @@ static void hb_vmGreater()
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2))
+    if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
@@ -4735,7 +4735,7 @@ static void hb_vmGreaterEqual()
   }
   else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
   {
-    if (HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2))
+    if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&

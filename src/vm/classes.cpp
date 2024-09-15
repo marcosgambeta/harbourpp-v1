@@ -1419,7 +1419,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiDateClass;
   }
-  else if (HB_IS_TIMESTAMP(pObject))
+  else if (pObject->isTimeStamp())
   {
     return s_uiTimeStampClass;
   }
@@ -1482,7 +1482,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "DATE";
   }
-  else if (HB_IS_TIMESTAMP(pObject))
+  else if (pObject->isTimeStamp())
   {
     return "TIMESTAMP";
   }
@@ -2201,7 +2201,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_TIMESTAMP(pObject))
+  else if (pObject->isTimeStamp())
   {
     if (s_uiTimeStampClass)
     {
@@ -3074,7 +3074,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::DATE;
     }
-    else if (HB_IS_TIMESTAMP(pItem))
+    else if (pItem->isTimeStamp())
     {
       return Harbour::Item::TIMESTAMP;
     }

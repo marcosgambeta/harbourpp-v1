@@ -98,7 +98,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   {
     return hb_itemGetND(pItem1) < hb_itemGetND(pItem2);
   }
-  else if (HB_IS_TIMESTAMP(pItem1) && HB_IS_TIMESTAMP(pItem2))
+  else if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
   {
     long lDate1, lTime1, lDate2, lTime2;
     hb_itemGetTDT(pItem1, &lDate1, &lTime1);
