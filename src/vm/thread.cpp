@@ -927,7 +927,7 @@ HB_CARGO_FUNC(hb_threadStartVM)
       hb_vmPush(pStart);
       fSend = true;
     }
-    else if (HB_IS_SYMBOL(pStart))
+    else if (pStart->isSymbol())
     {
       hb_vmPush(pStart);
       hb_vmPushNil();
@@ -1143,7 +1143,7 @@ HB_FUNC(HB_THREADSTART)
         pStart = nullptr;
       }
     }
-    else if (HB_IS_SYMBOL(pStart))
+    else if (pStart->isSymbol())
     {
       pSymbol = hb_itemGetSymbol(pStart);
       if (!pSymbol->value.pFunPtr)

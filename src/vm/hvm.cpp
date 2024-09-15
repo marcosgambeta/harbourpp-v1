@@ -4155,7 +4155,7 @@ static void hb_vmFuncPtr() /* pushes a function address pointer. Removes the sym
 
   auto pItem = hb_stackItemFromTop(-1);
 
-  if (HB_IS_SYMBOL(pItem))
+  if (pItem->isSymbol())
   {
     /* do nothing - now we are using Harbour::Item::SYMBOL */
 #if 0
@@ -4263,7 +4263,7 @@ static void hb_vmExactlyEqual()
     pItem1->item.asLogical.value = fResult;
   }
 #endif
-  else if (HB_IS_SYMBOL(pItem1) && HB_IS_SYMBOL(pItem2))
+  else if (pItem1->isSymbol() && pItem2->isSymbol())
   {
     pItem1->item.asLogical.value = pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
                                    (pItem1->item.asSymbol.value->pDynSym != nullptr &&
@@ -9742,7 +9742,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM *pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
         pItem = nullptr;
       }
     }
-    else if (HB_IS_SYMBOL(pItem))
+    else if (pItem->isSymbol())
     {
       pSymbol = pItem->item.asSymbol.value;
       pItem = nullptr;
@@ -13183,7 +13183,7 @@ HB_FUNC(__VMITEMID)
     {
       hb_retptr(hb_codeblockId(pItem));
     }
-    else if (HB_IS_SYMBOL(pItem))
+    else if (pItem->isSymbol())
     {
       hb_retptr(pItem->item.asSymbol.value);
     }

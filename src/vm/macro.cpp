@@ -1099,7 +1099,7 @@ void hb_macroPushSymbol(PHB_ITEM pItem)
     }
   }
 
-  if (!HB_IS_SYMBOL(hb_stackItemFromTop(-1)) && hb_vmRequestQuery() == 0)
+  if (!hb_stackItemFromTop(-1)->isSymbol() && hb_vmRequestQuery() == 0)
   {
     hb_stackPop();                         /* remove compiled string */
     hb_vmPushDynSym(hb_dynsymGetCase("")); /* push compiled symbol instead of a string */

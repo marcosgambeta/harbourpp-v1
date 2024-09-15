@@ -1439,7 +1439,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiPointerClass;
   }
-  else if (HB_IS_SYMBOL(pObject))
+  else if (pObject->isSymbol())
   {
     return s_uiSymbolClass;
   }
@@ -1502,7 +1502,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "POINTER";
   }
-  else if (HB_IS_SYMBOL(pObject))
+  else if (pObject->isSymbol())
   {
     return "SYMBOL";
   }
@@ -2089,7 +2089,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_SYMBOL(pObject))
+  else if (pObject->isSymbol())
   {
     if (s_uiSymbolClass)
     {
@@ -2820,7 +2820,7 @@ static PHB_DYNS hb_objGetMsgSym(PHB_ITEM pMessage)
     {
       szMsg = pMessage->item.asString.value;
     }
-    else if (HB_IS_SYMBOL(pMessage))
+    else if (pMessage->isSymbol())
     {
       pDynSym = pMessage->item.asSymbol.value->pDynSym;
       if (!pDynSym)
@@ -2842,7 +2842,7 @@ static PHB_SYMB hb_objGetFuncSym(PHB_ITEM pItem)
 {
   if (pItem != nullptr)
   {
-    if (HB_IS_SYMBOL(pItem))
+    if (pItem->isSymbol())
     {
       return pItem->item.asSymbol.value;
     }
@@ -3090,7 +3090,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::POINTER;
     }
-    else if (HB_IS_SYMBOL(pItem))
+    else if (pItem->isSymbol())
     {
       return Harbour::Item::SYMBOL;
     }
@@ -3967,7 +3967,7 @@ HB_FUNC(__CLSNEW)
   }
 
   if (szClassName != nullptr && (!pDatas || HB_IS_NUMERIC(pDatas)) && (!pSuperArray || pSuperArray->isArray()) &&
-      (!pClassFunc || HB_IS_SYMBOL(pClassFunc)) && (!pModFriend || pModFriend->isLogical()))
+      (!pClassFunc || pClassFunc->isSymbol()) && (!pModFriend || pModFriend->isLogical()))
   {
     HB_STACK_TLS_PRELOAD
     HB_USHORT uiClass;
@@ -4330,7 +4330,7 @@ HB_FUNC(__CLSINSTSUPER)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_SYMBOL(pItem))
+    if (pItem->isSymbol())
     {
       pClassFuncSym = hb_itemGetSymbol(pItem);
     }
@@ -4955,7 +4955,7 @@ HB_FUNC_STATIC(msgPerform)
     HB_USHORT uiPCount = hb_pcount();
     PHB_SYMB pSym = nullptr;
 
-    if (HB_IS_SYMBOL(pItem))
+    if (pItem->isSymbol())
     {
       pSym = pItem->item.asSymbol.value;
     }
@@ -4963,7 +4963,7 @@ HB_FUNC_STATIC(msgPerform)
     {
       // Dirty hack
       pItem = hb_arrayGetItemPtr(pItem, 1);
-      if (pItem && HB_IS_SYMBOL(pItem))
+      if (pItem && pItem->isSymbol())
       {
         pSym = pItem->item.asSymbol.value;
       }
@@ -5657,7 +5657,7 @@ HB_FUNC(__OBJSETIVARS)
     {
       pObject = pNewObj = hb_clsInst(hb_clsFindClass(hb_itemGetCPtr(pObject), nullptr));
     }
-    else if (HB_IS_SYMBOL(pObject))
+    else if (pObject->isSymbol())
     {
       pObject = pNewObj = hb_clsInst(hb_clsFindClassByFunc(hb_itemGetSymbol(pObject)));
     }
@@ -5698,7 +5698,7 @@ HB_FUNC(__OBJRESTOREIVARS)
     {
       pObject = hb_clsInst(hb_clsFindClass(hb_itemGetCPtr(pClass), hb_parc(3)));
     }
-    else if (HB_IS_SYMBOL(pClass))
+    else if (pClass->isSymbol())
     {
       pObject = hb_clsInst(hb_clsFindClassByFunc(hb_itemGetSymbol(pClass)));
     }

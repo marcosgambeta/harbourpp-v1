@@ -125,7 +125,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
         pItem = nullptr;
       }
     }
-    else if (HB_IS_SYMBOL(pItem))
+    else if (pItem->isSymbol())
     {
       pSymbol = pItem->item.asSymbol.value;
       pItem = nullptr;
@@ -224,7 +224,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
         pItem = nullptr;
       }
     }
-    else if (HB_IS_SYMBOL(pItem))
+    else if (pItem->isSymbol())
     {
       pSymbol = pItem->item.asSymbol.value;
       pItem = nullptr;
@@ -478,7 +478,7 @@ HB_FUNC(HB_EXECFROMARRAY)
 
   if (pFunc && (!pArray || pArray->isArray()))
   {
-    if (HB_IS_SYMBOL(pFunc))
+    if (pFunc->isSymbol())
     {
       pExecSym = hb_itemGetSymbol(pFunc);
     }
@@ -563,7 +563,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
   {
     PHB_SYMB pExecSym = nullptr;
 
-    if (HB_IS_SYMBOL(pParam))
+    if (pParam->isSymbol())
     {
       pExecSym = hb_itemGetSymbol(pParam);
     }

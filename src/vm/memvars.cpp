@@ -597,7 +597,7 @@ static PHB_DYNS hb_memvarGetSymbol(PHB_ITEM pItem)
     {
       pDynSym = hb_memvarFindSymbol(pItem->item.asString.value, pItem->item.asString.length);
     }
-    else if (HB_IS_SYMBOL(pItem))
+    else if (pItem->isSymbol())
     {
       pDynSym = pItem->item.asSymbol.value->pDynSym;
       if (pDynSym == nullptr)
@@ -663,7 +663,7 @@ void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue)
   PHB_DYNS pDynVar = nullptr;
 
   // find dynamic symbol or create one
-  if (HB_IS_SYMBOL(pMemvar))
+  if (pMemvar->isSymbol())
   {
     pDynVar = pMemvar->item.asSymbol.value->pDynSym;
     if (pDynVar == nullptr)

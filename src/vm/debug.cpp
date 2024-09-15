@@ -104,7 +104,7 @@ static void AddToArray(PHB_ITEM pItem, PHB_ITEM pReturn, HB_SIZE nPos)
    HB_TRACE(HB_TR_DEBUG, ("AddToArray(%p, %p, %" HB_PFS "u)", static_cast<void*>(pItem), static_cast<void*>(pReturn), nPos));
 #endif
 
-  if (HB_IS_SYMBOL(pItem))
+  if (pItem->isSymbol())
   { // Symbol is pushed as text
     auto pArrayItem = hb_arrayGetItemPtr(pReturn, nPos);
 

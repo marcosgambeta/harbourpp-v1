@@ -983,7 +983,7 @@ PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetSymbol(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && HB_IS_SYMBOL(pItem))
+  if (pItem && pItem->isSymbol())
   {
     return pItem->item.asSymbol.value;
   }
@@ -2776,9 +2776,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     fResult = pItem2->isBlock() && pItem1->item.asBlock.value == pItem2->item.asBlock.value;
   }
-  else if (HB_IS_SYMBOL(pItem1))
+  else if (pItem1->isSymbol())
   {
-    fResult = HB_IS_SYMBOL(pItem2) && (pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
+    fResult = pItem2->isSymbol() && (pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
                                        (pItem1->item.asSymbol.value->pDynSym != nullptr &&
                                         pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
   }
@@ -2887,9 +2887,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_SYMBOL(pItem1))
+  else if (pItem1->isSymbol())
   {
-    if (HB_IS_SYMBOL(pItem2))
+    if (pItem2->isSymbol())
     {
       *piResult = (pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
                    (pItem1->item.asSymbol.value->pDynSym != nullptr &&

@@ -886,7 +886,7 @@ PHB_ITEM hb_stackNewFrame(PHB_STACK_STATE pFrame, HB_USHORT uiParams)
   PHB_ITEM *pBase = hb_stack.pPos - uiParams - 2;
   PHB_ITEM pItem = *pBase; // procedure symbol
 
-  if (!HB_IS_SYMBOL(pItem))
+  if (!pItem->isSymbol())
   {
 #if defined(HB_VM_DEBUG)
     hb_stackDispLocal();
@@ -1302,7 +1302,7 @@ HB_ISIZ hb_stackBaseProcOffset(int iLevel)
     nOffset = (*(hb_stack.pItems + nOffset))->item.asSymbol.stackstate->nBaseItem;
   }
 
-  if (iLevel < 0 && (nOffset > 0 || HB_IS_SYMBOL(*hb_stack.pItems)))
+  if (iLevel < 0 && (nOffset > 0 || (*hb_stack.pItems)->isSymbol())
   {
     return nOffset;
   }
