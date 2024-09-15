@@ -1415,7 +1415,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiNumericClass;
   }
-  else if (HB_IS_DATE(pObject))
+  else if (pObject->isDate())
   {
     return s_uiDateClass;
   }
@@ -1478,7 +1478,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "NUMERIC";
   }
-  else if (HB_IS_DATE(pObject))
+  else if (pObject->isDate())
   {
     return "DATE";
   }
@@ -2187,7 +2187,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_DATE(pObject))
+  else if (pObject->isDate())
   {
     if (s_uiDateClass)
     {
@@ -3070,7 +3070,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::NUMERIC;
     }
-    else if (HB_IS_DATE(pItem))
+    else if (pItem->isDate())
     {
       return Harbour::Item::DATE;
     }

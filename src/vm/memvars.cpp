@@ -1494,7 +1494,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
         HB_PUT_LE_DOUBLE(&buffer[HB_MEM_REC_LEN], dNumber);
         hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1);
       }
-      else if (HB_IS_DATE(pMemvar))
+      else if (pMemvar->isDate())
       {
         auto dNumber = static_cast<double>(hb_itemGetDL(pMemvar));
         buffer[11] = 'D' + 128;
