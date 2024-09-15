@@ -1303,7 +1303,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
         // Make separate search loops for different types to find, so that
         // the loop can be faster.
 
-        if (HB_IS_BLOCK(pValue))
+        if (pValue->isBlock())
         {
           HB_STACK_TLS_PRELOAD
           do
@@ -1494,7 +1494,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
         // Make separate search loops for different types to find, so that
         // the loop can be faster.
 
-        if (HB_IS_BLOCK(pValue))
+        if (pValue->isBlock())
         {
           HB_STACK_TLS_PRELOAD
           do
@@ -1664,7 +1664,7 @@ HB_BOOL hb_arrayEval(PHB_ITEM pArray, PHB_ITEM bBlock, HB_SIZE *pnStart, HB_SIZE
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayEval(%p, %p, %p, %p)", static_cast<void*>(pArray), static_cast<void*>(bBlock), static_cast<void*>(pnStart), static_cast<void*>(pnCount)));
 #endif
 
-  if (pArray->isArray() && HB_IS_BLOCK(bBlock))
+  if (pArray->isArray() && bBlock->isBlock())
   {
     PHB_BASEARRAY pBaseArray = pArray->item.asArray.value;
     HB_SIZE nLen = pBaseArray->nLen;

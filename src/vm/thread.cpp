@@ -921,7 +921,7 @@ HB_CARGO_FUNC(hb_threadStartVM)
   {
     auto pStart = hb_arrayGetItemPtr(pThread->pParams, 1);
 
-    if (HB_IS_BLOCK(pStart))
+    if (pStart->isBlock())
     {
       hb_vmPushEvalSym();
       hb_vmPush(pStart);
@@ -1152,7 +1152,7 @@ HB_FUNC(HB_THREADSTART)
         pStart = nullptr;
       }
     }
-    else if (!HB_IS_BLOCK(pStart))
+    else if (!pStart->isBlock())
     {
       pStart = nullptr;
     }

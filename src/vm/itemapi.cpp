@@ -2110,7 +2110,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     {
       hb_gcRefInc(pSource->item.asArray.value);
     }
-    else if (HB_IS_BLOCK(pSource))
+    else if (pSource->isBlock())
     {
       hb_gcRefInc(pSource->item.asBlock.value);
     }
@@ -2772,9 +2772,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     fResult = HB_IS_POINTER(pItem2) && pItem1->item.asPointer.value == pItem2->item.asPointer.value;
   }
-  else if (HB_IS_BLOCK(pItem1))
+  else if (pItem1->isBlock())
   {
-    fResult = HB_IS_BLOCK(pItem2) && pItem1->item.asBlock.value == pItem2->item.asBlock.value;
+    fResult = pItem2->isBlock() && pItem1->item.asBlock.value == pItem2->item.asBlock.value;
   }
   else if (HB_IS_SYMBOL(pItem1))
   {
@@ -2877,9 +2877,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_BLOCK(pItem1))
+  else if (pItem1->isBlock())
   {
-    if (HB_IS_BLOCK(pItem2))
+    if (pItem2->isBlock())
     {
       *piResult = pItem1->item.asBlock.value < pItem2->item.asBlock.value
                       ? -1

@@ -1427,7 +1427,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiLogicalClass;
   }
-  else if (HB_IS_BLOCK(pObject))
+  else if (pObject->isBlock())
   {
     return s_uiBlockClass;
   }
@@ -1490,7 +1490,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "LOGICAL";
   }
-  else if (HB_IS_BLOCK(pObject))
+  else if (pObject->isBlock())
   {
     return "BLOCK";
   }
@@ -1695,7 +1695,7 @@ static HB_ISIZ hb_clsSenderOffset(void)
   if (nOffset > 0)
   {
     // Is it inline method?
-    if (nOffset > 0 && HB_IS_BLOCK(hb_stackItem(nOffset + 1)) &&
+    if (nOffset > 0 && hb_stackItem(nOffset + 1)->isBlock() &&
         (hb_stackItem(nOffset)->item.asSymbol.value == &hb_symEval ||
          hb_stackItem(nOffset)->item.asSymbol.value->pDynSym == hb_symEval.pDynSym))
     {
@@ -1757,7 +1757,7 @@ static PHB_SYMB hb_clsSenderSymbol(void)
     {
       auto pBlock = hb_stackItem(nOffset + 1);
 
-      if (HB_IS_BLOCK(pBlock))
+      if (pBlock->isBlock())
       {
         pSym = pBlock->item.asBlock.value->pDefSymb;
       }
@@ -1969,7 +1969,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_BLOCK(pObject))
+  else if (pObject->isBlock())
   {
     if (pMsg == hb_symEval.pDynSym)
     {
@@ -3082,7 +3082,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::LOGICAL;
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       return Harbour::Item::BLOCK;
     }
@@ -3318,7 +3318,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
       break;
 
     case HB_OO_MSG_INLINE:
-      fOK = pFunction && HB_IS_BLOCK(pFunction);
+      fOK = pFunction && pFunction->isBlock();
       break;
 
     case HB_OO_MSG_SUPER:
@@ -4655,7 +4655,7 @@ HB_FUNC(__SENDER)
     auto pSelf = hb_stackItem(nOffset + 1);
 
     // Is it inline method?
-    if (nOffset > 0 && HB_IS_BLOCK(pSelf) && hb_stackItem(nOffset)->item.asSymbol.value == &hb_symEval)
+    if (nOffset > 0 && pSelf->isBlock() && hb_stackItem(nOffset)->item.asSymbol.value == &hb_symEval)
     {
       pSelf = hb_stackItem(hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem + 1);
     }
@@ -4698,7 +4698,7 @@ HB_FUNC(__CLSSYNCWAIT)
         auto pSelf = hb_stackItem(nOffset + 1);
 
         // Is it inline method?
-        if (HB_IS_BLOCK(pSelf) && pBase->item.asSymbol.value == &hb_symEval)
+        if (pSelf->isBlock() && pBase->item.asSymbol.value == &hb_symEval)
         {
           pSelf = hb_stackItem(pBase->item.asSymbol.stackstate->nBaseItem + 1);
         }
@@ -5373,7 +5373,7 @@ void hb_mthAddTime(HB_ULONG ulClockTicks)
     return;
   }
 
-  if (HB_IS_BLOCK(pObject))
+  if (pObject->isBlock())
   {
     PHB_SYMB pSym = hb_stackBaseItem()->item.asSymbol.value;
 

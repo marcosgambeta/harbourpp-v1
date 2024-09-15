@@ -4254,7 +4254,7 @@ static void hb_vmExactlyEqual()
     pItem1->item.asLogical.value = fResult;
   }
 #ifndef HB_CLP_STRICT
-  else if (HB_IS_BLOCK(pItem1) && HB_IS_BLOCK(pItem2))
+  else if (pItem1->isBlock() && pItem2->isBlock())
   {
     bool fResult = pItem1->item.asBlock.value == pItem2->item.asBlock.value;
     hb_stackPop();
@@ -4894,7 +4894,7 @@ static void hb_vmSeqBlock()
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_BLOCK(pItem))
+  if (pItem->isBlock())
   {
     PHB_ITEM pBlock = hb_errorBlock();
     auto pBlockCopy = static_cast<PHB_ITEM>(hb_gcAllocRaw(sizeof(HB_ITEM), &s_gcSeqBlockFuncs));
@@ -6667,7 +6667,7 @@ static HARBOUR hb_vmDoBlock()
   HB_STACK_TLS_PRELOAD
 
   auto pBlock = hb_stackSelfItem();
-  if (!HB_IS_BLOCK(pBlock))
+  if (!pBlock->isBlock())
   {
     hb_errInternal(HB_EI_VMNOTCBLOCK, nullptr, "hb_vmDoBlock()", nullptr);
   }
@@ -6752,7 +6752,7 @@ PHB_ITEM hb_vmEvalBlockOrMacro(PHB_ITEM pItem)
 
   HB_STACK_TLS_PRELOAD
 
-  if (HB_IS_BLOCK(pItem))
+  if (pItem->isBlock())
   {
     hb_vmPushEvalSym();
     hb_vmPush(pItem);
@@ -9747,7 +9747,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM *pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
       pSymbol = pItem->item.asSymbol.value;
       pItem = nullptr;
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       pSymbol = &hb_symEval;
     }
@@ -13179,7 +13179,7 @@ HB_FUNC(__VMITEMID)
     {
       hb_retptr(hb_hashId(pItem));
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       hb_retptr(hb_codeblockId(pItem));
     }
@@ -13206,7 +13206,7 @@ HB_FUNC(__VMITEMREFS)
     {
       hb_retnint(hb_hashRefs(pItem));
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       hb_retnint(hb_codeblockRefs(pItem));
     }

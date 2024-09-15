@@ -544,7 +544,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
   }
-  else if (HB_IS_BLOCK(pItem))
+  else if (pItem->isBlock())
   {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asBlock.value);
 

@@ -126,7 +126,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     { // TODO: switch ?
       iWeight1 = 1;
     }
-    else if (HB_IS_BLOCK(pItem1))
+    else if (pItem1->isBlock())
     {
       iWeight1 = 2;
     }
@@ -155,7 +155,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     { // TODO: switch ?
       iWeight2 = 1;
     }
-    else if (HB_IS_BLOCK(pItem2))
+    else if (pItem2->isBlock())
     {
       iWeight2 = 2;
     }

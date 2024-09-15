@@ -130,7 +130,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
       pSymbol = pItem->item.asSymbol.value;
       pItem = nullptr;
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       pSymbol = &hb_symEval;
     }
@@ -229,7 +229,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
       pSymbol = pItem->item.asSymbol.value;
       pItem = nullptr;
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       pSymbol = &hb_symEval;
     }
@@ -486,7 +486,7 @@ HB_FUNC(HB_EXECFROMARRAY)
     {
       pExecSym = hb_dynsymGet(hb_itemGetCPtr(pFunc))->pSymbol;
     }
-    else if (HB_IS_BLOCK(pFunc) && !pSelf)
+    else if (pFunc->isBlock() && !pSelf)
     {
       pSelf = pFunc;
       pExecSym = &hb_symEval;
@@ -571,7 +571,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
     {
       pExecSym = hb_dynsymGet(hb_itemGetCPtr(pParam))->pSymbol;
     }
-    else if (HB_IS_BLOCK(pParam) && !pSelf)
+    else if (pParam->isBlock() && !pSelf)
     {
       pSelf = pParam;
       pExecSym = &hb_symEval;
