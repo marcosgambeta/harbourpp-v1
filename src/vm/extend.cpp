@@ -572,7 +572,7 @@ double hb_parnd(int iParam)
     {
       return pItem->item.asDouble.value;
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<double>(pItem->item.asInteger.value);
     }
@@ -602,7 +602,7 @@ int hb_parni(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_INTEGER(pItem))
+    if (pItem->isInteger())
     {
       return pItem->item.asInteger.value;
     }
@@ -636,7 +636,7 @@ int hb_parnidef(int iParam, int iDefValue)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_INTEGER(pItem))
+    if (pItem->isInteger())
     {
       return pItem->item.asInteger.value;
     }
@@ -674,7 +674,7 @@ long hb_parnl(int iParam)
     {
       return static_cast<long>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<long>(pItem->item.asInteger.value);
     }
@@ -708,7 +708,7 @@ long hb_parnldef(int iParam, long lDefValue)
     {
       return static_cast<long>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<long>(pItem->item.asInteger.value);
     }
@@ -742,7 +742,7 @@ HB_ISIZ hb_parns(int iParam)
     {
       return static_cast<HB_ISIZ>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
     }
@@ -776,7 +776,7 @@ HB_ISIZ hb_parnsdef(int iParam, HB_ISIZ nDefValue)
     {
       return static_cast<HB_ISIZ>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
     }
@@ -811,7 +811,7 @@ HB_LONGLONG hb_parnll(int iParam)
     {
       return static_cast<HB_LONGLONG>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
     }
@@ -846,7 +846,7 @@ HB_MAXINT hb_parnint(int iParam)
     {
       return static_cast<HB_MAXINT>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
     }
@@ -880,7 +880,7 @@ HB_MAXINT hb_parnintdef(int iParam, HB_MAXINT nDefValue)
     {
       return static_cast<HB_MAXINT>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
     }
@@ -944,7 +944,7 @@ void *hb_parptrx(int iParam)
     {
       return reinterpret_cast<void *>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return reinterpret_cast<void *>(pItem->item.asInteger.value);
     }
@@ -1357,7 +1357,7 @@ int hb_parvl(int iParam, ...)
     {
       return pItem->item.asLogical.value ? 1 : 0;
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return pItem->item.asInteger.value != 0 ? 1 : 0;
     }
@@ -1406,7 +1406,7 @@ double hb_parvnd(int iParam, ...)
     {
       return pItem->item.asDouble.value;
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<double>(pItem->item.asInteger.value);
     }
@@ -1447,7 +1447,7 @@ int hb_parvni(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_INTEGER(pItem))
+    if (pItem->isInteger())
     {
       return pItem->item.asInteger.value;
     }
@@ -1496,7 +1496,7 @@ long hb_parvnl(int iParam, ...)
     {
       return static_cast<long>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<long>(pItem->item.asInteger.value);
     }
@@ -1546,7 +1546,7 @@ HB_ISIZ hb_parvns(int iParam, ...)
     {
       return static_cast<HB_ISIZ>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
     }
@@ -1592,7 +1592,7 @@ HB_LONGLONG hb_parvnll(int iParam, ...)
     {
       return static_cast<HB_LONGLONG>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
     }
@@ -1638,7 +1638,7 @@ HB_MAXINT hb_parvnint(int iParam, ...)
     {
       return static_cast<HB_MAXINT>(pItem->item.asLong.value);
     }
-    else if (HB_IS_INTEGER(pItem))
+    else if (pItem->isInteger())
     {
       return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
     }

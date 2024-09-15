@@ -3442,7 +3442,7 @@ static void hb_vmNegate()
 
   auto pItem = hb_stackItemFromTop(-1);
 
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
 #if - HB_VMINT_MAX > HB_VMINT_MIN
     if (pItem->item.asInteger.value < -HB_VMINT_MAX)
@@ -3834,7 +3834,7 @@ static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
 #endif
 
 #if - (HB_VMLONG_MAX / HB_VMINT_MIN) >= HB_VMINT_MAX && 1
-  if (HB_IS_INTEGER(pItem1) && HB_IS_INTEGER(pItem2))
+  if (pItem1->isInteger() && pItem2->isInteger())
   {
     HB_MAXINT nResult =
         static_cast<HB_MAXINT>(pItem1->item.asInteger.value) * static_cast<HB_MAXINT>(pItem2->item.asInteger.value);
@@ -4019,7 +4019,7 @@ static void hb_vmInc(PHB_ITEM pItem)
 
   if (HB_IS_NUMINT(pItem))
   {
-    if (HB_IS_INTEGER(pItem))
+    if (pItem->isInteger())
     {
       if (pItem->item.asInteger.value < HB_VMINT_MAX)
       {
@@ -4086,7 +4086,7 @@ static void hb_vmDec(PHB_ITEM pItem)
 
   if (HB_IS_NUMINT(pItem))
   {
-    if (HB_IS_INTEGER(pItem))
+    if (pItem->isInteger())
     {
       if (pItem->item.asInteger.value > HB_VMINT_MIN)
       {
@@ -5573,7 +5573,7 @@ static void hb_vmArrayPush()
     }
     return;
   }
-  else if (HB_IS_INTEGER(pIndex))
+  else if (pIndex->isInteger())
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
   }
@@ -5677,7 +5677,7 @@ static void hb_vmArrayPushRef()
     }
     return;
   }
-  else if (HB_IS_INTEGER(pIndex))
+  else if (pIndex->isInteger())
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
   }
@@ -5795,7 +5795,7 @@ static void hb_vmArrayPop()
     }
     return;
   }
-  else if (HB_IS_INTEGER(pIndex))
+  else if (pIndex->isInteger())
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
   }
@@ -5912,7 +5912,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
   auto pDim = hb_stackItemFromTop(static_cast<int>(-1 - uiDimension));
 
   /* use the proper type of number of elements */
-  if (HB_IS_INTEGER(pDim))
+  if (pDim->isInteger())
   {
     nElements = static_cast<HB_ISIZ>(pDim->item.asInteger.value);
   }
@@ -11016,7 +11016,7 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11071,7 +11071,7 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
     hb_stackDec();
@@ -11139,7 +11139,7 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11194,7 +11194,7 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
     hb_stackDec();
@@ -11262,7 +11262,7 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11312,7 +11312,7 @@ HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
     hb_stackDec();
@@ -11375,7 +11375,7 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11425,7 +11425,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
     hb_stackDec();
@@ -11488,7 +11488,7 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11538,7 +11538,7 @@ HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
     hb_stackDec();
@@ -11601,7 +11601,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11651,7 +11651,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   HB_STACK_TLS_PRELOAD
 
   auto pItem = hb_stackItemFromTop(-1);
-  if (HB_IS_INTEGER(pItem))
+  if (pItem->isInteger())
   {
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
     hb_stackDec();
