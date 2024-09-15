@@ -122,7 +122,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     int iWeight1;
     int iWeight2;
 
-    if (HB_IS_ARRAY(pItem1))
+    if (pItem1->isArray())
     { // TODO: switch ?
       iWeight1 = 1;
     }
@@ -151,7 +151,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
       iWeight1 = 7;
     }
 
-    if (HB_IS_ARRAY(pItem2))
+    if (pItem2->isArray())
     { // TODO: switch ?
       iWeight2 = 1;
     }
@@ -397,7 +397,7 @@ HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, PHB_IT
    HB_TRACE(HB_TR_DEBUG, ("hb_arraySort(%p, %p, %p, %p)", static_cast<void*>(pArray), static_cast<void*>(pnStart), static_cast<void*>(pnCount), static_cast<void*>(pBlock)));
 #endif
 
-  if (HB_IS_ARRAY(pArray))
+  if (pArray->isArray())
   {
     PHB_BASEARRAY pBaseArray = pArray->item.asArray.value;
     HB_SIZE nLen = pBaseArray->nLen;

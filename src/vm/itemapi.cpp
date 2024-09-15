@@ -1861,7 +1861,7 @@ HB_SIZE hb_itemSize(PHB_ITEM pItem)
     {
       return pItem->item.asString.length;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       return hb_arrayLen(pItem);
     }
@@ -2106,7 +2106,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
         hb_xRefInc(pSource->item.asString.value);
       }
     }
-    else if (HB_IS_ARRAY(pSource))
+    else if (pSource->isArray())
     {
       hb_gcRefInc(pSource->item.asArray.value);
     }
@@ -2391,7 +2391,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
       {
         PHB_ITEM pBase = HB_IS_BYREF(pItem->item.asEnum.basePtr) ? hb_itemUnRef(pItem->item.asEnum.basePtr)
                                                                  : pItem->item.asEnum.basePtr;
-        if (HB_IS_ARRAY(pBase))
+        if (pBase->isArray())
         {
           pBase = hb_arrayGetItemPtr(pBase, pItem->item.asEnum.offset);
           if (pBase)
@@ -2677,7 +2677,7 @@ PHB_ITEM hb_itemClone(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemClone(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (HB_IS_ARRAY(pItem))
+  if (pItem->isArray())
   {
     if (HB_IS_OBJECT(pItem))
     {
@@ -2704,7 +2704,7 @@ void hb_itemCloneTo(PHB_ITEM pDest, PHB_ITEM pSource)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemCloneTo(%p,%p)", static_cast<void*>(pDest), static_cast<void*>(pSource)));
 #endif
 
-  if (HB_IS_ARRAY(pSource))
+  if (pSource->isArray())
   {
     if (HB_IS_OBJECT(pSource))
     {
@@ -2760,9 +2760,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
     fResult = HB_IS_LOGICAL(pItem2) &&
               (pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value);
   }
-  else if (HB_IS_ARRAY(pItem1))
+  else if (pItem1->isArray())
   {
-    fResult = HB_IS_ARRAY(pItem2) && pItem1->item.asArray.value == pItem2->item.asArray.value;
+    fResult = pItem2->isArray() && pItem1->item.asArray.value == pItem2->item.asArray.value;
   }
   else if (HB_IS_HASH(pItem1))
   {
@@ -2847,9 +2847,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_ARRAY(pItem1))
+  else if (pItem1->isArray())
   {
-    if (HB_IS_ARRAY(pItem2))
+    if (pItem2->isArray())
     {
       *piResult = pItem1->item.asArray.value < pItem2->item.asArray.value
                       ? -1

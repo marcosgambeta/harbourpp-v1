@@ -517,7 +517,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
     pItem = hb_itemUnRefOnce(pItem);
   }
 
-  if (HB_IS_ARRAY(pItem))
+  if (pItem->isArray())
   {
     PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asArray.value);
 

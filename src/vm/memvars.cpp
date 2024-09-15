@@ -162,7 +162,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
         {
           PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef(pLocal->item.asEnum.basePtr)
                                                                     : pLocal->item.asEnum.basePtr;
-          if (HB_IS_ARRAY(pBase))
+          if (pBase->isArray())
           {
             auto pItem = hb_itemNew(nullptr);
             hb_arrayGetItemRef(pBase, pLocal->item.asEnum.offset, pItem);
@@ -1139,7 +1139,7 @@ HB_FUNC(__MVPUBLIC)
 
       if (pMemvar != nullptr)
       {
-        if (HB_IS_ARRAY(pMemvar))
+        if (pMemvar->isArray())
         {
           // we are accepting an one-dimensional array of strings only
           const std::size_t nLen = hb_arrayLen(pMemvar);
@@ -1172,7 +1172,7 @@ HB_FUNC(__MVPRIVATE)
 
       if (pMemvar != nullptr)
       {
-        if (HB_IS_ARRAY(pMemvar))
+        if (pMemvar->isArray())
         {
           // we are accepting an one-dimensional array of strings only
           const std::size_t nLen = hb_arrayLen(pMemvar);
@@ -1205,7 +1205,7 @@ HB_FUNC(__MVXRELEASE)
 
       if (pMemvar != nullptr)
       {
-        if (HB_IS_ARRAY(pMemvar))
+        if (pMemvar->isArray())
         {
           // we are accepting an one-dimensional array of strings only
           const std::size_t nLen = hb_arrayLen(pMemvar);

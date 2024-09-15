@@ -4271,7 +4271,7 @@ static void hb_vmExactlyEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_ARRAY(pItem1) && HB_IS_ARRAY(pItem2) && !hb_objHasOperator(pItem1, HB_OO_OP_EXACTEQUAL))
+  else if (pItem1->isArray() && pItem2->isArray() && !hb_objHasOperator(pItem1, HB_OO_OP_EXACTEQUAL))
   {
     bool fResult = pItem1->item.asArray.value == pItem2->item.asArray.value;
     hb_stackPop();
@@ -5107,7 +5107,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
       pEnum->item.asEnum.valuePtr = nullptr;
     }
 
-    if (HB_IS_ARRAY(pBase))
+    if (pBase->isArray())
     {
       /* the index into an array */
       pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->item.asArray.value->nLen;
@@ -5172,7 +5172,7 @@ static void hb_vmEnumNext()
     {
       pBase = hb_itemUnRef(pBase);
     }
-    if (HB_IS_ARRAY(pBase))
+    if (pBase->isArray())
     {
       if (HB_IS_OBJECT(pBase) && hb_objHasOperator(pBase, HB_OO_OP_ENUMSKIP))
       {
@@ -5255,7 +5255,7 @@ static void hb_vmEnumPrev()
     {
       pBase = hb_itemUnRef(pBase);
     }
-    if (HB_IS_ARRAY(pBase))
+    if (pBase->isArray())
     {
       if (HB_IS_OBJECT(pBase) && hb_objHasOperator(pBase, HB_OO_OP_ENUMSKIP))
       {
@@ -5605,7 +5605,7 @@ static void hb_vmArrayPush()
     return;
   }
 
-  if (HB_IS_ARRAY(pArray))
+  if (pArray->isArray())
   {
     if (HB_IS_OBJECT(pArray) && hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, nullptr))
     {
@@ -5710,7 +5710,7 @@ static void hb_vmArrayPushRef()
     return;
   }
 
-  if (HB_IS_ARRAY(pArray))
+  if (pArray->isArray())
   {
     if (HB_IS_OBJECT(pArray) && hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
     {
@@ -5822,7 +5822,7 @@ static void hb_vmArrayPop()
     return;
   }
 
-  if (HB_IS_ARRAY(pArray))
+  if (pArray->isArray())
   {
     if (HB_IS_OBJECT(pArray) && hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pArray, pArray, pIndex, pValue))
     {
@@ -6189,7 +6189,7 @@ static void hb_vmPushAParams()
   HB_STACK_TLS_PRELOAD
 
   auto pArray = hb_stackItemFromTop(-1);
-  if (HB_IS_ARRAY(pArray))
+  if (pArray->isArray())
   {
     HB_SIZE nLen = pArray->item.asArray.value->nLen;
 
@@ -12221,7 +12221,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
 
   auto pArray = hb_stackItemFromTop(-1);
 
-  if (HB_IS_ARRAY(pArray))
+  if (pArray->isArray())
   {
     if (HB_IS_OBJECT(pArray) && hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
     {
@@ -12307,7 +12307,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
     pArray = hb_itemUnRef(pArray);
   }
 
-  if (HB_IS_ARRAY(pArray))
+  if (pArray->isArray())
   {
     if (HB_IS_OBJECT(pArray) && hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
     {
@@ -13171,7 +13171,7 @@ HB_FUNC(__VMITEMID)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       hb_retptr(hb_arrayId(pItem));
     }
@@ -13198,7 +13198,7 @@ HB_FUNC(__VMITEMREFS)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       hb_retnint(hb_arrayRefs(pItem));
     }

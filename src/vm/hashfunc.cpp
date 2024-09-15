@@ -777,14 +777,14 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (fExact && HB_IS_ARRAY(pValue))
+    else if (fExact && pValue->isArray())
     {
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_ARRAY(pItem) && pItem->item.asArray.value == pValue->item.asArray.value)
+          if (pItem->isArray() && pItem->item.asArray.value == pValue->item.asArray.value)
           {
             fFound = true;
             break;

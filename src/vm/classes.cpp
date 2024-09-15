@@ -1360,7 +1360,7 @@ HB_BOOL hb_clsIsParent(HB_USHORT uiClass, const char *szParentName)
 
 HB_USHORT hb_objGetClass(PHB_ITEM pItem)
 {
-  if (pItem && HB_IS_ARRAY(pItem))
+  if (pItem && pItem->isArray())
   {
     return pItem->item.asArray.value->uiClass;
   }
@@ -1375,7 +1375,7 @@ HB_USHORT hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc
 {
   HB_USHORT uiClass = 0;
 
-  if (pItem && HB_IS_ARRAY(pItem) && pItem->item.asArray.value->uiClass == 0)
+  if (pItem && pItem->isArray() && pItem->item.asArray.value->uiClass == 0)
   {
     uiClass = pItem->item.asArray.value->uiClass = hb_clsFindClass(szClass, szFunc);
   }
@@ -1391,7 +1391,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
    HB_TRACE(HB_TR_DEBUG, ("hb_objGetClassH(%p)", static_cast<void*>(pObject)));
 #endif
 
-  if (HB_IS_ARRAY(pObject))
+  if (pObject->isArray())
   {
     if (pObject->item.asArray.value->uiClass != 0)
     {
@@ -1454,7 +1454,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
    HB_TRACE(HB_TR_DEBUG, ("hb_objGetClsName(%p)", static_cast<void*>(pObject)));
 #endif
 
-  if (HB_IS_ARRAY(pObject))
+  if (pObject->isArray())
   {
     if (pObject->item.asArray.value->uiClass != 0)
     {
@@ -1776,7 +1776,7 @@ static HB_USHORT hb_clsSenderObjectClass(void)
     HB_STACK_TLS_PRELOAD
     auto pSender = hb_stackItem(nOffset + 1);
 
-    if (HB_IS_ARRAY(pSender))
+    if (pSender->isArray())
     {
       return pSender->item.asArray.value->uiClass;
     }
@@ -1897,7 +1897,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
 
   PHB_DYNS pMsg = pMessage->pDynSym;
 
-  if (HB_IS_ARRAY(pObject))
+  if (pObject->isArray())
   {
     if (pObject->item.asArray.value->uiClass)
     {
@@ -2064,7 +2064,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         {
           PHB_ITEM pBase = HB_IS_BYREF(pEnum->item.asEnum.basePtr) ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
                                                                    : pEnum->item.asEnum.basePtr;
-          if (HB_IS_ARRAY(pBase))
+          if (pBase->isArray())
           {
             if (HB_IS_OBJECT(pBase) && hb_objHasOperator(pBase, HB_OO_OP_ENUMISLAST))
             {
@@ -3055,7 +3055,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
         return Harbour::Item::HASH;
       }
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       if (pItem->item.asArray.value->uiClass == 0)
       {
@@ -3966,7 +3966,7 @@ HB_FUNC(__CLSNEW)
     pModFriend = nullptr;
   }
 
-  if (szClassName != nullptr && (!pDatas || HB_IS_NUMERIC(pDatas)) && (!pSuperArray || HB_IS_ARRAY(pSuperArray)) &&
+  if (szClassName != nullptr && (!pDatas || HB_IS_NUMERIC(pDatas)) && (!pSuperArray || pSuperArray->isArray()) &&
       (!pClassFunc || HB_IS_SYMBOL(pClassFunc)) && (!pModFriend || HB_IS_LOGICAL(pModFriend)))
   {
     HB_STACK_TLS_PRELOAD
@@ -5268,7 +5268,7 @@ HB_FUNC_STATIC(msgGetData)
   HB_STACK_TLS_PRELOAD
   auto pObject = hb_stackSelfItem();
 
-  if (HB_IS_ARRAY(pObject))
+  if (pObject->isArray())
   {
     HB_USHORT uiObjClass = pObject->item.asArray.value->uiClass;
     HB_USHORT uiClass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
@@ -5297,7 +5297,7 @@ HB_FUNC_STATIC(msgSetData)
   HB_STACK_TLS_PRELOAD
   auto pObject = hb_stackSelfItem();
 
-  if (HB_IS_ARRAY(pObject))
+  if (pObject->isArray())
   {
     auto pReturn = hb_param(1, Harbour::Item::ANY);
     HB_USHORT uiObjClass = pObject->item.asArray.value->uiClass;
@@ -5580,7 +5580,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
 
 static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
 {
-  if (pObject && HB_IS_OBJECT(pObject) && pArray && HB_IS_ARRAY(pArray) && pArray->item.asArray.value->uiClass == 0)
+  if (pObject && HB_IS_OBJECT(pObject) && pArray && pArray->isArray() && pArray->item.asArray.value->uiClass == 0)
   {
     HB_USHORT uiClass = pObject->item.asArray.value->uiClass;
     HB_SIZE nPos, nIndex, nLen;

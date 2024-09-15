@@ -442,7 +442,7 @@ HB_FUNC(HB_EXECFROMARRAY)
 
     if (iPCount == 1)
     {
-      if (HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam))
+      if (pParam->isArray() && !HB_IS_OBJECT(pParam))
       {
         pArray = pParam;
         pItem = hb_arrayGetItemPtr(pArray, 1);
@@ -476,7 +476,7 @@ HB_FUNC(HB_EXECFROMARRAY)
     }
   }
 
-  if (pFunc && (!pArray || HB_IS_ARRAY(pArray)))
+  if (pFunc && (!pArray || pArray->isArray()))
   {
     if (HB_IS_SYMBOL(pFunc))
     {
@@ -543,7 +543,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
   PHB_ITEM pSelf = nullptr;
   HB_ULONG ulParamOffset = 0;
 
-  if (pParam && HB_IS_ARRAY(pParam) && !HB_IS_OBJECT(pParam))
+  if (pParam && pParam->isArray() && !HB_IS_OBJECT(pParam))
   {
     pArray = pParam;
     pParam = hb_arrayGetItemPtr(pArray, 1);

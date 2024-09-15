@@ -968,7 +968,7 @@ HB_BOOL hb_hashRemove(PHB_ITEM pHash, PHB_ITEM pItem)
       hb_hashDel(pHash, pItem);
       return true;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       HB_SIZE n = 0;
       PHB_ITEM pKey;

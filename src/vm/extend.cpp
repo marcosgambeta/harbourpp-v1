@@ -214,7 +214,7 @@ HB_BOOL hb_extIsArray(int iParam)
     pItem = hb_itemUnRef(pItem);
   }
 
-  return HB_IS_ARRAY(pItem) && !HB_ARRAY_OBJ(pItem);
+  return pItem->isArray() && !HB_ARRAY_OBJ(pItem);
 }
 
 // function to be called from pcode DLLs to detect if the extend system
@@ -1007,7 +1007,7 @@ const char *hb_parvc(int iParam, ...)
     {
       return pItem->item.asString.value;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1045,7 +1045,7 @@ const char *hb_parvcx(int iParam, ...)
     {
       return pItem->item.asString.value;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1082,7 +1082,7 @@ HB_SIZE hb_parvclen(int iParam, ...)
     {
       return pItem->item.asString.length;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1125,7 +1125,7 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
       {
         return pItem->item.asString.length + 1;
       }
-      else if (HB_IS_ARRAY(pItem))
+      else if (pItem->isArray())
       {
         va_list va;
         HB_SIZE nArrayIndex;
@@ -1166,7 +1166,7 @@ const char *hb_parvds(int iParam, ...)
     {
       return hb_dateDecStr(hb_stackDateBuffer(), pItem->item.asDateTime.julian);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1205,7 +1205,7 @@ char *hb_parvdsbuff(char *szDate, int iParam, ...)
     {
       return hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1244,7 +1244,7 @@ long hb_parvdl(int iParam, ...)
     {
       return pItem->item.asDateTime.julian;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1281,7 +1281,7 @@ double hb_parvtd(int iParam, ...)
     {
       return hb_timeStampPackDT(pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1320,7 +1320,7 @@ HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec, int iParam, ...)
       *plMilliSec = pItem->item.asDateTime.time;
       return true;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1369,7 +1369,7 @@ int hb_parvl(int iParam, ...)
     {
       return pItem->item.asDouble.value != 0.0 ? 1 : 0;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1414,7 +1414,7 @@ double hb_parvnd(int iParam, ...)
     {
       return static_cast<double>(pItem->item.asLong.value);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1459,7 +1459,7 @@ int hb_parvni(int iParam, ...)
     {
       return HB_CAST_INT(pItem->item.asDouble.value);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1509,7 +1509,7 @@ long hb_parvnl(int iParam, ...)
     {
       return static_cast<long>(pItem->item.asDateTime.julian);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1554,7 +1554,7 @@ HB_ISIZ hb_parvns(int iParam, ...)
     {
       return HB_CAST_ISIZ(pItem->item.asDouble.value);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1600,7 +1600,7 @@ HB_LONGLONG hb_parvnll(int iParam, ...)
     {
       return HB_CAST_LONGLONG(pItem->item.asDouble.value);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1646,7 +1646,7 @@ HB_MAXINT hb_parvnint(int iParam, ...)
     {
       return HB_CAST_MAXINT(pItem->item.asDouble.value);
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1683,7 +1683,7 @@ void *hb_parvptr(int iParam, ...)
     {
       return pItem->item.asPointer.value;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -1723,7 +1723,7 @@ void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int iParam, ...)
         return pItem->item.asPointer.value;
       }
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       va_list va;
       HB_SIZE nArrayIndex;
@@ -2553,7 +2553,7 @@ int hb_storvc(const char *szText, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2590,7 +2590,7 @@ int hb_storvclen(const char *szText, HB_SIZE nLen, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2627,7 +2627,7 @@ int hb_storvclen_buffer(char *szText, HB_SIZE nLen, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2666,7 +2666,7 @@ int hb_storvds(const char *szDate, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2703,7 +2703,7 @@ int hb_storvdl(long lJulian, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2740,7 +2740,7 @@ int hb_storvtd(double dTimeStamp, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2777,7 +2777,7 @@ int hb_storvtdt(long lJulian, long lMilliSec, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2814,7 +2814,7 @@ int hb_storvl(int iLogical, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2851,7 +2851,7 @@ int hb_storvni(int iValue, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2888,7 +2888,7 @@ int hb_storvnl(long lValue, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2925,7 +2925,7 @@ int hb_storvns(HB_ISIZ nValue, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -2963,7 +2963,7 @@ int hb_storvnll(HB_LONGLONG llValue, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -3001,7 +3001,7 @@ int hb_storvnint(HB_MAXINT nValue, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -3038,7 +3038,7 @@ int hb_storvnd(double dNumber, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -3075,7 +3075,7 @@ int hb_storvptr(void *pointer, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
@@ -3112,7 +3112,7 @@ int hb_storvptrGC(void *pointer, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       int iRetVal;
       va_list va;
