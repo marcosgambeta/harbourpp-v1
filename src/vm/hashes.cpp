@@ -225,9 +225,9 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
       return 1;
     }
   }
-  else if (HB_IS_POINTER(pKey1))
+  else if (pKey1->isPointer())
   {
-    if (HB_IS_POINTER(pKey2))
+    if (pKey2->isPointer())
     {
       return pKey1->item.asPointer.value < pKey2->item.asPointer.value
                  ? -1

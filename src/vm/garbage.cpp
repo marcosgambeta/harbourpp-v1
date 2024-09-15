@@ -556,7 +556,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
       pAlloc->pFuncs->mark(HB_BLOCK_PTR(pAlloc));
     }
   }
-  else if (HB_IS_POINTER(pItem))
+  else if (pItem->isPointer())
   {
     if (pItem->item.asPointer.collect)
     {

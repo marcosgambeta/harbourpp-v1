@@ -1435,7 +1435,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiHashClass;
   }
-  else if (HB_IS_POINTER(pObject))
+  else if (pObject->isPointer())
   {
     return s_uiPointerClass;
   }
@@ -1498,7 +1498,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "HASH";
   }
-  else if (HB_IS_POINTER(pObject))
+  else if (pObject->isPointer())
   {
     return "POINTER";
   }
@@ -2243,7 +2243,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_POINTER(pObject))
+  else if (pObject->isPointer())
   {
     if (s_uiPointerClass)
     {
@@ -3086,7 +3086,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::BLOCK;
     }
-    else if (HB_IS_POINTER(pItem))
+    else if (pItem->isPointer())
     {
       return Harbour::Item::POINTER;
     }

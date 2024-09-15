@@ -950,7 +950,7 @@ void *hb_itemGetPtr(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetPtr(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && HB_IS_POINTER(pItem))
+  if (pItem && pItem->isPointer())
   {
     return pItem->item.asPointer.value;
   }
@@ -966,7 +966,7 @@ void *hb_itemGetPtrGC(PHB_ITEM pItem, const HB_GC_FUNCS *pFuncs)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetPtrGC(%p,%p)", static_cast<void*>(pItem), static_cast<const void*>(pFuncs)));
 #endif
 
-  if (pItem && HB_IS_POINTER(pItem) && pItem->item.asPointer.collect &&
+  if (pItem && pItem->isPointer() && pItem->item.asPointer.collect &&
       hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
   {
     return pItem->item.asPointer.value;
@@ -2137,7 +2137,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
         hb_gcRefInc(pSource->item.asRefer.BasePtr.array);
       }
     }
-    else if (HB_IS_POINTER(pSource))
+    else if (pSource->isPointer())
     {
       if (pSource->item.asPointer.collect)
       {
@@ -2768,9 +2768,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     fResult = HB_IS_HASH(pItem2) && pItem1->item.asHash.value == pItem2->item.asHash.value;
   }
-  else if (HB_IS_POINTER(pItem1))
+  else if (pItem1->isPointer())
   {
-    fResult = HB_IS_POINTER(pItem2) && pItem1->item.asPointer.value == pItem2->item.asPointer.value;
+    fResult = pItem2->isPointer() && pItem1->item.asPointer.value == pItem2->item.asPointer.value;
   }
   else if (pItem1->isBlock())
   {
@@ -2867,9 +2867,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_POINTER(pItem1))
+  else if (pItem1->isPointer())
   {
-    if (HB_IS_POINTER(pItem2))
+    if (pItem2->isPointer())
     {
       *piResult = pItem1->item.asPointer.value < pItem2->item.asPointer.value
                       ? -1

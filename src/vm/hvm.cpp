@@ -4237,7 +4237,7 @@ static void hb_vmExactlyEqual()
         pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
     hb_stackDec();
   }
-  else if (HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2))
+  else if (pItem1->isPointer() && pItem2->isPointer())
   {
     bool fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
     hb_stackPop();
@@ -4363,7 +4363,7 @@ static void hb_vmEqual()
         pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
     hb_stackDec();
   }
-  else if (HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2))
+  else if (pItem1->isPointer() && pItem2->isPointer())
   {
     bool fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
     hb_stackPop();
@@ -4464,7 +4464,7 @@ static void hb_vmNotEqual()
         pItem1->item.asLogical.value ? !pItem2->item.asLogical.value : pItem2->item.asLogical.value;
     hb_stackDec();
   }
-  else if (HB_IS_POINTER(pItem1) && HB_IS_POINTER(pItem2))
+  else if (pItem1->isPointer() && pItem2->isPointer())
   {
     bool fResult = pItem1->item.asPointer.value != pItem2->item.asPointer.value;
     hb_stackPop();
@@ -6783,7 +6783,7 @@ void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
   HB_TRACE(HB_TR_DEBUG, ("hb_vmDestroyBlockOrMacro(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (HB_IS_POINTER(pItem))
+  if (pItem->isPointer())
   {
     auto pMacro = static_cast<PHB_MACRO>(hb_itemGetPtr(pItem));
     if (pMacro)
@@ -13210,7 +13210,7 @@ HB_FUNC(__VMITEMREFS)
     {
       hb_retnint(hb_codeblockRefs(pItem));
     }
-    else if (HB_IS_POINTER(pItem))
+    else if (pItem->isPointer())
     {
       hb_retnint(hb_gcRefCount(pItem->item.asPointer.value));
     }
@@ -13265,7 +13265,7 @@ HB_FUNC(__RECOVERERRORBLOCK)
   {
     auto pItem = hb_stackItem(nRecoverBase);
 
-    if (HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && pItem->item.asPointer.single &&
+    if (pItem->isPointer() && pItem->item.asPointer.collect && pItem->item.asPointer.single &&
         hb_gcFuncs(pItem->item.asPointer.value) == &s_gcSeqBlockFuncs)
     {
       hb_itemReturn(static_cast<PHB_ITEM>(pItem->item.asPointer.value));

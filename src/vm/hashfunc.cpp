@@ -757,14 +757,14 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (HB_IS_POINTER(pValue))
+    else if (pValue->isPointer())
     {
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_POINTER(pItem) && pItem->item.asPointer.value == pValue->item.asPointer.value)
+          if (pItem->isPointer() && pItem->item.asPointer.value == pValue->item.asPointer.value)
           {
             fFound = true;
             break;

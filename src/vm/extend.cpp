@@ -910,7 +910,7 @@ void *hb_parptr(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_POINTER(pItem))
+    if (pItem->isPointer())
     {
       return pItem->item.asPointer.value;
     }
@@ -936,7 +936,7 @@ void *hb_parptrx(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_POINTER(pItem))
+    if (pItem->isPointer())
     {
       return pItem->item.asPointer.value;
     }
@@ -974,7 +974,7 @@ void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_POINTER(pItem) && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
+    if (pItem->isPointer() && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
     {
       return pItem->item.asPointer.value;
     }
@@ -1679,7 +1679,7 @@ void *hb_parvptr(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_POINTER(pItem))
+    if (pItem->isPointer())
     {
       return pItem->item.asPointer.value;
     }
@@ -1716,7 +1716,7 @@ void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_POINTER(pItem))
+    if (pItem->isPointer())
     {
       if (pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
       {
@@ -1733,7 +1733,7 @@ void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int iParam, ...)
       va_end(va);
 
       pItem = hb_arrayGetItemPtr(pItem, nArrayIndex);
-      if (pItem && HB_IS_POINTER(pItem) && pItem->item.asPointer.collect &&
+      if (pItem && pItem->isPointer() && pItem->item.asPointer.collect &&
           hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
       {
         return pItem->item.asPointer.value;
