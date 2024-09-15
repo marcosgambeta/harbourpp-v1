@@ -3468,7 +3468,7 @@ static void hb_vmNegate()
       pItem->item.asInteger.length = HB_INT_EXPLENGTH(pItem->item.asInteger.value);
     }
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if - HB_VMLONG_MAX > HB_VMLONG_MIN
     if (pItem->item.asLong.value < -HB_VMLONG_MAX)
@@ -5577,7 +5577,7 @@ static void hb_vmArrayPush()
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
   }
-  else if (HB_IS_LONG(pIndex))
+  else if (pIndex->isLong())
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asLong.value);
   }
@@ -5681,7 +5681,7 @@ static void hb_vmArrayPushRef()
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
   }
-  else if (HB_IS_LONG(pIndex))
+  else if (pIndex->isLong())
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asLong.value);
   }
@@ -5799,7 +5799,7 @@ static void hb_vmArrayPop()
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
   }
-  else if (HB_IS_LONG(pIndex))
+  else if (pIndex->isLong())
   {
     nIndex = static_cast<HB_SIZE>(pIndex->item.asLong.value);
   }
@@ -5916,7 +5916,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
   {
     nElements = static_cast<HB_ISIZ>(pDim->item.asInteger.value);
   }
-  else if (HB_IS_LONG(pDim))
+  else if (pDim->isLong())
   {
     nElements = static_cast<HB_ISIZ>(pDim->item.asLong.value);
   }
@@ -11021,7 +11021,7 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value == static_cast<HB_MAXINT>(lValue);
@@ -11076,7 +11076,7 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
     hb_stackDec();
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value == static_cast<HB_MAXINT>(lValue);
@@ -11144,7 +11144,7 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value != static_cast<HB_MAXINT>(lValue);
@@ -11199,7 +11199,7 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
     hb_stackDec();
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value != static_cast<HB_MAXINT>(lValue);
@@ -11267,7 +11267,7 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value < static_cast<HB_MAXINT>(lValue);
@@ -11317,7 +11317,7 @@ HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
     hb_stackDec();
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value < static_cast<HB_MAXINT>(lValue);
@@ -11380,7 +11380,7 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value <= static_cast<HB_MAXINT>(lValue);
@@ -11430,7 +11430,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
     hb_stackDec();
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value <= static_cast<HB_MAXINT>(lValue);
@@ -11493,7 +11493,7 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value > static_cast<HB_MAXINT>(lValue);
@@ -11543,7 +11543,7 @@ HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
     hb_stackDec();
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value > static_cast<HB_MAXINT>(lValue);
@@ -11606,7 +11606,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
     pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value >= static_cast<HB_MAXINT>(lValue);
@@ -11656,7 +11656,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
     hb_stackDec();
   }
-  else if (HB_IS_LONG(pItem))
+  else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value >= static_cast<HB_MAXINT>(lValue);
