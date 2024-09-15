@@ -1314,7 +1314,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             hb_vmPushSize(++nStart);
             hb_vmEval(2);
 
-            if (HB_IS_LOGICAL(hb_stackReturnItem()) && hb_stackReturnItem()->item.asLogical.value)
+            if (hb_stackReturnItem()->isLogical() && hb_stackReturnItem()->item.asLogical.value)
             {
               return nStart;
             }
@@ -1391,7 +1391,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             } while (--nCount > 0);
           }
         }
-        else if (HB_IS_LOGICAL(pValue))
+        else if (pValue->isLogical())
         {
           HB_BOOL bValue = hb_itemGetL(pValue);
 
@@ -1399,7 +1399,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (HB_IS_LOGICAL(pItem) && hb_itemGetL(pItem) == bValue)
+            if (pItem->isLogical() && hb_itemGetL(pItem) == bValue)
             {
               return nStart;
             }
@@ -1512,7 +1512,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             hb_vmPushSize(nStart + 1);
             hb_vmEval(2);
 
-            if (HB_IS_LOGICAL(hb_stackReturnItem()) && hb_stackReturnItem()->item.asLogical.value)
+            if (hb_stackReturnItem()->isLogical() && hb_stackReturnItem()->item.asLogical.value)
             {
               return nStart + 1;
             }
@@ -1589,7 +1589,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             } while (--nCount && nStart--);
           }
         }
-        else if (HB_IS_LOGICAL(pValue))
+        else if (pValue->isLogical())
         {
           HB_BOOL bValue = hb_itemGetL(pValue);
 
@@ -1597,7 +1597,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (HB_IS_LOGICAL(pItem) && hb_itemGetL(pItem) == bValue)
+            if (pItem->isLogical() && hb_itemGetL(pItem) == bValue)
             {
               return nStart + 1;
             }

@@ -4231,7 +4231,7 @@ static void hb_vmExactlyEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->item.asLogical.value =
         pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
@@ -4357,7 +4357,7 @@ static void hb_vmEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->item.asLogical.value =
         pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
@@ -4458,7 +4458,7 @@ static void hb_vmNotEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->item.asLogical.value =
         pItem1->item.asLogical.value ? !pItem2->item.asLogical.value : pItem2->item.asLogical.value;
@@ -4544,7 +4544,7 @@ static void hb_vmLess()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->item.asLogical.value = !pItem1->item.asLogical.value && pItem2->item.asLogical.value;
     hb_stackDec();
@@ -4612,7 +4612,7 @@ static void hb_vmLessEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->item.asLogical.value = !pItem1->item.asLogical.value || pItem2->item.asLogical.value;
     hb_stackDec();
@@ -4680,7 +4680,7 @@ static void hb_vmGreater()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->item.asLogical.value = pItem1->item.asLogical.value && !pItem2->item.asLogical.value;
     hb_stackDec();
@@ -4748,7 +4748,7 @@ static void hb_vmGreaterEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->item.asLogical.value = pItem1->item.asLogical.value || !pItem2->item.asLogical.value;
     hb_stackDec();
@@ -4846,7 +4846,7 @@ static void hb_vmForTest() /* Test to check the end point of the FOR */
 
     if (pResult)
     {
-      if (HB_IS_LOGICAL(pResult))
+      if (pResult->isLogical())
       {
         fBack = pResult->item.asLogical.value;
         hb_itemRelease(pResult);
@@ -5453,7 +5453,7 @@ static void hb_vmNot()
 
   auto pItem = hb_stackItemFromTop(-1);
 
-  if (HB_IS_LOGICAL(pItem))
+  if (pItem->isLogical())
   {
     pItem->type = Harbour::Item::LOGICAL;
     pItem->item.asLogical.value = !pItem->item.asLogical.value;
@@ -5481,7 +5481,7 @@ static void hb_vmAnd()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = pItem1->item.asLogical.value && pItem2->item.asLogical.value;
@@ -5515,7 +5515,7 @@ static void hb_vmOr()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = pItem1->item.asLogical.value || pItem2->item.asLogical.value;
@@ -7964,7 +7964,7 @@ static HB_BOOL hb_vmPopLogical()
 
   HB_STACK_TLS_PRELOAD
 
-  if (HB_IS_LOGICAL(hb_stackItemFromTop(-1)))
+  if (hb_stackItemFromTop(-1)->isLogical())
   {
     bool fValue = hb_stackItemFromTop(-1)->item.asLogical.value;
     hb_stackDec();

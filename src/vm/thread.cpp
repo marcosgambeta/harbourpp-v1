@@ -1580,7 +1580,7 @@ HB_FUNC(HB_THREADONCE)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_ISBYREF(1) && (pItem->isNil() || HB_IS_LOGICAL(pItem)))
+  if (pItem && HB_ISBYREF(1) && (pItem->isNil() || pItem->isLogical()))
   {
     HB_STACK_TLS_PRELOAD
     auto fFirstCall = false;

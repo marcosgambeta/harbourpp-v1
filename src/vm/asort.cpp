@@ -79,7 +79,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
 
     // CA-Cl*pper always takes return value as logical item
     // accepting 0, 1 as numeric representation of HB_FALSE/HB_TRUE
-    return (HB_IS_LOGICAL(pRet) || HB_IS_NUMERIC(pRet)) ? hb_itemGetL(pRet) : true;
+    return (pRet->isLogical() || HB_IS_NUMERIC(pRet)) ? hb_itemGetL(pRet) : true;
   }
 
   // Do native compare when no codeblock is supplied
@@ -110,7 +110,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     // it's not exact comparison, compare only Julian date
     return hb_itemGetDL(pItem1) < hb_itemGetDL(pItem2);
   }
-  else if (HB_IS_LOGICAL(pItem1) && HB_IS_LOGICAL(pItem2))
+  else if (pItem1->isLogical() && pItem2->isLogical())
   {
     return hb_itemGetL(pItem1) < hb_itemGetL(pItem2);
   }
@@ -134,7 +134,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight1 = 3;
     }
-    else if (HB_IS_LOGICAL(pItem1))
+    else if (pItem1->isLogical())
     {
       iWeight1 = 4;
     }
@@ -163,7 +163,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight2 = 3;
     }
-    else if (HB_IS_LOGICAL(pItem2))
+    else if (pItem2->isLogical())
     {
       iWeight2 = 4;
     }

@@ -734,7 +734,7 @@ HB_BOOL hb_itemGetL(PHB_ITEM pItem)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_LOGICAL(pItem))
+    if (pItem->isLogical())
     {
       return pItem->item.asLogical.value;
     }
@@ -763,7 +763,7 @@ HB_BOOL hb_itemGetLX(PHB_ITEM pItem)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_LOGICAL(pItem))
+    if (pItem->isLogical())
     {
       return pItem->item.asLogical.value;
     }
@@ -2755,9 +2755,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
     fResult = HB_IS_DATETIME(pItem2) && pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
               pItem1->item.asDateTime.time == pItem2->item.asDateTime.time;
   }
-  else if (HB_IS_LOGICAL(pItem1))
+  else if (pItem1->isLogical())
   {
-    fResult = HB_IS_LOGICAL(pItem2) &&
+    fResult = pItem2->isLogical() &&
               (pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value);
   }
   else if (pItem1->isArray())
@@ -2838,9 +2838,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_LOGICAL(pItem1))
+  else if (pItem1->isLogical())
   {
-    if (HB_IS_LOGICAL(pItem2))
+    if (pItem2->isLogical())
     {
       *piResult = pItem1->item.asLogical.value ? (pItem2->item.asLogical.value ? 0 : 1)
                                                : (pItem2->item.asLogical.value ? -1 : 0);

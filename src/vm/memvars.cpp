@@ -1512,7 +1512,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
         HB_PUT_LE_DOUBLE(&buffer[HB_MEM_REC_LEN], dNumber);
         hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + HB_MEM_NUM_LEN, -1);
       }
-      else if (HB_IS_LOGICAL(pMemvar))
+      else if (pMemvar->isLogical())
       {
         buffer[11] = 'L' + 128;
         buffer[16] = 1;

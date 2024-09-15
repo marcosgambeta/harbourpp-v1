@@ -516,7 +516,7 @@ int hb_parl(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_LOGICAL(pItem))
+    if (pItem->isLogical())
     {
       return pItem->item.asLogical.value ? 1 : 0;
     }
@@ -542,7 +542,7 @@ int hb_parldef(int iParam, int iDefValue)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_LOGICAL(pItem))
+    if (pItem->isLogical())
     {
       return pItem->item.asLogical.value ? 1 : 0;
     }
@@ -1353,7 +1353,7 @@ int hb_parvl(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_LOGICAL(pItem))
+    if (pItem->isLogical())
     {
       return pItem->item.asLogical.value ? 1 : 0;
     }

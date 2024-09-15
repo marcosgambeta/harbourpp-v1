@@ -1423,7 +1423,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiTimeStampClass;
   }
-  else if (HB_IS_LOGICAL(pObject))
+  else if (pObject->isLogical())
   {
     return s_uiLogicalClass;
   }
@@ -1486,7 +1486,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "TIMESTAMP";
   }
-  else if (HB_IS_LOGICAL(pObject))
+  else if (pObject->isLogical())
   {
     return "LOGICAL";
   }
@@ -2229,7 +2229,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_LOGICAL(pObject))
+  else if (pObject->isLogical())
   {
     if (s_uiLogicalClass)
     {
@@ -3078,7 +3078,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::TIMESTAMP;
     }
-    else if (HB_IS_LOGICAL(pItem))
+    else if (pItem->isLogical())
     {
       return Harbour::Item::LOGICAL;
     }
@@ -3967,7 +3967,7 @@ HB_FUNC(__CLSNEW)
   }
 
   if (szClassName != nullptr && (!pDatas || HB_IS_NUMERIC(pDatas)) && (!pSuperArray || pSuperArray->isArray()) &&
-      (!pClassFunc || HB_IS_SYMBOL(pClassFunc)) && (!pModFriend || HB_IS_LOGICAL(pModFriend)))
+      (!pClassFunc || HB_IS_SYMBOL(pClassFunc)) && (!pModFriend || pModFriend->isLogical()))
   {
     HB_STACK_TLS_PRELOAD
     HB_USHORT uiClass;
