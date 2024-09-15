@@ -1485,7 +1485,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
         buffer[11] = 'N' + 128;
 #ifdef HB_CLP_STRICT
         // NOTE: This is the buggy, but fully CA-Cl*pper compatible method. [vszakats]
-        buffer[16] = static_cast<HB_BYTE>(iWidth) + (HB_IS_DOUBLE(pMemvar) ? static_cast<HB_BYTE>(iDec + 1) : 0);
+        buffer[16] = static_cast<HB_BYTE>(iWidth) + (pMemvar->isDouble() ? static_cast<HB_BYTE>(iDec + 1) : 0);
 #else
         // NOTE: This would be the correct method, but Clipper is buggy here. [vszakats]
         buffer[16] = static_cast<HB_BYTE>(iWidth) + (iDec == 0 ? 0 : static_cast<HB_BYTE>(iDec + 1));

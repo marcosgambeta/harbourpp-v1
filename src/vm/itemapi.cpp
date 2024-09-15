@@ -746,7 +746,7 @@ HB_BOOL hb_itemGetL(PHB_ITEM pItem)
     {
       return pItem->item.asLong.value != 0;
     }
-    else if (HB_IS_DOUBLE(pItem))
+    else if (pItem->isDouble())
     {
       return pItem->item.asDouble.value != 0.0;
     }
@@ -775,7 +775,7 @@ HB_BOOL hb_itemGetLX(PHB_ITEM pItem)
     {
       return pItem->item.asLong.value != 0;
     }
-    else if (HB_IS_DOUBLE(pItem))
+    else if (pItem->isDouble())
     {
       return pItem->item.asDouble.value != 0.0;
     }
@@ -800,7 +800,7 @@ double hb_itemGetND(PHB_ITEM pItem)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_DOUBLE(pItem))
+    if (pItem->isDouble())
     {
       return pItem->item.asDouble.value;
     }
@@ -833,7 +833,7 @@ int hb_itemGetNI(PHB_ITEM pItem)
     {
       return static_cast<int>(pItem->item.asLong.value);
     }
-    else if (HB_IS_DOUBLE(pItem))
+    else if (pItem->isDouble())
     {
       return HB_CAST_INT(pItem->item.asDouble.value);
     }
@@ -858,7 +858,7 @@ long hb_itemGetNL(PHB_ITEM pItem)
     {
       return static_cast<long>(pItem->item.asInteger.value);
     }
-    else if (HB_IS_DOUBLE(pItem))
+    else if (pItem->isDouble())
     {
       return HB_CAST_LONG(pItem->item.asDouble.value);
     }
@@ -883,7 +883,7 @@ HB_ISIZ hb_itemGetNS(PHB_ITEM pItem)
     {
       return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
     }
-    else if (HB_IS_DOUBLE(pItem))
+    else if (pItem->isDouble())
     {
       return HB_CAST_ISIZ(pItem->item.asDouble.value);
     }
@@ -908,7 +908,7 @@ HB_MAXINT hb_itemGetNInt(PHB_ITEM pItem)
     {
       return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
     }
-    else if (HB_IS_DOUBLE(pItem))
+    else if (pItem->isDouble())
     {
       return HB_CAST_MAXINT(pItem->item.asDouble.value);
     }
@@ -934,7 +934,7 @@ HB_LONGLONG hb_itemGetNLL(PHB_ITEM pItem)
     {
       return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
     }
-    else if (HB_IS_DOUBLE(pItem))
+    else if (pItem->isDouble())
     {
       return HB_CAST_LONGLONG(pItem->item.asDouble.value);
     }
@@ -1537,7 +1537,7 @@ double hb_itemGetNDDec(PHB_ITEM pItem, int *piDec)
     *piDec = 0;
     return static_cast<double>(pItem->item.asLong.value);
   }
-  else if (HB_IS_DOUBLE(pItem))
+  else if (pItem->isDouble())
   {
     *piDec = pItem->item.asDouble.decimal;
     return pItem->item.asDouble.value;
@@ -1802,7 +1802,7 @@ void hb_itemGetNLen(PHB_ITEM pItem, int *piWidth, int *piDecimal)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_DOUBLE(pItem))
+    if (pItem->isDouble())
     {
       if (piWidth)
       {
@@ -3112,7 +3112,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
 
   auto fNeg = false;
 
-  if (HB_IS_DOUBLE(pNumber))
+  if (pNumber->isDouble())
   {
     auto dNumber = hb_itemGetND(pNumber);
 
