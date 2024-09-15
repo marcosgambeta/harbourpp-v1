@@ -4184,14 +4184,14 @@ static void hb_vmExactlyEqual()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_NIL(pItem1))
+  if (pItem1->isNil())
   {
     /* pItem1 is NIL so this is safe */
     pItem1->type = Harbour::Item::LOGICAL;
-    pItem1->item.asLogical.value = HB_IS_NIL(pItem2);
+    pItem1->item.asLogical.value = pItem2->isNil();
     hb_stackPop(); /* clear the pItem2 */
   }
-  else if (HB_IS_NIL(pItem2))
+  else if (pItem2->isNil())
   {
     hb_stackDec(); /* pItem2 is already NIL */
     if (HB_IS_COMPLEX(pItem1))
@@ -4306,14 +4306,14 @@ static void hb_vmEqual()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_NIL(pItem1))
+  if (pItem1->isNil())
   {
     /* pItem1 is NIL so this is safe */
     pItem1->type = Harbour::Item::LOGICAL;
-    pItem1->item.asLogical.value = HB_IS_NIL(pItem2);
+    pItem1->item.asLogical.value = pItem2->isNil();
     hb_stackPop(); /* clear the pItem2 */
   }
-  else if (HB_IS_NIL(pItem2))
+  else if (pItem2->isNil())
   {
     hb_stackDec(); /* pItem2 is already NIL */
     if (HB_IS_COMPLEX(pItem1))
@@ -4407,14 +4407,14 @@ static void hb_vmNotEqual()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_NIL(pItem1))
+  if (pItem1->isNil())
   {
     /* pItem1 is NIL so this is safe */
     pItem1->type = Harbour::Item::LOGICAL;
-    pItem1->item.asLogical.value = !HB_IS_NIL(pItem2);
+    pItem1->item.asLogical.value = !pItem2->isNil();
     hb_stackPop(); /* clear the pItem2 */
   }
-  else if (HB_IS_NIL(pItem2))
+  else if (pItem2->isNil())
   {
     hb_stackDec(); /* pItem2 is already NIL */
     if (HB_IS_COMPLEX(pItem1))
@@ -6454,7 +6454,7 @@ void hb_vmDo(HB_USHORT uiParams)
   PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->item.asSymbol.value;
   auto pSelf = hb_stackSelfItem(); /* NIL, OBJECT or BLOCK */
 
-  if (!HB_IS_NIL(pSelf))
+  if (!pSelf->isNil())
   { /* are we sending a message ? */
     PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
     if (pExecSym)
@@ -11036,7 +11036,7 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
     pItem->item.asLogical.value = pItem->item.asDouble.value == static_cast<double>(lValue);
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_NIL(pItem))
+  else if (pItem->isNil())
   {
     pItem->item.asLogical.value = false;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11091,7 +11091,7 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = pItem->item.asDouble.value == static_cast<double>(lValue);
     hb_stackDec();
   }
-  else if (HB_IS_NIL(pItem))
+  else if (pItem->isNil())
   {
     *pfValue = false;
     hb_stackDec();
@@ -11159,7 +11159,7 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
     pItem->item.asLogical.value = pItem->item.asDouble.value != static_cast<double>(lValue);
     pItem->type = Harbour::Item::LOGICAL;
   }
-  else if (HB_IS_NIL(pItem))
+  else if (pItem->isNil())
   {
     pItem->item.asLogical.value = true;
     pItem->type = Harbour::Item::LOGICAL;
@@ -11214,7 +11214,7 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
     *pfValue = pItem->item.asDouble.value != static_cast<double>(lValue);
     hb_stackDec();
   }
-  else if (HB_IS_NIL(pItem))
+  else if (pItem->isNil())
   {
     *pfValue = true;
     hb_stackDec();

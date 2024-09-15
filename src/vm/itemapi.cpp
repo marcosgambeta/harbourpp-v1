@@ -2746,9 +2746,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
     fResult = HB_IS_STRING(pItem2) && pItem1->item.asString.length == pItem2->item.asString.length &&
               memcmp(pItem1->item.asString.value, pItem2->item.asString.value, pItem1->item.asString.length) == 0;
   }
-  else if (HB_IS_NIL(pItem1))
+  else if (pItem1->isNil())
   {
-    fResult = HB_IS_NIL(pItem2);
+    fResult = pItem2->isNil();
   }
   else if (HB_IS_DATETIME(pItem1))
   {
@@ -2816,9 +2816,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_NIL(pItem1))
+  else if (pItem1->isNil())
   {
-    if (HB_IS_NIL(pItem2))
+    if (pItem2->isNil())
     {
       *piResult = 0;
       fResult = true;

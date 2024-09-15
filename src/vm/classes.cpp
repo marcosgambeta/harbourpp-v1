@@ -782,7 +782,7 @@ static HB_USHORT hb_clsAddInitValue(PCLASS pClass, PHB_ITEM pItem, HB_USHORT uiT
 
   PINITDATA pInitData;
 
-  if (!pItem || HB_IS_NIL(pItem))
+  if (!pItem || pItem->isNil())
   {
     return 0;
   }
@@ -1403,7 +1403,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
     }
     // built in types
   }
-  else if (HB_IS_NIL(pObject))
+  else if (pObject->isNil())
   {
     return s_uiNilClass;
   }
@@ -1466,7 +1466,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
     }
     // built in types
   }
-  else if (HB_IS_NIL(pObject))
+  else if (pObject->isNil())
   {
     return "NIL";
   }
@@ -2257,7 +2257,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_NIL(pObject))
+  else if (pObject->isNil())
   {
     if (s_uiNilClass)
     {
@@ -3094,7 +3094,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::SYMBOL;
     }
-    else if (HB_IS_NIL(pItem))
+    else if (pItem->isNil())
     {
       return Harbour::Item::NIL;
     }
@@ -3352,7 +3352,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
           uiIndex = static_cast<HB_USHORT>(pNewMeth - pClass->pMethods);
         }
       }
-      fOK = pFunction == nullptr || HB_IS_NIL(pFunction) || uiIndex != 0;
+      fOK = pFunction == nullptr || pFunction->isNil() || uiIndex != 0;
       if (fOK)
       {
         pDelegMsg = hb_objGetMsgSym(pInit);
@@ -3364,7 +3364,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
             uiSprClass = static_cast<HB_USHORT>(pNewMeth - pClass->pMethods);
           }
         }
-        fOK = (pInit == nullptr || HB_IS_NIL(pInit) || uiSprClass != 0) && (uiIndex != 0 || uiSprClass != 0);
+        fOK = (pInit == nullptr || pInit->isNil() || uiSprClass != 0) && (uiIndex != 0 || uiSprClass != 0);
       }
       break;
     }
@@ -3498,7 +3498,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
           hb_arraySize(pClass->pSharedDatas, pNewMeth->uiData);
         }
 
-        if (pInit && !HB_IS_NIL(pInit))
+        if (pInit && !pInit->isNil())
         { // Initializer found
           // Shared Classdata need to be initialized only once
           // ACCESS/ASSIGN methods will be inherited by subclasses
@@ -3949,19 +3949,19 @@ HB_FUNC(__CLSNEW)
   auto pDatas = hb_param(2, Harbour::Item::ANY);
 
   auto pSuperArray = hb_param(3, Harbour::Item::ANY);
-  if (pSuperArray && HB_IS_NIL(pSuperArray))
+  if (pSuperArray && pSuperArray->isNil())
   {
     pSuperArray = nullptr;
   }
 
   auto pClassFunc = hb_param(4, Harbour::Item::ANY);
-  if (pClassFunc && HB_IS_NIL(pClassFunc))
+  if (pClassFunc && pClassFunc->isNil())
   {
     pClassFunc = nullptr;
   }
 
   auto pModFriend = hb_param(5, Harbour::Item::ANY);
-  if (pModFriend && HB_IS_NIL(pModFriend))
+  if (pModFriend && pModFriend->isNil())
   {
     pModFriend = nullptr;
   }
@@ -5505,7 +5505,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
         if (pInfo->uiStatus < uiStatus)
         {
           pItem = hb_arrayGetItemPtr(pObject, nIndex);
-          if (!pItem || (pInfo->uiStatus == 0 && HB_IS_NIL(pItem)))
+          if (!pItem || (pInfo->uiStatus == 0 && pItem->isNil()))
           {
             uiStatus = 3;
           }
@@ -5884,11 +5884,11 @@ HB_FUNC(__CLSLOCKDEF)
   auto pClsItm = hb_param(1, Harbour::Item::BYREF);
   auto fLocked = false;
 
-  if (pClsItm && HB_IS_NIL(pClsItm))
+  if (pClsItm && pClsItm->isNil())
   {
     if (!s_pClassMtx || hb_threadMutexLock(s_pClassMtx))
     {
-      if (HB_IS_NIL(pClsItm))
+      if (pClsItm->isNil())
       {
         fLocked = true;
       }
@@ -5907,7 +5907,7 @@ HB_FUNC(__CLSUNLOCKDEF)
   auto pClsDst = hb_param(1, Harbour::Item::BYREF);
   auto pClsSrc = hb_param(2, Harbour::Item::ANY);
 
-  if (pClsDst && pClsSrc && HB_IS_NIL(pClsDst) && !HB_ISBYREF(2))
+  if (pClsDst && pClsSrc && pClsDst->isNil() && !HB_ISBYREF(2))
   {
     // special core code only macro used to eliminate race condition
     // in unprotected readonly access to pClsDst variable.

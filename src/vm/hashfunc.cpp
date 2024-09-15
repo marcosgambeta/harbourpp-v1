@@ -737,14 +737,14 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (HB_IS_NIL(pValue))
+    else if (pValue->isNil())
     {
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_NIL(pItem))
+          if (pItem->isNil())
           {
             fFound = true;
             break;

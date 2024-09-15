@@ -1345,7 +1345,7 @@ void hb_hashSetDefault(PHB_ITEM pHash, PHB_ITEM pValue)
       hb_itemRelease(pHash->item.asHash.value->pDefault);
       pHash->item.asHash.value->pDefault = nullptr;
     }
-    if (pValue && !HB_IS_NIL(pValue) && (!HB_IS_HASH(pValue) || pHash->item.asHash.value != pValue->item.asHash.value))
+    if (pValue && !pValue->isNil() && (!HB_IS_HASH(pValue) || pHash->item.asHash.value != pValue->item.asHash.value))
     {
       pHash->item.asHash.value->pDefault = hb_itemClone(pValue);
       hb_gcUnlock(pHash->item.asHash.value->pDefault);

@@ -185,7 +185,7 @@ HB_BOOL hb_extIsNil(int iParam)
     pItem = hb_itemUnRef(pItem);
   }
 
-  return HB_IS_NIL(pItem);
+  return pItem->isNil();
 }
 
 // function to be called from pcode DLLs to detect if the extend system

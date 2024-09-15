@@ -1405,13 +1405,13 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             }
           } while (--nCount > 0);
         }
-        else if (HB_IS_NIL(pValue))
+        else if (pValue->isNil())
         {
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (HB_IS_NIL(pItem))
+            if (pItem->isNil())
             {
               return nStart;
             }
@@ -1603,13 +1603,13 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             }
           } while (--nCount && nStart--);
         }
-        else if (HB_IS_NIL(pValue))
+        else if (pValue->isNil())
         {
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (HB_IS_NIL(pItem))
+            if (pItem->isNil())
             {
               return nStart + 1;
             }

@@ -1580,11 +1580,11 @@ HB_FUNC(HB_THREADONCE)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_ISBYREF(1) && (HB_IS_NIL(pItem) || HB_IS_LOGICAL(pItem)))
+  if (pItem && HB_ISBYREF(1) && (pItem->isNil() || HB_IS_LOGICAL(pItem)))
   {
     HB_STACK_TLS_PRELOAD
     auto fFirstCall = false;
-    if (HB_IS_NIL(pItem) || !hb_itemGetL(pItem))
+    if (pItem->isNil() || !hb_itemGetL(pItem))
     {
       auto pAction = hb_param(2, Harbour::Item::EVALITEM);
 
@@ -1604,7 +1604,7 @@ HB_FUNC(HB_THREADONCE)
       }
       if (hb_threadMutexLock(s_pOnceMutex))
       {
-        if (HB_IS_NIL(pItem))
+        if (pItem->isNil())
         {
           if (pAction)
           {
@@ -1645,7 +1645,7 @@ HB_FUNC(HB_THREADONCEINIT)
     HB_STACK_TLS_PRELOAD
     auto fInitialized = false;
 
-    if (HB_IS_NIL(pItem) && !HB_IS_NIL(pValue))
+    if (pItem->isNil() && !pValue->isNil())
     {
 #if defined(HB_MT_VM)
       if (!s_fThreadInit)
@@ -1653,7 +1653,7 @@ HB_FUNC(HB_THREADONCEINIT)
         hb_threadInit();
       }
       HB_CRITICAL_LOCK(s_once_mtx);
-      if (HB_IS_NIL(pItem))
+      if (pItem->isNil())
       {
         // special core code only macro used to eliminate race condition
         // in unprotected readonly access to pItem variable.
@@ -2256,7 +2256,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
       {
         pMutex->events = hb_itemArrayNew(1);
         hb_gcUnlock(pMutex->events);
-        if (pNotifier && !HB_IS_NIL(pNotifier))
+        if (pNotifier && !pNotifier->isNil())
         {
           hb_arraySet(pMutex->events, 1, pNotifier);
         }
@@ -2292,7 +2292,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
       }
       if (iCount > 0)
       {
-        if (pNotifier && !HB_IS_NIL(pNotifier))
+        if (pNotifier && !pNotifier->isNil())
         {
           int iSet = iCount;
           do
@@ -2339,7 +2339,7 @@ void hb_threadMutexNotify(PHB_ITEM pItem, PHB_ITEM pNotifier, HB_BOOL fWaiting)
         {
           hb_vmLockForce();
           hb_arraySize(pMutex->events, iLen + iCount);
-          if (pNotifier && !HB_IS_NIL(pNotifier))
+          if (pNotifier && !pNotifier->isNil())
           {
             int iSet = iCount;
             do

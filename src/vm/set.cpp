@@ -153,7 +153,7 @@ static char *set_string(PHB_ITEM pItem, char *szOldString)
 
   char *szString;
 
-  if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+  if (HB_IS_STRING(pItem) || pItem->isNil())
   {
     if (szOldString != nullptr)
     {
@@ -831,7 +831,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
   case HB_SET_EXIT:
     pResult = hb_itemPutL(pResult, pSet->HB_SET_EXIT);
     // NOTE: Otherwise ReadExit() will always set the value. [vszakats]
-    if (pArg1 != nullptr && !HB_IS_NIL(pArg1))
+    if (pArg1 != nullptr && !pArg1->isNil())
     {
       pSet->HB_SET_EXIT = set_logical(pArg1, pSet->HB_SET_EXIT);
     }
@@ -1213,13 +1213,13 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_HBOUTLOG:
     pResult = hb_itemPutC(pResult, pSet->HB_SET_HBOUTLOG);
-    if (pArg1 != nullptr && (HB_IS_STRING(pArg1) || HB_IS_NIL(pArg1)))
+    if (pArg1 != nullptr && (HB_IS_STRING(pArg1) || pArg1->isNil()))
     {
       if (pSet->HB_SET_HBOUTLOG)
       {
         hb_xfree(pSet->HB_SET_HBOUTLOG);
       }
-      if (HB_IS_NIL(pArg1))
+      if (pArg1->isNil())
       {
         pSet->HB_SET_HBOUTLOG = nullptr;
       }
@@ -1254,7 +1254,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     }
     if (pArg1 != nullptr)
     {
-      if (HB_IS_NIL(pArg1))
+      if (pArg1->isNil())
       {
         pSet->hb_set_oscp = nullptr;
       }
@@ -1287,7 +1287,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     }
     if (pArg1 != nullptr)
     {
-      if (HB_IS_NIL(pArg1))
+      if (pArg1->isNil())
       {
         pSet->hb_set_dbcp = nullptr;
       }
@@ -1689,7 +1689,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_PRINTFILE:
       // This sets needs 3rd parameter to indicate additive mode
       // so they cannot be fully supported by this function
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
         open_handle(pSet, hb_itemGetCPtr(pItem), false, set_specifier);
         fResult = true;
@@ -2180,7 +2180,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_MFILEEXT:
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_MFILEEXT)
@@ -2192,7 +2192,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DEFAULT:
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_DEFAULT)
@@ -2204,7 +2204,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_PATH:
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_PATH)
@@ -2221,7 +2221,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DELIMCHARS:
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_DELIMCHARS)
@@ -2233,7 +2233,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_EOL:
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_EOL)
@@ -2245,9 +2245,9 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_HBOUTLOG:
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
-        if (HB_IS_NIL(pItem))
+        if (pItem->isNil())
         {
           szValue = nullptr;
         }
@@ -2265,7 +2265,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_HBOUTLOGINFO:
-      if (HB_IS_STRING(pItem) || HB_IS_NIL(pItem))
+      if (HB_IS_STRING(pItem) || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_HBOUTLOGINFO)
@@ -2278,7 +2278,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_OSCODEPAGE:
-      if (HB_IS_NIL(pItem))
+      if (pItem->isNil())
       {
         pSet->hb_set_oscp = nullptr;
         fResult = true;
@@ -2294,7 +2294,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DBCODEPAGE:
-      if (HB_IS_NIL(pItem))
+      if (pItem->isNil())
       {
         pSet->hb_set_dbcp = nullptr;
         fResult = true;
@@ -2336,7 +2336,7 @@ HB_BOOL hb_setSetItem2(HB_set_enum set_specifier, PHB_ITEM pItem1, PHB_ITEM pIte
     case HB_SET_ALTFILE:
     case HB_SET_EXTRAFILE:
     case HB_SET_PRINTFILE:
-      if (HB_IS_STRING(pItem1) || HB_IS_NIL(pItem1))
+      if (HB_IS_STRING(pItem1) || pItem1->isNil())
       {
         HB_STACK_TLS_PRELOAD
         PHB_SET_STRUCT pSet = hb_stackSetStruct();
