@@ -446,7 +446,177 @@ typedef struct _HB_ITEM
     struct hb_struSymbol    asSymbol;
     struct hb_struRecover   asRecover;
   } item;
+
+// for internal use (core)
+#if defined(__cplusplus)
+  bool isNil();
+  bool isArray();
+  bool isBlock();
+  bool isDate();
+  bool isTimeStamp();
+  bool isDouble();
+  bool isInteger();
+  bool isLogical();
+  bool isLong();
+  bool isSymbol();
+  bool isPointer();
+  bool isHash();
+  bool isMemo();
+  bool isString();
+  bool isMemVar();
+  bool isEnum();
+  bool isExtRef();
+  bool isByRef();
+  bool isNumeric();
+  bool isNumInt();
+  bool isDateTime();
+  bool isComplex();
+  bool isGCItem();
+  bool isEvalItem();
+  bool isHashKey();
+  bool isBadItem();
+  //#define HB_IS_OBJECT(p)     (HB_IS_ARRAY(p) && HB_ARRAY_OBJ(p))
+  //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
+#endif
 } HB_ITEM, * PHB_ITEM;
+
+#if defined(__cplusplus)
+
+inline bool _HB_ITEM::isNil()
+{
+  return (HB_ITEM_TYPE(this) == Harbour::Item::NIL);
+}
+
+inline bool _HB_ITEM::isArray()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::ARRAY) != 0);
+}
+
+inline bool _HB_ITEM::isBlock()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::BLOCK) != 0);
+}
+
+inline bool _HB_ITEM::isDate()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::DATE) != 0);
+}
+
+inline bool _HB_ITEM::isTimeStamp()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::TIMESTAMP) != 0);
+}
+
+inline bool _HB_ITEM::isDouble()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::DOUBLE) != 0);
+}
+
+inline bool _HB_ITEM::isInteger()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::INTEGER) != 0);
+}
+
+inline bool _HB_ITEM::isLogical()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::LOGICAL) != 0);
+}
+
+inline bool _HB_ITEM::isLong()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::LONG) != 0);
+}
+
+inline bool _HB_ITEM::isSymbol()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::SYMBOL) != 0);
+}
+
+inline bool _HB_ITEM::isPointer()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::POINTER) != 0);
+}
+
+inline bool _HB_ITEM::isHash()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::HASH) != 0);
+}
+
+inline bool _HB_ITEM::isMemo()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::MEMOFLAG) != 0);
+}
+
+inline bool _HB_ITEM::isString()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::STRING) != 0);
+}
+
+inline bool _HB_ITEM::isMemVar()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::MEMVAR) != 0);
+}
+
+inline bool _HB_ITEM::isEnum()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::ENUM) != 0);
+}
+
+inline bool _HB_ITEM::isExtRef()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::EXTREF) != 0);
+}
+
+inline bool _HB_ITEM::isByRef()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::BYREF) != 0);
+}
+
+inline bool _HB_ITEM::isNumeric()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::NUMERIC) != 0);
+}
+
+inline bool _HB_ITEM::isNumInt()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::NUMINT) != 0);
+}
+
+inline bool _HB_ITEM::isDateTime()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::DATETIME) != 0);
+}
+
+inline bool _HB_ITEM::isComplex()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::COMPLEX) != 0);
+}
+
+inline bool _HB_ITEM::isGCItem()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::GCITEM) != 0);
+}
+
+inline bool _HB_ITEM::isEvalItem()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::EVALITEM) != 0);
+}
+
+inline bool _HB_ITEM::isHashKey()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::HASHKEY) != 0);
+}
+
+inline bool _HB_ITEM::isBadItem()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::COMPLEX) != 0 && (HB_ITEM_TYPERAW(this) & ~(Harbour::Item::COMPLEX | Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT)) != 0);
+}
+
+//#define HB_IS_OBJECT(p)     (HB_IS_ARRAY(p) && HB_ARRAY_OBJ(p))
+
+//#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
+
+#endif
 
 // internal structure for arrays
 typedef struct _HB_BASEARRAY
