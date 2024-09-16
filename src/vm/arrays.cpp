@@ -1342,14 +1342,14 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue &&
+            if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
                 hb_itemGetND(pItem) == static_cast<double>(nValue))
             {
               return nStart;
             }
           } while (--nCount > 0);
         }
-        else if (HB_IS_NUMERIC(pValue))
+        else if (pValue->isNumeric())
         {
           auto dValue = hb_itemGetND(pValue);
 
@@ -1357,7 +1357,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (HB_IS_NUMERIC(pItem) && hb_itemGetND(pItem) == dValue)
+            if (pItem->isNumeric() && hb_itemGetND(pItem) == dValue)
             {
               return nStart;
             }
@@ -1540,14 +1540,14 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue &&
+            if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
                 hb_itemGetND(pItem) == static_cast<double>(nValue))
             {
               return nStart + 1;
             }
           } while (--nCount && nStart--);
         }
-        else if (HB_IS_NUMERIC(pValue))
+        else if (pValue->isNumeric())
         {
           auto dValue = hb_itemGetND(pValue);
 
@@ -1555,7 +1555,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (HB_IS_NUMERIC(pItem) && hb_itemGetND(pItem) == dValue)
+            if (pItem->isNumeric() && hb_itemGetND(pItem) == dValue)
             {
               return nStart + 1;
             }

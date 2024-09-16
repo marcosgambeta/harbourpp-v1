@@ -1119,7 +1119,7 @@ HB_FUNC(HB_THREADSTART)
   HB_ULONG ulStart = 1;
 
   auto pStart = hb_param(ulStart, Harbour::Item::ANY);
-  while (pStart && HB_IS_NUMERIC(pStart))
+  while (pStart && pStart->isNumeric())
   {
     ulAttr |= static_cast<HB_ULONG>(hb_itemGetNL(pStart));
     pStart = hb_param(++ulStart, Harbour::Item::ANY);

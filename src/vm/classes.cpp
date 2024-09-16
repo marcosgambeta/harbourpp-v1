@@ -1411,7 +1411,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiCharacterClass;
   }
-  else if (HB_IS_NUMERIC(pObject))
+  else if (pObject->isNumeric())
   {
     return s_uiNumericClass;
   }
@@ -1474,7 +1474,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "CHARACTER";
   }
-  else if (HB_IS_NUMERIC(pObject))
+  else if (pObject->isNumeric())
   {
     return "NUMERIC";
   }
@@ -2215,7 +2215,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_NUMERIC(pObject))
+  else if (pObject->isNumeric())
   {
     if (s_uiNumericClass)
     {
@@ -3066,7 +3066,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     {
       return Harbour::Item::NUMINT;
     }
-    else if (HB_IS_NUMERIC(pItem))
+    else if (pItem->isNumeric())
     {
       return Harbour::Item::NUMERIC;
     }
@@ -3966,7 +3966,7 @@ HB_FUNC(__CLSNEW)
     pModFriend = nullptr;
   }
 
-  if (szClassName != nullptr && (!pDatas || HB_IS_NUMERIC(pDatas)) && (!pSuperArray || pSuperArray->isArray()) &&
+  if (szClassName != nullptr && (!pDatas || pDatas->isNumeric()) && (!pSuperArray || pSuperArray->isArray()) &&
       (!pClassFunc || pClassFunc->isSymbol()) && (!pModFriend || pModFriend->isLogical()))
   {
     HB_STACK_TLS_PRELOAD
@@ -5199,7 +5199,7 @@ HB_FUNC_STATIC(msgSetClsData)
   {
     if (pMethod->itemType && !(pMethod->itemType & HB_ITEM_TYPERAW(pReturn)))
     {
-      if (pMethod->itemType == Harbour::Item::NUMINT && HB_IS_NUMERIC(pReturn))
+      if (pMethod->itemType == Harbour::Item::NUMINT && pReturn->isNumeric())
       {
         hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
       }
@@ -5244,7 +5244,7 @@ HB_FUNC_STATIC(msgSetShrData)
   {
     if (pMethod->itemType && !(pMethod->itemType & HB_ITEM_TYPERAW(pReturn)))
     {
-      if (pMethod->itemType == Harbour::Item::NUMINT && HB_IS_NUMERIC(pReturn))
+      if (pMethod->itemType == Harbour::Item::NUMINT && pReturn->isNumeric())
       {
         hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
       }
@@ -5323,7 +5323,7 @@ HB_FUNC_STATIC(msgSetData)
     {
       if (pMethod->itemType && !(pMethod->itemType & HB_ITEM_TYPERAW(pReturn)))
       {
-        if (pMethod->itemType == Harbour::Item::NUMINT && HB_IS_NUMERIC(pReturn))
+        if (pMethod->itemType == Harbour::Item::NUMINT && pReturn->isNumeric())
         {
           hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
         }
@@ -5649,7 +5649,7 @@ HB_FUNC(__OBJSETIVARS)
   {
     PHB_ITEM pNewObj = nullptr;
 
-    if (HB_IS_NUMERIC(pObject))
+    if (pObject->isNumeric())
     {
       pObject = pNewObj = hb_clsInst(static_cast<HB_USHORT>(hb_itemGetNI(pObject)));
     }
@@ -5690,7 +5690,7 @@ HB_FUNC(__OBJRESTOREIVARS)
   {
     PHB_ITEM pObject = nullptr;
 
-    if (HB_IS_NUMERIC(pClass))
+    if (pClass->isNumeric())
     {
       pObject = hb_clsInst(static_cast<HB_USHORT>(hb_itemGetNI(pClass)));
     }

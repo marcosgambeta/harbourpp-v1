@@ -599,7 +599,7 @@ static PHB_DYNS hb_dynsymByItem(PHB_ITEM pItem)
         pDynSym = hb_dynsymFind(pItem->item.asSymbol.value->szName);
       }
     }
-    else if (HB_IS_NUMERIC(pItem))
+    else if (pItem->isNumeric())
     {
       pDynSym = hb_dynsymGetByIndex(hb_itemGetNL(pItem));
     }

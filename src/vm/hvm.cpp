@@ -3597,7 +3597,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       pResult->item.asDouble.decimal = 0;
     }
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     int iDec1, iDec2;
     double dNumber1 = hb_itemGetNDDec(pItem1, &iDec1);
@@ -3653,7 +3653,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       hb_itemPutDL(pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian);
     }
   }
-  else if (HB_IS_DATETIME(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (HB_IS_DATETIME(pItem1) && pItem2->isNumeric())
   {
     if (pItem1->isTimeStamp())
     {
@@ -3672,7 +3672,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       hb_itemPutDL(pResult, hb_itemGetDL(pItem1) + hb_itemGetNL(pItem2));
     }
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_DATETIME(pItem2))
+  else if (pItem1->isNumeric() && HB_IS_DATETIME(pItem2))
   {
     if (pItem2->isTimeStamp())
     {
@@ -3733,7 +3733,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       pResult->item.asDouble.decimal = 0;
     }
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     int iDec1, iDec2;
     double dNumber1 = hb_itemGetNDDec(pItem1, &iDec1);
@@ -3758,7 +3758,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       HB_ITEM_PUT_LONGRAW(pResult, lJulian);
     }
   }
-  else if (HB_IS_DATETIME(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (HB_IS_DATETIME(pItem1) && pItem2->isNumeric())
   {
     if (pItem1->isTimeStamp())
     {
@@ -3846,7 +3846,7 @@ static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else
 #endif
-      if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+      if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     int iDec1, iDec2;
     double dNumber1 = hb_itemGetNDDec(pItem1, &iDec1);
@@ -3892,7 +3892,7 @@ static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       hb_itemPutND(pResult, static_cast<double>(nNumber1) / static_cast<double>(nDivisor));
     }
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     auto dDivisor = hb_itemGetND(pItem2);
 
@@ -3956,7 +3956,7 @@ static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       hb_itemPutND(pResult, static_cast<double>(HB_ITEM_GET_NUMINTRAW(pItem1) % nDivisor));
     }
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     auto dDivisor = hb_itemGetND(pItem2);
 
@@ -3994,7 +3994,7 @@ static void hb_vmPower(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPower(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
 #endif
 
-  if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     /* NOTE: Clipper always returns the result of power with the SET number of decimal places. */
     hb_itemPutND(pResult, pow(hb_itemGetND(pItem1), hb_itemGetND(pItem2)));
@@ -4218,7 +4218,7 @@ static void hb_vmExactlyEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) == HB_ITEM_GET_NUMDBLRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4337,7 +4337,7 @@ static void hb_vmEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) == HB_ITEM_GET_NUMDBLRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4438,7 +4438,7 @@ static void hb_vmNotEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) != HB_ITEM_GET_NUMDBLRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4523,7 +4523,7 @@ static void hb_vmLess()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) < HB_ITEM_GET_NUMDBLRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4591,7 +4591,7 @@ static void hb_vmLessEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) <= HB_ITEM_GET_NUMDBLRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4659,7 +4659,7 @@ static void hb_vmGreater()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) > HB_ITEM_GET_NUMDBLRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4727,7 +4727,7 @@ static void hb_vmGreaterEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     hb_stackDec();
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) >= HB_ITEM_GET_NUMDBLRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4834,7 +4834,7 @@ static void hb_vmForTest() /* Test to check the end point of the FOR */
   auto fBack = false;
 
   auto pStep = hb_stackItemFromTop(-1);
-  if (HB_IS_NUMERIC(pStep))
+  if (pStep->isNumeric())
   {
     fBack = HB_ITEM_GET_NUMDBLRAW(pStep) < 0.0;
     hb_stackDec();
@@ -11809,7 +11809,7 @@ HB_BOOL hb_xvmMultByInt(HB_LONG lValue)
   HB_STACK_TLS_PRELOAD
 
   auto pValue = hb_stackItemFromTop(-1);
-  if (HB_IS_NUMERIC(pValue))
+  if (pValue->isNumeric())
   {
     int iDec;
     double dValue = hb_itemGetNDDec(pValue, &iDec);
@@ -11887,7 +11887,7 @@ HB_BOOL hb_xvmDivideByInt(HB_LONG lDivisor)
   HB_STACK_TLS_PRELOAD
 
   auto pValue = hb_stackItemFromTop(-1);
-  if (HB_IS_NUMERIC(pValue))
+  if (pValue->isNumeric())
   {
     if (lDivisor == 0)
     {
@@ -11935,7 +11935,7 @@ HB_BOOL hb_xvmModulusByInt(HB_LONG lDivisor)
   HB_STACK_TLS_PRELOAD
 
   auto pValue = hb_stackItemFromTop(-1);
-  if (HB_IS_NUMERIC(pValue))
+  if (pValue->isNumeric())
   {
     if (lDivisor == 0)
     {

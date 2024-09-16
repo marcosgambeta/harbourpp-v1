@@ -79,7 +79,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
 
     // CA-Cl*pper always takes return value as logical item
     // accepting 0, 1 as numeric representation of HB_FALSE/HB_TRUE
-    return (pRet->isLogical() || HB_IS_NUMERIC(pRet)) ? hb_itemGetL(pRet) : true;
+    return (pRet->isLogical() || pRet->isNumeric()) ? hb_itemGetL(pRet) : true;
   }
 
   // Do native compare when no codeblock is supplied
@@ -94,7 +94,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     // to avoid precision lose in 64-bit integer to double conversion
     return hb_itemGetNInt(pItem1) < hb_itemGetNInt(pItem2);
   }
-  else if (HB_IS_NUMERIC(pItem1) && HB_IS_NUMERIC(pItem2))
+  else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     return hb_itemGetND(pItem1) < hb_itemGetND(pItem2);
   }
@@ -142,7 +142,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight1 = 5;
     }
-    else if (HB_IS_NUMERIC(pItem1))
+    else if (pItem1->isNumeric())
     {
       iWeight1 = 6;
     }
@@ -171,7 +171,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight2 = 5;
     }
-    else if (HB_IS_NUMERIC(pItem2))
+    else if (pItem2->isNumeric())
     {
       iWeight2 = 6;
     }

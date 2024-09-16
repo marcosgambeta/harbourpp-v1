@@ -247,7 +247,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
     HB_MAXINT n1 = HB_ITEM_GET_NUMINTRAW(pKey1), n2 = HB_ITEM_GET_NUMINTRAW(pKey2);
     return n1 < n2 ? -1 : (n1 > n2 ? 1 : 0);
   }
-  else if (HB_IS_NUMERIC(pKey2))
+  else if (pKey2->isNumeric())
   {
     auto d1 = hb_itemGetND(pKey1);
     auto d2 = hb_itemGetND(pKey2);

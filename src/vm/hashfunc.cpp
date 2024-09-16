@@ -660,7 +660,7 @@ HB_FUNC(HB_HSCAN)
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_NUMERIC(pItem) && hb_itemGetNInt(pItem) == nValue &&
+          if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
               hb_itemGetND(pItem) == static_cast<double>(nValue))
           {
             fFound = true;
@@ -674,7 +674,7 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (HB_IS_NUMERIC(pValue))
+    else if (pValue->isNumeric())
     {
       auto dValue = hb_itemGetND(pValue);
       while (nCount--)
@@ -682,7 +682,7 @@ HB_FUNC(HB_HSCAN)
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_NUMERIC(pItem) && hb_itemGetND(pItem) == dValue)
+          if (pItem->isNumeric() && hb_itemGetND(pItem) == dValue)
           {
             fFound = true;
             break;

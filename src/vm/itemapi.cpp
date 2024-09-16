@@ -2730,7 +2730,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
 {
   auto fResult = false;
 
-  if (HB_IS_NUMERIC(pItem1))
+  if (pItem1->isNumeric())
   {
     if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
     {
@@ -2738,7 +2738,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      fResult = HB_IS_NUMERIC(pItem2) && hb_itemGetND(pItem1) == hb_itemGetND(pItem2);
+      fResult = pItem2->isNumeric() && hb_itemGetND(pItem1) == hb_itemGetND(pItem2);
     }
   }
   else if (pItem1->isString())
@@ -2792,7 +2792,7 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
 {
   auto fResult = false;
 
-  if (HB_IS_NUMERIC(pItem1))
+  if (pItem1->isNumeric())
   {
     if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
     {
@@ -2800,7 +2800,7 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       *piResult = n1 < n2 ? -1 : (n1 > n2 ? 1 : 0);
       fResult = true;
     }
-    else if (HB_IS_NUMERIC(pItem2))
+    else if (pItem2->isNumeric())
     {
       auto d1 = hb_itemGetND(pItem1);
       auto d2 = hb_itemGetND(pItem2);
@@ -3366,7 +3366,7 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
       iWidth = 90;
     }
 
-    if (pWidth && HB_IS_NUMERIC(pWidth))
+    if (pWidth && pWidth->isNumeric())
     {
       // If the width parameter is specified, override the default value
       // and set the number of decimals to zero
@@ -3380,7 +3380,7 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
     }
 
     // Clipper ignores decimal places when iWidth is 1
-    if (iWidth > 1 && pDec && HB_IS_NUMERIC(pDec))
+    if (iWidth > 1 && pDec && pDec->isNumeric())
     {
       // This function does not include the decimal places in the width,
       // so the width must be adjusted downwards, if the decimal places

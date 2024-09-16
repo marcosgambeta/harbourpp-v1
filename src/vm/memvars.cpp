@@ -1476,7 +1476,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
           hb_fileWrite(fhnd, "\0", 1, -1);
         }
       }
-      else if (HB_IS_NUMERIC(pMemvar))
+      else if (pMemvar->isNumeric())
       {
         auto dNumber = hb_itemGetND(pMemvar);
         int iWidth;

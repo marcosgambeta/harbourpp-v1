@@ -142,7 +142,7 @@ static int set_number(PHB_ITEM pItem, int iOldValue)
    HB_TRACE(HB_TR_DEBUG, ("set_number(%p, %d)", static_cast<void*>(pItem), iOldValue));
 #endif
 
-  return HB_IS_NUMERIC(pItem) ? hb_itemGetNI(pItem) : iOldValue;
+  return pItem->isNumeric() ? hb_itemGetNI(pItem) : iOldValue;
 }
 
 static char *set_string(PHB_ITEM pItem, char *szOldString)
@@ -675,7 +675,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     }
     break;
   case HB_SET_CURSOR:
-    if (pArg1 != nullptr && HB_IS_NUMERIC(pArg1))
+    if (pArg1 != nullptr && pArg1->isNumeric())
     {
       pResult = hb_itemPutNI(pResult, hb_conSetCursor(true, hb_itemGetNI(pArg1)));
     }
@@ -1106,7 +1106,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
           hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
         }
       }
-      else if (HB_IS_NUMERIC(pArg1))
+      else if (pArg1->isNumeric())
       {
         int iValue = set_number(pArg1, pSet->HB_SET_FILECASE);
         if (iValue == HB_SET_CASE_LOWER || iValue == HB_SET_CASE_UPPER || iValue == HB_SET_CASE_MIXED)
@@ -1147,7 +1147,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
           hb_errRT_BASE(EG_ARG, 2020, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
         }
       }
-      else if (HB_IS_NUMERIC(pArg1))
+      else if (pArg1->isNumeric())
       {
         int iValue = set_number(pArg1, pSet->HB_SET_DIRCASE);
         if (iValue == HB_SET_CASE_LOWER || iValue == HB_SET_CASE_UPPER || iValue == HB_SET_CASE_MIXED)
@@ -1926,7 +1926,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       break;
 
     case HB_SET_DECIMALS:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -1937,7 +1937,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_EPOCH:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -1948,7 +1948,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_MBLOCKSIZE:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -1959,7 +1959,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DBFLOCKSCHEME:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -1970,7 +1970,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_AUTORDER:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -1981,7 +1981,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_AUTOSHARE:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -1992,14 +1992,14 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_CURSOR:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         hb_conSetCursor(true, hb_itemGetNI(pItem));
         fResult = true;
       }
       break;
     case HB_SET_EVENTMASK:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -2010,7 +2010,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_MARGIN:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -2021,7 +2021,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_MESSAGE:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
         if (iValue >= 0)
@@ -2032,7 +2032,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_TYPEAHEAD:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         // Set the value and limit the range
         pSet->HB_SET_TYPEAHEAD = hb_itemGetNI(pItem);
@@ -2054,7 +2054,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_VIDEOMODE:
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         pSet->HB_SET_VIDEOMODE = hb_itemGetNI(pItem);
         fResult = true;
@@ -2100,7 +2100,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
           iValue = HB_SET_CASE_MIXED;
         }
       }
-      else if (HB_IS_NUMERIC(pItem))
+      else if (pItem->isNumeric())
       {
         iValue = hb_itemGetNI(pItem);
       }
