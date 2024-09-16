@@ -148,7 +148,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
    HB_TRACE(HB_TR_DEBUG, ("hb_memvarDetachLocal(%p)", static_cast<void*>(pLocal)));
 #endif
 
-  if (HB_IS_BYREF(pLocal))
+  if (pLocal->isByRef())
   {
     do
     {
@@ -160,7 +160,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
       {
         if (!pLocal->item.asEnum.valuePtr)
         {
-          PHB_ITEM pBase = HB_IS_BYREF(pLocal->item.asEnum.basePtr) ? hb_itemUnRef(pLocal->item.asEnum.basePtr)
+          PHB_ITEM pBase = pLocal->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pLocal->item.asEnum.basePtr)
                                                                     : pLocal->item.asEnum.basePtr;
           if (pBase->isArray())
           {
@@ -177,7 +177,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
         break;
       }
       pLocal = hb_itemUnRefOnce(pLocal);
-    } while (HB_IS_BYREF(pLocal));
+    } while (pLocal->isByRef());
   }
 
   // Change the value only if this variable is not referenced
@@ -394,7 +394,7 @@ HB_ERRCODE hb_memvarGet(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
     if (pMemvar != nullptr)
     {
       // value is already created
-      if (HB_IS_BYREF(pMemvar))
+      if (pMemvar->isByRef())
       {
         hb_itemCopy(pItem, hb_itemUnRef(pMemvar));
       }
@@ -455,7 +455,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
 
     if (pMemvar != nullptr)
     {
-      if (HB_IS_BYREF(pMemvar) && !pMemvar->isEnum())
+      if (pMemvar->isByRef() && !pMemvar->isEnum())
       {
         hb_itemCopy(pItem, pMemvar);
       }
@@ -479,7 +479,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
         pMemvar = hb_dynsymGetMemvar(pDyn);
         if (pMemvar != nullptr)
         {
-          if (HB_IS_BYREF(pMemvar) && !pMemvar->isEnum())
+          if (pMemvar->isByRef() && !pMemvar->isEnum())
           {
             hb_itemCopy(pItem, pMemvar);
           }
@@ -514,7 +514,7 @@ PHB_ITEM hb_memvarGetItem(PHB_SYMB pMemvarSymb)
 
     if (pMemvar != nullptr)
     {
-      if (HB_IS_BYREF(pMemvar))
+      if (pMemvar->isByRef())
       {
         return hb_itemUnRef(pMemvar);
       }
@@ -628,7 +628,7 @@ char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen)
     if (pMemvar != nullptr)
     {
       // variable contains some data
-      if (HB_IS_BYREF(pMemvar))
+      if (pMemvar->isByRef())
       {
         pMemvar = hb_itemUnRef(pMemvar);
       }
@@ -1364,7 +1364,7 @@ HB_FUNC(__MVGETDEF)
 
     if (pDynVar && (pMemvar = hb_dynsymGetMemvar(pDynVar)) != nullptr)
     {
-      hb_itemReturn(HB_IS_BYREF(pMemvar) ? hb_itemUnRef(pMemvar) : pMemvar);
+      hb_itemReturn(pMemvar->isByRef() ? hb_itemUnRef(pMemvar) : pMemvar);
     }
     else if (hb_pcount() >= 2)
     {

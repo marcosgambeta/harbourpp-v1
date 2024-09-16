@@ -180,7 +180,7 @@ HB_BOOL hb_extIsNil(int iParam)
     return true;
   }
 
-  if (HB_IS_BYREF(pItem))
+  if (pItem->isByRef())
   {
     pItem = hb_itemUnRef(pItem);
   }
@@ -209,7 +209,7 @@ HB_BOOL hb_extIsArray(int iParam)
     return false;
   }
 
-  if (HB_IS_BYREF(pItem))
+  if (pItem->isByRef())
   {
     pItem = hb_itemUnRef(pItem);
   }
@@ -238,7 +238,7 @@ HB_BOOL hb_extIsObject(int iParam)
     return false;
   }
 
-  if (HB_IS_BYREF(pItem))
+  if (pItem->isByRef())
   {
     pItem = hb_itemUnRef(pItem);
   }
@@ -261,7 +261,7 @@ const char *hb_parc(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -287,7 +287,7 @@ const char *hb_parcx(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -313,7 +313,7 @@ HB_SIZE hb_parclen(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -346,7 +346,7 @@ HB_SIZE hb_parcsiz(int iParam)
     // NOTE: hb_parcsiz() will only work for strings passed by reference.
     //       CA-Cl*pper works like this. [vszakats]
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
 
@@ -375,7 +375,7 @@ const char *hb_pards(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -403,7 +403,7 @@ char *hb_pardsbuff(char *szDate, int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -431,7 +431,7 @@ long hb_pardl(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -457,7 +457,7 @@ double hb_partd(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -483,7 +483,7 @@ HB_BOOL hb_partdt(long *plJulian, long *plMilliSec, int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -511,7 +511,7 @@ int hb_parl(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -537,7 +537,7 @@ int hb_parldef(int iParam, int iDefValue)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -563,7 +563,7 @@ double hb_parnd(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -597,7 +597,7 @@ int hb_parni(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -631,7 +631,7 @@ int hb_parnidef(int iParam, int iDefValue)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -665,7 +665,7 @@ long hb_parnl(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -699,7 +699,7 @@ long hb_parnldef(int iParam, long lDefValue)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -733,7 +733,7 @@ HB_ISIZ hb_parns(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -767,7 +767,7 @@ HB_ISIZ hb_parnsdef(int iParam, HB_ISIZ nDefValue)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -802,7 +802,7 @@ HB_LONGLONG hb_parnll(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -837,7 +837,7 @@ HB_MAXINT hb_parnint(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -871,7 +871,7 @@ HB_MAXINT hb_parnintdef(int iParam, HB_MAXINT nDefValue)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -905,7 +905,7 @@ void *hb_parptr(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -931,7 +931,7 @@ void *hb_parptrx(int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -969,7 +969,7 @@ void *hb_parptrGC(const HB_GC_FUNCS *pFuncs, int iParam)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -998,7 +998,7 @@ const char *hb_parvc(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1036,7 +1036,7 @@ const char *hb_parvcx(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1073,7 +1073,7 @@ HB_SIZE hb_parvclen(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1117,7 +1117,7 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
     // NOTE: hb_parvcsiz() will only work for strings passed by reference.
     //       CA-Cl*pper works like this. [vszakats]
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
 
@@ -1157,7 +1157,7 @@ const char *hb_parvds(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1196,7 +1196,7 @@ char *hb_parvdsbuff(char *szDate, int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1235,7 +1235,7 @@ long hb_parvdl(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1272,7 +1272,7 @@ double hb_parvtd(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1309,7 +1309,7 @@ HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec, int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1348,7 +1348,7 @@ int hb_parvl(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1397,7 +1397,7 @@ double hb_parvnd(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1442,7 +1442,7 @@ int hb_parvni(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1487,7 +1487,7 @@ long hb_parvnl(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1537,7 +1537,7 @@ HB_ISIZ hb_parvns(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1583,7 +1583,7 @@ HB_LONGLONG hb_parvnll(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1629,7 +1629,7 @@ HB_MAXINT hb_parvnint(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1674,7 +1674,7 @@ void *hb_parvptr(int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1711,7 +1711,7 @@ void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int iParam, ...)
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -2086,7 +2086,7 @@ int hb_stor(int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemClear(hb_itemUnRef(pItem));
       return 1;
@@ -2113,7 +2113,7 @@ int hb_storc(const char *szText, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutC(hb_itemUnRef(pItem), szText);
       return 1;
@@ -2140,7 +2140,7 @@ int hb_storclen(const char *szText, HB_SIZE nLen, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutCL(hb_itemUnRef(pItem), szText, nLen);
       return 1;
@@ -2167,7 +2167,7 @@ int hb_storclen_buffer(char *szText, HB_SIZE nLen, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutCLPtr(hb_itemUnRef(pItem), szText, nLen);
       return 1;
@@ -2196,7 +2196,7 @@ int hb_stords(const char *szDate, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutDS(hb_itemUnRef(pItem), szDate);
       return 1;
@@ -2223,7 +2223,7 @@ int hb_stordl(long lJulian, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutDL(hb_itemUnRef(pItem), lJulian);
       return 1;
@@ -2250,7 +2250,7 @@ int hb_stortd(double dTimeStamp, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutTD(hb_itemUnRef(pItem), dTimeStamp);
       return 1;
@@ -2277,7 +2277,7 @@ int hb_stortdt(long lJulian, long lMilliSec, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutTDT(hb_itemUnRef(pItem), lJulian, lMilliSec);
       return 1;
@@ -2304,7 +2304,7 @@ int hb_storl(int iLogical, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutL(hb_itemUnRef(pItem), iLogical ? true : false);
       return 1;
@@ -2331,7 +2331,7 @@ int hb_storni(int iValue, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutNI(hb_itemUnRef(pItem), iValue);
       return 1;
@@ -2358,7 +2358,7 @@ int hb_stornl(long lValue, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutNL(hb_itemUnRef(pItem), lValue);
       return 1;
@@ -2385,7 +2385,7 @@ int hb_storns(HB_ISIZ nValue, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutNS(hb_itemUnRef(pItem), nValue);
       return 1;
@@ -2413,7 +2413,7 @@ int hb_stornll(HB_LONGLONG llValue, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutNLL(hb_itemUnRef(pItem), llValue);
       return 1;
@@ -2441,7 +2441,7 @@ int hb_stornint(HB_MAXINT nValue, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutNInt(hb_itemUnRef(pItem), nValue);
       return 1;
@@ -2468,7 +2468,7 @@ int hb_stornd(double dNumber, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutND(hb_itemUnRef(pItem), dNumber);
       return 1;
@@ -2495,7 +2495,7 @@ int hb_storptr(void *pointer, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutPtr(hb_itemUnRef(pItem), pointer);
       return 1;
@@ -2522,7 +2522,7 @@ int hb_storptrGC(void *pointer, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutPtrGC(hb_itemUnRef(pItem), pointer);
       return 1;
@@ -2546,7 +2546,7 @@ int hb_storvc(const char *szText, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2583,7 +2583,7 @@ int hb_storvclen(const char *szText, HB_SIZE nLen, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2620,7 +2620,7 @@ int hb_storvclen_buffer(char *szText, HB_SIZE nLen, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2659,7 +2659,7 @@ int hb_storvds(const char *szDate, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2696,7 +2696,7 @@ int hb_storvdl(long lJulian, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2733,7 +2733,7 @@ int hb_storvtd(double dTimeStamp, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2770,7 +2770,7 @@ int hb_storvtdt(long lJulian, long lMilliSec, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2807,7 +2807,7 @@ int hb_storvl(int iLogical, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2844,7 +2844,7 @@ int hb_storvni(int iValue, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2881,7 +2881,7 @@ int hb_storvnl(long lValue, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2918,7 +2918,7 @@ int hb_storvns(HB_ISIZ nValue, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2956,7 +2956,7 @@ int hb_storvnll(HB_LONGLONG llValue, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -2994,7 +2994,7 @@ int hb_storvnint(HB_MAXINT nValue, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -3031,7 +3031,7 @@ int hb_storvnd(double dNumber, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -3068,7 +3068,7 @@ int hb_storvptr(void *pointer, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {
@@ -3105,7 +3105,7 @@ int hb_storvptrGC(void *pointer, int iParam, ...)
   if (iParam >= -1 && iParam <= hb_pcount())
   {
     auto pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
-    bool bByRef = HB_IS_BYREF(pItem);
+    bool bByRef = pItem->isByRef();
 
     if (bByRef)
     {

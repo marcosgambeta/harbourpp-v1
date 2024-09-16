@@ -1987,7 +1987,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       }
     }
   }
-  else if (HB_IS_BYREF(pObject))
+  else if (pObject->isByRef())
   {
     if (pStack)
     {
@@ -2011,7 +2011,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         }
         else if (pMsg == s___msgEnumKey.pDynSym)
         {
-          PHB_ITEM pBase = HB_IS_BYREF(pEnum->item.asEnum.basePtr) ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
+          PHB_ITEM pBase = pEnum->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
                                                                    : pEnum->item.asEnum.basePtr;
           if (pBase->isHash())
           {
@@ -2025,7 +2025,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         }
         else if (pMsg == s___msgEnumBase.pDynSym)
         {
-          if (HB_IS_BYREF(pEnum->item.asEnum.basePtr))
+          if (pEnum->item.asEnum.basePtr->isByRef())
           {
             hb_itemCopy(hb_stackReturnItem(), hb_itemUnRef(pEnum->item.asEnum.basePtr));
           }
@@ -2051,7 +2051,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         }
         else if (pMsg == s___msgEnumIsFirst.pDynSym)
         {
-          PHB_ITEM pBase = HB_IS_BYREF(pEnum->item.asEnum.basePtr) ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
+          PHB_ITEM pBase = pEnum->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
                                                                    : pEnum->item.asEnum.basePtr;
           if (HB_IS_OBJECT(pBase) && hb_objHasOperator(pBase, HB_OO_OP_ENUMISFIRST))
           {
@@ -2062,7 +2062,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         }
         else if (pMsg == s___msgEnumIsLast.pDynSym)
         {
-          PHB_ITEM pBase = HB_IS_BYREF(pEnum->item.asEnum.basePtr) ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
+          PHB_ITEM pBase = pEnum->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
                                                                    : pEnum->item.asEnum.basePtr;
           if (pBase->isArray())
           {

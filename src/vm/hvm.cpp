@@ -1146,7 +1146,7 @@ void hb_vmThreadQuit(void)
   {
     auto pReturn = hb_stackReturnItem();
 
-    if (HB_IS_BYREF(pReturn))
+    if (pReturn->isByRef())
     {
       pReturn = hb_itemUnRef(pReturn);
     }
@@ -3158,7 +3158,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_LOCALINC: {
       int iLocal = HB_PCODE_MKUSHORT(&pCode[1]);
       PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
-      hb_vmInc(HB_IS_BYREF(pLocal) ? hb_itemUnRef(pLocal) : pLocal);
+      hb_vmInc(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
       pCode += 3;
       break;
     }
@@ -3166,7 +3166,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_LOCALDEC: {
       int iLocal = HB_PCODE_MKUSHORT(&pCode[1]);
       PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
-      hb_vmDec(HB_IS_BYREF(pLocal) ? hb_itemUnRef(pLocal) : pLocal);
+      hb_vmDec(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
       pCode += 3;
       break;
     }
@@ -3174,7 +3174,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_LOCALINCPUSH: {
       int iLocal = HB_PCODE_MKUSHORT(&pCode[1]);
       PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
-      if (HB_IS_BYREF(pLocal))
+      if (pLocal->isByRef())
       {
         pLocal = hb_itemUnRef(pLocal);
       }
@@ -3374,7 +3374,7 @@ static void hb_vmAddInt(PHB_ITEM pResult, HB_LONG lAdd)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmAddInt(%p,%ld)", static_cast<void*>(pResult), lAdd));
 #endif
 
-  if (HB_IS_BYREF(pResult))
+  if (pResult->isByRef())
   {
     pResult = hb_itemUnRef(pResult);
   }
@@ -5081,7 +5081,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     pEnum->item.asEnum.basePtr = pBase = &(static_cast<PHB_ENUMREF>(pValue->item.asExtRef.value))->basevalue;
     pEnum->item.asEnum.valuePtr = nullptr;
 
-    if (HB_IS_BYREF(pBase))
+    if (pBase->isByRef())
     {
       pBase = hb_itemUnRef(pBase);
     }
@@ -5168,7 +5168,7 @@ static void hb_vmEnumNext()
     auto pEnumRef = hb_stackItemFromTop(-(i << 1));
     auto pEnum = hb_itemUnRefOnce(pEnumRef);
     PHB_ITEM pBase = pEnum->item.asEnum.basePtr;
-    if (HB_IS_BYREF(pBase))
+    if (pBase->isByRef())
     {
       pBase = hb_itemUnRef(pBase);
     }
@@ -5251,7 +5251,7 @@ static void hb_vmEnumPrev()
     auto pEnumRef = hb_stackItemFromTop(-(i << 1));
     auto pEnum = hb_itemUnRefOnce(pEnumRef);
     PHB_ITEM pBase = pEnum->item.asEnum.basePtr;
-    if (HB_IS_BYREF(pBase))
+    if (pBase->isByRef())
     {
       pBase = hb_itemUnRef(pBase);
     }
@@ -5653,7 +5653,7 @@ static void hb_vmArrayPushRef()
 
   auto pIndex = hb_stackItemFromTop(-1);
   auto pRefer = hb_stackItemFromTop(-2);
-  PHB_ITEM pArray = HB_IS_BYREF(pRefer) ? hb_itemUnRef(pRefer) : pRefer;
+  PHB_ITEM pArray = pRefer->isByRef() ? hb_itemUnRef(pRefer) : pRefer;
 
   if (pArray->isHash() && HB_IS_HASHKEY(pIndex))
   {
@@ -5767,7 +5767,7 @@ static void hb_vmArrayPop()
   auto pArray = hb_stackItemFromTop(-2);
   auto pIndex = hb_stackItemFromTop(-1);
 
-  if (HB_IS_BYREF(pArray))
+  if (pArray->isByRef())
   {
     pArray = hb_itemUnRef(pArray);
   }
@@ -6044,7 +6044,7 @@ static void hb_vmMacroPushIndex()
     do
     {
       auto pArray = hb_stackItemFromTop(-2);
-      if (HB_IS_BYREF(pArray))
+      if (pArray->isByRef())
       {
         hb_vmArrayPushRef();
       }
@@ -7795,7 +7795,7 @@ static void hb_vmPushLocal(int iLocal)
     pLocal = hb_codeblockGetRef(hb_stackSelfItem()->item.asBlock.value, iLocal);
   }
 
-  hb_itemCopy(hb_stackAllocItem(), HB_IS_BYREF(pLocal) ? hb_itemUnRef(pLocal) : pLocal);
+  hb_itemCopy(hb_stackAllocItem(), pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
 }
 
 static void hb_vmPushLocalByRef(int iLocal)
@@ -7811,7 +7811,7 @@ static void hb_vmPushLocalByRef(int iLocal)
   if (iLocal >= 0)
   {
     PHB_ITEM pLocal = hb_stackLocalVariableAt(&iLocal);
-    if (HB_IS_BYREF(pLocal) && !pLocal->isEnum())
+    if (pLocal->isByRef() && !pLocal->isEnum())
     {
       hb_itemCopy(pTop, pLocal);
       return;
@@ -7839,7 +7839,7 @@ static void hb_vmPushStatic(HB_USHORT uiStatic)
 
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->item.asArray.value->pItems + uiStatic - 1;
-  hb_itemCopy(hb_stackAllocItem(), HB_IS_BYREF(pStatic) ? hb_itemUnRef(pStatic) : pStatic);
+  hb_itemCopy(hb_stackAllocItem(), pStatic->isByRef() ? hb_itemUnRef(pStatic) : pStatic);
 }
 
 static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
@@ -7853,7 +7853,7 @@ static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
   auto pTop = hb_stackAllocItem();
   auto pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
 
-  if (HB_IS_BYREF(pBase->item.asArray.value->pItems + uiStatic - 1) &&
+  if ((pBase->item.asArray.value->pItems + uiStatic - 1)->isByRef() &&
       !(pBase->item.asArray.value->pItems + uiStatic - 1)->isEnum())
   {
     hb_itemCopy(pTop, pBase->item.asArray.value->pItems + uiStatic - 1);
@@ -7919,7 +7919,7 @@ static void hb_vmDuplUnRef()
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackItemFromTop(-1);
   hb_itemCopy(hb_stackAllocItem(), pItem);
-  if (HB_IS_BYREF(pItem))
+  if (pItem->isByRef())
   {
     hb_itemCopy(pItem, hb_itemUnRef(pItem));
   }
@@ -7933,7 +7933,7 @@ static void hb_vmPushUnRef()
 
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackItemFromTop(-1);
-  hb_itemCopy(hb_stackAllocItem(), HB_IS_BYREF(pItem) ? hb_itemUnRef(pItem) : pItem);
+  hb_itemCopy(hb_stackAllocItem(), pItem->isByRef() ? hb_itemUnRef(pItem) : pItem);
 }
 
 static void hb_vmSwap(int iCount)
@@ -9276,7 +9276,7 @@ static PHB_ITEM hb_vmMsgIdxRefRead(PHB_ITEM pRefer)
   if (hb_vmRequestQuery() == 0)
   {
     HB_STACK_TLS_PRELOAD
-    PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
+    PHB_ITEM pObject = (&pMsgIdxRef->object)->isByRef() ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
 
     hb_stackPushReturn();
     if ((pMsgIdxRef->value.type & Harbour::Item::DEFAULT) == 0)
@@ -9300,7 +9300,7 @@ static PHB_ITEM hb_vmMsgIdxRefWrite(PHB_ITEM pRefer, PHB_ITEM pSource)
   if (hb_vmRequestQuery() == 0)
   {
     HB_STACK_TLS_PRELOAD
-    PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
+    PHB_ITEM pObject = (&pMsgIdxRef->object)->isByRef() ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
     hb_stackPushReturn();
     hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pObject, pObject, &pMsgIdxRef->index, pSource);
     hb_stackPopReturn();
@@ -9326,7 +9326,7 @@ static void hb_vmMsgIdxRefCopy(PHB_ITEM pDest)
   {
     if (hb_vmRequestReenter())
     {
-      PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
+      PHB_ITEM pObject = (&pMsgIdxRef->object)->isByRef() ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
       hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pObject, pObject, &pMsgIdxRef->index, &pMsgIdxRef->value);
       hb_vmRequestRestore();
     }
@@ -9344,7 +9344,7 @@ static void hb_vmMsgIdxRefClear(void *value)
   {
     if (hb_vmRequestReenter())
     {
-      PHB_ITEM pObject = HB_IS_BYREF(&pMsgIdxRef->object) ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
+      PHB_ITEM pObject = (&pMsgIdxRef->object)->isByRef() ? hb_itemUnRef(&pMsgIdxRef->object) : &pMsgIdxRef->object;
       hb_objOperatorCall(HB_OO_OP_ARRAYINDEX, pObject, pObject, &pMsgIdxRef->index, &pMsgIdxRef->value);
       hb_vmRequestRestore();
     }
@@ -10452,7 +10452,7 @@ void hb_xvmCopyLocals(int iDest, int iSource)
 #endif
 
   PHB_ITEM pDest = hb_xvmLocalPtr(iDest);
-  hb_itemCopyToRef(hb_xvmLocalPtr(iSource), HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest);
+  hb_itemCopyToRef(hb_xvmLocalPtr(iSource), pDest->isByRef() ? hb_itemUnRef(pDest) : pDest);
 }
 
 void hb_xvmPushStatic(HB_USHORT uiStatic)
@@ -10745,7 +10745,7 @@ void hb_xvmLocalSetInt(int iLocal, HB_LONG lValue)
   {
     /* local variable or local parameter */
     pLocal = hb_stackLocalVariable(iLocal);
-    if (HB_IS_BYREF(pLocal))
+    if (pLocal->isByRef())
     {
       pLocal = hb_itemUnRef(pLocal);
     }
@@ -10789,7 +10789,7 @@ HB_BOOL hb_xvmLocalInc(int iLocal)
 
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
-  hb_vmInc(HB_IS_BYREF(pLocal) ? hb_itemUnRef(pLocal) : pLocal);
+  hb_vmInc(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
   HB_XVM_RETURN
 }
 
@@ -10801,7 +10801,7 @@ HB_BOOL hb_xvmLocalDec(int iLocal)
 
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
-  hb_vmDec(HB_IS_BYREF(pLocal) ? hb_itemUnRef(pLocal) : pLocal);
+  hb_vmDec(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
   HB_XVM_RETURN
 }
 
@@ -10813,7 +10813,7 @@ HB_BOOL hb_xvmLocalIncPush(int iLocal)
 
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
-  if (HB_IS_BYREF(pLocal))
+  if (pLocal->isByRef())
   {
     pLocal = hb_itemUnRef(pLocal);
   }
@@ -10830,7 +10830,7 @@ HB_BOOL hb_xvmLocalAdd(int iLocal)
 
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
-  if (HB_IS_BYREF(pLocal))
+  if (pLocal->isByRef())
   {
     pLocal = hb_itemUnRef(pLocal);
   }
@@ -10848,7 +10848,7 @@ HB_BOOL hb_xvmStaticAdd(HB_USHORT uiStatic)
 
   HB_STACK_TLS_PRELOAD
   PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->item.asArray.value->pItems + uiStatic - 1;
-  if (HB_IS_BYREF(pStatic))
+  if (pStatic->isByRef())
   {
     pStatic = hb_itemUnRef(pStatic);
   }
@@ -12302,7 +12302,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
   auto pValue = hb_stackItemFromTop(-2);
   auto pArray = hb_stackItemFromTop(-1);
 
-  if (HB_IS_BYREF(pArray))
+  if (pArray->isByRef())
   {
     pArray = hb_itemUnRef(pArray);
   }

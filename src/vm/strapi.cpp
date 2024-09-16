@@ -784,7 +784,7 @@ const char *hb_parstr(int iParam, void *cdp, void **phString, HB_SIZE *pnLen)
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -813,7 +813,7 @@ const char *hb_parstr_utf8(int iParam, void **phString, HB_SIZE *pnLen)
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -842,7 +842,7 @@ const HB_WCHAR *hb_parstr_u16(int iParam, int iEndian, void **phString, HB_SIZE 
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -871,7 +871,7 @@ const char *hb_parastr(int iParam, HB_SIZE nIndex, void *cdp, void **phString, H
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -907,7 +907,7 @@ const char *hb_parastr_utf8(int iParam, HB_SIZE nIndex, void **phString, HB_SIZE
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -943,7 +943,7 @@ const HB_WCHAR *hb_parastr_u16(int iParam, HB_SIZE nIndex, int iEndian, void **p
   {
     PHB_ITEM pItem = (iParam == -1) ? hb_stackReturnItem() : hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }
@@ -1043,7 +1043,7 @@ int hb_storstr(void *cdp, const char *szText, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutStrLen(hb_itemUnRef(pItem), cdp, szText, szText ? strlen(szText) : 0);
       return 1;
@@ -1070,7 +1070,7 @@ int hb_storstr_utf8(const char *szText, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutStrLenUTF8(hb_itemUnRef(pItem), szText, szText ? strlen(szText) : 0);
       return 1;
@@ -1097,7 +1097,7 @@ int hb_storstr_u16(int iEndian, const HB_WCHAR *szText, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutStrLenU16(hb_itemUnRef(pItem), iEndian, szText, hb_wstrlen(szText));
       return 1;
@@ -1124,7 +1124,7 @@ int hb_storstrlen(void *cdp, const char *szText, HB_SIZE nLen, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutStrLen(hb_itemUnRef(pItem), cdp, szText, nLen);
       return 1;
@@ -1151,7 +1151,7 @@ int hb_storstrlen_utf8(const char *szText, HB_SIZE nLen, int iParam)
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutStrLenUTF8(hb_itemUnRef(pItem), szText, nLen);
       return 1;
@@ -1178,7 +1178,7 @@ int hb_storstrlen_u16(int iEndian, const HB_WCHAR *szText, HB_SIZE nLen, int iPa
   {
     auto pItem = hb_stackItemFromBase(iParam);
 
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       hb_itemPutStrLenU16(hb_itemUnRef(pItem), iEndian, szText, nLen);
       return 1;

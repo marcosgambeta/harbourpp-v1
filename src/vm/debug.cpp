@@ -323,7 +323,7 @@ PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
       pLocal = hb_codeblockGetRef(hb_stackItem(nBaseOffset)->item.asBlock.value, iLocal);
     }
 
-    if (HB_IS_BYREF(pLocal))
+    if (pLocal->isByRef())
     {
       pLocal = hb_itemUnRef(pLocal);
     }

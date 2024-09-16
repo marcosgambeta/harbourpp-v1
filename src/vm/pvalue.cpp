@@ -60,6 +60,6 @@ HB_FUNC(HB_PVALUE)
     {
       hb_itemCopyToRef(pItem, hb_param(2, Harbour::Item::ANY));
     }
-    hb_itemReturn(HB_IS_BYREF(pItem) ? hb_itemUnRef(pItem) : pItem);
+    hb_itemReturn(pItem->isByRef() ? hb_itemUnRef(pItem) : pItem);
   }
 }

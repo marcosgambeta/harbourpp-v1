@@ -490,7 +490,7 @@ void hb_gcMark(void *pBlock)
 // Mark a passed item as used so it will be not released by the GC
 void hb_gcItemRef(PHB_ITEM pItem)
 {
-  while (HB_IS_BYREF(pItem))
+  while (pItem->isByRef())
   {
     if (pItem->isEnum())
     {

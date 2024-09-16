@@ -727,7 +727,7 @@ PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int iFlags)
                                      iFlags && (pHash->item.asHash.value->iFlags & iFlags) == iFlags);
     if (pDest)
     {
-      return HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest;
+      return pDest->isByRef() ? hb_itemUnRef(pDest) : pDest;
     }
   }
 
@@ -750,7 +750,7 @@ PHB_ITEM hb_hashGetCItemPtr(PHB_ITEM pHash, const char *pszKey)
     hb_stackPop();
     if (pDest)
     {
-      return HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest;
+      return pDest->isByRef() ? hb_itemUnRef(pDest) : pDest;
     }
   }
 
@@ -799,7 +799,7 @@ PHB_ITEM hb_hashGetItemRefPtr(PHB_ITEM pHash, PHB_ITEM pKey)
                         (pHash->item.asHash.value->iFlags & HB_HASH_AUTOADD_REFERENCE) == HB_HASH_AUTOADD_REFERENCE);
     if (pDest)
     {
-      if (!HB_IS_BYREF(pDest))
+      if (!pDest->isByRef())
       {
         pDest = hb_memvarDetachLocal(pDest);
       }
@@ -1009,7 +1009,7 @@ HB_BOOL hb_hashAdd(PHB_ITEM pHash, PHB_ITEM pKey, PHB_ITEM pValue)
     PHB_ITEM pDest = hb_hashValuePtr(pHash->item.asHash.value, pKey, true);
     if (pDest)
     {
-      if (HB_IS_BYREF(pDest))
+      if (pDest->isByRef())
       {
         pDest = hb_itemUnRef(pDest);
       }
@@ -1069,7 +1069,7 @@ PHB_ITEM hb_hashGetValueAt(PHB_ITEM pHash, HB_SIZE nPos)
   if (pHash->isHash() && nPos > 0 && nPos <= pHash->item.asHash.value->nLen)
   {
     PHB_ITEM pValue = &pHash->item.asHash.value->pPairs[nPos - 1].value;
-    return HB_IS_BYREF(pValue) ? hb_itemUnRef(pValue) : pValue;
+    return pValue->isByRef() ? hb_itemUnRef(pValue) : pValue;
   }
   else
   {
@@ -1146,7 +1146,7 @@ void hb_hashCloneBody(PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pClonedL
   for (HB_SIZE nPos = 0; nPos < pHash->item.asHash.value->nLen; ++nPos)
   {
     PHB_ITEM pValue = &pHash->item.asHash.value->pPairs[nPos].value;
-    if (HB_IS_BYREF(pValue))
+    if (pValue->isByRef())
     {
       pValue = hb_itemUnRef(pValue);
     }
@@ -1203,7 +1203,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
         for (nPos = 0; nPos < pBaseHash->nLen; ++nPos)
         {
           PHB_ITEM pVal = &pBaseHash->pPairs[nPos].value;
-          if (HB_IS_BYREF(pVal))
+          if (pVal->isByRef())
           {
             pVal = hb_itemUnRef(pVal);
           }
@@ -1222,7 +1222,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
           if (hb_hashFind(pSource->item.asHash.value, &pBaseHash->pPairs[nPos].key, &nSrcPos))
           {
             PHB_ITEM pDestVal = &pBaseHash->pPairs[nPos].value;
-            if (HB_IS_BYREF(pDestVal))
+            if (pDestVal->isByRef())
             {
               pDestVal = hb_itemUnRef(pDestVal);
             }
@@ -1250,7 +1250,7 @@ void hb_hashJoin(PHB_ITEM pDest, PHB_ITEM pSource, int iType)
           if (!hb_hashDel(pDest, &pBaseHash->pPairs[nPos].key))
           {
             PHB_ITEM pVal = &pBaseHash->pPairs[nPos].value;
-            if (HB_IS_BYREF(pVal))
+            if (pVal->isByRef())
             {
               pVal = hb_itemUnRef(pVal);
             }

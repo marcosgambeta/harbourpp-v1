@@ -2118,7 +2118,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     {
       hb_gcRefInc(pSource->item.asHash.value);
     }
-    else if (HB_IS_BYREF(pSource))
+    else if (pSource->isByRef())
     {
       if (pSource->isMemVar())
       {
@@ -2163,7 +2163,7 @@ void hb_itemCopyToRef(PHB_ITEM pDest, PHB_ITEM pSource)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemCopyToRef(%p, %p)", static_cast<void*>(pDest), static_cast<void*>(pSource)));
 #endif
 
-  if (HB_IS_BYREF(pDest))
+  if (pDest->isByRef())
   {
     pDest = hb_itemUnRefWrite(pDest, pSource);
     if (!pDest || pDest == pSource)
@@ -2174,7 +2174,7 @@ void hb_itemCopyToRef(PHB_ITEM pDest, PHB_ITEM pSource)
     }
   }
 
-  if (HB_IS_BYREF(pSource))
+  if (pSource->isByRef())
   {
     if (hb_itemUnRef(pSource) == pDest)
     {
@@ -2201,7 +2201,7 @@ void hb_itemCopyFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemCopyFromRef(%p, %p)", static_cast<void*>(pDest), static_cast<void*>(pSource)));
 #endif
 
-  if (HB_IS_BYREF(pSource))
+  if (pSource->isByRef())
   {
     pSource = hb_itemUnRef(pSource);
     if (pDest == pSource)
@@ -2247,9 +2247,9 @@ void hb_itemMoveRef(PHB_ITEM pDest, PHB_ITEM pSource)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemMoveRef(%p, %p)", static_cast<void*>(pDest), static_cast<void*>(pSource)));
 #endif
 
-  if (HB_IS_BYREF(pSource))
+  if (pSource->isByRef())
   {
-    if (hb_itemUnRef(pSource) == (HB_IS_BYREF(pDest) ? hb_itemUnRef(pDest) : pDest))
+    if (hb_itemUnRef(pSource) == (pDest->isByRef() ? hb_itemUnRef(pDest) : pDest))
     {
       // assign will create cyclic reference
       // pSource is a reference to pDest
@@ -2279,7 +2279,7 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemMoveToRef(%p, %p)", static_cast<void*>(pDest), static_cast<void*>(pSource)));
 #endif
 
-  if (HB_IS_BYREF(pDest))
+  if (pDest->isByRef())
   {
     pDest = hb_itemUnRefWrite(pDest, pSource);
     if (!pDest || pDest == pSource)
@@ -2291,7 +2291,7 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
     }
   }
 
-  if (HB_IS_BYREF(pSource))
+  if (pSource->isByRef())
   {
     if (hb_itemUnRef(pSource) == pDest)
     {
@@ -2327,7 +2327,7 @@ void hb_itemMoveFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemMoveFromRef(%p, %p)", static_cast<void*>(pDest), static_cast<void*>(pSource)));
 #endif
 
-  if (HB_IS_BYREF(pSource))
+  if (pSource->isByRef())
   {
     auto pUnRef = hb_itemUnRef(pSource);
     if (pDest != pUnRef)
@@ -2374,7 +2374,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemUnRefOnce(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (HB_IS_BYREF(pItem))
+  if (pItem->isByRef())
   {
     if (pItem->isMemVar())
     {
@@ -2389,7 +2389,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
       }
       else
       {
-        PHB_ITEM pBase = HB_IS_BYREF(pItem->item.asEnum.basePtr) ? hb_itemUnRef(pItem->item.asEnum.basePtr)
+        PHB_ITEM pBase = pItem->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pItem->item.asEnum.basePtr)
                                                                  : pItem->item.asEnum.basePtr;
         if (pBase->isArray())
         {
@@ -2505,7 +2505,7 @@ PHB_ITEM hb_itemUnRef(PHB_ITEM pItem)
   do
   {
     pItem = hb_itemUnRefOnce(pItem);
-  } while (HB_IS_BYREF(pItem));
+  } while (pItem->isByRef());
 
   return pItem;
 }
@@ -2526,7 +2526,7 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
   {
     do
     {
-      if (pItem->isEnum() && HB_IS_BYREF(pItem->item.asEnum.basePtr) && pItem->item.asEnum.offset >= 1)
+      if (pItem->isEnum() && pItem->item.asEnum.basePtr->isByRef() && pItem->item.asEnum.offset >= 1)
       {
         auto pBase = hb_itemUnRef(pItem->item.asEnum.basePtr);
         if (pBase->isString() && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length)
@@ -2537,7 +2537,7 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
         }
       }
       pItem = hb_itemUnRefOnce(pItem);
-    } while (HB_IS_BYREF(pItem));
+    } while (pItem->isByRef());
   }
   else
   {
@@ -2561,7 +2561,7 @@ PHB_ITEM hb_itemUnRefRefer(PHB_ITEM pItem)
   {
     pLast = pItem;
     pItem = hb_itemUnRefOnce(pItem);
-  } while (HB_IS_BYREF(pItem));
+  } while (pItem->isByRef());
 
   return pLast;
 }
@@ -2630,7 +2630,7 @@ PHB_ITEM hb_itemUnShare(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemUnShare(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (HB_IS_BYREF(pItem))
+  if (pItem->isByRef())
   {
     pItem = hb_itemUnRef(pItem);
   }
@@ -2653,7 +2653,7 @@ HB_BOOL hb_itemGetWriteCL(PHB_ITEM pItem, char **pszValue, HB_SIZE *pnLen)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_BYREF(pItem))
+    if (pItem->isByRef())
     {
       pItem = hb_itemUnRef(pItem);
     }

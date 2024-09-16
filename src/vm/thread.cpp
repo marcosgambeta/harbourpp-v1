@@ -1058,7 +1058,7 @@ PHB_THREADSTATE hb_threadStateClone(HB_ULONG ulAttr, PHB_ITEM pParams)
       for (HB_SIZE nParam = 1; nParam <= nPCount; ++nParam)
       {
         auto pParam = hb_arrayGetItemPtr(pParams, nParam);
-        if (HB_IS_BYREF(pParam))
+        if (pParam->isByRef())
         {
           hb_memvarDetachLocal(pParam);
         }
@@ -1189,7 +1189,7 @@ HB_FUNC(HB_THREADSTART)
     else
     {
       auto pParam = hb_arrayGetItemPtr(pParams, 1);
-      if (HB_IS_BYREF(pParam))
+      if (pParam->isByRef())
       {
         hb_itemCopy(pParam, hb_itemUnRef(pParam));
       }
