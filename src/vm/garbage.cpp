@@ -496,7 +496,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
     {
       return;
     }
-    else if (HB_IS_EXTREF(pItem))
+    else if (pItem->isExtRef())
     {
       pItem->item.asExtRef.func->mark(pItem->item.asExtRef.value);
       return;

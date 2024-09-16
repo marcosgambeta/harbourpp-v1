@@ -2128,7 +2128,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
       { // enumerators cannot be copied
         pDest->type = Harbour::Item::NIL;
       }
-      else if (HB_IS_EXTREF(pSource))
+      else if (pSource->isExtRef())
       {
         pSource->item.asExtRef.func->copy(pDest);
       }
@@ -2432,7 +2432,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
         return pItem->item.asEnum.valuePtr;
       }
     }
-    else if (HB_IS_EXTREF(pItem))
+    else if (pItem->isExtRef())
     {
       pItem = pItem->item.asExtRef.func->read(pItem);
     }
@@ -2518,7 +2518,7 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemUnRefWrite(%p,%p)", static_cast<void*>(pItem), static_cast<void*>(pSource)));
 #endif
 
-  if (HB_IS_EXTREF(pItem))
+  if (pItem->isExtRef())
   {
     pItem = pItem->item.asExtRef.func->write(pItem, pSource);
   }

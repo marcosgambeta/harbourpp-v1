@@ -152,7 +152,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
   {
     do
     {
-      if (pLocal->isMemVar() || HB_IS_EXTREF(pLocal))
+      if (pLocal->isMemVar() || pLocal->isExtRef())
       {
         break;
       }
