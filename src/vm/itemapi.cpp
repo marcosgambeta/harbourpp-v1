@@ -2732,7 +2732,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
 
   if (pItem1->isNumeric())
   {
-    if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+    if (pItem1->isNumInt() && pItem2->isNumInt())
     {
       fResult = HB_ITEM_GET_NUMINTRAW(pItem1) == HB_ITEM_GET_NUMINTRAW(pItem2);
     }
@@ -2794,7 +2794,7 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
 
   if (pItem1->isNumeric())
   {
-    if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+    if (pItem1->isNumInt() && pItem2->isNumInt())
     {
       HB_MAXINT n1 = HB_ITEM_GET_NUMINTRAW(pItem1), n2 = HB_ITEM_GET_NUMINTRAW(pItem2);
       *piResult = n1 < n2 ? -1 : (n1 > n2 ? 1 : 0);

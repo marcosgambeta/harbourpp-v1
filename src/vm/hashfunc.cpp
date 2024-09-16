@@ -652,7 +652,7 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (HB_IS_NUMINT(pValue))
+    else if (pValue->isNumInt())
     {
       HB_MAXINT nValue = hb_itemGetNInt(pValue);
       while (nCount--)

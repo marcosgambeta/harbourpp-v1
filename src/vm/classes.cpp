@@ -3062,7 +3062,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
         return Harbour::Item::ARRAY;
       }
     }
-    else if (HB_IS_NUMINT(pItem))
+    else if (pItem->isNumInt())
     {
       return Harbour::Item::NUMINT;
     }

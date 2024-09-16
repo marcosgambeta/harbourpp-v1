@@ -3379,7 +3379,7 @@ static void hb_vmAddInt(PHB_ITEM pResult, HB_LONG lAdd)
     pResult = hb_itemUnRef(pResult);
   }
 
-  if (HB_IS_NUMINT(pResult))
+  if (pResult->isNumInt())
   {
     HB_MAXINT nVal = HB_ITEM_GET_NUMINTRAW(pResult), nResult;
 
@@ -3573,7 +3573,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmPlus(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
 #endif
 
-  if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     HB_MAXINT nNumber1 = HB_ITEM_GET_NUMINTRAW(pItem1);
     HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW(pItem2);
@@ -3657,7 +3657,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     if (pItem1->isTimeStamp())
     {
-      if (HB_IS_NUMINT(pItem2))
+      if (pItem2->isNumInt())
       {
         hb_vmTimeStampPut(pResult, pItem1->item.asDateTime.julian + static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem2)),
                           pItem1->item.asDateTime.time);
@@ -3676,7 +3676,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     if (pItem2->isTimeStamp())
     {
-      if (HB_IS_NUMINT(pItem1))
+      if (pItem1->isNumInt())
       {
         hb_vmTimeStampPut(pResult, static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem1)) + pItem2->item.asDateTime.julian,
                           pItem2->item.asDateTime.time);
@@ -3709,7 +3709,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmMinus(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
 #endif
 
-  if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     HB_MAXINT nNumber1 = HB_ITEM_GET_NUMINTRAW(pItem1);
     HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW(pItem2);
@@ -3762,7 +3762,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     if (pItem1->isTimeStamp())
     {
-      if (HB_IS_NUMINT(pItem2))
+      if (pItem2->isNumInt())
       {
         hb_vmTimeStampPut(pResult, pItem1->item.asDateTime.julian - static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem2)),
                           pItem1->item.asDateTime.time);
@@ -3872,7 +3872,7 @@ static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmDivide(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
 #endif
 
-  if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     HB_MAXINT nDivisor = HB_ITEM_GET_NUMINTRAW(pItem2);
 
@@ -3936,7 +3936,7 @@ static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmModulus(%p,%p,%p)", static_cast<void*>(pResult), static_cast<void*>(pItem1), static_cast<void*>(pItem2)));
 #endif
 
-  if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     HB_MAXINT nDivisor = HB_ITEM_GET_NUMINTRAW(pItem2);
 
@@ -4017,7 +4017,7 @@ static void hb_vmInc(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmInc(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (HB_IS_NUMINT(pItem))
+  if (pItem->isNumInt())
   {
     if (pItem->isInteger())
     {
@@ -4084,7 +4084,7 @@ static void hb_vmDec(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_vmDec(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (HB_IS_NUMINT(pItem))
+  if (pItem->isNumInt())
   {
     if (pItem->isInteger())
     {
@@ -4212,7 +4212,7 @@ static void hb_vmExactlyEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = fResult;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) == HB_ITEM_GET_NUMINTRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4331,7 +4331,7 @@ static void hb_vmEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = fResult;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) == HB_ITEM_GET_NUMINTRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4432,7 +4432,7 @@ static void hb_vmNotEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = i != 0;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) != HB_ITEM_GET_NUMINTRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4517,7 +4517,7 @@ static void hb_vmLess()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = i < 0;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) < HB_ITEM_GET_NUMINTRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4585,7 +4585,7 @@ static void hb_vmLessEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = i <= 0;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) <= HB_ITEM_GET_NUMINTRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4653,7 +4653,7 @@ static void hb_vmGreater()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = i > 0;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) > HB_ITEM_GET_NUMINTRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -4721,7 +4721,7 @@ static void hb_vmGreaterEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = i >= 0;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) >= HB_ITEM_GET_NUMINTRAW(pItem2));
     pItem1->type = Harbour::Item::LOGICAL;
@@ -5344,7 +5344,7 @@ static PHB_ITEM hb_vmSwitchGet()
   HB_STACK_TLS_PRELOAD
   auto pSwitch = hb_stackItemFromTop(-1);
 
-  if (!(HB_IS_NUMINT(pSwitch) || pSwitch->isString()))
+  if (!(pSwitch->isNumInt() || pSwitch->isString()))
   {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 3104, nullptr, "SWITCH", 1, pSwitch);
 
@@ -5374,7 +5374,7 @@ static const HB_BYTE *hb_vmSwitch(const HB_BYTE *pCode, HB_USHORT casesCnt)
       switch (pCode[0])
       {
       case HB_P_PUSHLONG:
-        if (HB_IS_NUMINT(pSwitch))
+        if (pSwitch->isNumInt())
         {
           fFound = HB_ITEM_GET_NUMINTRAW(pSwitch) == HB_PCODE_MKLONG(&pCode[1]);
         }
@@ -11948,7 +11948,7 @@ HB_BOOL hb_xvmModulusByInt(HB_LONG lDivisor)
         hb_itemRelease(pSubst);
       }
     }
-    else if (HB_IS_NUMINT(pValue))
+    else if (pValue->isNumInt())
     {
       hb_itemPutND(pValue, static_cast<double>(HB_ITEM_GET_NUMINTRAW(pValue) % lDivisor));
     }

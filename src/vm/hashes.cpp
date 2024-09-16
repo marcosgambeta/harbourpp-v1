@@ -242,7 +242,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
       return 1;
     }
   }
-  else if (HB_IS_NUMINT(pKey1) && HB_IS_NUMINT(pKey2))
+  else if (pKey1->isNumInt() && pKey2->isNumInt())
   {
     HB_MAXINT n1 = HB_ITEM_GET_NUMINTRAW(pKey1), n2 = HB_ITEM_GET_NUMINTRAW(pKey2);
     return n1 < n2 ? -1 : (n1 > n2 ? 1 : 0);

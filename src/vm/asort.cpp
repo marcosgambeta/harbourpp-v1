@@ -88,7 +88,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   {
     return hb_itemStrCmp(pItem1, pItem2, false) < 0;
   }
-  else if (HB_IS_NUMINT(pItem1) && HB_IS_NUMINT(pItem2))
+  else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
     // intentionally separate comparison for integer numbers
     // to avoid precision lose in 64-bit integer to double conversion
