@@ -797,14 +797,14 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (fExact && HB_IS_HASH(pValue))
+    else if (fExact && pValue->isHash())
     {
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_HASH(pItem) && pItem->item.asHash.value == pValue->item.asHash.value)
+          if (pItem->isHash() && pItem->item.asHash.value == pValue->item.asHash.value)
           {
             fFound = true;
             break;

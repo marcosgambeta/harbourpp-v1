@@ -4245,7 +4245,7 @@ static void hb_vmExactlyEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = fResult;
   }
-  else if (HB_IS_HASH(pItem1) && HB_IS_HASH(pItem2))
+  else if (pItem1->isHash() && pItem2->isHash())
   {
     bool fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
     hb_stackPop();
@@ -4372,7 +4372,7 @@ static void hb_vmEqual()
     pItem1->item.asLogical.value = fResult;
   }
 #if 0
-   else if( HB_IS_HASH(pItem1) && HB_IS_HASH(pItem2) ) {
+   else if( pItem1->isHash() && pItem2->isHash() ) {
       bool fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
       hb_stackPop();
       hb_itemClear(pItem1);
@@ -4473,7 +4473,7 @@ static void hb_vmNotEqual()
     pItem1->item.asLogical.value = fResult;
   }
 #if 0
-   else if( HB_IS_HASH(pItem1) && HB_IS_HASH(pItem2) ) {
+   else if( pItem1->isHash() && pItem2->isHash() ) {
       bool fResult = pItem1->item.asHash.value != pItem2->item.asHash.value;
       hb_stackPop();
       hb_itemClear(pItem1);
@@ -4790,7 +4790,7 @@ static void hb_vmInstring()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = fResult;
   }
-  else if (HB_IS_HASH(pItem2) && (HB_IS_HASHKEY(pItem1) || hb_hashLen(pItem1) == 1))
+  else if (pItem2->isHash() && (HB_IS_HASHKEY(pItem1) || hb_hashLen(pItem1) == 1))
   {
     bool fResult = hb_hashScan(pItem2, pItem1, nullptr);
     hb_stackPop();
@@ -5116,7 +5116,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
         fStart = false;
       }
     }
-    else if (HB_IS_HASH(pBase))
+    else if (pBase->isHash())
     {
       HB_SIZE nLen = hb_hashLen(pBase);
       /* the index into a hash */
@@ -5202,7 +5202,7 @@ static void hb_vmEnumNext()
         }
       }
     }
-    else if (HB_IS_HASH(pBase))
+    else if (pBase->isHash())
     {
       /* Clear the item value which can be set with RT error
          when enumerator was out of array size during unreferencing
@@ -5285,7 +5285,7 @@ static void hb_vmEnumPrev()
         }
       }
     }
-    else if (HB_IS_HASH(pBase))
+    else if (pBase->isHash())
     {
       /* Clear the item value which can be set with RT error
          when enumerator was out of array size during unreferencing
@@ -5554,7 +5554,7 @@ static void hb_vmArrayPush()
   auto pIndex = hb_stackItemFromTop(-1);
   auto pArray = hb_stackItemFromTop(-2);
 
-  if (HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex))
+  if (pArray->isHash() && HB_IS_HASHKEY(pIndex))
   {
     auto pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
     if (pValue)
@@ -5655,7 +5655,7 @@ static void hb_vmArrayPushRef()
   auto pRefer = hb_stackItemFromTop(-2);
   PHB_ITEM pArray = HB_IS_BYREF(pRefer) ? hb_itemUnRef(pRefer) : pRefer;
 
-  if (HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex))
+  if (pArray->isHash() && HB_IS_HASHKEY(pIndex))
   {
     auto pValue = hb_hashGetItemRefPtr(pArray, pIndex);
     if (pValue)
@@ -5772,7 +5772,7 @@ static void hb_vmArrayPop()
     pArray = hb_itemUnRef(pArray);
   }
 
-  if (HB_IS_HASH(pArray) && HB_IS_HASHKEY(pIndex))
+  if (pArray->isHash() && HB_IS_HASHKEY(pIndex))
   {
     auto pDest = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ASSIGN);
     if (pDest)
@@ -12256,7 +12256,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
       }
     }
   }
-  else if (HB_IS_HASH(pArray))
+  else if (pArray->isHash())
   {
     hb_vmPushNumInt(nIndex);
     auto pIndex = hb_stackItemFromTop(-1);
@@ -12346,7 +12346,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
       }
     }
   }
-  else if (HB_IS_HASH(pArray))
+  else if (pArray->isHash())
   {
     hb_vmPushNumInt(nIndex);
     auto pDest = hb_hashGetItemPtr(pArray, hb_stackItemFromTop(-1), HB_HASH_AUTOADD_ASSIGN);
@@ -13175,7 +13175,7 @@ HB_FUNC(__VMITEMID)
     {
       hb_retptr(hb_arrayId(pItem));
     }
-    else if (HB_IS_HASH(pItem))
+    else if (pItem->isHash())
     {
       hb_retptr(hb_hashId(pItem));
     }
@@ -13202,7 +13202,7 @@ HB_FUNC(__VMITEMREFS)
     {
       hb_retnint(hb_arrayRefs(pItem));
     }
-    else if (HB_IS_HASH(pItem))
+    else if (pItem->isHash())
     {
       hb_retnint(hb_hashRefs(pItem));
     }

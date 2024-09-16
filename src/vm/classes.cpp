@@ -1431,7 +1431,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiBlockClass;
   }
-  else if (HB_IS_HASH(pObject))
+  else if (pObject->isHash())
   {
     return s_uiHashClass;
   }
@@ -1494,7 +1494,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "BLOCK";
   }
-  else if (HB_IS_HASH(pObject))
+  else if (pObject->isHash())
   {
     return "HASH";
   }
@@ -2013,7 +2013,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         {
           PHB_ITEM pBase = HB_IS_BYREF(pEnum->item.asEnum.basePtr) ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
                                                                    : pEnum->item.asEnum.basePtr;
-          if (HB_IS_HASH(pBase))
+          if (pBase->isHash())
           {
             pBase = hb_hashGetKeyAt(pBase, pEnum->item.asEnum.offset);
             if (pBase)
@@ -2075,7 +2075,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
               hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_arrayLen(pBase));
             }
           }
-          else if (HB_IS_HASH(pBase))
+          else if (pBase->isHash())
           {
             hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_hashLen(pBase));
           }
@@ -2119,7 +2119,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       return &s___msgName;
     }
   }
-  else if (HB_IS_HASH(pObject))
+  else if (pObject->isHash())
   {
     if (s_uiHashClass)
     {
@@ -2338,7 +2338,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
 HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pStack)
 {
 #if defined(HB_HASH_MSG_ITEMS)
-  if (HB_IS_HASH(pObject))
+  if (pObject->isHash())
   {
     HB_STACK_TLS_PRELOAD
     auto pIndex = hb_itemPutCConst(hb_stackAllocItem(), pMessage->szName + 1);

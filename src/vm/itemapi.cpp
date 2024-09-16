@@ -1865,7 +1865,7 @@ HB_SIZE hb_itemSize(PHB_ITEM pItem)
     {
       return hb_arrayLen(pItem);
     }
-    else if (HB_IS_HASH(pItem))
+    else if (pItem->isHash())
     {
       return hb_hashLen(pItem);
     }
@@ -2114,7 +2114,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     {
       hb_gcRefInc(pSource->item.asBlock.value);
     }
-    else if (HB_IS_HASH(pSource))
+    else if (pSource->isHash())
     {
       hb_gcRefInc(pSource->item.asHash.value);
     }
@@ -2399,7 +2399,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
             return pBase;
           }
         }
-        else if (HB_IS_HASH(pBase))
+        else if (pBase->isHash())
         {
           pBase = hb_hashGetValueAt(pBase, pItem->item.asEnum.offset);
           if (pBase)
@@ -2688,7 +2688,7 @@ PHB_ITEM hb_itemClone(PHB_ITEM pItem)
       return hb_arrayClone(pItem);
     }
   }
-  else if (HB_IS_HASH(pItem))
+  else if (pItem->isHash())
   {
     return hb_hashClone(pItem);
   }
@@ -2715,7 +2715,7 @@ void hb_itemCloneTo(PHB_ITEM pDest, PHB_ITEM pSource)
       hb_arrayCloneTo(pDest, pSource);
     }
   }
-  else if (HB_IS_HASH(pSource))
+  else if (pSource->isHash())
   {
     hb_hashCloneTo(pDest, pSource);
   }
@@ -2764,9 +2764,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     fResult = pItem2->isArray() && pItem1->item.asArray.value == pItem2->item.asArray.value;
   }
-  else if (HB_IS_HASH(pItem1))
+  else if (pItem1->isHash())
   {
-    fResult = HB_IS_HASH(pItem2) && pItem1->item.asHash.value == pItem2->item.asHash.value;
+    fResult = pItem2->isHash() && pItem1->item.asHash.value == pItem2->item.asHash.value;
   }
   else if (pItem1->isPointer())
   {
@@ -2857,9 +2857,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_HASH(pItem1))
+  else if (pItem1->isHash())
   {
-    if (HB_IS_HASH(pItem2))
+    if (pItem2->isHash())
     {
       *piResult = pItem1->item.asHash.value < pItem2->item.asHash.value
                       ? -1
