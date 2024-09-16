@@ -152,7 +152,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
   {
     do
     {
-      if (HB_IS_MEMVAR(pLocal) || HB_IS_EXTREF(pLocal))
+      if (pLocal->isMemVar() || HB_IS_EXTREF(pLocal))
       {
         break;
       }
@@ -184,7 +184,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
   // by another codeblock yet.
   // In this case we have to copy the current value to a global memory
   // pool so it can be shared by codeblocks
-  if (!HB_IS_MEMVAR(pLocal))
+  if (!pLocal->isMemVar())
   {
     auto pMemvar = hb_memvarValueNew();
     hb_itemRawCpy(pMemvar, pLocal);
@@ -254,7 +254,7 @@ static void hb_memvarAddPrivate(PHB_DYNS pDynSym, PHB_ITEM pValue)
     pPrivateStack->stack[pPrivateStack->count].pDynSym = pDynSym;
     pPrivateStack->stack[pPrivateStack->count++].pPrevMemvar = hb_dynsymGetMemvar(pDynSym);
 
-    if (pValue && HB_IS_MEMVAR(pValue))
+    if (pValue && pValue->isMemVar())
     {
       pMemvar = pValue->item.asMemvar.value;
       hb_xRefInc(pMemvar);

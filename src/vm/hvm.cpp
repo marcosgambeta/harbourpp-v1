@@ -9016,7 +9016,7 @@ static void hb_vmItemRefClear(void *value)
   auto pItmRef = static_cast<PHB_ITMREF>(value);
 
 #if 1
-  if (!HB_IS_MEMVAR(&pItmRef->memvar) || pItmRef->memvar.item.asMemvar.value != pItmRef->value ||
+  if (!(&pItmRef->memvar)->isMemVar() || pItmRef->memvar.item.asMemvar.value != pItmRef->value ||
       !HB_IS_EXTREF(pItmRef->value) || pItmRef->value->item.asExtRef.func != &s_ItmExtRawRef)
   {
     hb_errInternal(HB_EI_ERRUNRECOV, "hb_vmItemRefClear()", nullptr, nullptr);

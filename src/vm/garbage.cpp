@@ -501,7 +501,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
       pItem->item.asExtRef.func->mark(pItem->item.asExtRef.value);
       return;
     }
-    else if (!HB_IS_MEMVAR(pItem) && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0)
+    else if (!pItem->isMemVar() && pItem->item.asRefer.offset == 0 && pItem->item.asRefer.value >= 0)
     {
       // array item reference
       PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asRefer.BasePtr.array);

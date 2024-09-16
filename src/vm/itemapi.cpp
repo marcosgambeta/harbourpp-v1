@@ -2120,7 +2120,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     }
     else if (HB_IS_BYREF(pSource))
     {
-      if (HB_IS_MEMVAR(pSource))
+      if (pSource->isMemVar())
       {
         hb_memvarValueIncRef(pSource->item.asMemvar.value);
       }
@@ -2376,7 +2376,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
 
   if (HB_IS_BYREF(pItem))
   {
-    if (HB_IS_MEMVAR(pItem))
+    if (pItem->isMemVar())
     {
       pItem = pItem->item.asMemvar.value;
     }
