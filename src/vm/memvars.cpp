@@ -156,7 +156,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
       {
         break;
       }
-      else if (HB_IS_ENUM(pLocal))
+      else if (pLocal->isEnum())
       {
         if (!pLocal->item.asEnum.valuePtr)
         {
@@ -455,7 +455,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
 
     if (pMemvar != nullptr)
     {
-      if (HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar))
+      if (HB_IS_BYREF(pMemvar) && !pMemvar->isEnum())
       {
         hb_itemCopy(pItem, pMemvar);
       }
@@ -479,7 +479,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
         pMemvar = hb_dynsymGetMemvar(pDyn);
         if (pMemvar != nullptr)
         {
-          if (HB_IS_BYREF(pMemvar) && !HB_IS_ENUM(pMemvar))
+          if (HB_IS_BYREF(pMemvar) && !pMemvar->isEnum())
           {
             hb_itemCopy(pItem, pMemvar);
           }

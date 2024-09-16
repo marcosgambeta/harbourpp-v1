@@ -7811,7 +7811,7 @@ static void hb_vmPushLocalByRef(int iLocal)
   if (iLocal >= 0)
   {
     PHB_ITEM pLocal = hb_stackLocalVariableAt(&iLocal);
-    if (HB_IS_BYREF(pLocal) && !HB_IS_ENUM(pLocal))
+    if (HB_IS_BYREF(pLocal) && !pLocal->isEnum())
     {
       hb_itemCopy(pTop, pLocal);
       return;
@@ -7854,7 +7854,7 @@ static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
   auto pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
 
   if (HB_IS_BYREF(pBase->item.asArray.value->pItems + uiStatic - 1) &&
-      !HB_IS_ENUM(pBase->item.asArray.value->pItems + uiStatic - 1))
+      !(pBase->item.asArray.value->pItems + uiStatic - 1)->isEnum())
   {
     hb_itemCopy(pTop, pBase->item.asArray.value->pItems + uiStatic - 1);
     return;

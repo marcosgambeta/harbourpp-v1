@@ -2124,7 +2124,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
       {
         hb_memvarValueIncRef(pSource->item.asMemvar.value);
       }
-      else if (HB_IS_ENUM(pSource))
+      else if (pSource->isEnum())
       { // enumerators cannot be copied
         pDest->type = Harbour::Item::NIL;
       }
@@ -2380,7 +2380,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
     {
       pItem = pItem->item.asMemvar.value;
     }
-    else if (HB_IS_ENUM(pItem))
+    else if (pItem->isEnum())
     { // FOR EACH control variable
       // enumerator variable
       if (pItem->item.asEnum.valuePtr)
@@ -2526,7 +2526,7 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
   {
     do
     {
-      if (HB_IS_ENUM(pItem) && HB_IS_BYREF(pItem->item.asEnum.basePtr) && pItem->item.asEnum.offset >= 1)
+      if (pItem->isEnum() && HB_IS_BYREF(pItem->item.asEnum.basePtr) && pItem->item.asEnum.offset >= 1)
       {
         auto pBase = hb_itemUnRef(pItem->item.asEnum.basePtr);
         if (pBase->isString() && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length)

@@ -492,7 +492,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
 {
   while (HB_IS_BYREF(pItem))
   {
-    if (HB_IS_ENUM(pItem))
+    if (pItem->isEnum())
     {
       return;
     }

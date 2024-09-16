@@ -1994,7 +1994,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
       // method of enumerator variable from FOR EACH statement
       auto pEnum = hb_itemUnRefOnce(pObject);
 
-      if (HB_IS_ENUM(pEnum))
+      if (pEnum->isEnum())
       {
         // Do actions here - we already have unreferenced pEnum so
         // it will be a little bit faster but in the future it's
