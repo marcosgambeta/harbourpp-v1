@@ -84,7 +84,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
 
   // Do native compare when no codeblock is supplied
 
-  if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  if (pItem1->isString() && pItem2->isString())
   {
     return hb_itemStrCmp(pItem1, pItem2, false) < 0;
   }
@@ -130,7 +130,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight1 = 2;
     }
-    else if (HB_IS_STRING(pItem1))
+    else if (pItem1->isString())
     {
       iWeight1 = 3;
     }
@@ -159,7 +159,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight2 = 2;
     }
-    else if (HB_IS_STRING(pItem2))
+    else if (pItem2->isString())
     {
       iWeight2 = 3;
     }

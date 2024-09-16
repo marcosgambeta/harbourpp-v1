@@ -1407,7 +1407,7 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
   {
     return s_uiNilClass;
   }
-  else if (HB_IS_STRING(pObject))
+  else if (pObject->isString())
   {
     return s_uiCharacterClass;
   }
@@ -1470,7 +1470,7 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
   {
     return "NIL";
   }
-  else if (HB_IS_STRING(pObject))
+  else if (pObject->isString())
   {
     return "CHARACTER";
   }
@@ -2079,7 +2079,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
           {
             hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_hashLen(pBase));
           }
-          else if (HB_IS_STRING(pBase))
+          else if (pBase->isString())
           {
             hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_itemGetCLen(pBase));
           }
@@ -2173,7 +2173,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
     }
 #endif
   }
-  else if (HB_IS_STRING(pObject))
+  else if (pObject->isString())
   {
     if (s_uiCharacterClass)
     {
@@ -2816,7 +2816,7 @@ static PHB_DYNS hb_objGetMsgSym(PHB_ITEM pMessage)
   {
     const char *szMsg = nullptr;
 
-    if (HB_IS_STRING(pMessage))
+    if (pMessage->isString())
     {
       szMsg = pMessage->item.asString.value;
     }
@@ -2846,7 +2846,7 @@ static PHB_SYMB hb_objGetFuncSym(PHB_ITEM pItem)
     {
       return pItem->item.asSymbol.value;
     }
-    else if (HB_IS_STRING(pItem))
+    else if (pItem->isString())
     {
       auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
 
@@ -2979,7 +2979,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
 {
   if (pItem != nullptr)
   {
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       switch (hb_itemGetCPtr(pItem)[0])
       {
@@ -4334,7 +4334,7 @@ HB_FUNC(__CLSINSTSUPER)
     {
       pClassFuncSym = hb_itemGetSymbol(pItem);
     }
-    else if (HB_IS_STRING(pItem))
+    else if (pItem->isString())
     {
       auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
       if (pDynSym)
@@ -4907,7 +4907,7 @@ HB_FUNC_STATIC( msgClassParent )
    if( pItemParam && uiClass && uiClass <= s_uiClasses ) {
       if( HB_IS_OBJECT(pItemParam) ) {
          fHasParent = hb_clsHasParentClass(s_pClasses[uiClass], pItemParam->item.asArray.value->uiClass);
-      } else if( HB_IS_STRING(pItemParam) ) {
+      } else if( pItemParam->isString() ) {
          fHasParent = hb_clsIsParent(uiClass, hb_parc(pItemParam))
       }
    }
@@ -5653,7 +5653,7 @@ HB_FUNC(__OBJSETIVARS)
     {
       pObject = pNewObj = hb_clsInst(static_cast<HB_USHORT>(hb_itemGetNI(pObject)));
     }
-    else if (HB_IS_STRING(pObject))
+    else if (pObject->isString())
     {
       pObject = pNewObj = hb_clsInst(hb_clsFindClass(hb_itemGetCPtr(pObject), nullptr));
     }
@@ -5694,7 +5694,7 @@ HB_FUNC(__OBJRESTOREIVARS)
     {
       pObject = hb_clsInst(static_cast<HB_USHORT>(hb_itemGetNI(pClass)));
     }
-    else if (HB_IS_STRING(pClass))
+    else if (pClass->isString())
     {
       pObject = hb_clsInst(hb_clsFindClass(hb_itemGetCPtr(pClass), hb_parc(3)));
     }

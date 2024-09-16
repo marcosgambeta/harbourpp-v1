@@ -86,7 +86,7 @@ static char set_char(PHB_ITEM pItem, char oldChar)
 
   char newChar = oldChar;
 
-  if (HB_IS_STRING(pItem))
+  if (pItem->isString())
   {
     // Only replace if string has at least one character.
     auto nLen = hb_itemGetCLen(pItem);
@@ -114,7 +114,7 @@ static bool set_logical(PHB_ITEM pItem, bool bDefault)
     {
       bLogical = hb_itemGetL(pItem);
     }
-    else if (HB_IS_STRING(pItem))
+    else if (pItem->isString())
     {
       auto szString = hb_itemGetCPtr(pItem);
       auto nLen = hb_itemGetCLen(pItem);
@@ -153,7 +153,7 @@ static char *set_string(PHB_ITEM pItem, char *szOldString)
 
   char *szString;
 
-  if (HB_IS_STRING(pItem) || pItem->isNil())
+  if (pItem->isString() || pItem->isNil())
   {
     if (szOldString != nullptr)
     {
@@ -602,7 +602,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_ALTFILE:
     pResult = hb_itemPutC(pResult, pSet->HB_SET_ALTFILE);
-    if (pArg1 && HB_IS_STRING(pArg1))
+    if (pArg1 && pArg1->isString())
     {
       open_handle(pSet, hb_itemGetCPtr(pArg1), set_logical(pArg2, false), HB_SET_ALTFILE);
     }
@@ -658,7 +658,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_COLOR:
     pResult =
-        hb_itemPutC(pResult, hb_conSetColor(pArg1 != nullptr && HB_IS_STRING(pArg1) ? hb_itemGetCPtr(pArg1) : nullptr));
+        hb_itemPutC(pResult, hb_conSetColor(pArg1 != nullptr && pArg1->isString() ? hb_itemGetCPtr(pArg1) : nullptr));
     break;
   case HB_SET_CONFIRM:
     pResult = hb_itemPutL(pResult, pSet->HB_SET_CONFIRM);
@@ -765,7 +765,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_DEVICE:
     pResult = hb_itemPutC(pResult, pSet->HB_SET_DEVICE);
-    if (pArg1 && HB_IS_STRING(pArg1))
+    if (pArg1 && pArg1->isString())
     {
       // If the print file is not already open, open it in overwrite mode.
       pSet->HB_SET_DEVICE = set_string(pArg1, pSet->HB_SET_DEVICE);
@@ -845,7 +845,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_EXTRAFILE:
     pResult = hb_itemPutC(pResult, pSet->HB_SET_EXTRAFILE);
-    if (pArg1 && HB_IS_STRING(pArg1))
+    if (pArg1 && pArg1->isString())
     {
       open_handle(pSet, hb_itemGetCPtr(pArg1), set_logical(pArg2, false), HB_SET_EXTRAFILE);
     }
@@ -974,7 +974,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_PRINTFILE:
     pResult = hb_itemPutC(pResult, pSet->HB_SET_PRINTFILE);
-    if (pArg1 && HB_IS_STRING(pArg1))
+    if (pArg1 && pArg1->isString())
     {
       open_handle(pSet, hb_itemGetCPtr(pArg1), set_logical(pArg2, false), HB_SET_PRINTFILE);
       // With SET PRINTER TO or Set(_SET_PRINTFILE, "") are expected to activate the default printer [jarabal]
@@ -1052,7 +1052,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     pResult = hb_itemPutC(pResult, hb_langID());
     if (pArg1 != nullptr)
     {
-      if (HB_IS_STRING(pArg1))
+      if (pArg1->isString())
       {
         hb_langSelectID(hb_itemGetCPtr(pArg1));
       }
@@ -1066,7 +1066,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     pResult = hb_itemPutC(pResult, hb_cdpID());
     if (pArg1 != nullptr)
     {
-      if (HB_IS_STRING(pArg1))
+      if (pArg1->isString())
       {
         hb_cdpSelectID(hb_itemGetCPtr(pArg1));
       }
@@ -1087,7 +1087,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     pResult = hb_itemPutNI(pResult, pSet->HB_SET_FILECASE);
     if (pArg1 != nullptr)
     {
-      if (HB_IS_STRING(pArg1))
+      if (pArg1->isString())
       {
         if (!hb_stricmp(hb_itemGetCPtr(pArg1), "LOWER"))
         {
@@ -1128,7 +1128,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     pResult = hb_itemPutNI(pResult, pSet->HB_SET_DIRCASE);
     if (pArg1 != nullptr)
     {
-      if (HB_IS_STRING(pArg1))
+      if (pArg1->isString())
       {
         if (!hb_stricmp(hb_itemGetCPtr(pArg1), "LOWER"))
         {
@@ -1213,7 +1213,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     break;
   case HB_SET_HBOUTLOG:
     pResult = hb_itemPutC(pResult, pSet->HB_SET_HBOUTLOG);
-    if (pArg1 != nullptr && (HB_IS_STRING(pArg1) || pArg1->isNil()))
+    if (pArg1 != nullptr && (pArg1->isString() || pArg1->isNil()))
     {
       if (pSet->HB_SET_HBOUTLOG)
       {
@@ -1258,7 +1258,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       {
         pSet->hb_set_oscp = nullptr;
       }
-      else if (HB_IS_STRING(pArg1))
+      else if (pArg1->isString())
       {
         PHB_CODEPAGE cdp = hb_cdpFindExt(hb_itemGetCPtr(pArg1));
         if (cdp)
@@ -1291,7 +1291,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       {
         pSet->hb_set_dbcp = nullptr;
       }
-      else if (HB_IS_STRING(pArg1))
+      else if (pArg1->isString())
       {
         PHB_CODEPAGE cdp = hb_cdpFindExt(hb_itemGetCPtr(pArg1));
         if (cdp)
@@ -1689,7 +1689,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_PRINTFILE:
       // This sets needs 3rd parameter to indicate additive mode
       // so they cannot be fully supported by this function
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         open_handle(pSet, hb_itemGetCPtr(pItem), false, set_specifier);
         fResult = true;
@@ -2062,21 +2062,21 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       break;
 
     case HB_SET_COLOR:
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         hb_conSetColor(hb_itemGetCPtr(pItem));
         fResult = true;
       }
       break;
     case HB_SET_LANGUAGE:
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         hb_langSelectID(hb_itemGetCPtr(pItem));
         fResult = true;
       }
       break;
     case HB_SET_CODEPAGE:
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         hb_cdpSelectID(hb_itemGetCPtr(pItem));
         fResult = true;
@@ -2085,7 +2085,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_FILECASE:
     case HB_SET_DIRCASE:
       iValue = -1;
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         if (!hb_stricmp(hb_itemGetCPtr(pItem), "LOWER"))
         {
@@ -2119,7 +2119,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DATEFORMAT:
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         int iYear = 0;
 
@@ -2148,7 +2148,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_TIMEFORMAT:
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_TIMEFORMAT)
@@ -2167,7 +2167,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DEVICE:
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_DEVICE)
@@ -2180,7 +2180,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_MFILEEXT:
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_MFILEEXT)
@@ -2192,7 +2192,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DEFAULT:
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_DEFAULT)
@@ -2204,7 +2204,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_PATH:
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_PATH)
@@ -2221,7 +2221,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_DELIMCHARS:
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_DELIMCHARS)
@@ -2233,7 +2233,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_EOL:
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_EOL)
@@ -2245,7 +2245,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_HBOUTLOG:
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         if (pItem->isNil())
         {
@@ -2265,7 +2265,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       break;
     case HB_SET_HBOUTLOGINFO:
-      if (HB_IS_STRING(pItem) || pItem->isNil())
+      if (pItem->isString() || pItem->isNil())
       {
         szValue = hb_strndup(hb_itemGetCPtr(pItem), USHRT_MAX);
         if (pSet->HB_SET_HBOUTLOGINFO)
@@ -2283,7 +2283,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
         pSet->hb_set_oscp = nullptr;
         fResult = true;
       }
-      else if (HB_IS_STRING(pItem))
+      else if (pItem->isString())
       {
         PHB_CODEPAGE cdp = hb_cdpFindExt(hb_itemGetCPtr(pItem));
         if (cdp)
@@ -2299,7 +2299,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
         pSet->hb_set_dbcp = nullptr;
         fResult = true;
       }
-      else if (HB_IS_STRING(pItem))
+      else if (pItem->isString())
       {
         PHB_CODEPAGE cdp = hb_cdpFindExt(hb_itemGetCPtr(pItem));
         if (cdp)
@@ -2336,7 +2336,7 @@ HB_BOOL hb_setSetItem2(HB_set_enum set_specifier, PHB_ITEM pItem1, PHB_ITEM pIte
     case HB_SET_ALTFILE:
     case HB_SET_EXTRAFILE:
     case HB_SET_PRINTFILE:
-      if (HB_IS_STRING(pItem1) || pItem1->isNil())
+      if (pItem1->isString() || pItem1->isNil())
       {
         HB_STACK_TLS_PRELOAD
         PHB_SET_STRUCT pSet = hb_stackSetStruct();

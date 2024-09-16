@@ -266,7 +266,7 @@ const char *hb_parc(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       return pItem->item.asString.value;
     }
@@ -292,7 +292,7 @@ const char *hb_parcx(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       return pItem->item.asString.value;
     }
@@ -318,7 +318,7 @@ HB_SIZE hb_parclen(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       return pItem->item.asString.length;
     }
@@ -350,7 +350,7 @@ HB_SIZE hb_parcsiz(int iParam)
     {
       pItem = hb_itemUnRef(pItem);
 
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         return pItem->item.asString.length + 1;
       }
@@ -948,7 +948,7 @@ void *hb_parptrx(int iParam)
     {
       return reinterpret_cast<void *>(pItem->item.asInteger.value);
     }
-    else if (HB_IS_STRING(pItem))
+    else if (pItem->isString())
     {
       return static_cast<void *>(pItem->item.asString.value);
     }
@@ -1003,7 +1003,7 @@ const char *hb_parvc(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       return pItem->item.asString.value;
     }
@@ -1017,7 +1017,7 @@ const char *hb_parvc(int iParam, ...)
       va_end(va);
 
       pItem = hb_arrayGetItemPtr(pItem, nArrayIndex);
-      return pItem && HB_IS_STRING(pItem) ? hb_itemGetCPtr(pItem) : nullptr;
+      return pItem && pItem->isString() ? hb_itemGetCPtr(pItem) : nullptr;
     }
   }
 
@@ -1041,7 +1041,7 @@ const char *hb_parvcx(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       return pItem->item.asString.value;
     }
@@ -1078,7 +1078,7 @@ HB_SIZE hb_parvclen(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       return pItem->item.asString.length;
     }
@@ -1121,7 +1121,7 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
     {
       pItem = hb_itemUnRef(pItem);
 
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         return pItem->item.asString.length + 1;
       }

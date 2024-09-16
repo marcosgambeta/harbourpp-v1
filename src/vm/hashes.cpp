@@ -177,9 +177,9 @@ static const HB_GC_FUNCS s_gcHashFuncs = {hb_hashGarbageRelease, hb_hashGarbageM
 
 static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
 {
-  if (HB_IS_STRING(pKey1))
+  if (pKey1->isString())
   {
-    if (HB_IS_STRING(pKey2))
+    if (pKey2->isString())
     {
       if (iFlags & HB_HASH_BINARY)
       {
@@ -216,7 +216,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
                                ? -1
                                : (pKey1->item.asDateTime.time > pKey2->item.asDateTime.time ? 1 : 0)));
     }
-    else if (HB_IS_STRING(pKey2))
+    else if (pKey2->isString())
     {
       return -1;
     }
@@ -233,7 +233,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
                  ? -1
                  : (pKey1->item.asPointer.value > pKey2->item.asPointer.value ? 1 : 0);
     }
-    else if (HB_IS_STRING(pKey2) || HB_IS_DATETIME(pKey2))
+    else if (pKey2->isString() || HB_IS_DATETIME(pKey2))
     {
       return -1;
     }

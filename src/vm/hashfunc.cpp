@@ -632,14 +632,14 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (HB_IS_STRING(pValue))
+    else if (pValue->isString())
     {
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0)
+          if (pItem->isString() && hb_itemStrCmp(pItem, pValue, fExact) == 0)
           {
             fFound = true;
             break;

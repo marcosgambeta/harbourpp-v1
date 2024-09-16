@@ -309,7 +309,7 @@ const char *hb_itemGetStr(PHB_ITEM pItem, void *cdp, void **phString, HB_SIZE *p
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetStr(%p,%p,%p,%p)", static_cast<void*>(pItem), cdp, static_cast<void*>(phString), static_cast<void*>(pnLen)));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     char *pFree = nullptr;
     HB_SIZE nSize = 0;
@@ -347,7 +347,7 @@ const char *hb_itemGetStrUTF8(PHB_ITEM pItem, void **phString, HB_SIZE *pnLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetStrUTF8(%p,%p,%p)", static_cast<void*>(pItem), static_cast<void*>(phString), static_cast<void*>(pnLen)));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     auto cdp = hb_vmCDP();
     HB_SIZE nLen = hb_cdpStrAsUTF8Len(cdp, pItem->item.asString.value, pItem->item.asString.length, 0);
@@ -391,7 +391,7 @@ const HB_WCHAR *hb_itemGetStrU16(PHB_ITEM pItem, int iEndian, void **phString, H
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetStrU16(%p,%d,%p,%p)", static_cast<void*>(pItem), iEndian, static_cast<void*>(phString), static_cast<void*>(pnLen)));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     auto cdp = hb_vmCDP();
     HB_SIZE nLen = hb_cdpStrAsU16Len(cdp, pItem->item.asString.value, pItem->item.asString.length, 0);
@@ -428,7 +428,7 @@ HB_SIZE hb_itemCopyStr(PHB_ITEM pItem, void *cdp, char *pStrBuffer, HB_SIZE nSiz
    HB_TRACE(HB_TR_DEBUG, ("hb_itemCopyStr(%p,%p,%p,%" HB_PFS "u)", static_cast<void*>(pItem), cdp, static_cast<void*>(pStrBuffer), nSize));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     if (pStrBuffer)
     {
@@ -455,7 +455,7 @@ HB_SIZE hb_itemCopyStrUTF8(PHB_ITEM pItem, char *pStrBuffer, HB_SIZE nSize)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemCopyStrUTF8(%p,%p,%" HB_PFS "u)", static_cast<void*>(pItem), static_cast<void*>(pStrBuffer), nSize));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     if (pStrBuffer)
     {
@@ -481,7 +481,7 @@ HB_SIZE hb_itemCopyStrU16(PHB_ITEM pItem, int iEndian, HB_WCHAR *pStrBuffer, HB_
    HB_TRACE(HB_TR_DEBUG, ("hb_itemCopyStrU16(%p,%d,%p,%" HB_PFS "u)", static_cast<void*>(pItem), iEndian, static_cast<void*>(pStrBuffer), nSize));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     if (pStrBuffer)
     {

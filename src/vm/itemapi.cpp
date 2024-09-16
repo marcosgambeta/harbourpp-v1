@@ -489,7 +489,7 @@ PHB_ITEM hb_itemPutCLPtr(PHB_ITEM pItem, char *szText, HB_SIZE nLen)
 
 void hb_itemSetCMemo(PHB_ITEM pItem)
 {
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     pItem->type |= Harbour::Item::MEMOFLAG;
   }
@@ -503,7 +503,7 @@ char *hb_itemGetC(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetC(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     auto szResult = static_cast<char *>(hb_xgrab(pItem->item.asString.length + 1));
     hb_xmemcpy(szResult, pItem->item.asString.value, pItem->item.asString.length);
@@ -526,7 +526,7 @@ const char *hb_itemGetCPtr(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetCPtr(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     return pItem->item.asString.value;
   }
@@ -542,7 +542,7 @@ HB_SIZE hb_itemGetCLen(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetCLen(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     return pItem->item.asString.length;
   }
@@ -558,7 +558,7 @@ HB_SIZE hb_itemCopyC(PHB_ITEM pItem, char *szBuffer, HB_SIZE nLen)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemCopyC(%p, %s, %" HB_PFS "u)", static_cast<void*>(pItem), szBuffer, nLen));
 #endif
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     if (nLen == 0 || nLen > pItem->item.asString.length)
     {
@@ -598,7 +598,7 @@ const char *hb_itemGetCRef(PHB_ITEM pItem, void **phRef, HB_SIZE *pnLen)
 
   *phRef = nullptr;
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     if (pnLen)
     {
@@ -1857,7 +1857,7 @@ HB_SIZE hb_itemSize(PHB_ITEM pItem)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       return pItem->item.asString.length;
     }
@@ -2099,7 +2099,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
   if (HB_IS_COMPLEX(pSource))
   {
     // GCLOCK enter
-    if (HB_IS_STRING(pSource))
+    if (pSource->isString())
     {
       if (pSource->item.asString.allocated)
       {
@@ -2407,7 +2407,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
             return pBase;
           }
         }
-        else if (HB_IS_STRING(pBase))
+        else if (pBase->isString())
         {
           if (pItem->item.asEnum.offset > 0 &&
               static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length)
@@ -2522,14 +2522,14 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
   {
     pItem = pItem->item.asExtRef.func->write(pItem, pSource);
   }
-  else if (HB_IS_STRING(pSource) && pSource->item.asString.length == 1)
+  else if (pSource->isString() && pSource->item.asString.length == 1)
   {
     do
     {
       if (HB_IS_ENUM(pItem) && HB_IS_BYREF(pItem->item.asEnum.basePtr) && pItem->item.asEnum.offset >= 1)
       {
         auto pBase = hb_itemUnRef(pItem->item.asEnum.basePtr);
-        if (HB_IS_STRING(pBase) && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length)
+        if (pBase->isString() && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length)
         {
           hb_itemUnShareString(pBase);
           pBase->item.asString.value[pItem->item.asEnum.offset - 1] = pSource->item.asString.value[0];
@@ -2635,7 +2635,7 @@ PHB_ITEM hb_itemUnShare(PHB_ITEM pItem)
     pItem = hb_itemUnRef(pItem);
   }
 
-  if (HB_IS_STRING(pItem))
+  if (pItem->isString())
   {
     return hb_itemUnShareString(pItem);
   }
@@ -2658,7 +2658,7 @@ HB_BOOL hb_itemGetWriteCL(PHB_ITEM pItem, char **pszValue, HB_SIZE *pnLen)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       hb_itemUnShareString(pItem);
       *pnLen = pItem->item.asString.length;
@@ -2741,9 +2741,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
       fResult = HB_IS_NUMERIC(pItem2) && hb_itemGetND(pItem1) == hb_itemGetND(pItem2);
     }
   }
-  else if (HB_IS_STRING(pItem1))
+  else if (pItem1->isString())
   {
-    fResult = HB_IS_STRING(pItem2) && pItem1->item.asString.length == pItem2->item.asString.length &&
+    fResult = pItem2->isString() && pItem1->item.asString.length == pItem2->item.asString.length &&
               memcmp(pItem1->item.asString.value, pItem2->item.asString.value, pItem1->item.asString.length) == 0;
   }
   else if (pItem1->isNil())
@@ -2808,9 +2808,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_STRING(pItem1))
+  else if (pItem1->isString())
   {
-    if (HB_IS_STRING(pItem2))
+    if (pItem2->isString())
     {
       *piResult = hb_itemStrCmp(pItem1, pItem2, bForceExact);
       fResult = true;

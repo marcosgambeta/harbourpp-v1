@@ -3605,7 +3605,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
 
     hb_itemPutNDDec(pResult, dNumber1 + dNumber2, HB_MAX(iDec1, iDec2));
   }
-  else if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  else if (pItem1->isString() && pItem2->isString())
   {
     HB_SIZE nLen1 = pItem1->item.asString.length;
     HB_SIZE nLen2 = pItem2->item.asString.length;
@@ -3777,7 +3777,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       hb_itemPutDL(pResult, hb_itemGetDL(pItem1) - hb_itemGetNL(pItem2));
     }
   }
-  else if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  else if (pItem1->isString() && pItem2->isString())
   {
     HB_SIZE nLen1 = pItem1->item.asString.length;
     HB_SIZE nLen2 = pItem2->item.asString.length;
@@ -4201,7 +4201,7 @@ static void hb_vmExactlyEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = false;
   }
-  else if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  else if (pItem1->isString() && pItem2->isString())
   {
     bool fResult =
         pItem1->item.asString.length == pItem2->item.asString.length &&
@@ -4323,7 +4323,7 @@ static void hb_vmEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = false;
   }
-  else if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  else if (pItem1->isString() && pItem2->isString())
   {
     bool fResult = hb_itemStrCmp(pItem1, pItem2, false) == 0;
     hb_stackPop();
@@ -4424,7 +4424,7 @@ static void hb_vmNotEqual()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = true;
   }
-  else if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  else if (pItem1->isString() && pItem2->isString())
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
@@ -4509,7 +4509,7 @@ static void hb_vmLess()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  if (pItem1->isString() && pItem2->isString())
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
@@ -4577,7 +4577,7 @@ static void hb_vmLessEqual()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  if (pItem1->isString() && pItem2->isString())
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
@@ -4645,7 +4645,7 @@ static void hb_vmGreater()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  if (pItem1->isString() && pItem2->isString())
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
@@ -4713,7 +4713,7 @@ static void hb_vmGreaterEqual()
   auto pItem2 = hb_stackItemFromTop(-1);
   auto pItem1 = hb_stackItemFromTop(-2);
 
-  if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  if (pItem1->isString() && pItem2->isString())
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
@@ -4781,7 +4781,7 @@ static void hb_vmInstring()
   auto pItem1 = hb_stackItemFromTop(-2);
   auto pItem2 = hb_stackItemFromTop(-1);
 
-  if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+  if (pItem1->isString() && pItem2->isString())
   {
     bool fResult = (hb_strAt(pItem1->item.asString.value, pItem1->item.asString.length, pItem2->item.asString.value,
                              pItem2->item.asString.length) != 0);
@@ -5126,7 +5126,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
         fStart = false;
       }
     }
-    else if (HB_IS_STRING(pBase))
+    else if (pBase->isString())
     {
       /* storage item for single characters */
       pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->item.asString.length;
@@ -5217,7 +5217,7 @@ static void hb_vmEnumNext()
         break;
       }
     }
-    else if (HB_IS_STRING(pBase))
+    else if (pBase->isString())
     {
       if (static_cast<HB_SIZE>(++pEnum->item.asEnum.offset) > pBase->item.asString.length)
       {
@@ -5300,7 +5300,7 @@ static void hb_vmEnumPrev()
         break;
       }
     }
-    else if (HB_IS_STRING(pBase))
+    else if (pBase->isString())
     {
       if (--pEnum->item.asEnum.offset == 0)
       {
@@ -5344,7 +5344,7 @@ static PHB_ITEM hb_vmSwitchGet()
   HB_STACK_TLS_PRELOAD
   auto pSwitch = hb_stackItemFromTop(-1);
 
-  if (!(HB_IS_NUMINT(pSwitch) || HB_IS_STRING(pSwitch)))
+  if (!(HB_IS_NUMINT(pSwitch) || pSwitch->isString()))
   {
     PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ARG, 3104, nullptr, "SWITCH", 1, pSwitch);
 
@@ -5382,7 +5382,7 @@ static const HB_BYTE *hb_vmSwitch(const HB_BYTE *pCode, HB_USHORT casesCnt)
         break;
 
       case HB_P_PUSHSTRSHORT:
-        if (HB_IS_STRING(pSwitch))
+        if (pSwitch->isString())
         {
 #if 0
                   fFound = hb_itemStrCmp(pItem1, pItem2, bExact);
@@ -7747,7 +7747,7 @@ static void hb_vmPushAliasedVar(PHB_SYMB pSym)
   HB_STACK_TLS_PRELOAD
   auto pAlias = hb_stackItemFromTop(-1);
 
-  if (HB_IS_STRING(pAlias))
+  if (pAlias->isString())
   {
     const char *szAlias = pAlias->item.asString.value;
 
@@ -8030,7 +8030,7 @@ static void hb_vmPopAliasedVar(PHB_SYMB pSym)
   /*
    * "M", "MEMV" - "MEMVAR" and "FIEL" - "FIELD" are reserved aliases
    */
-  if (HB_IS_STRING(pAlias))
+  if (pAlias->isString())
   {
     const char *szAlias = pAlias->item.asString.value;
 
@@ -9400,7 +9400,7 @@ static void hb_vmMsgIndexReference(PHB_ITEM pRefer, PHB_ITEM pObject, PHB_ITEM p
   pMsgIdxRef->value.type = Harbour::Item::NIL | Harbour::Item::DEFAULT;
   pMsgIdxRef->object.type = Harbour::Item::NIL;
   pMsgIdxRef->index.type = Harbour::Item::NIL;
-  hb_itemCopy(&pMsgIdxRef->object, HB_IS_STRING(pObject) ? pRefer : pObject);
+  hb_itemCopy(&pMsgIdxRef->object, pObject->isString() ? pRefer : pObject);
   hb_itemMove(&pMsgIdxRef->index, pIndex);
 
   pIndex->type = Harbour::Item::BYREF | Harbour::Item::EXTREF;
@@ -9732,7 +9732,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM *pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
   {
     PHB_SYMB pSymbol = nullptr;
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
 
@@ -10867,7 +10867,7 @@ HB_BOOL hb_xvmMemvarAdd(PHB_SYMB pSymbol)
   HB_STACK_TLS_PRELOAD
   auto pVal1 = hb_stackItemFromTop(-2);
   auto pVal2 = hb_stackItemFromTop(-1);
-  if (HB_IS_STRING(pVal1) && HB_IS_STRING(pVal2))
+  if (pVal1->isString() && pVal2->isString())
   {
     PHB_ITEM pMemVar = hb_memvarGetItem(pSymbol);
     if (pMemVar)
@@ -13214,7 +13214,7 @@ HB_FUNC(__VMITEMREFS)
     {
       hb_retnint(hb_gcRefCount(pItem->item.asPointer.value));
     }
-    else if (HB_IS_STRING(pItem))
+    else if (pItem->isString())
     {
       hb_retnint(hb_xRefCount(pItem->item.asString.value));
     }

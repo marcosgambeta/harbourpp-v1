@@ -1320,7 +1320,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             }
           } while (--nCount > 0 && nStart < pBaseArray->nLen);
         }
-        else if (HB_IS_STRING(pValue))
+        else if (pValue->isString())
         {
           do
           {
@@ -1328,7 +1328,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
 
             // NOTE: The order of the pItem and pValue parameters passed to
             //       hb_itemStrCmp() is significant, please don't change it. [vszakats]
-            if (HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0)
+            if (pItem->isString() && hb_itemStrCmp(pItem, pValue, fExact) == 0)
             {
               return nStart;
             }
@@ -1518,7 +1518,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             }
           } while (--nCount && nStart--);
         }
-        else if (HB_IS_STRING(pValue))
+        else if (pValue->isString())
         {
           do
           {
@@ -1526,7 +1526,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
 
             // NOTE: The order of the pItem and pValue parameters passed to
             //       hb_itemStrCmp() is significant, please don't change it. [vszakats]
-            if (HB_IS_STRING(pItem) && hb_itemStrCmp(pItem, pValue, fExact) == 0)
+            if (pItem->isString() && hb_itemStrCmp(pItem, pValue, fExact) == 0)
             {
               return nStart + 1;
             }

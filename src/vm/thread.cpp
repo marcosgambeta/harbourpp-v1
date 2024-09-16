@@ -932,7 +932,7 @@ HB_CARGO_FUNC(hb_threadStartVM)
       hb_vmPush(pStart);
       hb_vmPushNil();
     }
-    else if (HB_IS_STRING(pStart))
+    else if (pStart->isString())
     {
       hb_vmPushDynSym(hb_dynsymGet(hb_itemGetCPtr(pStart)));
       hb_vmPushNil();
@@ -1130,7 +1130,7 @@ HB_FUNC(HB_THREADSTART)
 
   if (pStart)
   {
-    if (HB_IS_STRING(pStart))
+    if (pStart->isString())
     {
       szFuncName = hb_itemGetCPtr(pStart);
       auto pDynSym = hb_dynsymFindName(szFuncName);
@@ -1182,7 +1182,7 @@ HB_FUNC(HB_THREADSTART)
     }
 
     // update startup item if necessary
-    if (HB_IS_STRING(pStart) && pSymbol)
+    if (pStart->isString() && pSymbol)
     {
       hb_itemPutSymbol(hb_arrayGetItemPtr(pParams, 1), pSymbol);
     }
