@@ -1363,7 +1363,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             }
           } while (--nCount > 0);
         }
-        else if (HB_IS_DATETIME(pValue))
+        else if (pValue->isDateTime())
         {
           if (fExact)
           {
@@ -1371,7 +1371,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-              if (HB_IS_DATETIME(pItem) && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
+              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
                   pItem->item.asDateTime.time == pValue->item.asDateTime.time)
               {
                 return nStart;
@@ -1384,7 +1384,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-              if (HB_IS_DATETIME(pItem) && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian)
+              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian)
               {
                 return nStart;
               }
@@ -1561,7 +1561,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             }
           } while (--nCount && nStart--);
         }
-        else if (HB_IS_DATETIME(pValue))
+        else if (pValue->isDateTime())
         {
           if (fExact)
           {
@@ -1569,7 +1569,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-              if (HB_IS_DATETIME(pItem) && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
+              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
                   pItem->item.asDateTime.time == pValue->item.asDateTime.time)
               {
                 return nStart + 1;
@@ -1582,7 +1582,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-              if (HB_IS_DATETIME(pItem) && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian)
+              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian)
               {
                 return nStart + 1;
               }

@@ -204,9 +204,9 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
       return 1;
     }
   }
-  else if (HB_IS_DATETIME(pKey1))
+  else if (pKey1->isDateTime())
   {
-    if (HB_IS_DATETIME(pKey2))
+    if (pKey2->isDateTime())
     {
       return pKey1->item.asDateTime.julian < pKey2->item.asDateTime.julian
                  ? -1
@@ -233,7 +233,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
                  ? -1
                  : (pKey1->item.asPointer.value > pKey2->item.asPointer.value ? 1 : 0);
     }
-    else if (pKey2->isString() || HB_IS_DATETIME(pKey2))
+    else if (pKey2->isString() || pKey2->isDateTime())
     {
       return -1;
     }

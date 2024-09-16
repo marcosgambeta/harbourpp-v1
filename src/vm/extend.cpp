@@ -380,7 +380,7 @@ const char *hb_pards(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return hb_dateDecStr(hb_stackDateBuffer(), pItem->item.asDateTime.julian);
     }
@@ -408,7 +408,7 @@ char *hb_pardsbuff(char *szDate, int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
     }
@@ -436,7 +436,7 @@ long hb_pardl(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return pItem->item.asDateTime.julian;
     }
@@ -462,7 +462,7 @@ double hb_partd(int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return hb_timeStampPackDT(pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
     }
@@ -488,7 +488,7 @@ HB_BOOL hb_partdt(long *plJulian, long *plMilliSec, int iParam)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       *plJulian = pItem->item.asDateTime.julian;
       *plMilliSec = pItem->item.asDateTime.time;
@@ -1162,7 +1162,7 @@ const char *hb_parvds(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return hb_dateDecStr(hb_stackDateBuffer(), pItem->item.asDateTime.julian);
     }
@@ -1201,7 +1201,7 @@ char *hb_parvdsbuff(char *szDate, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
     }
@@ -1240,7 +1240,7 @@ long hb_parvdl(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return pItem->item.asDateTime.julian;
     }
@@ -1277,7 +1277,7 @@ double hb_parvtd(int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       return hb_timeStampPackDT(pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
     }
@@ -1314,7 +1314,7 @@ HB_BOOL hb_parvtdt(long *plJulian, long *plMilliSec, int iParam, ...)
       pItem = hb_itemUnRef(pItem);
     }
 
-    if (HB_IS_DATETIME(pItem))
+    if (pItem->isDateTime())
     {
       *plJulian = pItem->item.asDateTime.julian;
       *plMilliSec = pItem->item.asDateTime.time;
@@ -1505,7 +1505,7 @@ long hb_parvnl(int iParam, ...)
       return HB_CAST_LONG(pItem->item.asDouble.value);
       // CA-Cl*pper does it
     }
-    else if (HB_IS_DATETIME(pItem))
+    else if (pItem->isDateTime())
     {
       return static_cast<long>(pItem->item.asDateTime.julian);
     }

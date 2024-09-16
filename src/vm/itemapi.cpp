@@ -646,7 +646,7 @@ char *hb_itemGetDS(PHB_ITEM pItem, char *szDate)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetDS(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(szDate)));
 #endif
 
-  if (pItem && HB_IS_DATETIME(pItem))
+  if (pItem && pItem->isDateTime())
   {
     return hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
   }
@@ -662,7 +662,7 @@ long hb_itemGetDL(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetDL(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && HB_IS_DATETIME(pItem))
+  if (pItem && pItem->isDateTime())
   {
     return pItem->item.asDateTime.julian;
   }
@@ -681,7 +681,7 @@ char *hb_itemGetTS(PHB_ITEM pItem, char *szDateTime)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetTS(%p, %s)", static_cast<void*>(pItem), szDateTime));
 #endif
 
-  if (pItem && HB_IS_DATETIME(pItem))
+  if (pItem && pItem->isDateTime())
   {
     return hb_timeStampStrRawPut(szDateTime, pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
   }
@@ -697,7 +697,7 @@ double hb_itemGetTD(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetTD(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && HB_IS_DATETIME(pItem))
+  if (pItem && pItem->isDateTime())
   {
     return hb_timeStampPackDT(pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
   }
@@ -713,7 +713,7 @@ HB_BOOL hb_itemGetTDT(PHB_ITEM pItem, long *plJulian, long *plMilliSec)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetTDT(%p,%p,%p)", static_cast<void*>(pItem), static_cast<void*>(plJulian), static_cast<void*>(plMilliSec)));
 #endif
 
-  if (pItem && HB_IS_DATETIME(pItem))
+  if (pItem && pItem->isDateTime())
   {
     *plJulian = pItem->item.asDateTime.julian;
     *plMilliSec = pItem->item.asDateTime.time;
@@ -779,7 +779,7 @@ HB_BOOL hb_itemGetLX(PHB_ITEM pItem)
     {
       return pItem->item.asDouble.value != 0.0;
     }
-    else if (HB_IS_DATETIME(pItem))
+    else if (pItem->isDateTime())
     {
       return pItem->item.asDateTime.julian != 0 || pItem->item.asDateTime.time != 0;
     }
@@ -2750,9 +2750,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     fResult = pItem2->isNil();
   }
-  else if (HB_IS_DATETIME(pItem1))
+  else if (pItem1->isDateTime())
   {
-    fResult = HB_IS_DATETIME(pItem2) && pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
+    fResult = pItem2->isDateTime() && pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
               pItem1->item.asDateTime.time == pItem2->item.asDateTime.time;
   }
   else if (pItem1->isLogical())
@@ -2824,9 +2824,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
       fResult = true;
     }
   }
-  else if (HB_IS_DATETIME(pItem1))
+  else if (pItem1->isDateTime())
   {
-    if (HB_IS_DATETIME(pItem2))
+    if (pItem2->isDateTime())
     {
       *piResult = pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian
                       ? -1

@@ -105,7 +105,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     hb_itemGetTDT(pItem2, &lDate2, &lTime2);
     return lDate1 == lDate2 ? lTime1 < lTime2 : lDate1 < lDate2;
   }
-  else if (HB_IS_DATETIME(pItem1) && HB_IS_DATETIME(pItem2))
+  else if (pItem1->isDateTime() && pItem2->isDateTime())
   {
     // it's not exact comparison, compare only Julian date
     return hb_itemGetDL(pItem1) < hb_itemGetDL(pItem2);
@@ -138,7 +138,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight1 = 4;
     }
-    else if (HB_IS_DATETIME(pItem1))
+    else if (pItem1->isDateTime())
     {
       iWeight1 = 5;
     }
@@ -167,7 +167,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
     {
       iWeight2 = 4;
     }
-    else if (HB_IS_DATETIME(pItem2))
+    else if (pItem2->isDateTime())
     {
       iWeight2 = 5;
     }

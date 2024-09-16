@@ -695,14 +695,14 @@ HB_FUNC(HB_HSCAN)
         ++nStart;
       }
     }
-    else if (HB_IS_DATETIME(pValue))
+    else if (pValue->isDateTime())
     {
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (HB_IS_DATETIME(pItem) && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
+          if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
               (!fExact || pItem->item.asDateTime.time == pValue->item.asDateTime.time))
           {
             fFound = true;
