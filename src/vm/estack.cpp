@@ -1302,7 +1302,7 @@ HB_ISIZ hb_stackBaseProcOffset(int iLevel)
     nOffset = (*(hb_stack.pItems + nOffset))->item.asSymbol.stackstate->nBaseItem;
   }
 
-  if (iLevel < 0 && (nOffset > 0 || (*hb_stack.pItems)->isSymbol())
+  if (iLevel < 0 && (nOffset > 0 || (*hb_stack.pItems)->isSymbol()))
   {
     return nOffset;
   }
