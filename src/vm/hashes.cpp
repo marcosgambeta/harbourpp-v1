@@ -110,11 +110,11 @@ static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
       }
       else
       {
-        if (HB_IS_COMPLEX(pKey))
+        if (pKey->isComplex())
         {
           hb_itemClear(pKey);
         }
-        if (HB_IS_COMPLEX(pVal))
+        if (pVal->isComplex())
         {
           hb_itemClear(pVal);
         }
@@ -520,11 +520,11 @@ static void hb_hashDelPair(PHB_BASEHASH pBaseHash, HB_SIZE nPos)
       hb_xfree(pBaseHash->pnPos);
       pBaseHash->pnPos = nullptr;
     }
-    if (HB_IS_COMPLEX(&pPairs->key))
+    if ((&pPairs->key)->isComplex())
     {
       hb_itemClear(&pPairs->key);
     }
-    if (HB_IS_COMPLEX(&pPairs->value))
+    if ((&pPairs->value)->isComplex())
     {
       hb_itemClear(&pPairs->value);
     }
@@ -629,7 +629,7 @@ PHB_ITEM hb_hashNew(PHB_ITEM pItem)
   {
     pItem = hb_itemNew(nullptr);
   }
-  else if (HB_IS_COMPLEX(pItem))
+  else if (pItem->isComplex())
   {
     hb_itemClear(pItem);
   }
@@ -905,11 +905,11 @@ HB_BOOL hb_hashClear(PHB_ITEM pHash)
       while (pHash->item.asHash.value->nLen)
       {
         pHash->item.asHash.value->nLen--;
-        if (HB_IS_COMPLEX(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key))
+        if ((&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key)->isComplex())
         {
           hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key);
         }
-        if (HB_IS_COMPLEX(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value))
+        if ((&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value)->isComplex())
         {
           hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value);
         }

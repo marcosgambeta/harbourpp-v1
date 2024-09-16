@@ -362,7 +362,7 @@ HB_GARBAGE_FUNC(hb_gcGripMark)
 
 static HB_GARBAGE_FUNC(hb_gcGripRelease)
 {
-  if (HB_IS_COMPLEX(static_cast<PHB_ITEM>(Cargo)))
+  if (static_cast<PHB_ITEM>(Cargo)->isComplex())
   {
     hb_itemClear(static_cast<PHB_ITEM>(Cargo));
   }

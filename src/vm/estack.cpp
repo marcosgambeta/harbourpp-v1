@@ -627,7 +627,7 @@ void hb_stackPop(void)
     hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
   }
 
-  if (HB_IS_COMPLEX(*hb_stack.pPos))
+  if ((*hb_stack.pPos)->isComplex())
   {
     hb_itemClear(*hb_stack.pPos);
   }
@@ -642,7 +642,7 @@ void hb_stackPopReturn(void)
 
   HB_STACK_TLS_PRELOAD
 
-  if (HB_IS_COMPLEX(&hb_stack.Return))
+  if ((&hb_stack.Return)->isComplex())
   {
     hb_itemClear(&hb_stack.Return);
   }
@@ -774,7 +774,7 @@ void hb_stackRemove(HB_ISIZ nUntilPos)
   while (hb_stack.pPos > pEnd)
   {
     --hb_stack.pPos;
-    if (HB_IS_COMPLEX(*hb_stack.pPos))
+    if ((*hb_stack.pPos)->isComplex())
     {
       hb_itemClear(*hb_stack.pPos);
     }
@@ -922,7 +922,7 @@ void hb_stackOldFrame(PHB_STACK_STATE pFrame)
   do
   {
     --hb_stack.pPos;
-    if (HB_IS_COMPLEX(*hb_stack.pPos))
+    if ((*hb_stack.pPos)->isComplex())
     {
       hb_itemClear(*hb_stack.pPos);
     }

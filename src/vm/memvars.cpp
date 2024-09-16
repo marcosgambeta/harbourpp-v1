@@ -121,7 +121,7 @@ void hb_memvarValueDecRef(PHB_ITEM pMemvar)
 
   if (hb_xRefDec(pMemvar))
   {
-    if (HB_IS_COMPLEX(pMemvar))
+    if (pMemvar->isComplex())
     {
       hb_itemClear(pMemvar);
     }

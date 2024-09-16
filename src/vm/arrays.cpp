@@ -63,7 +63,7 @@ static void hb_arrayReleaseItems(PHB_BASEARRAY pBaseArray)
     do
     {
       pBaseArray->nLen--;
-      if (HB_IS_COMPLEX(pBaseArray->pItems + pBaseArray->nLen))
+      if ((pBaseArray->pItems + pBaseArray->nLen)->isComplex())
       {
         hb_itemClear(pBaseArray->pItems + pBaseArray->nLen);
       }
@@ -141,7 +141,7 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) // creates a new array
    HB_TRACE(HB_TR_DEBUG, ("hb_arrayNew(%p, %" HB_PFS "u)", static_cast<void*>(pItem), nLen));
 #endif
 
-  if (HB_IS_COMPLEX(pItem))
+  if (pItem->isComplex())
   {
     hb_itemClear(pItem);
   }
@@ -247,7 +247,7 @@ HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
           // release old items
           for (nPos = nLen; nPos < pBaseArray->nLen; nPos++)
           {
-            if (HB_IS_COMPLEX(pBaseArray->pItems + nPos))
+            if ((pBaseArray->pItems + nPos)->isComplex())
             {
               hb_itemClear(pBaseArray->pItems + nPos);
             }
@@ -525,7 +525,7 @@ HB_BOOL hb_arrayGetItemRef(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
   {
     if (pArray != pItem)
     {
-      if (HB_IS_COMPLEX(pItem))
+      if (pItem->isComplex())
       {
         hb_itemClear(pItem);
       }

@@ -3579,7 +3579,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW(pItem2);
     HB_MAXINT nResult = nNumber1 + nNumber2;
 
-    if (HB_IS_COMPLEX(pResult))
+    if (pResult->isComplex())
     {
       hb_itemClear(pResult);
     }
@@ -3715,7 +3715,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     HB_MAXINT nNumber2 = HB_ITEM_GET_NUMINTRAW(pItem2);
     HB_MAXINT nResult = nNumber1 - nNumber2;
 
-    if (HB_IS_COMPLEX(pResult))
+    if (pResult->isComplex())
     {
       hb_itemClear(pResult);
     }
@@ -3751,7 +3751,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      if (HB_IS_COMPLEX(pResult))
+      if (pResult->isComplex())
       {
         hb_itemClear(pResult);
       }
@@ -3838,7 +3838,7 @@ static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     HB_MAXINT nResult =
         static_cast<HB_MAXINT>(pItem1->item.asInteger.value) * static_cast<HB_MAXINT>(pItem2->item.asInteger.value);
-    if (HB_IS_COMPLEX(pResult))
+    if (pResult->isComplex())
     {
       hb_itemClear(pResult);
     }
@@ -4194,7 +4194,7 @@ static void hb_vmExactlyEqual()
   else if (pItem2->isNil())
   {
     hb_stackDec(); /* pItem2 is already NIL */
-    if (HB_IS_COMPLEX(pItem1))
+    if (pItem1->isComplex())
     {
       hb_itemClear(pItem1);
     }
@@ -4316,7 +4316,7 @@ static void hb_vmEqual()
   else if (pItem2->isNil())
   {
     hb_stackDec(); /* pItem2 is already NIL */
-    if (HB_IS_COMPLEX(pItem1))
+    if (pItem1->isComplex())
     {
       hb_itemClear(pItem1);
     }
@@ -4417,7 +4417,7 @@ static void hb_vmNotEqual()
   else if (pItem2->isNil())
   {
     hb_stackDec(); /* pItem2 is already NIL */
-    if (HB_IS_COMPLEX(pItem1))
+    if (pItem1->isComplex())
     {
       hb_itemClear(pItem1);
     }
@@ -4994,11 +4994,11 @@ static void hb_vmEnumRefClear(void *value)
 {
   hb_itemMove(hb_itemUnRefOnce(&(static_cast<PHB_ENUMREF>(value))->enumref),
               &(static_cast<PHB_ENUMREF>(value))->oldvalue);
-  if (HB_IS_COMPLEX(&(static_cast<PHB_ENUMREF>(value))->basevalue))
+  if ((&(static_cast<PHB_ENUMREF>(value))->basevalue)->isComplex())
   {
     hb_itemClear(&(static_cast<PHB_ENUMREF>(value))->basevalue);
   }
-  if (HB_IS_COMPLEX(&(static_cast<PHB_ENUMREF>(value))->enumref))
+  if ((&(static_cast<PHB_ENUMREF>(value))->enumref)->isComplex())
   {
     hb_itemClear(&(static_cast<PHB_ENUMREF>(value))->enumref);
   }
@@ -6088,7 +6088,7 @@ static HB_LONG hb_vmArgsJoin(HB_LONG lLevel, HB_USHORT uiArgSets)
   auto pArgs = hb_stackItemFromTop(lLevel);
 
   HB_LONG lArgs = hb_itemGetNL(pArgs);
-  if (HB_IS_COMPLEX(pArgs))
+  if (pArgs->isComplex())
   {
     hb_itemClear(pArgs);
   }
@@ -7137,7 +7137,7 @@ static void hb_vmTSVRefClear(void *value)
 {
   if (hb_xRefDec(value))
   {
-    if (HB_IS_COMPLEX(&(static_cast<PHB_TSVREF>(value))->source))
+    if ((&(static_cast<PHB_TSVREF>(value))->source)->isComplex())
     {
       hb_itemClear(&(static_cast<PHB_TSVREF>(value))->source);
     }
@@ -7164,7 +7164,7 @@ static void hb_vmTSVRefMark(void *value)
 /* destructor for terminated threads */
 static void hb_vmTSVarClean(void *pThreadItem)
 {
-  if (HB_IS_COMPLEX(static_cast<PHB_ITEM>(pThreadItem)))
+  if (static_cast<PHB_ITEM>(pThreadItem)->isComplex())
   {
     hb_itemClear(static_cast<PHB_ITEM>(pThreadItem));
   }
@@ -7191,7 +7191,7 @@ static void hb_vmTSVReference(PHB_ITEM pStatic)
 
   /* Use hb_stackReturnItem() as temporary item holder */
   auto pRefer = hb_stackReturnItem();
-  if (HB_IS_COMPLEX(pRefer))
+  if (pRefer->isComplex())
   {
     hb_itemClear(pRefer);
   }
@@ -8248,7 +8248,7 @@ static void hb_vmStaticsClear()
         for (HB_SIZE ul = 1; ul <= nLen; ++ul)
         {
           auto pItem = hb_arrayGetItemPtr(pStatics, ul);
-          if (pItem && HB_IS_COMPLEX(pItem))
+          if (pItem && pItem->isComplex())
           {
             hb_itemClear(pItem);
           }
@@ -9195,11 +9195,11 @@ static void hb_vmMsgRefClear(void *value)
 
   if (hb_xRefDec(value))
   {
-    if (HB_IS_COMPLEX(&pMsgRef->value))
+    if ((&pMsgRef->value)->isComplex())
     {
       hb_itemClear(&pMsgRef->value);
     }
-    if (HB_IS_COMPLEX(&pMsgRef->object))
+    if ((&pMsgRef->object)->isComplex())
     {
       hb_itemClear(&pMsgRef->object);
     }
@@ -9241,7 +9241,7 @@ HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg)
   hb_itemMove(&pMsgRef->object, pObject);
 
   auto pRefer = hb_stackReturnItem();
-  if (HB_IS_COMPLEX(pRefer))
+  if (pRefer->isComplex())
   {
     hb_itemClear(pRefer);
   }
@@ -9352,15 +9352,15 @@ static void hb_vmMsgIdxRefClear(void *value)
 
   if (hb_xRefDec(value))
   {
-    if (HB_IS_COMPLEX(&pMsgIdxRef->value))
+    if ((&pMsgIdxRef->value)->isComplex())
     {
       hb_itemClear(&pMsgIdxRef->value);
     }
-    if (HB_IS_COMPLEX(&pMsgIdxRef->object))
+    if ((&pMsgIdxRef->object)->isComplex())
     {
       hb_itemClear(&pMsgIdxRef->object);
     }
-    if (HB_IS_COMPLEX(&pMsgIdxRef->index))
+    if ((&pMsgIdxRef->index)->isComplex())
     {
       hb_itemClear(&pMsgIdxRef->index);
     }

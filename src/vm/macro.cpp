@@ -861,7 +861,7 @@ static void hb_macroBlock(const char *szString, PHB_ITEM pItem)
   {
     pMacro->pCodeInfo->pCode[pMacro->pCodeInfo->nPCodePos - 1] = HB_P_ENDBLOCK;
 
-    if (HB_IS_COMPLEX(pItem))
+    if (pItem->isComplex())
     {
       hb_itemClear(pItem);
     }
@@ -948,7 +948,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
   i += sizeof(PHB_DYNS);
   byBuf[i++] = HB_P_ENDBLOCK;
 
-  if (HB_IS_COMPLEX(pItem))
+  if (pItem->isComplex())
   {
     hb_itemClear(pItem);
   }
