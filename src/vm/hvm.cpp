@@ -342,7 +342,7 @@ static const char *s_vm_pszLinkedMain = nullptr; // name of startup function set
 
 // virtual machine state
 
-HB_SYMB hb_symEval = {"EVAL", {HB_FS_PUBLIC}, {hb_vmDoBlock}, nullptr}; // symbol to evaluate codeblocks
+HB_SYMB hb_symEval = {"EVAL", {HB_FS_PUBLIC}, {hb_vmDoBlock}, nullptr};               // symbol to evaluate codeblocks
 static HB_SYMB s_symBreak = {"BREAK", {HB_FS_PUBLIC}, {HB_FUNCNAME(BREAK)}, nullptr}; // symbol to generate break
 static PHB_ITEM s_breakBlock = nullptr;
 

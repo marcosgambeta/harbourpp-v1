@@ -2012,7 +2012,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         else if (pMsg == s___msgEnumKey.pDynSym)
         {
           PHB_ITEM pBase = pEnum->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
-                                                                   : pEnum->item.asEnum.basePtr;
+                                                                 : pEnum->item.asEnum.basePtr;
           if (pBase->isHash())
           {
             pBase = hb_hashGetKeyAt(pBase, pEnum->item.asEnum.offset);
@@ -2052,7 +2052,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         else if (pMsg == s___msgEnumIsFirst.pDynSym)
         {
           PHB_ITEM pBase = pEnum->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
-                                                                   : pEnum->item.asEnum.basePtr;
+                                                                 : pEnum->item.asEnum.basePtr;
           if (pBase->isObject() && hb_objHasOperator(pBase, HB_OO_OP_ENUMISFIRST))
           {
             return hb_objGetMethod(pBase, pMessage, pStack);
@@ -2063,7 +2063,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         else if (pMsg == s___msgEnumIsLast.pDynSym)
         {
           PHB_ITEM pBase = pEnum->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
-                                                                   : pEnum->item.asEnum.basePtr;
+                                                                 : pEnum->item.asEnum.basePtr;
           if (pBase->isArray())
           {
             if (pBase->isObject() && hb_objHasOperator(pBase, HB_OO_OP_ENUMISLAST))

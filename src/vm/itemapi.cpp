@@ -966,8 +966,7 @@ void *hb_itemGetPtrGC(PHB_ITEM pItem, const HB_GC_FUNCS *pFuncs)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetPtrGC(%p,%p)", static_cast<void*>(pItem), static_cast<const void*>(pFuncs)));
 #endif
 
-  if (pItem && pItem->isPointer() && pItem->item.asPointer.collect &&
-      hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
+  if (pItem && pItem->isPointer() && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
   {
     return pItem->item.asPointer.value;
   }
@@ -2390,7 +2389,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
       else
       {
         PHB_ITEM pBase = pItem->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pItem->item.asEnum.basePtr)
-                                                                 : pItem->item.asEnum.basePtr;
+                                                               : pItem->item.asEnum.basePtr;
         if (pBase->isArray())
         {
           pBase = hb_arrayGetItemPtr(pBase, pItem->item.asEnum.offset);
@@ -2779,8 +2778,8 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   else if (pItem1->isSymbol())
   {
     fResult = pItem2->isSymbol() && (pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                                       (pItem1->item.asSymbol.value->pDynSym != nullptr &&
-                                        pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
+                                     (pItem1->item.asSymbol.value->pDynSym != nullptr &&
+                                      pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
   }
   return fResult;
 }

@@ -161,7 +161,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
         if (!pLocal->item.asEnum.valuePtr)
         {
           PHB_ITEM pBase = pLocal->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pLocal->item.asEnum.basePtr)
-                                                                    : pLocal->item.asEnum.basePtr;
+                                                                  : pLocal->item.asEnum.basePtr;
           if (pBase->isArray())
           {
             auto pItem = hb_itemNew(nullptr);
@@ -1325,8 +1325,8 @@ HB_FUNC(__MVGET)
       // Generate an error with retry possibility
       // (user created error handler can create this variable)
       auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr,
-                                 pName->isString() ? pName->item.asString.value : pName->item.asSymbol.value->szName,
-                                 0, EF_CANRETRY);
+                                 pName->isString() ? pName->item.asString.value : pName->item.asSymbol.value->szName, 0,
+                                 EF_CANRETRY);
 
       while (hb_errLaunch(pError) == E_RETRY)
       {
