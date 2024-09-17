@@ -4790,7 +4790,7 @@ static void hb_vmInstring()
     pItem1->type = Harbour::Item::LOGICAL;
     pItem1->item.asLogical.value = fResult;
   }
-  else if (pItem2->isHash() && (HB_IS_HASHKEY(pItem1) || hb_hashLen(pItem1) == 1))
+  else if (pItem2->isHash() && (pItem1->isHashKey() || hb_hashLen(pItem1) == 1))
   {
     bool fResult = hb_hashScan(pItem2, pItem1, nullptr);
     hb_stackPop();
@@ -5554,7 +5554,7 @@ static void hb_vmArrayPush()
   auto pIndex = hb_stackItemFromTop(-1);
   auto pArray = hb_stackItemFromTop(-2);
 
-  if (pArray->isHash() && HB_IS_HASHKEY(pIndex))
+  if (pArray->isHash() && pIndex->isHashKey())
   {
     auto pValue = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ACCESS);
     if (pValue)
@@ -5655,7 +5655,7 @@ static void hb_vmArrayPushRef()
   auto pRefer = hb_stackItemFromTop(-2);
   PHB_ITEM pArray = pRefer->isByRef() ? hb_itemUnRef(pRefer) : pRefer;
 
-  if (pArray->isHash() && HB_IS_HASHKEY(pIndex))
+  if (pArray->isHash() && pIndex->isHashKey())
   {
     auto pValue = hb_hashGetItemRefPtr(pArray, pIndex);
     if (pValue)
@@ -5772,7 +5772,7 @@ static void hb_vmArrayPop()
     pArray = hb_itemUnRef(pArray);
   }
 
-  if (pArray->isHash() && HB_IS_HASHKEY(pIndex))
+  if (pArray->isHash() && pIndex->isHashKey())
   {
     auto pDest = hb_hashGetItemPtr(pArray, pIndex, HB_HASH_AUTOADD_ASSIGN);
     if (pDest)
@@ -5998,7 +5998,7 @@ static void hb_vmHashGen(HB_SIZE nElements) /* generates an nElements Hash and f
   {
     auto pKey = hb_stackItemFromTop(iPos++);
     auto pVal = hb_stackItemFromTop(iPos++);
-    if (HB_IS_HASHKEY(pKey))
+    if (pKey->isHashKey())
     {
       hb_hashAdd(pHash, pKey, pVal);
     }
