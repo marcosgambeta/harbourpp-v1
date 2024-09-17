@@ -3669,7 +3669,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      hb_itemPutDL(pResult, hb_itemGetDL(pItem1) + hb_itemGetNL(pItem2));
+      hb_itemPutDL(pResult, hb_itemGetDL(pItem1) + pItem2->getNL());
     }
   }
   else if (pItem1->isNumeric() && pItem2->isDateTime())
@@ -3688,7 +3688,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      hb_itemPutDL(pResult, hb_itemGetNL(pItem1) + hb_itemGetDL(pItem2));
+      hb_itemPutDL(pResult, pItem1->getNL() + hb_itemGetDL(pItem2));
     }
   }
   else if (!hb_objOperatorCall(HB_OO_OP_PLUS, pResult, pItem1, pItem2, nullptr))
@@ -3774,7 +3774,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      hb_itemPutDL(pResult, hb_itemGetDL(pItem1) - hb_itemGetNL(pItem2));
+      hb_itemPutDL(pResult, hb_itemGetDL(pItem1) - pItem2->getNL());
     }
   }
   else if (pItem1->isString() && pItem2->isString())
@@ -6087,7 +6087,7 @@ static HB_LONG hb_vmArgsJoin(HB_LONG lLevel, HB_USHORT uiArgSets)
   HB_STACK_TLS_PRELOAD
   auto pArgs = hb_stackItemFromTop(lLevel);
 
-  HB_LONG lArgs = hb_itemGetNL(pArgs);
+  HB_LONG lArgs = pArgs->getNL();
   if (pArgs->isComplex())
   {
     hb_itemClear(pArgs);

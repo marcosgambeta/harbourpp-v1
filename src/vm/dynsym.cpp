@@ -601,7 +601,7 @@ static PHB_DYNS hb_dynsymByItem(PHB_ITEM pItem)
     }
     else if (pItem->isNumeric())
     {
-      pDynSym = hb_dynsymGetByIndex(hb_itemGetNL(pItem));
+      pDynSym = hb_dynsymGetByIndex(pItem->getNL());
     }
   }
   return pDynSym;

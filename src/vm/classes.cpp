@@ -2760,7 +2760,7 @@ long hb_objDataGetNL(PHB_ITEM pObject, const char *szMsg)
   hb_vmSend(0);
   {
     HB_STACK_TLS_PRELOAD
-    return hb_itemGetNL(hb_stackReturnItem());
+    return hb_stackReturnItem()->getNL();
   }
 }
 
