@@ -442,11 +442,11 @@ HB_FUNC(HB_EXECFROMARRAY)
 
     if (iPCount == 1)
     {
-      if (pParam->isArray() && !HB_IS_OBJECT(pParam))
+      if (pParam->isArray() && !pParam->isObject())
       {
         pArray = pParam;
         pItem = hb_arrayGetItemPtr(pArray, 1);
-        if (HB_IS_OBJECT(pItem))
+        if (pItem->isObject())
         {
           pSelf = pItem;
           pFunc = hb_arrayGetItemPtr(pArray, 2);
@@ -463,7 +463,7 @@ HB_FUNC(HB_EXECFROMARRAY)
         pFunc = pParam;
       }
     }
-    else if (HB_IS_OBJECT(pParam) && iPCount <= 3)
+    else if (pParam->isObject() && iPCount <= 3)
     {
       pSelf = pParam;
       pFunc = hb_param(2, Harbour::Item::ANY);
@@ -543,11 +543,11 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
   PHB_ITEM pSelf = nullptr;
   HB_ULONG ulParamOffset = 0;
 
-  if (pParam && pParam->isArray() && !HB_IS_OBJECT(pParam))
+  if (pParam && pParam->isArray() && !pParam->isObject())
   {
     pArray = pParam;
     pParam = hb_arrayGetItemPtr(pArray, 1);
-    if (HB_IS_OBJECT(pParam))
+    if (pParam->isObject())
     {
       pSelf = pParam;
       pParam = hb_arrayGetItemPtr(pArray, 2);

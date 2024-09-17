@@ -2185,7 +2185,7 @@ void hb_itemCopyToRef(PHB_ITEM pDest, PHB_ITEM pSource)
     }
   }
 
-  if (HB_IS_OBJECT(pDest) && hb_objOperatorCall(HB_OO_OP_ASSIGN, pDest, pDest, pSource, nullptr))
+  if (pDest->isObject() && hb_objOperatorCall(HB_OO_OP_ASSIGN, pDest, pDest, pSource, nullptr))
   {
     return;
   }
@@ -2303,7 +2303,7 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
     }
   }
 
-  if (HB_IS_OBJECT(pDest) && hb_objOperatorCall(HB_OO_OP_ASSIGN, pDest, pDest, pSource, nullptr))
+  if (pDest->isObject() && hb_objOperatorCall(HB_OO_OP_ASSIGN, pDest, pDest, pSource, nullptr))
   {
     hb_itemSetNil(pSource);
     return;
@@ -2679,7 +2679,7 @@ PHB_ITEM hb_itemClone(PHB_ITEM pItem)
 
   if (pItem->isArray())
   {
-    if (HB_IS_OBJECT(pItem))
+    if (pItem->isObject())
     {
       return hb_objCloneTo(hb_itemNew(nullptr), pItem);
     }
@@ -2706,7 +2706,7 @@ void hb_itemCloneTo(PHB_ITEM pDest, PHB_ITEM pSource)
 
   if (pSource->isArray())
   {
-    if (HB_IS_OBJECT(pSource))
+    if (pSource->isObject())
     {
       hb_objCloneTo(pDest, pSource);
     }

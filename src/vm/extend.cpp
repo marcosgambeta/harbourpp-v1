@@ -243,7 +243,7 @@ HB_BOOL hb_extIsObject(int iParam)
     pItem = hb_itemUnRef(pItem);
   }
 
-  return HB_IS_OBJECT(pItem);
+  return pItem->isObject();
 }
 
 // NOTE: Caller should not modify the buffer returned by this function.

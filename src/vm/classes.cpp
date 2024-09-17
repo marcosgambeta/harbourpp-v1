@@ -1186,7 +1186,7 @@ void hb_clsDoInit(void)
       hb_vmPushDynSym(pFuncSym);
       hb_vmPushNil();
       hb_vmProc(0);
-      if (HB_IS_OBJECT(pReturn))
+      if (pReturn->isObject())
       {
         *(s_puiHandles[i]) = pReturn->item.asArray.value->uiClass;
       }
@@ -2053,7 +2053,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         {
           PHB_ITEM pBase = pEnum->item.asEnum.basePtr->isByRef() ? hb_itemUnRef(pEnum->item.asEnum.basePtr)
                                                                    : pEnum->item.asEnum.basePtr;
-          if (HB_IS_OBJECT(pBase) && hb_objHasOperator(pBase, HB_OO_OP_ENUMISFIRST))
+          if (pBase->isObject() && hb_objHasOperator(pBase, HB_OO_OP_ENUMISFIRST))
           {
             return hb_objGetMethod(pBase, pMessage, pStack);
           }
@@ -2066,7 +2066,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
                                                                    : pEnum->item.asEnum.basePtr;
           if (pBase->isArray())
           {
-            if (HB_IS_OBJECT(pBase) && hb_objHasOperator(pBase, HB_OO_OP_ENUMISLAST))
+            if (pBase->isObject() && hb_objHasOperator(pBase, HB_OO_OP_ENUMISLAST))
             {
               return hb_objGetMethod(pBase, pMessage, pStack);
             }
@@ -2510,7 +2510,7 @@ static void hb_objSuperDestructorCall(PHB_ITEM pObject, PCLASS pClass)
 // Call object destructor
 void hb_objDestructorCall(PHB_ITEM pObject)
 {
-  if (HB_IS_OBJECT(pObject) && pObject->item.asArray.value->uiClass <= s_uiClasses)
+  if (pObject->isObject() && pObject->item.asArray.value->uiClass <= s_uiClasses)
   {
     PCLASS pClass = s_pClasses[pObject->item.asArray.value->uiClass];
 
@@ -2770,7 +2770,7 @@ long hb_objDataGetNL(PHB_ITEM pObject, const char *szMsg)
 
 PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg)
 {
-  if (pObject && HB_IS_OBJECT(pObject) && pVarMsg)
+  if (pObject && pObject->isObject() && pVarMsg)
   {
     HB_USHORT uiClass = pObject->item.asArray.value->uiClass;
     PCLASS pClass = s_pClasses[uiClass];
@@ -4358,7 +4358,7 @@ HB_FUNC(__CLSINSTSUPER)
       {
         auto pObject = hb_stackReturnItem();
 
-        if (HB_IS_OBJECT(pObject))
+        if (pObject->isObject())
         {
           uiClass = pObject->item.asArray.value->uiClass;
 
@@ -4377,7 +4377,7 @@ HB_FUNC(__CLSINSTSUPER)
               hb_vmSend(0);
 
               pObject = hb_stackReturnItem();
-              if (HB_IS_OBJECT(pObject))
+              if (pObject->isObject())
               {
                 uiClass = pObject->item.asArray.value->uiClass;
                 if (s_pClasses[uiClass]->pClassFuncSym == pClassFuncSym)
@@ -4390,7 +4390,7 @@ HB_FUNC(__CLSINSTSUPER)
         }
 
         // This disables destructor execution for this object
-        if (uiClassH && HB_IS_OBJECT(pObject))
+        if (uiClassH && pObject->isObject())
         {
           pObject->item.asArray.value->uiClass = 0;
         }
@@ -4660,7 +4660,7 @@ HB_FUNC(__SENDER)
       pSelf = hb_stackItem(hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem + 1);
     }
 
-    if (HB_IS_OBJECT(pSelf))
+    if (pSelf->isObject())
     {
       hb_itemReturn(pSelf);
     }
@@ -4905,7 +4905,7 @@ HB_FUNC_STATIC( msgClassParent )
    pItemParam = hb_param(1, Harbour::Item::ANY);
 
    if( pItemParam && uiClass && uiClass <= s_uiClasses ) {
-      if( HB_IS_OBJECT(pItemParam) ) {
+      if( pItemParam->isObject() ) {
          fHasParent = hb_clsHasParentClass(s_pClasses[uiClass], pItemParam->item.asArray.value->uiClass);
       } else if( pItemParam->isString() ) {
          fHasParent = hb_clsIsParent(uiClass, hb_parc(pItemParam))
@@ -4959,7 +4959,7 @@ HB_FUNC_STATIC(msgPerform)
     {
       pSym = pItem->item.asSymbol.value;
     }
-    else if (HB_IS_OBJECT(pItem) && s_pClasses[pItem->item.asArray.value->uiClass]->pClassSym == s___msgSymbol.pDynSym)
+    else if (pItem->isObject() && s_pClasses[pItem->item.asArray.value->uiClass]->pClassSym == s___msgSymbol.pDynSym)
     {
       // Dirty hack
       pItem = hb_arrayGetItemPtr(pItem, 1);
@@ -5432,7 +5432,7 @@ using PHB_IVARINFO = HB_IVARINFO *;
 
 static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fChanged)
 {
-  if (!pObject || !HB_IS_OBJECT(pObject))
+  if (!pObject || !pObject->isObject())
   {
     return nullptr;
   }
@@ -5580,7 +5580,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
 
 static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
 {
-  if (pObject && HB_IS_OBJECT(pObject) && pArray && pArray->isArray() && pArray->item.asArray.value->uiClass == 0)
+  if (pObject && pObject->isObject() && pArray && pArray->isArray() && pArray->item.asArray.value->uiClass == 0)
   {
     HB_USHORT uiClass = pObject->item.asArray.value->uiClass;
     HB_SIZE nPos, nIndex, nLen;
@@ -5661,7 +5661,7 @@ HB_FUNC(__OBJSETIVARS)
     {
       pObject = pNewObj = hb_clsInst(hb_clsFindClassByFunc(hb_itemGetSymbol(pObject)));
     }
-    else if (!HB_IS_OBJECT(pObject))
+    else if (!pObject->isObject())
     {
       pObject = nullptr;
     }
