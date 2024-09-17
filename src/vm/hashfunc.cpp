@@ -498,7 +498,7 @@ HB_FUNC(HB_HMERGE)
     {
       auto pAction = hb_param(3, Harbour::Item::EVALITEM | Harbour::Item::NUMERIC);
 
-      if (pAction && HB_IS_EVALITEM(pAction))
+      if (pAction && pAction->isEvalItem())
       {
         HB_SIZE nLen = hb_hashLen(pSource), nPos = 0;
         while (++nPos <= nLen)
@@ -602,7 +602,7 @@ HB_FUNC(HB_HSCAN)
     }
     HB_SIZE nCount = HB_ISNUM(4) ? static_cast<HB_SIZE>(hb_parns(4)) : nLen - nStart + 1;
 
-    if (HB_IS_EVALITEM(pValue))
+    if (pValue->isEvalItem())
     {
       while (nCount--)
       {
