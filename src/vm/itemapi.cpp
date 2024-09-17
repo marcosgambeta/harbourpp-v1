@@ -817,6 +817,26 @@ double hb_itemGetND(PHB_ITEM pItem)
   return 0;
 }
 
+double _HB_ITEM::getND() // equivalent to hb_itemGetND
+{
+  if (this->isDouble())
+  {
+    return this->item.asDouble.value;
+  }
+  else if (this->isInteger())
+  {
+    return static_cast<double>(this->item.asInteger.value);
+  }
+  else if (this->isLong())
+  {
+    return static_cast<double>(this->item.asLong.value);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 int hb_itemGetNI(PHB_ITEM pItem)
 {
 #if 0

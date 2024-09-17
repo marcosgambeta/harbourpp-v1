@@ -479,6 +479,7 @@ typedef struct _HB_ITEM
   //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
   int getNI();
   long getNL();
+  double getND();
 #endif
 } HB_ITEM, * PHB_ITEM;
 
