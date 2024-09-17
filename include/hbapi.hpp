@@ -477,6 +477,7 @@ typedef struct _HB_ITEM
   bool isBadItem();
   bool isObject();
   //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
+  int getNI();
 #endif
 } HB_ITEM, * PHB_ITEM;
 

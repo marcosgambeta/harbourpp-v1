@@ -842,6 +842,26 @@ int hb_itemGetNI(PHB_ITEM pItem)
   return 0;
 }
 
+int _HB_ITEM::getNI() // equivalent to hb_itemGetNI
+{
+  if (this->isInteger())
+  {
+    return this->item.asInteger.value;
+  }
+  else if (this->isLong())
+  {
+    return static_cast<int>(this->item.asLong.value);
+  }
+  else if (this->isDouble())
+  {
+    return HB_CAST_INT(this->item.asDouble.value);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 long hb_itemGetNL(PHB_ITEM pItem)
 {
 #if 0
