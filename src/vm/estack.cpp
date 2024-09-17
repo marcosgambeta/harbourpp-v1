@@ -1393,7 +1393,7 @@ static HB_DYNS_FUNC(hb_stackMemvarScan)
   HB_SYMBOL_UNUSED(Cargo);
 
   pMemvar = hb_dynsymGetMemvar(pDynSymbol);
-  if (pMemvar && HB_IS_GCITEM(pMemvar))
+  if (pMemvar && pMemvar->isGCItem())
   {
     hb_gcItemRef(pMemvar);
   }
@@ -1412,7 +1412,7 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
   while (nCount)
   {
     PHB_ITEM pMemvar = pPrivateStack->stack[--nCount].pPrevMemvar;
-    if (pMemvar && HB_IS_GCITEM(pMemvar))
+    if (pMemvar && pMemvar->isGCItem())
     {
       hb_gcItemRef(pMemvar);
     }
@@ -1425,7 +1425,7 @@ static void hb_stackIsMemvarRef(PHB_STACK pStack)
     while (uiDynSym > 0)
     {
       auto pMemvar = static_cast<PHB_ITEM>(pStack->pDynH[--uiDynSym].pMemvar);
-      if (pMemvar && HB_IS_GCITEM(pMemvar))
+      if (pMemvar && pMemvar->isGCItem())
       {
         hb_gcItemRef(pMemvar);
       }
@@ -1446,7 +1446,7 @@ static void hb_stackIsTsdRef(PHB_STACK pStack, PHB_TSD_FUNC pCleanFunc)
     if (pStack->pTSD[iTSD].pTSD && pStack->pTSD[iTSD].pTSD->pCleanFunc == pCleanFunc)
     {
       auto pItem = static_cast<PHB_ITEM>(pStack->pTSD[iTSD].value);
-      if (HB_IS_GCITEM(pItem))
+      if (pItem->isGCItem())
       {
         hb_gcItemRef(pItem);
       }
@@ -1468,7 +1468,7 @@ void hb_stackIsStackRef(void *pStackId, PHB_TSD_FUNC pCleanFunc)
   while (nCount > 0)
   {
     PHB_ITEM pItem = pStack->pItems[--nCount];
-    if (HB_IS_GCITEM(pItem))
+    if (pItem->isGCItem())
     {
       hb_gcItemRef(pItem);
     }

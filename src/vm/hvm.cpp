@@ -5008,15 +5008,15 @@ static void hb_vmEnumRefClear(void *value)
 
 static void hb_vmEnumRefMark(void *value)
 {
-  if (HB_IS_GCITEM(&(static_cast<PHB_ENUMREF>(value))->basevalue))
+  if ((&(static_cast<PHB_ENUMREF>(value))->basevalue)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_ENUMREF>(value))->basevalue);
   }
-  if (HB_IS_GCITEM(&(static_cast<PHB_ENUMREF>(value))->oldvalue))
+  if ((&(static_cast<PHB_ENUMREF>(value))->oldvalue)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_ENUMREF>(value))->oldvalue);
   }
-  if (HB_IS_GCITEM(&(static_cast<PHB_ENUMREF>(value))->enumref))
+  if ((&(static_cast<PHB_ENUMREF>(value))->enumref)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_ENUMREF>(value))->enumref);
   }
@@ -7149,13 +7149,13 @@ static void hb_vmTSVRefClear(void *value)
 
 static void hb_vmTSVRefMark(void *value)
 {
-  if (HB_IS_GCITEM(&(static_cast<PHB_TSVREF>(value))->source))
+  if ((&(static_cast<PHB_TSVREF>(value))->source)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_TSVREF>(value))->source);
   }
 
   auto pItem = static_cast<PHB_ITEM>(hb_stackTestTSD(&(static_cast<PHB_TSVREF>(value))->threadData));
-  if (pItem && HB_IS_GCITEM(pItem))
+  if (pItem && pItem->isGCItem())
   {
     hb_gcItemRef(pItem);
   }
@@ -9209,11 +9209,11 @@ static void hb_vmMsgRefClear(void *value)
 
 static void hb_vmMsgRefMark(void *value)
 {
-  if (HB_IS_GCITEM(&(static_cast<PHB_MSGREF>(value))->object))
+  if ((&(static_cast<PHB_MSGREF>(value))->object)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_MSGREF>(value))->object);
   }
-  if (HB_IS_GCITEM(&(static_cast<PHB_MSGREF>(value))->value))
+  if ((&(static_cast<PHB_MSGREF>(value))->value)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_MSGREF>(value))->value);
   }
@@ -9370,15 +9370,15 @@ static void hb_vmMsgIdxRefClear(void *value)
 
 static void hb_vmMsgIdxRefMark(void *value)
 {
-  if (HB_IS_GCITEM(&(static_cast<PHB_MSGIDXREF>(value))->object))
+  if ((&(static_cast<PHB_MSGIDXREF>(value))->object)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_MSGIDXREF>(value))->object);
   }
-  if (HB_IS_GCITEM(&(static_cast<PHB_MSGIDXREF>(value))->index))
+  if ((&(static_cast<PHB_MSGIDXREF>(value))->index)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_MSGIDXREF>(value))->index);
   }
-  if (HB_IS_GCITEM(&(static_cast<PHB_MSGIDXREF>(value))->value))
+  if ((&(static_cast<PHB_MSGIDXREF>(value))->value)->isGCItem())
   {
     hb_gcItemRef(&(static_cast<PHB_MSGIDXREF>(value))->value);
   }

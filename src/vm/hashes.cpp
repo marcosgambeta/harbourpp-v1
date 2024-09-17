@@ -101,7 +101,7 @@ static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
       // small hack for buggy destructors in hash items
       pBaseHash->iFlags |= HB_HASH_RESORT;
 
-      if (HB_IS_GCITEM(pKey) && HB_IS_GCITEM(pVal))
+      if (pKey->isGCItem() && pVal->isGCItem())
       {
         HB_STACK_TLS_PRELOAD
         hb_itemRawMove(hb_stackAllocItem(), pVal);
@@ -157,11 +157,11 @@ static HB_GARBAGE_FUNC(hb_hashGarbageMark)
 
     while (nLen--)
     {
-      if (HB_IS_GCITEM(&pPairs[nLen].key))
+      if ((&pPairs[nLen].key)->isGCItem())
       {
         hb_gcItemRef(&pPairs[nLen].key);
       }
-      if (HB_IS_GCITEM(&pPairs[nLen].value))
+      if ((&pPairs[nLen].value)->isGCItem())
       {
         hb_gcItemRef(&pPairs[nLen].value);
       }

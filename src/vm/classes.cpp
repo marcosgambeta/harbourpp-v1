@@ -1324,7 +1324,7 @@ void hb_clsIsClassRef(void)
          PINITDATA pInitData = pClass->pInitData;
 
          do {
-            if( HB_IS_GCITEM(pInitData->pInitValue) ) {
+            if( pInitData->pInitValue->isGCItem() ) {
                hb_gcItemRef(pInitData->pInitValue);
             }
             ++pInitData;

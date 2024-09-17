@@ -125,7 +125,7 @@ static HB_GARBAGE_FUNC(hb_arrayGarbageMark)
 
     while (nLen--)
     {
-      if (HB_IS_GCITEM(pItems + nLen))
+      if ((pItems + nLen)->isGCItem())
       {
         hb_gcItemRef(pItems + nLen);
       }
