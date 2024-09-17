@@ -142,7 +142,7 @@ static int set_number(PHB_ITEM pItem, int iOldValue)
    HB_TRACE(HB_TR_DEBUG, ("set_number(%p, %d)", static_cast<void*>(pItem), iOldValue));
 #endif
 
-  return pItem->isNumeric() ? hb_itemGetNI(pItem) : iOldValue;
+  return pItem->isNumeric() ? pItem->getNI() : iOldValue;
 }
 
 static char *set_string(PHB_ITEM pItem, char *szOldString)
@@ -677,7 +677,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
   case HB_SET_CURSOR:
     if (pArg1 != nullptr && pArg1->isNumeric())
     {
-      pResult = hb_itemPutNI(pResult, hb_conSetCursor(true, hb_itemGetNI(pArg1)));
+      pResult = hb_itemPutNI(pResult, hb_conSetCursor(true, pArg1->getNI()));
     }
     else
     {
@@ -1928,7 +1928,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_DECIMALS:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_DECIMALS = iValue;
@@ -1939,7 +1939,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_EPOCH:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_EPOCH = iValue;
@@ -1950,7 +1950,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_MBLOCKSIZE:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_MBLOCKSIZE = iValue;
@@ -1961,7 +1961,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_DBFLOCKSCHEME:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_DBFLOCKSCHEME = iValue;
@@ -1972,7 +1972,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_AUTORDER:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_AUTORDER = iValue;
@@ -1983,7 +1983,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_AUTOSHARE:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_AUTOSHARE = iValue;
@@ -1994,14 +1994,14 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_CURSOR:
       if (pItem->isNumeric())
       {
-        hb_conSetCursor(true, hb_itemGetNI(pItem));
+        hb_conSetCursor(true, pItem->getNI());
         fResult = true;
       }
       break;
     case HB_SET_EVENTMASK:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_EVENTMASK = iValue;
@@ -2012,7 +2012,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_MARGIN:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_MARGIN = iValue;
@@ -2023,7 +2023,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_MESSAGE:
       if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
         if (iValue >= 0)
         {
           pSet->HB_SET_MESSAGE = iValue;
@@ -2035,7 +2035,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       if (pItem->isNumeric())
       {
         // Set the value and limit the range
-        pSet->HB_SET_TYPEAHEAD = hb_itemGetNI(pItem);
+        pSet->HB_SET_TYPEAHEAD = pItem->getNI();
         if (pSet->HB_SET_TYPEAHEAD == 0)
         {
           /* Do nothing */;
@@ -2056,7 +2056,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_VIDEOMODE:
       if (pItem->isNumeric())
       {
-        pSet->HB_SET_VIDEOMODE = hb_itemGetNI(pItem);
+        pSet->HB_SET_VIDEOMODE = pItem->getNI();
         fResult = true;
       }
       break;
@@ -2102,7 +2102,7 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
       }
       else if (pItem->isNumeric())
       {
-        iValue = hb_itemGetNI(pItem);
+        iValue = pItem->getNI();
       }
 
       if (iValue == HB_SET_CASE_LOWER || iValue == HB_SET_CASE_UPPER || iValue == HB_SET_CASE_MIXED)

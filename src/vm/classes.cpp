@@ -2737,7 +2737,7 @@ int hb_objDataGetNI(PHB_ITEM pObject, const char *szMsg)
   hb_vmSend(0);
   {
     HB_STACK_TLS_PRELOAD
-    return hb_itemGetNI(hb_stackReturnItem());
+    return hb_stackReturnItem()->getNI();
   }
 }
 
@@ -3322,14 +3322,14 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
       break;
 
     case HB_OO_MSG_SUPER:
-      uiIndex = static_cast<HB_USHORT>(hb_itemGetNI(pFunction));
-      uiSprClass = static_cast<HB_USHORT>(hb_itemGetNI(pInit));
+      uiIndex = static_cast<HB_USHORT>(pFunction->getNI());
+      uiSprClass = static_cast<HB_USHORT>(pInit->getNI());
       fOK = uiSprClass && uiSprClass <= s_uiClasses && uiIndex <= pClass->uiDatas;
       break;
 
     case HB_OO_MSG_ASSIGN:
     case HB_OO_MSG_ACCESS:
-      uiIndex = static_cast<HB_USHORT>(hb_itemGetNI(pFunction));
+      uiIndex = static_cast<HB_USHORT>(pFunction->getNI());
       // This validation can break buggy .prg code which wrongly
       // sets data offsets but IMHO it will help to clean the code.
       // [druzus]
@@ -3338,7 +3338,7 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
 
     case HB_OO_MSG_CLSASSIGN:
     case HB_OO_MSG_CLSACCESS:
-      uiIndex = static_cast<HB_USHORT>(hb_itemGetNI(pFunction));
+      uiIndex = static_cast<HB_USHORT>(pFunction->getNI());
       fOK = uiIndex != 0;
       break;
 
@@ -3971,7 +3971,7 @@ HB_FUNC(__CLSNEW)
   {
     HB_STACK_TLS_PRELOAD
     HB_USHORT uiClass;
-    uiClass = hb_clsNew(szClassName, static_cast<HB_USHORT>(hb_itemGetNI(pDatas)), pSuperArray,
+    uiClass = hb_clsNew(szClassName, static_cast<HB_USHORT>(pDatas->getNI()), pSuperArray,
                         hb_itemGetSymbol(pClassFunc), hb_itemGetL(pModFriend));
     hb_retni(uiClass);
   }
@@ -5651,7 +5651,7 @@ HB_FUNC(__OBJSETIVARS)
 
     if (pObject->isNumeric())
     {
-      pObject = pNewObj = hb_clsInst(static_cast<HB_USHORT>(hb_itemGetNI(pObject)));
+      pObject = pNewObj = hb_clsInst(static_cast<HB_USHORT>(pObject->getNI()));
     }
     else if (pObject->isString())
     {
@@ -5692,7 +5692,7 @@ HB_FUNC(__OBJRESTOREIVARS)
 
     if (pClass->isNumeric())
     {
-      pObject = hb_clsInst(static_cast<HB_USHORT>(hb_itemGetNI(pClass)));
+      pObject = hb_clsInst(static_cast<HB_USHORT>(pClass->getNI()));
     }
     else if (pClass->isString())
     {

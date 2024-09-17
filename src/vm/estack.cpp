@@ -853,7 +853,7 @@ static void hb_stackDispLocal(void)
     }
 
     case Harbour::Item::INTEGER:
-      hb_snprintf(buffer, sizeof(buffer), HB_I_("INTEGER = %i "), hb_itemGetNI(*pBase));
+      hb_snprintf(buffer, sizeof(buffer), HB_I_("INTEGER = %i "), (*pBase)->getNI());
       break;
 
     case Harbour::Item::STRING:

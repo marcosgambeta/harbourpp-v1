@@ -529,7 +529,7 @@ HB_FUNC(HB_HMERGE)
       }
       else
       {
-        hb_hashJoin(pDest, pSource, pAction ? hb_itemGetNI(pAction) : HB_HASH_UNION);
+        hb_hashJoin(pDest, pSource, pAction ? pAction->getNI() : HB_HASH_UNION);
       }
     }
     hb_itemReturn(pDest);
@@ -940,7 +940,7 @@ HB_FUNC(HB_HAUTOADD)
       }
       else
       {
-        int iNewFlags = hb_itemGetNI(pValue);
+        int iNewFlags = pValue->getNI();
         if ((iNewFlags | iOldFlags) != iNewFlags)
         {
           hb_hashClearFlags(pHash, iOldFlags);

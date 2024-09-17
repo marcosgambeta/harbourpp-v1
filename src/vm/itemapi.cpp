@@ -3389,7 +3389,7 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
     {
       // If the width parameter is specified, override the default value
       // and set the number of decimals to zero
-      iWidth = hb_itemGetNI(pWidth);
+      iWidth = pWidth->getNI();
 
       if (iWidth < 1)
       {
@@ -3404,7 +3404,7 @@ char *hb_itemStr(PHB_ITEM pNumber, PHB_ITEM pWidth, PHB_ITEM pDec)
       // This function does not include the decimal places in the width,
       // so the width must be adjusted downwards, if the decimal places
       // parameter is greater than 0
-      iDec = hb_itemGetNI(pDec);
+      iDec = pDec->getNI();
 
       if (iDec <= 0)
       {

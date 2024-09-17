@@ -655,7 +655,7 @@ int hb_arrayGetNI(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    return hb_itemGetNI(pArray->item.asArray.value->pItems + nIndex - 1);
+    return (pArray->item.asArray.value->pItems + nIndex - 1)->getNI();
   }
   else
   {
