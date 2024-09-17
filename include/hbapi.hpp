@@ -475,7 +475,7 @@ typedef struct _HB_ITEM
   bool isEvalItem();
   bool isHashKey();
   bool isBadItem();
-  //#define HB_IS_OBJECT(p)     (HB_IS_ARRAY(p) && HB_ARRAY_OBJ(p))
+  bool isObject();
   //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -612,8 +612,6 @@ inline bool _HB_ITEM::isBadItem()
   return ((HB_ITEM_TYPERAW(this) & Harbour::Item::COMPLEX) != 0 && (HB_ITEM_TYPERAW(this) & ~(Harbour::Item::COMPLEX | Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT)) != 0);
 }
 
-//#define HB_IS_OBJECT(p)     (HB_IS_ARRAY(p) && HB_ARRAY_OBJ(p))
-
 //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
 
 #endif
@@ -627,6 +625,13 @@ typedef struct _HB_BASEARRAY
   HB_USHORT   uiClass;      // offset to the classes base if it is an object
   HB_USHORT   uiPrevCls;    // for fixing after access super
 } HB_BASEARRAY, * PHB_BASEARRAY;
+
+#if defined(__cplusplus)
+inline bool _HB_ITEM::isObject()
+{
+  return (HB_IS_ARRAY(this) && HB_ARRAY_OBJ(this));
+}
+#endif
 
 #ifndef _HB_HASH_INTERNAL_
 // internal structure for hashes
