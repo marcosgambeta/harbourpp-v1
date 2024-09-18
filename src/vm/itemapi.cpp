@@ -3549,8 +3549,8 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
   {
   case Harbour::Item::STRING:
   case Harbour::Item::MEMO:
-    buffer = const_cast<char *>(hb_itemGetCPtr(pItem));
-    *nLen = hb_itemGetCLen(pItem);
+    buffer = const_cast<char *>(pItem->getCPtr());
+    *nLen = pItem->getCLen();
     *bFreeReq = false;
     break;
 

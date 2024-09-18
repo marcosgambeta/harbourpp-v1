@@ -1017,7 +1017,7 @@ const char *hb_parvc(int iParam, ...)
       va_end(va);
 
       pItem = hb_arrayGetItemPtr(pItem, nArrayIndex);
-      return pItem && pItem->isString() ? hb_itemGetCPtr(pItem) : nullptr;
+      return pItem && pItem->isString() ? pItem->getCPtr() : nullptr;
     }
   }
 

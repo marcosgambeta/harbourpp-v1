@@ -2081,7 +2081,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
           }
           else if (pBase->isString())
           {
-            hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_itemGetCLen(pBase));
+            hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= pBase->getCLen());
           }
 
           return &s___msgEnumIsLast;
@@ -2848,7 +2848,7 @@ static PHB_SYMB hb_objGetFuncSym(PHB_ITEM pItem)
     }
     else if (pItem->isString())
     {
-      auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
+      auto pDynSym = hb_dynsymFindName(pItem->getCPtr());
 
       if (pDynSym && pDynSym->pSymbol->value.pFunPtr)
       {
@@ -2981,11 +2981,11 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
   {
     if (pItem->isString())
     {
-      switch (hb_itemGetCPtr(pItem)[0])
+      switch (pItem->getCPtr()[0])
       {
       case 'C':
       case 'c':
-        if (hb_strnicmp(hb_itemGetCPtr(pItem), "code", 4) == 0)
+        if (hb_strnicmp(pItem->getCPtr(), "code", 4) == 0)
         {
           return Harbour::Item::BLOCK;
         }
@@ -2995,7 +2995,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
 
       case 'S':
       case 's':
-        if (hb_strnicmp(hb_itemGetCPtr(pItem), "str", 3) == 0)
+        if (hb_strnicmp(pItem->getCPtr(), "str", 3) == 0)
         {
           return Harbour::Item::STRING;
         }
@@ -3010,7 +3010,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
 
       case 'D':
       case 'd':
-        if (hb_strnicmp(hb_itemGetCPtr(pItem), "datet", 5) == 0)
+        if (hb_strnicmp(pItem->getCPtr(), "datet", 5) == 0)
         {
           return Harbour::Item::TIMESTAMP;
         }
@@ -3033,7 +3033,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
 
       case 'N':
       case 'n':
-        if (hb_stricmp(hb_itemGetCPtr(pItem), "nil") == 0)
+        if (hb_stricmp(pItem->getCPtr(), "nil") == 0)
         {
           return Harbour::Item::NIL;
         }
@@ -4336,7 +4336,7 @@ HB_FUNC(__CLSINSTSUPER)
     }
     else if (pItem->isString())
     {
-      auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
+      auto pDynSym = hb_dynsymFindName(pItem->getCPtr());
       if (pDynSym)
       {
         pClassFuncSym = pDynSym->pSymbol;
@@ -5655,7 +5655,7 @@ HB_FUNC(__OBJSETIVARS)
     }
     else if (pObject->isString())
     {
-      pObject = pNewObj = hb_clsInst(hb_clsFindClass(hb_itemGetCPtr(pObject), nullptr));
+      pObject = pNewObj = hb_clsInst(hb_clsFindClass(pObject->getCPtr(), nullptr));
     }
     else if (pObject->isSymbol())
     {
@@ -5696,7 +5696,7 @@ HB_FUNC(__OBJRESTOREIVARS)
     }
     else if (pClass->isString())
     {
-      pObject = hb_clsInst(hb_clsFindClass(hb_itemGetCPtr(pClass), hb_parc(3)));
+      pObject = hb_clsInst(hb_clsFindClass(pClass->getCPtr(), hb_parc(3)));
     }
     else if (pClass->isSymbol())
     {

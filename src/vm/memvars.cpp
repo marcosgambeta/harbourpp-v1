@@ -1458,7 +1458,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
       if (pMemvar->isString())
       {
         // Store the closing zero byte, too
-        HB_SIZE nLen = hb_itemGetCLen(pMemvar) + 1;
+        HB_SIZE nLen = pMemvar->getCLen() + 1;
         int iOverFlow = 0;
 
         // Clipper supports only 64 KiB strings
@@ -1470,7 +1470,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
         buffer[11] = 'C' + 128;
         HB_PUT_LE_UINT16(&buffer[16], nLen);
         hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN, -1);
-        hb_fileWrite(fhnd, hb_itemGetCPtr(pMemvar), nLen - iOverFlow, -1);
+        hb_fileWrite(fhnd, pMemvar->getCPtr(), nLen - iOverFlow, -1);
         if (iOverFlow)
         {
           hb_fileWrite(fhnd, "\0", 1, -1);

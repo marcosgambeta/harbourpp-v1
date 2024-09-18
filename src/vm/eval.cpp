@@ -484,7 +484,7 @@ HB_FUNC(HB_EXECFROMARRAY)
     }
     else if (pFunc->isString())
     {
-      pExecSym = hb_dynsymGet(hb_itemGetCPtr(pFunc))->pSymbol;
+      pExecSym = hb_dynsymGet(pFunc->getCPtr())->pSymbol;
     }
     else if (pFunc->isBlock() && !pSelf)
     {
@@ -569,7 +569,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
     }
     else if (pParam->isString())
     {
-      pExecSym = hb_dynsymGet(hb_itemGetCPtr(pParam))->pSymbol;
+      pExecSym = hb_dynsymGet(pParam->getCPtr())->pSymbol;
     }
     else if (pParam->isBlock() && !pSelf)
     {

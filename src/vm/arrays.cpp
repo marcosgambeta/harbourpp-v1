@@ -769,7 +769,7 @@ char *hb_arrayGetC(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    return hb_itemGetC(pArray->item.asArray.value->pItems + nIndex - 1);
+    return (pArray->item.asArray.value->pItems + nIndex - 1)->getC();
   }
   else
   {
@@ -785,7 +785,7 @@ const char *hb_arrayGetCPtr(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    return hb_itemGetCPtr(pArray->item.asArray.value->pItems + nIndex - 1);
+    return (pArray->item.asArray.value->pItems + nIndex - 1)->getCPtr();
   }
   else
   {
@@ -801,7 +801,7 @@ HB_SIZE hb_arrayGetCLen(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    return hb_itemGetCLen(pArray->item.asArray.value->pItems + nIndex - 1);
+    return (pArray->item.asArray.value->pItems + nIndex - 1)->getCLen();
   }
   else
   {

@@ -857,7 +857,7 @@ static void hb_stackDispLocal(void)
       break;
 
     case Harbour::Item::STRING:
-      hb_snprintf(buffer, sizeof(buffer), HB_I_("STRING = \"%s\" "), hb_itemGetCPtr(*pBase));
+      hb_snprintf(buffer, sizeof(buffer), HB_I_("STRING = \"%s\" "), (*pBase)->getCPtr());
       break;
 
     case Harbour::Item::SYMBOL:

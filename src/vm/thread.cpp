@@ -934,7 +934,7 @@ HB_CARGO_FUNC(hb_threadStartVM)
     }
     else if (pStart->isString())
     {
-      hb_vmPushDynSym(hb_dynsymGet(hb_itemGetCPtr(pStart)));
+      hb_vmPushDynSym(hb_dynsymGet(pStart->getCPtr()));
       hb_vmPushNil();
     }
     else
@@ -1132,7 +1132,7 @@ HB_FUNC(HB_THREADSTART)
   {
     if (pStart->isString())
     {
-      szFuncName = hb_itemGetCPtr(pStart);
+      szFuncName = pStart->getCPtr();
       auto pDynSym = hb_dynsymFindName(szFuncName);
       if (pDynSym)
       {
