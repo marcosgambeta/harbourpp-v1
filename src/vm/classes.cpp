@@ -3966,12 +3966,12 @@ HB_FUNC(__CLSNEW)
     pModFriend = nullptr;
   }
 
-  if (szClassName != nullptr && (!pDatas || pDatas->isNumeric()) && (!pSuperArray || pSuperArray->isArray()) &&
-      (!pClassFunc || pClassFunc->isSymbol()) && (!pModFriend || pModFriend->isLogical()))
+  if (szClassName != nullptr && (pDatas == nullptr || pDatas->isNumeric()) && (pSuperArray == nullptr || pSuperArray->isArray()) &&
+      (pClassFunc == nullptr || pClassFunc->isSymbol()) && (pModFriend == nullptr || pModFriend->isLogical()))
   {
     HB_STACK_TLS_PRELOAD
     HB_USHORT uiClass;
-    uiClass = hb_clsNew(szClassName, static_cast<HB_USHORT>(pDatas->getNI()), pSuperArray,
+    uiClass = hb_clsNew(szClassName, static_cast<HB_USHORT>(hb_itemGetNI(pDatas)), pSuperArray,
                         hb_itemGetSymbol(pClassFunc), hb_itemGetL(pModFriend));
     hb_retni(uiClass);
   }
