@@ -755,6 +755,30 @@ HB_BOOL hb_itemGetL(PHB_ITEM pItem)
   return false;
 }
 
+HB_BOOL _HB_ITEM::getL() // equivalent to hb_itemGetL
+{
+  if (this->isLogical())
+  {
+    return this->item.asLogical.value;
+  }
+  else if (this->isInteger())
+  {
+    return this->item.asInteger.value != 0;
+  }
+  else if (this->isLong())
+  {
+    return this->item.asLong.value != 0;
+  }
+  else if (this->isDouble())
+  {
+    return this->item.asDouble.value != 0.0;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 HB_BOOL hb_itemGetLX(PHB_ITEM pItem)
 {
 #if 0

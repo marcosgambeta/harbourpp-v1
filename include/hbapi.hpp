@@ -480,6 +480,7 @@ typedef struct _HB_ITEM
   int getNI();
   long getNL();
   double getND();
+  HB_BOOL getL();
 #endif
 } HB_ITEM, * PHB_ITEM;
 
