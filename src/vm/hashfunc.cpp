@@ -661,7 +661,7 @@ HB_FUNC(HB_HSCAN)
         if (pItem != nullptr)
         {
           if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
-              hb_itemGetND(pItem) == static_cast<double>(nValue))
+              pItem->getND() == static_cast<double>(nValue))
           {
             fFound = true;
             break;
@@ -676,13 +676,13 @@ HB_FUNC(HB_HSCAN)
     }
     else if (pValue->isNumeric())
     {
-      auto dValue = hb_itemGetND(pValue);
+      auto dValue = pValue->getND();
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (pItem->isNumeric() && hb_itemGetND(pItem) == dValue)
+          if (pItem->isNumeric() && pItem->getND() == dValue)
           {
             fFound = true;
             break;

@@ -737,7 +737,7 @@ double hb_arrayGetND(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    return hb_itemGetND(pArray->item.asArray.value->pItems + nIndex - 1);
+    return (pArray->item.asArray.value->pItems + nIndex - 1)->getND();
   }
   else
   {
@@ -1343,7 +1343,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
             if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
-                hb_itemGetND(pItem) == static_cast<double>(nValue))
+                pItem->getND() == static_cast<double>(nValue))
             {
               return nStart;
             }
@@ -1351,13 +1351,13 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
         }
         else if (pValue->isNumeric())
         {
-          auto dValue = hb_itemGetND(pValue);
+          auto dValue = pValue->getND();
 
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (pItem->isNumeric() && hb_itemGetND(pItem) == dValue)
+            if (pItem->isNumeric() && pItem->getND() == dValue)
             {
               return nStart;
             }
@@ -1541,7 +1541,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
             if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
-                hb_itemGetND(pItem) == static_cast<double>(nValue))
+                pItem->getND() == static_cast<double>(nValue))
             {
               return nStart + 1;
             }
@@ -1549,13 +1549,13 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
         }
         else if (pValue->isNumeric())
         {
-          auto dValue = hb_itemGetND(pValue);
+          auto dValue = pValue->getND();
 
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (pItem->isNumeric() && hb_itemGetND(pItem) == dValue)
+            if (pItem->isNumeric() && pItem->getND() == dValue)
             {
               return nStart + 1;
             }

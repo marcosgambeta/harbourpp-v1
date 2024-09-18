@@ -2797,7 +2797,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      fResult = pItem2->isNumeric() && hb_itemGetND(pItem1) == hb_itemGetND(pItem2);
+      fResult = pItem2->isNumeric() && pItem1->getND() == pItem2->getND();
     }
   }
   else if (pItem1->isString())
@@ -2861,8 +2861,8 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
     }
     else if (pItem2->isNumeric())
     {
-      auto d1 = hb_itemGetND(pItem1);
-      auto d2 = hb_itemGetND(pItem2);
+      auto d1 = pItem1->getND();
+      auto d2 = pItem2->getND();
       *piResult = d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
       fResult = true;
     }
@@ -3173,7 +3173,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
 
   if (pNumber->isDouble())
   {
-    auto dNumber = hb_itemGetND(pNumber);
+    auto dNumber = pNumber->getND();
 
     if (!hb_isfinite(dNumber))
     {

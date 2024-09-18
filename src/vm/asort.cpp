@@ -96,7 +96,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    return hb_itemGetND(pItem1) < hb_itemGetND(pItem2);
+    return pItem1->getND() < pItem2->getND();
   }
   else if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
   {

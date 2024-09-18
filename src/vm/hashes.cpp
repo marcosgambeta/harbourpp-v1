@@ -249,8 +249,8 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
   }
   else if (pKey2->isNumeric())
   {
-    auto d1 = hb_itemGetND(pKey1);
-    auto d2 = hb_itemGetND(pKey2);
+    auto d1 = pKey1->getND();
+    auto d2 = pKey2->getND();
     return d1 < d2 ? -1 : (d1 > d2 ? 1 : 0);
   }
   return -1;

@@ -838,7 +838,7 @@ static void hb_stackDispLocal(void)
     break;
 
     case Harbour::Item::DOUBLE:
-      hb_snprintf(buffer, sizeof(buffer), HB_I_("DOUBLE = %f "), hb_itemGetND(*pBase));
+      hb_snprintf(buffer, sizeof(buffer), HB_I_("DOUBLE = %f "), (*pBase)->getND());
       break;
 
     case Harbour::Item::LOGICAL:

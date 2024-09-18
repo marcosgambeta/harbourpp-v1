@@ -3894,7 +3894,7 @@ static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    auto dDivisor = hb_itemGetND(pItem2);
+    auto dDivisor = pItem2->getND();
 
     if (dDivisor == 0.0)
     {
@@ -3915,7 +3915,7 @@ static void hb_vmDivide(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
          integer result. Therefore this code is not needed and has been
          removed - David G. Holm <dholm@jsd-llc.com>
        */
-      hb_itemPutND(pResult, hb_itemGetND(pItem1) / dDivisor);
+      hb_itemPutND(pResult, pItem1->getND() / dDivisor);
     }
   }
   else if (!hb_objOperatorCall(HB_OO_OP_DIVIDE, pResult, pItem1, pItem2, nullptr))
@@ -3958,7 +3958,7 @@ static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    auto dDivisor = hb_itemGetND(pItem2);
+    auto dDivisor = pItem2->getND();
 
     if (dDivisor == 0.0)
     {
@@ -3973,7 +3973,7 @@ static void hb_vmModulus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     else
     {
       /* NOTE: Clipper always returns the result of modulus with the SET number of decimal places. */
-      hb_itemPutND(pResult, fmod(hb_itemGetND(pItem1), dDivisor));
+      hb_itemPutND(pResult, fmod(pItem1->getND(), dDivisor));
     }
   }
   else if (!hb_objOperatorCall(HB_OO_OP_MOD, pResult, pItem1, pItem2, nullptr))
@@ -3997,7 +3997,7 @@ static void hb_vmPower(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   if (pItem1->isNumeric() && pItem2->isNumeric())
   {
     /* NOTE: Clipper always returns the result of power with the SET number of decimal places. */
-    hb_itemPutND(pResult, pow(hb_itemGetND(pItem1), hb_itemGetND(pItem2)));
+    hb_itemPutND(pResult, pow(pItem1->getND(), pItem2->getND()));
   }
   else if (!hb_objOperatorCall(HB_OO_OP_POWER, pResult, pItem1, pItem2, nullptr))
   {
@@ -11902,7 +11902,7 @@ HB_BOOL hb_xvmDivideByInt(HB_LONG lDivisor)
     }
     else
     {
-      hb_itemPutND(pValue, hb_itemGetND(pValue) / lDivisor);
+      hb_itemPutND(pValue, pValue->getND() / lDivisor);
     }
   }
   else if (hb_objHasOperator(pValue, HB_OO_OP_DIVIDE))
@@ -11954,7 +11954,7 @@ HB_BOOL hb_xvmModulusByInt(HB_LONG lDivisor)
     }
     else
     {
-      hb_itemPutND(pValue, fmod(hb_itemGetND(pValue), lDivisor));
+      hb_itemPutND(pValue, fmod(pValue->getND(), lDivisor));
     }
   }
   else if (hb_objHasOperator(pValue, HB_OO_OP_MOD))
