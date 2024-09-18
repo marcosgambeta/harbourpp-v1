@@ -842,7 +842,7 @@ static void hb_stackDispLocal(void)
       break;
 
     case Harbour::Item::LOGICAL:
-      hb_snprintf(buffer, sizeof(buffer), HB_I_("LOGICAL = %s "), hb_itemGetL(*pBase) ? ".T." : ".F.");
+      hb_snprintf(buffer, sizeof(buffer), HB_I_("LOGICAL = %s "), (*pBase)->getL() ? ".T." : ".F.");
       break;
 
     case Harbour::Item::LONG: {

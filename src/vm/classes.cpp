@@ -2714,7 +2714,7 @@ HB_BOOL hb_objDataGetL(PHB_ITEM pObject, const char *szMsg)
   hb_vmSend(0);
   {
     HB_STACK_TLS_PRELOAD
-    return hb_itemGetL(hb_stackReturnItem());
+    return hb_stackReturnItem()->getL();
   }
 }
 

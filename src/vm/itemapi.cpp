@@ -3576,7 +3576,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     break;
 
   case Harbour::Item::LOGICAL:
-    buffer = const_cast<char *>(hb_itemGetL(pItem) ? ".T." : ".F.");
+    buffer = const_cast<char *>(pItem->getL() ? ".T." : ".F.");
     *nLen = 3;
     *bFreeReq = false;
     break;

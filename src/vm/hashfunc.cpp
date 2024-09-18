@@ -515,7 +515,7 @@ HB_FUNC(HB_HMERGE)
             hb_vmSend(3);
             {
               auto pReturn = hb_stackReturnItem();
-              if (pReturn->isLogical() && hb_itemGetL(pReturn))
+              if (pReturn->isLogical() && pReturn->getL())
               {
                 hb_hashAdd(pDest, pKey, pValue);
               }
@@ -618,7 +618,7 @@ HB_FUNC(HB_HSCAN)
           hb_vmSend(3);
           {
             auto pReturn = hb_stackReturnItem();
-            if (pReturn->isLogical() && hb_itemGetL(pReturn))
+            if (pReturn->isLogical() && pReturn->getL())
             {
               fFound = true;
               break;
@@ -724,7 +724,7 @@ HB_FUNC(HB_HSCAN)
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (pItem->isLogical() && hb_itemGetL(pItem) == fValue)
+          if (pItem->isLogical() && pItem->getL() == fValue)
           {
             fFound = true;
             break;
@@ -854,7 +854,7 @@ HB_FUNC(HB_HCASEMATCH)
 
     if (pValue)
     {
-      if (hb_itemGetL(pValue))
+      if (pValue->getL())
       {
         if ((iFlags & HB_HASH_IGNORECASE) != 0)
         {
@@ -888,7 +888,7 @@ HB_FUNC(HB_HBINARY)
 
     if (pValue)
     {
-      if (hb_itemGetL(pValue))
+      if (pValue->getL())
       {
         if ((iFlags & HB_HASH_BINARY) == 0)
         {
@@ -929,7 +929,7 @@ HB_FUNC(HB_HAUTOADD)
     {
       if (pValue->isLogical())
       {
-        if (hb_itemGetL(pValue))
+        if (pValue->getL())
         {
           hb_hashSetFlags(pHash, hb_hashGetDefault(pHash) ? HB_HASH_AUTOADD_ALWAYS : HB_HASH_AUTOADD_ASSIGN);
         }
@@ -971,7 +971,7 @@ HB_FUNC(HB_HKEEPORDER)
 
     if (pValue)
     {
-      if (hb_itemGetL(pValue))
+      if (pValue->getL())
       {
         if ((iFlags & HB_HASH_KEEPORDER) == 0)
         {

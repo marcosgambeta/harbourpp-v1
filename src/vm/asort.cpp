@@ -79,7 +79,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
 
     // CA-Cl*pper always takes return value as logical item
     // accepting 0, 1 as numeric representation of HB_FALSE/HB_TRUE
-    return (pRet->isLogical() || pRet->isNumeric()) ? hb_itemGetL(pRet) : true;
+    return (pRet->isLogical() || pRet->isNumeric()) ? pRet->getL() : true;
   }
 
   // Do native compare when no codeblock is supplied
@@ -112,7 +112,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    return hb_itemGetL(pItem1) < hb_itemGetL(pItem2);
+    return pItem1->getL() < pItem2->getL();
   }
   else
   {

@@ -1584,7 +1584,7 @@ HB_FUNC(HB_THREADONCE)
   {
     HB_STACK_TLS_PRELOAD
     auto fFirstCall = false;
-    if (pItem->isNil() || !hb_itemGetL(pItem))
+    if (pItem->isNil() || !pItem->getL())
     {
       auto pAction = hb_param(2, Harbour::Item::EVALITEM);
 

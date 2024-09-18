@@ -1517,7 +1517,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
         buffer[11] = 'L' + 128;
         buffer[16] = 1;
         buffer[17] = 0;
-        buffer[HB_MEM_REC_LEN] = hb_itemGetL(pMemvar) ? 1 : 0;
+        buffer[HB_MEM_REC_LEN] = pMemvar->getL() ? 1 : 0;
         hb_fileWrite(fhnd, buffer, HB_MEM_REC_LEN + 1, -1);
       }
     }

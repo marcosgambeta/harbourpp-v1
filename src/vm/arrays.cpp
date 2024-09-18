@@ -639,7 +639,7 @@ HB_BOOL hb_arrayGetL(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    return hb_itemGetL(pArray->item.asArray.value->pItems + nIndex - 1);
+    return (pArray->item.asArray.value->pItems + nIndex - 1)->getL();
   }
   else
   {
@@ -1393,13 +1393,13 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
         }
         else if (pValue->isLogical())
         {
-          HB_BOOL bValue = hb_itemGetL(pValue);
+          HB_BOOL bValue = pValue->getL();
 
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (pItem->isLogical() && hb_itemGetL(pItem) == bValue)
+            if (pItem->isLogical() && pItem->getL() == bValue)
             {
               return nStart;
             }
@@ -1591,13 +1591,13 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
         }
         else if (pValue->isLogical())
         {
-          HB_BOOL bValue = hb_itemGetL(pValue);
+          HB_BOOL bValue = pValue->getL();
 
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (pItem->isLogical() && hb_itemGetL(pItem) == bValue)
+            if (pItem->isLogical() && pItem->getL() == bValue)
             {
               return nStart + 1;
             }

@@ -112,7 +112,7 @@ static bool set_logical(PHB_ITEM pItem, bool bDefault)
   {
     if (pItem->isLogical())
     {
-      bLogical = hb_itemGetL(pItem);
+      bLogical = pItem->getL();
     }
     else if (pItem->isString())
     {
@@ -1703,224 +1703,224 @@ HB_BOOL hb_setSetItem(HB_set_enum set_specifier, PHB_ITEM pItem)
     case HB_SET_ALTERNATE:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_ALTERNATE = hb_itemGetL(pItem);
+        pSet->HB_SET_ALTERNATE = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_AUTOPEN:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_AUTOPEN = hb_itemGetL(pItem);
+        pSet->HB_SET_AUTOPEN = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_BELL:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_BELL = hb_itemGetL(pItem);
+        pSet->HB_SET_BELL = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_CANCEL:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_CANCEL = hb_itemGetL(pItem);
+        pSet->HB_SET_CANCEL = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_CONFIRM:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_CONFIRM = hb_itemGetL(pItem);
+        pSet->HB_SET_CONFIRM = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_CONSOLE:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_CONSOLE = hb_itemGetL(pItem);
+        pSet->HB_SET_CONSOLE = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_DEBUG:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_DEBUG = hb_itemGetL(pItem);
+        pSet->HB_SET_DEBUG = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_DELETED:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_DELETED = hb_itemGetL(pItem);
+        pSet->HB_SET_DELETED = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_DELIMITERS:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_DELIMITERS = hb_itemGetL(pItem);
+        pSet->HB_SET_DELIMITERS = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_EOF:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_EOF = hb_itemGetL(pItem);
+        pSet->HB_SET_EOF = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_ESCAPE:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_ESCAPE = hb_itemGetL(pItem);
+        pSet->HB_SET_ESCAPE = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_EXACT:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_EXACT = hb_itemGetL(pItem);
+        pSet->HB_SET_EXACT = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_EXCLUSIVE:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_EXCLUSIVE = hb_itemGetL(pItem);
+        pSet->HB_SET_EXCLUSIVE = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_EXIT:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_EXIT = hb_itemGetL(pItem);
+        pSet->HB_SET_EXIT = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_EXTRA:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_EXTRA = hb_itemGetL(pItem);
+        pSet->HB_SET_EXTRA = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_FIXED:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_FIXED = hb_itemGetL(pItem);
+        pSet->HB_SET_FIXED = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_IDLEREPEAT:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_IDLEREPEAT = hb_itemGetL(pItem);
+        pSet->HB_SET_IDLEREPEAT = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_INSERT:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_INSERT = hb_itemGetL(pItem);
+        pSet->HB_SET_INSERT = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_INTENSITY:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_INTENSITY = hb_itemGetL(pItem);
+        pSet->HB_SET_INTENSITY = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_MCENTER:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_MCENTER = hb_itemGetL(pItem);
+        pSet->HB_SET_MCENTER = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_OPTIMIZE:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_OPTIMIZE = hb_itemGetL(pItem);
+        pSet->HB_SET_OPTIMIZE = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_FORCEOPT:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_FORCEOPT = hb_itemGetL(pItem);
+        pSet->HB_SET_FORCEOPT = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_PRINTER:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_PRINTER = hb_itemGetL(pItem);
+        pSet->HB_SET_PRINTER = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_SCOREBOARD:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_SCOREBOARD = hb_itemGetL(pItem);
+        pSet->HB_SET_SCOREBOARD = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_SCROLLBREAK:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_SCROLLBREAK = hb_itemGetL(pItem);
+        pSet->HB_SET_SCROLLBREAK = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_SOFTSEEK:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_SOFTSEEK = hb_itemGetL(pItem);
+        pSet->HB_SET_SOFTSEEK = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_STRICTREAD:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_STRICTREAD = hb_itemGetL(pItem);
+        pSet->HB_SET_STRICTREAD = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_UNIQUE:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_UNIQUE = hb_itemGetL(pItem);
+        pSet->HB_SET_UNIQUE = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_WRAP:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_WRAP = hb_itemGetL(pItem);
+        pSet->HB_SET_WRAP = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_HARDCOMMIT:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_HARDCOMMIT = hb_itemGetL(pItem);
+        pSet->HB_SET_HARDCOMMIT = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_DEFEXTENSIONS:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_DEFEXTENSIONS = hb_itemGetL(pItem);
+        pSet->HB_SET_DEFEXTENSIONS = pItem->getL();
         fResult = true;
       }
       break;
     case HB_SET_TRIMFILENAME:
       if (pItem->isLogical())
       {
-        pSet->HB_SET_TRIMFILENAME = hb_itemGetL(pItem);
+        pSet->HB_SET_TRIMFILENAME = pItem->getL();
         fResult = true;
       }
       break;
