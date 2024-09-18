@@ -517,6 +517,21 @@ char *hb_itemGetC(PHB_ITEM pItem)
   }
 }
 
+char *_HB_ITEM::getC() // equivalent to hb_itemGetC
+{
+  if (this->isString())
+  {
+    auto szResult = static_cast<char *>(hb_xgrab(this->item.asString.length + 1));
+    hb_xmemcpy(szResult, this->item.asString.value, this->item.asString.length);
+    szResult[this->item.asString.length] = '\0';
+    return szResult;
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+
 // NOTE: Caller should not modify the buffer returned by this function.
 //       [vszakats]
 
@@ -536,6 +551,18 @@ const char *hb_itemGetCPtr(PHB_ITEM pItem)
   }
 }
 
+const char *_HB_ITEM::getCPtr() // equivalent to hb_itemGetCPtr
+{
+  if (this->isString())
+  {
+    return this->item.asString.value;
+  }
+  else
+  {
+    return "";
+  }
+}
+
 HB_SIZE hb_itemGetCLen(PHB_ITEM pItem)
 {
 #if 0
@@ -545,6 +572,18 @@ HB_SIZE hb_itemGetCLen(PHB_ITEM pItem)
   if (pItem && pItem->isString())
   {
     return pItem->item.asString.length;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+HB_SIZE _HB_ITEM::getCLen() // equivalent to hb_itemGetCLen
+{
+  if (this->isString())
+  {
+    return this->item.asString.length;
   }
   else
   {

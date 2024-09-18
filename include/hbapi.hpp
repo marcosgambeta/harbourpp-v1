@@ -481,6 +481,9 @@ typedef struct _HB_ITEM
   long getNL();
   double getND();
   HB_BOOL getL();
+  char *getC();
+  const char *getCPtr();
+  HB_SIZE getCLen();
 #endif
 } HB_ITEM, * PHB_ITEM;
 
