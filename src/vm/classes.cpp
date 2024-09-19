@@ -2057,7 +2057,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
           {
             return hb_objGetMethod(pBase, pMessage, pStack);
           }
-          hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) <= 1);
+          hb_stackReturnItem()->putL(static_cast<HB_SIZE>(pEnum->item.asEnum.offset) <= 1);
           return &s___msgEnumIsFirst;
         }
         else if (pMsg == s___msgEnumIsLast.pDynSym)
@@ -2072,16 +2072,16 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
             }
             else
             {
-              hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_arrayLen(pBase));
+              hb_stackReturnItem()->putL(static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_arrayLen(pBase));
             }
           }
           else if (pBase->isHash())
           {
-            hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_hashLen(pBase));
+            hb_stackReturnItem()->putL(static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= hb_hashLen(pBase));
           }
           else if (pBase->isString())
           {
-            hb_itemPutL(hb_stackReturnItem(), static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= pBase->getCLen());
+            hb_stackReturnItem()->putL(static_cast<HB_SIZE>(pEnum->item.asEnum.offset) >= pBase->getCLen());
           }
 
           return &s___msgEnumIsLast;

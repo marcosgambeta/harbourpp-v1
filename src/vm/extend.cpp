@@ -1908,7 +1908,7 @@ void hb_retl(int iLogical)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_itemPutL(hb_stackReturnItem(), iLogical ? true : false);
+  hb_stackReturnItem()->putL(iLogical ? true : false);
 }
 
 #undef hb_retnd
@@ -2297,7 +2297,7 @@ int hb_storl(int iLogical, int iParam)
 
   if (iParam == -1)
   {
-    hb_itemPutL(hb_stackReturnItem(), iLogical ? true : false);
+    hb_stackReturnItem()->putL(iLogical ? true : false);
     return 1;
   }
   else if (iParam >= 0 && iParam <= hb_pcount())
@@ -2306,7 +2306,7 @@ int hb_storl(int iLogical, int iParam)
 
     if (pItem->isByRef())
     {
-      hb_itemPutL(hb_itemUnRef(pItem), iLogical ? true : false);
+      hb_itemUnRef(pItem)->putL(iLogical ? true : false);
       return 1;
     }
   }
@@ -2825,7 +2825,7 @@ int hb_storvl(int iLogical, int iParam, ...)
     }
     else if (bByRef || iParam == -1)
     {
-      hb_itemPutL(pItem, iLogical ? true : false);
+      pItem->putL(iLogical ? true : false);
       return 1;
     }
   }

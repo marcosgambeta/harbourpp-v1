@@ -949,7 +949,7 @@ HB_BOOL hb_arraySetL(PHB_ITEM pArray, HB_SIZE nIndex, HB_BOOL fValue)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    hb_itemPutL(pArray->item.asArray.value->pItems + nIndex - 1, fValue);
+    (pArray->item.asArray.value->pItems + nIndex - 1)->putL(fValue);
     return true;
   }
   else
