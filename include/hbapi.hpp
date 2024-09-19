@@ -449,6 +449,10 @@ typedef struct _HB_ITEM
 
 // for internal use (core)
 #if defined(__cplusplus)
+  //
+  HB_TYPE rawType();
+  void setType(HB_TYPE type);
+  //
   bool isNil();
   bool isArray();
   bool isBlock();
@@ -477,6 +481,7 @@ typedef struct _HB_ITEM
   bool isBadItem();
   bool isObject();
   //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
+  //
   int getNI();
   long getNL();
   double getND();
@@ -485,10 +490,21 @@ typedef struct _HB_ITEM
   const char *getCPtr();
   HB_SIZE getCLen();
   HB_MAXINT getNInt();
+  //
 #endif
 } HB_ITEM, * PHB_ITEM;
 
 #if defined(__cplusplus)
+
+inline HB_TYPE _HB_ITEM::rawType()
+{
+  return this->type;
+}
+
+inline void _HB_ITEM::setType(HB_TYPE type)
+{
+  this->type = type;
+}
 
 inline bool _HB_ITEM::isNil()
 {
