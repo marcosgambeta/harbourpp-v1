@@ -1040,6 +1040,26 @@ HB_MAXINT hb_itemGetNInt(PHB_ITEM pItem)
   return 0;
 }
 
+HB_MAXINT _HB_ITEM::getNInt() // equivalent to hb_itemGetNInt
+{
+  if (this->isLong())
+  {
+    return static_cast<HB_MAXINT>(this->item.asLong.value);
+  }
+  else if (this->isInteger())
+  {
+    return static_cast<HB_MAXINT>(this->item.asInteger.value);
+  }
+  else if (this->isDouble())
+  {
+    return HB_CAST_MAXINT(this->item.asDouble.value);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 #ifndef HB_LONG_LONG_OFF
 HB_LONGLONG hb_itemGetNLL(PHB_ITEM pItem)
 {

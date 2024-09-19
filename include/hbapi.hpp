@@ -484,6 +484,7 @@ typedef struct _HB_ITEM
   char *getC();
   const char *getCPtr();
   HB_SIZE getCLen();
+  HB_MAXINT getNInt();
 #endif
 } HB_ITEM, * PHB_ITEM;
 
