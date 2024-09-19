@@ -82,7 +82,7 @@ void hb_arrayPushBase(PHB_BASEARRAY pBaseArray)
 {
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
-  pItem->type = Harbour::Item::ARRAY;
+  pItem->setType(Harbour::Item::ARRAY);
   pItem->item.asArray.value = pBaseArray;
   hb_gcRefInc(pBaseArray);
 }
@@ -156,7 +156,7 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) // creates a new array
     pItems = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM) * nLen));
     for (HB_SIZE nPos = 0; nPos < nLen; ++nPos)
     {
-      (pItems + nPos)->type = Harbour::Item::NIL;
+      (pItems + nPos)->setType(Harbour::Item::NIL);
     }
   }
   else
@@ -170,7 +170,7 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) // creates a new array
   pBaseArray->uiClass = 0;
   pBaseArray->uiPrevCls = 0;
   pBaseArray->nAllocated = nLen;
-  pItem->type = Harbour::Item::ARRAY;
+  pItem->setType(Harbour::Item::ARRAY);
   pItem->item.asArray.value = pBaseArray;
 
   return true;
@@ -213,7 +213,7 @@ HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
 
         for (nPos = 0; nPos < nLen; nPos++)
         {
-          (pBaseArray->pItems + nPos)->type = Harbour::Item::NIL;
+          (pBaseArray->pItems + nPos)->setType(Harbour::Item::NIL);
         }
       }
       else
@@ -239,7 +239,7 @@ HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
           // set value for new items
           for (nPos = pBaseArray->nLen; nPos < nLen; nPos++)
           {
-            (pBaseArray->pItems + nPos)->type = Harbour::Item::NIL;
+            (pBaseArray->pItems + nPos)->setType(Harbour::Item::NIL);
           }
         }
         else if (pBaseArray->nLen > nLen)
@@ -531,7 +531,7 @@ HB_BOOL hb_arrayGetItemRef(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
       }
       hb_gcRefInc(pArray->item.asArray.value);
     }
-    pItem->type = Harbour::Item::BYREF;
+    pItem->setType(Harbour::Item::BYREF);
     pItem->item.asRefer.BasePtr.array = pArray->item.asArray.value;
     pItem->item.asRefer.value = nIndex - 1;
     pItem->item.asRefer.offset = 0;

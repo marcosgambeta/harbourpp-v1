@@ -642,7 +642,7 @@ PHB_ITEM hb_hashNew(PHB_ITEM pItem)
   pBaseHash->iFlags = HB_HASH_FLAG_DEFAULT;
   pBaseHash->pDefault = nullptr;
 
-  pItem->type = Harbour::Item::HASH;
+  pItem->setType(Harbour::Item::HASH);
   pItem->item.asHash.value = pBaseHash;
 
   return pItem;

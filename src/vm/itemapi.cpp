@@ -291,7 +291,7 @@ PHB_ITEM hb_itemPutC(PHB_ITEM pItem, const char *szText)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::STRING;
+  pItem->setType(Harbour::Item::STRING);
   pItem->item.asString.value = const_cast<char *>(szText);
   pItem->item.asString.length = nLen;
   pItem->item.asString.allocated = nAlloc;
@@ -336,7 +336,7 @@ PHB_ITEM hb_itemPutCL(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
   //       trash if the szText buffer is nullptr, at least with hb_retclen().
   //       [vszakats]
 
-  pItem->type = Harbour::Item::STRING;
+  pItem->setType(Harbour::Item::STRING);
   pItem->item.asString.value = szValue;
   pItem->item.asString.length = nLen;
   pItem->item.asString.allocated = nAlloc;
@@ -364,7 +364,7 @@ PHB_ITEM hb_itemPutCConst(PHB_ITEM pItem, const char *szText)
 
   HB_SIZE nLen = szText ? strlen(szText) : 0;
 
-  pItem->type = Harbour::Item::STRING;
+  pItem->setType(Harbour::Item::STRING);
   pItem->item.asString.length = nLen;
   pItem->item.asString.allocated = 0;
   pItem->item.asString.value =
@@ -391,7 +391,7 @@ PHB_ITEM hb_itemPutCLConst(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::STRING;
+  pItem->setType(Harbour::Item::STRING);
   pItem->item.asString.length = nLen;
   pItem->item.asString.allocated = 0;
 
@@ -431,7 +431,7 @@ PHB_ITEM hb_itemPutCPtr(PHB_ITEM pItem, char *szText)
 
   HB_SIZE nLen = szText ? strlen(szText) : 0;
 
-  pItem->type = Harbour::Item::STRING;
+  pItem->setType(Harbour::Item::STRING);
   pItem->item.asString.length = nLen;
   if (nLen <= 1)
   {
@@ -469,7 +469,7 @@ PHB_ITEM hb_itemPutCLPtr(PHB_ITEM pItem, char *szText, HB_SIZE nLen)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::STRING;
+  pItem->setType(Harbour::Item::STRING);
   pItem->item.asString.length = nLen;
   if (nLen <= 1)
   {
@@ -1197,7 +1197,7 @@ PHB_ITEM hb_itemPutDS(PHB_ITEM pItem, const char *szDate)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::DATE;
+  pItem->setType(Harbour::Item::DATE);
   pItem->item.asDateTime.julian = hb_dateEncStr(szDate);
   pItem->item.asDateTime.time = 0;
 
@@ -1222,7 +1222,7 @@ PHB_ITEM hb_itemPutD(PHB_ITEM pItem, int iYear, int iMonth, int iDay)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::DATE;
+  pItem->setType(Harbour::Item::DATE);
   pItem->item.asDateTime.julian = hb_dateEncode(iYear, iMonth, iDay);
   pItem->item.asDateTime.time = 0;
 
@@ -1247,7 +1247,7 @@ PHB_ITEM hb_itemPutDL(PHB_ITEM pItem, long lJulian)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::DATE;
+  pItem->setType(Harbour::Item::DATE);
   pItem->item.asDateTime.julian = lJulian;
   pItem->item.asDateTime.time = 0;
 
@@ -1272,7 +1272,7 @@ PHB_ITEM hb_itemPutTS(PHB_ITEM pItem, const char *szDateTime)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::TIMESTAMP;
+  pItem->setType(Harbour::Item::TIMESTAMP);
   hb_timeStampStrRawGet(szDateTime, &pItem->item.asDateTime.julian, &pItem->item.asDateTime.time);
 
   return pItem;
@@ -1298,7 +1298,7 @@ PHB_ITEM hb_itemPutTD(PHB_ITEM pItem, double dTimeStamp)
 
   long lJulian, lMilliSec;
   hb_timeStampUnpackDT(dTimeStamp, &lJulian, &lMilliSec);
-  pItem->type = Harbour::Item::TIMESTAMP;
+  pItem->setType(Harbour::Item::TIMESTAMP);
   pItem->item.asDateTime.julian = lJulian;
   pItem->item.asDateTime.time = lMilliSec;
 
@@ -1323,7 +1323,7 @@ PHB_ITEM hb_itemPutTDT(PHB_ITEM pItem, long lJulian, long lMilliSec)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::TIMESTAMP;
+  pItem->setType(Harbour::Item::TIMESTAMP);
   pItem->item.asDateTime.julian = lJulian;
   pItem->item.asDateTime.time = lMilliSec;
 
@@ -1348,7 +1348,7 @@ PHB_ITEM hb_itemPutL(PHB_ITEM pItem, HB_BOOL bValue)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::LOGICAL;
+  pItem->setType(Harbour::Item::LOGICAL);
   pItem->item.asLogical.value = bValue;
 
   return pItem;
@@ -1374,7 +1374,7 @@ PHB_ITEM hb_itemPutND(PHB_ITEM pItem, double dNumber)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::DOUBLE;
+  pItem->setType(Harbour::Item::DOUBLE);
   pItem->item.asDouble.length = HB_DBL_LENGTH(dNumber);
   pItem->item.asDouble.decimal = static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS);
   pItem->item.asDouble.value = dNumber;
@@ -1400,7 +1400,7 @@ PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int iNumber)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::INTEGER;
+  pItem->setType(Harbour::Item::INTEGER);
   pItem->item.asInteger.value = iNumber;
   pItem->item.asInteger.length = HB_INT_LENGTH(iNumber);
 
@@ -1449,21 +1449,21 @@ PHB_ITEM hb_itemPutNS(PHB_ITEM pItem, HB_ISIZ nNumber)
   }
 
 #if HB_SIZE_MAX <= HB_VMUINT_MAX
-  pItem->type = Harbour::Item::INTEGER;
+  pItem->setType(Harbour::Item::INTEGER);
   pItem->item.asInteger.value = nNumber;
   // EXP limit used intentionally
   pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
 #else
   if (HB_LIM_INT(nNumber))
   {
-    pItem->type = Harbour::Item::INTEGER;
+    pItem->setType(Harbour::Item::INTEGER);
     pItem->item.asInteger.value = static_cast<int>(nNumber);
     // EXP limit used intentionally
     pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
   }
   else
   {
-    pItem->type = Harbour::Item::LONG;
+    pItem->setType(Harbour::Item::LONG);
     pItem->item.asLong.value = nNumber;
     pItem->item.asLong.length = HB_LONG_LENGTH(nNumber);
   }
@@ -1492,11 +1492,11 @@ PHB_ITEM hb_itemPutNLL(PHB_ITEM pItem, HB_LONGLONG llNumber)
   }
 
 #if HB_VMLONG_MAX >= LONGLONG_MAX
-  pItem->type = Harbour::Item::LONG;
+  pItem->setType(Harbour::Item::LONG);
   pItem->item.asLong.value = static_cast<HB_MAXINT>(llNumber);
   pItem->item.asLong.length = HB_LONG_LENGTH(llNumber);
 #else
-  pItem->type = Harbour::Item::DOUBLE;
+  pItem->setType(Harbour::Item::DOUBLE);
   pItem->item.asDouble.value = static_cast<double>(llNumber);
   pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
   pItem->item.asDouble.decimal = 0;
@@ -1525,14 +1525,14 @@ PHB_ITEM hb_itemPutNInt(PHB_ITEM pItem, HB_MAXINT nNumber)
 
   if (HB_LIM_INT(nNumber))
   {
-    pItem->type = Harbour::Item::INTEGER;
+    pItem->setType(Harbour::Item::INTEGER);
     pItem->item.asInteger.value = static_cast<int>(nNumber);
     // EXP limit used intentionally
     pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
   }
   else
   {
-    pItem->type = Harbour::Item::LONG;
+    pItem->setType(Harbour::Item::LONG);
     pItem->item.asLong.value = nNumber;
     pItem->item.asLong.length = HB_LONG_LENGTH(nNumber);
   }
@@ -1619,7 +1619,7 @@ PHB_ITEM hb_itemPutNDLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
     iDec = hb_stackSetStruct()->HB_SET_DECIMALS;
   }
 
-  pItem->type = Harbour::Item::DOUBLE;
+  pItem->setType(Harbour::Item::DOUBLE);
   pItem->item.asDouble.length = static_cast<HB_USHORT>(iWidth);
   pItem->item.asDouble.decimal = static_cast<HB_USHORT>(iDec);
   pItem->item.asDouble.value = dNumber;
@@ -1645,7 +1645,7 @@ PHB_ITEM hb_itemPutNDDec(PHB_ITEM pItem, double dNumber, int iDec)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::DOUBLE;
+  pItem->setType(Harbour::Item::DOUBLE);
   pItem->item.asDouble.length = HB_DBL_LENGTH(dNumber);
 
   if (iDec == HB_DEFAULT_DECIMALS)
@@ -1712,7 +1712,7 @@ PHB_ITEM hb_itemPutNILen(PHB_ITEM pItem, int iNumber, int iWidth)
     iWidth = HB_INT_LENGTH(iNumber);
   }
 
-  pItem->type = Harbour::Item::INTEGER;
+  pItem->setType(Harbour::Item::INTEGER);
   pItem->item.asInteger.length = static_cast<HB_USHORT>(iWidth);
   pItem->item.asInteger.value = iNumber;
 
@@ -1743,7 +1743,7 @@ PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int iWidth)
     iWidth = HB_INT_LENGTH(lNumber);
   }
 
-  pItem->type = Harbour::Item::INTEGER;
+  pItem->setType(Harbour::Item::INTEGER);
   pItem->item.asInteger.value = static_cast<int>(lNumber);
   pItem->item.asInteger.length = static_cast<HB_USHORT>(iWidth);
 #else
@@ -1752,7 +1752,7 @@ PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int iWidth)
     iWidth = HB_LONG_LENGTH(lNumber);
   }
 
-  pItem->type = Harbour::Item::LONG;
+  pItem->setType(Harbour::Item::LONG);
   pItem->item.asLong.value = static_cast<HB_MAXINT>(lNumber);
   pItem->item.asLong.length = iWidth;
 #endif
@@ -1785,11 +1785,11 @@ PHB_ITEM hb_itemPutNLLLen(PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth)
     iWidth = HB_LONG_LENGTH(llNumber);
   }
 
-  pItem->type = Harbour::Item::LONG;
+  pItem->setType(Harbour::Item::LONG);
   pItem->item.asLong.value = static_cast<HB_MAXINT>(llNumber);
   pItem->item.asLong.length = static_cast<HB_USHORT>(iWidth);
 #else
-  pItem->type = Harbour::Item::DOUBLE;
+  pItem->setType(Harbour::Item::DOUBLE);
   pItem->item.asDouble.value = static_cast<double>(llNumber);
   if (iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH)
   {
@@ -1849,7 +1849,7 @@ PHB_ITEM hb_itemPutPtr(PHB_ITEM pItem, void *pValue)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::POINTER;
+  pItem->setType(Harbour::Item::POINTER);
   pItem->item.asPointer.value = pValue;
   pItem->item.asPointer.collect = pItem->item.asPointer.single = false;
 
@@ -1874,7 +1874,7 @@ PHB_ITEM hb_itemPutPtrGC(PHB_ITEM pItem, void *pValue)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::POINTER;
+  pItem->setType(Harbour::Item::POINTER);
   pItem->item.asPointer.value = pValue;
   pItem->item.asPointer.collect = true;
   pItem->item.asPointer.single = false;
@@ -1902,7 +1902,7 @@ PHB_ITEM hb_itemPutPtrRawGC(PHB_ITEM pItem, void *pValue)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::POINTER;
+  pItem->setType(Harbour::Item::POINTER);
   pItem->item.asPointer.value = pValue;
   pItem->item.asPointer.collect = true;
   pItem->item.asPointer.single = false;
@@ -1928,7 +1928,7 @@ PHB_ITEM hb_itemPutSymbol(PHB_ITEM pItem, PHB_SYMB pSym)
     pItem = hb_itemNew(nullptr);
   }
 
-  pItem->type = Harbour::Item::SYMBOL;
+  pItem->setType(Harbour::Item::SYMBOL);
   pItem->item.asSymbol.value = pSym;
   pItem->item.asSymbol.stackstate = nullptr;
   pItem->item.asSymbol.paramcnt = pItem->item.asSymbol.paramdeclcnt = 0;
@@ -2155,7 +2155,7 @@ void hb_itemInit(PHB_ITEM pItem)
 
   if (pItem != nullptr)
   {
-    pItem->type = Harbour::Item::NIL;
+    pItem->setType(Harbour::Item::NIL);
   }
 }
 
@@ -2166,7 +2166,7 @@ void hb_itemClear(PHB_ITEM pItem)
 #endif
 
   HB_TYPE type = HB_ITEM_TYPERAW(pItem);
-  pItem->type = Harbour::Item::NIL;
+  pItem->setType(Harbour::Item::NIL);
 
   // GCLOCK enter
   if (type & Harbour::Item::STRING)
@@ -2268,7 +2268,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
       }
       else if (pSource->isEnum())
       { // enumerators cannot be copied
-        pDest->type = Harbour::Item::NIL;
+        pDest->setType(Harbour::Item::NIL);
       }
       else if (pSource->isExtRef())
       {
@@ -2377,7 +2377,7 @@ void hb_itemMove(PHB_ITEM pDest, PHB_ITEM pSource)
   // GCLOCK enter
   hb_itemRawCpy(pDest, pSource);
   pDest->type &= ~Harbour::Item::DEFAULT;
-  pSource->type = Harbour::Item::NIL;
+  pSource->setType(Harbour::Item::NIL);
   // GCLOCK leave
 }
 
@@ -2409,7 +2409,7 @@ void hb_itemMoveRef(PHB_ITEM pDest, PHB_ITEM pSource)
   // GCLOCK enter
   hb_itemRawCpy(pDest, pSource);
   pDest->type &= ~Harbour::Item::DEFAULT;
-  pSource->type = Harbour::Item::NIL;
+  pSource->setType(Harbour::Item::NIL);
   // GCLOCK leave
 }
 
@@ -2459,7 +2459,7 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
   // GCLOCK enter
   hb_itemRawCpy(pDest, pSource);
   pDest->type &= ~Harbour::Item::DEFAULT;
-  pSource->type = Harbour::Item::NIL;
+  pSource->setType(Harbour::Item::NIL);
   // GCLOCK leave
 }
 

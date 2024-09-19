@@ -195,7 +195,7 @@ static void hb_stack_init(PHB_STACK pStack)
   for (HB_ISIZ n = 0; n < pStack->nItems; ++n)
   {
     pStack->pItems[n] = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
-    pStack->pItems[n]->type = Harbour::Item::NIL;
+    pStack->pItems[n]->setType(Harbour::Item::NIL);
   }
 
   pStack->pPos++;
@@ -715,7 +715,7 @@ PHB_ITEM hb_stackAllocItem(void)
     hb_stackIncrease();
   }
 
-  (*(hb_stack.pPos - 1))->type = Harbour::Item::NIL;
+  (*(hb_stack.pPos - 1))->setType(Harbour::Item::NIL);
 
   return *(hb_stack.pPos - 1);
 }
@@ -762,7 +762,7 @@ void hb_stackIncrease(void)
   do
   {
     hb_stack.pItems[nEndIndex] = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
-    hb_stack.pItems[nEndIndex]->type = Harbour::Item::NIL;
+    hb_stack.pItems[nEndIndex]->setType(Harbour::Item::NIL);
   } while (++nEndIndex < hb_stack.nItems);
 }
 

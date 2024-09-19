@@ -379,7 +379,7 @@ PHB_ITEM hb_gcGripGet(PHB_ITEM pOrigin)
   pAlloc->locked = 1;
   pAlloc->used = s_uUsedFlag;
 
-  pItem->type = Harbour::Item::NIL;
+  pItem->setType(Harbour::Item::NIL);
 
   HB_GC_LOCK();
   hb_gcLink(&s_pLockedBlock, pAlloc);

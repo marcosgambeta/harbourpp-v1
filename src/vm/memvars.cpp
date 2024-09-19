@@ -96,7 +96,7 @@ static PHB_ITEM hb_memvarValueNew(void)
 #endif
 
   auto pMemvar = static_cast<PHB_ITEM>(hb_xgrab(sizeof(HB_ITEM)));
-  pMemvar->type = Harbour::Item::NIL;
+  pMemvar->setType(Harbour::Item::NIL);
   return pMemvar;
 }
 
@@ -189,7 +189,7 @@ PHB_ITEM hb_memvarDetachLocal(PHB_ITEM pLocal)
     auto pMemvar = hb_memvarValueNew();
     hb_itemRawCpy(pMemvar, pLocal);
     pMemvar->type &= ~Harbour::Item::DEFAULT;
-    pLocal->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
+    pLocal->setType(Harbour::Item::BYREF | Harbour::Item::MEMVAR);
     pLocal->item.asMemvar.value = pMemvar;
   }
 
@@ -462,7 +462,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
       else
       {
         // value is already created
-        pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
+        pItem->setType(Harbour::Item::BYREF | Harbour::Item::MEMVAR);
         pItem->item.asMemvar.value = pMemvar;
         hb_xRefInc(pMemvar);
       }
@@ -486,7 +486,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
           else
           {
             // value is already created
-            pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
+            pItem->setType(Harbour::Item::BYREF | Harbour::Item::MEMVAR);
             pItem->item.asMemvar.value = pMemvar;
             hb_xRefInc(pMemvar);
           }
@@ -711,7 +711,7 @@ static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM 
       else
       {
         // new PUBLIC variable - initialize it to .F.
-        pMemvar->type = Harbour::Item::LOGICAL;
+        pMemvar->setType(Harbour::Item::LOGICAL);
 
         // NOTE: PUBLIC variables named CLIPPER and HARBOUR are initialized
         //       to .T., this is normal Clipper behaviour. [vszakats]
@@ -1081,7 +1081,7 @@ PHB_ITEM hb_memvarSaveInArray(int iScope, HB_BOOL fCopy)
         }
         else
         {
-          pItem->type = Harbour::Item::BYREF | Harbour::Item::MEMVAR;
+          pItem->setType(Harbour::Item::BYREF | Harbour::Item::MEMVAR);
           pItem->item.asMemvar.value = pMemvar;
           hb_xRefInc(pMemvar);
         }

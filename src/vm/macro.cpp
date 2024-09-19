@@ -867,7 +867,7 @@ static void hb_macroBlock(const char *szString, PHB_ITEM pItem)
     }
 
     pItem->item.asBlock.value = hb_codeblockMacroNew(pMacro->pCodeInfo->pCode, pMacro->pCodeInfo->nPCodePos);
-    pItem->type = Harbour::Item::BLOCK;
+    pItem->setType(Harbour::Item::BLOCK);
     pItem->item.asBlock.paramcnt = 0;
     pItem->item.asBlock.lineno = 0;
     pItem->item.asBlock.hclass = 0;
@@ -953,7 +953,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
     hb_itemClear(pItem);
   }
   pItem->item.asBlock.value = hb_codeblockMacroNew(byBuf, i);
-  pItem->type = Harbour::Item::BLOCK;
+  pItem->setType(Harbour::Item::BLOCK);
   pItem->item.asBlock.paramcnt = 1;
   pItem->item.asBlock.lineno = 0;
   pItem->item.asBlock.hclass = 0;
