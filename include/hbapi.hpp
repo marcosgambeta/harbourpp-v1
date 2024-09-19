@@ -491,6 +491,8 @@ typedef struct _HB_ITEM
   HB_SIZE getCLen();
   HB_MAXINT getNInt();
   //
+  _HB_ITEM *putL(HB_BOOL bValue);
+  //
 #endif
 } HB_ITEM, * PHB_ITEM;
 

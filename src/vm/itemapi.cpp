@@ -1354,6 +1354,19 @@ PHB_ITEM hb_itemPutL(PHB_ITEM pItem, HB_BOOL bValue)
   return pItem;
 }
 
+PHB_ITEM _HB_ITEM::putL(HB_BOOL bValue) // equivalent to hb_itemPutL
+{
+  if (this->isComplex())
+  {
+    hb_itemClear(this);
+  }
+
+  this->setType(Harbour::Item::LOGICAL);
+  this->item.asLogical.value = bValue;
+
+  return this;
+}
+
 PHB_ITEM hb_itemPutND(PHB_ITEM pItem, double dNumber)
 {
 #if 0
