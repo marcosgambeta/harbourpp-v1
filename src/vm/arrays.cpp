@@ -966,7 +966,7 @@ HB_BOOL hb_arraySetNI(PHB_ITEM pArray, HB_SIZE nIndex, int iNumber)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    hb_itemPutNI(pArray->item.asArray.value->pItems + nIndex - 1, iNumber);
+    (pArray->item.asArray.value->pItems + nIndex - 1)->putNI(iNumber);
     return true;
   }
   else

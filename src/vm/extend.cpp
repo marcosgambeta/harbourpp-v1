@@ -1930,7 +1930,7 @@ void hb_retni(int iNumber)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_itemPutNI(hb_stackReturnItem(), iNumber);
+  hb_stackReturnItem()->putNI(iNumber);
 }
 
 #undef hb_retnl
@@ -2324,7 +2324,7 @@ int hb_storni(int iValue, int iParam)
 
   if (iParam == -1)
   {
-    hb_itemPutNI(hb_stackReturnItem(), iValue);
+    hb_stackReturnItem()->putNI(iValue);
     return 1;
   }
   else if (iParam >= 0 && iParam <= hb_pcount())
@@ -2333,7 +2333,7 @@ int hb_storni(int iValue, int iParam)
 
     if (pItem->isByRef())
     {
-      hb_itemPutNI(hb_itemUnRef(pItem), iValue);
+      hb_itemUnRef(pItem)->putNI(iValue);
       return 1;
     }
   }
@@ -2862,7 +2862,7 @@ int hb_storvni(int iValue, int iParam, ...)
     }
     else if (bByRef || iParam == -1)
     {
-      hb_itemPutNI(pItem, iValue);
+      pItem->putNI(iValue);
       return 1;
     }
   }
