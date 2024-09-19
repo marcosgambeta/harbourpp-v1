@@ -92,7 +92,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   {
     // intentionally separate comparison for integer numbers
     // to avoid precision lose in 64-bit integer to double conversion
-    return hb_itemGetNInt(pItem1) < hb_itemGetNInt(pItem2);
+    return pItem1->getNInt() < pItem2->getNInt();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {

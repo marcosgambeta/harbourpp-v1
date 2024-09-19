@@ -5201,7 +5201,7 @@ HB_FUNC_STATIC(msgSetClsData)
     {
       if (pMethod->itemType == Harbour::Item::NUMINT && pReturn->isNumeric())
       {
-        hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
+        hb_itemPutNInt(pReturn, pReturn->getNInt());
       }
       else
       {
@@ -5246,7 +5246,7 @@ HB_FUNC_STATIC(msgSetShrData)
     {
       if (pMethod->itemType == Harbour::Item::NUMINT && pReturn->isNumeric())
       {
-        hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
+        hb_itemPutNInt(pReturn, pReturn->getNInt());
       }
       else
       {
@@ -5325,7 +5325,7 @@ HB_FUNC_STATIC(msgSetData)
       {
         if (pMethod->itemType == Harbour::Item::NUMINT && pReturn->isNumeric())
         {
-          hb_itemPutNInt(pReturn, hb_itemGetNInt(pReturn));
+          hb_itemPutNInt(pReturn, pReturn->getNInt());
         }
         else
         {

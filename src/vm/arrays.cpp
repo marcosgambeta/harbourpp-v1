@@ -721,7 +721,7 @@ HB_MAXINT hb_arrayGetNInt(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->item.asArray.value->nLen)
   {
-    return hb_itemGetNInt(pArray->item.asArray.value->pItems + nIndex - 1);
+    return (pArray->item.asArray.value->pItems + nIndex - 1)->getNInt();
   }
   else
   {
@@ -1336,13 +1336,13 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
         }
         else if (pValue->isNumInt())
         {
-          HB_MAXINT nValue = hb_itemGetNInt(pValue);
+          HB_MAXINT nValue = pValue->getNInt();
 
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
+            if (pItem->isNumeric() && pItem->getNInt() == nValue &&
                 pItem->getND() == static_cast<double>(nValue))
             {
               return nStart;
@@ -1534,13 +1534,13 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
         }
         else if (pValue->isNumInt())
         {
-          HB_MAXINT nValue = hb_itemGetNInt(pValue);
+          HB_MAXINT nValue = pValue->getNInt();
 
           do
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
+            if (pItem->isNumeric() && pItem->getNInt() == nValue &&
                 pItem->getND() == static_cast<double>(nValue))
             {
               return nStart + 1;

@@ -848,7 +848,7 @@ static void hb_stackDispLocal(void)
     case Harbour::Item::LONG: {
       char szBuf[24];
       hb_snprintf(buffer, sizeof(buffer), HB_I_("LONG = %s "),
-                  hb_numToStr(szBuf, sizeof(szBuf), hb_itemGetNInt(*pBase)));
+                  hb_numToStr(szBuf, sizeof(szBuf), (*pBase)->getNInt()));
       break;
     }
 

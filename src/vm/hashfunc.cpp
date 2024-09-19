@@ -654,13 +654,13 @@ HB_FUNC(HB_HSCAN)
     }
     else if (pValue->isNumInt())
     {
-      HB_MAXINT nValue = hb_itemGetNInt(pValue);
+      HB_MAXINT nValue = pValue->getNInt();
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (pItem->isNumeric() && hb_itemGetNInt(pItem) == nValue &&
+          if (pItem->isNumeric() && pItem->getNInt() == nValue &&
               pItem->getND() == static_cast<double>(nValue))
           {
             fFound = true;
