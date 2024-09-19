@@ -1420,6 +1420,20 @@ PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int iNumber)
   return pItem;
 }
 
+PHB_ITEM _HB_ITEM::putNI(int iNumber) // equivalent to hb_itemPutNI
+{
+  if (this->isComplex())
+  {
+    hb_itemClear(this);
+  }
+
+  this->setType(Harbour::Item::INTEGER);
+  this->item.asInteger.value = iNumber;
+  this->item.asInteger.length = HB_INT_LENGTH(iNumber);
+
+  return this;
+}
+
 PHB_ITEM hb_itemPutNL(PHB_ITEM pItem, long lNumber)
 {
 #if 0
