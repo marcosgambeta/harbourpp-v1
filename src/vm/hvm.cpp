@@ -2449,7 +2449,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_TRUE: {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::LOGICAL);
-      pItem->item.asLogical.value = true;
+      pItem->setLogicalValue(true);
       pCode++;
       break;
     }
@@ -2457,7 +2457,7 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_FALSE: {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::LOGICAL);
-      pItem->item.asLogical.value = false;
+      pItem->setLogicalValue(false);
       pCode++;
       break;
     }
@@ -4188,7 +4188,7 @@ static void hb_vmExactlyEqual()
   {
     /* pItem1 is NIL so this is safe */
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = pItem2->isNil();
+    pItem1->setLogicalValue(pItem2->isNil());
     hb_stackPop(); /* clear the pItem2 */
   }
   else if (pItem2->isNil())
@@ -4199,7 +4199,7 @@ static void hb_vmExactlyEqual()
       hb_itemClear(pItem1);
     }
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = false;
+    pItem1->setLogicalValue(false);
   }
   else if (pItem1->isString() && pItem2->isString())
   {
@@ -4210,31 +4210,30 @@ static void hb_vmExactlyEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
   else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) == HB_ITEM_GET_NUMINTRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMINTRAW(pItem1) == HB_ITEM_GET_NUMINTRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) == HB_ITEM_GET_NUMDBLRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMDBLRAW(pItem1) == HB_ITEM_GET_NUMDBLRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isDateTime() && pItem2->isDateTime())
   {
-    pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                    pItem1->item.asDateTime.time == pItem2->item.asDateTime.time);
+    pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
+                                    pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    pItem1->item.asLogical.value =
-        pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(pItem1->logicalValue() ? pItem2->logicalValue() : !pItem2->logicalValue());
     hb_stackDec();
   }
   else if (pItem1->isPointer() && pItem2->isPointer())
@@ -4243,7 +4242,7 @@ static void hb_vmExactlyEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
   else if (pItem1->isHash() && pItem2->isHash())
   {
@@ -4251,7 +4250,7 @@ static void hb_vmExactlyEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
 #ifndef HB_CLP_STRICT
   else if (pItem1->isBlock() && pItem2->isBlock())
@@ -4260,14 +4259,14 @@ static void hb_vmExactlyEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
 #endif
   else if (pItem1->isSymbol() && pItem2->isSymbol())
   {
-    pItem1->item.asLogical.value = pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
+    pItem1->setLogicalValue(pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
                                    (pItem1->item.asSymbol.value->pDynSym != nullptr &&
-                                    pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym);
+                                    pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4277,7 +4276,7 @@ static void hb_vmExactlyEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
   else if (hb_objOperatorCall(HB_OO_OP_EXACTEQUAL, pItem1, pItem1, pItem2, nullptr))
   {
@@ -4310,7 +4309,7 @@ static void hb_vmEqual()
   {
     /* pItem1 is NIL so this is safe */
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = pItem2->isNil();
+    pItem1->setLogicalValue(pItem2->isNil());
     hb_stackPop(); /* clear the pItem2 */
   }
   else if (pItem2->isNil())
@@ -4321,7 +4320,7 @@ static void hb_vmEqual()
       hb_itemClear(pItem1);
     }
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = false;
+    pItem1->setLogicalValue(false);
   }
   else if (pItem1->isString() && pItem2->isString())
   {
@@ -4329,17 +4328,17 @@ static void hb_vmEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
   else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) == HB_ITEM_GET_NUMINTRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMINTRAW(pItem1) == HB_ITEM_GET_NUMINTRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) == HB_ITEM_GET_NUMDBLRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMDBLRAW(pItem1) == HB_ITEM_GET_NUMDBLRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4347,20 +4346,19 @@ static void hb_vmEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian) &&
-                                     (pItem1->item.asDateTime.time == pItem2->item.asDateTime.time);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian) &&
+                                     (pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
     }
     else
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    pItem1->item.asLogical.value =
-        pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(pItem1->logicalValue() ? pItem2->logicalValue() : !pItem2->logicalValue());
     hb_stackDec();
   }
   else if (pItem1->isPointer() && pItem2->isPointer())
@@ -4369,7 +4367,7 @@ static void hb_vmEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
 #if 0
    else if( pItem1->isHash() && pItem2->isHash() ) {
@@ -4377,7 +4375,7 @@ static void hb_vmEqual()
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->setType(Harbour::Item::LOGICAL);
-      pItem1->item.asLogical.value = fResult;
+      pItem1->setLogicalValue(fResult);
    }
 #endif
   else if (hb_objOperatorCall(HB_OO_OP_EQUAL, pItem1, pItem1, pItem2, nullptr))
@@ -4411,7 +4409,7 @@ static void hb_vmNotEqual()
   {
     /* pItem1 is NIL so this is safe */
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = !pItem2->isNil();
+    pItem1->setLogicalValue(!pItem2->isNil());
     hb_stackPop(); /* clear the pItem2 */
   }
   else if (pItem2->isNil())
@@ -4422,7 +4420,7 @@ static void hb_vmNotEqual()
       hb_itemClear(pItem1);
     }
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = true;
+    pItem1->setLogicalValue(true);
   }
   else if (pItem1->isString() && pItem2->isString())
   {
@@ -4430,17 +4428,17 @@ static void hb_vmNotEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = i != 0;
+    pItem1->setLogicalValue(i != 0);
   }
   else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) != HB_ITEM_GET_NUMINTRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMINTRAW(pItem1) != HB_ITEM_GET_NUMINTRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) != HB_ITEM_GET_NUMDBLRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMDBLRAW(pItem1) != HB_ITEM_GET_NUMDBLRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4448,20 +4446,19 @@ static void hb_vmNotEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian) ||
-                                     (pItem1->item.asDateTime.time != pItem2->item.asDateTime.time);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian) ||
+                                     (pItem1->item.asDateTime.time != pItem2->item.asDateTime.time));
     }
     else
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    pItem1->item.asLogical.value =
-        pItem1->item.asLogical.value ? !pItem2->item.asLogical.value : pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(pItem1->logicalValue() ? !pItem2->logicalValue() : pItem2->logicalValue());
     hb_stackDec();
   }
   else if (pItem1->isPointer() && pItem2->isPointer())
@@ -4470,7 +4467,7 @@ static void hb_vmNotEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
 #if 0
    else if( pItem1->isHash() && pItem2->isHash() ) {
@@ -4478,7 +4475,7 @@ static void hb_vmNotEqual()
       hb_stackPop();
       hb_itemClear(pItem1);
       pItem1->setType(Harbour::Item::LOGICAL);
-      pItem1->item.asLogical.value = fResult;
+      pItem1->setLogicalValue(fResult);
    }
 #endif
   else if (hb_objOperatorCall(HB_OO_OP_NOTEQUAL, pItem1, pItem1, pItem2, nullptr))
@@ -4515,17 +4512,17 @@ static void hb_vmLess()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = i < 0;
+    pItem1->setLogicalValue(i < 0);
   }
   else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) < HB_ITEM_GET_NUMINTRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMINTRAW(pItem1) < HB_ITEM_GET_NUMINTRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) < HB_ITEM_GET_NUMDBLRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMDBLRAW(pItem1) < HB_ITEM_GET_NUMDBLRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4533,20 +4530,20 @@ static void hb_vmLess()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time < pItem2->item.asDateTime.time);
+                                      pItem1->item.asDateTime.time < pItem2->item.asDateTime.time));
     }
     else
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    pItem1->item.asLogical.value = !pItem1->item.asLogical.value && pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(!pItem1->logicalValue() && pItem2->logicalValue());
     hb_stackDec();
   }
   else if (hb_objOperatorCall(HB_OO_OP_LESS, pItem1, pItem1, pItem2, nullptr))
@@ -4583,17 +4580,17 @@ static void hb_vmLessEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = i <= 0;
+    pItem1->setLogicalValue(i <= 0);
   }
   else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) <= HB_ITEM_GET_NUMINTRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMINTRAW(pItem1) <= HB_ITEM_GET_NUMINTRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) <= HB_ITEM_GET_NUMDBLRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMDBLRAW(pItem1) <= HB_ITEM_GET_NUMDBLRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4601,20 +4598,20 @@ static void hb_vmLessEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time <= pItem2->item.asDateTime.time);
+                                      pItem1->item.asDateTime.time <= pItem2->item.asDateTime.time));
     }
     else
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian <= pItem2->item.asDateTime.julian);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian <= pItem2->item.asDateTime.julian));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    pItem1->item.asLogical.value = !pItem1->item.asLogical.value || pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(!pItem1->logicalValue() || pItem2->logicalValue());
     hb_stackDec();
   }
   else if (hb_objOperatorCall(HB_OO_OP_LESSEQUAL, pItem1, pItem1, pItem2, nullptr))
@@ -4651,17 +4648,17 @@ static void hb_vmGreater()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = i > 0;
+    pItem1->setLogicalValue(i > 0);
   }
   else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) > HB_ITEM_GET_NUMINTRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMINTRAW(pItem1) > HB_ITEM_GET_NUMINTRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) > HB_ITEM_GET_NUMDBLRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMDBLRAW(pItem1) > HB_ITEM_GET_NUMDBLRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4669,20 +4666,20 @@ static void hb_vmGreater()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time > pItem2->item.asDateTime.time);
+                                      pItem1->item.asDateTime.time > pItem2->item.asDateTime.time));
     }
     else
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    pItem1->item.asLogical.value = pItem1->item.asLogical.value && !pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(pItem1->logicalValue() && !pItem2->logicalValue());
     hb_stackDec();
   }
   else if (hb_objOperatorCall(HB_OO_OP_GREATER, pItem1, pItem1, pItem2, nullptr))
@@ -4719,17 +4716,17 @@ static void hb_vmGreaterEqual()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = i >= 0;
+    pItem1->setLogicalValue(i >= 0);
   }
   else if (pItem1->isNumInt() && pItem2->isNumInt())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMINTRAW(pItem1) >= HB_ITEM_GET_NUMINTRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMINTRAW(pItem1) >= HB_ITEM_GET_NUMINTRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
   {
-    pItem1->item.asLogical.value = (HB_ITEM_GET_NUMDBLRAW(pItem1) >= HB_ITEM_GET_NUMDBLRAW(pItem2));
+    pItem1->setLogicalValue((HB_ITEM_GET_NUMDBLRAW(pItem1) >= HB_ITEM_GET_NUMDBLRAW(pItem2)));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4737,20 +4734,20 @@ static void hb_vmGreaterEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
                                      (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time >= pItem2->item.asDateTime.time);
+                                      pItem1->item.asDateTime.time >= pItem2->item.asDateTime.time));
     }
     else
     {
-      pItem1->item.asLogical.value = (pItem1->item.asDateTime.julian >= pItem2->item.asDateTime.julian);
+      pItem1->setLogicalValue((pItem1->item.asDateTime.julian >= pItem2->item.asDateTime.julian));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {
-    pItem1->item.asLogical.value = pItem1->item.asLogical.value || !pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(pItem1->logicalValue() || !pItem2->logicalValue());
     hb_stackDec();
   }
   else if (hb_objOperatorCall(HB_OO_OP_GREATEREQUAL, pItem1, pItem1, pItem2, nullptr))
@@ -4788,7 +4785,7 @@ static void hb_vmInstring()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
   else if (pItem2->isHash() && (pItem1->isHashKey() || hb_hashLen(pItem1) == 1))
   {
@@ -4796,7 +4793,7 @@ static void hb_vmInstring()
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = fResult;
+    pItem1->setLogicalValue(fResult);
   }
   else if (hb_objOperatorCall(HB_OO_OP_INCLUDE, pItem1, pItem2, pItem1, nullptr))
   {
@@ -4848,7 +4845,7 @@ static void hb_vmForTest() /* Test to check the end point of the FOR */
     {
       if (pResult->isLogical())
       {
-        fBack = pResult->item.asLogical.value;
+        fBack = pResult->logicalValue();
         hb_itemRelease(pResult);
         hb_stackPop();
         hb_stackPop();
@@ -5456,7 +5453,7 @@ static void hb_vmNot()
   if (pItem->isLogical())
   {
     pItem->setType(Harbour::Item::LOGICAL);
-    pItem->item.asLogical.value = !pItem->item.asLogical.value;
+    pItem->setLogicalValue(!pItem->logicalValue());
   }
   else if (!hb_objOperatorCall(HB_OO_OP_NOT, pItem, pItem, nullptr, nullptr))
   {
@@ -5484,7 +5481,7 @@ static void hb_vmAnd()
   if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = pItem1->item.asLogical.value && pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(pItem1->logicalValue() && pItem2->logicalValue());
     hb_stackDec();
   }
   else if (hb_objOperatorCall(HB_OO_OP_AND, pItem1, pItem1, pItem2, nullptr))
@@ -5518,7 +5515,7 @@ static void hb_vmOr()
   if (pItem1->isLogical() && pItem2->isLogical())
   {
     pItem1->setType(Harbour::Item::LOGICAL);
-    pItem1->item.asLogical.value = pItem1->item.asLogical.value || pItem2->item.asLogical.value;
+    pItem1->setLogicalValue(pItem1->logicalValue() || pItem2->logicalValue());
     hb_stackDec();
   }
   else if (hb_objOperatorCall(HB_OO_OP_OR, pItem1, pItem1, pItem2, nullptr))
@@ -7266,7 +7263,7 @@ void hb_vmPushLogical(HB_BOOL bValue)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::LOGICAL);
-  pItem->item.asLogical.value = bValue;
+  pItem->setLogicalValue(bValue);
 }
 
 /* not used by HVM code */
@@ -7966,7 +7963,7 @@ static HB_BOOL hb_vmPopLogical()
 
   if (hb_stackItemFromTop(-1)->isLogical())
   {
-    bool fValue = hb_stackItemFromTop(-1)->item.asLogical.value;
+    bool fValue = hb_stackItemFromTop(-1)->logicalValue();
     hb_stackDec();
     return fValue;
   }
@@ -11018,27 +11015,27 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value == static_cast<HB_MAXINT>(lValue);
-    pItem->item.asLogical.value = f;
+    pItem->setLogicalValue(f);
 #else
-    pItem->item.asLogical.value = pItem->item.asLong.value == static_cast<HB_MAXINT>(lValue);
+    pItem->setLogicalValue(pItem->item.asLong.value == static_cast<HB_MAXINT>(lValue));
 #endif
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isDouble())
   {
-    pItem->item.asLogical.value = pItem->item.asDouble.value == static_cast<double>(lValue);
+    pItem->setLogicalValue(pItem->item.asDouble.value == static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isNil())
   {
-    pItem->item.asLogical.value = false;
+    pItem->setLogicalValue(false);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_EQUAL))
@@ -11141,27 +11138,27 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value != static_cast<HB_MAXINT>(lValue);
-    pItem->item.asLogical.value = f;
+    pItem->setLogicalValue(f);
 #else
-    pItem->item.asLogical.value = pItem->item.asLong.value != static_cast<HB_MAXINT>(lValue);
+    pItem->setLogicalValue(pItem->item.asLong.value != static_cast<HB_MAXINT>(lValue));
 #endif
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isDouble())
   {
-    pItem->item.asLogical.value = pItem->item.asDouble.value != static_cast<double>(lValue);
+    pItem->setLogicalValue(pItem->item.asDouble.value != static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isNil())
   {
-    pItem->item.asLogical.value = true;
+    pItem->setLogicalValue(true);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_NOTEQUAL))
@@ -11264,22 +11261,22 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value < static_cast<HB_MAXINT>(lValue);
-    pItem->item.asLogical.value = f;
+    pItem->setLogicalValue(f);
 #else
-    pItem->item.asLogical.value = pItem->item.asLong.value < static_cast<HB_MAXINT>(lValue);
+    pItem->setLogicalValue(pItem->item.asLong.value < static_cast<HB_MAXINT>(lValue));
 #endif
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isDouble())
   {
-    pItem->item.asLogical.value = pItem->item.asDouble.value < static_cast<double>(lValue);
+    pItem->setLogicalValue(pItem->item.asDouble.value < static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_LESS))
@@ -11377,22 +11374,22 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value <= static_cast<HB_MAXINT>(lValue);
-    pItem->item.asLogical.value = f;
+    pItem->setLogicalValue(f);
 #else
-    pItem->item.asLogical.value = pItem->item.asLong.value <= static_cast<HB_MAXINT>(lValue);
+    pItem->setLogicalValue(pItem->item.asLong.value <= static_cast<HB_MAXINT>(lValue));
 #endif
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isDouble())
   {
-    pItem->item.asLogical.value = pItem->item.asDouble.value <= static_cast<double>(lValue);
+    pItem->setLogicalValue(pItem->item.asDouble.value <= static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_LESSEQUAL))
@@ -11490,22 +11487,22 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value > static_cast<HB_MAXINT>(lValue);
-    pItem->item.asLogical.value = f;
+    pItem->setLogicalValue(f);
 #else
-    pItem->item.asLogical.value = pItem->item.asLong.value > static_cast<HB_MAXINT>(lValue);
+    pItem->setLogicalValue(pItem->item.asLong.value > static_cast<HB_MAXINT>(lValue));
 #endif
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isDouble())
   {
-    pItem->item.asLogical.value = pItem->item.asDouble.value > static_cast<double>(lValue);
+    pItem->setLogicalValue(pItem->item.asDouble.value > static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_GREATER))
@@ -11603,22 +11600,22 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->item.asLogical.value = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
   {
 #if defined(__DCC__) /* NOTE: Workaround for vxworks/diab/x86 5.8.0.0 compiler bug. */
     bool f = pItem->item.asLong.value >= static_cast<HB_MAXINT>(lValue);
-    pItem->item.asLogical.value = f;
+    pItem->setLogicalValue(f);
 #else
-    pItem->item.asLogical.value = pItem->item.asLong.value >= static_cast<HB_MAXINT>(lValue);
+    pItem->setLogicalValue(pItem->item.asLong.value >= static_cast<HB_MAXINT>(lValue));
 #endif
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isDouble())
   {
-    pItem->item.asLogical.value = pItem->item.asDouble.value >= static_cast<double>(lValue);
+    pItem->setLogicalValue(pItem->item.asDouble.value >= static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_GREATEREQUAL))

@@ -518,7 +518,7 @@ int hb_parl(int iParam)
 
     if (pItem->isLogical())
     {
-      return pItem->item.asLogical.value ? 1 : 0;
+      return pItem->logicalValue() ? 1 : 0;
     }
   }
 
@@ -544,7 +544,7 @@ int hb_parldef(int iParam, int iDefValue)
 
     if (pItem->isLogical())
     {
-      return pItem->item.asLogical.value ? 1 : 0;
+      return pItem->logicalValue() ? 1 : 0;
     }
   }
 
@@ -1355,7 +1355,7 @@ int hb_parvl(int iParam, ...)
 
     if (pItem->isLogical())
     {
-      return pItem->item.asLogical.value ? 1 : 0;
+      return pItem->logicalValue() ? 1 : 0;
     }
     else if (pItem->isInteger())
     {

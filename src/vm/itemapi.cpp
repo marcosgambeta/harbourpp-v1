@@ -775,7 +775,7 @@ HB_BOOL hb_itemGetL(PHB_ITEM pItem)
   {
     if (pItem->isLogical())
     {
-      return pItem->item.asLogical.value;
+      return pItem->logicalValue();
     }
     else if (pItem->isInteger())
     {
@@ -798,7 +798,7 @@ HB_BOOL _HB_ITEM::getL() // equivalent to hb_itemGetL
 {
   if (this->isLogical())
   {
-    return this->item.asLogical.value;
+    return this->logicalValue();
   }
   else if (this->isInteger())
   {
@@ -828,7 +828,7 @@ HB_BOOL hb_itemGetLX(PHB_ITEM pItem)
   {
     if (pItem->isLogical())
     {
-      return pItem->item.asLogical.value;
+      return pItem->logicalValue();
     }
     else if (pItem->isInteger())
     {
@@ -1349,7 +1349,7 @@ PHB_ITEM hb_itemPutL(PHB_ITEM pItem, HB_BOOL bValue)
   }
 
   pItem->setType(Harbour::Item::LOGICAL);
-  pItem->item.asLogical.value = bValue;
+  pItem->setLogicalValue(bValue);
 
   return pItem;
 }
@@ -1362,7 +1362,7 @@ PHB_ITEM _HB_ITEM::putL(HB_BOOL bValue) // equivalent to hb_itemPutL
   }
 
   this->setType(Harbour::Item::LOGICAL);
-  this->item.asLogical.value = bValue;
+  this->setLogicalValue(bValue);
 
   return this;
 }
@@ -2927,7 +2927,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   else if (pItem1->isLogical())
   {
     fResult = pItem2->isLogical() &&
-              (pItem1->item.asLogical.value ? pItem2->item.asLogical.value : !pItem2->item.asLogical.value);
+              (pItem1->logicalValue() ? pItem2->logicalValue() : !pItem2->logicalValue());
   }
   else if (pItem1->isArray())
   {
@@ -3011,8 +3011,8 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isLogical())
     {
-      *piResult = pItem1->item.asLogical.value ? (pItem2->item.asLogical.value ? 0 : 1)
-                                               : (pItem2->item.asLogical.value ? -1 : 0);
+      *piResult = pItem1->logicalValue() ? (pItem2->logicalValue() ? 0 : 1)
+                                               : (pItem2->logicalValue() ? -1 : 0);
       fResult = true;
     }
   }

@@ -1314,7 +1314,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             hb_vmPushSize(++nStart);
             hb_vmEval(2);
 
-            if (hb_stackReturnItem()->isLogical() && hb_stackReturnItem()->item.asLogical.value)
+            if (hb_stackReturnItem()->isLogical() && hb_stackReturnItem()->logicalValue())
             {
               return nStart;
             }
@@ -1512,7 +1512,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             hb_vmPushSize(nStart + 1);
             hb_vmEval(2);
 
-            if (hb_stackReturnItem()->isLogical() && hb_stackReturnItem()->item.asLogical.value)
+            if (hb_stackReturnItem()->isLogical() && hb_stackReturnItem()->logicalValue())
             {
               return nStart + 1;
             }
