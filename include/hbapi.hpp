@@ -494,6 +494,9 @@ typedef struct _HB_ITEM
   _HB_ITEM *putNI(int iNumber);
   _HB_ITEM *putL(HB_BOOL bValue);
   //
+  HB_BOOL logicalValue();
+  void setLogicalValue(HB_BOOL bValue);
+  //
 #endif
 } HB_ITEM, * PHB_ITEM;
 
@@ -640,6 +643,16 @@ inline bool _HB_ITEM::isBadItem()
 }
 
 //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
+
+inline HB_BOOL _HB_ITEM::logicalValue()
+{
+  return this->item.asLogical.value;
+}
+
+inline void _HB_ITEM::setLogicalValue(HB_BOOL bValue)
+{
+  this->item.asLogical.value = bValue;
+}
 
 #endif
 
