@@ -779,7 +779,7 @@ HB_BOOL hb_itemGetL(PHB_ITEM pItem)
     }
     else if (pItem->isInteger())
     {
-      return pItem->item.asInteger.value != 0;
+      return pItem->integerValue() != 0;
     }
     else if (pItem->isLong())
     {
@@ -802,7 +802,7 @@ HB_BOOL _HB_ITEM::getL() // equivalent to hb_itemGetL
   }
   else if (this->isInteger())
   {
-    return this->item.asInteger.value != 0;
+    return this->integerValue() != 0;
   }
   else if (this->isLong())
   {
@@ -832,7 +832,7 @@ HB_BOOL hb_itemGetLX(PHB_ITEM pItem)
     }
     else if (pItem->isInteger())
     {
-      return pItem->item.asInteger.value != 0;
+      return pItem->integerValue() != 0;
     }
     else if (pItem->isLong())
     {
@@ -869,7 +869,7 @@ double hb_itemGetND(PHB_ITEM pItem)
     }
     else if (pItem->isInteger())
     {
-      return static_cast<double>(pItem->item.asInteger.value);
+      return static_cast<double>(pItem->integerValue());
     }
     else if (pItem->isLong())
     {
@@ -888,7 +888,7 @@ double _HB_ITEM::getND() // equivalent to hb_itemGetND
   }
   else if (this->isInteger())
   {
-    return static_cast<double>(this->item.asInteger.value);
+    return static_cast<double>(this->integerValue());
   }
   else if (this->isLong())
   {
@@ -910,7 +910,7 @@ int hb_itemGetNI(PHB_ITEM pItem)
   {
     if (pItem->isInteger())
     {
-      return pItem->item.asInteger.value;
+      return pItem->integerValue();
     }
     else if (pItem->isLong())
     {
@@ -929,7 +929,7 @@ int _HB_ITEM::getNI() // equivalent to hb_itemGetNI
 {
   if (this->isInteger())
   {
-    return this->item.asInteger.value;
+    return this->integerValue();
   }
   else if (this->isLong())
   {
@@ -959,7 +959,7 @@ long hb_itemGetNL(PHB_ITEM pItem)
     }
     else if (pItem->isInteger())
     {
-      return static_cast<long>(pItem->item.asInteger.value);
+      return static_cast<long>(pItem->integerValue());
     }
     else if (pItem->isDouble())
     {
@@ -978,7 +978,7 @@ long _HB_ITEM::getNL() // equivalent to hb_itemGetNL
   }
   else if (this->isInteger())
   {
-    return static_cast<long>(this->item.asInteger.value);
+    return static_cast<long>(this->integerValue());
   }
   else if (this->isDouble())
   {
@@ -1004,7 +1004,7 @@ HB_ISIZ hb_itemGetNS(PHB_ITEM pItem)
     }
     else if (pItem->isInteger())
     {
-      return static_cast<HB_ISIZ>(pItem->item.asInteger.value);
+      return static_cast<HB_ISIZ>(pItem->integerValue());
     }
     else if (pItem->isDouble())
     {
@@ -1029,7 +1029,7 @@ HB_MAXINT hb_itemGetNInt(PHB_ITEM pItem)
     }
     else if (pItem->isInteger())
     {
-      return static_cast<HB_MAXINT>(pItem->item.asInteger.value);
+      return static_cast<HB_MAXINT>(pItem->integerValue());
     }
     else if (pItem->isDouble())
     {
@@ -1048,7 +1048,7 @@ HB_MAXINT _HB_ITEM::getNInt() // equivalent to hb_itemGetNInt
   }
   else if (this->isInteger())
   {
-    return static_cast<HB_MAXINT>(this->item.asInteger.value);
+    return static_cast<HB_MAXINT>(this->integerValue());
   }
   else if (this->isDouble())
   {
@@ -1075,7 +1075,7 @@ HB_LONGLONG hb_itemGetNLL(PHB_ITEM pItem)
     }
     else if (pItem->isInteger())
     {
-      return static_cast<HB_LONGLONG>(pItem->item.asInteger.value);
+      return static_cast<HB_LONGLONG>(pItem->integerValue());
     }
     else if (pItem->isDouble())
     {
@@ -1414,8 +1414,8 @@ PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int iNumber)
   }
 
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->item.asInteger.value = iNumber;
-  pItem->item.asInteger.length = HB_INT_LENGTH(iNumber);
+  pItem->setIntegerValue(iNumber);
+  pItem->setIntegerLength(HB_INT_LENGTH(iNumber));
 
   return pItem;
 }
@@ -1428,8 +1428,8 @@ PHB_ITEM _HB_ITEM::putNI(int iNumber) // equivalent to hb_itemPutNI
   }
 
   this->setType(Harbour::Item::INTEGER);
-  this->item.asInteger.value = iNumber;
-  this->item.asInteger.length = HB_INT_LENGTH(iNumber);
+  this->setIntegerValue(iNumber);
+  this->setIntegerLength(HB_INT_LENGTH(iNumber));
 
   return this;
 }
@@ -1477,16 +1477,16 @@ PHB_ITEM hb_itemPutNS(PHB_ITEM pItem, HB_ISIZ nNumber)
 
 #if HB_SIZE_MAX <= HB_VMUINT_MAX
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->item.asInteger.value = nNumber;
+  pItem->setIntegerValue(nNumber);
   // EXP limit used intentionally
-  pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
+  pItem->setIntegerLength(HB_INT_EXPLENGTH(nNumber));
 #else
   if (HB_LIM_INT(nNumber))
   {
     pItem->setType(Harbour::Item::INTEGER);
-    pItem->item.asInteger.value = static_cast<int>(nNumber);
+    pItem->setIntegerValue(static_cast<int>(nNumber));
     // EXP limit used intentionally
-    pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
+    pItem->setIntegerLength(HB_INT_EXPLENGTH(nNumber));
   }
   else
   {
@@ -1553,9 +1553,9 @@ PHB_ITEM hb_itemPutNInt(PHB_ITEM pItem, HB_MAXINT nNumber)
   if (HB_LIM_INT(nNumber))
   {
     pItem->setType(Harbour::Item::INTEGER);
-    pItem->item.asInteger.value = static_cast<int>(nNumber);
+    pItem->setIntegerValue(static_cast<int>(nNumber));
     // EXP limit used intentionally
-    pItem->item.asInteger.length = HB_INT_EXPLENGTH(nNumber);
+    pItem->setIntegerLength(HB_INT_EXPLENGTH(nNumber));
   }
   else
   {
@@ -1699,7 +1699,7 @@ double hb_itemGetNDDec(PHB_ITEM pItem, int *piDec)
   if (pItem->isInteger())
   {
     *piDec = 0;
-    return static_cast<double>(pItem->item.asInteger.value);
+    return static_cast<double>(pItem->integerValue());
   }
   else if (pItem->isLong())
   {
@@ -1740,8 +1740,8 @@ PHB_ITEM hb_itemPutNILen(PHB_ITEM pItem, int iNumber, int iWidth)
   }
 
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->item.asInteger.length = static_cast<HB_USHORT>(iWidth);
-  pItem->item.asInteger.value = iNumber;
+  pItem->setIntegerLength(static_cast<HB_USHORT>(iWidth));
+  pItem->setIntegerValue(iNumber);
 
   return pItem;
 }
@@ -1771,8 +1771,8 @@ PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int iWidth)
   }
 
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->item.asInteger.value = static_cast<int>(lNumber);
-  pItem->item.asInteger.length = static_cast<HB_USHORT>(iWidth);
+  pItem->setIntegerValue(static_cast<int>(lNumber));
+  pItem->setIntegerLength(static_cast<HB_USHORT>(iWidth));
 #else
   if (iWidth <= 0 || iWidth >= HB_DEFAULT_WIDTH)
   {
@@ -1986,7 +1986,7 @@ void hb_itemGetNLen(PHB_ITEM pItem, int *piWidth, int *piDecimal)
     {
       if (piWidth)
       {
-        *piWidth = static_cast<int>(pItem->item.asInteger.length);
+        *piWidth = static_cast<int>(pItem->integerLength());
       }
       if (piDecimal)
       {
@@ -3452,7 +3452,7 @@ HB_BOOL hb_itemStrBuf(char *szResult, PHB_ITEM pNumber, int iSize, int iDec)
 
     if (pNumber->isInteger())
     {
-      nNumber = pNumber->item.asInteger.value;
+      nNumber = pNumber->integerValue();
     }
     else if (pNumber->isLong())
     {

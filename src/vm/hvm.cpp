@@ -2465,8 +2465,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_ONE: {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
-      pItem->item.asInteger.value = 1;
-      pItem->item.asInteger.length = 10;
+      pItem->setIntegerValue(1);
+      pItem->setIntegerLength(10);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(HB_P_ONE)"));
 #endif
@@ -2477,8 +2477,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_ZERO: {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
-      pItem->item.asInteger.value = 0;
-      pItem->item.asInteger.length = 10;
+      pItem->setIntegerValue(0);
+      pItem->setIntegerLength(10);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(HB_P_ZERO)"));
 #endif
@@ -2497,8 +2497,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_PUSHBYTE: {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
-      pItem->item.asInteger.value = static_cast<signed char>(pCode[1]);
-      pItem->item.asInteger.length = 10;
+      pItem->setIntegerValue(static_cast<signed char>(pCode[1]));
+      pItem->setIntegerLength(10);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(HB_P_PUSHBYTE)"));
 #endif
@@ -2509,8 +2509,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
     case HB_P_PUSHINT: {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
-      pItem->item.asInteger.value = HB_PCODE_MKSHORT(&pCode[1]);
-      pItem->item.asInteger.length = 10;
+      pItem->setIntegerValue(HB_PCODE_MKSHORT(&pCode[1]));
+      pItem->setIntegerLength(10);
 #if 0
             HB_TRACE(HB_TR_INFO, ("(HB_P_PUSHINT)"));
 #endif
@@ -3445,15 +3445,15 @@ static void hb_vmNegate()
   if (pItem->isInteger())
   {
 #if - HB_VMINT_MAX > HB_VMINT_MIN
-    if (pItem->item.asInteger.value < -HB_VMINT_MAX)
+    if (pItem->integerValue() < -HB_VMINT_MAX)
     {
 #if HB_VMLONG_MAX > HB_VMINT_MAX
-      auto nValue = static_cast<HB_MAXINT>(pItem->item.asInteger.value);
+      auto nValue = static_cast<HB_MAXINT>(pItem->integerValue());
       pItem->setType(Harbour::Item::LONG);
       pItem->item.asLong.value = -nValue;
       pItem->item.asLong.length = HB_LONG_EXPLENGTH(-nValue);
 #else
-      auto dValue = static_cast<double>(pItem->item.asInteger.value);
+      auto dValue = static_cast<double>(pItem->integerValue());
       pItem->setType(Harbour::Item::DOUBLE);
       pItem->item.asDouble.value = -dValue;
       pItem->item.asDouble.length = HB_DBL_LENGTH(-dValue);
@@ -3464,8 +3464,8 @@ static void hb_vmNegate()
 #endif
     {
       pItem->setType(Harbour::Item::INTEGER);
-      pItem->item.asInteger.value = -pItem->item.asInteger.value;
-      pItem->item.asInteger.length = HB_INT_EXPLENGTH(pItem->item.asInteger.value);
+      pItem->setIntegerValue(-pItem->integerValue());
+      pItem->setIntegerLength(HB_INT_EXPLENGTH(pItem->integerValue()));
     }
   }
   else if (pItem->isLong())
@@ -3837,7 +3837,7 @@ static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   if (pItem1->isInteger() && pItem2->isInteger())
   {
     HB_MAXINT nResult =
-        static_cast<HB_MAXINT>(pItem1->item.asInteger.value) * static_cast<HB_MAXINT>(pItem2->item.asInteger.value);
+        static_cast<HB_MAXINT>(pItem1->integerValue()) * static_cast<HB_MAXINT>(pItem2->integerValue());
     if (pResult->isComplex())
     {
       hb_itemClear(pResult);
@@ -4021,21 +4021,21 @@ static void hb_vmInc(PHB_ITEM pItem)
   {
     if (pItem->isInteger())
     {
-      if (pItem->item.asInteger.value < HB_VMINT_MAX)
+      if (pItem->integerValue() < HB_VMINT_MAX)
       {
         pItem->setType(Harbour::Item::INTEGER);
-        pItem->item.asInteger.value++;
-        pItem->item.asInteger.length = HB_INT_EXPLENGTH(pItem->item.asInteger.value);
+        pItem->item.asInteger.value++; // TODO: setIntegerValue
+        pItem->setIntegerLength(HB_INT_EXPLENGTH(pItem->integerValue()));
       }
       else
       {
 #if HB_VMINT_MAX < HB_VMLONG_MAX
         pItem->setType(Harbour::Item::LONG);
-        pItem->item.asLong.value = static_cast<HB_MAXINT>(pItem->item.asInteger.value) + 1;
+        pItem->item.asLong.value = static_cast<HB_MAXINT>(pItem->integerValue()) + 1;
         pItem->item.asLong.length = HB_LONG_EXPLENGTH(pItem->item.asLong.value);
 #else
         pItem->setType(Harbour::Item::DOUBLE);
-        pItem->item.asDouble.value = static_cast<double>(pItem->item.asInteger.value) + 1;
+        pItem->item.asDouble.value = static_cast<double>(pItem->integerValue()) + 1;
         pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
         pItem->item.asDouble.decimal = 0;
 #endif
@@ -4088,21 +4088,21 @@ static void hb_vmDec(PHB_ITEM pItem)
   {
     if (pItem->isInteger())
     {
-      if (pItem->item.asInteger.value > HB_VMINT_MIN)
+      if (pItem->integerValue() > HB_VMINT_MIN)
       {
         pItem->setType(Harbour::Item::INTEGER);
-        pItem->item.asInteger.value--;
-        pItem->item.asInteger.length = HB_INT_EXPLENGTH(pItem->item.asInteger.value);
+        pItem->item.asInteger.value--; // TODO: setIntegerValue
+        pItem->setIntegerLength(HB_INT_EXPLENGTH(pItem->integerValue()));
       }
       else
       {
 #if HB_VMINT_MIN > HB_VMLONG_MIN
         pItem->setType(Harbour::Item::LONG);
-        pItem->item.asLong.value = static_cast<HB_MAXINT>(pItem->item.asInteger.value) - 1;
+        pItem->item.asLong.value = static_cast<HB_MAXINT>(pItem->integerValue()) - 1;
         pItem->item.asLong.length = HB_LONG_EXPLENGTH(pItem->item.asLong.value);
 #else
         pItem->setType(Harbour::Item::DOUBLE);
-        pItem->item.asDouble.value = static_cast<double>(pItem->item.asInteger.value) - 1;
+        pItem->item.asDouble.value = static_cast<double>(pItem->integerValue()) - 1;
         pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
         pItem->item.asDouble.decimal = 0;
 #endif
@@ -5160,7 +5160,7 @@ static void hb_vmEnumNext()
   HB_STACK_TLS_PRELOAD
   int i;
 
-  for (i = static_cast<int>(hb_stackItemFromTop(-1)->item.asInteger.value); i > 0; --i)
+  for (i = static_cast<int>(hb_stackItemFromTop(-1)->integerValue()); i > 0; --i)
   {
     auto pEnumRef = hb_stackItemFromTop(-(i << 1));
     auto pEnum = hb_itemUnRefOnce(pEnumRef);
@@ -5243,7 +5243,7 @@ static void hb_vmEnumPrev()
   HB_STACK_TLS_PRELOAD
   int i;
 
-  for (i = hb_stackItemFromTop(-1)->item.asInteger.value; i > 0; --i)
+  for (i = hb_stackItemFromTop(-1)->integerValue(); i > 0; --i)
   {
     auto pEnumRef = hb_stackItemFromTop(-(i << 1));
     auto pEnum = hb_itemUnRefOnce(pEnumRef);
@@ -5326,7 +5326,7 @@ static void hb_vmEnumEnd()
   HB_STACK_TLS_PRELOAD
 
   /* remove number of iterators */
-  int iVars = hb_stackItemFromTop(-1)->item.asInteger.value;
+  int iVars = hb_stackItemFromTop(-1)->integerValue();
   hb_stackDec();
 
   while (--iVars >= 0)
@@ -5572,7 +5572,7 @@ static void hb_vmArrayPush()
   }
   else if (pIndex->isInteger())
   {
-    nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
+    nIndex = static_cast<HB_SIZE>(pIndex->integerValue());
   }
   else if (pIndex->isLong())
   {
@@ -5676,7 +5676,7 @@ static void hb_vmArrayPushRef()
   }
   else if (pIndex->isInteger())
   {
-    nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
+    nIndex = static_cast<HB_SIZE>(pIndex->integerValue());
   }
   else if (pIndex->isLong())
   {
@@ -5794,7 +5794,7 @@ static void hb_vmArrayPop()
   }
   else if (pIndex->isInteger())
   {
-    nIndex = static_cast<HB_SIZE>(pIndex->item.asInteger.value);
+    nIndex = static_cast<HB_SIZE>(pIndex->integerValue());
   }
   else if (pIndex->isLong())
   {
@@ -5911,7 +5911,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
   /* use the proper type of number of elements */
   if (pDim->isInteger())
   {
-    nElements = static_cast<HB_ISIZ>(pDim->item.asInteger.value);
+    nElements = static_cast<HB_ISIZ>(pDim->integerValue());
   }
   else if (pDim->isLong())
   {
@@ -6241,7 +6241,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
        * or it was saved on the stack using hb_vmPushAlias()
        * or was evaluated from an expression, (nWorkArea)->field
        */
-      hb_rddSelectWorkAreaNumber(pAlias->item.asInteger.value);
+      hb_rddSelectWorkAreaNumber(pAlias->integerValue());
       pAlias->setType(Harbour::Item::NIL);
       break;
 
@@ -7322,8 +7322,8 @@ void hb_vmPushInteger(int iNumber)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->item.asInteger.value = iNumber;
-  pItem->item.asInteger.length = HB_INT_LENGTH(iNumber);
+  pItem->setIntegerValue(iNumber);
+  pItem->setIntegerLength(HB_INT_LENGTH(iNumber));
 }
 
 #if HB_VMINT_MAX >= INT32_MAX
@@ -7336,8 +7336,8 @@ static void hb_vmPushIntegerConst(int iNumber)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->item.asInteger.value = iNumber;
-  pItem->item.asInteger.length = static_cast<HB_USHORT>(hb_vmCalcIntWidth(iNumber));
+  pItem->setIntegerValue(iNumber);
+  pItem->setIntegerLength(static_cast<HB_USHORT>(hb_vmCalcIntWidth(iNumber)));
 }
 #else
 static void hb_vmPushLongConst(long lNumber)
@@ -7700,8 +7700,8 @@ static void hb_vmPushAlias()
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::INTEGER);
-  pItem->item.asInteger.value = hb_rddGetCurrentWorkAreaNumber();
-  pItem->item.asInteger.length = 10;
+  pItem->setIntegerValue(hb_rddGetCurrentWorkAreaNumber());
+  pItem->setIntegerLength(10);
 }
 
 /* It pops the last item from the stack to use it to select a workarea
@@ -11015,7 +11015,7 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue);
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->integerValue()) == lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
@@ -11070,7 +11070,7 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) == lValue;
+    *pfValue = static_cast<HB_LONG>(pItem->integerValue()) == lValue;
     hb_stackDec();
   }
   else if (pItem->isLong())
@@ -11138,7 +11138,7 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue);
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->integerValue()) != lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
@@ -11193,7 +11193,7 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) != lValue;
+    *pfValue = static_cast<HB_LONG>(pItem->integerValue()) != lValue;
     hb_stackDec();
   }
   else if (pItem->isLong())
@@ -11261,7 +11261,7 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue);
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->integerValue()) < lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
@@ -11311,7 +11311,7 @@ HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) < lValue;
+    *pfValue = static_cast<HB_LONG>(pItem->integerValue()) < lValue;
     hb_stackDec();
   }
   else if (pItem->isLong())
@@ -11374,7 +11374,7 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue);
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->integerValue()) <= lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
@@ -11424,7 +11424,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) <= lValue;
+    *pfValue = static_cast<HB_LONG>(pItem->integerValue()) <= lValue;
     hb_stackDec();
   }
   else if (pItem->isLong())
@@ -11487,7 +11487,7 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue);
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->integerValue()) > lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
@@ -11537,7 +11537,7 @@ HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) > lValue;
+    *pfValue = static_cast<HB_LONG>(pItem->integerValue()) > lValue;
     hb_stackDec();
   }
   else if (pItem->isLong())
@@ -11600,7 +11600,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue);
+    pItem->setLogicalValue(static_cast<HB_LONG>(pItem->integerValue()) >= lValue);
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isLong())
@@ -11650,7 +11650,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   auto pItem = hb_stackItemFromTop(-1);
   if (pItem->isInteger())
   {
-    *pfValue = static_cast<HB_LONG>(pItem->item.asInteger.value) >= lValue;
+    *pfValue = static_cast<HB_LONG>(pItem->integerValue()) >= lValue;
     hb_stackDec();
   }
   else if (pItem->isLong())
