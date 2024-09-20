@@ -3966,8 +3966,9 @@ HB_FUNC(__CLSNEW)
     pModFriend = nullptr;
   }
 
-  if (szClassName != nullptr && (pDatas == nullptr || pDatas->isNumeric()) && (pSuperArray == nullptr || pSuperArray->isArray()) &&
-      (pClassFunc == nullptr || pClassFunc->isSymbol()) && (pModFriend == nullptr || pModFriend->isLogical()))
+  if (szClassName != nullptr && (pDatas == nullptr || pDatas->isNumeric()) &&
+      (pSuperArray == nullptr || pSuperArray->isArray()) && (pClassFunc == nullptr || pClassFunc->isSymbol()) &&
+      (pModFriend == nullptr || pModFriend->isLogical()))
   {
     HB_STACK_TLS_PRELOAD
     HB_USHORT uiClass;

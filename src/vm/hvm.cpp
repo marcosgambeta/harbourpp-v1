@@ -4227,7 +4227,7 @@ static void hb_vmExactlyEqual()
   else if (pItem1->isDateTime() && pItem2->isDateTime())
   {
     pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                    pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
+                             pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4265,8 +4265,8 @@ static void hb_vmExactlyEqual()
   else if (pItem1->isSymbol() && pItem2->isSymbol())
   {
     pItem1->setLogicalValue(pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                                   (pItem1->item.asSymbol.value->pDynSym != nullptr &&
-                                    pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
+                            (pItem1->item.asSymbol.value->pDynSym != nullptr &&
+                             pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4347,7 +4347,7 @@ static void hb_vmEqual()
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian) &&
-                                     (pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
+                              (pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
     }
     else
     {
@@ -4447,7 +4447,7 @@ static void hb_vmNotEqual()
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->setLogicalValue((pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian) ||
-                                     (pItem1->item.asDateTime.time != pItem2->item.asDateTime.time));
+                              (pItem1->item.asDateTime.time != pItem2->item.asDateTime.time));
     }
     else
     {
@@ -4531,8 +4531,8 @@ static void hb_vmLess()
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
-                                     (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time < pItem2->item.asDateTime.time));
+                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
+                               pItem1->item.asDateTime.time < pItem2->item.asDateTime.time));
     }
     else
     {
@@ -4599,8 +4599,8 @@ static void hb_vmLessEqual()
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
-                                     (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time <= pItem2->item.asDateTime.time));
+                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
+                               pItem1->item.asDateTime.time <= pItem2->item.asDateTime.time));
     }
     else
     {
@@ -4667,8 +4667,8 @@ static void hb_vmGreater()
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
-                                     (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time > pItem2->item.asDateTime.time));
+                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
+                               pItem1->item.asDateTime.time > pItem2->item.asDateTime.time));
     }
     else
     {
@@ -4735,8 +4735,8 @@ static void hb_vmGreaterEqual()
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
       pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
-                                     (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                                      pItem1->item.asDateTime.time >= pItem2->item.asDateTime.time));
+                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
+                               pItem1->item.asDateTime.time >= pItem2->item.asDateTime.time));
     }
     else
     {

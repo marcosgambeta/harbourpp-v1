@@ -657,8 +657,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     }
     break;
   case HB_SET_COLOR:
-    pResult =
-        hb_itemPutC(pResult, hb_conSetColor(pArg1 != nullptr && pArg1->isString() ? pArg1->getCPtr() : nullptr));
+    pResult = hb_itemPutC(pResult, hb_conSetColor(pArg1 != nullptr && pArg1->isString() ? pArg1->getCPtr() : nullptr));
     break;
   case HB_SET_CONFIRM:
     pResult = hb_itemPutL(pResult, pSet->HB_SET_CONFIRM);

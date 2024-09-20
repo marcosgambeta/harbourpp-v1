@@ -2926,8 +2926,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isLogical())
   {
-    fResult = pItem2->isLogical() &&
-              (pItem1->logicalValue() ? pItem2->logicalValue() : !pItem2->logicalValue());
+    fResult = pItem2->isLogical() && (pItem1->logicalValue() ? pItem2->logicalValue() : !pItem2->logicalValue());
   }
   else if (pItem1->isArray())
   {
@@ -3011,8 +3010,7 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isLogical())
     {
-      *piResult = pItem1->logicalValue() ? (pItem2->logicalValue() ? 0 : 1)
-                                               : (pItem2->logicalValue() ? -1 : 0);
+      *piResult = pItem1->logicalValue() ? (pItem2->logicalValue() ? 0 : 1) : (pItem2->logicalValue() ? -1 : 0);
       fResult = true;
     }
   }

@@ -716,7 +716,8 @@ static void hb_memvarCreateFromDynSymbol(PHB_DYNS pDynVar, int iScope, PHB_ITEM 
         // NOTE: PUBLIC variables named CLIPPER and HARBOUR are initialized
         //       to .T., this is normal Clipper behaviour. [vszakats]
 
-        pMemvar->setLogicalValue((strcmp(pDynVar->pSymbol->szName, "HARBOUR") == 0 || strcmp(pDynVar->pSymbol->szName, "CLIPPER") == 0));
+        pMemvar->setLogicalValue(
+            (strcmp(pDynVar->pSymbol->szName, "HARBOUR") == 0 || strcmp(pDynVar->pSymbol->szName, "CLIPPER") == 0));
       }
     }
   }

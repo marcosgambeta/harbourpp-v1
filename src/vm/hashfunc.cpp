@@ -660,8 +660,7 @@ HB_FUNC(HB_HSCAN)
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (pItem->isNumeric() && pItem->getNInt() == nValue &&
-              pItem->getND() == static_cast<double>(nValue))
+          if (pItem->isNumeric() && pItem->getNInt() == nValue && pItem->getND() == static_cast<double>(nValue))
           {
             fFound = true;
             break;
