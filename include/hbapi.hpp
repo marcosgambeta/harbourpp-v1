@@ -500,6 +500,10 @@ typedef struct _HB_ITEM
   void setIntegerValue(int iValue);
   HB_USHORT integerLength();
   void setIntegerLength(HB_USHORT length);
+  HB_MAXINT longValue();
+  void setLongValue(HB_MAXINT lValue);
+  HB_USHORT longLength();
+  void setLongLength(HB_USHORT length);
   //
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -648,6 +652,8 @@ inline bool _HB_ITEM::isBadItem()
 
 //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
 
+// logical
+
 inline HB_BOOL _HB_ITEM::logicalValue()
 {
   return this->item.asLogical.value;
@@ -657,6 +663,8 @@ inline void _HB_ITEM::setLogicalValue(HB_BOOL bValue)
 {
   this->item.asLogical.value = bValue;
 }
+
+// integer
 
 inline int _HB_ITEM::integerValue()
 {
@@ -676,6 +684,28 @@ inline HB_USHORT _HB_ITEM::integerLength()
 inline void _HB_ITEM::setIntegerLength(HB_USHORT length)
 {
   this->item.asInteger.length = length;
+}
+
+// long
+
+inline HB_MAXINT _HB_ITEM::longValue()
+{
+  return this->item.asLong.value;
+}
+
+inline void _HB_ITEM::setLongValue(HB_MAXINT lValue)
+{
+  this->item.asLong.value = lValue;
+}
+
+inline HB_USHORT _HB_ITEM::longLength()
+{
+  return this->item.asLong.length;
+}
+
+inline void _HB_ITEM::setLongLength(HB_USHORT length)
+{
+  this->item.asLong.length = length;
 }
 
 #endif
