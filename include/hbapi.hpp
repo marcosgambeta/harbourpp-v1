@@ -496,6 +496,10 @@ typedef struct _HB_ITEM
   //
   HB_BOOL logicalValue();
   void setLogicalValue(HB_BOOL bValue);
+  int integerValue();
+  void setIntegerValue(int iValue);
+  HB_USHORT integerLength();
+  void setIntegerLength(HB_USHORT length);
   //
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -652,6 +656,26 @@ inline HB_BOOL _HB_ITEM::logicalValue()
 inline void _HB_ITEM::setLogicalValue(HB_BOOL bValue)
 {
   this->item.asLogical.value = bValue;
+}
+
+inline int _HB_ITEM::integerValue()
+{
+  return this->item.asInteger.value;
+}
+
+inline void _HB_ITEM::setIntegerValue(int iValue)
+{
+  this->item.asInteger.value = iValue;
+}
+
+inline HB_USHORT _HB_ITEM::integerLength()
+{
+  return this->item.asInteger.length;
+}
+
+inline void _HB_ITEM::setIntegerLength(HB_USHORT length)
+{
+  this->item.asInteger.length = length;
 }
 
 #endif
