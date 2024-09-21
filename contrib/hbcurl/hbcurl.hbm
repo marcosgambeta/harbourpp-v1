@@ -6,6 +6,8 @@
 
 -w3 -es2
 
+{allgcc}-cflag=-fpermissive
+
 -depkeyhead=curl:curl/curl.h
 -depcontrol=curl:no{HB_BUILD_3RDEXT='no'}
 -depcontrol=curl:${HB_WITH_CURL}
