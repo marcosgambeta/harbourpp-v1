@@ -260,7 +260,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
           pStr2++;
         }
       }
-      else if (pItem && HB_IS_LOGICAL(pItem))
+      else if (pItem && pItem->isLogical())
       {
         iSize = 1;
         if (hb_itemGetL(pItem))

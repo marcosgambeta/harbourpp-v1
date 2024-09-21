@@ -870,7 +870,7 @@ void hb_socekxParamsInit(PHB_SOCKEX pSock, PHB_ITEM pParams)
     {
       pSock->iAutoFlush = hb_itemGetNI(pItem);
     }
-    if ((pItem = hb_hashGetCItemPtr(pParams, "redir")) != nullptr && HB_IS_LOGICAL(pItem))
+    if ((pItem = hb_hashGetCItemPtr(pParams, "redir")) != nullptr && pItem->isLogical())
     {
       pSock->fRedirAll = hb_itemGetL(pItem);
     }

@@ -637,7 +637,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
 
       /* If the error block didn't return a logical value, */
       /* or the canSubstitute flag has been set, consider it as a failure */
-      if (!HB_IS_LOGICAL(pResult) || (uiFlags & EF_CANSUBSTITUTE))
+      if (!pResult->isLogical() || (uiFlags & EF_CANSUBSTITUTE))
       {
         bFailure = true;
       }

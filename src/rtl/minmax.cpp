@@ -84,7 +84,7 @@ HB_FUNC(MAX)
       }
       return;
     }
-    else if (HB_IS_LOGICAL(p1) && HB_IS_LOGICAL(p2))
+    else if (p1->isLogical() && p2->isLogical())
     {
       HB_BOOL b1 = hb_itemGetL(p1);
       HB_BOOL b2 = hb_itemGetL(p2);
@@ -155,7 +155,7 @@ HB_FUNC(MIN)
       }
       return;
     }
-    else if (HB_IS_LOGICAL(p1) && HB_IS_LOGICAL(p2))
+    else if (p1->isLogical() && p2->isLogical())
     {
       HB_BOOL b1 = hb_itemGetL(p1);
       HB_BOOL b2 = hb_itemGetL(p2);

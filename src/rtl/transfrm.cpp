@@ -903,7 +903,7 @@ HB_FUNC(TRANSFORM)
 
     /* --- Handle LOGICAL values --- */
 
-    else if (HB_IS_LOGICAL(pValue))
+    else if (pValue->isLogical())
     {
       auto bDone = false;
       auto bExit = false;
@@ -1060,7 +1060,7 @@ HB_FUNC(TRANSFORM)
       hb_itemGetTDT(pValue, &lDate, &lTime);
       hb_retc(hb_timeStampFormat(szResult, hb_setGetDateFormat(), hb_setGetTimeFormat(), lDate, lTime));
     }
-    else if (HB_IS_LOGICAL(pValue))
+    else if (pValue->isLogical())
     {
       hb_retc_const(hb_itemGetL(pValue) ? "T" : "F");
     }

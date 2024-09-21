@@ -306,7 +306,7 @@ static char *hb_itemStringCon(PHB_ITEM pItem, HB_SIZE *pnLen, HB_BOOL *pfFreeReq
 {
   /* logical values in device output (not console, stdout or stderr) are
      shown as single letter */
-  if (HB_IS_LOGICAL(pItem))
+  if (pItem->isLogical())
   {
     *pnLen = 1;
     *pfFreeReq = HB_FALSE;

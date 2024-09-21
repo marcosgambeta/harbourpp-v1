@@ -94,7 +94,7 @@ HB_FUNC(DESCEND)
     {
       hb_retnd(-1 * hb_itemGetND(pItem));
     }
-    else if (HB_IS_LOGICAL(pItem))
+    else if (pItem->isLogical())
     {
       hb_retl(!hb_itemGetL(pItem));
     }
