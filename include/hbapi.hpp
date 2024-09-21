@@ -504,6 +504,12 @@ typedef struct _HB_ITEM
   void setLongValue(HB_MAXINT lValue);
   HB_USHORT longLength();
   void setLongLength(HB_USHORT length);
+  double doubleValue();
+  void setDoubleValue(double dValue);
+  HB_USHORT doubleLength();
+  void setDoubleLength(HB_USHORT length);
+  HB_USHORT doubleDecimal();
+  void setDoubleDecimal(HB_USHORT decimal);
   //
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -706,6 +712,38 @@ inline HB_USHORT _HB_ITEM::longLength()
 inline void _HB_ITEM::setLongLength(HB_USHORT length)
 {
   this->item.asLong.length = length;
+}
+
+// double
+
+inline double _HB_ITEM::doubleValue()
+{
+  return this->item.asDouble.value;
+}
+
+inline void _HB_ITEM::setDoubleValue(double dValue)
+{
+  this->item.asDouble.value = dValue;
+}
+
+inline HB_USHORT _HB_ITEM::doubleLength()
+{
+  return this->item.asDouble.length;
+}
+
+inline void _HB_ITEM::setDoubleLength(HB_USHORT length)
+{
+  this->item.asDouble.length = length;
+}
+
+inline HB_USHORT _HB_ITEM::doubleDecimal()
+{
+  return this->item.asDouble.decimal;
+}
+
+inline void _HB_ITEM::setDoubleDecimal(HB_USHORT decimal)
+{
+  this->item.asDouble.decimal = decimal;
 }
 
 #endif
