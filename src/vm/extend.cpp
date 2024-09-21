@@ -570,7 +570,7 @@ double hb_parnd(int iParam)
 
     if (pItem->isDouble())
     {
-      return pItem->item.asDouble.value;
+      return pItem->doubleValue();
     }
     else if (pItem->isInteger())
     {
@@ -612,7 +612,7 @@ int hb_parni(int iParam)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_INT(pItem->item.asDouble.value);
+      return HB_CAST_INT(pItem->doubleValue());
     }
   }
 
@@ -646,7 +646,7 @@ int hb_parnidef(int iParam, int iDefValue)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_INT(pItem->item.asDouble.value);
+      return HB_CAST_INT(pItem->doubleValue());
     }
   }
 
@@ -680,7 +680,7 @@ long hb_parnl(int iParam)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_LONG(pItem->item.asDouble.value);
+      return HB_CAST_LONG(pItem->doubleValue());
     }
   }
 
@@ -714,7 +714,7 @@ long hb_parnldef(int iParam, long lDefValue)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_LONG(pItem->item.asDouble.value);
+      return HB_CAST_LONG(pItem->doubleValue());
     }
   }
 
@@ -748,7 +748,7 @@ HB_ISIZ hb_parns(int iParam)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_ISIZ(pItem->item.asDouble.value);
+      return HB_CAST_ISIZ(pItem->doubleValue());
     }
   }
 
@@ -782,7 +782,7 @@ HB_ISIZ hb_parnsdef(int iParam, HB_ISIZ nDefValue)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_ISIZ(pItem->item.asDouble.value);
+      return HB_CAST_ISIZ(pItem->doubleValue());
     }
   }
 
@@ -817,7 +817,7 @@ HB_LONGLONG hb_parnll(int iParam)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_LONGLONG(pItem->item.asDouble.value);
+      return HB_CAST_LONGLONG(pItem->doubleValue());
     }
   }
 
@@ -852,7 +852,7 @@ HB_MAXINT hb_parnint(int iParam)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_MAXINT(pItem->item.asDouble.value);
+      return HB_CAST_MAXINT(pItem->doubleValue());
     }
   }
 
@@ -886,7 +886,7 @@ HB_MAXINT hb_parnintdef(int iParam, HB_MAXINT nDefValue)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_MAXINT(pItem->item.asDouble.value);
+      return HB_CAST_MAXINT(pItem->doubleValue());
     }
   }
 
@@ -1367,7 +1367,7 @@ int hb_parvl(int iParam, ...)
     }
     else if (pItem->isDouble())
     {
-      return pItem->item.asDouble.value != 0.0 ? 1 : 0;
+      return pItem->doubleValue() != 0.0 ? 1 : 0;
     }
     else if (pItem->isArray())
     {
@@ -1404,7 +1404,7 @@ double hb_parvnd(int iParam, ...)
 
     if (pItem->isDouble())
     {
-      return pItem->item.asDouble.value;
+      return pItem->doubleValue();
     }
     else if (pItem->isInteger())
     {
@@ -1457,7 +1457,7 @@ int hb_parvni(int iParam, ...)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_INT(pItem->item.asDouble.value);
+      return HB_CAST_INT(pItem->doubleValue());
     }
     else if (pItem->isArray())
     {
@@ -1502,7 +1502,7 @@ long hb_parvnl(int iParam, ...)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_LONG(pItem->item.asDouble.value);
+      return HB_CAST_LONG(pItem->doubleValue());
       // CA-Cl*pper does it
     }
     else if (pItem->isDateTime())
@@ -1552,7 +1552,7 @@ HB_ISIZ hb_parvns(int iParam, ...)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_ISIZ(pItem->item.asDouble.value);
+      return HB_CAST_ISIZ(pItem->doubleValue());
     }
     else if (pItem->isArray())
     {
@@ -1598,7 +1598,7 @@ HB_LONGLONG hb_parvnll(int iParam, ...)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_LONGLONG(pItem->item.asDouble.value);
+      return HB_CAST_LONGLONG(pItem->doubleValue());
     }
     else if (pItem->isArray())
     {
@@ -1644,7 +1644,7 @@ HB_MAXINT hb_parvnint(int iParam, ...)
     }
     else if (pItem->isDouble())
     {
-      return HB_CAST_MAXINT(pItem->item.asDouble.value);
+      return HB_CAST_MAXINT(pItem->doubleValue());
     }
     else if (pItem->isArray())
     {

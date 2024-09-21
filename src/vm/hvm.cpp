@@ -3392,15 +3392,15 @@ static void hb_vmAddInt(PHB_ITEM pResult, HB_LONG lAdd)
     else
     {
       pResult->setType(Harbour::Item::DOUBLE);
-      pResult->item.asDouble.value = static_cast<double>(nVal) + lAdd;
-      pResult->item.asDouble.length = HB_DBL_LENGTH(pResult->item.asDouble.value);
-      pResult->item.asDouble.decimal = 0;
+      pResult->setDoubleValue(static_cast<double>(nVal) + lAdd);
+      pResult->setDoubleLength(HB_DBL_LENGTH(pResult->doubleValue()));
+      pResult->setDoubleDecimal(0);
     }
   }
   else if (pResult->isDouble())
   {
-    pResult->item.asDouble.value += lAdd;
-    pResult->item.asDouble.length = HB_DBL_LENGTH(pResult->item.asDouble.value);
+    pResult->item.asDouble.value += lAdd; // TODO:
+    pResult->setDoubleLength(HB_DBL_LENGTH(pResult->doubleValue()));
   }
   else if (pResult->isDateTime())
   {
@@ -3455,9 +3455,9 @@ static void hb_vmNegate()
 #else
       auto dValue = static_cast<double>(pItem->integerValue());
       pItem->setType(Harbour::Item::DOUBLE);
-      pItem->item.asDouble.value = -dValue;
-      pItem->item.asDouble.length = HB_DBL_LENGTH(-dValue);
-      pItem->item.asDouble.decimal = 0;
+      pItem->setDoubleValue(-dValue);
+      pItem->setDoubleLength(HB_DBL_LENGTH(-dValue));
+      pItem->setDoubleDecimal(0);
 #endif
     }
     else
@@ -3475,9 +3475,9 @@ static void hb_vmNegate()
     {
       auto dValue = static_cast<double>(pItem->longValue());
       pItem->setType(Harbour::Item::DOUBLE);
-      pItem->item.asDouble.value = -dValue;
-      pItem->item.asDouble.length = HB_DBL_LENGTH(-dValue);
-      pItem->item.asDouble.decimal = 0;
+      pItem->setDoubleValue(-dValue);
+      pItem->setDoubleLength(HB_DBL_LENGTH(-dValue));
+      pItem->setDoubleDecimal(0);
     }
     else
 #endif
@@ -3490,8 +3490,8 @@ static void hb_vmNegate()
   else if (pItem->isDouble())
   {
     pItem->setType(Harbour::Item::DOUBLE);
-    pItem->item.asDouble.value = -pItem->item.asDouble.value;
-    pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
+    pItem->setDoubleValue(-pItem->doubleValue());
+    pItem->setDoubleLength(HB_DBL_LENGTH(pItem->doubleValue()));
   }
   else
   {
@@ -3592,9 +3592,9 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     {
       double dResult = static_cast<double>(nNumber1) + static_cast<double>(nNumber2);
       pResult->setType(Harbour::Item::DOUBLE);
-      pResult->item.asDouble.value = dResult;
-      pResult->item.asDouble.length = HB_DBL_LENGTH(dResult);
-      pResult->item.asDouble.decimal = 0;
+      pResult->setDoubleValue(dResult);
+      pResult->setDoubleLength(HB_DBL_LENGTH(dResult));
+      pResult->setDoubleDecimal(0);
     }
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
@@ -3664,7 +3664,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       }
       else
       {
-        hb_vmTimeStampAdd(pResult, pItem1, pItem2->item.asDouble.value);
+        hb_vmTimeStampAdd(pResult, pItem1, pItem2->doubleValue());
       }
     }
     else
@@ -3683,7 +3683,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       }
       else
       {
-        hb_vmTimeStampAdd(pResult, pItem2, pItem1->item.asDouble.value);
+        hb_vmTimeStampAdd(pResult, pItem2, pItem1->doubleValue());
       }
     }
     else
@@ -3728,9 +3728,9 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     {
       double dResult = static_cast<double>(nNumber1) - static_cast<double>(nNumber2);
       pResult->setType(Harbour::Item::DOUBLE);
-      pResult->item.asDouble.value = dResult;
-      pResult->item.asDouble.length = HB_DBL_LENGTH(dResult);
-      pResult->item.asDouble.decimal = 0;
+      pResult->setDoubleValue(dResult);
+      pResult->setDoubleLength(HB_DBL_LENGTH(dResult));
+      pResult->setDoubleDecimal(0);
     }
   }
   else if (pItem1->isNumeric() && pItem2->isNumeric())
@@ -3769,7 +3769,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
       }
       else
       {
-        hb_vmTimeStampAdd(pResult, pItem1, -pItem2->item.asDouble.value);
+        hb_vmTimeStampAdd(pResult, pItem1, -pItem2->doubleValue());
       }
     }
     else
@@ -4035,9 +4035,9 @@ static void hb_vmInc(PHB_ITEM pItem)
         pItem->setLongLength(HB_LONG_EXPLENGTH(pItem->longValue()));
 #else
         pItem->setType(Harbour::Item::DOUBLE);
-        pItem->item.asDouble.value = static_cast<double>(pItem->integerValue()) + 1;
-        pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
-        pItem->item.asDouble.decimal = 0;
+        pItem->setDoubleValue(static_cast<double>(pItem->integerValue()) + 1);
+        pItem->setDoubleLength(HB_DBL_LENGTH(pItem->doubleValue()));
+        pItem->setDoubleDecimal(0);
 #endif
       }
     }
@@ -4050,16 +4050,16 @@ static void hb_vmInc(PHB_ITEM pItem)
     else
     {
       pItem->setType(Harbour::Item::DOUBLE);
-      pItem->item.asDouble.value = static_cast<double>(pItem->longValue()) + 1;
-      pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
-      pItem->item.asDouble.decimal = 0;
+      pItem->setDoubleValue(static_cast<double>(pItem->longValue()) + 1);
+      pItem->setDoubleLength(HB_DBL_LENGTH(pItem->doubleValue()));
+      pItem->setDoubleDecimal(0);
     }
   }
   else if (pItem->isDouble())
   {
     pItem->setType(Harbour::Item::DOUBLE);
-    pItem->item.asDouble.value++;
-    pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
+    pItem->item.asDouble.value++; // TODO:
+    pItem->setDoubleLength(HB_DBL_LENGTH(pItem->doubleValue()));
   }
   else if (pItem->isDateTime())
   {
@@ -4102,9 +4102,9 @@ static void hb_vmDec(PHB_ITEM pItem)
         pItem->setLongLength(HB_LONG_EXPLENGTH(pItem->longValue()));
 #else
         pItem->setType(Harbour::Item::DOUBLE);
-        pItem->item.asDouble.value = static_cast<double>(pItem->integerValue()) - 1;
-        pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
-        pItem->item.asDouble.decimal = 0;
+        pItem->setDoubleValue(static_cast<double>(pItem->integerValue()) - 1);
+        pItem->setDoubleLength(HB_DBL_LENGTH(pItem->doubleValue()));
+        pItem->setDoubleDecimal(0);
 #endif
       }
     }
@@ -4117,16 +4117,16 @@ static void hb_vmDec(PHB_ITEM pItem)
     else
     {
       pItem->setType(Harbour::Item::DOUBLE);
-      pItem->item.asDouble.value = static_cast<double>(pItem->longValue()) - 1;
-      pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
-      pItem->item.asDouble.decimal = 0;
+      pItem->setDoubleValue(static_cast<double>(pItem->longValue()) - 1);
+      pItem->setDoubleLength(HB_DBL_LENGTH(pItem->doubleValue()));
+      pItem->setDoubleDecimal(0);
     }
   }
   else if (pItem->isDouble())
   {
     pItem->setType(Harbour::Item::DOUBLE);
-    pItem->item.asDouble.value--;
-    pItem->item.asDouble.length = HB_DBL_LENGTH(pItem->item.asDouble.value);
+    pItem->item.asDouble.value--; // TODO:
+    pItem->setDoubleLength(HB_DBL_LENGTH(pItem->doubleValue()));
   }
   else if (pItem->isDateTime())
   {
@@ -5580,7 +5580,7 @@ static void hb_vmArrayPush()
   }
   else if (pIndex->isDouble())
   {
-    nIndex = static_cast<HB_SIZE>(pIndex->item.asDouble.value);
+    nIndex = static_cast<HB_SIZE>(pIndex->doubleValue());
   }
   else
   {
@@ -5684,7 +5684,7 @@ static void hb_vmArrayPushRef()
   }
   else if (pIndex->isDouble())
   {
-    nIndex = static_cast<HB_SIZE>(pIndex->item.asDouble.value);
+    nIndex = static_cast<HB_SIZE>(pIndex->doubleValue());
   }
   else if (hb_objHasOperator(pArray, HB_OO_OP_ARRAYINDEX))
   {
@@ -5802,7 +5802,7 @@ static void hb_vmArrayPop()
   }
   else if (pIndex->isDouble())
   {
-    nIndex = static_cast<HB_SIZE>(pIndex->item.asDouble.value);
+    nIndex = static_cast<HB_SIZE>(pIndex->doubleValue());
   }
   else
   {
@@ -5919,7 +5919,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
   }
   else if (pDim->isDouble())
   {
-    nElements = static_cast<HB_ISIZ>(pDim->item.asDouble.value);
+    nElements = static_cast<HB_ISIZ>(pDim->doubleValue());
   }
   else
   {
@@ -6255,7 +6255,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
     case Harbour::Item::DOUBLE:
       /* Alias was evaluated from an expression, (nWorkArea)->field
        */
-      hb_rddSelectWorkAreaNumber(static_cast<int>(pAlias->item.asDouble.value));
+      hb_rddSelectWorkAreaNumber(static_cast<int>(pAlias->doubleValue()));
       pAlias->setType(Harbour::Item::NIL);
       break;
 
@@ -7430,15 +7430,15 @@ void hb_vmPushDouble(double dNumber, int iDec)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::DOUBLE);
-  pItem->item.asDouble.value = dNumber;
-  pItem->item.asDouble.length = HB_DBL_LENGTH(dNumber);
+  pItem->setDoubleValue(dNumber);
+  pItem->setDoubleLength(HB_DBL_LENGTH(dNumber));
   if (iDec == HB_DEFAULT_DECIMALS)
   {
-    pItem->item.asDouble.decimal = static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS);
+    pItem->setDoubleDecimal(static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS));
   }
   else
   {
-    pItem->item.asDouble.decimal = static_cast<HB_USHORT>(iDec);
+    pItem->setDoubleDecimal(static_cast<HB_USHORT>(iDec));
   }
 }
 
@@ -7451,24 +7451,24 @@ static void hb_vmPushDoubleConst(double dNumber, int iWidth, int iDec)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::DOUBLE);
-  pItem->item.asDouble.value = dNumber;
+  pItem->setDoubleValue(dNumber);
 
   if (iDec == HB_DEFAULT_DECIMALS)
   {
-    pItem->item.asDouble.decimal = static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS);
+    pItem->setDoubleDecimal(static_cast<HB_USHORT>(hb_stackSetStruct()->HB_SET_DECIMALS));
   }
   else
   {
-    pItem->item.asDouble.decimal = static_cast<HB_USHORT>(iDec);
+    pItem->setDoubleDecimal(static_cast<HB_USHORT>(iDec));
   }
 
   if (iWidth == HB_DEFAULT_WIDTH)
   {
-    pItem->item.asDouble.length = HB_DBL_LENGTH(dNumber);
+    pItem->setDoubleLength(HB_DBL_LENGTH(dNumber));
   }
   else
   {
-    pItem->item.asDouble.length = static_cast<HB_USHORT>(iWidth);
+    pItem->setDoubleLength(static_cast<HB_USHORT>(iWidth));
   }
 }
 
@@ -11030,7 +11030,7 @@ HB_BOOL hb_xvmEqualInt(HB_LONG lValue)
   }
   else if (pItem->isDouble())
   {
-    pItem->setLogicalValue(pItem->item.asDouble.value == static_cast<double>(lValue));
+    pItem->setLogicalValue(pItem->doubleValue() == static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isNil())
@@ -11085,7 +11085,7 @@ HB_BOOL hb_xvmEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isDouble())
   {
-    *pfValue = pItem->item.asDouble.value == static_cast<double>(lValue);
+    *pfValue = pItem->doubleValue() == static_cast<double>(lValue);
     hb_stackDec();
   }
   else if (pItem->isNil())
@@ -11153,7 +11153,7 @@ HB_BOOL hb_xvmNotEqualInt(HB_LONG lValue)
   }
   else if (pItem->isDouble())
   {
-    pItem->setLogicalValue(pItem->item.asDouble.value != static_cast<double>(lValue));
+    pItem->setLogicalValue(pItem->doubleValue() != static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (pItem->isNil())
@@ -11208,7 +11208,7 @@ HB_BOOL hb_xvmNotEqualIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isDouble())
   {
-    *pfValue = pItem->item.asDouble.value != static_cast<double>(lValue);
+    *pfValue = pItem->doubleValue() != static_cast<double>(lValue);
     hb_stackDec();
   }
   else if (pItem->isNil())
@@ -11276,7 +11276,7 @@ HB_BOOL hb_xvmLessThenInt(HB_LONG lValue)
   }
   else if (pItem->isDouble())
   {
-    pItem->setLogicalValue(pItem->item.asDouble.value < static_cast<double>(lValue));
+    pItem->setLogicalValue(pItem->doubleValue() < static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_LESS))
@@ -11326,7 +11326,7 @@ HB_BOOL hb_xvmLessThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isDouble())
   {
-    *pfValue = pItem->item.asDouble.value < static_cast<double>(lValue);
+    *pfValue = pItem->doubleValue() < static_cast<double>(lValue);
     hb_stackDec();
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_LESS))
@@ -11389,7 +11389,7 @@ HB_BOOL hb_xvmLessEqualThenInt(HB_LONG lValue)
   }
   else if (pItem->isDouble())
   {
-    pItem->setLogicalValue(pItem->item.asDouble.value <= static_cast<double>(lValue));
+    pItem->setLogicalValue(pItem->doubleValue() <= static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_LESSEQUAL))
@@ -11439,7 +11439,7 @@ HB_BOOL hb_xvmLessEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isDouble())
   {
-    *pfValue = pItem->item.asDouble.value <= static_cast<double>(lValue);
+    *pfValue = pItem->doubleValue() <= static_cast<double>(lValue);
     hb_stackDec();
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_LESSEQUAL))
@@ -11502,7 +11502,7 @@ HB_BOOL hb_xvmGreaterThenInt(HB_LONG lValue)
   }
   else if (pItem->isDouble())
   {
-    pItem->setLogicalValue(pItem->item.asDouble.value > static_cast<double>(lValue));
+    pItem->setLogicalValue(pItem->doubleValue() > static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_GREATER))
@@ -11552,7 +11552,7 @@ HB_BOOL hb_xvmGreaterThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isDouble())
   {
-    *pfValue = pItem->item.asDouble.value > static_cast<double>(lValue);
+    *pfValue = pItem->doubleValue() > static_cast<double>(lValue);
     hb_stackDec();
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_GREATER))
@@ -11615,7 +11615,7 @@ HB_BOOL hb_xvmGreaterEqualThenInt(HB_LONG lValue)
   }
   else if (pItem->isDouble())
   {
-    pItem->setLogicalValue(pItem->item.asDouble.value >= static_cast<double>(lValue));
+    pItem->setLogicalValue(pItem->doubleValue() >= static_cast<double>(lValue));
     pItem->setType(Harbour::Item::LOGICAL);
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_GREATEREQUAL))
@@ -11665,7 +11665,7 @@ HB_BOOL hb_xvmGreaterEqualThenIntIs(HB_LONG lValue, HB_BOOL *pfValue)
   }
   else if (pItem->isDouble())
   {
-    *pfValue = pItem->item.asDouble.value >= static_cast<double>(lValue);
+    *pfValue = pItem->doubleValue() >= static_cast<double>(lValue);
     hb_stackDec();
   }
   else if (hb_objHasOperator(pItem, HB_OO_OP_GREATEREQUAL))
