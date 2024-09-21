@@ -1324,9 +1324,9 @@ HB_FUNC(__MVGET)
     {
       // Generate an error with retry possibility
       // (user created error handler can create this variable)
-      auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr,
-                                 pName->isString() ? pName->stringValue() : pName->item.asSymbol.value->szName, 0,
-                                 EF_CANRETRY);
+      auto pError =
+          hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr,
+                       pName->isString() ? pName->stringValue() : pName->item.asSymbol.value->szName, 0, EF_CANRETRY);
 
       while (hb_errLaunch(pError) == E_RETRY)
       {

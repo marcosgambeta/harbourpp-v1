@@ -4202,10 +4202,9 @@ static void hb_vmExactlyEqual()
   }
   else if (pItem1->isString() && pItem2->isString())
   {
-    bool fResult =
-        pItem1->stringLength() == pItem2->stringLength() &&
-        (pItem1->stringValue() == pItem2->stringValue() ||
-         memcmp(pItem1->stringValue(), pItem2->stringValue(), pItem1->stringLength()) == 0);
+    bool fResult = pItem1->stringLength() == pItem2->stringLength() &&
+                   (pItem1->stringValue() == pItem2->stringValue() ||
+                    memcmp(pItem1->stringValue(), pItem2->stringValue(), pItem1->stringLength()) == 0);
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -4779,8 +4778,8 @@ static void hb_vmInstring()
 
   if (pItem1->isString() && pItem2->isString())
   {
-    bool fResult = (hb_strAt(pItem1->stringValue(), pItem1->stringLength(), pItem2->stringValue(),
-                             pItem2->stringLength()) != 0);
+    bool fResult =
+        (hb_strAt(pItem1->stringValue(), pItem1->stringLength(), pItem2->stringValue(), pItem2->stringLength()) != 0);
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -5128,8 +5127,7 @@ static void hb_vmEnumStart(int nVars, int nDescend)
       pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->stringLength();
       if (pBase->stringLength())
       {
-        pEnum->item.asEnum.valuePtr =
-            hb_itemPutCL(nullptr, pBase->stringValue() + pEnum->item.asEnum.offset - 1, 1);
+        pEnum->item.asEnum.valuePtr = hb_itemPutCL(nullptr, pBase->stringValue() + pEnum->item.asEnum.offset - 1, 1);
       }
       else
       {
@@ -7546,7 +7544,8 @@ void hb_vmPushStringPcode(const char *szText, HB_SIZE nLength)
   pItem->setType(Harbour::Item::STRING);
   pItem->setStringAllocated(0);
   pItem->setStringLength(nLength);
-  pItem->setStringValue(const_cast<char *>((nLength <= 1 ? hb_szAscii[static_cast<unsigned char>(szText[0])] : szText)));
+  pItem->setStringValue(
+      const_cast<char *>((nLength <= 1 ? hb_szAscii[static_cast<unsigned char>(szText[0])] : szText)));
 }
 
 void hb_vmPushSymbol(PHB_SYMB pSym)
@@ -7750,16 +7749,16 @@ static void hb_vmPushAliasedVar(PHB_SYMB pSym)
     {
       if (pAlias->stringLength() == 1 ||                                 /* M->variable */
           (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
-                                                            pAlias->stringLength()) == 0))
+                                                      pAlias->stringLength()) == 0))
       {
         hb_memvarGetValue(pAlias, pSym);
         return;
       }
     }
     else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
-                                                               pAlias->stringLength()) == 0 ||
-                                                   hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
-                                                               pAlias->stringLength()) == 0))
+                                                         pAlias->stringLength()) == 0 ||
+                                             hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
+                                                         pAlias->stringLength()) == 0))
     {
       hb_rddGetFieldValue(pAlias, pSym);
       return;
@@ -8033,7 +8032,7 @@ static void hb_vmPopAliasedVar(PHB_SYMB pSym)
     {
       if (pAlias->stringLength() == 1 ||                                 /* M->variable */
           (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
-                                                            pAlias->stringLength()) == 0))
+                                                      pAlias->stringLength()) == 0))
       {
         hb_memvarSetValue(pSym, hb_stackItemFromTop(-2));
         hb_stackPop(); /* alias */
@@ -8042,9 +8041,9 @@ static void hb_vmPopAliasedVar(PHB_SYMB pSym)
       }
     }
     else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
-                                                               pAlias->stringLength()) == 0 ||
-                                                   hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
-                                                               pAlias->stringLength()) == 0))
+                                                         pAlias->stringLength()) == 0 ||
+                                             hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
+                                                         pAlias->stringLength()) == 0))
     {
       hb_rddPutFieldValue(hb_stackItemFromTop(-2), pSym);
       hb_stackPop(); /* alias */

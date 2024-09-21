@@ -314,8 +314,8 @@ const char *hb_itemGetStr(PHB_ITEM pItem, void *cdp, void **phString, HB_SIZE *p
     char *pFree = nullptr;
     HB_SIZE nSize = 0;
 
-    const char *pString = hb_cdpnDup3(pItem->stringValue(), pItem->stringLength(), nullptr, pnLen, &pFree,
-                                      &nSize, hb_vmCDP(), static_cast<PHB_CODEPAGE>(cdp));
+    const char *pString = hb_cdpnDup3(pItem->stringValue(), pItem->stringLength(), nullptr, pnLen, &pFree, &nSize,
+                                      hb_vmCDP(), static_cast<PHB_CODEPAGE>(cdp));
     if (pFree != nullptr)
     {
       *phString = static_cast<void *>(pFree);
@@ -485,8 +485,7 @@ HB_SIZE hb_itemCopyStrU16(PHB_ITEM pItem, int iEndian, HB_WCHAR *pStrBuffer, HB_
   {
     if (pStrBuffer)
     {
-      nSize = hb_cdpStrToU16(hb_vmCDP(), iEndian, pItem->stringValue(), pItem->stringLength(), pStrBuffer,
-                             nSize);
+      nSize = hb_cdpStrToU16(hb_vmCDP(), iEndian, pItem->stringValue(), pItem->stringLength(), pStrBuffer, nSize);
     }
     else
     {

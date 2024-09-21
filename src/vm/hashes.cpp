@@ -187,8 +187,7 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
                    ? -1
                    : (pKey1->stringLength() > pKey2->stringLength()
                           ? 1
-                          : memcmp(pKey1->stringValue(), pKey2->stringValue(),
-                                   pKey1->stringLength()));
+                          : memcmp(pKey1->stringValue(), pKey2->stringValue(), pKey1->stringLength()));
       }
       else if (iFlags & HB_HASH_IGNORECASE)
       {

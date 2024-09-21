@@ -367,7 +367,8 @@ PHB_ITEM hb_itemPutCConst(PHB_ITEM pItem, const char *szText)
   pItem->setType(Harbour::Item::STRING);
   pItem->setStringLength(nLen);
   pItem->setStringAllocated(0);
-  pItem->setStringValue(const_cast<char *>((nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0])));
+  pItem->setStringValue(
+      const_cast<char *>((nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0])));
 
   return pItem;
 }
@@ -2577,8 +2578,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
         }
         else if (pBase->isString())
         {
-          if (pItem->item.asEnum.offset > 0 &&
-              static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->stringLength())
+          if (pItem->item.asEnum.offset > 0 && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->stringLength())
           {
             pItem->item.asEnum.valuePtr =
                 hb_itemPutCL(nullptr, pBase->stringValue() + pItem->item.asEnum.offset - 1, 1);
@@ -2755,8 +2755,8 @@ PHB_ITEM hb_itemReSizeString(PHB_ITEM pItem, HB_SIZE nSize)
   else
   {
     HB_SIZE nAlloc = nSize + 1 + (pItem->stringAllocated() <= nSize ? nSize : 0);
-    pItem->setStringValue(static_cast<char *>(hb_xRefResize(
-        pItem->stringValue(), pItem->stringLength(), nAlloc, &pItem->item.asString.allocated)));
+    pItem->setStringValue(static_cast<char *>(
+        hb_xRefResize(pItem->stringValue(), pItem->stringLength(), nAlloc, &pItem->item.asString.allocated)));
     pItem->setStringLength(nSize);
     pItem->stringValue()[nSize] = '\0';
   }
