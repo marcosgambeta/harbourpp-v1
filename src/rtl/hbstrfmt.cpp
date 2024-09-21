@@ -235,7 +235,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
       int iSize, iExtra;
 
       fSign = 0;
-      if (pItem && HB_IS_NUMERIC(pItem))
+      if (pItem && pItem->isNumeric())
       {
         iSize = sizeof(HB_MAXINT) * 3 + 1;
         pStr2 = pStr = static_cast<char *>(hb_xgrab(iSize + 1));
@@ -390,7 +390,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
       const char *pStr2;
       int iSize, iExtra, iD;
 
-      if (pItem && HB_IS_NUMERIC(pItem))
+      if (pItem && pItem->isNumeric())
       {
         hb_itemGetNLen(pItem, &iSize, &iD);
 

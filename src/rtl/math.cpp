@@ -117,7 +117,7 @@ static int hb_matherr(HB_MATH_EXCEPTION *pexc)
 
     if (pMatherrResult)
     {
-      if (HB_IS_NUMERIC(pMatherrResult))
+      if (pMatherrResult->isNumeric())
       {
         pexc->retval = hb_itemGetND(pMatherrResult);
         hb_itemGetNLen(pMatherrResult, &pexc->retvalwidth, &pexc->retvaldec);
@@ -534,7 +534,7 @@ static int hb_matherrblock(HB_MATH_EXCEPTION *pexc)
           hb_itemGetNLen(pRetval, &pexc->retvalwidth, &pexc->retvaldec);
           hb_itemRelease(pRetval);
         }
-        if (pRet && HB_IS_NUMERIC(pRet))
+        if (pRet && pRet->isNumeric())
         {
           retval = hb_itemGetNI(pRet); /* block may also return 0 to force C math lib warnings */
           hb_itemRelease(pRet);

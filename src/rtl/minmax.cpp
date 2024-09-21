@@ -70,7 +70,7 @@ HB_FUNC(MAX)
       }
       return;
     }
-    else if (HB_IS_NUMERIC(p1) && HB_IS_NUMERIC(p2))
+    else if (p1->isNumeric() && p2->isNumeric())
     {
       auto d1 = hb_itemGetND(p1);
       auto d2 = hb_itemGetND(p2);
@@ -141,7 +141,7 @@ HB_FUNC(MIN)
       }
       return;
     }
-    else if (HB_IS_NUMERIC(p1) && HB_IS_NUMERIC(p2))
+    else if (p1->isNumeric() && p2->isNumeric())
     {
       auto d1 = hb_itemGetND(p1);
       auto d2 = hb_itemGetND(p2);

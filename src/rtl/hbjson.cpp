@@ -263,7 +263,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     }
     _hb_jsonCtxAdd(pCtx, &buf[sizeof(buf) - i], i);
   }
-  else if (HB_IS_NUMERIC(pValue))
+  else if (pValue->isNumeric())
   {
     char buf[64];
     int iDec;

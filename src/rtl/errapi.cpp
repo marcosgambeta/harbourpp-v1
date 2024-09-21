@@ -120,7 +120,7 @@ static bool hb_errGetNumCode(int *piValue, const char *szOperation)
       return false;
     }
 
-    if (!HB_IS_NUMERIC(pItem))
+    if (!pItem->isNumeric())
     {
       hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
     }

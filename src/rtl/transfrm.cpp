@@ -400,7 +400,7 @@ HB_FUNC(TRANSFORM)
 
     /* --- Handle NUMERIC values --- */
 
-    else if (HB_IS_NUMERIC(pValue))
+    else if (pValue->isNumeric())
     {
       int iWidth; /* Width of string          */
       int iDec;   /* Number of decimals       */
@@ -1016,7 +1016,7 @@ HB_FUNC(TRANSFORM)
     {
       hb_itemReturn(pValue);
     }
-    else if (HB_IS_NUMERIC(pValue))
+    else if (pValue->isNumeric())
     {
       char *szStr;
 

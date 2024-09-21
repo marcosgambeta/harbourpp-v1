@@ -455,11 +455,11 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
     {
       PHB_ITEM pItem;
 
-      if ((pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && HB_IS_NUMERIC(pItem))
+      if ((pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && pItem->isNumeric())
       {
         level = hb_itemGetNI(pItem);
       }
-      if ((pItem = hb_hashGetCItemPtr(pParams, "zs")) != nullptr && HB_IS_NUMERIC(pItem))
+      if ((pItem = hb_hashGetCItemPtr(pParams, "zs")) != nullptr && pItem->isNumeric())
       {
         strategy = hb_itemGetNI(pItem);
       }

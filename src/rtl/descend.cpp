@@ -90,7 +90,7 @@ HB_FUNC(DESCEND)
     {
       hb_retnl(5231808 - hb_itemGetDL(pItem));
     }
-    else if (HB_IS_NUMERIC(pItem))
+    else if (pItem->isNumeric())
     {
       hb_retnd(-1 * hb_itemGetND(pItem));
     }
