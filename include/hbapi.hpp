@@ -496,20 +496,30 @@ typedef struct _HB_ITEM
   //
   HB_BOOL logicalValue();
   void setLogicalValue(HB_BOOL bValue);
+  //
   int integerValue();
   void setIntegerValue(int iValue);
   HB_USHORT integerLength();
   void setIntegerLength(HB_USHORT length);
+  //
   HB_MAXINT longValue();
   void setLongValue(HB_MAXINT lValue);
   HB_USHORT longLength();
   void setLongLength(HB_USHORT length);
+  //
   double doubleValue();
   void setDoubleValue(double dValue);
   HB_USHORT doubleLength();
   void setDoubleLength(HB_USHORT length);
   HB_USHORT doubleDecimal();
   void setDoubleDecimal(HB_USHORT decimal);
+  //
+  char *stringValue();
+  void setStringValue(char *sValue);
+  HB_SIZE stringLength();
+  void setStringLength(HB_SIZE length);
+  HB_SIZE stringAllocated();
+  void setStringAllocated(HB_SIZE allocated);
   //
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -744,6 +754,38 @@ inline HB_USHORT _HB_ITEM::doubleDecimal()
 inline void _HB_ITEM::setDoubleDecimal(HB_USHORT decimal)
 {
   this->item.asDouble.decimal = decimal;
+}
+
+// string
+
+inline char *_HB_ITEM::stringValue()
+{
+  return this->item.asString.value;
+}
+
+inline void _HB_ITEM::setStringValue(char *sValue)
+{
+  this->item.asString.value = sValue;
+}
+
+inline HB_SIZE _HB_ITEM::stringLength()
+{
+  return this->item.asString.length;
+}
+
+inline void _HB_ITEM::setStringLength(HB_SIZE length)
+{
+  this->item.asString.length = length;
+}
+
+inline HB_SIZE _HB_ITEM::stringAllocated()
+{
+  return this->item.asString.allocated;
+}
+
+inline void _HB_ITEM::setStringAllocated(HB_SIZE allocated)
+{
+  this->item.asString.allocated = allocated;
 }
 
 #endif
