@@ -306,6 +306,8 @@ DIRS := \
    gtwvt \
    gtxwc \
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 ifneq ($(HB_HAS_ZLIB),)
 
    ifneq ($(HB_HAS_PCRE),)
