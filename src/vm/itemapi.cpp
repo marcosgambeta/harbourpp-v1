@@ -292,9 +292,9 @@ PHB_ITEM hb_itemPutC(PHB_ITEM pItem, const char *szText)
   }
 
   pItem->setType(Harbour::Item::STRING);
-  pItem->item.asString.value = const_cast<char *>(szText);
-  pItem->item.asString.length = nLen;
-  pItem->item.asString.allocated = nAlloc;
+  pItem->setStringValue(const_cast<char *>(szText));
+  pItem->setStringLength(nLen);
+  pItem->setStringAllocated(nAlloc);
 
   return pItem;
 }
@@ -337,9 +337,9 @@ PHB_ITEM hb_itemPutCL(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
   //       [vszakats]
 
   pItem->setType(Harbour::Item::STRING);
-  pItem->item.asString.value = szValue;
-  pItem->item.asString.length = nLen;
-  pItem->item.asString.allocated = nAlloc;
+  pItem->setStringValue(szValue);
+  pItem->setStringLength(nLen);
+  pItem->setStringAllocated(nAlloc);
 
   return pItem;
 }
@@ -365,10 +365,9 @@ PHB_ITEM hb_itemPutCConst(PHB_ITEM pItem, const char *szText)
   HB_SIZE nLen = szText ? strlen(szText) : 0;
 
   pItem->setType(Harbour::Item::STRING);
-  pItem->item.asString.length = nLen;
-  pItem->item.asString.allocated = 0;
-  pItem->item.asString.value =
-      const_cast<char *>((nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
+  pItem->setStringLength(nLen);
+  pItem->setStringAllocated(0);
+  pItem->setStringValue(const_cast<char *>((nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0])));
 
   return pItem;
 }
@@ -392,16 +391,16 @@ PHB_ITEM hb_itemPutCLConst(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
   }
 
   pItem->setType(Harbour::Item::STRING);
-  pItem->item.asString.length = nLen;
-  pItem->item.asString.allocated = 0;
+  pItem->setStringLength(nLen);
+  pItem->setStringAllocated(0);
 
   if (nLen <= 1)
   {
-    pItem->item.asString.value = const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]);
+    pItem->setStringValue(const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
   }
   else if (szText[nLen] == '\0')
   {
-    pItem->item.asString.value = const_cast<char *>(szText);
+    pItem->setStringValue(const_cast<char *>(szText));
   }
   else
   {
@@ -432,11 +431,11 @@ PHB_ITEM hb_itemPutCPtr(PHB_ITEM pItem, char *szText)
   HB_SIZE nLen = szText ? strlen(szText) : 0;
 
   pItem->setType(Harbour::Item::STRING);
-  pItem->item.asString.length = nLen;
+  pItem->setStringLength(nLen);
   if (nLen <= 1)
   {
-    pItem->item.asString.allocated = 0;
-    pItem->item.asString.value = const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]);
+    pItem->setStringAllocated(0);
+    pItem->setStringValue(const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
     if (szText != nullptr)
     {
       hb_xfree(szText);
@@ -444,8 +443,8 @@ PHB_ITEM hb_itemPutCPtr(PHB_ITEM pItem, char *szText)
   }
   else
   {
-    pItem->item.asString.allocated = nLen + 1;
-    pItem->item.asString.value = szText;
+    pItem->setStringAllocated(nLen + 1);
+    pItem->setStringValue(szText);
   }
 
   return pItem;
@@ -470,18 +469,18 @@ PHB_ITEM hb_itemPutCLPtr(PHB_ITEM pItem, char *szText, HB_SIZE nLen)
   }
 
   pItem->setType(Harbour::Item::STRING);
-  pItem->item.asString.length = nLen;
+  pItem->setStringLength(nLen);
   if (nLen <= 1)
   {
-    pItem->item.asString.allocated = 0;
-    pItem->item.asString.value = const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]);
+    pItem->setStringAllocated(0);
+    pItem->setStringValue(const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
     hb_xfree(szText);
   }
   else
   {
     szText[nLen] = '\0';
-    pItem->item.asString.allocated = nLen + 1;
-    pItem->item.asString.value = szText;
+    pItem->setStringAllocated(nLen + 1);
+    pItem->setStringValue(szText);
   }
 
   return pItem;
@@ -505,9 +504,9 @@ char *hb_itemGetC(PHB_ITEM pItem)
 
   if (pItem && pItem->isString())
   {
-    auto szResult = static_cast<char *>(hb_xgrab(pItem->item.asString.length + 1));
-    hb_xmemcpy(szResult, pItem->item.asString.value, pItem->item.asString.length);
-    szResult[pItem->item.asString.length] = '\0';
+    auto szResult = static_cast<char *>(hb_xgrab(pItem->stringLength() + 1));
+    hb_xmemcpy(szResult, pItem->stringValue(), pItem->stringLength());
+    szResult[pItem->stringLength()] = '\0';
 
     return szResult;
   }
@@ -521,9 +520,9 @@ char *_HB_ITEM::getC() // equivalent to hb_itemGetC
 {
   if (this->isString())
   {
-    auto szResult = static_cast<char *>(hb_xgrab(this->item.asString.length + 1));
-    hb_xmemcpy(szResult, this->item.asString.value, this->item.asString.length);
-    szResult[this->item.asString.length] = '\0';
+    auto szResult = static_cast<char *>(hb_xgrab(this->stringLength() + 1));
+    hb_xmemcpy(szResult, this->stringValue(), this->stringLength());
+    szResult[this->stringLength()] = '\0';
     return szResult;
   }
   else
@@ -543,7 +542,7 @@ const char *hb_itemGetCPtr(PHB_ITEM pItem)
 
   if (pItem && pItem->isString())
   {
-    return pItem->item.asString.value;
+    return pItem->stringValue();
   }
   else
   {
@@ -555,7 +554,7 @@ const char *_HB_ITEM::getCPtr() // equivalent to hb_itemGetCPtr
 {
   if (this->isString())
   {
-    return this->item.asString.value;
+    return this->stringValue();
   }
   else
   {
@@ -571,7 +570,7 @@ HB_SIZE hb_itemGetCLen(PHB_ITEM pItem)
 
   if (pItem && pItem->isString())
   {
-    return pItem->item.asString.length;
+    return pItem->stringLength();
   }
   else
   {
@@ -583,7 +582,7 @@ HB_SIZE _HB_ITEM::getCLen() // equivalent to hb_itemGetCLen
 {
   if (this->isString())
   {
-    return this->item.asString.length;
+    return this->stringLength();
   }
   else
   {
@@ -599,11 +598,11 @@ HB_SIZE hb_itemCopyC(PHB_ITEM pItem, char *szBuffer, HB_SIZE nLen)
 
   if (pItem && pItem->isString())
   {
-    if (nLen == 0 || nLen > pItem->item.asString.length)
+    if (nLen == 0 || nLen > pItem->stringLength())
     {
-      nLen = pItem->item.asString.length;
+      nLen = pItem->stringLength();
     }
-    hb_xmemcpy(szBuffer, pItem->item.asString.value, nLen);
+    hb_xmemcpy(szBuffer, pItem->stringValue(), nLen);
     return nLen;
   }
   else
@@ -641,16 +640,16 @@ const char *hb_itemGetCRef(PHB_ITEM pItem, void **phRef, HB_SIZE *pnLen)
   {
     if (pnLen)
     {
-      *pnLen = pItem->item.asString.length;
+      *pnLen = pItem->stringLength();
     }
 
-    if (pItem->item.asString.allocated)
+    if (pItem->stringAllocated())
     {
-      *phRef = static_cast<void *>(pItem->item.asString.value);
-      hb_xRefInc(pItem->item.asString.value);
+      *phRef = static_cast<void *>(pItem->stringValue());
+      hb_xRefInc(pItem->stringValue());
     }
 
-    return pItem->item.asString.value;
+    return pItem->stringValue();
   }
 
   if (pnLen)
@@ -2028,7 +2027,7 @@ HB_SIZE hb_itemSize(PHB_ITEM pItem)
   {
     if (pItem->isString())
     {
-      return pItem->item.asString.length;
+      return pItem->stringLength();
     }
     else if (pItem->isArray())
     {
@@ -2198,9 +2197,9 @@ void hb_itemClear(PHB_ITEM pItem)
   // GCLOCK enter
   if (type & Harbour::Item::STRING)
   {
-    if (pItem->item.asString.allocated)
+    if (pItem->stringAllocated())
     {
-      hb_xRefFree(pItem->item.asString.value);
+      hb_xRefFree(pItem->stringValue());
     }
   }
   else if (type & Harbour::Item::ARRAY)
@@ -2270,9 +2269,9 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     // GCLOCK enter
     if (pSource->isString())
     {
-      if (pSource->item.asString.allocated)
+      if (pSource->stringAllocated())
       {
-        hb_xRefInc(pSource->item.asString.value);
+        hb_xRefInc(pSource->stringValue());
       }
     }
     else if (pSource->isArray())
@@ -2579,10 +2578,10 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
         else if (pBase->isString())
         {
           if (pItem->item.asEnum.offset > 0 &&
-              static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length)
+              static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->stringLength())
           {
             pItem->item.asEnum.valuePtr =
-                hb_itemPutCL(nullptr, pBase->item.asString.value + pItem->item.asEnum.offset - 1, 1);
+                hb_itemPutCL(nullptr, pBase->stringValue() + pItem->item.asEnum.offset - 1, 1);
             return pItem->item.asEnum.valuePtr;
           }
         }
@@ -2691,17 +2690,17 @@ PHB_ITEM hb_itemUnRefWrite(PHB_ITEM pItem, PHB_ITEM pSource)
   {
     pItem = pItem->item.asExtRef.func->write(pItem, pSource);
   }
-  else if (pSource->isString() && pSource->item.asString.length == 1)
+  else if (pSource->isString() && pSource->stringLength() == 1)
   {
     do
     {
       if (pItem->isEnum() && pItem->item.asEnum.basePtr->isByRef() && pItem->item.asEnum.offset >= 1)
       {
         auto pBase = hb_itemUnRef(pItem->item.asEnum.basePtr);
-        if (pBase->isString() && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->item.asString.length)
+        if (pBase->isString() && static_cast<HB_SIZE>(pItem->item.asEnum.offset) <= pBase->stringLength())
         {
           hb_itemUnShareString(pBase);
-          pBase->item.asString.value[pItem->item.asEnum.offset - 1] = pSource->item.asString.value[0];
+          pBase->stringValue()[pItem->item.asEnum.offset - 1] = pSource->stringValue()[0];
           return pItem->item.asEnum.valuePtr;
         }
       }
@@ -2744,22 +2743,22 @@ PHB_ITEM hb_itemReSizeString(PHB_ITEM pItem, HB_SIZE nSize)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemReSizeString(%p,%" HB_PFS "u)", static_cast<void*>(pItem), nSize));
 #endif
 
-  if (pItem->item.asString.allocated == 0)
+  if (pItem->stringAllocated() == 0)
   {
     auto szText = static_cast<char *>(hb_xgrab(nSize + 1));
-    hb_xmemcpy(szText, pItem->item.asString.value, pItem->item.asString.length);
+    hb_xmemcpy(szText, pItem->stringValue(), pItem->stringLength());
     szText[nSize] = '\0';
-    pItem->item.asString.value = szText;
-    pItem->item.asString.length = nSize;
-    pItem->item.asString.allocated = nSize + 1;
+    pItem->setStringValue(szText);
+    pItem->setStringLength(nSize);
+    pItem->setStringAllocated(nSize + 1);
   }
   else
   {
-    HB_SIZE nAlloc = nSize + 1 + (pItem->item.asString.allocated <= nSize ? nSize : 0);
-    pItem->item.asString.value = static_cast<char *>(hb_xRefResize(
-        pItem->item.asString.value, pItem->item.asString.length, nAlloc, &pItem->item.asString.allocated));
-    pItem->item.asString.length = nSize;
-    pItem->item.asString.value[nSize] = '\0';
+    HB_SIZE nAlloc = nSize + 1 + (pItem->stringAllocated() <= nSize ? nSize : 0);
+    pItem->setStringValue(static_cast<char *>(hb_xRefResize(
+        pItem->stringValue(), pItem->stringLength(), nAlloc, &pItem->item.asString.allocated)));
+    pItem->setStringLength(nSize);
+    pItem->stringValue()[nSize] = '\0';
   }
   pItem->type &= ~Harbour::Item::DEFAULT;
 
@@ -2775,18 +2774,18 @@ PHB_ITEM hb_itemUnShareString(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemUnShareString(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem->item.asString.allocated == 0 || hb_xRefCount(pItem->item.asString.value) > 1)
+  if (pItem->stringAllocated() == 0 || hb_xRefCount(pItem->stringValue()) > 1)
   {
-    HB_SIZE nLen = pItem->item.asString.length + 1;
-    auto szText = static_cast<char *>(hb_xmemcpy(hb_xgrab(nLen), pItem->item.asString.value, nLen));
-    if (pItem->item.asString.allocated)
+    HB_SIZE nLen = pItem->stringLength() + 1;
+    auto szText = static_cast<char *>(hb_xmemcpy(hb_xgrab(nLen), pItem->stringValue(), nLen));
+    if (pItem->stringAllocated())
     {
       // GCLOCK enter
-      hb_xRefFree(pItem->item.asString.value);
+      hb_xRefFree(pItem->stringValue());
       // GCLOCK leave
     }
-    pItem->item.asString.value = szText;
-    pItem->item.asString.allocated = nLen;
+    pItem->setStringValue(szText);
+    pItem->setStringAllocated(nLen);
   }
   pItem->type &= ~Harbour::Item::DEFAULT;
 
@@ -2830,8 +2829,8 @@ HB_BOOL hb_itemGetWriteCL(PHB_ITEM pItem, char **pszValue, HB_SIZE *pnLen)
     if (pItem->isString())
     {
       hb_itemUnShareString(pItem);
-      *pnLen = pItem->item.asString.length;
-      *pszValue = pItem->item.asString.value;
+      *pnLen = pItem->stringLength();
+      *pszValue = pItem->stringValue();
       return true;
     }
   }
@@ -2912,8 +2911,8 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isString())
   {
-    fResult = pItem2->isString() && pItem1->item.asString.length == pItem2->item.asString.length &&
-              memcmp(pItem1->item.asString.value, pItem2->item.asString.value, pItem1->item.asString.length) == 0;
+    fResult = pItem2->isString() && pItem1->stringLength() == pItem2->stringLength() &&
+              memcmp(pItem1->stringValue(), pItem2->stringValue(), pItem1->stringLength()) == 0;
   }
   else if (pItem1->isNil())
   {
@@ -3080,10 +3079,10 @@ int hb_itemStrCmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   HB_STACK_TLS_PRELOAD
 
-  const char *szFirst = pFirst->item.asString.value;
-  const char *szSecond = pSecond->item.asString.value;
-  HB_SIZE nLenFirst = pFirst->item.asString.length;
-  HB_SIZE nLenSecond = pSecond->item.asString.length;
+  const char *szFirst = pFirst->stringValue();
+  const char *szSecond = pSecond->stringValue();
+  HB_SIZE nLenFirst = pFirst->stringLength();
+  HB_SIZE nLenSecond = pSecond->stringLength();
 
   if (szFirst == szSecond && nLenFirst == nLenSecond)
   {
@@ -3174,10 +3173,10 @@ int hb_itemStrICmp(PHB_ITEM pFirst, PHB_ITEM pSecond, HB_BOOL bForceExact)
 
   HB_STACK_TLS_PRELOAD
 
-  const char *szFirst = pFirst->item.asString.value;
-  const char *szSecond = pSecond->item.asString.value;
-  HB_SIZE nLenFirst = pFirst->item.asString.length;
-  HB_SIZE nLenSecond = pSecond->item.asString.length;
+  const char *szFirst = pFirst->stringValue();
+  const char *szSecond = pSecond->stringValue();
+  HB_SIZE nLenFirst = pFirst->stringLength();
+  HB_SIZE nLenSecond = pSecond->stringLength();
 
   if (!bForceExact && hb_stackSetStruct()->HB_SET_EXACT)
   {

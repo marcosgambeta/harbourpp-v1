@@ -2818,7 +2818,7 @@ static PHB_DYNS hb_objGetMsgSym(PHB_ITEM pMessage)
 
     if (pMessage->isString())
     {
-      szMsg = pMessage->item.asString.value;
+      szMsg = pMessage->stringValue();
     }
     else if (pMessage->isSymbol())
     {
@@ -4017,7 +4017,7 @@ HB_FUNC(__CLSDELMSG)
 
   if (uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked)
   {
-    auto pMsg = hb_dynsymFindName(pString->item.asString.value);
+    auto pMsg = hb_dynsymFindName(pString->stringValue());
 
     if (pMsg)
     {
@@ -4125,7 +4125,7 @@ HB_FUNC(__CLSMODMSG)
 
   if (uiClass && uiClass <= s_uiClasses && pString && !s_pClasses[uiClass]->fLocked)
   {
-    auto pMsg = hb_dynsymFindName(pString->item.asString.value);
+    auto pMsg = hb_dynsymFindName(pString->stringValue());
 
     if (pMsg)
     {

@@ -449,7 +449,7 @@ void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags)
     struMacro.Flags = HB_MACRO_GEN_PUSH;
     struMacro.uiNameLen = HB_SYMBOL_NAME_LEN;
     struMacro.status = HB_MACRO_CONT;
-    struMacro.length = pItem->item.asString.length;
+    struMacro.length = pItem->stringLength();
     /*
      * Clipper appears to expand nested macros statically vs. by
      * Macro Parser, f.e.:
@@ -462,9 +462,9 @@ void hb_macroGetValue(PHB_ITEM pItem, int iContext, int flags)
      *          ? "Type:", Type(cText)
      *       RETURN
      */
-    char *pszFree = hb_macroTextSubst(pItem->item.asString.value, &struMacro.length);
+    char *pszFree = hb_macroTextSubst(pItem->stringValue(), &struMacro.length);
     struMacro.string = pszFree;
-    if (pszFree == pItem->item.asString.value)
+    if (pszFree == pItem->stringValue())
     {
       pszFree = nullptr;
     }
@@ -542,8 +542,8 @@ void hb_macroSetValue(PHB_ITEM pItem, int flags)
     struMacro.Flags = HB_MACRO_GEN_POP;
     struMacro.uiNameLen = HB_SYMBOL_NAME_LEN;
     struMacro.status = HB_MACRO_CONT;
-    struMacro.string = pItem->item.asString.value;
-    struMacro.length = pItem->item.asString.length;
+    struMacro.string = pItem->stringValue();
+    struMacro.length = pItem->stringLength();
 
     int iStatus = hb_macroParse(&struMacro);
 
@@ -587,8 +587,8 @@ void hb_macroPushReference(PHB_ITEM pItem)
     struMacro.Flags = HB_MACRO_GEN_PUSH | HB_MACRO_GEN_REFER;
     struMacro.uiNameLen = HB_SYMBOL_NAME_LEN;
     struMacro.status = HB_MACRO_CONT;
-    struMacro.string = pItem->item.asString.value;
-    struMacro.length = pItem->item.asString.length;
+    struMacro.string = pItem->stringValue();
+    struMacro.length = pItem->stringLength();
 
     int iStatus = hb_macroParse(&struMacro);
 
@@ -628,13 +628,13 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
   {
     /* grab memory for "alias->var"
      */
-    HB_SIZE nLen = pAlias->item.asString.length + pVar->item.asString.length + 2;
+    HB_SIZE nLen = pAlias->stringLength() + pVar->stringLength() + 2;
     auto szString = static_cast<char *>(hb_xgrab(nLen + 1));
 
-    memcpy(szString, pAlias->item.asString.value, pAlias->item.asString.length);
-    szString[pAlias->item.asString.length] = '-';
-    szString[pAlias->item.asString.length + 1] = '>';
-    memcpy(szString + pAlias->item.asString.length + 2, pVar->item.asString.value, pVar->item.asString.length);
+    memcpy(szString, pAlias->stringValue(), pAlias->stringLength());
+    szString[pAlias->stringLength()] = '-';
+    szString[pAlias->stringLength() + 1] = '>';
+    memcpy(szString + pAlias->stringLength() + 2, pVar->stringValue(), pVar->stringLength());
     szString[nLen] = '\0';
 
     HB_MACRO struMacro;
@@ -675,8 +675,8 @@ static void hb_macroUseAliased(PHB_ITEM pAlias, PHB_ITEM pVar, int iFlag, int iS
     struMacro.Flags = iFlag | HB_MACRO_GEN_ALIASED;
     struMacro.uiNameLen = HB_SYMBOL_NAME_LEN;
     struMacro.status = HB_MACRO_CONT;
-    struMacro.string = pVar->item.asString.value;
-    struMacro.length = pVar->item.asString.length;
+    struMacro.string = pVar->stringValue();
+    struMacro.length = pVar->stringLength();
 
     int iStatus = hb_macroParse(&struMacro);
 
@@ -1076,7 +1076,7 @@ void hb_macroPushSymbol(PHB_ITEM pItem)
   {
     HB_BOOL fNewBuffer;
 
-    char *szString = hb_macroTextSymbol(pItem->item.asString.value, pItem->item.asString.length, &fNewBuffer);
+    char *szString = hb_macroTextSymbol(pItem->stringValue(), pItem->stringLength(), &fNewBuffer);
     if (szString != nullptr)
     {
       PHB_DYNS pDynSym = hb_dynsymGetCase(szString);
@@ -1119,11 +1119,11 @@ void hb_macroTextValue(PHB_ITEM pItem)
 
   if (hb_macroCheckParam(pItem))
   {
-    HB_SIZE nLength = pItem->item.asString.length;
+    HB_SIZE nLength = pItem->stringLength();
 
-    char *szString = hb_macroTextSubst(pItem->item.asString.value, &nLength);
+    char *szString = hb_macroTextSubst(pItem->stringValue(), &nLength);
 
-    if (szString != pItem->item.asString.value)
+    if (szString != pItem->stringValue())
     {
       /* replace the old value on the eval stack with the new one
        */
@@ -1154,8 +1154,8 @@ const char *hb_macroGetType(PHB_ITEM pItem)
     struMacro.Flags = HB_MACRO_GEN_PUSH | HB_MACRO_GEN_TYPE;
     struMacro.uiNameLen = HB_SYMBOL_NAME_LEN;
     struMacro.status = HB_MACRO_CONT;
-    struMacro.string = pItem->item.asString.value;
-    struMacro.length = pItem->item.asString.length;
+    struMacro.string = pItem->stringValue();
+    struMacro.length = pItem->stringLength();
 
     int iStatus = hb_macroParse(&struMacro);
 

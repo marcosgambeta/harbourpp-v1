@@ -595,7 +595,7 @@ static PHB_DYNS hb_memvarGetSymbol(PHB_ITEM pItem)
   {
     if (pItem->isString())
     {
-      pDynSym = hb_memvarFindSymbol(pItem->item.asString.value, pItem->item.asString.length);
+      pDynSym = hb_memvarFindSymbol(pItem->stringValue(), pItem->stringLength());
     }
     else if (pItem->isSymbol())
     {
@@ -635,8 +635,8 @@ char *hb_memvarGetStrValuePtr(char *szVarName, HB_SIZE *pnLen)
 
       if (pMemvar->isString())
       {
-        szValue = pMemvar->item.asString.value;
-        *pnLen = pMemvar->item.asString.length;
+        szValue = pMemvar->stringValue();
+        *pnLen = pMemvar->stringLength();
       }
     }
   }
@@ -673,7 +673,7 @@ void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue)
   }
   else if (pMemvar->isString())
   {
-    pDynVar = hb_dynsymGet(pMemvar->item.asString.value);
+    pDynVar = hb_dynsymGet(pMemvar->stringValue());
   }
 
   if (pDynVar != nullptr)
@@ -1325,7 +1325,7 @@ HB_FUNC(__MVGET)
       // Generate an error with retry possibility
       // (user created error handler can create this variable)
       auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr,
-                                 pName->isString() ? pName->item.asString.value : pName->item.asSymbol.value->szName, 0,
+                                 pName->isString() ? pName->stringValue() : pName->item.asSymbol.value->szName, 0,
                                  EF_CANRETRY);
 
       while (hb_errLaunch(pError) == E_RETRY)
@@ -1396,7 +1396,7 @@ HB_FUNC(__MVPUT)
       // attempt to assign a value to undeclared variable
       // create the PRIVATE one
       hb_memvarCreateFromDynSymbol(
-          hb_dynsymGet(pName->isString() ? pName->item.asString.value : pName->item.asSymbol.value->szName),
+          hb_dynsymGet(pName->isString() ? pName->stringValue() : pName->item.asSymbol.value->szName),
           HB_VSCOMP_PRIVATE, pValue);
     }
     hb_memvarUpdatePrivatesBase();

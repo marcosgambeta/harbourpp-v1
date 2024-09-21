@@ -268,7 +268,7 @@ const char *hb_parc(int iParam)
 
     if (pItem->isString())
     {
-      return pItem->item.asString.value;
+      return pItem->stringValue();
     }
   }
 
@@ -294,7 +294,7 @@ const char *hb_parcx(int iParam)
 
     if (pItem->isString())
     {
-      return pItem->item.asString.value;
+      return pItem->stringValue();
     }
   }
 
@@ -320,7 +320,7 @@ HB_SIZE hb_parclen(int iParam)
 
     if (pItem->isString())
     {
-      return pItem->item.asString.length;
+      return pItem->stringLength();
     }
   }
 
@@ -352,7 +352,7 @@ HB_SIZE hb_parcsiz(int iParam)
 
       if (pItem->isString())
       {
-        return pItem->item.asString.length + 1;
+        return pItem->stringLength() + 1;
       }
     }
   }
@@ -950,7 +950,7 @@ void *hb_parptrx(int iParam)
     }
     else if (pItem->isString())
     {
-      return static_cast<void *>(pItem->item.asString.value);
+      return static_cast<void *>(pItem->stringValue());
     }
   }
 
@@ -1005,7 +1005,7 @@ const char *hb_parvc(int iParam, ...)
 
     if (pItem->isString())
     {
-      return pItem->item.asString.value;
+      return pItem->stringValue();
     }
     else if (pItem->isArray())
     {
@@ -1043,7 +1043,7 @@ const char *hb_parvcx(int iParam, ...)
 
     if (pItem->isString())
     {
-      return pItem->item.asString.value;
+      return pItem->stringValue();
     }
     else if (pItem->isArray())
     {
@@ -1080,7 +1080,7 @@ HB_SIZE hb_parvclen(int iParam, ...)
 
     if (pItem->isString())
     {
-      return pItem->item.asString.length;
+      return pItem->stringLength();
     }
     else if (pItem->isArray())
     {
@@ -1123,7 +1123,7 @@ HB_SIZE hb_parvcsiz(int iParam, ...)
 
       if (pItem->isString())
       {
-        return pItem->item.asString.length + 1;
+        return pItem->stringLength() + 1;
       }
       else if (pItem->isArray())
       {

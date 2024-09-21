@@ -589,7 +589,7 @@ static PHB_DYNS hb_dynsymByItem(PHB_ITEM pItem)
   {
     if (pItem->isString())
     {
-      pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+      pDynSym = hb_dynsymFindName(pItem->stringValue());
     }
     else if (pItem->isSymbol())
     {

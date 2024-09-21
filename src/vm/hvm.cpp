@@ -3607,8 +3607,8 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isString() && pItem2->isString())
   {
-    HB_SIZE nLen1 = pItem1->item.asString.length;
-    HB_SIZE nLen2 = pItem2->item.asString.length;
+    HB_SIZE nLen1 = pItem1->stringLength();
+    HB_SIZE nLen2 = pItem2->stringLength();
 
     if (nLen2)
     {
@@ -3622,7 +3622,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
             pItem1 = pResult;
           }
           hb_itemReSizeString(pItem1, nLen1 + nLen2);
-          hb_xmemcpy(pItem1->item.asString.value + nLen1, pItem2->item.asString.value, nLen2);
+          hb_xmemcpy(pItem1->stringValue() + nLen1, pItem2->stringValue(), nLen2);
         }
         else
         {
@@ -3779,8 +3779,8 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isString() && pItem2->isString())
   {
-    HB_SIZE nLen1 = pItem1->item.asString.length;
-    HB_SIZE nLen2 = pItem2->item.asString.length;
+    HB_SIZE nLen1 = pItem1->stringLength();
+    HB_SIZE nLen2 = pItem2->stringLength();
 
     if (nLen1 == 0)
     {
@@ -3803,12 +3803,12 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
         pItem1 = pResult;
       }
       hb_itemReSizeString(pItem1, nLen1 + nLen2);
-      while (nLen1 && pItem1->item.asString.value[nLen1 - 1] == ' ')
+      while (nLen1 && pItem1->stringValue()[nLen1 - 1] == ' ')
       {
         nLen1--;
       }
-      hb_xmemcpy(pItem1->item.asString.value + nLen1, pItem2->item.asString.value, nLen2);
-      hb_xmemset(pItem1->item.asString.value + nLen1 + nLen2, ' ', pItem1->item.asString.length - nLen1 - nLen2);
+      hb_xmemcpy(pItem1->stringValue() + nLen1, pItem2->stringValue(), nLen2);
+      hb_xmemset(pItem1->stringValue() + nLen1 + nLen2, ' ', pItem1->stringLength() - nLen1 - nLen2);
     }
     else
     {
@@ -4203,9 +4203,9 @@ static void hb_vmExactlyEqual()
   else if (pItem1->isString() && pItem2->isString())
   {
     bool fResult =
-        pItem1->item.asString.length == pItem2->item.asString.length &&
-        (pItem1->item.asString.value == pItem2->item.asString.value ||
-         memcmp(pItem1->item.asString.value, pItem2->item.asString.value, pItem1->item.asString.length) == 0);
+        pItem1->stringLength() == pItem2->stringLength() &&
+        (pItem1->stringValue() == pItem2->stringValue() ||
+         memcmp(pItem1->stringValue(), pItem2->stringValue(), pItem1->stringLength()) == 0);
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -4779,8 +4779,8 @@ static void hb_vmInstring()
 
   if (pItem1->isString() && pItem2->isString())
   {
-    bool fResult = (hb_strAt(pItem1->item.asString.value, pItem1->item.asString.length, pItem2->item.asString.value,
-                             pItem2->item.asString.length) != 0);
+    bool fResult = (hb_strAt(pItem1->stringValue(), pItem1->stringLength(), pItem2->stringValue(),
+                             pItem2->stringLength()) != 0);
     hb_stackPop();
     hb_itemClear(pItem1);
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -5125,11 +5125,11 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     else if (pBase->isString())
     {
       /* storage item for single characters */
-      pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->item.asString.length;
-      if (pBase->item.asString.length)
+      pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->stringLength();
+      if (pBase->stringLength())
       {
         pEnum->item.asEnum.valuePtr =
-            hb_itemPutCL(nullptr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1);
+            hb_itemPutCL(nullptr, pBase->stringValue() + pEnum->item.asEnum.offset - 1, 1);
       }
       else
       {
@@ -5215,12 +5215,12 @@ static void hb_vmEnumNext()
     }
     else if (pBase->isString())
     {
-      if (static_cast<HB_SIZE>(++pEnum->item.asEnum.offset) > pBase->item.asString.length)
+      if (static_cast<HB_SIZE>(++pEnum->item.asEnum.offset) > pBase->stringLength())
       {
         break;
       }
       pEnum->item.asEnum.valuePtr =
-          hb_itemPutCL(pEnum->item.asEnum.valuePtr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1);
+          hb_itemPutCL(pEnum->item.asEnum.valuePtr, pBase->stringValue() + pEnum->item.asEnum.offset - 1, 1);
     }
     else
     {
@@ -5303,7 +5303,7 @@ static void hb_vmEnumPrev()
         break;
       }
       pEnum->item.asEnum.valuePtr =
-          hb_itemPutCL(pEnum->item.asEnum.valuePtr, pBase->item.asString.value + pEnum->item.asEnum.offset - 1, 1);
+          hb_itemPutCL(pEnum->item.asEnum.valuePtr, pBase->stringValue() + pEnum->item.asEnum.offset - 1, 1);
     }
     else
     {
@@ -5383,8 +5383,8 @@ static const HB_BYTE *hb_vmSwitch(const HB_BYTE *pCode, HB_USHORT casesCnt)
 #if 0
                   fFound = hb_itemStrCmp(pItem1, pItem2, bExact);
 #endif
-          fFound = static_cast<HB_SIZE>(pCode[1]) - 1 == pSwitch->item.asString.length &&
-                   memcmp(pSwitch->item.asString.value, &pCode[2], pSwitch->item.asString.length) == 0;
+          fFound = static_cast<HB_SIZE>(pCode[1]) - 1 == pSwitch->stringLength() &&
+                   memcmp(pSwitch->stringValue(), &pCode[2], pSwitch->stringLength()) == 0;
         }
         pCode += 2 + pCode[1];
         break;
@@ -6271,7 +6271,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
       /* expand '&' operator if exists */
       HB_BOOL bNewString;
 
-      char *szAlias = hb_macroExpandString(pAlias->item.asString.value, pAlias->item.asString.length, &bNewString);
+      char *szAlias = hb_macroExpandString(pAlias->stringValue(), pAlias->stringLength(), &bNewString);
       if (pField)
       {
         errCode = hb_rddSelectWorkAreaAlias(szAlias);
@@ -7544,10 +7544,9 @@ void hb_vmPushStringPcode(const char *szText, HB_SIZE nLength)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::STRING);
-  pItem->item.asString.allocated = 0;
-  pItem->item.asString.length = nLength;
-  pItem->item.asString.value =
-      const_cast<char *>((nLength <= 1 ? hb_szAscii[static_cast<unsigned char>(szText[0])] : szText));
+  pItem->setStringAllocated(0);
+  pItem->setStringLength(nLength);
+  pItem->setStringValue(const_cast<char *>((nLength <= 1 ? hb_szAscii[static_cast<unsigned char>(szText[0])] : szText)));
 }
 
 void hb_vmPushSymbol(PHB_SYMB pSym)
@@ -7745,22 +7744,22 @@ static void hb_vmPushAliasedVar(PHB_SYMB pSym)
 
   if (pAlias->isString())
   {
-    const char *szAlias = pAlias->item.asString.value;
+    const char *szAlias = pAlias->stringValue();
 
     if (szAlias[0] == 'M' || szAlias[0] == 'm')
     {
-      if (pAlias->item.asString.length == 1 ||                                 /* M->variable */
-          (pAlias->item.asString.length >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
-                                                            pAlias->item.asString.length) == 0))
+      if (pAlias->stringLength() == 1 ||                                 /* M->variable */
+          (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
+                                                            pAlias->stringLength()) == 0))
       {
         hb_memvarGetValue(pAlias, pSym);
         return;
       }
     }
-    else if (pAlias->item.asString.length >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
-                                                               pAlias->item.asString.length) == 0 ||
+    else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
+                                                               pAlias->stringLength()) == 0 ||
                                                    hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
-                                                               pAlias->item.asString.length) == 0))
+                                                               pAlias->stringLength()) == 0))
     {
       hb_rddGetFieldValue(pAlias, pSym);
       return;
@@ -8028,13 +8027,13 @@ static void hb_vmPopAliasedVar(PHB_SYMB pSym)
    */
   if (pAlias->isString())
   {
-    const char *szAlias = pAlias->item.asString.value;
+    const char *szAlias = pAlias->stringValue();
 
     if (szAlias[0] == 'M' || szAlias[0] == 'm')
     {
-      if (pAlias->item.asString.length == 1 ||                                 /* M->variable */
-          (pAlias->item.asString.length >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
-                                                            pAlias->item.asString.length) == 0))
+      if (pAlias->stringLength() == 1 ||                                 /* M->variable */
+          (pAlias->stringLength() >= 4 && hb_strnicmp(szAlias, "MEMVAR", /* MEMVAR-> or MEMVA-> or MEMV-> */
+                                                            pAlias->stringLength()) == 0))
       {
         hb_memvarSetValue(pSym, hb_stackItemFromTop(-2));
         hb_stackPop(); /* alias */
@@ -8042,10 +8041,10 @@ static void hb_vmPopAliasedVar(PHB_SYMB pSym)
         return;
       }
     }
-    else if (pAlias->item.asString.length >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
-                                                               pAlias->item.asString.length) == 0 ||
+    else if (pAlias->stringLength() >= 4 && (hb_strnicmp(szAlias, "FIELD", /* FIELD-> or FIEL-> */
+                                                               pAlias->stringLength()) == 0 ||
                                                    hb_strnicmp(szAlias, "_FIELD", /* _FIELD-> or _FIE-> */
-                                                               pAlias->item.asString.length) == 0))
+                                                               pAlias->stringLength()) == 0))
     {
       hb_rddPutFieldValue(hb_stackItemFromTop(-2), pSym);
       hb_stackPop(); /* alias */
@@ -9730,7 +9729,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM *pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
 
     if (pItem->isString())
     {
-      auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+      auto pDynSym = hb_dynsymFindName(pItem->stringValue());
 
       if (pDynSym)
       {
@@ -13212,7 +13211,7 @@ HB_FUNC(__VMITEMREFS)
     }
     else if (pItem->isString())
     {
-      hb_retnint(hb_xRefCount(pItem->item.asString.value));
+      hb_retnint(hb_xRefCount(pItem->stringValue()));
     }
   }
 }

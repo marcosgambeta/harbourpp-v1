@@ -183,12 +183,12 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
     {
       if (iFlags & HB_HASH_BINARY)
       {
-        return pKey1->item.asString.length < pKey2->item.asString.length
+        return pKey1->stringLength() < pKey2->stringLength()
                    ? -1
-                   : (pKey1->item.asString.length > pKey2->item.asString.length
+                   : (pKey1->stringLength() > pKey2->stringLength()
                           ? 1
-                          : memcmp(pKey1->item.asString.value, pKey2->item.asString.value,
-                                   pKey1->item.asString.length));
+                          : memcmp(pKey1->stringValue(), pKey2->stringValue(),
+                                   pKey1->stringLength()));
       }
       else if (iFlags & HB_HASH_IGNORECASE)
       {

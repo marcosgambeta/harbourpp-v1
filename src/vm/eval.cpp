@@ -117,7 +117,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
 
     if (pItem->isString())
     {
-      auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+      auto pDynSym = hb_dynsymFindName(pItem->stringValue());
 
       if (pDynSym)
       {
@@ -216,7 +216,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
 
     if (pItem->isString())
     {
-      auto pDynSym = hb_dynsymFindName(pItem->item.asString.value);
+      auto pDynSym = hb_dynsymFindName(pItem->stringValue());
 
       if (pDynSym)
       {
