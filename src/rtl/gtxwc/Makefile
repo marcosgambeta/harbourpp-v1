@@ -7,6 +7,8 @@ LIBNAME := gtxwc
 CPP_SOURCES := \
    gtxwc.cpp \
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 ifneq ($(HB_HAS_X11),)
 
    HB_CFLAGS += $(foreach d,$(HB_HAS_X11),-I$(d))

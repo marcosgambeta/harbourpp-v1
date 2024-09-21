@@ -5671,7 +5671,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_SELECTCOPY:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, wnd->fSelectCopy);
-    if (pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal))
+    if (pInfo->pNewVal && pInfo->pNewVal->isLogical())
     {
       wnd->fSelectCopy = hb_itemGetL(pInfo->pNewVal);
     }
@@ -5692,7 +5692,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_ALTENTER:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, wnd->fAltEnter);
-    if (pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal))
+    if (pInfo->pNewVal && pInfo->pNewVal->isLogical())
     {
       wnd->fAltEnter = hb_itemGetL(pInfo->pNewVal);
     }
@@ -5700,7 +5700,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_ISFULLSCREEN:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, wnd->fFullScreen);
-    if (pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL(pInfo->pNewVal) != wnd->fFullScreen)
+    if (pInfo->pNewVal && pInfo->pNewVal->isLogical() && hb_itemGetL(pInfo->pNewVal) != wnd->fFullScreen)
     {
       wnd->fFullScreen = !wnd->fFullScreen;
       if (wnd->fInit)
@@ -5714,7 +5714,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_MAXIMIZED:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, wnd->fMaximized);
-    if (pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL(pInfo->pNewVal) != wnd->fMaximized)
+    if (pInfo->pNewVal && pInfo->pNewVal->isLogical() && hb_itemGetL(pInfo->pNewVal) != wnd->fMaximized)
     {
       wnd->fMaximized = !wnd->fMaximized;
       if (wnd->fInit)
@@ -5728,7 +5728,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_MINIMIZED:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, wnd->fMinimized);
-    if (pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL(pInfo->pNewVal) != wnd->fMinimized)
+    if (pInfo->pNewVal && pInfo->pNewVal->isLogical() && hb_itemGetL(pInfo->pNewVal) != wnd->fMinimized)
     {
       wnd->fMinimized = !wnd->fMinimized;
       if (wnd->fInit)
@@ -5751,7 +5751,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_CLOSABLE:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, wnd->iCloseMode == 0);
-    if (pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) &&
+    if (pInfo->pNewVal && pInfo->pNewVal->isLogical() &&
         (hb_itemGetL(pInfo->pNewVal) ? (wnd->iCloseMode != 0) : (wnd->iCloseMode == 0)))
     {
       iVal = wnd->iCloseMode;
@@ -5789,7 +5789,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_RESIZABLE:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, wnd->fResizable);
-    if (pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && hb_itemGetL(pInfo->pNewVal) != wnd->fResizable)
+    if (pInfo->pNewVal && pInfo->pNewVal->isLogical() && hb_itemGetL(pInfo->pNewVal) != wnd->fResizable)
     {
       wnd->fResizable = !wnd->fResizable;
       if (wnd->fInit)
