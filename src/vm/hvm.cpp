@@ -3836,8 +3836,7 @@ static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
 #if - (HB_VMLONG_MAX / HB_VMINT_MIN) >= HB_VMINT_MAX && 1
   if (pItem1->isInteger() && pItem2->isInteger())
   {
-    HB_MAXINT nResult =
-        static_cast<HB_MAXINT>(pItem1->integerValue()) * static_cast<HB_MAXINT>(pItem2->integerValue());
+    HB_MAXINT nResult = static_cast<HB_MAXINT>(pItem1->integerValue()) * static_cast<HB_MAXINT>(pItem2->integerValue());
     if (pResult->isComplex())
     {
       hb_itemClear(pResult);
