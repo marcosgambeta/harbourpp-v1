@@ -58,7 +58,7 @@ HB_FUNC(ABS)
 
     hb_itemGetNLen(pNumber, &iWidth, &iDec);
 
-    if (HB_IS_INTEGER(pNumber))
+    if (pNumber->isInteger())
     {
       auto iNumber = hb_itemGetNI(pNumber);
 
