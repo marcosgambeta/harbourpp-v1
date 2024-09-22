@@ -448,7 +448,7 @@ HB_FUNC(TRANSFORM)
         hb_itemGetNLen(pValue, &iWidth, &iDec);
         if (hb_setGetFixed())
         {
-          if (HB_IS_NUMINT(pValue))
+          if (pValue->isNumInt())
           {
             iWidth += 2 + (hb_setGetDecimals() << 1);
           }
@@ -471,7 +471,7 @@ HB_FUNC(TRANSFORM)
       if ((uiPicFlags & (PF_DEBIT | PF_PARNEG | PF_PARNEGWOS)) && dValue < 0)
       {
         /* Always convert absolute val */
-        if (HB_IS_NUMINT(pValue))
+        if (pValue->isNumInt())
         { /* workaround for 64-bit integer conversion */
           pNumber = hb_itemPutNInt(nullptr, -hb_itemGetNInt(pValue));
         }
@@ -1020,7 +1020,7 @@ HB_FUNC(TRANSFORM)
     {
       char *szStr;
 
-      if (HB_IS_NUMINT(pValue) && hb_setGetFixed())
+      if (pValue->isNumInt() && hb_setGetFixed())
       {
         int iWidth, iDec;
         hb_itemGetNLen(pValue, &iWidth, &iDec);

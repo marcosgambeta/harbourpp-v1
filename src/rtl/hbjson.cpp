@@ -242,7 +242,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     _hb_jsonCtxAdd(pCtx, "\"", 1);
     hb_strfree(hString);
   }
-  else if (HB_IS_NUMINT(pValue))
+  else if (pValue->isNumInt())
   {
     char buf[24];
     HB_MAXINT nVal = hb_itemGetNInt(pValue);
