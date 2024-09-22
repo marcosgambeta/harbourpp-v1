@@ -81,7 +81,7 @@ HB_FUNC(DO)
       hb_vmPushEvalSym();
       pSelf = pItem;
     }
-    else if (HB_IS_SYMBOL(pItem))
+    else if (pItem->isSymbol())
     {
       hb_vmPush(pItem);
     }

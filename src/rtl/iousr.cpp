@@ -649,7 +649,7 @@ HB_FUNC(IOUSR_REGISTER)
     {
       auto pSymItm = hb_arrayGetItemPtr(pMthItm, nAt);
 
-      if (!HB_IS_NIL(pSymItm) && !HB_IS_SYMBOL(pSymItm))
+      if (!HB_IS_NIL(pSymItm) && !pSymItm->isSymbol())
       {
         break;
       }
