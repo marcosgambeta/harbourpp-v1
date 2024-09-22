@@ -115,7 +115,7 @@ HB_BOOL hb_fileCopyEx(const char *pszSource, const char *pszDest, HB_SIZE nBufSi
   auto fResult = false;
   PHB_FILE pSrcFile;
 
-  if (pCallBack && !HB_IS_EVALITEM(pCallBack))
+  if (pCallBack && !pCallBack->isEvalItem())
   {
     pCallBack = nullptr;
   }

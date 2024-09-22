@@ -139,7 +139,7 @@ HB_FUNC(HB_ISHASHKEY)
 HB_FUNC(HB_ISEVALITEM)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
-  hb_retl(pItem && HB_IS_EVALITEM(pItem));
+  hb_retl(pItem && pItem->isEvalItem());
 }
 
 HB_FUNC(HB_ISNULL)

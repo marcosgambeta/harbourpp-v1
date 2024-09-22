@@ -594,7 +594,7 @@ static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBa
 
   if (pI18N && pForm)
   {
-    if (HB_IS_EVALITEM(pForm))
+    if (pForm->isEvalItem())
     {
       if (fBase)
       {

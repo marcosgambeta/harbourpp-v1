@@ -582,7 +582,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
     PHB_ITEM pResult;
 
     /* Check if we have a valid error handler */
-    if (!pErrData->errorBlock || !HB_IS_EVALITEM(pErrData->errorBlock))
+    if (!pErrData->errorBlock || !pErrData->errorBlock->isEvalItem())
     {
       hb_errInternal(HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr);
     }
@@ -696,7 +696,7 @@ PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
     HB_USHORT uiFlags = hb_errGetFlags(pError);
 
     /* Check if we have a valid error handler */
-    if (!pErrData->errorBlock || !HB_IS_EVALITEM(pErrData->errorBlock))
+    if (!pErrData->errorBlock || !pErrData->errorBlock->isEvalItem())
     {
       hb_errInternal(HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr);
     }
