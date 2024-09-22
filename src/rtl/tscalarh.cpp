@@ -56,7 +56,7 @@ HB_FUNC(HBHASH)
   {
     auto pItem = hb_param(-1, Harbour::Item::ANY);
 
-    if (HB_IS_OBJECT(pItem))
+    if (pItem->isObject())
     {
       hb_vmPushDynSym(hb_dynsymGetCase("NEW"));
       hb_vmPush(pItem);

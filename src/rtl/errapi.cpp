@@ -527,7 +527,7 @@ void hb_errExit(void)
 
 void hb_errReinit(PHB_ITEM pError)
 {
-  if (pError && HB_IS_OBJECT(pError))
+  if (pError && pError->isObject())
   {
     hb_itemRelease(s_pError);
     s_pError = hb_itemNew(pError);
@@ -547,7 +547,7 @@ PHB_ITEM hb_errNew(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_errNew()"));
 #endif
 
-  if (!s_pError || !HB_IS_OBJECT(s_pError))
+  if (!s_pError || !s_pError->isObject())
   {
     hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
   }
