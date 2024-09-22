@@ -451,7 +451,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
     int level = HB_ZLIB_COMPRESSION_DEFAULT, strategy = HB_ZLIB_STRATEGY_DEFAULT, windowBitsIn = MAX_WBITS,
         windowBitsOut = MAX_WBITS;
 
-    if (pParams && HB_IS_HASH(pParams))
+    if (pParams && pParams->isHash())
     {
       PHB_ITEM pItem;
 

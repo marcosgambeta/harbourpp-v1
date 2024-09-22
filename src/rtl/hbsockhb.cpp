@@ -823,7 +823,7 @@ void hb_sockexSetAutoFlush(PHB_SOCKEX pSock, int iAutoFlush)
 void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int *pKeylen, const void **pIV, int *pIVlen,
                            int *pLevel, int *pStrategy)
 {
-  if (pParams && HB_IS_HASH(pParams))
+  if (pParams && pParams->isHash())
   {
     PHB_ITEM pItem;
 
@@ -855,7 +855,7 @@ void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int *pKeylen
 
 void hb_socekxParamsInit(PHB_SOCKEX pSock, PHB_ITEM pParams)
 {
-  if (pParams && HB_IS_HASH(pParams))
+  if (pParams && pParams->isHash())
   {
     PHB_ITEM pItem;
 

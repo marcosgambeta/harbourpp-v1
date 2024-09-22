@@ -142,9 +142,9 @@ static void _hb_jsonCtxAddIndent(PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel)
 static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel, bool fEOL, PHB_CODEPAGE cdp)
 {
   /* Protection against recursive structures */
-  if ((pValue->isArray() || HB_IS_HASH(pValue)) && hb_itemSize(pValue) > 0)
+  if ((pValue->isArray() || pValue->isHash()) && hb_itemSize(pValue) > 0)
   {
-    void *id = HB_IS_HASH(pValue) ? hb_hashId(pValue) : hb_arrayId(pValue);
+    void *id = pValue->isHash() ? hb_hashId(pValue) : hb_arrayId(pValue);
 
     for (HB_SIZE nIndex = 0; nIndex < nLevel; nIndex++)
     {
@@ -329,7 +329,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
           _hb_jsonCtxAdd(pCtx, pCtx->szEol, pCtx->iEolLen);
         }
 
-        if (pCtx->iIndent && !((pItem->isArray() || HB_IS_HASH(pItem)) && hb_itemSize(pItem) > 0))
+        if (pCtx->iIndent && !((pItem->isArray() || pItem->isHash()) && hb_itemSize(pItem) > 0))
         {
           _hb_jsonCtxAddIndent(pCtx, (nLevel + 1));
         }
@@ -348,7 +348,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
       _hb_jsonCtxAdd(pCtx, "[]", 2);
     }
   }
-  else if (HB_IS_HASH(pValue))
+  else if (pValue->isHash())
   {
     HB_SIZE nLen = hb_hashLen(pValue);
 
@@ -384,7 +384,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
           if (pCtx->iIndent)
           {
             _hb_jsonCtxAdd(pCtx, ": ", 2);
-            fEOL = (pItem->isArray() || HB_IS_HASH(pItem)) && hb_itemSize(pItem) > 0;
+            fEOL = (pItem->isArray() || pItem->isHash()) && hb_itemSize(pItem) > 0;
           }
           else
           {

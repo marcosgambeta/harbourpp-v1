@@ -2246,7 +2246,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 {
   int iRet = 0, iOptions;
 
-  if (pMessage && HB_IS_HASH(pMessage))
+  if (pMessage && pMessage->isHash())
   {
     if (!pOptions || hb_arrayLen(pOptions) == 0)
     {

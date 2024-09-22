@@ -370,7 +370,7 @@ static PHB_I18N_TRANS hb_i18n_initialize(PHB_ITEM pTable)
 {
   PHB_I18N_TRANS pI18N = nullptr;
 
-  if (HB_IS_HASH(pTable))
+  if (pTable->isHash())
   {
     PHB_ITEM pDefContext = nullptr;
 

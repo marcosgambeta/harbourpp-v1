@@ -75,7 +75,7 @@ HB_FUNC(LEN)
       hb_retns(hb_arrayLen(pItem));
       return;
     }
-    else if (HB_IS_HASH(pItem))
+    else if (pItem->isHash())
     {
       hb_retns(hb_hashLen(pItem));
       return;
