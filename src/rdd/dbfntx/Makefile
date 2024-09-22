@@ -5,4 +5,6 @@ CPP_SOURCES := \
 
 LIBNAME := rddntx
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 include $(TOP)$(ROOT)config/lib.mk
