@@ -409,7 +409,7 @@ static PHB_FILE s_fileOpen(PHB_FILE_FUNCS pFuncs, const char *pszName, const cha
   hb_vmDo(5);
 
   auto pFileItm = hb_stackReturnItem();
-  if (!HB_IS_NIL(pFileItm))
+  if (!pFileItm->isNil())
   {
     pFile = s_fileNew(pIO, hb_itemNew(pFileItm));
   }
@@ -649,7 +649,7 @@ HB_FUNC(IOUSR_REGISTER)
     {
       auto pSymItm = hb_arrayGetItemPtr(pMthItm, nAt);
 
-      if (!HB_IS_NIL(pSymItm) && !pSymItm->isSymbol())
+      if (!pSymItm->isNil() && !pSymItm->isSymbol())
       {
         break;
       }

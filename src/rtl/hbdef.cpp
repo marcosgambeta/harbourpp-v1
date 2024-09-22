@@ -73,7 +73,7 @@ HB_FUNC(HB_DEFAULTVALUE)
    Not recommended for new code. */
 HB_FUNC(__DEFAULTNIL)
 {
-  if (hb_pcount() >= 2 && HB_IS_NIL(hb_param(1, Harbour::Item::ANY)))
+  if (hb_pcount() >= 2 && hb_param(1, Harbour::Item::ANY)->isNil())
   {
     hb_itemParamStore(1, hb_param(2, Harbour::Item::ANY));
   }

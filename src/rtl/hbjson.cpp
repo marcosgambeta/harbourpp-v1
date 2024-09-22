@@ -271,7 +271,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     hb_snprintf(buf, sizeof(buf), "%.*f", iDec, dblValue);
     _hb_jsonCtxAdd(pCtx, buf, strlen(buf));
   }
-  else if (HB_IS_NIL(pValue))
+  else if (pValue->isNil())
   {
     _hb_jsonCtxAdd(pCtx, "null", 4);
   }
