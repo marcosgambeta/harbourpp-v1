@@ -91,7 +91,7 @@ HB_FUNC(MAX)
       hb_retl(b1 >= b2 ? b1 : b2);
       return;
     }
-    else if (HB_IS_DATE(p1) && HB_IS_DATE(p2))
+    else if (p1->isDate() && p2->isDate())
     {
       long l1 = hb_itemGetDL(p1);
       long l2 = hb_itemGetDL(p2);
@@ -100,11 +100,11 @@ HB_FUNC(MAX)
     }
     else if (HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2))
     {
-      if (HB_IS_DATE(p1) && hb_itemGetDL(p1) == hb_itemGetDL(p2))
+      if (p1->isDate() && hb_itemGetDL(p1) == hb_itemGetDL(p2))
       {
         hb_itemReturn(p1);
       }
-      else if (HB_IS_DATE(p2) && hb_itemGetDL(p1) == hb_itemGetDL(p2))
+      else if (p2->isDate() && hb_itemGetDL(p1) == hb_itemGetDL(p2))
       {
         hb_itemReturn(p2);
       }
@@ -162,7 +162,7 @@ HB_FUNC(MIN)
       hb_retl(b1 <= b2 ? b1 : b2);
       return;
     }
-    else if (HB_IS_DATE(p1) && HB_IS_DATE(p2))
+    else if (p1->isDate() && p2->isDate())
     {
       long l1 = hb_itemGetDL(p1);
       long l2 = hb_itemGetDL(p2);
@@ -172,11 +172,11 @@ HB_FUNC(MIN)
     }
     else if (HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2))
     {
-      if (HB_IS_DATE(p1) && hb_itemGetDL(p1) == hb_itemGetDL(p2))
+      if (p1->isDate() && hb_itemGetDL(p1) == hb_itemGetDL(p2))
       {
         hb_itemReturn(p1);
       }
-      else if (HB_IS_DATE(p2) && hb_itemGetDL(p1) == hb_itemGetDL(p2))
+      else if (p2->isDate() && hb_itemGetDL(p1) == hb_itemGetDL(p2))
       {
         hb_itemReturn(p2);
       }

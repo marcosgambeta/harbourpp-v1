@@ -286,7 +286,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
       _hb_jsonCtxAdd(pCtx, "false", 5);
     }
   }
-  else if (HB_IS_DATE(pValue))
+  else if (pValue->isDate())
   {
     char szBuffer[10];
     hb_itemGetDS(pValue, szBuffer + 1);

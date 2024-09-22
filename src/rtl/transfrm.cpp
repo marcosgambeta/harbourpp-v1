@@ -678,7 +678,7 @@ HB_FUNC(TRANSFORM)
 
     /* --- Handle DATE values --- */
 
-    else if (HB_IS_DATE(pValue))
+    else if (pValue->isDate())
     {
       const char *szDateFormat;
       char szNewFormat[11];
@@ -1045,7 +1045,7 @@ HB_FUNC(TRANSFORM)
         }
       }
     }
-    else if (HB_IS_DATE(pValue))
+    else if (pValue->isDate())
     {
       char szDate[9];
       char szResult[11];

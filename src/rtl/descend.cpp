@@ -86,7 +86,7 @@ HB_FUNC(DESCEND)
         hb_retc_null();
       }
     }
-    else if (HB_IS_DATE(pItem))
+    else if (pItem->isDate())
     {
       hb_retnl(5231808 - hb_itemGetDL(pItem));
     }
