@@ -98,7 +98,7 @@ HB_FUNC(MAX)
       hb_retdl(l1 >= l2 ? l1 : l2);
       return;
     }
-    else if (HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2))
+    else if (p1->isDateTime() && p2->isDateTime())
     {
       if (p1->isDate() && hb_itemGetDL(p1) == hb_itemGetDL(p2))
       {
@@ -170,7 +170,7 @@ HB_FUNC(MIN)
       hb_retdl(l1 <= l2 ? l1 : l2);
       return;
     }
-    else if (HB_IS_DATETIME(p1) && HB_IS_DATETIME(p2))
+    else if (p1->isDateTime() && p2->isDateTime())
     {
       if (p1->isDate() && hb_itemGetDL(p1) == hb_itemGetDL(p2))
       {
