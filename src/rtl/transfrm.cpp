@@ -779,7 +779,7 @@ HB_FUNC(TRANSFORM)
 
     /* --- Handle TIMESTAMP values --- */
 
-    else if (HB_IS_TIMESTAMP(pValue))
+    else if (pValue->isTimeStamp())
     {
       const char *szDateFormat = nullptr, *szTimeFormat = nullptr;
       char szNewFormat[11];
@@ -1052,7 +1052,7 @@ HB_FUNC(TRANSFORM)
 
       hb_retc(hb_dateFormat(hb_itemGetDS(pValue, szDate), szResult, hb_setGetDateFormat()));
     }
-    else if (HB_IS_TIMESTAMP(pValue))
+    else if (pValue->isTimeStamp())
     {
       char szResult[27];
       long lDate, lTime;

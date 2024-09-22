@@ -294,7 +294,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     szBuffer[9] = '\"';
     _hb_jsonCtxAdd(pCtx, szBuffer, 10);
   }
-  else if (HB_IS_TIMESTAMP(pValue))
+  else if (pValue->isTimeStamp())
   {
     char szBuffer[19];
     hb_itemGetTS(pValue, szBuffer + 1);
