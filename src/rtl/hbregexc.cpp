@@ -119,7 +119,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
 
   if (pRegExItm)
   {
-    if (HB_IS_POINTER(pRegExItm))
+    if (pRegExItm->isPointer())
     {
       pRegEx = static_cast<PHB_REGEX>(hb_itemGetPtrGC(pRegExItm, &s_gcRegexFuncs));
       if (pRegEx)

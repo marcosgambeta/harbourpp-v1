@@ -2985,7 +2985,7 @@ static HB_SOCKET s_socketSelectCallback(PHB_ITEM pItem)
     {
       sd = static_cast<HB_SOCKET>(hb_itemGetNInt(pItem));
     }
-    else if (HB_IS_POINTER(pItem))
+    else if (pItem->isPointer())
     {
       sd = hb_socketItemGet(pItem);
       if (sd == HB_NO_SOCKET)
