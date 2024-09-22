@@ -5879,7 +5879,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       x = hb_itemGetNI(pInfo->pNewVal);
       y = hb_itemGetNI(pInfo->pNewVal2);
     }
-    else if (pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 2)
+    else if (pInfo->pNewVal && pInfo->pNewVal->isArray() && hb_arrayLen(pInfo->pNewVal) == 2)
     {
       x = hb_arrayGetNI(pInfo->pNewVal, 1);
       y = hb_arrayGetNI(pInfo->pNewVal, 2);
@@ -5946,7 +5946,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       {
         hb_arraySetNI(pInfo->pResult, iVal + 1, wnd->colors[iVal].value);
       }
-      if (pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 16)
+      if (pInfo->pNewVal && pInfo->pNewVal->isArray() && hb_arrayLen(pInfo->pNewVal) == 16)
       {
         for (iVal = 0; iVal < 16; iVal++)
         {
@@ -5972,7 +5972,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_DISPIMAGE:
     if (wnd->window && pInfo->pNewVal &&
-        ((HB_IS_ARRAY(pInfo->pNewVal) &&
+        ((pInfo->pNewVal->isArray() &&
           hb_arrayLen(pInfo->pNewVal) ==
               static_cast<HB_SIZE>((hb_arrayGetType(pInfo->pNewVal, 4) & Harbour::Item::NUMERIC) ? 4 : 3)) ||
          pInfo->pNewVal->isString()))
@@ -6040,7 +6040,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       }
 
       /* fetch & validate area for displaying */
-      if (pInfo->pNewVal2 && HB_IS_ARRAY(pInfo->pNewVal2))
+      if (pInfo->pNewVal2 && pInfo->pNewVal2->isArray())
       {
         switch (hb_arrayLen(pInfo->pNewVal2))
         {

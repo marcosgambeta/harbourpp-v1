@@ -703,7 +703,7 @@ static const char *hb_i18n_setcodepage(PHB_I18N_TRANS pI18N, const char *szCdpID
               {
                 hb_i18n_transitm(pResult, cdpage, cdp);
               }
-              else if (HB_IS_ARRAY(pResult))
+              else if (pResult->isArray())
               {
                 HB_SIZE nTrans = hb_arrayLen(pResult), u2;
                 for (u2 = 1; u2 <= nTrans; ++u2)
@@ -806,7 +806,7 @@ PHB_ITEM hb_i18n_gettext(PHB_ITEM pMsgID, PHB_ITEM pContext)
       pTable = hb_hashGetItemPtr(pTable, pMsgID, 0);
       if (pTable)
       {
-        if (HB_IS_ARRAY(pTable))
+        if (pTable->isArray())
         {
           pTable = hb_arrayGetItemPtr(pTable, 1);
         }
@@ -865,11 +865,11 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
 
     if (pTable)
     {
-      PHB_ITEM pMsg = HB_IS_ARRAY(pMsgID) ? hb_arrayGetItemPtr(pMsgID, 1) : pMsgID;
+      PHB_ITEM pMsg = pMsgID->isArray() ? hb_arrayGetItemPtr(pMsgID, 1) : pMsgID;
       pTable = pMsg && pMsg->isString() ? hb_hashGetItemPtr(pTable, pMsg, 0) : nullptr;
       if (pTable)
       {
-        if (pTable->isString() || (HB_IS_ARRAY(pTable) && (hb_arrayGetType(pTable, 1) & Harbour::Item::STRING) != 0))
+        if (pTable->isString() || (pTable->isArray() && (hb_arrayGetType(pTable, 1) & Harbour::Item::STRING) != 0))
         {
           pMsgID = pTable;
           cdpage = pI18N->cdpage;
@@ -880,7 +880,7 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
     }
   }
 
-  if (pMsgID && HB_IS_ARRAY(pMsgID))
+  if (pMsgID && pMsgID->isArray())
   {
     long lIndex;
 
@@ -1070,7 +1070,7 @@ HB_FUNC(HB_I18N_ADDTEXT)
 
     if (pMsgID && pTrans)
     {
-      if (HB_IS_ARRAY(pTrans))
+      if (pTrans->isArray())
       {
         HB_SIZE nLen = hb_arrayLen(pTrans);
         if (nLen != 0)

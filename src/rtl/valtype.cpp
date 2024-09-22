@@ -153,7 +153,7 @@ HB_FUNC(HB_ISNULL)
       hb_retl(hb_itemGetCLen(pItem) == 0);
       return;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       hb_retl(hb_arrayLen(pItem) == 0);
       return;

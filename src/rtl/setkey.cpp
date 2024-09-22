@@ -353,7 +353,7 @@ HB_FUNC(HB_SETKEYSAVE)
   {
     hb_setkeyRelease(sk_data); /* destroy the internal list */
 
-    if (HB_IS_ARRAY(pParam))
+    if (pParam->isArray())
     {
       nItemCount = hb_arrayLen(pParam);
 

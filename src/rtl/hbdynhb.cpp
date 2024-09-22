@@ -60,7 +60,7 @@ HB_FUNC(HB_DYNCALL)
 
   if (pParam)
   {
-    if (HB_IS_ARRAY(pParam))
+    if (pParam->isArray())
     {
       HB_SIZE nLen = hb_arrayLen(pParam);
 

@@ -2166,7 +2166,7 @@ HB_BOOL hb_socketAddrFromItem(void **pSockAddr, unsigned *puiLen, PHB_ITEM pAddr
   *pSockAddr = nullptr;
   *puiLen = 0;
 
-  if (pAddrItm && HB_IS_ARRAY(pAddrItm))
+  if (pAddrItm && pAddrItm->isArray())
   {
     if (hb_arrayLen(pAddrItm) >= 2 && (hb_arrayGetType(pAddrItm, 1) & Harbour::Item::NUMERIC) != 0)
     {

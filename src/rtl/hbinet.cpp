@@ -1030,7 +1030,7 @@ HB_FUNC(HB_INETRECVENDBLOCK)
   int iPatternsCount = 0;
   int iLen;
 
-  if (pProto && HB_IS_ARRAY(pProto))
+  if (pProto && pProto->isArray())
   {
     auto iPatternsMax = static_cast<int>(hb_arrayLen(pProto));
     int i;

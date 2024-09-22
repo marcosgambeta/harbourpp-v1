@@ -70,7 +70,7 @@ HB_FUNC(LEN)
       hb_retns(nLen);
       return;
     }
-    else if (HB_IS_ARRAY(pItem))
+    else if (pItem->isArray())
     {
       hb_retns(hb_arrayLen(pItem));
       return;
