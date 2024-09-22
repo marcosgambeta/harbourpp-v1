@@ -76,7 +76,7 @@ HB_FUNC(DO)
       }
       hb_vmPushDynSym(pDynSym);
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       hb_vmPushEvalSym();
       pSelf = pItem;

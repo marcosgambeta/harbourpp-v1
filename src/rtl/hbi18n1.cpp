@@ -282,7 +282,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile(PHB_ITEM pExp)
       if (hb_vmRequestQuery() == 0)
       {
         pExp = hb_stackItemFromTop(-1);
-        if (HB_IS_BLOCK(pExp))
+        if (pExp->isBlock())
         {
           pBlock = hb_itemNew(pExp);
         }
