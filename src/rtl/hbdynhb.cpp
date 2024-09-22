@@ -69,11 +69,11 @@ HB_FUNC(HB_DYNCALL)
         auto pFunction = hb_arrayGetItemPtr(pParam, 1);
         HB_SIZE nBasePos = 2;
 
-        if (HB_IS_STRING(pFunction) && nLen >= nBasePos)
+        if (pFunction->isString() && nLen >= nBasePos)
         {
           auto pLibrary = hb_arrayGetItemPtr(pParam, nBasePos);
 
-          if (HB_IS_STRING(pLibrary))
+          if (pLibrary->isString())
           {
             pLibraryHandle = hb_libLoad(pLibrary, nullptr);
             if (pLibraryHandle)

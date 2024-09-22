@@ -2263,7 +2263,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
     pMessage = hb_hashGetCItemPtr(pMessage, "TXT");
   }
 
-  if (pMessage && HB_IS_STRING(pMessage) && pOptions && (iOptions = static_cast<int>(hb_arrayLen(pOptions))) > 0)
+  if (pMessage && pMessage->isString() && pOptions && (iOptions = static_cast<int>(hb_arrayLen(pOptions))) > 0)
   {
     HB_SIZE nLen;
     void *hMessage;

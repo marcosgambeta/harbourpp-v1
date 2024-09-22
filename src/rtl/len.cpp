@@ -59,7 +59,7 @@ HB_FUNC(LEN)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       auto nLen = hb_itemGetCLen(pItem);
       auto cdp = hb_vmCDP();

@@ -5578,7 +5578,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_FONTNAME:
     pInfo->pResult = hb_itemPutC(pInfo->pResult, wnd->szFontName);
-    if (pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal))
+    if (pInfo->pNewVal && pInfo->pNewVal->isString())
     { /* TODO */
       if (wnd->szFontName)
       {
@@ -5590,7 +5590,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
   case HB_GTI_FONTSEL:
     pInfo->pResult = hb_itemPutC(pInfo->pResult, wnd->szFontSel);
-    if (pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal))
+    if (pInfo->pNewVal && pInfo->pNewVal->isString())
     {
       auto fInit = false;
       HB_XWC_XLIB_LOCK(wnd->dpy);
@@ -5626,7 +5626,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   case HB_GTI_WINTITLE:
     pInfo->pResult = wnd->szTitle ? hb_itemPutStrLenUTF8(pInfo->pResult, wnd->szTitle, strlen(wnd->szTitle))
                                   : hb_itemPutC(pInfo->pResult, nullptr);
-    if (pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal))
+    if (pInfo->pNewVal && pInfo->pNewVal->isString())
     {
       void *hString;
       HB_SIZE nLen;
@@ -5975,7 +5975,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
         ((HB_IS_ARRAY(pInfo->pNewVal) &&
           hb_arrayLen(pInfo->pNewVal) ==
               static_cast<HB_SIZE>((hb_arrayGetType(pInfo->pNewVal, 4) & Harbour::Item::NUMERIC) ? 4 : 3)) ||
-         HB_IS_STRING(pInfo->pNewVal)))
+         pInfo->pNewVal->isString()))
     {
       XImage *xImage = nullptr;
       XWC_RECT rx;

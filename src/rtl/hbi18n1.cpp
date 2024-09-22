@@ -485,7 +485,7 @@ static PHB_I18N_TRANS hb_i18n_deserialize(PHB_ITEM pItem)
 {
   PHB_I18N_TRANS pI18N = nullptr;
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     auto nLen = hb_itemGetCLen(pItem);
     auto pBuffer = hb_itemGetCPtr(pItem);
@@ -620,7 +620,7 @@ static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBa
       }
       fResult = true;
     }
-    else if (HB_IS_STRING(pForm))
+    else if (pForm->isString())
     {
       int iForm = hb_i18n_pluralformfind(hb_itemGetCPtr(pForm));
       if (iForm)
@@ -699,7 +699,7 @@ static const char *hb_i18n_setcodepage(PHB_I18N_TRANS pI18N, const char *szCdpID
             else
             {
               auto pResult = hb_hashGetValueAt(pContext, u);
-              if (HB_IS_STRING(pResult))
+              if (pResult->isString())
               {
                 hb_i18n_transitm(pResult, cdpage, cdp);
               }
@@ -751,7 +751,7 @@ static const char *hb_i18n_description(PHB_I18N_TRANS pI18N, PHB_ITEM pItem)
     auto pValue = hb_hashGetItemPtr(pI18N->table, pKey, 0);
     if (pItem != nullptr)
     {
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         if (pValue)
         {
@@ -810,7 +810,7 @@ PHB_ITEM hb_i18n_gettext(PHB_ITEM pMsgID, PHB_ITEM pContext)
         {
           pTable = hb_arrayGetItemPtr(pTable, 1);
         }
-        if (pTable && HB_IS_STRING(pTable))
+        if (pTable && pTable->isString())
         {
           pMsgID = pTable;
           cdpage = pI18N->cdpage;
@@ -821,7 +821,7 @@ PHB_ITEM hb_i18n_gettext(PHB_ITEM pMsgID, PHB_ITEM pContext)
 
   if (pMsgID)
   {
-    if (HB_IS_STRING(pMsgID))
+    if (pMsgID->isString())
     {
       if (cdpage)
       {
@@ -866,10 +866,10 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
     if (pTable)
     {
       PHB_ITEM pMsg = HB_IS_ARRAY(pMsgID) ? hb_arrayGetItemPtr(pMsgID, 1) : pMsgID;
-      pTable = pMsg && HB_IS_STRING(pMsg) ? hb_hashGetItemPtr(pTable, pMsg, 0) : nullptr;
+      pTable = pMsg && pMsg->isString() ? hb_hashGetItemPtr(pTable, pMsg, 0) : nullptr;
       if (pTable)
       {
-        if (HB_IS_STRING(pTable) || (HB_IS_ARRAY(pTable) && (hb_arrayGetType(pTable, 1) & Harbour::Item::STRING) != 0))
+        if (pTable->isString() || (HB_IS_ARRAY(pTable) && (hb_arrayGetType(pTable, 1) & Harbour::Item::STRING) != 0))
         {
           pMsgID = pTable;
           cdpage = pI18N->cdpage;
@@ -908,7 +908,7 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
 
   if (pMsgID)
   {
-    if (HB_IS_STRING(pMsgID))
+    if (pMsgID->isString())
     {
       if (cdpage)
       {
@@ -947,7 +947,7 @@ HB_FUNC(HB_I18N_GETTEXT)
     pMsgID = hb_i18n_gettext(pMsgID, pContext);
   }
 
-  if (pMsgID && HB_IS_STRING(pMsgID))
+  if (pMsgID && pMsgID->isString())
   {
     hb_itemReturn(pMsgID);
   }
@@ -972,7 +972,7 @@ HB_FUNC(HB_I18N_NGETTEXT)
     pMsgID = hb_i18n_ngettext(pNum, pMsgID, pContext);
   }
 
-  if (pMsgID && HB_IS_STRING(pMsgID))
+  if (pMsgID && pMsgID->isString())
   {
     hb_itemReturn(pMsgID);
   }
@@ -1077,7 +1077,7 @@ HB_FUNC(HB_I18N_ADDTEXT)
         {
           for (HB_SIZE n = 1; n <= nLen; ++n)
           {
-            if (!HB_IS_STRING(hb_arrayGetItemPtr(pTrans, n)))
+            if (!hb_arrayGetItemPtr(pTrans, n)->isString())
             {
               pTrans = nullptr;
               break;

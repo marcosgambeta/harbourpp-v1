@@ -64,8 +64,8 @@ HB_FUNC(HB_STRREPLACE)
     if (nText > 0 && nSrc > 0)
     {
       auto pDst = hb_param(3, Harbour::Item::STRING | Harbour::Item::ARRAY);
-      const char *pszDst = pDst && HB_IS_STRING(pDst) ? hb_itemGetCPtr(pDst) : nullptr;
-      const char *pszSrc = HB_IS_STRING(pSrc) ? hb_itemGetCPtr(pSrc) : nullptr;
+      const char *pszDst = pDst && pDst->isString() ? hb_itemGetCPtr(pDst) : nullptr;
+      const char *pszSrc = pSrc->isString() ? hb_itemGetCPtr(pSrc) : nullptr;
       auto pszText = hb_itemGetCPtr(pText);
       const char *ptr;
       char *pszResult = nullptr;

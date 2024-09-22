@@ -827,17 +827,17 @@ void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int *pKeylen
   {
     PHB_ITEM pItem;
 
-    if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "key")) != nullptr && HB_IS_STRING(pItem))
+    if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "key")) != nullptr && pItem->isString())
     {
       *pKeydata = hb_itemGetCPtr(pItem);
       *pKeylen = static_cast<int>(hb_itemGetCLen(pItem));
     }
-    else if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "pass")) != nullptr && HB_IS_STRING(pItem))
+    else if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "pass")) != nullptr && pItem->isString())
     {
       *pKeydata = hb_itemGetCPtr(pItem);
       *pKeylen = static_cast<int>(hb_itemGetCLen(pItem));
     }
-    if (pIV && pIVlen && (pItem = hb_hashGetCItemPtr(pParams, "iv")) != nullptr && HB_IS_STRING(pItem))
+    if (pIV && pIVlen && (pItem = hb_hashGetCItemPtr(pParams, "iv")) != nullptr && pItem->isString())
     {
       *pIV = hb_itemGetCPtr(pItem);
       *pIVlen = static_cast<int>(hb_itemGetCLen(pItem));

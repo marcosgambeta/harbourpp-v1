@@ -250,7 +250,7 @@ HB_FUNC_STATIC(_DESCRIPTION)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     hb_errPutDescription(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }
@@ -267,7 +267,7 @@ HB_FUNC_STATIC(_FILENAME)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     hb_errPutFileName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }
@@ -284,7 +284,7 @@ HB_FUNC_STATIC(_OPERATION)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     hb_errPutOperation(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }
@@ -301,7 +301,7 @@ HB_FUNC_STATIC(_SUBSYSTEM)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     hb_errPutSubSystem(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }

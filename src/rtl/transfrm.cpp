@@ -189,7 +189,7 @@ HB_FUNC(TRANSFORM)
 
     /* --- Handle STRING values --- */
 
-    if (HB_IS_STRING(pValue))
+    if (pValue->isString())
     {
       auto szExp = hb_itemGetCPtr(pValue);
       auto nExpLen = hb_itemGetCLen(pValue);
@@ -1012,7 +1012,7 @@ HB_FUNC(TRANSFORM)
   }
   else if (pPic || HB_ISNIL(2))
   { /* Picture is an empty string or NIL */
-    if (HB_IS_STRING(pValue))
+    if (pValue->isString())
     {
       hb_itemReturn(pValue);
     }

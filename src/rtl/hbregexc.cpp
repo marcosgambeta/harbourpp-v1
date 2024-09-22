@@ -127,7 +127,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
         fArgError = false;
       }
     }
-    else if (HB_IS_STRING(pRegExItm))
+    else if (pRegExItm->isString())
     {
       auto nLen = hb_itemGetCLen(pRegExItm);
       auto szRegEx = hb_itemGetCPtr(pRegExItm);

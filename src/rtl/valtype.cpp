@@ -148,7 +148,7 @@ HB_FUNC(HB_ISNULL)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       hb_retl(hb_itemGetCLen(pItem) == 0);
       return;

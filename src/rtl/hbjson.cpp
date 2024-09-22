@@ -172,7 +172,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     _hb_jsonCtxAdd(pCtx, pCtx->szEol, pCtx->iEolLen);
   }
 
-  if (HB_IS_STRING(pValue))
+  if (pValue->isString())
   {
     const char *szString;
     HB_SIZE nLen;
@@ -365,7 +365,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
       {
         auto pKey = hb_hashGetKeyAt(pValue, nIndex);
 
-        if (HB_IS_STRING(pKey))
+        if (pKey->isString())
         {
           auto pItem = hb_hashGetValueAt(pValue, nIndex);
 
@@ -663,7 +663,7 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, PHB_COD
       for (;;)
       {
         /* Do we need to check if key does not exist yet? */
-        if ((szSource = _hb_jsonDecode(szSource, pItemKey, cdp)) == nullptr || !HB_IS_STRING(pItemKey) ||
+        if ((szSource = _hb_jsonDecode(szSource, pItemKey, cdp)) == nullptr || !pItemKey->isString() ||
             *(szSource = _skipws(szSource)) != ':' ||
             (szSource = _hb_jsonDecode(_skipws(szSource + 1), pItemValue, cdp)) == nullptr)
         {

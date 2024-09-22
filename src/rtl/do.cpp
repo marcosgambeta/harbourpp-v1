@@ -65,7 +65,7 @@ HB_FUNC(DO)
   {
     auto pItem = hb_param(1, Harbour::Item::ANY);
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
 
