@@ -865,7 +865,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
   pField = pArea->area.lpFields + uiIndex;
   if (pField->uiType != Harbour::DB::Field::MEMO && pField->uiType != Harbour::DB::Field::NONE)
   {
-    if (HB_IS_MEMO(pItem) || pItem->isString())
+    if (pItem->isMemo() || pItem->isString())
     {
       if (pField->uiType == Harbour::DB::Field::STRING)
       {

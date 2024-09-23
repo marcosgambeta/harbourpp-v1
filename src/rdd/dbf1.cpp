@@ -2817,7 +2817,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   }
   else
   {
-    if (HB_IS_MEMO(pItem) || pItem->isString())
+    if (pItem->isMemo() || pItem->isString())
     {
       nLen = pField->uiLen;
       if (pField->uiType == Harbour::DB::Field::STRING)
