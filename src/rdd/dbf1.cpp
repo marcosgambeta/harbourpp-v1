@@ -1864,7 +1864,7 @@ static HB_ERRCODE hb_dbfGoToId(DBFAREAP pArea, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_dbfGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
 #endif
 
-  if (HB_IS_NUMERIC(pItem))
+  if (pItem->isNumeric())
   {
     return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
   }
@@ -4067,7 +4067,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   }
 
   case DBI_LOCKTEST:
-    if (HB_IS_NUMERIC(pItem))
+    if (pItem->isNumeric())
     {
       hb_itemPutNI(pItem, hb_dbfLockTest(pArea, REC_LOCK, hb_itemGetNL(pItem)));
     }
@@ -4105,7 +4105,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   case DBI_SETHEADER: {
     HB_UINT uiSetHeader = pArea->uiSetHeader;
 
-    if (HB_IS_NUMERIC(pItem))
+    if (pItem->isNumeric())
     {
       int iMode = hb_itemGetNI(pItem);
       if ((iMode & ~DB_SETHEADER_MASK) == 0)
@@ -4233,7 +4233,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
         }
         fLck = true;
       }
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         nValue = hb_dbfNextValueSet(pArea, uiIndex - 1, hb_itemGetNInt(pItem));
       }
@@ -4255,7 +4255,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
     if (hb_dbfIsAutoIncField(pArea->area.lpFields + uiIndex - 1) != HB_AUTOINC_NONE)
     {
       int iValue;
-      if (HB_IS_NUMERIC(pItem))
+      if (pItem->isNumeric())
       {
         fLck = false;
         if (pArea->fShared && !pArea->fFLocked && !pArea->fHeaderLocked)
@@ -7389,7 +7389,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
   case RDDI_SETHEADER: {
     HB_USHORT uiSetHeader = pData->uiSetHeader;
 
-    if (HB_IS_NUMERIC(pItem))
+    if (pItem->isNumeric())
     {
       int iMode = hb_itemGetNI(pItem);
       if ((iMode & ~DB_SETHEADER_MASK) == 0)
@@ -7420,7 +7420,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
   case RDDI_DECIMALS: {
-    int iDecimals = HB_IS_NUMERIC(pItem) ? hb_itemGetNI(pItem) : -1;
+    int iDecimals = pItem->isNumeric() ? hb_itemGetNI(pItem) : -1;
 
     hb_itemPutNI(pItem, pData->bDecimals);
     if (iDecimals >= 0 && iDecimals <= 20)

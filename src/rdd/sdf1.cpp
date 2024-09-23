@@ -237,7 +237,7 @@ static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, PHB_ITEM pItem)
 #endif
 
 #ifndef HB_CLP_STRICT
-  if (HB_IS_NUMERIC(pItem))
+  if (pItem->isNumeric())
   {
     return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
   }

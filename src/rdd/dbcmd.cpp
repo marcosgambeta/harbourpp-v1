@@ -1281,7 +1281,7 @@ HB_FUNC(ORDBAGNAME)
       {
         pOrderInfo.itmOrder = nullptr;
       }
-      else if (HB_IS_NUMERIC(pOrderInfo.itmOrder))
+      else if (pOrderInfo.itmOrder->isNumeric())
       {
         if (hb_itemGetNI(pOrderInfo.itmOrder) == 0)
         {
@@ -1469,7 +1469,7 @@ HB_FUNC(ORDFOR)
       {
         pOrderInfo.itmOrder = nullptr;
       }
-      else if (HB_IS_NUMERIC(pOrderInfo.itmOrder))
+      else if (pOrderInfo.itmOrder->isNumeric())
       {
         if (hb_itemGetNI(pOrderInfo.itmOrder) == 0)
         {
@@ -1510,7 +1510,7 @@ HB_FUNC(ORDKEY)
       {
         pOrderInfo.itmOrder = nullptr;
       }
-      else if (HB_IS_NUMERIC(pOrderInfo.itmOrder))
+      else if (pOrderInfo.itmOrder->isNumeric())
       {
         if (hb_itemGetNI(pOrderInfo.itmOrder) == 0)
         {
@@ -1620,7 +1620,7 @@ HB_FUNC(ORDNAME)
       {
         pOrderInfo.itmOrder = nullptr;
       }
-      else if (HB_IS_NUMERIC(pOrderInfo.itmOrder))
+      else if (pOrderInfo.itmOrder->isNumeric())
       {
         if (hb_itemGetNI(pOrderInfo.itmOrder) == 0)
         {

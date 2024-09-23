@@ -8826,7 +8826,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     break;
 
   case DBOI_POSITION:
-    if (pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal))
+    if (pInfo->itmNewVal && pInfo->itmNewVal->isNumeric())
     {
       pInfo->itmResult = hb_itemPutL(
           pInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, hb_itemGetNL(pInfo->itmNewVal), true) == Harbour::SUCCESS);
@@ -8840,7 +8840,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
   // TODO: is this ok?  DBOI_RECNO == DBOI_KEYNORAW ? No, it isn't.
   // case DBOI_RECNO:
   case DBOI_KEYNORAW:
-    if (pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal))
+    if (pInfo->itmNewVal && pInfo->itmNewVal->isNumeric())
     {
       pInfo->itmResult = hb_itemPutL(
           pInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, hb_itemGetNL(pInfo->itmNewVal), false) == Harbour::SUCCESS);
@@ -8860,7 +8860,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     break;
 
   case DBOI_RELKEYPOS:
-    if (pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal))
+    if (pInfo->itmNewVal && pInfo->itmNewVal->isNumeric())
     {
       hb_cdxDBOISetRelKeyPos(pArea, pTag, hb_itemGetND(pInfo->itmNewVal));
     }
@@ -8883,7 +8883,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
   case DBOI_SKIPUNIQUE:
     pInfo->itmResult =
         hb_itemPutL(pInfo->itmResult, hb_cdxDBOISkipUnique(pArea, pTag,
-                                                           pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal)
+                                                           pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
                                                                ? hb_itemGetNL(pInfo->itmNewVal)
                                                                : 1) == Harbour::SUCCESS);
     break;

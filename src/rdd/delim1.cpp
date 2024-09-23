@@ -534,7 +534,7 @@ static HB_ERRCODE hb_delimGoToId(DELIMAREAP pArea, PHB_ITEM pItem)
 #endif
 
 #ifndef HB_CLP_STRICT
-  if (HB_IS_NUMERIC(pItem))
+  if (pItem->isNumeric())
   {
     return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
   }
@@ -1782,7 +1782,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
   case RDDI_SETHEADER: {
     LPDELIMDATA pData = DELIMNODE_DATA(pRDD);
     HB_USHORT uiSetHeader = pData->uiSetHeader;
-    if (HB_IS_NUMERIC(pItem))
+    if (pItem->isNumeric())
     {
       int iMode = hb_itemGetNI(pItem);
       if (iMode == 0 || iMode == 1)

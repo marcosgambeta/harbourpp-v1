@@ -8404,7 +8404,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       break;
     case DBOI_SKIPUNIQUE:
       pInfo->itmResult =
-          hb_itemPutL(pInfo->itmResult, hb_nsxOrdSkipUnique(pTag, pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal)
+          hb_itemPutL(pInfo->itmResult, hb_nsxOrdSkipUnique(pTag, pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
                                                                       ? hb_itemGetNL(pInfo->itmNewVal)
                                                                       : 1));
       break;
@@ -8584,7 +8584,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       }
       break;
     case DBOI_SKIPUNIQUE:
-      hb_itemPutL(pInfo->itmResult, SELF_SKIP(&pArea->dbfarea.area, pInfo->itmNewVal && HB_IS_NUMERIC(pInfo->itmNewVal)
+      hb_itemPutL(pInfo->itmResult, SELF_SKIP(&pArea->dbfarea.area, pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
                                                                         ? hb_itemGetNL(pInfo->itmNewVal)
                                                                         : 1) == Harbour::SUCCESS);
       break;
@@ -8860,7 +8860,7 @@ static HB_ERRCODE hb_nsxOrderListFocus(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
      * RDDs and I chosen DBFCDX one as default. [druzus]
      */
 #ifdef HB_CLP_STRICT
-    if (pTag || (HB_IS_NUMERIC(pOrderInfo->itmOrder) && hb_itemGetNI(pOrderInfo->itmOrder) == 0) ||
+    if (pTag || (pOrderInfo->itmOrder->isNumeric() && hb_itemGetNI(pOrderInfo->itmOrder) == 0) ||
         (pOrderInfo->itmOrder->isString() && hb_itemGetCLen(pOrderInfo->itmOrder) == 0))
 #endif
       pArea->lpCurTag = pTag;
