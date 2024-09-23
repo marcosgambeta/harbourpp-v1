@@ -93,7 +93,7 @@ static bool hb_usrIsMethod(PHB_ITEM pMethods, HB_USHORT uiMethod)
 {
   auto pItem = hb_arrayGetItemPtr(pMethods, uiMethod);
 
-  return pItem && HB_IS_EVALITEM(pItem);
+  return pItem && pItem->isEvalItem();
 }
 
 static bool hb_usrPushMethod(PHB_ITEM pMethods, HB_USHORT uiMethod)
@@ -102,7 +102,7 @@ static bool hb_usrPushMethod(PHB_ITEM pMethods, HB_USHORT uiMethod)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_SYMBOL(pItem))
+    if (pItem->isSymbol())
     {
       hb_vmPush(pItem);
       hb_vmPushNil();
