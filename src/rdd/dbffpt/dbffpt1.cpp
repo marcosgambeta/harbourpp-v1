@@ -4774,7 +4774,7 @@ static HB_ERRCODE hb_fptDoPack(FPTAREAP pArea, HB_ULONG ulBlockSize, PHB_ITEM pE
     HB_ULONG ulRecords;
     HB_LONG lStep = lEvalStep;
 
-    if (pEvalBlock && !HB_IS_BLOCK(pEvalBlock))
+    if (pEvalBlock && !pEvalBlock->isBlock())
     {
       pEvalBlock = nullptr;
     }

@@ -1664,7 +1664,7 @@ static int hb_hsxCreate(const char *szFile, int iBufSize, int iKeySize, HB_BOOL 
         return iRetVal;
       }
     }
-    else if (HB_IS_BLOCK(pExpr))
+    else if (pExpr->isBlock())
     {
       pKeyExpr = hb_itemNew(pExpr);
     }
@@ -1910,7 +1910,7 @@ static int hb_hsxFilter(int iHandle, const char *pSeek, HB_SIZE nSeek, PHB_ITEM 
       }
       fDestroyExpr = true;
     }
-    else if (!HB_IS_BLOCK(pVerify))
+    else if (!pVerify->isBlock())
     {
       pVerify = nullptr;
     }

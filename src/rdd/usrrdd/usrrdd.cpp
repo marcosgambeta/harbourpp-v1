@@ -108,7 +108,7 @@ static bool hb_usrPushMethod(PHB_ITEM pMethods, HB_USHORT uiMethod)
       hb_vmPushNil();
       return true;
     }
-    else if (HB_IS_BLOCK(pItem))
+    else if (pItem->isBlock())
     {
       hb_vmPushEvalSym();
       hb_vmPush(pItem);
