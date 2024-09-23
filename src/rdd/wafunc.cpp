@@ -650,7 +650,7 @@ HB_ERRCODE hb_rddOpenTable(const char *szFileName, const char *szDriver, HB_USHO
   HB_ERRCODE errCode = pStruct ? SELF_CREATEFIELDS(pArea, pStruct) : Harbour::SUCCESS;
   if (errCode == Harbour::SUCCESS)
   {
-    if (pDelim && !HB_IS_NIL(pDelim))
+    if (pDelim && !pDelim->isNil())
     {
       errCode = SELF_INFO(pArea, DBI_SETDELIMITER, pDelim);
     }
@@ -713,7 +713,7 @@ HB_ERRCODE hb_rddCreateTable(const char *szFileName, const char *szDriver, HB_US
   pInfo.ulConnection = ulConnection;
   pInfo.lpdbHeader = nullptr;
 
-  if (pDelim && !HB_IS_NIL(pDelim))
+  if (pDelim && !pDelim->isNil())
   {
     errCode = SELF_INFO(pArea, DBI_SETDELIMITER, pDelim);
   }

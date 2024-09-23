@@ -1106,7 +1106,7 @@ HB_FUNC(FIELDPUT)
     if (uiIndex > 0)
     {
       auto pItem = hb_param(2, Harbour::Item::ANY);
-      if (pItem && !HB_IS_NIL(pItem))
+      if (pItem && !pItem->isNil())
       {
         if (SELF_PUTVALUE(pArea, uiIndex, pItem) == Harbour::SUCCESS)
         {
@@ -1277,7 +1277,7 @@ HB_FUNC(ORDBAGNAME)
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
     if (pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder))
     {
-      if (HB_IS_NIL(pOrderInfo.itmOrder))
+      if (pOrderInfo.itmOrder->isNil())
       {
         pOrderInfo.itmOrder = nullptr;
       }
@@ -1465,7 +1465,7 @@ HB_FUNC(ORDFOR)
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
     if (pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder))
     {
-      if (HB_IS_NIL(pOrderInfo.itmOrder))
+      if (pOrderInfo.itmOrder->isNil())
       {
         pOrderInfo.itmOrder = nullptr;
       }
@@ -1506,7 +1506,7 @@ HB_FUNC(ORDKEY)
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
     if (pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder))
     {
-      if (HB_IS_NIL(pOrderInfo.itmOrder))
+      if (pOrderInfo.itmOrder->isNil())
       {
         pOrderInfo.itmOrder = nullptr;
       }
@@ -1561,7 +1561,7 @@ HB_FUNC(ORDLISTADD)
 
     HB_ERRCODE errCode = SELF_ORDLSTADD(pArea, &pOrderInfo);
 
-    if (!pOrderInfo.itmResult || HB_IS_NIL(pOrderInfo.itmResult))
+    if (!pOrderInfo.itmResult || pOrderInfo.itmResult->isNil())
     {
       hb_retl(errCode == Harbour::SUCCESS);
     }
@@ -1616,7 +1616,7 @@ HB_FUNC(ORDNAME)
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
     if (pOrderInfo.itmOrder)
     {
-      if (HB_IS_NIL(pOrderInfo.itmOrder))
+      if (pOrderInfo.itmOrder->isNil())
       {
         pOrderInfo.itmOrder = nullptr;
       }

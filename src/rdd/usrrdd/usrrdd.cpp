@@ -43,6 +43,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -2264,7 +2268,7 @@ static HB_ERRCODE hb_usrOrderListAdd(AREAP pArea, LPDBORDERINFO pOrderInfo)
   hb_vmDo(2);
 
   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
-  if (pResult && !HB_IS_NIL(pResult))
+  if (pResult && !pResult->isNil())
   {
     if (pOrderInfo->itmResult)
     {
@@ -2317,7 +2321,7 @@ static HB_ERRCODE hb_usrOrderListDelete(AREAP pArea, LPDBORDERINFO pOrderInfo)
   hb_vmDo(2);
 
   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
-  if (pResult && !HB_IS_NIL(pResult))
+  if (pResult && !pResult->isNil())
   {
     if (pOrderInfo->itmResult)
     {
@@ -2353,7 +2357,7 @@ static HB_ERRCODE hb_usrOrderListFocus(AREAP pArea, LPDBORDERINFO pOrderInfo)
   hb_vmDo(2);
 
   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
-  if (pResult && !HB_IS_NIL(pResult))
+  if (pResult && !pResult->isNil())
   {
     if (pOrderInfo->itmResult)
     {
@@ -2457,7 +2461,7 @@ static HB_ERRCODE hb_usrOrderDestroy(AREAP pArea, LPDBORDERINFO pOrderInfo)
   hb_vmDo(2);
 
   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
-  if (pResult && !HB_IS_NIL(pResult))
+  if (pResult && !pResult->isNil())
   {
     if (pOrderInfo->itmResult)
     {
@@ -2494,7 +2498,7 @@ static HB_ERRCODE hb_usrOrderInfo(AREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
   hb_vmDo(3);
 
   auto pResult = hb_arrayGetItemPtr(pItem, UR_ORI_RESULT);
-  if (pResult && !HB_IS_NIL(pResult))
+  if (pResult && !pResult->isNil())
   {
     if (pOrderInfo->itmResult)
     {
@@ -4526,7 +4530,7 @@ HB_FUNC_UR_SUPER(ORDSETCOND)
   {
     auto pItem = hb_param(2, Harbour::Item::ANY);
 
-    if (pItem && HB_IS_NIL(pItem))
+    if (pItem && pItem->isNil())
     {
       hb_retni(SUPER_ORDSETCOND(pArea, nullptr));
     }

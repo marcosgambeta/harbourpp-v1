@@ -47,6 +47,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #define HB_CDX_NEW_SORT
 
 #if !defined(HB_SIXCDX)
@@ -6141,7 +6145,7 @@ static HB_ULONG hb_cdxDBOIScopeEval(LPCDXTAG pTag, HB_EVALSCOPE_FUNC pFunc, void
            pBtmScopeKey = pTag->bottomScopeKey;
 
   // TODO: RT error when item type differ then Tag type
-  if (!pItemLo || HB_IS_NIL(pItemLo))
+  if (!pItemLo || pItemLo->isNil())
   {
     pTag->topScopeKey = nullptr;
   }
@@ -6150,7 +6154,7 @@ static HB_ULONG hb_cdxDBOIScopeEval(LPCDXTAG pTag, HB_EVALSCOPE_FUNC pFunc, void
     pTag->topScopeKey = hb_cdxKeyPutItem(nullptr, pItemLo, CDX_IGNORE_REC_NUM, pTag, CDX_CMP_PREFIX);
   }
 
-  if (!pItemHi || HB_IS_NIL(pItemHi))
+  if (!pItemHi || pItemHi->isNil())
   {
     pTag->bottomScopeKey = nullptr;
   }
@@ -9231,7 +9235,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             }
           }
 #else
-          if (pInfo->itmNewVal && !HB_IS_NIL(pInfo->itmNewVal) && pTag->Template)
+          if (pInfo->itmNewVal && !pInfo->itmNewVal->isNil() && pTag->Template)
           {
             pKey = hb_cdxKeyPutItem(nullptr, pInfo->itmNewVal, pArea->dbfarea.ulRecNo, pTag, CDX_CMP_EXACT);
           }
@@ -9290,7 +9294,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
             }
           }
 #else
-          if (pInfo->itmNewVal && !HB_IS_NIL(pInfo->itmNewVal) && pTag->Template)
+          if (pInfo->itmNewVal && !pInfo->itmNewVal->isNil() && pTag->Template)
           {
             pKey = hb_cdxKeyPutItem(nullptr, pInfo->itmNewVal, pArea->dbfarea.ulRecNo, pTag, CDX_CMP_EXACT);
           }

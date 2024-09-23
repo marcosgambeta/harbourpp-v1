@@ -211,6 +211,10 @@
       in VM codepage are respected and lCase switch works properly
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
@@ -1891,7 +1895,7 @@ static int hb_hsxFilter(int iHandle, const char *pSeek, HB_SIZE nSeek, PHB_ITEM 
     return HSX_NOTABLE;
   }
 
-  if (!pVerify || HB_IS_NIL(pVerify))
+  if (!pVerify || pVerify->isNil())
   {
     pVerify = pHSX->pKeyItem;
   }

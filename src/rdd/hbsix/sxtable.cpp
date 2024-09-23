@@ -60,6 +60,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
@@ -440,7 +444,7 @@ HB_FUNC(SX_TURBOAREA)
   if (pArea != nullptr)
   {
     PHB_ITEM pItem = hb_itemParam(1);
-    if (hb_pcount() > 0 && HB_IS_NIL(pItem))
+    if (hb_pcount() > 0 && pItem->isNil())
     {
       hb_itemPutNI(pItem, 0);
     }
@@ -475,7 +479,7 @@ HB_FUNC(SX_SETTURBO)
   else
   {
     PHB_ITEM pItem = hb_itemParam(1);
-    if (hb_pcount() > 0 && HB_IS_NIL(pItem))
+    if (hb_pcount() > 0 && pItem->isNil())
     {
       hb_itemPutNI(pItem, 0);
     }

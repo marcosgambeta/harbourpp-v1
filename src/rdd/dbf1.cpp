@@ -4162,7 +4162,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     {
       pArea->uiDirtyRead = hb_itemGetL(pItem) ? HB_IDXREAD_DIRTY : HB_IDXREAD_CLEAN;
     }
-    else if (!HB_IS_NIL(pItem))
+    else if (!pItem->isNil())
     {
       pArea->uiDirtyRead = HB_IDXREAD_DEFAULT;
     }
@@ -5777,7 +5777,7 @@ static HB_ERRCODE hb_dbfSortReadRec(LPDBSORTREC pSortRec, PHB_ITEM pValue)
 {
   AREAP pArea = pSortRec->pSortInfo->dbtri.lpaSource;
 
-  if (HB_IS_NIL(pValue))
+  if (pValue->isNil())
   {
     hb_arrayNew(pValue, pSortRec->pSortInfo->uiItemCount);
   }

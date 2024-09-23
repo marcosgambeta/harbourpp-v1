@@ -48,6 +48,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #if defined(HB_FPT_NO_READLOCK)
 #undef HB_MEMO_SAFELOCK
 #else
@@ -3104,7 +3108,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
   }
   else if (pArea->uiMemoVersion == DB_MEMOVER_SIX)
   {
-    if (HB_IS_NIL(pItem))
+    if (pItem->isNil())
     {
       ulType = FPTIT_SIX_NIL;
       ulSize = 0;
@@ -3825,7 +3829,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
         pFieldBuf[0] = hb_itemGetL(pItem) ? 1 : 0;
         uiType = HB_VF_LOG;
       }
-      else if (HB_IS_NIL(pItem))
+      else if (pItem->isNil())
       {
         uiType = 0;
       }
