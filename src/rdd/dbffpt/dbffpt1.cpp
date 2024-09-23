@@ -3773,7 +3773,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
         return EDBF_DATATYPE;
       }
       lVal = hb_itemGetNInt(pItem);
-      if (HB_IS_DOUBLE(pItem) ? !HB_DBL_LIM_INT32(hb_itemGetND(pItem)) : !HB_LIM_INT32(lVal))
+      if (pItem->isDouble() ? !HB_DBL_LIM_INT32(hb_itemGetND(pItem)) : !HB_LIM_INT32(lVal))
       {
         return EDBF_DATAWIDTH;
       }
@@ -3838,7 +3838,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
         HB_MAXINT lVal;
         lVal = hb_itemGetNInt(pItem);
 
-        if (!HB_IS_DOUBLE(pItem) && HB_LIM_INT32(lVal))
+        if (!pItem->isDouble() && HB_LIM_INT32(lVal))
         {
           HB_PUT_LE_UINT32(pFieldBuf, static_cast<HB_U32>(lVal));
           uiType = HB_VF_INT;

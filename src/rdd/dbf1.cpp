@@ -2962,7 +2962,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         HB_MAXINT lVal;
         int iSize;
 
-        if (pField->uiDec || HB_IS_DOUBLE(pItem))
+        if (pField->uiDec || pItem->isDouble())
         {
           double dVal;
 #if 0 // this version rounds double values to nearest integer
@@ -3042,7 +3042,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       else if (pField->uiType == Harbour::DB::Field::ANY && pField->uiLen == 4)
       {
         HB_MAXINT lVal = hb_itemGetNInt(pItem);
-        if (HB_IS_DOUBLE(pItem) ? HB_DBL_LIM_INT32(hb_itemGetND(pItem)) : HB_LIM_INT32(lVal))
+        if (pItem->isDouble() ? HB_DBL_LIM_INT32(hb_itemGetND(pItem)) : HB_LIM_INT32(lVal))
         {
           HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
         }
