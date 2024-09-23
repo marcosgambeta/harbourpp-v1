@@ -3903,7 +3903,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
           }
         }
       }
-      else if (HB_IS_ARRAY(pItem))
+      else if (pItem->isArray())
       {
         HB_ULONG ulArrayCount = 0;
         int iTrans;
@@ -5088,7 +5088,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   case DBI_BLOB_DIRECT_EXPORT: { // BLOBDirectExport() { <nPointer>, <cTargetFile>, <kMOde> }
     HB_ERRCODE errCode = Harbour::FAILURE;
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       HB_ULONG ulBlock = hb_arrayGetNL(pItem, 1);
       auto szFile = hb_arrayGetCPtr(pItem, 2);
@@ -5106,7 +5106,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     // pItem := { <nPointer>, <nStart>, <nCount> }
     HB_ULONG ulBlock, ulStart, ulCount;
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       ulBlock = hb_arrayGetNL(pItem, 1);
       ulStart = hb_arrayGetNL(pItem, 2);
@@ -5132,7 +5132,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     break;
   }
   case DBI_BLOB_DIRECT_IMPORT: // BLOBDirectImport() { <nOldPointer>, <cSourceFile> }
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       hb_itemPutNInt(pItem, hb_fptPutVarFile(pArea, hb_arrayGetNL(pItem, 1), hb_arrayGetCPtr(pItem, 2)));
     }
@@ -5147,7 +5147,7 @@ static HB_ERRCODE hb_fptInfo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     HB_ERRCODE errCode = EDBF_UNSUPPORTED;
     HB_ULONG ulBlock = 0;
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       auto pValue = hb_arrayGetItemPtr(pItem, 2);
       ulBlock = hb_arrayGetNL(pItem, 1);
@@ -5294,7 +5294,7 @@ static HB_ERRCODE hb_fptFieldInfo(FPTAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
         iTrans = FPT_TRANS_NONE;
       }
 
-      if (HB_IS_ARRAY(pItem))
+      if (pItem->isArray())
       {
         ulStart = hb_arrayGetNL(pItem, 1);
         if (ulStart)

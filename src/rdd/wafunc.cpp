@@ -846,7 +846,7 @@ static const char *hb_dbTransFieldPos(PHB_ITEM pFields, HB_USHORT uiField)
   auto pItem = hb_arrayGetItemPtr(pFields, uiField);
   if (pItem != nullptr)
   {
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       szField = hb_arrayGetCPtr(pItem, DBS_NAME);
     }
