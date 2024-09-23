@@ -75,6 +75,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
@@ -186,7 +190,7 @@ HB_FUNC(SX_FREEZE)
       Info.itmResult = hb_itemNew(nullptr);
       if (SELF_ORDINFO(pArea, DBOI_CUSTOM, &Info) == Harbour::SUCCESS)
       {
-        fResult = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult);
+        fResult = Info.itmResult->isLogical() && hb_itemGetL(Info.itmResult);
       }
       hb_itemRelease(Info.itmNewVal);
       hb_itemRelease(Info.itmResult);
@@ -210,7 +214,7 @@ HB_FUNC(SX_WARM)
       Info.itmResult = hb_itemNew(nullptr);
       if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS)
       {
-        fResult = HB_IS_LOGICAL(Info.itmResult) && !hb_itemGetL(Info.itmResult);
+        fResult = Info.itmResult->isLogical() && !hb_itemGetL(Info.itmResult);
       }
       hb_itemRelease(Info.itmNewVal);
       hb_itemRelease(Info.itmResult);
@@ -234,7 +238,7 @@ HB_FUNC(SX_CHILL)
       Info.itmResult = hb_itemNew(nullptr);
       if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS)
       {
-        fResult = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult);
+        fResult = Info.itmResult->isLogical() && hb_itemGetL(Info.itmResult);
       }
       hb_itemRelease(Info.itmNewVal);
       hb_itemRelease(Info.itmResult);
@@ -272,7 +276,7 @@ HB_FUNC(SX_THERMOMETER)
         for (i = 0; i < 3; ++i, --iTemperature)
         {
           hb_itemClear(Info.itmResult);
-          if (SELF_ORDINFO(pArea, s_iStates[i], &Info) == Harbour::SUCCESS && HB_IS_LOGICAL(Info.itmResult) &&
+          if (SELF_ORDINFO(pArea, s_iStates[i], &Info) == Harbour::SUCCESS && Info.itmResult->isLogical() &&
               hb_itemGetL(Info.itmResult))
           {
             break;
@@ -729,7 +733,7 @@ HB_FUNC(SX_WILDSEEK)
         Info.itmNewVal = hb_param(1, Harbour::Item::STRING);
         if (SELF_ORDINFO(pArea, DBOI_SKIPWILD, &Info) == Harbour::SUCCESS)
         {
-          fFound = HB_IS_LOGICAL(Info.itmResult) && hb_itemGetL(Info.itmResult);
+          fFound = Info.itmResult->isLogical() && hb_itemGetL(Info.itmResult);
         }
       }
     }

@@ -4228,7 +4228,7 @@ static bool hb_cdxCheckRecordFilter(CDXAREAP pArea, HB_ULONG ulRecNo)
     if (!lResult && pArea->dbfarea.area.dbfi.itmCobExpr)
     {
       auto pResult = hb_vmEvalBlock(pArea->dbfarea.area.dbfi.itmCobExpr);
-      lResult = HB_IS_LOGICAL(pResult) && !hb_itemGetL(pResult);
+      lResult = pResult->isLogical() && !hb_itemGetL(pResult);
     }
   }
   return !lResult;
@@ -8966,7 +8966,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
   case DBOI_ISDESC:
     pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag && !pTag->UsrAscend);
-    if (pTag && pInfo->itmNewVal && HB_IS_LOGICAL(pInfo->itmNewVal))
+    if (pTag && pInfo->itmNewVal && pInfo->itmNewVal->isLogical())
     {
       pTag->UsrAscend = !hb_itemGetL(pInfo->itmNewVal);
       pTag->curKeyState &= ~(CDX_CURKEY_RAWPOS | CDX_CURKEY_LOGPOS);
@@ -8975,7 +8975,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
   case DBOI_UNIQUE:
     pInfo->itmResult = hb_itemPutL(pInfo->itmResult, (pTag ? pTag->UniqueKey || pTag->UsrUnique : false));
-    if (pTag && pInfo->itmNewVal && HB_IS_LOGICAL(pInfo->itmNewVal) && !pTag->UniqueKey)
+    if (pTag && pInfo->itmNewVal && pInfo->itmNewVal->isLogical() && !pTag->UniqueKey)
     {
       pTag->UsrUnique = hb_itemGetL(pInfo->itmNewVal);
       pTag->curKeyState &= ~(CDX_CURKEY_RAWPOS | CDX_CURKEY_LOGPOS | CDX_CURKEY_RAWCNT | CDX_CURKEY_LOGCNT);

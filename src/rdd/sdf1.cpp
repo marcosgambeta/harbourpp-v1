@@ -644,7 +644,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         errCode = EDBF_DATATYPE;
       }
     }
-    else if (HB_IS_LOGICAL(pItem))
+    else if (pItem->isLogical())
     {
       if (pField->uiType == Harbour::DB::Field::LOGICAL)
       {

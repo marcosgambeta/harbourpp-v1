@@ -3824,7 +3824,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
         hb_sxDtoP(reinterpret_cast<char *>(pFieldBuf), hb_itemGetDL(pItem));
         uiType = HB_VF_DATE;
       }
-      else if (HB_IS_LOGICAL(pItem))
+      else if (pItem->isLogical())
       {
         pFieldBuf[0] = hb_itemGetL(pItem) ? 1 : 0;
         uiType = HB_VF_LOG;
