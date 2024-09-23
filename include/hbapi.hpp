@@ -531,9 +531,9 @@ inline HB_TYPE _HB_ITEM::rawType()
   return this->type;
 }
 
-inline void _HB_ITEM::setType(HB_TYPE type)
+inline void _HB_ITEM::setType(HB_TYPE _type)
 {
-  this->type = type;
+  this->type = _type;
 }
 
 inline bool _HB_ITEM::isNil()
