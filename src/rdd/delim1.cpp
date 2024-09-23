@@ -895,7 +895,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
         errCode = EDBF_DATATYPE;
       }
     }
-    else if (HB_IS_DATETIME(pItem))
+    else if (pItem->isDateTime())
     {
       if (pField->uiType == Harbour::DB::Field::DATE)
       {

@@ -2900,7 +2900,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         errCode = EDBF_DATATYPE;
       }
     }
-    else if (HB_IS_DATETIME(pItem))
+    else if (pItem->isDateTime())
     {
       if (pField->uiType == Harbour::DB::Field::DATE)
       {
@@ -5586,7 +5586,7 @@ static int hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue
         i = hb_itemStrCmp(pItem1, pItem2, true);
       }
     }
-    else if (HB_IS_DATETIME(pItem1))
+    else if (pItem1->isDateTime())
     {
       double dValue1 = hb_itemGetTD(pItem1), dValue2 = hb_itemGetTD(pItem2);
       i = dValue1 < dValue2 ? -1 : (dValue1 == dValue2 ? 0 : 1);

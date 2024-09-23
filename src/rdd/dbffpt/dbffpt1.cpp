@@ -3758,7 +3758,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
     }
     else if (pField->uiLen == 3)
     {
-      if (!HB_IS_DATETIME(pItem))
+      if (!pItem->isDateTime())
       {
         return EDBF_DATATYPE;
       }
@@ -3819,7 +3819,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
         }
       }
 
-      if (HB_IS_DATETIME(pItem))
+      if (pItem->isDateTime())
       {
         hb_sxDtoP(reinterpret_cast<char *>(pFieldBuf), hb_itemGetDL(pItem));
         uiType = HB_VF_DATE;

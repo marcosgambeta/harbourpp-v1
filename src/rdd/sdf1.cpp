@@ -599,7 +599,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         errCode = EDBF_DATATYPE;
       }
     }
-    else if (HB_IS_DATETIME(pItem))
+    else if (pItem->isDateTime())
     {
       if (pField->uiType == Harbour::DB::Field::DATE)
       {
