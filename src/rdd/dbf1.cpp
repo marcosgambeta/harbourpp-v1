@@ -3984,7 +3984,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     {
       pArea->fTransRec = hb_itemGetL(pItem);
     }
-    else if (HB_IS_POINTER(pItem))
+    else if (pItem->isPointer())
     {
       LPDBTRANSINFO lpdbTransInfo = hb_dbTransInfoGet(pItem);
 
