@@ -61,7 +61,7 @@ HB_FUNC(HB_DBDETACH)
   {
     pArea = static_cast<AREAP>(hb_rddGetCurrentWorkAreaPointer());
   }
-  else if (HB_IS_STRING(pAlias))
+  else if (pAlias->isString())
   {
     auto szAlias = hb_itemGetCPtr(pAlias);
     hb_rddGetAliasNumber(szAlias, &iArea);

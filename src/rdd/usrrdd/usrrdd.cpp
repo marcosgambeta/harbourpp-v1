@@ -189,7 +189,7 @@ static const char *hb_usrArrayGetCPtr(PHB_ITEM pArray, HB_SIZE nPos)
 {
   auto pItem = hb_arrayGetItemPtr(pArray, nPos);
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     return hb_itemGetCPtr(pItem);
   }
@@ -1548,7 +1548,7 @@ static HB_ERRCODE hb_usrGetRec(AREAP pArea, HB_BYTE **pBuffer)
   hb_vmDo(2);
 
   auto pItem = hb_stackItemFromBase(nOffset);
-  if (HB_IS_STRING(pItem))
+  if (pItem->isString())
   {
     *pBuffer = reinterpret_cast<HB_BYTE *>(const_cast<char *>(hb_itemGetCPtr(pItem)));
   }

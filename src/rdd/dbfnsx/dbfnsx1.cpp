@@ -43,6 +43,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #define HB_NSX_SIX_STRICT
 #define HB_NSX_CLEAR_UNUSED
 /* #define HB_NSX_EXTERNAL_PAGEBUFFER */
@@ -4297,7 +4301,7 @@ static LPTAGINFO hb_nsxFindTag(NSXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagI
     return pArea->lpCurTag;
   }
 
-  fBag = HB_IS_STRING(pTagItem) && hb_itemGetCLen(pBagItem) > 0;
+  fBag = pTagItem->isString() && hb_itemGetCLen(pBagItem) > 0;
   if (fBag)
   {
     pIndex = hb_nsxFindBag(pArea, hb_itemGetCPtr(pBagItem));
@@ -8857,7 +8861,7 @@ static HB_ERRCODE hb_nsxOrderListFocus(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
      */
 #ifdef HB_CLP_STRICT
     if (pTag || (HB_IS_NUMERIC(pOrderInfo->itmOrder) && hb_itemGetNI(pOrderInfo->itmOrder) == 0) ||
-        (HB_IS_STRING(pOrderInfo->itmOrder) && hb_itemGetCLen(pOrderInfo->itmOrder) == 0))
+        (pOrderInfo->itmOrder->isString() && hb_itemGetCLen(pOrderInfo->itmOrder) == 0))
 #endif
       pArea->lpCurTag = pTag;
   }

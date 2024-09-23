@@ -1275,7 +1275,7 @@ HB_FUNC(ORDBAGNAME)
   {
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
-    if (pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder))
+    if (pOrderInfo.itmOrder && !pOrderInfo.itmOrder->isString())
     {
       if (pOrderInfo.itmOrder->isNil())
       {
@@ -1463,7 +1463,7 @@ HB_FUNC(ORDFOR)
   {
     DBORDERINFO pOrderInfo;
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
-    if (pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder))
+    if (pOrderInfo.itmOrder && !pOrderInfo.itmOrder->isString())
     {
       if (pOrderInfo.itmOrder->isNil())
       {
@@ -1504,7 +1504,7 @@ HB_FUNC(ORDKEY)
   {
     DBORDERINFO pOrderInfo{};
     pOrderInfo.itmOrder = hb_param(1, Harbour::Item::ANY);
-    if (pOrderInfo.itmOrder && !HB_IS_STRING(pOrderInfo.itmOrder))
+    if (pOrderInfo.itmOrder && !pOrderInfo.itmOrder->isString())
     {
       if (pOrderInfo.itmOrder->isNil())
       {

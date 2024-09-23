@@ -3059,7 +3059,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
   HB_MAXINT iVal;
   HB_LONG lVal;
 
-  if (HB_IS_STRING(pItem))
+  if (pItem->isString())
   {
     ulType = FPTIT_TEXT;
     if (iTrans == FPT_TRANS_UNICODE)
@@ -3869,7 +3869,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
           }
         }
       }
-      else if (HB_IS_STRING(pItem))
+      else if (pItem->isString())
       {
         auto nLen = hb_itemGetCLen(pItem);
 

@@ -8782,7 +8782,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
   {
   case DBOI_CONDITION:
     pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pTag ? pTag->ForExpr : nullptr);
-    if (pTag && pInfo->itmNewVal && HB_IS_STRING(pInfo->itmNewVal))
+    if (pTag && pInfo->itmNewVal && pInfo->itmNewVal->isString())
     {
       if (pTag->ForExpr != nullptr)
       {

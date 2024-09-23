@@ -784,7 +784,7 @@ static bool hb_dbfPasswordSet(DBFAREAP pArea, PHB_ITEM pPasswd, bool fRaw)
 
   auto nLen = hb_itemGetCLen(pPasswd);
 
-  fSet = !pArea->fHasMemo && HB_IS_STRING(pPasswd) && (!fRaw || nLen == 8);
+  fSet = !pArea->fHasMemo && pPasswd->isString() && (!fRaw || nLen == 8);
   if (fSet)
   {
     if (nLen > 0)
@@ -2817,7 +2817,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   }
   else
   {
-    if (HB_IS_MEMO(pItem) || HB_IS_STRING(pItem))
+    if (HB_IS_MEMO(pItem) || pItem->isString())
     {
       nLen = pField->uiLen;
       if (pField->uiType == Harbour::DB::Field::STRING)
@@ -4143,7 +4143,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     else
     {
       PHB_DYNS pTriggerSym = pArea->pTriggerSym;
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         hb_dbfTriggerSet(pArea, pItem);
       }
@@ -4499,7 +4499,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
 
   if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_PENDINGTRIGGER, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS)
   {
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       hb_dbfTriggerSet(pArea, pItem);
     }
@@ -4510,7 +4510,7 @@ static HB_ERRCODE hb_dbfOpen(DBFAREAP pArea, LPDBOPENINFO pOpenInfo)
     hb_itemClear(pItem);
     if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TRIGGER, pOpenInfo->ulConnection, pItem) == Harbour::SUCCESS)
     {
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         hb_dbfTriggerSet(pArea, pItem);
       }
@@ -5571,9 +5571,9 @@ static int hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue
       HB_MAXINT nValue1 = hb_itemGetNInt(pItem1), nValue2 = hb_itemGetNInt(pItem2);
       i = nValue1 < nValue2 ? -1 : (nValue1 == nValue2 ? 0 : 1);
     }
-    else if (HB_IS_STRING(pItem1))
+    else if (pItem1->isString())
     {
-      if (!HB_IS_STRING(pItem2))
+      if (!pItem2->isString())
       {
         i = 1;
       }
@@ -7433,7 +7433,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     char *szTrigger = pData->szTrigger;
     auto fFree = false;
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       fFree = true;
       pData->szTrigger = hb_itemGetCLen(pItem) > 0 ? hb_itemGetC(pItem) : nullptr;
@@ -7456,7 +7456,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
   case RDDI_PENDINGTRIGGER:
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       if (pData->szPendingTrigger)
       {
@@ -7483,7 +7483,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     char *szPasswd = pData->szPasswd;
     auto fFree = false;
 
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       fFree = true;
       pData->szPasswd = hb_itemGetCLen(pItem) > 0 ? hb_itemGetC(pItem) : nullptr;
@@ -7506,7 +7506,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
   case RDDI_PENDINGPASSWORD:
-    if (HB_IS_STRING(pItem))
+    if (pItem->isString())
     {
       if (pData->szPendingPasswd)
       {

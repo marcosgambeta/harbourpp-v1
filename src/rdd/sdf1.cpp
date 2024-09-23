@@ -569,7 +569,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
   {
     char szBuffer[256];
 
-    if (HB_IS_MEMO(pItem) || HB_IS_STRING(pItem))
+    if (HB_IS_MEMO(pItem) || pItem->isString())
     {
       if (pField->uiType == Harbour::DB::Field::STRING)
       {
