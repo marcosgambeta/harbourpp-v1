@@ -480,7 +480,7 @@ typedef struct _HB_ITEM
   bool isHashKey();
   bool isBadItem();
   bool isObject();
-  //#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
+  bool isNumber(); // TODO: same as isNumeric()
   //
   int getNI();
   long getNL();
@@ -666,7 +666,10 @@ inline bool _HB_ITEM::isBadItem()
   return ((HB_ITEM_TYPERAW(this) & Harbour::Item::COMPLEX) != 0 && (HB_ITEM_TYPERAW(this) & ~(Harbour::Item::COMPLEX | Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT)) != 0);
 }
 
-//#define HB_IS_NUMBER(p)     HB_IS_NUMERIC(p)
+inline bool _HB_ITEM::isNumber()
+{
+  return ((HB_ITEM_TYPERAW(this) & Harbour::Item::NUMERIC) != 0);
+}
 
 // logical
 
