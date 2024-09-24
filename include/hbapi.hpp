@@ -521,6 +521,7 @@ typedef struct _HB_ITEM
   HB_SIZE stringAllocated();
   void setStringAllocated(HB_SIZE allocated);
   //
+  void clear();
 #endif
 } HB_ITEM, * PHB_ITEM;
 
