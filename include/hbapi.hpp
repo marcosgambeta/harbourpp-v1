@@ -521,6 +521,13 @@ typedef struct _HB_ITEM
   HB_SIZE stringAllocated();
   void setStringAllocated(HB_SIZE allocated);
   //
+  void *pointerValue();
+  void setPointerValue(void *pValue);
+  HB_BOOL pointerCollect();
+  void setPointerCollect(HB_BOOL b);
+  HB_BOOL pointerSingle();
+  void setPointerSingle(HB_BOOL b);
+  //
   void clear();
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -790,6 +797,38 @@ inline HB_SIZE _HB_ITEM::stringAllocated()
 inline void _HB_ITEM::setStringAllocated(HB_SIZE allocated)
 {
   this->item.asString.allocated = allocated;
+}
+
+// pointer
+
+inline void *_HB_ITEM::pointerValue()
+{
+  return this->item.asPointer.value;
+}
+
+inline void _HB_ITEM::setPointerValue(void *pValue)
+{
+  this->item.asPointer.value = pValue;
+}
+
+inline HB_BOOL _HB_ITEM::pointerCollect()
+{
+  return this->item.asPointer.collect;
+}
+
+inline void _HB_ITEM::setPointerCollect(HB_BOOL b)
+{
+  this->item.asPointer.collect = b;
+}
+
+inline HB_BOOL _HB_ITEM::pointerSingle()
+{
+  return this->item.asPointer.single;
+}
+
+inline void _HB_ITEM::setPointerSingle(HB_BOOL b)
+{
+  this->item.asPointer.single = b;
 }
 
 #endif
