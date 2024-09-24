@@ -921,7 +921,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
         errCode = EDBF_DATATYPE;
       }
     }
-    else if (HB_IS_NUMBER(pItem))
+    else if (pItem->isNumber())
     {
       if (pField->uiType == Harbour::DB::Field::LONG)
       {

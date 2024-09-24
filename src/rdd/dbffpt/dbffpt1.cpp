@@ -3768,7 +3768,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
     {
       HB_MAXINT lVal;
 
-      if (!HB_IS_NUMBER(pItem))
+      if (!pItem->isNumber())
       {
         return EDBF_DATATYPE;
       }
@@ -3833,7 +3833,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       {
         uiType = 0;
       }
-      else if (HB_IS_NUMBER(pItem))
+      else if (pItem->isNumber())
       {
         HB_MAXINT lVal;
         lVal = hb_itemGetNInt(pItem);
