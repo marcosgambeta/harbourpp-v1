@@ -629,7 +629,7 @@ void hb_stackPop(void)
 
   if ((*hb_stack.pPos)->isComplex())
   {
-    hb_itemClear(*hb_stack.pPos);
+    (*hb_stack.pPos)->clear();
   }
 }
 
@@ -644,7 +644,7 @@ void hb_stackPopReturn(void)
 
   if ((&hb_stack.Return)->isComplex())
   {
-    hb_itemClear(&hb_stack.Return);
+    (&hb_stack.Return)->clear();
   }
 
   if (--hb_stack.pPos <= hb_stack.pBase)
@@ -776,7 +776,7 @@ void hb_stackRemove(HB_ISIZ nUntilPos)
     --hb_stack.pPos;
     if ((*hb_stack.pPos)->isComplex())
     {
-      hb_itemClear(*hb_stack.pPos);
+      (*hb_stack.pPos)->clear();
     }
   }
 }
@@ -923,7 +923,7 @@ void hb_stackOldFrame(PHB_STACK_STATE pFrame)
     --hb_stack.pPos;
     if ((*hb_stack.pPos)->isComplex())
     {
-      hb_itemClear(*hb_stack.pPos);
+      (*hb_stack.pPos)->clear();
     }
   } while (hb_stack.pPos > hb_stack.pBase);
 

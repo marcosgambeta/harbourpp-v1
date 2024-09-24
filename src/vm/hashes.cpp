@@ -105,18 +105,18 @@ static HB_GARBAGE_FUNC(hb_hashGarbageRelease)
       {
         HB_STACK_TLS_PRELOAD
         hb_itemRawMove(hb_stackAllocItem(), pVal);
-        hb_itemClear(pKey);
+        pKey->clear();
         hb_stackPop();
       }
       else
       {
         if (pKey->isComplex())
         {
-          hb_itemClear(pKey);
+          pKey->clear();
         }
         if (pVal->isComplex())
         {
-          hb_itemClear(pVal);
+          pVal->clear();
         }
       }
     }
@@ -521,11 +521,11 @@ static void hb_hashDelPair(PHB_BASEHASH pBaseHash, HB_SIZE nPos)
     }
     if ((&pPairs->key)->isComplex())
     {
-      hb_itemClear(&pPairs->key);
+      (&pPairs->key)->clear();
     }
     if ((&pPairs->value)->isComplex())
     {
-      hb_itemClear(&pPairs->value);
+      (&pPairs->value)->clear();
     }
     hb_xfree(pPairs);
   }
@@ -630,7 +630,7 @@ PHB_ITEM hb_hashNew(PHB_ITEM pItem)
   }
   else if (pItem->isComplex())
   {
-    hb_itemClear(pItem);
+    pItem->clear();
   }
 
   auto pBaseHash = static_cast<PHB_BASEHASH>(hb_gcAllocRaw(sizeof(HB_BASEHASH), &s_gcHashFuncs));
@@ -906,11 +906,11 @@ HB_BOOL hb_hashClear(PHB_ITEM pHash)
         pHash->item.asHash.value->nLen--;
         if ((&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key)->isComplex())
         {
-          hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key);
+          (&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].key)->clear();
         }
         if ((&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value)->isComplex())
         {
-          hb_itemClear(&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value);
+          (&pHash->item.asHash.value->pPairs[pHash->item.asHash.value->nLen].value)->clear();
         }
       }
       // This condition is a protection against recursive call

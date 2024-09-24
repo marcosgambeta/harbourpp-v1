@@ -65,7 +65,7 @@ static void hb_arrayReleaseItems(PHB_BASEARRAY pBaseArray)
       pBaseArray->nLen--;
       if ((pBaseArray->pItems + pBaseArray->nLen)->isComplex())
       {
-        hb_itemClear(pBaseArray->pItems + pBaseArray->nLen);
+        (pBaseArray->pItems + pBaseArray->nLen)->clear();
       }
     } while (pBaseArray->nLen);
 
@@ -143,7 +143,7 @@ HB_BOOL hb_arrayNew(PHB_ITEM pItem, HB_SIZE nLen) // creates a new array
 
   if (pItem->isComplex())
   {
-    hb_itemClear(pItem);
+    pItem->clear();
   }
 
   PHB_ITEM pItems;
@@ -249,7 +249,7 @@ HB_BOOL hb_arraySize(PHB_ITEM pArray, HB_SIZE nLen)
           {
             if ((pBaseArray->pItems + nPos)->isComplex())
             {
-              hb_itemClear(pBaseArray->pItems + nPos);
+              (pBaseArray->pItems + nPos)->clear();
             }
           }
 
@@ -492,7 +492,7 @@ HB_BOOL hb_arraySetForward(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
   }
   else
   {
-    hb_itemClear(pItem);
+    pItem->clear();
     return false;
   }
 }
@@ -527,7 +527,7 @@ HB_BOOL hb_arrayGetItemRef(PHB_ITEM pArray, HB_SIZE nIndex, PHB_ITEM pItem)
     {
       if (pItem->isComplex())
       {
-        hb_itemClear(pItem);
+        pItem->clear();
       }
       hb_gcRefInc(pArray->item.asArray.value);
     }

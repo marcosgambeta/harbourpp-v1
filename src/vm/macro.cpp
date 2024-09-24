@@ -863,7 +863,7 @@ static void hb_macroBlock(const char *szString, PHB_ITEM pItem)
 
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
 
     pItem->item.asBlock.value = hb_codeblockMacroNew(pMacro->pCodeInfo->pCode, pMacro->pCodeInfo->nPCodePos);
@@ -950,7 +950,7 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
 
   if (pItem->isComplex())
   {
-    hb_itemClear(pItem);
+    pItem->clear();
   }
   pItem->item.asBlock.value = hb_codeblockMacroNew(byBuf, i);
   pItem->setType(Harbour::Item::BLOCK);

@@ -283,7 +283,7 @@ PHB_ITEM hb_itemPutC(PHB_ITEM pItem, const char *szText)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -324,7 +324,7 @@ PHB_ITEM hb_itemPutCL(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -354,7 +354,7 @@ PHB_ITEM hb_itemPutCConst(PHB_ITEM pItem, const char *szText)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -383,7 +383,7 @@ PHB_ITEM hb_itemPutCLConst(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -421,7 +421,7 @@ PHB_ITEM hb_itemPutCPtr(PHB_ITEM pItem, char *szText)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -461,7 +461,7 @@ PHB_ITEM hb_itemPutCLPtr(PHB_ITEM pItem, char *szText, HB_SIZE nLen)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1189,7 +1189,7 @@ PHB_ITEM hb_itemPutDS(PHB_ITEM pItem, const char *szDate)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1214,7 +1214,7 @@ PHB_ITEM hb_itemPutD(PHB_ITEM pItem, int iYear, int iMonth, int iDay)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1239,7 +1239,7 @@ PHB_ITEM hb_itemPutDL(PHB_ITEM pItem, long lJulian)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1264,7 +1264,7 @@ PHB_ITEM hb_itemPutTS(PHB_ITEM pItem, const char *szDateTime)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1288,7 +1288,7 @@ PHB_ITEM hb_itemPutTD(PHB_ITEM pItem, double dTimeStamp)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1315,7 +1315,7 @@ PHB_ITEM hb_itemPutTDT(PHB_ITEM pItem, long lJulian, long lMilliSec)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1340,7 +1340,7 @@ PHB_ITEM hb_itemPutL(PHB_ITEM pItem, HB_BOOL bValue)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1358,7 +1358,7 @@ PHB_ITEM _HB_ITEM::putL(HB_BOOL bValue) // equivalent to hb_itemPutL
 {
   if (this->isComplex())
   {
-    hb_itemClear(this);
+    this->clear();
   }
 
   this->setType(Harbour::Item::LOGICAL);
@@ -1379,7 +1379,7 @@ PHB_ITEM hb_itemPutND(PHB_ITEM pItem, double dNumber)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1405,7 +1405,7 @@ PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int iNumber)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1424,7 +1424,7 @@ PHB_ITEM _HB_ITEM::putNI(int iNumber) // equivalent to hb_itemPutNI
 {
   if (this->isComplex())
   {
-    hb_itemClear(this);
+    this->clear();
   }
 
   this->setType(Harbour::Item::INTEGER);
@@ -1444,7 +1444,7 @@ PHB_ITEM hb_itemPutNL(PHB_ITEM pItem, long lNumber)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1467,7 +1467,7 @@ PHB_ITEM hb_itemPutNS(PHB_ITEM pItem, HB_ISIZ nNumber)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1510,7 +1510,7 @@ PHB_ITEM hb_itemPutNLL(PHB_ITEM pItem, HB_LONGLONG llNumber)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1542,7 +1542,7 @@ PHB_ITEM hb_itemPutNInt(PHB_ITEM pItem, HB_MAXINT nNumber)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1627,7 +1627,7 @@ PHB_ITEM hb_itemPutNDLen(PHB_ITEM pItem, double dNumber, int iWidth, int iDec)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1664,7 +1664,7 @@ PHB_ITEM hb_itemPutNDDec(PHB_ITEM pItem, double dNumber, int iDec)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1726,7 +1726,7 @@ PHB_ITEM hb_itemPutNILen(PHB_ITEM pItem, int iNumber, int iWidth)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1756,7 +1756,7 @@ PHB_ITEM hb_itemPutNLLen(PHB_ITEM pItem, long lNumber, int iWidth)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1798,7 +1798,7 @@ PHB_ITEM hb_itemPutNLLLen(PHB_ITEM pItem, HB_LONGLONG llNumber, int iWidth)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1868,7 +1868,7 @@ PHB_ITEM hb_itemPutPtr(PHB_ITEM pItem, void *pValue)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1893,7 +1893,7 @@ PHB_ITEM hb_itemPutPtrGC(PHB_ITEM pItem, void *pValue)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1921,7 +1921,7 @@ PHB_ITEM hb_itemPutPtrRawGC(PHB_ITEM pItem, void *pValue)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -1947,7 +1947,7 @@ PHB_ITEM hb_itemPutSymbol(PHB_ITEM pItem, PHB_SYMB pSym)
   {
     if (pItem->isComplex())
     {
-      hb_itemClear(pItem);
+      pItem->clear();
     }
   }
   else
@@ -2313,7 +2313,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
 
   if (pDest->isComplex())
   {
-    hb_itemClear(pDest);
+    pDest->clear();
   }
 
   hb_itemRawCpy(pDest, pSource);
@@ -2452,7 +2452,7 @@ void hb_itemMove(PHB_ITEM pDest, PHB_ITEM pSource)
 
   if (pDest->isComplex())
   {
-    hb_itemClear(pDest);
+    pDest->clear();
   }
 
   // GCLOCK enter
@@ -2484,7 +2484,7 @@ void hb_itemMoveRef(PHB_ITEM pDest, PHB_ITEM pSource)
 
   if (pDest->isComplex())
   {
-    hb_itemClear(pDest);
+    pDest->clear();
   }
 
   // GCLOCK enter
@@ -2534,7 +2534,7 @@ void hb_itemMoveToRef(PHB_ITEM pDest, PHB_ITEM pSource)
 
   if (pDest->isComplex())
   {
-    hb_itemClear(pDest);
+    pDest->clear();
   }
 
   // GCLOCK enter
@@ -2558,7 +2558,7 @@ void hb_itemMoveFromRef(PHB_ITEM pDest, PHB_ITEM pSource)
       // pSource is not a reference to pDest - make copy
       hb_itemCopy(pDest, pUnRef);
     }
-    hb_itemClear(pSource);
+    pSource->clear();
   }
   else
   {
@@ -2691,7 +2691,7 @@ PHB_ITEM hb_itemUnRefOnce(PHB_ITEM pItem)
               // one of the pItem->item.asRefer.BasePtr.array items
               // or more then one reference to this array exists
               // so it will not be freed [druzus]
-              hb_itemClear(pItem);
+              pItem->clear();
             }
           }
         }

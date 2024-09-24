@@ -123,7 +123,7 @@ void hb_memvarValueDecRef(PHB_ITEM pMemvar)
   {
     if (pMemvar->isComplex())
     {
-      hb_itemClear(pMemvar);
+      pMemvar->clear();
     }
     hb_xfree(pMemvar);
   }
@@ -424,7 +424,7 @@ void hb_memvarGetValue(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
     // Generate an error with retry possibility
     // (user created error handler can create this variable)
     auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
-    hb_itemClear(pItem);
+    pItem->clear();
 
     while (hb_errLaunch(pError) == E_RETRY)
     {
@@ -472,7 +472,7 @@ void hb_memvarGetRefer(PHB_ITEM pItem, PHB_SYMB pMemvarSymb)
       // Generate an error with retry possibility
       // (user created error handler can make this variable accessible)
       auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pMemvarSymb->szName, 0, EF_CANRETRY);
-      hb_itemClear(pItem);
+      pItem->clear();
 
       while (hb_errLaunch(pError) == E_RETRY)
       {
@@ -755,7 +755,7 @@ static void hb_memvarRelease(PHB_ITEM pMemvar)
         pMemvar = hb_dynsymGetMemvar(pDynSymbol);
         if (pMemvar != nullptr)
         {
-          hb_itemClear(pMemvar);
+          pMemvar->clear();
         }
         return;
       }
@@ -795,7 +795,7 @@ static void hb_memvarReleaseWithMask(const char *szMask, bool bInclude)
       bool fMatch = hb_strMatchCaseWildExact(pDynVar->pSymbol->szName, szMask);
       if (bInclude ? fMatch : !fMatch)
       {
-        hb_itemClear(pMemvar);
+        pMemvar->clear();
       }
     }
   }

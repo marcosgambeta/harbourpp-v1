@@ -1919,7 +1919,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
           else
           {
             // Someone tried to manipulate with supercast array
-            hb_itemClear(pObject);
+            pObject->clear();
           }
         }
 #ifdef HB_MSG_POOL

@@ -1245,7 +1245,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     }
     else if (pResult)
     {
-      hb_itemClear(pResult);
+      pResult->clear();
     }
     else
     {
@@ -1278,7 +1278,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
     }
     else if (pResult)
     {
-      hb_itemClear(pResult);
+      pResult->clear();
     }
     else
     {

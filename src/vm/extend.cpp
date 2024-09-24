@@ -93,7 +93,7 @@ PHB_ITEM hb_paramError(int iParam)
 
   if (pParam == nullptr)
   {
-    hb_itemClear(&s_NIL);
+    (&s_NIL)->clear();
     pParam = &s_NIL;
   }
 
@@ -1752,7 +1752,7 @@ void hb_ret(void)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_itemClear(hb_stackReturnItem());
+  hb_stackReturnItem()->clear();
 }
 
 #undef hb_reta
@@ -2079,7 +2079,7 @@ int hb_stor(int iParam)
 
   if (iParam == -1)
   {
-    hb_itemClear(hb_stackReturnItem());
+    hb_stackReturnItem()->clear();
     return 1;
   }
   else if (iParam >= 0 && iParam <= hb_pcount())
@@ -2088,7 +2088,7 @@ int hb_stor(int iParam)
 
     if (pItem->isByRef())
     {
-      hb_itemClear(hb_itemUnRef(pItem));
+      hb_itemUnRef(pItem)->clear();
       return 1;
     }
   }

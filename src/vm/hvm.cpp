@@ -1161,7 +1161,7 @@ void hb_vmThreadQuit(void)
       hb_itemCopy(pState->pResult, pReturn);
     }
   }
-  hb_itemClear(hb_stackReturnItem());
+  hb_stackReturnItem()->clear();
 
   hb_stackSetActionRequest(0);
   hb_rddCloseAll();      /* close all workareas */
@@ -1467,7 +1467,7 @@ int hb_vmQuit(void)
   hb_vmDoModuleExitFunctions(); /* process AtExit registered functions */
 
   /* release all known items stored in subsystems */
-  hb_itemClear(hb_stackReturnItem());
+  hb_stackReturnItem()->clear();
   hb_stackRemove(1); /* clear stack items, leave only initial symbol item */
 
   /* intentionally here to allow executing object destructors for all
@@ -1485,7 +1485,7 @@ int hb_vmQuit(void)
   hb_vmSetI18N(nullptr); /* remove i18n translation table */
   hb_i18n_exit();        /* unregister i18n module */
 
-  hb_itemClear(hb_stackReturnItem());
+  hb_stackReturnItem()->clear();
   hb_gcCollectAll(true);
 #ifndef HB_NO_DEBUG
   /* deactivate debugger */
@@ -1511,7 +1511,7 @@ int hb_vmQuit(void)
   hb_conRelease();            /* releases Console */
   hb_vmReleaseLocalSymbols(); /* releases the local modules linked list */
   hb_dynsymRelease();         /* releases the dynamic symbol table */
-  hb_itemClear(hb_stackReturnItem());
+  hb_stackReturnItem()->clear();
   hb_gcCollectAll(true);
 
   hb_vmDoModuleQuitFunctions(); /* process AtQuit registered functions */
@@ -3581,7 +3581,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
 
     if (pResult->isComplex())
     {
-      hb_itemClear(pResult);
+      pResult->clear();
     }
 
     if (nNumber2 >= 0 ? nResult >= nNumber1 : nResult < nNumber1)
@@ -3717,7 +3717,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
 
     if (pResult->isComplex())
     {
-      hb_itemClear(pResult);
+      pResult->clear();
     }
 
     if (nNumber2 <= 0 ? nResult >= nNumber1 : nResult < nNumber1)
@@ -3753,7 +3753,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     {
       if (pResult->isComplex())
       {
-        hb_itemClear(pResult);
+        pResult->clear();
       }
       HB_ITEM_PUT_LONGRAW(pResult, lJulian);
     }
@@ -3839,7 +3839,7 @@ static void hb_vmMult(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     HB_MAXINT nResult = static_cast<HB_MAXINT>(pItem1->integerValue()) * static_cast<HB_MAXINT>(pItem2->integerValue());
     if (pResult->isComplex())
     {
-      hb_itemClear(pResult);
+      pResult->clear();
     }
     HB_ITEM_PUT_NUMINTRAW(pResult, nResult);
   }
@@ -4195,7 +4195,7 @@ static void hb_vmExactlyEqual()
     hb_stackDec(); /* pItem2 is already NIL */
     if (pItem1->isComplex())
     {
-      hb_itemClear(pItem1);
+      pItem1->clear();
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(false);
@@ -4206,7 +4206,7 @@ static void hb_vmExactlyEqual()
                    (pItem1->stringValue() == pItem2->stringValue() ||
                     memcmp(pItem1->stringValue(), pItem2->stringValue(), pItem1->stringLength()) == 0);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4238,7 +4238,7 @@ static void hb_vmExactlyEqual()
   {
     bool fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4246,7 +4246,7 @@ static void hb_vmExactlyEqual()
   {
     bool fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4255,7 +4255,7 @@ static void hb_vmExactlyEqual()
   {
     bool fResult = pItem1->item.asBlock.value == pItem2->item.asBlock.value;
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4272,7 +4272,7 @@ static void hb_vmExactlyEqual()
   {
     bool fResult = pItem1->item.asArray.value == pItem2->item.asArray.value;
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4315,7 +4315,7 @@ static void hb_vmEqual()
     hb_stackDec(); /* pItem2 is already NIL */
     if (pItem1->isComplex())
     {
-      hb_itemClear(pItem1);
+      pItem1->clear();
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(false);
@@ -4324,7 +4324,7 @@ static void hb_vmEqual()
   {
     bool fResult = hb_itemStrCmp(pItem1, pItem2, false) == 0;
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4363,7 +4363,7 @@ static void hb_vmEqual()
   {
     bool fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4371,7 +4371,7 @@ static void hb_vmEqual()
    else if( pItem1->isHash() && pItem2->isHash() ) {
       bool fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
       hb_stackPop();
-      hb_itemClear(pItem1);
+      pItem1->clear();
       pItem1->setType(Harbour::Item::LOGICAL);
       pItem1->setLogicalValue(fResult);
    }
@@ -4415,7 +4415,7 @@ static void hb_vmNotEqual()
     hb_stackDec(); /* pItem2 is already NIL */
     if (pItem1->isComplex())
     {
-      hb_itemClear(pItem1);
+      pItem1->clear();
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(true);
@@ -4424,7 +4424,7 @@ static void hb_vmNotEqual()
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(i != 0);
   }
@@ -4463,7 +4463,7 @@ static void hb_vmNotEqual()
   {
     bool fResult = pItem1->item.asPointer.value != pItem2->item.asPointer.value;
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4471,7 +4471,7 @@ static void hb_vmNotEqual()
    else if( pItem1->isHash() && pItem2->isHash() ) {
       bool fResult = pItem1->item.asHash.value != pItem2->item.asHash.value;
       hb_stackPop();
-      hb_itemClear(pItem1);
+      pItem1->clear();
       pItem1->setType(Harbour::Item::LOGICAL);
       pItem1->setLogicalValue(fResult);
    }
@@ -4508,7 +4508,7 @@ static void hb_vmLess()
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(i < 0);
   }
@@ -4576,7 +4576,7 @@ static void hb_vmLessEqual()
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(i <= 0);
   }
@@ -4644,7 +4644,7 @@ static void hb_vmGreater()
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(i > 0);
   }
@@ -4712,7 +4712,7 @@ static void hb_vmGreaterEqual()
   {
     int i = hb_itemStrCmp(pItem1, pItem2, false);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(i >= 0);
   }
@@ -4781,7 +4781,7 @@ static void hb_vmInstring()
     bool fResult =
         (hb_strAt(pItem1->stringValue(), pItem1->stringLength(), pItem2->stringValue(), pItem2->stringLength()) != 0);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4789,7 +4789,7 @@ static void hb_vmInstring()
   {
     bool fResult = hb_hashScan(pItem2, pItem1, nullptr);
     hb_stackPop();
-    hb_itemClear(pItem1);
+    pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
     pItem1->setLogicalValue(fResult);
   }
@@ -4991,11 +4991,11 @@ static void hb_vmEnumRefClear(void *value)
               &(static_cast<PHB_ENUMREF>(value))->oldvalue);
   if ((&(static_cast<PHB_ENUMREF>(value))->basevalue)->isComplex())
   {
-    hb_itemClear(&(static_cast<PHB_ENUMREF>(value))->basevalue);
+    (&(static_cast<PHB_ENUMREF>(value))->basevalue)->clear();
   }
   if ((&(static_cast<PHB_ENUMREF>(value))->enumref)->isComplex())
   {
-    hb_itemClear(&(static_cast<PHB_ENUMREF>(value))->enumref);
+    (&(static_cast<PHB_ENUMREF>(value))->enumref)->clear();
   }
 
   hb_xfree(value);
@@ -6084,7 +6084,7 @@ static HB_LONG hb_vmArgsJoin(HB_LONG lLevel, HB_USHORT uiArgSets)
   HB_LONG lArgs = pArgs->getNL();
   if (pArgs->isComplex())
   {
-    hb_itemClear(pArgs);
+    pArgs->clear();
   }
 
   if (--uiArgSets)
@@ -6285,7 +6285,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
       {
         hb_xfree(szAlias);
       }
-      hb_itemClear(pAlias);
+      pAlias->clear();
       break;
     }
 
@@ -6807,7 +6807,7 @@ PHB_ITEM hb_vmCompileMacro(const char *szExpr, PHB_ITEM pDest)
   }
   if (pDest)
   {
-    hb_itemClear(pDest);
+    pDest->clear();
   }
   return nullptr;
 }
@@ -7010,7 +7010,7 @@ static void hb_vmFrame(HB_USHORT usLocals, unsigned char ucParams)
    if( iTotal > 0 ) {
       pBase->item.asSymbol.paramcnt = ucParams;
       do {
-         hb_itemClear(hb_stackItemFromTop(-iTotal));
+         hb_stackItemFromTop(-iTotal)->clear();
       } while( --iTotal > 0 );
    }
 
@@ -7133,7 +7133,7 @@ static void hb_vmTSVRefClear(void *value)
   {
     if ((&(static_cast<PHB_TSVREF>(value))->source)->isComplex())
     {
-      hb_itemClear(&(static_cast<PHB_TSVREF>(value))->source);
+      (&(static_cast<PHB_TSVREF>(value))->source)->clear();
     }
 
     hb_stackReleaseTSD(&(static_cast<PHB_TSVREF>(value))->threadData);
@@ -7160,7 +7160,7 @@ static void hb_vmTSVarClean(void *pThreadItem)
 {
   if (static_cast<PHB_ITEM>(pThreadItem)->isComplex())
   {
-    hb_itemClear(static_cast<PHB_ITEM>(pThreadItem));
+    static_cast<PHB_ITEM>(pThreadItem)->clear();
   }
 }
 
@@ -7187,7 +7187,7 @@ static void hb_vmTSVReference(PHB_ITEM pStatic)
   auto pRefer = hb_stackReturnItem();
   if (pRefer->isComplex())
   {
-    hb_itemClear(pRefer);
+    pRefer->clear();
   }
   pRefer->setType(Harbour::Item::BYREF | Harbour::Item::EXTREF);
   pRefer->item.asExtRef.value = static_cast<void *>(pTSVRef);
@@ -7879,7 +7879,7 @@ static void hb_vmPushVariable(PHB_SYMB pVarSymb)
   {
 
     auto pError = hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr, pVarSymb->szName, 0, EF_CANRETRY);
-    hb_itemClear(pItem);
+    pItem->clear();
 
     while (hb_errLaunch(pError) == E_RETRY)
     {
@@ -8244,7 +8244,7 @@ static void hb_vmStaticsClear()
           auto pItem = hb_arrayGetItemPtr(pStatics, ul);
           if (pItem && pItem->isComplex())
           {
-            hb_itemClear(pItem);
+            pItem->clear();
           }
         }
       }
@@ -9191,11 +9191,11 @@ static void hb_vmMsgRefClear(void *value)
   {
     if ((&pMsgRef->value)->isComplex())
     {
-      hb_itemClear(&pMsgRef->value);
+      (&pMsgRef->value)->clear();
     }
     if ((&pMsgRef->object)->isComplex())
     {
-      hb_itemClear(&pMsgRef->object);
+      (&pMsgRef->object)->clear();
     }
     hb_xfree(value);
   }
@@ -9237,7 +9237,7 @@ HB_BOOL hb_vmMsgReference(PHB_ITEM pObject, PHB_DYNS pMessage, PHB_DYNS pAccMsg)
   auto pRefer = hb_stackReturnItem();
   if (pRefer->isComplex())
   {
-    hb_itemClear(pRefer);
+    pRefer->clear();
   }
   pRefer->setType(Harbour::Item::BYREF | Harbour::Item::EXTREF);
   pRefer->item.asExtRef.value = static_cast<void *>(pMsgRef);
@@ -9348,15 +9348,15 @@ static void hb_vmMsgIdxRefClear(void *value)
   {
     if ((&pMsgIdxRef->value)->isComplex())
     {
-      hb_itemClear(&pMsgIdxRef->value);
+      (&pMsgIdxRef->value)->clear();
     }
     if ((&pMsgIdxRef->object)->isComplex())
     {
-      hb_itemClear(&pMsgIdxRef->object);
+      (&pMsgIdxRef->object)->clear();
     }
     if ((&pMsgIdxRef->index)->isComplex())
     {
-      hb_itemClear(&pMsgIdxRef->index);
+      (&pMsgIdxRef->index)->clear();
     }
     hb_xfree(value);
   }
