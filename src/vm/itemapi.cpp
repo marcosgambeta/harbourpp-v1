@@ -2247,40 +2247,40 @@ void hb_itemClear(PHB_ITEM pItem)
 
 void _HB_ITEM::clear() // equivalent to hb_itemClear
 {
-  HB_TYPE type = HB_ITEM_TYPERAW(this);
+  HB_TYPE _type = HB_ITEM_TYPERAW(this);
   this->setType(Harbour::Item::NIL);
 
   // GCLOCK enter
-  if (type & Harbour::Item::STRING)
+  if (_type & Harbour::Item::STRING)
   {
     if (this->stringAllocated())
     {
       hb_xRefFree(this->stringValue());
     }
   }
-  else if (type & Harbour::Item::ARRAY)
+  else if (_type & Harbour::Item::ARRAY)
   {
     hb_gcRefFree(this->arrayValue());
   }
-  else if (type & Harbour::Item::BLOCK)
+  else if (_type & Harbour::Item::BLOCK)
   {
     hb_gcRefFree(this->item.asBlock.value);
   }
-  else if (type & Harbour::Item::HASH)
+  else if (_type & Harbour::Item::HASH)
   {
     hb_gcRefFree(this->item.asHash.value);
   }
-  else if (type & Harbour::Item::BYREF)
+  else if (_type & Harbour::Item::BYREF)
   {
-    if (type & Harbour::Item::MEMVAR)
+    if (_type & Harbour::Item::MEMVAR)
     {
       hb_memvarValueDecRef(this->item.asMemvar.value);
     }
-    else if (type & Harbour::Item::ENUM)
+    else if (_type & Harbour::Item::ENUM)
     { // FOR EACH control variable
       hb_vmEnumRelease(this->item.asEnum.basePtr, this->item.asEnum.valuePtr);
     }
-    else if (type & Harbour::Item::EXTREF)
+    else if (_type & Harbour::Item::EXTREF)
     {
       this->item.asExtRef.func->clear(this->item.asExtRef.value);
     }
@@ -2289,7 +2289,7 @@ void _HB_ITEM::clear() // equivalent to hb_itemClear
       hb_gcRefFree(this->item.asRefer.BasePtr.array);
     }
   }
-  else if (type & Harbour::Item::POINTER)
+  else if (_type & Harbour::Item::POINTER)
   {
     if (this->pointerCollect())
     {
