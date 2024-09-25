@@ -1912,7 +1912,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
             // Copy real object - do not move! the same super casted
             // object can be used more then once and we mustn't
             // destroy it. We can safely use hb_stackReturnItem() here.
-            hb_itemCopy(hb_stackReturnItem(), pObject->arrayValue()->pItems);
+            hb_itemCopy(hb_stackReturnItem(), pObject->arrayItems());
             // move real object back to the stack
             hb_itemMove(pObject, hb_stackReturnItem());
           }
