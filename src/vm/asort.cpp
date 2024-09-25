@@ -399,7 +399,7 @@ HB_BOOL hb_arraySort(PHB_ITEM pArray, HB_SIZE *pnStart, HB_SIZE *pnCount, PHB_IT
 
   if (pArray->isArray())
   {
-    PHB_BASEARRAY pBaseArray = pArray->item.asArray.value;
+    PHB_BASEARRAY pBaseArray = pArray->arrayValue();
     HB_SIZE nLen = pBaseArray->nLen;
     HB_SIZE nStart;
 

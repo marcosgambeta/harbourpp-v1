@@ -519,7 +519,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
 
   if (pItem->isArray())
   {
-    PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asArray.value);
+    PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->arrayValue());
 
     // Check this array only if it was not checked yet
     if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)

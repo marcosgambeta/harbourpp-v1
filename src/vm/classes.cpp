@@ -1188,7 +1188,7 @@ void hb_clsDoInit(void)
       hb_vmProc(0);
       if (pReturn->isObject())
       {
-        *(s_puiHandles[i]) = pReturn->item.asArray.value->uiClass;
+        *(s_puiHandles[i]) = pReturn->arrayValue()->uiClass;
       }
     }
   }
@@ -1362,7 +1362,7 @@ HB_USHORT hb_objGetClass(PHB_ITEM pItem)
 {
   if (pItem && pItem->isArray())
   {
-    return pItem->item.asArray.value->uiClass;
+    return pItem->arrayValue()->uiClass;
   }
   else
   {
@@ -1375,9 +1375,9 @@ HB_USHORT hb_objSetClass(PHB_ITEM pItem, const char *szClass, const char *szFunc
 {
   HB_USHORT uiClass = 0;
 
-  if (pItem && pItem->isArray() && pItem->item.asArray.value->uiClass == 0)
+  if (pItem && pItem->isArray() && pItem->arrayValue()->uiClass == 0)
   {
-    uiClass = pItem->item.asArray.value->uiClass = hb_clsFindClass(szClass, szFunc);
+    uiClass = pItem->arrayValue()->uiClass = hb_clsFindClass(szClass, szFunc);
   }
   return uiClass;
 }
@@ -1393,9 +1393,9 @@ static HB_USHORT hb_objGetClassH(PHB_ITEM pObject)
 
   if (pObject->isArray())
   {
-    if (pObject->item.asArray.value->uiClass != 0)
+    if (pObject->arrayValue()->uiClass != 0)
     {
-      return pObject->item.asArray.value->uiClass;
+      return pObject->arrayValue()->uiClass;
     }
     else
     {
@@ -1456,9 +1456,9 @@ const char *hb_objGetClsName(PHB_ITEM pObject)
 
   if (pObject->isArray())
   {
-    if (pObject->item.asArray.value->uiClass != 0)
+    if (pObject->arrayValue()->uiClass != 0)
     {
-      return s_pClasses[pObject->item.asArray.value->uiClass]->szName;
+      return s_pClasses[pObject->arrayValue()->uiClass]->szName;
     }
     else
     {
@@ -1778,7 +1778,7 @@ static HB_USHORT hb_clsSenderObjectClass(void)
 
     if (pSender->isArray())
     {
-      return pSender->item.asArray.value->uiClass;
+      return pSender->arrayValue()->uiClass;
     }
   }
   return 0;
@@ -1878,9 +1878,9 @@ static void hb_clsMakeSuperObject(PHB_ITEM pDest, PHB_ITEM pObject, HB_USHORT ui
   hb_arraySet(pDest, 1, pObject);
   // And transform it into a fake object
   // backup of actual handle
-  pDest->item.asArray.value->uiPrevCls = hb_objGetClassH(pObject);
+  pDest->arrayValue()->uiPrevCls = hb_objGetClassH(pObject);
   // superclass handle casting
-  pDest->item.asArray.value->uiClass = uiSuperClass;
+  pDest->arrayValue()->uiClass = uiSuperClass;
 }
 
 // <pFuncSym> = hb_objGetMethod(<pObject>, <pMessage>, <pStackState>)
@@ -1899,20 +1899,20 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
 
   if (pObject->isArray())
   {
-    if (pObject->item.asArray.value->uiClass)
+    if (pObject->arrayValue()->uiClass)
     {
-      pClass = s_pClasses[pObject->item.asArray.value->uiClass];
+      pClass = s_pClasses[pObject->arrayValue()->uiClass];
       if (pStack)
       {
-        pStack->uiClass = pObject->item.asArray.value->uiClass;
-        if (pObject->item.asArray.value->uiPrevCls)
+        pStack->uiClass = pObject->arrayValue()->uiClass;
+        if (pObject->arrayValue()->uiPrevCls)
         {
-          if (pObject->item.asArray.value->nLen)
+          if (pObject->arrayValue()->nLen)
           {
             // Copy real object - do not move! the same super casted
             // object can be used more then once and we mustn't
             // destroy it. We can safely use hb_stackReturnItem() here.
-            hb_itemCopy(hb_stackReturnItem(), pObject->item.asArray.value->pItems);
+            hb_itemCopy(hb_stackReturnItem(), pObject->arrayValue()->pItems);
             // move real object back to the stack
             hb_itemMove(pObject, hb_stackReturnItem());
           }
@@ -2358,7 +2358,7 @@ HB_BOOL hb_objGetVarRef(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pSt
     HB_STACK_TLS_PRELOAD
     if (pExecSym == &s___msgSetData)
     {
-      HB_USHORT uiObjClass = pObject->item.asArray.value->uiClass;
+      HB_USHORT uiObjClass = pObject->arrayValue()->uiClass;
       PCLASS pClass = s_pClasses[pStack->uiClass];
       PMETHOD pMethod = pClass->pMethods + pStack->uiMethod;
       HB_SIZE nIndex = pMethod->uiData;
@@ -2510,9 +2510,9 @@ static void hb_objSuperDestructorCall(PHB_ITEM pObject, PCLASS pClass)
 // Call object destructor
 void hb_objDestructorCall(PHB_ITEM pObject)
 {
-  if (pObject->isObject() && pObject->item.asArray.value->uiClass <= s_uiClasses)
+  if (pObject->isObject() && pObject->arrayValue()->uiClass <= s_uiClasses)
   {
-    PCLASS pClass = s_pClasses[pObject->item.asArray.value->uiClass];
+    PCLASS pClass = s_pClasses[pObject->arrayValue()->uiClass];
 
     if (pClass->fHasDestructor)
     {
@@ -2772,7 +2772,7 @@ PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg)
 {
   if (pObject && pObject->isObject() && pVarMsg)
   {
-    HB_USHORT uiClass = pObject->item.asArray.value->uiClass;
+    HB_USHORT uiClass = pObject->arrayValue()->uiClass;
     PCLASS pClass = s_pClasses[uiClass];
     PMETHOD pMethod = hb_clsFindMsg(pClass, pVarMsg);
 
@@ -2788,17 +2788,17 @@ PHB_ITEM hb_objGetVarPtr(PHB_ITEM pObject, PHB_DYNS pVarMsg)
       if (pFuncSym == &s___msgSetData || pFuncSym == &s___msgGetData)
       {
         HB_SIZE nIndex = pMethod->uiData + pMethod->uiOffset;
-        if (pObject->item.asArray.value->uiPrevCls)
+        if (pObject->arrayValue()->uiPrevCls)
         {
           pObject = hb_arrayGetItemPtr(pObject, 1);
           if (!pObject)
           {
             return nullptr;
           }
-          if (uiClass != pObject->item.asArray.value->uiClass)
+          if (uiClass != pObject->arrayValue()->uiClass)
           {
             nIndex = pMethod->uiData +
-                     hb_clsParentInstanceOffset(s_pClasses[pObject->item.asArray.value->uiClass], pMethod->uiSprClass);
+                     hb_clsParentInstanceOffset(s_pClasses[pObject->arrayValue()->uiClass], pMethod->uiSprClass);
           }
         }
         return hb_arrayGetItemPtr(pObject, nIndex);
@@ -3057,7 +3057,7 @@ static HB_TYPE hb_clsGetItemType(PHB_ITEM pItem, HB_TYPE nDefault)
     }
     else if (pItem->isArray())
     {
-      if (pItem->item.asArray.value->uiClass == 0)
+      if (pItem->arrayValue()->uiClass == 0)
       {
         return Harbour::Item::ARRAY;
       }
@@ -4044,7 +4044,7 @@ static PHB_ITEM hb_clsInst(HB_USHORT uiClass)
     }
     pSelf = hb_itemNew(nullptr);
     hb_arrayNew(pSelf, uiDatas);
-    pSelf->item.asArray.value->uiClass = uiClass;
+    pSelf->arrayValue()->uiClass = uiClass;
 
     if (pClass->uiMutexOffset)
     {
@@ -4225,7 +4225,7 @@ HB_FUNC(__OBJGETCLSNAME)
 
   if (pObject)
   {
-    uiClass = pObject->item.asArray.value->uiClass;
+    uiClass = pObject->arrayValue()->uiClass;
   }
   else
   {
@@ -4361,7 +4361,7 @@ HB_FUNC(__CLSINSTSUPER)
 
         if (pObject->isObject())
         {
-          uiClass = pObject->item.asArray.value->uiClass;
+          uiClass = pObject->arrayValue()->uiClass;
 
           if (s_pClasses[uiClass]->pClassFuncSym == pClassFuncSym)
           {
@@ -4380,7 +4380,7 @@ HB_FUNC(__CLSINSTSUPER)
               pObject = hb_stackReturnItem();
               if (pObject->isObject())
               {
-                uiClass = pObject->item.asArray.value->uiClass;
+                uiClass = pObject->arrayValue()->uiClass;
                 if (s_pClasses[uiClass]->pClassFuncSym == pClassFuncSym)
                 {
                   uiClassH = uiClass;
@@ -4393,7 +4393,7 @@ HB_FUNC(__CLSINSTSUPER)
         // This disables destructor execution for this object
         if (uiClassH && pObject->isObject())
         {
-          pObject->item.asArray.value->uiClass = 0;
+          pObject->arrayValue()->uiClass = 0;
         }
         else if (hb_vmRequestQuery() == 0)
         {
@@ -4907,7 +4907,7 @@ HB_FUNC_STATIC( msgClassParent )
 
    if( pItemParam && uiClass && uiClass <= s_uiClasses ) {
       if( pItemParam->isObject() ) {
-         fHasParent = hb_clsHasParentClass(s_pClasses[uiClass], pItemParam->item.asArray.value->uiClass);
+         fHasParent = hb_clsHasParentClass(s_pClasses[uiClass], pItemParam->arrayValue()->uiClass);
       } else if( pItemParam->isString() ) {
          fHasParent = hb_clsIsParent(uiClass, hb_parc(pItemParam))
       }
@@ -4960,7 +4960,7 @@ HB_FUNC_STATIC(msgPerform)
     {
       pSym = pItem->item.asSymbol.value;
     }
-    else if (pItem->isObject() && s_pClasses[pItem->item.asArray.value->uiClass]->pClassSym == s___msgSymbol.pDynSym)
+    else if (pItem->isObject() && s_pClasses[pItem->arrayValue()->uiClass]->pClassSym == s___msgSymbol.pDynSym)
     {
       // Dirty hack
       pItem = hb_arrayGetItemPtr(pItem, 1);
@@ -5271,7 +5271,7 @@ HB_FUNC_STATIC(msgGetData)
 
   if (pObject->isArray())
   {
-    HB_USHORT uiObjClass = pObject->item.asArray.value->uiClass;
+    HB_USHORT uiObjClass = pObject->arrayValue()->uiClass;
     HB_USHORT uiClass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
     PCLASS pClass = s_pClasses[uiClass];
     PMETHOD pMethod = pClass->pMethods + hb_stackBaseItem()->item.asSymbol.stackstate->uiMethod;
@@ -5301,7 +5301,7 @@ HB_FUNC_STATIC(msgSetData)
   if (pObject->isArray())
   {
     auto pReturn = hb_param(1, Harbour::Item::ANY);
-    HB_USHORT uiObjClass = pObject->item.asArray.value->uiClass;
+    HB_USHORT uiObjClass = pObject->arrayValue()->uiClass;
     HB_USHORT uiClass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
     PCLASS pClass = s_pClasses[uiClass];
     PMETHOD pMethod = pClass->pMethods + hb_stackBaseItem()->item.asSymbol.stackstate->uiMethod;
@@ -5442,7 +5442,7 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
   PHB_ITEM pItem;
   HB_SIZE nLimit, nLen, nCount, nIndex;
 
-  HB_USHORT uiClass = pObject->item.asArray.value->uiClass;
+  HB_USHORT uiClass = pObject->arrayValue()->uiClass;
   PCLASS pClass = s_pClasses[uiClass];
   nLen = nCount = hb_arrayLen(pObject);
   HB_SIZE nSize = 0;
@@ -5581,9 +5581,9 @@ static PHB_ITEM hb_objGetIVars(PHB_ITEM pObject, HB_USHORT uiScope, HB_BOOL fCha
 
 static void hb_objSetIVars(PHB_ITEM pObject, PHB_ITEM pArray)
 {
-  if (pObject && pObject->isObject() && pArray && pArray->isArray() && pArray->item.asArray.value->uiClass == 0)
+  if (pObject && pObject->isObject() && pArray && pArray->isArray() && pArray->arrayValue()->uiClass == 0)
   {
-    HB_USHORT uiClass = pObject->item.asArray.value->uiClass;
+    HB_USHORT uiClass = pObject->arrayValue()->uiClass;
     HB_SIZE nPos, nIndex, nLen;
     PHB_ITEM pValue;
 
@@ -5687,7 +5687,7 @@ HB_FUNC(__OBJRESTOREIVARS)
   auto pArray = hb_param(1, Harbour::Item::ARRAY);
   auto pClass = hb_param(2, Harbour::Item::NUMERIC | Harbour::Item::STRING | Harbour::Item::SYMBOL);
 
-  if (pClass && pArray && pArray->item.asArray.value->uiClass == 0)
+  if (pClass && pArray && pArray->arrayValue()->uiClass == 0)
   {
     PHB_ITEM pObject = nullptr;
 
@@ -5927,7 +5927,7 @@ HB_FUNC(__OBJSETCLASS)
 {
   auto pObject = hb_param(1, Harbour::Item::ARRAY);
 
-  if (pObject && pObject->item.asArray.value->uiClass == 0)
+  if (pObject && pObject->arrayValue()->uiClass == 0)
   {
     auto szClass = hb_parc(2);
 
@@ -5955,10 +5955,10 @@ HB_FUNC(__OBJSETCLASSHANDLE)
   {
     auto uiClass = static_cast<HB_USHORT>(hb_parni(2));
 
-    uiPrevClassHandle = pObject->item.asArray.value->uiClass;
+    uiPrevClassHandle = pObject->arrayValue()->uiClass;
     if (uiClass <= s_uiClasses)
     {
-      pObject->item.asArray.value->uiClass = uiClass;
+      pObject->arrayValue()->uiClass = uiClass;
     }
   }
 

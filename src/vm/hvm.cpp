@@ -4270,7 +4270,7 @@ static void hb_vmExactlyEqual()
   }
   else if (pItem1->isArray() && pItem2->isArray() && !hb_objHasOperator(pItem1, HB_OO_OP_EXACTEQUAL))
   {
-    bool fResult = pItem1->item.asArray.value == pItem2->item.asArray.value;
+    bool fResult = pItem1->arrayValue() == pItem2->arrayValue();
     hb_stackPop();
     pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -5107,8 +5107,8 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     if (pBase->isArray())
     {
       /* the index into an array */
-      pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->item.asArray.value->nLen;
-      if (pBase->item.asArray.value->nLen == 0)
+      pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->arrayValue()->nLen;
+      if (pBase->arrayValue()->nLen == 0)
       {
         fStart = false;
       }
@@ -5192,7 +5192,7 @@ static void hb_vmEnumNext()
           hb_itemRelease(pEnum->item.asEnum.valuePtr);
           pEnum->item.asEnum.valuePtr = nullptr;
         }
-        if (static_cast<HB_SIZE>(++pEnum->item.asEnum.offset) > pBase->item.asArray.value->nLen)
+        if (static_cast<HB_SIZE>(++pEnum->item.asEnum.offset) > pBase->arrayValue()->nLen)
         {
           break;
         }
@@ -5609,9 +5609,9 @@ static void hb_vmArrayPush()
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->item.asArray.value->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
     {
-      hb_itemCopy(pIndex, pArray->item.asArray.value->pItems + nIndex - 1);
+      hb_itemCopy(pIndex, pArray->arrayValue()->pItems + nIndex - 1);
       hb_itemMove(pArray, pIndex);
       hb_stackDec();
     }
@@ -5715,7 +5715,7 @@ static void hb_vmArrayPushRef()
       hb_stackPop();
       return;
     }
-    else if (HB_IS_VALID_INDEX(nIndex, pArray->item.asArray.value->nLen))
+    else if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
     {
       /* This function is safe for overwriting passed array, [druzus] */
       hb_arrayGetItemRef(pArray, nIndex, pRefer);
@@ -5828,10 +5828,10 @@ static void hb_vmArrayPop()
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->item.asArray.value->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
     {
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
-      hb_itemMoveRef(pArray->item.asArray.value->pItems + nIndex - 1, pValue);
+      hb_itemMoveRef(pArray->arrayValue()->pItems + nIndex - 1, pValue);
       hb_stackPop();
       hb_stackPop();
       hb_stackDec(); /* value was moved above hb_stackDec() is enough */
@@ -5883,7 +5883,7 @@ static void hb_vmArrayGen(HB_SIZE nElements) /* generates an nElements Array and
     {
       auto pValue = hb_stackItemFromTop(static_cast<int>(nPos - nElements - 1));
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
-      hb_itemMove(pArray->item.asArray.value->pItems + nPos, pValue);
+      hb_itemMove(pArray->arrayValue()->pItems + nPos, pValue);
     }
     /* move the new array to position of first parameter */
     hb_itemMove(hb_stackItemFromTop(-1 - static_cast<int>(nElements)), pArray);
@@ -5939,7 +5939,7 @@ static HB_BOOL hb_vmArrayNew(PHB_ITEM pArray, HB_USHORT uiDimension)
       /* call self recursively to create next dimensions */
       while (nElements--)
       {
-        if (!hb_vmArrayNew(pArray->item.asArray.value->pItems + nElements, uiDimension))
+        if (!hb_vmArrayNew(pArray->arrayValue()->pItems + nElements, uiDimension))
         {
           return false;
         }
@@ -6187,16 +6187,16 @@ static void hb_vmPushAParams()
   auto pArray = hb_stackItemFromTop(-1);
   if (pArray->isArray())
   {
-    HB_SIZE nLen = pArray->item.asArray.value->nLen;
+    HB_SIZE nLen = pArray->arrayValue()->nLen;
 
     if (nLen)
     {
       for (HB_SIZE nPos = 1; nPos < nLen; ++nPos)
       {
-        hb_vmPush(pArray->item.asArray.value->pItems + nPos);
+        hb_vmPush(pArray->arrayValue()->pItems + nPos);
       }
       auto pCount = hb_stackAllocItem();
-      hb_itemCopy(pCount, pArray->item.asArray.value->pItems);
+      hb_itemCopy(pCount, pArray->arrayValue()->pItems);
       hb_itemMove(pArray, pCount);
       hb_itemPutNS(pCount, nLen);
     }
@@ -7210,7 +7210,7 @@ static void hb_vmInitThreadStatics(HB_USHORT uiCount, const HB_BYTE *pCode)
   while (uiCount--)
   {
     HB_USHORT uiStatic = HB_PCODE_MKUSHORT(pCode);
-    PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->item.asArray.value->pItems + uiStatic - 1;
+    PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->arrayValue()->pItems + uiStatic - 1;
     hb_vmTSVReference(pStatic);
     pCode += 2;
   }
@@ -7835,7 +7835,7 @@ static void hb_vmPushStatic(HB_USHORT uiStatic)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->item.asArray.value->pItems + uiStatic - 1;
+  PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->arrayValue()->pItems + uiStatic - 1;
   hb_itemCopy(hb_stackAllocItem(), pStatic->isByRef() ? hb_itemUnRef(pStatic) : pStatic);
 }
 
@@ -7850,18 +7850,18 @@ static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
   auto pTop = hb_stackAllocItem();
   auto pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
 
-  if ((pBase->item.asArray.value->pItems + uiStatic - 1)->isByRef() &&
-      !(pBase->item.asArray.value->pItems + uiStatic - 1)->isEnum())
+  if ((pBase->arrayValue()->pItems + uiStatic - 1)->isByRef() &&
+      !(pBase->arrayValue()->pItems + uiStatic - 1)->isEnum())
   {
-    hb_itemCopy(pTop, pBase->item.asArray.value->pItems + uiStatic - 1);
+    hb_itemCopy(pTop, pBase->arrayValue()->pItems + uiStatic - 1);
     return;
   }
   pTop->setType(Harbour::Item::BYREF);
   /* we store the offset instead of a pointer to support a dynamic stack */
   pTop->item.asRefer.value = uiStatic - 1;
   pTop->item.asRefer.offset = 0; /* 0 for static variables */
-  pTop->item.asRefer.BasePtr.array = pBase->item.asArray.value;
-  hb_gcRefInc(pBase->item.asArray.value);
+  pTop->item.asRefer.BasePtr.array = pBase->arrayValue();
+  hb_gcRefInc(pBase->arrayValue());
 }
 
 static void hb_vmPushVariable(PHB_SYMB pVarSymb)
@@ -8099,7 +8099,7 @@ static void hb_vmPopStatic(HB_USHORT uiStatic)
   auto pVal = hb_stackItemFromTop(-1);
   /* Remove MEMOFLAG if exists (assignment from field). */
   pVal->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
-  PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->item.asArray.value->pItems + uiStatic - 1;
+  PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->arrayValue()->pItems + uiStatic - 1;
   hb_itemMoveToRef(pStatic, pVal);
   hb_stackDec();
 }
@@ -10844,7 +10844,7 @@ HB_BOOL hb_xvmStaticAdd(HB_USHORT uiStatic)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->item.asArray.value->pItems + uiStatic - 1;
+  PHB_ITEM pStatic = (static_cast<PHB_ITEM>(hb_stackGetStaticsBase()))->arrayValue()->pItems + uiStatic - 1;
   if (pStatic->isByRef())
   {
     pStatic = hb_itemUnRef(pStatic);
@@ -12228,10 +12228,10 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->item.asArray.value->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
     {
       auto pItem = hb_stackAllocItem();
-      hb_itemCopy(pItem, pArray->item.asArray.value->pItems + nIndex - 1);
+      hb_itemCopy(pItem, pArray->arrayValue()->pItems + nIndex - 1);
       hb_itemMove(pArray, pItem);
       hb_stackDec();
     }
@@ -12316,10 +12316,10 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->item.asArray.value->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
     {
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
-      hb_itemMoveRef(pArray->item.asArray.value->pItems + nIndex - 1, pValue);
+      hb_itemMoveRef(pArray->arrayValue()->pItems + nIndex - 1, pValue);
       hb_stackPop();
       hb_stackDec(); /* value was moved above hb_stackDec() is enough */
     }
