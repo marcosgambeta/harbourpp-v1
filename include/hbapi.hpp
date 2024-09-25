@@ -530,6 +530,7 @@ typedef struct _HB_ITEM
   //
   _HB_BASEARRAY *arrayValue();
   void setArrayValue(_HB_BASEARRAY *pValue);
+  _HB_ITEM *arrayItems();
   //
   void clear();
 #endif
@@ -859,10 +860,17 @@ typedef struct _HB_BASEARRAY
 } HB_BASEARRAY, * PHB_BASEARRAY;
 
 #if defined(__cplusplus)
+
 inline bool _HB_ITEM::isObject()
 {
   return (HB_IS_ARRAY(this) && HB_ARRAY_OBJ(this));
 }
+
+inline _HB_ITEM *_HB_ITEM::arrayItems()
+{
+  return this->item.asArray.value->pItems;
+}
+
 #endif
 
 #ifndef _HB_HASH_INTERNAL_
