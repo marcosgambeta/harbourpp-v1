@@ -5107,8 +5107,8 @@ static void hb_vmEnumStart(int nVars, int nDescend)
     if (pBase->isArray())
     {
       /* the index into an array */
-      pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->arrayValue()->nLen;
-      if (pBase->arrayValue()->nLen == 0)
+      pEnum->item.asEnum.offset = (nDescend > 0) ? 1 : pBase->arrayLen();
+      if (pBase->arrayLen() == 0)
       {
         fStart = false;
       }
@@ -5192,7 +5192,7 @@ static void hb_vmEnumNext()
           hb_itemRelease(pEnum->item.asEnum.valuePtr);
           pEnum->item.asEnum.valuePtr = nullptr;
         }
-        if (static_cast<HB_SIZE>(++pEnum->item.asEnum.offset) > pBase->arrayValue()->nLen)
+        if (static_cast<HB_SIZE>(++pEnum->item.asEnum.offset) > pBase->arrayLen())
         {
           break;
         }
@@ -5609,7 +5609,7 @@ static void hb_vmArrayPush()
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       hb_itemCopy(pIndex, pArray->arrayItems() + nIndex - 1);
       hb_itemMove(pArray, pIndex);
@@ -5715,7 +5715,7 @@ static void hb_vmArrayPushRef()
       hb_stackPop();
       return;
     }
-    else if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
+    else if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       /* This function is safe for overwriting passed array, [druzus] */
       hb_arrayGetItemRef(pArray, nIndex, pRefer);
@@ -5828,7 +5828,7 @@ static void hb_vmArrayPop()
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
       hb_itemMoveRef(pArray->arrayItems() + nIndex - 1, pValue);
@@ -6187,7 +6187,7 @@ static void hb_vmPushAParams()
   auto pArray = hb_stackItemFromTop(-1);
   if (pArray->isArray())
   {
-    HB_SIZE nLen = pArray->arrayValue()->nLen;
+    HB_SIZE nLen = pArray->arrayLen();
 
     if (nLen)
     {
@@ -12228,7 +12228,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       auto pItem = hb_stackAllocItem();
       hb_itemCopy(pItem, pArray->arrayItems() + nIndex - 1);
@@ -12316,7 +12316,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
       return;
     }
 
-    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayValue()->nLen))
+    if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
       hb_itemMoveRef(pArray->arrayItems() + nIndex - 1, pValue);

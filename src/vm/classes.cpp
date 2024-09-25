@@ -1907,7 +1907,7 @@ PHB_SYMB hb_objGetMethod(PHB_ITEM pObject, PHB_SYMB pMessage, PHB_STACK_STATE pS
         pStack->uiClass = pObject->arrayValue()->uiClass;
         if (pObject->arrayValue()->uiPrevCls)
         {
-          if (pObject->arrayValue()->nLen)
+          if (pObject->arrayLen())
           {
             // Copy real object - do not move! the same super casted
             // object can be used more then once and we mustn't
