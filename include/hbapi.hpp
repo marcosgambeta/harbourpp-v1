@@ -528,6 +528,9 @@ typedef struct _HB_ITEM
   HB_BOOL pointerSingle();
   void setPointerSingle(HB_BOOL b);
   //
+  _HB_BASEARRAY *arrayValue();
+  void setArrayValue(_HB_BASEARRAY *pValue);
+  //
   void clear();
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -829,6 +832,18 @@ inline HB_BOOL _HB_ITEM::pointerSingle()
 inline void _HB_ITEM::setPointerSingle(HB_BOOL b)
 {
   this->item.asPointer.single = b;
+}
+
+// array
+
+inline _HB_BASEARRAY *_HB_ITEM::arrayValue()
+{
+  return this->item.asArray.value;
+}
+
+inline void _HB_ITEM::setArrayValue(_HB_BASEARRAY *pValue)
+{
+  this->item.asArray.value = pValue;
 }
 
 #endif
