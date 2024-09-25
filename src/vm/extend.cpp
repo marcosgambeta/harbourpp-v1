@@ -1733,8 +1733,7 @@ void *hb_parvptrGC(const HB_GC_FUNCS *pFuncs, int iParam, ...)
       va_end(va);
 
       pItem = hb_arrayGetItemPtr(pItem, nArrayIndex);
-      if (pItem && pItem->isPointer() && pItem->pointerCollect() &&
-          hb_gcFuncs(pItem->pointerValue()) == pFuncs)
+      if (pItem && pItem->isPointer() && pItem->pointerCollect() && hb_gcFuncs(pItem->pointerValue()) == pFuncs)
       {
         return pItem->pointerValue();
       }

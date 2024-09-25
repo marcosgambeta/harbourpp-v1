@@ -3072,9 +3072,8 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isArray())
     {
-      *piResult = pItem1->arrayValue() < pItem2->arrayValue()
-                      ? -1
-                      : (pItem1->arrayValue() > pItem2->arrayValue() ? 1 : 0);
+      *piResult =
+          pItem1->arrayValue() < pItem2->arrayValue() ? -1 : (pItem1->arrayValue() > pItem2->arrayValue() ? 1 : 0);
       fResult = true;
     }
   }

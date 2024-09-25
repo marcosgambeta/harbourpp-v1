@@ -228,9 +228,8 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
   {
     if (pKey2->isPointer())
     {
-      return pKey1->pointerValue() < pKey2->pointerValue()
-                 ? -1
-                 : (pKey1->pointerValue() > pKey2->pointerValue() ? 1 : 0);
+      return pKey1->pointerValue() < pKey2->pointerValue() ? -1
+                                                           : (pKey1->pointerValue() > pKey2->pointerValue() ? 1 : 0);
     }
     else if (pKey2->isString() || pKey2->isDateTime())
     {

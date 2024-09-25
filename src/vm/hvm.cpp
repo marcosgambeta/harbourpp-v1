@@ -7850,8 +7850,7 @@ static void hb_vmPushStaticByRef(HB_USHORT uiStatic)
   auto pTop = hb_stackAllocItem();
   auto pBase = static_cast<PHB_ITEM>(hb_stackGetStaticsBase());
 
-  if ((pBase->arrayItems() + uiStatic - 1)->isByRef() &&
-      !(pBase->arrayItems() + uiStatic - 1)->isEnum())
+  if ((pBase->arrayItems() + uiStatic - 1)->isByRef() && !(pBase->arrayItems() + uiStatic - 1)->isEnum())
   {
     hb_itemCopy(pTop, pBase->arrayItems() + uiStatic - 1);
     return;
