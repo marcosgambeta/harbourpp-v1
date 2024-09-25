@@ -1422,7 +1422,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (pItem->isPointer() && pItem->item.asPointer.value == pValue->item.asPointer.value)
+            if (pItem->isPointer() && pItem->pointerValue() == pValue->pointerValue())
             {
               return nStart;
             }
@@ -1619,7 +1619,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (pItem->isPointer() && pItem->item.asPointer.value == pValue->item.asPointer.value)
+            if (pItem->isPointer() && pItem->pointerValue() == pValue->pointerValue())
             {
               return nStart + 1;
             }

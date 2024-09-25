@@ -558,9 +558,9 @@ void hb_gcItemRef(PHB_ITEM pItem)
   }
   else if (pItem->isPointer())
   {
-    if (pItem->item.asPointer.collect)
+    if (pItem->pointerCollect())
     {
-      PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asPointer.value);
+      PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->pointerValue());
 
       if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)
       {

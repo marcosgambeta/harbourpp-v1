@@ -864,7 +864,7 @@ static void hb_stackDispLocal(void)
       break;
 
     case Harbour::Item::POINTER:
-      hb_snprintf(buffer, sizeof(buffer), HB_I_("POINTER = %p "), (*pBase)->item.asPointer.value);
+      hb_snprintf(buffer, sizeof(buffer), HB_I_("POINTER = %p "), (*pBase)->pointerValue());
       break;
 
     default:

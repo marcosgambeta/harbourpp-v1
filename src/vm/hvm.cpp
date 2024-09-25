@@ -4236,7 +4236,7 @@ static void hb_vmExactlyEqual()
   }
   else if (pItem1->isPointer() && pItem2->isPointer())
   {
-    bool fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
+    bool fResult = pItem1->pointerValue() == pItem2->pointerValue();
     hb_stackPop();
     pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -4361,7 +4361,7 @@ static void hb_vmEqual()
   }
   else if (pItem1->isPointer() && pItem2->isPointer())
   {
-    bool fResult = pItem1->item.asPointer.value == pItem2->item.asPointer.value;
+    bool fResult = pItem1->pointerValue() == pItem2->pointerValue();
     hb_stackPop();
     pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -4461,7 +4461,7 @@ static void hb_vmNotEqual()
   }
   else if (pItem1->isPointer() && pItem2->isPointer())
   {
-    bool fResult = pItem1->item.asPointer.value != pItem2->item.asPointer.value;
+    bool fResult = pItem1->pointerValue() != pItem2->pointerValue();
     hb_stackPop();
     pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -4896,8 +4896,9 @@ static void hb_vmSeqBlock()
     hb_itemRawCpy(pBlockCopy, pBlock);
     hb_itemRawCpy(pBlock, pItem);
     pItem->setType(Harbour::Item::POINTER);
-    pItem->item.asPointer.value = pBlockCopy;
-    pItem->item.asPointer.collect = pItem->item.asPointer.single = true;
+    pItem->setPointerValue(pBlockCopy);
+    pItem->setPointerCollect(true);
+    pItem->setPointerSingle(true);
   }
 }
 
@@ -4923,8 +4924,9 @@ static void hb_vmWithObjectStart()
   auto pnWithObjectBase = static_cast<HB_ISIZ *>(hb_gcAllocRaw(sizeof(HB_ISIZ), &s_gcWithObjectFuncs));
   *pnWithObjectBase = hb_stackWithObjectOffset();
   pItem->setType(Harbour::Item::POINTER);
-  pItem->item.asPointer.value = pnWithObjectBase;
-  pItem->item.asPointer.collect = pItem->item.asPointer.single = true;
+  pItem->setPointerValue(pnWithObjectBase);
+  pItem->setPointerCollect(true);
+  pItem->setPointerSingle(true);
   /* The object is pushed directly before this pcode */
   /* store position of current WITH OBJECT frame */
   hb_stackWithObjectSetOffset(hb_stackTopOffset() - 2);
@@ -7504,8 +7506,9 @@ void hb_vmPushPointer(void *pPointer)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::POINTER);
-  pItem->item.asPointer.value = pPointer;
-  pItem->item.asPointer.collect = pItem->item.asPointer.single = false;
+  pItem->setPointerValue(pPointer);
+  pItem->setPointerCollect(false);
+  pItem->setPointerSingle(false);
 }
 
 void hb_vmPushPointerGC(void *pPointer)
@@ -7517,9 +7520,9 @@ void hb_vmPushPointerGC(void *pPointer)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::POINTER);
-  pItem->item.asPointer.value = pPointer;
-  pItem->item.asPointer.collect = true;
-  pItem->item.asPointer.single = false;
+  pItem->setPointerValue(pPointer);
+  pItem->setPointerCollect(true);
+  pItem->setPointerSingle(false);
   hb_gcAttach(pPointer);
 }
 
@@ -13206,7 +13209,7 @@ HB_FUNC(__VMITEMREFS)
     }
     else if (pItem->isPointer())
     {
-      hb_retnint(hb_gcRefCount(pItem->item.asPointer.value));
+      hb_retnint(hb_gcRefCount(pItem->pointerValue()));
     }
     else if (pItem->isString())
     {
@@ -13259,10 +13262,10 @@ HB_FUNC(__RECOVERERRORBLOCK)
   {
     auto pItem = hb_stackItem(nRecoverBase);
 
-    if (pItem->isPointer() && pItem->item.asPointer.collect && pItem->item.asPointer.single &&
-        hb_gcFuncs(pItem->item.asPointer.value) == &s_gcSeqBlockFuncs)
+    if (pItem->isPointer() && pItem->pointerCollect() && pItem->pointerSingle() &&
+        hb_gcFuncs(pItem->pointerValue()) == &s_gcSeqBlockFuncs)
     {
-      hb_itemReturn(static_cast<PHB_ITEM>(pItem->item.asPointer.value));
+      hb_itemReturn(static_cast<PHB_ITEM>(pItem->pointerValue()));
     }
   }
 }

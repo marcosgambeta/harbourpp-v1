@@ -1095,7 +1095,7 @@ void *hb_itemGetPtr(PHB_ITEM pItem)
 
   if (pItem && pItem->isPointer())
   {
-    return pItem->item.asPointer.value;
+    return pItem->pointerValue();
   }
   else
   {
@@ -1109,9 +1109,9 @@ void *hb_itemGetPtrGC(PHB_ITEM pItem, const HB_GC_FUNCS *pFuncs)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetPtrGC(%p,%p)", static_cast<void*>(pItem), static_cast<const void*>(pFuncs)));
 #endif
 
-  if (pItem && pItem->isPointer() && pItem->item.asPointer.collect && hb_gcFuncs(pItem->item.asPointer.value) == pFuncs)
+  if (pItem && pItem->isPointer() && pItem->pointerCollect() && hb_gcFuncs(pItem->pointerValue()) == pFuncs)
   {
-    return pItem->item.asPointer.value;
+    return pItem->pointerValue();
   }
   else
   {
@@ -1877,8 +1877,9 @@ PHB_ITEM hb_itemPutPtr(PHB_ITEM pItem, void *pValue)
   }
 
   pItem->setType(Harbour::Item::POINTER);
-  pItem->item.asPointer.value = pValue;
-  pItem->item.asPointer.collect = pItem->item.asPointer.single = false;
+  pItem->setPointerValue(pValue);
+  pItem->setPointerCollect(false);
+  pItem->setPointerSingle(false);
 
   return pItem;
 }
@@ -1902,9 +1903,9 @@ PHB_ITEM hb_itemPutPtrGC(PHB_ITEM pItem, void *pValue)
   }
 
   pItem->setType(Harbour::Item::POINTER);
-  pItem->item.asPointer.value = pValue;
-  pItem->item.asPointer.collect = true;
-  pItem->item.asPointer.single = false;
+  pItem->setPointerValue(pValue);
+  pItem->setPointerCollect(true);
+  pItem->setPointerSingle(false);
 
   hb_gcAttach(pValue);
 
@@ -1930,9 +1931,9 @@ PHB_ITEM hb_itemPutPtrRawGC(PHB_ITEM pItem, void *pValue)
   }
 
   pItem->setType(Harbour::Item::POINTER);
-  pItem->item.asPointer.value = pValue;
-  pItem->item.asPointer.collect = true;
-  pItem->item.asPointer.single = false;
+  pItem->setPointerValue(pValue);
+  pItem->setPointerCollect(true);
+  pItem->setPointerSingle(false);
 
   return pItem;
 }
@@ -2236,9 +2237,9 @@ void hb_itemClear(PHB_ITEM pItem)
   }
   else if (type & Harbour::Item::POINTER)
   {
-    if (pItem->item.asPointer.collect)
+    if (pItem->pointerCollect())
     {
-      hb_gcRefFree(pItem->item.asPointer.value);
+      hb_gcRefFree(pItem->pointerValue());
     }
   }
   // GCLOCK leave
@@ -2290,9 +2291,9 @@ void _HB_ITEM::clear() // equivalent to hb_itemClear
   }
   else if (type & Harbour::Item::POINTER)
   {
-    if (this->item.asPointer.collect)
+    if (this->pointerCollect())
     {
-      hb_gcRefFree(this->item.asPointer.value);
+      hb_gcRefFree(this->pointerValue());
     }
   }
   // GCLOCK leave
@@ -2362,15 +2363,15 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     }
     else if (pSource->isPointer())
     {
-      if (pSource->item.asPointer.collect)
+      if (pSource->pointerCollect())
       {
-        if (pSource->item.asPointer.single)
+        if (pSource->pointerSingle())
         {
-          pDest->item.asPointer.collect = false;
+          pDest->setPointerCollect(false);
         }
         else
         {
-          hb_gcRefInc(pSource->item.asPointer.value);
+          hb_gcRefInc(pSource->pointerValue());
         }
       }
     }
@@ -2991,7 +2992,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isPointer())
   {
-    fResult = pItem2->isPointer() && pItem1->item.asPointer.value == pItem2->item.asPointer.value;
+    fResult = pItem2->isPointer() && pItem1->pointerValue() == pItem2->pointerValue();
   }
   else if (pItem1->isBlock())
   {
@@ -3091,9 +3092,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isPointer())
     {
-      *piResult = pItem1->item.asPointer.value < pItem2->item.asPointer.value
+      *piResult = pItem1->pointerValue() < pItem2->pointerValue()
                       ? -1
-                      : (pItem1->item.asPointer.value > pItem2->item.asPointer.value ? 1 : 0);
+                      : (pItem1->pointerValue() > pItem2->pointerValue() ? 1 : 0);
       fResult = true;
     }
   }

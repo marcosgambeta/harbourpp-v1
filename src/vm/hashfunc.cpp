@@ -763,7 +763,7 @@ HB_FUNC(HB_HSCAN)
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (pItem->isPointer() && pItem->item.asPointer.value == pValue->item.asPointer.value)
+          if (pItem->isPointer() && pItem->pointerValue() == pValue->pointerValue())
           {
             fFound = true;
             break;
