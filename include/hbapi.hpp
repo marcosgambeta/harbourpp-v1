@@ -531,6 +531,7 @@ typedef struct _HB_ITEM
   _HB_BASEARRAY *arrayValue();
   void setArrayValue(_HB_BASEARRAY *pValue);
   _HB_ITEM *arrayItems();
+  HB_SIZE arrayLen();
   //
   void clear();
 #endif
@@ -869,6 +870,11 @@ inline bool _HB_ITEM::isObject()
 inline _HB_ITEM *_HB_ITEM::arrayItems()
 {
   return this->item.asArray.value->pItems;
+}
+
+inline HB_SIZE _HB_ITEM::arrayLen()
+{
+  return this->item.asArray.value->nLen;
 }
 
 #endif
