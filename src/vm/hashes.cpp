@@ -207,13 +207,13 @@ static int hb_hashItemCmp(PHB_ITEM pKey1, PHB_ITEM pKey2, int iFlags)
   {
     if (pKey2->isDateTime())
     {
-      return pKey1->item.asDateTime.julian < pKey2->item.asDateTime.julian
+      return pKey1->dateTimeJulian() < pKey2->dateTimeJulian()
                  ? -1
-                 : (pKey1->item.asDateTime.julian > pKey2->item.asDateTime.julian
+                 : (pKey1->dateTimeJulian() > pKey2->dateTimeJulian()
                         ? 1
-                        : (pKey1->item.asDateTime.time < pKey2->item.asDateTime.time
+                        : (pKey1->dateTimeTime() < pKey2->dateTimeTime()
                                ? -1
-                               : (pKey1->item.asDateTime.time > pKey2->item.asDateTime.time ? 1 : 0)));
+                               : (pKey1->dateTimeTime() > pKey2->dateTimeTime() ? 1 : 0)));
     }
     else if (pKey2->isString())
     {

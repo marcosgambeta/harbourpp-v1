@@ -687,7 +687,7 @@ char *hb_itemGetDS(PHB_ITEM pItem, char *szDate)
 
   if (pItem && pItem->isDateTime())
   {
-    return hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
+    return hb_dateDecStr(szDate, pItem->dateTimeJulian());
   }
   else
   {
@@ -703,7 +703,7 @@ long hb_itemGetDL(PHB_ITEM pItem)
 
   if (pItem && pItem->isDateTime())
   {
-    return pItem->item.asDateTime.julian;
+    return pItem->dateTimeJulian();
   }
   else
   {
@@ -722,7 +722,7 @@ char *hb_itemGetTS(PHB_ITEM pItem, char *szDateTime)
 
   if (pItem && pItem->isDateTime())
   {
-    return hb_timeStampStrRawPut(szDateTime, pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
+    return hb_timeStampStrRawPut(szDateTime, pItem->dateTimeJulian(), pItem->dateTimeTime());
   }
   else
   {
@@ -738,7 +738,7 @@ double hb_itemGetTD(PHB_ITEM pItem)
 
   if (pItem && pItem->isDateTime())
   {
-    return hb_timeStampPackDT(pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
+    return hb_timeStampPackDT(pItem->dateTimeJulian(), pItem->dateTimeTime());
   }
   else
   {
@@ -754,8 +754,8 @@ HB_BOOL hb_itemGetTDT(PHB_ITEM pItem, long *plJulian, long *plMilliSec)
 
   if (pItem && pItem->isDateTime())
   {
-    *plJulian = pItem->item.asDateTime.julian;
-    *plMilliSec = pItem->item.asDateTime.time;
+    *plJulian = pItem->dateTimeJulian();
+    *plMilliSec = pItem->dateTimeTime();
     return true;
   }
   else
@@ -844,7 +844,7 @@ HB_BOOL hb_itemGetLX(PHB_ITEM pItem)
     }
     else if (pItem->isDateTime())
     {
-      return pItem->item.asDateTime.julian != 0 || pItem->item.asDateTime.time != 0;
+      return pItem->dateTimeJulian() != 0 || pItem->dateTimeTime() != 0;
     }
     else
     {
@@ -1198,8 +1198,8 @@ PHB_ITEM hb_itemPutDS(PHB_ITEM pItem, const char *szDate)
   }
 
   pItem->setType(Harbour::Item::DATE);
-  pItem->item.asDateTime.julian = hb_dateEncStr(szDate);
-  pItem->item.asDateTime.time = 0;
+  pItem->setDateTimeJulian(hb_dateEncStr(szDate));
+  pItem->setDateTimeTime(0);
 
   return pItem;
 }
@@ -1223,8 +1223,8 @@ PHB_ITEM hb_itemPutD(PHB_ITEM pItem, int iYear, int iMonth, int iDay)
   }
 
   pItem->setType(Harbour::Item::DATE);
-  pItem->item.asDateTime.julian = hb_dateEncode(iYear, iMonth, iDay);
-  pItem->item.asDateTime.time = 0;
+  pItem->setDateTimeJulian(hb_dateEncode(iYear, iMonth, iDay));
+  pItem->setDateTimeTime(0);
 
   return pItem;
 }
@@ -1248,8 +1248,8 @@ PHB_ITEM hb_itemPutDL(PHB_ITEM pItem, long lJulian)
   }
 
   pItem->setType(Harbour::Item::DATE);
-  pItem->item.asDateTime.julian = lJulian;
-  pItem->item.asDateTime.time = 0;
+  pItem->setDateTimeJulian(lJulian);
+  pItem->setDateTimeTime(0);
 
   return pItem;
 }
@@ -1299,8 +1299,8 @@ PHB_ITEM hb_itemPutTD(PHB_ITEM pItem, double dTimeStamp)
   long lJulian, lMilliSec;
   hb_timeStampUnpackDT(dTimeStamp, &lJulian, &lMilliSec);
   pItem->setType(Harbour::Item::TIMESTAMP);
-  pItem->item.asDateTime.julian = lJulian;
-  pItem->item.asDateTime.time = lMilliSec;
+  pItem->setDateTimeJulian(lJulian);
+  pItem->setDateTimeTime(lMilliSec);
 
   return pItem;
 }
@@ -1324,8 +1324,8 @@ PHB_ITEM hb_itemPutTDT(PHB_ITEM pItem, long lJulian, long lMilliSec)
   }
 
   pItem->setType(Harbour::Item::TIMESTAMP);
-  pItem->item.asDateTime.julian = lJulian;
-  pItem->item.asDateTime.time = lMilliSec;
+  pItem->setDateTimeJulian(lJulian);
+  pItem->setDateTimeTime(lMilliSec);
 
   return pItem;
 }
@@ -2975,8 +2975,8 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isDateTime())
   {
-    fResult = pItem2->isDateTime() && pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-              pItem1->item.asDateTime.time == pItem2->item.asDateTime.time;
+    fResult = pItem2->isDateTime() && pItem1->dateTimeJulian() == pItem2->dateTimeJulian() &&
+              pItem1->dateTimeTime() == pItem2->dateTimeTime();
   }
   else if (pItem1->isLogical())
   {
@@ -3050,13 +3050,13 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isDateTime())
     {
-      *piResult = pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian
+      *piResult = pItem1->dateTimeJulian() < pItem2->dateTimeJulian()
                       ? -1
-                      : (pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian
+                      : (pItem1->dateTimeJulian() > pItem2->dateTimeJulian()
                              ? 1
-                             : (pItem1->item.asDateTime.time < pItem2->item.asDateTime.time
+                             : (pItem1->dateTimeTime() < pItem2->dateTimeTime()
                                     ? -1
-                                    : (pItem1->item.asDateTime.time > pItem2->item.asDateTime.time ? 1 : 0)));
+                                    : (pItem1->dateTimeTime() > pItem2->dateTimeTime() ? 1 : 0)));
       fResult = true;
     }
   }
@@ -3656,7 +3656,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     HB_STACK_TLS_PRELOAD
     char szDate[9];
 
-    hb_dateDecStr(szDate, pItem->item.asDateTime.julian);
+    hb_dateDecStr(szDate, pItem->dateTimeJulian());
 
     buffer = static_cast<char *>(hb_xgrab(11));
     hb_dateFormat(szDate, buffer, hb_stackSetStruct()->HB_SET_DATEFORMAT);
@@ -3670,7 +3670,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     char szDateTime[27];
 
     hb_timeStampFormat(szDateTime, hb_stackSetStruct()->HB_SET_DATEFORMAT, hb_stackSetStruct()->HB_SET_TIMEFORMAT,
-                       pItem->item.asDateTime.julian, pItem->item.asDateTime.time);
+                       pItem->dateTimeJulian(), pItem->dateTimeTime());
 
     buffer = hb_strdup(szDateTime);
     *nLen = strlen(buffer);

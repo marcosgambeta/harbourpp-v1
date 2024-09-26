@@ -701,8 +701,8 @@ HB_FUNC(HB_HSCAN)
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
-              (!fExact || pItem->item.asDateTime.time == pValue->item.asDateTime.time))
+          if (pItem->isDateTime() && pItem->dateTimeJulian() == pValue->dateTimeJulian() &&
+              (!fExact || pItem->dateTimeTime() == pValue->dateTimeTime()))
           {
             fFound = true;
             break;

@@ -2603,8 +2603,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 #endif
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::DATE);
-      pItem->item.asDateTime.julian = static_cast<long>(HB_PCODE_MKLONG(&pCode[1]));
-      pItem->item.asDateTime.time = 0;
+      pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKLONG(&pCode[1])));
+      pItem->setDateTimeTime(0);
       pCode += 5;
       break;
     }
@@ -2615,8 +2615,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 #endif
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::TIMESTAMP);
-      pItem->item.asDateTime.julian = static_cast<long>(HB_PCODE_MKLONG(&pCode[1]));
-      pItem->item.asDateTime.time = static_cast<long>(HB_PCODE_MKLONG(&pCode[5]));
+      pItem->setDateTimeJulian(static_cast<long>(HB_PCODE_MKLONG(&pCode[1])));
+      pItem->setDateTimeTime(static_cast<long>(HB_PCODE_MKLONG(&pCode[5])));
       pCode += 9;
       break;
     }
@@ -3561,8 +3561,8 @@ static void hb_vmTimeStampAdd(PHB_ITEM pResult, PHB_ITEM pItem, double dValue)
   long lJulian, lMilliSec;
   hb_timeStampUnpackDT(dValue, &lJulian, &lMilliSec);
 
-  lJulian += pItem->item.asDateTime.julian;
-  lMilliSec += pItem->item.asDateTime.time;
+  lJulian += pItem->dateTimeJulian();
+  lMilliSec += pItem->dateTimeTime();
 
   hb_vmTimeStampPut(pResult, lJulian, lMilliSec);
 }
@@ -3644,13 +3644,13 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   {
     if (pItem1->isTimeStamp() || pItem2->isTimeStamp())
     {
-      hb_vmTimeStampPut(pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian,
-                        pItem1->item.asDateTime.time + pItem2->item.asDateTime.time);
+      hb_vmTimeStampPut(pResult, pItem1->dateTimeJulian() + pItem2->dateTimeJulian(),
+                        pItem1->dateTimeTime() + pItem2->dateTimeTime());
     }
     else
     {
       /* NOTE: This is not a bug. CA-Cl*pper does exactly that for DATEs. */
-      hb_itemPutDL(pResult, pItem1->item.asDateTime.julian + pItem2->item.asDateTime.julian);
+      hb_itemPutDL(pResult, pItem1->dateTimeJulian() + pItem2->dateTimeJulian());
     }
   }
   else if (pItem1->isDateTime() && pItem2->isNumeric())
@@ -3659,8 +3659,8 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     {
       if (pItem2->isNumInt())
       {
-        hb_vmTimeStampPut(pResult, pItem1->item.asDateTime.julian + static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem2)),
-                          pItem1->item.asDateTime.time);
+        hb_vmTimeStampPut(pResult, pItem1->dateTimeJulian() + static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem2)),
+                          pItem1->dateTimeTime());
       }
       else
       {
@@ -3678,8 +3678,8 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     {
       if (pItem1->isNumInt())
       {
-        hb_vmTimeStampPut(pResult, static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem1)) + pItem2->item.asDateTime.julian,
-                          pItem2->item.asDateTime.time);
+        hb_vmTimeStampPut(pResult, static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem1)) + pItem2->dateTimeJulian(),
+                          pItem2->dateTimeTime());
       }
       else
       {
@@ -3743,8 +3743,8 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isDateTime() && pItem2->isDateTime())
   {
-    long lTime = pItem1->item.asDateTime.time - pItem2->item.asDateTime.time,
-         lJulian = pItem1->item.asDateTime.julian - pItem2->item.asDateTime.julian;
+    long lTime = pItem1->dateTimeTime() - pItem2->dateTimeTime(),
+         lJulian = pItem1->dateTimeJulian() - pItem2->dateTimeJulian();
     if (lTime != 0)
     {
       hb_itemPutNDDec(pResult, hb_timeStampPackDT(lJulian, lTime), HB_TIMEDIFF_DEC);
@@ -3764,8 +3764,8 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     {
       if (pItem2->isNumInt())
       {
-        hb_vmTimeStampPut(pResult, pItem1->item.asDateTime.julian - static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem2)),
-                          pItem1->item.asDateTime.time);
+        hb_vmTimeStampPut(pResult, pItem1->dateTimeJulian() - static_cast<long>(HB_ITEM_GET_NUMINTRAW(pItem2)),
+                          pItem1->dateTimeTime());
       }
       else
       {
@@ -4224,8 +4224,8 @@ static void hb_vmExactlyEqual()
   }
   else if (pItem1->isDateTime() && pItem2->isDateTime())
   {
-    pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                             pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
+    pItem1->setLogicalValue((pItem1->dateTimeJulian() == pItem2->dateTimeJulian() &&
+                             pItem1->dateTimeTime() == pItem2->dateTimeTime()));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -4344,12 +4344,12 @@ static void hb_vmEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian) &&
-                              (pItem1->item.asDateTime.time == pItem2->item.asDateTime.time));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() == pItem2->dateTimeJulian()) &&
+                              (pItem1->dateTimeTime() == pItem2->dateTimeTime()));
     }
     else
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() == pItem2->dateTimeJulian()));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
@@ -4444,12 +4444,12 @@ static void hb_vmNotEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian) ||
-                              (pItem1->item.asDateTime.time != pItem2->item.asDateTime.time));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() != pItem2->dateTimeJulian()) ||
+                              (pItem1->dateTimeTime() != pItem2->dateTimeTime()));
     }
     else
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian != pItem2->item.asDateTime.julian));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() != pItem2->dateTimeJulian()));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
@@ -4528,13 +4528,13 @@ static void hb_vmLess()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
-                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                               pItem1->item.asDateTime.time < pItem2->item.asDateTime.time));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() < pItem2->dateTimeJulian()) ||
+                              (pItem1->dateTimeJulian() == pItem2->dateTimeJulian() &&
+                               pItem1->dateTimeTime() < pItem2->dateTimeTime()));
     }
     else
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() < pItem2->dateTimeJulian()));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
@@ -4596,13 +4596,13 @@ static void hb_vmLessEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian < pItem2->item.asDateTime.julian) ||
-                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                               pItem1->item.asDateTime.time <= pItem2->item.asDateTime.time));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() < pItem2->dateTimeJulian()) ||
+                              (pItem1->dateTimeJulian() == pItem2->dateTimeJulian() &&
+                               pItem1->dateTimeTime() <= pItem2->dateTimeTime()));
     }
     else
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian <= pItem2->item.asDateTime.julian));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() <= pItem2->dateTimeJulian()));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
@@ -4664,13 +4664,13 @@ static void hb_vmGreater()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
-                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                               pItem1->item.asDateTime.time > pItem2->item.asDateTime.time));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() > pItem2->dateTimeJulian()) ||
+                              (pItem1->dateTimeJulian() == pItem2->dateTimeJulian() &&
+                               pItem1->dateTimeTime() > pItem2->dateTimeTime()));
     }
     else
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() > pItem2->dateTimeJulian()));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
@@ -4732,13 +4732,13 @@ static void hb_vmGreaterEqual()
   {
     if (pItem1->isTimeStamp() && pItem2->isTimeStamp())
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian > pItem2->item.asDateTime.julian) ||
-                              (pItem1->item.asDateTime.julian == pItem2->item.asDateTime.julian &&
-                               pItem1->item.asDateTime.time >= pItem2->item.asDateTime.time));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() > pItem2->dateTimeJulian()) ||
+                              (pItem1->dateTimeJulian() == pItem2->dateTimeJulian() &&
+                               pItem1->dateTimeTime() >= pItem2->dateTimeTime()));
     }
     else
     {
-      pItem1->setLogicalValue((pItem1->item.asDateTime.julian >= pItem2->item.asDateTime.julian));
+      pItem1->setLogicalValue((pItem1->dateTimeJulian() >= pItem2->dateTimeJulian()));
     }
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
@@ -7480,8 +7480,8 @@ void hb_vmPushDate(long lDate)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::DATE);
-  pItem->item.asDateTime.julian = lDate;
-  pItem->item.asDateTime.time = 0;
+  pItem->setDateTimeJulian(lDate);
+  pItem->setDateTimeTime(0);
 }
 
 void hb_vmPushTimeStamp(long lJulian, long lMilliSec)
@@ -7493,8 +7493,8 @@ void hb_vmPushTimeStamp(long lJulian, long lMilliSec)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::TIMESTAMP);
-  pItem->item.asDateTime.julian = lJulian;
-  pItem->item.asDateTime.time = lMilliSec;
+  pItem->setDateTimeJulian(lJulian);
+  pItem->setDateTimeTime(lMilliSec);
 }
 
 void hb_vmPushPointer(void *pPointer)

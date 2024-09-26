@@ -1370,8 +1370,8 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
-                  pItem->item.asDateTime.time == pValue->item.asDateTime.time)
+              if (pItem->isDateTime() && pItem->dateTimeJulian() == pValue->dateTimeJulian() &&
+                  pItem->dateTimeTime() == pValue->dateTimeTime())
               {
                 return nStart;
               }
@@ -1383,7 +1383,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian)
+              if (pItem->isDateTime() && pItem->dateTimeJulian() == pValue->dateTimeJulian())
               {
                 return nStart;
               }
@@ -1567,8 +1567,8 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian &&
-                  pItem->item.asDateTime.time == pValue->item.asDateTime.time)
+              if (pItem->isDateTime() && pItem->dateTimeJulian() == pValue->dateTimeJulian() &&
+                  pItem->dateTimeTime() == pValue->dateTimeTime())
               {
                 return nStart + 1;
               }
@@ -1580,7 +1580,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
             {
               PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-              if (pItem->isDateTime() && pItem->item.asDateTime.julian == pValue->item.asDateTime.julian)
+              if (pItem->isDateTime() && pItem->dateTimeJulian() == pValue->dateTimeJulian())
               {
                 return nStart + 1;
               }

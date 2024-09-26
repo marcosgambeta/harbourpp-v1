@@ -833,7 +833,7 @@ static void hb_stackDispLocal(void)
     case Harbour::Item::TIMESTAMP: {
       char szDateTime[24];
       hb_snprintf(buffer, sizeof(buffer), HB_I_("TIMESTAMP = \"%s\" "),
-                  hb_timeStampStr(szDateTime, (*pBase)->item.asDateTime.julian, (*pBase)->item.asDateTime.time));
+                  hb_timeStampStr(szDateTime, (*pBase)->dateTimeJulian(), (*pBase)->dateTimeTime()));
     }
     break;
 
