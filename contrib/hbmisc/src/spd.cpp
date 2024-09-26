@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -442,10 +446,10 @@ HB_FUNC( SQL_SPRINTF )
          else     /* Par Item sprintf() Out */
          {
 #ifdef HB_IT_NULL
-            if( (HB_IS_NIL(pItmPar) || HB_IS_NULL(pItmPar)) )
+            if( (pItmPar->isNil() || HB_IS_NULL(pItmPar)) )
             {
 #else
-            if( HB_IS_NIL(pItmPar) )
+            if( pItmPar->isNil() )
             {
 #endif
                ulWidth = f;

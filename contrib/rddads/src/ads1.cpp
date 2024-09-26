@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #define SUPERTABLE   (&adsSuper)
 #define MAX_STR_LEN  255
 
@@ -4227,7 +4231,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
    }
 
    /* all others need an index handle */
-   if( uiIndex != DBOI_ORDERCOUNT && pOrderInfo->itmOrder && !HB_IS_NIL(pOrderInfo->itmOrder) ) {
+   if( uiIndex != DBOI_ORDERCOUNT && pOrderInfo->itmOrder && !pOrderInfo->itmOrder->isNil() ) {
       u32RetVal = AE_SUCCESS;
 
       if( HB_IS_STRING(pOrderInfo->itmOrder) ) {

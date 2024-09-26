@@ -45,6 +45,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbwinole.hpp"
 #include "hbapicdp.hpp"
 #include "hbapilng.hpp"
@@ -540,7 +544,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, PHB_ITEM p
   void *pData;
   UINT uiPos;
 
-  if (pItem == nullptr || HB_IS_NIL(pItem))
+  if (pItem == nullptr || pItem->isNil())
   {
     return true;
   }
@@ -758,7 +762,7 @@ static SAFEARRAY *hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims,
       {
         plSize[0] = static_cast<UINT>(hb_arrayLen(pItem));
       }
-      else if (!HB_IS_NIL(pItem))
+      else if (!pItem->isNil())
       {
         return nullptr;
       }
@@ -2594,7 +2598,7 @@ static void hb_oleInvokeCall(WORD wFlags)
   IDispatch *pDisp;
 
   auto pObject = hb_stackSelfItem();
-  if (HB_IS_NIL(pObject))
+  if (pObject->isNil())
   {
     pObject = hb_param(++uiOffset, Harbour::Item::ANY);
   }

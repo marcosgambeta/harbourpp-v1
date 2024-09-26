@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbvmint.hpp" /* FIXME: clean the code to not access any internal HVM structures */
 #include "hbapi.hpp"
 #include "hbvm.hpp"
@@ -1040,7 +1044,7 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
           }
         }
 #endif
-        else if (HB_IS_NIL(pStructure))
+        else if (pStructure->isNil())
         {
           if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR)
           {

@@ -46,6 +46,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 #include "hbapigt.hpp"
@@ -270,7 +274,7 @@ HB_FUNC(HB_EXEC)
 
     if (iParams >= 1)
     {
-      fSend = iParams > 1 && !HB_IS_NIL(hb_param(2, Harbour::Item::ANY));
+      fSend = iParams > 1 && !hb_param(2, Harbour::Item::ANY)->isNil();
       iParams--;
     }
     else

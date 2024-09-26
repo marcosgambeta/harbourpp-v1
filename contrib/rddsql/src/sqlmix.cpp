@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbinit.hpp"
 #include "hbapiitm.hpp"
@@ -1772,7 +1776,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
                } else {
                   LPCDXKEY pKey;
                   hb_cdxIndexLockWrite(pTag->pIndex);
-                  if( pOrderInfo->itmNewVal && !HB_IS_NIL(pOrderInfo->itmNewVal) ) {
+                  if( pOrderInfo->itmNewVal && !pOrderInfo->itmNewVal->isNil() ) {
                      pKey = hb_cdxKeyPutItem(nullptr, pOrderInfo->itmNewVal, pArea->sqlarea.ulRecNo, pTag, true, true);
                   } else {
                      pKey = hb_cdxKeyEval(nullptr, pTag);
@@ -1801,7 +1805,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
                } else {
                   LPCDXKEY pKey;
                   hb_cdxIndexLockWrite(pTag->pIndex);
-                  if( pOrderInfo->itmNewVal && !HB_IS_NIL(pOrderInfo->itmNewVal) ) {
+                  if( pOrderInfo->itmNewVal && !pOrderInfo->itmNewVal->isNil() ) {
                      pKey = hb_cdxKeyPutItem(nullptr, pOrderInfo->itmNewVal, pArea->sqlarea.ulRecNo, pTag, true, true);
                   } else {
                      pKey = hb_cdxKeyEval(nullptr, pTag);

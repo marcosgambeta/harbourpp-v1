@@ -46,6 +46,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "gtqtc.h"
 
 static  int                   s_GtId;
@@ -2544,7 +2548,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
 
       case HB_GTI_MSGBOX:
-         if( !pInfo->pNewVal || HB_IS_LOGICAL(pInfo->pNewVal) || HB_IS_NIL(pInfo->pNewVal) ) {
+         if( !pInfo->pNewVal || HB_IS_LOGICAL(pInfo->pNewVal) || pInfo->pNewVal->isNil() ) {
             pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fMsgAlert);
             if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) ) {
                pQTC->fMsgAlert = hb_itemGetL(pInfo->pNewVal);

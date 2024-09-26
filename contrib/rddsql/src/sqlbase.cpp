@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
@@ -508,7 +512,7 @@ static HB_ERRCODE sqlbasePutValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITE
        || (HB_IS_NUMBER(pItem) && (pField->uiType == Harbour::DB::Field::INTEGER || pField->uiType == Harbour::DB::Field::LONG || pField->uiType == Harbour::DB::Field::FLOAT || pField->uiType == Harbour::DB::Field::DOUBLE))
        || (HB_IS_LOGICAL(pItem) && pField->uiType == Harbour::DB::Field::LOGICAL)
        || pField->uiType == Harbour::DB::Field::ANY
-       || HB_IS_NIL(pItem) ) {
+       || pItem->isNil() ) {
       hb_arraySet(static_cast<PHB_ITEM>(pArea->pRecord), uiIndex, pItem);
    } else {
       PHB_ITEM pError = hb_errNew();

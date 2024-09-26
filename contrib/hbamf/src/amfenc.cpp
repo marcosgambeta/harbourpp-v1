@@ -8,6 +8,10 @@
  * AmFast C library for Python
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
@@ -986,7 +990,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
       amf3_conversion_out(context, pItem);
    }
 
-   if( HB_IS_NIL(pItem) ) {
+   if( pItem->isNil() ) {
       result = amf3_encode_nil(context);
    } else if( HB_IS_LOGICAL(pItem) ) {
       result = amf3_encode_bool(context, pItem);

@@ -45,6 +45,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "rddads.hpp"
 
 #include "hbvm.hpp"
@@ -637,7 +641,7 @@ HB_FUNC( ADSKEYNO )
    auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
-   if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || HB_IS_NIL(pxOrder)) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
+   if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
       if( pArea != nullptr ) {
@@ -646,7 +650,7 @@ HB_FUNC( ADSKEYNO )
          UNSIGNED16 usFilterOption = pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI(pFilterOption)) : ADS_IGNOREFILTERS;
 
          /* get an Index Handle */
-         if( pxOrder == nullptr || HB_IS_NIL(pxOrder) ) { /* didn't pass it in; use current */
+         if( pxOrder == nullptr || pxOrder->isNil() ) { /* didn't pass it in; use current */
             hIndex = pArea->hOrdCurrent;
          } else if( HB_IS_NUMBER(pxOrder) ) {
             auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
@@ -682,7 +686,7 @@ HB_FUNC( ADSKEYCOUNT )
    auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
-   if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || HB_IS_NIL(pxOrder)) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
+   if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
       if( pArea != nullptr ) {
@@ -691,7 +695,7 @@ HB_FUNC( ADSKEYCOUNT )
          UNSIGNED16 usFilterOption = pFilterOption ? static_cast<UNSIGNED16>(hb_itemGetNI(pFilterOption)) : ADS_IGNOREFILTERS;
 
          /* get an Index Handle */
-         if( pxOrder == nullptr || HB_IS_NIL(pxOrder) ) { /* didn't pass it in; use current */
+         if( pxOrder == nullptr || pxOrder->isNil() ) { /* didn't pass it in; use current */
             hIndex = pArea->hOrdCurrent;
          } else if( HB_IS_NUMBER(pxOrder) ) {
             auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));

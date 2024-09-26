@@ -60,6 +60,10 @@
  * Giancarlo Niccolai <giancarlo@niccolai.org>
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
@@ -504,24 +508,24 @@ static void mxml_node_unlink(PHB_ITEM pNode)
   auto pParent = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
   /* Detaching from previous */
-  if (!HB_IS_NIL(pPrev))
+  if (!pPrev->isNil())
   {
     hb_objSendMsg(pPrev, "_ONEXT", 1, pNext);
     hb_objSendMsg(pNode, "_ONEXT", 1, pNil);
   }
 
   /* Detaching from Next */
-  if (!HB_IS_NIL(pNext))
+  if (!pNext->isNil())
   {
     hb_objSendMsg(pNext, "_OPREV", 1, pPrev);
     hb_objSendMsg(pNode, "_OPREV", 1, pNil);
   }
 
   /* Detaching from parent */
-  if (!HB_IS_NIL(pParent))
+  if (!pParent->isNil())
   {
     /* Eventually set the next node as first child */
-    if (HB_IS_NIL(pPrev))
+    if (pPrev->isNil())
     { /* was I the first node? */
       hb_objSendMsg(pParent, "_OCHILD", 1, pNext);
     }
@@ -549,7 +553,7 @@ static void mxml_node_insert_before(PHB_ITEM pTg, PHB_ITEM pNode)
   hb_objSendMsg(pNode, "_OPREV", 1, hb_param(-1, Harbour::Item::ANY));
 
   /* if the previous is not null, and if his next was tg, we must update to node */
-  if (!HB_IS_NIL(pPrev))
+  if (!pPrev->isNil())
   {
     hb_objSendMsg(pPrev, "ONEXT", 0);
     if (hb_arrayId(hb_param(-1, Harbour::Item::ANY)) == hb_arrayId(pTg))
@@ -571,7 +575,7 @@ static void mxml_node_insert_before(PHB_ITEM pTg, PHB_ITEM pNode)
   hb_objSendMsg(pNode, "_OPARENT", 1, pParent);
 
   /* if the parent is not null, and if it's child was tg, we must update to node */
-  if (!HB_IS_NIL(pParent))
+  if (!pParent->isNil())
   {
     hb_objSendMsg(pParent, "OCHILD", 0);
     if (hb_arrayId(hb_param(-1, Harbour::Item::ANY)) == hb_arrayId(pTg))
@@ -624,7 +628,7 @@ static void mxml_node_insert_below(PHB_ITEM pTg, PHB_ITEM pNode)
   hb_objSendMsg(pNode, "_OPARENT", 1, pTg);
 
   /* All children parents are moved to pNode */
-  while (!HB_IS_NIL(pChild))
+  while (!pChild->isNil())
   {
     hb_objSendMsg(pChild, "_OPARENT", 1, pNode);
     hb_objSendMsg(pChild, "ONEXT", 0);
@@ -648,13 +652,13 @@ static void mxml_node_add_below(PHB_ITEM pTg, PHB_ITEM pNode)
   hb_objSendMsg(pTg, "OCHILD", 0);
   auto pChild = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
-  if (!HB_IS_NIL(pChild))
+  if (!pChild->isNil())
   {
     /* Scanning up to the last child */
     for (;;)
     {
       hb_objSendMsg(pChild, "ONEXT", 0);
-      if (HB_IS_NIL(hb_param(-1, Harbour::Item::ANY)))
+      if (hb_param(-1, Harbour::Item::ANY)->isNil())
       {
         break;
       }
@@ -723,7 +727,7 @@ static PHB_ITEM mxml_node_clone_tree(PHB_ITEM pTg)
   hb_objSendMsg(pTg, "OCHILD", 0);
   auto pNode = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
-  while (!HB_IS_NIL(pNode))
+  while (!pNode->isNil())
   {
     PHB_ITEM pSubTree;
 
@@ -1668,7 +1672,7 @@ static MXML_STATUS mxml_node_read(MXML_REFIL *ref, PHB_ITEM pNode, PHB_ITEM doc,
     hb_objSendMsg(pNode, "OCHILD", 0);
     auto child_node = hb_itemNew(hb_param(-1, Harbour::Item::ANY));
 
-    while (!HB_IS_NIL(child_node))
+    while (!child_node->isNil())
     {
       hb_objSendMsg(child_node, "NTYPE", 0);
       if (hb_parni(-1) == MXML_TYPE_DATA)
@@ -1779,7 +1783,7 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, PHB_ITEM pNode, int style)
     hb_objSendMsg(pNode, "OCHILD", 0);
     hb_itemMove(pChild, hb_param(-1, Harbour::Item::ANY));
 
-    if (HB_IS_NIL(pItem) && HB_IS_NIL(pChild))
+    if (pItem->isNil() && pChild->isNil())
     {
       mxml_output_string_len(out, "/>", 2);
       if (!(style & MXML_STYLE_NONEWLINE))
@@ -1793,7 +1797,7 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, PHB_ITEM pNode, int style)
 
       mxml_output_char(out, '>');
 
-      if (!HB_IS_NIL(pChild))
+      if (!pChild->isNil())
       {
         mustIndent = 1;
         if (!(style & MXML_STYLE_NONEWLINE))
@@ -1801,7 +1805,7 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, PHB_ITEM pNode, int style)
           mxml_output_string(out, hb_conNewLine());
         }
 
-        while (!HB_IS_NIL(pChild))
+        while (!pChild->isNil())
         {
           mxml_node_write(out, pChild, style);
           hb_objSendMsg(pChild, "ONEXT", 0);
@@ -1809,7 +1813,7 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, PHB_ITEM pNode, int style)
         }
       }
 
-      if (!HB_IS_NIL(pItem))
+      if (!pItem->isNil())
       {
         if (mustIndent && (style & MXML_STYLE_INDENT))
         {
@@ -1921,7 +1925,7 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, PHB_ITEM pNode, int style)
     hb_objSendMsg(pNode, "OCHILD", 0);
     hb_itemMove(pChild, hb_param(-1, Harbour::Item::ANY));
 
-    while (!HB_IS_NIL(pChild))
+    while (!pChild->isNil())
     {
       mxml_node_write(out, pChild, style);
       hb_objSendMsg(pChild, "ONEXT", 0);
