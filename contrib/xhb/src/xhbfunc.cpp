@@ -71,7 +71,7 @@ HB_FUNC( HB_POINTER2STRING )
 
    if( HB_IS_POINTER(pPointer) && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
-   } else if( HB_IS_INTEGER(pPointer) && pLen ) {
+   } else if( pPointer->isInteger() && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS(pLen));
    } else if( HB_IS_LONG(pPointer) && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetNL(pPointer)), hb_itemGetNS(pLen));

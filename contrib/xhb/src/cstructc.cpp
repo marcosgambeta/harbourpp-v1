@@ -1030,7 +1030,7 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
           }
         }
 #if UINT_MAX == ULONG_MAX
-        else if (HB_IS_INTEGER(pStructure))
+        else if (pStructure->isInteger())
         {
           if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR)
           {
@@ -1527,7 +1527,7 @@ HB_FUNC(HB_POINTER2STRING)
   {
     hb_retclen(static_cast<char *>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
   }
-  else if (HB_IS_INTEGER(pPointer) && pLen)
+  else if (pPointer->isInteger() && pLen)
   {
     hb_retclen(reinterpret_cast<char *>(static_cast<HB_PTRUINT>(hb_itemGetNI(pPointer))), hb_itemGetNS(pLen));
   }
@@ -1571,7 +1571,7 @@ HB_FUNC(__CSTR_COPYTO)
     pPointer = reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pTarget)));
   }
 #if UINT_MAX == ULONG_MAX
-  else if (HB_IS_INTEGER(pTarget))
+  else if (pTarget->isInteger())
   {
     pPointer = reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pTarget)));
   }

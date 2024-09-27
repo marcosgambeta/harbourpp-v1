@@ -433,10 +433,10 @@ static bool amf3_encode_hash(amfContext * context, PHB_ITEM pItem)
    HB_ISIZ  len      = hb_hashLen(pItem);
    HB_ISIZ  nIntKeys = 0;
 
-   if( (((hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) != 0 && HB_IS_INTEGER(hb_hashGetKeyAt(pItem, 1))) || hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) == 0 ) {
+   if( (((hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) != 0 && hb_hashGetKeyAt(pItem, 1)->isInteger()) || hb_hashGetFlags(pItem) & HB_HASH_KEEPORDER) == 0 ) {
       for( i = 1; i <= len; i++ ) {
          pKey = hb_hashGetKeyAt(pItem, i);
-         if( HB_IS_INTEGER(pKey) ) {
+         if( pKey->isInteger() ) {
             nIntKeys++;
          }
       }
@@ -467,7 +467,7 @@ static bool amf3_encode_hash(amfContext * context, PHB_ITEM pItem)
       for( i = 1; i <= len; i++ ) {
          pKey = hb_hashGetKeyAt(pItem, i);
          pVal = hb_hashGetValueAt(pItem, i);
-         if( HB_IS_INTEGER(pKey) ) {
+         if( pKey->isInteger() ) {
             if( !amf3_encode(context, pVal) ) {
                return false;
             }
@@ -994,7 +994,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
       result = amf3_encode_nil(context);
    } else if( pItem->isLogical() ) {
       result = amf3_encode_bool(context, pItem);
-   } else if( HB_IS_INTEGER(pItem) || HB_IS_LONG(pItem) ) {
+   } else if( pItem->isInteger() || HB_IS_LONG(pItem) ) {
       result = amf3_write_int(context, pItem);
    } else if( HB_IS_DOUBLE(pItem) ) {
       result = amfX_write_double(context, pItem);
