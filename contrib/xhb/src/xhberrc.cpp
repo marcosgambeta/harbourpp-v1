@@ -126,7 +126,7 @@ HB_FUNC(SETUNHANDLEDEXCEPTIONFILTER)
   auto pFuncItm = hb_param(1, Harbour::Item::ANY);
   PHB_SYMB pFuncSym = s_pFuncSymbol;
 
-  if (pFuncItm && HB_IS_SYMBOL(pFuncItm))
+  if (pFuncItm && pFuncItm->isSymbol())
   {
     s_pFuncSymbol = hb_itemGetSymbol(pFuncItm);
     pDefaultHandler = PRGUnhandledExceptionFilter;

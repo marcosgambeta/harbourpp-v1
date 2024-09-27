@@ -1659,7 +1659,7 @@ typedef struct
 HB_BOOL hb_oleDispInvoke(PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPPARAMS *pParams, VARIANT *pVarResult,
                          HB_OLEOBJ_FUNC pObjFunc, HB_USHORT uiClass)
 {
-  if (!pSym && HB_IS_SYMBOL(pObject))
+  if (!pSym && pObject->isSymbol())
   {
     pSym = hb_itemGetSymbol(pObject);
     pObject = nullptr;
