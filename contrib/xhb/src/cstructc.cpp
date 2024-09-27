@@ -227,7 +227,7 @@ static HB_UINT SizeOfCStructure(PHB_ITEM aDef, HB_UINT uiAlign)
 
         hb_itemRelease(pID);
 
-        if (HB_IS_OBJECT(pStructure))
+        if (pStructure->isObject())
         {
           hb_objSendMsg(pStructure, "SizeOf", 0);
           uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
@@ -483,7 +483,7 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
 
         hb_itemRelease(pID);
 
-        if (HB_IS_OBJECT(pStructure))
+        if (pStructure->isObject())
         {
           hb_objSendMsg(pStructure, "SizeOf", 0);
           uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
@@ -1225,7 +1225,7 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
 
         hb_itemRelease(pID);
 
-        if (HB_IS_OBJECT(pStructure))
+        if (pStructure->isObject())
         {
           hb_objSendMsg(pStructure, "SizeOf", 0);
           uiMemberSize = static_cast<HB_UINT>(hb_parns(-1));
@@ -1394,7 +1394,7 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
 
       hb_itemRelease(pID);
 
-      if (!HB_IS_OBJECT(pStructure))
+      if (!pStructure->isObject())
       {
         hb_itemRelease(pStructure);
         hb_errRT_BASE(EG_ARG, 2023, nullptr, "StructureToArray", 2, hb_paramError(1), hb_paramError(2));

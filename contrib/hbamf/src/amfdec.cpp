@@ -58,7 +58,7 @@ static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
       hb_itemRelease(pRetCopy);
 
       if( pNewItem ) {
-         if( !HB_IS_OBJECT(pNewItem) ) {
+         if( !pNewItem->isObject() ) {
             hb_itemRelease(pNewItem);
             pNewItem = nullptr;
          }
@@ -1011,7 +1011,7 @@ static bool amf3_deserialize_obj(amfContext * context, PHB_ITEM pItem, bool prox
 #endif
    }
 
-   if( !HB_IS_OBJECT(pItem) ) {
+   if( !pItem->isObject() ) {
       hb_itemRelease(pClass);
       return false;
    }

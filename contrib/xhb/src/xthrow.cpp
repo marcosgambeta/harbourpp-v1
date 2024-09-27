@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -52,7 +56,7 @@ HB_FUNC(THROW)
 {
   auto pError = hb_param(1, Harbour::Item::ANY);
 
-  if (pError && HB_IS_OBJECT(pError))
+  if (pError && pError->isObject())
   {
     PHB_ITEM pResult = hb_errLaunchSubst(pError);
     if (pResult)

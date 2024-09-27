@@ -78,7 +78,7 @@ LONG WINAPI PRGUnhandledExceptionFilter(EXCEPTION_POINTERS *ExceptionInfo)
       hb_vmPushStringPcode("EXCEPTION_POINTERS", 18);
       hb_vmPushLong(8);
       hb_vmDo(2);
-      if (HB_IS_OBJECT(hb_stackReturnItem()))
+      if (hb_stackReturnItem()->isObject())
       {
         pException = hb_itemNew(hb_stackReturnItem());
         if (s_pBufferMsg)

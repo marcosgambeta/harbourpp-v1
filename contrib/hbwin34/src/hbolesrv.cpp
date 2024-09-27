@@ -336,7 +336,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch *lpThis, REFIID riid, L
             dispid = static_cast<DISPID>(nPos);
           }
         }
-        else if (HB_IS_OBJECT(pAction))
+        else if (pAction->isObject())
         {
           auto pDynSym = hb_dynsymFindName(szName);
 
@@ -452,7 +452,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
         }
       }
     }
-    else if (HB_IS_OBJECT(pAction))
+    else if (pAction->isObject())
     {
       pDynSym = hb_dispIdToDynsym(dispid);
       if (pDynSym && (wFlags & DISPATCH_PROPERTYPUT) != 0)

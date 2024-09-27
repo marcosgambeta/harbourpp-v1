@@ -832,7 +832,7 @@ static HB_BOOL hb_oleSafeArrayToString(PHB_ITEM pItem, SAFEARRAY *pSafeArray)
 
 IDispatch *hb_oleItemGetDispatch(PHB_ITEM pItem)
 {
-  if (HB_IS_OBJECT(pItem))
+  if (pItem->isObject())
   {
     if (hb_objHasMessage(pItem, s_pDyns_hObjAccess))
     {
@@ -1021,7 +1021,7 @@ static void hb_oleItemToVariantRef(VARIANT *pVariant, PHB_ITEM pItem, VARIANT *p
     break;
   }
   case Harbour::Item::ARRAY: /* or OBJECT */
-    if (HB_IS_OBJECT(pItem))
+    if (pItem->isObject())
     {
       IDispatch *pDisp = hb_oleItemGetDispatch(pItem);
 
@@ -1493,7 +1493,7 @@ void hb_oleVariantUpdate(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjF
         }
       }
     }
-    else if (pObjFunc && HB_IS_OBJECT(pItem))
+    else if (pObjFunc && pItem->isObject())
     {
       VARIANTARG variant;
       VariantInit(&variant);
@@ -1528,7 +1528,7 @@ void hb_oleVariantUpdate(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjF
         *V_UNKNOWNREF(pVariant) = pUnk;
       }
     }
-    else if (pObjFunc && HB_IS_OBJECT(pItem))
+    else if (pObjFunc && pItem->isObject())
     {
       VARIANTARG variant;
       VariantInit(&variant);

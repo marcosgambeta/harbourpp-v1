@@ -1018,7 +1018,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
       } else {
          result = amf3_serialize_date(context, pItem);
       }
-   } else if( HB_IS_OBJECT(pItem) ) {
+   } else if( pItem->isObject() ) {
       if( !writeByte(context, OBJECT_TYPE) ) {
          result = false;
       } else {
