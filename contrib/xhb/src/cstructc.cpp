@@ -1282,7 +1282,7 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
       break;
 
     case CTYPE_CHAR_PTR: /* char * */
-      if (HB_IS_STRING(pBaseVar->pItems + nIndex) &&
+      if ((pBaseVar->pItems + nIndex)->isString() &&
           (pBaseVar->pItems + nIndex)->item.asString.value == *((char **)(Buffer + uiOffset)))
       {
 #if 0
@@ -1306,7 +1306,7 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
       break;
 
     case CTYPE_UNSIGNED_CHAR_PTR: /* unsigned char * */
-      if (HB_IS_STRING(pBaseVar->pItems + nIndex) &&
+      if ((pBaseVar->pItems + nIndex)->isString() &&
           (pBaseVar->pItems + nIndex)->item.asString.value == *((char **)(Buffer + uiOffset)))
       {
 #if 0

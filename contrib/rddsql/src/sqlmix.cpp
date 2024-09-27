@@ -1628,7 +1628,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
    switch( uiIndex ) {
       case DBOI_CONDITION:
          pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, (pTag ? pTag->szForExpr : nullptr));
-         if( pTag && pOrderInfo->itmNewVal && HB_IS_STRING(pOrderInfo->itmNewVal) ) {
+         if( pTag && pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isString() ) {
             if( pTag->szForExpr != nullptr ) {
                hb_xfree(pTag->szForExpr);
                pTag->szForExpr = nullptr;

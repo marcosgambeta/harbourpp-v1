@@ -49,6 +49,10 @@
    tip_FileNameMimeType() -> hb_mimeFName()
    tip_MimeType()         -> hb_mimeStr() */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -739,7 +743,7 @@ HB_FUNC( TIP_FILEMIMETYPE )
       const char * ext_type   = nullptr;
       const char * magic_type = nullptr;
 
-      if( HB_IS_STRING(pFile) )
+      if( pFile->isString() )
       {
          auto fname = hb_itemGetCPtr(pFile);
 

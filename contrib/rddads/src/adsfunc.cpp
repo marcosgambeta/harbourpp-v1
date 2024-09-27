@@ -641,7 +641,7 @@ HB_FUNC( ADSKEYNO )
    auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
-   if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
+   if( (pxOrder == nullptr || pxOrder->isString() || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
       if( pArea != nullptr ) {
@@ -686,7 +686,7 @@ HB_FUNC( ADSKEYCOUNT )
    auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
-   if( (pxOrder == nullptr || HB_IS_STRING(pxOrder) || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
+   if( (pxOrder == nullptr || pxOrder->isString() || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
       if( pArea != nullptr ) {
@@ -1987,7 +1987,7 @@ HB_FUNC( ADSDDSETDATABASEPROPERTY )
       case ADS_DD_TEMP_TABLE_PATH:
       case ADS_DD_ADMIN_PASSWORD:
       case ADS_DD_ENCRYPT_TABLE_PASSWORD:
-         ulRetVal = AdsDDSetDatabaseProperty( hConnect, ulProperty, HB_IS_STRING(pParam) ? const_cast<char*>(hb_itemGetCPtr(pParam)) : nullptr,
+         ulRetVal = AdsDDSetDatabaseProperty( hConnect, ulProperty, pParam->isString() ? const_cast<char*>(hb_itemGetCPtr(pParam)) : nullptr,
                                               static_cast<UNSIGNED16>(hb_itemGetCLen(pParam)) + 1 );
          break;
       /* String properties (NULL not accepted) */

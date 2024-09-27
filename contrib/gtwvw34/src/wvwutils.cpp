@@ -47,6 +47,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbgtwvw.hpp"
 
 #include "hbapifs.hpp"
@@ -1279,12 +1283,12 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
         pFunc = hb_itemNew(pFirst);
         iType = 2;
       }
-      else if (HB_IS_STRING(pFirst))
+      else if (pFirst->isString())
       {
         auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
         if (pExecSym)
         {
-          pFunc = static_cast<PHB_ITEM>(pExecSym);
+          pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
         }
         iType = 1;
       }
@@ -1381,10 +1385,10 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
         wvw->a.pFuncModal[iIndex] = hb_itemNew(pFirst);
         wvw->a.iTypeModal[iIndex] = 2;
       }
-      else if (HB_IS_STRING(pFirst))
+      else if (pFirst->isString())
       {
         auto pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
-        wvw->a.pFuncModal[iIndex] = pExecSym ? static_cast<PHB_ITEM>(pExecSym) : nullptr;
+        wvw->a.pFuncModal[iIndex] = pExecSym ? reinterpret_cast<PHB_ITEM>(pExecSym) : nullptr;
         wvw->a.iTypeModal[iIndex] = 1;
       }
 

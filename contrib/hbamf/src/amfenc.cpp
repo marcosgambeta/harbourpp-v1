@@ -51,7 +51,7 @@ extern bool hbamf_is_cls_externalizable(HB_USHORT uiClass);
 
 static void _ref_realItemPtr(PHB_ITEM pKey, PHB_ITEM pItem)
 {
-   if( HB_IS_STRING(pItem) ) {
+   if( pItem->isString() ) {
       hb_itemPutPtr(pKey, const_cast<char*>(hb_itemGetCPtr(pItem)));
    } else if( HB_IS_ARRAY(pItem) ) {
       hb_itemPutPtr(pKey, hb_arrayId(pItem));
@@ -301,7 +301,7 @@ static int amf3_add_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
 
    }
 
-   if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr ) {
+   if( (pItem->isString() || HB_IS_MEMO(pItem)) && context->use_strstr ) {
       auto str_len = hb_itemGetCLen(pItem);
       if( str_len > 3 && str_len < 32 ) { /* do this only for mid-sized strings */
          if( !context->use_refs ) {
@@ -347,7 +347,7 @@ static int amf3_get_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
       }
    }
 
-   if( (HB_IS_STRING(pItem) || HB_IS_MEMO(pItem)) && context->use_strstr ) {
+   if( (pItem->isString() || HB_IS_MEMO(pItem)) && context->use_strstr ) {
       auto str_len = hb_itemGetCLen(pItem);
       if( str_len > 3 && str_len < 32 ) { /* do this only for mid-sized strings */
          PHB_ITEM pStrIdx = hb_hashGetItemPtr(context->strstr_ref, pItem, 0);
@@ -410,7 +410,7 @@ static bool amf3_serialize_object_as_string(amfContext * context, PHB_ITEM pItem
    PHB_ITEM pStr;
    bool result;
 
-   if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) ) {
+   if( pItem->isString() || HB_IS_MEMO(pItem) ) {
       return amf3_serialize_string(context, pItem);
    }
 
@@ -449,7 +449,7 @@ static bool amf3_encode_hash(amfContext * context, PHB_ITEM pItem)
    for( i = 1; i <= len; i++ ) {
       pKey = hb_hashGetKeyAt(pItem, i);
       pVal = hb_hashGetValueAt(pItem, i);
-      if( HB_IS_STRING(pKey) ) {
+      if( pKey->isString() ) {
          if( !amf3_serialize_string(context, pKey) ) {
             return false;
          }
@@ -486,7 +486,7 @@ static bool amf3_encode_dynamic_dict(amfContext * context, PHB_ITEM pItem)
    for( i = 1; i <= len; i++ ) {
       PHB_ITEM pKey = hb_hashGetKeyAt(pItem, i);
       PHB_ITEM pVal = hb_hashGetValueAt(pItem, i);
-      if( HB_IS_STRING(pKey) ) {
+      if( pKey->isString() ) {
          if( !amf3_serialize_string(context, pKey) ) {
             return false;
          }
@@ -534,7 +534,7 @@ static HB_ISIZ amf3_encode_byte_array(amfContext * context, PHB_ITEM pItem)
    HB_ISIZ      item_len;
    const char * bytes;
 
-   if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) ) {
+   if( pItem->isString() || HB_IS_MEMO(pItem) ) {
       item_len = hb_itemGetCLen(pItem);
       bytes    = hb_itemGetCPtr(pItem);
    } else {
@@ -998,7 +998,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
       result = amf3_write_int(context, pItem);
    } else if( pItem->isDouble() ) {
       result = amfX_write_double(context, pItem);
-   } else if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) ) {
+   } else if( pItem->isString() || HB_IS_MEMO(pItem) ) {
       if( context->encode_ba ) {
          if( !writeByte(context, BYTE_ARRAY_TYPE) ) {
             result = false;

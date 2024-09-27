@@ -54,6 +54,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "gtwvg.hpp"
 
 #include <windowsx.h>
@@ -942,7 +946,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
         pFunc = hb_itemNew(pFirst);
         iType = 2;
       }
-      else if (HB_IS_STRING(pFirst))
+      else if (pFirst->isString())
       {
         pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
         if (pExecSym)
@@ -1056,7 +1060,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
         _s->pFuncModal[iIndex] = pFunc;
         _s->iTypeModal[iIndex] = 2;
       }
-      else if (HB_IS_STRING(pFirst))
+      else if (pFirst->isString())
       {
         pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
         if (pExecSym)

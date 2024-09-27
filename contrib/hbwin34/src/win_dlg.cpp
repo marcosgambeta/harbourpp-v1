@@ -45,6 +45,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbwapi.hpp"
 
 #include <commdlg.h>
@@ -111,7 +115,7 @@ static LPTSTR s_dialogPairs(int iParam, DWORD *pdwIndex)
       for (n = nLen = 0; n < nSize; ++n)
       {
         pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
-        if (HB_IS_STRING(pArrItem))
+        if (pArrItem->isString())
         {
           n1 = HB_ITEMCOPYSTR(pArrItem, nullptr, 0);
           if (n1)
@@ -136,7 +140,7 @@ static LPTSTR s_dialogPairs(int iParam, DWORD *pdwIndex)
         for (n = nLen = 0; n < nSize; ++n)
         {
           pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
-          if (HB_IS_STRING(pArrItem))
+          if (pArrItem->isString())
           {
             n1 = HB_ITEMCOPYSTR(pArrItem, lpStr + nLen, nTotal - nLen);
             if (n1)

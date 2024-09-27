@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 #include "hbapilng.hpp"
@@ -75,12 +79,12 @@ HB_FUNC( XPP_INDEX )
             else
                hb_errRT_BASE(EG_BOUND, 1012, "Error in array index", hb_langDGetErrorDesc(EG_ARRASSIGN), 1, pIndex);
          }
-         else if( HB_IS_STRING(pSelf) )
+         else if( pSelf->isString() )
          {
             auto nLen = hb_itemGetCLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )
             {
-               char cValue = HB_IS_STRING(pValue) ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
+               char cValue = pValue->isString() ? hb_itemGetCPtr(pValue)[0] : static_cast<char>(hb_itemGetNI(pValue));
                if( nLen == 1 )
                   hb_itemPutCL(pSelf, &cValue, 1);
                else
@@ -115,7 +119,7 @@ HB_FUNC( XPP_INDEX )
             else
                hb_errRT_BASE(EG_BOUND, 1132, nullptr, hb_langDGetErrorDesc(EG_ARRACCESS), 2, pSelf, pIndex);  /* TODO: Emulate exact XPP error msg */
          }
-         else if( HB_IS_STRING(pSelf) )
+         else if( pSelf->isString() )
          {
             auto nLen = hb_itemGetCLen(pSelf);
             if( XHB_IS_VALID_INDEX( nIndex, nLen ) )

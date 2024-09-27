@@ -46,6 +46,10 @@
 
 /* NOTE: User programs should never call this layer directly! */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 /* This definition has to be placed before #include "hbapigt.hpp" */
 #define HB_GT_NAME CTW
 
@@ -2403,7 +2407,7 @@ static int hb_ctw_gt_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 
   int iOptions;
 
-  if (pMessage && HB_IS_STRING(pMessage) && pOptions && (iOptions = static_cast<int>(hb_arrayLen(pOptions))) > 0)
+  if (pMessage && pMessage->isString() && pOptions && (iOptions = static_cast<int>(hb_arrayLen(pOptions))) > 0)
   {
     int iRows, iCols;
     HB_BOOL fScreen;

@@ -1891,7 +1891,7 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, PHB_ITEM pNode, int style)
 
     hb_objSendMsg(pNode, "CDATA", 0);
 
-    if (HB_IS_STRING(hb_param(-1, Harbour::Item::ANY)))
+    if (hb_param(-1, Harbour::Item::ANY)->isString())
     {
       mxml_output_char(out, ' ');
       mxml_output_string_len(out, hb_parcx(-1), hb_parclen(-1));
@@ -1909,7 +1909,7 @@ static MXML_STATUS mxml_node_write(MXML_OUTPUT *out, PHB_ITEM pNode, int style)
     mxml_output_string_len(out, hb_parcx(-1), hb_parclen(-1));
     hb_objSendMsg(pNode, "CDATA", 0);
 
-    if (HB_IS_STRING(hb_param(-1, Harbour::Item::ANY)))
+    if (hb_param(-1, Harbour::Item::ANY)->isString())
     {
       mxml_output_char(out, ' ');
       mxml_output_string_len(out, hb_parcx(-1), hb_parclen(-1));
@@ -2392,7 +2392,7 @@ HB_FUNC(HBXML_DATAREAD)
   char buffer[512], *buf;
   HB_SIZE nLen;
 
-  if (pDoc == nullptr || pParam == nullptr || (!HB_IS_STRING(pParam) && !HB_IS_NUMERIC(pParam)))
+  if (pDoc == nullptr || pParam == nullptr || (!pParam->isString() && !HB_IS_NUMERIC(pParam)))
   {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     return;

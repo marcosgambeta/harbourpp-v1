@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
@@ -92,7 +96,7 @@ HB_FUNC( CUPSPRINTFILE )
             PHB_ITEM pKey = hb_hashGetKeyAt(pOptions, tmp);
             PHB_ITEM pVal = hb_hashGetValueAt(pOptions, tmp);
 
-            if( pKey && HB_IS_STRING(pKey) && pVal )
+            if( pKey && pKey->isString() && pVal )
                num_options = cupsAddOption(hb_itemGetCPtr(pKey), hb_itemGetCPtr(pVal), num_options, &options);
          }
       }

@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "rddads.hpp"
 
 #include "hbinit.hpp"
@@ -1305,7 +1309,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
    /* all others need an index handle */
    if( uiIndex != DBOI_ORDERCOUNT ) {
       if( pOrderInfo->itmOrder ) {
-         if( HB_IS_STRING(pOrderInfo->itmOrder) ) {
+         if( pOrderInfo->itmOrder->isString() ) {
             pTag = pArea->pTagList;
             while( pTag ) {
                if( !hb_stricmp( hb_itemGetCPtr(pOrderInfo->itmOrder), pTag->szName ) ) {

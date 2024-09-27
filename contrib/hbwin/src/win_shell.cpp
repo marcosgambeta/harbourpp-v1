@@ -45,6 +45,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #undef _WIN32_IE
 #define _WIN32_IE 0x0500 /* request Windows 2000 features for NOTIFYICONDATA */
 
@@ -168,7 +172,7 @@ static LPTSTR s_StringList(int iParam)
       for (n = nLen = 0; n < nSize; ++n)
       {
         pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
-        if (HB_IS_STRING(pArrItem))
+        if (pArrItem->isString())
         {
           n1 = HB_ITEMCOPYSTR(pArrItem, nullptr, 0);
           if (n1)
@@ -184,7 +188,7 @@ static LPTSTR s_StringList(int iParam)
         for (n = nLen = 0; n < nSize; ++n)
         {
           pArrItem = hb_arrayGetItemPtr(pItem, n + 1);
-          if (HB_IS_STRING(pArrItem))
+          if (pArrItem->isString())
           {
             n1 = HB_ITEMCOPYSTR(pArrItem, lpStr + nLen, nTotal - nLen);
             if (n1)

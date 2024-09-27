@@ -140,7 +140,7 @@ HB_FUNC(XHB__KEYBOARD)
       {
         hb_inkeyPut(hb_itemGetNI(pItem));
       }
-      else if (HB_IS_STRING(pItem))
+      else if (pItem->isString())
       {
         hb_inkeySetText(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), false);
       }

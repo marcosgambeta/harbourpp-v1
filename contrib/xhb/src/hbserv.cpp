@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -805,7 +809,7 @@ HB_FUNC(HB_PUSHSIGNALHANDLER)
   auto iMask = hb_parni(1);
   auto pFunc = hb_param(2, Harbour::Item::ANY);
 
-  if (pFunc == nullptr || iMask == 0 || (!HB_IS_POINTER(pFunc) && !HB_IS_STRING(pFunc) && !HB_IS_BLOCK(pFunc)))
+  if (pFunc == nullptr || iMask == 0 || (!HB_IS_POINTER(pFunc) && !pFunc->isString() && !HB_IS_BLOCK(pFunc)))
   {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, "Wrong parameter count/type", nullptr, 2, hb_param(1, Harbour::Item::ANY),
                          hb_param(2, Harbour::Item::ANY));

@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbvmint.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
@@ -192,7 +196,7 @@ HB_FUNC_STATIC(_PROCNAME)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     hb_errPutProcName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }
@@ -226,7 +230,7 @@ HB_FUNC_STATIC(_MODULENAME)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_STRING(pItem))
+  if (pItem && pItem->isString())
   {
     hb_errPutModuleName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
   }

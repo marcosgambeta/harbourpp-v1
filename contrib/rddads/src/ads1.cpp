@@ -610,7 +610,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
                }
                /* fallthrough */
             case ADS_STRING:
-               if( HB_IS_STRING(pItem) ) {
+               if( pItem->isString() ) {
                   UNSIGNED16 u16DataType = ADS_STRINGKEY ;
                   auto ucLen = static_cast<UNSIGNED16>(hb_itemGetCLen(pItem));
                   auto pucScope = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pItem)));
@@ -1014,7 +1014,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
    }
 
    /* build a seek key */
-   if( HB_IS_STRING(pKey) ) {
+   if( pKey->isString() ) {
       pszKey = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetCPtr(pKey)));
       u16KeyLen = static_cast<UNSIGNED16>(hb_itemGetCLen(pKey));
 #ifdef ADS_USE_OEM_TRANSLATION
@@ -2556,7 +2556,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
    switch( pField->uiType ) {
       case Harbour::DB::Field::STRING:
       case Harbour::DB::Field::VARLENGTH:
-         if( HB_IS_STRING(pItem) ) {
+         if( pItem->isString() ) {
             bTypeError = false;
 #if ADS_LIB_VERSION >= 1000
             if( (pField->uiFlags & HB_FF_UNICODE) != 0 ) {
@@ -2675,7 +2675,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case Harbour::DB::Field::MEMO:
       case Harbour::DB::Field::BLOB:
       case Harbour::DB::Field::IMAGE:
-         if( HB_IS_STRING(pItem) ) {
+         if( pItem->isString() ) {
             bTypeError = false;
             nLen = hb_itemGetCLen(pItem);
 
@@ -3991,7 +3991,7 @@ static HB_ERRCODE adsOrderListFocus(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
    pOrderInfo->itmResult = hb_itemPutCL(pOrderInfo->itmResult, reinterpret_cast<char*>(pucTagName), u16Len);
 
    if( pOrderInfo->itmOrder ) {
-      if( HB_IS_STRING(pOrderInfo->itmOrder) ) {
+      if( pOrderInfo->itmOrder->isString() ) {
          /* ADS cannot handle a space-padded string--we have to trim it */
          hb_strncpyUpperTrim(reinterpret_cast<char*>(pucTagName), hb_itemGetCPtr(pOrderInfo->itmOrder), sizeof(pucTagName) - 1);
          if( !pucTagName[0] ) {
@@ -4184,7 +4184,7 @@ static HB_ERRCODE adsOrderDestroy(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
    ADSHANDLE hIndex;
    UNSIGNED32 u32RetVal;
 
-   if( HB_IS_STRING(pOrderInfo->itmOrder) ) {
+   if( pOrderInfo->itmOrder->isString() ) {
       UNSIGNED8 pucTagName[ADS_MAX_TAG_NAME + 1];
 
       hb_strncpyUpperTrim(reinterpret_cast<char*>(pucTagName), hb_itemGetCPtr(pOrderInfo->itmOrder), sizeof(pucTagName) - 1);
@@ -4234,7 +4234,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
    if( uiIndex != DBOI_ORDERCOUNT && pOrderInfo->itmOrder && !pOrderInfo->itmOrder->isNil() ) {
       u32RetVal = AE_SUCCESS;
 
-      if( HB_IS_STRING(pOrderInfo->itmOrder) ) {
+      if( pOrderInfo->itmOrder->isString() ) {
          UNSIGNED8 pucTagName[ADS_MAX_TAG_NAME + 1];
 
          hb_strncpyUpperTrim(reinterpret_cast<char*>(pucTagName), hb_itemGetCPtr(pOrderInfo->itmOrder), sizeof(pucTagName) - 1);

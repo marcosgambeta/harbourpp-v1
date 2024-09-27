@@ -99,7 +99,7 @@ HB_FUNC(BLANK)
       hb_retnl(0);
     }
   }
-  else if (HB_IS_STRING(pItem))
+  else if (pItem->isString())
   {
     auto pMode = hb_param(2, Harbour::Item::LOGICAL);
 

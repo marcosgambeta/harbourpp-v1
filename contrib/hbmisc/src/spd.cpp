@@ -480,7 +480,7 @@ HB_FUNC( SQL_SPRINTF )
                hb_itemRelease(pItmCpy);
 
             }
-            else if( HB_IS_STRING(pItmPar) && ( iCOut == 's' || iCOut == 'S' ) )
+            else if( pItmPar->isString() && ( iCOut == 's' || iCOut == 'S' ) )
             {
                if( IsType )
                {

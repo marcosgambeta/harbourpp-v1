@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -81,7 +85,7 @@ static void s_xhb_bitOper(int iOper)
       return;
     }
 
-    if (HB_IS_STRING(pItem1) && HB_IS_STRING(pItem2))
+    if (pItem1->isString() && pItem2->isString())
     {
       if ((nLen1 | nLen2) != 0)
       {
@@ -132,7 +136,7 @@ static void s_xhb_bitOper(int iOper)
       return;
     }
 
-    if (HB_IS_STRING(pItem1) && (HB_IS_NUMERIC(pItem2) || nLen2 == 1))
+    if (pItem1->isString() && (HB_IS_NUMERIC(pItem2) || nLen2 == 1))
     {
       if (nLen1)
       {
@@ -171,7 +175,7 @@ static void s_xhb_bitOper(int iOper)
       return;
     }
 
-    if ((HB_IS_NUMERIC(pItem1) || nLen1 == 1) && HB_IS_STRING(pItem2))
+    if ((HB_IS_NUMERIC(pItem1) || nLen1 == 1) && pItem2->isString())
     {
       auto pStr = hb_itemGetCPtr(pItem2);
       int iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);

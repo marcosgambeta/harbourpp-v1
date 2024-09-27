@@ -549,7 +549,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, PHB_ITEM p
     return true;
   }
 
-  if (HB_IS_STRING(pItem))
+  if (pItem->isString())
   {
     pStr = hb_itemGetCPtr(pItem);
     uiPos = static_cast<UINT>(hb_itemGetCLen(pItem));
@@ -754,7 +754,7 @@ static SAFEARRAY *hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims,
   {
     if (pItem != nullptr)
     {
-      if (HB_IS_STRING(pItem))
+      if (pItem->isString())
       {
         plSize[0] = static_cast<UINT>(hb_itemGetCLen(pItem));
       }
@@ -1832,7 +1832,7 @@ static HRESULT GetNamedParams(IDispatch *pDisp, OLECHAR *szMethodName, PHB_ITEM 
   for (nPos = 1; nPos <= nLen; ++nPos)
   {
     PHB_ITEM pKey = hb_hashGetKeyAt(pHash, nPos);
-    if (HB_IS_STRING(pKey))
+    if (pKey->isString())
     {
       pNames[iArgs + 1] =
           const_cast<HB_WCHAR *>(hb_itemGetStrU16(pKey, HB_CDP_ENDIAN_NATIVE, &phStrings[iArgs], nullptr));
@@ -2915,7 +2915,7 @@ HB_FUNC(__OLEVARIANTNEW)
 #endif
 
   case VT_BSTR:
-    if (pInit == nullptr || HB_IS_STRING(pInit))
+    if (pInit == nullptr || pInit->isString())
     {
       V_VT(&variant) = VT_BSTR;
       V_BSTR(&variant) = hb_oleItemToString(pInit);

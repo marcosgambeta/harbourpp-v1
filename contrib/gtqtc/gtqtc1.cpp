@@ -1687,21 +1687,21 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
          pText     = hb_hashGetCItemPtr(pText, "TXT");
       }
 
-      if( pTitle && HB_IS_STRING(pTitle) ) {
+      if( pTitle && pTitle->isString() ) {
          hb_gt_qtc_itemGetQString(pTitle, &qStr);
          qMsg.setWindowTitle(qStr);
       } else if( !pQTC->wndTitle->isNull() ) {
          qMsg.setWindowTitle(*pQTC->wndTitle);
       }
-      if( pText && HB_IS_STRING(pText) ) {
+      if( pText && pText->isString() ) {
          hb_gt_qtc_itemGetQString(pText, &qStr);
          qMsg.setText(qStr);
       }
-      if( pInfoText && HB_IS_STRING(pInfoText) ) {
+      if( pInfoText && pInfoText->isString() ) {
          hb_gt_qtc_itemGetQString(pInfoText, &qStr);
          qMsg.setInformativeText(qStr);
       }
-      if( pDetailed && HB_IS_STRING(pDetailed) ) {
+      if( pDetailed && pDetailed->isString() ) {
          hb_gt_qtc_itemGetQString(pDetailed, &qStr);
          qMsg.setDetailedText(qStr);
       }
@@ -1715,7 +1715,7 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
          for( i = 1; i <= iLen; ++i ) {
             auto pItem = hb_arrayGetItemPtr(pButtons, i);
 
-            if( HB_IS_STRING(pItem) ) {
+            if( pItem->isString() ) {
                hb_gt_qtc_itemGetQString(pItem, &qStr);
                qMsg.addButton(qStr, QMessageBox::ActionRole);
             }
@@ -2020,7 +2020,7 @@ static int hb_gt_qtc_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 
    pQTC = HB_GTQTC_GET(pGT);
 
-   if( pQTC->fMsgAlert && pMessage && (HB_IS_STRING(pMessage) || HB_IS_HASH(pMessage)) ) {
+   if( pQTC->fMsgAlert && pMessage && (pMessage->isString() || HB_IS_HASH(pMessage)) ) {
       iRet = hb_gt_qtc_messageBox(pQTC, pMessage, pOptions, dDelay);
    }
    else {
@@ -2091,7 +2091,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_FONTNAME:
          pInfo->pResult = hb_gt_qtc_itemPutQString(pInfo->pResult, pQTC->fontName);
-         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isString() ) {
             /* store font status for next operation on fontsize */
             hb_gt_qtc_itemGetQString(pInfo->pNewVal, pQTC->fontName);
          }
@@ -2158,7 +2158,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_WINTITLE:
          pInfo->pResult = hb_gt_qtc_itemPutQString(pInfo->pResult, pQTC->wndTitle);
-         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isString() ) {
             hb_gt_qtc_itemGetQString(pInfo->pNewVal, pQTC->wndTitle);
             if( pQTC->qWnd ) {
                pQTC->qWnd->setWindowTitle(*pQTC->wndTitle);
@@ -2167,7 +2167,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
 
       case HB_GTI_ICONFILE:
-         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isString() ) {
             QString qStr;
             hb_gt_qtc_itemGetQString(pInfo->pNewVal, &qStr);
             if( pQTC->qIcon ) {
@@ -2212,7 +2212,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             }
          }
          pInfo->pResult = hb_gt_qtc_itemPutQString(pInfo->pResult, &qStr);
-         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isString() ) {
             hb_gt_qtc_itemGetQString(pInfo->pNewVal, &qStr);
             QApplication::clipboard()->setText(qStr);
             if( QApplication::clipboard()->supportsSelection() ) {
@@ -2449,7 +2449,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             QImage qImg = QImage();
 
             /* filename or resource */
-            if( HB_IS_STRING(pInfo->pNewVal) ) {
+            if( pInfo->pNewVal->isString() ) {
                if( hb_itemGetCLen(pInfo->pNewVal) > 0 ) {
                   QString qStr;
                   hb_gt_qtc_itemGetQString(pInfo->pNewVal, &qStr);
@@ -2560,7 +2560,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
 #ifdef HB_QT_SOUND
       case HB_GTI_SOUND:
-         if( pInfo->pNewVal && HB_IS_STRING(pInfo->pNewVal) && hb_itemGetCLen(pInfo->pNewVal) > 0 ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isString() && hb_itemGetCLen(pInfo->pNewVal) > 0 ) {
             QString qStr;
             hb_gt_qtc_itemGetQString(pInfo->pNewVal, &qStr);
             QSound::play(qStr);

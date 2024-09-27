@@ -46,6 +46,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
@@ -108,7 +112,7 @@ HB_FUNC( DLLCALL )
 
    if( pLibrary )
    {
-      if( HB_IS_STRING(pLibrary) )
+      if( pLibrary->isString() )
       {
          pLibraryHandle = hb_libLoad(pLibrary, nullptr);
          if( pLibraryHandle )
@@ -154,7 +158,7 @@ HB_FUNC( DLLPREPARECALL )
 
    if( pLibrary )
    {
-      if( HB_IS_STRING(pLibrary) )
+      if( pLibrary->isString() )
       {
          pLibraryHandle = hb_libLoad(pLibrary, nullptr);
          if( pLibraryHandle )

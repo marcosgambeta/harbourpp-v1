@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbrddsql.hpp"
 
 #include "hbapiitm.hpp"
@@ -153,7 +157,7 @@ static HB_ERRCODE mysqlConnect(SQLDDCONNECTION * pConnection, PHB_ITEM pItem)
                            hb_arrayGetCPtr(pItem, 4) /* password */,
                            hb_arrayGetCPtr(pItem, 5) /* db */,
                            hb_arrayGetNI(pItem, 6) /* port */,
-                           pItemUnixSocket && HB_IS_STRING(pItemUnixSocket) ? hb_itemGetCPtr(pItemUnixSocket) : nullptr,
+                           pItemUnixSocket && pItemUnixSocket->isString() ? hb_itemGetCPtr(pItemUnixSocket) : nullptr,
                            hb_arrayGetNI(pItem, 8) /* flags*/) ) {
       hb_rddsqlSetError(mysql_errno(pMySql), mysql_error(pMySql), nullptr, nullptr, 0);
       mysql_close(pMySql);

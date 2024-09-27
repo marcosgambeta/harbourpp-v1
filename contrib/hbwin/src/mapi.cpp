@@ -45,6 +45,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp" /* for HB_OS_* detection */
 
 #if defined(UNICODE)
@@ -186,7 +190,7 @@ HB_FUNC(WIN_MAPISENDMAIL)
 
           ++note.nRecipCount;
         }
-        else if (HB_IS_STRING(pItem))
+        else if (pItem->isString())
         {
           note.lpRecips[note.nRecipCount].lpszName =
               const_cast<LPSTR>(HB_ITEMGETSTR(pItem, &hString[iString++], nullptr));
@@ -209,7 +213,7 @@ HB_FUNC(WIN_MAPISENDMAIL)
           note.lpFiles[note.nFileCount].nPosition = static_cast<ULONG>(-1);
           ++note.nFileCount;
         }
-        else if (HB_IS_STRING(pItem))
+        else if (pItem->isString())
         {
           note.lpFiles[note.nFileCount].lpszPathName =
               const_cast<LPSTR>(HB_ITEMGETSTR(pItem, &hString[iString++], nullptr));
