@@ -57,7 +57,7 @@ static void _ref_realItemPtr(PHB_ITEM pKey, PHB_ITEM pItem)
       hb_itemPutPtr(pKey, hb_arrayId(pItem));
    } else if( pItem->isHash() ) {
       hb_itemPutPtr(pKey, hb_hashId(pItem));
-   } else if( HB_IS_DATETIME(pItem) ) {
+   } else if( pItem->isDateTime() ) {
       hb_itemCopy(pKey, pItem);
    }
 }
@@ -272,7 +272,7 @@ static int amf3_add_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
       auto pKey = hb_itemNew(nullptr);
 
       _ref_realItemPtr(pKey, pItem);
-      if( !pKey->isPointer() && !HB_IS_DATETIME(pKey) ) {
+      if( !pKey->isPointer() && !pKey->isDateTime() ) {
          hb_itemRelease(pKey);
          return -1;
       }
@@ -1012,7 +1012,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
             result = amf3_serialize_string(context, pItem);
          }
       }
-   } else if( HB_IS_DATETIME(pItem) ) {
+   } else if( pItem->isDateTime() ) {
       if( !writeByte(context, DATE_TYPE) ) {
          result = false;
       } else {

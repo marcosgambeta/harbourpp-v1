@@ -2897,7 +2897,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_DATE:
-    if (pInit == nullptr || HB_IS_DATETIME(pInit))
+    if (pInit == nullptr || pInit->isDateTime())
     {
       V_VT(&variant) = VT_DATE;
       V_R8(&variant) = hb_itemGetTD(pInit) - HB_OLE_DATE_BASE;

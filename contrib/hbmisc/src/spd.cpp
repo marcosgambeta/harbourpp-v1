@@ -502,7 +502,7 @@ HB_FUNC( SQL_SPRINTF )
                   hb_itemRelease(pItmPar);
 
             }
-            else if( HB_IS_DATETIME(pItmPar) && iCOut == 's' )
+            else if( pItmPar->isDateTime() && iCOut == 's' )
             {
                long lDate, lTime;
                char cDTFrm[27];

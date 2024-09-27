@@ -587,7 +587,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
          switch( u16KeyType ) {
             case ADS_RAW:               /* ADT files need the ";" concatenation operator (instead of "+") to be optimized */
                /* ADS timestamp values */
-               if( HB_IS_DATETIME(pItem) ) {
+               if( pItem->isDateTime() ) {
                   if( pArea->iFileType == ADS_ADT ) {
                      UNSIGNED8 pKeyBuf[8];
                      long lDate, lTime;
@@ -643,7 +643,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
                break;
 
             case ADS_DATE:
-               if( HB_IS_DATETIME(pItem) ) {
+               if( pItem->isDateTime() ) {
                   double dTemp;
                   dTemp = hb_itemGetDL(pItem);
                   AdsSetScope(hOrder, nScope, reinterpret_cast<UNSIGNED8*>(&dTemp), static_cast<UNSIGNED16>(sizeof(dTemp)), ADS_DOUBLEKEY);
@@ -1029,7 +1029,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
 #else
       u16KeyType = ADS_STRINGKEY;
 #endif
-   } else if( HB_IS_DATETIME(pKey) ) {
+   } else if( pKey->isDateTime() ) {
       u16KeyType = 0;
       AdsGetKeyType(pArea->hOrdCurrent, &u16KeyType);
       /* index on timestamp values */
@@ -2638,7 +2638,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case Harbour::DB::Field::TIME:
       case Harbour::DB::Field::TIMESTAMP:
       case Harbour::DB::Field::MODTIME:
-         if( HB_IS_DATETIME(pItem) ) {
+         if( pItem->isDateTime() ) {
             long lDate, lTime;
             bTypeError = false;
             hb_itemGetTDT(pItem, &lDate, &lTime);
@@ -2650,7 +2650,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
 
       case Harbour::DB::Field::DATE:
-         if( HB_IS_DATETIME(pItem) ) {
+         if( pItem->isDateTime() ) {
             long lDate = hb_itemGetDL(pItem);
 
             /* ADS does not support dates before 0001-01-01. It generates corrupted
