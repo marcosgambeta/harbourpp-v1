@@ -55,7 +55,7 @@ static void _ref_realItemPtr(PHB_ITEM pKey, PHB_ITEM pItem)
       hb_itemPutPtr(pKey, const_cast<char*>(hb_itemGetCPtr(pItem)));
    } else if( pItem->isArray() ) {
       hb_itemPutPtr(pKey, hb_arrayId(pItem));
-   } else if( HB_IS_HASH(pItem) ) {
+   } else if( pItem->isHash() ) {
       hb_itemPutPtr(pKey, hb_hashId(pItem));
    } else if( HB_IS_DATETIME(pItem) ) {
       hb_itemCopy(pKey, pItem);
@@ -1030,7 +1030,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
       } else {
          result = amf3_serialize_array(context, pItem);
       }
-   } else if( HB_IS_HASH(pItem) ) {
+   } else if( pItem->isHash() ) {
       result = amf3_write_hash(context, pItem);
    }
 

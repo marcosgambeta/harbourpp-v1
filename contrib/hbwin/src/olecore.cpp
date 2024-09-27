@@ -1717,7 +1717,7 @@ HB_BOOL hb_oleDispInvoke(PHB_SYMB pSym, PHB_ITEM pObject, PHB_ITEM pParam, DISPP
       }
     }
 
-    if (pObject && !HB_IS_HASH(pObject))
+    if (pObject && !pObject->isHash())
     {
       hb_vmSend(static_cast<HB_USHORT>(iParams));
     }

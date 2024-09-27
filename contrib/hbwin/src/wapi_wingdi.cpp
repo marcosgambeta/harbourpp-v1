@@ -76,7 +76,7 @@ POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
 
   memset(p, 0, sizeof(POINT));
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->x = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "x")));
     p->y = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "y")));
@@ -102,7 +102,7 @@ void hbwapi_stor_POINT(POINT *p, int iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     s_hb_hashSetCItemNL(pStru, "x", p->x);
     s_hb_hashSetCItemNL(pStru, "y", p->y);
@@ -120,7 +120,7 @@ RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
 
   memset(p, 0, sizeof(RECT));
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->left = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "left")));
     p->top = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "top")));
@@ -150,7 +150,7 @@ void hbwapi_stor_RECT(RECT *p, int iParam)
 {
   auto pStru = hb_param(iParam, Harbour::Item::ANY);
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     s_hb_hashSetCItemNL(pStru, "left", p->left);
     s_hb_hashSetCItemNL(pStru, "top", p->top);
@@ -176,7 +176,7 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
 
   memset(p, 0, sizeof(LOGFONT));
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->lfHeight = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfHeight")));
     p->lfWidth = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfWidth")));
@@ -255,7 +255,7 @@ DOCINFO *hbwapi_par_DOCINFO(DOCINFO *p, int iParam, HB_BOOL bMandatory, void ***
 
   p->cbSize = sizeof(DOCINFO);
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->lpszDocName = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszDocName"), &h[0], nullptr);
     p->lpszOutput = HB_ITEMGETSTR(hb_hashGetCItemPtr(pStru, "lpszOutput"), &h[1], nullptr);
@@ -323,7 +323,7 @@ HB_FUNC(__WAPI_DEVMODE_SET)
   PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
   auto pStru = hb_param(2, Harbour::Item::ANY);
 
-  if (pDevMode && pStru && HB_IS_HASH(pStru))
+  if (pDevMode && pStru && pStru->isHash())
   {
     pDevMode->dmOrientation = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmOrientation")));
     pDevMode->dmPaperSize = static_cast<short>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "dmPaperSize")));
@@ -384,7 +384,7 @@ HB_FUNC(__WAPI_DEVMODE_GET)
   PDEVMODE pDevMode = hbwapi_par_PDEVMODE(1);
   auto pStru = hb_param(2, Harbour::Item::ANY);
 
-  if (pDevMode && pStru && HB_IS_HASH(pStru))
+  if (pDevMode && pStru && pStru->isHash())
   {
     s_hb_hashSetCItemNL(pStru, "dmOrientation", pDevMode->dmOrientation);
     s_hb_hashSetCItemNL(pStru, "dmPaperSize", pDevMode->dmPaperSize);

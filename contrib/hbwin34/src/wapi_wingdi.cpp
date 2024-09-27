@@ -85,7 +85,7 @@ POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
 
   memset(p, 0, sizeof(*p));
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->x = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "x")));
     p->y = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "y")));
@@ -113,7 +113,7 @@ void hbwapi_stor_SIZE(const SIZE *p, int iParam)
 
   if (pStru)
   {
-    if (HB_IS_HASH(pStru))
+    if (pStru->isHash())
     {
       s_hb_hashSetCItemNL(pStru, "cx", p->cx);
       s_hb_hashSetCItemNL(pStru, "cy", p->cy);
@@ -145,7 +145,7 @@ void hbwapi_stor_POINT(const POINT *p, int iParam)
 
   if (pStru)
   {
-    if (HB_IS_HASH(pStru))
+    if (pStru->isHash())
     {
       s_hb_hashSetCItemNL(pStru, "x", p->x);
       s_hb_hashSetCItemNL(pStru, "y", p->y);
@@ -177,7 +177,7 @@ RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
 
   memset(p, 0, sizeof(*p));
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->left = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "left")));
     p->top = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "top")));
@@ -209,7 +209,7 @@ void hbwapi_stor_RECT(const RECT *p, int iParam)
 
   if (pStru)
   {
-    if (HB_IS_HASH(pStru))
+    if (pStru->isHash())
     {
       s_hb_hashSetCItemNL(pStru, "left", p->left);
       s_hb_hashSetCItemNL(pStru, "top", p->top);
@@ -249,7 +249,7 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
 
   memset(p, 0, sizeof(*p));
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->lfHeight = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfHeight")));
     p->lfWidth = static_cast<LONG>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lfWidth")));
@@ -323,7 +323,7 @@ LOGBRUSH *hbwapi_par_LOGBRUSH(LOGBRUSH *p, int iParam)
 
   memset(p, 0, sizeof(*p));
 
-  if (pStru && HB_IS_HASH(pStru))
+  if (pStru && pStru->isHash())
   {
     p->lbStyle = static_cast<UINT>(hb_itemGetNI(hb_hashGetCItemPtr(pStru, "lbStyle")));
     p->lbColor = static_cast<COLORREF>(hb_itemGetNL(hb_hashGetCItemPtr(pStru, "lbColor")));
@@ -1160,7 +1160,7 @@ static void hbwapi_stor_TEXTMETRIC(const TEXTMETRIC *p, int iParam)
 
   if (pStru)
   {
-    if (HB_IS_HASH(pStru))
+    if (pStru->isHash())
     {
       s_hb_hashSetCItemNL(pStru, "tmHeight", p->tmHeight);
       s_hb_hashSetCItemNL(pStru, "tmAscent", p->tmAscent);

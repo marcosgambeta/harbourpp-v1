@@ -89,7 +89,7 @@ HB_FUNC( CUPSPRINTFILE )
    {
       HB_SIZE tmp;
 
-      if( HB_IS_HASH(pOptions) )
+      if( pOptions->isHash() )
       {
          for( tmp = 1; tmp <= hb_hashLen(pOptions); ++tmp )
          {

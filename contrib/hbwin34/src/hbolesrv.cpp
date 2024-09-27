@@ -327,7 +327,7 @@ static HRESULT STDMETHODCALLTYPE GetIDsOfNames(IDispatch *lpThis, REFIID riid, L
           }
           dispid = static_cast<DISPID>(nPos);
         }
-        else if (HB_IS_HASH(pAction))
+        else if (pAction->isHash())
         {
           HB_SIZE nPos = hb_hashGetCItemPos(pAction, szName);
 
@@ -411,7 +411,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
                                    pVarResult, s_objItemToVariant, uiClass);
       }
     }
-    else if (HB_IS_HASH(pAction))
+    else if (pAction->isHash())
     {
       PHB_ITEM pItem;
 
@@ -653,7 +653,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance(IClassFactory *lpThis, IUnk
           hb_vmRequestRestore();
         }
       }
-      else if (HB_IS_HASH(s_pAction))
+      else if (s_pAction->isHash())
       {
         if (s_fHashClone)
         {
@@ -892,7 +892,7 @@ HB_FUNC(WIN_OLESERVERINIT)
           {
             if (hb_parl(4))
             {
-              if (HB_IS_HASH(s_pAction))
+              if (s_pAction->isHash())
               {
                 s_fHashClone = true;
               }

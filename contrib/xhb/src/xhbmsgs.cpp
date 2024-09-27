@@ -106,7 +106,7 @@ HB_FUNC(XHB_INCLUDE)
   {
     hb_retl(hb_arrayScan(pSelf, pKey, nullptr, nullptr, true) != 0);
   }
-  else if (HB_IS_HASH(pSelf) && (HB_IS_HASHKEY(pKey) || hb_hashLen(pKey) == 1))
+  else if (pSelf->isHash() && (HB_IS_HASHKEY(pKey) || hb_hashLen(pKey) == 1))
   {
     hb_retl(hb_hashScan(pSelf, pKey, nullptr));
   }
@@ -168,7 +168,7 @@ HB_FUNC(XHB_EQUAL)
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) == dValue);
   }
-  else if (HB_IS_HASH(pSelf) && HB_IS_HASH(pValue))
+  else if (pSelf->isHash() && pValue->isHash())
   {
     hb_retl(hb_hashId(pSelf) == hb_hashId(pValue));
   }
@@ -199,7 +199,7 @@ HB_FUNC(XHB_NOTEQUAL)
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) != dValue);
   }
-  else if (HB_IS_HASH(pSelf) && HB_IS_HASH(pValue))
+  else if (pSelf->isHash() && pValue->isHash())
   {
     hb_retl(hb_hashId(pSelf) != hb_hashId(pValue));
   }
@@ -452,7 +452,7 @@ HB_FUNC(XHB_PLUS)
     uc += static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   }
-  else if (HB_IS_HASH(pSelf) && HB_IS_HASH(pValue))
+  else if (pSelf->isHash() && pValue->isHash())
   {
     PHB_ITEM pHash = hb_hashClone(pSelf);
     hb_hashJoin(pHash, pValue, HB_HASH_UNION);
@@ -486,7 +486,7 @@ HB_FUNC(XHB_MINUS)
     uc -= static_cast<HB_UCHAR>(hb_itemGetNI(pValue));
     hb_retclen(reinterpret_cast<char *>(&uc), 1);
   }
-  else if (HB_IS_HASH(pSelf) && HB_IS_HASH(pValue))
+  else if (pSelf->isHash() && pValue->isHash())
   {
     PHB_ITEM pHash = hb_hashClone(pSelf);
     hb_hashRemove(pHash, pValue);

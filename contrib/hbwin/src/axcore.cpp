@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbwapi.hpp"
 #include "hbwinole.hpp"
 #include <olectl.h>
@@ -340,7 +344,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
   {
     auto pKey = hb_itemPutNL(hb_stackAllocItem(), static_cast<long>(dispid));
 
-    if (pAction && HB_IS_HASH(pAction))
+    if (pAction && pAction->isHash())
     {
       pAction = hb_hashGetItemPtr(pAction, pKey, 0);
       pKey = nullptr;

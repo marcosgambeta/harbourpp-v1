@@ -1671,7 +1671,7 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
 
       pTitle = pInfoText = pDetailed = nullptr;
 
-      if( HB_IS_HASH(pText) ) {
+      if( pText->isHash() ) {
          if( !pButtons || !pButtons->isArray() ) {
             pButtons = hb_hashGetCItemPtr(pText, "BTN");
          }
@@ -2020,7 +2020,7 @@ static int hb_gt_qtc_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
 
    pQTC = HB_GTQTC_GET(pGT);
 
-   if( pQTC->fMsgAlert && pMessage && (pMessage->isString() || HB_IS_HASH(pMessage)) ) {
+   if( pQTC->fMsgAlert && pMessage && (pMessage->isString() || pMessage->isHash()) ) {
       iRet = hb_gt_qtc_messageBox(pQTC, pMessage, pOptions, dDelay);
    }
    else {

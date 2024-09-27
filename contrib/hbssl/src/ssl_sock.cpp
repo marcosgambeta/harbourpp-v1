@@ -456,7 +456,7 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
   PHB_ITEM pSSL = nullptr;
   SSL *ssl = nullptr;
 
-  if (pParams && HB_IS_HASH(pParams))
+  if (pParams && pParams->isHash())
   {
     PHB_ITEM pItem;
 
