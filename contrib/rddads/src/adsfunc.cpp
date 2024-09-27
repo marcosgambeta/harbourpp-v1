@@ -961,7 +961,7 @@ HB_FUNC( ADSISRECORDVALID )
          if( pArea->dbfi.itmCobExpr ) {
             auto pResult = hb_vmEvalBlock(pArea->dbfi.itmCobExpr);
 
-            bReturn = HB_IS_LOGICAL(pResult) && hb_itemGetL(pResult);
+            bReturn = pResult->isLogical() && hb_itemGetL(pResult);
          } else {
             bReturn = true;
          }

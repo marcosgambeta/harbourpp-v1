@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "ct.h"
 
 HB_FUNC(XTOC)
@@ -69,7 +73,7 @@ HB_FUNC(XTOC)
       HB_PUT_LE_DOUBLE(buf, d);
       hb_retclen(buf, sizeof(buf));
     }
-    else if (HB_IS_LOGICAL(pItem))
+    else if (pItem->isLogical())
     {
       hb_retclen(hb_itemGetL(pItem) ? "T" : "F", 1);
     }

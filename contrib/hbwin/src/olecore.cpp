@@ -2759,7 +2759,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_BOOL:
-    if (pInit == nullptr || HB_IS_LOGICAL(pInit))
+    if (pInit == nullptr || pInit->isLogical())
     {
       V_VT(&variant) = VT_BOOL;
       V_BOOL(&variant) = hb_itemGetL(pInit) ? TRUE : FALSE;

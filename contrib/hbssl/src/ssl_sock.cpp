@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 /* this has to be declared before hbsocket.h is included */
 #define _HB_SOCKEX_IMPLEMENTATION_
 
@@ -473,11 +477,11 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
     {
       timeout = hb_itemGetNInt(pItem);
     }
-    if ((pItem = hb_hashGetCItemPtr(pParams, "server")) != nullptr && HB_IS_LOGICAL(pItem))
+    if ((pItem = hb_hashGetCItemPtr(pParams, "server")) != nullptr && pItem->isLogical())
     {
       fServer = hb_itemGetL(pItem);
     }
-    else if ((pItem = hb_hashGetCItemPtr(pParams, "client")) != nullptr && HB_IS_LOGICAL(pItem))
+    else if ((pItem = hb_hashGetCItemPtr(pParams, "client")) != nullptr && pItem->isLogical())
     {
       fServer = !hb_itemGetL(pItem);
     }

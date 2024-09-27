@@ -992,7 +992,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
 
    if( pItem->isNil() ) {
       result = amf3_encode_nil(context);
-   } else if( HB_IS_LOGICAL(pItem) ) {
+   } else if( pItem->isLogical() ) {
       result = amf3_encode_bool(context, pItem);
    } else if( HB_IS_INTEGER(pItem) || HB_IS_LONG(pItem) ) {
       result = amf3_write_int(context, pItem);

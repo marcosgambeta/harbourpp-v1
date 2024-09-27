@@ -1043,7 +1043,7 @@ static HB_BOOL hb_mixCheckRecordFilter(SQLMIXAREAP pArea, HB_ULONG ulRecNo)
 
       if( !lResult && pArea->sqlarea.area.dbfi.itmCobExpr ) {
          auto pResult = hb_vmEvalBlock(pArea->sqlarea.area.dbfi.itmCobExpr);
-         lResult = HB_IS_LOGICAL(pResult) && !hb_itemGetL(pResult);
+         lResult = pResult->isLogical() && !hb_itemGetL(pResult);
       }
    }
    return !lResult;
@@ -1757,7 +1757,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
 
       case DBOI_CUSTOM:
          pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, (pTag ? pTag->fCustom : HB_FALSE));
-         if( pOrderInfo->itmNewVal && HB_IS_LOGICAL(pOrderInfo->itmNewVal) && hb_itemGetL(pOrderInfo->itmNewVal) ) {
+         if( pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isLogical() && hb_itemGetL(pOrderInfo->itmNewVal) ) {
             pTag->fCustom = true;
          }
          break;

@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
@@ -92,7 +96,7 @@ HB_FUNC(COMPLEMENT)
       hb_itemGetNLen(pItem, &iWidth, &iDec);
       hb_retndlen(-dValue, iWidth, iDec);
     }
-    else if (HB_IS_LOGICAL(pItem))
+    else if (pItem->isLogical())
     {
       hb_retl(!hb_itemGetL(pItem));
     }

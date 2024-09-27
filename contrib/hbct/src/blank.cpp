@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
@@ -144,7 +148,7 @@ HB_FUNC(BLANK)
       hb_reta(0);
     }
   }
-  else if (HB_IS_LOGICAL(pItem))
+  else if (pItem->isLogical())
   {
     if (bRef)
     {

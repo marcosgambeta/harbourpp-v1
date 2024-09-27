@@ -2236,7 +2236,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             pQTC->fMaximized = (pQTC->qWnd->windowState() & Qt::WindowMaximized) != 0;
          }
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fMaximized);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fMaximized : pQTC->fMaximized ) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fMaximized : pQTC->fMaximized ) ) {
             pQTC->fMaximized = !pQTC->fMaximized;
             if( pQTC->qWnd ) {
                hb_gt_qtc_setWindowState(pQTC, Qt::WindowMaximized, pQTC->fMaximized, true);
@@ -2249,7 +2249,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             pQTC->fFullScreen = (pQTC->qWnd->windowState() & Qt::WindowFullScreen) != 0;
          }
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fFullScreen);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fFullScreen : pQTC->fFullScreen) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fFullScreen : pQTC->fFullScreen) ) {
             pQTC->fFullScreen = !pQTC->fFullScreen;
             if( pQTC->qWnd ) {
                hb_gt_qtc_setWindowState(pQTC, Qt::WindowFullScreen, pQTC->fFullScreen, true);
@@ -2259,7 +2259,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_ALTENTER:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fAltEnter);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() ) {
             pQTC->fAltEnter = hb_itemGetL(pInfo->pNewVal);
          }
          break;
@@ -2269,7 +2269,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             pQTC->fMinimized = (pQTC->qWnd->windowState() & Qt::WindowMinimized) != 0;
          }
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fMinimized);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fMinimized : pQTC->fMinimized) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fMinimized : pQTC->fMinimized) ) {
             pQTC->fMinimized = !pQTC->fMinimized;
             if( pQTC->qWnd ) {
                hb_gt_qtc_setWindowState(pQTC, Qt::WindowMinimized, pQTC->fMinimized, !pQTC->fMinimized);
@@ -2279,7 +2279,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_CLOSABLE:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->iCloseMode == 0);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && (hb_itemGetL(pInfo->pNewVal) ? (pQTC->iCloseMode != 0) : (pQTC->iCloseMode == 0)) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() && (hb_itemGetL(pInfo->pNewVal) ? (pQTC->iCloseMode != 0) : (pQTC->iCloseMode == 0)) ) {
             iVal = pQTC->iCloseMode;
             pQTC->iCloseMode = iVal == 0 ? 1 : 0;
             if( pQTC->qWnd ) {
@@ -2303,7 +2303,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_RESIZABLE:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fResizable);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fResizable : pQTC->fResizable ) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fResizable : pQTC->fResizable ) ) {
             pQTC->fResizable = !pQTC->fResizable;
             if( pQTC->qWnd ) {
                pQTC->qWnd->setResizing();
@@ -2332,7 +2332,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_RESIZESTEP:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fResizeInc);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fResizeInc : pQTC->fResizeInc ) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() && (hb_itemGetL(pInfo->pNewVal) ? !pQTC->fResizeInc : pQTC->fResizeInc ) ) {
             pQTC->fResizeInc = !pQTC->fResizeInc;
             if( pQTC->qWnd ) {
                pQTC->qWnd->setResizing();
@@ -2342,7 +2342,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_SELECTCOPY:
          pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fSelectCopy);
-         if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isLogical() ) {
             pQTC->fSelectCopy = hb_itemGetL(pInfo->pNewVal);
          }
          break;
@@ -2548,9 +2548,9 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
 
       case HB_GTI_MSGBOX:
-         if( !pInfo->pNewVal || HB_IS_LOGICAL(pInfo->pNewVal) || pInfo->pNewVal->isNil() ) {
+         if( !pInfo->pNewVal || pInfo->pNewVal->isLogical() || pInfo->pNewVal->isNil() ) {
             pInfo->pResult = hb_itemPutL(pInfo->pResult, pQTC->fMsgAlert);
-            if( pInfo->pNewVal && HB_IS_LOGICAL(pInfo->pNewVal) ) {
+            if( pInfo->pNewVal && pInfo->pNewVal->isLogical() ) {
                pQTC->fMsgAlert = hb_itemGetL(pInfo->pNewVal);
             }
          } else {

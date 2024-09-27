@@ -1054,7 +1054,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
       pszKey = reinterpret_cast<UNSIGNED8*>(&dValue);
       u16KeyLen = static_cast<UNSIGNED16>(sizeof(double));
       u16KeyType = ADS_DOUBLEKEY;
-   } else if( HB_IS_LOGICAL(pKey) ) {
+   } else if( pKey->isLogical() ) {
       pszKey = reinterpret_cast<UNSIGNED8*>(const_cast<char*>(hb_itemGetL(pKey) ? "1" : "0"));
       u16KeyLen = 1;
       u16KeyType = ADS_STRINGKEY;
@@ -1368,7 +1368,7 @@ static HB_ERRCODE adsSkipFilter(ADSAREAP pArea, HB_LONG lUpDown)
    if( pArea->area.dbfi.itmCobExpr != nullptr && !pArea->area.dbfi.fOptimized ) {
       while( !pArea->area.fBof && !pArea->area.fEof ) {
          auto pResult = hb_vmEvalBlock(pArea->area.dbfi.itmCobExpr);
-         if( !HB_IS_LOGICAL(pResult) || hb_itemGetL(pResult) ) {
+         if( !pResult->isLogical() || hb_itemGetL(pResult) ) {
             break;
          }
 
@@ -2665,7 +2665,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
 
       case Harbour::DB::Field::LOGICAL:
-         if( HB_IS_LOGICAL(pItem) ) {
+         if( pItem->isLogical() ) {
             bTypeError = false;
             *szText = hb_itemGetL(pItem) ? 'T' : 'F';
             u32RetVal = AdsSetLogical(pArea->hTable, ADSFIELD(uiIndex), static_cast<UNSIGNED16>(hb_itemGetL(pItem)));
@@ -4281,7 +4281,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
             AdsIsIndexDescending(hIndex, &u16);
 
 #if ADS_LIB_VERSION >= 900
-            if( pOrderInfo->itmNewVal && HB_IS_LOGICAL(pOrderInfo->itmNewVal) ) {
+            if( pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isLogical() ) {
                if( hb_itemGetL(pOrderInfo->itmNewVal) ? u16 == 0 : u16 != 0 ) {
                   AdsSetIndexDirection(hIndex, true);
                }

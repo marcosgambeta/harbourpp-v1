@@ -7,6 +7,10 @@
  * AmFast C library for Python
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapistr.hpp"
@@ -266,7 +270,7 @@ static bool amf3_deserialize_string(amfContext * context, PHB_ITEM pItem)
    /* Check for reference */
    pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem ) {
-      if( HB_IS_LOGICAL(pRefItem) ) {
+      if( pRefItem->isLogical() ) {
          /* Logical value means a problem getting reference from the hash */
          hb_itemRelease(pRefItem);
          return false;
@@ -389,7 +393,7 @@ static bool amf3_deserialize_array(amfContext * context, PHB_ITEM pItem, bool co
    /* Check for reference */
    pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem ) {
-      if( HB_IS_LOGICAL(pRefItem) ) {
+      if( pRefItem->isLogical() ) {
          /* Logical value means a problem getting reference from the hash */
          hb_itemRelease(pRefItem);
          return false;
@@ -489,7 +493,7 @@ static bool amf3_deserialize_date(amfContext * context, PHB_ITEM pItem)
    /* Check for reference */
    pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem ) {
-      if( HB_IS_LOGICAL(pRefItem) ) {
+      if( pRefItem->isLogical() ) {
          /* Logical value means a problem getting reference from the hash */
          hb_itemRelease(pRefItem);
          return false;
@@ -537,7 +541,7 @@ static bool amf3_deserialize_byte_array(amfContext * context, PHB_ITEM pItem)
    /* Check for reference */
    pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem ) {
-      if( HB_IS_LOGICAL(pRefItem) ) {
+      if( pRefItem->isLogical() ) {
          /* Logical value means a problem getting reference from the hash */
          hb_itemRelease(pRefItem);
          return false;
@@ -751,7 +755,7 @@ static bool amf3_deserialize_class_def(amfContext * context, PHB_ITEM pClass, in
    /* Check for reference */
    pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem ) {
-      if( HB_IS_LOGICAL(pRefItem) ) {
+      if( pRefItem->isLogical() ) {
          /* Logical value means a problem getting reference from the hash */
          hb_itemRelease(pRefItem);
          return false;
@@ -822,7 +826,7 @@ static bool amf3_decode_obj_attrs(amfContext * context, PHB_ITEM pHash, PHB_ITEM
       return false;
    }
 
-   if( HB_IS_LOGICAL(pValue) && hb_itemGetL(pValue) ) {
+   if( pValue->isLogical() && hb_itemGetL(pValue) ) {
       if( !amf3_decode_dynamic_dict(context, pHash) )
          return false;
    }
@@ -910,7 +914,7 @@ static bool amf3_deserialize_obj(amfContext * context, PHB_ITEM pItem, bool prox
    /* Check for reference */
    pRefItem = amf3_decode_reference(pHash, header);
    if( pRefItem ) {
-      if( HB_IS_LOGICAL(pRefItem) ) {
+      if( pRefItem->isLogical() ) {
          /* Logical value means a problem getting reference from the hash */
          hb_itemRelease(pRefItem);
          return false;

@@ -557,7 +557,7 @@ HB_FUNC( SQL_SPRINTF )
                hb_itemRelease(pItmCpy);
 
             }
-            else if( HB_IS_LOGICAL(pItmPar) )
+            else if( pItmPar->isLogical() )
             {
 
                if( s )  /* Internal Modifier */
