@@ -53,7 +53,7 @@ static void _ref_realItemPtr(PHB_ITEM pKey, PHB_ITEM pItem)
 {
    if( pItem->isString() ) {
       hb_itemPutPtr(pKey, const_cast<char*>(hb_itemGetCPtr(pItem)));
-   } else if( HB_IS_ARRAY(pItem) ) {
+   } else if( pItem->isArray() ) {
       hb_itemPutPtr(pKey, hb_arrayId(pItem));
    } else if( HB_IS_HASH(pItem) ) {
       hb_itemPutPtr(pKey, hb_hashId(pItem));
@@ -1024,7 +1024,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
       } else {
          result = amf3_serialize_object(context, pItem);
       }
-   } else if( HB_IS_ARRAY(pItem) ) {
+   } else if( pItem->isArray() ) {
       if( !writeByte(context, ARRAY_TYPE) ) {
          result = false;
       } else {

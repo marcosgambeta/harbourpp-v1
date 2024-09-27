@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 #include "hbset.hpp"
@@ -279,7 +283,7 @@ HB_FUNC(HB_READLINE)
 
   auto pOpt = hb_itemNew(nullptr);
 
-  if (HB_IS_ARRAY(pTerm1))
+  if (pTerm1->isArray())
   {
     HB_SIZE i;
 

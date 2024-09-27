@@ -163,7 +163,7 @@ static LPTSTR s_StringList(int iParam)
   {
     HB_SIZE nLen;
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       HB_SIZE nSize, n, n1;
       PHB_ITEM pArrItem;

@@ -5196,7 +5196,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          UNSIGNED32 u32RetVal;
          LPRDDADSDATA pData = RDDADSNODE_DATA(pRDD);
 
-         if( HB_IS_ARRAY(pItem) ) {
+         if( pItem->isArray() ) {
 #if ADS_LIB_VERSION >= 600
             u32RetVal = AdsConnect60(static_cast<UNSIGNED8*>(HB_UNCONST(hb_arrayGetCPtr(pItem, 1))) /* pucServerPath */,
                                      static_cast<UNSIGNED16>(hb_arrayGetNI(pItem, 2)) /* usServerTypes */,

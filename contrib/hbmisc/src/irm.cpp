@@ -7,6 +7,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -182,7 +186,7 @@ PHB_IRMMAP hb_irmExecute(PHB_ITEM pItem)
 {
    const char * szOper;
 
-   if( HB_IS_ARRAY(pItem) && ( szOper = hb_arrayGetCPtr(pItem, 1) ) != nullptr )
+   if( pItem->isArray() && ( szOper = hb_arrayGetCPtr(pItem, 1) ) != nullptr )
    {
       HB_ULONG   ulLen, ulSize;
       PHB_IRMMAP pMap;

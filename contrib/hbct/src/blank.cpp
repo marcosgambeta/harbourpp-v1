@@ -137,7 +137,7 @@ HB_FUNC(BLANK)
       }
     }
   }
-  else if (HB_IS_ARRAY(pItem))
+  else if (pItem->isArray())
   {
     if (bRef)
     {

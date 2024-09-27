@@ -1672,7 +1672,7 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
       pTitle = pInfoText = pDetailed = nullptr;
 
       if( HB_IS_HASH(pText) ) {
-         if( !pButtons || !HB_IS_ARRAY(pButtons) ) {
+         if( !pButtons || !pButtons->isArray() ) {
             pButtons = hb_hashGetCItemPtr(pText, "BTN");
          }
          if( dDelay <= 0 ) {
@@ -1705,7 +1705,7 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
          hb_gt_qtc_itemGetQString(pDetailed, &qStr);
          qMsg.setDetailedText(qStr);
       }
-      if( pButtons && HB_IS_ARRAY(pButtons) && (iLen = static_cast<int>(hb_arrayLen(pButtons))) > 0 ) {
+      if( pButtons && pButtons->isArray() && (iLen = static_cast<int>(hb_arrayLen(pButtons))) > 0 ) {
          int i;
 
 #if defined(HB_OS_ANDROID)
@@ -2380,7 +2380,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          if( pInfo->pNewVal && pInfo->pNewVal->isNumeric() && pInfo->pNewVal2 && pInfo->pNewVal2->isNumeric() ) {
             x = hb_itemGetNI(pInfo->pNewVal);
             y = hb_itemGetNI(pInfo->pNewVal2);
-         } else if( pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 2 ) {
+         } else if( pInfo->pNewVal && pInfo->pNewVal->isArray() && hb_arrayLen(pInfo->pNewVal) == 2 ) {
             x = hb_arrayGetNI(pInfo->pNewVal, 1);
             y = hb_arrayGetNI(pInfo->pNewVal, 2);
          } else {
@@ -2423,7 +2423,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
             for( iVal = 0; iVal < 16; iVal++ ) {
                hb_arraySetNL(pInfo->pResult, iVal + 1, QTC_RGB2NUM(pQTC->colors[iVal]));
             }
-            if( pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 16 ) {
+            if( pInfo->pNewVal && pInfo->pNewVal->isArray() && hb_arrayLen(pInfo->pNewVal) == 16 ) {
                for( iVal = 0; iVal < 16; iVal++ ) {
                   int iColor = hb_arrayGetNI(pInfo->pNewVal, iVal + 1);
                   QRgb rgb = QTC_NUM2RGB(iColor);
@@ -2512,7 +2512,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
             QRect rx = pQTC->qWnd->qConsole->image->rect();
 
-            if( pInfo->pNewVal2 && HB_IS_ARRAY(pInfo->pNewVal2) ) {
+            if( pInfo->pNewVal2 && pInfo->pNewVal2->isArray() ) {
                switch( hb_arrayLen(pInfo->pNewVal2) ) {
                   case 2:
                      rx.setLeft(hb_arrayGetNI(pInfo->pNewVal2, 1));

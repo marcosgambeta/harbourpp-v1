@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -640,7 +644,7 @@ HB_FUNC(
     for (auto i = 0; i < pointsTotal; i++)
     {
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
-      if (HB_IS_ARRAY(pPoint))
+      if (pPoint->isArray())
       {
         points[i].x = hb_arrayGetNI(pPoint, 1);
         points[i].y = hb_arrayGetNI(pPoint, 2);
@@ -681,7 +685,7 @@ HB_FUNC(GDIMAGEOPENPOLYGON) /* original: void gdImageOpenPolygon(gdImagePtr im, 
     for (auto i = 0; i < pointsTotal; i++)
     {
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
-      if (HB_IS_ARRAY(pPoint))
+      if (pPoint->isArray())
       {
         points[i].x = hb_arrayGetNI(pPoint, 1);
         points[i].y = hb_arrayGetNI(pPoint, 2);
@@ -742,7 +746,7 @@ HB_FUNC(GDIMAGEFILLEDPOLYGON) /* original: void gdImageFilledPolygon(gdImagePtr 
     for (auto i = 0; i < pointsTotal; i++)
     {
       auto pPoint = hb_arrayGetItemPtr(pPoints, i + 1);
-      if (HB_IS_ARRAY(pPoint))
+      if (pPoint->isArray())
       {
         points[i].x = hb_arrayGetNI(pPoint, 1);
         points[i].y = hb_arrayGetNI(pPoint, 2);

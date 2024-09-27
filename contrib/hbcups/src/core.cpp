@@ -100,7 +100,7 @@ HB_FUNC( CUPSPRINTFILE )
                num_options = cupsAddOption(hb_itemGetCPtr(pKey), hb_itemGetCPtr(pVal), num_options, &options);
          }
       }
-      else if( HB_IS_ARRAY(pOptions) )
+      else if( pOptions->isArray() )
       {
          for( tmp = 1; tmp <= hb_arrayLen(pOptions); ++tmp )
          {

@@ -554,7 +554,7 @@ static HB_BOOL hb_oleSafeArrayFill(SAFEARRAY *pSafeArray, VARTYPE vt, PHB_ITEM p
     pStr = hb_itemGetCPtr(pItem);
     uiPos = static_cast<UINT>(hb_itemGetCLen(pItem));
   }
-  else if (HB_IS_ARRAY(pItem))
+  else if (pItem->isArray())
   {
     pStr = nullptr;
     uiPos = static_cast<UINT>(hb_arrayLen(pItem));
@@ -758,7 +758,7 @@ static SAFEARRAY *hb_oleSafeArrayFromItem(PHB_ITEM pItem, VARTYPE vt, int iDims,
       {
         plSize[0] = static_cast<UINT>(hb_itemGetCLen(pItem));
       }
-      else if (HB_IS_ARRAY(pItem))
+      else if (pItem->isArray())
       {
         plSize[0] = static_cast<UINT>(hb_arrayLen(pItem));
       }
@@ -2737,7 +2737,7 @@ HB_FUNC(__OLEVARIANTNEW)
 
   V_VT(&variant) = VT_ILLEGAL;
 
-  if (pInit && HB_IS_ARRAY(pInit) && iType == (iType & VT_TYPEMASK))
+  if (pInit && pInit->isArray() && iType == (iType & VT_TYPEMASK))
   {
     iType |= VT_ARRAY;
   }

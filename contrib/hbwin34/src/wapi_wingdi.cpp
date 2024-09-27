@@ -48,6 +48,10 @@
       https://msdn.microsoft.com/library/aa923590
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbwapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -88,7 +92,7 @@ POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
 
     return p;
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 2)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 2)
   {
     p->x = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
     p->y = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
@@ -116,7 +120,7 @@ void hbwapi_stor_SIZE(const SIZE *p, int iParam)
     }
     else
     {
-      if (!HB_IS_ARRAY(pStru))
+      if (!pStru->isArray())
       {
         if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(2)))
         {
@@ -148,7 +152,7 @@ void hbwapi_stor_POINT(const POINT *p, int iParam)
     }
     else
     {
-      if (!HB_IS_ARRAY(pStru))
+      if (!pStru->isArray())
       {
         if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(2)))
         {
@@ -182,7 +186,7 @@ RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
 
     return p;
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 4)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 4)
   {
     p->left = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
     p->top = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
@@ -214,7 +218,7 @@ void hbwapi_stor_RECT(const RECT *p, int iParam)
     }
     else
     {
-      if (!HB_IS_ARRAY(pStru))
+      if (!pStru->isArray())
       {
         if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(4)))
         {
@@ -275,7 +279,7 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
 
     return p;
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 14)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 14)
   {
     p->lfHeight = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
     p->lfWidth = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
@@ -334,7 +338,7 @@ LOGBRUSH *hbwapi_par_LOGBRUSH(LOGBRUSH *p, int iParam)
       p->lbHatch = reinterpret_cast<ULONG_PTR>(hb_itemGetPtr(hb_hashGetCItemPtr(pStru, "lbHatch")));
     }
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 3)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 3)
   {
     p->lbStyle = static_cast<UINT>(hb_arrayGetNI(pStru, 1));
     p->lbColor = static_cast<COLORREF>(hb_arrayGetNL(pStru, 2));
@@ -1181,7 +1185,7 @@ static void hbwapi_stor_TEXTMETRIC(const TEXTMETRIC *p, int iParam)
     }
     else
     {
-      if (!HB_IS_ARRAY(pStru))
+      if (!pStru->isArray())
       {
         if (!hb_itemParamStoreRelease(static_cast<USHORT>(iParam), pStru = hb_itemArrayNew(20)))
         {

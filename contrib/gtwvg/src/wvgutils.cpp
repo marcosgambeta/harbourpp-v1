@@ -54,6 +54,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "gtwvg.hpp"
 
 /* workaround for missing declaration in MinGW */
@@ -1221,7 +1225,7 @@ HB_FUNC(WVT_GETFONTHANDLE)
 
 HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT *rc)
 {
-  if (HB_IS_ARRAY(aRect) && hb_arrayLen(aRect) == 4)
+  if (aRect->isArray() && hb_arrayLen(aRect) == 4)
   {
     rc->left = hb_arrayGetNL(aRect, 1);
     rc->top = hb_arrayGetNL(aRect, 2);
@@ -1246,7 +1250,7 @@ PHB_ITEM wvt_Rect2Array(RECT *rc)
 
 HB_BOOL wvt_Array2Point(PHB_ITEM aPoint, POINT *pt)
 {
-  if (HB_IS_ARRAY(aPoint) && hb_arrayLen(aPoint) == 2)
+  if (aPoint->isArray() && hb_arrayLen(aPoint) == 2)
   {
     pt->x = hb_arrayGetNL(aPoint, 1);
     pt->y = hb_arrayGetNL(aPoint, 2);
@@ -1267,7 +1271,7 @@ PHB_ITEM wvt_Point2Array(POINT *pt)
 
 HB_BOOL wvt_Array2Size(PHB_ITEM aSize, SIZE *siz)
 {
-  if (HB_IS_ARRAY(aSize) && hb_arrayLen(aSize) == 2)
+  if (aSize->isArray() && hb_arrayLen(aSize) == 2)
   {
     siz->cx = hb_arrayGetNL(aSize, 1);
     siz->cy = hb_arrayGetNL(aSize, 2);

@@ -166,7 +166,7 @@ static LPTSTR s_StringList(int iParam)
   {
     HB_SIZE nLen, nSize, nTotal, n, n1;
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       nSize = hb_arrayLen(pItem);
       for (n = nLen = 0; n < nSize; ++n)

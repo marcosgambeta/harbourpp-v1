@@ -102,7 +102,7 @@ HB_FUNC(XHB_INCLUDE)
   auto pSelf = hb_stackSelfItem();
   auto pKey = hb_param(1, Harbour::Item::ANY);
 
-  if (HB_IS_ARRAY(pSelf))
+  if (pSelf->isArray())
   {
     hb_retl(hb_arrayScan(pSelf, pKey, nullptr, nullptr, true) != 0);
   }
@@ -340,7 +340,7 @@ HB_FUNC(XHB_INDEX)
     if (pIndex->isNumeric())
     {
       HB_SIZE nIndex = hb_itemGetNS(pIndex);
-      if (HB_IS_ARRAY(pSelf))
+      if (pSelf->isArray())
       {
         HB_SIZE nLen = hb_arrayLen(pSelf);
         if (XHB_IS_VALID_INDEX(nIndex, nLen))
@@ -393,7 +393,7 @@ HB_FUNC(XHB_INDEX)
     if (pIndex->isNumeric())
     {
       HB_SIZE nIndex = hb_itemGetNS(pIndex);
-      if (HB_IS_ARRAY(pSelf))
+      if (pSelf->isArray())
       {
         HB_SIZE nLen = hb_arrayLen(pSelf);
         if (XHB_IS_VALID_INDEX(nIndex, nLen))

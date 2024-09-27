@@ -48,6 +48,10 @@
       https://msdn.microsoft.com/library/aa923590
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbwapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -79,7 +83,7 @@ POINT *hbwapi_par_POINT(POINT *p, int iParam, HB_BOOL bMandatory)
 
     return p;
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 2)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 2)
   {
     p->x = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
     p->y = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
@@ -103,7 +107,7 @@ void hbwapi_stor_POINT(POINT *p, int iParam)
     s_hb_hashSetCItemNL(pStru, "x", p->x);
     s_hb_hashSetCItemNL(pStru, "y", p->y);
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 2)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 2)
   {
     hb_arraySetNL(pStru, 1, p->x);
     hb_arraySetNL(pStru, 2, p->y);
@@ -125,7 +129,7 @@ RECT *hbwapi_par_RECT(RECT *p, int iParam, HB_BOOL bMandatory)
 
     return p;
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 4)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 4)
   {
     p->left = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
     p->top = static_cast<LONG>(hb_arrayGetNL(pStru, 2));
@@ -153,7 +157,7 @@ void hbwapi_stor_RECT(RECT *p, int iParam)
     s_hb_hashSetCItemNL(pStru, "right", p->right);
     s_hb_hashSetCItemNL(pStru, "bottom", p->bottom);
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 4)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 4)
   {
     hb_arraySetNL(pStru, 1, p->left);
     hb_arraySetNL(pStru, 2, p->top);
@@ -202,7 +206,7 @@ LOGFONT *hbwapi_par_LOGFONT(LOGFONT *p, int iParam, HB_BOOL bMandatory)
 
     return p;
   }
-  else if (pStru && HB_IS_ARRAY(pStru) && hb_arrayLen(pStru) >= 14)
+  else if (pStru && pStru->isArray() && hb_arrayLen(pStru) >= 14)
   {
     p->lfHeight = static_cast<LONG>(hb_arrayGetNL(pStru, 1));
     p->lfWidth = static_cast<LONG>(hb_arrayGetNL(pStru, 2));

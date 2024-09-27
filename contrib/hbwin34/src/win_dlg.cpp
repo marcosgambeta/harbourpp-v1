@@ -106,7 +106,7 @@ static LPTSTR s_dialogPairs(int iParam, DWORD *pdwIndex)
   {
     HB_SIZE nLen, n, n1;
 
-    if (HB_IS_ARRAY(pItem))
+    if (pItem->isArray())
     {
       HB_SIZE nSize, n2;
       PHB_ITEM pArrItem;

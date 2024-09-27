@@ -247,7 +247,7 @@ HB_FUNC_STATIC(_AASTACK)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_ARRAY(pItem))
+  if (pItem && pItem->isArray())
   {
     hb_errPutCallStack(hb_stackSelfItem(), pItem);
   }
