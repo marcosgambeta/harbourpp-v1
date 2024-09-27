@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -109,7 +113,7 @@ static PHB_ITEM hb_mmf_itemPut(PHB_ITEM pItem, void * pMemAddr, int iType)
 {
    if( pItem != nullptr )
    {
-      if( HB_IS_COMPLEX(pItem) )
+      if( pItem->isComplex() )
          hb_itemClear(pItem);
    }
    else

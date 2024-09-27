@@ -67,7 +67,7 @@ static PHB_ITEM hb_itemPutCRaw(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_COMPLEX(pItem))
+    if (pItem->isComplex())
     {
       hb_itemClear(pItem);
     }
@@ -102,7 +102,7 @@ static PHB_ITEM hb_itemPutCRawStatic(PHB_ITEM pItem, const char *szText, HB_SIZE
 
   if (pItem != nullptr)
   {
-    if (HB_IS_COMPLEX(pItem))
+    if (pItem->isComplex())
     {
       hb_itemClear(pItem);
     }

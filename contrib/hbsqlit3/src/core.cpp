@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "sqlite3.h"
 
 #include "hbapi.hpp"
@@ -253,7 +257,7 @@ static PHB_ITEM hb_sqlite3_itemPut(PHB_ITEM pItem, void *pMemAddr, int iType)
 {
   if (pItem != nullptr)
   {
-    if (HB_IS_COMPLEX(pItem))
+    if (pItem->isComplex())
     {
       hb_itemClear(pItem);
     }
