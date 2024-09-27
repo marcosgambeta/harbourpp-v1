@@ -506,7 +506,7 @@ static HB_ERRCODE sqlbasePutValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITE
    HB_ERRCODE errCode = Harbour::SUCCESS;
    LPFIELD pField  = pArea->area.lpFields + (uiIndex - 1);
 
-   if(    ((HB_IS_MEMO(pItem) || pItem->isString()) && (pField->uiType == Harbour::DB::Field::STRING || pField->uiType == Harbour::DB::Field::MEMO))
+   if(    ((pItem->isMemo() || pItem->isString()) && (pField->uiType == Harbour::DB::Field::STRING || pField->uiType == Harbour::DB::Field::MEMO))
        || (HB_IS_DATE(pItem) && pField->uiType == Harbour::DB::Field::DATE)
        || (HB_IS_TIMESTAMP(pItem) && pField->uiType == Harbour::DB::Field::TIMESTAMP)
        || (HB_IS_NUMBER(pItem) && (pField->uiType == Harbour::DB::Field::INTEGER || pField->uiType == Harbour::DB::Field::LONG || pField->uiType == Harbour::DB::Field::FLOAT || pField->uiType == Harbour::DB::Field::DOUBLE))
