@@ -61,7 +61,7 @@ HB_FUNC(XTOC)
       char szDate[9];
       hb_retc(hb_itemGetDS(pItem, szDate));
     }
-    else if (HB_IS_TIMESTAMP(pItem))
+    else if (pItem->isTimeStamp())
     {
       char szDateTime[18];
       hb_retc(hb_itemGetTS(pItem, szDateTime));

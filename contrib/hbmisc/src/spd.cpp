@@ -516,7 +516,7 @@ HB_FUNC( SQL_SPRINTF )
                      cIntMod[f++] = '\0';           /* Date & Time */
                }
 
-               if( HB_IS_TIMESTAMP(pItmPar) )
+               if( pItmPar->isTimeStamp() )
                {
                   hb_itemGetTDT(pItmPar, &lDate, &lTime);
                   hb_timeStampFormat(cDTFrm,
@@ -549,7 +549,7 @@ HB_FUNC( SQL_SPRINTF )
                {
                   /* Empty DATE, DATETIME print DEFAULT for T converter or DK_EMPTYDATE, DK_EMPTYDATETIME for t converter */
                   if( *cDTFrm == ' ' )
-                     hb_itemPutC(pItmCpy, HB_IS_TIMESTAMP(pItmPar) ? (IsType == 2 ? "DEFAULT" : DK_EMPTYDATETIME) : (IsType == 2 ? "DEFAULT" : DK_EMPTYDATE));
+                     hb_itemPutC(pItmCpy, pItmPar->isTimeStamp() ? (IsType == 2 ? "DEFAULT" : DK_EMPTYDATETIME) : (IsType == 2 ? "DEFAULT" : DK_EMPTYDATE));
                   else
                      STAItm(pItmCpy);
                }

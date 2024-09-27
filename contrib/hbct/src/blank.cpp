@@ -66,7 +66,7 @@ HB_FUNC(BLANK)
       hb_retl(false);
     }
   }
-  else if (HB_IS_TIMESTAMP(pItem))
+  else if (pItem->isTimeStamp())
   {
     if (bRef)
     {

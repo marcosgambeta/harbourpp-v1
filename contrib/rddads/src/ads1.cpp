@@ -596,7 +596,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
                      ++lTime;
                      HB_PUT_BE_UINT32(pKeyBuf, lDate);
                      HB_PUT_BE_UINT32(&pKeyBuf[4], lTime);
-                     AdsSetScope(hOrder, nScope, pKeyBuf, HB_IS_TIMESTAMP(pItem) ? 8 : 4, ADS_RAWKEY);
+                     AdsSetScope(hOrder, nScope, pKeyBuf, pItem->isTimeStamp() ? 8 : 4, ADS_RAWKEY);
                      break;
                   }
 #if ADS_LIB_VERSION >= 900
@@ -1041,7 +1041,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
          HB_PUT_BE_UINT32(pKeyBuf, lDate);
          HB_PUT_BE_UINT32(&pKeyBuf[4], lTime);
          pszKey = pKeyBuf;
-         u16KeyLen = HB_IS_TIMESTAMP(pKey) ? 8 : 4;
+         u16KeyLen = pKey->isTimeStamp() ? 8 : 4;
          u16KeyType = ADS_RAWKEY;
       } else {
          dValue = hb_itemGetTD(pKey);

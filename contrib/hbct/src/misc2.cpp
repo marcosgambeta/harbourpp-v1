@@ -81,7 +81,7 @@ HB_FUNC(COMPLEMENT)
     {
       hb_retdl(4537847 - hb_itemGetDL(pItem));
     }
-    else if (HB_IS_TIMESTAMP(pItem))
+    else if (pItem->isTimeStamp())
     {
       hb_rettd(4537847.0 - hb_itemGetTD(pItem));
     }
