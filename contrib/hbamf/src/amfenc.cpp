@@ -328,7 +328,7 @@ static int amf3_get_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
       PHB_ITEM pVal;
 
       _ref_realItemPtr(pKey, pItem);
-      if( !HB_IS_POINTER(pKey) && !HB_IS_DOUBLE(pKey) ) {
+      if( !HB_IS_POINTER(pKey) && !pKey->isDouble() ) {
          hb_itemRelease(pKey);
          return -1;
       }
@@ -996,7 +996,7 @@ static bool amf3_encode(amfContext * context, PHB_ITEM pItem)
       result = amf3_encode_bool(context, pItem);
    } else if( pItem->isInteger() || pItem->isLong() ) {
       result = amf3_write_int(context, pItem);
-   } else if( HB_IS_DOUBLE(pItem) ) {
+   } else if( pItem->isDouble() ) {
       result = amfX_write_double(context, pItem);
    } else if( HB_IS_STRING(pItem) || HB_IS_MEMO(pItem) ) {
       if( context->encode_ba ) {
