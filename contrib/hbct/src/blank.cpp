@@ -77,7 +77,7 @@ HB_FUNC(BLANK)
       hb_rettdt(0, 0);
     }
   }
-  else if (HB_IS_DATE(pItem))
+  else if (pItem->isDate())
   {
     if (bRef)
     {

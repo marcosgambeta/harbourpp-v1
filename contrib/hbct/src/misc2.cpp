@@ -77,7 +77,7 @@ HB_FUNC(COMPLEMENT)
         hb_retc_null();
       }
     }
-    else if (HB_IS_DATE(pItem))
+    else if (pItem->isDate())
     {
       hb_retdl(4537847 - hb_itemGetDL(pItem));
     }

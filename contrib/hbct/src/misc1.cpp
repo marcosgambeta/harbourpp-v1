@@ -56,7 +56,7 @@ HB_FUNC(XTOC)
 
   if (pItem != nullptr)
   {
-    if (HB_IS_DATE(pItem))
+    if (pItem->isDate())
     {
       char szDate[9];
       hb_retc(hb_itemGetDS(pItem, szDate));
