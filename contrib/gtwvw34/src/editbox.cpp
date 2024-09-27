@@ -47,6 +47,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbgtwvw.hpp"
 
 /* EDITBOX begins (experimental) */
@@ -327,7 +331,7 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
     auto fCodeExec = false;
     auto pKey = hb_itemPutNI(nullptr, iKey);
     PHB_ITEM pCodeblock = hb_itemDoC("SETKEY", 1, pKey);
-    if (HB_IS_EVALITEM(pCodeblock))
+    if (pCodeblock->isEvalItem())
     {
       SetFocus(hWndParent);
       PHB_ITEM pReturn = hb_itemDo(pCodeblock, 0);

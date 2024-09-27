@@ -412,7 +412,7 @@ static SSL *s_SSL_itemGet(PHB_ITEM pItem, PHB_ITEM *pSSL, bool *pfFree)
   {
     PHB_ITEM pRelease = nullptr;
 
-    if (HB_IS_EVALITEM(pItem))
+    if (pItem->isEvalItem())
     {
       pItem = pRelease = hb_itemDo(pItem, 0);
     }

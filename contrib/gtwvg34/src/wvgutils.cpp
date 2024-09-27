@@ -751,7 +751,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wP
 
       case 2: /* Block */
         /* eval the codeblock */
-        if (HB_IS_EVALITEM(pFunc))
+        if (pFunc->isEvalItem())
         {
           if (hb_vmRequestReenter())
           {
@@ -858,7 +858,7 @@ static INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wP
         break;
 
       case 2:                      /* Block */
-        if (HB_IS_EVALITEM(pFunc)) /* eval the codeblock */
+        if (pFunc->isEvalItem()) /* eval the codeblock */
         {
           if (hb_vmRequestReenter())
           {
@@ -940,7 +940,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
       int iType = 0;
       int iResource = hb_parni(4);
 
-      if (HB_IS_EVALITEM(pFirst))
+      if (pFirst->isEvalItem())
       {
         /* pFunc is pointing to stored code block (later) */
         pFunc = hb_itemNew(pFirst);
@@ -994,7 +994,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
         if (pFunc)
         {
           /* if codeblock, store the codeblock and lock it there */
-          if (HB_IS_EVALITEM(pFirst))
+          if (pFirst->isEvalItem())
           {
             _s->pcbFunc[iIndex] = pFunc;
           }
@@ -1051,7 +1051,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
       int iResource = hb_parni(4);
       HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : _s->hWnd;
 
-      if (HB_IS_EVALITEM(pFirst))
+      if (pFirst->isEvalItem())
       {
         /* pFunc is pointing to stored code block (later) */
         _s->pcbFuncModal[iIndex] = hb_itemNew(pFirst);

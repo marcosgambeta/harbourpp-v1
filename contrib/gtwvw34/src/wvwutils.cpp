@@ -1277,7 +1277,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
       auto iType = 0;
       auto iResource = hb_parni(4);
 
-      if (HB_IS_EVALITEM(pFirst))
+      if (pFirst->isEvalItem())
       {
         /* pFunc is pointing to stored code block (later) */
         pFunc = hb_itemNew(pFirst);
@@ -1380,7 +1380,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
       INT_PTR iResult = 0;
       HWND hParent = hbwapi_is_HANDLE(5) ? hbwapi_par_raw_HWND(5) : wvw_zer->hWnd;
 
-      if (HB_IS_EVALITEM(pFirst))
+      if (pFirst->isEvalItem())
       {
         wvw->a.pFuncModal[iIndex] = hb_itemNew(pFirst);
         wvw->a.iTypeModal[iIndex] = 2;

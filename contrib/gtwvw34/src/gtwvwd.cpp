@@ -74,6 +74,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbgtwvw.hpp"
 
 #include "hbinit.hpp"
@@ -1878,7 +1882,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPA
     case 1:
       if (hb_vmRequestReenter())
       {
-        hb_vmPushDynSym(static_cast<PHB_DYNS>(pFunc));
+        hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
         hb_vmPushNil();
         hbwapi_vmPush_HANDLE(hDlg);
         hb_vmPushNumInt(message);
@@ -1893,7 +1897,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPA
     case 2:
       /* eval the codeblock */
 #if 0
-            if( HB_IS_EVALITEM(pFunc) ) {
+            if( pFunc->isEvalItem() ) {
                PHB_ITEM hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
                auto himessage = hb_itemPutNInt(nullptr, message);
                auto hiwParam  = hb_itemPutNInt(nullptr, wParam);
@@ -1911,7 +1915,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPA
                hb_itemRelease(hilParam);
             }
 #endif
-      if (HB_IS_EVALITEM(pFunc) && hb_vmRequestReenter())
+      if (pFunc->isEvalItem() && hb_vmRequestReenter())
       {
         hb_vmPushEvalSym();
         hb_vmPush(pFunc);
@@ -2004,7 +2008,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
     case 1:
       if (hb_vmRequestReenter())
       {
-        hb_vmPushDynSym(static_cast<PHB_DYNS>(pFunc));
+        hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
         hb_vmPushNil();
         hbwapi_vmPush_HANDLE(hDlg);
         hb_vmPushNumInt(message);
@@ -2019,7 +2023,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
     case 2:
       /* eval the codeblock */
 #if 0
-            if( HB_IS_EVALITEM(pFunc) ) {
+            if( pFunc->isEvalItem() ) {
                PHB_ITEM hihDlg    = hbwapi_itemPut_HANDLE(nullptr, hDlg);
                auto himessage = hb_itemPutNInt(nullptr, message);
                auto hiwParam  = hb_itemPutNInt(nullptr, wParam);
@@ -2037,7 +2041,7 @@ BOOL CALLBACK hb_gt_wvw_DlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPA
                hb_itemRelease(hilParam);
             }
 #endif
-      if (HB_IS_EVALITEM(pFunc) && hb_vmRequestReenter())
+      if (pFunc->isEvalItem() && hb_vmRequestReenter())
       {
         hb_vmPushEvalSym();
         hb_vmPush(pFunc);

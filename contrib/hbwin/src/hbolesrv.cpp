@@ -419,7 +419,7 @@ static HRESULT STDMETHODCALLTYPE Invoke(IDispatch *lpThis, DISPID dispid, REFIID
 
       if (pItem != nullptr)
       {
-        if (HB_IS_EVALITEM(pItem))
+        if (pItem->isEvalItem())
         {
           if ((wFlags & DISPATCH_METHOD) != 0)
           {
@@ -633,7 +633,7 @@ static HRESULT STDMETHODCALLTYPE classCreateInstance(IClassFactory *lpThis, IUnk
 
     if (s_pAction)
     {
-      if (HB_IS_EVALITEM(s_pAction))
+      if (s_pAction->isEvalItem())
       {
         if (hb_vmRequestReenter())
         {

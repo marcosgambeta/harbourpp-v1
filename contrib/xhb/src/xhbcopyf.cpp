@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapifs.hpp"
@@ -119,7 +123,7 @@ static HB_BOOL hb_copyfile(const char *pszSource, const char *pszDest, PHB_ITEM 
 
       auto buffer = static_cast<HB_UCHAR *>(hb_xgrab(BUFFER_SIZE));
       bRetVal = true;
-      if (pBlock && HB_IS_EVALITEM(pBlock))
+      if (pBlock && pBlock->isEvalItem())
       {
         pCount = hb_itemNew(nullptr);
       }
