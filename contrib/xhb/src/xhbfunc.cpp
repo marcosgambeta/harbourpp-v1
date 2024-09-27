@@ -354,8 +354,8 @@ HB_FUNC( HB_ISBYREF )
 {
    if( hb_pcount() ) {
       PHB_ITEM pItem = hb_stackItemFromBase(1);
-      if( HB_IS_BYREF(pItem) ) {
-         hb_retl(HB_IS_BYREF(hb_itemUnRefOnce(pItem)));
+      if( pItem->isByRef() ) {
+         hb_retl(hb_itemUnRefOnce(pItem)->isByRef());
       }
    }
 }
