@@ -137,7 +137,7 @@ HB_FUNC(XHB_EEQUAL)
     auto dValue = hb_itemGetND(pValue);
     hb_retl(static_cast<double>(uc) == dValue);
   }
-  else if (HB_IS_BLOCK(pSelf) && HB_IS_BLOCK(pValue))
+  else if (pSelf->isBlock() && pValue->isBlock())
   {
     hb_retl(hb_codeblockId(pSelf) == hb_codeblockId(pValue));
   }

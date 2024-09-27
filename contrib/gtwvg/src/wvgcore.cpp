@@ -55,6 +55,10 @@
 
 /* GUI Drawing Function */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbwinole.hpp"
 #include "gtwvg.hpp"
 
@@ -343,7 +347,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, L
 
     case 2: /* Block */
       /* eval the codeblock */
-      if (HB_IS_BLOCK(pFunc))
+      if (pFunc->isBlock())
       {
         if (hb_vmRequestReenter())
         {
@@ -450,7 +454,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, L
 
     case 2: /* Block */
       /* eval the codeblock */
-      if (HB_IS_BLOCK(pFunc))
+      if (pFunc->isBlock())
       {
         if (hb_vmRequestReenter())
         {

@@ -45,6 +45,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbzebra.hpp"
 #include "hbvm.hpp"
 
@@ -104,7 +108,7 @@ int hb_zebra_draw( PHB_ZEBRA pZebra, HB_ZEBRA_CALLBACK pCallback, void * cargo, 
 
 static void hb_zebra_draw_codeblock_callback( void * pDrawBlock, double dX, double dY, double dWidth, double dHeight )
 {
-   if( pDrawBlock && HB_IS_BLOCK(pDrawBlock) && hb_vmRequestReenter() ) {
+   if( pDrawBlock && static_cast<PHB_ITEM>(pDrawBlock)->isBlock() && hb_vmRequestReenter() ) {
       hb_vmPushEvalSym();
       hb_vmPush(static_cast<PHB_ITEM>(pDrawBlock));
       hb_vmPushDouble(dX, HB_DEFAULT_DECIMALS);

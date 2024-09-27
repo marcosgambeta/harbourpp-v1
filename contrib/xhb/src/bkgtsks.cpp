@@ -413,7 +413,7 @@ HB_FUNC(HB_BACKGROUNDADD)
   auto pMillisec = hb_param(2, Harbour::Item::NUMERIC);
   auto pActive = hb_param(3, Harbour::Item::LOGICAL);
 
-  if (HB_IS_BLOCK(pBlock) || pBlock->isArray())
+  if (pBlock->isBlock() || pBlock->isArray())
   {
     hb_retnl(hb_backgroundAddFunc(pBlock, (pMillisec == nullptr ? 0 : hb_itemGetNI(pMillisec)),
                                   (pActive == nullptr ? HB_TRUE : hb_itemGetL(pActive))));

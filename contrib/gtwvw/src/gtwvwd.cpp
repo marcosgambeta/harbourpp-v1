@@ -74,6 +74,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbgtwvw.hpp"
 
 #include "hbgfxdef.ch"
@@ -1992,7 +1996,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
     case 1:
       if (hb_vmRequestReenter())
       {
-        hb_vmPushDynSym(static_cast<PHB_DYNS>(pFunc));
+        hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
         hb_vmPushNil();
         hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hDlg)));
         hb_vmPushNumInt(message);
@@ -2035,7 +2039,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, LPAR
 
          }
        */
-      if (HB_IS_BLOCK(pFunc))
+      if (pFunc->isBlock())
       {
         if (hb_vmRequestReenter())
         {
@@ -2134,7 +2138,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
     case 1:
       if (hb_vmRequestReenter())
       {
-        hb_vmPushDynSym(static_cast<PHB_DYNS>(pFunc));
+        hb_vmPushDynSym(reinterpret_cast<PHB_DYNS>(pFunc));
 
         hb_vmPushNil();
         hb_vmPushNumInt(static_cast<HB_MAXINT>(reinterpret_cast<HB_PTRUINT>(hDlg)));
@@ -2171,7 +2175,7 @@ BOOL CALLBACK hb_gt_wvwDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, LPAR
          &hiwParam, &hilParam); bReturn = hb_itemGetNL(pReturn); hb_itemRelease(pReturn);
          }
        */
-      if (HB_IS_BLOCK(pFunc))
+      if (pFunc->isBlock())
       {
         if (hb_vmRequestReenter())
         {
@@ -10735,7 +10739,7 @@ LRESULT CALLBACK hb_gt_wvwEBProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
     hb_itemPutNI(hiKey, iKey);
 
     PHB_ITEM pCodeblock = hb_itemDoC("SETKEY", 1, hiKey);
-    if (HB_IS_BLOCK(pCodeblock))
+    if (pCodeblock->isBlock())
     {
       SetFocus(hWndParent);
       pReturn = hb_itemDo(pCodeblock, 0);

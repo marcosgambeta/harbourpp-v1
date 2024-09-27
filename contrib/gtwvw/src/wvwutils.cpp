@@ -2184,7 +2184,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
     return;
   }
 
-  if (HB_IS_BLOCK(pFirst))
+  if (pFirst->isBlock())
   {
     /* pFunc is pointing to stored code block (later) */
     pFunc = hb_itemNew(pFirst);
@@ -2236,7 +2236,7 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
       if (pFunc)
       {
         /* if codeblock, store the codeblock and lock it there */
-        if (HB_IS_BLOCK(pFirst))
+        if (pFirst->isBlock())
         {
           p->s_sApp->pcbFunc[iIndex] = pFunc;
         }
@@ -2292,7 +2292,7 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
     return;
   }
 
-  if (HB_IS_BLOCK(pFirst))
+  if (pFirst->isBlock())
   {
     /* pFunc is pointing to stored code block (later) */
 

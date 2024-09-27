@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbvmint.hpp"
 #include "hbapi.hpp"
 #include "hbvm.hpp"
@@ -59,7 +63,7 @@ HB_FUNC(HB_QSELF)
   {
     PHB_ITEM pSelf = hb_stackItem(nOffset + 1);
 
-    if (nOffset > 0 && HB_IS_BLOCK(pSelf))
+    if (nOffset > 0 && pSelf->isBlock())
     {
       static PHB_SYMB s_pSymEval = nullptr;
 

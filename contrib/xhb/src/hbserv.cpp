@@ -809,7 +809,7 @@ HB_FUNC(HB_PUSHSIGNALHANDLER)
   auto iMask = hb_parni(1);
   auto pFunc = hb_param(2, Harbour::Item::ANY);
 
-  if (pFunc == nullptr || iMask == 0 || (!pFunc->isPointer() && !pFunc->isString() && !HB_IS_BLOCK(pFunc)))
+  if (pFunc == nullptr || iMask == 0 || (!pFunc->isPointer() && !pFunc->isString() && !pFunc->isBlock()))
   {
     hb_errRT_BASE_SubstR(EG_ARG, 3012, "Wrong parameter count/type", nullptr, 2, hb_param(1, Harbour::Item::ANY),
                          hb_param(2, Harbour::Item::ANY));
