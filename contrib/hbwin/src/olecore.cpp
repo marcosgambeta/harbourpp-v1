@@ -2906,7 +2906,7 @@ HB_FUNC(__OLEVARIANTNEW)
 
 #ifdef HB_OLE_PASS_POINTERS
   case VT_PTR:
-    if (pInit == nullptr || HB_IS_POINTER(pInit))
+    if (pInit == nullptr || pInit->isPointer())
     {
       V_VT(&variant) = VT_PTR;
       V_BYREF(&variant) = hb_itemGetPtr(pInit);

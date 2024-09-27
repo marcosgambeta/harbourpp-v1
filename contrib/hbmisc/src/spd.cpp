@@ -611,7 +611,7 @@ HB_FUNC( SQL_SPRINTF )
                   break;
                }
             }
-            else if( pItmPar->isNumeric() || HB_IS_POINTER(pItmPar) )
+            else if( pItmPar->isNumeric() || pItmPar->isPointer() )
             {
                if( (f = i + HB_MAX(ulWidth, DK_BLKBUF)) > ulMaxBuf )
                {

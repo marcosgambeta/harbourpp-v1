@@ -61,6 +61,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "gtwgu.hpp"
 
 // Note for Harbour++ v2: use only std::mutex
@@ -315,7 +319,7 @@ static LRESULT hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
       PHB_ITEM pEvent = hb_itemPutNI(nullptr, nEvent);
       PHB_ITEM pResult = hb_vmEvalBlockV(pWVT->pGT->pNotifierBlock, 2, pEvent, pParams);
 
-      if (HB_IS_POINTER(pResult))
+      if (pResult->isPointer())
       {
         nResult = (HB_PTRUINT)hb_itemGetPtr(pResult);
       }

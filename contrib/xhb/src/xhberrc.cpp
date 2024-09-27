@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbvm.hpp"
@@ -146,7 +150,7 @@ HB_FUNC(SETUNHANDLEDEXCEPTIONFILTER)
   else
   {
     s_pFuncSymbol = nullptr;
-    if (pFuncItm && HB_IS_POINTER(pFuncItm))
+    if (pFuncItm && pFuncItm->isPointer())
     {
       pDefaultHandler = reinterpret_cast<LPTOP_LEVEL_EXCEPTION_FILTER>(hb_itemGetPtr(pFuncItm));
       if (pDefaultHandler == PRGUnhandledExceptionFilter)

@@ -1523,7 +1523,7 @@ HB_FUNC(HB_POINTER2STRING)
   auto pPointer = hb_param(1, Harbour::Item::ANY);
   auto pLen = hb_param(2, Harbour::Item::NUMERIC);
 
-  if (HB_IS_POINTER(pPointer) && pLen)
+  if (pPointer->isPointer() && pLen)
   {
     hb_retclen(static_cast<char *>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
   }
@@ -1576,7 +1576,7 @@ HB_FUNC(__CSTR_COPYTO)
     pPointer = reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pTarget)));
   }
 #endif
-  else if (HB_IS_POINTER(pTarget))
+  else if (pTarget->isPointer())
   {
     pPointer = hb_itemGetPtr(pTarget);
   }

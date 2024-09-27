@@ -56,6 +56,10 @@
 
 /* Direct WinApi Functions - Prefixed wvg_*() */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #if defined(__BORLANDC__)
 #if !defined(NONAMELESSUNION)
 #define NONAMELESSUNION
@@ -894,7 +898,7 @@ LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 
   if (pBlock)
   {
-    if (HB_IS_POINTER(pBlock))
+    if (pBlock->isPointer())
     {
       hb_vmPushSymbol(hb_dynsymSymbol(((PHB_SYMB)pBlock)->pDynSym));
       hb_vmPushNil();

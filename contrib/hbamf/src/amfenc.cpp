@@ -272,7 +272,7 @@ static int amf3_add_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
       auto pKey = hb_itemNew(nullptr);
 
       _ref_realItemPtr(pKey, pItem);
-      if( !HB_IS_POINTER(pKey) && !HB_IS_DATETIME(pKey) ) {
+      if( !pKey->isPointer() && !HB_IS_DATETIME(pKey) ) {
          hb_itemRelease(pKey);
          return -1;
       }
@@ -328,7 +328,7 @@ static int amf3_get_index(amfContext * context, PHB_ITEM pHash, PHB_ITEM pItem)
       PHB_ITEM pVal;
 
       _ref_realItemPtr(pKey, pItem);
-      if( !HB_IS_POINTER(pKey) && !pKey->isDouble() ) {
+      if( !pKey->isPointer() && !pKey->isDouble() ) {
          hb_itemRelease(pKey);
          return -1;
       }

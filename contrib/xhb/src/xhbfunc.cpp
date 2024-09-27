@@ -69,7 +69,7 @@ HB_FUNC( HB_POINTER2STRING )
    auto pPointer = hb_param(1, Harbour::Item::ANY);
    auto pLen = hb_param(2, Harbour::Item::NUMERIC);
 
-   if( HB_IS_POINTER(pPointer) && pLen ) {
+   if( pPointer->isPointer() && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
    } else if( pPointer->isInteger() && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS(pLen));
