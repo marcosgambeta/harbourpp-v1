@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbvmint.hpp"
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
@@ -56,7 +60,7 @@ HB_FUNC(HB_ENUMINDEX)
   while (--nFuncOffset > 0)
   {
     PHB_ITEM pItem = hb_stackItem(nFuncOffset);
-    if (HB_IS_ENUM(pItem))
+    if (pItem->isEnum())
     {
       nIndex = pItem->item.asEnum.offset;
       break;
