@@ -1016,7 +1016,7 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
       {
         PHB_ITEM pStructure = pBaseVar->pItems + nIndex;
 
-        if (HB_IS_LONG(pStructure))
+        if (pStructure->isLong())
         {
           if ((pBaseDef->pItems + nIndex)->item.asInteger.value > CTYPE_STRUCTURE_PTR)
           {
@@ -1531,7 +1531,7 @@ HB_FUNC(HB_POINTER2STRING)
   {
     hb_retclen(reinterpret_cast<char *>(static_cast<HB_PTRUINT>(hb_itemGetNI(pPointer))), hb_itemGetNS(pLen));
   }
-  else if (HB_IS_LONG(pPointer) && pLen)
+  else if (pPointer->isLong() && pLen)
   {
     hb_retclen(reinterpret_cast<char *>(static_cast<HB_PTRUINT>(hb_itemGetNL(pPointer))), hb_itemGetNS(pLen));
   }
@@ -1566,7 +1566,7 @@ HB_FUNC(__CSTR_COPYTO)
     s_pVALUE = hb_dynsymGetCase("VALUE");
   }
 
-  if (HB_IS_LONG(pTarget))
+  if (pTarget->isLong())
   {
     pPointer = reinterpret_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pTarget)));
   }

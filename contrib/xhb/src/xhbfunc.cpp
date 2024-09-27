@@ -73,7 +73,7 @@ HB_FUNC( HB_POINTER2STRING )
       hb_retclen_const(static_cast<char*>(hb_itemGetPtr(pPointer)), hb_itemGetNS(pLen));
    } else if( pPointer->isInteger() && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetNI(pPointer)), hb_itemGetNS(pLen));
-   } else if( HB_IS_LONG(pPointer) && pLen ) {
+   } else if( pPointer->isLong() && pLen ) {
       hb_retclen_const(static_cast<char*>(hb_itemGetNL(pPointer)), hb_itemGetNS(pLen));
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 2, hb_paramError(1), hb_paramError(2));

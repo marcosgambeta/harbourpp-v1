@@ -100,7 +100,7 @@ static HB_UINT SCItm( char * cBuffer, HB_UINT ulMaxBuf, const char * cParFrm, in
          /* case 'c': case 'C': case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': */
          default:
             s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, iIndWidth, iIndPrec,
-                            HB_IS_LONG(pItmPar) ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
+                            pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
       }
    }
    else if( IsIndW || IsIndP )
@@ -120,7 +120,7 @@ static HB_UINT SCItm( char * cBuffer, HB_UINT ulMaxBuf, const char * cParFrm, in
             break;
          /* case 'c': case 'C': case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': */
          default:
-            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, iInd, HB_IS_LONG(pItmPar) ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
+            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, iInd, pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
       }
    }
    else
@@ -138,7 +138,7 @@ static HB_UINT SCItm( char * cBuffer, HB_UINT ulMaxBuf, const char * cParFrm, in
             break;
          /* case 'c': case 'C': case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': */
          default:
-            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, HB_IS_LONG(pItmPar) ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
+            s = hb_snprintf(cBuffer, ulMaxBuf, cParFrm, pItmPar->isLong() ? hb_itemGetNL(pItmPar) : hb_itemGetNI(pItmPar));
       }
    }
    return s;
