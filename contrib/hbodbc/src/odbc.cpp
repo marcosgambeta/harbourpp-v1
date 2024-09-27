@@ -51,6 +51,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -1156,7 +1160,7 @@ HB_FUNC( HB_ODBCNUMSETLEN )  /* nValue, nSize, nDecimals --> nValue (nSize, nDec
    auto iLen = hb_parni(2);
    auto iDec = hb_parni(3);
 
-   if( pValue != nullptr && HB_IS_NUMINT(pValue) && iDec == 0 ) {
+   if( pValue != nullptr && pValue->isNumInt() && iDec == 0 ) {
       hb_retnintlen(hb_itemGetNInt(pValue), iLen);
    } else {
       hb_retnlen(hb_itemGetND(pValue), iLen, iDec);

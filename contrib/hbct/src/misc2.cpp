@@ -85,7 +85,7 @@ HB_FUNC(COMPLEMENT)
     {
       hb_rettd(4537847.0 - hb_itemGetTD(pItem));
     }
-    else if (HB_IS_NUMINT(pItem))
+    else if (pItem->isNumInt())
     {
       hb_retnint(-hb_itemGetNInt(pItem));
     }
