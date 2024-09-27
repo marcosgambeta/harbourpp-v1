@@ -636,7 +636,7 @@ static HB_ERRCODE adsScopeSet(ADSAREAP pArea, ADSHANDLE hOrder, HB_USHORT nScope
                break;
 
             case ADS_NUMERIC:
-               if( HB_IS_NUMERIC(pItem) ) {
+               if( pItem->isNumeric() ) {
                   auto dTemp = hb_itemGetND(pItem);
                   AdsSetScope(hOrder, nScope, reinterpret_cast<UNSIGNED8*>(&dTemp), static_cast<UNSIGNED16>(sizeof(dTemp)), ADS_DOUBLEKEY);
                }
@@ -954,7 +954,7 @@ static HB_ERRCODE adsGoToId(ADSAREAP pArea, PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("adsGoToId(%p, %p)", static_cast<void*>(pArea), static_cast<void*>(pItem)));
 #endif
 
-   if( HB_IS_NUMERIC(pItem) ) {
+   if( pItem->isNumeric() ) {
       HB_ULONG ulRecNo = hb_itemGetNL(pItem);
       return SELF_GOTO(&pArea->area, ulRecNo);
    } else {
@@ -1049,7 +1049,7 @@ static HB_ERRCODE adsSeek(ADSAREAP pArea, HB_BOOL bSoftSeek, PHB_ITEM pKey, HB_B
          u16KeyLen = static_cast<UNSIGNED16>(sizeof(double));
          u16KeyType = ADS_DOUBLEKEY;
       }
-   } else if( HB_IS_NUMERIC(pKey) ) {
+   } else if( pKey->isNumeric() ) {
       dValue = hb_itemGetND(pKey);
       pszKey = reinterpret_cast<UNSIGNED8*>(&dValue);
       u16KeyLen = static_cast<UNSIGNED16>(sizeof(double));
@@ -2612,7 +2612,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case Harbour::DB::Field::AUTOINC:
       case Harbour::DB::Field::INTEGER:
 #if ADS_LIB_VERSION >= 700 && !defined(HB_LONG_LONG_OFF)
-         if( HB_IS_NUMERIC(pItem) ) {
+         if( pItem->isNumeric() ) {
             bTypeError = false;
             u32RetVal = AdsSetLongLong(pArea->hTable, ADSFIELD(uiIndex), hb_itemGetNInt(pItem));
             /* write to auto-increment field will generate error 5066 */
@@ -2623,7 +2623,7 @@ static HB_ERRCODE adsPutValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case Harbour::DB::Field::DOUBLE:
       case Harbour::DB::Field::CURDOUBLE:
       case Harbour::DB::Field::CURRENCY:
-         if( HB_IS_NUMERIC(pItem) ) {
+         if( pItem->isNumeric() ) {
             bTypeError = false;
             u32RetVal = AdsSetDouble(pArea->hTable, ADSFIELD(uiIndex), hb_itemGetND(pItem));
             /* write to auto-increment field will generate error 5066
@@ -3999,7 +3999,7 @@ static HB_ERRCODE adsOrderListFocus(ADSAREAP pArea, LPDBORDERINFO pOrderInfo)
             return Harbour::SUCCESS;
          }
          u32RetVal = AdsGetIndexHandle(pArea->hTable, pucTagName, &hIndex);
-      } else if( HB_IS_NUMERIC(pOrderInfo->itmOrder) ) {
+      } else if( pOrderInfo->itmOrder->isNumeric() ) {
          u16Order = static_cast<UNSIGNED16>(hb_itemGetNI(pOrderInfo->itmOrder));
          if( !u16Order ) {
             pArea->hOrdCurrent = 0;
@@ -4239,7 +4239,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
 
          hb_strncpyUpperTrim(reinterpret_cast<char*>(pucTagName), hb_itemGetCPtr(pOrderInfo->itmOrder), sizeof(pucTagName) - 1);
          u32RetVal = AdsGetIndexHandle(pArea->hTable, pucTagName, &hIndex);
-      } else if( HB_IS_NUMERIC(pOrderInfo->itmOrder) ) {
+      } else if( pOrderInfo->itmOrder->isNumeric() ) {
          u32RetVal = AdsGetIndexHandleByOrder(pArea->hTable, static_cast<UNSIGNED16>(hb_itemGetNI(pOrderInfo->itmOrder)), &hIndex);
       }
 
@@ -4357,7 +4357,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
          break;
 
       case DBOI_POSITION:
-         if( pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) ) {
+         if( pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ) {
             /* TODO: results will be wrong if filter is not valid for ADS server */
             if( (u32RetVal = AdsGotoTop(hIndex)) == AE_SUCCESS ) {
                u32RetVal = AdsSkip(hIndex, hb_itemGetNL(pOrderInfo->itmNewVal) - 1);
@@ -4401,7 +4401,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
          break;
 
       case DBOI_RELKEYPOS:
-         if( pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) ) {
+         if( pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ) {
             adsSetRelPos(pArea, hIndex, hb_itemGetND(pOrderInfo->itmNewVal));
          } else {
             pOrderInfo->itmResult = hb_itemPutND(pOrderInfo->itmResult, adsGetRelPos(pArea, hIndex));
@@ -4614,7 +4614,7 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
 
 #if ADS_LIB_VERSION >= 900
       case DBOI_SKIPUNIQUE: {
-         HB_LONG lToSkip = pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) ? hb_itemGetNL(pOrderInfo->itmNewVal) : 1;
+         HB_LONG lToSkip = pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ? hb_itemGetNL(pOrderInfo->itmNewVal) : 1;
          if( hIndex ) {
             pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, AdsSkipUnique(hIndex, lToSkip >= 0 ? 1 : -1) == AE_SUCCESS);
             hb_adsUpdateAreaFlags(pArea);
@@ -5235,7 +5235,7 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
                   The thread default connection handle might be 0 if caller
                   accidentally disconnects twice. */
 
-         if( (hConnect != 0 || HB_IS_NUMERIC(pItem) ) && AdsDisconnect(hConnect) == AE_SUCCESS ) {
+         if( (hConnect != 0 || pItem->isNumeric() ) && AdsDisconnect(hConnect) == AE_SUCCESS ) {
             hb_ads_clrConnection(hConnect);
             hb_itemPutL(pItem, true);
          } else {

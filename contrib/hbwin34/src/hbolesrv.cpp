@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #if !defined(HB_DYNLIB)
 
 #include "hbapi.hpp"
@@ -130,7 +134,7 @@ static HB_BOOL s_hashWithNumKeys(PHB_ITEM pHash)
   for (HB_SIZE n = 1; n <= nLen; ++n)
   {
     PHB_ITEM pKey = hb_hashGetKeyAt(pHash, n);
-    if (!pKey || !HB_IS_NUMERIC(pKey))
+    if (!pKey || !pKey->isNumeric())
     {
       return false;
     }

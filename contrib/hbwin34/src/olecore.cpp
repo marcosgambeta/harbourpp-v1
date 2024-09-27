@@ -2758,7 +2758,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_I1:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_I1;
       V_I1(&variant) = static_cast<signed char>(hb_itemGetNI(pInit));
@@ -2766,7 +2766,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_I2:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_I2;
       V_I2(&variant) = static_cast<short>(hb_itemGetNI(pInit));
@@ -2774,7 +2774,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_I4:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_I4;
       V_I4(&variant) = hb_itemGetNL(pInit);
@@ -2782,7 +2782,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_I8:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_I8;
 #if defined(HB_OLE_NO_LL)
@@ -2795,7 +2795,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_UI1:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_UI1;
       V_UI1(&variant) = static_cast<unsigned char>(hb_itemGetNI(pInit));
@@ -2803,7 +2803,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_UI2:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_UI2;
       V_UI2(&variant) = static_cast<unsigned short>(hb_itemGetNI(pInit));
@@ -2811,7 +2811,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_UI4:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_UI4;
       V_UI4(&variant) = hb_itemGetNL(pInit);
@@ -2819,7 +2819,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_UI8:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_UI8;
 #if defined(HB_OLE_NO_LL)
@@ -2832,7 +2832,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_INT:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_INT;
       V_INT(&variant) = hb_itemGetNI(pInit);
@@ -2840,7 +2840,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_UINT:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_UINT;
       V_UINT(&variant) = static_cast<UINT>(hb_itemGetNI(pInit));
@@ -2848,7 +2848,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_ERROR:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_ERROR;
       V_ERROR(&variant) = static_cast<SCODE>(hb_itemGetNL(pInit));
@@ -2856,7 +2856,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_R4:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_R4;
       V_R4(&variant) = static_cast<float>(hb_itemGetND(pInit));
@@ -2864,7 +2864,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_R8:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_R8;
       V_R8(&variant) = hb_itemGetND(pInit);
@@ -2872,7 +2872,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_CY:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_CY;
       VarCyFromR8(hb_itemGetND(pInit), &V_CY(&variant));
@@ -2880,7 +2880,7 @@ HB_FUNC(__OLEVARIANTNEW)
     break;
 
   case VT_DECIMAL:
-    if (pInit == nullptr || HB_IS_NUMERIC(pInit))
+    if (pInit == nullptr || pInit->isNumeric())
     {
       V_VT(&variant) = VT_DECIMAL;
       VarDecFromR8(hb_itemGetND(pInit), &HB_WIN_U1(&variant, decVal) /*&V_DECIMAL(&variant)*/);

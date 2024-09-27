@@ -66,7 +66,7 @@ HB_FUNC(XTOC)
       char szDateTime[18];
       hb_retc(hb_itemGetTS(pItem, szDateTime));
     }
-    else if (HB_IS_NUMERIC(pItem))
+    else if (pItem->isNumeric())
     {
       char buf[sizeof(double)];
       auto d = hb_parnd(1);

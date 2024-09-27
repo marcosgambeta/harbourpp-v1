@@ -2033,7 +2033,7 @@ HB_FUNC( ADSDDSETDATABASEPROPERTY )
       case ADS_DD_VERSION_MINOR:
 #endif
       {
-         if( HB_IS_NUMERIC(pParam) ) {
+         if( pParam->isNumeric() ) {
             ulBuffer = static_cast<UNSIGNED16>(hb_itemGetNI(pParam));
             ulRetVal = AdsDDSetDatabaseProperty(hConnect, ulProperty, static_cast<VOID*>(&ulBuffer), sizeof(ulBuffer));
          } else {

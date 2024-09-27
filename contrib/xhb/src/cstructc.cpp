@@ -329,7 +329,7 @@ static HB_BYTE *ArrayToStructure(PHB_ITEM aVar, PHB_ITEM aDef, HB_UINT uiAlign, 
     {
     case CTYPE_CHAR:          /* char */
     case CTYPE_UNSIGNED_CHAR: /* unsigned char */
-      if ((pBaseVar->pItems + nIndex)->type && !HB_IS_NUMERIC(pBaseVar->pItems + nIndex))
+      if ((pBaseVar->pItems + nIndex)->type && !(pBaseVar->pItems + nIndex)->isNumeric())
       {
         hb_errRT_BASE(EG_ARG, 2023, nullptr, "ArrayToStructure", 3, hb_paramError(1), hb_paramError(2),
                       hb_paramError(3));

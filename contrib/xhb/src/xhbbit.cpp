@@ -65,7 +65,7 @@ static void s_xhb_bitOper(int iOper)
 
   if (pItem1 && pItem2)
   {
-    if (HB_IS_NUMERIC(pItem1) && (HB_IS_NUMERIC(pItem2) || nLen2 == 1))
+    if (pItem1->isNumeric() && (pItem2->isNumeric() || nLen2 == 1))
     {
       HB_MAXINT nVal1 = hb_itemGetNInt(pItem1),
                 nVal2 = nLen2 == 1 ? static_cast<HB_BYTE>(hb_itemGetCPtr(pItem1)[0]) : hb_itemGetNInt(pItem2);
@@ -136,7 +136,7 @@ static void s_xhb_bitOper(int iOper)
       return;
     }
 
-    if (pItem1->isString() && (HB_IS_NUMERIC(pItem2) || nLen2 == 1))
+    if (pItem1->isString() && (pItem2->isNumeric() || nLen2 == 1))
     {
       if (nLen1)
       {
@@ -175,7 +175,7 @@ static void s_xhb_bitOper(int iOper)
       return;
     }
 
-    if ((HB_IS_NUMERIC(pItem1) || nLen1 == 1) && pItem2->isString())
+    if ((pItem1->isNumeric() || nLen1 == 1) && pItem2->isString())
     {
       auto pStr = hb_itemGetCPtr(pItem2);
       int iVal = nLen1 == 1 ? hb_itemGetCPtr(pItem1)[0] : hb_itemGetNI(pItem1);

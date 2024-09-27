@@ -1667,7 +1667,7 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
 
       case DBOI_POSITION:
       case DBOI_KEYNORAW:
-         if( pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) ) {
+         if( pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ) {
             /* TODO */
 #if 0
             pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, hb_itemGetNL(pOrderInfo->itmNewVal), uiIndex == DBOI_POSITION) == Harbour::SUCCESS);

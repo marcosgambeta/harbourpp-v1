@@ -213,7 +213,7 @@ HB_FUNC_STATIC(_PROCLINE)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  if (pItem && HB_IS_NUMERIC(pItem))
+  if (pItem && pItem->isNumeric())
   {
     hb_errPutProcLine(hb_stackSelfItem(), static_cast<HB_UINT>(hb_itemGetNI(pItem)));
   }

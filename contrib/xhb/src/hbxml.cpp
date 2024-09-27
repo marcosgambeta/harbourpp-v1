@@ -2392,7 +2392,7 @@ HB_FUNC(HBXML_DATAREAD)
   char buffer[512], *buf;
   HB_SIZE nLen;
 
-  if (pDoc == nullptr || pParam == nullptr || (!pParam->isString() && !HB_IS_NUMERIC(pParam)))
+  if (pDoc == nullptr || pParam == nullptr || (!pParam->isString() && !pParam->isNumeric()))
   {
     hb_errRT_BASE(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
     return;

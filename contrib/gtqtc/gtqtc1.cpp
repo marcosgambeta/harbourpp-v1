@@ -1677,7 +1677,7 @@ static int hb_gt_qtc_messageBox(PHB_GTQTC pQTC, PHB_ITEM pText, PHB_ITEM pButton
          }
          if( dDelay <= 0 ) {
             PHB_ITEM pVal = hb_hashGetCItemPtr(pText, "TIM");
-            if( pVal && HB_IS_NUMERIC(pVal) ) {
+            if( pVal && pVal->isNumeric() ) {
               dDelay = hb_itemGetND(pVal);
             }
          }
@@ -2186,7 +2186,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_CURSORBLINKRATE:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, QApplication::cursorFlashTime());
-         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isNumeric() ) {
             iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal < 0 ) {
                iVal = 0;
@@ -2290,7 +2290,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_CLOSEMODE:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->iCloseMode);
-         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isNumeric() ) {
             iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal <= 2 ) {
                pQTC->iCloseMode = iVal;
@@ -2314,7 +2314,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
       case HB_GTI_RESIZEMODE:
          pInfo->pResult = hb_itemPutNI(pInfo->pResult, pQTC->iResizeMode);
-         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isNumeric() ) {
             iVal = hb_itemGetNI(pInfo->pNewVal);
             switch( iVal ) {
                case HB_GTI_RESIZEMODE_FONT:
@@ -2377,7 +2377,7 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          hb_arraySetNI(pInfo->pResult, 1, x);
          hb_arraySetNI(pInfo->pResult, 2, y);
 
-         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) && pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isNumeric() && pInfo->pNewVal2 && pInfo->pNewVal2->isNumeric() ) {
             x = hb_itemGetNI(pInfo->pNewVal);
             y = hb_itemGetNI(pInfo->pNewVal2);
          } else if( pInfo->pNewVal && HB_IS_ARRAY(pInfo->pNewVal) && hb_arrayLen(pInfo->pNewVal) == 2 ) {
@@ -2402,11 +2402,11 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       }
       case HB_GTI_PALETTE: {
          bool fExpose = false;
-         if( pInfo->pNewVal && HB_IS_NUMERIC(pInfo->pNewVal) ) {
+         if( pInfo->pNewVal && pInfo->pNewVal->isNumeric() ) {
             iVal = hb_itemGetNI(pInfo->pNewVal);
             if( iVal >= 0 && iVal < 16 ) {
                pInfo->pResult = hb_itemPutNI(pInfo->pResult, QTC_RGB2NUM(pQTC->colors[iVal]));
-               if( pInfo->pNewVal2 && HB_IS_NUMERIC(pInfo->pNewVal2) ) {
+               if( pInfo->pNewVal2 && pInfo->pNewVal2->isNumeric() ) {
                   auto iColor = hb_itemGetNI(pInfo->pNewVal2);
                   QRgb rgb = QTC_NUM2RGB(iColor);
                   if( rgb != pQTC->colors[iVal] ) {

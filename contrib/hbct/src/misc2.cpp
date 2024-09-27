@@ -89,7 +89,7 @@ HB_FUNC(COMPLEMENT)
     {
       hb_retnint(-hb_itemGetNInt(pItem));
     }
-    else if (HB_IS_NUMERIC(pItem))
+    else if (pItem->isNumeric())
     {
       int iWidth, iDec;
       auto dValue = hb_itemGetND(pItem);

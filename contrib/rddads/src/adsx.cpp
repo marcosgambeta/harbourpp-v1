@@ -1318,7 +1318,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
                pTag = pTag->pNext;
             }
-         } else if( HB_IS_NUMERIC(pOrderInfo->itmOrder) ) {
+         } else if( pOrderInfo->itmOrder->isNumeric() ) {
             UNSIGNED16 usOrder = 0, usSearch = static_cast<UNSIGNED16>(hb_itemGetNI(pOrderInfo->itmOrder));
 
             AdsGetNumIndexes( pArea->adsarea.hTable, &usOrder );
@@ -1387,7 +1387,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       case DBOI_POSITION:
       case DBOI_RECNO:
       case DBOI_KEYNORAW:
-         if( uiIndex == DBOI_POSITION && pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) ) {
+         if( uiIndex == DBOI_POSITION && pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ) {
             HB_ULONG ulPos;
 
             ulPos = hb_itemGetNL(pOrderInfo->itmNewVal);
@@ -1415,7 +1415,7 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
 
       case DBOI_RELKEYPOS:
-         if( pOrderInfo->itmNewVal && HB_IS_NUMERIC(pOrderInfo->itmNewVal) ) {
+         if( pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ) {
             auto ulPos = static_cast<HB_ULONG>(hb_itemGetND(pOrderInfo->itmNewVal) * static_cast<double>(pTag->ulRecCount));
 
             if( ulPos > 0 && ulPos <= pTag->ulRecCount ) {

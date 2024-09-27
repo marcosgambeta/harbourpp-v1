@@ -68,7 +68,7 @@ HB_FUNC( XPP_INDEX )
    if( hb_pcount() == 2 ) /* ASSIGN */
    {
       auto pValue = hb_param(2, Harbour::Item::ANY);
-      if( HB_IS_NUMERIC(pIndex) )
+      if( pIndex->isNumeric() )
       {
          HB_SIZE nIndex = hb_itemGetNS(pIndex);
          if( HB_IS_ARRAY(pSelf) )
@@ -108,7 +108,7 @@ HB_FUNC( XPP_INDEX )
    }
    else /* ACCESS */
    {
-      if( HB_IS_NUMERIC(pIndex) )
+      if( pIndex->isNumeric() )
       {
          HB_SIZE nIndex = hb_itemGetNS(pIndex);
          if( HB_IS_ARRAY(pSelf) )

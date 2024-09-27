@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 /* this has to be declared before hbapifs.h is included */
 #define _HB_FILE_IMPLEMENTATION_
 
@@ -586,7 +590,7 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue) // F
       case HB_VF_TIMEOUT: {
          HB_MAXINT nTimeout = pFile->nTimeout;
 
-         if( HB_IS_NUMERIC(pValue) ) {
+         if( pValue->isNumeric() ) {
             pFile->nTimeout = hb_itemGetNInt(pValue);
          }
          hb_itemPutNInt(pValue, nTimeout);

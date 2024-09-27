@@ -177,7 +177,7 @@ HB_FUNC(WIN_MAPISENDMAIL)
             continue;
           }
 
-          if (hb_arrayLen(pItem) >= 3 && HB_IS_NUMERIC(hb_arrayGetItemPtr(pItem, 3)))
+          if (hb_arrayLen(pItem) >= 3 && hb_arrayGetItemPtr(pItem, 3)->isNumeric())
           {
             note.lpRecips[note.nRecipCount].ulRecipClass = static_cast<ULONG>(hb_arrayGetNL(pItem, 3));
           }

@@ -473,7 +473,7 @@ static PHB_SOCKEX s_sockexNew(HB_SOCKET sd, PHB_ITEM pParams)
       ssl = s_SSL_itemGet(hb_hashGetCItemPtr(pParams, "key"), &pSSL, &fFree);
     }
 
-    if ((pItem = hb_hashGetCItemPtr(pParams, "timeout")) != nullptr && HB_IS_NUMERIC(pItem))
+    if ((pItem = hb_hashGetCItemPtr(pParams, "timeout")) != nullptr && pItem->isNumeric())
     {
       timeout = hb_itemGetNInt(pItem);
     }

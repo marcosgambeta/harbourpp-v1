@@ -299,7 +299,7 @@ static HB_ERRCODE sqlbaseGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
 static HB_ERRCODE sqlbaseGoToId(SQLBASEAREAP pArea, PHB_ITEM pItem)
 {
-   if( HB_IS_NUMERIC(pItem) ) {
+   if( pItem->isNumeric() ) {
       return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
    } else {
       PHB_ITEM pError = hb_errNew();

@@ -44,6 +44,10 @@
  *
  */
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbwapi.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
@@ -385,7 +389,7 @@ void *__hbwapi_parv_handle(int n, int i)
 void *hbwapi_itemGet_HANDLE(PHB_ITEM pItem)
 {
 #if defined(__HBWIN_WITH_UNSAFE_HANDLES)
-  if (pItem && HB_IS_NUMERIC(pItem))
+  if (pItem && pItem->isNumeric())
   {
     return static_cast<void *>(static_cast<HB_PTRUINT>(hb_itemGetNInt(pItem)));
   }
