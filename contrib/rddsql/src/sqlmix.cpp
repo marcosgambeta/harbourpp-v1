@@ -990,7 +990,7 @@ static PMIXTAG hb_mixFindTag(SQLMIXAREAP pArea, PHB_ITEM pOrder)
 {
    PMIXTAG pTag;
 
-   if( HB_IS_NUMBER(pOrder) ) {
+   if( pOrder->isNumber() ) {
       int iCurr = 0;
 
       auto iOrder = hb_itemGetNI(pOrder);

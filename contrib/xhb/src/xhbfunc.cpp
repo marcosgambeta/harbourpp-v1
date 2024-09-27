@@ -136,7 +136,7 @@ HB_FUNC(XHB__KEYBOARD)
     {
       auto pItem = hb_arrayGetItemPtr(pArray, nIndex);
 
-      if (HB_IS_NUMBER(pItem))
+      if (pItem->isNumber())
       {
         hb_inkeyPut(hb_itemGetNI(pItem));
       }

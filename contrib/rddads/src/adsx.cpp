@@ -529,7 +529,7 @@ static PMIXTAG mixFindTag( ADSXAREAP pArea, PHB_ITEM pOrder )
 {
    PMIXTAG pTag;
 
-   if( HB_IS_NUMBER(pOrder) ) {
+   if( pOrder->isNumber() ) {
       UNSIGNED16 usOrder = 0, usFind;
 
       usFind = static_cast<UNSIGNED16>(hb_itemGetNI(pOrder));

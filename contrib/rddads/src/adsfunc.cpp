@@ -641,7 +641,7 @@ HB_FUNC( ADSKEYNO )
    auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
-   if( (pxOrder == nullptr || pxOrder->isString() || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
+   if( (pxOrder == nullptr || pxOrder->isString() || pxOrder->isNumber() || pxOrder->isNil()) && (pFilterOption == nullptr || pFilterOption->isNumber()) ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
       if( pArea != nullptr ) {
@@ -652,7 +652,7 @@ HB_FUNC( ADSKEYNO )
          /* get an Index Handle */
          if( pxOrder == nullptr || pxOrder->isNil() ) { /* didn't pass it in; use current */
             hIndex = pArea->hOrdCurrent;
-         } else if( HB_IS_NUMBER(pxOrder) ) {
+         } else if( pxOrder->isNumber() ) {
             auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
 
             if( ordNum > 0 ) { /* otherwise leave hIndex at 0 */
@@ -686,7 +686,7 @@ HB_FUNC( ADSKEYCOUNT )
    auto pFilterOption = hb_param(3, Harbour::Item::NUMERIC);
 
    /* if arg 1 or 3 is bad, toss error */
-   if( (pxOrder == nullptr || pxOrder->isString() || HB_IS_NUMBER(pxOrder) || pxOrder->isNil()) && (pFilterOption == nullptr || HB_IS_NUMBER(pFilterOption)) ) {
+   if( (pxOrder == nullptr || pxOrder->isString() || pxOrder->isNumber() || pxOrder->isNil()) && (pFilterOption == nullptr || pFilterOption->isNumber()) ) {
       ADSAREAP pArea = hb_adsGetWorkAreaPointer();
 
       if( pArea != nullptr ) {
@@ -697,7 +697,7 @@ HB_FUNC( ADSKEYCOUNT )
          /* get an Index Handle */
          if( pxOrder == nullptr || pxOrder->isNil() ) { /* didn't pass it in; use current */
             hIndex = pArea->hOrdCurrent;
-         } else if( HB_IS_NUMBER(pxOrder) ) {
+         } else if( pxOrder->isNumber() ) {
             auto ordNum = static_cast<UNSIGNED8>(hb_itemGetNI(pxOrder));
 
             if( ordNum > 0 ) { /* otherwise leave hIndex at 0 */

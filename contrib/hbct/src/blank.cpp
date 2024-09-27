@@ -88,7 +88,7 @@ HB_FUNC(BLANK)
       hb_retdl(0);
     }
   }
-  else if (HB_IS_NUMBER(pItem))
+  else if (pItem->isNumber())
   {
     if (bRef)
     {

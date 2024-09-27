@@ -509,7 +509,7 @@ static HB_ERRCODE sqlbasePutValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITE
    if(    ((pItem->isMemo() || pItem->isString()) && (pField->uiType == Harbour::DB::Field::STRING || pField->uiType == Harbour::DB::Field::MEMO))
        || (pItem->isDate() && pField->uiType == Harbour::DB::Field::DATE)
        || (pItem->isTimeStamp() && pField->uiType == Harbour::DB::Field::TIMESTAMP)
-       || (HB_IS_NUMBER(pItem) && (pField->uiType == Harbour::DB::Field::INTEGER || pField->uiType == Harbour::DB::Field::LONG || pField->uiType == Harbour::DB::Field::FLOAT || pField->uiType == Harbour::DB::Field::DOUBLE))
+       || (pItem->isNumber() && (pField->uiType == Harbour::DB::Field::INTEGER || pField->uiType == Harbour::DB::Field::LONG || pField->uiType == Harbour::DB::Field::FLOAT || pField->uiType == Harbour::DB::Field::DOUBLE))
        || (pItem->isLogical() && pField->uiType == Harbour::DB::Field::LOGICAL)
        || pField->uiType == Harbour::DB::Field::ANY
        || pItem->isNil() ) {
