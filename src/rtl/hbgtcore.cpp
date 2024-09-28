@@ -2257,7 +2257,7 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
       auto pVal = hb_hashGetCItemPtr(pMessage, "TIM");
       if (pVal && pVal->isNumeric())
       {
-        dDelay = hb_itemGetND(pVal);
+        dDelay = pVal->getND();
       }
     }
     pMessage = hb_hashGetCItemPtr(pMessage, "TXT");

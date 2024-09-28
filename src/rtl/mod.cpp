@@ -65,8 +65,8 @@ HB_FUNC(MOD)
 
   if (pNumber && pBase)
   {
-    auto dNumber = hb_itemGetND(pNumber);
-    auto dBase = hb_itemGetND(pBase); /* dBase! Cool! */
+    auto dNumber = pNumber->getND();
+    auto dBase = pBase->getND(); /* dBase! Cool! */
 
     if (dBase)
     {

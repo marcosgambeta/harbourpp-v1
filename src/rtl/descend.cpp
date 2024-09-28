@@ -92,7 +92,7 @@ HB_FUNC(DESCEND)
     }
     else if (pItem->isNumeric())
     {
-      hb_retnd(-1 * hb_itemGetND(pItem));
+      hb_retnd(-1 * pItem->getND());
     }
     else if (pItem->isLogical())
     {

@@ -110,7 +110,7 @@ HB_FUNC(HB_NTOC)
     }
     else
     {
-      hb_retc(hb_dblToStr(szBuffer, sizeof(szBuffer), hb_itemGetND(pNumber), hb_parnidef(2, -1)));
+      hb_retc(hb_dblToStr(szBuffer, sizeof(szBuffer), pNumber->getND(), hb_parnidef(2, -1)));
     }
   }
   else

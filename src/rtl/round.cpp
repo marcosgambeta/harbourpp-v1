@@ -64,7 +64,7 @@ HB_FUNC(INT)
       int iWidth;
 
       hb_itemGetNLen(pNumber, &iWidth, nullptr);
-      hb_retnlen(hb_numInt(hb_itemGetND(pNumber)), iWidth, 0);
+      hb_retnlen(hb_numInt(pNumber->getND()), iWidth, 0);
     }
   }
   else
@@ -86,7 +86,7 @@ HB_FUNC(ROUND)
      * applications may be important due to different formatting rules
      * when SET FIXED is ON [druzus]
      */
-    hb_retndlen(hb_numRound(hb_itemGetND(pNumber), iDec), 0, HB_MAX(iDec, 0));
+    hb_retndlen(hb_numRound(pNumber->getND(), iDec), 0, HB_MAX(iDec, 0));
 #else
     if (iDec == 0 && pNumber->isNumInt())
     {
@@ -94,7 +94,7 @@ HB_FUNC(ROUND)
     }
     else
     {
-      hb_retnlen(hb_numRound(hb_itemGetND(pNumber), iDec), 0, HB_MAX(iDec, 0));
+      hb_retnlen(hb_numRound(pNumber->getND(), iDec), 0, HB_MAX(iDec, 0));
     }
 #endif
   }

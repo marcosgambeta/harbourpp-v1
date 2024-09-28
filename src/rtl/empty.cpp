@@ -74,7 +74,7 @@ HB_FUNC(EMPTY)
     break;
 
   case Harbour::Item::DOUBLE:
-    hb_retl(hb_itemGetND(pItem) == 0.0);
+    hb_retl(pItem->getND() == 0.0);
     break;
 
   case Harbour::Item::DATE:

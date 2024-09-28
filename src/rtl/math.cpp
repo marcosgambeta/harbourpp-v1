@@ -119,7 +119,7 @@ static int hb_matherr(HB_MATH_EXCEPTION *pexc)
     {
       if (pMatherrResult->isNumeric())
       {
-        pexc->retval = hb_itemGetND(pMatherrResult);
+        pexc->retval = pMatherrResult->getND();
         hb_itemGetNLen(pMatherrResult, &pexc->retvalwidth, &pexc->retvaldec);
         pexc->handled = 1;
       }
@@ -530,7 +530,7 @@ static int hb_matherrblock(HB_MATH_EXCEPTION *pexc)
         pRetval = hb_itemArrayGet(pArray, 1);
         if (pRetval)
         {
-          pexc->retval = hb_itemGetND(pRetval);
+          pexc->retval = pRetval->getND();
           hb_itemGetNLen(pRetval, &pexc->retvalwidth, &pexc->retvaldec);
           hb_itemRelease(pRetval);
         }

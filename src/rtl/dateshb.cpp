@@ -324,7 +324,7 @@ HB_FUNC(HB_NTOT)
 
   if (pNum)
   {
-    hb_rettd(hb_itemGetND(pNum));
+    hb_rettd(pNum->getND());
   }
   else
   {
@@ -338,7 +338,7 @@ HB_FUNC(HB_NTOMSEC)
 
   if (pNum)
   {
-    hb_retnint(static_cast<HB_MAXINT>(hb_itemGetND(pNum) * HB_MILLISECS_PER_DAY));
+    hb_retnint(static_cast<HB_MAXINT>(pNum->getND() * HB_MILLISECS_PER_DAY));
   }
   else
   {
@@ -352,7 +352,7 @@ HB_FUNC(HB_NTOSEC)
 
   if (pNum)
   {
-    hb_retnd(hb_itemGetND(pNum) * HB_SECONDS_PER_DAY);
+    hb_retnd(pNum->getND() * HB_SECONDS_PER_DAY);
   }
   else
   {
@@ -366,7 +366,7 @@ HB_FUNC(HB_NTOMIN)
 
   if (pNum)
   {
-    hb_retnd(hb_itemGetND(pNum) * HB_MINUTES_PER_DAY);
+    hb_retnd(pNum->getND() * HB_MINUTES_PER_DAY);
   }
   else
   {
@@ -380,7 +380,7 @@ HB_FUNC(HB_NTOHOUR)
 
   if (pNum)
   {
-    hb_retnd(hb_itemGetND(pNum) * 24);
+    hb_retnd(pNum->getND() * 24);
   }
   else
   {
@@ -408,7 +408,7 @@ HB_FUNC(HB_SECTOT)
 
   if (pNum)
   {
-    hb_rettd(hb_itemGetND(pNum) / HB_SECONDS_PER_DAY);
+    hb_rettd(pNum->getND() / HB_SECONDS_PER_DAY);
   }
   else
   {
@@ -422,7 +422,7 @@ HB_FUNC(HB_MSECTOT)
 
   if (pNum)
   {
-    hb_rettd(hb_itemGetND(pNum) / HB_MILLISECS_PER_DAY);
+    hb_rettd(pNum->getND() / HB_MILLISECS_PER_DAY);
   }
   else
   {

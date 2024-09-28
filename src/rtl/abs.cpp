@@ -102,7 +102,7 @@ HB_FUNC(ABS)
     }
     else
     {
-      auto dNumber = hb_itemGetND(pNumber);
+      auto dNumber = pNumber->getND();
 
       hb_retndlen(dNumber >= 0.0 ? dNumber : -dNumber, 0, iDec);
     }

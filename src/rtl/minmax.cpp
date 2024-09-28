@@ -72,8 +72,8 @@ HB_FUNC(MAX)
     }
     else if (p1->isNumeric() && p2->isNumeric())
     {
-      auto d1 = hb_itemGetND(p1);
-      auto d2 = hb_itemGetND(p2);
+      auto d1 = p1->getND();
+      auto d2 = p2->getND();
       if (d1 >= d2)
       {
         hb_itemReturn(p1);
@@ -143,8 +143,8 @@ HB_FUNC(MIN)
     }
     else if (p1->isNumeric() && p2->isNumeric())
     {
-      auto d1 = hb_itemGetND(p1);
-      auto d2 = hb_itemGetND(p2);
+      auto d1 = p1->getND();
+      auto d2 = p2->getND();
       if (d1 <= d2)
       {
         hb_itemReturn(p1);

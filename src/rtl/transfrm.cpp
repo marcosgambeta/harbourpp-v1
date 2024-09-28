@@ -408,7 +408,7 @@ HB_FUNC(TRANSFORM)
       HB_SIZE i;
       PHB_ITEM pNumber = nullptr;
 
-      auto dValue = hb_itemGetND(pValue);
+      auto dValue = pValue->getND();
 
       /* Support date function for numbers */
       if (uiPicFlags & PF_DATE)
