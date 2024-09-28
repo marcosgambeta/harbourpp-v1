@@ -61,7 +61,7 @@ HB_FUNC(FKLABEL)
 
   if (pPar1)
   {
-    auto iFKey = hb_itemGetNI(pPar1);
+    auto iFKey = pPar1->getNI();
 
     if (iFKey > 0 && iFKey <= 40)
     {

@@ -2065,7 +2065,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pGT->iRedrawMax);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      pGT->iRedrawMax = hb_itemGetNI(pInfo->pNewVal);
+      pGT->iRedrawMax = pInfo->pNewVal->getNI();
     }
     break;
 
@@ -3312,7 +3312,7 @@ static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iE
   {
     int iKey;
     HB_GTSELF_UNLOCK(pGT);
-    iKey = hb_itemGetNI(hb_vmEvalBlock(pGT->pInkeyReadBlock));
+    iKey = hb_vmEvalBlock(pGT->pInkeyReadBlock)->getNI();
     HB_GTSELF_LOCK(pGT);
     if (iKey != 0)
     {
@@ -3338,7 +3338,7 @@ static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iE
       }
       pKey = hb_itemPutNI(pKey, pGT->inkeyLast);
       HB_GTSELF_UNLOCK(pGT);
-      pGT->inkeyLast = hb_itemGetNI(hb_vmEvalBlockV(pGT->pInkeyFilterBlock, 1, pKey));
+      pGT->inkeyLast = hb_vmEvalBlockV(pGT->pInkeyFilterBlock, 1, pKey)->getNI();
       HB_GTSELF_LOCK(pGT);
       if (pGT->inkeyLast != 0)
       {

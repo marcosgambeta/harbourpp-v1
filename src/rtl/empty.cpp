@@ -66,7 +66,7 @@ HB_FUNC(EMPTY)
     break;
 
   case Harbour::Item::INTEGER:
-    hb_retl(hb_itemGetNI(pItem) == 0);
+    hb_retl(pItem->getNI() == 0);
     break;
 
   case Harbour::Item::LONG:

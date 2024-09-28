@@ -60,7 +60,7 @@ HB_FUNC(ABS)
 
     if (pNumber->isInteger())
     {
-      auto iNumber = hb_itemGetNI(pNumber);
+      auto iNumber = pNumber->getNI();
 
       if (iNumber >= 0)
       {

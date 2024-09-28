@@ -123,7 +123,7 @@ HB_FUNC(HB_CDAY)
 
   if (pDay)
   {
-    hb_retc_const(hb_dateCDOW(hb_itemGetNI(pDay)));
+    hb_retc_const(hb_dateCDOW(pDay->getNI()));
   }
   else
   {

@@ -927,8 +927,8 @@ static void s_inetRecvPattern(const char *const *patterns, int *patternsizes, in
     return;
   }
 
-  iBufferSize = pBufferSize ? hb_itemGetNI(pBufferSize) : 80;
-  iMax = pMaxSize ? hb_itemGetNI(pMaxSize) : 0;
+  iBufferSize = pBufferSize ? pBufferSize->getNI() : 80;
+  iMax = pMaxSize ? pMaxSize->getNI() : 0;
 
   socket->iError = HB_INET_ERR_OK;
 

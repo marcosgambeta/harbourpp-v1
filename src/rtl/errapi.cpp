@@ -109,7 +109,7 @@ static bool hb_errGetNumCode(int *piValue, const char *szOperation)
 
   if (pItem != nullptr)
   {
-    *piValue = hb_itemGetNI(pItem);
+    *piValue = pItem->getNI();
   }
   else
   {
@@ -125,7 +125,7 @@ static bool hb_errGetNumCode(int *piValue, const char *szOperation)
       hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
     }
 
-    *piValue = hb_itemGetNI(pItem);
+    *piValue = pItem->getNI();
     hb_itemRelease(pItem);
   }
 

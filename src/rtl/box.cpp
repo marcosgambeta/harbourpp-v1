@@ -75,7 +75,7 @@ HB_FUNC(DISPBOX)
       {
         iColor = -1;
       }
-      hb_gtBoxEx(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
+      hb_gtBoxEx(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI(), pszBox, iColor);
     }
     else
     {
@@ -89,11 +89,11 @@ HB_FUNC(DISPBOX)
 
       if (hb_parni(5) == 2)
       {
-        hb_gtBoxD(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
+        hb_gtBoxD(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());
       }
       else
       {
-        hb_gtBoxS(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight));
+        hb_gtBoxS(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI());
       }
 
       if (pszColor)
@@ -117,6 +117,6 @@ HB_FUNC(HB_DISPBOX)
     auto pszColor = hb_parc(6);
     int iColor = pszColor ? hb_gtColorToN(pszColor) : hb_parnidef(6, -1);
 
-    hb_gtDrawBox(hb_itemGetNI(pTop), hb_itemGetNI(pLeft), hb_itemGetNI(pBottom), hb_itemGetNI(pRight), pszBox, iColor);
+    hb_gtDrawBox(pTop->getNI(), pLeft->getNI(), pBottom->getNI(), pRight->getNI(), pszBox, iColor);
   }
 }

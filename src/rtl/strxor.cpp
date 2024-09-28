@@ -90,7 +90,7 @@ HB_FUNC(HB_STRXOR)
     }
     else if ((pItem2 = hb_param(2, Harbour::Item::NUMERIC)) != nullptr)
     {
-      auto bChar = static_cast<char>(hb_itemGetNI(pItem2));
+      auto bChar = static_cast<char>(pItem2->getNI());
 
       if (bChar)
       {

@@ -3891,7 +3891,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
       /* store font status for next operation on fontsize */
-      switch (hb_itemGetNI(pInfo->pNewVal))
+      switch (pInfo->pNewVal->getNI())
       {
       case HB_GTI_FONTW_THIN:
         pWVT->fontWeight = FW_LIGHT;
@@ -3927,7 +3927,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, iVal);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      switch (hb_itemGetNI(pInfo->pNewVal))
+      switch (pInfo->pNewVal->getNI())
       {
       case HB_GTI_FONTQ_HIGH:
         pWVT->fontQuality = ANTIALIASED_QUALITY;
@@ -3946,7 +3946,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->fontAttribute);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      pWVT->fontAttribute = hb_itemGetNI(pInfo->pNewVal) & (HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG |
+      pWVT->fontAttribute = pInfo->pNewVal->getNI() & (HB_GTI_FONTA_FIXMETRIC | HB_GTI_FONTA_CLRBKG |
                                                             HB_GTI_FONTA_CTRLCHARS | HB_GTI_FONTA_DRAWBOX);
     }
     break;
@@ -4036,7 +4036,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->CodePage);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       if (iVal != pWVT->CodePage)
       {
         if (!pWVT->hWnd)
@@ -4084,7 +4084,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->boxCodePage);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       if (iVal != pWVT->boxCodePage)
       {
         if (!pWVT->hWnd)
@@ -4167,7 +4167,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     }
     else if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      hIcon = LoadIcon(pWVT->hInstance, MAKEINTRESOURCE(hb_itemGetNI(pInfo->pNewVal)));
+      hIcon = LoadIcon(pWVT->hInstance, MAKEINTRESOURCE(pInfo->pNewVal->getNI()));
     }
     if (hIcon != pWVT->hIcon)
     {
@@ -4200,7 +4200,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      hb_gt_winapi_setKbdState(hb_itemGetNI(pInfo->pNewVal));
+      hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI());
     }
     break;
 
@@ -4231,7 +4231,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, GetCaretBlinkTime());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       SetCaretBlinkTime(HB_MAX(iVal, 0));
     }
     break;
@@ -4292,7 +4292,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutL(pInfo->pResult, false);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       if (iVal != 0)
       {
         bool fAdd = (hb_itemType(pInfo->pNewVal2) & Harbour::Item::STRING) != 0;
@@ -4418,7 +4418,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->CloseMode);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       if (iVal >= 0 && iVal <= 2 && pWVT->CloseMode != iVal)
       {
         pWVT->CloseMode = iVal;
@@ -4433,7 +4433,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   case HB_GTI_PALETTE:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      auto iIndex = hb_itemGetNI(pInfo->pNewVal);
+      auto iIndex = pInfo->pNewVal->getNI();
 
       if (iIndex >= 0 && iIndex < 16)
       {
@@ -4484,7 +4484,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, pWVT->ResizeMode);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       switch (iVal)
       {
       case HB_GTI_RESIZEMODE_FONT:
@@ -4527,8 +4527,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC) &&
         (hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC))
     {
-      x = hb_itemGetNI(pInfo->pNewVal);
-      y = hb_itemGetNI(pInfo->pNewVal2);
+      x = pInfo->pNewVal->getNI();
+      y = pInfo->pNewVal2->getNI();
     }
     else if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) && hb_arrayLen(pInfo->pNewVal) == 2)
     {

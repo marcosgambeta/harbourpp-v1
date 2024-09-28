@@ -5529,7 +5529,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, wnd->fontWeight);
     if (pInfo->pNewVal && pInfo->pNewVal->isNumeric())
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       switch (iVal)
       {
       case HB_GTI_FONTW_THIN:
@@ -5609,7 +5609,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
                                                       (wnd->fDrawBox ? HB_GTI_FONTA_DRAWBOX : 0));
     if (pInfo->pNewVal && pInfo->pNewVal->isNumeric())
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       wnd->fFixMetric = (iVal & HB_GTI_FONTA_FIXMETRIC) != 0;
       wnd->fClearBkg = (iVal & HB_GTI_FONTA_CLRBKG) != 0;
       wnd->fDrawBox = (iVal & HB_GTI_FONTA_DRAWBOX) != 0;
@@ -5681,7 +5681,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, wnd->cursorBlinkRate);
     if (pInfo->pNewVal && pInfo->pNewVal->isNumeric())
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       wnd->cursorBlinkRate = HB_MAX(iVal, 0);
     }
     break;
@@ -5769,7 +5769,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, wnd->iCloseMode);
     if (pInfo->pNewVal && pInfo->pNewVal->isNumeric())
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       if (iVal >= 0 && iVal <= 2 && wnd->iCloseMode != iVal)
       {
         if ((iVal == 2 || wnd->iCloseMode == 2) && wnd->fInit)
@@ -5806,7 +5806,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, HB_GTI_RESIZEMODE_ROWS);
     if (pInfo->pNewVal && pInfo->pNewVal->isNumeric())
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       switch (iVal)
       {
       case HB_GTI_RESIZEMODE_FONT:
@@ -5876,8 +5876,8 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
     if (pInfo->pNewVal && pInfo->pNewVal->isNumeric() && pInfo->pNewVal2 && pInfo->pNewVal2->isNumeric())
     {
-      x = hb_itemGetNI(pInfo->pNewVal);
-      y = hb_itemGetNI(pInfo->pNewVal2);
+      x = pInfo->pNewVal->getNI();
+      y = pInfo->pNewVal2->getNI();
     }
     else if (pInfo->pNewVal && pInfo->pNewVal->isArray() && hb_arrayLen(pInfo->pNewVal) == 2)
     {
@@ -5911,13 +5911,13 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   case HB_GTI_PALETTE:
     if (pInfo->pNewVal && pInfo->pNewVal->isNumeric())
     {
-      iVal = hb_itemGetNI(pInfo->pNewVal);
+      iVal = pInfo->pNewVal->getNI();
       if (iVal >= 0 && iVal < 16)
       {
         pInfo->pResult = hb_itemPutNI(pInfo->pResult, wnd->colors[iVal].value);
         if (pInfo->pNewVal2 && pInfo->pNewVal2->isNumeric())
         {
-          auto iColor = hb_itemGetNI(pInfo->pNewVal2);
+          auto iColor = pInfo->pNewVal2->getNI();
           if (iColor != wnd->colors[iVal].value)
           {
             wnd->colors[iVal].value = iColor;

@@ -1004,7 +1004,7 @@ static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_sln_escDelay);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      hb_sln_escDelay = hb_itemGetNI(pInfo->pNewVal);
+      hb_sln_escDelay = pInfo->pNewVal->getNI();
     }
     break;
 

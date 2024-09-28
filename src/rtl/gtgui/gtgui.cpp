@@ -302,7 +302,7 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, hb_gt_winapi_getKbdState());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::NUMERIC)
     {
-      hb_gt_winapi_setKbdState(hb_itemGetNI(pInfo->pNewVal));
+      hb_gt_winapi_setKbdState(pInfo->pNewVal->getNI());
     }
     break;
 #endif

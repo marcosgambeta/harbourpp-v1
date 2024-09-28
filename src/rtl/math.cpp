@@ -536,7 +536,7 @@ static int hb_matherrblock(HB_MATH_EXCEPTION *pexc)
         }
         if (pRet && pRet->isNumeric())
         {
-          retval = hb_itemGetNI(pRet); /* block may also return 0 to force C math lib warnings */
+          retval = pRet->getNI(); /* block may also return 0 to force C math lib warnings */
           hb_itemRelease(pRet);
         }
         else
