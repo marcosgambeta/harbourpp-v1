@@ -588,7 +588,7 @@ long hb_arrayGetDL(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->arrayLen())
   {
-    return hb_itemGetDL(pArray->arrayItems() + nIndex - 1);
+    return (pArray->arrayItems() + nIndex - 1)->getDL();
   }
   else
   {

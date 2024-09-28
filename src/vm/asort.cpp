@@ -108,7 +108,7 @@ static bool hb_itemIsLess(PHB_BASEARRAY pBaseArray, PHB_ITEM pBlock, HB_SIZE nIt
   else if (pItem1->isDateTime() && pItem2->isDateTime())
   {
     // it's not exact comparison, compare only Julian date
-    return hb_itemGetDL(pItem1) < hb_itemGetDL(pItem2);
+    return pItem1->getDL() < pItem2->getDL();
   }
   else if (pItem1->isLogical() && pItem2->isLogical())
   {

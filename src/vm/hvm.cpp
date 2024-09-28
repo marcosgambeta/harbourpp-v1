@@ -3669,7 +3669,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      hb_itemPutDL(pResult, hb_itemGetDL(pItem1) + pItem2->getNL());
+      hb_itemPutDL(pResult, pItem1->getDL() + pItem2->getNL());
     }
   }
   else if (pItem1->isNumeric() && pItem2->isDateTime())
@@ -3688,7 +3688,7 @@ static void hb_vmPlus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      hb_itemPutDL(pResult, pItem1->getNL() + hb_itemGetDL(pItem2));
+      hb_itemPutDL(pResult, pItem1->getNL() + pItem2->getDL());
     }
   }
   else if (!hb_objOperatorCall(HB_OO_OP_PLUS, pResult, pItem1, pItem2, nullptr))
@@ -3774,7 +3774,7 @@ static void hb_vmMinus(PHB_ITEM pResult, PHB_ITEM pItem1, PHB_ITEM pItem2)
     }
     else
     {
-      hb_itemPutDL(pResult, hb_itemGetDL(pItem1) - pItem2->getNL());
+      hb_itemPutDL(pResult, pItem1->getDL() - pItem2->getNL());
     }
   }
   else if (pItem1->isString() && pItem2->isString())

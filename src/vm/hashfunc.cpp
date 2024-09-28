@@ -717,7 +717,7 @@ HB_FUNC(HB_HSCAN)
     }
     else if (pValue->isLogical())
     {
-      HB_BOOL fValue = hb_itemGetDL(pValue);
+      HB_BOOL fValue = hb_itemGetDL(pValue); // TODO: why hb_itemGetDL and not hb_itemGetL ?
       while (nCount--)
       {
         auto pItem = hb_hashGetValueAt(pHash, nStart);
