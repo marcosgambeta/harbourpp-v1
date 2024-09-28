@@ -711,6 +711,18 @@ long hb_itemGetDL(PHB_ITEM pItem)
   }
 }
 
+long _HB_ITEM::getDL() // equivalent to hb_itemGetDL
+{
+  if (this->isDateTime())
+  {
+    return this->dateTimeJulian();
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 // This function always closes the time with a zero byte, so it needs a
 // 18 character long buffer to store time in format "YYYYMMDDhhmmssfff"
 // with trailing 0 byte.

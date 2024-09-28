@@ -490,6 +490,7 @@ typedef struct _HB_ITEM
   const char *getCPtr();
   HB_SIZE getCLen();
   HB_MAXINT getNInt();
+  long getDL();
   //
   _HB_ITEM *putNI(int iNumber);
   _HB_ITEM *putL(HB_BOOL bValue);
