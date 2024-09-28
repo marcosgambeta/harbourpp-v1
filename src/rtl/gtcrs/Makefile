@@ -7,6 +7,8 @@ LIBNAME := gtcrs
 CPP_SOURCES := \
    gtcrs.cpp \
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 ifneq ($(HB_HAS_CURSES),)
 
    HB_CFLAGS += $(foreach d,$(HB_HAS_CURSES),-I$(d))

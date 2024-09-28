@@ -7,6 +7,8 @@ LIBNAME := gttrm
 CPP_SOURCES := \
    gttrm.cpp \
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 HB_SUPPORTED := yes
 ifeq ($(HB_PLATFORM),win)
    HB_SUPPORTED := no

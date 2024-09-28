@@ -7,6 +7,8 @@ LIBNAME := gtwvt
 CPP_SOURCES := \
    gtwvt.cpp \
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 ifneq ($(filter $(HB_PLATFORM),win wce),)
    include $(TOP)$(ROOT)config/lib.mk
 else

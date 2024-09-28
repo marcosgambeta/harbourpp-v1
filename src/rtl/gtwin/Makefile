@@ -7,6 +7,8 @@ LIBNAME := gtwin
 CPP_SOURCES := \
    gtwin.cpp \
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 ifeq ($(HB_PLATFORM),win)
    include $(TOP)$(ROOT)config/lib.mk
 else

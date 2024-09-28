@@ -9,6 +9,8 @@ CPP_SOURCES := \
    kbsln.cpp \
    mousesln.cpp \
 
+HB_CFLAGS += -D_HB_API_INTERNAL_
+
 # TODO: Add these to lib path list
 # LDFLAGS := -L/usr/local/lib $(LDFLAGS)
 # LDFLAGS := -L/usr/lib/slang -L/usr/local/lib -L/usr/local/lib/slang $(LDFLAGS)
