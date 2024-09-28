@@ -2096,7 +2096,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
         if (fGet && (hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC))
         {
-          colors[iIndex] = hb_itemGetNL(pInfo->pNewVal2);
+          colors[iIndex] = pInfo->pNewVal2->getNL();
           hb_gt_win_SetPalette(true, colors);
         }
       }

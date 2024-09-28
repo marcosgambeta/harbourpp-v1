@@ -863,7 +863,7 @@ void hb_socekxParamsInit(PHB_SOCKEX pSock, PHB_ITEM pParams)
     {
       if (pSock->buffer == nullptr)
       {
-        pSock->readahead = hb_itemGetNL(pItem);
+        pSock->readahead = pItem->getNL();
       }
     }
     if ((pItem = hb_hashGetCItemPtr(pParams, "flush")) != nullptr && pItem->isNumeric())

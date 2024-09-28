@@ -4441,7 +4441,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
 
         if (hb_itemType(pInfo->pNewVal2) & Harbour::Item::NUMERIC)
         {
-          pWVT->COLORS[iIndex] = hb_itemGetNL(pInfo->pNewVal2);
+          pWVT->COLORS[iIndex] = pInfo->pNewVal2->getNL();
 
           if (pWVT->hWnd)
           {

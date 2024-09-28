@@ -290,8 +290,8 @@ static HB_BOOL s_fileTimeGet(PHB_FILE_FUNCS pFuncs, const char *pszFileName, lon
   bool fResult = hb_parl(-1);
   if (fResult)
   {
-    *plJulian = hb_itemGetNL(hb_stackItemFromBase(iOffset));
-    *plMillisec = hb_itemGetNL(hb_stackItemFromBase(iOffset + 1));
+    *plJulian = hb_stackItemFromBase(iOffset)->getNL();
+    *plMillisec = hb_stackItemFromBase(iOffset + 1)->getNL();
   }
   hb_stackPop();
   hb_stackPop();
@@ -325,7 +325,7 @@ static HB_BOOL s_fileAttrGet(PHB_FILE_FUNCS pFuncs, const char *pszFileName, HB_
   bool fResult = hb_parl(-1);
   if (fResult)
   {
-    *pnAttr = static_cast<HB_FATTR>(hb_itemGetNL(hb_stackItemFromBase(iOffset)));
+    *pnAttr = static_cast<HB_FATTR>(hb_stackItemFromBase(iOffset)->getNL());
   }
   hb_stackPop();
 
