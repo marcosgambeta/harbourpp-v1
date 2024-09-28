@@ -473,7 +473,7 @@ HB_FUNC(TRANSFORM)
         /* Always convert absolute val */
         if (pValue->isNumInt())
         { /* workaround for 64-bit integer conversion */
-          pNumber = hb_itemPutNInt(nullptr, -hb_itemGetNInt(pValue));
+          pNumber = hb_itemPutNInt(nullptr, -(pValue->getNInt()));
         }
         else
         {

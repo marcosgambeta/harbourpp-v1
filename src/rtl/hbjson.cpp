@@ -245,7 +245,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
   else if (pValue->isNumInt())
   {
     char buf[24];
-    HB_MAXINT nVal = hb_itemGetNInt(pValue);
+    HB_MAXINT nVal = pValue->getNInt();
     bool fNeg = nVal < 0;
     int i = 0;
 

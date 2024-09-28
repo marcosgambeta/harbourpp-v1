@@ -83,7 +83,7 @@ HB_FUNC(ABS)
     }
     else if (pNumber->isLong())
     {
-      HB_MAXINT lNumber = hb_itemGetNInt(pNumber);
+      HB_MAXINT lNumber = pNumber->getNInt();
 
       if (lNumber >= 0)
       {

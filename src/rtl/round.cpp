@@ -90,7 +90,7 @@ HB_FUNC(ROUND)
 #else
     if (iDec == 0 && pNumber->isNumInt())
     {
-      hb_retnint(hb_itemGetNInt(pNumber));
+      hb_retnint(pNumber->getNInt());
     }
     else
     {

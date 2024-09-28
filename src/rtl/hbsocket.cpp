@@ -2983,7 +2983,7 @@ static HB_SOCKET s_socketSelectCallback(PHB_ITEM pItem)
   {
     if (pItem->isNumeric())
     {
-      sd = static_cast<HB_SOCKET>(hb_itemGetNInt(pItem));
+      sd = static_cast<HB_SOCKET>(pItem->getNInt());
     }
     else if (pItem->isPointer())
     {

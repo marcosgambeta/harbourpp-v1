@@ -58,8 +58,8 @@ HB_FUNC(MAX)
   {
     if (p1->isNumInt() && p2->isNumInt())
     {
-      HB_MAXINT l1 = hb_itemGetNInt(p1);
-      HB_MAXINT l2 = hb_itemGetNInt(p2);
+      HB_MAXINT l1 = p1->getNInt();
+      HB_MAXINT l2 = p2->getNInt();
       if (l1 >= l2)
       {
         hb_itemReturn(p1);
@@ -129,8 +129,8 @@ HB_FUNC(MIN)
   {
     if (p1->isNumInt() && p2->isNumInt())
     {
-      HB_MAXINT l1 = hb_itemGetNInt(p1);
-      HB_MAXINT l2 = hb_itemGetNInt(p2);
+      HB_MAXINT l1 = p1->getNInt();
+      HB_MAXINT l2 = p2->getNInt();
       if (l1 <= l2)
       {
         hb_itemReturn(p1);

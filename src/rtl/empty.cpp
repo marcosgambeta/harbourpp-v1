@@ -70,7 +70,7 @@ HB_FUNC(EMPTY)
     break;
 
   case Harbour::Item::LONG:
-    hb_retl(hb_itemGetNInt(pItem) == 0);
+    hb_retl(pItem->getNInt() == 0);
     break;
 
   case Harbour::Item::DOUBLE:
