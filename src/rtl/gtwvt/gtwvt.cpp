@@ -3731,11 +3731,11 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bMaximized);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      if (static_cast<bool>(hb_itemGetL(pInfo->pNewVal)) != pWVT->bMaximized && !pWVT->bFullScreen)
+      if (static_cast<bool>(pInfo->pNewVal->getL()) != pWVT->bMaximized && !pWVT->bFullScreen)
       {
         if (!pWVT->hWnd)
         {
-          pWVT->bMaximized = hb_itemGetL(pInfo->pNewVal);
+          pWVT->bMaximized = pInfo->pNewVal->getL();
         }
         else if (pWVT->bMaximized)
         {
@@ -3755,7 +3755,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bFullScreen);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      if (static_cast<bool>(hb_itemGetL(pInfo->pNewVal)) != pWVT->bFullScreen)
+      if (static_cast<bool>(pInfo->pNewVal->getL()) != pWVT->bFullScreen)
       {
         if (pWVT->hWnd)
         {
@@ -3763,7 +3763,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
         }
         else
         {
-          pWVT->bFullScreen = hb_itemGetL(pInfo->pNewVal);
+          pWVT->bFullScreen = pInfo->pNewVal->getL();
         }
       }
     }
@@ -3773,7 +3773,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bAltEnter);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      pWVT->bAltEnter = hb_itemGetL(pInfo->pNewVal);
+      pWVT->bAltEnter = pInfo->pNewVal->getL();
     }
     break;
 
@@ -4272,7 +4272,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bResizable);
     if (pInfo->pNewVal)
     {
-      bool bNewValue = hb_itemGetL(pInfo->pNewVal);
+      bool bNewValue = pInfo->pNewVal->getL();
       if (bNewValue != pWVT->bResizable)
       {
         pWVT->bResizable = bNewValue;
@@ -4379,7 +4379,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->bSelectCopy);
       if (pInfo->pNewVal)
       {
-        bool bNewValue = hb_itemGetL(pInfo->pNewVal);
+        bool bNewValue = pInfo->pNewVal->getL();
         if (bNewValue != pWVT->bSelectCopy)
         {
           if (pWVT->hWnd)
@@ -4403,7 +4403,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   case HB_GTI_CLOSABLE:
     pInfo->pResult = hb_itemPutL(pInfo->pResult, pWVT->CloseMode == 0);
     if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL) &&
-        (hb_itemGetL(pInfo->pNewVal) ? (pWVT->CloseMode != 0) : (pWVT->CloseMode == 0)))
+        (pInfo->pNewVal->getL() ? (pWVT->CloseMode != 0) : (pWVT->CloseMode == 0)))
     {
       iVal = pWVT->CloseMode;
       pWVT->CloseMode = iVal == 0 ? 1 : 0;

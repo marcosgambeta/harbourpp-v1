@@ -643,7 +643,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
       }
       else
       {
-        uiAction = hb_itemGetL(pResult) ? E_RETRY : E_DEFAULT;
+        uiAction = pResult->getL() ? E_RETRY : E_DEFAULT;
 
         if ((uiAction == E_DEFAULT && !(uiFlags & EF_CANDEFAULT)) || (uiAction == E_RETRY && !(uiFlags & EF_CANRETRY)))
         {

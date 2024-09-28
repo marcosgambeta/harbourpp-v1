@@ -706,7 +706,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdp
     break;
 
   case Harbour::Item::LOGICAL:
-    pBuffer[nOffset++] = hb_itemGetL(pItem) ? HB_SERIAL_TRUE : HB_SERIAL_FALSE;
+    pBuffer[nOffset++] = pItem->getL() ? HB_SERIAL_TRUE : HB_SERIAL_FALSE;
     break;
 
   case Harbour::Item::DATE:

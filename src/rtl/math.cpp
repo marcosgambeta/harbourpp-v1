@@ -519,7 +519,7 @@ static int hb_matherrblock(HB_MATH_EXCEPTION *pexc)
       pHandled = hb_itemArrayGet(pArray, 2);
       if (pHandled)
       {
-        pexc->handled = hb_itemGetL(pHandled);
+        pexc->handled = pHandled->getL();
         hb_itemRelease(pHandled);
       }
 

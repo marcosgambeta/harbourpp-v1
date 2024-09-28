@@ -1997,7 +1997,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, hb_gt_win_IsFullScreen());
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      bool fNewValue = hb_itemGetL(pInfo->pNewVal);
+      bool fNewValue = pInfo->pNewVal->getL();
       if (static_cast<bool>(hb_itemGetL(pInfo->pResult)) != fNewValue)
       {
         hb_gt_win_FullScreen(fNewValue);
@@ -2048,7 +2048,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fClosable);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      bool fNewValue = hb_itemGetL(pInfo->pNewVal);
+      bool fNewValue = pInfo->pNewVal->getL();
       if (fNewValue != s_fClosable)
       {
         hb_gt_win_SetCloseButton(true, fNewValue);
@@ -2169,7 +2169,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fSpecialKeyHandling);
     if (s_fWin9x && hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      s_fSpecialKeyHandling = hb_itemGetL(pInfo->pNewVal);
+      s_fSpecialKeyHandling = pInfo->pNewVal->getL();
     }
     break;
 
@@ -2177,7 +2177,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fAltKeyHandling);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      s_fAltKeyHandling = hb_itemGetL(pInfo->pNewVal);
+      s_fAltKeyHandling = pInfo->pNewVal->getL();
     }
     break;
 
@@ -2185,7 +2185,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, s_fMouseEnable);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      s_fMouseEnable = hb_itemGetL(pInfo->pNewVal);
+      s_fMouseEnable = pInfo->pNewVal->getL();
       SetConsoleMode(s_HInput, s_fMouseEnable ? ENABLE_MOUSE_INPUT : 0x0000);
     }
     break;

@@ -96,7 +96,7 @@ HB_FUNC(DESCEND)
     }
     else if (pItem->isLogical())
     {
-      hb_retl(!hb_itemGetL(pItem));
+      hb_retl(!pItem->getL());
     }
   }
 }

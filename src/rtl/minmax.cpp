@@ -86,8 +86,8 @@ HB_FUNC(MAX)
     }
     else if (p1->isLogical() && p2->isLogical())
     {
-      HB_BOOL b1 = hb_itemGetL(p1);
-      HB_BOOL b2 = hb_itemGetL(p2);
+      HB_BOOL b1 = p1->getL();
+      HB_BOOL b2 = p2->getL();
       hb_retl(b1 >= b2 ? b1 : b2);
       return;
     }
@@ -157,8 +157,8 @@ HB_FUNC(MIN)
     }
     else if (p1->isLogical() && p2->isLogical())
     {
-      HB_BOOL b1 = hb_itemGetL(p1);
-      HB_BOOL b2 = hb_itemGetL(p2);
+      HB_BOOL b1 = p1->getL();
+      HB_BOOL b2 = p2->getL();
       hb_retl(b1 <= b2 ? b1 : b2);
       return;
     }

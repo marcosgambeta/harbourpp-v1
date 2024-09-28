@@ -263,7 +263,7 @@ PHB_ITEM hb_strFormat(PHB_ITEM pItemReturn, PHB_ITEM pItemFormat, int iCount, PH
       else if (pItem && pItem->isLogical())
       {
         iSize = 1;
-        if (hb_itemGetL(pItem))
+        if (pItem->getL())
         {
           pStr2 = "1";
         }

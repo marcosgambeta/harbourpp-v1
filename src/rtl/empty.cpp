@@ -89,7 +89,7 @@ HB_FUNC(EMPTY)
   }
 
   case Harbour::Item::LOGICAL:
-    hb_retl(!hb_itemGetL(pItem));
+    hb_retl(!pItem->getL());
     break;
 
   case Harbour::Item::BLOCK:

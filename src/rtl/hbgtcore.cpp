@@ -2057,7 +2057,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, pGT->fVgaCell);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::LOGICAL)
     {
-      pGT->fVgaCell = hb_itemGetL(pInfo->pNewVal);
+      pGT->fVgaCell = pInfo->pNewVal->getL();
     }
     break;
 
@@ -2281,12 +2281,12 @@ static int hb_gt_def_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
     HB_GTSELF_INFO(pGT, HB_GTI_ISSCREENPOS, &gtInfo);
     if (gtInfo.pResult)
     {
-      fScreen = hb_itemGetL(gtInfo.pResult);
+      fScreen = gtInfo.pResult->getL();
     }
     HB_GTSELF_INFO(pGT, HB_GTI_KBDSUPPORT, &gtInfo);
     if (gtInfo.pResult)
     {
-      fKeyBoard = hb_itemGetL(gtInfo.pResult);
+      fKeyBoard = gtInfo.pResult->getL();
       hb_itemRelease(gtInfo.pResult);
     }
     HB_GTSELF_GETSIZE(pGT, &iRows, &iCols);

@@ -466,7 +466,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
       if ((pItem = hb_hashGetCItemPtr(pParams, "gzin")) != nullptr && pItem->isLogical())
       {
-        fDecompressIn = hb_itemGetL(pItem);
+        fDecompressIn = pItem->getL();
         if (fDecompressIn)
         {
           windowBitsIn += 16;
@@ -476,9 +476,9 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
       {
         if (windowBitsIn == MAX_WBITS)
         {
-          fDecompressIn = hb_itemGetL(pItem);
+          fDecompressIn = pItem->getL();
         }
-        else if (hb_itemGetL(pItem))
+        else if (pItem->getL())
         {
           windowBitsIn += 16;
         }
@@ -486,7 +486,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
       if ((pItem = hb_hashGetCItemPtr(pParams, "gzout")) != nullptr && pItem->isLogical())
       {
-        fCompressOut = hb_itemGetL(pItem);
+        fCompressOut = pItem->getL();
         if (fCompressOut)
         {
           windowBitsOut += 16;
@@ -495,7 +495,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
       if ((pItem = hb_hashGetCItemPtr(pParams, "zout")) != nullptr && pItem->isLogical() &&
           windowBitsOut == MAX_WBITS)
       {
-        fCompressOut = hb_itemGetL(pItem);
+        fCompressOut = pItem->getL();
       }
     }
 

@@ -872,7 +872,7 @@ void hb_socekxParamsInit(PHB_SOCKEX pSock, PHB_ITEM pParams)
     }
     if ((pItem = hb_hashGetCItemPtr(pParams, "redir")) != nullptr && pItem->isLogical())
     {
-      pSock->fRedirAll = hb_itemGetL(pItem);
+      pSock->fRedirAll = pItem->getL();
     }
   }
 }

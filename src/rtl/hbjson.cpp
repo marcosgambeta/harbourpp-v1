@@ -277,7 +277,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
   }
   else if (pValue->isLogical())
   {
-    if (hb_itemGetL(pValue))
+    if (pValue->getL())
     {
       _hb_jsonCtxAdd(pCtx, "true", 4);
     }
