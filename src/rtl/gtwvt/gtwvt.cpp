@@ -4140,7 +4140,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       pWVT->wcTransLen = hb_itemGetCLen(pInfo->pNewVal) / sizeof(HB_WCHAR);
       if (pWVT->wcTransLen > 0)
       {
-        pWVT->wcTrans = pWVT->wcTransLen == 0 ? nullptr : reinterpret_cast<HB_WCHAR *>(hb_itemGetC(pInfo->pNewVal));
+        pWVT->wcTrans = pWVT->wcTransLen == 0 ? nullptr : reinterpret_cast<HB_WCHAR *>(pInfo->pNewVal->getC());
       }
     }
     break;

@@ -60,7 +60,7 @@ HB_FUNC(HB_ASCIIUPPER)
     {
       if (HB_ISLOWER(pszText[u]))
       {
-        char *pszBuff = hb_itemGetC(pText);
+        char *pszBuff = pText->getC();
 
         do
         {
@@ -91,7 +91,7 @@ HB_FUNC(HB_ASCIILOWER)
     {
       if (HB_ISUPPER(pszText[u]))
       {
-        char *pszBuff = hb_itemGetC(pText);
+        char *pszBuff = pText->getC();
 
         do
         {
