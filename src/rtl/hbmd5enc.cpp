@@ -70,7 +70,7 @@ HB_FUNC(HB_MD5ENCRYPT)
 
   if (pData && hb_parclen(2) > 0)
   {
-    auto nLen = hb_itemGetCLen(pData);
+    auto nLen = pData->getCLen();
 
     if (nLen)
     {
@@ -109,7 +109,7 @@ HB_FUNC(HB_MD5DECRYPT)
 
   if (pData && hb_parclen(2) > 0)
   {
-    auto nLen = hb_itemGetCLen(pData);
+    auto nLen = pData->getCLen();
 
     if (nLen)
     {

@@ -4137,7 +4137,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
         hb_itemFreeC(reinterpret_cast<char *>(pWVT->wcTrans));
         pWVT->wcTrans = nullptr;
       }
-      pWVT->wcTransLen = hb_itemGetCLen(pInfo->pNewVal) / sizeof(HB_WCHAR);
+      pWVT->wcTransLen = pInfo->pNewVal->getCLen() / sizeof(HB_WCHAR);
       if (pWVT->wcTransLen > 0)
       {
         pWVT->wcTrans = pWVT->wcTransLen == 0 ? nullptr : reinterpret_cast<HB_WCHAR *>(pInfo->pNewVal->getC());
@@ -4359,7 +4359,7 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     {
       pInfo->pResult = HB_ITEMPUTSTR(pInfo->pResult, pWVT->lpSelectCopy);
 
-      if (hb_itemGetCLen(pInfo->pNewVal))
+      if (pInfo->pNewVal->getCLen())
       {
         HMENU hSysMenu = pWVT->hWnd ? GetSystemMenu(pWVT->hWnd, FALSE) : nullptr;
         if (hSysMenu || !pWVT->hWnd)

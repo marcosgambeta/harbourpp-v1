@@ -202,7 +202,7 @@ HB_FUNC(HB_ATX)
 
     if (pRegEx)
     {
-      auto nLen = hb_itemGetCLen(pString);
+      auto nLen = pString->getCLen();
       HB_SIZE nStart = hb_parns(4);
       HB_SIZE nEnd = hb_parnsdef(5, nLen);
 
@@ -275,7 +275,7 @@ static bool hb_regex(int iRequest)
   }
 
   auto pszString = pString->getCPtr();
-  auto nLen = hb_itemGetCLen(pString);
+  auto nLen = pString->getCLen();
   int iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ? REGEX_MAX_GROUPS : 1;
   int iMatches = hb_regexec(pRegEx, pszString, nLen, iMaxMatch, aMatches);
   if (iMatches > 0)

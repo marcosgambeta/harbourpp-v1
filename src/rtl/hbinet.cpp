@@ -1158,7 +1158,7 @@ static void s_inetSendInternal(HB_BOOL lAll)
   else
   {
     buffer = pBuffer->getCPtr();
-    iSend = static_cast<int>(hb_itemGetCLen(pBuffer));
+    iSend = static_cast<int>(pBuffer->getCLen());
     if (HB_ISNUM(3))
     {
       iLen = hb_parni(3);
@@ -1599,7 +1599,7 @@ HB_FUNC(HB_INETDGRAMSEND)
     else
     {
       szBuffer = pBuffer->getCPtr();
-      iLen = static_cast<int>(hb_itemGetCLen(pBuffer));
+      iLen = static_cast<int>(pBuffer->getCLen());
       if (HB_ISNUM(5))
       {
         auto iMaxLen = hb_parni(5);

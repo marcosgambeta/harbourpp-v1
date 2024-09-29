@@ -58,11 +58,11 @@ HB_FUNC(HB_STRXOR)
     char *pRet;
 
     auto pStr1 = pItem->getCPtr();
-    auto nLen1 = hb_itemGetCLen(pItem);
+    auto nLen1 = pItem->getCLen();
 
     if ((pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr)
     {
-      auto nLen2 = hb_itemGetCLen(pItem2);
+      auto nLen2 = pItem2->getCLen();
       if (nLen2)
       {
         auto pStr2 = pItem2->getCPtr();

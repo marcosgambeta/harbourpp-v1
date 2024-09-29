@@ -60,7 +60,7 @@ HB_FUNC(SUBSTR)
   {
     auto cdp = hb_vmCDP();
     auto pszText = pText->getCPtr();
-    HB_ISIZ nSize = hb_itemGetCLen(pText);
+    HB_ISIZ nSize = pText->getCLen();
     HB_ISIZ nFrom = hb_parns(2);
     HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
 

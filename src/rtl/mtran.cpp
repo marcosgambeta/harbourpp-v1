@@ -86,7 +86,7 @@ HB_FUNC(MEMOTRAN)
 
   if (pString)
   {
-    auto nLen = hb_itemGetCLen(pString);
+    auto nLen = pString->getCLen();
     auto pszResult = static_cast<char *>(hb_xgrab(nLen + 1));
     const char *pszRepl;
     char cHardCR = ';';

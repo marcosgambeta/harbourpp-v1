@@ -60,7 +60,7 @@ HB_FUNC(HB_AT)
   {
     auto cdp = hb_vmCDP();
     auto pszText = pText->getCPtr();
-    auto nTextLength = hb_itemGetCLen(pText);
+    auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parns(3);
     HB_SIZE nFrom, nPos = 0;
 
@@ -110,7 +110,7 @@ HB_FUNC(HB_AT)
 
       if (nTo > 0)
       {
-        nPos = hb_strAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pszText, nTo);
+        nPos = hb_strAt(pSub->getCPtr(), pSub->getCLen(), pszText, nTo);
         if (nPos > 0)
         {
           if (HB_CDP_ISCHARIDX(cdp))
@@ -139,7 +139,7 @@ HB_FUNC(AT)
 
   if (pText && pSub)
   {
-    HB_SIZE nPos = hb_strAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pText->getCPtr(), hb_itemGetCLen(pText));
+    HB_SIZE nPos = hb_strAt(pSub->getCPtr(), pSub->getCLen(), pText->getCPtr(), pText->getCLen());
     if (nPos)
     {
       auto cdp = hb_vmCDP();

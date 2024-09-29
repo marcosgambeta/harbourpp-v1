@@ -61,7 +61,7 @@ HB_FUNC(LEN)
   {
     if (pItem->isString())
     {
-      auto nLen = hb_itemGetCLen(pItem);
+      auto nLen = pItem->getCLen();
       auto cdp = hb_vmCDP();
       if (HB_CDP_ISCHARIDX(cdp))
       {

@@ -92,7 +92,7 @@ HB_FUNC(HB_UCODE)
 
   if (pText)
   {
-    hb_retni(hb_cdpTextGetU16(hb_vmCDP(), pText->getCPtr(), hb_itemGetCLen(pText)));
+    hb_retni(hb_cdpTextGetU16(hb_vmCDP(), pText->getCPtr(), pText->getCLen()));
   }
   else
   {
@@ -126,7 +126,7 @@ HB_FUNC(HB_ULEN)
 
   if (pText)
   {
-    hb_retns(hb_cdpTextLen(hb_vmCDP(), pText->getCPtr(), hb_itemGetCLen(pText)));
+    hb_retns(hb_cdpTextLen(hb_vmCDP(), pText->getCPtr(), pText->getCLen()));
   }
   else
   {
@@ -143,7 +143,7 @@ HB_FUNC(HB_BLEN)
 
   if (pText)
   {
-    hb_retns(hb_itemGetCLen(pText));
+    hb_retns(pText->getCLen());
   }
   else
   {
@@ -162,7 +162,7 @@ HB_FUNC(HB_UPEEK)
   {
     auto cdp = hb_vmCDP();
     auto szText = pText->getCPtr();
-    auto nLen = hb_itemGetCLen(pText);
+    auto nLen = pText->getCLen();
     HB_SIZE nPos = hb_parns(2);
     HB_WCHAR wc = 0;
 
@@ -194,7 +194,7 @@ HB_FUNC(HB_BPEEK)
   if (pText && HB_ISNUM(2))
   {
     HB_SIZE nPos = hb_parns(2);
-    hb_retni((nPos > 0 && nPos <= hb_itemGetCLen(pText)) ? static_cast<HB_UCHAR>(pText->getCPtr()[nPos - 1]) : 0);
+    hb_retni((nPos > 0 && nPos <= pText->getCLen()) ? static_cast<HB_UCHAR>(pText->getCPtr()[nPos - 1]) : 0);
   }
   else
   {
@@ -213,7 +213,7 @@ HB_FUNC(HB_UPOKE)
   {
     auto cdp = hb_vmCDP();
     auto szText = pText->getCPtr();
-    auto nLen = hb_itemGetCLen(pText);
+    auto nLen = pText->getCLen();
     HB_SIZE nPos = hb_parns(2);
 
     if (nPos > 0 && nPos <= nLen)
@@ -289,7 +289,7 @@ HB_FUNC(HB_USUBSTR)
   {
     auto cdp = hb_vmCDP();
     auto pszText = pText->getCPtr();
-    HB_ISIZ nSize = hb_itemGetCLen(pText);
+    HB_ISIZ nSize = pText->getCLen();
     HB_ISIZ nFrom = hb_parns(2);
     HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
 
@@ -348,7 +348,7 @@ HB_FUNC(HB_BSUBSTR)
   if (pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))
   {
     auto pszText = pText->getCPtr();
-    HB_ISIZ nSize = hb_itemGetCLen(pText);
+    HB_ISIZ nSize = pText->getCLen();
     HB_ISIZ nFrom = hb_parns(2);
     HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
 

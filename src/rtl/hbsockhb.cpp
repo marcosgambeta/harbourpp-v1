@@ -830,17 +830,17 @@ void hb_socekxParamsGetStd(PHB_ITEM pParams, const void **pKeydata, int *pKeylen
     if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "key")) != nullptr && pItem->isString())
     {
       *pKeydata = pItem->getCPtr();
-      *pKeylen = static_cast<int>(hb_itemGetCLen(pItem));
+      *pKeylen = static_cast<int>(pItem->getCLen());
     }
     else if (pKeydata && pKeylen && (pItem = hb_hashGetCItemPtr(pParams, "pass")) != nullptr && pItem->isString())
     {
       *pKeydata = pItem->getCPtr();
-      *pKeylen = static_cast<int>(hb_itemGetCLen(pItem));
+      *pKeylen = static_cast<int>(pItem->getCLen());
     }
     if (pIV && pIVlen && (pItem = hb_hashGetCItemPtr(pParams, "iv")) != nullptr && pItem->isString())
     {
       *pIV = pItem->getCPtr();
-      *pIVlen = static_cast<int>(hb_itemGetCLen(pItem));
+      *pIVlen = static_cast<int>(pItem->getCLen());
     }
     if (pLevel && (pItem = hb_hashGetCItemPtr(pParams, "zlib")) != nullptr && pItem->isNumeric())
     {

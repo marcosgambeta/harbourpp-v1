@@ -57,7 +57,7 @@ HB_FUNC(HB_STRDECODESCAPE)
 
   if (pText)
   {
-    auto nLen = hb_itemGetCLen(pText);
+    auto nLen = pText->getCLen();
     if (nLen > 0)
     {
       auto str = static_cast<char *>(hb_xgrab(nLen + 1));
@@ -89,7 +89,7 @@ HB_FUNC(HB_STRCDECODE)
 
   if (pText)
   {
-    auto nLen = hb_itemGetCLen(pText);
+    auto nLen = pText->getCLen();
     HB_BOOL fCont = hb_parl(2);
     if (nLen > 0)
     {

@@ -54,7 +54,7 @@ HB_FUNC(BIN2W)
 
   if (pItem != nullptr)
   {
-    auto nLen = hb_itemGetCLen(pItem);
+    auto nLen = pItem->getCLen();
     if (nLen)
     {
       auto pszString = pItem->getCPtr();
@@ -71,7 +71,7 @@ HB_FUNC(BIN2I)
 
   if (pItem != nullptr)
   {
-    auto nLen = hb_itemGetCLen(pItem);
+    auto nLen = pItem->getCLen();
     if (nLen)
     {
       auto pszString = pItem->getCPtr();
@@ -88,7 +88,7 @@ HB_FUNC(BIN2L)
 
   if (pItem != nullptr)
   {
-    auto nLen = hb_itemGetCLen(pItem);
+    auto nLen = pItem->getCLen();
     if (nLen)
     {
       auto pszString = pItem->getCPtr();

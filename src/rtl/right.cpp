@@ -64,7 +64,7 @@ HB_FUNC(RIGHT)
     }
     else
     {
-      auto nText = hb_itemGetCLen(pText);
+      auto nText = pText->getCLen();
       if (static_cast<HB_SIZE>(nLen) < nText)
       {
         auto cdp = hb_vmCDP();

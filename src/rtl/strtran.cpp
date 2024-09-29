@@ -68,8 +68,8 @@ HB_FUNC(STRTRAN)
 
     if (nStart && nCount)
     {
-      auto nText = hb_itemGetCLen(pText);
-      auto nSeek = hb_itemGetCLen(pSeek);
+      auto nText = pText->getCLen();
+      auto nSeek = pSeek->getCLen();
 
       if (nSeek && nSeek <= nText && nStart > 0)
       {

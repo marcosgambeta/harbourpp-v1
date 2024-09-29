@@ -86,7 +86,7 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
 
   if (bf && pData)
   {
-    auto nLen = hb_itemGetCLen(pData);
+    auto nLen = pData->getCLen();
 
     if (nLen)
     {
@@ -135,7 +135,7 @@ HB_FUNC(HB_BLOWFISHDECRYPT)
 
   if (bf && pData)
   {
-    auto nSize = hb_itemGetCLen(pData);
+    auto nSize = pData->getCLen();
 
     if (nSize >= 8 && (nSize & 0x07) == 0)
     {
@@ -215,7 +215,7 @@ HB_FUNC(HB_BLOWFISHENCRYPT_CFB)
 
   if (bf && pData)
   {
-    auto nLen = hb_itemGetCLen(pData);
+    auto nLen = pData->getCLen();
 
     if (nLen)
     {
@@ -255,7 +255,7 @@ HB_FUNC(HB_BLOWFISHDECRYPT_CFB)
 
   if (bf && pData)
   {
-    auto nLen = hb_itemGetCLen(pData);
+    auto nLen = pData->getCLen();
 
     if (nLen)
     {

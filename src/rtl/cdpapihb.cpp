@@ -345,7 +345,7 @@ HB_FUNC(HB_UTF8AT)
 
   if (pText && pSub)
   {
-    auto nTextLength = hb_itemGetCLen(pText);
+    auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parnsdef(3, 1);
     HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
 
@@ -355,7 +355,7 @@ HB_FUNC(HB_UTF8AT)
     }
     else
     {
-      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pText->getCPtr(), nTextLength,
+      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), pSub->getCLen(), pText->getCPtr(), nTextLength,
                                   nStart, nEnd, false));
     }
   }
@@ -378,7 +378,7 @@ HB_FUNC(HB_UTF8RAT)
 
   if (pText && pSub)
   {
-    auto nTextLength = hb_itemGetCLen(pText);
+    auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parnsdef(3, 1);
     HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
 
@@ -388,7 +388,7 @@ HB_FUNC(HB_UTF8RAT)
     }
     else
     {
-      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pText->getCPtr(), nTextLength,
+      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), pSub->getCLen(), pText->getCPtr(), nTextLength,
                                   nStart, nEnd, true));
     }
   }
@@ -540,7 +540,7 @@ HB_FUNC(HB_UTF8POKE)
   if (pText && HB_ISNUM(2) && HB_ISNUM(3))
   {
     auto szString = pText->getCPtr();
-    auto nLen = hb_itemGetCLen(pText);
+    auto nLen = pText->getCLen();
     HB_SIZE nPos;
 
     nPos = utf8pos(szString, nLen, hb_parns(2));

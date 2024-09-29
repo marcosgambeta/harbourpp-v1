@@ -2073,7 +2073,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutC(pInfo->pResult, pGT->cdpBox ? pGT->cdpBox->id : nullptr);
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING)
     {
-      if (hb_itemGetCLen(pInfo->pNewVal) > 0)
+      if (pInfo->pNewVal->getCLen() > 0)
       {
         PHB_CODEPAGE cdpBox = hb_cdpFind(pInfo->pNewVal->getCPtr());
         if (cdpBox)
@@ -2164,7 +2164,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING)
     {
       /* set new Clipboard value */
-      hb_gt_setClipboard(pInfo->pNewVal->getCPtr(), hb_itemGetCLen(pInfo->pNewVal));
+      hb_gt_setClipboard(pInfo->pNewVal->getCPtr(), pInfo->pNewVal->getCLen());
     }
     else
     {

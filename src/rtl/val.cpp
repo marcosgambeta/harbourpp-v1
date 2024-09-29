@@ -55,7 +55,7 @@ static void hb_val(HB_BOOL fExt)
   if (pText)
   {
     auto szText = pText->getCPtr();
-    auto iLen = static_cast<int>(hb_itemGetCLen(pText));
+    auto iLen = static_cast<int>(pText->getCLen());
     HB_MAXINT lValue;
     double dValue;
     int iDec;

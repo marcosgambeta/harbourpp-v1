@@ -150,7 +150,7 @@ HB_FUNC(HB_ISNULL)
   {
     if (pItem->isString())
     {
-      hb_retl(hb_itemGetCLen(pItem) == 0);
+      hb_retl(pItem->getCLen() == 0);
       return;
     }
     else if (pItem->isArray())

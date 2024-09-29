@@ -467,7 +467,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void *data, HB_SIZE nSize, HB_MAXINT t
   HB_SIZE nResult = hb_parns(-1);
   if (nResult > 0)
   {
-    nSize = hb_itemGetCLen(hb_stackItemFromBase(iOffset));
+    nSize = hb_stackItemFromBase(iOffset)->getCLen();
     if (nResult > nSize)
     {
       nResult = nSize;
@@ -509,7 +509,7 @@ static HB_SIZE s_fileReadAt(PHB_FILE pFile, void *buffer, HB_SIZE nSize, HB_FOFF
   HB_SIZE nResult = hb_parns(-1);
   if (nResult > 0)
   {
-    nSize = hb_itemGetCLen(hb_stackItemFromBase(iOffset));
+    nSize = hb_stackItemFromBase(iOffset)->getCLen();
     if (nResult > nSize)
     {
       nResult = nSize;

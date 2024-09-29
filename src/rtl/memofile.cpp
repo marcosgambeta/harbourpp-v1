@@ -107,7 +107,7 @@ static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
 
     if (pFile != nullptr)
     {
-      auto nSize = hb_itemGetCLen(pString);
+      auto nSize = pString->getCLen();
       auto pData = pString->getCPtr();
 
       while (nSize > 0)

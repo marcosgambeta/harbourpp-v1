@@ -62,7 +62,7 @@ HB_FUNC(EMPTY)
 
   case Harbour::Item::STRING:
   case Harbour::Item::MEMO:
-    hb_retl(hb_strEmpty(pItem->getCPtr(), hb_itemGetCLen(pItem)));
+    hb_retl(hb_strEmpty(pItem->getCPtr(), pItem->getCLen()));
     break;
 
   case Harbour::Item::INTEGER:

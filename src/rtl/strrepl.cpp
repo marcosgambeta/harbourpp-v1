@@ -58,7 +58,7 @@ HB_FUNC(HB_STRREPLACE)
 
   if (pText && pSrc)
   {
-    auto nText = hb_itemGetCLen(pText);
+    auto nText = pText->getCLen();
     HB_SIZE nSrc = hb_itemSize(pSrc);
 
     if (nText > 0 && nSrc > 0)

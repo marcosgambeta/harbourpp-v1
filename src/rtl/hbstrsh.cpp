@@ -58,7 +58,7 @@ HB_FUNC(HB_STRSHRINK)
     if (nShrinkBy > 0)
     {
       auto pszText = pText->getCPtr();
-      HB_ISIZ nText = hb_itemGetCLen(pText);
+      HB_ISIZ nText = pText->getCLen();
       HB_ISIZ nLen;
       auto cdp = hb_vmCDP();
 

@@ -94,7 +94,7 @@ HB_FUNC(HARDCR)
   if (pString)
   {
     char *pszBuffer = pString->getC();
-    auto nStringLen = hb_itemGetCLen(pString);
+    auto nStringLen = pString->getCLen();
 
     hb_retclen_buffer(hb_strHardCR(pszBuffer, nStringLen), nStringLen);
   }

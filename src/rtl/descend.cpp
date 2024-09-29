@@ -73,7 +73,7 @@ HB_FUNC(DESCEND)
   {
     if (pItem->isString())
     {
-      auto nLen = hb_itemGetCLen(pItem);
+      auto nLen = pItem->getCLen();
 
       if (nLen > 0)
       {

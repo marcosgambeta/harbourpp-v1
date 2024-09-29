@@ -55,7 +55,7 @@ HB_FUNC(REPLICATE)
 
   if (pItem && HB_ISNUM(2))
   {
-    auto nLen = hb_itemGetCLen(pItem);
+    auto nLen = pItem->getCLen();
     HB_ISIZ nTimes = hb_parns(2);
 
     if (nLen > 0 && nTimes > 0)

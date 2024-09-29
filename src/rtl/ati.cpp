@@ -90,7 +90,7 @@ HB_FUNC(HB_ATI)
   {
     auto cdp = hb_vmCDP();
     auto pszText = pText->getCPtr();
-    auto nTextLength = hb_itemGetCLen(pText);
+    auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parns(3);
     HB_SIZE nFrom, nPos = 0;
 
@@ -140,7 +140,7 @@ HB_FUNC(HB_ATI)
 
       if (nTo > 0)
       {
-        nPos = s_strAtI(cdp, pSub->getCPtr(), hb_itemGetCLen(pSub), pszText, nTo);
+        nPos = s_strAtI(cdp, pSub->getCPtr(), pSub->getCLen(), pszText, nTo);
         if (nPos > 0)
         {
           nPos += HB_CDP_ISCHARIDX(cdp) ? nStart : nFrom;

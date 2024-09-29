@@ -64,7 +64,7 @@ HB_FUNC(LEFT)
     }
     else
     {
-      auto nText = hb_itemGetCLen(pText);
+      auto nText = pText->getCLen();
       if (static_cast<HB_SIZE>(nLen) < nText)
       {
         auto cdp = hb_vmCDP();
@@ -96,7 +96,7 @@ HB_FUNC(HB_LEFTEQ)
 
   if (pItem1 && pItem2)
   {
-    hb_retl(hb_cdpcmp(pItem1->getCPtr(), hb_itemGetCLen(pItem1), pItem2->getCPtr(), hb_itemGetCLen(pItem2),
+    hb_retl(hb_cdpcmp(pItem1->getCPtr(), pItem1->getCLen(), pItem2->getCPtr(), pItem2->getCLen(),
                       hb_vmCDP(), false) == 0);
   }
   else
@@ -112,7 +112,7 @@ HB_FUNC(HB_LEFTEQI)
 
   if (pItem1 && pItem2)
   {
-    hb_retl(hb_cdpicmp(pItem1->getCPtr(), hb_itemGetCLen(pItem1), pItem2->getCPtr(), hb_itemGetCLen(pItem2),
+    hb_retl(hb_cdpicmp(pItem1->getCPtr(), pItem1->getCLen(), pItem2->getCPtr(), pItem2->getCLen(),
                        hb_vmCDP(), false) == 0);
   }
   else
