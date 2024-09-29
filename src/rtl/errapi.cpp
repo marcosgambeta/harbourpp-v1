@@ -252,7 +252,7 @@ HB_FUNC_STATIC(_DESCRIPTION)
 
   if (pItem && pItem->isString())
   {
-    hb_errPutDescription(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
+    hb_errPutDescription(hb_stackSelfItem(), pItem->getCPtr());
   }
 
   hb_itemReturn(pItem);
@@ -269,7 +269,7 @@ HB_FUNC_STATIC(_FILENAME)
 
   if (pItem && pItem->isString())
   {
-    hb_errPutFileName(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
+    hb_errPutFileName(hb_stackSelfItem(), pItem->getCPtr());
   }
 
   hb_itemReturn(pItem);
@@ -286,7 +286,7 @@ HB_FUNC_STATIC(_OPERATION)
 
   if (pItem && pItem->isString())
   {
-    hb_errPutOperation(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
+    hb_errPutOperation(hb_stackSelfItem(), pItem->getCPtr());
   }
 
   hb_itemReturn(pItem);
@@ -303,7 +303,7 @@ HB_FUNC_STATIC(_SUBSYSTEM)
 
   if (pItem && pItem->isString())
   {
-    hb_errPutSubSystem(hb_stackSelfItem(), hb_itemGetCPtr(pItem));
+    hb_errPutSubSystem(hb_stackSelfItem(), pItem->getCPtr());
   }
 
   hb_itemReturn(pItem);

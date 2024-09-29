@@ -53,7 +53,7 @@ HB_FUNC(HB_ASCIIUPPER)
 
   if (pText)
   {
-    auto pszText = hb_itemGetCPtr(pText);
+    auto pszText = pText->getCPtr();
     auto nLen = hb_itemGetCLen(pText);
 
     for (HB_SIZE u = 0; u < nLen; u++)
@@ -84,7 +84,7 @@ HB_FUNC(HB_ASCIILOWER)
 
   if (pText)
   {
-    auto pszText = hb_itemGetCPtr(pText);
+    auto pszText = pText->getCPtr();
     auto nLen = hb_itemGetCLen(pText);
 
     for (HB_SIZE u = 0; u < nLen; u++)

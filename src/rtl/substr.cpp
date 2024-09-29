@@ -59,7 +59,7 @@ HB_FUNC(SUBSTR)
   if (pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))
   {
     auto cdp = hb_vmCDP();
-    auto pszText = hb_itemGetCPtr(pText);
+    auto pszText = pText->getCPtr();
     HB_ISIZ nSize = hb_itemGetCLen(pText);
     HB_ISIZ nFrom = hb_parns(2);
     HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);

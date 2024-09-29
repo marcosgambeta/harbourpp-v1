@@ -472,7 +472,7 @@ static HB_SIZE s_fileRead(PHB_FILE pFile, void *data, HB_SIZE nSize, HB_MAXINT t
     {
       nResult = nSize;
     }
-    memcpy(data, hb_itemGetCPtr(hb_stackItemFromBase(iOffset)), nSize);
+    memcpy(data, hb_stackItemFromBase(iOffset)->getCPtr(), nSize);
   }
   hb_stackPop();
 
@@ -514,7 +514,7 @@ static HB_SIZE s_fileReadAt(PHB_FILE pFile, void *buffer, HB_SIZE nSize, HB_FOFF
     {
       nResult = nSize;
     }
-    memcpy(buffer, hb_itemGetCPtr(hb_stackItemFromBase(iOffset)), nSize);
+    memcpy(buffer, hb_stackItemFromBase(iOffset)->getCPtr(), nSize);
   }
   hb_stackPop();
 

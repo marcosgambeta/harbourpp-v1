@@ -563,7 +563,7 @@ static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn,
 
   case Harbour::Item::STRING:
   case Harbour::Item::MEMO:
-    szVal = hb_itemGetCPtr(pItem);
+    szVal = pItem->getCPtr();
     nLen = hb_itemGetCLen(pItem);
     if (nLen == 0)
     {
@@ -835,7 +835,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdp
 
   case Harbour::Item::STRING:
   case Harbour::Item::MEMO:
-    szVal = hb_itemGetCPtr(pItem);
+    szVal = pItem->getCPtr();
     nLen = hb_itemGetCLen(pItem);
     if (nLen == 0)
     {

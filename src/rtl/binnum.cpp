@@ -57,7 +57,7 @@ HB_FUNC(BIN2W)
     auto nLen = hb_itemGetCLen(pItem);
     if (nLen)
     {
-      auto pszString = hb_itemGetCPtr(pItem);
+      auto pszString = pItem->getCPtr();
       uiResult = HB_GET_LE_INT16(pszString);
     }
   }
@@ -74,7 +74,7 @@ HB_FUNC(BIN2I)
     auto nLen = hb_itemGetCLen(pItem);
     if (nLen)
     {
-      auto pszString = hb_itemGetCPtr(pItem);
+      auto pszString = pItem->getCPtr();
       iResult = HB_GET_LE_UINT16(pszString);
     }
   }
@@ -91,7 +91,7 @@ HB_FUNC(BIN2L)
     auto nLen = hb_itemGetCLen(pItem);
     if (nLen)
     {
-      auto pszString = hb_itemGetCPtr(pItem);
+      auto pszString = pItem->getCPtr();
       if (nLen >= 3)
       {
         iResult = HB_GET_LE_INT32(pszString);

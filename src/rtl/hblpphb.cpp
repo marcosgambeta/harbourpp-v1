@@ -219,7 +219,7 @@ HB_FUNC(HB_LPPSEND)
   }
 
   auto pData = hb_param(2, Harbour::Item::STRING);
-  hb_retl(hb_lppSend(pGC->pSocket, pData ? hb_itemGetCPtr(pData) : "", hb_itemGetCLen(pData), hb_parnintdef(3, -1)));
+  hb_retl(hb_lppSend(pGC->pSocket, pData ? pData->getCPtr() : "", hb_itemGetCLen(pData), hb_parnintdef(3, -1)));
 }
 
 HB_FUNC(HB_LPPRECV)

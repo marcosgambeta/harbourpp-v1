@@ -78,7 +78,7 @@ HB_FUNC(DESCEND)
       if (nLen > 0)
       {
         auto szBuffer = static_cast<char *>(hb_xgrab(nLen + 1));
-        hb_strDescend(szBuffer, hb_itemGetCPtr(pItem), nLen);
+        hb_strDescend(szBuffer, pItem->getCPtr(), nLen);
         hb_retclen_buffer(szBuffer, nLen);
       }
       else

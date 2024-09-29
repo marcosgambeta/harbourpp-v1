@@ -208,7 +208,7 @@ HB_FUNC(HB_ATX)
 
       if (nLen && nStart <= nLen && nStart <= nEnd)
       {
-        auto pszString = hb_itemGetCPtr(pString);
+        auto pszString = pString->getCPtr();
         HB_REGMATCH aMatches[HB_REGMATCH_SIZE(1)];
 
         if (nEnd < nLen)
@@ -274,7 +274,7 @@ static bool hb_regex(int iRequest)
     return false;
   }
 
-  auto pszString = hb_itemGetCPtr(pString);
+  auto pszString = pString->getCPtr();
   auto nLen = hb_itemGetCLen(pString);
   int iMaxMatch = iRequest == 0 || iRequest == 4 || iRequest == 5 ? REGEX_MAX_GROUPS : 1;
   int iMatches = hb_regexec(pRegEx, pszString, nLen, iMaxMatch, aMatches);

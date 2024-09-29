@@ -62,7 +62,7 @@
 HB_FUNC(STOD)
 {
   auto pDateString = hb_param(1, Harbour::Item::STRING);
-  hb_retds(hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr);
+  hb_retds(hb_itemGetCLen(pDateString) >= 7 ? pDateString->getCPtr() : nullptr);
 }
 
 #endif

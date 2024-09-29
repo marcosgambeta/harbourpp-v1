@@ -98,7 +98,7 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
        */
       nSize = (fRaw ? ((nLen + 7) >> 3) : ((nLen >> 3) + 1)) << 3;
       auto pszData = static_cast<char *>(hb_xgrab(nSize + 1));
-      memcpy(pszData, hb_itemGetCPtr(pData), nLen);
+      memcpy(pszData, pData->getCPtr(), nLen);
       memset(pszData + nLen, '\0', nSize - nLen);
       if (!fRaw)
       {
@@ -143,7 +143,7 @@ HB_FUNC(HB_BLOWFISHDECRYPT)
       HB_SIZE nLen;
 
       auto pszData = static_cast<char *>(hb_xgrab(nSize + (fRaw ? 1 : 0)));
-      auto pszSource = hb_itemGetCPtr(pData);
+      auto pszSource = pData->getCPtr();
       for (nLen = 0; nLen < nSize; nLen += 8)
       {
         HB_U32 xl, xr;
@@ -219,7 +219,7 @@ HB_FUNC(HB_BLOWFISHENCRYPT_CFB)
 
     if (nLen)
     {
-      auto pszSource = hb_itemGetCPtr(pData);
+      auto pszSource = pData->getCPtr();
       auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
       HB_BYTE vect[HB_BF_CIPHERBLOCK];
 
@@ -259,7 +259,7 @@ HB_FUNC(HB_BLOWFISHDECRYPT_CFB)
 
     if (nLen)
     {
-      auto pszSource = hb_itemGetCPtr(pData);
+      auto pszSource = pData->getCPtr();
       auto pszData = static_cast<char *>(hb_xgrab(nLen + 1));
       HB_BYTE vect[HB_BF_CIPHERBLOCK];
 

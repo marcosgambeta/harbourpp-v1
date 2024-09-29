@@ -65,7 +65,7 @@ HB_FUNC(LEN)
       auto cdp = hb_vmCDP();
       if (HB_CDP_ISCHARIDX(cdp))
       {
-        nLen = hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen);
+        nLen = hb_cdpTextLen(cdp, pItem->getCPtr(), nLen);
       }
       hb_retns(nLen);
       return;

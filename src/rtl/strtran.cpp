@@ -76,8 +76,8 @@ HB_FUNC(STRTRAN)
         auto pReplace = hb_param(3, Harbour::Item::STRING);
         auto nReplace = hb_itemGetCLen(pReplace);
         auto szReplace = hb_itemGetCPtr(pReplace);
-        auto szText = hb_itemGetCPtr(pText);
-        auto szSeek = hb_itemGetCPtr(pSeek);
+        auto szText = pText->getCPtr();
+        auto szSeek = pSeek->getCPtr();
         HB_SIZE nFound = 0;
         HB_SIZE nReplaced = 0;
         HB_SIZE nT = 0;

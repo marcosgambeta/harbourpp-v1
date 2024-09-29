@@ -52,7 +52,7 @@
 static HB_SIZE hb_cdpItemLen(PHB_CODEPAGE cdp, PHB_ITEM pItem)
 {
   auto nLen = hb_itemGetCLen(pItem);
-  return nLen && cdp ? hb_cdpTextLen(cdp, hb_itemGetCPtr(pItem), nLen) : nLen;
+  return nLen && cdp ? hb_cdpTextLen(cdp, pItem->getCPtr(), nLen) : nLen;
 }
 
 static const char *s_hb_padGet(PHB_CODEPAGE cdp, HB_SIZE *pnPad)

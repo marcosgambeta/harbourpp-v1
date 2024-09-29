@@ -57,7 +57,7 @@ HB_FUNC(HB_STRXOR)
     HB_SIZE n;
     char *pRet;
 
-    auto pStr1 = hb_itemGetCPtr(pItem);
+    auto pStr1 = pItem->getCPtr();
     auto nLen1 = hb_itemGetCLen(pItem);
 
     if ((pItem2 = hb_param(2, Harbour::Item::STRING)) != nullptr)
@@ -65,7 +65,7 @@ HB_FUNC(HB_STRXOR)
       auto nLen2 = hb_itemGetCLen(pItem2);
       if (nLen2)
       {
-        auto pStr2 = hb_itemGetCPtr(pItem2);
+        auto pStr2 = pItem2->getCPtr();
         HB_SIZE n2;
 
         pRet = static_cast<char *>(hb_xgrab(nLen1 + 1));

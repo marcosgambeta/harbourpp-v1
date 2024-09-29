@@ -56,7 +56,7 @@ HB_FUNC(HB_STRCLEAR)
 
   if (pItem && HB_ISBYREF(1))
   {
-    auto pszPtr = hb_itemGetCPtr(pItem);
+    auto pszPtr = pItem->getCPtr();
     char *pBuffer;
     HB_SIZE nSize;
     if (hb_itemGetWriteCL(pItem, &pBuffer, &nSize))

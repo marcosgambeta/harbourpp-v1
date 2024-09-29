@@ -5584,7 +5584,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
       {
         hb_xfree(wnd->szFontName);
       }
-      wnd->szFontName = hb_strdup(hb_itemGetCPtr(pInfo->pNewVal));
+      wnd->szFontName = hb_strdup(pInfo->pNewVal->getCPtr());
     }
     break;
 
@@ -5594,7 +5594,7 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     {
       auto fInit = false;
       HB_XWC_XLIB_LOCK(wnd->dpy);
-      fInit = hb_gt_xwc_SetFont(wnd, hb_itemGetCPtr(pInfo->pNewVal), 0, 0, nullptr) && wnd->fInit;
+      fInit = hb_gt_xwc_SetFont(wnd, pInfo->pNewVal->getCPtr(), 0, 0, nullptr) && wnd->fInit;
       HB_XWC_XLIB_UNLOCK(wnd->dpy);
       if (fInit)
       {

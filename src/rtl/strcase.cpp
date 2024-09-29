@@ -56,7 +56,7 @@ HB_FUNC(LOWER)
   if (pText)
   {
     auto nLen = hb_itemGetCLen(pText);
-    char *pszBuffer = hb_cdpnDupLower(hb_vmCDP(), hb_itemGetCPtr(pText), &nLen);
+    char *pszBuffer = hb_cdpnDupLower(hb_vmCDP(), pText->getCPtr(), &nLen);
     hb_retclen_buffer(pszBuffer, nLen);
   }
   else
@@ -73,7 +73,7 @@ HB_FUNC(UPPER)
   if (pText)
   {
     auto nLen = hb_itemGetCLen(pText);
-    char *pszBuffer = hb_cdpnDupUpper(hb_vmCDP(), hb_itemGetCPtr(pText), &nLen);
+    char *pszBuffer = hb_cdpnDupUpper(hb_vmCDP(), pText->getCPtr(), &nLen);
     hb_retclen_buffer(pszBuffer, nLen);
   }
   else

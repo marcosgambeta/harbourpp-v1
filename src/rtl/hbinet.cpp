@@ -1069,7 +1069,7 @@ HB_FUNC(HB_INETRECVENDBLOCK)
     iLen = static_cast<int>(hb_itemGetCLen(pProto));
     if (iLen > 0)
     {
-      patterns[0] = hb_itemGetCPtr(pProto);
+      patterns[0] = pProto->getCPtr();
       patternsizes[0] = iLen;
     }
     else
@@ -1157,7 +1157,7 @@ static void s_inetSendInternal(HB_BOOL lAll)
   }
   else
   {
-    buffer = hb_itemGetCPtr(pBuffer);
+    buffer = pBuffer->getCPtr();
     iSend = static_cast<int>(hb_itemGetCLen(pBuffer));
     if (HB_ISNUM(3))
     {
@@ -1598,7 +1598,7 @@ HB_FUNC(HB_INETDGRAMSEND)
     }
     else
     {
-      szBuffer = hb_itemGetCPtr(pBuffer);
+      szBuffer = pBuffer->getCPtr();
       iLen = static_cast<int>(hb_itemGetCLen(pBuffer));
       if (HB_ISNUM(5))
       {

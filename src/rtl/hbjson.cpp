@@ -185,7 +185,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
     }
     else
     {
-      szString = hb_itemGetCPtr(pValue);
+      szString = pValue->getCPtr();
       nLen = hb_itemGetCLen(pValue);
     }
 

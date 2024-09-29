@@ -270,7 +270,7 @@ static PHB_ITEM hb_i18n_pluralexp_compile(PHB_ITEM pExp)
     szMacro[1] = '|';
     szMacro[2] = 'n';
     szMacro[3] = '|';
-    memcpy(&szMacro[4], hb_itemGetCPtr(pExp), nLen);
+    memcpy(&szMacro[4], pExp->getCPtr(), nLen);
     szMacro[4 + nLen] = '}';
     szMacro[5 + nLen] = '\0';
     auto pMacro = hb_itemPutCLPtr(nullptr, szMacro, nLen);
@@ -394,28 +394,28 @@ static PHB_I18N_TRANS hb_i18n_initialize(PHB_ITEM pTable)
       auto pValue = hb_hashGetItemPtr(pTable, pKey, 0);
       if (pValue)
       {
-        pI18N->base_cdpage = hb_cdpFind(hb_itemGetCPtr(pValue));
+        pI18N->base_cdpage = hb_cdpFind(pValue->getCPtr());
       }
 
       pKey = hb_itemPutCConst(pKey, "CODEPAGE");
       pValue = hb_hashGetItemPtr(pTable, pKey, 0);
       if (pValue)
       {
-        pI18N->cdpage = hb_cdpFind(hb_itemGetCPtr(pValue));
+        pI18N->cdpage = hb_cdpFind(pValue->getCPtr());
       }
 
       pKey = hb_itemPutCConst(pKey, "BASE_LANG");
       pValue = hb_hashGetItemPtr(pTable, pKey, 0);
       if (pValue)
       {
-        pI18N->base_plural_form = hb_i18n_pluralformfind(hb_itemGetCPtr(pValue));
+        pI18N->base_plural_form = hb_i18n_pluralformfind(pValue->getCPtr());
       }
 
       pKey = hb_itemPutCConst(pKey, "LANG");
       pValue = hb_hashGetItemPtr(pTable, pKey, 0);
       if (pValue)
       {
-        pI18N->plural_form = hb_i18n_pluralformfind(hb_itemGetCPtr(pValue));
+        pI18N->plural_form = hb_i18n_pluralformfind(pValue->getCPtr());
       }
 
       pKey = hb_itemPutCConst(pKey, "BASE_PLURAL_EXP");
@@ -458,7 +458,7 @@ static PHB_ITEM hb_i18n_serialize(PHB_I18N_TRANS pI18N)
     auto pValue = hb_hashGetItemPtr(pI18N->table, pKey, 0);
     if (pValue)
     {
-      hb_strncpy(&pI18Nbuffer[HB_I18N_TXT_OFFSET], hb_itemGetCPtr(pValue), HB_I18N_TXT_SIZE);
+      hb_strncpy(&pI18Nbuffer[HB_I18N_TXT_OFFSET], pValue->getCPtr(), HB_I18N_TXT_SIZE);
     }
 
     return hb_itemPutCLPtr(pKey, pI18Nbuffer, nSize + HB_I18N_HEADER_SIZE);
@@ -488,7 +488,7 @@ static PHB_I18N_TRANS hb_i18n_deserialize(PHB_ITEM pItem)
   if (pItem && pItem->isString())
   {
     auto nLen = hb_itemGetCLen(pItem);
-    auto pBuffer = hb_itemGetCPtr(pItem);
+    auto pBuffer = pItem->getCPtr();
     if (nLen > HB_I18N_HEADER_SIZE && hb_i18n_headercheck(pBuffer, nLen))
     {
       pBuffer += HB_I18N_HEADER_SIZE;
@@ -622,7 +622,7 @@ static bool hb_i18n_setpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pForm, bool fBa
     }
     else if (pForm->isString())
     {
-      int iForm = hb_i18n_pluralformfind(hb_itemGetCPtr(pForm));
+      int iForm = hb_i18n_pluralformfind(pForm->getCPtr());
       if (iForm)
       {
         const char *szKey;
@@ -660,7 +660,7 @@ static void hb_i18n_transitm(PHB_ITEM pText, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cd
 
   if (nLen > 0)
   {
-    char *szValue = hb_cdpnDup(hb_itemGetCPtr(pText), &nLen, cdpIn, cdpOut);
+    char *szValue = hb_cdpnDup(pText->getCPtr(), &nLen, cdpIn, cdpOut);
     hb_itemPutCLPtr(pText, szValue, nLen);
   }
 }

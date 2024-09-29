@@ -67,11 +67,11 @@ HB_FUNC(DO)
 
     if (pItem->isString())
     {
-      auto pDynSym = hb_dynsymFindName(hb_itemGetCPtr(pItem));
+      auto pDynSym = hb_dynsymFindName(pItem->getCPtr());
 
       if (!pDynSym)
       {
-        hb_errRT_BASE(EG_NOFUNC, 1001, nullptr, hb_itemGetCPtr(pItem), HB_ERR_ARGS_BASEPARAMS);
+        hb_errRT_BASE(EG_NOFUNC, 1001, nullptr, pItem->getCPtr(), HB_ERR_ARGS_BASEPARAMS);
         return;
       }
       hb_vmPushDynSym(pDynSym);

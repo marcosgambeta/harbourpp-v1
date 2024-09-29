@@ -70,7 +70,7 @@ HB_FUNC(LEFT)
         auto cdp = hb_vmCDP();
         if (HB_CDP_ISCHARIDX(cdp))
         {
-          nLen = hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nLen);
+          nLen = hb_cdpTextPos(cdp, pText->getCPtr(), nText, nLen);
         }
       }
       if (static_cast<HB_SIZE>(nLen) >= nText)
@@ -79,7 +79,7 @@ HB_FUNC(LEFT)
       }
       else
       {
-        hb_retclen(hb_itemGetCPtr(pText), nLen);
+        hb_retclen(pText->getCPtr(), nLen);
       }
     }
   }
@@ -96,7 +96,7 @@ HB_FUNC(HB_LEFTEQ)
 
   if (pItem1 && pItem2)
   {
-    hb_retl(hb_cdpcmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2),
+    hb_retl(hb_cdpcmp(pItem1->getCPtr(), hb_itemGetCLen(pItem1), pItem2->getCPtr(), hb_itemGetCLen(pItem2),
                       hb_vmCDP(), false) == 0);
   }
   else
@@ -112,7 +112,7 @@ HB_FUNC(HB_LEFTEQI)
 
   if (pItem1 && pItem2)
   {
-    hb_retl(hb_cdpicmp(hb_itemGetCPtr(pItem1), hb_itemGetCLen(pItem1), hb_itemGetCPtr(pItem2), hb_itemGetCLen(pItem2),
+    hb_retl(hb_cdpicmp(pItem1->getCPtr(), hb_itemGetCLen(pItem1), pItem2->getCPtr(), hb_itemGetCLen(pItem2),
                        hb_vmCDP(), false) == 0);
   }
   else

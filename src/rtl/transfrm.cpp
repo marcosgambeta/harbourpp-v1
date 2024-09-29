@@ -83,7 +83,7 @@ HB_FUNC(TRANSFORM)
   {
     auto cdp = hb_vmCDP();
     char szPicDate[11];
-    auto szPic = hb_itemGetCPtr(pPic);
+    auto szPic = pPic->getCPtr();
     auto nPicLen = hb_itemGetCLen(pPic);
     HB_SIZE nPicPos = 0;
     HB_USHORT uiPicFlags; /* Function flags */
@@ -191,7 +191,7 @@ HB_FUNC(TRANSFORM)
 
     if (pValue->isString())
     {
-      auto szExp = hb_itemGetCPtr(pValue);
+      auto szExp = pValue->getCPtr();
       auto nExpLen = hb_itemGetCLen(pValue);
       HB_SIZE nExpPos = 0;
 

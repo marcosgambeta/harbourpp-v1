@@ -134,7 +134,7 @@ HB_FUNC(DTOS)
 HB_FUNC(HB_STOD)
 {
   auto pDateString = hb_param(1, Harbour::Item::STRING);
-  hb_retds(hb_itemGetCLen(pDateString) >= 7 ? hb_itemGetCPtr(pDateString) : nullptr);
+  hb_retds(hb_itemGetCLen(pDateString) >= 7 ? pDateString->getCPtr() : nullptr);
 }
 
 HB_FUNC(YEAR)

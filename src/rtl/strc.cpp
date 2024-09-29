@@ -61,7 +61,7 @@ HB_FUNC(HB_STRDECODESCAPE)
     if (nLen > 0)
     {
       auto str = static_cast<char *>(hb_xgrab(nLen + 1));
-      hb_xmemcpy(str, hb_itemGetCPtr(pText), nLen + 1);
+      hb_xmemcpy(str, pText->getCPtr(), nLen + 1);
       hb_strRemEscSeq(str, &nLen);
       hb_retclen_buffer(str, nLen);
     }
@@ -93,7 +93,7 @@ HB_FUNC(HB_STRCDECODE)
     HB_BOOL fCont = hb_parl(2);
     if (nLen > 0)
     {
-      auto pszSrc = hb_itemGetCPtr(pText);
+      auto pszSrc = pText->getCPtr();
       auto pszDst = static_cast<char *>(hb_xgrab(nLen + 1));
       HB_SIZE nDst = 0, n;
 

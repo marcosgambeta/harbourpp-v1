@@ -92,7 +92,7 @@ HB_FUNC(HB_UCODE)
 
   if (pText)
   {
-    hb_retni(hb_cdpTextGetU16(hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText)));
+    hb_retni(hb_cdpTextGetU16(hb_vmCDP(), pText->getCPtr(), hb_itemGetCLen(pText)));
   }
   else
   {
@@ -126,7 +126,7 @@ HB_FUNC(HB_ULEN)
 
   if (pText)
   {
-    hb_retns(hb_cdpTextLen(hb_vmCDP(), hb_itemGetCPtr(pText), hb_itemGetCLen(pText)));
+    hb_retns(hb_cdpTextLen(hb_vmCDP(), pText->getCPtr(), hb_itemGetCLen(pText)));
   }
   else
   {
@@ -161,7 +161,7 @@ HB_FUNC(HB_UPEEK)
   if (pText && HB_ISNUM(2))
   {
     auto cdp = hb_vmCDP();
-    auto szText = hb_itemGetCPtr(pText);
+    auto szText = pText->getCPtr();
     auto nLen = hb_itemGetCLen(pText);
     HB_SIZE nPos = hb_parns(2);
     HB_WCHAR wc = 0;
@@ -194,7 +194,7 @@ HB_FUNC(HB_BPEEK)
   if (pText && HB_ISNUM(2))
   {
     HB_SIZE nPos = hb_parns(2);
-    hb_retni((nPos > 0 && nPos <= hb_itemGetCLen(pText)) ? static_cast<HB_UCHAR>(hb_itemGetCPtr(pText)[nPos - 1]) : 0);
+    hb_retni((nPos > 0 && nPos <= hb_itemGetCLen(pText)) ? static_cast<HB_UCHAR>(pText->getCPtr()[nPos - 1]) : 0);
   }
   else
   {
@@ -212,7 +212,7 @@ HB_FUNC(HB_UPOKE)
   if (pText && HB_ISNUM(2) && HB_ISNUM(3))
   {
     auto cdp = hb_vmCDP();
-    auto szText = hb_itemGetCPtr(pText);
+    auto szText = pText->getCPtr();
     auto nLen = hb_itemGetCLen(pText);
     HB_SIZE nPos = hb_parns(2);
 
@@ -288,7 +288,7 @@ HB_FUNC(HB_USUBSTR)
   if (pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))
   {
     auto cdp = hb_vmCDP();
-    auto pszText = hb_itemGetCPtr(pText);
+    auto pszText = pText->getCPtr();
     HB_ISIZ nSize = hb_itemGetCLen(pText);
     HB_ISIZ nFrom = hb_parns(2);
     HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
@@ -347,7 +347,7 @@ HB_FUNC(HB_BSUBSTR)
 
   if (pText && HB_ISNUM(2) && (iPCount < 3 || HB_ISNUM(3)))
   {
-    auto pszText = hb_itemGetCPtr(pText);
+    auto pszText = pText->getCPtr();
     HB_ISIZ nSize = hb_itemGetCLen(pText);
     HB_ISIZ nFrom = hb_parns(2);
     HB_ISIZ nCount = iPCount < 3 ? nSize : hb_parns(3);
@@ -416,7 +416,7 @@ HB_FUNC(HB_ULEFT)
       auto nText = hb_itemGetCLen(pText);
       if (static_cast<HB_SIZE>(nLen) < nText)
       {
-        nLen = hb_cdpTextPos(hb_vmCDP(), hb_itemGetCPtr(pText), nText, nLen);
+        nLen = hb_cdpTextPos(hb_vmCDP(), pText->getCPtr(), nText, nLen);
       }
       if (static_cast<HB_SIZE>(nLen) >= nText)
       {
@@ -424,7 +424,7 @@ HB_FUNC(HB_ULEFT)
       }
       else
       {
-        hb_retclen(hb_itemGetCPtr(pText), nLen);
+        hb_retclen(pText->getCPtr(), nLen);
       }
     }
   }
@@ -456,7 +456,7 @@ HB_FUNC(HB_BLEFT)
       }
       else
       {
-        hb_retclen(hb_itemGetCPtr(pText), nLen);
+        hb_retclen(pText->getCPtr(), nLen);
       }
     }
   }
@@ -479,10 +479,10 @@ HB_FUNC(HB_URIGHT)
     if (static_cast<HB_SIZE>(nLen) < nText)
     {
       auto cdp = hb_vmCDP();
-      HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
+      HB_SIZE nChars = hb_cdpTextLen(cdp, pText->getCPtr(), nText);
       if (nChars > static_cast<HB_SIZE>(nLen))
       {
-        nLen = nText - hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nChars - nLen);
+        nLen = nText - hb_cdpTextPos(cdp, pText->getCPtr(), nText, nChars - nLen);
       }
       else
       {
@@ -495,7 +495,7 @@ HB_FUNC(HB_URIGHT)
     }
     else
     {
-      hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
+      hb_retclen(pText->getCPtr() + nText - nLen, nLen);
     }
   }
   else
@@ -520,7 +520,7 @@ HB_FUNC(HB_BRIGHT)
     }
     else
     {
-      hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
+      hb_retclen(pText->getCPtr() + nText - nLen, nLen);
     }
   }
   else
@@ -539,7 +539,7 @@ HB_FUNC(HB_UAT)
   if (pText && pSub)
   {
     auto cdp = hb_vmCDP();
-    auto pszText = hb_itemGetCPtr(pText);
+    auto pszText = pText->getCPtr();
     auto nTextLength = hb_itemGetCLen(pText);
     HB_SIZE nStart = hb_parns(3);
     HB_SIZE nFrom, nPos = 0;
@@ -583,7 +583,7 @@ HB_FUNC(HB_UAT)
 
       if (nTo > 0)
       {
-        nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo);
+        nPos = hb_strAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pszText, nTo);
         if (nPos > 0)
         {
           nPos = hb_cdpTextLen(cdp, pszText, nPos - 1) + 1 + nStart;
@@ -607,7 +607,7 @@ HB_FUNC(HB_BAT)
 
   if (pText && pSub)
   {
-    auto pszText = hb_itemGetCPtr(pText);
+    auto pszText = pText->getCPtr();
     auto nTextLength = hb_itemGetCLen(pText);
     HB_SIZE nStart = hb_parns(3);
     HB_SIZE nFrom, nPos = 0;
@@ -650,7 +650,7 @@ HB_FUNC(HB_BAT)
 
       if (nTo > 0)
       {
-        nPos = hb_strAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), pszText, nTo);
+        nPos = hb_strAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pszText, nTo);
         if (nPos > 0)
         {
           nPos += nFrom;

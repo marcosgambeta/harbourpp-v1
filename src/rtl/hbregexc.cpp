@@ -130,7 +130,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
     else if (pRegExItm->isString())
     {
       auto nLen = hb_itemGetCLen(pRegExItm);
-      auto szRegEx = hb_itemGetCPtr(pRegExItm);
+      auto szRegEx = pRegExItm->getCPtr();
       if (nLen > 0)
       {
         fArgError = false;

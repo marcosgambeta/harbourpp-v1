@@ -355,7 +355,7 @@ HB_FUNC(HB_UTF8AT)
     }
     else
     {
-      hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength,
+      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pText->getCPtr(), nTextLength,
                                   nStart, nEnd, false));
     }
   }
@@ -388,7 +388,7 @@ HB_FUNC(HB_UTF8RAT)
     }
     else
     {
-      hb_retns(hb_cdpUTF8StringAt(hb_itemGetCPtr(pSub), hb_itemGetCLen(pSub), hb_itemGetCPtr(pText), nTextLength,
+      hb_retns(hb_cdpUTF8StringAt(pSub->getCPtr(), hb_itemGetCLen(pSub), pText->getCPtr(), nTextLength,
                                   nStart, nEnd, true));
     }
   }
@@ -539,7 +539,7 @@ HB_FUNC(HB_UTF8POKE)
 
   if (pText && HB_ISNUM(2) && HB_ISNUM(3))
   {
-    auto szString = hb_itemGetCPtr(pText);
+    auto szString = pText->getCPtr();
     auto nLen = hb_itemGetCLen(pText);
     HB_SIZE nPos;
 

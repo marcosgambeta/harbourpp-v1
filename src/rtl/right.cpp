@@ -70,10 +70,10 @@ HB_FUNC(RIGHT)
         auto cdp = hb_vmCDP();
         if (HB_CDP_ISCHARIDX(cdp))
         {
-          HB_SIZE nChars = hb_cdpTextLen(cdp, hb_itemGetCPtr(pText), nText);
+          HB_SIZE nChars = hb_cdpTextLen(cdp, pText->getCPtr(), nText);
           if (nChars > static_cast<HB_SIZE>(nLen))
           {
-            nLen = nText - hb_cdpTextPos(cdp, hb_itemGetCPtr(pText), nText, nChars - nLen);
+            nLen = nText - hb_cdpTextPos(cdp, pText->getCPtr(), nText, nChars - nLen);
           }
           else
           {
@@ -87,7 +87,7 @@ HB_FUNC(RIGHT)
       }
       else
       {
-        hb_retclen(hb_itemGetCPtr(pText) + nText - nLen, nLen);
+        hb_retclen(pText->getCPtr() + nText - nLen, nLen);
       }
     }
   }
