@@ -791,12 +791,12 @@ static bool hb_dbfPasswordSet(DBFAREAP pArea, PHB_ITEM pPasswd, bool fRaw)
     {
       if (nLen < 8)
       {
-        memcpy(pKeyBuffer, hb_itemGetCPtr(pPasswd), nLen);
+        memcpy(pKeyBuffer, pPasswd->getCPtr(), nLen);
         memset(pKeyBuffer + nLen, '\0', 8 - nLen);
       }
       else
       {
-        memcpy(pKeyBuffer, hb_itemGetCPtr(pPasswd), 8);
+        memcpy(pKeyBuffer, pPasswd->getCPtr(), 8);
       }
     }
   }
@@ -2834,7 +2834,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         }
         else
         {
-          pszPtr = hb_itemGetCPtr(pItem);
+          pszPtr = pItem->getCPtr();
           nSize = hb_itemGetCLen(pItem);
           if ((pField->uiFlags & HB_FF_BINARY) == 0)
           {
@@ -2847,7 +2847,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
             {
               nLen = nSize;
             }
-            memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetCPtr(pItem), nLen);
+            memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], pItem->getCPtr(), nLen);
           }
           if (nLen < static_cast<HB_SIZE>(pField->uiLen))
           {
@@ -2865,7 +2865,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         }
         else
         {
-          pszPtr = hb_itemGetCPtr(pItem);
+          pszPtr = pItem->getCPtr();
           nSize = hb_itemGetCLen(pItem);
           if ((pField->uiFlags & HB_FF_BINARY) == 0)
           {

@@ -576,7 +576,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         if ((pField->uiFlags & HB_FF_BINARY) == 0)
         {
           nSize = pField->uiLen;
-          hb_cdpnDup2(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem),
+          hb_cdpnDup2(pItem->getCPtr(), hb_itemGetCLen(pItem),
                       reinterpret_cast<char *>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nSize, hb_vmCDP(),
                       pArea->area.cdPage);
         }
@@ -587,7 +587,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
           {
             nSize = pField->uiLen;
           }
-          memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetCPtr(pItem), nSize);
+          memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], pItem->getCPtr(), nSize);
         }
         if (nSize < static_cast<HB_SIZE>(pField->uiLen))
         {

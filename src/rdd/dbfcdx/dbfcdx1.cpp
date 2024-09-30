@@ -8667,7 +8667,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
   case DBOI_ORDERCOUNT: {
     LPCDXINDEX pIndex;
-    const char *pszBag = hb_itemGetCLen(pInfo->atomBagName) > 0 ? hb_itemGetCPtr(pInfo->atomBagName) : nullptr;
+    const char *pszBag = hb_itemGetCLen(pInfo->atomBagName) > 0 ? pInfo->atomBagName->getCPtr() : nullptr;
     pIndex = pszBag ? hb_cdxFindBag(pArea, pszBag) : pArea->lpIndexes;
     while (pIndex)
     {
@@ -8699,7 +8699,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
     if (hb_itemGetCLen(pInfo->atomBagName) > 0)
     {
-      pIndexSeek = hb_cdxFindBag(pArea, hb_itemGetCPtr(pInfo->atomBagName));
+      pIndexSeek = hb_cdxFindBag(pArea, pInfo->atomBagName->getCPtr());
     }
     else
     {
@@ -8728,7 +8728,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
     if (hb_itemGetCLen(pInfo->atomBagName) > 0)
     {
-      pIndexSeek = hb_cdxFindBag(pArea, hb_itemGetCPtr(pInfo->atomBagName));
+      pIndexSeek = hb_cdxFindBag(pArea, pInfo->atomBagName->getCPtr());
     }
     else
     {
@@ -8796,7 +8796,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       }
       if (hb_itemGetCLen(pInfo->itmNewVal) > 0)
       {
-        auto pForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
+        auto pForExpr = pInfo->itmNewVal->getCPtr();
 
         if (SELF_COMPILE(&pArea->dbfarea.area, pForExpr) == Harbour::SUCCESS)
         {
@@ -10492,7 +10492,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
         {
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
-          hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, reinterpret_cast<const HB_BYTE *>(hb_itemGetCPtr(pItem)),
+          hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, reinterpret_cast<const HB_BYTE *>(pItem->getCPtr()),
                            static_cast<int>(hb_itemGetCLen(pItem)));
           break;
 

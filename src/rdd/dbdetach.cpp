@@ -63,7 +63,7 @@ HB_FUNC(HB_DBDETACH)
   }
   else if (pAlias->isString())
   {
-    auto szAlias = hb_itemGetCPtr(pAlias);
+    auto szAlias = pAlias->getCPtr();
     hb_rddGetAliasNumber(szAlias, &iArea);
     if (iArea > 0)
     {

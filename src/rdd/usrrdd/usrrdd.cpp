@@ -191,7 +191,7 @@ static const char *hb_usrArrayGetCPtr(PHB_ITEM pArray, HB_SIZE nPos)
 
   if (pItem && pItem->isString())
   {
-    return hb_itemGetCPtr(pItem);
+    return pItem->getCPtr();
   }
   else
   {
@@ -1008,7 +1008,7 @@ static HB_ERRCODE hb_usrSysName(AREAP pArea, char *szSysName)
   hb_xvmPushLocalByRef(static_cast<HB_SHORT>(nOffset));
   hb_vmDo(2);
 
-  hb_strncpy(szSysName, hb_itemGetCPtr(hb_stackItemFromBase(nOffset)), HB_RDD_MAX_DRIVERNAME_LEN);
+  hb_strncpy(szSysName, hb_stackItemFromBase(nOffset)->getCPtr(), HB_RDD_MAX_DRIVERNAME_LEN);
   hb_stackPop();
 
   return hb_usrReturn();
@@ -1378,7 +1378,7 @@ static HB_ERRCODE hb_usrFieldName(AREAP pArea, HB_USHORT uiIndex, char *szName)
   hb_xvmPushLocalByRef(static_cast<HB_SHORT>(nOffset));
   hb_vmDo(3);
 
-  hb_strncpy(szName, hb_itemGetCPtr(hb_stackItemFromBase(nOffset)), pArea->uiMaxFieldNameLength);
+  hb_strncpy(szName, hb_stackItemFromBase(nOffset)->getCPtr(), pArea->uiMaxFieldNameLength);
   hb_stackPop();
 
   return hb_usrReturn();
@@ -1550,7 +1550,7 @@ static HB_ERRCODE hb_usrGetRec(AREAP pArea, HB_BYTE **pBuffer)
   auto pItem = hb_stackItemFromBase(nOffset);
   if (pItem->isString())
   {
-    *pBuffer = reinterpret_cast<HB_BYTE *>(const_cast<char *>(hb_itemGetCPtr(pItem)));
+    *pBuffer = reinterpret_cast<HB_BYTE *>(const_cast<char *>(pItem->getCPtr()));
   }
   else
   {
@@ -1788,7 +1788,7 @@ static HB_ERRCODE hb_usrAlias(AREAP pArea, char *szAlias)
   hb_xvmPushLocalByRef(static_cast<HB_SHORT>(nOffset));
   hb_vmDo(2);
 
-  hb_strncpy(szAlias, hb_itemGetCPtr(hb_stackItemFromBase(nOffset)), HB_RDD_MAX_ALIAS_LEN);
+  hb_strncpy(szAlias, hb_stackItemFromBase(nOffset)->getCPtr(), HB_RDD_MAX_ALIAS_LEN);
   hb_stackPop();
 
   return hb_usrReturn();

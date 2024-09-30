@@ -141,7 +141,7 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
   case Harbour::Item::MEMO: {
     auto nLen = hb_itemGetCLen(pValue);
     HB_SIZE nCnt = 0;
-    auto szVal = hb_itemGetCPtr(pValue);
+    auto szVal = pValue->getCPtr();
 
     hb_addStrToFBuffer(pFileBuf, szDelim);
     while (nLen && HB_ISSPACE(szVal[nLen - 1]))

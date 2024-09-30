@@ -4332,7 +4332,7 @@ static LPTAGINFO hb_nsxFindTag(NSXAREAP pArea, PHB_ITEM pTagItem, PHB_ITEM pBagI
   {
     if (hb_itemType(pTagItem) & Harbour::Item::STRING)
     {
-      auto szTag = hb_itemGetCPtr(pTagItem);
+      auto szTag = pTagItem->getCPtr();
       int iTag;
 
       if (fBag)
@@ -6644,7 +6644,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
         {
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
-          hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, hb_itemGetCPtr(pItem),
+          hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(),
                            static_cast<HB_INTCAST>(hb_itemGetCLen(pItem)));
           break;
 
@@ -8004,7 +8004,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
     if (hb_itemGetCLen(pInfo->atomBagName) > 0)
     {
-      LPNSXINDEX pIndex = hb_nsxFindBag(pArea, hb_itemGetCPtr(pInfo->atomBagName));
+      LPNSXINDEX pIndex = hb_nsxFindBag(pArea, pInfo->atomBagName->getCPtr());
       i = pIndex ? pIndex->iTags : 0;
     }
     else
@@ -8032,7 +8032,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
     if (hb_itemGetCLen(pInfo->atomBagName) > 0)
     {
-      pIndexSeek = hb_nsxFindBag(pArea, hb_itemGetCPtr(pInfo->atomBagName));
+      pIndexSeek = hb_nsxFindBag(pArea, pInfo->atomBagName->getCPtr());
     }
     else if (pArea->lpCurTag)
     {
@@ -8060,7 +8060,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
     if (hb_itemGetCLen(pInfo->atomBagName) > 0)
     {
-      pIndexSeek = hb_nsxFindBag(pArea, hb_itemGetCPtr(pInfo->atomBagName));
+      pIndexSeek = hb_nsxFindBag(pArea, pInfo->atomBagName->getCPtr());
     }
     else if (pArea->lpCurTag)
     {
@@ -8102,7 +8102,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pTag->ForExpr);
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::STRING)
       {
-        auto szForExpr = hb_itemGetCPtr(pInfo->itmNewVal);
+        auto szForExpr = pInfo->itmNewVal->getCPtr();
         if (pTag->ForExpr ? strncmp(pTag->ForExpr, szForExpr, NSX_MAXEXPLEN) != 0 : *szForExpr)
         {
           PHB_ITEM pForItem = nullptr;

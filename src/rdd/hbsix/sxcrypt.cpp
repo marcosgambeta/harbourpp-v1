@@ -48,6 +48,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbsxfunc.hpp"
 
 #define rnd_mul1 0x0de6d
@@ -152,7 +156,7 @@ static bool _hb_sxGetKey(PHB_ITEM pKeyItem, char *pKeyVal)
     auto nKey = hb_itemGetCLen(pKeyItem);
     if (nKey)
     {
-      memcpy(pKeyVal, hb_itemGetCPtr(pKeyItem), HB_MIN(nKey, 8));
+      memcpy(pKeyVal, pKeyItem->getCPtr(), HB_MIN(nKey, 8));
     }
     if (nKey < 8)
     {

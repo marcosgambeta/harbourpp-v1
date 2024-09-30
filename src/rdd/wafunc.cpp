@@ -852,7 +852,7 @@ static const char *hb_dbTransFieldPos(PHB_ITEM pFields, HB_USHORT uiField)
     }
     else
     {
-      szField = hb_itemGetCPtr(pItem);
+      szField = pItem->getCPtr();
     }
 
     if (*szField == '\0')
