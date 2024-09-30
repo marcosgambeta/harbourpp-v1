@@ -315,7 +315,7 @@ HB_FUNC(DBINFO)
     {
       PHB_ITEM pInfo = hb_itemParam(2);
 
-      SELF_INFO(pArea, static_cast<HB_USHORT>(hb_itemGetNI(pIndex)), pInfo);
+      SELF_INFO(pArea, static_cast<HB_USHORT>(pIndex->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
     }
     else
@@ -348,7 +348,7 @@ HB_FUNC(DBORDERINFO)
       pOrderInfo.itmResult = hb_itemNew(nullptr);
       pOrderInfo.itmCobExpr = nullptr;
       pOrderInfo.fAllTags = false;
-      SELF_ORDINFO(pArea, static_cast<HB_USHORT>(hb_itemGetNI(pType)), &pOrderInfo);
+      SELF_ORDINFO(pArea, static_cast<HB_USHORT>(pType->getNI()), &pOrderInfo);
       hb_itemReturnRelease(pOrderInfo.itmResult);
     }
     else
@@ -375,7 +375,7 @@ HB_FUNC(DBFIELDINFO)
     {
       auto pInfo = hb_itemNew(hb_param(3, Harbour::Item::ANY));
 
-      SELF_FIELDINFO(pArea, uiIndex, static_cast<HB_USHORT>(hb_itemGetNI(pType)), pInfo);
+      SELF_FIELDINFO(pArea, uiIndex, static_cast<HB_USHORT>(pType->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
     }
     else
@@ -401,7 +401,7 @@ HB_FUNC(DBRECORDINFO)
     {
       PHB_ITEM pInfo = hb_itemParam(3);
 
-      SELF_RECINFO(pArea, pRecNo, static_cast<HB_USHORT>(hb_itemGetNI(pType)), pInfo);
+      SELF_RECINFO(pArea, pRecNo, static_cast<HB_USHORT>(pType->getNI()), pInfo);
       hb_itemReturnRelease(pInfo);
     }
     else
@@ -436,7 +436,7 @@ HB_FUNC(DBFILEGET)
     if (uiIndex > 0 && pMode && hb_parclen(2) > 0 && SELF_FIELDCOUNT(pArea, &uiFields) == Harbour::SUCCESS &&
         uiIndex <= uiFields)
     {
-      hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(hb_itemGetNI(pMode))) ==
+      hb_retl(SELF_GETVALUEFILE(pArea, uiIndex, hb_parc(2), static_cast<HB_USHORT>(pMode->getNI())) ==
               Harbour::SUCCESS);
     }
     else

@@ -7687,7 +7687,7 @@ static HB_ERRCODE hb_cdxOpen(CDXAREAP pArea, LPDBOPENINFO pOpenInfo)
       hb_itemRelease(pItem);
       return Harbour::FAILURE;
     }
-    pArea->dbfarea.bLockType = static_cast<HB_BYTE>(hb_itemGetNI(pItem));
+    pArea->dbfarea.bLockType = static_cast<HB_BYTE>(pItem->getNI());
     hb_itemRelease(pItem);
     if (pArea->dbfarea.bLockType == 0)
     {
@@ -10501,7 +10501,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
         case Harbour::Item::DOUBLE:
           if (pTag->uiLen == 4)
           {
-            HB_U32 uiVal = static_cast<HB_U32>(hb_itemGetNI(pItem)) + 0x80000000;
+            HB_U32 uiVal = static_cast<HB_U32>(pItem->getNI()) + 0x80000000;
             HB_PUT_BE_UINT32(&cTemp[0], uiVal);
             hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, cTemp, 4);
           }

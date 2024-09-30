@@ -1784,7 +1784,7 @@ static HB_ERRCODE hb_delimRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ul
     HB_USHORT uiSetHeader = pData->uiSetHeader;
     if (pItem->isNumeric())
     {
-      int iMode = hb_itemGetNI(pItem);
+      int iMode = pItem->getNI();
       if (iMode == 0 || iMode == 1)
       {
         pData->uiSetHeader = static_cast<HB_USHORT>(iMode);

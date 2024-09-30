@@ -8481,7 +8481,7 @@ static HB_ERRCODE hb_ntxOrderListFocus(NTXAREAP pArea, LPDBORDERINFO pOrderInfo)
      * [x]Harbour RDDs and I chosen DBFCDX one as default. [druzus]
      */
 #ifdef HB_CLP_STRICT
-    if (pTag || (pOrderInfo->itmOrder->isNumeric() && hb_itemGetNI(pOrderInfo->itmOrder) == 0) ||
+    if (pTag || (pOrderInfo->itmOrder->isNumeric() && pOrderInfo->itmOrder->getNI() == 0) ||
         (pOrderInfo->itmOrder->isString() && pOrderInfo->itmOrder->getCLen() == 0))
 #endif
       pArea->lpCurTag = pTag;

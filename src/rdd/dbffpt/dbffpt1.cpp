@@ -157,7 +157,7 @@ static int hb_memoDefaultType(LPRDDNODE pRDD, HB_ULONG ulConnect)
   hb_itemClear(pItem);
   if (SELF_RDDINFO(pRDD, RDDI_MEMOTYPE, ulConnect, pItem) == Harbour::SUCCESS)
   {
-    iType = hb_itemGetNI(pItem);
+    iType = pItem->getNI();
   }
   hb_stackPop();
 

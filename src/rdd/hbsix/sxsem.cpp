@@ -46,6 +46,10 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
+#if !defined(_HB_API_INTERNAL_)
+#define _HB_API_INTERNAL_
+#endif
+
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
@@ -71,7 +75,7 @@ static bool hb_sxSemName(char *szFileName)
       DBORDERINFO pOrderInfo{};
 
       pOrderInfo.itmOrder = hb_param(1, Harbour::Item::NUMERIC);
-      if (pOrderInfo.itmOrder && hb_itemGetNI(pOrderInfo.itmOrder) == 0)
+      if (pOrderInfo.itmOrder && pOrderInfo.itmOrder->getNI() == 0)
       {
         pOrderInfo.itmOrder = nullptr;
       }

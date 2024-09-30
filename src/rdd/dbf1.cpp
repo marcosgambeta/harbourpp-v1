@@ -4107,7 +4107,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
     if (pItem->isNumeric())
     {
-      int iMode = hb_itemGetNI(pItem);
+      int iMode = pItem->getNI();
       if ((iMode & ~DB_SETHEADER_MASK) == 0)
       {
         pArea->uiSetHeader = iMode;
@@ -4266,7 +4266,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
           }
           fLck = true;
         }
-        iValue = hb_dbfNextValueStep(pArea, uiIndex - 1, hb_itemGetNI(pItem));
+        iValue = hb_dbfNextValueStep(pArea, uiIndex - 1, pItem->getNI());
         if (fLck)
         {
           SELF_RAWLOCK(&pArea->area, HEADER_UNLOCK, 0);
@@ -4462,12 +4462,12 @@ static HB_ERRCODE hb_dbfNewArea(DBFAREAP pArea)
     auto pItem = hb_itemNew(nullptr);
     if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_TABLETYPE, 0, pItem) == Harbour::SUCCESS)
     {
-      pArea->bTableType = static_cast<HB_BYTE>(hb_itemGetNI(pItem));
+      pArea->bTableType = static_cast<HB_BYTE>(pItem->getNI());
     }
     hb_itemClear(pItem);
     if (SELF_RDDINFO(SELF_RDDNODE(&pArea->area), RDDI_SETHEADER, 0, pItem) == Harbour::SUCCESS)
     {
-      pArea->uiSetHeader = static_cast<HB_UINT>(hb_itemGetNI(pItem));
+      pArea->uiSetHeader = static_cast<HB_UINT>(pItem->getNI());
     }
     hb_itemRelease(pItem);
   }
@@ -7391,7 +7391,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
 
     if (pItem->isNumeric())
     {
-      int iMode = hb_itemGetNI(pItem);
+      int iMode = pItem->getNI();
       if ((iMode & ~DB_SETHEADER_MASK) == 0)
       {
         pData->uiSetHeader = static_cast<HB_USHORT>(iMode);
@@ -7420,7 +7420,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
   case RDDI_DECIMALS: {
-    int iDecimals = pItem->isNumeric() ? hb_itemGetNI(pItem) : -1;
+    int iDecimals = pItem->isNumeric() ? pItem->getNI() : -1;
 
     hb_itemPutNI(pItem, pData->bDecimals);
     if (iDecimals >= 0 && iDecimals <= 20)
