@@ -153,7 +153,7 @@ static bool _hb_sxGetKey(PHB_ITEM pKeyItem, char *pKeyVal)
   }
   if (hb_itemType(pKeyItem) & Harbour::Item::STRING)
   {
-    auto nKey = hb_itemGetCLen(pKeyItem);
+    auto nKey = pKeyItem->getCLen();
     if (nKey)
     {
       memcpy(pKeyVal, pKeyItem->getCPtr(), HB_MIN(nKey, 8));

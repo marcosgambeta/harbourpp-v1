@@ -6645,7 +6645,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
           hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(),
-                           static_cast<HB_INTCAST>(hb_itemGetCLen(pItem)));
+                           static_cast<HB_INTCAST>(pItem->getCLen()));
           break;
 
         case Harbour::Item::INTEGER:
@@ -8861,7 +8861,7 @@ static HB_ERRCODE hb_nsxOrderListFocus(NSXAREAP pArea, LPDBORDERINFO pOrderInfo)
      */
 #ifdef HB_CLP_STRICT
     if (pTag || (pOrderInfo->itmOrder->isNumeric() && hb_itemGetNI(pOrderInfo->itmOrder) == 0) ||
-        (pOrderInfo->itmOrder->isString() && hb_itemGetCLen(pOrderInfo->itmOrder) == 0))
+        (pOrderInfo->itmOrder->isString() && pOrderInfo->itmOrder->getCLen() == 0))
 #endif
       pArea->lpCurTag = pTag;
   }

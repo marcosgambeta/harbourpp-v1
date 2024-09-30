@@ -1117,7 +1117,7 @@ static HB_ULONG hb_fptCountSMTItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
     }
     else
     {
-      ulLen = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
+      ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (iTrans == FPT_TRANS_CP && ulLen > 0)
       {
         ulLen = static_cast<HB_ULONGCAST>(
@@ -1257,7 +1257,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPtr
     }
     else
     {
-      ulLen = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
+      ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (ulLen > 0)
       {
         u = 0xFFFF;
@@ -1616,7 +1616,7 @@ static HB_ULONG hb_fptCountSixItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
     }
     else
     {
-      ulLen = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
+      ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (iTrans == FPT_TRANS_CP && ulLen > 0)
       {
         ulLen =
@@ -1730,7 +1730,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBu
     }
     else
     {
-      ulLen = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
+      ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (ulLen > 0)
       {
         if (iTrans == FPT_TRANS_CP)
@@ -1894,7 +1894,7 @@ static HB_ULONG hb_fptCountFlexItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
     }
     else
     {
-      ulLen = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
+      ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (iTrans == FPT_TRANS_CP && ulLen > 0)
       {
         ulLen = static_cast<HB_ULONGCAST>(
@@ -1949,7 +1949,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPt
     break;
   case Harbour::Item::MEMO:
   case Harbour::Item::STRING:
-    ulLen = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
+    ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
     if (ulLen == 0)
     {
       *(*bBufPtr)++ = FPTIT_FLEXAR_NUL;
@@ -3074,7 +3074,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
     }
     else
     {
-      ulSize = static_cast<HB_ULONGCAST>(hb_itemGetCLen(pItem));
+      ulSize = static_cast<HB_ULONGCAST>(pItem->getCLen());
       bBufPtr = reinterpret_cast<const HB_BYTE *>(pItem->getCPtr());
       if (iTrans == FPT_TRANS_CP && ulSize > 0)
       {
@@ -3871,7 +3871,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       }
       else if (pItem->isString())
       {
-        auto nLen = hb_itemGetCLen(pItem);
+        auto nLen = pItem->getCLen();
 
         pBlock = reinterpret_cast<const HB_BYTE *>(pItem->getCPtr());
         if (nLen > HB_VF_CHAR)

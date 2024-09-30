@@ -2835,7 +2835,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         else
         {
           pszPtr = pItem->getCPtr();
-          nSize = hb_itemGetCLen(pItem);
+          nSize = pItem->getCLen();
           if ((pField->uiFlags & HB_FF_BINARY) == 0)
           {
             hb_cdpnDup2(pszPtr, nSize, reinterpret_cast<char *>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nLen,
@@ -2866,7 +2866,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         else
         {
           pszPtr = pItem->getCPtr();
-          nSize = hb_itemGetCLen(pItem);
+          nSize = pItem->getCLen();
           if ((pField->uiFlags & HB_FF_BINARY) == 0)
           {
             if (nLen > static_cast<HB_SIZE>(sizeof(szBuffer)))
@@ -7436,7 +7436,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     if (pItem->isString())
     {
       fFree = true;
-      pData->szTrigger = hb_itemGetCLen(pItem) > 0 ? pItem->getC() : nullptr;
+      pData->szTrigger = pItem->getCLen() > 0 ? pItem->getC() : nullptr;
     }
 
     if (fFree && szTrigger)
@@ -7463,7 +7463,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
         hb_xfree(pData->szPendingTrigger);
         pData->szPendingTrigger = nullptr;
       }
-      if (hb_itemGetCLen(pItem) > 0)
+      if (pItem->getCLen() > 0)
       {
         pData->szPendingTrigger = pItem->getC();
       }
@@ -7486,7 +7486,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     if (pItem->isString())
     {
       fFree = true;
-      pData->szPasswd = hb_itemGetCLen(pItem) > 0 ? pItem->getC() : nullptr;
+      pData->szPasswd = pItem->getCLen() > 0 ? pItem->getC() : nullptr;
     }
 
     if (fFree && szPasswd)
@@ -7513,7 +7513,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
         hb_xfree(pData->szPendingPasswd);
         pData->szPendingPasswd = nullptr;
       }
-      if (hb_itemGetCLen(pItem) > 0)
+      if (pItem->getCLen() > 0)
       {
         pData->szPendingPasswd = pItem->getC();
       }

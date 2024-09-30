@@ -872,13 +872,13 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
         if ((pField->uiFlags & HB_FF_BINARY) == 0)
         {
           nSize = pField->uiLen;
-          hb_cdpnDup2(pItem->getCPtr(), hb_itemGetCLen(pItem),
+          hb_cdpnDup2(pItem->getCPtr(), pItem->getCLen(),
                       reinterpret_cast<char *>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], &nSize, hb_vmCDP(),
                       pArea->area.cdPage);
         }
         else
         {
-          nSize = hb_itemGetCLen(pItem);
+          nSize = pItem->getCLen();
           if (nSize > static_cast<HB_SIZE>(pField->uiLen))
           {
             nSize = pField->uiLen;

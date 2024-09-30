@@ -685,7 +685,7 @@ static int hb_hsxEval(int iHandle, PHB_ITEM pExpr, HB_BYTE *pKey, HB_BOOL *fDele
   if (pExpr->isString())
   {
     pStr = pExpr->getCPtr();
-    nLen = hb_itemGetCLen(pExpr);
+    nLen = pExpr->getCLen();
     if (fDeleted)
     {
       *fDeleted = HB_FALSE;
@@ -1655,7 +1655,7 @@ static int hb_hsxCreate(const char *szFile, int iBufSize, int iKeySize, HB_BOOL 
 
   if (pExpr)
   {
-    if (hb_itemGetCLen(pExpr) > 0)
+    if (pExpr->getCLen() > 0)
     {
       szExpr = pExpr->getCPtr();
       iRetVal = hb_hsxCompile(szExpr, &pKeyExpr);
@@ -1901,7 +1901,7 @@ static int hb_hsxFilter(int iHandle, const char *pSeek, HB_SIZE nSeek, PHB_ITEM 
   }
   else
   {
-    if (hb_itemGetCLen(pVerify) > 0)
+    if (pVerify->getCLen() > 0)
     {
       iResult = hb_hsxCompile(pVerify->getCPtr(), &pVerify);
       if (iResult != HSX_SUCCESS)
@@ -2330,7 +2330,7 @@ HB_FUNC(HS_VERIFY)
     if (pExpr)
     {
       szText = pExpr->getCPtr();
-      nLen = hb_itemGetCLen(pExpr);
+      nLen = pExpr->getCLen();
     }
 
     hb_retni(hb_hsxVerify(hb_parni(1), szText, nLen, hb_parc(3), hb_parclen(3), hb_parni(4)));
@@ -2351,7 +2351,7 @@ HB_FUNC(HS_VERIFY)
       if (pExpr)
       {
         szText = pExpr->getCPtr();
-        nLen = hb_itemGetCLen(pExpr);
+        nLen = pExpr->getCLen();
       }
     }
     hb_retl(nLen && nSub && hb_hsxStrCmp(szSub, nSub, szText, nLen, fIgnoreCase, 3));
