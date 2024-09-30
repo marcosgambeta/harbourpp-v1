@@ -7436,7 +7436,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     if (pItem->isString())
     {
       fFree = true;
-      pData->szTrigger = hb_itemGetCLen(pItem) > 0 ? hb_itemGetC(pItem) : nullptr;
+      pData->szTrigger = hb_itemGetCLen(pItem) > 0 ? pItem->getC() : nullptr;
     }
 
     if (fFree && szTrigger)
@@ -7465,7 +7465,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       }
       if (hb_itemGetCLen(pItem) > 0)
       {
-        pData->szPendingTrigger = hb_itemGetC(pItem);
+        pData->szPendingTrigger = pItem->getC();
       }
     }
     else if (pData->szPendingTrigger)
@@ -7486,7 +7486,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     if (pItem->isString())
     {
       fFree = true;
-      pData->szPasswd = hb_itemGetCLen(pItem) > 0 ? hb_itemGetC(pItem) : nullptr;
+      pData->szPasswd = hb_itemGetCLen(pItem) > 0 ? pItem->getC() : nullptr;
     }
 
     if (fFree && szPasswd)
@@ -7515,7 +7515,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
       }
       if (hb_itemGetCLen(pItem) > 0)
       {
-        pData->szPendingPasswd = hb_itemGetC(pItem);
+        pData->szPendingPasswd = pItem->getC();
       }
     }
     else if (pData->szPendingPasswd)
