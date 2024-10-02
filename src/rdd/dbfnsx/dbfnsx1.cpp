@@ -718,17 +718,17 @@ static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     if (fTrans)
     {
       len = pTag->KeyLength;
-      hb_cdpnDup2(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), reinterpret_cast<char *>(pKey->val), &len, hb_vmCDP(),
+      hb_cdpnDup2(pItem->getCPtr(), pItem->getCLen(), reinterpret_cast<char *>(pKey->val), &len, hb_vmCDP(),
                   pTag->pIndex->pArea->dbfarea.area.cdPage);
     }
     else
     {
-      len = hb_itemGetCLen(pItem);
+      len = pItem->getCLen();
       if (len > static_cast<HB_SIZE>(pTag->KeyLength))
       {
         len = pTag->KeyLength;
       }
-      memcpy(pKey->val, hb_itemGetCPtr(pItem), len);
+      memcpy(pKey->val, pItem->getCPtr(), len);
     }
     if (len < static_cast<HB_SIZE>(pTag->KeyLength))
     {
@@ -740,7 +740,7 @@ static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     }
     break;
   case 'N':
-    d = hb_itemGetND(pItem);
+    d = pItem->getND();
     HB_DBL2ORD(&d, pKey->val);
     break;
   case 'D':
@@ -763,7 +763,7 @@ static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     HB_DBL2ORD(&d, pKey->val);
     break;
   case 'L':
-    pKey->val[0] = hb_itemGetL(pItem) ? 'T' : 'F';
+    pKey->val[0] = pItem->getL() ? 'T' : 'F';
     break;
   default:
     memset(pKey->val, '\0', pTag->KeyLength);
@@ -7521,7 +7521,7 @@ static HB_ERRCODE hb_nsxOrderCreate(NSXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     iLen = 1;
     break;
   case 'C':
-    iLen = static_cast<HB_INTCAST>(hb_itemGetCLen(pResult));
+    iLen = static_cast<HB_INTCAST>(pResult->getCLen());
     if (iLen > NSX_MAXKEYLEN)
     {
       iLen = NSX_MAXKEYLEN;
