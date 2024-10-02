@@ -1618,7 +1618,7 @@ static HB_ERRCODE hb_usrGetVarLen(AREAP pArea, HB_USHORT uiIndex, HB_ULONG *pulL
   hb_xvmPushLocalByRef(static_cast<HB_SHORT>(nOffset));
   hb_vmDo(3);
 
-  *pulLength = hb_itemGetNL(hb_stackItemFromBase(nOffset));
+  *pulLength = hb_stackItemFromBase(nOffset)->getNL();
   hb_stackPop();
 
   return hb_usrReturn();
@@ -1642,7 +1642,7 @@ static HB_ERRCODE hb_usrRecCount(AREAP pArea, HB_ULONG *pulRecCount)
   hb_xvmPushLocalByRef(static_cast<HB_SHORT>(nOffset));
   hb_vmDo(2);
 
-  *pulRecCount = hb_itemGetNL(hb_stackItemFromBase(nOffset));
+  *pulRecCount = hb_stackItemFromBase(nOffset)->getNL();
   hb_stackPop();
 
   return hb_usrReturn();
@@ -1686,7 +1686,7 @@ static HB_ERRCODE hb_usrRecNo(AREAP pArea, HB_ULONG *pulRecNo)
   hb_xvmPushLocalByRef(static_cast<HB_SHORT>(nOffset));
   hb_vmDo(2);
 
-  *pulRecNo = hb_itemGetNL(hb_stackItemFromBase(nOffset));
+  *pulRecNo = hb_stackItemFromBase(nOffset)->getNL();
   hb_stackPop();
 
   return hb_usrReturn();

@@ -7806,7 +7806,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       /* case DBOI_RECNO: */
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC)
       {
-        pInfo->itmResult = hb_itemPutL(pInfo->itmResult, hb_ntxOrdKeyGoto(pTag, hb_itemGetNL(pInfo->itmNewVal)));
+        pInfo->itmResult = hb_itemPutL(pInfo->itmResult, hb_ntxOrdKeyGoto(pTag, pInfo->itmNewVal->getNL()));
       }
       else
       {
@@ -8025,7 +8025,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_SKIPUNIQUE:
       pInfo->itmResult =
           hb_itemPutL(pInfo->itmResult, hb_ntxOrdSkipUnique(pTag, pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
-                                                                      ? hb_itemGetNL(pInfo->itmNewVal)
+                                                                      ? pInfo->itmNewVal->getNL()
                                                                       : 1));
       break;
     case DBOI_SKIPEVAL:
@@ -8149,7 +8149,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       if (pInfo->itmNewVal && hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC)
       {
         hb_itemPutL(pInfo->itmResult,
-                    SELF_GOTO(&pArea->dbfarea.area, hb_itemGetNL(pInfo->itmNewVal)) == Harbour::SUCCESS);
+                    SELF_GOTO(&pArea->dbfarea.area, pInfo->itmNewVal->getNL()) == Harbour::SUCCESS);
       }
       else
       {
@@ -8215,7 +8215,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       break;
     case DBOI_SKIPUNIQUE:
       hb_itemPutL(pInfo->itmResult, SELF_SKIP(&pArea->dbfarea.area, pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
-                                                                        ? hb_itemGetNL(pInfo->itmNewVal)
+                                                                        ? pInfo->itmNewVal->getNL()
                                                                         : 1) == Harbour::SUCCESS);
       break;
     case DBOI_SKIPEVAL:

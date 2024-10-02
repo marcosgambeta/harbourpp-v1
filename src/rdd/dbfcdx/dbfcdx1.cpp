@@ -8829,7 +8829,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     if (pInfo->itmNewVal && pInfo->itmNewVal->isNumeric())
     {
       pInfo->itmResult = hb_itemPutL(
-          pInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, hb_itemGetNL(pInfo->itmNewVal), true) == Harbour::SUCCESS);
+          pInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, pInfo->itmNewVal->getNL(), true) == Harbour::SUCCESS);
     }
     else
     {
@@ -8843,7 +8843,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     if (pInfo->itmNewVal && pInfo->itmNewVal->isNumeric())
     {
       pInfo->itmResult = hb_itemPutL(
-          pInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, hb_itemGetNL(pInfo->itmNewVal), false) == Harbour::SUCCESS);
+          pInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, pInfo->itmNewVal->getNL(), false) == Harbour::SUCCESS);
     }
     else
     {
@@ -8884,7 +8884,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     pInfo->itmResult =
         hb_itemPutL(pInfo->itmResult, hb_cdxDBOISkipUnique(pArea, pTag,
                                                            pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
-                                                               ? hb_itemGetNL(pInfo->itmNewVal)
+                                                               ? pInfo->itmNewVal->getNL()
                                                                : 1) == Harbour::SUCCESS);
     break;
 

@@ -239,7 +239,7 @@ static HB_ERRCODE hb_sdfGoToId(SDFAREAP pArea, PHB_ITEM pItem)
 #ifndef HB_CLP_STRICT
   if (pItem->isNumeric())
   {
-    return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
+    return SELF_GOTO(&pArea->area, pItem->getNL());
   }
 #endif
   // generate RTE

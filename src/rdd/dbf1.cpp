@@ -1866,7 +1866,7 @@ static HB_ERRCODE hb_dbfGoToId(DBFAREAP pArea, PHB_ITEM pItem)
 
   if (pItem->isNumeric())
   {
-    return SELF_GOTO(&pArea->area, hb_itemGetNL(pItem));
+    return SELF_GOTO(&pArea->area, pItem->getNL());
   }
   else
   {
@@ -4069,7 +4069,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   case DBI_LOCKTEST:
     if (pItem->isNumeric())
     {
-      hb_itemPutNI(pItem, hb_dbfLockTest(pArea, REC_LOCK, hb_itemGetNL(pItem)));
+      hb_itemPutNI(pItem, hb_dbfLockTest(pArea, REC_LOCK, pItem->getNL()));
     }
     else
     {
