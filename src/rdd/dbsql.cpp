@@ -468,7 +468,7 @@ HB_FUNC(__DBSQL)
         }
         else if (pNext)
         {
-          llNext = hb_itemGetNInt(pNext);
+          llNext = pNext->getNInt();
         }
         else if (!fRest)
         {

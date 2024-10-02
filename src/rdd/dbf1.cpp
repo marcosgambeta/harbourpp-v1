@@ -2993,7 +2993,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         }
         else
         {
-          lVal = static_cast<HB_MAXINT>(hb_itemGetNInt(pItem));
+          lVal = static_cast<HB_MAXINT>(pItem->getNInt());
 #ifdef HB_LONG_LONG_OFF
           dVal = static_cast<double>(lVal);
 #endif
@@ -3041,7 +3041,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       }
       else if (pField->uiType == Harbour::DB::Field::ANY && pField->uiLen == 4)
       {
-        HB_MAXINT lVal = hb_itemGetNInt(pItem);
+        HB_MAXINT lVal = pItem->getNInt();
         if (pItem->isDouble() ? HB_DBL_LIM_INT32(pItem->getND()) : HB_LIM_INT32(lVal))
         {
           HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
@@ -4235,7 +4235,7 @@ static HB_ERRCODE hb_dbfFieldInfo(DBFAREAP pArea, HB_USHORT uiIndex, HB_USHORT u
       }
       if (pItem->isNumeric())
       {
-        nValue = hb_dbfNextValueSet(pArea, uiIndex - 1, hb_itemGetNInt(pItem));
+        nValue = hb_dbfNextValueSet(pArea, uiIndex - 1, pItem->getNInt());
       }
       else
       {

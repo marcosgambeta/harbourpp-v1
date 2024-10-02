@@ -1142,7 +1142,7 @@ static HB_ULONG hb_fptCountSMTItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
     break;
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG: {
-    HB_MAXINT iVal = hb_itemGetNInt(pItem);
+    HB_MAXINT iVal = pItem->getNInt();
     if (HB_LIM_INT32(iVal))
     {
       ulSize = 5;
@@ -1284,7 +1284,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPtr
 
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG: {
-    HB_MAXINT iVal = hb_itemGetNInt(pItem);
+    HB_MAXINT iVal = pItem->getNInt();
     if (HB_LIM_INT32(iVal))
     {
       *(*bBufPtr)++ = SMT_IT_INT;
@@ -1671,7 +1671,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBu
 
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG: {
-    HB_MAXINT iVal = hb_itemGetNInt(pItem);
+    HB_MAXINT iVal = pItem->getNInt();
     hb_itemGetNLen(pItem, &iWidth, &iDec);
     if (HB_LIM_INT32(iVal))
     {
@@ -1918,7 +1918,7 @@ static HB_ULONG hb_fptCountFlexItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
     break;
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG:
-    iVal = hb_itemGetNInt(pItem);
+    iVal = pItem->getNInt();
     ulSize += (HB_LIM_INT8(iVal) ? 2 : (HB_LIM_INT16(iVal) ? 3 : (HB_LIM_INT32(iVal) ? 5 : 10)));
     break;
   case Harbour::Item::DOUBLE:
@@ -1994,7 +1994,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPt
   }
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG: {
-    HB_MAXINT iVal = hb_itemGetNInt(pItem);
+    HB_MAXINT iVal = pItem->getNInt();
     hb_itemGetNLen(pItem, &iWidth, &iDec);
     if (HB_LIM_INT8(iVal))
     {
@@ -3160,7 +3160,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
       break;
     case Harbour::Item::INTEGER:
     case Harbour::Item::LONG:
-      iVal = hb_itemGetNInt(pItem);
+      iVal = pItem->getNInt();
       if (HB_LIM_INT8(iVal))
       {
         ulType = FPTIT_FLEX_CHAR;
@@ -3771,7 +3771,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       {
         return EDBF_DATATYPE;
       }
-      lVal = hb_itemGetNInt(pItem);
+      lVal = pItem->getNInt();
       if (pItem->isDouble() ? !HB_DBL_LIM_INT32(pItem->getND()) : !HB_LIM_INT32(lVal))
       {
         return EDBF_DATAWIDTH;
@@ -3835,7 +3835,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       else if (pItem->isNumber())
       {
         HB_MAXINT lVal;
-        lVal = hb_itemGetNInt(pItem);
+        lVal = pItem->getNInt();
 
         if (!pItem->isDouble() && HB_LIM_INT32(lVal))
         {
