@@ -483,8 +483,8 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
     char *pFree = nullptr, *pDest;
     auto cdpVM = hb_vmCDP();
 
-    auto pText = hb_itemGetCPtr(pItem);
-    nLen = hb_itemGetCLen(pItem);
+    auto pText = pItem->getCPtr();
+    nLen = pItem->getCLen();
 
     if (cdpVM != pTag->pIndex->pArea->dbfarea.area.cdPage)
     {
@@ -539,13 +539,13 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
   case 'N':
     if (pTag->uiLen == 4)
     {
-      HB_U32 uiVal = static_cast<HB_U32>(hb_itemGetNI(pItem)) + 0x80000000;
+      HB_U32 uiVal = static_cast<HB_U32>(pItem->getNI()) + 0x80000000;
       HB_PUT_BE_UINT32(buf, uiVal);
       nLen = 4;
     }
     else
     {
-      d = hb_itemGetND(pItem);
+      d = pItem->getND();
       HB_DBL2ORD(&d, buf);
       nLen = 8;
     }
@@ -572,7 +572,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
     nLen = 8;
     break;
   case 'L':
-    *buf = static_cast<HB_BYTE>(hb_itemGetL(pItem) ? 'T' : 'F');
+    *buf = static_cast<HB_BYTE>(pItem->getL() ? 'T' : 'F');
     nLen = 1;
     break;
   default:
@@ -8193,7 +8193,7 @@ static HB_ERRCODE hb_cdxOrderCreate(CDXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     uiLen = 1;
     break;
   case 'C': {
-    auto nLen = hb_itemGetCLen(pResult);
+    auto nLen = pResult->getCLen();
     if (nLen > USHRT_MAX)
     {
       nLen = USHRT_MAX;
@@ -10493,7 +10493,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
           hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, reinterpret_cast<const HB_BYTE *>(pItem->getCPtr()),
-                           static_cast<int>(hb_itemGetCLen(pItem)));
+                           static_cast<int>(pItem->getCLen()));
           break;
 
         case Harbour::Item::INTEGER:
