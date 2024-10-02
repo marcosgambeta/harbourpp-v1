@@ -474,17 +474,17 @@ static LPKEYINFO hb_ntxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     if (fTrans)
     {
       len = pTag->KeyLength;
-      hb_cdpnDup2(hb_itemGetCPtr(pItem), hb_itemGetCLen(pItem), pKey->key, &len, hb_vmCDP(),
+      hb_cdpnDup2(pItem->getCPtr(), pItem->getCLen(), pKey->key, &len, hb_vmCDP(),
                   pTag->pIndex->pArea->dbfarea.area.cdPage);
     }
     else
     {
-      len = hb_itemGetCLen(pItem);
+      len = pItem->getCLen();
       if (len > static_cast<HB_SIZE>(pTag->KeyLength))
       {
         len = pTag->KeyLength;
       }
-      memcpy(pKey->key, hb_itemGetCPtr(pItem), len);
+      memcpy(pKey->key, pItem->getCPtr(), len);
     }
     if (len < static_cast<HB_SIZE>(pTag->KeyLength))
     {
@@ -528,7 +528,7 @@ static LPKEYINFO hb_ntxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     pKey->key[pTag->KeyLength] = '\0';
     break;
   case 'L':
-    pKey->key[0] = (hb_itemGetL(pItem) ? 'T' : 'F');
+    pKey->key[0] = (pItem->getL() ? 'T' : 'F');
     if (pTag->KeyLength > 1)
     {
       memset(pKey->key + 1, '\0', pTag->KeyLength - 1);
@@ -7088,7 +7088,7 @@ static HB_ERRCODE hb_ntxOrderCreate(NTXAREAP pArea, LPDBORDERCREATEINFO pOrderIn
     iLen = 1;
     break;
   case 'C':
-    iLen = static_cast<HB_INTCAST>(hb_itemGetCLen(pResult));
+    iLen = static_cast<HB_INTCAST>(pResult->getCLen());
     if (iLen > NTX_MAX_KEY)
     {
       iLen = NTX_MAX_KEY;
