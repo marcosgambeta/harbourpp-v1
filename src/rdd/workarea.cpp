@@ -370,11 +370,11 @@ static HB_ERRCODE hb_waCreateFields(AREAP pArea, PHB_ITEM pStruct)
       // Too many people reported the behavior with code below as a
       // Clipper compatibility bug so I commented this code, Druzus.
 #if 0
-      #ifdef HB_CLP_STRICT
+#ifdef HB_CLP_STRICT
                   dbFieldInfo.uiLen = uiLen;
-      #else
+#else
                   dbFieldInfo.uiLen = uiLen + uiDec * 256;
-      #endif
+#endif
 #endif
       dbFieldInfo.uiFlags &= HB_FF_NULLABLE | HB_FF_BINARY | HB_FF_COMPRESSED | HB_FF_ENCRYPTED | HB_FF_UNICODE;
       break;
@@ -1944,7 +1944,7 @@ static HB_ERRCODE hb_waSetLocate(AREAP pArea, LPDBSCOPEINFO pScopeInfo)
 }
 
 // Compile a character expression.
-static HB_ERRCODE hb_waCompile(AREAP pArea, const char * szExpr)
+static HB_ERRCODE hb_waCompile(AREAP pArea, const char *szExpr)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_waCompile(%p, %p)", static_cast<void*>(pArea), static_cast<const void *>(szExpr)));
@@ -2548,11 +2548,11 @@ void hb_rddSetFileRedirector(HB_RDDACCEPT funcAccept, HB_BOOL fEnable)
 
   HB_USHORT uiFree;
 
-  #if defined(HB_USE_CPP_MUTEX)
+#if defined(HB_USE_CPP_MUTEX)
   rddMtx.lock();
-  #else
+#else
   hb_threadEnterCriticalSection(&s_rddMtx);
-  #endif
+#endif
   uiFree = s_uiRddRedirCount + 1;
   for (HB_USHORT uiCount = 0; uiCount < s_uiRddRedirCount; uiCount++)
   {
@@ -2584,11 +2584,11 @@ void hb_rddSetFileRedirector(HB_RDDACCEPT funcAccept, HB_BOOL fEnable)
     s_rddRedirAccept[s_uiRddRedirCount] = funcAccept;
     s_uiRddRedirCount++;
   }
-  #if defined(HB_USE_CPP_MUTEX)
+#if defined(HB_USE_CPP_MUTEX)
   rddMtx.unlock();
-  #else
+#else
   hb_threadLeaveCriticalSection(&s_rddMtx);
-  #endif
+#endif
 }
 
 // Shutdown the RDD system.
@@ -2669,11 +2669,11 @@ int hb_rddRegister(const char *szDriver, HB_USHORT uiType)
   }
   else
   {
-    #if defined(HB_USE_CPP_MUTEX)
+#if defined(HB_USE_CPP_MUTEX)
     rddMtx.lock();
-    #else
+#else
     hb_threadEnterCriticalSection(&s_rddMtx);
-    #endif
+#endif
     // repeat the test to protect against possible registering RDD by
     //  <szDriver>_GETFUNCTABLE()
     if (!hb_rddFindNode(szDriver, nullptr))
@@ -2691,11 +2691,11 @@ int hb_rddRegister(const char *szDriver, HB_USHORT uiType)
     {
       iResult = 1;
     }
-    #if defined(HB_USE_CPP_MUTEX)
+#if defined(HB_USE_CPP_MUTEX)
     rddMtx.unlock();
-    #else
+#else
     hb_threadLeaveCriticalSection(&s_rddMtx);
-    #endif
+#endif
   }
 
   if (iResult != 0)

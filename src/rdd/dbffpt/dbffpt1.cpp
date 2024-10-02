@@ -55,7 +55,7 @@
 #if defined(HB_FPT_NO_READLOCK)
 #undef HB_MEMO_SAFELOCK
 #else
-//#  define HB_MEMO_SAFELOCK
+// #  define HB_MEMO_SAFELOCK
 #endif
 
 #include "hbapi.hpp"
@@ -1120,8 +1120,8 @@ static HB_ULONG hb_fptCountSMTItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
       ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (iTrans == FPT_TRANS_CP && ulLen > 0)
       {
-        ulLen = static_cast<HB_ULONGCAST>(
-            hb_cdpnDup2Len(pItem->getCPtr(), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage));
+        ulLen =
+            static_cast<HB_ULONGCAST>(hb_cdpnDup2Len(pItem->getCPtr(), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage));
       }
       else
       {
@@ -1619,8 +1619,7 @@ static HB_ULONG hb_fptCountSixItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULON
       ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (iTrans == FPT_TRANS_CP && ulLen > 0)
       {
-        ulLen =
-            static_cast<HB_ULONGCAST>(hb_cdpnDup2Len(pItem->getCPtr(), ulLen, u, hb_vmCDP(), pArea->area.cdPage));
+        ulLen = static_cast<HB_ULONGCAST>(hb_cdpnDup2Len(pItem->getCPtr(), ulLen, u, hb_vmCDP(), pArea->area.cdPage));
       }
       else
       {
@@ -1897,8 +1896,8 @@ static HB_ULONG hb_fptCountFlexItemLength(FPTAREAP pArea, PHB_ITEM pItem, HB_ULO
       ulLen = static_cast<HB_ULONGCAST>(pItem->getCLen());
       if (iTrans == FPT_TRANS_CP && ulLen > 0)
       {
-        ulLen = static_cast<HB_ULONGCAST>(
-            hb_cdpnDup2Len(pItem->getCPtr(), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage));
+        ulLen =
+            static_cast<HB_ULONGCAST>(hb_cdpnDup2Len(pItem->getCPtr(), ulLen, 0xFFFF, hb_vmCDP(), pArea->area.cdPage));
       }
       else
       {

@@ -8882,10 +8882,10 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
 
   case DBOI_SKIPUNIQUE:
     pInfo->itmResult =
-        hb_itemPutL(pInfo->itmResult, hb_cdxDBOISkipUnique(pArea, pTag,
-                                                           pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
-                                                               ? pInfo->itmNewVal->getNL()
-                                                               : 1) == Harbour::SUCCESS);
+        hb_itemPutL(pInfo->itmResult,
+                    hb_cdxDBOISkipUnique(pArea, pTag,
+                                         pInfo->itmNewVal && pInfo->itmNewVal->isNumeric() ? pInfo->itmNewVal->getNL()
+                                                                                           : 1) == Harbour::SUCCESS);
     break;
 
   case DBOI_SKIPEVAL:

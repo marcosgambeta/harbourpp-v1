@@ -6644,8 +6644,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
         {
         case Harbour::Item::STRING:
         case Harbour::Item::MEMO:
-          hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(),
-                           static_cast<HB_INTCAST>(pItem->getCLen()));
+          hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, pItem->getCPtr(), static_cast<HB_INTCAST>(pItem->getCLen()));
           break;
 
         case Harbour::Item::INTEGER:
@@ -8403,10 +8402,9 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       }
       break;
     case DBOI_SKIPUNIQUE:
-      pInfo->itmResult =
-          hb_itemPutL(pInfo->itmResult, hb_nsxOrdSkipUnique(pTag, pInfo->itmNewVal && pInfo->itmNewVal->isNumeric()
-                                                                      ? pInfo->itmNewVal->getNL()
-                                                                      : 1));
+      pInfo->itmResult = hb_itemPutL(
+          pInfo->itmResult,
+          hb_nsxOrdSkipUnique(pTag, pInfo->itmNewVal && pInfo->itmNewVal->isNumeric() ? pInfo->itmNewVal->getNL() : 1));
       break;
     case DBOI_SKIPEVAL:
     case DBOI_SKIPEVALBACK:
@@ -8518,8 +8516,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       /* case DBOI_RECNO: */
       if (pInfo->itmNewVal && hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC)
       {
-        hb_itemPutL(pInfo->itmResult,
-                    SELF_GOTO(&pArea->dbfarea.area, pInfo->itmNewVal->getNL()) == Harbour::SUCCESS);
+        hb_itemPutL(pInfo->itmResult, SELF_GOTO(&pArea->dbfarea.area, pInfo->itmNewVal->getNL()) == Harbour::SUCCESS);
       }
       else
       {

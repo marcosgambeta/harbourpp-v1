@@ -771,7 +771,7 @@ HB_FUNC(DBSEEK)
   }
 }
 
-HB_FUNC( DBSELECTAREA )
+HB_FUNC(DBSELECTAREA)
 {
   auto szAlias = hb_parc(1);
 
@@ -2218,8 +2218,8 @@ HB_FUNC(__DBAPP)
                                                    hb_param(5, Harbour::Item::NUMERIC), // Next
                                                    HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), // RecID
                                                    hb_param(7, Harbour::Item::LOGICAL),                     // Rest
-                                                   hb_parc(10),                        // Codepage
-                                                   hb_param(11, Harbour::Item::ANY))); // Delimiter
+                                                   hb_parc(10),                                             // Codepage
+                                                   hb_param(11, Harbour::Item::ANY)));                      // Delimiter
   }
   else
   {
@@ -2249,8 +2249,8 @@ HB_FUNC(__DBCOPY)
                                                    hb_param(5, Harbour::Item::NUMERIC), // Next
                                                    HB_ISNIL(6) ? nullptr : hb_param(6, Harbour::Item::ANY), // RecID
                                                    hb_param(7, Harbour::Item::LOGICAL),                     // Rest
-                                                   hb_parc(10),                        // Codepage
-                                                   hb_param(11, Harbour::Item::ANY))); // Delimiter
+                                                   hb_parc(10),                                             // Codepage
+                                                   hb_param(11, Harbour::Item::ANY)));                      // Delimiter
   }
   else
   {
