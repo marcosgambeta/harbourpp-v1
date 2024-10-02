@@ -900,7 +900,7 @@ static bool hb_nsxEvalCond(NSXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
     }
   }
 
-  fRet = hb_itemGetL(hb_vmEvalBlockOrMacro(pCondItem));
+  fRet = hb_vmEvalBlockOrMacro(pCondItem)->getL();
 
   if (iCurrArea)
   {
@@ -921,7 +921,7 @@ static bool hb_nsxEvalSeekCond(LPTAGINFO pTag, PHB_ITEM pCondItem)
   pKeyVal = hb_nsxKeyGetItem(nullptr, pTag->CurKeyInfo, pTag, true);
   auto pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKeyInfo->rec);
 
-  fRet = hb_itemGetL(hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec));
+  fRet = hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec)->getL();
 
   hb_itemRelease(pKeyVal);
   hb_itemRelease(pKeyRec);
@@ -6670,7 +6670,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
           break;
 
         case Harbour::Item::LOGICAL:
-          szBuffer[0] = hb_itemGetL(pItem) ? 'T' : 'F';
+          szBuffer[0] = pItem->getL() ? 'T' : 'F';
           hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, szBuffer, 1);
           break;
 
@@ -8207,7 +8207,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag->fUsrDescend);
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        pTag->fUsrDescend = hb_itemGetL(pInfo->itmNewVal);
+        pTag->fUsrDescend = pInfo->itmNewVal->getL();
       }
       break;
     case DBOI_UNIQUE:
@@ -8216,7 +8216,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_CUSTOM:
       if (!pTag->Template && (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL))
       {
-        bool fNewVal = hb_itemGetL(pInfo->itmNewVal);
+        bool fNewVal = pInfo->itmNewVal->getL();
         if (pTag->Custom ? !fNewVal : fNewVal)
         {
           if (hb_nsxTagLockWrite(pTag))
@@ -8237,7 +8237,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_CHGONLY:
       if (!pTag->Custom && (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL))
       {
-        bool fNewVal = hb_itemGetL(pInfo->itmNewVal);
+        bool fNewVal = pInfo->itmNewVal->getL();
         if (pTag->ChgOnly ? !fNewVal : fNewVal)
         {
           if (hb_nsxTagLockWrite(pTag))
@@ -8454,7 +8454,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
         pInfo->itmResult =
-            hb_itemPutL(pInfo->itmResult, hb_itemGetL(pInfo->itmNewVal) ? hb_nsxIndexLockRead(pTag->pIndex)
+            hb_itemPutL(pInfo->itmResult, pInfo->itmNewVal->getL() ? hb_nsxIndexLockRead(pTag->pIndex)
                                                                         : hb_nsxIndexUnLockRead(pTag->pIndex));
       }
       else
@@ -8466,7 +8466,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
         pInfo->itmResult =
-            hb_itemPutL(pInfo->itmResult, hb_itemGetL(pInfo->itmNewVal) ? hb_nsxIndexLockWrite(pTag->pIndex, true)
+            hb_itemPutL(pInfo->itmResult, pInfo->itmNewVal->getL() ? hb_nsxIndexLockWrite(pTag->pIndex, true)
                                                                         : hb_nsxIndexUnLockWrite(pTag->pIndex));
       }
       else
@@ -8485,7 +8485,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag->pIndex->fShared);
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        pTag->pIndex->fShared = hb_itemGetL(pInfo->itmNewVal);
+        pTag->pIndex->fShared = pInfo->itmNewVal->getL();
       }
       break;
     case DBOI_ISREADONLY:
@@ -8959,7 +8959,7 @@ static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fStrictStruct = pData->fStrictStruct;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fStrictStruct = hb_itemGetL(pItem);
+      pData->fStrictStruct = pItem->getL();
     }
     hb_itemPutL(pItem, fStrictStruct);
     break;
@@ -8969,7 +8969,7 @@ static HB_ERRCODE hb_nsxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fMultiKey = pData->fMultiKey;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fMultiKey = hb_itemGetL(pItem);
+      pData->fMultiKey = pItem->getL();
     }
     hb_itemPutL(pItem, fMultiKey);
     break;

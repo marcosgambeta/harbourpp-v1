@@ -91,7 +91,7 @@ HB_FUNC(SX_ISFLOCKED)
   {
     auto pItem = hb_itemNew(nullptr);
     SELF_INFO(pArea, DBI_ISFLOCK, pItem);
-    fLocked = hb_itemGetL(pItem);
+    fLocked = pItem->getL();
     hb_itemRelease(pItem);
   }
 
@@ -107,7 +107,7 @@ HB_FUNC(SX_ISREADONLY)
   {
     auto pItem = hb_itemNew(nullptr);
     SELF_INFO(pArea, DBI_ISREADONLY, pItem);
-    fReadOnly = hb_itemGetL(pItem);
+    fReadOnly = pItem->getL();
     hb_itemRelease(pItem);
   }
 
@@ -123,7 +123,7 @@ HB_FUNC(SX_ISSHARED)
   {
     auto pItem = hb_itemNew(nullptr);
     SELF_INFO(pArea, DBI_SHARED, pItem);
-    fShared = hb_itemGetL(pItem);
+    fShared = pItem->getL();
     hb_itemRelease(pItem);
   }
 
@@ -140,7 +140,7 @@ HB_FUNC(SX_IDTYPE)
     auto pItem = hb_itemNew(nullptr);
     if (SELF_RECINFO(pArea, nullptr, DBRI_ENCRYPTED, pItem) == Harbour::SUCCESS)
     {
-      iType = hb_itemGetL(pItem) ? 2 : 1;
+      iType = pItem->getL() ? 2 : 1;
     }
     hb_itemRelease(pItem);
   }
@@ -158,7 +158,7 @@ HB_FUNC(SX_TABLETYPE)
     auto pItem = hb_itemNew(nullptr);
     if (SELF_INFO(pArea, DBI_ISENCRYPTED, pItem) == Harbour::SUCCESS)
     {
-      iType = hb_itemGetL(pItem) ? 2 : 1;
+      iType = pItem->getL() ? 2 : 1;
     }
     hb_itemRelease(pItem);
   }

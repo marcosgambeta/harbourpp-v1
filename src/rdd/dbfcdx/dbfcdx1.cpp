@@ -709,7 +709,7 @@ static bool hb_cdxEvalCond(CDXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
     }
   }
 
-  fRet = hb_itemGetL(hb_vmEvalBlockOrMacro(pCondItem));
+  fRet = hb_vmEvalBlockOrMacro(pCondItem)->getL();
 
   if (iCurrArea)
   {
@@ -728,7 +728,7 @@ static bool hb_cdxEvalSeekCond(LPCDXTAG pTag, PHB_ITEM pCondItem)
   pKeyVal = hb_cdxKeyGetItem(pTag->CurKey, nullptr, pTag);
   pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKey->rec);
 
-  fRet = hb_itemGetL(hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec));
+  fRet = hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec)->getL();
 
   hb_itemRelease(pKeyVal);
   hb_itemRelease(pKeyRec);
@@ -4228,7 +4228,7 @@ static bool hb_cdxCheckRecordFilter(CDXAREAP pArea, HB_ULONG ulRecNo)
     if (!lResult && pArea->dbfarea.area.dbfi.itmCobExpr)
     {
       auto pResult = hb_vmEvalBlock(pArea->dbfarea.area.dbfi.itmCobExpr);
-      lResult = pResult->isLogical() && !hb_itemGetL(pResult);
+      lResult = pResult->isLogical() && !pResult->getL();
     }
   }
   return !lResult;
@@ -8968,7 +8968,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag && !pTag->UsrAscend);
     if (pTag && pInfo->itmNewVal && pInfo->itmNewVal->isLogical())
     {
-      pTag->UsrAscend = !hb_itemGetL(pInfo->itmNewVal);
+      pTag->UsrAscend = !pInfo->itmNewVal->getL();
       pTag->curKeyState &= ~(CDX_CURKEY_RAWPOS | CDX_CURKEY_LOGPOS);
     }
     break;
@@ -8977,7 +8977,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     pInfo->itmResult = hb_itemPutL(pInfo->itmResult, (pTag ? pTag->UniqueKey || pTag->UsrUnique : false));
     if (pTag && pInfo->itmNewVal && pInfo->itmNewVal->isLogical() && !pTag->UniqueKey)
     {
-      pTag->UsrUnique = hb_itemGetL(pInfo->itmNewVal);
+      pTag->UsrUnique = pInfo->itmNewVal->getL();
       pTag->curKeyState &= ~(CDX_CURKEY_RAWPOS | CDX_CURKEY_LOGPOS | CDX_CURKEY_RAWCNT | CDX_CURKEY_LOGCNT);
     }
     break;
@@ -9123,7 +9123,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
   case DBOI_CUSTOM:
     if (pTag && !pTag->Template && (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL))
     {
-      bool fNewVal = hb_itemGetL(pInfo->itmNewVal);
+      bool fNewVal = pInfo->itmNewVal->getL();
       if (pTag->Custom ? !fNewVal : fNewVal)
       {
         if (hb_cdxIndexLockWrite(pTag->pIndex))
@@ -9154,7 +9154,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
   case DBOI_CHGONLY:
     if (pTag && !pTag->Custom && (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL))
     {
-      bool fNewVal = hb_itemGetL(pInfo->itmNewVal);
+      bool fNewVal = pInfo->itmNewVal->getL();
       if (pTag->ChgOnly ? !fNewVal : fNewVal)
       {
         if (hb_cdxIndexLockWrite(pTag->pIndex))
@@ -9352,7 +9352,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     {
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        if (hb_itemGetL(pInfo->itmNewVal))
+        if (pInfo->itmNewVal->getL())
         {
           hb_cdxIndexLockRead(pTag->pIndex);
         }
@@ -9374,7 +9374,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     {
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        if (hb_itemGetL(pInfo->itmNewVal))
+        if (pInfo->itmNewVal->getL())
         {
           hb_cdxIndexLockWrite(pTag->pIndex);
         }
@@ -9540,7 +9540,7 @@ static HB_ERRCODE hb_cdxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fStrictStruct = pData->fStrictStruct;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fStrictStruct = hb_itemGetL(pItem);
+      pData->fStrictStruct = pItem->getL();
     }
     hb_itemPutL(pItem, fStrictStruct);
     break;
@@ -10526,7 +10526,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
           break;
 
         case Harbour::Item::LOGICAL:
-          cTemp[0] = static_cast<HB_BYTE>(hb_itemGetL(pItem) ? 'T' : 'F');
+          cTemp[0] = static_cast<HB_BYTE>(pItem->getL() ? 'T' : 'F');
           hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, cTemp, 1);
           break;
 

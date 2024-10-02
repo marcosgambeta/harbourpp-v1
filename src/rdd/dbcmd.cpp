@@ -808,7 +808,7 @@ HB_FUNC(__DBSETFOUND)
     auto pFound = hb_param(1, Harbour::Item::LOGICAL);
     if (pFound)
     {
-      pArea->fFound = hb_itemGetL(pFound);
+      pArea->fFound = pFound->getL();
     }
   }
 }

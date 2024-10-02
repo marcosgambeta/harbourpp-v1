@@ -202,7 +202,7 @@ static HB_ERRCODE hb_waSkipFilter(AREAP pArea, HB_LONG lUpDown)
         return Harbour::FAILURE;
       }
 
-      if (pArea->valResult->isLogical() && !hb_itemGetL(pArea->valResult))
+      if (pArea->valResult->isLogical() && !pArea->valResult->getL())
       {
         if (SELF_SKIPRAW(pArea, lUpDown) != Harbour::SUCCESS)
         {

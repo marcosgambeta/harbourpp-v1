@@ -1320,7 +1320,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPtr
   }
   case Harbour::Item::LOGICAL:
     *(*bBufPtr)++ = SMT_IT_LOGICAL;
-    *(*bBufPtr)++ = hb_itemGetL(pItem) ? 1 : 0;
+    *(*bBufPtr)++ = pItem->getL() ? 1 : 0;
     break;
 
   case Harbour::Item::NIL:
@@ -1711,7 +1711,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBu
   }
   case Harbour::Item::LOGICAL:
     HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_LOG);
-    (*bBufPtr)[6] = hb_itemGetL(pItem) ? 1 : 0;
+    (*bBufPtr)[6] = pItem->getL() ? 1 : 0;
     *bBufPtr += SIX_ITEM_BUFSIZE;
     break;
 
@@ -2041,7 +2041,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPt
     break;
   }
   case Harbour::Item::LOGICAL:
-    *(*bBufPtr)++ = hb_itemGetL(pItem) ? FPTIT_FLEXAR_TRUE : FPTIT_FLEXAR_FALSE;
+    *(*bBufPtr)++ = pItem->getL() ? FPTIT_FLEXAR_TRUE : FPTIT_FLEXAR_FALSE;
     break;
   case Harbour::Item::NIL:
   default:
@@ -3147,7 +3147,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
       ulSize = 0;
       break;
     case Harbour::Item::LOGICAL:
-      ulType = hb_itemGetL(pItem) ? FPTIT_FLEX_TRUE : FPTIT_FLEX_FALSE;
+      ulType = pItem->getL() ? FPTIT_FLEX_TRUE : FPTIT_FLEX_FALSE;
       ulSize = 0;
       break;
     case Harbour::Item::DATE:
@@ -3336,7 +3336,7 @@ static HB_ERRCODE hb_fptLockForRead(FPTAREAP pArea, HB_USHORT uiIndex, bool *fUn
     auto pResult = hb_itemNew(nullptr);
 
     errCode = SELF_RECINFO(&pArea->area, pRecNo, DBRI_LOCKED, pResult);
-    fLocked = hb_itemGetL(pResult);
+    fLocked = pResult->getL();
     hb_itemRelease(pRecNo);
     hb_itemRelease(pResult);
     if (errCode != Harbour::SUCCESS)
@@ -3825,7 +3825,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       }
       else if (pItem->isLogical())
       {
-        pFieldBuf[0] = hb_itemGetL(pItem) ? 1 : 0;
+        pFieldBuf[0] = pItem->getL() ? 1 : 0;
         uiType = HB_VF_LOG;
       }
       else if (pItem->isNil())

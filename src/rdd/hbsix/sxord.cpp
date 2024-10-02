@@ -190,7 +190,7 @@ HB_FUNC(SX_FREEZE)
       Info.itmResult = hb_itemNew(nullptr);
       if (SELF_ORDINFO(pArea, DBOI_CUSTOM, &Info) == Harbour::SUCCESS)
       {
-        fResult = Info.itmResult->isLogical() && hb_itemGetL(Info.itmResult);
+        fResult = Info.itmResult->isLogical() && Info.itmResult->getL();
       }
       hb_itemRelease(Info.itmNewVal);
       hb_itemRelease(Info.itmResult);
@@ -214,7 +214,7 @@ HB_FUNC(SX_WARM)
       Info.itmResult = hb_itemNew(nullptr);
       if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS)
       {
-        fResult = Info.itmResult->isLogical() && !hb_itemGetL(Info.itmResult);
+        fResult = Info.itmResult->isLogical() && !Info.itmResult->getL();
       }
       hb_itemRelease(Info.itmNewVal);
       hb_itemRelease(Info.itmResult);
@@ -238,7 +238,7 @@ HB_FUNC(SX_CHILL)
       Info.itmResult = hb_itemNew(nullptr);
       if (SELF_ORDINFO(pArea, DBOI_CHGONLY, &Info) == Harbour::SUCCESS)
       {
-        fResult = Info.itmResult->isLogical() && hb_itemGetL(Info.itmResult);
+        fResult = Info.itmResult->isLogical() && Info.itmResult->getL();
       }
       hb_itemRelease(Info.itmNewVal);
       hb_itemRelease(Info.itmResult);
@@ -277,7 +277,7 @@ HB_FUNC(SX_THERMOMETER)
         {
           hb_itemClear(Info.itmResult);
           if (SELF_ORDINFO(pArea, s_iStates[i], &Info) == Harbour::SUCCESS && Info.itmResult->isLogical() &&
-              hb_itemGetL(Info.itmResult))
+              Info.itmResult->getL())
           {
             break;
           }
@@ -733,7 +733,7 @@ HB_FUNC(SX_WILDSEEK)
         Info.itmNewVal = hb_param(1, Harbour::Item::STRING);
         if (SELF_ORDINFO(pArea, DBOI_SKIPWILD, &Info) == Harbour::SUCCESS)
         {
-          fFound = Info.itmResult->isLogical() && hb_itemGetL(Info.itmResult);
+          fFound = Info.itmResult->isLogical() && Info.itmResult->getL();
         }
       }
     }

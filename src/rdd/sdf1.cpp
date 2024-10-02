@@ -648,7 +648,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
     {
       if (pField->uiType == Harbour::DB::Field::LOGICAL)
       {
-        pArea->pRecord[pArea->pFieldOffset[uiIndex]] = hb_itemGetL(pItem) ? 'T' : 'F';
+        pArea->pRecord[pArea->pFieldOffset[uiIndex]] = pItem->getL() ? 'T' : 'F';
       }
       else
       {

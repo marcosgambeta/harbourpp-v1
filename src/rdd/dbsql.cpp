@@ -206,7 +206,7 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
 
   case Harbour::Item::LOGICAL:
     hb_addStrToFBuffer(pFileBuf, szDelim);
-    hb_addToFBuffer(pFileBuf, hb_itemGetL(pValue) ? 'Y' : 'N');
+    hb_addToFBuffer(pFileBuf, pValue->getL() ? 'Y' : 'N');
     hb_addStrToFBuffer(pFileBuf, szDelim);
     break;
 

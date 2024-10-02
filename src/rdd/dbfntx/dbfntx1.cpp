@@ -621,7 +621,7 @@ static bool hb_ntxEvalCond(NTXAREAP pArea, PHB_ITEM pCondItem, bool fSetWA)
     }
   }
 
-  fRet = hb_itemGetL(hb_vmEvalBlockOrMacro(pCondItem));
+  fRet = hb_vmEvalBlockOrMacro(pCondItem)->getL();
 
   if (iCurrArea)
   {
@@ -642,7 +642,7 @@ static bool hb_ntxEvalSeekCond(LPTAGINFO pTag, PHB_ITEM pCondItem)
   pKeyVal = hb_ntxKeyGetItem(nullptr, pTag->CurKeyInfo, pTag, true);
   auto pKeyRec = hb_itemPutNInt(nullptr, pTag->CurKeyInfo->Xtra);
 
-  fRet = hb_itemGetL(hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec));
+  fRet = hb_vmEvalBlockV(pCondItem, 2, pKeyVal, pKeyRec)->getL();
 
   hb_itemRelease(pKeyVal);
   hb_itemRelease(pKeyRec);
@@ -6178,7 +6178,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
           break;
 
         case Harbour::Item::LOGICAL:
-          szBuffer[0] = hb_itemGetL(pItem) ? 'T' : 'F';
+          szBuffer[0] = pItem->getL() ? 'T' : 'F';
           hb_ntxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, szBuffer, 1);
           break;
 
@@ -7829,7 +7829,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag->fUsrDescend);
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        pTag->fUsrDescend = hb_itemGetL(pInfo->itmNewVal);
+        pTag->fUsrDescend = pInfo->itmNewVal->getL();
       }
       break;
     case DBOI_UNIQUE:
@@ -7838,7 +7838,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_CUSTOM:
       if (!pTag->Template && hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        bool fNewVal = hb_itemGetL(pInfo->itmNewVal);
+        bool fNewVal = pInfo->itmNewVal->getL();
         if (pTag->Custom ? !fNewVal : fNewVal)
         {
           if (hb_ntxTagLockWrite(pTag))
@@ -7859,7 +7859,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_CHGONLY:
       if (!pTag->Custom && hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        bool fNewVal = hb_itemGetL(pInfo->itmNewVal);
+        bool fNewVal = pInfo->itmNewVal->getL();
         if (pTag->ChgOnly ? !fNewVal : fNewVal)
         {
           if (hb_ntxTagLockWrite(pTag))
@@ -8074,7 +8074,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
         pInfo->itmResult =
-            hb_itemPutL(pInfo->itmResult, hb_itemGetL(pInfo->itmNewVal) ? hb_ntxIndexLockRead(pTag->pIndex)
+            hb_itemPutL(pInfo->itmResult, pInfo->itmNewVal->getL() ? hb_ntxIndexLockRead(pTag->pIndex)
                                                                         : hb_ntxIndexUnLockRead(pTag->pIndex));
       }
       else
@@ -8086,7 +8086,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
         pInfo->itmResult =
-            hb_itemPutL(pInfo->itmResult, hb_itemGetL(pInfo->itmNewVal) ? hb_ntxIndexLockWrite(pTag->pIndex, true)
+            hb_itemPutL(pInfo->itmResult, pInfo->itmNewVal->getL() ? hb_ntxIndexLockWrite(pTag->pIndex, true)
                                                                         : hb_ntxIndexUnLockWrite(pTag->pIndex));
       }
       else
@@ -8111,7 +8111,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
       pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pTag->pIndex->fShared);
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::LOGICAL)
       {
-        pTag->pIndex->fShared = hb_itemGetL(pInfo->itmNewVal);
+        pTag->pIndex->fShared = pInfo->itmNewVal->getL();
       }
       break;
     case DBOI_ISREADONLY:
@@ -8624,7 +8624,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fMultiTag = pData->fMultiTag;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fMultiTag = hb_itemGetL(pItem);
+      pData->fMultiTag = pItem->getL();
     }
     hb_itemPutL(pItem, fMultiTag);
 #endif
@@ -8635,7 +8635,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fSortRecNo = pData->fSortRecNo;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fSortRecNo = hb_itemGetL(pItem);
+      pData->fSortRecNo = pItem->getL();
     }
     hb_itemPutL(pItem, fSortRecNo);
     break;
@@ -8645,7 +8645,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fStruct = pData->fStruct;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fStruct = hb_itemGetL(pItem);
+      pData->fStruct = pItem->getL();
     }
     hb_itemPutL(pItem, fStruct);
     break;
@@ -8655,7 +8655,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fStrictStruct = pData->fStrictStruct;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fStrictStruct = hb_itemGetL(pItem);
+      pData->fStrictStruct = pItem->getL();
     }
     hb_itemPutL(pItem, fStrictStruct);
     break;
@@ -8665,7 +8665,7 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fMultiKey = pData->fMultiKey;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
-      pData->fMultiKey = hb_itemGetL(pItem);
+      pData->fMultiKey = pItem->getL();
     }
     hb_itemPutL(pItem, fMultiKey);
     break;

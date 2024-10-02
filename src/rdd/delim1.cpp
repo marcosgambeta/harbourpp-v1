@@ -944,7 +944,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
     {
       if (pField->uiType == Harbour::DB::Field::LOGICAL)
       {
-        pArea->pRecord[pArea->pFieldOffset[uiIndex]] = hb_itemGetL(pItem) ? 'T' : 'F';
+        pArea->pRecord[pArea->pFieldOffset[uiIndex]] = pItem->getL() ? 'T' : 'F';
       }
       else
       {

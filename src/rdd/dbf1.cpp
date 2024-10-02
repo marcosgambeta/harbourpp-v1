@@ -3060,7 +3060,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
     {
       if (pField->uiType == Harbour::DB::Field::LOGICAL)
       {
-        pArea->pRecord[pArea->pFieldOffset[uiIndex]] = hb_itemGetL(pItem) ? 'T' : 'F';
+        pArea->pRecord[pArea->pFieldOffset[uiIndex]] = pItem->getL() ? 'T' : 'F';
       }
       else
       {
@@ -3982,7 +3982,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
     if (pItem->isLogical())
     {
-      pArea->fTransRec = hb_itemGetL(pItem);
+      pArea->fTransRec = pItem->getL();
     }
     else if (pItem->isPointer())
     {
@@ -4007,7 +4007,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
     if (pItem->isLogical())
     {
-      pArea->fShared = hb_itemGetL(pItem);
+      pArea->fShared = pItem->getL();
     }
     hb_itemPutL(pItem, fShared);
     break;
@@ -4023,7 +4023,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   case DBI_ISTEMPORARY:
     if (!pArea->pDataFile && !pArea->pMemoFile && pItem->isLogical())
     {
-      pArea->fTemporary = hb_itemGetL(pItem);
+      pArea->fTemporary = pItem->getL();
     }
     else
     {
@@ -4138,7 +4138,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
   case DBI_TRIGGER:
     if (pItem->isLogical())
     {
-      pArea->fTrigger = pArea->pTriggerSym && hb_itemGetL(pItem);
+      pArea->fTrigger = pArea->pTriggerSym && pItem->getL();
     }
     else
     {
@@ -4160,7 +4160,7 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
     if (pItem->isLogical())
     {
-      pArea->uiDirtyRead = hb_itemGetL(pItem) ? HB_IDXREAD_DIRTY : HB_IDXREAD_CLEAN;
+      pArea->uiDirtyRead = pItem->getL() ? HB_IDXREAD_DIRTY : HB_IDXREAD_CLEAN;
     }
     else if (!pItem->isNil())
     {
@@ -5593,7 +5593,7 @@ static int hb_dbfSortCmp(LPDBSORTREC pSortRec, PHB_ITEM pValue1, PHB_ITEM pValue
     }
     else if (pItem1->isLogical())
     {
-      i = hb_itemGetL(pItem1) ? (hb_itemGetL(pItem2) ? 0 : 1) : (hb_itemGetL(pItem2) ? -1 : 0);
+      i = pItem1->getL() ? (hb_itemGetL(pItem2) ? 0 : 1) : (hb_itemGetL(pItem2) ? -1 : 0);
     }
     if (i != 0)
     {
@@ -7404,7 +7404,7 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     bool fDirty = (pData->uiDirtyRead == HB_IDXREAD_DIRTYMASK);
     if (pItem->isLogical())
     {
-      pData->uiDirtyRead = hb_itemGetL(pItem) ? HB_IDXREAD_DIRTYMASK : HB_IDXREAD_CLEANMASK;
+      pData->uiDirtyRead = pItem->getL() ? HB_IDXREAD_DIRTYMASK : HB_IDXREAD_CLEANMASK;
     }
     hb_itemPutL(pItem, fDirty);
     break;
