@@ -6650,7 +6650,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
         case Harbour::Item::INTEGER:
         case Harbour::Item::LONG:
         case Harbour::Item::DOUBLE:
-          d = hb_itemGetND(pItem);
+          d = pItem->getND();
           HB_DBL2ORD(&d, szBuffer);
           hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, szBuffer, 8);
           break;
@@ -8193,7 +8193,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_RELKEYPOS:
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC)
       {
-        hb_nsxOrdSetRelKeyPos(pTag, hb_itemGetND(pInfo->itmNewVal));
+        hb_nsxOrdSetRelKeyPos(pTag, pInfo->itmNewVal->getND());
       }
       else
       {
@@ -8526,7 +8526,7 @@ static HB_ERRCODE hb_nsxOrderInfo(NSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_RELKEYPOS:
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC)
       {
-        auto dPos = hb_itemGetND(pInfo->itmNewVal);
+        auto dPos = pInfo->itmNewVal->getND();
         LPTAGINFO pSavedTag = pArea->lpCurTag;
         pArea->lpCurTag = nullptr;
         if (dPos >= 1.0)

@@ -8862,7 +8862,7 @@ static HB_ERRCODE hb_cdxOrderInfo(CDXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
   case DBOI_RELKEYPOS:
     if (pInfo->itmNewVal && pInfo->itmNewVal->isNumeric())
     {
-      hb_cdxDBOISetRelKeyPos(pArea, pTag, hb_itemGetND(pInfo->itmNewVal));
+      hb_cdxDBOISetRelKeyPos(pArea, pTag, pInfo->itmNewVal->getND());
     }
     else
     {
@@ -10507,7 +10507,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
           }
           else
           {
-            d = hb_itemGetND(pItem);
+            d = pItem->getND();
             HB_DBL2ORD(&d, &cTemp[0]);
             hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, cTemp, 8);
           }

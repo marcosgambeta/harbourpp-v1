@@ -2966,9 +2966,9 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         {
           double dVal;
 #if 0 // this version rounds double values to nearest integer
-          dVal = hb_numDecConv(hb_itemGetND(pItem), -static_cast<int>(pField->uiDec));
+          dVal = hb_numDecConv(pItem->getND(), -static_cast<int>(pField->uiDec));
 #else // this one truncates double value to integer dropping fractional part
-          dVal = hb_itemGetND(pItem);
+          dVal = pItem->getND();
           if (pField->uiDec)
           {
             dVal = hb_numDecConv(dVal, -static_cast<int>(pField->uiDec));
@@ -3037,12 +3037,12 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       }
       else if (pField->uiType == Harbour::DB::Field::DOUBLE)
       {
-        HB_PUT_LE_DOUBLE(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetND(pItem));
+        HB_PUT_LE_DOUBLE(pArea->pRecord + pArea->pFieldOffset[uiIndex], pItem->getND());
       }
       else if (pField->uiType == Harbour::DB::Field::ANY && pField->uiLen == 4)
       {
         HB_MAXINT lVal = hb_itemGetNInt(pItem);
-        if (pItem->isDouble() ? HB_DBL_LIM_INT32(hb_itemGetND(pItem)) : HB_LIM_INT32(lVal))
+        if (pItem->isDouble() ? HB_DBL_LIM_INT32(pItem->getND()) : HB_LIM_INT32(lVal))
         {
           HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], static_cast<HB_U32>(lVal));
         }

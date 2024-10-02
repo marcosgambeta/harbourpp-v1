@@ -7815,7 +7815,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_RELKEYPOS:
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC)
       {
-        hb_ntxOrdSetRelKeyPos(pTag, hb_itemGetND(pInfo->itmNewVal));
+        hb_ntxOrdSetRelKeyPos(pTag, pInfo->itmNewVal->getND());
       }
       else
       {
@@ -8156,7 +8156,7 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_RELKEYPOS:
       if (hb_itemType(pInfo->itmNewVal) & Harbour::Item::NUMERIC)
       {
-        auto dPos = hb_itemGetND(pInfo->itmNewVal);
+        auto dPos = pInfo->itmNewVal->getND();
         LPTAGINFO pSavedTag = pArea->lpCurTag;
         pArea->lpCurTag = nullptr;
         if (dPos >= 1.0)
