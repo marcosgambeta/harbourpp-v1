@@ -552,7 +552,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
     }
     break;
   case 'D':
-    d = static_cast<double>(hb_itemGetDL(pItem));
+    d = static_cast<double>(pItem->getDL());
     HB_DBL2ORD(&d, buf);
     nLen = 8;
     if (iMode == CDX_CMP_PREFIX && pTag->uiType == 'T')
@@ -563,7 +563,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
   case 'T':
     if (pTag->uiType == 'D')
     {
-      d = static_cast<double>(hb_itemGetDL(pItem));
+      d = static_cast<double>(pItem->getDL());
     }
     else
     {
@@ -10526,7 +10526,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
           break;
 
         case Harbour::Item::DATE:
-          d = static_cast<double>(hb_itemGetDL(pItem));
+          d = static_cast<double>(pItem->getDL());
           HB_DBL2ORD(&d, &cTemp[0]);
           hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, cTemp, 8);
           break;

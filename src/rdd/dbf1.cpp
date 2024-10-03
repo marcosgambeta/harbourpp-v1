@@ -2909,11 +2909,11 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       {
         if (pField->uiLen == 3)
         {
-          HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem));
+          HB_PUT_LE_UINT24(pArea->pRecord + pArea->pFieldOffset[uiIndex], pItem->getDL());
         }
         else if (pField->uiLen == 4)
         {
-          HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem));
+          HB_PUT_LE_UINT32(pArea->pRecord + pArea->pFieldOffset[uiIndex], pItem->getDL());
         }
         else
         {
@@ -2937,7 +2937,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
       }
       else if (pField->uiType == Harbour::DB::Field::ANY && pField->uiLen == 3)
       {
-        hb_sxDtoP(reinterpret_cast<char *>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], hb_itemGetDL(pItem));
+        hb_sxDtoP(reinterpret_cast<char *>(pArea->pRecord) + pArea->pFieldOffset[uiIndex], pItem->getDL());
       }
       else
       {

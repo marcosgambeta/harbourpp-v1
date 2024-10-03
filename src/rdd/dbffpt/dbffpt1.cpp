@@ -1317,7 +1317,7 @@ static void hb_fptStoreSMTItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPtr
   {
     HB_LONG lVal;
     *(*bBufPtr)++ = SMT_IT_DATE;
-    lVal = hb_itemGetDL(pItem);
+    lVal = pItem->getDL();
     HB_PUT_LE_UINT32(*bBufPtr, lVal);
     *bBufPtr += 4;
     break;
@@ -1712,7 +1712,7 @@ static HB_ULONG hb_fptStoreSixItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBu
   case Harbour::Item::DATE:
   case Harbour::Item::TIMESTAMP:
   {
-    HB_LONG lVal = hb_itemGetDL(pItem);
+    HB_LONG lVal = pItem->getDL();
     HB_PUT_LE_UINT16(&(*bBufPtr)[0], FPTIT_SIX_LDATE);
     HB_PUT_LE_UINT32(&(*bBufPtr)[6], lVal);
     *bBufPtr += SIX_ITEM_BUFSIZE;
@@ -1997,7 +1997,7 @@ static void hb_fptStoreFlexItem(FPTAREAP pArea, PHB_ITEM pItem, HB_BYTE **bBufPt
   {
     HB_LONG lVal;
     *(*bBufPtr)++ = FPTIT_FLEXAR_DATEJ;
-    lVal = hb_itemGetDL(pItem);
+    lVal = pItem->getDL();
     HB_PUT_LE_UINT32(*bBufPtr, lVal);
     *bBufPtr += 4;
     break;
@@ -3166,7 +3166,7 @@ static HB_ERRCODE hb_fptPutMemo(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIte
     case Harbour::Item::TIMESTAMP:
       ulType = FPTIT_FLEX_LDATE;
       ulSize = 4;
-      lVal = hb_itemGetDL(pItem);
+      lVal = pItem->getDL();
       HB_PUT_LE_UINT32(itmBuffer, lVal);
       bBufPtr = itmBuffer;
       break;
@@ -3774,7 +3774,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
       {
         return EDBF_DATATYPE;
       }
-      hb_sxDtoP(reinterpret_cast<char *>(pFieldBuf), hb_itemGetDL(pItem));
+      hb_sxDtoP(reinterpret_cast<char *>(pFieldBuf), pItem->getDL());
     }
     else if (pField->uiLen == 4)
     {
@@ -3833,7 +3833,7 @@ static HB_ERRCODE hb_fptPutVarField(FPTAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
 
       if (pItem->isDateTime())
       {
-        hb_sxDtoP(reinterpret_cast<char *>(pFieldBuf), hb_itemGetDL(pItem));
+        hb_sxDtoP(reinterpret_cast<char *>(pFieldBuf), pItem->getDL());
         uiType = HB_VF_DATE;
       }
       else if (pItem->isLogical())

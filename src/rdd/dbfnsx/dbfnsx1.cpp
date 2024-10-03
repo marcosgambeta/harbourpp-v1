@@ -744,7 +744,7 @@ static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     HB_DBL2ORD(&d, pKey->val);
     break;
   case 'D':
-    d = static_cast<double>(hb_itemGetDL(pItem));
+    d = static_cast<double>(pItem->getDL());
     HB_DBL2ORD(&d, pKey->val);
     if (puiLen && pTag->KeyType == 'T')
     {
@@ -754,7 +754,7 @@ static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
   case 'T':
     if (pTag->KeyType == 'D')
     {
-      d = static_cast<double>(hb_itemGetDL(pItem));
+      d = static_cast<double>(pItem->getDL());
     }
     else
     {
@@ -6663,7 +6663,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
           }
           else
           {
-            d = static_cast<double>(hb_itemGetDL(pItem));
+            d = static_cast<double>(pItem->getDL());
           }
           HB_DBL2ORD(&d, szBuffer);
           hb_nsxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, szBuffer, 8);
