@@ -1639,7 +1639,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_PLUSEQ: {
+    case HB_P_PLUSEQ:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       auto pValue = hb_stackItemFromTop(-1);
       hb_vmPlus(pResult, pResult, pValue);
@@ -1650,7 +1651,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_PLUSEQPOP: {
+    case HB_P_PLUSEQPOP:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       hb_vmPlus(pResult, pResult, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -1665,7 +1667,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_MINUSEQ: {
+    case HB_P_MINUSEQ:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       auto pValue = hb_stackItemFromTop(-1);
       hb_vmMinus(pResult, pResult, pValue);
@@ -1676,7 +1679,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MINUSEQPOP: {
+    case HB_P_MINUSEQPOP:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       hb_vmMinus(pResult, pResult, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -1691,7 +1695,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_MULTEQ: {
+    case HB_P_MULTEQ:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       auto pValue = hb_stackItemFromTop(-1);
       hb_vmMult(pResult, pResult, pValue);
@@ -1702,7 +1707,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MULTEQPOP: {
+    case HB_P_MULTEQPOP:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       hb_vmMult(pResult, pResult, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -1717,7 +1723,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_DIVEQ: {
+    case HB_P_DIVEQ:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       auto pValue = hb_stackItemFromTop(-1);
       hb_vmDivide(pResult, pResult, pValue);
@@ -1728,7 +1735,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_DIVEQPOP: {
+    case HB_P_DIVEQPOP:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       hb_vmDivide(pResult, pResult, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -1743,7 +1751,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_MODEQ: {
+    case HB_P_MODEQ:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       auto pValue = hb_stackItemFromTop(-1);
       hb_vmModulus(pResult, pResult, pValue);
@@ -1754,7 +1763,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MODEQPOP: {
+    case HB_P_MODEQPOP:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       hb_vmModulus(pResult, pResult, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -1769,7 +1779,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_EXPEQ: {
+    case HB_P_EXPEQ:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       auto pValue = hb_stackItemFromTop(-1);
       hb_vmPower(pResult, pResult, pValue);
@@ -1780,7 +1791,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_EXPEQPOP: {
+    case HB_P_EXPEQPOP:
+    {
       auto pResult = hb_itemUnRef(hb_stackItemFromTop(-2));
       hb_vmPower(pResult, pResult, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -1794,7 +1806,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_INCEQ: {
+    case HB_P_INCEQ:
+    {
       auto pResult = hb_stackItemFromTop(-1);
       auto pValue = hb_itemUnRef(pResult);
       hb_vmInc(pValue);
@@ -1817,7 +1830,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_DECEQ: {
+    case HB_P_DECEQ:
+    {
       auto pResult = hb_stackItemFromTop(-1);
       auto pValue = hb_itemUnRef(pResult);
       hb_vmDec(pValue);
@@ -2088,7 +2102,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += 5;
       break;
 
-    case HB_P_THREADSTATICS: {
+    case HB_P_THREADSTATICS:
+    {
       HB_USHORT uiCount = HB_PCODE_MKUSHORT(&pCode[1]);
       hb_vmInitThreadStatics(uiCount, &pCode[3]);
       pCode += 3 + (static_cast<HB_ULONG>(uiCount) << 1);
@@ -2162,7 +2177,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_SEQALWAYS: {
+    case HB_P_SEQALWAYS:
+    {
       /*
        * Create the SEQUENCE envelope
        * [ break return value ]  -2
@@ -2223,7 +2239,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += 4;
       break;
 
-    case HB_P_ALWAYSEND: {
+    case HB_P_ALWAYSEND:
+    {
 #if defined(_HB_RECOVER_DEBUG)
       if (hb_stackItemFromTop(HB_RECOVER_STATE)->type != Harbour::Item::RECOVER)
       {
@@ -2271,7 +2288,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_SEQBEGIN: {
+    case HB_P_SEQBEGIN:
+    {
       /*
        * Create the SEQUENCE envelope
        * [ break return value ]  -2
@@ -2446,7 +2464,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
       /* Push */
 
-    case HB_P_TRUE: {
+    case HB_P_TRUE:
+    {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::LOGICAL);
       pItem->setLogicalValue(true);
@@ -2454,7 +2473,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_FALSE: {
+    case HB_P_FALSE:
+    {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::LOGICAL);
       pItem->setLogicalValue(false);
@@ -2462,7 +2482,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_ONE: {
+    case HB_P_ONE:
+    {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
       pItem->setIntegerValue(1);
@@ -2474,7 +2495,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_ZERO: {
+    case HB_P_ZERO:
+    {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
       pItem->setIntegerValue(0);
@@ -2494,7 +2516,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode++;
       break;
 
-    case HB_P_PUSHBYTE: {
+    case HB_P_PUSHBYTE:
+    {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
       pItem->setIntegerValue(static_cast<signed char>(pCode[1]));
@@ -2506,7 +2529,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_PUSHINT: {
+    case HB_P_PUSHINT:
+    {
       auto pItem = hb_stackAllocItem();
       pItem->setType(Harbour::Item::INTEGER);
       pItem->setIntegerValue(HB_PCODE_MKSHORT(&pCode[1]));
@@ -2561,7 +2585,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += 2 + pCode[1];
       break;
 
-    case HB_P_PUSHSTR: {
+    case HB_P_PUSHSTR:
+    {
       HB_USHORT uiSize = HB_PCODE_MKUSHORT(&pCode[1]);
       if (bDynCode)
       {
@@ -2575,7 +2600,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_PUSHSTRLARGE: {
+    case HB_P_PUSHSTRLARGE:
+    {
       HB_SIZE nSize = HB_PCODE_MKUINT24(&pCode[1]);
       if (bDynCode)
       {
@@ -2589,7 +2615,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_PUSHSTRHIDDEN: {
+    case HB_P_PUSHSTRHIDDEN:
+    {
       auto nSize = static_cast<HB_SIZE>(HB_PCODE_MKUSHORT(&pCode[2]));
       char *szText = hb_compDecodeString(pCode[1], reinterpret_cast<const char *>(pCode) + 4, &nSize);
       hb_itemPutCLPtr(hb_stackAllocItem(), szText, nSize);
@@ -2597,7 +2624,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_PUSHDATE: {
+    case HB_P_PUSHDATE:
+    {
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHDATE)"));
 #endif
@@ -2609,7 +2637,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_PUSHTIMESTAMP: {
+    case HB_P_PUSHTIMESTAMP:
+    {
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("(HB_P_PUSHTIMESTAMP)"));
 #endif
@@ -2621,7 +2650,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_PUSHBLOCK: {
+    case HB_P_PUSHBLOCK:
+    {
       /* +0    -> _pushblock
        * +1 +2 -> size of codeblock
        * +3 +4 -> number of expected parameters
@@ -2633,7 +2663,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += nSize;
       break;
     }
-    case HB_P_PUSHBLOCKLARGE: {
+    case HB_P_PUSHBLOCKLARGE:
+    {
       /* +0       -> _pushblock
        * +1 +2 +3 -> size of codeblock
        * +4 +5    -> number of expected parameters
@@ -2645,7 +2676,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += nSize;
       break;
     }
-    case HB_P_PUSHBLOCKSHORT: {
+    case HB_P_PUSHBLOCKSHORT:
+    {
       /* +0    -> _pushblock
        * +1    -> size of codeblock
        */
@@ -2847,7 +2879,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += 3;
       break;
 
-    case HB_P_POPVARIABLE: {
+    case HB_P_POPVARIABLE:
+    {
       /*
          2004-03-19 Ron Pinkas
          Test with Clipper shows that for assignment, MEMVAR context
@@ -2958,7 +2991,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       pCode += 2;
       break;
 
-    case HB_P_MACROPUSHREF: {
+    case HB_P_MACROPUSHREF:
+    {
       auto pMacro = hb_stackItemFromTop(-1);
       hb_macroPushReference(pMacro);
       pCode++;
@@ -2981,28 +3015,32 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
       /* macro compiled opcodes - we are using symbol address here */
 
-    case HB_P_MMESSAGE: {
+    case HB_P_MMESSAGE:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_vmPushSymbol(pDynSym->pSymbol);
       pCode += sizeof(PHB_DYNS) + 1;
       break;
     }
 
-    case HB_P_MPOPALIASEDFIELD: {
+    case HB_P_MPOPALIASEDFIELD:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_vmPopAliasedField(pDynSym->pSymbol);
       pCode += sizeof(PHB_DYNS) + 1;
       break;
     }
 
-    case HB_P_MPOPALIASEDVAR: {
+    case HB_P_MPOPALIASEDVAR:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_vmPopAliasedVar(pDynSym->pSymbol);
       pCode += sizeof(PHB_DYNS) + 1;
       break;
     }
 
-    case HB_P_MPOPFIELD: {
+    case HB_P_MPOPFIELD:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       /* Pops a value from the eval stack and uses it to set
        * a new value of the given field
@@ -3016,7 +3054,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MPOPMEMVAR: {
+    case HB_P_MPOPMEMVAR:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_memvarSetValue(pDynSym->pSymbol, hb_stackItemFromTop(-1));
       hb_stackPop();
@@ -3027,21 +3066,24 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MPUSHALIASEDFIELD: {
+    case HB_P_MPUSHALIASEDFIELD:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_vmPushAliasedField(pDynSym->pSymbol);
       pCode += sizeof(PHB_DYNS) + 1;
       break;
     }
 
-    case HB_P_MPUSHALIASEDVAR: {
+    case HB_P_MPUSHALIASEDVAR:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_vmPushAliasedVar(pDynSym->pSymbol);
       pCode += sizeof(PHB_DYNS) + 1;
       break;
     }
 
-    case HB_P_MPUSHBLOCK: {
+    case HB_P_MPUSHBLOCK:
+    {
       /*NOTE: the pcode is stored in dynamically allocated memory
        * We need to handle it with more care than compile-time
        * codeblocks
@@ -3057,7 +3099,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MPUSHBLOCKLARGE: {
+    case HB_P_MPUSHBLOCKLARGE:
+    {
       /*NOTE: the pcode is stored in dynamically allocated memory
        * We need to handle it with more care than compile-time
        * codeblocks
@@ -3073,7 +3116,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MPUSHFIELD: {
+    case HB_P_MPUSHFIELD:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       /* It pushes the current value of the given field onto the eval stack
        */
@@ -3085,7 +3129,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MPUSHMEMVAR: {
+    case HB_P_MPUSHMEMVAR:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_memvarGetValue(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
@@ -3095,7 +3140,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MPUSHMEMVARREF: {
+    case HB_P_MPUSHMEMVARREF:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_memvarGetRefer(hb_stackAllocItem(), pDynSym->pSymbol);
 #if 0
@@ -3105,35 +3151,40 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_MPUSHSYM: {
+    case HB_P_MPUSHSYM:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_vmPushSymbol(pDynSym->pSymbol);
       pCode += sizeof(PHB_DYNS) + 1;
       break;
     }
 
-    case HB_P_MPUSHVARIABLE: {
+    case HB_P_MPUSHVARIABLE:
+    {
       auto pDynSym = static_cast<PHB_DYNS>(HB_GET_PTR(pCode + 1));
       hb_vmPushVariable(pDynSym->pSymbol);
       pCode += sizeof(PHB_DYNS) + 1;
       break;
     }
 
-    case HB_P_MPUSHSTR: {
+    case HB_P_MPUSHSTR:
+    {
       HB_USHORT uiSize = HB_PCODE_MKUSHORT(&pCode[1]);
       hb_vmPushString(reinterpret_cast<const char *>(pCode + 3), uiSize - 1);
       pCode += 3 + uiSize;
       break;
     }
 
-    case HB_P_MPUSHSTRLARGE: {
+    case HB_P_MPUSHSTRLARGE:
+    {
       HB_SIZE nSize = HB_PCODE_MKUINT24(&pCode[1]);
       hb_vmPushString(reinterpret_cast<const char *>(pCode + 3), nSize - 1);
       pCode += 4 + nSize;
       break;
     }
 
-    case HB_P_LOCALNEARADDINT: {
+    case HB_P_LOCALNEARADDINT:
+    {
       int iLocal = pCode[1];
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("HB_P_LOCALNEARADDINT"));
@@ -3144,7 +3195,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_LOCALADDINT: {
+    case HB_P_LOCALADDINT:
+    {
       int iLocal = HB_PCODE_MKUSHORT(&pCode[1]);
 #if 0
             HB_TRACE(HB_TR_DEBUG, ("HB_P_LOCALADDINT"));
@@ -3155,7 +3207,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_LOCALINC: {
+    case HB_P_LOCALINC:
+    {
       int iLocal = HB_PCODE_MKUSHORT(&pCode[1]);
       PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
       hb_vmInc(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
@@ -3163,7 +3216,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_LOCALDEC: {
+    case HB_P_LOCALDEC:
+    {
       int iLocal = HB_PCODE_MKUSHORT(&pCode[1]);
       PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
       hb_vmDec(pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
@@ -3171,7 +3225,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
       break;
     }
 
-    case HB_P_LOCALINCPUSH: {
+    case HB_P_LOCALINCPUSH:
+    {
       int iLocal = HB_PCODE_MKUSHORT(&pCode[1]);
       PHB_ITEM pLocal = hb_stackLocalVariable(iLocal);
       if (pLocal->isByRef())
@@ -3186,7 +3241,8 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
       /* WITH OBJECT */
 
-    case HB_P_WITHOBJECTMESSAGE: {
+    case HB_P_WITHOBJECTMESSAGE:
+    {
       HB_USHORT wSymPos = HB_PCODE_MKUSHORT(&pCode[1]);
       if (wSymPos != 0xFFFF)
       {
@@ -6265,7 +6321,8 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
       pAlias->setType(Harbour::Item::NIL);
       break;
 
-    case Harbour::Item::STRING: {
+    case Harbour::Item::STRING:
+    {
       /* Alias was evaluated from an expression, for example: (cVar)->field
        */
       /* expand '&' operator if exists */

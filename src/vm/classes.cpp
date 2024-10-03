@@ -3342,7 +3342,8 @@ static bool hb_clsAddMsg(HB_USHORT uiClass, const char *szMessage, HB_USHORT uiT
       fOK = uiIndex != 0;
       break;
 
-    case HB_OO_MSG_DELEGATE: {
+    case HB_OO_MSG_DELEGATE:
+    {
       PHB_DYNS pDelegMsg = hb_objGetMsgSym(pFunction);
       if (pDelegMsg)
       {

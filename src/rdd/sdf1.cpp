@@ -479,7 +479,8 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
     hb_itemPutDS(pItem, reinterpret_cast<const char *>(pArea->pRecord) + pArea->pFieldOffset[uiIndex]);
     break;
 
-  case Harbour::DB::Field::TIMESTAMP: {
+  case Harbour::DB::Field::TIMESTAMP:
+  {
     long lJulian, lMilliSec;
     HB_BYTE *pFieldPtr = pArea->pRecord + pArea->pFieldOffset[uiIndex], bChar;
 
@@ -491,7 +492,8 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
     break;
   }
 
-  case Harbour::DB::Field::LONG: {
+  case Harbour::DB::Field::LONG:
+  {
     HB_MAXINT lVal;
     double dVal;
     auto fDbl = false;
@@ -523,7 +525,8 @@ static HB_ERRCODE hb_sdfGetValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
     hb_itemClear(pItem);
     break;
 
-  default: {
+  default:
+  {
     PHB_ITEM pError = hb_errNew();
     hb_errPutGenCode(pError, EG_DATATYPE);
     hb_errPutDescription(pError, hb_langDGetErrorDesc(EG_DATATYPE));
@@ -860,7 +863,8 @@ static HB_ERRCODE hb_sdfInfo(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     break;
 
   case DBI_DB_VERSION:
-  case DBI_RDD_VERSION: {
+  case DBI_RDD_VERSION:
+  {
     char szBuf[64];
     int iSub = hb_itemGetNI(pItem);
 

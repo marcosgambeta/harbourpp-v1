@@ -579,7 +579,8 @@ static HB_ERRCODE hb_waFieldInfo(AREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTyp
     hb_itemPutC(pItem, hb_dynsymName(static_cast<PHB_DYNS>(pField->sym)));
     break;
 
-  case DBS_TYPE: {
+  case DBS_TYPE:
+  {
     HB_USHORT uiFlags = 0;
     char szType[8];
     char cType;
@@ -855,7 +856,8 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     hb_arrayNew(pItem, 0);
     break;
 
-  case DBI_CHILDCOUNT: {
+  case DBI_CHILDCOUNT:
+  {
     LPDBRELINFO lpdbRelations = pArea->lpdbRelations;
     HB_USHORT uiCount = 0;
     while (lpdbRelations)
@@ -894,7 +896,8 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     hb_itemPutNI(pItem, pArea->uiFieldCount);
     break;
 
-  case DBI_ALIAS: {
+  case DBI_ALIAS:
+  {
     char szAlias[HB_RDD_MAX_ALIAS_LEN + 1];
     if (SELF_ALIAS(pArea, szAlias) != Harbour::SUCCESS)
     {
@@ -904,12 +907,14 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     break;
   }
 
-  case DBI_TABLEEXT: {
+  case DBI_TABLEEXT:
+  {
     LPRDDNODE pNode = SELF_RDDNODE(pArea);
     hb_itemClear(pItem);
     return pNode ? SELF_RDDINFO(pNode, RDDI_TABLEEXT, 0, pItem) : Harbour::FAILURE;
   }
-  case DBI_SCOPEDRELATION: {
+  case DBI_SCOPEDRELATION:
+  {
     int iRelNo = hb_itemGetNI(pItem);
     auto fScoped = false;
 
@@ -929,7 +934,8 @@ static HB_ERRCODE hb_waInfo(AREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     hb_itemPutL(pItem, fScoped);
     break;
   }
-  case DBI_POSITIONED: {
+  case DBI_POSITIONED:
+  {
     HB_ULONG ulRecCount, ulRecNo;
     if (SELF_RECNO(pArea, &ulRecNo) != Harbour::SUCCESS)
     {
@@ -2115,7 +2121,8 @@ static HB_ERRCODE hb_waRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCon
     }
     hb_itemPutNI(pItem, iResult);
     break;
-  case RDDI_MEMOEXT: {
+  case RDDI_MEMOEXT:
+  {
     const char *szExt = hb_setGetMFileExt();
     char *szResult = szExt ? hb_strdup(szExt) : nullptr;
     if (hb_itemType(pItem) & Harbour::Item::STRING)

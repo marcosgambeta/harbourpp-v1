@@ -364,7 +364,8 @@ static bool hb_regex(int iRequest)
       fResult = true;
       break;
 
-    case 5: { /* _ALL_ results AND positions */
+    case 5:
+    { /* _ALL_ results AND positions */
       PHB_ITEM pAtxArray;
       auto iMax = hb_parni(5);               /* max nuber of matches I want, 0 = unlimited */
       auto iGetMatch = hb_parni(6);          /* Gets if want only one single match or a sub-match */

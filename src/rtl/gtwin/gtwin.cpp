@@ -2018,7 +2018,8 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 #endif
     break;
 
-  case HB_GTI_CODEPAGE: {
+  case HB_GTI_CODEPAGE:
+  {
     UINT uiCodePage = GetConsoleCP();
     UINT uiCodePageNew = hb_itemGetNI(pInfo->pNewVal);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, uiCodePage);
@@ -2030,7 +2031,8 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     break;
   }
 
-  case HB_GTI_WINTITLE: {
+  case HB_GTI_WINTITLE:
+  {
     TCHAR buff[256];
 
     DWORD dwLen = GetConsoleTitle(buff, HB_SIZEOFARRAY(buff));
@@ -2135,14 +2137,16 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 
   case HB_GTI_DESKTOPROWS:
   case HB_GTI_DESKTOPHEIGHT:
-  case HB_GTI_VIEWMAXHEIGHT: {
+  case HB_GTI_VIEWMAXHEIGHT:
+  {
     COORD coBuf = GetLargestConsoleWindowSize(s_HOutput);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, coBuf.Y - 1);
     break;
   }
   case HB_GTI_DESKTOPCOLS:
   case HB_GTI_DESKTOPWIDTH:
-  case HB_GTI_VIEWMAXWIDTH: {
+  case HB_GTI_VIEWMAXWIDTH:
+  {
     COORD coBuf = GetLargestConsoleWindowSize(s_HOutput);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, coBuf.X - 1);
     break;

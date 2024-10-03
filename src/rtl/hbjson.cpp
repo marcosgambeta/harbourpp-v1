@@ -470,7 +470,8 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, PHB_COD
         case 't':
           *szHead++ = '\t';
           break;
-        case 'u': {
+        case 'u':
+        {
           HB_WCHAR wc = 0;
 
           for (auto i = 0; i < 4; i++)

@@ -7605,7 +7605,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     pInfo->itmResult = hb_itemPutL(pInfo->itmResult, pArea->pSort ? pArea->pSort->fReindex : false);
     return Harbour::SUCCESS;
   case DBOI_LOCKOFFSET:
-  case DBOI_HPLOCKING: {
+  case DBOI_HPLOCKING:
+  {
     HB_DBFLOCKDATA lockData;
 
     hb_dbfLockIdxGetData(pArea->dbfarea.bLockType, &lockData);
@@ -7619,7 +7620,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     }
     return Harbour::SUCCESS;
   }
-  case DBOI_ORDERCOUNT: {
+  case DBOI_ORDERCOUNT:
+  {
     int i;
 
     if (hb_itemGetCLen(pInfo->atomBagName) > 0)
@@ -7635,7 +7637,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
     return Harbour::SUCCESS;
   }
-  case DBOI_BAGCOUNT: {
+  case DBOI_BAGCOUNT:
+  {
     int i = 0;
     LPNTXINDEX pIndex = pArea->lpIndexes;
     while (pIndex)
@@ -7646,7 +7649,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, i);
     return Harbour::SUCCESS;
   }
-  case DBOI_BAGNUMBER: {
+  case DBOI_BAGNUMBER:
+  {
     LPNTXINDEX pIndex = pArea->lpIndexes, pIndexSeek = nullptr;
     int i = 0;
 
@@ -7674,7 +7678,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     pInfo->itmResult = hb_itemPutNI(pInfo->itmResult, pIndex ? i : 0);
     return Harbour::SUCCESS;
   }
-  case DBOI_BAGORDER: {
+  case DBOI_BAGORDER:
+  {
     LPNTXINDEX pIndex = pArea->lpIndexes, pIndexSeek = nullptr;
     int i = 0;
 
@@ -7777,7 +7782,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     case DBOI_EXPRESSION:
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pTag->KeyExpr);
       break;
-    case DBOI_BAGNAME: {
+    case DBOI_BAGNAME:
+    {
       PHB_FNAME pFileName = hb_fsFNameSplit(pTag->pIndex->IndexName);
       pInfo->itmResult = hb_itemPutC(pInfo->itmResult, pFileName->szName);
       hb_xfree(pFileName);
@@ -7994,7 +8000,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
         return Harbour::FAILURE;
       }
       break;
-    case DBOI_KEYTYPE: {
+    case DBOI_KEYTYPE:
+    {
       char szType[2];
       szType[0] = static_cast<char>(pTag->KeyType);
       szType[1] = 0;
@@ -8135,7 +8142,8 @@ static HB_ERRCODE hb_ntxOrderInfo(NTXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
     switch (uiIndex)
     {
     case DBOI_KEYCOUNT:
-    case DBOI_KEYCOUNTRAW: {
+    case DBOI_KEYCOUNTRAW:
+    {
       HB_ULONG ulRecCount = 0;
       SELF_RECCOUNT(&pArea->dbfarea.area, &ulRecCount);
       hb_itemPutNInt(pInfo->itmResult, ulRecCount);
@@ -8603,7 +8611,8 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
   {
   case RDDI_ORDBAGEXT:
   case RDDI_ORDEREXT:
-  case RDDI_ORDSTRUCTEXT: {
+  case RDDI_ORDSTRUCTEXT:
+  {
     auto szNew = hb_itemGetCPtr(pItem);
     char *szNewVal;
 
@@ -8617,7 +8626,8 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
 
-  case RDDI_MULTITAG: {
+  case RDDI_MULTITAG:
+  {
 #if defined(HB_NTX_NOMULTITAG)
     hb_itemPutL(pItem, false);
 #else
@@ -8631,7 +8641,8 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
 
-  case RDDI_SORTRECNO: {
+  case RDDI_SORTRECNO:
+  {
     bool fSortRecNo = pData->fSortRecNo;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
@@ -8641,7 +8652,8 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
 
-  case RDDI_STRUCTORD: {
+  case RDDI_STRUCTORD:
+  {
     bool fStruct = pData->fStruct;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
@@ -8651,7 +8663,8 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
 
-  case RDDI_STRICTSTRUCT: {
+  case RDDI_STRICTSTRUCT:
+  {
     bool fStrictStruct = pData->fStrictStruct;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {
@@ -8661,7 +8674,8 @@ static HB_ERRCODE hb_ntxRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     break;
   }
 
-  case RDDI_MULTIKEY: {
+  case RDDI_MULTIKEY:
+  {
     bool fMultiKey = pData->fMultiKey;
     if (hb_itemType(pItem) & Harbour::Item::LOGICAL)
     {

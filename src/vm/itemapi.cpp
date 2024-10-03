@@ -3664,7 +3664,8 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     *bFreeReq = false;
     break;
 
-  case Harbour::Item::DATE: {
+  case Harbour::Item::DATE:
+  {
     HB_STACK_TLS_PRELOAD
     char szDate[9];
 
@@ -3677,7 +3678,8 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     break;
   }
 
-  case Harbour::Item::TIMESTAMP: {
+  case Harbour::Item::TIMESTAMP:
+  {
     HB_STACK_TLS_PRELOAD
     char szDateTime[27];
 
@@ -3692,7 +3694,8 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
 
   case Harbour::Item::DOUBLE:
   case Harbour::Item::INTEGER:
-  case Harbour::Item::LONG: {
+  case Harbour::Item::LONG:
+  {
     HB_STACK_TLS_PRELOAD
     if (hb_stackSetStruct()->HB_SET_FIXED)
     {
@@ -3741,7 +3744,8 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
     buffer[*nLen] = '\0';
     break;
 
-  case Harbour::Item::POINTER: {
+  case Harbour::Item::POINTER:
+  {
     int size = (sizeof(void *) << 1) + 3; // n bytes for address + 0x + \0
     auto addr = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pItem));
 
@@ -3790,7 +3794,8 @@ char *hb_itemPadConv(PHB_ITEM pItem, HB_SIZE *pnSize, HB_BOOL *bFreeReq)
 
     case Harbour::Item::DOUBLE:
     case Harbour::Item::INTEGER:
-    case Harbour::Item::LONG: {
+    case Harbour::Item::LONG:
+    {
       int i;
       char *buffer = hb_itemString(pItem, pnSize, bFreeReq);
 

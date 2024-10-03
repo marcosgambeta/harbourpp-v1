@@ -363,7 +363,8 @@ static void hb_dbfUpdateStampFields(DBFAREAP pArea)
   {
     switch (pField->uiType)
     {
-    case Harbour::DB::Field::MODTIME: {
+    case Harbour::DB::Field::MODTIME:
+    {
       HB_BYTE *pPtr = pArea->pRecord + pArea->pFieldOffset[uiCount];
       if (!pArea->fTransRec || HB_GET_LE_UINT64(pPtr) == 0)
       {
@@ -377,7 +378,8 @@ static void hb_dbfUpdateStampFields(DBFAREAP pArea)
       }
       break;
     }
-    case Harbour::DB::Field::ROWVER: {
+    case Harbour::DB::Field::ROWVER:
+    {
       HB_BYTE *pPtr = pArea->pRecord + pArea->pFieldOffset[uiCount];
       if (!pArea->fTransRec || HB_GET_LE_UINT64(pPtr) == 0)
       {
@@ -2481,7 +2483,8 @@ static HB_ERRCODE hb_dbfGetValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
                     20 - (pField->uiDec > 0 ? (pField->uiDec + 1) : 0), static_cast<int>(pField->uiDec));
     break;
 
-  case Harbour::DB::Field::LONG: {
+  case Harbour::DB::Field::LONG:
+  {
     HB_MAXINT lVal;
     HB_BOOL fDbl;
 
@@ -3977,7 +3980,8 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
                               : static_cast<HB_MAXINT>(static_cast<HB_NHANDLE>(hb_fileHandle(pArea->pMemoFile))));
     break;
 
-  case DBI_TRANSREC: {
+  case DBI_TRANSREC:
+  {
     bool fTransRec = pArea->fTransRec;
 
     if (pItem->isLogical())
@@ -4002,7 +4006,8 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     hb_itemPutL(pItem, fTransRec);
     break;
   }
-  case DBI_SHARED: {
+  case DBI_SHARED:
+  {
     bool fShared = pArea->fShared;
 
     if (pItem->isLogical())
@@ -4057,7 +4062,8 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     hb_itemPutNL(pItem, pArea->ulNumLocksPos);
     break;
 
-  case DBI_LOCKOFFSET: {
+  case DBI_LOCKOFFSET:
+  {
     HB_FOFFSET nPos, nFlSize, nRlSize;
     int iDir;
 
@@ -4077,7 +4083,8 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     }
     break;
 
-  case DBI_LOCKSCHEME: {
+  case DBI_LOCKSCHEME:
+  {
     int iScheme = hb_itemGetNI(pItem);
     if (pArea->bLockType)
     {
@@ -4102,7 +4109,8 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     }
     break;
   }
-  case DBI_SETHEADER: {
+  case DBI_SETHEADER:
+  {
     HB_UINT uiSetHeader = pArea->uiSetHeader;
 
     if (pItem->isNumeric())
@@ -4155,7 +4163,8 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     hb_itemPutPtr(pItem, pArea->lpdbOpenInfo);
     break;
 
-  case DBI_DIRTYREAD: {
+  case DBI_DIRTYREAD:
+  {
     bool fDirty = HB_DIRTYREAD(pArea);
 
     if (pItem->isLogical())
@@ -4171,7 +4180,8 @@ static HB_ERRCODE hb_dbfInfo(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
     break;
   }
   case DBI_DB_VERSION:
-  case DBI_RDD_VERSION: {
+  case DBI_RDD_VERSION:
+  {
     char szBuf[64];
     int iSub = hb_itemGetNI(pItem);
 
@@ -4378,7 +4388,8 @@ static HB_ERRCODE hb_dbfRecInfo(DBFAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInf
     break;
 
   case DBRI_RAWMEMOS:
-  case DBRI_RAWDATA: {
+  case DBRI_RAWDATA:
+  {
     HB_SIZE nLength;
 
     if (!pArea->fValidBuffer && !hb_dbfReadRecord(pArea))
@@ -7344,7 +7355,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     hb_itemPutL(pItem, true);
     break;
 
-  case RDDI_TABLEEXT: {
+  case RDDI_TABLEEXT:
+  {
     auto szNew = hb_itemGetCPtr(pItem);
     char *szNewVal;
 
@@ -7357,7 +7369,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     }
     break;
   }
-  case RDDI_TABLETYPE: {
+  case RDDI_TABLETYPE:
+  {
     int iType = hb_itemGetNI(pItem);
     hb_itemPutNI(pItem, pData->bTableType ? pData->bTableType : DB_DBF_STD);
     switch (iType)
@@ -7368,7 +7381,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     }
     break;
   }
-  case RDDI_LOCKSCHEME: {
+  case RDDI_LOCKSCHEME:
+  {
     int iScheme = hb_itemGetNI(pItem);
 
     hb_itemPutNI(pItem, pData->bLockType ? pData->bLockType : hb_setGetDBFLockScheme());
@@ -7386,7 +7400,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     }
     break;
   }
-  case RDDI_SETHEADER: {
+  case RDDI_SETHEADER:
+  {
     HB_USHORT uiSetHeader = pData->uiSetHeader;
 
     if (pItem->isNumeric())
@@ -7400,7 +7415,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     hb_itemPutNI(pItem, uiSetHeader);
     break;
   }
-  case RDDI_DIRTYREAD: {
+  case RDDI_DIRTYREAD:
+  {
     bool fDirty = (pData->uiDirtyRead == HB_IDXREAD_DIRTYMASK);
     if (pItem->isLogical())
     {
@@ -7409,7 +7425,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     hb_itemPutL(pItem, fDirty);
     break;
   }
-  case RDDI_INDEXPAGESIZE: {
+  case RDDI_INDEXPAGESIZE:
+  {
     int iPageSize = hb_itemGetNI(pItem);
 
     hb_itemPutNI(pItem, pData->uiIndexPageSize);
@@ -7419,7 +7436,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     }
     break;
   }
-  case RDDI_DECIMALS: {
+  case RDDI_DECIMALS:
+  {
     int iDecimals = pItem->isNumeric() ? pItem->getNI() : -1;
 
     hb_itemPutNI(pItem, pData->bDecimals);
@@ -7429,7 +7447,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     }
     break;
   }
-  case RDDI_TRIGGER: {
+  case RDDI_TRIGGER:
+  {
     char *szTrigger = pData->szTrigger;
     auto fFree = false;
 
@@ -7479,7 +7498,8 @@ static HB_ERRCODE hb_dbfRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulCo
     }
     break;
 
-  case RDDI_PASSWORD: {
+  case RDDI_PASSWORD:
+  {
     char *szPasswd = pData->szPasswd;
     auto fFree = false;
 

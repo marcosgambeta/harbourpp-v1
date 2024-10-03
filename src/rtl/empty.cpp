@@ -81,7 +81,8 @@ HB_FUNC(EMPTY)
     hb_retl(hb_itemGetDL(pItem) == 0);
     break;
 
-  case Harbour::Item::TIMESTAMP: {
+  case Harbour::Item::TIMESTAMP:
+  {
     long lDate, lTime;
     hb_itemGetTDT(pItem, &lDate, &lTime);
     hb_retl(lDate == 0 && lTime == 0);
@@ -100,7 +101,8 @@ HB_FUNC(EMPTY)
     hb_retl(hb_itemGetPtr(pItem) == nullptr);
     break;
 
-  case Harbour::Item::SYMBOL: {
+  case Harbour::Item::SYMBOL:
+  {
     PHB_SYMB pSym = hb_itemGetSymbol(pItem);
     if (pSym && (pSym->scope.value & HB_FS_DEFERRED) && pSym->pDynSym)
     {

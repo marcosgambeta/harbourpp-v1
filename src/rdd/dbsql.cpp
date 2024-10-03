@@ -138,7 +138,8 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
   switch (hb_itemType(pValue))
   {
   case Harbour::Item::STRING:
-  case Harbour::Item::MEMO: {
+  case Harbour::Item::MEMO:
+  {
     auto nLen = pValue->getCLen();
     HB_SIZE nCnt = 0;
     auto szVal = pValue->getCPtr();
@@ -171,7 +172,8 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
     break;
   }
 
-  case Harbour::Item::DATE: {
+  case Harbour::Item::DATE:
+  {
     char szDate[9];
 
     hb_addStrToFBuffer(pFileBuf, szDelim);
@@ -192,7 +194,8 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
     break;
   }
 
-  case Harbour::Item::TIMESTAMP: {
+  case Harbour::Item::TIMESTAMP:
+  {
     long lDate, lTime;
     char szDateTime[24];
 
@@ -212,7 +215,8 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
 
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG:
-  case Harbour::Item::DOUBLE: {
+  case Harbour::Item::DOUBLE:
+  {
     char szResult[HB_MAX_DOUBLE_LENGTH];
     int iSize, iWidth, iDec;
 

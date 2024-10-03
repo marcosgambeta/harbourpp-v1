@@ -1356,7 +1356,8 @@ static bool hb_gt_xwc_DefineBoxChar(PXWND_DEF wnd, HB_USHORT usCh, XWC_CharTrans
     {
     case HB_BOXCH_FILLER1:
     case HB_BOXCH_FILLER2:
-    case HB_BOXCH_FILLER3: {
+    case HB_BOXCH_FILLER3:
+    {
       int skip, start, mod;
 
       if (usCh == HB_BOXCH_FILLER1)
@@ -3177,7 +3178,8 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
     break;
 
   case ButtonPress:
-  case ButtonRelease: {
+  case ButtonRelease:
+  {
     int button = evt->xbutton.button - 1;
 
 #ifdef XWC_DEBUG
@@ -3345,7 +3347,8 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
     }
     break;
 
-  case SelectionNotify: {
+  case SelectionNotify:
+  {
     Atom aNextRequest = None;
 #ifdef XWC_DEBUG
     printf("Event: SelectionNotify: selection=%ld (%s), property=%ld (%s), target=%ld (%s) => %ld (%s)\n",
@@ -3457,7 +3460,8 @@ static void hb_gt_xwc_WndProc(PXWND_DEF wnd, XEvent *evt)
     break;
   }
 
-  case SelectionRequest: {
+  case SelectionRequest:
+  {
     XSelectionRequestEvent *req = &evt->xselectionrequest;
     XEvent respond;
 
@@ -5492,7 +5496,8 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   case HB_GTI_DESKTOPWIDTH:
   case HB_GTI_DESKTOPHEIGHT:
   case HB_GTI_DESKTOPCOLS:
-  case HB_GTI_DESKTOPROWS: {
+  case HB_GTI_DESKTOPROWS:
+  {
     XWindowAttributes wndAttr;
     HB_XWC_XLIB_LOCK(wnd->dpy);
     XGetWindowAttributes(wnd->dpy, DefaultRootWindow(wnd->dpy), &wndAttr);
@@ -5647,7 +5652,8 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     }
     break;
 
-  case HB_GTI_CLIPBOARDDATA: {
+  case HB_GTI_CLIPBOARDDATA:
+  {
     void *hString;
     HB_SIZE nLen;
     const char *pszClipboardData = hb_itemGetStrUTF8(pInfo->pNewVal, &hString, &nLen);
@@ -5832,7 +5838,8 @@ static HB_BOOL hb_gt_xwc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
     break;
 
   case HB_GTI_SETPOS_XY:
-  case HB_GTI_SETPOS_ROWCOL: {
+  case HB_GTI_SETPOS_ROWCOL:
+  {
     int x = wnd->iNewPosX, y = wnd->iNewPosY;
 
     if (wnd->window)

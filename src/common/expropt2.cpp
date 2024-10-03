@@ -277,7 +277,8 @@ PHB_EXPR hb_compExprReduceMult(PHB_EXPR pSelf, HB_COMP_DECL)
 
     switch (bType)
     {
-    case HB_ET_LONG: {
+    case HB_ET_LONG:
+    {
       HB_MAXDBL dVal =
           static_cast<HB_MAXDBL>(pLeft->value.asNum.val.l) * static_cast<HB_MAXDBL>(pRight->value.asNum.val.l);
 
@@ -447,7 +448,8 @@ PHB_EXPR hb_compExprReduceMinus(PHB_EXPR pSelf, HB_COMP_DECL)
 
     switch (bType)
     {
-    case HB_ET_LONG: {
+    case HB_ET_LONG:
+    {
       HB_MAXDBL dVal =
           static_cast<HB_MAXDBL>(pLeft->value.asNum.val.l) - static_cast<HB_MAXDBL>(pRight->value.asNum.val.l);
 
@@ -643,7 +645,8 @@ static bool hb_compExprReducePlusNums(PHB_EXPR pSelf, PHB_EXPR pAdd)
 
   switch (pNum->value.asNum.NumType & pAdd->value.asNum.NumType)
   {
-  case HB_ET_LONG: {
+  case HB_ET_LONG:
+  {
     HB_MAXDBL dVal = static_cast<HB_MAXDBL>(pNum->value.asNum.val.l) + static_cast<HB_MAXDBL>(pAdd->value.asNum.val.l);
     if (HB_DBL_LIM_LONG(dVal))
     {
@@ -699,7 +702,8 @@ PHB_EXPR hb_compExprReducePlus(PHB_EXPR pSelf, HB_COMP_DECL)
 
       switch (bType)
       {
-      case HB_ET_LONG: {
+      case HB_ET_LONG:
+      {
         HB_MAXDBL dVal =
             static_cast<HB_MAXDBL>(pLeft->value.asNum.val.l) + static_cast<HB_MAXDBL>(pRight->value.asNum.val.l);
 
@@ -1039,7 +1043,8 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     switch (pLeft->ExprType)
     {
-    case HB_ET_LOGICAL: {
+    case HB_ET_LOGICAL:
+    {
       // .F. != .T.  = .T.
       // .T. != .T.  = .F.
       // .F. != .F.  = .F.
@@ -1070,7 +1075,8 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
       }
       break;
 
-    case HB_ET_NUMERIC: {
+    case HB_ET_NUMERIC:
+    {
       auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
@@ -1101,7 +1107,8 @@ PHB_EXPR hb_compExprReduceNE(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_DATE:
-    case HB_ET_TIMESTAMP: {
+    case HB_ET_TIMESTAMP:
+    {
       bool bResult = pLeft->value.asDate.lDate != pRight->value.asDate.lDate ||
                      pLeft->value.asDate.lTime != pRight->value.asDate.lTime;
       HB_COMP_EXPR_FREE(pLeft);
@@ -1196,7 +1203,8 @@ PHB_EXPR hb_compExprReduceGE(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     switch (pLeft->ExprType)
     {
-    case HB_ET_LOGICAL: {
+    case HB_ET_LOGICAL:
+    {
       // .T. >= .F.  = .T.
       // .T. >= .T.  = .T.
       // .F. >= .F.  = .T.
@@ -1210,7 +1218,8 @@ PHB_EXPR hb_compExprReduceGE(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     break;
 
-    case HB_ET_NUMERIC: {
+    case HB_ET_NUMERIC:
+    {
       auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
@@ -1241,7 +1250,8 @@ PHB_EXPR hb_compExprReduceGE(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_DATE:
-    case HB_ET_TIMESTAMP: {
+    case HB_ET_TIMESTAMP:
+    {
       bool bResult = (pLeft->value.asDate.lDate > pRight->value.asDate.lDate) ||
                      (pLeft->value.asDate.lDate == pRight->value.asDate.lDate &&
                       pLeft->value.asDate.lTime >= pRight->value.asDate.lTime);
@@ -1279,7 +1289,8 @@ PHB_EXPR hb_compExprReduceLE(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     switch (pLeft->ExprType)
     {
-    case HB_ET_LOGICAL: {
+    case HB_ET_LOGICAL:
+    {
       // .T. <= .F.  = .F.
       // .T. <= .T.  = .T.
       // .F. <= .F.  = .T.
@@ -1293,7 +1304,8 @@ PHB_EXPR hb_compExprReduceLE(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     break;
 
-    case HB_ET_NUMERIC: {
+    case HB_ET_NUMERIC:
+    {
       auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
@@ -1324,7 +1336,8 @@ PHB_EXPR hb_compExprReduceLE(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_DATE:
-    case HB_ET_TIMESTAMP: {
+    case HB_ET_TIMESTAMP:
+    {
       bool bResult = (pLeft->value.asDate.lDate < pRight->value.asDate.lDate) ||
                      (pLeft->value.asDate.lDate == pRight->value.asDate.lDate &&
                       pLeft->value.asDate.lTime <= pRight->value.asDate.lTime);
@@ -1362,7 +1375,8 @@ PHB_EXPR hb_compExprReduceGT(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     switch (pLeft->ExprType)
     {
-    case HB_ET_LOGICAL: {
+    case HB_ET_LOGICAL:
+    {
       // .T. > .F.  = .T.
       // .T. > .T.  = .F.
       // .F. > .F.  = .F.
@@ -1376,7 +1390,8 @@ PHB_EXPR hb_compExprReduceGT(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     break;
 
-    case HB_ET_NUMERIC: {
+    case HB_ET_NUMERIC:
+    {
       auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
@@ -1407,7 +1422,8 @@ PHB_EXPR hb_compExprReduceGT(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_DATE:
-    case HB_ET_TIMESTAMP: {
+    case HB_ET_TIMESTAMP:
+    {
       bool bResult = (pLeft->value.asDate.lDate > pRight->value.asDate.lDate) ||
                      (pLeft->value.asDate.lDate == pRight->value.asDate.lDate &&
                       pLeft->value.asDate.lTime > pRight->value.asDate.lTime);
@@ -1445,7 +1461,8 @@ PHB_EXPR hb_compExprReduceLT(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     switch (pLeft->ExprType)
     {
-    case HB_ET_LOGICAL: {
+    case HB_ET_LOGICAL:
+    {
       // .F. < .T.  = .T.
       // .T. < .T.  = .F.
       // .F. < .F.  = .F.
@@ -1459,7 +1476,8 @@ PHB_EXPR hb_compExprReduceLT(PHB_EXPR pSelf, HB_COMP_DECL)
     }
     break;
 
-    case HB_ET_NUMERIC: {
+    case HB_ET_NUMERIC:
+    {
       auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
@@ -1490,7 +1508,8 @@ PHB_EXPR hb_compExprReduceLT(PHB_EXPR pSelf, HB_COMP_DECL)
     break;
 
     case HB_ET_DATE:
-    case HB_ET_TIMESTAMP: {
+    case HB_ET_TIMESTAMP:
+    {
       bool bResult = (pLeft->value.asDate.lDate < pRight->value.asDate.lDate) ||
                      (pLeft->value.asDate.lDate == pRight->value.asDate.lDate &&
                       pLeft->value.asDate.lTime < pRight->value.asDate.lTime);
@@ -1528,7 +1547,8 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
   {
     switch (pLeft->ExprType)
     {
-    case HB_ET_LOGICAL: {
+    case HB_ET_LOGICAL:
+    {
       bool bResult = (pLeft->value.asLogical == pRight->value.asLogical);
       HB_COMP_EXPR_FREE(pLeft);
       HB_COMP_EXPR_FREE(pRight);
@@ -1563,7 +1583,8 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
       }
       break;
 
-    case HB_ET_NUMERIC: {
+    case HB_ET_NUMERIC:
+    {
       auto bResult = false;
 
       switch (pLeft->value.asNum.NumType & pRight->value.asNum.NumType)
@@ -1594,7 +1615,8 @@ PHB_EXPR hb_compExprReduceEQ(PHB_EXPR pSelf, HB_COMP_DECL)
     }
 
     case HB_ET_DATE:
-    case HB_ET_TIMESTAMP: {
+    case HB_ET_TIMESTAMP:
+    {
       bool bResult = (pLeft->value.asDate.lDate == pRight->value.asDate.lDate) &&
                      (pLeft->value.asDate.lTime == pRight->value.asDate.lTime);
       HB_COMP_EXPR_FREE(pLeft);

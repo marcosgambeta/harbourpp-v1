@@ -196,7 +196,8 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
-  case HB_DYN_CTYPE_STRUCTURE: {
+  case HB_DYN_CTYPE_STRUCTURE:
+  {
     auto nLen = hb_itemGetCLen(pParam);
     pArg->hString = hb_xgrab(nLen + sizeof(char));
     pArg->bRawBuffer = true;
@@ -210,25 +211,29 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
 
     switch (pArg->iEncoding)
     {
-    case HB_DYN_ENC_ASCII: {
+    case HB_DYN_ENC_ASCII:
+    {
       HB_SIZE nLen;
       const char *s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
       r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF8: {
+    case HB_DYN_ENC_UTF8:
+    {
       HB_SIZE nLen;
       const char *s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
       r = reinterpret_cast<HB_PTRUINT>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF16: {
+    case HB_DYN_ENC_UTF16:
+    {
       HB_SIZE nLen;
       const HB_WCHAR *s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
       r = reinterpret_cast<HB_PTRUINT>(hb_wstrunshare(&pArg->hString, s, nLen));
       break;
     }
-    default: {
+    default:
+    {
       auto nLen = hb_itemGetCLen(pParam);
       pArg->hString = hb_xgrab(nLen + sizeof(char));
       pArg->bRawBuffer = true;
@@ -646,7 +651,8 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
     break;
 
   case HB_DYN_CTYPE_CHAR_UNSIGNED_PTR:
-  case HB_DYN_CTYPE_STRUCTURE: {
+  case HB_DYN_CTYPE_STRUCTURE:
+  {
     auto nLen = hb_itemGetCLen(pParam);
     pArg->hString = hb_xgrab(nLen + sizeof(char));
     pArg->bRawBuffer = true;
@@ -660,25 +666,29 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
 
     switch (pArg->iEncoding)
     {
-    case HB_DYN_ENC_ASCII: {
+    case HB_DYN_ENC_ASCII:
+    {
       HB_SIZE nLen;
       const char *s = hb_itemGetStr(pParam, hb_setGetOSCP(), &pArg->hString, &nLen);
       *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF8: {
+    case HB_DYN_ENC_UTF8:
+    {
       HB_SIZE nLen;
       const char *s = hb_itemGetStrUTF8(pParam, &pArg->hString, &nLen);
       *r1 = reinterpret_cast<HB_U32>(hb_strunshare(&pArg->hString, s, nLen));
       break;
     }
-    case HB_DYN_ENC_UTF16: {
+    case HB_DYN_ENC_UTF16:
+    {
       HB_SIZE nLen;
       const HB_WCHAR *s = hb_itemGetStrU16(pParam, HB_CDP_ENDIAN_NATIVE, &pArg->hString, &nLen);
       *r1 = reinterpret_cast<HB_U32>(hb_wstrunshare(&pArg->hString, s, nLen));
       break;
     }
-    default: {
+    default:
+    {
       auto nLen = hb_itemGetCLen(pParam);
       pArg->hString = hb_xgrab(nLen + sizeof(char));
       pArg->bRawBuffer = true;

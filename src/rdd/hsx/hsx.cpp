@@ -1116,7 +1116,8 @@ static int hb_hsxLock(int iHandle, int iAction, HB_ULONG ulRecord)
         pHSX->fWrLocked = false;
       }
       /* fallthrough */
-    case HSX_HDRWRITEUNLOCK: {
+    case HSX_HDRWRITEUNLOCK:
+    {
       int iRet = hb_hsxHdrFlush(iHandle);
       if (iRetVal == HSX_SUCCESS)
       {

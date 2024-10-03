@@ -610,7 +610,8 @@ void hb_compVariableAdd(HB_COMP_DECL, const char *szVarName, PHB_VARTYPE pVarTyp
     switch (HB_COMP_PARAM->iVarScope)
     {
     case HB_VSCOMP_LOCAL:
-    case HB_VSCOMP_PARAMETER: {
+    case HB_VSCOMP_PARAMETER:
+    {
       HB_USHORT wLocal = hb_compVarListAdd(&pFunc->pLocals, pVar);
 
       if (HB_COMP_PARAM->iVarScope == HB_VSCOMP_PARAMETER)

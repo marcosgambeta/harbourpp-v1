@@ -134,7 +134,8 @@ static void sig_handler(int iSigNo)
   switch (iSigNo)
   {
 #ifdef SIGCHLD
-  case SIGCHLD: {
+  case SIGCHLD:
+  {
     int e = errno, stat;
     pid_t pid;
     while ((pid = waitpid(-1, &stat, WNOHANG)) > 0)

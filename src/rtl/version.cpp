@@ -111,7 +111,8 @@ HB_FUNC(HB_VERSION)
   case HB_VERSION_BUILD_DATE_STR:
     hb_retc_buffer(hb_verBuildDate());
     break;
-  case HB_VERSION_BUILD_DATE: {
+  case HB_VERSION_BUILD_DATE:
+  {
     char *pszBuildDate = hb_verBuildDate();
 
     if (strlen(pszBuildDate) >= 11)
@@ -146,7 +147,8 @@ HB_FUNC(HB_VERSION)
     hb_xfree(pszBuildDate);
     break;
   }
-  case HB_VERSION_BUILD_TIME: {
+  case HB_VERSION_BUILD_TIME:
+  {
     char *pszBuildDate = hb_verBuildDate();
     hb_retc(strlen(pszBuildDate) >= 20 ? pszBuildDate + 12 : nullptr);
     hb_xfree(pszBuildDate);

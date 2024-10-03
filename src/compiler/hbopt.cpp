@@ -1144,7 +1144,8 @@ static void hb_compPCodeEnumScanLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocals)
       break;
 
     case HB_P_PUSHBLOCK:
-    case HB_P_PUSHBLOCKLARGE: {
+    case HB_P_PUSHBLOCKLARGE:
+    {
       HB_BYTE *pCode = &pFunc->pCode[nPos + 5];
       HB_USHORT usVarCount;
 
@@ -1478,7 +1479,8 @@ static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocal
     {
     case HB_P_POPLOCALNEAR:
     case HB_P_PUSHLOCALNEAR:
-    case HB_P_LOCALNEARADDINT: {
+    case HB_P_LOCALNEARADDINT:
+    {
       HB_BYTE *pVar = &pFunc->pCode[nPos + 1];
       HB_SHORT isVar = static_cast<signed char>(pVar[0]);
 
@@ -1505,7 +1507,8 @@ static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocal
     case HB_P_LOCALADDINT:
     case HB_P_LOCALDEC:
     case HB_P_LOCALINC:
-    case HB_P_LOCALINCPUSH: {
+    case HB_P_LOCALINCPUSH:
+    {
       HB_BYTE *pVar = &pFunc->pCode[nPos + 1];
       HB_SHORT isVar = HB_PCODE_MKSHORT(pVar);
 
@@ -1526,7 +1529,8 @@ static void hb_compPCodeEnumRenumberLocals(PHB_HFUNC pFunc, PHB_OPT_LOCAL pLocal
     }
 
     case HB_P_PUSHBLOCK:
-    case HB_P_PUSHBLOCKLARGE: {
+    case HB_P_PUSHBLOCKLARGE:
+    {
       HB_BYTE *pVar = &pFunc->pCode[nPos + 5];
       HB_USHORT usVarCount;
 

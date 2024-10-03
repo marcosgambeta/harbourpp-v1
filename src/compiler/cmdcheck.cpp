@@ -227,7 +227,8 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
       }
       break;
 
-    case 'B': {
+    case 'B':
+    {
       char *szOption = hb_compChkOptionDup(szSwPtr);
 
       if (strcmp(szOption, "BUILD") == 0)
@@ -250,7 +251,8 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
       break;
     }
 
-    case 'C': {
+    case 'C':
+    {
       char *szOption = hb_compChkOptionDup(szSwPtr);
 
       if (strlen(szOption) >= 4 && strncmp("CREDITS", szOption, strlen(szOption)) == 0)

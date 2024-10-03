@@ -555,7 +555,8 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
 
   switch (HB_PP_TOKEN_TYPE(pToken->type))
   {
-  case HB_PP_TOKEN_NUMBER: {
+  case HB_PP_TOKEN_NUMBER:
+  {
     HB_MAXINT lNumber;
     double dNumber;
     int iDec, iWidth;
@@ -575,7 +576,8 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
       return NUM_LONG;
     }
   }
-  case HB_PP_TOKEN_DATE: {
+  case HB_PP_TOKEN_DATE:
+  {
     int iYear, iMonth, iDay;
 
     pLex->iState = LITERAL;
@@ -829,7 +831,8 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
     pLex->iState = LOOKUP;
     return static_cast<HB_UCHAR>(pToken->value[0]);
 
-  case HB_PP_TOKEN_KEYWORD: {
+  case HB_PP_TOKEN_KEYWORD:
+  {
     int iType;
     hb_pp_tokenUpper(pToken);
     iType = hb_comp_keywordType(pToken);
@@ -1259,7 +1262,8 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
       iType = IDENTIFIER;
       break;
 
-    case AS_TYPE: {
+    case AS_TYPE:
+    {
       int iAs = hb_comp_asType(pToken->pNext, false);
       if (iAs)
       {
