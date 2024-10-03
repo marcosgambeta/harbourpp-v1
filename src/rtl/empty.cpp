@@ -78,7 +78,7 @@ HB_FUNC(EMPTY)
     break;
 
   case Harbour::Item::DATE:
-    hb_retl(hb_itemGetDL(pItem) == 0);
+    hb_retl(pItem->getDL() == 0);
     break;
 
   case Harbour::Item::TIMESTAMP:

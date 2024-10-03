@@ -82,7 +82,7 @@ HB_FUNC(CMONTH)
   {
     int iYear, iMonth, iDay;
 
-    hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
+    hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retc_const(hb_dateCMonth(iMonth));
   }
   else
@@ -97,7 +97,7 @@ HB_FUNC(CDOW)
 
   if (pDate)
   {
-    long lDate = hb_itemGetDL(pDate);
+    long lDate = pDate->getDL();
 
     if (lDate)
     {

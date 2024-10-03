@@ -144,7 +144,7 @@ HB_FUNC(YEAR)
   if (pDate)
   {
     int iYear, iMonth, iDay;
-    hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
+    hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retnilen(iYear, 5);
   }
   else
@@ -160,7 +160,7 @@ HB_FUNC(MONTH)
   if (pDate)
   {
     int iYear, iMonth, iDay;
-    hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
+    hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retnilen(iMonth, 3);
   }
   else
@@ -176,7 +176,7 @@ HB_FUNC(DAY)
   if (pDate)
   {
     int iYear, iMonth, iDay;
-    hb_dateDecode(hb_itemGetDL(pDate), &iYear, &iMonth, &iDay);
+    hb_dateDecode(pDate->getDL(), &iYear, &iMonth, &iDay);
     hb_retnilen(iDay, 3);
   }
   else
@@ -191,7 +191,7 @@ HB_FUNC(DOW)
 
   if (pDate)
   {
-    hb_retnilen(hb_dateJulianDOW(hb_itemGetDL(pDate)), 3);
+    hb_retnilen(hb_dateJulianDOW(pDate->getDL()), 3);
   }
   else
   {
@@ -689,7 +689,7 @@ HB_FUNC(HB_WEEK)
   if (pDate)
   {
     int iYear, iWeek, iDay;
-    hb_dateDecWeek(hb_itemGetDL(pDate), &iYear, &iWeek, &iDay);
+    hb_dateDecWeek(pDate->getDL(), &iYear, &iWeek, &iDay);
     hb_storni(iYear, 2);
     hb_storni(iDay, 3);
     hb_retni(iWeek);

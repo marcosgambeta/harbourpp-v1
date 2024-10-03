@@ -711,7 +711,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdp
 
   case Harbour::Item::DATE:
     pBuffer[nOffset++] = HB_SERIAL_DATE;
-    l = hb_itemGetDL(pItem);
+    l = pItem->getDL();
     HB_PUT_LE_UINT24(&pBuffer[nOffset], l);
     nOffset += 3;
     break;
