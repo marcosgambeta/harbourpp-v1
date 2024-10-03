@@ -462,7 +462,8 @@ static HB_ERRCODE sqlite3Open(SQLBASEAREAP pArea)
 
     switch (dbFieldInfo.uiType)
     {
-    case Harbour::DB::Field::STRING: {
+    case Harbour::DB::Field::STRING:
+    {
       HB_SIZE nSize = hb_cdpUTF8StringLength(reinterpret_cast<const char *>(sqlite3_column_text(st, uiIndex)),
                                              sqlite3_column_bytes(st, uiIndex));
 

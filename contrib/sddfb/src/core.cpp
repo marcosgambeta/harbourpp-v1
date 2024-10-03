@@ -282,7 +282,8 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
 
       int iType = pVar->sqltype & ~1;
       switch( iType ) {
-         case SQL_TEXT: {
+         case SQL_TEXT:
+         {
             dbFieldInfo.uiType = Harbour::DB::Field::STRING;
             dbFieldInfo.uiLen = pVar->sqllen;
             pVar->sqldata = static_cast<char*>(hb_xgrab(sizeof(char) * pVar->sqllen + 2));
@@ -292,7 +293,8 @@ static HB_ERRCODE fbOpen(SQLBASEAREAP pArea)
             break;
          }
 
-         case SQL_VARYING: {
+         case SQL_VARYING:
+         {
             dbFieldInfo.uiType = Harbour::DB::Field::VARLENGTH;
             dbFieldInfo.uiLen = pVar->sqllen;
             /* pVar->sqltype = SQL_TEXT;  Coercing */

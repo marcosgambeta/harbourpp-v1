@@ -389,7 +389,8 @@ static HB_ERRCODE ocilibOpen(SQLBASEAREAP pArea)
 
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
-            case Harbour::DB::Field::STRING: {
+            case Harbour::DB::Field::STRING:
+            {
                auto pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
@@ -535,7 +536,8 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                break;
 
             case Harbour::DB::Field::VARLENGTH:
-            case Harbour::DB::Field::MEMO: {
+            case Harbour::DB::Field::MEMO:
+            {
                OCI_Long * val = OCI_GetLong(rs, ui);
                if( val ) {
                   unsigned int uiSize = OCI_LongGetSize(val);
@@ -550,7 +552,8 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
 
             case Harbour::DB::Field::IMAGE:
             case Harbour::DB::Field::BLOB:
-            case Harbour::DB::Field::OLE: {
+            case Harbour::DB::Field::OLE:
+            {
                OCI_Long * val = OCI_GetLong(rs, ui);
                if( val ) {
                   pItem = hb_itemPutCL(pItem, static_cast<const char*>(OCI_LongGetBuffer(val)), OCI_LongGetSize(val));
@@ -565,7 +568,8 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                pItem = hb_itemPutNDLen(pItem, OCI_GetDouble(rs, ui), pField->uiLen, pField->uiDec);
                break;
 
-            case Harbour::DB::Field::DATE: {
+            case Harbour::DB::Field::DATE:
+            {
                OCI_Date * date = OCI_GetDate(rs, ui);
                int iYear, iMonth, iDay;
                if( date && OCI_DateGetDate(date, &iYear, &iMonth, &iDay) ) {
@@ -574,7 +578,8 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                break;
             }
 
-            case Harbour::DB::Field::TIME: {
+            case Harbour::DB::Field::TIME:
+            {
                OCI_Date * date = OCI_GetDate(rs, ui);
                int iYear, iMonth, iDay, iHour, iMin, iSec;
 
@@ -584,7 +589,8 @@ static HB_ERRCODE ocilibGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                break;
             }
 
-            case Harbour::DB::Field::TIMESTAMP: {
+            case Harbour::DB::Field::TIMESTAMP:
+            {
                OCI_Timestamp * ts = OCI_GetTimestamp(rs, ui);
                int iYear, iMonth, iDay, iHour, iMin, iSec, iFSec;
                if( ts && OCI_TimestampGetDateTime(ts, &iYear, &iMonth, &iDay, &iHour, &iMin, &iSec, &iFSec) ) {

@@ -318,7 +318,8 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
   {
     switch (hb_parni(2) /* nMode */)
     {
-    case 0: {
+    case 0:
+    {
       int ptArray[WIN_STATUSBAR_MAX_PARTS];
       RECT rc = {0, 0, 0, 0};
       int n;
@@ -337,7 +338,8 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
       hb_retl((HB_BOOL)SendMessage(hWndSB, SB_SETPARTS, (WPARAM)iParts + 1, (LPARAM)(LPINT)ptArray));
       return;
     }
-    case -1: {
+    case -1:
+    {
       RECT rc;
 
       if (GetClientRect(hWndSB, &rc))

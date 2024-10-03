@@ -333,7 +333,8 @@ static HB_BOOL s_handle_trace(int n)
     case 0:
       return false;
     case 1:
-    case 2: {
+    case 2:
+    {
       char procname[HB_SYMBOL_NAME_LEN + HB_SYMBOL_NAME_LEN + 5];
       char file[HB_PATH_MAX];
       HB_USHORT line;

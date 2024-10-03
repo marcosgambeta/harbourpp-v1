@@ -371,7 +371,8 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
       }
     }
     break;
-  case 1: {
+  case 1:
+  {
     UINT uiOptions = bMap3Dcolors ? LR_LOADMAP3DCOLORS : LR_DEFAULTCOLOR;
 
     hBitmap = (HBITMAP)LoadImage((HINSTANCE)wvg_hInstance(), szBitmap, IMAGE_BITMAP, iExpWidth, iExpHeight, uiOptions);
@@ -447,7 +448,8 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
 
   switch (iMode)
   {
-  case 0: {
+  case 0:
+  {
     int ptArray[WIN_STATUSBAR_MAX_PARTS];
     int iParts;
     RECT rc = {0, 0, 0, 0};
@@ -472,7 +474,8 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
     }
     break;
   }
-  case -1: {
+  case -1:
+  {
     RECT rc = {0, 0, 0, 0};
     int ptArray[WIN_STATUSBAR_MAX_PARTS];
 

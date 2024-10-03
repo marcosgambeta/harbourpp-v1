@@ -587,7 +587,8 @@ static void s_fileCommit(PHB_FILE pFile) // FileFunc
 static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue) // FileFunc
 {
    switch( iIndex ) {
-      case HB_VF_TIMEOUT: {
+      case HB_VF_TIMEOUT:
+      {
          HB_MAXINT nTimeout = pFile->nTimeout;
 
          if( pValue->isNumeric() ) {
@@ -605,7 +606,8 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue) // F
          hb_itemPutNInt(pValue, _PHB_FILE->pFuncs->Handle(_PHB_FILE));
          return true;
 
-      case HB_VF_IONAME: {
+      case HB_VF_IONAME:
+      {
          const char * pszNext = nullptr;
 
          if( _PHB_FILE->pFuncs->Configure(_PHB_FILE, iIndex, pValue) ) {

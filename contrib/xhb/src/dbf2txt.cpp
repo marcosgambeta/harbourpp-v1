@@ -90,7 +90,8 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char *cDel
   switch (hb_itemType(pValue))
   {
   /* a "C" field */
-  case Harbour::Item::STRING: {
+  case Harbour::Item::STRING:
+  {
     char *szStrEsc;
     char *szString;
 
@@ -111,7 +112,8 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char *cDel
     break;
   }
   /* a "D" field */
-  case Harbour::Item::DATE: {
+  case Harbour::Item::DATE:
+  {
     auto szDate = static_cast<char *>(hb_xgrab(9));
 
     hb_itemGetDS(pValue, szDate);
@@ -126,7 +128,8 @@ static HB_BOOL hb_ExportVar(HB_FHANDLE handle, PHB_ITEM pValue, const char *cDel
   /* an "N" field */
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG:
-  case Harbour::Item::DOUBLE: {
+  case Harbour::Item::DOUBLE:
+  {
     char *szResult = hb_itemStr(pValue, nullptr, nullptr);
 
     if (szResult)

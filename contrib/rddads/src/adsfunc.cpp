@@ -1959,7 +1959,8 @@ HB_FUNC( ADSDDGETDATABASEPROPERTY )
       /* Integer properties */
 #if ADS_LIB_VERSION >= 620
       case ADS_DD_VERSION_MAJOR:
-      case ADS_DD_VERSION_MINOR: {
+      case ADS_DD_VERSION_MINOR:
+      {
          UNSIGNED16 ulBuffer;
          UNSIGNED16 ulLength = sizeof(ulBuffer);
 

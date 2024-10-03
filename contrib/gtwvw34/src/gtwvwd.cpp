@@ -1493,7 +1493,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
 
-  case HB_GTI_DESKTOPWIDTH: {
+  case HB_GTI_DESKTOPWIDTH:
+  {
     RECT rDesk{};
     HWND hDesk = GetDesktopWindow();
     GetWindowRect(hDesk, &rDesk);
@@ -1501,7 +1502,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     break;
   }
 
-  case HB_GTI_DESKTOPHEIGHT: {
+  case HB_GTI_DESKTOPHEIGHT:
+  {
     /* NOTE 2004-06-18 currently includes StatusBar and ToolBar, if any.
      * TODO            Think: should it return chars area only?
      * SEEALSO         hb_gt_wvwCalcPixelHeight() - iSBHeight - iTBHeight
@@ -1514,7 +1516,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     break;
   }
 
-  case HB_GTI_DESKTOPCOLS: {
+  case HB_GTI_DESKTOPCOLS:
+  {
     RECT rDesk{};
     HWND hDesk = GetDesktopWindow();
     GetClientRect(hDesk, &rDesk);
@@ -1522,7 +1525,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     break;
   }
 
-  case HB_GTI_DESKTOPROWS: {
+  case HB_GTI_DESKTOPROWS:
+  {
     /* NOTE 2004-06-18 currently includes StatusBar and ToolBar, if any.
      * TODO            I Think it should it return chars area only?
      * SEEALSO         hb_gt_wvwCalcPixelHeight() - iSBHeight - iTBHeight
@@ -1554,7 +1558,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
 
-  case HB_GTI_ICONFILE: {
+  case HB_GTI_ICONFILE:
+  {
     HICON hIcon = nullptr;
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING)
     {
@@ -1566,7 +1571,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     break;
   }
 
-  case HB_GTI_ICONRES: {
+  case HB_GTI_ICONRES:
+  {
     HICON hIcon = nullptr;
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING)
     {
@@ -1628,7 +1634,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
 
-  case HB_GTI_SCREENSIZE: {
+  case HB_GTI_SCREENSIZE:
+  {
     int iX, iY;
 
     if (!pInfo->pResult)
@@ -1696,7 +1703,8 @@ static HB_BOOL hb_gt_wvw_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutPtr(pInfo->pResult, s_wvw->pWin[0]->hWnd);
     break;
 
-  default: {
+  default:
+  {
     if (pGT)
     {
       return HB_GTSUPER_INFO(pGT, iType, pInfo);
@@ -2575,7 +2583,8 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
   case WM_CREATE:
     return static_cast<LRESULT>(hb_gt_wvwInitWindow(wvw_win, hWnd, wvw_win->COLS, wvw_win->ROWS));
 
-  case WM_COMMAND: { /* handle menu items */
+  case WM_COMMAND:
+  { /* handle menu items */
     bool fTopMost = (s_wvw->iNumWindows == nWin + 1);
     auto iEvent = static_cast<int>(HIWORD(wParam));
     auto iId = static_cast<int>(LOWORD(wParam));
@@ -2738,7 +2747,8 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
     }
     return 0;
 
-  case WM_PAINT: {
+  case WM_PAINT:
+  {
     PAINTSTRUCT ps{};
     HDC hdc;
     RECT updateRect{};
@@ -3144,7 +3154,8 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
       case VK_F12:
         hb_gt_wvwTranslateKey(K_F12, K_SH_F12, K_ALT_F12, K_CTRL_F12);
         break;
-      default: {
+      default:
+      {
         bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
         bool bShift = GetKeyState(VK_SHIFT) & 0x8000;
         int iScanCode = HB_LOBYTE(HIWORD(lParam));
@@ -3213,7 +3224,8 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
       return 0;
     }
 
-  case WM_CHAR: {
+  case WM_CHAR:
+  {
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     int iScanCode = HB_LOBYTE(HIWORD(lParam));
     auto c = static_cast<int>(wParam);
@@ -3491,7 +3503,8 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
     return 0;
 
   case WM_HSCROLL:
-  case WM_VSCROLL: {
+  case WM_VSCROLL:
+  {
     auto hCtrlWnd = reinterpret_cast<HWND>(lParam);
     int nCtrlId;
     bool fTopMost = (s_wvw->iNumWindows == nWin + 1);
@@ -3555,7 +3568,8 @@ static LRESULT CALLBACK hb_gt_wvwWndProc(HWND hWnd, UINT message, WPARAM wParam,
     break;
 
   case WM_CTLCOLORSTATIC:
-  case WM_CTLCOLOREDIT: {
+  case WM_CTLCOLOREDIT:
+  {
     if (s_wvw->a.pSymWVW_ONCTLCOLOR)
     {
       SetBkMode(reinterpret_cast<HDC>(wParam), TRANSPARENT);
@@ -6652,7 +6666,8 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
       {
       case CBN_SELCHANGE:
       case CBN_SETFOCUS:
-      case CBN_KILLFOCUS: {
+      case CBN_KILLFOCUS:
+      {
         auto iCurSel = static_cast<int>(SendMessage(wvw_ctl->hWnd, CB_GETCURSEL, 0, 0));
         if (iCurSel == CB_ERR)
         {
@@ -6693,7 +6708,8 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
       {
       case EN_SETFOCUS:
       case EN_KILLFOCUS:
-      case EN_CHANGE: {
+      case EN_CHANGE:
+      {
         /* now execute the codeblock */
         auto pEvent = hb_itemPutNI(nullptr, iEventType);
 
@@ -6841,7 +6857,8 @@ static LRESULT CALLBACK hb_gt_wvw_BtnProc(HWND hWnd, UINT message, WPARAM wParam
   switch (message)
   {
   case WM_KEYDOWN:
-  case WM_SYSKEYDOWN: {
+  case WM_SYSKEYDOWN:
+  {
     bool bAlt = GetKeyState(VK_MENU) & 0x8000;
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     bool bShift = GetKeyState(VK_SHIFT) & 0x8000;

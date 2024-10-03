@@ -1982,7 +1982,8 @@ static HB_ERRCODE adsFieldInfo(ADSAREAP pArea, HB_USHORT uiIndex, HB_USHORT uiTy
    }
 
    switch( uiType ) {
-      case DBS_ISNULL: {
+      case DBS_ISNULL:
+      {
          UNSIGNED16 u16Null = 1;
 
          if( pArea->fPositioned ) {
@@ -2187,7 +2188,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
       case Harbour::DB::Field::TIME:
       case Harbour::DB::Field::TIMESTAMP:
-      case Harbour::DB::Field::MODTIME: {
+      case Harbour::DB::Field::MODTIME:
+      {
          SIGNED32 lTime = 0, lDate = 0;
          u32RetVal = AdsGetMilliseconds(pArea->hTable, ADSFIELD(uiIndex), &lTime);
          if( u32RetVal != AE_SUCCESS ) {
@@ -2241,7 +2243,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
 #if ADS_LIB_VERSION >= 700 && !defined(HB_LONG_LONG_OFF)
-      case Harbour::DB::Field::AUTOINC: {
+      case Harbour::DB::Field::AUTOINC:
+      {
          SIGNED64 qVal = 0;
          u32RetVal = AdsGetLongLong(pArea->hTable, ADSFIELD(uiIndex), &qVal);
          if( u32RetVal != AE_SUCCESS ) {
@@ -2251,7 +2254,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutNIntLen(pItem, static_cast<HB_MAXINT>(qVal), 10);
          break;
       }
-      case Harbour::DB::Field::ROWVER: {
+      case Harbour::DB::Field::ROWVER:
+      {
          SIGNED64 qVal = 0;
          u32RetVal = AdsGetLongLong(pArea->hTable, ADSFIELD(uiIndex), &qVal);
          if( u32RetVal != AE_SUCCESS ) {
@@ -2263,7 +2267,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       }
 #else
       case Harbour::DB::Field::AUTOINC:
-      case Harbour::DB::Field::ROWVER: {
+      case Harbour::DB::Field::ROWVER:
+      {
          DOUBLE dVal = 0;
 
          u32RetVal = AdsGetDouble(pArea->hTable, ADSFIELD(uiIndex), &dVal);
@@ -2278,7 +2283,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
       case Harbour::DB::Field::LONG:
       case Harbour::DB::Field::DOUBLE:
       case Harbour::DB::Field::CURDOUBLE:
-      case Harbour::DB::Field::CURRENCY: {
+      case Harbour::DB::Field::CURRENCY:
+      {
          DOUBLE dVal = 0;
 
          u32RetVal = AdsGetDouble(pArea->hTable, ADSFIELD(uiIndex), &dVal);
@@ -2300,7 +2306,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          }
          break;
       }
-      case Harbour::DB::Field::DATE: {
+      case Harbour::DB::Field::DATE:
+      {
          SIGNED32 lDate;
 
          u32RetVal = AdsGetJulian(pArea->hTable, ADSFIELD(uiIndex), &lDate);
@@ -2312,7 +2319,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          break;
       }
 
-      case Harbour::DB::Field::LOGICAL: {
+      case Harbour::DB::Field::LOGICAL:
+      {
          UNSIGNED16 pbValue = 0;
          u32RetVal = AdsGetLogical(pArea->hTable, ADSFIELD(uiIndex), &pbValue);
          if( u32RetVal != AE_SUCCESS ) {
@@ -2325,7 +2333,8 @@ static HB_ERRCODE adsGetValue(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
 
       case Harbour::DB::Field::MEMO:
       case Harbour::DB::Field::BLOB:
-      case Harbour::DB::Field::IMAGE: {
+      case Harbour::DB::Field::IMAGE:
+      {
          UNSIGNED8 * pucBuf;
          UNSIGNED16 u16Type;
 
@@ -2790,7 +2799,8 @@ static HB_ERRCODE adsRecInfo(ADSAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInfoTy
    HB_ERRCODE uiRetVal = Harbour::SUCCESS;
 
    switch( uiInfoType ) {
-      case DBRI_DELETED: {
+      case DBRI_DELETED:
+      {
          HB_BOOL fDeleted = false;
          HB_ULONG ulCurrRec = 0;
 
@@ -2809,7 +2819,8 @@ static HB_ERRCODE adsRecInfo(ADSAREAP pArea, PHB_ITEM pRecID, HB_USHORT uiInfoTy
          hb_itemPutL(pInfo, fDeleted);
          break;
       }
-      case DBRI_LOCKED: {
+      case DBRI_LOCKED:
+      {
          UNSIGNED16 u16Locked = 0;
 
          if( ulRecNo == 0 ) {
@@ -3185,7 +3196,8 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutNL(pItem, pArea->iFileType == ADS_ADT ? 0 : 32 + pArea->area.uiFieldCount * 32 + 2);
          break;
 
-      case DBI_LASTUPDATE: {
+      case DBI_LASTUPDATE:
+      {
          UNSIGNED8 pucFormat[11];
          UNSIGNED16 pusLen = 11;
          UNSIGNED8 pucDate[11];
@@ -3202,7 +3214,8 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutNL(pItem, pArea->ulRecordLen);
          break;
 
-      case DBI_GETLOCKARRAY: {
+      case DBI_GETLOCKARRAY:
+      {
          UNSIGNED16 u16Count;
          uRetVal = AdsGetNumLocks(pArea->hTable, &u16Count);
          if( uRetVal != AE_SUCCESS ) {
@@ -3233,7 +3246,8 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutC(pItem, adsTableExt(pArea->iFileType));
          break;
 
-      case DBI_FULLPATH: {
+      case DBI_FULLPATH:
+      {
          UNSIGNED8  aucBuffer[MAX_STR_LEN + 1];
          UNSIGNED16 pusLen = MAX_STR_LEN;
          AdsGetTableFilename(pArea->hTable, ADS_FULLPATHNAME, aucBuffer, &pusLen);
@@ -3253,7 +3267,8 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutL(pItem, pArea->fPositioned);
          break;
 
-      case DBI_LOCKCOUNT: {
+      case DBI_LOCKCOUNT:
+      {
          UNSIGNED16 u16Count;
          uRetVal = AdsGetNumLocks(pArea->hTable, &u16Count);
          if( uRetVal != AE_SUCCESS ) {
@@ -3272,7 +3287,8 @@ static HB_ERRCODE adsInfo(ADSAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pItem)
          hb_itemPutC(pItem, adsMemoExt(pArea->iFileType));
          break;
 
-      case DBI_DB_VERSION: {      /* HOST driver Version */
+      case DBI_DB_VERSION:
+      {      /* HOST driver Version */
          UNSIGNED32 ulMajor;
          UNSIGNED32 ulMinor;
          UNSIGNED8  ucLetter;
@@ -4302,7 +4318,8 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
          pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, u16 != 0);
          break;
 
-      case DBOI_KEYTYPE: {
+      case DBOI_KEYTYPE:
+      {
          const char * szType = nullptr;
          if( hIndex ) {
             AdsGetKeyType(hIndex, &u16);
@@ -4417,7 +4434,8 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
          pOrderInfo->itmResult = hb_itemPutCL(pOrderInfo->itmResult, reinterpret_cast<const char*>(aucBuffer), u16len);
          break;
 
-      case DBOI_NUMBER: {
+      case DBOI_NUMBER:
+      {
          UNSIGNED16 usOrder = 0;
          if( hIndex ) {
             AdsGetIndexOrderByHandle(hIndex, &usOrder);
@@ -4613,7 +4631,8 @@ static HB_ERRCODE adsOrderInfo(ADSAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO 
          break;
 
 #if ADS_LIB_VERSION >= 900
-      case DBOI_SKIPUNIQUE: {
+      case DBOI_SKIPUNIQUE:
+      {
          HB_LONG lToSkip = pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ? hb_itemGetNL(pOrderInfo->itmNewVal) : 1;
          if( hIndex ) {
             pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, AdsSkipUnique(hIndex, lToSkip >= 0 ? 1 : -1) == AE_SUCCESS);
@@ -5183,7 +5202,8 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          hb_itemPutL(pItem, true);
          break;
 
-      case RDDI_CONNECTION: {
+      case RDDI_CONNECTION:
+      {
          ADSHANDLE hOldConnection = hb_ads_getConnection();
 
          hb_ads_setConnection(HB_ADS_GETCONNECTION(pItem));
@@ -5191,7 +5211,8 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          break;
       }
 
-      case RDDI_CONNECT: {
+      case RDDI_CONNECT:
+      {
          ADSHANDLE hConnect = 0;
          UNSIGNED32 u32RetVal;
          LPRDDADSDATA pData = RDDADSNODE_DATA(pRDD);
@@ -5228,7 +5249,8 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          break;
       }
 
-      case RDDI_DISCONNECT: {
+      case RDDI_DISCONNECT:
+      {
          ADSHANDLE hConnect = HB_ADS_GETCONNECTION(pItem);
 
          /* NOTE: Only allow disconnect of 0 if explicitly passed.
@@ -5267,7 +5289,8 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          hb_itemPutC(pItem, adsIndexExt(adsGetFileType(pRDD->rddID)));
          break;
 
-      case RDDI_INDEXPAGESIZE: {
+      case RDDI_INDEXPAGESIZE:
+      {
          auto iPageSize = hb_itemGetNI(pItem);
 
          hb_itemPutNI(pItem, adsIndexPageSize(adsGetFileType(pRDD->rddID)));
@@ -5278,31 +5301,36 @@ static HB_ERRCODE adsRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulConne
          break;
       }
 
-      case RDDI_ERRORNO: {
+      case RDDI_ERRORNO:
+      {
          LPRDDADSDATA pData = RDDADSNODE_DATA(pRDD);
          hb_itemPutNL(pItem, static_cast<unsigned long>(pData->ulError));
          break;
       }
 
-      case RDDI_ERROR: {
+      case RDDI_ERROR:
+      {
          LPRDDADSDATA pData = RDDADSNODE_DATA(pRDD);
          hb_itemPutC(pItem, reinterpret_cast<char*>(pData->szError));
          break;
       }
 
-      case RDDI_INSERTID: {
+      case RDDI_INSERTID:
+      {
          LPRDDADSDATA pData = RDDADSNODE_DATA(pRDD);
          hb_itemPutNL(pItem, static_cast<unsigned long>(pData->ulInsertID));
          break;
       }
 
-      case RDDI_AFFECTEDROWS: {
+      case RDDI_AFFECTEDROWS:
+      {
          LPRDDADSDATA pData = RDDADSNODE_DATA(pRDD);
          hb_itemPutNL(pItem, static_cast<unsigned long>(pData->ulAffectedRows));
          break;
       }
 
-      case RDDI_EXECUTE: {
+      case RDDI_EXECUTE:
+      {
          LPRDDADSDATA pData = RDDADSNODE_DATA(pRDD);
          ADSHANDLE hConnect = ulConnect ? static_cast<ADSHANDLE>(ulConnect) : hb_ads_getConnection();
          ADSHANDLE hStatement = 0;

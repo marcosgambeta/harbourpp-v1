@@ -1291,7 +1291,8 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
       case HB_CURLOPT_HTTPPOST:
-      case HB_CURLOPT_MIMEPOST: {
+      case HB_CURLOPT_MIMEPOST:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         if (pArray != nullptr)
@@ -1337,7 +1338,8 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_USERAGENT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_USERAGENT, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
-      case HB_CURLOPT_HTTPHEADER: {
+      case HB_CURLOPT_HTTPHEADER:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPHEADER, nullptr);
@@ -1358,7 +1360,8 @@ HB_FUNC(CURL_EASY_SETOPT)
       }
       break;
 #if LIBCURL_VERSION_NUM >= 0x070A03
-      case HB_CURLOPT_HTTP200ALIASES: {
+      case HB_CURLOPT_HTTP200ALIASES:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_HTTP200ALIASES, nullptr);
@@ -1422,7 +1425,8 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_MAIL_FROM:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_FROM, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
-      case HB_CURLOPT_MAIL_RCPT: {
+      case HB_CURLOPT_MAIL_RCPT:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_MAIL_RCPT, nullptr);
@@ -1462,7 +1466,8 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_FTPPORT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_FTPPORT, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
-      case HB_CURLOPT_QUOTE: {
+      case HB_CURLOPT_QUOTE:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_QUOTE, nullptr);
@@ -1482,7 +1487,8 @@ HB_FUNC(CURL_EASY_SETOPT)
         }
       }
       break;
-      case HB_CURLOPT_POSTQUOTE: {
+      case HB_CURLOPT_POSTQUOTE:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_POSTQUOTE, nullptr);
@@ -1502,7 +1508,8 @@ HB_FUNC(CURL_EASY_SETOPT)
         }
       }
       break;
-      case HB_CURLOPT_PREQUOTE: {
+      case HB_CURLOPT_PREQUOTE:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_PREQUOTE, nullptr);
@@ -1739,7 +1746,8 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071503
-      case HB_CURLOPT_RESOLVE: {
+      case HB_CURLOPT_RESOLVE:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_RESOLVE, nullptr);
@@ -1907,7 +1915,8 @@ HB_FUNC(CURL_EASY_SETOPT)
 
         /* Telnet options */
 
-      case HB_CURLOPT_TELNETOPTIONS: {
+      case HB_CURLOPT_TELNETOPTIONS:
+      {
         auto pArray = hb_param(3, Harbour::Item::ARRAY);
 
         curl_easy_setopt(hb_curl->curl, CURLOPT_TELNETOPTIONS, nullptr);
@@ -1934,7 +1943,8 @@ HB_FUNC(CURL_EASY_SETOPT)
 
         /* Harbour specials */
 
-      case HB_CURLOPT_PROGRESSBLOCK: {
+      case HB_CURLOPT_PROGRESSBLOCK:
+      {
         auto pProgressCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
         if (hb_curl->pProgressCallback)
@@ -2072,7 +2082,8 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_READDATA, hb_curl);
         break;
 
-      case HB_CURLOPT_DEBUGBLOCK: {
+      case HB_CURLOPT_DEBUGBLOCK:
+      {
         auto pDebugCallback = hb_param(3, Harbour::Item::BLOCK | Harbour::Item::SYMBOL);
 
         if (hb_curl->pDebugCallback)

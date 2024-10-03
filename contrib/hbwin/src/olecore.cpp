@@ -939,7 +939,8 @@ static void hb_oleItemToVariantRef(VARIANT *pVariant, PHB_ITEM pItem, VARIANT *p
     }
     break;
 
-  case Harbour::Item::DATE: {
+  case Harbour::Item::DATE:
+  {
     long lDate = hb_itemGetDL(pItem);
 
     if (lDate == 0 && hb_oleGetNullDateFlag())
@@ -963,7 +964,8 @@ static void hb_oleItemToVariantRef(VARIANT *pVariant, PHB_ITEM pItem, VARIANT *p
     }
     break;
   }
-  case Harbour::Item::TIMESTAMP: {
+  case Harbour::Item::TIMESTAMP:
+  {
     double dDate = hb_itemGetTD(pItem);
 
     if (dDate == 0 && hb_oleGetNullDateFlag())
@@ -987,7 +989,8 @@ static void hb_oleItemToVariantRef(VARIANT *pVariant, PHB_ITEM pItem, VARIANT *p
     }
     break;
   }
-  case Harbour::Item::POINTER: {
+  case Harbour::Item::POINTER:
+  {
     IDispatch *pDisp;
     VARIANT *pVarPtr;
 
@@ -1209,7 +1212,8 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, HB_USHORT uiClass)
   switch (V_VT(pVariant))
   {
   case VT_UNKNOWN:
-  case VT_UNKNOWN | VT_BYREF: {
+  case VT_UNKNOWN | VT_BYREF:
+  {
     IDispatch *pdispVal = nullptr;
     IUnknown *punkVal = V_VT(pVariant) == VT_UNKNOWN ? V_UNKNOWN(pVariant) : *V_UNKNOWNREF(pVariant);
     hb_itemClear(pItem);
@@ -1380,7 +1384,8 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, HB_USHORT uiClass)
     break;
 
   case VT_CY:
-  case VT_CY | VT_BYREF: {
+  case VT_CY | VT_BYREF:
+  {
     double dblVal;
     if (VarR8FromCy(V_VT(pVariant) == VT_CY ? V_CY(pVariant) : *V_CYREF(pVariant), &dblVal) != S_OK)
     {
@@ -1394,7 +1399,8 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, HB_USHORT uiClass)
   }
 
   case VT_DECIMAL:
-  case VT_DECIMAL | VT_BYREF: {
+  case VT_DECIMAL | VT_BYREF:
+  {
     double dblVal;
     if (VarR8FromDec(V_VT(pVariant) == VT_DECIMAL ? &HB_WIN_U1(pVariant, decVal) : V_DECIMALREF(pVariant), &dblVal) !=
         S_OK)
@@ -1406,7 +1412,8 @@ void hb_oleVariantToItemEx(PHB_ITEM pItem, VARIANT *pVariant, HB_USHORT uiClass)
   }
 
   case VT_DATE:
-  case VT_DATE | VT_BYREF: {
+  case VT_DATE | VT_BYREF:
+  {
     long lJulian, lMilliSec;
     double dblVal = V_VT(pVariant) == VT_DATE ? V_R8(pVariant) : *V_R8REF(pVariant);
 
@@ -1477,7 +1484,8 @@ void hb_oleVariantUpdate(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjF
 {
   switch (V_VT(pVariant))
   {
-  case VT_DISPATCH | VT_BYREF: {
+  case VT_DISPATCH | VT_BYREF:
+  {
     IDispatch *pDisp = hb_oleItemGetDispatch(pItem);
 
     if (pDisp)
@@ -1510,7 +1518,8 @@ void hb_oleVariantUpdate(VARIANT *pVariant, PHB_ITEM pItem, HB_OLEOBJ_FUNC pObjF
     break;
   }
 
-  case VT_UNKNOWN | VT_BYREF: {
+  case VT_UNKNOWN | VT_BYREF:
+  {
     IDispatch *pDisp = hb_oleItemGetDispatch(pItem);
 
     if (pDisp)
@@ -2266,7 +2275,8 @@ HB_FUNC(WIN_OLEERRORTEXT)
   case DISP_E_BUFFERTOOSMALL:
     hb_retc_const("DISP_E_BUFFERTOOSMALL");
     break;
-  default: {
+  default:
+  {
     char buf[16];
 
     hb_snprintf(buf, 16, "0x%08x", static_cast<UINT>(static_cast<HB_PTRUINT>(lOleError)));

@@ -105,7 +105,8 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
   switch (message)
   {
   case WM_KEYDOWN:
-  case WM_SYSKEYDOWN: {
+  case WM_SYSKEYDOWN:
+  {
     bool bAlt = GetKeyState(VK_MENU) & 0x8000;
     switch (wParam)
     {
@@ -158,7 +159,8 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
     break;
   }
 
-  case WM_CHAR: {
+  case WM_CHAR:
+  {
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     int iScanCode = HB_LOBYTE(HIWORD(lParam));
     auto c = static_cast<int>(wParam);
@@ -200,7 +202,8 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
     break;
   }
 
-  case WM_SYSCHAR: {
+  case WM_SYSCHAR:
+  {
     int c;
     switch (HB_LOBYTE(HIWORD(lParam)))
     {
@@ -350,7 +353,8 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
   switch (message)
   {
   case WM_KEYDOWN:
-  case WM_SYSKEYDOWN: {
+  case WM_SYSKEYDOWN:
+  {
     bool bAlt = GetKeyState(VK_MENU) & 0x8000;
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     bool bShift = GetKeyState(VK_SHIFT) & 0x8000;
@@ -436,12 +440,14 @@ static LRESULT CALLBACK hb_gt_wvw_EBProc(HWND hWnd, UINT message, WPARAM wParam,
     break;
   }
 
-  case WM_CHAR: {
+  case WM_CHAR:
+  {
     switch (wParam)
     {
     case VK_TAB:
       return 0;
-    case 1: {
+    case 1:
+    {
       bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
       if (bCtrl)
       {

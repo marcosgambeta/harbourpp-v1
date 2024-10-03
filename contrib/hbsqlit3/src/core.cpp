@@ -529,7 +529,8 @@ static void func(sqlite3_context *ctx, int argc, sqlite3_value **argv)
       sqlite3_result_double(ctx, hb_itemGetND(pResult));
       break;
 
-    case Harbour::Item::STRING: {
+    case Harbour::Item::STRING:
+    {
       void *hText;
       HB_SIZE nText;
       const char *pszText = hb_itemGetStrUTF8(pResult, &hText, &nText);
@@ -2029,7 +2030,8 @@ static int trace_handler(unsigned uType, void *cbTraceHandler, void *p, void *x)
       hb_vmPushPointer(p);
       hb_vmSend(2);
       break;
-    case SQLITE_TRACE_CLOSE: {
+    case SQLITE_TRACE_CLOSE:
+    {
       PHB_ITEM pItem = hb_itemNew(nullptr);
       HB_SQLITE3 *hbsqlite3 = static_cast<HB_SQLITE3 *>(hb_xgrabz(sizeof(HB_SQLITE3)));
       HB_SYMBOL_UNUSED(x);

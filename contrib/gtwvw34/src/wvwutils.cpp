@@ -1302,7 +1302,8 @@ HB_FUNC(WVW_CREATEDIALOGDYNAMIC)
       {
         switch (iResource)
         {
-        case 0: {
+        case 0:
+        {
           void *hText;
           hDlg = CreateDialog(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr),
                               hb_parl(2) ? wvw_zer->hWnd : nullptr, reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcMLess));
@@ -1394,7 +1395,8 @@ HB_FUNC(WVW_CREATEDIALOGMODAL)
 
       switch (iResource)
       {
-      case 0: {
+      case 0:
+      {
         void *hText;
         iResult = DialogBoxParam(GetModuleHandle(nullptr), HB_PARSTRDEF(1, &hText, nullptr), hParent,
                                  reinterpret_cast<DLGPROC>(hb_gt_wvw_DlgProcModal),

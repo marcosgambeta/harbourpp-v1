@@ -226,7 +226,8 @@ static void do_token1(int iSwitch)
            end of string is not a token) */
         switch (iSwitch)
         {
-        case DO_TOKEN1_TOKEN: {
+        case DO_TOKEN1_TOKEN:
+        {
           char cRet;
 
           hb_retc_null();
@@ -335,7 +336,8 @@ static void do_token1(int iSwitch)
 
     switch (iSwitch)
     {
-    case DO_TOKEN1_TOKEN: {
+    case DO_TOKEN1_TOKEN:
+    {
       char cRet;
 
       if (nTokenCounter == HB_SIZE_MAX || nToken == nTokenCounter)
@@ -394,7 +396,8 @@ static void do_token1(int iSwitch)
   {
     switch (iSwitch)
     {
-    case DO_TOKEN1_TOKEN: {
+    case DO_TOKEN1_TOKEN:
+    {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
       char cRet;
@@ -431,7 +434,8 @@ static void do_token1(int iSwitch)
       break;
     }
     case DO_TOKEN1_TOKENLOWER:
-    case DO_TOKEN1_TOKENUPPER: {
+    case DO_TOKEN1_TOKENUPPER:
+    {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
@@ -457,7 +461,8 @@ static void do_token1(int iSwitch)
       break;
     }
     case DO_TOKEN1_NUMTOKEN:
-    case DO_TOKEN1_ATTOKEN: {
+    case DO_TOKEN1_ATTOKEN:
+    {
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 

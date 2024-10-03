@@ -2354,7 +2354,8 @@ static HB_BOOL hb_ctw_gt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutL(pInfo->pResult, true);
     break;
 
-  case HB_GTI_NEWWIN: {
+  case HB_GTI_NEWWIN:
+  {
     HB_BOOL fResult;
 
     hb_ctw_SelectWindow(HB_GTCTW_GET(pGT), 0, true);
@@ -2367,7 +2368,8 @@ static HB_BOOL hb_ctw_gt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     return fResult;
   }
-  case HB_GTI_GETWIN: {
+  case HB_GTI_GETWIN:
+  {
     HB_BOOL fResult;
     PHB_GTCTW pCTW = HB_GTCTW_GET(pGT);
     int iWindow = HB_CTW_GETCURRENT(pCTW);
@@ -2380,7 +2382,8 @@ static HB_BOOL hb_ctw_gt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     return fResult;
   }
-  case HB_GTI_SETWIN: {
+  case HB_GTI_SETWIN:
+  {
     HB_BOOL fResult;
     PHB_GTCTW pCTW = HB_GTCTW_GET(pGT);
 

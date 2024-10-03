@@ -317,7 +317,8 @@ static HB_ERRCODE mysqlOpen(SQLBASEAREAP pArea)
 
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
-            case Harbour::DB::Field::STRING: {
+            case Harbour::DB::Field::STRING:
+            {
                auto pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
@@ -461,7 +462,8 @@ static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
    char szBuffer[64];
 
    switch( pField->uiType ) {
-      case Harbour::DB::Field::STRING: {
+      case Harbour::DB::Field::STRING:
+      {
 #if 0
          /* Expand strings to field length */
          auto pStr = static_cast<char*>(hb_xgrab(pField->uiLen + 1));
@@ -497,7 +499,8 @@ static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
          }
          break;
 
-      case Harbour::DB::Field::DATE: {
+      case Harbour::DB::Field::DATE:
+      {
          char szDate[9];
 
          szDate[0] = pValue[0];
@@ -513,7 +516,8 @@ static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
          break;
       }
 
-      case Harbour::DB::Field::TIMESTAMP: {
+      case Harbour::DB::Field::TIMESTAMP:
+      {
          char szTimeStamp[15];
 
          szTimeStamp[0] = pValue[0];
@@ -536,7 +540,8 @@ static HB_ERRCODE mysqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
          break;
       }
 
-      case Harbour::DB::Field::TIME: {
+      case Harbour::DB::Field::TIME:
+      {
          char szTimeStamp[15];
 
          szTimeStamp[0] = '0';

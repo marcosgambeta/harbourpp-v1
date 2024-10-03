@@ -362,7 +362,8 @@ static HB_ERRCODE pgsqlOpen(SQLBASEAREAP pArea)
 
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
-            case Harbour::DB::Field::STRING: {
+            case Harbour::DB::Field::STRING:
+            {
                auto pStr = static_cast<char*>(hb_xgrab(dbFieldInfo.uiLen + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
@@ -505,7 +506,8 @@ static HB_ERRCODE pgsqlGetValue(SQLBASEAREAP pArea, HB_USHORT uiIndex, PHB_ITEM 
          hb_itemPutL(pItem, pValue[0] == 'T' || pValue[0] == 'Y');
          break;
 
-      case Harbour::DB::Field::DATE: {
+      case Harbour::DB::Field::DATE:
+      {
          char szDate[9];
          szDate[0] = pValue[0];
          szDate[1] = pValue[1];

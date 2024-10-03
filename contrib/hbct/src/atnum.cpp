@@ -75,7 +75,8 @@ static void do_atnum(int iSwitch)
     {
       switch (iSwitch)
       {
-      case DO_ATNUM_AFTERATNUM: {
+      case DO_ATNUM_AFTERATNUM:
+      {
         /* AFTERATNUM */
         int iArgErrorMode = ct_getargerrormode();
 
@@ -88,7 +89,8 @@ static void do_atnum(int iSwitch)
         hb_retc_null();
         break;
       }
-      case DO_ATNUM_BEFORATNUM: {
+      case DO_ATNUM_BEFORATNUM:
+      {
         /* BEFORATNUM */
         int iArgErrorMode = ct_getargerrormode();
 
@@ -101,7 +103,8 @@ static void do_atnum(int iSwitch)
         hb_retc_null();
         break;
       }
-      case DO_ATNUM_ATNUM: {
+      case DO_ATNUM_ATNUM:
+      {
         /* ATNUM */
         int iArgErrorMode = ct_getargerrormode();
 
@@ -251,7 +254,8 @@ static void do_atnum(int iSwitch)
     switch (iSwitch)
     {
     case DO_ATNUM_AFTERATNUM:
-    case DO_ATNUM_BEFORATNUM: {
+    case DO_ATNUM_BEFORATNUM:
+    {
       /* AFTERATNUM */
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
@@ -273,7 +277,8 @@ static void do_atnum(int iSwitch)
       }
       break;
     }
-    case DO_ATNUM_ATNUM: {
+    case DO_ATNUM_ATNUM:
+    {
       /* ATNUM */
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();

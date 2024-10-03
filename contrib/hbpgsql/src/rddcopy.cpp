@@ -144,7 +144,8 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
   switch (hb_itemType(pValue))
   {
   case Harbour::Item::STRING:
-  case Harbour::Item::MEMO: {
+  case Harbour::Item::MEMO:
+  {
     auto nLen = hb_itemGetCLen(pValue);
     HB_SIZE nCnt = 0;
     auto szVal = hb_itemGetCPtr(pValue);
@@ -191,7 +192,8 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
     break;
   }
 
-  case Harbour::Item::DATE: {
+  case Harbour::Item::DATE:
+  {
     char szDate[9];
 
     if (!addStrToContext(context, szQuote))
@@ -222,7 +224,8 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
     break;
   }
 
-  case Harbour::Item::TIMESTAMP: {
+  case Harbour::Item::TIMESTAMP:
+  {
     long lDate, lTime;
     char szDateTime[24];
 
@@ -249,7 +252,8 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
 
   case Harbour::Item::INTEGER:
   case Harbour::Item::LONG:
-  case Harbour::Item::DOUBLE: {
+  case Harbour::Item::DOUBLE:
+  {
     char szResult[HB_MAX_DOUBLE_LENGTH];
     int iSize, iWidth, iDec;
 

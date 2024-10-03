@@ -538,7 +538,8 @@ static HB_ERRCODE odbcOpen(SQLBASEAREAP pArea)
 
       if( !bError ) {
          switch( dbFieldInfo.uiType ) {
-            case Harbour::DB::Field::STRING: {
+            case Harbour::DB::Field::STRING:
+            {
                auto pStr = static_cast<char*>(hb_xgrab(static_cast<HB_SIZE>(dbFieldInfo.uiLen) + 1));
                memset(pStr, ' ', dbFieldInfo.uiLen);
                pStr[dbFieldInfo.uiLen] = '\0';
@@ -743,7 +744,8 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                }
                break;
 
-            case Harbour::DB::Field::DOUBLE: {
+            case Harbour::DB::Field::DOUBLE:
+            {
                double val = 0.0;
                if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_DOUBLE, &val, sizeof(val), &iLen)) ) {
                   pItem = hb_itemPutNDLen(pItem, val, pField->uiLen, pField->uiDec);
@@ -751,7 +753,8 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                break;
             }
 
-            case Harbour::DB::Field::LOGICAL: {
+            case Harbour::DB::Field::LOGICAL:
+            {
                unsigned char val = 0;
                if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_BIT, &val, sizeof(val), &iLen)) ) {
                   pItem = hb_itemPutL(pItem, val != 0);
@@ -759,7 +762,8 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                break;
             }
 
-            case Harbour::DB::Field::DATE: {
+            case Harbour::DB::Field::DATE:
+            {
                DATE_STRUCT val = {0, 0, 0};
                if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_DATE, &val, sizeof(val), &iLen)) ) {
                   pItem = hb_itemPutD(pItem, val.year, val.month, val.day);
@@ -767,7 +771,8 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                break;
             }
 
-            case Harbour::DB::Field::TIME: {
+            case Harbour::DB::Field::TIME:
+            {
                TIME_STRUCT val = {0, 0, 0};
                if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_TIME, &val, sizeof(val), &iLen)) ) {
                   pItem = hb_itemPutTDT(pItem, 0, hb_timeEncode(val.hour, val.minute, val.second, 0));
@@ -775,7 +780,8 @@ static HB_ERRCODE odbcGoTo(SQLBASEAREAP pArea, HB_ULONG ulRecNo)
                break;
             }
 
-            case Harbour::DB::Field::TIMESTAMP: {
+            case Harbour::DB::Field::TIMESTAMP:
+            {
                TIMESTAMP_STRUCT val = {0, 0, 0, 0, 0, 0, 0};
                if( SQL_SUCCEEDED(res = SQLGetData(hStmt, ui, SQL_C_TIMESTAMP, &val, sizeof(val), &iLen)) ) {
                   pItem = hb_itemPutTDT(pItem, hb_dateEncode(val.year, val.month, val.day), hb_timeEncode(val.hour, val.minute, val.second, val.fraction / 1000000));

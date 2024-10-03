@@ -221,7 +221,8 @@ HB_FUNC(WVG_SETGOBJDATA)
             gObj->pPicture = pWVT->pGUI->pPicture[hb_parni(3) - 1];
           }
           break;
-        case GOBJ_OBJDATA_IMAGE: {
+        case GOBJ_OBJDATA_IMAGE:
+        {
           IPicture *pPicture = nullptr;
 
           if (HB_ISNUM(3))
@@ -1479,7 +1480,8 @@ HB_FUNC(WVG_IMAGE)
         pPicture = pWVT->pGUI->pPicture[hb_parni(7) - 1];
       }
       break;
-    case GOBJ_IMAGESOURCE_RESOURCE: {
+    case GOBJ_IMAGESOURCE_RESOURCE:
+    {
       void *hPic;
       void *hRes;
       pPicture = hb_wvt_gtLoadPictureFromResource(HB_PARSTR(7, &hPic, nullptr), HB_PARSTR(8, &hRes, nullptr));
@@ -1487,7 +1489,8 @@ HB_FUNC(WVG_IMAGE)
       hb_strfree(hRes);
       break;
     }
-    case GOBJ_IMAGESOURCE_FILE: {
+    case GOBJ_IMAGESOURCE_FILE:
+    {
       pPicture = hb_wvt_gtLoadPicture(hb_parc(7));
       break;
     }

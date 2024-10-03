@@ -1104,7 +1104,8 @@ static bool amf3_getItem(amfContext * context, PHB_ITEM pItem)
          lRet = true;
          break;
 
-      case INT_TYPE: {
+      case INT_TYPE:
+      {
          int iVal;
          if( amf3_decode_int(context, &iVal) ) {
             hb_itemPutNI(pItem, iVal);
@@ -1114,7 +1115,8 @@ static bool amf3_getItem(amfContext * context, PHB_ITEM pItem)
       }
       break;
 
-      case DOUBLE_TYPE: {
+      case DOUBLE_TYPE:
+      {
          double dVal;
          if( amfX_decode_double(context, &dVal) ) {
             hb_itemPutND(pItem, dVal);

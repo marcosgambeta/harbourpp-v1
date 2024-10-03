@@ -90,7 +90,8 @@ void ct_charop(int iMode)
       break;
 
     /* SHL */
-    case CT_CHAROP_CHARSHL: {
+    case CT_CHAROP_CHARSHL:
+    {
       int iSHL = hb_parni(2) % 8; /* defaults to 0 */
 
       if (iSHL == 0)
@@ -108,7 +109,8 @@ void ct_charop(int iMode)
     }
 
     /* SHR */
-    case CT_CHAROP_CHARSHR: {
+    case CT_CHAROP_CHARSHR:
+    {
       int iSHR = hb_parni(2) % 8; /* defaults to 0 */
 
       if (iSHR == 0)
@@ -126,7 +128,8 @@ void ct_charop(int iMode)
     }
 
     /* RLL */
-    case CT_CHAROP_CHARRLL: {
+    case CT_CHAROP_CHARRLL:
+    {
       int iRLL = hb_parni(2) % 8; /* defaults to 0 */
 
       hb_xmemcpy(pucResult, pucString, sStrLen);
@@ -153,7 +156,8 @@ void ct_charop(int iMode)
     }
 
     /* RLR */
-    case CT_CHAROP_CHARRLR: {
+    case CT_CHAROP_CHARRLR:
+    {
       int iRLR = hb_parni(2) % 8; /* defaults to 0 */
 
       hb_xmemcpy(pucResult, pucString, sStrLen);

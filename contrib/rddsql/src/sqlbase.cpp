@@ -650,7 +650,8 @@ static HB_ERRCODE sqlbaseCreate(SQLBASEAREAP pArea, LPDBOPENINFO pOpenInfo)
       LPFIELD pField = pArea->area.lpFields + uiCount;
 
       switch( pField->uiType ) {
-         case Harbour::DB::Field::STRING: {
+         case Harbour::DB::Field::STRING:
+         {
             auto pStr = static_cast<char*>(hb_xgrab(pField->uiLen + 1));
             memset(pStr, ' ', pField->uiLen);
             pStr[pField->uiLen] = '\0';
@@ -902,7 +903,8 @@ static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          hb_itemPutL(pItem, true);
          break;
 
-      case RDDI_CONNECTION: {
+      case RDDI_CONNECTION:
+      {
          HB_ULONG ulNewConnection = 0;
 
          if( hb_itemType(pItem) & Harbour::Item::NUMERIC ) {
@@ -925,7 +927,8 @@ static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
          hb_itemPutL(pItem, true);
          break;
 
-      case RDDI_CONNECT: {
+      case RDDI_CONNECT:
+      {
          PSDDNODE pNode = nullptr;
          HB_ULONG ul;
 

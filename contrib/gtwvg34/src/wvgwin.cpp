@@ -269,7 +269,8 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
 
   switch (hbwapi_par_INT(2))
   {
-  case TB_ADDBITMAP: {
+  case TB_ADDBITMAP:
+  {
     TBADDBITMAP tbab;
 
     tbab.hInst = nullptr;
@@ -281,7 +282,8 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
     hbwapi_ret_NI((int)SendMessage(hTB, TB_ADDBITMAP, (WPARAM)1, (LPARAM)&tbab));
     break;
   }
-  case TB_ADDBUTTONS: {
+  case TB_ADDBUTTONS:
+  {
     TBBUTTON tbb;
 
     tbb.iBitmap = hbwapi_par_INT(3);
@@ -294,7 +296,8 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
     hbwapi_ret_L(SendMessage(hTB, TB_ADDBUTTONS, (WPARAM)1, (LPARAM)(LPTBBUTTON)&tbb));
     break;
   }
-  case TB_ADDSTRING: {
+  case TB_ADDSTRING:
+  {
     void *hCaption;
     hbwapi_ret_NI((int)SendMessage(hTB, TB_ADDSTRING, 0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr)));
     hb_strfree(hCaption);
@@ -405,7 +408,8 @@ HB_FUNC(WVG_SENDTOOLBARMESSAGE)
   case TB_MOVEBUTTON:
   case TB_GETINSERTMARK:
     break;
-  case TB_GETCOLORSCHEME: {
+  case TB_GETCOLORSCHEME:
+  {
     PHB_ITEM info = hb_itemArrayNew(2);
     COLORSCHEME colorScheme{};
 
@@ -437,7 +441,8 @@ HB_FUNC(WVG_SENDEDITCONTROLMESSAGE)
 {
   switch (hbwapi_par_INT(2))
   {
-  case EM_GETSEL: {
+  case EM_GETSEL:
+  {
     DWORD min = 0;
     DWORD max = 0;
     SendMessage(hbwapi_par_raw_HWND(1), EM_GETSEL, (WPARAM)&min, (LPARAM)&max);
@@ -471,7 +476,8 @@ HB_FUNC(WVG_SENDCBMESSAGE)
     hb_retnint(SendMessage(hCB, CB_FINDSTRINGEXACT, (WPARAM)hb_parni(3), (LPARAM)HB_PARSTR(4, &hText, nullptr)));
     break;
 #if defined(CB_GETCOMBOBOXINFO)
-  case CB_GETCOMBOBOXINFO: {
+  case CB_GETCOMBOBOXINFO:
+  {
     COMBOBOXINFO cbi{};
     cbi.cbSize = sizeof(cbi);
 
@@ -517,7 +523,8 @@ HB_FUNC(WVG_SENDCBMESSAGE)
   case CB_GETCURSEL:
     hb_retnint(SendMessage(hCB, CB_GETCURSEL, 0, 0));
     break;
-  case CB_GETDROPPEDCONTROLRECT: {
+  case CB_GETDROPPEDCONTROLRECT:
+  {
     RECT rc;
     PHB_ITEM pRect = hb_itemArrayNew(4);
 
@@ -537,7 +544,8 @@ HB_FUNC(WVG_SENDCBMESSAGE)
   case CB_GETDROPPEDWIDTH:
     hb_retnint(SendMessage(hCB, CB_GETDROPPEDWIDTH, 0, 0));
     break;
-  case CB_GETEDITSEL: {
+  case CB_GETEDITSEL:
+  {
     DWORD range = (DWORD)SendMessage(hCB, CB_GETEDITSEL, 0, 0);
     PHB_ITEM pRng = hb_itemArrayNew(2);
 
@@ -559,7 +567,8 @@ HB_FUNC(WVG_SENDCBMESSAGE)
   case CB_GETITEMHEIGHT:
     hb_retnint(SendMessage(hCB, CB_GETITEMHEIGHT, 0, 0));
     break;
-  case CB_GETLBTEXT: {
+  case CB_GETLBTEXT:
+  {
     HB_ISIZ iSize = SendMessage(hCB, CB_GETLBTEXTLEN, (WPARAM)hb_parnint(3), 0);
     LPTSTR text = (LPTSTR)hb_xgrab((iSize + 1) * sizeof(TCHAR));
     SendMessage(hCB, CB_GETLBTEXT, iSize, (LPARAM)text);

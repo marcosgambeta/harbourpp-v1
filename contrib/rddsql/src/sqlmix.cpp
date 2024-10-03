@@ -140,7 +140,8 @@ static PMIXKEY hb_mixKeyPutItem(PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, 
 
    /* TODO: check valtype */
    switch( pTag->bType ) {
-      case 'C': {
+      case 'C':
+      {
          auto nLen = hb_itemGetCLen(pItem);
 
          if( nLen > static_cast<HB_SIZE>(pTag->uiKeyLen) ) {

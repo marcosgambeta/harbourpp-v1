@@ -571,7 +571,8 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
   switch (message)
   {
   case WM_KEYDOWN:
-  case WM_SYSKEYDOWN: {
+  case WM_SYSKEYDOWN:
+  {
     HB_BOOL bAlt = GetKeyState(VK_MENU) & 0x8000;
 
     pWVT->IgnoreWM_SYSCHAR = HB_FALSE;
@@ -649,7 +650,8 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
     case VK_F12:
       hb_gt_wvt_TranslateKey(pWVT, K_F12, K_SH_F12, K_ALT_F12, K_CTRL_F12);
       break;
-    default: {
+    default:
+    {
       HB_BOOL bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
       HB_BOOL bShift = GetKeyState(VK_SHIFT) & 0x8000;
       int iScanCode = HIWORD(lParam) & 0xFF;
@@ -711,7 +713,8 @@ static HB_BOOL hb_gt_wvt_KeyEvent(PHB_GTWVT pWVT, UINT message, WPARAM wParam, L
     break;
   }
 
-  case WM_CHAR: {
+  case WM_CHAR:
+  {
     HB_BOOL bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     int iScanCode = HIWORD(lParam) & 0xFF;
     int c = (int)wParam;
@@ -912,7 +915,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
     {
     case WM_CREATE:
       return 0;
-    case WM_SETFOCUS: {
+    case WM_SETFOCUS:
+    {
       PHB_ITEM pEvParams = hb_itemArrayNew(3);
 
       hbwapi_arraySet_HANDLE(pEvParams, 1, hWnd);
@@ -922,7 +926,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       hb_gt_wvt_FireEvent(pWVT, HB_GTE_SETFOCUS, pEvParams);
       return 0;
     }
-    case WM_KILLFOCUS: {
+    case WM_KILLFOCUS:
+    {
       PHB_ITEM pEvParams = hb_itemArrayNew(3);
 
       hbwapi_arraySet_HANDLE(pEvParams, 1, hWnd);
@@ -962,7 +967,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       return 0;
 
     // Pritpal Bedi - 2008-06-06
-    case WM_ACTIVATE: {
+    case WM_ACTIVATE:
+    {
       PHB_ITEM pEvParams = hb_itemNew(nullptr);
       hb_gt_wvt_FireEvent(pWVT, (LOWORD(wParam) == WA_INACTIVE ? HB_GTE_KILLFOCUS : HB_GTE_SETFOCUS), pEvParams);
       SendMessage(hWnd, WM_SIZE, 0, 0);
@@ -979,7 +985,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
         break;
       }
       break;
-    case WM_TIMER: {
+    case WM_TIMER:
+    {
       PHB_ITEM pEvParams = hb_itemPutNI(nullptr, (int)wParam);
       hb_gt_wvt_FireEvent(pWVT, HB_GTE_TIMER, pEvParams);
       return 0;
@@ -1003,7 +1010,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
     case WM_EXITMENULOOP:
       hb_gt_wvt_FireMenuEvent(pWVT, 2, (int)wParam);
       return 0;
-    case WM_MOUSEHOVER: {
+    case WM_MOUSEHOVER:
+    {
       PHB_ITEM pEvParams = hb_itemArrayNew(6);
 
       hb_arraySetNI(pEvParams, 1, message);
@@ -1014,7 +1022,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       hb_gt_wvt_FireEvent(pWVT, HB_GTE_MOUSE, pEvParams);
       return 0;
     }
-    case WM_MOUSELEAVE: {
+    case WM_MOUSELEAVE:
+    {
       PHB_ITEM pEvParams = hb_itemArrayNew(2);
 
       hb_arraySetNI(pEvParams, 1, message);
@@ -1045,7 +1054,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
         hb_gt_wvt_FireEvent(pWVT, HB_GTE_COMMAND, pEvParams);
       }
       return 0;
-    case WM_NOTIFY: {
+    case WM_NOTIFY:
+    {
       PHB_ITEM pEvParams = hb_itemArrayNew(2);
 
       hb_arraySetNI(pEvParams, 1, (int)wParam);
@@ -1072,7 +1082,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
     case WM_CTLCOLORBTN:
     case WM_CTLCOLORDLG:
     case WM_CTLCOLORSCROLLBAR:
-    case WM_CTLCOLORSTATIC: {
+    case WM_CTLCOLORSTATIC:
+    {
       LRESULT nResult;
       PHB_ITEM pEvParams = hb_itemArrayNew(2);
 
@@ -1090,7 +1101,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
         return nResult;
       }
     }
-    case WM_HSCROLL: {
+    case WM_HSCROLL:
+    {
       PHB_ITEM pEvParams = hb_itemArrayNew(3);
 
       hb_arraySetNL(pEvParams, 1, (long)LOWORD(wParam));
@@ -1100,7 +1112,8 @@ static LRESULT CALLBACK hb_gt_wvt_WndProc(HWND hWnd, UINT message, WPARAM wParam
       hb_gt_wvt_FireEvent(pWVT, HB_GTE_HSCROLL, pEvParams);
       return 0;
     }
-    case WM_VSCROLL: {
+    case WM_VSCROLL:
+    {
       PHB_ITEM pEvParams = hb_itemArrayNew(3);
 
       hb_arraySetNL(pEvParams, 1, (long)LOWORD(wParam));
@@ -1426,7 +1439,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
 
-  case HB_GTI_SCREENHEIGHT: {
+  case HB_GTI_SCREENHEIGHT:
+  {
     RECT rc;
     GetClientRect(pWVT->hWnd, &rc);
 
@@ -1438,7 +1452,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
   }
-  case HB_GTI_SCREENWIDTH: {
+  case HB_GTI_SCREENWIDTH:
+  {
     RECT rc;
     GetClientRect(pWVT->hWnd, &rc);
 
@@ -1450,28 +1465,32 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
   }
-  case HB_GTI_DESKTOPWIDTH: {
+  case HB_GTI_DESKTOPWIDTH:
+  {
     RECT rDesk;
     HWND hDesk = GetDesktopWindow();
     GetWindowRect(hDesk, &rDesk);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.right - rDesk.left);
     break;
   }
-  case HB_GTI_DESKTOPHEIGHT: {
+  case HB_GTI_DESKTOPHEIGHT:
+  {
     RECT rDesk;
     HWND hDesk = GetDesktopWindow();
     GetWindowRect(hDesk, &rDesk);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, rDesk.bottom - rDesk.top);
     break;
   }
-  case HB_GTI_DESKTOPCOLS: {
+  case HB_GTI_DESKTOPCOLS:
+  {
     RECT rDesk;
     HWND hDesk = GetDesktopWindow();
     GetClientRect(hDesk, &rDesk);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, (rDesk.right - rDesk.left) / pWVT->fontWidth);
     break;
   }
-  case HB_GTI_DESKTOPROWS: {
+  case HB_GTI_DESKTOPROWS:
+  {
     RECT rDesk;
     HWND hDesk = GetDesktopWindow();
     GetClientRect(hDesk, &rDesk);
@@ -1562,13 +1581,15 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     pInfo->pResult = hb_itemPutPtr(pInfo->pResult, (void *)(HB_PTRUINT)pWVT->hIcon);
     break;
-  case HB_GTI_VIEWMAXWIDTH: {
+  case HB_GTI_VIEWMAXWIDTH:
+  {
     RECT rc;
     GetClientRect(pWVT->hWnd, &rc);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, rc.right - rc.left / pWVT->fontWidth);
     break;
   }
-  case HB_GTI_VIEWMAXHEIGHT: {
+  case HB_GTI_VIEWMAXHEIGHT:
+  {
     RECT rc;
     GetClientRect(pWVT->hWnd, &rc);
     pInfo->pResult = hb_itemPutNI(pInfo->pResult, rc.bottom - rc.top / pWVT->fontHeight);
@@ -1612,7 +1633,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
 
-  case HB_GTI_SCREENSIZE: {
+  case HB_GTI_SCREENSIZE:
+  {
     RECT rc;
     GetClientRect(pWVT->hWnd, &rc);
 
@@ -1759,7 +1781,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutPtr(pInfo->pResult, pWVT->hWnd);
     break;
 
-  case HB_GTI_SPEC: {
+  case HB_GTI_SPEC:
+  {
     int iMessage = hb_itemGetNI(pInfo->pNewVal);
     switch (iMessage)
     {
@@ -1921,14 +1944,16 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       {
         switch (hb_itemGetNI(pInfo->pNewVal2))
         {
-        case HB_GTS_WS_SETONTOP: {
+        case HB_GTS_WS_SETONTOP:
+        {
           RECT rect = {0, 0, 0, 0};
           GetWindowRect(pWVT->hWnd, &rect);
           hb_retl(SetWindowPos(pWVT->hWnd, HWND_TOPMOST, rect.left, rect.top, 0, 0,
                                SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE));
           break;
         }
-        case HB_GTS_WS_SETASNORMAL: {
+        case HB_GTS_WS_SETASNORMAL:
+        {
           RECT rect = {0, 0, 0, 0};
           GetWindowRect(pWVT->hWnd, &rect);
           hb_retl(SetWindowPos(pWVT->hWnd, HWND_NOTOPMOST, rect.left, rect.top, 0, 0,
@@ -2047,7 +2072,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
 
     break;
-  case HB_GTI_ENABLE: {
+  case HB_GTI_ENABLE:
+  {
     PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp)
     {
@@ -2060,7 +2086,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
   }
-  case HB_GTI_DISABLE: {
+  case HB_GTI_DISABLE:
+  {
     PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp)
     {
@@ -2073,7 +2100,8 @@ static HB_BOOL hb_gt_wvt_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
   }
-  case HB_GTI_SETFOCUS: {
+  case HB_GTI_SETFOCUS:
+  {
     PHB_GT pGTp = hb_gt_ItemBase(pInfo->pNewVal);
     if (pGTp)
     {

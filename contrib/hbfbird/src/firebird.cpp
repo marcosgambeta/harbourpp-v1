@@ -624,14 +624,16 @@ HB_FUNC(FBGETDATA)
         hb_retc(data);
         break;
 
-      case SQL_BLOB: {
+      case SQL_BLOB:
+      {
         auto blob_id = reinterpret_cast<ISC_QUAD *>(var->sqldata);
         hb_retptr(static_cast<void *>(blob_id));
         break;
       }
       case SQL_SHORT:
       case SQL_LONG:
-      case SQL_INT64: {
+      case SQL_INT64:
+      {
         ISC_INT64 value;
         short field_width;
         short dscale;

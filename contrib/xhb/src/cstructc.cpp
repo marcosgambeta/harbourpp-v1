@@ -1387,7 +1387,8 @@ static PHB_ITEM StructureToArray(HB_BYTE *Buffer, HB_SIZE nBufferLen, PHB_ITEM a
       hb_itemPutPtr(pBaseVar->pItems + nIndex, static_cast<void *>(Buffer + uiOffset));
       break;
 
-    default: {
+    default:
+    {
       HB_UINT uiNestedSize /*, uiNestedAlign */;
       auto pID = hb_itemPutNI(nullptr, (pBaseDef->pItems + nIndex)->item.asInteger.value);
       PHB_ITEM pStructure = hb_itemDoC("HB_CSTRUCTUREFROMID", 1, pID);

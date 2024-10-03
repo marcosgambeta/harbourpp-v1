@@ -329,7 +329,8 @@ static HB_SIZE s_fileWrite(PHB_FILE pFile, const void * data, HB_SIZE nSize, HB_
 static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
 {
    switch( iIndex ) {
-      case HB_VF_TIMEOUT: {
+      case HB_VF_TIMEOUT:
+      {
          HB_MAXINT timeout = pFile->timeout;
 
          if( pValue->isNumeric() ) {
@@ -343,7 +344,8 @@ static HB_BOOL s_fileConfigure(PHB_FILE pFile, int iIndex, PHB_ITEM pValue)
          hb_itemPutNInt(pValue, pFile->port);
          return true;
 
-      case HB_VF_SHUTDOWN: {
+      case HB_VF_SHUTDOWN:
+      {
          int iMode = pFile->fRead ? (pFile->fWrite ? FO_READWRITE : FO_READ) : (pFile->fWrite ? FO_WRITE : -1);
 
          if( pValue->isNumeric() ) {

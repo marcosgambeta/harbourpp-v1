@@ -859,7 +859,8 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
     {
       switch (iResource)
       {
-      case 0: {
+      case 0:
+      {
         void *hTemplate;
         hDlg = CreateDialog((HINSTANCE)wvg_hInstance(), HB_PARSTR(1, &hTemplate, nullptr), hb_parl(2) ? _s->hWnd : nullptr,
                             hb_wvt_gtDlgProcMLess);
@@ -968,7 +969,8 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
 
   switch (iResource)
   {
-  case 0: {
+  case 0:
+  {
     void *hTemplate;
     iResult = DialogBoxParam((HINSTANCE)wvg_hInstance(), HB_PARSTR(1, &hTemplate, nullptr), hParent, hb_wvt_gtDlgProcModal,
                              (LPARAM)(DWORD)iIndex + 1);

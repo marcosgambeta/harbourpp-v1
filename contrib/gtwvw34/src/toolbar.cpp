@@ -209,7 +209,8 @@ static void hb_gt_wvw_TBMouseEvent(PWVW_WIN wvw_win, HWND hWnd, UINT message, WP
     keyCode = K_RDBLCLK;
     break;
 
-  case WM_LBUTTONDOWN: {
+  case WM_LBUTTONDOWN:
+  {
     HWND hWndFocus = GetFocus();
 
     if (hb_gt_wvw_GetControlClass(wvw_win, hWndFocus) > 0)
@@ -365,7 +366,8 @@ static LRESULT CALLBACK hb_gt_wvw_TBProc(HWND hWnd, UINT message, WPARAM wParam,
     hb_gt_wvw_TBMouseEvent(wvw_win, hWnd, message, wParam, lParam);
     break;
 
-  case WM_PAINT: {
+  case WM_PAINT:
+  {
     CallWindowProc(wvw_win->tbOldProc, hWnd, message, wParam, lParam);
 
     RECT rTB{};

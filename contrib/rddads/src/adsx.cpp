@@ -173,7 +173,8 @@ static PMIXKEY mixKeyNew(PHB_ITEM pItem, HB_ULONG ulRecNo, HB_BYTE bType, HB_USH
    pKey->rec = ulRecNo;
 
    switch( bType ) {
-      case 'C': {
+      case 'C':
+      {
          auto nLen = hb_itemGetCLen(pItem);
          if( nLen > static_cast<HB_SIZE>(uiLen) ) {
             nLen = uiLen;
@@ -1368,7 +1369,8 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, pTag->uiLen);
          break;
 
-      case DBOI_KEYVAL: {
+      case DBOI_KEYVAL:
+      {
          PHB_CODEPAGE pCodepage = hb_cdpSelect( pArea->adsarea.area.cdPage );
 
          auto pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
@@ -1461,7 +1463,8 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, "mix");
          break;
 
-      case DBOI_ORDERCOUNT: {
+      case DBOI_ORDERCOUNT:
+      {
          UNSIGNED16 usOrder = 0;
 
          AdsGetNumIndexes( pArea->adsarea.hTable, &usOrder );
@@ -1474,7 +1477,8 @@ static HB_ERRCODE adsxOrderInfo( ADSXAREAP pArea, HB_USHORT uiIndex, LPDBORDERIN
          break;
       }
 
-      case DBOI_NUMBER: {
+      case DBOI_NUMBER:
+      {
          PMIXTAG    pTag2;
          UNSIGNED16 usOrder = 0;
 

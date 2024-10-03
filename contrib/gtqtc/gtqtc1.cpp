@@ -723,7 +723,8 @@ static QBitmap * hb_gt_qtc_defineBoxChar(PHB_GTQTC pQTC, HB_USHORT usCh)
       switch( usCh ) {
          case HB_BOXCH_FILLER1:
          case HB_BOXCH_FILLER2:
-         case HB_BOXCH_FILLER3: {
+         case HB_BOXCH_FILLER3:
+         {
             int skip, start, mod;
 
             qBitMap = hb_gt_qtc_bitmap_char(cellx, celly);
@@ -2203,7 +2204,8 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          }
          break;
 
-      case HB_GTI_CLIPBOARDDATA: {
+      case HB_GTI_CLIPBOARDDATA:
+      {
          QString qStr = QApplication::clipboard()->text();
          if( qStr.isEmpty() && QApplication::clipboard()->supportsSelection() ) {
             qStr = QApplication::clipboard()->text(QClipboard::Selection);
@@ -2357,7 +2359,8 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          break;
 
       case HB_GTI_SETPOS_XY:
-      case HB_GTI_SETPOS_ROWCOL: {
+      case HB_GTI_SETPOS_ROWCOL:
+      {
          int x = pQTC->iNewPosX, y = pQTC->iNewPosY;
 
          if( pQTC->qWnd ) {
@@ -2400,7 +2403,8 @@ static HB_BOOL hb_gt_qtc_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
          }
          break;
       }
-      case HB_GTI_PALETTE: {
+      case HB_GTI_PALETTE:
+      {
          bool fExpose = false;
          if( pInfo->pNewVal && pInfo->pNewVal->isNumeric() ) {
             iVal = hb_itemGetNI(pInfo->pNewVal);
@@ -2598,7 +2602,8 @@ static int hb_gt_qtc_gfx_Primitive(PHB_GT pGT, int iType, int iTop, int iLeft, i
       int iTmp;
 
       switch( iType ) {
-         case HB_GFX_MAKECOLOR: {
+         case HB_GFX_MAKECOLOR:
+         {
             QRgb qColor = qRgb(iTop & 0xFF, iLeft & 0xFF, iBottom & 0xFF);
             iRet = QTC_RGB2NUM(qColor);
             break;

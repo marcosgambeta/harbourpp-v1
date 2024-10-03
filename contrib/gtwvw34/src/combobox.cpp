@@ -94,7 +94,8 @@ static LRESULT CALLBACK hb_gt_wvw_CBProc(HWND hWnd, UINT message, WPARAM wParam,
   switch (message)
   {
   case WM_KEYDOWN:
-  case WM_SYSKEYDOWN: {
+  case WM_SYSKEYDOWN:
+  {
     bool bAlt = GetKeyState(VK_MENU) & 0x8000;
     bool bCtrl = GetKeyState(VK_CONTROL) & 0x8000;
     bool bShift = GetKeyState(VK_SHIFT) & 0x8000;

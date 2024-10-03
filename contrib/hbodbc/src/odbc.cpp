@@ -573,7 +573,8 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          case SQL_LONGVARCHAR:
          case SQL_WCHAR:
          case SQL_WVARCHAR:
-         case SQL_WLONGVARCHAR: {
+         case SQL_WLONGVARCHAR:
+         {
             O_HB_CHAR * val = nullptr;
             O_HB_CHAR buffer[1];
 #if defined(UNICODE)
@@ -615,7 +616,8 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 
          case SQL_BINARY:
          case SQL_VARBINARY:
-         case SQL_LONGVARBINARY: {
+         case SQL_LONGVARBINARY:
+         {
             char * val = nullptr;
             char buffer[1];
 
@@ -658,7 +660,8 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
 #endif
          case SQL_TINYINT:
          case SQL_SMALLINT:
-         case SQL_INTEGER: {
+         case SQL_INTEGER:
+         {
             SQLINTEGER val = 0;
             if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_LONG, &val, sizeof(val), &nLen)) ) {
                hb_stornint(val, 5);
@@ -672,7 +675,8 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
          case SQL_NUMERIC:
          case SQL_REAL:
          case SQL_FLOAT:
-         case SQL_DOUBLE: {
+         case SQL_DOUBLE:
+         {
             double val = 0.0;
             if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_DOUBLE, &val, sizeof(val), &nLen)) ) {
                hb_stornd(val, 5);
@@ -682,7 +686,8 @@ HB_FUNC( SQLGETDATA )  /* hStmt, nField, nType, [nMaxLen], @xValue --> nRetCode 
             break;
          }
 
-         case SQL_BIT: {
+         case SQL_BIT:
+         {
             unsigned char val = 0;
             if( SQL_SUCCEEDED(res = SQLGetData(hStmt, uiField, SQL_C_BIT, &val, sizeof(val), &nLen)) ) {
                hb_storl(val != 0, 5);
