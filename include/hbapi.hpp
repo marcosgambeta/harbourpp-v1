@@ -491,6 +491,8 @@ typedef struct _HB_ITEM
   HB_SIZE getCLen();
   HB_MAXINT getNInt();
   long getDL();
+  double getTD();
+  HB_BOOL getTDT(long *plJulian, long *plMilliSec);
   //
   _HB_ITEM *putNI(int iNumber);
   _HB_ITEM *putL(HB_BOOL bValue);

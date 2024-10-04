@@ -758,6 +758,18 @@ double hb_itemGetTD(PHB_ITEM pItem)
   }
 }
 
+double _HB_ITEM::getTD() // equivalent to hb_itemGetTD
+{
+  if (this->isDateTime())
+  {
+    return hb_timeStampPackDT(this->dateTimeJulian(), this->dateTimeTime());
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 HB_BOOL hb_itemGetTDT(PHB_ITEM pItem, long *plJulian, long *plMilliSec)
 {
 #if 0
@@ -768,6 +780,21 @@ HB_BOOL hb_itemGetTDT(PHB_ITEM pItem, long *plJulian, long *plMilliSec)
   {
     *plJulian = pItem->dateTimeJulian();
     *plMilliSec = pItem->dateTimeTime();
+    return true;
+  }
+  else
+  {
+    *plJulian = *plMilliSec = 0;
+    return false;
+  }
+}
+
+HB_BOOL _HB_ITEM::getTDT(long *plJulian, long *plMilliSec) // equivalent to hb_itemGetTDT
+{
+  if (this->isDateTime())
+  {
+    *plJulian = this->dateTimeJulian();
+    *plMilliSec = this->dateTimeTime();
     return true;
   }
   else
