@@ -606,7 +606,7 @@ double hb_arrayGetTD(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->arrayLen())
   {
-    return hb_itemGetTD(pArray->arrayItems() + nIndex - 1);
+    return (pArray->arrayItems() + nIndex - 1)->getTD();
   }
   else
   {
@@ -622,7 +622,7 @@ HB_BOOL hb_arrayGetTDT(PHB_ITEM pArray, HB_SIZE nIndex, long *plJulian, long *pl
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->arrayLen())
   {
-    return hb_itemGetTDT(pArray->arrayItems() + nIndex - 1, plJulian, plMilliSec);
+    return (pArray->arrayItems() + nIndex - 1)->getTDT(plJulian, plMilliSec);
   }
   else
   {

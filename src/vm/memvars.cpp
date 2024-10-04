@@ -1505,7 +1505,7 @@ static HB_DYNS_FUNC(hb_memvarSave)
       }
       else if (pMemvar->isTimeStamp())
       {
-        double dNumber = hb_itemGetTD(pMemvar);
+        double dNumber = pMemvar->getTD();
         buffer[11] = 'T' + 128;
         buffer[16] = 1;
         buffer[17] = 0;
