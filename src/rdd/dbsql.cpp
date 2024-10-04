@@ -199,7 +199,7 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
     long lDate, lTime;
     char szDateTime[24];
 
-    hb_itemGetTDT(pValue, &lDate, &lTime);
+    pValue->getTDT(&lDate, &lTime);
     hb_timeStampStr(szDateTime, lDate, lTime);
     hb_addStrToFBuffer(pFileBuf, szDelim);
     hb_addStrToFBuffer(pFileBuf, szDateTime);

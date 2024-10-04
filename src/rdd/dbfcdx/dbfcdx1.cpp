@@ -567,7 +567,7 @@ static LPCDXKEY hb_cdxKeyPutItem(LPCDXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRec, 
     }
     else
     {
-      d = hb_itemGetTD(pItem);
+      d = pItem->getTD();
     }
     HB_DBL2ORD(&d, buf);
     nLen = 8;
@@ -10532,7 +10532,7 @@ static void hb_cdxTagDoIndex(LPCDXTAG pTag, bool fReindex)
           break;
 
         case Harbour::Item::TIMESTAMP:
-          d = hb_itemGetTD(pItem);
+          d = pItem->getTD();
           HB_DBL2ORD(&d, &cTemp[0]);
           hb_cdxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, cTemp, 8);
           break;

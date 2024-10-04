@@ -908,7 +908,7 @@ static HB_ERRCODE hb_delimPutValue(DELIMAREAP pArea, HB_USHORT uiIndex, PHB_ITEM
       else if (pField->uiType == Harbour::DB::Field::TIMESTAMP && (pField->uiLen == 12 || pField->uiLen == 23))
       {
         long lDate, lTime;
-        hb_itemGetTDT(pItem, &lDate, &lTime);
+        pItem->getTDT(&lDate, &lTime);
         if (pField->uiLen == 12)
         {
           hb_timeStr(szBuffer, lTime);

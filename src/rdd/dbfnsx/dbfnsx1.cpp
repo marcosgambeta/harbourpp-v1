@@ -758,7 +758,7 @@ static LPKEYINFO hb_nsxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     }
     else
     {
-      d = hb_itemGetTD(pItem);
+      d = pItem->getTD();
     }
     HB_DBL2ORD(&d, pKey->val);
     break;
@@ -6659,7 +6659,7 @@ static HB_ERRCODE hb_nsxTagCreate(LPTAGINFO pTag, bool fReindex)
         case Harbour::Item::TIMESTAMP:
           if (pTag->KeyType == 'T')
           {
-            d = hb_itemGetTD(pItem);
+            d = pItem->getTD();
           }
           else
           {
