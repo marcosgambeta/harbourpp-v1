@@ -840,7 +840,7 @@ HB_FUNC(TRANSFORM)
       }
 #endif
 
-      hb_itemGetTDT(pValue, &lDate, &lTime);
+      pValue->getTDT(&lDate, &lTime);
       if (szTimeFormat != nullptr)
       {
         if (szDateFormat != nullptr)
@@ -1057,7 +1057,7 @@ HB_FUNC(TRANSFORM)
       char szResult[27];
       long lDate, lTime;
 
-      hb_itemGetTDT(pValue, &lDate, &lTime);
+      pValue->getTDT(&lDate, &lTime);
       hb_retc(hb_timeStampFormat(szResult, hb_setGetDateFormat(), hb_setGetTimeFormat(), lDate, lTime));
     }
     else if (pValue->isLogical())

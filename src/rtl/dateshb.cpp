@@ -310,7 +310,7 @@ HB_FUNC(HB_TTON)
 
   if (pTime)
   {
-    hb_retnd(hb_itemGetTD(pTime));
+    hb_retnd(pTime->getTD());
   }
   else
   {

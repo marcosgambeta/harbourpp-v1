@@ -84,7 +84,7 @@ HB_FUNC(EMPTY)
   case Harbour::Item::TIMESTAMP:
   {
     long lDate, lTime;
-    hb_itemGetTDT(pItem, &lDate, &lTime);
+    pItem->getTDT(&lDate, &lTime);
     hb_retl(lDate == 0 && lTime == 0);
     break;
   }

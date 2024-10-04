@@ -110,7 +110,7 @@ HB_FUNC(MAX)
       }
       else
       {
-        hb_itemReturn(hb_itemGetTD(p1) >= hb_itemGetTD(p2) ? p1 : p2);
+        hb_itemReturn(p1->getTD() >= p2->getTD() ? p1 : p2);
       }
       return;
     }
@@ -182,7 +182,7 @@ HB_FUNC(MIN)
       }
       else
       {
-        hb_itemReturn(hb_itemGetTD(p1) <= hb_itemGetTD(p2) ? p1 : p2);
+        hb_itemReturn(p1->getTD() <= p2->getTD() ? p1 : p2);
       }
       return;
     }
