@@ -511,7 +511,7 @@ HB_FUNC(_SXOPENINIT)
 
     if (SELF_INFO(pArea, DBI_OPENINFO, pItem))
     {
-      pInfo = static_cast<LPDBOPENINFO>(hb_itemGetPtr(pItem));
+      pInfo = static_cast<LPDBOPENINFO>(pItem->getPtr());
     }
     hb_itemRelease(pItem);
     if (pInfo)

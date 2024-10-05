@@ -1554,7 +1554,7 @@ static HB_ERRCODE hb_usrGetRec(AREAP pArea, HB_BYTE **pBuffer)
   }
   else
   {
-    *pBuffer = static_cast<HB_BYTE *>(hb_itemGetPtr(pItem));
+    *pBuffer = static_cast<HB_BYTE *>(pItem->getPtr());
   }
   hb_stackPop();
 
