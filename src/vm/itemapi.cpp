@@ -1142,6 +1142,18 @@ void *hb_itemGetPtr(PHB_ITEM pItem)
   }
 }
 
+void *_HB_ITEM::getPtr() // equivalent to hb_itemGetPtr
+{
+  if (this->isPointer())
+  {
+    return this->pointerValue();
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+
 void *hb_itemGetPtrGC(PHB_ITEM pItem, const HB_GC_FUNCS *pFuncs)
 {
 #if 0
@@ -1158,6 +1170,20 @@ void *hb_itemGetPtrGC(PHB_ITEM pItem, const HB_GC_FUNCS *pFuncs)
   }
 }
 
+#if 0 // TODO:
+void *_HB_ITEM::getPtrGC(const HB_GC_FUNCS *pFuncs) // equivalent to hb_itemGetPtrGC
+{
+  if (this->isPointer() && this->pointerCollect() && hb_gcFuncs(this->pointerValue()) == pFuncs)
+  {
+    return this->pointerValue();
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+#endif
+
 PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
 {
 #if 0
@@ -1167,6 +1193,18 @@ PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
   if (pItem && pItem->isSymbol())
   {
     return pItem->item.asSymbol.value;
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+
+PHB_SYMB _HB_ITEM::getSymbol() // equivalent to hb_itemGetSymbol
+{
+  if (this->isSymbol())
+  {
+    return this->item.asSymbol.value;
   }
   else
   {

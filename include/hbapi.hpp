@@ -493,6 +493,9 @@ typedef struct _HB_ITEM
   long getDL();
   double getTD();
   HB_BOOL getTDT(long *plJulian, long *plMilliSec);
+  void *getPtr();
+  //void *getPtrGC(const HB_GC_FUNCS *pFuncs); TODO:
+  PHB_SYMB getSymbol();
   //
   _HB_ITEM *putNI(int iNumber);
   _HB_ITEM *putL(HB_BOOL bValue);
