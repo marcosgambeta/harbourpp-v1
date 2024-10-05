@@ -98,7 +98,7 @@ HB_FUNC(EMPTY)
     break;
 
   case Harbour::Item::POINTER:
-    hb_retl(hb_itemGetPtr(pItem) == nullptr);
+    hb_retl(pItem->getPtr() == nullptr);
     break;
 
   case Harbour::Item::SYMBOL:
