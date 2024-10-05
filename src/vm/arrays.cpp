@@ -817,7 +817,7 @@ void *hb_arrayGetPtr(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->arrayLen())
   {
-    return hb_itemGetPtr(pArray->arrayItems() + nIndex - 1);
+    return (pArray->arrayItems() + nIndex - 1)->getPtr();
   }
   else
   {

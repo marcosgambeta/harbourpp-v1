@@ -3812,7 +3812,7 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
   case Harbour::Item::POINTER:
   {
     int size = (sizeof(void *) << 1) + 3; // n bytes for address + 0x + \0
-    auto addr = reinterpret_cast<HB_PTRUINT>(hb_itemGetPtr(pItem));
+    auto addr = reinterpret_cast<HB_PTRUINT>(pItem->getPtr());
 
     *nLen = size - 1;
     *bFreeReq = true;

@@ -6838,7 +6838,7 @@ void hb_vmDestroyBlockOrMacro(PHB_ITEM pItem)
 
   if (pItem->isPointer())
   {
-    auto pMacro = static_cast<PHB_MACRO>(hb_itemGetPtr(pItem));
+    auto pMacro = static_cast<PHB_MACRO>(pItem->getPtr());
     if (pMacro)
     {
       hb_macroDelete(pMacro);

@@ -2691,7 +2691,7 @@ void *hb_objDataGetPtr(PHB_ITEM pObject, const char *szMsg)
   hb_vmSend(0);
   {
     HB_STACK_TLS_PRELOAD
-    return hb_itemGetPtr(hb_stackReturnItem());
+    return hb_stackReturnItem()->getPtr();
   }
 }
 
