@@ -827,7 +827,7 @@ static void hb_stackDispLocal(void)
     case Harbour::Item::DATE:
     {
       char szDate[9];
-      hb_snprintf(buffer, sizeof(buffer), HB_I_("DATE = \"%s\" "), hb_itemGetDS(*pBase, szDate));
+      hb_snprintf(buffer, sizeof(buffer), HB_I_("DATE = \"%s\" "), (*pBase)->getDS(szDate));
     }
     break;
 

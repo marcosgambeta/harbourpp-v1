@@ -570,7 +570,7 @@ char *hb_arrayGetDS(PHB_ITEM pArray, HB_SIZE nIndex, char *szDate)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->arrayLen())
   {
-    return hb_itemGetDS(pArray->arrayItems() + nIndex - 1, szDate);
+    return (pArray->arrayItems() + nIndex - 1)->getDS(szDate);
   }
   else
   {
