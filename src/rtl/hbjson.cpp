@@ -289,7 +289,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
   else if (pValue->isDate())
   {
     char szBuffer[10];
-    hb_itemGetDS(pValue, szBuffer + 1);
+    pValue->getDS(szBuffer + 1);
     szBuffer[0] = '\"';
     szBuffer[9] = '\"';
     _hb_jsonCtxAdd(pCtx, szBuffer, 10);

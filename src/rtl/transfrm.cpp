@@ -732,7 +732,7 @@ HB_FUNC(TRANSFORM)
       }
 #endif
 
-      hb_dateFormat(hb_itemGetDS(pValue, szDate), szResult, szDateFormat);
+      hb_dateFormat(pValue->getDS(szDate), szResult, szDateFormat);
       nResultPos = strlen(szResult);
 
 #ifdef HB_CLP_STRICT
@@ -1050,7 +1050,7 @@ HB_FUNC(TRANSFORM)
       char szDate[9];
       char szResult[11];
 
-      hb_retc(hb_dateFormat(hb_itemGetDS(pValue, szDate), szResult, hb_setGetDateFormat()));
+      hb_retc(hb_dateFormat(pValue->getDS(szDate), szResult, hb_setGetDateFormat()));
     }
     else if (pValue->isTimeStamp())
     {
