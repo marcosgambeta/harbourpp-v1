@@ -788,7 +788,7 @@ HB_FUNC(DBSELECTAREA)
       auto pItem = hb_param(1, Harbour::Item::SYMBOL);
       if (pItem != nullptr)
       {
-        auto pSymAlias = hb_itemGetSymbol(pItem);
+        auto pSymAlias = pItem->getSymbol();
         if (pSymAlias->pDynSym != nullptr)
         {
           iNewArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
@@ -1810,7 +1810,7 @@ HB_FUNC(SELECT)
       auto pItem = hb_param(1, Harbour::Item::SYMBOL);
       if (pItem)
       {
-        PHB_SYMB pSymAlias = hb_itemGetSymbol(pItem);
+        PHB_SYMB pSymAlias = pItem->getSymbol();
         if (pSymAlias->pDynSym)
         {
           iArea = static_cast<int>(hb_dynsymAreaHandle(pSymAlias->pDynSym));
