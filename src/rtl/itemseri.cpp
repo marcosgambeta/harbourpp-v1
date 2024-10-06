@@ -558,7 +558,7 @@ static HB_SIZE hb_itemSerialSize(PHB_ITEM pItem, int iFlags, PHB_CODEPAGE cdpIn,
     break;
 
   case Harbour::Item::SYMBOL:
-    nSize = 2 + strlen(hb_itemGetSymbol(pItem)->szName);
+    nSize = 2 + strlen(pItem->getSymbol()->szName);
     break;
 
   case Harbour::Item::STRING:
@@ -821,7 +821,7 @@ static HB_SIZE hb_serializeItem(PHB_ITEM pItem, HB_BOOL iFlags, PHB_CODEPAGE cdp
     break;
 
   case Harbour::Item::SYMBOL:
-    szVal = hb_itemGetSymbol(pItem)->szName;
+    szVal = pItem->getSymbol()->szName;
     nLen = strlen(szVal);
     if (nLen > 0xFF)
     {
