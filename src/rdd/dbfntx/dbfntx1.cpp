@@ -510,12 +510,12 @@ static LPKEYINFO hb_ntxKeyPutItem(LPKEYINFO pKey, PHB_ITEM pItem, HB_ULONG ulRec
     if (pTag->KeyLength < 8)
     {
       char szDate[9];
-      hb_itemGetDS(pItem, szDate);
+      pItem->getDS(szDate);
       memcpy(pKey->key, szDate, pTag->KeyLength);
     }
     else
     {
-      hb_itemGetDS(pItem, pKey->key);
+      pItem->getDS(pKey->key);
       if (pTag->KeyLength > 8)
       {
         memset(pKey->key + 8, '\0', pTag->KeyLength - 8);
@@ -6173,7 +6173,7 @@ static HB_ERRCODE hb_ntxTagCreate(LPTAGINFO pTag, bool fReindex)
           }
           /* fallthrough */
         case Harbour::Item::DATE:
-          hb_itemGetDS(pItem, szBuffer);
+          pItem->getDS(szBuffer);
           hb_ntxSortKeyAdd(pSort, pArea->dbfarea.ulRecNo, szBuffer, 8);
           break;
 

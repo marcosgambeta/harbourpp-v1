@@ -177,7 +177,7 @@ static bool hb_exportBufSqlVar(PHB_FILEBUF pFileBuf, PHB_ITEM pValue, const char
     char szDate[9];
 
     hb_addStrToFBuffer(pFileBuf, szDelim);
-    hb_itemGetDS(pValue, szDate);
+    pValue->getDS(szDate);
     if (szDate[0] == ' ')
     {
       hb_addStrToFBuffer(pFileBuf, "0100-01-01");

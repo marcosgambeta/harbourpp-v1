@@ -2917,7 +2917,7 @@ static HB_ERRCODE hb_dbfPutValue(DBFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
         }
         else
         {
-          hb_itemGetDS(pItem, szBuffer);
+          pItem->getDS(szBuffer);
           memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, 8);
         }
       }

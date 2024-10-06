@@ -606,7 +606,7 @@ static HB_ERRCODE hb_sdfPutValue(SDFAREAP pArea, HB_USHORT uiIndex, PHB_ITEM pIt
     {
       if (pField->uiType == Harbour::DB::Field::DATE)
       {
-        hb_itemGetDS(pItem, szBuffer);
+        pItem->getDS(szBuffer);
         memcpy(pArea->pRecord + pArea->pFieldOffset[uiIndex], szBuffer, 8);
       }
       else if (pField->uiType == Harbour::DB::Field::TIMESTAMP && (pField->uiLen == 12 || pField->uiLen == 23))
