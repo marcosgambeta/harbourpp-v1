@@ -695,6 +695,18 @@ char *hb_itemGetDS(PHB_ITEM pItem, char *szDate)
   }
 }
 
+char *_HB_ITEM::getDS(char *szDate) // equivalent to hb_itemGetDS
+{
+  if (this->isDateTime())
+  {
+    return hb_dateDecStr(szDate, this->dateTimeJulian());
+  }
+  else
+  {
+    return hb_dateDecStr(szDate, 0);
+  }
+}
+
 long hb_itemGetDL(PHB_ITEM pItem)
 {
 #if 0

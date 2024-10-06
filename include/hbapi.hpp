@@ -490,6 +490,7 @@ typedef struct _HB_ITEM
   const char *getCPtr();
   HB_SIZE getCLen();
   HB_MAXINT getNInt();
+  char *getDS(char *szDate);
   long getDL();
   double getTD();
   HB_BOOL getTDT(long *plJulian, long *plMilliSec);
