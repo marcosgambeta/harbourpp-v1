@@ -3800,10 +3800,10 @@ char *hb_itemString(PHB_ITEM pItem, HB_SIZE *nLen, HB_BOOL *bFreeReq)
 
   case Harbour::Item::SYMBOL:
     *bFreeReq = true;
-    *nLen = strlen(hb_itemGetSymbol(pItem)->szName) + 3;
+    *nLen = strlen(pItem->getSymbol()->szName) + 3;
     buffer = static_cast<char *>(hb_xgrab(*nLen + 1));
     buffer[0] = '@';
-    memcpy(buffer + 1, hb_itemGetSymbol(pItem)->szName, *nLen - 3);
+    memcpy(buffer + 1, pItem->getSymbol()->szName, *nLen - 3);
     buffer[*nLen - 2] = '(';
     buffer[*nLen - 1] = ')';
     buffer[*nLen] = '\0';

@@ -1145,7 +1145,7 @@ HB_FUNC(HB_THREADSTART)
     }
     else if (pStart->isSymbol())
     {
-      pSymbol = hb_itemGetSymbol(pStart);
+      pSymbol = pStart->getSymbol();
       if (!pSymbol->value.pFunPtr)
       {
         szFuncName = pSymbol->szName;

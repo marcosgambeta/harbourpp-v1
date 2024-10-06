@@ -849,7 +849,7 @@ PHB_SYMB hb_arrayGetSymbol(PHB_ITEM pArray, HB_SIZE nIndex)
 
   if (pArray->isArray() && nIndex > 0 && nIndex <= pArray->arrayLen())
   {
-    return hb_itemGetSymbol(pArray->arrayItems() + nIndex - 1);
+    return (pArray->arrayItems() + nIndex - 1)->getSymbol();
   }
   else
   {

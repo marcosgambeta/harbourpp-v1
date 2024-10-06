@@ -4334,7 +4334,7 @@ HB_FUNC(__CLSINSTSUPER)
   {
     if (pItem->isSymbol())
     {
-      pClassFuncSym = hb_itemGetSymbol(pItem);
+      pClassFuncSym = pItem->getSymbol();
     }
     else if (pItem->isString())
     {
@@ -5661,7 +5661,7 @@ HB_FUNC(__OBJSETIVARS)
     }
     else if (pObject->isSymbol())
     {
-      pObject = pNewObj = hb_clsInst(hb_clsFindClassByFunc(hb_itemGetSymbol(pObject)));
+      pObject = pNewObj = hb_clsInst(hb_clsFindClassByFunc(pObject->getSymbol()));
     }
     else if (!pObject->isObject())
     {
@@ -5702,7 +5702,7 @@ HB_FUNC(__OBJRESTOREIVARS)
     }
     else if (pClass->isSymbol())
     {
-      pObject = hb_clsInst(hb_clsFindClassByFunc(hb_itemGetSymbol(pClass)));
+      pObject = hb_clsInst(hb_clsFindClassByFunc(pClass->getSymbol()));
     }
 
     if (pObject)

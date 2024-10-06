@@ -480,7 +480,7 @@ HB_FUNC(HB_EXECFROMARRAY)
   {
     if (pFunc->isSymbol())
     {
-      pExecSym = hb_itemGetSymbol(pFunc);
+      pExecSym = pFunc->getSymbol();
     }
     else if (pFunc->isString())
     {
@@ -565,7 +565,7 @@ HB_BOOL hb_execFromArray(PHB_ITEM pParam)
 
     if (pParam->isSymbol())
     {
-      pExecSym = hb_itemGetSymbol(pParam);
+      pExecSym = pParam->getSymbol();
     }
     else if (pParam->isString())
     {
