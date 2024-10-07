@@ -593,10 +593,10 @@ static PHB_DYNS hb_dynsymByItem(PHB_ITEM pItem)
     }
     else if (pItem->isSymbol())
     {
-      pDynSym = pItem->item.asSymbol.value->pDynSym;
+      pDynSym = pItem->symbolValue()->pDynSym;
       if (pDynSym == nullptr)
       {
-        pDynSym = hb_dynsymFind(pItem->item.asSymbol.value->szName);
+        pDynSym = hb_dynsymFind(pItem->symbolValue()->szName);
       }
     }
     else if (pItem->isNumeric())

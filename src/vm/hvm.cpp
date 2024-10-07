@@ -2051,14 +2051,14 @@ void hb_vmExecute(const HB_BYTE *pCode, PHB_SYMB pSymbols)
 
     case HB_P_LINE:
 #if 0
-            HB_TRACE(HB_TR_INFO, ("Opcode: HB_P_LINE: %s (%i)", hb_stackBaseItem()->item.asSymbol.value->szName, hb_stackBaseItem()->item.asSymbol.stackstate->uiLineNo));
+            HB_TRACE(HB_TR_INFO, ("Opcode: HB_P_LINE: %s (%i)", hb_stackBaseItem()->symbolValue()->szName, hb_stackBaseItem()->symbolStackState()->uiLineNo));
 #endif
 
-      hb_stackBaseItem()->item.asSymbol.stackstate->uiLineNo = HB_PCODE_MKUSHORT(&pCode[1]);
+      hb_stackBaseItem()->symbolStackState()->uiLineNo = HB_PCODE_MKUSHORT(&pCode[1]);
 #ifndef HB_NO_DEBUG
-      if (hb_stackBaseItem()->item.asSymbol.stackstate->fDebugging)
+      if (hb_stackBaseItem()->symbolStackState()->fDebugging)
       {
-        hb_vmDebuggerShowLine(hb_stackBaseItem()->item.asSymbol.stackstate->uiLineNo);
+        hb_vmDebuggerShowLine(hb_stackBaseItem()->symbolStackState()->uiLineNo);
       }
 #endif
       pCode += 3;
@@ -4215,7 +4215,7 @@ static void hb_vmFuncPtr() /* pushes a function address pointer. Removes the sym
     /* do nothing - now we are using Harbour::Item::SYMBOL */
 #if 0
       hb_stackPop();
-      hb_vmPushPointer(static_cast<void*>(pItem->item.asSymbol.value->value.pFunPtr));
+      hb_vmPushPointer(static_cast<void*>(pItem->symbolValue()->value.pFunPtr));
 #endif
   }
   else
@@ -4318,9 +4318,9 @@ static void hb_vmExactlyEqual()
 #endif
   else if (pItem1->isSymbol() && pItem2->isSymbol())
   {
-    pItem1->setLogicalValue(pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                            (pItem1->item.asSymbol.value->pDynSym != nullptr &&
-                             pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
+    pItem1->setLogicalValue(pItem1->symbolValue() == pItem2->symbolValue() ||
+                            (pItem1->symbolValue()->pDynSym != nullptr &&
+                             pItem1->symbolValue()->pDynSym == pItem2->symbolValue()->pDynSym));
     pItem1->setType(Harbour::Item::LOGICAL);
     hb_stackDec();
   }
@@ -6222,8 +6222,8 @@ static void hb_vmPushVParams()
   int i = 0;
 
   auto pBase = hb_stackBaseItem();
-  int iFirst = pBase->item.asSymbol.paramdeclcnt;
-  int iPCount = pBase->item.asSymbol.paramcnt;
+  int iFirst = pBase->symbolParamDeclCnt();
+  int iPCount = pBase->symbolParamCnt();
   while (++iFirst <= iPCount)
   {
     hb_vmPush(hb_stackItemFromBase(iFirst));
@@ -6317,7 +6317,7 @@ static HB_ERRCODE hb_vmSelectWorkarea(PHB_ITEM pAlias, PHB_SYMB pField)
     case Harbour::Item::SYMBOL:
       /* Alias was specified using alias identifier, for example: al->field
        */
-      errCode = hb_rddSelectWorkAreaSymbol(pAlias->item.asSymbol.value);
+      errCode = hb_rddSelectWorkAreaSymbol(pAlias->symbolValue());
       pAlias->setType(Harbour::Item::NIL);
       break;
 
@@ -6430,7 +6430,7 @@ void hb_vmProc(HB_USHORT uiParams)
 #endif
 #endif
 
-  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->item.asSymbol.value;
+  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
   HB_VM_FUNCUNREF(pSym);
   if (HB_VM_ISFUNC(pSym))
   {
@@ -6504,7 +6504,7 @@ void hb_vmDo(HB_USHORT uiParams)
 #endif
 
   HB_STACK_STATE sStackState;
-  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->item.asSymbol.value;
+  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
   auto pSelf = hb_stackSelfItem(); /* NIL, OBJECT or BLOCK */
 
   if (!pSelf->isNil())
@@ -6610,7 +6610,7 @@ void hb_vmSend(HB_USHORT uiParams)
 #endif
 
   HB_STACK_STATE sStackState;
-  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->item.asSymbol.value;
+  PHB_SYMB pSym = hb_stackNewFrame(&sStackState, uiParams)->symbolValue();
   auto pSelf = hb_stackSelfItem(); /* NIL, OBJECT or BLOCK */
 
   PHB_SYMB pExecSym = hb_objGetMethod(pSelf, pSym, &sStackState);
@@ -6659,7 +6659,7 @@ static void hb_vmPushObjectVarRef()
   HB_STACK_TLS_PRELOAD
   HB_STACK_STATE sStackState;
   PHB_ITEM pItem = hb_stackNewFrame(&sStackState, 0); /* procedure name */
-  PHB_SYMB pSym = pItem->item.asSymbol.value;
+  PHB_SYMB pSym = pItem->symbolValue();
   if (!hb_objGetVarRef(hb_stackSelfItem(), pSym, &sStackState) && hb_vmRequestQuery() == 0)
   {
     hb_errRT_BASE_SubstR(EG_NOVARMETHOD, 1005, nullptr, pSym->szName + (pSym->szName[0] == '_' ? 1 : 0), 1,
@@ -6728,14 +6728,14 @@ static HARBOUR hb_vmDoBlock()
   auto pBase = hb_stackBaseItem();
 
   /* set number of declared parameters */
-  pBase->item.asSymbol.paramdeclcnt = pBlock->item.asBlock.paramcnt;
+  pBase->setSymbolParamDeclCnt(pBlock->item.asBlock.paramcnt);
   /* set the current line number to a line where the codeblock was defined */
-  pBase->item.asSymbol.stackstate->uiLineNo = pBlock->item.asBlock.lineno;
+  pBase->symbolStackState()->uiLineNo = pBlock->item.asBlock.lineno;
   /* set execution context for OOP scope */
-  pBase->item.asSymbol.stackstate->uiClass = pBlock->item.asBlock.hclass;
-  pBase->item.asSymbol.stackstate->uiMethod = pBlock->item.asBlock.method;
+  pBase->symbolStackState()->uiClass = pBlock->item.asBlock.hclass;
+  pBase->symbolStackState()->uiMethod = pBlock->item.asBlock.method;
   /* add missing parameters */
-  int iParam = pBlock->item.asBlock.paramcnt - pBase->item.asSymbol.paramcnt;
+  int iParam = pBlock->item.asBlock.paramcnt - pBase->symbolParamCnt();
   while (--iParam >= 0)
   {
     hb_stackAllocItem()->setType(Harbour::Item::NIL);
@@ -7014,7 +7014,7 @@ static void hb_vmLocalName(
 #endif
 
   HB_STACK_TLS_PRELOAD
-  if (hb_stackBaseItem()->item.asSymbol.stackstate->fDebugging)
+  if (hb_stackBaseItem()->symbolStackState()->fDebugging)
   {
     s_pFunDbgEntry(HB_DBG_LOCALNAME, 0, szLocalName, uiLocal, nullptr);
   }
@@ -7029,7 +7029,7 @@ static void hb_vmStaticName(HB_BYTE bIsGlobal, HB_USHORT uiStatic,
 
   HB_STACK_TLS_PRELOAD
   HB_SYMBOL_UNUSED(bIsGlobal);
-  if (hb_stackBaseItem()->item.asSymbol.stackstate->fDebugging)
+  if (hb_stackBaseItem()->symbolStackState()->fDebugging)
   {
     s_pFunDbgEntry(HB_DBG_STATICNAME, 0, szStaticName, uiStatic, static_cast<PHB_ITEM>(hb_stackGetStaticsBase()));
   }
@@ -7045,7 +7045,7 @@ static void hb_vmModuleName(const char *szModuleName) /* PRG and function name i
   {
     HB_STACK_TLS_PRELOAD
     s_pFunDbgEntry(HB_DBG_MODULENAME, 0, szModuleName, 0, nullptr);
-    hb_stackBaseItem()->item.asSymbol.stackstate->fDebugging = true;
+    hb_stackBaseItem()->symbolStackState()->fDebugging = true;
   }
 }
 #endif
@@ -7065,9 +7065,9 @@ static void hb_vmFrame(HB_USHORT usLocals, unsigned char ucParams)
    /* This old code which clears additional parameters to make space for
     * local variables without updating pBase->item.asSymbol.paramdeclcnt
     */
-   iTotal = pBase->item.asSymbol.paramcnt - ucParams;
+   iTotal = pBase->symbolParamCnt() - ucParams;
    if( iTotal > 0 ) {
-      pBase->item.asSymbol.paramcnt = ucParams;
+      pBase->setSymbolParamCnt(ucParams);
       do {
          hb_stackItemFromTop(-iTotal)->clear();
       } while( --iTotal > 0 );
@@ -7075,15 +7075,15 @@ static void hb_vmFrame(HB_USHORT usLocals, unsigned char ucParams)
 
    iTotal = usLocals + ucParams;
    if( iTotal ) {
-      iTotal -= pBase->item.asSymbol.paramcnt;
+      iTotal -= pBase->symbolParamCnt();
       while( --iTotal >= 0 ) {
          HB_VM_PUSHNIL();
       }
    }
 #else
-  pBase->item.asSymbol.paramdeclcnt = ucParams;
+  pBase->setSymbolParamDeclCnt(ucParams);
 
-  iTotal = ucParams - pBase->item.asSymbol.paramcnt;
+  iTotal = ucParams - pBase->symbolParamCnt();
   if (iTotal < 0)
   {
     iTotal = 0;
@@ -7107,9 +7107,9 @@ static void hb_vmVFrame(HB_USHORT usLocals, unsigned char ucParams)
 
   auto pBase = hb_stackBaseItem();
 
-  pBase->item.asSymbol.paramdeclcnt = ucParams;
+  pBase->setSymbolParamDeclCnt(ucParams);
 
-  int iTotal = ucParams - pBase->item.asSymbol.paramcnt;
+  int iTotal = ucParams - pBase->symbolParamCnt();
   if (iTotal < 0)
   {
     iTotal = 0;
@@ -7617,8 +7617,8 @@ void hb_vmPushSymbol(PHB_SYMB pSym)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
-  pItem->item.asSymbol.value = pSym;
-  pItem->item.asSymbol.stackstate = nullptr;
+  pItem->setSymbolValue(pSym);
+  pItem->setSymbolStackState(nullptr);
 }
 
 void hb_vmPushDynSym(PHB_DYNS pDynSym)
@@ -7630,8 +7630,8 @@ void hb_vmPushDynSym(PHB_DYNS pDynSym)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
-  pItem->item.asSymbol.value = pDynSym->pSymbol;
-  pItem->item.asSymbol.stackstate = nullptr;
+  pItem->setSymbolValue(pDynSym->pSymbol);
+  pItem->setSymbolStackState(nullptr);
 }
 
 void hb_vmPushEvalSym(void)
@@ -7643,8 +7643,8 @@ void hb_vmPushEvalSym(void)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
-  pItem->item.asSymbol.value = &hb_symEval;
-  pItem->item.asSymbol.stackstate = nullptr;
+  pItem->setSymbolValue(&hb_symEval);
+  pItem->setSymbolStackState(nullptr);
 }
 
 /* -3    -> HB_P_PUSHBLOCK
@@ -7682,9 +7682,9 @@ static void hb_vmPushBlock(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen
   pItem->item.asBlock.paramcnt = HB_PCODE_MKUSHORT(pCode);
   /* store the line number where the codeblock was defined
    */
-  pItem->item.asBlock.lineno = hb_stackBaseItem()->item.asSymbol.stackstate->uiLineNo;
-  pItem->item.asBlock.hclass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
-  pItem->item.asBlock.method = hb_stackBaseItem()->item.asSymbol.stackstate->uiMethod;
+  pItem->item.asBlock.lineno = hb_stackBaseItem()->symbolStackState()->uiLineNo;
+  pItem->item.asBlock.hclass = hb_stackBaseItem()->symbolStackState()->uiClass;
+  pItem->item.asBlock.method = hb_stackBaseItem()->symbolStackState()->uiMethod;
 }
 
 /* -2    -> HB_P_PUSHBLOCKSHORT
@@ -7714,9 +7714,9 @@ static void hb_vmPushBlockShort(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE
   pItem->item.asBlock.paramcnt = 0;
   /* store the line number where the codeblock was defined
    */
-  pItem->item.asBlock.lineno = hb_stackBaseItem()->item.asSymbol.stackstate->uiLineNo;
-  pItem->item.asBlock.hclass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
-  pItem->item.asBlock.method = hb_stackBaseItem()->item.asSymbol.stackstate->uiMethod;
+  pItem->item.asBlock.lineno = hb_stackBaseItem()->symbolStackState()->uiLineNo;
+  pItem->item.asBlock.hclass = hb_stackBaseItem()->symbolStackState()->uiClass;
+  pItem->item.asBlock.method = hb_stackBaseItem()->symbolStackState()->uiMethod;
 }
 
 /* -(5|6)     -> HB_P_MPUSHBLOCK[LARGE]
@@ -7741,9 +7741,9 @@ static void hb_vmPushMacroBlock(const HB_BYTE *pCode, HB_SIZE nSize, HB_USHORT u
   pItem->item.asBlock.paramcnt = usParams;
   /* store the line number where the codeblock was defined
    */
-  pItem->item.asBlock.lineno = hb_stackBaseItem()->item.asSymbol.stackstate->uiLineNo;
-  pItem->item.asBlock.hclass = hb_stackBaseItem()->item.asSymbol.stackstate->uiClass;
-  pItem->item.asBlock.method = hb_stackBaseItem()->item.asSymbol.stackstate->uiMethod;
+  pItem->item.asBlock.lineno = hb_stackBaseItem()->symbolStackState()->uiLineNo;
+  pItem->item.asBlock.hclass = hb_stackBaseItem()->symbolStackState()->uiClass;
+  pItem->item.asBlock.method = hb_stackBaseItem()->symbolStackState()->uiMethod;
 }
 
 /* pushes current workarea number on the eval stack
@@ -9797,7 +9797,7 @@ HB_BOOL hb_vmTryEval(PHB_ITEM *pResult, PHB_ITEM pItem, HB_ULONG ulPCount, ...)
     }
     else if (pItem->isSymbol())
     {
-      pSymbol = pItem->item.asSymbol.value;
+      pSymbol = pItem->symbolValue();
       pItem = nullptr;
     }
     else if (pItem->isBlock())
@@ -10306,9 +10306,9 @@ void hb_xvmSetLine(HB_USHORT uiLine)
 
   HB_STACK_TLS_PRELOAD
 
-  hb_stackBaseItem()->item.asSymbol.stackstate->uiLineNo = uiLine;
+  hb_stackBaseItem()->symbolStackState()->uiLineNo = uiLine;
 #ifndef HB_NO_DEBUG
-  if (hb_stackBaseItem()->item.asSymbol.stackstate->fDebugging)
+  if (hb_stackBaseItem()->symbolStackState()->fDebugging)
   {
     hb_vmDebuggerShowLine(uiLine);
   }
@@ -10601,8 +10601,8 @@ void hb_xvmPushFuncSymbol(PHB_SYMB pSym)
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
   pItem->setType(Harbour::Item::SYMBOL);
-  pItem->item.asSymbol.value = pSym;
-  pItem->item.asSymbol.stackstate = nullptr;
+  pItem->setSymbolValue(pSym);
+  pItem->setSymbolStackState(nullptr);
   hb_stackAllocItem()->setType(Harbour::Item::NIL);
 }
 
@@ -13238,7 +13238,7 @@ HB_FUNC(__VMITEMID)
     }
     else if (pItem->isSymbol())
     {
-      hb_retptr(pItem->item.asSymbol.value);
+      hb_retptr(pItem->symbolValue());
     }
   }
 }

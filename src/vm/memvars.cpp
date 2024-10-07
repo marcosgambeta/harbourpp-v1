@@ -332,7 +332,7 @@ static void hb_memvarResetPrivatesBase(void)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  hb_stackGetPrivateStack()->base = hb_stackBaseItem()->item.asSymbol.stackstate->nPrivateBase;
+  hb_stackGetPrivateStack()->base = hb_stackBaseItem()->symbolStackState()->nPrivateBase;
 }
 
 // This functions copies passed item value into the memvar pointed
@@ -599,10 +599,10 @@ static PHB_DYNS hb_memvarGetSymbol(PHB_ITEM pItem)
     }
     else if (pItem->isSymbol())
     {
-      pDynSym = pItem->item.asSymbol.value->pDynSym;
+      pDynSym = pItem->symbolValue()->pDynSym;
       if (pDynSym == nullptr)
       {
-        pDynSym = hb_dynsymFind(pItem->item.asSymbol.value->szName);
+        pDynSym = hb_dynsymFind(pItem->symbolValue()->szName);
       }
     }
   }
@@ -665,10 +665,10 @@ void hb_memvarCreateFromItem(PHB_ITEM pMemvar, int iScope, PHB_ITEM pValue)
   // find dynamic symbol or create one
   if (pMemvar->isSymbol())
   {
-    pDynVar = pMemvar->item.asSymbol.value->pDynSym;
+    pDynVar = pMemvar->symbolValue()->pDynSym;
     if (pDynVar == nullptr)
     {
-      pDynVar = hb_dynsymGet(pMemvar->item.asSymbol.value->szName);
+      pDynVar = hb_dynsymGet(pMemvar->symbolValue()->szName);
     }
   }
   else if (pMemvar->isString())
@@ -783,7 +783,7 @@ static void hb_memvarReleaseWithMask(const char *szMask, bool bInclude)
   HB_STACK_TLS_PRELOAD
 
   HB_SIZE nCount = hb_stackGetPrivateStack()->count;
-  HB_SIZE nBase = hb_stackBaseItem()->item.asSymbol.stackstate->nPrivateBase;
+  HB_SIZE nBase = hb_stackBaseItem()->symbolStackState()->nPrivateBase;
   while (nCount-- > nBase)
   {
     PHB_DYNS pDynVar = hb_stackGetPrivateStack()->stack[nCount].pDynSym;
@@ -916,12 +916,12 @@ static HB_SIZE hb_memvarGetBaseOffset(int iProcLevel)
       HB_ISIZ nOffset = hb_stackBaseProcOffset(iLevel - iProcLevel - 1);
       if (nOffset > 0)
       {
-        return hb_stackItem(nOffset)->item.asSymbol.stackstate->nPrivateBase;
+        return hb_stackItem(nOffset)->symbolStackState()->nPrivateBase;
       }
     }
   }
 
-  return hb_stackBaseItem()->item.asSymbol.stackstate->nPrivateBase;
+  return hb_stackBaseItem()->symbolStackState()->nPrivateBase;
 }
 
 // Count the number of variables with given scope
@@ -1326,7 +1326,7 @@ HB_FUNC(__MVGET)
       // (user created error handler can create this variable)
       auto pError =
           hb_errRT_New(ES_ERROR, nullptr, EG_NOVAR, 1003, nullptr,
-                       pName->isString() ? pName->stringValue() : pName->item.asSymbol.value->szName, 0, EF_CANRETRY);
+                       pName->isString() ? pName->stringValue() : pName->symbolValue()->szName, 0, EF_CANRETRY);
 
       while (hb_errLaunch(pError) == E_RETRY)
       {
@@ -1396,7 +1396,7 @@ HB_FUNC(__MVPUT)
       // attempt to assign a value to undeclared variable
       // create the PRIVATE one
       hb_memvarCreateFromDynSymbol(
-          hb_dynsymGet(pName->isString() ? pName->stringValue() : pName->item.asSymbol.value->szName),
+          hb_dynsymGet(pName->isString() ? pName->stringValue() : pName->symbolValue()->szName),
           HB_VSCOMP_PRIVATE, pValue);
     }
     hb_memvarUpdatePrivatesBase();
@@ -1805,7 +1805,7 @@ HB_FUNC(__MVSETBASE)
 
   if (nOffset > 0)
   {
-    hb_stackItem(nOffset)->item.asSymbol.stackstate->nPrivateBase = hb_memvarGetPrivatesBase();
+    hb_stackItem(nOffset)->symbolStackState()->nPrivateBase = hb_memvarGetPrivatesBase();
   }
 }
 

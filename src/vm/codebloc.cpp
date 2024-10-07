@@ -212,7 +212,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, HB_USHORT uiLocals, const 
 
   pCBlock->pCode = pCode;
   pCBlock->dynBuffer = nLen != 0;
-  pCBlock->pDefSymb = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym(pBase) : pBase->item.asSymbol.value;
+  pCBlock->pDefSymb = pBase->symbolStackState()->uiClass ? hb_clsMethodSym(pBase) : pBase->symbolValue();
   pCBlock->pSymbols = pSymbols;
   pCBlock->pStatics = hb_stackGetStaticsBase();
   pCBlock->uiLocals = uiLocals;
@@ -248,7 +248,7 @@ PHB_CODEBLOCK hb_codeblockMacroNew(const HB_BYTE *pBuffer, HB_SIZE nLen)
   // Store the number of referenced local variables
   pCBlock->pCode = pCode;
   pCBlock->dynBuffer = true;
-  pCBlock->pDefSymb = pBase->item.asSymbol.stackstate->uiClass ? hb_clsMethodSym(pBase) : pBase->item.asSymbol.value;
+  pCBlock->pDefSymb = pBase->symbolStackState()->uiClass ? hb_clsMethodSym(pBase) : pBase->symbolValue();
   pCBlock->pSymbols = nullptr; // macro-compiled codeblock cannot access a local symbol table
   pCBlock->pStatics = hb_stackGetStaticsBase();
   pCBlock->uiLocals = 0;

@@ -1204,7 +1204,7 @@ PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
 
   if (pItem && pItem->isSymbol())
   {
-    return pItem->item.asSymbol.value;
+    return pItem->symbolValue();
   }
   else
   {
@@ -1216,7 +1216,7 @@ PHB_SYMB _HB_ITEM::getSymbol() // equivalent to hb_itemGetSymbol
 {
   if (this->isSymbol())
   {
-    return this->item.asSymbol.value;
+    return this->symbolValue();
   }
   else
   {
@@ -2046,9 +2046,10 @@ PHB_ITEM hb_itemPutSymbol(PHB_ITEM pItem, PHB_SYMB pSym)
   }
 
   pItem->setType(Harbour::Item::SYMBOL);
-  pItem->item.asSymbol.value = pSym;
-  pItem->item.asSymbol.stackstate = nullptr;
-  pItem->item.asSymbol.paramcnt = pItem->item.asSymbol.paramdeclcnt = 0;
+  pItem->setSymbolValue(pSym);
+  pItem->setSymbolStackState(nullptr);
+  pItem->setSymbolParamCnt(0);
+  pItem->setSymbolParamDeclCnt(0);
 
   return pItem;
 }
@@ -3089,9 +3090,9 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isSymbol())
   {
-    fResult = pItem2->isSymbol() && (pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                                     (pItem1->item.asSymbol.value->pDynSym != nullptr &&
-                                      pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym));
+    fResult = pItem2->isSymbol() && (pItem1->symbolValue() == pItem2->symbolValue() ||
+                                     (pItem1->symbolValue()->pDynSym != nullptr &&
+                                      pItem1->symbolValue()->pDynSym == pItem2->symbolValue()->pDynSym));
   }
   return fResult;
 }
@@ -3200,11 +3201,11 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isSymbol())
     {
-      *piResult = (pItem1->item.asSymbol.value == pItem2->item.asSymbol.value ||
-                   (pItem1->item.asSymbol.value->pDynSym != nullptr &&
-                    pItem1->item.asSymbol.value->pDynSym == pItem2->item.asSymbol.value->pDynSym))
+      *piResult = (pItem1->symbolValue() == pItem2->symbolValue() ||
+                   (pItem1->symbolValue()->pDynSym != nullptr &&
+                    pItem1->symbolValue()->pDynSym == pItem2->symbolValue()->pDynSym))
                       ? 0
-                      : (pItem1->item.asSymbol.value < pItem2->item.asSymbol.value ? -1 : 1);
+                      : (pItem1->symbolValue() < pItem2->symbolValue() ? -1 : 1);
       fResult = true;
     }
   }

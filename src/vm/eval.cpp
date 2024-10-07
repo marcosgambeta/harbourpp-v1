@@ -127,7 +127,7 @@ PHB_ITEM hb_evalLaunch(PHB_EVALINFO pEvalInfo)
     }
     else if (pItem->isSymbol())
     {
-      pSymbol = pItem->item.asSymbol.value;
+      pSymbol = pItem->symbolValue();
       pItem = nullptr;
     }
     else if (pItem->isBlock())
@@ -226,7 +226,7 @@ PHB_ITEM hb_itemDo(PHB_ITEM pItem, HB_ULONG ulPCount, ...)
     }
     else if (pItem->isSymbol())
     {
-      pSymbol = pItem->item.asSymbol.value;
+      pSymbol = pItem->symbolValue();
       pItem = nullptr;
     }
     else if (pItem->isBlock())
@@ -496,9 +496,9 @@ HB_FUNC(HB_EXECFROMARRAY)
   if (pExecSym)
   {
     pFunc = hb_stackBaseItem();
-    pItem = hb_stackItem(pFunc->item.asSymbol.stackstate->nBaseItem);
-    pFunc->item.asSymbol.stackstate->uiClass = pItem->item.asSymbol.stackstate->uiClass;
-    pFunc->item.asSymbol.stackstate->uiMethod = pItem->item.asSymbol.stackstate->uiMethod;
+    pItem = hb_stackItem(pFunc->symbolStackState()->nBaseItem);
+    pFunc->symbolStackState()->uiClass = pItem->symbolStackState()->uiClass;
+    pFunc->symbolStackState()->uiMethod = pItem->symbolStackState()->uiMethod;
 
     iPCount = 0;
     hb_vmPushSymbol(pExecSym);
@@ -629,7 +629,8 @@ HB_FUNC(HB_EXECMSG)
   if (iParams >= 2 && HB_ISSYMBOL(1))
   {
     auto pBase = hb_stackBaseItem();
-    pBase->item.asSymbol.paramcnt = pBase->item.asSymbol.paramdeclcnt = 0;
+    pBase->setSymbolParamCnt(0);
+    pBase->setSymbolParamDeclCnt(0);
     hb_vmProc(static_cast<HB_USHORT>(iParams - 2));
   }
   else

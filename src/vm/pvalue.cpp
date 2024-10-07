@@ -51,9 +51,9 @@
 HB_FUNC(HB_PVALUE)
 {
   auto uiParam = static_cast<HB_USHORT>(hb_parni(1));
-  HB_ISIZ nOffset = hb_stackBaseItem()->item.asSymbol.stackstate->nBaseItem;
+  HB_ISIZ nOffset = hb_stackBaseItem()->symbolStackState()->nBaseItem;
 
-  if (uiParam && uiParam <= hb_stackItem(nOffset)->item.asSymbol.paramcnt)
+  if (uiParam && uiParam <= hb_stackItem(nOffset)->symbolParamCnt())
   {
     auto pItem = hb_stackItem(nOffset + 1 + uiParam);
     if (hb_pcount() > 1)

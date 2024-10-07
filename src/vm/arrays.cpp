@@ -1981,7 +1981,7 @@ PHB_ITEM hb_arrayFromParams(int iLevel)
   HB_ISIZ nBaseOffset = hb_stackBaseProcOffset(iLevel);
   if (nBaseOffset > 0)
   {
-    uiPCount = hb_stackItem(nBaseOffset)->item.asSymbol.paramcnt;
+    uiPCount = hb_stackItem(nBaseOffset)->symbolParamCnt();
   }
   else
   {
@@ -2006,7 +2006,7 @@ PHB_ITEM hb_arrayBaseParams(void)
   HB_STACK_TLS_PRELOAD
 
   auto pArray = hb_itemNew(nullptr);
-  HB_USHORT uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;
+  HB_USHORT uiPCount = hb_stackBaseItem()->symbolParamCnt();
 
   hb_arrayNew(pArray, uiPCount);
 
@@ -2027,7 +2027,7 @@ PHB_ITEM hb_arraySelfParams(void)
   HB_STACK_TLS_PRELOAD
 
   auto pArray = hb_itemNew(nullptr);
-  HB_USHORT uiPCount = hb_stackBaseItem()->item.asSymbol.paramcnt;
+  HB_USHORT uiPCount = hb_stackBaseItem()->symbolParamCnt();
 
   hb_arrayNew(pArray, uiPCount + 1);
 

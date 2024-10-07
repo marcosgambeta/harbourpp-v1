@@ -73,7 +73,7 @@ HB_FUNC(PROCLINE)
 
   if (nOffset > 0)
   {
-    hb_retni(hb_stackItem(nOffset)->item.asSymbol.stackstate->uiLineNo);
+    hb_retni(hb_stackItem(nOffset)->symbolStackState()->uiLineNo);
   }
   else
   {
@@ -112,7 +112,7 @@ HB_FUNC(PROCFILE)
     {
       auto pBase = hb_stackItem(nOffset);
 
-      pSym = pBase->item.asSymbol.value;
+      pSym = pBase->symbolValue();
       if (pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym)
       {
         auto pSelf = hb_stackItem(nOffset + 1);
@@ -121,12 +121,12 @@ HB_FUNC(PROCFILE)
         {
           pSym = pSelf->item.asBlock.value->pDefSymb;
         }
-        else if (pBase->item.asSymbol.stackstate->uiClass)
+        else if (pBase->symbolStackState()->uiClass)
         {
           pSym = hb_clsMethodSym(pBase);
         }
       }
-      else if (pBase->item.asSymbol.stackstate->uiClass)
+      else if (pBase->symbolStackState()->uiClass)
       {
         pSym = hb_clsMethodSym(pBase);
       }
@@ -153,30 +153,30 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
     auto pBase = hb_stackItem(nOffset);
     auto pSelf = hb_stackItem(nOffset + 1);
 
-    if (fMethodName && nOffset > 0 && pBase->item.asSymbol.value == &hb_symEval &&
-        pBase->item.asSymbol.stackstate->uiClass)
+    if (fMethodName && nOffset > 0 && pBase->symbolValue() == &hb_symEval &&
+        pBase->symbolStackState()->uiClass)
     {
-      HB_ISIZ nPrevOffset = hb_stackItem(nOffset)->item.asSymbol.stackstate->nBaseItem;
+      HB_ISIZ nPrevOffset = hb_stackItem(nOffset)->symbolStackState()->nBaseItem;
 
-      if (hb_stackItem(nPrevOffset)->item.asSymbol.stackstate->uiClass == pBase->item.asSymbol.stackstate->uiClass &&
-          hb_stackItem(nPrevOffset)->item.asSymbol.stackstate->uiMethod == pBase->item.asSymbol.stackstate->uiMethod)
+      if (hb_stackItem(nPrevOffset)->symbolStackState()->uiClass == pBase->symbolStackState()->uiClass &&
+          hb_stackItem(nPrevOffset)->symbolStackState()->uiMethod == pBase->symbolStackState()->uiMethod)
       {
         pBase = hb_stackItem(nPrevOffset);
         pSelf = hb_stackItem(nPrevOffset + 1);
       }
     }
 
-    if (pBase->item.asSymbol.value == &hb_symEval || pBase->item.asSymbol.value->pDynSym == hb_symEval.pDynSym)
+    if (pBase->symbolValue() == &hb_symEval || pBase->symbolValue()->pDynSym == hb_symEval.pDynSym)
     {
       hb_strncat(szName, "(b)", HB_PROCBUF_LEN);
       // it is a method name?
-      if (fMethodName && pBase->item.asSymbol.stackstate->uiClass)
+      if (fMethodName && pBase->symbolStackState()->uiClass)
       {
-        hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
+        hb_strncat(szName, hb_clsName(pBase->symbolStackState()->uiClass), HB_PROCBUF_LEN);
         hb_strncat(szName, ":", HB_PROCBUF_LEN);
         hb_strncat(
             szName,
-            hb_clsMethodName(pBase->item.asSymbol.stackstate->uiClass, pBase->item.asSymbol.stackstate->uiMethod),
+            hb_clsMethodName(pBase->symbolStackState()->uiClass, pBase->symbolStackState()->uiMethod),
             HB_PROCBUF_LEN);
       }
       else if (pSelf->isBlock())
@@ -185,22 +185,22 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
       }
       else if (pSelf->isSymbol())
       {
-        hb_strncpy(szName, pSelf->item.asSymbol.value->szName, HB_PROCBUF_LEN);
+        hb_strncpy(szName, pSelf->symbolValue()->szName, HB_PROCBUF_LEN);
       }
       else
       {
-        hb_strncat(szName, pBase->item.asSymbol.value->szName, HB_PROCBUF_LEN);
+        hb_strncat(szName, pBase->symbolValue()->szName, HB_PROCBUF_LEN);
       }
     }
     else
     {
       // it is a method name?
-      if (pBase->item.asSymbol.stackstate->uiClass)
+      if (pBase->symbolStackState()->uiClass)
       {
-        hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
+        hb_strncat(szName, hb_clsName(pBase->symbolStackState()->uiClass), HB_PROCBUF_LEN);
         hb_strncat(szName, ":", HB_PROCBUF_LEN);
       }
-      hb_strncat(szName, pBase->item.asSymbol.value->szName, HB_PROCBUF_LEN);
+      hb_strncat(szName, pBase->symbolValue()->szName, HB_PROCBUF_LEN);
     }
   }
 
@@ -220,7 +220,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
     auto pBase = hb_stackItem(nOffset);
     auto pSelf = hb_stackItem(nOffset + 1);
 
-    PHB_SYMB pSym = pBase->item.asSymbol.value;
+    PHB_SYMB pSym = pBase->symbolValue();
 
     if (szName != nullptr)
     {
@@ -240,9 +240,9 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
       }
       else
       {
-        if (pBase->item.asSymbol.stackstate->uiClass)
+        if (pBase->symbolStackState()->uiClass)
         { // it is a method name
-          hb_strncat(szName, hb_clsName(pBase->item.asSymbol.stackstate->uiClass), HB_PROCBUF_LEN);
+          hb_strncat(szName, hb_clsName(pBase->symbolStackState()->uiClass), HB_PROCBUF_LEN);
           hb_strncat(szName, ":", HB_PROCBUF_LEN);
         }
         hb_strncat(szName, pSym->szName, HB_PROCBUF_LEN);
@@ -251,7 +251,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
 
     if (puiLine)
     {
-      *puiLine = pBase->item.asSymbol.stackstate->uiLineNo;
+      *puiLine = pBase->symbolStackState()->uiLineNo;
     }
 
     if (szFile != nullptr)
@@ -260,7 +260,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
       {
         pSym = pSelf->item.asBlock.value->pDefSymb;
       }
-      else if (pBase->item.asSymbol.stackstate->uiClass)
+      else if (pBase->symbolStackState()->uiClass)
       {
         pSym = hb_clsMethodSym(pBase);
       }

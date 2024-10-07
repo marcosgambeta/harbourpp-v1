@@ -3138,5 +3138,5 @@ int hb_pcount(void)
 #endif
 
   HB_STACK_TLS_PRELOAD
-  return static_cast<int>((hb_stackBaseItem())->item.asSymbol.paramcnt);
+  return static_cast<int>((hb_stackBaseItem())->symbolParamCnt());
 }

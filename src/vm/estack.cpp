@@ -200,7 +200,7 @@ static void hb_stack_init(PHB_STACK pStack)
 
   pStack->pPos++;
   hb_itemPutSymbol(*pStack->pItems, &s_initSymbol);
-  (*pStack->pItems)->item.asSymbol.stackstate = &pStack->state;
+  (*pStack->pItems)->setSymbolStackState(&pStack->state);
 
   pStack->rdd.uiCurrArea = 1;
   pStack->iKeyPoll = 1;
@@ -794,7 +794,7 @@ static void hb_stackDispLocal(void)
 
   hb_conOutErr(hb_conNewLine(), 0);
   hb_snprintf(buffer, sizeof(buffer), HB_I_("Virtual Machine Stack Dump at %s(%i):"),
-              (*hb_stack.pBase)->item.asSymbol.value->szName, (*hb_stack.pBase)->item.asSymbol.stackstate->uiLineNo);
+              (*hb_stack.pBase)->symbolValue()->szName, (*hb_stack.pBase)->symbolStackState()->uiLineNo);
   hb_conOutErr(buffer, 0);
   hb_conOutErr(hb_conNewLine(), 0);
   hb_conOutErr("--------------------------", 0);
@@ -863,7 +863,7 @@ static void hb_stackDispLocal(void)
       break;
 
     case Harbour::Item::SYMBOL:
-      hb_snprintf(buffer, sizeof(buffer), HB_I_("SYMBOL = %s "), (*pBase)->item.asSymbol.value->szName);
+      hb_snprintf(buffer, sizeof(buffer), HB_I_("SYMBOL = %s "), (*pBase)->symbolValue()->szName);
       break;
 
     case Harbour::Item::POINTER:
@@ -903,11 +903,11 @@ PHB_ITEM hb_stackNewFrame(PHB_STACK_STATE pFrame, HB_USHORT uiParams)
   pFrame->uiClass = pFrame->uiMethod = pFrame->uiLineNo = 0;
   pFrame->fDebugging = false;
 
-  pItem->item.asSymbol.stackstate = pFrame;
-  pItem->item.asSymbol.paramcnt = uiParams;
+  pItem->setSymbolStackState(pFrame);
+  pItem->setSymbolParamCnt(uiParams);
   // set default value of 'paramdeclcnt' - it will be updated
   // in hb_vm[V]Frame only
-  pItem->item.asSymbol.paramdeclcnt = uiParams;
+  pItem->setSymbolParamDeclCnt(uiParams);
   hb_stack.pBase = pBase;
 
   return pItem;
@@ -979,16 +979,16 @@ PHB_ITEM hb_stackLocalVariable(int iLocal)
 
   // if( iLocal <= 0 )
   //    hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
-  if (pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt)
+  if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt())
   {
     // function with variable number of parameters:
     // FUNCTION foo(a,b,c,...)
     // LOCAL x,y,z
     // number of passed parameters is bigger then number of declared
     // parameters - skip additional parameters only for local variables
-    if (iLocal > pBase->item.asSymbol.paramdeclcnt)
+    if (iLocal > pBase->symbolParamDeclCnt())
     {
-      iLocal += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
+      iLocal += pBase->symbolParamCnt() - pBase->symbolParamDeclCnt();
     }
   }
   return *(hb_stack.pBase + iLocal + 1);
@@ -1002,16 +1002,16 @@ PHB_ITEM hb_stackLocalVariableAt(int *piFromBase)
 
   // if( *piFromBase <= 0 )
   //    hb_errInternal(HB_EI_STACKUFLOW, nullptr, nullptr, nullptr);
-  if (pBase->item.asSymbol.paramcnt > pBase->item.asSymbol.paramdeclcnt)
+  if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt())
   {
     // function with variable number of parameters:
     // FUNCTION foo(a,b,c,...)
     // LOCAL x,y,z
     // number of passed parameters is bigger then number of declared
     // parameters - skip additional parameters only for local variables
-    if (*piFromBase > pBase->item.asSymbol.paramdeclcnt)
+    if (*piFromBase > pBase->symbolParamDeclCnt())
     {
-      *piFromBase += pBase->item.asSymbol.paramcnt - pBase->item.asSymbol.paramdeclcnt;
+      *piFromBase += pBase->symbolParamCnt() - pBase->symbolParamDeclCnt();
     }
   }
   return *(hb_stack.pBase + *piFromBase + 1);
@@ -1272,10 +1272,10 @@ void hb_stackClearMemvarsBase(void)
 
   PHB_ITEM pBase = *hb_stack.pBase;
 
-  while (pBase->item.asSymbol.stackstate->nPrivateBase != 0)
+  while (pBase->symbolStackState()->nPrivateBase != 0)
   {
-    pBase->item.asSymbol.stackstate->nPrivateBase = 0;
-    pBase = *(hb_stack.pItems + pBase->item.asSymbol.stackstate->nBaseItem);
+    pBase->symbolStackState()->nPrivateBase = 0;
+    pBase = *(hb_stack.pItems + pBase->symbolStackState()->nBaseItem);
   }
 }
 
@@ -1287,7 +1287,7 @@ int hb_stackCallDepth(void)
 
   while (nOffset > 0)
   {
-    nOffset = (*(hb_stack.pItems + nOffset))->item.asSymbol.stackstate->nBaseItem;
+    nOffset = (*(hb_stack.pItems + nOffset))->symbolStackState()->nBaseItem;
     ++iLevel;
   }
 
@@ -1301,7 +1301,7 @@ HB_ISIZ hb_stackBaseProcOffset(int iLevel)
 
   while (iLevel-- > 0 && nOffset > 0)
   {
-    nOffset = (*(hb_stack.pItems + nOffset))->item.asSymbol.stackstate->nBaseItem;
+    nOffset = (*(hb_stack.pItems + nOffset))->symbolStackState()->nBaseItem;
   }
 
   if (iLevel < 0 && (nOffset > 0 || (*hb_stack.pItems)->isSymbol()))
@@ -1322,12 +1322,12 @@ HB_ISIZ hb_stackBaseSymbolOffset(PHB_SYMB pSymbol)
   while (nOffset > 0)
   {
     PHB_ITEM pItem = hb_stack.pItems[nOffset];
-    if (pItem->item.asSymbol.value == pSymbol ||
-        (pSymbol->pDynSym != nullptr && pItem->item.asSymbol.value->pDynSym == pSymbol->pDynSym))
+    if (pItem->symbolValue() == pSymbol ||
+        (pSymbol->pDynSym != nullptr && pItem->symbolValue()->pDynSym == pSymbol->pDynSym))
     {
       return nOffset;
     }
-    nOffset = pItem->item.asSymbol.stackstate->nBaseItem;
+    nOffset = pItem->symbolStackState()->nBaseItem;
   }
   return -1;
 }
@@ -1350,8 +1350,8 @@ void hb_stackBaseProcInfo(char *szProcName, HB_USHORT *puiProcLine)
     HB_STACK_TLS_PRELOAD
     if (hb_stack.pPos > hb_stack.pBase)
     {
-      hb_strncpy(szProcName, (*hb_stack.pBase)->item.asSymbol.value->szName, HB_SYMBOL_NAME_LEN);
-      *puiProcLine = (*hb_stack.pBase)->item.asSymbol.stackstate->uiLineNo;
+      hb_strncpy(szProcName, (*hb_stack.pBase)->symbolValue()->szName, HB_SYMBOL_NAME_LEN);
+      *puiProcLine = (*hb_stack.pBase)->symbolStackState()->uiLineNo;
     }
     else
     {
