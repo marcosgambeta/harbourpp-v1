@@ -100,6 +100,15 @@ void setDateTimeJulian(long lValue)
 long dateTimeTime()  
 void setDateTimeTime(long lValue)  
 
+PHB_SYMB symbolValue()  
+void setSymbolValue(PHB_SYMB pValue)  
+PHB_STACK_STATE symbolStackState()  
+void setSymbolStackState(PHB_STACK_STATE pValue)  
+HB_USHORT symbolParamCnt()  
+void setSymbolParamCnt(HB_USHORT usValue)  
+HB_USHORT symbolParamDeclCnt()  
+void setSymbolParamDeclCnt(HB_USHORT usValue)  
+
 void clear()  
 
 ### Notes
@@ -225,6 +234,15 @@ long dateTimeJulian()
 void setDateTimeJulian(long lValue)  
 long dateTimeTime()  
 void setDateTimeTime(long lValue)  
+
+PHB_SYMB symbolValue()  
+void setSymbolValue(PHB_SYMB pValue)  
+PHB_STACK_STATE symbolStackState()  
+void setSymbolStackState(PHB_STACK_STATE pValue)  
+HB_USHORT symbolParamCnt()  
+void setSymbolParamCnt(HB_USHORT usValue)  
+HB_USHORT symbolParamDeclCnt()  
+void setSymbolParamDeclCnt(HB_USHORT usValue)  
 
 void clear()  
 
