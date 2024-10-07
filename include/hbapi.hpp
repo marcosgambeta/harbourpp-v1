@@ -545,6 +545,15 @@ typedef struct _HB_ITEM
   long dateTimeTime();
   void setDateTimeTime(long lValue);
   //
+  PHB_SYMB symbolValue();
+  void setSymbolValue(PHB_SYMB pValue);
+  PHB_STACK_STATE symbolStackState();
+  void setSymbolStackState(PHB_STACK_STATE pValue);
+  HB_USHORT symbolParamCnt();
+  void setSymbolParamCnt(HB_USHORT usValue);
+  HB_USHORT symbolParamDeclCnt();
+  void setSymbolParamDeclCnt(HB_USHORT usValue);
+  //
   void clear();
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -880,6 +889,48 @@ inline long _HB_ITEM::dateTimeTime()
 inline void _HB_ITEM::setDateTimeTime(long lValue)
 {
   this->item.asDateTime.time = lValue;
+}
+
+// symbol
+
+inline PHB_SYMB _HB_ITEM::symbolValue()
+{
+  return this->item.asSymbol.value;
+}
+
+inline void _HB_ITEM::setSymbolValue(PHB_SYMB pValue)
+{
+  this->item.asSymbol.value = pValue;
+}
+
+inline PHB_STACK_STATE _HB_ITEM::symbolStackState()
+{
+  return this->item.asSymbol.stackstate;
+}
+
+inline void _HB_ITEM::setSymbolStackState(PHB_STACK_STATE pValue)
+{
+  this->item.asSymbol.stackstate = pValue;
+}
+
+inline HB_USHORT _HB_ITEM::symbolParamCnt()
+{
+  return this->item.asSymbol.paramcnt;
+}
+
+inline void _HB_ITEM::setSymbolParamCnt(HB_USHORT usValue)
+{
+  this->item.asSymbol.paramcnt = usValue;
+}
+
+inline HB_USHORT _HB_ITEM::symbolParamDeclCnt()
+{
+  return this->item.asSymbol.paramdeclcnt;
+}
+
+inline void _HB_ITEM::setSymbolParamDeclCnt(HB_USHORT usValue)
+{
+  this->item.asSymbol.paramdeclcnt = usValue;
 }
 
 #endif
