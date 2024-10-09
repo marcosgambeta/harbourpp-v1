@@ -2300,7 +2300,7 @@ void hb_itemClear(PHB_ITEM pItem)
   }
   else if (type & Harbour::Item::BLOCK)
   {
-    hb_gcRefFree(pItem->item.asBlock.value);
+    hb_gcRefFree(pItem->blockValue());
   }
   else if (type & Harbour::Item::HASH)
   {
@@ -2354,7 +2354,7 @@ void _HB_ITEM::clear() // equivalent to hb_itemClear
   }
   else if (_type & Harbour::Item::BLOCK)
   {
-    hb_gcRefFree(this->item.asBlock.value);
+    hb_gcRefFree(this->blockValue());
   }
   else if (_type & Harbour::Item::HASH)
   {
@@ -2426,7 +2426,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     }
     else if (pSource->isBlock())
     {
-      hb_gcRefInc(pSource->item.asBlock.value);
+      hb_gcRefInc(pSource->blockValue());
     }
     else if (pSource->isHash())
     {
@@ -3086,7 +3086,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isBlock())
   {
-    fResult = pItem2->isBlock() && pItem1->item.asBlock.value == pItem2->item.asBlock.value;
+    fResult = pItem2->isBlock() && pItem1->blockValue() == pItem2->blockValue();
   }
   else if (pItem1->isSymbol())
   {
@@ -3191,9 +3191,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isBlock())
     {
-      *piResult = pItem1->item.asBlock.value < pItem2->item.asBlock.value
+      *piResult = pItem1->blockValue() < pItem2->blockValue()
                       ? -1
-                      : (pItem1->item.asBlock.value > pItem2->item.asBlock.value ? 1 : 0);
+                      : (pItem1->blockValue() > pItem2->blockValue() ? 1 : 0);
       fResult = true;
     }
   }

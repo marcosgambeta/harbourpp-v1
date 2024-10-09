@@ -1640,7 +1640,7 @@ PHB_SYMB hb_clsMethodSym(PHB_ITEM pBaseSymbol)
     if (pFuncSym == &s___msgEvalInline)
     {
       auto pItem = hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData);
-      return pItem ? pItem->item.asBlock.value->pDefSymb : nullptr;
+      return pItem ? pItem->blockValue()->pDefSymb : nullptr;
     }
     // else if( pFuncSym == &s___msgPerform )
     else if (pFuncSym == &s___msgDelegate)
@@ -1759,7 +1759,7 @@ static PHB_SYMB hb_clsSenderSymbol(void)
 
       if (pBlock->isBlock())
       {
-        pSym = pBlock->item.asBlock.value->pDefSymb;
+        pSym = pBlock->blockValue()->pDefSymb;
       }
     }
   }
@@ -4934,8 +4934,8 @@ HB_FUNC_STATIC(msgEvalInline)
 
   hb_vmPush(hb_arrayGetItemPtr(s_pClasses[pMethod->uiSprClass]->pInlines, pMethod->uiData));
   auto pBlock = hb_stackItemFromTop(-1); // Push block
-  pBlock->item.asBlock.hclass = pStack->uiClass;
-  pBlock->item.asBlock.method = pStack->uiMethod;
+  pBlock->setBlockHClass(pStack->uiClass);
+  pBlock->setBlockMethod(pStack->uiMethod);
 
   hb_vmPush(hb_stackSelfItem()); // Push self as first argument
 

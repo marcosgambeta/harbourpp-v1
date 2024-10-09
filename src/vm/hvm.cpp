@@ -383,15 +383,15 @@ static PHB_ITEM hb_breakBlock()
                                        HB_P_FUNCTIONSHORT, 1, HB_P_ENDBLOCK};
 
     s_breakBlock = hb_itemNew(nullptr);
-    s_breakBlock->item.asBlock.value = hb_codeblockNew(s_pCode, /* pcode buffer         */
+    s_breakBlock->setBlockValue(hb_codeblockNew(s_pCode, /* pcode buffer         */
                                                        0,       /* number of referenced local variables */
                                                        nullptr, /* table with referenced local variables */
-                                                       &s_symBreak, sizeof(s_pCode));
+                                                       &s_symBreak, sizeof(s_pCode)));
     s_breakBlock->setType(Harbour::Item::BLOCK);
-    s_breakBlock->item.asBlock.paramcnt = 1;
-    s_breakBlock->item.asBlock.lineno = 0;
-    s_breakBlock->item.asBlock.hclass = 0;
-    s_breakBlock->item.asBlock.method = 0;
+    s_breakBlock->setBlockParamCnt(1);
+    s_breakBlock->setBlockLineNo(0);
+    s_breakBlock->setBlockHClass(0);
+    s_breakBlock->setBlockMethod(0);
   }
   return s_breakBlock;
 }
@@ -4309,7 +4309,7 @@ static void hb_vmExactlyEqual()
 #ifndef HB_CLP_STRICT
   else if (pItem1->isBlock() && pItem2->isBlock())
   {
-    bool fResult = pItem1->item.asBlock.value == pItem2->item.asBlock.value;
+    bool fResult = pItem1->blockValue() == pItem2->blockValue();
     hb_stackPop();
     pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -6728,22 +6728,22 @@ static HARBOUR hb_vmDoBlock()
   auto pBase = hb_stackBaseItem();
 
   /* set number of declared parameters */
-  pBase->setSymbolParamDeclCnt(pBlock->item.asBlock.paramcnt);
+  pBase->setSymbolParamDeclCnt(pBlock->blockParamCnt());
   /* set the current line number to a line where the codeblock was defined */
-  pBase->symbolStackState()->uiLineNo = pBlock->item.asBlock.lineno;
+  pBase->symbolStackState()->uiLineNo = pBlock->blockLineNo();
   /* set execution context for OOP scope */
-  pBase->symbolStackState()->uiClass = pBlock->item.asBlock.hclass;
-  pBase->symbolStackState()->uiMethod = pBlock->item.asBlock.method;
+  pBase->symbolStackState()->uiClass = pBlock->blockHClass();
+  pBase->symbolStackState()->uiMethod = pBlock->blockMethod();
   /* add missing parameters */
-  int iParam = pBlock->item.asBlock.paramcnt - pBase->symbolParamCnt();
+  int iParam = pBlock->blockParamCnt() - pBase->symbolParamCnt();
   while (--iParam >= 0)
   {
     hb_stackAllocItem()->setType(Harbour::Item::NIL);
   }
   /* set static base offset */
-  hb_stackSetStaticsBase(pBlock->item.asBlock.value->pStatics);
+  hb_stackSetStaticsBase(pBlock->blockValue()->pStatics);
 
-  hb_vmExecute(pBlock->item.asBlock.value->pCode, pBlock->item.asBlock.value->pSymbols);
+  hb_vmExecute(pBlock->blockValue()->pCode, pBlock->blockValue()->pSymbols);
 }
 
 /* Evaluates a passed codeblock item with no arguments passed to a codeblock
@@ -7671,20 +7671,20 @@ static void hb_vmPushBlock(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE nLen
 
   auto pItem = hb_stackAllocItem();
 
-  pItem->item.asBlock.value = hb_codeblockNew(pCode + 4 + (uiLocals << 1), /* pcode buffer         */
+  pItem->setBlockValue(hb_codeblockNew(pCode + 4 + (uiLocals << 1), /* pcode buffer         */
                                               uiLocals,                    /* number of referenced local variables */
                                               pCode + 4,                   /* table with referenced local variables */
-                                              pSymbols, nLen);
+                                              pSymbols, nLen));
 
   pItem->setType(Harbour::Item::BLOCK);
   /* store the number of expected parameters
    */
-  pItem->item.asBlock.paramcnt = HB_PCODE_MKUSHORT(pCode);
+  pItem->setBlockParamCnt(HB_PCODE_MKUSHORT(pCode));
   /* store the line number where the codeblock was defined
    */
-  pItem->item.asBlock.lineno = hb_stackBaseItem()->symbolStackState()->uiLineNo;
-  pItem->item.asBlock.hclass = hb_stackBaseItem()->symbolStackState()->uiClass;
-  pItem->item.asBlock.method = hb_stackBaseItem()->symbolStackState()->uiMethod;
+  pItem->setBlockLineNo(hb_stackBaseItem()->symbolStackState()->uiLineNo);
+  pItem->setBlockHClass(hb_stackBaseItem()->symbolStackState()->uiClass);
+  pItem->setBlockMethod(hb_stackBaseItem()->symbolStackState()->uiMethod);
 }
 
 /* -2    -> HB_P_PUSHBLOCKSHORT
@@ -7702,21 +7702,21 @@ static void hb_vmPushBlockShort(const HB_BYTE *pCode, PHB_SYMB pSymbols, HB_SIZE
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
 
-  pItem->item.asBlock.value = hb_codeblockNew(pCode,   /* pcode buffer         */
+  pItem->setBlockValue(hb_codeblockNew(pCode,   /* pcode buffer         */
                                               0,       /* number of referenced local variables */
                                               nullptr, /* table with referenced local variables */
-                                              pSymbols, nLen);
+                                              pSymbols, nLen));
 
   pItem->setType(Harbour::Item::BLOCK);
 
   /* store the number of expected parameters
    */
-  pItem->item.asBlock.paramcnt = 0;
+  pItem->setBlockParamCnt(0);
   /* store the line number where the codeblock was defined
    */
-  pItem->item.asBlock.lineno = hb_stackBaseItem()->symbolStackState()->uiLineNo;
-  pItem->item.asBlock.hclass = hb_stackBaseItem()->symbolStackState()->uiClass;
-  pItem->item.asBlock.method = hb_stackBaseItem()->symbolStackState()->uiMethod;
+  pItem->setBlockLineNo(hb_stackBaseItem()->symbolStackState()->uiLineNo);
+  pItem->setBlockHClass(hb_stackBaseItem()->symbolStackState()->uiClass);
+  pItem->setBlockMethod(hb_stackBaseItem()->symbolStackState()->uiMethod);
 }
 
 /* -(5|6)     -> HB_P_MPUSHBLOCK[LARGE]
@@ -7734,16 +7734,16 @@ static void hb_vmPushMacroBlock(const HB_BYTE *pCode, HB_SIZE nSize, HB_USHORT u
 
   HB_STACK_TLS_PRELOAD
   auto pItem = hb_stackAllocItem();
-  pItem->item.asBlock.value = hb_codeblockMacroNew(pCode, nSize);
+  pItem->setBlockValue(hb_codeblockMacroNew(pCode, nSize));
   pItem->setType(Harbour::Item::BLOCK);
   /* store the number of expected parameters
    */
-  pItem->item.asBlock.paramcnt = usParams;
+  pItem->setBlockParamCnt(usParams);
   /* store the line number where the codeblock was defined
    */
-  pItem->item.asBlock.lineno = hb_stackBaseItem()->symbolStackState()->uiLineNo;
-  pItem->item.asBlock.hclass = hb_stackBaseItem()->symbolStackState()->uiClass;
-  pItem->item.asBlock.method = hb_stackBaseItem()->symbolStackState()->uiMethod;
+  pItem->setBlockLineNo(hb_stackBaseItem()->symbolStackState()->uiLineNo);
+  pItem->setBlockHClass(hb_stackBaseItem()->symbolStackState()->uiClass);
+  pItem->setBlockMethod(hb_stackBaseItem()->symbolStackState()->uiMethod);
 }
 
 /* pushes current workarea number on the eval stack
@@ -7846,7 +7846,7 @@ static void hb_vmPushLocal(int iLocal)
     /* local variable referenced in a codeblock
      * hb_stackSelfItem() points to a codeblock that is currently evaluated
      */
-    pLocal = hb_codeblockGetRef(hb_stackSelfItem()->item.asBlock.value, iLocal);
+    pLocal = hb_codeblockGetRef(hb_stackSelfItem()->blockValue(), iLocal);
   }
 
   hb_itemCopy(hb_stackAllocItem(), pLocal->isByRef() ? hb_itemUnRef(pLocal) : pLocal);
@@ -7878,7 +7878,7 @@ static void hb_vmPushLocalByRef(int iLocal)
      * is stored can be no longer placed on the eval stack at the time
      * of a codeblock evaluation or variable access
      */
-    pTop->item.asRefer.BasePtr.block = hb_stackSelfItem()->item.asBlock.value;
+    pTop->item.asRefer.BasePtr.block = hb_stackSelfItem()->blockValue();
   }
   pTop->setType(Harbour::Item::BYREF);
   pTop->item.asRefer.value = iLocal;
@@ -8138,7 +8138,7 @@ static void hb_vmPopLocal(int iLocal)
     /* local variable referenced in a codeblock
      * hb_stackSelfItem() points to a codeblock that is currently evaluated
      */
-    pLocal = hb_codeblockGetRef(hb_stackSelfItem()->item.asBlock.value, iLocal);
+    pLocal = hb_codeblockGetRef(hb_stackSelfItem()->blockValue(), iLocal);
   }
 
   hb_itemMoveToRef(pLocal, pVal);
@@ -10494,7 +10494,7 @@ static PHB_ITEM hb_xvmLocalPtr(int iLocal)
     /* local variable referenced in a codeblock
      * hb_stackSelfItem() points to a codeblock that is currently evaluated
      */
-    return hb_codeblockGetRef(hb_stackSelfItem()->item.asBlock.value, iLocal);
+    return hb_codeblockGetRef(hb_stackSelfItem()->blockValue(), iLocal);
   }
 }
 

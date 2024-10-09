@@ -320,7 +320,7 @@ PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
     }
     else
     {
-      pLocal = hb_codeblockGetRef(hb_stackItem(nBaseOffset)->item.asBlock.value, iLocal);
+      pLocal = hb_codeblockGetRef(hb_stackItem(nBaseOffset)->blockValue(), iLocal);
     }
 
     if (pLocal->isByRef())
@@ -388,7 +388,7 @@ HB_FUNC(__DBGVMVARLSET)
       }
       else
       {
-        pLocal = hb_codeblockGetRef(hb_stackItem(nBaseOffset)->item.asBlock.value, iLocal);
+        pLocal = hb_codeblockGetRef(hb_stackItem(nBaseOffset)->blockValue(), iLocal);
       }
 
       hb_itemCopyToRef(pLocal, hb_stackItemFromBase(3));

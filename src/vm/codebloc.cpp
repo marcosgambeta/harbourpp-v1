@@ -192,7 +192,7 @@ PHB_CODEBLOCK hb_codeblockNew(const HB_BYTE *pBuffer, HB_USHORT uiLocals, const 
     auto pLocal = hb_stackSelfItem();
     if (pLocal->isBlock())
     {
-      PHB_CODEBLOCK pOwner = pLocal->item.asBlock.value;
+      PHB_CODEBLOCK pOwner = pLocal->blockValue();
 
       uiLocals = pOwner->uiLocals;
       pLocals = pOwner->pLocals;
@@ -268,7 +268,7 @@ PHB_ITEM hb_codeblockGetVar(PHB_ITEM pItem, int iItemPos)
    HB_TRACE(HB_TR_DEBUG, ("hb_codeblockGetVar(%p, %d)", static_cast<void*>(pItem), iItemPos));
 #endif
 
-  PHB_CODEBLOCK pCBlock = pItem->item.asBlock.value;
+  PHB_CODEBLOCK pCBlock = pItem->blockValue();
 
   // local variables accessed in a codeblock are always stored as reference
   return hb_itemUnRef(pCBlock->pLocals - iItemPos);
@@ -289,7 +289,7 @@ void *hb_codeblockId(PHB_ITEM pItem)
 {
   if (pItem->isBlock())
   {
-    return static_cast<void *>(pItem->item.asBlock.value);
+    return static_cast<void *>(pItem->blockValue());
   }
   else
   {
@@ -302,7 +302,7 @@ HB_COUNTER hb_codeblockRefs(PHB_ITEM pItem)
 {
   if (pItem->isBlock())
   {
-    return hb_gcRefCount(pItem->item.asBlock.value);
+    return hb_gcRefCount(pItem->blockValue());
   }
   else
   {

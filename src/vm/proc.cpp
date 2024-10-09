@@ -119,7 +119,7 @@ HB_FUNC(PROCFILE)
 
         if (pSelf->isBlock())
         {
-          pSym = pSelf->item.asBlock.value->pDefSymb;
+          pSym = pSelf->blockValue()->pDefSymb;
         }
         else if (pBase->symbolStackState()->uiClass)
         {
@@ -181,7 +181,7 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
       }
       else if (pSelf->isBlock())
       {
-        hb_strncat(szName, pSelf->item.asBlock.value->pDefSymb->szName, HB_PROCBUF_LEN);
+        hb_strncat(szName, pSelf->blockValue()->pDefSymb->szName, HB_PROCBUF_LEN);
       }
       else if (pSelf->isSymbol())
       {
@@ -231,7 +231,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
 
         if (pSelf->isBlock())
         {
-          hb_strncat(szName, pSelf->item.asBlock.value->pDefSymb->szName, HB_PROCBUF_LEN);
+          hb_strncat(szName, pSelf->blockValue()->pDefSymb->szName, HB_PROCBUF_LEN);
         }
         else
         {
@@ -258,7 +258,7 @@ HB_BOOL hb_procinfo(int iLevel, char *szName, HB_USHORT *puiLine, char *szFile)
     {
       if (pSelf->isBlock() && (pSym == &hb_symEval || pSym->pDynSym == hb_symEval.pDynSym))
       {
-        pSym = pSelf->item.asBlock.value->pDefSymb;
+        pSym = pSelf->blockValue()->pDefSymb;
       }
       else if (pBase->symbolStackState()->uiClass)
       {

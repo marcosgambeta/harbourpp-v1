@@ -866,12 +866,12 @@ static void hb_macroBlock(const char *szString, PHB_ITEM pItem)
       pItem->clear();
     }
 
-    pItem->item.asBlock.value = hb_codeblockMacroNew(pMacro->pCodeInfo->pCode, pMacro->pCodeInfo->nPCodePos);
+    pItem->setBlockValue(hb_codeblockMacroNew(pMacro->pCodeInfo->pCode, pMacro->pCodeInfo->nPCodePos));
     pItem->setType(Harbour::Item::BLOCK);
-    pItem->item.asBlock.paramcnt = 0;
-    pItem->item.asBlock.lineno = 0;
-    pItem->item.asBlock.hclass = 0;
-    pItem->item.asBlock.method = 0;
+    pItem->setBlockParamCnt(0);
+    pItem->setBlockLineNo(0);
+    pItem->setBlockHClass(0);
+    pItem->setBlockMethod(0);
 
     hb_macroDelete(pMacro);
   }
@@ -952,12 +952,12 @@ static void hb_macroSetGetBlock(PHB_DYNS pVarSym, PHB_ITEM pItem, int iWorkArea,
   {
     pItem->clear();
   }
-  pItem->item.asBlock.value = hb_codeblockMacroNew(byBuf, i);
+  pItem->setBlockValue(hb_codeblockMacroNew(byBuf, i));
   pItem->setType(Harbour::Item::BLOCK);
-  pItem->item.asBlock.paramcnt = 1;
-  pItem->item.asBlock.lineno = 0;
-  pItem->item.asBlock.hclass = 0;
-  pItem->item.asBlock.method = 0;
+  pItem->setBlockParamCnt(1);
+  pItem->setBlockLineNo(0);
+  pItem->setBlockHClass(0);
+  pItem->setBlockMethod(0);
 }
 
 HB_FUNC(MEMVARBLOCK)
