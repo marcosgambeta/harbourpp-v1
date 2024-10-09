@@ -109,6 +109,17 @@ void setSymbolParamCnt(HB_USHORT usValue)
 HB_USHORT symbolParamDeclCnt()  
 void setSymbolParamDeclCnt(HB_USHORT usValue)  
 
+_HB_CODEBLOCK *blockValue()  
+void setBlockValue(_HB_CODEBLOCK *pValue)  
+HB_USHORT blockParamCnt()  
+void setBlockParamCnt(HB_USHORT usValue)  
+HB_USHORT blockLineNo()  
+void setBlockLineNo(HB_USHORT usValue)  
+HB_USHORT blockHClass()  
+void setBlockHClass(HB_USHORT usValue)  
+HB_USHORT blockMethod()  
+void setBlockMethod(HB_USHORT usValue)  
+
 void clear()  
 
 ### Notes
@@ -243,6 +254,17 @@ HB_USHORT symbolParamCnt()
 void setSymbolParamCnt(HB_USHORT usValue)  
 HB_USHORT symbolParamDeclCnt()  
 void setSymbolParamDeclCnt(HB_USHORT usValue)  
+
+_HB_CODEBLOCK *blockValue()  
+void setBlockValue(_HB_CODEBLOCK *pValue)  
+HB_USHORT blockParamCnt()  
+void setBlockParamCnt(HB_USHORT usValue)  
+HB_USHORT blockLineNo()  
+void setBlockLineNo(HB_USHORT usValue)  
+HB_USHORT blockHClass()  
+void setBlockHClass(HB_USHORT usValue)  
+HB_USHORT blockMethod()  
+void setBlockMethod(HB_USHORT usValue)  
 
 void clear()  
 
