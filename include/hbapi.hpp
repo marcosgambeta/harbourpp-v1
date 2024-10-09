@@ -554,6 +554,17 @@ typedef struct _HB_ITEM
   HB_USHORT symbolParamDeclCnt();
   void setSymbolParamDeclCnt(HB_USHORT usValue);
   //
+  _HB_CODEBLOCK *blockValue();
+  void setBlockValue(_HB_CODEBLOCK *pValue);
+  HB_USHORT blockParamCnt();
+  void setBlockParamCnt(HB_USHORT usValue);
+  HB_USHORT blockLineNo();
+  void setBlockLineNo(HB_USHORT usValue);
+  HB_USHORT blockHClass();
+  void setBlockHClass(HB_USHORT usValue);
+  HB_USHORT blockMethod();
+  void setBlockMethod(HB_USHORT usValue);
+  //
   void clear();
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -931,6 +942,58 @@ inline HB_USHORT _HB_ITEM::symbolParamDeclCnt()
 inline void _HB_ITEM::setSymbolParamDeclCnt(HB_USHORT usValue)
 {
   this->item.asSymbol.paramdeclcnt = usValue;
+}
+
+// block
+
+inline _HB_CODEBLOCK *_HB_ITEM::blockValue()
+{
+  return this->item.asBlock.value;
+}
+
+inline void _HB_ITEM::setBlockValue(_HB_CODEBLOCK *pValue)
+{
+  this->item.asBlock.value = pValue;
+}
+
+inline HB_USHORT _HB_ITEM::blockParamCnt()
+{
+  return this->item.asBlock.paramcnt;
+}
+
+inline void _HB_ITEM::setBlockParamCnt(HB_USHORT usValue)
+{
+  this->item.asBlock.paramcnt = usValue;
+}
+
+inline HB_USHORT _HB_ITEM::blockLineNo()
+{
+  return this->item.asBlock.lineno;
+}
+
+inline void _HB_ITEM::setBlockLineNo(HB_USHORT usValue)
+{
+  this->item.asBlock.lineno = usValue;
+}
+
+inline HB_USHORT _HB_ITEM::blockHClass()
+{
+  return this->item.asBlock.hclass;
+}
+
+inline void _HB_ITEM::setBlockHClass(HB_USHORT usValue)
+{
+  this->item.asBlock.hclass = usValue;
+}
+
+inline HB_USHORT _HB_ITEM::blockMethod()
+{
+  return this->item.asBlock.method;
+}
+
+inline void _HB_ITEM::setBlockMethod(HB_USHORT usValue)
+{
+  this->item.asBlock.method = usValue;
 }
 
 #endif
