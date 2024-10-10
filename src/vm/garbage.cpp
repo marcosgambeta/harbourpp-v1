@@ -533,7 +533,7 @@ void hb_gcItemRef(PHB_ITEM pItem)
   }
   else if (pItem->isHash())
   {
-    PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->item.asHash.value);
+    PHB_GARBAGE pAlloc = HB_GC_PTR(pItem->hashValue());
 
     // Check this hash table only if it was not checked yet
     if ((pAlloc->used & ~HB_GC_DELETE) == s_uUsedFlag)

@@ -2304,7 +2304,7 @@ void hb_itemClear(PHB_ITEM pItem)
   }
   else if (type & Harbour::Item::HASH)
   {
-    hb_gcRefFree(pItem->item.asHash.value);
+    hb_gcRefFree(pItem->hashValue());
   }
   else if (type & Harbour::Item::BYREF)
   {
@@ -2358,7 +2358,7 @@ void _HB_ITEM::clear() // equivalent to hb_itemClear
   }
   else if (_type & Harbour::Item::HASH)
   {
-    hb_gcRefFree(this->item.asHash.value);
+    hb_gcRefFree(this->hashValue());
   }
   else if (_type & Harbour::Item::BYREF)
   {
@@ -2430,7 +2430,7 @@ void hb_itemCopy(PHB_ITEM pDest, PHB_ITEM pSource)
     }
     else if (pSource->isHash())
     {
-      hb_gcRefInc(pSource->item.asHash.value);
+      hb_gcRefInc(pSource->hashValue());
     }
     else if (pSource->isByRef())
     {
@@ -3078,7 +3078,7 @@ HB_BOOL hb_itemEqual(PHB_ITEM pItem1, PHB_ITEM pItem2)
   }
   else if (pItem1->isHash())
   {
-    fResult = pItem2->isHash() && pItem1->item.asHash.value == pItem2->item.asHash.value;
+    fResult = pItem2->isHash() && pItem1->hashValue() == pItem2->hashValue();
   }
   else if (pItem1->isPointer())
   {
@@ -3171,9 +3171,9 @@ HB_BOOL hb_itemCompare(PHB_ITEM pItem1, PHB_ITEM pItem2, HB_BOOL bForceExact, in
   {
     if (pItem2->isHash())
     {
-      *piResult = pItem1->item.asHash.value < pItem2->item.asHash.value
+      *piResult = pItem1->hashValue() < pItem2->hashValue()
                       ? -1
-                      : (pItem1->item.asHash.value > pItem2->item.asHash.value ? 1 : 0);
+                      : (pItem1->hashValue() > pItem2->hashValue() ? 1 : 0);
       fResult = true;
     }
   }

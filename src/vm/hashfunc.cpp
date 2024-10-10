@@ -803,7 +803,7 @@ HB_FUNC(HB_HSCAN)
         auto pItem = hb_hashGetValueAt(pHash, nStart);
         if (pItem != nullptr)
         {
-          if (pItem->isHash() && pItem->item.asHash.value == pValue->item.asHash.value)
+          if (pItem->isHash() && pItem->hashValue() == pValue->hashValue())
           {
             fFound = true;
             break;

@@ -4300,7 +4300,7 @@ static void hb_vmExactlyEqual()
   }
   else if (pItem1->isHash() && pItem2->isHash())
   {
-    bool fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
+    bool fResult = pItem1->hashValue() == pItem2->hashValue();
     hb_stackPop();
     pItem1->clear();
     pItem1->setType(Harbour::Item::LOGICAL);
@@ -4425,7 +4425,7 @@ static void hb_vmEqual()
   }
 #if 0
    else if( pItem1->isHash() && pItem2->isHash() ) {
-      bool fResult = pItem1->item.asHash.value == pItem2->item.asHash.value;
+      bool fResult = pItem1->hashValue() == pItem2->hashValue();
       hb_stackPop();
       pItem1->clear();
       pItem1->setType(Harbour::Item::LOGICAL);
@@ -4525,7 +4525,7 @@ static void hb_vmNotEqual()
   }
 #if 0
    else if( pItem1->isHash() && pItem2->isHash() ) {
-      bool fResult = pItem1->item.asHash.value != pItem2->item.asHash.value;
+      bool fResult = pItem1->hashValue() != pItem2->hashValue();
       hb_stackPop();
       pItem1->clear();
       pItem1->setType(Harbour::Item::LOGICAL);

@@ -1446,7 +1446,7 @@ HB_SIZE hb_arrayScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_SIZE
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart++;
 
-            if (pItem->isHash() && pItem->item.asHash.value == pValue->item.asHash.value)
+            if (pItem->isHash() && pItem->hashValue() == pValue->hashValue())
             {
               return nStart;
             }
@@ -1643,7 +1643,7 @@ HB_SIZE hb_arrayRevScan(PHB_ITEM pArray, PHB_ITEM pValue, HB_SIZE *pnStart, HB_S
           {
             PHB_ITEM pItem = pBaseArray->pItems + nStart;
 
-            if (pItem->isHash() && pItem->item.asHash.value == pValue->item.asHash.value)
+            if (pItem->isHash() && pItem->hashValue() == pValue->hashValue())
             {
               return nStart + 1;
             }
@@ -1914,7 +1914,7 @@ void hb_nestedCloneDo(PHB_ITEM pDstItem, PHB_ITEM pSrcItem, PHB_NESTED_CLONED pC
   }
   else if (pSrcItem->isHash())
   {
-    if (!hb_nestedCloneFind(pClonedList, static_cast<void *>(pSrcItem->item.asHash.value), pDstItem))
+    if (!hb_nestedCloneFind(pClonedList, static_cast<void *>(pSrcItem->hashValue()), pDstItem))
     {
       hb_hashCloneBody(pDstItem, pSrcItem, pClonedList);
     }
