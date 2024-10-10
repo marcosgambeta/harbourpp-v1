@@ -310,8 +310,7 @@ PHB_ITEM hb_dbg_vmVarLGet(int iLevel, int iLocal)
     {
       auto pBase = hb_stackItem(nBaseOffset - 1);
 
-      if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt() &&
-          iLocal > pBase->symbolParamDeclCnt())
+      if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt() && iLocal > pBase->symbolParamDeclCnt())
       {
         iLocal += pBase->symbolParamCnt() - pBase->symbolParamDeclCnt();
       }
@@ -378,8 +377,7 @@ HB_FUNC(__DBGVMVARLSET)
       {
         auto pBase = hb_stackItem(nBaseOffset - 1);
 
-        if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt() &&
-            iLocal > pBase->symbolParamDeclCnt())
+        if (pBase->symbolParamCnt() > pBase->symbolParamDeclCnt() && iLocal > pBase->symbolParamDeclCnt())
         {
           iLocal += pBase->symbolParamCnt() - pBase->symbolParamDeclCnt();
         }

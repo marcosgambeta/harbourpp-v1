@@ -1396,8 +1396,8 @@ HB_FUNC(__MVPUT)
       // attempt to assign a value to undeclared variable
       // create the PRIVATE one
       hb_memvarCreateFromDynSymbol(
-          hb_dynsymGet(pName->isString() ? pName->stringValue() : pName->symbolValue()->szName),
-          HB_VSCOMP_PRIVATE, pValue);
+          hb_dynsymGet(pName->isString() ? pName->stringValue() : pName->symbolValue()->szName), HB_VSCOMP_PRIVATE,
+          pValue);
     }
     hb_memvarUpdatePrivatesBase();
     hb_itemReturn(pValue);
@@ -1663,8 +1663,7 @@ HB_FUNC(__MVRESTORE)
 
         switch (uiType)
         {
-        case 'C':
-        {
+        case 'C': {
           uiWidth += uiDec * 256;
           auto pbyString = static_cast<HB_BYTE *>(hb_xgrab(uiWidth));
 
@@ -1681,8 +1680,7 @@ HB_FUNC(__MVRESTORE)
           break;
         }
 
-        case 'N':
-        {
+        case 'N': {
           HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
           if (hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN)
@@ -1697,8 +1695,7 @@ HB_FUNC(__MVRESTORE)
           break;
         }
 
-        case 'D':
-        {
+        case 'D': {
           HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
           if (hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN)
@@ -1713,8 +1710,7 @@ HB_FUNC(__MVRESTORE)
           break;
         }
 
-        case 'T':
-        {
+        case 'T': {
           HB_BYTE pbyNumber[HB_MEM_NUM_LEN];
 
           if (hb_fileRead(fhnd, pbyNumber, HB_MEM_NUM_LEN, -1) == HB_MEM_NUM_LEN)
@@ -1729,8 +1725,7 @@ HB_FUNC(__MVRESTORE)
           break;
         }
 
-        case 'L':
-        {
+        case 'L': {
           HB_BYTE pbyLogical[1];
 
           if (hb_fileRead(fhnd, pbyLogical, 1, -1) == 1)

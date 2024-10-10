@@ -153,8 +153,7 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
     auto pBase = hb_stackItem(nOffset);
     auto pSelf = hb_stackItem(nOffset + 1);
 
-    if (fMethodName && nOffset > 0 && pBase->symbolValue() == &hb_symEval &&
-        pBase->symbolStackState()->uiClass)
+    if (fMethodName && nOffset > 0 && pBase->symbolValue() == &hb_symEval && pBase->symbolStackState()->uiClass)
     {
       HB_ISIZ nPrevOffset = hb_stackItem(nOffset)->symbolStackState()->nBaseItem;
 
@@ -174,10 +173,8 @@ char *hb_procname(int iLevel, char *szName, HB_BOOL fMethodName)
       {
         hb_strncat(szName, hb_clsName(pBase->symbolStackState()->uiClass), HB_PROCBUF_LEN);
         hb_strncat(szName, ":", HB_PROCBUF_LEN);
-        hb_strncat(
-            szName,
-            hb_clsMethodName(pBase->symbolStackState()->uiClass, pBase->symbolStackState()->uiMethod),
-            HB_PROCBUF_LEN);
+        hb_strncat(szName, hb_clsMethodName(pBase->symbolStackState()->uiClass, pBase->symbolStackState()->uiMethod),
+                   HB_PROCBUF_LEN);
       }
       else if (pSelf->isBlock())
       {

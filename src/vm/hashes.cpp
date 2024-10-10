@@ -721,8 +721,8 @@ PHB_ITEM hb_hashGetItemPtr(PHB_ITEM pHash, PHB_ITEM pKey, int iFlags)
 
   if (pHash->isHash() && pKey->isHashKey())
   {
-    PHB_ITEM pDest = hb_hashValuePtr(pHash->hashValue(), pKey,
-                                     iFlags && (pHash->hashValue()->iFlags & iFlags) == iFlags);
+    PHB_ITEM pDest =
+        hb_hashValuePtr(pHash->hashValue(), pKey, iFlags && (pHash->hashValue()->iFlags & iFlags) == iFlags);
     if (pDest)
     {
       return pDest->isByRef() ? hb_itemUnRef(pDest) : pDest;
@@ -1138,8 +1138,7 @@ void hb_hashCloneBody(PHB_ITEM pDest, PHB_ITEM pHash, PHB_NESTED_CLONED pClonedL
   }
   if (pHash->hashValue()->pnPos)
   {
-    memcpy(pDest->hashValue()->pnPos, pHash->hashValue()->pnPos,
-           pHash->hashValue()->nLen * sizeof(HB_SIZE));
+    memcpy(pDest->hashValue()->pnPos, pHash->hashValue()->pnPos, pHash->hashValue()->nLen * sizeof(HB_SIZE));
   }
   for (HB_SIZE nPos = 0; nPos < pHash->hashValue()->nLen; ++nPos)
   {

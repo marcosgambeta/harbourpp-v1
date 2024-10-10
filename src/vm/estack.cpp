@@ -824,15 +824,13 @@ static void hb_stackDispLocal(void)
       hb_snprintf(buffer, sizeof(buffer), HB_I_("BLOCK "));
       break;
 
-    case Harbour::Item::DATE:
-    {
+    case Harbour::Item::DATE: {
       char szDate[9];
       hb_snprintf(buffer, sizeof(buffer), HB_I_("DATE = \"%s\" "), (*pBase)->getDS(szDate));
     }
     break;
 
-    case Harbour::Item::TIMESTAMP:
-    {
+    case Harbour::Item::TIMESTAMP: {
       char szDateTime[24];
       hb_snprintf(buffer, sizeof(buffer), HB_I_("TIMESTAMP = \"%s\" "),
                   hb_timeStampStr(szDateTime, (*pBase)->dateTimeJulian(), (*pBase)->dateTimeTime()));
@@ -847,8 +845,7 @@ static void hb_stackDispLocal(void)
       hb_snprintf(buffer, sizeof(buffer), HB_I_("LOGICAL = %s "), (*pBase)->getL() ? ".T." : ".F.");
       break;
 
-    case Harbour::Item::LONG:
-    {
+    case Harbour::Item::LONG: {
       char szBuf[24];
       hb_snprintf(buffer, sizeof(buffer), HB_I_("LONG = %s "), hb_numToStr(szBuf, sizeof(szBuf), (*pBase)->getNInt()));
       break;

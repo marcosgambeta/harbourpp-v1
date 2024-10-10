@@ -1164,8 +1164,7 @@ PHB_ITEM hb_setGetItem(HB_set_enum set_specifier, PHB_ITEM pResult, PHB_ITEM pAr
       }
     }
     break;
-  case HB_SET_DIRSEPARATOR:
-  {
+  case HB_SET_DIRSEPARATOR: {
     char szDirSep[2];
     szDirSep[0] = static_cast<char>(pSet->HB_SET_DIRSEPARATOR);
     szDirSep[1] = '\0';
