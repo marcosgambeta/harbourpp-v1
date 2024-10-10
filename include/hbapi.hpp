@@ -565,6 +565,9 @@ typedef struct _HB_ITEM
   HB_USHORT blockMethod();
   void setBlockMethod(HB_USHORT usValue);
   //
+  _HB_BASEHASH *hashValue();
+  void setHashValue(_HB_BASEHASH *pValue);
+  //
   void clear();
 #endif
 } HB_ITEM, * PHB_ITEM;
@@ -994,6 +997,18 @@ inline HB_USHORT _HB_ITEM::blockMethod()
 inline void _HB_ITEM::setBlockMethod(HB_USHORT usValue)
 {
   this->item.asBlock.method = usValue;
+}
+
+// hash
+
+inline _HB_BASEHASH *_HB_ITEM::hashValue()
+{
+  return this->item.asHash.value;
+}
+
+inline void _HB_ITEM::setHashValue(_HB_BASEHASH *pValue)
+{
+  this->item.asHash.value = pValue;
 }
 
 #endif
