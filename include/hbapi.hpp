@@ -539,6 +539,7 @@ typedef struct _HB_ITEM
   _HB_BASEARRAY *arrayValue();
   void setArrayValue(_HB_BASEARRAY *pValue);
   _HB_ITEM *arrayItems();
+  bool isValidIndex(HB_SIZE nIndex);
   _HB_ITEM *arrayItem(HB_SIZE nIndex);
   HB_SIZE arrayLen();
   //
@@ -1035,6 +1036,11 @@ inline bool _HB_ITEM::isObject()
 inline _HB_ITEM *_HB_ITEM::arrayItems()
 {
   return this->item.asArray.value->pItems;
+}
+
+inline bool _HB_ITEM::isValidIndex(HB_SIZE nIndex)
+{
+  return nIndex > 0 && nIndex <= this->arrayLen();
 }
 
 inline _HB_ITEM *_HB_ITEM::arrayItem(HB_SIZE nIndex)
