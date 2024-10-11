@@ -499,6 +499,7 @@ typedef struct _HB_ITEM
   PHB_SYMB getSymbol();
   //
   _HB_ITEM *putNI(int iNumber);
+  _HB_ITEM *putNL(long lNumber);
   _HB_ITEM *putL(HB_BOOL bValue);
   //
   HB_BOOL logicalValue();

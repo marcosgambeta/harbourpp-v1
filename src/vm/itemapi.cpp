@@ -1546,6 +1546,18 @@ PHB_ITEM hb_itemPutNL(PHB_ITEM pItem, long lNumber)
   return pItem;
 }
 
+PHB_ITEM _HB_ITEM::putNL(long lNumber) // equivalent to hb_itemPutNL
+{
+  if (this->isComplex())
+  {
+    this->clear();
+  }
+
+  HB_ITEM_PUT_LONGRAW(this, lNumber);
+
+  return this;
+}
+
 PHB_ITEM hb_itemPutNS(PHB_ITEM pItem, HB_ISIZ nNumber)
 {
 #if 0
