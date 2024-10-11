@@ -539,6 +539,7 @@ typedef struct _HB_ITEM
   _HB_BASEARRAY *arrayValue();
   void setArrayValue(_HB_BASEARRAY *pValue);
   _HB_ITEM *arrayItems();
+  _HB_ITEM *arrayItem(HB_SIZE nIndex);
   HB_SIZE arrayLen();
   //
   long dateTimeJulian();
@@ -1034,6 +1035,11 @@ inline bool _HB_ITEM::isObject()
 inline _HB_ITEM *_HB_ITEM::arrayItems()
 {
   return this->item.asArray.value->pItems;
+}
+
+inline _HB_ITEM *_HB_ITEM::arrayItem(HB_SIZE nIndex)
+{
+  return this->item.asArray.value->pItems + (nIndex - 1);
 }
 
 inline HB_SIZE _HB_ITEM::arrayLen()
