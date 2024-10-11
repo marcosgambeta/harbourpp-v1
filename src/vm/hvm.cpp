@@ -5611,7 +5611,7 @@ static void hb_vmArrayPush()
 
     if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
-      hb_itemCopy(pIndex, pArray->arrayItems() + nIndex - 1);
+      hb_itemCopy(pIndex, pArray->arrayItem(nIndex));
       hb_itemMove(pArray, pIndex);
       hb_stackDec();
     }
@@ -5831,7 +5831,7 @@ static void hb_vmArrayPop()
     if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
-      hb_itemMoveRef(pArray->arrayItems() + nIndex - 1, pValue);
+      hb_itemMoveRef(pArray->arrayItem(nIndex), pValue);
       hb_stackPop();
       hb_stackPop();
       hb_stackDec(); /* value was moved above hb_stackDec() is enough */
@@ -12230,7 +12230,7 @@ static void hb_vmArrayItemPush(HB_SIZE nIndex)
     if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       auto pItem = hb_stackAllocItem();
-      hb_itemCopy(pItem, pArray->arrayItems() + nIndex - 1);
+      hb_itemCopy(pItem, pArray->arrayItem(nIndex));
       hb_itemMove(pArray, pItem);
       hb_stackDec();
     }
@@ -12318,7 +12318,7 @@ static void hb_vmArrayItemPop(HB_SIZE nIndex)
     if (HB_IS_VALID_INDEX(nIndex, pArray->arrayLen()))
     {
       pValue->type &= ~(Harbour::Item::MEMOFLAG | Harbour::Item::DEFAULT);
-      hb_itemMoveRef(pArray->arrayItems() + nIndex - 1, pValue);
+      hb_itemMoveRef(pArray->arrayItem(nIndex), pValue);
       hb_stackPop();
       hb_stackDec(); /* value was moved above hb_stackDec() is enough */
     }
