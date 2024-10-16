@@ -1719,7 +1719,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_MAXCONNECTS, hb_parnl(3));
         break;
       case HB_CURLOPT_CLOSEPOLICY: /* OBSOLETE, does nothing. */
-        res = curl_easy_setopt(hb_curl->curl, CURLOPT_CLOSEPOLICY, hb_parnl(3));
+        res = curl_easy_setopt(hb_curl->curl, static_cast<CURLoption>(CURLOPT_CLOSEPOLICY), hb_parnl(3));
         break;
       case HB_CURLOPT_FRESH_CONNECT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_FRESH_CONNECT, HB_CURL_OPT_BOOL(3));
