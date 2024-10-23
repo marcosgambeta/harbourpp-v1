@@ -77,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_NEW )
+HB_FUNC_STATIC(WAS_LOGBRUSH_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new LOGBRUSH());
@@ -85,7 +85,7 @@ HB_FUNC_STATIC( WAS_LOGBRUSH_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_DELETE )
+HB_FUNC_STATIC(WAS_LOGBRUSH_DELETE)
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -100,7 +100,7 @@ HB_FUNC_STATIC( WAS_LOGBRUSH_DELETE )
 
 // UINT lbStyle
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBSTYLE )
+HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBSTYLE)
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -110,7 +110,7 @@ HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBSTYLE )
   }
 }
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBSTYLE )
+HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBSTYLE)
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -122,7 +122,7 @@ HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBSTYLE )
 
 // COLORREF lbColor
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBCOLOR )
+HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBCOLOR)
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -132,7 +132,7 @@ HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBCOLOR )
   }
 }
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBCOLOR )
+HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBCOLOR)
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -144,7 +144,7 @@ HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBCOLOR )
 
 // ULONG_PTR lbHatch
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBHATCH )
+HB_FUNC_STATIC(WAS_LOGBRUSH_SETLBHATCH)
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -154,7 +154,7 @@ HB_FUNC_STATIC( WAS_LOGBRUSH_SETLBHATCH )
   }
 }
 
-HB_FUNC_STATIC( WAS_LOGBRUSH_GETLBHATCH )
+HB_FUNC_STATIC(WAS_LOGBRUSH_GETLBHATCH)
 {
   auto obj = static_cast<LOGBRUSH*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

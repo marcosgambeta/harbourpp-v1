@@ -77,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_NEW )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new KERNINGPAIR());
@@ -85,7 +85,7 @@ HB_FUNC_STATIC( WAS_KERNINGPAIR_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_DELETE )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_DELETE)
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -100,7 +100,7 @@ HB_FUNC_STATIC( WAS_KERNINGPAIR_DELETE )
 
 // WORD wFirst
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_SETWFIRST )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWFIRST)
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -110,7 +110,7 @@ HB_FUNC_STATIC( WAS_KERNINGPAIR_SETWFIRST )
   }
 }
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_GETWFIRST )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWFIRST)
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -122,7 +122,7 @@ HB_FUNC_STATIC( WAS_KERNINGPAIR_GETWFIRST )
 
 // WORD wSecond
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_SETWSECOND )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_SETWSECOND)
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -132,7 +132,7 @@ HB_FUNC_STATIC( WAS_KERNINGPAIR_SETWSECOND )
   }
 }
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_GETWSECOND )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_GETWSECOND)
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -144,7 +144,7 @@ HB_FUNC_STATIC( WAS_KERNINGPAIR_GETWSECOND )
 
 // int iKernAmount
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_SETIKERNAMOUNT )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_SETIKERNAMOUNT)
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -154,7 +154,7 @@ HB_FUNC_STATIC( WAS_KERNINGPAIR_SETIKERNAMOUNT )
   }
 }
 
-HB_FUNC_STATIC( WAS_KERNINGPAIR_GETIKERNAMOUNT )
+HB_FUNC_STATIC(WAS_KERNINGPAIR_GETIKERNAMOUNT)
 {
   auto obj = static_cast<KERNINGPAIR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

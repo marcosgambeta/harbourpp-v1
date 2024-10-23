@@ -71,7 +71,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_FILETIME_NEW )
+HB_FUNC_STATIC(WAS_FILETIME_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new FILETIME());
@@ -79,7 +79,7 @@ HB_FUNC_STATIC( WAS_FILETIME_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_FILETIME_DELETE )
+HB_FUNC_STATIC(WAS_FILETIME_DELETE)
 {
   auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -94,7 +94,7 @@ HB_FUNC_STATIC( WAS_FILETIME_DELETE )
 
 // DWORD dwLowDateTime
 
-HB_FUNC_STATIC( WAS_FILETIME_SETDWLOWDATETIME )
+HB_FUNC_STATIC(WAS_FILETIME_SETDWLOWDATETIME)
 {
   auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WAS_FILETIME_SETDWLOWDATETIME )
   }
 }
 
-HB_FUNC_STATIC( WAS_FILETIME_GETDWLOWDATETIME )
+HB_FUNC_STATIC(WAS_FILETIME_GETDWLOWDATETIME)
 {
   auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -116,7 +116,7 @@ HB_FUNC_STATIC( WAS_FILETIME_GETDWLOWDATETIME )
 
 // DWORD dwHighDateTime
 
-HB_FUNC_STATIC( WAS_FILETIME_SETDWHIGHDATETIME )
+HB_FUNC_STATIC(WAS_FILETIME_SETDWHIGHDATETIME)
 {
   auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WAS_FILETIME_SETDWHIGHDATETIME )
   }
 }
 
-HB_FUNC_STATIC( WAS_FILETIME_GETDWHIGHDATETIME )
+HB_FUNC_STATIC(WAS_FILETIME_GETDWHIGHDATETIME)
 {
   auto obj = static_cast<FILETIME*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

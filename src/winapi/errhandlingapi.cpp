@@ -36,7 +36,7 @@
 #include "winapi.hpp"
 
 // WINBASEAPI UINT WINAPI SetErrorMode (UINT uMode)
-HB_FUNC( WASETERRORMODE )
+HB_FUNC(WASETERRORMODE)
 {
   wa_ret_UINT(SetErrorMode(wa_par_UINT(1)));
 }
@@ -57,7 +57,7 @@ HB_FUNC( WASETERRORMODE )
 // WINBASEAPI UINT WINAPI GetErrorMode (VOID)
 // #endif
 #if 0
-HB_FUNC( WAGETERRORMODE )
+HB_FUNC(WAGETERRORMODE)
 {
   wa_ret_UINT(GetErrorMode());
 }
@@ -68,13 +68,13 @@ HB_FUNC( WAGETERRORMODE )
 // WINBASEAPI VOID WINAPI RaiseException (DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, CONST ULONG_PTR *lpArguments)
 
 // WINBASEAPI DWORD WINAPI GetLastError (VOID)
-HB_FUNC( WAGETLASTERROR )
+HB_FUNC(WAGETLASTERROR)
 {
   wa_ret_DWORD(GetLastError());
 }
 
 // WINBASEAPI VOID WINAPI SetLastError (DWORD dwErrCode)
-HB_FUNC( WASETLASTERROR )
+HB_FUNC(WASETLASTERROR)
 {
   SetLastError(wa_par_DWORD(1));
 }

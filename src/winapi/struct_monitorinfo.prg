@@ -76,7 +76,7 @@ RETURN
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_MONITORINFO_NEW )
+HB_FUNC_STATIC(WAS_MONITORINFO_NEW)
 {
   auto obj = new MONITORINFO();
   obj->cbSize = sizeof(MONITORINFO);
@@ -86,7 +86,7 @@ HB_FUNC_STATIC( WAS_MONITORINFO_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_MONITORINFO_DELETE )
+HB_FUNC_STATIC(WAS_MONITORINFO_DELETE)
 {
   auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -101,7 +101,7 @@ HB_FUNC_STATIC( WAS_MONITORINFO_DELETE )
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC( WAS_MONITORINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_MONITORINFO_SETCBSIZE )
 // {
 //   auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
@@ -111,7 +111,7 @@ HB_FUNC_STATIC( WAS_MONITORINFO_DELETE )
 //   }
 // }
 
-HB_FUNC_STATIC( WAS_MONITORINFO_GETCBSIZE )
+HB_FUNC_STATIC(WAS_MONITORINFO_GETCBSIZE)
 {
   auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -127,7 +127,7 @@ HB_FUNC_STATIC( WAS_MONITORINFO_GETCBSIZE )
 
 // DWORD dwFlags
 
-HB_FUNC_STATIC( WAS_MONITORINFO_SETDWFLAGS )
+HB_FUNC_STATIC(WAS_MONITORINFO_SETDWFLAGS)
 {
   auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -137,7 +137,7 @@ HB_FUNC_STATIC( WAS_MONITORINFO_SETDWFLAGS )
   }
 }
 
-HB_FUNC_STATIC( WAS_MONITORINFO_GETDWFLAGS )
+HB_FUNC_STATIC(WAS_MONITORINFO_GETDWFLAGS)
 {
   auto obj = static_cast<MONITORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

@@ -83,7 +83,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_RGBQUAD_NEW )
+HB_FUNC_STATIC(WAS_RGBQUAD_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new RGBQUAD());
@@ -91,7 +91,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_RGBQUAD_DELETE )
+HB_FUNC_STATIC(WAS_RGBQUAD_DELETE)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -106,7 +106,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_DELETE )
 
 // BYTE rgbBlue
 
-HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBBLUE )
+HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBBLUE)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -116,7 +116,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBBLUE )
   }
 }
 
-HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBBLUE )
+HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBBLUE)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -128,7 +128,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBBLUE )
 
 // BYTE rgbGreen
 
-HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBGREEN )
+HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBGREEN)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -138,7 +138,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBGREEN )
   }
 }
 
-HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBGREEN )
+HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBGREEN)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -150,7 +150,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBGREEN )
 
 // BYTE rgbRed
 
-HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBRED )
+HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBRED)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -160,7 +160,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBRED )
   }
 }
 
-HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBRED )
+HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBRED)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -172,7 +172,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBRED )
 
 // BYTE rgbReserved
 
-HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBRESERVED )
+HB_FUNC_STATIC(WAS_RGBQUAD_SETRGBRESERVED)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -182,7 +182,7 @@ HB_FUNC_STATIC( WAS_RGBQUAD_SETRGBRESERVED )
   }
 }
 
-HB_FUNC_STATIC( WAS_RGBQUAD_GETRGBRESERVED )
+HB_FUNC_STATIC(WAS_RGBQUAD_GETRGBRESERVED)
 {
   auto obj = static_cast<RGBQUAD*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

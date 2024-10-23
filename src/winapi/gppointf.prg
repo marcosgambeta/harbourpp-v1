@@ -72,7 +72,7 @@ RETURN
 
 using namespace Gdiplus;
 
-HB_FUNC_STATIC( WAGPPOINTF_NEW )
+HB_FUNC_STATIC(WAGPPOINTF_NEW)
 {
   if( hb_pcount() == 0 )
   {
@@ -114,7 +114,7 @@ HB_FUNC_STATIC( WAGPPOINTF_NEW )
   }
 }
 
-HB_FUNC_STATIC( WAGPPOINTF_DELETE )
+HB_FUNC_STATIC(WAGPPOINTF_DELETE)
 {
   auto obj = static_cast<GpPointF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +129,7 @@ HB_FUNC_STATIC( WAGPPOINTF_DELETE )
 
 // REAL X
 
-HB_FUNC_STATIC( WAGPPOINTF_SETX )
+HB_FUNC_STATIC(WAGPPOINTF_SETX)
 {
   auto obj = static_cast<GpPointF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -139,7 +139,7 @@ HB_FUNC_STATIC( WAGPPOINTF_SETX )
   }
 }
 
-HB_FUNC_STATIC( WAGPPOINTF_GETX )
+HB_FUNC_STATIC(WAGPPOINTF_GETX)
 {
   auto obj = static_cast<GpPointF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -151,7 +151,7 @@ HB_FUNC_STATIC( WAGPPOINTF_GETX )
 
 // REAL Y
 
-HB_FUNC_STATIC( WAGPPOINTF_SETY )
+HB_FUNC_STATIC(WAGPPOINTF_SETY)
 {
   auto obj = static_cast<GpPointF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -161,7 +161,7 @@ HB_FUNC_STATIC( WAGPPOINTF_SETY )
   }
 }
 
-HB_FUNC_STATIC( WAGPPOINTF_GETY )
+HB_FUNC_STATIC(WAGPPOINTF_GETY)
 {
   auto obj = static_cast<GpPointF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

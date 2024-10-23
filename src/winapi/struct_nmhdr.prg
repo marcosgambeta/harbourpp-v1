@@ -77,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_NMHDR_NEW )
+HB_FUNC_STATIC(WAS_NMHDR_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new NMHDR());
@@ -85,7 +85,7 @@ HB_FUNC_STATIC( WAS_NMHDR_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_NMHDR_DELETE )
+HB_FUNC_STATIC(WAS_NMHDR_DELETE)
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -100,7 +100,7 @@ HB_FUNC_STATIC( WAS_NMHDR_DELETE )
 
 // HWND hwndFrom
 
-HB_FUNC_STATIC( WAS_NMHDR_SETHWNDFROM )
+HB_FUNC_STATIC(WAS_NMHDR_SETHWNDFROM)
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -110,7 +110,7 @@ HB_FUNC_STATIC( WAS_NMHDR_SETHWNDFROM )
   }
 }
 
-HB_FUNC_STATIC( WAS_NMHDR_GETHWNDFROM )
+HB_FUNC_STATIC(WAS_NMHDR_GETHWNDFROM)
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -122,7 +122,7 @@ HB_FUNC_STATIC( WAS_NMHDR_GETHWNDFROM )
 
 // UINT_PTR idFrom
 
-HB_FUNC_STATIC( WAS_NMHDR_SETIDFROM )
+HB_FUNC_STATIC(WAS_NMHDR_SETIDFROM)
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -132,7 +132,7 @@ HB_FUNC_STATIC( WAS_NMHDR_SETIDFROM )
   }
 }
 
-HB_FUNC_STATIC( WAS_NMHDR_GETIDFROM )
+HB_FUNC_STATIC(WAS_NMHDR_GETIDFROM)
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -144,7 +144,7 @@ HB_FUNC_STATIC( WAS_NMHDR_GETIDFROM )
 
 // UINT code
 
-HB_FUNC_STATIC( WAS_NMHDR_SETCODE )
+HB_FUNC_STATIC(WAS_NMHDR_SETCODE)
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -154,7 +154,7 @@ HB_FUNC_STATIC( WAS_NMHDR_SETCODE )
   }
 }
 
-HB_FUNC_STATIC( WAS_NMHDR_GETCODE )
+HB_FUNC_STATIC(WAS_NMHDR_GETCODE)
 {
   auto obj = static_cast<NMHDR*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

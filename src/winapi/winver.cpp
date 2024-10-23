@@ -46,7 +46,7 @@
 // DWORD WINAPI GetFileVersionInfoSizeA(LPCSTR lptstrFilename,LPDWORD lpdwHandle)
 // DWORD GetFileVersionInfoSizeA([in] LPCSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
+HB_FUNC(WAGETFILEVERSIONINFOSIZEA)
 {
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeA(wa_par_LPCSTR(1), &dwHandle));
@@ -57,7 +57,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEA )
 // DWORD WINAPI GetFileVersionInfoSizeW(LPCWSTR lptstrFilename,LPDWORD lpdwHandle)
 // DWORD GetFileVersionInfoSizeW([in] LPCWSTR lptstrFilename, [out, optional] LPDWORD lpdwHandle)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOSIZEW )
+HB_FUNC(WAGETFILEVERSIONINFOSIZEW)
 {
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeW(wa_par_LPCWSTR(1), &dwHandle));
@@ -65,7 +65,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEW )
 }
 #endif
 
-HB_FUNC( WAGETFILEVERSIONINFOSIZE )
+HB_FUNC(WAGETFILEVERSIONINFOSIZE)
 {
   void *str1{};
   DWORD dwHandle{};
@@ -77,7 +77,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZE )
 // WINBOOL WINAPI GetFileVersionInfoA(LPCSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
 // BOOL GetFileVersionInfoA([in] LPCSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOA )
+HB_FUNC(WAGETFILEVERSIONINFOA)
 {
   wa_ret_BOOL(GetFileVersionInfoA(wa_par_LPCSTR(1), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
 }
@@ -86,13 +86,13 @@ HB_FUNC( WAGETFILEVERSIONINFOA )
 // WINBOOL WINAPI GetFileVersionInfoW(LPCWSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,LPVOID lpData)
 // BOOL GetFileVersionInfoW([in] LPCWSTR lptstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOW )
+HB_FUNC(WAGETFILEVERSIONINFOW)
 {
   wa_ret_BOOL(GetFileVersionInfoW(wa_par_LPCWSTR(1), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
 }
 #endif
 
-HB_FUNC( WAGETFILEVERSIONINFO )
+HB_FUNC(WAGETFILEVERSIONINFO)
 {
   void *str1{};
   wa_ret_BOOL(GetFileVersionInfo(HB_PARSTR(1, &str1, nullptr), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
@@ -109,7 +109,7 @@ HB_FUNC( WAGETFILEVERSIONINFO )
 
 // BOOL GetFileVersionInfoExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOEXA )
+HB_FUNC(WAGETFILEVERSIONINFOEXA)
 {
   wa_ret_BOOL(GetFileVersionInfoExA(wa_par_DWORD(1), wa_par_LPCSTR(2), 0, wa_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)))); // TODO: buffer for data
 }
@@ -117,14 +117,14 @@ HB_FUNC( WAGETFILEVERSIONINFOEXA )
 
 // BOOL GetFileVersionInfoExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, DWORD dwHandle, [in] DWORD dwLen, [out] LPVOID lpData)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOEXW )
+HB_FUNC(WAGETFILEVERSIONINFOEXW)
 {
   wa_ret_BOOL(GetFileVersionInfoExW(wa_par_DWORD(1), wa_par_LPCWSTR(2), 0, wa_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)))); // TODO: buffer for data
 }
 #endif
 
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOEX )
+HB_FUNC(WAGETFILEVERSIONINFOEX)
 {
   void *str2{};
   wa_ret_BOOL(GetFileVersionInfoEx(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), 0, wa_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)))); // TODO: buffer for data
@@ -134,7 +134,7 @@ HB_FUNC( WAGETFILEVERSIONINFOEX )
 
 // DWORD GetFileVersionInfoSizeExA([in] DWORD dwFlags, [in] LPCSTR lpwstrFilename, [out] LPDWORD lpdwHandle)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOSIZEEXA )
+HB_FUNC(WAGETFILEVERSIONINFOSIZEEXA)
 {
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeExA(wa_par_DWORD(1), wa_par_LPCSTR(2), &dwHandle));
@@ -144,7 +144,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEXA )
 
 // DWORD GetFileVersionInfoSizeExW([in] DWORD dwFlags, [in] LPCWSTR lpwstrFilename, [out] LPDWORD lpdwHandle)
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOSIZEEXW )
+HB_FUNC(WAGETFILEVERSIONINFOSIZEEXW)
 {
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeExW(wa_par_DWORD(1), wa_par_LPCWSTR(2), &dwHandle));
@@ -153,7 +153,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEXW )
 #endif
 
 #if 0
-HB_FUNC( WAGETFILEVERSIONINFOSIZEEX )
+HB_FUNC(WAGETFILEVERSIONINFOSIZEEX)
 {
   void *str2{};
   DWORD dwHandle{};

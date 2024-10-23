@@ -30,22 +30,22 @@
 #include "hbapi.hpp"
 #include "winapi.hpp"
 
-HB_FUNC( WAPTON )
+HB_FUNC(WAPTON)
 {
   hb_retnint(reinterpret_cast<HB_PTRUINT>(hb_parptr(1)));
 }
 
-HB_FUNC( WANTOP )
+HB_FUNC(WANTOP)
 {
   hb_retptr(reinterpret_cast<void*>(hb_parnint(1)));
 }
 
-HB_FUNC( WALOWORD ) // macro TODO: move to correct file
+HB_FUNC(WALOWORD ) // macro TODO: move to correct file
 {
   wa_ret_int(LOWORD(wa_par_DWORD(1)));
 }
 
-HB_FUNC( WAHIWORD ) // macro TODO: move to correct file
+HB_FUNC(WAHIWORD ) // macro TODO: move to correct file
 {
   wa_ret_int(HIWORD(wa_par_DWORD(1)));
 }

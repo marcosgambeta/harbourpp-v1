@@ -84,7 +84,7 @@ RETURN
 
 using namespace Gdiplus;
 
-HB_FUNC_STATIC( WAGPRECTF_NEW )
+HB_FUNC_STATIC(WAGPRECTF_NEW)
 {
   if( hb_pcount() == 0 )
   {
@@ -118,7 +118,7 @@ HB_FUNC_STATIC( WAGPRECTF_NEW )
   }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_DELETE )
+HB_FUNC_STATIC(WAGPRECTF_DELETE)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -133,7 +133,7 @@ HB_FUNC_STATIC( WAGPRECTF_DELETE )
 
 // INT X
 
-HB_FUNC_STATIC( WAGPRECTF_SETX )
+HB_FUNC_STATIC(WAGPRECTF_SETX)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -143,7 +143,7 @@ HB_FUNC_STATIC( WAGPRECTF_SETX )
   }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_GETX )
+HB_FUNC_STATIC(WAGPRECTF_GETX)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -155,7 +155,7 @@ HB_FUNC_STATIC( WAGPRECTF_GETX )
 
 // INT Y
 
-HB_FUNC_STATIC( WAGPRECTF_SETY )
+HB_FUNC_STATIC(WAGPRECTF_SETY)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -165,7 +165,7 @@ HB_FUNC_STATIC( WAGPRECTF_SETY )
   }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_GETY )
+HB_FUNC_STATIC(WAGPRECTF_GETY)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -177,7 +177,7 @@ HB_FUNC_STATIC( WAGPRECTF_GETY )
 
 // INT Width
 
-HB_FUNC_STATIC( WAGPRECTF_SETWIDTH )
+HB_FUNC_STATIC(WAGPRECTF_SETWIDTH)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -187,7 +187,7 @@ HB_FUNC_STATIC( WAGPRECTF_SETWIDTH )
   }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_GETWIDTH )
+HB_FUNC_STATIC(WAGPRECTF_GETWIDTH)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -199,7 +199,7 @@ HB_FUNC_STATIC( WAGPRECTF_GETWIDTH )
 
 // INT Height
 
-HB_FUNC_STATIC( WAGPRECTF_SETHEIGHT )
+HB_FUNC_STATIC(WAGPRECTF_SETHEIGHT)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -209,7 +209,7 @@ HB_FUNC_STATIC( WAGPRECTF_SETHEIGHT )
   }
 }
 
-HB_FUNC_STATIC( WAGPRECTF_GETHEIGHT )
+HB_FUNC_STATIC(WAGPRECTF_GETHEIGHT)
 {
   auto obj = static_cast<GpRectF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

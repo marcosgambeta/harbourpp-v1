@@ -80,7 +80,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_CURSORINFO_NEW )
+HB_FUNC_STATIC(WAS_CURSORINFO_NEW)
 {
   auto obj = new CURSORINFO();
   obj->cbSize = sizeof(CURSORINFO);
@@ -90,7 +90,7 @@ HB_FUNC_STATIC( WAS_CURSORINFO_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_CURSORINFO_DELETE )
+HB_FUNC_STATIC(WAS_CURSORINFO_DELETE)
 {
   auto obj = static_cast<CURSORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -105,7 +105,7 @@ HB_FUNC_STATIC( WAS_CURSORINFO_DELETE )
 
 // DWORD cbSize
 
-// HB_FUNC_STATIC( WAS_CURSORINFO_SETCBSIZE )
+// HB_FUNC_STATIC(WAS_CURSORINFO_SETCBSIZE )
 // {
 //   auto obj = static_cast<CURSORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 //
@@ -115,7 +115,7 @@ HB_FUNC_STATIC( WAS_CURSORINFO_DELETE )
 //   }
 // }
 
-HB_FUNC_STATIC( WAS_CURSORINFO_GETCBSIZE )
+HB_FUNC_STATIC(WAS_CURSORINFO_GETCBSIZE)
 {
   auto obj = static_cast<CURSORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -127,7 +127,7 @@ HB_FUNC_STATIC( WAS_CURSORINFO_GETCBSIZE )
 
 // DWORD flags
 
-HB_FUNC_STATIC( WAS_CURSORINFO_SETFLAGS )
+HB_FUNC_STATIC(WAS_CURSORINFO_SETFLAGS)
 {
   auto obj = static_cast<CURSORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -137,7 +137,7 @@ HB_FUNC_STATIC( WAS_CURSORINFO_SETFLAGS )
   }
 }
 
-HB_FUNC_STATIC( WAS_CURSORINFO_GETFLAGS )
+HB_FUNC_STATIC(WAS_CURSORINFO_GETFLAGS)
 {
   auto obj = static_cast<CURSORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -149,7 +149,7 @@ HB_FUNC_STATIC( WAS_CURSORINFO_GETFLAGS )
 
 // HCURSOR hCursor
 
-HB_FUNC_STATIC( WAS_CURSORINFO_SETHCURSOR )
+HB_FUNC_STATIC(WAS_CURSORINFO_SETHCURSOR)
 {
   auto obj = static_cast<CURSORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -159,7 +159,7 @@ HB_FUNC_STATIC( WAS_CURSORINFO_SETHCURSOR )
   }
 }
 
-HB_FUNC_STATIC( WAS_CURSORINFO_GETHCURSOR )
+HB_FUNC_STATIC(WAS_CURSORINFO_GETHCURSOR)
 {
   auto obj = static_cast<CURSORINFO*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

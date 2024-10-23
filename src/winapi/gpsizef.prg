@@ -72,7 +72,7 @@ RETURN
 
 using namespace Gdiplus;
 
-HB_FUNC_STATIC( WAGPSIZEF_NEW )
+HB_FUNC_STATIC(WAGPSIZEF_NEW)
 {
   if( hb_pcount() == 0 )
   {
@@ -106,7 +106,7 @@ HB_FUNC_STATIC( WAGPSIZEF_NEW )
   }
 }
 
-HB_FUNC_STATIC( WAGPSIZEF_DELETE )
+HB_FUNC_STATIC(WAGPSIZEF_DELETE)
 {
   auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -121,7 +121,7 @@ HB_FUNC_STATIC( WAGPSIZEF_DELETE )
 
 // REAL Width
 
-HB_FUNC_STATIC( WAGPSIZEF_SETWIDTH )
+HB_FUNC_STATIC(WAGPSIZEF_SETWIDTH)
 {
   auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -131,7 +131,7 @@ HB_FUNC_STATIC( WAGPSIZEF_SETWIDTH )
   }
 }
 
-HB_FUNC_STATIC( WAGPSIZEF_GETWIDTH )
+HB_FUNC_STATIC(WAGPSIZEF_GETWIDTH)
 {
   auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -143,7 +143,7 @@ HB_FUNC_STATIC( WAGPSIZEF_GETWIDTH )
 
 // REAL Height
 
-HB_FUNC_STATIC( WAGPSIZEF_SETHEIGHT )
+HB_FUNC_STATIC(WAGPSIZEF_SETHEIGHT)
 {
   auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -153,7 +153,7 @@ HB_FUNC_STATIC( WAGPSIZEF_SETHEIGHT )
   }
 }
 
-HB_FUNC_STATIC( WAGPSIZEF_GETHEIGHT )
+HB_FUNC_STATIC(WAGPSIZEF_GETHEIGHT)
 {
   auto obj = static_cast<SizeF*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

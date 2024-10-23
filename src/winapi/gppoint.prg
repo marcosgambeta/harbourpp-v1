@@ -72,7 +72,7 @@ RETURN
 
 using namespace Gdiplus;
 
-HB_FUNC_STATIC( WAGPPOINT_NEW )
+HB_FUNC_STATIC(WAGPPOINT_NEW)
 {
   if( hb_pcount() == 0 )
   {
@@ -114,7 +114,7 @@ HB_FUNC_STATIC( WAGPPOINT_NEW )
   }
 }
 
-HB_FUNC_STATIC( WAGPPOINT_DELETE )
+HB_FUNC_STATIC(WAGPPOINT_DELETE)
 {
   auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -129,7 +129,7 @@ HB_FUNC_STATIC( WAGPPOINT_DELETE )
 
 // INT X
 
-HB_FUNC_STATIC( WAGPPOINT_SETX )
+HB_FUNC_STATIC(WAGPPOINT_SETX)
 {
   auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -139,7 +139,7 @@ HB_FUNC_STATIC( WAGPPOINT_SETX )
   }
 }
 
-HB_FUNC_STATIC( WAGPPOINT_GETX )
+HB_FUNC_STATIC(WAGPPOINT_GETX)
 {
   auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -151,7 +151,7 @@ HB_FUNC_STATIC( WAGPPOINT_GETX )
 
 // INT Y
 
-HB_FUNC_STATIC( WAGPPOINT_SETY )
+HB_FUNC_STATIC(WAGPPOINT_SETY)
 {
   auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -161,7 +161,7 @@ HB_FUNC_STATIC( WAGPPOINT_SETY )
   }
 }
 
-HB_FUNC_STATIC( WAGPPOINT_GETY )
+HB_FUNC_STATIC(WAGPPOINT_GETY)
 {
   auto obj = static_cast<GpPoint*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

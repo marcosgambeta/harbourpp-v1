@@ -40,14 +40,14 @@
 // WINBASEAPI DECLSPEC_NORETURN VOID WINAPI FreeLibraryAndExitThread (HMODULE hLibModule, DWORD dwExitCode)
 
 // WINBASEAPI WINBOOL WINAPI FreeResource (HGLOBAL hResData)
-HB_FUNC( WAFREERESOURCE )
+HB_FUNC(WAFREERESOURCE)
 {
   wa_ret_BOOL(FreeResource(wa_par_HGLOBAL(1)));
 }
 
 // WINBASEAPI HMODULE WINAPI GetModuleHandleA (LPCSTR lpModuleName)
 #if 0
-HB_FUNC( WAGETMODULEHANDLEA )
+HB_FUNC(WAGETMODULEHANDLEA)
 {
   wa_ret_HMODULE(GetModuleHandleA(wa_par_LPCSTR(1)));
 }
@@ -55,13 +55,13 @@ HB_FUNC( WAGETMODULEHANDLEA )
 
 // WINBASEAPI HMODULE WINAPI GetModuleHandleW (LPCWSTR lpModuleName)
 #if 0
-HB_FUNC( WAGETMODULEHANDLEW )
+HB_FUNC(WAGETMODULEHANDLEW)
 {
   wa_ret_HMODULE(GetModuleHandleW(wa_par_LPCWSTR(1)));
 }
 #endif
 
-HB_FUNC( WAGETMODULEHANDLE )
+HB_FUNC(WAGETMODULEHANDLE)
 {
   void *str{};
   wa_ret_HMODULE(GetModuleHandle(HB_PARSTR(1, &str, nullptr)));
@@ -70,7 +70,7 @@ HB_FUNC( WAGETMODULEHANDLE )
 
 // WINBASEAPI HMODULE WINAPI LoadLibraryExA (LPCSTR lpLibFileName, HANDLE hFile, DWORD dwFlags)
 #if 0
-HB_FUNC( WALOADLIBRARYEXA )
+HB_FUNC(WALOADLIBRARYEXA)
 {
   wa_ret_HMODULE(LoadLibraryExA(wa_par_LPCSTR(1), wa_par_HANDLE(2), wa_par_DWORD(3)));
 }
@@ -78,13 +78,13 @@ HB_FUNC( WALOADLIBRARYEXA )
 
 // WINBASEAPI HMODULE WINAPI LoadLibraryExW (LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags)
 #if 0
-HB_FUNC( WALOADLIBRARYEXW )
+HB_FUNC(WALOADLIBRARYEXW)
 {
   wa_ret_HMODULE(LoadLibraryExW(wa_par_LPCWSTR(1), wa_par_HANDLE(2), wa_par_DWORD(3)));
 }
 #endif
 
-HB_FUNC( WALOADLIBRARYEX )
+HB_FUNC(WALOADLIBRARYEX)
 {
   void *str{};
   wa_ret_HMODULE(LoadLibraryEx(HB_PARSTR(1, &str, nullptr), wa_par_HANDLE(2), wa_par_DWORD(3)));
@@ -92,7 +92,7 @@ HB_FUNC( WALOADLIBRARYEX )
 }
 
 // WINBASEAPI HGLOBAL WINAPI LoadResource (HMODULE hModule, HRSRC hResInfo)
-HB_FUNC( WALOADRESOURCE )
+HB_FUNC(WALOADRESOURCE)
 {
   wa_ret_HGLOBAL(LoadResource(wa_par_HMODULE(1), wa_par_HRSRC(2)));
 }
@@ -102,13 +102,13 @@ HB_FUNC( WALOADRESOURCE )
 // WINUSERAPI int WINAPI LoadStringW (HINSTANCE hInstance, UINT uID, LPWSTR lpBuffer, int cchBufferMax)
 
 // WINBASEAPI LPVOID WINAPI LockResource (HGLOBAL hResData)
-HB_FUNC( WALOCKRESOURCE )
+HB_FUNC(WALOCKRESOURCE)
 {
   wa_ret_LPVOID(LockResource(wa_par_HGLOBAL(1)));
 }
 
 // WINBASEAPI DWORD WINAPI SizeofResource (HMODULE hModule, HRSRC hResInfo)
-HB_FUNC( WASIZEOFRESOURCE )
+HB_FUNC(WASIZEOFRESOURCE)
 {
   wa_ret_DWORD(SizeofResource(wa_par_HMODULE(1), wa_par_HRSRC(2)));
 }
@@ -119,7 +119,7 @@ HB_FUNC( WASIZEOFRESOURCE )
 
 // WINBASEAPI WINBOOL WINAPI SetDefaultDllDirectories (DWORD DirectoryFlags)
 #if 0
-HB_FUNC( WASETDEFAULTDLLDIRECTORIES )
+HB_FUNC(WASETDEFAULTDLLDIRECTORIES)
 {
   wa_ret_BOOL(SetDefaultDllDirectories(wa_par_DWORD(1)));
 }
@@ -127,7 +127,7 @@ HB_FUNC( WASETDEFAULTDLLDIRECTORIES )
 
 // WINBASEAPI WINBOOL WINAPI GetModuleHandleExA (DWORD dwFlags, LPCSTR lpModuleName, HMODULE *phModule)
 #if 0
-HB_FUNC( WAGETMODULEHANDLEEXA )
+HB_FUNC(WAGETMODULEHANDLEEXA)
 {
   HMODULE hModule{};
   wa_ret_BOOL(GetModuleHandleExA(wa_par_DWORD(1), wa_par_LPCSTR(2), &hModule));
@@ -137,7 +137,7 @@ HB_FUNC( WAGETMODULEHANDLEEXA )
 
 // WINBASEAPI WINBOOL WINAPI GetModuleHandleExW (DWORD dwFlags, LPCWSTR lpModuleName, HMODULE *phModule)
 #if 0
-HB_FUNC( WAGETMODULEHANDLEEXW )
+HB_FUNC(WAGETMODULEHANDLEEXW)
 {
   HMODULE hModule{};
   wa_ret_BOOL(GetModuleHandleExW(wa_par_DWORD(1), wa_par_LPCWSTR(2), &hModule));
@@ -145,7 +145,7 @@ HB_FUNC( WAGETMODULEHANDLEEXW )
 }
 #endif
 
-HB_FUNC( WAGETMODULEHANDLEEX )
+HB_FUNC(WAGETMODULEHANDLEEX)
 {
   void *str{};
   HMODULE hModule{};
@@ -173,19 +173,19 @@ HB_FUNC( WAGETMODULEHANDLEEX )
 // WINBASEAPI WINBOOL WINAPI QueryOptionalDelayLoadedAPI (HMODULE CallerModule, LPCSTR lpDllName, LPCSTR lpProcName, DWORD Reserved)
 
 // WINBASEAPI WINBOOL WINAPI DisableThreadLibraryCalls (HMODULE hLibModule)
-HB_FUNC( WADISABLETHREADLIBRARYCALLS )
+HB_FUNC(WADISABLETHREADLIBRARYCALLS)
 {
   wa_ret_BOOL(DisableThreadLibraryCalls(wa_par_HMODULE(1)));
 }
 
 // WINBASEAPI WINBOOL WINAPI FreeLibrary (HMODULE hLibModule)
-HB_FUNC( WAFREELIBRARY )
+HB_FUNC(WAFREELIBRARY)
 {
   wa_ret_BOOL(FreeLibrary(wa_par_HMODULE(1)));
 }
 
 // WINBASEAPI FARPROC WINAPI GetProcAddress (HMODULE hModule, LPCSTR lpProcName)
-HB_FUNC( WAGETPROCADDRESS )
+HB_FUNC(WAGETPROCADDRESS)
 {
   wa_ret_FARPROC(GetProcAddress(wa_par_HMODULE(1), wa_par_LPCSTR(2)));
 }
@@ -196,7 +196,7 @@ HB_FUNC( WAGETPROCADDRESS )
 
 // WINBASEAPI int WINAPI FindStringOrdinal (DWORD dwFindStringOrdinalFlags, LPCWSTR lpStringSource, int cchSource, LPCWSTR lpStringValue, int cchValue, WINBOOL bIgnoreCase)
 #if 0 // TODO: Windows 7 or upper
-HB_FUNC( WAFINDSTRINGORDINAL )
+HB_FUNC(WAFINDSTRINGORDINAL)
 {
   void *str1{};
   void *str2{};

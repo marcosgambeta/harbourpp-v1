@@ -71,7 +71,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_POINTFLOAT_NEW )
+HB_FUNC_STATIC(WAS_POINTFLOAT_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new POINTFLOAT());
@@ -79,7 +79,7 @@ HB_FUNC_STATIC( WAS_POINTFLOAT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_POINTFLOAT_DELETE )
+HB_FUNC_STATIC(WAS_POINTFLOAT_DELETE)
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -94,7 +94,7 @@ HB_FUNC_STATIC( WAS_POINTFLOAT_DELETE )
 
 // FLOAT x
 
-HB_FUNC_STATIC( WAS_POINTFLOAT_SETX )
+HB_FUNC_STATIC(WAS_POINTFLOAT_SETX)
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -104,7 +104,7 @@ HB_FUNC_STATIC( WAS_POINTFLOAT_SETX )
   }
 }
 
-HB_FUNC_STATIC( WAS_POINTFLOAT_GETX )
+HB_FUNC_STATIC(WAS_POINTFLOAT_GETX)
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -116,7 +116,7 @@ HB_FUNC_STATIC( WAS_POINTFLOAT_GETX )
 
 // FLOAT y
 
-HB_FUNC_STATIC( WAS_POINTFLOAT_SETY )
+HB_FUNC_STATIC(WAS_POINTFLOAT_SETY)
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -126,7 +126,7 @@ HB_FUNC_STATIC( WAS_POINTFLOAT_SETY )
   }
 }
 
-HB_FUNC_STATIC( WAS_POINTFLOAT_GETY )
+HB_FUNC_STATIC(WAS_POINTFLOAT_GETY)
 {
   auto obj = static_cast<POINTFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

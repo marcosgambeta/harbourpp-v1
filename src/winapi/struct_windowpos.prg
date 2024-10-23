@@ -101,7 +101,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_NEW )
+HB_FUNC_STATIC(WAS_WINDOWPOS_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new WINDOWPOS());
@@ -109,7 +109,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_DELETE )
+HB_FUNC_STATIC(WAS_WINDOWPOS_DELETE)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -124,7 +124,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_DELETE )
 
 // HWND hwnd
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_SETHWND )
+HB_FUNC_STATIC(WAS_WINDOWPOS_SETHWND)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -134,7 +134,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_SETHWND )
   }
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_GETHWND )
+HB_FUNC_STATIC(WAS_WINDOWPOS_GETHWND)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -146,7 +146,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_GETHWND )
 
 // HWND hwndInsertAfter
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_SETHWNDINSERTAFTER )
+HB_FUNC_STATIC(WAS_WINDOWPOS_SETHWNDINSERTAFTER)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -156,7 +156,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_SETHWNDINSERTAFTER )
   }
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_GETHWNDINSERTAFTER )
+HB_FUNC_STATIC(WAS_WINDOWPOS_GETHWNDINSERTAFTER)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -168,7 +168,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_GETHWNDINSERTAFTER )
 
 // int x
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_SETX )
+HB_FUNC_STATIC(WAS_WINDOWPOS_SETX)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -178,7 +178,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_SETX )
   }
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_GETX )
+HB_FUNC_STATIC(WAS_WINDOWPOS_GETX)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -190,7 +190,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_GETX )
 
 // int y
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_SETY )
+HB_FUNC_STATIC(WAS_WINDOWPOS_SETY)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -200,7 +200,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_SETY )
   }
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_GETY )
+HB_FUNC_STATIC(WAS_WINDOWPOS_GETY)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -212,7 +212,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_GETY )
 
 // int cx
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_SETCX )
+HB_FUNC_STATIC(WAS_WINDOWPOS_SETCX)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -222,7 +222,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_SETCX )
   }
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_GETCX )
+HB_FUNC_STATIC(WAS_WINDOWPOS_GETCX)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -234,7 +234,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_GETCX )
 
 // int cy
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_SETCY )
+HB_FUNC_STATIC(WAS_WINDOWPOS_SETCY)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -244,7 +244,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_SETCY )
   }
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_GETCY )
+HB_FUNC_STATIC(WAS_WINDOWPOS_GETCY)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -256,7 +256,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_GETCY )
 
 // UINT flags
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_SETFLAGS )
+HB_FUNC_STATIC(WAS_WINDOWPOS_SETFLAGS)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -266,7 +266,7 @@ HB_FUNC_STATIC( WAS_WINDOWPOS_SETFLAGS )
   }
 }
 
-HB_FUNC_STATIC( WAS_WINDOWPOS_GETFLAGS )
+HB_FUNC_STATIC(WAS_WINDOWPOS_GETFLAGS)
 {
   auto obj = static_cast<WINDOWPOS*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

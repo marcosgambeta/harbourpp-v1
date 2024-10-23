@@ -77,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_LOGPEN_NEW )
+HB_FUNC_STATIC(WAS_LOGPEN_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new LOGPEN());
@@ -85,7 +85,7 @@ HB_FUNC_STATIC( WAS_LOGPEN_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_LOGPEN_DELETE )
+HB_FUNC_STATIC(WAS_LOGPEN_DELETE)
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -100,7 +100,7 @@ HB_FUNC_STATIC( WAS_LOGPEN_DELETE )
 
 // UINT lopnStyle
 
-HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNSTYLE )
+HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNSTYLE)
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -110,7 +110,7 @@ HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNSTYLE )
   }
 }
 
-HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNSTYLE )
+HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNSTYLE)
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -122,7 +122,7 @@ HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNSTYLE )
 
 // POINT lopnWidth
 
-HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNWIDTH )
+HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNWIDTH)
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -132,7 +132,7 @@ HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNWIDTH )
   }
 }
 
-HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNWIDTH )
+HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNWIDTH)
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -144,7 +144,7 @@ HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNWIDTH )
 
 // COLORREF lopnColor
 
-HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNCOLOR )
+HB_FUNC_STATIC(WAS_LOGPEN_SETLOPNCOLOR)
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -154,7 +154,7 @@ HB_FUNC_STATIC( WAS_LOGPEN_SETLOPNCOLOR )
   }
 }
 
-HB_FUNC_STATIC( WAS_LOGPEN_GETLOPNCOLOR )
+HB_FUNC_STATIC(WAS_LOGPEN_GETLOPNCOLOR)
 {
   auto obj = static_cast<LOGPEN*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

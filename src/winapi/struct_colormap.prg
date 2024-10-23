@@ -72,7 +72,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_COLORMAP_NEW )
+HB_FUNC_STATIC(WAS_COLORMAP_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new COLORMAP());
@@ -80,7 +80,7 @@ HB_FUNC_STATIC( WAS_COLORMAP_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_COLORMAP_DELETE )
+HB_FUNC_STATIC(WAS_COLORMAP_DELETE)
 {
   auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -95,7 +95,7 @@ HB_FUNC_STATIC( WAS_COLORMAP_DELETE )
 
 // COLORREF from
 
-HB_FUNC_STATIC( WAS_COLORMAP_SETFROM )
+HB_FUNC_STATIC(WAS_COLORMAP_SETFROM)
 {
   auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -105,7 +105,7 @@ HB_FUNC_STATIC( WAS_COLORMAP_SETFROM )
   }
 }
 
-HB_FUNC_STATIC( WAS_COLORMAP_GETFROM )
+HB_FUNC_STATIC(WAS_COLORMAP_GETFROM)
 {
   auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -117,7 +117,7 @@ HB_FUNC_STATIC( WAS_COLORMAP_GETFROM )
 
 // COLORREF to
 
-HB_FUNC_STATIC( WAS_COLORMAP_SETTO )
+HB_FUNC_STATIC(WAS_COLORMAP_SETTO)
 {
   auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -127,7 +127,7 @@ HB_FUNC_STATIC( WAS_COLORMAP_SETTO )
   }
 }
 
-HB_FUNC_STATIC( WAS_COLORMAP_GETTO )
+HB_FUNC_STATIC(WAS_COLORMAP_GETTO)
 {
   auto obj = static_cast<COLORMAP*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

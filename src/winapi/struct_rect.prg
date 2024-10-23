@@ -83,7 +83,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_RECT_NEW )
+HB_FUNC_STATIC(WAS_RECT_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new RECT());
@@ -91,7 +91,7 @@ HB_FUNC_STATIC( WAS_RECT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_RECT_DELETE )
+HB_FUNC_STATIC(WAS_RECT_DELETE)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -106,7 +106,7 @@ HB_FUNC_STATIC( WAS_RECT_DELETE )
 
 // LONG left
 
-HB_FUNC_STATIC( WAS_RECT_SETLEFT )
+HB_FUNC_STATIC(WAS_RECT_SETLEFT)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -116,7 +116,7 @@ HB_FUNC_STATIC( WAS_RECT_SETLEFT )
   }
 }
 
-HB_FUNC_STATIC( WAS_RECT_GETLEFT )
+HB_FUNC_STATIC(WAS_RECT_GETLEFT)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -128,7 +128,7 @@ HB_FUNC_STATIC( WAS_RECT_GETLEFT )
 
 // LONG top
 
-HB_FUNC_STATIC( WAS_RECT_SETTOP )
+HB_FUNC_STATIC(WAS_RECT_SETTOP)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -138,7 +138,7 @@ HB_FUNC_STATIC( WAS_RECT_SETTOP )
   }
 }
 
-HB_FUNC_STATIC( WAS_RECT_GETTOP )
+HB_FUNC_STATIC(WAS_RECT_GETTOP)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -150,7 +150,7 @@ HB_FUNC_STATIC( WAS_RECT_GETTOP )
 
 // LONG right
 
-HB_FUNC_STATIC( WAS_RECT_SETRIGHT )
+HB_FUNC_STATIC(WAS_RECT_SETRIGHT)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -160,7 +160,7 @@ HB_FUNC_STATIC( WAS_RECT_SETRIGHT )
   }
 }
 
-HB_FUNC_STATIC( WAS_RECT_GETRIGHT )
+HB_FUNC_STATIC(WAS_RECT_GETRIGHT)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -172,7 +172,7 @@ HB_FUNC_STATIC( WAS_RECT_GETRIGHT )
 
 // LONG bottom
 
-HB_FUNC_STATIC( WAS_RECT_SETBOTTOM )
+HB_FUNC_STATIC(WAS_RECT_SETBOTTOM)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -182,7 +182,7 @@ HB_FUNC_STATIC( WAS_RECT_SETBOTTOM )
   }
 }
 
-HB_FUNC_STATIC( WAS_RECT_GETBOTTOM )
+HB_FUNC_STATIC(WAS_RECT_GETBOTTOM)
 {
   auto obj = static_cast<RECT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 

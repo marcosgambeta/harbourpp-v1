@@ -77,7 +77,7 @@ RETURN
 #include "hbapicls.hpp"
 #include "winapi.hpp"
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_NEW )
+HB_FUNC_STATIC(WAS_ABCFLOAT_NEW)
 {
   auto self = hb_stackSelfItem();
   hb_objDataPutPtr(self, "_PTR", new ABCFLOAT());
@@ -85,7 +85,7 @@ HB_FUNC_STATIC( WAS_ABCFLOAT_NEW )
   hb_itemReturn(self);
 }
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_DELETE )
+HB_FUNC_STATIC(WAS_ABCFLOAT_DELETE)
 {
   auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -100,7 +100,7 @@ HB_FUNC_STATIC( WAS_ABCFLOAT_DELETE )
 
 // FLOAT abcfA
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_SETABCFA )
+HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFA)
 {
   auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -110,7 +110,7 @@ HB_FUNC_STATIC( WAS_ABCFLOAT_SETABCFA )
   }
 }
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_GETABCFA )
+HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFA)
 {
   auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -122,7 +122,7 @@ HB_FUNC_STATIC( WAS_ABCFLOAT_GETABCFA )
 
 // FLOAT abcfB
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_SETABCFB )
+HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFB)
 {
   auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -132,7 +132,7 @@ HB_FUNC_STATIC( WAS_ABCFLOAT_SETABCFB )
   }
 }
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_GETABCFB )
+HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFB)
 {
   auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -144,7 +144,7 @@ HB_FUNC_STATIC( WAS_ABCFLOAT_GETABCFB )
 
 // FLOAT abcfC
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_SETABCFC )
+HB_FUNC_STATIC(WAS_ABCFLOAT_SETABCFC)
 {
   auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
@@ -154,7 +154,7 @@ HB_FUNC_STATIC( WAS_ABCFLOAT_SETABCFC )
   }
 }
 
-HB_FUNC_STATIC( WAS_ABCFLOAT_GETABCFC )
+HB_FUNC_STATIC(WAS_ABCFLOAT_GETABCFC)
 {
   auto obj = static_cast<ABCFLOAT*>(hb_objDataGetPtr(hb_stackSelfItem(), "PTR"));
 
