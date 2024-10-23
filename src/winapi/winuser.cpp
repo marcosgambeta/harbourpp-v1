@@ -114,9 +114,9 @@ HB_FUNC(WAGETMOUSEMOVEPOINTSEX)
 
 // WINUSERAPI HDESK WINAPI CreateDesktopW(LPCWSTR lpszDesktop,LPCWSTR lpszDevice,LPDEVMODEW pDevmode,DWORD dwFlags,ACCESS_MASK dwDesiredAccess,LPSECURITY_ATTRIBUTES lpsa)
 
-// WINUSERAPI HDESK WINAPI CreateDesktopExA (LPCSTR lpszDesktop, LPCSTR lpszDevice, DEVMODEA *pDevmode, DWORD dwFlags, ACCESS_MASK dwDesiredAccess, LPSECURITY_ATTRIBUTES lpsa, ULONG ulHeapSize, PVOID pvoid)
+// WINUSERAPI HDESK WINAPI CreateDesktopExA(LPCSTR lpszDesktop, LPCSTR lpszDevice, DEVMODEA *pDevmode, DWORD dwFlags, ACCESS_MASK dwDesiredAccess, LPSECURITY_ATTRIBUTES lpsa, ULONG ulHeapSize, PVOID pvoid)
 
-// WINUSERAPI HDESK WINAPI CreateDesktopExW (LPCWSTR lpszDesktop, LPCWSTR lpszDevice, DEVMODEW *pDevmode, DWORD dwFlags, ACCESS_MASK dwDesiredAccess, LPSECURITY_ATTRIBUTES lpsa, ULONG ulHeapSize, PVOID pvoid)
+// WINUSERAPI HDESK WINAPI CreateDesktopExW(LPCWSTR lpszDesktop, LPCWSTR lpszDevice, DEVMODEW *pDevmode, DWORD dwFlags, ACCESS_MASK dwDesiredAccess, LPSECURITY_ATTRIBUTES lpsa, ULONG ulHeapSize, PVOID pvoid)
 
 // WINUSERAPI HDESK WINAPI OpenDesktopA(LPCSTR lpszDesktop,DWORD dwFlags,WINBOOL fInherit,ACCESS_MASK dwDesiredAccess)
 
@@ -781,7 +781,7 @@ HB_FUNC(WAGETCLASSINFOEX)
   hb_strfree(str);
 }
 
-// WINUSERAPI LRESULT WINAPI CallWindowProcA (WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+// WINUSERAPI LRESULT WINAPI CallWindowProcA(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 #if 0
 HB_FUNC(WACALLWINDOWPROCA)
 {
@@ -789,7 +789,7 @@ HB_FUNC(WACALLWINDOWPROCA)
 }
 #endif
 
-// WINUSERAPI LRESULT WINAPI CallWindowProcW (WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+// WINUSERAPI LRESULT WINAPI CallWindowProcW(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 #if 0
 HB_FUNC(WACALLWINDOWPROCW)
 {
@@ -802,9 +802,9 @@ HB_FUNC(WACALLWINDOWPROC)
   wa_ret_LRESULT(CallWindowProc(wa_par_WNDPROC(1), wa_par_HWND(2), wa_par_UINT(3), wa_par_WPARAM(4), wa_par_LPARAM(5)));
 }
 
-// WINUSERAPI LRESULT WINAPI CallWindowProcA (FARPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+// WINUSERAPI LRESULT WINAPI CallWindowProcA(FARPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
-// WINUSERAPI LRESULT WINAPI CallWindowProcW (FARPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+// WINUSERAPI LRESULT WINAPI CallWindowProcW(FARPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
 // WINUSERAPI HDEVNOTIFY WINAPI RegisterDeviceNotificationA(HANDLE hRecipient,LPVOID NotificationFilter,DWORD Flags)
 #if 0
@@ -900,13 +900,13 @@ HB_FUNC(WAUPDATELAYEREDWINDOW)
   wa_ret_BOOL(UpdateLayeredWindow(wa_par_HWND(1), wa_par_HDC(2), wa_par_POINT(3), wa_par_SIZE(4), wa_par_HDC(5), wa_par_POINT(6), wa_par_COLORREF(7), wa_par_BLENDFUNCTION(8), wa_par_DWORD(9)));
 }
 
-// WINUSERAPI WINBOOL WINAPI UpdateLayeredWindowIndirect (HWND hWnd, const UPDATELAYEREDWINDOWINFO *pULWInfo)
+// WINUSERAPI WINBOOL WINAPI UpdateLayeredWindowIndirect(HWND hWnd, const UPDATELAYEREDWINDOWINFO *pULWInfo)
 HB_FUNC(WAUPDATELAYEREDWINDOWINDIRECT)
 {
   wa_ret_BOOL(UpdateLayeredWindowIndirect(wa_par_HWND(1), wa_par_UPDATELAYEREDWINDOWINFO(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI GetLayeredWindowAttributes (HWND hwnd, COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags)
+// WINUSERAPI WINBOOL WINAPI GetLayeredWindowAttributes(HWND hwnd, COLORREF *pcrKey, BYTE *pbAlpha, DWORD *pdwFlags)
 HB_FUNC(WAGETLAYEREDWINDOWATTRIBUTES)
 {
   COLORREF crKey{};
@@ -918,73 +918,73 @@ HB_FUNC(WAGETLAYEREDWINDOWATTRIBUTES)
   wa_stor_DWORD(dwFlags, 4);
 }
 
-// WINUSERAPI WINBOOL WINAPI PrintWindow (HWND hwnd, HDC hdcBlt, UINT nFlags)
+// WINUSERAPI WINBOOL WINAPI PrintWindow(HWND hwnd, HDC hdcBlt, UINT nFlags)
 HB_FUNC(WAPRINTWINDOW)
 {
   wa_ret_BOOL(PrintWindow(wa_par_HWND(1), wa_par_HDC(2), wa_par_UINT(3)));
 }
 
-// WINUSERAPI WINBOOL WINAPI SetLayeredWindowAttributes (HWND hwnd, COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
+// WINUSERAPI WINBOOL WINAPI SetLayeredWindowAttributes(HWND hwnd, COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
 HB_FUNC(WASETLAYEREDWINDOWATTRIBUTES)
 {
   wa_ret_BOOL(SetLayeredWindowAttributes(wa_par_HWND(1), wa_par_COLORREF(2), wa_par_BYTE(3), wa_par_DWORD(4)));
 }
 
-// WINUSERAPI WINBOOL WINAPI ShowWindowAsync (HWND hWnd, int nCmdShow)
+// WINUSERAPI WINBOOL WINAPI ShowWindowAsync(HWND hWnd, int nCmdShow)
 HB_FUNC(WASHOWWINDOWASYNC)
 {
   wa_ret_BOOL(ShowWindowAsync(wa_par_HWND(1), wa_par_int(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI FlashWindow (HWND hWnd, WINBOOL bInvert)
+// WINUSERAPI WINBOOL WINAPI FlashWindow(HWND hWnd, WINBOOL bInvert)
 HB_FUNC(WAFLASHWINDOW)
 {
   wa_ret_BOOL(FlashWindow(wa_par_HWND(1), wa_par_BOOL(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI FlashWindowEx (PFLASHWINFO pfwi)
+// WINUSERAPI WINBOOL WINAPI FlashWindowEx(PFLASHWINFO pfwi)
 HB_FUNC(WAFLASHWINDOWEX)
 {
   wa_ret_BOOL(FlashWindowEx(wa_par_FLASHWINFO(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI ShowOwnedPopups (HWND hWnd, WINBOOL fShow)
+// WINUSERAPI WINBOOL WINAPI ShowOwnedPopups(HWND hWnd, WINBOOL fShow)
 HB_FUNC(WASHOWOWNEDPOPUPS)
 {
   wa_ret_BOOL(ShowOwnedPopups(wa_par_HWND(1), wa_par_BOOL(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI OpenIcon (HWND hWnd)
+// WINUSERAPI WINBOOL WINAPI OpenIcon(HWND hWnd)
 HB_FUNC(WAOPENICON)
 {
   wa_ret_BOOL(OpenIcon(wa_par_HWND(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI CloseWindow (HWND hWnd)
+// WINUSERAPI WINBOOL WINAPI CloseWindow(HWND hWnd)
 HB_FUNC(WACLOSEWINDOW)
 {
   wa_ret_BOOL(CloseWindow(wa_par_HWND(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI MoveWindow (HWND hWnd, int X, int Y, int nWidth, int nHeight, WINBOOL bRepaint)
+// WINUSERAPI WINBOOL WINAPI MoveWindow(HWND hWnd, int X, int Y, int nWidth, int nHeight, WINBOOL bRepaint)
 HB_FUNC(WAMOVEWINDOW)
 {
   wa_ret_BOOL(MoveWindow(wa_par_HWND(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_BOOL(6)));
 }
 
-// WINUSERAPI WINBOOL WINAPI SetWindowPos (HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, UINT uFlags)
+// WINUSERAPI WINBOOL WINAPI SetWindowPos(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, UINT uFlags)
 HB_FUNC(WASETWINDOWPOS)
 {
   wa_ret_BOOL(SetWindowPos(wa_par_HWND(1), wa_par_HWND(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_UINT(7)));
 }
 
-// WINUSERAPI WINBOOL WINAPI GetWindowPlacement (HWND hWnd, WINDOWPLACEMENT *lpwndpl)
+// WINUSERAPI WINBOOL WINAPI GetWindowPlacement(HWND hWnd, WINDOWPLACEMENT *lpwndpl)
 HB_FUNC(WAGETWINDOWPLACEMENT)
 {
   wa_ret_BOOL(GetWindowPlacement(wa_par_HWND(1), wa_par_WINDOWPLACEMENT(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI SetWindowPlacement (HWND hWnd, CONST WINDOWPLACEMENT *lpwndpl)
+// WINUSERAPI WINBOOL WINAPI SetWindowPlacement(HWND hWnd, CONST WINDOWPLACEMENT *lpwndpl)
 HB_FUNC(WASETWINDOWPLACEMENT)
 {
   wa_ret_BOOL(SetWindowPlacement(wa_par_HWND(1), wa_par_WINDOWPLACEMENT(2)));
@@ -1008,49 +1008,49 @@ HB_FUNC(WASETWINDOWDISPLAYAFFINITY)
 }
 #endif
 
-// WINUSERAPI HDWP WINAPI BeginDeferWindowPos (int nNumWindows)
+// WINUSERAPI HDWP WINAPI BeginDeferWindowPos(int nNumWindows)
 HB_FUNC(WABEGINDEFERWINDOWPOS)
 {
   wa_ret_HDWP(BeginDeferWindowPos(wa_par_int(1)));
 }
 
-// WINUSERAPI HDWP WINAPI DeferWindowPos (HDWP hWinPosInfo, HWND hWnd, HWND hWndInsertAfter, int x, int y, int cx, int cy, UINT uFlags)
+// WINUSERAPI HDWP WINAPI DeferWindowPos(HDWP hWinPosInfo, HWND hWnd, HWND hWndInsertAfter, int x, int y, int cx, int cy, UINT uFlags)
 HB_FUNC(WADEFERWINDOWPOS)
 {
   wa_ret_HDWP(DeferWindowPos(wa_par_HDWP(1), wa_par_HWND(2), wa_par_HWND(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_UINT(8)));
 }
 
-// WINUSERAPI WINBOOL WINAPI EndDeferWindowPos (HDWP hWinPosInfo)
+// WINUSERAPI WINBOOL WINAPI EndDeferWindowPos(HDWP hWinPosInfo)
 HB_FUNC(WAENDDEFERWINDOWPOS)
 {
   wa_ret_BOOL(EndDeferWindowPos(wa_par_HDWP(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI IsWindowVisible (HWND hWnd)
+// WINUSERAPI WINBOOL WINAPI IsWindowVisible(HWND hWnd)
 HB_FUNC(WAISWINDOWVISIBLE)
 {
   wa_ret_BOOL(IsWindowVisible(wa_par_HWND(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI IsIconic (HWND hWnd)
+// WINUSERAPI WINBOOL WINAPI IsIconic(HWND hWnd)
 HB_FUNC(WAISICONIC)
 {
   wa_ret_BOOL(IsIconic(wa_par_HWND(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI AnyPopup (VOID)
+// WINUSERAPI WINBOOL WINAPI AnyPopup(VOID)
 HB_FUNC(WAANYPOPUP)
 {
   wa_ret_BOOL(AnyPopup());
 }
 
-// WINUSERAPI WINBOOL WINAPI BringWindowToTop (HWND hWnd)
+// WINUSERAPI WINBOOL WINAPI BringWindowToTop(HWND hWnd)
 HB_FUNC(WABRINGWINDOWTOTOP)
 {
   wa_ret_BOOL(BringWindowToTop(wa_par_HWND(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI IsZoomed (HWND hWnd)
+// WINUSERAPI WINBOOL WINAPI IsZoomed(HWND hWnd)
 HB_FUNC(WAISZOOMED)
 {
   wa_ret_BOOL(IsZoomed(wa_par_HWND(1)));
@@ -1459,7 +1459,7 @@ HB_FUNC(WAGETOPENCLIPBOARDWINDOW)
   wa_ret_HWND(GetOpenClipboardWindow());
 }
 
-// WINUSERAPI WINBOOL WINAPI AddClipboardFormatListener (HWND hwnd)
+// WINUSERAPI WINBOOL WINAPI AddClipboardFormatListener(HWND hwnd)
 #if 0
 HB_FUNC(WAADDCLIPBOARDFORMATLISTENER)
 {
@@ -1467,7 +1467,7 @@ HB_FUNC(WAADDCLIPBOARDFORMATLISTENER)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI RemoveClipboardFormatListener (HWND hwnd)
+// WINUSERAPI WINBOOL WINAPI RemoveClipboardFormatListener(HWND hwnd)
 #if 0
 HB_FUNC(WAREMOVECLIPBOARDFORMATLISTENER)
 {
@@ -1475,7 +1475,7 @@ HB_FUNC(WAREMOVECLIPBOARDFORMATLISTENER)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI GetUpdatedClipboardFormats (PUINT lpuiFormats, UINT cFormats, PUINT pcFormatsOut)
+// WINUSERAPI WINBOOL WINAPI GetUpdatedClipboardFormats(PUINT lpuiFormats, UINT cFormats, PUINT pcFormatsOut)
 
 // WINUSERAPI WINBOOL WINAPI CharToOemA(LPCSTR lpszSrc,LPSTR lpszDst)
 HB_FUNC(WACHARTOOEMA)
@@ -1769,11 +1769,11 @@ HB_FUNC(WAKEYBD_EVENT)
 
 // WINUSERAPI UINT WINAPI SendInput(UINT cInputs,LPINPUT pInputs,int cbSize)
 
-// WINUSERAPI WINBOOL WINAPI GetTouchInputInfo (HTOUCHINPUT hTouchInput, UINT cInputs, PTOUCHINPUT pInputs, int cbSize)
+// WINUSERAPI WINBOOL WINAPI GetTouchInputInfo(HTOUCHINPUT hTouchInput, UINT cInputs, PTOUCHINPUT pInputs, int cbSize)
 
-// WINUSERAPI WINBOOL WINAPI CloseTouchInputHandle (HTOUCHINPUT hTouchInput)
+// WINUSERAPI WINBOOL WINAPI CloseTouchInputHandle(HTOUCHINPUT hTouchInput)
 
-// WINUSERAPI WINBOOL WINAPI RegisterTouchWindow (HWND hwnd, ULONG ulFlags)
+// WINUSERAPI WINBOOL WINAPI RegisterTouchWindow(HWND hwnd, ULONG ulFlags)
 #if 0
 HB_FUNC(WAREGISTERTOUCHWINDOW)
 {
@@ -1781,7 +1781,7 @@ HB_FUNC(WAREGISTERTOUCHWINDOW)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI UnregisterTouchWindow (HWND hwnd)
+// WINUSERAPI WINBOOL WINAPI UnregisterTouchWindow(HWND hwnd)
 #if 0
 HB_FUNC(WAUNREGISTERTOUCHWINDOW)
 {
@@ -1789,7 +1789,7 @@ HB_FUNC(WAUNREGISTERTOUCHWINDOW)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI IsTouchWindow (HWND hwnd, PULONG pulFlags)
+// WINUSERAPI WINBOOL WINAPI IsTouchWindow(HWND hwnd, PULONG pulFlags)
 #if 0
 HB_FUNC(WAISTOUCHWINDOW)
 {
@@ -1799,7 +1799,7 @@ HB_FUNC(WAISTOUCHWINDOW)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI InitializeTouchInjection (UINT32 maxCount, DWORD dwMode)
+// WINUSERAPI WINBOOL WINAPI InitializeTouchInjection(UINT32 maxCount, DWORD dwMode)
 #if 0
 HB_FUNC(WAINITIALIZETOUCHINJECTION)
 {
@@ -1807,37 +1807,37 @@ HB_FUNC(WAINITIALIZETOUCHINJECTION)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI InjectTouchInput (UINT32 count, CONST POINTER_TOUCH_INFO *contacts)
+// WINUSERAPI WINBOOL WINAPI InjectTouchInput(UINT32 count, CONST POINTER_TOUCH_INFO *contacts)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerType (UINT32 pointerId, POINTER_INPUT_TYPE *pointerType)
+// WINUSERAPI WINBOOL WINAPI GetPointerType(UINT32 pointerId, POINTER_INPUT_TYPE *pointerType)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerCursorId (UINT32 pointerId, UINT32 *cursorId)
+// WINUSERAPI WINBOOL WINAPI GetPointerCursorId(UINT32 pointerId, UINT32 *cursorId)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerInfo (UINT32 pointerId, POINTER_INFO *pointerInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerInfo(UINT32 pointerId, POINTER_INFO *pointerInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerInfoHistory (UINT32 pointerId, UINT32 *entriesCount, POINTER_INFO *pointerInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerInfoHistory(UINT32 pointerId, UINT32 *entriesCount, POINTER_INFO *pointerInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerFrameInfo (UINT32 pointerId, UINT32 *pointerCount, POINTER_INFO *pointerInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerFrameInfo(UINT32 pointerId, UINT32 *pointerCount, POINTER_INFO *pointerInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerFrameInfoHistory (UINT32 pointerId, UINT32 *entriesCount, UINT32 *pointerCount, POINTER_INFO *pointerInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerFrameInfoHistory(UINT32 pointerId, UINT32 *entriesCount, UINT32 *pointerCount, POINTER_INFO *pointerInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerTouchInfo (UINT32 pointerId, POINTER_TOUCH_INFO *touchInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerTouchInfo(UINT32 pointerId, POINTER_TOUCH_INFO *touchInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerTouchInfoHistory (UINT32 pointerId, UINT32 *entriesCount, POINTER_TOUCH_INFO *touchInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerTouchInfoHistory(UINT32 pointerId, UINT32 *entriesCount, POINTER_TOUCH_INFO *touchInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerFrameTouchInfo (UINT32 pointerId, UINT32 *pointerCount, POINTER_TOUCH_INFO *touchInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerFrameTouchInfo(UINT32 pointerId, UINT32 *pointerCount, POINTER_TOUCH_INFO *touchInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerFrameTouchInfoHistory (UINT32 pointerId, UINT32 *entriesCount, UINT32 *pointerCount, POINTER_TOUCH_INFO *touchInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerFrameTouchInfoHistory(UINT32 pointerId, UINT32 *entriesCount, UINT32 *pointerCount, POINTER_TOUCH_INFO *touchInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerPenInfo (UINT32 pointerId, POINTER_PEN_INFO *penInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerPenInfo(UINT32 pointerId, POINTER_PEN_INFO *penInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerPenInfoHistory (UINT32 pointerId, UINT32 *entriesCount, POINTER_PEN_INFO *penInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerPenInfoHistory(UINT32 pointerId, UINT32 *entriesCount, POINTER_PEN_INFO *penInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerFramePenInfo (UINT32 pointerId, UINT32 *pointerCount, POINTER_PEN_INFO *penInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerFramePenInfo(UINT32 pointerId, UINT32 *pointerCount, POINTER_PEN_INFO *penInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerFramePenInfoHistory (UINT32 pointerId, UINT32 *entriesCount, UINT32 *pointerCount, POINTER_PEN_INFO *penInfo)
+// WINUSERAPI WINBOOL WINAPI GetPointerFramePenInfoHistory(UINT32 pointerId, UINT32 *entriesCount, UINT32 *pointerCount, POINTER_PEN_INFO *penInfo)
 
-// WINUSERAPI WINBOOL WINAPI SkipPointerFrameMessages (UINT32 pointerId)
+// WINUSERAPI WINBOOL WINAPI SkipPointerFrameMessages(UINT32 pointerId)
 #if 0
 HB_FUNC(WASKIPPOINTERFRAMEMESSAGES)
 {
@@ -1845,11 +1845,11 @@ HB_FUNC(WASKIPPOINTERFRAMEMESSAGES)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI RegisterPointerInputTarget (HWND hwnd, POINTER_INPUT_TYPE pointerType)
+// WINUSERAPI WINBOOL WINAPI RegisterPointerInputTarget(HWND hwnd, POINTER_INPUT_TYPE pointerType)
 
-// WINUSERAPI WINBOOL WINAPI UnregisterPointerInputTarget (HWND hwnd, POINTER_INPUT_TYPE pointerType)
+// WINUSERAPI WINBOOL WINAPI UnregisterPointerInputTarget(HWND hwnd, POINTER_INPUT_TYPE pointerType)
 
-// WINUSERAPI WINBOOL WINAPI EnableMouseInPointer (WINBOOL fEnable)
+// WINUSERAPI WINBOOL WINAPI EnableMouseInPointer(WINBOOL fEnable)
 #if 0
 HB_FUNC(WAENABLEMOUSEINPOINTER)
 {
@@ -1857,7 +1857,7 @@ HB_FUNC(WAENABLEMOUSEINPOINTER)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI IsMouseInPointerEnabled (VOID)
+// WINUSERAPI WINBOOL WINAPI IsMouseInPointerEnabled(VOID)
 #if 0
 HB_FUNC(WAISMOUSEINPOINTERENABLED)
 {
@@ -1865,7 +1865,7 @@ HB_FUNC(WAISMOUSEINPOINTERENABLED)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI RegisterTouchHitTestingWindow (HWND hwnd, ULONG value)
+// WINUSERAPI WINBOOL WINAPI RegisterTouchHitTestingWindow(HWND hwnd, ULONG value)
 #if 0
 HB_FUNC(WAREGISTERTOUCHHITTESTINGWINDOW)
 {
@@ -1873,15 +1873,15 @@ HB_FUNC(WAREGISTERTOUCHHITTESTINGWINDOW)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI EvaluateProximityToRect (const RECT *controlBoundingBox, const TOUCH_HIT_TESTING_INPUT *pHitTestingInput, TOUCH_HIT_TESTING_PROXIMITY_EVALUATION *pProximityEval)
+// WINUSERAPI WINBOOL WINAPI EvaluateProximityToRect(const RECT *controlBoundingBox, const TOUCH_HIT_TESTING_INPUT *pHitTestingInput, TOUCH_HIT_TESTING_PROXIMITY_EVALUATION *pProximityEval)
 
-// WINUSERAPI WINBOOL WINAPI EvaluateProximityToPolygon (UINT32 numVertices, const POINT *controlPolygon, const TOUCH_HIT_TESTING_INPUT *pHitTestingInput, TOUCH_HIT_TESTING_PROXIMITY_EVALUATION *pProximityEval)
+// WINUSERAPI WINBOOL WINAPI EvaluateProximityToPolygon(UINT32 numVertices, const POINT *controlPolygon, const TOUCH_HIT_TESTING_INPUT *pHitTestingInput, TOUCH_HIT_TESTING_PROXIMITY_EVALUATION *pProximityEval)
 
-// WINUSERAPI LRESULT WINAPI PackTouchHitTestingProximityEvaluation (const TOUCH_HIT_TESTING_INPUT *pHitTestingInput, const TOUCH_HIT_TESTING_PROXIMITY_EVALUATION *pProximityEval)
+// WINUSERAPI LRESULT WINAPI PackTouchHitTestingProximityEvaluation(const TOUCH_HIT_TESTING_INPUT *pHitTestingInput, const TOUCH_HIT_TESTING_PROXIMITY_EVALUATION *pProximityEval)
 
-// WINUSERAPI WINBOOL WINAPI GetWindowFeedbackSetting (HWND hwnd, FEEDBACK_TYPE feedback, DWORD dwFlags, UINT32 *pSize, VOID *config)
+// WINUSERAPI WINBOOL WINAPI GetWindowFeedbackSetting(HWND hwnd, FEEDBACK_TYPE feedback, DWORD dwFlags, UINT32 *pSize, VOID *config)
 
-// WINUSERAPI WINBOOL WINAPI SetWindowFeedbackSetting (HWND hwnd, FEEDBACK_TYPE feedback, DWORD dwFlags, UINT32 size, CONST VOID *configuration)
+// WINUSERAPI WINBOOL WINAPI SetWindowFeedbackSetting(HWND hwnd, FEEDBACK_TYPE feedback, DWORD dwFlags, UINT32 size, CONST VOID *configuration)
 
 // WINUSERAPI WINBOOL WINAPI GetLastInputInfo(PLASTINPUTINFO plii)
 
@@ -2096,7 +2096,7 @@ HB_FUNC(WATRANSLATEACCELERATOR)
   wa_ret_int(TranslateAccelerator(wa_par_HWND(1), wa_par_HACCEL(2), wa_par_MSG(3)));
 }
 
-// WINUSERAPI UINT_PTR WINAPI SetCoalescableTimer (HWND hWnd, UINT_PTR nIDEvent, UINT uElapse, TIMERPROC lpTimerFunc, ULONG uToleranceDelay)
+// WINUSERAPI UINT_PTR WINAPI SetCoalescableTimer(HWND hWnd, UINT_PTR nIDEvent, UINT uElapse, TIMERPROC lpTimerFunc, ULONG uToleranceDelay)
 #if 0 // TODO: for Windows 8 or upper
 HB_FUNC(WASETCOALESCABLETIMER)
 {
@@ -3180,37 +3180,37 @@ HB_FUNC(WACHILDWINDOWFROMPOINTEX)
   wa_ret_HWND(ChildWindowFromPointEx(wa_par_HWND(1), *wa_par_POINT(2), wa_par_UINT(3)));
 }
 
-// WINUSERAPI WINBOOL WINAPI SetPhysicalCursorPos (int X, int Y)
+// WINUSERAPI WINBOOL WINAPI SetPhysicalCursorPos(int X, int Y)
 HB_FUNC(WASETPHYSICALCURSORPOS)
 {
   wa_ret_BOOL(SetPhysicalCursorPos(wa_par_int(1), wa_par_int(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI GetPhysicalCursorPos (LPPOINT lpPoint)
+// WINUSERAPI WINBOOL WINAPI GetPhysicalCursorPos(LPPOINT lpPoint)
 HB_FUNC(WAGETPHYSICALCURSORPOS)
 {
   wa_ret_BOOL(GetPhysicalCursorPos(wa_par_POINT(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI LogicalToPhysicalPoint (HWND hWnd, LPPOINT lpPoint)
+// WINUSERAPI WINBOOL WINAPI LogicalToPhysicalPoint(HWND hWnd, LPPOINT lpPoint)
 HB_FUNC(WALOGICALTOPHYSICALPOINT)
 {
   wa_ret_BOOL(LogicalToPhysicalPoint(wa_par_HWND(1), wa_par_POINT(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI PhysicalToLogicalPoint (HWND hWnd, LPPOINT lpPoint)
+// WINUSERAPI WINBOOL WINAPI PhysicalToLogicalPoint(HWND hWnd, LPPOINT lpPoint)
 HB_FUNC(WAPHYSICALTOLOGICALPOINT)
 {
   wa_ret_BOOL(PhysicalToLogicalPoint(wa_par_HWND(1), wa_par_POINT(2)));
 }
 
-// WINUSERAPI HWND WINAPI WindowFromPhysicalPoint (POINT Point)
+// WINUSERAPI HWND WINAPI WindowFromPhysicalPoint(POINT Point)
 HB_FUNC(WAWINDOWFROMPHYSICALPOINT)
 {
   wa_ret_HWND(WindowFromPhysicalPoint(*wa_par_POINT(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI LogicalToPhysicalPointForPerMonitorDPI (HWND hwnd, LPPOINT lpPoint)
+// WINUSERAPI WINBOOL WINAPI LogicalToPhysicalPointForPerMonitorDPI(HWND hwnd, LPPOINT lpPoint)
 #if 0
 HB_FUNC(WALOGICALTOPHYSICALPOINTFORPERMONITORDPI)
 {
@@ -3218,7 +3218,7 @@ HB_FUNC(WALOGICALTOPHYSICALPOINTFORPERMONITORDPI)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI PhysicalToLogicalPointForPerMonitorDPI (HWND hwnd, LPPOINT lpPoint)
+// WINUSERAPI WINBOOL WINAPI PhysicalToLogicalPointForPerMonitorDPI(HWND hwnd, LPPOINT lpPoint)
 #if 0
 HB_FUNC(WAPHYSICALTOLOGICALPOINTFORPERMONITORDPI)
 {
@@ -3700,23 +3700,23 @@ HB_FUNC(WAGETWINDOW)
   wa_ret_HWND(GetWindow(wa_par_HWND(1), wa_par_UINT(2)));
 }
 
-// WINUSERAPI HHOOK WINAPI SetWindowsHookA (int nFilterType, HOOKPROC pfnFilterProc)
+// WINUSERAPI HHOOK WINAPI SetWindowsHookA(int nFilterType, HOOKPROC pfnFilterProc)
 
-// WINUSERAPI HHOOK WINAPI SetWindowsHookW (int nFilterType, HOOKPROC pfnFilterProc)
+// WINUSERAPI HHOOK WINAPI SetWindowsHookW(int nFilterType, HOOKPROC pfnFilterProc)
 
-// WINUSERAPI HOOKPROC WINAPI SetWindowsHookA (int nFilterType, HOOKPROC pfnFilterProc)
+// WINUSERAPI HOOKPROC WINAPI SetWindowsHookA(int nFilterType, HOOKPROC pfnFilterProc)
 
-// WINUSERAPI HOOKPROC WINAPI SetWindowsHookW (int nFilterType, HOOKPROC pfnFilterProc)
+// WINUSERAPI HOOKPROC WINAPI SetWindowsHookW(int nFilterType, HOOKPROC pfnFilterProc)
 
-// WINUSERAPI WINBOOL WINAPI UnhookWindowsHook (int nCode, HOOKPROC pfnFilterProc)
+// WINUSERAPI WINBOOL WINAPI UnhookWindowsHook(int nCode, HOOKPROC pfnFilterProc)
 
-// WINUSERAPI HHOOK WINAPI SetWindowsHookExA (int idHook, HOOKPROC lpfn, HINSTANCE hmod, DWORD dwThreadId)
+// WINUSERAPI HHOOK WINAPI SetWindowsHookExA(int idHook, HOOKPROC lpfn, HINSTANCE hmod, DWORD dwThreadId)
 
-// WINUSERAPI HHOOK WINAPI SetWindowsHookExW (int idHook, HOOKPROC lpfn, HINSTANCE hmod, DWORD dwThreadId)
+// WINUSERAPI HHOOK WINAPI SetWindowsHookExW(int idHook, HOOKPROC lpfn, HINSTANCE hmod, DWORD dwThreadId)
 
-// WINUSERAPI WINBOOL WINAPI UnhookWindowsHookEx (HHOOK hhk)
+// WINUSERAPI WINBOOL WINAPI UnhookWindowsHookEx(HHOOK hhk)
 
-// WINUSERAPI LRESULT WINAPI CallNextHookEx (HHOOK hhk, int nCode, WPARAM wParam, LPARAM lParam)
+// WINUSERAPI LRESULT WINAPI CallNextHookEx(HHOOK hhk, int nCode, WPARAM wParam, LPARAM lParam)
 
 // WINUSERAPI WINBOOL WINAPI CheckMenuRadioItem(HMENU hmenu,UINT first,UINT last,UINT check,UINT flags)
 HB_FUNC(WACHECKMENURADIOITEM)
@@ -3911,11 +3911,11 @@ HB_FUNC(WAGETICONINFO)
   wa_ret_BOOL(GetIconInfo(wa_par_HICON(1), wa_par_ICONINFO(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI GetIconInfoExA (HICON hicon, PICONINFOEXA piconinfo)
+// WINUSERAPI WINBOOL WINAPI GetIconInfoExA(HICON hicon, PICONINFOEXA piconinfo)
 
-// WINUSERAPI WINBOOL WINAPI GetIconInfoExW (HICON hicon, PICONINFOEXW piconinfo)
+// WINUSERAPI WINBOOL WINAPI GetIconInfoExW(HICON hicon, PICONINFOEXW piconinfo)
 
-// WINUSERAPI int WINAPI LoadStringA (HINSTANCE hInstance, UINT uID, LPSTR lpBuffer, int cchBufferMax)
+// WINUSERAPI int WINAPI LoadStringA(HINSTANCE hInstance, UINT uID, LPSTR lpBuffer, int cchBufferMax)
 #if 0
 HB_FUNC(WALOADSTRINGA)
 {
@@ -3923,7 +3923,7 @@ HB_FUNC(WALOADSTRINGA)
 }
 #endif
 
-// WINUSERAPI int WINAPI LoadStringW (HINSTANCE hInstance, UINT uID, LPWSTR lpBuffer, int cchBufferMax)
+// WINUSERAPI int WINAPI LoadStringW(HINSTANCE hInstance, UINT uID, LPWSTR lpBuffer, int cchBufferMax)
 #if 0
 HB_FUNC(WALOADSTRINGW)
 {
@@ -4183,15 +4183,15 @@ HB_FUNC(WAGETGUIRESOURCES)
 
 // WINUSERAPI WINBOOL WINAPI EnumDisplayDevicesW(LPCWSTR lpDevice,DWORD iDevNum,PDISPLAY_DEVICEW lpDisplayDevice,DWORD dwFlags)
 
-// WINUSERAPI LONG WINAPI GetDisplayConfigBufferSizes (UINT32 flags, UINT32 *numPathArrayElements, UINT32 *numModeInfoArrayElements)
+// WINUSERAPI LONG WINAPI GetDisplayConfigBufferSizes(UINT32 flags, UINT32 *numPathArrayElements, UINT32 *numModeInfoArrayElements)
 
-// WINUSERAPI LONG WINAPI SetDisplayConfig (UINT32 numPathArrayElements, DISPLAYCONFIG_PATH_INFO *pathArray, UINT32 numModeInfoArrayElements, DISPLAYCONFIG_MODE_INFO *modeInfoArray, UINT32 flags)
+// WINUSERAPI LONG WINAPI SetDisplayConfig(UINT32 numPathArrayElements, DISPLAYCONFIG_PATH_INFO *pathArray, UINT32 numModeInfoArrayElements, DISPLAYCONFIG_MODE_INFO *modeInfoArray, UINT32 flags)
 
-// WINUSERAPI LONG WINAPI QueryDisplayConfig (UINT32 flags, UINT32 *numPathArrayElements, DISPLAYCONFIG_PATH_INFO *pathArray, UINT32 *numModeInfoArrayElements, DISPLAYCONFIG_MODE_INFO *modeInfoArray, DISPLAYCONFIG_TOPOLOGY_ID *currentTopologyId)
+// WINUSERAPI LONG WINAPI QueryDisplayConfig(UINT32 flags, UINT32 *numPathArrayElements, DISPLAYCONFIG_PATH_INFO *pathArray, UINT32 *numModeInfoArrayElements, DISPLAYCONFIG_MODE_INFO *modeInfoArray, DISPLAYCONFIG_TOPOLOGY_ID *currentTopologyId)
 
-// WINUSERAPI LONG WINAPI DisplayConfigGetDeviceInfo (DISPLAYCONFIG_DEVICE_INFO_HEADER *requestPacket)
+// WINUSERAPI LONG WINAPI DisplayConfigGetDeviceInfo(DISPLAYCONFIG_DEVICE_INFO_HEADER *requestPacket)
 
-// WINUSERAPI LONG WINAPI DisplayConfigSetDeviceInfo (DISPLAYCONFIG_DEVICE_INFO_HEADER *setPacket)
+// WINUSERAPI LONG WINAPI DisplayConfigSetDeviceInfo(DISPLAYCONFIG_DEVICE_INFO_HEADER *setPacket)
 
 // WINUSERAPI WINBOOL WINAPI SystemParametersInfoA(UINT uiAction,UINT uiParam,PVOID pvParam,UINT fWinIni)
 HB_FUNC(WASYSTEMPARAMETERSINFOA ) // TODO: fix
@@ -4205,25 +4205,25 @@ HB_FUNC(WASYSTEMPARAMETERSINFOW ) // TODO: fix
   wa_ret_BOOL(SystemParametersInfoW(wa_par_UINT(1), wa_par_UINT(2), static_cast<PVOID>(hb_parptr(3)), wa_par_UINT(4)));
 }
 
-// WINUSERAPI VOID WINAPI SetDebugErrorLevel (DWORD dwLevel)
+// WINUSERAPI VOID WINAPI SetDebugErrorLevel(DWORD dwLevel)
 HB_FUNC(WASETDEBUGERRORLEVEL)
 {
   SetDebugErrorLevel(wa_par_DWORD(1));
 }
 
-// WINUSERAPI VOID WINAPI SetLastErrorEx (DWORD dwErrCode, DWORD dwType)
+// WINUSERAPI VOID WINAPI SetLastErrorEx(DWORD dwErrCode, DWORD dwType)
 HB_FUNC(WASETLASTERROREX)
 {
   SetLastErrorEx(wa_par_DWORD(1), wa_par_DWORD(2));
 }
 
-// WINUSERAPI int WINAPI InternalGetWindowText (HWND hWnd, LPWSTR pString, int cchMaxCount)
+// WINUSERAPI int WINAPI InternalGetWindowText(HWND hWnd, LPWSTR pString, int cchMaxCount)
 HB_FUNC(WAINTERNALGETWINDOWTEXT)
 {
   wa_ret_int(InternalGetWindowText(wa_par_HWND(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_int(3)));
 }
 
-// WINUSERAPI WINBOOL WINAPI CancelShutdown (VOID)
+// WINUSERAPI WINBOOL WINAPI CancelShutdown(VOID)
 HB_FUNC(WACANCELSHUTDOWN)
 {
   wa_ret_BOOL(CancelShutdown());
@@ -4247,7 +4247,7 @@ HB_FUNC(WAMONITORFROMWINDOW)
   wa_ret_HMONITOR(MonitorFromWindow(wa_par_HWND(1), wa_par_DWORD(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI EndTask (HWND hWnd, WINBOOL fShutDown, WINBOOL fForce)
+// WINUSERAPI WINBOOL WINAPI EndTask(HWND hWnd, WINBOOL fShutDown, WINBOOL fForce)
 #if 0
 HB_FUNC(WAENDTASK)
 {
@@ -4255,7 +4255,7 @@ HB_FUNC(WAENDTASK)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI SoundSentry (VOID)
+// WINUSERAPI WINBOOL WINAPI SoundSentry(VOID)
 HB_FUNC(WASOUNDSENTRY)
 {
   wa_ret_BOOL(SoundSentry());
@@ -4302,7 +4302,7 @@ HB_FUNC(WAISWINEVENTHOOKINSTALLED)
 
 // WINUSERAPI WINBOOL WINAPI GetGUIThreadInfo(DWORD idThread,PGUITHREADINFO pgui)
 
-// WINUSERAPI WINBOOL WINAPI BlockInput (WINBOOL fBlockIt)
+// WINUSERAPI WINBOOL WINAPI BlockInput(WINBOOL fBlockIt)
 HB_FUNC(WABLOCKINPUT)
 {
   wa_ret_BOOL(BlockInput(wa_par_BOOL(1)));
@@ -4320,13 +4320,13 @@ HB_FUNC(WAGETWINDOWMODULEFILENAMEW ) // TODO: fix
   wa_ret_UINT(GetWindowModuleFileNameW(wa_par_HWND(1), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), wa_par_UINT(3)));
 }
 
-// WINUSERAPI WINBOOL WINAPI SetProcessDPIAware (VOID)
+// WINUSERAPI WINBOOL WINAPI SetProcessDPIAware(VOID)
 HB_FUNC(WASETPROCESSDPIAWARE)
 {
   wa_ret_BOOL(SetProcessDPIAware());
 }
 
-// WINUSERAPI WINBOOL WINAPI IsProcessDPIAware (VOID)
+// WINUSERAPI WINBOOL WINAPI IsProcessDPIAware(VOID)
 HB_FUNC(WAISPROCESSDPIAWARE)
 {
   wa_ret_BOOL(IsProcessDPIAware());
@@ -4422,71 +4422,71 @@ HB_FUNC(WAUSERHANDLEGRANTACCESS)
 
 // WINUSERAPI UINT WINAPI GetRawInputBuffer(PRAWINPUT pData,PUINT pcbSize,UINT cbSizeHeader)
 
-// WINUSERAPI WINBOOL WINAPI RegisterRawInputDevices (PCRAWINPUTDEVICE pRawInputDevices, UINT uiNumDevices, UINT cbSize)
+// WINUSERAPI WINBOOL WINAPI RegisterRawInputDevices(PCRAWINPUTDEVICE pRawInputDevices, UINT uiNumDevices, UINT cbSize)
 
-// WINUSERAPI UINT WINAPI GetRegisteredRawInputDevices (PRAWINPUTDEVICE pRawInputDevices, PUINT puiNumDevices, UINT cbSize)
+// WINUSERAPI UINT WINAPI GetRegisteredRawInputDevices(PRAWINPUTDEVICE pRawInputDevices, PUINT puiNumDevices, UINT cbSize)
 
-// WINUSERAPI UINT WINAPI GetRawInputDeviceList (PRAWINPUTDEVICELIST pRawInputDeviceList, PUINT puiNumDevices, UINT cbSize)
+// WINUSERAPI UINT WINAPI GetRawInputDeviceList(PRAWINPUTDEVICELIST pRawInputDeviceList, PUINT puiNumDevices, UINT cbSize)
 
-// WINUSERAPI LRESULT WINAPI DefRawInputProc (PRAWINPUT *paRawInput, INT nInput, UINT cbSizeHeader)
+// WINUSERAPI LRESULT WINAPI DefRawInputProc(PRAWINPUT *paRawInput, INT nInput, UINT cbSizeHeader)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerDevices (UINT32 *deviceCount, POINTER_DEVICE_INFO *pointerDevices)
+// WINUSERAPI WINBOOL WINAPI GetPointerDevices(UINT32 *deviceCount, POINTER_DEVICE_INFO *pointerDevices)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerDevice (HANDLE device, POINTER_DEVICE_INFO *pointerDevice)
+// WINUSERAPI WINBOOL WINAPI GetPointerDevice(HANDLE device, POINTER_DEVICE_INFO *pointerDevice)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerDeviceProperties (HANDLE device, UINT32 *propertyCount, POINTER_DEVICE_PROPERTY *pointerProperties)
+// WINUSERAPI WINBOOL WINAPI GetPointerDeviceProperties(HANDLE device, UINT32 *propertyCount, POINTER_DEVICE_PROPERTY *pointerProperties)
 
-// WINUSERAPI WINBOOL WINAPI RegisterPointerDeviceNotifications (HWND window, WINBOOL notifyRange)
+// WINUSERAPI WINBOOL WINAPI RegisterPointerDeviceNotifications(HWND window, WINBOOL notifyRange)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerDeviceRects (HANDLE device, RECT *pointerDeviceRect, RECT *displayRect)
+// WINUSERAPI WINBOOL WINAPI GetPointerDeviceRects(HANDLE device, RECT *pointerDeviceRect, RECT *displayRect)
 
-// WINUSERAPI WINBOOL WINAPI GetPointerDeviceCursors (HANDLE device, UINT32 *cursorCount, POINTER_DEVICE_CURSOR_INFO *deviceCursors)
+// WINUSERAPI WINBOOL WINAPI GetPointerDeviceCursors(HANDLE device, UINT32 *cursorCount, POINTER_DEVICE_CURSOR_INFO *deviceCursors)
 
-// WINUSERAPI WINBOOL WINAPI GetRawPointerDeviceData (UINT32 pointerId, UINT32 historyCount, UINT32 propertiesCount, POINTER_DEVICE_PROPERTY *pProperties, LONG *pValues)
+// WINUSERAPI WINBOOL WINAPI GetRawPointerDeviceData(UINT32 pointerId, UINT32 historyCount, UINT32 propertiesCount, POINTER_DEVICE_PROPERTY *pProperties, LONG *pValues)
 
-// WINUSERAPI WINBOOL WINAPI ChangeWindowMessageFilter (UINT message, DWORD dwFlag)
+// WINUSERAPI WINBOOL WINAPI ChangeWindowMessageFilter(UINT message, DWORD dwFlag)
 
-// WINUSERAPI WINBOOL WINAPI ChangeWindowMessageFilterEx (HWND hwnd, UINT message, DWORD action, PCHANGEFILTERSTRUCT pChangeFilterStruct)
+// WINUSERAPI WINBOOL WINAPI ChangeWindowMessageFilterEx(HWND hwnd, UINT message, DWORD action, PCHANGEFILTERSTRUCT pChangeFilterStruct)
 
-// WINUSERAPI WINBOOL WINAPI GetGestureInfo (HGESTUREINFO hGestureInfo, PGESTUREINFO pGestureInfo)
+// WINUSERAPI WINBOOL WINAPI GetGestureInfo(HGESTUREINFO hGestureInfo, PGESTUREINFO pGestureInfo)
 
-// WINUSERAPI WINBOOL WINAPI GetGestureExtraArgs (HGESTUREINFO hGestureInfo, UINT cbExtraArgs, PBYTE pExtraArgs)
+// WINUSERAPI WINBOOL WINAPI GetGestureExtraArgs(HGESTUREINFO hGestureInfo, UINT cbExtraArgs, PBYTE pExtraArgs)
 
-// WINUSERAPI WINBOOL WINAPI CloseGestureInfoHandle (HGESTUREINFO hGestureInfo)
+// WINUSERAPI WINBOOL WINAPI CloseGestureInfoHandle(HGESTUREINFO hGestureInfo)
 
-// WINUSERAPI WINBOOL WINAPI SetGestureConfig (HWND hwnd, DWORD dwReserved, UINT cIDs, PGESTURECONFIG pGestureConfig, UINT cbSize)
+// WINUSERAPI WINBOOL WINAPI SetGestureConfig(HWND hwnd, DWORD dwReserved, UINT cIDs, PGESTURECONFIG pGestureConfig, UINT cbSize)
 
-// WINUSERAPI WINBOOL WINAPI GetGestureConfig (HWND hwnd, DWORD dwReserved, DWORD dwFlags, PUINT pcIDs, PGESTURECONFIG pGestureConfig, UINT cbSize)
+// WINUSERAPI WINBOOL WINAPI GetGestureConfig(HWND hwnd, DWORD dwReserved, DWORD dwFlags, PUINT pcIDs, PGESTURECONFIG pGestureConfig, UINT cbSize)
 
-// WINUSERAPI WINBOOL WINAPI ShutdownBlockReasonCreate (HWND hWnd, LPCWSTR pwszReason)
+// WINUSERAPI WINBOOL WINAPI ShutdownBlockReasonCreate(HWND hWnd, LPCWSTR pwszReason)
 HB_FUNC(WASHUTDOWNBLOCKREASONCREATE)
 {
   wa_ret_BOOL(ShutdownBlockReasonCreate(wa_par_HWND(1), wa_par_LPCWSTR(2)));
 }
 
-// WINUSERAPI WINBOOL WINAPI ShutdownBlockReasonQuery (HWND hWnd, LPWSTR pwszBuff, DWORD *pcchBuff)
+// WINUSERAPI WINBOOL WINAPI ShutdownBlockReasonQuery(HWND hWnd, LPWSTR pwszBuff, DWORD *pcchBuff)
 
 /*
-WINUSERAPI WINBOOL WINAPI ShutdownBlockReasonDestroy (HWND hWnd)
+WINUSERAPI WINBOOL WINAPI ShutdownBlockReasonDestroy(HWND hWnd)
 */
 HB_FUNC(WASHUTDOWNBLOCKREASONDESTROY)
 {
   wa_ret_BOOL(ShutdownBlockReasonDestroy(wa_par_HWND(1)));
 }
 
-// WINUSERAPI WINBOOL WINAPI GetCurrentInputMessageSource (INPUT_MESSAGE_SOURCE *inputMessageSource)
+// WINUSERAPI WINBOOL WINAPI GetCurrentInputMessageSource(INPUT_MESSAGE_SOURCE *inputMessageSource)
 
-// WINUSERAPI WINBOOL WINAPI GetCIMSSM (INPUT_MESSAGE_SOURCE *inputMessageSource)
+// WINUSERAPI WINBOOL WINAPI GetCIMSSM(INPUT_MESSAGE_SOURCE *inputMessageSource)
 
-// WINUSERAPI WINBOOL WINAPI GetAutoRotationState (PAR_STATE pState)
+// WINUSERAPI WINBOOL WINAPI GetAutoRotationState(PAR_STATE pState)
 
-// WINUSERAPI WINBOOL WINAPI GetDisplayAutoRotationPreferences (ORIENTATION_PREFERENCE *pOrientation)
+// WINUSERAPI WINBOOL WINAPI GetDisplayAutoRotationPreferences(ORIENTATION_PREFERENCE *pOrientation)
 
-// WINUSERAPI WINBOOL WINAPI GetDisplayAutoRotationPreferencesByProcessId (DWORD dwProcessId, ORIENTATION_PREFERENCE *pOrientation, WINBOOL *fRotateScreen)
+// WINUSERAPI WINBOOL WINAPI GetDisplayAutoRotationPreferencesByProcessId(DWORD dwProcessId, ORIENTATION_PREFERENCE *pOrientation, WINBOOL *fRotateScreen)
 
-// WINUSERAPI WINBOOL WINAPI SetDisplayAutoRotationPreferences (ORIENTATION_PREFERENCE orientation)
+// WINUSERAPI WINBOOL WINAPI SetDisplayAutoRotationPreferences(ORIENTATION_PREFERENCE orientation)
 
-// WINUSERAPI WINBOOL WINAPI IsImmersiveProcess (HANDLE hProcess)
+// WINUSERAPI WINBOOL WINAPI IsImmersiveProcess(HANDLE hProcess)
 #if 0
 HB_FUNC(WAISIMMERSIVEPROCESS)
 {
@@ -4494,7 +4494,7 @@ HB_FUNC(WAISIMMERSIVEPROCESS)
 }
 #endif
 
-// WINUSERAPI WINBOOL WINAPI SetProcessRestrictionExemption (WINBOOL fEnableExemption)
+// WINUSERAPI WINBOOL WINAPI SetProcessRestrictionExemption(WINBOOL fEnableExemption)
 #if 0
 HB_FUNC(WASETPROCESSRESTRICTIONEXEMPTION)
 {

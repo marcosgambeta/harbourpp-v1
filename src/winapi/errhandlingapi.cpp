@@ -35,26 +35,26 @@
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-// WINBASEAPI UINT WINAPI SetErrorMode (UINT uMode)
+// WINBASEAPI UINT WINAPI SetErrorMode(UINT uMode)
 HB_FUNC(WASETERRORMODE)
 {
   wa_ret_UINT(SetErrorMode(wa_par_UINT(1)));
 }
 
-// WINBASEAPI LPTOP_LEVEL_EXCEPTION_FILTER WINAPI SetUnhandledExceptionFilter (LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
+// WINBASEAPI LPTOP_LEVEL_EXCEPTION_FILTER WINAPI SetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
 
-// WINBASEAPI LONG WINAPI UnhandledExceptionFilter (struct _EXCEPTION_POINTERS *ExceptionInfo)
+// WINBASEAPI LONG WINAPI UnhandledExceptionFilter(struct _EXCEPTION_POINTERS *ExceptionInfo)
 
-// WINBASEAPI PVOID WINAPI AddVectoredExceptionHandler (ULONG First, PVECTORED_EXCEPTION_HANDLER Handler)
+// WINBASEAPI PVOID WINAPI AddVectoredExceptionHandler(ULONG First, PVECTORED_EXCEPTION_HANDLER Handler)
 
-// WINBASEAPI ULONG WINAPI RemoveVectoredExceptionHandler (PVOID Handle)
+// WINBASEAPI ULONG WINAPI RemoveVectoredExceptionHandler(PVOID Handle)
 
-// WINBASEAPI PVOID WINAPI AddVectoredContinueHandler (ULONG First, PVECTORED_EXCEPTION_HANDLER Handler)
+// WINBASEAPI PVOID WINAPI AddVectoredContinueHandler(ULONG First, PVECTORED_EXCEPTION_HANDLER Handler)
 
-// WINBASEAPI ULONG WINAPI RemoveVectoredContinueHandler (PVOID Handle)
+// WINBASEAPI ULONG WINAPI RemoveVectoredContinueHandler(PVOID Handle)
 
 // #if _WIN32_WINNT >= 0x0600
-// WINBASEAPI UINT WINAPI GetErrorMode (VOID)
+// WINBASEAPI UINT WINAPI GetErrorMode(VOID)
 // #endif
 #if 0
 HB_FUNC(WAGETERRORMODE)
@@ -63,17 +63,17 @@ HB_FUNC(WAGETERRORMODE)
 }
 #endif
 
-// WINBASEAPI VOID WINAPI RestoreLastError (DWORD dwErrCode)
+// WINBASEAPI VOID WINAPI RestoreLastError(DWORD dwErrCode)
 
-// WINBASEAPI VOID WINAPI RaiseException (DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, CONST ULONG_PTR *lpArguments)
+// WINBASEAPI VOID WINAPI RaiseException(DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, CONST ULONG_PTR *lpArguments)
 
-// WINBASEAPI DWORD WINAPI GetLastError (VOID)
+// WINBASEAPI DWORD WINAPI GetLastError(VOID)
 HB_FUNC(WAGETLASTERROR)
 {
   wa_ret_DWORD(GetLastError());
 }
 
-// WINBASEAPI VOID WINAPI SetLastError (DWORD dwErrCode)
+// WINBASEAPI VOID WINAPI SetLastError(DWORD dwErrCode)
 HB_FUNC(WASETLASTERROR)
 {
   SetLastError(wa_par_DWORD(1));

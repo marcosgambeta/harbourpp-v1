@@ -484,9 +484,9 @@ HB_FUNC(WADELETEPRINTPROVIDORW)
   wa_ret_BOOL(DeletePrintProvidorW(reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(1))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(3)))));
 }
 
-// WINBOOL WINAPI IsValidDevmodeA (PDEVMODEA pDevmode,size_t DevmodeSize)
+// WINBOOL WINAPI IsValidDevmodeA(PDEVMODEA pDevmode,size_t DevmodeSize)
 
-// WINBOOL WINAPI IsValidDevmodeW (PDEVMODEW pDevmode,size_t DevmodeSize)
+// WINBOOL WINAPI IsValidDevmodeW(PDEVMODEW pDevmode,size_t DevmodeSize)
 
 // WINBOOL AddPrinterConnection2W(HWND hWnd,LPCWSTR pszName,DWORD dwLevel,PVOID pConnectionInfo)
 

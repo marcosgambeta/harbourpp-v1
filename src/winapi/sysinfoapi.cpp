@@ -36,35 +36,35 @@
 #include "hbwinuni.hpp"
 #include "winapi.hpp"
 
-// WINBASEAPI WINBOOL WINAPI GetComputerNameExA (COMPUTER_NAME_FORMAT NameType, LPSTR lpBuffer, LPDWORD nSize)
+// WINBASEAPI WINBOOL WINAPI GetComputerNameExA(COMPUTER_NAME_FORMAT NameType, LPSTR lpBuffer, LPDWORD nSize)
 
-// WINBASEAPI WINBOOL WINAPI GetComputerNameExW (COMPUTER_NAME_FORMAT NameType, LPWSTR lpBuffer, LPDWORD nSize)
+// WINBASEAPI WINBOOL WINAPI GetComputerNameExW(COMPUTER_NAME_FORMAT NameType, LPWSTR lpBuffer, LPDWORD nSize)
 
-// WINBASEAPI UINT WINAPI EnumSystemFirmwareTables (DWORD FirmwareTableProviderSignature, PVOID pFirmwareTableEnumBuffer, DWORD BufferSize)
+// WINBASEAPI UINT WINAPI EnumSystemFirmwareTables(DWORD FirmwareTableProviderSignature, PVOID pFirmwareTableEnumBuffer, DWORD BufferSize)
 
-// WINBASEAPI VOID WINAPI GetLocalTime (LPSYSTEMTIME lpSystemTime)
+// WINBASEAPI VOID WINAPI GetLocalTime(LPSYSTEMTIME lpSystemTime)
 HB_FUNC(WAGETLOCALTIME)
 {
   GetLocalTime(wa_par_SYSTEMTIME(1));
 }
 
-// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformation (PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Buffer, PDWORD ReturnedLength)
+// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformation(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Buffer, PDWORD ReturnedLength)
 
-// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformationEx (LOGICAL_PROCESSOR_RELATIONSHIP RelationshipType, PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX Buffer, PDWORD ReturnedLength)
+// WINBASEAPI WINBOOL WINAPI GetLogicalProcessorInformationEx(LOGICAL_PROCESSOR_RELATIONSHIP RelationshipType, PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX Buffer, PDWORD ReturnedLength)
 #if _WIN32_WINNT >= 0x0601
 #endif
 
-// WINBASEAPI VOID WINAPI GetNativeSystemInfo (LPSYSTEM_INFO lpSystemInfo)
+// WINBASEAPI VOID WINAPI GetNativeSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 HB_FUNC(WAGETNATIVESYSTEMINFO)
 {
   GetNativeSystemInfo(wa_par_SYSTEM_INFO(1));
 }
 
-// WINBASEAPI WINBOOL WINAPI GetOsSafeBootMode (PDWORD Flags)
+// WINBASEAPI WINBOOL WINAPI GetOsSafeBootMode(PDWORD Flags)
 #if _WIN32_WINNT >= 0x0601
 #endif
 
-// WINBASEAPI WINBOOL WINAPI GetProductInfo (DWORD dwOSMajorVersion, DWORD dwOSMinorVersion, DWORD dwSpMajorVersion, DWORD dwSpMinorVersion, PDWORD pdwReturnedProductType)
+// WINBASEAPI WINBOOL WINAPI GetProductInfo(DWORD dwOSMajorVersion, DWORD dwOSMinorVersion, DWORD dwSpMajorVersion, DWORD dwSpMinorVersion, PDWORD pdwReturnedProductType)
 #if _WIN32_WINNT >= 0x0600
 HB_FUNC(WAGETPRODUCTINFO)
 {
@@ -74,25 +74,25 @@ HB_FUNC(WAGETPRODUCTINFO)
 }
 #endif
 
-// WINBASEAPI UINT WINAPI GetSystemDirectoryA (LPSTR lpBuffer, UINT uSize)
+// WINBASEAPI UINT WINAPI GetSystemDirectoryA(LPSTR lpBuffer, UINT uSize)
 
-// WINBASEAPI UINT WINAPI GetSystemDirectoryW (LPWSTR lpBuffer, UINT uSize)
+// WINBASEAPI UINT WINAPI GetSystemDirectoryW(LPWSTR lpBuffer, UINT uSize)
 
-// WINBASEAPI UINT WINAPI GetSystemFirmwareTable (DWORD FirmwareTableProviderSignature, DWORD FirmwareTableID, PVOID pFirmwareTableBuffer, DWORD BufferSize)
+// WINBASEAPI UINT WINAPI GetSystemFirmwareTable(DWORD FirmwareTableProviderSignature, DWORD FirmwareTableID, PVOID pFirmwareTableBuffer, DWORD BufferSize)
 
-// WINBASEAPI VOID WINAPI GetSystemInfo (LPSYSTEM_INFO lpSystemInfo)
+// WINBASEAPI VOID WINAPI GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 HB_FUNC(WAGETSYSTEMINFO)
 {
   GetSystemInfo(wa_par_SYSTEM_INFO(1));
 }
 
-// WINBASEAPI VOID WINAPI GetSystemTime (LPSYSTEMTIME lpSystemTime)
+// WINBASEAPI VOID WINAPI GetSystemTime(LPSYSTEMTIME lpSystemTime)
 HB_FUNC(WAGETSYSTEMTIME)
 {
   GetSystemTime(wa_par_SYSTEMTIME(1));
 }
 
-// WINBASEAPI WINBOOL WINAPI GetSystemTimeAdjustment (PDWORD lpTimeAdjustment, PDWORD lpTimeIncrement, PBOOL lpTimeAdjustmentDisabled)
+// WINBASEAPI WINBOOL WINAPI GetSystemTimeAdjustment(PDWORD lpTimeAdjustment, PDWORD lpTimeIncrement, PBOOL lpTimeAdjustmentDisabled)
 HB_FUNC(WAGETSYSTEMTIMEADJUSTMENT)
 {
   DWORD TimeAdjustment{};
@@ -104,13 +104,13 @@ HB_FUNC(WAGETSYSTEMTIMEADJUSTMENT)
   wa_stor_BOOL(TimeAdjustmentDisabled, 3);
 }
 
-// WINBASEAPI VOID WINAPI GetSystemTimeAsFileTime (LPFILETIME lpSystemTimeAsFileTime)
+// WINBASEAPI VOID WINAPI GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime)
 HB_FUNC(WAGETSYSTEMTIMEASFILETIME)
 {
   GetSystemTimeAsFileTime(wa_par_FILETIME(1));
 }
 
-// WINBASEAPI VOID WINAPI GetSystemTimePreciseAsFileTime (LPFILETIME lpSystemTimeAsFileTime)
+// WINBASEAPI VOID WINAPI GetSystemTimePreciseAsFileTime(LPFILETIME lpSystemTimeAsFileTime)
 #if 0
 HB_FUNC(WAGETSYSTEMTIMEPRECISEASFILETIME ) // TODO: Windows 8/2012
 {
@@ -118,17 +118,17 @@ HB_FUNC(WAGETSYSTEMTIMEPRECISEASFILETIME ) // TODO: Windows 8/2012
 }
 #endif
 
-// WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryA (LPSTR lpBuffer, UINT uSize)
+// WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryA(LPSTR lpBuffer, UINT uSize)
 
-// WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryW (LPWSTR lpBuffer, UINT uSize)
+// WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryW(LPWSTR lpBuffer, UINT uSize)
 
-// WINBASEAPI DWORD WINAPI GetTickCount (VOID)
+// WINBASEAPI DWORD WINAPI GetTickCount(VOID)
 HB_FUNC(WAGETTICKCOUNT)
 {
   wa_ret_DWORD(GetTickCount());
 }
 
-// WINBASEAPI ULONGLONG WINAPI GetTickCount64 (VOID)
+// WINBASEAPI ULONGLONG WINAPI GetTickCount64(VOID)
 #if _WIN32_WINNT >= 0x0600
 HB_FUNC(WAGETTICKCOUNT64)
 {
@@ -136,41 +136,41 @@ HB_FUNC(WAGETTICKCOUNT64)
 }
 #endif
 
-// WINBASEAPI DWORD WINAPI GetVersion (VOID)
+// WINBASEAPI DWORD WINAPI GetVersion(VOID)
 HB_FUNC(WAGETVERSION)
 {
   wa_ret_DWORD(GetVersion());
 }
 
-// WINBASEAPI WINBOOL WINAPI GetVersionExA (LPOSVERSIONINFOA lpVersionInformation)
+// WINBASEAPI WINBOOL WINAPI GetVersionExA(LPOSVERSIONINFOA lpVersionInformation)
 
-// WINBASEAPI WINBOOL WINAPI GetVersionExW (LPOSVERSIONINFOW lpVersionInformation)
+// WINBASEAPI WINBOOL WINAPI GetVersionExW(LPOSVERSIONINFOW lpVersionInformation)
 
-// WINBASEAPI UINT WINAPI GetWindowsDirectoryA (LPSTR lpBuffer, UINT uSize)
+// WINBASEAPI UINT WINAPI GetWindowsDirectoryA(LPSTR lpBuffer, UINT uSize)
 
-// WINBASEAPI UINT WINAPI GetWindowsDirectoryW (LPWSTR lpBuffer, UINT uSize)
+// WINBASEAPI UINT WINAPI GetWindowsDirectoryW(LPWSTR lpBuffer, UINT uSize)
 
-// WINBASEAPI WINBOOL WINAPI GlobalMemoryStatusEx (LPMEMORYSTATUSEX lpBuffer)
+// WINBASEAPI WINBOOL WINAPI GlobalMemoryStatusEx(LPMEMORYSTATUSEX lpBuffer)
 HB_FUNC(WAGLOBALMEMORYSTATUSEX)
 {
   wa_ret_BOOL(GlobalMemoryStatusEx(wa_par_MEMORYSTATUSEX(1)));
 }
 
-// WINBASEAPI WINBOOL WINAPI SetComputerNameExW (COMPUTER_NAME_FORMAT NameType, LPCWSTR lpBuffer)
+// WINBASEAPI WINBOOL WINAPI SetComputerNameExW(COMPUTER_NAME_FORMAT NameType, LPCWSTR lpBuffer)
 
-// WINBASEAPI WINBOOL WINAPI SetLocalTime (CONST SYSTEMTIME *lpSystemTime)
+// WINBASEAPI WINBOOL WINAPI SetLocalTime(CONST SYSTEMTIME *lpSystemTime)
 HB_FUNC(WASETLOCALTIME)
 {
   wa_ret_BOOL(SetLocalTime(wa_par_SYSTEMTIME(1)));
 }
 
-// WINBASEAPI WINBOOL WINAPI SetSystemTime (CONST SYSTEMTIME *lpSystemTime)
+// WINBASEAPI WINBOOL WINAPI SetSystemTime(CONST SYSTEMTIME *lpSystemTime)
 HB_FUNC(WASETSYSTEMTIME)
 {
   wa_ret_BOOL(SetSystemTime(wa_par_SYSTEMTIME(1)));
 }
 
-// NTSYSAPI ULONGLONG NTAPI VerSetConditionMask (ULONGLONG ConditionMask, ULONG TypeMask, UCHAR Condition)
+// NTSYSAPI ULONGLONG NTAPI VerSetConditionMask(ULONGLONG ConditionMask, ULONG TypeMask, UCHAR Condition)
 HB_FUNC(WAVERSETCONDITIONMASK)
 {
   wa_ret_ULONGLONG(VerSetConditionMask(wa_par_ULONGLONG(1), wa_par_ULONG(2), wa_par_UCHAR(3)));

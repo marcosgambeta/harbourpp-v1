@@ -290,7 +290,7 @@ HB_FUNC(WAIMAGELIST_DUPLICATE)
   wa_ret_HIMAGELIST(ImageList_Duplicate(wa_par_HIMAGELIST(1)));
 }
 
-// WINCOMMCTRLAPI HRESULT WINAPI HIMAGELIST_QueryInterface (HIMAGELIST himl, REFIID riid, void **ppv)
+// WINCOMMCTRLAPI HRESULT WINAPI HIMAGELIST_QueryInterface(HIMAGELIST himl, REFIID riid, void **ppv)
 
 // WINCOMMCTRLAPI HWND WINAPI CreateToolbarEx(HWND hwnd,DWORD ws,UINT wID,int nBitmaps,HINSTANCE hBMInst,UINT_PTR wBMID,LPCTBBUTTON lpButtons,int iNumButtons,int dxButton,int dyButton,int dxBitmap,int dyBitmap,UINT uStructSize)
 
@@ -418,9 +418,9 @@ HB_FUNC(WACREATEUPDOWNCONTROL)
   wa_ret_HWND(CreateUpDownControl(wa_par_DWORD(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_HWND(6), wa_par_int(7), wa_par_HINSTANCE(8), wa_par_HWND(9), wa_par_int(10), wa_par_int(11), wa_par_int(12)));
 }
 
-// WINCOMMCTRLAPI HRESULT WINAPI TaskDialogIndirect (const TASKDIALOGCONFIG *pTaskConfig, int *pnButton, int *pnRadioButton, WINBOOL *pfVerificationFlagChecked)
+// WINCOMMCTRLAPI HRESULT WINAPI TaskDialogIndirect(const TASKDIALOGCONFIG *pTaskConfig, int *pnButton, int *pnRadioButton, WINBOOL *pfVerificationFlagChecked)
 
-// WINCOMMCTRLAPI HRESULT WINAPI TaskDialog (HWND hwndOwner, HINSTANCE hInstance, PCWSTR pszWindowTitle, PCWSTR pszMainInstruction, PCWSTR pszContent, TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons, PCWSTR pszIcon, int *pnButton)
+// WINCOMMCTRLAPI HRESULT WINAPI TaskDialog(HWND hwndOwner, HINSTANCE hInstance, PCWSTR pszWindowTitle, PCWSTR pszMainInstruction, PCWSTR pszContent, TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons, PCWSTR pszIcon, int *pnButton)
 #if 0
 HB_FUNC(WATASKDIALOG)
 {
@@ -438,69 +438,69 @@ HB_FUNC(WATASKDIALOG)
 }
 #endif
 
-// WINCOMMCTRLAPI HDSA WINAPI DSA_Create (int cbItem, int cItemGrow)
+// WINCOMMCTRLAPI HDSA WINAPI DSA_Create(int cbItem, int cItemGrow)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DSA_Destroy (HDSA hdsa)
+// WINCOMMCTRLAPI WINBOOL WINAPI DSA_Destroy(HDSA hdsa)
 
-// WINCOMMCTRLAPI void WINAPI DSA_DestroyCallback (HDSA hdsa, PFNDAENUMCALLBACK pfnCB, void *pData)
+// WINCOMMCTRLAPI void WINAPI DSA_DestroyCallback(HDSA hdsa, PFNDAENUMCALLBACK pfnCB, void *pData)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DSA_DeleteItem (HDSA hdsa, int i)
+// WINCOMMCTRLAPI WINBOOL WINAPI DSA_DeleteItem(HDSA hdsa, int i)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DSA_DeleteAllItems (HDSA hdsa)
+// WINCOMMCTRLAPI WINBOOL WINAPI DSA_DeleteAllItems(HDSA hdsa)
 
-// WINCOMMCTRLAPI void WINAPI DSA_EnumCallback (HDSA hdsa, PFNDAENUMCALLBACK pfnCB, void *pData)
+// WINCOMMCTRLAPI void WINAPI DSA_EnumCallback(HDSA hdsa, PFNDAENUMCALLBACK pfnCB, void *pData)
 
-// WINCOMMCTRLAPI int WINAPI DSA_InsertItem (HDSA hdsa, int i, const void *pitem)
+// WINCOMMCTRLAPI int WINAPI DSA_InsertItem(HDSA hdsa, int i, const void *pitem)
 
-// WINCOMMCTRLAPI PVOID WINAPI DSA_GetItemPtr (HDSA hdsa, int i)
+// WINCOMMCTRLAPI PVOID WINAPI DSA_GetItemPtr(HDSA hdsa, int i)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DSA_GetItem (HDSA hdsa, int i, void *pitem)
+// WINCOMMCTRLAPI WINBOOL WINAPI DSA_GetItem(HDSA hdsa, int i, void *pitem)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DSA_SetItem (HDSA hdsa, int i, const void *pitem)
+// WINCOMMCTRLAPI WINBOOL WINAPI DSA_SetItem(HDSA hdsa, int i, const void *pitem)
 
-// WINCOMMCTRLAPI HDSA WINAPI DSA_Clone (HDSA hdsa)
+// WINCOMMCTRLAPI HDSA WINAPI DSA_Clone(HDSA hdsa)
 
-// WINCOMMCTRLAPI ULONGLONG WINAPI DSA_GetSize (HDSA hdsa)
+// WINCOMMCTRLAPI ULONGLONG WINAPI DSA_GetSize(HDSA hdsa)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DSA_Sort (HDSA pdsa, PFNDACOMPARE pfnCompare, LPARAM lParam)
+// WINCOMMCTRLAPI WINBOOL WINAPI DSA_Sort(HDSA pdsa, PFNDACOMPARE pfnCompare, LPARAM lParam)
 
-// WINCOMMCTRLAPI HDPA WINAPI DPA_Create (int cItemGrow)
+// WINCOMMCTRLAPI HDPA WINAPI DPA_Create(int cItemGrow)
 
-// WINCOMMCTRLAPI HDPA WINAPI DPA_CreateEx (int cpGrow, HANDLE hheap)
+// WINCOMMCTRLAPI HDPA WINAPI DPA_CreateEx(int cpGrow, HANDLE hheap)
 
-// WINCOMMCTRLAPI HDPA WINAPI DPA_Clone (const HDPA hdpa, HDPA hdpaNew)
+// WINCOMMCTRLAPI HDPA WINAPI DPA_Clone(const HDPA hdpa, HDPA hdpaNew)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Destroy (HDPA hdpa)
+// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Destroy(HDPA hdpa)
 
-// WINCOMMCTRLAPI void WINAPI DPA_DestroyCallback (HDPA hdpa, PFNDAENUMCALLBACK pfnCB, void *pData)
+// WINCOMMCTRLAPI void WINAPI DPA_DestroyCallback(HDPA hdpa, PFNDAENUMCALLBACK pfnCB, void *pData)
 
-// WINCOMMCTRLAPI PVOID WINAPI DPA_DeletePtr (HDPA hdpa, int i)
+// WINCOMMCTRLAPI PVOID WINAPI DPA_DeletePtr(HDPA hdpa, int i)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DPA_DeleteAllPtrs (HDPA hdpa)
+// WINCOMMCTRLAPI WINBOOL WINAPI DPA_DeleteAllPtrs(HDPA hdpa)
 
-// WINCOMMCTRLAPI void WINAPI DPA_EnumCallback (HDPA hdpa, PFNDAENUMCALLBACK pfnCB, void *pData)
+// WINCOMMCTRLAPI void WINAPI DPA_EnumCallback(HDPA hdpa, PFNDAENUMCALLBACK pfnCB, void *pData)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Grow (HDPA pdpa, int cp)
+// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Grow(HDPA pdpa, int cp)
 
-// WINCOMMCTRLAPI int WINAPI DPA_InsertPtr (HDPA hdpa, int i, void *p)
+// WINCOMMCTRLAPI int WINAPI DPA_InsertPtr(HDPA hdpa, int i, void *p)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DPA_SetPtr (HDPA hdpa, int i, void *p)
+// WINCOMMCTRLAPI WINBOOL WINAPI DPA_SetPtr(HDPA hdpa, int i, void *p)
 
-// WINCOMMCTRLAPI PVOID WINAPI DPA_GetPtr (HDPA hdpa, INT_PTR i)
+// WINCOMMCTRLAPI PVOID WINAPI DPA_GetPtr(HDPA hdpa, INT_PTR i)
 
-// WINCOMMCTRLAPI int WINAPI DPA_GetPtrIndex (HDPA hdpa, const void *p)
+// WINCOMMCTRLAPI int WINAPI DPA_GetPtrIndex(HDPA hdpa, const void *p)
 
-// WINCOMMCTRLAPI ULONGLONG WINAPI DPA_GetSize (HDPA hdpa)
+// WINCOMMCTRLAPI ULONGLONG WINAPI DPA_GetSize(HDPA hdpa)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Sort (HDPA hdpa, PFNDACOMPARE pfnCompare, LPARAM lParam)
+// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Sort(HDPA hdpa, PFNDACOMPARE pfnCompare, LPARAM lParam)
 
-// WINCOMMCTRLAPI HRESULT WINAPI DPA_LoadStream (HDPA *phdpa, PFNDPASTREAM pfn, struct IStream *pstream, void *pvInstData)
+// WINCOMMCTRLAPI HRESULT WINAPI DPA_LoadStream(HDPA *phdpa, PFNDPASTREAM pfn, struct IStream *pstream, void *pvInstData)
 
-// WINCOMMCTRLAPI HRESULT WINAPI DPA_SaveStream (HDPA hdpa, PFNDPASTREAM pfn, struct IStream *pstream, void *pvInstData)
+// WINCOMMCTRLAPI HRESULT WINAPI DPA_SaveStream(HDPA hdpa, PFNDPASTREAM pfn, struct IStream *pstream, void *pvInstData)
 
-// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Merge (HDPA hdpaDest, HDPA hdpaSrc, DWORD dwFlags, PFNDACOMPARE pfnCompare, PFNDPAMERGE pfnMerge, LPARAM lParam)
+// WINCOMMCTRLAPI WINBOOL WINAPI DPA_Merge(HDPA hdpaDest, HDPA hdpaSrc, DWORD dwFlags, PFNDACOMPARE pfnCompare, PFNDPAMERGE pfnMerge, LPARAM lParam)
 
-// WINCOMMCTRLAPI int WINAPI DPA_Search (HDPA hdpa, void *pFind, int iStart, PFNDACOMPARE pfnCompare, LPARAM lParam, UINT options)
+// WINCOMMCTRLAPI int WINAPI DPA_Search(HDPA hdpa, void *pFind, int iStart, PFNDACOMPARE pfnCompare, LPARAM lParam, UINT options)
 
 // WINCOMMCTRLAPI WINBOOL WINAPI FlatSB_EnableScrollBar(HWND,int,UINT)
 #if 0
@@ -606,7 +606,7 @@ HB_FUNC(WAUNINITIALIZEFLATSB)
 }
 #endif
 
-// WINCOMMCTRLAPI HRESULT WINAPI LoadIconMetric (HINSTANCE hinst, PCWSTR pszName, int lims, HICON *phico)
+// WINCOMMCTRLAPI HRESULT WINAPI LoadIconMetric(HINSTANCE hinst, PCWSTR pszName, int lims, HICON *phico)
 #if 0
 HB_FUNC(WALOADICONMETRIC)
 {
@@ -616,7 +616,7 @@ HB_FUNC(WALOADICONMETRIC)
 }
 #endif
 
-// WINCOMMCTRLAPI HRESULT WINAPI LoadIconWithScaleDown (HINSTANCE hinst, PCWSTR pszName, int cx, int cy, HICON *phico)
+// WINCOMMCTRLAPI HRESULT WINAPI LoadIconWithScaleDown(HINSTANCE hinst, PCWSTR pszName, int cx, int cy, HICON *phico)
 #if 0
 HB_FUNC(WALOADICONWITHSCALEDOWN)
 {

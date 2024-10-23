@@ -740,7 +740,7 @@ HB_FUNC(WAGETDIBITS)
   wa_ret_int(GetDIBits(wa_par_HDC(1), wa_par_HBITMAP(2), wa_par_UINT(3), wa_par_UINT(4), static_cast<LPVOID>(hb_parptr(5)), wa_par_BITMAPINFO(6), wa_par_UINT(7)));
 }
 
-// WINGDIAPI DWORD WINAPI GetFontData (HDC hdc,DWORD dwTable,DWORD dwOffset,PVOID pvBuffer,DWORD cjBuffer)
+// WINGDIAPI DWORD WINAPI GetFontData(HDC hdc,DWORD dwTable,DWORD dwOffset,PVOID pvBuffer,DWORD cjBuffer)
 HB_FUNC(WAGETFONTDATA)
 {
   wa_ret_DWORD(GetFontData(wa_par_HDC(1), wa_par_DWORD(2), wa_par_DWORD(3), static_cast<PVOID>(hb_parptr(4)), wa_par_DWORD(5)));
@@ -835,7 +835,7 @@ HB_FUNC(WAGETPOLYFILLMODE)
 
 // WINGDIAPI WINBOOL WINAPI GetRasterizerCaps(LPRASTERIZER_STATUS lpraststat,UINT cjBytes)
 
-// WINGDIAPI int WINAPI GetRandomRgn (HDC hdc,HRGN hrgn,INT i)
+// WINGDIAPI int WINAPI GetRandomRgn(HDC hdc,HRGN hrgn,INT i)
 HB_FUNC(WAGETRANDOMRGN)
 {
   wa_ret_int(GetRandomRgn(wa_par_HDC(1), wa_par_HRGN(2), wa_par_int(3)));
@@ -1029,7 +1029,7 @@ HB_FUNC(WAGETTEXTEXTENTPOINTI)
 }
 #endif
 
-// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointI (HDC hdc,LPWORD lpwszString,int cwchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
+// WINGDIAPI WINBOOL WINAPI GetTextExtentExPointI(HDC hdc,LPWORD lpwszString,int cwchString,int nMaxExtent,LPINT lpnFit,LPINT lpnDx,LPSIZE lpSize)
 
 // WINGDIAPI WINBOOL WINAPI GetCharWidthI(HDC hdc,UINT giFirst,UINT cgi,LPWORD pgi,LPINT piWidths)
 
