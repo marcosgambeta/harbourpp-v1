@@ -40,8 +40,8 @@
 #if 0
 HB_FUNC( WABCRYPTOPENALGORITHMPROVIDER )
 {
-  void * str2{};
-  void * str3{};
+  void *str2{};
+  void *str3{};
   wa_ret_NTSTATUS(BCryptOpenAlgorithmProvider(###, HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_ULONG(4)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -62,7 +62,7 @@ HB_FUNC( WABCRYPTENUMALGORITHMS )
 #if 0
 HB_FUNC( WABCRYPTENUMPROVIDERS )
 {
-  void * str1{};
+  void *str1{};
   ULONG ImplCount{};
   wa_ret_NTSTATUS(BCryptEnumProviders(HB_PARSTR(1, &str1, nullptr), &ImplCount, ###, wa_par_ULONG(4)));
   wa_stor_ULONG(ImplCount, 2);
@@ -74,7 +74,7 @@ HB_FUNC( WABCRYPTENUMPROVIDERS )
 #if 0
 HB_FUNC( WABCRYPTGETPROPERTY )
 {
-  void * str2{};
+  void *str2{};
   UCHAR bOutput{};
   ULONG cbResult{};
   wa_ret_NTSTATUS(BCryptGetProperty(wa_par_BCRYPT_HANDLE(1), HB_PARSTR(2, &str2, nullptr), &bOutput, wa_par_ULONG(4), &cbResult, wa_par_ULONG(6)));
@@ -88,7 +88,7 @@ HB_FUNC( WABCRYPTGETPROPERTY )
 #if 0
 HB_FUNC( WABCRYPTSETPROPERTY )
 {
-  void * str2{};
+  void *str2{};
   UCHAR bInput{};
   wa_ret_NTSTATUS(BCryptSetProperty(wa_par_BCRYPT_HANDLE(1), HB_PARSTR(2, &str2, nullptr), &bInput, wa_par_ULONG(4), wa_par_ULONG(5)));
   wa_stor_UCHAR(bInput, 3);
@@ -164,7 +164,7 @@ HB_FUNC( WABCRYPTDECRYPT )
 #if 0
 HB_FUNC( WABCRYPTEXPORTKEY )
 {
-  void * str3{};
+  void *str3{};
   wa_ret_NTSTATUS(BCryptExportKey( ###, ###, HB_PARSTR(3, &str3, nullptr), ###, wa_par_ULONG(5), ###, wa_par_ULONG(7) ));
   hb_strfree(str3);
 }
@@ -174,7 +174,7 @@ HB_FUNC( WABCRYPTEXPORTKEY )
 #if 0
 HB_FUNC( WABCRYPTIMPORTKEY )
 {
-  void * str3{};
+  void *str3{};
   wa_ret_NTSTATUS(BCryptImportKey( ###, ###, HB_PARSTR(3, &str3, nullptr), ###, ###, wa_par_ULONG(6), ###, wa_par_ULONG(8), wa_par_ULONG(9) ));
   hb_strfree(str3);
 }
@@ -184,7 +184,7 @@ HB_FUNC( WABCRYPTIMPORTKEY )
 #if 0
 HB_FUNC( WABCRYPTIMPORTKEYPAIR )
 {
-  void * str3{};
+  void *str3{};
   wa_ret_NTSTATUS(BCryptImportKeyPair( ###, ###, HB_PARSTR(3, &str3, nullptr), ###, ###, wa_par_ULONG(6), wa_par_ULONG(7) ));
   hb_strfree(str3);
 }
@@ -250,7 +250,7 @@ HB_FUNC( WABCRYPTSECRETAGREEMENT )
 #if 0
 HB_FUNC( WABCRYPTDERIVEKEY )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_NTSTATUS(BCryptDeriveKey( ###, HB_PARSTR(2, &str2, nullptr), ###, ###, wa_par_ULONG(5), ###, wa_par_ULONG(7) ));
   hb_strfree(str2);
 }
@@ -332,9 +332,9 @@ HB_FUNC( WABCRYPTDERIVEKEYPBKDF2 )
 #if 0
 HB_FUNC( WABCRYPTRESOLVEPROVIDERS )
 {
-  void * str1{};
-  void * str3{};
-  void * str4{};
+  void *str1{};
+  void *str3{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptResolveProviders( HB_PARSTR(1, &str1, nullptr), wa_par_ULONG(2), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_ULONG(5), wa_par_ULONG(6), ###, ### ));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -354,7 +354,7 @@ HB_FUNC( WABCRYPTGETFIPSALGORITHMMODE )
 #if 0
 HB_FUNC( WABCRYPTQUERYPROVIDERREGISTRATION )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_NTSTATUS(BCryptQueryProviderRegistration( HB_PARSTR(1, &str1, nullptr), wa_par_ULONG(2), wa_par_ULONG(3), ###, ### ));
   hb_strfree(str1);
 }
@@ -372,7 +372,7 @@ HB_FUNC( WABCRYPTENUMREGISTEREDPROVIDERS )
 #if 0
 HB_FUNC( WABCRYPTCREATECONTEXT )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_NTSTATUS(BCryptCreateContext( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ### ));
   hb_strfree(str2);
 }
@@ -382,7 +382,7 @@ HB_FUNC( WABCRYPTCREATECONTEXT )
 #if 0
 HB_FUNC( WABCRYPTDELETECONTEXT )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_NTSTATUS(BCryptDeleteContext( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr) ));
   hb_strfree(str2);
 }
@@ -400,7 +400,7 @@ HB_FUNC( WABCRYPTENUMCONTEXTS )
 #if 0
 HB_FUNC( WABCRYPTCONFIGURECONTEXT )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_NTSTATUS(BCryptConfigureContext( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ### ));
   hb_strfree(str2);
 }
@@ -410,7 +410,7 @@ HB_FUNC( WABCRYPTCONFIGURECONTEXT )
 #if 0
 HB_FUNC( WABCRYPTQUERYCONTEXTCONFIGURATION )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_NTSTATUS(BCryptQueryContextConfiguration( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), ###, ### ));
   hb_strfree(str2);
 }
@@ -420,8 +420,8 @@ HB_FUNC( WABCRYPTQUERYCONTEXTCONFIGURATION )
 #if 0
 HB_FUNC( WABCRYPTADDCONTEXTFUNCTION )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptAddContextFunction( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), wa_par_ULONG(5) ));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -432,8 +432,8 @@ HB_FUNC( WABCRYPTADDCONTEXTFUNCTION )
 #if 0
 HB_FUNC( WABCRYPTREMOVECONTEXTFUNCTION )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptRemoveContextFunction( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr) ));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -444,7 +444,7 @@ HB_FUNC( WABCRYPTREMOVECONTEXTFUNCTION )
 #if 0
 HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONS )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_NTSTATUS(BCryptEnumContextFunctions( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), ###, ### ));
   hb_strfree(str2);
 }
@@ -454,8 +454,8 @@ HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONS )
 #if 0
 HB_FUNC( WABCRYPTCONFIGURECONTEXTFUNCTION )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptConfigureContextFunction( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ### ));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -466,8 +466,8 @@ HB_FUNC( WABCRYPTCONFIGURECONTEXTFUNCTION )
 #if 0
 HB_FUNC( WABCRYPTQUERYCONTEXTFUNCTIONCONFIGURATION )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptQueryContextFunctionConfiguration( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ###, ### ));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -478,8 +478,8 @@ HB_FUNC( WABCRYPTQUERYCONTEXTFUNCTIONCONFIGURATION )
 #if 0
 HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONPROVIDERS )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptEnumContextFunctionProviders( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), ###, ### ));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -490,8 +490,8 @@ HB_FUNC( WABCRYPTENUMCONTEXTFUNCTIONPROVIDERS )
 #if 0
 HB_FUNC( WABCRYPTSETCONTEXTFUNCTIONPROPERTY )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptSetContextFunctionProperty( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), wa_par_ULONG(6), ### ));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -502,8 +502,8 @@ HB_FUNC( WABCRYPTSETCONTEXTFUNCTIONPROPERTY )
 #if 0
 HB_FUNC( WABCRYPTQUERYCONTEXTFUNCTIONPROPERTY )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_NTSTATUS(BCryptQueryContextFunctionProperty( wa_par_ULONG(1), HB_PARSTR(2, &str2, nullptr), wa_par_ULONG(3), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), ###, ### ));
   hb_strfree(str2);
   hb_strfree(str4);

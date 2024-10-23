@@ -63,7 +63,7 @@ HB_FUNC( WAGETMODULEHANDLEW )
 
 HB_FUNC( WAGETMODULEHANDLE )
 {
-  void * str{};
+  void *str{};
   wa_ret_HMODULE(GetModuleHandle(HB_PARSTR(1, &str, nullptr)));
   hb_strfree(str);
 }
@@ -86,7 +86,7 @@ HB_FUNC( WALOADLIBRARYEXW )
 
 HB_FUNC( WALOADLIBRARYEX )
 {
-  void * str{};
+  void *str{};
   wa_ret_HMODULE(LoadLibraryEx(HB_PARSTR(1, &str, nullptr), wa_par_HANDLE(2), wa_par_DWORD(3)));
   hb_strfree(str);
 }
@@ -147,7 +147,7 @@ HB_FUNC( WAGETMODULEHANDLEEXW )
 
 HB_FUNC( WAGETMODULEHANDLEEX )
 {
-  void * str{};
+  void *str{};
   HMODULE hModule{};
   wa_ret_BOOL(GetModuleHandleEx(wa_par_DWORD(1), HB_PARSTR(2, &str, nullptr), &hModule));
   hb_storptr(hModule, 3);
@@ -198,8 +198,8 @@ HB_FUNC( WAGETPROCADDRESS )
 #if 0 // TODO: Windows 7 or upper
 HB_FUNC( WAFINDSTRINGORDINAL )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_int(FindStringOrdinal(wa_par_DWORD(1), HB_PARSTR(2, &str1, nullptr), wa_par_int(3), HB_PARSTR(4, &str2, nullptr), wa_par_int(5), wa_par_BOOL(6)));
   hb_strfree(str1);
   hb_strfree(str2);

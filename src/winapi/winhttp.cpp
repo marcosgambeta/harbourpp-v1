@@ -41,7 +41,7 @@
 // WINBOOL WINAPI WinHttpAddRequestHeaders(HINTERNET,LPCWSTR,DWORD,DWORD)
 HB_FUNC( WAWINHTTPADDREQUESTHEADERS )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(WinHttpAddRequestHeaders(wa_par_HINTERNET(1), HB_PARSTR(2, &str, nullptr), wa_par_DWORD(3), wa_par_DWORD(4)));
   hb_strfree(str);
 }
@@ -63,7 +63,7 @@ HB_FUNC( WAWINHTTPCLOSEHANDLE )
 // HINTERNET WINAPI WinHttpConnect(HINTERNET,LPCWSTR,INTERNET_PORT,DWORD)
 HB_FUNC( WAWINHTTPCONNECT )
 {
-  void * str{};
+  void *str{};
   wa_ret_HINTERNET(WinHttpConnect(wa_par_HINTERNET(1), HB_PARSTR(2, &str, nullptr), wa_par_INTERNET_PORT(3), wa_par_DWORD(4)));
   hb_strfree(str);
 }
@@ -81,9 +81,9 @@ HB_FUNC( WAWINHTTPCONNECT )
 // HINTERNET WINAPI WinHttpOpen(LPCWSTR,DWORD,LPCWSTR,LPCWSTR,DWORD)
 HB_FUNC( WAWINHTTPOPEN )
 {
-  void * str1{};
-  void * str2{};
-  void * str3{};
+  void *str1{};
+  void *str2{};
+  void *str3{};
   wa_ret_HINTERNET(WinHttpOpen(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2), HB_PARSTR(3, &str2, nullptr), HB_PARSTR(4, &str3, nullptr), wa_par_DWORD(5)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -162,7 +162,7 @@ HB_FUNC( WAWINHTTPRECEIVERESPONSE )
 // WINHTTPAPI BOOL WinHttpSendRequest([in] HINTERNET hRequest, [in, optional] LPCWSTR lpszHeaders, [in] DWORD dwHeadersLength, [in, optional] LPVOID lpOptional, [in] DWORD dwOptionalLength, [in] DWORD dwTotalLength, [in] DWORD_PTR dwContext)
 HB_FUNC( WAWINHTTPSENDREQUEST )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(WinHttpSendRequest(wa_par_HINTERNET(1), HB_PARSTR(2, &str, nullptr), wa_par_DWORD(3), wa_par_LPVOID(4), wa_par_DWORD(5), wa_par_DWORD(6), wa_par_DWORD_PTR(7)));
   hb_strfree(str);
 }
@@ -172,8 +172,8 @@ HB_FUNC( WAWINHTTPSENDREQUEST )
 // WINBOOL WINAPI WinHttpSetCredentials(HINTERNET,DWORD,DWORD,LPCWSTR,LPCWSTR,LPVOID)
 HB_FUNC( WAWINHTTPSETCREDENTIALS )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(WinHttpSetCredentials(wa_par_HINTERNET(1), wa_par_DWORD(2), wa_par_DWORD(3), HB_PARSTR(4, &str1, nullptr), HB_PARSTR(5, &str2, nullptr), static_cast<LPVOID>(hb_parptr(6))));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -198,7 +198,7 @@ HB_FUNC( WAWINHTTPSETTIMEOUTS )
 // WINBOOL WINAPI WinHttpTimeToSystemTime(LPCWSTR,SYSTEMTIME*)
 HB_FUNC( WAWINHTTPTIMETOSYSTEMTIME )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(WinHttpTimeToSystemTime(HB_PARSTR(1, &str, nullptr), wa_par_SYSTEMTIME(2)));
   hb_strfree(str);
 }

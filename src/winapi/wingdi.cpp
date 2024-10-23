@@ -54,7 +54,7 @@ HB_FUNC( WAADDFONTRESOURCEW )
 
 HB_FUNC( WAADDFONTRESOURCE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_int(AddFontResource(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -135,7 +135,7 @@ HB_FUNC( WACOPYMETAFILEW )
 
 HB_FUNC( WACOPYMETAFILE )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HMETAFILE(CopyMetaFile(wa_par_HMETAFILE(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -224,7 +224,7 @@ HB_FUNC( WACREATEFONTW )
 
 HB_FUNC( WACREATEFONT )
 {
-  void * str14{};
+  void *str14{};
   wa_ret_HFONT(CreateFontW(wa_par_int(1), wa_par_int(2), wa_par_int(3), wa_par_int(4), wa_par_int(5), wa_par_DWORD(6), wa_par_DWORD(7), wa_par_DWORD(8), wa_par_DWORD(9), wa_par_DWORD(10), wa_par_DWORD(11), wa_par_DWORD(12), wa_par_DWORD(13), HB_PARSTR(14, &str14, nullptr)));
   hb_strfree(str14);
 }
@@ -257,7 +257,7 @@ HB_FUNC( WACREATEMETAFILEW )
 
 HB_FUNC( WACREATEMETAFILE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_HDC(CreateMetaFile(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -348,9 +348,9 @@ HB_FUNC( WACREATESCALABLEFONTRESOURCEW )
 
 HB_FUNC( WACREATESCALABLEFONTRESOURCE )
 {
-  void * str2{};
-  void * str3{};
-  void * str4{};
+  void *str2{};
+  void *str3{};
+  void *str4{};
   wa_ret_BOOL(CreateScalableFontResource(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -425,7 +425,7 @@ HB_FUNC( WAENUMFONTFAMILIESW )
 
 HB_FUNC( WAENUMFONTFAMILIES )
 {
-  void * str{};
+  void *str{};
   wa_ret_int(EnumFontFamilies(wa_par_HDC(1), HB_PARSTR(2, &str, nullptr), wa_par_FONTENUMPROC(3), wa_par_LPARAM(4)));
   hb_strfree(str);
 }
@@ -448,7 +448,7 @@ HB_FUNC( WAENUMFONTSW )
 
 HB_FUNC( WAENUMFONTS )
 {
-  void * str{};
+  void *str{};
   wa_ret_int(EnumFonts(wa_par_HDC(1), HB_PARSTR(2, &str, nullptr), wa_par_FONTENUMPROC(3), wa_par_LPARAM(4)));
   hb_strfree(str);
 }
@@ -786,7 +786,7 @@ HB_FUNC( WAGETMETAFILEW )
 
 HB_FUNC( WAGETMETAFILE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_HMETAFILE(GetMetaFile(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -905,7 +905,7 @@ HB_FUNC( WAGETTEXTEXTENTPOINTW )
 
 HB_FUNC( WAGETTEXTEXTENTPOINT )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_BOOL(GetTextExtentPoint(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_SIZE(4)));
   hb_strfree(str2);
 }
@@ -928,7 +928,7 @@ HB_FUNC( WAGETTEXTEXTENTPOINT32W )
 
 HB_FUNC( WAGETTEXTEXTENTPOINT32 )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_BOOL(GetTextExtentPoint32(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_SIZE(4)));
   hb_strfree(str2);
 }
@@ -959,7 +959,7 @@ HB_FUNC( WAGETTEXTEXTENTEXPOINTW )
 
 HB_FUNC( WAGETTEXTEXTENTEXPOINT )
 {
-  void * str2{};
+  void *str2{};
   INT lpnFit{};
   INT lpnDx{};
   wa_ret_BOOL(GetTextExtentExPoint(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_int(4), &lpnFit, &lpnDx, wa_par_SIZE(7)));
@@ -1012,7 +1012,7 @@ HB_FUNC( WAGETGLYPHINDICESW )
 
 HB_FUNC( WAGETGLYPHINDICES )
 {
-  void * str2{};
+  void *str2{};
   WORD gi{};
   wa_ret_DWORD(GetGlyphIndices(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), &gi, wa_par_DWORD(5)));
   wa_stor_WORD(gi, 4);
@@ -1059,7 +1059,7 @@ HB_FUNC( WAADDFONTRESOURCEEXW )
 
 HB_FUNC( WAADDFONTRESOURCEEX )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_int(AddFontResourceEx(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
   hb_strfree(str1);
 }
@@ -1082,7 +1082,7 @@ HB_FUNC( WAREMOVEFONTRESOURCEEXW )
 
 HB_FUNC( WAREMOVEFONTRESOURCEEX )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(RemoveFontResourceEx(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2), static_cast<PVOID>(hb_parptr(3))));
   hb_strfree(str1);
 }
@@ -1295,7 +1295,7 @@ HB_FUNC( WAREMOVEFONTRESOURCEW )
 
 HB_FUNC( WAREMOVEFONTRESOURCE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(RemoveFontResource(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1704,7 +1704,7 @@ HB_FUNC( WACOPYENHMETAFILEW )
 
 HB_FUNC( WACOPYENHMETAFILE )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HENHMETAFILE(CopyEnhMetaFile(wa_par_HENHMETAFILE(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -1727,8 +1727,8 @@ HB_FUNC( WACREATEENHMETAFILEW )
 
 HB_FUNC( WACREATEENHMETAFILE )
 {
-  void * str2{};
-  void * str4{};
+  void *str2{};
+  void *str4{};
   wa_ret_HDC(CreateEnhMetaFile(wa_par_HDC(1), HB_PARSTR(2, &str2, nullptr), wa_par_RECT(3), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str2);
   hb_strfree(str4);
@@ -1764,7 +1764,7 @@ HB_FUNC( WAGETENHMETAFILEW )
 
 HB_FUNC( WAGETENHMETAFILE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_HENHMETAFILE(GetEnhMetaFile(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1794,7 +1794,7 @@ HB_FUNC( WAGETENHMETAFILEDESCRIPTIONW )
 HB_FUNC( WAGETENHMETAFILEDESCRIPTION )
 {
   auto cchBuffer = wa_par_UINT(2) + 1;
-  TCHAR * buffer = new TCHAR[cchBuffer];
+  TCHAR *buffer = new TCHAR[cchBuffer];
   auto result = GetEnhMetaFileDescription(wa_par_HENHMETAFILE(1), cchBuffer, buffer);
   wa_ret_UINT(result);
   HB_STORSTRLEN(buffer, result, 3);
@@ -2125,7 +2125,7 @@ HB_FUNC( WATEXTOUTW )
 
 HB_FUNC( WATEXTOUT )
 {
-  void * str4{};
+  void *str4{};
   wa_ret_BOOL(TextOut(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), HB_PARSTR(4, &str4, nullptr), wa_par_int(5)));
   hb_strfree(str4);
 }

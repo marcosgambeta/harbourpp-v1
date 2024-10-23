@@ -65,7 +65,7 @@ HB_FUNC( WALOADKEYBOARDLAYOUTW )
 
 HB_FUNC( WALOADKEYBOARDLAYOUT )
 {
-  void * str{};
+  void *str{};
   wa_ret_HKL(LoadKeyboardLayout(HB_PARSTR(1, &str, nullptr), wa_par_UINT(2)));
   hb_strfree(str);
 }
@@ -284,7 +284,7 @@ HB_FUNC( WAREGISTERWINDOWMESSAGEW )
 
 HB_FUNC( WAREGISTERWINDOWMESSAGE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_UINT(RegisterWindowMessage(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -474,7 +474,7 @@ HB_FUNC( WASENDMESSAGEW )
 
 HB_FUNC( WASENDMESSAGE )
 {
-  void * str{};
+  void *str{};
   wa_ret_LRESULT(SendMessage(wa_par_HWND(1), wa_par_UINT(2), wa_par_WPARAM(3), HB_ISCHAR(4) ? reinterpret_cast<LPARAM>(HB_PARSTR(4, &str, nullptr)) : wa_par_LPARAM(4)));
   hb_strfree(str);
 }
@@ -709,7 +709,7 @@ HB_FUNC( WAUNREGISTERCLASSW )
 
 HB_FUNC( WAUNREGISTERCLASS )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(UnregisterClass(HB_PARSTR(1, &str, nullptr), wa_par_HINSTANCE(2)));
   hb_strfree(str);
 }
@@ -732,7 +732,7 @@ HB_FUNC( WAGETCLASSINFOW )
 
 HB_FUNC( WAGETCLASSINFO )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(GetClassInfoW(wa_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), wa_par_WNDCLASS(3)));
   hb_strfree(str);
 }
@@ -776,7 +776,7 @@ HB_FUNC( WAGETCLASSINFOEXW )
 
 HB_FUNC( WAGETCLASSINFOEX )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(GetClassInfoEx(wa_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), wa_par_WNDCLASSEX(3)));
   hb_strfree(str);
 }
@@ -851,8 +851,8 @@ HB_FUNC( WACREATEWINDOWEXW )
 
 HB_FUNC( WACREATEWINDOWEX )
 {
-  void * str2{};
-  void * str3{};
+  void *str2{};
+  void *str3{};
   wa_ret_HWND(CreateWindowEx(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_int(8), wa_par_HWND(9), wa_par_HMENU(10), wa_par_HINSTANCE(11), static_cast<LPVOID>(hb_parptr(12))));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -1074,7 +1074,7 @@ HB_FUNC( WACREATEDIALOGPARAMW )
 
 HB_FUNC( WACREATEDIALOGPARAM )
 {
-  void * str{};
+  void *str{};
   wa_ret_HWND(CreateDialogParam(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni(2)), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
   hb_strfree(str);
 }
@@ -1118,7 +1118,7 @@ HB_FUNC( WADIALOGBOXPARAMW )
 
 HB_FUNC( WADIALOGBOXPARAM )
 {
-  void * str{};
+  void *str{};
   wa_ret_INT_PTR(DialogBoxParam(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str, nullptr) : MAKEINTRESOURCE(hb_parni(2)), wa_par_HWND(3), wa_par_DLGPROC(4), wa_par_LPARAM(5)));
   hb_strfree(str);
 }
@@ -1188,7 +1188,7 @@ HB_FUNC( WASETDLGITEMTEXTW )
 
 HB_FUNC( WASETDLGITEMTEXT )
 {
-  void * str3{};
+  void *str3{};
   wa_ret_BOOL(SetDlgItemText(wa_par_HWND(1), wa_par_int(2), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str3);
 }
@@ -1212,7 +1212,7 @@ HB_FUNC( WAGETDLGITEMTEXTW )
 HB_FUNC( WAGETDLGITEMTEXT )
 {
   auto cchMax = wa_par_int(4) + 1;
-  TCHAR * buffer = new TCHAR[cchMax];
+  TCHAR *buffer = new TCHAR[cchMax];
   auto result = GetDlgItemText(wa_par_HWND(1), wa_par_int(2), buffer, cchMax);
   wa_ret_UINT(result);
   HB_STORSTRLEN(buffer, result, 3); // TODO: result == 0 (fail)
@@ -1396,7 +1396,7 @@ HB_FUNC( WAREGISTERCLIPBOARDFORMATW )
 
 HB_FUNC( WAREGISTERCLIPBOARDFORMAT )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_UINT(RegisterClipboardFormat(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1432,7 +1432,7 @@ HB_FUNC( WAGETCLIPBOARDFORMATNAMEW )
 HB_FUNC( WAGETCLIPBOARDFORMATNAME )
 {
   int cchMaxCount = wa_par_int(3) + 1;
-  TCHAR * buffer = new TCHAR[cchMaxCount];
+  TCHAR *buffer = new TCHAR[cchMaxCount];
   auto result = GetClipboardFormatName(wa_par_UINT(1), buffer, cchMaxCount);
   wa_ret_int(result);
   HB_STORSTRLEN(buffer, result, 2); // TODO: result == 0 (fail)
@@ -1712,7 +1712,7 @@ HB_FUNC( WAGETKEYNAMETEXTW )
 HB_FUNC( WAGETKEYNAMETEXT )
 {
   int cchSize = wa_par_int(3) + 1;
-  TCHAR * buffer = new TCHAR[cchSize];
+  TCHAR *buffer = new TCHAR[cchSize];
   auto result = GetKeyNameText(wa_par_LONG(1), buffer, cchSize);
   wa_ret_int(result);
   HB_STORSTRLEN(buffer, result, 2);
@@ -2009,7 +2009,7 @@ HB_FUNC( WALOADACCELERATORSW )
 
 HB_FUNC( WALOADACCELERATORS )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HACCEL(LoadAccelerators(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -2122,7 +2122,7 @@ HB_FUNC( WALOADMENUW )
 
 HB_FUNC( WALOADMENU )
 {
-  void * str{};
+  void *str{};
   wa_ret_HMENU(LoadMenu(wa_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr)));
   hb_strfree(str);
 }
@@ -2161,7 +2161,7 @@ HB_FUNC( WACHANGEMENUW )
 
 HB_FUNC( WACHANGEMENU )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(ChangeMenu(wa_par_HMENU(1), wa_par_UINT(2), HB_PARSTR(3, &str, nullptr), wa_par_UINT(4), wa_par_UINT(5)));
   hb_strfree(str);
 }
@@ -2268,7 +2268,7 @@ HB_FUNC( WAINSERTMENUW )
 
 HB_FUNC( WAINSERTMENU )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(InsertMenu(wa_par_HMENU(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_UINT_PTR(4), HB_PARSTR(5, &str, nullptr)));
   hb_strfree(str);
 }
@@ -2291,7 +2291,7 @@ HB_FUNC( WAAPPENDMENUW )
 
 HB_FUNC( WAAPPENDMENU )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(AppendMenu(wa_par_HMENU(1), wa_par_UINT(2), wa_par_UINT_PTR(3), HB_PARSTR(4, &str, nullptr)));
   hb_strfree(str);
 }
@@ -2314,7 +2314,7 @@ HB_FUNC( WAMODIFYMENUW )
 
 HB_FUNC( WAMODIFYMENU )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(ModifyMenu(wa_par_HMENU(1), wa_par_UINT(2), wa_par_UINT(3), wa_par_UINT_PTR(4), HB_PARSTR(5, &str, nullptr)));
   hb_strfree(str);
 }
@@ -2451,7 +2451,7 @@ HB_FUNC( WADRAWTEXTW )
 
 HB_FUNC( WADRAWTEXT )
 {
-  void * str{};
+  void *str{};
   wa_ret_int(DrawTextW(wa_par_HDC(1), HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_RECT(4), wa_par_UINT(5)));
   hb_strfree(str);
 }
@@ -2474,7 +2474,7 @@ HB_FUNC( WADRAWTEXTEXW )
 
 HB_FUNC( WADRAWTEXTEX )
 {
-  void * str{};
+  void *str{};
   wa_ret_int(DrawTextEx(wa_par_HDC(1), (LPWSTR) HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_RECT(4), wa_par_UINT(5), wa_par_DRAWTEXTPARAMS(6)));
   hb_strfree(str);
 }
@@ -2535,7 +2535,7 @@ HB_FUNC( WATABBEDTEXTOUT )
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
-  void * str{};
+  void *str{};
   wa_ret_LONG(TabbedTextOut(wa_par_HDC(1), wa_par_int(2), wa_par_int(3), HB_PARSTR(4, &str, nullptr), wa_par_int(5), wa_par_int(6), vec.data(), wa_par_int(8)));
   hb_strfree(str);
 }
@@ -2588,7 +2588,7 @@ HB_FUNC( WAGETTABBEDTEXTEXTENT )
       vec.push_back(static_cast<INT>(hb_arrayGetNI(pArray, i + 1)));
     }
   }
-  void * str{};
+  void *str{};
   wa_ret_DWORD(GetTabbedTextExtent(wa_par_HDC(1), HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_int(4), vec.data()));
   hb_strfree(str);
 }
@@ -2831,7 +2831,7 @@ HB_FUNC( WASETPROPW )
 
 HB_FUNC( WASETPROP )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(SetProp(wa_par_HWND(1), HB_PARSTR(2, &str, nullptr), wa_par_HANDLE(3)));
   hb_strfree(str);
 }
@@ -2854,7 +2854,7 @@ HB_FUNC( WAGETPROPW )
 
 HB_FUNC( WAGETPROP )
 {
-  void * str{};
+  void *str{};
   wa_ret_HANDLE(GetProp(wa_par_HWND(1), HB_PARSTR(2, &str, nullptr)));
   hb_strfree(str);
 }
@@ -2877,7 +2877,7 @@ HB_FUNC( WAREMOVEPROPW )
 
 HB_FUNC( WAREMOVEPROP )
 {
-  void * str{};
+  void *str{};
   wa_ret_HANDLE(RemoveProp(wa_par_HWND(1), HB_PARSTR(2, &str, nullptr)));
   hb_strfree(str);
 }
@@ -2908,7 +2908,7 @@ HB_FUNC( WASETWINDOWTEXTW )
 
 HB_FUNC( WASETWINDOWTEXT )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_BOOL(SetWindowText(wa_par_HWND(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -3012,8 +3012,8 @@ HB_FUNC( WAMESSAGEBOXW )
 
 HB_FUNC( WAMESSAGEBOX )
 {
-  void * str2{};
-  void * str3{};
+  void *str2{};
+  void *str3{};
   wa_ret_int(MessageBox(wa_par_HWND(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_UINT(4)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -3037,8 +3037,8 @@ HB_FUNC( WAMESSAGEBOXEXW )
 
 HB_FUNC( WAMESSAGEBOXEX )
 {
-  void * str2{};
-  void * str3{};
+  void *str2{};
+  void *str3{};
   wa_ret_int(MessageBoxEx(wa_par_HWND(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_UINT(4), wa_par_WORD(5)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -3598,8 +3598,8 @@ HB_FUNC( WAFINDWINDOWW )
 
 HB_FUNC( WAFINDWINDOW )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_HWND(FindWindow(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -3623,8 +3623,8 @@ HB_FUNC( WAFINDWINDOWEXW )
 
 HB_FUNC( WAFINDWINDOWEX )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_HWND(FindWindowEx(wa_par_HWND(1), wa_par_HWND(2), HB_PARSTR(3, &str1, nullptr), HB_PARSTR(4, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -3742,7 +3742,7 @@ HB_FUNC( WALOADBITMAPW )
 
 HB_FUNC( WALOADBITMAP )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HBITMAP(LoadBitmap(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -3765,7 +3765,7 @@ HB_FUNC( WALOADCURSORW )
 
 HB_FUNC( WALOADCURSOR )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HCURSOR(LoadCursor(wa_par_HINSTANCE(1), HB_ISCHAR(2) ? HB_PARSTR(2, &str2, nullptr) : MAKEINTRESOURCE(hb_parni(2))));
   hb_strfree(str2);
 }
@@ -3788,7 +3788,7 @@ HB_FUNC( WALOADCURSORFROMFILEW )
 
 HB_FUNC( WALOADCURSORFROMFILE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_HCURSOR(LoadCursorFromFile(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -3829,7 +3829,7 @@ HB_FUNC( WALOADICONW )
 
 HB_FUNC( WALOADICON )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HICON(LoadIcon(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -3876,7 +3876,7 @@ HB_FUNC( WALOADIMAGEW )
 
 HB_FUNC( WALOADIMAGE )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HANDLE(LoadImage(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), wa_par_UINT(3), wa_par_int(4), wa_par_int(5), wa_par_UINT(6)));
   hb_strfree(str2);
 }
@@ -4095,8 +4095,8 @@ HB_FUNC( WACREATEMDIWINDOWW )
 
 HB_FUNC( WACREATEMDIWINDOW )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_HWND(CreateMDIWindow(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3), wa_par_int(4), wa_par_int(5), wa_par_int(6), wa_par_int(7), wa_par_HWND(8), wa_par_HINSTANCE(9), wa_par_LPARAM(10)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -4152,7 +4152,7 @@ HB_FUNC( WAWINHELPW )
 
 HB_FUNC( WAWINHELP )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(WinHelp(wa_par_HWND(1), HB_PARSTR(2, &str, nullptr), wa_par_UINT(3), wa_par_ULONG_PTR(4)));
   hb_strfree(str);
 }

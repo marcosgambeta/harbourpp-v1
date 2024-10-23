@@ -44,8 +44,8 @@ HB_FUNC( WACLOSEDRIVER )
 // WINMMAPI HDRVR WINAPI OpenDriver(LPCWSTR szDriverName,LPCWSTR szSectionName,LPARAM lParam2)
 HB_FUNC( WAOPENDRIVER )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_HDRVR(OpenDriver(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_LPARAM(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -89,7 +89,7 @@ HB_FUNC( WASNDPLAYSOUNDW )
 
 HB_FUNC( WASNDPLAYSOUND )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(sndPlaySound(HB_PARSTR(1, &str1, nullptr), wa_par_UINT(2)));
   hb_strfree(str1);
 }
@@ -112,7 +112,7 @@ HB_FUNC( WAPLAYSOUNDW )
 
 HB_FUNC( WAPLAYSOUND )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(PlaySound(HB_PARSTR(1, &str1, nullptr), wa_par_HMODULE(2), wa_par_DWORD(3)));
   hb_strfree(str1);
 }
@@ -707,7 +707,7 @@ HB_FUNC( WAMCIGETDEVICEIDW )
 
 HB_FUNC( WAMCIGETDEVICEID )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_MCIDEVICEID(mciGetDeviceID(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -730,7 +730,7 @@ HB_FUNC( WAMCIGETDEVICEIDFROMELEMENTIDW )
 
 HB_FUNC( WAMCIGETDEVICEIDFROMELEMENTID )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_MCIDEVICEID(mciGetDeviceIDFromElementID(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }

@@ -337,7 +337,7 @@ HB_FUNC_STATIC( WAS_WNDCLASS_SETLPSZMENUNAME )
 
   if( obj != nullptr )
   {
-    void * str = hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME");
+    void *str = hb_objDataGetPtr(hb_stackSelfItem(), "STRMENUNAME");
     if( str != nullptr && !IS_INTRESOURCE(str) )
     {
       hb_strfree(str);
@@ -373,7 +373,7 @@ HB_FUNC_STATIC( WAS_WNDCLASS_SETLPSZCLASSNAME )
 
   if( obj != nullptr )
   {
-    void * str = hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME");
+    void *str = hb_objDataGetPtr(hb_stackSelfItem(), "STRCLASSNAME");
     if( str != nullptr )
     {
       hb_strfree(str);

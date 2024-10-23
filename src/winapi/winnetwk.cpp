@@ -54,9 +54,9 @@ HB_FUNC( WAWNETADDCONNECTIONW )
 
 HB_FUNC( WAWNETADDCONNECTION )
 {
-  void * str1{};
-  void * str2{};
-  void * str3{};
+  void *str1{};
+  void *str2{};
+  void *str3{};
   wa_ret_DWORD(WNetAddConnection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -81,8 +81,8 @@ HB_FUNC( WAWNETADDCONNECTION2W )
 
 HB_FUNC( WAWNETADDCONNECTION2 )
 {
-  void * str2{};
-  void * str3{};
+  void *str2{};
+  void *str3{};
   wa_ret_DWORD(WNetAddConnection2(static_cast<LPNETRESOURCEW>(hb_parptr(1)), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -106,8 +106,8 @@ HB_FUNC( WAWNETADDCONNECTION3W )
 
 HB_FUNC( WAWNETADDCONNECTION3 )
 {
-  void * str3{};
-  void * str4{};
+  void *str3{};
+  void *str4{};
   wa_ret_DWORD(WNetAddConnection3(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5)));
   hb_strfree(str3);
   hb_strfree(str4);
@@ -131,7 +131,7 @@ HB_FUNC( WAWNETCANCELCONNECTIONW )
 
 HB_FUNC( WAWNETCANCELCONNECTION )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_DWORD(WNetCancelConnection(HB_PARSTR(1, &str1, nullptr), wa_par_BOOL(2)));
   hb_strfree(str1);
 }
@@ -154,7 +154,7 @@ HB_FUNC( WAWNETCANCELCONNECTION2W )
 
 HB_FUNC( WAWNETCANCELCONNECTION2 )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_DWORD(WNetCancelConnection2(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2), wa_par_BOOL(3)));
   hb_strfree(str1);
 }
@@ -181,7 +181,7 @@ HB_FUNC( WAWNETGETCONNECTIONW )
 
 HB_FUNC( WAWNETGETCONNECTION )
 {
-  void * str1{};
+  void *str1{};
   DWORD nLength{};
   wa_ret_DWORD(WNetGetConnection(HB_PARSTR(1, &str1, nullptr), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(2))), &nLength));
   wa_stor_DWORD(nLength, 3);
@@ -214,8 +214,8 @@ HB_FUNC( WAWNETUSECONNECTIONW )
 
 HB_FUNC( WAWNETUSECONNECTION )
 {
-  void * str3{};
-  void * str4{};
+  void *str3{};
+  void *str4{};
   DWORD BufferSize{};
   DWORD Result{};
   wa_ret_DWORD(WNetUseConnection(wa_par_HWND(1), static_cast<LPNETRESOURCEW>(hb_parptr(2)), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), wa_par_DWORD(5), reinterpret_cast<LPWSTR>(const_cast<char*>(hb_parc(6))), &BufferSize, &Result));

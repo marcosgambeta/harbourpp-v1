@@ -169,7 +169,7 @@ HB_FUNC( WAIMAGELIST_LOADIMAGEW )
 
 HB_FUNC( WAIMAGELIST_LOADIMAGE )
 {
-  void * str{};
+  void *str{};
   wa_ret_HIMAGELIST(ImageList_LoadImageW(wa_par_HINSTANCE(1), HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5), wa_par_UINT(6), wa_par_UINT(7)));
   hb_strfree(str);
 }
@@ -243,7 +243,7 @@ HB_FUNC( WAIMAGELIST_EXTRACTICON )
 // HIMAGELIST ImageList_LoadBitmap(HINSTANCE hi,LPCSTR lpbmp,int cx,int cGrow,COLORREF crMask)
 HB_FUNC( WAIMAGELIST_LOADBITMAP )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_HIMAGELIST(ImageList_LoadBitmap(wa_par_HINSTANCE(1), HB_PARSTR(2, &str2, nullptr), wa_par_int(3), wa_par_int(4), wa_par_COLORREF(5)));
   hb_strfree(str2);
 }
@@ -318,7 +318,7 @@ HB_FUNC( WADRAWSTATUSTEXTW )
 
 HB_FUNC( WADRAWSTATUSTEXT )
 {
-  void * str{};
+  void *str{};
   DrawStatusText(wa_par_HDC(1), wa_par_RECT(2), HB_PARSTR(3, &str, nullptr), wa_par_UINT(4));
   hb_strfree(str);
 }
@@ -341,7 +341,7 @@ HB_FUNC( WACREATESTATUSWINDOWW )
 
 HB_FUNC( WACREATESTATUSWINDOW )
 {
-  void * str{};
+  void *str{};
   wa_ret_HWND(CreateStatusWindow(hb_parnl(1), HB_PARSTR(2, &str, nullptr), wa_par_HWND(3), wa_par_UINT(4)));
   hb_strfree(str);
 }
@@ -424,10 +424,10 @@ HB_FUNC( WACREATEUPDOWNCONTROL )
 #if 0
 HB_FUNC( WATASKDIALOG )
 {
-  void * str3{};
-  void * str4{};
-  void * str5{};
-  void * str7{};
+  void *str3{};
+  void *str4{};
+  void *str5{};
+  void *str7{};
   int nButton{};
   wa_ret_HRESULT(TaskDialog(wa_par_HWND(1), wa_par_HINSTANCE(2), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr), HB_PARSTR(5, &str5, nullptr), static_cast<TASKDIALOG_COMMON_BUTTON_FLAGS>(hb_parni(6)), HB_PARSTR(7, &str7, nullptr), &nButton));
   hb_strfree(str3);
@@ -610,7 +610,7 @@ HB_FUNC( WAUNINITIALIZEFLATSB )
 #if 0
 HB_FUNC( WALOADICONMETRIC )
 {
-  HICON * phico{};
+  HICON *phico{};
   wa_ret_HRESULT(LoadIconMetric(wa_par_HINSTANCE(1), wa_par_PCWSTR(2), wa_par_int(3), &phico));
   hb_storptr(phico, 4);
 }
@@ -620,7 +620,7 @@ HB_FUNC( WALOADICONMETRIC )
 #if 0
 HB_FUNC( WALOADICONWITHSCALEDOWN )
 {
-  HICON * phico{};
+  HICON *phico{};
   wa_ret_HRESULT(LoadIconWithScaleDown(wa_par_HINSTANCE(1), wa_par_PCWSTR(2), wa_par_int(3), wa_par_int(4), &phico));
   hb_storptr(phico, 4);
 }

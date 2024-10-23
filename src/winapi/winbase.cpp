@@ -205,7 +205,7 @@ HB_FUNC( WAGETBINARYTYPEW )
 
 HB_FUNC( WAGETBINARYTYPE )
 {
-  void * str1{};
+  void *str1{};
   DWORD BinaryType{};
   wa_ret_BOOL(GetBinaryType(HB_PARSTR(1, &str1, nullptr), &BinaryType));
   wa_stor_DWORD(BinaryType, 2);
@@ -468,7 +468,7 @@ HB_FUNC( WASETFILESHORTNAMEW )
 
 HB_FUNC( WASETFILESHORTNAME )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_BOOL(SetFileShortName(wa_par_HANDLE(1), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str2);
 }
@@ -776,7 +776,7 @@ HB_FUNC( WAENCRYPTFILEW )
 
 HB_FUNC( WAENCRYPTFILE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(EncryptFile(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -799,7 +799,7 @@ HB_FUNC( WADECRYPTFILEW )
 
 HB_FUNC( WADECRYPTFILE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(DecryptFile(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2)));
   hb_strfree(str1);
 }
@@ -826,7 +826,7 @@ HB_FUNC( WAFILEENCRYPTIONSTATUSW )
 
 HB_FUNC( WAFILEENCRYPTIONSTATUS )
 {
-  void * str1{};
+  void *str1{};
   DWORD Status{};
   wa_ret_BOOL(FileEncryptionStatus(HB_PARSTR(1, &str1, nullptr), &Status));
   wa_stor_DWORD(Status, 2);
@@ -865,8 +865,8 @@ HB_FUNC( WALSTRCMPW )
 
 HB_FUNC( WALSTRCMP )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_int(lstrcmp(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -890,8 +890,8 @@ HB_FUNC( WALSTRCMPIW )
 
 HB_FUNC( WALSTRCMPI )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_int(lstrcmpi(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -939,7 +939,7 @@ HB_FUNC( WALSTRLENW )
 
 HB_FUNC( WALSTRLEN )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_int(lstrlen(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1022,7 +1022,7 @@ HB_FUNC( WALOADLIBRARYW )
 
 HB_FUNC( WALOADLIBRARY )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_HMODULE(LoadLibrary(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1111,7 +1111,7 @@ HB_FUNC( WAFATALAPPEXITW )
 
 HB_FUNC( WAFATALAPPEXIT )
 {
-  void * str2{};
+  void *str2{};
   FatalAppExit(wa_par_UINT(1), HB_PARSTR(2, &str2, nullptr));
   hb_strfree(str2);
 }
@@ -1136,8 +1136,8 @@ HB_FUNC( WAGETFIRMWAREENVIRONMENTVARIABLEW )
 
 HB_FUNC( WAGETFIRMWAREENVIRONMENTVARIABLE )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_DWORD(GetFirmwareEnvironmentVariable(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1161,8 +1161,8 @@ HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLEW )
 
 HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLE )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(SetFirmwareEnvironmentVariable(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1186,8 +1186,8 @@ HB_FUNC( WAFINDRESOURCEW )
 
 HB_FUNC( WAFINDRESOURCE )
 {
-  void * str2{};
-  void * str3{};
+  void *str2{};
+  void *str3{};
   wa_ret_HRSRC(FindResource(wa_par_HMODULE(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -1229,7 +1229,7 @@ HB_FUNC( WABEGINUPDATERESOURCEW )
 
 HB_FUNC( WABEGINUPDATERESOURCE )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_HANDLE(BeginUpdateResource(HB_PARSTR(1, &str1, nullptr), wa_par_BOOL(2)));
   hb_strfree(str1);
 }
@@ -1252,8 +1252,8 @@ HB_FUNC( WAUPDATERESOURCEW )
 
 HB_FUNC( WAUPDATERESOURCE )
 {
-  void * str2{};
-  void * str3{};
+  void *str2{};
+  void *str3{};
   wa_ret_BOOL(UpdateResource(wa_par_HANDLE(1), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_WORD(4), static_cast<LPVOID>(hb_parptr(5)), wa_par_DWORD(6)));
   hb_strfree(str2);
   hb_strfree(str3);
@@ -1303,8 +1303,8 @@ HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLEEXW )
 #if 0
 HB_FUNC( WASETFIRMWAREENVIRONMENTVARIABLEEX )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(SetFirmwareEnvironmentVariableEx(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<PVOID>(hb_parptr(3)), wa_par_DWORD(4), wa_par_DWORD(5)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1341,7 +1341,7 @@ HB_FUNC( WAGLOBALADDATOMW )
 
 HB_FUNC( WAGLOBALADDATOM )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_ATOM(GlobalAddAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1365,7 +1365,7 @@ HB_FUNC( WAGLOBALADDATOMEXW )
 #if 0
 HB_FUNC( WAGLOBALADDATOMEX )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_ATOM(GlobalAddAtomEx(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2)));
   hb_strfree(str1);
 }
@@ -1389,7 +1389,7 @@ HB_FUNC( WAGLOBALFINDATOMW )
 
 HB_FUNC( WAGLOBALFINDATOM )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_ATOM(GlobalFindAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1428,7 +1428,7 @@ HB_FUNC( WAADDATOMW )
 
 HB_FUNC( WAADDATOM )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_ATOM(AddAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1451,7 +1451,7 @@ HB_FUNC( WAFINDATOMW )
 
 HB_FUNC( WAFINDATOM )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_ATOM(FindAtom(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1486,8 +1486,8 @@ HB_FUNC( WAGETPROFILEINTW )
 
 HB_FUNC( WAGETPROFILEINT )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_UINT(GetProfileInt(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_INT(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1523,9 +1523,9 @@ HB_FUNC( WAWRITEPROFILESTRINGW )
 
 HB_FUNC( WAWRITEPROFILESTRING )
 {
-  void * str1{};
-  void * str2{};
-  void * str3{};
+  void *str1{};
+  void *str2{};
+  void *str3{};
   wa_ret_BOOL(WriteProfileString(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1562,8 +1562,8 @@ HB_FUNC( WAWRITEPROFILESECTIONW )
 
 HB_FUNC( WAWRITEPROFILESECTION )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(WriteProfileSection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1587,9 +1587,9 @@ HB_FUNC( WAGETPRIVATEPROFILEINTW )
 
 HB_FUNC( WAGETPRIVATEPROFILEINT )
 {
-  void * str1{};
-  void * str2{};
-  void * str4{};
+  void *str1{};
+  void *str2{};
+  void *str4{};
   wa_ret_UINT(GetPrivateProfileInt(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_INT(3), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1626,10 +1626,10 @@ HB_FUNC( WAWRITEPRIVATEPROFILESTRINGW )
 
 HB_FUNC( WAWRITEPRIVATEPROFILESTRING )
 {
-  void * str1{};
-  void * str2{};
-  void * str3{};
-  void * str4{};
+  void *str1{};
+  void *str2{};
+  void *str3{};
+  void *str4{};
   wa_ret_BOOL(WritePrivateProfileString(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), HB_PARSTR(4, &str4, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1667,9 +1667,9 @@ HB_FUNC( WAWRITEPRIVATEPROFILESECTIONW )
 
 HB_FUNC( WAWRITEPRIVATEPROFILESECTION )
 {
-  void * str1{};
-  void * str2{};
-  void * str3{};
+  void *str1{};
+  void *str2{};
+  void *str3{};
   wa_ret_BOOL(WritePrivateProfileSection(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1718,9 +1718,9 @@ HB_FUNC( WAWRITEPRIVATEPROFILESTRUCTW )
 
 HB_FUNC( WAWRITEPRIVATEPROFILESTRUCT )
 {
-  void * str1{};
-  void * str2{};
-  void * str5{};
+  void *str1{};
+  void *str2{};
+  void *str5{};
   wa_ret_BOOL(WritePrivateProfileStruct(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), static_cast<LPVOID>(hb_parptr(3)), wa_par_UINT(4), HB_PARSTR(5, &str5, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -1775,7 +1775,7 @@ HB_FUNC( WASETDLLDIRECTORYW )
 
 HB_FUNC( WASETDLLDIRECTORY )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(SetDllDirectory(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -1825,7 +1825,7 @@ HB_FUNC( WAREMOVEDIRECTORYTRANSACTEDW )
 #if 0
 HB_FUNC( WAREMOVEDIRECTORYTRANSACTED )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(RemoveDirectoryTransacted(HB_PARSTR(1, &str1, nullptr), wa_par_HANDLE(2)));
   hb_strfree(str1);
 }
@@ -1876,7 +1876,7 @@ HB_FUNC( WASETFILEATTRIBUTESTRANSACTEDW )
 #if 0
 HB_FUNC( WASETFILEATTRIBUTESTRANSACTED )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(SetFileAttributesTransacted(HB_PARSTR(1, &str1, nullptr), wa_par_DWORD(2), wa_par_HANDLE(3)));
   hb_strfree(str1);
 }
@@ -1908,7 +1908,7 @@ HB_FUNC( WAGETCOMPRESSEDFILESIZEW )
 
 HB_FUNC( WAGETCOMPRESSEDFILESIZE )
 {
-  void * str1{};
+  void *str1{};
   DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSize(HB_PARSTR(1, &str1, nullptr), &FileSizeHigh));
   wa_stor_DWORD(FileSizeHigh, 2);
@@ -1938,7 +1938,7 @@ HB_FUNC( WAGETCOMPRESSEDFILESIZETRANSACTEDW )
 #if 0
 HB_FUNC( WAGETCOMPRESSEDFILESIZETRANSACTED )
 {
-  void * str1{};
+  void *str1{};
   DWORD FileSizeHigh{};
   wa_ret_DWORD(GetCompressedFileSizeTransacted(HB_PARSTR(1, &str1, nullptr), &FileSizeHigh, wa_par_HANDLE(3)));
   wa_stor_DWORD(FileSizeHigh, 2);
@@ -1965,7 +1965,7 @@ HB_FUNC( WADELETEFILETRANSACTEDW )
 #if 0
 HB_FUNC( WADELETEFILETRANSACTED )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(DeleteFileTransacted(HB_PARSTR(1, &str1, nullptr), wa_par_HANDLE(2)));
   hb_strfree(str1);
 }
@@ -1993,8 +1993,8 @@ HB_FUNC( WACOPYFILEW )
 
 HB_FUNC( WACOPYFILE )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(CopyFileW(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_BOOL(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2032,8 +2032,8 @@ HB_FUNC( WAMOVEFILEW )
 
 HB_FUNC( WAMOVEFILE )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(MoveFile(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2057,8 +2057,8 @@ HB_FUNC( WAMOVEFILEEXW )
 
 HB_FUNC( WAMOVEFILEEX )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(MoveFileEx(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2090,9 +2090,9 @@ HB_FUNC( WAREPLACEFILEW )
 
 HB_FUNC( WAREPLACEFILE )
 {
-  void * str1{};
-  void * str2{};
-  void * str3{};
+  void *str1{};
+  void *str2{};
+  void *str3{};
   wa_ret_BOOL(ReplaceFile(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), wa_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)), static_cast<LPVOID>(hb_parptr(6))));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2207,8 +2207,8 @@ HB_FUNC( WASETVOLUMELABELW )
 
 HB_FUNC( WASETVOLUMELABEL )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(SetVolumeLabel(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2262,7 +2262,7 @@ HB_FUNC( WACLEAREVENTLOGW )
 
 HB_FUNC( WACLEAREVENTLOG )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(ClearEventLog(wa_par_HANDLE(1), HB_PARSTR(2, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -2285,7 +2285,7 @@ HB_FUNC( WABACKUPEVENTLOGW )
 
 HB_FUNC( WABACKUPEVENTLOG )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(BackupEventLog(wa_par_HANDLE(1), HB_PARSTR(2, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -2342,8 +2342,8 @@ HB_FUNC( WAOPENEVENTLOGW )
 
 HB_FUNC( WAOPENEVENTLOG )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_HANDLE(OpenEventLog(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2367,8 +2367,8 @@ HB_FUNC( WAREGISTEREVENTSOURCEW )
 
 HB_FUNC( WAREGISTEREVENTSOURCE )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_HANDLE(RegisterEventSource(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2392,8 +2392,8 @@ HB_FUNC( WAOPENBACKUPEVENTLOGW )
 
 HB_FUNC( WAOPENBACKUPEVENTLOG )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_HANDLE(OpenBackupEventLog(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -2495,7 +2495,7 @@ HB_FUNC( WAISBADSTRINGPTRW )
 
 HB_FUNC( WAISBADSTRINGPTR )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(IsBadStringPtr(HB_PARSTR(1, &str1, nullptr), wa_par_UINT_PTR(2)));
   hb_strfree(str1);
 }
@@ -2551,9 +2551,9 @@ HB_FUNC( WALOOKUPPRIVILEGEDISPLAYNAMEW ) // TODO: corrigir parametro 3
 #if 0
 HB_FUNC( WALOOKUPPRIVILEGEDISPLAYNAME ) // TODO: corrigir parametro 3
 {
-  void * str1{};
-  void * str2{};
-  void * str3{};
+  void *str1{};
+  void *str2{};
+  void *str3{};
   DWORD cchDisplayName{};
   DWORD LanguageId{};
   wa_ret_BOOL(LookupPrivilegeDisplayName(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), HB_PARSTR(3, &str3, nullptr), &cchDisplayName, &LanguageId));
@@ -2608,7 +2608,7 @@ HB_FUNC( WAGETCOMPUTERNAMEW ) // TODO: corrigir parametro 1
 HB_FUNC( WAGETCOMPUTERNAME )
 {
   DWORD nSize = wa_par_DWORD(2) + 1;
-  TCHAR * buffer = new TCHAR[nSize];
+  TCHAR *buffer = new TCHAR[nSize];
   wa_ret_BOOL(GetComputerName(buffer, &nSize));
   HB_STORSTRLEN(buffer, nSize, 1);
   wa_stor_DWORD(nSize, 2);
@@ -2633,7 +2633,7 @@ HB_FUNC( WASETCOMPUTERNAMEW )
 
 HB_FUNC( WASETCOMPUTERNAME )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(SetComputerName(HB_PARSTR(1, &str1, nullptr)));
   hb_strfree(str1);
 }
@@ -2792,7 +2792,7 @@ HB_FUNC( WAOPENJOBOBJECTW )
 
 HB_FUNC( WAOPENJOBOBJECT )
 {
-  void * str3{};
+  void *str3{};
   wa_ret_HANDLE(OpenJobObject(wa_par_DWORD(1), wa_par_BOOL(2), HB_PARSTR(3, &str3, nullptr)));
   hb_strfree(str3);
 }
@@ -2875,8 +2875,8 @@ HB_FUNC( WASETVOLUMEMOUNTPOINTW )
 
 HB_FUNC( WASETVOLUMEMOUNTPOINT )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOL(SetVolumeMountPoint(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -3063,8 +3063,8 @@ HB_FUNC( WACREATESYMBOLICLINKW )
 #if 0
 HB_FUNC( WACREATESYMBOLICLINK )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOLEAN(CreateSymbolicLink(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3)));
   hb_strfree(str1);
   hb_strfree(str2);
@@ -3090,8 +3090,8 @@ HB_FUNC( WACREATESYMBOLICLINKTRANSACTEDW )
 #if 0
 HB_FUNC( WACREATESYMBOLICLINKTRANSACTED )
 {
-  void * str1{};
-  void * str2{};
+  void *str1{};
+  void *str2{};
   wa_ret_BOOLEAN(CreateSymbolicLinkTransacted(HB_PARSTR(1, &str1, nullptr), HB_PARSTR(2, &str2, nullptr), wa_par_DWORD(3), wa_par_HANDLE(4)));
   hb_strfree(str1);
   hb_strfree(str2);

@@ -67,7 +67,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEW )
 
 HB_FUNC( WAGETFILEVERSIONINFOSIZE )
 {
-  void * str1{};
+  void *str1{};
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSize(HB_PARSTR(1, &str1, nullptr), &dwHandle));
   wa_stor_DWORD(dwHandle, 2);
@@ -94,7 +94,7 @@ HB_FUNC( WAGETFILEVERSIONINFOW )
 
 HB_FUNC( WAGETFILEVERSIONINFO )
 {
-  void * str1{};
+  void *str1{};
   wa_ret_BOOL(GetFileVersionInfo(HB_PARSTR(1, &str1, nullptr), 0, wa_par_DWORD(3), static_cast<LPVOID>(hb_parptr(4)))); // TODO: buffer for data
   hb_strfree(str1);
 }
@@ -126,7 +126,7 @@ HB_FUNC( WAGETFILEVERSIONINFOEXW )
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOEX )
 {
-  void * str2{};
+  void *str2{};
   wa_ret_BOOL(GetFileVersionInfoEx(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), 0, wa_par_DWORD(4), static_cast<LPVOID>(hb_parptr(5)))); // TODO: buffer for data
   hb_strfree(str2);
 }
@@ -155,7 +155,7 @@ HB_FUNC( WAGETFILEVERSIONINFOSIZEEXW )
 #if 0
 HB_FUNC( WAGETFILEVERSIONINFOSIZEEX )
 {
-  void * str2{};
+  void *str2{};
   DWORD dwHandle{};
   wa_ret_DWORD(GetFileVersionInfoSizeEx(wa_par_DWORD(1), HB_PARSTR(2, &str2, nullptr), &dwHandle));
   wa_stor_DWORD(dwHandle, 3);

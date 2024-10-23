@@ -133,7 +133,7 @@ HB_FUNC( WASETLOCALEINFOW )
 
 HB_FUNC( WASETLOCALEINFO )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(SetLocaleInfo(wa_par_LCID(1), wa_par_LCTYPE(2), HB_PARSTR(3, &str, nullptr)));
   hb_strfree(str);
 }
@@ -160,7 +160,7 @@ HB_FUNC( WASETCALENDARINFOW )
 
 HB_FUNC( WASETCALENDARINFO )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(SetCalendarInfo(wa_par_LCID(1), wa_par_CALID(2), wa_par_CALTYPE(3), HB_PARSTR(4, &str, nullptr)));
   hb_strfree(str);
 }
@@ -204,7 +204,7 @@ HB_FUNC( WAGETUSERGEOID )
 // WINBASEAPI LCID WINAPI LocaleNameToLCID (LPCWSTR lpName, DWORD dwFlags)
 HB_FUNC( WALOCALENAMETOLCID )
 {
-  void * str{};
+  void *str{};
   wa_ret_LCID(LocaleNameToLCID(HB_PARSTR(1, &str, nullptr), wa_par_DWORD(2)));
   hb_strfree(str);
 }
@@ -371,7 +371,7 @@ HB_FUNC( WAGETTHREADUILANGUAGE )
 #if 0 // TODO: Windows Vista or upper
 HB_FUNC( WAISVALIDLOCALENAME )
 {
-  void * str{};
+  void *str{};
   wa_ret_BOOL(IsValidLocaleName(HB_PARSTR(1, &str, nullptr)));
   hb_strfree(str);
 }
