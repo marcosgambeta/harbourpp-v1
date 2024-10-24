@@ -2460,7 +2460,7 @@ HB_FUNC(WADRAWTEXT)
 #if 0
 HB_FUNC(WADRAWTEXTEXA)
 {
-  wa_ret_int(DrawTextExA(wa_par_HDC(1), (LPSTR) hb_parc(2), wa_par_in(3), wa_par_RECT(4), wa_par_UINT(5), wa_par_DRAWTEXTPARAMS(6)));
+  wa_ret_int(DrawTextExA(wa_par_HDC(1), static_cast<LPSTR>(hb_parc(2)), wa_par_in(3), wa_par_RECT(4), wa_par_UINT(5), wa_par_DRAWTEXTPARAMS(6)));
 }
 #endif
 
@@ -2468,14 +2468,14 @@ HB_FUNC(WADRAWTEXTEXA)
 #if 0
 HB_FUNC(WADRAWTEXTEXW)
 {
-  wa_ret_int(DrawTextExW(wa_par_HDC(1), (LPWSTR) hb_parc(2), wa_par_int(3), wa_par_RECT(4), wa_par_UINT(5), wa_par_DRAWTEXTPARAMS(6)));
+  wa_ret_int(DrawTextExW(wa_par_HDC(1), static_cast<LPWSTR>(hb_parc(2)), wa_par_int(3), wa_par_RECT(4), wa_par_UINT(5), wa_par_DRAWTEXTPARAMS(6)));
 }
 #endif
 
 HB_FUNC(WADRAWTEXTEX)
 {
   void *str{};
-  wa_ret_int(DrawTextEx(wa_par_HDC(1), (LPWSTR) HB_PARSTR(2, &str, nullptr), wa_par_int(3), wa_par_RECT(4), wa_par_UINT(5), wa_par_DRAWTEXTPARAMS(6)));
+  wa_ret_int(DrawTextEx(wa_par_HDC(1), const_cast<LPWSTR>(HB_PARSTR(2, &str, nullptr)), wa_par_int(3), wa_par_RECT(4), wa_par_UINT(5), wa_par_DRAWTEXTPARAMS(6)));
   hb_strfree(str);
 }
 
@@ -3841,7 +3841,7 @@ HB_FUNC(WALOADICON)
 // WINUSERAPI HICON WINAPI CreateIcon(HINSTANCE hInstance,int nWidth,int nHeight,BYTE cPlanes,BYTE cBitsPixel,CONST BYTE *lpbANDbits,CONST BYTE *lpbXORbits)
 HB_FUNC(WACREATEICON ) // TODO: revise
 {
-  wa_ret_HICON(CreateIcon(wa_par_HINSTANCE(1), wa_par_int(2), wa_par_int(3), wa_par_BYTE(4), wa_par_BYTE(5), (CONST BYTE *) hb_parc(6), (CONST BYTE *) hb_parc(7)));
+  wa_ret_HICON(CreateIcon(wa_par_HINSTANCE(1), wa_par_int(2), wa_par_int(3), wa_par_BYTE(4), wa_par_BYTE(5), reinterpret_cast<CONST BYTE *>(hb_parc(6)), reinterpret_cast<CONST BYTE *>(hb_parc(7))));
 }
 
 // WINUSERAPI WINBOOL WINAPI DestroyIcon(HICON hIcon)

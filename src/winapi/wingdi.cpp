@@ -1612,11 +1612,11 @@ HB_FUNC(WAGRADIENTFILL)
   }
   if( type == 1 )
   {
-    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), (PVOID) vec2gr.data(), wa_par_ULONG(5), wa_par_ULONG(6)));
+    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gr.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
   }
   else if( type == 2 )
   {
-    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), (PVOID) vec2gt.data(), wa_par_ULONG(5), wa_par_ULONG(6)));
+    wa_ret_BOOL(GradientFill(wa_par_HDC(1), vec1.data(), wa_par_ULONG(3), static_cast<PVOID>(vec2gt.data()), wa_par_ULONG(5), wa_par_ULONG(6)));
   }
   else
   {

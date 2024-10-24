@@ -241,7 +241,7 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMFILEICM)
 HB_FUNC(WAGDIPCREATEBITMAPFROMSCAN0)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromScan0(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPixelFormat(4), (BYTE*) hb_parptr(5), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromScan0(wa_par_INT(1), wa_par_INT(2), wa_par_INT(3), wa_par_GpPixelFormat(4), static_cast<BYTE*>(hb_parptr(5)), &p));
   hb_storptr(p, 6);
 }
 
@@ -265,7 +265,7 @@ HB_FUNC(WAGDIPCREATEBITMAPFROMDIRECTDRAWSURFACE)
 HB_FUNC(WAGDIPCREATEBITMAPFROMGDIDIB)
 {
   GpBitmap *p{};
-  wa_ret_GpStatus(GdipCreateBitmapFromGdiDib((GDIPCONST BITMAPINFO*) hb_parptr(1), (VOID*) hb_parptr(2), &p));
+  wa_ret_GpStatus(GdipCreateBitmapFromGdiDib((GDIPCONST BITMAPINFO*) hb_parptr(1), static_cast<VOID*>(hb_parptr(2)), &p));
   hb_storptr(p, 3);
 }
 
@@ -330,13 +330,13 @@ HB_FUNC(WAGDIPCLONEBITMAPAREAI)
 // GpStatus WINGDIPAPI GdipBitmapLockBits(GpBitmap*,GDIPCONST GpRect*,UINT,PixelFormat,BitmapData*)
 HB_FUNC(WAGDIPBITMAPLOCKBITS)
 {
-  wa_ret_GpStatus(GdipBitmapLockBits(wa_par_GpBitmap(1), wa_par_GpRect(2), wa_par_UINT(3), wa_par_GpPixelFormat(4), (BitmapData*) hb_parptr(5)));
+  wa_ret_GpStatus(GdipBitmapLockBits(wa_par_GpBitmap(1), wa_par_GpRect(2), wa_par_UINT(3), wa_par_GpPixelFormat(4), static_cast<BitmapData*>(hb_parptr(5))));
 }
 
 // GpStatus WINGDIPAPI GdipBitmapUnlockBits(GpBitmap*,BitmapData*)
 HB_FUNC(WAGDIPBITMAPUNLOCKBITS)
 {
-  wa_ret_GpStatus(GdipBitmapUnlockBits(wa_par_GpBitmap(1), (BitmapData*) hb_parptr(2)));
+  wa_ret_GpStatus(GdipBitmapUnlockBits(wa_par_GpBitmap(1), static_cast<BitmapData*>(hb_parptr(2))));
 }
 
 // GpStatus WINGDIPAPI GdipBitmapGetPixel(GpBitmap*,INT,INT,ARGB*)
@@ -381,7 +381,7 @@ HB_FUNC(WAGDIPBITMAPAPPLYEFFECT)
 {
   VOID *p{};
   INT i{};
-  wa_ret_GpStatus(GdipBitmapApplyEffect(wa_par_GpBitmap(1), (CGpEffect*) hb_parptr(2), static_cast<RECT*>(wa_get_ptr(3)), wa_par_BOOL(4), &p, &i));
+  wa_ret_GpStatus(GdipBitmapApplyEffect(wa_par_GpBitmap(1), static_cast<CGpEffect*>(hb_parptr(2)), static_cast<RECT*>(wa_get_ptr(3)), wa_par_BOOL(4), &p, &i));
   hb_storptr(p, 5);
   hb_storni(i, 6);
 }
@@ -391,11 +391,11 @@ HB_FUNC(WAGDIPBITMAPAPPLYEFFECT)
 #if 0
 HB_FUNC(WAGDIPBITMAPCREATEAPPLYEFFECT)
 {
-  GpBitmap *b1 = (GpBitmap*) hb_parptr(1);
+  GpBitmap *b1 = static_cast<GpBitmap*>(hb_parptr(1));
   GpBitmap *b2{};
   VOID *p{};
   INT i{};
-  wa_ret_GpStatus(GdipBitmapCreateApplyEffect(&b1, wa_par_INT(2), (CGpEffect*) hb_parptr(3), static_cast<RECT*>(wa_get_ptr(4)), static_cast<RECT*>(wa_get_ptr(5)), &b2, wa_par_BOOL(7), &p, &i));
+  wa_ret_GpStatus(GdipBitmapCreateApplyEffect(&b1, wa_par_INT(2), static_cast<CGpEffect*>(hb_parptr(3)), static_cast<RECT*>(wa_get_ptr(4)), static_cast<RECT*>(wa_get_ptr(5)), &b2, wa_par_BOOL(7), &p, &i));
   hb_storptr(p, 8);
   hb_storni(i, 9);
 }
@@ -611,7 +611,7 @@ HB_FUNC(WAGDIPGETEFFECTPARAMETERSIZE)
 #if 0
 HB_FUNC(WAGDIPSETEFFECTPARAMETERS)
 {
-  wa_ret_GpStatus(GdipSetEffectParameters((CGpEffect*) hb_parptr(1), (GDIPCONST VOID*) hb_parptr(2), wa_par_UINT(3)));
+  wa_ret_GpStatus(GdipSetEffectParameters((CGpEffect*) hb_parptr(1), static_cast<GDIPCONST VOID*>(hb_parptr(2)), wa_par_UINT(3)));
 }
 #endif
 
@@ -1074,7 +1074,7 @@ HB_FUNC(WAGDIPGETINTERPOLATIONMODE)
 #if 0
 HB_FUNC(WAGDIPGRAPHICSSETABORT)
 {
-  wa_ret_GpStatus(GdipGraphicsSetAbort(wa_par_GpGraphics(1), (GdiplusAbort*) hb_parptr(2)));
+  wa_ret_GpStatus(GdipGraphicsSetAbort(wa_par_GpGraphics(1), static_cast<GdiplusAbort*>(hb_parptr(2))));
 }
 #endif
 
