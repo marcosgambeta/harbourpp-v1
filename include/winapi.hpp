@@ -133,6 +133,8 @@
 #define wa_par_LINEDDAPROC(n) reinterpret_cast<LINEDDAPROC>(hb_parptr(n))
 #define wa_par_MFENUMPROC(n) reinterpret_cast<MFENUMPROC>(hb_parptr(n))
 #define wa_par_ENHMFENUMPROC(n) reinterpret_cast<ENHMFENUMPROC>(hb_parptr(n))
+#define wa_par_WINEVENTPROC(n) reinterpret_cast<WINEVENTPROC>(hb_parptr(n))
+#define wa_par_HWINEVENTHOOK(n) static_cast<HWINEVENTHOOK>(hb_parptr(n))
 
 #define wa_ret___LONG32(x)     hb_retnl(x)
 #define wa_ret_ATOM(x)         hb_retni(x)
@@ -222,6 +224,7 @@
 #define wa_ret_GEOID(x)        hb_parnl(x)
 #define wa_ret_GEOTYPE(x)      hb_parnl(x)
 #define wa_ret_GEOCLASS(x)     hb_parnl(x)
+#define wa_ret_HWINEVENTHOOK(x) hb_retptr(x)
 
 // #define wa_stor_ATOM(v, n)         hb_storni(v, n)
 #define wa_stor_BOOL(v, n)         hb_storl(v, n)
