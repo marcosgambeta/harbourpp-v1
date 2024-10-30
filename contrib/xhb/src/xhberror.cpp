@@ -391,7 +391,7 @@ static void xhb_errRedefineClass(void *cargo)
 
 #ifdef XHB_ERROR_OVERLOAD_ERRORNEW
     {
-      PHB_DYNS pDynSym = hb_dynsymFind("ERRORNEW");
+      auto pDynSym = hb_dynsymFind("ERRORNEW");
       if (pDynSym)
       {
         s_symErrorNew.pDynSym = pDynSym;

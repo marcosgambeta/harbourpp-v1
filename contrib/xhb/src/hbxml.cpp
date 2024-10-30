@@ -466,9 +466,7 @@ static MXML_STATUS mxml_attribute_write(MXML_OUTPUT *out, PHBXML_ATTRIBUTE pAttr
 
 static PHB_ITEM mxml_node_new(PHB_ITEM pDoc)
 {
-  PHB_DYNS pExecSym;
-
-  pExecSym = hb_dynsymGetCase("TXMLNODE");
+  auto pExecSym = hb_dynsymGetCase("TXMLNODE");
   hb_vmPushDynSym(pExecSym);
   hb_vmPushNil();
   hb_vmDo(0);

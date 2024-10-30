@@ -39,7 +39,7 @@ extern HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass);
 
 static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
 {
-  PHB_DYNS pSymbol = hb_dynsymGet(hb_itemGetCPtr(pClassFuncStr));
+  auto pSymbol = hb_dynsymGet(hb_itemGetCPtr(pClassFuncStr));
 
   if (pSymbol)
   {

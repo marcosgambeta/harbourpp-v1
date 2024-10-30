@@ -136,7 +136,7 @@ HB_FUNC(SETUNHANDLEDEXCEPTIONFILTER)
      */
     if (s_pHbCStructDyn == nullptr)
     {
-      PHB_DYNS pDyn = hb_dynsymFind("HB_CSTRUCTURE");
+      auto pDyn = hb_dynsymFind("HB_CSTRUCTURE");
       if (pDyn && hb_dynsymIsFunction(pDyn))
       {
         s_pHbCStructDyn = pDyn;

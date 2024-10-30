@@ -800,7 +800,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, PVOID pvReserved)
 
     if (!s_fServerReady)
     {
-      PHB_DYNS pDynSym = hb_dynsymFind("DLLMAIN");
+      auto pDynSym = hb_dynsymFind("DLLMAIN");
 
       if (pDynSym && hb_dynsymIsFunction(pDynSym) && hb_vmRequestReenter())
       {
