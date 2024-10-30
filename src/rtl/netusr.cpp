@@ -58,7 +58,7 @@
 
 #endif
 
-/* NOTE: The caller must free the returned buffer. [vszakats] */
+// NOTE: The caller must free the returned buffer. [vszakats]
 
 char *hb_username(void)
 {

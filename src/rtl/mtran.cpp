@@ -46,7 +46,7 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-/* NOTE: pszResult must have an allocated buffer of at least nStringLen */
+// NOTE: pszResult must have an allocated buffer of at least nStringLen
 
 static HB_SIZE hb_strMemotran(char *pszResult, const char *pszString, HB_SIZE nStringLen, char cHardCR, char cSoftCR)
 {
@@ -98,9 +98,9 @@ HB_FUNC(MEMOTRAN)
       cHardCR = *pszRepl;
     }
 
-    /* CA-Cl*pper checks 3rd cSoftCR parameter only
-     * if 2nd one cHardCR is specified [druzus]
-     */
+    // CA-Cl*pper checks 3rd cSoftCR parameter only
+    // if 2nd one cHardCR is specified [druzus]
+
 #ifdef HB_CLP_STRICT
     if (pszRepl)
 #endif

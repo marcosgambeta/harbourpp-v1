@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* this has to be declared before hbapifs.h is included */
+// this has to be declared before hbapifs.h is included
 #define _HB_FILE_IMPLEMENTATION_
 
 #include "hbapi.hpp"
@@ -630,7 +630,7 @@ static const HB_FILE_FUNCS s_fileFuncs = {
 using HB_FILE_FUNC = HB_BOOL (*)(PHB_FILE_FUNCS pFuncs, const char *);
 #define HB_FILE_FUNC_COUNT (sizeof(HB_FILE_FUNCS) / sizeof(HB_FILE_FUNC))
 
-/* IOUSR_Register(<aMethods>, <cPrefix>) */
+// IOUSR_Register(<aMethods>, <cPrefix>)
 HB_FUNC(IOUSR_REGISTER)
 {
   auto pMthItm = hb_param(1, Harbour::Item::ARRAY);
@@ -695,7 +695,7 @@ HB_FUNC(IOUSR_REGISTER)
   }
 }
 
-/* IOUSR_SetError([<nError> [, <nBase> ]]) --> <nPrevError> */
+// IOUSR_SetError([<nError> [, <nBase> ]]) --> <nPrevError>
 HB_FUNC(IOUSR_SETERROR)
 {
   HB_ERRCODE errCodePrev = hb_fsError();

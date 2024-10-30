@@ -104,7 +104,7 @@ void hb_gtSleep(PHB_GT pGT, double dSeconds)
   HB_GTSELF_LOCK(pGT);
 }
 
-/* helper internal function */
+// helper internal function
 static void hb_gt_def_BaseInit(PHB_GT_BASE pGT)
 {
   pGT->fVgaCell = true;
@@ -123,7 +123,7 @@ static void hb_gt_def_BaseInit(PHB_GT_BASE pGT)
   pGT->hStdOut = HB_STDOUT_HANDLE;
   pGT->hStdErr = HB_STDERR_HANDLE;
 
-  pGT->iDoubleClickSpeed = 168; /* In milliseconds */
+  pGT->iDoubleClickSpeed = 168; // In milliseconds
 
   pGT->inkeyBuffer = pGT->defaultKeyBuffer;
   pGT->inkeyBufferSize = HB_DEFAULT_INKEY_BUFSIZE;
@@ -337,10 +337,10 @@ static HB_BOOL hb_gt_def_IsColor(PHB_GT pGT)
   return pGT->fIsColor;
 }
 
-/* NOTE: szColorString must be at least HB_CLRSTR_LEN wide by the NG. It seems
-         that CA-Cl*pper SetColor() will return string lengths up to 131+EOF.
-         That seems like a 127+1 buffer size, plus lazy overflow checking.
-         [vszakats] */
+// NOTE: szColorString must be at least HB_CLRSTR_LEN wide by the NG. It seems
+//       that CA-Cl*pper SetColor() will return string lengths up to 131+EOF.
+//       That seems like a 127+1 buffer size, plus lazy overflow checking.
+//       [vszakats]
 static void hb_gt_def_GetColorStr(PHB_GT pGT, char *pszColorString)
 {
 #if 0
@@ -357,7 +357,7 @@ static void hb_gt_def_SetColorStr(PHB_GT pGT, const char *szColorString)
 #endif
 
   HB_GTSELF_STRINGTOCOLORS(pGT, szColorString, &pGT->pColor, &pGT->iColorCount);
-  pGT->iColorIndex = HB_CLR_STANDARD; /* HB_GTSELF_COLORSELECT(pGT, HB_CLR_STANDARD); */
+  pGT->iColorIndex = HB_CLR_STANDARD; // HB_GTSELF_COLORSELECT(pGT, HB_CLR_STANDARD);
 }
 
 static void hb_gt_def_ColorSelect(PHB_GT pGT, int iColorIndex)
@@ -418,14 +418,14 @@ static void hb_gt_def_SetClearChar(PHB_GT pGT, HB_USHORT usChar)
   pGT->usClearChar = usChar;
 }
 
-/* helper internal function */
-/* masks: 0x0007     Foreground
-          0x0070     Background
-          0x0008     Bright
-          0x0080     Blink
-          0x0800     Underline foreground
-          0x8000     Underline background
- */
+// helper internal function
+// masks: 0x0007     Foreground
+//        0x0070     Background
+//        0x0008     Bright
+//        0x0080     Blink
+//        0x0800     Underline foreground
+//        0x8000     Underline background
+
 static const char *hb_gt_def_ColorDecode(const char *szColorString, int *piColor)
 {
 #if 0
@@ -614,7 +614,7 @@ static void hb_gt_def_ColorsToString(PHB_GT pGT, int *pColors, int iColorCount, 
 
   HB_SYMBOL_UNUSED(pGT);
 
-  /* Go on if there's space left for the largest color string plus EOF */
+  // Go on if there's space left for the largest color string plus EOF
   for (int iColorIndex = iPos = 0; iColorIndex < iColorCount && iPos < iBufSize - 8; ++iColorIndex)
   {
     int nColor = pColors[iColorIndex] & 7;
@@ -661,11 +661,11 @@ static void hb_gt_def_ColorsToString(PHB_GT pGT, int *pColors, int iColorCount, 
 
       if (j == 0)
       {
-        /* NOTE: When STRICT is on, Harbour will put both the "*" and "+"
-                 chars to the first half of the colorspec (like "W*+/B"),
-                 which is quite ugly, otherwise it will put the "+" to the
-                 first half and the "*" to the second (like "W+/B*"), which
-                 is how it should be done. [vszakats] */
+        // NOTE: When STRICT is on, Harbour will put both the "*" and "+"
+        //       chars to the first half of the colorspec (like "W*+/B"),
+        //       which is quite ugly, otherwise it will put the "+" to the
+        //       first half and the "*" to the second (like "W+/B*"), which
+        //       is how it should be done. [vszakats]
 #ifdef HB_CLP_STRICT
         if ((pColors[iColorIndex] & 0x80) != 0)
         {
@@ -743,11 +743,9 @@ static void hb_gt_def_SetBlink(PHB_GT pGT, HB_BOOL fBlink)
 
 static void hb_gt_def_SetSnowFlag(PHB_GT pGT, HB_BOOL fNoSnow)
 {
-  /*
-   * NOTE: This is a compatibility function which have to be implemented
-   *       in low-level GT driver.
-   *       If you're running on a CGA and snow is a problem speak up!
-   */
+  // NOTE: This is a compatibility function which have to be implemented
+  //       in low-level GT driver.
+  //       If you're running on a CGA and snow is a problem speak up!
 
   HB_SYMBOL_UNUSED(pGT);
   HB_SYMBOL_UNUSED(fNoSnow);
@@ -858,7 +856,7 @@ static void hb_gt_def_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 {
   HB_SYMBOL_UNUSED(dFrequency);
 
-  /* convert Clipper (MS-DOS) timer tick units to seconds ( x / 18.2 ) */
+  // convert Clipper (MS-DOS) timer tick units to seconds ( x / 18.2 )
   hb_gtSleep(pGT, dDuration / 18.2);
 }
 
@@ -1030,10 +1028,10 @@ static void hb_gt_def_WriteAt(PHB_GT pGT, int iRow, int iCol, const char *szText
 static void hb_gt_def_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *szText, HB_SIZE nLength)
 {
   int iMaxCol = HB_GTSELF_MAXCOL(pGT);
-  /* Truncate the text if the cursor will end up off the right edge */
+  // Truncate the text if the cursor will end up off the right edge
   iCol = HB_GTSELF_PUTTEXTW(pGT, iRow, iCol, HB_GTSELF_GETCOLOR(pGT), szText,
                             HB_MIN(nLength, static_cast<HB_SIZE>(iMaxCol - iCol + 1)));
-  /* Finally, save the new cursor position, even if off-screen */
+  // Finally, save the new cursor position, even if off-screen
   HB_GTSELF_SETPOS(pGT, iRow, iCol);
 }
 
@@ -1070,8 +1068,8 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
   int iRow, iCol;
   HB_GTSELF_GETPOS(pGT, &iRow, &iCol);
 
-  /* Limit the starting cursor position to MaxRow(),MaxCol()
-     on the high end, but don't limit it on the low end. */
+  // Limit the starting cursor position to MaxRow(),MaxCol()
+  // on the high end, but don't limit it on the low end.
 
   if (iRow > iMaxRow || iCol > iMaxCol)
   {
@@ -1148,16 +1146,16 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
       ++iCol;
       if (iCol > iMaxCol || iCol <= 0)
       {
-        /* If the cursor position started off the left edge,
-           don't display the first character of the string */
+        // If the cursor position started off the left edge,
+        // don't display the first character of the string
         if (iCol > 0)
         {
           szString[iLen++] = wc;
         }
-        /* Always advance to the first column of the next row
-           when the right edge is reached or when the cursor
-           started off the left edge, unless the cursor is off
-           the top edge, in which case only change the column */
+        // Always advance to the first column of the next row
+        // when the right edge is reached or when the cursor
+        // started off the left edge, unless the cursor is off
+        // the top edge, in which case only change the column
         iCol = 0;
         if (iRow >= 0)
         {
@@ -1171,7 +1169,7 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
         szString[iLen++] = wc;
       }
 
-      /* Special handling for a really wide screen or device */
+      // Special handling for a really wide screen or device
       if (iLen >= WRITECON_BUFFER_SIZE)
       {
         bDisp = true;
@@ -1188,7 +1186,7 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
       iLen = 0;
       if (iRow > iMaxRow)
       {
-        /* Normal scroll */
+        // Normal scroll
         HB_GTSELF_SCROLL(pGT, 0, 0, iMaxRow, iMaxCol, HB_GTSELF_GETCOLOR(pGT), HB_GTSELF_GETCLEARCHAR(pGT),
                          iRow - iMaxRow, 0);
         iRow = iMaxRow;
@@ -1196,15 +1194,15 @@ static void hb_gt_def_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
       }
       else if (iRow < 0 && bNewLine)
       {
-        /* Special case scroll when newline
-           and cursor off top edge of display */
+        // Special case scroll when newline
+        // and cursor off top edge of display
         HB_GTSELF_SCROLL(pGT, 0, 0, iMaxRow, iMaxCol, HB_GTSELF_GETCOLOR(pGT), HB_GTSELF_GETCLEARCHAR(pGT), 1, 0);
       }
       HB_GTSELF_SETPOS(pGT, iRow, iCol);
       bDisp = false;
       bNewLine = false;
 
-      /* To emulate scrolling */
+      // To emulate scrolling
       HB_GTSELF_FLUSH(pGT);
 
       if (bBell)
@@ -1231,8 +1229,8 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
   int iRow, iCol;
   HB_GTSELF_GETPOS(pGT, &iRow, &iCol);
 
-  /* Limit the starting cursor position to MaxRow(),MaxCol()
-     on the high end, but don't limit it on the low end. */
+  // Limit the starting cursor position to MaxRow(),MaxCol()
+  // on the high end, but don't limit it on the low end.
 
   if (iRow > iMaxRow || iCol > iMaxCol)
   {
@@ -1311,16 +1309,16 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
       ++iCol;
       if (iCol > iMaxCol || iCol <= 0)
       {
-        /* If the cursor position started off the left edge,
-           don't display the first character of the string */
+        // If the cursor position started off the left edge,
+        // don't display the first character of the string
         if (iCol > 0)
         {
           szString[iLen++] = wc;
         }
-        /* Always advance to the first column of the next row
-           when the right edge is reached or when the cursor
-           started off the left edge, unless the cursor is off
-           the top edge, in which case only change the column */
+        // Always advance to the first column of the next row
+        // when the right edge is reached or when the cursor
+        // started off the left edge, unless the cursor is off
+        // the top edge, in which case only change the column
         iCol = 0;
         if (iRow >= 0)
         {
@@ -1334,7 +1332,7 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
         szString[iLen++] = wc;
       }
 
-      /* Special handling for a really wide screen or device */
+      // Special handling for a really wide screen or device
       if (iLen >= WRITECON_BUFFER_SIZE)
       {
         bDisp = true;
@@ -1351,7 +1349,7 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
       iLen = 0;
       if (iRow > iMaxRow)
       {
-        /* Normal scroll */
+        // Normal scroll
         HB_GTSELF_SCROLL(pGT, 0, 0, iMaxRow, iMaxCol, HB_GTSELF_GETCOLOR(pGT), HB_GTSELF_GETCLEARCHAR(pGT),
                          iRow - iMaxRow, 0);
         iRow = iMaxRow;
@@ -1359,15 +1357,15 @@ static void hb_gt_def_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
       }
       else if (iRow < 0 && bNewLine)
       {
-        /* Special case scroll when newline
-           and cursor off top edge of display */
+        // Special case scroll when newline
+        // and cursor off top edge of display
         HB_GTSELF_SCROLL(pGT, 0, 0, iMaxRow, iMaxCol, HB_GTSELF_GETCOLOR(pGT), HB_GTSELF_GETCLEARCHAR(pGT), 1, 0);
       }
       HB_GTSELF_SETPOS(pGT, iRow, iCol);
       bDisp = false;
       bNewLine = false;
 
-      /* To emulate scrolling */
+      // To emulate scrolling
       HB_GTSELF_FLUSH(pGT);
 
       if (bBell)
@@ -1509,7 +1507,7 @@ static void hb_gt_def_DrawShadow(PHB_GT pGT, int iTop, int iLeft, int iBottom, i
   iMaxRow = HB_GTSELF_MAXROW(pGT);
   iMaxCol = HB_GTSELF_MAXCOL(pGT);
 
-  /* Draw the bottom edge */
+  // Draw the bottom edge
   if (iBottom <= iMaxRow && iLeft <= iMaxCol)
   {
     HB_GTSELF_SETATTRIBUTE(pGT, iBottom, iLeft, iBottom, HB_MIN(iRight, iMaxCol), iColor);
@@ -1518,7 +1516,7 @@ static void hb_gt_def_DrawShadow(PHB_GT pGT, int iTop, int iLeft, int iBottom, i
   ++iRight;
   ++iTop;
 
-  /* Draw the right edge */
+  // Draw the right edge
   if (iTop <= iMaxRow && iRight <= iMaxCol)
   {
     HB_GTSELF_SETATTRIBUTE(pGT, iTop, iRight, iBottom, HB_MIN(iRight + 1, iMaxCol), iColor);
@@ -2096,9 +2094,9 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     pInfo->pResult = hb_itemPutNInt(pInfo->pResult, HB_GTSELF_MAXROW(pGT));
     break;
 
-  case HB_GTI_NEWWIN: /* clear screen area, set default cursor shape and position */
+  case HB_GTI_NEWWIN: // clear screen area, set default cursor shape and position
 
-    /* Clear screen */
+    // Clear screen
     HB_GTSELF_DISPBEGIN(pGT);
     HB_GTSELF_SCROLL(pGT, 0, 0, HB_GTSELF_MAXROW(pGT), HB_GTSELF_MAXCOL(pGT), HB_GTSELF_GETCOLOR(pGT),
                      HB_GTSELF_GETCLEARCHAR(pGT), 0, 0);
@@ -2106,10 +2104,10 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     HB_GTSELF_SETCURSORSTYLE(pGT, SC_NORMAL);
     HB_GTSELF_DISPEND(pGT);
     HB_GTSELF_FLUSH(pGT);
-    /* fallthrough */
+    // fallthrough
 
   case HB_GTI_GETWIN:
-  { /* save screen buffer, cursor shape and position */
+  { // save screen buffer, cursor shape and position
     int iRow, iCol, iFlag;
     HB_SIZE nSize;
 
@@ -2118,7 +2116,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
       pInfo->pResult = hb_itemNew(nullptr);
     }
     hb_arrayNew(pInfo->pResult, 7);
-    /* 7th item is allocated for GTCTW window number */
+    // 7th item is allocated for GTCTW window number
     HB_GTSELF_GETPOS(pGT, &iRow, &iCol);
     hb_arraySetNI(pInfo->pResult, 1, iRow);
     hb_arraySetNI(pInfo->pResult, 2, iCol);
@@ -2143,7 +2141,7 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
     }
     break;
   }
-  case HB_GTI_SETWIN: /* restore screen buffer, cursor shape and position */
+  case HB_GTI_SETWIN: // restore screen buffer, cursor shape and position
     if ((hb_itemType(pInfo->pNewVal) & Harbour::Item::ARRAY) && hb_arrayLen(pInfo->pNewVal) == 7)
     {
       HB_GTSELF_DISPBEGIN(pGT);
@@ -2164,12 +2162,12 @@ static HB_BOOL hb_gt_def_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
   case HB_GTI_CLIPBOARDDATA:
     if (hb_itemType(pInfo->pNewVal) & Harbour::Item::STRING)
     {
-      /* set new Clipboard value */
+      // set new Clipboard value
       hb_gt_setClipboard(pInfo->pNewVal->getCPtr(), pInfo->pNewVal->getCLen());
     }
     else
     {
-      /* get Clipboard value */
+      // get Clipboard value
       char *pszClipData;
       HB_SIZE nLen;
 
@@ -2940,7 +2938,7 @@ static int hb_gt_def_ReadKey(PHB_GT pGT, int iEventMask)
   return HB_GTSELF_MOUSEREADKEY(pGT, iEventMask);
 }
 
-/* helper internal function */
+// helper internal function
 static int hb_gt_def_InkeyFilter(PHB_GT pGT, int iKey, int iEventMask)
 {
 #if 0
@@ -3071,7 +3069,7 @@ static int hb_gt_def_InkeyFilter(PHB_GT pGT, int iKey, int iEventMask)
   return iKey;
 }
 
-/* helper internal function: drop the next key in keyboard buffer */
+// helper internal function: drop the next key in keyboard buffer
 static void hb_gt_def_InkeyPop(PHB_GT pGT)
 {
   if (pGT->StrBuffer)
@@ -3091,7 +3089,7 @@ static void hb_gt_def_InkeyPop(PHB_GT pGT)
   }
 }
 
-/* Put the key into keyboard buffer */
+// Put the key into keyboard buffer
 static void hb_gt_def_InkeyPut(PHB_GT pGT, int iKey)
 {
 #if 0
@@ -3104,11 +3102,10 @@ static void hb_gt_def_InkeyPut(PHB_GT pGT, int iKey)
 
   if (pGT->inkeyHead != pGT->inkeyTail && pGT->inkeyLastPos >= 0 && (iKey == K_MOUSEMOVE || HB_INKEY_ISMOUSEPOS(iKey)))
   {
-    /*
-     * Clipper does not store in buffer repeated mouse movement
-     * IMHO it's good idea to reduce unnecessary inkey buffer
-     * overloading so I also implemented it, [druzus]
-     */
+    // Clipper does not store in buffer repeated mouse movement
+    // IMHO it's good idea to reduce unnecessary inkey buffer
+    // overloading so I also implemented it, [druzus]
+
     int iLastKey = pGT->inkeyBuffer[pGT->inkeyLastPos];
 
     if (iLastKey == K_MOUSEMOVE || HB_INKEY_ISMOUSEPOS(iLastKey))
@@ -3121,10 +3118,9 @@ static void hb_gt_def_InkeyPut(PHB_GT pGT, int iKey)
     }
   }
 
-  /*
-   * When the buffer is full new event overwrite the last one
-   * in the buffer - it's Clipper behavior, [druzus]
-   */
+  // When the buffer is full new event overwrite the last one
+  // in the buffer - it's Clipper behavior, [druzus]
+
   pGT->inkeyBuffer[pGT->inkeyLastPos = iHead++] = iKey;
   if (iHead >= pGT->inkeyBufferSize)
   {
@@ -3137,7 +3133,7 @@ static void hb_gt_def_InkeyPut(PHB_GT pGT, int iKey)
   }
 }
 
-/* Inset the key into head of keyboard buffer */
+// Inset the key into head of keyboard buffer
 static void hb_gt_def_InkeyIns(PHB_GT pGT, int iKey)
 {
 #if 0
@@ -3151,9 +3147,9 @@ static void hb_gt_def_InkeyIns(PHB_GT pGT, int iKey)
 
   pGT->inkeyBuffer[pGT->inkeyTail] = iKey;
 
-  /* When the buffer is full new event overwrite the last one
-   * in the buffer. [druzus]
-   */
+  // When the buffer is full new event overwrite the last one
+  // in the buffer. [druzus]
+
   if (pGT->inkeyHead == pGT->inkeyTail)
   {
     if (--pGT->inkeyHead < 0)
@@ -3164,7 +3160,7 @@ static void hb_gt_def_InkeyIns(PHB_GT pGT, int iKey)
   }
 }
 
-/* helper internal function */
+// helper internal function
 static HB_BOOL hb_gt_def_InkeyNextCheck(PHB_GT pGT, int iEventMask, int *iKey)
 {
 #if 0
@@ -3201,7 +3197,7 @@ static HB_BOOL hb_gt_def_InkeyNextCheck(PHB_GT pGT, int iEventMask, int *iKey)
   return true;
 }
 
-/* helper internal function */
+// helper internal function
 static void hb_gt_def_InkeyPollDo(PHB_GT pGT)
 {
 #if 0
@@ -3224,7 +3220,7 @@ static void hb_gt_def_InkeyPollDo(PHB_GT pGT)
         case 'c':
           if (hb_setGetCancel())
           {
-            hb_vmRequestCancel(); /* Request cancellation */
+            hb_vmRequestCancel(); // Request cancellation
             return;
           }
           break;
@@ -3232,7 +3228,7 @@ static void hb_gt_def_InkeyPollDo(PHB_GT pGT)
         case 'd':
           if (hb_setGetDebug())
           {
-            hb_vmRequestDebug(); /* Request the debugger */
+            hb_vmRequestDebug(); // Request the debugger
             return;
           }
         }
@@ -3242,18 +3238,18 @@ static void hb_gt_def_InkeyPollDo(PHB_GT pGT)
     {
       switch (iKey)
       {
-      case HB_BREAK_FLAG: /* Check for Ctrl+Break */
-      case K_ALT_C:       /* Check for normal Alt+C */
+      case HB_BREAK_FLAG: // Check for Ctrl+Break
+      case K_ALT_C:       // Check for normal Alt+C
         if (hb_setGetCancel())
         {
-          hb_vmRequestCancel(); /* Request cancellation */
+          hb_vmRequestCancel(); // Request cancellation
           return;
         }
         break;
-      case K_ALT_D: /* Check for Alt+D */
+      case K_ALT_D: // Check for Alt+D
         if (hb_setGetDebug())
         {
-          hb_vmRequestDebug(); /* Request the debugger */
+          hb_vmRequestDebug(); // Request the debugger
           return;
         }
       }
@@ -3262,27 +3258,26 @@ static void hb_gt_def_InkeyPollDo(PHB_GT pGT)
   }
 }
 
-/* Poll the console keyboard to stuff the Harbour buffer */
+// Poll the console keyboard to stuff the Harbour buffer
 static void hb_gt_def_InkeyPoll(PHB_GT pGT)
 {
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_def_InkeyPoll(%p)", static_cast<void*>(pGT)));
 #endif
 
-  /*
-   * Clipper 5.3 always poll events without respecting
-   * _SET_TYPEAHEAD when CL5.2 only when it's non zero.
-   * IMHO keeping CL5.2 behavior will be more accurate for Harbour
-   * because it allows to control it by user what some times could be
-   * necessary due to different low-level GT behavior on some platforms
-   */
+  // Clipper 5.3 always poll events without respecting
+  // _SET_TYPEAHEAD when CL5.2 only when it's non zero.
+  // IMHO keeping CL5.2 behavior will be more accurate for Harbour
+  // because it allows to control it by user what some times could be
+  // necessary due to different low-level GT behavior on some platforms
+
   if (hb_setGetTypeAhead())
   {
     hb_gt_def_InkeyPollDo(pGT);
   }
 }
 
-/* Return the next key without extracting it */
+// Return the next key without extracting it
 static int hb_gt_def_InkeyNext(PHB_GT pGT, int iEventMask)
 {
 #if 0
@@ -3295,7 +3290,7 @@ static int hb_gt_def_InkeyNext(PHB_GT pGT, int iEventMask)
   return iKey;
 }
 
-/* Wait for keyboard input */
+// Wait for keyboard input
 static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iEventMask)
 {
 #if 0
@@ -3321,7 +3316,7 @@ static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iE
     }
   }
 
-  /* Wait forever ?, Use fixed value 100 for strict Clipper compatibility */
+  // Wait forever ?, Use fixed value 100 for strict Clipper compatibility
   timeout = (fWait && dSeconds * 100 >= 1) ? static_cast<HB_MAXINT>(dSeconds * 1000) : -1;
   timer = hb_timerInit(timeout);
 
@@ -3347,7 +3342,7 @@ static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iE
       }
     }
 
-    /* immediately break if a VM request is pending. */
+    // immediately break if a VM request is pending.
     if (!fWait || (timeout = hb_timerTest(timeout, &timer)) == 0 || hb_vmRequestQuery() != 0)
     {
       break;
@@ -3368,7 +3363,7 @@ static int hb_gt_def_InkeyGet(PHB_GT pGT, HB_BOOL fWait, double dSeconds, int iE
   return fPop ? pGT->inkeyLast : 0;
 }
 
-/* Return the value of the last key that was extracted */
+// Return the value of the last key that was extracted
 static int hb_gt_def_InkeyLast(PHB_GT pGT, int iEventMask)
 {
 #if 0
@@ -3379,7 +3374,7 @@ static int hb_gt_def_InkeyLast(PHB_GT pGT, int iEventMask)
   return hb_gt_def_InkeyFilter(pGT, pGT->inkeyLast, iEventMask);
 }
 
-/* Set LastKey() value and return previous value */
+// Set LastKey() value and return previous value
 static int hb_gt_def_InkeySetLast(PHB_GT pGT, int iKey)
 {
 #if 0
@@ -3392,7 +3387,7 @@ static int hb_gt_def_InkeySetLast(PHB_GT pGT, int iKey)
   return iLast;
 }
 
-/* Set text into inkey buffer */
+// Set text into inkey buffer
 static void hb_gt_def_InkeySetText(PHB_GT pGT, const char *szText, HB_SIZE nLen, HB_BOOL fEol)
 {
 #if 0
@@ -3444,7 +3439,7 @@ static void hb_gt_def_InkeySetText(PHB_GT pGT, const char *szText, HB_SIZE nLen,
   }
 }
 
-/* Reset the keyboard buffer */
+// Reset the keyboard buffer
 static void hb_gt_def_InkeyReset(PHB_GT pGT)
 {
 #if 0
@@ -3485,7 +3480,7 @@ static void hb_gt_def_InkeyReset(PHB_GT pGT)
   }
 }
 
-/* reset inkey pool to default state and free any allocated resources */
+// reset inkey pool to default state and free any allocated resources
 static void hb_gt_def_InkeyExit(PHB_GT pGT)
 {
 #if 0
@@ -3546,19 +3541,18 @@ static void hb_gt_def_MouseSetCursor(PHB_GT pGT, HB_BOOL fVisible)
   }
   else if (pGT->fMouseVisible)
   {
-    /*
-     * mouse drivers use hide counters, so repeated calls to
-     * HB_GTSELF_MOUSEHIDE(pGT) will need at least the same number of
-     * calls to HB_GTSELF_MOUSESHOW() to make mouse cursor visible. This
-     * behavior is not compatible with Clipper so call to
-     * HB_GTSELF_MOUSEHIDE(pGT) is guarded by pGT->fMouseVisible.
-     * The counter is not updated when mouse cursor is visible and
-     * HB_GTSELF_MOUSESHOW() is called so this behavior is enough.
-     * If some platform works in differ way then and this behavior
-     * will create problems GT driver should overload
-     * HB_GTSELF_MOUSESETCURSOR()/HB_GTSELF_MOUSEGETCURSOR() methods.
-     * [druzus]
-     */
+    // mouse drivers use hide counters, so repeated calls to
+    // HB_GTSELF_MOUSEHIDE(pGT) will need at least the same number of
+    // calls to HB_GTSELF_MOUSESHOW() to make mouse cursor visible. This
+    // behavior is not compatible with Clipper so call to
+    // HB_GTSELF_MOUSEHIDE(pGT) is guarded by pGT->fMouseVisible.
+    // The counter is not updated when mouse cursor is visible and
+    // HB_GTSELF_MOUSESHOW() is called so this behavior is enough.
+    // If some platform works in differ way then and this behavior
+    // will create problems GT driver should overload
+    // HB_GTSELF_MOUSESETCURSOR()/HB_GTSELF_MOUSEGETCURSOR() methods.
+    // [druzus]
+
     HB_GTSELF_MOUSEHIDE(pGT);
     pGT->fMouseVisible = false;
   }
@@ -3795,7 +3789,7 @@ static void hb_gt_def_WhoCares(PHB_GT pGT, void *pCargo)
   HB_SYMBOL_UNUSED(pCargo);
 }
 
-/* - */
+// -
 
 #if defined(__GNUC__) && 0
 static const HB_GT_FUNCS s_gtCoreFunc = {
@@ -3967,9 +3961,9 @@ static const HB_GT_FUNCS s_gtCoreFunc = {hb_gt_def_Lock,
                                          hb_gt_def_GetCursorStyle,
                                          hb_gt_def_SetCursorStyle,
                                          hb_gt_def_GetScrCursor,
-                                         hb_gt_def_GetChar, /* intentionally mapped to GetScrChar */
-                                         hb_gt_def_PutChar, /* intentionally mapped to PutScrChar */
-                                         hb_gt_def_GetUC,   /* intentionally mapped to GetScrUC */
+                                         hb_gt_def_GetChar, // intentionally mapped to GetScrChar
+                                         hb_gt_def_PutChar, // intentionally mapped to PutScrChar
+                                         hb_gt_def_GetUC,   // intentionally mapped to GetScrUC
                                          hb_gt_def_DispBegin,
                                          hb_gt_def_DispEnd,
                                          hb_gt_def_DispCount,
@@ -4053,11 +4047,11 @@ static const HB_GT_FUNCS s_gtCoreFunc = {hb_gt_def_Lock,
                                          hb_gt_def_WhoCares};
 #endif
 
-/* - */
+// -
 
 static char s_gtNameBuf[HB_GT_NAME_MAX_ + 1];
 
-/* NOTE: Must be in sync with gtsys.c */
+// NOTE: Must be in sync with gtsys.c
 #if defined(HB_GT_LIB)
 static const char *s_szNameDefault = HB_GT_DRVNAME(HB_GT_LIB);
 #elif defined(HB_OS_WIN)
@@ -4359,7 +4353,7 @@ void hb_gtStartupInit(void)
     return;
   }
   if (hb_dynsymFind("HB_GT_NUL"))
-  { /* GTNUL was explicitly REQUESTed */
+  { // GTNUL was explicitly REQUESTed
     if (hb_gtTryInit("NUL", false))
     {
       return;
@@ -4368,7 +4362,7 @@ void hb_gtStartupInit(void)
 
   hb_errInternal(9998, "Harbour++ terminal (GT) initialization failure", nullptr, nullptr);
 
-  /* not executed, only to force linking hb_GTSYS() */
+  // not executed, only to force linking hb_GTSYS()
   HB_FUNC_EXEC(HB_GTSYS);
 }
 

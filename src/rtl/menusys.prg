@@ -49,16 +49,16 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-/* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
-         it has all related variables and methods. */
+// NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
+//       it has all related variables and methods.
 
 #ifdef HB_COMPAT_C53
 
-/* Standard Menu System Modal handling for Menu Items */
+// Standard Menu System Modal handling for Menu Items
 FUNCTION MenuModal(oTopMenu, nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
    RETURN HBMenuSys():New(oTopMenu):modal(nSelection, nMsgRow, nMsgLeft, nMsgRight, cMsgColor, GetList)
 
-/* Dummy function */
+// Dummy function
 FUNCTION ShowMsg(aMsg, lMode)
 
    HB_SYMBOL_UNUSED(aMsg)
@@ -66,7 +66,7 @@ FUNCTION ShowMsg(aMsg, lMode)
 
    RETURN .F.
 
-/* ShortCut processing for initial Get or Menu Item. */
+// ShortCut processing for initial Get or Menu Item.
 FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
 
    LOCAL nItem
@@ -118,8 +118,8 @@ FUNCTION IsShortcut(oMenu, nKey, /* @ */ nID)
 
    RETURN .F.
 
-/* Navigates to the next Get or Menu Item from the
-   Current if more than one uses the same ShortCut. */
+// Navigates to the next Get or Menu Item from the
+// Current if more than one uses the same ShortCut.
 FUNCTION IsQuick(oMenu, nKey, /* @ */ nID)
 
    LOCAL nItem

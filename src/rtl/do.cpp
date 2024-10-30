@@ -49,12 +49,11 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 
-/* NOTE: Do() as a function is a Harbour extension. [vszakats] */
+// NOTE: Do() as a function is a Harbour extension. [vszakats]
 
-/* NOTE: use hb_stackItemFromBase(uiParam) instead of
- *       hb_param(uiParam, Harbour::Item::ANY) to keep references to
- *       parameters passed by refeence. [druzus]
- */
+// NOTE: use hb_stackItemFromBase(uiParam) instead of
+//       hb_param(uiParam, Harbour::Item::ANY) to keep references to
+//       parameters passed by refeence. [druzus]
 
 HB_FUNC(DO)
 {

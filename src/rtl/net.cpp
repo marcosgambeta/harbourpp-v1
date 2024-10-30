@@ -61,15 +61,15 @@
 #endif
 
 #if !defined(MAXGETHOSTNAME) && (defined(HB_OS_UNIX))
-#define MAXGETHOSTNAME 256 /* should be enough for a host name */
+#define MAXGETHOSTNAME 256 // should be enough for a host name
 #endif
 
-/* NOTE: Clipper will only return a maximum of 15 bytes from this function.
-         And it will be padded with spaces. Harbour does the same on the
-         MS-DOS platform.
-         [vszakats] */
+// NOTE: Clipper will only return a maximum of 15 bytes from this function.
+//       And it will be padded with spaces. Harbour does the same on the
+//       MS-DOS platform.
+//       [vszakats]
 
-/* NOTE: The caller must free the returned buffer. [vszakats] */
+// NOTE: The caller must free the returned buffer. [vszakats]
 
 char *hb_netname(void)
 {

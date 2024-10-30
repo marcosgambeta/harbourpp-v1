@@ -57,7 +57,7 @@
 #include "hbgtcore.hpp"
 #include "hbset.hpp"
 
-/* gt API functions */
+// gt API functions
 
 HB_ERRCODE hb_gtInit(HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
@@ -89,7 +89,7 @@ HB_ERRCODE hb_gtExit(void)
 #endif
 
   hb_gtRelease(nullptr);
-  /* clear internal clipboard data */
+  // clear internal clipboard data
   hb_gt_setClipboard(nullptr, 0);
   return Harbour::SUCCESS;
 }
@@ -353,10 +353,10 @@ HB_ERRCODE hb_gtPostExt(void)
   return errCode;
 }
 
-/* NOTE: szColorString must be at least HB_CLRSTR_LEN wide by the NG. It seems
-         that CA-Cl*pper SetColor() will return string lengths up to 131+EOF.
-         That seems like a 127+1 buffer size, plus lazy overflow checking.
-         [vszakats] */
+// NOTE: szColorString must be at least HB_CLRSTR_LEN wide by the NG. It seems
+//       that CA-Cl*pper SetColor() will return string lengths up to 131+EOF.
+//       That seems like a 127+1 buffer size, plus lazy overflow checking.
+//       [vszakats]
 
 HB_ERRCODE hb_gtGetColorStr(char *pszColorString)
 {
@@ -493,8 +493,8 @@ HB_ERRCODE hb_gtGetPosEx(int *piRow, int *piCol)
   return Harbour::FAILURE;
 }
 
-/* NOTE: Should be exactly the same as hb_gtSetPosContext(), but without the
-         additional third parameter. */
+// NOTE: Should be exactly the same as hb_gtSetPosContext(), but without the
+//       additional third parameter.
 
 HB_ERRCODE hb_gtSetPos(int iRow, int iCol)
 {
@@ -1009,7 +1009,7 @@ HB_ERRCODE hb_gtSetAttribute(int iTop, int iLeft, int iBottom, int iRight, int i
   return Harbour::FAILURE;
 }
 
-/* prepare the terminal for system call */
+// prepare the terminal for system call
 HB_ERRCODE hb_gtSuspend(void)
 {
 #if 0

@@ -56,9 +56,9 @@ FUNCTION _SetVideoMode(nMode)
 
    RETURN 0
 
-/* NOTE: Original _GetNumCol() will not recognize colors written
-         in lowercase. We're replicating this behaviour in this
-         compatibility function. [vszakats] */
+// NOTE: Original _GetNumCol() will not recognize colors written
+//       in lowercase. We're replicating this behaviour in this
+//       compatibility function. [vszakats]
 
 FUNCTION _GetNumCol(cColor)
 
@@ -77,9 +77,9 @@ FUNCTION __GUIColor(cColor, nPos)
    RETURN hb_ColorIndex(cColor, nPos - 1)
 
 FUNCTION IsDefColor()
-   RETURN SetColor() == "W/N,N/W,N/N,N/N,N/W" /* NOTE: Color must match with the one in set.c */
+   RETURN SetColor() == "W/N,N/W,N/N,N/N,N/W" // NOTE: Color must match with the one in set.c
 
-/* Removes the accelerator marker from a caption string */
+// Removes the accelerator marker from a caption string
 FUNCTION __Caption(cCaption)
 
    LOCAL nPos

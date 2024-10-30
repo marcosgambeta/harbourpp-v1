@@ -47,9 +47,8 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* hb_StrReplace( <cString>, [ <cSource> | <acSource> | <hReplace> ], [ <cDest> | <acDest> ] )
- *    --> <cResult>
- */
+// hb_StrReplace( <cString>, [ <cSource> | <acSource> | <hReplace> ], [ <cDest> | <acDest> ] )
+//    --> <cResult>
 HB_FUNC(HB_STRREPLACE)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);

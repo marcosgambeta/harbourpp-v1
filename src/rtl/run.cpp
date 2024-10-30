@@ -54,8 +54,8 @@
 #include <windows.h>
 #endif
 
-/* FIXME: The screen buffer handling is not right for all platforms (Windows)
-          The output of the launched (MS-DOS?) app is not visible. */
+// FIXME: The screen buffer handling is not right for all platforms (Windows)
+//        The output of the launched (MS-DOS?) app is not visible.
 
 HB_FUNC(__RUN)
 {
@@ -82,7 +82,7 @@ HB_FUNC(__RUN)
 
     if (hb_gtResume() != Harbour::SUCCESS)
     {
-/* an error should be generated here !! Something like */
+// an error should be generated here !! Something like
 #if 0
          hb_errRT_BASE_Ext1(EG_GTRESUME, 6002, nullptr, HB_ERR_FUNCNAME, 0, EF_CANDEFAULT);
 #endif

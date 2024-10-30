@@ -329,10 +329,9 @@ HB_FUNC(HB_TOKENGET)
   }
 }
 
-/* like hb_tokenGet() but returns next token starting from passed position
- * (0 based) inside string, f.e.:
- *    hb_tokenPtr(cString, @nTokPos, Chr(9)) --> cToken
- */
+// like hb_tokenGet() but returns next token starting from passed position
+// (0 based) inside string, f.e.:
+//    hb_tokenPtr(cString, @nTokPos, Chr(9)) --> cToken
 HB_FUNC(HB_TOKENPTR)
 {
   const char *szLine, *szDelim;
@@ -354,9 +353,9 @@ HB_FUNC(HB_TOKENPTR)
       nSkip = hb_parclen(1) + 1;
     }
 
-    /* return position to start next search from */
+    // return position to start next search from
     hb_storns(nSkip, 2);
-    /* return token */
+    // return token
     hb_retclen(szToken, nToken);
   }
   else

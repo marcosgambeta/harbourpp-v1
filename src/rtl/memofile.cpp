@@ -47,9 +47,9 @@
 #include "hbapiitm.hpp"
 #include "hbapifs.hpp"
 
-/* NOTE: CA-Cl*pper has ~64 KiB (65516 bytes exactly) limit on read, in Harbour
-         this limit is extended, so we are not *strictly* compatible here.
-         [vszakats] */
+// NOTE: CA-Cl*pper has ~64 KiB (65516 bytes exactly) limit on read, in Harbour
+//       this limit is extended, so we are not *strictly* compatible here.
+//       [vszakats]
 
 static void hb_memoread(HB_BOOL bHandleEOF)
 {
@@ -62,7 +62,7 @@ static void hb_memoread(HB_BOOL bHandleEOF)
 
     if (pBuffer)
     {
-      /* Don't read the file terminating EOF character */
+      // Don't read the file terminating EOF character
       if (bHandleEOF && nSize > 0)
       {
         if (pBuffer[nSize - 1] == HB_CHAR_EOF)
@@ -122,10 +122,10 @@ static HB_BOOL hb_memowrit(HB_BOOL bHandleEOF)
       }
       bRetVal = nSize == 0;
 
-      /* NOTE: CA-Cl*pper will add the EOF even if the write failed. [vszakats] */
-      /* NOTE: CA-Cl*pper will not return .F. when the EOF could not be written. [vszakats] */
+      // NOTE: CA-Cl*pper will add the EOF even if the write failed. [vszakats]
+      // NOTE: CA-Cl*pper will not return .F. when the EOF could not be written. [vszakats]
       if (bHandleEOF && bRetVal)
-      { /* if true, then write EOF */
+      { // if true, then write EOF
         char cEOF = HB_CHAR_EOF;
         hb_fileWrite(pFile, &cEOF, sizeof(char), -1);
       }

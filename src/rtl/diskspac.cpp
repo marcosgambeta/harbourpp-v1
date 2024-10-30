@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: DiskSpace() supports larger disks than 2 GiB. CA-Cl*pper will always
-         return a (long) value, Harbour may return a (double) for large
-         values, the decimal places are always set to zero, though. */
+// NOTE: DiskSpace() supports larger disks than 2 GiB. CA-Cl*pper will always
+//       return a (long) value, Harbour may return a (double) for large
+//       values, the decimal places are always set to zero, though.
 
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
@@ -82,8 +82,8 @@ HB_FUNC(DISKSPACE)
   (static_cast<double>((v).LowPart) + static_cast<double>((v).HighPart) * ((static_cast<double>(0xFFFFFFFF)) + 1))
 
 #else
-    /* NOTE: For compilers that don't seem to deal with the
-             unnamed struct that is part of ULARGE_INTEGER [pt] */
+    // NOTE: For compilers that don't seem to deal with the
+    //       unnamed struct that is part of ULARGE_INTEGER [pt]
 #define HB_GET_LARGE_UINT(v)                                                                                           \
   (static_cast<double>((v).u.LowPart) + static_cast<double>((v).u.HighPart) * ((static_cast<double>(0xFFFFFFFF)) + 1))
 #endif

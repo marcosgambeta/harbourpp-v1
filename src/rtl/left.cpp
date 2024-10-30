@@ -49,7 +49,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-/* returns the left-most n characters in string */
+// returns the left-most n characters in string
 
 HB_FUNC(LEFT)
 {

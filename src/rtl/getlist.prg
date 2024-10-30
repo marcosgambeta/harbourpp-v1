@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: Harbour internal function to set and get the active GetList */
+// NOTE: Harbour internal function to set and get the active GetList
 
 THREAD STATIC t_oGetListActive
 
@@ -61,7 +61,7 @@ PROCEDURE __GetListSetActive(oGetList)
 
    RETURN
 
-/* NOTE: Using a separate function for maximum speed */
+// NOTE: Using a separate function for maximum speed
 
 FUNCTION __GetListActive()
    RETURN t_oGetListActive

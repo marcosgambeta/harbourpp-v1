@@ -165,7 +165,7 @@ STATIC PROCEDURE __hbdoc__read_file(aEntry, cFileName, hMeta, aErrMsg)
       hb_HDel(hMeta, "TEMPLATE")
    ENDIF
 
-   /* Preselect the default template based on source filename */
+   // Preselect the default template based on source filename
    FOR EACH tmp IN aFilenameTemplateMap
       IF hb_LeftEqI(cFileName, tmp)
          hMeta["TEMPLATE"] := tmp:__enumKey()
@@ -220,7 +220,7 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
          EXIT
       OTHERWISE
          IF hEntry == NIL
-            /* Ignore line outside entry. Don't warn, this is normal. */
+            // Ignore line outside entry. Don't warn, this is normal.
          ELSEIF Left(LTrim(cLine), 1) == "$" .AND. Right(RTrim(cLine), 1) == "$"
             cLine := AllTrim(cLine)
             cSection := SubStr(cLine, 2, Len(cLine) - 2)
@@ -231,9 +231,9 @@ STATIC PROCEDURE __hbdoc__read_stream(aEntry, cFile, cFileName, hMeta, aErrMsg)
             ENDIF
          ELSEIF !Empty(cSection)
             IF Empty(hEntry[cSection])
-               /* some "heuristics" to detect in which column the real content starts,
-                  we assume the first line of content is correct, and use this with all
-                  consecutive lines. [vszakats] */
+               // some "heuristics" to detect in which column the real content starts,
+               // we assume the first line of content is correct, and use this with all
+               // consecutive lines. [vszakats]
                nStartCol := Len(cLine) - Len(LTrim(cLine)) + 1
             ELSE
                hEntry[cSection] += Chr(10)
@@ -323,17 +323,15 @@ FUNCTION __hbdoc_FilterOut(cFile)
 
    RETURN cOK
 
-/*
- * 0xC0, 'H', 'B', 'D' followed two-byte version number in Little Endian order.
- * Corresponding magic(5) rule:
- *
- *    0       string          \xc0HBD         Harbour Documentation
- *    >4      leshort         x               version %d
- *
- * Until such time that the serialized format changes, and handling of
- * previously-saved files is required, only a naive approach of using
- * version 1 is taken.
- */
+// 0xC0, 'H', 'B', 'D' followed two-byte version number in Little Endian order.
+// Corresponding magic(5) rule:
+//
+//    0       string          \xc0HBD         Harbour Documentation
+//    >4      leshort         x               version %d
+//
+// Until such time that the serialized format changes, and handling of
+// previously-saved files is required, only a naive approach of using
+// version 1 is taken.
 
 #define _HBDOC_EXT       ".hbd"
 

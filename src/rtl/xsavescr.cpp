@@ -47,8 +47,8 @@
 #include "hbapigt.hpp"
 #include "hbstack.hpp"
 
-/* NOTE: In original CA-Cl*pper 5.x these functions are written in Clipper
-         [vszakats] */
+// NOTE: In original CA-Cl*pper 5.x these functions are written in Clipper
+//       [vszakats]
 
 struct HB_SCRDATA
 {
@@ -90,10 +90,10 @@ HB_FUNC(__XSAVESCREEN)
   hb_gtSave(0, 0, pScrData->maxrow, pScrData->maxcol, pScrData->buffer);
 }
 
-/* NOTE: There's no check about the screen size on restore, so this will
-         fail if the user has changed the screen resolution between calling
-         save and restore.
-         [vszakats] */
+// NOTE: There's no check about the screen size on restore, so this will
+//       fail if the user has changed the screen resolution between calling
+//       save and restore.
+//       [vszakats]
 
 HB_FUNC(__XRESTSCREEN)
 {

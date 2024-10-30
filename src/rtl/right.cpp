@@ -49,7 +49,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-/* returns the right-most n characters in string */
+// returns the right-most n characters in string
 
 HB_FUNC(RIGHT)
 {
@@ -93,6 +93,6 @@ HB_FUNC(RIGHT)
   }
   else
   {
-    hb_retc_null(); /* Clipper doesn't error */
+    hb_retc_null(); // Clipper doesn't error
   }
 }

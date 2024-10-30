@@ -89,7 +89,7 @@ HB_FUNC(STRZERO)
 
         if (szResult[nPos] == '-')
         {
-          /* NOTE: Negative sign found, put it to the first position */
+          // NOTE: Negative sign found, put it to the first position
 
           szResult[nPos] = ' ';
 
@@ -103,7 +103,7 @@ HB_FUNC(STRZERO)
         }
         else
         {
-          /* Negative sign not found */
+          // Negative sign not found
 
           nPos = 0;
           while (szResult[nPos] != '\0' && szResult[nPos] == ' ')
@@ -121,9 +121,9 @@ HB_FUNC(STRZERO)
     }
     else
 #ifdef HB_CLP_STRICT
-      /* NOTE: In CA-Cl*pper StrZero() is written in Clipper, and will call
-               Str() to do the job, the error (if any) will also be thrown
-               by Str().  [vszakats] */
+      // NOTE: In CA-Cl*pper StrZero() is written in Clipper, and will call
+      //       Str() to do the job, the error (if any) will also be thrown
+      //       by Str().  [vszakats]
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, "STR", HB_ERR_ARGS_BASEPARAMS);
 #else
       hb_errRT_BASE_SubstR(EG_ARG, 6003, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);

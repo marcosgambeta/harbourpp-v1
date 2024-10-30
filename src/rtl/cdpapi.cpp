@@ -63,7 +63,7 @@ std::mutex cdpMtx;
 
 #else
 
-/* MT macros */
+// MT macros
 #define HB_CDP_LOCK() hb_threadEnterCriticalSection(&s_cdpMtx)
 #define HB_CDP_UNLOCK() hb_threadLeaveCriticalSection(&s_cdpMtx)
 static HB_CRITICAL_NEW(s_cdpMtx);
@@ -119,7 +119,7 @@ static HB_UNITABLE hb_uniTbl_UTF8 = {HB_CPID_437, s_uniCodes, nullptr, 0};
 
 static HB_UCHAR s_en_buffer[0x300];
 
-/* pseudo codepage for translations only */
+// pseudo codepage for translations only
 static HB_CODEPAGE s_utf8_codepage = {"UTF8",
                                       "UTF-8",
                                       &hb_uniTbl_UTF8,
@@ -156,9 +156,7 @@ HB_CODEPAGE_ANNOUNCE(EN)
 
 static PHB_CODEPAGE s_cdpList = nullptr;
 
-/*
- * conversions
- */
+// conversions
 void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
 {
   HB_CDP_LOCK();
@@ -199,9 +197,7 @@ void hb_cdpBuildTransTable(PHB_UNITABLE uniTable)
   HB_CDP_UNLOCK();
 }
 
-/*
- * standard conversion functions
- */
+// standard conversion functions
 static HB_BOOL hb_cdpStd_get(PHB_CODEPAGE cdp, const char *pSrc, HB_SIZE nLen, HB_SIZE *pnIndex, HB_WCHAR *wc)
 {
   if (*pnIndex < nLen)
@@ -641,7 +637,7 @@ static int hb_cdpMulti_cmp(PHB_CODEPAGE cdp, const char *szFirst, HB_SIZE nLenFi
     {
       if (n1 == 0 || n2 == 0)
       {
-        /* One of characters doesn't belong to the national characters */
+        // One of characters doesn't belong to the national characters
         iRet = (u1 < u2) ? -1 : 1;
       }
       else
@@ -770,7 +766,7 @@ static int hb_cdpMulti_cmpi(PHB_CODEPAGE cdp, const char *szFirst, HB_SIZE nLenF
     {
       if (n1 == 0 || n2 == 0)
       {
-        /* One of characters doesn't belong to the national characters */
+        // One of characters doesn't belong to the national characters
         iRet = (u1 < u2) ? -1 : 1;
       }
       else
@@ -819,7 +815,7 @@ static int hb_cdpMulti_cmpi(PHB_CODEPAGE cdp, const char *szFirst, HB_SIZE nLenF
   return iRet;
 }
 
-/* Warning: this functions works only with byte oriented CPs */
+// Warning: this functions works only with byte oriented CPs
 HB_BOOL hb_cdpIsDigit(PHB_CODEPAGE cdp, int iChar)
 {
   return (cdp != nullptr) ? (cdp->flags[iChar & 0x0ff] & HB_CDP_DIGIT) != 0 : HB_ISDIGIT(iChar);
@@ -928,11 +924,9 @@ char *hb_strUpper(char *szText, HB_SIZE nLen)
   return szText;
 }
 
-/* end of byte only functions */
+// end of byte only functions
 
-/*
- * basic CP functions
- */
+// basic CP functions
 
 HB_BOOL hb_strIsDigit(const char *szChar)
 {
@@ -1058,9 +1052,7 @@ HB_BOOL hb_strIsUpper(const char *szChar)
   }
 }
 
-/*
- * comparison
- */
+// comparison
 
 const HB_UCHAR *hb_cdpGetSortTab(PHB_CODEPAGE cdp)
 {
@@ -1079,9 +1071,8 @@ int hb_cdpicmp(const char *szFirst, HB_SIZE nLenFirst, const char *szSecond, HB_
   return HB_CDPCHAR_CMPI(cdp, szFirst, nLenFirst, szSecond, nLenSecond, fExact);
 }
 
-/*
- * UTF-8 conversions
- */
+// UTF-8 conversions
+
 int hb_cdpUTF8CharSize(HB_WCHAR wc)
 {
   if (wc < 0x0080)
@@ -1093,7 +1084,7 @@ int hb_cdpUTF8CharSize(HB_WCHAR wc)
     return 2;
   }
   else
-  { /* if( wc <= 0xffff ) */
+  { // if( wc <= 0xffff )
     return 3;
   }
 }
@@ -1114,17 +1105,18 @@ int hb_cdpU16CharToUTF8(char *szUTF8, HB_WCHAR wc)
     n = 2;
   }
   else
-  { /* if( wc <= 0xffff ) */
+  { // if( wc <= 0xffff )
     szUTF8[0] = 0xe0 | ((wc >> 12) & 0x0f);
     szUTF8[1] = 0x80 | ((wc >> 6) & 0x3f);
     szUTF8[2] = 0x80 | (wc & 0x3f);
     n = 3;
   }
-  /*
-     else {
-        n = 0;
-     }
-   */
+#if 0
+  else
+  {
+    n = 0;
+  }
+#endif
   return n;
 }
 
@@ -1321,7 +1313,7 @@ HB_WCHAR hb_cdpUTF8StringPeek(const char *pSrc, HB_SIZE nLen, HB_SIZE nPos)
   return 0;
 }
 
-/* caller must free the returned buffer if not nullptr */
+// caller must free the returned buffer if not nullptr
 char *hb_cdpUTF8StringSubstr(const char *pSrc, HB_SIZE nLen, HB_SIZE nFrom, HB_SIZE nCount, HB_SIZE *pulDest)
 {
   HB_SIZE nDst = 0;
@@ -1736,9 +1728,7 @@ HB_SIZE hb_cdpUTF8ToStr(PHB_CODEPAGE cdp, const char *pSrc, HB_SIZE nSrc, char *
   return nPosD;
 }
 
-/*
- * U16 (hb wide char) conversions
- */
+// U16 (hb wide char) conversions
 HB_WCHAR hb_cdpGetU16(PHB_CODEPAGE cdp, HB_UCHAR ch)
 {
   if (cdp != nullptr)
@@ -2248,9 +2238,7 @@ HB_SIZE hb_cdpU16ToStr(PHB_CODEPAGE cdp, int iEndian, const HB_WCHAR *pSrc, HB_S
   return nPosD;
 }
 
-/*
- * CP translations
- */
+// CP translations
 HB_SIZE hb_cdpTransLen(const char *pSrc, HB_SIZE nSrc, HB_SIZE nMax, PHB_CODEPAGE cdpIn, PHB_CODEPAGE cdpOut)
 {
   if (cdpIn && cdpOut && cdpIn != cdpOut &&
@@ -2761,7 +2749,7 @@ HB_WCHAR hb_cdpUpperWC(PHB_CODEPAGE cdp, HB_WCHAR wc)
   }
 }
 
-/* functions operating on character indexes */
+// functions operating on character indexes
 HB_SIZE hb_cdpTextLen(PHB_CODEPAGE cdp, const char *pText, HB_SIZE nSize)
 {
   if (cdp && HB_CDP_ISCUSTOM(cdp))
@@ -2961,9 +2949,7 @@ HB_BOOL hb_cdpCharCaseEq(PHB_CODEPAGE cdp, const char *szText1, HB_SIZE nLen1, H
   return false;
 }
 
-/*
- * CP management
- */
+// CP management
 static HB_UCHAR hb_cdpUtf8Char(const char **pStrPtr, PHB_UNITABLE uniTable)
 {
   const char *pszString = *pStrPtr;
@@ -3724,7 +3710,7 @@ const char *hb_cdpSelectID(const char *id)
   return cdp ? cdp->id : nullptr;
 }
 
-/* Caller must release the pointer */
+// Caller must release the pointer
 const char **hb_cdpList(void)
 {
   PHB_CODEPAGE cdp = s_cdpList;

@@ -48,12 +48,12 @@
 #include "button.ch"
 #include "color.ch"
 
-/* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
-         it has all related variables and methods. */
+// NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
+//       it has all related variables and methods.
 
-/* NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
-         functions to generate screen output. Harbour uses Disp*()
-         functions only. [vszakats] */
+// NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
+//       functions to generate screen output. Harbour uses Disp*()
+//       functions only. [vszakats]
 
 #ifdef HB_COMPAT_C53
 
@@ -80,7 +80,7 @@ CREATE CLASS ScrollBar FUNCTION HBScrollBar
    METHOD update()
    METHOD hitTest(nMRow, nMCol)
 
-   METHOD Init(nStart, nEnd, nOffset, bSBlock, nOrient)  /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD Init(nStart, nEnd, nOffset, bSBlock, nOrient)  // NOTE: This method is a Harbour extension [vszakats]
 
    PROTECTED:
 
@@ -366,12 +366,12 @@ METHOD ScrollBar:CalcThumbPos()
 
    RETURN .T.
 
-/* New definitions for better coding. These are screen codepage dependent,
-   but can be changed with the setStyle method. */
-#define SB_UPARROW      Chr(24)  /* LOW-ASCII "↑" */
-#define SB_DNARROW      Chr(25)  /* LOW-ASCII "↓" */
-#define SB_RIGHTARROW   Chr(27)  /* LOW-ASCII "→" */
-#define SB_LEFTARROW    Chr(26)  /* LOW-ASCII "←" */
+// New definitions for better coding. These are screen codepage dependent,
+// but can be changed with the setStyle method.
+#define SB_UPARROW      Chr(24)  // LOW-ASCII "↑"
+#define SB_DNARROW      Chr(25)  // LOW-ASCII "↓"
+#define SB_RIGHTARROW   Chr(27)  // LOW-ASCII "→"
+#define SB_LEFTARROW    Chr(26)  // LOW-ASCII "←"
 
 #define SB_THUMB        hb_UTF8ToStr("░")
 #define SB_TRACK        hb_UTF8ToStr("▓")

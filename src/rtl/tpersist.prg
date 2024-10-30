@@ -86,13 +86,13 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
          cProp := NIL
 
          IF Empty(cLine) .OR. hb_LeftEq(cLine, "//")
-            /* ignore comments and empty lines */
+            // ignore comments and empty lines
          ELSEIF hb_LeftEq(cLine, "::")
 
             IF (nPos := At(":=", cLine)) > 0
                cProp := RTrim(SubStr(cLine, 3, nPos - 3))
                uValue := &(LTrim(SubStr(cLine, nPos + 2)))
-            ELSEIF (nPos := At("=", cLine)) > 0 /* fix for older versions */
+            ELSEIF (nPos := At("=", cLine)) > 0 // fix for older versions
                cProp := RTrim(SubStr(cLine, 3, nPos - 3))
                uValue := &(LTrim(SubStr(cLine, nPos + 1)))
             ENDIF
@@ -184,7 +184,7 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
 
          CASE "B"
          CASE "P"
-            /* ignore codeblock and pointer items */
+            // ignore codeblock and pointer items
             EXIT
 
          OTHERWISE
@@ -223,7 +223,7 @@ STATIC FUNCTION ArrayToText(aArray, cName, nIndent)
 
       CASE "B"
       CASE "P"
-         /* ignore codeblock and pointer items */
+         // ignore codeblock and pointer items
          EXIT
 
       OTHERWISE

@@ -174,13 +174,12 @@ HB_FUNC(HB_CDPLIST)
   hb_xfree(static_cast<void *>(list));
 }
 
-/* NOTE: CA-Cl*pper 5.2e Intl. will return: "NATSORT v1.2i x14 19/Mar/93" */
-/* NOTE: CA-Cl*pper 5.3  Intl. will return: "NATSORT v1.3i x19 06/Mar/95" */
+// NOTE: CA-Cl*pper 5.2e Intl. will return: "NATSORT v1.2i x14 19/Mar/93"
+// NOTE: CA-Cl*pper 5.3  Intl. will return: "NATSORT v1.3i x19 06/Mar/95"
 HB_FUNC_TRANSLATE(__NATSORTVER, HB_CDPINFO)
 
-/*
- * extended CP PRG functions
- */
+// extended CP PRG functions
+
 HB_FUNC(HB_TRANSLATE)
 {
   auto nLen = hb_parclen(1);
@@ -347,7 +346,7 @@ HB_FUNC(HB_UTF8AT)
   {
     auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parnsdef(3, 1);
-    HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
+    HB_SIZE nEnd = hb_parnsdef(4, nTextLength); // nTextLength can be > UTF8 len. No problem.
 
     if (nEnd < nStart)
     {
@@ -365,11 +364,9 @@ HB_FUNC(HB_UTF8AT)
   }
 }
 
-/*
- * NOTE: In HB_UTF8RAT we are still traversing from
- *       left to right, as it would be required anyway to
- *       determine the real string length. [bacco]
- */
+// NOTE: In HB_UTF8RAT we are still traversing from
+//       left to right, as it would be required anyway to
+//       determine the real string length. [bacco]
 
 HB_FUNC(HB_UTF8RAT)
 {
@@ -380,7 +377,7 @@ HB_FUNC(HB_UTF8RAT)
   {
     auto nTextLength = pText->getCLen();
     HB_SIZE nStart = hb_parnsdef(3, 1);
-    HB_SIZE nEnd = hb_parnsdef(4, nTextLength); /* nTextLength can be > UTF8 len. No problem.*/
+    HB_SIZE nEnd = hb_parnsdef(4, nTextLength); // nTextLength can be > UTF8 len. No problem.
 
     if (nEnd < nStart)
     {
@@ -666,8 +663,7 @@ HB_FUNC(HB_UTF8LEN)
   }
 }
 
-/* none of numeric parameters in StrTran() (4-th and 5-th) refers to
- * character position in string so we do not need to create new
- * hb_utf8StrTran() but we can safely use normal StrTran() function
- */
+// none of numeric parameters in StrTran() (4-th and 5-th) refers to
+// character position in string so we do not need to create new
+// hb_utf8StrTran() but we can safely use normal StrTran() function
 HB_FUNC_TRANSLATE(HB_UTF8STRTRAN, STRTRAN)

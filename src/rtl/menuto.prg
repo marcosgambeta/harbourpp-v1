@@ -4,7 +4,7 @@
 // Released to Public Domain by Phil Barnett <philb@iag.net>
 //
 
-/* NOTE: Recursive use is supported. */
+// NOTE: Recursive use is supported.
 
 #include "color.ch"
 #include "inkey.ch"
@@ -20,7 +20,7 @@
 THREAD STATIC t_aLevel   := {}
 THREAD STATIC t_nPointer := 1
 
-/* NOTE: <cColor> parameter is a Harbour extension. */
+// NOTE: <cColor> parameter is a Harbour extension.
 
 FUNCTION __AtPrompt(nRow, nCol, cPrompt, cMsg, cColor)
 
@@ -205,8 +205,8 @@ FUNCTION __MenuTo(bBlock, cVariable)
             IF (nMouseClik := HitTest(t_aLevel[nPointer - 1], MRow(), MCol())) > 0
                n := nMouseClik
             ENDIF
-            /* QUESTION: Clipper does this, but shouldn't we only
-                         exit when HitTest() was successful? */
+            // QUESTION: Clipper does this, but shouldn't we only
+            //           exit when HitTest() was successful?
             IF nKey == K_LDBLCLK
                lExit := .T.
             ENDIF

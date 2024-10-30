@@ -70,7 +70,7 @@ HB_FUNC(HB_DIRDELETE)
   }
 }
 
-/* NOTE: Clipper 5.3 functions */
+// NOTE: Clipper 5.3 functions
 
 #ifdef HB_COMPAT_C53
 
@@ -86,13 +86,13 @@ HB_FUNC(DIRCHANGE)
   }
 }
 
-/* NOTE: Clipper 5.3 NG incorrectly states that the name of this function is
-         DirMake(), in reality it's not. */
+// NOTE: Clipper 5.3 NG incorrectly states that the name of this function is
+//       DirMake(), in reality it's not.
 
 HB_FUNC_TRANSLATE(MAKEDIR, HB_DIRCREATE)
 HB_FUNC_TRANSLATE(DIRREMOVE, HB_DIRDELETE)
 
-/* NOTE: Clipper 5.3 undocumented */
+// NOTE: Clipper 5.3 undocumented
 
 #ifdef HB_CLP_UNDOC
 

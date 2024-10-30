@@ -12,13 +12,13 @@
 #include "setcurs.ch"
 #include "hbgtinfo.ch"
 
-/* FIXME: Clipper defines a clipped window for Alert() [vszakats] */
+// FIXME: Clipper defines a clipped window for Alert() [vszakats]
 
-/* NOTE: Clipper will return NIL if the first parameter is not a string, but
-         this is not documented. [vszakats] */
+// NOTE: Clipper will return NIL if the first parameter is not a string, but
+//       this is not documented. [vszakats]
 
-/* NOTE: Clipper handles these buttons {"Ok", "", "Cancel"} in a buggy way.
-         This is fixed. [vszakats] */
+// NOTE: Clipper handles these buttons {"Ok", "", "Cancel"} in a buggy way.
+//       This is fixed. [vszakats]
 
 #ifdef HB_CLP_UNDOC
 STATIC s_lNoAlert
@@ -68,15 +68,15 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
    CASE Len(aOptionsOK) == 0
       aOptionsOK := {"Ok"}
 #ifdef HB_CLP_STRICT
-   CASE Len(aOptionsOK) > 4  /* NOTE: Clipper allows only four options [vszakats] */
+   CASE Len(aOptionsOK) > 4  // NOTE: Clipper allows only four options [vszakats]
       ASize(aOptionsOK, 4)
 #endif
    ENDCASE
 
    RETURN hb_gtAlert(cMessage, aOptionsOK, cColorNorm, cColorHigh)
 
-/* NOTE: xMessage can be of any type. This is a Harbour extension over Alert(). */
-/* NOTE: nDelay parameter is a Harbour extension over Alert(). */
+// NOTE: xMessage can be of any type. This is a Harbour extension over Alert().
+// NOTE: nDelay parameter is a Harbour extension over Alert().
 
 FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
 
@@ -138,7 +138,7 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    CASE Len(aOptionsOK) == 0
       aOptionsOK := {"Ok"}
 #ifdef HB_CLP_STRICT
-   CASE Len(aOptionsOK) > 4  /* NOTE: Clipper allows only four options [vszakats] */
+   CASE Len(aOptionsOK) > 4  // NOTE: Clipper allows only four options [vszakats]
       ASize(aOptionsOK, 4)
 #endif
    ENDCASE

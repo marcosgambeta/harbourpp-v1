@@ -47,7 +47,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* returns n copies of a single space */
+// returns n copies of a single space
 
 HB_FUNC(SPACE)
 {
@@ -61,9 +61,9 @@ HB_FUNC(SPACE)
     {
       auto szResult = static_cast<char *>(hb_xgrab(nLen + 1));
 
-/* NOTE: String overflow could never occur since a string can
-         be as large as ULONG_MAX, and the maximum length that
-         can be specified is LONG_MAX here. [vszakats] */
+// NOTE: String overflow could never occur since a string can
+//       be as large as ULONG_MAX, and the maximum length that
+//       can be specified is LONG_MAX here. [vszakats]
 #if 0
          hb_errRT_BASE(EG_STROVERFLOW, 1233, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 #endif

@@ -46,7 +46,7 @@ extern "C"
     sha224_ctx ctx_inside;
     sha224_ctx ctx_outside;
 
-    /* for hmac_reinit */
+    // for hmac_reinit
     sha224_ctx ctx_inside_reinit;
     sha224_ctx ctx_outside_reinit;
 
@@ -59,7 +59,7 @@ extern "C"
     sha256_ctx ctx_inside;
     sha256_ctx ctx_outside;
 
-    /* for hmac_reinit */
+    // for hmac_reinit
     sha256_ctx ctx_inside_reinit;
     sha256_ctx ctx_outside_reinit;
 
@@ -72,7 +72,7 @@ extern "C"
     sha384_ctx ctx_inside;
     sha384_ctx ctx_outside;
 
-    /* for hmac_reinit */
+    // for hmac_reinit
     sha384_ctx ctx_inside_reinit;
     sha384_ctx ctx_outside_reinit;
 
@@ -85,7 +85,7 @@ extern "C"
     sha512_ctx ctx_inside;
     sha512_ctx ctx_outside;
 
-    /* for hmac_reinit */
+    // for hmac_reinit
     sha512_ctx ctx_inside_reinit;
     sha512_ctx ctx_outside_reinit;
 
@@ -125,4 +125,4 @@ extern "C"
 }
 #endif
 
-#endif /* ! _HMAC_SHA2_H */
+#endif // ! _HMAC_SHA2_H

@@ -47,7 +47,7 @@
 #include "hbapi.hpp"
 #include "hbapicdp.hpp"
 
-/* replaces characters in a string */
+// replaces characters in a string
 HB_FUNC(STUFF)
 {
   auto szText = hb_parc(1);

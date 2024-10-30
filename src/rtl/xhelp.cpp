@@ -58,21 +58,20 @@ HB_FUNC(__XHELP)
 
   if (hb_dynsymIsFunction(s_pDynSym))
   {
-    /* NOTE: push the existing params after the dynamic symbol. [awhite] */
+    // NOTE: push the existing params after the dynamic symbol. [awhite]
 
     auto iPCount = hb_pcount();
 
     hb_vmPushDynSym(s_pDynSym);
     hb_vmPushNil();
-    /* CA-Cl*pper respects references so hb_stackItemFromBase() is
-     * used instead of hb_param() [druzus]
-     */
+    // CA-Cl*pper respects references so hb_stackItemFromBase() is
+    // used instead of hb_param() [druzus]
     for (auto iParam = 1; iParam <= iPCount; iParam++)
     {
       hb_vmPush(hb_stackItemFromBase(iParam));
     }
 
     hb_vmProc(static_cast<HB_USHORT>(iPCount));
-    /* NOTE: Leave the return value as it is. */
+    // NOTE: Leave the return value as it is.
   }
 }

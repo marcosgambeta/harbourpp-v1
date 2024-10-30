@@ -43,8 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: CA-Cl*pper 5.x uses DevPos(), DevOut() to display messages
-         on screen. Harbour uses Disp*() functions only. [vszakats] */
+// NOTE: CA-Cl*pper 5.x uses DevPos(), DevOut() to display messages
+//       on screen. Harbour uses Disp*() functions only. [vszakats]
 
 #include "hbclass.ch"
 
@@ -129,8 +129,8 @@ METHOD HBLabelForm:Init(cLBLName, lPrinter, cAltFile, lNoConsole, bFor, bWhile, 
       err:subSystem := "FRMLBL"
       Eval(ErrorBlock(), err)
    ELSE
-      /* NOTE: CA-Cl*pper does an RTrim() on the filename here,
-               but in Harbour we're using _SET_TRIMFILENAME. [vszakats] */
+      // NOTE: CA-Cl*pper does an RTrim() on the filename here,
+      //       but in Harbour we're using _SET_TRIMFILENAME. [vszakats]
       IF Set(_SET_DEFEXTENSIONS)
          cLBLName := hb_FNameExtSetDef(cLBLName, ".lbl")
       ENDIF
@@ -390,7 +390,7 @@ METHOD HBLabelForm:LoadLabel(cLblFile)
          NEXT
       ENDIF
 
-      FClose(nHandle)  // Close file
+      FClose(nHandle) // Close file
    ENDIF
 
    RETURN aLabel

@@ -47,8 +47,8 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* returns the maximum of two date or numerics */
-/* NOTE: CA-Cl*pper returns 1st item when they are equal [druzus] */
+// returns the maximum of two date or numerics
+// NOTE: CA-Cl*pper returns 1st item when they are equal [druzus]
 HB_FUNC(MAX)
 {
   auto p1 = hb_param(1, Harbour::Item::ANY);
@@ -118,8 +118,8 @@ HB_FUNC(MAX)
   hb_errRT_BASE_SubstR(EG_ARG, 1093, nullptr, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS);
 }
 
-/* returns the minimum of two date or numerics */
-/* NOTE: CA-Cl*pper returns 1st item when they are equal [druzus] */
+// returns the minimum of two date or numerics
+// NOTE: CA-Cl*pper returns 1st item when they are equal [druzus]
 HB_FUNC(MIN)
 {
   auto p1 = hb_param(1, Harbour::Item::ANY);

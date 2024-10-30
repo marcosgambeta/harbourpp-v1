@@ -56,10 +56,10 @@ PROCEDURE __Dir(cFileMask)
 
    IF Empty(cFileMask)
 
-      /* NOTE: Although Cl*pper has this string in the national language
-               module, it will not use it from there.
-               This is hard-wired to English. So this is a small
-               incompatibility. */
+      // NOTE: Although Cl*pper has this string in the national language
+      //       module, it will not use it from there.
+      //       This is hard-wired to English. So this is a small
+      //       incompatibility.
 
 #ifdef HB_CLP_STRICT
       QOut("Database Files    # Records    Last Update     Size")
@@ -119,8 +119,8 @@ STATIC PROCEDURE PutNormal(aDirEntry)
 
    hb_FNameSplit(aDirEntry[F_NAME], NIL, @cName, @cExt)
 
-   /* Strict MS-DOS like formatting, it does not play well with long
-      filenames which do not stick to 8.3 MS-DOS convention */
+   // Strict MS-DOS like formatting, it does not play well with long
+   // filenames which do not stick to 8.3 MS-DOS convention
 
    QOut(PadR(cName, 8), PadR(SubStr(cExt, 2), 3), Str(aDirEntry[F_SIZE], 8), "", aDirEntry[F_DATE])
 

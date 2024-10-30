@@ -59,8 +59,7 @@ static const HB_BLOWFISH *hb_bf_keyparam(void)
   }
 }
 
-/* hb_blowfishKey(<cPasswd>) --> <cBfKey>
- */
+// hb_blowfishKey(<cPasswd>) --> <cBfKey>
 HB_FUNC(HB_BLOWFISHKEY)
 {
   auto iLen = static_cast<int>(hb_parclen(1));
@@ -73,12 +72,11 @@ HB_FUNC(HB_BLOWFISHKEY)
   }
 }
 
-/* hb_blowfishEncrypt(<cBfKey>, <cText> [, <lRaw>=.F. ]) --> <cCipher> | NIL
- * return string encrypted using ECB (electronic codebook) mode or
- * NIL on error (wrong parameters),
- * in raw mode passed string is padded to 8 bytes with '\0'
- * otherwise ANSI X.923 padding is used
- */
+// hb_blowfishEncrypt(<cBfKey>, <cText> [, <lRaw>=.F. ]) --> <cCipher> | NIL
+// return string encrypted using ECB (electronic codebook) mode or
+// NIL on error (wrong parameters),
+// in raw mode passed string is padded to 8 bytes with '\0'
+// otherwise ANSI X.923 padding is used
 HB_FUNC(HB_BLOWFISHENCRYPT)
 {
   const HB_BLOWFISH *bf = hb_bf_keyparam();
@@ -93,9 +91,9 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
       bool fRaw = hb_parl(3);
       HB_SIZE nSize;
 
-      /* In raw mode passed string is padded to 8 bytes with '\0'
-       * otherwise ANSI X.923 padding is used
-       */
+      // In raw mode passed string is padded to 8 bytes with '\0'
+      // otherwise ANSI X.923 padding is used
+
       nSize = (fRaw ? ((nLen + 7) >> 3) : ((nLen >> 3) + 1)) << 3;
       auto pszData = static_cast<char *>(hb_xgrab(nSize + 1));
       memcpy(pszData, pData->getCPtr(), nLen);
@@ -122,12 +120,11 @@ HB_FUNC(HB_BLOWFISHENCRYPT)
   }
 }
 
-/* hb_blowfishDecrypt(<cBfKey>, <cCipher> [, <lRaw>=.F. ]) --> <cText> | NIL
- * return string decrypted using ECB (electronic codebook) mode or
- * NIL on error (wrong parameters),
- * in raw mode whole passed string is decoded as is
- * otherwise it's decoded ANSI X.923 padded data
- */
+// hb_blowfishDecrypt(<cBfKey>, <cCipher> [, <lRaw>=.F. ]) --> <cText> | NIL
+// return string decrypted using ECB (electronic codebook) mode or
+// NIL on error (wrong parameters),
+// in raw mode whole passed string is decoded as is
+// otherwise it's decoded ANSI X.923 padded data
 HB_FUNC(HB_BLOWFISHDECRYPT)
 {
   const HB_BLOWFISH *bf = hb_bf_keyparam();
@@ -174,9 +171,9 @@ HB_FUNC(HB_BLOWFISHDECRYPT)
   }
 }
 
-/* BlowFish encryption using CFB (cipher feedback) mode instead
- * of ECB (electronic codebook) mode with ANSI X.923 padding
- */
+// BlowFish encryption using CFB (cipher feedback) mode instead
+// of ECB (electronic codebook) mode with ANSI X.923 padding
+
 static void hb_bf_initvect(HB_BYTE *vect)
 {
   auto pszVect = hb_parc(3);
@@ -203,11 +200,10 @@ static void hb_bf_encode(const HB_BLOWFISH *bf, HB_BYTE *vect)
   HB_PUT_BE_UINT32(&vect[4], xr);
 }
 
-/* hb_blowfishEncrypt_CFB(<cBfKey>, <cText> [, <cInitSeed> ])
- *          --> <cCipher> | NIL
- * return string encrypted using CFB (cipher feedback) mode or
- * NIL on error (wrong parameters)
- */
+// hb_blowfishEncrypt_CFB(<cBfKey>, <cText> [, <cInitSeed> ])
+//          --> <cCipher> | NIL
+// return string encrypted using CFB (cipher feedback) mode or
+// NIL on error (wrong parameters)
 HB_FUNC(HB_BLOWFISHENCRYPT_CFB)
 {
   const HB_BLOWFISH *bf = hb_bf_keyparam();
@@ -243,11 +239,10 @@ HB_FUNC(HB_BLOWFISHENCRYPT_CFB)
   }
 }
 
-/* hb_blowfishDecrypt_CFB(<cBfKey>, <cCipher> [, <cInitSeed> ])
- *          --> <cText> | NIL
- * return string decrypted using CFB (cipher feedback) mode or
- * NIL on error (wrong parameters),
- */
+// hb_blowfishDecrypt_CFB(<cBfKey>, <cCipher> [, <cInitSeed> ])
+//          --> <cText> | NIL
+// return string decrypted using CFB (cipher feedback) mode or
+// NIL on error (wrong parameters),
 HB_FUNC(HB_BLOWFISHDECRYPT_CFB)
 {
   const HB_BLOWFISH *bf = hb_bf_keyparam();

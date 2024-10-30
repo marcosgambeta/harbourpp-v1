@@ -48,7 +48,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #include "hbgtcore.hpp"
 
@@ -60,392 +60,392 @@ int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, PHB_CODEPAGE cdp)
 
   iFlags &= (HB_KF_SHIFT | HB_KF_CTRL | HB_KF_ALT);
 
-  /* Perform key translations */
+  // Perform key translations
   switch (iKey)
   {
   case 0:
-  case -1: /* No key available */
+  case -1: // No key available
     return 0;
 
-  case 8: /* BackSpace or CTRL + H */
+  case 8: // BackSpace or CTRL + H
     iKey = iFlags & HB_KF_CTRL ? 'H' : HB_KX_BS;
     break;
 
-  case 9: /* Tab or CTRL + I */
+  case 9: // Tab or CTRL + I
     iKey = iFlags & HB_KF_CTRL ? 'I' : HB_KX_TAB;
     break;
 
-  case 10: /* CTRL + ENTER or CTRL + J - we cannot guess :( */
+  case 10: // CTRL + ENTER or CTRL + J - we cannot guess :(
     iKey = HB_KX_ENTER;
     iFlags |= HB_KF_CTRL;
     break;
 
-  case 13: /* ENTER or CTRL + M */
+  case 13: // ENTER or CTRL + M
     iKey = iFlags & HB_KF_CTRL ? 'M' : HB_KX_ENTER;
     break;
 
-  case 127: /* CTRL + BackSpace */
+  case 127: // CTRL + BackSpace
     iKey = HB_KX_BS;
     iFlags |= HB_KF_CTRL;
     break;
 
-  case 259: /* CTRL + "@" */
+  case 259: // CTRL + "@"
     iKey = '@';
     iFlags |= HB_KF_CTRL;
     break;
 
-  case 270: /* ALT + BackSpace */
+  case 270: // ALT + BackSpace
     iKey = HB_KX_BS;
     iFlags |= HB_KF_ALT;
     break;
 
-  case 271: /* SHIFT + TAB */
+  case 271: // SHIFT + TAB
     iKey = HB_KX_TAB;
     iFlags |= HB_KF_SHIFT;
     break;
 
-  case 404: /* CTRL + TAB */
+  case 404: // CTRL + TAB
     iKey = HB_KX_TAB;
     iFlags |= HB_KF_CTRL;
     break;
 
-  case 272: /* Alt + Q */
+  case 272: // Alt + Q
     iKey = 'Q';
     iFlags |= HB_KF_ALT;
     break;
-  case 273: /* Alt + W */
+  case 273: // Alt + W
     iKey = 'W';
     iFlags |= HB_KF_ALT;
     break;
-  case 274: /* Alt + E */
+  case 274: // Alt + E
     iKey = 'E';
     iFlags |= HB_KF_ALT;
     break;
-  case 275: /* Alt + R */
+  case 275: // Alt + R
     iKey = 'R';
     iFlags |= HB_KF_ALT;
     break;
-  case 276: /* Alt + T */
+  case 276: // Alt + T
     iKey = 'T';
     iFlags |= HB_KF_ALT;
     break;
-  case 277: /* Alt + Y */
+  case 277: // Alt + Y
     iKey = 'Y';
     iFlags |= HB_KF_ALT;
     break;
-  case 278: /* Alt + U */
+  case 278: // Alt + U
     iKey = 'U';
     iFlags |= HB_KF_ALT;
     break;
-  case 279: /* Alt + I */
+  case 279: // Alt + I
     iKey = 'I';
     iFlags |= HB_KF_ALT;
     break;
-  case 280: /* Alt + O */
+  case 280: // Alt + O
     iKey = 'O';
     iFlags |= HB_KF_ALT;
     break;
-  case 281: /* Alt + P */
+  case 281: // Alt + P
     iKey = 'P';
     iFlags |= HB_KF_ALT;
     break;
-  case 282: /* Alt + [ */
+  case 282: // Alt + [
     iKey = '[';
     iFlags |= HB_KF_ALT;
     break;
-  case 283: /* Alt + ] */
+  case 283: // Alt + ]
     iKey = ']';
     iFlags |= HB_KF_ALT;
     break;
-  case 284: /* ALT + ENTER */
+  case 284: // ALT + ENTER
     iKey = HB_KX_ENTER;
     iFlags |= HB_KF_ALT;
     break;
 
-  case 286: /* Alt + A */
+  case 286: // Alt + A
     iKey = 'A';
     iFlags |= HB_KF_ALT;
     break;
-  case 287: /* Alt + S */
+  case 287: // Alt + S
     iKey = 'S';
     iFlags |= HB_KF_ALT;
     break;
-  case 288: /* Alt + D */
+  case 288: // Alt + D
     iKey = 'D';
     iFlags |= HB_KF_ALT;
     break;
-  case 289: /* Alt + F */
+  case 289: // Alt + F
     iKey = 'F';
     iFlags |= HB_KF_ALT;
     break;
-  case 290: /* Alt + G */
+  case 290: // Alt + G
     iKey = 'G';
     iFlags |= HB_KF_ALT;
     break;
-  case 291: /* Alt + H */
+  case 291: // Alt + H
     iKey = 'H';
     iFlags |= HB_KF_ALT;
     break;
-  case 292: /* Alt + J */
+  case 292: // Alt + J
     iKey = 'J';
     iFlags |= HB_KF_ALT;
     break;
-  case 293: /* Alt + K */
+  case 293: // Alt + K
     iKey = 'K';
     iFlags |= HB_KF_ALT;
     break;
-  case 294: /* Alt + L */
+  case 294: // Alt + L
     iKey = 'L';
     iFlags |= HB_KF_ALT;
     break;
-  case 295: /* Alt + ; */
+  case 295: // Alt + ;
     iKey = ';';
     iFlags |= HB_KF_ALT;
     break;
-  case 296: /* Alt + ' */
+  case 296: // Alt + '
     iKey = '\'';
     iFlags |= HB_KF_ALT;
     break;
-  case 297: /* Alt + ` */
+  case 297: // Alt + `
     iKey = '`';
     iFlags |= HB_KF_ALT;
     break;
-  case 299: /* Alt + \ */
+  case 299: // Alt + \
     iKey = '\\';
     iFlags |= HB_KF_ALT;
     break;
 
-  case 300: /* Alt + Z */
+  case 300: // Alt + Z
     iKey = 'Z';
     iFlags |= HB_KF_ALT;
     break;
-  case 301: /* Alt + X */
+  case 301: // Alt + X
     iKey = 'X';
     iFlags |= HB_KF_ALT;
     break;
-  case 302: /* Alt + C */
+  case 302: // Alt + C
     iKey = 'C';
     iFlags |= HB_KF_ALT;
     break;
-  case 303: /* Alt + V */
+  case 303: // Alt + V
     iKey = 'V';
     iFlags |= HB_KF_ALT;
     break;
-  case 304: /* Alt + B */
+  case 304: // Alt + B
     iKey = 'B';
     iFlags |= HB_KF_ALT;
     break;
-  case 305: /* Alt + N */
+  case 305: // Alt + N
     iKey = 'N';
     iFlags |= HB_KF_ALT;
     break;
-  case 306: /* Alt + M */
+  case 306: // Alt + M
     iKey = 'M';
     iFlags |= HB_KF_ALT;
     break;
-  case 307: /* Alt + , */
+  case 307: // Alt + ,
     iKey = ',';
     iFlags |= HB_KF_ALT;
     break;
-  case 308: /* Alt + . */
+  case 308: // Alt + .
     iKey = '.';
     iFlags |= HB_KF_ALT;
     break;
-  case 309: /* Alt + / */
+  case 309: // Alt + /
     iKey = '/';
     iFlags |= HB_KF_ALT;
     break;
 
-  case 376: /* Alt + 1 */
-  case 377: /* Alt + 2 */
-  case 378: /* Alt + 3 */
-  case 379: /* Alt + 4 */
-  case 380: /* Alt + 5 */
-  case 381: /* Alt + 6 */
-  case 382: /* Alt + 7 */
-  case 383: /* Alt + 8 */
-  case 384: /* Alt + 9 */
+  case 376: // Alt + 1
+  case 377: // Alt + 2
+  case 378: // Alt + 3
+  case 379: // Alt + 4
+  case 380: // Alt + 5
+  case 381: // Alt + 6
+  case 382: // Alt + 7
+  case 383: // Alt + 8
+  case 384: // Alt + 9
     iKey = iKey - (376 - '1');
     iFlags |= HB_KF_ALT;
     break;
-  case 385: /* Alt + 0 */
+  case 385: // Alt + 0
     iKey = '0';
     iFlags |= HB_KF_ALT;
     break;
-  case 386: /* Alt + - */
+  case 386: // Alt + -
     iKey = '-';
     iFlags |= HB_KF_ALT;
     break;
-  case 387: /* Alt + = */
+  case 387: // Alt + =
     iKey = '=';
     iFlags |= HB_KF_ALT;
     break;
 
-  case 421: /* ALT + TAB */
+  case 421: // ALT + TAB
     iKey = HB_KX_TAB;
     iFlags |= HB_KF_ALT;
     break;
 
-  case 327: /* Home */
+  case 327: // Home
     iKey = HB_KX_HOME;
     iFlags |= iKeyPad;
     break;
-  case 328: /* Up arrow */
+  case 328: // Up arrow
     iKey = HB_KX_UP;
     iFlags |= iKeyPad;
     break;
-  case 329: /* Page Up */
+  case 329: // Page Up
     iKey = HB_KX_PGUP;
     iFlags |= iKeyPad;
     break;
-  case 331: /* Left arrow */
+  case 331: // Left arrow
     iKey = HB_KX_LEFT;
     iFlags |= iKeyPad;
     break;
-  case 333: /* Right arrow */
+  case 333: // Right arrow
     iKey = HB_KX_RIGHT;
     iFlags |= iKeyPad;
     break;
-  case 335: /* End */
+  case 335: // End
     iKey = HB_KX_END;
     iFlags |= iKeyPad;
     break;
-  case 336: /* Down arrow */
+  case 336: // Down arrow
     iKey = HB_KX_DOWN;
     iFlags |= iKeyPad;
     break;
-  case 337: /* Page Down */
+  case 337: // Page Down
     iKey = HB_KX_PGDN;
     iFlags |= iKeyPad;
     break;
-  case 338: /* Insert */
+  case 338: // Insert
     iKey = HB_KX_INS;
     iFlags |= iKeyPad;
     break;
-  case 339: /* Delete */
+  case 339: // Delete
     iKey = HB_KX_DEL;
     iFlags |= iKeyPad;
     break;
 
-  case 370: /* Ctrl + Print */
+  case 370: // Ctrl + Print
     iKey = HB_KX_PRTSCR;
     iFlags |= HB_KF_CTRL;
     break;
 
-  case 371: /* Ctrl + Left arrow */
+  case 371: // Ctrl + Left arrow
     iKey = HB_KX_LEFT;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
-  case 372: /* Ctrl + Right arrow */
+  case 372: // Ctrl + Right arrow
     iKey = HB_KX_RIGHT;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
-  case 373: /* Ctrl + End */
+  case 373: // Ctrl + End
     iKey = HB_KX_END;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
-  case 374: /* Ctrl + Page Down */
+  case 374: // Ctrl + Page Down
     iKey = HB_KX_PGDN;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
-  case 375: /* Ctrl + Home */
+  case 375: // Ctrl + Home
     iKey = HB_KX_HOME;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
-  case 388: /* Ctrl + Page Up */
+  case 388: // Ctrl + Page Up
     iKey = HB_KX_PGUP;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
-  case 397: /* Ctrl + Up arrow */
+  case 397: // Ctrl + Up arrow
     iKey = HB_KX_UP;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
-  case 401: /* Ctrl + Down arrow */
+  case 401: // Ctrl + Down arrow
     iKey = HB_KX_DOWN;
     iFlags |= HB_KF_CTRL | iKeyPad;
     break;
 
-  case 315: /* F1 */
-  case 316: /* F2 */
-  case 317: /* F3 */
-  case 318: /* F4 */
-  case 319: /* F5 */
-  case 320: /* F6 */
-  case 321: /* F7 */
-  case 322: /* F8 */
-  case 323: /* F9 */
-  case 324: /* F10 */
+  case 315: // F1
+  case 316: // F2
+  case 317: // F3
+  case 318: // F4
+  case 319: // F5
+  case 320: // F6
+  case 321: // F7
+  case 322: // F8
+  case 323: // F9
+  case 324: // F10
     iKey = iKey - (315 - HB_KX_F1);
     break;
-  case 389: /* F11 */
+  case 389: // F11
     iKey = HB_KX_F11;
     break;
-  case 390: /* F12 */
+  case 390: // F12
     iKey = HB_KX_F12;
     break;
 
-  case 340: /* Shift + F1 */
-  case 341: /* Shift + F2 */
-  case 342: /* Shift + F3 */
-  case 343: /* Shift + F4 */
-  case 344: /* Shift + F5 */
-  case 345: /* Shift + F6 */
-  case 346: /* Shift + F7 */
-  case 347: /* Shift + F8 */
-  case 348: /* Shift + F9 */
-  case 349: /* Shift + F10 */
+  case 340: // Shift + F1
+  case 341: // Shift + F2
+  case 342: // Shift + F3
+  case 343: // Shift + F4
+  case 344: // Shift + F5
+  case 345: // Shift + F6
+  case 346: // Shift + F7
+  case 347: // Shift + F8
+  case 348: // Shift + F9
+  case 349: // Shift + F10
     iKey = iKey - (340 - HB_KX_F1);
     iFlags |= HB_KF_SHIFT;
     break;
-  case 391: /* Shift + F11 */
+  case 391: // Shift + F11
     iKey = HB_KX_F11;
     iFlags |= HB_KF_SHIFT;
     break;
-  case 392: /* Shift + F12 */
+  case 392: // Shift + F12
     iKey = HB_KX_F12;
     iFlags |= HB_KF_SHIFT;
     break;
 
-  case 350: /* Ctrl + F1 */
-  case 351: /* Ctrl + F2 */
-  case 352: /* Ctrl + F3 */
-  case 353: /* Ctrl + F4 */
-  case 354: /* Ctrl + F5 */
-  case 355: /* Ctrl + F6 */
-  case 356: /* Ctrl + F7 */
-  case 357: /* Ctrl + F8 */
-  case 358: /* Ctrl + F9 */
-  case 359: /* Ctrl + F10 */
+  case 350: // Ctrl + F1
+  case 351: // Ctrl + F2
+  case 352: // Ctrl + F3
+  case 353: // Ctrl + F4
+  case 354: // Ctrl + F5
+  case 355: // Ctrl + F6
+  case 356: // Ctrl + F7
+  case 357: // Ctrl + F8
+  case 358: // Ctrl + F9
+  case 359: // Ctrl + F10
     iKey = iKey - (350 - HB_KX_F1);
     iFlags |= HB_KF_CTRL;
     break;
-  case 393: /* Ctrl + F11 */
+  case 393: // Ctrl + F11
     iKey = HB_KX_F11;
     iFlags |= HB_KF_CTRL;
     break;
-  case 394: /* Ctrl + F12 */
+  case 394: // Ctrl + F12
     iKey = HB_KX_F12;
     iFlags |= HB_KF_CTRL;
     break;
 
-  case 360: /* Alt + F1 */
-  case 361: /* Alt + F2 */
-  case 362: /* Alt + F3 */
-  case 363: /* Alt + F4 */
-  case 364: /* Alt + F5 */
-  case 365: /* Alt + F6 */
-  case 366: /* Alt + F7 */
-  case 367: /* Alt + F8 */
-  case 368: /* Alt + F9 */
-  case 369: /* Alt + F10 */
+  case 360: // Alt + F1
+  case 361: // Alt + F2
+  case 362: // Alt + F3
+  case 363: // Alt + F4
+  case 364: // Alt + F5
+  case 365: // Alt + F6
+  case 366: // Alt + F7
+  case 367: // Alt + F8
+  case 368: // Alt + F9
+  case 369: // Alt + F10
     iKey = iKey - (360 - HB_KX_F1);
     iFlags |= HB_KF_ALT;
     break;
-  case 395: /* Alt + F11 */
+  case 395: // Alt + F11
     iKey = HB_KX_F11;
     iFlags |= HB_KF_ALT;
     break;
-  case 396: /* Alt + F12 */
+  case 396: // Alt + F12
     iKey = HB_KX_F12;
     iFlags |= HB_KF_ALT;
     break;
@@ -646,4 +646,4 @@ int hb_gt_dos_keyCodeTranslate(int iKey, int iFlags, PHB_CODEPAGE cdp)
   return HB_INKEY_NEW_KEY(iKey, iFlags);
 }
 
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN

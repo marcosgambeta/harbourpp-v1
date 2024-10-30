@@ -51,7 +51,7 @@ FUNCTION __Wait(xPrompt)
    LOCAL cKey
    LOCAL bBlock
 
-   /* TODO: Here we can use Lang API to localize default message */
+   // TODO: Here we can use Lang API to localize default message
    QOut(iif(xPrompt == NIL, "Press any key to continue...", xPrompt))
 
    DO WHILE .T.

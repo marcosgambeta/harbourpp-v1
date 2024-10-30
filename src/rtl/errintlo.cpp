@@ -50,8 +50,8 @@
 #include "hbset.hpp"
 #include "hbstack.hpp"
 
-/* NOTE: Use as minimal calls from here, as possible.
-         Don't allocate memory from this function. [vszakats] */
+// NOTE: Use as minimal calls from here, as possible.
+//       Don't allocate memory from this function. [vszakats]
 
 void hb_errInternalRaw(HB_ERRCODE errCode, const char *szText, const char *szPar1, const char *szPar2)
 {

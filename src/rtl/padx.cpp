@@ -153,7 +153,7 @@ static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
               hb_xmemset(szResult + nSize, szPad[0], static_cast<HB_SIZE>(nLen) - nSize);
             }
             break;
-          default: /* HB_PAD_C */
+          default: // HB_PAD_C
             if (nPad > 1)
             {
               HB_SIZE nRep = (static_cast<HB_SIZE>(nLen) - nSize) >> 1, nPos = 0;
@@ -212,7 +212,7 @@ static void s_hb_strPad(int iMode, PHB_CODEPAGE cdp)
   }
 }
 
-/* left-pads a date, number, or string with spaces or supplied character */
+// left-pads a date, number, or string with spaces or supplied character
 HB_FUNC(PADL)
 {
   auto cdp = hb_vmCDP();
@@ -242,7 +242,7 @@ HB_FUNC(HB_UPADL)
   s_hb_strPad(HB_PAD_L, cdp);
 }
 
-/* right-pads a date, number, or string with spaces or supplied character */
+// right-pads a date, number, or string with spaces or supplied character
 HB_FUNC(PADR)
 {
   auto cdp = hb_vmCDP();
@@ -272,7 +272,7 @@ HB_FUNC(HB_UPADR)
   s_hb_strPad(HB_PAD_R, cdp);
 }
 
-/* centre-pads a date, number, or string with spaces or supplied character */
+// centre-pads a date, number, or string with spaces or supplied character
 HB_FUNC(PADC)
 {
   auto cdp = hb_vmCDP();

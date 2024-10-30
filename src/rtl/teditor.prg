@@ -54,7 +54,7 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-/* FIXME: Leave this here, until this code is cleaned off of RTEs */
+// FIXME: Leave this here, until this code is cleaned off of RTEs
 #pragma linenumber=on
 
 #define _REFRESH_NONE   0
@@ -398,7 +398,7 @@ METHOD HBEditor:MoveCursor(nKey)
       EXIT
 
    CASE K_CTRL_RIGHT
-      /* Resolve K_CTRL_B and K_CTRL_RIGHT Cl*pper keycode collision */
+      // Resolve K_CTRL_B and K_CTRL_RIGHT Cl*pper keycode collision
       IF nKey != K_CTRL_RIGHT .AND. hb_keyVal(nKey) != HB_KX_RIGHT
          RETURN .F.
       ENDIF
@@ -427,7 +427,7 @@ METHOD HBEditor:MoveCursor(nKey)
       EXIT
 
    CASE K_CTRL_END
-      /* Resolve K_CTRL_W and K_CTRL_END Cl*pper keycode collision */
+      // Resolve K_CTRL_W and K_CTRL_END Cl*pper keycode collision
       IF nKey != K_CTRL_END .AND. hb_keyVal(nKey) != HB_KX_END
          RETURN .F.
       ENDIF
@@ -561,24 +561,24 @@ METHOD HBEditor:Edit(nPassedKey)
          // if it's a movement key ::MoveCursor() handles it
 
       CASE nKeyStd == K_CTRL_B .OR. nKeyStd == K_ALT_B
-         /* FIXME: K_ALT_B is not Cl*pper compatible, added as workaround
-                   for missing in some GTs extended keycodes which are
-                   necessary to resolve K_CTRL_B and K_CTRL_RIGHT keycode
-                   conflict */
+         // FIXME: K_ALT_B is not Cl*pper compatible, added as workaround
+         //        for missing in some GTs extended keycodes which are
+         //        necessary to resolve K_CTRL_B and K_CTRL_RIGHT keycode
+         //        conflict
          ::ReformParagraph()
 
       CASE nKeyStd == K_CTRL_W .OR. nKeyStd == K_ALT_W
-         /* FIXME: K_ALT_W is not Cl*pper compatible, added as workaround
-                   for missing in some GTs extended keycodes which are
-                   necessary to resolve K_CTRL_W and K_CTRL_END keycode
-                   conflict */
+         // FIXME: K_ALT_W is not Cl*pper compatible, added as workaround
+         //        for missing in some GTs extended keycodes which are
+         //        necessary to resolve K_CTRL_W and K_CTRL_END keycode
+         //        conflict
          ::lSaved := .T.
          ::lExitEdit := .T.
 
       OTHERWISE
-         /* NOTE: if you call ::Edit() with a key that is passed to
-                  ::KeyboardHook() and then ::KeyboardHook() calls ::Edit()
-                  with the same key you end up with an endless loop */
+         // NOTE: if you call ::Edit() with a key that is passed to
+         //       ::KeyboardHook() and then ::KeyboardHook() calls ::Edit()
+         //       with the same key you end up with an endless loop
          ::KeyboardHook(nKeyStd)
       ENDCASE
 

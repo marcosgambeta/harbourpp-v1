@@ -54,7 +54,7 @@ HB_FUNC(__DEFPATH)
 
   if (szDefault != nullptr)
   {
-    /* Leave enough space to append a path delimiter */
+    // Leave enough space to append a path delimiter
     hb_strncpy(buffer, szDefault, sizeof(buffer) - 1);
     size = static_cast<int>(strlen(buffer));
   }
@@ -63,12 +63,12 @@ HB_FUNC(__DEFPATH)
   HB_TRACE(HB_TR_INFO, ("HB_DEFPATH: HB_OS_PATH_DELIM_CHR is |%c| and HB_OS_PATH_LIST_SEP_CHR is |%c|",
                         HB_OS_PATH_DELIM_CHR, HB_OS_PATH_LIST_SEP_CHR));
 
-  /* If the path is not empty and it doesn't end with a drive or path
-     delimiter, then add the appropriate separator. Use ':' if the size
-     of the path is 1 and the list separator is not ':', otherwise use
-     the path delimiter. This allows the use of a drive letter delimiter
-     for DOS compatible operating systems while preventing it from being
-     with a Unix compatible OS. */
+  // If the path is not empty and it doesn't end with a drive or path
+  // delimiter, then add the appropriate separator. Use ':' if the size
+  // of the path is 1 and the list separator is not ':', otherwise use
+  // the path delimiter. This allows the use of a drive letter delimiter
+  // for DOS compatible operating systems while preventing it from being
+  // with a Unix compatible OS.
 #ifdef HB_OS_HAS_DRIVE_LETTER
   if (size && buffer[size - 1] != HB_OS_PATH_DELIM_CHR && buffer[size - 1] != HB_OS_DRIVE_DELIM_CHR)
   {

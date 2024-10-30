@@ -48,7 +48,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* converts string to lower case */
+// converts string to lower case
 HB_FUNC(LOWER)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -65,7 +65,7 @@ HB_FUNC(LOWER)
   }
 }
 
-/* converts string to upper case */
+// converts string to upper case
 HB_FUNC(UPPER)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);

@@ -47,7 +47,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* returns n copies of given string */
+// returns n copies of given string
 
 HB_FUNC(REPLICATE)
 {

@@ -46,7 +46,7 @@
 
 #include "error.ch"
 
-/* NOTE: In CA-Cl*pper 5.2/5.3 the cMethod argument seems to be ignored. */
+// NOTE: In CA-Cl*pper 5.2/5.3 the cMethod argument seems to be ignored.
 
 FUNCTION __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
 
@@ -58,8 +58,8 @@ FUNCTION __eInstVar52(oVar, cMethod, xValue, cType, nSubCode, xMin, xMax)
       IF xMin != NIL
          lError := !xValue >= xMin
       ENDIF
-      /* NOTE: In CA-Cl*pper 5.2, xMin validation result is
-               ignored when xMax != NIL. Harbour is doing the same. */
+      // NOTE: In CA-Cl*pper 5.2, xMin validation result is
+      //       ignored when xMax != NIL. Harbour is doing the same.
       IF xMax != NIL
          lError := !xValue <= xMax
       ENDIF

@@ -48,12 +48,12 @@
 #include "button.ch"
 #include "color.ch"
 
-/* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
-         it has all related variables and methods. */
+// NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
+//       it has all related variables and methods.
 
-/* NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
-         functions to generate screen output. Harbour uses Disp*()
-         functions only. [vszakats] */
+// NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
+//       functions to generate screen output. Harbour uses Disp*()
+//       functions only. [vszakats]
 
 #ifdef HB_COMPAT_C53
 
@@ -61,7 +61,7 @@ CREATE CLASS RadioButtn FUNCTION HBRadioButton
 
    EXPORTED:
 
-   VAR cargo                                 /* NOTE: CA-Cl*pper 5.3 has a bug, where this var is filled with NIL every time its value is read ( cargo := o:cargo ). */
+   VAR cargo                                 // NOTE: CA-Cl*pper 5.3 has a bug, where this var is filled with NIL every time its value is read ( cargo := o:cargo ).
 
    METHOD display()
    METHOD hitTest(nMRow, nMCol)
@@ -72,7 +72,7 @@ CREATE CLASS RadioButtn FUNCTION HBRadioButton
 
    METHOD bitmaps(aBitmaps) SETGET
    METHOD buffer() SETGET
-   METHOD data(cData) SETGET               /* NOTE: Undocumented CA-Cl*pper 5.3 method. */
+   METHOD data(cData) SETGET               // NOTE: Undocumented CA-Cl*pper 5.3 method.
    METHOD capCol(nCapCol) SETGET
    METHOD capRow(nCapRow) SETGET
    METHOD caption(cCaption) SETGET
@@ -84,7 +84,7 @@ CREATE CLASS RadioButtn FUNCTION HBRadioButton
    METHOD sBlock(bSBlock) SETGET
    METHOD style(cStyle) SETGET
 
-   METHOD Init(nRow, nCol, cCaption, cData)  /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD Init(nRow, nCol, cCaption, cData)  // NOTE: This method is a Harbour extension [vszakats]
 
    PROTECTED:
 
@@ -319,7 +319,7 @@ METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
    ::cCaption := hb_defaultValue(cCaption, "")
    ::nCol     := nCol
    ::nRow     := nRow
-   ::cData    := cData  /* NOTE: Every type is allowed here to be fully compatible */
+   ::cData    := cData  // NOTE: Every type is allowed here to be fully compatible
 
    IF IsDefColor()
       ::cColorSpec := "W/N,W+/N,W+/N,N/W,W/N,W/N,W+/N"
@@ -337,7 +337,7 @@ METHOD RadioButtn:Init(nRow, nCol, cCaption, cData)
 
    RETURN Self
 
-FUNCTION RadioButto(nRow, nCol, cCaption, cData) /* NOTE: cData argument is undocumented */
+FUNCTION RadioButto(nRow, nCol, cCaption, cData) // NOTE: cData argument is undocumented
    RETURN HBRadioButton():New(nRow, nCol, cCaption, cData)
 
 #endif

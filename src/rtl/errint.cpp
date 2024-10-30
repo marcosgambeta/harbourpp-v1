@@ -46,14 +46,14 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 
-/* NOTE: Use as minimal calls from here, as possible.
-         Don't allocate memory from this function. [vszakats] */
+// NOTE: Use as minimal calls from here, as possible.
+//       Don't allocate memory from this function. [vszakats]
 
 void hb_errInternal(HB_ERRCODE errCode, const char *szText, const char *szPar1, const char *szPar2)
 {
   hb_errInternalRaw(errCode, szText, szPar1, szPar2);
 
-  /* release console settings */
+  // release console settings
   hb_conRelease();
 
   if (hb_cmdargCheck("ERRGPF"))

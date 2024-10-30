@@ -49,7 +49,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-/* locates a substring in a string */
+// locates a substring in a string
 
 HB_FUNC(HB_AT)
 {

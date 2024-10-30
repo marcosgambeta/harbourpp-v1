@@ -50,12 +50,12 @@
 #include "color.ch"
 #include "setcurs.ch"
 
-/* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
-         it has all related variables and methods. */
+// NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
+//       it has all related variables and methods.
 
-/* NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
-         functions to generate screen output. Harbour uses Disp*()
-         functions only. [vszakats] */
+// NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
+//       functions to generate screen output. Harbour uses Disp*()
+//       functions only. [vszakats]
 
 #ifdef HB_COMPAT_C53
 
@@ -94,12 +94,12 @@ CREATE CLASS RadioGroup FUNCTION HBRadioGroup
    METHOD left(nLeft) SETGET
    METHOD message(cMessage) SETGET
    METHOD right(nRight) SETGET
-   METHOD textValue() SETGET                   /* NOTE: Undocumented CA-Cl*pper var. */
+   METHOD textValue() SETGET                   // NOTE: Undocumented CA-Cl*pper var.
    METHOD top(nTop) SETGET
    METHOD typeOut() SETGET
-   METHOD value() SETGET                       /* NOTE: Undocumented CA-Cl*pper var. */
+   METHOD value() SETGET                       // NOTE: Undocumented CA-Cl*pper var.
 
-   METHOD Init(nTop, nLeft, nBottom, nRight)  /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD Init(nTop, nLeft, nBottom, nRight)  // NOTE: This method is a Harbour extension [vszakats]
 
    PROTECTED:
 

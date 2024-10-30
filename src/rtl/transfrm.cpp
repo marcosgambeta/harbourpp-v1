@@ -52,26 +52,26 @@
 #include "hbset.hpp"
 #include "hbapicdp.hpp"
 
-/* Picture function flags */
-#define PF_LEFT 0x0001          /* @B */
-#define PF_CREDIT 0x0002        /* @C */
-#define PF_DEBIT 0x0004         /* @X */
-#define PF_PADL 0x0008 /* @L */ /* NOTE: This is a FoxPro/XPP extension [vszakats] */
-#define PF_PARNEG 0x0010        /* @( */
-#define PF_REMAIN 0x0020        /* @R */
-#define PF_UPPER 0x0040         /* @! */
-#define PF_DATE 0x0080          /* @D */
-#define PF_BRITISH 0x0100       /* @E */
-#define PF_EXCHANG 0x0100       /* @E. Also means exchange . and , */
-#define PF_EMPTY 0x0200         /* @Z */
-#define PF_WIDTH 0x0400         /* @S */
-#define PF_PARNEGWOS 0x0800     /* @) Similar to PF_PARNEG but without leading spaces */
-#define PF_TIME 0x1000          /* @T only time part from timestamp items, Harbour extension */
+// Picture function flags
+#define PF_LEFT 0x0001          // @B
+#define PF_CREDIT 0x0002        // @C
+#define PF_DEBIT 0x0004         // @X
+#define PF_PADL 0x0008          // @L NOTE: This is a FoxPro/XPP extension [vszakats]
+#define PF_PARNEG 0x0010        // @(
+#define PF_REMAIN 0x0020        // @R
+#define PF_UPPER 0x0040         // @!
+#define PF_DATE 0x0080          // @D
+#define PF_BRITISH 0x0100       // @E
+#define PF_EXCHANG 0x0100       // @E. Also means exchange . and ,
+#define PF_EMPTY 0x0200         // @Z
+#define PF_WIDTH 0x0400         // @S
+#define PF_PARNEGWOS 0x0800     // @) Similar to PF_PARNEG but without leading spaces
+#define PF_TIME 0x1000          // @T only time part from timestamp items, Harbour extension
 
 HB_FUNC(TRANSFORM)
 {
-  auto pValue = hb_param(1, Harbour::Item::ANY);  /* Input parameter */
-  auto pPic = hb_param(2, Harbour::Item::STRING); /* Picture string */
+  auto pValue = hb_param(1, Harbour::Item::ANY);  // Input parameter
+  auto pPic = hb_param(2, Harbour::Item::STRING); // Picture string
 
   auto bError = false;
 
@@ -86,33 +86,33 @@ HB_FUNC(TRANSFORM)
     auto szPic = pPic->getCPtr();
     auto nPicLen = pPic->getCLen();
     HB_SIZE nPicPos = 0;
-    HB_USHORT uiPicFlags; /* Function flags */
+    HB_USHORT uiPicFlags; // Function flags
 
-    HB_SIZE nParamS = 0; /* To avoid GCC -O2 warning */
-    char cParamL = '\0'; /* To avoid GCC -O2 warning */
+    HB_SIZE nParamS = 0; // To avoid GCC -O2 warning
+    char cParamL = '\0'; // To avoid GCC -O2 warning
 
     char *szResult;
     HB_SIZE nResultPos;
 
     HB_SIZE nOffset = 0;
 
-    /* --- Analyze picture functions --- */
+    // --- Analyze picture functions ---
 
     uiPicFlags = 0;
 
-    /* If an "@" char is at the first pos, we have picture function */
+    // If an "@" char is at the first pos, we have picture function
 
     if (*szPic == '@')
     {
       auto bDone = false;
 
-      /* Skip the "@" char */
+      // Skip the "@" char
 
       szPic++;
       nPicLen--;
 
-      /* Go through all function chars, until the end of the picture string
-         or any whitespace found. */
+      // Go through all function chars, until the end of the picture string
+      // or any whitespace found.
 
       while (nPicLen && !bDone)
       {
@@ -120,7 +120,7 @@ HB_FUNC(TRANSFORM)
         {
         case HB_CHAR_HT:
         case ' ':
-          bDone = true; /* End of function string */
+          bDone = true; // End of function string
           break;
         case '!':
           uiPicFlags |= PF_UPPER;
@@ -132,11 +132,11 @@ HB_FUNC(TRANSFORM)
           uiPicFlags |= PF_PARNEGWOS;
           break;
 #ifndef HB_CLP_STRICT
-        /* Xbase++ and FoxPro compatibility */
+        // Xbase++ and FoxPro compatibility
         case 'l':
         case 'L':
         case '0':
-          uiPicFlags |= PF_PADL; /* FoxPro/XPP extension */
+          uiPicFlags |= PF_PADL; // FoxPro/XPP extension
           cParamL = '0';
           break;
 #endif
@@ -187,7 +187,7 @@ HB_FUNC(TRANSFORM)
       }
     }
 
-    /* --- Handle STRING values --- */
+    // --- Handle STRING values ---
 
     if (pValue->isString())
     {
@@ -195,9 +195,9 @@ HB_FUNC(TRANSFORM)
       auto nExpLen = pValue->getCLen();
       HB_SIZE nExpPos = 0;
 
-      /* Grab enough */
+      // Grab enough
 
-      /* Support date function for strings */
+      // Support date function for strings
       if (uiPicFlags & (PF_DATE | PF_BRITISH))
       {
         hb_dateFormat("XXXXXXXX", szPicDate, hb_setGetDateFormat());
@@ -205,7 +205,7 @@ HB_FUNC(TRANSFORM)
         nPicLen = strlen(szPicDate);
       }
 
-      /* Template string */
+      // Template string
       if (nPicPos < nPicLen)
       {
         HB_SIZE nSize = nExpLen + nExpLen + nPicLen - nPicPos;
@@ -221,12 +221,12 @@ HB_FUNC(TRANSFORM)
           {
             switch (wcPict)
             {
-            /* Upper */
+            // Upper
             case '!':
               HB_CDPCHAR_PUT(cdp, szResult, nSize, &nResultPos, hb_cdpUpperWC(cdp, wcExp));
               break;
 
-            /* Out the character */
+            // Out the character
             case '#':
             case '9':
             case 'a':
@@ -241,14 +241,14 @@ HB_FUNC(TRANSFORM)
                              (uiPicFlags & PF_UPPER) ? hb_cdpUpperWC(cdp, wcExp) : wcExp);
               break;
 
-            /* Logical */
+            // Logical
             case 'y':
             case 'Y':
               HB_CDPCHAR_PUT(cdp, szResult, nSize, &nResultPos,
                              (wcExp == 't' || wcExp == 'T' || wcExp == 'y' || wcExp == 'Y') ? 'Y' : 'N');
               break;
 
-            /* Other choices */
+            // Other choices
             default:
               HB_CDPCHAR_PUT(cdp, szResult, nSize, &nResultPos, wcPict);
               if (uiPicFlags & PF_REMAIN)
@@ -263,7 +263,7 @@ HB_FUNC(TRANSFORM)
           }
           else
           {
-/* NOTE: This is a FoxPro compatible [jarabal] */
+// NOTE: This is a FoxPro compatible [jarabal]
 #if defined(HB_COMPAT_FOXPRO)
             nPicPos = nPicLen;
             break;
@@ -309,10 +309,10 @@ HB_FUNC(TRANSFORM)
           }
         }
 
-        /* Any chars left ? */
+        // Any chars left ?
         if ((uiPicFlags & PF_REMAIN) && nPicPos < nPicLen)
         {
-          /* Export remainder */
+          // Export remainder
           while (nPicPos++ < nPicLen && nResultPos < nSize)
           {
             szResult[nResultPos++] = ' ';
@@ -353,21 +353,20 @@ HB_FUNC(TRANSFORM)
 
       if (uiPicFlags & PF_BRITISH)
       {
-        /* CA-Cl*pper do not check result size and always exchanges
-         * bytes 1-2 with bytes 4-5. It's buffer overflow bug and I do
-         * not want to replicate it. It also causes that the results of
-         * @E conversion used for strings smaller then 5 bytes behaves
-         * randomly.
-         * In fact precise tests can show that it's not random behavior
-         * but CA-Cl*pper uses static buffer for result and when current
-         * one is smaller then 5 bytes then first two bytes are exchanged
-         * with 4-5 bytes from previous result which was length enough,
-         * f.e.:
-         *          ? Transform("0123456789", "")
-         *          ? Transform("AB", "@E")
-         *          ? Transform("ab", "@E")
-         * [druzus]
-         */
+        // CA-Cl*pper do not check result size and always exchanges
+        // bytes 1-2 with bytes 4-5. It's buffer overflow bug and I do
+        // not want to replicate it. It also causes that the results of
+        // @E conversion used for strings smaller then 5 bytes behaves
+        // randomly.
+        // In fact precise tests can show that it's not random behavior
+        // but CA-Cl*pper uses static buffer for result and when current
+        // one is smaller then 5 bytes then first two bytes are exchanged
+        // with 4-5 bytes from previous result which was length enough,
+        // f.e.:
+        //          ? Transform("0123456789", "")
+        //          ? Transform("AB", "@E")
+        //          ? Transform("ab", "@E")
+        // [druzus]
         if (HB_CDP_ISCHARIDX(cdp))
         {
           HB_WCHAR wc0, wc1, wc2, wc3, wc4;
@@ -398,19 +397,19 @@ HB_FUNC(TRANSFORM)
       }
     }
 
-    /* --- Handle NUMERIC values --- */
+    // --- Handle NUMERIC values ---
 
     else if (pValue->isNumeric())
     {
-      int iWidth; /* Width of string          */
-      int iDec;   /* Number of decimals       */
+      int iWidth; // Width of string
+      int iDec;   // Number of decimals
       int iCount;
       HB_SIZE i;
       PHB_ITEM pNumber = nullptr;
 
       auto dValue = pValue->getND();
 
-      /* Support date function for numbers */
+      // Support date function for numbers
       if (uiPicFlags & PF_DATE)
       {
         hb_dateFormat("99999999", szPicDate, hb_setGetDateFormat());
@@ -444,7 +443,7 @@ HB_FUNC(TRANSFORM)
 
       iCount = 0;
       if (iWidth == 0)
-      { /* Width calculated ??      */
+      { // Width calculated ??
         hb_itemGetNLen(pValue, &iWidth, &iDec);
         if (hb_setGetFixed())
         {
@@ -470,9 +469,9 @@ HB_FUNC(TRANSFORM)
 
       if ((uiPicFlags & (PF_DEBIT | PF_PARNEG | PF_PARNEGWOS)) && dValue < 0)
       {
-        /* Always convert absolute val */
+        // Always convert absolute val
         if (pValue->isNumInt())
-        { /* workaround for 64-bit integer conversion */
+        { // workaround for 64-bit integer conversion
           pNumber = hb_itemPutNInt(nullptr, -(pValue->getNInt()));
         }
         else
@@ -484,11 +483,11 @@ HB_FUNC(TRANSFORM)
 
       if (dValue != 0)
       {
-        /* Don't empty the result if the number is not zero */
+        // Don't empty the result if the number is not zero
         uiPicFlags &= ~PF_EMPTY;
       }
 
-      /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
+      // allocate 4 additional bytes for possible ") CR" or ") DB" suffix
       szResult = static_cast<char *>(hb_xgrab(iWidth + 5));
       hb_itemStrBuf(szResult, pValue, iWidth, iDec);
       if (pNumber)
@@ -511,7 +510,7 @@ HB_FUNC(TRANSFORM)
         szResult[iWidth] = '\0';
       }
 
-      /* Pad with padding char */
+      // Pad with padding char
       if (uiPicFlags & PF_PADL)
       {
         for (i = 0; szResult[i] == ' '; i++)
@@ -519,9 +518,8 @@ HB_FUNC(TRANSFORM)
           szResult[i] = cParamL;
         }
 
-        /* please test it with FoxPro and Xbase++ to check
-         * if they made the same [druzus]
-         */
+        // please test it with FoxPro and Xbase++ to check
+        // if they made the same [druzus]
         if (i && szResult[i] == '-')
         {
           szResult[0] = '-';
@@ -548,7 +546,7 @@ HB_FUNC(TRANSFORM)
       {
         char *szStr = szResult;
 
-        /* allocate 4 additional bytes for possible ") CR" or ") DB" suffix */
+        // allocate 4 additional bytes for possible ") CR" or ") DB" suffix
         szResult = static_cast<char *>(hb_xgrab(nPicLen + 5));
 
         for (i = iCount = 0; i < nPicLen; i++)
@@ -600,7 +598,7 @@ HB_FUNC(TRANSFORM)
 
       if (dValue < 0)
       {
-        /* PF_PARNEGWOS has higher priority then PF_PARNEG */
+        // PF_PARNEGWOS has higher priority then PF_PARNEG
         if ((uiPicFlags & PF_PARNEGWOS))
         {
           iCount = 0;
@@ -617,7 +615,7 @@ HB_FUNC(TRANSFORM)
           }
 
 #ifndef HB_CLP_STRICT
-          /* This is not Clipper compatible */
+          // This is not Clipper compatible
           if (szResult[iCount] >= '1' && szResult[iCount] <= '9' &&
               (nPicLen == 0 || szPic[iCount] == '9' || szPic[iCount] != szResult[iCount]))
           {
@@ -640,7 +638,7 @@ HB_FUNC(TRANSFORM)
         else if ((uiPicFlags & PF_PARNEG))
         {
 #ifndef HB_CLP_STRICT
-          /* This is not Clipper compatible */
+          // This is not Clipper compatible
           if (*szResult >= '1' && *szResult <= '9' && (nPicLen == 0 || *szPic == '9' || *szPic != *szResult))
           {
             for (iCount = 1; static_cast<HB_SIZE>(iCount) < i; iCount++)
@@ -676,7 +674,7 @@ HB_FUNC(TRANSFORM)
       szResult[i] = '\0';
     }
 
-    /* --- Handle DATE values --- */
+    // --- Handle DATE values ---
 
     else if (pValue->isDate())
     {
@@ -691,14 +689,13 @@ HB_FUNC(TRANSFORM)
 #ifndef HB_CLP_STRICT
       if (uiPicFlags & PF_BRITISH)
       {
-        /* When @E is used CA-Cl*pper do not update date format
-         * pattern but wrongly moves 4th and 5th bytes of
-         * formatted date to the beginning (see below). It causes
-         * that date formats formats different then MM?DD?YY[YY]
-         * are wrongly translated. The code below is not CA-Cl*pper
-         * compatible but it tries to respect user date format
-         * [druzus]
-         */
+        // When @E is used CA-Cl*pper do not update date format
+        // pattern but wrongly moves 4th and 5th bytes of
+        // formatted date to the beginning (see below). It causes
+        // that date formats formats different then MM?DD?YY[YY]
+        // are wrongly translated. The code below is not CA-Cl*pper
+        // compatible but it tries to respect user date format
+        // [druzus]
         const char *szBritish = hb_setGetCentury() ? "DDMMYYYY" : "DDMMYY";
         char cLast = 'x';
 
@@ -738,14 +735,13 @@ HB_FUNC(TRANSFORM)
 #ifdef HB_CLP_STRICT
       if (uiPicFlags & PF_BRITISH)
       {
-        /* replicated wrong Clipper behavior, see note above.
-         * It's not exact CA-Cl*pper behavior because it does
-         * not check for size of results and can extract data
-         * from static memory buffer used in previous conversions
-         * (see my note for @E in string conversion above)
-         * but this is buffer overflow and I do not plan to
-         * replicated it too [druzus]
-         */
+        // replicated wrong Clipper behavior, see note above.
+        // It's not exact CA-Cl*pper behavior because it does
+        // not check for size of results and can extract data
+        // from static memory buffer used in previous conversions
+        // (see my note for @E in string conversion above)
+        // but this is buffer overflow and I do not plan to
+        // replicated it too [druzus]
         if (nResultPos >= 5)
         {
           szNewFormat[0] = szResult[0];
@@ -759,8 +755,7 @@ HB_FUNC(TRANSFORM)
 #endif
       if (uiPicFlags & PF_REMAIN)
       {
-        /* Here we also respect the date format modified for @E [druzus]
-         */
+        // Here we also respect the date format modified for @E [druzus]
         hb_dateFormat("99999999", szPicDate, szDateFormat);
         nPicLen = strlen(szPicDate);
 
@@ -777,7 +772,7 @@ HB_FUNC(TRANSFORM)
       }
     }
 
-    /* --- Handle TIMESTAMP values --- */
+    // --- Handle TIMESTAMP values ---
 
     else if (pValue->isTimeStamp())
     {
@@ -799,14 +794,13 @@ HB_FUNC(TRANSFORM)
 #ifndef HB_CLP_STRICT
       if (szDateFormat != nullptr && (uiPicFlags & PF_BRITISH))
       {
-        /* When @E is used CA-Cl*pper do not update date format
-         * pattern but wrongly moves 4th and 5th bytes of
-         * formatted date to the beginning (see below). It causes
-         * that date formats formats different then MM?DD?YY[YY]
-         * are wrongly translated. The code below is not CA-Cl*pper
-         * compatible but it tries to respect user date format
-         * [druzus]
-         */
+        // When @E is used CA-Cl*pper do not update date format
+        // pattern but wrongly moves 4th and 5th bytes of
+        // formatted date to the beginning (see below). It causes
+        // that date formats formats different then MM?DD?YY[YY]
+        // are wrongly translated. The code below is not CA-Cl*pper
+        // compatible but it tries to respect user date format
+        // [druzus]
         const char *szBritish = hb_setGetCentury() ? "DDMMYYYY" : "DDMMYY";
         char cLast = 'x';
 
@@ -862,14 +856,13 @@ HB_FUNC(TRANSFORM)
 #ifdef HB_CLP_STRICT
       if (uiPicFlags & PF_BRITISH)
       {
-        /* replicated wrong Clipper behavior, see note above.
-         * It's not exact CA-Cl*pper behavior because it does
-         * not check for size of results and can extract data
-         * from static memory buffer used in previous conversions
-         * (see my note for @E in string conversion above)
-         * but this is buffer overflow and I do not plan to
-         * replicated it too [druzus]
-         */
+        // replicated wrong Clipper behavior, see note above.
+        // It's not exact CA-Cl*pper behavior because it does
+        // not check for size of results and can extract data
+        // from static memory buffer used in previous conversions
+        // (see my note for @E in string conversion above)
+        // but this is buffer overflow and I do not plan to
+        // replicated it too [druzus]
         if (nResultPos >= 5)
         {
           szNewFormat[0] = szResult[0];
@@ -883,8 +876,7 @@ HB_FUNC(TRANSFORM)
 #endif
       if (szDateFormat != nullptr && (uiPicFlags & PF_REMAIN))
       {
-        /* Here we also respect the date format modified for @E [druzus]
-         */
+        // Here we also respect the date format modified for @E [druzus]
         hb_dateFormat("99999999", szPicDate, szDateFormat);
         nPicLen = strlen(szPicDate);
 
@@ -901,7 +893,7 @@ HB_FUNC(TRANSFORM)
       }
     }
 
-    /* --- Handle LOGICAL values --- */
+    // --- Handle LOGICAL values ---
 
     else if (pValue->isLogical())
     {
@@ -933,13 +925,13 @@ HB_FUNC(TRANSFORM)
 
         switch (cPic)
         {
-        case 'y': /* Yes/No */
-        case 'Y': /* Yes/No */
+        case 'y': // Yes/No
+        case 'Y': // Yes/No
 
           if (!bDone)
           {
             szResult[nResultPos] = hb_itemGetL(pValue) ? 'Y' : 'N';
-            bDone = true; /* Logical written */
+            bDone = true; // Logical written
           }
           else
           {
@@ -949,8 +941,8 @@ HB_FUNC(TRANSFORM)
           break;
 
         case '#':
-        case 'l': /* True/False */
-        case 'L': /* True/False */
+        case 'l': // True/False
+        case 'L': // True/False
 
           if (!bDone)
           {
@@ -975,12 +967,12 @@ HB_FUNC(TRANSFORM)
       }
     }
 
-    /* --- */
+    // ---
 
     else
     {
-      szResult = nullptr; /* To avoid GCC -O2 warning */
-      nResultPos = 0;     /* To avoid GCC -O2 warning */
+      szResult = nullptr; // To avoid GCC -O2 warning
+      nResultPos = 0;     // To avoid GCC -O2 warning
       bError = true;
     }
 
@@ -992,7 +984,7 @@ HB_FUNC(TRANSFORM)
       }
       else if (uiPicFlags & PF_LEFT)
       {
-        /* Trim left and pad with spaces */
+        // Trim left and pad with spaces
         HB_SIZE nFirstChar = nOffset;
 
         while (nFirstChar < nResultPos && szResult[nFirstChar] == ' ')
@@ -1011,7 +1003,7 @@ HB_FUNC(TRANSFORM)
     }
   }
   else if (pPic || HB_ISNIL(2))
-  { /* Picture is an empty string or NIL */
+  { // Picture is an empty string or NIL
     if (pValue->isString())
     {
       hb_itemReturn(pValue);
@@ -1074,7 +1066,7 @@ HB_FUNC(TRANSFORM)
     bError = true;
   }
 
-  /* If there was any parameter error, launch a runtime error */
+  // If there was any parameter error, launch a runtime error
 
   if (bError)
   {

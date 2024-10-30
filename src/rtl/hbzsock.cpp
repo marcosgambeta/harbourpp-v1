@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* this has to be declared before hbsocket.h is included */
+// this has to be declared before hbsocket.h is included
 #define _HB_SOCKEX_IMPLEMENTATION_
 
 #include "hbapiitm.hpp"
@@ -168,7 +168,7 @@ static int s_zsock_inbuffer(PHB_SOCKEX pSock)
   return pSock->inbuffer > 0 ? 1 : 0;
 }
 
-/* socket filter */
+// socket filter
 
 static long s_sockexRead(PHB_SOCKEX pSock, void *data, long len, HB_MAXINT timeout)
 {
@@ -410,8 +410,8 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
 
     hb_xfree(pZ);
   }
-  /* call hb_sockexRawClear() with fClose = HB_FALSE because
-     hb_sockexClose() already closed real socket */
+  // call hb_sockexRawClear() with fClose = HB_FALSE because
+  // hb_sockexClose() already closed real socket
   hb_sockexRawClear(pSock, false);
   hb_xfree(pSock);
 
@@ -539,9 +539,9 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
       if (fDecompressIn && level != HB_ZLIB_COMPRESSION_DISABLE)
       {
-        /* MAX_WBITS=15, decompression - support for formats:
-         * -15: raw, 15: ZLIB, 31: GZIP, 47: ZLIB+GZIP
-         */
+        // MAX_WBITS=15, decompression - support for formats:
+        // -15: raw, 15: ZLIB, 31: GZIP, 47: ZLIB+GZIP
+
         if (inflateInit2(&pZ->z_read, windowBitsIn) == Z_OK)
         {
           pZ->fDecompressIn = true;
@@ -555,9 +555,9 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
 
       if (fCompressOut && level != HB_ZLIB_COMPRESSION_DISABLE)
       {
-        /* MAX_WBITS=15, compression format:
-         * -15: raw, 15: ZLIB (+6 bytes), 31: GZIP(+18 bytes)
-         */
+        // MAX_WBITS=15, compression format:
+        // -15: raw, 15: ZLIB (+6 bytes), 31: GZIP(+18 bytes)
+
         if (deflateInit2(&pZ->z_write, level, Z_DEFLATED, windowBitsOut, HB_ZSOCK_MEM_LEVEL, strategy) == Z_OK)
         {
           pZ->fCompressOut = true;
@@ -590,7 +590,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
   return pSockNew;
 }
 
-/* hb_socketNewZSock(<pSocket>, [<hParams>]) --> <pSocket> */
+// hb_socketNewZSock(<pSocket>, [<hParams>]) --> <pSocket>
 HB_FUNC(HB_SOCKETNEWZSOCK)
 {
   PHB_SOCKEX pSock = hb_sockexParam(1);

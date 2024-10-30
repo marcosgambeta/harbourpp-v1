@@ -43,48 +43,43 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* Rationale:
- *
- * There are three aspects to profiling:
- *
- * 1) Gathering profile information.
- * 2) Taking a snapshot of an application's profile information.
- * 3) Reporting on the data gathered in the snapshot.
- *
- * Point 1 is handled in Harbour's virtual machine. This source aims to
- * provide code for performing points 2 and 3. A class is provided to
- * gather, hold and manipulate the profile snapshot and a hierarchy of
- * classes exist for reporting on that snapshot. The reporting classes are
- * designed such that they are easy to inherit from and improve upon.
- *
- * The idea behind all of this is that the the design should provide all the
- * necessary building blocks for writing profiler reporters that suite the
- * user's needs (perhaps as part of an extended debugger or something).
- *
- */
+// Rationale:
+//
+// There are three aspects to profiling:
+//
+// 1) Gathering profile information.
+// 2) Taking a snapshot of an application's profile information.
+// 3) Reporting on the data gathered in the snapshot.
+//
+// Point 1 is handled in Harbour's virtual machine. This source aims to
+// provide code for performing points 2 and 3. A class is provided to
+// gather, hold and manipulate the profile snapshot and a hierarchy of
+// classes exist for reporting on that snapshot. The reporting classes are
+// designed such that they are easy to inherit from and improve upon.
+//
+// The idea behind all of this is that the the design should provide all the
+// necessary building blocks for writing profiler reporters that suite the
+// user's needs (perhaps as part of an extended debugger or something).
 
-/* Notes:
- *
- * As much as possible, the profiler class and the profile report classes
- * attempt to turn off the profiler to ensure that we don't get some sort of
- * Heisenberg effect. In other words, we don't want the profiler showing up
- * in the profiler.
- *
- * Many of the "PROTECTED:" scope specifiers in the source have been
- * commented out where there's a problem with scope in Harbour's class
- * system. Note that those comments will be removed when the bug is fixed.
- */
+// Notes:
+//
+// As much as possible, the profiler class and the profile report classes
+// attempt to turn off the profiler to ensure that we don't get some sort of
+// Heisenberg effect. In other words, we don't want the profiler showing up
+// in the profiler.
+//
+// Many of the "PROTECTED:" scope specifiers in the source have been
+// commented out where there's a problem with scope in Harbour's class
+// system. Note that those comments will be removed when the bug is fixed.
 
-/* TODO:
- * - Handle any TODO: items in the source.
- * - Document the classes and the class hierarchy.
- */
+// TODO:
+// - Handle any TODO: items in the source.
+// - Document the classes and the class hierarchy.
 
-/* Thanks:
- *
- * Thanks to Antonio and Patrick for agreeing to replace the old profile
- * reporting code with this approach.
- */
+// Thanks:
+//
+// Thanks to Antonio and Patrick for agreeing to replace the old profile
+// reporting code with this approach.
 
 #include "hbclass.ch"
 #include "fileio.ch"

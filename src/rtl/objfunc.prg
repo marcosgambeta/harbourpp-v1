@@ -85,11 +85,11 @@ FUNCTION __objGetMsgList(oObject, lDataMethod, nClassType)
 
    FOR EACH cName IN aInfo
 
-      /* Set functions begin with a leading underscore */
+      // Set functions begin with a leading underscore
       IF !hb_LeftEq(cName, "_")
 
-         /* Find position of matching set function in array with all symbols */
-         /* If found: DATA, else: METHOD */
+         // Find position of matching set function in array with all symbols
+         // If found: DATA, else: METHOD
          IF (AScan(aInfo, {|tmp|tmp == ("_" + cName)}, nFirst) > 0) == lDataMethod
             AAdd(aData, cName)
          ENDIF

@@ -35,18 +35,14 @@
 #ifndef HEADER_HMAC_SHA1_H
 #define HEADER_HMAC_SHA1_H
 
-/*
- * Include SHA-1 stuff - CHOOSE WHICH SOURCE to use for the SHA1 functions
- *
- * Use the below include if your system has a library with SHA1 and be sure
- * to link to the library:
- */
+// Include SHA-1 stuff - CHOOSE WHICH SOURCE to use for the SHA1 functions
+//
+// Use the below include if your system has a library with SHA1 and be sure
+// to link to the library:
 
-/* #include <sha.h> */
+// #include <sha.h>
 
-/*
- * Or you can use Steve Reid's public domain SHA1 implementation:
- */
+// Or you can use Steve Reid's public domain SHA1 implementation:
 
 #include "sha1.hpp"
 
@@ -58,7 +54,7 @@ extern "C"
 #define HMAC_SHA1_DIGEST_LENGTH 20
 #define HMAC_SHA1_BLOCK_LENGTH 64
 
-  /* The HMAC_SHA1 structure: */
+  // The HMAC_SHA1 structure:
   typedef struct _HMAC_SHA1_CTX
   {
     unsigned char ipad[HMAC_SHA1_BLOCK_LENGTH];

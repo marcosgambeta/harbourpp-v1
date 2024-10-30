@@ -79,7 +79,7 @@ HB_FUNC(RAT)
       } while (--nTo >= 0);
     }
   }
-  /* This function never seems to raise an error */
+  // This function never seems to raise an error
   hb_retns(nPos);
 }
 

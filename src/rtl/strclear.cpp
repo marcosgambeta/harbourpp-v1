@@ -50,8 +50,8 @@ HB_FUNC(HB_STRCLEAR)
 {
   auto pItem = hb_param(1, Harbour::Item::STRING);
 
-  /* NOTE: clear RETURN value before calling hb_itemGetWriteCL(),
-           it's possible that it contains copy of passed item [druzus] */
+  // NOTE: clear RETURN value before calling hb_itemGetWriteCL(),
+  //       it's possible that it contains copy of passed item [druzus]
   hb_retl(false);
 
   if (pItem && HB_ISBYREF(1))

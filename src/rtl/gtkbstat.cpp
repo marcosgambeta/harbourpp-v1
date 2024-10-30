@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #include "hbgtcore.hpp"
 
@@ -156,4 +156,4 @@ void hb_gt_winapi_setKbdState(int iKbdState)
   }
 }
 
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN

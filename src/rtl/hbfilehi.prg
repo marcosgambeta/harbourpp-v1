@@ -45,7 +45,7 @@
 
 #define _ISDRIVESPEC(cDir) (!Empty(hb_osDriveSeparator()) .AND. Right(cDir, Len(hb_osDriveSeparator())) == hb_osDriveSeparator())
 
-/* NOTE: Can hurt if there are symlinks on the way. */
+// NOTE: Can hurt if there are symlinks on the way.
 FUNCTION hb_PathNormalize(cPath)
 
    LOCAL aDir
@@ -140,7 +140,7 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
    cPathBase   := hb_PathJoin(hb_DirBase(), hb_DirSepAdd(cPathBase))
    cPathTarget := hb_PathJoin(hb_DirBase(), cPathTarget)
 
-   /* TODO: Optimize to operate on strings instead of arrays */
+   // TODO: Optimize to operate on strings instead of arrays
 
    aPathBase   := s_FN_ToArray(cPathBase)
    aPathTarget := s_FN_ToArray(cPathTarget, @cTargetFileName)
@@ -165,7 +165,7 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
       RETURN s_FN_FromArray(aPathTarget, tmp, cTargetFileName, "")
    ENDIF
 
-   /* Different drive spec. There is no way to solve that using relative dirs. */
+   // Different drive spec. There is no way to solve that using relative dirs.
    IF !Empty(hb_osDriveSeparator()) .AND. ;
       tmp == 1 .AND. ( ;
       Right(aPathBase[1]  , Len(hb_osDriveSeparator())) == hb_osDriveSeparator() .OR. ;
@@ -173,7 +173,7 @@ FUNCTION hb_PathRelativize(cPathBase, cPathTarget, lForceRelative)
       RETURN cPathTarget
    ENDIF
 
-   /* Force to return relative paths even when base is different. */
+   // Force to return relative paths even when base is different.
    IF hb_defaultValue(lForceRelative, .T.) .AND. ;
       hb_DirExists(cPathBase + (cTestTarget := s_FN_FromArray(aPathTarget, tmp, cTargetFileName, Replicate(".." + hb_ps(), Len(aPathBase) - tmp))))
       RETURN cTestTarget
@@ -286,7 +286,7 @@ FUNCTION hb_DirBuild(cDir)
          cDirTemp := Left(cDir, tmp)
          cDir := SubStr(cDir, tmp + 1)
 #ifdef __PLATFORM__WINDOWS
-      ELSEIF hb_LeftEq(cDir, "\\") /* UNC Path, network share */
+      ELSEIF hb_LeftEq(cDir, "\\") // UNC Path, network share
          cDirTemp := Left(cDir, hb_At("\", cDir, 3))
          cDir := SubStr(cDir, Len(cDirTemp) + 1)
 #endif
@@ -301,7 +301,7 @@ FUNCTION hb_DirBuild(cDir)
          IF !Right(cDirTemp, 1) == hb_ps() .AND. !cDirTemp == ""
             cDirTemp += hb_ps()
          ENDIF
-         IF !cDirItem == ""  /* Skip root path, if any */
+         IF !cDirItem == ""  // Skip root path, if any
             cDirTemp += cDirItem
             IF hb_FileExists(cDirTemp)
                RETURN .F.
@@ -333,7 +333,7 @@ FUNCTION hb_DirUnbuild(cDir)
             hb_DirDelete(cDir) != 0
             RETURN .F.
          ENDIF
-         IF (tmp := RAt(hb_ps(), cDir)) == 0  /* FIXME: use hb_URAt() function */
+         IF (tmp := RAt(hb_ps(), cDir)) == 0  // FIXME: use hb_URAt() function
             EXIT
          ENDIF
          cDir := Left(cDir, tmp - 1)

@@ -43,77 +43,76 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* Idea and protocol
-   =================
-   Very often it is required to accept the whole data message from
-   TCP connection. Because of stream nature of TCP, this requires
-   additional steps from application like start/end marker, or sending
-   length of structure before the structure. The latter simple approach
-   was used in Length Prefix Protocol (LPP). Protocol can easily be
-   described by simple Harbour expression:
-    Bin2L(hb_BLen(cData)) + cData
-
-   Future extensions: Protocol is limited to 4 GiB size for a single LPP
-   message. This can be extended in future to use highest bit of length
-   (or some highest length values 2^32-1, etc) as a special marker for
-   64-bit or similar length encoding.
-
-   Public functions and procedures
-   ===============================
-   hb_lppCreate(hSocket) --> hLPP
-   hb_lppDestroy(hNSTP)
-    Destroys only LPP related structures. Socket remains open and
-    it is possible to continue data transfers using hb_socket*()
-    functions.
-   hb_lppError(hLPP) --> nError
-    nError value is compatible with Harbour socket error API,
-    the only new error code (until now) is HB_LPP_ERROR_TOOLARGE
-   hb_lppSetLimit(hLPP, nLimit)
-    Sets size limit for receiving data. Sending 4 bytes containing
-    large 32-bit value makes receiving application to allocate a
-    large memory block for storage of data to be received. It is very
-    easy to crash  application (or system) using such protocol and
-    logic. hb_lppSetLimit() helps to protect against such attacks.
-    On hb_lppCreate() limit is set to 1024 bytes. This is enough
-    for server/client authentication. After successful
-    authentication server can increase size limit and large LPP
-    packets can be used.
-   hb_lppSend(hLPP, cBuf [, nTimeout = FOREVER ]) --> lSuccess
-   hb_lppRecv(hLPP, @cBuf [, nTimeout = FOREVER ]) --> lSuccess
-   hb_lppSendLen(hLPP) --> nBytesSent
-    Useful for drawing progress bars, etc.
-   hb_lppRecvLen(hLPP) --> nBytesReceived
-    Useful for drawing progress bars, etc.
-
-   Sample code
-   ===========
-   // send sample
-   hLPP := hb_lppCreate(hSocket)
-   DO WHILE !( lI := hb_lppSend(hLPP, cData, nTimeout) ) .AND. ;
-          hb_lppError(hLPP) == HB_SOCKET_ERR_TIMEOUT )
-      // draw progress bar using hb_lppSendLen(hLPP)
-   ENDDO
-   IF lI  // or hb_lppError(hLPP) == 0
-      // Sent OK
-   ELSE
-      // error
-   ENDIF
-   hb_hsctpDestroy(hLPP)
-
-
-   // recv sample
-   DO WHILE !(lI := hb_lppRecv(hLPP, @cData, nTimeout)) .AND. ;
-          hb_lppError(hLPP) == HB_SOCKET_ERR_TIMEOUT)
-      // draw progress bar using hb_lppRecvLen(hLPP)
-   ENDDO
-   IF lI
-      // Rcvd OK, data in cData
-   ELSEIF hb_lppError(hLPP) == 0
-      // remote side shutdown connection
-   ELSE
-      // error
-   ENDIF
- */
+// Idea and protocol
+// =================
+// Very often it is required to accept the whole data message from
+// TCP connection. Because of stream nature of TCP, this requires
+// additional steps from application like start/end marker, or sending
+// length of structure before the structure. The latter simple approach
+// was used in Length Prefix Protocol (LPP). Protocol can easily be
+// described by simple Harbour expression:
+//  Bin2L(hb_BLen(cData)) + cData
+//
+// Future extensions: Protocol is limited to 4 GiB size for a single LPP
+// message. This can be extended in future to use highest bit of length
+// (or some highest length values 2^32-1, etc) as a special marker for
+// 64-bit or similar length encoding.
+//
+// Public functions and procedures
+// ===============================
+// hb_lppCreate(hSocket) --> hLPP
+// hb_lppDestroy(hNSTP)
+//  Destroys only LPP related structures. Socket remains open and
+//  it is possible to continue data transfers using hb_socket*()
+//  functions.
+// hb_lppError(hLPP) --> nError
+//  nError value is compatible with Harbour socket error API,
+//  the only new error code (until now) is HB_LPP_ERROR_TOOLARGE
+// hb_lppSetLimit(hLPP, nLimit)
+//  Sets size limit for receiving data. Sending 4 bytes containing
+//  large 32-bit value makes receiving application to allocate a
+//  large memory block for storage of data to be received. It is very
+//  easy to crash  application (or system) using such protocol and
+//  logic. hb_lppSetLimit() helps to protect against such attacks.
+//  On hb_lppCreate() limit is set to 1024 bytes. This is enough
+//  for server/client authentication. After successful
+//  authentication server can increase size limit and large LPP
+//  packets can be used.
+// hb_lppSend(hLPP, cBuf [, nTimeout = FOREVER ]) --> lSuccess
+// hb_lppRecv(hLPP, @cBuf [, nTimeout = FOREVER ]) --> lSuccess
+// hb_lppSendLen(hLPP) --> nBytesSent
+//  Useful for drawing progress bars, etc.
+// hb_lppRecvLen(hLPP) --> nBytesReceived
+//  Useful for drawing progress bars, etc.
+//
+// Sample code
+// ===========
+// // send sample
+// hLPP := hb_lppCreate(hSocket)
+// DO WHILE !( lI := hb_lppSend(hLPP, cData, nTimeout) ) .AND. ;
+//        hb_lppError(hLPP) == HB_SOCKET_ERR_TIMEOUT )
+//    // draw progress bar using hb_lppSendLen(hLPP)
+// ENDDO
+// IF lI  // or hb_lppError(hLPP) == 0
+//    // Sent OK
+// ELSE
+//    // error
+// ENDIF
+// hb_hsctpDestroy(hLPP)
+//
+//
+// // recv sample
+// DO WHILE !(lI := hb_lppRecv(hLPP, @cData, nTimeout)) .AND. ;
+//        hb_lppError(hLPP) == HB_SOCKET_ERR_TIMEOUT)
+//    // draw progress bar using hb_lppRecvLen(hLPP)
+// ENDDO
+// IF lI
+//    // Rcvd OK, data in cData
+// ELSEIF hb_lppError(hLPP) == 0
+//    // remote side shutdown connection
+// ELSE
+//    // error
+// ENDIF
 
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"

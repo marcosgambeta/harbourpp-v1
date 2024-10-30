@@ -53,9 +53,9 @@ HB_FUNC(LEN)
 {
   auto pItem = hb_param(1, Harbour::Item::ANY);
 
-  /* NOTE: Double safety to ensure that a parameter was really passed,
-           compiler checks this, but a direct hb_vmDo() call
-           may not do so. [vszakats] */
+  // NOTE: Double safety to ensure that a parameter was really passed,
+  //       compiler checks this, but a direct hb_vmDo() call
+  //       may not do so. [vszakats]
 
   if (pItem != nullptr)
   {

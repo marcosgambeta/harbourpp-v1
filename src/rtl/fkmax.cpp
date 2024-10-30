@@ -46,14 +46,14 @@
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
 
-/* Dumb function to maintain dBase III+ and CA-Cl*pper compatibility */
+// Dumb function to maintain dBase III+ and CA-Cl*pper compatibility
 
 HB_FUNC(FKMAX)
 {
-  hb_retni(40); /* IBM specific */
+  hb_retni(40); // IBM specific
 }
 
-/* Dumb function to maintain dBase III+ and CA-Cl*pper compatibility */
+// Dumb function to maintain dBase III+ and CA-Cl*pper compatibility
 
 HB_FUNC(FKLABEL)
 {

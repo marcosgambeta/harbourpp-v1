@@ -44,10 +44,10 @@
 // If you do not wish that, delete this exception notice.
 
 #ifdef HB_LEGACY_LEVEL4
-/* Required for legacy language modules with a two character ID.
-   These cannot have a compatibility puller symbol in langlgcy.prg,
-   which in turn pulls all CP modules, so we're pulling them from
-   here. */
+// Required for legacy language modules with a two character ID.
+// These cannot have a compatibility puller symbol in langlgcy.prg,
+// which in turn pulls all CP modules, so we're pulling them from
+// here.
 REQUEST HB_CODEPAGE_CS852
 REQUEST HB_CODEPAGE_DE850
 REQUEST HB_CODEPAGE_EL737
@@ -65,7 +65,7 @@ FUNCTION hb_langSelect(cLangID, cCP)
 
 #ifdef HB_LEGACY_LEVEL4
 
-      /* Emulate legacy Harbour language modules for compatibility */
+      // Emulate legacy Harbour language modules for compatibility
       SWITCH Upper(cLangID)
       CASE "BE866"  ; cCPDef := "BG866" ; cLangIDBase := "be" ; EXIT
       CASE "BEWIN"  ; cCPDef := "BGWIN" ; cLangIDBase := "be" ; EXIT
@@ -120,9 +120,9 @@ FUNCTION hb_langSelect(cLangID, cCP)
       CASE "ZHB5"   ; cCPDef := "BIG5"  ; cLangIDBase := "zh" ; EXIT
       CASE "ZHGB"   ; cCPDef := "GBK"   ; cLangIDBase := "zh_sim" ; EXIT
       OTHERWISE
-         /* Case sensitive legacy IDs. Lowercase flavours denote new
-            language module IDs, so they won't be recognized as
-            compatibility ones. INCOMPATIBLE. */
+         // Case sensitive legacy IDs. Lowercase flavours denote new
+         // language module IDs, so they won't be recognized as
+         // compatibility ones. INCOMPATIBLE.
          SWITCH cLangID
          CASE "CA"     ; cCPDef := "DE850" ; cLangIDBase := "ca" ; EXIT
          CASE "DE"     ; cCPDef := "DE850" ; cLangIDBase := "de" ; EXIT
@@ -134,7 +134,7 @@ FUNCTION hb_langSelect(cLangID, cCP)
          CASE "GL"     ; cCPDef := "DE850" ; cLangIDBase := "gl" ; EXIT
          CASE "ID"     ; cCPDef := "EN"    ; cLangIDBase := "id" ; EXIT
          CASE "IT"     ; cCPDef := "DE850" ; cLangIDBase := "it" ; EXIT
-         /* INCOMPATIBILITY: "KO" (Korean) using CP949 is not supported anymore. */
+         // INCOMPATIBILITY: "KO" (Korean) using CP949 is not supported anymore.
          CASE "NL"     ; cCPDef := "EN"    ; cLangIDBase := "nl" ; EXIT
          CASE "PT"     ; cCPDef := "DE850" ; cLangIDBase := "pt" ; EXIT
          CASE "RO"     ; cCPDef := "CS852" ; cLangIDBase := "ro" ; EXIT
@@ -151,16 +151,16 @@ FUNCTION hb_langSelect(cLangID, cCP)
 #ifdef HB_LEGACY_LEVEL4
       IF Empty(cLangIDBase)
 #endif
-         /* Support standard ISO language IDs */
+         // Support standard ISO language IDs
          IF Empty(tmp := __LangStdToLangHb(cLangID))
-            /* Normal case */
+            // Normal case
             cLangIDBase := cLangID
          ELSE
             cLangID := cLangIDBase := tmp
          ENDIF
 #ifdef HB_LEGACY_LEVEL4
       ELSE
-         /* Legacy emulation */
+         // Legacy emulation
          cLangID := cLangIDBase
       ENDIF
 #endif

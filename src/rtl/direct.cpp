@@ -43,47 +43,44 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*
- * Notes from the fringe... <ptucker@sympatico.ca>
- *
- * Clipper is a bit schizoid with the treatment of file attributes, but we've
- * emulated that weirdness here for your viewing amusement.
- *
- * In Clippers' home world of MS-DOS, there are 5 basic attributes: 'A'rchive,
- * 'H'idden, 'S'ystem, 'R'eadonly and 'D'irectory.  In addition, a file can
- * have no attributes, and only 1 file per physical partition can have the
- * 'V'olume label.
- *
- * For a given file request, it is implied that the attribute mask includes
- * all attributes except 'H'idden, 'S'ystem, 'D'irectory and 'V'olume.
- * The returned file list will always include (for instance) 'R'eadOnly files
- * unless they also happen to be 'H'idden and that attribute was not requested.
- *
- * "V" is a special case - you will get back the entry that describes the
- * volume label for the drive implied by the file mask.
- *
- * Differences from the 'standard' (where supported):
- * - Filenames will be returned in the same case as they are stored in the
- *   directory.  Clipper (and VO too) will convert the names to upper case
- * - Filenames will be the full filename as supported by the OS in use.
- * - There are a number of additional file attributes returned.
- *   They are:
- *       'I' - DEVICE      File is a device
- *       'T' - TEMPORARY   File is a Temporary file
- *       'P' - SPARSE      File is Sparse
- *       'L' - REPARSE     File/Dir is a reparse point
- *       'C' - COMPRESSED  File/Dir is compressed
- *       'O' - OFFLINE     File/Dir is not online
- *       'X' - NOTINDEXED  Exclude File/Dir from Indexing Service
- *       'E' - ENCRYPTED   File/Dir is Encrypted
- *       'M' - VOLCOMP     Volume Supports Compression
- * - Clipper can sometimes drop the ReadOnly indication of directories.
- *   Harbour detects this correctly.
- *
- * TODO: - check that path support vis stat works on all platforms
- *       - UNC Support? ie: dir \\myserver\root
- *
- */
+// Notes from the fringe... <ptucker@sympatico.ca>
+//
+// Clipper is a bit schizoid with the treatment of file attributes, but we've
+// emulated that weirdness here for your viewing amusement.
+//
+// In Clippers' home world of MS-DOS, there are 5 basic attributes: 'A'rchive,
+// 'H'idden, 'S'ystem, 'R'eadonly and 'D'irectory.  In addition, a file can
+// have no attributes, and only 1 file per physical partition can have the
+// 'V'olume label.
+//
+// For a given file request, it is implied that the attribute mask includes
+// all attributes except 'H'idden, 'S'ystem, 'D'irectory and 'V'olume.
+// The returned file list will always include (for instance) 'R'eadOnly files
+// unless they also happen to be 'H'idden and that attribute was not requested.
+//
+// "V" is a special case - you will get back the entry that describes the
+// volume label for the drive implied by the file mask.
+//
+// Differences from the 'standard' (where supported):
+// - Filenames will be returned in the same case as they are stored in the
+//   directory.  Clipper (and VO too) will convert the names to upper case
+// - Filenames will be the full filename as supported by the OS in use.
+// - There are a number of additional file attributes returned.
+//   They are:
+//       'I' - DEVICE      File is a device
+//       'T' - TEMPORARY   File is a Temporary file
+//       'P' - SPARSE      File is Sparse
+//       'L' - REPARSE     File/Dir is a reparse point
+//       'C' - COMPRESSED  File/Dir is compressed
+//       'O' - OFFLINE     File/Dir is not online
+//       'X' - NOTINDEXED  Exclude File/Dir from Indexing Service
+//       'E' - ENCRYPTED   File/Dir is Encrypted
+//       'M' - VOLCOMP     Volume Supports Compression
+// - Clipper can sometimes drop the ReadOnly indication of directories.
+//   Harbour detects this correctly.
+//
+// TODO: - check that path support vis stat works on all platforms
+//       - UNC Support? ie: dir \\myserver\root
 
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
@@ -91,10 +88,10 @@
 
 #include "directry.ch"
 
-/* NOTE: 8.3 support should be added in a separate way, like
-         as a function which converts full names to 8.3 names, since
-         this issue is very much platform specific, and this is
-         not the only place which may need the conversion [vszakats]. */
+// NOTE: 8.3 support should be added in a separate way, like
+//       as a function which converts full names to 8.3 names, since
+//       this issue is very much platform specific, and this is
+//       not the only place which may need the conversion [vszakats].
 
 PHB_ITEM hb_fsDirectory(const char *pszDirSpec, const char *pszAttributes, HB_BOOL fDateTime)
 {
@@ -103,7 +100,7 @@ PHB_ITEM hb_fsDirectory(const char *pszDirSpec, const char *pszAttributes, HB_BO
   PHB_FFIND ffind;
   HB_FATTR ulMask;
 
-  /* Get the passed attributes and convert them to Harbour Flags */
+  // Get the passed attributes and convert them to Harbour Flags
 
   ulMask = HB_FA_ARCHIVE | HB_FA_READONLY;
 
@@ -116,9 +113,8 @@ PHB_ITEM hb_fsDirectory(const char *pszDirSpec, const char *pszAttributes, HB_BO
   {
     if (ulMask != HB_FA_LABEL)
     {
-      /* CA-Cl*pper compatible behavior - add all file mask when
-       * last character is directory or drive separator
-       */
+      // CA-Cl*pper compatible behavior - add all file mask when
+      // last character is directory or drive separator
       HB_SIZE nLen = strlen(pszDirSpec) - 1;
 #ifdef HB_OS_HAS_DRIVE_LETTER
       if (pszDirSpec[nLen] == HB_OS_PATH_DELIM_CHR || pszDirSpec[nLen] == HB_OS_DRIVE_DELIM_CHR)
@@ -135,7 +131,7 @@ PHB_ITEM hb_fsDirectory(const char *pszDirSpec, const char *pszAttributes, HB_BO
     pszDirSpec = HB_OS_ALLFILE_MASK;
   }
 
-  /* Get the file list */
+  // Get the file list
 
   if ((ffind = hb_fsFindFirst(pszDirSpec, ulMask)) != nullptr)
   {
@@ -160,7 +156,7 @@ PHB_ITEM hb_fsDirectory(const char *pszDirSpec, const char *pszAttributes, HB_BO
         hb_arraySetDL(pSubarray, F_DATE, ffind->lDate);
       }
 
-      /* Don't exit when array limit is reached */
+      // Don't exit when array limit is reached
       hb_arrayAddForward(pDir, pSubarray);
     } while (hb_fsFindNext(ffind));
 

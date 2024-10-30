@@ -48,7 +48,7 @@
 
 #if defined(HB_COMPAT_C53) && defined(HB_CLP_UNDOC)
 
-/* NOTE: Clipper 5.3 undocumented */
+// NOTE: Clipper 5.3 undocumented
 
 HB_FUNC(FSETDEVMOD)
 {
@@ -65,7 +65,7 @@ HB_FUNC(FSETDEVMOD)
   }
   else
   {
-    hb_fsSetFError(6); /* ERROR_INVALID_HANDLE */
+    hb_fsSetFError(6); // ERROR_INVALID_HANDLE
   }
 
   hb_retni(iRet);

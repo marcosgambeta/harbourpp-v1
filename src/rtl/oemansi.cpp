@@ -43,8 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: These are Windows specific, for other platforms it will return the
-         passed parameter unchanged. */
+// NOTE: These are Windows specific, for other platforms it will return the
+//       passed parameter unchanged.
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"

@@ -43,8 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* WARNING: Can not use the preprocessor, otherwise
-            it will auto inherit from itself. */
+// WARNING: Can not use the preprocessor, otherwise
+//          it will auto inherit from itself.
 
 #include "hboo.ch"
 #include "error.ch"
@@ -62,9 +62,9 @@ FUNCTION HBObject()
          oClass := HBClass():New("HBObject", NIL, @HBObject())
 
 #ifndef HB_CLP_STRICT
-         oClass:AddInline("ISDERIVEDFROM"   , {|Self, xPar1|__objDerivedFrom(Self, xPar1)}, HB_OO_CLSTP_EXPORTED) /* Xbase++ compatibility */
+         oClass:AddInline("ISDERIVEDFROM"   , {|Self, xPar1|__objDerivedFrom(Self, xPar1)}, HB_OO_CLSTP_EXPORTED) // Xbase++ compatibility
 #endif
-         /* Class(y) */
+         // Class(y)
          oClass:AddInline("ISKINDOF"        , {|Self, xPar1|__objDerivedFrom(Self, xPar1)}, HB_OO_CLSTP_EXPORTED)
 
          oClass:AddMethod("NEW"  , @HBObject_New()   , HB_OO_CLSTP_EXPORTED)
@@ -83,7 +83,7 @@ FUNCTION HBObject()
          oClass:AddInline("ADDVAR"   , {|Self, cVAR, nScopeMeth, uiData, hClass|__clsAddMsg(hClass := __classH(Self), cVar, uidata := __cls_IncData(hClass), HB_OO_MSG_ACCESS, NIL, iif(nScopeMeth == NIL, 1, nScopeMeth)), ;
                                                                                 __clsAddMsg(hClass, "_" + cVar, uiData, HB_OO_MSG_ASSIGN, NIL, iif(nScopeMeth == NIL, 1, nScopeMeth))}, HB_OO_CLSTP_EXPORTED)
 
-         /* These ones exist within Class(y), so we will probably try to implement it */
+         // These ones exist within Class(y), so we will probably try to implement it
 
          oClass:AddInline("asString"       , {|Self|::class:name + " object"}, HB_OO_CLSTP_EXPORTED)
          oClass:AddInline("asExpStr"       , {|Self|                        }, HB_OO_CLSTP_EXPORTED)
@@ -102,11 +102,11 @@ FUNCTION HBObject()
          oClass:AddInline("null"           , {|Self|                        }, HB_OO_CLSTP_EXPORTED)
          oClass:AddInline("size"           , {|Self|Len(Self)               }, HB_OO_CLSTP_EXPORTED)
 
-         /* No idea when those two could occur !!? */
+         // No idea when those two could occur !!?
          oClass:AddInline("wrongClass"     , {|Self|                        }, HB_OO_CLSTP_EXPORTED)
          oClass:AddInline("badMethod"      , {|Self|                        }, HB_OO_CLSTP_EXPORTED)
 
-         /* this one exist within VO and seem to be Auto Called when object ran out of scope */
+         // this one exist within VO and seem to be Auto Called when object ran out of scope
          oClass:AddInline("Axit"           , {|Self|                        }, HB_OO_CLSTP_EXPORTED)
 #endif
 

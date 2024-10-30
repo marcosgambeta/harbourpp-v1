@@ -48,7 +48,7 @@
 
 #include "hbapi.hpp"
 
-/* Warning: this code works only on ASCII based machines */
+// Warning: this code works only on ASCII based machines
 
 static signed char base64_decode_value(int value_in)
 {

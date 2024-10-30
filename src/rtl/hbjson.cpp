@@ -49,46 +49,44 @@
 #include "hbset.hpp"
 #include "hbjson.h"
 
-/*
-   The application/json Media Type for JavaScript Object Notation (JSON)
-   https://tools.ietf.org/html/rfc4627
-
-      C level functions:
-        char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent );
-           pValue  - value to encode;
-           pnLen   - if pnLen is not nullptr, length of returned buffer is
-                     stored to *pnLen;
-           iIndent - indenting to be human readable;
-           returns pointer to encoded JSON buffer. buffer must be fried
-              by the caller.
-
-        HB_SIZE hb_jsonDecode( const char * szSource, PHB_ITEM pValue );
-           szSource - JSON source;
-           pValue   - item to store decoded value. Item value is
-                      undetermined in case of error;
-           returns number of bytes decoded from the buffer. This allows
-              to use the remaining part of the buffer for some other
-              purposes. Returns 0 on error.
-
-      Harbour level functions:
-        hb_jsonEncode( xValue [, lHuman = .F. | nIndent = 0 ] ) --> cJSON
-        hb_jsonDecode( cJSON ) --> xValue
-        hb_jsonDecode( cJSON, @xValue ) --> nLengthDecoded
-
-      Note:
-        - JSON encode functions are safe for recursive arrays and hashes.
-          Recursive part of array or hash will be stored as null. JSON
-          encoder still allows to use same structure in the leaves, in
-          this case content will be duplicate.
-          I.e.:
-             xI := { 1, NIL }
-             xI[2] := xI
-             ? hb_jsonEncode( xI )  // [1,null]
-          but:
-             xI := { 1, .T. }
-             xI := { 2, xI, xI }
-             ? hb_jsonEncode( xI )  // [2,[1,true],[1,true]]
- */
+// The application/json Media Type for JavaScript Object Notation (JSON)
+// https://tools.ietf.org/html/rfc4627
+//
+//    C level functions:
+//      char * hb_jsonEncode( PHB_ITEM pValue, HB_SIZE * pnLen, int iIndent );
+//         pValue  - value to encode;
+//         pnLen   - if pnLen is not nullptr, length of returned buffer is
+//                   stored to *pnLen;
+//         iIndent - indenting to be human readable;
+//         returns pointer to encoded JSON buffer. buffer must be fried
+//            by the caller.
+//
+//      HB_SIZE hb_jsonDecode( const char * szSource, PHB_ITEM pValue );
+//         szSource - JSON source;
+//         pValue   - item to store decoded value. Item value is
+//                    undetermined in case of error;
+//         returns number of bytes decoded from the buffer. This allows
+//            to use the remaining part of the buffer for some other
+//            purposes. Returns 0 on error.
+//
+//    Harbour level functions:
+//      hb_jsonEncode( xValue [, lHuman = .F. | nIndent = 0 ] ) --> cJSON
+//      hb_jsonDecode( cJSON ) --> xValue
+//      hb_jsonDecode( cJSON, @xValue ) --> nLengthDecoded
+//
+//    Note:
+//      - JSON encode functions are safe for recursive arrays and hashes.
+//        Recursive part of array or hash will be stored as null. JSON
+//        encoder still allows to use same structure in the leaves, in
+//        this case content will be duplicate.
+//        I.e.:
+//           xI := { 1, NIL }
+//           xI[2] := xI
+//           ? hb_jsonEncode( xI )  // [1,null]
+//        but:
+//           xI := { 1, .T. }
+//           xI := { 2, xI, xI }
+//           ? hb_jsonEncode( xI )  // [2,[1,true],[1,true]]
 
 struct HB_JSON_ENCODE_CTX
 {
@@ -141,7 +139,7 @@ static void _hb_jsonCtxAddIndent(PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel)
 
 static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nLevel, bool fEOL, PHB_CODEPAGE cdp)
 {
-  /* Protection against recursive structures */
+  // Protection against recursive structures
   if ((pValue->isArray() || pValue->isHash()) && hb_itemSize(pValue) > 0)
   {
     void *id = pValue->isHash() ? hb_hashId(pValue) : hb_arrayId(pValue);
@@ -409,7 +407,7 @@ static void _hb_jsonEncode(PHB_ITEM pValue, PHB_JSON_ENCODE_CTX pCtx, HB_SIZE nL
   }
   else
   {
-    /* All unsupported types are replaced by null */
+    // All unsupported types are replaced by null
     _hb_jsonCtxAdd(pCtx, "null", 4);
   }
 }
@@ -529,8 +527,8 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, PHB_COD
   }
   else if (*szSource == '-' || (*szSource >= '0' && *szSource <= '9'))
   {
-    /* NOTE: this function is much less strict to number format than
-             JSON syntax definition. This is allowed behaviour [Mindaugas] */
+    // NOTE: this function is much less strict to number format than
+    //       JSON syntax definition. This is allowed behaviour [Mindaugas]
     HB_MAXINT nValue = 0;
     double dblValue = 0;
     auto fDbl = false;
@@ -663,7 +661,7 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, PHB_COD
 
       for (;;)
       {
-        /* Do we need to check if key does not exist yet? */
+        // Do we need to check if key does not exist yet?
         if ((szSource = _hb_jsonDecode(szSource, pItemKey, cdp)) == nullptr || !pItemKey->isString() ||
             *(szSource = _skipws(szSource)) != ':' ||
             (szSource = _hb_jsonDecode(_skipws(szSource + 1), pItemValue, cdp)) == nullptr)
@@ -699,7 +697,7 @@ static const char *_hb_jsonDecode(const char *szSource, PHB_ITEM pValue, PHB_COD
   return nullptr;
 }
 
-/* C level API functions */
+// C level API functions
 
 char *hb_jsonEncodeCP(PHB_ITEM pValue, HB_SIZE *pnLen, int iIndent, PHB_CODEPAGE cdp)
 {
@@ -760,7 +758,7 @@ HB_SIZE hb_jsonDecode(const char *szSource, PHB_ITEM pValue)
   return hb_jsonDecodeCP(szSource, pValue, nullptr);
 }
 
-/* Harbour level API functions */
+// Harbour level API functions
 
 static PHB_CODEPAGE _hb_jsonCdpPar(int iParam)
 {

@@ -62,8 +62,7 @@ static void hb_md5_next_seed(char *vect, const char *pszKey, int iLen)
   hb_md5(vect, 16, vect);
 }
 
-/* hb_MD5Encrypt(<cText>, <cPasswd>) --> <cCipher>
- */
+// hb_MD5Encrypt(<cText>, <cPasswd>) --> <cCipher>
 HB_FUNC(HB_MD5ENCRYPT)
 {
   auto pData = hb_param(1, Harbour::Item::STRING);
@@ -101,8 +100,7 @@ HB_FUNC(HB_MD5ENCRYPT)
   }
 }
 
-/* hb_MD5Decrypt(<cCipher>, <cPasswd> ]) --> <cText>
- */
+// hb_MD5Decrypt(<cCipher>, <cPasswd> ]) --> <cText>
 HB_FUNC(HB_MD5DECRYPT)
 {
   auto pData = hb_param(1, Harbour::Item::STRING);

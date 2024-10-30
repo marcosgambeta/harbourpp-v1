@@ -98,9 +98,9 @@ double hb_fsDiskSpace(const char *pszPath, HB_USHORT uiType)
   (static_cast<double>((v).LowPart) + static_cast<double>((v).HighPart) * ((static_cast<double>(0xFFFFFFFF)) + 1))
 
 #else
-        /* NOTE: Borland doesn't seem to deal with the un-named
-                 struct that is part of ULARGE_INTEGER
-                 [pt] */
+        // NOTE: Borland doesn't seem to deal with the un-named
+        //       struct that is part of ULARGE_INTEGER
+        //       [pt]
 #define HB_GET_LARGE_UINT(v)                                                                                           \
   (static_cast<double>((v).u.LowPart) + static_cast<double>((v).u.HighPart) * ((static_cast<double>(0xFFFFFFFF)) + 1))
 #endif

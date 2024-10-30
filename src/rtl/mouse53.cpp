@@ -45,7 +45,7 @@
 
 #include "hbapigt.hpp"
 
-/* Harbour callable interface */
+// Harbour callable interface
 
 #ifdef HB_COMPAT_C53
 
@@ -156,8 +156,8 @@ HB_FUNC(MRESTSTATE)
 
 HB_FUNC(MSETBOUNDS)
 {
-  hb_mouseSetBounds(hb_parni(1), /* Defaults to zero on bad type */
-                    hb_parni(2), /* Defaults to zero on bad type */
+  hb_mouseSetBounds(hb_parni(1), // Defaults to zero on bad type
+                    hb_parni(2), // Defaults to zero on bad type
                     HB_ISNUM(3) ? hb_parni(3) : hb_gtMaxRow(), HB_ISNUM(4) ? hb_parni(4) : hb_gtMaxCol());
 }
 

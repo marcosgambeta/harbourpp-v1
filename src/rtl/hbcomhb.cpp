@@ -43,35 +43,33 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*
- * hb_comClose(nPort)  --> lSuccess
- * hb_comDiscardChar(nPort, nChar | cChar) --> lSuccess
- * hb_comErrorChar(nPort, nChar | cChar) --> lSuccess
- * hb_comFlowChars(nPort, nXONchar | cXONchar, nXOFFchar | cXOFFchar) --> lSuccess
- * hb_comFlowControl(nPort, @nOldFlow [, nNewFlow]) --> lSuccess
- * hb_comFlowSet(nPort, nFlow) --> lSuccess
- * hb_comFlush(nPort, [ nType = HB_COM_IOFLUSH ]) --> lSuccess
- * hb_comGetDevice(nPort)  --> cDeviceName
- * hb_comGetDeviceHandle(nPort)  --> nHandle | F_ERROR
- * hb_comGetError(nPort) --> nError
- * hb_comGetOSError(nPort) --> nError
- * hb_comFindPort(cDeviceName [, lCreate = .F. ]) --> nPort
- * hb_comInit(nPort, nBaud, cParity, nSize, nStop) --> lSuccess
- * hb_comInputCount(nPort) --> nCount
- * hb_comInputState(nPort) --> nState
- * hb_comLastNum() --> nLastPortNumber
- * hb_comLSR(nPort, @nValue) --> lSuccess
- * hb_comMCR(nPort, @nValue, nClear, nSet) --> lSuccess
- * hb_comMSR(nPort, @nValue) --> lSuccess
- * hb_comOpen(nPort) --> lSuccess
- * hb_comOutputCount(nPort) --> nCount
- * hb_comOutputState(nPort) --> nState
- * hb_comSendBreak(nPort, [ nDuration = 50 ]) --> lSuccess
- * hb_comSetDevice(nPort, cDeviceName) --> lSuccess
- * hb_comSetError(nPort, nError) --> NIL
- * hb_comRecv(nPort, @cBuffer, [ nLen = Len(cBuffer) ], [ nTimeout = 0 ]) --> nBytesRecv
- * hb_comSend(nPort, cBuffer, [ nLen = Len(cBuffer) ], [ nTimeout = 0 ]) --> nBytesSent
- */
+// hb_comClose(nPort)  --> lSuccess
+// hb_comDiscardChar(nPort, nChar | cChar) --> lSuccess
+// hb_comErrorChar(nPort, nChar | cChar) --> lSuccess
+// hb_comFlowChars(nPort, nXONchar | cXONchar, nXOFFchar | cXOFFchar) --> lSuccess
+// hb_comFlowControl(nPort, @nOldFlow [, nNewFlow]) --> lSuccess
+// hb_comFlowSet(nPort, nFlow) --> lSuccess
+// hb_comFlush(nPort, [ nType = HB_COM_IOFLUSH ]) --> lSuccess
+// hb_comGetDevice(nPort)  --> cDeviceName
+// hb_comGetDeviceHandle(nPort)  --> nHandle | F_ERROR
+// hb_comGetError(nPort) --> nError
+// hb_comGetOSError(nPort) --> nError
+// hb_comFindPort(cDeviceName [, lCreate = .F. ]) --> nPort
+// hb_comInit(nPort, nBaud, cParity, nSize, nStop) --> lSuccess
+// hb_comInputCount(nPort) --> nCount
+// hb_comInputState(nPort) --> nState
+// hb_comLastNum() --> nLastPortNumber
+// hb_comLSR(nPort, @nValue) --> lSuccess
+// hb_comMCR(nPort, @nValue, nClear, nSet) --> lSuccess
+// hb_comMSR(nPort, @nValue) --> lSuccess
+// hb_comOpen(nPort) --> lSuccess
+// hb_comOutputCount(nPort) --> nCount
+// hb_comOutputState(nPort) --> nState
+// hb_comSendBreak(nPort, [ nDuration = 50 ]) --> lSuccess
+// hb_comSetDevice(nPort, cDeviceName) --> lSuccess
+// hb_comSetError(nPort, nError) --> NIL
+// hb_comRecv(nPort, @cBuffer, [ nLen = Len(cBuffer) ], [ nTimeout = 0 ]) --> nBytesRecv
+// hb_comSend(nPort, cBuffer, [ nLen = Len(cBuffer) ], [ nTimeout = 0 ]) --> nBytesSent
 
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
@@ -201,7 +199,7 @@ HB_FUNC(HB_COMOUTPUTSTATE)
 
 HB_FUNC(HB_COMSENDBREAK)
 {
-  /* 50ms break is enough for baud-rate 300 and higher */
+  // 50ms break is enough for baud-rate 300 and higher
   hb_retl(hb_comSendBreak(hb_parni(1), hb_parnidef(2, 50)) == 0);
 }
 

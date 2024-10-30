@@ -139,7 +139,7 @@ CREATE CLASS HBGetList
 
 ENDCLASS
 
-/* --- */
+// ---
 
 #ifdef HB_COMPAT_C53
 METHOD HBGetList:ReadModal(nPos, oMenu, nMsgRow, nMsgLeft, nMsgRight, cMsgColor)
@@ -653,7 +653,7 @@ METHOD HBGetList:Settle(nPos, lInit)
 
    IF nPos == 0
       nExitState := GE_DOWN
-   ELSEIF nPos > 0 .AND. hb_defaultValue(lInit, .F.)  /* NOTE: Never .T. in C5.2 mode. */
+   ELSEIF nPos > 0 .AND. hb_defaultValue(lInit, .F.)  // NOTE: Never .T. in C5.2 mode.
       nExitState := GE_NOEXIT
    ELSE
       nExitState := ::aGetList[nPos]:exitState
@@ -890,7 +890,7 @@ METHOD HBGetList:GUIReader(oGet, oMenu, aMsg)
             oGet:varPut(oGUI:value)
             EXIT
          ENDIF
-         /* fallthrough */
+         // fallthrough
       OTHERWISE
          oGet:varPut(oGUI:buffer)
       ENDSWITCH
@@ -1164,7 +1164,7 @@ METHOD HBGetList:GUIPostValidate(oGet, oGUI, aMsg)
             xNewValue := oGUI:value
             EXIT
          ENDIF
-         /* fallthrough */
+         // fallthrough
       OTHERWISE
          xNewValue := oGUI:buffer
       ENDSWITCH
@@ -1633,7 +1633,7 @@ METHOD HBGetList:EraseGetMsg(aMsg)
 
    RETURN Self
 
-/* --- */
+// ---
 
 METHOD HBGetList:Init(GetList)
 

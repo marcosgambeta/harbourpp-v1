@@ -52,7 +52,7 @@
 
 HB_FUNC_EXTERN(QOUT);
 
-#define ACCEPT_BUFFER_LEN 256 /* length of input buffer for ACCEPT command */
+#define ACCEPT_BUFFER_LEN 256 // length of input buffer for ACCEPT command
 
 #ifdef HB_CLP_UNDOC
 
@@ -78,7 +78,7 @@ HB_FUNC(__ACCEPT)
   HB_SIZE nLen = 0, nChar;
   int input = 0;
 
-  /* cPrompt(s) passed ? */
+  // cPrompt(s) passed ?
   if (hb_pcount() >= 1)
   {
     HB_FUNC_EXEC(QOUT);
@@ -88,7 +88,7 @@ HB_FUNC(__ACCEPT)
 
   while (input != K_ENTER && hb_vmRequestQuery() == 0)
   {
-    /* Wait forever, for keyboard events only */
+    // Wait forever, for keyboard events only
     input = hb_inkey(true, 0.0, INKEY_KEYBOARD);
     switch (input)
     {

@@ -81,7 +81,7 @@ void hb_regexInit(HB_REG_FREE pFree, HB_REG_COMP pComp, HB_REG_EXEC pExec)
   s_reg_exec = pExec;
 }
 
-/* This releases regex when called from the garbage collector */
+// This releases regex when called from the garbage collector
 static HB_GARBAGE_FUNC(hb_regexRelease)
 {
   (s_reg_free)(static_cast<PHB_REGEX>(Cargo));
@@ -144,7 +144,7 @@ PHB_REGEX hb_regexGet(PHB_ITEM pRegExItm, int iFlags)
     hb_errRT_BASE_SubstR(EG_ARG, 3012, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm);
   }
   else if (!pRegEx)
-  { /* hb_regexCompile() failed */
+  { // hb_regexCompile() failed
     hb_errRT_BASE_SubstR(EG_ARG, 3015, nullptr, HB_ERR_FUNCNAME, 1, pRegExItm);
   }
 

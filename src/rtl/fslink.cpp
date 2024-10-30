@@ -213,7 +213,7 @@ HB_BOOL hb_fsLinkSym(const char *pszTarget, const char *pszNewFile)
   return fResult;
 }
 
-/* NOTE: Caller must free the pointer, if not nullptr */
+// NOTE: Caller must free the pointer, if not nullptr
 char *hb_fsLinkRead(const char *pszFile)
 {
   char *pszLink = nullptr;
@@ -319,7 +319,7 @@ char *hb_fsLinkRead(const char *pszFile)
       else
       {
         pszLink[size] = '\0';
-        /* Convert from OS codepage */
+        // Convert from OS codepage
         pszLink = const_cast<char *>(hb_osDecodeCP(pszLink, nullptr, nullptr));
       }
 

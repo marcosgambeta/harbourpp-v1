@@ -215,7 +215,7 @@ HB_FUNC(HB_HEXTOSTR)
 
       auto szDest = static_cast<char *>(hb_xgrab(nDest + 1));
 
-      /* ul = 0; see above stop condition */
+      // ul = 0; see above stop condition
       do
       {
         char c = *szStr++;

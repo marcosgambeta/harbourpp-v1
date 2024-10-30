@@ -50,9 +50,8 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* hb_UChar(<nCode>) --> <cText>
- * return string with U+nCode character in HVM CP encoding
- */
+// hb_UChar(<nCode>) --> <cText>
+// return string with U+nCode character in HVM CP encoding
 HB_FUNC(HB_UCHAR)
 {
   if (HB_ISNUM(1))
@@ -67,9 +66,8 @@ HB_FUNC(HB_UCHAR)
   }
 }
 
-/* hb_BChar(<nCode>) --> <cText>
- * return 1 byte string with <nCode> value
- */
+// hb_BChar(<nCode>) --> <cText>
+// return 1 byte string with <nCode> value
 HB_FUNC(HB_BCHAR)
 {
   if (HB_ISNUM(1))
@@ -83,9 +81,8 @@ HB_FUNC(HB_BCHAR)
   }
 }
 
-/* hb_UCode(<cText>) --> <nCode>
- * return unicode value of 1st character (not byte) in given string
- */
+// hb_UCode(<cText>) --> <nCode>
+// return unicode value of 1st character (not byte) in given string
 HB_FUNC(HB_UCODE)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -100,9 +97,8 @@ HB_FUNC(HB_UCODE)
   }
 }
 
-/* hb_BCode(<cText>) --> <nCode>
- * return value of 1st byte in given string
- */
+// hb_BCode(<cText>) --> <nCode>
+// return value of 1st byte in given string
 HB_FUNC(HB_BCODE)
 {
   auto szText = hb_parc(1);
@@ -117,9 +113,8 @@ HB_FUNC(HB_BCODE)
   }
 }
 
-/* hb_ULen(<cText>) --> <nChars>
- * return string length in characters
- */
+// hb_ULen(<cText>) --> <nChars>
+// return string length in characters
 HB_FUNC(HB_ULEN)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -134,9 +129,8 @@ HB_FUNC(HB_ULEN)
   }
 }
 
-/* hb_BLen(<cText>) --> <nBytes>
- * return string length in bytes
- */
+// hb_BLen(<cText>) --> <nBytes>
+// return string length in bytes
 HB_FUNC(HB_BLEN)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -151,9 +145,8 @@ HB_FUNC(HB_BLEN)
   }
 }
 
-/* hb_UPeek(<cText>, <n>) --> <nCode>
- * return unicode value of <n>th character in given string
- */
+// hb_UPeek(<cText>, <n>) --> <nCode>
+// return unicode value of <n>th character in given string
 HB_FUNC(HB_UPEEK)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -184,9 +177,8 @@ HB_FUNC(HB_UPEEK)
   }
 }
 
-/* hb_BPeek(<cText>, <n>) --> <nCode>
- * return value of <n>th byte in given string
- */
+// hb_BPeek(<cText>, <n>) --> <nCode>
+// return value of <n>th byte in given string
 HB_FUNC(HB_BPEEK)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -202,9 +194,8 @@ HB_FUNC(HB_BPEEK)
   }
 }
 
-/* hb_UPoke( [@]<cText>, <n>, <nVal> ) --> <cText>
- * change <n>th character in given string to unicode <nVal> one and return modified text
- */
+// hb_UPoke( [@]<cText>, <n>, <nVal> ) --> <cText>
+// change <n>th character in given string to unicode <nVal> one and return modified text
 HB_FUNC(HB_UPOKE)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -254,9 +245,8 @@ HB_FUNC(HB_UPOKE)
   }
 }
 
-/* hb_BPoke( [@]<cText>, <n>, <nVal> ) --> <cText>
- * change <n>th byte in given string to <nVal> and return modified text
- */
+// hb_BPoke( [@]<cText>, <n>, <nVal> ) --> <cText>
+// change <n>th byte in given string to <nVal> and return modified text
 HB_FUNC(HB_BPOKE)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -278,8 +268,7 @@ HB_FUNC(HB_BPOKE)
   }
 }
 
-/* hb_USubStr(<cString>, <nStart>, <nCount>) --> <cSubstring>
- */
+// hb_USubStr(<cString>, <nStart>, <nCount>) --> <cSubstring>
 HB_FUNC(HB_USUBSTR)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -338,8 +327,7 @@ HB_FUNC(HB_USUBSTR)
   }
 }
 
-/* hb_BSubStr(<cString>, <nStart>, <nCount>) --> <cSubstring>
- */
+// hb_BSubStr(<cString>, <nStart>, <nCount>) --> <cSubstring>
 HB_FUNC(HB_BSUBSTR)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -398,8 +386,7 @@ HB_FUNC(HB_BSUBSTR)
   }
 }
 
-/* hb_ULeft(<cString>, <nCount>) --> <cSubstring>
- */
+// hb_ULeft(<cString>, <nCount>) --> <cSubstring>
 HB_FUNC(HB_ULEFT)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -434,8 +421,7 @@ HB_FUNC(HB_ULEFT)
   }
 }
 
-/* hb_BLeft(<cString>, <nCount>) --> <cSubstring>
- */
+// hb_BLeft(<cString>, <nCount>) --> <cSubstring>
 HB_FUNC(HB_BLEFT)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -466,8 +452,7 @@ HB_FUNC(HB_BLEFT)
   }
 }
 
-/* hb_URight(<cString>, <nCount>) --> <cSubstring>
- */
+// hb_URight(<cString>, <nCount>) --> <cSubstring>
 HB_FUNC(HB_URIGHT)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -504,8 +489,7 @@ HB_FUNC(HB_URIGHT)
   }
 }
 
-/* hb_BRight(<cString>, <nCount>) --> <cSubstring>
- */
+// hb_BRight(<cString>, <nCount>) --> <cSubstring>
 HB_FUNC(HB_BRIGHT)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -529,8 +513,7 @@ HB_FUNC(HB_BRIGHT)
   }
 }
 
-/* hb_UAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
- */
+// hb_UAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
 HB_FUNC(HB_UAT)
 {
   auto pSub = hb_param(1, Harbour::Item::STRING);
@@ -598,8 +581,7 @@ HB_FUNC(HB_UAT)
   }
 }
 
-/* hb_BAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
- */
+// hb_BAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
 HB_FUNC(HB_BAT)
 {
   auto pSub = hb_param(1, Harbour::Item::STRING);
@@ -665,8 +647,7 @@ HB_FUNC(HB_BAT)
   }
 }
 
-/* hb_BRAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
- */
+// hb_BRAt(<cSubString>, <cString>, [<nFrom>], [<nTo>]) --> <nAt>
 HB_FUNC(HB_BRAT)
 {
   auto nSubLen = hb_parclen(1);
@@ -723,8 +704,7 @@ HB_FUNC(HB_BRAT)
   hb_retns(nPos);
 }
 
-/* hb_BStuff( <cString>, <nAt>, <nDel>, <cIns> ) --> <cResult>
- */
+// hb_BStuff( <cString>, <nAt>, <nDel>, <cIns> ) --> <cResult>
 HB_FUNC(HB_BSTUFF)
 {
   auto szText = hb_parc(1);
@@ -777,8 +757,7 @@ HB_FUNC(HB_BSTUFF)
   }
 }
 
-/* hb_UStuff( <cString>, <nAt>, <nDel>, <cIns> ) --> <cResult>
- */
+// hb_UStuff( <cString>, <nAt>, <nDel>, <cIns> ) --> <cResult>
 HB_FUNC(HB_USTUFF)
 {
   auto szText = hb_parc(1);

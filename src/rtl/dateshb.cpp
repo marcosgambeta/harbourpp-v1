@@ -129,7 +129,7 @@ HB_FUNC(DTOS)
   }
 }
 
-/* NOTE: Harbour extension, exactly the same as SToD(). */
+// NOTE: Harbour extension, exactly the same as SToD().
 
 HB_FUNC(HB_STOD)
 {
@@ -680,8 +680,8 @@ HB_FUNC(HB_STRTOTS)
   }
 }
 
-/* get week number and other parts ISO 8601 week date:
-   hb_Week(<dDate>, [@<nYear>], [@<nDayOfWeek>]) --> <nWeek> */
+// get week number and other parts ISO 8601 week date:
+// hb_Week(<dDate>, [@<nYear>], [@<nDayOfWeek>]) --> <nWeek>
 HB_FUNC(HB_WEEK)
 {
   auto pDate = hb_param(1, Harbour::Item::DATETIME);

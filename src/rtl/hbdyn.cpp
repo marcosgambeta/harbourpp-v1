@@ -57,7 +57,7 @@
 #define _MASK_CALLCONV 0x0F00000
 #define _MASK_OPTIONS 0xF000000
 
-/* C raw return types */
+// C raw return types
 #define _RETTYPERAW_INT32 1
 #define _RETTYPERAW_INT64 2
 #define _RETTYPERAW_DOUBLE 3
@@ -178,7 +178,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
     break;
 
   case HB_DYN_CTYPE_LLONG_UNSIGNED:
-    /* FIXME: Digits are lost. */
+    // FIXME: Digits are lost.
 #if HB_VMLONG_MAX == INT32_MAX || defined(HB_LONG_LONG_OFF)
     pArg->value.t.n64 = static_cast<HB_MAXUINT>(hb_itemGetNInt(pParam));
 #else
@@ -188,7 +188,7 @@ static HB_U64 hb_u64par(PHB_ITEM pParam, PHB_DYNARG pArg)
     break;
 
   case HB_DYN_CTYPE_FLOAT:
-    /* FIXME */
+    // FIXME
 
   case HB_DYN_CTYPE_DOUBLE:
     HB_PUT_LE_DOUBLE(reinterpret_cast<HB_BYTE *>(&pArg->value.t.n64), hb_itemGetND(pParam));
@@ -610,7 +610,7 @@ static void hb_u32par(PHB_ITEM pParam, PHB_DYNARG pArg, HB_U32 *r1, HB_U32 *r2, 
 
   case HB_DYN_CTYPE_LLONG_UNSIGNED:
 #if !defined(HB_LONG_LONG_OFF)
-    /* FIXME: Digits are lost. */
+    // FIXME: Digits are lost.
 #if HB_VMLONG_MAX == INT32_MAX || defined(HB_LONG_LONG_OFF)
     pArg->value.t.n64 = static_cast<HB_MAXUINT>(hb_itemGetNInt(pParam));
 #else
@@ -1357,7 +1357,7 @@ void hb_dynCall(int iFuncFlags, void *pFunctionRaw, int iParams, int iFirst, int
         }
         break;
 #endif
-      default: /* HB_DYN_CALLCONV_CDECL */
+      default: // HB_DYN_CALLCONV_CDECL
         switch (iRetTypeRaw)
         {
         case _RETTYPERAW_INT32:

@@ -53,7 +53,7 @@ HB_FUNC(HB_COLORINDEX)
     HB_SIZE nColorPos;
     auto iColorIndex = hb_parni(2);
 
-    /* Skip the given number of commas */
+    // Skip the given number of commas
     for (nColorPos = 0; pszColor[nColorPos] != '\0' && iColorIndex > 0; nColorPos++)
     {
       if (pszColor[nColorPos] == ',')
@@ -62,31 +62,31 @@ HB_FUNC(HB_COLORINDEX)
       }
     }
 
-    /* if found, continue */
+    // if found, continue
     if (iColorIndex == 0)
     {
       HB_SIZE nColorLen;
 
-      /* Skip the spaces after the comma */
+      // Skip the spaces after the comma
       while (pszColor[nColorPos] == ' ')
       {
         nColorPos++;
       }
 
-      /* Search for next comma or end of string */
+      // Search for next comma or end of string
       nColorLen = 0;
       while (pszColor[nColorPos + nColorLen] != '\0' && pszColor[nColorPos + nColorLen] != ',')
       {
         nColorLen++;
       }
 
-      /* Skip the trailing spaces */
+      // Skip the trailing spaces
       while (nColorLen > 0 && pszColor[nColorPos + nColorLen - 1] == ' ')
       {
         nColorLen--;
       }
 
-      /* Return the string */
+      // Return the string
       hb_retclen(pszColor + nColorPos, nColorLen);
     }
     else

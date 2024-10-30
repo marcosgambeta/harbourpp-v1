@@ -49,12 +49,12 @@
 #include "button.ch"
 #include "color.ch"
 
-/* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
-         it has all related variables and methods. */
+// NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
+//       it has all related variables and methods.
 
-/* NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
-         functions to generate screen output. Harbour uses Disp*()
-         functions only. [vszakats] */
+// NOTE: CA-Cl*pper 5.3 uses a mixture of QQOut(), DevOut(), Disp*()
+//       functions to generate screen output. Harbour uses Disp*()
+//       functions only. [vszakats]
 
 #ifdef HB_COMPAT_C53
 
@@ -92,7 +92,7 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
    METHOD top(nTop) SETGET
    METHOD width() SETGET
 
-   METHOD Init(nTop, nLeft, nBottom, nRight) /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD Init(nTop, nLeft, nBottom, nRight) // NOTE: This method is a Harbour extension [vszakats]
 
    PROTECTED:
 
@@ -109,7 +109,7 @@ CREATE CLASS PopupMenu FUNCTION HBPopupMenu
    VAR aItems     INIT {}
    VAR aSaveScr
 
-   VAR lShadowed  INIT .F. /* Harbour extension */
+   VAR lShadowed  INIT .F. // Harbour extension
 
    METHOD setMetrics()
 
@@ -339,8 +339,8 @@ METHOD PopupMenu:getPrev()
 
    RETURN 0
 
-/* NOTE: This method corrects a bug in Cl*pper:
-         1) when a menuitem is disabled it will ignore the key [jlalin] */
+// NOTE: This method corrects a bug in Cl*pper:
+//       1) when a menuitem is disabled it will ignore the key [jlalin]
 
 METHOD PopupMenu:getShortCt(nKey)
 
@@ -354,8 +354,8 @@ METHOD PopupMenu:getShortCt(nKey)
 
    RETURN 0
 
-/* NOTE: This method corrects one bug in CA-Cl*pper:
-         1) when a menuitem is disabled it will ignore the click [jlalin] */
+// NOTE: This method corrects one bug in CA-Cl*pper:
+//       1) when a menuitem is disabled it will ignore the click [jlalin]
 
 METHOD PopupMenu:hitTest(nMRow, nMCol)
 
@@ -482,7 +482,7 @@ METHOD PopupMenu:setItem(nPos, oItem)
       ::nWidth := Max(__CapMetrics(oItem), ::nWidth)
    ENDIF
 
-   RETURN Self /* NOTE: CA-Cl*pper returns NIL, which is wrong. */
+   RETURN Self // NOTE: CA-Cl*pper returns NIL, which is wrong.
 
 METHOD PopupMenu:setMetrics()
 

@@ -112,7 +112,7 @@ HB_FUNC(HB_STRTOEXP)
         case '\\':
         case '"':
           *pDst++ = '\\';
-          /* fallthrough */
+          // fallthrough
         default:
           *pDst++ = ch;
           break;

@@ -103,4 +103,4 @@ extern "C"
 }
 #endif
 
-#endif /* !SHA2_H */
+#endif // !SHA2_H

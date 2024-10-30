@@ -172,7 +172,7 @@ static bool hb_copyfile(const char *pszSource, const char *pszDest)
   return bRetVal;
 }
 
-/* Clipper returns .F. on failure and NIL on success */
+// Clipper returns .F. on failure and NIL on success
 
 HB_FUNC(__COPYFILE)
 {
@@ -189,6 +189,6 @@ HB_FUNC(__COPYFILE)
   else
   {
     hb_errRT_BASE(EG_ARG, 2010, nullptr, HB_ERR_FUNCNAME,
-                  HB_ERR_ARGS_BASEPARAMS); /* NOTE: Undocumented but existing Clipper Run-time error */
+                  HB_ERR_ARGS_BASEPARAMS); // NOTE: Undocumented but existing Clipper Run-time error
   }
 }

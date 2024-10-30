@@ -82,10 +82,9 @@ HB_FUNC(ROUND)
     auto iDec = hb_parni(2);
 
 #ifdef HB_CLP_STRICT
-    /* In CA-Cl*pper Round() always returns double item, what in some
-     * applications may be important due to different formatting rules
-     * when SET FIXED is ON [druzus]
-     */
+    // In CA-Cl*pper Round() always returns double item, what in some
+    // applications may be important due to different formatting rules
+    // when SET FIXED is ON [druzus]
     hb_retndlen(hb_numRound(pNumber->getND(), iDec), 0, HB_MAX(iDec, 0));
 #else
     if (iDec == 0 && pNumber->isNumInt())

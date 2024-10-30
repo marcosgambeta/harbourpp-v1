@@ -49,7 +49,7 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-/* returns l characters from n characters into string */
+// returns l characters from n characters into string
 
 HB_FUNC(SUBSTR)
 {

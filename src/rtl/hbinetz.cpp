@@ -48,9 +48,9 @@
 #include "hbznet.h"
 #include "hbzlib.ch"
 
-/* this function is intentionally not in hbinet.c to not create binding
- * to ZLIB if user does not use it
- */
+// this function is intentionally not in hbinet.c to not create binding
+// to ZLIB if user does not use it
+
 HB_FUNC(HB_INETCOMPRESS)
 {
   auto pItem = hb_param(1, Harbour::Item::POINTER);
@@ -66,7 +66,7 @@ HB_FUNC(HB_INETCOMPRESS)
     PHB_ZNETSTREAM pStream = hb_znetOpen(iLevel, iStrategy);
     if (pStream == nullptr)
     {
-      pItem = nullptr; /* to force RTE */
+      pItem = nullptr; // to force RTE
     }
     if (hb_znetInetInitialize(pItem, pStream, hb_znetRead, hb_znetWrite, hb_znetFlush, hb_znetClose, nullptr, nullptr))
     {

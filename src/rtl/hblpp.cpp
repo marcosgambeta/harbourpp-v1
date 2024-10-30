@@ -157,7 +157,7 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void **data, HB_SIZE *len, HB_MAXINT timeout
       }
       else if (lRecv == 0)
       {
-        /* peer closed connection */
+        // peer closed connection
         pSocket->iError = 0;
         return false;
       }
@@ -173,7 +173,7 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void **data, HB_SIZE *len, HB_MAXINT timeout
 
       if (pSocket->nLimit && pSocket->nRecvSize > pSocket->nLimit)
       {
-        /* protection against remote memory exhaust attack */
+        // protection against remote memory exhaust attack
         pSocket->iError = HB_LPP_ERR_TOOLARGE;
         hb_xfree(pSocket->pRecvBuffer);
         pSocket->pRecvBuffer = nullptr;
@@ -205,7 +205,7 @@ HB_BOOL hb_lppRecv(PHB_LPP pSocket, void **data, HB_SIZE *len, HB_MAXINT timeout
     }
     else if (lRecv == 0)
     {
-      /* peer closed connection */
+      // peer closed connection
       pSocket->iError = 0;
       return false;
     }

@@ -56,17 +56,15 @@
 #include <windows.h>
 #endif
 
-/*
-   SecondsCPU(n) --> nTime
-   FlagShip/CLIP compatible function, which reports how many CPU and/or
-   system seconds have elapsed since the beginning of the program execution.
-    n == 1  utime  -> user CPU time of the current process
-    n == 2  stime  -> system CPU time behalf of the current process
-    n == 3  u + s  -> sum of utime + stime (default)
-    n == 11 cutime -> sum of the user CPU time of the current + child process
-    n == 12 cstime -> sum of the system CPU time of the current + child process
-    n == 13 cu+cs  -> sum of cutime + cstime
- */
+// SecondsCPU(n) --> nTime
+// FlagShip/CLIP compatible function, which reports how many CPU and/or
+// system seconds have elapsed since the beginning of the program execution.
+//  n == 1  utime  -> user CPU time of the current process
+//  n == 2  stime  -> system CPU time behalf of the current process
+//  n == 3  u + s  -> sum of utime + stime (default)
+//  n == 11 cutime -> sum of the user CPU time of the current + child process
+//  n == 12 cstime -> sum of the system CPU time of the current + child process
+//  n == 13 cu+cs  -> sum of cutime + cstime
 
 double hb_secondsCPU(int n)
 {
@@ -108,7 +106,7 @@ double hb_secondsCPU(int n)
       d += tm.tms_stime;
     }
 
-/* In POSIX-1996 the CLK_TCK symbol is mentioned as obsolescent */
+// In POSIX-1996 the CLK_TCK symbol is mentioned as obsolescent
 #if 0
       d /= CLK_TCK;
 #endif
@@ -137,8 +135,8 @@ double hb_secondsCPU(int n)
   else
 #endif
   {
-    /* TODO: this code is only for DOS and other platforms which cannot
-             calculate process time */
+    // TODO: this code is only for DOS and other platforms which cannot
+    //       calculate process time
 
     if (n & 1)
     {

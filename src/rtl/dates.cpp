@@ -55,15 +55,12 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
    HB_TRACE(HB_TR_DEBUG, ("hb_dateFormat(%s, %p, %s)", szDate, static_cast<void*>(szFormattedDate), szDateFormat));
 #endif
 
-  /*
-   * NOTE: szFormattedDate must point to a buffer of at least 11 bytes.
-   *       szDateFormat must point to a buffer holding the date format to use.
-   */
+  // NOTE: szFormattedDate must point to a buffer of at least 11 bytes.
+  //       szDateFormat must point to a buffer holding the date format to use.
+
   int format_count, digit_count;
 
-  /*
-   * Determine the maximum size of the formatted date string
-   */
+  // Determine the maximum size of the formatted date string
   auto size = static_cast<int>(strlen(szDateFormat));
   if (size > 10)
   {
@@ -71,7 +68,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
   }
 
   if (szDate != nullptr && strlen(szDate) == 8)
-  { /* A valid date is always 8 characters */
+  { // A valid date is always 8 characters
     auto used_d = false;
     auto used_m = false;
     auto used_y = false;
@@ -105,7 +102,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
             szFormattedDate[format_count++] = szDate[6];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         case 3:
           if (!used_d && format_count < size)
           {
@@ -115,14 +112,14 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
             szFormattedDate[format_count++] = szDate[6];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         case 2:
           if (!used_d && format_count < size)
           {
             szFormattedDate[format_count++] = szDate[6];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         default:
           if (!used_d && format_count < size)
           {
@@ -149,7 +146,7 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
             szFormattedDate[format_count++] = szDate[4];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         case 3:
           if (!used_m && format_count < size)
           {
@@ -159,14 +156,14 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
             szFormattedDate[format_count++] = szDate[4];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         case 2:
           if (!used_m && format_count < size)
           {
             szFormattedDate[format_count++] = szDate[4];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         default:
           if (!used_m && format_count < size)
           {
@@ -190,21 +187,21 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
             szFormattedDate[format_count++] = szDate[0];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         case 3:
           if (!used_y && format_count < size)
           {
             szFormattedDate[format_count++] = szDate[1];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         case 2:
           if (!used_y && format_count < size)
           {
             szFormattedDate[format_count++] = szDate[2];
             digit_count--;
           }
-          /* fallthrough */
+          // fallthrough
         default:
           if (!used_y && format_count < size)
           {
@@ -229,8 +226,8 @@ char *hb_dateFormat(const char *szDate, char *szFormattedDate, const char *szDat
   }
   else
   {
-    /* Not a valid date string, so return a blank date with separators */
-    format_count = size; /* size is either 8 or 10 */
+    // Not a valid date string, so return a blank date with separators
+    format_count = size; // size is either 8 or 10
     hb_strncpy(szFormattedDate, szDateFormat, size);
 
     for (digit_count = 0; digit_count < size; digit_count++)
@@ -336,8 +333,8 @@ static int hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long
       }
     }
 
-    /* If there are non-digits at the start of the date field,
-       they are not to be treated as date field separators */
+    // If there are non-digits at the start of the date field,
+    // they are not to be treated as date field separators
     non_digit = 1;
     size = static_cast<int>(strlen(szDate));
     for (count = used = 0; count < size; count++)
@@ -345,7 +342,7 @@ static int hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long
       digit = szDate[count];
       if (HB_ISDIGIT(digit))
       {
-        /* Process the digit for the current date field */
+        // Process the digit for the current date field
         if (d_pos == 1)
         {
           d_value = (d_value * 10) + digit - '0';
@@ -358,16 +355,16 @@ static int hb_dateUnformatRaw(const char *szDate, const char *szDateFormat, long
         {
           y_value = (y_value * 10) + digit - '0';
         }
-        /* Treat the next non-digit as a date field separator */
+        // Treat the next non-digit as a date field separator
         non_digit = 0;
       }
       else
       {
-        /* Process the non-digit */
+        // Process the non-digit
         if (non_digit == 0)
         {
-          /* Only move to the next date field on the first
-             consecutive non-digit that is encountered */
+          // Only move to the next date field on the first
+          // consecutive non-digit that is encountered
           non_digit = 1;
           d_pos--;
           m_pos--;
@@ -400,16 +397,15 @@ long hb_dateUnformat(const char *szDate, const char *szDateFormat)
   return lDate;
 }
 
-/* time modifiers:
- *    H - hour
- *    M - minutes
- *    S - seconds
- *    F - fractional part of seconds
- *    P - PM/AM marker
- * maximal size of time pattern:
- *    16 for "hh:mm:ss:ffff pp"
- * always safe buffer size is 17 (+1 for 0)
- */
+// time modifiers:
+//    H - hour
+//    M - minutes
+//    S - seconds
+//    F - fractional part of seconds
+//    P - PM/AM marker
+// maximal size of time pattern:
+//    16 for "hh:mm:ss:ffff pp"
+// always safe buffer size is 17 (+1 for 0)
 char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
 {
 #if 0
@@ -514,7 +510,7 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
         }
         iPM = -1;
       }
-      /* fallthrough */
+      // fallthrough
     default:
       digits = value = 0;
     }
@@ -540,12 +536,10 @@ char *hb_timeFormat(char *szBuffer, const char *szTimeFormat, long lMilliSec)
   return szBuffer;
 }
 
-/*
- * maximal size of time pattern:
- *    16 for "hh:mm:ss:ffff pp"
- * total maximal size of formatted timestamp value: 10 + 16 = 26
- * always safe buffer size is: 27
- */
+// maximal size of time pattern:
+//    16 for "hh:mm:ss:ffff pp"
+// total maximal size of formatted timestamp value: 10 + 16 = 26
+// always safe buffer size is: 27
 char *hb_timeStampFormat(char *szBuffer, const char *szDateFormat, const char *szTimeFormat, long lJulian,
                          long lMilliSec)
 {
@@ -625,7 +619,7 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
           iPM = 0;
         }
       }
-      /* fallthrough */
+      // fallthrough
     default:
       pValue = nullptr;
     }
@@ -684,7 +678,7 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
   {
     if (iHour == 0)
     {
-      iHour = 24; /* wrong time */
+      iHour = 24; // wrong time
     }
     else if (iHour != 12)
     {
@@ -695,7 +689,7 @@ long hb_timeUnformat(const char *szTime, const char *szTimeFormat)
   {
     if (iHour == 0)
     {
-      iHour = 24; /* wrong time */
+      iHour = 24; // wrong time
     }
     else if (iHour == 12)
     {

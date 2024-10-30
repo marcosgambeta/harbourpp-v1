@@ -48,17 +48,17 @@
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 
-/* converts an ASCII code to a character value */
+// converts an ASCII code to a character value
 HB_FUNC(CHR)
 {
   if (HB_ISNUM(1))
   {
-    /* NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
-             Chr() cases where the passed parameter is a constant which
-             can be divided by 256 but it's not zero, in this case it
-             will return an empty string instead of a Chr(0). [vszakats] */
+    // NOTE: CA-Cl*pper's compiler optimizer will be wrong for those
+    //       Chr() cases where the passed parameter is a constant which
+    //       can be divided by 256 but it's not zero, in this case it
+    //       will return an empty string instead of a Chr(0). [vszakats]
 
-    /* Believe it or not, Cl*pper does this! */
+    // Believe it or not, Cl*pper does this!
 #ifdef HB_CLP_STRICT
     char szChar[2];
     szChar[0] = hb_parnl(1) % 256;
@@ -84,7 +84,7 @@ HB_FUNC(CHR)
   }
 }
 
-/* converts a character value to an ASCII code */
+// converts a character value to an ASCII code
 HB_FUNC(ASC)
 {
   auto szValue = hb_parc(1);

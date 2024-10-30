@@ -78,7 +78,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
       Eval(ErrorBlock(), oErr)
    ENDIF
 
-   /* If no drive/dir specified, search the SET DEFAULT and PATH directories */
+   // If no drive/dir specified, search the SET DEFAULT and PATH directories
 
    hb_FNameSplit(cFile, @cDir, @cName, @cExt)
 
@@ -87,7 +87,7 @@ PROCEDURE __TypeFile(cFile, lPrint)
       cTmp := StrTran(Set(_SET_DEFAULT) + ";" + Set(_SET_PATH), ",", ";")
 
       i := Len(cTmp)
-      DO WHILE SubStr(cTmp, i, 1) == ";"            /* remove last ";" */
+      DO WHILE SubStr(cTmp, i, 1) == ";"            // remove last ";"
          cTmp := Left(cTmp, --i)
       ENDDO
 
@@ -111,13 +111,13 @@ PROCEDURE __TypeFile(cFile, lPrint)
       oErr:fileName    := cFile
       oErr:OsCode      := FError()
       oErr:tries       := ++nRetries
-      IF !hb_defaultValue(Eval(ErrorBlock(), oErr), .T.)  /* user select "Default" */
+      IF !hb_defaultValue(Eval(ErrorBlock(), oErr), .T.)  // user select "Default"
          RETURN
       ENDIF
    ENDDO
 
-   /* NOTE: the NG say you should explicitly SET CONSOLE OFF if you wish to
-            suppress output to screen. [ckedem] */
+   // NOTE: the NG say you should explicitly SET CONSOLE OFF if you wish to
+   //       suppress output to screen. [ckedem]
 
    IF lPrint
       aSaveSet[1] := Set(_SET_DEVICE, "PRINTER")
@@ -127,15 +127,15 @@ PROCEDURE __TypeFile(cFile, lPrint)
    nSize   := FSeek(nHandle, 0, FS_END)
    nBuffer := Min(nSize, BUFFER_LENGTH)
 
-   FSeek(nHandle, 0)  /* go top */
+   FSeek(nHandle, 0)  // go top
 
-   /* Here we try to read a line at a time but I think we could just
-      display the whole buffer since it said:
-      "without any headings or formatting" */
+   // Here we try to read a line at a time but I think we could just
+   // display the whole buffer since it said:
+   // "without any headings or formatting"
 
    nHasRead := 0
    cBuffer := Space(nBuffer)
-   QOut()  /* starting a new line */
+   QOut()  // starting a new line
    DO WHILE (nRead := FRead(nHandle, @cBuffer, nBuffer)) > 0
       nHasRead += nRead
       QQOut(cBuffer)

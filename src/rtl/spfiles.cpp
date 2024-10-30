@@ -95,12 +95,10 @@ HB_BOOL hb_spFile(const char *pszFileName, char *pszRetPath)
       }
     }
 
-    /*
-     * This code is intentional. To eliminate race condition,
-     * in pending hb_spCreate()/hb_spOpen() call when we have to know
-     * real path and file name we have to set its deterministic value
-     * here. If it's not necessary the caller may drop this value.
-     */
+    // This code is intentional. To eliminate race condition,
+    // in pending hb_spCreate()/hb_spOpen() call when we have to know
+    // real path and file name we have to set its deterministic value
+    // here. If it's not necessary the caller may drop this value.
     if (!bIsFile)
     {
       pFilepath->szPath = szDefault ? szDefault : ".";
@@ -167,12 +165,10 @@ HB_BOOL hb_spFileExists(const char *pszFileName, char *pszRetPath)
       }
     }
 
-    /*
-     * This code is intentional. To eliminate race condition,
-     * in pending hb_spCreate()/hb_spOpen() call when we have to know
-     * real path and file name we have to set its deterministic value
-     * here. If it's not necessary the caller may drop this value.
-     */
+    // This code is intentional. To eliminate race condition,
+    // in pending hb_spCreate()/hb_spOpen() call when we have to know
+    // real path and file name we have to set its deterministic value
+    // here. If it's not necessary the caller may drop this value.
     if (!bIsFile)
     {
       pFilepath->szPath = szDefault ? szDefault : ".";

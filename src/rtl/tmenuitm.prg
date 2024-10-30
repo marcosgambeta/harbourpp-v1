@@ -49,8 +49,8 @@
 
 #define IS_IN(str, list)  ("|" + (str) + "|" $ "|" + (list) + "|")
 
-/* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
-         it has all related variables and methods. */
+// NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
+//       it has all related variables and methods.
 
 #ifdef HB_COMPAT_C53
 
@@ -69,13 +69,13 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
    METHOD shortcut(nShortcut) SETGET
    METHOD style(cStyle) SETGET
 
-   VAR __col      INIT -1  AS NUMERIC                   /* NOTE: This is a Harbour extension. */
-   VAR __row      INIT -1  AS NUMERIC                   /* NOTE: This is a Harbour extension. */
-   VAR __issep    INIT .F. AS LOGICAL                   /* NOTE: This is a Harbour extension. */
+   VAR __col      INIT -1  AS NUMERIC                   // NOTE: This is a Harbour extension.
+   VAR __row      INIT -1  AS NUMERIC                   // NOTE: This is a Harbour extension.
+   VAR __issep    INIT .F. AS LOGICAL                   // NOTE: This is a Harbour extension.
 
    METHOD isPopUp()
 
-   METHOD Init(cCaption, boData, nShortcut, cMessage, nID) /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD Init(cCaption, boData, nShortcut, cMessage, nID) // NOTE: This method is a Harbour extension [vszakats]
 
    PROTECTED:
 
@@ -86,7 +86,7 @@ CREATE CLASS MenuItem FUNCTION HBMenuItem
    VAR nID
    VAR cMessage
    VAR nShortcut
-   VAR cStyle     INIT hb_UTF8ToStr("√") + Chr(16) /* LOW-ASCII "►" */
+   VAR cStyle     INIT hb_UTF8ToStr("√") + Chr(16) // LOW-ASCII "►"
 
 ENDCLASS
 

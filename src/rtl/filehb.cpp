@@ -46,16 +46,16 @@
 #include "hbapi.hpp"
 #include "hbapifs.hpp"
 
-/* TODO: Xbase++ has an extension where the second parameter can specify
-         the required attribute. */
+// TODO: Xbase++ has an extension where the second parameter can specify
+//       the required attribute.
 
-/* NOTE: CA-Cl*pper RTrim()s the filename before doing the existence check.
-         This is not multi-platform friendly, so Harbour doesn't do any
-         modification on the filename. [vszakats]
-         For easier portability in Harbour user can optionally enable
-         leading and trailing spaces stripping by
-            Set(_SET_TRIMFILENAME, .T.)
-         [druzus] */
+// NOTE: CA-Cl*pper RTrim()s the filename before doing the existence check.
+//       This is not multi-platform friendly, so Harbour doesn't do any
+//       modification on the filename. [vszakats]
+//       For easier portability in Harbour user can optionally enable
+//       leading and trailing spaces stripping by
+//          Set(_SET_TRIMFILENAME, .T.)
+//       [druzus]
 
 HB_FUNC(FILE)
 {

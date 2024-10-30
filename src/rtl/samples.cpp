@@ -45,7 +45,7 @@
 
 #include "hbapi.hpp"
 
-/* NOTE: szTime must be 9 chars large. */
+// NOTE: szTime must be 9 chars large.
 
 static char *hb_SecToTimeStr(char *pszTime, long lTime)
 {

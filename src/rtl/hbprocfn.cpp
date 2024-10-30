@@ -126,7 +126,7 @@ HB_FUNC(HB_PROCESSCLOSE)
   }
 }
 
-/* hb_processRun(<cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], [ <lDetach> ]) --> <nResult> */
+// hb_processRun(<cCommand>, [ <cStdIn> ], [ @<cStdOut> ], [ @<cStdErr> ], [ <lDetach> ]) --> <nResult>
 HB_FUNC(HB_PROCESSRUN)
 {
   auto szName = hb_parc(1);

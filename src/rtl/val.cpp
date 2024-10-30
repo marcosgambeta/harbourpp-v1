@@ -47,7 +47,7 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* returns the numeric value of a character string representation of a number */
+// returns the numeric value of a character string representation of a number
 static void hb_val(HB_BOOL fExt)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);

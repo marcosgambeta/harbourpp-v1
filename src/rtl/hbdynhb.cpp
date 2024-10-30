@@ -94,7 +94,7 @@ HB_FUNC(HB_DYNCALL)
           ++nBasePos;
         }
 
-        /* Function flags */
+        // Function flags
         if (nBasePos <= nLen)
         {
           iFuncFlags = hb_arrayGetNI(pParam, nBasePos);
@@ -102,7 +102,7 @@ HB_FUNC(HB_DYNCALL)
 
         ++nBasePos;
 
-        /* Argument flags */
+        // Argument flags
         if (nBasePos <= nLen)
         {
           HB_SIZE nArgCount = hb_pcount() - 1;

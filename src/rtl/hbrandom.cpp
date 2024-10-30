@@ -48,16 +48,16 @@
 #include "hbdate.hpp"
 #include "hbstack.hpp"
 
-/* NOTE: core random generator algorithm is the work of Steve Park
-         https://web.archive.org/web/www.cs.wm.edu/~va/software/park/ */
+// NOTE: core random generator algorithm is the work of Steve Park
+//       https://web.archive.org/web/www.cs.wm.edu/~va/software/park/
 
-#define MODULUS 2147483647 /* DON'T CHANGE THIS VALUE */
-#define MULTIPLIER 48271   /* DON'T CHANGE THIS VALUE */
+#define MODULUS 2147483647 // DON'T CHANGE THIS VALUE
+#define MULTIPLIER 48271   // DON'T CHANGE THIS VALUE
 
 static HB_TSD_NEW(s_seed, sizeof(HB_I32), nullptr, nullptr);
 #define SEED_PTR (static_cast<HB_I32 *>(hb_stackGetTSD(&s_seed)))
 
-/* Returns a double value between 0 and 1 */
+// Returns a double value between 0 and 1
 double hb_random_num(void)
 {
   HB_I32 *seed = SEED_PTR;
@@ -118,11 +118,10 @@ static void hb_random(double dRnd)
   }
 }
 
-/*
- * hb_Random() --> returns a real value n so that 0 <= n < 1
- * hb_Random(x) --> returns a real number n so that 0 <= n < x
- * hb_Random(x, y) --> Returns a real number n so that x <= n < y
- */
+// hb_Random() --> returns a real value n so that 0 <= n < 1
+// hb_Random(x) --> returns a real number n so that 0 <= n < x
+// hb_Random(x, y) --> Returns a real number n so that x <= n < y
+
 HB_FUNC(HB_RANDOM)
 {
   hb_random(hb_random_num());
@@ -157,12 +156,11 @@ static void hb_randomint(double dRnd)
   }
 }
 
-/*
- * hb_RandomInt() --> returns 0 or 1, evenly distributed
- * hb_RandomInt(N) --> returns an integer between 1 and N (inclusive)
- * hb_RandomInt(x, y) --> Returns an integer number between x and y (inclusive)
- * The integer returned is of the longest type available
- */
+// hb_RandomInt() --> returns 0 or 1, evenly distributed
+// hb_RandomInt(N) --> returns an integer between 1 and N (inclusive)
+// hb_RandomInt(x, y) --> Returns an integer number between x and y (inclusive)
+// The integer returned is of the longest type available
+
 HB_FUNC(HB_RANDOMINT)
 {
   hb_randomint(hb_random_num());

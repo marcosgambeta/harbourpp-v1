@@ -182,7 +182,7 @@ METHOD HBMemoEditor:KeyboardHook(nKey)
          SetPos(nRow, nCol)
 
          IF Upper(hb_keyChar(nYesNoKey)) == "Y"
-            hb_keySetLast(K_ESC)  /* Cl*pper compatibility */
+            hb_keySetLast(K_ESC)  // Cl*pper compatibility
             ::lSaved := .F.
             ::lExitEdit := .T.
          ENDIF
@@ -225,7 +225,7 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
 
    CASE ME_DATA
       IF HB_ISNUMERIC(nKey)
-         /* TODO: convert nKey >=1 .and. nKey <= 31 to key value with unicode character */
+         // TODO: convert nKey >=1 .and. nKey <= 31 to key value with unicode character
          IF HB_ULen(hb_keyChar(nKey)) > 0
             ::super:Edit(nKey)
          ENDIF
@@ -251,13 +251,13 @@ METHOD HBMemoEditor:HandleUserKey(nKey, nUdfReturn)
       EXIT
 
 #ifndef HB_CLP_STRICT
-   CASE ME_PASTE  /* Xbase++ compatibility */
+   CASE ME_PASTE  // Xbase++ compatibility
       hb_gtInfo(HB_GTI_CLIPBOARDPASTE, .T.)
       EXIT
 #endif
 
    CASE ME_IGNORE
-      /* do nothing */
+      // do nothing
       EXIT
 
    OTHERWISE
@@ -307,7 +307,7 @@ METHOD HBMemoEditor:InsertState(lInsState)
 
    RETURN Self
 
-/* ------------------------------------------ */
+// ------------------------------------------
 
 FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunction, nLineLength, nTabSize, nTextBuffRow, nTextBuffColumn, nWindowRow, nWindowColumn)
 
@@ -336,8 +336,8 @@ FUNCTION MemoEdit(cString, nTop, nLeft, nBottom, nRight, lEditMode, xUserFunctio
    oEd:MemoInit(xUserFunction)
    oEd:display()
 
-   /* Contrary to what the NG says, any logical value will make it pass
-      through without any editing. */
+   // Contrary to what the NG says, any logical value will make it pass
+   // through without any editing.
    IF !HB_ISLOGICAL(xUserFunction)
       nOldCursor := SetCursor()
       oEd:InsertState(Set(_SET_INSERT))

@@ -50,12 +50,12 @@ HB_BOOL hb_printerIsReady(const char *pszPrinterName)
 {
   auto bIsPrinter = false;
 
-  /* NOTE: Platform independent method, at least it will compile and run
-           on any platform, but the result may not be the expected one,
-           since Unix/Linux doesn't support LPT/COM by nature, other OSs
-           may not reflect the actual physical presence of the printer when
-           trying to open it, since we are talking to the spooler.
-           [vszakats] */
+  // NOTE: Platform independent method, at least it will compile and run
+  //       on any platform, but the result may not be the expected one,
+  //       since Unix/Linux doesn't support LPT/COM by nature, other OSs
+  //       may not reflect the actual physical presence of the printer when
+  //       trying to open it, since we are talking to the spooler.
+  //       [vszakats]
 
   {
     if (pszPrinterName == nullptr)
@@ -79,26 +79,26 @@ HB_BOOL hb_printerIsReady(const char *pszPrinterName)
   return bIsPrinter;
 }
 
-/* Contrary to popular beliefs and such (mis)feature implemented
-   in the Harbour derivative xHarbour, [hb_]IsPrinter() functions
-   are only meant to work on direct _devices_ (f.e. LPT1:, \\server\queue,
-   tcp:localhost:9100, /dev/lp0, etc...). Those that are writable
-   just like a stream. Of these two functions, IsPrinter() will
-   always use the same, OS-specific predefined device name, just
-   like in Cl*pper, for compatibility. IOW, it doesn't accept
-   a parameter. See source code above what the predefined device
-   names are. hb_IsPrinter() _will_ accept such device name as its
-   1st and only parameter. However, because devices are typically
-   virtualized by modern OSes, they may not be offering the exact
-   Cl*pper behavior experienced under MS-DOS. To get the latter,
-   an MS-DOS build of Harbour is required. Because direct device
-   names don't have anything to do with high-level graphical
-   printers (and their names may even collide with valid device
-   names), such printer names are _not_ handled by these functions.
-   For such feature, explore the appropriate OS/desktop specific
-   printing libraries/APIs (or create a portable, printable document,
-   like a .pdf). As for these ones, regard them as legacy functions
-   for compatibility. [vszakats] */
+// Contrary to popular beliefs and such (mis)feature implemented
+// in the Harbour derivative xHarbour, [hb_]IsPrinter() functions
+// are only meant to work on direct _devices_ (f.e. LPT1:, \\server\queue,
+// tcp:localhost:9100, /dev/lp0, etc...). Those that are writable
+// just like a stream. Of these two functions, IsPrinter() will
+// always use the same, OS-specific predefined device name, just
+// like in Cl*pper, for compatibility. IOW, it doesn't accept
+// a parameter. See source code above what the predefined device
+// names are. hb_IsPrinter() _will_ accept such device name as its
+// 1st and only parameter. However, because devices are typically
+// virtualized by modern OSes, they may not be offering the exact
+// Cl*pper behavior experienced under MS-DOS. To get the latter,
+// an MS-DOS build of Harbour is required. Because direct device
+// names don't have anything to do with high-level graphical
+// printers (and their names may even collide with valid device
+// names), such printer names are _not_ handled by these functions.
+// For such feature, explore the appropriate OS/desktop specific
+// printing libraries/APIs (or create a portable, printable document,
+// like a .pdf). As for these ones, regard them as legacy functions
+// for compatibility. [vszakats]
 
 HB_FUNC(HB_ISPRINTER)
 {

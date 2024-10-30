@@ -43,14 +43,14 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
-/* This definition has to be placed before #include "hbapigt.hpp" */
+// This definition has to be placed before #include "hbapigt.hpp"
 #define HB_GT_NAME NUL
 
 #include "hbgtcore.hpp"
 
-/* NOTE: Must be in sync with hbgtcore.c */
+// NOTE: Must be in sync with hbgtcore.c
 #if defined(HB_GT_LIB)
 HB_GT_REQUEST(HB_GT_LIB)
 #elif defined(HB_OS_WIN)

@@ -209,7 +209,7 @@ HB_BOOL hb_fileCopyEx(const char *pszSource, const char *pszDest, HB_SIZE nBufSi
 
 HB_FUNC(HB_FCOPY)
 {
-  HB_ERRCODE errCode = 2; /* file not found */
+  HB_ERRCODE errCode = 2; // file not found
   auto fResult = false;
   auto pszSource = hb_parc(1);
   auto pszDest = hb_parc(2);

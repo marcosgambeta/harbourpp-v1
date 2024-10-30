@@ -46,12 +46,12 @@
 #include "hbapi.hpp"
 #include "hbapierr.hpp"
 
-/* NOTE: IMPORTANT:
-         hb_bit*() Harbour level function names and logic are embedded
-         in the compiler optimization engine, so in any case these
-         function have to be changed, updated or extended, don't forget
-         to update the references in the compiler as well.
-         [vszakats] */
+// NOTE: IMPORTANT:
+//       hb_bit*() Harbour level function names and logic are embedded
+//       in the compiler optimization engine, so in any case these
+//       function have to be changed, updated or extended, don't forget
+//       to update the references in the compiler as well.
+//       [vszakats]
 
 static bool hb_numParam(int iParam, HB_MAXINT *plNum)
 {

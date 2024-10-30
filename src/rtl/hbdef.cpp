@@ -69,8 +69,8 @@ HB_FUNC(HB_DEFAULTVALUE)
   hb_itemReturn(pParam);
 }
 
-/* For compatibility with legacy DEFAULT ... TO ... command.
-   Not recommended for new code. */
+// For compatibility with legacy DEFAULT ... TO ... command.
+// Not recommended for new code.
 HB_FUNC(__DEFAULTNIL)
 {
   if (hb_pcount() >= 2 && hb_param(1, Harbour::Item::ANY)->isNil())

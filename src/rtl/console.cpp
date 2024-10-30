@@ -64,12 +64,11 @@
 #include <windows.h>
 #endif
 
-/* NOTE: Some C compilers like Borland C optimize the call of small static buffers
- *       into an integer to read it faster. Later, programs like CodeGuard
- *       complain if the given buffer was smaller than an int. [ckedem]
- */
+// NOTE: Some C compilers like Borland C optimize the call of small static buffers
+//       into an integer to read it faster. Later, programs like CodeGuard
+//       complain if the given buffer was smaller than an int. [ckedem]
 
-/* length of buffer for CR/LF characters */
+// length of buffer for CR/LF characters
 #if !defined(HB_OS_EOL_LEN) || HB_OS_EOL_LEN < 4
 #define CRLF_BUFFER_LEN 4
 #else
@@ -110,10 +109,10 @@ void hb_conInit(void)
 #endif
 
 #if !defined(HB_OS_WIN)
-  /* On Windows file handles with numbers 0, 1, 2 are
-     translated inside filesys to:
-     GetStdHandle(STD_INPUT_HANDLE), GetStdHandle(STD_OUTPUT_HANDLE),
-     GetStdHandle(STD_ERROR_HANDLE) */
+  // On Windows file handles with numbers 0, 1, 2 are
+  // translated inside filesys to:
+  // GetStdHandle(STD_INPUT_HANDLE), GetStdHandle(STD_OUTPUT_HANDLE),
+  // GetStdHandle(STD_ERROR_HANDLE)
 
   s_hFilenoStdin = fileno(stdin);
   s_hFilenoStdout = fileno(stdout);
@@ -123,30 +122,27 @@ void hb_conInit(void)
 
 #ifdef HB_CLP_UNDOC
   {
-    /* Undocumented CA-Cl*pper switch //STDERR:x */
+    // Undocumented CA-Cl*pper switch //STDERR:x
     int iStderr = hb_cmdargNum("STDERR");
 
     if (iStderr == 0 || iStderr == 1)
-    { /* //STDERR with no parameter or 0 */
+    { // //STDERR with no parameter or 0
       s_hFilenoStderr = s_hFilenoStdout;
     }
-    /* disabled in default builds. It's not multi-platform and very
-     * dangerous because it can redirect error messages to data files
-     * [druzus]
-     */
+    // disabled in default builds. It's not multi-platform and very
+    // dangerous because it can redirect error messages to data files
+    // [druzus]
 #ifdef HB_CLP_STRICT
     else if (iStderr > 0)
-    { /* //STDERR:x */
+    { // //STDERR:x
       s_hFilenoStderr = static_cast<HB_FHANDLE>(iStderr);
     }
 #endif
   }
 #endif
 
-  /*
-   * Some compilers open stdout and stderr in text mode, but
-   * Harbour needs them to be open in binary mode.
-   */
+  // Some compilers open stdout and stderr in text mode, but
+  // Harbour needs them to be open in binary mode.
   hb_fsSetDevMode(s_hFilenoStdin, FD_BINARY);
   hb_fsSetDevMode(s_hFilenoStdout, FD_BINARY);
   hb_fsSetDevMode(s_hFilenoStderr, FD_BINARY);
@@ -169,15 +165,13 @@ void hb_conRelease(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_conRelease()"));
 #endif
 
-  /*
-   * Clipper does not restore screen size on exit so I removed the code with:
-   *    hb_gtSetMode( s_originalMaxRow + 1, s_originalMaxCol + 1 );
-   * If the low-level GT drive change some video adapter parameters which
-   * have to be restored on exit then it should does it in its Exit()
-   * method. Here we cannot force any actions because it may cause bad
-   * results in some GTs, f.e. when the screen size is controlled by remote
-   * user and not Harbour application (some terminal modes), [Druzus]
-   */
+  // Clipper does not restore screen size on exit so I removed the code with:
+  //    hb_gtSetMode( s_originalMaxRow + 1, s_originalMaxCol + 1 );
+  // If the low-level GT drive change some video adapter parameters which
+  // have to be restored on exit then it should does it in its Exit()
+  // method. Here we cannot force any actions because it may cause bad
+  // results in some GTs, f.e. when the screen size is controlled by remote
+  // user and not Harbour application (some terminal modes), [Druzus]
 
   hb_gtExit();
 
@@ -202,7 +196,7 @@ HB_FUNC(HB_EOL)
 
 #if defined(HB_LEGACY_LEVEL4)
 
-/* Deprecated */
+// Deprecated
 HB_FUNC(HB_OSNEWLINE)
 {
   hb_retc_const(s_szCrLf);
@@ -210,7 +204,7 @@ HB_FUNC(HB_OSNEWLINE)
 
 #endif
 
-/* Output an item to STDOUT */
+// Output an item to STDOUT
 void hb_conOutStd(const char *szStr, HB_SIZE nLen)
 {
 #if 0
@@ -228,7 +222,7 @@ void hb_conOutStd(const char *szStr, HB_SIZE nLen)
   }
 }
 
-/* Output an item to STDERR */
+// Output an item to STDERR
 void hb_conOutErr(const char *szStr, HB_SIZE nLen)
 {
 #if 0
@@ -246,7 +240,7 @@ void hb_conOutErr(const char *szStr, HB_SIZE nLen)
   }
 }
 
-/* Output an item to the screen and/or printer and/or alternate */
+// Output an item to the screen and/or printer and/or alternate
 void hb_conOutAlt(const char *szStr, HB_SIZE nLen)
 {
 #if 0
@@ -262,25 +256,25 @@ void hb_conOutAlt(const char *szStr, HB_SIZE nLen)
 
   if (hb_setGetAlternate() && (pFile = hb_setGetAltHan()) != nullptr)
   {
-    /* Print to alternate file if SET ALTERNATE ON and valid alternate file */
+    // Print to alternate file if SET ALTERNATE ON and valid alternate file
     hb_fileWrite(pFile, szStr, nLen, -1);
   }
 
   if ((pFile = hb_setGetExtraHan()) != nullptr)
   {
-    /* Print to extra file if valid alternate file */
+    // Print to extra file if valid alternate file
     hb_fileWrite(pFile, szStr, nLen, -1);
   }
 
   if ((pFile = hb_setGetPrinterHandle(HB_SET_PRN_CON)) != nullptr)
   {
-    /* Print to printer if SET PRINTER ON and valid printer file */
+    // Print to printer if SET PRINTER ON and valid printer file
     hb_fileWrite(pFile, szStr, nLen, -1);
     hb_prnPos()->col += static_cast<int>(nLen);
   }
 }
 
-/* Output an item to the screen and/or printer */
+// Output an item to the screen and/or printer
 static void hb_conOutDev(const char *szStr, HB_SIZE nLen)
 {
 #if 0
@@ -291,21 +285,21 @@ static void hb_conOutDev(const char *szStr, HB_SIZE nLen)
 
   if ((pFile = hb_setGetPrinterHandle(HB_SET_PRN_DEV)) != nullptr)
   {
-    /* Display to printer if SET DEVICE TO PRINTER and valid printer file */
+    // Display to printer if SET DEVICE TO PRINTER and valid printer file
     hb_fileWrite(pFile, szStr, nLen, -1);
     hb_prnPos()->col += static_cast<int>(nLen);
   }
   else
   {
-    /* Otherwise, display to console */
+    // Otherwise, display to console
     hb_gtWrite(szStr, nLen);
   }
 }
 
 static char *hb_itemStringCon(PHB_ITEM pItem, HB_SIZE *pnLen, HB_BOOL *pfFreeReq)
 {
-  /* logical values in device output (not console, stdout or stderr) are
-     shown as single letter */
+  // logical values in device output (not console, stdout or stderr) are
+  // shown as single letter
   if (pItem->isLogical())
   {
     *pnLen = 1;
@@ -315,7 +309,7 @@ static char *hb_itemStringCon(PHB_ITEM pItem, HB_SIZE *pnLen, HB_BOOL *pfFreeReq
   return hb_itemString(pItem, pnLen, pfFreeReq);
 }
 
-HB_FUNC(OUTSTD) /* writes a list of values to the standard output device */
+HB_FUNC(OUTSTD) // writes a list of values to the standard output device
 {
   auto iPCount = hb_pcount();
 
@@ -340,7 +334,7 @@ HB_FUNC(OUTSTD) /* writes a list of values to the standard output device */
   }
 }
 
-HB_FUNC(OUTERR) /* writes a list of values to the standard error device */
+HB_FUNC(OUTERR) // writes a list of values to the standard error device
 {
   auto iPCount = hb_pcount();
 
@@ -365,7 +359,7 @@ HB_FUNC(OUTERR) /* writes a list of values to the standard error device */
   }
 }
 
-HB_FUNC(QQOUT) /* writes a list of values to the current device (screen or printer) and is affected by SET ALTERNATE */
+HB_FUNC(QQOUT) // writes a list of values to the current device (screen or printer) and is affected by SET ALTERNATE
 {
   auto iPCount = hb_pcount();
 
@@ -425,13 +419,13 @@ HB_FUNC(QOUT)
   HB_FUNC_EXEC(QQOUT);
 }
 
-HB_FUNC(__EJECT) /* Ejects the current page from the printer */
+HB_FUNC(__EJECT) // Ejects the current page from the printer
 {
   PHB_FILE pFile;
 
   if ((pFile = hb_setGetPrinterHandle(HB_SET_PRN_ANY)) != nullptr)
   {
-    static const char s_szEop[4] = {0x0C, 0x0D, 0x00, 0x00}; /* Buffer is 4 bytes to make CodeGuard happy */
+    static const char s_szEop[4] = {0x0C, 0x0D, 0x00, 0x00}; // Buffer is 4 bytes to make CodeGuard happy
     hb_fileWrite(pFile, s_szEop, 2, -1);
   }
 
@@ -439,12 +433,12 @@ HB_FUNC(__EJECT) /* Ejects the current page from the printer */
   pPrnPos->row = pPrnPos->col = 0;
 }
 
-HB_FUNC(PROW) /* Returns the current printer row position */
+HB_FUNC(PROW) // Returns the current printer row position
 {
   hb_retni(static_cast<int>(hb_prnPos()->row));
 }
 
-HB_FUNC(PCOL) /* Returns the current printer row position */
+HB_FUNC(PCOL) // Returns the current printer row position
 {
   hb_retni(static_cast<int>(hb_prnPos()->col));
 }
@@ -457,8 +451,8 @@ static void hb_conDevPos(int iRow, int iCol)
 
   PHB_FILE pFile;
 
-  /* Position printer if SET DEVICE TO PRINTER and valid printer file
-     otherwise position console */
+  // Position printer if SET DEVICE TO PRINTER and valid printer file
+  // otherwise position console
 
   if ((pFile = hb_setGetPrinterHandle(HB_SET_PRN_DEV)) != nullptr)
   {
@@ -475,7 +469,7 @@ static void hb_conDevPos(int iRow, int iCol)
       {
         if (++pPrnPos->row > iPRow)
         {
-          memcpy(&buf[iPtr], "\x0C\x0D\x00\x00", 2); /* Source buffer is 4 bytes to make CodeGuard happy */
+          memcpy(&buf[iPtr], "\x0C\x0D\x00\x00", 2); // Source buffer is 4 bytes to make CodeGuard happy
           iPtr += 2;
           pPrnPos->row = 0;
         }
@@ -527,9 +521,9 @@ static void hb_conDevPos(int iRow, int iCol)
   }
 }
 
-/* NOTE: This should be placed after the hb_conDevPos() definition. */
+// NOTE: This should be placed after the hb_conDevPos() definition.
 
-HB_FUNC(DEVPOS) /* Sets the screen and/or printer position */
+HB_FUNC(DEVPOS) // Sets the screen and/or printer position
 {
   if (HB_ISNUM(1) && HB_ISNUM(2))
   {
@@ -537,13 +531,13 @@ HB_FUNC(DEVPOS) /* Sets the screen and/or printer position */
   }
 
 #if defined(HB_CLP_UNDOC)
-  /* NOTE: Both 5.2e and 5.3 does that, while the documentation
-           says it will return NIL. [vszakats] */
+  // NOTE: Both 5.2e and 5.3 does that, while the documentation
+  //       says it will return NIL. [vszakats]
   hb_itemReturn(hb_param(1, Harbour::Item::ANY));
 #endif
 }
 
-HB_FUNC(SETPRC) /* Sets the current printer row and column positions */
+HB_FUNC(SETPRC) // Sets the current printer row and column positions
 {
   if (hb_pcount() == 2 && HB_ISNUM(1) && HB_ISNUM(2))
   {
@@ -554,7 +548,7 @@ HB_FUNC(SETPRC) /* Sets the current printer row and column positions */
 }
 
 HB_FUNC(
-    DEVOUT) /* writes a single value to the current device (screen or printer), but is not affected by SET ALTERNATE */
+    DEVOUT) // writes a single value to the current device (screen or printer), but is not affected by SET ALTERNATE
 {
   if (HB_ISCHAR(2))
   {
@@ -590,7 +584,7 @@ HB_FUNC(
   }
 }
 
-HB_FUNC(DISPOUT) /* writes a single value to the screen, but is not affected by SET ALTERNATE */
+HB_FUNC(DISPOUT) // writes a single value to the screen, but is not affected by SET ALTERNATE
 {
   if (HB_ISCHAR(2))
   {
@@ -620,11 +614,11 @@ HB_FUNC(DISPOUT) /* writes a single value to the screen, but is not affected by 
   }
 }
 
-/* Undocumented Clipper function */
+// Undocumented Clipper function
 
-/* NOTE: Clipper does no checks about the screen positions. [vszakats] */
+// NOTE: Clipper does no checks about the screen positions. [vszakats]
 
-HB_FUNC(DISPOUTAT) /* writes a single value to the screen at specific position, but is not affected by SET ALTERNATE */
+HB_FUNC(DISPOUTAT) // writes a single value to the screen at specific position, but is not affected by SET ALTERNATE
 {
   if (HB_ISCHAR(4))
   {
@@ -654,7 +648,7 @@ HB_FUNC(DISPOUTAT) /* writes a single value to the screen at specific position, 
   }
 }
 
-/* Harbour extension, works like DispOutAt() but does not change cursor position */
+// Harbour extension, works like DispOutAt() but does not change cursor position
 
 HB_FUNC(HB_DISPOUTAT)
 {
@@ -687,8 +681,8 @@ HB_FUNC(HB_DISPOUTAT)
   }
 }
 
-/* Same as hb_DispOutAt(), but draws with the attribute HB_GT_ATTR_BOX,
-   so we can use it to draw graphical elements. */
+// Same as hb_DispOutAt(), but draws with the attribute HB_GT_ATTR_BOX,
+// so we can use it to draw graphical elements.
 HB_FUNC(HB_DISPOUTATBOX)
 {
   auto nLen = hb_parclen(3);
@@ -727,17 +721,17 @@ HB_FUNC(HB_DISPOUTATBOX)
   }
 }
 
-HB_FUNC(HB_GETSTDIN) /* Return handle for STDIN */
+HB_FUNC(HB_GETSTDIN) // Return handle for STDIN
 {
   hb_retnint(static_cast<HB_NHANDLE>(s_hFilenoStdin));
 }
 
-HB_FUNC(HB_GETSTDOUT) /* Return handle for STDOUT */
+HB_FUNC(HB_GETSTDOUT) // Return handle for STDOUT
 {
   hb_retnint(static_cast<HB_NHANDLE>(s_hFilenoStdout));
 }
 
-HB_FUNC(HB_GETSTDERR) /* Return handle for STDERR */
+HB_FUNC(HB_GETSTDERR) // Return handle for STDERR
 {
   hb_retnint(static_cast<HB_NHANDLE>(s_hFilenoStderr));
 }

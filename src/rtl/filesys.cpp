@@ -55,16 +55,15 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: In DOS/DJGPP under WinNT4 hb_fsSeek(fhnd, offset < 0, FS_SET) will
-         set the file pointer to the passed negative value and the subsequent
-         hb_fsWrite() call will fail. In CA-Cl*pper, _fsSeek() will fail,
-         the pointer will not be moved and thus the _fsWrite() call will
-         successfully write the buffer to the current file position. [vszakats]
+// NOTE: In DOS/DJGPP under WinNT4 hb_fsSeek(fhnd, offset < 0, FS_SET) will
+//       set the file pointer to the passed negative value and the subsequent
+//       hb_fsWrite() call will fail. In CA-Cl*pper, _fsSeek() will fail,
+//       the pointer will not be moved and thus the _fsWrite() call will
+//       successfully write the buffer to the current file position. [vszakats]
+//
+// This has been corrected by ptucker
 
-   This has been corrected by ptucker
- */
-
-/* *nixes */
+// *nixes
 #if !defined(_LARGEFILE64_SOURCE)
 #define _LARGEFILE64_SOURCE 1
 #endif
@@ -90,8 +89,8 @@
 #include <sys/wait.h>
 #include <sys/time.h>
 #if !defined(HB_HAS_POLL) && !defined(HB_NO_POLL) && defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L
-/* use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
-   file handle limit */
+// use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
+// file handle limit
 #define HB_HAS_POLL
 #endif
 #if defined(HB_HAS_POLL)
@@ -165,11 +164,9 @@
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
 #if defined(__USE_LARGEFILE64)
-/*
- * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
- * defined and effectively enables lseek64()/flock64()/ftruncate64()
- * functions on 32-bit machines.
- */
+// The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
+// defined and effectively enables lseek64()/flock64()/ftruncate64()
+// functions on 32-bit machines.
 #define HB_USE_LARGEFILE64
 #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
 #define HB_USE_LARGEFILE64
@@ -177,19 +174,18 @@
 #endif
 
 #if defined(HB_OS_HAS_DRIVE_LETTER)
-/* 2004-08-27 - <maurilio.longo@libero.it>
-                HB_FS_GETDRIVE() should return a number in the range 0..25 ('A'..'Z')
-                HB_FS_SETDRIVE() should accept a number inside same range.
-
-                If a particular platform/compiler returns/accepts different ranges of
-                values, simply define a branch for that platform.
-
-                NOTE: There is not an implicit "current disk", ALWAYS use
-
-                        my_func(hb_fsCurDrv(), ...)
-
-                      to refer to current disk
- */
+// 2004-08-27 - <maurilio.longo@libero.it>
+//              HB_FS_GETDRIVE() should return a number in the range 0..25 ('A'..'Z')
+//              HB_FS_SETDRIVE() should accept a number inside same range.
+//
+//              If a particular platform/compiler returns/accepts different ranges of
+//              values, simply define a branch for that platform.
+//
+//              NOTE: There is not an implicit "current disk", ALWAYS use
+//
+//                      my_func(hb_fsCurDrv(), ...)
+//
+//                    to refer to current disk
 
 #if defined(HB_OS_WIN)
 
@@ -201,7 +197,7 @@
 #define HB_FS_SETDRIVE(n) fs_win_set_drive(n)
 
 #elif defined(__BORLANDC__)
-/* 0 based version */
+// 0 based version
 
 #define HB_FS_GETDRIVE(n)                                                                                              \
   do                                                                                                                   \
@@ -210,8 +206,8 @@
   } while (false)
 #define HB_FS_SETDRIVE(n) setdisk(n)
 
-#else /* _MSC_VER */
-/* 1 based version */
+#else // _MSC_VER
+// 1 based version
 
 #define HB_FS_GETDRIVE(n)                                                                                              \
   do                                                                                                                   \
@@ -221,14 +217,14 @@
 #define HB_FS_SETDRIVE(n) _chdrive((n) + 1)
 
 #endif
-#endif /* HB_OS_HAS_DRIVE_LETTER */
+#endif // HB_OS_HAS_DRIVE_LETTER
 
 #ifndef O_BINARY
-#define O_BINARY 0 /* O_BINARY not defined on Linux */
+#define O_BINARY 0 // O_BINARY not defined on Linux
 #endif
 
 #ifndef O_LARGEFILE
-#define O_LARGEFILE 0 /* O_LARGEFILE is used for LFS in 32-bit Linux */
+#define O_LARGEFILE 0 // O_LARGEFILE is used for LFS in 32-bit Linux
 #endif
 
 #if !defined(HB_OS_UNIX)
@@ -244,19 +240,19 @@
 #endif
 
 #if defined(_MSC_VER) || defined(__MINGW32__) || defined(__IBMCPP__)
-/* These compilers use sopen() rather than open(), because their
-   versions of open() do not support combined O_ and SH_ flags */
+// These compilers use sopen() rather than open(), because their
+// versions of open() do not support combined O_ and SH_ flags
 #define HB_FS_SOPEN
 #endif
 
 #if defined(HB_OS_ANDROID)
-/* hack for missing functions in android libc library */
+// hack for missing functions in android libc library
 #define fdatasync fsync
 #define ftruncate64 ftruncate
 #define pread64 pread
 #define pwrite64(f, b, s, o) pwrite(f, (void *)b, s, o)
 #elif defined(HB_OS_MINIX)
-/* hack for functions missing from the Minix C library */
+// hack for functions missing from the Minix C library
 #define fdatasync fsync
 #define ftruncate64 ftruncate
 #endif
@@ -409,7 +405,7 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
     }
   }
 
-  /* shared flags */
+  // shared flags
   switch (uiFlags & (FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE | FO_DENYNONE))
   {
   case FO_DENYREAD:
@@ -426,7 +422,7 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
     break;
   }
 
-  /* file attributes flags */
+  // file attributes flags
   if (nAttr == FC_NORMAL)
   {
     *dwAttr = FILE_ATTRIBUTE_NORMAL;
@@ -458,7 +454,7 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
    HB_TRACE(HB_TR_DEBUG, ("convert_open_flags(%d, %u, %hu, %p, %p, %p, %p)", fCreate, nAttr, uiFlags, static_cast<void*>(flags), static_cast<void*>(mode), static_cast<void*>(share), static_cast<void*>(attr)));
 #endif
 
-  /* file access mode */
+  // file access mode
 #if defined(HB_OS_UNIX)
   *mode = HB_FA_POSIX_ATTR(nAttr);
   if (*mode == 0)
@@ -481,7 +477,7 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
   *mode = S_IREAD | ((nAttr & FC_READONLY) ? 0 : S_IWRITE) | ((nAttr & FC_SYSTEM) ? S_IEXEC : 0);
 #endif
 
-  /* dos file attributes */
+  // dos file attributes
   *attr = 0;
 
   if (fCreate)
@@ -503,7 +499,7 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
       *flags |= O_RDWR;
       break;
     default:
-      /* this should not happen and it's here to force default OS behavior */
+      // this should not happen and it's here to force default OS behavior
       *flags |= (O_RDONLY | O_WRONLY | O_RDWR);
       break;
     }
@@ -522,7 +518,7 @@ static void convert_open_flags(bool fCreate, HB_FATTR nAttr, HB_USHORT uiFlags, 
     }
   }
 
-  /* shared flags (HB_FS_SOPEN) */
+  // shared flags (HB_FS_SOPEN)
 #if defined(_MSC_VER)
   if ((uiFlags & FO_DENYREAD) == FO_DENYREAD)
   {
@@ -581,7 +577,7 @@ static HB_USHORT convert_seek_flags(HB_USHORT uiFlags)
    HB_TRACE(HB_TR_DEBUG, ("convert_seek_flags(%hu)", uiFlags));
 #endif
 
-  /* by default FS_SET is set */
+  // by default FS_SET is set
   HB_USHORT result_flags = SEEK_SET;
 
   if (uiFlags & FS_RELATIVE)
@@ -597,9 +593,7 @@ static HB_USHORT convert_seek_flags(HB_USHORT uiFlags)
   return result_flags;
 }
 
-/*
- * filesys.api functions:
- */
+// filesys.api functions:
 
 HB_FHANDLE hb_fsGetOsHandle(HB_FHANDLE hFileHandle)
 {
@@ -615,9 +609,9 @@ HB_FHANDLE hb_fsGetOsHandle(HB_FHANDLE hFileHandle)
 }
 
 #if defined(HB_OS_UNIX)
-/* for POSIX systems only, hides low-level select()/poll() access,
-   intentionally covered by HB_OS_UNIX macro to generate compile time
-   error in code which tries to use it on other platforms */
+// for POSIX systems only, hides low-level select()/poll() access,
+// intentionally covered by HB_OS_UNIX macro to generate compile time
+// error in code which tries to use it on other platforms
 
 static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
 {
@@ -665,7 +659,7 @@ static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
       break;
     }
   }
-#else /* !HB_HAS_POLL */
+#else // !HB_HAS_POLL
   {
 #if !defined(HB_HAS_SELECT_TIMER)
     HB_MAXUINT timer = hb_timerInit(nTimeOut);
@@ -725,14 +719,14 @@ static int hb_fsCanAccess(HB_FHANDLE hFile, HB_MAXINT nTimeOut, bool fRead)
   }
 // #else
 //{
-//    int iTODO; /* TODO: for given platform */
+//    int iTODO; // TODO: for given platform
 //
 //    HB_SYMBOL_UNUSED(hFile);
 //    HB_SYMBOL_UNUSED(nTimeOut);
 //    HB_SYMBOL_UNUSED(fRead);
 //    iResult = -1;
 // }
-#endif /* !HB_HAS_POLL */
+#endif // !HB_HAS_POLL
 
   hb_vmLock();
 
@@ -843,7 +837,7 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
       hb_xfree(pFree);
     }
   }
-#else /* !HB_HAS_POLL */
+#else // !HB_HAS_POLL
   {
 #if !defined(HB_HAS_SELECT_TIMER)
     HB_MAXUINT timer = hb_timerInit(nTimeOut);
@@ -961,20 +955,20 @@ int hb_fsPoll(PHB_POLLFD pPollSet, int iCount, HB_MAXINT nTimeOut)
   }
 // #else
 //{
-//    int iTODO; /* TODO: for given platform */
+//    int iTODO; // TODO: for given platform
 //
 //    HB_SYMBOL_UNUSED(pPollSet);
 //    HB_SYMBOL_UNUSED(iCount);
 //    HB_SYMBOL_UNUSED(nTimeOut);
 //    iResult = -1;
 // }
-#endif /* !HB_HAS_POLL */
+#endif // !HB_HAS_POLL
 
   hb_vmLock();
 
   return iResult;
 }
-#endif /* HB_OS_UNIX */
+#endif // HB_OS_UNIX
 
 HB_FHANDLE hb_fsPOpen(const char *pszFileName, const char *pszMode)
 {
@@ -1179,7 +1173,7 @@ HB_BOOL hb_fsPipeCreate(HB_FHANDLE hPipe[2])
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int iTODO; // TODO: for given platform
 
     hPipe[0] = hPipe[1] = FS_ERROR;
     hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
@@ -1215,7 +1209,7 @@ int hb_fsIsPipeOrSock(HB_FHANDLE hPipeHandle)
     return type == FILE_TYPE_PIPE ? 1 : 0;
   }
 #else
-  int iTODO; /* TODO: for given platform */
+  int iTODO; // TODO: for given platform
   HB_SYMBOL_UNUSED(hPipeHandle);
   hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
   return 0;
@@ -1252,7 +1246,7 @@ HB_BOOL hb_fsPipeUnblock(HB_FHANDLE hPipeHandle)
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int iTODO; // TODO: for given platform
     HB_SYMBOL_UNUSED(hPipeHandle);
     hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
     return false;
@@ -1318,7 +1312,7 @@ HB_SIZE hb_fsPipeIsData(HB_FHANDLE hPipeHandle, HB_SIZE nBufferSize, HB_MAXINT n
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int iTODO; // TODO: for given platform
     HB_SYMBOL_UNUSED(hPipeHandle);
     HB_SYMBOL_UNUSED(nBufferSize);
     HB_SYMBOL_UNUSED(nTimeOut);
@@ -1389,9 +1383,9 @@ HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void *buffer, HB_SIZE nSize
         }
 
         dwToWrite = static_cast<DWORD>(nSize - nWritten);
-        /* real life tests show that MSDN is wrong and MS-Windows
-           refuse to accept even single byte if data is longer then
-           size of PIPE buffer in unblocking mode [druzus] */
+        // real life tests show that MSDN is wrong and MS-Windows
+        // refuse to accept even single byte if data is longer then
+        // size of PIPE buffer in unblocking mode [druzus]
         if (dwToWrite > 4096)
         {
           dwToWrite = 4096;
@@ -1456,7 +1450,7 @@ HB_SIZE hb_fsPipeWrite(HB_FHANDLE hPipeHandle, const void *buffer, HB_SIZE nSize
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int iTODO; // TODO: for given platform
     HB_SYMBOL_UNUSED(nTimeOut);
     nWritten = hb_fsWriteLarge(hPipeHandle, buffer, nSize);
   }
@@ -1588,10 +1582,9 @@ void hb_fsCloseRaw(HB_FHANDLE hFileHandle)
   {
 #if defined(EINTR)
     int ret;
-    /* ignoring EINTR in close() it's quite common bug when sockets or
-     * pipes are used. Without such protection it's not safe to use
-     * signals in user code.
-     */
+    // ignoring EINTR in close() it's quite common bug when sockets or
+    // pipes are used. Without such protection it's not safe to use
+    // signals in user code.
     do
     {
       ret = close(hFileHandle);
@@ -1617,10 +1610,9 @@ void hb_fsClose(HB_FHANDLE hFileHandle)
   {
     int ret;
 #if defined(EINTR)
-    /* ignoring EINTR in close() it's quite common bug when sockets or
-     * pipes are used. Without such protection it's not safe to use
-     * signals in user code.
-     */
+    // ignoring EINTR in close() it's quite common bug when sockets or
+    // pipes are used. Without such protection it's not safe to use
+    // signals in user code.
     do
     {
       ret = close(hFileHandle);
@@ -1728,7 +1720,7 @@ HB_BOOL hb_fsGetFileTime(const char *pszFileName, long *plJulian, long *plMillis
   }
 #else
   {
-    int iTODO; /* TODO: for given platform */
+    int iTODO; // TODO: for given platform
 
     HB_SYMBOL_UNUSED(pszFileName);
   }
@@ -1794,7 +1786,7 @@ HB_BOOL hb_fsGetAttr(const char *pszFileName, HB_FATTR *pnAttr)
     }
 #else
     {
-      int iTODO; /* TODO: for given platform */
+      int iTODO; // TODO: for given platform
 
       HB_SYMBOL_UNUSED(pszFileName);
     }
@@ -1945,7 +1937,7 @@ HB_BOOL hb_fsSetFileTime(const char *pszFileName, long lJulian, long lMillisec)
   }
 #else
   {
-    int iTODO; /* To force warning */
+    int iTODO; // To force warning
 
     fResult = false;
     hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
@@ -2033,7 +2025,7 @@ HB_BOOL hb_fsSetAttr(const char *pszFileName, HB_FATTR nAttr)
     }
 #else
     {
-      int iTODO; /* To force warning */
+      int iTODO; // To force warning
 
       fResult = false;
       hb_fsSetError(static_cast<HB_ERRCODE>(FS_ERROR));
@@ -2156,7 +2148,7 @@ HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
       DWORD dwToRead;
       DWORD dwRead;
 
-      /* Determine how much to read this time */
+      // Determine how much to read this time
       if (nCount > static_cast<HB_SIZE>(HB_WIN_IOREAD_LIMIT))
       {
         dwToRead = HB_WIN_IOREAD_LIMIT;
@@ -2199,7 +2191,7 @@ HB_SIZE hb_fsReadLarge(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount)
       unsigned int uiToRead;
       long lRead;
 
-      /* Determine how much to read this time */
+      // Determine how much to read this time
       if (nCount > static_cast<HB_SIZE>(INT_MAX))
       {
         uiToRead = INT_MAX;
@@ -2262,7 +2254,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
       DWORD dwToWrite;
       DWORD dwWritten;
 
-      /* Determine how much to write this time */
+      // Determine how much to write this time
       if (nCount > static_cast<HB_SIZE>(HB_WIN_IOWRITE_LIMIT))
       {
         dwToWrite = HB_WIN_IOWRITE_LIMIT;
@@ -2314,7 +2306,7 @@ HB_SIZE hb_fsWriteLarge(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCoun
       unsigned int uiToWrite;
       long lWritten;
 
-      /* Determine how much to write this time */
+      // Determine how much to write this time
       if (nCount > static_cast<HB_SIZE>(INT_MAX))
       {
         uiToWrite = INT_MAX;
@@ -2457,11 +2449,10 @@ HB_SIZE hb_fsReadAt(HB_FHANDLE hFileHandle, void *pBuff, HB_SIZE nCount, HB_FOFF
       nRead = dwRead;
     }
   }
-#endif /* HB_WIN_IOREAD_LIMIT */
+#endif // HB_WIN_IOREAD_LIMIT
 
-/* FIXME: below are not atom operations. It has to be fixed for RDD
- *        file access with shared file handles in aliased work areas. TOCHECK: OS/2 ?
- */
+// FIXME: below are not atom operations. It has to be fixed for RDD
+//        file access with shared file handles in aliased work areas. TOCHECK: OS/2 ?
 #elif defined(HB_FS_IO_16BIT)
   if (hb_fsSeekLarge(hFileHandle, nOffset, FS_SET) == nOffset)
   {
@@ -2593,11 +2584,10 @@ HB_SIZE hb_fsWriteAt(HB_FHANDLE hFileHandle, const void *pBuff, HB_SIZE nCount, 
       nWritten = dwWritten;
     }
   }
-#endif /* HB_WIN_IOWRITE_LIMIT */
+#endif // HB_WIN_IOWRITE_LIMIT
 
-/* FIXME: below are not atom operations. It has to be fixed for RDD
- *        file access with shared file handles in aliased work areas. TOCHECK: OS/2 ?
- */
+// FIXME: below are not atom operations. It has to be fixed for RDD
+//        file access with shared file handles in aliased work areas. TOCHECK: OS/2 ?
 #elif defined(HB_FS_IO_16BIT)
   if (hb_fsSeekLarge(hFileHandle, nOffset, FS_SET) == nOffset)
   {
@@ -2648,11 +2638,11 @@ HB_BOOL hb_fsTruncAt(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset)
     auto ulOffsetLow = static_cast<ULONG>(nOffset & 0xFFFFFFFF);
     auto ulOffsetHigh = static_cast<ULONG>(nOffset >> 32);
 
-    /* This is not atom operation anyhow if someone want to truncate
-     * file then he has to made necessary synchronizations in upper level
-     * code. We have such situation in our RDD drivers and for us such
-     * version is enough. [druzus]
-     */
+    // This is not atom operation anyhow if someone want to truncate
+    // file then he has to made necessary synchronizations in upper level
+    // code. We have such situation in our RDD drivers and for us such
+    // version is enough. [druzus]
+
     ulOffsetLow = SetFilePointer(DosToWinHandle(hFileHandle), ulOffsetLow, reinterpret_cast<PLONG>(&ulOffsetHigh),
                                  static_cast<DWORD>(SEEK_SET));
     if (((static_cast<HB_FOFFSET>(ulOffsetHigh) << 32) | ulOffsetLow) == nOffset)
@@ -2698,35 +2688,32 @@ void hb_fsCommit(HB_FHANDLE hFileHandle)
 #elif defined(HB_OS_UNIX)
   {
     int iResult;
-    /* We should check here only for _POSIX_SYNCHRONIZED_IO defined
-     * and it should be enough to test if fdatasync() declaration
-     * exists in <unistd.h>. Unfortunately on some OS-es like Darwin
-     * _POSIX_SYNCHRONIZED_IO is defined but fdatasync() does not exists.
-     * As workaround we are using this trick to check non zero version
-     * number but on some systems it may disable using fdatasync() [druzus]
-     */
+    // We should check here only for _POSIX_SYNCHRONIZED_IO defined
+    // and it should be enough to test if fdatasync() declaration
+    // exists in <unistd.h>. Unfortunately on some OS-es like Darwin
+    // _POSIX_SYNCHRONIZED_IO is defined but fdatasync() does not exists.
+    // As workaround we are using this trick to check non zero version
+    // number but on some systems it may disable using fdatasync() [druzus]
 #if defined(_POSIX_SYNCHRONIZED_IO) && _POSIX_SYNCHRONIZED_IO - 0 > 0
-    /* faster - flushes data buffers only, without updating directory info
-     */
+    // faster - flushes data buffers only, without updating directory info
     HB_FAILURE_RETRY(iResult, fdatasync(hFileHandle));
 #else
-    /* slower - flushes all file data buffers and i-node info
-     */
+    // slower - flushes all file data buffers and i-node info
     HB_FAILURE_RETRY(iResult, fsync(hFileHandle));
 #endif
   }
 #else
 
-  /* NOTE: close() functions releases all locks regardless if it is an
-   * original or duplicated file handle
-   */
-  /* This hack is very dangerous. POSIX standard define that if _ANY_
-   * file handle is closed all locks set by the process on the file
-   * pointed by this descriptor are removed. It doesn't matter they
-   * were done using different descriptor. It means that we now clean
-   * all locks on hFileHandle with the code below if the OS is POSIX
-   * compliant. I vote to disable it. [druzus]
-   */
+  // NOTE: close() functions releases all locks regardless if it is an
+  // original or duplicated file handle
+
+  // This hack is very dangerous. POSIX standard define that if _ANY_
+  // file handle is closed all locks set by the process on the file
+  // pointed by this descriptor are removed. It doesn't matter they
+  // were done using different descriptor. It means that we now clean
+  // all locks on hFileHandle with the code below if the OS is POSIX
+  // compliant. I vote to disable it. [druzus]
+
   {
     int dup_handle;
     auto fResult = false;
@@ -2854,7 +2841,7 @@ HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, H
       lock_info.l_type = (uiMode & FLX_SHARED) ? F_RDLCK : F_WRLCK;
       lock_info.l_start = ulStart;
       lock_info.l_len = ulLength;
-      lock_info.l_whence = SEEK_SET; /* start from the beginning of the file */
+      lock_info.l_whence = SEEK_SET; // start from the beginning of the file
       lock_info.l_pid = 0;
 
       HB_FAILURE_RETRY(iResult, fcntl(hFileHandle, (uiMode & FLX_WAIT) ? F_SETLKW : F_SETLK, &lock_info));
@@ -2863,7 +2850,7 @@ HB_BOOL hb_fsLock(HB_FHANDLE hFileHandle, HB_ULONG ulStart, HB_ULONG ulLength, H
 
     case FL_UNLOCK:
 
-      lock_info.l_type = F_UNLCK; /* unlock */
+      lock_info.l_type = F_UNLCK; // unlock
       lock_info.l_start = ulStart;
       lock_info.l_len = ulLength;
       lock_info.l_whence = SEEK_SET;
@@ -2980,7 +2967,7 @@ HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLe
       lock_info.l_type = (uiMode & FLX_SHARED) ? F_RDLCK : F_WRLCK;
       lock_info.l_start = nStart;
       lock_info.l_len = nLength;
-      lock_info.l_whence = SEEK_SET; /* start from the beginning of the file */
+      lock_info.l_whence = SEEK_SET; // start from the beginning of the file
       lock_info.l_pid = 0;
 
       HB_FAILURE_RETRY(iResult, fcntl(hFileHandle, (uiMode & FLX_WAIT) ? F_SETLKW64 : F_SETLK64, &lock_info));
@@ -2989,7 +2976,7 @@ HB_BOOL hb_fsLockLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nStart, HB_FOFFSET nLe
 
     case FL_UNLOCK:
 
-      lock_info.l_type = F_UNLCK; /* unlock */
+      lock_info.l_type = F_UNLCK; // unlock
       lock_info.l_start = nStart;
       lock_info.l_len = nLength;
       lock_info.l_whence = SEEK_SET;
@@ -3076,11 +3063,11 @@ HB_ULONG hb_fsSeek(HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags)
 
   hb_vmUnlock();
 #if defined(HB_OS_WIN)
-  /* This DOS hack creates 2 GiB file size limit, Druzus */
+  // This DOS hack creates 2 GiB file size limit, Druzus
   if (lOffset < 0 && nFlags == SEEK_SET)
   {
     ulPos = static_cast<ULONG>(INVALID_SET_FILE_POINTER);
-    hb_fsSetError(25); /* 'Seek Error' */
+    hb_fsSetError(25); // 'Seek Error'
   }
   else
   {
@@ -3098,21 +3085,21 @@ HB_ULONG hb_fsSeek(HB_FHANDLE hFileHandle, HB_LONG lOffset, HB_USHORT uiFlags)
     }
   }
 #else
-  /* This DOS hack creates 2 GiB file size limit, Druzus */
+  // This DOS hack creates 2 GiB file size limit, Druzus
   if (lOffset < 0 && nFlags == SEEK_SET)
   {
     ulPos = static_cast<HB_ULONG>(-1);
-    hb_fsSetError(25); /* 'Seek Error' */
+    hb_fsSetError(25); // 'Seek Error'
   }
   else
   {
     ulPos = lseek(hFileHandle, lOffset, nFlags);
     hb_fsSetIOError(ulPos != static_cast<HB_ULONG>(-1), 0);
 #if defined(HB_OS_UNIX)
-    /* small trick to resolve problem with position reported for directories */
+    // small trick to resolve problem with position reported for directories
     if (ulPos == LONG_MAX && lOffset == 0 && nFlags == SEEK_END)
     {
-      /* we do not need to use fstat64() here on 32-bit platforms, [druzus] */
+      // we do not need to use fstat64() here on 32-bit platforms, [druzus]
       struct stat st;
 
       if (fstat(hFileHandle, &st) == 0)
@@ -3156,7 +3143,7 @@ HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT 
     if (nOffset < 0 && nFlags == SEEK_SET)
     {
       nPos = static_cast<HB_FOFFSET>(-1);
-      hb_fsSetError(25); /* 'Seek Error' */
+      hb_fsSetError(25); // 'Seek Error'
     }
     else
     {
@@ -3196,14 +3183,14 @@ HB_FOFFSET hb_fsSeekLarge(HB_FHANDLE hFileHandle, HB_FOFFSET nOffset, HB_USHORT 
     if (nOffset < 0 && nFlags == SEEK_SET)
     {
       nPos = static_cast<HB_FOFFSET>(-1);
-      hb_fsSetError(25); /* 'Seek Error' */
+      hb_fsSetError(25); // 'Seek Error'
     }
     else
     {
       nPos = lseek64(hFileHandle, nOffset, nFlags);
       hb_fsSetIOError(nPos != static_cast<HB_FOFFSET>(-1), 0);
 #if defined(HB_OS_UNIX)
-      /* small trick to resolve problem with position reported for directories */
+      // small trick to resolve problem with position reported for directories
       if (nPos == LONG_MAX && nOffset == 0 && nFlags == SEEK_END)
       {
         struct stat64 st;
@@ -3531,8 +3518,8 @@ HB_BOOL hb_fsRmDir(const char *pszDirName)
   return fResult;
 }
 
-/* NOTE: This is not thread safe function, it's there for compatibility. */
-/* NOTE: 0 = current drive, 1 = A, 2 = B, 3 = C, etc. */
+// NOTE: This is not thread safe function, it's there for compatibility.
+// NOTE: 0 = current drive, 1 = A, 2 = B, 3 = C, etc.
 
 const char *hb_fsCurDir(int iDrive)
 {
@@ -3548,8 +3535,8 @@ const char *hb_fsCurDir(int iDrive)
   return pszDirBuffer;
 }
 
-/* NOTE: Thread safe version of hb_fsCurDir() */
-/* NOTE: 0 = current drive, 1 = A, 2 = B, 3 = C, etc. */
+// NOTE: Thread safe version of hb_fsCurDir()
+// NOTE: 0 = current drive, 1 = A, 2 = B, 3 = C, etc.
 
 HB_ERRCODE hb_fsCurDirBuff(int iDrive, char *pszBuffer, HB_SIZE nSize)
 {
@@ -3562,11 +3549,10 @@ HB_ERRCODE hb_fsCurDirBuff(int iDrive, char *pszBuffer, HB_SIZE nSize)
 
   pszBuffer[0] = '\0';
 
-  /*
-   * do not cover this code by HB_OS_HAS_DRIVE_LETTER macro
-   * It will allow us to add drive emulation in hb_fsCurDrv()/hb_fsChDrv()
-   * and hb_fsNameConv()
-   */
+  // do not cover this code by HB_OS_HAS_DRIVE_LETTER macro
+  // It will allow us to add drive emulation in hb_fsCurDrv()/hb_fsChDrv()
+  // and hb_fsNameConv()
+
 #if defined(HB_OS_WIN) || !(defined(__MINGW32__))
   if (iDrive > 0)
   {
@@ -3624,9 +3610,9 @@ HB_ERRCODE hb_fsCurDirBuff(int iDrive, char *pszBuffer, HB_SIZE nSize)
     char *pszStart;
     HB_SIZE nLen;
 
-    /* Strip the leading drive spec, and leading backslash if there's one. */
-    /* NOTE: A trailing underscore is not returned on this platform,
-             so we don't need to strip it. [vszakats] */
+    // Strip the leading drive spec, and leading backslash if there's one.
+    // NOTE: A trailing underscore is not returned on this platform,
+    //       so we don't need to strip it. [vszakats]
 
     nLen = strlen(pszBuffer);
     pszStart = pszBuffer;
@@ -3644,7 +3630,7 @@ HB_ERRCODE hb_fsCurDirBuff(int iDrive, char *pszBuffer, HB_SIZE nSize)
       nLen--;
     }
 
-    /* Strip the trailing (back)slash if there's one */
+    // Strip the trailing (back)slash if there's one
     if (nLen && strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszStart[nLen - 1])))
     {
       nLen--;
@@ -3658,7 +3644,7 @@ HB_ERRCODE hb_fsCurDirBuff(int iDrive, char *pszBuffer, HB_SIZE nSize)
     pszBuffer[nLen] = '\0';
 
 #if !defined(HB_OS_WIN)
-    /* Convert from OS codepage */
+    // Convert from OS codepage
     {
       char *pszFree = nullptr;
       const char *pszResult;
@@ -3720,7 +3706,7 @@ HB_BOOL hb_fsGetCWD(char *pszBuffer, HB_SIZE nSize)
     HB_SIZE nLen;
     nLen = strlen(pszBuffer);
 
-    /* add the trailing (back)slash if there's no one */
+    // add the trailing (back)slash if there's no one
     if (nLen + 1 < nSize && strchr(HB_OS_PATH_DELIM_CHR_LIST, static_cast<HB_UCHAR>(pszBuffer[nLen - 1])) == 0)
     {
       pszBuffer[nLen++] = HB_OS_PATH_DELIM_CHR;
@@ -3728,7 +3714,7 @@ HB_BOOL hb_fsGetCWD(char *pszBuffer, HB_SIZE nSize)
     }
 
 #if !defined(HB_OS_WIN)
-    /* Convert from OS codepage */
+    // Convert from OS codepage
     {
       char *pszFree = nullptr;
       const char *pszResult;
@@ -3825,7 +3811,7 @@ HB_BOOL hb_fsSetCWD(const char *pszDirName)
   return fResult;
 }
 
-/* NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ... */
+// NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ...
 
 HB_ERRCODE hb_fsChDrv(int iDrive)
 {
@@ -3870,7 +3856,7 @@ HB_ERRCODE hb_fsChDrv(int iDrive)
   return nResult;
 }
 
-/* NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ... */
+// NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ...
 
 int hb_fsCurDrv(void)
 {
@@ -3894,10 +3880,10 @@ int hb_fsCurDrv(void)
 
 #endif
 
-  return iDrive; /* Return the drive number, base 0. */
+  return iDrive; // Return the drive number, base 0.
 }
 
-/* NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ... */
+// NOTE: 0=A:, 1=B:, 2=C:, 3=D:, ...
 
 HB_ERRCODE hb_fsIsDrv(int iDrive)
 {
@@ -3977,9 +3963,8 @@ HB_BOOL hb_fsIsDevice(HB_FHANDLE hFileHandle)
   return fResult;
 }
 
-/* convert file name for hb_fsExtOpen()
- * caller must free the returned buffer
- */
+// convert file name for hb_fsExtOpen()
+// caller must free the returned buffer
 char *hb_fsExtName(const char *pszFileName, const char *pDefExt, HB_FATTR nExFlags, const char *pPaths)
 {
   HB_PATHNAMES *pNextPath;
@@ -4066,16 +4051,16 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
   char *szFree = nullptr;
 
 #if 0
-#define FXO_TRUNCATE 0x0100         /* Create (truncate if exists) */
-#define FXO_APPEND 0x0200           /* Create (append if exists) */
-#define FXO_UNIQUE 0x0400           /* Create unique file FO_EXCL ??? */
-#define FXO_FORCEEXT 0x0800         /* Force default extension */
-#define FXO_DEFAULTS 0x1000         /* Use SET command defaults */
-#define FXO_DEVICERAW 0x2000        /* Open devices in raw mode */
-   /* Harbour extension */
-#define FXO_NOSEEKPOS FXO_DEVICERAW /* seek pos not needed in regular file */
-#define FXO_SHARELOCK 0x4000        /* emulate DOS SH_DENY* mode in POSIX OS */
-#define FXO_COPYNAME 0x8000         /* copy final szPath into pszFileName */
+#define FXO_TRUNCATE 0x0100         // Create (truncate if exists)
+#define FXO_APPEND 0x0200           // Create (append if exists)
+#define FXO_UNIQUE 0x0400           // Create unique file FO_EXCL ???
+#define FXO_FORCEEXT 0x0800         // Force default extension
+#define FXO_DEFAULTS 0x1000         // Use SET command defaults
+#define FXO_DEVICERAW 0x2000        // Open devices in raw mode
+   // Harbour extension
+#define FXO_NOSEEKPOS FXO_DEVICERAW // seek pos not needed in regular file
+#define FXO_SHARELOCK 0x4000        // emulate DOS SH_DENY* mode in POSIX OS
+#define FXO_COPYNAME 0x8000         // copy final szPath into pszFileName
 
    hb_errGetFileName(pError);
 #endif
@@ -4114,7 +4099,7 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
   {
 #if defined(HB_USE_BSDLOCKS)
     int iLock, iResult;
-    if (/* (uiFlags & (FO_READ | FO_WRITE | FO_READWRITE)) == FO_READ || */
+    if (// (uiFlags & (FO_READ | FO_WRITE | FO_READWRITE)) == FO_READ ||
         (uiFlags & (FO_DENYREAD | FO_DENYWRITE | FO_EXCLUSIVE)) == 0)
     {
       iLock = LOCK_SH | LOCK_NB;
@@ -4144,15 +4129,13 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
     {
       hb_fsClose(hFile);
       hFile = FS_ERROR;
-      /*
-       * fix for NetErr() support and Clipper compatibility,
-       * should be revised with a better multi platform solution.
-       */
+      // fix for NetErr() support and Clipper compatibility,
+      // should be revised with a better multi platform solution.
       hb_fsSetError((nExFlags & FXO_TRUNCATE) ? 5 : 32);
     }
     else if (nExFlags & FXO_TRUNCATE)
     {
-      /* truncate the file only if properly locked */
+      // truncate the file only if properly locked
       hb_fsSeek(hFile, 0, FS_SET);
       hb_fsTruncAt(hFile, 0);
       if (hb_fsError() != 0)
@@ -4164,10 +4147,8 @@ HB_FHANDLE hb_fsExtOpen(const char *pszFileName, const char *pDefExt, HB_FATTR n
     }
   }
 #elif 1
-  /*
-   * Temporary fix for NetErr() support and Clipper compatibility,
-   * should be revised with a better solution.
-   */
+  // Temporary fix for NetErr() support and Clipper compatibility,
+  // should be revised with a better solution.
   if ((nExFlags & (FXO_TRUNCATE | FXO_APPEND | FXO_UNIQUE)) == 0 && hb_fsError() == 5)
   {
     hb_fsSetError(32);
@@ -4229,18 +4210,16 @@ HB_BOOL hb_fsEof(HB_FHANDLE hFileHandle)
 
 const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
 {
-  /*
-     Convert file and dir case. The allowed SET options are:
-        LOWER - Convert all characters of file to lower
-        UPPER - Convert all characters of file to upper
-        MIXED - Leave as is
-
-     The allowed environment options are:
-        FILECASE - define the case of file
-        DIRCASE - define the case of path
-        DIRSEPARATOR - define separator of path (Ex. "/")
-        TRIMFILENAME - strip trailing and leading spaces (also from extension)
-   */
+  // Convert file and dir case. The allowed SET options are:
+  //    LOWER - Convert all characters of file to lower
+  //    UPPER - Convert all characters of file to upper
+  //    MIXED - Leave as is
+  //
+  // The allowed environment options are:
+  //    FILECASE - define the case of file
+  //    DIRCASE - define the case of path
+  //    DIRSEPARATOR - define separator of path (Ex. "/")
+  //    TRIMFILENAME - strip trailing and leading spaces (also from extension)
 
   if (pszFree)
   {
@@ -4299,7 +4278,7 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
 
     pFileName = hb_fsFNameSplit(pszFileName);
 
-    /* strip trailing and leading spaces */
+    // strip trailing and leading spaces
     if (fTrim)
     {
       if (pFileName->szName)
@@ -4318,7 +4297,7 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
       }
     }
 
-    /* FILECASE */
+    // FILECASE
     if (iFileCase == HB_SET_CASE_LOWER)
     {
       if (pFileName->szName)
@@ -4342,7 +4321,7 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
       }
     }
 
-    /* DIRCASE */
+    // DIRCASE
     if (pFileName->szPath)
     {
       if (iDirCase == HB_SET_CASE_LOWER)
@@ -4390,22 +4369,20 @@ const char *hb_fsNameConv(const char *pszFileName, char **pszFree)
 #if defined(HB_OS_WIN)
 HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
 {
-  /*
-     Convert file and dir case. The allowed SET options are:
-        LOWER - Convert all characters of file to lower
-        UPPER - Convert all characters of file to upper
-        MIXED - Leave as is
-
-     The allowed environment options are:
-        FILECASE - define the case of file
-        DIRCASE - define the case of path
-        DIRSEPARATOR - define separator of path (Ex. "/")
-        TRIMFILENAME - strip trailing and leading spaces (also from extension)
-   */
+  // Convert file and dir case. The allowed SET options are:
+  //    LOWER - Convert all characters of file to lower
+  //    UPPER - Convert all characters of file to upper
+  //    MIXED - Leave as is
+  //
+  // The allowed environment options are:
+  //    FILECASE - define the case of file
+  //    DIRCASE - define the case of path
+  //    DIRSEPARATOR - define separator of path (Ex. "/")
+  //    TRIMFILENAME - strip trailing and leading spaces (also from extension)
 
   if (!hb_vmIsReady())
   {
-    return hb_mbtowc(pszFileName); /* No HVM stack */
+    return hb_mbtowc(pszFileName); // No HVM stack
   }
 
   auto cdp = hb_vmCDP();
@@ -4452,7 +4429,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
 
     pFileName = hb_fsFNameSplit(pszBuffer);
 
-    /* strip trailing and leading spaces */
+    // strip trailing and leading spaces
     if (fTrim)
     {
       if (pFileName->szName)
@@ -4471,7 +4448,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
       }
     }
 
-    /* FILECASE */
+    // FILECASE
     if (iFileCase == HB_SET_CASE_LOWER)
     {
       if (pFileName->szName)
@@ -4495,7 +4472,7 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
       }
     }
 
-    /* DIRCASE */
+    // DIRCASE
     if (pFileName->szPath)
     {
       if (iDirCase == HB_SET_CASE_LOWER)
@@ -4532,9 +4509,9 @@ HB_WCHAR *hb_fsNameConvU16(const char *pszFileName)
 
   return lpwFileName;
 }
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN
 
-/* NOTE: pszBuffer must be HB_PATH_MAX long. */
+// NOTE: pszBuffer must be HB_PATH_MAX long.
 void hb_fsBaseDirBuff(char *pszBuffer)
 {
   char *pszBaseName = hb_cmdargProgName();

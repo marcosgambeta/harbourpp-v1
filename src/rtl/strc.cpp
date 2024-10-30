@@ -48,9 +48,8 @@
 #include "hbapiitm.hpp"
 #include "hbapierr.hpp"
 
-/* hb_StrDecodEscape( <cEscSeqStr> ) --> <cStr>
- * decode string with \ escape sequences
- */
+// hb_StrDecodEscape( <cEscSeqStr> ) --> <cStr>
+// decode string with \ escape sequences
 HB_FUNC(HB_STRDECODESCAPE)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);
@@ -76,13 +75,12 @@ HB_FUNC(HB_STRDECODESCAPE)
   }
 }
 
-/* hb_StrCDecode( <cStr> [, @<lCont> ] ) --> <cResult> | NIL
- * decode string using C compiler rules
- * if second parameter <lCont> is passed by reference then it allows
- * to decode multiline strings. In such case <lCont> is set to .T.
- * if string ends with unclosed "" quoting.
- * Function returns decoded string or NIL on syntax error.
- */
+// hb_StrCDecode( <cStr> [, @<lCont> ] ) --> <cResult> | NIL
+// decode string using C compiler rules
+// if second parameter <lCont> is passed by reference then it allows
+// to decode multiline strings. In such case <lCont> is set to .T.
+// if string ends with unclosed "" quoting.
+// Function returns decoded string or NIL on syntax error.
 HB_FUNC(HB_STRCDECODE)
 {
   auto pText = hb_param(1, Harbour::Item::STRING);

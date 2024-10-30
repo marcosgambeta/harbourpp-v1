@@ -62,11 +62,9 @@
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
 #if defined(__USE_LARGEFILE64)
-/*
- * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
- * defined and effectively enables lseek64()/flock64()/ftruncate64()
- * functions on 32-bit machines.
- */
+// The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
+// defined and effectively enables lseek64()/flock64()/ftruncate64()
+// functions on 32-bit machines.
 #define HB_USE_LARGEFILE64
 #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
 #define HB_USE_LARGEFILE64

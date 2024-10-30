@@ -49,8 +49,8 @@
 #include "color.ch"
 #include "inkey.ch"
 
-/* NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
-         it has all related variables and methods. */
+// NOTE: Harbour doesn't support CA-Cl*pper 5.3 GUI functionality, but
+//       it has all related variables and methods.
 
 #ifdef HB_COMPAT_C53
 
@@ -69,7 +69,7 @@ CREATE CLASS TopBarMenu FUNCTION HBTopBarMenu
    METHOD getNext()
    METHOD getPrev()
    METHOD getAccel(nKey)
-   METHOD getShortCt(nKey)                        /* NOTE: This method exists but it is not documented in the manuals nor the NG's [jlalin] */
+   METHOD getShortCt(nKey)                        // NOTE: This method exists but it is not documented in the manuals nor the NG's [jlalin]
    METHOD hitTest(nMRow, nMCol)
    METHOD insItem(nPos, oItem)
    METHOD select(nPos)
@@ -82,7 +82,7 @@ CREATE CLASS TopBarMenu FUNCTION HBTopBarMenu
    METHOD right(nRight) SETGET
    METHOD row(nRow) SETGET
 
-   METHOD Init(nRow, nLeft, nRight)                /* NOTE: This method is a Harbour extension [vszakats] */
+   METHOD Init(nRow, nLeft, nRight)                // NOTE: This method is a Harbour extension [vszakats]
 
    PROTECTED:
 
@@ -254,10 +254,10 @@ METHOD TopBarMenu:getPrev()
 
    RETURN 0
 
-/* NOTE: This method corrects two bugs in Cl*pper:
-         1) when two menuitems have the same key and the
-            first item is disabled
-         2) when a menuitem is disabled it will ignore the key [jlalin] */
+// NOTE: This method corrects two bugs in Cl*pper:
+//       1) when two menuitems have the same key and the
+//          first item is disabled
+//       2) when a menuitem is disabled it will ignore the key [jlalin]
 
 METHOD TopBarMenu:getAccel(nKey)
 
@@ -294,12 +294,12 @@ METHOD TopBarMenu:getShortCt(nKey)
 
    RETURN 0
 
-/* NOTE: In my tests I can't get other values than HTNOWHERE or a value
-         greather than 0 (selected item), althought the NG's says that
-         it returns other HT* values [jlalin]
-
-         This method correct a bug in Cl*pper:
-         when click on a disabled menuitem it will ignore it [jlalin] */
+// NOTE: In my tests I can't get other values than HTNOWHERE or a value
+//       greather than 0 (selected item), althought the NG's says that
+//       it returns other HT* values [jlalin]
+//
+//       This method correct a bug in Cl*pper:
+//       when click on a disabled menuitem it will ignore it [jlalin]
 
 METHOD TopBarMenu:hitTest(nMRow, nMCol)
 
@@ -393,13 +393,13 @@ METHOD TopBarMenu:right(nRight)
 METHOD TopBarMenu:row(nRow)
 
    IF nRow != NIL
-      /* NOTE: CA-Cl*pper 5.3 has a bug, where it would show "TOP" in case of an error. */
+      // NOTE: CA-Cl*pper 5.3 has a bug, where it would show "TOP" in case of an error.
       ::nRow := __eInstVar53(Self, "ROW", nRow, "N", 1001)
    ENDIF
 
    RETURN ::nRow
 
-/* -------------------------------------------- */
+// --------------------------------------------
 
 METHOD TopBarMenu:Init(nRow, nLeft, nRight)
 
@@ -428,7 +428,7 @@ METHOD TopBarMenu:Init(nRow, nLeft, nRight)
 
    RETURN Self
 
-/* -------------------------------------------- */
+// --------------------------------------------
 
 FUNCTION TopBar(nRow, nLeft, nRight)
    RETURN HBTopBarMenu():New(nRow, nLeft, nRight)

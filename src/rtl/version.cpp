@@ -176,9 +176,9 @@ HB_FUNC(HB_VERSION)
     hb_retl(hb_vmIsMt());
     break;
 
-  case HB_VERSION_SHARED: /* FIXME: This only works when platforms has separate
-                                    compilation pass for harbour dynlib build -
-                                    it is 32-bit Windows. */
+  case HB_VERSION_SHARED: // FIXME: This only works when platforms has separate
+                          //        compilation pass for harbour dynlib build -
+                          //        it is 32-bit Windows.
 
 #if defined(HB_DYNLIB)
     hb_retl(true);
@@ -284,7 +284,7 @@ HB_FUNC(HB_OSISWINCE)
   hb_retl(hb_iswince());
 }
 
-/* Legacy functions */
+// Legacy functions
 
 HB_FUNC(HB_COMPILER)
 {

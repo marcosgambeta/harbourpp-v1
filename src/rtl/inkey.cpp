@@ -99,7 +99,7 @@ HB_FUNC(INKEY)
 
 HB_FUNC(__KEYBOARD)
 {
-  /* Clear the typeahead buffer without reallocating the keyboard buffer */
+  // Clear the typeahead buffer without reallocating the keyboard buffer
   hb_inkeyReset();
 
   if (HB_ISCHAR(1))

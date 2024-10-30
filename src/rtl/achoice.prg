@@ -12,9 +12,9 @@
 #define INRANGE(xLo, xVal, xHi)  (xVal >= xLo .AND. xVal <= xHi)
 #define BETWEEN(xLo, xVal, xHi)  Min(Max(xLo, xVal), xHi)
 
-/* NOTE: Extension: Harbour supports codeblocks and function pointers
-         as the xSelect parameter (both when supplied as is, or as an
-         array of codeblocks). [vszakats] */
+// NOTE: Extension: Harbour supports codeblocks and function pointers
+//       as the xSelect parameter (both when supplied as is, or as an
+//       array of codeblocks). [vszakats]
 
 FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos, nHiLiteRow)
 
@@ -63,11 +63,11 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
    ColorSelect(CLR_STANDARD)
 
-   /* NOTE: Undocumented parameter passing handled. AChoice()
-            is called in such way in rldialg.prg from RL tool
-            supplied with Clipper 5.x. 6th parameter is the
-            user function and 7th parameter is zero (empty I
-            suppose). [vszakats] */
+   // NOTE: Undocumented parameter passing handled. AChoice()
+   //       is called in such way in rldialg.prg from RL tool
+   //       supplied with Clipper 5.x. 6th parameter is the
+   //       user function and 7th parameter is zero (empty I
+   //       suppose). [vszakats]
    IF Empty(xUserFunc) .AND. ValType(xSelect) $ "CBS"
       xUserFunc := xSelect
       xSelect := NIL
@@ -486,7 +486,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
             SWITCH nUserFunc
             CASE AC_ABORT
-            CASE AC_REDRAW  /* QUESTION: Is this correct? */
+            CASE AC_REDRAW  // QUESTION: Is this correct?
                IF nPos != 0
                   DispLine(acItems[nPos], nTop + nPos - nAtTop, nLeft, .T., .F., nNumCols)
                ENDIF
@@ -513,9 +513,9 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
             IF nPos > 0 .AND. nMode != AC_EXCEPT
 
 #if 0
-               /* TODO: Disabled nRowsClr in DispPage() call:
-                  Please verify it, I do not know why it was added but
-                  it breaks code which adds dynamically new acItems positions */
+               // TODO: Disabled nRowsClr in DispPage() call:
+               // Please verify it, I do not know why it was added but
+               // it breaks code which adds dynamically new acItems positions
                nRowsClr := Min(nNumRows, nItems)
 #endif
                IF (nMode := Ach_Limits(@nFrstItem, @nLastItem, @nItems, alSelect, acItems)) == AC_NOITEM

@@ -217,8 +217,8 @@ METHOD Init(cFrmName AS STRING, ;
       err:subSystem := "FRMLBL"
       Eval(ErrorBlock(), err)
    ELSE
-      /* NOTE: CA-Cl*pper does an RTrim() on the filename here,
-               but in Harbour we're using _SET_TRIMFILENAME. */
+      // NOTE: CA-Cl*pper does an RTrim() on the filename here,
+      //       but in Harbour we're using _SET_TRIMFILENAME.
       IF Set(_SET_DEFEXTENSIONS)
          cFRMName := hb_FNameExtSetDef(cFRMName, ".frm")
       ENDIF
@@ -795,7 +795,7 @@ METHOD ExecuteReport() CLASS HBReportForm
       // Tack on the spacing for double/triple/etc.
       IF ::aReportData[RPT_SPACING] > 1
 
-         /* Double space problem in REPORT FORM at the bottom of the page  */
+         // Double space problem in REPORT FORM at the bottom of the page
          IF ::nLinesLeft >= ::aReportData[RPT_SPACING] - 1
 
             FOR nLine := 2 TO ::aReportData[RPT_SPACING]
@@ -905,7 +905,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
             nOptionByte := hb_BPeek(cParamsBuff, OPTION_OFFSET)
 
 #ifdef HB_CLP_STRICT
-            IF nOptionByte <= 8  /* Bug compatibility with CA-Cl*pper for corrupted input files */
+            IF nOptionByte <= 8  // Bug compatibility with CA-Cl*pper for corrupted input files
 #endif
                IF hb_bitAnd(nOptionByte, 4) != 0
                   aReport[RPT_PLAIN] := .T.          // Plain page
@@ -989,13 +989,13 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
 
    RETURN aReport
 
-/* Reads an expression from EXPR_BUFF via the OFFSETS_BUFF and returns
-   a pointer to offset contained in OFFSETS_BUFF that in turn points
-   to an expression located in the EXPR_BUFF string.
-   Notes:
-      1. The expression is empty if:
-          a. Passed pointer is equal to 65535
-          b. Character following character pointed to by pointer is hb_BChar(0) */
+// Reads an expression from EXPR_BUFF via the OFFSETS_BUFF and returns
+// a pointer to offset contained in OFFSETS_BUFF that in turn points
+// to an expression located in the EXPR_BUFF string.
+// Notes:
+//    1. The expression is empty if:
+//        a. Passed pointer is equal to 65535
+//        b. Character following character pointed to by pointer is hb_BChar(0)
 METHOD GetExpr(nPointer AS NUMERIC) CLASS HBReportForm
 
    LOCAL nExprOffset
@@ -1104,12 +1104,12 @@ STATIC FUNCTION ParseHeader(cHeaderString, nFields)
 
    RETURN aPageHeader
 
-/* Get a COLUMN element from FIELDS_BUFF string using nOffset to point to
-   the current FIELDS_OFFSET block.
-   Notes:
-      1. The Header or Contents expressions are empty if:
-         a. Passed pointer is equal to 65535
-         b. Character following character pointed to by pointer is hb_BChar(0) */
+// Get a COLUMN element from FIELDS_BUFF string using nOffset to point to
+// the current FIELDS_OFFSET block.
+// Notes:
+//    1. The Header or Contents expressions are empty if:
+//       a. Passed pointer is equal to 65535
+//       b. Character following character pointed to by pointer is hb_BChar(0)
 METHOD GetColumn(cFieldsBuffer AS STRING, /* @ */ nOffset AS NUMERIC) CLASS HBReportForm
 
    LOCAL aColumn[RCT_COUNT]

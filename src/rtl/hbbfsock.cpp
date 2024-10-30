@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* this has to be declared before hbsocket.h is included */
+// this has to be declared before hbsocket.h is included
 #define _HB_SOCKEX_IMPLEMENTATION_
 
 #include "hbapiitm.hpp"
@@ -132,7 +132,7 @@ static long s_bf_send(PHB_SOCKEX_BF pBF, HB_MAXINT timeout)
   return lSent;
 }
 
-/* socket filter */
+// socket filter
 
 static long s_sockexRead(PHB_SOCKEX pSock, void *data, long len, HB_MAXINT timeout)
 {
@@ -274,8 +274,8 @@ static int s_sockexClose(PHB_SOCKEX pSock, HB_BOOL fClose)
     memset(pBF, 0, sizeof(*pBF));
     hb_xfree(pBF);
   }
-  /* call hb_sockexRawClear() with fClose = HB_FALSE because
-     hb_sockexClose() already closed real socket */
+  // call hb_sockexRawClear() with fClose = HB_FALSE because
+  // hb_sockexClose() already closed real socket
   hb_sockexRawClear(pSock, false);
   hb_xfree(pSock);
 
@@ -349,7 +349,7 @@ static PHB_SOCKEX s_sockexNext(PHB_SOCKEX pSock, PHB_ITEM pParams)
   return pSockNew;
 }
 
-/* hb_socketNewBFSock(<pSocket>, [<hParams>]) --> <pSocket> */
+// hb_socketNewBFSock(<pSocket>, [<hParams>]) --> <pSocket>
 HB_FUNC(HB_SOCKETNEWBFSOCK)
 {
   PHB_SOCKEX pSock = hb_sockexParam(1);

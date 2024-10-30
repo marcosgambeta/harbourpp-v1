@@ -48,15 +48,15 @@
 #include "hbapierr.hpp"
 #include "hbmath.hpp"
 
-/* NOTE: In CA-Cl*pper this is written in Clipper, see the source below,
-         and the error handling is NOT made here, but in the % operator.
-         [vszakats] */
+// NOTE: In CA-Cl*pper this is written in Clipper, see the source below,
+//       and the error handling is NOT made here, but in the % operator.
+//       [vszakats]
 
-/* NOTE: CA-Cl*pper is buggy since it relies on the fact that the errorhandler
-         will silently handle zero division errors. [vszakats] */
+// NOTE: CA-Cl*pper is buggy since it relies on the fact that the errorhandler
+//       will silently handle zero division errors. [vszakats]
 
-/* NOTE: This C version fully emulates the behaviour of the original
-         CA-Cl*pper version, including bugs/side-effects. [vszakats] */
+// NOTE: This C version fully emulates the behaviour of the original
+//       CA-Cl*pper version, including bugs/side-effects. [vszakats]
 
 HB_FUNC(MOD)
 {
@@ -66,7 +66,7 @@ HB_FUNC(MOD)
   if (pNumber && pBase)
   {
     auto dNumber = pNumber->getND();
-    auto dBase = pBase->getND(); /* dBase! Cool! */
+    auto dBase = pBase->getND(); // dBase! Cool!
 
     if (dBase)
     {
@@ -82,17 +82,17 @@ HB_FUNC(MOD)
     {
       PHB_ITEM pResult = hb_errRT_BASE_Subst(EG_ZERODIV, 1341, nullptr, "%", HB_ERR_ARGS_BASEPARAMS);
 
-      /* In CA-Cl*pper Mod() function ignores substitution result
-       * and return original numeric item keeping its internal
-       * representation: integer or double, size and number of
-       * decimal places, it can be seen in code like:
-       *    PROCEDURE Main()
-       *       Set(_SET_FIXED, .T.)
-       *       ? Transform(Mod(12345, 0), "")
-       *       RETURN
-       *
-       * [druzus]
-       */
+      // In CA-Cl*pper Mod() function ignores substitution result
+      // and return original numeric item keeping its internal
+      // representation: integer or double, size and number of
+      // decimal places, it can be seen in code like:
+      //    PROCEDURE Main()
+      //       Set(_SET_FIXED, .T.)
+      //       ? Transform(Mod(12345, 0), "")
+      //       RETURN
+      //
+      // [druzus]
+
       if (pResult)
       {
         hb_itemReturn(pNumber);
@@ -107,10 +107,8 @@ HB_FUNC(MOD)
   }
 }
 
-/*
-   FUNCTION Mod(cl_num, cl_base)
-
-      LOCAL cl_result := cl_num % cl_base
-
-      RETURN iif( cl_base = 0, cl_num, iif( cl_result * cl_base < 0, cl_result + cl_base, cl_result ) )
- */
+// FUNCTION Mod(cl_num, cl_base)
+//
+//    LOCAL cl_result := cl_num % cl_base
+//
+//    RETURN iif( cl_base = 0, cl_num, iif( cl_result * cl_base < 0, cl_result + cl_base, cl_result ) )
