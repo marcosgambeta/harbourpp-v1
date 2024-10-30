@@ -1079,7 +1079,7 @@ void hb_macroPushSymbol(PHB_ITEM pItem)
     char *szString = hb_macroTextSymbol(pItem->stringValue(), pItem->stringLength(), &fNewBuffer);
     if (szString != nullptr)
     {
-      PHB_DYNS pDynSym = hb_dynsymGetCase(szString);
+      auto pDynSym = hb_dynsymGetCase(szString);
 
       if (fNewBuffer)
       {
@@ -1583,7 +1583,7 @@ void hb_macroGenMessage(const char *szMsgName, HB_BOOL bIsObject, HB_COMP_DECL)
 
     /* Find the address of passed symbol - create the symbol if doesn't exist
      */
-    PHB_DYNS pSym = hb_dynsymGetCase(szMsgName);
+    auto pSym = hb_dynsymGetCase(szMsgName);
 
     byBuf[0] = HB_P_MMESSAGE;
     HB_PUT_PTR(&byBuf[1], pSym);
