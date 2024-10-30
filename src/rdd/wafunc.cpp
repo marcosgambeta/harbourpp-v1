@@ -181,7 +181,7 @@ void *hb_rddAllocWorkAreaAlias(const char *szAlias, int iArea)
   }
   else
   {
-    PHB_DYNS pSymAlias = hb_dynsymGet(szAlias);
+    auto pSymAlias = hb_dynsymGet(szAlias);
 
     if (hb_dynsymAreaHandle(pSymAlias) == 0)
     {
