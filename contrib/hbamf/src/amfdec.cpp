@@ -35,7 +35,7 @@ struct amfContext
 };
 
 static bool amf3_getItem(amfContext * context, PHB_ITEM pItem);
-extern bool hbamf_is_cls_externalizable(HB_USHORT uiClass);
+extern HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass);
 
 static PHB_ITEM hbamf_cls_externalizable_instance(PHB_ITEM pClassFuncStr)
 {

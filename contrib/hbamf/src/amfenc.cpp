@@ -47,7 +47,7 @@ struct amfContext
 };
 
 static bool amf3_encode(amfContext * context, PHB_ITEM pItem);
-extern bool hbamf_is_cls_externalizable(HB_USHORT uiClass);
+extern HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass);
 
 static void _ref_realItemPtr(PHB_ITEM pKey, PHB_ITEM pItem)
 {
