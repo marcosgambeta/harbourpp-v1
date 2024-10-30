@@ -50,8 +50,8 @@
 #include "hbapigt.hpp"
 #include "hbapifs.hpp"
 
-#define SINGLEBUF  32768
-#define MAXLEN     (16 * 1024 * 1024)
+#define SINGLEBUF 32768
+#define MAXLEN (16 * 1024 * 1024)
 
 static int s_nCount = 0;
 
@@ -77,12 +77,12 @@ static void countCheck(int n, int nFlowCtrl)
   }
 }
 
-HB_FUNC( AMFSTDIO_READ )
+HB_FUNC(AMFSTDIO_READ)
 {
   auto pszStrIn = static_cast<char *>(hb_xgrab(SINGLEBUF));
   auto pszLenPrefix = static_cast<char *>(hb_xgrab(5));
-  char * pszBuf;
-  char * pszTmp = pszLenPrefix;
+  char *pszBuf;
+  char *pszTmp = pszLenPrefix;
   HB_USHORT nBytes;
   int nTotal = 0;
   int nLen;
@@ -94,7 +94,7 @@ HB_FUNC( AMFSTDIO_READ )
   while (nTotal < 4)
   {
     nToRead = (s_nCount + 4 - nTotal > SINGLEBUF ? SINGLEBUF - s_nCount : 4 - nTotal);
-    nBytes  = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
+    nBytes = hb_fsRead(hStdIn, pszStrIn, static_cast<HB_USHORT>(nToRead));
     if (!nBytes)
     {
       hb_xfree(pszStrIn);

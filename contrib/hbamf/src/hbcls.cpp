@@ -52,29 +52,31 @@
 
 HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass)
 {
-   PHB_DYNS pSymbol = hb_dynsymGet("__CLSMSGTYPE");
-   bool     result  = false;
+  PHB_DYNS pSymbol = hb_dynsymGet("__CLSMSGTYPE");
+  bool result = false;
 
-   /* as far as i know, there is no exported Harbour C level api for this */
+  /* as far as i know, there is no exported Harbour C level api for this */
 
-   if( uiClass && pSymbol ) {
-      auto pRetCopy = hb_itemNew(nullptr);
+  if (uiClass && pSymbol)
+  {
+    auto pRetCopy = hb_itemNew(nullptr);
 
-      hb_itemMove(pRetCopy, hb_stackReturnItem());
+    hb_itemMove(pRetCopy, hb_stackReturnItem());
 
-      hb_vmPushDynSym(pSymbol);
-      hb_vmPushNil();
-      hb_vmPushInteger(uiClass);
-      hb_vmPushString("EXTERNALIZABLE", 14);
-      hb_vmDo(2);
+    hb_vmPushDynSym(pSymbol);
+    hb_vmPushNil();
+    hb_vmPushInteger(uiClass);
+    hb_vmPushString("EXTERNALIZABLE", 14);
+    hb_vmDo(2);
 
-      if( hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA ) {
-         result = true;
-      }
+    if (hb_itemGetNI(hb_stackReturnItem()) == HB_OO_MSG_CLASSDATA)
+    {
+      result = true;
+    }
 
-      hb_itemMove(hb_stackReturnItem(), pRetCopy);
-      hb_itemRelease(pRetCopy);
-   }
+    hb_itemMove(hb_stackReturnItem(), pRetCopy);
+    hb_itemRelease(pRetCopy);
+  }
 
-   return result;
+  return result;
 }
