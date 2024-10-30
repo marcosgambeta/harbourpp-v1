@@ -54,6 +54,7 @@ void *getPtr()
 PHB_SYMB getSymbol()  
 
 _HB_ITEM *putNI(int iNumber)  
+_HB_ITEM *putNL(long lNumber)  
 _HB_ITEM *putL(HB_BOOL bValue)  
 
 HB_BOOL logicalValue()  
@@ -93,6 +94,8 @@ void setPointerSingle(HB_BOOL b)
 _HB_BASEARRAY *arrayValue()  
 void setArrayValue(_HB_BASEARRAY *pValue)  
 _HB_ITEM *arrayItems()  
+bool isValidIndex(HB_SIZE nIndex)  
+_HB_ITEM *arrayItem(HB_SIZE nIndex)  
 HB_SIZE arrayLen()  
 
 long dateTimeJulian()  
@@ -119,6 +122,9 @@ HB_USHORT blockHClass()
 void setBlockHClass(HB_USHORT usValue)  
 HB_USHORT blockMethod()  
 void setBlockMethod(HB_USHORT usValue)  
+
+_HB_BASEHASH *hashValue()  
+void setHashValue(_HB_BASEHASH *pValue)  
 
 void clear()  
 
@@ -200,6 +206,7 @@ void *getPtr()
 PHB_SYMB getSymbol()  
 
 _HB_ITEM *putNI(int iNumber)  
+_HB_ITEM *putNL(long lNumber)  
 _HB_ITEM *putL(HB_BOOL bValue)  
 
 HB_BOOL logicalValue()  
@@ -239,6 +246,8 @@ void setPointerSingle(HB_BOOL b)
 _HB_BASEARRAY *arrayValue()  
 void setArrayValue(_HB_BASEARRAY *pValue)  
 _HB_ITEM *arrayItems()  
+bool isValidIndex(HB_SIZE nIndex)  
+_HB_ITEM *arrayItem(HB_SIZE nIndex)  
 HB_SIZE arrayLen()  
 
 long dateTimeJulian()  
@@ -265,6 +274,9 @@ HB_USHORT blockHClass()
 void setBlockHClass(HB_USHORT usValue)  
 HB_USHORT blockMethod()  
 void setBlockMethod(HB_USHORT usValue)  
+
+_HB_BASEHASH *hashValue()  
+void setHashValue(_HB_BASEHASH *pValue)  
 
 void clear()  
 
