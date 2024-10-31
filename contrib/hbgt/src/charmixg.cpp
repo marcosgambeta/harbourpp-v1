@@ -8,33 +8,33 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( GT_CHARMIX )
+HB_FUNC(GT_CHARMIX)
 {
-   if( HB_ISCHAR(1) && HB_ISCHAR(2) )
-   {
-      auto s1 = hb_parc(1);
-      auto s2 = hb_parc(2);
-      HB_ISIZ      l1 = hb_parclen(1);
-      HB_ISIZ      l2 = hb_parclen(2);
-      HB_ISIZ      i, pos3 = 0;
+  if (HB_ISCHAR(1) && HB_ISCHAR(2))
+  {
+    auto s1 = hb_parc(1);
+    auto s2 = hb_parc(2);
+    HB_ISIZ l1 = hb_parclen(1);
+    HB_ISIZ l2 = hb_parclen(2);
+    HB_ISIZ i, pos3 = 0;
 
-      auto s3 = static_cast<char*>(hb_xgrab(l1 + l2 + 1));  /* grab us some memory to work with */
+    auto s3 = static_cast<char *>(hb_xgrab(l1 + l2 + 1)); /* grab us some memory to work with */
 
-      for( i = 0; i < l1; i++ )
-      {
-         s3[pos3++] = s1[i];
+    for (i = 0; i < l1; i++)
+    {
+      s3[pos3++] = s1[i];
 
-         if( i < l2 )
-            s3[pos3++] = s2[i];
-      }
+      if (i < l2)
+        s3[pos3++] = s2[i];
+    }
 
-      if( l2 > l1 )
-         for(; i < l2; i++ )
-            s3[pos3++] = s2[i];
+    if (l2 > l1)
+      for (; i < l2; i++)
+        s3[pos3++] = s2[i];
 
-      s3[pos3] = '\0';
-      hb_retclen_buffer(s3, l1 + l2);
-   }
-   else
-      hb_retc_null();
+    s3[pos3] = '\0';
+    hb_retclen_buffer(s3, l1 + l2);
+  }
+  else
+    hb_retc_null();
 }

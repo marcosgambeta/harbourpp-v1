@@ -7,15 +7,15 @@
 
 #include "hbapi.hpp"
 
-HB_FUNC( GT_ASCIISUM )
+HB_FUNC(GT_ASCIISUM)
 {
-   auto str = hb_parcx(1);
-   HB_ISIZ      len = hb_parclen(1);
-   HB_ISIZ      i;
-   HB_MAXUINT   ascSum = 0;
+  auto str = hb_parcx(1);
+  HB_ISIZ len = hb_parclen(1);
+  HB_ISIZ i;
+  HB_MAXUINT ascSum = 0;
 
-   for( i = 0; i <= len; i++, str++ )
-      ascSum += *str;
+  for (i = 0; i <= len; i++, str++)
+    ascSum += *str;
 
-   hb_retnint(ascSum);
+  hb_retnint(ascSum);
 }
