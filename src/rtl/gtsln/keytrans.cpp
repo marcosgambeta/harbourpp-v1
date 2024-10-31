@@ -43,14 +43,14 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* a shortcut only */
+// a shortcut only
 #define CTRL_PRESSED CONTROL_PRESSED
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* a table of keys translation */
+// a table of keys translation
 static int KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
                                        {SL_KEY_DOWN, K_DOWN},
                                        {SL_KEY_LEFT, K_LEFT},
@@ -375,11 +375,11 @@ static int KeyTranslationTable[][2] = {{SL_KEY_UP, K_UP},
                                        {SL_KEY_F(39), K_ALT_F9},
                                        {SL_KEY_F(40), K_ALT_F10}};
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #define KeyTranslationTableSize HB_SIZEOFARRAY(KeyTranslationTable)
 
-/* a very simple sort algorithm */
+// a very simple sort algorithm
 static void hb_sln_SortKeyTranslationTable(void)
 {
   for (auto i = 0; i < (static_cast<int>(KeyTranslationTableSize) - 1); i++)
@@ -416,9 +416,9 @@ static void hb_sln_SortKeyTranslationTable(void)
 #endif
 }
 
-/* ************************************************************************* */
+// *************************************************************************
 
-/* standard binary search */
+// standard binary search
 static int hb_sln_FindKeyTranslation(int SlangKey)
 {
   if ((SlangKey >= KeyTranslationTable[0][0]) && (SlangKey <= KeyTranslationTable[KeyTranslationTableSize - 1][0]))
@@ -454,7 +454,7 @@ static int hb_sln_FindKeyTranslation(int SlangKey)
   return 0;
 }
 
-/* ************************************************************************* */
+// *************************************************************************
 #if 0
 int hb_sln_SetKeyInKeyTranslationTable(int SlangKey, int ClipKey)
 {
@@ -466,11 +466,11 @@ int hb_sln_SetKeyInKeyTranslationTable(int SlangKey, int ClipKey)
             KeyTranslationTable[i][1] = ClipKey;
          }
          Found = 1;
-         /* we don't break here because SlangKey can be defined more than once */
+         // we don't break here because SlangKey can be defined more than once
       }
    }
 
    return Found;
 }
 #endif
-/* ************************************************************************* */
+// *************************************************************************

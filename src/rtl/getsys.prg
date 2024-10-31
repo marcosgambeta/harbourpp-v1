@@ -118,10 +118,10 @@ FUNCTION GetActive(oGet)
    THREAD STATIC t_oGetActive
 
    IF oGetList == NIL
-      /* NOTE: For complete compatibility we need to make sure this
-               function works even if there is no active GetList.
-               F.e. when 3rd party software manages GetLists on its
-               own and still uses this function. [vszakats] */
+      // NOTE: For complete compatibility we need to make sure this
+      //       function works even if there is no active GetList.
+      //       F.e. when 3rd party software manages GetLists on its
+      //       own and still uses this function. [vszakats]
       IF PCount() > 0
          oGetActiveOld := t_oGetActive
          t_oGetActive := oGet

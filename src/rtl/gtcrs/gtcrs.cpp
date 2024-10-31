@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "gtcrs.hpp"
 
@@ -57,7 +57,7 @@ static HB_GT_FUNCS SuperTable;
 static volatile bool s_SignalTable[MAX_SIGNO];
 #if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
 static volatile auto s_SignalFlag = false;
-/* this variable should be global and checked in main VM loop */
+// this variable should be global and checked in main VM loop
 static volatile auto s_BreakFlag = false;
 static volatile auto s_InetrruptFlag = false;
 #endif
@@ -87,7 +87,7 @@ struct mouseEvent
   int rbdn_row, rbdn_col;
   int mbup_row, mbup_col;
   int mbdn_row, mbdn_col;
-  /* to analyze DBLCLK on xterm */
+  // to analyze DBLCLK on xterm
   int click_delay;
   struct timeval BL_time;
   struct timeval BR_time;
@@ -153,7 +153,7 @@ struct InOutBase
   int efds_size;
   int efds_no;
 
-  /* curses data */
+  // curses data
   SCREEN *basescr;
   WINDOW *hb_stdscr;
   FILE *basein;
@@ -281,7 +281,7 @@ static void set_signals(void)
     s_SignalTable[i] = false;
   }
 
-  /* Ignore SIGPIPEs so they don't kill us. */
+  // Ignore SIGPIPEs so they don't kill us.
   signal(SIGPIPE, SIG_IGN);
 
   for (auto i = 0; sigs[i]; ++i)
@@ -362,7 +362,7 @@ static void set_signals(void)
 
 static void set_sig_handler(int iSig)
 {
-  /* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
+  // SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment
 #if defined(SA_NOCLDSTOP) && defined(SA_RESTART) && defined(SIGCHLD)
   struct sigaction act;
   sigaction(iSig, 0, &act);
@@ -779,12 +779,12 @@ static void mouse_init(InOutBase *ioBase)
 {
   if (ioBase->terminal_type == TERM_XTERM)
   {
-    /* save old hilit tracking & enable mouse tracking */
+    // save old hilit tracking & enable mouse tracking
     write_ttyseq(ioBase, "\033[?1001s\033[?1002h");
     ioBase->mouse_type = MOUSE_XTERM;
     memset(static_cast<void *>(&ioBase->mLastEvt), 0, sizeof(ioBase->mLastEvt));
     ioBase->mLastEvt.click_delay = DBLCLK_DELAY;
-    /* curses mouse buttons check */
+    // curses mouse buttons check
     ioBase->mButtons = tigetnum(const_cast<char *>("btns"));
     if (ioBase->mButtons < 1)
     {
@@ -795,9 +795,9 @@ static void mouse_init(InOutBase *ioBase)
   else if (ioBase->terminal_type == TERM_LINUX)
   {
     ioBase->Conn.eventMask = GPM_MOVE | GPM_DRAG | GPM_UP | GPM_DOWN | GPM_SINGLE | GPM_DOUBLE;
-    /* give me move events but handle them anyway */
+    // give me move events but handle them anyway
     ioBase->Conn.defaultMask = GPM_MOVE | GPM_HARD;
-    /* only pure mouse events, no Ctrl,Alt,Shift events */
+    // only pure mouse events, no Ctrl,Alt,Shift events
     ioBase->Conn.minMod = 0;
     ioBase->Conn.maxMod = ((1 << KG_SHIFT) | (1 << KG_CTRL) | (1 << KG_ALT));
     gpm_zerobased = 1;
@@ -817,10 +817,8 @@ static void mouse_init(InOutBase *ioBase)
       flush_gpmevt(&ioBase->mLastEvt);
       add_efds(ioBase, gpm_fd, O_RDONLY, set_gpmevt, static_cast<void *>(&ioBase->mLastEvt));
 
-      /*
-       * In recent GPM versions it produce unpleasure noice on the screen
-       * so I covered it with this macro, [druzus]
-       */
+      // In recent GPM versions it produce unpleasure noice on the screen
+      // so I covered it with this macro, [druzus]
 #ifdef HB_GPM_USE_XTRA
       ioBase->mButtons = Gpm_GetSnapshot(nullptr);
 #else
@@ -835,7 +833,7 @@ static void mouse_exit(InOutBase *ioBase)
 {
   if (ioBase->mouse_type == MOUSE_XTERM)
   {
-    /* disable mouse tracking & restore old hilit tracking */
+    // disable mouse tracking & restore old hilit tracking
     write_ttyseq(ioBase, "\033[?1002l\033[?1001r");
   }
 #if defined(HB_HAS_GPM)
@@ -1332,10 +1330,9 @@ static void disp_cursor(InOutBase *ioBase)
       cv = ioBase->cvvis;
       break;
     case SC_SPECIAL2:
-      /* TODO: find a proper sequence to set a cursor
-         to SC_SPECIAL2 under Linux console?
-         There is no such mode in current stable kernels (2.4.20)
-       */
+      // TODO: find a proper sequence to set a cursor
+      // to SC_SPECIAL2 under Linux console?
+      // There is no such mode in current stable kernels (2.4.20)
       lcurs = 4;
       cv = ioBase->cvvis;
       break;
@@ -1351,7 +1348,7 @@ static void disp_cursor(InOutBase *ioBase)
       }
       else if (cv != nullptr)
       {
-/* curses cursor shape set */
+// curses cursor shape set
 #if 0
             curs_set(ncurs);
 #endif
@@ -1389,7 +1386,7 @@ static void gt_refresh(InOutBase *ioBase)
          leaveok(ioBase->hb_stdscr, false);
       }
 #endif
-    /* if( ioBase->cursor != SC_NONE ) */
+    // if( ioBase->cursor != SC_NONE )
     wmove(ioBase->hb_stdscr, ioBase->row, ioBase->col);
     wrefresh(ioBase->hb_stdscr);
     disp_cursor(ioBase);
@@ -1514,15 +1511,15 @@ static void get_acsc(InOutBase *ioBase, unsigned char c, chtype *pch)
 
 static void init_keys(InOutBase *ioBase)
 {
-  /* virual CTRL/ALT sequences */
+  // virual CTRL/ALT sequences
   addKeyMap(ioBase, K_METACTRL, CTRL_SEQ);
   addKeyMap(ioBase, K_METAALT, ALT_SEQ);
-  /* national mode key sequences */
+  // national mode key sequences
 #ifdef NATION_SEQ
   addKeyMap(ioBase, K_NATIONAL, NATION_SEQ);
 #endif
 
-/* some harcoded sequences */
+// some harcoded sequences
 #if 0
    addKeyMap(ioBase, K_ESC, "\033\033");
 #endif
@@ -1575,7 +1572,7 @@ static void init_keys(InOutBase *ioBase)
 
     addKeyMap(ioBase, EXKEY_TAB | KEY_SHIFTMASK, "\033[Z");
 
-    /* key added for gnome-terminal and teraterm */
+    // key added for gnome-terminal and teraterm
 
     addKeyMap(ioBase, EXKEY_ENTER | KEY_CTRLMASK, "\033[7;5~");
     addKeyMap(ioBase, EXKEY_DEL | KEY_CTRLMASK, "\033[3;5~");
@@ -1596,70 +1593,70 @@ static void init_keys(InOutBase *ioBase)
 
     addKeyMap(ioBase, EXKEY_BS | KEY_SHIFTMASK, "\033[W");
 
-    /* end of added */
+    // end of added
   }
   else if (ioBase->terminal_type == TERM_LINUX)
   {
 
-    addKeyMap(ioBase, EXKEY_F1, "\033[[A");   /* kf1  */
-    addKeyMap(ioBase, EXKEY_F2, "\033[[B");   /* kf2  */
-    addKeyMap(ioBase, EXKEY_F3, "\033[[C");   /* kf3  */
-    addKeyMap(ioBase, EXKEY_F4, "\033[[D");   /* kf4  */
-    addKeyMap(ioBase, EXKEY_F5, "\033[[E");   /* kf5  */
-    addKeyMap(ioBase, EXKEY_F6, "\033[17~");  /* kf6  */
-    addKeyMap(ioBase, EXKEY_F7, "\033[18~");  /* kf7  */
-    addKeyMap(ioBase, EXKEY_F8, "\033[19~");  /* kf8  */
-    addKeyMap(ioBase, EXKEY_F9, "\033[20~");  /* kf9  */
-    addKeyMap(ioBase, EXKEY_F10, "\033[21~"); /* kf10 */
-    addKeyMap(ioBase, EXKEY_F11, "\033[23~"); /* kf11 */
-    addKeyMap(ioBase, EXKEY_F12, "\033[24~"); /* kf12 */
+    addKeyMap(ioBase, EXKEY_F1, "\033[[A");   // kf1
+    addKeyMap(ioBase, EXKEY_F2, "\033[[B");   // kf2
+    addKeyMap(ioBase, EXKEY_F3, "\033[[C");   // kf3
+    addKeyMap(ioBase, EXKEY_F4, "\033[[D");   // kf4
+    addKeyMap(ioBase, EXKEY_F5, "\033[[E");   // kf5
+    addKeyMap(ioBase, EXKEY_F6, "\033[17~");  // kf6
+    addKeyMap(ioBase, EXKEY_F7, "\033[18~");  // kf7
+    addKeyMap(ioBase, EXKEY_F8, "\033[19~");  // kf8 
+    addKeyMap(ioBase, EXKEY_F9, "\033[20~");  // kf9
+    addKeyMap(ioBase, EXKEY_F10, "\033[21~"); // kf10
+    addKeyMap(ioBase, EXKEY_F11, "\033[23~"); // kf11
+    addKeyMap(ioBase, EXKEY_F12, "\033[24~"); // kf12
 
-    addKeyMap(ioBase, EXKEY_F1 | KEY_SHIFTMASK, "\033[25~");  /* kf13 */
-    addKeyMap(ioBase, EXKEY_F2 | KEY_SHIFTMASK, "\033[26~");  /* kf14 */
-    addKeyMap(ioBase, EXKEY_F3 | KEY_SHIFTMASK, "\033[28~");  /* kf15 */
-    addKeyMap(ioBase, EXKEY_F4 | KEY_SHIFTMASK, "\033[29~");  /* kf16 */
-    addKeyMap(ioBase, EXKEY_F5 | KEY_SHIFTMASK, "\033[31~");  /* kf17 */
-    addKeyMap(ioBase, EXKEY_F6 | KEY_SHIFTMASK, "\033[32~");  /* kf18 */
-    addKeyMap(ioBase, EXKEY_F7 | KEY_SHIFTMASK, "\033[33~");  /* kf19 */
-    addKeyMap(ioBase, EXKEY_F8 | KEY_SHIFTMASK, "\033[34~");  /* kf20 */
-    addKeyMap(ioBase, EXKEY_F9 | KEY_SHIFTMASK, "\033[35~");  /* kf21 */
-    addKeyMap(ioBase, EXKEY_F10 | KEY_SHIFTMASK, "\033[36~"); /* kf22 */
-    addKeyMap(ioBase, EXKEY_F11 | KEY_SHIFTMASK, "\033[37~"); /* kf23 */
-    addKeyMap(ioBase, EXKEY_F12 | KEY_SHIFTMASK, "\033[38~"); /* kf24 */
+    addKeyMap(ioBase, EXKEY_F1 | KEY_SHIFTMASK, "\033[25~");  // kf13
+    addKeyMap(ioBase, EXKEY_F2 | KEY_SHIFTMASK, "\033[26~");  // kf14
+    addKeyMap(ioBase, EXKEY_F3 | KEY_SHIFTMASK, "\033[28~");  // kf15
+    addKeyMap(ioBase, EXKEY_F4 | KEY_SHIFTMASK, "\033[29~");  // kf16
+    addKeyMap(ioBase, EXKEY_F5 | KEY_SHIFTMASK, "\033[31~");  // kf17
+    addKeyMap(ioBase, EXKEY_F6 | KEY_SHIFTMASK, "\033[32~");  // kf18
+    addKeyMap(ioBase, EXKEY_F7 | KEY_SHIFTMASK, "\033[33~");  // kf19
+    addKeyMap(ioBase, EXKEY_F8 | KEY_SHIFTMASK, "\033[34~");  // kf20
+    addKeyMap(ioBase, EXKEY_F9 | KEY_SHIFTMASK, "\033[35~");  // kf21
+    addKeyMap(ioBase, EXKEY_F10 | KEY_SHIFTMASK, "\033[36~"); // kf22
+    addKeyMap(ioBase, EXKEY_F11 | KEY_SHIFTMASK, "\033[37~"); // kf23
+    addKeyMap(ioBase, EXKEY_F12 | KEY_SHIFTMASK, "\033[38~"); // kf24
 
-    addKeyMap(ioBase, EXKEY_F1 | KEY_CTRLMASK, "\033[39~");  /* kf25 */
-    addKeyMap(ioBase, EXKEY_F2 | KEY_CTRLMASK, "\033[40~");  /* kf26 */
-    addKeyMap(ioBase, EXKEY_F3 | KEY_CTRLMASK, "\033[41~");  /* kf27 */
-    addKeyMap(ioBase, EXKEY_F4 | KEY_CTRLMASK, "\033[42~");  /* kf28 */
-    addKeyMap(ioBase, EXKEY_F5 | KEY_CTRLMASK, "\033[43~");  /* kf29 */
-    addKeyMap(ioBase, EXKEY_F6 | KEY_CTRLMASK, "\033[44~");  /* kf30 */
-    addKeyMap(ioBase, EXKEY_F7 | KEY_CTRLMASK, "\033[45~");  /* kf31 */
-    addKeyMap(ioBase, EXKEY_F8 | KEY_CTRLMASK, "\033[46~");  /* kf32 */
-    addKeyMap(ioBase, EXKEY_F9 | KEY_CTRLMASK, "\033[47~");  /* kf33 */
-    addKeyMap(ioBase, EXKEY_F10 | KEY_CTRLMASK, "\033[48~"); /* kf34 */
-    addKeyMap(ioBase, EXKEY_F11 | KEY_CTRLMASK, "\033[49~"); /* kf35 */
-    addKeyMap(ioBase, EXKEY_F12 | KEY_CTRLMASK, "\033[50~"); /* kf36 */
+    addKeyMap(ioBase, EXKEY_F1 | KEY_CTRLMASK, "\033[39~");  // kf25
+    addKeyMap(ioBase, EXKEY_F2 | KEY_CTRLMASK, "\033[40~");  // kf26
+    addKeyMap(ioBase, EXKEY_F3 | KEY_CTRLMASK, "\033[41~");  // kf27
+    addKeyMap(ioBase, EXKEY_F4 | KEY_CTRLMASK, "\033[42~");  // kf28
+    addKeyMap(ioBase, EXKEY_F5 | KEY_CTRLMASK, "\033[43~");  // kf29
+    addKeyMap(ioBase, EXKEY_F6 | KEY_CTRLMASK, "\033[44~");  // kf30
+    addKeyMap(ioBase, EXKEY_F7 | KEY_CTRLMASK, "\033[45~");  // kf31
+    addKeyMap(ioBase, EXKEY_F8 | KEY_CTRLMASK, "\033[46~");  // kf32
+    addKeyMap(ioBase, EXKEY_F9 | KEY_CTRLMASK, "\033[47~");  // kf33
+    addKeyMap(ioBase, EXKEY_F10 | KEY_CTRLMASK, "\033[48~"); // kf34
+    addKeyMap(ioBase, EXKEY_F11 | KEY_CTRLMASK, "\033[49~"); // kf35
+    addKeyMap(ioBase, EXKEY_F12 | KEY_CTRLMASK, "\033[50~"); // kf36
 
-    addKeyMap(ioBase, EXKEY_F1 | KEY_ALTMASK, "\033[51~");  /* kf37 */
-    addKeyMap(ioBase, EXKEY_F2 | KEY_ALTMASK, "\033[52~");  /* kf38 */
-    addKeyMap(ioBase, EXKEY_F3 | KEY_ALTMASK, "\033[53~");  /* kf39 */
-    addKeyMap(ioBase, EXKEY_F4 | KEY_ALTMASK, "\033[54~");  /* kf40 */
-    addKeyMap(ioBase, EXKEY_F5 | KEY_ALTMASK, "\033[55~");  /* kf41 */
-    addKeyMap(ioBase, EXKEY_F6 | KEY_ALTMASK, "\033[56~");  /* kf42 */
-    addKeyMap(ioBase, EXKEY_F7 | KEY_ALTMASK, "\033[57~");  /* kf43 */
-    addKeyMap(ioBase, EXKEY_F8 | KEY_ALTMASK, "\033[58~");  /* kf44 */
-    addKeyMap(ioBase, EXKEY_F9 | KEY_ALTMASK, "\033[59~");  /* kf45 */
-    addKeyMap(ioBase, EXKEY_F10 | KEY_ALTMASK, "\033[70~"); /* kf46 */
-    addKeyMap(ioBase, EXKEY_F11 | KEY_ALTMASK, "\033[71~"); /* kf47 */
-    addKeyMap(ioBase, EXKEY_F12 | KEY_ALTMASK, "\033[72~"); /* kf48 */
+    addKeyMap(ioBase, EXKEY_F1 | KEY_ALTMASK, "\033[51~");  // kf37
+    addKeyMap(ioBase, EXKEY_F2 | KEY_ALTMASK, "\033[52~");  // kf38
+    addKeyMap(ioBase, EXKEY_F3 | KEY_ALTMASK, "\033[53~");  // kf39
+    addKeyMap(ioBase, EXKEY_F4 | KEY_ALTMASK, "\033[54~");  // kf40
+    addKeyMap(ioBase, EXKEY_F5 | KEY_ALTMASK, "\033[55~");  // kf41
+    addKeyMap(ioBase, EXKEY_F6 | KEY_ALTMASK, "\033[56~");  // kf42
+    addKeyMap(ioBase, EXKEY_F7 | KEY_ALTMASK, "\033[57~");  // kf43
+    addKeyMap(ioBase, EXKEY_F8 | KEY_ALTMASK, "\033[58~");  // kf44
+    addKeyMap(ioBase, EXKEY_F9 | KEY_ALTMASK, "\033[59~");  // kf45
+    addKeyMap(ioBase, EXKEY_F10 | KEY_ALTMASK, "\033[70~"); // kf46
+    addKeyMap(ioBase, EXKEY_F11 | KEY_ALTMASK, "\033[71~"); // kf47
+    addKeyMap(ioBase, EXKEY_F12 | KEY_ALTMASK, "\033[72~"); // kf48
   }
 
-  /* (curses) termcap/terminfo sequences */
+  // (curses) termcap/terminfo sequences
 
-  /* terminal mouse event */
+  // terminal mouse event
   addKeyMap(ioBase, K_MOUSETERM, "kmous");
 
-  /* FlagShip extension */
+  // FlagShip extension
   addKeyMap(ioBase, EXKEY_HOME | KEY_CTRLMASK, tiGetS("ked"));
   addKeyMap(ioBase, EXKEY_END | KEY_CTRLMASK, tiGetS("kel"));
   addKeyMap(ioBase, EXKEY_PGUP | KEY_CTRLMASK, tiGetS("kri"));
@@ -1667,18 +1664,18 @@ static void init_keys(InOutBase *ioBase)
   addKeyMap(ioBase, EXKEY_RIGHT | KEY_CTRLMASK, tiGetS("kctab"));
   addKeyMap(ioBase, EXKEY_LEFT | KEY_CTRLMASK, tiGetS("khts"));
 
-  /* some xterms extension */
+  // some xterms extension
   addKeyMap(ioBase, EXKEY_HOME, tiGetS("kfnd"));
   addKeyMap(ioBase, EXKEY_END, tiGetS("kslt"));
 
-  /* keypad */
+  // keypad
   addKeyMap(ioBase, EXKEY_CENTER, tiGetS("kb2"));
   addKeyMap(ioBase, EXKEY_HOME, tiGetS("ka1"));
   addKeyMap(ioBase, EXKEY_END, tiGetS("kc1"));
   addKeyMap(ioBase, EXKEY_PGUP, tiGetS("ka3"));
   addKeyMap(ioBase, EXKEY_PGDN, tiGetS("kc3"));
 
-  /* other keys */
+  // other keys
   addKeyMap(ioBase, EXKEY_ENTER, tiGetS("kent"));
   addKeyMap(ioBase, EXKEY_END, tiGetS("kend"));
   addKeyMap(ioBase, EXKEY_PGUP, tiGetS("kpp"));
@@ -1694,7 +1691,7 @@ static void init_keys(InOutBase *ioBase)
   addKeyMap(ioBase, EXKEY_BS, tiGetS("kbs"));
   addKeyMap(ioBase, EXKEY_TAB | KEY_ALTMASK, tiGetS("kcbt"));
 
-  /* function keys */
+  // function keys
   addKeyMap(ioBase, EXKEY_F1, tiGetS("kf1"));
   addKeyMap(ioBase, EXKEY_F2, tiGetS("kf2"));
   addKeyMap(ioBase, EXKEY_F3, tiGetS("kf3"));
@@ -1708,7 +1705,7 @@ static void init_keys(InOutBase *ioBase)
   addKeyMap(ioBase, EXKEY_F11, tiGetS("kf11"));
   addKeyMap(ioBase, EXKEY_F12, tiGetS("kf12"));
 
-  /* shifted function keys */
+  // shifted function keys
   addKeyMap(ioBase, EXKEY_F1 | KEY_SHIFTMASK, tiGetS("kf13"));
   addKeyMap(ioBase, EXKEY_F2 | KEY_SHIFTMASK, tiGetS("kf14"));
   addKeyMap(ioBase, EXKEY_F3 | KEY_SHIFTMASK, tiGetS("kf15"));
@@ -1734,7 +1731,7 @@ static void gt_tone(InOutBase *ioBase, double dFrequency, double dDuration)
   }
   else
   {
-    /* curses beep() */
+    // curses beep()
     if (ioBase->beep != nullptr)
     {
       write_ttyseq(ioBase, ioBase->beep);
@@ -1750,25 +1747,25 @@ static void set_sig_keys(InOutBase *ioBase, int key_int, int key_brk, int key_st
 {
   if (isatty(ioBase->base_infd))
   {
-    /* set SIGINT character, default ^C */
+    // set SIGINT character, default ^C
     if (key_int >= 0 && key_int <= 255)
     {
       ioBase->curr_TIO.c_cc[VINTR] = key_int;
     }
 
-    /* set SIGQUIT character, default ^D */
+    // set SIGQUIT character, default ^D
     if (key_brk >= 0 && key_brk <= 255)
     {
       ioBase->curr_TIO.c_cc[VQUIT] = key_brk;
     }
 
-    /* set SIGTSTP character, default ^Z */
+    // set SIGTSTP character, default ^Z
     if (key_stp >= 0 && key_stp <= 255)
     {
       ioBase->curr_TIO.c_cc[VSUSP] = key_stp;
     }
 
-    /* enable signals from terminal device */
+    // enable signals from terminal device
     if (ioBase->curr_TIO.c_cc[VINTR] != 0 || ioBase->curr_TIO.c_cc[VQUIT] != 0 || ioBase->curr_TIO.c_cc[VSUSP] != 0)
     {
       ioBase->curr_TIO.c_lflag |= ISIG;
@@ -1859,7 +1856,7 @@ static int gt_setsize(InOutBase *ioBase, int rows, int cols)
     char escseq[64];
     hb_snprintf(escseq, sizeof(escseq), "\033[8;%d;%dt", rows, cols);
     write_ttyseq(ioBase, escseq);
-    /* dirty hack - wait for SIGWINCH */
+    // dirty hack - wait for SIGWINCH
     if (gt_getsize(ioBase, &r, &c) > 0)
     {
       sleep(3);
@@ -2050,7 +2047,7 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
 
   if (isatty(ioBase->base_infd))
   {
-    tcgetattr(ioBase->base_infd, &ioBase->curr_TIO); /* save current terminal settings */
+    tcgetattr(ioBase->base_infd, &ioBase->curr_TIO); // save current terminal settings
     memcpy(&ioBase->saved_TIO, &ioBase->curr_TIO, sizeof(struct termios));
     ioBase->lTIOsaved = 1;
 
@@ -2066,13 +2063,13 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
 
     memset(ioBase->curr_TIO.c_cc, 0, NCCS);
 
-    /* workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
-       *buntu) in which select() unconditionally accepts stdin for
-       reading if c_cc[VMIN] = 0 [druzus] */
+    // workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
+    // *buntu) in which select() unconditionally accepts stdin for
+    // reading if c_cc[VMIN] = 0 [druzus]
     ioBase->curr_TIO.c_cc[VMIN] = 1;
   }
 
-  /* curses SCREEN initialization */
+  // curses SCREEN initialization
   if (ioBase->base_infd == fileno(stdin))
   {
     ioBase->basein = stdin;
@@ -2091,7 +2088,7 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
     ioBase->baseout = fdopen(dup(ioBase->base_outfd), "w");
   }
 
-  /* curses screen initialization */
+  // curses screen initialization
   ioBase->basescr = newterm(crsterm, ioBase->baseout, ioBase->basein);
 #if 0
    def_shell_mode();
@@ -2125,27 +2122,27 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
   ioBase->attr_mask = static_cast<chtype>(-1);
   if (has_colors())
   {
-    /* DOS->CURSES color mapping
-       DOS              -> curses
-       --------------------------------
-        0 black         -> COLOR_BLACK
-        1 blue          -> COLOR_BLUE
-        2 green         -> COLOR_GREEN
-        3 cyan          -> COLOR_CYAN
-        4 red           -> COLOR_RED
-        5 magenta       -> COLOR_MAGENTA
-        6 yellow        -> COLOR_YELLOW
-        7 light gray    -> COLOR_WHITE
+    // DOS->CURSES color mapping
+    // DOS              -> curses
+    // --------------------------------
+    //  0 black         -> COLOR_BLACK
+    //  1 blue          -> COLOR_BLUE
+    //  2 green         -> COLOR_GREEN
+    //  3 cyan          -> COLOR_CYAN
+    //  4 red           -> COLOR_RED
+    //  5 magenta       -> COLOR_MAGENTA
+    //  6 yellow        -> COLOR_YELLOW
+    //  7 light gray    -> COLOR_WHITE
+    //
+    //  8 gray          -> BOLD/BLINK BLACK
+    //  9 light blue    -> BOLD/BLINK BLUE
+    // 10 light green   -> BOLD/BLINK GREEN
+    // 11 light cyan    -> BOLD/BLINK CYAN
+    // 12 light red     -> BOLD/BLINK RED
+    // 13 light magenta -> BOLD/BLINK MAGENTA
+    // 14 light yellow  -> BOLD/BLINK YELLOW
+    // 15 white         -> BOLD/BLINK WHITE
 
-        8 gray          -> BOLD/BLINK BLACK
-        9 light blue    -> BOLD/BLINK BLUE
-       10 light green   -> BOLD/BLINK GREEN
-       11 light cyan    -> BOLD/BLINK CYAN
-       12 light red     -> BOLD/BLINK RED
-       13 light magenta -> BOLD/BLINK MAGENTA
-       14 light yellow  -> BOLD/BLINK YELLOW
-       15 white         -> BOLD/BLINK WHITE
-     */
     static const char color_map[] = {COLOR_BLACK, COLOR_BLUE,    COLOR_GREEN,  COLOR_CYAN,
                                      COLOR_RED,   COLOR_MAGENTA, COLOR_YELLOW, COLOR_WHITE};
 
@@ -2167,10 +2164,10 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
     for (i = 0; i < 256; i++)
     {
       unsigned int n;
-      bg = (i >> 4) & 0x07; /* extract background color bits 4-6 */
-      fg = (i & 0x07);      /* extract foreground color bits 0-2 */
+      bg = (i >> 4) & 0x07; // extract background color bits 4-6
+      fg = (i & 0x07);      // extract foreground color bits 0-2
       n = bg * 8 + fg;
-      /* n = bg * COLORS + fg */
+      // n = bg * COLORS + fg
       if (n == 0)
       {
         n = 7;
@@ -2185,11 +2182,11 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
       }
       ioBase->attr_map[i] = COLOR_PAIR(n);
       if (i & 0x08)
-      { /* highlight foreground bit 3 */
+      { // highlight foreground bit 3
         ioBase->attr_map[i] |= A_BOLD;
       }
       if (i & 0x80)
-      { /* blink/highlight background bit 7 */
+      { // blink/highlight background bit 7
         ioBase->attr_map[i] |= A_BLINK;
       }
     }
@@ -2199,23 +2196,23 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
   {
     for (i = 0; i < 256; i++)
     {
-      bg = (i >> 4) & 0x07; /* extract background color bits 4-6 */
-      fg = (i & 0x07);      /* extract foreground color bits 0-2 */
+      bg = (i >> 4) & 0x07; // extract background color bits 4-6
+      fg = (i & 0x07);      // extract foreground color bits 0-2
       ioBase->attr_map[i] = 0;
       if (fg < bg)
       {
         ioBase->attr_map[i] |= A_REVERSE;
       }
       if (fg == 1)
-      { /* underline? */
+      { // underline?
         ioBase->attr_map[i] |= A_UNDERLINE;
       }
       if (i & 0x08)
-      { /* highlight foreground bit 3 */
+      { // highlight foreground bit 3
         ioBase->attr_map[i] |= A_BOLD;
       }
       if (i & 0x80)
-      { /* blink/highlight background bit 7 */
+      { // blink/highlight background bit 7
         ioBase->attr_map[i] |= A_BLINK;
       }
       ioBase->is_color = 0;
@@ -2229,12 +2226,12 @@ static InOutBase *create_ioBase(char *term, int infd, int outfd, int errfd, pid_
    idcok(ioBase->hb_stdscr, false);
    leaveok(ioBase->hb_stdscr, false);
 #endif
-  /*
-   * curses keyboard initialization
-   * we have our own keyboard routine so it's unnecessary now
-   * but we call raw() to inform some versions of curses that
-   * there is no OPOST translation
-   */
+
+  // curses keyboard initialization
+  // we have our own keyboard routine so it's unnecessary now
+  // but we call raw() to inform some versions of curses that
+  // there is no OPOST translation
+
   raw();
 
   leaveok(ioBase->hb_stdscr, false);
@@ -2267,16 +2264,16 @@ static void destroy_ioBase(InOutBase *ioBase)
 
   if (ioBase->terminal_type == TERM_LINUX)
   {
-    /* restore a standard bell frequency and duration */
+    // restore a standard bell frequency and duration
     write_ttyseq(ioBase, "\033[10]\033[11]");
   }
 
-  /* curses SCREEN delete */
+  // curses SCREEN delete
   if (ioBase->hb_stdscr != nullptr)
   {
     ioBase->disp_count = 0;
-    /* on exit restore a cursor share and leave it visible
-       Marek's NOTE: This is incompatible with Clipper */
+    // on exit restore a cursor share and leave it visible
+    // Marek's NOTE: This is incompatible with Clipper
     if (ioBase->cursor != SC_UNDEF)
     {
       set_cursor(ioBase, SC_NORMAL);
@@ -2297,7 +2294,7 @@ static void destroy_ioBase(InOutBase *ioBase)
     fclose(ioBase->baseout);
   }
 
-  /* free allocated memory */
+  // free allocated memory
   if (ioBase->charmap != nullptr)
   {
     hb_xfree(ioBase->charmap);
@@ -2323,10 +2320,10 @@ static void destroy_ioBase(InOutBase *ioBase)
     removeAllKeyMap(&ioBase->pKeyTab);
   }
 
-  /* restore terminal settings */
+  // restore terminal settings
   gt_ttyrestore(ioBase);
 
-  /* kill terminal process if any */
+  // kill terminal process if any
   if (ioBase->termpid > 0)
   {
     kill(ioBase->termpid, SIGTERM);
@@ -2493,7 +2490,7 @@ static void del_all_ioBase(void)
   s_ioBase = nullptr;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 HB_BOOL HB_GT_FUNC(gt_AddEventHandle(int iFile, int iMode, int (*eventFunc)(int, int, void *), void *data))
 {
@@ -2578,7 +2575,7 @@ void HB_GT_FUNC(gt_CatchSignal(int iSig))
   set_sig_handler(iSig);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
@@ -2622,7 +2619,7 @@ static void hb_gt_crs_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_Exit(PHB_GT pGT) // FuncTable
 {
@@ -2634,7 +2631,7 @@ static void hb_gt_crs_Exit(PHB_GT pGT) // FuncTable
   del_all_ioBase();
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_IsColor(PHB_GT pGT) // FuncTable
 {
@@ -2646,7 +2643,7 @@ static HB_BOOL hb_gt_crs_IsColor(PHB_GT pGT) // FuncTable
   return s_ioBase->is_color;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
 {
@@ -2663,7 +2660,7 @@ static HB_BOOL hb_gt_crs_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
 {
@@ -2683,7 +2680,7 @@ static void hb_gt_crs_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
   HB_GTSUPER_SETBLINK(pGT, fBlink);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_Tone(PHB_GT pGT, double dFrequency, double dDuration) // FuncTable
 {
@@ -2695,12 +2692,12 @@ static void hb_gt_crs_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
   if (s_ioBase->terminal_type == TERM_LINUX)
   {
-    /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
+    // convert Clipper (DOS) timer tick units to seconds ( x / 18.2 )
     hb_gtSleep(pGT, dDuration / 18.2);
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static const char *hb_gt_crs_Version(PHB_GT pGT, int iType) // FuncTable
 {
@@ -2718,7 +2715,7 @@ static const char *hb_gt_crs_Version(PHB_GT pGT, int iType) // FuncTable
   return "Harbour++ Terminal: nCurses";
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_OutStd(PHB_GT pGT, const char *szStr, HB_SIZE nLen) // FuncTable
 {
@@ -2743,7 +2740,7 @@ static void hb_gt_crs_OutStd(PHB_GT pGT, const char *szStr, HB_SIZE nLen) // Fun
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_OutErr(PHB_GT pGT, const char *szStr, HB_SIZE nLen) // FuncTable
 {
@@ -2767,7 +2764,7 @@ static void hb_gt_crs_OutErr(PHB_GT pGT, const char *szStr, HB_SIZE nLen) // Fun
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_Suspend(PHB_GT pGT) // FuncTable
 {
@@ -2787,7 +2784,7 @@ static HB_BOOL hb_gt_crs_Suspend(PHB_GT pGT) // FuncTable
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_Resume(PHB_GT pGT) // FuncTable
 {
@@ -2811,7 +2808,7 @@ static HB_BOOL hb_gt_crs_Resume(PHB_GT pGT) // FuncTable
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_PreExt(PHB_GT pGT) // FuncTable
 {
@@ -2829,7 +2826,7 @@ static HB_BOOL hb_gt_crs_PreExt(PHB_GT pGT) // FuncTable
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_PostExt(PHB_GT pGT) // FuncTable
 {
@@ -2841,7 +2838,7 @@ static HB_BOOL hb_gt_crs_PostExt(PHB_GT pGT) // FuncTable
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_mouse_IsPresent(PHB_GT pGT) // FuncTable
 {
@@ -2853,7 +2850,7 @@ static HB_BOOL hb_gt_crs_mouse_IsPresent(PHB_GT pGT) // FuncTable
   return s_ioBase->mouse_type != MOUSE_NONE;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_mouse_Show(PHB_GT pGT) // FuncTable
 {
@@ -2872,7 +2869,7 @@ static void hb_gt_crs_mouse_Show(PHB_GT pGT) // FuncTable
   disp_mousecursor(s_ioBase);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_mouse_Hide(PHB_GT pGT) // FuncTable
 {
@@ -2890,7 +2887,7 @@ static void hb_gt_crs_mouse_Hide(PHB_GT pGT) // FuncTable
 #endif
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol) // FuncTable
 {
@@ -2904,7 +2901,7 @@ static void hb_gt_crs_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol) // FuncTa
   *piCol = s_ioBase->mLastEvt.col;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_mouse_SetPos(PHB_GT pGT, int iRow, int iCol) // FuncTable
 {
@@ -2914,13 +2911,13 @@ static void hb_gt_crs_mouse_SetPos(PHB_GT pGT, int iRow, int iCol) // FuncTable
 
   HB_SYMBOL_UNUSED(pGT);
 
-  /* it does really nothing */
+  // it does really nothing
   s_ioBase->mLastEvt.col = iCol;
   s_ioBase->mLastEvt.row = iRow;
   disp_mousecursor(s_ioBase);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
 {
@@ -2959,7 +2956,7 @@ static HB_BOOL hb_gt_crs_mouse_ButtonState(PHB_GT pGT, int iButton) // FuncTable
   return ret;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static int hb_gt_crs_mouse_CountButton(PHB_GT pGT) // FuncTable
 {
@@ -2981,7 +2978,7 @@ static void hb_gt_crs_mouse_SetDoubleClickSpeed(PHB_GT pGT, int iSpeed) // FuncT
   s_ioBase->mLastEvt.click_delay = iSpeed;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static int hb_gt_crs_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
 {
@@ -3003,7 +3000,7 @@ static int hb_gt_crs_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
   return iKey;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
@@ -3020,7 +3017,7 @@ static HB_BOOL hb_gt_crs_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP) // FuncTable
 {
@@ -3036,7 +3033,7 @@ static HB_BOOL hb_gt_crs_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_crs_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
 {
@@ -3069,7 +3066,7 @@ static HB_BOOL hb_gt_crs_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
 {
@@ -3098,7 +3095,7 @@ static void hb_gt_crs_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_crs_Refresh(PHB_GT pGT) // FuncTable
 {
@@ -3119,7 +3116,7 @@ static void hb_gt_crs_Refresh(PHB_GT pGT) // FuncTable
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
@@ -3160,11 +3157,11 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #if defined(HB_GT_CRS_BCEHACK) && defined(NCURSES_VERSION)
 #include <term.h>

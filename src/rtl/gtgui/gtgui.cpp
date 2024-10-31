@@ -44,7 +44,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #define HB_GT_NAME GUI
 
@@ -57,7 +57,7 @@
 #include "hbwinuni.hpp"
 #endif
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;
@@ -227,9 +227,9 @@ static int hb_gt_gui_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
   return iRet;
 }
 
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static const char *hb_gt_gui_Version(PHB_GT pGT, int iType) // FuncTable
 {
@@ -247,8 +247,8 @@ static const char *hb_gt_gui_Version(PHB_GT pGT, int iType) // FuncTable
   return "Harbour++ Terminal: Windows dummy console for GUI programs";
 }
 
-/* *********************************************************************** */
-/* dDuration is in 'Ticks' (18.2 per second) */
+// ***********************************************************************
+// dDuration is in 'Ticks' (18.2 per second)
 static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration) // FuncTable
 {
 #if 0
@@ -264,7 +264,7 @@ static void hb_gt_gui_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 #endif
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
 {
@@ -313,7 +313,7 @@ static HB_BOOL hb_gt_gui_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
@@ -331,8 +331,8 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************

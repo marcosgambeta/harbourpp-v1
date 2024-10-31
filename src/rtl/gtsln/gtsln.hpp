@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #define HB_GT_NAME SLN
 
@@ -59,7 +59,7 @@
 #include "hbdate.hpp"
 
 #if defined(HB_OS_DARWIN) || defined(HB_OS_AIX)
-#define REAL_UNIX_SYSTEM /* this is for slang.h to include some defs */
+#define REAL_UNIX_SYSTEM // this is for slang.h to include some defs
 #endif
 #include <slang.h>
 
@@ -72,18 +72,16 @@
 #include <time.h>
 #endif
 
-/*
- * It's a hack to detect UTF-8 patched version of slang, you may
- * need to modified it for your slang version because UTF-8 patches
- * are still unoficial
- */
+// It's a hack to detect UTF-8 patched version of slang, you may
+// need to modified it for your slang version because UTF-8 patches
+// are still unoficial
 #if SLANG_VERSION >= 20000
 #define HB_SLN_UTF8
 #elif defined(UTF8) && defined(SLSMG_HLINE_CHAR_TERM)
 #define HB_SLN_UNICODE
 #endif
 
-/* missing defines in previous versions of Slang - this may not work ok ! */
+// missing defines in previous versions of Slang - this may not work ok !
 #ifdef HB_SLN_UTF8
 
 #define HB_SLN_SET_ACSC(slch)                                                                                          \
@@ -110,7 +108,7 @@
 
 #define HB_SLN_IS_CHAR(slch) ((slch).wchars[0] != 0)
 
-#else /* !defined(HB_SLN_UTF8) */
+#else // !defined(HB_SLN_UTF8)
 
 #if SLANG_VERSION < 10400
 using SLsmg_Char_Type = unsigned short;
@@ -129,10 +127,10 @@ using SLsmg_Char_Type = unsigned short;
 #define SLSMG_UARROW_CHAR 0x18
 #define SLSMG_BOARD_CHAR 0xB2
 #define SLSMG_BLOCK_CHAR 0xDB
-/*
+#if 0
 #define SLSMG_BOARD_CHAR      'h'
 #define SLSMG_BLOCK_CHAR      '0'
-*/
+#endif
 #endif
 #endif
 
@@ -155,30 +153,30 @@ using SLsmg_Char_Type = unsigned short;
 
 #define HB_SLN_IS_CHAR(slch) ((slch) != 0)
 
-#endif /* HB_SLN_UTF8 */
+#endif // HB_SLN_UTF8
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* if we can not manipulate cursor state */
+// if we can not manipulate cursor state
 #define SC_UNAVAIL -1
 
-/* xHarbour compatible definitions */
+// xHarbour compatible definitions
 #if !defined(K_SH_LEFT)
-#define K_SH_LEFT K_LEFT     /* Shift-Left  == Left  */
-#define K_SH_UP K_UP         /* Shift-Up    == Up    */
-#define K_SH_RIGHT K_RIGHT   /* Shift-Right == Right */
-#define K_SH_DOWN K_DOWN     /* Shift-Down  == Down  */
-#define K_SH_INS K_INS       /* Shift-Ins   == Ins   */
-#define K_SH_DEL K_DEL       /* Shift-Del   == Del   */
-#define K_SH_HOME K_HOME     /* Shift-Home  == Home  */
-#define K_SH_END K_END       /* Shift-End   == End   */
-#define K_SH_PGUP K_PGUP     /* Shift-PgUp  == PgUp  */
-#define K_SH_PGDN K_PGDN     /* Shift-PgDn  == PgDn  */
-#define K_SH_RETURN K_RETURN /* Shift-Enter == Enter */
-#define K_SH_ENTER K_ENTER   /* Shift-Enter == Enter */
+#define K_SH_LEFT K_LEFT     // Shift-Left  == Left
+#define K_SH_UP K_UP         // Shift-Up    == Up
+#define K_SH_RIGHT K_RIGHT   // Shift-Right == Right
+#define K_SH_DOWN K_DOWN     // Shift-Down  == Down
+#define K_SH_INS K_INS       // Shift-Ins   == Ins
+#define K_SH_DEL K_DEL       // Shift-Del   == Del
+#define K_SH_HOME K_HOME     // Shift-Home  == Home
+#define K_SH_END K_END       // Shift-End   == End
+#define K_SH_PGUP K_PGUP     // Shift-PgUp  == PgUp
+#define K_SH_PGDN K_PGDN     // Shift-PgDn  == PgDn
+#define K_SH_RETURN K_RETURN // Shift-Enter == Enter
+#define K_SH_ENTER K_ENTER   // Shift-Enter == Enter
 #endif
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #define M_BUTTON_LEFT 0x0001
 #define M_BUTTON_RIGHT 0x0002
@@ -205,22 +203,22 @@ using SLsmg_Char_Type = unsigned short;
     }                                                                                                                  \
   }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 extern bool hb_sln_Is_Unicode;
 extern bool hb_sln_UnderLinuxConsole;
 extern bool hb_sln_UnderXterm;
 extern unsigned char hb_sln_inputTab[256];
 
-/* delay for waiting on characters after ESC key */
+// delay for waiting on characters after ESC key
 extern int hb_sln_escDelay;
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* to convert DeadKey+letter to national character */
+// to convert DeadKey+letter to national character
 extern unsigned char hb_sln_convKDeadKeys[];
 
-/* indicates that screen size has changed */
+// indicates that screen size has changed
 extern volatile bool hb_sln_bScreen_Size_Changed;
 
 extern int hb_sln_Init_Terminal(int phase);
@@ -241,4 +239,4 @@ extern void hb_gt_sln_mouse_FixTrash(void);
 extern int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew);
 extern void hb_gt_sln_mouse_ProcessTerminalEvent(void);
 
-/* *********************************************************************** */
+// ***********************************************************************

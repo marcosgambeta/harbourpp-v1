@@ -43,22 +43,20 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #define HB_GT_NAME CGI
 
-/*
- * HB_GT_CGI_RAWOUTPUT controls the behavior of GTCGI output
- * When not set GT driver output data in Refresh()/Redraw() methods
- * from super GT memory buffer - it causes that columns are wrapped
- * after last col.
- * It changes the previous behavior though it gives some improvements
- * like enabling DispBegin()/DispEnd() for output buffering.
- * If it's wrong and someone will prefer the old GTCGI behavior then
- * please uncomment HB_GT_CGI_RAWOUTPUT macro what will cause that
- * WriteCon(), Write(), WriteAt() method will be overload by GTCGI
- * and output data send directly without any buffering and line wrapping.
- */
+// HB_GT_CGI_RAWOUTPUT controls the behavior of GTCGI output
+// When not set GT driver output data in Refresh()/Redraw() methods
+// from super GT memory buffer - it causes that columns are wrapped
+// after last col.
+// It changes the previous behavior though it gives some improvements
+// like enabling DispBegin()/DispEnd() for output buffering.
+// If it's wrong and someone will prefer the old GTCGI behavior then
+// please uncomment HB_GT_CGI_RAWOUTPUT macro what will cause that
+// WriteCon(), Write(), WriteAt() method will be overload by GTCGI
+// and output data send directly without any buffering and line wrapping.
 
 #define HB_GT_CGI_RAWOUTPUT
 
@@ -131,7 +129,7 @@ static void hb_gt_cgi_Exit(PHB_GT pGT) // FuncTable
 
   if (pGTCGI)
   {
-    /* update cursor position on exit */
+    // update cursor position on exit
     if (pGTCGI->iLastCol > 0)
     {
       hb_gt_cgi_newLine(pGTCGI);
@@ -206,16 +204,16 @@ static void hb_gt_cgi_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int i
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_cgi_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols));
 #endif
 
-  /* Provide some basic scroll support for full screen */
+  // Provide some basic scroll support for full screen
   int iHeight, iWidth;
   HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
   if (iCols == 0 && iRows > 0 && iTop == 0 && iLeft == 0 && iBottom >= iHeight - 1 && iRight >= iWidth - 1)
   {
     PHB_GTCGI pGTCGI = HB_GTCGI_GET(pGT);
 
-    /* scroll up the internal screen buffer */
+    // scroll up the internal screen buffer
     HB_GTSELF_SCROLLUP(pGT, iRows, iColor, usChar);
-    /* update our internal row position */
+    // update our internal row position
     pGTCGI->iRow -= iRows;
     if (pGTCGI->iRow < 0)
     {
@@ -345,7 +343,7 @@ static void hb_gt_cgi_WriteAtW(PHB_GT pGT, int iRow, int iCol, const HB_WCHAR *s
   hb_xfree(buffer);
 }
 
-#else /* HB_GT_CGI_RAWOUTPUT */
+#else // HB_GT_CGI_RAWOUTPUT
 
 static void hb_gt_cgi_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
 {
@@ -442,9 +440,9 @@ static void hb_gt_cgi_Refresh(PHB_GT pGT) // FuncTable
   HB_GTSUPER_REFRESH(pGT);
 }
 
-#endif /* HB_GT_CGI_RAWOUTPUT */
+#endif // HB_GT_CGI_RAWOUTPUT
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
@@ -475,8 +473,8 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************

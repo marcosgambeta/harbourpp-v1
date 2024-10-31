@@ -58,10 +58,10 @@ FUNCTION hb_cdpTerm()
    LOCAL tmp
    cCP := __UnixParseLangCP(iif(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
-   /* TODO */
+   // TODO
    cCP := cLang := NIL
 #elif defined(__PLATFORM__OS2)
-   /* TODO */
+   // TODO
    cCP := cLang := NIL
 #endif
 
@@ -79,10 +79,10 @@ FUNCTION hb_cdpOS()
    LOCAL tmp
    cCP := __UnixParseLangCP(iif(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
-   /* TODO */
+   // TODO
    cCP := cLang := NIL
 #elif defined(__PLATFORM__OS2)
-   /* TODO */
+   // TODO
    cCP := cLang := NIL
 #endif
 
@@ -142,9 +142,9 @@ STATIC FUNCTION __CPWinToCPStd(nCPWin)
 
 #elif defined(__PLATFORM__UNIX)
 
-/* language[_territory][.codeset] */
-/* [language[_territory][.codeset][@modifier]] */
-/* TODO: handle "C"/"POSIX" values and values starting with "/" */
+// language[_territory][.codeset]
+// [language[_territory][.codeset][@modifier]]
+// TODO: handle "C"/"POSIX" values and values starting with "/"
 STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
 
    LOCAL tmp
@@ -161,13 +161,13 @@ STATIC FUNCTION __UnixParseLangCP(cString, /* @ */ cLang)
       cCP := "UTF-8"
    ENDIF
 
-   /* Tricks to make the manual translation table shorter */
+   // Tricks to make the manual translation table shorter
    cCP := hb_StrReplace(Lower(cCP), {"_" => "", "-" => "", "ibm" => "cp", "windows" => "cp"})
    IF hb_LeftEq(cCP, "iso8859")
       cCP := Stuff(cCP, Len("iso8859") + 1, 0, "-")
    ENDIF
 
-   /* Convert Unix CP name to Harbour CP ID */
+   // Convert Unix CP name to Harbour CP ID
    SWITCH cCP
    CASE "utf8"
    CASE "cp437"
@@ -494,4 +494,4 @@ STATIC FUNCTION __LangStdToCPCtryHb(cCtryStd)
 #endif
    ENDSWITCH
 
-   RETURN Left(hb_cdpSelect(), 2)  /* Caller assumes this never returns strings shorter than two chars */
+   RETURN Left(hb_cdpSelect(), 2)  // Caller assumes this never returns strings shorter than two chars

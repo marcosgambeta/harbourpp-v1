@@ -44,7 +44,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* this has to be declared before hbapifs.h is included */
+// this has to be declared before hbapifs.h is included
 #define _HB_FILE_INTERNAL_
 
 #if !defined(_LARGEFILE64_SOURCE)
@@ -74,11 +74,9 @@
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
 #if defined(__USE_LARGEFILE64)
-/*
- * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
- * defined and effectively enables lseek64()/flock64()/ftruncate64()
- * functions on 32-bit machines.
- */
+// The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
+// defined and effectively enables lseek64()/flock64()/ftruncate64()
+// functions on 32-bit machines.
 #define HB_USE_LARGEFILE64
 #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
 #define HB_USE_LARGEFILE64
@@ -360,9 +358,7 @@ static bool hb_fileTestLock(PHB_FILE pFile, HB_FOFFSET nStart, HB_FOFFSET nLen)
   return false;
 }
 
-/*
- * file methods
- */
+// file methods
 
 static HB_BOOL s_fileAccept(PHB_FILE_FUNCS pFuncs, const char *pszFileName)
 {
@@ -561,7 +557,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
   }
 
   if (fResult && pFile == nullptr)
-#endif /* HB_OS_UNIX */
+#endif // HB_OS_UNIX
   {
     HB_FHANDLE hFile = hb_fsExtOpen(pszFile, nullptr, nExFlags & ~static_cast<HB_FATTR>(FXO_DEFAULTS | FXO_COPYNAME),
                                     nullptr, nullptr);
@@ -592,7 +588,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
 #endif
         }
       }
-#endif /* HB_OS_UNIX */
+#endif // HB_OS_UNIX
 
       pFile = hb_fileNew(hFile, fShared, iMode, device, inode, true);
       if (pFile->hFile != hFile)
@@ -630,7 +626,7 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
             hb_fsClose(hFile);
             hFile = FS_ERROR;
 #if defined(HB_USE_SHARELOCKS) && !defined(HB_USE_BSDLOCKS)
-            /* FIXME: possible race condition */
+            // FIXME: possible race condition
             hb_fsLockLarge(pFile->hFile, HB_SHARELOCK_POS, HB_SHARELOCK_SIZE, FL_LOCK | FLX_SHARED);
 #endif
           }
@@ -644,10 +640,9 @@ static PHB_FILE s_fileExtOpen(PHB_FILE_FUNCS pFuncs, const char *pszFileName, co
           }
           if (hFile != FS_ERROR)
           {
-            /* FIXME: possible race condition in MT mode,
-             *        close() is not safe due to existing locks
-             *        which are removed.
-             */
+            // FIXME: possible race condition in MT mode,
+            //        close() is not safe due to existing locks
+            //        which are removed.
             hb_fsClose(hFile);
           }
         }
@@ -948,7 +943,7 @@ static HB_FHANDLE s_fileHandle(PHB_FILE pFile)
 
 static const HB_FILE_FUNCS *s_fileMethods(void)
 {
-  /* methods table */
+  // methods table
   static const HB_FILE_FUNCS s_fileFuncs = {
       s_fileAccept,
 
@@ -1043,7 +1038,7 @@ static HB_FOFFSET s_fileposSeek(PHB_FILE pFilePos, HB_FOFFSET nOffset, HB_USHORT
   {
     nOffset += _PHB_FILEPOS->seek_pos;
   }
-  /* else FS_SET */
+  // else FS_SET
 
   if (nOffset >= 0)
   {
@@ -1052,7 +1047,7 @@ static HB_FOFFSET s_fileposSeek(PHB_FILE pFilePos, HB_FOFFSET nOffset, HB_USHORT
   }
   else
   {
-    hb_fsSetError(25); /* 'Seek Error' */
+    hb_fsSetError(25); // 'Seek Error'
   }
 
   return _PHB_FILEPOS->seek_pos;
@@ -1090,7 +1085,7 @@ static HB_FHANDLE s_fileposHandle(PHB_FILE pFilePos)
 
 static const HB_FILE_FUNCS *s_fileposMethods(void)
 {
-  /* methods table */
+  // methods table
   static const HB_FILE_FUNCS s_fileFuncs = {
       s_fileAccept,
 
@@ -1120,7 +1115,7 @@ static PHB_FILE hb_fileposNew(PHB_FILE pFile)
   return reinterpret_cast<PHB_FILE>(pFilePos);
 }
 
-#endif /* HB_OS_UNIX */
+#endif // HB_OS_UNIX
 
 static const HB_FILE_FUNCS *s_pFileTypes[HB_FILE_TYPE_MAX];
 static int s_iFileTypes = 0;
@@ -1145,9 +1140,7 @@ static int s_fileFindDrv(const char *pszFileName)
   return i;
 }
 
-/*
- * public API functions
- */
+// public API functions
 
 HB_BOOL hb_fileRegisterFull(const HB_FILE_FUNCS *pFuncs)
 {
@@ -1515,7 +1508,7 @@ HB_FHANDLE hb_fileHandle(PHB_FILE pFile)
   return pFile->pFuncs->Handle(pFile);
 }
 
-/* internal FILE structures only */
+// internal FILE structures only
 
 PHB_FILE hb_fileCreateTemp(const char *pszDir, const char *pszPrefix, HB_FATTR ulAttr, char *pszName)
 {

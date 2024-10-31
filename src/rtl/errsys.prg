@@ -106,7 +106,7 @@ STATIC FUNCTION DefError(oError)
    DO WHILE (nChoice := Alert(cMessage + iif(cOSError == NIL, "", ";" + cOSError), aOptions)) == 0
    ENDDO
 
-   IF !Empty(nChoice)  /* Alert() may return NIL */
+   IF !Empty(nChoice)  // Alert() may return NIL
       SWITCH aOptions[nChoice]
       CASE "Break"
          Break(oError)

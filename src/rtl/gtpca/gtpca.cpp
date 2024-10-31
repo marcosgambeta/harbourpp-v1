@@ -43,11 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*
- * This module is partially based on VIDMGR by Andrew Clarke and modified for Harbour.
- */
+// This module is partially based on VIDMGR by Andrew Clarke and modified for Harbour.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #define HB_GT_NAME PCA
 
@@ -70,7 +68,7 @@
 
 #if defined(HB_OS_UNIX)
 #if defined(HB_HAS_TERMIOS)
-#include <unistd.h> /* read() function requires it */
+#include <unistd.h> // read() function requires it
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <signal.h>
@@ -223,10 +221,8 @@ static void hb_gt_pca_AnsiSetAutoMargin(int iAM)
 
   if (iAM != s_iAM)
   {
-    /*
-     * disabled until I'll find good PC-ANSI terminal documentation with
-     * detail Auto Margin and Auto Line Wrapping description, [druzus]
-     */
+    // disabled until I'll find good PC-ANSI terminal documentation with
+    // detail Auto Margin and Auto Line Wrapping description, [druzus]
 #if 0
       if( iAM != 0 ) {
          hb_gt_pca_termOut("\x1B[=7h", 5);
@@ -256,12 +252,12 @@ static void hb_gt_pca_AnsiGetCurPos(int *iRow, int *iCol)
 
     n = j = x = y = 0;
 
-    /* wait up to 2 seconds for answer */
+    // wait up to 2 seconds for answer
     HB_MAXINT timeout = 2000;
     HB_MAXUINT timer = hb_timerInit(timeout);
     for (;;)
     {
-      /* looking for cursor position in "\033[%d;%dR" */
+      // looking for cursor position in "\033[%d;%dR"
       while (j < n && rdbuf[j] != '\033')
       {
         ++j;
@@ -508,7 +504,7 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
-/* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
+// SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment
 #if defined(HB_HAS_TERMIOS) && defined(SA_NOCLDSTOP)
   s_fRestTTY = false;
   if (s_bStdinConsole)
@@ -516,11 +512,11 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #if defined(SIGTTOU)
     struct sigaction act, old;
 
-    /* if( s_saved_TIO.c_lflag & TOSTOP ) != 0 */
+    // if( s_saved_TIO.c_lflag & TOSTOP ) != 0
     sigaction(SIGTTOU, nullptr, &old);
     memcpy(&act, &old, sizeof(struct sigaction));
     act.sa_handler = sig_handler;
-    /* do not use SA_RESTART - new Linux kernels will repeat the operation */
+    // do not use SA_RESTART - new Linux kernels will repeat the operation
 #if defined(SA_ONESHOT)
     act.sa_flags = SA_ONESHOT;
 #elif defined(SA_RESETHAND)
@@ -543,9 +539,9 @@ static void hb_gt_pca_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #if 0
       s_curr_TIO.c_cc[VMIN] = 0;
 #else
-    /* workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
-       *buntu) in which select() unconditionally accepts stdin for
-       reading if c_cc[VMIN] = 0 [druzus] */
+    // workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
+    // *buntu) in which select() unconditionally accepts stdin for
+    // reading if c_cc[VMIN] = 0 [druzus]
     s_curr_TIO.c_cc[VMIN] = 1;
 #endif
     s_curr_TIO.c_cc[VTIME] = 0;
@@ -593,7 +589,7 @@ static void hb_gt_pca_Exit(PHB_GT pGT) // FuncTable
 #endif
 
   HB_GTSELF_REFRESH(pGT);
-  /* set default color */
+  // set default color
   hb_gt_pca_AnsiSetAttributes(0x07);
   hb_gt_pca_AnsiSetCursorStyle(SC_NORMAL);
   hb_gt_pca_AnsiSetAutoMargin(1);
@@ -653,8 +649,8 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
       ch = _getch();
       if ((ch == 0 || ch == 224) && _kbhit())
       {
-        /* It was a function key lead-in code, so read the actual
-           function key and then offset it by 256 */
+        // It was a function key lead-in code, so read the actual
+        // function key and then offset it by 256
         ch = _getch();
         if (ch != -1)
         {
@@ -683,7 +679,7 @@ static int hb_gt_pca_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
   }
 #else
   {
-    int iTODO; /* TODO: */
+    int iTODO; // TODO:
   }
 #endif
 
@@ -709,10 +705,10 @@ static void hb_gt_pca_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
   static double s_dLastSeconds = 0;
 
-  /* Output an ASCII BEL character to cause a sound */
-  /* but throttle to max once per second, in case of sound */
-  /* effects prgs calling lots of short tone sequences in */
-  /* succession leading to BEL hell on the terminal */
+  // Output an ASCII BEL character to cause a sound
+  // but throttle to max once per second, in case of sound
+  // effects prgs calling lots of short tone sequences in
+  // succession leading to BEL hell on the terminal
 
   double dCurrentSeconds = hb_dateSeconds();
   if (dCurrentSeconds < s_dLastSeconds || dCurrentSeconds - s_dLastSeconds > 0.5)
@@ -722,7 +718,7 @@ static void hb_gt_pca_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
     hb_gt_pca_termFlush();
   }
 
-  /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
+  // convert Clipper (DOS) timer tick units to seconds ( x / 18.2 )
   hb_gtSleep(pGT, dDuration / 18.2);
 }
 
@@ -766,7 +762,7 @@ static HB_BOOL hb_gt_pca_Suspend(PHB_GT pGT) // FuncTable
     tcsetattr(s_hFilenoStdin, TCSANOW, &s_saved_TIO);
   }
 #endif
-  /* Enable line wrap when cursor set after last column */
+  // Enable line wrap when cursor set after last column
   hb_gt_pca_AnsiSetAutoMargin(1);
   return true;
 }
@@ -950,8 +946,8 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************

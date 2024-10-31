@@ -76,8 +76,8 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #if !defined(HB_HAS_POLL) && !defined(HB_NO_POLL) && defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200112L
-/* use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
-   file handle limit */
+// use poll() instead of select() to avoid FD_SETSIZE (1024 in Linux)
+// file handle limit
 #define HB_HAS_POLL
 #endif
 #if defined(HB_HAS_POLL)
@@ -205,7 +205,7 @@ static const char *hb_comGetNameRaw(PHB_COM pCom, char *buffer, int size)
     hb_snprintf(buffer, size, "/dev/ttyf%02d", pCom->port);
 #elif defined(HB_OS_DARWIN)
     hb_snprintf(buffer, size, "/dev/cuaa%d", pCom->port - 1);
-#else /* defined(HB_OS_LINUX) || defined(HB_OS_CYGWIN) || ... */
+#else // defined(HB_OS_LINUX) || defined(HB_OS_CYGWIN) || ...
     hb_snprintf(buffer, size, "/dev/ttyS%d", pCom->port - 1);
 #endif
 #else
@@ -265,7 +265,7 @@ static int hb_comGetPortNum(const char *pszName)
   {
     iLen = 9;
   }
-#else /* defined(HB_OS_LINUX) || defined(HB_OS_CYGWIN) || ... */
+#else // defined(HB_OS_LINUX) || defined(HB_OS_CYGWIN) || ...
   if (strncmp(pszName, "/dev/ttyS", 9) == 0)
   {
     iLen = 9;
@@ -595,7 +595,7 @@ static int hb_comCanRead(PHB_COM pCom, HB_MAXINT timeout)
       iResult = 0;
     }
   } while (iResult == 0 && (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0);
-#else /* !HB_HAS_POLL */
+#else // !HB_HAS_POLL
   struct timeval tv;
   fd_set rfds;
 #if !defined(HB_HAS_SELECT_TIMER)
@@ -644,7 +644,7 @@ static int hb_comCanRead(PHB_COM pCom, HB_MAXINT timeout)
     }
 #endif
   }
-#endif /* !HB_HAS_POLL */
+#endif // !HB_HAS_POLL
 
   return iResult;
 }
@@ -685,7 +685,7 @@ static int hb_comCanWrite(PHB_COM pCom, HB_MAXINT timeout)
       iResult = 0;
     }
   } while (iResult == 0 && (timeout = hb_timerTest(timeout, &timer)) != 0 && hb_vmRequestQuery() == 0);
-#else /* !HB_HAS_POLL */
+#else // !HB_HAS_POLL
   struct timeval tv;
   fd_set wfds;
 #if !defined(HB_HAS_SELECT_TIMER)
@@ -734,7 +734,7 @@ static int hb_comCanWrite(PHB_COM pCom, HB_MAXINT timeout)
     }
 #endif
   }
-#endif /* !HB_HAS_POLL */
+#endif // !HB_HAS_POLL
 
   return iResult;
 }
@@ -755,10 +755,10 @@ int hb_comInputCount(int iPort)
     }
     hb_comSetOsError(pCom, iResult == -1);
 #elif defined(FIONREAD) && !defined(HB_OS_CYGWIN)
-    /* Cygwin sys/termios.h explicitly says that "TIOCINQ is
-     * utilized instead of FIONREAD which has been occupied for
-     * other purposes under CYGWIN", so don't give Cygwin
-     * even a chance to hit this code path. */
+    // Cygwin sys/termios.h explicitly says that "TIOCINQ is
+    // utilized instead of FIONREAD which has been occupied for
+    // other purposes under CYGWIN", so don't give Cygwin
+    // even a chance to hit this code path.
     int iResult = ioctl(pCom->fd, FIONREAD, &iCount);
     if (iResult == -1)
     {
@@ -842,27 +842,25 @@ int hb_comFlush(int iPort, int iType)
   return iResult;
 }
 
-/*
-   TIOCM_LE          DSR (data set ready/line enable)
-   TIOCM_DTR         DTR (data terminal ready)
-   TIOCM_RTS         RTS (request to send)
-   TIOCM_ST          Secondary TXD (transmit)
-   TIOCM_SR          Secondary RXD (receive)
-   TIOCM_CTS         CTS (clear to send)
-   TIOCM_CAR         DCD (data carrier detect)
-   TIOCM_CD           see TIOCM_CAR
-   TIOCM_RNG         RNG (ring)
-   TIOCM_RI           see TIOCM_RNG
-   TIOCM_DSR         DSR (data set ready)
-
-   supported only by few platforms (i.e. newer Linux kernels >= 2.4)
-   TIOCM_OUT1        OUT 1 (auxiliary user-designated output 2)
-   TIOCM_OUT2        OUT 2 (auxiliary user-designated output 1)
-   TIOCM_LOOP        LOOP (loopback mode)
- */
+// TIOCM_LE          DSR (data set ready/line enable)
+// TIOCM_DTR         DTR (data terminal ready)
+// TIOCM_RTS         RTS (request to send)
+// TIOCM_ST          Secondary TXD (transmit)
+// TIOCM_SR          Secondary RXD (receive)
+// TIOCM_CTS         CTS (clear to send)
+// TIOCM_CAR         DCD (data carrier detect)
+// TIOCM_CD           see TIOCM_CAR
+// TIOCM_RNG         RNG (ring)
+// TIOCM_RI           see TIOCM_RNG
+// TIOCM_DSR         DSR (data set ready)
+//
+// supported only by few platforms (i.e. newer Linux kernels >= 2.4)
+// TIOCM_OUT1        OUT 1 (auxiliary user-designated output 2)
+// TIOCM_OUT2        OUT 2 (auxiliary user-designated output 1)
+// TIOCM_LOOP        LOOP (loopback mode)
 
 #ifdef HB_OS_LINUX
-/* hack for missing definitions in standard header files */
+// hack for missing definitions in standard header files
 #ifndef TIOCM_OUT1
 #define TIOCM_OUT1 0x2000
 #endif
@@ -1043,9 +1041,8 @@ int hb_comLSR(int iPort, int *piValue)
     iResult = ioctl(pCom->fd, TIOCSERGETLSR, &iValue);
     hb_comSetOsError(pCom, iResult == -1);
 #else
-    /* NOTE: most of systems do not give access to the
-     *       Line Status Register (LSR)
-     */
+    // NOTE: most of systems do not give access to the
+    //       Line Status Register (LSR)
     hb_comSetComError(pCom, HB_COM_ERR_NOSUPPORT);
 #endif
   }
@@ -1067,10 +1064,9 @@ int hb_comSendBreak(int iPort, int iDurationInMilliSecs)
 
   if (pCom != nullptr)
   {
-    /* NOTE: duration is implementation defined non portable extension
-     *       we use 0 what means 'transmit zero-valued bits for at
-     *       least 0.25 seconds, and not more that 0.5 seconds'
-     */
+    // NOTE: duration is implementation defined non portable extension
+    //       we use 0 what means 'transmit zero-valued bits for at
+    //       least 0.25 seconds, and not more that 0.5 seconds'
 
     hb_vmUnlock();
 
@@ -1104,11 +1100,10 @@ int hb_comSendBreak(int iPort, int iDurationInMilliSecs)
 #define _HB_OCRTSCTS 0
 #define _HB_ICRTSCTS CRTSXOFF
 #else
-/* if you find compiler which does not support it then please check
- * if such flow control is supported by OS. If yes then check exact
- * value for this switch on given OS and define it only for given
- * compiler and OS
- */
+// if you find compiler which does not support it then please check
+// if such flow control is supported by OS. If yes then check exact
+// value for this switch on given OS and define it only for given
+// compiler and OS
 #endif
 
 int hb_comFlowControl(int iPort, int *piFlow, int iFlow)
@@ -1118,14 +1113,14 @@ int hb_comFlowControl(int iPort, int *piFlow, int iFlow)
 
   if (pCom != nullptr)
   {
-    /* NOTE: there is no support for DTR/DSR so we cannot use
-     *       DTR/DSR handshake instead of the RTS/CTS handshake
-     *       BSD systems support MDMBUF flags which enable output
-     *       flow control using CD (Carrier Detect) flag.
-     *       In SunOS TIOCSSOFTCAR can be used to control CLOCAL flag.
-     *       CLOCAL termios structure c_cflag can be used to enable CD
-     *       flow control in most portable way.
-     */
+    // NOTE: there is no support for DTR/DSR so we cannot use
+    //       DTR/DSR handshake instead of the RTS/CTS handshake
+    //       BSD systems support MDMBUF flags which enable output
+    //       flow control using CD (Carrier Detect) flag.
+    //       In SunOS TIOCSSOFTCAR can be used to control CLOCAL flag.
+    //       CLOCAL termios structure c_cflag can be used to enable CD
+    //       flow control in most portable way.
+
     struct termios tio;
 
     iResult = tcgetattr(pCom->fd, &tio);
@@ -1239,10 +1234,10 @@ int hb_comFlowSet(int iPort, int iFlow)
 
   if (pCom != nullptr)
   {
-    /* NOTE: HB_COM_FL_SOFT is ignored, we assume that user chose
-     *       correct hardware/software flow control type which is
-     *       the same as set in terminal device parameters
-     */
+    // NOTE: HB_COM_FL_SOFT is ignored, we assume that user chose
+    //       correct hardware/software flow control type which is
+    //       the same as set in terminal device parameters
+
     if (iFlow & HB_COM_FL_OON)
     {
       iResult = tcflow(pCom->fd, TCOON);
@@ -1371,8 +1366,8 @@ int hb_comErrorChar(int iPort, int iChar)
 
   if (pCom != nullptr)
   {
-    /* NOTE: there is no support for setting user defined error character
-     */
+    // NOTE: there is no support for setting user defined error character
+
     hb_comSetComError(pCom, HB_COM_ERR_NOSUPPORT);
   }
 
@@ -1381,7 +1376,7 @@ int hb_comErrorChar(int iPort, int iChar)
 
 int hb_comOutputState(int iPort)
 {
-  /* NOTE: checking HB_COM_TX_* output flow states is unsupported */
+  // NOTE: checking HB_COM_TX_* output flow states is unsupported
   int iResult = hb_comOutputCount(iPort);
 
   if (iResult == 0)
@@ -1403,7 +1398,7 @@ int hb_comInputState(int iPort)
 
   if (pCom != nullptr)
   {
-    /* NOTE: checking HB_COM_RX_* input flow states is unsupported */
+    // NOTE: checking HB_COM_RX_* input flow states is unsupported
     hb_comSetComError(pCom, HB_COM_ERR_NOSUPPORT);
   }
 
@@ -1434,7 +1429,7 @@ long hb_comSend(int iPort, const void *data, long len, HB_MAXINT timeout)
       lSent = 0;
     }
 #else
-    /* NOTE: write timeout is unsupported */
+    // NOTE: write timeout is unsupported
     HB_SYMBOL_UNUSED(timeout);
     lSent = 0;
 #endif
@@ -1479,11 +1474,10 @@ long hb_comRecv(int iPort, void *data, long len, HB_MAXINT timeout)
 #else
     if (timeout != pCom->rdtimeout)
     {
-      /* TODO: implement timeout settings
-       *          tio.c_cc[VTIME] = (timeout + 50) / 100;
-       *          tio.c_cc[VMIN]  = 0;
-       *       in DJGPP builds
-       */
+      // TODO: implement timeout settings
+      //          tio.c_cc[VTIME] = (timeout + 50) / 100;
+      //          tio.c_cc[VMIN]  = 0;
+      //       in DJGPP builds
     }
     lReceived = 0;
 #endif
@@ -1516,23 +1510,23 @@ int hb_comInit(int iPort, int iBaud, int iParity, int iSize, int iStop)
     if (iResult == 0)
     {
 #if defined(cfmakeraw) || defined(HB_OS_LINUX)
-      /* Raw input from device */
+      // Raw input from device
       cfmakeraw(&tio);
 #endif
       tio.c_iflag &= ~(IGNBRK | IGNPAR | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON | IXANY | IXOFF);
       tio.c_oflag &= ~OPOST;
       tio.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
       tio.c_cflag &= ~(CSIZE | PARENB);
-      /* Enable the receiver and set local mode... */
+      // Enable the receiver and set local mode...
       tio.c_cflag |= (CLOCAL | CREAD);
 
-      tio.c_cc[VTIME] = 0; /* inter-character timer in 1/10 sec. */
+      tio.c_cc[VTIME] = 0; // inter-character timer in 1/10 sec.
 #if 0
-         tio.c_cc[VMIN]  = 0;  /* minimum number of characters for read */
+         tio.c_cc[VMIN]  = 0;  // minimum number of characters for read
 #else
-      /* workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
-         *buntu) in which select() unconditionally accepts stdin for
-         reading if c_cc[VMIN] = 0 [druzus] */
+      // workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
+      // *buntu) in which select() unconditionally accepts stdin for
+      // reading if c_cc[VMIN] = 0 [druzus]
       tio.c_cc[VMIN] = 1;
 #endif
 
@@ -1771,7 +1765,7 @@ int hb_comOpen(int iPort)
       pCom->fd = open(name, O_RDWR | O_NOCTTY);
       if (pCom->fd != -1)
       {
-#if defined(TIOCEXCL) /* TIOCNXCL */
+#if defined(TIOCEXCL) // TIOCNXCL
         iResult = ioctl(pCom->fd, TIOCEXCL, 0);
         if (iResult != 0)
         {
@@ -1794,7 +1788,7 @@ int hb_comOpen(int iPort)
   return iResult;
 }
 
-/* end of HB_HAS_TERMIOS */
+// end of HB_HAS_TERMIOS
 
 #elif defined(HB_OS_WIN)
 
@@ -1933,9 +1927,9 @@ int hb_comMCR(int iPort, int *piValue, int iClr, int iSet)
       fResult = EscapeCommFunction(pCom->hComm, CLRRTS);
     }
 
-    /* MCR_OUT1, MCR_OUT2, MCR_LOOP and reading current state
-     * is unsupported
-     */
+    // MCR_OUT1, MCR_OUT2, MCR_LOOP and reading current state
+    // is unsupported
+
     hb_comSetOsError(pCom, !fResult);
   }
 
@@ -1977,9 +1971,8 @@ int hb_comMSR(int iPort, int *piValue)
         iValue |= HB_COM_MSR_DCD;
       }
 
-      /* MSR_DELTA_CTS, MSR_DELTA_DSR, MSR_TERI, MSR_DELTA_DCD
-       * are unsupported
-       */
+      // MSR_DELTA_CTS, MSR_DELTA_DSR, MSR_TERI, MSR_DELTA_DCD
+      // are unsupported
     }
     hb_comSetOsError(pCom, !fResult);
   }
@@ -2022,9 +2015,8 @@ int hb_comLSR(int iPort, int *piValue)
         iValue |= HB_COM_LSR_PARITY_ERR;
       }
 
-      /* LSR_DATA_READY, LSR_TRANS_HOLD_EMPTY, LSR_TRANS_EMPTY
-       * are unsupported
-       */
+      // LSR_DATA_READY, LSR_TRANS_HOLD_EMPTY, LSR_TRANS_EMPTY
+      // are unsupported
     }
     hb_comSetOsError(pCom, !fResult);
   }
@@ -2251,9 +2243,8 @@ int hb_comDiscardChar(int iPort, int iChar)
 
   if (pCom != nullptr)
   {
-    /* NOTE: there is no support for setting user defined character
-     * discarding input buffer
-     */
+    // NOTE: there is no support for setting user defined character
+    // discarding input buffer
     hb_comSetComError(pCom, HB_COM_ERR_NOSUPPORT);
   }
 
@@ -2302,7 +2293,7 @@ int hb_comOutputState(int iPort)
     fResult = ClearCommError(pCom->hComm, nullptr, &comStat);
     if (fResult)
     {
-      /* NOTE: HB_COM_TX_RFLUSH is unsupported */
+      // NOTE: HB_COM_TX_RFLUSH is unsupported
 
       if (comStat.fCtsHold)
       {
@@ -2551,16 +2542,16 @@ int hb_comInit(int iPort, int iBaud, int iParity, int iSize, int iStop)
         dcb.fNull = 0;
         dcb.fRtsControl = RTS_CONTROL_ENABLE;
         dcb.fAbortOnError = 0;
-        /*dcb.XonLim*/
-        /*dcb.XoffLim*/
+        //dcb.XonLim
+        //dcb.XoffLim
         dcb.ByteSize = static_cast<BYTE>(iSize);
         dcb.Parity = static_cast<BYTE>(iParity);
         dcb.StopBits = static_cast<BYTE>(iStop);
-        /*dcb.XonChar*/
-        /*dcb.XoffChar*/
+        //dcb.XonChar
+        //dcb.XoffChar
         dcb.ErrorChar = '?';
-        /*dcb.EofChar*/
-        /*dcb.EvtChar*/
+        //dcb.EofChar
+        //dcb.EvtChar
 
         fResult = SetCommState(pCom->hComm, &dcb);
         if (fResult)
@@ -2648,7 +2639,7 @@ int hb_comOpen(int iPort)
   return fResult ? 0 : -1;
 }
 
-/* end of HB_OS_WIN */
+// end of HB_OS_WIN
 
 #elif defined(HB_HAS_PMCOM)
 
@@ -2735,9 +2726,9 @@ int hb_comMCR(int iPort, int *piValue, int iClr, int iSet)
 
   if (pCom != nullptr)
   {
-    /* MCR_OUT1, MCR_OUT2, MCR_LOOP and reading current state
-     * is unsupported
-     */
+    // MCR_OUT1, MCR_OUT2, MCR_LOOP and reading current state
+    // is unsupported
+
     if (iSet & HB_COM_MCR_DTR)
     {
       COMSetDtr(iPort - 1, 1);
@@ -3258,7 +3249,7 @@ int hb_comOpen(int iPort)
   return iResult;
 }
 
-/* end of HB_HAS_PMCOM */
+// end of HB_HAS_PMCOM
 
 #else
 

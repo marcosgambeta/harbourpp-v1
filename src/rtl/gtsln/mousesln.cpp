@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "gtsln.hpp"
 #include <sys/time.h>
@@ -54,7 +54,7 @@
 #include <gpm.h>
 #endif
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static int s_iMouseRow = 0;
 static int s_iMouseCol = 0;
@@ -69,7 +69,7 @@ static struct timeval mLeftDblckTime;
 static struct timeval mMiddleDblckTime;
 static struct timeval mRightDblckTime;
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #if defined(HB_HAS_GPM)
 static HB_BOOL GetGpmEvent(Gpm_Event *Evt)
@@ -86,11 +86,11 @@ static HB_BOOL GetGpmEvent(Gpm_Event *Evt)
 }
 #endif
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL GetXtermEvent(int *Btn, int *Col, int *Row)
 {
-  /* Xterm mouse event consists of three chars */
+  // Xterm mouse event consists of three chars
   if (SLang_input_pending(0) > 0)
   {
     *Btn = SLang_getkey() - 0x20;
@@ -109,7 +109,7 @@ static HB_BOOL GetXtermEvent(int *Btn, int *Col, int *Row)
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_sln_CheckDoubleClick(void)
 {
@@ -147,7 +147,7 @@ static void hb_sln_CheckDoubleClick(void)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_ProcessTerminalEvent(void)
 {
@@ -188,7 +188,7 @@ void hb_gt_sln_mouse_ProcessTerminalEvent(void)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
 {
@@ -298,7 +298,7 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
 
     if (GetGpmEvent(&Evt))
     {
-      /* get the mouse event position */
+      // get the mouse event position
       s_iMouseRow = Evt.y;
       s_iMouseCol = Evt.x;
 
@@ -337,26 +337,26 @@ int hb_gt_sln_mouse_Inkey(int iEventMask, HB_BOOL fCheckNew)
   return 0;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_Init(void)
 {
   if (hb_sln_UnderXterm)
   {
-    const char *SaveHilit = "\033[?1001s"; /* save old hilit tracking */
-    const char *EnabTrack = "\033[?1000h"; /* enable mouse tracking */
+    const char *SaveHilit = "\033[?1001s"; // save old hilit tracking
+    const char *EnabTrack = "\033[?1000h"; // enable mouse tracking
 
-    /* force mouse usage under xterm */
+    // force mouse usage under xterm
     (void)SLtt_set_mouse_mode(1, 1);
 
-    /* initial xterm settings */
+    // initial xterm settings
     SLtt_write_string(const_cast<char *>(SaveHilit));
     SLtt_write_string(const_cast<char *>(EnabTrack));
     SLtt_flush_output();
 
     s_iMouseButtons = SLtt_tgetnum(const_cast<char *>("BT"));
 
-    /* force two buttons mouse under xterm */
+    // force two buttons mouse under xterm
     if (s_iMouseButtons < 1)
     {
       s_iMouseButtons = 3;
@@ -375,9 +375,9 @@ void hb_gt_sln_mouse_Init(void)
     close(iNull);
 #endif
     Conn.eventMask = GPM_MOVE | GPM_UP | GPM_DOWN | GPM_DRAG | GPM_DOUBLE;
-    /* give me move events but handle them anyway */
+    // give me move events but handle them anyway
     Conn.defaultMask = GPM_MOVE | GPM_HARD;
-    /* only pure mouse events, no Ctrl,Alt,Shift events */
+    // only pure mouse events, no Ctrl,Alt,Shift events
     Conn.minMod = 0;
     Conn.maxMod = 0;
 
@@ -396,10 +396,8 @@ void hb_gt_sln_mouse_Init(void)
         s_iMouseCol = Evt.x;
       }
 
-      /*
-       * In recent GPM versions it produce unpleasure noice on the screen
-       * so I covered it with this macro, [druzus]
-       */
+      // In recent GPM versions it produce unpleasure noice on the screen
+      // so I covered it with this macro, [druzus]
 #ifdef HB_GPM_USE_XTRA
       s_iMouseButtons = Gpm_GetSnapshot(nullptr);
 #else
@@ -415,7 +413,7 @@ void hb_gt_sln_mouse_Init(void)
 #endif
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_Exit(void)
 {
@@ -423,15 +421,15 @@ void hb_gt_sln_mouse_Exit(void)
   {
     if (hb_sln_UnderXterm)
     {
-      const char *DisabTrack = "\033[?1000l"; /* disable mouse tracking */
-      const char *RestoHilit = "\033[?1001r"; /* restore old hilit tracking */
+      const char *DisabTrack = "\033[?1000l"; // disable mouse tracking
+      const char *RestoHilit = "\033[?1001r"; // restore old hilit tracking
 
-      /* restore xterm settings */
+      // restore xterm settings
       SLtt_write_string(const_cast<char *>(DisabTrack));
       SLtt_write_string(const_cast<char *>(RestoHilit));
       SLtt_flush_output();
 
-      /* force mouse usage under xterm */
+      // force mouse usage under xterm
       (void)SLtt_set_mouse_mode(0, 1);
     }
 #if defined(HB_HAS_GPM)
@@ -447,7 +445,7 @@ void hb_gt_sln_mouse_Exit(void)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT)
 {
@@ -455,7 +453,7 @@ HB_BOOL hb_gt_sln_mouse_IsPresent(PHB_GT pGT)
   return s_bMousePresent;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_Show(PHB_GT pGT)
 {
@@ -470,7 +468,7 @@ void hb_gt_sln_mouse_Show(PHB_GT pGT)
 #endif
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_Hide(PHB_GT pGT)
 {
@@ -480,7 +478,7 @@ void hb_gt_sln_mouse_Hide(PHB_GT pGT)
 #endif
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol)
 {
@@ -489,13 +487,13 @@ void hb_gt_sln_mouse_GetPos(PHB_GT pGT, int *piRow, int *piCol)
   *piCol = s_iMouseCol;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol)
 {
   HB_SYMBOL_UNUSED(pGT);
 
-  /* it does really nothing */
+  // it does really nothing
   s_iMouseRow = iRow;
   s_iMouseCol = iCol;
 #if defined(HB_HAS_GPM)
@@ -509,7 +507,7 @@ void hb_gt_sln_mouse_SetPos(PHB_GT pGT, int iRow, int iCol)
 #endif
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton)
 {
@@ -528,7 +526,7 @@ HB_BOOL hb_gt_sln_mouse_ButtonState(PHB_GT pGT, int iButton)
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 int hb_gt_sln_mouse_CountButton(PHB_GT pGT)
 {
@@ -536,7 +534,7 @@ int hb_gt_sln_mouse_CountButton(PHB_GT pGT)
   return s_iMouseButtons;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 void hb_gt_sln_mouse_FixTrash(void)
 {
@@ -551,4 +549,4 @@ void hb_gt_sln_mouse_FixTrash(void)
 #endif
 }
 
-/* *********************************************************************** */
+// ***********************************************************************

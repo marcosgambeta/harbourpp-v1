@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "gtsln.hpp"
 
@@ -59,50 +59,50 @@ static auto s_fStdInTTY = false;
 static auto s_fStdOutTTY = false;
 static auto s_fStdErrTTY = false;
 
-/* does terminal works in Unicode (UTF-8) mode? */
+// does terminal works in Unicode (UTF-8) mode?
 bool hb_sln_Is_Unicode = false;
 
-/* Slang color names */
+// Slang color names
 static const char *s_colorNames[] = {
     "black", "blue",       "green",       "cyan",       "red",       "magenta",       "brown",  "lightgray",
 
     "gray",  "brightblue", "brightgreen", "brightcyan", "brightred", "brightmagenta", "yellow", "white"};
 
-/* to convert Clipper colors into Slang ones */
+// to convert Clipper colors into Slang ones
 #ifdef HB_SLN_UTF8
 static SLsmg_Color_Type s_colorTab[256];
 #else
 static SLsmg_Char_Type s_colorTab[256];
 #endif
-/* to convert displayed characters */
+// to convert displayed characters
 static SLsmg_Char_Type s_outputTab[256];
 
-/* to convert box displayed characters */
+// to convert box displayed characters
 static SLsmg_Char_Type s_outboxTab[256];
 
-/* to convert input characters */
+// to convert input characters
 unsigned char hb_sln_inputTab[256];
 
 static auto s_fActive = false;
 
 static int s_iCursorStyle = SC_NORMAL;
 
-/* indicate if we are currently running a command from system */
+// indicate if we are currently running a command from system
 static auto s_bSuspended = false;
 
-/* the name of an environment variable containing a definition of nation chars.*/
-/* A definition is a list of pairs of chars. The first char in each pair is  */
-/* an ASCII key, which should be pressed *after* a "DeadKey" was pressed to  */
-/* get the nation char, a second in that pair is a corresponding nation char */
+// the name of an environment variable containing a definition of nation chars.
+// A definition is a list of pairs of chars. The first char in each pair is
+// an ASCII key, which should be pressed *after* a "DeadKey" was pressed to
+// get the nation char, a second in that pair is a corresponding nation char
 static const char *hb_NationCharsEnvName = "HRBNATIONCHARS";
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 volatile bool hb_sln_bScreen_Size_Changed = false;
 
-/* window's resize handler */
+// window's resize handler
 static void sigwinch_handler(int iSig)
 {
   HB_SYMBOL_UNUSED(iSig);
@@ -110,30 +110,26 @@ static void sigwinch_handler(int iSig)
   SLsignal(SIGWINCH, sigwinch_handler);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_sln_colorTrans(void)
 {
   for (auto i = 0; i < 256; i++)
   {
     int fg = (i & 0x0F);
-    /*
-     * bit 7 is a blinking attribute - not used when console is not in
-     * UTF-8 mode because we are using it for changing into ACSC
-     * In SLANG 2.0 the character attributes are hold in HB_USHORT not HB_BYTE
-     * so we can use all colors, blinking bit and ACSC switch without
-     * any problems also when console is not in UTF-8 mode.
-     */
-#ifdef HB_SLN_UTF8 /* slang 2.0 */
+    // bit 7 is a blinking attribute - not used when console is not in
+    // UTF-8 mode because we are using it for changing into ACSC
+    // In SLANG 2.0 the character attributes are hold in HB_USHORT not HB_BYTE
+    // so we can use all colors, blinking bit and ACSC switch without
+    // any problems also when console is not in UTF-8 mode.
+#ifdef HB_SLN_UTF8 // slang 2.0
     int bg = (i >> 4) & 0x0F;
 #else
     int bg = (i >> 4) & (hb_sln_Is_Unicode ? 0x0F : 0x07);
 #endif
-    /*
-     * in Clipper default color i 0x07 when in Slang 0x00,
-     * we make a small trick with XOR 7 to make default colors
-     * the same.
-     */
+    // in Clipper default color i 0x07 when in Slang 0x00,
+    // we make a small trick with XOR 7 to make default colors
+    // the same.
     int clr = (bg << 4) | (fg ^ 0x07);
     SLtt_set_color(clr, nullptr, const_cast<char *>(s_colorNames[fg]), const_cast<char *>(s_colorNames[bg]));
 #ifdef HB_SLN_UTF8
@@ -144,11 +140,11 @@ static void hb_sln_colorTrans(void)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_sln_setSingleBox(void)
 {
-  /* convert all box chars into Clipper _B_SINBLE */
+  // convert all box chars into Clipper _B_SINBLE
   s_outputTab[186] = s_outputTab[179];
   s_outputTab[205] = s_outputTab[196];
 
@@ -189,7 +185,7 @@ static void hb_sln_setSingleBox(void)
   s_outputTab[214] = s_outputTab[218];
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_sln_setACSCtrans(void)
 {
@@ -208,7 +204,7 @@ static void hb_sln_setACSCtrans(void)
   HB_SLN_BUILD_RAWCHAR(chArrow[2], 'v', 0);
   HB_SLN_BUILD_RAWCHAR(chArrow[3], '^', 0);
 
-  /* init an alternate chars table */
+  // init an alternate chars table
   if ((p = reinterpret_cast<unsigned char *>(SLtt_Graphics_Char_Pairs)))
   {
     SLsmg_Char_Type SLch;
@@ -256,11 +252,11 @@ static void hb_sln_setACSCtrans(void)
       case SLSMG_PLUS_CHAR_TERM:
         s_outputTab[197] = SLch;
         break;
-        /*
+#if 0
                     case SLSMG_DEGREE_CHAR_TERM  :   s_outputTab[   ] = SLch; break;
                     case SLSMG_PLMINUS_CHAR_TERM :   s_outputTab[   ] = SLch; break;
                     case SLSMG_BULLET_CHAR_TERM  :   s_outputTab[   ] = SLch; break;
-        */
+#endif
       case SLSMG_DIAMOND_CHAR_TERM:
         s_outputTab[04] = SLch;
         break;
@@ -319,11 +315,11 @@ static void hb_sln_setACSCtrans(void)
       case SLSMG_PLUS_CHAR:
         s_outputTab[197] = SLch;
         break;
-        /*
+#if 0
                     case SLSMG_DEGREE_CHAR; :   s_outputTab[   ] = SLch; break;
                     case SLSMG_PLMINUS_CHAR :   s_outputTab[   ] = SLch; break;
                     case SLSMG_BULLET_CHAR  :   s_outputTab[   ] = SLch; break;
-        */
+#endif
       case SLSMG_DIAMOND_CHAR:
         s_outputTab[04] = SLch;
         break;
@@ -379,15 +375,13 @@ static void hb_sln_setACSCtrans(void)
     s_outputTab[24] = s_outputTab[30] = chArrow[3];
 
 #ifdef HB_SLN_UNICODE
-    /*
-     * There is a bug in SLANG lib patched for UTF-8 support
-     * SLSMG_UTEE_CHAR_TERM is reverted with SLSMG_DTEE_CHAR_TERM
-     * They should be mapped:
-     *    SLSMG_UTEE_CHAR_TERM = 'w'
-     *    SLSMG_DTEE_CHAR_TERM = 'v'
-     * Below it's a hack for this version of slang which fix the
-     * problem.
-     */
+    // There is a bug in SLANG lib patched for UTF-8 support
+    // SLSMG_UTEE_CHAR_TERM is reverted with SLSMG_DTEE_CHAR_TERM
+    // They should be mapped:
+    //    SLSMG_UTEE_CHAR_TERM = 'w'
+    //   SLSMG_DTEE_CHAR_TERM = 'v'
+    // Below it's a hack for this version of slang which fix the
+    // problem.
     if (SLSMG_UTEE_CHAR_TERM == 'v')
     {
       SLch = s_outputTab[193];
@@ -398,7 +392,7 @@ static void hb_sln_setACSCtrans(void)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
 {
@@ -407,12 +401,12 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
 #endif
   PHB_CODEPAGE cdpHost = HB_GTSELF_HOSTCP(pGT);
 
-  /* build a conversion chars table */
+  // build a conversion chars table
   for (auto i = 0; i < 256; i++)
   {
     if (i < 32)
     {
-      /* under Unix control-chars are not visible in a general meaning */
+      // under Unix control-chars are not visible in a general meaning
       HB_SLN_BUILD_RAWCHAR(s_outputTab[i], '.', 0);
     }
     else if (i >= 128)
@@ -428,7 +422,7 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
 
   hb_sln_setACSCtrans();
 
-  /* QUESTION: do we have double, single-double, ... frames under xterm ? */
+  // QUESTION: do we have double, single-double, ... frames under xterm ?
   if (hb_sln_UnderXterm)
   {
     hb_sln_setSingleBox();
@@ -457,7 +451,7 @@ static void hb_sln_setCharTrans(PHB_GT pGT, bool fBox)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 static void hb_sln_setKeyTrans(PHB_GT pGT)
 {
   PHB_CODEPAGE cdpTerm = HB_GTSELF_INCP(pGT), cdpHost = HB_GTSELF_HOSTCP(pGT);
@@ -468,19 +462,19 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
     hb_sln_inputTab[i] = static_cast<unsigned char>(hb_cdpTranslateChar(i, cdpTerm, cdpHost));
   }
 
-  /* init national chars */
+  // init national chars
   p = getenv(hb_NationCharsEnvName);
   if (p)
   {
     int len = strlen(p) >> 1;
 
-    /* no more than 128 National chars are allowed */
+    // no more than 128 National chars are allowed
     if (len > 128)
     {
       len = 128;
     }
 
-    /* the first element contains a number of Dead keys defined in an ENVAR */
+    // the first element contains a number of Dead keys defined in an ENVAR
     hb_sln_convKDeadKeys[0] = static_cast<unsigned char>(len);
 
     len <<= 1;
@@ -494,7 +488,7 @@ static void hb_sln_setKeyTrans(PHB_GT pGT)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_sln_SetCursorStyle(int iStyle)
 {
@@ -511,10 +505,10 @@ static void hb_sln_SetCursorStyle(int iStyle)
   {
     SLtt_set_cursor_visibility(iStyle != SC_NONE);
 
-    /* NOTE: cursor appearance works only under linux console */
+    // NOTE: cursor appearance works only under linux console
     if (hb_sln_UnderLinuxConsole && s_iCursorStyle != iStyle)
     {
-      /* keyseq to define cursor shape under linux console */
+      // keyseq to define cursor shape under linux console
       char cursDefseq[] = {27, '[', '?', '1', 'c', 0};
 
       switch (iStyle)
@@ -536,8 +530,8 @@ static void hb_sln_SetCursorStyle(int iStyle)
         break;
 
       case SC_SPECIAL2:
-        /* TODO: find a proper sequence to set a cursor
-           to SC_SPECIAL2 under Linux console  */
+        // TODO: find a proper sequence to set a cursor
+        // to SC_SPECIAL2 under Linux console
         cursDefseq[3] = '4';
         break;
       }
@@ -547,7 +541,7 @@ static void hb_sln_SetCursorStyle(int iStyle)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 #ifdef HB_SLN_UTF8
 static int hb_sln_isUTF8(int iStdOut, int iStdIn)
 {
@@ -562,12 +556,12 @@ static int hb_sln_isUTF8(int iStdOut, int iStdIn)
       int i, j, n, d, y, x;
 
       n = j = x = y = 0;
-      /* wait up to 2 seconds for answer */
+      // wait up to 2 seconds for answer
       HB_MAXINT timeout = 2000;
       HB_MAXUINT timer = hb_timerInit(timeout);
       for (;;)
       {
-        /* looking for cursor position in "\033[%d;%dR" */
+        // looking for cursor position in "\033[%d;%dR"
         while (j < n && rdbuf[j] != '\033')
         {
           ++j;
@@ -631,9 +625,9 @@ static int hb_sln_isUTF8(int iStdOut, int iStdIn)
   return -1;
 }
 #endif
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* I think this function should not be void. It should be HB_BOOL */
+// I think this function should not be void. It should be HB_BOOL
 static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout,
                            HB_FHANDLE hFilenoStderr) // FuncTable
 {
@@ -643,7 +637,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
   auto gt_Inited = false;
 
-  /* stdin && stdout && stderr */
+  // stdin && stdout && stderr
   s_hStdIn = hFilenoStdin;
   s_hStdOut = hFilenoStdout;
   s_hStdErr = hFilenoStderr;
@@ -652,21 +646,21 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   s_fStdOutTTY = isatty(s_hStdOut);
   s_fStdErrTTY = isatty(s_hStdErr);
 
-  /* Slang file descriptors */
+  // Slang file descriptors
   SLang_TT_Read_FD = -1;
   SLang_TT_Write_FD = -1;
 
-  /* read a terminal description from a terminfo database */
+  // read a terminal description from a terminfo database
   SLtt_get_terminfo();
 
-  /* initialize higher-level Slang routines */
+  // initialize higher-level Slang routines
   if (SLkp_init() != -1)
   {
-    /* initialize a terminal stuff and a Slang
-       keyboard subsystem for the first time */
+    // initialize a terminal stuff and a Slang
+    // keyboard subsystem for the first time
     if (hb_sln_Init_Terminal(0))
     {
-      /* fix an OutStd()/OutErr() output */
+      // fix an OutStd()/OutErr() output
       if (!s_fStdOutTTY && s_fStdInTTY)
       {
         SLang_TT_Write_FD = SLang_TT_Read_FD;
@@ -680,42 +674,42 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
          SLsmg_Setlocale = 0;
 #endif
 #endif
-      /* initialize a screen handling subsytem */
+      // initialize a screen handling subsytem
       if (SLsmg_init_smg() != -1)
       {
-        /* install window resize handler */
+        // install window resize handler
         SLsignal(SIGWINCH, sigwinch_handler);
 
-        /* do not indicate USER_BREAK in SLang_Error - ??? */
+        // do not indicate USER_BREAK in SLang_Error - ???
         SLang_Ignore_User_Abort = 1;
 
-        /* no default abort processing */
+        // no default abort processing
         SLang_set_abort_signal(nullptr);
 
-        /* NOTE: this is incompatible with CLIPPER
-           but under Unix we should assume cursor is
-           visible on startup because we cannot figure
-           out a current cursor state */
+        // NOTE: this is incompatible with CLIPPER
+        // but under Unix we should assume cursor is
+        // visible on startup because we cannot figure
+        // out a current cursor state
 
-        /* turn on a cursor visibility */
+        // turn on a cursor visibility
         if (SLtt_set_cursor_visibility(1) == -1)
         {
           s_iCursorStyle = SC_UNAVAIL;
         }
 
-        /* NOTE: this driver is implemented in a way that it is
-           impossible to get intensity/blinking background mode.
-           The reason is the way Slang is written.
-           This is incompatible with Clipper.
-           But when the console is in UTF-8 mode we don't need
-           to switch into ACSC because we can display all supported
-           characters using it's UNICODE values so we can use
-           blink bit as in Clipper.
-           In SLANG 2.0 the character attributes are hold in HB_USHORT
-           not HB_BYTE so we can use all colors, blinking bit and ACSC
-           switch without any problems also when console is not in
-           UTF-8 mode.
-         */
+        // NOTE: this driver is implemented in a way that it is
+        // impossible to get intensity/blinking background mode.
+        // The reason is the way Slang is written.
+        // This is incompatible with Clipper.
+        // But when the console is in UTF-8 mode we don't need
+        // to switch into ACSC because we can display all supported
+        // characters using it's UNICODE values so we can use
+        // blink bit as in Clipper.
+        // In SLANG 2.0 the character attributes are hold in HB_USHORT
+        // not HB_BYTE so we can use all colors, blinking bit and ACSC
+        // switch without any problems also when console is not in
+        // UTF-8 mode.
+
 #ifdef HB_SLN_UTF8
         SLtt_Blink_Mode = 1;
         SLtt_Use_Blink_For_ACS = 0;
@@ -737,7 +731,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
         SLsmg_Display_Eight_Bit = 128;
         SLsmg_Newline_Behavior = SLSMG_NEWLINE_SCROLLS;
 
-        /* initialize conversion tables */
+        // initialize conversion tables
         hb_sln_colorTrans();
         if (!hb_sln_Is_Unicode)
         {
@@ -745,16 +739,16 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
           hb_sln_setKeyTrans(pGT);
         }
 
-        /* ensure we are in a normal chars set */
+        // ensure we are in a normal chars set
         SLtt_set_alt_char_set(0);
 
-        /* set the normal Slang color */
+        // set the normal Slang color
         SLsmg_set_color(0);
 
-        /* NOTE: due to a work of a Slang library which does not
-           prepare its internal screen buffer properly, a screen
-           must be cleared before normal work. This is not
-           compatible with Clipper */
+        // NOTE: due to a work of a Slang library which does not
+        // prepare its internal screen buffer properly, a screen
+        // must be cleared before normal work. This is not
+        // compatible with Clipper
         SLsmg_cls();
         SLsmg_gotorc(0, 0);
         SLsmg_refresh();
@@ -766,7 +760,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
   if (!gt_Inited)
   {
-    /* something went wrong - restore default settings */
+    // something went wrong - restore default settings
     SLang_reset_tty();
     hb_errInternal(9997, "Internal error: screen driver initialization failure", nullptr, nullptr);
   }
@@ -783,7 +777,7 @@ static void hb_gt_sln_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   HB_GTSELF_SETPOS(pGT, SLsmg_get_row(), SLsmg_get_column());
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
 {
@@ -791,7 +785,7 @@ static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Exit(%p)", static_cast<void*>(pGT)));
 #endif
 
-  /* restore a standard bell frequency and duration */
+  // restore a standard bell frequency and duration
   if (hb_sln_UnderLinuxConsole)
   {
     SLtt_write_string(const_cast<char *>("\033[10]"));
@@ -801,7 +795,7 @@ static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
 
   HB_GTSELF_REFRESH(pGT);
   hb_gt_sln_mouse_Exit();
-  /* NOTE: This is incompatible with Clipper - on exit leave a cursor visible */
+  // NOTE: This is incompatible with Clipper - on exit leave a cursor visible
   hb_sln_SetCursorStyle(SC_NORMAL);
 
   SLsmg_refresh();
@@ -813,7 +807,7 @@ static void hb_gt_sln_Exit(PHB_GT pGT) // FuncTable
   HB_GTSUPER_EXIT(pGT);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
 {
@@ -825,11 +819,11 @@ static HB_BOOL hb_gt_sln_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
   HB_SYMBOL_UNUSED(iRows);
   HB_SYMBOL_UNUSED(iCols);
 
-  /* TODO: How to change the size of the screen? */
+  // TODO: How to change the size of the screen?
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_IsColor(PHB_GT pGT) // FuncTable
 {
@@ -841,7 +835,7 @@ static HB_BOOL hb_gt_sln_IsColor(PHB_GT pGT) // FuncTable
   return SLtt_Use_Ansi_Colors;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_sln_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
 {
@@ -849,24 +843,22 @@ static void hb_gt_sln_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_SetBlink(%p,%d)", static_cast<void*>(pGT), static_cast<int>(fBlink)));
 #endif
 
-  /*
-   * We cannot switch remote terminal between blinking and highlight mode
-   * for server side using standard termcap/terminfo codes - few rather
-   * exotic terminals have such capabilities but this are non standard
-   * extensions which can be hard coded only for given hardware (or
-   * software terminal emulator). I think that if it's necessary then
-   * user should add such tricks yourself to his programs using
-   * OutStd(<cBlinkSequence>)
-   * The only one thing I can make in portable way which will always
-   * work is disabling sending BLINK attribute to remote terminal. So
-   * in GTSLN like in GTCRS the function SetBlink(.F.) does it, [Druzus]
-   */
+  // We cannot switch remote terminal between blinking and highlight mode
+  // for server side using standard termcap/terminfo codes - few rather
+  // exotic terminals have such capabilities but this are non standard
+  // extensions which can be hard coded only for given hardware (or
+  // software terminal emulator). I think that if it's necessary then
+  // user should add such tricks yourself to his programs using
+  // OutStd(<cBlinkSequence>)
+  // The only one thing I can make in portable way which will always
+  // work is disabling sending BLINK attribute to remote terminal. So
+  // in GTSLN like in GTCRS the function SetBlink(.F.) does it, [Druzus]
 
   SLtt_Blink_Mode = fBlink ? 1 : 0;
   HB_GTSUPER_SETBLINK(pGT, fBlink);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // FuncTable
 {
@@ -874,7 +866,7 @@ static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_sln_Tone(%p,%lf,%lf)", static_cast<void*>(pGT), dFrequency, dDuration));
 #endif
 
-  /* TODO: Implement this for other consoles than linux ? */
+  // TODO: Implement this for other consoles than linux ?
 
   if (hb_sln_UnderLinuxConsole)
   {
@@ -894,14 +886,14 @@ static void hb_gt_sln_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
   if (hb_sln_UnderLinuxConsole)
   {
-    /* The conversion from Clipper (DOS) timer tick units to
-       milliseconds is * 1000.0 / 18.2. */
+    // The conversion from Clipper (DOS) timer tick units to
+    // milliseconds is * 1000.0 / 18.2.
     dDuration /= 18.2;
     hb_gtSleep(pGT, dDuration / 18.2);
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static const char *hb_gt_sln_Version(PHB_GT pGT, int iType) // FuncTable
 {
@@ -919,12 +911,12 @@ static const char *hb_gt_sln_Version(PHB_GT pGT, int iType) // FuncTable
   return "Harbour Terminal: Slang";
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* NOTE: these two are for prepare Slang to temporary
-   finish its work. They should be called from run.c. */
+// NOTE: these two are for prepare Slang to temporary
+// finish its work. They should be called from run.c.
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_Suspend(PHB_GT pGT) // FuncTable
 {
@@ -942,7 +934,7 @@ static HB_BOOL hb_gt_sln_Suspend(PHB_GT pGT) // FuncTable
   return s_bSuspended;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT) // FuncTable
 {
@@ -950,7 +942,7 @@ static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT) // FuncTable
 
   if (s_bSuspended && SLsmg_resume_smg() != -1 && hb_sln_Init_Terminal(1) != -1)
   {
-    SLsmg_refresh(); /* reinitialize a terminal */
+    SLsmg_refresh(); // reinitialize a terminal
 #if defined(HB_HAS_GPM)
     hb_gt_sln_mouse_FixTrash();
 #endif
@@ -960,7 +952,7 @@ static HB_BOOL hb_gt_sln_Resume(PHB_GT pGT) // FuncTable
   return !s_bSuspended;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_PreExt(PHB_GT pGT) // FuncTable
 {
@@ -973,7 +965,7 @@ static HB_BOOL hb_gt_sln_PreExt(PHB_GT pGT) // FuncTable
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_PostExt(PHB_GT pGT) // FuncTable
 {
@@ -981,7 +973,7 @@ static HB_BOOL hb_gt_sln_PostExt(PHB_GT pGT) // FuncTable
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncTable
 {
@@ -1015,7 +1007,7 @@ static HB_BOOL hb_gt_sln_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo) // FuncT
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP,
                                    HB_BOOL fBox) // FuncTable
@@ -1031,7 +1023,7 @@ static HB_BOOL hb_gt_sln_SetDispCP(PHB_GT pGT, const char *pszTermCDP, const cha
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_sln_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char *pszHostCDP) // FuncTable
 {
@@ -1046,7 +1038,7 @@ static HB_BOOL hb_gt_sln_SetKeyCP(PHB_GT pGT, const char *pszTermCDP, const char
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncTable
 {
@@ -1100,7 +1092,7 @@ static void hb_gt_sln_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_sln_Refresh(PHB_GT pGT) // FuncTable
 {
@@ -1124,7 +1116,7 @@ static void hb_gt_sln_Refresh(PHB_GT pGT) // FuncTable
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
@@ -1162,8 +1154,8 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************

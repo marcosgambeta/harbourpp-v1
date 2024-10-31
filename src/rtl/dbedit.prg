@@ -47,14 +47,14 @@
 #include "inkey.ch"
 #include "setcurs.ch"
 
-/* NOTE: Extension: Harbour supports codeblocks and function pointers
-         as the xUserFunc parameter. [vszakats] */
-/* NOTE: Clipper is buggy and will throw an error if the number of
-         columns is zero. (Check: dbEdit(0,0,20,20,{})) [vszakats] */
-/* NOTE: Clipper will throw an error if there's no database open [vszakats] */
-/* NOTE: The NG says that the return value is NIL, but it's not. [vszakats] */
-/* NOTE: Harbour is multithreading ready and Clipper only reentrant safe
-         [vszakats] */
+// NOTE: Extension: Harbour supports codeblocks and function pointers
+//       as the xUserFunc parameter. [vszakats]
+// NOTE: Clipper is buggy and will throw an error if the number of
+//       columns is zero. (Check: dbEdit(0,0,20,20,{})) [vszakats]
+// NOTE: Clipper will throw an error if there's no database open [vszakats]
+// NOTE: The NG says that the return value is NIL, but it's not. [vszakats]
+// NOTE: Harbour is multithreading ready and Clipper only reentrant safe
+//       [vszakats]
 
 FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPictures, xColumnHeaders, ;
       xHeadingSeparators, xColumnSeparators, xFootingSeparators, xColumnFootings)
@@ -99,7 +99,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    oBrowse:colSep    := iif(HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox(" │ "))
    oBrowse:footSep   := hb_defaultValue(xFootingSeparators, "")
    oBrowse:skipBlock := {|nRecs|Skipped(nRecs, lAppend)}
-   oBrowse:autoLite  := .F.  /* Set to .F. just like in CA-Cl*pper. [vszakats] */
+   oBrowse:autoLite  := .F.  // Set to .F. just like in CA-Cl*pper. [vszakats]
 
    IF HB_ISARRAY(acColumns)
       nColCount := 0
@@ -118,7 +118,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
       RETURN .F.
    ENDIF
 
-   /* Generate the TBrowse columns */
+   // Generate the TBrowse columns
 
    FOR nPos := 1 TO nColCount
 
@@ -134,14 +134,14 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
          cHeading := cBlock
       ENDIF
 
-      /* Simplified logic compared to CA-Cl*pper. In the latter there
-         is logic to detect several typical cBlock types (memvar,
-         aliased field, field) and using MemVarBlock()/FieldWBlock()/FieldBlock()
-         calls to create codeblocks for them if possible. In Harbour,
-         simple macro compilation will result in faster code for all
-         situations. As Maurilio Longo has pointed, there is no point in
-         creating codeblocks which are able to _assign_ values, as dbEdit()
-         is a read-only function. [vszakats] */
+      // Simplified logic compared to CA-Cl*pper. In the latter there
+      // is logic to detect several typical cBlock types (memvar,
+      // aliased field, field) and using MemVarBlock()/FieldWBlock()/FieldBlock()
+      // calls to create codeblocks for them if possible. In Harbour,
+      // simple macro compilation will result in faster code for all
+      // situations. As Maurilio Longo has pointed, there is no point in
+      // creating codeblocks which are able to _assign_ values, as dbEdit()
+      // is a read-only function. [vszakats]
 
       bBlock := iif(Type(cBlock) == "M", {||"  <Memo>  "}, hb_macroBlock(cBlock))
 
@@ -185,7 +185,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
 
    nOldCUrsor := SetCursor(SC_NONE)
 
-   /* Go into the processing loop */
+   // Go into the processing loop
 
    lAppend := .F.
    lFlag := .T.
@@ -285,9 +285,9 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    RETURN .T.
 
 
-/* NOTE: CA-Cl*pper uses intermediate function CallUser()
-         to execute user function. We're replicating this behavior
-         for code which may check ProcName() results in user function */
+// NOTE: CA-Cl*pper uses intermediate function CallUser()
+//       to execute user function. We're replicating this behavior
+//       for code which may check ProcName() results in user function
 STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
    LOCAL nPrevRecNo
@@ -302,13 +302,13 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
 
    nPrevRecNo := RecNo()
 
-   /* NOTE: CA-Cl*pper won't check the type of the return value here,
-            and will crash if it's a non-NIL, non-numeric type. We're
-            replicating this behavior. */
+   // NOTE: CA-Cl*pper won't check the type of the return value here,
+   //       and will crash if it's a non-NIL, non-numeric type. We're
+   //       replicating this behavior.
    nAction := iif(HB_ISEVALITEM(xUserFunc), ;
                                  Eval(xUserFunc, nMode, oBrowse:colPos), ;
               iif(HB_ISSTRING(xUserFunc) .AND. !Empty(xUserFunc), ;
-                                 &xUserFunc(nMode, oBrowse:colPos), ;  /* NOTE: Macro operator! */
+                                 &xUserFunc(nMode, oBrowse:colPos), ;  // NOTE: Macro operator!
               iif(nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT)))
 
    IF !lAppend .AND. Eof() .AND. !IsDbEmpty()
@@ -358,12 +358,12 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
    RETURN nAction != DE_ABORT
 
 
-/* helper function to detect empty tables. It's not perfect but
-   it functionally uses the same conditions as CA-Cl*pper */
+// helper function to detect empty tables. It's not perfect but
+// it functionally uses the same conditions as CA-Cl*pper
 STATIC FUNCTION IsDbEmpty()
    RETURN LastRec() == 0 .OR. (Bof() .AND. (Eof() .OR. RecNo() == LastRec() + 1))
 
-/* Helper function: TBrowse skipBlock */
+// Helper function: TBrowse skipBlock
 STATIC FUNCTION Skipped(nRecs, lAppend)
 
    LOCAL nSkipped := 0

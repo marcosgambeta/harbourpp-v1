@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
-/* TODO: include any standard headers here */
+// TODO: include any standard headers here
 
 #include "hbgtcore.hpp"
 #include "hbinit.hpp"
@@ -61,7 +61,7 @@ static void hb_gt_tpl_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_tpl_Init(%p,%p,%p,%p)", static_cast<void*>(pGT), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdin)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStdout)), reinterpret_cast<void*>(static_cast<HB_PTRUINT>(hFilenoStderr))));
 #endif
 
-  /* TODO: */
+  // TODO:
 
   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 }
@@ -74,7 +74,7 @@ static void hb_gt_tpl_Exit(PHB_GT pGT) // FuncTable
 
   HB_GTSUPER_EXIT(pGT);
 
-  /* TODO: */
+  // TODO:
 }
 
 static int hb_gt_tpl_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
@@ -86,8 +86,8 @@ static int hb_gt_tpl_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
   HB_SYMBOL_UNUSED(pGT);
   HB_SYMBOL_UNUSED(iEventMask);
 
-  /* TODO: check the input queue (incoming mouse and keyboard events)
-           and return the inkey code if any */
+  // TODO: check the input queue (incoming mouse and keyboard events)
+  //       and return the inkey code if any
 
   return 0;
 }
@@ -116,7 +116,7 @@ static HB_BOOL hb_gt_tpl_SetMode(PHB_GT pGT, int iRows, int iCols) // FuncTable
   HB_SYMBOL_UNUSED(iRows);
   HB_SYMBOL_UNUSED(iCols);
 
-  /* TODO: if possible change the size of the screen and return true */
+  // TODO: if possible change the size of the screen and return true
 
   return false;
 }
@@ -135,7 +135,7 @@ static void hb_gt_tpl_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
   {
     if (!HB_GTSELF_GETSCRCHAR(pGT, iRow, iCol, &iColor, &bAttr, &usChar))
       break;
-    /* TODO: display usChar at iRow, iCol position with color bColor */
+    // TODO: display usChar at iRow, iCol position with color bColor
     ++iCol;
   }
 }
@@ -151,10 +151,10 @@ static void hb_gt_tpl_Refresh(PHB_GT pGT) // FuncTable
   HB_GTSUPER_REFRESH(pGT);
   HB_GTSELF_GETSCRCURSOR(pGT, &iRow, &iCol, &iStyle);
 
-  /* TODO: set cursor position and shape */
+  // TODO: set cursor position and shape
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
@@ -173,8 +173,8 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************

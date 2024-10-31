@@ -55,30 +55,28 @@
 #include "hbthread.hpp"
 #include "hbchksum.h"
 
-/*
-   i18n hash table items:
-
-   "LANG"            => <cLangID>
-   "BASE_LANG"       => <cLangID>
-   "CODEPAGE"        => <cCodePage>
-   "BASE_CODEPAGE"   => <cCodePage>
-   "DESCRIPTION"     => <cDescription>
-   "PLURAL_EXP"      => <cPluralExp>
-   "BASE_PLURAL_EXP" => <cPluralExp>
-   "CONTEXT"         => ;
-               { "" => { <cMsg> => <cResult> | <aResult> } ; // default context
-      [, <cContext> => { <cMsg> => <cResult> | <aResult> } ] }
-
-   i18n file format:
-
-      00-03 signature { 193, 'H', 'B', 'L' }
-      04-07 size of serialized i18n hash table, 32 bits in little endian order
-      08-11 CRC32 of serialized i18n hash table
-      12-15 unused
-      16-47 description
-      48-63 unused
-      64-.. serialized i18n hash table
- */
+// i18n hash table items:
+//
+// "LANG"            => <cLangID>
+// "BASE_LANG"       => <cLangID>
+// "CODEPAGE"        => <cCodePage>
+// "BASE_CODEPAGE"   => <cCodePage>
+// "DESCRIPTION"     => <cDescription>
+// "PLURAL_EXP"      => <cPluralExp>
+// "BASE_PLURAL_EXP" => <cPluralExp>
+// "CONTEXT"         => ;
+//             { "" => { <cMsg> => <cResult> | <aResult> } ; // default context
+//    [, <cContext> => { <cMsg> => <cResult> | <aResult> } ] }
+//
+// i18n file format:
+//
+//    00-03 signature { 193, 'H', 'B', 'L' }
+//    04-07 size of serialized i18n hash table, 32 bits in little endian order
+//    08-11 CRC32 of serialized i18n hash table
+//    12-15 unused
+//    16-47 description
+//    48-63 unused
+//    64-.. serialized i18n hash table
 
 #define HB_I18N_HEADER_SIZE 64
 #define HB_I18N_SIG_OFFSET 0
@@ -184,9 +182,9 @@ static const char *hb_i18n_pluralformid(int iForm)
   return nullptr;
 }
 
-/* NOTE: Source:
-         https://www.gnu.org/software/hello/manual/gettext/Plural-forms.html
-         [vszakats] */
+// NOTE: Source:
+//       https://www.gnu.org/software/hello/manual/gettext/Plural-forms.html
+//       [vszakats]
 
 static long hb_i18n_pluralindex(int iForm, PHB_ITEM pNum)
 {
@@ -310,19 +308,19 @@ static PHB_I18N_TRANS hb_i18n_new(void)
   return pI18N;
 }
 
-/* HVM init */
+// HVM init
 void hb_i18n_init(void)
 {
-  /* do nothing in this implementation */
+  // do nothing in this implementation
 }
 
-/* HVM exit */
+// HVM exit
 void hb_i18n_exit(void)
 {
-  /* do nothing in this implementation */
+  // do nothing in this implementation
 }
 
-/* make copy of i18n set for new thread */
+// make copy of i18n set for new thread
 void *hb_i18n_alloc(void *cargo)
 {
   if (cargo)
@@ -332,7 +330,7 @@ void *hb_i18n_alloc(void *cargo)
   return cargo;
 }
 
-/* release i18n set when thread is terminated */
+// release i18n set when thread is terminated
 void hb_i18n_release(void *cargo)
 {
   if (cargo)
@@ -580,7 +578,7 @@ static bool hb_i18n_getpluralform(PHB_I18N_TRANS pI18N, PHB_ITEM pOldForm, bool 
       }
       else
       {
-        hb_itemPutCConst(pOldForm, "EN"); /* default is ENGLISH */
+        hb_itemPutCConst(pOldForm, "EN"); // default is ENGLISH
       }
     }
     fResult = true;
@@ -933,9 +931,7 @@ PHB_ITEM hb_i18n_ngettext(PHB_ITEM pNum, PHB_ITEM pMsgID, PHB_ITEM pContext)
   return pMsgID;
 }
 
-/*
- * base .prg i18n functions
- */
+// base .prg i18n functions
 
 HB_FUNC(HB_I18N_GETTEXT)
 {
@@ -985,9 +981,7 @@ HB_FUNC(HB_I18N_NGETTEXT)
 HB_FUNC_TRANSLATE(HB_I18N_GETTEXT_STRICT, HB_I18N_GETTEXT)
 HB_FUNC_TRANSLATE(HB_I18N_NGETTEXT_STRICT, HB_I18N_NGETTEXT)
 
-/*
- * extended .prg i18n functions to create and manage translation tables
- */
+// extended .prg i18n functions to create and manage translation tables
 
 HB_FUNC(HB_I18N_CREATE)
 {
@@ -1162,7 +1156,7 @@ HB_FUNC(HB_I18N_CHECK)
   hb_retl(hb_i18n_headercheck(hb_parc(1), hb_parclen(1)));
 }
 
-/* unofficial function to access internal hash table used by i18n set */
+// unofficial function to access internal hash table used by i18n set
 HB_FUNC(__I18N_HASHTABLE)
 {
   PHB_I18N_TRANS pI18N;

@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #include "hbgtcore.hpp"
 #include "hbapistr.hpp"
@@ -51,7 +51,7 @@
 
 #if defined(HB_OS_WIN)
 #include <windows.h>
-/* For Global*() */
+// For Global*()
 
 #if defined(__CYGWIN__)
 #include <wchar.h>
@@ -143,18 +143,18 @@ HB_BOOL hb_gt_winapi_setClipboardRaw(HB_UINT uFormat, void *pData, HB_SIZE nSize
 
     if (nSize)
     {
-      /* Allocate a global memory object for the text. */
+      // Allocate a global memory object for the text.
       HGLOBAL hglb = GlobalAlloc(GMEM_MOVEABLE, nSize);
       if (hglb)
       {
-        /* Lock the handle and copy the text to the buffer. */
+        // Lock the handle and copy the text to the buffer.
         LPVOID lpMem = GlobalLock(hglb);
 
         if (lpMem)
         {
           memcpy(lpMem, pData, nSize);
           (void)GlobalUnlock(hglb); // TODO: C++ cast
-          /* Place the handle on the clipboard. */
+          // Place the handle on the clipboard.
           fResult = SetClipboardData(static_cast<UINT>(uFormat), hglb) != 0;
         }
         if (!fResult)
@@ -194,12 +194,12 @@ HB_BOOL hb_gt_winapi_setClipboard(HB_UINT uFormat, PHB_ITEM pItem)
 
     if (nSize)
     {
-      /* Allocate a global memory object for the text. */
+      // Allocate a global memory object for the text.
       HGLOBAL hglb =
           GlobalAlloc(GMEM_MOVEABLE, (nSize + 1) * (uFormat == CF_UNICODETEXT ? sizeof(wchar_t) : sizeof(char)));
       if (hglb)
       {
-        /* Lock the handle and copy the text to the buffer. */
+        // Lock the handle and copy the text to the buffer.
         LPVOID lpMem = GlobalLock(hglb);
 
         if (lpMem)
@@ -213,7 +213,7 @@ HB_BOOL hb_gt_winapi_setClipboard(HB_UINT uFormat, PHB_ITEM pItem)
             hb_itemCopyStr(pItem, hb_setGetOSCP(), static_cast<char *>(lpMem), nSize + 1);
           }
           (void)GlobalUnlock(hglb); // TODO: C++ cast
-          /* Place the handle on the clipboard. */
+          // Place the handle on the clipboard.
           fResult = SetClipboardData(static_cast<UINT>(uFormat), hglb) != 0;
         }
         if (!fResult)
@@ -258,7 +258,7 @@ HB_BOOL hb_gt_winapi_getClipboard(HB_UINT uFormat, PHB_ITEM pItem)
         case CF_OEMTEXT:
         case CF_TEXT:
           nSize = hb_strnlen(static_cast<const char *>(lpMem), nSize);
-          /* fallthrough */
+          // fallthrough
         default:
           if (nSize)
           {
@@ -281,4 +281,4 @@ HB_BOOL hb_gt_winapi_getClipboard(HB_UINT uFormat, PHB_ITEM pItem)
   return nSize != 0;
 }
 
-#endif /* HB_OS_WIN */
+#endif // HB_OS_WIN

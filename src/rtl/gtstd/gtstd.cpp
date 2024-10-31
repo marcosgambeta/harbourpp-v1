@@ -43,7 +43,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #define HB_GT_NAME STD
 
@@ -220,7 +220,7 @@ static void hb_gt_std_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   hb_fsSetDevMode(pGTSTD->hStdout, FD_BINARY);
   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
-/* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
+// SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment
 #if defined(HB_HAS_TERMIOS) && defined(SA_NOCLDSTOP)
 
   if (pGTSTD->fStdinConsole)
@@ -228,11 +228,11 @@ static void hb_gt_std_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #if defined(SIGTTOU)
     struct sigaction act, old;
 
-    /* if( pGTSTD->saved_TIO.c_lflag & TOSTOP ) != 0 */
+    // if( pGTSTD->saved_TIO.c_lflag & TOSTOP ) != 0
     sigaction(SIGTTOU, nullptr, &old);
     memcpy(&act, &old, sizeof(struct sigaction));
     act.sa_handler = sig_handler;
-    /* do not use SA_RESTART - new Linux kernels will repeat the operation */
+    // do not use SA_RESTART - new Linux kernels will repeat the operation
 #if defined(SA_ONESHOT)
     act.sa_flags = SA_ONESHOT;
 #elif defined(SA_RESETHAND)
@@ -255,9 +255,9 @@ static void hb_gt_std_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 #if 0
       pGTSTD->curr_TIO.c_cc[VMIN] = 0;
 #else
-    /* workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
-       *buntu) in which select() unconditionally accepts stdin for
-       reading if c_cc[VMIN] = 0 [druzus] */
+    // workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
+    // *buntu) in which select() unconditionally accepts stdin for
+    // reading if c_cc[VMIN] = 0 [druzus]
     pGTSTD->curr_TIO.c_cc[VMIN] = 1;
 #endif
     pGTSTD->curr_TIO.c_cc[VTIME] = 0;
@@ -308,7 +308,7 @@ static void hb_gt_std_Exit(PHB_GT pGT) // FuncTable
 
   if (pGTSTD)
   {
-    /* update cursor position on exit */
+    // update cursor position on exit
     if (pGTSTD->fStdoutConsole && pGTSTD->iLastCol > 0)
     {
       hb_gt_std_newLine(pGTSTD);
@@ -371,8 +371,8 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
       ch = _getch();
       if ((ch == 0 || ch == 224) && _kbhit())
       {
-        /* It was a function key lead-in code, so read the actual
-           function key and then offset it by 256 */
+        // It was a function key lead-in code, so read the actual
+        // function key and then offset it by 256
         ch = _getch();
         if (ch != -1)
         {
@@ -415,7 +415,7 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
         }
       }
       else
-      { /* Remove from the input queue */
+      { // Remove from the input queue
         ReadConsoleInput(reinterpret_cast<HANDLE>(hb_fsGetOsHandle(pGTSTD->hStdin)), &ir, 1, &dwEvents);
       }
     }
@@ -432,7 +432,7 @@ static int hb_gt_std_ReadKey(PHB_GT pGT, int iEventMask) // FuncTable
     }
     else
     {
-      int iTODO; /* TODO: */
+      int iTODO; // TODO:
     }
   }
 #endif
@@ -469,10 +469,10 @@ static void hb_gt_std_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
 
   PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
 
-  /* Output an ASCII BEL character to cause a sound */
-  /* but throttle to max once per second, in case of sound */
-  /* effects prgs calling lots of short tone sequences in */
-  /* succession leading to BEL hell on the terminal */
+  // Output an ASCII BEL character to cause a sound
+  // but throttle to max once per second, in case of sound
+  // effects prgs calling lots of short tone sequences in
+  // succession leading to BEL hell on the terminal
 
   double dCurrentSeconds = hb_dateSeconds();
   if (dCurrentSeconds < pGTSTD->dToneSeconds || dCurrentSeconds - pGTSTD->dToneSeconds > 0.5)
@@ -481,7 +481,7 @@ static void hb_gt_std_Tone(PHB_GT pGT, double dFrequency, double dDuration) // F
     pGTSTD->dToneSeconds = dCurrentSeconds;
   }
 
-  /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
+  // convert Clipper (DOS) timer tick units to seconds ( x / 18.2 )
   hb_gtSleep(pGT, dDuration / 18.2);
 }
 
@@ -556,13 +556,13 @@ static void hb_gt_std_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int i
 
   int iHeight, iWidth;
 
-  /* Provide some basic scroll support for full screen */
+  // Provide some basic scroll support for full screen
   HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
   if (iCols == 0 && iRows > 0 && iTop == 0 && iLeft == 0 && iBottom >= iHeight - 1 && iRight >= iWidth - 1)
   {
-    /* scroll up the internal screen buffer */
+    // scroll up the internal screen buffer
     HB_GTSELF_SCROLLUP(pGT, iRows, iColor, usChar);
-    /* update our internal row position */
+    // update our internal row position
     PHB_GTSTD pGTSTD = HB_GTSTD_GET(pGT);
     pGTSTD->iRow -= iRows;
     if (pGTSTD->iRow < 0)
@@ -685,10 +685,8 @@ static void hb_gt_std_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize) // FuncT
   {
     if (iLineFeed > 0)
     {
-      /*
-       * If you want to disable full screen redrawing in console (TTY)
-       * output then comment out the 'if' block below, Druzus
-       */
+      // If you want to disable full screen redrawing in console (TTY)
+      // output then comment out the 'if' block below, Druzus
       if (pGTSTD->fStdoutConsole)
       {
         if (pGTSTD->iRow > iRow)
@@ -794,8 +792,8 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************

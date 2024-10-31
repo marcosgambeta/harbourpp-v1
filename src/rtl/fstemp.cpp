@@ -44,7 +44,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* *nixes */
+// *nixes
 #if !defined(_LARGEFILE64_SOURCE)
 #define _LARGEFILE64_SOURCE 1
 #endif
@@ -61,7 +61,7 @@
 
 #if defined(HB_OS_UNIX)
 #include <stdlib.h>
-#include <unistd.h> /* We need for mkstemp() on BSD */
+#include <unistd.h> // We need for mkstemp() on BSD
 #endif
 
 #if defined(HB_OS_WIN)
@@ -82,11 +82,9 @@
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)
 #if defined(__USE_LARGEFILE64)
-/*
- * The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
- * defined and effectively enables lseek64()/flock64()/ftruncate64()
- * functions on 32-bit machines.
- */
+// The macro: __USE_LARGEFILE64 is set when _LARGEFILE64_SOURCE is
+// defined and effectively enables lseek64()/flock64()/ftruncate64()
+// functions on 32-bit machines.
 #define HB_USE_LARGEFILE64
 #elif defined(HB_OS_UNIX) && defined(O_LARGEFILE)
 #define HB_USE_LARGEFILE64
@@ -144,7 +142,7 @@ static bool fsGetTempDirByCase(char *pszName, const char *pszTempDir, bool fTran
 HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszPrefix, const char *pszExt,
                              HB_FATTR ulAttr)
 {
-  /* less attemps */
+  // less attemps
   int iAttemptLeft = 99, iLen;
   HB_FHANDLE fd;
 
@@ -210,7 +208,7 @@ HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszP
       hb_vmLock();
     }
     else
-#endif /* HB_HAS_MKSTEMP */
+#endif // HB_HAS_MKSTEMP
     {
       double d = hb_random_num();
       double x;
@@ -239,7 +237,7 @@ HB_FHANDLE hb_fsCreateTempEx(char *pszName, const char *pszDir, const char *pszP
   return fd;
 }
 
-/* NOTE: The buffer must be at least HB_PATH_MAX chars long */
+// NOTE: The buffer must be at least HB_PATH_MAX chars long
 #if !defined(HB_OS_UNIX)
 
 static bool hb_fsTempName(char *pszBuffer, const char *pszDir, const char *pszPrefix)
@@ -296,7 +294,7 @@ static bool hb_fsTempName(char *pszBuffer, const char *pszDir, const char *pszPr
   {
     auto pTmpBuffer = static_cast<char *>(hb_xgrab(L_tmpnam + 1));
 
-    /* TODO: Implement these: */
+    // TODO: Implement these:
     HB_SYMBOL_UNUSED(pszDir);
     HB_SYMBOL_UNUSED(pszPrefix);
 
@@ -320,16 +318,16 @@ static bool hb_fsTempName(char *pszBuffer, const char *pszDir, const char *pszPr
 
 #endif
 
-/* NOTE: The pszName buffer must be at least HB_PATH_MAX chars long */
+// NOTE: The pszName buffer must be at least HB_PATH_MAX chars long
 
 HB_FHANDLE hb_fsCreateTemp(const char *pszDir, const char *pszPrefix, HB_FATTR ulAttr, char *pszName)
 {
 #if defined(HB_OS_UNIX)
   return hb_fsCreateTempEx(pszName, pszDir, pszPrefix, nullptr, ulAttr);
 #else
-  /* If there was no special extension requested, we're using
-     native temp file generation functions on systems where such
-     API exist. */
+  // If there was no special extension requested, we're using
+  // native temp file generation functions on systems where such
+  // API exist.
   int iAttemptLeft = 999;
 
   while (--iAttemptLeft)
@@ -338,15 +336,15 @@ HB_FHANDLE hb_fsCreateTemp(const char *pszDir, const char *pszPrefix, HB_FATTR u
     {
 
 #if defined(HB_OS_WIN)
-      /* Using FO_TRUNC on win platforms as hb_fsTempName() uses GetTempFileName(),
-         which creates the file, so FO_EXCL would fail at this point. [vszakats] */
+      // Using FO_TRUNC on win platforms as hb_fsTempName() uses GetTempFileName(),
+      // which creates the file, so FO_EXCL would fail at this point. [vszakats]
       HB_FHANDLE fhnd = hb_fsCreateEx(pszName, ulAttr, FO_EXCLUSIVE | FO_TRUNC);
 #else
       HB_FHANDLE fhnd = hb_fsCreateEx(pszName, ulAttr, FO_EXCLUSIVE | FO_EXCL);
 #endif
 
-      /* This function may fail, if the generated filename got
-         used between generation and the file creation. */
+      // This function may fail, if the generated filename got
+      // used between generation and the file creation.
 
       if (fhnd != FS_ERROR)
       {
@@ -355,8 +353,8 @@ HB_FHANDLE hb_fsCreateTemp(const char *pszDir, const char *pszPrefix, HB_FATTR u
     }
     else
     {
-      /* Don't attempt to retry if the filename generator is
-         failing for some reason. */
+      // Don't attempt to retry if the filename generator is
+      // failing for some reason.
       break;
     }
   }
@@ -365,7 +363,7 @@ HB_FHANDLE hb_fsCreateTemp(const char *pszDir, const char *pszPrefix, HB_FATTR u
 #endif
 }
 
-/* NOTE: pszTempDir must be at least HB_PATH_MAX long. */
+// NOTE: pszTempDir must be at least HB_PATH_MAX long.
 HB_ERRCODE hb_fsTempDir(char *pszTempDir)
 {
   auto nResult = static_cast<HB_ERRCODE>(FS_ERROR);

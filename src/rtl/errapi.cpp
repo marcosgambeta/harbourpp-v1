@@ -55,13 +55,13 @@
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 
-/* This is added to be able to detect a recursive error, and not let Harbour
-   go into an infinite loop, this is an emulated version of the Clipper
-   "Unrecoverable error 650: Processor stack fault" internal error, but
-   better shows what is really the problem. [vszakats] */
+// This is added to be able to detect a recursive error, and not let Harbour
+// go into an infinite loop, this is an emulated version of the Clipper
+// "Unrecoverable error 650: Processor stack fault" internal error, but
+// better shows what is really the problem. [vszakats]
 #define HB_ERROR_LAUNCH_MAX 8
 
-/* Error class instance variables offsets */
+// Error class instance variables offsets
 #define HB_TERROR_CARGO 1
 #define HB_TERROR_ARGS 2
 #define HB_TERROR_FLAGS 3
@@ -90,7 +90,7 @@ struct HB_ERRDATA
   PHB_ERROR_INFO errorHandler;
   PHB_ITEM errorBlock;
   int iLaunchCount;
-  int uiErrorDOS; /* The value of DosError() */
+  int uiErrorDOS; // The value of DosError()
 };
 
 using PHB_ERRDATA = HB_ERRDATA *;
@@ -436,8 +436,8 @@ HB_FUNC(ERRORNEW)
   hb_itemReturnRelease(hb_errNew());
 }
 
-/* There's a similar undocumented, internal function in CA-Cl*pper named
-   ErrorInHandler(). [vszakats] */
+// There's a similar undocumented, internal function in CA-Cl*pper named
+// ErrorInHandler(). [vszakats]
 
 HB_FUNC(__ERRINHANDLER)
 {
@@ -468,9 +468,8 @@ PHB_ITEM hb_errorBlock(void)
   return pErrData->errorBlock;
 }
 
-/* set new low-level error launcher (C function) and return
- * handler currently active
- */
+// set new low-level error launcher (C function) and return
+// handler currently active
 PHB_ERROR_INFO hb_errorHandler(PHB_ERROR_INFO pNewHandler)
 {
   auto pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
@@ -503,12 +502,12 @@ void hb_errInit(void)
    HB_TRACE(HB_TR_DEBUG, ("hb_errInit()"));
 #endif
 
-  /* error function */
+  // error function
   hb_dynsymNew(&s_symErrorNew);
-  /* init message */
+  // init message
   hb_dynsymNew(&s_symmsgInit);
 
-  /* Create error class and base object */
+  // Create error class and base object
   s_pError = hb_itemNew(nullptr);
   hb_clsAssociate(hb_errClassCreate());
   hb_itemMove(s_pError, hb_stackReturnItem());
@@ -532,10 +531,9 @@ void hb_errReinit(PHB_ITEM pError)
     hb_itemRelease(s_pError);
     s_pError = hb_itemNew(pError);
   }
-  /* intentionaly outside above if() block so it can be called
-   * with NULL parameter just to refresh :Init() method status
-   * after class modification [druzus]
-   */
+  // intentionaly outside above if() block so it can be called
+  // with NULL parameter just to refresh :Init() method status
+  // after class modification [druzus]
   s_fErrInit = hb_objHasMessage(s_pError, s_symmsgInit.pDynSym);
 }
 
@@ -573,7 +571,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
    HB_TRACE(HB_TR_DEBUG, ("hb_errLaunch(%p)", pError));
 #endif
 
-  HB_USHORT uiAction = E_DEFAULT; /* Needed to avoid GCC -O2 warning */
+  HB_USHORT uiAction = E_DEFAULT; // Needed to avoid GCC -O2 warning
 
   if (pError)
   {
@@ -581,25 +579,25 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
     HB_USHORT uiFlags = hb_errGetFlags(pError);
     PHB_ITEM pResult;
 
-    /* Check if we have a valid error handler */
+    // Check if we have a valid error handler
     if (!pErrData->errorBlock || !pErrData->errorBlock->isEvalItem())
     {
       hb_errInternal(HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr);
     }
 
-    /* Check if the error launcher was called too many times recursively */
+    // Check if the error launcher was called too many times recursively
     if (pErrData->iLaunchCount == HB_ERROR_LAUNCH_MAX)
     {
       hb_errInternal(HB_EI_ERRTOOMANY, nullptr, nullptr, nullptr);
     }
 
-    /* Launch the error handler: "lResult := Eval(ErrorBlock(), oError)" */
+    // Launch the error handler: "lResult := Eval(ErrorBlock(), oError)"
     pErrData->iLaunchCount++;
 
-    /* set DosError() to last OS error code */
+    // set DosError() to last OS error code
     pErrData->uiErrorDOS = static_cast<int>(hb_errGetOsCode(pError));
 
-    /* Add one try to the counter. */
+    // Add one try to the counter.
     if (uiFlags & EF_CANRETRY)
     {
       hb_errPutTries(pError, static_cast<HB_USHORT>(hb_errGetTries(pError) + 1));
@@ -607,9 +605,8 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
 
     if (pErrData->errorHandler)
     {
-      /* there is a low-level error handler defined - use it instead
-       * of normal Harbour level one
-       */
+      // there is a low-level error handler defined - use it instead
+      // of normal Harbour level one
       pErrData->errorHandler->Error = pError;
       pErrData->errorHandler->ErrorBlock = pErrData->errorBlock;
       pResult = (pErrData->errorHandler->Func)(pErrData->errorHandler);
@@ -622,7 +619,7 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
 
     pErrData->iLaunchCount--;
 
-    /* Check results */
+    // Check results
     if (hb_vmRequestQuery() != 0)
     {
       if (pResult)
@@ -635,8 +632,8 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
     {
       auto bFailure = false;
 
-      /* If the error block didn't return a logical value, */
-      /* or the canSubstitute flag has been set, consider it as a failure */
+      // If the error block didn't return a logical value,
+      // or the canSubstitute flag has been set, consider it as a failure
       if (!pResult->isLogical() || (uiFlags & EF_CANSUBSTITUTE))
       {
         bFailure = true;
@@ -665,22 +662,22 @@ HB_USHORT hb_errLaunch(PHB_ITEM pError)
   }
   else
   {
-    uiAction = E_RETRY; /* Clipper does this, undocumented */
+    uiAction = E_RETRY; // Clipper does this, undocumented
   }
 
   return uiAction;
 }
 
-/* This error launcher should be used in those situations, where the error
-   handler is expected to return a value to be substituted as the result of
-   a failed operation. [vszakats] */
+// This error launcher should be used in those situations, where the error
+// handler is expected to return a value to be substituted as the result of
+// a failed operation. [vszakats]
 
-/* NOTE: This should only be called when the EF_CANSUBSTITUTE flag was set
-         Since it this case the error handler will return the value
-         to be substituted. [vszakats] */
+// NOTE: This should only be called when the EF_CANSUBSTITUTE flag was set
+//       Since it this case the error handler will return the value
+//       to be substituted. [vszakats]
 
-/* NOTE: The item pointer returned should be hb_itemRelease()-d by the
-         caller if it was not nullptr. [vszakats] */
+// NOTE: The item pointer returned should be hb_itemRelease()-d by the
+//       caller if it was not nullptr. [vszakats]
 
 PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
 {
@@ -695,25 +692,25 @@ PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
     auto pErrData = static_cast<PHB_ERRDATA>(hb_stackGetTSD(&s_errData));
     HB_USHORT uiFlags = hb_errGetFlags(pError);
 
-    /* Check if we have a valid error handler */
+    // Check if we have a valid error handler
     if (!pErrData->errorBlock || !pErrData->errorBlock->isEvalItem())
     {
       hb_errInternal(HB_EI_ERRNOBLOCK, nullptr, nullptr, nullptr);
     }
 
-    /* Check if the error launcher was called too many times recursively */
+    // Check if the error launcher was called too many times recursively
     if (pErrData->iLaunchCount == HB_ERROR_LAUNCH_MAX)
     {
       hb_errInternal(HB_EI_ERRTOOMANY, nullptr, nullptr, nullptr);
     }
 
-    /* Launch the error handler: "xResult := Eval(ErrorBlock(), oError)" */
+    // Launch the error handler: "xResult := Eval(ErrorBlock(), oError)"
     pErrData->iLaunchCount++;
 
-    /* set DosError() to last OS error code */
+    // set DosError() to last OS error code
     pErrData->uiErrorDOS = static_cast<int>(hb_errGetOsCode(pError));
 
-    /* Add one try to the counter. */
+    // Add one try to the counter.
     if (uiFlags & EF_CANRETRY)
     {
       hb_errPutTries(pError, static_cast<HB_USHORT>(hb_errGetTries(pError) + 1));
@@ -721,9 +718,8 @@ PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
 
     if (pErrData->errorHandler)
     {
-      /* there is a low-level error handler defined - use it instead
-       * of normal Harbour level one
-       */
+      // there is a low-level error handler defined - use it instead
+      // of normal Harbour level one
       pErrData->errorHandler->Error = pError;
       pErrData->errorHandler->ErrorBlock = pErrData->errorBlock;
       pResult = (pErrData->errorHandler->Func)(pErrData->errorHandler);
@@ -736,7 +732,7 @@ PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
 
     pErrData->iLaunchCount--;
 
-    /* Check results */
+    // Check results
     if (hb_vmRequestQuery() != 0)
     {
       if (pResult)
@@ -747,8 +743,8 @@ PHB_ITEM hb_errLaunchSubst(PHB_ITEM pError)
     }
     else
     {
-      /* If the canSubstitute flag has not been set,
-         consider it as a failure. */
+      // If the canSubstitute flag has not been set,
+      // consider it as a failure.
       if (!(uiFlags & EF_CANSUBSTITUTE))
       {
         hb_errInternal(HB_EI_ERRRECFAILURE, nullptr, nullptr, nullptr);
@@ -769,7 +765,7 @@ void hb_errRelease(PHB_ITEM pError)
    HB_TRACE(HB_TR_DEBUG, ("hb_errRelease(%p)", pError));
 #endif
 
-  /* NOTE: nullptr pointer is checked by hb_itemRelease() [vszakats] */
+  // NOTE: nullptr pointer is checked by hb_itemRelease() [vszakats]
   hb_itemRelease(pError);
 }
 
@@ -1019,7 +1015,7 @@ PHB_ITEM hb_errPutArgs(PHB_ITEM pError, HB_ULONG ulArgCount, ...)
 
   auto pArray = hb_itemArrayNew(ulArgCount);
 
-  /* Build the array from the passed arguments. */
+  // Build the array from the passed arguments.
 
   va_list va;
   va_start(va, ulArgCount);
@@ -1029,16 +1025,16 @@ PHB_ITEM hb_errPutArgs(PHB_ITEM pError, HB_ULONG ulArgCount, ...)
   }
   va_end(va);
 
-  /* Assign the new array to the object data item. */
+  // Assign the new array to the object data item.
   hb_errPutArgsArray(pError, pArray);
 
-  /* Release the Array. */
+  // Release the Array.
   hb_itemRelease(pArray);
 
   return pError;
 }
 
-/* Wrappers for hb_errLaunch() */
+// Wrappers for hb_errLaunch()
 
 PHB_ITEM hb_errRT_New(HB_USHORT uiSeverity, const char *szSubSystem, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
                       const char *szDescription, const char *szOperation, HB_ERRCODE errOsCode, HB_USHORT uiFlags)
@@ -1080,11 +1076,11 @@ PHB_ITEM hb_errRT_SubstParams(const char *szSubSystem, HB_ERRCODE errGenCode, HB
   PHB_ITEM pError = hb_errRT_New_Subst(ES_ERROR, szSubSystem ? szSubSystem : HB_ERR_SS_BASE, errGenCode, errSubCode,
                                        szDescription, szOperation, 0, EF_NONE);
   PHB_ITEM pArray = hb_arrayBaseParams();
-  /* Assign the new array to the object data item. */
+  // Assign the new array to the object data item.
   hb_errPutArgsArray(pError, pArray);
-  /* Release the Array. */
+  // Release the Array.
   hb_itemRelease(pArray);
-  /* Ok, launch... */
+  // Ok, launch...
   PHB_ITEM pRetVal = hb_errLaunchSubst(pError);
   hb_itemRelease(pError);
   return pRetVal;
@@ -1123,15 +1119,14 @@ HB_FUNC(__ERRRT_SBASE)
 HB_USHORT hb_errRT_BASE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char *szDescription,
                         const char *szOperation, HB_ULONG ulArgCount, ...)
 {
-  /* I replaced EF_CANRETRY with EF_NONE for Clipper compatibility
-   * If it's wrong and I missed something please fix me, Druzus.
-   */
+  // I replaced EF_CANRETRY with EF_NONE for Clipper compatibility
+  // If it's wrong and I missed something please fix me, Druzus.
   auto pError = hb_errRT_New(ES_ERROR, HB_ERR_SS_BASE, errGenCode, errSubCode, szDescription, szOperation, 0,
                              EF_NONE /* EF_CANRETRY */);
 
   PHB_ITEM pArray;
 
-  /* Build the array from the passed arguments. */
+  // Build the array from the passed arguments.
   if (ulArgCount == 0)
   {
     pArray = nullptr;
@@ -1168,16 +1163,16 @@ HB_USHORT hb_errRT_BASE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const char
   }
   if (pArray)
   {
-    /* Assign the new array to the object data item. */
+    // Assign the new array to the object data item.
     hb_errPutArgsArray(pError, pArray);
-    /* Release the Array. */
+    // Release the Array.
     hb_itemRelease(pArray);
   }
 
-  /* Ok, launch... */
+  // Ok, launch...
   HB_USHORT uiAction = hb_errLaunch(pError);
 
-  /* Release. */
+  // Release.
   hb_errRelease(pError);
 
   return uiAction;
@@ -1191,7 +1186,7 @@ HB_USHORT hb_errRT_BASE_Ext1(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const
 
   PHB_ITEM pArray;
 
-  /* Build the array from the passed arguments. */
+  // Build the array from the passed arguments.
   if (ulArgCount == 0)
   {
     pArray = nullptr;
@@ -1228,13 +1223,13 @@ HB_USHORT hb_errRT_BASE_Ext1(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const
   }
   if (pArray)
   {
-    /* Assign the new array to the object data item. */
+    // Assign the new array to the object data item.
     hb_errPutArgsArray(pError, pArray);
-    /* Release the Array. */
+    // Release the Array.
     hb_itemRelease(pArray);
   }
 
-  /* Ok, launch... */
+  // Ok, launch...
   HB_USHORT uiAction = hb_errLaunch(pError);
 
   hb_errRelease(pError);
@@ -1250,7 +1245,7 @@ PHB_ITEM hb_errRT_BASE_Subst(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const
 
   PHB_ITEM pArray;
 
-  /* Build the array from the passed arguments. */
+  // Build the array from the passed arguments.
   if (ulArgCount == 0)
   {
     pArray = nullptr;
@@ -1287,13 +1282,13 @@ PHB_ITEM hb_errRT_BASE_Subst(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const
   }
   if (pArray)
   {
-    /* Assign the new array to the object data item. */
+    // Assign the new array to the object data item.
     hb_errPutArgsArray(pError, pArray);
-    /* Release the Array. */
+    // Release the Array.
     hb_itemRelease(pArray);
   }
 
-  /* Ok, launch... */
+  // Ok, launch...
   PHB_ITEM pRetVal = hb_errLaunchSubst(pError);
 
   hb_errRelease(pError);
@@ -1309,7 +1304,7 @@ void hb_errRT_BASE_SubstR(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const ch
 
   PHB_ITEM pArray;
 
-  /* Build the array from the passed arguments. */
+  // Build the array from the passed arguments.
   if (ulArgCount == 0)
   {
     pArray = nullptr;
@@ -1346,13 +1341,13 @@ void hb_errRT_BASE_SubstR(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, const ch
   }
   if (pArray)
   {
-    /* Assign the new array to the object data item. */
+    // Assign the new array to the object data item.
     hb_errPutArgsArray(pError, pArray);
-    /* Release the Array. */
+    // Release the Array.
     hb_itemRelease(pArray);
   }
 
-  /* Ok, launch... */
+  // Ok, launch...
   hb_itemReturnRelease(hb_errLaunchSubst(pError));
   hb_errRelease(pError);
 }

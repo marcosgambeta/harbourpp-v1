@@ -109,13 +109,13 @@ static const char *const s_inetCRLF = "\r\n";
 static HB_COUNTER s_initialize = 1;
 
 #if defined(HB_OS_LINUX)
-/* #define HB_INET_LINUX_INTERRUPT     SIGUSR1 + 90 */
+// #define HB_INET_LINUX_INTERRUPT     SIGUSR1 + 90
 #ifdef HB_INET_LINUX_INTERRUPT
 #include <signal.h>
 
 static void hb_inetLinuxSigusrHandle(int sig)
 {
-  /* nothing to do */
+  // nothing to do
   HB_SYMBOL_UNUSED(sig);
 }
 #endif
@@ -235,7 +235,7 @@ static HB_GARBAGE_FUNC(hb_inetSocketMark)
 
 static const HB_GC_FUNCS s_gcInetFuncs = {hb_inetSocketFinalize, hb_inetSocketMark};
 
-/* Socket Initialization */
+// Socket Initialization
 
 static void hb_inetAutoInit(void)
 {
@@ -273,7 +273,7 @@ HB_MAXINT hb_znetInetTimeout(PHB_ITEM pItem, HB_BOOL fError)
 
   if (socket)
   {
-    return socket->iTimeout; /* socket->pPeriodicBlock ? socket->iTimeLimit */
+    return socket->iTimeout; // socket->pPeriodicBlock ? socket->iTimeLimit
   }
   else if (fError)
   {
@@ -324,7 +324,7 @@ HB_FUNC(HB_INETCLEANUP)
   hb_socketCleanup();
 }
 
-/* Socket Creation and destruction */
+// Socket Creation and destruction
 
 HB_FUNC(HB_INETCREATE)
 {
@@ -384,7 +384,7 @@ HB_FUNC(HB_INETFD)
   }
 }
 
-/* Socket data access & management */
+// Socket data access & management
 
 HB_FUNC(HB_INETSTATUS)
 {
@@ -392,7 +392,7 @@ HB_FUNC(HB_INETSTATUS)
 
   if (socket)
   {
-    hb_retni(socket->sd == HB_NO_SOCKET ? -1 : 1); /* TODO: hb_retni(socket->status); */
+    hb_retni(socket->sd == HB_NO_SOCKET ? -1 : 1); // TODO: hb_retni(socket->status);
   }
   else
   {
@@ -400,7 +400,7 @@ HB_FUNC(HB_INETSTATUS)
   }
 }
 
-/* Prepared, but still not used; being in wait for comments */
+// Prepared, but still not used; being in wait for comments
 #if 0
 HB_FUNC( HB_INETSTATUSDESC )
 {
@@ -735,7 +735,7 @@ HB_FUNC(HB_INETSETRCVBUFSIZE)
   }
 }
 
-/* TCP receive and send functions */
+// TCP receive and send functions
 
 static long s_inetRecv(PHB_SOCKET_STRUCT socket, char *buffer, long size, HB_BOOL readahead, HB_MAXINT timeout)
 {
@@ -850,23 +850,23 @@ static void s_inetRecvInternal(int iMode)
       {
         iReceived += iLen;
         if (iMode == 0)
-        { /* Called from hb_inetRecv()? */
+        { // Called from hb_inetRecv()?
           break;
         }
       }
       else if (iLen == -1 && s_inetIsTimeout(socket))
       {
-        /* if we have a pPeriodicBlock, timeLimit is our REAL timeout */
+        // if we have a pPeriodicBlock, timeLimit is our REAL timeout
         if (socket->pPeriodicBlock)
         {
-          /* timed out; let's see if we have to run a cb routine */
+          // timed out; let's see if we have to run a cb routine
           iTimeElapsed += socket->iTimeout;
           hb_execFromArray(socket->pPeriodicBlock);
-          /* do we continue? */
+          // do we continue?
           if (hb_parl(-1) && hb_vmRequestQuery() == 0 &&
               (socket->iTimeLimit == -1 || iTimeElapsed < socket->iTimeLimit))
           {
-            iLen = 1; /* Declare success to continue loop */
+            iLen = 1; // Declare success to continue loop
           }
         }
       }
@@ -946,7 +946,7 @@ static void s_inetRecvPattern(const char *const *patterns, int *patternsizes, in
     iLen = s_inetRecv(socket, &cChar, 1, true, socket->iTimeout);
     if (iLen == -1 && s_inetIsTimeout(socket))
     {
-      iLen = -2; /* this signals timeout */
+      iLen = -2; // this signals timeout
       if (socket->pPeriodicBlock)
       {
         HB_BOOL fResult;
@@ -1112,7 +1112,7 @@ HB_FUNC(HB_INETDATAREADY)
     }
     else
     {
-      HB_MAXINT timeout = hb_parnint(2); /* default to 0 */
+      HB_MAXINT timeout = hb_parnint(2); // default to 0
 
       if (socket->readahead > 0 && socket->recvFunc)
       {
@@ -1205,8 +1205,8 @@ static void s_inetSendInternal(HB_BOOL lAll)
     if (socket->flushFunc && (lLastSnd > 0 || (lLastSnd == -1 && socket->iTimeout >= 0 && socket->iTimeout < 10000 &&
                                                s_inetIsTimeout(socket))))
     {
-      /* TODO: safe information about unflushed data and try to call
-               flush before entering receive wait sate */
+      // TODO: safe information about unflushed data and try to call
+      //       flush before entering receive wait sate
       socket->flushFunc(socket->stream, socket->sd,
                         socket->iTimeout < 0 ? socket->iTimeout : HB_MAX(socket->iTimeout, 10000), false);
     }
@@ -1225,7 +1225,7 @@ HB_FUNC(HB_INETSENDALL)
   s_inetSendInternal(true);
 }
 
-/* Name resolution interface functions */
+// Name resolution interface functions
 
 HB_FUNC(HB_INETGETHOSTS)
 {
@@ -1273,7 +1273,7 @@ HB_FUNC(HB_INETGETALIAS)
   }
 }
 
-/* Interface information function */
+// Interface information function
 
 HB_FUNC(HB_INETIFINFO)
 {
@@ -1289,7 +1289,7 @@ HB_FUNC(HB_INETIFINFO)
   }
 }
 
-/* Server Specific functions */
+// Server Specific functions
 
 static int s_inetBind(PHB_SOCKET_STRUCT socket, const void *pSockAddr, unsigned uiLen)
 {
@@ -1390,7 +1390,7 @@ HB_FUNC(HB_INETACCEPT)
   }
 }
 
-/* Client specific (connection functions) */
+// Client specific (connection functions)
 
 static void hb_inetConnectInternal(HB_BOOL fResolve)
 {
@@ -1431,7 +1431,7 @@ static void hb_inetConnectInternal(HB_BOOL fResolve)
     }
     else
     {
-      /* Creates comm socket */
+      // Creates comm socket
       socket->sd = hb_socketOpen(HB_SOCKET_PF_INET, HB_SOCKET_PT_STREAM, 0);
       if (socket->sd == HB_NO_SOCKET)
       {
@@ -1486,7 +1486,7 @@ HB_FUNC(HB_INETCONNECTIP)
   hb_inetConnectInternal(false);
 }
 
-/* Datagram functions */
+// Datagram functions
 
 HB_FUNC(HB_INETDGRAMBIND)
 {
@@ -1495,7 +1495,7 @@ HB_FUNC(HB_INETDGRAMBIND)
   auto iPort = hb_parni(1);
   const char *szAddress;
 
-  /* Parameter error checking */
+  // Parameter error checking
   if (iPort == 0 || (hb_pcount() >= 4 && !HB_ISCHAR(4)))
   {
     hb_inetErrRT();
@@ -1504,7 +1504,7 @@ HB_FUNC(HB_INETDGRAMBIND)
 
   HB_SOCKET_INIT(socket, pSocket);
 
-  /* Creates comm socket */
+  // Creates comm socket
   socket->sd = hb_socketOpen(HB_SOCKET_PF_INET, HB_SOCKET_PT_DGRAM, HB_SOCKET_IPPROTO_UDP);
   if (socket->sd == HB_NO_SOCKET)
   {
@@ -1513,7 +1513,7 @@ HB_FUNC(HB_INETDGRAMBIND)
     return;
   }
 
-  /* Setting broadcast if needed. */
+  // Setting broadcast if needed.
   if (hb_parl(3))
   {
     hb_socketSetBroadcast(socket->sd, true);
@@ -1548,7 +1548,7 @@ HB_FUNC(HB_INETDGRAM)
 
   HB_SOCKET_INIT(socket, pSocket);
 
-  /* Creates comm socket */
+  // Creates comm socket
   socket->sd = hb_socketOpen(HB_SOCKET_PF_INET, HB_SOCKET_PT_DGRAM, HB_SOCKET_IPPROTO_UDP);
   if (socket->sd == HB_NO_SOCKET)
   {
@@ -1557,7 +1557,7 @@ HB_FUNC(HB_INETDGRAM)
     return;
   }
 
-  /* Setting broadcast if needed. */
+  // Setting broadcast if needed.
   if (hb_parl(1))
   {
     hb_socketSetBroadcast(socket->sd, true);
@@ -1663,14 +1663,14 @@ HB_FUNC(HB_INETDGRAMRECV)
       fRepeat = false;
       if (socket->remote)
       {
-        hb_xfree(socket->remote); /* FIXME: double free */
+        hb_xfree(socket->remote); // FIXME: double free
       }
       iMax = hb_socketRecvFrom(socket->sd, buffer, iLen, 0, &socket->remote, &socket->remotelen, socket->iTimeout);
       if (socket->pPeriodicBlock)
       {
         iTimeElapsed += socket->iTimeout;
         hb_execFromArray(socket->pPeriodicBlock);
-        /* do we continue? */
+        // do we continue?
         fRepeat =
             hb_parl(-1) && hb_vmRequestQuery() == 0 && (socket->iTimeLimit == -1 || iTimeElapsed < socket->iTimeLimit);
       }
@@ -1689,7 +1689,7 @@ HB_FUNC(HB_INETDGRAMRECV)
   }
 }
 
-/* Generic utility(?) functions */
+// Generic utility(?) functions
 
 HB_FUNC(HB_INETCRLF)
 {

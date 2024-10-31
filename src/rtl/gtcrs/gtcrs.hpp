@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #define HB_GT_NAME CRS
 
@@ -92,17 +92,17 @@
 #include <time.h>
 #if (defined(HB_OS_LINUX) || defined(HB_OS_BSD) || defined(HB_OS_MINIX))
 #if defined(HB_OS_LINUX)
-#include <pty.h>  /* for openpty and forkpty */
-#include <utmp.h> /* for login_tty */
+#include <pty.h>  // for openpty and forkpty
+#include <utmp.h> // for login_tty
 #elif defined(HB_OS_DARWIN) || defined(__NetBSD__) || defined(__OpenBSD__)
-#include <util.h> /* for openpty, forkpty and login_tty */
+#include <util.h> // for openpty, forkpty and login_tty
 #if defined(__NetBSD__)
 #include <termcap.h>
 #define tigetnum(id) tgetnum(id)
 #define tigetstr(id) tgetstr(id, NULL)
 #endif
 #elif defined(HB_OS_BSD) || defined(HB_OS_MINIX)
-#include <libutil.h> /* for openpty, forkpty and login_tty */
+#include <libutil.h> // for openpty, forkpty and login_tty
 #endif
 #endif
 
@@ -110,7 +110,7 @@
 #define O_ACCMODE (O_RDONLY | O_WRONLY | O_RDWR)
 #endif
 
-/* #define HB_GT_CRS_TTYHACK */
+// #define HB_GT_CRS_TTYHACK
 
 #ifndef MAX_SIGNO
 #define MAX_SIGNO 64
@@ -121,7 +121,7 @@
 #define BASE_ERRFD 2
 #define MAXFD 1024
 
-/* #define DBLCLK_DELAY 168 */
+// #define DBLCLK_DELAY 168
 #define DBLCLK_DELAY hb_mouseGetDoubleClickSpeed()
 
 #define MAX_IOBASE 32
@@ -138,7 +138,7 @@
 #define EVTFDSTAT_STOP 0x02
 #define EVTFDSTAT_DEL 0x03
 
-/* mouse button states */
+// mouse button states
 #define M_BUTTON_LEFT 0x0001
 #define M_BUTTON_RIGHT 0x0002
 #define M_BUTTON_MIDDLE 0x0004
@@ -161,7 +161,7 @@
 #define KEY_KPADMASK 0x08000000
 #define KEY_EXTDMASK 0x10000000
 #define KEY_CLIPMASK 0x20000000
-/* 0x40000000 reserved for Harbour extended keys */
+// 0x40000000 reserved for Harbour extended keys
 #define KEY_MASK 0xFF000000
 
 #define CLR_KEYMASK(x) ((x) & ~KEY_MASK)
@@ -173,7 +173,7 @@
 
 #define CTRL_SEQ "\036"
 #define ALT_SEQ "\037"
-/*#define NATION_SEQ         "\016"*/
+//#define NATION_SEQ         "\016"
 
 #define EXKEY_F1 (HB_KX_F1 | KEY_EXTDMASK)
 #define EXKEY_F2 (HB_KX_F2 | KEY_EXTDMASK)

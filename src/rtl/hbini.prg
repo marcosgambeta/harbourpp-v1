@@ -43,30 +43,27 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*
- * This small procedure reads a .ini file in the standard .ini format into
- * an hash array:
- *    ; A line starting with a ';' is a comment
- *    # Also, a '#' marks a comment up to the end of the line
- *    [NewSection]
- *    Variable=Value
- *    OtherVariable: Value
- *
- * You can pass a list of "potential" .ini files in a ';' separated path;
- * the first readable file will be loaded.
- *
- * On error, the function returns NIL. On success, you will have an hash
- * array of this form:
- *
- *    {"MAIN" => {"Key1" => "Val1", ... , "KeyN" => "ValN"},
- *     "Section1" => {"Key1" => "Val1", ... , "KeyN" => "ValN"},
- *     ...
- *     "SectionN" => {"Key1" => "Val1", ... , "KeyN" => "ValN"}
- *    }
- *
- * 'MAIN' is the default section (variables that are declared without a section).
- *
- */
+// This small procedure reads a .ini file in the standard .ini format into
+// an hash array:
+//    ; A line starting with a ';' is a comment
+//    # Also, a '#' marks a comment up to the end of the line
+//    [NewSection]
+//    Variable=Value
+//    OtherVariable: Value
+//
+// You can pass a list of "potential" .ini files in a ';' separated path;
+// the first readable file will be loaded.
+//
+// On error, the function returns NIL. On success, you will have an hash
+// array of this form:
+//
+//    {"MAIN" => {"Key1" => "Val1", ... , "KeyN" => "ValN"},
+//     "Section1" => {"Key1" => "Val1", ... , "KeyN" => "ValN"},
+//     ...
+//     "SectionN" => {"Key1" => "Val1", ... , "KeyN" => "ValN"}
+//    }
+//
+// 'MAIN' is the default section (variables that are declared without a section).
 
 #include "fileio.ch"
 
@@ -102,7 +99,7 @@ FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
    LOCAL hIni := {=>}
 
-   /* Default case sensitiveness for keys */
+   // Default case sensitiveness for keys
    hb_default(@lKeyCaseSens, .T.)
    hb_default(@lAutoMain, .T.)
 
@@ -139,7 +136,7 @@ STATIC FUNCTION hb_iniFileLow(cFileSpec)
       RETURN ""
    ENDIF
 
-   /* we'll read the whole file, then we'll break it in lines. */
+   // we'll read the whole file, then we'll break it in lines.
    cData := Space(FSeek(hFile, 0, FS_END))
    FSeek(hFile, 0, FS_SET)
    nLen := FRead(hFile, @cData, hb_BLen(cData))
@@ -163,44 +160,44 @@ STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
    reSection := hb_regexComp("[[](.*)[]]")
    reSplitters := hb_regexComp(cSplitters)
 
-   /* Always begin with the 'MAIN' section */
+   // Always begin with the 'MAIN' section
    hCurrentSection := iif(lAutoMain, hIni["MAIN"], hIni)
 
    cLine := ""
    FOR EACH cData IN hb_ATokens(cData, .T.)
       cLine += AllTrim(cData)
 
-      /* Sum up lines terminating with "<space>||" ...*/
+      // Sum up lines terminating with "<space>||" ...
       IF Right(cLine, 3) == " ||"
          cLine := hb_StrShrink(cLine, 2)
-         /* ... but proceed if stream over */
+         // ... but proceed if stream over
          IF !cData:__enumIsLast()
             LOOP
          ENDIF
       ENDIF
 
-      /* Skip void lines */
+      // Skip void lines
       IF Empty(cLine)
          LOOP
       ENDIF
 
-      /* remove eventual comments */
+      // remove eventual comments
       IF !Empty(aKeyVal := hb_regexSplit(reComment, cLine))
          IF Empty(cLine := AllTrim(aKeyVal[1]))
-            /* Skip all comment lines */
+            // Skip all comment lines
             LOOP
          ENDIF
       ENDIF
 
-      /* Is it an "INCLUDE" statement ? */
+      // Is it an "INCLUDE" statement ?
       IF !Empty(aKeyVal := hb_regex(reInclude, cLine))
-         /* ignore void includes */
+         // ignore void includes
          aKeyVal[2] := AllTrim(aKeyVal[2])
          IF Len(aKeyVal[2]) == 0
             LOOP
          ENDIF
          hb_iniStringLow(hIni, hb_iniFileLow(aKeyVal[2]), lKeyCaseSens, cSplitters, lAutoMain)
-      /* Is it a NEW section? */
+      // Is it a NEW section?
       ELSEIF !Empty(aKeyVal := hb_regex(reSection, cLine))
          cLine := AllTrim(aKeyVal[2])
          IF Len(cLine) != 0
@@ -210,11 +207,11 @@ STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
             ENDIF
             hIni[cLine] := hCurrentSection
          ENDIF
-      /* Is it a valid key */
+      // Is it a valid key
       ELSEIF Len(aKeyVal := hb_regexSplit(reSplitters, cLine, NIL, NIL, 1)) == 1
-         /* TODO: Signal error */
+         // TODO: Signal error
       ELSE
-         /* If not case sensitive, use upper keys */
+         // If not case sensitive, use upper keys
          IF !lKeyCaseSens
             aKeyVal[1] := Upper(aKeyVal[1])
          ENDIF
@@ -286,25 +283,25 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       lAutoMain := .F.
    ENDIF
 
-   /* Write top-level section */
+   // Write top-level section
    IF lAutoMain
-      /* When lAutoMain is on, write the 'main' section */
+      // When lAutoMain is on, write the 'main' section
       hb_HEval(hIni["MAIN"], {|cKey, xVal|cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine})
    ELSE
-      /* When lAutoMain is off, just write all the top-level variables. */
+      // When lAutoMain is off, just write all the top-level variables.
       hb_HEval(hIni, {|cKey, xVal|iif(HB_ISHASH(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine)})
    ENDIF
 
    FOR EACH cSection IN hIni
 
-      /* Avoid re-processing 'MAIN' section */
+      // Avoid re-processing 'MAIN' section
       IF lAutoMain
-         /* When lAutoMain is on, skip section named 'MAIN' */
+         // When lAutoMain is on, skip section named 'MAIN'
          IF cSection:__enumKey == "MAIN"
             LOOP
          ENDIF
       ELSE
-         /* When lAutoMain is off, skip all the top-level variables. */
+         // When lAutoMain is off, skip all the top-level variables.
          IF !HB_ISHASH(cSection)
             LOOP
          ENDIF

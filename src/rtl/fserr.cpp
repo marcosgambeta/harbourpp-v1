@@ -54,7 +54,7 @@
 #include <errno.h>
 #endif
 
-/* Try to translate C errno into DOS error code */
+// Try to translate C errno into DOS error code
 #if !defined(HB_OS_WIN)
 static HB_ERRCODE hb_errnoToDosError(int ErrCode)
 {
@@ -64,16 +64,16 @@ static HB_ERRCODE hb_errnoToDosError(int ErrCode)
   case ENMFILE:
 #endif
   case ENOENT:
-    return 2; /* File not found */
+    return 2; // File not found
 #if defined(ENOTDIR)
   case ENOTDIR:
-    return 3; /* Path not found */
+    return 3; // Path not found
 #endif
 #if defined(ENFILE)
   case ENFILE:
 #endif
   case EMFILE:
-    return 4; /* Too many open files */
+    return 4; // Too many open files
   case EACCES:
 #if defined(ETXTBSY)
   case ETXTBSY:
@@ -81,35 +81,35 @@ static HB_ERRCODE hb_errnoToDosError(int ErrCode)
 #if defined(EPERM)
   case EPERM:
 #endif
-    return 5; /* Access denied */
+    return 5; // Access denied
   case EBADF:
-    return 6; /* Invalid handle */
+    return 6; // Invalid handle
   case ENOMEM:
-    return 8; /* Insufficient memory */
+    return 8; // Insufficient memory
 #if defined(EFAULT)
   case EFAULT:
-    return 9; /* Invalid memory block address */
+    return 9; // Invalid memory block address
 #endif
   case EINVAL:
-    return 13; /* Invalid data */
+    return 13; // Invalid data
 #if defined(EROFS)
   case EROFS:
-    return 19; /* Attempt to write on write-protected diskette */
+    return 19; // Attempt to write on write-protected diskette
 #endif
 #if defined(ESPIPE)
   case ESPIPE:
-    return 25; /* Seek error */
+    return 25; // Seek error
 #endif
 #if defined(ENOSPC)
   case ENOSPC:
-    return 29; /* Write fault */
+    return 29; // Write fault
 #endif
   case EPIPE:
-    return 29; /* Write fault */
+    return 29; // Write fault
   case EEXIST:
-    return 32; /* Sharing violation */
+    return 32; // Sharing violation
   case EAGAIN:
-    return 33; /* Lock violation */
+    return 33; // Lock violation
   }
 
   return static_cast<HB_ERRCODE>(ErrCode);
@@ -144,7 +144,7 @@ static HB_ERRCODE hb_WinToDosError(DWORD dwError)
 
 #endif
 
-/* return FError() code */
+// return FError() code
 HB_ERRCODE hb_fsGetFError(void)
 {
 #if 0
@@ -154,7 +154,7 @@ HB_ERRCODE hb_fsGetFError(void)
   return hb_stackIOErrors()->uiFError;
 }
 
-/* return DOS error code of last operation */
+// return DOS error code of last operation
 HB_ERRCODE hb_fsError(void)
 {
 #if 0
@@ -164,7 +164,7 @@ HB_ERRCODE hb_fsError(void)
   return hb_stackIOErrors()->uiErrorLast;
 }
 
-/* return real error code of last operation */
+// return real error code of last operation
 HB_ERRCODE hb_fsOsError(void)
 {
 #if 0
@@ -174,7 +174,7 @@ HB_ERRCODE hb_fsOsError(void)
   return hb_stackIOErrors()->uiOsErrorLast;
 }
 
-/* set FError() code */
+// set FError() code
 void hb_fsSetFError(HB_ERRCODE uiError)
 {
 #if 0
@@ -184,7 +184,7 @@ void hb_fsSetFError(HB_ERRCODE uiError)
   hb_stackIOErrors()->uiFError = uiError;
 }
 
-/* set DOS error code for last operation */
+// set DOS error code for last operation
 void hb_fsSetError(HB_ERRCODE uiError)
 {
 #if 0
@@ -193,14 +193,14 @@ void hb_fsSetError(HB_ERRCODE uiError)
 
   PHB_IOERRORS pIOErrors;
   pIOErrors = hb_stackIOErrors();
-  /* TODO: untranslate uiError into errno */
+  // TODO: untranslate uiError into errno
   pIOErrors->uiOsErrorLast = pIOErrors->uiErrorLast = uiError;
 }
 
-/* set error code for last operation */
+// set error code for last operation
 void hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
 {
-  /* TODO: implement it */
+  // TODO: implement it
   HB_SYMBOL_UNUSED(uiOperation);
 
   HB_ERRCODE uiOsErrorLast, uiErrorLast;
@@ -223,9 +223,8 @@ void hb_fsSetIOError(HB_BOOL fResult, HB_USHORT uiOperation)
 #endif
   }
 
-  /* HB_TRACE() message is intentionally here to not overwrite
-   * OS error code processed above.
-   */
+  // HB_TRACE() message is intentionally here to not overwrite
+  // OS error code processed above.
 #if 0
    HB_TRACE(HB_TR_DEBUG, ("hb_fsSetIOError(%d,%hu)", fResult, uiOperation));
 #endif

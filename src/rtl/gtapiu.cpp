@@ -47,7 +47,7 @@
 
 void hb_gtWCreate(HB_GT_RECT *rect, HB_GT_WND **wnd)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(rect);
   HB_SYMBOL_UNUSED(wnd);
@@ -55,53 +55,53 @@ void hb_gtWCreate(HB_GT_RECT *rect, HB_GT_WND **wnd)
 
 void hb_gtWDestroy(HB_GT_WND *wnd)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(wnd);
 }
 
 HB_BOOL hb_gtWFlash(void)
 {
-  /* TODO: */
+  // TODO:
 
   return false;
 }
 
 void hb_gtWApp(HB_GT_WND **wnd)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(wnd);
 }
 
 void hb_gtWCurrent(HB_GT_WND *wnd)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(wnd);
 }
 
 void hb_gtWPos(HB_GT_WND *wnd, HB_GT_RECT *rect)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(wnd);
   HB_SYMBOL_UNUSED(rect);
 }
 
-HB_BOOL hb_gtWVis(HB_GT_WND *wnd, HB_USHORT iStatus) /* USHORT in CA-Cl*pper [vszakats] */
+HB_BOOL hb_gtWVis(HB_GT_WND *wnd, HB_USHORT iStatus) // USHORT in CA-Cl*pper [vszakats]
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(wnd);
   HB_SYMBOL_UNUSED(iStatus);
   return false;
 }
 
-HB_ERRCODE hb_gtSLR(HB_GT_SLR *pSLR) /* System-Level Request */
+HB_ERRCODE hb_gtSLR(HB_GT_SLR *pSLR) // System-Level Request
 {
-  /* Do nothing in Harbour, since the low-level GT API is
-     implemented with a different method than in CA-Cl*pper. */
+  // Do nothing in Harbour, since the low-level GT API is
+  // implemented with a different method than in CA-Cl*pper.
 
   HB_SYMBOL_UNUSED(pSLR);
   return Harbour::FAILURE;
@@ -109,7 +109,7 @@ HB_ERRCODE hb_gtSLR(HB_GT_SLR *pSLR) /* System-Level Request */
 
 HB_ERRCODE hb_gtModalRead(void *dummy)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(dummy);
   return Harbour::FAILURE;
@@ -117,14 +117,14 @@ HB_ERRCODE hb_gtModalRead(void *dummy)
 
 HB_ERRCODE hb_gtFlushCursor(void)
 {
-  /* TODO: */
+  // TODO:
 
   return Harbour::FAILURE;
 }
 
 HB_ERRCODE hb_gtSetColor(HB_GT_RGB *color)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(color);
   return Harbour::FAILURE;
@@ -132,7 +132,7 @@ HB_ERRCODE hb_gtSetColor(HB_GT_RGB *color)
 
 HB_ERRCODE hb_gtGetColor(HB_GT_RGB *color)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(color);
   return Harbour::FAILURE;
@@ -140,7 +140,7 @@ HB_ERRCODE hb_gtGetColor(HB_GT_RGB *color)
 
 HB_ERRCODE hb_gtSetBorder(HB_GT_RGB *color)
 {
-  /* TODO: */
+  // TODO:
 
   HB_SYMBOL_UNUSED(color);
   return Harbour::FAILURE;
