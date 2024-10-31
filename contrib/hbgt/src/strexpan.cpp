@@ -1,10 +1,10 @@
-/*
- * BBS.......: The Dark Knight Returns
- * Date......: 1993-05-24
- *
- * This is an original work by Andy M Leighton and is placed in the
- * public domain.
- */
+//
+// BBS.......: The Dark Knight Returns
+// Date......: 1993-05-24
+//
+// This is an original work by Andy M Leighton and is placed in the
+// public domain.
+//
 
 #include "hbapi.hpp"
 
