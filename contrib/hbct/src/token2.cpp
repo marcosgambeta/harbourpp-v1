@@ -54,9 +54,9 @@
  */
 
 #include "ct.h"
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 
 /* static functions for token environment management */
 

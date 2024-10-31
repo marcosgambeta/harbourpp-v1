@@ -15,13 +15,13 @@
 #include <hbapiitm.hpp>
 #include <hbapistr.hpp>
 #include <hbapicls.hpp> /* for hb_objSetClass() */
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 #include "amf.h"
 
-#include "hbdate.hpp"
-#include "hbmath.hpp"
+#include <hbdate.hpp>
+#include <hbmath.hpp>
 
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 struct amfContext
 {

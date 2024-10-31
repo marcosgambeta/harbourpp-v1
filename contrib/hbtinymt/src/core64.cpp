@@ -46,7 +46,7 @@
  */
 
 #include <hbapi.hpp>
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 
 #include "tinymt64.h"
 

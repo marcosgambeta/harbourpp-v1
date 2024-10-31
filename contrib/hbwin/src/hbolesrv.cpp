@@ -52,7 +52,7 @@
 
 #include <hbapi.hpp>
 
-#include "hbwinuni.hpp"
+#include <hbwinuni.hpp>
 #include "hbwinole.hpp"
 #include <olectl.h>
 

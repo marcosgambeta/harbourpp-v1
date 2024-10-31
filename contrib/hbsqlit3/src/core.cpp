@@ -51,12 +51,12 @@
 #include "sqlite3.h"
 
 #include <hbapi.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 #include <hbapifs.hpp>
 #include <hbapistr.hpp>
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 
 /* FIXME: verify the exact SQLITE3 version */
 #if SQLITE_VERSION_NUMBER <= 3004001

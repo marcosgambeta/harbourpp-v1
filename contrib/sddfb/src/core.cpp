@@ -53,7 +53,7 @@
 
 #include "hbrddsql.hpp"
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 #include <ibase.h>
 
 struct SDDCONN

@@ -51,11 +51,11 @@
 
 #include "rddads.hpp"
 
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 #include <hbapierr.hpp>
 #include <hbapilng.hpp>
-#include "hbstack.hpp"
-#include "hbdate.hpp"
+#include <hbstack.hpp>
+#include <hbdate.hpp>
 
 #include "rddsys.ch"
 

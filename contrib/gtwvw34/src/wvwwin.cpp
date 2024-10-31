@@ -46,7 +46,7 @@
 
 #include "hbgtwvw.hpp"
 
-#include "hbmath.hpp"
+#include <hbmath.hpp>
 
 static bool hb_gt_wvw_SetCentreWindow(PWVW_WIN wvw_win, bool fCentre, bool fPaint)
 {

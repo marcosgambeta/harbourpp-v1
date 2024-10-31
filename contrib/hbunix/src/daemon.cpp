@@ -29,7 +29,7 @@
  */
 
 #include "hbposix.hpp"
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 HB_FUNC( UNIX_DAEMON )
 {

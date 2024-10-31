@@ -70,7 +70,7 @@
 #include <hbapicls.hpp>
 #include <hbapifs.hpp>
 
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 #include "hbxml.hpp"
 

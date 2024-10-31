@@ -53,7 +53,7 @@
 #include <hbapicdp.hpp>
 #include <hbapilng.hpp>
 #include <hbapistr.hpp>
-#include "hbinit.hpp"
+#include <hbinit.hpp>
 
 /* enable workaround for wrong OLE variant structure definition */
 #if (defined(_MSC_VER) && (_MSC_VER <= 1500))

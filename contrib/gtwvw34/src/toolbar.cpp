@@ -48,7 +48,7 @@
  */
 
 #include "hbgtwvw.hpp"
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 /*
 add one button to existing Toolbar

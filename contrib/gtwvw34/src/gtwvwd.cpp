@@ -80,10 +80,10 @@
 
 #include "hbgtwvw.hpp"
 
-#include "hbinit.hpp"
+#include <hbinit.hpp>
 #include <hbapifs.hpp>
-#include "hbmath.hpp"
-#include "hbvm.hpp"
+#include <hbmath.hpp>
+#include <hbvm.hpp>
 
 #include "hbgfxdef.ch"
 
@@ -196,8 +196,8 @@ static void s_RunControlBlock(PWVW_WIN wvw_win, int nClass, HWND hWnd, UINT mess
                               int iEventType);
 static void s_ReposControls(PWVW_WIN wvw_win, int nClass);
 
-#include "hbgtcore.hpp"
-#include "hbinit.hpp"
+#include <hbgtcore.hpp>
+#include <hbinit.hpp>
 #include <hbapiitm.hpp>
 
 static int s_GtId;

@@ -53,9 +53,9 @@
 
 #include "hbssl.h"
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
-#include "hbdate.hpp"
-#include "hbinit.hpp"
+#include <hbvm.hpp>
+#include <hbdate.hpp>
+#include <hbinit.hpp>
 
 struct _HB_SSLSTREAM
 {

@@ -47,7 +47,7 @@
 #include "hbssl.h"
 #include <hbapifs.hpp>
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 enum HB_PEM_TYPES
 {

@@ -52,7 +52,7 @@
 #include <hbapierr.hpp>
 #include <hbapifs.hpp>
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 #if defined(HB_OS_UNIX)
 #include <sys/stat.h>

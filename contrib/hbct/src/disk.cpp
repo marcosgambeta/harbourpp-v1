@@ -50,9 +50,9 @@
 #include <hbapi.hpp>
 #include <hbapierr.hpp>
 #include <hbapifs.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 #include "ctstrfil.h"
-#include "hbwinuni.hpp"
+#include <hbwinuni.hpp>
 
 #if defined(HB_OS_WIN)
 #include <windows.h>

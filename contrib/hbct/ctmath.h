@@ -47,7 +47,7 @@
 #ifndef _CTMATH_H
 #define _CTMATH_H
 
-#include "hbmath.hpp"
+#include <hbmath.hpp>
 
 #define CT_PI      3.14159265358979323846
 #define CT_PI_2    1.57079632679489661923

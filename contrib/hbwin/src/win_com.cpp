@@ -46,7 +46,7 @@
 
 #include "hbwin.hpp"
 #include <hbapierr.hpp>
-#include "hbinit.hpp"
+#include <hbinit.hpp>
 
 static struct
 {

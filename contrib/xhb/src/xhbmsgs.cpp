@@ -51,8 +51,8 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 #include <hbapilng.hpp>
-#include "hbstack.hpp"
-#include "hbmath.hpp"
+#include <hbstack.hpp>
+#include <hbmath.hpp>
 
 HB_FUNC(XHB_HASHERROR)
 {

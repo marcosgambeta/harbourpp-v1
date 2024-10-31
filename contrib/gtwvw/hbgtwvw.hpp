@@ -81,17 +81,17 @@
    #define CINTERFACE         1
 #endif
 
-#include "hbset.hpp"
-#include "hbgtcore.hpp"
-#include "hbinit.hpp"
+#include <hbset.hpp>
+#include <hbgtcore.hpp>
+#include <hbinit.hpp>
 #include "hbapigt.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "inkey.ch"
 #include "error.ch"
-#include "hbvm.hpp"
-#include "hbstack.hpp"
-#include "hbwinuni.hpp"
+#include <hbvm.hpp>
+#include <hbstack.hpp>
+#include <hbwinuni.hpp>
 
 #if 0
 #include "hbole.hpp"

@@ -79,10 +79,10 @@
 
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
-#include "hbset.hpp"
+#include <hbvm.hpp>
+#include <hbset.hpp>
 #include <hbapierr.hpp>
-#include "hbwinuni.hpp"
+#include <hbwinuni.hpp>
 
 #if defined(HB_OS_WIN)
 #include <windows.h>

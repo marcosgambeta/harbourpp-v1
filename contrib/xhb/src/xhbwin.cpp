@@ -52,7 +52,7 @@
 
 #if defined(HB_OS_WIN)
 
-#include "hbwinuni.hpp"
+#include <hbwinuni.hpp>
 #include <windows.h>
 
 /* Original version may have returned NIL in some error situations. */

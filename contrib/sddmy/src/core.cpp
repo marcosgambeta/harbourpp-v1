@@ -51,7 +51,7 @@
 #include "hbrddsql.hpp"
 
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 #ifndef my_socket_defined
 #define my_socket_defined

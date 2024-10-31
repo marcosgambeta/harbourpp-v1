@@ -52,9 +52,9 @@
 #include <hbapifs.hpp>
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
-#include "hbthread.hpp"
-#include "hbvm.hpp"
-#include "hbinit.hpp"
+#include <hbthread.hpp>
+#include <hbvm.hpp>
+#include <hbinit.hpp>
 
 #include "directry.ch"
 

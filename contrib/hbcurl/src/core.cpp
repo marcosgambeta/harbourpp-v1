@@ -58,7 +58,7 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 #include <hbapifs.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 #include "hbhash.hpp"
 
 #include "hbcurl.ch"

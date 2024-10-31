@@ -47,10 +47,10 @@
 #include "hbrddsql.hpp"
 
 #include <hbapiitm.hpp>
-#include "hbdate.hpp"
+#include <hbdate.hpp>
 #include <hbapistr.hpp>
-#include "hbset.hpp"
-#include "hbvm.hpp"
+#include <hbset.hpp>
+#include <hbvm.hpp>
 
 /* Required by headers on Windows */
 #if defined(HB_OS_WIN)

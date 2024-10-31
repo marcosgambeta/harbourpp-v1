@@ -51,9 +51,9 @@
 #include "hbapiitm.hpp"
 #include "hbapicls.hpp"
 #include "hbapierr.hpp"
-#include "hbvm.hpp"
-#include "hbstack.hpp"
-#include "hbdate.hpp"
+#include <hbvm.hpp>
+#include <hbstack.hpp>
+#include <hbdate.hpp>
 
 #if defined( HB_OS_WIN )
 

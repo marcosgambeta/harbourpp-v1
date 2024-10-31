@@ -46,8 +46,8 @@
 
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
-#include "hbstack.hpp"
-#include "hbvm.hpp"
+#include <hbstack.hpp>
+#include <hbvm.hpp>
 #include "hboo.ch"
 
 HB_BOOL hbamf_is_cls_externalizable(HB_USHORT uiClass)

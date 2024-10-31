@@ -50,8 +50,8 @@
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
-#include "hbstack.hpp"
-#include "hbvm.hpp"
+#include <hbstack.hpp>
+#include <hbvm.hpp>
 
 #if defined(HB_OS_WIN)
 #include <windows.h>

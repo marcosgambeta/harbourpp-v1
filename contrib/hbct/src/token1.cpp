@@ -53,7 +53,7 @@
 
 #include "ct.h"
 
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 
 /* static const data */
 static const char *sc_pcSeparatorStr = "\x00"

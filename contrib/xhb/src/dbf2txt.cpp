@@ -50,8 +50,8 @@
 #include <hbapierr.hpp>
 #include <hbapicdp.hpp>
 #include <hbapifs.hpp>
-#include "hbset.hpp"
-#include "hbvm.hpp"
+#include <hbset.hpp>
+#include <hbvm.hpp>
 
 /* Escaping delimited strings. Need to be cleaned/optimized/improved */
 static char *hb_strescape(const char *szInput, HB_ISIZ nLen, const char *cDelim)

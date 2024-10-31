@@ -71,7 +71,7 @@
 #include <hbapiitm.hpp>
 #include <hbapistr.hpp>
 #include <hbapierr.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 #include "hbexpat.ch"
 

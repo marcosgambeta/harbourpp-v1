@@ -50,7 +50,7 @@
 
 #include "hbvmint.hpp"
 #include <hbapi.hpp>
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 
 HB_FUNC( ISBEGSEQ )
 {

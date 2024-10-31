@@ -49,8 +49,8 @@
 #include <hbapierr.hpp>
 #include <hbapifs.hpp>
 #include <hbapistr.hpp>
-#include "hbstack.hpp"
-#include "hbvm.hpp"
+#include <hbstack.hpp>
+#include <hbvm.hpp>
 
 #include "mxml.h"
 #include "config.h"

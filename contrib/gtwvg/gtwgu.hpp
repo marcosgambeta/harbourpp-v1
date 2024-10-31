@@ -70,18 +70,18 @@
 #include <commdlg.h>
 #include <shellapi.h>
 
-#include "hbset.hpp"
-#include "hbgtcore.hpp"
-#include "hbinit.hpp"
+#include <hbset.hpp>
+#include <hbgtcore.hpp>
+#include <hbinit.hpp>
 #include "hbapicdp.hpp"
 #include "hbapierr.hpp"
 #include "hbapiitm.hpp"
 #include "inkey.ch"
 #include "error.ch"
-#include "hbvm.hpp"
-#include "hbthread.hpp"
+#include <hbvm.hpp>
+#include <hbthread.hpp>
 #include "hbgfxdef.ch"
-#include "hbwinuni.hpp"
+#include <hbwinuni.hpp>
 
 #include "hbgtwvg.ch"
 

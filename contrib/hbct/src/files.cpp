@@ -53,9 +53,9 @@
 #include <hbapi.hpp>
 #include <hbapifs.hpp>
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
-#include "hbstack.hpp"
-#include "hbdate.hpp"
+#include <hbvm.hpp>
+#include <hbstack.hpp>
+#include <hbdate.hpp>
 #include "hb_io.hpp"
 #include "ctdisk.ch"
 

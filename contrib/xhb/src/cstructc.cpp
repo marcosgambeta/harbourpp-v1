@@ -50,13 +50,13 @@
 
 #include "hbvmint.hpp" /* FIXME: clean the code to not access any internal HVM structures */
 #include <hbapi.hpp>
-#include "hbvm.hpp"
-#include "hbstack.hpp"
+#include <hbvm.hpp>
+#include <hbstack.hpp>
 #include <hbapiitm.hpp>
 #include <hbapicls.hpp>
 #include <hbapierr.hpp>
 #include <hbapilng.hpp>
-#include "hbset.hpp"
+#include <hbset.hpp>
 #include "hbctypes.ch"
 
 static PHB_ITEM hb_itemPutCRaw(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)

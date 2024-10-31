@@ -49,7 +49,7 @@
 
 #include <hbapi.hpp>
 #include <hbapierr.hpp>
-#include "hbdate.hpp"
+#include <hbdate.hpp>
 
 /* NOTE: szTime must be 9 chars large. */
 

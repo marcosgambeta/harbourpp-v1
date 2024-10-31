@@ -54,8 +54,8 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 #include <hbapistr.hpp>
-#include "hbdate.hpp"
-#include "hbset.hpp"
+#include <hbdate.hpp>
+#include <hbset.hpp>
 
 #if !defined(HB_OS_UNIX)
 #  undef _LARGEFILE64_SOURCE
@@ -75,7 +75,7 @@
    #if !defined(INVALID_FILE_ATTRIBUTES)
       #define INVALID_FILE_ATTRIBUTES  (static_cast<DWORD>(-1))
    #endif
-   #include "hbwinuni.hpp"
+   #include <hbwinuni.hpp>
 #endif
 
 #if !defined(HB_USE_LARGEFILE64) && defined(HB_OS_UNIX)

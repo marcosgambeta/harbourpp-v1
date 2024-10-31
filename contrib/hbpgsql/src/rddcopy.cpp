@@ -49,8 +49,8 @@
 #include <hbapierr.hpp>
 #include <hbapiitm.hpp>
 #include <hbapirdd.hpp>
-#include "hbvm.hpp"
-#include "hbdate.hpp"
+#include <hbvm.hpp>
+#include <hbdate.hpp>
 
 struct pgCopyContext
 {

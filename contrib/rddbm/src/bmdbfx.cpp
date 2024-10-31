@@ -58,9 +58,9 @@
 #include <hbapirdd.hpp>
 #include <hbapierr.hpp>
 #include "hbdbferr.hpp"
-#include "hbvm.hpp"
-#include "hbset.hpp"
-#include "hbinit.hpp"
+#include <hbvm.hpp>
+#include <hbset.hpp>
+#include <hbinit.hpp>
 #include "rddsys.ch"
 
 /* now this function is RDD independent and can work with any RDD supporting

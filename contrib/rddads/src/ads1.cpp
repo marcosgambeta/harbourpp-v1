@@ -53,15 +53,15 @@
 
 #include "rddads.hpp"
 
-#include "hbvm.hpp"
-#include "hbinit.hpp"
+#include <hbvm.hpp>
+#include <hbinit.hpp>
 #include <hbapistr.hpp>
 #include <hbapierr.hpp>
 #include "hbdbferr.hpp"
 #include <hbapilng.hpp>
-#include "hbdate.hpp"
-#include "hbset.hpp"
-#include "hbstack.hpp"
+#include <hbdate.hpp>
+#include <hbset.hpp>
+#include <hbstack.hpp>
 
 #include "rddsys.ch"
 

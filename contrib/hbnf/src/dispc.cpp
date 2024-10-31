@@ -52,7 +52,7 @@
 #include <hbapi.hpp>
 #include <hbapifs.hpp>
 #include <hbapigt.hpp>
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 
 #define K_STRING    0
 #define K_LIST      ( !K_STRING )

@@ -47,7 +47,7 @@
 
 #include "ct.h"
 
-#include "hbstack.hpp"
+#include <hbstack.hpp>
 
 struct CT_STR
 {

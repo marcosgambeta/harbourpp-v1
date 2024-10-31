@@ -55,7 +55,7 @@
 #include <hbapifs.hpp>
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
-#include "hbinit.hpp"
+#include <hbinit.hpp>
 
 #include "hbsocket.hpp"
 

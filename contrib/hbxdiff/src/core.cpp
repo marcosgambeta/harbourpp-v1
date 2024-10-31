@@ -52,9 +52,9 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 #include <hbapifs.hpp>
-#include "hbinit.hpp"
-#include "hbstack.hpp"
-#include "hbvm.hpp"
+#include <hbinit.hpp>
+#include <hbstack.hpp>
+#include <hbvm.hpp>
 
 #include "xdiff.h"
 

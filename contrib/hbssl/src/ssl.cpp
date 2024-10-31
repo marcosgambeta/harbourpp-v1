@@ -73,7 +73,7 @@
 
 #include "hbssl.h"
 #include <hbapiitm.hpp>
-#include "hbvm.hpp"
+#include <hbvm.hpp>
 
 #if !defined(HB_OPENSSL_NO_APPLINK) && defined(HB_OS_WIN) && defined(HB_CPU_X86) &&                                    \
     OPENSSL_VERSION_NUMBER >= 0x00908000L

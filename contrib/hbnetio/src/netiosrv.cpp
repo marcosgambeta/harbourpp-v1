@@ -76,11 +76,11 @@
 #include "hbsocket.hpp"
 #include "hbznet.h"
 #include "hbzlib.ch"
-#include "hbinit.hpp"
-#include "hbvm.hpp"
-#include "hbstack.hpp"
-#include "hbthread.hpp"
-#include "hbdate.hpp"
+#include <hbinit.hpp>
+#include <hbvm.hpp>
+#include <hbstack.hpp>
+#include <hbthread.hpp>
+#include <hbdate.hpp>
 #include "netio.hpp"
 #include "hbserial.ch"
 

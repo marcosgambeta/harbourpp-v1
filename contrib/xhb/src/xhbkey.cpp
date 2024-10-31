@@ -44,8 +44,8 @@
  *
  */
 
-#include "hbgtcore.hpp"
-#include "hbset.hpp"
+#include <hbgtcore.hpp>
+#include <hbset.hpp>
 #include "xhbinkey.ch"
 
 static int hb_inkeyKeyXHB(int iKey)

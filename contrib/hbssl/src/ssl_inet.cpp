@@ -48,7 +48,7 @@
 
 #include "hbssl.h"
 #include <hbapiitm.hpp>
-#include "hbdate.hpp"
+#include <hbdate.hpp>
 #include "hbznet.h"
 
 static long hb_inetReadSSL(PHB_ZNETSTREAM pStream, HB_SOCKET sd, void *buffer, long len, HB_MAXINT timeout)
