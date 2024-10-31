@@ -44,8 +44,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 #include "hbmemvar.ch"
 
 HB_FUNC(__MVSYMBOLINFO)

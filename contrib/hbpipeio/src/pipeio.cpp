@@ -51,10 +51,10 @@
 /* this has to be declared before hbapifs.h is included */
 #define _HB_FILE_IMPLEMENTATION_
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
 #include "hbinit.hpp"
 
 #define FILE_PREFIX      "PIPE:"

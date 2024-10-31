@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapigt.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapigt.hpp>
 
 HB_FUNC( NUMBUTTONS )
 {

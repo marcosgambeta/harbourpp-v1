@@ -49,10 +49,10 @@
 #endif
 
 #include "hbvmint.hpp"
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbvm.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 #include "hbstack.hpp"
 
 HB_FUNC(HB_QSELF)

@@ -55,10 +55,10 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapistr.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapistr.hpp>
 #include "hbdate.hpp"
 #include "hbset.hpp"
 

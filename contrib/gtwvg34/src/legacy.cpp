@@ -1,6 +1,6 @@
 // Copyright 2014 Viktor Szakats
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 // mappings to hbwin
 HB_FUNC_TRANSLATE(WVG_APPENDMENU, WAPI_APPENDMENU)

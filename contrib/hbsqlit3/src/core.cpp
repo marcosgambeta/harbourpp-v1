@@ -50,12 +50,12 @@
 
 #include "sqlite3.h"
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbvm.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapifs.hpp"
-#include "hbapistr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapifs.hpp>
+#include <hbapistr.hpp>
 #include "hbstack.hpp"
 
 /* FIXME: verify the exact SQLITE3 version */

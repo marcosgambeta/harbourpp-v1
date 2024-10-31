@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #if defined(HB_OS_WIN) && defined(__WATCOMC__)
 #include <windows.h>
 #include <initguid.h>

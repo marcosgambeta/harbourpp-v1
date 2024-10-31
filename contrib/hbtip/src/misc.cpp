@@ -46,8 +46,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
 #include "hbdate.hpp"
 
 /* Internet timestamp based on:

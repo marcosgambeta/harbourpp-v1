@@ -19,7 +19,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 HB_FUNC( FT_SETRATE )
 {

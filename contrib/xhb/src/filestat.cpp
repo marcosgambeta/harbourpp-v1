@@ -44,10 +44,10 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
 #include "hbdate.hpp"
-#include "hbapierr.hpp"
+#include <hbapierr.hpp>
 
 #if !defined(_LARGEFILE64_SOURCE)
 #define _LARGEFILE64_SOURCE 1

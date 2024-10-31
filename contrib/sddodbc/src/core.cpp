@@ -46,9 +46,9 @@
 
 #include "hbrddsql.hpp"
 
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include "hbdate.hpp"
-#include "hbapistr.hpp"
+#include <hbapistr.hpp>
 #include "hbset.hpp"
 #include "hbvm.hpp"
 

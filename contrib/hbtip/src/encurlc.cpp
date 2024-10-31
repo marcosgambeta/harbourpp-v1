@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 
 HB_FUNC( TIP_URLENCODE )
 {

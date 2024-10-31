@@ -45,10 +45,10 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapigt.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapigt.hpp>
+#include <hbapifs.hpp>
 
 #define SINGLEBUF 32768
 #define MAXLEN (16 * 1024 * 1024)

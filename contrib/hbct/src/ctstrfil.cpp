@@ -45,9 +45,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapigt.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapigt.hpp>
 
 #include "ctstrfil.h"
 

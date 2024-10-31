@@ -44,12 +44,12 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapirdd.hpp"
-#include "hbapierr.hpp"
-#include "hbapicdp.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapirdd.hpp>
+#include <hbapierr.hpp>
+#include <hbapicdp.hpp>
+#include <hbapifs.hpp>
 #include "hbset.hpp"
 #include "hbvm.hpp"
 

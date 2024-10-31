@@ -81,7 +81,7 @@
 #include "hbgtwvw.hpp"
 
 #include "hbinit.hpp"
-#include "hbapifs.hpp"
+#include <hbapifs.hpp>
 #include "hbmath.hpp"
 #include "hbvm.hpp"
 
@@ -198,7 +198,7 @@ static void s_ReposControls(PWVW_WIN wvw_win, int nClass);
 
 #include "hbgtcore.hpp"
 #include "hbinit.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;

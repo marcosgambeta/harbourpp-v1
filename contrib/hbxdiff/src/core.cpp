@@ -48,10 +48,10 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapifs.hpp>
 #include "hbinit.hpp"
 #include "hbstack.hpp"
 #include "hbvm.hpp"

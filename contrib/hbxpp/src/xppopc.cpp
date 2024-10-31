@@ -48,9 +48,9 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapilng.hpp"
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapilng.hpp>
 #include "hbstack.hpp"
 
 /*

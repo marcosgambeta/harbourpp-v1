@@ -45,7 +45,7 @@
  */
 
 #include "hbssl.h"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include <openssl/evp.h>
 
 #if OPENSSL_VERSION_NUMBER < 0x10100000L

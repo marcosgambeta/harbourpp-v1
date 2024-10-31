@@ -45,9 +45,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapirdd.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapirdd.hpp>
 
 HB_FUNC_TRANSLATE(FIELDSIZE, FIELDLEN)
 HB_FUNC_TRANSLATE(FIELDDECI, FIELDDEC)

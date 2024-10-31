@@ -254,7 +254,7 @@ static BOOL hb_wvw_Size_Ready(BOOL b_p_SizeIsReady);
 
 #include "hbgtcore.hpp"
 #include "hbinit.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 /* set in mainwin.c                                                  */
 /*                                                                   */

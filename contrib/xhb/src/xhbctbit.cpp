@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 static HB_ULONG hb_hextonum(const char *cHex)
 {

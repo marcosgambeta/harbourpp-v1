@@ -49,8 +49,8 @@
 #endif
 
 #include "hbwapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
 
 static HB_GARBAGE_FUNC(s_gc_HDC_release)
 {

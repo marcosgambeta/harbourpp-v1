@@ -46,7 +46,7 @@
 
 #include "hbwapi.hpp"
 #include "hbvm.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include <windowsx.h>
 
 /* Application-defined callback used with the CreateDialog and DialogBox... It

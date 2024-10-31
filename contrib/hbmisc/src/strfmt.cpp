@@ -44,8 +44,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 
 #define HB_STRFORMAT_PARNUM_MAX_  9
 #define POS_TO_PAR( pos )  ( pos + 2 )

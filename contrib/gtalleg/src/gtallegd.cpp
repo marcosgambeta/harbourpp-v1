@@ -49,10 +49,10 @@
 #include "hbgtcore.hpp"
 #include "hbinit.hpp"
 #include "hbvm.hpp"
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapifs.hpp>
 
 #include "ssf.h"
 

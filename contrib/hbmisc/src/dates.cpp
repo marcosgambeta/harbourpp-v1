@@ -47,9 +47,9 @@
 
 #include <time.h>
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapilng.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapilng.hpp>
 #include "hbdate.hpp"
 
 static const int s_daysinmonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };

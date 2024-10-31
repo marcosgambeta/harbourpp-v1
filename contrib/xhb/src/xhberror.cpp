@@ -49,10 +49,10 @@
 #endif
 
 #include "hbvmint.hpp"
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapicls.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapicls.hpp>
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 

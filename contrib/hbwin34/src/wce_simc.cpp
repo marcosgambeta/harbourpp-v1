@@ -45,7 +45,7 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 HB_FUNC(WCE_SIMINITIALIZE) /* hSim by reference, lNotifications */
 {

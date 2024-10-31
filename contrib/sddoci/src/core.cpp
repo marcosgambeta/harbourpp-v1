@@ -46,10 +46,10 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 #include "hbdate.hpp"
-#include "hbapistr.hpp"
+#include <hbapistr.hpp>
 #include "hbset.hpp"
 #include "hbvm.hpp"
 

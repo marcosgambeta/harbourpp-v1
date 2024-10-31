@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapigt.hpp"
+#include <hbapigt.hpp>
 
 HB_FUNC(SETLASTKEY)
 {

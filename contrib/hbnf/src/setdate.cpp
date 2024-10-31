@@ -69,7 +69,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbdate.hpp"
 
 HB_FUNC( FT_SETDATE )

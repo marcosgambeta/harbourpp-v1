@@ -53,8 +53,8 @@
 #endif
 
 #include "hbwapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 #include <winspool.h>
 
 static void s_hb_hashSetCItemNL(PHB_ITEM pHash, const char *pszKey, long v)

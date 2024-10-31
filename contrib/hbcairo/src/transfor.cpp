@@ -45,8 +45,8 @@
  */
 
 #include "hbcairo.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 
 HB_FUNC(CAIRO_GET_MATRIX)
 {

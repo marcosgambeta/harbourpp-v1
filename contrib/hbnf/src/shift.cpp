@@ -26,8 +26,8 @@
  *
  */
 
-#include "hbapigt.hpp"
-#include "hbapiitm.hpp"
+#include <hbapigt.hpp>
+#include <hbapiitm.hpp>
 
 HB_FUNC( FT_SHIFT )
 {

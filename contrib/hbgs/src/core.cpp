@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 #if defined(HB_OS_WIN) && !defined(_Windows)
 #  define _Windows

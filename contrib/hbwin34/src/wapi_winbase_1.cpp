@@ -45,8 +45,8 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
 
 HB_FUNC(WAPI_GETCOMMANDLINE)
 {

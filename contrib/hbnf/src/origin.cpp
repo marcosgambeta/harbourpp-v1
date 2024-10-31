@@ -17,6 +17,6 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 HB_FUNC_TRANSLATE( FT_ORIGIN, HB_PROGNAME )

@@ -47,8 +47,8 @@
  */
 
 #include "hbpgsql.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
 
 static HB_GARBAGE_FUNC(PGconn_release)
 {

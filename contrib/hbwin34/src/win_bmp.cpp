@@ -47,8 +47,8 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapiitm.hpp"
+#include <hbapifs.hpp>
+#include <hbapiitm.hpp>
 
 #ifndef QUERYESCSUPPORT
 #define QUERYESCSUPPORT 8

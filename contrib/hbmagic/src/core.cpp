@@ -46,8 +46,8 @@
 
 #include <magic.h>
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
 
 static HB_GARBAGE_FUNC( magic_gc_close )
 {

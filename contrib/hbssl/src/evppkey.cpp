@@ -45,7 +45,7 @@
  */
 
 #include "hbssl.h"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include <openssl/evp.h>
 #include <openssl/rsa.h>
 

@@ -51,9 +51,9 @@
 #include "rddads.hpp"
 
 #include "hbinit.hpp"
-#include "hbapierr.hpp"
+#include <hbapierr.hpp>
 #include "hbdbferr.hpp"
-#include "hbapilng.hpp"
+#include <hbapilng.hpp>
 #include "hbdate.hpp"
 #include "hbset.hpp"
 #include "hbvm.hpp"

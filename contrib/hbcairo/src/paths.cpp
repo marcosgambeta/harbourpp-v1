@@ -45,7 +45,7 @@
  */
 
 #include "hbcairo.hpp"
-#include "hbapistr.hpp"
+#include <hbapistr.hpp>
 
 HB_FUNC(CAIRO_APPEND_PATH)
 {

@@ -64,11 +64,11 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
-#include "hbapicls.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
+#include <hbapicls.hpp>
+#include <hbapifs.hpp>
 
 #include "hbvm.hpp"
 

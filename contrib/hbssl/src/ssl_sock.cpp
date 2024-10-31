@@ -52,7 +52,7 @@
 #define _HB_SOCKEX_IMPLEMENTATION_
 
 #include "hbssl.h"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include "hbvm.hpp"
 #include "hbdate.hpp"
 #include "hbinit.hpp"

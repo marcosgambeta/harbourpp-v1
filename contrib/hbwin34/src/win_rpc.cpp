@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbwinuni.hpp"
 #include "hbwin.ch"
 #include <rpc.h>

@@ -49,9 +49,9 @@
 /* TOFIX: support for reading files with any encoding
           and translating it to unicode for the GT */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapigt.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapigt.hpp>
 #include "hbstack.hpp"
 
 #define K_STRING    0

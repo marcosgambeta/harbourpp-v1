@@ -46,7 +46,7 @@
  */
 
 #include "hbwin.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 HB_FUNC(WIN_OSISNT)
 {

@@ -44,8 +44,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 
 #if defined(HB_OS_WIN)
    #include <windows.h>

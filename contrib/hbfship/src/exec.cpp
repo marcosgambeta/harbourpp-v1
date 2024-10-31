@@ -46,8 +46,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
 
 #if defined(HB_OS_UNIX)
 #  include <sys/types.h>

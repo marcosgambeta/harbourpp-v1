@@ -46,9 +46,9 @@
 
 #include "hbpgsql.hpp"
 
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
-#include "hbapirdd.hpp"
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
+#include <hbapirdd.hpp>
 #include "hbvm.hpp"
 #include "hbdate.hpp"
 

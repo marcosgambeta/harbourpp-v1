@@ -5,7 +5,7 @@
 // public domain.
 //
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 HB_FUNC(GT_ASCIISUM)
 {

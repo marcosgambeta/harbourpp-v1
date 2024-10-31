@@ -49,8 +49,8 @@
 #endif
 
 #include "hbvmint.hpp"
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 #include "hbstack.hpp"
 
 HB_FUNC(HB_ENUMINDEX)

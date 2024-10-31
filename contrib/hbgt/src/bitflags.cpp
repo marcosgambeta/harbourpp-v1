@@ -14,8 +14,8 @@
 // the public domain.
 //
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 
 HB_FUNC(GT_NEWFLAG)
 {

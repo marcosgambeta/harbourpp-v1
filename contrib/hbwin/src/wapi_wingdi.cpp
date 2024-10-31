@@ -53,8 +53,8 @@
 #endif
 
 #include "hbwapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 
 /* For Arc() */
 #include <winspool.h>

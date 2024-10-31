@@ -26,8 +26,8 @@
  *  Nanforum Toolkit
  */
 
-#include "hbapi.hpp"
-#include "hbapigt.hpp"
+#include <hbapi.hpp>
+#include <hbapigt.hpp>
 
 HB_FUNC( FT_PUTKEY )
 {

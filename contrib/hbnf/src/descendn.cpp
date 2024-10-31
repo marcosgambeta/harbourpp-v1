@@ -16,8 +16,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 
 HB_FUNC( FT_DESCEND )
 {

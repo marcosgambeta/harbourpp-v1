@@ -53,9 +53,9 @@
  * i.e. instead of using haAGetKeyAt() they can use hb_HKeyAt().
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 
 static void s_errRT_hashArg(void)
 {

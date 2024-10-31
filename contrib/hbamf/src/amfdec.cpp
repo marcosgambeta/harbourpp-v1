@@ -11,10 +11,10 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapistr.hpp"
-#include "hbapicls.hpp" /* for hb_objSetClass() */
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapistr.hpp>
+#include <hbapicls.hpp> /* for hb_objSetClass() */
 #include "hbstack.hpp"
 #include "amf.h"
 

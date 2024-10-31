@@ -45,7 +45,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "ct.h"
 
 #if HB_VMLONG_MAX == INT32_MAX

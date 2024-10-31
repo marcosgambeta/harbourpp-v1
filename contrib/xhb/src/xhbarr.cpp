@@ -46,8 +46,8 @@
 
 #include "hbvm.hpp"
 #include "hbstack.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 
 /* ASplice(<aArray> [, <nPos>] [, <nCount>] [, <xVal1>] [, ...] [, <xValN>]) --> <aDeleted>
  * Removes elements and return them as array, optionally add items

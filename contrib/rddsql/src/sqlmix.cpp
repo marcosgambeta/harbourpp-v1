@@ -48,13 +48,13 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "hbinit.hpp"
-#include "hbapiitm.hpp"
-#include "hbapirdd.hpp"
-#include "hbapierr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapirdd.hpp>
+#include <hbapierr.hpp>
 #include "hbdbferr.hpp"
-#include "hbapilng.hpp"
+#include <hbapilng.hpp>
 #include "hbdate.hpp"
 #include "hbset.hpp"
 #include "hbvm.hpp"

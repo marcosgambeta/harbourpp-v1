@@ -46,7 +46,7 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 HB_FUNC(WIN_REGCREATEKEYEX)
 {

@@ -50,14 +50,14 @@
 #define _HB_API_INTERNAL_
 #endif
 
-/* This definition has to be placed before #include "hbapigt.hpp" */
+/* This definition has to be placed before #include <hbapigt.hpp> */
 #define HB_GT_NAME CTW
 
 #include "hbgtcore.hpp"
 #include "hbstack.hpp"
 #include "hbinit.hpp"
-#include "hbapiitm.hpp"
-#include "hbapistr.hpp"
+#include <hbapiitm.hpp>
+#include <hbapistr.hpp>
 
 #include "ctwin.h"
 

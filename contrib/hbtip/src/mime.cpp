@@ -53,10 +53,10 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapifs.hpp>
 
 /* Detects the MIME type of a given file */
 

@@ -47,9 +47,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
+#include <hbapifs.hpp>
 #include "hbvm.hpp"
 #include "ctstrfil.h"
 #include "hbwinuni.hpp"

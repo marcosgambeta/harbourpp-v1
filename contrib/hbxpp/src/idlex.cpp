@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 /* NOTE: Sleep() may collide with other implementations with the
          same name (in FlagsShip, CLIP) which also expects parameter

@@ -19,10 +19,10 @@
    3) Text buffer should be reallocated dynamically
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapigt.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapigt.hpp>
+#include <hbapierr.hpp>
 
 #define _STABILIZE_UP    1
 #define _STABILIZE_DOWN  0

@@ -50,9 +50,9 @@
    debug window.
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapifs.hpp>
 
 #include "xhb.hpp"
 

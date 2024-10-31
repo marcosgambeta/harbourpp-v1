@@ -46,7 +46,7 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbapierr.hpp"
+#include <hbapierr.hpp>
 
 #ifndef WS_OVERLAPPEDWINDOW
 #define WS_OVERLAPPEDWINDOW (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX)

@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapicom.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapicom.hpp>
 #include "ctcom.ch"
 
 static int hb_ctComCharParam(int iParam)

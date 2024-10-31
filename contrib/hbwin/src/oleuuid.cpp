@@ -45,6 +45,6 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 // TODO: remover arquivo, pois é somente para Watcom

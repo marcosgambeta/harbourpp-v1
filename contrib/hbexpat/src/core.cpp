@@ -67,10 +67,10 @@
    ( XML_MINOR_VERSION == mi && \
      XML_MICRO_VERSION >= mu ) ) ) )
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapistr.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapistr.hpp>
+#include <hbapierr.hpp>
 #include "hbvm.hpp"
 
 #include "hbexpat.ch"

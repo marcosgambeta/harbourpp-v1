@@ -44,8 +44,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 #include "hbstack.hpp"
 #include "hbvm.hpp"
 #include "hboo.ch"

@@ -61,9 +61,9 @@
       Upon error   -> An empty array
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapiitm.hpp>
 #include "hbfast.hpp"
 
 /* adjustable, but this should be sufficient in normal situation */

@@ -50,9 +50,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapiitm.hpp>
 #include "hbvm.hpp"
 #include "hbstack.hpp"
 #include "hbdate.hpp"

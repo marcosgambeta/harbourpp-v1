@@ -50,10 +50,10 @@
 #  define _LARGEFILE64_SOURCE  1
 #endif
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapistr.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapistr.hpp>
 #include "hbdate.hpp"
 #include "hbset.hpp"
 

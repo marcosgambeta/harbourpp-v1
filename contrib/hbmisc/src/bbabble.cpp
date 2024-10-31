@@ -44,7 +44,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 /* Algorithm:
       http://wiki.yak.net/589/Bubble_Babble_Encoding.txt

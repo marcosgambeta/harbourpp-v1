@@ -53,9 +53,9 @@
 #define __STDINT_H
 #endif
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
 
 #include "ibase.h"
 

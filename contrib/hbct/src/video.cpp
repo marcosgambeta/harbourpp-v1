@@ -45,8 +45,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapigt.hpp"
+#include <hbapi.hpp>
+#include <hbapigt.hpp>
 
 #include "ctvideo.ch"
 

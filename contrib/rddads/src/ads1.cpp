@@ -55,10 +55,10 @@
 
 #include "hbvm.hpp"
 #include "hbinit.hpp"
-#include "hbapistr.hpp"
-#include "hbapierr.hpp"
+#include <hbapistr.hpp>
+#include <hbapierr.hpp>
 #include "hbdbferr.hpp"
-#include "hbapilng.hpp"
+#include <hbapilng.hpp>
 #include "hbdate.hpp"
 #include "hbset.hpp"
 #include "hbstack.hpp"

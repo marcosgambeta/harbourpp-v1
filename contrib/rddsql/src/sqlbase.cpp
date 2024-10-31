@@ -48,8 +48,8 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 #include "hbvm.hpp"
 #include "hbset.hpp"
 #include "hbrddsql.hpp"

@@ -72,7 +72,7 @@
 #endif
 
 #include "hbssl.h"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include "hbvm.hpp"
 
 #if !defined(HB_OPENSSL_NO_APPLINK) && defined(HB_OS_WIN) && defined(HB_CPU_X86) &&                                    \

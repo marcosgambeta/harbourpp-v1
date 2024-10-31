@@ -45,7 +45,7 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 
 #include <commctrl.h>
 

@@ -22,8 +22,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
 
 #if defined(HB_OS_UNIX) && !defined(HB_OS_IOS)
 #  include <unistd.h>

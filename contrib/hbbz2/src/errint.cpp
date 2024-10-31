@@ -44,8 +44,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
 
 /* Required if bz2 lib was built with BZ_NO_STDIO [vszakats] */
 #ifdef __cplusplus

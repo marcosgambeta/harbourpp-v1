@@ -45,7 +45,7 @@
  */
 
 #include "hbssl.h"
-#include "hbapiitm.hpp"
+#include <hbapiitm.hpp>
 #include <openssl/evp.h>
 
 static HB_GARBAGE_FUNC(EVP_ENCODE_CTX_release)

@@ -137,8 +137,8 @@
 #define FT_CHR_LF   10
 #define FT_CHR_EOF  26
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
 #include "hbstack.hpp"
 
 typedef struct

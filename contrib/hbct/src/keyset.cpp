@@ -46,7 +46,7 @@
  */
 
 #include "ct.h"
-#include "hbapigt.hpp"
+#include <hbapigt.hpp>
 
 static void SetGet(int iFlag)
 {

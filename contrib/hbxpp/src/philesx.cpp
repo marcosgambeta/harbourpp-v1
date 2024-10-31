@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapierr.hpp>
 
 HB_FUNC( CURDRIVE )
 {

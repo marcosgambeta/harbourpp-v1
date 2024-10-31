@@ -44,8 +44,8 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
 
 HB_FUNC(ISDIRECTORY)
 {

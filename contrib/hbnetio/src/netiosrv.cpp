@@ -69,10 +69,10 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapifs.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapifs.hpp>
+#include <hbapierr.hpp>
 #include "hbsocket.hpp"
 #include "hbznet.h"
 #include "hbzlib.ch"

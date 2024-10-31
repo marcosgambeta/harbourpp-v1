@@ -50,9 +50,9 @@
 #endif
 
 #include "hbwinole.hpp"
-#include "hbapicdp.hpp"
-#include "hbapilng.hpp"
-#include "hbapistr.hpp"
+#include <hbapicdp.hpp>
+#include <hbapilng.hpp>
+#include <hbapistr.hpp>
 #include "hbinit.hpp"
 
 /* enable workaround for wrong OLE variant structure definition */

@@ -47,7 +47,7 @@
  *
  */
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 #include "ct.h"
 
 HB_BOOL ct_numParam(int iParam, HB_MAXINT *plNum)

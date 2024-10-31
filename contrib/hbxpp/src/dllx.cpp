@@ -50,9 +50,9 @@
 #define _HB_API_INTERNAL_
 #endif
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
 
 #include "hbdyn.ch"
 

@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
 
 #include "lzf.h"
 #include "lzfP.h"

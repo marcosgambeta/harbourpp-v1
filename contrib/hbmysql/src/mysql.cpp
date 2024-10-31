@@ -46,10 +46,10 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapierr.hpp"
-#include "hbapiitm.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapierr.hpp>
+#include <hbapiitm.hpp>
+#include <hbapifs.hpp>
 
 /* NOTE: To satisfy MySQL headers. */
 #if defined(HB_OS_WIN)

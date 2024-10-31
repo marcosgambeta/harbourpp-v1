@@ -54,10 +54,10 @@
 #include <curl/types.h>
 #endif
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
-#include "hbapifs.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
+#include <hbapifs.hpp>
 #include "hbvm.hpp"
 #include "hbhash.hpp"
 

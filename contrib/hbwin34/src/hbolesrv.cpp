@@ -50,7 +50,7 @@
 
 #if !defined(HB_DYNLIB)
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 #include "hbwinuni.hpp"
 #include "hbwinole.hpp"

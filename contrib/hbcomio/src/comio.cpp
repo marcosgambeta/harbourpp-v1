@@ -51,13 +51,13 @@
 /* this has to be declared before hbapifs.h is included */
 #define _HB_FILE_IMPLEMENTATION_
 
-#include "hbapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapiitm.hpp"
-#include "hbapierr.hpp"
+#include <hbapi.hpp>
+#include <hbapifs.hpp>
+#include <hbapiitm.hpp>
+#include <hbapierr.hpp>
 #include "hbinit.hpp"
 
-#include "hbapicom.hpp"
+#include <hbapicom.hpp>
 
 struct _HB_FILE
 {

@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapicdp.hpp"
-#include "hbapiitm.hpp"
+#include <hbapi.hpp>
+#include <hbapicdp.hpp>
+#include <hbapiitm.hpp>
 
 HB_FUNC( __HB_XML_CDPU16MAP )
 {

@@ -44,9 +44,9 @@
  *
  */
 
-#include "hbapi.hpp"
-#include "hbapiitm.hpp"
-#include "hbapirdd.hpp"
+#include <hbapi.hpp>
+#include <hbapiitm.hpp>
+#include <hbapirdd.hpp>
 
 #include "dmlb.ch"
 

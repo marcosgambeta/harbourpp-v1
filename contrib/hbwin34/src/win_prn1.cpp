@@ -45,8 +45,8 @@
  */
 
 #include "hbwapi.hpp"
-#include "hbapifs.hpp"
-#include "hbapiitm.hpp"
+#include <hbapifs.hpp>
+#include <hbapiitm.hpp>
 #include <winspool.h>
 
 #ifdef HB_LEGACY_LEVEL5

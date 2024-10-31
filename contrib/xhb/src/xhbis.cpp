@@ -46,7 +46,7 @@
 
 #include <ctype.h>
 
-#include "hbapi.hpp"
+#include <hbapi.hpp>
 
 #ifdef __dj_include_inline_ctype_ha_
 
