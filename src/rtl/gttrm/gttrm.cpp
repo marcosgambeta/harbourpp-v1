@@ -55,7 +55,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #define HB_GT_NAME TRM
 
@@ -143,7 +143,7 @@ static HB_GT_FUNCS SuperTable;
 #define EVTFDSTAT_STOP 0x02
 #define EVTFDSTAT_DEL 0x03
 
-/* mouse button states */
+// mouse button states
 #define M_BUTTON_LEFT 0x0001
 #define M_BUTTON_RIGHT 0x0002
 #define M_BUTTON_MIDDLE 0x0004
@@ -166,7 +166,7 @@ static HB_GT_FUNCS SuperTable;
 #define KEY_KPADMASK 0x08000000
 #define KEY_EXTDMASK 0x10000000
 #define KEY_CLIPMASK 0x20000000
-/* 0x40000000 reserved for Harbour extended keys */
+// 0x40000000 reserved for Harbour extended keys
 #define KEY_MASK 0xFF000000
 
 #define CLR_KEYMASK(x) ((x) & ~KEY_MASK)
@@ -178,7 +178,7 @@ static HB_GT_FUNCS SuperTable;
 
 #define CTRL_SEQ "\036"
 #define ALT_SEQ "\037"
-/*#define NATION_SEQ         "\016"*/
+//#define NATION_SEQ         "\016"
 
 #define EXKEY_F1 (HB_KX_F1 | KEY_EXTDMASK)
 #define EXKEY_F2 (HB_KX_F2 | KEY_EXTDMASK)
@@ -271,7 +271,7 @@ struct mouseEvent
   int rbdn_row, rbdn_col;
   int mbup_row, mbup_col;
   int mbdn_row, mbdn_col;
-  /* to analize DBLCLK on xterm */
+  // to analize DBLCLK on xterm
 #if defined(HB_OS_UNIX)
   struct timeval BL_time;
   struct timeval BR_time;
@@ -362,7 +362,7 @@ struct _HB_GTTRM
 
   double dToneSeconds;
 
-  /* input events */
+  // input events
   keyTab *pKeyTab;
   int key_flag;
   int esc_delay;
@@ -388,7 +388,7 @@ struct _HB_GTTRM
   int efds_size;
   int efds_no;
 
-  /* terminal functions */
+  // terminal functions
 
   void (*Init)(HB_GTTRM_PTR);
   void (*Exit)(HB_GTTRM_PTR);
@@ -408,7 +408,7 @@ using HB_TERM_STATE = _HB_GTTRM;
 using HB_GTTRM = _HB_GTTRM;
 using PHB_GTTRM = _HB_GTTRM *;
 
-/* static variables use by signal handler */
+// static variables use by signal handler
 #if defined(HB_OS_UNIX)
 static volatile auto s_WinSizeChangeFlag = false;
 #endif
@@ -416,13 +416,13 @@ static volatile auto s_WinSizeChangeFlag = false;
 static volatile auto s_fRestTTY = false;
 #endif
 
-/* save old hilit tracking & enable mouse tracking */
+// save old hilit tracking & enable mouse tracking
 static const char *s_szMouseOn = "\033[?1001s\033[?1002h";
-/* disable mouse tracking & restore old hilit tracking */
+// disable mouse tracking & restore old hilit tracking
 static const char *s_szMouseOff = "\033[?1002l\033[?1001r";
 static const char s_szBell[] = {HB_CHAR_BEL, 0};
 
-/* conversion table for ANSI color indexes */
+// conversion table for ANSI color indexes
 static const int s_AnsiColors[] = {0, 4, 2, 6, 1, 5, 3, 7, 8, 12, 10, 14, 9, 13, 11, 15};
 
 static int getClipKey(int nKey)
@@ -477,7 +477,7 @@ static int getClipKey(int nKey)
   return nRet;
 }
 
-/* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
+// SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment
 #if defined(HB_OS_UNIX) && defined(SA_NOCLDSTOP)
 
 static void sig_handler(int iSigNo)
@@ -536,7 +536,7 @@ static void set_signals(void)
 {
   int sigs[] = {SIGINT, SIGQUIT, SIGTSTP, SIGWINCH /*, SIGCHLD */, 0};
 
-  /* Ignore SIGPIPEs so they don't kill us. */
+  // Ignore SIGPIPEs so they don't kill us.
   signal(SIGPIPE, SIG_IGN);
   for (auto i = 0; sigs[i]; ++i)
   {
@@ -685,11 +685,9 @@ static void hb_gt_trm_termOutTrans(PHB_GTTRM pTerm, const char *pStr, int iLen, 
 }
 #endif
 
-/* ************************************************************************* */
+// *************************************************************************
 
-/*
- * KEYBOARD and MOUSE
- */
+// KEYBOARD and MOUSE
 
 static int add_efds(PHB_GTTRM pTerm, int fd, int mode, int (*eventFunc)(int, int, void *), void *cargo)
 {
@@ -952,7 +950,7 @@ static void set_tmevt(PHB_GTTRM pTerm, unsigned char *cMBuf, mouseEvent *mEvt)
   }
 
 #if defined(HB_OS_BEOS)
-  /* warning in HAIKU/BEOS MIDDLE and RIGHT buttons are reverted */
+  // warning in HAIKU/BEOS MIDDLE and RIGHT buttons are reverted
   switch (cMBuf[0] & 0xC3)
   {
   case 0x1:
@@ -1107,9 +1105,9 @@ static void mouse_init(PHB_GTTRM pTerm)
   if (pTerm->terminal_type == TERM_LINUX)
   {
     pTerm->Conn.eventMask = GPM_MOVE | GPM_DRAG | GPM_UP | GPM_DOWN | GPM_SINGLE | GPM_DOUBLE;
-    /* give me move events but handle them anyway */
+    // give me move events but handle them anyway
     pTerm->Conn.defaultMask = GPM_MOVE | GPM_HARD;
-    /* report Ctrl,Alt,Shift events */
+    // report Ctrl,Alt,Shift events
     pTerm->Conn.minMod = 0;
     pTerm->Conn.maxMod = ((1 << KG_SHIFT) | (1 << KG_CTRL) | (1 << KG_ALT));
     gpm_zerobased = 1;
@@ -1128,10 +1126,8 @@ static void mouse_init(PHB_GTTRM pTerm)
       flush_gpmevt(pTerm);
       add_efds(pTerm, gpm_fd, O_RDONLY, set_gpmevt, static_cast<void *>(pTerm));
 
-      /*
-       * In recent GPM versions it produce unpleasure noice on the screen
-       * so I covered it with this macro, [druzus]
-       */
+      // In recent GPM versions it produce unpleasure noice on the screen
+      // so I covered it with this macro, [druzus]
 #ifdef HB_GPM_USE_XTRA
       pTerm->mButtons = Gpm_GetSnapshot(nullptr);
 #else
@@ -1578,11 +1574,11 @@ again:
       }
     }
 
-    /*
+#if 0
           if( pTerm->nation_transtbl && pTerm->nation_mode &&
                nKey >= 32 && nKey < 128 && pTerm->nation_transtbl[nKey] )
              nKey = pTerm->nation_transtbl[nKey];
-     */
+#endif
     if (nKey > 0 && nKey <= 255 && pTerm->keyTransTbl[nKey])
     {
       nKey = pTerm->keyTransTbl[nKey];
@@ -1597,11 +1593,10 @@ again:
   return nKey;
 }
 
-/* ************************************************************************* */
+// *************************************************************************
 
-/*
- * LINUX terminal operations
- */
+// LINUX terminal operations
+
 static void hb_gt_trm_LinuxSetTermMode(PHB_GTTRM pTerm, int iAM)
 {
 #if 0
@@ -1638,7 +1633,7 @@ static void hb_gt_trm_LinuxTone(PHB_GTTRM pTerm, double dFrequency, double dDura
   hb_gt_trm_termOut(pTerm, escseq, strlen(escseq));
   hb_gt_trm_termFlush(pTerm);
 
-  /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
+  // convert Clipper (DOS) timer tick units to seconds ( x / 18.2 )
   hb_gtSleep(pTerm->pGT, dDuration / 18.2);
 }
 
@@ -1667,10 +1662,9 @@ static void hb_gt_trm_LinuxSetCursorStyle(PHB_GTTRM pTerm, int iStyle)
       lcurs = 8;
       break;
     case SC_SPECIAL2:
-      /* TODO: find a proper sequence to set a cursor
-         to SC_SPECIAL2 under Linux console?
-         There is no such mode in current stable kernels (2.4.20)
-       */
+      // TODO: find a proper sequence to set a cursor
+      // to SC_SPECIAL2 under Linux console?
+      // There is no such mode in current stable kernels (2.4.20)
       lcurs = 4;
       break;
     }
@@ -1711,14 +1705,13 @@ static void hb_gt_trm_LinuxSetPalette(PHB_GTTRM pTerm, int iIndexFrom, int iInde
       hb_gt_trm_termOut(pTerm, szColor, 10);
     } while (++iIndexFrom <= iIndexTo);
 
-    /* ESC ] is Operating System Command (OSC) which by default should
-     * be terminated by ESC \ (ST). Some terminals which sets LINUX
-     * TERM envvar but do not correctly understand above palette set
-     * sequence may hang waiting for ST. We send ST below to avoid such
-     * situation.
-     * Linux console simply ignore ST terminator so nothing wrong
-     * should happen.
-     */
+    // ESC ] is Operating System Command (OSC) which by default should
+    // be terminated by ESC \ (ST). Some terminals which sets LINUX
+    // TERM envvar but do not correctly understand above palette set
+    // sequence may hang waiting for ST. We send ST below to avoid such
+    // situation.
+    // Linux console simply ignore ST terminator so nothing wrong
+    // should happen.
     hb_gt_trm_termOut(pTerm, "\033\\", 2);
   }
 }
@@ -1732,9 +1725,8 @@ static void hb_gt_trm_LinuxResetPalette(PHB_GTTRM pTerm)
   hb_gt_trm_termOut(pTerm, "\033]R", 3);
 }
 
-/*
- * XTERM terminal operations
- */
+// XTERM terminal operations
+
 static HB_BOOL hb_gt_trm_XtermSetMode(PHB_GTTRM pTerm, int *piRows, int *piCols)
 {
 #if 0
@@ -1750,7 +1742,7 @@ static HB_BOOL hb_gt_trm_XtermSetMode(PHB_GTTRM pTerm, int *piRows, int *piCols)
   hb_gt_trm_termFlush(pTerm);
 
 #if defined(HB_OS_UNIX)
-  /* dirty hack - wait for SIGWINCH */
+  // dirty hack - wait for SIGWINCH
   if (*piRows != iHeight || *piCols != iWidth)
   {
     sleep(3);
@@ -1826,7 +1818,7 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int iAttr)
       }
       else if (pTerm->iExtColor == HB_GTTRM_CLRX16)
       {
-        /* ESC [ 38 ; 5 ; <fg> m */
+        // ESC [ 38 ; 5 ; <fg> m
         buff[i++] = '3';
         buff[i++] = '8';
         buff[i++] = ';';
@@ -1838,7 +1830,7 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int iAttr)
         }
         buff[i++] = '0' + fg % 10;
         buff[i++] = ';';
-        /* ESC [ 48 ; 5 ; <bg> m */
+        // ESC [ 48 ; 5 ; <bg> m
         buff[i++] = '4';
         buff[i++] = '8';
         buff[i++] = ';';
@@ -1852,22 +1844,22 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int iAttr)
       }
       else if (pTerm->iExtColor == HB_GTTRM_CLR256)
       {
-        /* ESC [ 38 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5 */
+        // ESC [ 38 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5
         rgb = pTerm->colors[iAttr & 0x0F];
         rgb = 16 + 36 * ((rgb & 0xFF) / 43) + 6 * (((rgb >> 8) & 0xFF) / 43) + (((rgb >> 16) & 0xFF) / 43);
         i += hb_snprintf(buff + i, sizeof(buff) - i, "38;5;%d", rgb);
-        /* ESC [ 48 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5 */
+        // ESC [ 48 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5
         rgb = pTerm->colors[(iAttr >> 4) & 0x0F];
         rgb = 16 + 36 * ((rgb & 0xFF) / 43) + 6 * (((rgb >> 8) & 0xFF) / 43) + (((rgb >> 16) & 0xFF) / 43);
         i += hb_snprintf(buff + i, sizeof(buff) - i, ";48;5;%d", rgb);
       }
       else if (pTerm->iExtColor == HB_GTTRM_CLRRGB)
       {
-        /* ESC [ 38 ; 2 ; <r> ; <g> ; <b> m */
+        // ESC [ 38 ; 2 ; <r> ; <g> ; <b> m
         rgb = pTerm->colors[iAttr & 0x0F];
         i +=
             hb_snprintf(buff + i, sizeof(buff) - i, "38;2;%d;%d;%d", rgb & 0xFF, (rgb >> 8) & 0xFF, (rgb >> 16) & 0xFF);
-        /* ESC [ 48 ; 2 ; <r> ; <g> ; <b> m */
+        // ESC [ 48 ; 2 ; <r> ; <g> ; <b> m
         rgb = pTerm->colors[(iAttr >> 4) & 0x0F];
         i += hb_snprintf(buff + i, sizeof(buff) - i, ";48;2;%d;%d;%d", rgb & 0xFF, (rgb >> 8) & 0xFF,
                          (rgb >> 16) & 0xFF);
@@ -1939,7 +1931,7 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int iAttr)
         }
         else if (pTerm->iExtColor == HB_GTTRM_CLRX16)
         {
-          /* ESC [ 38 ; 5 ; <fg> m */
+          // ESC [ 38 ; 5 ; <fg> m
           buff[i++] = '3';
           buff[i++] = '8';
           buff[i++] = ';';
@@ -1953,14 +1945,14 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int iAttr)
         }
         else if (pTerm->iExtColor == HB_GTTRM_CLR256)
         {
-          /* ESC [ 38 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5 */
+          // ESC [ 38 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5
           rgb = pTerm->colors[iAttr & 0x0F];
           rgb = 16 + 36 * ((rgb & 0xFF) / 43) + 6 * (((rgb >> 8) & 0xFF) / 43) + (((rgb >> 16) & 0xFF) / 43);
           i += hb_snprintf(buff + i, sizeof(buff) - i, "38;5;%d", rgb);
         }
         else if (pTerm->iExtColor == HB_GTTRM_CLRRGB)
         {
-          /* ESC [ 38 ; 2 ; <r> ; <g> ; <b> m */
+          // ESC [ 38 ; 2 ; <r> ; <g> ; <b> m
           rgb = pTerm->colors[iAttr & 0x0F];
           i += hb_snprintf(buff + i, sizeof(buff) - i, "38;2;%d;%d;%d", rgb & 0xFF, (rgb >> 8) & 0xFF,
                            (rgb >> 16) & 0xFF);
@@ -1990,7 +1982,7 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int iAttr)
         }
         else if (pTerm->iExtColor == HB_GTTRM_CLRX16)
         {
-          /* ESC [ 48 ; 5 ; <fg> m */
+          // ESC [ 48 ; 5 ; <fg> m
           buff[i++] = '4';
           buff[i++] = '8';
           buff[i++] = ';';
@@ -2004,14 +1996,14 @@ static void hb_gt_trm_XtermSetAttributes(PHB_GTTRM pTerm, int iAttr)
         }
         else if (pTerm->iExtColor == HB_GTTRM_CLR256)
         {
-          /* ESC [ 48 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5 */
+          // ESC [ 48 ; 5 ; <16 + 36 * r + 6 * g + b> m   0 <= r,g,b <= 5
           rgb = pTerm->colors[(iAttr >> 4) & 0x0F];
           rgb = 16 + 36 * ((rgb & 0xFF) / 43) + 6 * (((rgb >> 8) & 0xFF) / 43) + (((rgb >> 16) & 0xFF) / 43);
           i += hb_snprintf(buff + i, sizeof(buff) - i, "48;5;%d", rgb);
         }
         else if (pTerm->iExtColor == HB_GTTRM_CLRRGB)
         {
-          /* ESC [ 48 ; 2 ; <r> ; <g> ; <b> m */
+          // ESC [ 48 ; 2 ; <r> ; <g> ; <b> m
           rgb = pTerm->colors[(iAttr >> 4) & 0x0F];
           i += hb_snprintf(buff + i, sizeof(buff) - i, "48;2;%d;%d;%d", rgb & 0xFF, (rgb >> 8) & 0xFF,
                            (rgb >> 16) & 0xFF);
@@ -2068,9 +2060,8 @@ static void hb_gt_trm_XtermSetTitle(PHB_GTTRM pTerm, const char *szTitle)
   hb_gt_trm_termOut(pTerm, "\007", 1);
 }
 
-/*
- * BSD console
- */
+// BSD console
+
 static HB_BOOL hb_gt_trm_BsdGetCursorPos(PHB_GTTRM pTerm, int *iRow, int *iCol, const char *szPost)
 {
 #if 0
@@ -2137,13 +2128,12 @@ static void hb_gt_trm_BsdTone(PHB_GTTRM pTerm, double dFrequency, double dDurati
   hb_gt_trm_termOut(pTerm, escseq, strlen(escseq));
   hb_gt_trm_termFlush(pTerm);
 
-  /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
+  // convert Clipper (DOS) timer tick units to seconds ( x / 18.2 )
   hb_gtSleep(pTerm->pGT, dDuration / 18.2);
 }
 
-/*
- * ANSI terminal operations
- */
+// ANSI terminal operations
+
 static void hb_gt_trm_AnsiSetTermMode(PHB_GTTRM pTerm, int iAM)
 {
 #if 0
@@ -2156,10 +2146,8 @@ static void hb_gt_trm_AnsiSetTermMode(PHB_GTTRM pTerm, int iAM)
     {
       hb_gt_trm_termOut(pTerm, "\x1B[0m", 4);
     }
-    /*
-     * disabled until I'll find good PC-ANSI terminal documentation with
-     * detail Auto Margin and Auto Line Wrapping description, [druzus]
-     */
+    // disabled until I'll find good PC-ANSI terminal documentation with
+    // detail Auto Margin and Auto Line Wrapping description, [druzus]
 #if 0
       hb_gt_trm_termOut(pTerm, iAM ? "\x1B[?7h" : "\x1B[?7l", 5);
 #endif
@@ -2188,12 +2176,12 @@ static HB_BOOL hb_gt_trm_AnsiGetCursorPos(PHB_GTTRM pTerm, int *iRow, int *iCol,
     n = j = x = y = 0;
     pTerm->fPosAnswer = false;
 
-    /* wait up to 2 seconds for answer */
+    // wait up to 2 seconds for answer
     HB_MAXINT timeout = 2000;
     HB_MAXUINT timer = hb_timerInit(timeout);
     for (;;)
     {
-      /* looking for cursor position in "\033[%d;%dR" */
+      // looking for cursor position in "\033[%d;%dR"
       while (j < n && rdbuf[j] != '\033')
       {
         ++j;
@@ -2485,10 +2473,10 @@ static void hb_gt_trm_AnsiTone(PHB_GTTRM pTerm, double dFrequency, double dDurat
 
   HB_SYMBOL_UNUSED(dFrequency);
 
-  /* Output an ASCII BEL character to cause a sound */
-  /* but throttle to max once per second, in case of sound */
-  /* effects prgs calling lots of short tone sequences in */
-  /* succession leading to BEL hell on the terminal */
+  // Output an ASCII BEL character to cause a sound
+  // but throttle to max once per second, in case of sound
+  // effects prgs calling lots of short tone sequences in
+  // succession leading to BEL hell on the terminal
 
   double dCurrentSeconds = hb_dateSeconds();
   if (dCurrentSeconds < pTerm->dToneSeconds || dCurrentSeconds - pTerm->dToneSeconds > 0.5)
@@ -2497,7 +2485,7 @@ static void hb_gt_trm_AnsiTone(PHB_GTTRM pTerm, double dFrequency, double dDurat
     pTerm->dToneSeconds = dCurrentSeconds;
   }
 
-  /* convert Clipper (DOS) timer tick units to seconds ( x / 18.2 ) */
+  // convert Clipper (DOS) timer tick units to seconds ( x / 18.2 )
   hb_gtSleep(pTerm->pGT, dDuration / 18.2);
 }
 
@@ -2516,7 +2504,7 @@ static void hb_gt_trm_AnsiExit(PHB_GTTRM pTerm)
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_AnsiExit(%p)", static_cast<void*>(pTerm)));
 #endif
 
-  /* set default color */
+  // set default color
   pTerm->SetAttributes(pTerm, 0x07 & pTerm->iAttrMask);
   pTerm->SetCursorStyle(pTerm, SC_NORMAL);
   pTerm->SetTermMode(pTerm, 1);
@@ -2527,11 +2515,10 @@ static void hb_gt_trm_AnsiExit(PHB_GTTRM pTerm)
   }
 }
 
-/* ************************************************************************* */
+// *************************************************************************
 
-/*
- * common functions
- */
+// common functions
+
 static bool hb_trm_Param(const char *pszParam, int *piValue)
 {
   auto fResult = false;
@@ -2841,86 +2828,86 @@ static void addKeyTab(PHB_GTTRM pTerm, const keySeq *keys)
 
 static void init_keys(PHB_GTTRM pTerm)
 {
-  static const keySeq stdKeySeq[] = {/* virual CTRL/ALT sequences */
+  static const keySeq stdKeySeq[] = {// virual CTRL/ALT sequences
                                      {K_METACTRL, CTRL_SEQ},
                                      {K_METAALT, ALT_SEQ},
 #ifdef NATION_SEQ
-                                     /* national mode key sequences */
+                                     // national mode key sequences
                                      {K_NATIONAL, NATION_SEQ},
 #endif
                                      {EXKEY_ENTER, "\r"},
-                                     /* terminal mouse event */
+                                     // terminal mouse event
                                      {K_MOUSETERM, "\033[M"},
                                      {0, nullptr}};
 
   static const keySeq stdFnKeySeq[] = {
 
-      {EXKEY_F1, "\033[11~"}, /* kf1  */
-      {EXKEY_F2, "\033[12~"}, /* kf2  */
-      {EXKEY_F3, "\033[13~"}, /* kf3  */
-      {EXKEY_F4, "\033[14~"}, /* kf4  */
-      {EXKEY_F5, "\033[15~"}, /* kf5  */
+      {EXKEY_F1, "\033[11~"}, // kf1
+      {EXKEY_F2, "\033[12~"}, // kf2
+      {EXKEY_F3, "\033[13~"}, // kf3
+      {EXKEY_F4, "\033[14~"}, // kf4
+      {EXKEY_F5, "\033[15~"}, // kf5
 
-      {EXKEY_F6, "\033[17~"},  /* kf6  */
-      {EXKEY_F7, "\033[18~"},  /* kf7  */
-      {EXKEY_F8, "\033[19~"},  /* kf8  */
-      {EXKEY_F9, "\033[20~"},  /* kf9  */
-      {EXKEY_F10, "\033[21~"}, /* kf10 */
-      {EXKEY_F11, "\033[23~"}, /* kf11 */
-      {EXKEY_F12, "\033[24~"}, /* kf12 */
+      {EXKEY_F6, "\033[17~"},  // kf6
+      {EXKEY_F7, "\033[18~"},  // kf7
+      {EXKEY_F8, "\033[19~"},  // kf8
+      {EXKEY_F9, "\033[20~"},  // kf9
+      {EXKEY_F10, "\033[21~"}, // kf10
+      {EXKEY_F11, "\033[23~"}, // kf11
+      {EXKEY_F12, "\033[24~"}, // kf12
 
-      {EXKEY_F1 | KEY_SHIFTMASK, "\033[25~"},  /* kf13 */
-      {EXKEY_F2 | KEY_SHIFTMASK, "\033[26~"},  /* kf14 */
-      {EXKEY_F3 | KEY_SHIFTMASK, "\033[28~"},  /* kf15 */
-      {EXKEY_F4 | KEY_SHIFTMASK, "\033[29~"},  /* kf16 */
-      {EXKEY_F5 | KEY_SHIFTMASK, "\033[31~"},  /* kf17 */
-      {EXKEY_F6 | KEY_SHIFTMASK, "\033[32~"},  /* kf18 */
-      {EXKEY_F7 | KEY_SHIFTMASK, "\033[33~"},  /* kf19 */
-      {EXKEY_F8 | KEY_SHIFTMASK, "\033[34~"},  /* kf20 */
-      {EXKEY_F9 | KEY_SHIFTMASK, "\033[35~"},  /* kf21 */
-      {EXKEY_F10 | KEY_SHIFTMASK, "\033[36~"}, /* kf22 */
-      {EXKEY_F11 | KEY_SHIFTMASK, "\033[37~"}, /* kf23 */
-      {EXKEY_F12 | KEY_SHIFTMASK, "\033[38~"}, /* kf24 */
+      {EXKEY_F1 | KEY_SHIFTMASK, "\033[25~"},  // kf13
+      {EXKEY_F2 | KEY_SHIFTMASK, "\033[26~"},  // kf14
+      {EXKEY_F3 | KEY_SHIFTMASK, "\033[28~"},  // kf15
+      {EXKEY_F4 | KEY_SHIFTMASK, "\033[29~"},  // kf16
+      {EXKEY_F5 | KEY_SHIFTMASK, "\033[31~"},  // kf17
+      {EXKEY_F6 | KEY_SHIFTMASK, "\033[32~"},  // kf18
+      {EXKEY_F7 | KEY_SHIFTMASK, "\033[33~"},  // kf19
+      {EXKEY_F8 | KEY_SHIFTMASK, "\033[34~"},  // kf20
+      {EXKEY_F9 | KEY_SHIFTMASK, "\033[35~"},  // kf21
+      {EXKEY_F10 | KEY_SHIFTMASK, "\033[36~"}, // kf22
+      {EXKEY_F11 | KEY_SHIFTMASK, "\033[37~"}, // kf23
+      {EXKEY_F12 | KEY_SHIFTMASK, "\033[38~"}, // kf24
 
-      {EXKEY_F1 | KEY_CTRLMASK, "\033[39~"},  /* kf25 */
-      {EXKEY_F2 | KEY_CTRLMASK, "\033[40~"},  /* kf26 */
-      {EXKEY_F3 | KEY_CTRLMASK, "\033[41~"},  /* kf27 */
-      {EXKEY_F4 | KEY_CTRLMASK, "\033[42~"},  /* kf28 */
-      {EXKEY_F5 | KEY_CTRLMASK, "\033[43~"},  /* kf29 */
-      {EXKEY_F6 | KEY_CTRLMASK, "\033[44~"},  /* kf30 */
-      {EXKEY_F7 | KEY_CTRLMASK, "\033[45~"},  /* kf31 */
-      {EXKEY_F8 | KEY_CTRLMASK, "\033[46~"},  /* kf32 */
-      {EXKEY_F9 | KEY_CTRLMASK, "\033[47~"},  /* kf33 */
-      {EXKEY_F10 | KEY_CTRLMASK, "\033[48~"}, /* kf34 */
-      {EXKEY_F11 | KEY_CTRLMASK, "\033[49~"}, /* kf35 */
-      {EXKEY_F12 | KEY_CTRLMASK, "\033[50~"}, /* kf36 */
+      {EXKEY_F1 | KEY_CTRLMASK, "\033[39~"},  // kf25
+      {EXKEY_F2 | KEY_CTRLMASK, "\033[40~"},  // kf26
+      {EXKEY_F3 | KEY_CTRLMASK, "\033[41~"},  // kf27
+      {EXKEY_F4 | KEY_CTRLMASK, "\033[42~"},  // kf28
+      {EXKEY_F5 | KEY_CTRLMASK, "\033[43~"},  // kf29
+      {EXKEY_F6 | KEY_CTRLMASK, "\033[44~"},  // kf30
+      {EXKEY_F7 | KEY_CTRLMASK, "\033[45~"},  // kf31
+      {EXKEY_F8 | KEY_CTRLMASK, "\033[46~"},  // kf32
+      {EXKEY_F9 | KEY_CTRLMASK, "\033[47~"},  // kf33 
+      {EXKEY_F10 | KEY_CTRLMASK, "\033[48~"}, // kf34
+      {EXKEY_F11 | KEY_CTRLMASK, "\033[49~"}, // kf35
+      {EXKEY_F12 | KEY_CTRLMASK, "\033[50~"}, // kf36
 
-      {EXKEY_F1 | KEY_ALTMASK, "\033[51~"},  /* kf37 */
-      {EXKEY_F2 | KEY_ALTMASK, "\033[52~"},  /* kf38 */
-      {EXKEY_F3 | KEY_ALTMASK, "\033[53~"},  /* kf39 */
-      {EXKEY_F4 | KEY_ALTMASK, "\033[54~"},  /* kf40 */
-      {EXKEY_F5 | KEY_ALTMASK, "\033[55~"},  /* kf41 */
-      {EXKEY_F6 | KEY_ALTMASK, "\033[56~"},  /* kf42 */
-      {EXKEY_F7 | KEY_ALTMASK, "\033[57~"},  /* kf43 */
-      {EXKEY_F8 | KEY_ALTMASK, "\033[58~"},  /* kf44 */
-      {EXKEY_F9 | KEY_ALTMASK, "\033[59~"},  /* kf45 */
-      {EXKEY_F10 | KEY_ALTMASK, "\033[70~"}, /* kf46 */
-      {EXKEY_F11 | KEY_ALTMASK, "\033[71~"}, /* kf47 */
-      {EXKEY_F12 | KEY_ALTMASK, "\033[72~"}, /* kf48 */
+      {EXKEY_F1 | KEY_ALTMASK, "\033[51~"},  // kf37
+      {EXKEY_F2 | KEY_ALTMASK, "\033[52~"},  // kf38
+      {EXKEY_F3 | KEY_ALTMASK, "\033[53~"},  // kf39
+      {EXKEY_F4 | KEY_ALTMASK, "\033[54~"},  // kf40
+      {EXKEY_F5 | KEY_ALTMASK, "\033[55~"},  // kf41
+      {EXKEY_F6 | KEY_ALTMASK, "\033[56~"},  // kf42
+      {EXKEY_F7 | KEY_ALTMASK, "\033[57~"},  // kf43
+      {EXKEY_F8 | KEY_ALTMASK, "\033[58~"},  // kf44
+      {EXKEY_F9 | KEY_ALTMASK, "\033[59~"},  // kf45
+      {EXKEY_F10 | KEY_ALTMASK, "\033[70~"}, // kf46
+      {EXKEY_F11 | KEY_ALTMASK, "\033[71~"}, // kf47
+      {EXKEY_F12 | KEY_ALTMASK, "\033[72~"}, // kf48
 
       {0, nullptr}};
 
-  static const keySeq stdCursorKeySeq[] = {{EXKEY_HOME, "\033[1~"}, /* khome */
-                                           {EXKEY_INS, "\033[2~"},  /* kich1 */
-                                           {EXKEY_DEL, "\033[3~"},  /* kdch1 */
-                                           {EXKEY_END, "\033[4~"},  /* kend  */
-                                           {EXKEY_PGUP, "\033[5~"}, /* kpp   */
-                                           {EXKEY_PGDN, "\033[6~"}, /* knp   */
+  static const keySeq stdCursorKeySeq[] = {{EXKEY_HOME, "\033[1~"}, // khome
+                                           {EXKEY_INS, "\033[2~"},  // kich1
+                                           {EXKEY_DEL, "\033[3~"},  // kdch1
+                                           {EXKEY_END, "\033[4~"},  // kend
+                                           {EXKEY_PGUP, "\033[5~"}, // kpp
+                                           {EXKEY_PGDN, "\033[6~"}, // knp
 
                                            {0, nullptr}};
 
-  static const keySeq puttyKeySeq[] = {/* In XTerm (XFree 3.x.x) they are without CTRL,
-                                          kcuu1, kcud1, kcuf1, kcub1 */
+  static const keySeq puttyKeySeq[] = {// In XTerm (XFree 3.x.x) they are without CTRL,
+                                       // kcuu1, kcud1, kcuf1, kcub1
                                        {EXKEY_UP | KEY_CTRLMASK, "\033OA"},
                                        {EXKEY_DOWN | KEY_CTRLMASK, "\033OB"},
                                        {EXKEY_RIGHT | KEY_CTRLMASK, "\033OC"},
@@ -2931,9 +2918,8 @@ static void init_keys(PHB_GTTRM pTerm)
                                        {0, nullptr}};
 
 #if defined(HB_OS_BEOS)
-  /* warning above XFree 3.x.x CTRL + {UP,DOWN,RIGHT,LEFT} kyes create
-   * collision with HAIKU/BEOS XTerm and standard CTRL keys
-   */
+  // warning above XFree 3.x.x CTRL + {UP,DOWN,RIGHT,LEFT} kyes create
+  // collision with HAIKU/BEOS XTerm and standard CTRL keys
   static const keySeq haikuStdKeySeq[] = {{EXKEY_UP, "\033OA"},
                                           {EXKEY_DOWN, "\033OB"},
                                           {EXKEY_RIGHT, "\033OC"},
@@ -2942,7 +2928,7 @@ static void init_keys(PHB_GTTRM pTerm)
                                           {0, nullptr}};
 #endif
 
-  static const keySeq haikuCtrlKeySeq[] = {/* HAIKU/BEOS XTerm CTRL + {UP,DOWN,RIGHT,LEFT} kyes */
+  static const keySeq haikuCtrlKeySeq[] = {// HAIKU/BEOS XTerm CTRL + {UP,DOWN,RIGHT,LEFT} kyes
                                            {EXKEY_UP | KEY_CTRLMASK, "\033O5A"},
                                            {EXKEY_DOWN | KEY_CTRLMASK, "\033O5B"},
                                            {EXKEY_RIGHT | KEY_CTRLMASK, "\033O5C"},
@@ -2975,7 +2961,7 @@ static void init_keys(PHB_GTTRM pTerm)
 
                                            {0, nullptr}};
 
-  static const keySeq xtermModKeySeq[] = {/* XTerm  with modifiers */
+  static const keySeq xtermModKeySeq[] = {// XTerm  with modifiers
                                           {EXKEY_F1 | KEY_CTRLMASK, "\033O5P"},
                                           {EXKEY_F2 | KEY_CTRLMASK, "\033O5Q"},
                                           {EXKEY_F3 | KEY_CTRLMASK, "\033O5R"},
@@ -3014,10 +3000,10 @@ static void init_keys(PHB_GTTRM pTerm)
                                           {EXKEY_DOWN | KEY_CTRLMASK, "\033[5B"},
                                           {EXKEY_RIGHT | KEY_CTRLMASK, "\033[5C"},
                                           {EXKEY_LEFT | KEY_CTRLMASK, "\033[5D"},
-                                          {EXKEY_CENTER | KEY_CTRLMASK, "\033[5E"}, /* --- */
-                                          {EXKEY_END | KEY_CTRLMASK, "\033[5F"},    /* --- */
-                                          {EXKEY_CENTER | KEY_CTRLMASK, "\033[5G"}, /* --- */
-                                          {EXKEY_HOME | KEY_CTRLMASK, "\033[5H"},   /* --- */
+                                          {EXKEY_CENTER | KEY_CTRLMASK, "\033[5E"}, // ---
+                                          {EXKEY_END | KEY_CTRLMASK, "\033[5F"},    // ---
+                                          {EXKEY_CENTER | KEY_CTRLMASK, "\033[5G"}, // ---
+                                          {EXKEY_HOME | KEY_CTRLMASK, "\033[5H"},   // ---
 
                                           {EXKEY_F1 | KEY_ALTMASK, "\033O3P"},
                                           {EXKEY_F2 | KEY_ALTMASK, "\033O3Q"},
@@ -3057,10 +3043,10 @@ static void init_keys(PHB_GTTRM pTerm)
                                           {EXKEY_DOWN | KEY_ALTMASK, "\033[3B"},
                                           {EXKEY_RIGHT | KEY_ALTMASK, "\033[3C"},
                                           {EXKEY_LEFT | KEY_ALTMASK, "\033[3D"},
-                                          {EXKEY_CENTER | KEY_ALTMASK, "\033[3E"}, /* --- */
-                                          {EXKEY_END | KEY_ALTMASK, "\033[3F"},    /* --- */
-                                          {EXKEY_CENTER | KEY_ALTMASK, "\033[3G"}, /* --- */
-                                          {EXKEY_HOME | KEY_ALTMASK, "\033[3H"},   /* --- */
+                                          {EXKEY_CENTER | KEY_ALTMASK, "\033[3E"}, // ---
+                                          {EXKEY_END | KEY_ALTMASK, "\033[3F"},    // ---
+                                          {EXKEY_CENTER | KEY_ALTMASK, "\033[3G"}, // ---
+                                          {EXKEY_HOME | KEY_ALTMASK, "\033[3H"},   // ---
 
                                           {EXKEY_F1 | KEY_SHIFTMASK, "\033O2P"},
                                           {EXKEY_F2 | KEY_SHIFTMASK, "\033O2Q"},
@@ -3110,10 +3096,10 @@ static void init_keys(PHB_GTTRM pTerm)
                                           {EXKEY_DOWN | KEY_SHIFTMASK, "\033[2B"},
                                           {EXKEY_RIGHT | KEY_SHIFTMASK, "\033[2C"},
                                           {EXKEY_LEFT | KEY_SHIFTMASK, "\033[2D"},
-                                          {EXKEY_CENTER | KEY_SHIFTMASK, "\033[2E"}, /* --- */
-                                          {EXKEY_END | KEY_SHIFTMASK, "\033[2F"},    /* --- */
-                                          {EXKEY_CENTER | KEY_SHIFTMASK, "\033[2G"}, /* --- */
-                                          {EXKEY_HOME | KEY_SHIFTMASK, "\033[2H"},   /* --- */
+                                          {EXKEY_CENTER | KEY_SHIFTMASK, "\033[2E"}, // ---
+                                          {EXKEY_END | KEY_SHIFTMASK, "\033[2F"},    // ---
+                                          {EXKEY_CENTER | KEY_SHIFTMASK, "\033[2G"}, // ---
+                                          {EXKEY_HOME | KEY_SHIFTMASK, "\033[2H"},   // ---
 
                                           {EXKEY_BS | KEY_ALTMASK, "\033\010"},
 
@@ -3121,44 +3107,44 @@ static void init_keys(PHB_GTTRM pTerm)
 
   static const keySeq xtermFnKeySeq[] = {
 
-      {EXKEY_F1, "\033OP"}, /* kf1  */
-      {EXKEY_F2, "\033OQ"}, /* kf2  */
-      {EXKEY_F3, "\033OR"}, /* kf3  */
-      {EXKEY_F4, "\033OS"}, /* kf4  */
+      {EXKEY_F1, "\033OP"}, // kf1
+      {EXKEY_F2, "\033OQ"}, // kf2
+      {EXKEY_F3, "\033OR"}, // kf3
+      {EXKEY_F4, "\033OS"}, // kf4
 
       {0, nullptr}};
 
   static const keySeq xtermKeySeq[] = {
 
-    {EXKEY_BS, "\010"},  /* kbs   */
-    {EXKEY_TAB, "\011"}, /* ht    */
+    {EXKEY_BS, "\010"},  // kbs
+    {EXKEY_TAB, "\011"}, // ht
     {EXKEY_BS, "\177"},
 
-    /* cursor keys */
+    // cursor keys
     {EXKEY_UP, "\033[A"},
     {EXKEY_DOWN, "\033[B"},
     {EXKEY_RIGHT, "\033[C"},
     {EXKEY_LEFT, "\033[D"},
 
-    {EXKEY_CENTER, "\033[E"}, /* XTerm */
-    {EXKEY_END, "\033[F"},    /* XTerm */
-    {EXKEY_CENTER, "\033[G"}, /* PuTTY */
-    {EXKEY_HOME, "\033[H"},   /* XTerm */
+    {EXKEY_CENTER, "\033[E"}, // XTerm
+    {EXKEY_END, "\033[F"},    // XTerm
+    {EXKEY_CENTER, "\033[G"}, // PuTTY
+    {EXKEY_HOME, "\033[H"},   // XTerm
 
-    {EXKEY_TAB | KEY_SHIFTMASK, "\033[Z"}, /* kcbt, XTerm */
+    {EXKEY_TAB | KEY_SHIFTMASK, "\033[Z"}, // kcbt, XTerm
 
-    /* Konsole */
+    // Konsole
     {EXKEY_ENTER | KEY_SHIFTMASK, "\033OM"},
 
-    {EXKEY_END, "\033Ow"}, /* rxvt */
+    {EXKEY_END, "\033Ow"}, // rxvt
 
-    /* gnome-terminal */
-    {EXKEY_END, "\033OF"},  /* kend  */
-    {EXKEY_HOME, "\033OH"}, /* khome */
+    // gnome-terminal
+    {EXKEY_END, "\033OF"},  // kend
+    {EXKEY_HOME, "\033OH"}, // khome
     {EXKEY_ENTER | KEY_ALTMASK, "\033\012"},
 
 #if 0
-      /* key added for gnome-terminal and teraterm */
+      // key added for gnome-terminal and teraterm
       { EXKEY_ENTER |KEY_CTRLMASK, "\033[7;5~" },
       { EXKEY_TAB   |KEY_CTRLMASK, "\033[8;5~" },
 
@@ -3184,99 +3170,99 @@ static void init_keys(PHB_GTTRM pTerm)
 
   static const keySeq linuxKeySeq[] = {
 
-      {EXKEY_TAB, "\011"}, /* ht    */
-      {EXKEY_BS, "\177"},  /* kbs   */
+      {EXKEY_TAB, "\011"}, // ht
+      {EXKEY_BS, "\177"},  // kbs
 
-      {EXKEY_UP, "\033[A"},     /* kcuu1 */
-      {EXKEY_DOWN, "\033[B"},   /* kcud1 */
-      {EXKEY_RIGHT, "\033[C"},  /* kcuf1 */
-      {EXKEY_LEFT, "\033[D"},   /* kcub1 */
-      {EXKEY_CENTER, "\033[G"}, /* kb2 */
+      {EXKEY_UP, "\033[A"},     // kcuu1
+      {EXKEY_DOWN, "\033[B"},   // kcud1
+      {EXKEY_RIGHT, "\033[C"},  // kcuf1
+      {EXKEY_LEFT, "\033[D"},   // kcub1
+      {EXKEY_CENTER, "\033[G"}, // kb2
 
-      {EXKEY_F1, "\033[[A"}, /* kf1  */
-      {EXKEY_F2, "\033[[B"}, /* kf2  */
-      {EXKEY_F3, "\033[[C"}, /* kf3  */
-      {EXKEY_F4, "\033[[D"}, /* kf4  */
-      {EXKEY_F5, "\033[[E"}, /* kf5  */
+      {EXKEY_F1, "\033[[A"}, // kf1
+      {EXKEY_F2, "\033[[B"}, // kf2
+      {EXKEY_F3, "\033[[C"}, // kf3
+      {EXKEY_F4, "\033[[D"}, // kf4
+      {EXKEY_F5, "\033[[E"}, // kf5
 
-      {EXKEY_TAB | KEY_ALTMASK, "\033[Z"}, /* kcbt */
+      {EXKEY_TAB | KEY_ALTMASK, "\033[Z"}, // kcbt
 
       {0, nullptr}};
 
   static const keySeq ansiKeySeq[] = {
 
-      {EXKEY_BS, "\010"},  /* kbs   */
-      {EXKEY_TAB, "\011"}, /* ht    */
-      {EXKEY_DEL, "\177"}, /* kdch1 */
-      /* cursor keys */
-      {EXKEY_UP, "\033[A"},     /* kcuu1 */
-      {EXKEY_DOWN, "\033[B"},   /* kcud1 */
-      {EXKEY_RIGHT, "\033[C"},  /* kcuf1 */
-      {EXKEY_LEFT, "\033[D"},   /* kcub1 */
-      {EXKEY_CENTER, "\033[E"}, /* kb2   */
-      {EXKEY_END, "\033[F"},    /* kend  */
-      {EXKEY_PGDN, "\033[G"},   /* knp   */
-      {EXKEY_HOME, "\033[H"},   /* khome */
-      {EXKEY_PGUP, "\033[I"},   /* kpp   */
-      {EXKEY_INS, "\033[L"},    /* kich1 */
+      {EXKEY_BS, "\010"},  // kbs
+      {EXKEY_TAB, "\011"}, // ht
+      {EXKEY_DEL, "\177"}, // kdch1
+      // cursor keys
+      {EXKEY_UP, "\033[A"},     // kcuu1
+      {EXKEY_DOWN, "\033[B"},   // kcud1
+      {EXKEY_RIGHT, "\033[C"},  // kcuf1
+      {EXKEY_LEFT, "\033[D"},   // kcub1
+      {EXKEY_CENTER, "\033[E"}, // kb2
+      {EXKEY_END, "\033[F"},    // kend
+      {EXKEY_PGDN, "\033[G"},   // knp
+      {EXKEY_HOME, "\033[H"},   // khome
+      {EXKEY_PGUP, "\033[I"},   // kpp
+      {EXKEY_INS, "\033[L"},    // kich1
 
-      {EXKEY_F1, "\033[M"},  /* kf1  */
-      {EXKEY_F2, "\033[N"},  /* kf2  */
-      {EXKEY_F3, "\033[O"},  /* kf3  */
-      {EXKEY_F4, "\033[P"},  /* kf4  */
-      {EXKEY_F5, "\033[Q"},  /* kf5  */
-      {EXKEY_F6, "\033[R"},  /* kf6  */
-      {EXKEY_F7, "\033[S"},  /* kf7  */
-      {EXKEY_F8, "\033[T"},  /* kf8  */
-      {EXKEY_F9, "\033[U"},  /* kf9  */
-      {EXKEY_F10, "\033[V"}, /* kf10 */
-      {EXKEY_F11, "\033[W"}, /* kf11 */
-      {EXKEY_F12, "\033[X"}, /* kf12 */
+      {EXKEY_F1, "\033[M"},  // kf1
+      {EXKEY_F2, "\033[N"},  // kf2
+      {EXKEY_F3, "\033[O"},  // kf3
+      {EXKEY_F4, "\033[P"},  // kf4
+      {EXKEY_F5, "\033[Q"},  // kf5
+      {EXKEY_F6, "\033[R"},  // kf6
+      {EXKEY_F7, "\033[S"},  // kf7
+      {EXKEY_F8, "\033[T"},  // kf8
+      {EXKEY_F9, "\033[U"},  // kf9
+      {EXKEY_F10, "\033[V"}, // kf10
+      {EXKEY_F11, "\033[W"}, // kf11
+      {EXKEY_F12, "\033[X"}, // kf12
 
-      {EXKEY_F1 | KEY_SHIFTMASK, "\033[Y"},  /* kf13 */
-      {EXKEY_F2 | KEY_SHIFTMASK, "\033[Z"},  /* kf14 */
-      {EXKEY_F3 | KEY_SHIFTMASK, "\033[a"},  /* kf15 */
-      {EXKEY_F4 | KEY_SHIFTMASK, "\033[b"},  /* kf16 */
-      {EXKEY_F5 | KEY_SHIFTMASK, "\033[c"},  /* kf17 */
-      {EXKEY_F6 | KEY_SHIFTMASK, "\033[d"},  /* kf18 */
-      {EXKEY_F7 | KEY_SHIFTMASK, "\033[e"},  /* kf19 */
-      {EXKEY_F8 | KEY_SHIFTMASK, "\033[f"},  /* kf20 */
-      {EXKEY_F9 | KEY_SHIFTMASK, "\033[g"},  /* kf21 */
-      {EXKEY_F10 | KEY_SHIFTMASK, "\033[h"}, /* kf22 */
-      {EXKEY_F11 | KEY_SHIFTMASK, "\033[i"}, /* kf23 */
-      {EXKEY_F12 | KEY_SHIFTMASK, "\033[j"}, /* kf24 */
+      {EXKEY_F1 | KEY_SHIFTMASK, "\033[Y"},  // kf13
+      {EXKEY_F2 | KEY_SHIFTMASK, "\033[Z"},  // kf14
+      {EXKEY_F3 | KEY_SHIFTMASK, "\033[a"},  // kf15
+      {EXKEY_F4 | KEY_SHIFTMASK, "\033[b"},  // kf16
+      {EXKEY_F5 | KEY_SHIFTMASK, "\033[c"},  // kf17
+      {EXKEY_F6 | KEY_SHIFTMASK, "\033[d"},  // kf18
+      {EXKEY_F7 | KEY_SHIFTMASK, "\033[e"},  // kf19
+      {EXKEY_F8 | KEY_SHIFTMASK, "\033[f"},  // kf20
+      {EXKEY_F9 | KEY_SHIFTMASK, "\033[g"},  // kf21
+      {EXKEY_F10 | KEY_SHIFTMASK, "\033[h"}, // kf22
+      {EXKEY_F11 | KEY_SHIFTMASK, "\033[i"}, // kf23
+      {EXKEY_F12 | KEY_SHIFTMASK, "\033[j"}, // kf24
 
-      {EXKEY_F1 | KEY_CTRLMASK, "\033[k"},  /* kf25 */
-      {EXKEY_F2 | KEY_CTRLMASK, "\033[l"},  /* kf26 */
-      {EXKEY_F3 | KEY_CTRLMASK, "\033[m"},  /* kf27 */
-      {EXKEY_F4 | KEY_CTRLMASK, "\033[n"},  /* kf28 */
-      {EXKEY_F5 | KEY_CTRLMASK, "\033[o"},  /* kf29 */
-      {EXKEY_F6 | KEY_CTRLMASK, "\033[p"},  /* kf30 */
-      {EXKEY_F7 | KEY_CTRLMASK, "\033[q"},  /* kf31 */
-      {EXKEY_F8 | KEY_CTRLMASK, "\033[r"},  /* kf32 */
-      {EXKEY_F9 | KEY_CTRLMASK, "\033[s"},  /* kf33 */
-      {EXKEY_F10 | KEY_CTRLMASK, "\033[t"}, /* kf34 */
-      {EXKEY_F11 | KEY_CTRLMASK, "\033[u"}, /* kf35 */
-      {EXKEY_F12 | KEY_CTRLMASK, "\033[v"}, /* kf36 */
+      {EXKEY_F1 | KEY_CTRLMASK, "\033[k"},  // kf25
+      {EXKEY_F2 | KEY_CTRLMASK, "\033[l"},  // kf26
+      {EXKEY_F3 | KEY_CTRLMASK, "\033[m"},  // kf27
+      {EXKEY_F4 | KEY_CTRLMASK, "\033[n"},  // kf28
+      {EXKEY_F5 | KEY_CTRLMASK, "\033[o"},  // kf29
+      {EXKEY_F6 | KEY_CTRLMASK, "\033[p"},  // kf30
+      {EXKEY_F7 | KEY_CTRLMASK, "\033[q"},  // kf31
+      {EXKEY_F8 | KEY_CTRLMASK, "\033[r"},  // kf32
+      {EXKEY_F9 | KEY_CTRLMASK, "\033[s"},  // kf33
+      {EXKEY_F10 | KEY_CTRLMASK, "\033[t"}, // kf34
+      {EXKEY_F11 | KEY_CTRLMASK, "\033[u"}, // kf35
+      {EXKEY_F12 | KEY_CTRLMASK, "\033[v"}, // kf36
 
-      {EXKEY_F1 | KEY_ALTMASK, "\033[w"},  /* kf37 */
-      {EXKEY_F2 | KEY_ALTMASK, "\033[x"},  /* kf38 */
-      {EXKEY_F3 | KEY_ALTMASK, "\033[y"},  /* kf39 */
-      {EXKEY_F4 | KEY_ALTMASK, "\033[z"},  /* kf40 */
-      {EXKEY_F5 | KEY_ALTMASK, "\033[@"},  /* kf41 */
-      {EXKEY_F6 | KEY_ALTMASK, "\033[["},  /* kf42 */
-      {EXKEY_F7 | KEY_ALTMASK, "\033[\\"}, /* kf43 */
-      {EXKEY_F8 | KEY_ALTMASK, "\033[]"},  /* kf44 */
-      {EXKEY_F9 | KEY_ALTMASK, "\033[^"},  /* kf45 */
-      {EXKEY_F10 | KEY_ALTMASK, "\033[_"}, /* kf46 */
-      {EXKEY_F11 | KEY_ALTMASK, "\033[`"}, /* kf47 */
-      {EXKEY_F12 | KEY_ALTMASK, "\033[{"}, /* kf48 */
+      {EXKEY_F1 | KEY_ALTMASK, "\033[w"},  // kf37
+      {EXKEY_F2 | KEY_ALTMASK, "\033[x"},  // kf38
+      {EXKEY_F3 | KEY_ALTMASK, "\033[y"},  // kf39
+      {EXKEY_F4 | KEY_ALTMASK, "\033[z"},  // kf40
+      {EXKEY_F5 | KEY_ALTMASK, "\033[@"},  // kf41
+      {EXKEY_F6 | KEY_ALTMASK, "\033[["},  // kf42
+      {EXKEY_F7 | KEY_ALTMASK, "\033[\\"}, // kf43
+      {EXKEY_F8 | KEY_ALTMASK, "\033[]"},  // kf44
+      {EXKEY_F9 | KEY_ALTMASK, "\033[^"},  // kf45
+      {EXKEY_F10 | KEY_ALTMASK, "\033[_"}, // kf46
+      {EXKEY_F11 | KEY_ALTMASK, "\033[`"}, // kf47
+      {EXKEY_F12 | KEY_ALTMASK, "\033[{"}, // kf48
 
       {0, nullptr}};
 
   static const keySeq bsdConsKeySeq[] = {
 
-      {EXKEY_TAB | KEY_SHIFTMASK, "\033[Z"}, /* SHIFT+TAB */
+      {EXKEY_TAB | KEY_SHIFTMASK, "\033[Z"}, // SHIFT+TAB
 
       {0, nullptr}};
 
@@ -3302,7 +3288,7 @@ static void init_keys(PHB_GTTRM pTerm)
     addKeyTab(pTerm, xtermFnKeySeq);
     addKeyTab(pTerm, xtermModKeySeq);
     addKeyTab(pTerm, puttyKeySeq);
-    /* if( pTerm->terminal_ext & TERM_PUTTY ) for PuTTY */
+    // if( pTerm->terminal_ext & TERM_PUTTY ) for PuTTY
     addKeyTab(pTerm, rxvtKeySeq);
     if (pTerm->terminal_type == TERM_CYGWIN)
     {
@@ -3321,13 +3307,13 @@ static void init_keys(PHB_GTTRM pTerm)
 
 #if 0
    static const keySeq oldCTerm3XKeySeq[] = {
-      { EXKEY_UP,     "\033OA"  }, /* kcuu1 */
-      { EXKEY_DOWN,   "\033OB"  }, /* kcud1 */
-      { EXKEY_RIGHT,  "\033OC"  }, /* kcuf1 */
-      { EXKEY_LEFT,   "\033OD"  }, /* kcub1 */
+      { EXKEY_UP,     "\033OA"  }, // kcuu1
+      { EXKEY_DOWN,   "\033OB"  }, // kcud1
+      { EXKEY_RIGHT,  "\033OC"  }, // kcuf1
+      { EXKEY_LEFT,   "\033OD"  }, // kcub1
 
-      { EXKEY_CENTER, "\033OE"  }, /* kb2   */
-      { EXKEY_ENTER,  "\033OM"  }, /* kent  */
+      { EXKEY_CENTER, "\033OE"  }, // kb2
+      { EXKEY_ENTER,  "\033OM"  }, // kent
 
       { EXKEY_CENTER|KEY_CTRLMASK, "\033OE" },
       { EXKEY_END   |KEY_CTRLMASK, "\033OF" },
@@ -3335,8 +3321,8 @@ static void init_keys(PHB_GTTRM pTerm)
       { 0, nullptr } };
 #endif
 #if 0
-   /* (curses) termcap/terminfo sequences */
-   /* FlagShip extension */
+   // (curses) termcap/terminfo sequences
+   // FlagShip extension
    addKeyMap(pTerm, EXKEY_HOME  | KEY_CTRLMASK, tiGetS("ked"  ));
    addKeyMap(pTerm, EXKEY_END   | KEY_CTRLMASK, tiGetS("kel"  ));
    addKeyMap(pTerm, EXKEY_PGUP  | KEY_CTRLMASK, tiGetS("kri"  ));
@@ -3344,18 +3330,18 @@ static void init_keys(PHB_GTTRM pTerm)
    addKeyMap(pTerm, EXKEY_RIGHT | KEY_CTRLMASK, tiGetS("kctab"));
    addKeyMap(pTerm, EXKEY_LEFT  | KEY_CTRLMASK, tiGetS("khts" ));
 
-   /* some xterms extension */
+   // some xterms extension
    addKeyMap(pTerm, EXKEY_HOME,   tiGetS("kfnd"));
    addKeyMap(pTerm, EXKEY_END,    tiGetS("kslt"));
 
-   /* keypad */
+   // keypad
    addKeyMap(pTerm, EXKEY_CENTER, tiGetS("kb2" ));
    addKeyMap(pTerm, EXKEY_HOME,   tiGetS("ka1" ));
    addKeyMap(pTerm, EXKEY_END,    tiGetS("kc1" ));
    addKeyMap(pTerm, EXKEY_PGUP,   tiGetS("ka3" ));
    addKeyMap(pTerm, EXKEY_PGDN,   tiGetS("kc3" ));
 
-   /* other keys */
+   // other keys
    addKeyMap(pTerm, EXKEY_ENTER,  tiGetS("kent" ));
    addKeyMap(pTerm, EXKEY_END,    tiGetS("kend" ));
    addKeyMap(pTerm, EXKEY_PGUP,   tiGetS("kpp"  ));
@@ -3372,7 +3358,7 @@ static void init_keys(PHB_GTTRM pTerm)
 
    addKeyMap(pTerm, EXKEY_TAB | KEY_ALTMASK, tiGetS("kcbt"));
 
-   /* function keys */
+   // function keys
    addKeyMap(pTerm, EXKEY_F1,     tiGetS("kf1" ));
    addKeyMap(pTerm, EXKEY_F2,     tiGetS("kf2" ));
    addKeyMap(pTerm, EXKEY_F3,     tiGetS("kf3" ));
@@ -3386,7 +3372,7 @@ static void init_keys(PHB_GTTRM pTerm)
    addKeyMap(pTerm, EXKEY_F11,    tiGetS("kf11"));
    addKeyMap(pTerm, EXKEY_F12,    tiGetS("kf12"));
 
-   /* shifted function keys */
+   // shifted function keys
    addKeyMap(pTerm, EXKEY_F1 |KEY_SHIFTMASK, tiGetS("kf13"));
    addKeyMap(pTerm, EXKEY_F2 |KEY_SHIFTMASK, tiGetS("kf14"));
    addKeyMap(pTerm, EXKEY_F3 |KEY_SHIFTMASK, tiGetS("kf15"));
@@ -3425,7 +3411,7 @@ static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
   pTerm->terminal_ext = 0;
   pTerm->fAM = false;
 
-  /* standard VGA colors */
+  // standard VGA colors
   pTerm->colors[0x00] = 0x000000;
   pTerm->colors[0x01] = 0xAA0000;
   pTerm->colors[0x02] = 0x00AA00;
@@ -3499,18 +3485,18 @@ static void hb_gt_trm_SetTerm(PHB_GTTRM pTerm)
     }
   }
 
-  if ((pTerm->terminal_ext & TERM_PUTTY) ||         /* PuTTY terminal emulator */
-      strncmp(szTerm, "xterm", 5) == 0 ||           /* X11 terminal emulator */
-      strncmp(szTerm, "rxvt", 4) == 0 ||            /* rxvt terminal emulator */
-      strncmp(szTerm, "gnome", 5) == 0 ||           /* GNOME Terminal */
-      strncmp(szTerm, "vte", 3) == 0 ||             /* VTE aka GNOME Terminal */
-      strncmp(szTerm, "konsole", 7) == 0 ||         /* KDE console window */
-      strncmp(szTerm, "nsterm", 6) == 0 ||          /* Apple Terminal */
-      strncmp(szTerm, "Apple_Terminal", 14) == 0 || /* Apple Terminal */
-      strncmp(szTerm, "aixterm", 7) == 0 ||         /* IBM Aixterm Terminal Emulator */
-      strncmp(szTerm, "tmux", 4) == 0 ||            /* tmux terminal multiplexer */
+  if ((pTerm->terminal_ext & TERM_PUTTY) ||         // PuTTY terminal emulator
+      strncmp(szTerm, "xterm", 5) == 0 ||           // X11 terminal emulator
+      strncmp(szTerm, "rxvt", 4) == 0 ||            // rxvt terminal emulator
+      strncmp(szTerm, "gnome", 5) == 0 ||           // GNOME Terminal
+      strncmp(szTerm, "vte", 3) == 0 ||             // VTE aka GNOME Terminal
+      strncmp(szTerm, "konsole", 7) == 0 ||         // KDE console window
+      strncmp(szTerm, "nsterm", 6) == 0 ||          // Apple Terminal
+      strncmp(szTerm, "Apple_Terminal", 14) == 0 || // Apple Terminal
+      strncmp(szTerm, "aixterm", 7) == 0 ||         // IBM Aixterm Terminal Emulator
+      strncmp(szTerm, "tmux", 4) == 0 ||            // tmux terminal multiplexer
       strncmp(szTerm, "screen", 6) == 0)
-  { /* VT 100/ANSI X3.64 virtual terminal */
+  { // VT 100/ANSI X3.64 virtual terminal
     pTerm->Init = hb_gt_trm_AnsiInit;
     pTerm->Exit = hb_gt_trm_AnsiExit;
     pTerm->SetTermMode = hb_gt_trm_LinuxSetTermMode;
@@ -3649,7 +3635,7 @@ static void hb_gt_trm_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
   hb_gt_trm_SetTerm(pTerm);
 
-/* SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment */
+// SA_NOCLDSTOP in #if is a hack to detect POSIX compatible environment
 #if defined(HB_OS_UNIX) && defined(SA_NOCLDSTOP)
 
   if (pTerm->fStdinTTY)
@@ -3658,11 +3644,11 @@ static void hb_gt_trm_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
     s_fRestTTY = true;
 
-    /* if( pTerm->saved_TIO.c_lflag & TOSTOP ) != 0 */
+    // if( pTerm->saved_TIO.c_lflag & TOSTOP ) != 0
     sigaction(SIGTTOU, nullptr, &old);
     memcpy(&act, &old, sizeof(struct sigaction));
     act.sa_handler = sig_handler;
-    /* do not use SA_RESTART - new Linux kernels will repeat the operation */
+    // do not use SA_RESTART - new Linux kernels will repeat the operation
 #if defined(SA_ONESHOT)
     act.sa_flags = SA_ONESHOT;
 #elif defined(SA_RESETHAND)
@@ -3683,13 +3669,13 @@ static void hb_gt_trm_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
     pTerm->curr_TIO.c_cflag |= CS8 | CREAD;
     pTerm->curr_TIO.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
     pTerm->curr_TIO.c_oflag &= ~OPOST;
-    /* Enable LF->CR+LF translation */
+    // Enable LF->CR+LF translation
     pTerm->curr_TIO.c_oflag = ONLCR | OPOST;
 
     memset(pTerm->curr_TIO.c_cc, 0, NCCS);
-    /* workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
-       *buntu) in which select() unconditionally accepts stdin for
-       reading if c_cc[VMIN] = 0 [druzus] */
+    // workaround for bug in some Linux kernels (i.e. 3.13.0-64-generic
+    // *buntu) in which select() unconditionally accepts stdin for
+    // reading if c_cc[VMIN] = 0 [druzus]
     pTerm->curr_TIO.c_cc[VMIN] = 1;
 #if 0
       pTerm->curr_TIO.c_cc[VMIN] = 0;
@@ -3852,7 +3838,7 @@ static void hb_gt_trm_mouse_SetPos(PHB_GT pGT, int iRow, int iCol) // FuncTable
 #endif
 
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
-  /* it does really nothing */
+  // it does really nothing
   pTerm->mLastEvt.col = iCol;
   pTerm->mLastEvt.row = iRow;
   disp_mousecursor(pTerm);
@@ -3984,7 +3970,7 @@ static HB_BOOL hb_gt_trm_Suspend(PHB_GT pGT) // FuncTable
     tcsetattr(pTerm->hFilenoStdin, TCSANOW, &pTerm->saved_TIO);
   }
 #endif
-  /* Enable line wrap when cursor set after last column */
+  // Enable line wrap when cursor set after last column
   pTerm->SetTermMode(pTerm, 1);
   return true;
 }
@@ -4025,7 +4011,7 @@ static void hb_gt_trm_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int i
    HB_TRACE(HB_TR_DEBUG, ("hb_gt_trm_Scroll(%p,%d,%d,%d,%d,%d,%d,%d,%d)", static_cast<void*>(pGT), iTop, iLeft, iBottom, iRight, iColor, usChar, iRows, iCols));
 #endif
 
-  /* Provide some basic scroll support for full screen */
+  // Provide some basic scroll support for full screen
   if (iCols == 0 && iRows > 0 && iTop == 0 && iLeft == 0)
   {
     PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
@@ -4034,12 +4020,12 @@ static void hb_gt_trm_Scroll(PHB_GT pGT, int iTop, int iLeft, int iBottom, int i
     HB_GTSELF_GETSIZE(pGT, &iHeight, &iWidth);
     if (iBottom >= iHeight - 1 && iRight >= iWidth - 1 && pTerm->iRow == iHeight - 1)
     {
-      /* scroll up the internal screen buffer */
+      // scroll up the internal screen buffer
       HB_GTSELF_SCROLLUP(pGT, iRows, iColor, usChar);
-      /* set default color for terminals which use it to erase
-       * scrolled area */
+      // set default color for terminals which use it to erase
+      // scrolled area
       pTerm->SetAttributes(pTerm, iColor & pTerm->iAttrMask);
-      /* update our internal row position */
+      // update our internal row position
       do
       {
         hb_gt_trm_termOut(pTerm, "\r\n", 2);
@@ -4079,10 +4065,10 @@ static void hb_gt_trm_SetBlink(PHB_GT pGT, HB_BOOL fBlink) // FuncTable
   PHB_GTTRM pTerm = HB_GTTRM_GET(pGT);
 
 #if 0
-   /* This is not portable extension - temporary disabled */
+   // This is not portable extension - temporary disabled
    if( pTerm->terminal_ext & TERM_PUTTY ) {
-      static const char * szBlinkOff = "\033[=0E"; /* disable blinking, highlight bkg */
-      static const char * szBlinkOn  = "\033[=1E"; /* enable blinking */
+      static const char * szBlinkOff = "\033[=0E"; // disable blinking, highlight bkg
+      static const char * szBlinkOn  = "\033[=1E"; // enable blinking
 
       const char * szBlink = fBlink ? szBlinkOn : szBlinkOff;
 
@@ -4516,8 +4502,8 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************

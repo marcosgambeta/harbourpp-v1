@@ -59,12 +59,12 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #define HB_GT_NAME WIN
 
-/* TODO: include any standard headers here */
-/* *********************************************************************** */
+// TODO: include any standard headers here 
+// ***********************************************************************
 
 #include "hbgtcore.hpp"
 #include "hbinit.hpp"
@@ -75,7 +75,7 @@
 #include "hbapicdp.hpp"
 
 #undef _WIN32_WINNT
-#define _WIN32_WINNT 0x0600 /* for hb_gt_win_SetPalette_Vista() */
+#define _WIN32_WINNT 0x0600 // for hb_gt_win_SetPalette_Vista()
 
 #include <windows.h>
 #include <wincon.h>
@@ -85,7 +85,7 @@
 #endif
 
 #ifndef HB_GTWIN_USE_SETCONSOLEMENUCLOSE_OFF
-#define HB_GTWIN_USE_SETCONSOLEMENUCLOSE /* Enable undocumented Windows API function call */
+#define HB_GTWIN_USE_SETCONSOLEMENUCLOSE // Enable undocumented Windows API function call
 #endif
 
 struct _HB_CONSOLE_SCREEN_BUFFER_INFOEX
@@ -132,7 +132,7 @@ using HB_PCONSOLE_SCREEN_BUFFER_INFOEX = HB_CONSOLE_SCREEN_BUFFER_INFOEX *;
 #define CONSOLE_WINDOWED_MODE 0
 #endif
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static int s_GtId;
 static HB_GT_FUNCS SuperTable;
@@ -171,17 +171,17 @@ static HB_FHANDLE s_hStdIn, s_hStdOut, s_hStdErr;
 static HANDLE s_HInput = INVALID_HANDLE_VALUE;
 static HANDLE s_HOutput = INVALID_HANDLE_VALUE;
 static DWORD s_dwimode, s_dwomode;
-static CONSOLE_SCREEN_BUFFER_INFO s_csbi, s_origCsbi; /* active screen mode */
-                                                      /* to restore screen mode on exit */
+static CONSOLE_SCREEN_BUFFER_INFO s_csbi, s_origCsbi; // active screen mode
+                                                      // to restore screen mode on exit
 
-/* faster macro version for use inside this module */
+// faster macro version for use inside this module
 #define _GetScreenWidth() (s_csbi.dwSize.X)
 #define _GetScreenHeight() (s_csbi.dwSize.Y)
 
 #define INPUT_BUFFER_LEN 32
 
-static DWORD s_dwNumRead;  /* Ok to use DWORD here, because this is specific... */
-static DWORD s_dwNumIndex; /* ...to the Windows API, which defines DWORD, etc.  */
+static DWORD s_dwNumRead;  // Ok to use DWORD here, because this is specific...
+static DWORD s_dwNumIndex; // ...to the Windows API, which defines DWORD, etc.
 static INPUT_RECORD s_irBuffer[INPUT_BUFFER_LEN];
 static auto s_fAltIsDown = false;
 static int s_iAltVal = 0;
@@ -190,7 +190,7 @@ static int s_mouse_buttons;
 static int s_mouse_col;
 static int s_mouse_row;
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static int hb_gt_win_keyFlags(DWORD dwState)
 {
@@ -284,7 +284,7 @@ static int hb_gt_win_getKbdState(void)
   return iKbdState;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_xSetCursorPos(void)
 {
@@ -297,7 +297,7 @@ static void hb_gt_win_xSetCursorPos(void)
   SetConsoleCursorPosition(s_HOutput, s_csbi.dwCursorPosition);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_xSetCursorStyle(void)
 {
@@ -327,8 +327,8 @@ static void hb_gt_win_xSetCursorStyle(void)
   case SC_SPECIAL2:
     cci.bVisible = TRUE;
     cci.dwSize = 66;
-    /* In their infinite wisdom, MS doesn't support cursors that
-       don't start at the bottom of the cell */
+    // In their infinite wisdom, MS doesn't support cursors that
+    // don't start at the bottom of the cell
     break;
 
   case SC_NORMAL:
@@ -341,7 +341,7 @@ static void hb_gt_win_xSetCursorStyle(void)
   SetConsoleCursorInfo(s_HOutput, &cci);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_xScreenUpdate(void)
 {
@@ -369,11 +369,11 @@ static void hb_gt_win_xScreenUpdate(void)
       s_iUpdtLeft = _GetScreenWidth();
       s_iUpdtBottom = s_iUpdtRight = 0;
 
-      WriteConsoleOutput(s_HOutput,         /* output handle */
-                         s_pCharInfoScreen, /* data to write */
-                         coSize,            /* col/row size of source buffer */
-                         coDest,            /* upper-left cell to write data from in src */
-                         &srWin);           /* screen buffer rect to write data to */
+      WriteConsoleOutput(s_HOutput,         // output handle
+                         s_pCharInfoScreen, // data to write
+                         coSize,            // col/row size of source buffer
+                         coDest,            // upper-left cell to write data from in src
+                         &srWin);           // screen buffer rect to write data to
     }
 
     if (s_iOldCurStyle != s_iCursorStyle)
@@ -388,7 +388,7 @@ static void hb_gt_win_xScreenUpdate(void)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_xUpdtSet(int iTop, int iLeft, int iBottom, int iRight)
 {
@@ -414,7 +414,7 @@ static void hb_gt_win_xUpdtSet(int iTop, int iLeft, int iBottom, int iRight)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static BOOL WINAPI hb_gt_win_CtrlHandler(DWORD dwCtrlType)
 {
@@ -452,7 +452,7 @@ static BOOL WINAPI hb_gt_win_CtrlHandler(DWORD dwCtrlType)
   return bHandled;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
 {
@@ -502,7 +502,7 @@ static void hb_gt_win_xGetScreenContents(PHB_GT pGT, SMALL_RECT *psrWin)
   HB_GTSELF_COLDAREA(pGT, psrWin->Top, psrWin->Left, psrWin->Bottom, psrWin->Right);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
 {
@@ -534,12 +534,10 @@ static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
     s_iUpdtLeft = _GetScreenWidth();
     s_iUpdtBottom = s_iUpdtRight = 0;
 
-    /*
-     * Unfortunately Windows refuse to read to big area :-(
-     * (I do not know why) so we cannot read the whole console
-     * buffer { 0, 0, s_csbi.dwSize.Y - 1, s_csbi.dwSize.X - 1 }
-     * because it reads nothing, [druzus]
-     */
+    // Unfortunately Windows refuse to read to big area :-(
+    // (I do not know why) so we cannot read the whole console
+    // buffer { 0, 0, s_csbi.dwSize.Y - 1, s_csbi.dwSize.X - 1 }
+    // because it reads nothing, [druzus]
 #if 0
       srWin.Top    = 0;
       srWin.Left   = 0;
@@ -555,13 +553,13 @@ static void hb_gt_win_xInitScreenParam(PHB_GT pGT)
     coDest.Y = srWin.Top;
     coDest.X = srWin.Left;
 
-    /* read the screen rectangle into the buffer */
-    if (ReadConsoleOutput(s_HOutput,         /* screen handle */
-                          s_pCharInfoScreen, /* transfer area */
-                          s_csbi.dwSize,     /* size of destination buffer */
-                          coDest,            /* upper-left cell to write data to */
+    // read the screen rectangle into the buffer
+    if (ReadConsoleOutput(s_HOutput,         // screen handle
+                          s_pCharInfoScreen, // transfer area
+                          s_csbi.dwSize,     // size of destination buffer
+                          coDest,            // upper-left cell to write data to
                           &srWin))
-    { /* screen buffer rectangle to read from */
+    { // screen buffer rectangle to read from
       hb_gt_win_xGetScreenContents(pGT, &srWin);
     }
     HB_GTSELF_SETPOS(pGT, s_iCurRow, s_iCurCol);
@@ -631,10 +629,9 @@ static bool hb_gt_win_SetPalette_Vista(bool bSet, COLORREF *colors)
           info.ColorTable[tmp] = colors[tmp];
         }
 
-        /* workaround for console window size reduction when structure
-         * filled by GetConsoleScreenBufferInfoEx() is passed directly
-         * to SetConsoleScreenBufferInfoEx() [druzus]
-         */
+        // workaround for console window size reduction when structure
+        // filled by GetConsoleScreenBufferInfoEx() is passed directly
+        // to SetConsoleScreenBufferInfoEx() [druzus]
         info.srWindow.Right++;
         info.srWindow.Bottom++;
         bDone = s_pSetConsoleScreenBufferInfoEx(s_HOutput, &info) != 0;
@@ -731,7 +728,7 @@ static bool hb_gt_win_SetCloseButton(bool bSet, bool bClosable)
   return bOldClosable;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFilenoStdout, HB_FHANDLE hFilenoStderr)
 {
@@ -741,7 +738,7 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
   s_fWin9x = hb_iswin9x();
 
-  /* stdin && stdout && stderr */
+  // stdin && stdout && stderr
   s_hStdIn = hFilenoStdin;
   s_hStdOut = hFilenoStdout;
   s_hStdErr = hFilenoStderr;
@@ -751,17 +748,15 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   s_dwNumRead = s_dwNumIndex = 0;
   s_iOldCurStyle = s_iCursorStyle = SC_NORMAL;
 
-  /* AllocConsole() initializes standard input, standard output,
-     and standard error handles for the new console. [jarabal] */
+  // AllocConsole() initializes standard input, standard output,
+  // and standard error handles for the new console. [jarabal]
 
 #ifndef HB_NO_ALLOC_CONSOLE
-  /*
-   * This is a hack for MSYS console. It does not support full screen output
-   * so nothing can be seen on the screen and we have to close the MSYS
-   * console to be able to allocate the MS-Windows one.
-   * Unfortunately I do not know any method to detect the MSYS console
-   * so I used this hack with checking OSTYPE environment variable. [druzus]
-   */
+  // This is a hack for MSYS console. It does not support full screen output
+  // so nothing can be seen on the screen and we have to close the MSYS
+  // console to be able to allocate the MS-Windows one.
+  // Unfortunately I do not know any method to detect the MSYS console
+  // so I used this hack with checking OSTYPE environment variable. [druzus]
   {
     TCHAR lpOsType[16];
 
@@ -776,17 +771,17 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
     }
   }
 
-  /* Try to allocate console if we haven't inherited any */
+  // Try to allocate console if we haven't inherited any
   AllocConsole();
 #endif
 
   if ((s_HInput = GetStdHandle(STD_INPUT_HANDLE)) == INVALID_HANDLE_VALUE)
   {
 #ifdef HB_NO_ALLOC_CONSOLE
-    /* allocate console only when debugger is linked */
+    // allocate console only when debugger is linked
     if (hb_dynsymFind("__DBGENTRY"))
     {
-      AllocConsole(); /* It is a Windows app without a console, so we create one */
+      AllocConsole(); // It is a Windows app without a console, so we create one
       s_HInput = GetStdHandle(STD_INPUT_HANDLE);
     }
 #endif
@@ -796,16 +791,16 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
     }
   }
 
-  /* Add Ctrl+Break handler [vszakats] */
+  // Add Ctrl+Break handler [vszakats]
   SetConsoleCtrlHandler(hb_gt_win_CtrlHandler, TRUE);
 
   HB_GTSUPER_INIT(pGT, hFilenoStdin, hFilenoStdout, hFilenoStderr);
 
-  s_HOutput = CreateFile(TEXT("CONOUT$"),                    /* filename    */
-                         GENERIC_READ | GENERIC_WRITE,       /* Access flag */
-                         FILE_SHARE_READ | FILE_SHARE_WRITE, /* share mode  */
-                         nullptr,                            /* security attributes */
-                         OPEN_EXISTING,                      /* create mode */
+  s_HOutput = CreateFile(TEXT("CONOUT$"),                    // filename
+                         GENERIC_READ | GENERIC_WRITE,       // Access flag
+                         FILE_SHARE_READ | FILE_SHARE_WRITE, // share mode
+                         nullptr,                            // security attributes
+                         OPEN_EXISTING,                      // create mode
                          0, 0);
 
   if (s_HOutput == INVALID_HANDLE_VALUE)
@@ -813,11 +808,11 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
     hb_errInternal(10001, "Could not allocate console (output)", nullptr, nullptr);
   }
 
-  s_HInput = CreateFile(TEXT("CONIN$"),                     /* filename    */
-                        GENERIC_READ | GENERIC_WRITE,       /* Access flag */
-                        FILE_SHARE_READ | FILE_SHARE_WRITE, /* share mode  */
-                        nullptr,                            /* security attributes */
-                        OPEN_EXISTING,                      /* create mode */
+  s_HInput = CreateFile(TEXT("CONIN$"),                     // filename
+                        GENERIC_READ | GENERIC_WRITE,       // Access flag
+                        FILE_SHARE_READ | FILE_SHARE_WRITE, // share mode
+                        nullptr,                            // security attributes
+                        OPEN_EXISTING,                      // create mode
                         0, 0);
 
   if (s_HInput == INVALID_HANDLE_VALUE)
@@ -827,7 +822,7 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
 
   GetConsoleScreenBufferInfo(s_HOutput, &s_csbi);
 
-  /* save screen info to restore on exit */
+  // save screen info to restore on exit
   memcpy(&s_origCsbi, &s_csbi, sizeof(s_csbi));
 
   s_csbi.srWindow.Top = s_csbi.srWindow.Left = 0;
@@ -859,7 +854,7 @@ static void hb_gt_win_Init(PHB_GT pGT, HB_FHANDLE hFilenoStdin, HB_FHANDLE hFile
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_Exit(PHB_GT pGT)
 {
@@ -894,13 +889,13 @@ static void hb_gt_win_Exit(PHB_GT pGT)
 
     CloseHandle(s_HOutput);
   }
-  /* Remove Ctrl+Break handler */
+  // Remove Ctrl+Break handler
   SetConsoleCtrlHandler(hb_gt_win_CtrlHandler, FALSE);
 
   HB_GTSUPER_EXIT(pGT);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
 {
@@ -932,7 +927,7 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
       coBuf.X = static_cast<short>(iCols);
     }
 
-    /* new console window size and scroll position */
+    // new console window size and scroll position
     SMALL_RECT srWin;
     srWin.Top = srWin.Left = 0;
     srWin.Bottom = static_cast<short>(iRows - 1);
@@ -940,9 +935,8 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
 
     if (static_cast<int>(_GetScreenWidth()) >= iCols && static_cast<int>(_GetScreenHeight()) >= iRows)
     {
-      /* the new dimensions do not exceed the current buffer dimensions so
-       * we can safely resize the console window first, then the buffer
-       */
+      // the new dimensions do not exceed the current buffer dimensions so
+      // we can safely resize the console window first, then the buffer
       if (SetConsoleWindowInfo(s_HOutput, TRUE, &srWin))
       {
         SetConsoleScreenBufferSize(s_HOutput, coBuf);
@@ -951,10 +945,9 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
     }
     else if (static_cast<int>(_GetScreenWidth()) <= iCols && static_cast<int>(_GetScreenHeight()) <= iRows)
     {
-      /* none of the current buffer dimensions is larger then the
-       * new dimensions so we can safely enlarge the buffer to new
-       * dimensions then adjust the console window dimensions
-       */
+      // none of the current buffer dimensions is larger then the
+      // new dimensions so we can safely enlarge the buffer to new
+      // dimensions then adjust the console window dimensions
       if (SetConsoleScreenBufferSize(s_HOutput, coBuf))
       {
         SetConsoleWindowInfo(s_HOutput, TRUE, &srWin);
@@ -963,18 +956,17 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
     }
     else
     {
-      /* one of the new dimensions is smaller and second larger then the
-       * current buffer dimensions. Windows API needs to keep the buffer
-       * dimensions not smaller then console window size and there is
-       * no single API call which allow to change both buffer and console
-       * window dimensions. It means that we have to resize one of the
-       * above objects in two steps. We can temporary enlarge the buffer
-       * dimensions or reduce the console window dimensions.
-       * To reduce the possibility that we will exploit some WIN API
-       * limits for the maximum buffer size instead of enlarging it we
-       * decrease the one of console window dimensions which is larger
-       * then the corresponding new one.
-       */
+      // one of the new dimensions is smaller and second larger then the
+      // current buffer dimensions. Windows API needs to keep the buffer
+      // dimensions not smaller then console window size and there is
+      // no single API call which allow to change both buffer and console
+      // window dimensions. It means that we have to resize one of the
+      // above objects in two steps. We can temporary enlarge the buffer
+      // dimensions or reduce the console window dimensions.
+      // To reduce the possibility that we will exploit some WIN API
+      // limits for the maximum buffer size instead of enlarging it we
+      // decrease the one of console window dimensions which is larger
+      // then the corresponding new one.
       if (static_cast<int>(_GetScreenWidth()) < iCols)
       {
         srWin.Right = static_cast<short>(_GetScreenWidth() - 1);
@@ -985,11 +977,10 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
       }
       if (SetConsoleWindowInfo(s_HOutput, TRUE, &srWin))
       {
-        /* now we can safely set the new buffer dimensions because
-         * none of them is smaller then corresponding dimensions of
-         * just reduced console window and then we set final console
-         * window size.
-         */
+        // now we can safely set the new buffer dimensions because
+        // none of them is smaller then corresponding dimensions of
+        // just reduced console window and then we set final console
+        // window size.
         if (SetConsoleScreenBufferSize(s_HOutput, coBuf))
         {
           srWin.Bottom = static_cast<short>(iRows - 1);
@@ -1009,7 +1000,7 @@ static HB_BOOL hb_gt_win_SetMode(PHB_GT pGT, int iRows, int iCols)
   return fRet;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static const char *hb_gt_win_Version(PHB_GT pGT, int iType)
 {
@@ -1027,7 +1018,7 @@ static const char *hb_gt_win_Version(PHB_GT pGT, int iType)
   return "Harbour++ Terminal: Windows native console";
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_win_PostExt(PHB_GT pGT)
 {
@@ -1043,7 +1034,7 @@ static HB_BOOL hb_gt_win_PostExt(PHB_GT pGT)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_win_Suspend(PHB_GT pGT)
 {
@@ -1080,7 +1071,7 @@ static HB_BOOL hb_gt_win_Resume(PHB_GT pGT)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static int Handle_Alt_Key(INPUT_RECORD *pInRec, bool *pAltIsDown, int *pAltVal)
 {
@@ -1089,31 +1080,31 @@ static int Handle_Alt_Key(INPUT_RECORD *pInRec, bool *pAltIsDown, int *pAltVal)
   switch ((pInRec->Event.KeyEvent.dwControlKeyState & ENHANCED_KEY) == 0 ? pInRec->Event.KeyEvent.wVirtualScanCode : 0)
   {
   case 0x49:
-    ++iVal; /* fallthrough */ /* 9 */
+    ++iVal; // fallthrough // 9
   case 0x48:
-    ++iVal; /* fallthrough */ /* 8 */
+    ++iVal; // fallthrough // 8
   case 0x47:
-    ++iVal; /* fallthrough */ /* 7 */
+    ++iVal; // fallthrough // 7
   case 0x4d:
-    ++iVal; /* fallthrough */ /* 6 */
+    ++iVal; // fallthrough // 6
   case 0x4c:
-    ++iVal; /* fallthrough */ /* 5 */
+    ++iVal; // fallthrough // 5
   case 0x4b:
-    ++iVal; /* fallthrough */ /* 4 */
+    ++iVal; // fallthrough // 4
   case 0x51:
-    ++iVal; /* fallthrough */ /* 3 */
+    ++iVal; // fallthrough // 3
   case 0x50:
-    ++iVal; /* fallthrough */ /* 2 */
+    ++iVal; // fallthrough // 2
   case 0x4f:
-    ++iVal; /* fallthrough */ /* 1 */
-  case 0x52:                  /* 0 */
+    ++iVal; // fallthrough // 1
+  case 0x52:               // 0
     if (pInRec->Event.KeyEvent.bKeyDown)
     {
       *pAltVal = *pAltVal * 10 + iVal;
     }
     iVal = 0;
     break;
-  case 0x38: /* Alt */
+  case 0x38: // Alt
     if (pInRec->Event.KeyEvent.bKeyDown)
     {
       break;
@@ -1126,7 +1117,7 @@ static int Handle_Alt_Key(INPUT_RECORD *pInRec, bool *pAltIsDown, int *pAltVal)
       iVal = *pAltVal & 0xFF;
 #endif
     }
-    /* fallthrough */
+    // fallthrough
   default:
     *pAltIsDown = false;
     break;
@@ -1247,17 +1238,17 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 
   int iKey = 0;
 
-  /* First check for Ctrl+Break, which is handled by gtwin.c */
+  // First check for Ctrl+Break, which is handled by gtwin.c
   if (s_fBreak)
   {
-    /* Reset the global Ctrl+Break flag */
+    // Reset the global Ctrl+Break flag
     s_fBreak = false;
-    iKey = HB_BREAK_FLAG; /* Indicate that Ctrl+Break was pressed */
-    /* Check for events only when the event buffer is exhausted. */
+    iKey = HB_BREAK_FLAG; // Indicate that Ctrl+Break was pressed
+    // Check for events only when the event buffer is exhausted.
   }
   else if (s_dwNumIndex >= s_dwNumRead)
   {
-    /* Check for keyboard input */
+    // Check for keyboard input
 
     s_dwNumRead = 0;
     GetNumberOfConsoleInputEvents(s_HInput, &s_dwNumRead);
@@ -1265,9 +1256,9 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
     if (s_dwNumRead)
     {
 #if defined(UNICODE)
-      /* Workaround for UNICOWS bug:
-            https://web.archive.org/web/blogs.msdn.com/michkap/archive/2007/01/13/1460724.aspx
-         [vszakats] */
+      // Workaround for UNICOWS bug:
+      //    https://web.archive.org/web/blogs.msdn.com/michkap/archive/2007/01/13/1460724.aspx
+      // [vszakats]
 
       if (s_fWin9x)
       {
@@ -1278,12 +1269,12 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
       }
 #endif
 
-      /* Read keyboard input */
-      ReadConsoleInput(s_HInput,         /* input buffer handle    */
-                       s_irBuffer,       /* buffer to read into    */
-                       INPUT_BUFFER_LEN, /* size of read buffer    */
-                       &s_dwNumRead);    /* number of records read */
-      /* Set up to process the first input event */
+      // Read keyboard input
+      ReadConsoleInput(s_HInput,         // input buffer handle
+                       s_irBuffer,       // buffer to read into
+                       INPUT_BUFFER_LEN, // size of read buffer
+                       &s_dwNumRead);    // number of records read
+      // Set up to process the first input event
       s_dwNumIndex = 0;
 
 #if defined(UNICODE)
@@ -1309,11 +1300,11 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 #ifndef _TRACE
             switch (pInRec->Event.KeyEvent.wVirtualScanCode)
             {
-            case 0x38: /* ALT */
-            case 0x1d: /* CTRL */
-            case 0x2a: /* LSHIFT */
-            case 0x36: /* RSHIFT */
-              /* ignore control keys */
+            case 0x38: // ALT
+            case 0x1d: // CTRL
+            case 0x2a: // LSHIFT
+            case 0x36: // RSHIFT
+              // ignore control keys
               continue;
             default:
               if (!pInRec->Event.KeyEvent.bKeyDown)
@@ -1328,11 +1319,11 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
                    "state=0x%04x "
                    "uchar=%d "
                    "repeat=%d\n",
-                   static_cast<int>(pInRec->Event.KeyEvent.wVirtualKeyCode),   /* VK_* key code */
-                   static_cast<int>(pInRec->Event.KeyEvent.wVirtualScanCode),  /* scan code */
-                   static_cast<int>(pInRec->Event.KeyEvent.dwControlKeyState), /* state */
-                   static_cast<int>(pInRec->Event.KeyEvent.uChar.UnicodeChar), /* char */
-                   static_cast<int>(pInRec->Event.KeyEvent.wRepeatCount));     /* repeat */
+                   static_cast<int>(pInRec->Event.KeyEvent.wVirtualKeyCode),   // VK_* key code
+                   static_cast<int>(pInRec->Event.KeyEvent.wVirtualScanCode),  // scan code
+                   static_cast<int>(pInRec->Event.KeyEvent.dwControlKeyState), // state
+                   static_cast<int>(pInRec->Event.KeyEvent.uChar.UnicodeChar), // char
+                   static_cast<int>(pInRec->Event.KeyEvent.wRepeatCount));     // repeat
           }
 #ifdef _TRACE
           else if (pInRec->EventType == MOUSE_EVENT)
@@ -1372,7 +1363,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
     }
   }
 
-  /* Only process one keyboard event at a time. */
+  // Only process one keyboard event at a time.
   if (iKey == 0 && s_dwNumIndex < s_dwNumRead)
   {
     INPUT_RECORD *pInRec = &s_irBuffer[s_dwNumIndex];
@@ -1380,7 +1371,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 
     if (pInRec->EventType == KEY_EVENT)
     {
-      /* Save the keyboard state and ASCII, scan, key code */
+      // Save the keyboard state and ASCII, scan, key code
       WORD wScan = pInRec->Event.KeyEvent.wVirtualScanCode;
       WORD wVKey = pInRec->Event.KeyEvent.wVirtualKeyCode;
       DWORD dwState = pInRec->Event.KeyEvent.dwControlKeyState;
@@ -1407,7 +1398,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
 
       if (iChar != 0 || s_fAltIsDown)
       {
-        /* Our own routine to process ALT + KeyPad NUMs */
+        // Our own routine to process ALT + KeyPad NUMs
       }
       else if (pInRec->Event.KeyEvent.bKeyDown)
       {
@@ -1417,27 +1408,24 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
         iChar = static_cast<HB_UCHAR>(pInRec->Event.KeyEvent.uChar.AsciiChar);
 #endif
 
-        /*
-         * Under Win9x, upper row keys are affected by caps-lock
-         * and should not be.  There are 2 solutions - the first
-         * is to enable the calling of SpecialHandling below - which
-         * will only be activated under Win9x (Preferably under user
-         * control, since they know if their keyboard isn't working), or
-         * just enable KeyB handling in config.sys, and do not enable the
-         * following call.
-
-         * 2004-11-26 Vicente Guerra
-         * (With some clarification by Paul Tucker)
-         * If making this fix the default under Win98, then it doesn't
-         * work for non-US keyboards.  (The default has now been changed)
-         * I tried to replicate the problem under Win98SE (Spanish),
-         * but it works fine. I hope someone could tell me how the
-         * problem appears, for try to fix it.
-
-         * "Microsoft has confirmed this to be a bug in the Microsoft
-         * products " Windows 95 & Windows 98 (According to MSDN)
-         *
-         */
+        // Under Win9x, upper row keys are affected by caps-lock
+        // and should not be.  There are 2 solutions - the first
+        // is to enable the calling of SpecialHandling below - which
+        // will only be activated under Win9x (Preferably under user
+        // control, since they know if their keyboard isn't working), or
+        // just enable KeyB handling in config.sys, and do not enable the
+        // following call.
+        //
+        // 2004-11-26 Vicente Guerra
+        // (With some clarification by Paul Tucker)
+        // If making this fix the default under Win98, then it doesn't
+        // work for non-US keyboards.  (The default has now been changed)
+        // I tried to replicate the problem under Win98SE (Spanish),
+        // but it works fine. I hope someone could tell me how the
+        // problem appears, for try to fix it.
+        //
+        // "Microsoft has confirmed this to be a bug in the Microsoft
+        // products " Windows 95 & Windows 98 (According to MSDN)
 
         if (s_fSpecialKeyHandling && (dwState & CAPSLOCK_ON))
         {
@@ -1579,7 +1567,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
             break;
           }
           iFlags |= HB_KF_CTRL;
-          /* fallthrough */
+          // fallthrough
         case VK_PAUSE:
           iKey = HB_KX_PAUSE;
           break;
@@ -1601,7 +1589,7 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
         case VK_NUMPAD9:
           if (iFlags == HB_KF_ALT)
           {
-            iKey = iFlags = 0; /* for ALT + <ASCII/UNICODE_VALUE_FROM_KEYPAD> */
+            iKey = iFlags = 0; // for ALT + <ASCII/UNICODE_VALUE_FROM_KEYPAD>
           }
           else
           {
@@ -1872,10 +1860,10 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
     {
       int iFlags = hb_gt_win_keyFlags(pInRec->Event.MouseEvent.dwControlKeyState);
 
-      /* mouse wheel events use screen based mouse position */
+      // mouse wheel events use screen based mouse position
       if (pInRec->Event.MouseEvent.dwEventFlags == MOUSE_HWHEELED)
       {
-        /* unsupported */
+        // unsupported
       }
       else if (pInRec->Event.MouseEvent.dwEventFlags == MOUSE_WHEELED)
       {
@@ -1934,10 +1922,10 @@ static int hb_gt_win_ReadKey(PHB_GT pGT, int iEventMask)
   return iKey;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/* *********************************************************************** */
-/* dDuration is in 'Ticks' (18.2 per second) */
+// ***********************************************************************
+// dDuration is in 'Ticks' (18.2 per second)
 static void hb_gt_win_Tone(PHB_GT pGT, double dFrequency, double dDuration)
 {
 #if 0
@@ -1950,7 +1938,7 @@ static void hb_gt_win_Tone(PHB_GT pGT, double dFrequency, double dDuration)
   hb_gt_BaseLock(pGT);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static bool hb_gt_win_IsFullScreen(void)
 {
@@ -1967,7 +1955,7 @@ static bool hb_gt_win_IsFullScreen(void)
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static bool hb_gt_win_FullScreen(HB_BOOL bFullScreen)
 {
@@ -1983,7 +1971,7 @@ static bool hb_gt_win_FullScreen(HB_BOOL bFullScreen)
   return false;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
 {
@@ -2226,7 +2214,7 @@ static HB_BOOL hb_gt_win_Info(PHB_GT pGT, int iType, PHB_GT_INFO pInfo)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_win_mouse_IsPresent(PHB_GT pGT)
 {
@@ -2255,7 +2243,7 @@ static HB_BOOL hb_gt_win_mouse_ButtonState(PHB_GT pGT, int iButton)
   auto fReturn = false;
 
   if (iButton == 0)
-  { /* TODO: switch */
+  { // TODO: switch
     fReturn = (GetKeyState(VK_LBUTTON) & 0x8000) != 0;
   }
   else if (iButton == 1)
@@ -2278,7 +2266,7 @@ static int hb_gt_win_mouse_CountButton(PHB_GT pGT)
   return static_cast<int>(dwCount);
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
 {
@@ -2319,7 +2307,7 @@ static void hb_gt_win_Redraw(PHB_GT pGT, int iRow, int iCol, int iSize)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static void hb_gt_win_Refresh(PHB_GT pGT)
 {
@@ -2351,7 +2339,7 @@ static void hb_gt_win_Refresh(PHB_GT pGT)
   }
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
 {
@@ -2381,12 +2369,10 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* *********************************************************************** */
+// ***********************************************************************
 
 #include "hbgtreg.hpp"
 
-/* *********************************************************************** */
+// ***********************************************************************
 
-/*
-TODO: remover código relacionado com Win9x
-*/
+// TODO: remover código relacionado com Win9x
