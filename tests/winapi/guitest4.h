@@ -1,9 +1,8 @@
-/*
- * WinApi test
- *
- * Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
- *
- */
+//
+// WinApi test
+//
+// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+//
 
 #define IDR_MYMENU 101
 #define IDM_FILE_NEW  1

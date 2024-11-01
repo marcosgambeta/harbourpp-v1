@@ -1,9 +1,8 @@
-/*
- * WinApi test
- *
- * Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
- *
- */
+//
+// WinApi test
+//
+// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+//
 
 #include <windows.h>
 #include "guitest7.h"
