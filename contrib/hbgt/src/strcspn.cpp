@@ -21,13 +21,19 @@ HB_FUNC(GT_STRCSPN)
     for (p1 = 0; p1 < l1; ++p1)
     {
       for (p2 = 0; (p2 < l2) && (string[p1] != cset[p2]); ++p2)
+      {
         ;
+      }
 
       if (p2 < l2)
+      {
         break;
+      }
     }
     hb_retns(p1);
   }
   else
+  {
     hb_retns(-1);
+  }
 }

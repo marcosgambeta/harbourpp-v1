@@ -19,12 +19,20 @@ HB_FUNC(GT_CHRTOTAL)
     HB_ISIZ count, p1, p2;
 
     for (count = 0, p2 = 0; p2 < l2; p2++)
+    {
       for (p1 = 0; p1 < l1; p1++)
+      {
         if (s1[p1] == s2[p2])
+        {
           count++; /* increment counter */
+        }
+      }
+    }
 
     hb_retns(count);
   }
   else
+  {
     hb_retns(-1);
+  }
 }

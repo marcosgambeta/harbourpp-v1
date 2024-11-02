@@ -15,7 +15,9 @@ HB_FUNC(GT_ASCIISUM)
   HB_MAXUINT ascSum = 0;
 
   for (i = 0; i <= len; i++, str++)
+  {
     ascSum += *str;
+  }
 
   hb_retnint(ascSum);
 }

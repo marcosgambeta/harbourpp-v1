@@ -27,15 +27,21 @@ HB_FUNC(GT_NEWFLAG)
     unsigned Byte;
 
     if (!(FlagCount % 8))
+    {
       --ByteCount;
+    }
     auto FlagString = static_cast<char *>(hb_xgrab(ByteCount));
     for (Byte = 0; Byte < ByteCount; Byte++)
+    {
       FlagString[Byte] = 0;
+    }
     hb_retclen(FlagString, ByteCount);
     hb_xfree(FlagString);
   }
   else
+  {
     hb_retc_null();
+  }
 }
 
 HB_FUNC(GT_SETFLAG)
@@ -68,7 +74,9 @@ HB_FUNC(GT_SETFLAG)
     hb_retclen_buffer(FlagString, hb_parclen(1));
   }
   else
+  {
     hb_retc_null();
+  }
 }
 
 HB_FUNC(GT_CLRFLAG)
@@ -101,7 +109,9 @@ HB_FUNC(GT_CLRFLAG)
     hb_retclen_buffer(FlagString, hb_parclen(1));
   }
   else
+  {
     hb_retc_null();
+  }
 }
 
 HB_FUNC(GT_ISFLAG)

@@ -23,7 +23,9 @@ HB_FUNC(GT_STRPBRK)
     do
     {
       for (p2 = 0; (p2 < l2) && (cset[p2] != string[p1]); ++p2)
+      {
         ;
+      }
 
       if (p2 < l2)
       {
@@ -33,8 +35,12 @@ HB_FUNC(GT_STRPBRK)
     } while (p1++ < l1);
 
     if (p2 >= l2)
+    {
       hb_retc_null();
+    }
   }
   else
+  {
     hb_retc_null();
+  }
 }

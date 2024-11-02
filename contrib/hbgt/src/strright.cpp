@@ -21,13 +21,19 @@ HB_FUNC(GT_STRRIGHT)
     for (p1 = l1 - 1; p1 >= 0; p1--)
     {
       for (p2 = 0; p2 < l2 && cset[p2] != string[p1]; p2++)
+      {
         ;
+      }
 
       if (p2 == l2)
+      {
         break;
+      }
     }
     hb_retns(l1 - p1 - 1);
   }
   else
+  {
     hb_retns(-1);
+  }
 }

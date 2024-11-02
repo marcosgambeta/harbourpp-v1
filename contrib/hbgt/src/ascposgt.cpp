@@ -19,11 +19,17 @@ HB_FUNC(GT_ASCPOS)
          /* starting at position 0 */
 
     if (p > hb_parclen(1)) /* oh oh p > length of passed string */
+    {
       hb_retni(-2);        /* error -2 */
+    }
     else
+    {
       hb_retni(static_cast<int>(s[p])); /* return ASCII code of appropriate */
                                         /* character in string */
+    }
   }
   else
+  {
     hb_retni(-1);
+  }
 }

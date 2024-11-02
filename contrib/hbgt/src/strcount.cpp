@@ -28,15 +28,21 @@ HB_FUNC(GT_STRCOUNT)
       for (p1 = 0; p1 < l1; p1++)
       {
         if (s1[p1] != s2[p2 + p1])
+        {
           match = 0;
+        }
       }
 
       if (match)
+      {
         count++;
+      }
     }
 
     hb_retns(count);
   }
   else
+  {
     hb_retns(-1);
+  }
 }

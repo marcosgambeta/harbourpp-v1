@@ -23,7 +23,9 @@ HB_FUNC(GT_CHRFIRST)
     do
     {
       for (p2 = 0; (p2 < l2) && (cset[p2] != string[p1]); ++p2)
+      {
         ;
+      }
 
       if (p2 < l2)
       {
@@ -33,8 +35,12 @@ HB_FUNC(GT_CHRFIRST)
     } while (p1++ < l1);
 
     if (p2 >= l2)
+    {
       hb_retni(0);
+    }
   }
   else
+  {
     hb_retni(-1);
+  }
 }

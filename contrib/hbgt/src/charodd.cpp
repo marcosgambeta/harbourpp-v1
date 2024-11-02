@@ -19,10 +19,14 @@ HB_FUNC(GT_CHARODD)
     auto s2 = static_cast<char *>(hb_xgrab(len / 2 + 1)); /* grab us some memory to work with */
 
     for (i = 0; i <= len; i += 2)
+    {
       s2[i / 2] = s1[i] & 0x7f;
+    }
 
     hb_retclen_buffer(s2, len / 2);
   }
   else
+  {
     hb_retc_null();
+  }
 }

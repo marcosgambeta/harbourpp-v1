@@ -20,7 +20,9 @@ HB_FUNC(GT_STREXPAND)
     int j;
 
     if (HB_ISCHAR(3))
+    {
       insert = hb_parc(3);
+    }
 
     auto out = static_cast<char *>(hb_xgrab(len * (nIns + 1))); /* grab us some memory to work with */
 
@@ -34,7 +36,9 @@ HB_FUNC(GT_STREXPAND)
       {
         /* insert the fill characters */
         for (j = 1; j <= nIns; j++)
+        {
           out[p++] = insert[0];
+        }
       }
     }
     out[p] = '\0'; /* Add terminating NUL */
@@ -42,5 +46,7 @@ HB_FUNC(GT_STREXPAND)
     hb_retc_buffer(out);
   }
   else
+  {
     hb_retc_null();
+  }
 }
