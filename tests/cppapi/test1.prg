@@ -1,9 +1,8 @@
-/*
- * C++ API test
- *
- * Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
- *
- */
+//
+// C++ API test
+//
+// Copyright (c) 2024 Marcos Antonio Gambeta <marcosgambeta AT outlook DOT com>
+//
 
 // Compile with:
 // hbmk2 test1 -cflag=-D_HB_API_INTERNAL_
@@ -38,6 +37,7 @@ RETURN
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
 
+// using stack (more fast)
 HB_FUNC(TEST1)
 {
   _HB_ITEM value{};
@@ -46,6 +46,7 @@ HB_FUNC(TEST1)
   value.clear();
 }
 
+// using heap (more slow)
 HB_FUNC(TEST2)
 {
   auto value = hb_itemNew(nullptr);
