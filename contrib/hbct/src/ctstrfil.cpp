@@ -1,10 +1,9 @@
-/*
- * StrFile(), FileStr(), ScreenFile(), FileScreen()
- * SetFCreate(), CSetSafety()
- *
- * Copyright 2004 Pavel Tsarenko <tpe2@mail.ru>
- *
- */
+//
+// StrFile(), FileStr(), ScreenFile(), FileScreen()
+// SetFCreate(), CSetSafety()
+//
+// Copyright 2004 Pavel Tsarenko <tpe2@mail.ru>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

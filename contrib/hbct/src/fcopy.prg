@@ -1,23 +1,22 @@
-/*
- * CT3 file functions:
- *    FileCopy(), FileCOpen(), FileCCLose(), FileAppend()
- *
- *    Author...: Frederic J. Bell
- *    Dated....: 1994-06-17
- *    Revised..: 1994-09-20
- *    Purpose..: Replaces the following CA-T*ols functions which generate GPF's
- *               FileCopy(), FileCOpen(), FileAppend()!
- *    Relies on: Clipper (can you believe it!)
- *    Compile..: /n /m /w /[/p /b /l] /es2
- *    Notes....:
- *    No copyright - released into the public domain NSA.
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- *    added FileCDaTi() and rewritten above functions for CT3 compatibility
- *    and some problems fixing,
- *
- */
+//
+// CT3 file functions:
+//    FileCopy(), FileCOpen(), FileCCLose(), FileAppend()
+//
+//    Author...: Frederic J. Bell
+//    Dated....: 1994-06-17
+//    Revised..: 1994-09-20
+//    Purpose..: Replaces the following CA-T*ols functions which generate GPF's
+//               FileCopy(), FileCOpen(), FileAppend()!
+//    Relies on: Clipper (can you believe it!)
+//    Compile..: /n /m /w /[/p /b /l] /es2
+//    Notes....:
+//    No copyright - released into the public domain NSA.
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
+//    added FileCDaTi() and rewritten above functions for CT3 compatibility
+//    and some problems fixing,
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

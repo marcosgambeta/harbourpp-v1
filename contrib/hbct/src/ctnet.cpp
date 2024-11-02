@@ -1,9 +1,8 @@
-/*
- * CT3 NET functions to PC-LAN/MS-NET.
- *
- * Copyright 2004 Eduardo Fernandes <eduardo@modalsistemas.com.br>
- *
- */
+//
+// CT3 NET functions to PC-LAN/MS-NET.
+//
+// Copyright 2004 Eduardo Fernandes <eduardo@modalsistemas.com.br>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

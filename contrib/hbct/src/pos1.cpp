@@ -1,11 +1,10 @@
-/*
- * PosAlpha(), PosLower(), PosRange() and PosUpper() CT3 string functions
- *
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour) (PosUpper())
- * Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
- *        Author: Martin Vogel <vogel@inttec.de>
- *
- */
+//
+// PosAlpha(), PosLower(), PosRange() and PosUpper() CT3 string functions
+//
+// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour) (PosUpper())
+// Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
+//        Author: Martin Vogel <vogel@inttec.de>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

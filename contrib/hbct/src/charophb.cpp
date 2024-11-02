@@ -1,15 +1,14 @@
-/*
- * CT3 string functions
- *     - CharSub()  (Harbour extension)
- *     - CharShl()  (Harbour extension)
- *     - CharShr()  (Harbour extension)
- *     - CharRll()  (Harbour extension)
- *     - CharRlr()  (Harbour extension)
- *
- * Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
- *        Author: Martin Vogel <vogel@inttec.de>
- *
- */
+//
+// CT3 string functions
+//     - CharSub()  (Harbour extension)
+//     - CharShl()  (Harbour extension)
+//     - CharShr()  (Harbour extension)
+//     - CharRll()  (Harbour extension)
+//     - CharRlr()  (Harbour extension)
+//
+// Copyright 2001 IntTec GmbH, Neunlindenstr 32, 79106 Freiburg, Germany
+//        Author: Martin Vogel <vogel@inttec.de>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

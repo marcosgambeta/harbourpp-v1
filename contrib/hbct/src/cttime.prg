@@ -1,10 +1,9 @@
-/*
- * TimeToSec(), SecToTime(), Millisec()
- *
- * Copyright 2003 Piero Vincenzo Lupano <pierovincenzo1956@supereva.it>
- * Copyright 2003 Przemyslaw Czerpak <druzus@acn.waw.pl>
- *
- */
+//
+// TimeToSec(), SecToTime(), Millisec()
+//
+// Copyright 2003 Piero Vincenzo Lupano <pierovincenzo1956@supereva.it>
+// Copyright 2003 Przemyslaw Czerpak <druzus@acn.waw.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

@@ -1,12 +1,11 @@
-/*
- * CT (Clipper Tools) Disk, File and Directory management.
- *
- * Copyright 2004-2005 Eduardo Fernandes <modalsist@yahoo.com.br>
- *    DirMake(), DirName(), DriveType(), Volume(), VolSerial()
- * Copyright 2004 Phil Krylov <phil@newstar.rinet.ru> (NumDiskL())
- * Copyright 2006 Pavel Tsarenko <tpe2@mail.ru> (TrueName())
- *
- */
+//
+// CT (Clipper Tools) Disk, File and Directory management.
+//
+// Copyright 2004-2005 Eduardo Fernandes <modalsist@yahoo.com.br>
+//    DirMake(), DirName(), DriveType(), Volume(), VolSerial()
+// Copyright 2004 Phil Krylov <phil@newstar.rinet.ru> (NumDiskL())
+// Copyright 2006 Pavel Tsarenko <tpe2@mail.ru> (TrueName())
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

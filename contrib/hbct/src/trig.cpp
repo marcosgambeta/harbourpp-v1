@@ -1,26 +1,25 @@
-/*
- * CT3 trigonometric functions
- *     - Pi()
- *     - Sin()
- *     - Cos()
- *     - Tan()
- *     - Cot()
- *     - Asin()
- *     - Acos()
- *     - Atan()
- *     - Sinh()
- *     - Cosh()
- *     - Tanh()
- *     - Atn2()
- *     - RToD()
- *     - DToR()
- *
- * Copyright 2001 Alejandro de Garate <alex_degarate@hotmail.com>
- *
- * Documentation and changes concerning error handling Copyright 2001
- *   IntTec GmbH, Freiburg, Germany, Author: Martin Vogel <vogel@inttec.de>
- *
- */
+//
+// CT3 trigonometric functions
+//     - Pi()
+//     - Sin()
+//     - Cos()
+//     - Tan()
+//     - Cot()
+//     - Asin()
+//     - Acos()
+//     - Atan()
+//     - Sinh()
+//     - Cosh()
+//     - Tanh()
+//     - Atn2()
+//     - RToD()
+//     - DToR()
+//
+// Copyright 2001 Alejandro de Garate <alex_degarate@hotmail.com>
+//
+// Documentation and changes concerning error handling Copyright 2001
+//   IntTec GmbH, Freiburg, Germany, Author: Martin Vogel <vogel@inttec.de>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

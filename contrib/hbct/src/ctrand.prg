@@ -1,9 +1,8 @@
-/*
- * CT3 functions: Random(), Rand()
- *
- * Copyright 2007 Pavel Tsarenko <tpe2@mail.ru>
- *
- */
+//
+// CT3 functions: Random(), Rand()
+//
+// Copyright 2007 Pavel Tsarenko <tpe2@mail.ru>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

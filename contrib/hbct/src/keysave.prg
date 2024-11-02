@@ -1,9 +1,8 @@
-/*
- * CT3 SETKEY Functions: SaveSetKey(), RestSetKey()
- *
- * Copyright 2004 Philip Chee <philip@aleytys.pc.my>
- *
- */
+//
+// CT3 SETKEY Functions: SaveSetKey(), RestSetKey()
+//
+// Copyright 2004 Philip Chee <philip@aleytys.pc.my>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

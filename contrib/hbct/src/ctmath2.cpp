@@ -1,16 +1,15 @@
-/*
- * CT3 mathematical functions
- *   - Floor()
- *   - Ceiling()
- *   - Sign()
- *   - Log10()
- *   - Fact()
- *
- * Copyright 2001 Alejandro de Garate <alex_degarate@hotmail.com>
- * Copyright 2001 IntTec GmbH, Freiburg, Germany
- *        Author: Martin Vogel <vogel@inttec.de> (Documentation and changes concerning error handling)
- *
- */
+//
+// CT3 mathematical functions
+//   - Floor()
+//   - Ceiling()
+//   - Sign()
+//   - Log10()
+//   - Fact()
+//
+// Copyright 2001 Alejandro de Garate <alex_degarate@hotmail.com>
+// Copyright 2001 IntTec GmbH, Freiburg, Germany
+//        Author: Martin Vogel <vogel@inttec.de> (Documentation and changes concerning error handling)
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

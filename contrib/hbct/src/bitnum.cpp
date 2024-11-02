@@ -1,12 +1,11 @@
-/*
- * CT3 Number and bit manipulation functions:
- *       NumAnd(), NumOr(), NumXor(), NumNot(), NumHigh(), NumLow()
- *       NumRol(), NumMirr(), ClearBit(), SetBit(), IsBit(),
- *       IntNeg(), IntPos()
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// CT3 Number and bit manipulation functions:
+//       NumAnd(), NumOr(), NumXor(), NumNot(), NumHigh(), NumLow()
+//       NumRol(), NumMirr(), ClearBit(), SetBit(), IsBit(),
+//       IntNeg(), IntPos()
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

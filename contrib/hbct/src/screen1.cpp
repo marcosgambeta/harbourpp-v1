@@ -1,12 +1,11 @@
-/*
- * CT3 video functions:
- * ScreenAttr(), ScreenMix(), SayScreen(),
- * ClearWin(), InvertWin(), UnTextWin(), CharWin(), ColorWin(), ColorRepl()
- * and Harbour extension: ScreenText()
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// CT3 video functions:
+// ScreenAttr(), ScreenMix(), SayScreen(),
+// ClearWin(), InvertWin(), UnTextWin(), CharWin(), ColorWin(), ColorRepl()
+// and Harbour extension: ScreenText()
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

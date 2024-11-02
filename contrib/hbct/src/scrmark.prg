@@ -1,12 +1,11 @@
-/*
- * CT3 video functions (screen-like functions):
- *
- * Copyright 2004 Pavel Tsarenko <tpe2.mail.ru> (ScreenMark())
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *   modified for better CT3 compatibility and GT drivers which do not use
- *   VGA compatible video buffer
- *
- */
+//
+// CT3 video functions (screen-like functions):
+//
+// Copyright 2004 Pavel Tsarenko <tpe2.mail.ru> (ScreenMark())
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//   modified for better CT3 compatibility and GT drivers which do not use
+//   VGA compatible video buffer
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

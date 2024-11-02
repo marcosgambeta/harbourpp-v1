@@ -1,15 +1,14 @@
-/*
- * CT3 files functions: SetFAttr()
- *
- * Copyright 2001 Luiz Rafael Culik <culik@sl.conex.net>
- *    SetFDaTi(), FileSMax(), FileDelete()
- * Copyright 2004 Phil Krylov <phil@newstar.rinet.ru>
- *    FileSeek(), FileSize(), FileAttr(), FileTime(), FileDate()
- *    FileMove(), FileSMax(),
- *    DeleteFile(), RenameFile()
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// CT3 files functions: SetFAttr()
+//
+// Copyright 2001 Luiz Rafael Culik <culik@sl.conex.net>
+//    SetFDaTi(), FileSMax(), FileDelete()
+// Copyright 2004 Phil Krylov <phil@newstar.rinet.ru>
+//    FileSeek(), FileSize(), FileAttr(), FileTime(), FileDate()
+//    FileMove(), FileSMax(),
+//    DeleteFile(), RenameFile()
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
