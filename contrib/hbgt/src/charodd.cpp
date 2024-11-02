@@ -16,7 +16,7 @@ HB_FUNC(GT_CHARODD)
     HB_ISIZ len = hb_parclen(1);
     HB_ISIZ i;
 
-    auto s2 = static_cast<char *>(hb_xgrab(len / 2 + 1)); /* grab us some memory to work with */
+    auto s2 = static_cast<char *>(hb_xgrab(len / 2 + 1)); // grab us some memory to work with
 
     for (i = 0; i <= len; i += 2)
     {

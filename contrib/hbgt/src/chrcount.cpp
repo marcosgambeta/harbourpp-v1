@@ -17,13 +17,13 @@ HB_FUNC(GT_CHRCOUNT)
     HB_ISIZ len = hb_parclen(2);
     HB_ISIZ count, pos2;
 
-    /* loop through s2 matching passed character (s1) with
-       each character of s1 */
+    // loop through s2 matching passed character (s1) with
+    // each character of s1
     for (count = 0, pos2 = 1; pos2 <= len; s2++, pos2++)
     {
-      if (*s1 == *s2) /* character matches s1 */
+      if (*s1 == *s2) // character matches s1
       {
-        count++;      /* increment counter */
+        count++;      // increment counter
       }
     }
 

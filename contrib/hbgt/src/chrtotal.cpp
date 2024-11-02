@@ -24,7 +24,7 @@ HB_FUNC(GT_CHRTOTAL)
       {
         if (s1[p1] == s2[p2])
         {
-          count++; /* increment counter */
+          count++; // increment counter
         }
       }
     }

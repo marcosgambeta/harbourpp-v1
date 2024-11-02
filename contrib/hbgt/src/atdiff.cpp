@@ -17,16 +17,16 @@ HB_FUNC(GT_ATDIFF)
     HB_ISIZ len = hb_parclen(2);
     HB_ISIZ pos;
 
-    /* loop through comparing both strings
-       NOTE: pos starts at 1, so as to return a string index
-             for Cl*pper */
+    // loop through comparing both strings
+    // NOTE: pos starts at 1, so as to return a string index
+    //       for Cl*pper
 
     for (pos = 1; (pos <= len) && (*s1 == *s2); s2++, s1++)
     {
       pos++;
     }
 
-    if (pos > len) /* strings match exactly */
+    if (pos > len) // strings match exactly
     {
       hb_retns(0);
     }

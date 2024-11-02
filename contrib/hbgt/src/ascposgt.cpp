@@ -15,17 +15,17 @@ HB_FUNC(GT_ASCPOS)
     auto s = hb_parc(1);
     HB_SIZE p = hb_parns(2);
 
-    p--; /* decrement p to adjust for c strings */
-         /* starting at position 0 */
+    p--; // decrement p to adjust for c strings
+         // starting at position 0
 
-    if (p > hb_parclen(1)) /* oh oh p > length of passed string */
+    if (p > hb_parclen(1)) // oh oh p > length of passed string
     {
-      hb_retni(-2);        /* error -2 */
+      hb_retni(-2);        // error -2
     }
     else
     {
-      hb_retni(static_cast<int>(s[p])); /* return ASCII code of appropriate */
-                                        /* character in string */
+      hb_retni(static_cast<int>(s[p])); // return ASCII code of appropriate
+                                        // character in string
     }
   }
   else

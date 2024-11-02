@@ -18,8 +18,8 @@ HB_FUNC(GT_STRCOUNT)
     HB_ISIZ l2 = hb_parclen(2);
     HB_ISIZ count, p1, p2;
 
-    /* loop through s2 matching passed character (s1) with
-       each character of s1 */
+    // loop through s2 matching passed character (s1) with
+    // each character of s1
 
     for (count = 0, p2 = 0; p2 <= (l2 - l1); p2++)
     {

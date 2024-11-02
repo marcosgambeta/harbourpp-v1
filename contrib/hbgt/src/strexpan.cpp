@@ -24,24 +24,24 @@ HB_FUNC(GT_STREXPAND)
       insert = hb_parc(3);
     }
 
-    auto out = static_cast<char *>(hb_xgrab(len * (nIns + 1))); /* grab us some memory to work with */
+    auto out = static_cast<char *>(hb_xgrab(len * (nIns + 1))); // grab us some memory to work with
 
-    /* loop thru input */
+    // loop thru input
     for (i = 0, p = 0; i < len; i++)
     {
-      out[p++] = in[i]; /* insert a character from input */
+      out[p++] = in[i]; // insert a character from input
 
-      /* do not insert fill chars on last char of input */
+      // do not insert fill chars on last char of input
       if (i < (len - 1))
       {
-        /* insert the fill characters */
+        // insert the fill characters
         for (j = 1; j <= nIns; j++)
         {
           out[p++] = insert[0];
         }
       }
     }
-    out[p] = '\0'; /* Add terminating NUL */
+    out[p] = '\0'; // Add terminating NUL
 
     hb_retc_buffer(out);
   }
