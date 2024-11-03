@@ -121,8 +121,8 @@ HB_FUNC(TABEXPAND)
 
     iIgnore141 = hb_parldef(6, 0);
 
-    /* estimate maximum return length by assuming that EVERY tab char
-       can be replaced by at most <nTabWidth> characters */
+    // estimate maximum return length by assuming that EVERY tab char
+    // can be replaced by at most <nTabWidth> characters
     for (sIndex = 0; sIndex < sStrLen; sIndex++)
     {
       if (*(pcString + sIndex) == cTab)
@@ -137,7 +137,7 @@ HB_FUNC(TABEXPAND)
     }
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + (sTabCnt * (sTabWidth - 1))));
 
-    /* now copy the string */
+    // now copy the string
     sIndex = 0;
     sRetLen = 0;
     sLineIndex = 0;
@@ -147,7 +147,7 @@ HB_FUNC(TABEXPAND)
 
       if (cChar == cTab)
       {
-        /* tab character */
+        // tab character
 
         for (HB_SIZE sFillIndex = sTabWidth - (sLineIndex % sTabWidth); sFillIndex > 0; sFillIndex--)
         {
@@ -160,7 +160,7 @@ HB_FUNC(TABEXPAND)
       }
       else if (cChar == HB_CHAR_SOFT1)
       {
-        /* soft carriage return */
+        // soft carriage return
         *(pcRet + sRetLen) = HB_CHAR_SOFT1;
         sRetLen++;
         sIndex++;
@@ -175,7 +175,7 @@ HB_FUNC(TABEXPAND)
       }
       else if (cChar == cCR)
       {
-        /* newline string ? */
+        // newline string ?
         if (sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen &&
             ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex)
         {
@@ -200,7 +200,7 @@ HB_FUNC(TABEXPAND)
         sLineIndex++;
       }
     }
-    /* copy rest */
+    // copy rest
     hb_xmemcpy(pcRet + sRetLen, pcString + sIndex, sStrLen - sIndex);
     sRetLen += sStrLen - sIndex;
     hb_retclen(pcRet, sRetLen);
@@ -302,11 +302,11 @@ HB_FUNC(TABPACK)
       hb_retc_null();
       return;
     }
-    /* estimate maximum return length by assuming that there's
-       nothing to pack */
+    // estimate maximum return length by assuming that there's
+    // nothing to pack
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
 
-    /* now copy the string */
+    // now copy the string
     sIndex = 0;
     sRetLen = 0;
     sTabIndex = 0;
@@ -320,7 +320,7 @@ HB_FUNC(TABPACK)
       {
         if (sTabIndex == sTabWidth - 1)
         {
-          /* we have just found the last character of a tabstop */
+          // we have just found the last character of a tabstop
           *(pcRet + sRetLen) = cTab;
           sRetLen++;
           sFillCount = 0;
@@ -338,17 +338,17 @@ HB_FUNC(TABPACK)
       {
         *(pcRet + sRetLen) = cTab;
         sRetLen++;
-        /* discard any fill characters before the tabstop */
+        // discard any fill characters before the tabstop
         sFillCount = 0;
         sTabIndex = 0;
         sIndex++;
       }
       else if (cChar == HB_CHAR_SOFT1 && !iIgnore141)
       {
-        /* soft carriage return */
+        // soft carriage return
 
-        /* eventually not enough fill chars to fill a tab,
-           so copy them verbatim */
+        // eventually not enough fill chars to fill a tab,
+        // so copy them verbatim
         for (; sFillCount > 0; sFillCount--)
         {
           *(pcRet + sRetLen) = cFill;
@@ -361,12 +361,12 @@ HB_FUNC(TABPACK)
       }
       else if (cChar == cCR)
       {
-        /* newline string ? */
+        // newline string ?
         if (sNewLineLen > 0 && sIndex + sNewLineLen <= sStrLen &&
             ct_at_exact_forward(pcString + sIndex, sNewLineLen, pcNewLine, sNewLineLen, nullptr) == pcString + sIndex)
         {
-          /* eventually not enough fill chars to fill a tab,
-             so copy them verbatim */
+          // eventually not enough fill chars to fill a tab,
+          // so copy them verbatim
           for (; sFillCount > 0; sFillCount--)
           {
             *(pcRet + sRetLen) = cFill;
@@ -387,8 +387,8 @@ HB_FUNC(TABPACK)
       }
       else
       {
-        /* eventually not enough fill chars to fill a tab,
-           so copy them verbatim */
+        // eventually not enough fill chars to fill a tab,
+        // so copy them verbatim
         for (; sFillCount > 0; sFillCount--)
         {
           *(pcRet + sRetLen) = cFill;
@@ -409,7 +409,7 @@ HB_FUNC(TABPACK)
         }
       }
     }
-    /* copy rest */
+    // copy rest
     for (; sFillCount > 0; sFillCount--)
     {
       *(pcRet + sRetLen) = cFill;

@@ -61,10 +61,10 @@ static int min3(int a, int b, int c)
 
 HB_FUNC(STRDIFF)
 {
-  /* param check */
+  // param check
   if (HB_ISCHAR(1) || HB_ISCHAR(2))
   {
-    /* get parameters */
+    // get parameters
     const char *pcStr1, *pcStr2;
     HB_SIZE sStrLen1, sStrLen2;
     int iAtLike = ct_getatlike();
@@ -93,7 +93,7 @@ HB_FUNC(STRDIFF)
       sStrLen2 = 0;
     }
 
-    /* check for memory consumption */
+    // check for memory consumption
     if ((static_cast<double>(sStrLen1) + 1.0) * (static_cast<double>(sStrLen2) + 1.0) *
             (static_cast<double>(sizeof(int))) >=
         static_cast<double>(UINT_MAX))
@@ -110,7 +110,7 @@ HB_FUNC(STRDIFF)
       return;
     }
 
-    /* get penalty points */
+    // get penalty points
     auto iReplace = hb_parnidef(3, 3);
     auto iDelete = hb_parnidef(4, 6);
     auto iInsert = hb_parnidef(5, 1);

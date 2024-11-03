@@ -492,7 +492,7 @@ HB_FUNC(COLORWIN)
   hb_retc_null();
 }
 
-HB_FUNC(SCREENTEXT) /* HB_EXTENSION */
+HB_FUNC(SCREENTEXT) // HB_EXTENSION
 {
   int iTop, iLeft, iBottom, iRight;
 

@@ -367,9 +367,9 @@ HB_FUNC(ATAN)
       }
       else
       {
-        /* atan normally don't error, but it's save to return Pi()/2
-           or -Pi()/2, respectively, as these
-           are the boundary result values */
+        // atan normally don't error, but it's save to return Pi()/2
+        // or -Pi()/2, respectively, as these
+        // are the boundary result values
         if (dArg < 0.0)
         {
           hb_retnd(-CT_PI / 2.0);
@@ -426,11 +426,11 @@ HB_FUNC(ATN2)
       }
       else
       {
-        /* DOMAIN error: both arguments to atan2 have been 0 */
-        /* CTIII behaves very strange here: atn2 (0.0, 0.0) == -PI
-           atn2 (0.0, -0.0) == 0.0
-           atn2 (-0.0, 0.0) == -PI
-           atn2 (-0.0, -0.0) == -2*PI */
+        // DOMAIN error: both arguments to atan2 have been 0
+        // CTIII behaves very strange here: atn2 (0.0, 0.0) == -PI
+        // atn2 (0.0, -0.0) == 0.0
+        // atn2 (-0.0, 0.0) == -PI
+        // atn2 (-0.0, -0.0) == -2*PI
         if (dX >= 0.0)
         {
           hb_retnd(-CT_PI);
@@ -490,8 +490,8 @@ HB_FUNC(SINH)
       }
       else
       {
-        /* OVERFLOW error: we have no CTIII behaviour to follow,
-           so return +INF or -INF, respectively */
+        // OVERFLOW error: we have no CTIII behaviour to follow,
+        // so return +INF or -INF, respectively
         if (dArg < 0.0)
         {
           hb_retndlen(-HUGE_VAL, -1, -1);
@@ -547,8 +547,8 @@ HB_FUNC(COSH)
       }
       else
       {
-        /* OVERFLOW error: we have no CTIII behaviour to follow,
-           so return +INF */
+        // OVERFLOW error: we have no CTIII behaviour to follow,
+        // so return +INF
         hb_retndlen(HUGE_VAL, -1, -1);
       }
     }
@@ -597,8 +597,8 @@ HB_FUNC(TANH)
       }
       else
       {
-        /* normally, Tanh() doesn't give errors, but let's return -1 or +1,
-           respectively, as these are the boundary result values */
+        // normally, Tanh() doesn't give errors, but let's return -1 or +1,
+        // respectively, as these are the boundary result values
         if (dArg < 0.0)
         {
           hb_retnd(-1.0);

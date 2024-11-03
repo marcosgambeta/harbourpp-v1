@@ -57,19 +57,19 @@
 
 #include <hbstack.hpp>
 
-/* static functions for token environment management */
+// static functions for token environment management
 
 #define TOKEN_ENVIRONMENT_STEP 100
 
 struct TOKEN_POSITION
 {
-  HB_SIZE sStartPos; /* relative 0-based index of first char of token */
-  HB_SIZE sEndPos;   /* relative 0-based index of first char BEHIND token, so that length = sEndPos-sStartPos */
+  HB_SIZE sStartPos; // relative 0-based index of first char of token
+  HB_SIZE sEndPos;   // relative 0-based index of first char BEHIND token, so that length = sEndPos-sStartPos
 };
 
 using TOKEN_ENVIRONMENT = TOKEN_POSITION *;
 
-/* alloc new token environment */
+// alloc new token environment
 static TOKEN_ENVIRONMENT sTokEnvNew(void)
 {
   auto env = static_cast<TOKEN_ENVIRONMENT>(hb_xalloc(sizeof(TOKEN_POSITION) * (2 + TOKEN_ENVIRONMENT_STEP) + 1));
@@ -79,23 +79,23 @@ static TOKEN_ENVIRONMENT sTokEnvNew(void)
     return nullptr;
   }
 
-  /* use the first element to store current length and use of token env */
-  env[0].sStartPos = 0;                    /* 0-based index to next free, unused element */
-  env[0].sEndPos = TOKEN_ENVIRONMENT_STEP; /* but there are 100 elements ready for use */
+  // use the first element to store current length and use of token env
+  env[0].sStartPos = 0;                    // 0-based index to next free, unused element
+  env[0].sEndPos = TOKEN_ENVIRONMENT_STEP; // but there are 100 elements ready for use
 
-  /* use second element to store actual index with TokenNext() */
-  env[1].sStartPos = 0; /* 0-based index value that is to be used NEXT */
+  // use second element to store actual index with TokenNext()
+  env[1].sStartPos = 0; // 0-based index value that is to be used NEXT
 
   return env;
 }
 
-/* add a tokenizing position to a token environment */
+// add a tokenizing position to a token environment
 static int sTokEnvAddPos(TOKEN_ENVIRONMENT *pEnv, TOKEN_POSITION *pPos)
 {
   HB_SIZE nIndex;
   TOKEN_ENVIRONMENT env = *pEnv;
 
-  /* new memory needed? */
+  // new memory needed?
   if (env[0].sStartPos == env[0].sEndPos)
   {
     env = *pEnv = static_cast<TOKEN_ENVIRONMENT>(
@@ -104,7 +104,7 @@ static int sTokEnvAddPos(TOKEN_ENVIRONMENT *pEnv, TOKEN_POSITION *pPos)
     env[0].sEndPos += TOKEN_ENVIRONMENT_STEP;
   }
 
-  nIndex = env[0].sStartPos + 2; /* +2  because of extra elements */
+  nIndex = env[0].sStartPos + 2; // +2  because of extra elements
   env[nIndex].sStartPos = pPos->sStartPos;
   env[nIndex].sEndPos = pPos->sEndPos;
   env[0].sStartPos++;
@@ -112,19 +112,19 @@ static int sTokEnvAddPos(TOKEN_ENVIRONMENT *pEnv, TOKEN_POSITION *pPos)
   return 1;
 }
 
-/* check to see if token pointer is at end of environment */
+// check to see if token pointer is at end of environment
 static int sTokEnvEnd(TOKEN_ENVIRONMENT env)
 {
   return env[1].sStartPos >= env[0].sStartPos;
 }
 
-/* get size of token environment in memory */
+// get size of token environment in memory
 static HB_SIZE sTokEnvGetSize(TOKEN_ENVIRONMENT env)
 {
   return sizeof(TOKEN_POSITION) * (2 + env[0].sEndPos);
 }
 
-/* get position element pointed to by tokenizing pointer */
+// get position element pointed to by tokenizing pointer
 static TOKEN_POSITION *sTokEnvGetPos(TOKEN_ENVIRONMENT env)
 {
   if (env[1].sStartPos >= env[0].sStartPos)
@@ -132,10 +132,10 @@ static TOKEN_POSITION *sTokEnvGetPos(TOKEN_ENVIRONMENT env)
     return nullptr;
   }
 
-  return env + 2 + (env[1].sStartPos); /* "+2" because of extra elements */
+  return env + 2 + (env[1].sStartPos); // "+2" because of extra elements
 }
 
-/* get position element pointed to by given 0-based index */
+// get position element pointed to by given 0-based index
 static TOKEN_POSITION *sTokEnvGetPosIndex(TOKEN_ENVIRONMENT env, HB_SIZE nIndex)
 {
   if (nIndex >= env[0].sStartPos)
@@ -143,10 +143,10 @@ static TOKEN_POSITION *sTokEnvGetPosIndex(TOKEN_ENVIRONMENT env, HB_SIZE nIndex)
     return nullptr;
   }
 
-  return env + 2 + nIndex; /* "+2" because of extra elements */
+  return env + 2 + nIndex; // "+2" because of extra elements
 }
 
-/* increment tokenizing pointer by one */
+// increment tokenizing pointer by one
 static int sTokEnvIncPtr(TOKEN_ENVIRONMENT env)
 {
   if (env[1].sStartPos >= env[0].sStartPos)
@@ -160,7 +160,7 @@ static int sTokEnvIncPtr(TOKEN_ENVIRONMENT env)
   }
 }
 
-/* set tokenizing pointer to 0-based value */
+// set tokenizing pointer to 0-based value
 static int sTokEnvSetPtr(TOKEN_ENVIRONMENT env, HB_SIZE sCnt)
 {
   if (sCnt >= env[0].sStartPos)
@@ -174,9 +174,9 @@ static int sTokEnvSetPtr(TOKEN_ENVIRONMENT env, HB_SIZE sCnt)
   }
 }
 
-/* decrement tokenizing pointer by one */
+// decrement tokenizing pointer by one
 
-/* sTokEnvDecPtr currently not used ! */
+// sTokEnvDecPtr currently not used !
 #if 0
 static int sTokEnvDecPtr(TOKEN_ENVIRONMENT env)
 {
@@ -189,27 +189,27 @@ static int sTokEnvDecPtr(TOKEN_ENVIRONMENT env)
 }
 #endif
 
-/* get value of tokenizing pointer */
+// get value of tokenizing pointer
 static HB_SIZE sTokEnvGetPtr(TOKEN_ENVIRONMENT env)
 {
   return env[1].sStartPos;
 }
 
-/* get token count */
+// get token count
 static HB_SIZE sTokEnvGetCnt(TOKEN_ENVIRONMENT env)
 {
   return env[0].sStartPos;
 }
 
-/* free token environment */
+// free token environment
 static void sTokEnvDel(TOKEN_ENVIRONMENT env)
 {
   hb_xfree(env);
 }
 
-/* Harbour functions */
+// Harbour functions
 
-/* static data */
+// static data
 static const char sc_spcSeparatorStr[] = "\x00"
                                          "\x09"
                                          "\x0A"
@@ -307,7 +307,7 @@ HB_FUNC(TOKENINIT)
     TOKEN_ENVIRONMENT sTokenEnvironment;
     TOKEN_POSITION sTokenPosition;
 
-    /* separator string */
+    // separator string
     auto sSeparatorStrLen = hb_parclen(2);
     if (sSeparatorStrLen > 0)
     {
@@ -319,7 +319,7 @@ HB_FUNC(TOKENINIT)
       sSeparatorStrLen = sizeof(sc_spcSeparatorStr) - 1;
     }
 
-    /* skip width */
+    // skip width
     if (HB_ISNUM(3))
     {
       nSkip = hb_parns(3);
@@ -333,7 +333,7 @@ HB_FUNC(TOKENINIT)
       nSkip = HB_SIZE_MAX;
     }
 
-    /* allocate new token environment */
+    // allocate new token environment
     if ((sTokenEnvironment = sTokEnvNew()) == nullptr)
     {
       int iArgErrorMode = ct_getargerrormode();
@@ -351,7 +351,7 @@ HB_FUNC(TOKENINIT)
     pcSubStr = pcString;
     sSubStrLen = sStrLen;
 
-    /* scan start condition */
+    // scan start condition
     pc = pcSubStr - 1;
 
     for (;;)
@@ -359,7 +359,7 @@ HB_FUNC(TOKENINIT)
       HB_SIZE sMatchedPos = sSeparatorStrLen;
       HB_SIZE nSkipCnt;
 
-      /* nSkip */
+      // nSkip
       nSkipCnt = 0;
       do
       {
@@ -405,18 +405,18 @@ HB_FUNC(TOKENINIT)
       }
     }
 
-    /* save token environment to 4th parameter OR to the static */
+    // save token environment to 4th parameter OR to the static
     hb_retl(sTokSave(sTokenEnvironment, 4));
   }
   else
   {
-    /* if there is a token environment stored in either the 4th parameter or
-       in the static variable -> rewind to first token */
+    // if there is a token environment stored in either the 4th parameter or
+    // in the static variable -> rewind to first token
     TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(4, false);
 
     if (sTokenEnvironment != nullptr)
     {
-      /* rewind to first token */
+      // rewind to first token
       int iResult = sTokEnvSetPtr(sTokenEnvironment, 0);
 
       if (!sTokSave(sTokenEnvironment, 4))
@@ -427,7 +427,7 @@ HB_FUNC(TOKENINIT)
     }
     else
     {
-      /* nothing to rewind -> return .F. */
+      // nothing to rewind -> return .F.
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
@@ -459,7 +459,7 @@ HB_FUNC(TOKENNEXT)
     TOKEN_ENVIRONMENT sTokenEnvironment = sTokGet(3, false);
     TOKEN_POSITION *psTokenPosition;
 
-    /* token environment by parameter ... */
+    // token environment by parameter ...
     if (sTokenEnvironment == nullptr)
     {
       int iArgErrorMode = ct_getargerrormode();
@@ -473,16 +473,16 @@ HB_FUNC(TOKENNEXT)
       return;
     }
 
-    /* nth token or next token ?  */
+    // nth token or next token ?
     if (HB_ISNUM(2))
     {
       psTokenPosition = sTokEnvGetPosIndex(sTokenEnvironment, hb_parns(2) - 1);
-      /* no increment here */
+      // no increment here
     }
     else
     {
       psTokenPosition = sTokEnvGetPos(sTokenEnvironment);
-      /* increment counter */
+      // increment counter
       sTokEnvIncPtr(sTokenEnvironment);
     }
 
@@ -514,7 +514,7 @@ HB_FUNC(TOKENNEXT)
   }
   else
   {
-    /* no string given, no token returns */
+    // no string given, no token returns
     PHB_ITEM pSubst = nullptr;
     int iArgErrorMode = ct_getargerrormode();
 
@@ -590,7 +590,7 @@ HB_FUNC(TOKENEND)
     }
     else
     {
-      /* it is CT3 behaviour to return .T. if there's no string TokenInit()'ed */
+      // it is CT3 behaviour to return .T. if there's no string TokenInit()'ed
       hb_retl(true);
     }
   }

@@ -48,14 +48,14 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_CHARONE_CHARONE 0
 #define DO_CHARONE_WORDONE 1
 
-/* helper function for the *one functions */
+// helper function for the *one functions
 static void do_charone(int iSwitch)
 {
-  /* param check */
+  // param check
   if (HB_ISCHAR(1))
   {
     const char *pcString;
@@ -87,7 +87,7 @@ static void do_charone(int iSwitch)
         char cCurrent = *pcString;
 
         auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
-        /* copy first char */
+        // copy first char
         pcRet[sRetStrLen++] = cCurrent;
         for (const char *pcSub = pcString + 1; pcSub < pcString + sStrLen; pcSub++)
         {
@@ -106,7 +106,7 @@ static void do_charone(int iSwitch)
       }
       else
       {
-        /* algorithm does nothing to 1-char-strings */
+        // algorithm does nothing to 1-char-strings
         hb_retclen(pcString, sStrLen);
       }
       break;
@@ -119,7 +119,7 @@ static void do_charone(int iSwitch)
         char cCurrent2 = pcString[1];
 
         auto pcRet = static_cast<char *>(hb_xgrab(sStrLen));
-        /* copy first double char */
+        // copy first double char
         pcRet[sRetStrLen++] = cCurrent1;
         pcRet[sRetStrLen++] = cCurrent2;
 
@@ -152,7 +152,7 @@ static void do_charone(int iSwitch)
           }
         }
 
-        /* copy last character if string length is odd */
+        // copy last character if string length is odd
         if (sStrLen & 1)
         {
           pcRet[sRetStrLen++] = pcString[sStrLen - 1];
@@ -163,7 +163,7 @@ static void do_charone(int iSwitch)
       }
       else
       {
-        /* algorithm does nothing to 3-char-strings */
+        // algorithm does nothing to 3-char-strings
         hb_retclen(pcString, sStrLen);
       }
       break;

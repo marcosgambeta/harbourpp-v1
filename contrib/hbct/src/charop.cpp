@@ -51,10 +51,10 @@
 
 #include "ct.h"
 
-/* helper function */
+// helper function
 void ct_charop(int iMode)
 {
-  /* suppressing return value ? */
+  // suppressing return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
   if (HB_ISCHAR(1))
@@ -80,7 +80,7 @@ void ct_charop(int iMode)
 
     switch (iMode)
     {
-    /* NOT */
+    // NOT
     case CT_CHAROP_CHARNOT:
       for (sPos = 0; sPos < sStrLen; ++sPos)
       {
@@ -88,10 +88,10 @@ void ct_charop(int iMode)
       }
       break;
 
-    /* SHL */
+    // SHL
     case CT_CHAROP_CHARSHL:
     {
-      int iSHL = hb_parni(2) % 8; /* defaults to 0 */
+      int iSHL = hb_parni(2) % 8; // defaults to 0
 
       if (iSHL == 0)
       {
@@ -107,10 +107,10 @@ void ct_charop(int iMode)
       break;
     }
 
-    /* SHR */
+    // SHR
     case CT_CHAROP_CHARSHR:
     {
-      int iSHR = hb_parni(2) % 8; /* defaults to 0 */
+      int iSHR = hb_parni(2) % 8; // defaults to 0
 
       if (iSHR == 0)
       {
@@ -126,10 +126,10 @@ void ct_charop(int iMode)
       break;
     }
 
-    /* RLL */
+    // RLL
     case CT_CHAROP_CHARRLL:
     {
-      int iRLL = hb_parni(2) % 8; /* defaults to 0 */
+      int iRLL = hb_parni(2) % 8; // defaults to 0
 
       hb_xmemcpy(pucResult, pucString, sStrLen);
 
@@ -140,7 +140,7 @@ void ct_charop(int iMode)
           for (auto iRLLCnt = 0; iRLLCnt < iRLL; iRLLCnt++)
           {
             if (pucResult[sPos] & 0x80)
-            { /* most left bit set -> roll over */
+            { // most left bit set -> roll over
               pucResult[sPos] <<= 1;
               pucResult[sPos] |= 0x01;
             }
@@ -154,10 +154,10 @@ void ct_charop(int iMode)
       break;
     }
 
-    /* RLR */
+    // RLR
     case CT_CHAROP_CHARRLR:
     {
-      int iRLR = hb_parni(2) % 8; /* defaults to 0 */
+      int iRLR = hb_parni(2) % 8; // defaults to 0
 
       hb_xmemcpy(pucResult, pucString, sStrLen);
 
@@ -168,7 +168,7 @@ void ct_charop(int iMode)
           for (auto iRLRCnt = 0; iRLRCnt < iRLR; iRLRCnt++)
           {
             if (pucResult[sPos] & 0x01)
-            { /* most right bit set -> roll over */
+            { // most right bit set -> roll over
               pucResult[sPos] >>= 1;
               pucResult[sPos] |= 0x80;
             }
@@ -182,7 +182,7 @@ void ct_charop(int iMode)
       break;
     }
 
-    /* ADD */
+    // ADD
     case CT_CHAROP_CHARADD:
 
       if (HB_ISCHAR(2))
@@ -209,7 +209,7 @@ void ct_charop(int iMode)
       }
       break;
 
-    /* SUB */
+    // SUB
     case CT_CHAROP_CHARSUB:
 
       if (HB_ISCHAR(2))
@@ -236,7 +236,7 @@ void ct_charop(int iMode)
       }
       break;
 
-    /* AND */
+    // AND
     case CT_CHAROP_CHARAND:
 
       if (HB_ISCHAR(2))
@@ -263,7 +263,7 @@ void ct_charop(int iMode)
       }
       break;
 
-    /* OR */
+    // OR
     case CT_CHAROP_CHAROR:
 
       if (HB_ISCHAR(2))
@@ -290,7 +290,7 @@ void ct_charop(int iMode)
       }
       break;
 
-    /* XOR */
+    // XOR
     case CT_CHAROP_CHARXOR:
 
       if (HB_ISCHAR(2))

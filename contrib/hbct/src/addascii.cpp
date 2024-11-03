@@ -48,7 +48,7 @@
 
 HB_FUNC(ADDASCII)
 {
-  /* suppressing return value ? */
+  // suppressing return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
   if (HB_ISCHAR(1))
@@ -69,7 +69,7 @@ HB_FUNC(ADDASCII)
                  EF_CANDEFAULT, HB_ERR_ARGS_BASEPARAMS);
       }
 
-      /* return string unchanged */
+      // return string unchanged
       if (iNoRet)
       {
         hb_retl(false);

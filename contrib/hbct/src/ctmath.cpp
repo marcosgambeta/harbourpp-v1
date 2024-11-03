@@ -47,9 +47,9 @@
 #include "ct.h"
 #include "ctmath.h"
 
-/* ---------------- */
-/*  initialization  */
-/* ---------------- */
+// ---------------- //
+//  initialization  //
+// ---------------- //
 int ct_math_init(void)
 {
 #if 0
@@ -68,10 +68,10 @@ int ct_math_exit(void)
   return 1;
 }
 
-/* ---------------- */
-/*  math precision  */
-/* ---------------- */
-static int s_iPrecision = 16; /* TODO: make this thread safe */
+// ---------------- //
+// math precision   //
+// ---------------- //
+static int s_iPrecision = 16; // TODO: make this thread safe
 
 void ct_setprecision(int iPrecision)
 {

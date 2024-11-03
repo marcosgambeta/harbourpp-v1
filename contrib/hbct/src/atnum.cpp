@@ -53,7 +53,7 @@
 #define DO_ATNUM_BEFORATNUM 1
 #define DO_ATNUM_ATNUM 2
 
-/* helper function */
+// helper function
 static void do_atnum(int iSwitch)
 {
   if (HB_ISCHAR(1) && HB_ISCHAR(2))
@@ -65,7 +65,7 @@ static void do_atnum(int iSwitch)
     int iMultiPass = ct_getatmupa();
     int iAtLike = ct_getatlike();
     char cAtLike = ct_getatlikechar();
-    HB_SIZE sIgnore = hb_parnsdef(4, 0); /* eventually ignore some characters */
+    HB_SIZE sIgnore = hb_parnsdef(4, 0); // eventually ignore some characters
     HB_SIZE sMatchStrLen = 0;
     HB_SIZE nCounter;
     const char *pc = nullptr;
@@ -76,7 +76,7 @@ static void do_atnum(int iSwitch)
       {
       case DO_ATNUM_AFTERATNUM:
       {
-        /* AFTERATNUM */
+        // AFTERATNUM
         int iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE)
@@ -90,7 +90,7 @@ static void do_atnum(int iSwitch)
       }
       case DO_ATNUM_BEFORATNUM:
       {
-        /* BEFORATNUM */
+        // BEFORATNUM
         int iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE)
@@ -104,7 +104,7 @@ static void do_atnum(int iSwitch)
       }
       case DO_ATNUM_ATNUM:
       {
-        /* ATNUM */
+        // ATNUM
         int iArgErrorMode = ct_getargerrormode();
 
         if (iArgErrorMode != CT_ARGERR_IGNORE)
@@ -125,10 +125,10 @@ static void do_atnum(int iSwitch)
       sStrLen -= sIgnore;
     }
 
-    /* nth match or last match ? */
+    // nth match or last match ?
     if (HB_ISNUM(3) && (nCounter = hb_parns(3)) != 0)
     {
-      /* find the <nCounter>th match */
+      // find the <nCounter>th match
       const char *pcSubStr;
       HB_SIZE sSubStrLen;
       HB_SIZE nMatchCounter = 0;
@@ -154,19 +154,19 @@ static void do_atnum(int iSwitch)
 
         if (pc == nullptr)
         {
-          /* no match found; if this happens at this point,
-             there are no <nCounter> matches, so return an empty string */
+          // no match found; if this happens at this point,
+          // there are no <nCounter> matches, so return an empty string
           switch (iSwitch)
           {
           case DO_ATNUM_AFTERATNUM:
           case DO_ATNUM_BEFORATNUM:
-            /* AFTERATNUM */
-            /* BEFORATNUM */
+            // AFTERATNUM
+            // BEFORATNUM
             hb_retc_null();
             break;
 
           case DO_ATNUM_ATNUM:
-            /* ATNUM */
+            // ATNUM
             hb_retns(0);
             break;
           }
@@ -187,8 +187,8 @@ static void do_atnum(int iSwitch)
     }
     else
     {
-      /* we have to find the last match and return the
-         string after that last match */
+      // we have to find the last match and return the
+      // string after that last match
       switch (iAtLike)
       {
       case CT_SETATLIKE_EXACT:
@@ -204,18 +204,18 @@ static void do_atnum(int iSwitch)
       }
       if (pc == nullptr)
       {
-        /* no matches found */
+        // no matches found
         switch (iSwitch)
         {
         case DO_ATNUM_AFTERATNUM:
         case DO_ATNUM_BEFORATNUM:
-          /* AFTERATNUM */
-          /* BEFORATNUM */
+          // AFTERATNUM
+          // BEFORATNUM
           hb_retc_null();
           break;
 
         case DO_ATNUM_ATNUM:
-          /* ATNUM */
+          // ATNUM
           hb_retns(0);
           break;
         }
@@ -226,7 +226,7 @@ static void do_atnum(int iSwitch)
     switch (iSwitch)
     {
     case DO_ATNUM_AFTERATNUM:
-      /* AFTERATNUM */
+      // AFTERATNUM
       if (pc + sMatchStrLen >= pcString + sStrLen)
       {
         hb_retc_null();
@@ -238,12 +238,12 @@ static void do_atnum(int iSwitch)
       break;
 
     case DO_ATNUM_BEFORATNUM:
-      /* BEFORATNUM */
+      // BEFORATNUM
       hb_retclen(pcString - sIgnore, pc - (pcString - sIgnore));
       break;
 
     case DO_ATNUM_ATNUM:
-      /* ATNUM */
+      // ATNUM
       hb_retns(pc - (pcString - sIgnore) + 1);
       break;
     }
@@ -255,7 +255,7 @@ static void do_atnum(int iSwitch)
     case DO_ATNUM_AFTERATNUM:
     case DO_ATNUM_BEFORATNUM:
     {
-      /* AFTERATNUM */
+      // AFTERATNUM
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 
@@ -278,7 +278,7 @@ static void do_atnum(int iSwitch)
     }
     case DO_ATNUM_ATNUM:
     {
-      /* ATNUM */
+      // ATNUM
       PHB_ITEM pSubst = nullptr;
       int iArgErrorMode = ct_getargerrormode();
 

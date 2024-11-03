@@ -87,7 +87,7 @@ static HB_TSD_NEW(s_FFData, sizeof(HB_FFDATA), nullptr, hb_fileFindRelease);
 
 #define HB_GET_FFDATA() (static_cast<PHB_FFDATA>(hb_stackGetTSD(&s_FFData)))
 
-/* limit attributes to DOS ones for code portability */
+// limit attributes to DOS ones for code portability
 #define HB_FF_ATTR(ff) ((ff)->attr & 0xFF)
 
 static PHB_FFIND _hb_fileStart(HB_BOOL fNext, HB_BOOL fAny)
@@ -241,7 +241,7 @@ HB_FUNC(FILEDELETE)
     HB_FATTR nAttr = hb_parnldef(2, HB_FA_ALL);
     PHB_FFIND ffind;
 
-    /* In CT3 this function does not remove directories */
+    // In CT3 this function does not remove directories
     nAttr &= ~HB_FA_DIRECTORY;
 
     if ((ffind = hb_fsFindFirst(pszDirSpec, nAttr)) != nullptr)

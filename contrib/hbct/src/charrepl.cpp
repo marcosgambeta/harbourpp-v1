@@ -48,22 +48,22 @@
 
 HB_FUNC(CHARREPL)
 {
-  /* suppressing return value ? */
+  // suppressing return value ? 
   int iNoRet = ct_getref() && HB_ISBYREF(2);
 
   HB_SIZE sSearchLen, sReplaceLen;
 
-  /* param check */
+  // param check
   if ((sSearchLen = hb_parclen(1)) > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) > 0)
   {
-    /* get parameters */
+    // get parameters
     auto pcSearch = hb_parc(1);
     auto pcString = hb_parc(2);
     auto sStrLen = hb_parclen(2);
     auto pcReplace = hb_parc(3);
     int iMode = hb_parldef(4, 0);
 
-    /* if sStrLen == 0, we can return immediately */
+    // if sStrLen == 0, we can return immediately
     if (sStrLen == 0)
     {
       if (iNoRet)
@@ -92,8 +92,8 @@ HB_FUNC(CHARREPL)
 
       if (iMode)
       {
-        /* no multiple replacements: searching in pcString,
-           replacing in pcRet */
+        // no multiple replacements: searching in pcString,
+        // replacing in pcRet
         const char *pc = pcString;
 
         while ((pc = ct_at_exact_forward(pc, sStrLen - (pc - pcString), pcSearch + sIndex, 1, &sMatchStrLen)) !=
@@ -105,7 +105,7 @@ HB_FUNC(CHARREPL)
       }
       else
       {
-        /* multiple replacements: searching & replacing in pcRet */
+        // multiple replacements: searching & replacing in pcRet
         char *pcw = pcRet;
         while ((pcw = const_cast<char *>(
                     ct_at_exact_forward(pcw, sStrLen - (pcw - pcRet), pcSearch + sIndex, 1, &sMatchStrLen))) != nullptr)
@@ -115,7 +115,7 @@ HB_FUNC(CHARREPL)
       }
     }
 
-    /* return string */
+    // return string
     hb_storclen(pcRet, sStrLen, 2);
 
     if (iNoRet)

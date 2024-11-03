@@ -177,7 +177,7 @@ HB_FUNC(POSEQUAL)
     {
       if (*pc1 == *pc2)
       {
-        /* save possible return value */
+        // save possible return value
         if (sCompareCnt == 0)
         {
           sRet = pc1 - pcString1 + 1;
@@ -192,7 +192,7 @@ HB_FUNC(POSEQUAL)
       }
       else
       {
-        /* reset compare counter */
+        // reset compare counter
         sCompareCnt = 0;
       }
       pc1++;

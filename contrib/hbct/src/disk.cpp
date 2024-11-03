@@ -78,9 +78,8 @@ HB_FUNC(DIRNAME)
   if (pszDrive)
   {
     auto uc = static_cast<HB_UCHAR>(*pszDrive);
-    /* some network drivers (f.e. NETX from Novell NetWare) allow
-     * to create drives after 'Z' letter.
-     */
+    // some network drivers (f.e. NETX from Novell NetWare) allow
+    // to create drives after 'Z' letter.
     if (uc >= 'A' && uc < 'A' + 32)
     {
       iDrive = uc - ('A' - 1);
@@ -99,7 +98,7 @@ HB_FUNC(DIRNAME)
 HB_FUNC(DRIVETYPE)
 {
 #if defined(HB_OS_WIN)
-  HB_SIZE nSize = hb_parclen(1) + 2; /* allow space for '\0' & ":\" */
+  HB_SIZE nSize = hb_parclen(1) + 2; // allow space for '\0' & ":\"
   auto pszDrive = static_cast<char *>(hb_xgrab(nSize + 1));
   LPCTSTR lpDrive;
   LPTSTR lpFree;
@@ -130,22 +129,22 @@ HB_FUNC(DRIVETYPE)
   switch (uiType)
   {
   case DRIVE_RAMDISK:
-    uiType = 0; /* RAM Drive - Clipper compatible */
+    uiType = 0; // RAM Drive - Clipper compatible
     break;
   case DRIVE_REMOVABLE:
-    uiType = 2; /* Floppy Drive - Clipper compatible */
+    uiType = 2; // Floppy Drive - Clipper compatible
     break;
   case DRIVE_FIXED:
-    uiType = 3; /* Hard Drive  - Clipper compatible */
+    uiType = 3; // Hard Drive  - Clipper compatible
     break;
   case DRIVE_CDROM:
-    uiType = 4; /* CD-Rom Drive - xHarbour extension */ /* HB_EXTENSION */
+    uiType = 4; // CD-Rom Drive - xHarbour extension // HB_EXTENSION
     break;
   case DRIVE_REMOTE:
-    uiType = 5; /* Network Drive - xHarbour extension */ /* HB_EXTENSION */
+    uiType = 5; // Network Drive - xHarbour extension // HB_EXTENSION
     break;
   default:
-    uiType = 9; /* Unknown Drive - xHarbour extension */ /* HB_EXTENSION */
+    uiType = 9; // Unknown Drive - xHarbour extension // HB_EXTENSION
     break;
   }
   hb_retni(uiType);
@@ -157,29 +156,27 @@ HB_FUNC(DRIVETYPE)
 HB_FUNC(NUMDISKL)
 {
 #if defined(HB_OS_WIN)
-  /* LASTDRIVE does not affect Windows apps, they always have 26 letters avail */
+  // LASTDRIVE does not affect Windows apps, they always have 26 letters avail
   hb_retni(26);
 #else
-  /* For Unix, return the most harmless value... or not? */
+  // For Unix, return the most harmless value... or not?
   hb_retni(1);
 #endif
 }
 
-/*
- * Volume() depends of the CSetSafety() setting and, if is true, does not
- * overwrite an existing label.
- *
- * Syntax is: Volume("X:test") or Volume("X:\test"), where "x" is the
- * any drive letter and "test" will be the new volume name.
- *
- * Notes:
- * 1) if the drive letter is not supplied, then the current drive will
- *    be used to change volume name.
- * 2) if Volume("X:") or Volume("X:\") then the volume name of the drive
- *    "X:" will be erased.
- * 3) if Volume("") or Volume() then the volume name of the current drive
- *   will be erased.
- */
+// Volume() depends of the CSetSafety() setting and, if is true, does not
+// overwrite an existing label.
+//
+// Syntax is: Volume("X:test") or Volume("X:\test"), where "x" is the
+// any drive letter and "test" will be the new volume name.
+//
+// Notes:
+// 1) if the drive letter is not supplied, then the current drive will
+//    be used to change volume name.
+// 2) if Volume("X:") or Volume("X:\") then the volume name of the drive
+//    "X:" will be erased.
+// 3) if Volume("") or Volume() then the volume name of the current drive
+//   will be erased.
 
 HB_FUNC(VOLUME)
 {
@@ -227,17 +224,15 @@ HB_FUNC(VOLUME)
   hb_retl(bReturn);
 }
 
-/*
- * VolSerial() function returns the volume serial number of an drive letter like
- * floppy, Hard-disk, CD or mapped network drive. The return value is a numeric
- * type. If the drive is not available, VolSerial() returns -1.
- *
- * Syntax is: VolSerial("X:\")
- * Note that the trailing backslash is required.
- *
- * To convert in the hex format, call hb_NumToHex() function.
- * Example: hb_NumToHex(VolSerial("C:\")).
- */
+// VolSerial() function returns the volume serial number of an drive letter like
+// floppy, Hard-disk, CD or mapped network drive. The return value is a numeric
+// type. If the drive is not available, VolSerial() returns -1.
+//
+// Syntax is: VolSerial("X:\")
+// Note that the trailing backslash is required.
+//
+// To convert in the hex format, call hb_NumToHex() function.
+// Example: hb_NumToHex(VolSerial("C:\")).
 
 HB_FUNC(VOLSERIAL)
 {
@@ -247,15 +242,15 @@ HB_FUNC(VOLSERIAL)
   HB_SIZE nLen;
   LPCTSTR lpRootPath = HB_PARSTR(1, &hDrive, &nLen);
 
-  if (GetVolumeInformation(nLen > 0 ? lpRootPath : nullptr, /* RootPathName */
-                           nullptr,                         /* VolumeName */
-                           0,                               /* VolumeNameSize */
-                           &dwSerial,                       /* VolumeSerialNumber */
-                           nullptr,                         /* MaxComponentLength */
-                           nullptr,                         /* FileSystemFlags */
-                           nullptr,                         /* FileSystemName */
+  if (GetVolumeInformation(nLen > 0 ? lpRootPath : nullptr, // RootPathName
+                           nullptr,                         // VolumeName
+                           0,                               // VolumeNameSize
+                           &dwSerial,                       // VolumeSerialNumber
+                           nullptr,                         // MaxComponentLength
+                           nullptr,                         // FileSystemFlags
+                           nullptr,                         // FileSystemName
                            0))
-  { /* FileSystemSize */
+  { // FileSystemSize
     hb_retnint(dwSerial);
   }
   else

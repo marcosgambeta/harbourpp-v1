@@ -48,11 +48,11 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_ASCPOS_ASCPOS 0
 #define DO_ASCPOS_VALPOS 1
 
-/* helper function */
+// helper function
 static void do_ascpos(int iSwitch)
 {
   if (HB_ISCHAR(1))

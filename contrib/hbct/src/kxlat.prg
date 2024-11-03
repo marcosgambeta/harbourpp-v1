@@ -50,8 +50,8 @@
 
 #include "ctscan.ch"
 
-/* Trick to make it work in the STATIC initializer.
-   It's safe because it's only used with ASCII chars. */
+// Trick to make it work in the STATIC initializer.
+// It's safe because it's only used with ASCII chars.
 #define hb_keyCode(x)  Asc(x)
 
 STATIC s_hTrs := {=>}
@@ -302,17 +302,17 @@ STATIC sc_hCnv := { ;
    KS_ALT_PAD_MUL    => HB_KP_ALT_STAR    , ;
    KS_ALT_PAD_MINUS  => HB_KP_ALT_MINUS   , ;
    KS_ALT_PAD_PLUS   => HB_KP_ALT_PLUS    , ;
-   KS_PAD_1          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_2          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_3          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_4          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_5          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_6          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_7          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_8          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_9          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_0          => 0                 , ; /* no Harbour equivalent */
-   KS_PAD_DECIMAL    => 0                 }   /* no Harbour equivalent */
+   KS_PAD_1          => 0                 , ; // no Harbour equivalent
+   KS_PAD_2          => 0                 , ; // no Harbour equivalent
+   KS_PAD_3          => 0                 , ; // no Harbour equivalent
+   KS_PAD_4          => 0                 , ; // no Harbour equivalent
+   KS_PAD_5          => 0                 , ; // no Harbour equivalent
+   KS_PAD_6          => 0                 , ; // no Harbour equivalent
+   KS_PAD_7          => 0                 , ; // no Harbour equivalent
+   KS_PAD_8          => 0                 , ; // no Harbour equivalent
+   KS_PAD_9          => 0                 , ; // no Harbour equivalent
+   KS_PAD_0          => 0                 , ; // no Harbour equivalent
+   KS_PAD_DECIMAL    => 0                 }   // no Harbour equivalent
 
 FUNCTION __hbct_key_c_to_n(cKey)
 
@@ -349,7 +349,7 @@ FUNCTION GetKXLat(cKeyValue)
 
    LOCAL xKey := hbct_GetKXLat(__hbct_key_c_to_n(cKeyValue))
 
-   /* doc is unclear. should this return a numeric in these cases? */
+   // doc is unclear. should this return a numeric in these cases?
    IF HB_ISNUMERIC(xKey)
       RETURN xKey
    ENDIF
@@ -381,7 +381,7 @@ FUNCTION GetKXTab()
 
    RETURN cTrs
 
-/* Harbour extensions using standard numeric key values */
+// Harbour extensions using standard numeric key values
 
 FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
 
@@ -408,7 +408,7 @@ FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
                   ENDIF
                ENDIF
             ELSEIF HB_ISNUMERIC(nNewKeyValue)
-               /* refuse overwriting custom HB_GTI_INKEYFILTER */
+               // refuse overwriting custom HB_GTI_INKEYFILTER
                IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
                   lAccepted := .T.
                   IF Empty(s_hTrs)

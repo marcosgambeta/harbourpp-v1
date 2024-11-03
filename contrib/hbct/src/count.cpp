@@ -46,14 +46,14 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_COUNT_COUNTLEFT 0
 #define DO_COUNT_COUNTRIGHT 1
 
-/* helper function for the Count*() functions */
+// helper function for the Count*() functions
 static void do_count(int iSwitch)
 {
-  /* param check */
+  // param check
   if (HB_ISCHAR(1))
   {
     auto pcString = hb_parc(1);

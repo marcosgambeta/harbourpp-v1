@@ -48,10 +48,10 @@
 
 HB_FUNC(CHARMIRR)
 {
-  /* suppressing return value ? */
+  // suppressing return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-  /* param check */
+  // param check
   if (HB_ISCHAR(1))
   {
     auto pcString = hb_parc(1);
@@ -102,7 +102,7 @@ HB_FUNC(CHARMIRR)
       pc2++;
     }
 
-    /* return string */
+    // return string
     hb_storclen(pcRet, sStrLen, 1);
 
     if (iNoRet)

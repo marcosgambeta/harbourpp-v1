@@ -46,20 +46,20 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_REPLACE_REPLALL 0
 #define DO_REPLACE_REPLLEFT 1
 #define DO_REPLACE_REPLRIGHT 2
 
 static const HB_ERRCODE sulErrorSubcodes[] = {CT_ERROR_REPLALL, CT_ERROR_REPLLEFT, CT_ERROR_REPLRIGHT};
 
-/* helper function for the Repl*() functions */
+// helper function for the Repl*() functions
 static void do_replace(int iSwitch)
 {
-  /* suppressing return value ? */
+  // suppressing return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-  /* param check */
+  // param check
   if (HB_ISCHAR(1) && (hb_parclen(2) > 0 || HB_ISNUM(2)))
   {
     auto pcString = hb_parc(1);

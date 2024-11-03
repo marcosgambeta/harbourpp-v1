@@ -105,7 +105,7 @@ HB_FUNC(CTON)
     }
 
 #ifdef HB_CT3_STRICT32
-    /* test shows that this is exact CT3 behavior */
+    // test shows that this is exact CT3 behavior
     if (static_cast<HB_I32>(nValue) >= 0 || hb_parl(3))
     {
       hb_retnl(static_cast<HB_I32>(nValue));

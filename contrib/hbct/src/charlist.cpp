@@ -48,7 +48,7 @@
 
 #include "ct.h"
 
-/* helper function for the list function */
+// helper function for the list function
 void ct_charlist(int iMode)
 {
   auto pcString = hb_parc(1);

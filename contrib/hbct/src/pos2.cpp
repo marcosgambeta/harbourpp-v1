@@ -178,13 +178,13 @@ HB_FUNC(POSDEL)
 
     auto pcRet = static_cast<char *>(hb_xgrab(sStrLen - sDelLen + 1));
 
-    /* copy first part */
+    // copy first part
     if (sStartPos > 1)
     {
       hb_xmemcpy(pcRet, pcString, sStartPos - 1);
     }
 
-    /* copy second part */
+    // copy second part
     if (sStrLen > (sStartPos - 1 + sDelLen))
     {
       hb_xmemcpy(pcRet + sStartPos - 1, pcString + sStartPos - 1 + sDelLen, sStrLen - (sStartPos - 1 + sDelLen));
@@ -241,7 +241,7 @@ HB_FUNC(POSINS)
         sStartPos = sStrLen;
       }
 
-      /* check for false sStartPos */
+      // check for false sStartPos
       if (sStartPos > sStrLen + 1)
       {
         int iArgErrorMode = ct_getargerrormode();
@@ -258,16 +258,16 @@ HB_FUNC(POSINS)
 
       auto pcRet = static_cast<char *>(hb_xgrab(sStrLen + sInsLen + 1));
 
-      /* copy first part */
+      // copy first part
       if (sStartPos > 1)
       {
         hb_xmemcpy(pcRet, pcString, sStartPos - 1);
       }
 
-      /* insert string */
+      // insert string
       hb_xmemcpy(pcRet + sStartPos - 1, pcInsert, sInsLen);
 
-      /* copy second part */
+      // copy second part
       if (sStrLen > (sStartPos - 1))
       {
         hb_xmemcpy(pcRet + sStartPos - 1 + sInsLen, pcString + sStartPos - 1, sStrLen - (sStartPos - 1));
@@ -346,7 +346,7 @@ HB_FUNC(POSREPL)
         }
       }
 
-      /* check for false sStartPos */
+      // check for false sStartPos
       if (sStartPos > sStrLen + 1)
       {
         int iArgErrorMode = ct_getargerrormode();
@@ -379,16 +379,16 @@ HB_FUNC(POSREPL)
 
       auto pcRet = static_cast<char *>(hb_xgrab(sRetLen + 1));
 
-      /* copy first part */
+      // copy first part
       if (sStartPos > 1)
       {
         hb_xmemcpy(pcRet, pcString, sStartPos - 1);
       }
 
-      /* insert replacement string */
+      // insert replacement string
       hb_xmemcpy(pcRet + sStartPos - 1, pcReplace, sReplLen);
 
-      /* copy second part */
+      // copy second part
       if (sStrLen > (sStartPos - 1 + sReplLen))
       {
         hb_xmemcpy(pcRet + sStartPos - 1 + sReplLen, pcString + sStartPos - 1 + sReplLen,

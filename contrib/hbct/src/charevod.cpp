@@ -54,7 +54,7 @@
 #define DO_CHAREVOD_CHAREVEN 0
 #define DO_CHAREVOD_CHARODD 1
 
-/* helper function */
+// helper function
 static void do_charevod(int iSwitch)
 {
   if (HB_ISCHAR(1))

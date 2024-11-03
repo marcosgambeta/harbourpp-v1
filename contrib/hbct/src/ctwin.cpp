@@ -43,13 +43,13 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* NOTE: User programs should never call this layer directly! */
+// NOTE: User programs should never call this layer directly!
 
 #if !defined(_HB_API_INTERNAL_)
 #define _HB_API_INTERNAL_
 #endif
 
-/* This definition has to be placed before #include <hbapigt.hpp> */
+// This definition has to be placed before #include <hbapigt.hpp>
 #define HB_GT_NAME CTW
 
 #include <hbgtcore.hpp>
@@ -375,11 +375,9 @@ static int hb_ctw_SetWindowBoard(PHB_GTCTW pCTW, int iTop, int iLeft, int iBotto
 #endif
 
 #ifdef HB_CLP_STRICT
-  /*
-   * This limitation is only for strict CT3 compatibility, the CTW GTs
-   * can work in practice with any virtual board size and position and
-   * is limited only by available physical memory, [druzus]
-   */
+  // This limitation is only for strict CT3 compatibility, the CTW GTs
+  // can work in practice with any virtual board size and position and
+  // is limited only by available physical memory, [druzus]
   if (iBottom >= pCTW->iMapHeight)
   {
     iBottom = pCTW->iMapHeight - 1;
@@ -441,10 +439,9 @@ static int hb_ctw_CurrentWindow(PHB_GTCTW pCTW)
 
   pTSD = HB_CTW_TSD(pCTW);
 
-  /* because other threads can close current window we need additional
-   * protection here and we have to check if current handle is still
-   * valid [druzus]
-   */
+  // because other threads can close current window we need additional
+  // protection here and we have to check if current handle is still
+  // valid [druzus]
   if (pTSD->iCurrWindow > 0)
   {
     if (pTSD->iCurrWindow > pCTW->iMaxWindow || pCTW->windows[pTSD->iCurrWindow] == nullptr)
@@ -473,7 +470,7 @@ static int hb_ctw_SelectWindow(PHB_GTCTW pCTW, int iWindow, HB_BOOL fToTop)
     {
       int i;
 
-      /* update window level */
+      // update window level
       i = pCTW->iOpenWindows - 1;
       while (i >= 0)
       {
@@ -490,7 +487,7 @@ static int hb_ctw_SelectWindow(PHB_GTCTW pCTW, int iWindow, HB_BOOL fToTop)
 
           if (iPos != i && !pCTW->windows[iWindow]->fHidden)
           {
-            /* INFO: CT effectively calls hb_ctw_RemapAllWindows() here */
+            // INFO: CT effectively calls hb_ctw_RemapAllWindows() here
             if (i < pCTW->iOpenWindows - 1)
             {
               hb_ctw_RemapAllWindows(pCTW, i, true);
@@ -633,7 +630,7 @@ static int hb_ctw_SetWindowLevel(PHB_GTCTW pCTW, int iWindow, int iLevel)
       HB_BOOL fToTop;
       int i;
 
-      /* update window level */
+      // update window level
       fToTop = pWnd->iLevel < iLevel;
       pWnd->iLevel = iLevel;
 
@@ -874,7 +871,7 @@ static int hb_ctw_CreateWindow(PHB_GTCTW pCTW, int iTop, int iLeft, int iBottom,
   pWnd->iHandle = iTmp;
 
   pCTW->windows[pWnd->iHandle] = pWnd;
-  /* update window level */
+  // update window level
   iTmp = pCTW->iOpenWindows++;
   while (iTmp > 0 && pCTW->windows[pCTW->windowStack[iTmp - 1]]->iLevel > pWnd->iLevel)
   {
@@ -1326,7 +1323,7 @@ static int hb_ctw_SwapWindows(PHB_GTCTW pCTW, int iWindow1, int iWindow2)
   return -1;
 }
 
-/* --- */
+// ---
 
 static void hb_ctw_Init(PHB_GTCTW pCTW)
 {
@@ -1342,17 +1339,17 @@ static void hb_ctw_Init(PHB_GTCTW pCTW)
   pCTW->iVerticalStep = 2;
   pCTW->iHorizontalStep = 5;
 
-  /* initialize thread local storage for current window number */
+  // initialize thread local storage for current window number
   HB_TSD_INIT(&pCTW->TSD, sizeof(HB_CTWDATA), nullptr, nullptr);
 
   HB_GTSELF_GETSIZE(pCTW->pGT, &pCTW->iMapHeight, &pCTW->iMapWidth);
 
-  /* update cursor position to the rules used by CTWIN */
+  // update cursor position to the rules used by CTWIN
   HB_GTSELF_GETPOS(pCTW->pGT, &iRow, &iCol);
   HB_GTSELF_SETPOS(pCTW->pGT, iRow, iCol);
 }
 
-/* --- */
+// ---
 
 static PHB_GTCTW hb_ctw_base(void)
 {
@@ -1416,7 +1413,7 @@ static void hb_ctw_gt_Exit(PHB_GT pGT)
       hb_xfree(pCTW->pWindowMap);
       hb_xfree(pCTW->pShadowMap);
     }
-    /* release thread local storage for current window number */
+    // release thread local storage for current window number
     hb_stackReleaseTSD(&pCTW->TSD);
     hb_xfree(pCTW);
   }
@@ -1486,11 +1483,9 @@ static void hb_ctw_gt_GetPos(PHB_GT pGT, int *piRow, int *piCol)
   }
 }
 
-/*
- * CTWIN uses differ rules when set cursor position out of screen visible
- * area then standard Clipper's GT drivers so we have to replicate it in
- * SetPos() method, [druzus]
- */
+// CTWIN uses differ rules when set cursor position out of screen visible
+// area then standard Clipper's GT drivers so we have to replicate it in
+// SetPos() method, [druzus]
 static void hb_ctw_gt_SetPos(PHB_GT pGT, int iRow, int iCol)
 {
 #if 0
@@ -1582,10 +1577,8 @@ static int hb_ctw_gt_MaxRow(PHB_GT pGT)
   }
 }
 
-/*
- * CTWIN uses differ rules in console output then standard Clipper's
- * GT drivers so we have to overload WRITECON() method, [druzus]
- */
+// CTWIN uses differ rules in console output then standard Clipper's
+// GT drivers so we have to overload WRITECON() method, [druzus]
 #define WRITECON_BUFFER_SIZE 512
 
 static void hb_ctw_gt_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
@@ -1606,7 +1599,7 @@ static void hb_ctw_gt_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
   iMaxRow = HB_GTSELF_MAXROW(pGT);
   iMaxCol = HB_GTSELF_MAXCOL(pGT);
 
-  /* small hack for scrolling console output when client area is set */
+  // small hack for scrolling console output when client area is set
   {
     PHB_GTCTW pCTW = HB_GTCTW_GET(pGT);
     int iWindow = HB_CTW_GETCURRENT(pCTW);
@@ -1713,7 +1706,7 @@ static void hb_ctw_gt_WriteCon(PHB_GT pGT, const char *szText, HB_SIZE nLength)
       HB_GTSELF_SETPOS(pGT, iRow, iCol);
       bDisp = false;
 
-      /* To emulate scrolling */
+      // To emulate scrolling
       HB_GTSELF_FLUSH(pGT);
 
       if (bBell)
@@ -1741,7 +1734,7 @@ static void hb_ctw_gt_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
   iMaxRow = HB_GTSELF_MAXROW(pGT);
   iMaxCol = HB_GTSELF_MAXCOL(pGT);
 
-  /* small hack for scrolling console output when client area is set */
+  // small hack for scrolling console output when client area is set
   {
     PHB_GTCTW pCTW = HB_GTCTW_GET(pGT);
     int iWindow = HB_CTW_GETCURRENT(pCTW);
@@ -1850,7 +1843,7 @@ static void hb_ctw_gt_WriteConW(PHB_GT pGT, const HB_WCHAR *szText, HB_SIZE nLen
       HB_GTSELF_SETPOS(pGT, iRow, iCol);
       bDisp = false;
 
-      /* To emulate scrolling */
+      // To emulate scrolling
       HB_GTSELF_FLUSH(pGT);
 
       if (bBell)
@@ -2235,15 +2228,14 @@ static HB_BOOL hb_ctw_gt_PutChar(PHB_GT pGT, int iRow, int iCol, int iColor, HB_
       long lIndex = static_cast<long>(iRow) * pCTW->iMapWidth + iCol;
       iWindow = pCTW->pWindowMap[lIndex];
 #if 0
-         /* When window with shadow is closed CT3 restores attributes
-          * which existed before shadow was displayed. In an application
-          * which switches to window 0 for pass-throw output it causes that
-          * wrong attributes appears after this operation. In Harbour it's
-          * fixed so such problem do not exist. Anyhow some code may switch
-          * to window 0, make SaveScreen()/RestScreen() and in such case
-          * all shadow attributes are copied to window 0 buffer. The code
-          * below is workaround for it. [druzus]
-          */
+         // When window with shadow is closed CT3 restores attributes
+         // which existed before shadow was displayed. In an application
+         // which switches to window 0 for pass-throw output it causes that
+         // wrong attributes appears after this operation. In Harbour it's
+         // fixed so such problem do not exist. Anyhow some code may switch
+         // to window 0, make SaveScreen()/RestScreen() and in such case
+         // all shadow attributes are copied to window 0 buffer. The code
+         // below is workaround for it. [druzus]
          if( pCTW->pShadowMap[lIndex] != 0 ) {
             int iShadow = pCTW->pShadowMap[lIndex] & ~HB_CTW_SHADOW_MASK;
             if( pCTW->windows[iShadow]->iShadowAttr >= 0 && pCTW->windows[iShadow]->iShadowAttr == iColor ) {
@@ -2570,7 +2562,7 @@ static int hb_ctw_gt_Alert(PHB_GT pGT, PHB_ITEM pMessage, PHB_ITEM pOptions, int
         HB_GTSELF_REFRESH(pGT);
 
         iKey = HB_GTSELF_INKEYGET(pGT, true, dDelay, INKEY_ALL);
-        /* TODO: add support for SET KEY blocks */
+        // TODO: add support for SET KEY blocks
 
         if (iKey == K_ESC)
         {
@@ -2669,7 +2661,7 @@ static int hb_ctw_gt_ReadKey(PHB_GT pGT, int iEventMask)
   return iKey;
 }
 
-/* helper function */
+// helper function
 static HB_U32 hb_ctw_gt_cellValue(PHB_GT pGT, int iRow, int iCol)
 {
   HB_SCREENCELL cell;
@@ -2728,7 +2720,7 @@ static void hb_ctw_gt_RedrawDiff(PHB_GT pGT)
   }
 }
 
-/* Public functions */
+// Public functions
 
 HB_BOOL hb_ctwInit(void)
 {
@@ -3090,11 +3082,10 @@ int hb_ctwGetPosWindow(int iRow, int iCol)
 
 int hb_ctwLastKey(int *piNewKey)
 {
-  /* keyread() in CT3 uses 64512 bytes length buffer
-   * when it reach this limit and new key is added the
-   * buffer size is decreased by 1024 to 63488 bytes
-   * before adding key. TODO: check if buffer is shifted
-   */
+  // keyread() in CT3 uses 64512 bytes length buffer
+  // when it reach this limit and new key is added the
+  // buffer size is decreased by 1024 to 63488 bytes
+  // before adding key. TODO: check if buffer is shifted
   int iResult = 0;
   PHB_GTCTW pCTW = hb_ctw_base();
 
@@ -3146,9 +3137,9 @@ static HB_BOOL hb_gt_FuncInit(PHB_GT_FUNCS pFuncTable)
   return true;
 }
 
-/* --- */
+// ---
 
 #define HB_GTSUPER NULL
 #include "hbgtreg.h"
 
-/* --- */
+// ---

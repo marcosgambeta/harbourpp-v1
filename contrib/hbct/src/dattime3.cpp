@@ -44,7 +44,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* stime() exists only in SVr4, SVID, X/OPEN and Linux */
+// stime() exists only in SVr4, SVID, X/OPEN and Linux
 #ifndef _SVID_SOURCE
 #define _SVID_SOURCE
 #endif
@@ -63,7 +63,7 @@
 
 struct CT_DATE
 {
-  /* even if these are chars, variable must be int, since we need an extra -1 */
+  // even if these are chars, variable must be int, since we need an extra -1
   double dTimeSet;
   double dTimeCounter;
 };
@@ -159,11 +159,11 @@ HB_FUNC(SETTIME)
     tm = time(nullptr);
     tm += lNewTime - (tm % 86400);
 #if (defined(__GLIBC__) && ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 31))))
-    /* stime() is deprecated in glibc 2.31+ */
+    // stime() is deprecated in glibc 2.31+
     struct timespec ts = {tm, 0};
     fResult = clock_settime(CLOCK_REALTIME, &ts) == 0;
 #else
-    /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
+    // stime() exists only in SVr4, SVID, X/OPEN and Linux
     fResult = stime(&tm) == 0;
 #endif
 #endif
@@ -193,14 +193,14 @@ HB_FUNC(SETDATE)
       st.wDayOfWeek = static_cast<WORD>(hb_dateJulianDOW(lDate));
       fResult = SetLocalTime(&st);
 #elif defined(HB_OS_LINUX) && !defined(HB_OS_ANDROID)
-      /* stime() exists only in SVr4, SVID, X/OPEN and Linux */
+      // stime() exists only in SVr4, SVID, X/OPEN and Linux
       long lNewDate = lDate - hb_dateEncode(1970, 1, 1);
 #if (defined(__GLIBC__) && ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 31))))
-      /* stime() is deprecated in glibc 2.31+ */
+      // stime() is deprecated in glibc 2.31+
       struct timespec ts
       {
       };
-      clock_gettime(CLOCK_REALTIME, &ts); /* keep tv_nsec */
+      clock_gettime(CLOCK_REALTIME, &ts); // keep tv_nsec
       ts.tv_sec = lNewDate * 86400 + (ts.tv_sec % 86400);
       fResult = clock_settime(CLOCK_REALTIME, &ts) == 0;
 #else

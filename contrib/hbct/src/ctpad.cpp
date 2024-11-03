@@ -46,11 +46,11 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_PAD_PADLEFT 0
 #define DO_PAD_PADRIGHT 1
 
-/* helper function for the pad functions */
+// helper function for the pad functions
 static void do_pad(int iSwitch)
 {
   if (HB_ISCHAR(1) && HB_ISNUM(2))
@@ -97,7 +97,7 @@ static void do_pad(int iSwitch)
     {
       if (sRetLen > sStrLen)
       {
-        /* fill with cFill */
+        // fill with cFill
         for (pc = pcRet; pc < pcRet + (sRetLen - sStrLen); pc++)
         {
           *pc = cFill;
@@ -114,7 +114,7 @@ static void do_pad(int iSwitch)
       hb_xmemcpy(pcRet, pcString, (sRetLen < sStrLen ? sRetLen : sStrLen));
       if (sRetLen > sStrLen)
       {
-        /* fill with cFill */
+        // fill with cFill
         for (pc = pcRet + sStrLen; pc < pcRet + sRetLen; pc++)
         {
           *pc = cFill;

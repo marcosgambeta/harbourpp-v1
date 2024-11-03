@@ -114,7 +114,7 @@ HB_FUNC(SETCLEARB)
   }
   else
   {
-    usNew = ' '; /* CT uses 255 => U+00A0 in CP437 */
+    usNew = ' '; // CT uses 255 => U+00A0 in CP437
   }
 
   hb_gtSetClearChar(usNew);
@@ -176,15 +176,15 @@ HB_FUNC(WOPEN)
 {
   int iColor;
 
-  /* 6th (color) and 7th (lVisible) parameters are Harbour extensions */
-  iColor = hb_ctColorParam(6, -1); /* Harbour extension */ /* HB_EXTENSION */
+  // 6th (color) and 7th (lVisible) parameters are Harbour extensions
+  iColor = hb_ctColorParam(6, -1); // Harbour extension // HB_EXTENSION
   hb_retni(hb_ctwCreateWindow(hb_parni(1), hb_parni(2), hb_parni(3), hb_parni(4), hb_parl(5), iColor,
-                              hb_parldef(7, true))); /* HB_EXTENSION */
+                              hb_parldef(7, true))); // HB_EXTENSION
 }
 
 HB_FUNC(WCLOSE)
 {
-  /* 1st parameter (window handle) is Harbour extension */
+  // 1st parameter (window handle) is Harbour extension
   hb_retni(hb_ctwCloseWindow(HB_ISNUM(1) ? hb_parni(1) : /* HB_EXTENSION */ hb_ctwCurrentWindow()));
 }
 
@@ -193,7 +193,7 @@ HB_FUNC(WACLOSE)
   hb_retni(hb_ctwCloseAllWindows());
 }
 
-HB_FUNC(WSELECT) /* 2nd parameter (fBringToTop) is Harbour extension */
+HB_FUNC(WSELECT) // 2nd parameter (fBringToTop) is Harbour extension
 {
   hb_retni(HB_ISNUM(1) ? hb_ctwSelectWindow(hb_parni(1), hb_parldef(2, true))
                        : /* HB_EXTENSION */ hb_ctwCurrentWindow());
@@ -206,25 +206,25 @@ HB_FUNC(WNUM)
 
 HB_FUNC(WBOX)
 {
-  static const HB_WCHAR s_pWBoxFrames[16][9] = {HB_B_DOUBLE_W,        /* 0  WB_DOUBLE_CLEAR */
-                                                HB_B_SINGLE_W,        /* 1  WB_SINGLE_CLEAR */
-                                                HB_B_DOUBLE_SINGLE_W, /* 2  WB_DOUBLE_SINGLE_CLEAR */
-                                                HB_B_SINGLE_DOUBLE_W, /* 3  WB_SINGLE_DOUBLE_CLEAR */
+  static const HB_WCHAR s_pWBoxFrames[16][9] = {HB_B_DOUBLE_W,        // 0  WB_DOUBLE_CLEAR
+                                                HB_B_SINGLE_W,        // 1  WB_SINGLE_CLEAR
+                                                HB_B_DOUBLE_SINGLE_W, // 2  WB_DOUBLE_SINGLE_CLEAR
+                                                HB_B_SINGLE_DOUBLE_W, // 3  WB_SINGLE_DOUBLE_CLEAR
 
-                                                HB_B_DOUBLE_W,        /* 4  WB_DOUBLE */
-                                                HB_B_SINGLE_W,        /* 5  WB_SINGLE */
-                                                HB_B_DOUBLE_SINGLE_W, /* 6  WB_DOUBLE_SINGLE */
-                                                HB_B_SINGLE_DOUBLE_W, /* 7  WB_SINGLE_DOUBLE */
+                                                HB_B_DOUBLE_W,        // 4  WB_DOUBLE
+                                                HB_B_SINGLE_W,        // 5  WB_SINGLE
+                                                HB_B_DOUBLE_SINGLE_W, // 6  WB_DOUBLE_SINGLE
+                                                HB_B_SINGLE_DOUBLE_W, // 7  WB_SINGLE_DOUBLE
 
-                                                HB_B_HALF_FULL_W, /* 8  WB_HALF_FULL_CLEAR */
-                                                HB_B_HALF_W,      /* 9  WB_HALF_CLEAR */
-                                                HB_B_FULL_HALF_W, /* 10 WB_FULL_HALF_CLEAR */
-                                                HB_B_FULL_W,      /* 11 WB_FULL_CLEAR */
+                                                HB_B_HALF_FULL_W, // 8  WB_HALF_FULL_CLEAR
+                                                HB_B_HALF_W,      // 9  WB_HALF_CLEAR
+                                                HB_B_FULL_HALF_W, // 10 WB_FULL_HALF_CLEAR
+                                                HB_B_FULL_W,      // 11 WB_FULL_CLEAR
 
-                                                HB_B_HALF_FULL_W, /* 12 WB_HALF_FULL */
-                                                HB_B_HALF_W,      /* 13 WB_HALF */
-                                                HB_B_FULL_HALF_W, /* 14 WB_FULL_HALF */
-                                                HB_B_FULL_W};     /* 15 WB_FULL */
+                                                HB_B_HALF_FULL_W, // 12 WB_HALF_FULL
+                                                HB_B_HALF_W,      // 13 WB_HALF
+                                                HB_B_FULL_HALF_W, // 14 WB_FULL_HALF
+                                                HB_B_FULL_W};     // 15 WB_FULL
 
   HB_WCHAR szBoxBuf[10], wc;
   auto pszBoxFrame = hb_parc(1);
@@ -258,7 +258,7 @@ HB_FUNC(WBOX)
     szBoxBuf[9] = '\0';
   }
 
-  iColor = hb_ctColorParam(2, -1); /* Harbour extension */ /* HB_EXTENSION */
+  iColor = hb_ctColorParam(2, -1); // Harbour extension // HB_EXTENSION
   hb_retni(hb_ctwAddWindowBox(hb_ctwCurrentWindow(), szBoxBuf, iColor));
 }
 
@@ -372,10 +372,10 @@ HB_FUNC(CTWLASTKEY)
   }
 }
 
-/* NOTE: These two functions are emulating the MaxRow()/MaxCol() core functions
-         "overloaded" by the CT3 library. */
+// NOTE: These two functions are emulating the MaxRow()/MaxCol() core functions
+//       "overloaded" by the CT3 library.
 
-HB_FUNC(HBCT_MAXROW) /* Return the maximum screen/window row number (zero origin) */
+HB_FUNC(HBCT_MAXROW) // Return the maximum screen/window row number (zero origin)
 {
   if (hb_parl(1))
   {
@@ -389,7 +389,7 @@ HB_FUNC(HBCT_MAXROW) /* Return the maximum screen/window row number (zero origin
   }
 }
 
-HB_FUNC(HBCT_MAXCOL) /* Return the maximum screen/window column number (zero origin) */
+HB_FUNC(HBCT_MAXCOL) // Return the maximum screen/window column number (zero origin)
 {
   if (hb_parl(1))
   {
@@ -403,22 +403,18 @@ HB_FUNC(HBCT_MAXCOL) /* Return the maximum screen/window column number (zero ori
   }
 }
 
-/* Undocumented CT3 window functions
- */
+// Undocumented CT3 window functions
 
-/*
-   WAlias( <nHandle> ) --> <nHandle> | -1
-   change current window handle to <nHandle>
-   if <nHandle> is not used by other window
-   or is current window.
- */
+// WAlias( <nHandle> ) --> <nHandle> | -1
+// change current window handle to <nHandle>
+// if <nHandle> is not used by other window
+// or is current window.
 HB_FUNC(WALIAS)
 {
   auto iWindow = hb_parnidef(1, -1);
 
-  /* 255 is original CT3 limit,
-   * Harbour CTWIN does not have such internal limits
-   */
+  // 255 is original CT3 limit,
+  // Harbour CTWIN does not have such internal limits
   if (iWindow >= 0 && iWindow <= 255)
   {
     iWindow = hb_ctwChangeWindowHandle(iWindow);
@@ -431,15 +427,13 @@ HB_FUNC(WALIAS)
   hb_retni(iWindow);
 }
 
-/*
-   WList() --> <cHandleList>
-   _WStack() --> <cHandleList>
-   return string with window handles in each character,
-   the last character is the top window.
-
-   Warning: this is compatibility only function
-            which works correctly only for 255 windows.
- */
+// WList() --> <cHandleList>
+// _WStack() --> <cHandleList>
+// return string with window handles in each character,
+// the last character is the top window.
+//
+// Warning: this is compatibility only function
+//          which works correctly only for 255 windows.
 
 HB_FUNC(WLIST)
 {
@@ -480,25 +474,24 @@ HB_FUNC(WLIST)
 
 HB_FUNC_TRANSLATE(_WSTACK, WLIST)
 
-/* Temporary Harbour extensions to test some extended CTW functionality
- */
+// Temporary Harbour extensions to test some extended CTW functionality
 
-HB_FUNC(WHIDE) /* HB_EXTENSION */
+HB_FUNC(WHIDE) // HB_EXTENSION
 {
   hb_ctwVisible(HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_HIDDEN);
 }
 
-HB_FUNC(WSHOW) /* HB_EXTENSION */
+HB_FUNC(WSHOW) // HB_EXTENSION
 {
   hb_ctwVisible(HB_ISNUM(1) ? hb_parni(1) : hb_ctwCurrentWindow(), HB_CTW_VISIBLE);
 }
 
-HB_FUNC(WSHADOW) /* HB_EXTENSION */
+HB_FUNC(WSHADOW) // HB_EXTENSION
 {
   hb_retni(hb_ctwSetWindowShadow(hb_ctwCurrentWindow(), hb_parnidef(1, HB_CTW_SHADOW_UNDEF) /* nAttr */));
 }
 
-HB_FUNC(WLEVEL) /* HB_EXTENSION */
+HB_FUNC(WLEVEL) // HB_EXTENSION
 {
   hb_retni(hb_ctwSetWindowLevel(hb_ctwCurrentWindow(), hb_parnidef(1, HB_CTW_UNDEF) /* nLevel */));
 }

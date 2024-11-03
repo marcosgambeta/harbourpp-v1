@@ -48,16 +48,16 @@
 
 HB_FUNC(WORDREPL)
 {
-  /* suppressing return value ? */
+  // suppressing return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(2);
   int iMultiPass = ct_getatmupa();
 
   HB_SIZE sSearchLen, sReplaceLen;
 
-  /* param check */
+  // param check
   if ((sSearchLen = hb_parclen(1)) / 2 > 0 && HB_ISCHAR(2) && (sReplaceLen = hb_parclen(3)) / 2 > 0)
   {
-    /* get parameters */
+    // get parameters
     auto pcSearch = hb_parc(1);
     auto pcString = hb_parc(2);
     auto sStrLen = hb_parclen(2);
@@ -84,7 +84,7 @@ HB_FUNC(WORDREPL)
       {
         if (iMode)
         {
-          /* always replace */
+          // always replace
           *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
           *(pcRet + (pc - pcString) + 1) = *(pcReplace + sReplIndex + 1);
 
@@ -99,24 +99,24 @@ HB_FUNC(WORDREPL)
         }
         else
         {
-          /* replace only if pc is an even position */
+          // replace only if pc is an even position
           if (((pc - pcString) % 2) == 0)
           {
             *(pcRet + (pc - pcString)) = *(pcReplace + sReplIndex);
             *(pcRet + (pc - pcString) + 1) = *(pcReplace + sReplIndex + 1);
-            /* parse pcString in steps of two characters */
+            // parse pcString in steps of two characters
             pc += 2;
           }
           else
           {
-            /* we are on an odd position, so add only 1 to pc */
+            // we are on an odd position, so add only 1 to pc
             pc++;
           }
         }
       }
     }
 
-    /* return string */
+    // return string
     hb_storclen(pcRet, sStrLen, 2);
 
     if (iNoRet)

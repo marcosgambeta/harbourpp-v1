@@ -204,9 +204,9 @@ HB_FUNC(RANGEREPL)
 
     if (iNoRef)
     {
-      /* Contrary to the official documentation, RangeRepl() returns NIL instead of .F.
-       * in this situation. If the string is not passed by reference, it returns the
-       * string regardless of iNoRef. */
+      // Contrary to the official documentation, RangeRepl() returns NIL instead of .F.
+      // in this situation. If the string is not passed by reference, it returns the
+      // string regardless of iNoRef.
       hb_ret();
     }
     else

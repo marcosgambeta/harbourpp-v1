@@ -67,7 +67,7 @@ HB_FUNC(ATREPL)
     char *pcRetStr;
     HB_SIZE nRetStrLen;
 
-    /* eventually ignore some characters */
+    // eventually ignore some characters
     nIgnore = hb_parns(6);
 
     if (nIgnore >= nStrLen)
@@ -84,17 +84,17 @@ HB_FUNC(ATREPL)
       return;
     }
 
-    /* replacement */
+    // replacement
     pcReplacement = hb_parc(3);
     nReplaceLen = pcReplacement ? hb_parclen(3) : 0;
 
-    /* replace mode */
+    // replace mode
     iReplaceMode = hb_parl(5);
 
-    /* n-th match or last match ? */
+    // n-th match or last match ?
     nCounter = hb_parns(4);
 
-    /* little trick: */
+    // little trick:
     if (iReplaceMode == 0 && nCounter == 0)
     {
       nCounter = HB_SIZE_MAX;
@@ -102,10 +102,10 @@ HB_FUNC(ATREPL)
 
     if (nCounter != 0)
     {
-      /* depending on iReplaceMode: replace all occurrences including the nth one
-         or only the nth occurrence
-         NOTE: if iReplaceMode = false and the nth occurrence does not exist,
-         all occurrences are replaced */
+      // depending on iReplaceMode: replace all occurrences including the nth one
+      // or only the nth occurrence
+      // NOTE: if iReplaceMode = false and the nth occurrence does not exist,
+      // all occurrences are replaced
       char *pcRetSubStr;
       HB_SIZE sRetSubStrLen;
       HB_SIZE nMatchCounter = 0;
@@ -143,13 +143,13 @@ HB_FUNC(ATREPL)
 
         nMatchCounter++;
 
-        /* replace match ? */
+        // replace match ?
         if (iReplaceMode == 0 || nMatchCounter == nCounter)
         {
           if (nMatchStrLen < nReplaceLen)
           {
-            /* pcRetStr grows, so realloc memory */
-            /* save pc pointer */
+            // pcRetStr grows, so realloc memory
+            // save pc pointer
             HB_SIZE sPCPos = pc - pcRetStr;
 
             pcRetStr = static_cast<char *>(hb_xrealloc(pcRetStr, nRetStrLen + (nReplaceLen - nMatchStrLen) + 1));
@@ -192,12 +192,12 @@ HB_FUNC(ATREPL)
     }
     else
     {
-      /* find and replace last match */
+      // find and replace last match
       nRetStrLen = nStrLen;
       pcRetStr = static_cast<char *>(hb_xgrab(nRetStrLen + 1));
       hb_xmemcpy(pcRetStr, pcString, nRetStrLen);
 
-      /* we have to find the last match and replace it */
+      // we have to find the last match and replace it
       switch (iAtLike)
       {
       case CT_SETATLIKE_EXACT:
@@ -220,11 +220,11 @@ HB_FUNC(ATREPL)
         return;
       }
 
-      /* replace match */
+      // replace match
       if (nMatchStrLen < nReplaceLen)
       {
-        /* pcRetStr grows, so realloc memory */
-        /* save pc pointer */
+        // pcRetStr grows, so realloc memory
+        // save pc pointer
         HB_SIZE sPCPos = pc - pcRetStr;
 
         pcRetStr = static_cast<char *>(hb_xrealloc(pcRetStr, nRetStrLen + (nReplaceLen - nMatchStrLen) + 1));

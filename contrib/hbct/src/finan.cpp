@@ -65,7 +65,7 @@ HB_FUNC(FV)
 
     if (dRate == 0.0)
     {
-      /* NOTE: CT3 crashes with dRate == 0.0 */
+      // NOTE: CT3 crashes with dRate == 0.0
       dResult = dPayment * dTime;
     }
     else
@@ -119,7 +119,7 @@ HB_FUNC(PV)
 
     if (dRate == 0.0)
     {
-      /* NOTE: CT3 crashes with dRate == 0.0 */
+      // NOTE: CT3 crashes with dRate == 0.0
       dResult = dPayment * dTime;
     }
     else
@@ -173,7 +173,7 @@ HB_FUNC(PAYMENT)
 
     if (dRate == 0.0)
     {
-      /* NOTE: CT3 crashes with dRate == 0.0 */
+      // NOTE: CT3 crashes with dRate == 0.0
       dResult = dCapital / dTime;
     }
     else
@@ -227,12 +227,12 @@ HB_FUNC(PERIODS)
 
     if (dPayment <= dCapital * dRate)
     {
-      /* in this case infinite time is needed to cancel the loan */
+      // in this case infinite time is needed to cancel the loan
       dResult = -1.0;
     }
     else if (dRate == 0.0)
     {
-      /* NOTE: CT3 crashes with dRate == 0.0 */
+      // NOTE: CT3 crashes with dRate == 0.0
       dResult = dCapital / dPayment;
     }
     else
@@ -294,29 +294,29 @@ HB_FUNC(RATE)
     auto dCapital = hb_parnd(1);
     auto dPayment = hb_parnd(2);
     auto dTime = hb_parnd(3);
-    double dEpsilon = 0.00001; /* minimal to consider 2 numbers as equal */
-    double dScale = 1.0;       /* fractional step */
-    double j = 1.0;            /* index */
+    double dEpsilon = 0.00001; // minimal to consider 2 numbers as equal
+    double dScale = 1.0;       // fractional step
+    double j = 1.0;            // index
 
     while (j < 1020.0)
-    {              /* maximum annual rate */
-      double dAux; /* estimated payment to compare for */
-      double r;    /* temptative rate */
+    {              // maximum annual rate
+      double dAux; // estimated payment to compare for
+      double r;    // temptative rate
       double dExp;
 
       HB_MATH_EXCEPTION hb_exc;
       double dBase;
 
-      r = j * 0.000833333; /* j * (0.01 / 12.0)  mensual's rate */
+      r = j * 0.000833333; // j * (0.01 / 12.0)  mensual's rate
 
-      /* replace Payment() function overhead */
+      // replace Payment() function overhead
 
       hb_mathResetError(&hb_exc);
       dBase = 1.0 + r;
       dExp = pow(dBase, dTime);
       if (hb_mathGetError(&hb_exc, "POW", dBase, dTime, dExp))
       {
-        /* TODO: Check if this is a correct default correction value for pow() */
+        // TODO: Check if this is a correct default correction value for pow()
         dExp = hb_exc.handled ? hb_exc.retval : 0.0;
       }
 
@@ -338,7 +338,7 @@ HB_FUNC(RATE)
       }
     }
 
-    hb_retnd(j * 0.000833333); /* return as mensual's rate */
+    hb_retnd(j * 0.000833333); // return as mensual's rate
   }
   else
   {

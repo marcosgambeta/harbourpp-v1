@@ -50,10 +50,10 @@ HB_FUNC(STRSWAP)
 {
   HB_SIZE sStrLen1, sStrLen2;
 
-  /* param check */
+  // param check
   if ((sStrLen1 = hb_parclen(1)) > 0 && (sStrLen2 = hb_parclen(2)) > 0)
   {
-    /* get parameters */
+    // get parameters
     auto pcString1 = hb_parc(1);
     auto pcString2 = hb_parc(2);
     char *pcRet1 = nullptr, *pcRet2 = nullptr;
@@ -90,7 +90,7 @@ HB_FUNC(STRSWAP)
       }
     }
 
-    /* strings */
+    // strings
     if (iChange1)
     {
       hb_storclen(pcRet1, sStrLen1, 1);

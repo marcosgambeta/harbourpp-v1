@@ -63,7 +63,7 @@ HB_FUNC(CHARRELA)
     HB_SIZE sOffset1, sOffset2;
     HB_SIZE sMatchStrLen;
 
-    /* check for empty strings */
+    // check for empty strings
     if (sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0)
     {
       hb_retns(0);
@@ -73,9 +73,9 @@ HB_FUNC(CHARRELA)
     sOffset1 = 0;
     sOffset2 = 0;
 
-    /* NOTE: this algorithm is not the best since the search that gave
-       the larger relative position in the step before is repeated;
-       try a search algorithm alternating between both strings */
+    // NOTE: this algorithm is not the best since the search that gave
+    // the larger relative position in the step before is repeated;
+    // try a search algorithm alternating between both strings
     while (sOffset1 < sStrLen1 && sOffset2 < sStrLen2)
     {
       pc1 = ct_at_exact_forward(pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1,
@@ -86,7 +86,7 @@ HB_FUNC(CHARRELA)
       {
         if (pc1 - pcString1 == pc2 - pcString2)
         {
-          /* correlation found */
+          // correlation found
           hb_retns((pc1 - pcString1) + 1);
           return;
         }
@@ -152,7 +152,7 @@ HB_FUNC(CHARRELREP)
     HB_SIZE sOffset1, sOffset2;
     HB_SIZE sMatchStrLen;
 
-    /* check for empty strings */
+    // check for empty strings
     if (sStrToMatchLen1 == 0 || sStrToMatchLen2 == 0 || sReplaceLen == 0 || sStrLen2 == 0)
     {
       if (iNoRet)
@@ -172,9 +172,9 @@ HB_FUNC(CHARRELREP)
     sOffset1 = 0;
     sOffset2 = 0;
 
-    /* NOTE: this algorithm is not the best since the search that gave
-       the larger relative position in the step before is repeated;
-       try a search algorithm alternating between both strings */
+    // NOTE: this algorithm is not the best since the search that gave
+    // the larger relative position in the step before is repeated;
+    // try a search algorithm alternating between both strings
     while (sOffset1 < sStrLen1 && sOffset2 < sStrLen2)
     {
       pc1 = ct_at_exact_forward(pcStringToMatch1, sStrToMatchLen1, pcString1 + sOffset1, sStrLen1 - sOffset1,
@@ -185,11 +185,11 @@ HB_FUNC(CHARRELREP)
       {
         if (pc1 - pcString1 == pc2 - pcString2)
         {
-          /* correlation found -> start replacement */
+          // correlation found -> start replacement
 
           for (HB_SIZE sCurr = 1; sCurr <= sStrToMatchLen1; sCurr++)
           {
-            /* check if pcString2 is long enough */
+            // check if pcString2 is long enough
             if ((pc2 - pcString2) + sCurr >= sStrLen2)
             {
               HB_SIZE sStr2Offset, sReplOffset;
@@ -197,7 +197,7 @@ HB_FUNC(CHARRELREP)
               sStr2Offset = sStrToMatchLen2 < sCurr ? sStrToMatchLen2 : sCurr;
               sReplOffset = sReplaceLen < sCurr ? sReplaceLen : sCurr;
 
-              /* do the characters in pcString2 and pcStrToMatch2 match ? */
+              // do the characters in pcString2 and pcStrToMatch2 match ?
               if (*(pc2 + sCurr - 1) == *(pcStringToMatch2 + sStr2Offset - 1))
               {
                 *(pcRet + (pc2 - pcString2) + sCurr - 1) = *(pcReplace + sReplOffset - 1);

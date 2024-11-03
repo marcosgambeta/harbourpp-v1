@@ -48,18 +48,18 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_CHARSWAP_CHARSWAP 0
 #define DO_CHARSWAP_WORDSWAP 1
 #define DO_CHARSWAP_WORDSWAP_CHARSWAP 2
 
-/* helper function for the CharSwap() and WordSwap() functions */
+// helper function for the CharSwap() and WordSwap() functions
 static void do_charswap(int iSwitch)
 {
-  /* suppress return value ? */
+  // suppress return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-  /* param check */
+  // param check
   if (HB_ISCHAR(1))
   {
     auto pcString = hb_parc(1);
@@ -110,14 +110,14 @@ static void do_charswap(int iSwitch)
       case DO_CHARSWAP_WORDSWAP_CHARSWAP:
         pcRet[sRetIndex++] = pcSub[3];
         pcRet[sRetIndex++] = pcSub[2];
-        /* fallthrough */
+        // fallthrough
       case DO_CHARSWAP_CHARSWAP:
         pcRet[sRetIndex++] = pcSub[1];
         pcRet[sRetIndex++] = pcSub[0];
       }
     }
 
-    /* copy rest of string */
+    // copy rest of string
     if (iSwitch == DO_CHARSWAP_WORDSWAP || iSwitch == DO_CHARSWAP_WORDSWAP_CHARSWAP)
     {
       iMod = sStrLen % 4;
@@ -132,7 +132,7 @@ static void do_charswap(int iSwitch)
       pcRet[sRetIndex++] = *pcSub;
     }
 
-    /* return string */
+    // return string
     hb_storclen(pcRet, sRetIndex, 1);
 
     if (iNoRet)

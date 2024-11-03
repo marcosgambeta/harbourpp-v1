@@ -45,7 +45,7 @@
 
 #include "hbdefs.hpp"
 
-/* Extended Drivers */
+// Extended Drivers
 HB_FUNC(CGA40)
 {
   ;
@@ -230,7 +230,7 @@ HB_FUNC(VGA50)
 {
   ;
 }
-/* Video Functions */
+// Video Functions
 HB_FUNC(EGAPALETTE)
 {
   ;
@@ -319,11 +319,11 @@ HB_FUNC(VIDEOSETUP)
 {
   ;
 }
-/* Disk Utilities */
+// Disk Utilities
 #if 0
-HB_FUNC( DIRCHANGE )  { ; } /* Implemented in Harbour core as C5.3 function. */
-HB_FUNC( DIRREMOVE )  { ; } /* Implemented in Harbour core as C5.3 function. */
-HB_FUNC( DISKCHANGE ) { ; } /* Implemented in Harbour core as C5.3 function. */
+HB_FUNC( DIRCHANGE )  { ; } // Implemented in Harbour core as C5.3 function.
+HB_FUNC( DIRREMOVE )  { ; } // Implemented in Harbour core as C5.3 function.
+HB_FUNC( DISKCHANGE ) { ; } // Implemented in Harbour core as C5.3 function.
 #endif
 HB_FUNC(DISKCHECK)
 {
@@ -401,7 +401,7 @@ HB_FUNC(SETSHARE)
 {
   ;
 }
-/* Printer Functions */
+// Printer Functions
 HB_FUNC(NUMPRINTER)
 {
   ;
@@ -454,7 +454,7 @@ HB_FUNC(TOF)
 {
   ;
 }
-/* Database Functions */
+// Database Functions
 HB_FUNC(DBFDSKSIZE)
 {
   ;
@@ -463,7 +463,7 @@ HB_FUNC(ISDBT)
 {
   ;
 }
-/* Set Status */
+// Set Status
 HB_FUNC(CSETALL)
 {
   ;
@@ -536,7 +536,7 @@ HB_FUNC(NUMFKEY)
 {
   ;
 }
-/* System Information */
+// System Information
 HB_FUNC(BIOSDATE)
 {
   ;
@@ -613,7 +613,7 @@ HB_FUNC(SSETVERIFY)
 {
   ;
 }
-/* Miscellaneous Functions */
+// Miscellaneous Functions
 HB_FUNC(DATATYPE)
 {
   ;
@@ -662,7 +662,7 @@ HB_FUNC(STACKFREE)
 {
   ;
 }
-/* PEEK/POKE Functions */
+// PEEK/POKE Functions
 HB_FUNC(INBYTE)
 {
   ;

@@ -53,10 +53,10 @@ HB_FUNC(WORDTOCHAR)
 
   iMultiPass = ct_getatmupa();
 
-  /* param check */
+  // param check
   if ((sSearchLen = hb_parclen(1)) / 2 > 0 && (sStrLen = hb_parclen(2)) / 2 > 0 && (sReplaceLen = hb_parclen(3)) > 0)
   {
-    /* get parameters */
+    // get parameters
     auto pcSearch = hb_parc(1);
     auto pcString = hb_parc(2);
     auto pcReplace = hb_parc(3);
@@ -68,7 +68,7 @@ HB_FUNC(WORDTOCHAR)
     sIndex = 0;
     iNoReplace = 0;
 
-    *pcRet = *pcString; /* copy first char */
+    *pcRet = *pcString; // copy first char
 
     do
     {
@@ -92,7 +92,7 @@ HB_FUNC(WORDTOCHAR)
 
         if (!iMultiPass)
         {
-          iNoReplace = 1; /* just copy next char without searching & replacing */
+          iNoReplace = 1; // just copy next char without searching & replacing
         }
       }
       else
@@ -103,7 +103,7 @@ HB_FUNC(WORDTOCHAR)
       sIndex++;
     } while (sIndex < sStrLen - 1);
 
-    /* return string */
+    // return string
     hb_retclen(pcRet, sRetIndex + 1);
     hb_xfree(pcRet);
   }

@@ -48,7 +48,7 @@
 
 #include <hbstack.hpp>
 
-/* statics */
+// statics
 
 struct CT_CHARSORT
 {
@@ -60,7 +60,7 @@ using PCT_CHARSORT = CT_CHARSORT *;
 
 static HB_TSD_NEW(s_charsort, sizeof(CT_CHARSORT), nullptr, nullptr);
 
-/* qsort function */
+// qsort function
 #ifdef __IBMCPP__
 int extern _LNK_CONV
 #else
@@ -89,15 +89,15 @@ _hb_do_sortdescend(const void *p1, const void *p2)
 
 HB_FUNC(CHARSORT)
 {
-  /* suppressing return value ? */
+  // suppressing return value ?
   int iNoRet = ct_getref() && HB_ISBYREF(1);
 
-  /* param check I */
+  // param check I
   if (HB_ISCHAR(1))
   {
     auto charsort = static_cast<PCT_CHARSORT>(hb_stackGetTSD(&s_charsort));
 
-    /* get parameters */
+    // get parameters
     auto pcString = hb_parc(1);
 
     auto sStrLen = hb_parclen(1);
@@ -109,7 +109,7 @@ HB_FUNC(CHARSORT)
     charsort->sCompareLen = hb_parnsdef(3, sElementLen);
     charsort->sElementPos = hb_parnsdef(5, 0);
 
-    /* param check II */
+    // param check II
     if (sElementLen == 0 || charsort->sCompareLen > sElementLen || sIgnore + sElementLen > sStrLen ||
         charsort->sElementPos + charsort->sCompareLen > sElementLen || sSortLen + sIgnore > sStrLen)
     {
@@ -144,7 +144,7 @@ HB_FUNC(CHARSORT)
       qsort(pcRet + sIgnore, (sSortLen / sElementLen), sElementLen, _hb_do_sortascend);
     }
 
-    /* return string */
+    // return string
     hb_storclen(pcRet, sStrLen, 1);
 
     if (iNoRet)

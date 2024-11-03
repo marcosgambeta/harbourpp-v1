@@ -43,38 +43,35 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*
- * CT3 NET Functions Comments:
- *
- * NetCancel(<cLocalDevice>) --> lReleased
- * Return true if <cLocalDevice> was disconnected.
- *
- * NetDisk(cDrive) --> lSuccess
- * Return true if <cDrive> is a network drive, otherwise return false if is a local drive.
- *
- * NetLocName(cSahredDevice) --> cLocalDevice
- * Not implemented yet.
- *
- * NetPrinter() --> lSuccess
- * Return true if a current local printer set by SET PRINTER TO was connected to a
- * network printer.
- *
- * NetRedir(cLocalDevice, cSharedDevice, [cPassword], [lShowError]) --> lSuccess
- * Return true if <cLocalDevice> was connected to <cSharedDevice> with <cPassword>, if any.
- *
- * NetRmtname(cLocalDevice) --> cSharedName
- * Return the shared resource name connected to a <cLocalDevice>.
- * The original parameter <nDevice> in CA-Cl*pper Tools was changed to <cLocalName> in
- * xHarbour because in Windows Network I didn't find a number table like in MS-DOS. See
- * CA-T*ols help for more details.
- *
- * Network() --> lSuccess
- * Return true if a PC-LAN/MS-NET or NetWare type is active.
- *
- * NNetwork() --> lSuccess
- * Return true if a NetWare type is active.
- *
- */
+// CT3 NET Functions Comments:
+//
+// NetCancel(<cLocalDevice>) --> lReleased
+// Return true if <cLocalDevice> was disconnected.
+//
+// NetDisk(cDrive) --> lSuccess
+// Return true if <cDrive> is a network drive, otherwise return false if is a local drive.
+//
+// NetLocName(cSahredDevice) --> cLocalDevice
+// Not implemented yet.
+//
+// NetPrinter() --> lSuccess
+// Return true if a current local printer set by SET PRINTER TO was connected to a
+// network printer.
+//
+// NetRedir(cLocalDevice, cSharedDevice, [cPassword], [lShowError]) --> lSuccess
+// Return true if <cLocalDevice> was connected to <cSharedDevice> with <cPassword>, if any.
+//
+// NetRmtname(cLocalDevice) --> cSharedName
+// Return the shared resource name connected to a <cLocalDevice>.
+// The original parameter <nDevice> in CA-Cl*pper Tools was changed to <cLocalName> in
+// xHarbour because in Windows Network I didn't find a number table like in MS-DOS. See
+// CA-T*ols help for more details.
+//
+// Network() --> lSuccess
+// Return true if a PC-LAN/MS-NET or NetWare type is active.
+//
+// NNetwork() --> lSuccess
+// Return true if a NetWare type is active.
 
 #include <hbapi.hpp>
 #include <hbapiitm.hpp>
@@ -116,12 +113,11 @@ HB_FUNC(NETCANCEL)
   void *hDevice;
 
   DWORD dwResult = WNetCancelConnection(HB_PARSTRDEF(1, &hDevice, nullptr),
-                                        TRUE); /* FALSE = fail if exist open files or print jobs. */
+                                        TRUE); // FALSE = fail if exist open files or print jobs.
 
   hb_strfree(hDevice);
-  /* TRUE = force cancel connection even if exist
-   *        open files or print jobs.
-   */
+  // TRUE = force cancel connection even if exist
+  //        open files or print jobs.
   hb_retl(dwResult == NO_ERROR);
 #else
   hb_retl(false);
@@ -131,7 +127,7 @@ HB_FUNC(NETCANCEL)
 HB_FUNC(NETPRINTER)
 {
 #if defined(HB_OS_WIN)
-  const char *cPrn = hb_setGetCPtr(HB_SET_PRINTFILE); /* query default local printer port. */
+  const char *cPrn = hb_setGetCPtr(HB_SET_PRINTFILE); // query default local printer port.
 
   if (!cPrn || !*cPrn || hb_stricmp(cPrn, "PRN") == 0)
   {

@@ -49,8 +49,7 @@
 #include <hbapigt.hpp>
 #include "hbchksum.h"
 
-/* com_DosCon(<cString>, [<nLine>], [<nColumn>]) --> <cNull>
- */
+// com_DosCon(<cString>, [<nLine>], [<nColumn>]) --> <cNull>
 HB_FUNC(COM_DOSCON)
 {
   auto nLen = hb_parclen(1);
@@ -77,8 +76,7 @@ HB_FUNC(COM_DOSCON)
   hb_retc_null();
 }
 
-/* com_CRC(<cString>, [<nStart>], [<nPolynomial>]) --> <nCRC>
- */
+// com_CRC(<cString>, [<nStart>], [<nPolynomial>]) --> <nCRC>
 HB_FUNC(COM_CRC)
 {
   HB_MAXUINT crc = hb_parnint(2);
@@ -90,18 +88,17 @@ HB_FUNC(COM_CRC)
 
     if (nPolynomial == 0)
     {
-      nPolynomial = 0x11021; /* CRC_16_X25 */
+      nPolynomial = 0x11021; // CRC_16_X25
     }
 
-    /* NOTE: warning this function is not bug compatible with CT3.
-     *       It fixes few problems in original CT3 implementation
-     *       i.e. it works correctly for 8-bit and smaller polynomials
-     *       instead of returning 0 or supports much larger polynomials
-     *       up to 64-bit.
-     *       For 16/17-bit polynomials it gives the same results as CT3
-     *       so for most common usage it should be binary compatible
-     *       with CT3. [druzus]
-     */
+    // NOTE: warning this function is not bug compatible with CT3.
+    //       It fixes few problems in original CT3 implementation
+    //       i.e. it works correctly for 8-bit and smaller polynomials
+    //       instead of returning 0 or supports much larger polynomials
+    //       up to 64-bit.
+    //       For 16/17-bit polynomials it gives the same results as CT3
+    //       so for most common usage it should be binary compatible
+    //       with CT3. [druzus]
     crc = hb_crcct(crc, szString, hb_parclen(1), nPolynomial);
   }
   hb_retnint(crc);
@@ -118,8 +115,7 @@ static char s_xmoblock_sum(const char *szData, HB_SIZE nLen)
   return static_cast<char>(uc);
 }
 
-/* XMoBlock(<cString>, <nBlockNumber>, [<lCRC>], [<nMode>]) --> <cXModemBlock>
- */
+// XMoBlock(<cString>, <nBlockNumber>, [<lCRC>], [<nMode>]) --> <cXModemBlock>
 HB_FUNC(XMOBLOCK)
 {
   HB_SIZE nSize;
@@ -162,8 +158,7 @@ HB_FUNC(XMOBLOCK)
   hb_retclen_buffer(pszBlock, nSize);
 }
 
-/* XMoCheck(<cString>, [<lCRC>]) --> <nBlockNumber>|-1
- */
+// XMoCheck(<cString>, [<lCRC>]) --> <nBlockNumber>|-1
 HB_FUNC(XMOCHECK)
 {
   auto nLen = hb_parclen(1);
@@ -200,8 +195,7 @@ HB_FUNC(XMOCHECK)
   hb_retni(iResult);
 }
 
-/* ZeroInsert(<cString>) --> <cDataBlock>
- */
+// ZeroInsert(<cString>) --> <cDataBlock>
 HB_FUNC(ZEROINSERT)
 {
   auto pString = hb_param(1, Harbour::Item::STRING);
@@ -216,7 +210,7 @@ HB_FUNC(ZEROINSERT)
     auto nLen = hb_itemGetCLen(pString);
     uiVal = 0;
     nBits = 0;
-    /* NOTE: trailing zero accessed intentionally */
+    // NOTE: trailing zero accessed intentionally
     for (n = 0; n <= nLen; ++n)
     {
       uiVal |= static_cast<unsigned char>(szText[n]);
@@ -288,8 +282,7 @@ HB_FUNC(ZEROINSERT)
   }
 }
 
-/* ZeroRemove(<cDataBlock>) --> cString
- */
+// ZeroRemove(<cDataBlock>) --> cString
 HB_FUNC(ZEROREMOVE)
 {
   auto pString = hb_param(1, Harbour::Item::STRING);
@@ -316,9 +309,8 @@ HB_FUNC(ZEROREMOVE)
         {
           if (c & 0x80)
           {
-            /* wrong string encoding which does not confirm
-             * CCITT specification.
-             */
+            // wrong string encoding which does not confirm
+            // CCITT specification.
             hb_retc_null();
             return;
           }
@@ -348,15 +340,14 @@ HB_FUNC(ZEROREMOVE)
       }
     }
 
-    /* NOTE: CT3 decodes some wrong CCITT strings which does not have
-     *       trailing 0 instead of returning empty string "", i.e.:
-     *          ? Len(ZeroRemove(Chr(31)))
-     *          ? Len(ZeroRemove(Chr(31) + Chr(31)))
-     *       this implementation fixed this bug but if you need strict
-     *       CT3 behavior for compatibility in some broken code then
-     *       you can disable this fix setting HB_CT3_ZEROREMOVE_BUG
-     *       macro. [druzus]
-     */
+    // NOTE: CT3 decodes some wrong CCITT strings which does not have
+    //       trailing 0 instead of returning empty string "", i.e.:
+    //          ? Len(ZeroRemove(Chr(31)))
+    //          ? Len(ZeroRemove(Chr(31) + Chr(31)))
+    //       this implementation fixed this bug but if you need strict
+    //       CT3 behavior for compatibility in some broken code then
+    //       you can disable this fix setting HB_CT3_ZEROREMOVE_BUG
+    //       macro. [druzus]
 #ifdef HB_CT3_ZEROREMOVE_BUG
     if (l == 5)
     {

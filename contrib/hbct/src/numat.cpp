@@ -61,7 +61,7 @@ HB_FUNC(NUMAT)
     HB_SIZE nCounter;
     const char *pc, *pcSubStr;
 
-    /* eventually ignore some characters */
+    // eventually ignore some characters
     sIgnore = hb_parnsdef(3, 0);
 
     if (sIgnore >= sStrLen)

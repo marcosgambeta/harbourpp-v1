@@ -90,8 +90,8 @@ HB_FUNC(CHARMIX)
     }
     else
     {
-      pcString2 = " "; /* NOTE: The original CT3 uses " " as 2nd string
-                          if the 2nd param is not a string ! */
+      pcString2 = " "; // NOTE: The original CT3 uses " " as 2nd string
+                       // if the 2nd param is not a string !
       sLen2 = 1;
     }
 

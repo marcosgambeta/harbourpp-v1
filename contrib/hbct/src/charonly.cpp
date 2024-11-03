@@ -50,16 +50,16 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_CHARONLY_CHARONLY 0
 #define DO_CHARONLY_WORDONLY 1
 #define DO_CHARONLY_CHARREM 2
 #define DO_CHARONLY_WORDREM 3
 
-/* helper function for the *one functions */
+// helper function for the *one functions
 static void do_charonly(int iSwitch)
 {
-  /* param check */
+  // param check
   if (HB_ISCHAR(1) && HB_ISCHAR(2))
   {
     auto pcString = hb_parc(2);
@@ -69,7 +69,7 @@ static void do_charonly(int iSwitch)
     HB_SIZE sRetStrLen = 0;
     int iShift;
 
-    /* check for zero-length strings */
+    // check for zero-length strings
     switch (iSwitch)
     {
     case DO_CHARONLY_CHARONLY:
@@ -121,7 +121,7 @@ static void do_charonly(int iSwitch)
       }
     }
 
-    /* copy last character if string length is odd */
+    // copy last character if string length is odd 
     if (iShift == 2 && sStrLen % 2 == 1)
     {
       pcRet[sRetStrLen++] = pcString[sStrLen - 1];

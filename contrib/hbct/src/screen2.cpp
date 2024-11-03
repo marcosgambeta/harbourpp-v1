@@ -165,7 +165,7 @@ HB_FUNC(SAYSPREAD)
           hb_gtBeginWrite();
         }
       } while (nPos-- && iCol--);
-      /* CT3 does not respect iCol in the above condition */
+      // CT3 does not respect iCol in the above condition
       hb_gtEndWrite();
     }
   }
@@ -263,7 +263,7 @@ HB_FUNC(SAYMOVEIN)
   hb_retc_null();
 }
 
-HB_FUNC(CLEARSLOW) /* TODO: Unicode support */
+HB_FUNC(CLEARSLOW) // TODO: Unicode support
 {
   int iMaxRow = hb_gtMaxRow();
   int iMaxCol = hb_gtMaxCol();
@@ -356,7 +356,7 @@ HB_FUNC(CLEARSLOW) /* TODO: Unicode support */
   }
 }
 
-HB_FUNC(SCREENSTR) /* TODO: Unicode support */
+HB_FUNC(SCREENSTR) // TODO: Unicode support
 {
   int iRow, iCol, iMaxRow, iMaxCol;
   char *pBuffer;
@@ -411,7 +411,7 @@ HB_FUNC(SCREENSTR) /* TODO: Unicode support */
   }
 }
 
-HB_FUNC(STRSCREEN) /* TODO: Unicode support */
+HB_FUNC(STRSCREEN) // TODO: Unicode support
 {
   auto nLen = hb_parclen(1);
 
@@ -458,7 +458,7 @@ HB_FUNC(STRSCREEN) /* TODO: Unicode support */
   hb_retc_null();
 }
 
-HB_FUNC(__HBCT_DSPTIME) /* Helper function for ShowTime() */
+HB_FUNC(__HBCT_DSPTIME) // Helper function for ShowTime()
 {
   int iColor;
   char szTime[10];

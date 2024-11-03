@@ -46,17 +46,17 @@
 
 #include "ct.h"
 
-/* defines */
+// defines
 #define DO_REMOVE_REMALL 0
 #define DO_REMOVE_REMLEFT 1
 #define DO_REMOVE_REMRIGHT 2
 
 static const HB_ERRCODE sulErrorSubcodes[] = {CT_ERROR_REMALL, CT_ERROR_REMLEFT, CT_ERROR_REMRIGHT};
 
-/* helper function for the Rem*() functions */
+// helper function for the Rem*() functions
 static void do_remove(int iSwitch)
 {
-  /* param check */
+  // param check
   if (HB_ISCHAR(1))
   {
     auto pcString = hb_parc(1);

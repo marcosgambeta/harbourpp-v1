@@ -67,7 +67,7 @@ HB_FUNC(ATADJUST)
     char *pcRetStr;
     HB_SIZE sRetStrLen;
 
-    /* eventually ignore some characters */
+    // eventually ignore some characters
     sIgnore = hb_parnsdef(5, 0);
 
     if (sIgnore >= sStrLen)
@@ -89,7 +89,7 @@ HB_FUNC(ATADJUST)
       sStrLen -= sIgnore;
     }
 
-    /* check for wrong adjust position */
+    // check for wrong adjust position
     if (sAdjustPosition == 0)
     {
       int iArgErrorMode = ct_getargerrormode();
@@ -105,13 +105,13 @@ HB_FUNC(ATADJUST)
     }
     else
     {
-      sAdjustPosition--; /* makes live easier since C indices start at zero ! */
+      sAdjustPosition--; // makes live easier since C indices start at zero !
     }
 
-    /* nth match or last match ? */
+    // nth match or last match ?
     if (HB_ISNUM(4) && (nCounter = hb_parns(4)) != 0)
     {
-      /* find the <nCounter>th match */
+      // find the <nCounter>th match
       const char *pcSubStr;
       HB_SIZE sSubStrLen;
       HB_SIZE nMatchCounter = 0;
@@ -137,8 +137,8 @@ HB_FUNC(ATADJUST)
 
         if (pc == nullptr)
         {
-          /* no match found; if this happens at this point,
-             there are no <nCounter> matches, so return */
+          // no match found; if this happens at this point,
+          // there are no <nCounter> matches, so return
           hb_retclen(pcString, sStrLen);
           return;
         }
@@ -157,7 +157,7 @@ HB_FUNC(ATADJUST)
     }
     else
     {
-      /* we have to find the last match */
+      // we have to find the last match
       switch (iAtLike)
       {
       case CT_SETATLIKE_EXACT:
@@ -174,13 +174,13 @@ HB_FUNC(ATADJUST)
 
       if (pc == nullptr)
       {
-        /* no matches found */
+        // no matches found
         hb_retclen(pcString, sStrLen);
         return;
       }
     }
 
-    /* adjust string */
+    // adjust string
     if (HB_ISCHAR(6))
     {
       if (hb_parclen(6) > 0)
@@ -201,39 +201,39 @@ HB_FUNC(ATADJUST)
       cFillChar = 0x20;
     }
 
-    /* position of pc == adjust position ? */
+    // position of pc == adjust position ?
     if (pc == pcString + sAdjustPosition)
     {
-      /* do nothing */
+      // do nothing
       hb_retclen(pcString, sStrLen);
     }
     else
     {
       if (pc > pcString + sAdjustPosition)
       {
-        /* adjust to left */
-        /* check if we only delete cFillChar characters */
+        // adjust to left
+        // check if we only delete cFillChar characters
         for (const char *pcCheckFill = pcString + sAdjustPosition; pcCheckFill < pc; pcCheckFill++)
         {
           if (*pcCheckFill != cFillChar)
           {
-            /* no -> return string unchanged */
+            // no -> return string unchanged
             hb_retclen(pcString, sStrLen);
             return;
           }
         }
 
-        /* ok -> calculate new string size */
+        // ok -> calculate new string size
         sRetStrLen = sStrLen - (pc - (pcString + sAdjustPosition));
         pcRetStr = static_cast<char *>(hb_xgrab(sRetStrLen + 1));
 
-        /* copy first portion of string */
+        // copy first portion of string
         if (sAdjustPosition > 0)
         {
           hb_xmemcpy(pcRetStr, pcString, sAdjustPosition);
         }
 
-        /* copy second portion of string */
+        // copy second portion of string
         if (sRetStrLen > sAdjustPosition)
         {
           hb_xmemcpy(pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition);
@@ -243,20 +243,20 @@ HB_FUNC(ATADJUST)
       }
       else
       {
-        /* adjust to right */
+        // adjust to right
         sRetStrLen = sStrLen + (pcString + sAdjustPosition) - pc;
         pcRetStr = static_cast<char *>(hb_xgrab(sRetStrLen + 1));
 
-        /* copy first portion of string */
+        // copy first portion of string
         if (pc > pcString)
         {
           hb_xmemcpy(pcRetStr, pcString, pc - pcString);
         }
 
-        /* fill characters */
+        // fill characters
         hb_xmemset(pcRetStr + (pc - pcString), cFillChar, sAdjustPosition - (pc - pcString));
 
-        /* copy second portion of string */
+        // copy second portion of string
         if (sRetStrLen > sAdjustPosition)
         {
           hb_xmemcpy(pcRetStr + sAdjustPosition, pc, sRetStrLen - sAdjustPosition);

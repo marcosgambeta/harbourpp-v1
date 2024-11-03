@@ -60,7 +60,7 @@ HB_FUNC(VGAPALETTE)
 
   if (hb_pcount() < 4)
   {
-    /* Resetting palette registers to default values is not supported yet */
+    // Resetting palette registers to default values is not supported yet
     hb_retl(false);
     return;
   }
@@ -81,7 +81,7 @@ HB_FUNC(VGAPALETTE)
 
   if (attr < 0 || attr >= 16)
   {
-    /* An invalid argument */
+    // An invalid argument
     hb_retl(false);
     return;
   }

@@ -47,8 +47,8 @@
 #include "ct.h"
 #include "ctmath.h"
 
-/* undefine the following if you want to evaluate the mantissa and exponent from the doubles' bit representation */
-/* #define CT_EXPONENT_MANTISSA_BIT 1 */
+// undefine the following if you want to evaluate the mantissa and exponent from the doubles' bit representation
+// #define CT_EXPONENT_MANTISSA_BIT 1
 
 HB_FUNC(MANTISSA)
 {
