@@ -1,48 +1,47 @@
-/*
- * SQL Base Database Driver
- *
- * Copyright 2007 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; see the file LICENSE.txt.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301 USA (or visit https://www.gnu.org/licenses/).
- *
- * As a special exception, the Harbour Project gives permission for
- * additional uses of the text contained in its release of Harbour.
- *
- * The exception is that, if you link the Harbour libraries with other
- * files to produce an executable, this does not by itself cause the
- * resulting executable to be covered by the GNU General Public License.
- * Your use of that executable is in no way restricted on account of
- * linking the Harbour library code into it.
- *
- * This exception does not however invalidate any other reasons why
- * the executable file might be covered by the GNU General Public License.
- *
- * This exception applies only to the code released by the Harbour
- * Project under the name Harbour.  If you copy code from other
- * Harbour Project or Free Software Foundation releases into a copy of
- * Harbour, as the General Public License permits, the exception does
- * not apply to the code that you add in this way.  To avoid misleading
- * anyone as to the status of such modified files, you must delete
- * this exception notice from them.
- *
- * If you write modifications of your own for Harbour, it is your choice
- * whether to permit this exception to apply to your modifications.
- * If you do not wish that, delete this exception notice.
- *
- */
+//
+// SQL Base Database Driver
+//
+// Copyright 2007 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
+
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file LICENSE.txt.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301 USA (or visit https://www.gnu.org/licenses/).
+//
+// As a special exception, the Harbour Project gives permission for
+// additional uses of the text contained in its release of Harbour.
+//
+// The exception is that, if you link the Harbour libraries with other
+// files to produce an executable, this does not by itself cause the
+// resulting executable to be covered by the GNU General Public License.
+// Your use of that executable is in no way restricted on account of
+// linking the Harbour library code into it.
+//
+// This exception does not however invalidate any other reasons why
+// the executable file might be covered by the GNU General Public License.
+//
+// This exception applies only to the code released by the Harbour
+// Project under the name Harbour.  If you copy code from other
+// Harbour Project or Free Software Foundation releases into a copy of
+// Harbour, as the General Public License permits, the exception does
+// not apply to the code that you add in this way.  To avoid misleading
+// anyone as to the status of such modified files, you must delete
+// this exception notice from them.
+//
+// If you write modifications of your own for Harbour, it is your choice
+// whether to permit this exception to apply to your modifications.
+// If you do not wish that, delete this exception notice.
 
 #if !defined(_HB_API_INTERNAL_)
 #define _HB_API_INTERNAL_
@@ -124,7 +123,7 @@ static HB_ERRCODE hb_errRT_SQLBASE(HB_ERRCODE errGenCode, HB_ERRCODE errSubCode,
   return iRet;
 }
 
-/* --- NULL SDD --- */
+// --- NULL SDD ---
 
 static HB_ERRCODE sddConnect(SQLDDCONNECTION *pConnection, PHB_ITEM pItem);
 static HB_ERRCODE sddDisconnect(SQLDDCONNECTION *pConnection);
@@ -219,7 +218,7 @@ static HB_ERRCODE sddGetVarLen(SQLBASEAREAP pArea, HB_USHORT uiIndex, HB_ULONG *
   return Harbour::SUCCESS;
 }
 
-/* --- SDD registration --- */
+// --- SDD registration ---
 
 static PSDDNODE s_pSdd = nullptr;
 
@@ -274,7 +273,7 @@ int hb_sddRegister(PSDDNODE pSdd)
   return 1;
 }
 
-/* --- RDD METHODS --- */
+// --- RDD METHODS ---
 
 static HB_ERRCODE sqlbaseGoBottom(SQLBASEAREAP pArea)
 {
@@ -387,7 +386,7 @@ static HB_ERRCODE sqlbaseSkip(SQLBASEAREAP pArea, HB_LONG lToSkip)
   {
     pArea->area.fEof = false;
   }
-  else /* if( lToSkip > 0 ) */
+  else // if( lToSkip > 0 )
   {
     pArea->area.fBof = false;
   }
@@ -1158,115 +1157,115 @@ static HB_ERRCODE sqlbaseRddInfo(LPRDDNODE pRDD, HB_USHORT uiIndex, HB_ULONG ulC
   return Harbour::SUCCESS;
 }
 
-/* --- */
+// ---
 
 // clang-format off
 static RDDFUNCS sqlbaseTable =
 {
-   ( DBENTRYP_BP ) nullptr,             /* sqlbaseBof */
-   ( DBENTRYP_BP ) nullptr,             /* sqlbaseEof */
-   ( DBENTRYP_BP ) nullptr,             /* sqlbaseFound */
+   ( DBENTRYP_BP ) nullptr,             // sqlbaseBof
+   ( DBENTRYP_BP ) nullptr,             // sqlbaseEof
+   ( DBENTRYP_BP ) nullptr,             // sqlbaseFound
    ( DBENTRYP_V ) sqlbaseGoBottom,
    ( DBENTRYP_UL ) sqlbaseGoTo,
    ( DBENTRYP_I ) sqlbaseGoToId,
    ( DBENTRYP_V ) sqlbaseGoTop,
-   ( DBENTRYP_BIB ) nullptr,            /* sqlbaseSeek */
+   ( DBENTRYP_BIB ) nullptr,            // sqlbaseSeek
    ( DBENTRYP_L ) sqlbaseSkip,
-   ( DBENTRYP_L ) nullptr,              /* sqlbaseSkipFilter */
+   ( DBENTRYP_L ) nullptr,              // sqlbaseSkipFilter
    ( DBENTRYP_L ) sqlbaseSkipRaw,
-   ( DBENTRYP_VF ) nullptr,             /* sqlbaseAddField */
+   ( DBENTRYP_VF ) nullptr,             // sqlbaseAddField
    ( DBENTRYP_B ) sqlbaseAppend,
-   ( DBENTRYP_I ) nullptr,              /* sqlbaseCreateFields */
+   ( DBENTRYP_I ) nullptr,              // sqlbaseCreateFields
    ( DBENTRYP_V ) sqlbaseDeleteRec,
    ( DBENTRYP_BP ) sqlbaseDeleted,
-   ( DBENTRYP_SP ) nullptr,             /* sqlbaseFieldCount */
-   ( DBENTRYP_VF ) nullptr,             /* sqlbaseFieldDisplay */
-   ( DBENTRYP_SSI ) nullptr,            /* sqlbaseFieldInfo */
-   ( DBENTRYP_SCP ) nullptr,            /* sqlbaseFieldName */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseFlush */
-   ( DBENTRYP_PP ) nullptr,             /* sqlbaseGetRec */
+   ( DBENTRYP_SP ) nullptr,             // sqlbaseFieldCount
+   ( DBENTRYP_VF ) nullptr,             // sqlbaseFieldDisplay
+   ( DBENTRYP_SSI ) nullptr,            // sqlbaseFieldInfo
+   ( DBENTRYP_SCP ) nullptr,            // sqlbaseFieldName
+   ( DBENTRYP_V ) nullptr,              // sqlbaseFlush
+   ( DBENTRYP_PP ) nullptr,             // sqlbaseGetRec
    ( DBENTRYP_SI ) sqlbaseGetValue,
    ( DBENTRYP_SVL ) sqlbaseGetVarLen,
    ( DBENTRYP_V ) sqlbaseGoCold,
    ( DBENTRYP_V ) sqlbaseGoHot,
-   ( DBENTRYP_P ) nullptr,              /* sqlbasePutRec */
+   ( DBENTRYP_P ) nullptr,              // sqlbasePutRec
    ( DBENTRYP_SI ) sqlbasePutValue,
    ( DBENTRYP_V ) sqlbaseRecall,
    ( DBENTRYP_ULP ) sqlbaseRecCount,
-   ( DBENTRYP_ISI ) nullptr,            /* sqlbaseRecInfo */
+   ( DBENTRYP_ISI ) nullptr,            // sqlbaseRecInfo
    ( DBENTRYP_ULP ) sqlbaseRecNo,
    ( DBENTRYP_I ) sqlbaseRecId,
-   ( DBENTRYP_S ) nullptr,              /* sqlbaseSetFieldExtent */
-   ( DBENTRYP_CP ) nullptr,             /* sqlbaseAlias */
+   ( DBENTRYP_S ) nullptr,              // sqlbaseSetFieldExtent
+   ( DBENTRYP_CP ) nullptr,             // sqlbaseAlias
    ( DBENTRYP_V ) sqlbaseClose,
    ( DBENTRYP_VO ) sqlbaseCreate,
    ( DBENTRYP_SI ) sqlbaseInfo,
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseNewArea */
+   ( DBENTRYP_V ) nullptr,              // sqlbaseNewArea
    ( DBENTRYP_VO ) sqlbaseOpen,
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseRelease */
+   ( DBENTRYP_V ) nullptr,              // sqlbaseRelease
    ( DBENTRYP_SP ) sqlbaseStructSize,
-   ( DBENTRYP_CP ) nullptr,             /* sqlbaseSysName */
-   ( DBENTRYP_VEI ) nullptr,            /* sqlbaseEval */
-   ( DBENTRYP_V ) nullptr,              /* sqlbasePack */
-   ( DBENTRYP_LSP ) nullptr,            /* sqlbasePackRec */
-   ( DBENTRYP_VS ) nullptr,             /* sqlbaseSort */
-   ( DBENTRYP_VT ) nullptr,             /* sqlbaseTrans */
-   ( DBENTRYP_VT ) nullptr,             /* sqlbaseTransRec */
+   ( DBENTRYP_CP ) nullptr,             // sqlbaseSysName
+   ( DBENTRYP_VEI ) nullptr,            // sqlbaseEval
+   ( DBENTRYP_V ) nullptr,              // sqlbasePack
+   ( DBENTRYP_LSP ) nullptr,            // sqlbasePackRec
+   ( DBENTRYP_VS ) nullptr,             // sqlbaseSort
+   ( DBENTRYP_VT ) nullptr,             // sqlbaseTrans
+   ( DBENTRYP_VT ) nullptr,             // sqlbaseTransRec
    ( DBENTRYP_V ) sqlbaseZap,
-   ( DBENTRYP_VR ) nullptr,             /* sqlbaseChildEnd */
-   ( DBENTRYP_VR ) nullptr,             /* sqlbaseChildStart */
-   ( DBENTRYP_VR ) nullptr,             /* sqlbaseChildSync */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseSyncChildren */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseClearRel */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseForceRel */
-   ( DBENTRYP_SSP ) nullptr,            /* sqlbaseRelArea */
-   ( DBENTRYP_VR ) nullptr,             /* sqlbaseRelEval */
-   ( DBENTRYP_SI ) nullptr,             /* sqlbaseRelText */
-   ( DBENTRYP_VR ) nullptr,             /* sqlbaseSetRel */
-   ( DBENTRYP_VOI ) nullptr,            /* sqlbaseOrderListAdd */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseOrderListClear */
-   ( DBENTRYP_VOI ) nullptr,            /* sqlbaseOrderListDelete */
-   ( DBENTRYP_VOI ) nullptr,            /* sqlbaseOrderListFocus */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseOrderListRebuild */
-   ( DBENTRYP_VOO ) nullptr,            /* sqlbaseOrderCondition */
-   ( DBENTRYP_VOC ) nullptr,            /* sqlbaseOrderCreate */
-   ( DBENTRYP_VOI ) nullptr,            /* sqlbaseOrderDestroy */
-   ( DBENTRYP_SVOI ) nullptr,           /* sqlbaseOrderInfo */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseClearFilter */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseClearLocate */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseClearScope */
-   ( DBENTRYP_VPLP ) nullptr,           /* sqlbaseCountScope */
-   ( DBENTRYP_I ) nullptr,              /* sqlbaseFilterText */
-   ( DBENTRYP_SI ) nullptr,             /* sqlbaseScopeInfo */
-   ( DBENTRYP_VFI ) nullptr,            /* sqlbaseSetFilter */
-   ( DBENTRYP_VLO ) nullptr,            /* sqlbaseSetLocate */
-   ( DBENTRYP_VOS ) nullptr,            /* sqlbaseSetScope */
-   ( DBENTRYP_VPL ) nullptr,            /* sqlbaseSkipScope */
-   ( DBENTRYP_B ) nullptr,              /* sqlbaseLocate */
-   ( DBENTRYP_CC ) nullptr,             /* sqlbaseCompile */
-   ( DBENTRYP_I ) nullptr,              /* sqlbaseError */
-   ( DBENTRYP_I ) nullptr,              /* sqlbaseEvalBlock */
-   ( DBENTRYP_VSP ) nullptr,            /* sqlbaseRawLock */
-   ( DBENTRYP_VL ) nullptr,             /* sqlbaseLock */
-   ( DBENTRYP_I ) nullptr,              /* sqlbaseUnLock */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseCloseMemFile */
-   ( DBENTRYP_VO ) nullptr,             /* sqlbaseCreateMemFile */
-   ( DBENTRYP_SCCS ) nullptr,           /* sqlbaseGetValueFile */
-   ( DBENTRYP_VO ) nullptr,             /* sqlbaseOpenMemFile */
-   ( DBENTRYP_SCCS ) nullptr,           /* sqlbasePutValueFile */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseReadDBHeader */
-   ( DBENTRYP_V ) nullptr,              /* sqlbaseWriteDBHeader */
+   ( DBENTRYP_VR ) nullptr,             // sqlbaseChildEnd
+   ( DBENTRYP_VR ) nullptr,             // sqlbaseChildStart
+   ( DBENTRYP_VR ) nullptr,             // sqlbaseChildSync
+   ( DBENTRYP_V ) nullptr,              // sqlbaseSyncChildren
+   ( DBENTRYP_V ) nullptr,              // sqlbaseClearRel
+   ( DBENTRYP_V ) nullptr,              // sqlbaseForceRel
+   ( DBENTRYP_SSP ) nullptr,            // sqlbaseRelArea
+   ( DBENTRYP_VR ) nullptr,             // sqlbaseRelEval
+   ( DBENTRYP_SI ) nullptr,             // sqlbaseRelText
+   ( DBENTRYP_VR ) nullptr,             // sqlbaseSetRel
+   ( DBENTRYP_VOI ) nullptr,            // sqlbaseOrderListAdd
+   ( DBENTRYP_V ) nullptr,              // sqlbaseOrderListClear
+   ( DBENTRYP_VOI ) nullptr,            // sqlbaseOrderListDelete
+   ( DBENTRYP_VOI ) nullptr,            // sqlbaseOrderListFocus
+   ( DBENTRYP_V ) nullptr,              // sqlbaseOrderListRebuild
+   ( DBENTRYP_VOO ) nullptr,            // sqlbaseOrderCondition
+   ( DBENTRYP_VOC ) nullptr,            // sqlbaseOrderCreate
+   ( DBENTRYP_VOI ) nullptr,            // sqlbaseOrderDestroy
+   ( DBENTRYP_SVOI ) nullptr,           // sqlbaseOrderInfo
+   ( DBENTRYP_V ) nullptr,              // sqlbaseClearFilter
+   ( DBENTRYP_V ) nullptr,              // sqlbaseClearLocate
+   ( DBENTRYP_V ) nullptr,              // sqlbaseClearScope
+   ( DBENTRYP_VPLP ) nullptr,           // sqlbaseCountScope
+   ( DBENTRYP_I ) nullptr,              // sqlbaseFilterText
+   ( DBENTRYP_SI ) nullptr,             // sqlbaseScopeInfo
+   ( DBENTRYP_VFI ) nullptr,            // sqlbaseSetFilter
+   ( DBENTRYP_VLO ) nullptr,            // sqlbaseSetLocate
+   ( DBENTRYP_VOS ) nullptr,            // sqlbaseSetScope
+   ( DBENTRYP_VPL ) nullptr,            // sqlbaseSkipScope
+   ( DBENTRYP_B ) nullptr,              // sqlbaseLocate
+   ( DBENTRYP_CC ) nullptr,             // sqlbaseCompile
+   ( DBENTRYP_I ) nullptr,              // sqlbaseError
+   ( DBENTRYP_I ) nullptr,              // sqlbaseEvalBlock
+   ( DBENTRYP_VSP ) nullptr,            // sqlbaseRawLock
+   ( DBENTRYP_VL ) nullptr,             // sqlbaseLock
+   ( DBENTRYP_I ) nullptr,              // sqlbaseUnLock 
+   ( DBENTRYP_V ) nullptr,              // sqlbaseCloseMemFile
+   ( DBENTRYP_VO ) nullptr,             // sqlbaseCreateMemFile
+   ( DBENTRYP_SCCS ) nullptr,           // sqlbaseGetValueFile
+   ( DBENTRYP_VO ) nullptr,             // sqlbaseOpenMemFile
+   ( DBENTRYP_SCCS ) nullptr,           // sqlbasePutValueFile 
+   ( DBENTRYP_V ) nullptr,              // sqlbaseReadDBHeader
+   ( DBENTRYP_V ) nullptr,              // sqlbaseWriteDBHeader
    ( DBENTRYP_R ) sqlbaseInit,
    ( DBENTRYP_R ) sqlbaseExit,
-   ( DBENTRYP_RVVL ) nullptr,           /* sqlbaseDrop */
-   ( DBENTRYP_RVVL ) nullptr,           /* sqlbaseExists */
-   ( DBENTRYP_RVVVL ) nullptr,          /* sqlbaseRename */
+   ( DBENTRYP_RVVL ) nullptr,           // sqlbaseDrop
+   ( DBENTRYP_RVVL ) nullptr,           // sqlbaseExists
+   ( DBENTRYP_RVVVL ) nullptr,          // sqlbaseRename
    ( DBENTRYP_RSLV ) sqlbaseRddInfo,
-   ( DBENTRYP_SVP ) nullptr             /* sqlbaseWhoCares */
+   ( DBENTRYP_SVP ) nullptr             // sqlbaseWhoCares
 };
 // clang-format on
 
-/* --- Module initialization code --- */
+// --- Module initialization code ---
 
 HB_FUNC(SQLBASE)
 {
@@ -1314,9 +1313,9 @@ HB_INIT_SYMBOLS_BEGIN(sqlbase__InitSymbols)
 {"SQLBASE", {HB_FS_PUBLIC}, {HB_FUNCNAME(SQLBASE)}, nullptr},
 {"SQLBASE_GETFUNCTABLE", {HB_FS_PUBLIC}, {HB_FUNCNAME(SQLBASE_GETFUNCTABLE)}, nullptr}
 HB_INIT_SYMBOLS_END(sqlbase__InitSymbols)
-    // clang-format on
+// clang-format on
 
-    // clang-format off
+// clang-format off
 HB_CALL_ON_STARTUP_BEGIN(_hb_sqlbase_init_)
 hb_vmAtInit(hb_sqlbaseInit, nullptr);
 HB_CALL_ON_STARTUP_END(_hb_sqlbase_init_)
