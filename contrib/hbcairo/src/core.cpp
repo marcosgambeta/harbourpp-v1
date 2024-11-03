@@ -47,7 +47,7 @@
 #include <hbapiitm.hpp>
 #include <hbapierr.hpp>
 
-/* --- cairo_t * support --- */
+// --- cairo_t * support ---
 static HB_GARBAGE_FUNC(hb_cairo_destructor)
 {
   auto ppCairo = static_cast<cairo_t **>(Cargo);
@@ -109,7 +109,7 @@ HB_FUNC(CAIRO_DESTROY)
   }
 }
 
-/* --- cairo_surface_t * support --- */
+// --- cairo_surface_t * support ---
 static HB_GARBAGE_FUNC(hb_cairo_surface_destructor)
 {
   auto ppSurface = static_cast<cairo_surface_t **>(Cargo);
@@ -179,7 +179,7 @@ HB_FUNC(CAIRO_SURFACE_DESTROY)
   }
 }
 
-/* --- cairo_path_t * support --- */
+// --- cairo_path_t * support ---
 static HB_GARBAGE_FUNC(hb_cairo_path_destructor)
 {
   auto ppPath = static_cast<cairo_path_t **>(Cargo);
@@ -241,10 +241,10 @@ HB_FUNC(CAIRO_PATH_DESTROY)
   }
 }
 
-/* --- cairo_path_t * iterator support --- */
+// --- cairo_path_t * iterator support ---
 
-/* NOTE: Path iterator functions are is not cairo functions.
-         This is only a way to pass path data to .prg level */
+// NOTE: Path iterator functions are is not cairo functions.
+//       This is only a way to pass path data to .prg level
 
 struct HB_CAIRO_PATH_ITERATOR
 {
@@ -318,7 +318,7 @@ HB_FUNC(CAIRO_PATH_ITERATOR_NEXT)
 
   if (pIterator && pIterator->ppPath && (pPath = *(pIterator->ppPath)) != nullptr)
   {
-    /* Skip */
+    // Skip
     if (pIterator->iPos == -1)
     {
       pIterator->iPos = 0;
@@ -328,7 +328,7 @@ HB_FUNC(CAIRO_PATH_ITERATOR_NEXT)
       pIterator->iPos += pPath->data[pIterator->iPos].header.length;
     }
 
-    /* return type */
+    // return type
     if (pIterator->iPos < pPath->num_data)
     {
       hb_retni(pPath->data[pIterator->iPos].header.type);
