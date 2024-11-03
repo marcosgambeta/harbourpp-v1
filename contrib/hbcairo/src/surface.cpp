@@ -1,9 +1,8 @@
-/*
- * Cairo library: surface
- *
- * Copyright 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
- *
- */
+//
+// Cairo library: surface
+//
+// Copyright 2009 Mindaugas Kavaliauskas <dbtopas at dbtopas.lt>
+//
 
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
