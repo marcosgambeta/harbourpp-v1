@@ -62,30 +62,36 @@
 
 #include "hbrddsql.hpp"
 
-#define SUPERTABLE  (&sqlmixSuper)
+#define SUPERTABLE (&sqlmixSuper)
 
-#define MIX_KEY( tag, node, index ) \
-   ( ( PMIXKEY ) &( reinterpret_cast<HB_BYTE*>( node ) )[( ( node )->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE) ) + ( index ) * ( tag )->uiTotalLen] )
+#define MIX_KEY(tag, node, index)                                                                                      \
+  ((PMIXKEY) & (reinterpret_cast<HB_BYTE *>(                                                                           \
+                   node))[((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + (index) * (tag)->uiTotalLen])
 
-#define MIX_COPY_KEYS_INTERNAL(tag, node, dst, src, count) \
-   memmove((reinterpret_cast<HB_BYTE*>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + (dst) * (tag)->uiTotalLen, \
-           (reinterpret_cast<HB_BYTE*>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + (src) * (tag)->uiTotalLen, \
-           (count) * (tag)->uiTotalLen)
+#define MIX_COPY_KEYS_INTERNAL(tag, node, dst, src, count)                                                             \
+  memmove((reinterpret_cast<HB_BYTE *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+              (dst) * (tag)->uiTotalLen,                                                                               \
+          (reinterpret_cast<HB_BYTE *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+              (src) * (tag)->uiTotalLen,                                                                               \
+          (count) * (tag)->uiTotalLen)
 
-#define MIX_COPY_KEYS_EXTERNAL(tag, ndst, dst, nsrc, src, count) \
-   memmove((reinterpret_cast<HB_BYTE*>(ndst)) + ((ndst)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + (dst) * (tag)->uiTotalLen, \
-           (reinterpret_cast<HB_BYTE*>(nsrc)) + ((nsrc)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + (src) * (tag)->uiTotalLen, \
-           (count) * (tag)->uiTotalLen)
+#define MIX_COPY_KEYS_EXTERNAL(tag, ndst, dst, nsrc, src, count)                                                       \
+  memmove((reinterpret_cast<HB_BYTE *>(ndst)) + ((ndst)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+              (dst) * (tag)->uiTotalLen,                                                                               \
+          (reinterpret_cast<HB_BYTE *>(nsrc)) + ((nsrc)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+              (src) * (tag)->uiTotalLen,                                                                               \
+          (count) * (tag)->uiTotalLen)
 
-#define MIX_ASSIGN_KEY(tag, node, dst, src) \
-   memmove((reinterpret_cast<HB_BYTE*>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + (dst) * (tag)->uiTotalLen, \
-           (src), (tag)->uiTotalLen)
+#define MIX_ASSIGN_KEY(tag, node, dst, src)                                                                            \
+  memmove((reinterpret_cast<HB_BYTE *>(node)) + ((node)->Leaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) +               \
+              (dst) * (tag)->uiTotalLen,                                                                               \
+          (src), (tag)->uiTotalLen)
 
-#define MIX_COPY_CHILDS_INTERNAL(tag, node, dst, src, count) \
-   memmove(&((node)->Child[(dst)]), &((node)->Child[(src)]), (count) * sizeof(void*))
+#define MIX_COPY_CHILDS_INTERNAL(tag, node, dst, src, count)                                                           \
+  memmove(&((node)->Child[(dst)]), &((node)->Child[(src)]), (count) * sizeof(void *))
 
-#define MIX_COPY_CHILDS_EXTERNAL(tag, ndst, dst, nsrc, src, count) \
-   memmove(&((ndst)->Child[(dst)]), &((nsrc)->Child[(src)]), (count) * sizeof(void*))
+#define MIX_COPY_CHILDS_EXTERNAL(tag, ndst, dst, nsrc, src, count)                                                     \
+  memmove(&((ndst)->Child[(dst)]), &((nsrc)->Child[(src)]), (count) * sizeof(void *))
 
 static HB_USHORT s_uiRddIdSQLMIX = static_cast<HB_USHORT>(-1);
 
@@ -93,26 +99,30 @@ static RDDFUNCS sqlmixSuper;
 
 /* --- Misc functions --- */
 
-static HB_ERRCODE sqlmixErrorRT(SQLMIXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, char * filename, HB_ERRCODE errOsCode, HB_USHORT uiFlags)
+static HB_ERRCODE sqlmixErrorRT(SQLMIXAREAP pArea, HB_ERRCODE errGenCode, HB_ERRCODE errSubCode, char *filename,
+                                HB_ERRCODE errOsCode, HB_USHORT uiFlags)
 {
-   HB_ERRCODE iRet = Harbour::FAILURE;
+  HB_ERRCODE iRet = Harbour::FAILURE;
 
-   if( hb_vmRequestQuery() == 0 ) {
-      PHB_ITEM pError = hb_errNew();
-      hb_errPutGenCode(pError, errGenCode);
-      hb_errPutSubCode(pError, errSubCode);
-      hb_errPutOsCode(pError, errOsCode);
-      hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));
-      if( filename ) {
-         hb_errPutFileName(pError, filename);
-      }
-      if( uiFlags ) {
-         hb_errPutFlags(pError, uiFlags);
-      }
-      iRet = SELF_ERROR(&pArea->sqlarea.area, pError);
-      hb_errRelease(pError);
-   }
-   return iRet;
+  if (hb_vmRequestQuery() == 0)
+  {
+    PHB_ITEM pError = hb_errNew();
+    hb_errPutGenCode(pError, errGenCode);
+    hb_errPutSubCode(pError, errSubCode);
+    hb_errPutOsCode(pError, errOsCode);
+    hb_errPutDescription(pError, hb_langDGetErrorDesc(errGenCode));
+    if (filename)
+    {
+      hb_errPutFileName(pError, filename);
+    }
+    if (uiFlags)
+    {
+      hb_errPutFlags(pError, uiFlags);
+    }
+    iRet = SELF_ERROR(&pArea->sqlarea.area, pError);
+    hb_errRelease(pError);
+  }
+  return iRet;
 }
 
 /* --- Memory Index --- */
@@ -123,161 +133,190 @@ static HB_ERRCODE sqlmixErrorRT(SQLMIXAREAP pArea, HB_ERRCODE errGenCode, HB_ERR
 
 static PMIXKEY hb_mixKeyNew(PMIXTAG pTag)
 {
-   return static_cast<PMIXKEY>(hb_xgrab(pTag->uiTotalLen));
+  return static_cast<PMIXKEY>(hb_xgrab(pTag->uiTotalLen));
 }
 
 static PMIXKEY hb_mixKeyPutItem(PMIXKEY pKey, PHB_ITEM pItem, HB_ULONG ulRecNo, PMIXTAG pTag)
 {
-   if( !pKey ) {
-      pKey = hb_mixKeyNew(pTag);
-   }
+  if (!pKey)
+  {
+    pKey = hb_mixKeyNew(pTag);
+  }
 
-   pKey->rec = ulRecNo;
-   pKey->notnul = 1;
+  pKey->rec = ulRecNo;
+  pKey->notnul = 1;
 
-   double dbl;
-   HB_BYTE buf[8];
+  double dbl;
+  HB_BYTE buf[8];
 
-   /* TODO: check valtype */
-   switch( pTag->bType ) {
-      case 'C':
-      {
-         auto nLen = hb_itemGetCLen(pItem);
+  /* TODO: check valtype */
+  switch (pTag->bType)
+  {
+  case 'C': {
+    auto nLen = hb_itemGetCLen(pItem);
 
-         if( nLen > static_cast<HB_SIZE>(pTag->uiKeyLen) ) {
-            nLen = pTag->uiKeyLen;
-         }
+    if (nLen > static_cast<HB_SIZE>(pTag->uiKeyLen))
+    {
+      nLen = pTag->uiKeyLen;
+    }
 
-         memcpy(pKey->val, hb_itemGetCPtr(pItem), nLen);
+    memcpy(pKey->val, hb_itemGetCPtr(pItem), nLen);
 
-         if( nLen < static_cast<HB_SIZE>(pTag->uiKeyLen) ) {
-            memset(pKey->val + nLen, ' ', static_cast<HB_SIZE>(pTag->uiKeyLen) - nLen);
-         }
+    if (nLen < static_cast<HB_SIZE>(pTag->uiKeyLen))
+    {
+      memset(pKey->val + nLen, ' ', static_cast<HB_SIZE>(pTag->uiKeyLen) - nLen);
+    }
 
-         break;
-      }
-      case 'N':
-         dbl = hb_itemGetND(pItem);
-         HB_DBL2ORD(&dbl, buf);
-         memcpy(pKey->val, buf, 8);
-         break;
+    break;
+  }
+  case 'N':
+    dbl = hb_itemGetND(pItem);
+    HB_DBL2ORD(&dbl, buf);
+    memcpy(pKey->val, buf, 8);
+    break;
 
-      case 'D':
-         dbl = static_cast<double>(hb_itemGetDL(pItem));
-         HB_DBL2ORD(&dbl, buf);
-         memcpy(pKey->val, buf, 8);
-         break;
+  case 'D':
+    dbl = static_cast<double>(hb_itemGetDL(pItem));
+    HB_DBL2ORD(&dbl, buf);
+    memcpy(pKey->val, buf, 8);
+    break;
 
-      case 'L':
-         pKey->val[0] = static_cast<HB_BYTE>(hb_itemGetL(pItem) ? 'T' : 'F');
-         break;
+  case 'L':
+    pKey->val[0] = static_cast<HB_BYTE>(hb_itemGetL(pItem) ? 'T' : 'F');
+    break;
 
-      default:
-         pKey->notnul = 0;
-         memset(pKey->val, ' ', pTag->uiKeyLen);
-   }
-   return pKey;
+  default:
+    pKey->notnul = 0;
+    memset(pKey->val, ' ', pTag->uiKeyLen);
+  }
+  return pKey;
 }
 
 static PMIXKEY hb_mixKeyEval(PMIXKEY pKey, PMIXTAG pTag)
 {
-   SQLMIXAREAP pArea = pTag->pArea;
-   int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
-   PHB_CODEPAGE pCodepage = hb_cdpSelect(pArea->sqlarea.area.cdPage);
+  SQLMIXAREAP pArea = pTag->pArea;
+  int iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+  PHB_CODEPAGE pCodepage = hb_cdpSelect(pArea->sqlarea.area.cdPage);
 
-   if( iCurrArea != pArea->sqlarea.area.uiArea ) {
-      hb_rddSelectWorkAreaNumber(pArea->sqlarea.area.uiArea);
-   } else {
-      iCurrArea = 0;
-   }
+  if (iCurrArea != pArea->sqlarea.area.uiArea)
+  {
+    hb_rddSelectWorkAreaNumber(pArea->sqlarea.area.uiArea);
+  }
+  else
+  {
+    iCurrArea = 0;
+  }
 
-   auto pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
+  auto pItem = hb_vmEvalBlockOrMacro(pTag->pKeyItem);
 
-   pKey = hb_mixKeyPutItem(pKey, pItem, pArea->sqlarea.ulRecNo, pTag);
+  pKey = hb_mixKeyPutItem(pKey, pItem, pArea->sqlarea.ulRecNo, pTag);
 
-   if( iCurrArea ) {
-      hb_rddSelectWorkAreaNumber(iCurrArea);
-   }
+  if (iCurrArea)
+  {
+    hb_rddSelectWorkAreaNumber(iCurrArea);
+  }
 
-   hb_cdpSelect(pCodepage);
+  hb_cdpSelect(pCodepage);
 
-   return pKey;
+  return pKey;
 }
 
 static HB_BOOL hb_mixEvalCond(SQLMIXAREAP pArea, PHB_ITEM pCondItem)
 {
-   int iCurrArea = 0;
+  int iCurrArea = 0;
 
-   if( pArea != nullptr ) {
-      iCurrArea = hb_rddGetCurrentWorkAreaNumber();
+  if (pArea != nullptr)
+  {
+    iCurrArea = hb_rddGetCurrentWorkAreaNumber();
 
-      if( iCurrArea != pArea->sqlarea.area.uiArea ) {
-         hb_rddSelectWorkAreaNumber(pArea->sqlarea.area.uiArea);
-      } else {
-         iCurrArea = 0;
-      }
-   }
+    if (iCurrArea != pArea->sqlarea.area.uiArea)
+    {
+      hb_rddSelectWorkAreaNumber(pArea->sqlarea.area.uiArea);
+    }
+    else
+    {
+      iCurrArea = 0;
+    }
+  }
 
-   bool fRet = hb_itemGetL(hb_vmEvalBlockOrMacro(pCondItem));
+  bool fRet = hb_itemGetL(hb_vmEvalBlockOrMacro(pCondItem));
 
-   if( iCurrArea ) {
-      hb_rddSelectWorkAreaNumber(iCurrArea);
-   }
+  if (iCurrArea)
+  {
+    hb_rddSelectWorkAreaNumber(iCurrArea);
+  }
 
-   return fRet;
+  return fRet;
 }
 
 static void hb_mixKeyFree(PMIXKEY pKey)
 {
-   hb_xfree(pKey);
+  hb_xfree(pKey);
 }
 
 static int hb_mixKeyCompare(PMIXTAG pTag, PMIXKEY pKey1, PMIXKEY pKey2, unsigned int uiLen)
 {
-   if( !pKey1->notnul || !pKey2->notnul ) {
-      return static_cast<int>(pKey1->notnul) - static_cast<int>(pKey2->notnul);
-   }
+  if (!pKey1->notnul || !pKey2->notnul)
+  {
+    return static_cast<int>(pKey1->notnul) - static_cast<int>(pKey2->notnul);
+  }
 
-   int i = 0;
-   unsigned int uiSize = pTag->uiKeyLen > uiLen ? uiLen : pTag->uiKeyLen;
+  int i = 0;
+  unsigned int uiSize = pTag->uiKeyLen > uiLen ? uiLen : pTag->uiKeyLen;
 
-   if( pTag->pCodepage ) {
-      i = hb_cdpcmp(reinterpret_cast<const char*>(pKey1->val), static_cast<HB_SIZE>(uiSize), reinterpret_cast<const char*>(pKey2->val), static_cast<HB_SIZE>(uiSize), pTag->pCodepage, 0);
-   } else if( uiSize > 0 ) {
-      i = memcmp(pKey1->val, pKey2->val, uiSize);
-   }
+  if (pTag->pCodepage)
+  {
+    i = hb_cdpcmp(reinterpret_cast<const char *>(pKey1->val), static_cast<HB_SIZE>(uiSize),
+                  reinterpret_cast<const char *>(pKey2->val), static_cast<HB_SIZE>(uiSize), pTag->pCodepage, 0);
+  }
+  else if (uiSize > 0)
+  {
+    i = memcmp(pKey1->val, pKey2->val, uiSize);
+  }
 
-   if( i == 0 ) {
-      if( pKey2->rec == static_cast<HB_ULONG>(-1) ) {
-         /* This condition seems inverted, but it's ok for seek last */
-         if( pTag->uiKeyLen > uiLen ) {
-            i = -1;
-         }
-      } else {
-         if( pTag->uiKeyLen > uiLen ) {
-            i = 1;
-         } else if( pTag->uiKeyLen < uiLen ) {
-            i = -1;
-         }
+  if (i == 0)
+  {
+    if (pKey2->rec == static_cast<HB_ULONG>(-1))
+    {
+      /* This condition seems inverted, but it's ok for seek last */
+      if (pTag->uiKeyLen > uiLen)
+      {
+        i = -1;
       }
-   }
-
-
-   if( i != 0 ) {
-      if( i < 0 ) {
-         return -2;
+    }
+    else
+    {
+      if (pTag->uiKeyLen > uiLen)
+      {
+        i = 1;
       }
+      else if (pTag->uiKeyLen < uiLen)
+      {
+        i = -1;
+      }
+    }
+  }
 
-      return 2;
-   }
+  if (i != 0)
+  {
+    if (i < 0)
+    {
+      return -2;
+    }
 
-   if( pKey1->rec < pKey2->rec ) {
-      return -1;
-   } else if( pKey1->rec > pKey2->rec ) {
-      return 1;
-   }
+    return 2;
+  }
 
-   return 0;
+  if (pKey1->rec < pKey2->rec)
+  {
+    return -1;
+  }
+  else if (pKey1->rec > pKey2->rec)
+  {
+    return 1;
+  }
+
+  return 0;
 }
 
 /* --- Tag management --- */
@@ -320,615 +359,752 @@ static void hb_mixTagPrintNode(PMIXTAG pTag, PMIXNODE pNode, int iLevel)
 
 static PMIXNODE hb_mixTagCreateNode(PMIXTAG pTag, HB_BOOL fLeaf)
 {
-   HB_SIZE nSize = (fLeaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + MIX_NODE_ORDER * pTag->uiTotalLen;
-   auto pNode = static_cast<PMIXNODE>(hb_xgrabz(nSize));
+  HB_SIZE nSize = (fLeaf ? sizeof(MIXNODELEAF) : sizeof(MIXNODE)) + MIX_NODE_ORDER * pTag->uiTotalLen;
+  auto pNode = static_cast<PMIXNODE>(hb_xgrabz(nSize));
 
-   pNode->Leaf = fLeaf ? 1 : 0;
+  pNode->Leaf = fLeaf ? 1 : 0;
 
-   return pNode;
+  return pNode;
 }
 
 static unsigned int hb_mixTagNodeParentIndex(PMIXNODE pNode)
 {
-   PMIXNODE pParent = pNode->Parent;
+  PMIXNODE pParent = pNode->Parent;
 
-   /* Find position in the parent node */
-   unsigned int ui = pParent->KeyCount;
-   do {
-      if( pParent->Child[ui] == pNode ) {
-         return ui;
-      }
-   } while( ui-- );
+  /* Find position in the parent node */
+  unsigned int ui = pParent->KeyCount;
+  do
+  {
+    if (pParent->Child[ui] == pNode)
+    {
+      return ui;
+    }
+  } while (ui--);
 
-   return static_cast<unsigned int>(-1);
+  return static_cast<unsigned int>(-1);
 }
 
-static int hb_mixTagFindKey(PMIXTAG pTag, PMIXKEY pKey, unsigned int uiLen, PMIXNODE * ppNode, unsigned int * puiPos, HB_BOOL fValidKey)
+static int hb_mixTagFindKey(PMIXTAG pTag, PMIXKEY pKey, unsigned int uiLen, PMIXNODE *ppNode, unsigned int *puiPos,
+                            HB_BOOL fValidKey)
 {
-   PMIXNODE pNode = pTag->Root;
+  PMIXNODE pNode = pTag->Root;
 
-   int i;
-   unsigned int ui;
+  int i;
+  unsigned int ui;
 
-   for( ;; ) {
-      i = -2;
+  for (;;)
+  {
+    i = -2;
 
-      /* TODO: binary search */
-      for( ui = 0; ui < pNode->KeyCount; ui++ ) {
-         i = hb_mixKeyCompare(pTag, MIX_KEY(pTag, pNode, ui), pKey, uiLen);
+    /* TODO: binary search */
+    for (ui = 0; ui < pNode->KeyCount; ui++)
+    {
+      i = hb_mixKeyCompare(pTag, MIX_KEY(pTag, pNode, ui), pKey, uiLen);
 
-         if( i >= 0 ) {
-            break;
-         }
+      if (i >= 0)
+      {
+        break;
       }
+    }
 
-      if( i == 0 || pNode->Leaf ) {
-         break;
-      } else {
-         pNode = pNode->Child[ui];
+    if (i == 0 || pNode->Leaf)
+    {
+      break;
+    }
+    else
+    {
+      pNode = pNode->Child[ui];
+    }
+  }
+
+  if (fValidKey && ui >= pNode->KeyCount)
+  {
+    /* unsuccessful find always finds position in leaf */
+
+    while (pNode->Parent && pNode->Parent->Child[pNode->Parent->KeyCount] == pNode)
+    {
+      pNode = pNode->Parent;
+    }
+
+    if (pNode->Parent)
+    {
+      for (ui = 0; ui < pNode->Parent->KeyCount; ui++)
+      {
+        if (pNode->Parent->Child[ui] == pNode)
+        {
+          pNode = pNode->Parent;
+          break;
+        }
       }
-   }
+    }
+    else
+    {
+      ui = pNode->KeyCount + 1; /* EOF */
+    }
+  }
 
-   if( fValidKey && ui >= pNode->KeyCount ) {
-      /* unsuccessful find always finds position in leaf */
-
-      while( pNode->Parent && pNode->Parent->Child[pNode->Parent->KeyCount] == pNode ) {
-         pNode = pNode->Parent;
-      }
-
-      if( pNode->Parent ) {
-         for( ui = 0; ui < pNode->Parent->KeyCount; ui++ ) {
-            if( pNode->Parent->Child[ui] == pNode ) {
-               pNode = pNode->Parent;
-               break;
-            }
-         }
-      } else {
-         ui = pNode->KeyCount + 1;   /* EOF */
-      }
-   }
-
-   *ppNode = pNode;
-   *puiPos = ui;
-   return i;
+  *ppNode = pNode;
+  *puiPos = ui;
+  return i;
 }
 
 static void hb_mixTagSetCurrent(PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos)
 {
-   if( uiPos < pNode->KeyCount ) {
-      pTag->CurNode = pNode;
-      pTag->CurPos = uiPos;
-      pTag->CurKey = MIX_KEY(pTag, pNode, uiPos);
-      pTag->fEof = false;
-   } else {
-      pTag->fEof = true;
-   }
+  if (uiPos < pNode->KeyCount)
+  {
+    pTag->CurNode = pNode;
+    pTag->CurPos = uiPos;
+    pTag->CurKey = MIX_KEY(pTag, pNode, uiPos);
+    pTag->fEof = false;
+  }
+  else
+  {
+    pTag->fEof = true;
+  }
 }
 
 static HB_BOOL hb_mixTagRefreshKey(PMIXTAG pTag)
 {
-   SQLMIXAREAP pArea = pTag->pArea;
+  SQLMIXAREAP pArea = pTag->pArea;
 
-   if( pArea->sqlarea.lpdbPendingRel ) {
-      SELF_FORCEREL(&pArea->sqlarea.area);
-   }
+  if (pArea->sqlarea.lpdbPendingRel)
+  {
+    SELF_FORCEREL(&pArea->sqlarea.area);
+  }
 
-   if( !pArea->sqlarea.fPositioned ) {
-      pTag->fEof = true;
-      return false;
-   } else if( pTag->fEof || pTag->CurKey->rec != pArea->sqlarea.ulRecNo ) {
-      PMIXKEY pKey = hb_mixKeyEval(nullptr, pTag);
-      PMIXNODE pNode;
-      unsigned int ui;
-      hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
-      hb_mixTagSetCurrent(pTag, pNode, ui);
-      hb_mixKeyFree(pKey);
-      return !pTag->fEof && pTag->CurKey->rec == pArea->sqlarea.ulRecNo;
-   }
-   pTag->fBof = pTag->fEof = false;
-   return true;
+  if (!pArea->sqlarea.fPositioned)
+  {
+    pTag->fEof = true;
+    return false;
+  }
+  else if (pTag->fEof || pTag->CurKey->rec != pArea->sqlarea.ulRecNo)
+  {
+    PMIXKEY pKey = hb_mixKeyEval(nullptr, pTag);
+    PMIXNODE pNode;
+    unsigned int ui;
+    hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
+    hb_mixTagSetCurrent(pTag, pNode, ui);
+    hb_mixKeyFree(pKey);
+    return !pTag->fEof && pTag->CurKey->rec == pArea->sqlarea.ulRecNo;
+  }
+  pTag->fBof = pTag->fEof = false;
+  return true;
 }
 
-static void hb_mixTagAddKeyNode(PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos, PMIXKEY pKey, PMIXNODE pChildLeft, PMIXNODE pChildRight)
+static void hb_mixTagAddKeyNode(PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos, PMIXKEY pKey, PMIXNODE pChildLeft,
+                                PMIXNODE pChildRight)
 {
-   MIX_COPY_KEYS_INTERNAL(pTag, pNode, uiPos + 1, uiPos, pNode->KeyCount - uiPos);
-   if( !pNode->Leaf ) {
-      MIX_COPY_CHILDS_INTERNAL(pTag, pNode, uiPos + 2, uiPos + 1, pNode->KeyCount - uiPos);
-      pNode->Child[uiPos] = pChildLeft;
-      pNode->Child[uiPos + 1] = pChildRight;
-      pChildLeft->Parent = pNode;
-      pChildRight->Parent = pNode;
-   }
-   MIX_ASSIGN_KEY(pTag, pNode, uiPos, pKey);
-   pNode->KeyCount++;
+  MIX_COPY_KEYS_INTERNAL(pTag, pNode, uiPos + 1, uiPos, pNode->KeyCount - uiPos);
+  if (!pNode->Leaf)
+  {
+    MIX_COPY_CHILDS_INTERNAL(pTag, pNode, uiPos + 2, uiPos + 1, pNode->KeyCount - uiPos);
+    pNode->Child[uiPos] = pChildLeft;
+    pNode->Child[uiPos + 1] = pChildRight;
+    pChildLeft->Parent = pNode;
+    pChildRight->Parent = pNode;
+  }
+  MIX_ASSIGN_KEY(pTag, pNode, uiPos, pKey);
+  pNode->KeyCount++;
 }
 
-static void hb_mixTagAddKeyPos(PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos, PMIXKEY pKey, PMIXNODE pChildLeft, PMIXNODE pChildRight)
+static void hb_mixTagAddKeyPos(PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos, PMIXKEY pKey, PMIXNODE pChildLeft,
+                               PMIXNODE pChildRight)
 {
-   if( pNode->KeyCount < MIX_NODE_ORDER ) {
-      hb_mixTagAddKeyNode(pTag, pNode, uiPos, pKey, pChildLeft, pChildRight);
-      return;
-   }
+  if (pNode->KeyCount < MIX_NODE_ORDER)
+  {
+    hb_mixTagAddKeyNode(pTag, pNode, uiPos, pKey, pChildLeft, pChildRight);
+    return;
+  }
 
-   unsigned int j, k;
+  unsigned int j, k;
 
 #ifdef USE_SIBLINGS
-   /* Try use siblings, if leaf node is full */
+  /* Try use siblings, if leaf node is full */
 
-   if( pNode->Leaf && pNode->Parent ) {
-      j = hb_mixTagNodeParentIndex(pNode);
+  if (pNode->Leaf && pNode->Parent)
+  {
+    j = hb_mixTagNodeParentIndex(pNode);
 
-      if( j > 0 && pNode->Parent->Child[j - 1]->KeyCount < MIX_NODE_ORDER ) {
-         MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent->Child[j - 1], pNode->Parent->Child[j - 1]->KeyCount, pNode->Parent, j - 1, 1);
-         pNode->Parent->Child[j - 1]->KeyCount++;
+    if (j > 0 && pNode->Parent->Child[j - 1]->KeyCount < MIX_NODE_ORDER)
+    {
+      MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent->Child[j - 1], pNode->Parent->Child[j - 1]->KeyCount, pNode->Parent,
+                             j - 1, 1);
+      pNode->Parent->Child[j - 1]->KeyCount++;
 
-         if( uiPos == 0 ) {
-            MIX_ASSIGN_KEY(pTag, pNode->Parent, j - 1, pKey);
-            pNode->Parent->Key[j - 1] = pKey;
-         } else {
-            MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent, j - 1, pNode, 0, 1);
-            uiPos--;
-            MIX_COPY_KEYS_INTERNAL(pTag, pNode, 0, 1, uiPos);
-            MIX_ASSIGN_KEY(pTag, pNode, uiPos, pKey);
-         }
-
-         return;
-      } else if( j < pNode->Parent->KeyCount && pNode->Parent->Child[j + 1]->KeyCount < MIX_NODE_ORDER ) {
-         MIX_COPY_KEYS_INTERNAL(pTag, pNode->Parent->Child[j + 1], 1, 0, pNode->Parent->Child[j + 1]->KeyCount);
-         MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent->Child[j + 1], 0, pNode->Parent, j, 1);
-         pNode->Parent->Child[j + 1]->KeyCount++;
-
-         if( uiPos == MIX_NODE_ORDER ) {
-            MIX_ASSIGN_KEY(pTag, pNode->Parent, j, pKey);
-         } else {
-            MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent, j, pNode, MIX_NODE_ORDER - 1, 1);
-            MIX_COPY_KEYS_INTERNAL(pTag, pNode, uiPos + 1, uiPos, MIX_NODE_ORDER - uiPos - 1);
-            MIX_ASSIGN_KEY(pTag, pNode, uiPos, pKey);
-         }
-         return;
+      if (uiPos == 0)
+      {
+        MIX_ASSIGN_KEY(pTag, pNode->Parent, j - 1, pKey);
+        pNode->Parent->Key[j - 1] = pKey;
       }
-   }
+      else
+      {
+        MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent, j - 1, pNode, 0, 1);
+        uiPos--;
+        MIX_COPY_KEYS_INTERNAL(pTag, pNode, 0, 1, uiPos);
+        MIX_ASSIGN_KEY(pTag, pNode, uiPos, pKey);
+      }
+
+      return;
+    }
+    else if (j < pNode->Parent->KeyCount && pNode->Parent->Child[j + 1]->KeyCount < MIX_NODE_ORDER)
+    {
+      MIX_COPY_KEYS_INTERNAL(pTag, pNode->Parent->Child[j + 1], 1, 0, pNode->Parent->Child[j + 1]->KeyCount);
+      MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent->Child[j + 1], 0, pNode->Parent, j, 1);
+      pNode->Parent->Child[j + 1]->KeyCount++;
+
+      if (uiPos == MIX_NODE_ORDER)
+      {
+        MIX_ASSIGN_KEY(pTag, pNode->Parent, j, pKey);
+      }
+      else
+      {
+        MIX_COPY_KEYS_EXTERNAL(pTag, pNode->Parent, j, pNode, MIX_NODE_ORDER - 1, 1);
+        MIX_COPY_KEYS_INTERNAL(pTag, pNode, uiPos + 1, uiPos, MIX_NODE_ORDER - uiPos - 1);
+        MIX_ASSIGN_KEY(pTag, pNode, uiPos, pKey);
+      }
+      return;
+    }
+  }
 #endif /* USE_SIBLINGS */
 
+  /* Create new node */
+  PMIXNODE pNewNode = hb_mixTagCreateNode(pTag, pNode->Leaf);
 
-   /* Create new node */
-   PMIXNODE pNewNode = hb_mixTagCreateNode(pTag, pNode->Leaf);
+  /* Move half of items to new node */
+  k = MIX_NODE_ORDER / 2 + ((uiPos <= MIX_NODE_ORDER / 2) ? 0 : 1);
+  MIX_COPY_KEYS_EXTERNAL(pTag, pNewNode, 0, pNode, k, MIX_NODE_ORDER - k);
+  if (!pNode->Leaf)
+  {
+    MIX_COPY_CHILDS_EXTERNAL(pTag, pNewNode, 1, pNode, k + 1, MIX_NODE_ORDER - k);
+    for (j = 1; j <= MIX_NODE_ORDER - k; j++)
+    {
+      pNewNode->Child[j]->Parent = pNewNode; /* Do NOT forget to re-parent */
+    }
+  }
+  pNode->KeyCount = k;
+  pNewNode->KeyCount = MIX_NODE_ORDER - k;
 
-   /* Move half of items to new node */
-   k = MIX_NODE_ORDER / 2 + ((uiPos <= MIX_NODE_ORDER / 2) ? 0 : 1);
-   MIX_COPY_KEYS_EXTERNAL(pTag, pNewNode, 0, pNode, k, MIX_NODE_ORDER - k);
-   if( !pNode->Leaf ) {
-      MIX_COPY_CHILDS_EXTERNAL(pTag, pNewNode, 1, pNode, k + 1, MIX_NODE_ORDER - k);
-      for( j = 1; j <= MIX_NODE_ORDER - k; j++ ) {
-         pNewNode->Child[j]->Parent = pNewNode;  /* Do NOT forget to re-parent */
-      }
-   }
-   pNode->KeyCount = k;
-   pNewNode->KeyCount = MIX_NODE_ORDER - k;
+  /* Insert new item to the left node or right node */
+  if (uiPos <= MIX_NODE_ORDER / 2)
+  {
+    hb_mixTagAddKeyNode(pTag, pNode, uiPos, pKey, pChildLeft, pChildRight);
+  }
+  else
+  {
+    hb_mixTagAddKeyNode(pTag, pNewNode, uiPos - MIX_NODE_ORDER / 2 - 1, pKey, pChildLeft, pChildRight);
+  }
 
-   /* Insert new item to the left node or right node */
-   if( uiPos <= MIX_NODE_ORDER / 2 ) {
-      hb_mixTagAddKeyNode(pTag, pNode, uiPos, pKey, pChildLeft, pChildRight);
-   } else {
-      hb_mixTagAddKeyNode(pTag, pNewNode, uiPos - MIX_NODE_ORDER / 2 - 1, pKey, pChildLeft, pChildRight);
-   }
+  /* Assign the leftmost child of the new node */
+  if (!pNode->Leaf)
+  {
+    pNewNode->Child[0] = pNode->Child[pNode->KeyCount];
+    pNewNode->Child[0]->Parent = pNewNode;
+  }
 
-   /* Assign the leftmost child of the new node */
-   if( !pNode->Leaf ) {
-      pNewNode->Child[0] = pNode->Child[pNode->KeyCount];
-      pNewNode->Child[0]->Parent = pNewNode;
-   }
+  pNode->KeyCount--;
 
-   pNode->KeyCount--;
-
-   /* Move middle (last+1 in first node) item up */
-   if( pNode->Parent ) {
-      hb_mixTagAddKeyPos(pTag, pNode->Parent, hb_mixTagNodeParentIndex(pNode), MIX_KEY(pTag, pNode, pNode->KeyCount), pNode, pNewNode);
-   } else {
-      pTag->Root = hb_mixTagCreateNode(pTag, 0);
-      hb_mixTagAddKeyNode(pTag, pTag->Root, 0, MIX_KEY(pTag, pNode, pNode->KeyCount), pNode, pNewNode);
-   }
+  /* Move middle (last+1 in first node) item up */
+  if (pNode->Parent)
+  {
+    hb_mixTagAddKeyPos(pTag, pNode->Parent, hb_mixTagNodeParentIndex(pNode), MIX_KEY(pTag, pNode, pNode->KeyCount),
+                       pNode, pNewNode);
+  }
+  else
+  {
+    pTag->Root = hb_mixTagCreateNode(pTag, 0);
+    hb_mixTagAddKeyNode(pTag, pTag->Root, 0, MIX_KEY(pTag, pNode, pNode->KeyCount), pNode, pNewNode);
+  }
 }
 
 static HB_BOOL hb_mixTagAddKey(PMIXTAG pTag, PMIXKEY pKey)
 {
-   PMIXNODE pNode;
-   unsigned int ui;
+  PMIXNODE pNode;
+  unsigned int ui;
 
-   int i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
+  int i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
 
-   /* Key can not be duplicated */
-   if( !i ) {
-      return false;
-   }
+  /* Key can not be duplicated */
+  if (!i)
+  {
+    return false;
+  }
 
-   hb_mixTagAddKeyPos(pTag, pNode, ui, pKey, nullptr, nullptr);
-   return true;
+  hb_mixTagAddKeyPos(pTag, pNode, ui, pKey, nullptr, nullptr);
+  return true;
 }
 
 static void hb_mixTagDelKeyNode(PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos)
 {
-   MIX_COPY_KEYS_INTERNAL(pTag, pNode, uiPos, uiPos + 1, pNode->KeyCount - uiPos - 1);
-   if( !pNode->Leaf ) {
-      MIX_COPY_CHILDS_INTERNAL(pTag, pNode, uiPos, uiPos + 1, pNode->KeyCount - uiPos);
-   }
-   pNode->KeyCount--;
+  MIX_COPY_KEYS_INTERNAL(pTag, pNode, uiPos, uiPos + 1, pNode->KeyCount - uiPos - 1);
+  if (!pNode->Leaf)
+  {
+    MIX_COPY_CHILDS_INTERNAL(pTag, pNode, uiPos, uiPos + 1, pNode->KeyCount - uiPos);
+  }
+  pNode->KeyCount--;
 }
 
 static void hb_mixTagNodeAdjust(PMIXTAG pTag, PMIXNODE pNode)
 {
-   unsigned int i, j;
-   PMIXNODE pParent, pSibling;
+  unsigned int i, j;
+  PMIXNODE pParent, pSibling;
 
-   for( ;; ) {
-      if( pNode->KeyCount >= MIX_NODE_ORDER / 2 ) {
-         return;
+  for (;;)
+  {
+    if (pNode->KeyCount >= MIX_NODE_ORDER / 2)
+    {
+      return;
+    }
+
+    /* Check siblings */
+
+    if (pNode->Parent)
+    {
+      pParent = pNode->Parent;
+      j = hb_mixTagNodeParentIndex(pNode);
+
+      if (j > 0 && pParent->Child[j - 1]->KeyCount > MIX_NODE_ORDER / 2)
+      {
+        /* Borrow from left */
+
+        pSibling = pParent->Child[j - 1];
+
+        /* It could not be pNode->Child[0] if it is not Leaf!!! */
+        hb_mixTagAddKeyNode(pTag, pNode, 0, MIX_KEY(pTag, pParent, j - 1), pSibling->Child[pSibling->KeyCount],
+                            pNode->Child[0]);
+        MIX_COPY_KEYS_EXTERNAL(pTag, pParent, j - 1, pSibling, pSibling->KeyCount - 1, 1);
+        pSibling->KeyCount--;
+        return;
       }
+      else if (j < pParent->KeyCount && pParent->Child[j + 1]->KeyCount > MIX_NODE_ORDER / 2)
+      {
+        /* Borrow from right */
 
-      /* Check siblings */
-
-      if( pNode->Parent ) {
-         pParent = pNode->Parent;
-         j = hb_mixTagNodeParentIndex(pNode);
-
-         if( j > 0 && pParent->Child[j - 1]->KeyCount > MIX_NODE_ORDER / 2 ) {
-            /* Borrow from left */
-
-            pSibling = pParent->Child[j - 1];
-
-            /* It could not be pNode->Child[0] if it is not Leaf!!! */
-            hb_mixTagAddKeyNode(pTag, pNode, 0, MIX_KEY( pTag, pParent, j - 1), pSibling->Child[pSibling->KeyCount], pNode->Child[0]);
-            MIX_COPY_KEYS_EXTERNAL(pTag, pParent, j - 1, pSibling, pSibling->KeyCount - 1, 1);
-            pSibling->KeyCount--;
-            return;
-         } else if( j < pParent->KeyCount && pParent->Child[j + 1]->KeyCount > MIX_NODE_ORDER / 2 ) {
-            /* Borrow from right */
-
-            pSibling = pParent->Child[j + 1];
-            hb_mixTagAddKeyNode(pTag, pNode, pNode->KeyCount, MIX_KEY(pTag, pParent, j), pNode->Child[pNode->KeyCount], pSibling->Child[0]);
-            MIX_COPY_KEYS_EXTERNAL(pTag, pParent, j, pSibling, 0, 1);
-            hb_mixTagDelKeyNode(pTag, pSibling, 0);
-            return;
-         } else if( j > 0 ) {
-            /* Join with left */
-
-            pSibling = pParent->Child[j - 1];
-            MIX_COPY_KEYS_EXTERNAL(pTag, pSibling, pSibling->KeyCount, pParent, j - 1, 1);
-            pSibling->KeyCount++;
-            MIX_COPY_KEYS_EXTERNAL(pTag, pSibling, pSibling->KeyCount, pNode, 0, pNode->KeyCount);
-
-            if( pNode->Leaf ) {
-               pSibling->KeyCount += pNode->KeyCount;
-            } else {
-               MIX_COPY_CHILDS_EXTERNAL(pTag, pSibling, pSibling->KeyCount, pNode, 0, pNode->KeyCount);
-               for( i = 0; i < pNode->KeyCount; i++ ) {
-                  pSibling->Child[pSibling->KeyCount++]->Parent = pSibling;
-               }
-
-               pSibling->Child[pSibling->KeyCount] = pNode->Child[i];
-               pSibling->Child[pSibling->KeyCount]->Parent = pSibling;
-            }
-            hb_xfree(pNode);
-            pParent->Child[j] = pSibling;
-            hb_mixTagDelKeyNode(pTag, pParent, j - 1);
-            pNode = pParent;
-         } else if( j < pParent->KeyCount ) {
-            /* Join with right */
-
-            pSibling = pParent->Child[j + 1];
-            MIX_COPY_KEYS_EXTERNAL(pTag, pNode, pNode->KeyCount, pParent, j, 1);
-            pNode->KeyCount++;
-            MIX_COPY_KEYS_EXTERNAL(pTag, pNode, pNode->KeyCount, pSibling, 0, pSibling->KeyCount);
-            if( pNode->Leaf ) {
-               pNode->KeyCount += pSibling->KeyCount;
-            } else {
-               MIX_COPY_CHILDS_EXTERNAL(pTag, pNode, pNode->KeyCount, pSibling, 0, pSibling->KeyCount);
-               for( i = 0; i < pSibling->KeyCount; i++ ) {
-                  pNode->Child[pNode->KeyCount++]->Parent = pNode;
-               }
-
-               pNode->Child[pNode->KeyCount] = pSibling->Child[i];
-               pNode->Child[pNode->KeyCount]->Parent = pNode;
-            }
-            hb_xfree(pSibling);
-            pParent->Child[j + 1] = pNode;
-            hb_mixTagDelKeyNode(pTag, pParent, j);
-            pNode = pParent;
-         }
-      } else {
-         /* Adjust root */
-
-         if( !pNode->KeyCount && !pNode->Leaf ) {
-            pTag->Root = pNode->Child[0];
-            pTag->Root->Parent = nullptr;
-            hb_xfree(pNode);
-         }
-         return;
+        pSibling = pParent->Child[j + 1];
+        hb_mixTagAddKeyNode(pTag, pNode, pNode->KeyCount, MIX_KEY(pTag, pParent, j), pNode->Child[pNode->KeyCount],
+                            pSibling->Child[0]);
+        MIX_COPY_KEYS_EXTERNAL(pTag, pParent, j, pSibling, 0, 1);
+        hb_mixTagDelKeyNode(pTag, pSibling, 0);
+        return;
       }
-   }
+      else if (j > 0)
+      {
+        /* Join with left */
+
+        pSibling = pParent->Child[j - 1];
+        MIX_COPY_KEYS_EXTERNAL(pTag, pSibling, pSibling->KeyCount, pParent, j - 1, 1);
+        pSibling->KeyCount++;
+        MIX_COPY_KEYS_EXTERNAL(pTag, pSibling, pSibling->KeyCount, pNode, 0, pNode->KeyCount);
+
+        if (pNode->Leaf)
+        {
+          pSibling->KeyCount += pNode->KeyCount;
+        }
+        else
+        {
+          MIX_COPY_CHILDS_EXTERNAL(pTag, pSibling, pSibling->KeyCount, pNode, 0, pNode->KeyCount);
+          for (i = 0; i < pNode->KeyCount; i++)
+          {
+            pSibling->Child[pSibling->KeyCount++]->Parent = pSibling;
+          }
+
+          pSibling->Child[pSibling->KeyCount] = pNode->Child[i];
+          pSibling->Child[pSibling->KeyCount]->Parent = pSibling;
+        }
+        hb_xfree(pNode);
+        pParent->Child[j] = pSibling;
+        hb_mixTagDelKeyNode(pTag, pParent, j - 1);
+        pNode = pParent;
+      }
+      else if (j < pParent->KeyCount)
+      {
+        /* Join with right */
+
+        pSibling = pParent->Child[j + 1];
+        MIX_COPY_KEYS_EXTERNAL(pTag, pNode, pNode->KeyCount, pParent, j, 1);
+        pNode->KeyCount++;
+        MIX_COPY_KEYS_EXTERNAL(pTag, pNode, pNode->KeyCount, pSibling, 0, pSibling->KeyCount);
+        if (pNode->Leaf)
+        {
+          pNode->KeyCount += pSibling->KeyCount;
+        }
+        else
+        {
+          MIX_COPY_CHILDS_EXTERNAL(pTag, pNode, pNode->KeyCount, pSibling, 0, pSibling->KeyCount);
+          for (i = 0; i < pSibling->KeyCount; i++)
+          {
+            pNode->Child[pNode->KeyCount++]->Parent = pNode;
+          }
+
+          pNode->Child[pNode->KeyCount] = pSibling->Child[i];
+          pNode->Child[pNode->KeyCount]->Parent = pNode;
+        }
+        hb_xfree(pSibling);
+        pParent->Child[j + 1] = pNode;
+        hb_mixTagDelKeyNode(pTag, pParent, j);
+        pNode = pParent;
+      }
+    }
+    else
+    {
+      /* Adjust root */
+
+      if (!pNode->KeyCount && !pNode->Leaf)
+      {
+        pTag->Root = pNode->Child[0];
+        pTag->Root->Parent = nullptr;
+        hb_xfree(pNode);
+      }
+      return;
+    }
+  }
 }
 
 static void hb_mixTagDelKeyPos(PMIXTAG pTag, PMIXNODE pNode, unsigned int uiPos)
 {
-   if( pNode->Leaf ) {
-      hb_mixTagDelKeyNode(pTag, pNode, uiPos);
-      hb_mixTagNodeAdjust(pTag, pNode);
-   } else {
-      PMIXNODE pLeaf;
+  if (pNode->Leaf)
+  {
+    hb_mixTagDelKeyNode(pTag, pNode, uiPos);
+    hb_mixTagNodeAdjust(pTag, pNode);
+  }
+  else
+  {
+    PMIXNODE pLeaf;
 
-      pLeaf = pNode->Child[uiPos + 1];
-      while( !pLeaf->Leaf ) {
-         pLeaf = pLeaf->Child[0];
-      }
+    pLeaf = pNode->Child[uiPos + 1];
+    while (!pLeaf->Leaf)
+    {
+      pLeaf = pLeaf->Child[0];
+    }
 
-      MIX_COPY_KEYS_EXTERNAL(pTag, pNode, uiPos, pLeaf, 0, 1);
-      hb_mixTagDelKeyNode(pTag, pLeaf, 0);
-      hb_mixTagNodeAdjust(pTag, pLeaf);
-   }
+    MIX_COPY_KEYS_EXTERNAL(pTag, pNode, uiPos, pLeaf, 0, 1);
+    hb_mixTagDelKeyNode(pTag, pLeaf, 0);
+    hb_mixTagNodeAdjust(pTag, pLeaf);
+  }
 }
 
 static HB_BOOL hb_mixTagDelKey(PMIXTAG pTag, PMIXKEY pKey)
 {
-   PMIXNODE pNode;
-   unsigned int ui;
+  PMIXNODE pNode;
+  unsigned int ui;
 
-   int i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
+  int i = hb_mixTagFindKey(pTag, pKey, pTag->uiKeyLen, &pNode, &ui, false);
 
-   if( i ) {
-      return false;
-   }
+  if (i)
+  {
+    return false;
+  }
 
-   hb_mixTagDelKeyPos(pTag, pNode, ui);
-   return true;
+  hb_mixTagDelKeyPos(pTag, pNode, ui);
+  return true;
 }
 
-static PMIXTAG hb_mixTagCreate(const char * szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem, PHB_ITEM pWhileItem, HB_BYTE bType, unsigned int uiKeyLen, SQLMIXAREAP pArea)
+static PMIXTAG hb_mixTagCreate(const char *szTagName, PHB_ITEM pKeyExpr, PHB_ITEM pKeyItem, PHB_ITEM pForItem,
+                               PHB_ITEM pWhileItem, HB_BYTE bType, unsigned int uiKeyLen, SQLMIXAREAP pArea)
 {
-   PMIXKEY pKey = nullptr;
-   LPDBORDERCONDINFO pOrdCondInfo = pArea->sqlarea.area.lpdbOrdCondInfo;
-   HB_ULONG ulNextCount = 0;
-   HB_LONG lStep = 0;
-   PHB_ITEM pItem, pEvalItem = nullptr;
+  PMIXKEY pKey = nullptr;
+  LPDBORDERCONDINFO pOrdCondInfo = pArea->sqlarea.area.lpdbOrdCondInfo;
+  HB_ULONG ulNextCount = 0;
+  HB_LONG lStep = 0;
+  PHB_ITEM pItem, pEvalItem = nullptr;
 
-   auto pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
+  auto pTag = static_cast<PMIXTAG>(hb_xgrabz(sizeof(MIXTAG)));
 
-   pTag->pArea = pArea;
+  pTag->pArea = pArea;
 
-   pTag->szName = static_cast<char*>(hb_xgrab(MIX_MAXTAGNAMELEN + 1));
-   hb_strncpyUpperTrim(pTag->szName, szTagName, MIX_MAXTAGNAMELEN);
+  pTag->szName = static_cast<char *>(hb_xgrab(MIX_MAXTAGNAMELEN + 1));
+  hb_strncpyUpperTrim(pTag->szName, szTagName, MIX_MAXTAGNAMELEN);
 
-   pTag->szKeyExpr = static_cast<char*>(hb_xgrab(hb_itemGetCLen(pKeyExpr) + 1));
-   hb_strncpyTrim(pTag->szKeyExpr, hb_itemGetCPtr(pKeyExpr), hb_itemGetCLen(pKeyExpr));
+  pTag->szKeyExpr = static_cast<char *>(hb_xgrab(hb_itemGetCLen(pKeyExpr) + 1));
+  hb_strncpyTrim(pTag->szKeyExpr, hb_itemGetCPtr(pKeyExpr), hb_itemGetCLen(pKeyExpr));
 
-   /* TODO: FOR expression */
-   pTag->szForExpr = nullptr;
+  /* TODO: FOR expression */
+  pTag->szForExpr = nullptr;
 
-   pTag->pKeyItem = pKeyItem;
-   pTag->pForItem = pForItem;
-   pTag->bType = bType;
-   pTag->uiKeyLen = uiKeyLen;
+  pTag->pKeyItem = pKeyItem;
+  pTag->pForItem = pForItem;
+  pTag->bType = bType;
+  pTag->uiKeyLen = uiKeyLen;
 
-   pTag->uiTotalLen = sizeof(MIXKEY) + pTag->uiKeyLen;
+  pTag->uiTotalLen = sizeof(MIXKEY) + pTag->uiKeyLen;
 
-   /* Use national support */
-   if( bType == 'C' ) {
-      if( pArea->sqlarea.area.cdPage && !HB_CDP_ISBINSORT(pArea->sqlarea.area.cdPage) ) {
-         pTag->pCodepage = pArea->sqlarea.area.cdPage;
+  /* Use national support */
+  if (bType == 'C')
+  {
+    if (pArea->sqlarea.area.cdPage && !HB_CDP_ISBINSORT(pArea->sqlarea.area.cdPage))
+    {
+      pTag->pCodepage = pArea->sqlarea.area.cdPage;
+    }
+  }
+
+  pTag->Root = hb_mixTagCreateNode(pTag, true);
+
+  HB_ULONG ulStartRec = 0;
+
+  if (pOrdCondInfo)
+  {
+    pEvalItem = pOrdCondInfo->itmCobEval;
+    lStep = pOrdCondInfo->lStep;
+  }
+
+  if (!pOrdCondInfo || pOrdCondInfo->fAll)
+  {
+    pArea->pTag = nullptr;
+  }
+  else
+  {
+    if (pOrdCondInfo->itmRecID)
+    {
+      ulStartRec = hb_itemGetNL(pOrdCondInfo->itmRecID);
+    }
+
+    if (ulStartRec)
+    {
+      ulNextCount = 1;
+    }
+    else if (pOrdCondInfo->fRest || pOrdCondInfo->lNextCount > 0)
+    {
+      if (pOrdCondInfo->itmStartRecID)
+      {
+        ulStartRec = hb_itemGetNL(pOrdCondInfo->itmStartRecID);
       }
-   }
 
-   pTag->Root = hb_mixTagCreateNode(pTag, true);
+      if (!ulStartRec)
+      {
+        ulStartRec = pArea->sqlarea.ulRecNo;
+      }
 
-   HB_ULONG ulStartRec = 0;
-
-   if( pOrdCondInfo ) {
-      pEvalItem = pOrdCondInfo->itmCobEval;
-      lStep = pOrdCondInfo->lStep;
-   }
-
-   if( !pOrdCondInfo || pOrdCondInfo->fAll ) {
+      if (pArea->sqlarea.area.lpdbOrdCondInfo->lNextCount > 0)
+      {
+        ulNextCount = pOrdCondInfo->lNextCount;
+      }
+    }
+    else if (!pOrdCondInfo->fUseCurrent)
+    {
       pArea->pTag = nullptr;
-   } else {
-      if( pOrdCondInfo->itmRecID ) {
-         ulStartRec = hb_itemGetNL(pOrdCondInfo->itmRecID);
+    }
+  }
+
+  if (ulStartRec == 0 && pArea->pTag == nullptr)
+  {
+    ulStartRec = 1;
+  }
+
+  if (ulStartRec)
+  {
+    SELF_GOTO(&pArea->sqlarea.area, ulStartRec);
+  }
+  else
+  {
+    SELF_GOTOP(&pArea->sqlarea.area);
+  }
+
+  while (!pArea->sqlarea.area.fEof)
+  {
+    if (pEvalItem)
+    {
+      if (lStep >= pOrdCondInfo->lStep)
+      {
+        lStep = 0;
+        if (!hb_mixEvalCond(nullptr, pEvalItem))
+        {
+          break;
+        }
       }
+      ++lStep;
+    }
 
-      if( ulStartRec ) {
-         ulNextCount = 1;
-      } else if( pOrdCondInfo->fRest || pOrdCondInfo->lNextCount > 0 ) {
-         if( pOrdCondInfo->itmStartRecID ) {
-            ulStartRec = hb_itemGetNL(pOrdCondInfo->itmStartRecID);
-         }
+    if (pWhileItem && !hb_mixEvalCond(nullptr, pWhileItem))
+    {
+      break;
+    }
 
-         if( !ulStartRec ) {
-            ulStartRec = pArea->sqlarea.ulRecNo;
-         }
+    if (pForItem == nullptr || hb_mixEvalCond(nullptr, pForItem))
+    {
+      pItem = hb_vmEvalBlockOrMacro(pKeyItem);
 
-         if( pArea->sqlarea.area.lpdbOrdCondInfo->lNextCount > 0 ) {
-            ulNextCount = pOrdCondInfo->lNextCount;
-         }
-      } else if( !pOrdCondInfo->fUseCurrent ) {
-         pArea->pTag = nullptr;
+      pKey = hb_mixKeyPutItem(pKey, pItem, pArea->sqlarea.ulRecNo, pTag);
+      hb_mixTagAddKey(pTag, pKey);
+    }
+
+    if (ulNextCount)
+    {
+      ulNextCount--;
+      if (!ulNextCount)
+      {
+        break;
       }
-   }
+    }
+    if (SELF_SKIPRAW(&pArea->sqlarea.area, 1) == Harbour::FAILURE)
+    {
+      break;
+    }
+  }
+  if (pKey)
+  {
+    hb_mixKeyFree(pKey);
+  }
 
-   if( ulStartRec == 0 && pArea->pTag == nullptr ) {
-      ulStartRec = 1;
-   }
-
-   if( ulStartRec ) {
-      SELF_GOTO(&pArea->sqlarea.area, ulStartRec);
-   } else {
-      SELF_GOTOP(&pArea->sqlarea.area);
-   }   
-
-   while( !pArea->sqlarea.area.fEof ) {
-      if( pEvalItem ) {
-         if( lStep >= pOrdCondInfo->lStep ) {
-            lStep = 0;
-            if( !hb_mixEvalCond(nullptr, pEvalItem) ) {
-               break;
-            }
-         }
-         ++lStep;
-      }
-
-      if( pWhileItem && !hb_mixEvalCond(nullptr, pWhileItem) ) {
-         break;
-      }
-
-      if( pForItem == nullptr || hb_mixEvalCond(nullptr, pForItem) ) {
-         pItem = hb_vmEvalBlockOrMacro(pKeyItem);
-
-         pKey = hb_mixKeyPutItem(pKey, pItem, pArea->sqlarea.ulRecNo, pTag);
-         hb_mixTagAddKey(pTag, pKey);
-      }
-
-      if( ulNextCount ) {
-         ulNextCount--;
-         if( !ulNextCount ) {
-            break;
-         }
-      }
-      if( SELF_SKIPRAW(&pArea->sqlarea.area, 1) == Harbour::FAILURE ) {
-         break;
-      }
-   }
-   if( pKey ) {
-      hb_mixKeyFree(pKey);
-   }
-
-   return pTag;
+  return pTag;
 }
 
 static void hb_mixTagDestroyNode(PMIXNODE pNode)
 {
-   if( !pNode->Leaf ) {
-      for( unsigned int ui = 0; ui <= pNode->KeyCount; ui++ ) {
-         hb_mixTagDestroyNode(pNode->Child[ui]);
-      }
-   }
-   hb_xfree(pNode);
+  if (!pNode->Leaf)
+  {
+    for (unsigned int ui = 0; ui <= pNode->KeyCount; ui++)
+    {
+      hb_mixTagDestroyNode(pNode->Child[ui]);
+    }
+  }
+  hb_xfree(pNode);
 }
 
 static void hb_mixTagDestroy(PMIXTAG pTag)
 {
-   if( pTag->szName ) {
-      hb_xfree(pTag->szName);
-   }
+  if (pTag->szName)
+  {
+    hb_xfree(pTag->szName);
+  }
 
-   if( pTag->szKeyExpr ) {
-      hb_xfree(pTag->szKeyExpr);
-   }
+  if (pTag->szKeyExpr)
+  {
+    hb_xfree(pTag->szKeyExpr);
+  }
 
-   if( pTag->szForExpr ) {
-      hb_xfree(pTag->szForExpr);
-   }
+  if (pTag->szForExpr)
+  {
+    hb_xfree(pTag->szForExpr);
+  }
 
-   if( pTag->pKeyItem ) {
-      hb_vmDestroyBlockOrMacro(pTag->pKeyItem);
-   }
+  if (pTag->pKeyItem)
+  {
+    hb_vmDestroyBlockOrMacro(pTag->pKeyItem);
+  }
 
-   if( pTag->pForItem ) {
-      hb_vmDestroyBlockOrMacro(pTag->pForItem);
-   }
+  if (pTag->pForItem)
+  {
+    hb_vmDestroyBlockOrMacro(pTag->pForItem);
+  }
 
-   if( pTag->Root ) {
-      hb_mixTagDestroyNode(pTag->Root);
-   }
+  if (pTag->Root)
+  {
+    hb_mixTagDestroyNode(pTag->Root);
+  }
 
-   if( pTag->HotKey ) {
-      hb_mixKeyFree(pTag->HotKey);
-   }
+  if (pTag->HotKey)
+  {
+    hb_mixKeyFree(pTag->HotKey);
+  }
 
-   hb_xfree(pTag);
+  hb_xfree(pTag);
 }
 
 static void hb_mixTagGoTop(PMIXTAG pTag)
 {
-   PMIXNODE pNode = pTag->Root;
-   while( !pNode->Leaf ) {
-      pNode = pNode->Child[0];
-   }
+  PMIXNODE pNode = pTag->Root;
+  while (!pNode->Leaf)
+  {
+    pNode = pNode->Child[0];
+  }
 
-   if( !pNode->KeyCount ) {
-      pTag->fEof = true;
-      return;
-   }
-   pTag->fEof = false;
-   pTag->CurNode = pNode;
-   pTag->CurPos = 0;
-   pTag->CurKey = MIX_KEY(pTag, pTag->CurNode, 0);
+  if (!pNode->KeyCount)
+  {
+    pTag->fEof = true;
+    return;
+  }
+  pTag->fEof = false;
+  pTag->CurNode = pNode;
+  pTag->CurPos = 0;
+  pTag->CurKey = MIX_KEY(pTag, pTag->CurNode, 0);
 }
 
 static void hb_mixTagGoBottom(PMIXTAG pTag)
 {
-   PMIXNODE pNode = pTag->Root;
-   while( !pNode->Leaf ) {
-      pNode = pNode->Child[pNode->KeyCount];
-   }
+  PMIXNODE pNode = pTag->Root;
+  while (!pNode->Leaf)
+  {
+    pNode = pNode->Child[pNode->KeyCount];
+  }
 
-   if( !pNode->KeyCount ) {
-      pTag->fEof = true;
-      return;
-   }
-   pTag->fEof = false;
-   pTag->CurNode = pNode;
-   pTag->CurPos = pNode->KeyCount - 1;
-   pTag->CurKey = MIX_KEY(pTag, pTag->CurNode, pTag->CurPos);
+  if (!pNode->KeyCount)
+  {
+    pTag->fEof = true;
+    return;
+  }
+  pTag->fEof = false;
+  pTag->CurNode = pNode;
+  pTag->CurPos = pNode->KeyCount - 1;
+  pTag->CurKey = MIX_KEY(pTag, pTag->CurNode, pTag->CurPos);
 }
 
 static void hb_mixTagSkip(PMIXTAG pTag, HB_LONG lSkip)
 {
-   PMIXNODE pNode = pTag->CurNode;
-   unsigned int uiPos = pTag->CurPos;
+  PMIXNODE pNode = pTag->CurNode;
+  unsigned int uiPos = pTag->CurPos;
 
-   #if 0
+#if 0
    printf("hb_mixTagSkip: CurNode=%p, CurPos=%d lSkip=%d\n", pNode, uiPos, lSkip);
-   #endif
+#endif
 
-   PMIXNODE pNode2;
-   unsigned int uiPos2;
+  PMIXNODE pNode2;
+  unsigned int uiPos2;
 
-   if( lSkip > 0 ) {
-      pTag->fBof = false;
-      while( !pTag->fEof && lSkip > 0 ) {
-         if( pNode->Leaf ) {
-            if( static_cast<HB_LONG>(pNode->KeyCount - 1 - uiPos) >= lSkip ) {
-               uiPos += lSkip;
-               lSkip = 0;
-            } else if( pNode->KeyCount - 1 > uiPos ) {
-               lSkip -= static_cast<HB_LONG>(pNode->KeyCount - 1 - uiPos);
-               uiPos = pNode->KeyCount - 1;
+  if (lSkip > 0)
+  {
+    pTag->fBof = false;
+    while (!pTag->fEof && lSkip > 0)
+    {
+      if (pNode->Leaf)
+      {
+        if (static_cast<HB_LONG>(pNode->KeyCount - 1 - uiPos) >= lSkip)
+        {
+          uiPos += lSkip;
+          lSkip = 0;
+        }
+        else if (pNode->KeyCount - 1 > uiPos)
+        {
+          lSkip -= static_cast<HB_LONG>(pNode->KeyCount - 1 - uiPos);
+          uiPos = pNode->KeyCount - 1;
+        }
+        if (lSkip)
+        {
+          do
+          {
+            if (pNode->Parent)
+            {
+              uiPos = hb_mixTagNodeParentIndex(pNode);
             }
-            if( lSkip ) {
-               do {
-                  if( pNode->Parent ) {
-                     uiPos = hb_mixTagNodeParentIndex(pNode);
-                  }
-                  pNode = pNode->Parent;
-               } while( pNode && uiPos == pNode->KeyCount );
+            pNode = pNode->Parent;
+          } while (pNode && uiPos == pNode->KeyCount);
 
-               if( pNode ) {
-                  lSkip--;
-               } else {
-                  pTag->fEof = true;
-               }
-            }
-         } else {
-            pNode = pNode->Child[uiPos + 1];
-            while( !pNode->Leaf ) {
-               pNode = pNode->Child[0];
-            }
-
-            uiPos = 0;
+          if (pNode)
+          {
             lSkip--;
-         }
+          }
+          else
+          {
+            pTag->fEof = true;
+          }
+        }
       }
-   } else if( lSkip < 0 ) {
-      lSkip = -lSkip;
+      else
+      {
+        pNode = pNode->Child[uiPos + 1];
+        while (!pNode->Leaf)
+        {
+          pNode = pNode->Child[0];
+        }
 
-      /* This is not needed. skip(-1) from Eof is processed inside sqlmixSkipRaw */
+        uiPos = 0;
+        lSkip--;
+      }
+    }
+  }
+  else if (lSkip < 0)
+  {
+    lSkip = -lSkip;
+
+    /* This is not needed. skip(-1) from Eof is processed inside sqlmixSkipRaw */
 #if 0
       if( pTag->fEof ) {
          hb_mixTagGoBottom(pTag);
@@ -936,51 +1112,66 @@ static void hb_mixTagSkip(PMIXTAG pTag, HB_LONG lSkip)
          pTag->fBof = pTag->fEof;
       }
 #endif
-      pTag->fBof = pTag->fEof;
+    pTag->fBof = pTag->fEof;
 
-      while( !pTag->fBof && lSkip > 0 ) {
-         if( pNode->Leaf ) {
-            if( static_cast<HB_LONG>(uiPos) >= lSkip ) {
-               uiPos -= lSkip;
-               lSkip = 0;
-            } else if( uiPos ) {
-               lSkip -= uiPos;
-               uiPos = 0;
+    while (!pTag->fBof && lSkip > 0)
+    {
+      if (pNode->Leaf)
+      {
+        if (static_cast<HB_LONG>(uiPos) >= lSkip)
+        {
+          uiPos -= lSkip;
+          lSkip = 0;
+        }
+        else if (uiPos)
+        {
+          lSkip -= uiPos;
+          uiPos = 0;
+        }
+        if (lSkip)
+        {
+          pNode2 = pNode;
+          uiPos2 = uiPos;
+          do
+          {
+            if (pNode->Parent)
+            {
+              uiPos = hb_mixTagNodeParentIndex(pNode);
             }
-            if( lSkip ) {
-               pNode2 = pNode;
-               uiPos2 = uiPos;
-               do {
-                  if( pNode->Parent ) {
-                     uiPos = hb_mixTagNodeParentIndex(pNode);
-                  }
-                  pNode = pNode->Parent;
-               } while( pNode && uiPos == 0 );
+            pNode = pNode->Parent;
+          } while (pNode && uiPos == 0);
 
-               if( pNode ) {
-                  uiPos--;
-                  lSkip--;
-               } else {
-                  pNode = pNode2;
-                  uiPos = uiPos2;
-                  pTag->fBof = true;
-               }
-            }
-         } else {
-            do {
-               pNode = pNode->Child[uiPos];
-               uiPos = pNode->KeyCount;
-            } while( !pNode->Leaf );
+          if (pNode)
+          {
             uiPos--;
             lSkip--;
-         }
+          }
+          else
+          {
+            pNode = pNode2;
+            uiPos = uiPos2;
+            pTag->fBof = true;
+          }
+        }
       }
-   }
-   if( !pTag->fEof ) {
-      pTag->CurNode = pNode;
-      pTag->CurPos = uiPos;
-      pTag->CurKey = MIX_KEY(pTag, pNode, uiPos);
-   }
+      else
+      {
+        do
+        {
+          pNode = pNode->Child[uiPos];
+          uiPos = pNode->KeyCount;
+        } while (!pNode->Leaf);
+        uiPos--;
+        lSkip--;
+      }
+    }
+  }
+  if (!pTag->fEof)
+  {
+    pTag->CurNode = pNode;
+    pTag->CurPos = uiPos;
+    pTag->CurKey = MIX_KEY(pTag, pNode, uiPos);
+  }
 }
 
 /* --- Misc functions --- */
@@ -989,358 +1180,436 @@ static void hb_mixTagSkip(PMIXTAG pTag, HB_LONG lSkip)
 
 static PMIXTAG hb_mixFindTag(SQLMIXAREAP pArea, PHB_ITEM pOrder)
 {
-   PMIXTAG pTag;
+  PMIXTAG pTag;
 
-   if( pOrder->isNumber() ) {
-      int iCurr = 0;
+  if (pOrder->isNumber())
+  {
+    int iCurr = 0;
 
-      auto iOrder = hb_itemGetNI(pOrder);
+    auto iOrder = hb_itemGetNI(pOrder);
 
-      pTag = pArea->pTagList;
-      while( pTag && iOrder != ++iCurr ) {
-         pTag = pTag->pNext;
-      }
-   } else {
-      char szTag[MIX_MAXTAGNAMELEN + 1];
+    pTag = pArea->pTagList;
+    while (pTag && iOrder != ++iCurr)
+    {
+      pTag = pTag->pNext;
+    }
+  }
+  else
+  {
+    char szTag[MIX_MAXTAGNAMELEN + 1];
 
-      hb_strncpyUpperTrim(szTag, hb_itemGetCPtr(pOrder), MIX_MAXTAGNAMELEN);
-      pTag = pArea->pTagList;
-      while( pTag && hb_stricmp(szTag, pTag->szName) ) {
-         pTag = pTag->pNext;
-      }
-   }
+    hb_strncpyUpperTrim(szTag, hb_itemGetCPtr(pOrder), MIX_MAXTAGNAMELEN);
+    pTag = pArea->pTagList;
+    while (pTag && hb_stricmp(szTag, pTag->szName))
+    {
+      pTag = pTag->pNext;
+    }
+  }
 
-   return pTag;
+  return pTag;
 }
 
 /* --- */
 
 static HB_ULONG hb_mixTagNodeKeyCount(PMIXNODE pNode)
 {
-   HB_ULONG ulKeyCount = pNode->KeyCount;
+  HB_ULONG ulKeyCount = pNode->KeyCount;
 
-   if( !pNode->Leaf ) {
-      unsigned int ui;
-      for( ui = 0; ui <= pNode->KeyCount; ui++ ) {
-         ulKeyCount += hb_mixTagNodeKeyCount(pNode->Child[ui]);
-      }
-   }
+  if (!pNode->Leaf)
+  {
+    unsigned int ui;
+    for (ui = 0; ui <= pNode->KeyCount; ui++)
+    {
+      ulKeyCount += hb_mixTagNodeKeyCount(pNode->Child[ui]);
+    }
+  }
 
-   return ulKeyCount;
+  return ulKeyCount;
 }
 
 static HB_BOOL hb_mixCheckRecordFilter(SQLMIXAREAP pArea, HB_ULONG ulRecNo)
 {
-   HB_BOOL lResult = false;
+  HB_BOOL lResult = false;
 
-   if( pArea->sqlarea.area.dbfi.itmCobExpr || hb_setGetDeleted() ) {
-      if( pArea->sqlarea.ulRecNo != ulRecNo || pArea->sqlarea.lpdbPendingRel ) {
-         SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
-      }
+  if (pArea->sqlarea.area.dbfi.itmCobExpr || hb_setGetDeleted())
+  {
+    if (pArea->sqlarea.ulRecNo != ulRecNo || pArea->sqlarea.lpdbPendingRel)
+    {
+      SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
+    }
 
-      if( hb_setGetDeleted() ) {
-         SUPER_DELETED(&pArea->sqlarea.area, &lResult);
-      }
+    if (hb_setGetDeleted())
+    {
+      SUPER_DELETED(&pArea->sqlarea.area, &lResult);
+    }
 
-      if( !lResult && pArea->sqlarea.area.dbfi.itmCobExpr ) {
-         auto pResult = hb_vmEvalBlock(pArea->sqlarea.area.dbfi.itmCobExpr);
-         lResult = pResult->isLogical() && !hb_itemGetL(pResult);
-      }
-   }
-   return !lResult;
+    if (!lResult && pArea->sqlarea.area.dbfi.itmCobExpr)
+    {
+      auto pResult = hb_vmEvalBlock(pArea->sqlarea.area.dbfi.itmCobExpr);
+      lResult = pResult->isLogical() && !hb_itemGetL(pResult);
+    }
+  }
+  return !lResult;
 }
 
 static HB_ULONG hb_mixDBOIKeyCount(PMIXTAG pTag, HB_BOOL fFilter)
 {
-   if( !pTag ) {
-      return 0;
-   }
+  if (!pTag)
+  {
+    return 0;
+  }
 
-   HB_ULONG ulKeyCount;
+  HB_ULONG ulKeyCount;
 
-   if( fFilter && pTag->pArea->sqlarea.area.dbfi.fFilter ) {
-      PMIXNODE pNode = pTag->CurNode;
-      unsigned int uiPos = pTag->CurPos;
-      HB_ULONG ulRecNo = pTag->pArea->sqlarea.ulRecNo;
+  if (fFilter && pTag->pArea->sqlarea.area.dbfi.fFilter)
+  {
+    PMIXNODE pNode = pTag->CurNode;
+    unsigned int uiPos = pTag->CurPos;
+    HB_ULONG ulRecNo = pTag->pArea->sqlarea.ulRecNo;
 
-      ulKeyCount = 0;
+    ulKeyCount = 0;
 
-      hb_mixTagGoTop(pTag);
-      while( !pTag->fEof ) {
-         if( hb_mixCheckRecordFilter(pTag->pArea, pTag->CurKey->rec) ) {
-            ulKeyCount++;
-         }
-         hb_mixTagSkip(pTag, 1);
+    hb_mixTagGoTop(pTag);
+    while (!pTag->fEof)
+    {
+      if (hb_mixCheckRecordFilter(pTag->pArea, pTag->CurKey->rec))
+      {
+        ulKeyCount++;
       }
-      hb_mixTagSetCurrent(pTag, pNode, uiPos);
-      SELF_GOTO(&pTag->pArea->sqlarea.area, ulRecNo);
+      hb_mixTagSkip(pTag, 1);
+    }
+    hb_mixTagSetCurrent(pTag, pNode, uiPos);
+    SELF_GOTO(&pTag->pArea->sqlarea.area, ulRecNo);
+  }
+  else
+  {
+    ulKeyCount = hb_mixTagNodeKeyCount(pTag->Root);
+  }
 
-   } else {
-      ulKeyCount = hb_mixTagNodeKeyCount(pTag->Root);
-   }
-
-   return ulKeyCount;
+  return ulKeyCount;
 }
 
 static HB_ULONG hb_mixDBOIKeyNo(PMIXTAG pTag, HB_BOOL fFilter)
 {
-   if( !pTag ) {
-      return 0;
-   }
+  if (!pTag)
+  {
+    return 0;
+  }
 
-   HB_ULONG ulKeyCount;
+  HB_ULONG ulKeyCount;
 
-   if( fFilter ) {
-      ulKeyCount = 0;
-   } else {
-      PMIXNODE pNode = pTag->CurNode;
-      unsigned int ui, uiPos = pTag->CurPos;
+  if (fFilter)
+  {
+    ulKeyCount = 0;
+  }
+  else
+  {
+    PMIXNODE pNode = pTag->CurNode;
+    unsigned int ui, uiPos = pTag->CurPos;
 
-      ulKeyCount = 1;
+    ulKeyCount = 1;
 
-      while( pNode ) {
-         ulKeyCount += uiPos;
-         if( !pNode->Leaf ) {
-            for( ui = 0; ui < uiPos; ui++ ) {
-               ulKeyCount += hb_mixTagNodeKeyCount(pNode->Child[ui]);
-            }
-         }
-         pNode = pNode->Parent;
-         if( pNode ) {
-            uiPos = hb_mixTagNodeParentIndex(pNode);
-         }
+    while (pNode)
+    {
+      ulKeyCount += uiPos;
+      if (!pNode->Leaf)
+      {
+        for (ui = 0; ui < uiPos; ui++)
+        {
+          ulKeyCount += hb_mixTagNodeKeyCount(pNode->Child[ui]);
+        }
       }
-   }
+      pNode = pNode->Parent;
+      if (pNode)
+      {
+        uiPos = hb_mixTagNodeParentIndex(pNode);
+      }
+    }
+  }
 
-   return ulKeyCount;
+  return ulKeyCount;
 }
 
 /* --- SQLMIX RDD METHODS --- */
 
 static HB_ERRCODE sqlmixGoBottom(SQLMIXAREAP pArea)
 {
-   if( SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   if( !pArea->pTag ) {
-      return SUPER_GOBOTTOM(&pArea->sqlarea.area);
-   }
+  if (!pArea->pTag)
+  {
+    return SUPER_GOBOTTOM(&pArea->sqlarea.area);
+  }
 
-   if( pArea->sqlarea.lpdbPendingRel && pArea->sqlarea.lpdbPendingRel->isScoped ) {
-      SELF_FORCEREL(&pArea->sqlarea.area);
-   }
+  if (pArea->sqlarea.lpdbPendingRel && pArea->sqlarea.lpdbPendingRel->isScoped)
+  {
+    SELF_FORCEREL(&pArea->sqlarea.area);
+  }
 
-   hb_mixTagGoBottom(pArea->pTag);
+  hb_mixTagGoBottom(pArea->pTag);
 
-   pArea->sqlarea.area.fTop = false;
-   pArea->sqlarea.area.fBottom = true;
+  pArea->sqlarea.area.fTop = false;
+  pArea->sqlarea.area.fBottom = true;
 
-   HB_ERRCODE retval = SELF_GOTO(&pArea->sqlarea.area, pArea->pTag->CurKey ? pArea->pTag->CurKey->rec : 0);
-   if( retval != Harbour::FAILURE && pArea->sqlarea.fPositioned ) {
-      retval = SELF_SKIPFILTER(&pArea->sqlarea.area, -1);
-   }
+  HB_ERRCODE retval = SELF_GOTO(&pArea->sqlarea.area, pArea->pTag->CurKey ? pArea->pTag->CurKey->rec : 0);
+  if (retval != Harbour::FAILURE && pArea->sqlarea.fPositioned)
+  {
+    retval = SELF_SKIPFILTER(&pArea->sqlarea.area, -1);
+  }
 
-   return retval;
+  return retval;
 }
 
 static HB_ERRCODE sqlmixGoTop(SQLMIXAREAP pArea)
 {
-   if( SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   if( !pArea->pTag ) {
-      return SUPER_GOTOP(&pArea->sqlarea.area);
-   }
+  if (!pArea->pTag)
+  {
+    return SUPER_GOTOP(&pArea->sqlarea.area);
+  }
 
-   if( pArea->sqlarea.lpdbPendingRel && pArea->sqlarea.lpdbPendingRel->isScoped ) {
-      SELF_FORCEREL(&pArea->sqlarea.area);
-   }
+  if (pArea->sqlarea.lpdbPendingRel && pArea->sqlarea.lpdbPendingRel->isScoped)
+  {
+    SELF_FORCEREL(&pArea->sqlarea.area);
+  }
 
-   hb_mixTagGoTop(pArea->pTag);
+  hb_mixTagGoTop(pArea->pTag);
 
-   pArea->sqlarea.area.fTop = true;
-   pArea->sqlarea.area.fBottom = false;
+  pArea->sqlarea.area.fTop = true;
+  pArea->sqlarea.area.fBottom = false;
 
-   HB_ERRCODE retval = SELF_GOTO(&pArea->sqlarea.area, pArea->pTag->CurKey ? pArea->pTag->CurKey->rec : 0);
-   if( retval != Harbour::FAILURE && pArea->sqlarea.fPositioned ) {
-      retval = SELF_SKIPFILTER(&pArea->sqlarea.area, 1);
-   }
+  HB_ERRCODE retval = SELF_GOTO(&pArea->sqlarea.area, pArea->pTag->CurKey ? pArea->pTag->CurKey->rec : 0);
+  if (retval != Harbour::FAILURE && pArea->sqlarea.fPositioned)
+  {
+    retval = SELF_SKIPFILTER(&pArea->sqlarea.area, 1);
+  }
 
-   return retval;
+  return retval;
 }
 
 static HB_ERRCODE sqlmixSeek(SQLMIXAREAP pArea, HB_BOOL fSoftSeek, PHB_ITEM pItem, HB_BOOL fFindLast)
 {
-   if( SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   if( !pArea->pTag ) {
-      sqlmixErrorRT(pArea, EG_NOORDER, 1201, nullptr, 0, EF_CANDEFAULT);
-      return Harbour::FAILURE;
-   } else {
-      HB_ERRCODE errCode = Harbour::SUCCESS;
-      PMIXTAG pTag = pArea->pTag;
+  if (!pArea->pTag)
+  {
+    sqlmixErrorRT(pArea, EG_NOORDER, 1201, nullptr, 0, EF_CANDEFAULT);
+    return Harbour::FAILURE;
+  }
+  else
+  {
+    HB_ERRCODE errCode = Harbour::SUCCESS;
+    PMIXTAG pTag = pArea->pTag;
 
-      if( pArea->sqlarea.lpdbPendingRel && pArea->sqlarea.lpdbPendingRel->isScoped ) {
-         SELF_FORCEREL(&pArea->sqlarea.area);
+    if (pArea->sqlarea.lpdbPendingRel && pArea->sqlarea.lpdbPendingRel->isScoped)
+    {
+      SELF_FORCEREL(&pArea->sqlarea.area);
+    }
+
+    pArea->sqlarea.area.fTop = pArea->sqlarea.area.fBottom = false;
+    pArea->sqlarea.area.fEof = false;
+
+    PMIXKEY pKey = hb_mixKeyPutItem(nullptr, pItem, fFindLast ? static_cast<HB_ULONG>(-1) : 0, pTag);
+
+    unsigned int uiKeyLen = pTag->uiKeyLen;
+    if (pTag->bType == 'C')
+    {
+      uiKeyLen = static_cast<unsigned int>(hb_itemGetCLen(pItem));
+      if (uiKeyLen > pTag->uiKeyLen)
+      {
+        uiKeyLen = pTag->uiKeyLen;
+      }
+    }
+
+    PMIXNODE pNode;
+    unsigned int ui;
+    hb_mixTagFindKey(pTag, pKey, uiKeyLen, &pNode, &ui, true);
+    hb_mixTagSetCurrent(pTag, pNode, ui);
+
+    if (fFindLast)
+    {
+      if (pTag->fEof)
+      {
+        hb_mixTagGoBottom(pTag);
+      }
+      else
+      {
+        hb_mixTagSkip(pTag, -1);
       }
 
-      pArea->sqlarea.area.fTop = pArea->sqlarea.area.fBottom = false;
-      pArea->sqlarea.area.fEof = false;
+      pArea->sqlarea.area.fFound =
+          !pTag->fEof && (uiKeyLen == 0 || memcmp(pTag->CurKey->val, pKey->val, static_cast<HB_ULONG>(uiKeyLen)) == 0);
 
-      PMIXKEY pKey = hb_mixKeyPutItem(nullptr, pItem, fFindLast ? static_cast<HB_ULONG>(-1) : 0, pTag);
-
-      unsigned int uiKeyLen = pTag->uiKeyLen;
-      if( pTag->bType == 'C' ) {
-         uiKeyLen = static_cast<unsigned int>(hb_itemGetCLen(pItem));
-         if( uiKeyLen > pTag->uiKeyLen ) {
-            uiKeyLen = pTag->uiKeyLen;
-         }
+      if (!pArea->sqlarea.area.fFound)
+      {
+        hb_mixTagSetCurrent(pTag, pNode, ui);
       }
+    }
+    else
+    {
+      pArea->sqlarea.area.fFound =
+          !pTag->fEof && (uiKeyLen == 0 || memcmp(pTag->CurKey->val, pKey->val, static_cast<HB_ULONG>(uiKeyLen)) == 0);
+    }
 
-      PMIXNODE pNode;
-      unsigned int ui;
-      hb_mixTagFindKey(pTag, pKey, uiKeyLen, &pNode, &ui, true);
-      hb_mixTagSetCurrent(pTag, pNode, ui);
+    bool fEOF = pTag->fEof;
 
-      if( fFindLast ) {
-         if( pTag->fEof ) {
-            hb_mixTagGoBottom(pTag);
-         } else {
-            hb_mixTagSkip(pTag, -1);
-         }
-
-         pArea->sqlarea.area.fFound = !pTag->fEof && (uiKeyLen == 0 || memcmp(pTag->CurKey->val, pKey->val, static_cast<HB_ULONG>(uiKeyLen)) == 0);
-
-         if( !pArea->sqlarea.area.fFound ) {
-            hb_mixTagSetCurrent(pTag, pNode, ui);
-         }
-      } else {
-         pArea->sqlarea.area.fFound = !pTag->fEof && (uiKeyLen == 0 || memcmp(pTag->CurKey->val, pKey->val, static_cast<HB_ULONG>(uiKeyLen)) == 0);
+    if (!fEOF)
+    {
+      errCode = SELF_GOTO(&pArea->sqlarea.area, pTag->CurKey->rec);
+      if (errCode != Harbour::FAILURE && pArea->sqlarea.fPositioned)
+      {
+        errCode = SELF_SKIPFILTER(&pArea->sqlarea.area, fFindLast ? -1 : 1);
+        if (errCode != Harbour::FAILURE && pArea->sqlarea.fPositioned)
+        {
+          pArea->sqlarea.area.fFound =
+              (uiKeyLen == 0 || memcmp(pTag->CurKey->val, pKey->val, static_cast<HB_ULONG>(uiKeyLen)) == 0);
+          if (!pArea->sqlarea.area.fFound && !fSoftSeek)
+          {
+            fEOF = true;
+          }
+        }
       }
+    }
 
-      bool fEOF = pTag->fEof;
+    if (errCode != Harbour::FAILURE && fEOF)
+    {
+      errCode = SELF_GOTO(&pArea->sqlarea.area, 0);
+    }
 
-      if( !fEOF ) {
-         errCode = SELF_GOTO(&pArea->sqlarea.area, pTag->CurKey->rec);
-         if( errCode != Harbour::FAILURE && pArea->sqlarea.fPositioned ) {
-            errCode = SELF_SKIPFILTER(&pArea->sqlarea.area, fFindLast ? -1 : 1);
-            if( errCode != Harbour::FAILURE && pArea->sqlarea.fPositioned ) {
-               pArea->sqlarea.area.fFound = (uiKeyLen == 0 || memcmp(pTag->CurKey->val, pKey->val, static_cast<HB_ULONG>(uiKeyLen)) == 0);
-               if( !pArea->sqlarea.area.fFound && !fSoftSeek ) {
-                  fEOF = true;
-               }
-            }
-         }
-      }
+    pArea->sqlarea.area.fBof = false;
 
-      if( errCode != Harbour::FAILURE && fEOF ) {
-         errCode = SELF_GOTO(&pArea->sqlarea.area, 0);
-      }
-
-      pArea->sqlarea.area.fBof = false;
-
-      hb_mixKeyFree(pKey);
-      return errCode;
-   }
+    hb_mixKeyFree(pKey);
+    return errCode;
+  }
 }
 
 static HB_ERRCODE sqlmixSkipRaw(SQLMIXAREAP pArea, HB_LONG lToSkip)
 {
-   if( SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   PMIXTAG pTag = pArea->pTag;
+  PMIXTAG pTag = pArea->pTag;
 
-   if( !pTag || lToSkip == 0 ) {
-      return SUPER_SKIPRAW(&pArea->sqlarea.area, lToSkip);
-   }
+  if (!pTag || lToSkip == 0)
+  {
+    return SUPER_SKIPRAW(&pArea->sqlarea.area, lToSkip);
+  }
 
-   if( pArea->sqlarea.lpdbPendingRel ) {
-      SELF_FORCEREL(&pArea->sqlarea.area);
-   }
+  if (pArea->sqlarea.lpdbPendingRel)
+  {
+    SELF_FORCEREL(&pArea->sqlarea.area);
+  }
 
-   bool fOut = false;
+  bool fOut = false;
 
-   if( !hb_mixTagRefreshKey(pTag) ) {
-      if( lToSkip > 0 || pArea->sqlarea.fPositioned ) {
-         fOut = true;
-      } else {
-         hb_mixTagGoBottom(pTag);
-         fOut = pTag->fEof;
-         lToSkip++;
-      }
-   }
+  if (!hb_mixTagRefreshKey(pTag))
+  {
+    if (lToSkip > 0 || pArea->sqlarea.fPositioned)
+    {
+      fOut = true;
+    }
+    else
+    {
+      hb_mixTagGoBottom(pTag);
+      fOut = pTag->fEof;
+      lToSkip++;
+    }
+  }
 
-   if( !fOut ) {
-      hb_mixTagSkip(pTag, lToSkip);
-   }
+  if (!fOut)
+  {
+    hb_mixTagSkip(pTag, lToSkip);
+  }
 
-   if( SELF_GOTO(&pArea->sqlarea.area, (pTag->fEof || fOut) ? 0 : pTag->CurKey->rec) != Harbour::SUCCESS ) {
-      return Harbour::FAILURE;
-   }
-   pArea->sqlarea.area.fEof = pTag->fEof;
-   pArea->sqlarea.area.fBof = pTag->fBof;
-   return Harbour::SUCCESS;
+  if (SELF_GOTO(&pArea->sqlarea.area, (pTag->fEof || fOut) ? 0 : pTag->CurKey->rec) != Harbour::SUCCESS)
+  {
+    return Harbour::FAILURE;
+  }
+  pArea->sqlarea.area.fEof = pTag->fEof;
+  pArea->sqlarea.area.fBof = pTag->fBof;
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixGoCold(SQLMIXAREAP pArea)
 {
-   HB_BOOL fRecordChanged = pArea->sqlarea.fRecordChanged;
-   HB_BOOL fAppend = pArea->sqlarea.fAppend;
+  HB_BOOL fRecordChanged = pArea->sqlarea.fRecordChanged;
+  HB_BOOL fAppend = pArea->sqlarea.fAppend;
 
-   if( SUPER_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SUPER_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   if( fRecordChanged && pArea->pTagList ) {
+  if (fRecordChanged && pArea->pTagList)
+  {
 
-      LPDBRELINFO lpdbPendingRel = pArea->sqlarea.lpdbPendingRel;
-      pArea->sqlarea.lpdbPendingRel = nullptr;
+    LPDBRELINFO lpdbPendingRel = pArea->sqlarea.lpdbPendingRel;
+    pArea->sqlarea.lpdbPendingRel = nullptr;
 
-      PMIXTAG pTag = pArea->pTagList;
-      bool fAdd, fDel;
-      while( pTag ) {
-         if( !pTag->fCustom ) {
-            PMIXKEY pKey = hb_mixKeyEval(nullptr, pTag);
+    PMIXTAG pTag = pArea->pTagList;
+    bool fAdd, fDel;
+    while (pTag)
+    {
+      if (!pTag->fCustom)
+      {
+        PMIXKEY pKey = hb_mixKeyEval(nullptr, pTag);
 
-            if( pTag->pForItem != nullptr ) {
-               fAdd = hb_mixEvalCond(pArea, pTag->pForItem);
-            } else {
-               fAdd = true;
-            }
+        if (pTag->pForItem != nullptr)
+        {
+          fAdd = hb_mixEvalCond(pArea, pTag->pForItem);
+        }
+        else
+        {
+          fAdd = true;
+        }
 
-            if( fAppend ) {
-               fDel = false;
-            } else {
-               if( hb_mixKeyCompare(pTag, pKey, pTag->HotKey, pTag->uiKeyLen) == 0 ) {
-                  fDel = !fAdd && pTag->HotFor;
-                  fAdd = fAdd && !pTag->HotFor;
-               } else {
-                  fDel = pTag->HotFor;
-               }
-            }
+        if (fAppend)
+        {
+          fDel = false;
+        }
+        else
+        {
+          if (hb_mixKeyCompare(pTag, pKey, pTag->HotKey, pTag->uiKeyLen) == 0)
+          {
+            fDel = !fAdd && pTag->HotFor;
+            fAdd = fAdd && !pTag->HotFor;
+          }
+          else
+          {
+            fDel = pTag->HotFor;
+          }
+        }
 
-            if( fDel ) {
-               hb_mixTagDelKey(pTag, pTag->HotKey);
-            }
+        if (fDel)
+        {
+          hb_mixTagDelKey(pTag, pTag->HotKey);
+        }
 
-            if( fAdd ) {
-               hb_mixTagAddKey(pTag, pKey);
-            }
+        if (fAdd)
+        {
+          hb_mixTagAddKey(pTag, pKey);
+        }
 
-            hb_mixKeyFree(pKey);
-         }
-         pTag = pTag->pNext;
+        hb_mixKeyFree(pKey);
       }
-      pArea->sqlarea.lpdbPendingRel = lpdbPendingRel;
-   }
+      pTag = pTag->pNext;
+    }
+    pArea->sqlarea.lpdbPendingRel = lpdbPendingRel;
+  }
 
-   return Harbour::SUCCESS;
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixGoHot(SQLMIXAREAP pArea)
@@ -1351,339 +1620,399 @@ static HB_ERRCODE sqlmixGoHot(SQLMIXAREAP pArea)
    }
 #endif
 
-   if( SUPER_GOHOT(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SUPER_GOHOT(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   PMIXTAG pTag = pArea->pTagList;
-   while( pTag ) {
-      if( !pTag->fCustom ) {
-         pTag->HotKey = hb_mixKeyEval(pTag->HotKey, pTag);
-         pTag->HotFor = pTag->pForItem == nullptr || hb_mixEvalCond(pArea, pTag->pForItem);
-      }
-      pTag = pTag->pNext;
-   }
-   return Harbour::SUCCESS;
+  PMIXTAG pTag = pArea->pTagList;
+  while (pTag)
+  {
+    if (!pTag->fCustom)
+    {
+      pTag->HotKey = hb_mixKeyEval(pTag->HotKey, pTag);
+      pTag->HotFor = pTag->pForItem == nullptr || hb_mixEvalCond(pArea, pTag->pForItem);
+    }
+    pTag = pTag->pNext;
+  }
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixZap(SQLMIXAREAP pArea)
 {
-   if( SUPER_ZAP(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SUPER_ZAP(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   PMIXTAG pTag = pArea->pTagList;
+  PMIXTAG pTag = pArea->pTagList;
 
-   while( pTag ) {
-      if( pTag->Root ) {
-         hb_mixTagDestroyNode(pTag->Root);
-      }
+  while (pTag)
+  {
+    if (pTag->Root)
+    {
+      hb_mixTagDestroyNode(pTag->Root);
+    }
 
-      pTag->Root = hb_mixTagCreateNode(pTag, true);
-      pTag->fEof = true;
+    pTag->Root = hb_mixTagCreateNode(pTag, true);
+    pTag->fEof = true;
 
-      pTag = pTag->pNext;
-   }
+    pTag = pTag->pNext;
+  }
 
-   return Harbour::SUCCESS;
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixClose(SQLMIXAREAP pArea)
 {
-   if( SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   if( SUPER_CLOSE(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SUPER_CLOSE(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   if( SELF_ORDLSTCLEAR(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SELF_ORDLSTCLEAR(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   return Harbour::SUCCESS;
+  return Harbour::SUCCESS;
 }
 
-static HB_ERRCODE sqlmixStructSize(SQLMIXAREAP pArea, HB_USHORT * StructSize)
+static HB_ERRCODE sqlmixStructSize(SQLMIXAREAP pArea, HB_USHORT *StructSize)
 {
-   HB_SYMBOL_UNUSED(pArea);
-   *StructSize = sizeof(SQLMIXAREA);
-   return Harbour::SUCCESS;
+  HB_SYMBOL_UNUSED(pArea);
+  *StructSize = sizeof(SQLMIXAREA);
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixOrderListClear(SQLMIXAREAP pArea)
 {
-   PMIXTAG pTag;
-   while( pArea->pTagList ) {
-      pTag = pArea->pTagList;
-      pArea->pTagList = pTag->pNext;
-      hb_mixTagDestroy(pTag);
-   }
-   pArea->pTag = nullptr;
-   return Harbour::SUCCESS;
+  PMIXTAG pTag;
+  while (pArea->pTagList)
+  {
+    pTag = pArea->pTagList;
+    pArea->pTagList = pTag->pNext;
+    hb_mixTagDestroy(pTag);
+  }
+  pArea->pTag = nullptr;
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixOrderListFocus(SQLMIXAREAP pArea, LPDBORDERINFO pOrderInfo)
 {
-   if( pArea->pTag ) {
-      pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pArea->pTag->szName);
-   }
+  if (pArea->pTag)
+  {
+    pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pArea->pTag->szName);
+  }
 
-   if( pOrderInfo->itmOrder ) {
-      pArea->pTag = hb_mixFindTag(pArea, pOrderInfo->itmOrder);
-   }
+  if (pOrderInfo->itmOrder)
+  {
+    pArea->pTag = hb_mixFindTag(pArea, pOrderInfo->itmOrder);
+  }
 
-   return pArea->pTag ? Harbour::SUCCESS : Harbour::FAILURE;
+  return pArea->pTag ? Harbour::SUCCESS : Harbour::FAILURE;
 }
 
 static HB_ERRCODE sqlmixOrderCreate(SQLMIXAREAP pArea, LPDBORDERCREATEINFO pOrderInfo)
 {
-   PHB_ITEM pKeyItem;
+  PHB_ITEM pKeyItem;
 
-   /* Obtain key codeblock */
-   if( pOrderInfo->itmCobExpr ) {
-      pKeyItem = hb_itemNew(pOrderInfo->itmCobExpr);
-   } else {
-      if( SELF_COMPILE(&pArea->sqlarea.area, hb_itemGetCPtr(pOrderInfo->abExpr)) == Harbour::FAILURE ) {
-         return Harbour::FAILURE;
+  /* Obtain key codeblock */
+  if (pOrderInfo->itmCobExpr)
+  {
+    pKeyItem = hb_itemNew(pOrderInfo->itmCobExpr);
+  }
+  else
+  {
+    if (SELF_COMPILE(&pArea->sqlarea.area, hb_itemGetCPtr(pOrderInfo->abExpr)) == Harbour::FAILURE)
+    {
+      return Harbour::FAILURE;
+    }
+    pKeyItem = pArea->sqlarea.area.valResult;
+    pArea->sqlarea.area.valResult = nullptr;
+  }
+
+  /* Test key codeblock on EOF */
+  HB_ULONG ulRecNo = pArea->sqlarea.ulRecNo;
+  SELF_GOTO(&pArea->sqlarea.area, 0);
+  if (SELF_EVALBLOCK(&pArea->sqlarea.area, pKeyItem) == Harbour::FAILURE)
+  {
+    hb_vmDestroyBlockOrMacro(pKeyItem);
+    SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
+    return Harbour::FAILURE;
+  }
+
+  PHB_ITEM pResult = pArea->sqlarea.area.valResult;
+  pArea->sqlarea.area.valResult = nullptr;
+
+  HB_USHORT uiLen;
+  HB_BYTE bType;
+
+  switch (hb_itemType(pResult))
+  {
+  case Harbour::Item::STRING:
+  case Harbour::Item::MEMO:
+    bType = 'C';
+    uiLen = static_cast<HB_USHORT>(hb_itemGetCLen(pResult));
+    if (uiLen > MIX_MAXKEYLEN)
+    {
+      uiLen = MIX_MAXKEYLEN;
+    }
+    break;
+
+  case Harbour::Item::INTEGER:
+  case Harbour::Item::LONG:
+  case Harbour::Item::DOUBLE:
+    bType = 'N';
+    uiLen = 8;
+    break;
+
+  case Harbour::Item::DATE:
+    bType = 'D';
+    uiLen = 8;
+    break;
+
+  case Harbour::Item::LOGICAL:
+    bType = 'L';
+    uiLen = 1;
+    break;
+
+  default:
+    bType = 'U';
+    uiLen = 0;
+  }
+  hb_itemRelease(pResult);
+
+  if (bType == 'U' || uiLen == 0)
+  {
+    hb_vmDestroyBlockOrMacro(pKeyItem);
+    SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
+    sqlmixErrorRT(pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, nullptr, 0, 0);
+    return Harbour::FAILURE;
+  }
+
+  PHB_ITEM pForItem = nullptr;
+  PHB_ITEM pWhileItem = nullptr;
+
+  if (pArea->sqlarea.area.lpdbOrdCondInfo)
+  {
+    /* Obtain FOR codeblock */
+    if (pArea->sqlarea.area.lpdbOrdCondInfo->itmCobFor)
+    {
+      pForItem = hb_itemNew(pArea->sqlarea.area.lpdbOrdCondInfo->itmCobFor);
+    }
+    else if (pArea->sqlarea.area.lpdbOrdCondInfo->abFor)
+    {
+      if (SELF_COMPILE(&pArea->sqlarea.area, pArea->sqlarea.area.lpdbOrdCondInfo->abFor) == Harbour::FAILURE)
+      {
+        hb_vmDestroyBlockOrMacro(pKeyItem);
+        SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
+        return Harbour::FAILURE;
       }
-      pKeyItem = pArea->sqlarea.area.valResult;
+      pForItem = pArea->sqlarea.area.valResult;
       pArea->sqlarea.area.valResult = nullptr;
-   }
+    }
 
-   /* Test key codeblock on EOF */
-   HB_ULONG ulRecNo = pArea->sqlarea.ulRecNo;
-   SELF_GOTO(&pArea->sqlarea.area, 0);
-   if( SELF_EVALBLOCK(&pArea->sqlarea.area, pKeyItem) == Harbour::FAILURE ) {
+    /* Obtain WHILE codeblock */
+    if (pArea->sqlarea.area.lpdbOrdCondInfo->itmCobWhile)
+    {
+      pWhileItem = hb_itemNew(pArea->sqlarea.area.lpdbOrdCondInfo->itmCobWhile);
+    }
+    else if (pArea->sqlarea.area.lpdbOrdCondInfo->abWhile)
+    {
+      if (SELF_COMPILE(&pArea->sqlarea.area, pArea->sqlarea.area.lpdbOrdCondInfo->abWhile) == Harbour::FAILURE)
+      {
+        hb_vmDestroyBlockOrMacro(pKeyItem);
+        if (pForItem)
+        {
+          hb_vmDestroyBlockOrMacro(pForItem);
+        }
+        SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
+        return Harbour::FAILURE;
+      }
+      pWhileItem = pArea->sqlarea.area.valResult;
+      pArea->sqlarea.area.valResult = nullptr;
+    }
+  }
+
+  /* Test FOR codeblock on EOF */
+  if (pForItem)
+  {
+    if (SELF_EVALBLOCK(&pArea->sqlarea.area, pForItem) == Harbour::FAILURE)
+    {
       hb_vmDestroyBlockOrMacro(pKeyItem);
+      hb_vmDestroyBlockOrMacro(pForItem);
+      if (pWhileItem)
+      {
+        hb_vmDestroyBlockOrMacro(pWhileItem);
+      }
       SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
       return Harbour::FAILURE;
-   }
-
-   PHB_ITEM pResult = pArea->sqlarea.area.valResult;
-   pArea->sqlarea.area.valResult = nullptr;
-
-   HB_USHORT uiLen;
-   HB_BYTE bType;
-
-   switch( hb_itemType(pResult) ) {
-      case Harbour::Item::STRING:
-      case Harbour::Item::MEMO:
-         bType = 'C';
-         uiLen = static_cast<HB_USHORT>(hb_itemGetCLen(pResult));
-         if( uiLen > MIX_MAXKEYLEN ) {
-            uiLen = MIX_MAXKEYLEN;
-         }
-         break;
-
-      case Harbour::Item::INTEGER:
-      case Harbour::Item::LONG:
-      case Harbour::Item::DOUBLE:
-         bType = 'N';
-         uiLen = 8;
-         break;
-
-      case Harbour::Item::DATE:
-         bType = 'D';
-         uiLen = 8;
-         break;
-
-      case Harbour::Item::LOGICAL:
-         bType = 'L';
-         uiLen = 1;
-         break;
-
-      default:
-         bType = 'U';
-         uiLen = 0;
-   }
-   hb_itemRelease(pResult);
-
-   if( bType == 'U' || uiLen == 0 ) {
-      hb_vmDestroyBlockOrMacro(pKeyItem);
-      SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
-      sqlmixErrorRT(pArea, bType == 'U' ? EG_DATATYPE : EG_DATAWIDTH, 1026, nullptr, 0, 0);
-      return Harbour::FAILURE;
-   }
-
-   PHB_ITEM pForItem = nullptr;
-   PHB_ITEM pWhileItem = nullptr;
-
-   if( pArea->sqlarea.area.lpdbOrdCondInfo ) {
-      /* Obtain FOR codeblock */
-      if( pArea->sqlarea.area.lpdbOrdCondInfo->itmCobFor ) {
-         pForItem = hb_itemNew(pArea->sqlarea.area.lpdbOrdCondInfo->itmCobFor);
-      } else if( pArea->sqlarea.area.lpdbOrdCondInfo->abFor ) {
-         if( SELF_COMPILE(&pArea->sqlarea.area, pArea->sqlarea.area.lpdbOrdCondInfo->abFor) == Harbour::FAILURE ) {
-            hb_vmDestroyBlockOrMacro(pKeyItem);
-            SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
-            return Harbour::FAILURE;
-         }
-         pForItem = pArea->sqlarea.area.valResult;
-         pArea->sqlarea.area.valResult = nullptr;
-      }
-
-      /* Obtain WHILE codeblock */
-      if( pArea->sqlarea.area.lpdbOrdCondInfo->itmCobWhile ) {
-         pWhileItem = hb_itemNew(pArea->sqlarea.area.lpdbOrdCondInfo->itmCobWhile);
-      } else if( pArea->sqlarea.area.lpdbOrdCondInfo->abWhile ) {
-         if( SELF_COMPILE(&pArea->sqlarea.area, pArea->sqlarea.area.lpdbOrdCondInfo->abWhile) == Harbour::FAILURE ) {
-            hb_vmDestroyBlockOrMacro(pKeyItem);
-            if( pForItem ) {
-               hb_vmDestroyBlockOrMacro(pForItem);
-            }
-            SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
-            return Harbour::FAILURE;
-         }
-         pWhileItem = pArea->sqlarea.area.valResult;
-         pArea->sqlarea.area.valResult = nullptr;
-      }
-   }
-
-   /* Test FOR codeblock on EOF */
-   if( pForItem ) {
-      if( SELF_EVALBLOCK(&pArea->sqlarea.area, pForItem) == Harbour::FAILURE ) {
-         hb_vmDestroyBlockOrMacro(pKeyItem);
-         hb_vmDestroyBlockOrMacro(pForItem);
-         if( pWhileItem ) {
-            hb_vmDestroyBlockOrMacro(pWhileItem);
-         }
-         SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
-         return Harbour::FAILURE;
-      }
-      if( (hb_itemType(pArea->sqlarea.area.valResult) & Harbour::Item::LOGICAL) == 0 ) {
-         hb_itemRelease(pArea->sqlarea.area.valResult);
-         pArea->sqlarea.area.valResult = 0;
-         hb_vmDestroyBlockOrMacro(pKeyItem);
-         hb_vmDestroyBlockOrMacro(pForItem);
-         if( pWhileItem ) {
-            hb_vmDestroyBlockOrMacro(pWhileItem);
-         }
-         SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
-         sqlmixErrorRT(pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0);
-         return Harbour::FAILURE;
-      }
+    }
+    if ((hb_itemType(pArea->sqlarea.area.valResult) & Harbour::Item::LOGICAL) == 0)
+    {
       hb_itemRelease(pArea->sqlarea.area.valResult);
       pArea->sqlarea.area.valResult = 0;
-   }
-
-   /* TODO: WHILE condition is not tested, like in DBFCDX. Why? Compatibility with Clipper? */
-
-   SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
-
-   PMIXTAG pTagNew = hb_mixTagCreate(pOrderInfo->atomBagName, pOrderInfo->abExpr, pKeyItem, pForItem, pWhileItem, bType, uiLen, pArea);
-
-   if( pWhileItem ) {
-      hb_vmDestroyBlockOrMacro(pWhileItem);
-   }
-
-   PMIXTAG pTag;
-
-   /* Append the tag to the end of list */
-   if( pArea->pTagList ) {
-      pTag = pArea->pTagList;
-      while( pTag->pNext ) {
-         pTag = pTag->pNext;
+      hb_vmDestroyBlockOrMacro(pKeyItem);
+      hb_vmDestroyBlockOrMacro(pForItem);
+      if (pWhileItem)
+      {
+        hb_vmDestroyBlockOrMacro(pWhileItem);
       }
+      SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
+      sqlmixErrorRT(pArea, EG_DATATYPE, EDBF_INVALIDFOR, nullptr, 0, 0);
+      return Harbour::FAILURE;
+    }
+    hb_itemRelease(pArea->sqlarea.area.valResult);
+    pArea->sqlarea.area.valResult = 0;
+  }
 
-      pTag->pNext = pTagNew;
-   } else {
-      pArea->pTagList = pTagNew;
-   }
+  /* TODO: WHILE condition is not tested, like in DBFCDX. Why? Compatibility with Clipper? */
 
-   pArea->pTag = pTagNew;
-   return Harbour::SUCCESS;
+  SELF_GOTO(&pArea->sqlarea.area, ulRecNo);
+
+  PMIXTAG pTagNew =
+      hb_mixTagCreate(pOrderInfo->atomBagName, pOrderInfo->abExpr, pKeyItem, pForItem, pWhileItem, bType, uiLen, pArea);
+
+  if (pWhileItem)
+  {
+    hb_vmDestroyBlockOrMacro(pWhileItem);
+  }
+
+  PMIXTAG pTag;
+
+  /* Append the tag to the end of list */
+  if (pArea->pTagList)
+  {
+    pTag = pArea->pTagList;
+    while (pTag->pNext)
+    {
+      pTag = pTag->pNext;
+    }
+
+    pTag->pNext = pTagNew;
+  }
+  else
+  {
+    pArea->pTagList = pTagNew;
+  }
+
+  pArea->pTag = pTagNew;
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDERINFO pOrderInfo)
 {
-   PMIXTAG pTag;
-   HB_USHORT uiTag = 0;
+  PMIXTAG pTag;
+  HB_USHORT uiTag = 0;
 
-   switch( uiIndex ) {
-      case DBOI_EVALSTEP:
-         pOrderInfo->itmResult = hb_itemPutNL(pOrderInfo->itmResult, pArea->sqlarea.area.lpdbOrdCondInfo ? pArea->sqlarea.area.lpdbOrdCondInfo->lStep : 0);
-         return Harbour::SUCCESS;
+  switch (uiIndex)
+  {
+  case DBOI_EVALSTEP:
+    pOrderInfo->itmResult = hb_itemPutNL(
+        pOrderInfo->itmResult, pArea->sqlarea.area.lpdbOrdCondInfo ? pArea->sqlarea.area.lpdbOrdCondInfo->lStep : 0);
+    return Harbour::SUCCESS;
 
-      case DBOI_ORDERCOUNT:
-         pTag = pArea->pTagList;
-         while( pTag ) {
-            pTag = pTag->pNext;
-            uiTag++;
-         }
-         pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, uiTag);
-         return Harbour::SUCCESS;
-   }
+  case DBOI_ORDERCOUNT:
+    pTag = pArea->pTagList;
+    while (pTag)
+    {
+      pTag = pTag->pNext;
+      uiTag++;
+    }
+    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, uiTag);
+    return Harbour::SUCCESS;
+  }
 
-   if( SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE ) {
-      return Harbour::FAILURE;
-   }
+  if (SELF_GOCOLD(&pArea->sqlarea.area) == Harbour::FAILURE)
+  {
+    return Harbour::FAILURE;
+  }
 
-   if( pOrderInfo->itmOrder ) {
-      pTag = hb_mixFindTag(pArea, pOrderInfo->itmOrder);
-   } else {
-      pTag = pArea->pTag;
-   }
+  if (pOrderInfo->itmOrder)
+  {
+    pTag = hb_mixFindTag(pArea, pOrderInfo->itmOrder);
+  }
+  else
+  {
+    pTag = pArea->pTag;
+  }
 
-   switch( uiIndex ) {
-      case DBOI_CONDITION:
-         pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, (pTag ? pTag->szForExpr : nullptr));
-         if( pTag && pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isString() ) {
-            if( pTag->szForExpr != nullptr ) {
-               hb_xfree(pTag->szForExpr);
-               pTag->szForExpr = nullptr;
+  switch (uiIndex)
+  {
+  case DBOI_CONDITION:
+    pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, (pTag ? pTag->szForExpr : nullptr));
+    if (pTag && pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isString())
+    {
+      if (pTag->szForExpr != nullptr)
+      {
+        hb_xfree(pTag->szForExpr);
+        pTag->szForExpr = nullptr;
+      }
+      if (pTag->pForItem != nullptr)
+      {
+        hb_vmDestroyBlockOrMacro(pTag->pForItem);
+        pTag->pForItem = nullptr;
+      }
+      if (hb_itemGetCLen(pOrderInfo->itmNewVal) > 0)
+      {
+        auto pForExpr = hb_itemGetCPtr(pOrderInfo->itmNewVal);
+
+        if (SELF_COMPILE(&pArea->sqlarea.area, pForExpr) == Harbour::SUCCESS)
+        {
+          PHB_ITEM pForItem = pArea->sqlarea.area.valResult;
+
+          pArea->sqlarea.area.valResult = nullptr;
+          if (SELF_EVALBLOCK(&pArea->sqlarea.area, pForItem) == Harbour::SUCCESS)
+          {
+            if (hb_itemType(pArea->sqlarea.area.valResult) & Harbour::Item::LOGICAL)
+            {
+              pTag->szForExpr = hb_strdup(pForExpr);
+              pTag->pForItem = pForItem;
+              pForItem = nullptr;
             }
-            if( pTag->pForItem != nullptr ) {
-               hb_vmDestroyBlockOrMacro(pTag->pForItem);
-               pTag->pForItem = nullptr;
-            }
-            if( hb_itemGetCLen(pOrderInfo->itmNewVal) > 0 ) {
-               auto pForExpr = hb_itemGetCPtr(pOrderInfo->itmNewVal);
+            hb_itemRelease(pArea->sqlarea.area.valResult);
+            pArea->sqlarea.area.valResult = nullptr;
+          }
+          if (pForItem)
+          {
+            hb_vmDestroyBlockOrMacro(pForItem);
+          }
+        }
+      }
+    }
+    break;
 
-               if( SELF_COMPILE(&pArea->sqlarea.area, pForExpr) == Harbour::SUCCESS ) {
-                  PHB_ITEM pForItem = pArea->sqlarea.area.valResult;
+  case DBOI_EXPRESSION:
+    pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pTag ? pTag->szKeyExpr : nullptr);
+    break;
 
-                  pArea->sqlarea.area.valResult = nullptr;
-                  if( SELF_EVALBLOCK(&pArea->sqlarea.area, pForItem) == Harbour::SUCCESS ) {
-                     if( hb_itemType(pArea->sqlarea.area.valResult) & Harbour::Item::LOGICAL ) {
-                        pTag->szForExpr = hb_strdup(pForExpr);
-                        pTag->pForItem = pForItem;
-                        pForItem = nullptr;
-                     }
-                     hb_itemRelease(pArea->sqlarea.area.valResult);
-                     pArea->sqlarea.area.valResult = nullptr;
-                  }
-                  if( pForItem ) {
-                     hb_vmDestroyBlockOrMacro(pForItem);
-                  }
-               }
-            }
-         }
-         break;
-
-      case DBOI_EXPRESSION:
-         pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pTag ? pTag->szKeyExpr : nullptr);
-         break;
-
-      case DBOI_POSITION:
-      case DBOI_KEYNORAW:
-         if( pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric() ) {
-            /* TODO */
+  case DBOI_POSITION:
+  case DBOI_KEYNORAW:
+    if (pOrderInfo->itmNewVal && pOrderInfo->itmNewVal->isNumeric())
+    {
+      /* TODO */
 #if 0
             pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, hb_cdxDBOIKeyGoto(pArea, pTag, hb_itemGetNL(pOrderInfo->itmNewVal), uiIndex == DBOI_POSITION) == Harbour::SUCCESS);
 #endif
-         } else {
-            pOrderInfo->itmResult = hb_itemPutNL(pOrderInfo->itmResult, hb_mixDBOIKeyNo(pTag, uiIndex == DBOI_POSITION));
-         }
-         break;
+    }
+    else
+    {
+      pOrderInfo->itmResult = hb_itemPutNL(pOrderInfo->itmResult, hb_mixDBOIKeyNo(pTag, uiIndex == DBOI_POSITION));
+    }
+    break;
 
-      case DBOI_KEYCOUNT:
-      case DBOI_KEYCOUNTRAW:
-         pOrderInfo->itmResult = hb_itemPutNL(pOrderInfo->itmResult, hb_mixDBOIKeyCount(pTag, uiIndex == DBOI_KEYCOUNT));
-         break;
+  case DBOI_KEYCOUNT:
+  case DBOI_KEYCOUNTRAW:
+    pOrderInfo->itmResult = hb_itemPutNL(pOrderInfo->itmResult, hb_mixDBOIKeyCount(pTag, uiIndex == DBOI_KEYCOUNT));
+    break;
 
-         /* TODO */
+    /* TODO */
 #if 0
       case DBOI_FINDREC:
          pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, hb_cdxDBOIFindRec(pArea, pTag, hb_itemGetNL(pOrderInfo->itmNewVal), false));
@@ -1693,51 +2022,55 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
          pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, hb_cdxDBOIFindRec(pArea, pTag, hb_itemGetNL(pOrderInfo->itmNewVal), true));
          break;
 #endif
-      case DBOI_NAME:
-         pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pTag ? pTag->szName : nullptr);
-         break;
+  case DBOI_NAME:
+    pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, pTag ? pTag->szName : nullptr);
+    break;
 
-      case DBOI_NUMBER:
-         pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, uiTag);  /* otherwise */
-         break;
+  case DBOI_NUMBER:
+    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, uiTag); /* otherwise */
+    break;
 
-      case DBOI_ISCOND:
-         pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, pTag && pTag->szForExpr != nullptr);
-         break;
+  case DBOI_ISCOND:
+    pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, pTag && pTag->szForExpr != nullptr);
+    break;
 
-      case DBOI_ISDESC:
-      case DBOI_UNIQUE:
-         pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, false);
-         break;
+  case DBOI_ISDESC:
+  case DBOI_UNIQUE:
+    pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, false);
+    break;
 
-      case DBOI_SCOPETOP:
-      case DBOI_SCOPEBOTTOM:
-         if( pOrderInfo->itmResult ) {
-            hb_itemClear(pOrderInfo->itmResult);
-         }
-         break;
+  case DBOI_SCOPETOP:
+  case DBOI_SCOPEBOTTOM:
+    if (pOrderInfo->itmResult)
+    {
+      hb_itemClear(pOrderInfo->itmResult);
+    }
+    break;
 
-      case DBOI_KEYTYPE:
-         if( pTag ) {
-            char szType[2];
+  case DBOI_KEYTYPE:
+    if (pTag)
+    {
+      char szType[2];
 
-            szType[0] = static_cast<char>(pTag->bType);
-            szType[1] = 0;
-            pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, szType);
-         } else {
-            pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, nullptr);
-         }
-         break;
+      szType[0] = static_cast<char>(pTag->bType);
+      szType[1] = 0;
+      pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, szType);
+    }
+    else
+    {
+      pOrderInfo->itmResult = hb_itemPutC(pOrderInfo->itmResult, nullptr);
+    }
+    break;
 
-      case DBOI_KEYSIZE:
-         pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, pTag ? pTag->uiKeyLen : 0);
-         break;
+  case DBOI_KEYSIZE:
+    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, pTag ? pTag->uiKeyLen : 0);
+    break;
 
-      case DBOI_KEYDEC:
-         pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, 0);
-         break;
+  case DBOI_KEYDEC:
+    pOrderInfo->itmResult = hb_itemPutNI(pOrderInfo->itmResult, 0);
+    break;
 
-         /* TODO */
+    /* TODO */
 #if 0
       case DBOI_KEYVAL:
          hb_itemClear(pOrderInfo->itmResult);
@@ -1822,32 +2155,32 @@ static HB_ERRCODE sqlmixOrderInfo(SQLMIXAREAP pArea, HB_USHORT uiIndex, LPDBORDE
          break;
 #endif
 
-      case DBOI_SHARED:
-      case DBOI_ISREADONLY:
-         pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, false);
-         break;
+  case DBOI_SHARED:
+  case DBOI_ISREADONLY:
+    pOrderInfo->itmResult = hb_itemPutL(pOrderInfo->itmResult, false);
+    break;
 
-      default:
-         return SUPER_ORDINFO(&pArea->sqlarea.area, uiIndex, pOrderInfo);
-
-   }
-   return Harbour::SUCCESS;
+  default:
+    return SUPER_ORDINFO(&pArea->sqlarea.area, uiIndex, pOrderInfo);
+  }
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixInit(LPRDDNODE pRDD)
 {
-   /* This empty method is used to avoid duplicated sqlbase init call */
-   HB_SYMBOL_UNUSED(pRDD);
-   return Harbour::SUCCESS;
+  /* This empty method is used to avoid duplicated sqlbase init call */
+  HB_SYMBOL_UNUSED(pRDD);
+  return Harbour::SUCCESS;
 }
 
 static HB_ERRCODE sqlmixExit(LPRDDNODE pRDD)
 {
-   /* This empty method is used to avoid duplicated sqlbase exit call */
-   HB_SYMBOL_UNUSED(pRDD);
-   return Harbour::SUCCESS;
+  /* This empty method is used to avoid duplicated sqlbase exit call */
+  HB_SYMBOL_UNUSED(pRDD);
+  return Harbour::SUCCESS;
 }
 
+// clang-format off
 static RDDFUNCS sqlmixTable =
 { ( DBENTRYP_BP ) nullptr,                 /* sqlmixBof */
   ( DBENTRYP_BP ) nullptr,                 /* sqlmixEof */
@@ -1950,52 +2283,62 @@ static RDDFUNCS sqlmixTable =
   ( DBENTRYP_RSLV ) nullptr,               /* sqlmixRddInfo */
   ( DBENTRYP_SVP ) nullptr,                /* sqlmixWhoCares */
 };
+// clang-format on
 
 /* force SQLBASE linking */
 HB_FUNC_TRANSLATE(SQLMIX, SQLBASE)
 
-HB_FUNC_STATIC( SQLMIX_GETFUNCTABLE )
+HB_FUNC_STATIC(SQLMIX_GETFUNCTABLE)
 {
-   auto puiCount = static_cast<HB_USHORT*>(hb_parptr(1));
-   auto pTable = static_cast<RDDFUNCS*>(hb_parptr(2));
-   auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
-   auto puiSuperRddId = static_cast<HB_USHORT*>(hb_parptr(5));
+  auto puiCount = static_cast<HB_USHORT *>(hb_parptr(1));
+  auto pTable = static_cast<RDDFUNCS *>(hb_parptr(2));
+  auto uiRddId = static_cast<HB_USHORT>(hb_parni(4));
+  auto puiSuperRddId = static_cast<HB_USHORT *>(hb_parptr(5));
 
-   if( pTable ) {
-      if( puiCount ) {
-         *puiCount = RDDFUNCSCOUNT;
-      }
+  if (pTable)
+  {
+    if (puiCount)
+    {
+      *puiCount = RDDFUNCSCOUNT;
+    }
 
-      HB_ERRCODE errCode = hb_rddInheritEx(pTable, &sqlmixTable, &sqlmixSuper, "SQLBASE", puiSuperRddId);
-      if( errCode == Harbour::SUCCESS ) {
-         s_uiRddIdSQLMIX = uiRddId;
-      }
-      hb_retni(errCode);
-   } else {
-      hb_retni(Harbour::FAILURE);
-   }
+    HB_ERRCODE errCode = hb_rddInheritEx(pTable, &sqlmixTable, &sqlmixSuper, "SQLBASE", puiSuperRddId);
+    if (errCode == Harbour::SUCCESS)
+    {
+      s_uiRddIdSQLMIX = uiRddId;
+    }
+    hb_retni(errCode);
+  }
+  else
+  {
+    hb_retni(Harbour::FAILURE);
+  }
 }
 
-static void hb_sqlmixRddInit(void * cargo)
+static void hb_sqlmixRddInit(void *cargo)
 {
-   HB_SYMBOL_UNUSED(cargo);
+  HB_SYMBOL_UNUSED(cargo);
 
-   if( hb_rddRegister("SQLBASE", RDT_FULL) > 1 || hb_rddRegister("SQLMIX", RDT_FULL) > 1 ) {
-      hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
-   }
+  if (hb_rddRegister("SQLBASE", RDT_FULL) > 1 || hb_rddRegister("SQLMIX", RDT_FULL) > 1)
+  {
+    hb_errInternal(HB_EI_RDDINVALID, nullptr, nullptr, nullptr);
+  }
 }
 
+// clang-format off
 HB_INIT_SYMBOLS_BEGIN(sqlmix__InitSymbols)
-{
-   "SQLMIX", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME(SQLMIX)}, nullptr
-},
+{"SQLMIX", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME(SQLMIX)}, nullptr},
 {"SQLMIX_GETFUNCTABLE", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME(SQLMIX_GETFUNCTABLE)}, nullptr}
 HB_INIT_SYMBOLS_END(sqlmix__InitSymbols)
+    // clang-format on
 
+    // clang-format off
 HB_CALL_ON_STARTUP_BEGIN(_hb_sqlmix_rdd_init_)
 hb_vmAtInit(hb_sqlmixRddInit, nullptr);
 HB_CALL_ON_STARTUP_END(_hb_sqlmix_rdd_init_)
+// clang-format on
 
+// clang-format off
 #if defined(HB_PRAGMA_STARTUP)
    #pragma startup sqlmix__InitSymbols
    #pragma startup _hb_sqlmix_rdd_init_
@@ -2004,3 +2347,4 @@ HB_CALL_ON_STARTUP_END(_hb_sqlmix_rdd_init_)
    HB_DATASEG_FUNC(_hb_sqlmix_rdd_init_)
    #include "hbiniseg.hpp"
 #endif
+// clang-format on
