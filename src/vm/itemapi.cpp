@@ -517,7 +517,7 @@ char *hb_itemGetC(PHB_ITEM pItem)
   }
 }
 
-char *_HB_ITEM::getC() // equivalent to hb_itemGetC
+HB_EXPORT char *_HB_ITEM::getC() // equivalent to hb_itemGetC
 {
   if (this->isString())
   {
@@ -551,7 +551,7 @@ const char *hb_itemGetCPtr(PHB_ITEM pItem)
   }
 }
 
-const char *_HB_ITEM::getCPtr() // equivalent to hb_itemGetCPtr
+HB_EXPORT const char *_HB_ITEM::getCPtr() // equivalent to hb_itemGetCPtr
 {
   if (this->isString())
   {
@@ -579,7 +579,7 @@ HB_SIZE hb_itemGetCLen(PHB_ITEM pItem)
   }
 }
 
-HB_SIZE _HB_ITEM::getCLen() // equivalent to hb_itemGetCLen
+HB_EXPORT HB_SIZE _HB_ITEM::getCLen() // equivalent to hb_itemGetCLen
 {
   if (this->isString())
   {
@@ -695,7 +695,7 @@ char *hb_itemGetDS(PHB_ITEM pItem, char *szDate)
   }
 }
 
-char *_HB_ITEM::getDS(char *szDate) // equivalent to hb_itemGetDS
+HB_EXPORT char *_HB_ITEM::getDS(char *szDate) // equivalent to hb_itemGetDS
 {
   if (this->isDateTime())
   {
@@ -723,7 +723,7 @@ long hb_itemGetDL(PHB_ITEM pItem)
   }
 }
 
-long _HB_ITEM::getDL() // equivalent to hb_itemGetDL
+HB_EXPORT long _HB_ITEM::getDL() // equivalent to hb_itemGetDL
 {
   if (this->isDateTime())
   {
@@ -770,7 +770,7 @@ double hb_itemGetTD(PHB_ITEM pItem)
   }
 }
 
-double _HB_ITEM::getTD() // equivalent to hb_itemGetTD
+HB_EXPORT double _HB_ITEM::getTD() // equivalent to hb_itemGetTD
 {
   if (this->isDateTime())
   {
@@ -801,7 +801,7 @@ HB_BOOL hb_itemGetTDT(PHB_ITEM pItem, long *plJulian, long *plMilliSec)
   }
 }
 
-HB_BOOL _HB_ITEM::getTDT(long *plJulian, long *plMilliSec) // equivalent to hb_itemGetTDT
+HB_EXPORT HB_BOOL _HB_ITEM::getTDT(long *plJulian, long *plMilliSec) // equivalent to hb_itemGetTDT
 {
   if (this->isDateTime())
   {
@@ -845,7 +845,7 @@ HB_BOOL hb_itemGetL(PHB_ITEM pItem)
   return false;
 }
 
-HB_BOOL _HB_ITEM::getL() // equivalent to hb_itemGetL
+HB_EXPORT HB_BOOL _HB_ITEM::getL() // equivalent to hb_itemGetL
 {
   if (this->isLogical())
   {
@@ -931,7 +931,7 @@ double hb_itemGetND(PHB_ITEM pItem)
   return 0;
 }
 
-double _HB_ITEM::getND() // equivalent to hb_itemGetND
+HB_EXPORT double _HB_ITEM::getND() // equivalent to hb_itemGetND
 {
   if (this->isDouble())
   {
@@ -976,7 +976,7 @@ int hb_itemGetNI(PHB_ITEM pItem)
   return 0;
 }
 
-int _HB_ITEM::getNI() // equivalent to hb_itemGetNI
+HB_EXPORT int _HB_ITEM::getNI() // equivalent to hb_itemGetNI
 {
   if (this->isInteger())
   {
@@ -1021,7 +1021,7 @@ long hb_itemGetNL(PHB_ITEM pItem)
   return 0;
 }
 
-long _HB_ITEM::getNL() // equivalent to hb_itemGetNL
+HB_EXPORT long _HB_ITEM::getNL() // equivalent to hb_itemGetNL
 {
   if (this->isLong())
   {
@@ -1091,7 +1091,7 @@ HB_MAXINT hb_itemGetNInt(PHB_ITEM pItem)
   return 0;
 }
 
-HB_MAXINT _HB_ITEM::getNInt() // equivalent to hb_itemGetNInt
+HB_EXPORT HB_MAXINT _HB_ITEM::getNInt() // equivalent to hb_itemGetNInt
 {
   if (this->isLong())
   {
@@ -1154,7 +1154,7 @@ void *hb_itemGetPtr(PHB_ITEM pItem)
   }
 }
 
-void *_HB_ITEM::getPtr() // equivalent to hb_itemGetPtr
+HB_EXPORT void *_HB_ITEM::getPtr() // equivalent to hb_itemGetPtr
 {
   if (this->isPointer())
   {
@@ -1183,7 +1183,7 @@ void *hb_itemGetPtrGC(PHB_ITEM pItem, const HB_GC_FUNCS *pFuncs)
 }
 
 #if 0 // TODO:
-void *_HB_ITEM::getPtrGC(const HB_GC_FUNCS *pFuncs) // equivalent to hb_itemGetPtrGC
+HB_EXPORT void *_HB_ITEM::getPtrGC(const HB_GC_FUNCS *pFuncs) // equivalent to hb_itemGetPtrGC
 {
   if (this->isPointer() && this->pointerCollect() && hb_gcFuncs(this->pointerValue()) == pFuncs)
   {
@@ -1212,7 +1212,7 @@ PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
   }
 }
 
-PHB_SYMB _HB_ITEM::getSymbol() // equivalent to hb_itemGetSymbol
+HB_EXPORT PHB_SYMB _HB_ITEM::getSymbol() // equivalent to hb_itemGetSymbol
 {
   if (this->isSymbol())
   {
@@ -1443,7 +1443,7 @@ PHB_ITEM hb_itemPutL(PHB_ITEM pItem, HB_BOOL bValue)
   return pItem;
 }
 
-PHB_ITEM _HB_ITEM::putL(HB_BOOL bValue) // equivalent to hb_itemPutL
+HB_EXPORT PHB_ITEM _HB_ITEM::putL(HB_BOOL bValue) // equivalent to hb_itemPutL
 {
   if (this->isComplex())
   {
@@ -1509,7 +1509,7 @@ PHB_ITEM hb_itemPutNI(PHB_ITEM pItem, int iNumber)
   return pItem;
 }
 
-PHB_ITEM _HB_ITEM::putNI(int iNumber) // equivalent to hb_itemPutNI
+HB_EXPORT PHB_ITEM _HB_ITEM::putNI(int iNumber) // equivalent to hb_itemPutNI
 {
   if (this->isComplex())
   {
@@ -1546,7 +1546,7 @@ PHB_ITEM hb_itemPutNL(PHB_ITEM pItem, long lNumber)
   return pItem;
 }
 
-PHB_ITEM _HB_ITEM::putNL(long lNumber) // equivalent to hb_itemPutNL
+HB_EXPORT PHB_ITEM _HB_ITEM::putNL(long lNumber) // equivalent to hb_itemPutNL
 {
   if (this->isComplex())
   {
@@ -2347,7 +2347,7 @@ void hb_itemClear(PHB_ITEM pItem)
   // GCLOCK leave
 }
 
-void _HB_ITEM::clear() // equivalent to hb_itemClear
+HB_EXPORT void _HB_ITEM::clear() // equivalent to hb_itemClear
 {
   HB_TYPE _type = HB_ITEM_TYPERAW(this);
   this->setType(Harbour::Item::NIL);

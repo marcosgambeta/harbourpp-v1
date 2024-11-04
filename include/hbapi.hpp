@@ -482,25 +482,25 @@ typedef struct _HB_ITEM
   bool isObject();
   bool isNumber(); // TODO: same as isNumeric()
   //
-  int getNI();
-  long getNL();
-  double getND();
-  HB_BOOL getL();
-  char *getC();
-  const char *getCPtr();
-  HB_SIZE getCLen();
-  HB_MAXINT getNInt();
-  char *getDS(char *szDate);
-  long getDL();
-  double getTD();
-  HB_BOOL getTDT(long *plJulian, long *plMilliSec);
-  void *getPtr();
-  //void *getPtrGC(const HB_GC_FUNCS *pFuncs); TODO:
-  PHB_SYMB getSymbol();
+  HB_EXPORT int getNI();
+  HB_EXPORT long getNL();
+  HB_EXPORT double getND();
+  HB_EXPORT HB_BOOL getL();
+  HB_EXPORT char *getC();
+  HB_EXPORT const char *getCPtr();
+  HB_EXPORT HB_SIZE getCLen();
+  HB_EXPORT HB_MAXINT getNInt();
+  HB_EXPORT char *getDS(char *szDate);
+  HB_EXPORT long getDL();
+  HB_EXPORT double getTD();
+  HB_EXPORT HB_BOOL getTDT(long *plJulian, long *plMilliSec);
+  HB_EXPORT void *getPtr();
+  //HB_EXPORT void *getPtrGC(const HB_GC_FUNCS *pFuncs); TODO:
+  HB_EXPORT PHB_SYMB getSymbol();
   //
-  _HB_ITEM *putNI(int iNumber);
-  _HB_ITEM *putNL(long lNumber);
-  _HB_ITEM *putL(HB_BOOL bValue);
+  HB_EXPORT _HB_ITEM *putNI(int iNumber);
+  HB_EXPORT _HB_ITEM *putNL(long lNumber);
+  HB_EXPORT _HB_ITEM *putL(HB_BOOL bValue);
   //
   HB_BOOL logicalValue();
   void setLogicalValue(HB_BOOL bValue);
@@ -571,7 +571,7 @@ typedef struct _HB_ITEM
   _HB_BASEHASH *hashValue();
   void setHashValue(_HB_BASEHASH *pValue);
   //
-  void clear();
+  HB_EXPORT void clear();
 #endif
 } HB_ITEM, * PHB_ITEM;
 
