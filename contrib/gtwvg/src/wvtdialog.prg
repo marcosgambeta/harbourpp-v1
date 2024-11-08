@@ -78,7 +78,7 @@
 
 CREATE CLASS WvtDialog
 
-   /* To hold previous settings */
+   // To hold previous settings
    VAR nOldRows
    VAR nOldCols
    VAR aOldFont
@@ -97,7 +97,7 @@ CREATE CLASS WvtDialog
    VAR oldMenuBlock
    VAR lGui
 
-   /* Dialog parameters */
+   // Dialog parameters
    VAR nRows
    VAR nCols
    VAR cFont
@@ -108,7 +108,7 @@ CREATE CLASS WvtDialog
    VAR cTitle
    VAR cColor
 
-   /* Objects handling */
+   // Objects handling
    VAR aObjects INIT {}
    VAR oCurObj
    VAR oLastObj
@@ -123,12 +123,12 @@ CREATE CLASS WvtDialog
    VAR aDialogKeys INIT {}
    VAR cDialogID INIT ""
 
-   /* Tooltip Management */
+   // Tooltip Management
    VAR nTooltipWidth
    VAR nTooltipBkColor
    VAR nTooltipTextColor
 
-   /* Miscellaneous */
+   // Miscellaneous
    VAR ClassName INIT "WVTDIALOG"
    VAR cPaintBlockID
    VAR nPaintID INIT 1
@@ -302,7 +302,7 @@ METHOD PROCEDURE WvtDialog:Destroy()
    wvt_SetToolTipBkColor(::oldTooltipBkColor)
    wvt_SetToolTipTextColor(::oldTooltipTextColor)
 
-   /* Here set mode is before setting the font */
+   // Here set mode is before setting the font
    SetMode(::nOldRows, ::nOldCols)
    wvt_SetFont(::aOldFont[1], ::aOldFont[2], ::aOldFont[3], ::aOldFont[4], ::aOldFont[5])
    wvt_SetTitle(::cOldTitle)

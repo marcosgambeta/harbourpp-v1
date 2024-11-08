@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtGets */
+// Class WvtGets
 CREATE CLASS WvtGets INHERIT WvtObject
 
    VAR aGetList INIT {}

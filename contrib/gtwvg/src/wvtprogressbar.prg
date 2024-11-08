@@ -76,11 +76,11 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtProgressBar */
+// Class WvtProgressBar
 CREATE CLASS WvtProgressBar INHERIT WvtObject
 
    VAR cImage
-   VAR nDirection INIT 0      /* 0-Left-Right,Top-Bottom  1-Right-Left,Bottom-Top */
+   VAR nDirection INIT 0      // 0-Left-Right,Top-Bottom  1-Right-Left,Bottom-Top
    VAR nStyle INIT 0
    VAR lVertical INIT .F.
    VAR lActive INIT .F.

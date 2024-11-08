@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* WvtStatusBar */
+// WvtStatusBar
 CREATE CLASS WvtStatusBar INHERIT WvtObject
 
    VAR aPanels

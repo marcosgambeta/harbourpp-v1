@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                               EkOnkar
+//                         ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -55,7 +54,7 @@
 #include "wvtwin.ch"
 #include "wvgparts.ch"
 
-CREATE CLASS WvgToolBar INHERIT WvgWindow /*WvgActiveXControl*/
+CREATE CLASS WvgToolBar INHERIT WvgWindow //WvgActiveXControl
 
    VAR appearance
    VAR style INIT WVGTOOLBAR_STYLE_STANDARD
@@ -111,7 +110,7 @@ METHOD WvgToolBar:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ::WvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 #if 0
-   /* + TBSTYLE_LIST   caption to the right, otherwise caption to the bottom */
+   // + TBSTYLE_LIST   caption to the right, otherwise caption to the bottom
    ::style := WIN_WS_CHILD + TBSTYLE_FLAT + CCS_ADJUSTABLE + CCS_NODIVIDER + CCS_VERT
 #endif
 
@@ -153,10 +152,9 @@ METHOD WvgToolBar:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ::createControl()
 
 #if 0
-   /* Should not be defined as we only require its notifications
-    * so the parent of toolbar will process them anyway
-    * All other functionality should be default until ownerdraw is introduced.
-    */
+   // Should not be defined as we only require its notifications
+   // so the parent of toolbar will process them anyway
+   // All other functionality should be default until ownerdraw is introduced.
    ::SetWindowProcCallback()
 #endif
 
@@ -267,7 +265,7 @@ METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nSt
    HB_SYMBOL_UNUSED(xHotImage)
    HB_SYMBOL_UNUSED(cDLL)
 
-   /* Issue this at the beginning of first item */
+   // Issue this at the beginning of first item
    IF !::lSized
 #if 0
       ::SendToolbarMessage(TB_SETBUTTONWIDTH, ::buttonWidth, ::buttonWidth)
@@ -304,7 +302,7 @@ METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nSt
    ENDSWITCH
 
    IF !Empty(pBitmap)
-      /* oBtn:image := pBitmap */
+      // oBtn:image := pBitmap
 
       IF HB_ISNUMERIC(nMapRGB)
          nBtn := wapi_ImageList_AddMasked(::hImageList, pBitmap, nMapRGB)
@@ -317,7 +315,7 @@ METHOD WvgToolBar:addItem(cCaption, xImage, xDisabledImage, xHotImage, cDLL, nSt
 
       wvg_AddToolBarButton(::pWnd, nBtn, oBtn:caption, oBtn:command, 1, ::showToolTips)
 
-      /* Set Button Size */
+      // Set Button Size
       ::SendToolbarMessage(TB_SETBUTTONSIZE, ::buttonWidth, ::buttonHeight)
 
 #if 0

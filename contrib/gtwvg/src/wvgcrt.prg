@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
+//
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -59,9 +59,9 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
 
    VAR oMenu
 
-   /* Configuration */
-   VAR alwaysOnTop INIT .F.        /* Determines whether the dialog can be covered by other windows */
-   VAR border INIT 0          /* Border type for the XbpCrt window */
+   // Configuration
+   VAR alwaysOnTop INIT .F.        // Determines whether the dialog can be covered by other windows
+   VAR border INIT 0          // Border type for the XbpCrt window
    VAR clipChildren INIT .F.
    VAR closable INIT .T.
    VAR fontHeight INIT 16
@@ -83,23 +83,23 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    VAR helpLink
    VAR maxCol INIT 79
    VAR maxRow INIT 24
-   VAR mouseMode INIT 1          /* Determines whether mouse coordinates are given as graphics or text coordinates.*/
-   VAR modalResult                                           /* Specifies the result of a modal dialog.                                        */
-   VAR aSyncFlush INIT .F.        /* Determines the display behavior of text-mode output.                           */
+   VAR mouseMode INIT 1          // Determines whether mouse coordinates are given as graphics or text coordinates.
+   VAR modalResult                                           // Specifies the result of a modal dialog.
+   VAR aSyncFlush INIT .F.        // Determines the display behavior of text-mode output.
    VAR tooltipText INIT ""
-   VAR useShortCuts INIT .F.        /* Enables shortcut keys for the system menu                                      */
+   VAR useShortCuts INIT .F.        // Enables shortcut keys for the system menu
    VAR xSize INIT 640 READONLY
    VAR ySize INIT 400 READONLY
 
-   /* GUI Specifics */
+   // GUI Specifics
    VAR animate INIT .F.
    VAR clipParent INIT .F.
    VAR clipSiblings INIT .T.
-   VAR group INIT 0          /* XBP_NO_GROUP */
+   VAR group INIT 0          // XBP_NO_GROUP
    VAR sizeRedraw INIT .F.
    VAR tabStop INIT .F.
 
-   /* Callback slots */
+   // Callback slots
    VAR sl_enter
    VAR sl_leave
    VAR sl_lbClick
@@ -120,20 +120,20 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    VAR sl_close
    VAR sl_helpRequest
    VAR sl_keyboard
-   VAR sl_killDisplayFocus                    /* only for CRT */
+   VAR sl_killDisplayFocus                    // only for CRT
    VAR sl_killInputFocus
    VAR sl_move
-   VAR sl_paint                               /* only for GUI dialogs */
+   VAR sl_paint                               // only for GUI dialogs
    VAR sl_quit
    VAR sl_resize
-   VAR sl_setDisplayFocus                     /* only for CRT */
+   VAR sl_setDisplayFocus                     // only for CRT
    VAR sl_setInputFocus
    VAR sl_dragEnter
    VAR sl_dragMotion
    VAR sl_dragLeave
    VAR sl_dragDrop
 
-   /* Harbour implementation */
+   // Harbour implementation
    VAR resizable INIT .T.
    VAR resizeMode INIT HB_GTI_RESIZEMODE_FONT
    VAR style INIT (WS_OVERLAPPED + WS_CAPTION + WS_SYSMENU + WS_SIZEBOX + WS_MINIMIZEBOX + WS_MAXIMIZEBOX)
@@ -149,7 +149,7 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    VAR aSize INIT {24, 79}
    VAR aPresParams INIT {}
    VAR lHasInputFocus INIT .F.
-   VAR nFrameState INIT 0  /* normal */
+   VAR nFrameState INIT 0  // normal
 
    VAR isGT INIT .F.
 
@@ -159,13 +159,13 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    METHOD refresh() INLINE ::invalidateRect()
    METHOD refreshEx()
 
-   /* Life cycle */
+   // Life cycle
    METHOD new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    METHOD destroy()
 
-   /* Methods */
+   // Methods
    METHOD currentPos()
    METHOD currentSize()
    METHOD captureMouse()
@@ -201,7 +201,7 @@ CREATE CLASS WvgCrt INHERIT WvgWindow, WvgPartHandler
    METHOD unlockPS()
    METHOD winDevice()
 
-   /* MESSAGES  */
+   // MESSAGES
    METHOD enter(xParam) SETGET
    METHOD leave(xParam) SETGET
    METHOD lbClick(xParam) SETGET
@@ -253,7 +253,7 @@ METHOD WvgCrt:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
       ::visible := lVisible
    ENDIF
 
-   /* Drawing Area of oCrt will point to itself */
+   // Drawing Area of oCrt will point to itself
    ::drawingArea := Self
 
    RETURN Self
@@ -311,7 +311,7 @@ METHOD WvgCrt:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
       hb_gtInfo(HB_GTI_ICONRES, ::icon)
    ENDIF
 
-   /* CreateWindow() be forced to execute */
+   // CreateWindow() be forced to execute
    CLS
    ::hWnd := hb_gtInfo(HB_GTI_SPEC, HB_GTS_WINDOWHANDLE)
    ::setFocus()
@@ -878,7 +878,7 @@ METHOD WvgCrt:quit(xParam, xParam1)
 
 METHOD WvgCrt:resize(xParam)
 
-   IF HB_ISBLOCK(xParam) /* .OR. HB_ISNIL(xParam) */
+   IF HB_ISBLOCK(xParam) // .OR. HB_ISNIL(xParam)
       ::sl_resize := xParam
       RETURN NIL
    ENDIF

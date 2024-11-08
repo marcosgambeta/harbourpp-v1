@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtTextBox */
+// Class WvtTextBox
 CREATE CLASS WvtTextBox INHERIT WvtObject
 
    VAR cText INIT ""

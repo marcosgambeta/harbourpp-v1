@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtPushButton */
+// Class WvtPushButton
 CREATE CLASS WvtPushButton INHERIT WvtObject
 
    VAR cCaption

@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtConsole */
+// Class WvtConsole
 CREATE CLASS WvtConsole INHERIT WvtObject
 
    METHOD New(oParent)

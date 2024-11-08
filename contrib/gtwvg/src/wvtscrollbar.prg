@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtScrollBar */
+// Class WvtScrollBar
 CREATE CLASS WvtScrollBar INHERIT WvtObject
 
    VAR nBarType INIT WVT_SCROLLBAR_VERT

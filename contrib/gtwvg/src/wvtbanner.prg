@@ -76,11 +76,11 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* CLASS WvtBanner */
+// CLASS WvtBanner
 CREATE CLASS WvtBanner INHERIT WvtObject
 
-   VAR nTimeDelay INIT 0.5    /* One-half Second */
-   VAR nDirection INIT 0      /* LEFT 1-RIGHT */
+   VAR nTimeDelay INIT 0.5    // One-half Second
+   VAR nDirection INIT 0      // LEFT 1-RIGHT
    VAR nCharToSkip INIT 1
    VAR cText INIT ""
    VAR cDispText INIT ""
@@ -89,7 +89,7 @@ CREATE CLASS WvtBanner INHERIT WvtObject
 
    VAR oLabel
 
-   VAR nAlignVert INIT 2     /* Center */
+   VAR nAlignVert INIT 2     // Center
 
    VAR nCurSeconds INIT 0
    VAR nCurAlign
@@ -182,9 +182,9 @@ METHOD WvtBanner:Refresh()
             ::nCurAlign := iif(::nCurAlign == 0, 1, 0)
          ENDIF
 
-         IF ::nCurAlign == 0   /* Left */
+         IF ::nCurAlign == 0   // Left
             ::cDispText := SubStr(::cText, ::nTextIndex)
-         ELSE                  /* Right */
+         ELSE                  // Right
             ::cDispText := SubStr(::cText, 1, ::nTextIndex)
          ENDIF
       ELSE
@@ -194,9 +194,9 @@ METHOD WvtBanner:Refresh()
             ::nCurAlign := iif(::nCurAlign == 0, 1, 0)
          ENDIF
 
-         IF ::nCurAlign == 0   /* Left */
+         IF ::nCurAlign == 0   // Left
             ::cDispText := SubStr(::cText, ::nTextIndex)
-         ELSE                  /* Right */
+         ELSE                  // Right
             ::cDispText := SubStr(::cText, 1, ::nTextIndex)
          ENDIF
       ENDIF

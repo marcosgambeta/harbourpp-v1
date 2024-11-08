@@ -44,9 +44,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                               EkOnkar
+//                         ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -158,7 +157,7 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
    ENDIF
 
 #if 0
-   ::SetWindowProcCallback()  /* Is this needed to catch windowing events ? - NO */
+   ::SetWindowProcCallback()  // Is this needed to catch windowing events ? - NO
 #endif
 
    IF HB_ISOBJECT(::oParent)

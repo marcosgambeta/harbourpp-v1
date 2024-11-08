@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -105,7 +104,7 @@ METHOD WvgTreeView:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::style := WS_CHILD + WS_TABSTOP + WS_CLIPSIBLINGS
-   ::exStyle := WS_EX_CLIENTEDGE // WS_EX_STATICEDGE /*+ TVS_EX_FADEINOUTEXPANDOS */
+   ::exStyle := WS_EX_CLIENTEDGE // WS_EX_STATICEDGE //+ TVS_EX_FADEINOUTEXPANDOS
 
    ::className := "SysTreeView32"
    ::objType := objTypeTreeView
@@ -131,7 +130,7 @@ METHOD WvgTreeView:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    ::createControl()
 
 #if 0
-   ::SetWindowProcCallback()  /* Let parent control the events because all notifications are posted via WM_NOTIFY */
+   ::SetWindowProcCallback()  // Let parent control the events because all notifications are posted via WM_NOTIFY
 #endif
 
    ::oRootItem := WvgTreeViewItem():New()
@@ -210,7 +209,7 @@ METHOD WvgTreeView:handleEvent(nMessage, aNM)
       ENDSWITCH
       EXIT
 
-#if 0  /* It must never reach here */
+#if 0  // It must never reach here
    CASE HB_GTE_ANY
       IF aNM[1] == WM_LBUTTONDOWN
          aHdr := wvg_GetNMTreeViewInfo(aNM[3])

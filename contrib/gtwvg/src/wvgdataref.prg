@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -101,7 +100,7 @@ METHOD WvgDataRef:getData()
    CASE ::className() == "LISTBOX"
       ::sl_editBuffer := wvg_LBGetCurSel(::hWnd) + 1
 
-#if 0 /* This is contrary the documentation of Xbase++ */
+#if 0 // This is contrary the documentation of Xbase++
       IF ::oParent:className() == "COMBOBOX"
          ::sl_editBuffer := {}
          FOR i := 1 TO ::numItems()
@@ -133,11 +132,11 @@ METHOD WvgDataRef:setData(xValue, mp2)
 
    SWITCH ::className()
 
-   CASE "BUTTON"     /* CheckBox, Radio, 3State */
+   CASE "BUTTON"     // CheckBox, Radio, 3State
       ::sendMessage(BM_SETCHECK, iif(::sl_editBuffer, BST_CHECKED, BST_UNCHECKED), 0)
       EXIT
 
-   CASE "LISTBOX"    /* Single Selection */
+   CASE "LISTBOX"    // Single Selection
       IF HB_ISNUMERIC(::sl_editBuffer)
          RETURN wvg_lbSetCurSel(::hWnd, ::sl_editBuffer - 1) >= 0
       ENDIF

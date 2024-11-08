@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtImage */
+// Class WvtImage
 CREATE CLASS WvtImage INHERIT WvtObject
 
    VAR cImageFile

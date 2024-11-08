@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtLabel */
+// Class WvtLabel
 CREATE CLASS WvtLabel INHERIT WvtObject
 
    ACCESS TEXT INLINE iif(::cText == NIL, "", ::cText)

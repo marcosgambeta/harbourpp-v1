@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -148,7 +147,7 @@ METHOD WvgListBox:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::createControl()
 #if 0
-   ::SetWindowProcCallback()   /* Let parent handle the notifications otherwise remove LBS_NOTIFY bit */
+   ::SetWindowProcCallback()   // Let parent handle the notifications otherwise remove LBS_NOTIFY bit
 #endif
    IF ::visible
       ::show()
@@ -237,7 +236,7 @@ METHOD WvgListBox:handleEvent(nMessage, aNM)
       ENDIF
       EXIT
 
-   CASE HB_GTE_ANY               /* This will never be reached */
+   CASE HB_GTE_ANY               // This will never be reached
       SWITCH aNM[1]
       CASE WM_LBUTTONUP
          ::nCurSelected := wvg_lbGetCurSel(::hWnd) + 1

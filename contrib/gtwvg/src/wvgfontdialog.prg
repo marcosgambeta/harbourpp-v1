@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                               EkOnkar
+//                         ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -55,10 +54,10 @@
 #include "wvtwin.ch"
 #include "wvgparts.ch"
 
-/* Class WvgFontDialog() */
+// Class WvgFontDialog()
 CREATE CLASS WvgFontDialog INHERIT WvgSysWindow
 
-   /* Appearance */
+   // Appearance
    VAR title INIT ""
    VAR buttonApply INIT .F.
    VAR buttonCancel INIT .T.
@@ -251,7 +250,7 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
          ENDIF
          EXIT
 
-      CASE 1038  /* Help */
+      CASE 1038  // Help
 
       ENDSWITCH
 
@@ -286,7 +285,7 @@ METHOD WvgFontDialog:destroy()
 
    RETURN Self
 
-/* Only callable from ::activateOK and ::activateApply */
+// Only callable from ::activateOK and ::activateApply
 METHOD WvgFontDialog:GetWvgFont(aFont)
 
    LOCAL oWvgFont

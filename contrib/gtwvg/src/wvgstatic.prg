@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                                EkOnkar
- *                          ( The LORD is ONE )
- */
+//                                EkOnkar
+//                          ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -61,8 +60,8 @@ CREATE CLASS WvgStatic INHERIT WvgWindow
    VAR caption INIT ""
    VAR clipParent INIT .T.
    VAR clipSiblings INIT .F.
-   VAR options INIT -1 /* WVGSTATIC_TEXT_LEFT */
-   VAR TYPE INIT -1 /* WVGSTATIC_TYPE_TEXT */
+   VAR options INIT -1 // WVGSTATIC_TEXT_LEFT
+   VAR TYPE INIT -1 // WVGSTATIC_TYPE_TEXT
 
    VAR hBitmap
 
@@ -80,7 +79,7 @@ METHOD WvgStatic:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   /* SS_NOTIFY  SS_ETCHEDFRAME  SS_SUNKEN  SS_WHITERECT */
+   // SS_NOTIFY  SS_ETCHEDFRAME  SS_SUNKEN  SS_WHITERECT
 
    ::style := WS_CHILD + WS_CLIPCHILDREN
    ::className := "STATIC"
@@ -108,7 +107,7 @@ METHOD WvgStatic:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    SWITCH ::type
    CASE WVGSTATIC_TYPE_TEXT
       IF hb_bitAnd(::options, WVGSTATIC_TEXT_LEFT) == WVGSTATIC_TEXT_LEFT
-         ::style += SS_LEFT /*+ SS_LEFTNOWORDWRAP */
+         ::style += SS_LEFT //+ SS_LEFTNOWORDWRAP
       ENDIF
       IF hb_bitAnd(::options, WVGSTATIC_TEXT_RIGHT) == WVGSTATIC_TEXT_RIGHT
          ::style += SS_RIGHT
@@ -172,10 +171,10 @@ METHOD WvgStatic:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
       EXIT
    CASE WVGSTATIC_TYPE_RECESSEDLINE
       EXIT
-   ENDSWITCH  /* ::type */
+   ENDSWITCH  // ::type
 
 #if 1
-   /* Options */
+   // Options
    IF AScan({WVGSTATIC_TYPE_FGNDFRAME, WVGSTATIC_TYPE_BGNDFRAME, WVGSTATIC_TYPE_HALFTONEFRAME}, ::type) > 0
       DO CASE
       CASE hb_bitAnd(::options, WVGSTATIC_FRAMETHIN) == WVGSTATIC_FRAMETHIN
@@ -200,7 +199,7 @@ METHOD WvgStatic:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::createControl()
 
-   ::SetWindowProcCallback()  /* Static must not be subject to GT dependent */
+   ::SetWindowProcCallback()  // Static must not be subject to GT dependent
 
    IF ::visible
       ::show()

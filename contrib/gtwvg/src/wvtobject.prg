@@ -76,11 +76,11 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/*
- * Class WvtObject
- *
- * Must never be used directly. It is parent class FOR all other objects!
- */
+//
+// Class WvtObject
+//
+// Must never be used directly. It is parent class FOR all other objects!
+//
 CREATE CLASS WvtObject
 
    VAR oParent
@@ -122,7 +122,7 @@ CREATE CLASS WvtObject
 
    VAR nTextColor
    VAR nBackColor
-   VAR nBackMode INIT 0 /* OPAQUE 1-TRANSPARENT */
+   VAR nBackMode INIT 0 // OPAQUE 1-TRANSPARENT
    VAR nTextColorHoverOn
    VAR nTextColorHoverOff
    VAR nBackColorHoverOn

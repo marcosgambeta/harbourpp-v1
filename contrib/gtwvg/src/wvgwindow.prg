@@ -43,9 +43,9 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                               EkOnkar
+//                         ( The LORD is ONE )
+//
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -55,7 +55,7 @@
 #include "wvtwin.ch"
 #include "wvgparts.ch"
 
-/* To Switch Over from ASCALLBACK() to SET/GET_Prop() calls */
+// To Switch Over from ASCALLBACK() to SET/GET_Prop() calls
 #if 0
 #define __BYASCALLBACK__
 #else
@@ -64,19 +64,19 @@
 
 CREATE CLASS WvgWindow INHERIT WvgPartHandler
 
-   /* Configuration */
+   // Configuration
    VAR animate INIT .F.
    VAR clipChildren INIT .F.
    VAR clipParent INIT .F.
    VAR clipSiblings INIT .T.
-   VAR group INIT 0    /* XBP_NO_GROUP */
+   VAR group INIT 0    // XBP_NO_GROUP
    VAR sizeRedraw INIT .F.
    VAR tabStop INIT .F.
    VAR visible INIT .T.
 
    VAR pointerFocus INIT .T.
 
-   /* Runtime variables */
+   // Runtime variables
    VAR dropZone INIT .F.
    VAR helpLink
    VAR s_tooltipText INIT ""
@@ -87,7 +87,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    VAR fnt_COMMPOUNDNAME
    VAR fnt_hFont
 
-   /* Callback slots */
+   // Callback slots
    VAR sl_enter
    VAR sl_leave
    VAR sl_lbClick
@@ -144,7 +144,7 @@ CREATE CLASS WvgWindow INHERIT WvgPartHandler
    VAR aSize INIT {0, 0}
    VAR aPresParams INIT {}
    VAR lHasInputFocus INIT .F.
-   VAR nFrameState INIT 0       /* normal */
+   VAR nFrameState INIT 0       // normal
 
    VAR maxCol INIT 79
    VAR maxRow INIT 24
@@ -492,7 +492,7 @@ METHOD WvgWindow:setPos(aPos, lPaint)
 
    RETURN Self
 
-METHOD WvgWindow:rePosition()    /* This will always be called from HB_GTE_RESIZED message of WVG engine */
+METHOD WvgWindow:rePosition()    // This will always be called from HB_GTE_RESIZED message of WVG engine
    RETURN ::setPosAndSize(::aPos, ::aSize)
 
 METHOD WvgWindow:setPosAndSize(aPos, aSize, lPaint)
@@ -545,7 +545,7 @@ METHOD WvgWindow:isDerivedFrom(cClassORoObject)
    LOCAL lTrue := .F.
    LOCAL cCls := __objGetClsName(self)
 
-   /* Compares without Xbp or Wvg prefixes  */
+   // Compares without Xbp or Wvg prefixes
 
    IF HB_ISSTRING(cClassORoObject)
       IF Upper(SubStr(cClassORoObject, 4)) == Upper(SubStr(cCls, 4))
@@ -1001,7 +1001,7 @@ METHOD WvgWindow:resize(xParam, xParam1)
       RETURN Self
    ENDIF
 
-   IF HB_ISBLOCK(xParam) /* .OR. HB_ISNIL(xParam) */
+   IF HB_ISBLOCK(xParam) // .OR. HB_ISNIL(xParam)
       ::sl_resize := xParam
       RETURN NIL
    ENDIF
@@ -1211,14 +1211,14 @@ METHOD WvgWindow:createControl()
    hWnd := wvg_CreateWindowEx( ;
       ::exStyle, ;
       ::className(), ;
-      "", ;                              /* window name */
+      "", ;                              // window name
       ::style, ;
       aPosSz[1], aPosSz[2], ;
       aPosSz[3], aPosSz[4], ;
       ::oParent:hWnd, ;
-      ::nID, ;                           /* hMenu       */
-      NIL, ;                             /* hInstance   */
-      NIL)                              /* lParam      */
+      ::nID, ;                           // hMenu
+      NIL, ;                             // hInstance
+      NIL)                              // lParam
 
    IF wvg_IsWindow(hWnd)
       ::hWnd := hWnd

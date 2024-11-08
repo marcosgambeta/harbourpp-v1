@@ -54,7 +54,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* Direct WinApi Functions - Prefixed wvg_*() */
+// Direct WinApi Functions - Prefixed wvg_*()
 
 #if defined(__BORLANDC__)
 #if !defined(NONAMELESSUNION)
@@ -128,9 +128,9 @@ HB_FUNC(WVG_HINSTANCE)
   hbwapi_ret_raw_HANDLE(wvg_hInstance());
 }
 
-/*
- *              Bitmap Management Function . Coutesy GTWVW
- */
+//
+//              Bitmap Management Function . Coutesy GTWVW
+//
 
 static BITMAPINFO *PackedDibLoad(LPCTSTR szFileName)
 {
@@ -335,17 +335,17 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
             hBitmap2 = CreateCompatibleBitmap(hdcSource, iExpWidth, iExpHeight);
             SelectObject(hdcTarget, hBitmap2);
 
-            bResult = StretchBlt(hdcTarget,  /* handle to destination DC                 */
-                                 0,          /* x-coord of destination upper-left corner */
-                                 0,          /* y-coord of destination upper-left corner */
-                                 iExpWidth,  /* width of destination rectangle           */
-                                 iExpHeight, /* height of destination rectangle          */
-                                 hdcSource,  /* handle to source DC                      */
-                                 0,          /* x-coord of source upper-left corner      */
-                                 0,          /* y-coord of source upper-left corner      */
-                                 iWidth,     /* width of source rectangle                */
-                                 iHeight,    /* height of source rectangle               */
-                                 SRCCOPY     /* raster operation code                    */
+            bResult = StretchBlt(hdcTarget,  // handle to destination DC
+                                 0,          // x-coord of destination upper-left corner
+                                 0,          // y-coord of destination upper-left corner
+                                 iExpWidth,  // width of destination rectangle
+                                 iExpHeight, // height of destination rectangle
+                                 hdcSource,  // handle to source DC
+                                 0,          // x-coord of source upper-left corner
+                                 0,          // y-coord of source upper-left corner
+                                 iWidth,     // width of source rectangle
+                                 iHeight,    // height of source rectangle
+                                 SRCCOPY     // raster operation code
             );
 
             if (!bResult)
@@ -383,7 +383,7 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
     }  
   }
   break;
-  case 2: /* loading from resourceid */
+  case 2: // loading from resourceid
   {
     UINT uiOptions = bMap3Dcolors ? LR_LOADMAP3DCOLORS : LR_DEFAULTCOLOR;
     char szResname[MAX_PATH + 1];
@@ -397,7 +397,7 @@ static HBITMAP hPrepareBitmap(LPCTSTR szBitmap, UINT uiBitmap, int iExpWidth, in
       return nullptr;
     }  
 
-  } /* loading from resources */
+  } // loading from resources
   break;
   }
 
@@ -505,7 +505,7 @@ HB_FUNC(WVG_STATUSBARSETTEXT)
     int iFlags;
     void *hCaption;
 
-    iPart -= 1; /* Zero based */
+    iPart -= 1; // Zero based
 
     iFlags = (int)HIWORD(SendMessage(hWndSB, SB_GETTEXT, (WPARAM)iPart, (LPARAM)szText));
 
@@ -539,9 +539,9 @@ HB_FUNC(WVG_STATUSBARREFRESH)
 #endif
 }
 
-/*
- * Wvg_GetNMHInfo( nlParam )
- */
+//
+// Wvg_GetNMHInfo( nlParam )
+//
 HB_FUNC(WVG_GETNMHDRINFO)
 {
   LPNMHDR lpnmh = (LPNMHDR)wvg_parlparam(1);
@@ -556,9 +556,9 @@ HB_FUNC(WVG_GETNMHDRINFO)
   hb_itemReturnRelease(pEvParams);
 }
 
-/*
- * Wvg_GetNMMouseInfo( nlParam )
- */
+//
+// Wvg_GetNMMouseInfo( nlParam )
+//
 HB_FUNC(WVG_GETNMMOUSEINFO)
 {
   LPNMMOUSE nmm = (LPNMMOUSE)wvg_parlparam(1);
@@ -575,9 +575,9 @@ HB_FUNC(WVG_GETNMMOUSEINFO)
   hb_itemReturnRelease(pEvParams);
 }
 
-/*
- *  Wvg_GetNMTreeViewInfo( nlParam )
- */
+//
+//  Wvg_GetNMTreeViewInfo( nlParam )
+//
 HB_FUNC(WVG_GETNMTREEVIEWINFO)
 {
   LPNMTREEVIEW pnmtv = (LPNMTREEVIEW)wvg_parlparam(1);
@@ -595,9 +595,9 @@ HB_FUNC(WVG_GETNMTREEVIEWINFO)
   hb_itemReturnRelease(pEvParams);
 }
 
-/*
- *  Wvg_TreeView_GetSelectionInfo( ::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected )
- */
+//
+//  Wvg_TreeView_GetSelectionInfo( ::hWnd, nlParam, @cParent, @cText, @hParentOfSelected, @hItemSelected )
+//
 HB_FUNC(WVG_TREEVIEW_GETSELECTIONINFO)
 {
   LPNMTREEVIEW pnmtv = (LPNMTREEVIEW)wvg_parlparam(2);
@@ -637,9 +637,9 @@ HB_FUNC(WVG_TREEVIEW_GETSELECTIONINFO)
   }
 }
 
-/*
- *   hItem := Wvg_TreeView_AddItem( oItem:hTree, hParent, oItem:Caption )
- */
+//
+//   hItem := Wvg_TreeView_AddItem( oItem:hTree, hParent, oItem:Caption )
+//
 HB_FUNC(WVG_TREEVIEW_ADDITEM)
 {
   TVINSERTSTRUCT tvis;
@@ -651,7 +651,7 @@ HB_FUNC(WVG_TREEVIEW_ADDITEM)
   HB_WIN_V_UNION(tvis, item.stateMask) = TVIS_BOLD | TVIS_CUT | TVIS_DROPHILITED | TVIS_EXPANDEDONCE | TVIS_SELECTED |
                                          TVIS_EXPANDPARTIAL | TVIS_OVERLAYMASK | TVIS_STATEIMAGEMASK | TVIS_USERMASK;
 
-  HB_WIN_V_UNION(tvis, item.state) = 0; /* TVI_BOLD */
+  HB_WIN_V_UNION(tvis, item.state) = 0; // TVI_BOLD
   tvis.hParent = HB_ISNUM(2) ? (HTREEITEM)wvg_parhandle(2) : nullptr;
   HB_WIN_V_UNION(tvis, item.pszText) = (LPTSTR)HB_PARSTRDEF(3, &hText, nullptr);
 
@@ -710,7 +710,7 @@ HB_FUNC(WVG_TREEVIEW_SHOWEXPANDED)
   }
 }
 
-/*                            WvgFontDialog()                           */
+//                            WvgFontDialog()
 
 PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
 {
@@ -757,7 +757,7 @@ PHB_ITEM wvg_logfontTOarray(LPLOGFONT lf, HB_BOOL bEmpty)
   return aFont;
 }
 
-/*                   An Alternative to WndProc Callbacks                */
+//                   An Alternative to WndProc Callbacks
 
 UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -800,14 +800,13 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
   return bret;
 }
 
-/*
- * Wvg_ChooseFont( hWnd, nWndProc, familyName, nominalPointSize,;
- *                 viewScreenFonts, viewPrinterFonts )
- */
+//
+// Wvg_ChooseFont( hWnd, nWndProc, familyName, nominalPointSize,;
+//                 viewScreenFonts, viewPrinterFonts )
 HB_FUNC(WVG_CHOOSEFONT)
 {
-  CHOOSEFONT cf; /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
-  LOGFONT lf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
+  CHOOSEFONT cf; // = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+  LOGFONT lf;    // = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
   DWORD Flags;
   LONG PointSize = 0;
   HWND hWnd = wvg_parhwnd(1);
@@ -843,7 +842,7 @@ HB_FUNC(WVG_CHOOSEFONT)
    Flags |= CF_SCALABLEONLY;
    Flags |= CF_NOVECTORFONTS;
    Flags |= CF_NOSCRIPTSEL;
-   Flags |= CF_NOSIMULATIONS;              /* ::synthesizeFonts  == .f. */
+   Flags |= CF_NOSIMULATIONS;              // ::synthesizeFonts  == .f. 
 #endif
 
   if (hb_parl(5))
@@ -857,7 +856,7 @@ HB_FUNC(WVG_CHOOSEFONT)
   
   cf.lStructSize = sizeof(CHOOSEFONT);
   cf.hwndOwner = hWnd;
-  cf.hDC = (HDC)nullptr; /* only when ::oPrinterPS is defined */
+  cf.hDC = (HDC)nullptr; // only when ::oPrinterPS is defined
   cf.lpLogFont = &lf;
   cf.iPointSize = PointSize;
   cf.Flags = Flags;
@@ -869,7 +868,7 @@ HB_FUNC(WVG_CHOOSEFONT)
   cf.lpTemplateName = (LPTSTR)nullptr;
   cf.hInstance = (HINSTANCE)nullptr;
   cf.lpszStyle = (LPTSTR)szStyle;
-  cf.nFontType = SCREEN_FONTTYPE; /* ?? */
+  cf.nFontType = SCREEN_FONTTYPE; // ??
   cf.nSizeMin = 0;
   cf.nSizeMax = 0;
 
@@ -945,9 +944,9 @@ HB_FUNC(WVG_FONTCREATE)
   hb_itemReturnRelease(aFont);
 }
 
-/*
- * Wvg_PointSizeToHeight( hdc, nPointSize )
- */
+//
+// Wvg_PointSizeToHeight( hdc, nPointSize )
+//
 HB_FUNC(WVG_POINTSIZETOHEIGHT)
 {
   HDC hdc = HB_ISNUM(1) ? wvg_parhdc(1) : GetDC(GetDesktopWindow());
@@ -960,9 +959,9 @@ HB_FUNC(WVG_POINTSIZETOHEIGHT)
   }  
 }
 
-/*
- * Wvg_HeightToPointSize( hdc, nHeight )
- */
+//
+// Wvg_HeightToPointSize( hdc, nHeight )
+//
 HB_FUNC(WVG_HEIGHTTOPOINTSIZE)
 {
   HDC hdc = HB_ISNUM(1) ? wvg_parhdc(1) : GetDC(GetDesktopWindow());
@@ -984,10 +983,9 @@ HB_FUNC(WVG_SETCURRENTBRUSH)
 #endif
 }
 
-/*
- *                                IL  | DL
- *  Wvg_AddToolBarButton( hWndTB, nBtn|hBitmap, cCaption, nButtonID, nMode, lIsTooltip )
- */
+//                                IL  | DL
+//  Wvg_AddToolBarButton( hWndTB, nBtn|hBitmap, cCaption, nButtonID, nMode, lIsTooltip )
+//
 HB_FUNC(WVG_ADDTOOLBARBUTTON)
 {
   TBBUTTON tbb;
@@ -997,11 +995,11 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
 
   switch (hb_parni(5))
   {
-  case 1: /* button from image */
+  case 1: // button from image
   {
     int iNewString;
 
-    /* set string */
+    // set string
     void *hCaption;
     iNewString = (int)SendMessage(hWndTB, TB_ADDSTRING, (WPARAM)0, (LPARAM)HB_PARSTR(3, &hCaption, nullptr));
     hb_strfree(hCaption);
@@ -1011,7 +1009,7 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
       SendMessage(hWndTB, TB_SETMAXTEXTROWS, (WPARAM)0, (LPARAM)0);
     }
     
-    /* add button */
+    // add button
     tbb.iBitmap = hb_parni(2);
     tbb.idCommand = iCommand;
     tbb.fsState = TBSTATE_ENABLED;
@@ -1019,33 +1017,33 @@ HB_FUNC(WVG_ADDTOOLBARBUTTON)
     tbb.dwData = 0;
     tbb.iString = iNewString;
 
-    /* FIXME: Convertion of LRESULT to HB_BOOL */
+    // FIXME: Convertion of LRESULT to HB_BOOL
     bSuccess = (HB_BOOL)SendMessage(hWndTB, TB_ADDBUTTONS, (WPARAM)1, (LPARAM)(LPTBBUTTON)&tbb);
     SendMessage(hWndTB, TB_SETPADDING, (WPARAM)0, (LPARAM)MAKELPARAM(10, 10));
     hb_retl(bSuccess);
     return;
   }
 
-  case 2: /* system bitmap */
+  case 2: // system bitmap
 
-  case 3:            /* separator     */
-    tbb.iBitmap = 0; /* Can be width of the separator */
+  case 3:            // separator
+    tbb.iBitmap = 0; // Can be width of the separator
     tbb.idCommand = 0;
     tbb.fsState = TBSTATE_ENABLED;
     tbb.fsStyle = TBSTYLE_SEP;
     tbb.dwData = 0;
     tbb.iString = 0;
 
-    /* FIXME: Convertion of LRESULT to HB_BOOL */
+    // FIXME: Convertion of LRESULT to HB_BOOL
     bSuccess = (HB_BOOL)SendMessage(hWndTB, TB_ADDBUTTONS, (WPARAM)1, (LPARAM)(LPTBBUTTON)&tbb);
     hb_retl(bSuccess);
     return;
   }
 }
 
-/*
- * Wvg_RegisterClass( cClassName,
- */
+//
+// Wvg_RegisterClass( cClassName,
+//
 HB_FUNC(WVG_REGISTERCLASS_BYNAME)
 {
   void *hClass;
@@ -1065,15 +1063,15 @@ HB_FUNC(WVG_REGISTERCLASS_BYNAME)
     if (GetLastError() != 1410)
     {
       hb_errInternal(10001, "Failed to register DA window class", nullptr, nullptr);
-    }  
+    }
   }
 
   hb_strfree(hClass);
 }
 
-/*
- *  Function with win_FillRect() exists in hbwin:win_parn1.c with different approach.
- */
+//
+//  Function with win_FillRect() exists in hbwin:win_parn1.c with different approach.
+//
 HB_FUNC(WVG_FILLRECT)
 {
   RECT rc;
@@ -1153,9 +1151,9 @@ HB_FUNC(WVG_RELEASEWINDOWPROCBLOCK)
   }  
 }
 
-/*
-   Wvg_CreateToolTipWindow( hControl ) -> hWndTT
- */
+//
+// Wvg_CreateToolTipWindow( hControl ) -> hWndTT
+//
 HB_FUNC(WVG_CREATETOOLTIPWINDOW)
 {
   HWND hwndTip;

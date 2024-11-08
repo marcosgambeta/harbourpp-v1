@@ -54,7 +54,7 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/* Direct WinApi Functions - Prefixed wvg_*() */
+// Direct WinApi Functions - Prefixed wvg_*()
 
 #include "gtwvg.hpp"
 #include "hbwapi.hpp"
@@ -139,9 +139,9 @@ HB_FUNC(WVG_SENDDLGITEMMESSAGE)
   }
 }
 
-/*
- *  win_SetTimer( hWnd, nIdentifier, nTimeOut )
- */
+//
+//  win_SetTimer( hWnd, nIdentifier, nTimeOut )
+//
 HB_FUNC(WVG_SETTIMER)
 {
   hb_retl(SetTimer((HWND)(HB_PTRUINT)hb_parnint(1), hb_parni(2), hb_parni(3), nullptr) != 0);
@@ -216,10 +216,10 @@ HB_FUNC(WVG_GETDLGITEMTEXT)
   LPTSTR cText = (LPTSTR)hb_xgrab(iLen * sizeof(TCHAR));
   UINT iResult;
 
-  iResult = GetDlgItemText((HWND)(HB_PTRUINT)hb_parnint(1), /* handle of dialog box */
-                           hb_parni(2),                     /* identifier of control      */
-                           cText,                           /* address of buffer for text */
-                           iLen                             /* maximum size of string     */
+  iResult = GetDlgItemText((HWND)(HB_PTRUINT)hb_parnint(1), // handle of dialog box
+                           hb_parni(2),                     // identifier of control
+                           cText,                           // address of buffer for text
+                           iLen                             // maximum size of string
   );
 
   cText[iResult] = '\0';
@@ -239,10 +239,10 @@ HB_FUNC(WVG_ISDLGBUTTONCHECKED)
 
 HB_FUNC(WVG_CHECKRADIOBUTTON)
 {
-  hb_retl(CheckRadioButton((HWND)(HB_PTRUINT)hb_parnint(1), /* handle of dialog box */
-                           hb_parni(2),                     /* identifier of first radio button in group */
-                           hb_parni(3),                     /* identifier of last radio button in group  */
-                           hb_parni(4)                      /* identifier of radio button to select      */
+  hb_retl(CheckRadioButton((HWND)(HB_PTRUINT)hb_parnint(1), // handle of dialog box
+                           hb_parni(2),                     // identifier of first radio button in group
+                           hb_parni(3),                     // identifier of last radio button in group
+                           hb_parni(4)                      // identifier of radio button to select
                            ));
 }
 
@@ -281,9 +281,9 @@ HB_FUNC(WVG_INVALIDATERECT)
   }  
 }
 
-/*
- *  win_LoadIcon( ncIcon )
- */
+//
+//  win_LoadIcon( ncIcon )
+//
 HB_FUNC(WVG_LOADICON)
 {
   HICON hIcon;
@@ -302,12 +302,10 @@ HB_FUNC(WVG_LOADICON)
   hb_retnint((HB_PTRUINT)hIcon);
 }
 
-/*
- *  win_LoadImage( ncImage, nSource, nBmpOrIcon, nWidth, nHeight ) -> hImage
- *    nSource == 0 ResourceIdByNumber
- *    nSource == 1 ResourceIdByName
- *    nSource == 2 ImageFromDiskFile
- */
+//  win_LoadImage( ncImage, nSource, nBmpOrIcon, nWidth, nHeight ) -> hImage
+//    nSource == 0 ResourceIdByNumber
+//    nSource == 1 ResourceIdByName
+//    nSource == 2 ImageFromDiskFile
 HB_FUNC(WVG_LOADIMAGE)
 {
   HANDLE hImage = 0;
@@ -317,7 +315,7 @@ HB_FUNC(WVG_LOADIMAGE)
 
   switch (iSource)
   {
-  case 0: /* Image from resource by numeric id */
+  case 0: // Image from resource by numeric id
     if (HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON)
     {
       hImage = LoadIcon((HINSTANCE)wvg_hInstance(), MAKEINTRESOURCE(hb_parni(1)));
@@ -328,7 +326,7 @@ HB_FUNC(WVG_LOADIMAGE)
     }  
     break;
 
-  case 1: /* image from resource by name */
+  case 1: // image from resource by name
     if (HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON)
     {
       hImage = LoadIcon((HINSTANCE)wvg_hInstance(), lpBuffer);
@@ -339,7 +337,7 @@ HB_FUNC(WVG_LOADIMAGE)
     }  
     break;
 
-  case 2: /* Image from disk file */
+  case 2: // Image from disk file
     if (HB_ISNUM(3) && hb_parni(3) == IMAGE_ICON)
     {
       hImage = (HICON)LoadImage((HINSTANCE)nullptr, lpBuffer, IMAGE_ICON, hb_parni(4), hb_parni(5), LR_LOADFROMFILE);
@@ -370,9 +368,9 @@ HB_FUNC(WVG_GETCLIENTRECT)
   hb_itemReturnRelease(info);
 }
 
-/*
- *    Win_DrawImage( hdc, nLeft, nTop, nWidth, nHeight, cImage, lDoNotScale ) in Pixels
- */
+//
+//    Win_DrawImage( hdc, nLeft, nTop, nWidth, nHeight, cImage, lDoNotScale ) in Pixels
+//
 HB_FUNC(WVG_DRAWIMAGE)
 {
   void *hImage;
@@ -402,9 +400,9 @@ HB_FUNC(WVG_CREATEBRUSH)
   hb_retnint((HB_PTRUINT)CreateBrushIndirect(&lb));
 }
 
-/*
- *   win_DrawText( hDC, cText, aRect, nFormat )
- */
+//
+//   win_DrawText( hDC, cText, aRect, nFormat )
+//
 HB_FUNC(WVG_DRAWTEXT)
 {
   RECT rc = {0, 0, 0, 0};
@@ -435,9 +433,9 @@ HB_FUNC(WVG_GETWINDOWRECT)
   hb_itemReturnRelease(info);
 }
 
-/*
- * Win_MoveWindow( hWnd, nLeft, nTop, nWidth, nHeight, lRePaint )
- */
+//
+// Win_MoveWindow( hWnd, nLeft, nTop, nWidth, nHeight, lRePaint )
+//
 HB_FUNC(WVG_MOVEWINDOW)
 {
   MoveWindow((HWND)(HB_PTRUINT)hb_parnint(1), hb_parnl(2), hb_parnl(3), hb_parnl(4), hb_parnl(5), hb_parl(6));
@@ -625,7 +623,7 @@ HB_FUNC(WVG_SLEEP)
   Sleep(hb_parni(1));
 }
 
-/*                         Menu Manipulations                           */
+//                         Menu Manipulations
 
 HB_FUNC(WVG_SETMENU)
 {
@@ -676,7 +674,7 @@ HB_FUNC(WVG_APPENDMENU)
                        HB_PARSTR(4, &hBuffer, nullptr)));
     hb_strfree(hBuffer);
   }
-  else /* It is a SEPARATOR or Submenu */
+  else // It is a SEPARATOR or Submenu
   {
     LPCTSTR lpszCaption = (LPCTSTR)(HB_PTRUINT)hb_parnint(4);
     hb_retl(AppendMenu((HMENU)(HB_PTRUINT)hb_parnint(1), (UINT)hb_parni(2), (HB_PTRUINT)hb_parnint(3),
@@ -695,7 +693,7 @@ HB_FUNC(WVG_INSERTMENU)
                        HB_PARSTR(5, &hBuffer, nullptr)));
     hb_strfree(hBuffer);
   }
-  else /* It is a SEPARATOR or Submenu */
+  else // It is a SEPARATOR or Submenu
   {
     LPCTSTR lpszCaption = (LPCTSTR)(HB_PTRUINT)hb_parnint(5);
     hb_retl(InsertMenu((HMENU)(HB_PTRUINT)hb_parnint(1), (UINT)hb_parni(2), flags, (HB_PTRUINT)hb_parnint(4),
@@ -862,7 +860,7 @@ HB_FUNC(WVG_CALLWINDOWPROC)
       CallWindowProc(wvg_parwndproc(1), wvg_parhwnd(2), (UINT)hb_parnint(3), wvg_parwparam(4), wvg_parlparam(5)));
 }
 
-/*                         TreeView Functions                           */
+//                         TreeView Functions
 
 HB_FUNC(WVG_TREEVIEW_SETTEXTCOLOR)
 {
@@ -898,7 +896,7 @@ HB_FUNC(WVG_TVIS_EXPANDED)
 #endif
 }
 
-/*                          ListBox Functions                           */
+//                          ListBox Functions
 
 HB_FUNC(WVG_LBGETTEXT)
 {
@@ -919,7 +917,7 @@ HB_FUNC(WVG_LBSETCURSEL)
   hb_retni(ListBox_SetCurSel(wvg_parhwnd(1), hb_parni(2)));
 }
 
-/*                                Buttons                               */
+//                                Buttons
 
 HB_FUNC(WVG_BUTTON_GETCHECK)
 {
@@ -936,9 +934,9 @@ HB_FUNC(WVG_ISZOOMED)
   hb_retl(IsZoomed(wvg_parhwnd(1)));
 }
 
-/*
- * Win_SetDCBrushColor( hDC, nRGB )
- */
+//
+// Win_SetDCBrushColor( hDC, nRGB )
+//
 HB_FUNC(WVG_SETDCBRUSHCOLOR)
 {
 #if (_WIN32_WINNT >= 0x0500)
@@ -948,9 +946,9 @@ HB_FUNC(WVG_SETDCBRUSHCOLOR)
 #endif
 }
 
-/*
- * Win_SetDCPenColor( hDC, nRGB )
- */
+//
+// Win_SetDCPenColor( hDC, nRGB )
+//
 HB_FUNC(WVG_SETDCPENCOLOR)
 {
 #if (_WIN32_WINNT >= 0x0500)
@@ -960,25 +958,25 @@ HB_FUNC(WVG_SETDCPENCOLOR)
 #endif
 }
 
-/*
- * Win_GetCurrentObject( hDC, nObjType )
- */
+//
+// Win_GetCurrentObject( hDC, nObjType )
+//
 HB_FUNC(WVG_GETCURRENTOBJECT)
 {
   wvg_rethandle(GetCurrentObject(wvg_parhdc(1), hb_parni(2)));
 }
 
-/*
- * Win_GetCurrentBrush( hDC )
- */
+//
+// Win_GetCurrentBrush( hDC )
+//
 HB_FUNC(WVG_GETCURRENTBRUSH)
 {
   wvg_rethandle(GetCurrentObject(wvg_parhdc(1), OBJ_BRUSH));
 }
 
-/*
- * Win_GetCurrentFornt( hDC )
- */
+//
+// Win_GetCurrentFornt( hDC )
+//
 HB_FUNC(WVG_GETCURRENTFONT)
 {
   wvg_rethandle(GetCurrentObject(wvg_parhdc(1), OBJ_FONT));
@@ -1023,9 +1021,9 @@ HB_FUNC(WVG_FORCEWINDOWTOTOP)
   SetWindowPos(wvg_parhwnd(1), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 }
 
-/*
- * Win_SetLayeredWindowAttributes( hWnd, nRGB, nOpacityFactor [0-255] )
- */
+//
+// Win_SetLayeredWindowAttributes( hWnd, nRGB, nOpacityFactor [0-255] )
+//
 HB_FUNC(WVG_SETLAYEREDWINDOWATTRIBUTES)
 {
 #if (_WIN32_WINNT >= 0x0500)
@@ -1045,7 +1043,7 @@ HB_FUNC(WVG_SETLAYEREDWINDOWATTRIBUTES)
 
       if (pfnLayered(hWnd, cr, (BYTE)hb_parni(3), /*LWA_COLORKEY |*/ LWA_ALPHA) == 0)
       {
-        /* Just to supress warning */
+        // Just to supress warning
       }
     }
     FreeLibrary(h);

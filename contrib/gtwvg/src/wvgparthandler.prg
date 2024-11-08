@@ -43,9 +43,8 @@
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
 
-/*                               EkOnkar
- *                         ( The LORD is ONE )
- */
+//                               EkOnkar
+//                         ( The LORD is ONE )
 
 #include "hbclass.ch"
 #include "inkey.ch"
@@ -84,7 +83,7 @@ CREATE CLASS WvgPartHandler
    VAR oOwner
    VAR nStatus INIT 0
 
-   /* Application Level Notifier */
+   // Application Level Notifier
    VAR sb_notifier
    METHOD notifierBlock(...) SETGET
 
@@ -226,7 +225,7 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
 
    RETURN
 
-/* This will be called by the WvgCrt() console for various events to be propagated to child controls */
+// This will be called by the WvgCrt() console for various events to be propagated to child controls
 METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    LOCAL aPos
@@ -245,7 +244,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          aPos := {xParams[3], xParams[4]}
          EXIT
       CASE WM_MOUSELEAVE
-         /* Nothing */
+         // Nothing
          EXIT
       OTHERWISE
          aPos := iif(::mouseMode == 2, {xParams[3], xParams[4]}, {xParams[5], xParams[6]})
@@ -353,8 +352,8 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
       EXIT
 
    CASE HB_GTE_GUIPARTS
-      /* Eventually every window be checked if it falls within returned rectangle or not
-         then it will avoid a lot of flickering */
+      // Eventually every window be checked if it falls within returned rectangle or not
+      // then it will avoid a lot of flickering
       AEval(::aChildren, {|o|wvg_InvalidateRect(o:hWnd)})
       EXIT
 
@@ -366,7 +365,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    CASE HB_GTE_MENU
       DO CASE
-      CASE xParams[1] == 0                             /* menu selected */
+      CASE xParams[1] == 0                             // menu selected
          IF HB_ISOBJECT(::oMenu)
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(xParams[2]))
                DO CASE
@@ -378,12 +377,12 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
             ENDIF
          ENDIF
 
-      CASE xParams[1] == 1 .AND. HB_ISOBJECT(::oMenu) /* enter menu loop */
+      CASE xParams[1] == 1 .AND. HB_ISOBJECT(::oMenu) // enter menu loop
          IF HB_ISBLOCK(::oMenu:sl_beginMenu)
             Eval(::oMenu:sl_beginMenu, , , Self)
          ENDIF
 
-      CASE xParams[1] == 2 .AND. HB_ISOBJECT(::oMenu) /* exit menu loop */
+      CASE xParams[1] == 2 .AND. HB_ISOBJECT(::oMenu) // exit menu loop
          IF HB_ISBLOCK(::oMenu:sl_endMenu)
             Eval(::oMenu:sl_endMenu, , , Self)
          ENDIF
@@ -460,7 +459,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    RETURN nReturn
 
-/* This will be called if a control is assigned its own WndProc via ::SetWindowProcCallback() */
+// This will be called if a control is assigned its own WndProc via ::SetWindowProcCallback()
 METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
 
    LOCAL nCtrlID
@@ -484,7 +483,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       nNotifctn := wvg_HIWORD(nwParam)
       hWndCtrl := nlParam
 
-      IF hWndCtrl == 0                            /* It is menu */
+      IF hWndCtrl == 0                            // It is menu
          IF HB_ISOBJECT(::oMenu)
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nCtrlID))
                DO CASE

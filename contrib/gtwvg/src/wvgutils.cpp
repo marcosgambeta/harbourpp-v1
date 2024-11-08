@@ -60,18 +60,17 @@
 
 #include "gtwvg.hpp"
 
-/* workaround for missing declaration in MinGW */
+// workaround for missing declaration in MinGW
 #if !defined(TTM_SETTITLE) && defined(TTM_SETTITLEA)
 #define TTM_SETTITLE TTM_SETTITLEA
 #endif
 
 #if defined(__MINGW32CE__)
-/* ChooseColorW() problem is fixed in current devel MINGW32CE version but
- * people who use recent official release (0.50) needs it
- */
+// ChooseColorW() problem is fixed in current devel MINGW32CE version but
+// people who use recent official release (0.50) needs it
 #undef ChooseColor
 BOOL WINAPI ChooseColor(LPCHOOSECOLORW);
-#endif /* __MINGW32CE__ */
+#endif // __MINGW32CE__
 
 #if 0
 HB_EXTERN_BEGIN
@@ -98,26 +97,24 @@ static HINSTANCE wvg_hInstance(void)
   return (HINSTANCE)hInstance;
 }
 
-/*
- *               Pritpal Bedi <bedipritpal@hotmail.com>
- */
+//
+//               Pritpal Bedi <bedipritpal@hotmail.com>
+//
 
 HB_FUNC(WVT_UTILS)
 {
-  /* Retained for legacy code. */
+  // Retained for legacy code.
 }
 
-/*
- *     Wvt_ChooseFont( cFontName, nHeight, nWidth, nWeight, nQuality, ;
- *                                    lItalic, lUnderline, lStrikeout )
- *              ->
- *    { cFontName, nHeight, nWidth, nWeight, nQuality, lItalic, lUnderline, lStrikeout, nRGB }
- */
+//     Wvt_ChooseFont( cFontName, nHeight, nWidth, nWeight, nQuality, ;
+//                                    lItalic, lUnderline, lStrikeout )
+//              ->
+//    { cFontName, nHeight, nWidth, nWeight, nQuality, lItalic, lUnderline, lStrikeout, nRGB }
 HB_FUNC(WVT_CHOOSEFONT)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
-  CHOOSEFONT cf; /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
-  LOGFONT lf;    /* = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; */
+  CHOOSEFONT cf; // = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+  LOGFONT lf;    // = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
   LONG PointSize = 0;
 
   if (HB_ISNUM(2))
@@ -195,9 +192,9 @@ HB_FUNC(WVT_CHOOSEFONT)
   }
 }
 
-/*
- *    Wvt_ChooseColor( nRGBInit, aRGB16, nFlags ) => nRGBSelected
- */
+//
+//    Wvt_ChooseColor( nRGBInit, aRGB16, nFlags ) => nRGBSelected
+//
 HB_FUNC(WVT_CHOOSECOLOR)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -227,9 +224,9 @@ HB_FUNC(WVT_CHOOSECOLOR)
   }  
 }
 
-/*
- *  Wvt_MessageBox( cMessage, cTitle, nIcon, hWnd )
- */
+//
+//  Wvt_MessageBox( cMessage, cTitle, nIcon, hWnd )
+//
 HB_FUNC(WVT_MESSAGEBOX)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -242,9 +239,9 @@ HB_FUNC(WVT_MESSAGEBOX)
   hb_strfree(hMsg);
 }
 
-/*
- *                              Tooltips
- */
+//
+//                              Tooltips
+//
 
 HB_FUNC(WVT_SETTOOLTIPACTIVE)
 {
@@ -260,9 +257,9 @@ HB_FUNC(WVT_SETTOOLTIPACTIVE)
   hb_retl(bActive);
 }
 
-/*
- *   Wvt_SetToolTip( nTop, nLeft, nBottom, nRight, cToolText )
- */
+//
+//   Wvt_SetToolTip( nTop, nLeft, nBottom, nRight, cToolText )
+//
 HB_FUNC(WVT_SETTOOLTIP)
 {
   PHB_GTWVT _s = hb_wvt_gtGetWVT();
@@ -600,9 +597,9 @@ HB_FUNC(WVT_GETFONTINFO)
   hb_itemReturnRelease(info);
 }
 
-/*
- *                 Peter Rees <peter@rees.co.nz>
- */
+//
+//                 Peter Rees <peter@rees.co.nz>
+//
 
 HB_FUNC(WVT_SETMENU)
 {
@@ -799,9 +796,9 @@ HB_FUNC(WVT_GETMENU)
   hb_retnint((HB_PTRUINT)GetMenu(_s->hWnd));
 }
 
-/*
- *                             Dialogs
- */
+//
+//                             Dialogs
+//
 
 HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
 {
@@ -815,7 +812,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
   int iIndex;
   int iResource = hb_parni(4);
 
-  /* check if we still have room for a new dialog */
+  // check if we still have room for a new dialog
   for (iIndex = 0; iIndex < WVT_DLGML_MAX; iIndex++)
   {
     if (_s->hDlgModeless[iIndex] == nullptr)
@@ -826,14 +823,14 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
 
   if (iIndex >= WVT_DLGML_MAX)
   {
-    /* no more room */
+    // no more room
     hb_retnint(0);
     return;
   }
 
   if (pFirst->isBlock())
   {
-    /* pFunc is pointing to stored code block (later) */
+    // pFunc is pointing to stored code block (later)
     pFunc = hb_itemNew(pFirst);
     iType = 2;
   }
@@ -874,7 +871,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
         break;
 
       case 2:
-        /* argument 1 is already unicode compliant, so no conversion */
+        // argument 1 is already unicode compliant, so no conversion
         hDlg = CreateDialogIndirect((HINSTANCE)wvg_hInstance(), (LPDLGTEMPLATE)hb_parc(1), hb_parl(2) ? _s->hWnd : nullptr,
                                     hb_wvt_gtDlgProcMLess);
         break;
@@ -887,7 +884,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
 
       if (pFunc)
       {
-        /* if codeblock, store the codeblock and lock it there */
+        // if codeblock, store the codeblock and lock it there
         if (pFirst->isBlock())
         {
           _s->pcbFunc[iIndex] = pFunc;
@@ -905,7 +902,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
     }
     else
     {
-      /* if codeblock item created earlier, release it */
+      // if codeblock item created earlier, release it
       if (iType == 2 && pFunc)
       {
         hb_itemRelease(pFunc);
@@ -930,7 +927,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
   HB_PTRDIFF iResult = 0;
   HWND hParent = HB_ISNUM(5) ? (HWND)(HB_PTRUINT)hb_parnint(5) : _s->hWnd;
 
-  /* check if we still have room for a new dialog */
+  // check if we still have room for a new dialog
   for (iIndex = 0; iIndex < WVT_DLGMD_MAX; iIndex++)
   {
     if (_s->hDlgModal[iIndex] == nullptr)
@@ -941,14 +938,14 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
 
   if (iIndex >= WVT_DLGMD_MAX)
   {
-    /* no more room */
+    // no more room
     hb_retnint(0);
     return;
   }
 
   if (pFirst->isBlock())
   {
-    /* pFunc is pointing to stored code block (later) */
+    // pFunc is pointing to stored code block (later)
 
     _s->pcbFuncModal[iIndex] = hb_itemNew(pFirst);
 
@@ -984,7 +981,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
     break;
 
   case 2:
-    /* argument 1 is already unicode compliant, so no conversion */
+    // argument 1 is already unicode compliant, so no conversion
     iResult = DialogBoxIndirectParam((HINSTANCE)wvg_hInstance(), (LPDLGTEMPLATE)hb_parc(1), hParent,
                                      hb_wvt_gtDlgProcModal, (LPARAM)(DWORD)iIndex + 1);
     break;
@@ -1000,36 +997,36 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
   int i, nchar;
   DWORD lStyle;
 
-  /* Parameters: 12 arrays                             */
-  /* 1 for DLG template                                */
-  /* 11 for item properties                            */
+  // Parameters: 12 arrays
+  // 1 for DLG template
+  // 11 for item properties
 
-  /* 64k allow to build up to 255 items on the dialog  */
-  /*                                                   */
+  // 64k allow to build up to 255 items on the dialog
+
   pdlgtemplate = p = (PWORD)LocalAlloc(LPTR, 65534);
 
   lStyle = hb_parvnl(1, 3);
 
-  /* start to fill in the dlgtemplate information.  addressing by WORDs */
+  // start to fill in the dlgtemplate information.  addressing by WORDs
 
-  *p++ = 1;                       /* version    */
-  *p++ = 0xFFFF;                  /* signature  */
-  *p++ = LOWORD(hb_parvnl(1, 1)); /* Help Id    */
+  *p++ = 1;                       // version
+  *p++ = 0xFFFF;                  // signature
+  *p++ = LOWORD(hb_parvnl(1, 1)); // Help Id
   *p++ = HIWORD(hb_parvnl(1, 1));
 
-  *p++ = LOWORD(hb_parvnl(1, 2)); /* ext. style */
+  *p++ = LOWORD(hb_parvnl(1, 2)); // ext. style
   *p++ = HIWORD(hb_parvnl(1, 2));
 
   *p++ = LOWORD(lStyle);
   *p++ = HIWORD(lStyle);
 
-  *p++ = (WORD)nItems;           /* NumberOfItems           */
-  *p++ = (short)hb_parvni(1, 5); /* x                       */
-  *p++ = (short)hb_parvni(1, 6); /* y                       */
-  *p++ = (short)hb_parvni(1, 7); /* cx                      */
-  *p++ = (short)hb_parvni(1, 8); /* cy                      */
-  *p++ = (short)0;               /* Menu (ignored for now.) */
-  *p++ = (short)0x00;            /* Class also ignored      */
+  *p++ = (WORD)nItems;           // NumberOfItems
+  *p++ = (short)hb_parvni(1, 5); // x
+  *p++ = (short)hb_parvni(1, 6); // y
+  *p++ = (short)hb_parvni(1, 7); // cx
+  *p++ = (short)hb_parvni(1, 8); // cy
+  *p++ = (short)0;               // Menu (ignored for now.)
+  *p++ = (short)0x00;            // Class also ignored
 
   if (hb_parinfa(1, 11) == Harbour::Item::STRING)
   {
@@ -1041,7 +1038,7 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
     *p++ = 0;
   }
   
-  /* add in the wPointSize and szFontName here iff the DS_SETFONT bit on */
+  // add in the wPointSize and szFontName here iff the DS_SETFONT bit on
 
   if ((lStyle & DS_SETFONT))
   {
@@ -1055,29 +1052,29 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
 
   for (i = 1; i <= nItems; i++)
   {
-    /* make sure each item starts on a DWORD boundary */
+    // make sure each item starts on a DWORD boundary
     p = lpwAlign(p);
 
-    *p++ = LOWORD(hb_parvnl(2, i)); /* help id     */
+    *p++ = LOWORD(hb_parvnl(2, i)); // help id
     *p++ = HIWORD(hb_parvnl(2, i));
 
-    *p++ = LOWORD(hb_parvnl(3, i)); /* ext. style  */
+    *p++ = LOWORD(hb_parvnl(3, i)); // ext. style
     *p++ = HIWORD(hb_parvnl(3, i));
 
-    *p++ = LOWORD(hb_parvnl(4, i)); /* style       */
+    *p++ = LOWORD(hb_parvnl(4, i)); // style
     *p++ = HIWORD(hb_parvnl(4, i));
 
-    *p++ = (short)hb_parvni(5, i); /* x           */
-    *p++ = (short)hb_parvni(6, i); /* y           */
-    *p++ = (short)hb_parvni(7, i); /* cx          */
-    *p++ = (short)hb_parvni(8, i); /* cy          */
+    *p++ = (short)hb_parvni(5, i); // x
+    *p++ = (short)hb_parvni(6, i); // y
+    *p++ = (short)hb_parvni(7, i); // cx
+    *p++ = (short)hb_parvni(8, i); // cy
 
-    *p++ = LOWORD(hb_parvnl(9, i)); /* id          */
-    *p++ = HIWORD(hb_parvnl(9, i)); /* id          */
+    *p++ = LOWORD(hb_parvnl(9, i)); // id
+    *p++ = HIWORD(hb_parvnl(9, i)); // id
 
     if (hb_parinfa(10, i) == Harbour::Item::STRING)
     {
-      nchar = nCopyAnsiToWideChar(p, (LPCSTR)hb_parvc(10, i)); /* class */
+      nchar = nCopyAnsiToWideChar(p, (LPCSTR)hb_parvc(10, i)); // class
       p += nchar;
     }
     else
@@ -1088,7 +1085,7 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
 
     if (hb_parinfa(11, i) == Harbour::Item::STRING)
     {
-      nchar = nCopyAnsiToWideChar(p, (LPCSTR)hb_parvc(11, i)); /*  text  */
+      nchar = nCopyAnsiToWideChar(p, (LPCSTR)hb_parvc(11, i)); //  text
       p += nchar;
     }
     else
@@ -1097,7 +1094,7 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
       *p++ = (WORD)hb_parvni(11, i);
     }
 
-    *p++ = 0x00; /* extras ( in array 12 ) */
+    *p++ = 0x00; // extras ( in array 12 )
   }
 
   p = lpwAlign(p);
@@ -1107,10 +1104,8 @@ HB_FUNC(WVT__MAKEDLGTEMPLATE)
   LocalFree(LocalHandle(pdlgtemplate));
 }
 
-/*
- *  Helper routine.  Take an input pointer, return closest
- *  pointer that is aligned on a DWORD (4 byte) boundary.
- */
+//  Helper routine.  Take an input pointer, return closest
+//  pointer that is aligned on a DWORD (4 byte) boundary.
 LPWORD lpwAlign(LPWORD lpIn)
 {
   HB_PTRUINT ul = (HB_PTRUINT)lpIn;
@@ -1172,9 +1167,9 @@ HB_FUNC(WVT_CBSETCURSEL)
   SendMessage(GetDlgItem((HWND)(HB_PTRUINT)hb_parnint(1), hb_parni(2)), CB_SETCURSEL, hb_parni(3), 0);
 }
 
-/*
- *   Wvt_DlgSetIcon( hDlg, ncIcon )
- */
+//
+//   Wvt_DlgSetIcon( hDlg, ncIcon )
+//
 HB_FUNC(WVT_DLGSETICON)
 {
   HICON hIcon;
@@ -1196,8 +1191,8 @@ HB_FUNC(WVT_DLGSETICON)
 
   if (hIcon)
   {
-    SendMessage((HWND)(HB_PTRUINT)hb_parnint(1), WM_SETICON, ICON_SMALL, (LPARAM)hIcon); /* Set Title Bar ICON */
-    SendMessage((HWND)(HB_PTRUINT)hb_parnint(1), WM_SETICON, ICON_BIG, (LPARAM)hIcon);   /* Set Task List Icon */
+    SendMessage((HWND)(HB_PTRUINT)hb_parnint(1), WM_SETICON, ICON_SMALL, (LPARAM)hIcon); // Set Title Bar ICON
+    SendMessage((HWND)(HB_PTRUINT)hb_parnint(1), WM_SETICON, ICON_BIG, (LPARAM)hIcon);   // Set Task List Icon
   }
 
   if (hIcon)
@@ -1221,9 +1216,9 @@ HB_FUNC(WVT_GETFONTHANDLE)
   hb_retnint((HB_PTRUINT)hFont);
 }
 
-/*
- *                     Utility Functions - Not API
- */
+//
+//                     Utility Functions - Not API
+//
 
 HB_BOOL wvt_Array2Rect(PHB_ITEM aRect, RECT *rc)
 {

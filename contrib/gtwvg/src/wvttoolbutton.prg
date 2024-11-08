@@ -76,7 +76,7 @@
 #define OBJ_CHILD_DATABLOCK       3
 #define OBJ_CHILD_REFRESHBLOCK    4
 
-/* Class WvtToolButton */
+// Class WvtToolButton
 CREATE CLASS WvtToolButton INHERIT WvtObject
 
    VAR cFileImage
