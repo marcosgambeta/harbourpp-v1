@@ -442,7 +442,7 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
 
   if (hWndSB == nullptr || !IsWindow(hWndSB))
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
     return;
   }
 
@@ -469,7 +469,7 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
 
     if (SendMessage(hWndSB, SB_SETPARTS, (WPARAM)iParts + 1, (LPARAM)(LPINT)ptArray))
     {
-      hb_retl(HB_TRUE);
+      hb_retl(true);
       return;
     }
     break;
@@ -485,13 +485,13 @@ HB_FUNC(WVG_STATUSBARCREATEPANEL)
 
       SendMessage(hWndSB, SB_SETPARTS, (WPARAM)1, (LPARAM)(LPINT)ptArray);
 
-      hb_retl(HB_TRUE);
+      hb_retl(true);
       return;
     }
   }
   }
 
-  hb_retl(HB_FALSE);
+  hb_retl(false);
 }
 
 HB_FUNC(WVG_STATUSBARSETTEXT)
@@ -768,12 +768,12 @@ UINT_PTR CALLBACK WvgDialogProcChooseFont(HWND hwnd, UINT msg, WPARAM wParam, LP
   if (msg == WM_INITDIALOG)
   {
     CHOOSEFONT *cf = (CHOOSEFONT *)lParam;
-    auto pBlock = (PHB_ITEM)hb_itemNew((PHB_ITEM)cf->lCustData);
+    auto pBlock = static_cast<PHB_ITEM>(hb_itemNew(reinterpret_cast<PHB_ITEM>(cf->lCustData)));
     SetProp(hwnd, TEXT("DIALOGPROC"), pBlock);
     binit = HB_TRUE;
   }
 
-  block = (PHB_ITEM)GetProp(hwnd, TEXT("DIALOGPROC"));
+  block = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("DIALOGPROC")));
 
   if (block)
   {
@@ -1097,7 +1097,7 @@ HB_FUNC(WVG_BEGINMOUSETRACKING)
 
 LRESULT CALLBACK ControlWindowProcedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-  PHB_ITEM pBlock = (PHB_ITEM)GetProp(hwnd, TEXT("BLOCKCALLBACK"));
+  PHB_ITEM pBlock = static_cast<PHB_ITEM>(GetProp(hwnd, TEXT("BLOCKCALLBACK")));
   long lRet;
 
   if (pBlock)
@@ -1143,7 +1143,7 @@ HB_FUNC(WVG_SETWINDOWPROCBLOCK)
 HB_FUNC(WVG_RELEASEWINDOWPROCBLOCK)
 {
   HWND hWnd = hbwapi_par_raw_HWND(1);
-  PHB_ITEM pBlock = (PHB_ITEM)RemoveProp(hWnd, TEXT("BLOCKCALLBACK"));
+  PHB_ITEM pBlock = static_cast<PHB_ITEM>(RemoveProp(hWnd, TEXT("BLOCKCALLBACK")));
 
   if (pBlock)
   {

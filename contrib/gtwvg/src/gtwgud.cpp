@@ -311,7 +311,7 @@ static int hb_gt_wvt_FireEvent(PHB_GTWVT pWVT, int nEvent, PHB_ITEM pParams)
     {
       auto pEvent = hb_itemPutNI(nullptr, nEvent);
 
-      nResult = hb_itemGetNI(hb_vmEvalBlockV((PHB_ITEM)pWVT->pGT->pNotifierBlock, 2, pEvent, pParams));
+      nResult = hb_itemGetNI(hb_vmEvalBlockV(static_cast<PHB_ITEM>(pWVT->pGT->pNotifierBlock), 2, pEvent, pParams));
 
       hb_itemRelease(pEvent);
 

@@ -449,7 +449,7 @@ HB_FUNC(WVT_SETMOUSEPOS)
   }
   else
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }  
 }
 
@@ -839,7 +839,7 @@ HB_FUNC(WVT_CREATEDIALOGDYNAMIC)
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
     if (pExecSym)
     {
-      pFunc = (PHB_ITEM)pExecSym;
+      pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
     }
     iType = 1;
   }
@@ -958,7 +958,7 @@ HB_FUNC(WVT_CREATEDIALOGMODAL)
     pExecSym = hb_dynsymFindName(hb_itemGetCPtr(pFirst));
     if (pExecSym)
     {
-      pFunc = (PHB_ITEM)pExecSym;
+      pFunc = reinterpret_cast<PHB_ITEM>(pExecSym);
     }
     _s->pFuncModal[iIndex] = pFunc;
     _s->iTypeModal[iIndex] = 1;

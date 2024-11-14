@@ -390,7 +390,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcMLess(HWND hDlg, UINT message, WPARAM wParam, L
   case WM_NCDESTROY:
     if (_s->pFunc[iIndex] != nullptr && _s->iType[iIndex] == 2)
     {
-      hb_itemRelease((PHB_ITEM)_s->pFunc[iIndex]);
+      hb_itemRelease(static_cast<PHB_ITEM>(_s->pFunc[iIndex]));
     }  
     _s->hDlgModeless[iIndex] = nullptr;
     _s->pFunc[iIndex] = nullptr;
@@ -497,7 +497,7 @@ INT_PTR CALLBACK hb_wvt_gtDlgProcModal(HWND hDlg, UINT message, WPARAM wParam, L
   case WM_NCDESTROY:
     if (_s->pFuncModal[iIndex] != nullptr && _s->iTypeModal[iIndex] == 2)
     {
-      hb_itemRelease((PHB_ITEM)_s->pFuncModal[iIndex]);
+      hb_itemRelease(static_cast<PHB_ITEM>(_s->pFuncModal[iIndex]));
     }  
     _s->hDlgModal[iIndex] = nullptr;
     _s->pFuncModal[iIndex] = nullptr;
@@ -867,7 +867,7 @@ HB_FUNC(WVT_SETPEN)
 
   if (!HB_ISNUM(1))
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }
   
   iPenStyle = hb_parni(1);
@@ -884,11 +884,11 @@ HB_FUNC(WVT_SETPEN)
     }  
     _s->currentPen = hPen;
 
-    hb_retl(HB_TRUE);
+    hb_retl(true);
   }
   else
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }  
 }
 
@@ -902,7 +902,7 @@ HB_FUNC(WVT_SETBRUSH)
 
   if (!HB_ISNUM(1))
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }
   
   lb.lbStyle = hb_parnl(1);
@@ -917,11 +917,11 @@ HB_FUNC(WVT_SETBRUSH)
     }  
     _s->currentBrush = hBrush;
 
-    hb_retl(HB_TRUE);
+    hb_retl(true);
   }
   else
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }  
 }
 
@@ -1058,7 +1058,7 @@ HB_FUNC(WVT_DRAWIMAGE)
 #endif
   }
 
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 //    Wvt_DrawLabel( nRow, nCol, cLabel, nAlign, nEscapement, nTextColor, nBkColor,;
@@ -1094,8 +1094,8 @@ HB_FUNC(WVT_DRAWLABEL)
   hFont = CreateFontIndirect(&logfont);
   if (hFont)
   {
-    void *hText;
-    LPCTSTR text = HB_PARSTR(3, &hText, nullptr);
+    void *hText2;
+    LPCTSTR text = HB_PARSTR(3, &hText2, nullptr);
     COLORREF fgClr = hb_wvt_FgColorParam(6), bgClr = hb_wvt_BgColorParam(7);
 
     xy = hb_wvt_gtGetXYFromColRow(hb_parni(2), hb_parni(1));
@@ -1122,12 +1122,12 @@ HB_FUNC(WVT_DRAWLABEL)
       SelectObject(_s->hGuiDC, hOldFontGui);
     }
 #endif
-    hb_strfree(hText);
+    hb_strfree(hText2);
     DeleteObject(hFont);
-    hb_retl(HB_TRUE);
+    hb_retl(true);
   }
 
-  hb_retl(HB_FALSE);
+  hb_retl(false);
 }
 
 //                   1      2       3        4       5       6        7         8
@@ -1391,7 +1391,7 @@ HB_FUNC(WVT_DRAWLINE)
     SelectObject(_s->hGuiDC, hOldPenGUI);
   }
   DeleteObject(hPen);
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 // Inside the area requested!
@@ -1570,7 +1570,7 @@ HB_FUNC(WVT_DRAWGRIDHORZ)
     }
   }
 #endif
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 // wvt_DrawGridVert( nTop, nBottom, aCols, nCols, aPxlOff )
@@ -1584,7 +1584,7 @@ HB_FUNC(WVT_DRAWGRIDVERT)
 
   if (!iTabs)
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }
   
   iCharWidth = _s->PTEXTSIZE.x;
@@ -1617,7 +1617,7 @@ HB_FUNC(WVT_DRAWGRIDVERT)
     }
   }
 #endif
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 // wvt_DrawButton( nTop, nLeft, nBottom, nRight, cText, cnImage, ;
@@ -1771,7 +1771,7 @@ HB_FUNC(WVT_DRAWBUTTON)
     }
   }
 
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 // wvt_DrawStatusBar( nNumPanels, aTLBRofPanels )
@@ -1929,10 +1929,10 @@ HB_FUNC(WVT_DRAWLABELEX)
     }
 #endif
     hb_strfree(hText);
-    hb_retl(HB_TRUE);
+    hb_retl(true);
   }
 
-  hb_retl(HB_FALSE);
+  hb_retl(false);
 }
 
 //                    1      2       3       4        5        6       7       8          9
@@ -2131,7 +2131,7 @@ HB_FUNC(WVT_DRAWLINEEX)
     break;
   }
 
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 //
@@ -2261,7 +2261,7 @@ HB_FUNC(WVT_DRAWLABELOBJ)
   }
 #endif
   hb_strfree(hText);
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 //
@@ -2308,7 +2308,7 @@ HB_FUNC(WVT_DRAWTOOLBUTTONSTATE)
 #endif
     break;
   }
-  hb_retl(HB_TRUE);
+  hb_retl(true);
 }
 
 //
@@ -2902,11 +2902,11 @@ HB_FUNC(WVT_LOADPEN)
     }  
     _s->pGUI->hUserPens[iSlot] = hPen;
 
-    hb_retl(HB_TRUE);
+    hb_retl(true);
   }
   else
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }  
 }
 

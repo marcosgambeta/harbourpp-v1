@@ -499,16 +499,16 @@ HB_FUNC(WVG_CLIENTTOSCREEN)
     if (ClientToScreen((HWND)(HB_PTRUINT)hb_parnint(1), &Point))
     {
       wvt_Point2ArrayEx(&Point, pArray);
-      hb_retl(HB_TRUE);
+      hb_retl(true);
     }
     else
     {
-      hb_retl(HB_FALSE);
+      hb_retl(false);
     }  
   }
   else
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }  
 }
 
@@ -522,16 +522,16 @@ HB_FUNC(WVG_SCREENTOCLIENT)
     if (ScreenToClient((HWND)(HB_PTRUINT)hb_parnint(1), &Point) > 0)
     {
       wvt_Point2ArrayEx(&Point, pArray);
-      hb_retl(HB_TRUE);
+      hb_retl(true);
     }
     else
     {
-      hb_retl(HB_FALSE);
+      hb_retl(false);
     }  
   }
   else
   {
-    hb_retl(HB_FALSE);
+    hb_retl(false);
   }  
 }
 
