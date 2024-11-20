@@ -501,6 +501,13 @@ typedef struct _HB_ITEM
   HB_EXPORT _HB_ITEM *putNI(int iNumber);
   HB_EXPORT _HB_ITEM *putNL(long lNumber);
   HB_EXPORT _HB_ITEM *putL(HB_BOOL bValue);
+  HB_EXPORT _HB_ITEM *putC(const char *szText);
+  HB_EXPORT _HB_ITEM *putCL(const char *szText, HB_SIZE nLen);
+  HB_EXPORT _HB_ITEM *putCConst(const char *szText);
+  HB_EXPORT _HB_ITEM *putCLConst(const char *szText, HB_SIZE nLen);
+  HB_EXPORT _HB_ITEM *putCPtr(char *szText);
+  HB_EXPORT _HB_ITEM *putCLPtr(char *szText, HB_SIZE nLen);
+  HB_EXPORT void setCMemo();
   //
   HB_BOOL logicalValue();
   void setLogicalValue(HB_BOOL bValue);

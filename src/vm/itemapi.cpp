@@ -299,6 +299,34 @@ PHB_ITEM hb_itemPutC(PHB_ITEM pItem, const char *szText)
   return pItem;
 }
 
+HB_EXPORT PHB_ITEM _HB_ITEM::putC(const char *szText) // equivalent to hb_itemPutC
+{
+  HB_SIZE nLen = szText ? strlen(szText) : 0;
+  HB_SIZE nAlloc;
+  if (nLen <= 1)
+  {
+    nAlloc = 0;
+    szText = hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0];
+  }
+  else
+  {
+    nAlloc = nLen + 1;
+    szText = static_cast<char *>(hb_xmemcpy(hb_xgrab(nAlloc), szText, nAlloc));
+  }
+
+  if (this->isComplex())
+  {
+    this->clear();
+  }
+
+  this->setType(Harbour::Item::STRING);
+  this->setStringValue(const_cast<char *>(szText));
+  this->setStringLength(nLen);
+  this->setStringAllocated(nAlloc);
+
+  return this;
+}
+
 PHB_ITEM hb_itemPutCL(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
 {
 #if 0
@@ -344,6 +372,40 @@ PHB_ITEM hb_itemPutCL(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
   return pItem;
 }
 
+HB_EXPORT PHB_ITEM _HB_ITEM::putCL(const char *szText, HB_SIZE nLen) // equivalent to hb_itemPutCL
+{
+  HB_SIZE nAlloc;
+  char *szValue;
+
+  if (nLen <= 1)
+  {
+    nAlloc = 0;
+    szValue = const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]);
+  }
+  else
+  {
+    nAlloc = nLen + 1;
+    szValue = static_cast<char *>(hb_xmemcpy(hb_xgrab(nAlloc), szText, nLen));
+    szValue[nLen] = '\0';
+  }
+
+  if (this->isComplex())
+  {
+    this->clear();
+  }
+
+  // NOTE: CA-Cl*pper seems to be buggy here, it will return nLen bytes of
+  //       trash if the szText buffer is nullptr, at least with hb_retclen().
+  //       [vszakats]
+
+  this->setType(Harbour::Item::STRING);
+  this->setStringValue(szValue);
+  this->setStringLength(nLen);
+  this->setStringAllocated(nAlloc);
+
+  return this;
+}
+
 PHB_ITEM hb_itemPutCConst(PHB_ITEM pItem, const char *szText)
 {
 #if 0
@@ -371,6 +433,24 @@ PHB_ITEM hb_itemPutCConst(PHB_ITEM pItem, const char *szText)
       const_cast<char *>((nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0])));
 
   return pItem;
+}
+
+HB_EXPORT PHB_ITEM _HB_ITEM::putCConst(const char *szText) // equivalent to hb_itemPutCConst
+{
+  if (this->isComplex())
+  {
+    this->clear();
+  }
+
+  HB_SIZE nLen = szText ? strlen(szText) : 0;
+
+  this->setType(Harbour::Item::STRING);
+  this->setStringLength(nLen);
+  this->setStringAllocated(0);
+  this->setStringValue(
+      const_cast<char *>((nLen > 1 ? szText : hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0])));
+
+  return this;
 }
 
 PHB_ITEM hb_itemPutCLConst(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
@@ -409,6 +489,33 @@ PHB_ITEM hb_itemPutCLConst(PHB_ITEM pItem, const char *szText, HB_SIZE nLen)
   }
 
   return pItem;
+}
+
+HB_EXPORT PHB_ITEM _HB_ITEM::putCLConst(const char *szText, HB_SIZE nLen) // equivalent to hb_itemPutCLConst
+{
+  if (this->isComplex())
+  {
+    this->clear();
+  }
+
+  this->setType(Harbour::Item::STRING);
+  this->setStringLength(nLen);
+  this->setStringAllocated(0);
+
+  if (nLen <= 1)
+  {
+    this->setStringValue(const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
+  }
+  else if (szText[nLen] == '\0')
+  {
+    this->setStringValue(const_cast<char *>(szText));
+  }
+  else
+  {
+    hb_errInternal(6003, "Internal error: _HB_ITEM::putCLConst() missing termination character", nullptr, nullptr);
+  }
+
+  return this;
 }
 
 PHB_ITEM hb_itemPutCPtr(PHB_ITEM pItem, char *szText)
@@ -451,6 +558,35 @@ PHB_ITEM hb_itemPutCPtr(PHB_ITEM pItem, char *szText)
   return pItem;
 }
 
+HB_EXPORT PHB_ITEM _HB_ITEM::putCPtr(char *szText) // equivalent to hb_itemPutCPtr
+{
+  if (this->isComplex())
+  {
+    this->clear();
+  }
+
+  HB_SIZE nLen = szText ? strlen(szText) : 0;
+
+  this->setType(Harbour::Item::STRING);
+  this->setStringLength(nLen);
+  if (nLen <= 1)
+  {
+    this->setStringAllocated(0);
+    this->setStringValue(const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
+    if (szText != nullptr)
+    {
+      hb_xfree(szText);
+    }
+  }
+  else
+  {
+    this->setStringAllocated(nLen + 1);
+    this->setStringValue(szText);
+  }
+
+  return this;
+}
+
 PHB_ITEM hb_itemPutCLPtr(PHB_ITEM pItem, char *szText, HB_SIZE nLen)
 {
 #if 0
@@ -487,11 +623,44 @@ PHB_ITEM hb_itemPutCLPtr(PHB_ITEM pItem, char *szText, HB_SIZE nLen)
   return pItem;
 }
 
+HB_EXPORT PHB_ITEM _HB_ITEM::putCLPtr(char *szText, HB_SIZE nLen) // equivalent to hb_itemPutCLPtr
+{
+  if (this->isComplex())
+  {
+    this->clear();
+  }
+
+  this->setType(Harbour::Item::STRING);
+  this->setStringLength(nLen);
+  if (nLen <= 1)
+  {
+    this->setStringAllocated(0);
+    this->setStringValue(const_cast<char *>(hb_szAscii[nLen ? static_cast<unsigned char>(szText[0]) : 0]));
+    hb_xfree(szText);
+  }
+  else
+  {
+    szText[nLen] = '\0';
+    this->setStringAllocated(nLen + 1);
+    this->setStringValue(szText);
+  }
+
+  return this;
+}
+
 void hb_itemSetCMemo(PHB_ITEM pItem)
 {
   if (pItem && pItem->isString())
   {
     pItem->type |= Harbour::Item::MEMOFLAG;
+  }
+}
+
+HB_EXPORT void _HB_ITEM::setCMemo() // equivalent to hb_itemSetCMemo
+{
+  if (this->isString())
+  {
+    this->type |= Harbour::Item::MEMOFLAG;
   }
 }
 
