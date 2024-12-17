@@ -283,7 +283,7 @@ METHOD PushButton:colorSpec(cColorSpec)
 METHOD PushButton:fBlock(bFBlock)
 
    IF PCount() > 0
-      ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
+      ::bFBlock := IIf(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
    RETURN ::bFBlock
@@ -310,7 +310,7 @@ METHOD PushButton:row(nRow)
 METHOD PushButton:sBlock(bSBlock)
 
    IF PCount() > 0
-      ::bSBlock := iif(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
+      ::bSBlock := IIf(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
    ENDIF
 
    RETURN ::bSBlock

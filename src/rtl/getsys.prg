@@ -216,7 +216,7 @@ FUNCTION Updated()
 
    LOCAL oGetList := __GetListLast()
 
-   RETURN iif(oGetList != NIL, oGetList:Updated(), .F.)
+   RETURN IIf(oGetList != NIL, oGetList:Updated(), .F.)
 
 PROCEDURE __KillRead()
 

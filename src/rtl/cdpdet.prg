@@ -52,11 +52,11 @@ FUNCTION hb_cdpTerm()
 
 #if defined(__PLATFORM__WINDOWS)
    LOCAL tmp
-   cCP := __CPWinToCPStd(iif((tmp := __wapi_GetConsoleOutputCP()) == 0, __wapi_GetOEMCP(), tmp))
+   cCP := __CPWinToCPStd(IIf((tmp := __wapi_GetConsoleOutputCP()) == 0, __wapi_GetOEMCP(), tmp))
    cLang := hb_UserLang()
 #elif defined(__PLATFORM__UNIX)
    LOCAL tmp
-   cCP := __UnixParseLangCP(iif(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
+   cCP := __UnixParseLangCP(IIf(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
    // TODO
    cCP := cLang := NIL
@@ -77,7 +77,7 @@ FUNCTION hb_cdpOS()
    cLang := hb_UserLang()
 #elif defined(__PLATFORM__UNIX)
    LOCAL tmp
-   cCP := __UnixParseLangCP(iif(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
+   cCP := __UnixParseLangCP(IIf(Empty(tmp := GetEnv("LANG")), GetEnv("LC_CTYPE"), tmp), @cLang)
 #elif defined(__PLATFORM__DOS)
    // TODO
    cCP := cLang := NIL

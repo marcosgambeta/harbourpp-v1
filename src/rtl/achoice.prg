@@ -476,7 +476,7 @@ FUNCTION AChoice(nTop, nLeft, nBottom, nRight, acItems, xSelect, xUserFunc, nPos
 
       CASE nMode != AC_NOITEM
 
-         nMode := iif(nKey == 0, AC_IDLE, AC_EXCEPT)
+         nMode := IIf(nKey == 0, AC_IDLE, AC_EXCEPT)
 
       ENDCASE
 
@@ -594,9 +594,9 @@ STATIC PROCEDURE DispPage(acItems, alSelect, nTop, nLeft, nRight, nNumRows, nPos
 
 STATIC PROCEDURE DispLine(cLine, nRow, nCol, lSelect, lHiLite, nNumCols)
 
-   ColorSelect(iif(lSelect .AND. HB_ISSTRING(cLine), iif(lHiLite, CLR_ENHANCED, CLR_STANDARD), CLR_UNSELECTED))
+   ColorSelect(IIf(lSelect .AND. HB_ISSTRING(cLine), IIf(lHiLite, CLR_ENHANCED, CLR_STANDARD), CLR_UNSELECTED))
 
-   hb_DispOutAt(nRow, nCol, iif(HB_ISSTRING(cLine), PadR(cLine, nNumCols), Space(nNumCols)))
+   hb_DispOutAt(nRow, nCol, IIf(HB_ISSTRING(cLine), PadR(cLine, nNumCols), Space(nNumCols)))
    IF lHiLite
       SetPos(nRow, nCol)
    ENDIF

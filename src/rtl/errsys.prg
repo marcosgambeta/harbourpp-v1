@@ -103,7 +103,7 @@ STATIC FUNCTION DefError(oError)
 
    // Show alert box
 
-   DO WHILE (nChoice := Alert(cMessage + iif(cOSError == NIL, "", ";" + cOSError), aOptions)) == 0
+   DO WHILE (nChoice := Alert(cMessage + IIf(cOSError == NIL, "", ";" + cOSError), aOptions)) == 0
    ENDDO
 
    IF !Empty(nChoice)  // Alert() may return NIL
@@ -140,7 +140,7 @@ STATIC FUNCTION DefError(oError)
 STATIC FUNCTION ErrorMessage(oError)
 
    // start error message
-   LOCAL cMessage := iif(oError:severity > ES_WARNING, "Error", "Warning") + " "
+   LOCAL cMessage := IIf(oError:severity > ES_WARNING, "Error", "Warning") + " "
 
    // add subsystem name if available
    IF HB_ISSTRING(oError:subsystem)

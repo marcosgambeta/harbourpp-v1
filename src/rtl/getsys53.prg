@@ -74,13 +74,13 @@ FUNCTION GUIPreValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
-   RETURN iif(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), .F.)
+   RETURN IIf(oGetList != NIL, oGetList:GUIPreValidate(oGet, oGUI, aMsg), .F.)
 
 FUNCTION GUIPostValidate(oGet, oGUI, aMsg)
 
    LOCAL oGetList := __GetListActive()
 
-   RETURN iif(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), .F.)
+   RETURN IIf(oGetList != NIL, oGetList:GUIPostValidate(oGet, oGUI, aMsg), .F.)
 
 PROCEDURE TBReader(oGet, oGetList, oMenu, aMsg)
 
@@ -112,7 +112,7 @@ FUNCTION Accelerator(oGetList, nKey, aMsg)
       oGetList := __GetListActive()
    ENDIF
 
-   RETURN iif(oGetList != NIL, oGetlist:Accelerator(nKey, aMsg), 0)
+   RETURN IIf(oGetList != NIL, oGetlist:Accelerator(nKey, aMsg), 0)
 
 FUNCTION HitTest(oGetList, nMRow, nMCol, aMsg)
 
@@ -120,7 +120,7 @@ FUNCTION HitTest(oGetList, nMRow, nMCol, aMsg)
       oGetList := __GetListActive()
    ENDIF
 
-   RETURN iif(oGetList != NIL, oGetlist:hitTest(nMRow, nMCol, aMsg), 0)
+   RETURN IIf(oGetList != NIL, oGetlist:hitTest(nMRow, nMCol, aMsg), 0)
 
 PROCEDURE ShowGetMsg(oGet, aMsg)
 

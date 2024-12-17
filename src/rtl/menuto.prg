@@ -112,7 +112,7 @@ FUNCTION __MenuTo(bBlock, cVariable)
       nHiLited := 0
 #endif
 
-      nSaveCursor := SetCursor(iif(Set(_SET_INTENSITY), SC_NONE, NIL))
+      nSaveCursor := SetCursor(IIf(Set(_SET_INTENSITY), SC_NONE, NIL))
       cSaveReadVar := ReadVar(hb_asciiUpper(cVariable))
       xMsg := ""
       nMsgCol := 0
@@ -150,9 +150,9 @@ FUNCTION __MenuTo(bBlock, cVariable)
          q := n
 
          cColor := t_aLevel[t_nPointer - 1][n][_ITM_COLOR]
-         cColorNormal := hb_ColorIndex(iif(Empty(hb_ColorIndex(cColor, CLR_STANDARD)), SetColor(), cColor), CLR_STANDARD)
+         cColorNormal := hb_ColorIndex(IIf(Empty(hb_ColorIndex(cColor, CLR_STANDARD)), SetColor(), cColor), CLR_STANDARD)
          IF Set(_SET_INTENSITY)
-            cColorSelect := hb_ColorIndex(iif(Empty(hb_ColorIndex(cColor, CLR_ENHANCED)), SetColor(), cColor), CLR_ENHANCED)
+            cColorSelect := hb_ColorIndex(IIf(Empty(hb_ColorIndex(cColor, CLR_ENHANCED)), SetColor(), cColor), CLR_ENHANCED)
          ELSE
             cColorSelect := cColorNormal
          ENDIF
@@ -215,13 +215,13 @@ FUNCTION __MenuTo(bBlock, cVariable)
          CASE K_DOWN
          CASE K_RIGHT
             IF ++n > nArrLen
-               n := iif(Set(_SET_WRAP), 1, nArrLen)
+               n := IIf(Set(_SET_WRAP), 1, nArrLen)
             ENDIF
             EXIT
          CASE K_UP
          CASE K_LEFT
             IF --n < 1
-               n := iif(Set(_SET_WRAP), nArrLen, 1)
+               n := IIf(Set(_SET_WRAP), nArrLen, 1)
             ENDIF
             EXIT
          CASE K_HOME

@@ -75,7 +75,7 @@ METHOD HBPersistent:LoadFromText(cObjectText, lIgnoreErrors)
       RETURN .F.
    ENDIF
 
-   bError := iif(hb_defaultValue(lIgnoreErrors, .F.), {|e|Break(e)}, ErrorBlock())
+   bError := IIf(hb_defaultValue(lIgnoreErrors, .F.), {|e|Break(e)}, ErrorBlock())
 
    FOR EACH cLine IN hb_ATokens(StrTran(cObjectText, Chr(13)), Chr(10))
 
@@ -158,8 +158,8 @@ METHOD HBPersistent:SaveToText(cObjectName, nIndent)
       nIndent := 0
    ENDIF
 
-   cObject := iif(nIndent > 0, hb_eol(), "") + Space(nIndent) + ;
-              "OBJECT " + iif(nIndent != 0, "::", "") + cObjectName + " AS " + ;
+   cObject := IIf(nIndent > 0, hb_eol(), "") + Space(nIndent) + ;
+              "OBJECT " + IIf(nIndent != 0, "::", "") + cObjectName + " AS " + ;
               ::ClassName() + hb_eol()
 
    FOR EACH cProp IN __clsGetProperties(::ClassH)

@@ -125,7 +125,7 @@ METHOD CheckBox:select(lState)
 
    LOCAL lOldState := ::lBuffer
 
-   ::lBuffer := iif(HB_ISLOGICAL(lState), lState, !::lBuffer)
+   ::lBuffer := IIf(HB_ISLOGICAL(lState), lState, !::lBuffer)
 
    IF lOldState != ::lBuffer
       ::display()
@@ -182,7 +182,7 @@ METHOD CheckBox:display()
 
    DispBegin()
 
-   hb_DispOutAt(::nRow, ::nCol + 1, iif(::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1)), hb_ColorIndex(::cColorSpec, iif(::lHasFocus, 1, 0)))
+   hb_DispOutAt(::nRow, ::nCol + 1, IIf(::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1)), hb_ColorIndex(::cColorSpec, IIf(::lHasFocus, 1, 0)))
 
    cColor := hb_ColorIndex(::cColorSpec, 2)
    hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1), cColor)
@@ -266,7 +266,7 @@ METHOD CheckBox:colorSpec(cColorSpec)
 METHOD CheckBox:fBlock(bFBlock)
 
    IF PCount() > 0
-      ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
+      ::bFBlock := IIf(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
    RETURN ::bFBlock
@@ -293,7 +293,7 @@ METHOD CheckBox:row(nRow)
 METHOD CheckBox:sBlock(bSBlock)
 
    IF PCount() > 0
-      ::bSBlock := iif(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
+      ::bSBlock := IIf(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
    ENDIF
 
    RETURN ::bSBlock

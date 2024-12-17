@@ -511,7 +511,7 @@ METHOD HBMenuSys:Execute()
       ENDIF
 
       // Pop the Menu:
-      // ::oMenu:select(iif(::PopMenu(), ::oMenu:current, 0))
+      // ::oMenu:select(IIf(::PopMenu(), ::oMenu:current, 0))
 
       // Display newly selected current menu item:
       IF IS_IN(::oMenu:ClassName(), "POPUPMENU|HB_POPUPMENU") .AND. ::nMenuLevel == 1 .AND. !::oMenu:isOpen

@@ -96,7 +96,7 @@ METHOD ScalarObject:AsString()
    CASE "D" ; RETURN DToC(Self)
    CASE "T" ; RETURN hb_TToC(Self)
    CASE "H" ; RETURN "{ ... => ... }"
-   CASE "L" ; RETURN iif(Self, ".T.", ".F.")
+   CASE "L" ; RETURN IIf(Self, ".T.", ".F.")
    CASE "N" ; RETURN hb_ntos(Self)
    CASE "S" ; RETURN "@" + ::name + "()"
    CASE "P" ; RETURN "<0x...>"
@@ -204,7 +204,7 @@ ENDCLASS
 
 METHOD Array:Init(nElements)
 
-   ::size := iif(nElements == NIL, 0, nElements)
+   ::size := IIf(nElements == NIL, 0, nElements)
 
    RETURN Self
 
@@ -539,7 +539,7 @@ CREATE CLASS Logical INHERIT HBScalar FUNCTION __HBLogical
 ENDCLASS
 
 METHOD Logical:AsString()
-   RETURN iif(Self, ".T.", ".F.")
+   RETURN IIf(Self, ".T.", ".F.")
 
 /* --- */
 

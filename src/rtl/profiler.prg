@@ -117,10 +117,10 @@ ACCESS nSeconds CLASS HBProfileEntity
    RETURN hb_Clocks2Secs(::nTicks)
 
 ACCESS nMeanTicks CLASS HBProfileEntity
-   RETURN iif(::nCalls == 0, 0, ::nTicks / ::nCalls)
+   RETURN IIf(::nCalls == 0, 0, ::nTicks / ::nCalls)
 
 ACCESS nMeanSeconds CLASS HBProfileEntity
-   RETURN iif(::nCalls == 0, 0, ::nSeconds / ::nCalls)
+   RETURN IIf(::nCalls == 0, 0, ::nSeconds / ::nCalls)
 
 METHOD HBProfileEntity:describe()
    RETURN "Base Entity"
@@ -493,7 +493,7 @@ METHOD HBProfileReport:generate(bFilter)
 
    hb_default(@bFilter, {||.T.})
 
-   ::emitHeader():oProfile:forEach({|o|iif(Eval(bFilter, o), ::emitLine(o), NIL)})
+   ::emitHeader():oProfile:forEach({|o|IIf(Eval(bFilter, o), ::emitLine(o), NIL)})
 
    __SetProfiler(lProfile)
 
@@ -637,7 +637,7 @@ METHOD HBProfileReportToTBrowse:generate(bFilter, nTop, nLeft, nBottom, nRight)
    oBrowse:goTopBlock    := {||::nEntity := 1}
    oBrowse:goBottomBlock := {||::nEntity := Len(::aReport)}
    oBrowse:skipBlock     := {|nSkip, nPos|nPos := ::nEntity, ;
-      ::nEntity := iif(nSkip > 0, ;
+      ::nEntity := IIf(nSkip > 0, ;
       Min(Len(::aReport), ::nEntity + nSkip), ;
       Max(1, ::nEntity + nSkip)), ::nEntity - nPos}
 

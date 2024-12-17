@@ -261,7 +261,7 @@ METHOD HBGetList:Reader(oMenu, aMsg)
 
          DO WHILE oGet:exitState == GE_NOEXIT .AND. !::lKillRead
 #ifdef HB_COMPAT_C53
-            SetCursor(iif(::nSaveCursor == SC_NONE, SC_NORMAL, ::nSaveCursor))
+            SetCursor(IIf(::nSaveCursor == SC_NONE, SC_NORMAL, ::nSaveCursor))
             nKey := Inkey(0)
             SetCursor(SC_NONE)
             ::GetApplyKey(nKey, oGet, oMenu, aMsg)
@@ -601,7 +601,7 @@ METHOD HBGetList:GetPostValidate(oGet, aMsg)
       oGet:updateBuffer()
 
 #ifdef HB_COMPAT_C53
-      ::lUpdated := iif(oGet:changed, .T., lUpdated)
+      ::lUpdated := IIf(oGet:changed, .T., lUpdated)
 #else
       ::lUpdated := lUpdated
 #endif
@@ -781,9 +781,9 @@ METHOD HBGetList:ShowScoreboard()
 
    IF Set(_SET_SCOREBOARD)
 
-      hb_DispOutAt(SCORE_ROW, SCORE_COL, iif(Set(_SET_INSERT), ;
+      hb_DispOutAt(SCORE_ROW, SCORE_COL, IIf(Set(_SET_INSERT), ;
          __natMsg(_GET_INSERT_ON), ;
-         iif(Len(__natMsg(_GET_INSERT_OFF)) == Len(__natMsg(_GET_INSERT_ON)), ;
+         IIf(Len(__natMsg(_GET_INSERT_OFF)) == Len(__natMsg(_GET_INSERT_ON)), ;
             __natMsg(_GET_INSERT_OFF), ;
             Space(Len(__natMsg(_GET_INSERT_ON))))))
 
@@ -1598,7 +1598,7 @@ METHOD HBGetList:ShowGetMsg(oGet, aMsg)
 
       hb_default(@oGet, ::oGet)
 
-      cMsg := iif(HB_ISOBJECT(oGet:control), oGet:control:message, oGet:message)
+      cMsg := IIf(HB_ISOBJECT(oGet:control), oGet:control:message, oGet:message)
 
       IF !Empty(cMsg)
          lMOldState := MSetCursor(.F.)

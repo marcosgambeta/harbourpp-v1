@@ -93,7 +93,7 @@ FUNCTION ADir(cFileMask, aName, aSize, aDate, aTime, aAttr)
 
    //
 
-   aDir := Directory(cFileMask, iif(HB_ISARRAY(aAttr), "HSD", NIL))
+   aDir := Directory(cFileMask, IIf(HB_ISARRAY(aAttr), "HSD", NIL))
    nDirLen := Len(aDir)
 
    FOR nDirPos := 1 TO nDirLen

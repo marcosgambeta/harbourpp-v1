@@ -54,7 +54,7 @@ FUNCTION Alert(cMessage, aOptions, cColorNorm)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex(cColorNorm, CLR_STANDARD)
-      cColorHigh := hb_StrReplace(iif((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
+      cColorHigh := hb_StrReplace(IIf((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
    ENDIF
 
    aOptionsOK := {}
@@ -106,7 +106,7 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
    CASE HB_ISARRAY(xMessage)
       cMessage := ""
       FOR EACH cString IN xMessage
-         cMessage += iif(cString:__enumIsFirst(), "", Chr(10)) + hb_CStr(cString)
+         cMessage += IIf(cString:__enumIsFirst(), "", Chr(10)) + hb_CStr(cString)
       NEXT
    CASE HB_ISSTRING(xMessage)
       cMessage := StrTran(xMessage, ";", Chr(10))
@@ -124,7 +124,7 @@ FUNCTION hb_Alert(xMessage, aOptions, cColorNorm, nDelay)
       cColorHigh := "W+/B"  // second pair color (Options buttons)
    ELSE
       cColorNorm := hb_ColorIndex(cColorNorm, CLR_STANDARD)
-      cColorHigh := hb_StrReplace(iif((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
+      cColorHigh := hb_StrReplace(IIf((nPos := At("/", cColorNorm)) > 0, SubStr(cColorNorm, nPos + 1) + "/" + Left(cColorNorm, nPos - 1), "N/" + cColorNorm), "+*")
    ENDIF
 
    aOptionsOK := {}

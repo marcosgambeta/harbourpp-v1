@@ -97,7 +97,7 @@ PROCEDURE hb_mvSave(cFileName, cMask, lIncludeMask)
             xValue := __mvDbgInfo(nScope, tmp, @cName)
             IF ValType(xValue) $ "CNDTL"
                lMatch := hb_WildMatchI(cMask, cName)
-               IF iif(lIncludeMask, lMatch, !lMatch)
+               IF IIf(lIncludeMask, lMatch, !lMatch)
                   AAdd(aVars, {cName, xValue})
                ENDIF
             ENDIF
@@ -221,7 +221,7 @@ FUNCTION hb_mvRestore(cFileName, lAdditive, cMask, lIncludeMask)
 
                   cName := item[1]
                   lMatch := hb_WildMatchI(cMask, cName)
-                  IF iif(lIncludeMask, lMatch, !lMatch)
+                  IF IIf(lIncludeMask, lMatch, !lMatch)
                      IF xValue == NIL
                         xValue := item[2]
                      ENDIF

@@ -267,8 +267,8 @@ FUNCTION __hbdoc_ToSource(aEntry)
             IF HB_ISSTRING(item) .AND. !hb_LeftEq(item:__enumKey(), "_")
                cSource += "   $" + item:__enumKey() + "$" + hb_eol()
                FOR EACH cLine IN hb_ATokens(StrTran(item, Chr(13)), Chr(10))
-                  cLineOut := iif(Len(cLine) == 0, "", Space(4) + cLine)
-                  cSource += iif(Empty(cLineOut), "", "  " + cLineOut) + hb_eol()
+                  cLineOut := IIf(Len(cLine) == 0, "", Space(4) + cLine)
+                  cSource += IIf(Empty(cLineOut), "", "  " + cLineOut) + hb_eol()
                NEXT
             ENDIF
          NEXT

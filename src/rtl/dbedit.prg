@@ -95,8 +95,8 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
    ENDIF
 
    oBrowse := TBrowseDB(nTop, nLeft, nBottom, nRight)
-   oBrowse:headSep   := iif(HB_ISSTRING(xHeadingSeparators), xHeadingSeparators, hb_UTF8ToStrBox("═╤═"))
-   oBrowse:colSep    := iif(HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox(" │ "))
+   oBrowse:headSep   := IIf(HB_ISSTRING(xHeadingSeparators), xHeadingSeparators, hb_UTF8ToStrBox("═╤═"))
+   oBrowse:colSep    := IIf(HB_ISSTRING(xColumnSeparators), xColumnSeparators, hb_UTF8ToStrBox(" │ "))
    oBrowse:footSep   := hb_defaultValue(xFootingSeparators, "")
    oBrowse:skipBlock := {|nRecs|Skipped(nRecs, lAppend)}
    oBrowse:autoLite  := .F.  // Set to .F. just like in CA-Cl*pper. [vszakats]
@@ -143,7 +143,7 @@ FUNCTION dbEdit(nTop, nLeft, nBottom, nRight, acColumns, xUserFunc, xColumnSayPi
       // creating codeblocks which are able to _assign_ values, as dbEdit()
       // is a read-only function. [vszakats]
 
-      bBlock := iif(Type(cBlock) == "M", {||"  <Memo>  "}, hb_macroBlock(cBlock))
+      bBlock := IIf(Type(cBlock) == "M", {||"  <Memo>  "}, hb_macroBlock(cBlock))
 
       DO CASE
       CASE HB_ISARRAY(xColumnHeaders) .AND. Len(xColumnHeaders) >= nPos .AND. HB_ISSTRING(xColumnHeaders[nPos])
@@ -293,10 +293,10 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
    LOCAL nPrevRecNo
    LOCAL nAction
    LOCAL nMode := ;
-      iif(nKey != 0,                  DE_EXCEPT,    ;
-      iif(!lAppend .AND. IsDbEmpty(), DE_EMPTY,     ;
-      iif(oBrowse:hitBottom,          DE_HITBOTTOM, ;
-      iif(oBrowse:hitTop,             DE_HITTOP, DE_IDLE))))
+      IIf(nKey != 0,                  DE_EXCEPT,    ;
+      IIf(!lAppend .AND. IsDbEmpty(), DE_EMPTY,     ;
+      IIf(oBrowse:hitBottom,          DE_HITBOTTOM, ;
+      IIf(oBrowse:hitTop,             DE_HITTOP, DE_IDLE))))
 
    oBrowse:forceStable()
 
@@ -305,11 +305,11 @@ STATIC FUNCTION CallUser(oBrowse, xUserFunc, nKey, lAppend, lFlag)
    // NOTE: CA-Cl*pper won't check the type of the return value here,
    //       and will crash if it's a non-NIL, non-numeric type. We're
    //       replicating this behavior.
-   nAction := iif(HB_ISEVALITEM(xUserFunc), ;
+   nAction := IIf(HB_ISEVALITEM(xUserFunc), ;
                                  Eval(xUserFunc, nMode, oBrowse:colPos), ;
-              iif(HB_ISSTRING(xUserFunc) .AND. !Empty(xUserFunc), ;
+              IIf(HB_ISSTRING(xUserFunc) .AND. !Empty(xUserFunc), ;
                                  &xUserFunc(nMode, oBrowse:colPos), ;  // NOTE: Macro operator!
-              iif(nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT)))
+              IIf(nKey == K_ENTER .OR. nKey == K_ESC, DE_ABORT, DE_CONT)))
 
    IF !lAppend .AND. Eof() .AND. !IsDbEmpty()
       dbSkip(-1)

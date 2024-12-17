@@ -70,7 +70,7 @@ PROCEDURE __Dir(cFileMask)
       AEval(Directory(hb_FNameMerge(Set(_SET_DEFAULT), "*", ".dbf")), {|aDirEntry|PutDbf(aDirEntry)})
    ELSE
 
-      hb_FNameSplit(iif(Set(_SET_TRIMFILENAME), AllTrim(cFileMask), cFileMask), @cPath, @cName, @cExt)
+      hb_FNameSplit(IIf(Set(_SET_TRIMFILENAME), AllTrim(cFileMask), cFileMask), @cPath, @cName, @cExt)
       IF Empty(cPath)
          cPath := Set(_SET_DEFAULT)
       ENDIF

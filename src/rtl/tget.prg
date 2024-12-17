@@ -261,7 +261,7 @@ METHOD Get:display()
    ENDIF
 
    ::nMaxLen := Len(cBuffer)
-   ::nDispLen := iif(::nPicLen == NIL, ::nMaxLen, ::nPicLen)
+   ::nDispLen := IIf(::nPicLen == NIL, ::nMaxLen, ::nPicLen)
 
    IF ::cType == "N" .AND. ::hasFocus .AND. !::lMinusPrinted .AND. ;
       ::decPos != 0 .AND. ::lMinus2 .AND. ;
@@ -320,8 +320,8 @@ METHOD Get:display()
    IF !::lSuppDisplay .OR. nDispPos != ::nOldPos
 
       hb_DispOutAt(::nRow, ::nCol, ;
-                   iif(::lHideInput, PadR(Replicate(Left(::cStyle, 1), Len(RTrim(cBuffer))), ::nDispLen), SubStr(cBuffer, nDispPos, ::nDispLen)), ;
-                   hb_ColorIndex(::cColorSpec, iif(::hasFocus, GET_CLR_ENHANCED, GET_CLR_UNSELECTED)))
+                   IIf(::lHideInput, PadR(Replicate(Left(::cStyle, 1), Len(RTrim(cBuffer))), ::nDispLen), SubStr(cBuffer, nDispPos, ::nDispLen)), ;
+                   hb_ColorIndex(::cColorSpec, IIf(::hasFocus, GET_CLR_ENHANCED, GET_CLR_UNSELECTED)))
 
       nRowPos := ::nRow
       nColPos := ::nCol + Min(::nDispLen, Len(cBuffer))
@@ -467,7 +467,7 @@ METHOD Get:setFocus()
       ::lMinus        := .F.
 
       IF ::cType == "N"
-         ::decPos := At(iif("E" $ ::cPicFunc, ",", "."), ::cBuffer)
+         ::decPos := At(IIf("E" $ ::cPicFunc, ",", "."), ::cBuffer)
          IF ::decPos == 0
             ::decPos := Len(::cBuffer) + 1
          ENDIF
@@ -714,7 +714,7 @@ METHOD Get:wordLeft()
       ELSE
          ::typeOut := .F.
 
-         nPos := iif(SubStr(::cBuffer, ::nPos, 1) == " ", ::nPos, ::nPos - 1)
+         nPos := IIf(SubStr(::cBuffer, ::nPos, 1) == " ", ::nPos, ::nPos - 1)
 
          DO WHILE nPos > 1 .AND. SubStr(::cBuffer, nPos, 1) == " "
             nPos--
@@ -723,7 +723,7 @@ METHOD Get:wordLeft()
             nPos--
          ENDDO
 
-         ::pos := iif(nPos > 1, nPos + 1, 1)
+         ::pos := IIf(nPos > 1, nPos + 1, 1)
 
          ::lSuppDisplay := .T.
          ::display()
@@ -911,12 +911,12 @@ METHOD Get:setColorSpec(cColorSpec)
 
 #ifdef HB_COMPAT_C53
       ::cColorSpec := hb_NToColor(nClrUns := Max(hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_UNSELECTED)), 0)) + ;
-                      "," + hb_NToColor(iif((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_ENHANCED))) != -1, nClrOth, nClrUns)) + ;
-                      "," + hb_NToColor(iif((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_CAPTION))) != -1, nClrOth, nClrUns)) + ;
-                      "," + hb_NToColor(iif((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_ACCEL))) != -1, nClrOth, nClrUns))
+                      "," + hb_NToColor(IIf((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_ENHANCED))) != -1, nClrOth, nClrUns)) + ;
+                      "," + hb_NToColor(IIf((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_CAPTION))) != -1, nClrOth, nClrUns)) + ;
+                      "," + hb_NToColor(IIf((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_ACCEL))) != -1, nClrOth, nClrUns))
 #else
       ::cColorSpec := hb_NToColor(nClrUns := Max(hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_UNSELECTED)), 0)) + ;
-                      "," + hb_NToColor(iif((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_ENHANCED))) != -1, nClrOth, nClrUns))
+                      "," + hb_NToColor(IIf((nClrOth := hb_ColorToN(hb_ColorIndex(cColorSpec, GET_CLR_ENHANCED))) != -1, nClrOth, nClrUns))
 #endif
 
    /* NOTE: CA-Cl*pper oddity. [vszakats] */
@@ -962,7 +962,7 @@ METHOD Get:setPos(nPos)
          DO CASE
          CASE nPos > ::nMaxLen
 
-            ::nPos := iif(::nMaxLen == 0, 1, ::nMaxLen)
+            ::nPos := IIf(::nMaxLen == 0, 1, ::nMaxLen)
             ::typeOut := .T.
 
          CASE nPos > 0
@@ -1173,9 +1173,9 @@ METHOD Get:PutMask(xValue, lEdit)
    ENDIF
 
    cBuffer := Transform(xValue, ;
-                        iif(Empty(cPicFunc), ;
-                            iif(::lPicBlankZero .AND. !::hasFocus, "@Z ", ""), ;
-                            cPicFunc + iif(::lPicBlankZero .AND. !::hasFocus, "Z", "") + " ") + ;
+                        IIf(Empty(cPicFunc), ;
+                            IIf(::lPicBlankZero .AND. !::hasFocus, "@Z ", ""), ;
+                            cPicFunc + IIf(::lPicBlankZero .AND. !::hasFocus, "Z", "") + " ") + ;
                         cPicMask)
 
    IF ::cType == "N"
@@ -1198,7 +1198,7 @@ METHOD Get:PutMask(xValue, lEdit)
          cChar := SubStr(cPicMask, nFor, 1)
          IF cChar $ ",." .AND. SubStr(cBuffer, nFor, 1) $ ",." // " " FIXME
             IF "E" $ cPicFunc
-               cChar := iif(cChar == ",", ".", ",")
+               cChar := IIf(cChar == ",", ".", ",")
             ENDIF
             cBuffer := Stuff(cBuffer, nFor, 1, cChar)
          ENDIF
@@ -1367,7 +1367,7 @@ METHOD Get:unTransform()
    RETURN xValue
 
 METHOD Get:type()
-   RETURN ::cType := ValType(iif(::hasFocus, ::xVarGet, ::varGet()))
+   RETURN ::cType := ValType(IIf(::hasFocus, ::xVarGet, ::varGet()))
 
 /* The METHOD Block and VAR bBlock allow to replace the
  * property Block for a function to control the content and
@@ -1445,7 +1445,7 @@ METHOD Get:reform()
 
    IF ::hasFocus
       ::cBuffer := ::PutMask(::unTransform(), .F.)
-      ::nDispLen := iif(::nPicLen == NIL, ::nMaxLen, ::nPicLen) // ?
+      ::nDispLen := IIf(::nPicLen == NIL, ::nMaxLen, ::nPicLen) // ?
    ENDIF
 
    RETURN Self
@@ -1460,7 +1460,7 @@ METHOD Get:hitTest(nMRow, nMCol)
       RETURN ::oControl:hitTest(nMRow, nMCol)
    ELSE
       DO CASE
-      CASE nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + iif(::nDispLen == NIL, 0, ::nDispLen)
+      CASE nMRow == ::nRow .AND. nMCol >= ::nCol .AND. nMCol < ::nCol + IIf(::nDispLen == NIL, 0, ::nDispLen)
          RETURN HTCLIENT
       CASE nMRow == ::nCapRow .AND. nMCol >= ::nCapCol .AND. nMCol < ::nCapCol + Len(::cCaption) /* NOTE: C5.3 doesn't care about the shortcut key. */
          RETURN HTCAPTION
@@ -1795,7 +1795,7 @@ METHOD Get:getBuffer()
    RETURN ::cBuffer
 
 METHOD Get:setBuffer(cBuffer)
-   RETURN iif(::hasFocus, ::cBuffer := cBuffer, cBuffer)
+   RETURN IIf(::hasFocus, ::cBuffer := cBuffer, cBuffer)
 
 /* NOTE: In contrary to CA-Cl*pper docs, this var is assignable. [vszakats] */
 
@@ -1805,7 +1805,7 @@ METHOD Get:getChanged()
 METHOD Get:setChanged(lChanged)
 
    IF HB_ISLOGICAL(lChanged)
-      RETURN iif(::hasFocus, ::lChanged := lChanged, lChanged)
+      RETURN IIf(::hasFocus, ::lChanged := lChanged, lChanged)
    ENDIF
 
    RETURN .F.
@@ -1816,7 +1816,7 @@ METHOD Get:getClear()
 METHOD Get:setClear(lClear)
 
    IF HB_ISLOGICAL(lClear)
-      RETURN iif(::hasFocus, ::lClear := lClear, lClear)
+      RETURN IIf(::hasFocus, ::lClear := lClear, lClear)
    ENDIF
 
    RETURN .F.
@@ -1827,7 +1827,7 @@ METHOD Get:getMinus()
 METHOD Get:setMinus(lMinus)
 
    IF HB_ISLOGICAL(lMinus)
-      RETURN iif(::hasFocus, ::lMinus := lMinus, lMinus)
+      RETURN IIf(::hasFocus, ::lMinus := lMinus, lMinus)
    ENDIF
 
    RETURN .F.
@@ -1839,7 +1839,7 @@ METHOD Get:getRow()
    RETURN ::nRow
 
 METHOD Get:setRow(nRow)
-   RETURN ::nRow := iif(HB_ISNUMERIC(nRow), Int(nRow), 0)
+   RETURN ::nRow := IIf(HB_ISNUMERIC(nRow), Int(nRow), 0)
 
 /* NOTE: CA-Cl*pper has a bug where negative nCol value will be translated to 16bit unsigned int,
          so the behaviour will be different in this case. [vszakats] */
@@ -1848,7 +1848,7 @@ METHOD Get:getCol()
    RETURN ::nCol
 
 METHOD Get:setCol(nCol)
-   RETURN ::nCol := iif(HB_ISNUMERIC(nCol), Int(nCol), 0)
+   RETURN ::nCol := IIf(HB_ISNUMERIC(nCol), Int(nCol), 0)
 
 METHOD Get:name(cName)
 
@@ -1914,24 +1914,24 @@ METHOD Get:Init(nRow, nCol, bVarBlock, cVarName, cPicture, cColorSpec)
       nRow := Row()
    ENDIF
    IF nCol == NIL
-      nCol := Col() + iif(Set(_SET_DELIMITERS), 1, 0)
+      nCol := Col() + IIf(Set(_SET_DELIMITERS), 1, 0)
    ENDIF
    __defaultNIL(@cVarName, "")
    IF bVarBlock == NIL
-      bVarBlock := iif(HB_ISSTRING(cVarName), MemVarBlock(cVarName), NIL)
+      bVarBlock := IIf(HB_ISSTRING(cVarName), MemVarBlock(cVarName), NIL)
    ENDIF
    IF cColorSpec == NIL
       cColorSpec := SetColor()
 #ifdef HB_COMPAT_C53
       cColorSpec := ;
-         hb_ColorIndex(cColorSpec, iif(Set(_SET_INTENSITY), CLR_UNSELECTED, CLR_STANDARD)) + "," + ;
-         hb_ColorIndex(cColorSpec, iif(Set(_SET_INTENSITY), CLR_ENHANCED, CLR_STANDARD)) + "," + ;
+         hb_ColorIndex(cColorSpec, IIf(Set(_SET_INTENSITY), CLR_UNSELECTED, CLR_STANDARD)) + "," + ;
+         hb_ColorIndex(cColorSpec, IIf(Set(_SET_INTENSITY), CLR_ENHANCED, CLR_STANDARD)) + "," + ;
          hb_ColorIndex(cColorSpec, CLR_STANDARD) + "," + ;
-         iif(IsDefColor(), iif(Set(_SET_INTENSITY), "W+/N", "W/N"), hb_ColorIndex(cColorSpec, iif(Set(_SET_INTENSITY), CLR_BACKGROUND, CLR_STANDARD)))
+         IIf(IsDefColor(), IIf(Set(_SET_INTENSITY), "W+/N", "W/N"), hb_ColorIndex(cColorSpec, IIf(Set(_SET_INTENSITY), CLR_BACKGROUND, CLR_STANDARD)))
 #else
       cColorSpec := ;
-         hb_ColorIndex(cColorSpec, iif(Set(_SET_INTENSITY), CLR_UNSELECTED, CLR_STANDARD)) + "," + ;
-         hb_ColorIndex(cColorSpec, iif(Set(_SET_INTENSITY), CLR_ENHANCED, CLR_STANDARD))
+         hb_ColorIndex(cColorSpec, IIf(Set(_SET_INTENSITY), CLR_UNSELECTED, CLR_STANDARD)) + "," + ;
+         hb_ColorIndex(cColorSpec, IIf(Set(_SET_INTENSITY), CLR_ENHANCED, CLR_STANDARD))
 #endif
    ENDIF
 

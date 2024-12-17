@@ -244,7 +244,7 @@ METHOD HBLabelForm:ExecuteLabel()
 
    // Add aBuffer to ::aBandToPrint
    FOR nField := 1 TO Len(::aLabelData[LBL_FIELDS])
-      ::aBandToPrint[nField] += iif(aBuffer[nField] == NIL, ::cBlank, aBuffer[nField])
+      ::aBandToPrint[nField] += IIf(aBuffer[nField] == NIL, ::cBlank, aBuffer[nField])
    NEXT
 
    IF ::nCurrentCol == ::aLabelData[LBL_ACROSS]

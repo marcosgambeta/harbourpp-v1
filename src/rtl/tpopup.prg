@@ -249,10 +249,10 @@ METHOD PopupMenu:display()
                cCaption := Stuff(cCaption, nHotKeyPos, 1, "")
             ENDIF
 
-            hb_DispOutAt(nTop, nLeft, cCaption, hb_ColorIndex(::cColorSpec, iif(item:__enumIndex() == nCurrent, 1, iif(item:enabled, 0, 4))))
+            hb_DispOutAt(nTop, nLeft, cCaption, hb_ColorIndex(::cColorSpec, IIf(item:__enumIndex() == nCurrent, 1, IIf(item:enabled, 0, 4))))
 
             IF item:enabled .AND. nHotKeyPos != 0
-               hb_DispOutAt(nTop, nLeft + nHotKeyPos - 1, SubStr(cCaption, nHotKeyPos, 1), hb_ColorIndex(::cColorSpec, iif(item:__enumIndex() == nCurrent, 3, 2)))
+               hb_DispOutAt(nTop, nLeft + nHotKeyPos - 1, SubStr(cCaption, nHotKeyPos, 1), hb_ColorIndex(::cColorSpec, IIf(item:__enumIndex() == nCurrent, 3, 2)))
             ENDIF
          ENDIF
       NEXT
@@ -301,7 +301,7 @@ METHOD PopupMenu:getFirst()
    RETURN 0
 
 METHOD PopupMenu:getItem(nPos)
-   RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
+   RETURN IIf(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
 METHOD PopupMenu:getLast()
 
@@ -439,9 +439,9 @@ METHOD PopupMenu:open()
       nRight := nLeft + ::nWidth + 1
    ENDIF
 
-   IF nRight < 0 .OR. nRight > iif(::lShadowed, MaxCol() - 2, MaxCol())
-      ::nLeft := MaxCol() - ::nWidth - iif(::lShadowed, 3, 1)
-      ::nRight := iif(::lShadowed, MaxCol() - 2, MaxCol())
+   IF nRight < 0 .OR. nRight > IIf(::lShadowed, MaxCol() - 2, MaxCol())
+      ::nLeft := MaxCol() - ::nWidth - IIf(::lShadowed, 3, 1)
+      ::nRight := IIf(::lShadowed, MaxCol() - 2, MaxCol())
       nLeft := ::nLeft
       nRight := ::nRight
       nTop := ::nTop
@@ -521,7 +521,7 @@ METHOD PopupMenu:bottom(nBottom)
    ENDIF
 #else
    IF PCount() > 0
-      ::nBottom := iif(nBottom == NIL, NIL, __eInstVar53(Self, "BOTTOM", nBottom, "N", 1001))
+      ::nBottom := IIf(nBottom == NIL, NIL, __eInstVar53(Self, "BOTTOM", nBottom, "N", 1001))
    ENDIF
 #endif
 
@@ -550,7 +550,7 @@ METHOD PopupMenu:left(nLeft)
    ENDIF
 #else
    IF PCount() > 0
-      ::nLeft := iif(nLeft == NIL, NIL, __eInstVar53(Self, "LEFT", nLeft, "N", 1001))
+      ::nLeft := IIf(nLeft == NIL, NIL, __eInstVar53(Self, "LEFT", nLeft, "N", 1001))
    ENDIF
 #endif
 
@@ -564,7 +564,7 @@ METHOD PopupMenu:right(nRight)
    ENDIF
 #else
    IF PCount() > 0
-      ::nRight := iif(nRight == NIL, NIL, __eInstVar53(Self, "RIGHT", nRight, "N", 1001))
+      ::nRight := IIf(nRight == NIL, NIL, __eInstVar53(Self, "RIGHT", nRight, "N", 1001))
    ENDIF
 #endif
 
@@ -578,7 +578,7 @@ METHOD PopupMenu:top(nTop)
    ENDIF
 #else
    IF PCount() > 0
-      ::nTop := iif(nTop == NIL, NIL, __eInstVar53(Self, "TOP", nTop, "N", 1001))
+      ::nTop := IIf(nTop == NIL, NIL, __eInstVar53(Self, "TOP", nTop, "N", 1001))
    ENDIF
 #endif
 

@@ -121,7 +121,7 @@ METHOD RadioButtn:select(lState)
 
    LOCAL lOldState := ::lBuffer
 
-   ::lBuffer := iif(HB_ISLOGICAL(lState), lState, !::lBuffer)
+   ::lBuffer := IIf(HB_ISLOGICAL(lState), lState, !::lBuffer)
 
    IF lOldState != ::lBuffer .AND. HB_ISEVALITEM(::bSBlock)
 
@@ -153,8 +153,8 @@ METHOD RadioButtn:display()
 
    DispBegin()
 
-   cColor := iif(::lBuffer, hb_ColorIndex(::cColorSpec, 3), hb_ColorIndex(::cColorSpec, 1))
-   hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1) + iif(::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1)) + Right(cStyle, 1), cColor)
+   cColor := IIf(::lBuffer, hb_ColorIndex(::cColorSpec, 3), hb_ColorIndex(::cColorSpec, 1))
+   hb_DispOutAt(::nRow, ::nCol, Left(cStyle, 1) + IIf(::lBuffer, SubStr(cStyle, 2, 1), SubStr(cStyle, 3, 1)) + Right(cStyle, 1), cColor)
 
    IF !Empty(cOldCaption := ::cCaption)
 
@@ -168,7 +168,7 @@ METHOD RadioButtn:display()
       hb_DispOutAt(::nCapRow, ::nCapCol, cOldCaption, hb_ColorIndex(::cColorSpec, 4))
 
       IF nPos != 0
-         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cOldCaption, nPos, 1), iif(::lHasfocus, hb_ColorIndex(::cColorSpec, 6), hb_ColorIndex(::cColorSpec, 5)))
+         hb_DispOutAt(::nCapRow, ::nCapCol + nPos - 1, SubStr(cOldCaption, nPos, 1), IIf(::lHasfocus, hb_ColorIndex(::cColorSpec, 6), hb_ColorIndex(::cColorSpec, 5)))
       ENDIF
    ENDIF
 
@@ -226,10 +226,10 @@ METHOD RadioButtn:buffer()
 METHOD RadioButtn:data(cData)
 
    IF PCount() > 0
-      ::cData := iif(cData == NIL, NIL, __eInstVar53(Self, "DATA", cData, "C", 1001))
+      ::cData := IIf(cData == NIL, NIL, __eInstVar53(Self, "DATA", cData, "C", 1001))
    ENDIF
 
-   RETURN iif(::cData == NIL, __Caption(::Caption), ::cData)
+   RETURN IIf(::cData == NIL, __Caption(::Caption), ::cData)
 
 METHOD RadioButtn:capCol(nCapCol)
 
@@ -274,7 +274,7 @@ METHOD RadioButtn:colorSpec(cColorSpec)
 METHOD RadioButtn:fBlock(bFBlock)
 
    IF PCount() > 0
-      ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
+      ::bFBlock := IIf(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
    RETURN ::bFBlock
@@ -293,7 +293,7 @@ METHOD RadioButtn:row(nRow)
 METHOD RadioButtn:sBlock(bSBlock)
 
    IF PCount() > 0
-      ::bSBlock := iif(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
+      ::bSBlock := IIf(bSBlock == NIL, NIL, __eInstVar53(Self, "SBLOCK", bSBlock, "B", 1001))
    ENDIF
 
    RETURN ::bSBlock

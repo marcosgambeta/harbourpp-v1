@@ -323,7 +323,7 @@ METHOD TBrowse:init(nTop, nLeft, nBottom, nRight)
    RETURN Self
 
 STATIC FUNCTION _SKIP_RESULT(xResult)
-   RETURN iif(HB_ISNUMERIC(xResult), Int(xResult), 0)
+   RETURN IIf(HB_ISNUMERIC(xResult), Int(xResult), 0)
 
 
 STATIC PROCEDURE _DISP_FHSEP(nRow, nType, cColor, aColData)
@@ -415,7 +415,7 @@ STATIC PROCEDURE _DISP_FHNAME(nRow, nHeight, nLeft, nRight, nType, nColor, aColo
          FOR nPos := 1 TO nHeight
             hb_DispOutAt(nRow + nPos - 1, nCol, ;
                           PadR(hb_tokenGet(cName, nPos, _TBR_CHR_LINEDELIMITER), nWidth), ;
-                          iif(aCol[_TBCI_DEFCOLOR][nColor] == 0, "N/N", aColors[aCol[_TBCI_DEFCOLOR][nColor]]))
+                          IIf(aCol[_TBCI_DEFCOLOR][nColor] == 0, "N/N", aColors[aCol[_TBCI_DEFCOLOR][nColor]]))
          NEXT
       ENDIF
    NEXT
@@ -436,7 +436,7 @@ METHOD TBrowse:dispFrames()
    ENDIF
 
    IF ::nHeadHeight > 0
-      _DISP_FHNAME(::n_Top, ::nHeadHeight, ::n_Left, ::n_Right, _TBCI_HEADING, iif(::lHeadSep, _TBC_CLR_HEADING, _TBC_CLR_STANDARD), ::aColors, ::aColData)
+      _DISP_FHNAME(::n_Top, ::nHeadHeight, ::n_Left, ::n_Right, _TBCI_HEADING, IIf(::lHeadSep, _TBC_CLR_HEADING, _TBC_CLR_STANDARD), ::aColors, ::aColData)
    ENDIF
    IF ::lHeadSep
       _DISP_FHSEP(::n_Top + ::nHeadHeight, _TBCI_HEADSEP, ::colorValue(_TBC_CLR_STANDARD), ::aColData)
@@ -445,7 +445,7 @@ METHOD TBrowse:dispFrames()
       _DISP_FHSEP(::n_Bottom - ::nFootHeight, _TBCI_FOOTSEP, ::colorValue(_TBC_CLR_STANDARD), ::aColData)
    ENDIF
    IF ::nFootHeight > 0
-      _DISP_FHNAME(::n_Bottom - ::nFootHeight + 1, ::nFootHeight, ::n_Left, ::n_Right, _TBCI_FOOTING, iif(::lFootSep, _TBC_CLR_FOOTING, _TBC_CLR_STANDARD), ::aColors, ::aColData)
+      _DISP_FHNAME(::n_Bottom - ::nFootHeight + 1, ::nFootHeight, ::n_Left, ::n_Right, _TBCI_FOOTING, IIf(::lFootSep, _TBC_CLR_FOOTING, _TBC_CLR_STANDARD), ::aColors, ::aColData)
    ENDIF
 
    DispEnd()
@@ -470,7 +470,7 @@ METHOD TBrowse:dispRow(nRow)
 
       DispBegin()
 
-      nRowPos := ::n_Top + ::nHeadHeight + iif(::lHeadSep, 1, 0) + nRow - 1
+      nRowPos := ::n_Top + ::nHeadHeight + IIf(::lHeadSep, 1, 0) + nRow - 1
       cStdColor := ::colorValue(_TBC_CLR_STANDARD)
 
       hb_DispBox(nRowPos, ::n_Left, nRowPos, ::n_Right, Space(9), cStdColor)
@@ -554,8 +554,8 @@ METHOD TBrowse:scrollBuffer(nRows)
    IF nRows >= nRowCount .OR. nRows <= -nRowCount
       AFill(::aCellStatus, .F.)
    ELSE
-      hb_Scroll(::n_Top + ::nHeadHeight + iif(::lHeadSep, 1, 0), ::n_Left, ;
-                ::n_Bottom - ::nFootHeight - iif(::lFootSep, 1, 0), ::n_Right, ;
+      hb_Scroll(::n_Top + ::nHeadHeight + IIf(::lHeadSep, 1, 0), ::n_Left, ;
+                ::n_Bottom - ::nFootHeight - IIf(::lFootSep, 1, 0), ::n_Right, ;
                 nRows, NIL, ::colorValue(_TBC_CLR_STANDARD))
       IF nRows > 0
          DO WHILE --nRows >= 0
@@ -631,7 +631,7 @@ METHOD TBrowse:readRecord(nRow)
             cValue := Eval(oCol:block)
             aColor := _CELLCOLORS(aCol, cValue, nColors)
             IF ValType(cValue) $ "CMNDTL"
-               cValue := PadR(Transform(cValue, iif(HB_ISSTRING(oCol:picture), oCol:picture, NIL)), aCol[_TBCI_CELLWIDTH])
+               cValue := PadR(Transform(cValue, IIf(HB_ISSTRING(oCol:picture), oCol:picture, NIL)), aCol[_TBCI_CELLWIDTH])
             ELSE
                cValue := Space(aCol[_TBCI_CELLWIDTH])
             ENDIF
@@ -906,7 +906,7 @@ STATIC FUNCTION _DECODECOLORS(cColorSpec)
        * definitions and use a little bit different rules. [druzus]
        */
       IF nPos <= 2 .AND. hb_ColorToN(cColor) == -1
-         cColor := iif(nPos == 1, "W/N", "N/W")
+         cColor := IIf(nPos == 1, "W/N", "N/W")
       ENDIF
       AAdd(aColors, cColor)
    NEXT
@@ -999,7 +999,7 @@ METHOD TBrowse:setCursorPos()
       nCol >= 1 .AND. nCol <= ::colCount .AND. ;
       (aCol := ::aColData[nCol])[_TBCI_COLPOS] != NIL
 
-      ::n_Row := ::n_Top + ::nHeadHeight + iif(::lHeadSep, 0, -1) + nRow
+      ::n_Row := ::n_Top + ::nHeadHeight + IIf(::lHeadSep, 0, -1) + nRow
       ::n_Col := ::aColData[nCol][_TBCI_COLPOS] + ::aColData[nCol][_TBCI_CELLPOS]
       IF aCol[_TBCI_SEPWIDTH] > 0
          DO WHILE --nCol >= 1
@@ -1131,7 +1131,7 @@ METHOD TBrowse:right()
 METHOD TBrowse:home()
 
    ::setUnstable()
-   ::nColPos := iif(::nLeftVisible < ::nRightVisible, ::nLeftVisible, ::nRightVisible)
+   ::nColPos := IIf(::nLeftVisible < ::nRightVisible, ::nLeftVisible, ::nRightVisible)
    RETURN Self
 
 
@@ -1288,7 +1288,7 @@ METHOD TBrowse:doConfigure()
        */
       xValue := Eval(oCol:block)
       cType  := ValType(xValue)
-      nWidth := iif(cType $ "CMNDTL", Len(Transform(xValue, iif(HB_ISSTRING(oCol:picture), oCol:picture, NIL))), 0)
+      nWidth := IIf(cType $ "CMNDTL", Len(Transform(xValue, IIf(HB_ISSTRING(oCol:picture), oCol:picture, NIL))), 0)
       cColSep := oCol:colSep
       IF cColSep == NIL
          cColSep := ::cColSep
@@ -1623,7 +1623,7 @@ STATIC FUNCTION _SETCOLUMNS(nFrom, nTo, nStep, aColData, nFirst, nWidth, lFirst)
       NEXT
    ENDIF
 
-   RETURN iif(nLast == 0, nFrom - nStep, nLast)
+   RETURN IIf(nLast == 0, nFrom - nStep, nLast)
 
 
 STATIC PROCEDURE _SETVISIBLE(aColData, nWidth, nFrozen, nLeft, nRight)
@@ -1734,7 +1734,7 @@ METHOD TBrowse:setVisible()
          ENDIF
       ELSEIF ::nColPos <= ::nFrozen .AND. ::nLeftVisible == 0
          nCol := _NEXTCOLUMN(::aColData, ::nFrozen + 1)
-         ::nColPos := iif(nCol == 0, nColumns, nCol)
+         ::nColPos := IIf(nCol == 0, nColumns, nCol)
       ENDIF
 
       _SETVISIBLE(::aColData, @nWidth, @::nFrozen, @::nLeftVisible, @::nRightVisible)
@@ -1751,7 +1751,7 @@ METHOD TBrowse:setVisible()
        */
       IF ::nColPos >= 1 .AND. ::aColData[::nColPos][_TBCI_CELLWIDTH] <= 0
          nCol := _PREVCOLUMN(::aColData, ::nColPos - 1)
-         ::nColPos := iif(nCol == 0, _NEXTCOLUMN(::aColData, ::nColPos + 1), nCol)
+         ::nColPos := IIf(nCol == 0, _NEXTCOLUMN(::aColData, ::nColPos + 1), nCol)
       ENDIF
 #endif
 
@@ -1762,7 +1762,7 @@ METHOD TBrowse:setVisible()
          aCol := ::aColData[nCol]
          IF aCol[_TBCI_CELLWIDTH] > 0 .AND. (nCol <= ::nFrozen .OR. nCol >= ::nLeftVisible)
 
-            nFrozen := iif(nCol == ::nLeftVisible, Int(nWidth / 2), 0)
+            nFrozen := IIf(nCol == ::nLeftVisible, Int(nWidth / 2), 0)
             nColPos := nLeft += nFrozen
             nLeft += aCol[_TBCI_COLWIDTH]
             IF lFirst
@@ -1770,7 +1770,7 @@ METHOD TBrowse:setVisible()
             ELSE
                nLeft += aCol[_TBCI_SEPWIDTH]
             ENDIF
-            nLast := iif(nCol == ::nRightVisible, _TBR_COORD(::n_Right) - nLeft + 1, 0)
+            nLast := IIf(nCol == ::nRightVisible, _TBR_COORD(::n_Right) - nLeft + 1, 0)
 
             IF aCol[_TBCI_COLPOS] != nColPos .OR. aCol[_TBCI_FROZENSPACE] != nFrozen .OR. aCol[_TBCI_LASTSPACE] != nLast
 
@@ -1938,10 +1938,10 @@ METHOD TBrowse:rowCount()
    ENDIF
 
    nRows := _TBR_COORD(::n_Bottom) - _TBR_COORD(::n_Top) + 1 - ;
-            ::nHeadHeight - iif(::lHeadSep, 1, 0) - ;
-            ::nFootHeight - iif(::lFootSep, 1, 0)
+            ::nHeadHeight - IIf(::lHeadSep, 1, 0) - ;
+            ::nFootHeight - IIf(::lFootSep, 1, 0)
 
-   RETURN iif(nRows > 0, nRows, 0)
+   RETURN IIf(nRows > 0, nRows, 0)
 
 
 /* NOTE: CA-Cl*pper has a bug where negative nRowPos value will be translated
@@ -1954,7 +1954,7 @@ METHOD TBrowse:setRowPos(nRowPos)
 
    IF HB_ISNUMERIC(nRowPos)
       nRow := Int(nRowPos)
-      ::nRowPos := iif(nRow > nRowCount, nRowCount, iif(nRow < 1, 1, nRow))
+      ::nRowPos := IIf(nRow > nRowCount, nRowCount, IIf(nRow < 1, 1, nRow))
       RETURN nRow
    ELSE
       ::nRowPos := Min(nRowCount, 1)
@@ -2200,7 +2200,7 @@ METHOD TBrowse:getColumn(nColumn)
 #ifdef HB_CLP_STRICT
    RETURN ::columns[nColumn]
 #else
-   RETURN iif(nColumn >= 1 .AND. nColumn <= ::colCount, ::columns[nColumn], NIL)
+   RETURN IIf(nColumn >= 1 .AND. nColumn <= ::colCount, ::columns[nColumn], NIL)
 #endif
 
 
@@ -2433,7 +2433,7 @@ METHOD TBrowse:hitTest(mRow, mCol)
       ELSE
          nRet := HTCELL
 #ifdef HB_BRW_STATICMOUSE
-         ::mRowPos := mRow - nTop - ::nHeadHeight - iif(::lHeadSep, 1, 0)
+         ::mRowPos := mRow - nTop - ::nHeadHeight - IIf(::lHeadSep, 1, 0)
 #endif
          lFirst := .T.
          nCol := 1
@@ -2488,10 +2488,10 @@ STATIC PROCEDURE _mBrwPos(oBrw, mRow, mCol)
       mCol >= (nLeft   := _TBR_COORD(oBrw:n_Left)) .AND. ;
       mCol <= (           _TBR_COORD(oBrw:n_Right))
 
-      IF mRow < nTop + oBrw:nHeadHeight + iif(oBrw:lHeadSep, 1, 0) .OR. mRow > nBottom - oBrw:nFootHeight - iif(oBrw:lFootSep, 1, 0)
+      IF mRow < nTop + oBrw:nHeadHeight + IIf(oBrw:lHeadSep, 1, 0) .OR. mRow > nBottom - oBrw:nFootHeight - IIf(oBrw:lFootSep, 1, 0)
          mRow := 0
       ELSE
-         mRow -= nTop + oBrw:nHeadHeight - iif(oBrw:lHeadSep, 0, 1)
+         mRow -= nTop + oBrw:nHeadHeight - IIf(oBrw:lHeadSep, 0, 1)
       ENDIF
 
       nPos := 0

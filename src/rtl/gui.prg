@@ -84,16 +84,16 @@ FUNCTION __Caption(cCaption)
 
    LOCAL nPos
 
-   RETURN iif((nPos := At("&", cCaption)) > 0, Stuff(cCaption, nPos, 1, ""), cCaption)
+   RETURN IIf((nPos := At("&", cCaption)) > 0, Stuff(cCaption, nPos, 1, ""), cCaption)
 
 FUNCTION __CapLength(cCaption)
 
    LOCAL nCaptionLen := Len(cCaption)
    LOCAL nPos
 
-   RETURN iif((nPos := At("&", cCaption)) > 0 .AND. nPos < nCaptionLen, nCaptionLen - 1, nCaptionLen)
+   RETURN IIf((nPos := At("&", cCaption)) > 0 .AND. nPos < nCaptionLen, nCaptionLen - 1, nCaptionLen)
 
 FUNCTION __CapMetrics(o)
-   RETURN __CapLength(o:caption) + iif(o:isPopup(), 3, 2)
+   RETURN __CapLength(o:caption) + IIf(o:isPopup(), 3, 2)
 
 #endif

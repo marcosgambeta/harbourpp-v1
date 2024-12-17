@@ -203,10 +203,10 @@ METHOD HBEditor:LoadFile(cFileName)
 
 METHOD HBEditor:LoadText(cText)
 
-   ::aText := Text2Array(cText, iif(::lWordWrap, ::nWordWrapCol, NIL), ::nTabWidth)
+   ::aText := Text2Array(cText, IIf(::lWordWrap, ::nWordWrapCol, NIL), ::nTabWidth)
    ::lDirty := .F.
 
-   RETURN iif(::nNumCols > 0, ::GoTo(1, 1), Self)
+   RETURN IIf(::nNumCols > 0, ::GoTo(1, 1), Self)
 
 // Saves file being edited, if there is no file name does nothing, returns .T. if OK
 METHOD HBEditor:SaveFile()
@@ -235,7 +235,7 @@ METHOD HBEditor:RemoveLine(nRow)
 
 // Return line n of text
 METHOD HBEditor:GetLine(nRow)
-   RETURN iif(nRow >= 1 .AND. nRow <= ::LineCount, ::aText[nRow]:cText, "")
+   RETURN IIf(nRow >= 1 .AND. nRow <= ::LineCount, ::aText[nRow]:cText, "")
 
 // Return text length of line n
 METHOD HBEditor:LineLen(nRow)
@@ -250,12 +250,12 @@ METHOD HBEditor:GetText(lSoftCR)
    LOCAL oLine
 
    cEOL := hb_eol()
-   cSoftCR := iif(::lWordWrap, iif(hb_defaultValue(lSoftCR, .F.), Chr(141) + Chr(10), ""), cEOL)
+   cSoftCR := IIf(::lWordWrap, IIf(hb_defaultValue(lSoftCR, .F.), Chr(141) + Chr(10), ""), cEOL)
    cText := ""
    FOR EACH oLine IN ::aText
       cText += oLine:cText
       IF !oLine:__enumIsLast()
-         cText += iif(oLine:lSoftCR, cSoftCR, cEOL)
+         cText += IIf(oLine:lSoftCR, cSoftCR, cEOL)
       ENDIF
    NEXT
 
@@ -478,13 +478,13 @@ METHOD HBEditor:Edit(nPassedKey)
       CASE (bKeyBlock := SetKey(nKeyStd)) != NIL
          Eval(bKeyBlock)
 
-      CASE !HB_ISNULL(cKey := iif(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
+      CASE !HB_ISNULL(cKey := IIf(nKeyStd == K_TAB .AND. Set(_SET_INSERT), Space(TabCount(::nTabWidth, ::nCol)), hb_keyChar(nKey)))
          ::lDirty := .T.
          oLine := ::aText[::nRow]
          IF (nPos := ::nCol - hb_ULen(oLine:cText) - 1) > 0
             oLine:cText += Space(nPos)
          ENDIF
-         oLine:cText := hb_UStuff(oLine:cText, ::nCol, iif(Set(_SET_INSERT), 0, 1), cKey)
+         oLine:cText := hb_UStuff(oLine:cText, ::nCol, IIf(Set(_SET_INSERT), 0, 1), cKey)
          ::nCol += hb_ULen(cKey)
          IF ::lWordWrap .AND. hb_ULen(oLine:cText) > ::nWordWrapCol
             ::ReformParagraph()
@@ -666,7 +666,7 @@ METHOD HBEditor:InsertState(lInsState)
 
    IF HB_ISLOGICAL(lInsState) .AND. ::lEditAllow
       Set(_SET_INSERT, lInsState)
-      SetCursor(iif(lInsState, SC_INSERT, SC_NORMAL))
+      SetCursor(IIf(lInsState, SC_INSERT, SC_NORMAL))
    ENDIF
 
    RETURN Self
@@ -734,7 +734,7 @@ STATIC FUNCTION Text2Array(cText, nWordWrapCol, nTabWidth)
    LOCAL aArray := {}
 
    hb_MLEval(cText, {|cLine, lSoftCR|AAdd(aArray, HBTextLine():New(cLine, lSoftCR))}, ;
-             iif(nWordWrapCol != NIL, nWordWrapCol + 1, 0xFFFF), nTabWidth, nWordWrapCol != NIL)
+             IIf(nWordWrapCol != NIL, nWordWrapCol + 1, 0xFFFF), nTabWidth, nWordWrapCol != NIL)
 
    IF Empty(aArray)
       AAdd(aArray, HBTextLine():New())

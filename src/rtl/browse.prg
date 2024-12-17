@@ -122,7 +122,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
                dbGoBottom()
             ELSE
                lAppend := .T.
-               SetCursor(iif(ReadInsert(), SC_INSERT, SC_NORMAL))
+               SetCursor(IIf(ReadInsert(), SC_INSERT, SC_NORMAL))
             ENDIF
             oBrw:Down()
             oBrw:ForceStable()
@@ -236,7 +236,7 @@ FUNCTION Browse(nTop, nLeft, nBottom, nRight)
 
       CASE K_INS
          IF lAppend
-            SetCursor(iif(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))
+            SetCursor(IIf(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))
          ENDIF
          EXIT
 
@@ -299,8 +299,8 @@ STATIC PROCEDURE StatLine(oBrw, lAppend)
       hb_DispOutAt(nTop, nRight - 40, "         ")
       hb_DispOutAt(nTop, nRight - 20, "                <new>")
    ELSE
-      hb_DispOutAt(nTop, nRight - 40, iif(Deleted(), "<Deleted>", "         "))
-      hb_DispOutAt(nTop, nRight - 20, PadR(hb_ntos(nRecNo) + "/" + hb_ntos(nLastRec), 16) + iif(oBrw:HitTop, "<bof>", "     "))
+      hb_DispOutAt(nTop, nRight - 40, IIf(Deleted(), "<Deleted>", "         "))
+      hb_DispOutAt(nTop, nRight - 20, PadR(hb_ntos(nRecNo) + "/" + hb_ntos(nLastRec), 16) + IIf(oBrw:HitTop, "<bof>", "     "))
    ENDIF
 
    RETURN
@@ -327,15 +327,15 @@ STATIC FUNCTION DoGet(oBrw, lAppend)
 
    lScore := Set(_SET_SCOREBOARD, .F.)
    lExit := Set(_SET_EXIT, .T.)
-   bIns := SetKey(K_INS, {||SetCursor(iif(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))})
-   nCursor := SetCursor(iif(ReadInsert(), SC_INSERT, SC_NORMAL))
+   bIns := SetKey(K_INS, {||SetCursor(IIf(ReadInsert(!ReadInsert()), SC_NORMAL, SC_INSERT))})
+   nCursor := SetCursor(IIf(ReadInsert(), SC_INSERT, SC_NORMAL))
    IF !Empty(cIndexKey := IndexKey(0))
       xKeyValue := Eval(bIndexKey := hb_macroBlock(cIndexKey))
    ENDIF
 
    oCol := oBrw:GetColumn(oBrw:ColPos)
    xValue := Eval(oCol:Block)
-   oGet := GetNew(Row(), Col(), {|xNewVal|iif(PCount() == 0, xValue, xValue := xNewVal)}, "mGetVar", NIL, oBrw:ColorSpec)
+   oGet := GetNew(Row(), Col(), {|xNewVal|IIf(PCount() == 0, xValue, xValue := xNewVal)}, "mGetVar", NIL, oBrw:ColorSpec)
    lSuccess := .F.
    IF ReadModal({oGet})
       IF lAppend .AND. RecNo() == LastRec() + 1
@@ -376,15 +376,15 @@ STATIC FUNCTION ExitKey(lAppend)
 
    SWITCH nKey := LastKey()
    CASE K_PGDN
-      RETURN iif(lAppend, 0, K_DOWN)
+      RETURN IIf(lAppend, 0, K_DOWN)
    CASE K_PGUP
-      RETURN iif(lAppend, 0, K_UP)
+      RETURN IIf(lAppend, 0, K_UP)
    CASE K_DOWN
    CASE K_UP
       RETURN nKey
    ENDSWITCH
 
-   RETURN iif(nKey == K_ENTER .OR. !(hb_keyChar(nKey) == ""), K_RIGHT, 0)
+   RETURN IIf(nKey == K_ENTER .OR. !(hb_keyChar(nKey) == ""), K_RIGHT, 0)
 
 STATIC PROCEDURE FreshOrder(oBrw)
 

@@ -138,7 +138,7 @@ METHOD HBMemoEditor:Edit()
 
          // Is it a configurable key?
          IF nKeyStd $ hConfigurableKeys
-            ::HandleUserKey(nKey, ::xDo(iif(::lDirty, ME_UNKEYX, ME_UNKEY)))
+            ::HandleUserKey(nKey, ::xDo(IIf(::lDirty, ME_UNKEYX, ME_UNKEY)))
          ELSE
             ::super:Edit(nKey)
          ENDIF
@@ -163,7 +163,7 @@ METHOD HBMemoEditor:KeyboardHook(nKey)
    IF ::UserFunctionIsValid() .AND. !::lCallKeyboardHook  // To avoid recursive calls in endless loop. [jarabal]
 
       ::lCallKeyboardHook := .T.
-      ::HandleUserKey(nKey, ::xDo(iif(::lDirty, ME_UNKEYX, ME_UNKEY)))
+      ::HandleUserKey(nKey, ::xDo(IIf(::lDirty, ME_UNKEYX, ME_UNKEY)))
       ::lCallKeyboardHook := .F.
 
    ELSEIF hb_keyStd(nKey) == K_ESC
@@ -299,9 +299,9 @@ METHOD HBMemoEditor:InsertState(lInsState)
 
    IF HB_ISLOGICAL(lInsState) .AND. ::lEditAllow
       Set(_SET_INSERT, lInsState)
-      SetCursor(iif(lInsState, SC_INSERT, SC_NORMAL))
+      SetCursor(IIf(lInsState, SC_INSERT, SC_NORMAL))
       IF Set(_SET_SCOREBOARD)
-         hb_DispOutAt(0, MaxCol() - 19, iif(lInsState, "<insert>", "        "))
+         hb_DispOutAt(0, MaxCol() - 19, IIf(lInsState, "<insert>", "        "))
       ENDIF
    ENDIF
 

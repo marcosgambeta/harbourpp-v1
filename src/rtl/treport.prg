@@ -228,8 +228,8 @@ METHOD Init(cFrmName AS STRING, ;
 
    // Set output devices
 
-   lPrintOn   := iif(lPrinter, Set(_SET_PRINTER, lPrinter), Set(_SET_PRINTER))
-   lConsoleOn := iif(lNoConsole, Set(_SET_CONSOLE, .F.), Set(_SET_CONSOLE))
+   lPrintOn   := IIf(lPrinter, Set(_SET_PRINTER, lPrinter), Set(_SET_PRINTER))
+   lConsoleOn := IIf(lNoConsole, Set(_SET_CONSOLE, .F.), Set(_SET_CONSOLE))
 
    ::lFormFeeds := lPrinter
 
@@ -327,7 +327,7 @@ METHOD Init(cFrmName AS STRING, ;
          ENDIF
 
          // Print the first line
-         ::PrintIt(Space(::aReportData[RPT_LMARGIN]) + __natMsg(iif(nGroup == 1, _RFRM_SUBTOTAL, _RFRM_SUBSUBTOTAL)))
+         ::PrintIt(Space(::aReportData[RPT_LMARGIN]) + __natMsg(IIf(nGroup == 1, _RFRM_SUBTOTAL, _RFRM_SUBSUBTOTAL)))
 
          // Print the second line
          QQOut(Space(::aReportData[RPT_LMARGIN]))
@@ -590,7 +590,7 @@ METHOD ExecuteReport() CLASS HBReportForm
          IF lGroupChanged .OR. MakeAStr(Eval(::aReportData[RPT_GROUPS][nGroup][RGT_EXP]), ;
             ::aReportData[RPT_GROUPS][nGroup][RGT_TYPE]) != ::aGroupTotals[nGroup]
 
-            AAdd(aRecordHeader, __natMsg(iif(nGroup == 1, _RFRM_SUBTOTAL, _RFRM_SUBSUBTOTAL)))
+            AAdd(aRecordHeader, __natMsg(IIf(nGroup == 1, _RFRM_SUBTOTAL, _RFRM_SUBSUBTOTAL)))
             AAdd(aRecordHeader, "")
 
             // Cycle through the columns, adding either the group
@@ -656,7 +656,7 @@ METHOD ExecuteReport() CLASS HBReportForm
             ENDIF
          ENDIF
 
-         AAdd(aRecordHeader, iif(nGroup == 1, "** ", "* ") + ;
+         AAdd(aRecordHeader, IIf(nGroup == 1, "** ", "* ") + ;
             ::aReportData[RPT_GROUPS][nGroup][RGT_HEADER] + " " + ;
             MakeAStr(Eval(::aReportData[RPT_GROUPS][nGroup][RGT_EXP]), ::aReportData[RPT_GROUPS][nGroup][RGT_TYPE]))
       ENDIF
@@ -896,7 +896,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
 
             // Line spacing
             // Spacing is 1, 2, or 3
-            aReport[RPT_SPACING] := iif(hb_BSubStr(cParamsBuff, DBL_SPACE_OFFSET, 1) $ "YyTt", 2, 1)
+            aReport[RPT_SPACING] := IIf(hb_BSubStr(cParamsBuff, DBL_SPACE_OFFSET, 1) $ "YyTt", 2, 1)
 
             // Summary report flag
             aReport[RPT_SUMMARY] := hb_BSubStr(cParamsBuff, SUMMARY_RPT_OFFSET, 1) $ "YyTt"
@@ -934,7 +934,7 @@ METHOD LoadReportFile(cFrmFile AS STRING) CLASS HBReportForm
                nHeaderIndex--
             ENDDO
 
-            aReport[RPT_HEADER] := iif(nHeaderIndex == 0, {}, ASize(aHeader, nHeaderIndex))
+            aReport[RPT_HEADER] := IIf(nHeaderIndex == 0, {}, ASize(aHeader, nHeaderIndex))
 
             // Process Groups
             // Group
@@ -1093,7 +1093,7 @@ STATIC FUNCTION ParseHeader(cHeaderString, nFields)
          AAdd(aPageHeader, Left(cItem, nPos - 1))
       ELSE
          // empty string handling for S87 and 5.0 compatibility
-         AAdd(aPageHeader, iif(Empty(cItem), "", cItem))
+         AAdd(aPageHeader, IIf(Empty(cItem), "", cItem))
          // empty or not, we jump past the field
          nPos := nHeaderLen
       ENDIF
@@ -1175,7 +1175,7 @@ STATIC FUNCTION MakeAStr(uVar, cType)
    CASE Asc("T")
    CASE Asc("t") ; RETURN hb_TToC(uVar)
    CASE Asc("L")
-   CASE Asc("l") ; RETURN iif(uVar, "T", "F")
+   CASE Asc("l") ; RETURN IIf(uVar, "T", "F")
    CASE Asc("N")
    CASE Asc("n") ; RETURN Str(uVar)
    CASE Asc("C")

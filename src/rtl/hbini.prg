@@ -93,7 +93,7 @@ FUNCTION hb_iniNew(lAutoMain)
    RETURN hIni
 
 FUNCTION hb_iniRead(cFileSpec, lKeyCaseSens, cSplitters, lAutoMain)
-   RETURN hb_iniReadStr(iif(HB_ISSTRING(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
+   RETURN hb_iniReadStr(IIf(HB_ISSTRING(cFileSpec), hb_iniFileLow(cFileSpec), ""), lKeyCaseSens, cSplitters, lAutoMain)
 
 FUNCTION hb_iniReadStr(cData, lKeyCaseSens, cSplitters, lAutoMain)
 
@@ -161,7 +161,7 @@ STATIC FUNCTION hb_iniStringLow(hIni, cData, lKeyCaseSens, cSplitters, lAutoMain
    reSplitters := hb_regexComp(cSplitters)
 
    // Always begin with the 'MAIN' section
-   hCurrentSection := iif(lAutoMain, hIni["MAIN"], hIni)
+   hCurrentSection := IIf(lAutoMain, hIni["MAIN"], hIni)
 
    cLine := ""
    FOR EACH cData IN hb_ATokens(cData, .T.)
@@ -289,7 +289,7 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       hb_HEval(hIni["MAIN"], {|cKey, xVal|cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine})
    ELSE
       // When lAutoMain is off, just write all the top-level variables.
-      hb_HEval(hIni, {|cKey, xVal|iif(HB_ISHASH(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine)})
+      hb_HEval(hIni, {|cKey, xVal|IIf(HB_ISHASH(xVal), /* nothing */, cBuffer += hb_CStr(cKey) + "=" + hb_CStr(xVal) + cNewLine)})
    ENDIF
 
    FOR EACH cSection IN hIni
@@ -316,4 +316,4 @@ FUNCTION hb_iniWriteStr(hIni, cCommentBegin, cCommentEnd, lAutoMain)
       cBuffer += cCommentEnd + cNewLine
    ENDIF
 
-   RETURN iif(Empty(cBuffer), NIL, cBuffer)
+   RETURN IIf(Empty(cBuffer), NIL, cBuffer)

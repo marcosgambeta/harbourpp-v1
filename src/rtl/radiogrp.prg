@@ -147,7 +147,7 @@ METHOD RadioGroup:delItem(nPos)
    IF ::lHasFocus .AND. ::nItemCount < ::nValue
       ::nValue := ::nItemCount
       ::cTextValue := ::aItems[::nValue]:data
-      ::xBuffer := iif(HB_ISNUMERIC(::xBuffer), ::nValue, ::cTextValue)
+      ::xBuffer := IIf(HB_ISNUMERIC(::xBuffer), ::nValue, ::cTextValue)
    ENDIF
 
    RETURN Self
@@ -220,7 +220,7 @@ METHOD RadioGroup:getAccel(xKey)
    RETURN 0
 
 METHOD RadioGroup:getItem(nPos)
-   RETURN iif(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
+   RETURN IIf(nPos >= 1 .AND. nPos <= ::nItemCount, ::aItems[nPos], NIL)
 
 METHOD RadioGroup:hitTest(nMRow, nMCol)
 
@@ -368,7 +368,7 @@ METHOD RadioGroup:nextItem()
    LOCAL nValue
 
    IF ::lHasFocus .AND. ::nItemCount > 0
-      ::changeButton(nValue := ::nValue, iif(nValue == ::nItemCount, 1, nValue + 1))
+      ::changeButton(nValue := ::nValue, IIf(nValue == ::nItemCount, 1, nValue + 1))
    ENDIF
 
    RETURN Self
@@ -476,7 +476,7 @@ METHOD RadioGroup:changeButton(nUnselect, nSelect)
 
       ::nValue := nSelect
       ::cTextValue := ::aItems[nSelect]:data
-      ::xBuffer := iif(HB_ISNUMERIC(::xBuffer), nSelect, ::cTextValue)
+      ::xBuffer := IIf(HB_ISNUMERIC(::xBuffer), nSelect, ::cTextValue)
    ENDIF
 
    MSetCursor(nOldMCur)
@@ -537,7 +537,7 @@ METHOD RadioGroup:colorSpec(cColorSpec)
 METHOD RadioGroup:fBlock(bFBlock)
 
    IF PCount() > 0
-      ::bFBlock := iif(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
+      ::bFBlock := IIf(bFBlock == NIL, NIL, __eInstVar53(Self, "FBLOCK", bFBlock, "B", 1001))
    ENDIF
 
    RETURN ::bFBlock
