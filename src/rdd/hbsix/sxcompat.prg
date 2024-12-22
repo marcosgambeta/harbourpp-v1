@@ -96,10 +96,10 @@ FUNCTION sxChar(nLen, /* @ */ xKeyVal)
       xKeyVal := hb_TToS(xKeyVal)
       EXIT
    CASE "L"
-      xKeyVal := iif(xKeyVal, "T", "F")
+      xKeyVal := IIf(xKeyVal, "T", "F")
       EXIT
    OTHERWISE
-      xKeyVal := iif(HB_ISNUMERIC(nLen), "", Space(10))
+      xKeyVal := IIf(HB_ISNUMERIC(nLen), "", Space(10))
       EXIT
    ENDSWITCH
 
@@ -123,7 +123,7 @@ FUNCTION sxNum(/* @ */ xKeyVal)
       xKeyVal := xKeyVal - hb_SToD()
       EXIT
    CASE "L"
-      xKeyVal := iif(xKeyVal, 1, 0)
+      xKeyVal := IIf(xKeyVal, 1, 0)
       EXIT
    OTHERWISE
       xKeyVal := 0.00
@@ -405,7 +405,7 @@ FUNCTION sx_FileOrder()
    RETURN dbOrderInfo(DBOI_BAGNUMBER)
 
 FUNCTION sx_SetFileOrd(nIndex)
-   RETURN iif(HB_ISNUMERIC(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
+   RETURN IIf(HB_ISNUMERIC(nIndex), ordSetFocus(sx_TagOrder(1, nIndex)), ordSetFocus())
 
 FUNCTION rdd_Count()
    RETURN Len(rddList())
@@ -557,7 +557,7 @@ FUNCTION sx_IsLocked(xRec)
    LOCAL xRecord
 
    IF Used()
-      xRecord := iif(xRec == NIL, RecNo(), xRec)
+      xRecord := IIf(xRec == NIL, RecNo(), xRec)
       /* Don't be confused by function name.
          Even if it looks strange and results are not very usable due
          to possible race condition then this is what SIX3 exactly does. */

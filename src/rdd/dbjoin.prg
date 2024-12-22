@@ -127,11 +127,11 @@ STATIC FUNCTION __FieldTwo(cAlias, aFields)
 
    aStruct := {}
    bFind := {| cFld | cFld == cField }
-   AEval(dbStruct(), {|aFld|cField := aFld[DBS_NAME], iif(AScan(aFields, bFind) == 0, NIL, AAdd(aStruct, aFld))})
+   AEval(dbStruct(), {|aFld|cField := aFld[DBS_NAME], IIf(AScan(aFields, bFind) == 0, NIL, AAdd(aStruct, aFld))})
 
    dbSelectArea(cAlias)
    bFind := {| cFld | "->" $ cFld .AND. SubStr(cFld, At("->", cFld) + 2) == cField }
-   AEval(dbStruct(), {|aFld|cField := aFld[DBS_NAME], iif(AScan(aFields, bFind) == 0, NIL, AAdd(aStruct, aFld))})
+   AEval(dbStruct(), {|aFld|cField := aFld[DBS_NAME], IIf(AScan(aFields, bFind) == 0, NIL, AAdd(aStruct, aFld))})
 
    RETURN aStruct
 

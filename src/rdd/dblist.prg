@@ -56,9 +56,9 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
 
    // Choose the output style
    IF lOff
-      bOutBlock := {||QOut(iif(Deleted(), "*", " ")), AEval(abEval, {|bEval|QQOut(Eval(bEval), "")})}
+      bOutBlock := {||QOut(IIf(Deleted(), "*", " ")), AEval(abEval, {|bEval|QQOut(Eval(bEval), "")})}
    ELSE
-      bOutBlock := {||QOut(Str(RecNo(), 7), iif(Deleted(), "*", " ")), AEval(abEval, {|bEval|QQOut(Eval(bEval), "")})}
+      bOutBlock := {||QOut(Str(RecNo(), 7), IIf(Deleted(), "*", " ")), AEval(abEval, {|bEval|QQOut(Eval(bEval), "")})}
    ENDIF
 
    // Save SETs
@@ -68,7 +68,7 @@ PROCEDURE __dbList(lOff, abEval, lAll, bFor, bWhile, nNext, nRecord, lRest, lToP
    ENDIF
    IF !Empty(cToFileName)
       lOldExtra := Set(_SET_EXTRA, .T.)
-      cOldExtraFile := Set(_SET_EXTRAFILE, iif(Set(_SET_DEFEXTENSIONS), hb_FNameExtSetDef(cToFileName, ".txt"), cToFileName))
+      cOldExtraFile := Set(_SET_EXTRAFILE, IIf(Set(_SET_DEFEXTENSIONS), hb_FNameExtSetDef(cToFileName, ".txt"), cToFileName))
    ENDIF
 
    // Do the job

@@ -105,7 +105,7 @@ FUNCTION __dbTotal(cFile, xKey, aFields, xFor, xWhile, nNext, nRec, lRest, cRDD,
    nOldArea := Select()
 
    aNewDbStruct := {}
-   AEval(dbStruct(), {| aField | iif(aField[DBS_TYPE] == "M", NIL, AAdd(aNewDbStruct, aField)) })
+   AEval(dbStruct(), {| aField | IIf(aField[DBS_TYPE] == "M", NIL, AAdd(aNewDbStruct, aField)) })
    IF Empty(aNewDbStruct)
       RETURN .F.
    ENDIF

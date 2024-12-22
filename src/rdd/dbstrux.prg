@@ -67,7 +67,7 @@ FUNCTION __dbCopyXStruct(cFileName)
       __dbCreate(cFileName, NIL, NIL, .F.)
 
       AEval(aStruct, {| aField | ;
-         iif(aField[DBS_TYPE] == "C" .AND. aField[DBS_LEN] > 255, ;
+         IIf(aField[DBS_TYPE] == "C" .AND. aField[DBS_LEN] > 255, ;
             (aField[DBS_DEC] := Int(aField[DBS_LEN] / 256), aField[DBS_LEN] := aField[DBS_LEN] % 256), NIL), ;
          dbAppend(), ;
          FIELD->FIELD_NAME := aField[DBS_NAME], ;
@@ -138,7 +138,7 @@ FUNCTION __dbCreate(cFileName, cFileFrom, cRDD, lNew, cAlias, cCodePage, nConnec
          // Type detection is more in sync with dbCreate() logic in Harbour, as lowercase "C"
          // and padded/continued strings ("C ", "C...") are also accepted.
 
-         AEval(aStruct, {| aField | iif(hb_LeftEqI(aField[DBS_TYPE], "C") .AND. aField[DBS_DEC] != 0, ;
+         AEval(aStruct, {| aField | IIf(hb_LeftEqI(aField[DBS_TYPE], "C") .AND. aField[DBS_DEC] != 0, ;
             (aField[DBS_LEN] += aField[DBS_DEC] * 256, aField[DBS_DEC] := 0), NIL) })
 
          dbCreate(cFileName, aStruct, cRDD, lNew, cAlias, NIL, cCodePage, nConnection)
@@ -172,6 +172,6 @@ FUNCTION __dbStructFilter(aStruct, aFieldList)
    AEval(aFieldList, {| cFieldName, nIndex | ;
       cName := RTrim(Upper(cFieldName)), ;
       nIndex := AScan(aStruct, bFindName), ;
-      iif(nIndex == 0, NIL, AAdd(aStructFiltered, aStruct[nIndex])) })
+      IIf(nIndex == 0, NIL, AAdd(aStructFiltered, aStruct[nIndex])) })
 
    RETURN aStructFiltered
