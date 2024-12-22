@@ -101,11 +101,11 @@ CREATE CLASS HBBrwText
    METHOD GoTop() INLINE ::oBrw:GoTop():ForceStable(), Self
    METHOD GoBottom() INLINE ::oBrw:GoBottom():ForceStable(), Self
 
-   METHOD Home() INLINE iif(::nLineOffset > 1, (::nLineOffset := 1, ::oBrw:RefreshAll():ForceStable()), NIL), Self
-   METHOD End() INLINE ::nLineOffset := Max(1, ::nMaxLineLen - (::nWidth - iif(::lLineNumbers, ::nLineNoLen, 0)) + 1), ::oBrw:RefreshAll():ForceStable(), Self
+   METHOD Home() INLINE IIf(::nLineOffset > 1, (::nLineOffset := 1, ::oBrw:RefreshAll():ForceStable()), NIL), Self
+   METHOD End() INLINE ::nLineOffset := Max(1, ::nMaxLineLen - (::nWidth - IIf(::lLineNumbers, ::nLineNoLen, 0)) + 1), ::oBrw:RefreshAll():ForceStable(), Self
 
-   METHOD Right() INLINE iif(::nLineOffset < ::nMaxLineLen + iif(::lLineNumbers, ::nLineNoLen, 0), (::nLineOffset++, ::oBrw:RefreshAll():ForceStable()), NIL), Self
-   METHOD Left() INLINE iif(::nLineOffset > 1, (::nLineOffset--, ::oBrw:RefreshAll():ForceStable()), NIL), Self
+   METHOD Right() INLINE IIf(::nLineOffset < ::nMaxLineLen + IIf(::lLineNumbers, ::nLineNoLen, 0), (::nLineOffset++, ::oBrw:RefreshAll():ForceStable()), NIL), Self
+   METHOD Left() INLINE IIf(::nLineOffset > 1, (::nLineOffset--, ::oBrw:RefreshAll():ForceStable()), NIL), Self
 
    METHOD RowPos() INLINE ::nRow
 
@@ -164,7 +164,7 @@ METHOD HBBrwText:SetActiveLine(n)
    RETURN Self
 
 METHOD HBBrwText:GetLine()
-   RETURN iif(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
+   RETURN IIf(::lLineNumbers, PadR(hb_ntos(::nRow) + ":", ::nLineNoLen), "") + ;
       MemoLine(::aRows[::nRow], ::nMaxLineLen, 1, ::nTabWidth, .F.)
 
 METHOD HBBrwText:GetLineText()
@@ -175,9 +175,9 @@ METHOD HBBrwText:GetLineColor()
    LOCAL aColor
 
    IF __dbgIsBreak(__dbg():pInfo, ::cFileName, ::nRow) >= 0
-      aColor := iif(::nRow == ::nActiveLine, {4, 4}, {3, 3})
+      aColor := IIf(::nRow == ::nActiveLine, {4, 4}, {3, 3})
    ELSE
-      aColor := iif(::nRow == ::nActiveLine, {2, 2}, {1, 1})
+      aColor := IIf(::nRow == ::nActiveLine, {2, 2}, {1, 1})
    ENDIF
 
    RETURN aColor
@@ -253,7 +253,7 @@ METHOD HBBrwText:Search(cString, lCaseSensitive, nMode)
    n := ::nRow
 
    DO WHILE Eval(bMove) != 0
-      IF cString $ iif(lCaseSensitive, ::aRows[::nRow], Upper(::aRows[::nRow]))
+      IF cString $ IIf(lCaseSensitive, ::aRows[::nRow], Upper(::aRows[::nRow]))
          lFound := .T.
          ::oBrw:MoveCursor(::nRow - n)
          ::RefreshAll()

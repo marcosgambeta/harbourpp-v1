@@ -499,4 +499,4 @@ FUNCTION __dbgAltToKey(nKey)
       K_ALT_Y, K_ALT_Z, K_ALT_1, K_ALT_2, K_ALT_3, K_ALT_4, ;
       K_ALT_5, K_ALT_6, K_ALT_7, K_ALT_8, K_ALT_9, K_ALT_0 }, nKey)
 
-   RETURN iif(nIndex > 0, SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1), "")
+   RETURN IIf(nIndex > 0, SubStr("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", nIndex, 1), "")

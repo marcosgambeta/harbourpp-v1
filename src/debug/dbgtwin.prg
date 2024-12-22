@@ -122,7 +122,7 @@ METHOD PROCEDURE HBDbWindow:Clear()
 
 METHOD PROCEDURE HBDbWindow:Hide()
 
-   __dbgRestScreen(::nTop, ::nLeft, ::nBottom + iif(::lShadow, 1, 0), ::nRight + iif(::lShadow, 2, 0), ::cBackImage)
+   __dbgRestScreen(::nTop, ::nLeft, ::nBottom + IIf(::lShadow, 1, 0), ::nRight + IIf(::lShadow, 2, 0), ::cBackImage)
    ::cBackImage := NIL
    ::lVisible := .F.
 
@@ -170,7 +170,7 @@ METHOD PROCEDURE HBDbWindow:Refresh()
 
    DispBegin()
 
-   hb_DispBox(::nTop, ::nLeft, ::nBottom, ::nRight, iif(::lFocused, HB_B_DOUBLE_UNI, HB_B_SINGLE_UNI), ::cColor)
+   hb_DispBox(::nTop, ::nLeft, ::nBottom, ::nRight, IIf(::lFocused, HB_B_DOUBLE_UNI, HB_B_SINGLE_UNI), ::cColor)
    hb_DispOutAtBox(::nTop, ::nLeft + 1, hb_UTF8ToStrBox("[■]"), ::cColor)
 
    ::ShowCaption(::cCaption)
@@ -185,7 +185,7 @@ METHOD PROCEDURE HBDbWindow:Refresh()
 
 METHOD PROCEDURE HBDbWindow:Show(lFocused)
 
-   ::cBackImage := __dbgSaveScreen(::nTop, ::nLeft, ::nBottom + iif(::lShadow, 1, 0), ::nRight + iif(::lShadow, 2, 0))
+   ::cBackImage := __dbgSaveScreen(::nTop, ::nLeft, ::nBottom + IIf(::lShadow, 1, 0), ::nRight + IIf(::lShadow, 2, 0))
    hb_Scroll(::nTop, ::nLeft, ::nBottom, ::nRight, NIL, NIL, ::cColor)
    ::SetFocus(hb_defaultValue(lFocused, ::lFocused))
 

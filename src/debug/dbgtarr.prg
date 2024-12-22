@@ -233,13 +233,13 @@ FUNCTION __dbgArrays(aArray, cVarName, lEditable)
    RETURN HBDbArray():New(aArray, cVarName, lEditable)
 
 STATIC FUNCTION GetTopPos(nPos)
-   RETURN iif((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
+   RETURN IIf((MaxRow() - nPos) < 5, MaxRow() - nPos, nPos)
 
 STATIC FUNCTION GetBottomPos(nPos)
-   RETURN iif(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
+   RETURN IIf(nPos < MaxRow() - 2, nPos, MaxRow() - 2)
 
 STATIC FUNCTION ArrayBrowseSkip(nPos, oBrwSets)
    RETURN ;
-      iif(oBrwSets:cargo[1] + nPos < 1, -oBrwSets:cargo[1] + 1, ;
-      iif(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
+      IIf(oBrwSets:cargo[1] + nPos < 1, -oBrwSets:cargo[1] + 1, ;
+      IIf(oBrwSets:cargo[1] + nPos > Len(oBrwSets:cargo[2][1]), ;
       Len(oBrwSets:cargo[2][1]) - oBrwSets:cargo[1], nPos))

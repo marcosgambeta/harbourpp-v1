@@ -84,7 +84,7 @@ METHOD HBDbInput:new(nRow, nCol, nWidth, cValue, cColor, nSize)
    ::nRow   := nRow
    ::nCol   := nCol
    ::nWidth := nWidth
-   ::nSize  := iif(HB_ISNUMERIC(nSize), nSize, nWidth)
+   ::nSize  := IIf(HB_ISNUMERIC(nSize), nSize, nWidth)
    ::cValue := PadR(cValue, ::nSize)
 
    ::setColor(cColor)
@@ -131,7 +131,7 @@ METHOD HBDbInput:display()
 METHOD HBDbInput:showCursor()
 
    SetPos(::nRow, ::nCol + ::nPos - ::nFirst)
-   SetCursor(iif(Set(_SET_INSERT), SC_INSERT, SC_NORMAL))
+   SetCursor(IIf(Set(_SET_INSERT), SC_INSERT, SC_NORMAL))
 
    RETURN Self
 

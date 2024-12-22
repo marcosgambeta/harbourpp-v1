@@ -55,7 +55,7 @@
 
 PROCEDURE __dbgHelp(cTopic)
 
-   LOCAL cColor := iif(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
+   LOCAL cColor := IIf(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
    LOCAL oBrw
    LOCAL nTopic
    LOCAL aTopics := GetTopics()

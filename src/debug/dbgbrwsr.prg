@@ -103,7 +103,7 @@ CREATE CLASS HBDbBrowser
    METHOD PageUp()             INLINE ::MoveCursor(-::rowCount)
    METHOD GetColumn(nColumn) INLINE ::aColumns[nColumn]
    METHOD RefreshAll()         INLINE AFill(::aRowState, .F.), Self
-   METHOD RefreshCurrent()     INLINE iif(::rowCount >= 1 .AND. ::rowPos <= Len(::aRowState), ::aRowState[::rowPos] := .F., NIL), Self
+   METHOD RefreshCurrent()     INLINE IIf(::rowCount >= 1 .AND. ::rowPos <= Len(::aRowState), ::aRowState[::rowPos] := .F., NIL), Self
    METHOD Invalidate()         INLINE ::RefreshAll()
    METHOD Stabilize()          INLINE ::ForceStable()
    METHOD ForceStable()
@@ -147,7 +147,7 @@ METHOD HBDbBrowser:MoveCursor(nSkip)
 
    nSkipped := ::GoTo(::rowPos + ::nFirstVisible - 1 + nSkip)
    IF !::hitBottom .OR. nSkipped != 0
-      IF iif(nSkipped > 0, ::rowPos + nSkipped <= ::rowCount, ::rowPos + nSkipped >= 1)
+      IF IIf(nSkipped > 0, ::rowPos + nSkipped <= ::rowCount, ::rowPos + nSkipped >= 1)
          ::RefreshCurrent()
          ::rowPos += nSkipped
          ::RefreshCurrent()
@@ -177,7 +177,7 @@ METHOD HBDbBrowser:DispRow(nRow, lHiLite)
       FOR EACH oCol IN ::aColumns
          IF nColX <= ::nRight
             xData := Eval(oCol:block)
-            nClr := iif(lHiLite, 2, 1)
+            nClr := IIf(lHiLite, 2, 1)
             aClr := Eval(oCol:colorBlock, xData)
             IF HB_ISARRAY(aClr)
                nClr := aClr[nClr]
@@ -188,7 +188,7 @@ METHOD HBDbBrowser:DispRow(nRow, lHiLite)
             IF nWid == NIL
                nWid := Len(xData)
             ENDIF
-            hb_DispOutAt(::nTop + nRow - 1, nColX, Left(PadR(xData, nWid) + iif(oCol:__enumIsLast(), "", " "), ::nRight - nColX + 1), ::aColorSpec[nClr])
+            hb_DispOutAt(::nTop + nRow - 1, nColX, Left(PadR(xData, nWid) + IIf(oCol:__enumIsLast(), "", " "), ::nRight - nColX + 1), ::aColorSpec[nClr])
             nColX += nWid + 1
          ENDIF
       NEXT

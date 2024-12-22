@@ -60,7 +60,7 @@ PROCEDURE __dbgShowWorkAreas()
    LOCAL aBrw[3]
    LOCAL aStruc
    LOCAL aInfo
-   LOCAL cColor := iif(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
+   LOCAL cColor := IIf(__dbg():lMonoDisplay, "N/W, W/N, W+/W, W+/N", "N/W, N/BG, R/W, R/BG")
    LOCAL n1
    LOCAL n2
    LOCAL n3 := 1
@@ -95,13 +95,13 @@ PROCEDURE __dbgShowWorkAreas()
    aBrw[1]:GoTopBlock    := {|| aBrw[1]:Cargo := n1 := 1 }
    aBrw[1]:GoBottomBlock := {|| aBrw[1]:Cargo := n1 := Len(aAlias) }
    aBrw[1]:SkipBlock     := {| nSkip, nPos | nPos := n1, ;
-      aBrw[1]:Cargo := n1 := iif(nSkip > 0, Min(Len(aAlias), n1 + nSkip), ;
+      aBrw[1]:Cargo := n1 := IIf(nSkip > 0, Min(Len(aAlias), n1 + nSkip), ;
       Max(1, n1 + nSkip)), ;
       n1 - nPos }
 
    aBrw[1]:AddColumn(oCol := HBDbColumnNew("", {|| PadR(aAlias[n1][2], 11) }))
 
-   oCol:ColorBlock := {|| iif(aAlias[n1][1] == Select(), {3, 4}, {1, 2}) }
+   oCol:ColorBlock := {|| IIf(aAlias[n1][1] == Select(), {3, 4}, {1, 2}) }
 
    IF cur_id > 1
       aBrw[1]:Configure():MoveCursor(cur_id - 1)
@@ -118,13 +118,13 @@ PROCEDURE __dbgShowWorkAreas()
    aBrw[2]:GoTopBlock    := {|| aBrw[2]:Cargo := n2 := 1 }
    aBrw[2]:GoBottomBlock := {|| aBrw[2]:Cargo := n2 := Len(aInfo) }
    aBrw[2]:SkipBlock     := {| nSkip, nPos | nPos := n2, ;
-      aBrw[2]:Cargo := n2 := iif(nSkip > 0, Min(Len(aInfo), n2 + nSkip), ;
+      aBrw[2]:Cargo := n2 := IIf(nSkip > 0, Min(Len(aInfo), n2 + nSkip), ;
       Max(1, n2 + nSkip)), ;
       n2 - nPos }
 
    aBrw[2]:AddColumn(oCol := HBDbColumnNew("", {|| PadR(aInfo[n2], 40) }))
 
-   oCol:ColorBlock := {|| iif(aAlias[n1][1] == Select() .AND. n2 == 1, {3, 4}, {1, 2}) }
+   oCol:ColorBlock := {|| IIf(aAlias[n1][1] == Select() .AND. n2 == 1, {3, 4}, {1, 2}) }
 
    // Structure browser
 
@@ -137,7 +137,7 @@ PROCEDURE __dbgShowWorkAreas()
    aBrw[3]:GoTopBlock    := {|| aBrw[3]:Cargo := n3 := 1 }
    aBrw[3]:GoBottomBlock := {|| aBrw[3]:Cargo := n3 := Len(aStruc) }
    aBrw[3]:SkipBlock     := {| nSkip, nPos | nPos := n3, ;
-      aBrw[3]:Cargo := n3 := iif(nSkip > 0, Min(Len(aStruc), n3 + nSkip), ;
+      aBrw[3]:Cargo := n3 := IIf(nSkip > 0, Min(Len(aStruc), n3 + nSkip), ;
       Max(1, n3 + nSkip)), n3 - nPos }
 
    aBrw[3]:AddColumn(HBDbColumnNew("", {|| PadR(aStruc[n3][DBS_NAME], 10) + " " + ;
@@ -190,7 +190,7 @@ STATIC PROCEDURE DlgWorkAreaPaint(oDlg, aBrw)
    aBrw[1]:ForceStable()
    aBrw[2]:ForceStable()
    aBrw[3]:ForceStable()
-   AEval(aBrw, {| a, i | iif(oDebug:nWaFocus == i, a:HiLite(), a:DeHilite()) })
+   AEval(aBrw, {| a, i | IIf(oDebug:nWaFocus == i, a:HiLite(), a:DeHilite()) })
 
    UpdateInfo(oDlg, Alias())
 
@@ -203,7 +203,7 @@ STATIC PROCEDURE DlgWorkAreaKey(nKey, oDlg, aBrw, aAlias, /* @ */ aStruc, /* @ *
 
    IF nKey == K_TAB .OR. nKey == K_SH_TAB
       aBrw[oDebug:nWaFocus]:Dehilite()
-      oDebug:nWaFocus += iif(nKey == K_TAB, 1, -1)
+      oDebug:nWaFocus += IIf(nKey == K_TAB, 1, -1)
       IF oDebug:nWaFocus < 1
          oDebug:nWaFocus := 3
       ENDIF
@@ -328,7 +328,7 @@ STATIC FUNCTION DbfInfo()
          EXIT
 #ifdef HB_CLP_STRICT
       CASE "L"
-         cValue := iif(xValue, "T", "F")
+         cValue := IIf(xValue, "T", "F")
 #endif
       OTHERWISE
          cValue := __dbgValToStr(xValue)
@@ -355,10 +355,10 @@ STATIC PROCEDURE UpdateInfo(oDlg, cAlias)
    hb_DispOutAt(oDlg:nTop + 1, oDlg:nLeft + 22, PadR(cAlias, 12), oDlg:cColor)
    hb_DispOutAt(oDlg:nTop + 1, oDlg:nLeft + 42, PadR(hb_ntos(RecNo()) + "/" + hb_ntos(LastRec()), 9), oDlg:cColor)
 
-   hb_DispOutAt(oDlg:nTop + 2, oDlg:nLeft + 23, iif(Bof(), "Yes", "No "), oDlg:cColor)
-   hb_DispOutAt(oDlg:nTop + 2, oDlg:nLeft + 40, iif(Deleted(), "Yes", "No "), oDlg:cColor)
-   hb_DispOutAt(oDlg:nTop + 3, oDlg:nLeft + 23, iif(Eof(), "Yes", "No "), oDlg:cColor)
-   hb_DispOutAt(oDlg:nTop + 3, oDlg:nLeft + 40, iif(Found(), "Yes", "No "), oDlg:cColor)
+   hb_DispOutAt(oDlg:nTop + 2, oDlg:nLeft + 23, IIf(Bof(), "Yes", "No "), oDlg:cColor)
+   hb_DispOutAt(oDlg:nTop + 2, oDlg:nLeft + 40, IIf(Deleted(), "Yes", "No "), oDlg:cColor)
+   hb_DispOutAt(oDlg:nTop + 3, oDlg:nLeft + 23, IIf(Eof(), "Yes", "No "), oDlg:cColor)
+   hb_DispOutAt(oDlg:nTop + 3, oDlg:nLeft + 40, IIf(Found(), "Yes", "No "), oDlg:cColor)
    hb_DispOutAt(oDlg:nTop + 4, oDlg:nLeft + 23, PadR(dbFilterInfo(), 30), oDlg:cColor)
    hb_DispOutAt(oDlg:nTop + 5, oDlg:nLeft + 23, PadR(ordKey(), 30), oDlg:cColor)
 
@@ -367,4 +367,4 @@ STATIC PROCEDURE UpdateInfo(oDlg, cAlias)
    RETURN
 
 STATIC FUNCTION dbFilterInfo()
-   RETURN iif(Empty(dbFilter()), iif(Empty(hb_dbGetFilter()), "", "{|| ... }"), dbFilter())
+   RETURN IIf(Empty(dbFilter()), IIf(Empty(hb_dbGetFilter()), "", "{|| ... }"), dbFilter())

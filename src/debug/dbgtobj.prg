@@ -118,7 +118,7 @@ METHOD HBDbObject:addWindows(nRow)
 
    IF nSize < MaxRow() - 2
       IF HB_ISNUMERIC(nRow)
-         oWndSets := HBDbWindow():New(nRow, 5, iif(nRow + nSize + 1 < MaxRow() - 2, nRow + nSize + 1, MaxRow() - 2), MaxCol() - 5, ;
+         oWndSets := HBDbWindow():New(nRow, 5, IIf(nRow + nSize + 1 < MaxRow() - 2, nRow + nSize + 1, MaxRow() - 2), MaxCol() - 5, ;
             ::objname + " is of class: " + ::TheObj:ClassName(), "N/W")
       ELSE
          oWndSets := HBDbWindow():New(1, 5, 2 + nSize, MaxCol() - 5, ::objname + " is of class: " + ::TheObj:ClassName(), "N/W")
@@ -147,7 +147,7 @@ METHOD HBDbObject:addWindows(nRow)
    oCol:DefColor := {1, 2}
    oBrwSets:Freeze := 1
 
-   oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| iif(!::pItems[::ArrayIndex][OMSG_EDIT], ;
+   oBrwSets:AddColumn(oCol := HBDbColumnNew("", {|| IIf(!::pItems[::ArrayIndex][OMSG_EDIT], ;
       ::pItems[::ArrayIndex][OMSG_VALUE], ;
       __dbgValToExp(__dbgObjGetValue(::TheObj, ::pItems[::arrayindex][OMSG_NAME]))) }))
 
