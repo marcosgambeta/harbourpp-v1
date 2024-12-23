@@ -4,6 +4,7 @@
 // Copyright 2006 Klas Engwall <klas dot engwall at engwall dot com>
 //
 
+// $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2, or (at your option)
@@ -42,6 +43,7 @@
 // If you write modifications of your own for Harbour, it is your choice
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
+// $HB_END_LICENSE$
 
 // NOTE: The collation sequence below is almost compatible with Clipper's
 // NTXSWE.OBJ which does NOT provide a correct Swedish collation. The most

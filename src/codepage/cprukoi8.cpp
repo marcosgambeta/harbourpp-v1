@@ -4,6 +4,7 @@
 // Copyright 2002 Alexander S.Kresin <alex@belacy.belgorod.su>
 //
 
+// $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2, or (at your option)
@@ -42,6 +43,7 @@
 // If you write modifications of your own for Harbour, it is your choice
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
+// $HB_END_LICENSE$
 
 #define HB_CP_ID        RUKOI8
 #define HB_CP_INFO      "Russian KOI-8"

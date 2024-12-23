@@ -5,6 +5,7 @@
 // Copyright 2012 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
 //
 
+// $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2, or (at your option)
@@ -43,6 +44,7 @@
 // If you write modifications of your own for Harbour, it is your choice
 // whether to permit this exception to apply to your modifications.
 // If you do not wish that, delete this exception notice.
+// $HB_END_LICENSE$
 
 #include "hbapi.hpp"
 #include "hbapiitm.hpp"
