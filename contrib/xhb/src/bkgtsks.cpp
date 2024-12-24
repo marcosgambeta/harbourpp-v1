@@ -1,9 +1,8 @@
-/*
- * The background tasks - an extension of idle state
- *
- * Copyright 2003-2008 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- */
+//
+// The background tasks - an extension of idle state
+//
+// Copyright 2003-2008 Francesco Saverio Giudice <info@fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

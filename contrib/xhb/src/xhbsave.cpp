@@ -1,9 +1,8 @@
-/*
- * xhb_SaveScreen(), xhb_RestScreen() functions
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- *
- */
+//
+// xhb_SaveScreen(), xhb_RestScreen() functions
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,10 +1,9 @@
-/*
- * AtSkipStrings(), AtI() functions
- *
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// AtSkipStrings(), AtI() functions
+//
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

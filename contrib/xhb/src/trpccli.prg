@@ -1,9 +1,8 @@
-/*
- * Remote Procedure Call code - Client class
- *
- * Copyright 2003 Giancarlo Niccolai <giancarlo@niccolai.ws>
- *
- */
+//
+// Remote Procedure Call code - Client class
+//
+// Copyright 2003 Giancarlo Niccolai <giancarlo@niccolai.ws>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

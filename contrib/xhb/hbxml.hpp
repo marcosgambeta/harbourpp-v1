@@ -1,10 +1,9 @@
-/*
- * HBXML - XML DOM oriented routines
- *
- * Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
- *    See also MXML library related copyright below
- *
- */
+//
+// HBXML - XML DOM oriented routines
+//
+// Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
+//    See also MXML library related copyright below
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

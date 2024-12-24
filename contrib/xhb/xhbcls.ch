@@ -1,14 +1,13 @@
-/*
- * Header file for cross-compatibility with xHarbour class code extensions
- *
- * Warning: using this functionality may break logical inheritance
- *          scheme or even some internal class definitions in both
- *          Harbour and xHarbour compilers. In Harbour it's unsupported
- *          feature added here only for strict XHB compatibility.
- *
- * Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// Header file for cross-compatibility with xHarbour class code extensions
+//
+// Warning: using this functionality may break logical inheritance
+//          scheme or even some internal class definitions in both
+//          Harbour and xHarbour compilers. In Harbour it's unsupported
+//          feature added here only for strict XHB compatibility.
+//
+// Copyright 2009 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

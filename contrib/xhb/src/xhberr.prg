@@ -1,15 +1,14 @@
-/*
- * xHarbour default error handler and error functions:
- *    xhb_ErrorSys(), __ErrorBlock(),
- *    __MinimalErrorHandler(), xhb_ErrorNew()
- *
- * Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 2009 Viktor Szakats (vszakats.net/harbour)
- * Copyright 1999 Antonio Linares <alinares@fivetech.com>
- * Copyright 2001-2004 Ron Pinkas <ron@profit-master.com> (TraceLog())
- * Copyright 2002 Luiz Rafael Culik <culikr@uol.com.br> (strvalue(), LogError())
- *
- */
+//
+// xHarbour default error handler and error functions:
+//    xhb_ErrorSys(), __ErrorBlock(),
+//    __MinimalErrorHandler(), xhb_ErrorNew()
+//
+// Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 2009 Viktor Szakats (vszakats.net/harbour)
+// Copyright 1999 Antonio Linares <alinares@fivetech.com>
+// Copyright 2001-2004 Ron Pinkas <ron@profit-master.com> (TraceLog())
+// Copyright 2002 Luiz Rafael Culik <culikr@uol.com.br> (strvalue(), LogError())
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

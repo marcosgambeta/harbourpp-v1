@@ -1,9 +1,8 @@
-/*
- * Header file for cross-compatibility with xHarbour
- *
- * Copyright 1999-2007 {list of individual authors and e-mail addresses}
- *
- */
+//
+// Header file for cross-compatibility with xHarbour
+//
+// Copyright 1999-2007 {list of individual authors and e-mail addresses}
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * Dumpvar function to display var contents
- *
- * Copyright 2003 Francesco Saverio Giudice <info@fsgiudice.com>
- *
- */
+//
+// Dumpvar function to display var contents
+//
+// Copyright 2003 Francesco Saverio Giudice <info@fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

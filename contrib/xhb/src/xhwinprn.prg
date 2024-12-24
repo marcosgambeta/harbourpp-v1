@@ -1,13 +1,12 @@
-/*
- * xHarbour compatible WIN32PRN class which inherits from WIN_PRN class
- * hiding some differences between Harbour and xHarbour
- *
- * this wrapper:
- *    Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * original WIN32PRN/WIN_PRN class author:
- *    Copyright 2004 Peter Rees <peter@rees.co.nz> Rees Software and Systems Ltd
- *
- */
+//
+// xHarbour compatible WIN32PRN class which inherits from WIN_PRN class
+// hiding some differences between Harbour and xHarbour
+//
+// this wrapper:
+//    Copyright 2010 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// original WIN32PRN/WIN_PRN class author:
+//    Copyright 2004 Peter Rees <peter@rees.co.nz> Rees Software and Systems Ltd
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

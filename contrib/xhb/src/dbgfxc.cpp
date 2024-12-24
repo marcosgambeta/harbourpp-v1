@@ -1,9 +1,8 @@
-/*
- * Debug Functions
- *
- * Copyright 2007-2008 Francesco Saverio Giudice <info / at /fsgiudice.com>
- *
- */
+//
+// Debug Functions
+//
+// Copyright 2007-2008 Francesco Saverio Giudice <info / at /fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

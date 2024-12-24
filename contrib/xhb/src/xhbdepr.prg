@@ -1,11 +1,10 @@
-/*
- * Functions deprecated from core Harbour by HB_LEGACY_LEVELn
- *   but kept in xHarbour, so they are made available here as well.
- *   Do not add internal functions (names starting with '__')
- *
- * Copyright 2013 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// Functions deprecated from core Harbour by HB_LEGACY_LEVELn
+//   but kept in xHarbour, so they are made available here as well.
+//   Do not add internal functions (names starting with '__')
+//
+// Copyright 2013 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

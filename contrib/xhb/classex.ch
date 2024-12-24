@@ -1,9 +1,8 @@
-/*
- * Class Extension
- *
- * Copyright 2002 Francesco Saverio Giudice [info@fsgiudice.com]
- *
- */
+//
+// Class Extension
+//
+// Copyright 2002 Francesco Saverio Giudice [info@fsgiudice.com]
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

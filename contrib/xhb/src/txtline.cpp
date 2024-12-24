@@ -1,9 +1,8 @@
-/*
- * hb_TabExpand() and hb_ReadLine() functions
- *
- * Copyright 2004 Marcelo Lombardo - lombardo@uol.com.br
- *
- */
+//
+// hb_TabExpand() and hb_ReadLine() functions
+//
+// Copyright 2004 Marcelo Lombardo - lombardo@uol.com.br
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * FParse*(), F*Count()
- *
- * Copyright 2004 Andi Jahja <xharbour@cbn.net.id>
- *
- */
+//
+// FParse*(), F*Count()
+//
+// Copyright 2004 Andi Jahja <xharbour@cbn.net.id>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

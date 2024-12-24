@@ -1,9 +1,8 @@
-/*
- * Number and bit manipulation functions: Num*X()
- *
- * Copyright 2001 Walter Negro - FOEESITRA" <waltern@foeesitra.org.ar>
- *
- */
+//
+// Number and bit manipulation functions: Num*X()
+//
+// Copyright 2001 Walter Negro - FOEESITRA" <waltern@foeesitra.org.ar>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

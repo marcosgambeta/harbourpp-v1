@@ -1,9 +1,8 @@
-/*
- * ScrollFixed() function
- *
- * Copyright 1999 David G. Holm <dholm@jsd-llc.com>
- *
- */
+//
+// ScrollFixed() function
+//
+// Copyright 1999 David G. Holm <dholm@jsd-llc.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

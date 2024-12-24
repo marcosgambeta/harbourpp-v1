@@ -1,10 +1,9 @@
-/*
- * xHarbour Project test code:
- * hb_regexReplace( cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch ) --> cReturn
- *
- * Copyright 2006 Francesco Saverio Giudice <info/at/fsgiudice.com>
- *
- */
+//
+// xHarbour Project test code:
+// hb_regexReplace( cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch ) --> cReturn
+//
+// Copyright 2006 Francesco Saverio Giudice <info/at/fsgiudice.com>
+//
 
 #require "xhb"
 

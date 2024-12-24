@@ -1,9 +1,8 @@
-/*
- * hb_sprintf() function
- *
- * Copyright 2003 Mauricio Abre <maurifull@datafull.com>
- *
- */
+//
+// hb_sprintf() function
+//
+// Copyright 2003 Mauricio Abre <maurifull@datafull.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

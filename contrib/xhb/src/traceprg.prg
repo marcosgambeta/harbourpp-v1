@@ -1,9 +1,8 @@
-/*
- * PRG Tracing System
- *
- * Copyright 2001 Ron Pinkas <ron@@ronpinkas.com>
- *
- */
+//
+// PRG Tracing System
+//
+// Copyright 2001 Ron Pinkas <ron@@ronpinkas.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

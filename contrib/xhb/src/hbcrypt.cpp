@@ -1,13 +1,12 @@
-/*
- * Cryptography for xHarbour
- *
- * WARNING: Non-standard, insecure crypto. Use core hb_blowfish*()
- *          functions or other _standard_ alternatives instead.
- *
- * Copyright 2003 Giancarlo Niccolai <giancarlo@niccolai.ws>
- * SEE ALSO COPYRIGHT NOTICE FOR NXS BELOW.
- *
- */
+//
+// Cryptography for xHarbour
+//
+// WARNING: Non-standard, insecure crypto. Use core hb_blowfish*()
+//          functions or other _standard_ alternatives instead.
+//
+// Copyright 2003 Giancarlo Niccolai <giancarlo@niccolai.ws>
+// SEE ALSO COPYRIGHT NOTICE FOR NXS BELOW.
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

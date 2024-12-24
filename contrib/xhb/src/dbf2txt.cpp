@@ -1,9 +1,8 @@
-/*
- * Dbf2Text() function
- *
- * Copyright 1999 Andi Jahja <andij@aonlippo.co.id>
- *
- */
+//
+// Dbf2Text() function
+//
+// Copyright 1999 Andi Jahja <andij@aonlippo.co.id>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

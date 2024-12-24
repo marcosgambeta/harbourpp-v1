@@ -1,9 +1,8 @@
-/*
- * xHarbour compatible hb_QSelf() function
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// xHarbour compatible hb_QSelf() function
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

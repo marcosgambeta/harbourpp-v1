@@ -1,9 +1,8 @@
-/*
- * hb_regexReplace(cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch) --> cReturn
- *
- * Copyright 2006 Francesco Saverio Giudice <info/at/fsgiudice.com>
- *
- */
+//
+// hb_regexReplace(cRegex, cString, cReplace, lCaseSensitive, lNewLine, nMaxMatches, nGetMatch) --> cReturn
+//
+// Copyright 2006 Francesco Saverio Giudice <info/at/fsgiudice.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

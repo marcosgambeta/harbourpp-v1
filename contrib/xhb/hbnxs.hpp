@@ -1,10 +1,9 @@
-/*
- * Cryptography for xHarbour
- *
- * Copyright 2003 Giancarlo Niccolai <giancarlo@niccolai.ws>
- * SEE ALSO COPYRIGHT NOTICE FOR NXS BELOW.
- *
- */
+//
+// Cryptography for xHarbour
+//
+// Copyright 2003 Giancarlo Niccolai <giancarlo@niccolai.ws>
+// SEE ALSO COPYRIGHT NOTICE FOR NXS BELOW.
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,9 +1,8 @@
-/*
- * dbModifyStructure(<cFile>) --> lSuccess
- *
- * Copyright 2009 Ron Pinkas <Ron.Pinkas at xHarbour.com>
- *
- */
+//
+// dbModifyStructure(<cFile>) --> lSuccess
+//
+// Copyright 2009 Ron Pinkas <Ron.Pinkas at xHarbour.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

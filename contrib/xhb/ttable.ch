@@ -1,9 +1,8 @@
-/*
- * Header file for Table,Record and Field Class
- *
- * Copyright 1999 {list of individual authors and e-mail addresses}
- *
- */
+//
+// Header file for Table,Record and Field Class
+//
+// Copyright 1999 {list of individual authors and e-mail addresses}
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

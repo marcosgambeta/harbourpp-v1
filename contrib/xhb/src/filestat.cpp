@@ -1,9 +1,8 @@
-/*
- * FileStats() function
- *
- * Copyright 2004 Giancarlo Niccolai <gc@niccolai.ws>
- *
- */
+//
+// FileStats() function
+//
+// Copyright 2004 Giancarlo Niccolai <gc@niccolai.ws>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

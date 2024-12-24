@@ -1,11 +1,10 @@
-/*
- * xHarbour compatible wrapper functions
- *
- * Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2000 David G. Holm <dholm@jsd-llc.com> (hb_F_Eof())
- *
- */
+//
+// xHarbour compatible wrapper functions
+//
+// Copyright 2007 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2000 David G. Holm <dholm@jsd-llc.com> (hb_F_Eof())
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -90,7 +89,7 @@ HB_FUNC( HB_STRING2POINTER )
       hb_retptr(static_cast<void*>(hb_itemGetCPtr(pString)));
    } else {
       hb_errRT_BASE_SubstR(EG_ARG, 1099, nullptr, HB_ERR_FUNCNAME, 1, hb_paramError(1));
-   }   
+   }
 }
 
 #endif

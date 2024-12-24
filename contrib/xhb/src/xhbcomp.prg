@@ -1,9 +1,8 @@
-/*
- * xHarbour compatibility functions
- *
- * Copyright 2007 Viktor Szakats (vszakats.net/harbour)
- *
- */
+//
+// xHarbour compatibility functions
+//
+// Copyright 2007 Viktor Szakats (vszakats.net/harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

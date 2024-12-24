@@ -1,9 +1,8 @@
-/*
- * Text file reading functions
- *
- * Copyright 2003 Marcelo Lombardo - lombardo@uol.com.br
- *
- */
+//
+// Text file reading functions
+//
+// Copyright 2003 Marcelo Lombardo - lombardo@uol.com.br
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

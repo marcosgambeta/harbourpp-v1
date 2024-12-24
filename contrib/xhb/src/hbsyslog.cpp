@@ -1,9 +1,8 @@
-/*
- * Event logging system
- *
- * Copyright 2004 Giancarlo Niccolai <gc@niccolai.ws>
- *
- */
+//
+// Event logging system
+//
+// Copyright 2004 Giancarlo Niccolai <gc@niccolai.ws>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

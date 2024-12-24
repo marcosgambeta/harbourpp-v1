@@ -1,9 +1,8 @@
-/*
- * xHarbour compatible functions for bit operators: |, &, ^^
- *
- * Copyright 2016 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
- *
- */
+//
+// xHarbour compatible functions for bit operators: |, &, ^^
+//
+// Copyright 2016 Przemyslaw Czerpak <druzus / at / priv.onet.pl>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

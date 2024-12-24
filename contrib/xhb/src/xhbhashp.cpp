@@ -1,10 +1,9 @@
-/*
- * xHarbour compatibility functions HSetPartition()/HGetPartition()
- *
- * Copyright 2010 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2003 Giancarlo Niccolai <gc@niccolai.ws>
- *
- */
+//
+// xHarbour compatibility functions HSetPartition()/HGetPartition()
+//
+// Copyright 2010 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2003 Giancarlo Niccolai <gc@niccolai.ws>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

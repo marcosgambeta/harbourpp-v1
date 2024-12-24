@@ -1,9 +1,8 @@
-/*
- * xhb_MemoEdit() function
- *
- * Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
- *
- */
+//
+// xhb_MemoEdit() function
+//
+// Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

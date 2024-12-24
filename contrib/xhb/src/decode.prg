@@ -1,9 +1,8 @@
-/*
- * hb_Decode() function
- *
- * Copyright 2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
- *
- */
+//
+// hb_Decode() function
+//
+// Copyright 2006 Francesco Saverio Giudice <info / at / fsgiudice / dot / com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

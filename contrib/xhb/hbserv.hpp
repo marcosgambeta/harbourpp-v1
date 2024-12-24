@@ -1,9 +1,8 @@
-/*
- * The Service/Daemon support
- *
- * Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
- *
- */
+//
+// The Service/Daemon support
+//
+// Copyright 2003 Giancarlo Niccolai <gian@niccolai.ws>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

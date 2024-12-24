@@ -1,9 +1,8 @@
-/*
- * The FastItem Optimization API
- *
- * Copyright 2008 Ron Pinkas <ron@@ronpinkas.com>
- *
- */
+//
+// The FastItem Optimization API
+//
+// Copyright 2008 Ron Pinkas <ron@@ronpinkas.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

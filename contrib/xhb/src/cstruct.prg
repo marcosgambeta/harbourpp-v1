@@ -1,9 +1,8 @@
-/*
- * C Structure Support.
- *
- * Copyright 2000 Ron Pinkas <ronpinkas@profit-master.com>
- *
- */
+//
+// C Structure Support.
+//
+// Copyright 2000 Ron Pinkas <ronpinkas@profit-master.com>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

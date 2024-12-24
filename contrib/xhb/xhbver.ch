@@ -1,9 +1,8 @@
-/*
- * Header file for version information
- *
- * Copyright 2005 Andi Jahja <xharbour@cbn.net.id>
- *
- */
+//
+// Header file for version information
+//
+// Copyright 2005 Andi Jahja <xharbour@cbn.net.id>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

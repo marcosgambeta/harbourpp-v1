@@ -1,9 +1,8 @@
-/*
- * Editor Class (base for MemoEdit(), debugger, etc.)
- *
- * Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
- *
- */
+//
+// Editor Class (base for MemoEdit(), debugger, etc.)
+//
+// Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

@@ -1,12 +1,11 @@
-/*
- * The Date API (Harbour level)
- *
- * Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
- * Copyright 2004 Giancarlo Niccolai <gc@niccolai.ws>
- * Copyright 2006 Pavel Tsarenko <tpe2@mail.ru> (DaysInMonth(), DaysToMonth())
- * Copyright 2007 Walter Negro <anegro@overnet.com.ar>
- *
- */
+//
+// The Date API (Harbour level)
+//
+// Copyright 1999-2001 Viktor Szakats (vszakats.net/harbour)
+// Copyright 2004 Giancarlo Niccolai <gc@niccolai.ws>
+// Copyright 2006 Pavel Tsarenko <tpe2@mail.ru> (DaysInMonth(), DaysToMonth())
+// Copyright 2007 Walter Negro <anegro@overnet.com.ar>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify

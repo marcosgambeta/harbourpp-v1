@@ -1,10 +1,9 @@
-/*
- * Misc Support Functions for HTMLLIB
- *
- * Copyright 2000 Manos Aspradakis <maspr@otenet.gr>
- * Copyright 2000 Luiz Rafael Culik <culik@sl.conex.net> (Porting this library to Harbour)
- *
- */
+//
+// Misc Support Functions for HTMLLIB
+//
+// Copyright 2000 Manos Aspradakis <maspr@otenet.gr>
+// Copyright 2000 Luiz Rafael Culik <culik@sl.conex.net> (Porting this library to Harbour)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
