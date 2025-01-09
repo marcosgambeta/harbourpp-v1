@@ -1,11 +1,10 @@
-/*
- * libcurl 'easy' API - Harbour header.
- *
- * Copyright 2008 Viktor Szakats (vszakats.net/harbour)
- * originally based on:
- * Copyright 2005 Luiz Rafael Culik Guimaraes <luiz at xharbour.com.br>
- *
- */
+//
+// libcurl 'easy' API - Harbour header.
+//
+// Copyright 2008 Viktor Szakats (vszakats.net/harbour)
+// originally based on:
+// Copyright 2005 Luiz Rafael Culik Guimaraes <luiz at xharbour.com.br>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -48,13 +47,13 @@
 // If you do not wish that, delete this exception notice.
 // $HB_END_LICENSE$
 
-/* NOTE: This file is also used by C code. */
+// NOTE: This file is also used by C code.
 
 #ifndef HBCURL_CH_
 #define HBCURL_CH_
 
-/* curl_easy_setopt() parameters.
-   NOTE: The actual values may be different from the libcurl equivalent. */
+// curl_easy_setopt() parameters.
+// NOTE: The actual values may be different from the libcurl equivalent.
 
 #define HB_CURLOPT_FILE                       1
 #define HB_CURLOPT_URL                        2
@@ -94,21 +93,21 @@
 #define HB_CURLOPT_STDERR                     37
 #define HB_CURLOPT_POSTQUOTE                  39
 #define HB_CURLOPT_WRITEINFO                  40
-#define HB_CURLOPT_VERBOSE                    41  /* talk a lot */
-#define HB_CURLOPT_HEADER                     42  /* throw the header out too */
-#define HB_CURLOPT_NOPROGRESS                 43  /* shut off the progress meter */
-#define HB_CURLOPT_NOBODY                     44  /* use HEAD to get http document */
-#define HB_CURLOPT_FAILONERROR                45  /* no output on http error codes >= 300 */
-#define HB_CURLOPT_UPLOAD                     46  /* this is an upload */
-#define HB_CURLOPT_POST                       47  /* HTTP POST method */
-#define HB_CURLOPT_DIRLISTONLY                48  /* Use NLST when listing ftp dir */
+#define HB_CURLOPT_VERBOSE                    41  // talk a lot
+#define HB_CURLOPT_HEADER                     42  // throw the header out too
+#define HB_CURLOPT_NOPROGRESS                 43  // shut off the progress meter
+#define HB_CURLOPT_NOBODY                     44  // use HEAD to get http document
+#define HB_CURLOPT_FAILONERROR                45  // no output on http error codes >= 300
+#define HB_CURLOPT_UPLOAD                     46  // this is an upload
+#define HB_CURLOPT_POST                       47  // HTTP POST method
+#define HB_CURLOPT_DIRLISTONLY                48  // Use NLST when listing ftp dir
 #define HB_CURLOPT_FTPLISTONLY                HB_CURLOPT_DIRLISTONLY
-#define HB_CURLOPT_APPEND                     50  /* Append instead of overwrite on upload! */
+#define HB_CURLOPT_APPEND                     50  // Append instead of overwrite on upload!
 #define HB_CURLOPT_FTPAPPEND                  HB_CURLOPT_APPEND
 #define HB_CURLOPT_NETRC                      51
-#define HB_CURLOPT_FOLLOWLOCATION             52  /* use Location: Luke! */
-#define HB_CURLOPT_TRANSFERTEXT               53  /* transfer data in text/ASCII format */
-#define HB_CURLOPT_PUT                        54  /* HTTP PUT */
+#define HB_CURLOPT_FOLLOWLOCATION             52  // use Location: Luke!
+#define HB_CURLOPT_TRANSFERTEXT               53  // transfer data in text/ASCII format
+#define HB_CURLOPT_PUT                        54  // HTTP PUT
 #define HB_CURLOPT_PROGRESSFUNCTION           56
 #define HB_CURLOPT_PROGRESSDATA               HB_CURLOPT_XFERINFODATA
 #define HB_CURLOPT_XFERINFODATA               57
@@ -128,8 +127,8 @@
 #define HB_CURLOPT_CLOSEPOLICY                72
 #define HB_CURLOPT_FRESH_CONNECT              74
 #define HB_CURLOPT_FORBID_REUSE               75
-#define HB_CURLOPT_RANDOM_FILE                76  /* Deprecated in 7.84.0. It serves no purpose anymore. */
-#define HB_CURLOPT_EGDSOCKET                  77  /* Deprecated in 7.84.0. It serves no purpose anymore. */
+#define HB_CURLOPT_RANDOM_FILE                76  // Deprecated in 7.84.0. It serves no purpose anymore.
+#define HB_CURLOPT_EGDSOCKET                  77  // Deprecated in 7.84.0. It serves no purpose anymore.
 #define HB_CURLOPT_CONNECTTIMEOUT             78
 #define HB_CURLOPT_HEADERFUNCTION             79
 #define HB_CURLOPT_HTTPGET                    80
@@ -143,7 +142,7 @@
 #define HB_CURLOPT_SSLKEYTYPE                 88
 #define HB_CURLOPT_SSLENGINE                  89
 #define HB_CURLOPT_SSLENGINE_DEFAULT          90
-#define HB_CURLOPT_DNS_USE_GLOBAL_CACHE       91  /* To become OBSOLETE soon */
+#define HB_CURLOPT_DNS_USE_GLOBAL_CACHE       91  // To become OBSOLETE soon
 #define HB_CURLOPT_DNS_CACHE_TIMEOUT          92
 #define HB_CURLOPT_PREQUOTE                   93
 #define HB_CURLOPT_DEBUGFUNCTION              94
@@ -262,7 +261,7 @@
 #define HB_CURLOPT_MIMEPOST                   269
 #define HB_CURLOPT_PROTOCOLS_STR              318
 #define HB_CURLOPT_REDIR_PROTOCOLS_STR        319
-#define HB_CURLOPT_DOWNLOAD                   1001  /* Harbour special ones */
+#define HB_CURLOPT_DOWNLOAD                   1001  // Harbour special ones
 #define HB_CURLOPT_PROGRESSBLOCK              1002
 #define HB_CURLOPT_UL_FILE_SETUP              1003
 #define HB_CURLOPT_UL_FILE_CLOSE              1004
@@ -275,74 +274,74 @@
 #define HB_CURLOPT_UL_FHANDLE_SETUP           1011
 #define HB_CURLOPT_DL_FHANDLE_SETUP           1012
 #define HB_CURLOPT_DEBUGBLOCK                 1013
-/* Compatibility ones. Please don't use these. */
+// Compatibility ones. Please don't use these.
 #define HB_CURLOPT_SETUPLOADFILE              HB_CURLOPT_UL_FILE_SETUP
 #define HB_CURLOPT_CLOSEUPLOADFILE            HB_CURLOPT_UL_FILE_CLOSE
 #define HB_CURLOPT_SETDOWNLOADFILE            HB_CURLOPT_DL_FILE_SETUP
 #define HB_CURLOPT_CLOSEDOWNLOADFILE          HB_CURLOPT_DL_FILE_CLOSE
 #define HB_CURLOPT_SETPROGRESS                HB_CURLOPT_PROGRESSBLOCK
 
-/* HB_CURLOPT_PROXYTYPE option */
-#define HB_CURLPROXY_HTTP                     0  /* added in 7.10 */
-#define HB_CURLPROXY_HTTP_1_0                 1  /* added in 7.19.4, force to use CONNECT HTTP/1.0 */
-#define HB_CURLPROXY_SOCKS4                   4  /* support added in 7.15.2, enum existed already in 7.10 */
-#define HB_CURLPROXY_SOCKS5                   5  /* added in 7.10 */
-#define HB_CURLPROXY_SOCKS4A                  6  /* added in 7.18.0 */
-#define HB_CURLPROXY_SOCKS5_HOSTNAME          7  /* Use the SOCKS5 protocol but pass along the host name rather than the IP address. added in 7.18.0 */
+// HB_CURLOPT_PROXYTYPE option
+#define HB_CURLPROXY_HTTP                     0  // added in 7.10
+#define HB_CURLPROXY_HTTP_1_0                 1  // added in 7.19.4, force to use CONNECT HTTP/1.0
+#define HB_CURLPROXY_SOCKS4                   4  // support added in 7.15.2, enum existed already in 7.10
+#define HB_CURLPROXY_SOCKS5                   5  // added in 7.10
+#define HB_CURLPROXY_SOCKS4A                  6  // added in 7.18.0
+#define HB_CURLPROXY_SOCKS5_HOSTNAME          7  // Use the SOCKS5 protocol but pass along the host name rather than the IP address. added in 7.18.0
 
-/* HB_CURLOPT_NETRC option */
-#define HB_CURL_NETRC_IGNORED                 0  /* The .netrc will never be read. */
-#define HB_CURL_NETRC_OPTIONAL                1  /* A user:password in the URL will be preferred */
-#define HB_CURL_NETRC_REQUIRED                2  /* A user:password in the URL will be ignored. */
+// HB_CURLOPT_NETRC option
+#define HB_CURL_NETRC_IGNORED                 0  // The .netrc will never be read.
+#define HB_CURL_NETRC_OPTIONAL                1  // A user:password in the URL will be preferred
+#define HB_CURL_NETRC_REQUIRED                2  // A user:password in the URL will be ignored.
 
-/* HB_CURLOPT_SSL_OPTIONS values */
+// HB_CURLOPT_SSL_OPTIONS values
 #define HB_CURLSSLOPT_ALLOW_BEAST             hb_bitShift( 1, 0 )
 
-/* HB_CURLOPT_HTTPAUTH option */
-#define HB_CURLAUTH_NONE                      0                    /* nothing */
-#define HB_CURLAUTH_BASIC                     1                    /* Basic (default) */
-#define HB_CURLAUTH_DIGEST                    2                    /* Digest */
-#define HB_CURLAUTH_GSSNEGOTIATE              4                    /* GSS-Negotiate */
-#define HB_CURLAUTH_NTLM                      8                    /* NTLM */
-#define HB_CURLAUTH_DIGEST_IE                 hb_bitShift( 1, 4 )  /* Digest with IE flavour */
-#define HB_CURLAUTH_NTLM_WB                   hb_bitShift( 1, 5 )  /* NTLM delegating to winbind helper */
-#define HB_CURLAUTH_ONLY                      hb_bitShift( 1, 31 ) /* used together with a single other type to force no auth or just that single type */
-#define HB_CURLAUTH_ANY                       hb_bitNot( 0 )       /* all types set */
+// HB_CURLOPT_HTTPAUTH option
+#define HB_CURLAUTH_NONE                      0                    // nothing
+#define HB_CURLAUTH_BASIC                     1                    // Basic (default)
+#define HB_CURLAUTH_DIGEST                    2                    // Digest
+#define HB_CURLAUTH_GSSNEGOTIATE              4                    // GSS-Negotiate
+#define HB_CURLAUTH_NTLM                      8                    // NTLM
+#define HB_CURLAUTH_DIGEST_IE                 hb_bitShift( 1, 4 )  // Digest with IE flavour
+#define HB_CURLAUTH_NTLM_WB                   hb_bitShift( 1, 5 )  // NTLM delegating to winbind helper
+#define HB_CURLAUTH_ONLY                      hb_bitShift( 1, 31 ) // used together with a single other type to force no auth or just that single type
+#define HB_CURLAUTH_ANY                       hb_bitNot( 0 )       // all types set
 #define HB_CURLAUTH_ANYSAFE                   hb_bitNot( hb_bitOr( HB_CURLAUTH_BASIC, HB_CURLAUTH_DIGEST_IE ) )
 
-/* HB_CURLOPT_HTTP_VERSION option */
-#define HB_CURL_HTTP_VERSION_NONE             0  /* setting this means we don't care, and that we'd like the library to choose the best possible for us! */
-#define HB_CURL_HTTP_VERSION_1_0              1  /* please use HTTP 1.0 in the request */
-#define HB_CURL_HTTP_VERSION_1_1              2  /* please use HTTP 1.1 in the request */
+// HB_CURLOPT_HTTP_VERSION option
+#define HB_CURL_HTTP_VERSION_NONE             0  // setting this means we don't care, and that we'd like the library to choose the best possible for us!
+#define HB_CURL_HTTP_VERSION_1_0              1  // please use HTTP 1.0 in the request
+#define HB_CURL_HTTP_VERSION_1_1              2  // please use HTTP 1.1 in the request
 
-/* HB_CURLOPT_USE_SSL option */
-#define HB_CURLUSESSL_NONE                    0  /* do not attempt to use SSL */
-#define HB_CURLUSESSL_TRY                     1  /* try using SSL, proceed anyway otherwise */
-#define HB_CURLUSESSL_CONTROL                 2  /* SSL for the control connection or fail */
-#define HB_CURLUSESSL_ALL                     3  /* SSL for all communication or fail */
+// HB_CURLOPT_USE_SSL option
+#define HB_CURLUSESSL_NONE                    0  // do not attempt to use SSL
+#define HB_CURLUSESSL_TRY                     1  // try using SSL, proceed anyway otherwise
+#define HB_CURLUSESSL_CONTROL                 2  // SSL for the control connection or fail
+#define HB_CURLUSESSL_ALL                     3  // SSL for all communication or fail
 
-/* HB_CURLOPT_FTPSSLAUTH option */
-#define HB_CURLFTPAUTH_DEFAULT                0  /* let libcurl decide */
-#define HB_CURLFTPAUTH_SSL                    1  /* use "AUTH SSL" */
-#define HB_CURLFTPAUTH_TLS                    2  /* use "AUTH TLS" */
+// HB_CURLOPT_FTPSSLAUTH option
+#define HB_CURLFTPAUTH_DEFAULT                0  // let libcurl decide
+#define HB_CURLFTPAUTH_SSL                    1  // use "AUTH SSL"
+#define HB_CURLFTPAUTH_TLS                    2  // use "AUTH TLS"
 
-/* HB_CURLOPT_FTP_SSL_CCC option */
-#define HB_CURLFTPSSL_CCC_NONE                0  /* do not send CCC */
-#define HB_CURLFTPSSL_CCC_PASSIVE             1  /* Let the server initiate the shutdown */
-#define HB_CURLFTPSSL_CCC_ACTIVE              2  /* Initiate the shutdown */
+// HB_CURLOPT_FTP_SSL_CCC option
+#define HB_CURLFTPSSL_CCC_NONE                0  // do not send CCC
+#define HB_CURLFTPSSL_CCC_PASSIVE             1  // Let the server initiate the shutdown
+#define HB_CURLFTPSSL_CCC_ACTIVE              2  // Initiate the shutdown
 
-/* HB_CURLOPT_FTP_FILEMETHOD option */
-#define HB_CURLFTPMETHOD_DEFAULT              0  /* let libcurl pick */
-#define HB_CURLFTPMETHOD_MULTICWD             1  /* single CWD operation for each path part */
-#define HB_CURLFTPMETHOD_NOCWD                2  /* no CWD at all */
-#define HB_CURLFTPMETHOD_SINGLECWD            3  /* one CWD to full dir, then work on file */
+// HB_CURLOPT_FTP_FILEMETHOD option
+#define HB_CURLFTPMETHOD_DEFAULT              0  // let libcurl pick
+#define HB_CURLFTPMETHOD_MULTICWD             1  // single CWD operation for each path part
+#define HB_CURLFTPMETHOD_NOCWD                2  // no CWD at all
+#define HB_CURLFTPMETHOD_SINGLECWD            3  // one CWD to full dir, then work on file
 
-/* HB_CURLOPT_FTP_CREATE_MISSING_DIRS option */
+// HB_CURLOPT_FTP_CREATE_MISSING_DIRS option 
 #define HB_CURLFTP_CREATE_DIR_NONE            0
 #define HB_CURLFTP_CREATE_DIR                 1
 #define HB_CURLFTP_CREATE_DIR_RETRY           2
 
-/* HB_CURLOPT_RTSP_REQUEST option */
+// HB_CURLOPT_RTSP_REQUEST option
 #define HB_CURL_RTSPREQ_NONE                  0
 #define HB_CURL_RTSPREQ_OPTIONS               1
 #define HB_CURL_RTSPREQ_DESCRIBE              2
@@ -357,33 +356,33 @@
 #define HB_CURL_RTSPREQ_RECEIVE               11
 #define HB_CURL_RTSPREQ_LAST                  12
 
-/* HB_CURLOPT_TIMECONDITION option */
+// HB_CURLOPT_TIMECONDITION option
 #define HB_CURL_TIMECOND_NONE                 0
 #define HB_CURL_TIMECOND_IFMODSINCE           1
 #define HB_CURL_TIMECOND_IFUNMODSINCE         2
 #define HB_CURL_TIMECOND_LASTMOD              3
 
-/* HB_CURLOPT_IPRESOLVE option */
-#define HB_CURL_IPRESOLVE_WHATEVER            0  /* default, resolves addresses to all IP versions that your system allows */
-#define HB_CURL_IPRESOLVE_V4                  1  /* resolve to ipv4 addresses */
-#define HB_CURL_IPRESOLVE_V6                  2  /* resolve to ipv6 addresses */
+// HB_CURLOPT_IPRESOLVE option
+#define HB_CURL_IPRESOLVE_WHATEVER            0  // default, resolves addresses to all IP versions that your system allows
+#define HB_CURL_IPRESOLVE_V4                  1  // resolve to ipv4 addresses
+#define HB_CURL_IPRESOLVE_V6                  2  // resolve to ipv6 addresses
 
-/* HB_CURLOPT_SSLVERSION option */
+// HB_CURLOPT_SSLVERSION option
 #define HB_CURL_SSLVERSION_DEFAULT            0
 #define HB_CURL_SSLVERSION_TLSv1              1
 #define HB_CURL_SSLVERSION_SSLv2              2
 #define HB_CURL_SSLVERSION_SSLv3              3
 
-/*  HB_CURLOPT_SSH_AUTH_TYPES option */
-#define HB_CURL_CURLSSH_AUTH_ANY              hb_bitNot( 0 )      /* all types supported by the server */
-#define HB_CURL_CURLSSH_AUTH_NONE             0                   /* none allowed, silly but complete */
-#define HB_CURL_CURLSSH_AUTH_PUBLICKEY        1                   /* public/private key files */
-#define HB_CURL_CURLSSH_AUTH_PASSWORD         2                   /* password */
-#define HB_CURL_CURLSSH_AUTH_HOST             4                   /* host key files */
-#define HB_CURL_CURLSSH_AUTH_KEYBOARD         8                   /* keyboard interactive */
+//  HB_CURLOPT_SSH_AUTH_TYPES option
+#define HB_CURL_CURLSSH_AUTH_ANY              hb_bitNot( 0 )      // all types supported by the server
+#define HB_CURL_CURLSSH_AUTH_NONE             0                   // none allowed, silly but complete
+#define HB_CURL_CURLSSH_AUTH_PUBLICKEY        1                   // public/private key files
+#define HB_CURL_CURLSSH_AUTH_PASSWORD         2                   // password
+#define HB_CURL_CURLSSH_AUTH_HOST             4                   // host key files
+#define HB_CURL_CURLSSH_AUTH_KEYBOARD         8                   // keyboard interactive
 #define HB_CURL_CURLSSH_AUTH_DEFAULT          HB_CURLSSH_AUTH_ANY
 
-/* CURLOPT_*PROTOCOLS options */
+// CURLOPT_*PROTOCOLS options
 #define HB_CURLPROTO_HTTP                     hb_bitShift( 1, 0 )
 #define HB_CURLPROTO_HTTPS                    hb_bitShift( 1, 1 )
 #define HB_CURLPROTO_FTP                      hb_bitShift( 1, 2 )
@@ -416,7 +415,7 @@
 #define HB_CURLPROTO_GOPHERS                  hb_bitShift( 1, 29 )
 #define HB_CURLPROTO_ALL                      hb_bitNot( 0 )
 
-/* curl_easy_pause() parameters. They can be combined with hb_bitOr(). */
+// curl_easy_pause() parameters. They can be combined with hb_bitOr().
 #define HB_CURLPAUSE_RECV                     1
 #define HB_CURLPAUSE_RECV_CONT                0
 #define HB_CURLPAUSE_SEND                     4
@@ -424,15 +423,15 @@
 #define HB_CURLPAUSE_ALL                      hb_bitOr( HB_CURLPAUSE_RECV, HB_CURLPAUSE_SEND )
 #define HB_CURLPAUSE_CONT                     hb_bitOr( HB_CURLPAUSE_RECV_CONT, HB_CURLPAUSE_SEND_CONT )
 
-/* curl_global_init() parameters. */
+// curl_global_init() parameters.
 #define HB_CURL_GLOBAL_SSL                    1
 #define HB_CURL_GLOBAL_WIN32                  2
 #define HB_CURL_GLOBAL_ALL                    hb_bitOr( HB_CURL_GLOBAL_SSL, HB_CURL_GLOBAL_WIN32 )
 #define HB_CURL_GLOBAL_NOTHING                0
 #define HB_CURL_GLOBAL_DEFAULT                HB_CURL_GLOBAL_ALL
 
-/* curl_easy_getinfo() parameters.
-   NOTE: The actual values may be different from the libcurl equivalent. */
+// curl_easy_getinfo() parameters.
+// NOTE: The actual values may be different from the libcurl equivalent.
 
 #define HB_CURLINFO_EFFECTIVE_URL             1
 #define HB_CURLINFO_RESPONSE_CODE             2
@@ -486,98 +485,98 @@
 #define HB_CURLINFO_CONTENT_LENGTH_DOWNLOAD_T ( HB_CURLINFO_OFF_T + 15 )
 #define HB_CURLINFO_CONTENT_LENGTH_UPLOAD_T   ( HB_CURLINFO_OFF_T + 16 )
 
-/* curl result codes. */
+// curl result codes.
 
-#define HB_CURLE_ERROR                        -1 /* request not passed to libcurl (libcurl not initialized or unknown parameter) */
+#define HB_CURLE_ERROR                        -1 // request not passed to libcurl (libcurl not initialized or unknown parameter)
 #define HB_CURLE_OK                           0
-#define HB_CURLE_UNSUPPORTED_PROTOCOL         1  /* */
-#define HB_CURLE_FAILED_INIT                  2  /* */
-#define HB_CURLE_URL_MALFORMAT                3  /* */
-#define HB_CURLE_NOT_BUILT_IN                 4  /* */
-#define HB_CURLE_COULDNT_RESOLVE_PROXY        5  /* */
-#define HB_CURLE_COULDNT_RESOLVE_HOST         6  /* */
-#define HB_CURLE_COULDNT_CONNECT              7  /* */
-#define HB_CURLE_FTP_WEIRD_SERVER_REPLY       8  /* */
-#define HB_CURLE_REMOTE_ACCESS_DENIED         9  /* a service was denied by the server due to lack of access - when login fails this is not returned. */
-#define HB_CURLE_OBSOLETE10                   10 /* NOT USED */
-#define HB_CURLE_FTP_WEIRD_PASS_REPLY         11 /* */
-#define HB_CURLE_OBSOLETE12                   12 /* NOT USED */
-#define HB_CURLE_FTP_WEIRD_PASV_REPLY         13 /* */
-#define HB_CURLE_FTP_WEIRD_227_FORMAT         14 /* */
-#define HB_CURLE_FTP_CANT_GET_HOST            15 /* */
-#define HB_CURLE_OBSOLETE16                   16 /* NOT USED */
-#define HB_CURLE_FTP_COULDNT_SET_TYPE         17 /* */
-#define HB_CURLE_PARTIAL_FILE                 18 /* */
-#define HB_CURLE_FTP_COULDNT_RETR_FILE        19 /* */
-#define HB_CURLE_OBSOLETE20                   20 /* NOT USED */
-#define HB_CURLE_QUOTE_ERROR                  21 /* quote command failure */
-#define HB_CURLE_HTTP_RETURNED_ERROR          22 /* */
-#define HB_CURLE_WRITE_ERROR                  23 /* */
-#define HB_CURLE_OBSOLETE24                   24 /* NOT USED */
-#define HB_CURLE_UPLOAD_FAILED                25 /* failed upload "command" */
-#define HB_CURLE_READ_ERROR                   26 /* could open/read from file */
-#define HB_CURLE_OUT_OF_MEMORY                27 /* */
-#define HB_CURLE_OPERATION_TIMEDOUT           28 /* the timeout time was reached */
-#define HB_CURLE_OBSOLETE29                   29 /* NOT USED */
-#define HB_CURLE_FTP_PORT_FAILED              30 /* FTP PORT operation failed */
-#define HB_CURLE_FTP_COULDNT_USE_REST         31 /* the REST command failed */
-#define HB_CURLE_OBSOLETE32                   32 /* NOT USED */
-#define HB_CURLE_RANGE_ERROR                  33 /* RANGE "command" didn't work */
-#define HB_CURLE_HTTP_POST_ERROR              34 /* */
-#define HB_CURLE_SSL_CONNECT_ERROR            35 /* wrong when connecting with SSL */
-#define HB_CURLE_BAD_DOWNLOAD_RESUME          36 /* couldn't resume download */
-#define HB_CURLE_FILE_COULDNT_READ_FILE       37 /* */
-#define HB_CURLE_LDAP_CANNOT_BIND             38 /* */
-#define HB_CURLE_LDAP_SEARCH_FAILED           39 /* */
-#define HB_CURLE_OBSOLETE40                   40 /* NOT USED */
-#define HB_CURLE_FUNCTION_NOT_FOUND           41 /* */
-#define HB_CURLE_ABORTED_BY_CALLBACK          42 /* */
-#define HB_CURLE_BAD_FUNCTION_ARGUMENT        43 /* */
-#define HB_CURLE_OBSOLETE44                   44 /* NOT USED */
-#define HB_CURLE_INTERFACE_FAILED             45 /* CURLOPT_INTERFACE failed */
-#define HB_CURLE_OBSOLETE46                   46 /* NOT USED */
-#define HB_CURLE_TOO_MANY_REDIRECTS           47 /* catch endless re-direct loops */
-#define HB_CURLE_UNKNOWN_OPTION               48 /* User specified an unknown option */
+#define HB_CURLE_UNSUPPORTED_PROTOCOL         1  //
+#define HB_CURLE_FAILED_INIT                  2  //
+#define HB_CURLE_URL_MALFORMAT                3  //
+#define HB_CURLE_NOT_BUILT_IN                 4  //
+#define HB_CURLE_COULDNT_RESOLVE_PROXY        5  //
+#define HB_CURLE_COULDNT_RESOLVE_HOST         6  //
+#define HB_CURLE_COULDNT_CONNECT              7  //
+#define HB_CURLE_FTP_WEIRD_SERVER_REPLY       8  //
+#define HB_CURLE_REMOTE_ACCESS_DENIED         9  // a service was denied by the server due to lack of access - when login fails this is not returned.
+#define HB_CURLE_OBSOLETE10                   10 // NOT USED
+#define HB_CURLE_FTP_WEIRD_PASS_REPLY         11 //
+#define HB_CURLE_OBSOLETE12                   12 // NOT USED
+#define HB_CURLE_FTP_WEIRD_PASV_REPLY         13 //
+#define HB_CURLE_FTP_WEIRD_227_FORMAT         14 //
+#define HB_CURLE_FTP_CANT_GET_HOST            15 //
+#define HB_CURLE_OBSOLETE16                   16 // NOT USED
+#define HB_CURLE_FTP_COULDNT_SET_TYPE         17 //
+#define HB_CURLE_PARTIAL_FILE                 18 //
+#define HB_CURLE_FTP_COULDNT_RETR_FILE        19 //
+#define HB_CURLE_OBSOLETE20                   20 // NOT USED
+#define HB_CURLE_QUOTE_ERROR                  21 // quote command failure
+#define HB_CURLE_HTTP_RETURNED_ERROR          22 //
+#define HB_CURLE_WRITE_ERROR                  23 //
+#define HB_CURLE_OBSOLETE24                   24 // NOT USED
+#define HB_CURLE_UPLOAD_FAILED                25 // failed upload "command"
+#define HB_CURLE_READ_ERROR                   26 // could open/read from file
+#define HB_CURLE_OUT_OF_MEMORY                27 //
+#define HB_CURLE_OPERATION_TIMEDOUT           28 // the timeout time was reached
+#define HB_CURLE_OBSOLETE29                   29 // NOT USED
+#define HB_CURLE_FTP_PORT_FAILED              30 // FTP PORT operation failed
+#define HB_CURLE_FTP_COULDNT_USE_REST         31 // the REST command failed
+#define HB_CURLE_OBSOLETE32                   32 // NOT USED
+#define HB_CURLE_RANGE_ERROR                  33 // RANGE "command" didn't work
+#define HB_CURLE_HTTP_POST_ERROR              34 //
+#define HB_CURLE_SSL_CONNECT_ERROR            35 // wrong when connecting with SSL
+#define HB_CURLE_BAD_DOWNLOAD_RESUME          36 // couldn't resume download
+#define HB_CURLE_FILE_COULDNT_READ_FILE       37 //
+#define HB_CURLE_LDAP_CANNOT_BIND             38 //
+#define HB_CURLE_LDAP_SEARCH_FAILED           39 //
+#define HB_CURLE_OBSOLETE40                   40 // NOT USED
+#define HB_CURLE_FUNCTION_NOT_FOUND           41 //
+#define HB_CURLE_ABORTED_BY_CALLBACK          42 //
+#define HB_CURLE_BAD_FUNCTION_ARGUMENT        43 //
+#define HB_CURLE_OBSOLETE44                   44 // NOT USED
+#define HB_CURLE_INTERFACE_FAILED             45 // CURLOPT_INTERFACE failed
+#define HB_CURLE_OBSOLETE46                   46 // NOT USED
+#define HB_CURLE_TOO_MANY_REDIRECTS           47 // catch endless re-direct loops
+#define HB_CURLE_UNKNOWN_OPTION               48 // User specified an unknown option
 #define HB_CURLE_UNKNOWN_TELNET_OPTION        HB_CURLE_UNKNOWN_OPTION
-#define HB_CURLE_TELNET_OPTION_SYNTAX         49 /* Malformed telnet option */
-#define HB_CURLE_OBSOLETE50                   50 /* NOT USED */
-#define HB_CURLE_PEER_FAILED_VERIFICATION     51 /* peer's certificate or fingerprint wasn't verified fine */
-#define HB_CURLE_GOT_NOTHING                  52 /* when this is a specific error */
-#define HB_CURLE_SSL_ENGINE_NOTFOUND          53 /* SSL crypto engine not found */
-#define HB_CURLE_SSL_ENGINE_SETFAILED         54 /* can not set SSL crypto engine as default */
-#define HB_CURLE_SEND_ERROR                   55 /* failed sending network data */
-#define HB_CURLE_RECV_ERROR                   56 /* failure in receiving network data */
-#define HB_CURLE_OBSOLETE57                   57 /* NOT IN USE */
-#define HB_CURLE_SSL_CERTPROBLEM              58 /* problem with the local certificate */
-#define HB_CURLE_SSL_CIPHER                   59 /* couldn't use specified cipher */
-#define HB_CURLE_SSL_CACERT                   60 /* problem with the CA cert (path?) */
-#define HB_CURLE_BAD_CONTENT_ENCODING         61 /* Unrecognized transfer encoding */
-#define HB_CURLE_LDAP_INVALID_URL             62 /* Invalid LDAP URL */
-#define HB_CURLE_FILESIZE_EXCEEDED            63 /* Maximum file size exceeded */
-#define HB_CURLE_USE_SSL_FAILED               64 /* Requested FTP SSL level failed */
-#define HB_CURLE_SEND_FAIL_REWIND             65 /* Sending the data requires a rewind that failed */
-#define HB_CURLE_SSL_ENGINE_INITFAILED        66 /* failed to initialise ENGINE */
-#define HB_CURLE_LOGIN_DENIED                 67 /* user, password or similar was not accepted and we failed to login */
-#define HB_CURLE_TFTP_NOTFOUND                68 /* file not found on server */
-#define HB_CURLE_TFTP_PERM                    69 /* permission problem on server */
-#define HB_CURLE_REMOTE_DISK_FULL             70 /* out of disk space on server */
-#define HB_CURLE_TFTP_ILLEGAL                 71 /* Illegal TFTP operation */
-#define HB_CURLE_TFTP_UNKNOWNID               72 /* Unknown transfer ID */
-#define HB_CURLE_REMOTE_FILE_EXISTS           73 /* File already exists */
-#define HB_CURLE_TFTP_NOSUCHUSER              74 /* No such user */
-#define HB_CURLE_CONV_FAILED                  75 /* conversion failed */
-#define HB_CURLE_CONV_REQD                    76 /* caller must register conversion callbacks using curl_easy_setopt options CURLOPT_CONV_FROM_NETWORK_FUNCTION, CURLOPT_CONV_TO_NETWORK_FUNCTION, and CURLOPT_CONV_FROM_UTF8_FUNCTION */
-#define HB_CURLE_SSL_CACERT_BADFILE           77 /* could not load CACERT file, missing or wrong format */
-#define HB_CURLE_REMOTE_FILE_NOT_FOUND        78 /* remote file not found */
-#define HB_CURLE_SSH                          79 /* error from the SSH layer, somewhat generic so the error message will be of interest when this has happened */
-#define HB_CURLE_SSL_SHUTDOWN_FAILED          80 /* Failed to shut down the SSL connection */
-#define HB_CURLE_AGAIN                        81 /* socket is not ready for send/recv, wait till it's ready and try again */
-#define HB_CURLE_SSL_CRL_BADFILE              82 /* could not load CRL file, missing or wrong format (Added in 7.19.0) */
-#define HB_CURLE_SSL_ISSUER_ERROR             83 /* Issuer check failed. (Added in 7.19.0) */
-#define HB_CURLE_FTP_PRET_FAILED              84 /* a PRET command failed */
-#define HB_CURLE_RTSP_CSEQ_ERROR              85 /* mismatch of RTSP CSeq numbers */
-#define HB_CURLE_RTSP_SESSION_ERROR           86 /* mismatch of RTSP Session Identifiers */
-#define HB_CURLE_FTP_BAD_FILE_LIST            87 /* unable to parse FTP file list */
-#define HB_CURLE_CHUNK_FAILED                 88 /* chunk callback reported error */
+#define HB_CURLE_TELNET_OPTION_SYNTAX         49 // Malformed telnet option 
+#define HB_CURLE_OBSOLETE50                   50 // NOT USED
+#define HB_CURLE_PEER_FAILED_VERIFICATION     51 // peer's certificate or fingerprint wasn't verified fine
+#define HB_CURLE_GOT_NOTHING                  52 // when this is a specific error
+#define HB_CURLE_SSL_ENGINE_NOTFOUND          53 // SSL crypto engine not found
+#define HB_CURLE_SSL_ENGINE_SETFAILED         54 // can not set SSL crypto engine as default
+#define HB_CURLE_SEND_ERROR                   55 // failed sending network data
+#define HB_CURLE_RECV_ERROR                   56 // failure in receiving network data
+#define HB_CURLE_OBSOLETE57                   57 // NOT IN USE 
+#define HB_CURLE_SSL_CERTPROBLEM              58 // problem with the local certificate
+#define HB_CURLE_SSL_CIPHER                   59 // couldn't use specified cipher
+#define HB_CURLE_SSL_CACERT                   60 // problem with the CA cert (path?)
+#define HB_CURLE_BAD_CONTENT_ENCODING         61 // Unrecognized transfer encoding
+#define HB_CURLE_LDAP_INVALID_URL             62 // Invalid LDAP URL
+#define HB_CURLE_FILESIZE_EXCEEDED            63 // Maximum file size exceeded
+#define HB_CURLE_USE_SSL_FAILED               64 // Requested FTP SSL level failed
+#define HB_CURLE_SEND_FAIL_REWIND             65 // Sending the data requires a rewind that failed
+#define HB_CURLE_SSL_ENGINE_INITFAILED        66 // failed to initialise ENGINE
+#define HB_CURLE_LOGIN_DENIED                 67 // user, password or similar was not accepted and we failed to login
+#define HB_CURLE_TFTP_NOTFOUND                68 // file not found on server
+#define HB_CURLE_TFTP_PERM                    69 // permission problem on server
+#define HB_CURLE_REMOTE_DISK_FULL             70 // out of disk space on server
+#define HB_CURLE_TFTP_ILLEGAL                 71 // Illegal TFTP operation
+#define HB_CURLE_TFTP_UNKNOWNID               72 // Unknown transfer ID
+#define HB_CURLE_REMOTE_FILE_EXISTS           73 // File already exists
+#define HB_CURLE_TFTP_NOSUCHUSER              74 // No such user
+#define HB_CURLE_CONV_FAILED                  75 // conversion failed
+#define HB_CURLE_CONV_REQD                    76 // caller must register conversion callbacks using curl_easy_setopt options CURLOPT_CONV_FROM_NETWORK_FUNCTION, CURLOPT_CONV_TO_NETWORK_FUNCTION, and CURLOPT_CONV_FROM_UTF8_FUNCTION
+#define HB_CURLE_SSL_CACERT_BADFILE           77 // could not load CACERT file, missing or wrong format
+#define HB_CURLE_REMOTE_FILE_NOT_FOUND        78 // remote file not found
+#define HB_CURLE_SSH                          79 // error from the SSH layer, somewhat generic so the error message will be of interest when this has happened
+#define HB_CURLE_SSL_SHUTDOWN_FAILED          80 // Failed to shut down the SSL connection
+#define HB_CURLE_AGAIN                        81 // socket is not ready for send/recv, wait till it's ready and try again
+#define HB_CURLE_SSL_CRL_BADFILE              82 // could not load CRL file, missing or wrong format (Added in 7.19.0)
+#define HB_CURLE_SSL_ISSUER_ERROR             83 // Issuer check failed. (Added in 7.19.0)
+#define HB_CURLE_FTP_PRET_FAILED              84 // a PRET command failed
+#define HB_CURLE_RTSP_CSEQ_ERROR              85 // mismatch of RTSP CSeq numbers
+#define HB_CURLE_RTSP_SESSION_ERROR           86 // mismatch of RTSP Session Identifiers
+#define HB_CURLE_FTP_BAD_FILE_LIST            87 // unable to parse FTP file list
+#define HB_CURLE_CHUNK_FAILED                 88 // chunk callback reported error
 
-#endif /* HBCURL_CH_ */
+#endif // HBCURL_CH_

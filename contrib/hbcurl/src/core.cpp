@@ -1,11 +1,10 @@
-/*
- * libcurl 'easy' API - Harbour interface.
- *
- * Copyright 2008-2010 Viktor Szakats (vszakats.net/harbour)
- * originally based on:
- * Copyright 2005 Luiz Rafael Culik Guimaraes <luiz at xharbour.com.br>
- *
- */
+//
+// libcurl 'easy' API - Harbour interface.
+//
+// Copyright 2008-2010 Viktor Szakats (vszakats.net/harbour)
+// originally based on:
+// Copyright 2005 Luiz Rafael Culik Guimaraes <luiz at xharbour.com.br>
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -68,13 +67,13 @@
 #define HB_CURL_OPT_BOOL(n) (HB_ISLOG(n) ? (long)hb_parl(n) : hb_parnldef(n, 1))
 #define HB_CURL_OPT_LARGENUM(n) ((curl_off_t)hb_parnint(n))
 
-/* NOTE: Harbour requires libcurl 7.17.0 or upper.
-         This was the version where curl_easy_setopt() started to
-         make copies of passed strings, which we currently require.
-         Update: This requirement is now sorted out by local string
-                 buffering logic used with pre-7.17.0 versions of
-                 libcurl.
-         [vszakats] */
+// NOTE: Harbour requires libcurl 7.17.0 or upper.
+//       This was the version where curl_easy_setopt() started to
+//       make copies of passed strings, which we currently require.
+//       Update: This requirement is now sorted out by local string
+//               buffering logic used with pre-7.17.0 versions of
+//               libcurl.
+//       [vszakats]
 
 #if LIBCURL_VERSION_NUM < 0x071100
 #ifndef HB_CURL_HASH_STRINGS
@@ -82,8 +81,8 @@
 #endif
 #endif
 
-/* Fall back to return simple error if special abort signal is not available. */
-#if !defined(CURL_READFUNC_ABORT) /* Introduced in LIBCURL_VERSION_NUM >= 0x070C01 */
+// Fall back to return simple error if special abort signal is not available.
+#if !defined(CURL_READFUNC_ABORT) // Introduced in LIBCURL_VERSION_NUM >= 0x070C01
 #define CURL_READFUNC_ABORT ((size_t)-1)
 #endif
 
@@ -129,17 +128,16 @@ typedef struct _HB_CURL
 
 } HB_CURL, *PHB_CURL;
 
-/* functions to keep passed string values accessible even if HVM
- * destroy them. It's necessary for old CURL versions which do not
- * make own copy of passed strings
- */
+// functions to keep passed string values accessible even if HVM
+// destroy them. It's necessary for old CURL versions which do not
+// make own copy of passed strings
 
 #ifdef HB_CURL_HASH_STRINGS
 
 #define HB_CURL_HASH_TABLE_SIZE 509UL
 
-/* returns a hash key */
-static HB_HASH_FUNC(hb_curl_HashKey) /* HB_SIZE func( const void * Value, const void * Cargo ) */
+// returns a hash key
+static HB_HASH_FUNC(hb_curl_HashKey) // HB_SIZE func( const void * Value, const void * Cargo )
 {
   HB_SIZE ulSum = 0;
   auto szName = static_cast<const char *>(Value);
@@ -155,7 +153,7 @@ static HB_HASH_FUNC(hb_curl_HashKey) /* HB_SIZE func( const void * Value, const 
   return ulSum % HB_CURL_HASH_TABLE_SIZE;
 }
 
-/* deletes a string */
+// deletes a string
 static HB_HASH_FUNC(hb_curl_HashDel)
 {
   hb_xfree(static_cast<void *>(Value));
@@ -164,7 +162,7 @@ static HB_HASH_FUNC(hb_curl_HashDel)
   return 1;
 }
 
-/* compares two strings */
+// compares two strings
 static HB_HASH_FUNC(hb_curl_HashCmp)
 {
   HB_SYMBOL_UNUSED(HashPtr);
@@ -200,13 +198,13 @@ static const char *hb_curl_StrHashNew(PHB_CURL hb_curl, const char *szValue)
 
 #define hb_curl_StrHash(c, s) (s)
 
-#endif /* HB_CURL_HASH_STRINGS */
+#endif // HB_CURL_HASH_STRINGS
 
 #if LIBCURL_VERSION_NUM >= 0x075500
 #define hb_bitShift(b, s) ((b) << (s))
 static char *hb_curl_protnames(unsigned long bitmask)
 {
-  /* now we need 166 bytes for 30 protocol names and trailing 0 so 200 is enough */
+  // now we need 166 bytes for 30 protocol names and trailing 0 so 200 is enough
   HB_SIZE nLen = 200, nDst = 0;
   auto buffer = static_cast<char *>(hb_xgrab(nLen));
   unsigned long prot;
@@ -329,8 +327,8 @@ static char *hb_curl_protnames(unsigned long bitmask)
 }
 #endif
 
-/* Global initialization/deinitialization */
-/* -------------------------------------- */
+// Global initialization/deinitialization
+// --------------------------------------
 
 static void *hb_curl_xgrab(size_t size)
 {
@@ -372,7 +370,7 @@ static void hb_curl_retcode(CURLcode code)
 
 HB_FUNC(CURL_GLOBAL_INIT)
 {
-#if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
+#if LIBCURL_VERSION_NUM >= 0x070A08 // Not documented. GUESS.
   hb_curl_retcode(curl_global_init_mem(hb_parnldef(1, CURL_GLOBAL_ALL), hb_curl_xgrab, hb_curl_xfree, hb_curl_xrealloc,
                                        hb_curl_strdup, hb_curl_calloc));
 #else
@@ -385,8 +383,8 @@ HB_FUNC(CURL_GLOBAL_CLEANUP)
   curl_global_cleanup();
 }
 
-/* Callbacks */
-/* --------- */
+// Callbacks
+// ---------
 
 static size_t hb_curl_read_dummy_callback(void *buffer, size_t size, size_t nmemb, void *Cargo)
 {
@@ -556,7 +554,7 @@ static int hb_curl_progress_callback(void *Cargo, double dltotal, double dlnow, 
 
       if (hb_parl(-1))
       {
-        return 1; /* Abort */
+        return 1; // Abort
       }
 
       hb_vmRequestRestore();
@@ -588,8 +586,8 @@ static int hb_curl_debug_callback(CURL *handle, curl_infotype type, char *data, 
   return 0;
 }
 
-/* Helpers */
-/* ------- */
+// Helpers
+// -------
 
 #if LIBCURL_VERSION_NUM < 0x073800
 static void hb_curl_form_free(struct curl_httppost **ptr)
@@ -663,8 +661,8 @@ static void hb_curl_buff_dl_free(PHB_CURL hb_curl)
   }
 }
 
-/* Constructor/Destructor */
-/* ---------------------- */
+// Constructor/Destructor
+// ----------------------
 
 static void PHB_CURL_free(PHB_CURL hb_curl, HB_BOOL bFree)
 {
@@ -680,7 +678,7 @@ static void PHB_CURL_free(PHB_CURL hb_curl, HB_BOOL bFree)
   curl_easy_setopt(hb_curl->curl, CURLOPT_PROGRESSDATA, nullptr);
 #endif
 
-  /* Some extra safety. Set these to NULL, before freeing their pointers. */
+  // Some extra safety. Set these to NULL, before freeing their pointers.
 #if LIBCURL_VERSION_NUM < 0x073800
   curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPPOST, nullptr);
 #endif
@@ -752,8 +750,8 @@ static void PHB_CURL_free(PHB_CURL hb_curl, HB_BOOL bFree)
 #endif
 }
 
-/* NOTE: Will create a new one. If 'from' is specified, the new one
-         will be based on the 'from' one. */
+// NOTE: Will create a new one. If 'from' is specified, the new one
+//       will be based on the 'from' one.
 
 static PHB_CURL PHB_CURL_create(CURL *from)
 {
@@ -778,10 +776,10 @@ static HB_GARBAGE_FUNC(PHB_CURL_release)
 {
   auto hb_curl_ptr = static_cast<PHB_CURL *>(Cargo);
 
-  /* Check if pointer is not NULL to avoid multiple freeing */
+  // Check if pointer is not NULL to avoid multiple freeing
   if (hb_curl_ptr && *hb_curl_ptr)
   {
-    /* Destroy the object */
+    // Destroy the object
     PHB_CURL_free(*hb_curl_ptr, true);
     *hb_curl_ptr = nullptr;
   }
@@ -830,8 +828,8 @@ static PHB_CURL PHB_CURL_par(int iParam)
   return ph ? static_cast<PHB_CURL>(*ph) : nullptr;
 }
 
-/* Harbour interface */
-/* ----------------- */
+// Harbour interface
+// -----------------
 
 HB_FUNC(CURL_EASY_INIT)
 {
@@ -858,7 +856,7 @@ HB_FUNC(CURL_EASY_CLEANUP)
 
     if (ph && *ph)
     {
-      /* Destroy the object */
+      // Destroy the object
       PHB_CURL_free(static_cast<PHB_CURL>(*ph), true);
       *ph = nullptr;
     }
@@ -918,7 +916,7 @@ HB_FUNC(CURL_EASY_PERFORM)
   }
 }
 
-/* NOTE: curl_easy_send( curl, cBuffer, @nSentBytes ) -> nResult */
+// NOTE: curl_easy_send( curl, cBuffer, @nSentBytes ) -> nResult
 HB_FUNC(CURL_EASY_SEND)
 {
   if (PHB_CURL_is(1))
@@ -944,7 +942,7 @@ HB_FUNC(CURL_EASY_SEND)
   }
 }
 
-/* NOTE: curl_easy_recv( curl, @cBuffer ) -> nResult */
+// NOTE: curl_easy_recv( curl, @cBuffer ) -> nResult
 HB_FUNC(CURL_EASY_RECV)
 {
   if (PHB_CURL_is(1))
@@ -992,7 +990,7 @@ HB_FUNC(CURL_EASY_SETOPT)
     {
       switch (hb_parni(2))
       {
-        /* Behavior */
+        // Behavior
 
       case HB_CURLOPT_VERBOSE:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_VERBOSE, HB_CURL_OPT_BOOL(3));
@@ -1014,51 +1012,51 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* Callback */
+        // Callback
 
-        /* These are hidden on the Harbour level: */
-        /* HB_CURLOPT_WRITEFUNCTION */
-        /* HB_CURLOPT_WRITEDATA */
-        /* HB_CURLOPT_READFUNCTION */
-        /* HB_CURLOPT_READDATA */
+        // These are hidden on the Harbour level:
+        // HB_CURLOPT_WRITEFUNCTION
+        // HB_CURLOPT_WRITEDATA
+        // HB_CURLOPT_READFUNCTION
+        // HB_CURLOPT_READDATA
 #if LIBCURL_VERSION_NUM >= 0x070C03
-        /* HB_CURLOPT_IOCTLFUNCTION */
-        /* HB_CURLOPT_IOCTLDATA */
+        // HB_CURLOPT_IOCTLFUNCTION
+        // HB_CURLOPT_IOCTLDATA
 #endif
-        /* HB_CURLOPT_SEEKFUNCTION */
-        /* HB_CURLOPT_SEEKDATA */
-        /* HB_CURLOPT_SOCKOPTFUNCTION */
-        /* HB_CURLOPT_SOCKOPTDATA */
-        /* HB_CURLOPT_OPENSOCKETFUNCTION */
-        /* HB_CURLOPT_OPENSOCKETDATA */
-        /* HB_CURLOPT_PROGRESSFUNCTION */
-        /* HB_CURLOPT_PROGRESSDATA */
-        /* HB_CURLOPT_XFERINFOFUNCTION */
-        /* HB_CURLOPT_XFERINFODATA */
-        /* HB_CURLOPT_HEADERFUNCTION */
-        /* HB_CURLOPT_HEADERDATA / CURLOPT_WRITEHEADER */
-        /* HB_CURLOPT_DEBUGFUNCTION */
-        /* HB_CURLOPT_DEBUGDATA */
+        // HB_CURLOPT_SEEKFUNCTION
+        // HB_CURLOPT_SEEKDATA
+        // HB_CURLOPT_SOCKOPTFUNCTION
+        // HB_CURLOPT_SOCKOPTDATA
+        // HB_CURLOPT_OPENSOCKETFUNCTION
+        // HB_CURLOPT_OPENSOCKETDATA
+        // HB_CURLOPT_PROGRESSFUNCTION
+        // HB_CURLOPT_PROGRESSDATA
+        // HB_CURLOPT_XFERINFOFUNCTION
+        // HB_CURLOPT_XFERINFODATA
+        // HB_CURLOPT_HEADERFUNCTION
+        // HB_CURLOPT_HEADERDATA / CURLOPT_WRITEHEADER
+        // HB_CURLOPT_DEBUGFUNCTION
+        // HB_CURLOPT_DEBUGDATA
 #if LIBCURL_VERSION_NUM >= 0x070B00
-        /* HB_CURLOPT_SSL_CTX_FUNCTION */
-        /* HB_CURLOPT_SSL_CTX_DATA */
+        // HB_CURLOPT_SSL_CTX_FUNCTION
+        // HB_CURLOPT_SSL_CTX_DATA
 #endif
-        /* HB_CURLOPT_CONV_TO_NETWORK_FUNCTION */
-        /* HB_CURLOPT_CONV_FROM_NETWORK_FUNCTION */
-        /* HB_CURLOPT_CONV_FROM_UTF8_FUNCTION */
+        // HB_CURLOPT_CONV_TO_NETWORK_FUNCTION
+        // HB_CURLOPT_CONV_FROM_NETWORK_FUNCTION
+        // HB_CURLOPT_CONV_FROM_UTF8_FUNCTION
 
-        /* Error */
+        // Error
 
-        /* HB_CURLOPT_ERRORBUFFER */
-        /* HB_CURLOPT_STDERR */
+        // HB_CURLOPT_ERRORBUFFER
+        // HB_CURLOPT_STDERR
 
       case HB_CURLOPT_FAILONERROR:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_FAILONERROR, HB_CURL_OPT_BOOL(3));
         break;
 
-      /* Network */
+      // Network
 
-      /* This is the only option that must be set before curl_easy_perform() is called. */
+      // This is the only option that must be set before curl_easy_perform() is called.
       case HB_CURLOPT_URL:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_URL, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
@@ -1076,11 +1074,11 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_HTTPPROXYTUNNEL:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_HTTPPROXYTUNNEL, HB_CURL_OPT_BOOL(3));
         break;
-        /*
-                 case HB_CURLOPT_SOCKS5_RESOLVE_LOCAL:
-                    res = curl_easy_setopt( hb_curl->curl, CURLOPT_SOCKS5_RESOLVE_LOCAL, HB_CURL_OPT_BOOL( 3 ) );
-                    break;
-         */
+#if 0
+      case HB_CURLOPT_SOCKS5_RESOLVE_LOCAL:
+         res = curl_easy_setopt(hb_curl->curl, CURLOPT_SOCKS5_RESOLVE_LOCAL, HB_CURL_OPT_BOOL(3));
+         break;
+#endif
       case HB_CURLOPT_INTERFACE:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_INTERFACE, hb_curl_StrHash(hb_curl, hb_parc(3)));
         break;
@@ -1096,7 +1094,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_DNS_CACHE_TIMEOUT, hb_parnl(3));
         break;
 #if LIBCURL_VERSION_NUM >= 0x070B01 && LIBCURL_VERSION_NUM < 0x073E00
-      case HB_CURLOPT_DNS_USE_GLOBAL_CACHE: /* OBSOLETE */
+      case HB_CURLOPT_DNS_USE_GLOBAL_CACHE: // OBSOLETE
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_DNS_USE_GLOBAL_CACHE, HB_CURL_OPT_BOOL(3));
         break;
 #endif
@@ -1108,7 +1106,7 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_PORT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_PORT, hb_parnl(3));
         break;
-#if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
+#if LIBCURL_VERSION_NUM >= 0x070A08 // Not documented. GUESS.
       case HB_CURLOPT_TCP_NODELAY:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_TCP_NODELAY, HB_CURL_OPT_BOOL(3));
         break;
@@ -1190,7 +1188,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* Names and passwords options (Authentication) */
+        // Names and passwords options (Authentication)
 
       case HB_CURLOPT_NETRC:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_NETRC, hb_parnl(3));
@@ -1233,7 +1231,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* HTTP options */
+        // HTTP options
 
       case HB_CURLOPT_AUTOREFERER:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_AUTOREFERER, HB_CURL_OPT_BOOL(3));
@@ -1421,7 +1419,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* SMTP options */
+        // SMTP options
 
 #if LIBCURL_VERSION_NUM >= 0x071400
       case HB_CURLOPT_MAIL_FROM:
@@ -1455,7 +1453,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* TFTP options */
+        // TFTP options
 
 #if LIBCURL_VERSION_NUM >= 0x071304
       case HB_CURLOPT_TFTP_BLKSIZE:
@@ -1463,7 +1461,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* FTP options */
+        // FTP options
 
       case HB_CURLOPT_FTPPORT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_FTPPORT, hb_curl_StrHash(hb_curl, hb_parc(3)));
@@ -1531,14 +1529,14 @@ HB_FUNC(CURL_EASY_SETOPT)
         }
       }
       break;
-      case HB_CURLOPT_DIRLISTONLY: /* HB_CURLOPT_FTPLISTONLY */
+      case HB_CURLOPT_DIRLISTONLY: // HB_CURLOPT_FTPLISTONLY
 #if LIBCURL_VERSION_NUM > 0x071004
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_DIRLISTONLY, HB_CURL_OPT_BOOL(3));
 #else
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_FTPLISTONLY, HB_CURL_OPT_BOOL(3));
 #endif
         break;
-      case HB_CURLOPT_APPEND: /* HB_CURLOPT_FTPAPPEND */
+      case HB_CURLOPT_APPEND: // HB_CURLOPT_FTPAPPEND
 #if LIBCURL_VERSION_NUM > 0x071004
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_APPEND, HB_CURL_OPT_BOOL(3));
 #else
@@ -1606,7 +1604,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* RTSP */
+        // RTSP
 
 #if LIBCURL_VERSION_NUM >= 0x071400
       case HB_CURLOPT_RTSP_REQUEST:
@@ -1629,7 +1627,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* Protocol */
+        // Protocol
 
       case HB_CURLOPT_TRANSFERTEXT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_TRANSFERTEXT, HB_CURL_OPT_BOOL(3));
@@ -1673,10 +1671,10 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_UPLOAD:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_UPLOAD, HB_CURL_OPT_BOOL(3));
         break;
-      case HB_CURLOPT_DOWNLOAD: /* Harbour extension */
+      case HB_CURLOPT_DOWNLOAD: // Harbour extension
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_UPLOAD, !HB_CURL_OPT_BOOL(3));
         break;
-#if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
+#if LIBCURL_VERSION_NUM >= 0x070A08 // Not documented. GUESS.
       case HB_CURLOPT_MAXFILESIZE:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_MAXFILESIZE, hb_parnl(3));
         break;
@@ -1693,7 +1691,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_TIMEVALUE, hb_parnl(3));
         break;
 
-        /* Connection */
+        // Connection
 
       case HB_CURLOPT_TIMEOUT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_TIMEOUT, hb_parnl(3));
@@ -1720,7 +1718,7 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_MAXCONNECTS:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_MAXCONNECTS, hb_parnl(3));
         break;
-      case HB_CURLOPT_CLOSEPOLICY: /* OBSOLETE, does nothing. */
+      case HB_CURLOPT_CLOSEPOLICY: // OBSOLETE, does nothing.
         res = curl_easy_setopt(hb_curl->curl, static_cast<CURLoption>(CURLOPT_CLOSEPOLICY), hb_parnl(3));
         break;
       case HB_CURLOPT_FRESH_CONNECT:
@@ -1737,7 +1735,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_CONNECTTIMEOUT_MS, hb_parnl(3));
         break;
 #endif
-#if LIBCURL_VERSION_NUM >= 0x070A08 /* Not documented. GUESS. */
+#if LIBCURL_VERSION_NUM >= 0x070A08 // Not documented. GUESS.
       case HB_CURLOPT_IPRESOLVE:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_IPRESOLVE, hb_parnl(3));
         break;
@@ -1779,7 +1777,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* SSL and Security */
+        // SSL and Security
 
       case HB_CURLOPT_SSLCERT:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_SSLCERT, hb_curl_StrHash(hb_curl, hb_parc(3)));
@@ -1839,7 +1837,7 @@ HB_FUNC(CURL_EASY_SETOPT)
       case HB_CURLOPT_SSL_SESSIONID_CACHE:
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_SSL_VERIFYHOST, HB_CURL_OPT_BOOL(3));
         break;
-      case HB_CURLOPT_KRBLEVEL: /* HB_CURLOPT_KRB4LEVEL */
+      case HB_CURLOPT_KRBLEVEL: // HB_CURLOPT_KRB4LEVEL
 #if LIBCURL_VERSION_NUM > 0x071003
         res = curl_easy_setopt(hb_curl->curl, CURLOPT_KRBLEVEL, hb_curl_StrHash(hb_curl, hb_parc(3)));
 #else
@@ -1870,7 +1868,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* SSH options */
+        // SSH options
 
 #if LIBCURL_VERSION_NUM >= 0x071001
       case HB_CURLOPT_SSH_AUTH_TYPES:
@@ -1896,7 +1894,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* Other options */
+        // Other options
 
 #if LIBCURL_VERSION_NUM >= 0x070A03
       case HB_CURLOPT_PRIVATE:
@@ -1904,7 +1902,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* HB_CURLOPT_SHARE */
+        // HB_CURLOPT_SHARE
 
 #if LIBCURL_VERSION_NUM >= 0x071004
       case HB_CURLOPT_NEW_FILE_PERMS:
@@ -1915,7 +1913,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         break;
 #endif
 
-        /* Telnet options */
+        // Telnet options
 
       case HB_CURLOPT_TELNETOPTIONS:
       {
@@ -1939,11 +1937,11 @@ HB_FUNC(CURL_EASY_SETOPT)
       }
       break;
 
-        /* Undocumented */
+        // Undocumented
 
-        /* HB_CURLOPT_WRITEINFO */
+        // HB_CURLOPT_WRITEINFO
 
-        /* Harbour specials */
+        // Harbour specials
 
       case HB_CURLOPT_PROGRESSBLOCK:
       {
@@ -1965,7 +1963,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         if (pProgressCallback)
         {
           hb_curl->pProgressCallback = hb_itemNew(pProgressCallback);
-          /* unlock the item so GC will not mark them as used */
+          // unlock the item so GC will not mark them as used
           hb_gcUnlock(hb_curl->pProgressCallback);
 
 #if LIBCURL_VERSION_NUM >= 0x072000
@@ -2100,7 +2098,7 @@ HB_FUNC(CURL_EASY_SETOPT)
         if (pDebugCallback)
         {
           hb_curl->pDebugCallback = hb_itemNew(pDebugCallback);
-          /* unlock the item so GC will not mark them as used */
+          // unlock the item so GC will not mark them as used
           hb_gcUnlock(hb_curl->pDebugCallback);
 
           curl_easy_setopt(hb_curl->curl, CURLOPT_DEBUGFUNCTION, hb_curl_debug_callback);
@@ -2125,7 +2123,7 @@ HB_FUNC(CURL_EASY_SETOPT)
   }
 }
 
-/* Harbour extension. */
+// Harbour extension.
 HB_FUNC(CURL_EASY_DL_BUFF_GET)
 {
   if (PHB_CURL_is(1))
@@ -2159,7 +2157,7 @@ HB_FUNC(CURL_EASY_DL_BUFF_GET)
 #define HB_CURL_EASY_GETINFO(hb_curl, n, p)                                                                            \
   (hb_curl ? curl_easy_getinfo(hb_curl->curl, n, p) : static_cast<CURLcode>(HB_CURLE_ERROR))
 
-/* NOTE: curl_easy_getinfo( curl, x, @nError ) -> xValue */
+// NOTE: curl_easy_getinfo( curl, x, @nError ) -> xValue
 HB_FUNC(CURL_EASY_GETINFO)
 {
   if (PHB_CURL_is(1) && HB_ISNUM(2))
@@ -2470,13 +2468,13 @@ HB_FUNC(CURL_EASY_GETINFO)
         int nCount;
         struct curl_slist *walk_ret_slist;
 
-        /* Count */
+        // Count
         for (walk_ret_slist = ret_slist, nCount = 0; walk_ret_slist->next; nCount++)
         {
           walk_ret_slist = walk_ret_slist->next;
         }
 
-        /* Fill */
+        // Fill
         pArray = hb_itemArrayNew(nCount);
         for (walk_ret_slist = ret_slist, nCount = 1; walk_ret_slist->next;)
         {
@@ -2549,8 +2547,8 @@ HB_FUNC(CURL_EASY_UNESCAPE)
   }
 }
 
-/* Harbour interface (session independent) */
-/* --------------------------------------- */
+// Harbour interface (session independent)
+// ---------------------------------------
 
 HB_FUNC(CURL_VERSION)
 {
@@ -2565,13 +2563,13 @@ HB_FUNC(CURL_VERSION_INFO)
   {
     PHB_ITEM pArray = hb_itemArrayNew(13);
 
-    hb_arraySetC(pArray, 1, data->version);          /* LIBCURL_VERSION */
-    hb_arraySetNI(pArray, 2, data->version_num);     /* LIBCURL_VERSION_NUM */
-    hb_arraySetC(pArray, 3, data->host);             /* OS/host/cpu/machine when configured */
-    hb_arraySetNI(pArray, 4, data->features);        /* bitmask, see defines below */
-    hb_arraySetC(pArray, 5, data->ssl_version);      /* human readable string */
-    hb_arraySetNI(pArray, 6, data->ssl_version_num); /* not used anymore, always 0 */
-    hb_arraySetC(pArray, 7, data->libz_version);     /* human readable string */
+    hb_arraySetC(pArray, 1, data->version);          // LIBCURL_VERSION
+    hb_arraySetNI(pArray, 2, data->version_num);     // LIBCURL_VERSION_NUM
+    hb_arraySetC(pArray, 3, data->host);             // OS/host/cpu/machine when configured
+    hb_arraySetNI(pArray, 4, data->features);        // bitmask, see defines below
+    hb_arraySetC(pArray, 5, data->ssl_version);      // human readable string
+    hb_arraySetNI(pArray, 6, data->ssl_version_num); // not used anymore, always 0
+    hb_arraySetC(pArray, 7, data->libz_version);     // human readable string
 #if defined(CURLVERSION_SECOND)
     hb_arraySetC(pArray, 9, data->age >= CURLVERSION_SECOND ? data->ares : nullptr);
     hb_arraySetNI(pArray, 10, data->age >= CURLVERSION_SECOND ? data->ares_num : 0);
@@ -2587,14 +2585,14 @@ HB_FUNC(CURL_VERSION_INFO)
 #if defined(CURLVERSION_FOURTH)
     hb_arraySetNI(pArray, 12,
                   data->age >= CURLVERSION_FOURTH ? data->iconv_ver_num
-                                                  : 0); /* Same as '_libiconv_version' if built with HAVE_ICONV */
+                                                  : 0); // Same as '_libiconv_version' if built with HAVE_ICONV
 #else
     hb_arraySetNI(pArray, 12, 0);
 #endif
-/* Just a guess. It's not documented in which libcurl version this member got added. */
+// Just a guess. It's not documented in which libcurl version this member got added.
 #if defined(CURLVERSION_FOURTH) && LIBCURL_VERSION_NUM >= 0x071001
     hb_arraySetC(pArray, 13,
-                 data->age >= CURLVERSION_FOURTH ? data->libssh_version : nullptr); /* human readable string */
+                 data->age >= CURLVERSION_FOURTH ? data->libssh_version : nullptr); // human readable string
 #else
     hb_arraySetC(pArray, 13, nullptr);
 #endif
@@ -2639,7 +2637,7 @@ HB_FUNC(CURL_EASY_STRERROR)
   }
 }
 
-/* NOTE: This returns the number of seconds since January 1st 1970 in the UTC time zone. */
+// NOTE: This returns the number of seconds since January 1st 1970 in the UTC time zone.
 HB_FUNC(CURL_GETDATE)
 {
   if (HB_ISCHAR(1))
@@ -2652,9 +2650,9 @@ HB_FUNC(CURL_GETDATE)
   }
 }
 
-/* Harbour interface (session independent) */
+// Harbour interface (session independent)
 
-/* NOTE: Obsolete, superceded by curl_easy_escape() */
+// NOTE: Obsolete, superceded by curl_easy_escape()
 HB_FUNC(CURL_ESCAPE)
 {
   if (HB_ISCHAR(1))
@@ -2669,7 +2667,7 @@ HB_FUNC(CURL_ESCAPE)
   }
 }
 
-/* NOTE: Obsolete, superceded by curl_easy_unescape() */
+// NOTE: Obsolete, superceded by curl_easy_unescape()
 HB_FUNC(CURL_UNESCAPE)
 {
   if (HB_ISCHAR(1))
