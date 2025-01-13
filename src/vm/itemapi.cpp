@@ -712,26 +712,12 @@ const char *hb_itemGetCPtr(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetCPtr(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && pItem->isString())
-  {
-    return pItem->stringValue();
-  }
-  else
-  {
-    return "";
-  }
+  return pItem && pItem->isString() ? pItem->stringValue() : "";
 }
 
 HB_EXPORT const char *_HB_ITEM::getCPtr() // equivalent to hb_itemGetCPtr
 {
-  if (this->isString())
-  {
-    return this->stringValue();
-  }
-  else
-  {
-    return "";
-  }
+  return this->isString() ? this->stringValue() : "";
 }
 
 HB_SIZE hb_itemGetCLen(PHB_ITEM pItem)
@@ -740,26 +726,12 @@ HB_SIZE hb_itemGetCLen(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetCLen(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && pItem->isString())
-  {
-    return pItem->stringLength();
-  }
-  else
-  {
-    return 0;
-  }
+  return pItem && pItem->isString() ? pItem->stringLength() : 0;
 }
 
 HB_EXPORT HB_SIZE _HB_ITEM::getCLen() // equivalent to hb_itemGetCLen
 {
-  if (this->isString())
-  {
-    return this->stringLength();
-  }
-  else
-  {
-    return 0;
-  }
+  return this->isString() ? this->stringLength() : 0;
 }
 
 HB_SIZE hb_itemCopyC(PHB_ITEM pItem, char *szBuffer, HB_SIZE nLen)
@@ -856,26 +828,12 @@ char *hb_itemGetDS(PHB_ITEM pItem, char *szDate)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetDS(%p, %p)", static_cast<void*>(pItem), static_cast<void*>(szDate)));
 #endif
 
-  if (pItem && pItem->isDateTime())
-  {
-    return hb_dateDecStr(szDate, pItem->dateTimeJulian());
-  }
-  else
-  {
-    return hb_dateDecStr(szDate, 0);
-  }
+  return pItem && pItem->isDateTime() ? hb_dateDecStr(szDate, pItem->dateTimeJulian()) : hb_dateDecStr(szDate, 0);
 }
 
 HB_EXPORT char *_HB_ITEM::getDS(char *szDate) // equivalent to hb_itemGetDS
 {
-  if (this->isDateTime())
-  {
-    return hb_dateDecStr(szDate, this->dateTimeJulian());
-  }
-  else
-  {
-    return hb_dateDecStr(szDate, 0);
-  }
+  return this->isDateTime() ? hb_dateDecStr(szDate, this->dateTimeJulian()) : hb_dateDecStr(szDate, 0);
 }
 
 long hb_itemGetDL(PHB_ITEM pItem)
@@ -884,26 +842,12 @@ long hb_itemGetDL(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetDL(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && pItem->isDateTime())
-  {
-    return pItem->dateTimeJulian();
-  }
-  else
-  {
-    return 0;
-  }
+  return pItem && pItem->isDateTime() ? pItem->dateTimeJulian() : 0;
 }
 
 HB_EXPORT long _HB_ITEM::getDL() // equivalent to hb_itemGetDL
 {
-  if (this->isDateTime())
-  {
-    return this->dateTimeJulian();
-  }
-  else
-  {
-    return 0;
-  }
+  return this->isDateTime() ? this->dateTimeJulian() : 0;
 }
 
 // This function always closes the time with a zero byte, so it needs a
@@ -915,14 +859,7 @@ char *hb_itemGetTS(PHB_ITEM pItem, char *szDateTime)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetTS(%p, %s)", static_cast<void*>(pItem), szDateTime));
 #endif
 
-  if (pItem && pItem->isDateTime())
-  {
-    return hb_timeStampStrRawPut(szDateTime, pItem->dateTimeJulian(), pItem->dateTimeTime());
-  }
-  else
-  {
-    return hb_timeStampStrRawPut(szDateTime, 0, 0);
-  }
+  return pItem && pItem->isDateTime() ? hb_timeStampStrRawPut(szDateTime, pItem->dateTimeJulian(), pItem->dateTimeTime()) : hb_timeStampStrRawPut(szDateTime, 0, 0);
 }
 
 double hb_itemGetTD(PHB_ITEM pItem)
@@ -931,26 +868,12 @@ double hb_itemGetTD(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetTD(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && pItem->isDateTime())
-  {
-    return hb_timeStampPackDT(pItem->dateTimeJulian(), pItem->dateTimeTime());
-  }
-  else
-  {
-    return 0;
-  }
+  return pItem && pItem->isDateTime() ? hb_timeStampPackDT(pItem->dateTimeJulian(), pItem->dateTimeTime()) : 0;
 }
 
 HB_EXPORT double _HB_ITEM::getTD() // equivalent to hb_itemGetTD
 {
-  if (this->isDateTime())
-  {
-    return hb_timeStampPackDT(this->dateTimeJulian(), this->dateTimeTime());
-  }
-  else
-  {
-    return 0;
-  }
+  return this->isDateTime() ? hb_timeStampPackDT(this->dateTimeJulian(), this->dateTimeTime()) : 0;
 }
 
 HB_BOOL hb_itemGetTDT(PHB_ITEM pItem, long *plJulian, long *plMilliSec)
@@ -1315,26 +1238,12 @@ void *hb_itemGetPtr(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetPtr(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && pItem->isPointer())
-  {
-    return pItem->pointerValue();
-  }
-  else
-  {
-    return nullptr;
-  }
+  return pItem && pItem->isPointer() ? pItem->pointerValue() : nullptr;
 }
 
 HB_EXPORT void *_HB_ITEM::getPtr() // equivalent to hb_itemGetPtr
 {
-  if (this->isPointer())
-  {
-    return this->pointerValue();
-  }
-  else
-  {
-    return nullptr;
-  }
+  return this->isPointer() ? this->pointerValue() : nullptr;
 }
 
 void *hb_itemGetPtrGC(PHB_ITEM pItem, const HB_GC_FUNCS *pFuncs)
@@ -1373,26 +1282,12 @@ PHB_SYMB hb_itemGetSymbol(PHB_ITEM pItem)
    HB_TRACE(HB_TR_DEBUG, ("hb_itemGetSymbol(%p)", static_cast<void*>(pItem)));
 #endif
 
-  if (pItem && pItem->isSymbol())
-  {
-    return pItem->symbolValue();
-  }
-  else
-  {
-    return nullptr;
-  }
+  return pItem && pItem->isSymbol() ? pItem->symbolValue() : nullptr;
 }
 
 HB_EXPORT PHB_SYMB _HB_ITEM::getSymbol() // equivalent to hb_itemGetSymbol
 {
-  if (this->isSymbol())
-  {
-    return this->symbolValue();
-  }
-  else
-  {
-    return nullptr;
-  }
+  return this->isSymbol() ? this->symbolValue() : nullptr;
 }
 
 PHB_ITEM hb_itemReturn(PHB_ITEM pItem)
