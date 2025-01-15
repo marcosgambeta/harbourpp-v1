@@ -208,13 +208,13 @@ static int hb_gencc_checkJumpCondAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE 
 
     if (iSize)
     {
-      fprintf(cargo->yyc, "\tif( hb_xvm%sIntIs(%ldL, &fValue) ) break;\n", szFunc, lValue);
-      fprintf(cargo->yyc, "\tif( %sfValue )\n\t\tgoto lab%05" HB_PFS "u;\n", fNot ? "!" : "",
+      fprintf(cargo->yyc, "\tif (hb_xvm%sIntIs(%ldL, &fValue)) break;\n", szFunc, lValue);
+      fprintf(cargo->yyc, "\tif (%sfValue)\n\t\tgoto lab%05" HB_PFS "u;\n", fNot ? "!" : "",
               HB_GENC_GETLABEL(nPCodePos + 1 + nOffset));
       return iSize;
     }
   }
-  fprintf(cargo->yyc, "\tif( hb_xvm%sInt(%ldL) ) break;\n", szFunc, lValue);
+  fprintf(cargo->yyc, "\tif (hb_xvm%sInt(%ldL)) break;\n", szFunc, lValue);
   return 1;
 }
 
@@ -255,7 +255,7 @@ static int hb_gencc_checkNumAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCod
     case HB_P_ARRAYPUSH:
       if (lValue > 0)
       {
-        fprintf(cargo->yyc, "\tif( hb_xvmArrayItemPush(%ldL) ) break;\n", lValue);
+        fprintf(cargo->yyc, "\tif (hb_xvmArrayItemPush(%ldL)) break;\n", lValue);
         return 1;
       }
       break;
@@ -263,27 +263,27 @@ static int hb_gencc_checkNumAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCod
     case HB_P_ARRAYPOP:
       if (lValue > 0)
       {
-        fprintf(cargo->yyc, "\tif( hb_xvmArrayItemPop(%ldL) ) break;\n", lValue);
+        fprintf(cargo->yyc, "\tif (hb_xvmArrayItemPop(%ldL)) break;\n", lValue);
         return 1;
       }
       break;
 
     case HB_P_MULT:
-      fprintf(cargo->yyc, "\tif( hb_xvmMultByInt(%ldL) ) break;\n", lValue);
+      fprintf(cargo->yyc, "\tif (hb_xvmMultByInt(%ldL)) break;\n", lValue);
       return 1;
 
     case HB_P_DIVIDE:
-      fprintf(cargo->yyc, "\tif( hb_xvmDivideByInt(%ldL) ) break;\n", lValue);
+      fprintf(cargo->yyc, "\tif (hb_xvmDivideByInt(%ldL)) break;\n", lValue);
       return 1;
 
     case HB_P_MODULUS:
-      fprintf(cargo->yyc, "\tif( hb_xvmModulusByInt(%ldL) ) break;\n", lValue);
+      fprintf(cargo->yyc, "\tif (hb_xvmModulusByInt(%ldL)) break;\n", lValue);
       return 1;
 
     case HB_P_MINUS:
       if (lValue > 0)
       {
-        fprintf(cargo->yyc, "\tif( hb_xvmAddInt(-%ldL) ) break;\n", lValue);
+        fprintf(cargo->yyc, "\tif (hb_xvmAddInt(-%ldL)) break;\n", lValue);
         return 1;
       }
 #if - LONG_MAX > LONG_MIN
@@ -296,7 +296,7 @@ static int hb_gencc_checkNumAhead(HB_LONG lValue, PHB_HFUNC pFunc, HB_SIZE nPCod
       /* fallthrough */
 
     case HB_P_PLUS:
-      fprintf(cargo->yyc, "\tif( hb_xvmAddInt(%ldL) ) break;\n", lValue);
+      fprintf(cargo->yyc, "\tif (hb_xvmAddInt(%ldL)) break;\n", lValue);
       return 1;
 
     case HB_P_RETVALUE:
@@ -336,35 +336,35 @@ static int hb_gencc_checkPlusAhead(PHB_HFUNC pFunc, HB_SIZE nPCodePos, PHB_LABEL
 static HB_GENC_FUNC(hb_p_and)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmAnd() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmAnd()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_arraypush)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmArrayPush() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmArrayPush()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_arraypushref)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmArrayPushRef() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmArrayPushRef()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_arraypop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmArrayPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmArrayPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_dec)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDec() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmDec()) break;\n");
   return 1;
 }
 
@@ -378,21 +378,21 @@ static HB_GENC_FUNC(hb_p_arraydim)
 static HB_GENC_FUNC(hb_p_divide)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDivide() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmDivide()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_do)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDo(%hu) ) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmDo(%hu)) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_doshort)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDo(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmDo(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
@@ -427,14 +427,14 @@ static HB_GENC_FUNC(hb_p_swap)
 static HB_GENC_FUNC(hb_p_equal)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmEqual() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmEqual()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_exactlyequal)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmExactlyEqual() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmExactlyEqual()) break;\n");
   return 1;
 }
 
@@ -471,7 +471,7 @@ static HB_GENC_FUNC(hb_p_false)
 static HB_GENC_FUNC(hb_p_fortest)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmForTest() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmForTest()) break;\n");
   return 1;
 }
 
@@ -492,14 +492,14 @@ static HB_GENC_FUNC(hb_p_funcptr)
 static HB_GENC_FUNC(hb_p_function)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmFunction(%hu) ) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmFunction(%hu)) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_functionshort)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmFunction(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmFunction(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
@@ -520,28 +520,28 @@ static HB_GENC_FUNC(hb_p_hashgen)
 static HB_GENC_FUNC(hb_p_greater)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmGreater() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmGreater()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_greaterequal)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmGreaterEqual() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmGreaterEqual()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_inc)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmInc() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmInc()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_instring)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmInstring() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmInstring()) break;\n");
   return 1;
 }
 
@@ -573,7 +573,7 @@ static HB_GENC_FUNC(hb_p_jumpfalsenear)
 {
   HB_ISIZ nOffset = static_cast<signed char>(pFunc->pCode[nPCodePos + 1]);
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopLogical(&fValue) ) break;\n\tif( !fValue )\n\t\tgoto lab%05" HB_PFS "u;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopLogical(&fValue)) break;\n\tif (!fValue)\n\t\tgoto lab%05" HB_PFS "u;\n",
           HB_GENC_GETLABEL(nPCodePos + nOffset));
   return 2;
 }
@@ -582,7 +582,7 @@ static HB_GENC_FUNC(hb_p_jumpfalse)
 {
   HB_ISIZ nOffset = HB_PCODE_MKSHORT(&(pFunc->pCode[nPCodePos + 1]));
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopLogical(&fValue) ) break;\n\tif( !fValue )\n\t\tgoto lab%05" HB_PFS "u;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopLogical(&fValue)) break;\n\tif (!fValue)\n\t\tgoto lab%05" HB_PFS "u;\n",
           HB_GENC_GETLABEL(nPCodePos + nOffset));
   return 3;
 }
@@ -591,7 +591,7 @@ static HB_GENC_FUNC(hb_p_jumpfalsefar)
 {
   HB_ISIZ nOffset = HB_PCODE_MKINT24(&(pFunc->pCode[nPCodePos + 1]));
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopLogical(&fValue) ) break;\n\tif( !fValue )\n\t\tgoto lab%05" HB_PFS "u;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopLogical(&fValue)) break;\n\tif (!fValue)\n\t\tgoto lab%05" HB_PFS "u;\n",
           HB_GENC_GETLABEL(nPCodePos + nOffset));
   return 4;
 }
@@ -600,7 +600,7 @@ static HB_GENC_FUNC(hb_p_jumptruenear)
 {
   HB_ISIZ nOffset = static_cast<signed char>(pFunc->pCode[nPCodePos + 1]);
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopLogical(&fValue) ) break;\n\tif( fValue )\n\t\tgoto lab%05" HB_PFS "u;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopLogical(&fValue)) break;\n\tif (fValue)\n\t\tgoto lab%05" HB_PFS "u;\n",
           HB_GENC_GETLABEL(nPCodePos + nOffset));
   return 2;
 }
@@ -609,7 +609,7 @@ static HB_GENC_FUNC(hb_p_jumptrue)
 {
   HB_ISIZ nOffset = HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]);
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopLogical(&fValue) ) break;\n\tif( fValue )\n\t\tgoto lab%05" HB_PFS "u;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopLogical(&fValue)) break;\n\tif (fValue)\n\t\tgoto lab%05" HB_PFS "u;\n",
           HB_GENC_GETLABEL(nPCodePos + nOffset));
   return 3;
 }
@@ -618,7 +618,7 @@ static HB_GENC_FUNC(hb_p_jumptruefar)
 {
   HB_ISIZ nOffset = HB_PCODE_MKINT24(&(pFunc->pCode[nPCodePos + 1]));
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopLogical(&fValue) ) break;\n\tif( fValue )\n\t\tgoto lab%05" HB_PFS "u;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopLogical(&fValue)) break;\n\tif (fValue)\n\t\tgoto lab%05" HB_PFS "u;\n",
           HB_GENC_GETLABEL(nPCodePos + nOffset));
   return 4;
 }
@@ -626,14 +626,14 @@ static HB_GENC_FUNC(hb_p_jumptruefar)
 static HB_GENC_FUNC(hb_p_less)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmLess() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmLess()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_lessequal)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmLessEqual() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmLessEqual()) break;\n");
   return 1;
 }
 
@@ -657,98 +657,98 @@ static HB_GENC_FUNC(hb_p_localname)
 static HB_GENC_FUNC(hb_p_macropop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPop(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPop(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_macropopaliased)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPopAliased(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPopAliased(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_macropush)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPush(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPush(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_macropushref)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPushRef() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPushRef()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_macrodo)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroDo(%hu) ) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroDo(%hu)) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_macrofunc)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroFunc(%hu) ) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroFunc(%hu)) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_macrosend)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroSend(%hu) ) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroSend(%hu)) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_macroarraygen)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroArrayGen(%hu) ) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroArrayGen(%hu)) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_macropushlist)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPushList(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPushList(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_macropushindex)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPushIndex() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPushIndex()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_macropushpare)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPushPare(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPushPare(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_macropushaliased)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroPushAliased(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroPushAliased(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_macrosymbol)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroSymbol() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroSymbol()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_macrotext)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMacroText() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMacroText()) break;\n");
   return 1;
 }
 
@@ -762,7 +762,7 @@ static HB_GENC_FUNC(hb_p_message)
 static HB_GENC_FUNC(hb_p_minus)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMinus() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMinus()) break;\n");
   return 1;
 }
 
@@ -779,42 +779,42 @@ static HB_GENC_FUNC(hb_p_modulename)
 static HB_GENC_FUNC(hb_p_modulus)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmModulus() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmModulus()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_mult)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMult() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMult()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_negate)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmNegate() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmNegate()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_not)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmNot() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmNot()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_notequal)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmNotEqual() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmNotEqual()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_or)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmOr() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmOr()) break;\n");
   return 1;
 }
 
@@ -837,7 +837,7 @@ static HB_GENC_FUNC(hb_p_plus)
     return 1 + iSkip;
   }
 
-  fprintf(cargo->yyc, "\tif( hb_xvmPlus() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmPlus()) break;\n");
   return 1;
 }
 
@@ -851,14 +851,14 @@ static HB_GENC_FUNC(hb_p_pop)
 static HB_GENC_FUNC(hb_p_popalias)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopAlias() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmPopAlias()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_popaliasedfield)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopAliasedField(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopAliasedField(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -866,14 +866,14 @@ static HB_GENC_FUNC(hb_p_popaliasedfield)
 static HB_GENC_FUNC(hb_p_popaliasedfieldnear)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopAliasedField(symbols + %u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmPopAliasedField(symbols + %u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_popaliasedvar)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopAliasedVar(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopAliasedVar(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -881,7 +881,7 @@ static HB_GENC_FUNC(hb_p_popaliasedvar)
 static HB_GENC_FUNC(hb_p_popfield)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopField(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopField(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -903,7 +903,7 @@ static HB_GENC_FUNC(hb_p_poplocalnear)
 static HB_GENC_FUNC(hb_p_popmemvar)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopMemvar(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopMemvar(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -918,7 +918,7 @@ static HB_GENC_FUNC(hb_p_popstatic)
 static HB_GENC_FUNC(hb_p_popvariable)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPopVariable(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPopVariable(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -926,21 +926,21 @@ static HB_GENC_FUNC(hb_p_popvariable)
 static HB_GENC_FUNC(hb_p_power)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPower() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmPower()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_pushalias)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushAlias() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmPushAlias()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_pushaliasedfield)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushAliasedField(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPushAliasedField(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -948,14 +948,14 @@ static HB_GENC_FUNC(hb_p_pushaliasedfield)
 static HB_GENC_FUNC(hb_p_pushaliasedfieldnear)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushAliasedField(symbols + %u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmPushAliasedField(symbols + %u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_pushaliasedvar)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushAliasedVar(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPushAliasedVar(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -1075,7 +1075,7 @@ static HB_GENC_FUNC(hb_p_pushdouble)
 static HB_GENC_FUNC(hb_p_pushfield)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushField(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPushField(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -1241,7 +1241,7 @@ static HB_GENC_FUNC(hb_p_pushlonglong)
 static HB_GENC_FUNC(hb_p_pushmemvar)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushMemvar(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPushMemvar(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -1249,7 +1249,7 @@ static HB_GENC_FUNC(hb_p_pushmemvar)
 static HB_GENC_FUNC(hb_p_pushmemvarref)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushMemvarByRef(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPushMemvarByRef(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -1337,19 +1337,19 @@ static HB_GENC_FUNC(hb_p_pushsym)
       fprintf(cargo->yyc, "\thb_xvmPushFuncSymbol(symbols + %hu);\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
       return 4;
     case HB_P_PUSHALIASEDFIELDNEAR:
-      fprintf(cargo->yyc, "\tif( hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), pFunc->pCode[nPCodePos + 4]);
       return 5;
     case HB_P_PUSHALIASEDFIELD:
-      fprintf(cargo->yyc, "\tif( hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]));
       return 6;
     case HB_P_POPALIASEDFIELDNEAR:
-      fprintf(cargo->yyc, "\tif( hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), pFunc->pCode[nPCodePos + 4]);
       return 5;
     case HB_P_POPALIASEDFIELD:
-      fprintf(cargo->yyc, "\tif( hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]), HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 4]));
       return 6;
     }
@@ -1371,19 +1371,19 @@ static HB_GENC_FUNC(hb_p_pushsymnear)
       fprintf(cargo->yyc, "\thb_xvmPushFuncSymbol(symbols + %u);\n", pFunc->pCode[nPCodePos + 1]);
       return 3;
     case HB_P_PUSHALIASEDFIELDNEAR:
-      fprintf(cargo->yyc, "\tif( hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 3]);
       return 4;
     case HB_P_PUSHALIASEDFIELD:
-      fprintf(cargo->yyc, "\tif( hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPushAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               pFunc->pCode[nPCodePos + 1], HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]));
       return 5;
     case HB_P_POPALIASEDFIELDNEAR:
-      fprintf(cargo->yyc, "\tif( hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               pFunc->pCode[nPCodePos + 1], pFunc->pCode[nPCodePos + 3]);
       return 4;
     case HB_P_POPALIASEDFIELD:
-      fprintf(cargo->yyc, "\tif( hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u) ) break;\n",
+      fprintf(cargo->yyc, "\tif (hb_xvmPopAliasedFieldExt(symbols + %u, symbols + %u)) break;\n",
               pFunc->pCode[nPCodePos + 1], HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 3]));
       return 5;
     }
@@ -1403,7 +1403,7 @@ static HB_GENC_FUNC(hb_p_pushfuncsym)
 static HB_GENC_FUNC(hb_p_pushvariable)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushVariable(symbols + %hu) ) break;\n",
+  fprintf(cargo->yyc, "\tif (hb_xvmPushVariable(symbols + %hu)) break;\n",
           HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
@@ -1418,21 +1418,21 @@ static HB_GENC_FUNC(hb_p_retvalue)
 static HB_GENC_FUNC(hb_p_send)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmSend(%hu) ) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmSend(%hu)) break;\n", HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_sendshort)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmSend(%u) ) break;\n", pFunc->pCode[nPCodePos + 1]);
+  fprintf(cargo->yyc, "\tif (hb_xvmSend(%u)) break;\n", pFunc->pCode[nPCodePos + 1]);
   return 2;
 }
 
 static HB_GENC_FUNC(hb_p_pushovarref)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPushObjectVarRef() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmPushObjectVarRef()) break;\n");
   return 1;
 }
 
@@ -1447,14 +1447,14 @@ static HB_GENC_FUNC(hb_p_seqalways)
 static HB_GENC_FUNC(hb_p_alwaysbegin)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\t} while(false);\n\tif( hb_xvmAlwaysBegin() ) break;\n\tdo {\n");
+  fprintf(cargo->yyc, "\t} while(false);\n\tif (hb_xvmAlwaysBegin()) break;\n\tdo {\n");
   return 4;
 }
 
 static HB_GENC_FUNC(hb_p_alwaysend)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\t} while(false);\n\tif( hb_xvmAlwaysEnd() ) break;\n");
+  fprintf(cargo->yyc, "\t} while(false);\n\tif (hb_xvmAlwaysEnd()) break;\n");
   cargo->iNestedBlock--;
   return 1;
 }
@@ -1462,7 +1462,7 @@ static HB_GENC_FUNC(hb_p_alwaysend)
 static HB_GENC_FUNC(hb_p_seqblock)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmSeqBlock() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmSeqBlock()) break;\n");
   return 1;
 }
 
@@ -1482,11 +1482,11 @@ static HB_GENC_FUNC(hb_p_seqend)
 
   if (nOffset == 4)
   { /* no RECOVER clause */
-    fprintf(cargo->yyc, "\tbreak;\n\t}\n\tif( hb_xvmSeqEnd() ) break;\n");
+    fprintf(cargo->yyc, "\tbreak;\n\t}\n\tif (hb_xvmSeqEnd()) break;\n");
   }
   else
   { /* RECOVER exists */
-    fprintf(cargo->yyc, "\tif( hb_xvmSeqEndTest() ) break;\n\tgoto lab%05" HB_PFS "u;\n\t}\n",
+    fprintf(cargo->yyc, "\tif (hb_xvmSeqEndTest()) break;\n\tgoto lab%05" HB_PFS "u;\n\t}\n",
             HB_GENC_GETLABEL(nPCodePos + nOffset));
   }
   cargo->iNestedBlock--;
@@ -1496,7 +1496,7 @@ static HB_GENC_FUNC(hb_p_seqend)
 static HB_GENC_FUNC(hb_p_seqrecover)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmSeqRecover() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmSeqRecover()) break;\n");
   return 1;
 }
 
@@ -1558,7 +1558,7 @@ static HB_GENC_FUNC(hb_p_threadstatics)
 static HB_GENC_FUNC(hb_p_swapalias)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmSwapAlias() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmSwapAlias()) break;\n");
   return 1;
 }
 
@@ -1608,7 +1608,7 @@ static HB_GENC_FUNC(hb_p_dummy)
 static HB_GENC_FUNC(hb_p_enumstart)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmEnumStart(%u, %u) ) break;\n", pFunc->pCode[nPCodePos + 1],
+  fprintf(cargo->yyc, "\tif (hb_xvmEnumStart(%u, %u)) break;\n", pFunc->pCode[nPCodePos + 1],
           pFunc->pCode[nPCodePos + 2]);
   return 3;
 }
@@ -1616,14 +1616,14 @@ static HB_GENC_FUNC(hb_p_enumstart)
 static HB_GENC_FUNC(hb_p_enumnext)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmEnumNext() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmEnumNext()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_enumprev)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmEnumPrev() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmEnumPrev()) break;\n");
   return 1;
 }
 
@@ -1693,7 +1693,7 @@ static HB_GENC_FUNC(hb_p_switch)
     {
       fprintf(cargo->yyc, "\t\tlong lVal;\n");
     }
-    fprintf(cargo->yyc, "\t\tif( hb_xvmSwitchGet(&pSwitch) ) break;\n"
+    fprintf(cargo->yyc, "\t\tif (hb_xvmSwitchGet(&pSwitch)) break;\n"
                         "\t\ttype = hb_itemType(pSwitch);\n");
     if (fStr)
     {
@@ -1712,14 +1712,14 @@ static HB_GENC_FUNC(hb_p_switch)
     switch (pFunc->pCode[nPCodePos])
     {
     case HB_P_PUSHLONG:
-      fprintf(cargo->yyc, "\t\tif( (type & Harbour::Item::NUMINT) != 0 && lVal == %ldL )\n",
+      fprintf(cargo->yyc, "\t\tif ((type & Harbour::Item::NUMINT) != 0 && lVal == %ldL)\n",
               HB_PCODE_MKLONG(&pFunc->pCode[nPCodePos + 1]));
       nPCodePos += 5;
       break;
     case HB_P_PUSHSTRSHORT:
-      fprintf(cargo->yyc, "\t\tif( pszText && nLen == %d && !memcmp(pszText, ", pFunc->pCode[nPCodePos + 1] - 1);
+      fprintf(cargo->yyc, "\t\tif (pszText && nLen == %d && !memcmp(pszText, ", pFunc->pCode[nPCodePos + 1] - 1);
       hb_compGenCString(cargo->yyc, &pFunc->pCode[nPCodePos + 2], pFunc->pCode[nPCodePos + 1] - 1);
-      fprintf(cargo->yyc, ", %d ) )\n", pFunc->pCode[nPCodePos + 1] - 1);
+      fprintf(cargo->yyc, ", %d))\n", pFunc->pCode[nPCodePos + 1] - 1);
       nPCodePos += 2 + pFunc->pCode[nPCodePos + 1];
       break;
     case HB_P_PUSHNIL:
@@ -1778,7 +1778,7 @@ static HB_GENC_FUNC(hb_p_pushtimestamp)
 static HB_GENC_FUNC(hb_p_localnearaddint)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmLocalAddInt(%u, %d) ) break;\n", pFunc->pCode[nPCodePos + 1],
+  fprintf(cargo->yyc, "\tif (hb_xvmLocalAddInt(%u, %d)) break;\n", pFunc->pCode[nPCodePos + 1],
           HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 2]));
   return 4;
 }
@@ -1786,7 +1786,7 @@ static HB_GENC_FUNC(hb_p_localnearaddint)
 static HB_GENC_FUNC(hb_p_localaddint)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmLocalAddInt(%d, %d) ) break;\n", HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]),
+  fprintf(cargo->yyc, "\tif (hb_xvmLocalAddInt(%d, %d)) break;\n", HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]),
           HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 3]));
   return 5;
 }
@@ -1801,137 +1801,137 @@ static HB_GENC_FUNC(hb_p_localinc)
       ((pFunc->pCode[nPCodePos + 3] == HB_P_PUSHLOCAL && iLocal == HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 4])) ||
        (pFunc->pCode[nPCodePos + 3] == HB_P_PUSHLOCALNEAR && iLocal == pFunc->pCode[nPCodePos + 4])))
   {
-    fprintf(cargo->yyc, "\tif( hb_xvmLocalIncPush(%d) ) break;\n", iLocal);
+    fprintf(cargo->yyc, "\tif (hb_xvmLocalIncPush(%d)) break;\n", iLocal);
     return (pFunc->pCode[nPCodePos + 3] == HB_P_PUSHLOCAL) ? 6 : 5;
   }
 
-  fprintf(cargo->yyc, "\tif( hb_xvmLocalInc(%d) ) break;\n", iLocal);
+  fprintf(cargo->yyc, "\tif (hb_xvmLocalInc(%d)) break;\n", iLocal);
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_localdec)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmLocalDec(%d) ) break;\n", HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmLocalDec(%d)) break;\n", HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_localincpush)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmLocalIncPush(%d) ) break;\n", HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
+  fprintf(cargo->yyc, "\tif (hb_xvmLocalIncPush(%d)) break;\n", HB_PCODE_MKSHORT(&pFunc->pCode[nPCodePos + 1]));
   return 3;
 }
 
 static HB_GENC_FUNC(hb_p_pluseqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPlusEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmPlusEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_minuseqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMinusEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMinusEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_multeqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMultEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMultEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_diveqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDivEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmDivEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_modeqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmModEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmModEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_expeqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmExpEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmExpEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_deceqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDecEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmDecEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_inceqpop)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmIncEqPop() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmIncEqPop()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_pluseq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmPlusEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmPlusEq()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_minuseq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMinusEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMinusEq()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_multeq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmMultEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmMultEq()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_diveq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDivEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmDivEq()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_modeq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmModEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmModEq()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_expeq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmExpEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmExpEq()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_deceq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmDecEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmDecEq()) break;\n");
   return 1;
 }
 
 static HB_GENC_FUNC(hb_p_inceq)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\tif( hb_xvmIncEq() ) break;\n");
+  fprintf(cargo->yyc, "\tif (hb_xvmIncEq()) break;\n");
   return 1;
 }
 

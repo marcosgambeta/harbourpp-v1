@@ -267,25 +267,25 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
           iFuncSuffix = pSym->pFunc ? pSym->pFunc->iFuncSuffix : 0;
           if (pSym->cScope & HB_FS_INIT)
           {
-            hb_compGenCFunc(yyc, "HB_FUNC_INIT( %s );\n", pSym->szName, true, iFuncSuffix);
+            hb_compGenCFunc(yyc, "HB_FUNC_INIT(%s);\n", pSym->szName, true, iFuncSuffix);
           }
           else if (pSym->cScope & HB_FS_EXIT)
           {
-            hb_compGenCFunc(yyc, "HB_FUNC_EXIT( %s );\n", pSym->szName, true, iFuncSuffix);
+            hb_compGenCFunc(yyc, "HB_FUNC_EXIT(%s);\n", pSym->szName, true, iFuncSuffix);
           }
           else if (pSym->cScope & HB_FS_STATIC)
           {
-            hb_compGenCFunc(yyc, "HB_FUNC_STATIC( %s );\n", pSym->szName, false, iFuncSuffix);
+            hb_compGenCFunc(yyc, "HB_FUNC_STATIC(%s);\n", pSym->szName, false, iFuncSuffix);
             hb_compFuncUsed(HB_COMP_PARAM, pSym);
           }
           else
           {
-            hb_compGenCFunc(yyc, "HB_FUNC( %s );\n", pSym->szName, false, iFuncSuffix);
+            hb_compGenCFunc(yyc, "HB_FUNC(%s);\n", pSym->szName, false, iFuncSuffix);
           }
         }
         else if ((pSym->cScope & HB_FS_DEFERRED) == 0)
         { /* it's not a function declared as dynamic */
-          hb_compGenCFunc(yyc, "HB_FUNC_EXTERN( %s );\n", pSym->szName, false, 0);
+          hb_compGenCFunc(yyc, "HB_FUNC_EXTERN(%s);\n", pSym->szName, false, 0);
         }
       }
       pSym = pSym->pNext;
@@ -368,15 +368,15 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
           iFuncSuffix = pSym->pFunc ? pSym->pFunc->iFuncSuffix : 0;
           if (pSym->cScope & HB_FS_INIT)
           {
-            hb_compGenCFunc(yyc, "}, {HB_INIT_FUNCNAME( %s )}, nullptr }", pSym->szName, true, iFuncSuffix);
+            hb_compGenCFunc(yyc, "}, {HB_INIT_FUNCNAME(%s)}, nullptr }", pSym->szName, true, iFuncSuffix);
           }
           else if (pSym->cScope & HB_FS_EXIT)
           {
-            hb_compGenCFunc(yyc, "}, {HB_EXIT_FUNCNAME( %s )}, nullptr }", pSym->szName, true, iFuncSuffix);
+            hb_compGenCFunc(yyc, "}, {HB_EXIT_FUNCNAME(%s)}, nullptr }", pSym->szName, true, iFuncSuffix);
           }
           else
           {
-            hb_compGenCFunc(yyc, "}, {HB_FUNCNAME( %s )}, nullptr }", pSym->szName, false, iFuncSuffix);
+            hb_compGenCFunc(yyc, "}, {HB_FUNCNAME(%s)}, nullptr }", pSym->szName, false, iFuncSuffix);
           }
         }
         else if (pSym->cScope & HB_FS_DEFERRED)
@@ -385,7 +385,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
         }
         else if (pSym->iFunc)
         { /* is it a function called from this module */
-          hb_compGenCFunc(yyc, "}, {HB_FUNCNAME( %s )}, nullptr }", pSym->szName, false, 0);
+          hb_compGenCFunc(yyc, "}, {HB_FUNCNAME(%s)}, nullptr }", pSym->szName, false, 0);
         }
         else
         {
@@ -420,19 +420,19 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
         }
         else if (pFunc->cScope & HB_FS_INIT)
         { /* Is it an INIT FUNCTION/PROCEDURE */
-          hb_compGenCFunc(yyc, "HB_FUNC_INIT( %s )\n", pFunc->szName, true, pFunc->iFuncSuffix);
+          hb_compGenCFunc(yyc, "HB_FUNC_INIT(%s)\n", pFunc->szName, true, pFunc->iFuncSuffix);
         }
         else if (pFunc->cScope & HB_FS_EXIT)
         { /* Is it an EXIT FUNCTION/PROCEDURE */
-          hb_compGenCFunc(yyc, "HB_FUNC_EXIT( %s )\n", pFunc->szName, true, pFunc->iFuncSuffix);
+          hb_compGenCFunc(yyc, "HB_FUNC_EXIT(%s)\n", pFunc->szName, true, pFunc->iFuncSuffix);
         }
         else if (pFunc->cScope & HB_FS_STATIC)
         { /* Is it a STATIC FUNCTION/PROCEDURE */
-          hb_compGenCFunc(yyc, "HB_FUNC_STATIC( %s )\n", pFunc->szName, false, pFunc->iFuncSuffix);
+          hb_compGenCFunc(yyc, "HB_FUNC_STATIC(%s)\n", pFunc->szName, false, pFunc->iFuncSuffix);
         }
         else
         { /* Then it must be PUBLIC FUNCTION/PROCEDURE */
-          hb_compGenCFunc(yyc, "HB_FUNC( %s )\n", pFunc->szName, false, pFunc->iFuncSuffix);
+          hb_compGenCFunc(yyc, "HB_FUNC(%s)\n", pFunc->szName, false, pFunc->iFuncSuffix);
         }
 
         if (HB_COMP_PARAM->iGenCOutput == HB_COMPGENC_REALCODE)
@@ -468,7 +468,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
 
         if (pInline->szName)
         {
-          hb_compGenCFunc(yyc, "HB_FUNC_STATIC( %s )\n", pInline->szName, false, 0);
+          hb_compGenCFunc(yyc, "HB_FUNC_STATIC(%s)\n", pInline->szName, false, 0);
         }
 
         fprintf(yyc, "%s", pInline->pCode);
@@ -494,7 +494,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
 
         if (pInline->szName)
         {
-          hb_compGenCFunc(yyc, "HB_FUNC_STATIC( %s )\n", pInline->szName, false, 0);
+          hb_compGenCFunc(yyc, "HB_FUNC_STATIC(%s)\n", pInline->szName, false, 0);
         }
 
         fprintf(yyc, "%s", pInline->pCode);
@@ -2751,7 +2751,7 @@ static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE *yyc)
     fprintf(yyc, "/* %05" HB_PFS "u */\n", pFunc->nPCodePos);
   }
   fprintf(yyc, "   };\n\n");
-  fprintf(yyc, "   hb_vmExecute( pcode, symbols );\n}\n");
+  fprintf(yyc, "   hb_vmExecute(pcode, symbols);\n}\n");
 }
 
 static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE *yyc)
@@ -2785,5 +2785,5 @@ static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE *yyc)
   }
 
   fprintf(yyc, "\t};\n\n");
-  fprintf(yyc, "\thb_vmExecute( pcode, symbols );\n}\n");
+  fprintf(yyc, "\thb_vmExecute(pcode, symbols);\n}\n");
 }
