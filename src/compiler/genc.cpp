@@ -308,7 +308,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
         }
       }
     }
-    fprintf(yyc, "\n\nHB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_%s )\n", szFileName);
+    fprintf(yyc, "\n\nHB_INIT_SYMBOLS_BEGIN(hb_vm_SymbolInit_%s)\n", szFileName);
 
     pSym = HB_COMP_PARAM->symbols.pFirst;
     while (pSym)
@@ -319,13 +319,13 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
          * we are using these two bits to mark the special function used to
          * initialize static variables or debugging info about valid stop lines
          */
-        fprintf(yyc, "{ \"%s\", {HB_FS_INITEXIT | HB_FS_LOCAL}, {hb_INIT%s}, nullptr }", pSym->szName,
+        fprintf(yyc, "{\"%s\", {HB_FS_INITEXIT | HB_FS_LOCAL}, {hb_INIT%s}, nullptr}", pSym->szName,
                 !memcmp(pSym->szName + 1, "_INITLINES", 10) ? "LINES"
                                                             : "STATICS"); /* NOTE: "hb_" intentionally in lower case */
       }
       else
       {
-        fprintf(yyc, "{ \"%s\", {", pSym->szName);
+        fprintf(yyc, "{\"%s\", {", pSym->szName);
 
         if (pSym->cScope & HB_FS_STATIC)
         {
@@ -368,28 +368,28 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
           iFuncSuffix = pSym->pFunc ? pSym->pFunc->iFuncSuffix : 0;
           if (pSym->cScope & HB_FS_INIT)
           {
-            hb_compGenCFunc(yyc, "}, {HB_INIT_FUNCNAME(%s)}, nullptr }", pSym->szName, true, iFuncSuffix);
+            hb_compGenCFunc(yyc, "}, {HB_INIT_FUNCNAME(%s)}, nullptr}", pSym->szName, true, iFuncSuffix);
           }
           else if (pSym->cScope & HB_FS_EXIT)
           {
-            hb_compGenCFunc(yyc, "}, {HB_EXIT_FUNCNAME(%s)}, nullptr }", pSym->szName, true, iFuncSuffix);
+            hb_compGenCFunc(yyc, "}, {HB_EXIT_FUNCNAME(%s)}, nullptr}", pSym->szName, true, iFuncSuffix);
           }
           else
           {
-            hb_compGenCFunc(yyc, "}, {HB_FUNCNAME(%s)}, nullptr }", pSym->szName, false, iFuncSuffix);
+            hb_compGenCFunc(yyc, "}, {HB_FUNCNAME(%s)}, nullptr}", pSym->szName, false, iFuncSuffix);
           }
         }
         else if (pSym->cScope & HB_FS_DEFERRED)
         { /* is it a function declared as dynamic */
-          fprintf(yyc, " | HB_FS_DEFERRED}, {nullptr}, nullptr }");
+          fprintf(yyc, " | HB_FS_DEFERRED}, {nullptr}, nullptr}");
         }
         else if (pSym->iFunc)
         { /* is it a function called from this module */
-          hb_compGenCFunc(yyc, "}, {HB_FUNCNAME(%s)}, nullptr }", pSym->szName, false, 0);
+          hb_compGenCFunc(yyc, "}, {HB_FUNCNAME(%s)}, nullptr}", pSym->szName, false, 0);
         }
         else
         {
-          fprintf(yyc, "}, {nullptr}, nullptr }"); /* memvar | alias | message */
+          fprintf(yyc, "}, {nullptr}, nullptr}"); /* memvar | alias | message */
         }
       }
 
@@ -517,19 +517,19 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
 
 static void hb_writeEndInit(HB_COMP_DECL, FILE *yyc, const char *szModulname, const char *szSourceFile)
 {
-  fprintf(yyc, "\nHB_INIT_SYMBOLS_EX_END( hb_vm_SymbolInit_%s, ", szModulname);
+  fprintf(yyc, "\nHB_INIT_SYMBOLS_EX_END(hb_vm_SymbolInit_%s, ", szModulname);
   if (HB_COMP_PARAM->fHideSource)
   {
     szSourceFile = "";
   }
   hb_compGenCString(yyc, reinterpret_cast<const HB_BYTE *>(szSourceFile), strlen(szSourceFile));
-  fprintf(yyc, ", 0x%lx, 0x%04x )\n\n", 0L, HB_PCODE_VER);
+  fprintf(yyc, ", 0x%lx, 0x%04x)\n\n", 0L, HB_PCODE_VER);
 
   fprintf(yyc,
           "#if defined(HB_PRAGMA_STARTUP)\n"
           "   #pragma startup hb_vm_SymbolInit_%s\n"
           "#elif defined(HB_DATASEG_STARTUP)\n"
-          "   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_%s )\n"
+          "   #define HB_DATASEG_BODY    HB_DATASEG_FUNC(hb_vm_SymbolInit_%s)\n"
           "   #include \"hbiniseg.hpp\"\n"
           "#endif\n\n",
           szModulname, szModulname);

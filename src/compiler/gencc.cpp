@@ -116,7 +116,7 @@ static void hb_compGenCStrData(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen, in
 #endif
   if (nLen > __HB_CSTRING_SIZE_MAX)
   {
-    fprintf(yyc, "\t{\tconst unsigned char str[ %" HB_PFS "u ] = {", nLen + 1);
+    fprintf(yyc, "\t{\tconst unsigned char str[%" HB_PFS "u] = {", nLen + 1);
     for (HB_SIZE nPos = 0; nPos < nLen; nPos++)
     {
       if ((nPos & 0x0F) == 0)
@@ -967,7 +967,7 @@ static HB_GENC_FUNC(hb_p_pushblockshort)
   HB_USHORT usSize = pFunc->pCode[nPCodePos + 1] - 2;
   nPCodePos += 2;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[ %hu ] = {", usSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[%hu] = {", usSize);
 
   for (HB_USHORT us = 0; us < usSize; ++us)
   {
@@ -996,7 +996,7 @@ static HB_GENC_FUNC(hb_p_pushblock)
   HB_USHORT usSize = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]) - 3;
   nPCodePos += 3;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[ %hu ] = {", usSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[%hu] = {", usSize);
 
   for (HB_USHORT us = 0; us < usSize; ++us)
   {
@@ -1025,7 +1025,7 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
   HB_SIZE nSize = HB_PCODE_MKUINT24(&pFunc->pCode[nPCodePos + 1]) - 4;
   nPCodePos += 4;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[ %" HB_PFS "u ] = {", nSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE codeblock[%" HB_PFS "u] = {", nSize);
 
   for (HB_SIZE ul = 0; ul < nSize; ++ul)
   {
@@ -1533,7 +1533,7 @@ static HB_GENC_FUNC(hb_p_threadstatics)
   HB_USHORT w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos + 1]);
   HB_SIZE nSize = static_cast<HB_SIZE>(w) << 1;
 
-  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE statics[ %" HB_PFS "u ] = {", nSize);
+  fprintf(cargo->yyc, "\t{\n\t\tstatic const HB_BYTE statics[%" HB_PFS "u] = {", nSize);
 
   for (HB_SIZE ul = 0; ul < nSize; ++ul)
   {
