@@ -448,7 +448,7 @@ static HB_GENC_FUNC(hb_p_endblock)
 static HB_GENC_FUNC(hb_p_endproc)
 {
   HB_GENC_LABEL();
-  fprintf(cargo->yyc, "\t/* *** END PROC *** */\n");
+  fprintf(cargo->yyc, "\t// END PROC\n");
   if (nPCodePos < pFunc->nPCodePos - 1)
   {
     if (cargo->iNestedBlock)
