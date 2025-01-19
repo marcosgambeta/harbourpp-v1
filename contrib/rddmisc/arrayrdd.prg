@@ -418,7 +418,7 @@ STATIC FUNCTION AR_CLOSE( nWA )
 
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d", nWA ) )
 
-   IF HB_ISARRAY( aDBFData )
+   IF HB_IsArray( aDBFData )
       /* decrease open number */
       --aDBFData[ DATABASE_OPENNUMBER ]
 
@@ -1203,7 +1203,7 @@ STATIC FUNCTION AR_ORDCREATE( nWA, aOrderCreate )
    aWAData  := USRRDD_AREADATA( nWA )
    aDBFData := aWAData[ WADATA_DATABASE ]
 
-   IF HB_ISARRAY( aOrderCreate[ UR_ORCR_CONDINFO ] )
+   IF HB_IsArray( aOrderCreate[ UR_ORCR_CONDINFO ] )
       aOCInfo := aOrderCreate[ UR_ORCR_CONDINFO ]
    ELSE
       aOCInfo := aOrderCreate[ UR_ORCR_CONDINFO ] := { ;
@@ -1760,16 +1760,16 @@ STATIC FUNCTION hb_Decode( ... )
       /* Ok because I have no other value than default, I will check if it is a complex value */
       /* like an array or an hash, so I can get it to decode values */
       IF xDefault != NIL .AND. ;
-         ( HB_ISARRAY( xDefault ) .OR. HB_ISHASH( xDefault ) )
+         ( HB_IsArray( xDefault ) .OR. HB_ISHASH( xDefault ) )
 
          /* If it is an array I will restart this function creating a linear call */
-         IF HB_ISARRAY( xDefault ) .AND. Len( xDefault ) > 0
+         IF HB_IsArray( xDefault ) .AND. Len( xDefault ) > 0
             /* I can have a linear array like { 1, "A", 2, "B", 3, "C" }
              * or an array of array couples like { { 1, "A" }, { 2, "B" }, { 3, "C" } }
              * first element tell me what type is */
 
             /* couples of values */
-            IF HB_ISARRAY( xDefault[ 1 ] )
+            IF HB_IsArray( xDefault[ 1 ] )
                /* If i have an array as default, this contains couples of key / value */
                /* so I have to convert in a linear array */
 
@@ -1777,7 +1777,7 @@ STATIC FUNCTION hb_Decode( ... )
 
                /* Check if array has a default value, this will be last value and has a value */
                /* different from an array */
-               IF ! HB_ISARRAY( ValType( xDefault[ nLen ] ) )
+               IF ! HB_IsArray( ValType( xDefault[ nLen ] ) )
                   aParams := Array( ( nLen - 1 ) * 2 )
 
                   n := 1

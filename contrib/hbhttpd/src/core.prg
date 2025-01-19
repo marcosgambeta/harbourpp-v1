@@ -973,7 +973,7 @@ STATIC FUNCTION GetErrorDesc(oErr)
    ENDIF
    IF !Empty(oErr:osCode);        cRet += "OS error: " + hb_ntos( oErr:osCode ) + hb_eol()
    ENDIF
-   IF HB_ISARRAY( oErr:args )
+   IF HB_IsArray( oErr:args )
       cRet += "Arguments:" + hb_eol()
       AEval( oErr:args, {| X, Y | cRet += Str( Y, 5 ) + ": " + hb_CStr( X ) + hb_eol() } )
    ENDIF
@@ -1595,7 +1595,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
             EXIT
 
          CASE "loop"
-            IF hb_HHasKey( aData, aInstr[ 2 ] ) .AND. HB_ISARRAY( aValue := aData[ aInstr[ 2 ] ] )
+            IF hb_HHasKey( aData, aInstr[ 2 ] ) .AND. HB_IsArray( aValue := aData[ aInstr[ 2 ] ] )
                FOR EACH xValue IN aValue
                   aData2 := hb_HClone( aData )
                   hb_HEval( xValue, {| k, v | aData2[ aInstr[ 2 ] + "." + k ] := v } )

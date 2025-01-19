@@ -351,7 +351,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, iif(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ELSE
       IF lMouseOver .OR. ::nType == _BUTTON_NORMAL .OR. ::nType == _BUTTON_HARD
@@ -375,7 +375,7 @@ METHOD WVWMouseButton:DRAW( nWinNum )
       ENDIF
 
       IF !Empty(::cCaption)
-         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, iif(HB_ISARRAY( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
+         wvw_DrawLabel( nWinNum, ::nRow1, _nCeiling( ( ::nCol2 + ::nCol1 ) / 2 ), ::cCaption, 6, , nLabelColor, RGB(198, 198, 198), ::cCaptionFont, iif(HB_IsArray( afontinfo ), afontinfo[ 2 ], ::nCaptionHeight), 0, , , , .F., .F. )
       ENDIF
    ENDIF
    SetCursor( nOldCursor )

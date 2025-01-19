@@ -149,7 +149,7 @@ STATIC FUNCTION xhb_DefError(oError)
    ENDIF
 
 
-   IF HB_ISARRAY(oError:Args)
+   IF HB_IsArray(oError:Args)
       cMessage += " Arguments: (" + Arguments(oError) + ")"
    ENDIF
 
@@ -619,7 +619,7 @@ STATIC FUNCTION Arguments(oErr)
 
    LOCAL xArg, cArguments := ""
 
-   IF HB_ISARRAY(oErr:Args)
+   IF HB_IsArray(oErr:Args)
       FOR EACH xArg IN oErr:Args
          cArguments += " [" + Str(xArg:__EnumIndex(), 2) + "] = Type: " + ValType(xArg)
 
@@ -689,7 +689,7 @@ FUNCTION xhb_ErrorNew(cSubSystem, nGenCode, nSubCode, cOperation, cDescription, 
    IF HB_ISSTRING(cDescription)
       oError:Description := cDescription
    ENDIF
-   IF HB_ISARRAY(aArgs)
+   IF HB_IsArray(aArgs)
       oError:Args := aArgs
    ENDIF
 

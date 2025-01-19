@@ -100,7 +100,7 @@ STATIC FUNCTION AFillNested( aValue, xVal )
    LOCAL item
 
    FOR EACH item IN aValue
-      IF HB_ISARRAY( item )
+      IF HB_IsArray( item )
          AFillNested( item, xVal )
       ELSE
          item := xVal

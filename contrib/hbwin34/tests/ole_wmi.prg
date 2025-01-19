@@ -40,14 +40,14 @@ PROCEDURE Main()
       ? "Win_Bios #" + hb_ntos( nIndex++ )
 
       ? "BiosCharacteristics . :", TypeAndValue( i:BiosCharacteristics )
-      IF HB_ISARRAY( i:BiosCharacteristics )
+      IF HB_IsArray( i:BiosCharacteristics )
          FOR EACH tmp IN i:BiosCharacteristics
             ? Space( 27 ), Str( tmp, 2 ), "->", WMI_Bios_BiosCharacteristics( tmp )
          NEXT
       ENDIF
 
       ? "BIOSVersion ......... :", TypeAndValue( i:BIOSVersion )
-      IF HB_ISARRAY( i:BIOSVersion )
+      IF HB_IsArray( i:BIOSVersion )
          FOR EACH tmp IN i:BIOSVersion
             ? Space( 27 ), tmp
          NEXT
@@ -64,7 +64,7 @@ PROCEDURE Main()
       ? "LanguageEdition ..... :", TypeAndValue( i:LanguageEdition )
 
       ? "ListOfLanguages ..... :", TypeAndValue( i:ListOfLanguages )
-      IF HB_ISARRAY( i:ListOfLanguages )
+      IF HB_IsArray( i:ListOfLanguages )
          FOR EACH tmp IN i:ListOfLanguages
             ? Space( 27 ), tmp
          NEXT

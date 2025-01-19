@@ -292,7 +292,7 @@ METHOD WvgFontDialog:GetWvgFont(aFont)
 
    LOCAL oWvgFont
 
-   IF !HB_ISARRAY(aFont)
+   IF !HB_IsArray(aFont)
       aFont := wvg_ChooseFont_GetLogFont(::hWnd)
    ENDIF
 

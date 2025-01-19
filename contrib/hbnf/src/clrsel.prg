@@ -603,7 +603,7 @@ STATIC FUNCTION _ftIdentArr(aArr1, aArr2)
 
    DO WHILE lIdentical .AND. n <= Len(aArr1)
       IF ValType(aArr1[n]) == ValType(aArr2[n])
-         lIdentical := iif(HB_ISARRAY(aArr1[n]), _ftIdentArr(aArr1[n], aArr2[n]), aArr1[n] == aArr2[n])
+         lIdentical := iif(HB_IsArray(aArr1[n]), _ftIdentArr(aArr1[n], aArr2[n]), aArr1[n] == aArr2[n])
       ELSE
          lIdentical := .F.
       ENDIF

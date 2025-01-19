@@ -148,7 +148,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_ISARRAY( xPostData )
+   CASE HB_IsArray( xPostData )
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
@@ -515,7 +515,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
             tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + '"' + cCrlf + cCrLf + ;
             tip_URLEncode( AllTrim(hb_CStr( item )) ) + cCrLf
       NEXT
-   CASE HB_ISARRAY( xPostData )
+   CASE HB_IsArray( xPostData )
       FOR EACH item IN xPostData
          IF Len(item) >= 2
             cData += ;

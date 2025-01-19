@@ -664,7 +664,7 @@ METHOD THtmlNode:isOptional()
 
 // checks if this is a node (leafs contain no further nodes, e.g. <br />,<hr>,_text_)
 METHOD THtmlNode:isNode()
-   RETURN HB_ISARRAY( ::htmlContent ) .AND. Len(::htmlContent) > 0
+   RETURN HB_IsArray( ::htmlContent ) .AND. Len(::htmlContent) > 0
 
 // checks if this is a block node that must be closed with an ending tag: eg: <table></table>, <ul></ul>
 METHOD THtmlNode:isBlock()
@@ -907,7 +907,7 @@ METHOD THtmlNode:insertBefore( oTHtmlNode )
       ::root:_document:changed := .T.
    ENDIF
 
-   IF HB_ISARRAY( ::parent:htmlContent )
+   IF HB_IsArray( ::parent:htmlContent )
       hb_AIns( ::parent:htmlContent, 1, oTHtmlNode, .T. )
    ENDIF
 
@@ -948,7 +948,7 @@ METHOD THtmlNode:Delete()
       ::root:_document:changed := .T.
    ENDIF
 
-   IF HB_ISARRAY( ::parent:htmlContent )
+   IF HB_IsArray( ::parent:htmlContent )
       hb_ADel( ::parent:htmlContent, hb_AScan( ::parent:htmlContent, Self,,, .T. ), .T. )
    ENDIF
 
@@ -1044,7 +1044,7 @@ METHOD THtmlNode:toString( nIndent )
       ENDIF
    ENDIF
 
-   IF HB_ISARRAY( ::htmlContent )
+   IF HB_IsArray( ::htmlContent )
 
       FOR EACH oNode IN ::htmlContent
          IF !oNode:isInline() .OR. oNode:htmlTagName == "!--"

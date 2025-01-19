@@ -794,7 +794,7 @@ STATIC FUNCTION AddrToIPPort( aAddr )
 
    LOCAL cIP
 
-   IF HB_ISARRAY( aAddr ) .AND. ;
+   IF HB_IsArray( aAddr ) .AND. ;
       ( aAddr[ HB_SOCKET_ADINFO_FAMILY ] == HB_SOCKET_AF_INET .OR. ;
         aAddr[ HB_SOCKET_ADINFO_FAMILY ] == HB_SOCKET_AF_INET6 )
       cIP := aAddr[ HB_SOCKET_ADINFO_ADDRESS ] + ":" + hb_ntos( aAddr[ HB_SOCKET_ADINFO_PORT ] )

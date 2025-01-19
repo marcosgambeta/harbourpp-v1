@@ -732,7 +732,7 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
       nMode := xLine
    CASE HB_ISEVALITEM( xLine )
       Eval( xLine )
-   CASE HB_ISARRAY( xLine )
+   CASE HB_IsArray( xLine )
       IF nMode == 2
          OutStd( Space( nIndent ) + Space(2) )
       ENDIF

@@ -417,7 +417,7 @@ STATIC FUNCTION HtmlScript( hVal, cKey )
          IF HB_ISSTRING( cVal )
             cVal := { cVal }
          ENDIF
-         IF HB_ISARRAY( cVal )
+         IF HB_IsArray( cVal )
             cTmp := ""
             AScan( cVal, {| cFile | cTmp += '<script src="' + cFile + '" type="text/javascript"></script>' + _CRLF } )
             cRet += cTmp
@@ -427,7 +427,7 @@ STATIC FUNCTION HtmlScript( hVal, cKey )
          IF HB_ISSTRING( cVal )
             cVal := { cVal }
          ENDIF
-         IF HB_ISARRAY( cVal )
+         IF HB_IsArray( cVal )
             cTmp := ""
             AScan( cVal, {| cVar | cTmp += cVar } )
             cRet += '<script type="text/javascript">' + _CRLF + "<!--" + _CRLF + cTmp + _CRLF + "-->" + _CRLF + "</script>" + _CRLF
@@ -453,7 +453,7 @@ STATIC FUNCTION HtmlStyle( hVal, cKey )
          IF HB_ISSTRING( cVal )
             cVal := { cVal }
          ENDIF
-         IF HB_ISARRAY( cVal )
+         IF HB_IsArray( cVal )
             cTmp := ""
             AScan( cVal, {| cFile | cTmp += '<link rel="StyleSheet" href="' + cFile + '" type="text/css">' + _CRLF } )
             cRet += cTmp
@@ -463,7 +463,7 @@ STATIC FUNCTION HtmlStyle( hVal, cKey )
          IF HB_ISSTRING( cVal )
             cVal := { cVal }
          ENDIF
-         IF HB_ISARRAY( cVal )
+         IF HB_IsArray( cVal )
             cTmp := ""
             AScan( cVal, {| cVar | cTmp += cVar } )
             cRet += '<style type="text/css">' + _CRLF + "<!--" + _CRLF + cTmp + _CRLF + "-->" + _CRLF + "</style>" + _CRLF
@@ -488,7 +488,7 @@ STATIC FUNCTION HtmlLinkRel( hVal, cKey )
          IF HB_ISSTRING( cVal )
             cVal := { cVal, cVal }
          ENDIF
-         IF HB_ISARRAY( cVal )
+         IF HB_IsArray( cVal )
             AScan( cVal, {| aVal | cRet += '<link rel="' + aVal[ 1 ] + '" href="' + aVal[ 2 ] + '"/>' + _CRLF } )
          ENDIF
       ENDIF

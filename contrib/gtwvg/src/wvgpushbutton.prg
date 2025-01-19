@@ -104,7 +104,7 @@ METHOD WvgPushButton:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
       ELSEIF ".BMP" == Upper(Right(::caption, 4))
          ::style += BS_BITMAP
       ENDIF
-   ELSEIF HB_ISARRAY(::caption)
+   ELSEIF HB_IsArray(::caption)
       ASize(::caption, 3)
       IF HB_ISNUMERIC(::caption[2])
          IF ::caption[2] == WVG_IMAGE_ICONFILE .OR. ::caption[2] == WVG_IMAGE_ICONRESOURCE
@@ -230,7 +230,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
    ELSEIF HB_ISNUMERIC(xCaption)  // Handle to the bitmap
       wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_BITMAP, ::caption)
 
-   ELSEIF HB_ISARRAY(xCaption)
+   ELSEIF HB_IsArray(xCaption)
       ASize(xCaption, 4)
       IF HB_ISCHAR(xCaption[1])
          wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, xCaption[1])

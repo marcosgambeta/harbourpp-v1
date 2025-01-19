@@ -584,7 +584,7 @@ METHOD TPQquery:Refresh(lQuery, lMeta)
          // Get some information about metadata
          aTemp := PQmetadata(res)
 
-         IF HB_ISARRAY(aTemp)
+         IF HB_IsArray(aTemp)
 
             FOR EACH i IN aTemp
 

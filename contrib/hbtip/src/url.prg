@@ -207,7 +207,7 @@ METHOD TUrl:AddGetForm( xPostData )
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_ISARRAY( xPostData )
+   CASE HB_IsArray( xPostData )
       FOR EACH item IN xPostData
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr( item:__enumIndex() )) ) + "=" + ;

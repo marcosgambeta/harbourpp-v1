@@ -85,7 +85,7 @@ METHOD win_BMP:LoadFile(cFileName, aDimXY)
       ::DimXY := {0, 0}
    ELSE
       ::Type := win_bitmapType(::Bitmap)
-      IF HB_ISARRAY(aDimXY)
+      IF HB_IsArray(aDimXY)
          ::DimXY := aDimXY
       ELSEIF !win_bitmapDimensions(::Bitmap, @::DimXY[1], @::DimXY[2])
          ::DimXY := {1, 1} // Driver may use the original dimensions
@@ -105,7 +105,7 @@ METHOD win_BMP:IsSupported(oPrn, /* @ */ nError)
 
 METHOD win_BMP:Draw(oPrn, aRectangle, /* @ */ nError) // Pass a win_Prn() object reference and rectangle array
 
-   IF HB_ISARRAY(aRectangle)
+   IF HB_IsArray(aRectangle)
       ::Rect := aRectangle
    ENDIF
 

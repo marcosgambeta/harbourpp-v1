@@ -327,7 +327,7 @@ METHOD TRPCFunction:CheckTypes(aParams)
 
    LOCAL oElem, i := 0
 
-   IF !HB_ISARRAY(aParams)
+   IF !HB_IsArray(aParams)
       RETURN .F.
    ENDIF
 

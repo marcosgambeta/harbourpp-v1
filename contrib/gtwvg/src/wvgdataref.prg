@@ -163,7 +163,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
       EXIT
 
    CASE "COMBOBOX"
-      IF HB_ISARRAY(::sl_editBuffer)
+      IF HB_IsArray(::sl_editBuffer)
          // NOT sure which way it should behave.
          // Xbase++ documentation IN this regard is crappy.
          FOR EACH s IN ::sl_editBuffer

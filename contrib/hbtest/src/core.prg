@@ -175,7 +175,7 @@ STATIC FUNCTION ErrorMessage( oError )
       cMessage += "#:" + hb_ntos( oError:tries ) + " "
    ENDIF
 
-   IF HB_ISARRAY( oError:Args )
+   IF HB_IsArray( oError:Args )
       cMessage += "A:" + hb_ntos( Len(oError:Args) ) + ":"
       FOR tmp := 1 TO Len(oError:Args)
          cMessage += ValType( oError:Args[ tmp ] ) + ":" + XToStr( oError:Args[ tmp ], .T. )

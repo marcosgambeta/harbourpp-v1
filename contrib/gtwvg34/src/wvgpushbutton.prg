@@ -111,7 +111,7 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
             ::style += BS_BITMAP
             EXIT
          ENDSWITCH
-      CASE HB_ISARRAY( ::caption )
+      CASE HB_IsArray( ::caption )
          ASize( ::caption, 3 )
          IF HB_ISNUMERIC(::caption[ 2 ])
             SWITCH ::caption[ 2 ]
@@ -243,7 +243,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
    CASE HB_ISNUMERIC(xCaption)  // Handle to the bitmap
       ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, ::caption )
 
-   CASE HB_ISARRAY( xCaption )
+   CASE HB_IsArray( xCaption )
       ASize( xCaption, 4 )
       IF HB_ISCHAR( xCaption[ 1 ] )
          ::sendMessage( WIN_WM_SETTEXT, 0, xCaption[ 1 ] )

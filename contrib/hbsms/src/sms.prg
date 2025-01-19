@@ -137,7 +137,7 @@ FUNCTION smsctx_New( xPort )
 
 FUNCTION smsctx_Close( smsctx )
 
-   IF !HB_ISARRAY( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !HB_IsArray( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN .F.
    ENDIF
 
@@ -156,7 +156,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
 
    LOCAL tmp
 
-   IF !HB_ISARRAY( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !HB_IsArray( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN -1
    ENDIF
 
@@ -228,7 +228,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
 
 FUNCTION smsctx_Receive( smsctx )
 
-   IF !HB_ISARRAY( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !HB_IsArray( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN NIL
    ENDIF
 
@@ -240,7 +240,7 @@ FUNCTION smsctx_PIN( smsctx, cPIN )
 
    LOCAL cOldValue
 
-   IF !HB_ISARRAY( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
+   IF !HB_IsArray( smsctx ) .OR. Len(smsctx) != _SMSCTX_MAX_
       RETURN NIL
    ENDIF
 

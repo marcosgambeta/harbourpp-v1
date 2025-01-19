@@ -218,7 +218,7 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
    IF !Empty(a_) .AND. HB_ISEVALITEM( a_[ 1 ] )
       ::sb_notifier := a_[ 1 ]
 
-   ELSEIF ! Empty(a_) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_ISNUMERIC(a_[ 1 ]) .AND. HB_ISARRAY( a_[ 2 ] )
+   ELSEIF ! Empty(a_) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_ISNUMERIC(a_[ 1 ]) .AND. HB_IsArray( a_[ 2 ] )
       Eval( ::sb_notifier, a_[ 1 ], a_[ 2 ], Self )
 
    ENDIF

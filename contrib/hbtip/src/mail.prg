@@ -493,7 +493,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
    DO CASE
    CASE HB_ISSTRING( xTo )
       aTo := { xTo }
-   CASE HB_ISARRAY( xTo )
+   CASE HB_IsArray( xTo )
       aTo := xTo
    ENDCASE
 
@@ -504,7 +504,7 @@ METHOD TIPMail:setHeader( cSubject, cFrom, xTo, xCC )
    DO CASE
    CASE HB_ISSTRING( xCC )
       aCC := { xCC }
-   CASE HB_ISARRAY( xCC )
+   CASE HB_IsArray( xCC )
       aCC := xCC
    ENDCASE
 

@@ -459,7 +459,7 @@ METHOD win_Prn:SetFont(cFontName, nPointSize, xWidth, nBold, lUnderline, lItalic
       ::FontPointSize := nPointSize
    ENDIF
    DO CASE
-   CASE HB_ISARRAY(xWidth) .AND. Len(xWidth) >= 2 .AND. HB_ISNUMERIC(xWidth[1]) .AND. HB_ISNUMERIC(xWidth[2])
+   CASE HB_IsArray(xWidth) .AND. Len(xWidth) >= 2 .AND. HB_ISNUMERIC(xWidth[1]) .AND. HB_ISNUMERIC(xWidth[2])
       ::FontWidth := xWidth
    CASE HB_ISNUMERIC(xWidth) .AND. xWidth != 0
       ::FontWidth := {1, xWidth}
@@ -685,7 +685,7 @@ METHOD win_Prn:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBol
 
       IF HB_ISSTRING(cFont)
          DO CASE
-         CASE HB_ISARRAY(nWidth)
+         CASE HB_IsArray(nWidth)
             nDiv   := nWidth[1]
             nWidth := nWidth[2]
          CASE HB_ISNUMERIC(nWidth) .AND. nWidth != 0

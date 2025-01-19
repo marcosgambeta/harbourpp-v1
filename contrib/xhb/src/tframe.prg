@@ -100,7 +100,7 @@ METHOD THtmlFrameSet:StartSet(aRows, aCols, onLoad, onUnload)
 
    cStr := CRLF() + " <frameset "
 
-   IF HB_ISARRAY(aRows) .AND. !Empty(aRows)
+   IF HB_IsArray(aRows) .AND. !Empty(aRows)
 
       cStr += ' rows="'
 
@@ -114,7 +114,7 @@ METHOD THtmlFrameSet:StartSet(aRows, aCols, onLoad, onUnload)
       cStr += '"'
    ENDIF
 
-   IF HB_ISARRAY(aCols) .AND. !Empty(aCols)
+   IF HB_IsArray(aCols) .AND. !Empty(aCols)
 
       cStr += ' cols="'
 

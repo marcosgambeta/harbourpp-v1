@@ -89,7 +89,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
       .F.)))
 
    CASE cTypeToConvertTo == "A" .AND. ; // They Want an Array
-      !HB_ISARRAY(xValueToConvert)
+      !HB_IsArray(xValueToConvert)
 
       xValueToConvert := {xValueToConvert}
 

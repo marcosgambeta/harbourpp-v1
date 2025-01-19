@@ -82,7 +82,7 @@ FUNCTION tip_MailAssemble( ;
    IF Empty(cFrom) .OR. ! HB_ISSTRING( cFrom )
       RETURN ""
    ENDIF
-   IF Empty(xTo) .OR. ( ! HB_ISSTRING( xTo ) .AND. ! HB_ISARRAY( xTo ) )
+   IF Empty(xTo) .OR. ( ! HB_ISSTRING( xTo ) .AND. ! HB_IsArray( xTo ) )
       RETURN ""
    ENDIF
 
@@ -144,7 +144,7 @@ FUNCTION tip_MailAssemble( ;
             cFile := aThisFile
             cData := hb_MemoRead( cFile )
             hb_vfAttrGet( cFile, @nAttr )
-         CASE HB_ISARRAY( aThisFile ) .AND. Len(aThisFile) >= 2
+         CASE HB_IsArray( aThisFile ) .AND. Len(aThisFile) >= 2
             cFile := aThisFile[ 1 ]
             IF HB_ISSTRING( aThisFile[ 2 ] )
                cData := aThisFile[ 2 ]
@@ -221,7 +221,7 @@ STATIC FUNCTION s_TransCP( xData, cCP )
       DO CASE
       CASE HB_ISSTRING( xData )
          RETURN hb_Translate( xData,, cCP )
-      CASE HB_ISARRAY( xData )
+      CASE HB_IsArray( xData )
          FOR EACH tmp IN xData
             tmp := hb_Translate( tmp,, cCP )
          NEXT

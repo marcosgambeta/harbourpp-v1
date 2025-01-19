@@ -208,7 +208,7 @@ STATIC FUNCTION DShowArray(aVar, lRecursive, nIndent, nRecursionLevel, nMaxRecur
 
    // TraceLog("DShowArray: aVar, lRecursive", aVar, lRecursive)
 
-   IF HB_ISARRAY(aVar)
+   IF HB_IsArray(aVar)
       nEolLen := Len(hb_eol())
       nChar := Len(hb_ntos(Len(aVar)))  // return number of chars to display that value
       // i.e. if Len(aVar) == 99, then nChar := 2

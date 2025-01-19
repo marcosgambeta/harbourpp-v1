@@ -290,7 +290,7 @@ FUNCTION PrgExpToVal(cExp)
 
 FUNCTION ValToArray(xVal)
 
-   IF HB_ISARRAY(xVal)
+   IF HB_IsArray(xVal)
       RETURN xVal
    ENDIF
 

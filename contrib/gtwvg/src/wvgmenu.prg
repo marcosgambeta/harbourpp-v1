@@ -115,7 +115,7 @@ METHOD WvgMenu:Popup(oXbp, aPos, nDefaultItem, nControl)
    nCmd := wvg_TrackPopupMenu(::hMenu, TPM_LEFTALIGN + TPM_TOPALIGN + TPM_RETURNCMD, aPos[1], aPos[2], oXbp:hWnd)
 
    aMenuItem := ::findMenuItemById(nCmd)
-   IF HB_ISARRAY(aMenuItem) .AND. HB_ISBLOCK(aMenuItem[2])
+   IF HB_IsArray(aMenuItem) .AND. HB_ISBLOCK(aMenuItem[2])
       Eval(aMenuItem[2], aMenuItem[1], , aMenuItem[4])
    ENDIF
 

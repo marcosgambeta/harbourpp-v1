@@ -234,7 +234,7 @@ METHOD WvgMenuBar:addItem( aItem, p2, p3, p4 )
 
    LOCAL xCaption, bAction, nStyle, nAttrib
 
-   IF PCount() == 1 .AND. HB_ISARRAY( aItem )
+   IF PCount() == 1 .AND. HB_IsArray( aItem )
       ASize( aItem, 4 )
       xCaption := aItem[ 1 ]
       bAction  := aItem[ 2 ]

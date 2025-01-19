@@ -106,7 +106,7 @@ METHOD GDChart:AddData(hData)
 
 METHOD GDChart:SetData(aData)
 
-   IF HB_ISARRAY( aData )
+   IF HB_IsArray( aData )
       ::aDataOfHashes := aData
    ENDIF
 
@@ -210,7 +210,7 @@ METHOD GDChart:PieChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_ISARRAY( colorp )
+         IF HB_IsArray( colorp )
             colorp := ::SetColor( colorp[ 1 ], colorp[ 2 ], colorp[ 3 ] )
          ENDIF
       ENDIF
@@ -433,7 +433,7 @@ METHOD GDChart:VerticalBarChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_ISARRAY( colorp )
+         IF HB_IsArray( colorp )
             colorp := ::SetColor( colorp[ 1 ], colorp[ 2 ], colorp[ 3 ] )
          ENDIF
       ENDIF
@@ -627,7 +627,7 @@ METHOD GDChart:HorizontalBarChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_ISARRAY( colorp )
+         IF HB_IsArray( colorp )
             colorp := ::SetColor( colorp[ 1 ], colorp[ 2 ], colorp[ 3 ] )
          ENDIF
       ENDIF
@@ -861,7 +861,7 @@ METHOD GDChart:LineChart()
          ::SetTile( pTile )
          colorp := gdTiled
       ELSE
-         IF HB_ISARRAY( colorp )
+         IF HB_IsArray( colorp )
             colorp := ::SetColor( colorp[ 1 ], colorp[ 2 ], colorp[ 3 ] )
          ENDIF
       ENDIF

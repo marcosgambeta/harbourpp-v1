@@ -74,7 +74,7 @@ FUNCTION wvw_GetPalette()
 /* <aPalette> = An array of 16 elements with RGB values */
 PROCEDURE wvw_SetPalette(aPalette)
 
-   IF !HB_ISARRAY(aPalette)
+   IF !HB_IsArray(aPalette)
       aPalette := AFill(Array(16), 0)
    ENDIF
 

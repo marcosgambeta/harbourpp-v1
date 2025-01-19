@@ -374,7 +374,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
 
    nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC(acnDlg), 1, 2))
 
-   IF HB_ISARRAY( acnDlg )
+   IF HB_IsArray( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
    ELSE
       xTemplate := acnDlg
@@ -408,7 +408,7 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
 
    nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC(acnDlg), 1, 2))
 
-   IF HB_ISARRAY( acnDlg )
+   IF HB_IsArray( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
    ELSE
       xTemplate := acnDlg
