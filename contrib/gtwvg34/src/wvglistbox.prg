@@ -175,7 +175,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISEVALITEM( ::sl_itemMarked )
+         IF HB_IsEvalItem( ::sl_itemMarked )
             Eval( ::sl_itemMarked, , , Self )
          ENDIF
          IF ::isParentCrt()
@@ -189,7 +189,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISEVALITEM( ::sl_itemSelected )
+         IF HB_IsEvalItem( ::sl_itemSelected )
             Eval( ::sl_itemSelected, , , Self )
          ENDIF
          IF ::isParentCrt()
@@ -211,7 +211,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
          IF ::isParentCrt()
             ::oParent:setFocus()
          ENDIF
-         IF HB_ISEVALITEM( ::sl_itemSelected )
+         IF HB_IsEvalItem( ::sl_itemSelected )
             Eval( ::sl_itemSelected, , , Self )
          ENDIF
          IF ::isParentCrt()
@@ -238,7 +238,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
       DO CASE
       CASE aNM[ 1 ] == WIN_WM_LBUTTONUP
          ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
-         IF HB_ISEVALITEM( ::sl_itemMarked )
+         IF HB_IsEvalItem( ::sl_itemMarked )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -250,7 +250,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
 
       CASE aNM[ 1 ] == WIN_WM_LBUTTONDBLCLK
          ::editBuffer := ::nCurSelected
-         IF HB_ISEVALITEM( ::sl_itemSelected )
+         IF HB_IsEvalItem( ::sl_itemSelected )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -264,7 +264,7 @@ METHOD WvgListBox:handleEvent( nMessage, aNM )
       CASE aNM[ 1 ] == WIN_WM_KEYUP
          IF ::nCurSelected != wvg_lbGetCurSel( ::hWnd ) + 1
             ::nCurSelected := wvg_lbGetCurSel( ::hWnd ) + 1
-            IF HB_ISEVALITEM( ::sl_itemMarked )
+            IF HB_IsEvalItem( ::sl_itemMarked )
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF

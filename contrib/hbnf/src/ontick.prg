@@ -63,7 +63,7 @@ STATIC PROCEDURE __ft_OnTick()
 PROCEDURE ft_OnTick(bOnTick, nTickInterval)
 
    /* Harbour extension: Harbour will also accept function pointers */
-   IF HB_ISEVALITEM(bOnTick)
+   IF HB_IsEvalItem(bOnTick)
       t_bOnTick := bOnTick
       IF HB_IsNumeric(nTickInterval)
          t_nTickInterval := (1 / 18.20648) * nTickInterval * 1000

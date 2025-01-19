@@ -174,12 +174,12 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
       CASE aNM[ NMH_code ] == EN_MAXTEXT
 
       CASE aNM[ NMH_code ] == EN_KILLFOCUS
-         IF HB_ISEVALITEM( ::sl_killInputFocus )
+         IF HB_IsEvalItem( ::sl_killInputFocus )
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
       CASE aNM[ NMH_code ] == EN_SETFOCUS
-         IF HB_ISEVALITEM( ::sl_setInputFocus )
+         IF HB_IsEvalItem( ::sl_setInputFocus )
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
 
@@ -199,12 +199,12 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
    CASE nMessage == HB_GTE_ANY
       DO CASE
       CASE aNM[ NMH_code ] == WIN_WM_KILLFOCUS
-         IF HB_ISEVALITEM( ::sl_killInputFocus )
+         IF HB_IsEvalItem( ::sl_killInputFocus )
             Eval( ::sl_killInputFocus, , , Self )
          ENDIF
 
       CASE aNM[ NMH_code ] == WIN_WM_SETFOCUS
-         IF HB_ISEVALITEM( ::sl_setInputFocus )
+         IF HB_IsEvalItem( ::sl_setInputFocus )
             Eval( ::sl_setInputFocus, , , Self )
          ENDIF
 
@@ -215,7 +215,7 @@ METHOD WvgSLE:handleEvent( nMessage, aNM )
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
-            IF HB_ISEVALITEM( ::sl_returnPressed )
+            IF HB_IsEvalItem( ::sl_returnPressed )
                Eval( ::sl_returnPressed, , , Self )
             ENDIF
          CASE aNM[ 2 ] == WIN_VK_TAB
@@ -286,9 +286,9 @@ METHOD WvgSLE:cutMarked()
 
 METHOD WvgSLE:returnPressed( bReturnPressed )
 
-   IF HB_ISEVALITEM( bReturnPressed )
+   IF HB_IsEvalItem( bReturnPressed )
       ::sl_returnPressed := bReturnPressed
-   ELSEIF HB_ISEVALITEM( ::sl_returnPressed )
+   ELSEIF HB_IsEvalItem( ::sl_returnPressed )
       Eval( ::sl_returnPressed, , , Self )
    ENDIF
 

@@ -145,7 +145,7 @@ METHOD WvgProgressBar:handleEvent( nMessage, aNM )
          ::rePosition()
       ENDIF
       ::sendMessage( WIN_WM_SIZE, 0, 0 )
-      IF HB_ISEVALITEM( ::sl_resize )
+      IF HB_IsEvalItem( ::sl_resize )
          Eval( ::sl_resize,,, Self )
       ENDIF
 
@@ -191,7 +191,7 @@ METHOD PROCEDURE WvgProgressBar:setCaption( cCaption )
 
 METHOD WvgProgressBar:draw( xParam )
 
-   IF HB_ISEVALITEM( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_paint := xParam
    ENDIF
 
@@ -199,7 +199,7 @@ METHOD WvgProgressBar:draw( xParam )
 
 METHOD WvgProgressBar:activate( xParam )
 
-   IF HB_ISEVALITEM( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 

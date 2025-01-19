@@ -215,10 +215,10 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF !Empty(a_) .AND. HB_ISEVALITEM( a_[ 1 ] )
+   IF !Empty(a_) .AND. HB_IsEvalItem( a_[ 1 ] )
       ::sb_notifier := a_[ 1 ]
 
-   ELSEIF ! Empty(a_) .AND. HB_ISEVALITEM( ::sb_notifier ) .AND. HB_IsNumeric(a_[ 1 ]) .AND. HB_IsArray( a_[ 2 ] )
+   ELSEIF ! Empty(a_) .AND. HB_IsEvalItem( ::sb_notifier ) .AND. HB_IsNumeric(a_[ 1 ]) .AND. HB_IsArray( a_[ 2 ] )
       Eval( ::sb_notifier, a_[ 1 ], a_[ 2 ], Self )
 
    ENDIF
@@ -245,67 +245,67 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
 
       SWITCH xParams[ 1 ]
       CASE WIN_WM_MOUSEHOVER
-         IF HB_ISEVALITEM( ::sl_enter )
+         IF HB_IsEvalItem( ::sl_enter )
             Eval( ::sl_enter, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_MOUSELEAVE
-         IF HB_ISEVALITEM( ::sl_leave )
+         IF HB_IsEvalItem( ::sl_leave )
             Eval( ::sl_leave, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_RBUTTONDOWN
-         IF HB_ISEVALITEM( ::sl_rbDown )
+         IF HB_IsEvalItem( ::sl_rbDown )
             Eval( ::sl_rbDown, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_LBUTTONDOWN
-         IF HB_ISEVALITEM( ::sl_lbDown )
+         IF HB_IsEvalItem( ::sl_lbDown )
             Eval( ::sl_lbDown, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_RBUTTONUP
-         IF HB_ISEVALITEM( ::sl_rbUp )
+         IF HB_IsEvalItem( ::sl_rbUp )
             Eval( ::sl_rbUp, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_LBUTTONUP
-         IF HB_ISEVALITEM( ::sl_lbUp )
+         IF HB_IsEvalItem( ::sl_lbUp )
             Eval( ::sl_lbUp, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_RBUTTONDBLCLK
-         IF HB_ISEVALITEM( ::sl_rbDblClick )
+         IF HB_IsEvalItem( ::sl_rbDblClick )
             Eval( ::sl_rbDblClick, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_LBUTTONDBLCLK
-         IF HB_ISEVALITEM( ::sl_lbDblClick )
+         IF HB_IsEvalItem( ::sl_lbDblClick )
             Eval( ::sl_lbDblClick, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_MBUTTONDOWN
-         IF HB_ISEVALITEM( ::sl_mbDown )
+         IF HB_IsEvalItem( ::sl_mbDown )
             Eval( ::sl_mbDown, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_MBUTTONUP
-         IF HB_ISEVALITEM( ::sl_mbClick )
+         IF HB_IsEvalItem( ::sl_mbClick )
             Eval( ::sl_mbClick, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_MBUTTONDBLCLK
-         IF HB_ISEVALITEM( ::sl_mbDblClick )
+         IF HB_IsEvalItem( ::sl_mbDblClick )
             Eval( ::sl_mbDblClick, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_MOUSEMOVE
-         IF HB_ISEVALITEM( ::sl_motion )
+         IF HB_IsEvalItem( ::sl_motion )
             Eval( ::sl_motion, aPos, , Self )
          ENDIF
          EXIT
       CASE WIN_WM_MOUSEWHEEL
-         IF HB_ISEVALITEM( ::sl_wheel )
+         IF HB_IsEvalItem( ::sl_wheel )
             Eval( ::sl_wheel, aPos, , Self )
          ENDIF
          EXIT
@@ -314,7 +314,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       ENDSWITCH
 
    CASE nEvent == HB_GTE_KEYBOARD
-      IF HB_ISEVALITEM( ::keyboard )
+      IF HB_IsEvalItem( ::keyboard )
          Eval( ::keyboard, xParams, , Self )
       ENDIF
 
@@ -323,13 +323,13 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       AEval( ::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) } )
 #endif
 
-      IF HB_ISEVALITEM( ::sl_setInputFocus )
+      IF HB_IsEvalItem( ::sl_setInputFocus )
          Eval( ::sl_setInputFocus, , , Self )
       ENDIF
       ::lHasInputFocus := .T.
 
    CASE nEvent == HB_GTE_KILLFOCUS
-      IF HB_ISEVALITEM( ::sl_killInputFocus )
+      IF HB_IsEvalItem( ::sl_killInputFocus )
          Eval( ::sl_killInputFocus, , , Self )
       ENDIF
       ::lHasInputFocus := .F.
@@ -345,7 +345,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
       AEval( ::aChildren, {| o | wvg_InvalidateRect( o:hWnd ) } )
 
    CASE nEvent == HB_GTE_CLOSE
-      IF HB_ISEVALITEM( ::close )
+      IF HB_IsEvalItem( ::close )
          nReturn := Eval( ::close, , , Self )
       ENDIF
 
@@ -355,21 +355,21 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
          IF HB_IsObject( ::oMenu )
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( xParams[ 2 ] ))
                DO CASE
-               CASE HB_ISEVALITEM( aMenuItem[ 2 ] )
+               CASE HB_IsEvalItem( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
-               CASE HB_ISEVALITEM( aMenuItem[ 3 ] )
+               CASE HB_IsEvalItem( aMenuItem[ 3 ] )
                   Eval( aMenuItem[ 3 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
                ENDCASE
             ENDIF
          ENDIF
 
       CASE xParams[ 1 ] == 1 .AND. HB_IsObject( ::oMenu ) // enter menu loop
-         IF HB_ISEVALITEM( ::oMenu:sl_beginMenu )
+         IF HB_IsEvalItem( ::oMenu:sl_beginMenu )
             Eval( ::oMenu:sl_beginMenu, , , Self )
          ENDIF
 
       CASE xParams[ 1 ] == 2 .AND. HB_IsObject( ::oMenu ) // exit menu loop
-         IF HB_ISEVALITEM( ::oMenu:sl_endMenu )
+         IF HB_IsEvalItem( ::oMenu:sl_endMenu )
             Eval( ::oMenu:sl_endMenu, , , Self )
          ENDIF
 
@@ -419,7 +419,7 @@ METHOD WvgPartHandler:notifier( nEvent, xParams )
             ::drawingArea:setPosAndSize( { 0, 0 }, ::currentSize(), .F. )
          ENDIF
       ENDIF
-      IF HB_ISEVALITEM( ::sl_resize )
+      IF HB_IsEvalItem( ::sl_resize )
          Eval( ::sl_resize, { xParams[ 1 ], xParams[ 2 ] }, { xParams[ 3 ], xParams[ 4 ] }, Self )
       ENDIF
       AEval( ::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) } )
@@ -460,9 +460,9 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
          IF HB_IsObject( ::oMenu )
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( nCtrlID ))
                DO CASE
-               CASE HB_ISEVALITEM( aMenuItem[ 2 ] )
+               CASE HB_IsEvalItem( aMenuItem[ 2 ] )
                   Eval( aMenuItem[ 2 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
-               CASE HB_ISEVALITEM( aMenuItem[ 3 ] )
+               CASE HB_IsEvalItem( aMenuItem[ 3 ] )
                   Eval( aMenuItem[ 3 ], aMenuItem[ 1 ], , aMenuItem[ 4 ] )
                ENDCASE
             ENDIF

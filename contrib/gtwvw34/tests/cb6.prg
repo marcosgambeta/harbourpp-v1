@@ -242,8 +242,8 @@ STATIC PROCEDURE CBreader( oGet )
          oGet:exitState := GE_MOUSEHIT
       ENDIF
 
-   CASE HB_ISEVALITEM( bKeyBlock := SetKey( nKey ) ) .OR. ;
-        HB_ISEVALITEM( bKeyBlock := SetKey( nKeyStd ) )
+   CASE HB_IsEvalItem( bKeyBlock := SetKey( nKey ) ) .OR. ;
+        HB_IsEvalItem( bKeyBlock := SetKey( nKeyStd ) )
 
       oGetList:GetDoSetKey( bKeyBlock )  // Eval(bKeyBlock)
       oGet:exitState := GE_NOEXIT

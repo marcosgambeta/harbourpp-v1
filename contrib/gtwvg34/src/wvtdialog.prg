@@ -548,7 +548,7 @@ METHOD WvtDialog:Inkey()
       ENDIF
 
       IF !::lEventHandled
-         IF HB_ISEVALITEM( SetKey( ::nKey ) )
+         IF HB_IsEvalItem( SetKey( ::nKey ) )
             Eval( SetKey( ::nKey ) )
          ENDIF
       ENDIF
@@ -639,7 +639,7 @@ METHOD WvtDialog:Eval( bBlock, p1, p2, p3, p4, p5 )
 
    LOCAL lRet
 
-   IF ( lRet := HB_ISEVALITEM( bBlock ) )
+   IF ( lRet := HB_IsEvalItem( bBlock ) )
       Eval( bBlock, p1, p2, p3, p4, p5 )
    ENDIF
 
@@ -653,7 +653,7 @@ METHOD WvtDialog:ActivateMenu()
    IF nMenu != 0
       IF HB_IsObject( ::oMenu )
          IF !Empty(aMenuItem := ::oMenu:FindMenuItemById( nMenu ))
-            IF HB_ISEVALITEM( aMenuItem[ WVT_MENU_ACTION ] )
+            IF HB_IsEvalItem( aMenuItem[ WVT_MENU_ACTION ] )
                Eval( aMenuItem[ WVT_MENU_ACTION ] )
             ENDIF
          ENDIF

@@ -1283,7 +1283,7 @@ METHOD WVWMouseButton:New( cCaption, nRow1, nCol1, nRow2, nCol2, bClickBlock, nT
    ::nRow2 := nRow2
    ::nCol2 := nCol2
 
-   ::bClickBlock    := iif(HB_ISEVALITEM( bClickBlock ), bClickBlock, NIL)
+   ::bClickBlock    := iif(HB_IsEvalItem( bClickBlock ), bClickBlock, NIL)
    ::bPressBlock    := NIL
 
    ::lRepeatPress   := .F.
@@ -1361,7 +1361,7 @@ METHOD WVWMouseButton:OnPress()
       wvwm_SetKeyRepeater(.T.)  // activate key repeater
    ENDIF
 
-   IF HB_ISEVALITEM( ::bPressBlock )
+   IF HB_IsEvalItem( ::bPressBlock )
       Eval( ::bPressBlock )
    ENDIF
 
@@ -1375,7 +1375,7 @@ METHOD WVWMouseButton:OnClick()
       RETURN Self
    ENDIF
 
-   IF HB_ISEVALITEM( ::bClickBlock )
+   IF HB_IsEvalItem( ::bClickBlock )
       Eval( ::bClickBlock )
    ENDIF
 

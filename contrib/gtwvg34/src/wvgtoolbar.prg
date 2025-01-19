@@ -200,7 +200,7 @@ METHOD WvgToolBar:handleEvent( nMessage, aNM )
 
       CASE aNMMouse[ NMH_code ] == NM_CLICK
          IF ( nObj := AScan( ::aItems, {| e_ | e_[ 1 ] == aNMMouse[ NMH_dwItemSpec ] } ) ) > 0
-            IF HB_ISEVALITEM( ::sl_lbClick )
+            IF HB_IsEvalItem( ::sl_lbClick )
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF
@@ -359,7 +359,7 @@ METHOD WvgToolBar:setSize()
 
 METHOD WvgToolBar:buttonClick( xParam )
 
-   IF HB_ISEVALITEM( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -367,7 +367,7 @@ METHOD WvgToolBar:buttonClick( xParam )
 
 METHOD WvgToolBar:change( xParam )
 
-   IF HB_ISEVALITEM( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_change := xParam
    ENDIF
 
@@ -375,7 +375,7 @@ METHOD WvgToolBar:change( xParam )
 
 METHOD WvgToolBar:buttonMenuClick( xParam )
 
-   IF HB_ISEVALITEM( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_buttonMenuClick := xParam
    ENDIF
 
@@ -383,7 +383,7 @@ METHOD WvgToolBar:buttonMenuClick( xParam )
 
 METHOD WvgToolBar:buttonDropDown( xParam )
 
-   IF HB_ISEVALITEM( xParam ) .OR. xParam == NIL
+   IF HB_IsEvalItem( xParam ) .OR. xParam == NIL
       ::sl_buttonDropDown := xParam
    ENDIF
 

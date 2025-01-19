@@ -116,7 +116,7 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
       IF HB_IsObject( bAction )
          cCaption := iif(Empty(cCaption), bAction:Caption, cCaption)
          aItem := { WIN_MF_POPUP, bAction:hMenu, cCaption, bAction }   // bAction is a wvtMenu object reference
-      ELSEIF HB_ISEVALITEM( bAction )
+      ELSEIF HB_IsEvalItem( bAction )
          aItem := { WIN_MF_STRING, ::MenuItemId++, cCaption, bAction } // bAction is a code block to execute
       ELSEIF hb_LeftEq( cCaption, "-" )
          aItem := { WIN_MF_SEPARATOR, 0, 0, NIL }

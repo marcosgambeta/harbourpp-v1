@@ -219,7 +219,7 @@ PROCEDURE Main(...)
 
    FOR EACH cFormat IN s_hSwitches[ "format" ]
 
-      IF HB_ISEVALITEM( generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ) )
+      IF HB_IsEvalItem( generatorClass := hb_HGetDef( s_generators, Lower(cFormat) ) )
 
          OutStd( "Output as", cFormat + hb_eol() )
 
@@ -730,7 +730,7 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
    CASE xLine == NIL
    CASE HB_IsNumeric(xLine)
       nMode := xLine
-   CASE HB_ISEVALITEM( xLine )
+   CASE HB_IsEvalItem( xLine )
       Eval( xLine )
    CASE HB_IsArray( xLine )
       IF nMode == 2

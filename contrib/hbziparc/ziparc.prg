@@ -333,7 +333,7 @@ FUNCTION hb_ZipFile( ;
 
          IF ( hHandle := FOpen( cFileToZip ) ) != F_ERROR
 
-            IF HB_ISEVALITEM( bUpdate )
+            IF HB_IsEvalItem( bUpdate )
                Eval( bUpdate, cFileToZip, nPos++ )
             ENDIF
 
@@ -360,7 +360,7 @@ FUNCTION hb_ZipFile( ;
 
             DO WHILE ( nLen := FRead( hHandle, @cBuffer, hb_BLen(cBuffer) ) ) > 0
 
-               IF HB_ISEVALITEM( bProgress )
+               IF HB_IsEvalItem( bProgress )
                   nRead += nLen
                   Eval( bProgress, nRead, nSize )
                ENDIF
@@ -451,7 +451,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
 
                nRead := 0
                DO WHILE ( nLen := hb_unzipFileRead( hUnzip, @cBuffer, hb_BLen(cBuffer) ) ) > 0
-                  IF HB_ISEVALITEM( bProgress )
+                  IF HB_IsEvalItem( bProgress )
                      nRead += nLen
                      Eval( bProgress, nRead, nSize )
                   ENDIF
@@ -463,7 +463,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
 
                hb_FSetDateTime( cPath + cZipName, dDate, cTime )
 
-               IF HB_ISEVALITEM( bUpdate )
+               IF HB_IsEvalItem( bUpdate )
                   Eval( bUpdate, cZipName, nPos )
                ENDIF
             ENDIF

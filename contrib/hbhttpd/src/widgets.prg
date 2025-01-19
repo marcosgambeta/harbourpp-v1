@@ -369,7 +369,7 @@ METHOD UWBrowse:Output()
          DO CASE
          CASE HB_IsString( xField )
             xI := FieldGet( FieldPos( xField ) )
-         CASE HB_ISEVALITEM( xField )
+         CASE HB_IsEvalItem( xField )
             xI := Eval( xField )
          ENDCASE
          SWITCH ValType( xI )

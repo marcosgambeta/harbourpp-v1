@@ -308,7 +308,7 @@ FUNCTION hb_LogRddMsgLogBlock( bMsgLogBlock )
 
       bOldMsgLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
 
-      IF HB_ISEVALITEM( bMsgLogBlock )
+      IF HB_IsEvalItem( bMsgLogBlock )
          aRDDData[ ARRAY_MSGLOGBLOCK ] := bMsgLogBlock
       ENDIF
    ENDIF
@@ -326,7 +326,7 @@ FUNCTION hb_LogRddUserLogBlock( bUserLogBlock )
 
       bOldUserLogBlock := aRDDData[ ARRAY_MSGLOGBLOCK ]
 
-      IF HB_ISEVALITEM( bUserLogBlock )
+      IF HB_IsEvalItem( bUserLogBlock )
          aRDDData[ ARRAY_USERLOGBLOCK ] := bUserLogBlock
       ENDIF
    ENDIF
@@ -435,7 +435,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
       bUserLogBlock := aRDDData[ ARRAY_USERLOGBLOCK ]
 
       // If not defined a User codeblock
-      IF !HB_ISEVALITEM( bUserLogBlock )
+      IF !HB_IsEvalItem( bUserLogBlock )
 
          hFile := aRDDData[ ARRAY_FHANDLE ]
 
@@ -450,7 +450,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
 
             // If defined a codeblock I send to user infos and he has to return a formatted string
             // Look at local ToString() function for details
-            IF HB_ISEVALITEM( bMsgLogBlock )
+            IF HB_IsEvalItem( bMsgLogBlock )
                cLog := Eval( bMsgLogBlock, cTag, cRDDName, cCmd, nWA, xPar1, xPar2, xPar3 )
             ELSE
                cLog := DToS( Date() ) + " " + Time() + " " + cTag + ": " + PadR( cRDDName + "_" + cCmd, 20 ) + " - " + ToString( cCmd, nWA, xPar1, xPar2, xPar3 )

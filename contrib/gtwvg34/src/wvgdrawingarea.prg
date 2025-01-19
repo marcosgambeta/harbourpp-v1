@@ -102,7 +102,7 @@ METHOD WvgDrawingArea:handleEvent( nMessage, aNM )
 
    DO CASE
    CASE nMessage == HB_GTE_RESIZED
-      IF HB_ISEVALITEM( ::sl_resize )
+      IF HB_IsEvalItem( ::sl_resize )
          Eval( ::sl_resize, , , Self )
       ENDIF
       AEval( ::aChildren, {| o | o:handleEvent( HB_GTE_RESIZED, { 0, 0, 0, 0, 0 } ) } )

@@ -88,9 +88,9 @@ METHOD WvgDataRef:getData()
 
    SWITCH ::className()
    CASE "COMBOBOX"
-      IF HB_IsObject( ::XbpListBox ) .AND. HB_ISEVALITEM( ::XbpListBox:dataLink )
+      IF HB_IsObject( ::XbpListBox ) .AND. HB_IsEvalItem( ::XbpListBox:dataLink )
          ::sl_editBuffer := ::XbpListBox:getData()
-      ELSEIF HB_IsObject( ::XbpSLE ) .AND. HB_ISEVALITEM( ::XbpSLE:dataLink )
+      ELSEIF HB_IsObject( ::XbpSLE ) .AND. HB_IsEvalItem( ::XbpSLE:dataLink )
          ::sl_editBuffer := ::XbpSLE:getData()
       ELSEIF HB_IsObject( ::XbpListBox )
          ::sl_editBuffer := ::XbpListBox:getData()
@@ -117,7 +117,7 @@ METHOD WvgDataRef:getData()
       EXIT
    ENDSWITCH
 
-   IF HB_ISEVALITEM( ::dataLink )
+   IF HB_IsEvalItem( ::dataLink )
       Eval( ::dataLink, ::sl_editBuffer )
    ENDIF
 
@@ -129,7 +129,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
 
    HB_SYMBOL_UNUSED( mp2 )
 
-   IF HB_ISEVALITEM( ::dataLink )
+   IF HB_IsEvalItem( ::dataLink )
       ::sl_editBuffer := Eval( ::dataLink  )
    ELSEIF xValue != NIL
       ::sl_editBuffer := xValue
@@ -184,9 +184,9 @@ METHOD WvgDataRef:undo()
 
 METHOD WvgDataRef:validate( xParam )
 
-   IF PCount() == 0 .AND. HB_ISEVALITEM( ::sl_validate )
+   IF PCount() == 0 .AND. HB_IsEvalItem( ::sl_validate )
       RETURN Eval( ::sl_validate, Self )
-   ELSEIF HB_ISEVALITEM( xParam )
+   ELSEIF HB_IsEvalItem( xParam )
       ::sl_validate := xParam
    ENDIF
 
