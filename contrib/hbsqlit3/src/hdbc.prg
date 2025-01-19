@@ -182,7 +182,7 @@ METHOD hdbcSQLTStatement:executeUpdate(cSql)
 
 METHOD hdbcSQLTStatement:close()
 
-   IF !HB_ISNIL(::pRes)
+   IF ::pRes != NIL
 
       sqlite3_finalize(::pRes)
 
