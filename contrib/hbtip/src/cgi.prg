@@ -136,7 +136,7 @@ METHOD TIPCgi:New()
 
 METHOD TIPCgi:Header( cValue )
 
-   IF HB_ISSTRING( cValue ) .AND. ! Empty(cValue)
+   IF HB_IsString( cValue ) .AND. ! Empty(cValue)
       ::cCgiHeader += cValue + _CRLF
    ELSE
       ::cCgiHeader += "Content-Type: text/html" + _CRLF
@@ -146,7 +146,7 @@ METHOD TIPCgi:Header( cValue )
 
 METHOD TIPCgi:Redirect( cUrl )
 
-   IF HB_ISSTRING( cUrl ) .AND. ! Empty(cUrl)
+   IF HB_IsString( cUrl ) .AND. ! Empty(cUrl)
       ::cCgiHeader += "Location: " + cUrl + _CRLF
    ENDIF
 
@@ -205,7 +205,7 @@ METHOD TIPCgi:StartSession( cSID )
    LOCAL nFileSize
    LOCAL cBuffer
 
-   IF !HB_ISSTRING( cSID ) .OR. Empty(cSID)
+   IF !HB_IsString( cSID ) .OR. Empty(cSID)
       DO CASE
       CASE hb_HGetRef( ::hGets, "SESSIONID", @cSID )
       CASE hb_HGetRef( ::hPosts, "SESSIONID", @cSID )
@@ -259,7 +259,7 @@ METHOD TIPCgi:DestroySession( cID )
    LOCAL cSID
    LOCAL lOk
 
-   IF HB_ISSTRING( cID ) .AND. ! Empty(cID)
+   IF HB_IsString( cID ) .AND. ! Empty(cID)
       cSID := cID
    ELSE
       cSID := ::cSID
@@ -297,7 +297,7 @@ METHOD PROCEDURE TIPCgi:ErrHandler( xError )
          "<tr><td>OPERATION:</td><td>" + xError:Operation + "</td></tr>" + ;
          "<tr><td>OS ERROR:</td><td>" + hb_ntos( xError:OsCode ) + " IN " + xError:SubSystem + "/" + hb_ntos( xError:SubCode ) + "</td></tr>" + ;
          "<tr><td>FILENAME:</td><td>" + Right(xError:FileName, 40) + "</td></tr>"
-   CASE HB_ISSTRING( xError )
+   CASE HB_IsString( xError )
       cErrMsg += "<tr><td>ERROR MESSAGE:</td><td>" + tip_HtmlSpecialChars( xError ) + "</td></tr>"
    ENDCASE
 
@@ -379,10 +379,10 @@ STATIC FUNCTION HtmlOption( xVal, cKey, cPre, cPost, lScan )
             hb_HDel( xVal, cKey )
          ENDIF
          cVal := cKey + "=" + '"' + cVal + '"'
-         IF HB_ISSTRING( cPre )
+         IF HB_IsString( cPre )
             cVal := cPre + cVal
          ENDIF
-         IF HB_ISSTRING( cPost )
+         IF HB_IsString( cPost )
             cVal += cPost
          ENDIF
       ENDIF
@@ -414,7 +414,7 @@ STATIC FUNCTION HtmlScript( hVal, cKey )
 
    IF hb_HGetRef( hVal, cKey, @hTmp )
       IF hb_HGetRef( hTmp, "src", @cVal )
-         IF HB_ISSTRING( cVal )
+         IF HB_IsString( cVal )
             cVal := { cVal }
          ENDIF
          IF HB_IsArray( cVal )
@@ -424,7 +424,7 @@ STATIC FUNCTION HtmlScript( hVal, cKey )
          ENDIF
       ENDIF
       IF hb_HGetRef( hTmp, "var", @cVal )
-         IF HB_ISSTRING( cVal )
+         IF HB_IsString( cVal )
             cVal := { cVal }
          ENDIF
          IF HB_IsArray( cVal )
@@ -450,7 +450,7 @@ STATIC FUNCTION HtmlStyle( hVal, cKey )
 
    IF hb_HGetRef( hVal, cKey, @hTmp )
       IF hb_HGetRef( hTmp, "src", @cVal )
-         IF HB_ISSTRING( cVal )
+         IF HB_IsString( cVal )
             cVal := { cVal }
          ENDIF
          IF HB_IsArray( cVal )
@@ -460,7 +460,7 @@ STATIC FUNCTION HtmlStyle( hVal, cKey )
          ENDIF
       ENDIF
       IF hb_HGetRef( hTmp, "var", @cVal )
-         IF HB_ISSTRING( cVal )
+         IF HB_IsString( cVal )
             cVal := { cVal }
          ENDIF
          IF HB_IsArray( cVal )
@@ -485,7 +485,7 @@ STATIC FUNCTION HtmlLinkRel( hVal, cKey )
 
    IF hb_HGetRef( hVal, cKey, @hTmp )
       IF hb_HGetRef( hTmp, "rel", @cVal )
-         IF HB_ISSTRING( cVal )
+         IF HB_IsString( cVal )
             cVal := { cVal, cVal }
          ENDIF
          IF HB_IsArray( cVal )

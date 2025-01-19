@@ -28,7 +28,7 @@ FUNCTION ft_DateCnfg(cFYStart, nDow)
 
    LOCAL dCheck
 
-   IF HB_ISSTRING(cFYStart)
+   IF HB_IsString(cFYStart)
       dCheck := CToD(cFYStart)
       IF !Empty(dCheck)
 

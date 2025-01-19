@@ -702,7 +702,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
       bEval := aMount[ cMount ]
       BEGIN SEQUENCE WITH {| oErr | UErrorHandler( oErr, oServer ) }
          xRet := Eval( bEval, cPath )
-         IF HB_ISSTRING( xRet )
+         IF HB_IsString( xRet )
             UWrite( xRet )
          ELSEIF HB_ISHASH( xRet )
             UWrite( UParse( xRet ) )
@@ -1546,7 +1546,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
          CASE "="
             IF hb_HHasKey( aData, aInstr[ 2 ] )
                xValue := aData[ aInstr[ 2 ] ]
-               IF HB_ISSTRING( xValue )
+               IF HB_IsString( xValue )
                   cRet += UHtmlEncode( xValue )
                ELSEIF HB_IsNumeric(xValue)
                   cRet += UHtmlEncode( Str( xValue ) )
@@ -1567,7 +1567,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
          CASE ":"
             IF hb_HHasKey( aData, aInstr[ 2 ] )
                xValue := aData[ aInstr[ 2 ] ]
-               IF HB_ISSTRING( xValue )
+               IF HB_IsString( xValue )
                   cRet += xValue
                ELSEIF HB_IsNumeric(xValue)
                   cRet += Str( xValue )

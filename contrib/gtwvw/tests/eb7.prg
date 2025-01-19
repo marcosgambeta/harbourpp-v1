@@ -194,13 +194,13 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
    mcVarType := ValType( mxValue )
    DO CASE
    CASE mcVarType == "C"
-      mcPict := iif(HB_ISSTRING( mcPict ), mcPict, Replicate( "X", Len(mxValue) ))
+      mcPict := iif(HB_IsString( mcPict ), mcPict, Replicate( "X", Len(mxValue) ))
       mbText := {|| mxValue }
    CASE mcVarType == "N"
-      mcPict := iif(HB_ISSTRING( mcPict ), mcPict, "999,999,999.99")
+      mcPict := iif(HB_IsString( mcPict ), mcPict, "999,999,999.99")
       mbText := {|| Transform( mxValue, mcPict ) }
    CASE mcVarType == "D"
-      mcPict := iif(HB_ISSTRING( mcPict ), mcPict, "9999-99-99")
+      mcPict := iif(HB_IsString( mcPict ), mcPict, "9999-99-99")
       mbText := {|| DToC(mxValue) }
    OTHERWISE
       // unsupported valtype
@@ -210,7 +210,7 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
    hb_default( @aEBGEts, {} )
 
    IF !HB_ISLOGICAL( mlMultiline ) .OR. ;
-      ! HB_ISSTRING( mxValue )
+      ! HB_IsString( mxValue )
       mlMultiline := .F.
    ENDIF
    hb_default( @mcLabel, mcVarName + ":" )

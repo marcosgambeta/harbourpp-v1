@@ -107,7 +107,7 @@ METHOD TIPClientHTTP:New( oUrl, xTrace, oCredentials )
 
 METHOD TIPClientHTTP:Get( cQuery )
 
-   IF !HB_ISSTRING( cQuery )
+   IF !HB_IsString( cQuery )
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 
@@ -158,13 +158,13 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_ISSTRING( xPostData )
+   CASE HB_IsString( xPostData )
       cData := xPostData
    OTHERWISE
       RETURN .F.
    ENDCASE
 
-   IF !HB_ISSTRING( cQuery )
+   IF !HB_IsString( cQuery )
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 
@@ -252,7 +252,7 @@ METHOD TIPClientHTTP:ReadHeaders( lClear )
       ::hHeaders := { => }
    ENDIF
    cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
-   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. HB_ISSTRING( cLine ) .AND. ! cLine == ""
+   DO WHILE ::inetErrorCode( ::SocketCon ) == 0 .AND. HB_IsString( cLine ) .AND. ! cLine == ""
 
       IF Len(aHead := hb_regexSplit( ":", cLine,,, 1 )) != 2
          cLine := ::inetRecvLine( ::SocketCon, @nPos, 500 )
@@ -305,7 +305,7 @@ METHOD TIPClientHTTP:Read( nLen )
 
       cLine := ::inetRecvLine( ::SocketCon, @nPos, 1024 )
 
-      IF !HB_ISSTRING( cLine ) .OR. cLine == ""
+      IF !HB_IsString( cLine ) .OR. cLine == ""
          RETURN NIL
       ENDIF
 
@@ -430,7 +430,7 @@ METHOD TIPClientHTTP:getcookies( cHost, cPath )
 
    hb_default( @cHost, ::oUrl:cServer )
 
-   IF !HB_ISSTRING( cPath )
+   IF !HB_IsString( cPath )
       cPath := ::oUrl:cPath
       IF cPath == ""
          cPath := "/"
@@ -524,7 +524,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
                tip_URLEncode( AllTrim(hb_CStr( item[ 2 ] )) ) + cCrLf
          ENDIF
       NEXT
-   CASE HB_ISSTRING( xPostData )
+   CASE HB_IsString( xPostData )
       cData := xPostData
    ENDCASE
 
@@ -533,7 +533,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
       cFile := hb_defaultValue( aAttachment[ 2 ], "" )
 
       cType := aAttachment[ 3 ]
-      IF !HB_ISSTRING( cType ) .OR. Empty(cType)
+      IF !HB_IsString( cType ) .OR. Empty(cType)
          cType := "text/html"
       ENDIF
 
@@ -557,7 +557,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    cData += cBound + "--" + cCrlf
 
-   IF !HB_ISSTRING( cQuery )
+   IF !HB_IsString( cQuery )
       cQuery := ::oUrl:BuildQuery()
    ENDIF
 

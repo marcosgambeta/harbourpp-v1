@@ -30,24 +30,24 @@ FUNCTION ft_Elapsed(dStart, dEnd, cTimeStart, cTimeEnd)
    LOCAL nTemp
    LOCAL aRetVal[4][2]
 
-   IF HB_ISSTRING(dStart)
+   IF HB_IsString(dStart)
       cTimeStart := dStart
       dStart     := Date()
    ELSEIF !HB_ISDATE(dStart)
       dStart     := Date()
    ENDIF
 
-   IF HB_ISSTRING(dEnd)
+   IF HB_IsString(dEnd)
       cTimeEnd := dEnd
       dEnd     := Date()
    ELSEIF !HB_ISDATE(dEnd)
       dEnd     := Date()
    ENDIF
 
-   IF !HB_ISSTRING(cTimeStart)
+   IF !HB_IsString(cTimeStart)
       cTimeStart := "00:00:00"
    ENDIF
-   IF !HB_ISSTRING(cTimeEnd)
+   IF !HB_IsString(cTimeEnd)
       cTimeEnd   := "00:00:00"
    ENDIF
 

@@ -22,7 +22,7 @@
 
 FUNCTION ft_ByteNot(cByte)
 
-   IF HB_ISSTRING(cByte)
+   IF HB_IsString(cByte)
       RETURN hb_BChar(hb_bitNot(hb_BCode(cByte)))
    ENDIF
 

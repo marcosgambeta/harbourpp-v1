@@ -446,7 +446,7 @@ METHOD hdbcSQLTResultSet:findColumn(cField)
 
 METHOD hdbcSQLTResultSet:getString(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::findColumn(nField)
    ENDIF
 
@@ -472,7 +472,7 @@ METHOD hdbcSQLTResultSet:moveToCurrentRow()
 
 METHOD hdbcSQLTResultSet:updateBuffer(nField, xValue, cType)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::findColumn(nField)
    ENDIF
 

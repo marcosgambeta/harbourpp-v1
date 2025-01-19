@@ -141,7 +141,7 @@ METHOD WvgRadioButton:configure( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
 METHOD WvgRadioButton:setCaption( xCaption )
 
-   IF HB_ISSTRING( xCaption )
+   IF HB_IsString( xCaption )
       ::caption := xCaption
       ::sendMessage( WIN_WM_SETTEXT, 0, ::caption )
    ENDIF

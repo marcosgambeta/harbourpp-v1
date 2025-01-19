@@ -298,18 +298,18 @@ METHOD WvgMenuBar:putItem(aItem, nPos, lInsert)
    IF nPos <= 0
       AAdd(::aMenuItems, aItem)
       nItemIndex := Len(::aMenuItems)
-      wvg_AppendMenu(::hMenu, aItem[1], aItem[2], iif(HB_ISSTRING(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
+      wvg_AppendMenu(::hMenu, aItem[1], aItem[2], iif(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
    ELSE
       nItemIndex := nPos
       IF lInsert
          ::aMenuItems := hb_AIns(::aMenuItems, nPos, aItem, .T.)
-         wvg_InsertMenu(::hMenu, nItemIndex - 1, aItem[1] + MF_BYPOSITION, aItem[2], iif(HB_ISSTRING(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
+         wvg_InsertMenu(::hMenu, nItemIndex - 1, aItem[1] + MF_BYPOSITION, aItem[2], iif(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]))
       ELSE
-         IF HB_ISSTRING(xCaption)
+         IF HB_IsString(xCaption)
             aItem[2] := ::aMenuItems[nItemIndex][2]
          ENDIF
          ::aMenuItems[nItemIndex] := aItem
-         wvg_SetMenuItem(::hMenu, nItemIndex - 1, aItem[2], iif(HB_ISSTRING(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]), HB_ISSTRING(xCaption))
+         wvg_SetMenuItem(::hMenu, nItemIndex - 1, aItem[2], iif(HB_IsString(aItem[3]), StrTran(aItem[3], "~", "&"), aItem[3]), HB_IsString(xCaption))
       ENDIF
    ENDIF
 

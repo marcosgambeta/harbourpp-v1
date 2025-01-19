@@ -79,10 +79,10 @@ FUNCTION tip_MailAssemble( ;
    LOCAL cCharsetCP
    LOCAL tmp
 
-   IF Empty(cFrom) .OR. ! HB_ISSTRING( cFrom )
+   IF Empty(cFrom) .OR. ! HB_IsString( cFrom )
       RETURN ""
    ENDIF
-   IF Empty(xTo) .OR. ( ! HB_ISSTRING( xTo ) .AND. ! HB_IsArray( xTo ) )
+   IF Empty(xTo) .OR. ( ! HB_IsString( xTo ) .AND. ! HB_IsArray( xTo ) )
       RETURN ""
    ENDIF
 
@@ -140,22 +140,22 @@ FUNCTION tip_MailAssemble( ;
          nAttr := 0
 
          DO CASE
-         CASE HB_ISSTRING( aThisFile )
+         CASE HB_IsString( aThisFile )
             cFile := aThisFile
             cData := hb_MemoRead( cFile )
             hb_vfAttrGet( cFile, @nAttr )
          CASE HB_IsArray( aThisFile ) .AND. Len(aThisFile) >= 2
             cFile := aThisFile[ 1 ]
-            IF HB_ISSTRING( aThisFile[ 2 ] )
+            IF HB_IsString( aThisFile[ 2 ] )
                cData := aThisFile[ 2 ]
                hb_default( @cFile, "unnamed" )
-            ELSEIF HB_ISSTRING( cFile )
+            ELSEIF HB_IsString( cFile )
                cData := hb_MemoRead( cFile )
                hb_vfAttrGet( cFile, @nAttr )
             ELSE
                LOOP  /* No filename and no content. */
             ENDIF
-            IF Len(aThisFile) >= 3 .AND. HB_ISSTRING( aThisFile[ 3 ] )
+            IF Len(aThisFile) >= 3 .AND. HB_IsString( aThisFile[ 3 ] )
                cMimeType := aThisFile[ 3 ]
             ENDIF
          OTHERWISE
@@ -191,7 +191,7 @@ FUNCTION tip_MailAssemble( ;
    ENDIF
 
    IF HB_ISEVALITEM( bSMIME ) .AND. ;
-      HB_ISSTRING( tmp := Eval( bSMIME, oMail:ToString() ) )
+      HB_IsString( tmp := Eval( bSMIME, oMail:ToString() ) )
 
       oMail := TIPMail():New()
       oMail:SetCharset( cCharset )
@@ -211,7 +211,7 @@ FUNCTION tip_MailAssemble( ;
       oMail:hHeaders[ "X-Priority" ] := hb_ntos( nPriority )
    ENDIF
 
-   RETURN iif(HB_ISSTRING( tmp ), oMail:HeadersToString() + tmp, oMail:ToString())
+   RETURN iif(HB_IsString( tmp ), oMail:HeadersToString() + tmp, oMail:ToString())
 
 STATIC FUNCTION s_TransCP( xData, cCP )
 
@@ -219,7 +219,7 @@ STATIC FUNCTION s_TransCP( xData, cCP )
 
    IF !Empty(cCP)
       DO CASE
-      CASE HB_ISSTRING( xData )
+      CASE HB_IsString( xData )
          RETURN hb_Translate( xData,, cCP )
       CASE HB_IsArray( xData )
          FOR EACH tmp IN xData

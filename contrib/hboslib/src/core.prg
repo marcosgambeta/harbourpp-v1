@@ -87,7 +87,7 @@ FUNCTION OL_WinCBCopy()
 
 FUNCTION OL_WinCBPaste( cText )
 
-   IF HB_ISSTRING( cText )
+   IF HB_IsString( cText )
       hb_gtInfo( HB_GTI_CLIPBOARDDATA, cText )
       RETURN .T.
    ENDIF

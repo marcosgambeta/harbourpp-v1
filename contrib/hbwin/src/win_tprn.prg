@@ -308,7 +308,7 @@ METHOD win_Prn:StartDoc(cDocName)
 
    LOCAL lResult
 
-   IF !HB_ISSTRING(cDocName)
+   IF !HB_IsString(cDocName)
       cDocName := hb_argv(0) + " [" + DToC(Date()) + " - " + Time() + "]"
    ENDIF
 

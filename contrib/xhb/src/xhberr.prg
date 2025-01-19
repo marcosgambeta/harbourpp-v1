@@ -63,7 +63,7 @@ FUNCTION xhb_ErrorLog(cErrorLog, lErrorLogAppend)
 
    LOCAL aValueOld := {s_cErrorLog, s_lErrorLogAppend}
 
-   IF HB_ISSTRING(cErrorLog)
+   IF HB_IsString(cErrorLog)
       s_cErrorLog := cErrorLog
    ENDIF
    IF HB_ISLOGICAL(lErrorLogAppend)
@@ -237,7 +237,7 @@ STATIC FUNCTION ErrorMessage(oError)
    cMessage := iif(oError:severity > ES_WARNING, "Error", "Warning") + " "
 
    // add subsystem name if available
-   IF HB_ISSTRING(oError:subsystem)
+   IF HB_IsString(oError:subsystem)
       cMessage += oError:subsystem()
    ELSE
       cMessage += "???"
@@ -251,7 +251,7 @@ STATIC FUNCTION ErrorMessage(oError)
    ENDIF
 
    // add error description if available
-   IF HB_ISSTRING(oError:description)
+   IF HB_IsString(oError:description)
       cMessage += "  " + oError:description
    ENDIF
 
@@ -519,7 +519,7 @@ STATIC FUNCTION LogError(oErr)
       FWriteLine(nHandle, "")
       FWriteLine(nHandle, "")
 
-      IF HB_ISSTRING(cScreen)
+      IF HB_IsString(cScreen)
          FWriteLine(nHandle, PadC(" Video Screen Dump ", nCols, "#"))
          FWriteLine(nHandle, "")
          FWriteLine(nHandle, "+" + Replicate("-", nCols + 1) + "+")
@@ -646,16 +646,16 @@ PROCEDURE __MinimalErrorHandler(oError)
    ENDIF
    cError += "!" + hb_eol()
 
-   IF HB_ISSTRING(oError:Operation)
+   IF HB_IsString(oError:Operation)
       cError += "Operation: " + oError:Operation + hb_eol()
    ENDIF
-   IF HB_ISSTRING(oError:Description)
+   IF HB_IsString(oError:Description)
       cError += "Description: " + oError:Description + hb_eol()
    ENDIF
-   IF HB_ISSTRING(xData := err_ModuleName(oError))
+   IF HB_IsString(xData := err_ModuleName(oError))
       cError += "Source: " + xData + hb_eol()
    ENDIF
-   IF HB_ISSTRING(xData := err_ProcName(oError))
+   IF HB_IsString(xData := err_ProcName(oError))
       cError += "Procedure: " + xData + hb_eol()
    ENDIF
    IF HB_IsNumeric(xData := err_ProcLine(oError))
@@ -674,7 +674,7 @@ FUNCTION xhb_ErrorNew(cSubSystem, nGenCode, nSubCode, cOperation, cDescription, 
    LOCAL oError := ErrorNew()
    LOCAL aStack, n
 
-   IF HB_ISSTRING(cSubSystem)
+   IF HB_IsString(cSubSystem)
       oError:SubSystem := cSubSystem
    ENDIF
    IF HB_IsNumeric(nGenCode)
@@ -683,10 +683,10 @@ FUNCTION xhb_ErrorNew(cSubSystem, nGenCode, nSubCode, cOperation, cDescription, 
    IF HB_IsNumeric(nSubCode)
       oError:SubCode := nSubCode
    ENDIF
-   IF HB_ISSTRING(cOperation)
+   IF HB_IsString(cOperation)
       oError:Operation := cOperation
    ENDIF
-   IF HB_ISSTRING(cDescription)
+   IF HB_IsString(cDescription)
       oError:Description := cDescription
    ENDIF
    IF HB_IsArray(aArgs)
@@ -694,7 +694,7 @@ FUNCTION xhb_ErrorNew(cSubSystem, nGenCode, nSubCode, cOperation, cDescription, 
    ENDIF
 
    IF __objHasMsg(oError, "MODULENAME")
-      IF HB_ISSTRING(cModuleName)
+      IF HB_IsString(cModuleName)
          oError:ModuleName := cModuleName
       ELSE
          oError:ModuleName := ProcFile(1)
@@ -702,7 +702,7 @@ FUNCTION xhb_ErrorNew(cSubSystem, nGenCode, nSubCode, cOperation, cDescription, 
    ENDIF
 
    IF __objHasMsg(oError, "PROCNAME")
-      IF HB_ISSTRING(cProcName)
+      IF HB_IsString(cProcName)
          oError:ProcName := cProcName
       ELSE
          oError:ProcName := ProcName(1)

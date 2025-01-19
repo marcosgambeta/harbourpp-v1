@@ -508,7 +508,7 @@ STATIC FUNCTION Reset()
 
 STATIC FUNCTION Buffer(Buffer, lAdopt)
 
-   IF HB_ISSTRING(Buffer)
+   IF HB_IsString(Buffer)
       IF Len(Buffer) < QSelf():SizeOf
          // TraceLog(Buffer)
          Buffer := PadR(Buffer, QSelf():SizeOf, Chr(0))
@@ -518,7 +518,7 @@ STATIC FUNCTION Buffer(Buffer, lAdopt)
       QSelf():DeValue(lAdopt)
    ENDIF
 
-   IF !HB_ISSTRING(QSelf():InternalBuffer)
+   IF !HB_IsString(QSelf():InternalBuffer)
       QSelf():InternalBuffer := QSelf():Value()
    ENDIF
 
@@ -555,7 +555,7 @@ STATIC FUNCTION DeValue(lAdopt)
    AEval(QSelf(), {|xVal|AAdd(aValues, xVal)}, 1, Len(QSelf()) - CLASS_PROPERTIES)
 #endif
 
-   IF !HB_ISSTRING(Buffer) .OR. Len(Buffer) == 0
+   IF !HB_IsString(Buffer) .OR. Len(Buffer) == 0
       // TraceLog("EMPTY Buffer passed to " + ProcName())
    ELSEIF Len(Buffer) < QSelf():SizeOf
       // TraceLog("Should have been caught at ::Buffer()!!!", Buffer)

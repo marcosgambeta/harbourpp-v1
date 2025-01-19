@@ -186,7 +186,7 @@ METHOD WvgCheckBox:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
 METHOD WvgCheckBox:setCaption(xCaption)
 
-   IF HB_ISSTRING(xCaption)
+   IF HB_IsString(xCaption)
       ::caption := xCaption
       wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::caption)
    ENDIF

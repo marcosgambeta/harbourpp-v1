@@ -291,7 +291,7 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
       wapi_AppendMenu( ::hMenu, ;
          aItem[ 1 ], ;
          aItem[ 2 ], ;
-         iif(HB_ISSTRING( aItem[ 3 ] ), StrTran( aItem[ 3 ], "~", "&" ), aItem[ 3 ]) )
+         iif(HB_IsString( aItem[ 3 ] ), StrTran( aItem[ 3 ], "~", "&" ), aItem[ 3 ]) )
    ELSE
       nItemIndex := nPos
       IF hb_defaultValue( lInsert, .T. )
@@ -300,17 +300,17 @@ METHOD WvgMenuBar:putItem( aItem, nPos, lInsert )
             nItemIndex - 1, ;
             aItem[ 1 ] + WIN_MF_BYPOSITION, ;
             aItem[ 2 ], ;
-            iif(HB_ISSTRING( aItem[ 3 ] ), StrTran( aItem[ 3 ], "~", "&" ), aItem[ 3 ]) )
+            iif(HB_IsString( aItem[ 3 ] ), StrTran( aItem[ 3 ], "~", "&" ), aItem[ 3 ]) )
       ELSE
-         IF HB_ISSTRING( xCaption )
+         IF HB_IsString( xCaption )
             aItem[ 2 ] := ::aMenuItems[ nItemIndex ][ 2 ]
          ENDIF
          ::aMenuItems[ nItemIndex ] := aItem
          wvg_SetMenuItem( ::hMenu, ;
             nItemIndex - 1, ;
             aItem[ 2 ], ;
-            iif(HB_ISSTRING( aItem[ 3 ] ), StrTran( aItem[ 3 ], "~", "&" ), aItem[ 3 ]), ;
-            HB_ISSTRING( xCaption ) )
+            iif(HB_IsString( aItem[ 3 ] ), StrTran( aItem[ 3 ], "~", "&" ), aItem[ 3 ]), ;
+            HB_IsString( xCaption ) )
       ENDIF
    ENDIF
 

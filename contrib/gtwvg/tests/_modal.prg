@@ -94,11 +94,11 @@ FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, aMessage_, nTop, nTime )
       nTime := 10000   //  Seconds
    ENDIF
 
-   IF HB_ISSTRING( aText_ )
+   IF HB_IsString( aText_ )
       aText_ := { aText_ }
    ENDIF
 
-   IF HB_ISSTRING( aButtons_ )
+   IF HB_IsString( aButtons_ )
       aButtons_ := { aButtons_ }
    ENDIF
 

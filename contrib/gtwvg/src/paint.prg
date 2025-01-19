@@ -319,13 +319,13 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
    AAdd(aDlg[1], nH)
    AAdd(aDlg[1], 0)
    AAdd(aDlg[1], 0)
-   AAdd(aDlg[1], iif(HB_ISSTRING(cTitle), cTitle, ""))
+   AAdd(aDlg[1], iif(HB_IsString(cTitle), cTitle, ""))
 
    IF hb_bitAnd(nStyle, DS_SETFONT) == DS_SETFONT
       AAdd(aDlg[1], iif(HB_IsNumeric(nPointSize), nPointSize, 8))
       AAdd(aDlg[1], iif(HB_IsNumeric(nWeight), nWeight, 400))
       AAdd(aDlg[1], iif(HB_ISLOGICAL(lItalic), lItalic, .F.))
-      AAdd(aDlg[1], iif(HB_ISSTRING(cFaceName), cFaceName, "MS Sans Serif"))
+      AAdd(aDlg[1], iif(HB_IsString(cFaceName), cFaceName, "MS Sans Serif"))
    ENDIF
 
    RETURN aDlg
@@ -396,7 +396,7 @@ FUNCTION wvt_AddDlgItem(aDlg, nTop, nLeft, nRows, nCols, aOffSet, cnId, cnDlgCla
    AAdd(aDlg[ 8], nH)
    AAdd(aDlg[ 9], cnId)
    AAdd(aDlg[10], cnDlgClass)
-   AAdd(aDlg[11], iif(HB_ISSTRING(cText), cText, iif(HB_IsNumeric(cText), cText, "")))
+   AAdd(aDlg[11], iif(HB_IsString(cText), cText, iif(HB_IsNumeric(cText), cText, "")))
    AAdd(aDlg[12], 0)
 
    RETURN aDlg
@@ -408,7 +408,7 @@ FUNCTION wvt_CreateDialog(acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu)
    LOCAL xTemplate
    LOCAL nDlgMode
 
-   IF HB_ISSTRING(cbDlgProc)
+   IF HB_IsString(cbDlgProc)
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
@@ -446,7 +446,7 @@ FUNCTION wvt_DialogBox(acnDlg, cbDlgProc, hWndParent)
    LOCAL xTemplate
    LOCAL nDlgMode
 
-   IF HB_ISSTRING(cbDlgProc)
+   IF HB_IsString(cbDlgProc)
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
@@ -566,10 +566,10 @@ FUNCTION wvt_SetIcon(ncIconRes, cIconName)
    IF HB_IsNumeric(ncIconRes)
       hb_gtInfo(HB_GTI_ICONRES, ncIconRes)
 
-   ELSEIF HB_ISSTRING(cIconName)
+   ELSEIF HB_IsString(cIconName)
       hb_gtInfo(HB_GTI_ICONRES, cIconName)
 
-   ELSEIF HB_ISSTRING(ncIconRes)
+   ELSEIF HB_IsString(ncIconRes)
       hb_gtInfo(HB_GTI_ICONFILE, ncIconRes)
 
    ENDIF
@@ -625,7 +625,7 @@ FUNCTION wvt_GetRGBColorByString(cColor, nForeBack)
 
    nForeBack := iif(HB_IsNumeric(nForeBack), nForeBack, 0)
 
-   IF HB_ISSTRING(cColor)
+   IF HB_IsString(cColor)
       IF (n := At("/", cColor)) > 0
          IF nForeBack == 0
             s := SubStr(cColor, 1, n - 1)

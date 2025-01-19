@@ -21,7 +21,7 @@
 
 FUNCTION ft_ByteOr(cByte1, cByte2)
 
-   IF HB_ISSTRING(cByte1) .AND. HB_ISSTRING(cByte2)
+   IF HB_IsString(cByte1) .AND. HB_IsString(cByte2)
       RETURN hb_BChar(hb_bitOr(hb_BCode(cByte1), hb_BCode(cByte2)))
    ENDIF
 

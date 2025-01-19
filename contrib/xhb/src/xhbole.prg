@@ -184,7 +184,7 @@ METHOD TOleAuto:New(xOle, cClass, cLicense)
 
    LOCAL hOle
 
-   IF HB_ISSTRING(xOle)
+   IF HB_IsString(xOle)
       IF Empty(hOle := __oleCreateObject(xOle, , cLicense))
          RETURN Throw(s_oleError())
       ENDIF
@@ -194,7 +194,7 @@ METHOD TOleAuto:New(xOle, cClass, cLicense)
       ::hObj := xOle
       IF ::__hObj == NIL
          RETURN Throw(s_oleError(0, "Invalid argument to contructor!"))
-      ELSEIF HB_ISSTRING(cClass)
+      ELSEIF HB_IsString(cClass)
          ::cClassName := cClass
       ELSE
          ::cClassName := hb_ntos(win_P2N(::__hObj))
@@ -205,7 +205,7 @@ METHOD TOleAuto:New(xOle, cClass, cLicense)
 
 METHOD TOleAuto:GetActiveObject(cClass)
 
-   IF HB_ISSTRING(cClass)
+   IF HB_IsString(cClass)
       IF Empty(::__hObj := __oleGetActiveObject(cClass))
          RETURN Throw(s_oleError())
       ENDIF

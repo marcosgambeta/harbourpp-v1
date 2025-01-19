@@ -99,7 +99,7 @@ FUNCTION EditorTitle( oEdit, cTitle )
 
    LOCAL _cTitle := oEdit[ E_TITLE ]
 
-   IF HB_ISSTRING( cTitle )
+   IF HB_IsString( cTitle )
       oEdit[ E_TITLE ] := cTitle
    ENDIF
 
@@ -211,7 +211,7 @@ FUNCTION EditorFile( xInput, cOutput, nLineLen, ;
 
    hb_default( @lSave, .T. )
 
-   IF HB_ISSTRING( xInput )
+   IF HB_IsString( xInput )
       nHandle := FOpen( xInput )
       lClose := .T.
    ELSE

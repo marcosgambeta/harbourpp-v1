@@ -62,7 +62,7 @@ FUNCTION xhb_SetTrace(xTrace)
    DO CASE
    CASE HB_ISLOGICAL(xTrace)
       s_lSET_TRACE := xTrace
-   CASE HB_ISSTRING(xTrace)
+   CASE HB_IsString(xTrace)
       SWITCH Upper(xTrace)
       CASE "ON"
          s_lSET_TRACE := .T.
@@ -80,7 +80,7 @@ FUNCTION xhb_SetTraceFile(xFile, lAppend)
    LOCAL cTraceFile := s_cSET_TRACEFILE
    LOCAL hFile
 
-   IF HB_ISSTRING(xFile) .AND. !Empty(xFile)
+   IF HB_IsString(xFile) .AND. !Empty(xFile)
       s_cSET_TRACEFILER := s_cSET_TRACEFILE := s_RealPath(xFile)
       IF !hb_defaultValue(lAppend, .F.) .AND. ;
          (hFile := hb_vfOpen(@s_cSET_TRACEFILER, FO_CREAT + FO_TRUNC + FO_WRITE)) != NIL
@@ -95,7 +95,7 @@ FUNCTION xhb_SetTraceStack(xLevel)
    LOCAL nTraceLevel := s_nSET_TRACESTACK
 
    DO CASE
-   CASE HB_ISSTRING(xLevel)
+   CASE HB_IsString(xLevel)
       SWITCH xLevel
       CASE "NONE"
          s_nSET_TRACESTACK := HB_SET_TRACESTACK_NONE

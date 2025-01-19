@@ -178,7 +178,7 @@ FUNCTION hb_BldLogMsg(...)
    FOR EACH xVar IN hb_AParams()
       IF HB_IsNumeric(xVar)
          cMsg += AllTrim(hb_CStr(xVar))
-      ELSEIF !HB_ISSTRING(xVar)
+      ELSEIF !HB_IsString(xVar)
          cMsg += hb_CStr(xVar)
       ELSE
          cMsg += xVar
@@ -613,7 +613,7 @@ METHOD HB_LogDbf:New(nLevel, cDBFName, cIndexName, aStruct, cDriver)
    LOCAL cPath, cName, cExt, cDrive
 
    ::Super:New(nLevel)
-   IF HB_ISSTRING(cDBFName)
+   IF HB_IsString(cDBFName)
       hb_FNameSplit(cDBFName, @cPath, @cName, @cExt, @cDrive)
       IF Empty(cExt)
          cExt := "dbf"
@@ -624,7 +624,7 @@ METHOD HB_LogDbf:New(nLevel, cDBFName, cIndexName, aStruct, cDriver)
       // __OutDebug("::cDBFName", ::cDBFName)
    ENDIF
 
-   IF HB_ISSTRING(cIndexName)
+   IF HB_IsString(cIndexName)
       hb_FNameSplit(cIndexName, @cPath, @cName, @cExt, @cDrive)
       IF Empty(cExt)
          cExt := "cdx"

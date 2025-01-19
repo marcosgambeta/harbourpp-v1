@@ -180,10 +180,10 @@ METHOD WvgProgressBar:configure( oParent, oOwner, aPos, aSize, aPresParams, lVis
 
 METHOD PROCEDURE WvgProgressBar:setCaption( cCaption )
 
-   IF HB_ISSTRING( cCaption )
+   IF HB_IsString( cCaption )
       ::Caption := cCaption
    ENDIF
-   IF HB_ISSTRING( ::Caption )
+   IF HB_IsString( ::Caption )
       ::sendMessage( WIN_WM_SETTEXT, 0, ::Caption )
    ENDIF
 

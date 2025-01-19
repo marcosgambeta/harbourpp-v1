@@ -132,7 +132,7 @@ METHOD TIPClientFTP:New( oUrl, xTrace, oCredentials )
 
 METHOD TIPClientFTP:Open( cUrl )
 
-   IF HB_ISSTRING( cUrl )
+   IF HB_IsString( cUrl )
       ::oUrl := TUrl():New( cUrl )
    ENDIF
 
@@ -574,7 +574,7 @@ METHOD TIPClientFTP:MPut( cFileSpec, cAttr )
    LOCAL aFile
    LOCAL cStr
 
-   IF !HB_ISSTRING( cFileSpec )
+   IF !HB_IsString( cFileSpec )
       RETURN NIL
    ENDIF
 

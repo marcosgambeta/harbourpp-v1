@@ -219,7 +219,7 @@ METHOD WvgStatusBar:getItem( nItemORcKey )
    LOCAL nIndex := 0
 
    DO CASE
-   CASE HB_ISSTRING( nItemORcKey )
+   CASE HB_IsString( nItemORcKey )
       nIndex := AScan( ::aItems, {| o | o:key == nItemORcKey } )
    CASE HB_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey

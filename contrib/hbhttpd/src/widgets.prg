@@ -367,7 +367,7 @@ METHOD UWBrowse:Output()
       FOR nI := 1 TO Len(::aColumns)
          xField := ::aColumns[ nI ][ 3 ]
          DO CASE
-         CASE HB_ISSTRING( xField )
+         CASE HB_IsString( xField )
             xI := FieldGet( FieldPos( xField ) )
          CASE HB_ISEVALITEM( xField )
             xI := Eval( xField )

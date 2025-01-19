@@ -80,13 +80,13 @@ STATIC FUNCTION DialogAlert( cCaption, aText_, aButtons_, sel, nTop, nTime )
       nTime := 10000   //  Seconds
    ENDIF
 
-   IF HB_ISSTRING( aText_ )
+   IF HB_IsString( aText_ )
       aText_ := { aText_ }
    ENDIF
 
    hb_default( @aText_, {} )
 
-   IF HB_ISSTRING( aButtons_ )
+   IF HB_IsString( aButtons_ )
       aButtons_ := { aButtons_ }
    ENDIF
 

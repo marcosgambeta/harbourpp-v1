@@ -165,7 +165,7 @@ FUNCTION tp_open( nPort, nInSize, nOutSize, nBaud, nData, cParity, nStop, cPortn
    hb_default( @cParity, "N" )
    hb_default( @nStop, 1 )
 
-   IF HB_ISSTRING( cPortname )
+   IF HB_IsString( cPortname )
       hb_comSetDevice( nPort, cPortname )
    ENDIF
 
@@ -274,7 +274,7 @@ FUNCTION tp_recvto( nPort, cDelim, nMaxlen, nTimeout )
       RETURN ""
    ENDIF
 
-   IF !HB_ISSTRING( cDelim ) .OR. Len(cDelim) == 0
+   IF !HB_IsString( cDelim ) .OR. Len(cDelim) == 0
       RETURN ""
    ENDIF
 

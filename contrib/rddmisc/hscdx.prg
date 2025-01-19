@@ -198,7 +198,7 @@ PROCEDURE hsx_Close( xHSX )
       DO CASE
       CASE HB_IsNumeric(xHSX)
          nSlot := AScan( aWData[ 2 ], xHSX )
-      CASE HB_ISSTRING( xHSX )
+      CASE HB_IsString( xHSX )
          nSlot := AScan( aWData[ 3 ], {| _1 | _1 == xHSX } )
       OTHERWISE
          nSlot := 0

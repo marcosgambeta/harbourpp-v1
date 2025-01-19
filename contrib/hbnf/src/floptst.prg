@@ -65,7 +65,7 @@ FUNCTION ft_FlopTst(nDriveNum)
 
    IF HB_IsNumeric(nDriveNum)
       cFileName := Chr(Asc("A") + nDriveNum) + hb_osDriveSeparator()
-   ELSEIF HB_ISSTRING(nDriveNum)
+   ELSEIF HB_IsString(nDriveNum)
       cFileName := nDriveNum
    ELSE
       RETURN ERR_WRONG_PARAMETERS

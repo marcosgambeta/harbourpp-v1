@@ -257,7 +257,7 @@ METHOD WvgComboBox:handleEvent(nMessage, aNM)
 
 METHOD WvgComboBox:addItem(cItem)
 
-   IF HB_ISSTRING(cItem)
+   IF HB_IsString(cItem)
       RETURN ::sendCBMessage(CB_ADDSTRING, cItem)
    ENDIF
 

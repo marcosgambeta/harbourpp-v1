@@ -209,7 +209,7 @@ ENDCLASS
 
 METHOD win_Prn:New(cPrinter)
 
-   ::PrinterName := iif(!HB_ISSTRING(cPrinter) .OR. Empty(cPrinter), win_printerGetDefault(), cPrinter)
+   ::PrinterName := iif(!HB_IsString(cPrinter) .OR. Empty(cPrinter), win_printerGetDefault(), cPrinter)
    /* Initialized with the current properties of the printer [jarabal] */
    ::GetDocumentProperties()
 
@@ -303,7 +303,7 @@ METHOD win_Prn:StartDoc(cDocName)
 
    IF !Empty(::hPrinterDc)
 
-      IF !HB_ISSTRING(cDocName)
+      IF !HB_IsString(cDocName)
          cDocName := hb_ProgName() + " [" + hb_TToC(hb_DateTime(), "yyyy-mm-dd", "hh:mm:ss") + "]"
       ENDIF
 
@@ -452,7 +452,7 @@ METHOD win_Prn:GetDocumentProperties()
 // If nDiv is < 0 then Fixed width printing is forced via ExtTextOut()
 METHOD win_Prn:SetFont(cFontName, nPointSize, xWidth, nBold, lUnderline, lItalic, nCharSet, lManualSize)
 
-   IF HB_ISSTRING(cFontName)
+   IF HB_IsString(cFontName)
       ::FontName := cFontName
    ENDIF
    IF HB_IsNumeric(nPointSize)
@@ -642,7 +642,7 @@ METHOD win_Prn:TextOut(cString, lNewLine, lUpdatePosX, nAlign)
    LOCAL size
    LOCAL nPosX
 
-   IF !Empty(::hPrinterDc) .AND. HB_ISSTRING(cString) .AND. !cString == "" .AND. ::CheckPage()
+   IF !Empty(::hPrinterDc) .AND. HB_IsString(cString) .AND. !cString == "" .AND. ::CheckPage()
 
       wapi_SetTextAlign(::hPrinterDC, hb_bitOr(WIN_TA_NOUPDATECP, hb_defaultValue(nAlign, hb_bitOr(WIN_TA_BOTTOM, WIN_TA_LEFT))))
 
@@ -683,7 +683,7 @@ METHOD win_Prn:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBol
 
    IF !Empty(::hPrinterDc) .AND. ::CheckPage()
 
-      IF HB_ISSTRING(cFont)
+      IF HB_IsString(cFont)
          DO CASE
          CASE HB_IsArray(nWidth)
             nDiv   := nWidth[1]
@@ -700,7 +700,7 @@ METHOD win_Prn:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBol
 
       lResult := ::TextOutAt(nPosX, nPosY, cString, lNewLine, lUpdatePosX, nAlign)
 
-      IF HB_ISSTRING(cFont)
+      IF HB_IsString(cFont)
          ::hFont := hFont  // Reset Font
       ENDIF
       IF HB_IsNumeric(nColor)

@@ -165,7 +165,7 @@ METHOD Wvg3State:configure(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
 METHOD Wvg3State:setCaption(xCaption)
 
-   IF HB_ISSTRING(xCaption)
+   IF HB_IsString(xCaption)
       ::caption := xCaption
       wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::caption)
    ENDIF

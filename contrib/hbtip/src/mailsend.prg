@@ -138,7 +138,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
             cTo += ","
          ENDIF
       NEXT
-   CASE HB_ISSTRING( xTo )
+   CASE HB_IsString( xTo )
       cTo := tip_GetRawEmail( AllTrim(xTo) )
    ENDCASE
 
@@ -157,7 +157,7 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
             cCC += ","
          ENDIF
       NEXT
-   CASE HB_ISSTRING( xCC )
+   CASE HB_IsString( xCC )
       cCC := tip_GetRawEmail( AllTrim(xCC) )
    ENDCASE
 
@@ -176,13 +176,13 @@ FUNCTION tip_MailSend( cServer, nPort, cFrom, xTo, xCC, xBCC, cBody, cSubject, ;
             cBCC += ","
          ENDIF
       NEXT
-   CASE HB_ISSTRING( xBCC )
+   CASE HB_IsString( xBCC )
       cBCC := tip_GetRawEmail( AllTrim(xBCC) )
    ENDCASE
 
    cUser := StrTran( cUser, "@", "&at;" )
 
-   IF HB_ISSTRING( cPopServer ) .AND. lPopAuth
+   IF HB_IsString( cPopServer ) .AND. lPopAuth
 
       BEGIN SEQUENCE WITH __BreakBlock()
          oUrl1 := TUrl():New( iif(lSSL, "pop3s://", "pop://") + cUser + ":" + cPass + "@" + cPopServer + "/" )

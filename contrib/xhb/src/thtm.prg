@@ -751,7 +751,7 @@ METHOD THtml:Say(str, font, size, type, color, style)
 
    ENDIF
 
-   IF HB_ISSTRING(type)
+   IF HB_IsString(type)
 
       IF "<" $ type
 
@@ -1016,13 +1016,13 @@ METHOD THtml:PutImageUrl(cImage, nBorder, nHeight, cUrl, ;
 
    IF nHeight != NIL .AND. HB_IsNumeric(nHeight)
       cStr += " height = " + hb_ntos(nHeight) + " " + CRLF()
-   ELSEIF nHeight != NIL .AND. HB_ISSTRING(nHeight)
+   ELSEIF nHeight != NIL .AND. HB_IsString(nHeight)
       cStr += " height = " + nHeight + " " + CRLF()
    ENDIF
 
    IF nWidth != NIL .AND. HB_IsNumeric(nWidth)
       cStr += " width = " + hb_ntos(nWidth) + " " + CRLF()
-   ELSEIF nWidth != NIL .AND. HB_ISSTRING(nWidth)
+   ELSEIF nWidth != NIL .AND. HB_IsString(nWidth)
       cStr += " width = " + nWidth + " " + CRLF()
    ENDIF
 
@@ -1080,13 +1080,13 @@ METHOD THtml:PutTextImageUrl(cImage, nBorder, nHeight, cUrl, ;
 
    IF nHeight != NIL .AND. HB_IsNumeric(nHeight)
       cStr += " height = " + hb_ntos(nHeight) + " "
-   ELSEIF nHeight != NIL .AND. HB_ISSTRING(nHeight)
+   ELSEIF nHeight != NIL .AND. HB_IsString(nHeight)
       cStr += " height = " + nHeight + " "
    ENDIF
 
    IF nWidth != NIL .AND. HB_IsNumeric(nWidth)
       cStr += " width = " + hb_ntos(nWidth) + " "
-   ELSEIF nWidth != NIL .AND. HB_ISSTRING(nWidth)
+   ELSEIF nWidth != NIL .AND. HB_IsString(nWidth)
       cStr += " width = " + nWidth + " "
    ENDIF
 
@@ -1137,19 +1137,19 @@ METHOD THtml:PutImage(cImage, nBorder, nHeight, ;
 
    IF nBorder != NIL .AND. HB_IsNumeric(nBorder)
       cStr += " border= " + hb_ntos(nBorder)
-   ELSEIF nBorder != NIL .AND. HB_ISSTRING(nBorder)
+   ELSEIF nBorder != NIL .AND. HB_IsString(nBorder)
       cStr += " border= " + '"' + nBorder + '"'
    ENDIF
 
    IF nHeight != NIL .AND. HB_IsNumeric(nHeight)
       cStr += " height= " + hb_ntos(nHeight) + " "
-   ELSEIF nHeight != NIL .AND. HB_ISSTRING(nHeight)
+   ELSEIF nHeight != NIL .AND. HB_IsString(nHeight)
       cStr += " height= " + '"' + nHeight + '"'
    ENDIF
 
    IF nWidth != NIL .AND. HB_IsNumeric(nWidth)
       cStr += " width= " + hb_ntos(nWidth) + " "
-   ELSEIF nWidth != NIL .AND. HB_ISSTRING(nWidth)
+   ELSEIF nWidth != NIL .AND. HB_IsString(nWidth)
       cStr += " width= " + nWidth + " "
    ENDIF
 
@@ -1280,13 +1280,13 @@ METHOD THtml:DefineTable(nCols, nBorder, nWidth, nHeight, ColorFore, ColorBG, ;
 
    IF nWidth != NIL .AND. HB_IsNumeric(nWidth)
       cStr += " width=" + hb_ntos(nWidth)
-   ELSEIF nWidth != NIL .AND. HB_ISSTRING(nWidth)
+   ELSEIF nWidth != NIL .AND. HB_IsString(nWidth)
       cStr += " width=" + '"' + nWidth + '"'
    ENDIF
 
    IF nHeight != NIL .AND. HB_IsNumeric(nHeight)
       cStr += " height=" + hb_ntos(nHeight)
-   ELSEIF nHeight != NIL .AND. HB_ISSTRING(nHeight)
+   ELSEIF nHeight != NIL .AND. HB_IsString(nHeight)
       cStr += " height=" + '"' + nHeight + '"'
    ENDIF
 
@@ -1474,7 +1474,7 @@ METHOD THtml:NewTableCell(cAlign, cColor, ;
 
    IF nHeight != NIL .AND. HB_IsNumeric(nHeight)
       cStr += " height=" + hb_ntos(nHeight)
-   ELSEIF nHeight != NIL .AND. HB_ISSTRING(nHeight)
+   ELSEIF nHeight != NIL .AND. HB_IsString(nHeight)
       cStr += " height=" + '"' + nHeight + '"'
    ENDIF
 
@@ -1484,13 +1484,13 @@ METHOD THtml:NewTableCell(cAlign, cColor, ;
 
    IF nWidth != NIL .AND. HB_IsNumeric(nWidth)
       cStr += " width=" + hb_ntos(nWidth)
-   ELSEIF nWidth != NIL .AND. HB_ISSTRING(nWidth)
+   ELSEIF nWidth != NIL .AND. HB_IsString(nWidth)
       cStr += " width=" + '"' + nWidth + '"'
    ENDIF
 
    IF nColspan != NIL .AND. HB_IsNumeric(nColspan)
       cStr += " colspan=" + hb_ntos(nColspan)
-   ELSEIF nColspan != NIL .AND. HB_ISSTRING(nColspan)
+   ELSEIF nColspan != NIL .AND. HB_IsString(nColspan)
       cStr += " colspan=" + '"' + nColspan + '"'
    ENDIF
 
@@ -1508,7 +1508,7 @@ METHOD THtml:NewTableCell(cAlign, cColor, ;
 
    IF nRowspan != NIL .AND. HB_IsNumeric(nRowspan)
       cStr += " rowspan=" + hb_ntos(nRowspan)
-   ELSEIF nRowspan != NIL .AND. HB_ISSTRING(nRowspan)
+   ELSEIF nRowspan != NIL .AND. HB_IsString(nRowspan)
       cStr += " rowspan=" + '"' + nRowspan + '"'
    ENDIF
 
@@ -2041,13 +2041,13 @@ METHOD THtml:AddObject(cType, cClassid, cAling, cCode, lDisable, cCodeBase, cNam
 
    IF nHeight != NIL .AND. HB_IsNumeric(nHeight)
       cStr += " height = " + hb_ntos(nHeight) + " " + CRLF()
-   ELSEIF nHeight != NIL .AND. HB_ISSTRING(nHeight)
+   ELSEIF nHeight != NIL .AND. HB_IsString(nHeight)
       cStr += " height = " + nHeight + " " + CRLF()
    ENDIF
 
    IF nWidth != NIL .AND. HB_IsNumeric(nWidth)
       cStr += " width = " + hb_ntos(nWidth) + " " + CRLF()
-   ELSEIF nWidth != NIL .AND. HB_ISSTRING(nWidth)
+   ELSEIF nWidth != NIL .AND. HB_IsString(nWidth)
       cStr += " width = " + nWidth + " " + CRLF()
    ENDIF
 
@@ -2291,7 +2291,7 @@ FUNCTION HtmlAny2Str(xVal)
 
    LOCAL xRet := NIL
 
-   IF HB_ISSTRING(xVal)
+   IF HB_IsString(xVal)
       xRet := iif(Empty(xVal), ".", xVal)
 
    ELSEIF HB_IsNumeric(xVal)

@@ -64,7 +64,7 @@ THREAD STATIC t_nErrorMin := 0
 
 PROCEDURE hb_BliVerNum( cString )
 
-   IF HB_ISSTRING( cString )
+   IF HB_IsString( cString )
       s_cSerialNum := cString
    ENDIF
 
@@ -381,7 +381,7 @@ FUNCTION SwpRunCmd( cCommand, nMem, cRunPath, cTempPath )
    HB_SYMBOL_UNUSED( cRunPath )
    HB_SYMBOL_UNUSED( cTempPath )
 
-   IF !HB_ISSTRING( cCommand ) .OR. Empty(cCommand)
+   IF !HB_IsString( cCommand ) .OR. Empty(cCommand)
 #if defined( __PLATFORM__UNIX )
       cCommand := GetEnv( "SHELL" )
 #else

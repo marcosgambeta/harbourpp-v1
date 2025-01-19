@@ -371,7 +371,7 @@ FUNCTION SQLPrepare(cQuery, ...)
          CASE HB_ISLOGICAL(x)
             x := iif(x, "'t'", "'f'")
 
-         CASE HB_ISSTRING(x)
+         CASE HB_IsString(x)
             x := SToQ(RTrim(x))
 
          OTHERWISE

@@ -64,7 +64,7 @@ FUNCTION INIT_PORT( cPort, nBaud, nData, nParity, nStop, nBufferSize )
              compatibility interface. [vszakats] */
    nPort := Len(s_hPort) + 1
 
-   IF HB_ISSTRING( cPort )
+   IF HB_IsString( cPort )
       cOldPortName := hb_comGetDevice( nPort )
       hb_comSetDevice( nPort, cPort )
    ENDIF

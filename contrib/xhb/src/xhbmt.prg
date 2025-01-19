@@ -51,7 +51,7 @@ FUNCTION StartThread(p1, p2, ...)
 
    IF PCount() < 2
       RETURN hb_threadStart(p1)
-   ELSEIF HB_ISOBJECT(p1) .AND. HB_ISSTRING(p2)
+   ELSEIF HB_ISOBJECT(p1) .AND. HB_IsString(p2)
       RETURN hb_threadStart({|...|p1:&p2(...)}, ...)
    ENDIF
 

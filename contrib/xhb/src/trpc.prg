@@ -969,7 +969,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
    CASE nMode == 1 // run in loop
       aSubst := AClone(aParams)
-      nSubstPos := AScan(aParams, {|x|HB_ISSTRING(x) .AND. x == "$."})
+      nSubstPos := AScan(aParams, {|x|HB_IsString(x) .AND. x == "$."})
 
       SWITCH aDesc[1]
       CASE "A" // all results
@@ -1022,7 +1022,7 @@ METHOD TRPCServeCon:FunctionRunner(cFuncName, oFunc, nMode, aParams, aDesc)
 
    CASE nMode == 2 // Run in a foreach loop
       aSubst := AClone(aParams)
-      nSubstPos := AScan(aParams, {|x|HB_ISSTRING(x) .AND. x == "$."})
+      nSubstPos := AScan(aParams, {|x|HB_IsString(x) .AND. x == "$."})
 
       SWITCH aDesc[1]
       CASE "A" // all results
@@ -1271,7 +1271,7 @@ METHOD Add(xFunction, cVersion, nLevel, oExec, oMethod)
    LOCAL nElem, lRet := .F.
    LOCAL oFunction
 
-   IF HB_ISSTRING(xFunction)
+   IF HB_IsString(xFunction)
       oFunction := TRPCFunction():New(xFunction, cVersion, nLevel, oExec, oMethod)
    ELSE
       oFunction := xFunction

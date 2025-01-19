@@ -62,7 +62,7 @@
 
 FUNCTION CStrToVal(cExp, cType)
 
-   IF !HB_ISSTRING(cExp)
+   IF !HB_IsString(cExp)
       Throw(xhb_ErrorNew("CSTR", 0, 3101, ProcName(), "Argument error", {cExp, cType}))
    ENDIF
 
@@ -310,7 +310,7 @@ FUNCTION ValToBlock(xVal)
 
 FUNCTION ValToCharacter(xVal)
 
-   IF HB_ISSTRING(xVal)
+   IF HB_IsString(xVal)
       RETURN xVal
    ENDIF
 

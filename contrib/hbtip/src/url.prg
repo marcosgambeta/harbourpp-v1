@@ -94,7 +94,7 @@ METHOD TUrl:SetAddress( cUrl )
 
    LOCAL aMatch, cServer, cPath
 
-   IF !HB_ISSTRING( cUrl )
+   IF !HB_IsString( cUrl )
       RETURN .F.
    ENDIF
 
@@ -216,7 +216,7 @@ METHOD TUrl:AddGetForm( xPostData )
             cData += "&"
          ENDIF
       NEXT
-   CASE HB_ISSTRING( xPostData )
+   CASE HB_IsString( xPostData )
       cData := xPostData
    ENDCASE
 

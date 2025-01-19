@@ -55,7 +55,7 @@ FUNCTION wvw_GetClipboard()
 
 FUNCTION wvw_SetClipboard(cData)
 
-   IF HB_ISSTRING(cData)
+   IF HB_IsString(cData)
       hb_gtInfo(HB_GTI_CLIPBOARDDATA, cData)
       RETURN .T.
    ENDIF
@@ -180,7 +180,7 @@ PROCEDURE wvw_YesClose(nWin)
    was equal to WVW_ID_BASE_PUSHBUTTON or higher. */
 FUNCTION wvw_AppendMenu(hMenu, nFlags, nMenuItemID, chCaption)
 
-   IF HB_ISSTRING(chCaption)
+   IF HB_IsString(chCaption)
       chCaption := StrTran(chCaption, "~", "&")
    ENDIF
 

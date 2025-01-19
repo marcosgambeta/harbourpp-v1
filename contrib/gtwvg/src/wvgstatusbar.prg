@@ -235,7 +235,7 @@ METHOD WvgStatusBar:getItem(nItemORcKey)
    LOCAL oPanel
 
    DO CASE
-   CASE HB_ISSTRING(nItemORcKey)
+   CASE HB_IsString(nItemORcKey)
       nIndex := AScan(::aItems, {|o|o:key == nItemORcKey})
    CASE HB_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey

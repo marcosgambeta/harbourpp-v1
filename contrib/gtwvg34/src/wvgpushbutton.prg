@@ -102,7 +102,7 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
       DO CASE
       CASE HB_IsNumeric(::caption)
          ::style += BS_BITMAP
-      CASE HB_ISSTRING( ::caption )
+      CASE HB_IsString( ::caption )
          SWITCH Lower(hb_FNameExt( ::caption ))
          CASE ".ico"
             ::style += BS_ICON
@@ -227,7 +227,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
    ::caption := xCaption
 
    DO CASE
-   CASE HB_ISSTRING( xCaption )
+   CASE HB_IsString( xCaption )
 
       SWITCH Lower(hb_FNameExt( ::caption ))
       CASE ".ico"
@@ -254,7 +254,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
             ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( xCaption[ 3 ], nLoadFromDiskFile, WIN_IMAGE_ICON ) )
             EXIT
          CASE WVG_IMAGE_ICONRESOURCE
-            IF HB_ISSTRING( xCaption[ 3 ] )
+            IF HB_IsString( xCaption[ 3 ] )
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( xCaption[ 3 ], nLoadFromResByIdName, WIN_IMAGE_ICON ) )
             ELSE
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_ICON, wvg_LoadImage( xCaption[ 3 ], nLoadFromResByIdNumber, WIN_IMAGE_ICON ) )
@@ -264,7 +264,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
             ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, wvg_LoadImage( xCaption[ 3 ], nLoadFromDiskFile, WIN_IMAGE_BITMAP ) )
             EXIT
          CASE WVG_IMAGE_BITMAPRESOURCE
-            IF HB_ISSTRING( xCaption[ 3 ] )
+            IF HB_IsString( xCaption[ 3 ] )
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, wvg_LoadImage( xCaption[ 3 ], nLoadFromResByIdName, WIN_IMAGE_BITMAP ) )
             ELSE
                ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, wvg_LoadImage( xCaption[ 3 ], nLoadFromResByIdNumber, WIN_IMAGE_BITMAP ) )

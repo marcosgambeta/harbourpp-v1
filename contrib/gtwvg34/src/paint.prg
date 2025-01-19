@@ -359,7 +359,7 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
    AAdd( aDlg[  8 ], nH )
    AAdd( aDlg[  9 ], cnId )
    AAdd( aDlg[ 10 ], cnDlgClass )
-   AAdd( aDlg[ 11 ], iif(HB_ISSTRING( cText ) .OR. HB_IsNumeric(cText), cText, "") )
+   AAdd( aDlg[ 11 ], iif(HB_IsString( cText ) .OR. HB_IsNumeric(cText), cText, "") )
    AAdd( aDlg[ 12 ], 0 )
 
    RETURN aDlg
@@ -368,11 +368,11 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
 
    LOCAL hDlg, xTemplate, nDlgMode
 
-   IF HB_ISSTRING( cbDlgProc )
+   IF HB_IsString( cbDlgProc )
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_IsNumeric(acnDlg), 1, 2))
+   nDlgMode := iif(HB_IsString( acnDlg ), 0, iif(HB_IsNumeric(acnDlg), 1, 2))
 
    IF HB_IsArray( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -402,11 +402,11 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
 
    LOCAL nResult, xTemplate, nDlgMode
 
-   IF HB_ISSTRING( cbDlgProc )
+   IF HB_IsString( cbDlgProc )
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_IsNumeric(acnDlg), 1, 2))
+   nDlgMode := iif(HB_IsString( acnDlg ), 0, iif(HB_IsNumeric(acnDlg), 1, 2))
 
    IF HB_IsArray( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -519,8 +519,8 @@ PROCEDURE wvt_SetIcon( ncIconRes, cIconName )
 
    DO CASE
    CASE HB_IsNumeric(ncIconRes) ; hb_gtInfo( HB_GTI_ICONRES, ncIconRes )
-   CASE HB_ISSTRING( cIconName )  ; hb_gtInfo( HB_GTI_ICONRES, cIconName )
-   CASE HB_ISSTRING( ncIconRes )  ; hb_gtInfo( HB_GTI_ICONFILE, ncIconRes )
+   CASE HB_IsString( cIconName )  ; hb_gtInfo( HB_GTI_ICONRES, cIconName )
+   CASE HB_IsString( ncIconRes )  ; hb_gtInfo( HB_GTI_ICONFILE, ncIconRes )
    ENDCASE
 
    RETURN
@@ -571,7 +571,7 @@ FUNCTION wvt_GetRGBColorByString( cColor, nForeBack )
    LOCAL s, n, lEnh
    LOCAL nIndex := 0
 
-   IF HB_ISSTRING( cColor )
+   IF HB_IsString( cColor )
       IF ( n := At( "/", cColor ) ) > 0
          IF hb_defaultValue( nForeBack, 0 ) == 0
             s := Left(cColor, n - 1)

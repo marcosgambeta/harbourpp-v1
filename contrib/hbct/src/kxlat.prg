@@ -318,7 +318,7 @@ STATIC sc_hCnv := { ;
 
 FUNCTION __hbct_key_c_to_n(cKey)
 
-   IF HB_ISSTRING(cKey)
+   IF HB_IsString(cKey)
       RETURN hb_HGetDef(sc_hCnv, cKey, 0)
    ENDIF
 
@@ -363,7 +363,7 @@ FUNCTION SetKXTab(cTrs)
    LOCAL hTrs := {=>}
    LOCAL tmp
 
-   IF HB_ISSTRING(cTrs)
+   IF HB_IsString(cTrs)
       FOR tmp := 1 TO hb_BLen(cTrs) STEP 4
          hTrs[__hbct_key_c_to_n(hb_BSubStr(cTrs, tmp, 2))] := __hbct_key_c_to_n(hb_BSubStr(cTrs, tmp + 2, 2))
       NEXT

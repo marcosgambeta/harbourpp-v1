@@ -67,7 +67,7 @@ PROCEDURE SetZipReadOnly( lReadOnly )
 
 PROCEDURE hb_SetZipComment( cComment )
 
-   IF cComment == NIL .OR. HB_ISSTRING( cComment )
+   IF cComment == NIL .OR. HB_IsString( cComment )
       t_cComment := cComment
    ENDIF
 
@@ -277,10 +277,10 @@ FUNCTION hb_ZipFile( ;
 
    IF !Empty(hZip := hb_zipOpen( cFileName, iif(! lOverwrite .AND. hb_FileExists( cFileName ), HB_ZIP_OPEN_ADDINZIP, NIL) ))
 
-      IF HB_ISSTRING( acFiles )
+      IF HB_IsString( acFiles )
          acFiles := { acFiles }
       ENDIF
-      IF HB_ISSTRING( acExclude )
+      IF HB_IsString( acExclude )
          acExclude := { acExclude }
       ENDIF
 
@@ -419,7 +419,7 @@ FUNCTION hb_UnzipFile( cFileName, bUpdate, lWithPath, cPassword, cPath, acFiles,
       lRetVal := .F.
    ELSE
       IF HB_IsNumeric(acFiles) .OR. ;
-         HB_ISSTRING( acFiles )
+         HB_IsString( acFiles )
          acFiles := { acFiles }
       ENDIF
 
@@ -493,7 +493,7 @@ FUNCTION hb_ZipDeleteFiles( cFileName, acFiles )
       cFileName := hb_FNameExtSetDef( cFileName, ".zip" )
    ENDIF
 
-   IF HB_ISSTRING( acFiles )
+   IF HB_IsString( acFiles )
       acFiles := { acFiles }
    ENDIF
 

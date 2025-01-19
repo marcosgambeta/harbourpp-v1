@@ -589,7 +589,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
          CASE cSectionName == "SUBCATEGORY" .AND. o:IsField( "SUBCATEGORY" )
 
             IF idxCategory != NIL .AND. ;
-               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. iif(HB_ISSTRING( c ), Lower(c) == Lower(cSection), Lower(c[ 1 ]) == Lower(cSection)) } ) ) == 0
+               ( idxSubCategory := AScan( sc_hConstraint[ "categories" ][ idxCategory ][ 1 ], {| c | c != NIL .AND. iif(HB_IsString( c ), Lower(c) == Lower(cSection), Lower(c[ 1 ]) == Lower(cSection)) } ) ) == 0
                AddErrorCondition( cFile, "Unrecognized SUBCATEGORY '" + idxCategory + "'-" + cSection )
             ENDIF
 

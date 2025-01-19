@@ -605,7 +605,7 @@ STATIC FUNCTION netiomgm_rpc_stop( netiosrv, cIPPort )
    LOCAL nconn
    LOCAL aAddressPeer
 
-   IF HB_ISSTRING( cIPPort )
+   IF HB_IsString( cIPPort )
 
       cIPPort := Lower(cIPPort)
 
@@ -636,7 +636,7 @@ STATIC FUNCTION netiomgm_rpc_clientinfo( netiosrv, netiomgm, cIPPort )
    LOCAL xCargo := NIL
    LOCAL lDone
 
-   IF HB_ISSTRING( cIPPort )
+   IF HB_IsString( cIPPort )
 
       cIPPort := Lower(cIPPort)
 

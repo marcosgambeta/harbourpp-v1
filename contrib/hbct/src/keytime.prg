@@ -56,7 +56,7 @@ FUNCTION KeyTime(nKey, cClockTime)
       t_hIdle := NIL
    ENDIF
 
-   IF HB_IsNumeric(nKey) .AND. HB_ISSTRING(cClockTime)
+   IF HB_IsNumeric(nKey) .AND. HB_IsString(cClockTime)
       nHour := Val(SubStr(cClockTime, 1, 2))
       nMin := Val(SubStr(cClockTime, 4, 2))
       nSec := Val(SubStr(cClockTime, 7, 2))

@@ -200,7 +200,7 @@ STATIC FUNCTION ErrorMessage(e)
    cMessage += iif(e:severity > ES_WARNING, "Error ", "Warning ")
 
    // add subsystem name if available
-   IF HB_ISSTRING(e:subsystem)
+   IF HB_IsString(e:subsystem)
       cMessage += e:subsystem()
    ELSE
       cMessage += "???"
@@ -214,7 +214,7 @@ STATIC FUNCTION ErrorMessage(e)
    ENDIF
 
    // add error description if available
-   IF HB_ISSTRING(e:description)
+   IF HB_IsString(e:description)
       cMessage += "<br />  " + e:description
    ENDIF
 

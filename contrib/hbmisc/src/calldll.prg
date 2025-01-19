@@ -76,8 +76,8 @@ FUNCTION hb_DynaCall1(cFunction, cLibrary, nCount, ...)
    LOCAL aParams
    LOCAL hHandle
 
-   IF HB_ISSTRING( cFunction ) .AND. ;
-      HB_ISSTRING( cLibrary )
+   IF HB_IsString( cFunction ) .AND. ;
+      HB_IsString( cLibrary )
 
       hb_mutexLock( s_mutex )
 

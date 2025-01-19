@@ -65,14 +65,14 @@ FUNCTION ft_XBox( ;
    nNumRows := Min(PCount() - 7, 8)
 
    // establish array of strings to be displayed
-   aLines_[1] := iif(HB_ISSTRING(cLine1), AllTrim(Left(cLine1, 74)), "")
-   aLines_[2] := iif(HB_ISSTRING(cLine2), AllTrim(Left(cLine2, 74)), "")
-   aLines_[3] := iif(HB_ISSTRING(cLine3), AllTrim(Left(cLine3, 74)), "")
-   aLines_[4] := iif(HB_ISSTRING(cLine4), AllTrim(Left(cLine4, 74)), "")
-   aLines_[5] := iif(HB_ISSTRING(cLine5), AllTrim(Left(cLine5, 74)), "")
-   aLines_[6] := iif(HB_ISSTRING(cLine6), AllTrim(Left(cLine6, 74)), "")
-   aLines_[7] := iif(HB_ISSTRING(cLine7), AllTrim(Left(cLine7, 74)), "")
-   aLines_[8] := iif(HB_ISSTRING(cLine8), AllTrim(Left(cLine8, 74)), "")
+   aLines_[1] := iif(HB_IsString(cLine1), AllTrim(Left(cLine1, 74)), "")
+   aLines_[2] := iif(HB_IsString(cLine2), AllTrim(Left(cLine2, 74)), "")
+   aLines_[3] := iif(HB_IsString(cLine3), AllTrim(Left(cLine3, 74)), "")
+   aLines_[4] := iif(HB_IsString(cLine4), AllTrim(Left(cLine4, 74)), "")
+   aLines_[5] := iif(HB_IsString(cLine5), AllTrim(Left(cLine5, 74)), "")
+   aLines_[6] := iif(HB_IsString(cLine6), AllTrim(Left(cLine6, 74)), "")
+   aLines_[7] := iif(HB_IsString(cLine7), AllTrim(Left(cLine7, 74)), "")
+   aLines_[8] := iif(HB_IsString(cLine8), AllTrim(Left(cLine8, 74)), "")
    ASize(aLines_, Min(nNumRows, 8))
 
    // determine longest line

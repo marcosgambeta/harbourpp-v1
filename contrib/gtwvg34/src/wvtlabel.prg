@@ -113,7 +113,7 @@ METHOD WvtLabel:Refresh()
 
 METHOD WvtLabel:SetText( cTxt )
 
-   IF HB_ISSTRING( cTxt )
+   IF HB_IsString( cTxt )
       ::Text := cTxt
       ::Refresh()
    ENDIF

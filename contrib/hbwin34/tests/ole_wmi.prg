@@ -20,7 +20,7 @@ PROCEDURE Main()
 
    ? "Win_LogicalDisk"
    FOR EACH i IN oWMI:ExecQuery( "SELECT * FROM Win32_LogicalDisk" )
-      IF HB_ISSTRING( i:VolumeSerialNumber )
+      IF HB_IsString( i:VolumeSerialNumber )
          ? i:VolumeSerialNumber, i:Description
       ENDIF
    NEXT
@@ -28,7 +28,7 @@ PROCEDURE Main()
 
    ? "Win_NetworkAdapter"
    FOR EACH i IN oWMI:ExecQuery( "SELECT * FROM Win32_NetworkAdapter" )
-      IF HB_ISSTRING( i:MACAddress )
+      IF HB_IsString( i:MACAddress )
          ? i:MACAddress, i:Description
       ENDIF
    NEXT

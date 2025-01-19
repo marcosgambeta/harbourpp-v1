@@ -53,7 +53,7 @@ FUNCTION TimeToSec(cTime)
 
    IF cTime == NIL
       nSec := Seconds()
-   ELSEIF HB_ISSTRING(cTime)
+   ELSEIF HB_IsString(cTime)
       nLen := Len(cTime)
       IF (nLen + 1) % 3 == 0 .AND. nLen <= 11
          nInd := 1

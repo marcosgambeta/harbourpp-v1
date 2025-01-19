@@ -58,7 +58,7 @@ PROCEDURE Main( cURL, cFile )
 
    ? "Harbour - TIP (class based internet client protocol) test"
 
-   IF !HB_ISSTRING( cURL ) .OR. Empty(cURL)
+   IF !HB_IsString( cURL ) .OR. Empty(cURL)
       ? hb_StrFormat( "Usage: %1$s <URI> [dumpToOrFromFileName]", hb_ProgName() )
       RETURN
    ENDIF
@@ -98,7 +98,7 @@ PROCEDURE Main( cURL, cFile )
    IF oClient:Open()
       ? "Connection status:", iif(Empty(oClient:cReply), "<connected>", oClient:cReply)
 
-      IF HB_ISSTRING( cFile ) .AND. hb_LeftEq( cFile, "+" )
+      IF HB_IsString( cFile ) .AND. hb_LeftEq( cFile, "+" )
          cFile := SubStr(cFile, 2)
          bWrite := .T.
       ENDIF
@@ -117,7 +117,7 @@ PROCEDURE Main( cURL, cFile )
             ? "Error: Data not sent", oClient:lastErrorMessage()
          ENDIF
       ELSE
-         IF HB_ISSTRING( cFile )
+         IF HB_IsString( cFile )
             IF ( cData := oClient:Read() ) == ""
                ? "Error: file could not be retrieved", oClient:lastErrorMessage()
             ELSE

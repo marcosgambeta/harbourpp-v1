@@ -114,7 +114,7 @@ METHOD GDChart:SetData(aData)
 
 METHOD GDChart:AddDef( cDefKey, xDefVal )
 
-   IF HB_ISSTRING( cDefKey )
+   IF HB_IsString( cDefKey )
       ::hDefs[ Upper(cDefKey) ] := xDefVal
    ENDIF
 

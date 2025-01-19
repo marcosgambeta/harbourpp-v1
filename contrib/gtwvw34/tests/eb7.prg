@@ -215,7 +215,7 @@ STATIC FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, m
    hb_default( @aEBGEts, {} )
 
    IF !HB_ISLOGICAL( mlMultiline ) .OR. ;
-      ! HB_ISSTRING( mxValue )
+      ! HB_IsString( mxValue )
       mlMultiline := .F.
    ENDIF
    hb_default( @mcLabel, mcVarName + ":" )

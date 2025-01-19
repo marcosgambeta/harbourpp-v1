@@ -171,14 +171,14 @@ METHOD TIPClient:New( oUrl, xTrace, oCredentials )
    LOCAL lSSL
 
    DO CASE
-   CASE HB_ISSTRING( xTrace ) .OR. hb_defaultValue( xTrace, .F. )
-      oLog := TIPLog():New( iif(HB_ISSTRING( xTrace ), xTrace, NIL) )
+   CASE HB_IsString( xTrace ) .OR. hb_defaultValue( xTrace, .F. )
+      oLog := TIPLog():New( iif(HB_IsString( xTrace ), xTrace, NIL) )
       ::bTrace := {| cMsg | iif(PCount() > 0, oLog:Add( cMsg ), oLog:Close()) }
    CASE HB_ISEVALITEM( xTrace )
       ::bTrace := xTrace
    ENDCASE
 
-   IF HB_ISSTRING( oUrl )
+   IF HB_IsString( oUrl )
       oUrl := TUrl():New( oUrl )
    ENDIF
 
@@ -235,7 +235,7 @@ METHOD TIPClient:Open( cUrl )
 
    LOCAL nPort
 
-   IF HB_ISSTRING( cUrl )
+   IF HB_IsString( cUrl )
       ::oUrl := TUrl():New( cUrl )
    ENDIF
 
@@ -299,10 +299,10 @@ METHOD TIPClient:OpenProxy( cServer, nPort, cProxy, nProxyPort, cResp, cUserName
       cRequest := ;
          "CONNECT " + cServer + ":" + hb_ntos( nPort ) + " HTTP/1.1" + Chr(13) + Chr(10) + ;
          "Proxy-Connection: Keep-Alive" + Chr(13) + Chr(10)
-      IF HB_ISSTRING( cUserAgent ) .AND. ! cUserAgent == ""
+      IF HB_IsString( cUserAgent ) .AND. ! cUserAgent == ""
          cRequest += "User-Agent: " + cUserAgent + Chr(13) + Chr(10)
       ENDIF
-      IF HB_ISSTRING( cUserName ) .AND. ! cUserName == ""
+      IF HB_IsString( cUserName ) .AND. ! cUserName == ""
          cRequest += "Proxy-Authorization: Basic " + hb_base64Encode( cUserName + ":" + hb_defaultValue( cPassword, "" ) ) + Chr(13) + Chr(10)
       ENDIF
       cRequest += Chr(13) + Chr(10)

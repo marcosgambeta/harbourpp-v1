@@ -137,7 +137,7 @@ METHOD win_Com:RecvTo(cDelim, nMaxlen)
             EXIT
          ELSE
             cRecv += cString
-            IF HB_ISSTRING(cDelim) .AND. cString == cDelim
+            IF HB_IsString(cDelim) .AND. cString == cDelim
                EXIT
             ENDIF
             IF hb_BLen(cRecv) == nMaxlen

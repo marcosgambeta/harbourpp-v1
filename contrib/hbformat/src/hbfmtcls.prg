@@ -134,7 +134,7 @@ METHOD HBFormatCode:New( aParams, cIniName )
 
    ::nErr := 0
 
-   IF HB_ISSTRING( cIniName )
+   IF HB_IsString( cIniName )
       IF !::ReadIni( cIniName )
          RETURN Self
       ENDIF

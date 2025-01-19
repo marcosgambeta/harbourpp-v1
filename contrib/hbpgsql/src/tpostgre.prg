@@ -101,10 +101,10 @@ METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
    LOCAL item
 
    LOCAL cConnect := ;
-      iif(HB_ISSTRING(cDatabase), " dbname = " + EscapeParam(cDatabase), "") + ;
-      iif(HB_ISSTRING(cHost), " host = " + EscapeParam(cHost), "") + ;
-      iif(HB_ISSTRING(cUser), " user = " + EscapeParam(cUser), "") + ;
-      iif(HB_ISSTRING(cPass), " password = " + EscapeParam(cPass), "") + ;
+      iif(HB_IsString(cDatabase), " dbname = " + EscapeParam(cDatabase), "") + ;
+      iif(HB_IsString(cHost), " host = " + EscapeParam(cHost), "") + ;
+      iif(HB_IsString(cUser), " user = " + EscapeParam(cUser), "") + ;
+      iif(HB_IsString(cPass), " password = " + EscapeParam(cPass), "") + ;
       iif(HB_IsNumeric(nPort), " port = " + hb_ntos(nPort), "")
 
    IF HB_ISHASH(hCustom)
@@ -119,7 +119,7 @@ METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
       ::lError := .T.
       ::cError := PQerrorMessage(::pDb)
    ELSE
-      IF HB_ISSTRING(cSchema)
+      IF HB_IsString(cSchema)
          ::SetSchema(cSchema)
       ELSE
          res := PQexec(::pDB, "SELECT current_schema()")
@@ -763,7 +763,7 @@ METHOD TPQquery:FieldPos(cField)
 
 METHOD TPQquery:FieldName(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ELSEIF nField < 1 .OR. nField > Len(::aStruct)
       nField := 0
@@ -777,7 +777,7 @@ METHOD TPQquery:FieldName(nField)
 
 METHOD TPQquery:FieldType(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ELSEIF nField < 1 .OR. nField > Len(::aStruct)
       nField := 0
@@ -791,7 +791,7 @@ METHOD TPQquery:FieldType(nField)
 
 METHOD TPQquery:FieldLen(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ELSEIF nField < 1 .OR. nField > Len(::aStruct)
       nField := 0
@@ -805,7 +805,7 @@ METHOD TPQquery:FieldLen(nField)
 
 METHOD TPQquery:FieldDec(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ELSEIF nField < 1 .OR. nField > Len(::aStruct)
       nField := 0
@@ -991,7 +991,7 @@ METHOD TPQquery:FieldGet(nField, nRow)
 
    LOCAL result
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ELSEIF nField < 1 .OR. nField > ::nFields
       nField := 0
@@ -1212,7 +1212,7 @@ METHOD TPQrow:New(row, old, struct)
 
 METHOD TPQrow:FieldGet(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ENDIF
 
@@ -1224,7 +1224,7 @@ METHOD TPQrow:FieldGet(nField)
 
 METHOD TPQrow:FieldPut(nField, Value)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ENDIF
 
@@ -1236,7 +1236,7 @@ METHOD TPQrow:FieldPut(nField, Value)
 
 METHOD TPQrow:FieldName(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ENDIF
 
@@ -1254,7 +1254,7 @@ METHOD TPQrow:FieldPos(cField)
 
 METHOD TPQrow:FieldType(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ENDIF
 
@@ -1266,7 +1266,7 @@ METHOD TPQrow:FieldType(nField)
 
 METHOD TPQrow:FieldLen(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ENDIF
 
@@ -1278,7 +1278,7 @@ METHOD TPQrow:FieldLen(nField)
 
 METHOD TPQrow:FieldDec(nField)
 
-   IF HB_ISSTRING(nField)
+   IF HB_IsString(nField)
       nField := ::FieldPos(nField)
    ENDIF
 

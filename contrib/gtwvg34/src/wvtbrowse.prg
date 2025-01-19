@@ -269,7 +269,7 @@ METHOD WvtBrowse:SetTooltip()
       ::RestSettings()
    ENDIF
 
-   IF HB_ISSTRING( cTip )
+   IF HB_IsString( cTip )
       ::Tooltip := cTip
    ENDIF
 

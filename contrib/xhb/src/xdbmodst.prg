@@ -170,7 +170,7 @@ FUNCTION dbMerge(xSource, lAppend)
    ENDIF
 
    // Validate args
-   IF HB_ISSTRING(xSource)
+   IF HB_IsString(xSource)
       nArea := Select()
 
       USE ( xSource ) ALIAS MergeSource EXCLUSIVE NEW

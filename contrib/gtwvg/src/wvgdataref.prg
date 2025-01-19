@@ -151,7 +151,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
       EXIT
 
    CASE "EDIT"
-      IF HB_ISSTRING(::sl_editBuffer)
+      IF HB_IsString(::sl_editBuffer)
          wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::sl_editBuffer)
       ENDIF
       EXIT

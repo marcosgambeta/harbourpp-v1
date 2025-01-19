@@ -57,7 +57,7 @@ THREAD STATIC t_hParams := { => }
 
 PROCEDURE hbtest_Setup( cName, xValue )
 
-   IF HB_ISSTRING( cName ) .AND. ! Empty(cName)
+   IF HB_IsString( cName ) .AND. ! Empty(cName)
       IF PCount() > 1
          t_hParams[ cName ] := xValue
       ELSEIF cName $ t_hParams
@@ -79,7 +79,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
 
    LOCAL cLangOld
 
-   IF HB_ISSTRING( cBlock )
+   IF HB_IsString( cBlock )
       lPPError := .F.
    ELSE
       cBlock := "[Preprocessor error]"
@@ -102,7 +102,7 @@ PROCEDURE hbtest_Call( cBlock, bBlock, xResultExpected )
       lFailed := !( XToStr( xResult, .F. ) == XToStr( xResultExpected, .F. ) )
    ELSE
       IF !( ValType( xResult ) == ValType( xResultExpected ) )
-         IF HB_ISSTRING( xResultExpected ) .AND. ValType( xResult ) $ "ABOHPS"
+         IF HB_IsString( xResultExpected ) .AND. ValType( xResult ) $ "ABOHPS"
             lFailed := !( XToStr( xResult, .F. ) == xResultExpected )
          ELSE
             lFailed := .T.
@@ -153,13 +153,13 @@ STATIC FUNCTION ErrorMessage( oError )
    IF HB_IsNumeric(oError:genCode)
       cMessage += hb_ntos( oError:genCode ) + " "
    ENDIF
-   IF HB_ISSTRING( oError:subsystem )
+   IF HB_IsString( oError:subsystem )
       cMessage += oError:subsystem + " "
    ENDIF
    IF HB_IsNumeric(oError:subCode)
       cMessage += hb_ntos( oError:subCode ) + " "
    ENDIF
-   IF HB_ISSTRING( oError:description )
+   IF HB_IsString( oError:description )
       cMessage += oError:description + " "
    ENDIF
    IF !Empty(oError:operation)

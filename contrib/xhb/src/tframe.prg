@@ -76,7 +76,7 @@ METHOD THtmlFrameSet:New(cFName, cTitle)
    ::FName := cFName
    ::Title := cTitle
 
-   IF HB_ISSTRING(::FName)
+   IF HB_IsString(::FName)
       cStr := ""
       ::nH := FCreate(::FName)
    ELSE
@@ -128,11 +128,11 @@ METHOD THtmlFrameSet:StartSet(aRows, aCols, onLoad, onUnload)
       cStr += '"'
    ENDIF
 
-   IF HB_ISSTRING(onLoad)
+   IF HB_IsString(onLoad)
       cStr += Space(7) + ' onLoad="' + onLoad + '"'
    ENDIF
 
-   IF HB_ISSTRING(onUnLoad)
+   IF HB_IsString(onUnLoad)
       cStr += Space(5) + ' onUnLoad="' + onUnLoad + '"'
    ENDIF
 
@@ -175,15 +175,15 @@ METHOD THtmlFrameSet:Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidt
 
    cStr := "  <frame "
 
-   IF HB_ISSTRING(cName)
+   IF HB_IsString(cName)
       cStr += ' name="' + cName + '"'
    ENDIF
 
-   IF HB_ISSTRING(cUrl)
+   IF HB_IsString(cUrl)
       cStr += ' src="' + cURL + '"'
    ENDIF
 
-   IF HB_ISSTRING(cTarget)
+   IF HB_IsString(cTarget)
       cStr += ' target="' + cTarget + '"'
    ENDIF
 
@@ -197,7 +197,7 @@ METHOD THtmlFrameSet:Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidt
       cStr += " noresize"
    ENDIF
 
-   IF HB_ISSTRING(cScrolling)
+   IF HB_IsString(cScrolling)
       cStr += ' scrolling="' + cScrolling + '"'
    ELSE
       IF lScrolling != NIL

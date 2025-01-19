@@ -115,7 +115,7 @@ FUNCTION smsctx_New( xPort )
    IF HB_IsNumeric(xPort)
       smsctx[ _SMSCTX_xHnd ] := xPort
       smsctx[ _SMSCTX_cPrevName ] := NIL
-   ELSEIF HB_ISSTRING( xPort )
+   ELSEIF HB_IsString( xPort )
       smsctx[ _SMSCTX_xHnd ] := 1
       smsctx[ _SMSCTX_cPrevName ] := hb_comGetDevice( smsctx[ _SMSCTX_xHnd ] )
       hb_comSetDevice( smsctx[ _SMSCTX_xHnd ], xPort )
@@ -245,7 +245,7 @@ FUNCTION smsctx_PIN( smsctx, cPIN )
    ENDIF
 
    cOldValue := smsctx[ _SMSCTX_cPIN ]
-   IF cPIN == NIL .OR. ( HB_ISSTRING( cPIN ) .AND. Len(cPIN) == 4 )
+   IF cPIN == NIL .OR. ( HB_IsString( cPIN ) .AND. Len(cPIN) == 4 )
       smsctx[ _SMSCTX_cPIN ] := cPIN
    ENDIF
 

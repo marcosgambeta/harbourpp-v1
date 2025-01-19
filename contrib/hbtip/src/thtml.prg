@@ -139,7 +139,7 @@ METHOD THtmlDocument:new( cHtmlString )
       " </body>" + hb_eol() + ;
       "</html>"
 
-   IF !HB_ISSTRING( cHtmlString )
+   IF !HB_IsString( cHtmlString )
       ::root := THtmlNode():new( cEmptyHtmlDoc )
    ELSEIF "<html" $ Lower(Left(cHtmlString, 4096))
       ::root := THtmlNode():new( cHtmlString )
@@ -607,7 +607,7 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       THtmlInit(.T.)
    ENDIF
 
-   IF HB_ISSTRING( oParent )
+   IF HB_IsString( oParent )
       // a HTML string is passed -> build new tree of objects
       oParent := StrTran( oParent, Chr(9), " " )
       ::root           := Self
@@ -619,7 +619,7 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       // a HTML object is passed -> we are in the course of building an object tree
       ::root        := oParent:root
       ::parent      := oParent
-      IF HB_ISSTRING( cAttrib )
+      IF HB_IsString( cAttrib )
          IF Right(cAttrib, 1) == "/"
             ::htmlEndTagName := "/"
             ::htmlAttributes := hb_StrShrink( cAttrib )
@@ -1053,7 +1053,7 @@ METHOD THtmlNode:toString( nIndent )
          cHtml += oNode:toString( nIndent + 1 )
       NEXT
 
-   ELSEIF HB_ISSTRING( ::htmlContent )
+   ELSEIF HB_IsString( ::htmlContent )
       cHtml += ::htmlContent
    ENDIF
 
@@ -1078,7 +1078,7 @@ METHOD THtmlNode:attrToString()
 
    IF ::htmlAttributes == NIL
       cAttr := ""
-   ELSEIF HB_ISSTRING( ::htmlAttributes )
+   ELSEIF HB_IsString( ::htmlAttributes )
       cAttr := " " + ::htmlAttributes
    ELSE
       // attributes are parsed into a Hash
@@ -1196,7 +1196,7 @@ METHOD THtmlNode:getAttributes()
       ::htmlAttributes := { => }
       hb_HCaseMatch( ::htmlAttributes, .F. )
 
-   ELSEIF HB_ISSTRING( ::htmlAttributes )
+   ELSEIF HB_IsString( ::htmlAttributes )
       IF ::htmlAttributes == "/"
          ::htmlAttributes := { => }
          hb_HCaseMatch( ::htmlAttributes, .F. )

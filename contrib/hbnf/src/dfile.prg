@@ -50,7 +50,7 @@ FUNCTION ft_DFSetup(cInFile, nTop, nLeft, nBottom, nRight, ;
          IF Len(cExitKeys) > 25
             ASize(cExitKeys, 25)
          ENDIF
-      ELSEIF HB_ISSTRING(cExitKeys)
+      ELSEIF HB_IsString(cExitKeys)
          cExitKeys := Left(cExitKeys, 25)
       ELSE
          cExitKeys := {}

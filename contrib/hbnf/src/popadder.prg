@@ -931,7 +931,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
    nLeft       := Int((MaxCol() - nWide) / 2) - 4
    nRight      := nLeft + nWide + 4
 
-   _ftPushWin(nTop, nLeft, nBottom, nRight, "QUESTION ?", iif(HB_ISSTRING(xVarVal) ;
+   _ftPushWin(nTop, nLeft, nBottom, nRight, "QUESTION ?", iif(HB_IsString(xVarVal) ;
       .AND. nVarLen > nWide, /* LOW-ASCII "←" */ Chr(27) + " scroll " + Chr(26) /* LOW-ASCII "→" */, NIL), nWinColor)
    _ftDispMessage(cMessage, nTop + 1, nLeft + 2, nBottom - 1, nRight - 2)
 
@@ -939,7 +939,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
       {|x|iif(PCount() > 0, xVarVal := x, xVarVal)}, "xVarVal")
 
    // If the input line is character and wider than window SCROLL
-   IF lGetOnNextLine .AND. HB_ISSTRING(xVarVal) .AND. nVarLen > nWide
+   IF lGetOnNextLine .AND. HB_IsString(xVarVal) .AND. nVarLen > nWide
       oNewGet:Picture := "@S" + hb_ntos(nWide) + iif(cPict == NIL, "", " " + cPict)
    ENDIF
 

@@ -154,7 +154,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
       EXIT
 
    CASE "EDIT"
-      IF HB_ISSTRING( ::sl_editBuffer )
+      IF HB_IsString( ::sl_editBuffer )
          wapi_SendMessage( ::hWnd, WIN_WM_SETTEXT, 0, ::sl_editBuffer )
       ENDIF
       EXIT

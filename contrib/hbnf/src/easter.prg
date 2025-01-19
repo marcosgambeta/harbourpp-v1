@@ -32,7 +32,7 @@ FUNCTION ft_Easter(nYear)
    LOCAL nMonth := 0
    LOCAL nDay := 0
 
-   IF HB_ISSTRING(nYear)
+   IF HB_IsString(nYear)
       nYear := Val(nYear)
    ENDIF
 

@@ -174,7 +174,7 @@ FUNCTION win_regGet(nHKEY, cKeyName, cEntryName, xDefault, nRegSam)
 
       win_regQueryValueEx(pKeyHandle, cEntryName, 0, @nValueType, @xRetVal)
 
-      IF HB_ISSTRING(xRetVal)
+      IF HB_IsString(xRetVal)
          SWITCH nValueType
          CASE WIN_REG_DWORD_LITTLE_ENDIAN  /* == WIN_REG_DWORD */
             xRetVal := Bin2U(xRetVal)

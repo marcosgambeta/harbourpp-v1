@@ -254,7 +254,7 @@ FUNCTION hb_LogRddLogFileName( cFileName )
 
       cOldFileName := aRDDData[ ARRAY_FILENAME ]
 
-      IF HB_ISSTRING( cFileName )
+      IF HB_IsString( cFileName )
          aRDDData[ ARRAY_FILENAME ] := cFileName
       ENDIF
    ENDIF
@@ -272,7 +272,7 @@ FUNCTION hb_LogRddTag( cTag )
 
       cOldTag := aRDDData[ ARRAY_TAG ]
 
-      IF HB_ISSTRING( cTag )
+      IF HB_IsString( cTag )
          aRDDData[ ARRAY_TAG ] := cTag
       ENDIF
    ENDIF
@@ -456,7 +456,7 @@ STATIC PROCEDURE ToLog( cCmd, nWA, xPar1, xPar2, xPar3 )
                cLog := DToS( Date() ) + " " + Time() + " " + cTag + ": " + PadR( cRDDName + "_" + cCmd, 20 ) + " - " + ToString( cCmd, nWA, xPar1, xPar2, xPar3 )
             ENDIF
             // Log to file only if cLog is a valid string
-            IF HB_ISSTRING( cLog )
+            IF HB_IsString( cLog )
                FWrite( hFile, cLog + hb_eol() )
             ENDIF
          ENDIF

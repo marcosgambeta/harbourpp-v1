@@ -464,7 +464,7 @@ STATIC FUNCTION AR_PUTVALUE( nWA, nField, xValue )
    HB_TRACE( HB_TR_DEBUG, hb_StrFormat( "nWA: %1$d, nField: %2$d, xValue: %3$s", nWA, nField, hb_ValToExp( xValue ) ) )
 
    IF nField > 0 .AND. nField <= Len( aStruct ) .AND. ;
-      iif( HB_ISSTRING( xValue ) .AND. aStruct[ nField ][ DBS_TYPE ] == "M", .T., ValType( xValue ) == aStruct[ nField ][ DBS_TYPE ] )
+      iif( HB_IsString( xValue ) .AND. aStruct[ nField ][ DBS_TYPE ] == "M", .T., ValType( xValue ) == aStruct[ nField ][ DBS_TYPE ] )
 
       xVal := PutValue( xValue, aStruct[ nField ][ DBS_TYPE ], aStruct[ nField ][ DBS_LEN ], aStruct[ nField ][ DBS_DEC ] )
 
@@ -1539,7 +1539,7 @@ FUNCTION hb_EraseArrayRdd( cFullName )
       hRDDData := USRRDD_RDDDATA( s_nRddID )
 
       IF hRDDData != NIL
-         IF HB_ISSTRING( cFullName )
+         IF HB_IsString( cFullName )
             cFullName := Upper( cFullName )
             /* First search if memory dbf exists */
             IF cFullName $ hRDDData
@@ -1618,7 +1618,7 @@ FUNCTION hb_FileArrayRdd( cFullName )
       hRDDData := USRRDD_RDDDATA( s_nRddID )
 
       IF hRDDData != NIL
-         IF HB_ISSTRING( cFullName )
+         IF HB_IsString( cFullName )
             cFullName := Upper( cFullName )
             /* First search if memory dbf exists */
             IF cFullName $ hRDDData

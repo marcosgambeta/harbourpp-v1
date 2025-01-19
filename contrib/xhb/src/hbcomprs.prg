@@ -83,7 +83,7 @@ FUNCTION hb_Compress(xPar1, xPar2, xPar3, xPar4, xPar5)
       lReturnByRef := PCount() >= 3
    ENDIF
 
-   IF !HB_ISSTRING(cSource)
+   IF !HB_IsString(cSource)
       oError := ErrorNew()
 
       oError:severity    := ES_ERROR
@@ -127,7 +127,7 @@ FUNCTION hb_Uncompress(nDestLen, cSource, nSourceLen, /* @ */ cDest)
 
    LOCAL oError
 
-   IF !HB_IsNumeric(nDestLen) .OR. !HB_ISSTRING(cSource)
+   IF !HB_IsNumeric(nDestLen) .OR. !HB_IsString(cSource)
 
       oError := ErrorNew()
 

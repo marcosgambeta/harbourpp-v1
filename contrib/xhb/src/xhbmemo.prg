@@ -65,7 +65,7 @@ CREATE CLASS xhb_TMemoEditor INHERIT XHBEditor
    METHOD Edit()                                   // Calls ::Super:Edit(nKey) but is needed to handle configurable keys
    METHOD KeyboardHook(nKey)                     // Gets called every time there is a key not handled directly by HBEditor
 
-   METHOD ExistUdf() INLINE HB_ISSTRING(::xUserFunction)
+   METHOD ExistUdf() INLINE HB_IsString(::xUserFunction)
    METHOD HandleUdf(nKey, nUdfReturn, lEdited)   // Handles requests returned to MemoEdit() by udf
    METHOD CallUdf(nMode)                         // Call user function. ( old xDo )
 
@@ -430,7 +430,7 @@ FUNCTION xhb_MemoEdit( ;
 
    // 2006-07-22 - E.F. Check argument types.
    //
-   IF !HB_ISNIL(cString) .AND. !HB_ISSTRING(cString) .AND. !HB_ISMEMO(cString)
+   IF !HB_ISNIL(cString) .AND. !HB_IsString(cString) .AND. !HB_ISMEMO(cString)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cString> Argument type error", ProcName()))
    ENDIF
    IF !HB_ISNIL(nTop) .AND. !HB_IsNumeric(nTop)
@@ -448,7 +448,7 @@ FUNCTION xhb_MemoEdit( ;
    IF !HB_ISNIL(lEditMode) .AND. !HB_ISLOGICAL(lEditMode)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<lEditMode> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(xUDF) .AND. !HB_ISSTRING(xUDF) .AND. !HB_ISLOGICAL(xUDF)
+   IF !HB_ISNIL(xUDF) .AND. !HB_IsString(xUDF) .AND. !HB_ISLOGICAL(xUDF)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cUserFunction> Argument type error", ProcName()))
    ENDIF
    IF !HB_ISNIL(nLineLength) .AND. !HB_IsNumeric(nLineLength)
@@ -476,7 +476,7 @@ FUNCTION xhb_MemoEdit( ;
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTop,nLeft,nRight,nBottom> Argument error", ProcName()))
    ENDIF
 
-   IF HB_ISSTRING(xUDF) .AND. Empty(xUDF)
+   IF HB_IsString(xUDF) .AND. Empty(xUDF)
       xUDF := NIL
    ENDIF
 

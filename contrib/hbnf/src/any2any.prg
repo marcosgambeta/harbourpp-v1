@@ -39,14 +39,14 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
    DO CASE
 
    CASE cTypeToConvertTo == "C" .AND. ; // They Want a Character String
-      !HB_ISSTRING(xValueToConvert)
+      !HB_IsString(xValueToConvert)
 
       xValueToConvert := _XTOC(xValueToConvert)
 
    CASE cTypeToConvertTo == "D" .AND. ; // They Want a Date
       !HB_ISDATE(xValueToConvert)
 
-      xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
+      xValueToConvert := iif(HB_IsString(xValueToConvert), ;
          ; // Convert from a Character
       CToD(xValueToConvert), ;
          iif(HB_IsNumeric(xValueToConvert), ;
@@ -61,7 +61,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
    CASE cTypeToConvertTo == "N" .AND. ; // They Want a Number
       !HB_IsNumeric(xValueToConvert)
 
-      xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
+      xValueToConvert := iif(HB_IsString(xValueToConvert), ;
          ; // Convert from a Character
       Val(xValueToConvert), ;
          iif(HB_ISDATE(xValueToConvert), ;
@@ -76,7 +76,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
    CASE cTypeToConvertTo == "L" .AND. ; // They Want a Logical
       !HB_ISLOGICAL(xValueToConvert)
 
-      xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
+      xValueToConvert := iif(HB_IsString(xValueToConvert), ;
          ; // Convert from a Character
       Upper(xValueToConvert) == iif(lWantYesNo, "Y", ".T."), ;
          iif(HB_ISDATE(xValueToConvert), ;

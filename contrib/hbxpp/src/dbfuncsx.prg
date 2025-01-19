@@ -78,7 +78,7 @@ FUNCTION xpp_dbUseArea(lNewArea, cDriver, cName, xcAlias, lShared, lReadonly)
          xcAlias := cName
       ENDIF
 
-      IF HB_ISSTRING( xcAlias )
+      IF HB_IsString( xcAlias )
          nOldArea := Select()
          IF ( nArea := Select( xcAlias ) ) > 0
             xcAlias += "_" + hb_ntos( nArea )
