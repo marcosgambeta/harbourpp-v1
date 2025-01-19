@@ -83,14 +83,14 @@ PROCEDURE Main()
       ? "SoftwareElementID ... :", TypeAndValue( i:SoftwareElementID )
 
       ? "SoftwareElementState  :", TypeAndValue( i:SoftwareElementState )
-      IF HB_ISNUMERIC(i:SoftwareElementState)
+      IF HB_IsNumeric(i:SoftwareElementState)
          ? Space( 27 ), Str( i:SoftwareElementState, 2 ), "->", WMI_Bios_SoftwareElementState( i:SoftwareElementState )
       ENDIF
 
       ? "Status .............. :", TypeAndValue( i:Status )
       ? "TargetOperatingSystem :", TypeAndValue( i:TargetOperatingSystem )
 
-      IF HB_ISNUMERIC(i:TargetOperatingSystem)
+      IF HB_IsNumeric(i:TargetOperatingSystem)
          ? Space( 27 ), Str( i:TargetOperatingSystem, 2 ), "->", WMI_Bios_TargetOperatingSystem( i:TargetOperatingSystem )
       ENDIF
 

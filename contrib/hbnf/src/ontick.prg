@@ -65,7 +65,7 @@ PROCEDURE ft_OnTick(bOnTick, nTickInterval)
    /* Harbour extension: Harbour will also accept function pointers */
    IF HB_ISEVALITEM(bOnTick)
       t_bOnTick := bOnTick
-      IF HB_ISNUMERIC(nTickInterval)
+      IF HB_IsNumeric(nTickInterval)
          t_nTickInterval := (1 / 18.20648) * nTickInterval * 1000
       ENDIF
       t_nLastCheck := hb_MilliSeconds()

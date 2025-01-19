@@ -27,7 +27,7 @@ FUNCTION ft_Qtr(dGivenDate, nQtrNum)
    LOCAL nTemp
    LOCAL aRetVal
 
-   IF HB_ISNUMERIC(dGivenDate)
+   IF HB_IsNumeric(dGivenDate)
       nQtrNum    := dGivenDate
       dGivenDate := Date()
    ELSEIF !HB_ISDATE(dGivenDate)
@@ -36,7 +36,7 @@ FUNCTION ft_Qtr(dGivenDate, nQtrNum)
 
    aRetval := ft_Year(dGivenDate)
 
-   IF HB_ISNUMERIC(nQtrNum)
+   IF HB_IsNumeric(nQtrNum)
       IF nQtrNum < 1 .OR. nQtrNum > 4
          nQtrNum := 4
       ENDIF

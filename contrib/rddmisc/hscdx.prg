@@ -196,7 +196,7 @@ PROCEDURE hsx_Close( xHSX )
    IF Used() .AND. rddName() == "HSCDX"
       aWData := USRRDD_AREADATA(Select())
       DO CASE
-      CASE HB_ISNUMERIC(xHSX)
+      CASE HB_IsNumeric(xHSX)
          nSlot := AScan( aWData[ 2 ], xHSX )
       CASE HB_ISSTRING( xHSX )
          nSlot := AScan( aWData[ 3 ], {| _1 | _1 == xHSX } )

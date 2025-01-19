@@ -285,7 +285,7 @@ METHOD XHBEditor:New(cString, nTop, nLeft, nBottom, nRight, lEditMode, nLineLeng
 
    // 2006-08-18 - E.F. Adjusted nLineLenght in accordance with Clipper's
    //                   memoedit.
-   IF !HB_ISNUMERIC(nLineLength)
+   IF !HB_IsNumeric(nLineLength)
       nLineLength := ::nNumCols
    ELSE
       IF nLineLength < 0
@@ -2977,7 +2977,7 @@ STATIC FUNCTION Text2Array(cString, nWordWrapCol)
       ENDIF
       nRetLen += Len(cLine) + nEOLLen
 
-      IF HB_ISNUMERIC(nWordWrapCol) .AND. Len(cLine) > nWordWrapCol
+      IF HB_IsNumeric(nWordWrapCol) .AND. Len(cLine) > nWordWrapCol
          DO WHILE .T.
             // Split line at nWordWrapCol boundary
             IF Len(cLine) > nWordWrapCol

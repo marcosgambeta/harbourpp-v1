@@ -548,12 +548,12 @@ METHOD TRPCClient:SetLoopMode(nMethod, xData, nEnd, nStep)
    IF HB_IsArray(xData)
       ::aLoopData := xData
    ELSE
-      IF HB_ISNUMERIC(xData)
+      IF HB_IsNumeric(xData)
          // this is to allow garbage collecting
          ::aLoopData := NIL
          ::nLoopStart := xData
          ::nLoopEnd := nEnd
-         IF HB_ISNUMERIC(nStep)
+         IF HB_IsNumeric(nStep)
             ::nLoopStep := nStep
          ELSE
             ::nLoopStep := 1

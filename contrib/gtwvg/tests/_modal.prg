@@ -282,7 +282,7 @@ FUNCTION CreateOCrt( nT, nL, nB, nR, cTitle, xIcon, lModal, lRowCols, lHidden, ;
    oCrt:create()
    SetCursor(0)
 
-   IF HB_ISNUMERIC(xIcon)
+   IF HB_IsNumeric(xIcon)
       hb_gtInfo( HB_GTI_ICONRES, xIcon )
    ELSE
       IF ".ico" $ Lower(xIcon)

@@ -107,7 +107,7 @@ FUNCTION xhb_SetTraceStack(xLevel)
          s_nSET_TRACESTACK := HB_SET_TRACESTACK_ALL
          EXIT
       ENDSWITCH
-   CASE HB_ISNUMERIC(xLevel)
+   CASE HB_IsNumeric(xLevel)
       IF xLevel >= 0
          s_nSET_TRACESTACK := xLevel
       ENDIF

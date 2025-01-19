@@ -244,7 +244,7 @@ STATIC FUNCTION ErrorMessage(oError)
    ENDIF
 
    // add subsystem's error code if available
-   IF HB_ISNUMERIC(oError:subCode)
+   IF HB_IsNumeric(oError:subCode)
       cMessage += "/" + hb_ntos(oError:subCode)
    ELSE
       cMessage += "/???"
@@ -641,7 +641,7 @@ PROCEDURE __MinimalErrorHandler(oError)
    LOCAL xData
 
    cError := "Error"
-   IF HB_ISNUMERIC(oError:SubCode)
+   IF HB_IsNumeric(oError:SubCode)
       cError += ": " + hb_ntos(oError:SubCode)
    ENDIF
    cError += "!" + hb_eol()
@@ -658,7 +658,7 @@ PROCEDURE __MinimalErrorHandler(oError)
    IF HB_ISSTRING(xData := err_ProcName(oError))
       cError += "Procedure: " + xData + hb_eol()
    ENDIF
-   IF HB_ISNUMERIC(xData := err_ProcLine(oError))
+   IF HB_IsNumeric(xData := err_ProcLine(oError))
       cError += "Line: " + hb_ntos(xData) + hb_eol()
    ENDIF
 
@@ -677,10 +677,10 @@ FUNCTION xhb_ErrorNew(cSubSystem, nGenCode, nSubCode, cOperation, cDescription, 
    IF HB_ISSTRING(cSubSystem)
       oError:SubSystem := cSubSystem
    ENDIF
-   IF HB_ISNUMERIC(nGenCode)
+   IF HB_IsNumeric(nGenCode)
       oError:GenCode := nGenCode
    ENDIF
-   IF HB_ISNUMERIC(nSubCode)
+   IF HB_IsNumeric(nSubCode)
       oError:SubCode := nSubCode
    ENDIF
    IF HB_ISSTRING(cOperation)
@@ -710,7 +710,7 @@ FUNCTION xhb_ErrorNew(cSubSystem, nGenCode, nSubCode, cOperation, cDescription, 
    ENDIF
 
    IF __objHasMsg(oError, "PROCLINE")
-      IF HB_ISNUMERIC(nProcLine)
+      IF HB_IsNumeric(nProcLine)
          oError:ProcLine := nProcLine
       ELSE
          oError:ProcLine := ProcLine(1)

@@ -100,7 +100,7 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
 
    IF lIsDefaultStyle
       DO CASE
-      CASE HB_ISNUMERIC(::caption)
+      CASE HB_IsNumeric(::caption)
          ::style += BS_BITMAP
       CASE HB_ISSTRING( ::caption )
          SWITCH Lower(hb_FNameExt( ::caption ))
@@ -113,7 +113,7 @@ METHOD WvgPushButton:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible
          ENDSWITCH
       CASE HB_IsArray( ::caption )
          ASize( ::caption, 3 )
-         IF HB_ISNUMERIC(::caption[ 2 ])
+         IF HB_IsNumeric(::caption[ 2 ])
             SWITCH ::caption[ 2 ]
             CASE WVG_IMAGE_ICONFILE
             CASE WVG_IMAGE_ICONRESOURCE
@@ -180,7 +180,7 @@ METHOD WvgPushButton:handleEvent( nMessage, aNM )
       // Will never be issued because pushbutton sends WIN_WM_COMMAND
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC(::clr_FG)
+      IF HB_IsNumeric(::clr_FG)
          wapi_SetTextColor( aNM[ 1 ], ::clr_FG )
       ENDIF
       IF !Empty(::hBrushBG)
@@ -240,7 +240,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
          ::sendMessage( WIN_WM_SETTEXT, 0, ::caption )
       ENDSWITCH
 
-   CASE HB_ISNUMERIC(xCaption)  // Handle to the bitmap
+   CASE HB_IsNumeric(xCaption)  // Handle to the bitmap
       ::sendMessage( BM_SETIMAGE, WIN_IMAGE_BITMAP, ::caption )
 
    CASE HB_IsArray( xCaption )

@@ -122,7 +122,7 @@ METHOD WvtLabel:SetText( cTxt )
 
 METHOD WvtLabel:SetTextColor( nRGB )
 
-   IF HB_ISNUMERIC(nRGB)
+   IF HB_IsNumeric(nRGB)
       ::nTextColor := nRGB
       ::nTextColorHoverOff := nRGB
       ::Refresh()
@@ -132,7 +132,7 @@ METHOD WvtLabel:SetTextColor( nRGB )
 
 METHOD WvtLabel:SetBackColor( nRGB )
 
-   IF HB_ISNUMERIC(nRGB)
+   IF HB_IsNumeric(nRGB)
       ::nBackColor := nRGB
       ::nBackColorHoverOff := nRGB
       ::Refresh()

@@ -142,7 +142,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
       EXIT
 
    CASE "LISTBOX"    // Single Selection
-      IF HB_ISNUMERIC(::sl_editBuffer)
+      IF HB_IsNumeric(::sl_editBuffer)
          RETURN wvg_lbSetCurSel( ::hWnd, ::sl_editBuffer - 1 ) >= 0
       ENDIF
       EXIT

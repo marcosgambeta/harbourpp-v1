@@ -27,7 +27,7 @@ FUNCTION ft_DayOfYr(dGivenDate, nDayNum, lIsAcct)
    LOCAL nTemp
    LOCAL aRetVal
 
-   IF HB_ISNUMERIC(dGivenDate)
+   IF HB_IsNumeric(dGivenDate)
       nDayNum    := dGivenDate
       dGivenDate := Date()
    ELSEIF HB_ISLOGICAL(dGivenDate)
@@ -43,7 +43,7 @@ FUNCTION ft_DayOfYr(dGivenDate, nDayNum, lIsAcct)
       aRetVal := ft_Year(dGivenDate)
    ENDIF
 
-   IF HB_ISNUMERIC(nDayNum)
+   IF HB_IsNumeric(nDayNum)
       nTemp := aRetVal[3] - aRetVal[2] + 1
       IF nDayNum < 1 .OR. nDayNum > nTemp
          nDayNum := nTemp

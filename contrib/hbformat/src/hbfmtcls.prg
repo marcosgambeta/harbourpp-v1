@@ -634,7 +634,7 @@ METHOD HBFormatCode:FormatLine( cLine, lContinued )
                      ELSEIF nState == FL_STATE_OP
                         nState := FL_STATE_ANY
                      ENDIF
-                  ELSEIF ( hb_isNumeric(nEnd) .AND. SubStr(cLine, nEnd - 1, 1) != "(" ) .OR. nState == FL_STATE_ANY .OR. nState == FL_STATE_DIGIT
+                  ELSEIF ( HB_IsNumeric(nEnd) .AND. SubStr(cLine, nEnd - 1, 1) != "(" ) .OR. nState == FL_STATE_ANY .OR. nState == FL_STATE_DIGIT
                      nA := i
                      nState := FL_STATE_OP
                   ENDIF
@@ -691,7 +691,7 @@ METHOD HBFormatCode:ConvertCmd( cLine, nBegin, nEnd, lFirstOnly )
 
    IF ::lCase
 
-      IF !HB_ISNUMERIC(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
+      IF !HB_IsNumeric(nBegin) /* FIXME: Temporary hack to avoid RTE when processing contrib/hbhttpd/core.prg */
          ::nErr := 1
          ::cLineErr := cLine
          RETURN .F.

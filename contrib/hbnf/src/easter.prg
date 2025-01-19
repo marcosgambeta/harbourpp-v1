@@ -40,7 +40,7 @@ FUNCTION ft_Easter(nYear)
       nYear := Year(nYear)
    ENDIF
 
-   IF HB_ISNUMERIC(nYear)
+   IF HB_IsNumeric(nYear)
       IF nYear > 1582
 
          // <<nGold>> is Golden number of the year in the 19 year Metonic cycle

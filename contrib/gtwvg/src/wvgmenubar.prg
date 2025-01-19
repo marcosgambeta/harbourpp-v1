@@ -375,7 +375,7 @@ METHOD WvgMenuBar:checkItem(nItemNum, lCheck)
 
    __defaultNIL(@lCheck, .T.)
 
-   IF !Empty(::hMenu) .AND. HB_ISNUMERIC(nItemNum)
+   IF !Empty(::hMenu) .AND. HB_IsNumeric(nItemNum)
       nRet := wvg_CheckMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + iif(lCheck, MF_CHECKED, MF_UNCHECKED))
    ENDIF
 
@@ -385,7 +385,7 @@ METHOD WvgMenuBar:enableItem(nItemNum)
 
    LOCAL lSuccess := .F.
 
-   IF !Empty(::hMenu) .AND. HB_ISNUMERIC(nItemNum)
+   IF !Empty(::hMenu) .AND. HB_IsNumeric(nItemNum)
       lSuccess := wvg_EnableMenuItem(::hMenu, nItemNum - 1, MF_BYPOSITION + MF_ENABLED)
    ENDIF
 
@@ -403,7 +403,7 @@ METHOD WvgMenuBar:disableItem(nItemNum)
 
 METHOD WvgMenuBar:getItem(nItemNum)
 
-   IF HB_ISNUMERIC(nItemNum) .AND. nItemNum > 0 .AND. nItemNum <= Len(::aMenuItems)
+   IF HB_IsNumeric(nItemNum) .AND. nItemNum > 0 .AND. nItemNum <= Len(::aMenuItems)
       RETURN {::aMenuItems[nItemNum][3], ::aMenuItems[nItemNum][4], ::aMenuItems[nItemNum][5], ::aMenuItems[nItemNum][6]}
    ENDIF
 
@@ -422,7 +422,7 @@ METHOD WvgMenuBar:isItemEnabled(nItemNum)
    RETURN wvg_IsMenuItemEnabled(::hMenu, nItemNum - 1)
 
 METHOD WvgMenuBar:selectItem(nItemNum)
-   RETURN !HB_ISNUMERIC(nItemNum)
+   RETURN !HB_IsNumeric(nItemNum)
 
 METHOD WvgMenuBar:setItem(nItemNum, aItem)
    RETURN ::putItem(aItem, nItemNum, .F.)

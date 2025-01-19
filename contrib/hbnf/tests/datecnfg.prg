@@ -153,12 +153,12 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
 
    IF dGivenDate == NIL .OR. !( ValType( dGivenDate ) $ "NDT" )
       dGivenDate := Date()
-   ELSEIF HB_ISNUMERIC(dGivenDate)
+   ELSEIF HB_IsNumeric(dGivenDate)
       nType := dGivenDate
       dGivenDate := Date()
    ENDIF
 
-   nType := iif(HB_ISNUMERIC(nType), nType, 0)
+   nType := iif(HB_IsNumeric(nType), nType, 0)
 
    IF nType == 0
       IF SubStr(cFY_Start, 6, 5) == "01.01"

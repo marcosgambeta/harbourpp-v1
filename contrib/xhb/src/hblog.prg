@@ -176,7 +176,7 @@ FUNCTION hb_BldLogMsg(...)
    LOCAL cMsg := ""
 
    FOR EACH xVar IN hb_AParams()
-      IF HB_ISNUMERIC(xVar)
+      IF HB_IsNumeric(xVar)
          cMsg += AllTrim(hb_CStr(xVar))
       ELSEIF !HB_ISSTRING(xVar)
          cMsg += hb_CStr(xVar)

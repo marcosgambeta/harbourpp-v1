@@ -151,10 +151,10 @@ METHOD WvgStatusBar:handleEvent(nMessage, aNM)
       EXIT
 
    CASE HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC(::clr_FG)
+      IF HB_IsNumeric(::clr_FG)
          wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_ISNUMERIC(::hBrushBG)
+      IF HB_IsNumeric(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE
@@ -216,9 +216,9 @@ METHOD WvgStatusBar:delItem(nItemORcKey)
    LOCAL nIndex := 0
 
    DO CASE
-   CASE HB_ISNUMERIC(nItemORcKey)
+   CASE HB_IsNumeric(nItemORcKey)
       nIndex := AScan(::aItems, {|o|o:key == nItemORcKey})
-   CASE HB_ISNUMERIC(nItemORcKey)
+   CASE HB_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 
@@ -237,7 +237,7 @@ METHOD WvgStatusBar:getItem(nItemORcKey)
    DO CASE
    CASE HB_ISSTRING(nItemORcKey)
       nIndex := AScan(::aItems, {|o|o:key == nItemORcKey})
-   CASE HB_ISNUMERIC(nItemORcKey)
+   CASE HB_IsNumeric(nItemORcKey)
       nIndex := nItemORcKey
    ENDCASE
 

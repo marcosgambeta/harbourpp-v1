@@ -728,7 +728,7 @@ STATIC PROCEDURE ShowSubHelp( xLine, /* @ */ nMode, nIndent, n )
 
    DO CASE
    CASE xLine == NIL
-   CASE HB_ISNUMERIC(xLine)
+   CASE HB_IsNumeric(xLine)
       nMode := xLine
    CASE HB_ISEVALITEM( xLine )
       Eval( xLine )
@@ -1012,7 +1012,7 @@ METHOD Entry:IsField( cField, nType )
 
    IF ( idx := hb_HPos( sc_hFields, cField ) ) > 0
       IF ::_group[ idx ] == 0
-      ELSEIF HB_ISNUMERIC(nType) .AND. hb_bitAnd( ::_group[ idx ], nType ) != nType
+      ELSEIF HB_IsNumeric(nType) .AND. hb_bitAnd( ::_group[ idx ], nType ) != nType
       ELSE
          RETURN .T.
       ENDIF

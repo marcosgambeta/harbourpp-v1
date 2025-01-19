@@ -362,7 +362,7 @@ FUNCTION SQLPrepare(cQuery, ...)
          CASE x != NIL .AND. Empty(x)
             x := "null"
 
-         CASE HB_ISNUMERIC(x)
+         CASE HB_IsNumeric(x)
             x := hb_ntos(x)
 
          CASE HB_ISDATE(x)

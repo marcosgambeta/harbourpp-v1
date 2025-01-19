@@ -121,7 +121,7 @@ METHOD WvgDialog:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    hb_gtInfo(HB_GTI_WINTITLE, ::title)
 
    IF !Empty(::icon)
-      IF HB_ISNUMERIC(::icon)
+      IF HB_IsNumeric(::icon)
          hb_gtInfo(HB_GTI_ICONRES, ::icon)
 
       ELSEIF HB_ISSTRING(::icon)

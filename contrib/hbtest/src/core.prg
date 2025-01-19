@@ -142,7 +142,7 @@ STATIC FUNCTION ErrorMessage( oError )
    LOCAL cMessage := ""
    LOCAL tmp
 
-   IF HB_ISNUMERIC(oError:severity)
+   IF HB_IsNumeric(oError:severity)
       SWITCH oError:severity
       CASE ES_WHOCARES     ; cMessage += "M " ; EXIT
       CASE ES_WARNING      ; cMessage += "W " ; EXIT
@@ -150,13 +150,13 @@ STATIC FUNCTION ErrorMessage( oError )
       CASE ES_CATASTROPHIC ; cMessage += "C " ; EXIT
       ENDSWITCH
    ENDIF
-   IF HB_ISNUMERIC(oError:genCode)
+   IF HB_IsNumeric(oError:genCode)
       cMessage += hb_ntos( oError:genCode ) + " "
    ENDIF
    IF HB_ISSTRING( oError:subsystem )
       cMessage += oError:subsystem + " "
    ENDIF
-   IF HB_ISNUMERIC(oError:subCode)
+   IF HB_IsNumeric(oError:subCode)
       cMessage += hb_ntos( oError:subCode ) + " "
    ENDIF
    IF HB_ISSTRING( oError:description )
@@ -168,10 +168,10 @@ STATIC FUNCTION ErrorMessage( oError )
    IF !Empty(oError:filename)
       cMessage += "<" + oError:filename + "> "
    ENDIF
-   IF HB_ISNUMERIC(oError:osCode)
+   IF HB_IsNumeric(oError:osCode)
       cMessage += "OS:" + hb_ntos( oError:osCode ) + " "
    ENDIF
-   IF HB_ISNUMERIC(oError:tries)
+   IF HB_IsNumeric(oError:tries)
       cMessage += "#:" + hb_ntos( oError:tries ) + " "
    ENDIF
 

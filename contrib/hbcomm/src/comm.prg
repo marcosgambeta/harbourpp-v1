@@ -76,7 +76,7 @@ FUNCTION INIT_PORT( cPort, nBaud, nData, nParity, nStop, nBufferSize )
       hb_default( @nBaud, 9600 )
 
       cParity := "N"
-      IF HB_ISNUMERIC(nParity)
+      IF HB_IsNumeric(nParity)
          SWITCH nParity
          CASE 0 ; cParity := "N" ; EXIT
          CASE 1 ; cParity := "O" ; EXIT
@@ -121,7 +121,7 @@ FUNCTION ISWORKING( nPort )
 /* Fetch <nCount> chars into <cData> */
 FUNCTION INCHR(nPort, nCount, /* @ */ cData)
 
-   cData := iif(HB_ISNUMERIC(nCount), Space( nCount ), "")
+   cData := iif(HB_IsNumeric(nCount), Space( nCount ), "")
 
    RETURN hb_comRecv( nPort, @cData, nCount )
 

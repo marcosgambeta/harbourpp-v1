@@ -18,7 +18,7 @@
 
 FUNCTION ft_Sleep(nSeconds, nInitial)
 
-   IF HB_ISNUMERIC(nInitial)
+   IF HB_IsNumeric(nInitial)
       nInitial -= Seconds()
       IF nInitial > 0
          nInitial -= 86399

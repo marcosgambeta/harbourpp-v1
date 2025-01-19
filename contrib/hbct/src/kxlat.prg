@@ -328,7 +328,7 @@ FUNCTION __hbct_key_n_to_c(nKey)
 
    LOCAL hKey
 
-   IF HB_ISNUMERIC(nKey)
+   IF HB_IsNumeric(nKey)
       FOR EACH hKey IN sc_hCnv
          IF hKey:__enumValue() == nKey
             RETURN hKey:__enumKey()
@@ -352,7 +352,7 @@ FUNCTION GetKXLat(cKeyValue)
    LOCAL xKey := hbct_GetKXLat(__hbct_key_c_to_n(cKeyValue))
 
    // doc is unclear. should this return a numeric in these cases?
-   IF HB_ISNUMERIC(xKey)
+   IF HB_IsNumeric(xKey)
       RETURN xKey
    ENDIF
 
@@ -399,7 +399,7 @@ FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
          hb_mutexUnlock(s_hMutex)
       ENDIF
    ELSE
-      IF HB_ISNUMERIC(nOrgKeyValue) .AND. nOrgKeyValue != 0
+      IF HB_IsNumeric(nOrgKeyValue) .AND. nOrgKeyValue != 0
          IF hb_mutexLock(s_hMutex)
             IF PCount() == 1
                IF nOrgKeyValue $ s_hTrs
@@ -409,7 +409,7 @@ FUNCTION hbct_SetKXLat(nOrgKeyValue, nNewKeyValue)
                      hb_gtInfo(HB_GTI_INKEYFILTER, NIL)
                   ENDIF
                ENDIF
-            ELSEIF HB_ISNUMERIC(nNewKeyValue)
+            ELSEIF HB_IsNumeric(nNewKeyValue)
                // refuse overwriting custom HB_GTI_INKEYFILTER
                IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
                   lAccepted := .T.
@@ -430,7 +430,7 @@ FUNCTION hbct_GetKXLat(nKeyValue)
 
    LOCAL nNewValue := 0
 
-   IF HB_ISNUMERIC(nKeyValue)
+   IF HB_IsNumeric(nKeyValue)
       IF hb_mutexLock(s_hMutex)
          IF nKeyValue $ s_hTrs
             nNewValue := s_hTrs[nKeyValue]

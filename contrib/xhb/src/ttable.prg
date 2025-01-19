@@ -131,7 +131,7 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
    LOCAL nCh
    LOCAL cWord
 
-   IF !HB_ISNUMERIC(nType) .OR. ;
+   IF !HB_IsNumeric(nType) .OR. ;
       (nType != 1 .AND. ;
        nType != 2 .AND. ;
        nType != 3)

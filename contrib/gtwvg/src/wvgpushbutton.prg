@@ -96,7 +96,7 @@ METHOD WvgPushButton:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
    ::wvgWindow:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
 
-   IF HB_ISNUMERIC(::caption)
+   IF HB_IsNumeric(::caption)
       ::style += BS_BITMAP
    ELSEIF HB_ISSTRING(::caption)
       IF ".ICO" == Upper(Right(::caption, 4))
@@ -106,7 +106,7 @@ METHOD WvgPushButton:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
       ENDIF
    ELSEIF HB_IsArray(::caption)
       ASize(::caption, 3)
-      IF HB_ISNUMERIC(::caption[2])
+      IF HB_IsNumeric(::caption[2])
          IF ::caption[2] == WVG_IMAGE_ICONFILE .OR. ::caption[2] == WVG_IMAGE_ICONRESOURCE
             ::style += BS_ICON
          ELSEIF ::caption[2] == WVG_IMAGE_BITMAPFILE .OR. ::caption[2] == WVG_IMAGE_BITMAPRESOURCE
@@ -169,10 +169,10 @@ METHOD WvgPushButton:handleEvent(nMessage, aNM)
       EXIT
 
    CASE HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC(::clr_FG)
+      IF HB_IsNumeric(::clr_FG)
          wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_ISNUMERIC(::hBrushBG)
+      IF HB_IsNumeric(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ENDIF
@@ -227,7 +227,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
          wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, ::caption)
       ENDIF
 
-   ELSEIF HB_ISNUMERIC(xCaption)  // Handle to the bitmap
+   ELSEIF HB_IsNumeric(xCaption)  // Handle to the bitmap
       wvg_SendMessage(::hWnd, BM_SETIMAGE, IMAGE_BITMAP, ::caption)
 
    ELSEIF HB_IsArray(xCaption)

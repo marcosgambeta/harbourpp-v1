@@ -433,7 +433,7 @@ METHOD TMariaDBQuery:GetRow(nRow)
    LOCAL oRow := NIL
    LOCAL i
 
-   IF !HB_ISNUMERIC(nRow)
+   IF !HB_IsNumeric(nRow)
       nRow := ::nCurRow
    ENDIF
 

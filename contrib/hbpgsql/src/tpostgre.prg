@@ -105,7 +105,7 @@ METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
       iif(HB_ISSTRING(cHost), " host = " + EscapeParam(cHost), "") + ;
       iif(HB_ISSTRING(cUser), " user = " + EscapeParam(cUser), "") + ;
       iif(HB_ISSTRING(cPass), " password = " + EscapeParam(cPass), "") + ;
-      iif(HB_ISNUMERIC(nPort), " port = " + hb_ntos(nPort), "")
+      iif(HB_IsNumeric(nPort), " port = " + hb_ntos(nPort), "")
 
    IF HB_ISHASH(hCustom)
       FOR EACH item IN hCustom
@@ -999,7 +999,7 @@ METHOD TPQquery:FieldGet(nField, nRow)
 
    IF nField > 0 .AND. ::nResultStatus == PGRES_TUPLES_OK
 
-      IF !HB_ISNUMERIC(nRow)
+      IF !HB_IsNumeric(nRow)
          nRow := ::nRecno
       ENDIF
 
@@ -1050,7 +1050,7 @@ METHOD TPQquery:Getrow(nRow)
    LOCAL aOld
    LOCAL nCol
 
-   IF !HB_ISNUMERIC(nRow)
+   IF !HB_IsNumeric(nRow)
       nRow := ::nRecno
    ENDIF
 

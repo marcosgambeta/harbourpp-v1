@@ -221,7 +221,7 @@ FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
          xName := DToS(xValue)
          EXIT
       CASE "N"
-         IF !HB_ISNUMERIC(nValueType) .OR. ;
+         IF !HB_IsNumeric(nValueType) .OR. ;
             !(nValueType == WIN_REG_DWORD .OR. ;
               nValueType == WIN_REG_DWORD_LITTLE_ENDIAN .OR. ;
               nValueType == WIN_REG_DWORD_BIG_ENDIAN .OR. ;
@@ -233,7 +233,7 @@ FUNCTION win_regSet(nHKEY, cKeyName, cEntryName, xValue, nValueType, nRegSam)
          EXIT
       CASE "C"
       CASE "M"
-         IF !HB_ISNUMERIC(nValueType) .OR. ;
+         IF !HB_IsNumeric(nValueType) .OR. ;
             !(nValueType == WIN_REG_SZ .OR. ;
               nValueType == WIN_REG_EXPAND_SZ .OR. ;
               nValueType == WIN_REG_MULTI_SZ)

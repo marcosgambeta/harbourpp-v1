@@ -105,7 +105,7 @@ FUNCTION PutCounter(oHtm, nNumber, cDir, nDigits, nWidth, bgColor, nBorder)
    __defaultNIL(@nBorder, 1)
    __defaultNIL(@BGCOLOR, "black")
 
-   IF HB_ISNUMERIC(nNumber)
+   IF HB_IsNumeric(nNumber)
       cStr := StrZero(nNumber, nDigits)
    ENDIF
 

@@ -122,7 +122,7 @@ METHOD WvgDialog:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    hb_gtInfo( HB_GTI_WINTITLE, ::title     )
 
    IF !Empty(::icon)
-      IF HB_ISNUMERIC(::icon)
+      IF HB_IsNumeric(::icon)
          hb_gtInfo( HB_GTI_ICONRES, ::icon )
 
       ELSEIF HB_ISSTRING( ::icon )
@@ -175,7 +175,7 @@ METHOD WvgDialog:destroy()
 
 METHOD WvgDialog:setFrameState( nState )
 
-   IF HB_ISNUMERIC(nState)
+   IF HB_IsNumeric(nState)
       SWITCH nState
       CASE WVGDLG_FRAMESTAT_MINIMIZED ; RETURN ::sendMessage( WIN_WM_SYSCOMMAND, WIN_SC_MINIMIZE, 0 ) != 0
       CASE WVGDLG_FRAMESTAT_MAXIMIZED ; RETURN ::sendMessage( WIN_WM_SYSCOMMAND, WIN_SC_MAXIMIZE, 0 ) != 0

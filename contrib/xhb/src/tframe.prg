@@ -207,11 +207,11 @@ METHOD THtmlFrameSet:Frame(cName, cURL, lBorder, lResize, lScrolling, marginwidt
       ENDIF
    ENDIF
 
-   IF HB_ISNUMERIC(marginwidth)
+   IF HB_IsNumeric(marginwidth)
       cStr += " marginwidth= " + hb_ntos(marginwidth)
    ENDIF
 
-   IF HB_ISNUMERIC(marginheight)
+   IF HB_IsNumeric(marginheight)
       cStr += " marginheight= " + hb_ntos(marginheight)
    ENDIF
 

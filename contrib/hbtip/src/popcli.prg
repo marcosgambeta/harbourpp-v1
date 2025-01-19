@@ -224,7 +224,7 @@ METHOD TIPClientPOP:Retrieve( nId, nLen )
          cRet := hb_BLeft(cRet, nPos + 1)
          ::bEof := .T.
 
-      ELSEIF HB_ISNUMERIC(nLen) .AND. nLen < hb_BLen(cRet)  /* FIXME: might break UTF-8 chars */
+      ELSEIF HB_IsNumeric(nLen) .AND. nLen < hb_BLen(cRet)  /* FIXME: might break UTF-8 chars */
          EXIT
       ELSE
          nRetLen += nRead
@@ -290,7 +290,7 @@ METHOD TIPClientPOP:UIDL( nMsgId )
    LOCAL nPos
    LOCAL cStr, cRet
 
-   IF HB_ISNUMERIC(nMsgId) .AND. nMsgId >= 1
+   IF HB_IsNumeric(nMsgId) .AND. nMsgId >= 1
       ::inetSendAll( ::SocketCon, "UIDL " + hb_ntos( Int( nMsgId ) ) + ::cCRLF )
    ELSE
       ::inetSendAll( ::SocketCon, "UIDL" + ::cCRLF )

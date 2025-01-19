@@ -170,7 +170,7 @@ ENDCLASS
 METHOD TOleAuto:hObj(xOle)
 
    IF xOle != NIL
-      IF HB_ISNUMERIC(xOle)
+      IF HB_IsNumeric(xOle)
          xOle := __olePDisp(xOle)
       ENDIF
       IF __oleIsDisp(xOle)

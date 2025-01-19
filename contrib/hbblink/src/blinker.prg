@@ -80,7 +80,7 @@ PROCEDURE hb_BliDemDte( dDate )
 
 PROCEDURE hb_BliDemMin( nValue )
 
-   IF HB_ISNUMERIC(nValue)
+   IF HB_IsNumeric(nValue)
       s_nDemoMinutes := nValue
    ENDIF
 
@@ -91,7 +91,7 @@ FUNCTION BliDbgHan( nValue )
    STATIC s_nDebugHandle := 1
    LOCAL nOldValue := s_nDebugHandle
 
-   IF HB_ISNUMERIC(nValue)
+   IF HB_IsNumeric(nValue)
       s_nDebugHandle := nValue
    ENDIF
 
@@ -107,7 +107,7 @@ FUNCTION BliDemMin( nValue )
 
    LOCAL nOldValue := s_nDemoMinutes
 
-   IF HB_ISNUMERIC(nValue)
+   IF HB_IsNumeric(nValue)
       s_nDemoMinutes := nValue
    ENDIF
 
@@ -186,7 +186,7 @@ FUNCTION BliMemPak( nValue )
    STATIC s_nGCFrequency := 0
    LOCAL nOldValue := s_nDemoMinutes
 
-   IF HB_ISNUMERIC(nValue)
+   IF HB_IsNumeric(nValue)
       s_nGCFrequency := nValue
    ENDIF
 

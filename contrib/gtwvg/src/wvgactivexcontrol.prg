@@ -130,7 +130,7 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
    ::license := cLicense
    ::hContainer := iif(HB_ISOBJECT(::oParent), ::oParent:getHWND(), ::oParent)
 
-   IF !HB_ISNUMERIC(::hContainer) .OR. !HB_ISSTRING(::CLSID)
+   IF !HB_IsNumeric(::hContainer) .OR. !HB_ISSTRING(::CLSID)
       RETURN NIL
    ENDIF
 
@@ -241,7 +241,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 
 METHOD WvgActiveXControl:mapEvent(nEvent, bBlock)
 
-   IF HB_ISNUMERIC(nEvent) .AND. HB_IsBlock(bBlock)
+   IF HB_IsNumeric(nEvent) .AND. HB_IsBlock(bBlock)
       ::hEvents[nEvent] := bBlock
    ENDIF
 

@@ -223,13 +223,13 @@ METHOD WvtDialog:Create()
    LOCAL aPalette, i, j
 
    ::oldToolTipActive := wvt_SetToolTipActive(.T.)
-   IF HB_ISNUMERIC(::nTooltipWidth)
+   IF HB_IsNumeric(::nTooltipWidth)
       wvt_SetToolTipWidth( ::nTooltipWidth )
    ENDIF
-   IF HB_ISNUMERIC(::nTooltipBkColor)
+   IF HB_IsNumeric(::nTooltipBkColor)
       wvt_SetToolTipBkColor( ::nTooltipBkColor )
    ENDIF
-   IF HB_ISNUMERIC(::nTooltipTextColor)
+   IF HB_IsNumeric(::nTooltipTextColor)
       wvt_SetToolTipTextColor( ::nTooltipTextColor )
    ENDIF
 

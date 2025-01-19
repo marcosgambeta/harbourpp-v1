@@ -305,7 +305,7 @@ METHOD WvgCrt:create(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    hb_gtInfo(HB_GTI_PRESPARAMS, {::exStyle, ::style, ::aPos[1], ::aPos[2], ::maxRow + 1, ::maxCol + 1, ::pGTp, .F., lRowCol, HB_WNDTYPE_CRT})
    hb_gtInfo(HB_GTI_SETFONT, {::fontName, ::fontHeight, ::fontWidth})
 
-   IF HB_ISNUMERIC(::icon)
+   IF HB_IsNumeric(::icon)
       hb_gtInfo(HB_GTI_ICONRES, ::icon)
    ELSEIF ".ico" $ Lower(::icon)
       hb_gtInfo(HB_GTI_ICONFILE, ::icon)
@@ -796,7 +796,7 @@ METHOD WvgCrt:helpRequest(xParam)
 
 METHOD WvgCrt:keyboard(xParam)
 
-   IF HB_ISNUMERIC(xParam) .AND. HB_IsBlock(::sl_keyboard)
+   IF HB_IsNumeric(xParam) .AND. HB_IsBlock(::sl_keyboard)
       Eval(::sl_keyboard, xParam, , Self)
       RETURN Self
    ENDIF
@@ -866,7 +866,7 @@ METHOD WvgCrt:paint(xParam)
 
 METHOD WvgCrt:quit(xParam, xParam1)
 
-   IF HB_ISNUMERIC(xParam) .AND. HB_IsBlock(::sl_quit)
+   IF HB_IsNumeric(xParam) .AND. HB_IsBlock(::sl_quit)
       Eval(::sl_quit, xParam, xParam1, Self)
       RETURN Self
    ENDIF

@@ -242,7 +242,7 @@ FUNCTION wvt_SetDlgCoMode(nMode)
    LOCAL nOldMode
 
    nOldMode := sMode
-   IF HB_ISNUMERIC(nMode) .AND. nMode <= 1 .AND. nMode >= 0
+   IF HB_IsNumeric(nMode) .AND. nMode <= 1 .AND. nMode >= 0
       sMode := nMode
    ENDIF
 
@@ -305,7 +305,7 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
       nH := nRows
    ENDIF
 
-   IF !HB_ISNUMERIC(nStyle)
+   IF !HB_IsNumeric(nStyle)
       nStyle := WS_CAPTION + WS_SYSMENU + WS_GROUP + WS_TABSTOP + DS_SETFONT + WS_THICKFRAME + WS_VISIBLE + WS_POPUP + DS_3DLOOK
    ENDIF
 
@@ -322,8 +322,8 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
    AAdd(aDlg[1], iif(HB_ISSTRING(cTitle), cTitle, ""))
 
    IF hb_bitAnd(nStyle, DS_SETFONT) == DS_SETFONT
-      AAdd(aDlg[1], iif(HB_ISNUMERIC(nPointSize), nPointSize, 8))
-      AAdd(aDlg[1], iif(HB_ISNUMERIC(nWeight), nWeight, 400))
+      AAdd(aDlg[1], iif(HB_IsNumeric(nPointSize), nPointSize, 8))
+      AAdd(aDlg[1], iif(HB_IsNumeric(nWeight), nWeight, 400))
       AAdd(aDlg[1], iif(HB_ISLOGICAL(lItalic), lItalic, .F.))
       AAdd(aDlg[1], iif(HB_ISSTRING(cFaceName), cFaceName, "MS Sans Serif"))
    ENDIF
@@ -387,16 +387,16 @@ FUNCTION wvt_AddDlgItem(aDlg, nTop, nLeft, nRows, nCols, aOffSet, cnId, cnDlgCla
 
    aDlg[1][4]++  // item count
 
-   AAdd(aDlg[ 2], iif(HB_ISNUMERIC(nHelpId), nHelpId, 0))
-   AAdd(aDlg[ 3], iif(HB_ISNUMERIC(nExStyle), nExStyle, 0))
-   AAdd(aDlg[ 4], iif(HB_ISNUMERIC(nStyle), nStyle, WS_CHILD + WS_VISIBLE))
+   AAdd(aDlg[ 2], iif(HB_IsNumeric(nHelpId), nHelpId, 0))
+   AAdd(aDlg[ 3], iif(HB_IsNumeric(nExStyle), nExStyle, 0))
+   AAdd(aDlg[ 4], iif(HB_IsNumeric(nStyle), nStyle, WS_CHILD + WS_VISIBLE))
    AAdd(aDlg[ 5], nX)
    AAdd(aDlg[ 6], nY)
    AAdd(aDlg[ 7], nW)
    AAdd(aDlg[ 8], nH)
    AAdd(aDlg[ 9], cnId)
    AAdd(aDlg[10], cnDlgClass)
-   AAdd(aDlg[11], iif(HB_ISSTRING(cText), cText, iif(HB_ISNUMERIC(cText), cText, "")))
+   AAdd(aDlg[11], iif(HB_ISSTRING(cText), cText, iif(HB_IsNumeric(cText), cText, "")))
    AAdd(aDlg[12], 0)
 
    RETURN aDlg
@@ -428,7 +428,7 @@ FUNCTION wvt_CreateDialog(acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu)
          wvt_DlgSetIcon(hDlg, ncIcon)
       ENDIF
 
-      IF HB_ISNUMERIC(nTimerTicks)
+      IF HB_IsNumeric(nTimerTicks)
          wvg_SetTimer(hDlg, 1001, nTimerTicks)
       ENDIF
 
@@ -563,7 +563,7 @@ FUNCTION wvt_GetTitle()
 
 FUNCTION wvt_SetIcon(ncIconRes, cIconName)
 
-   IF HB_ISNUMERIC(ncIconRes)
+   IF HB_IsNumeric(ncIconRes)
       hb_gtInfo(HB_GTI_ICONRES, ncIconRes)
 
    ELSEIF HB_ISSTRING(cIconName)
@@ -623,7 +623,7 @@ FUNCTION wvt_GetRGBColorByString(cColor, nForeBack)
    LOCAL nIndex := 0
    LOCAL a_ := {"N", "B", "G", "BG", "R", "RB", "GR", "W"}
 
-   nForeBack := iif(HB_ISNUMERIC(nForeBack), nForeBack, 0)
+   nForeBack := iif(HB_IsNumeric(nForeBack), nForeBack, 0)
 
    IF HB_ISSTRING(cColor)
       IF (n := At("/", cColor)) > 0

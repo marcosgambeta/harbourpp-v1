@@ -1548,7 +1548,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                xValue := aData[ aInstr[ 2 ] ]
                IF HB_ISSTRING( xValue )
                   cRet += UHtmlEncode( xValue )
-               ELSEIF HB_ISNUMERIC(xValue)
+               ELSEIF HB_IsNumeric(xValue)
                   cRet += UHtmlEncode( Str( xValue ) )
                ELSEIF HB_ISDATE( xValue )
                   cRet += UHtmlEncode( DToC(xValue) )
@@ -1569,7 +1569,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                xValue := aData[ aInstr[ 2 ] ]
                IF HB_ISSTRING( xValue )
                   cRet += xValue
-               ELSEIF HB_ISNUMERIC(xValue)
+               ELSEIF HB_IsNumeric(xValue)
                   cRet += Str( xValue )
                ELSEIF HB_ISDATE( xValue )
                   cRet += DToC(xValue)

@@ -207,7 +207,7 @@ STATIC FUNCTION ErrorMessage(e)
    ENDIF
 
    // add subsystem's error code if available
-   IF HB_ISNUMERIC(e:subCode)
+   IF HB_IsNumeric(e:subCode)
       cMessage += "/" + hb_ntos(e:subCode)
    ELSE
       cMessage += "/???"

@@ -613,13 +613,13 @@ METHOD win_Prn:SetPos(nPosX, nPosY)
 
 METHOD win_Prn:SetColor(nClrText, nClrPane, nAlign)
 
-   IF HB_ISNUMERIC(nClrText)
+   IF HB_IsNumeric(nClrText)
       ::TextColor := nClrText
    ENDIF
-   IF HB_ISNUMERIC(nClrPane)
+   IF HB_IsNumeric(nClrPane)
       ::BkColor := nClrPane
    ENDIF
-   IF HB_ISNUMERIC(nAlign)
+   IF HB_IsNumeric(nAlign)
       ::TextAlign := nAlign
    ENDIF
 
@@ -627,7 +627,7 @@ METHOD win_Prn:SetColor(nClrText, nClrPane, nAlign)
 
 METHOD win_Prn:SetBkMode(nMode)
 
-   IF HB_ISNUMERIC(nMode)
+   IF HB_IsNumeric(nMode)
       ::BkMode := nMode
    ENDIF
 
@@ -674,7 +674,7 @@ METHOD win_Prn:TextAtFont(nPosX, nPosY, cString, cFont, nPointSize, nWidth, nBol
 
    IF ::CheckPage()
 
-      IF !HB_ISNUMERIC(nPointSize)
+      IF !HB_IsNumeric(nPointSize)
          nPointSize := ::FontPointSize
       ENDIF
 

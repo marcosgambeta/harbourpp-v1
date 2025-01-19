@@ -109,7 +109,7 @@ METHOD TFbServer:New( cServer, cUser, cPassword, nDialect )
 
    ::db := FBConnect( cServer, cUser, cPassword )
 
-   IF HB_ISNUMERIC(::db)
+   IF HB_IsNumeric(::db)
       ::lError := .T.
       ::nError := ::db
    ENDIF
@@ -122,7 +122,7 @@ METHOD TFbServer:StartTransaction()
 
    ::trans := FBStartTransaction( ::db )
 
-   IF HB_ISNUMERIC(::trans)
+   IF HB_IsNumeric(::trans)
       ::lError := .T.
       ::nError := ::trans
    ELSE
@@ -357,7 +357,7 @@ METHOD TFbServer:Delete( oRow, cWhere )
 
    aTables := oRow:GetTables()
 
-   IF !HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
+   IF !HB_IsNumeric(::db) .AND. Len(aTables) == 1
       // Cannot delete joined tables
 
       IF cWhere == NIL
@@ -392,7 +392,7 @@ METHOD TFbServer:Append( oRow )
 
    aTables := oRow:GetTables()
 
-   IF !HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
+   IF !HB_IsNumeric(::db) .AND. Len(aTables) == 1
       // Can insert only one table, not in joined tables
 
       cQuery := 'INSERT INTO ' + aTables[ 1 ] + '('
@@ -425,7 +425,7 @@ METHOD TFbServer:Update( oRow, cWhere )
 
    aTables := oRow:GetTables()
 
-   IF !HB_ISNUMERIC(::db) .AND. Len(aTables) == 1
+   IF !HB_IsNumeric(::db) .AND. Len(aTables) == 1
       // Can't insert joined tables
 
       IF cWhere == NIL

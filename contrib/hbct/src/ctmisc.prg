@@ -60,7 +60,7 @@ FUNCTION Center(c, n, p, lMode)
 
    LOCAL cRet
 
-   IF !HB_ISNUMERIC(n)
+   IF !HB_IsNumeric(n)
       n := MaxCol() + 1 - Col() * 2
    ENDIF
    IF !HB_ISSTRING(c)

@@ -224,7 +224,7 @@ FUNCTION wvt_SetDlgCoMode( nMode )
    LOCAL nOldMode
 
    nOldMode := sMode
-   IF HB_ISNUMERIC(nMode) .AND. nMode <= 1 .AND. nMode >= 0
+   IF HB_IsNumeric(nMode) .AND. nMode <= 1 .AND. nMode >= 0
       sMode := nMode
    ENDIF
 
@@ -359,7 +359,7 @@ FUNCTION wvt_AddDlgItem( aDlg, nTop, nLeft, nRows, nCols, aOffSet, ;
    AAdd( aDlg[  8 ], nH )
    AAdd( aDlg[  9 ], cnId )
    AAdd( aDlg[ 10 ], cnDlgClass )
-   AAdd( aDlg[ 11 ], iif(HB_ISSTRING( cText ) .OR. HB_ISNUMERIC(cText), cText, "") )
+   AAdd( aDlg[ 11 ], iif(HB_ISSTRING( cText ) .OR. HB_IsNumeric(cText), cText, "") )
    AAdd( aDlg[ 12 ], 0 )
 
    RETURN aDlg
@@ -372,7 +372,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC(acnDlg), 1, 2))
+   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_IsNumeric(acnDlg), 1, 2))
 
    IF HB_IsArray( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -387,7 +387,7 @@ FUNCTION wvt_CreateDialog( acnDlg, lOnTop, cbDlgProc, ncIcon, nTimerTicks, hMenu
          wvt_DlgSetIcon( hDlg, ncIcon )
       ENDIF
 
-      IF HB_ISNUMERIC(nTimerTicks)
+      IF HB_IsNumeric(nTimerTicks)
          wvg_SetTimer( hDlg, 1001, nTimerTicks )
       ENDIF
 
@@ -406,7 +406,7 @@ FUNCTION wvt_DialogBox( acnDlg, cbDlgProc, hWndParent )
       cbDlgProc := Upper(cbDlgProc)
    ENDIF
 
-   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_ISNUMERIC(acnDlg), 1, 2))
+   nDlgMode := iif(HB_ISSTRING( acnDlg ), 0, iif(HB_IsNumeric(acnDlg), 1, 2))
 
    IF HB_IsArray( acnDlg )
       xTemplate := __wapi_DLGTEMPLATE_Raw_New( hb_ArrayToParams( acnDlg ) )
@@ -518,7 +518,7 @@ FUNCTION wvt_GetTitle()
 PROCEDURE wvt_SetIcon( ncIconRes, cIconName )
 
    DO CASE
-   CASE HB_ISNUMERIC(ncIconRes) ; hb_gtInfo( HB_GTI_ICONRES, ncIconRes )
+   CASE HB_IsNumeric(ncIconRes) ; hb_gtInfo( HB_GTI_ICONRES, ncIconRes )
    CASE HB_ISSTRING( cIconName )  ; hb_gtInfo( HB_GTI_ICONRES, cIconName )
    CASE HB_ISSTRING( ncIconRes )  ; hb_gtInfo( HB_GTI_ICONFILE, ncIconRes )
    ENDCASE
@@ -813,7 +813,7 @@ FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
 
    LOCAL hIcon
 
-   IF HB_ISNUMERIC(ncIcon)
+   IF HB_IsNumeric(ncIcon)
       hIcon := wapi_LoadIcon( wapi_GetModuleHandle(), ncIcon )
    ELSEIF Empty(hIcon := wapi_LoadImage( , ncIcon, WIN_IMAGE_ICON,,, WIN_LR_LOADFROMFILE ))
       hIcon := wapi_LoadImage( wapi_GetModuleHandle(), ncIcon, WIN_IMAGE_ICON )
@@ -828,7 +828,7 @@ FUNCTION wvt_DlgSetIcon( hDlg, ncIcon )
 
 FUNCTION wvg_LoadIcon( ncIcon )
 
-   IF HB_ISNUMERIC(ncIcon)
+   IF HB_IsNumeric(ncIcon)
       RETURN wapi_LoadIcon( wapi_GetModuleHandle(), ncIcon )
    ENDIF
 
@@ -852,7 +852,7 @@ FUNCTION wvg_TrackPopupMenu( hMenu, nFlags, x, y, hWnd )
 
    LOCAL xy
 
-   IF !HB_ISNUMERIC(x) .OR. ! HB_ISNUMERIC(y)
+   IF !HB_IsNumeric(x) .OR. ! HB_IsNumeric(y)
       xy := { => }
       wapi_GetCursorPos( @xy )
       x := xy[ "x" ]

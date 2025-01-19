@@ -392,7 +392,7 @@ METHOD TIPClient:Read( nLen )
       RETURN NIL
    ENDIF
 
-   IF !HB_ISNUMERIC(nLen) .OR. nLen <= 0 .OR. ( ::nLength > 0 .AND. nLen > ::nLength - ::nRead )
+   IF !HB_IsNumeric(nLen) .OR. nLen <= 0 .OR. ( ::nLength > 0 .AND. nLen > ::nLength - ::nRead )
       nLen := ::nLength - ::nRead
    ENDIF
 
@@ -554,7 +554,7 @@ METHOD TIPClient:WriteFromFile( cFile )
 
 METHOD TIPClient:Write( cData, nLen, lCommit )
 
-   IF !HB_ISNUMERIC(nLen) .OR. nLen <= 0
+   IF !HB_IsNumeric(nLen) .OR. nLen <= 0
       nLen := hb_BLen(cData)
    ENDIF
 
@@ -572,7 +572,7 @@ METHOD TIPClient:inetSendAll( SocketCon, cData, nLen )
 
    LOCAL nRet
 
-   IF !HB_ISNUMERIC(nLen) .OR. nLen <= 0
+   IF !HB_IsNumeric(nLen) .OR. nLen <= 0
       nLen := hb_BLen(cData)
    ENDIF
 
@@ -760,7 +760,7 @@ METHOD PROCEDURE TIPClient:inetConnect( cServer, nPort, SocketCon )
 /* Methods to manage buffers */
 METHOD TIPClient:InetRcvBufSize( SocketCon, nSizeBuff )
 
-   IF HB_ISNUMERIC(nSizeBuff) .AND. nSizeBuff > 0
+   IF HB_IsNumeric(nSizeBuff) .AND. nSizeBuff > 0
       hb_inetSetRcvBufSize( SocketCon, nSizeBuff )
    ENDIF
 
@@ -768,7 +768,7 @@ METHOD TIPClient:InetRcvBufSize( SocketCon, nSizeBuff )
 
 METHOD TIPClient:InetSndBufSize( SocketCon, nSizeBuff )
 
-   IF HB_ISNUMERIC(nSizeBuff) .AND. nSizeBuff > 0
+   IF HB_IsNumeric(nSizeBuff) .AND. nSizeBuff > 0
       hb_inetSetSndBufSize( SocketCon, nSizeBuff )
    ENDIF
 
@@ -776,10 +776,10 @@ METHOD TIPClient:InetSndBufSize( SocketCon, nSizeBuff )
 
 METHOD TIPClient:InetTimeOut( SocketCon, nConnTimeout )
 
-   IF HB_ISNUMERIC(nConnTimeout)
+   IF HB_IsNumeric(nConnTimeout)
       ::nConnTimeout := nConnTimeout
    ENDIF
-   IF HB_ISNUMERIC(::nConnTimeout)
+   IF HB_IsNumeric(::nConnTimeout)
       RETURN hb_inetTimeout( SocketCon, ::nConnTimeout )
    ENDIF
 

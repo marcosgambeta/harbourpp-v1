@@ -450,7 +450,7 @@ METHOD WvgWindow:setColorBG(nRGB)
    IF HB_ISSTRING(nRGB)
       nRGB := wvt_GetRGBColorByString(nRGB, 1)
    ENDIF
-   IF HB_ISNUMERIC(nRGB)
+   IF HB_IsNumeric(nRGB)
       hBrush := wvg_CreateBrush(BS_SOLID, nRGB, 0)
       IF hBrush != 0
          ::clr_BG := nRGB
@@ -598,7 +598,7 @@ METHOD WvgWindow:setFontCompoundName(xFont)
 
    cOldFont := ::fnt_COMMPOUNDNAME
 
-   IF HB_ISNUMERIC(cFont)
+   IF HB_IsNumeric(cFont)
 
    ELSE
       IF !Empty(xFont)
@@ -912,7 +912,7 @@ METHOD WvgWindow:helpRequest(xParam)
 
 METHOD WvgWindow:keyboard(xParam)
 
-   IF HB_ISNUMERIC(xParam) .AND. HB_IsBlock(::sl_keyboard)
+   IF HB_IsNumeric(xParam) .AND. HB_IsBlock(::sl_keyboard)
       Eval(::sl_keyboard, xParam, , Self)
       RETURN Self
    ENDIF
@@ -984,7 +984,7 @@ METHOD WvgWindow:paint(xParam)
 
 METHOD WvgWindow:quit(xParam, xParam1)
 
-   IF HB_ISNUMERIC(xParam) .AND. HB_IsBlock(::sl_quit)
+   IF HB_IsNumeric(xParam) .AND. HB_IsBlock(::sl_quit)
       Eval(::sl_quit, xParam, xParam1, Self)
       RETURN Self
    ENDIF

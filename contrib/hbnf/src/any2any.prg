@@ -27,7 +27,7 @@
 #define _XTOC(x)             CASE_AT(ValType(x), "CNDLM", ;
       {NULL, ;
       x, ;
-      iif(HB_ISNUMERIC(x), hb_ntos(x), NULL), ;
+      iif(HB_IsNumeric(x), hb_ntos(x), NULL), ;
       iif(HB_ISDATE(x), DToC(x), NULL), ;
       iif(HB_ISLOGICAL(x), iif(x, ".T.", ".F."), NULL), ;
       x})
@@ -49,7 +49,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
       xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
          ; // Convert from a Character
       CToD(xValueToConvert), ;
-         iif(HB_ISNUMERIC(xValueToConvert), ;
+         iif(HB_IsNumeric(xValueToConvert), ;
          ; // Convert from a Number
       xValueToConvert + EARLIEST_DATE, ;
          iif(HB_ISLOGICAL(xValueToConvert), ;
@@ -59,7 +59,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
       BLANK_DATE)))
 
    CASE cTypeToConvertTo == "N" .AND. ; // They Want a Number
-      !HB_ISNUMERIC(xValueToConvert)
+      !HB_IsNumeric(xValueToConvert)
 
       xValueToConvert := iif(HB_ISSTRING(xValueToConvert), ;
          ; // Convert from a Character
@@ -82,7 +82,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
          iif(HB_ISDATE(xValueToConvert), ;
          ; // Convert from a Date
       !Empty(xValueToConvert), ;
-         iif(HB_ISNUMERIC(xValueToConvert), ;
+         iif(HB_IsNumeric(xValueToConvert), ;
          ; // Convert from a Number
       xValueToConvert != 0, ;
          ; // Unsupported Type

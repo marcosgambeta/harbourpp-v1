@@ -188,10 +188,10 @@ METHOD WvgSLE:handleEvent(nMessage, aNM)
       EXIT
 
    CASE HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC(::clr_FG)
+      IF HB_IsNumeric(::clr_FG)
          wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_ISNUMERIC(::hBrushBG)
+      IF HB_IsNumeric(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
          RETURN ::hBrushBG
       ELSE

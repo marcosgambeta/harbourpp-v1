@@ -433,16 +433,16 @@ FUNCTION xhb_MemoEdit( ;
    IF !HB_ISNIL(cString) .AND. !HB_ISSTRING(cString) .AND. !HB_ISMEMO(cString)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cString> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nTop) .AND. !HB_ISNUMERIC(nTop)
+   IF !HB_ISNIL(nTop) .AND. !HB_IsNumeric(nTop)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTop> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nLeft) .AND. !HB_ISNUMERIC(nLeft)
+   IF !HB_ISNIL(nLeft) .AND. !HB_IsNumeric(nLeft)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nLeft> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nRight) .AND. !HB_ISNUMERIC(nRight)
+   IF !HB_ISNIL(nRight) .AND. !HB_IsNumeric(nRight)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nRight> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nBottom) .AND. !HB_ISNUMERIC(nBottom)
+   IF !HB_ISNIL(nBottom) .AND. !HB_IsNumeric(nBottom)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nBottom> Argument type error", ProcName()))
    ENDIF
    IF !HB_ISNIL(lEditMode) .AND. !HB_ISLOGICAL(lEditMode)
@@ -451,22 +451,22 @@ FUNCTION xhb_MemoEdit( ;
    IF !HB_ISNIL(xUDF) .AND. !HB_ISSTRING(xUDF) .AND. !HB_ISLOGICAL(xUDF)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cUserFunction> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nLineLength) .AND. !HB_ISNUMERIC(nLineLength)
+   IF !HB_ISNIL(nLineLength) .AND. !HB_IsNumeric(nLineLength)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nLineLength> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nTabSize) .AND. !HB_ISNUMERIC(nTabSize)
+   IF !HB_ISNIL(nTabSize) .AND. !HB_IsNumeric(nTabSize)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTabSize> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nTextBuffRow) .AND. !HB_ISNUMERIC(nTextBuffRow)
+   IF !HB_ISNIL(nTextBuffRow) .AND. !HB_IsNumeric(nTextBuffRow)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTextBuffRow> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nTextBuffColumn) .AND. !HB_ISNUMERIC(nTextBuffColumn)
+   IF !HB_ISNIL(nTextBuffColumn) .AND. !HB_IsNumeric(nTextBuffColumn)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nTextBuffColumn> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nWindowRow) .AND. !HB_ISNUMERIC(nWindowRow)
+   IF !HB_ISNIL(nWindowRow) .AND. !HB_IsNumeric(nWindowRow)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nWindowRow> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(nWindowColumn) .AND. !HB_ISNUMERIC(nWindowColumn)
+   IF !HB_ISNIL(nWindowColumn) .AND. !HB_IsNumeric(nWindowColumn)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nWindowColumn> Argument type error", ProcName()))
    ENDIF
 

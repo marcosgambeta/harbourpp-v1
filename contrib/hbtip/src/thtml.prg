@@ -1447,7 +1447,7 @@ METHOD THtmlNode:findNodesByTagName( cName, nOrdinal )
       ENDIF
    NEXT
 
-   IF HB_ISNUMERIC(nOrdinal)
+   IF HB_IsNumeric(nOrdinal)
       IF nOrdinal < 1 .OR. nOrdinal > Len(aRet)
          RETURN NIL
       ENDIF

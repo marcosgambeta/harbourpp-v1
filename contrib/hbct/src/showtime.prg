@@ -49,7 +49,7 @@ FUNCTION ShowTime(nRow, nCol, lNoSec, cColor, l12, lAmPm)
 
    THREAD STATIC t_hTimer
 
-   IF HB_ISNUMERIC(nRow) .AND. nRow >= 0 .AND. nRow <= MaxRow(.T.)
+   IF HB_IsNumeric(nRow) .AND. nRow >= 0 .AND. nRow <= MaxRow(.T.)
       IF t_hTimer != NIL
          hb_idleDel(t_hTimer)
       ENDIF

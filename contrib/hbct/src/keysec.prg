@@ -56,9 +56,9 @@ FUNCTION KeySec(nKey, nTime, nCounter, lMode)
       t_hIdle := NIL
    ENDIF
 
-   IF HB_ISNUMERIC(nKey)
+   IF HB_IsNumeric(nKey)
 
-      IF !HB_ISNUMERIC(nTime)
+      IF !HB_IsNumeric(nTime)
          nTime := 0
       ELSEIF nTime < 0
          nTime := -nTime / 18.2

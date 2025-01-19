@@ -132,7 +132,7 @@ METHOD Thread:new(...)
 
    IF PCount() == 1
       nMaxStackSize := hb_PValue(1)
-      IF HB_ISNUMERIC(nMaxStackSize)
+      IF HB_IsNumeric(nMaxStackSize)
          ::maxStackSize := nMaxStackSize
       ENDIF
       /* TODO: Create new thread here and suspend its execution
@@ -160,7 +160,7 @@ METHOD PROCEDURE Thread:quit( xResult, nRestart )
       IF PCount() > 0
          ::result := xResult
       ENDIF
-      IF !HB_ISNUMERIC(nRestart) .OR. nRestart != QUIT_RESTART
+      IF !HB_IsNumeric(nRestart) .OR. nRestart != QUIT_RESTART
          ::interval := NIL
       ENDIF
       QUIT
@@ -170,7 +170,7 @@ METHOD PROCEDURE Thread:quit( xResult, nRestart )
 
 METHOD Thread:setInterval( nHSeconds )
 
-   IF HB_ISNUMERIC(nHSeconds) .AND. Int( nHSeconds ) >= 0
+   IF HB_IsNumeric(nHSeconds) .AND. Int( nHSeconds ) >= 0
       ::interval := Int( nHSeconds )
    ELSEIF PCount() > 0 .OR. nHSeconds == NIL
       ::interval := NIL
@@ -184,7 +184,7 @@ METHOD Thread:setInterval( nHSeconds )
 METHOD Thread:setPriority( nPriority )
 
    /* TODO: add thread priority setting */
-   IF HB_ISNUMERIC(nPriority)
+   IF HB_IsNumeric(nPriority)
       ::priority := nPriority
    ENDIF
 
@@ -192,7 +192,7 @@ METHOD Thread:setPriority( nPriority )
 
 METHOD Thread:setStartTime( nSeconds )
 
-   IF HB_ISNUMERIC(nSeconds)
+   IF HB_IsNumeric(nSeconds)
       IF nSeconds < 0 .OR. nSeconds > 86400
          RETURN .F.
       ENDIF
@@ -220,7 +220,7 @@ METHOD Thread:start(xAction, ...)
                ::active := .T.
                ::startCount++
 
-               IF HB_ISNUMERIC(::startTime)
+               IF HB_IsNumeric(::startTime)
                   nTime := ::startTime - Seconds()
                   IF nTime < 0
                      nTime += 86400
@@ -256,7 +256,7 @@ METHOD Thread:start(xAction, ...)
                    *       it can be resumed
                    */
 
-                  IF !HB_ISNUMERIC(::interval)
+                  IF !HB_IsNumeric(::interval)
                      EXIT
                   ENDIF
 
@@ -288,7 +288,7 @@ METHOD Thread:synchronize( nTimeOut )
 
    IF hb_threadSelf() != pThreadID
       RETURN hb_threadWait( pThreadID, ;
-         iif(HB_ISNUMERIC(nTimeOut) .AND. nTimeOut != 0, ;
+         iif(HB_IsNumeric(nTimeOut) .AND. nTimeOut != 0, ;
          nTimeOut / 100, NIL) )
    ENDIF
 

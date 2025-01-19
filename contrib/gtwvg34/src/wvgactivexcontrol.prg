@@ -236,7 +236,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 
 METHOD WvgActiveXControl:mapEvent( nEvent, bBlock )
 
-   IF HB_ISNUMERIC(nEvent) .AND. HB_ISEVALITEM( bBlock )
+   IF HB_IsNumeric(nEvent) .AND. HB_ISEVALITEM( bBlock )
       ::hEvents[ nEvent ] := bBlock
    ENDIF
 

@@ -177,7 +177,7 @@ FUNCTION dbMerge(xSource, lAppend)
       nSource := Select()
 
       SELECT ( nArea )
-   ELSEIF HB_ISNUMERIC(xSource)
+   ELSEIF HB_IsNumeric(xSource)
       nSource := xSource
    ELSE
       RETURN .F.

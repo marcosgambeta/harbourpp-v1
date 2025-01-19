@@ -109,10 +109,10 @@ METHOD WvgDrawingArea:handleEvent(nMessage, aNM)
       RETURN EVENT_HANDELLED
 
    CASE nMessage == HB_GTE_CTLCOLOR
-      IF HB_ISNUMERIC(::clr_FG)
+      IF HB_IsNumeric(::clr_FG)
          wvg_SetTextColor(aNM[1], ::clr_FG)
       ENDIF
-      IF HB_ISNUMERIC(::hBrushBG)
+      IF HB_IsNumeric(::hBrushBG)
          wvg_SetBkMode(aNM[1], 1)
          wvg_FillRect(aNM[1], {0, 0, ::currentSize()[1], ::currentSize()[2]}, ::hBrushBG)
          RETURN EVENT_HANDELLED

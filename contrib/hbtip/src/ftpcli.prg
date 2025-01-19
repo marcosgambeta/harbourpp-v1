@@ -233,10 +233,10 @@ METHOD TIPClientFTP:TransferStart()
 
    /* Set internal socket send buffer to 64 KiB, this should
       resolve the speed problems some users have reported */
-   IF HB_ISNUMERIC(::nDefaultSndBuffSize)
+   IF HB_IsNumeric(::nDefaultSndBuffSize)
       ::InetSndBufSize( ::SocketCon, ::nDefaultSndBuffSize )
    ENDIF
-   IF HB_ISNUMERIC(::nDefaultRcvBuffSize)
+   IF HB_IsNumeric(::nDefaultRcvBuffSize)
       ::InetRcvBufSize( ::SocketCon, ::nDefaultRcvBuffSize )
    ENDIF
 

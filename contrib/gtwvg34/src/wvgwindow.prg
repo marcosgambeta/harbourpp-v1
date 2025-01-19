@@ -447,7 +447,7 @@ METHOD WvgWindow:setColorBG( nRGB )
    IF HB_ISSTRING( nRGB )
       nRGB := wvt_GetRGBColorByString( nRGB, 1 )
    ENDIF
-   IF HB_ISNUMERIC(nRGB)
+   IF HB_IsNumeric(nRGB)
       hBrush := wvg_CreateBrush( WIN_BS_SOLID, nRGB, 0 )
       IF !Empty(hBrush)
          ::clr_BG := nRGB
@@ -894,7 +894,7 @@ METHOD WvgWindow:helpRequest( xParam )
 
 METHOD WvgWindow:keyboard( xParam )
 
-   IF HB_ISNUMERIC(xParam) .AND. HB_ISEVALITEM( ::sl_keyboard )
+   IF HB_IsNumeric(xParam) .AND. HB_ISEVALITEM( ::sl_keyboard )
       Eval( ::sl_keyboard, xParam, , Self )
       RETURN Self
    ENDIF
@@ -966,7 +966,7 @@ METHOD WvgWindow:paint( xParam )
 
 METHOD WvgWindow:quit( xParam, xParam1 )
 
-   IF HB_ISNUMERIC(xParam) .AND. HB_ISEVALITEM( ::sl_quit )
+   IF HB_IsNumeric(xParam) .AND. HB_ISEVALITEM( ::sl_quit )
       Eval( ::sl_quit, xParam, xParam1, Self )
       RETURN Self
    ENDIF

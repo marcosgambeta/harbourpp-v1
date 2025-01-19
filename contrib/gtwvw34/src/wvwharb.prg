@@ -100,10 +100,10 @@ FUNCTION wvw_BringToTop1(hWnd)
    RETURN .T.
 
 FUNCTION wvw_LoadIcon(ncRes)
-   RETURN wapi_LoadIcon(iif(HB_ISNUMERIC(ncRes),, wapi_GetModuleHandle()), ncRes)
+   RETURN wapi_LoadIcon(iif(HB_IsNumeric(ncRes),, wapi_GetModuleHandle()), ncRes)
 
 FUNCTION wvw_LoadImage(hInstance, ncRes, ...)
-   RETURN wapi_LoadImage(iif(HB_ISNUMERIC(ncRes), wapi_GetModuleHandle(), hInstance), ncRes, ...)
+   RETURN wapi_LoadImage(iif(HB_IsNumeric(ncRes), wapi_GetModuleHandle(), hInstance), ncRes, ...)
 
 FUNCTION wvw_LoadBitmap(ncRes, lNULLInstance)
    RETURN wapi_LoadBitmap(iif(hb_defaultValue(lNULLInstance, .F.),, wapi_GetModuleHandle()), ncRes)
@@ -241,7 +241,7 @@ FUNCTION wvw_TrackPopupMenu(nWin, hMenu)
 
 FUNCTION win_LoadIcon(ncIcon)
 
-   IF HB_ISNUMERIC(ncIcon)
+   IF HB_IsNumeric(ncIcon)
       RETURN wapi_LoadIcon(wapi_GetModuleHandle(), ncIcon)
    ENDIF
 
@@ -359,7 +359,7 @@ FUNCTION wvw_SetWinStyle(nWin, nStyle)
       RETURN 0
    ENDIF
 
-   IF HB_ISNUMERIC(nStyle)
+   IF HB_IsNumeric(nStyle)
       nStyleOld := wapi_SetWindowLongPtr(hWnd, WIN_GWL_STYLE, nStyle)
       wapi_SetWindowPos(hWnd,,,,,, hb_bitOr(WIN_SWP_NOMOVE, WIN_SWP_NOSIZE, WIN_SWP_NOZORDER, WIN_SWP_FRAMECHANGED))
       wapi_ShowWindow(hWnd, WIN_SW_SHOWNORMAL)

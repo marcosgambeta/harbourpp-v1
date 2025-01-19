@@ -339,13 +339,13 @@ METHOD GDChart:VerticalBarChart()
       nTot      += hElement[ "VALUE" ]
    NEXT
 
-   IF !HB_ISNUMERIC(nLeftLabelSpace)
+   IF !HB_IsNumeric(nLeftLabelSpace)
       nLeftLabelSpace := nBorder + Len(LTrim(Transform( nMax, cAxisPict ))) * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_ISNUMERIC(nRightLabelSpace)
+   IF !HB_IsNumeric(nRightLabelSpace)
       nRightLabelSpace := nLeftLabelSpace // nBorder + Len(hb_ntos( nMax )) * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_ISNUMERIC(nBottomLabelSpace)
+   IF !HB_IsNumeric(nBottomLabelSpace)
       nBottomLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
 
@@ -531,16 +531,16 @@ METHOD GDChart:HorizontalBarChart()
       nTot      += hElement[ "VALUE" ]
    NEXT
 
-   IF !HB_ISNUMERIC(nLeftLabelSpace)
+   IF !HB_IsNumeric(nLeftLabelSpace)
       nLeftLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_ISNUMERIC(nRightLabelSpace)
+   IF !HB_IsNumeric(nRightLabelSpace)
       nRightLabelSpace := nBorder + ( Len(LTrim(Transform( nMax, cAxisPict ))) * ::GetFontWidth() / 2 )
    ENDIF
-   IF !HB_ISNUMERIC(nTopLabelSpace)
+   IF !HB_IsNumeric(nTopLabelSpace)
       nTopLabelSpace := nBorder + ::GetFontHeight() + nBorder
    ENDIF
-   IF !HB_ISNUMERIC(nBottomLabelSpace)
+   IF !HB_IsNumeric(nBottomLabelSpace)
       nBottomLabelSpace := nTopLabelSpace // nBorder + ::GetFontHeight() + nBorder
    ENDIF
 
@@ -739,13 +739,13 @@ METHOD GDChart:LineChart()
       nMinLabel := Max( nMinLabel, Len(iif(cLabel != NIL, cLabel, "")) )
    NEXT
 
-   IF !HB_ISNUMERIC(nLeftLabelSpace)
+   IF !HB_IsNumeric(nLeftLabelSpace)
       nLeftLabelSpace := nBorder + Max( Len(LTrim(Transform( nMax, cAxisPict ))), Len(LTrim(Transform( nMin, cAxisPict ))) ) * ::GetFontWidth() + nBorder
    ENDIF
-   IF !HB_ISNUMERIC(nRightLabelSpace)
+   IF !HB_IsNumeric(nRightLabelSpace)
       nRightLabelSpace := nLeftLabelSpace
    ENDIF
-   IF !HB_ISNUMERIC(nBottomLabelSpace)
+   IF !HB_IsNumeric(nBottomLabelSpace)
       nBottomLabelSpace := nBorder + nMaxLabel * ::GetFontWidth() + nBorder
    ENDIF
 

@@ -41,7 +41,7 @@ FUNCTION ft_DateCnfg(cFYStart, nDow)
       ENDIF
    ENDIF
 
-   IF HB_ISNUMERIC(nDow) .AND. nDow > 0 .AND. nDow < 8
+   IF HB_IsNumeric(nDow) .AND. nDow > 0 .AND. nDow < 8
       t_aDatePar[2] := nDow
    ENDIF
 

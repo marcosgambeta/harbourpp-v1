@@ -187,7 +187,7 @@ METHOD WvgPartHandler:setName(nNameId)
 
    LOCAL nOldNameId := ::nNameId
 
-   IF HB_ISNUMERIC(nNameId)
+   IF HB_IsNumeric(nNameId)
       ::nNameID := nNameId
    ENDIF
 
@@ -220,7 +220,7 @@ METHOD PROCEDURE WvgPartHandler:notifierBlock(...)
    IF !Empty(a_) .AND. HB_IsBlock(a_[1])
       ::sb_notifier := a_[1]
 
-   ELSEIF !Empty(a_) .AND. HB_IsBlock(::sb_notifier) .AND. HB_ISNUMERIC(a_[1]) .AND. HB_IsArray(a_[2])
+   ELSEIF !Empty(a_) .AND. HB_IsBlock(::sb_notifier) .AND. HB_IsNumeric(a_[1]) .AND. HB_IsArray(a_[2])
       Eval(::sb_notifier, a_[1], a_[2], Self)
 
    ENDIF
@@ -500,7 +500,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       ELSE
          IF (nObj := AScan(::aChildren, {|o|o:nID == nCtrlID})) > 0
             nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_COMMAND, {nNotifctn, nCtrlID, hWndCtrl})
-            IF HB_ISNUMERIC(nReturn) .AND. nReturn == 0
+            IF HB_IsNumeric(nReturn) .AND. nReturn == 0
                RETURN 0
             ENDIF
          ENDIF
@@ -511,7 +511,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       IF (nObj := AScan(::aChildren, {|o|o:nID == nwParam})) > 0
          nReturn := ::aChildren[nObj]:handleEvent(HB_GTE_NOTIFY, {nwParam, nlParam})
          DO CASE
-         CASE HB_ISNUMERIC(nReturn) .AND. nReturn == EVENT_HANDELLED
+         CASE HB_IsNumeric(nReturn) .AND. nReturn == EVENT_HANDELLED
             RETURN 0
          CASE HB_ISLOGICAL(nReturn)
             RETURN nReturn

@@ -31,7 +31,7 @@ PROCEDURE Main()
 
    /* Connect rdbms */
    db := FBConnect( cServer + cDatabase, cUser, cPass )
-   IF HB_ISNUMERIC(db)
+   IF HB_IsNumeric(db)
       ? "Error:", db, FBError( db )
       QUIT
    ENDIF
@@ -40,7 +40,7 @@ PROCEDURE Main()
    ? tmp := FBExecute( db, "sldjfs;ldjs;djf", nDialect ), FBError( tmp )
 
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC(trans)
+   IF HB_IsNumeric(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? tmp := FBQuery( db, "create table teste (code smallint)", nDialect, trans ), FBError( tmp )
@@ -49,7 +49,7 @@ PROCEDURE Main()
 
    ? "==="
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC(trans)
+   IF HB_IsNumeric(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? tmp := FBQuery( db, "CREATE TABLE customer( customer VARCHAR(20) )", nDialect, trans ), FBError( tmp )
@@ -58,7 +58,7 @@ PROCEDURE Main()
    ? "==="
 
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC(trans)
+   IF HB_IsNumeric(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? "Status Execute: ", tmp := FBExecute( db, 'insert into customer(customer) values ("test 1")', nDialect, trans ), FBError( tmp )
@@ -66,7 +66,7 @@ PROCEDURE Main()
    ENDIF
 
    trans := FBStartTransaction( db )
-   IF HB_ISNUMERIC(trans)
+   IF HB_IsNumeric(trans)
       ? "Error:", trans, FBError( trans )
    ELSE
       ? "Status Execute: ", tmp := FBExecute( db, 'insert into customer(customer) values ("test 2")', nDialect, trans ), FBError( tmp )
@@ -78,7 +78,7 @@ PROCEDURE Main()
    // FIX WINDOWS GPF BELOW
 
    qry := FBQuery( db, "SELECT * FROM customer", nDialect )
-   IF HB_ISNUMERIC(qry)
+   IF HB_IsNumeric(qry)
       ? "Error:", qry, FBError( qry )
    ELSE
       num_cols := qry[ 4 ]

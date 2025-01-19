@@ -950,7 +950,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
          oNewGet:Picture   := "9999-99-99"
       ELSEIF HB_ISLOGICAL(xVarVal)
          oNewGet:Picture   := "Y"
-      ELSEIF HB_ISNUMERIC(xVarVal)
+      ELSEIF HB_IsNumeric(xVarVal)
          oNewGet:Picture   := "999999.99"  // Guess that they are inputting dollars
       ENDIF
    ENDIF
