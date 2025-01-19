@@ -82,10 +82,10 @@
 
 struct HB_LEX_KEY
 {
-  const char *value; /* keyword name */
-  HB_SIZE minlen;    /* minimal length */
-  HB_SIZE maxlen;    /* maximal length */
-  int type;          /* terminal symbol code */
+  const char *value; // keyword name
+  HB_SIZE minlen;    // minimal length
+  HB_SIZE maxlen;    // maximal length
+  int type;          // terminal symbol code
 };
 
 // clang-format off
@@ -373,16 +373,15 @@ static bool hb_comp_timeDecode(PHB_PP_TOKEN pTime, long *plTime)
 
 static int hb_comp_dayTimeDecode(PHB_COMP_LEX pLex, PHB_PP_TOKEN pToken, YYSTYPE *yylval_ptr)
 {
-  /* TODO: decode datetime in VFP strict date form:
-   *    {^YYYY/MM/DD[,][HH[:MM[:SS][.CCC]][A|P]]}
-   * VFP accepts slash, dot or hyphen as date delimiter and
-   * 12 or 24-hour formatted time,
-   * If only hours are included in time part then comma have to
-   * be used to separate date and time parts or it's necessary
-   * to follow the hours with a colon.
-   *    { ^ <YEAR> <sep:/.-> <MONTH> <sep:/.-> <DAY> [[<sep2:,>]
-   *      [ <HOUR> [ : <MIN> [ : <SEC> [ . <FRAQ> ] ] ] [AM|PP] ] }
-   */
+  // TODO: decode datetime in VFP strict date form:
+  //    {^YYYY/MM/DD[,][HH[:MM[:SS][.CCC]][A|P]]}
+  // VFP accepts slash, dot or hyphen as date delimiter and
+  // 12 or 24-hour formatted time,
+  // If only hours are included in time part then comma have to
+  // be used to separate date and time parts or it's necessary
+  // to follow the hours with a colon.
+  //    { ^ <YEAR> <sep:/.-> <MONTH> <sep:/.-> <DAY> [[<sep2:,>]
+  //      [ <HOUR> [ : <MIN> [ : <SEC> [ . <FRAQ> ] ] ] [AM|PP] ] }
 
   PHB_PP_TOKEN pYear = pToken->pNext->pNext;
   PHB_PP_TOKEN pMonth, pDay, pTime = nullptr;
@@ -809,7 +808,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
       pLex->iState = OPERATOR;
       return HASHOP;
     }
-    /* fallthrough */
+    // fallthrough
   case HB_PP_TOKEN_PLUS:
   case HB_PP_TOKEN_MINUS:
   case HB_PP_TOKEN_MULT:
@@ -828,7 +827,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
 
   case HB_PP_TOKEN_EOL:
     pLex->fEol = true;
-    /* fallthrough */
+    // fallthrough
   case HB_PP_TOKEN_EOC:
     pLex->iState = LOOKUP;
     return static_cast<HB_UCHAR>(pToken->value[0]);
@@ -938,8 +937,8 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
         }
         if (!HB_SUPPORT_HARBOUR && HB_COMP_PARAM->iSyntaxCheckOnly < 2)
         {
-          /* Clipper does not like end[], end(), end->, end-- & end++ at
-             the beginning of line */
+          // Clipper does not like end[], end(), end->, end-- & end++ at
+          // the beginning of line
           if (HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_PB ||
               HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_SB ||
               HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_INC ||
@@ -1030,8 +1029,8 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
         }
         if (!HB_SUPPORT_HARBOUR && HB_COMP_PARAM->iSyntaxCheckOnly < 2)
         {
-          /* Clipper does not like NEXT[], NEXT(), NEXT->,
-             NEXT++ & NEXT-- at the beginning of line */
+          // Clipper does not like NEXT[], NEXT(), NEXT->,
+          // NEXT++ & NEXT-- at the beginning of line
           if (HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_PB ||
               HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_LEFT_SB ||
               HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_INC ||
@@ -1047,9 +1046,8 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
 
     case RETURN:
     case BREAK:
-      /* NOTE: Clipper does not like break[] in any context
-       *       There are no resons to limit this use in Harbour.
-       */
+      // NOTE: Clipper does not like break[] in any context
+      //       There are no resons to limit this use in Harbour.
       if (pLex->iState == LOOKUP && (HB_PP_TOKEN_ISEOC(pToken->pNext) || !HB_PP_LEX_NEEDLEFT(pToken->pNext)))
       {
         pLex->iState = iType;
@@ -1113,19 +1111,19 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
           }
           else if (pToken->pNext->len >= 4 && pToken->pNext->len <= 5 &&
                    hb_strnicmp("WHILE", pToken->pNext->value, pToken->pNext->len) == 0 &&
-                   /* check if it's not DO while [WITH <args>] */
+                   // check if it's not DO while [WITH <args>]
                    !HB_PP_TOKEN_ISEOC(pToken->pNext->pNext) &&
                    (HB_PP_TOKEN_TYPE(pToken->pNext->pNext->type) != HB_PP_TOKEN_KEYWORD ||
                     pToken->pNext->pNext->len != 4 || hb_stricmp("WITH", pToken->pNext->pNext->value) != 0))
           {
-            /* DO WHILE <exp> */
+            // DO WHILE <exp>
             hb_pp_tokenGet(pLex->pPP);
             pLex->iState = WHILE;
             return WHILE;
           }
-          /* DO identifier [WITH <args>] */
+          // DO identifier [WITH <args>]
           pToken = hb_pp_tokenGet(pLex->pPP);
-/* do not upper next token for case sensitive file systems */
+// do not upper next token for case sensitive file systems
 #if 0
                      hb_pp_tokenUpper(pToken);
 #endif
@@ -1136,7 +1134,7 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
         else if (HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_MACROVAR ||
                  HB_PP_TOKEN_TYPE(pToken->pNext->type) == HB_PP_TOKEN_MACROTEXT)
         {
-          /* DO &id WITH */
+          // DO &id WITH
           pLex->iState = DO;
           return DO;
         }
@@ -1195,13 +1193,13 @@ int hb_comp_yylex(YYSTYPE *yylval_ptr, HB_COMP_DECL)
       {
         if (pLex->iState == LOOKUP)
         {
-          PHB_PP_TOKEN pNext = pToken->pNext->pNext; /* COND EXP */
+          PHB_PP_TOKEN pNext = pToken->pNext->pNext; // COND EXP
 
           pLex->iState = IF;
           if (hb_pp_tokenNextExp(&pNext))
-          { /* TRUE EXP */
+          { // TRUE EXP
             if (hb_pp_tokenNextExp(&pNext))
-            { /* FALSE EXP */
+            { // FALSE EXP
               if (!hb_pp_tokenNextExp(&pNext) && pNext && HB_PP_TOKEN_TYPE(pNext->type) == HB_PP_TOKEN_RIGHT_PB)
               {
                 pLex->iState = IIF;

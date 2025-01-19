@@ -31,7 +31,7 @@ static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE *yyc);
 static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, bool fStrip, int iFuncSuffix);
 static void hb_writeEndInit(HB_COMP_DECL, FILE *yyc, const char *szModulname, const char *szSourceFile);
 
-/* helper structure to pass information */
+// helper structure to pass information
 struct HB_stru_genc_info
 {
   HB_COMP_DECL;
@@ -182,7 +182,7 @@ static void hb_compFuncUsed(HB_COMP_DECL, PHB_HSYMBOL pSym)
   }
 }
 
-void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ language output */
+void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) // generates the C++ language output
 {
   char szFileName[HB_PATH_MAX];
   hb_fsFNameMerge(szFileName, pFileName);
@@ -192,7 +192,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
   }
   hb_fsFNameMerge(szFileName, pFileName);
 
-  auto yyc = hb_fopen(szFileName, "w"); /* file handle for C++ output */
+  auto yyc = hb_fopen(szFileName, "w"); // file handle for C++ output
   if (!yyc)
   {
     hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_CREATE_OUTPUT, szFileName, nullptr);
@@ -252,7 +252,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
 
     fprintf(yyc, "\n\n");
 
-    /* write functions prototypes */
+    // write functions prototypes
     pSym = HB_COMP_PARAM->symbols.pFirst;
     while (pSym)
     {
@@ -263,7 +263,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
           fprintf(yyc, "HB_FUNC_INIT%s();\n", !memcmp(pSym->szName + 1, "_INITLINES", 10) ? "LINES" : "STATICS");
         }
         else if (pSym->cScope & HB_FS_LOCAL)
-        { /* is it a function defined in this module */
+        { // is it a function defined in this module
           iFuncSuffix = pSym->pFunc ? pSym->pFunc->iFuncSuffix : 0;
           if (pSym->cScope & HB_FS_INIT)
           {
@@ -284,18 +284,17 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
           }
         }
         else if ((pSym->cScope & HB_FS_DEFERRED) == 0)
-        { /* it's not a function declared as dynamic */
+        { // it's not a function declared as dynamic
           hb_compGenCFunc(yyc, "HB_FUNC_EXTERN(%s);\n", pSym->szName, false, 0);
         }
       }
       pSym = pSym->pNext;
     }
 
-    /* writes the symbol table */
-    /* Generate the wrapper that will initialize local symbol table
-     */
+    // writes the symbol table
+    // Generate the wrapper that will initialize local symbol table
     hb_strncpyUpper(szFileName, pFileName->szName, sizeof(szFileName) - 1);
-    /* replace non ID characters in name of local symbol table by '_' */
+    // replace non ID characters in name of local symbol table by '_'
     {
       auto iLen = static_cast<int>(strlen(szFileName));
 
@@ -315,13 +314,12 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
     {
       if (pSym->szName[0] == '(')
       {
-        /* Since the normal function cannot be INIT and EXIT at the same time
-         * we are using these two bits to mark the special function used to
-         * initialize static variables or debugging info about valid stop lines
-         */
+        // Since the normal function cannot be INIT and EXIT at the same time
+        // we are using these two bits to mark the special function used to
+        // initialize static variables or debugging info about valid stop lines
         fprintf(yyc, "{\"%s\", {HB_FS_INITEXIT | HB_FS_LOCAL}, {hb_INIT%s}, nullptr}", pSym->szName,
                 !memcmp(pSym->szName + 1, "_INITLINES", 10) ? "LINES"
-                                                            : "STATICS"); /* NOTE: "hb_" intentionally in lower case */
+                                                            : "STATICS"); // NOTE: "hb_" intentionally in lower case
       }
       else
       {
@@ -359,10 +357,10 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
           fprintf(yyc, " | HB_FS_FIRST");
         }
 
-        /* specify the function address if it is a defined function or an
-           external called function */
+        // specify the function address if it is a defined function or an
+        // external called function
         if (pSym->cScope & HB_FS_LOCAL)
-        { /* is it a function defined in this module */
+        { // is it a function defined in this module
           fprintf(yyc, " | HB_FS_LOCAL");
 
           iFuncSuffix = pSym->pFunc ? pSym->pFunc->iFuncSuffix : 0;
@@ -380,16 +378,16 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
           }
         }
         else if (pSym->cScope & HB_FS_DEFERRED)
-        { /* is it a function declared as dynamic */
+        { // is it a function declared as dynamic
           fprintf(yyc, " | HB_FS_DEFERRED}, {nullptr}, nullptr}");
         }
         else if (pSym->iFunc)
-        { /* is it a function called from this module */
+        { // is it a function called from this module
           hb_compGenCFunc(yyc, "}, {HB_FUNCNAME(%s)}, nullptr}", pSym->szName, false, 0);
         }
         else
         {
-          fprintf(yyc, "}, {nullptr}, nullptr}"); /* memvar | alias | message */
+          fprintf(yyc, "}, {nullptr}, nullptr}"); // memvar | alias | message
         }
       }
 
@@ -403,35 +401,34 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
 
     hb_writeEndInit(HB_COMP_PARAM, yyc, szFileName, HB_COMP_PARAM->szFile);
 
-    /* Generate functions data
-     */
+    // Generate functions data
     pFunc = HB_COMP_PARAM->functions.pFirst;
     while (pFunc)
     {
       if ((pFunc->funFlags & HB_FUNF_FILE_DECL) == 0)
       {
         if (pFunc == HB_COMP_PARAM->pInitFunc)
-        { /* Is it _STATICS$ - static initialization function */
+        { // Is it _STATICS$ - static initialization function
           fprintf(yyc, "HB_FUNC_INITSTATICS()\n");
         }
         else if (pFunc == HB_COMP_PARAM->pLineFunc)
-        { /* Is it an (_INITLINES) function */
+        { // Is it an (_INITLINES) function
           fprintf(yyc, "HB_FUNC_INITLINES()\n");
         }
         else if (pFunc->cScope & HB_FS_INIT)
-        { /* Is it an INIT FUNCTION/PROCEDURE */
+        { // Is it an INIT FUNCTION/PROCEDURE
           hb_compGenCFunc(yyc, "HB_FUNC_INIT(%s)\n", pFunc->szName, true, pFunc->iFuncSuffix);
         }
         else if (pFunc->cScope & HB_FS_EXIT)
-        { /* Is it an EXIT FUNCTION/PROCEDURE */
+        { // Is it an EXIT FUNCTION/PROCEDURE
           hb_compGenCFunc(yyc, "HB_FUNC_EXIT(%s)\n", pFunc->szName, true, pFunc->iFuncSuffix);
         }
         else if (pFunc->cScope & HB_FS_STATIC)
-        { /* Is it a STATIC FUNCTION/PROCEDURE */
+        { // Is it a STATIC FUNCTION/PROCEDURE
           hb_compGenCFunc(yyc, "HB_FUNC_STATIC(%s)\n", pFunc->szName, false, pFunc->iFuncSuffix);
         }
         else
-        { /* Then it must be PUBLIC FUNCTION/PROCEDURE */
+        { // Then it must be PUBLIC FUNCTION/PROCEDURE
           hb_compGenCFunc(yyc, "HB_FUNC(%s)\n", pFunc->szName, false, pFunc->iFuncSuffix);
         }
 
@@ -455,8 +452,7 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) /* generates the C++ lan
       pFunc = pFunc->pNext;
     }
 
-    /* Generate C++ inline functions
-     */
+    // Generate C++ inline functions
     pInline = HB_COMP_PARAM->inlines.pFirst;
     while (pInline)
     {
@@ -554,9 +550,8 @@ static void hb_compGenCFunc(FILE *yyc, const char *cDecor, const char *szName, b
         }
         else if (!fStrip || c != '$' || *tmp != 0)
         {
-          /* 'x' is used to force unique name and eliminate possible
-           * collisions with other function names.
-           */
+          // 'x' is used to force unique name and eliminate possible
+          // collisions with other function names.
           fprintf(yyc, "x%02x", static_cast<HB_UCHAR>(c));
         }
       }
@@ -579,12 +574,10 @@ static void hb_compGenCByteStr(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
   for (HB_SIZE nPos = 0; nPos < nLen; nPos++)
   {
     HB_BYTE uchr = static_cast<HB_BYTE>(pText[nPos]);
-    /*
-     * NOTE: After optimization some Chr(n) can be converted
-     *    into a string containing non-printable characters.
-     *
-     * TODO: add switch to use hexadecimal format "%#04x"
-     */
+    // NOTE: After optimization some Chr(n) can be converted
+    //    into a string containing non-printable characters.
+    //
+    // TODO: add switch to use hexadecimal format "%#04x"
     fprintf(yyc,
             (uchr < static_cast<HB_BYTE>(' ') || uchr >= 127 || uchr == '\\' || uchr == '\'') ? "%i, " : "\'%c\', ",
             uchr);
@@ -593,14 +586,13 @@ static void hb_compGenCByteStr(FILE *yyc, const HB_BYTE *pText, HB_SIZE nLen)
 
 static void hb_compGenCLocalName(PHB_HFUNC pFunc, int iLocal, HB_SIZE nPCodePos, PHB_GENC_INFO cargo)
 {
-  /* Variable with negative order are local variables
-   * referenced in a codeblock -handle it with care
-   */
+  // Variable with negative order are local variables
+  // referenced in a codeblock -handle it with care
 
   if (cargo->nEndBlockPos > nPCodePos)
   {
-    /* we are accessing variables within a codeblock */
-    /* the names of codeblock variable are lost     */
+    // we are accessing variables within a codeblock
+    // the names of codeblock variable are lost
     if (iLocal < 0)
     {
       fprintf(cargo->yyc, "\t/* localvar%i */", -iLocal);
@@ -1508,17 +1500,16 @@ static HB_GENC_FUNC(hb_p_pushblock)
   }
   fprintf(cargo->yyc, "\n");
 
-  nPCodePos += 7; /* codeblock size + number of parameters + number of local variables */
-  /* create the table of referenced local variables */
+  nPCodePos += 7; // codeblock size + number of parameters + number of local variables
+  // create the table of referenced local variables
   while (wVar--)
   {
     fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos], pFunc->pCode[nPCodePos + 1]);
-    /* NOTE:
-     * When a codeblock is used to initialize a static variable
-     * the names of local variables cannot be determined
-     * because at the time of C++ code generation we don't know
-     * in which function was defined this local variable
-     */
+    // NOTE:
+    // When a codeblock is used to initialize a static variable
+    // the names of local variables cannot be determined
+    // because at the time of C++ code generation we don't know
+    // in which function was defined this local variable
     if (cargo->bVerbose && (pFunc->cScope & HB_FS_INITEXIT) != HB_FS_INITEXIT)
     {
       w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos]);
@@ -1564,17 +1555,16 @@ static HB_GENC_FUNC(hb_p_pushblocklarge)
   }
   fprintf(cargo->yyc, "\n");
 
-  nPCodePos += 8; /* codeblock size + number of parameters + number of local variables */
-  /* create the table of referenced local variables */
+  nPCodePos += 8; // codeblock size + number of parameters + number of local variables
+  // create the table of referenced local variables
   while (wVar--)
   {
     fprintf(cargo->yyc, "\t%u, %u,", pFunc->pCode[nPCodePos], pFunc->pCode[nPCodePos + 1]);
-    /* NOTE:
-     * When a codeblock is used to initialize a static variable
-     * the names of local variables cannot be determined
-     * because at the time of C++ code generation we don't know
-     * in which function was defined this local variable
-     */
+    // NOTE:
+    // When a codeblock is used to initialize a static variable
+    // the names of local variables cannot be determined
+    // because at the time of C++ code generation we don't know
+    // in which function was defined this local variable
     if (cargo->bVerbose && (pFunc->cScope & HB_FS_INITEXIT) != HB_FS_INITEXIT)
     {
       w = HB_PCODE_MKUSHORT(&pFunc->pCode[nPCodePos]);
@@ -2536,9 +2526,9 @@ static HB_GENC_FUNC(hb_p_pushaparams)
   return 1;
 }
 
-/* NOTE: The order of functions have to match the order of opcodes
- *       mnemonics
- */
+// NOTE: The order of functions have to match the order of opcodes
+//       mnemonics
+
 // clang-format off
 static const PHB_GENC_FUNC s_verbose_table[] = {
    hb_p_and,
@@ -2593,7 +2583,7 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
    hb_p_minus,
    hb_p_modulus,
    hb_p_modulename,
-   /* start: pcodes generated by macro compiler */
+   // start: pcodes generated by macro compiler
    hb_p_dummy,
    hb_p_dummy,
    hb_p_dummy,
@@ -2607,7 +2597,7 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
    hb_p_dummy,
    hb_p_dummy,
    hb_p_dummy,
-   /* end: */
+   // end:
    hb_p_mult,
    hb_p_negate,
    hb_p_noop,
@@ -2668,9 +2658,9 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
    hb_p_one,
    hb_p_macrofunc,
    hb_p_macrodo,
-   /* start: more pcodes generated by macro compiler */
+   // start: more pcodes generated by macro compiler
    hb_p_dummy,
-   /* end: */
+   // end:
    hb_p_localnearaddint,
    hb_p_macropushref,
    hb_p_pushlonglong,
@@ -2680,7 +2670,7 @@ static const PHB_GENC_FUNC s_verbose_table[] = {
    hb_p_enumend,
    hb_p_switch,
    hb_p_pushdate,
-   /* optimization of inlined math operations (+=, -= */
+   // optimization of inlined math operations (+=, -=
    hb_p_pluseqpop,
    hb_p_minuseqpop,
    hb_p_multeqpop,
@@ -2734,7 +2724,7 @@ static void hb_compGenCReadable(HB_COMP_DECL, PHB_HFUNC pFunc, FILE *yyc)
 {
   const PHB_GENC_FUNC *pFuncTable = s_verbose_table;
 
-  /* Make sure that table is correct */
+  // Make sure that table is correct
   assert(HB_P_LAST_PCODE == sizeof(s_verbose_table) / sizeof(PHB_GENC_FUNC));
 
   HB_GENC_INFO genc_info;
@@ -2775,7 +2765,7 @@ static void hb_compGenCCompact(PHB_HFUNC pFunc, FILE *yyc)
       nChar = 1;
     }
 
-    /* Displaying as decimal is more compact than hex */
+    // Displaying as decimal is more compact than hex
     fprintf(yyc, "%d", static_cast<int>(pFunc->pCode[nPCodePos++]));
   }
 

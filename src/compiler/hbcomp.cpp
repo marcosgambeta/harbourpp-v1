@@ -108,15 +108,13 @@ static PHB_EXPR hb_compExprNew(HB_COMP_DECL, HB_EXPRTYPE iType)
   return pExpr;
 }
 
-/* Delete self - all components will be deleted somewhere else
- */
+// Delete self - all components will be deleted somewhere else
 static void hb_compExprClear(HB_COMP_DECL, PHB_EXPR pExpr)
 {
   hb_compExprDealloc(HB_COMP_PARAM, pExpr);
 }
 
-/* Delete all components and delete self
- */
+// Delete all components and delete self
 static void hb_compExprFree(HB_COMP_DECL, PHB_EXPR pExpr)
 {
 #if 0
@@ -252,43 +250,43 @@ PHB_COMP hb_comp_new(void)
     pComp = static_cast<PHB_COMP>(hb_xgrabz(sizeof(HB_COMP)));
     pComp->pLex = static_cast<PHB_COMP_LEX>(hb_xgrabz(sizeof(HB_COMP_LEX)));
 
-    /* initialize default settings */
+    // initialize default settings
     pComp->mode = HB_MODE_COMPILER;
     pComp->funcs = &s_comp_funcs;
 
     pComp->pLex->pPP = pPP;
 
-    /* various compatibility flags (-k switch)
-       activate Harbour extensions by default. */
+    // various compatibility flags (-k switch)
+    // activate Harbour extensions by default.
     pComp->supported = HB_COMPFLAG_HARBOUR | HB_COMPFLAG_XBASE | HB_COMPFLAG_HB_INLINE | HB_COMPFLAG_OPTJUMP |
                        HB_COMPFLAG_MACROTEXT | HB_COMPFLAG_SHORTCUTS;
 
     pComp->fSwitchCase = false;
-    pComp->fPPO = false;              /* flag indicating, is .ppo output needed */
-    pComp->fLineNumbers = true;       /* holds if we need pcodes with line numbers */
-    pComp->fAnyWarning = false;       /* holds if there was any warning during the compilation process */
-    pComp->fAutoMemvarAssume = false; /* holds if undeclared variables are automatically assumed MEMVAR (-a)*/
-    pComp->fForceMemvars = false;     /* holds if memvars are assumed when accessing undeclared variable (-v)*/
-    pComp->fDebugInfo = false;        /* holds if generate debugger required info */
-    pComp->fHideSource = false;       /* do not store .prg file names in PCODE */
-    pComp->fNoStartUp = false;        /* C code generation embed HB_FS_FIRST or not */
-    pComp->fCredits = false;          /* print credits */
-    pComp->fBuildInfo = false;        /* print build info */
-    pComp->fGauge = true;             /* line counter gauge */
-    pComp->fLogo = true;              /* print logo */
+    pComp->fPPO = false;              // flag indicating, is .ppo output needed
+    pComp->fLineNumbers = true;       // holds if we need pcodes with line numbers
+    pComp->fAnyWarning = false;       // holds if there was any warning during the compilation process
+    pComp->fAutoMemvarAssume = false; // holds if undeclared variables are automatically assumed MEMVAR (-a)
+    pComp->fForceMemvars = false;     // holds if memvars are assumed when accessing undeclared variable (-v)
+    pComp->fDebugInfo = false;        // holds if generate debugger required info
+    pComp->fHideSource = false;       // do not store .prg file names in PCODE
+    pComp->fNoStartUp = false;        // C code generation embed HB_FS_FIRST or not
+    pComp->fCredits = false;          // print credits
+    pComp->fBuildInfo = false;        // print build info
+    pComp->fGauge = true;             // line counter gauge
+    pComp->fLogo = true;              // print logo
     pComp->fSingleModule = false;
     pComp->fError = false;
     pComp->fINCLUDE = true;
 
-    pComp->iSyntaxCheckOnly = 0; /* syntax check only */
-    pComp->iStartProc = 0;       /* no implicit starting procedure */
-    pComp->iWarnings = 0;        /* enable parse warnings */
-    pComp->iErrorCount = 0;      /* number of compile errors */
+    pComp->iSyntaxCheckOnly = 0; // syntax check only
+    pComp->iStartProc = 0;       // no implicit starting procedure
+    pComp->iWarnings = 0;        // enable parse warnings
+    pComp->iErrorCount = 0;      // number of compile errors
 
-    pComp->iGenCOutput = HB_COMPGENC_COMPACT; /* C code generation default mode */
-    pComp->iExitLevel = HB_EXITLEVEL_DEFAULT; /* holds if there was any warning during the compilation process */
-    pComp->iLanguage = HB_LANG_C;             /* default Harbour generated output language */
-    pComp->iErrorFmt = HB_ERRORFMT_CLIPPER;   /* default Harbour generated output language */
+    pComp->iGenCOutput = HB_COMPGENC_COMPACT; // C code generation default mode
+    pComp->iExitLevel = HB_EXITLEVEL_DEFAULT; // holds if there was any warning during the compilation process
+    pComp->iLanguage = HB_LANG_C;             // default Harbour generated output language
+    pComp->iErrorFmt = HB_ERRORFMT_CLIPPER;   // default Harbour generated output language
 
     pComp->outMsgFunc = hb_compOutMsg;
   }
@@ -302,11 +300,10 @@ void hb_comp_free(PHB_COMP pComp)
   hb_compCompileEnd(pComp);
   hb_compParserStop(pComp);
 
-  /* free allocated expressions only when errors appear - in all
-   * other cases expressions should be always cleanly freed so
-   * executing hb_compExprLstDealloc() may only hides some real
-   * memory leaks
-   */
+  // free allocated expressions only when errors appear - in all
+  // other cases expressions should be always cleanly freed so
+  // executing hb_compExprLstDealloc() may only hides some real
+  // memory leaks
   if (pComp->iErrorCount != 0)
   {
     hb_compExprLstDealloc(pComp);

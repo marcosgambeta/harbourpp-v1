@@ -23,7 +23,8 @@
 
 #include "hbcomp.hpp"
 
-/* Table with parse errors */
+// Table with parse errors
+
 // clang-format off
 const char * const hb_comp_szErrors[] =
 {
@@ -101,8 +102,8 @@ const char * const hb_comp_szErrors[] =
    "ENDSWITCH does not match SWITCH",
    "END SEQUENCE does not match BEGIN SEQUENCE",
    "Code block contains both macro and WITH OBJECT messages ':%s'",
-   /* Some historical, funny sounding error messages from original CA-Cl*pper.
-      They serve no purpose whatsoever. [vszakats] */
+   // Some historical, funny sounding error messages from original CA-Cl*pper.
+   // They serve no purpose whatsoever. [vszakats]
    "END wreaks terrible vengeance on control stack",
    "Control level closure leaves gaping wound in control stack",
    "Ford Maverick error number",
@@ -110,10 +111,10 @@ const char * const hb_comp_szErrors[] =
 };
 // clang-format on
 
-/* Table with parse warnings */
-/* NOTE: The first character stores the warning's level that triggers this
- * warning. The warning's level is set by -w<n> command-line option.
- */
+// Table with parse warnings
+// NOTE: The first character stores the warning's level that triggers this
+// warning. The warning's level is set by -w<n> command-line option.
+
 // clang-format off
 const char * const hb_comp_szWarnings[] =
 {
@@ -177,7 +178,7 @@ void hb_compGenError(HB_COMP_DECL, const char *const szErrors[], char cPrefix, i
       pFunc->bError = true;
       pFunc = pFunc->pOwner;
     }
-    /* fatal error - exit immediately */
+    // fatal error - exit immediately
     if (cPrefix == 'F')
     {
       HB_COMP_PARAM->fExit = true;
@@ -194,7 +195,7 @@ void hb_compGenWarning(HB_COMP_DECL, const char *const szWarnings[], char cPrefi
   {
     hb_compDispMessage(HB_COMP_PARAM, cPrefix, iWarning, szText + 1, szWarning1, szWarning2);
 
-    HB_COMP_PARAM->fAnyWarning = true; /* report warnings at exit */
+    HB_COMP_PARAM->fAnyWarning = true; // report warnings at exit
   }
 }
 
@@ -247,14 +248,14 @@ void hb_compErrorCodeblockDecl(HB_COMP_DECL, const char *szVarName)
 {
   bool fError = HB_COMP_PARAM->fError;
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_BLOCK, szVarName, nullptr);
-  HB_COMP_PARAM->fError = fError; /* restore error flag for this line */
+  HB_COMP_PARAM->fError = fError; // restore error flag for this line
 }
 
 void hb_compErrorCodeblockWith(HB_COMP_DECL, const char *szMessage)
 {
   bool fError = HB_COMP_PARAM->fError;
   hb_compGenError(HB_COMP_PARAM, hb_comp_szErrors, 'E', HB_COMP_ERR_WITHOBJECT_MACROBLOCK, szMessage, nullptr);
-  HB_COMP_PARAM->fError = fError; /* restore error flag for this line */
+  HB_COMP_PARAM->fError = fError; // restore error flag for this line
 }
 
 void hb_compErrorMacro(HB_COMP_DECL, const char *szText)

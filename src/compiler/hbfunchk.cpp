@@ -23,21 +23,20 @@
 
 #include "hbcomp.hpp"
 
-/* NOTE: iMinParam = -1, means no lower limit
- *       iMaxParam = -1, means no upper limit
- */
+// NOTE: iMinParam = -1, means no lower limit
+//       iMaxParam = -1, means no upper limit
 
 struct HB_FUNCINFO
 {
-  const char *cFuncName; /* function name                   */
-  int iMinParam;         /* min number of parameters needed */
-  int iMaxParam;         /* max number of parameters needed */
+  const char *cFuncName; // function name
+  int iMinParam;         // min number of parameters needed
+  int iMaxParam;         // max number of parameters needed
 };
 
 using PHB_FUNCINFO = HB_FUNCINFO *;
 
-/* NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
- */
+// NOTE: THIS TABLE MUST BE SORTED ALPHABETICALLY
+
 // clang-format off
 static const HB_FUNCINFO s_stdFunc[] =
 {
@@ -117,10 +116,10 @@ HB_BOOL hb_compFunCallCheck(HB_COMP_DECL, const char *szFuncCall, int iArgs)
   auto iLen = static_cast<int>(strlen(szFuncCall));
   int iCmp;
 
-  /* Respect 4 or more letters shortcuts
-   * SECO() is not allowed because of Clipper function Seconds()
-   * however SECO32() is a valid name.
-   */
+  // Respect 4 or more letters shortcuts
+  // SECO() is not allowed because of Clipper function Seconds()
+  // however SECO32() is a valid name.
+
   if (iLen < 4)
   {
     iLen = 4;

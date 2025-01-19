@@ -75,11 +75,9 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
           pInfo = nullptr;
           break;
 
-        /*
-         * This enables checking also code block bodies,
-         * if it's not necessary then simply remove the
-         * code below. [druzus]
-         */
+        // This enables checking also code block bodies,
+        // if it's not necessary then simply remove the
+        // code below. [druzus]
         case HB_P_PUSHBLOCKLARGE:
           nSkip = 8 + HB_PCODE_MKUSHORT(&pFunc->pCode[nPos + 6]) * 2;
           break;
@@ -117,12 +115,10 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
               pInfo = static_cast<PHB_DEBUGINFO>(hb_xgrab(sizeof(HB_DEBUGINFO)));
               pInfo->pszModuleName = hb_strndup(pszModuleName, i);
               pInfo->ulFirstLine = pInfo->ulLastLine = ulLine;
-              /*
-               * allocate memory in 256 bytes chunks (for 2048 lines)
-               * The last 1 byte is reserved for additional 0 byte if
-               * the caller will want to use the returned buffer as
-               * parameter to hb_compGenPushString(). [druzus]
-               */
+              // allocate memory in 256 bytes chunks (for 2048 lines)
+              // The last 1 byte is reserved for additional 0 byte if
+              // the caller will want to use the returned buffer as
+              // parameter to hb_compGenPushString(). [druzus]
               pInfo->ulAllocated = ((ulLine >> 3) + 0x100) & 0xFFFFFF00L;
               pInfo->pLineMap = static_cast<HB_BYTE *>(hb_xgrabz(pInfo->ulAllocated + 1));
               pInfo->pNext = pLineInfo;
@@ -138,10 +134,8 @@ PHB_DEBUGINFO hb_compGetDebugInfo(HB_COMP_DECL)
             pInfo->ulAllocated = ulNewSize;
           }
           pInfo->pLineMap[nOffset] |= 1 << (ulLine & 0x7);
-          /*
-           * It's possible the the line number will be ascending
-           * if some external file is included more then once. [druzus]
-           */
+          // It's possible the the line number will be ascending
+          // if some external file is included more then once. [druzus]
           if (pInfo->ulFirstLine > ulLine)
           {
             pInfo->ulFirstLine = ulLine;

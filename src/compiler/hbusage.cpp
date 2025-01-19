@@ -53,11 +53,11 @@
 void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
 {
 #ifdef YYDEBUG
-   std::array<std::string, 46> options =
+  std::array<std::string, 46> options =
 #else
-   std::array<std::string, 45> options =
+  std::array<std::string, 45> options =
 #endif
-   {
+  {
       "\nOptions:  -a               automatic memvar declaration",
       "\n          -b               debug info",
       "\n          -build           display detailed version info",
@@ -94,9 +94,9 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
       "\n          -q2              disable all output messages",
       "\n          -ql              hide line counter gauge",
       "\n          -r:<max>         set maximum number of preprocessor iterations",
-/* TODO:   "\n          -r[<lib>]        request linker to search <lib> (or none)", */
+// TODO:   "\n          -r[<lib>]        request linker to search <lib> (or none)",
       "\n          -s[m]            syntax check only [minimal for dependencies list]",
-/* TODO:   "\n          -t<path>         path for temp file creation", */
+// TODO:   "\n          -t<path>         path for temp file creation",
       "\n          -u[<file>]       use command def set in <file> (or none)",
       "\n          -u+<file>        add command def set from <file>",
       "\n          -undef:<id>      #undef <id>",
@@ -108,20 +108,21 @@ void hb_compPrintUsage(HB_COMP_DECL, const char * szSelf)
       "\n          -z               suppress shortcutting (.and. & .or.)",
       "\n          @<file>          compile list of modules in <file>",
       "\n"
-   };
-   std::string buffer;
-   buffer.append("\nSyntax:  ");
-   buffer.append(szSelf);
-   buffer.append(" <file[s][.prg]|@file> [options]\n");
-   hb_compOutStd(HB_COMP_PARAM, buffer.data());
+  };
+  std::string buffer;
+  buffer.append("\nSyntax:  ");
+  buffer.append(szSelf);
+  buffer.append(" <file[s][.prg]|@file> [options]\n");
+  hb_compOutStd(HB_COMP_PARAM, buffer.data());
 
-   for( auto option : options ) {
-      hb_compOutStd(HB_COMP_PARAM, option.data());
-   }
+  for (auto option : options)
+  {
+    hb_compOutStd(HB_COMP_PARAM, option.data());
+  }
 }
 // clang-format on
 
-/* List of compatibility/features modes */
+// List of compatibility/features modes
 void hb_compPrintModes(HB_COMP_DECL)
 {
   std::array<std::string, 13> options = {"\nOptions:  c               clear all flags (strict Clipper mode)",
@@ -167,7 +168,7 @@ void hb_compPrintModes(HB_COMP_DECL)
 // clang-format off
 void hb_compPrintCredits(HB_COMP_DECL)
 {
-   hb_compOutStd(HB_COMP_PARAM,
+  hb_compOutStd(HB_COMP_PARAM,
          "\n"
          "Credits:  The Harbour Team\n"
          "          (replace space with @ in email addresses)\n"
@@ -259,7 +260,7 @@ void hb_compPrintCredits(HB_COMP_DECL)
          "Vladimir Kazimirchik (v_kazimirchik yahoo com)\n"
          "Walter Negro (anegro overnet.com.ar)\n"
          "Xavi (jarabal gmail com)\n"
-      );
+     );
 }
 // clang-format on
 

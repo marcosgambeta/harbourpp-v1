@@ -188,7 +188,7 @@ void hb_compI18nAddPlural(HB_COMP_DECL, const char **szTexts, HB_ULONG ulCount, 
 
   if (ulCount == 1)
   {
-    /* set the same string as plural form to mark it as plural text */
+    // set the same string as plural form to mark it as plural text
     if (!pString->uiPlurals)
     {
       pString->szPlurals[0] = pString->szText;
@@ -331,9 +331,8 @@ HB_BOOL hb_compI18nSave(HB_COMP_DECL, HB_BOOL fFinal)
   }
   else if (!fFinal)
   {
-    /* The exact file name was given generate single .pot file for
-     * all compiled .prg files in final phase.
-     */
+    // The exact file name was given generate single .pot file for
+    // all compiled .prg files in final phase.
     return false;
   }
 

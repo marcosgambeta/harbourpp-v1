@@ -285,7 +285,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
           break;
         case '0':
           ++szSwPtr;
-          /* fallthrough */
+          // fallthrough
         default:
           szSwPtr += 2;
           HB_COMP_PARAM->iExitLevel = HB_EXITLEVEL_DEFAULT;
@@ -400,7 +400,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
           break;
         case '0':
           ++szSwPtr;
-          /* fallthrough */
+          // fallthrough
         default:
           HB_COMP_PARAM->iGenCOutput = HB_COMPGENC_COMPACT;
           break;
@@ -444,7 +444,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
           break;
         case '0':
           ++szSwPtr;
-          /* fallthrough */
+          // fallthrough
         default:
           HB_COMP_PARAM->iErrorFmt = HB_ERRORFMT_CLIPPER;
           break;
@@ -459,7 +459,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
 
     case 'H':
     case '?':
-      /* HELP message */
+      // HELP message
       break;
 
     case 'I':
@@ -506,7 +506,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
           break;
 
         case 'H':
-          /* default Harbour mode */
+          // default Harbour mode
           if (*szSwPtr == '-')
           {
             HB_COMP_PARAM->supported &= ~HB_COMPFLAG_HARBOUR;
@@ -519,7 +519,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
           break;
 
         case 'C':
-          /* clear all flags - minimal set of features */
+          // clear all flags - minimal set of features
           HB_COMP_PARAM->supported &= HB_COMPFLAG_SHORTCUTS;
           HB_COMP_PARAM->supported |= HB_COMPFLAG_OPTJUMP | HB_COMPFLAG_MACROTEXT;
           break;
@@ -686,7 +686,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
       case '0':
       case '1':
         ++szSwPtr;
-        /* fallthrough */
+        // fallthrough
       default:
         HB_COMP_PARAM->iStartProc = 1;
         break;
@@ -738,11 +738,11 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
         break;
       case '2':
         HB_COMP_PARAM->fFullQuiet = true;
-        /* fallthrough */
+        // fallthrough
       case '0':
         HB_COMP_PARAM->fLogo = false;
         ++szSwPtr;
-        /* fallthrough */
+        // fallthrough
       default:
         HB_COMP_PARAM->fQuiet = true;
         break;
@@ -769,8 +769,8 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
       }
       else
       {
-        /* NOTE: ignored for Cl*pper compatibility:
-                 /r[<lib>] request linker to search <lib> (or none) */
+        // NOTE: ignored for Cl*pper compatibility:
+        //       /r[<lib>] request linker to search <lib> (or none)
         hb_compChkIgnoredInfo(HB_COMP_PARAM, "-r[<lib>]");
         szSwPtr = hb_compChkOptionGet(szSwPtr, nullptr, fEnv);
       }
@@ -796,8 +796,8 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
       break;
 
     case 'T':
-      /* NOTE: ignored for Cl*pper compatibility:
-               /t<path> path for temp file creation */
+      // NOTE: ignored for Cl*pper compatibility:
+      //       /t<path> path for temp file creation
       hb_compChkIgnoredInfo(HB_COMP_PARAM, "-t<path>");
       szSwPtr = hb_compChkOptionGet(szSwPtr + 1, nullptr, fEnv);
       break;
@@ -817,7 +817,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
         break;
       }
       ++szSwPtr;
-      /* extended definitions file: -u+<file> */
+      // extended definitions file: -u+<file>
       if (*szSwPtr == '+')
       {
         if (szSwPtr[1] && hb_compChkOptionLen(szSwPtr + 1, fEnv) > 0)
@@ -901,7 +901,7 @@ static const char *hb_compChkParseSwitch(HB_COMP_DECL, const char *szSwitch, boo
   return "";
 }
 
-/* check command-line parameters */
+// check command-line parameters
 void hb_compChkCommandLine(HB_COMP_DECL, int argc, const char *const argv[])
 {
   for (auto i = 1; i < argc && !HB_COMP_PARAM->fExit; ++i)
@@ -918,10 +918,10 @@ void hb_compChkCommandLine(HB_COMP_DECL, int argc, const char *const argv[])
   }
 }
 
-/* check environment parameters */
+// check environment parameters
 void hb_compChkEnvironment(HB_COMP_DECL)
 {
-  /* NOTE: if HARBOURCMD envvar exists then it's used instead of CLIPPERCMD */
+  // NOTE: if HARBOURCMD envvar exists then it's used instead of CLIPPERCMD
   char *szEnvCMD = hb_getenv("HARBOURCMD");
 
   if (!szEnvCMD || szEnvCMD[0] == '\0')

@@ -53,7 +53,7 @@ static void s_pp_msg(void *cargo, int iErrorFmt, int iLine, const char *szModule
 {
   HB_SYMBOL_UNUSED(cargo);
 
-  /* ignore all warning messages and errors when break or quit request */
+  // ignore all warning messages and errors when break or quit request
   if (cPrefix != 'W' && hb_vmRequestQuery() == 0)
   {
     char szMsgBuf[512], szLine[512];

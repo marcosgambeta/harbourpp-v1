@@ -267,7 +267,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piVa
     if (szSwitch[0] == 'k' || szSwitch[0] == 'K')
     {
       int iFlag = 0;
-      /* -k? parameters are case sensitive */
+      // -k? parameters are case sensitive
       switch (szSwitch[1])
       {
       case '?':
@@ -284,7 +284,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piVa
       case 'C':
         if (fSet)
         {
-          /* clear all flags - minimal set of features */
+          // clear all flags - minimal set of features
           HB_COMP_PARAM->supported &= HB_COMPFLAG_SHORTCUTS;
           HB_COMP_PARAM->supported |= HB_COMPFLAG_OPTJUMP | HB_COMPFLAG_MACROTEXT;
         }
@@ -407,7 +407,7 @@ static HB_BOOL hb_pp_CompilerSwitch(void *cargo, const char *szSwitch, int *piVa
       fError = true;
     }
   }
-  /* xHarbour extension */
+  // xHarbour extension
   else if (i >= 4 && hb_strnicmp(szSwitch, "TEXTHIDDEN", i) == 0)
   {
     if (fSet)
@@ -492,10 +492,10 @@ void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc)
 
     hb_pp_initDynDefines(HB_COMP_PARAM->pLex->pPP, !HB_COMP_PARAM->fNoArchDefs);
 
-    /* Add /D and /undef: command-line or envvar defines */
+    // Add /D and /undef: command-line or envvar defines
     hb_compChkSetDefines(HB_COMP_PARAM);
 
-    /* add extended definitions files (-u+<file>) */
+    // add extended definitions files (-u+<file>)
     if (HB_COMP_PARAM->iStdChExt > 0)
     {
       int i = 0;
@@ -506,7 +506,7 @@ void hb_compInitPP(HB_COMP_DECL, PHB_PP_OPEN_FUNC pOpenFunc)
       }
     }
 
-    /* mark current rules as standard ones */
+    // mark current rules as standard ones
     hb_pp_setStdBase(HB_COMP_PARAM->pLex->pPP);
   }
 }
