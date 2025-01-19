@@ -261,7 +261,7 @@ METHOD WvgStatusBar:clear()
 
 METHOD WvgStatusBar:panelClick(xParam)
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -269,7 +269,7 @@ METHOD WvgStatusBar:panelClick(xParam)
 
 METHOD WvgStatusBar:panelDblClick(xParam)
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbDblClick := xParam
    ENDIF
 

@@ -663,7 +663,7 @@ METHOD WvgWindow:enter(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_enter := xParam
       RETURN NIL
    ENDIF
@@ -677,7 +677,7 @@ METHOD WvgWindow:leave(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_leave := xParam
       RETURN NIL
    ENDIF
@@ -691,7 +691,7 @@ METHOD WvgWindow:lbClick(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
       RETURN NIL
    ENDIF
@@ -705,7 +705,7 @@ METHOD WvgWindow:lbDblClick(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbDblClick := xParam
       RETURN NIL
    ENDIF
@@ -719,7 +719,7 @@ METHOD WvgWindow:lbDown(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbDown := xParam
       RETURN NIL
    ENDIF
@@ -733,7 +733,7 @@ METHOD WvgWindow:lbUp(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbUp := xParam
       RETURN NIL
    ENDIF
@@ -747,7 +747,7 @@ METHOD WvgWindow:mbClick(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbClick := xParam
       RETURN NIL
    ENDIF
@@ -761,7 +761,7 @@ METHOD WvgWindow:mbDblClick(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbDblClick := xParam
       RETURN NIL
    ENDIF
@@ -775,7 +775,7 @@ METHOD WvgWindow:mbDown(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbDown := xParam
       RETURN NIL
    ENDIF
@@ -789,7 +789,7 @@ METHOD WvgWindow:mbUp(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_mbUp := xParam
       RETURN NIL
    ENDIF
@@ -803,7 +803,7 @@ METHOD WvgWindow:motion(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_motion := xParam
       RETURN NIL
    ENDIF
@@ -817,7 +817,7 @@ METHOD WvgWindow:rbClick(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbClick := xParam
       RETURN NIL
    ENDIF
@@ -831,7 +831,7 @@ METHOD WvgWindow:rbDblClick(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbDblClick := xParam
       RETURN NIL
    ENDIF
@@ -845,7 +845,7 @@ METHOD WvgWindow:rbDown(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbDown := xParam
       RETURN NIL
    ENDIF
@@ -859,7 +859,7 @@ METHOD WvgWindow:rbUp(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_rbUp := xParam
       RETURN NIL
    ENDIF
@@ -873,7 +873,7 @@ METHOD WvgWindow:wheel(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_wheel := xParam
       RETURN NIL
    ENDIF
@@ -883,12 +883,12 @@ METHOD WvgWindow:wheel(xParam)
 METHOD WvgWindow:close(xParam)
 
    if ::objType == objTypeCrt
-      IF HB_ISNIL(xParam) .AND. HB_IsBlock(::sl_close)
+      IF xParam == NIL .AND. HB_IsBlock(::sl_close)
          Eval(::sl_close, , , Self)
          RETURN Self
       ENDIF
 
-      IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+      IF HB_IsBlock(xParam) .OR. xParam == NIL
          ::sl_close := xParam
          RETURN NIL
       ENDIF
@@ -898,12 +898,12 @@ METHOD WvgWindow:close(xParam)
 
 METHOD WvgWindow:helpRequest(xParam)
 
-   IF HB_ISNIL(xParam) .AND. HB_IsBlock(::sl_helpRequest)
+   IF xParam == NIL .AND. HB_IsBlock(::sl_helpRequest)
       Eval(::sl_helpRequest, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_helpRequest := xParam
       RETURN NIL
    ENDIF
@@ -917,7 +917,7 @@ METHOD WvgWindow:keyboard(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_keyboard := xParam
       RETURN NIL
    ENDIF
@@ -927,12 +927,12 @@ METHOD WvgWindow:keyboard(xParam)
 METHOD WvgWindow:killDisplayFocus(xParam)
 
    if ::objType == objTypeCrt
-      IF HB_ISNIL(xParam) .AND. HB_IsBlock(::sl_killDisplayFocus)
+      IF xParam == NIL .AND. HB_IsBlock(::sl_killDisplayFocus)
          Eval(::sl_killDisplayFocus, , , Self)
          RETURN Self
       ENDIF
 
-      IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+      IF HB_IsBlock(xParam) .OR. xParam == NIL
          ::sl_killDisplayFocus := xParam
          RETURN NIL
       ENDIF
@@ -942,12 +942,12 @@ METHOD WvgWindow:killDisplayFocus(xParam)
 
 METHOD WvgWindow:killInputFocus(xParam)
 
-   IF HB_ISNIL(xParam) .AND. HB_IsBlock(::sl_killInputFocus)
+   IF xParam == NIL .AND. HB_IsBlock(::sl_killInputFocus)
       Eval(::sl_killInputFocus, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_killInputFocus := xParam
       RETURN NIL
    ENDIF
@@ -961,7 +961,7 @@ METHOD WvgWindow:move(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_move := xParam
       RETURN NIL
    ENDIF
@@ -975,7 +975,7 @@ METHOD WvgWindow:paint(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
       RETURN NIL
    ENDIF
@@ -989,7 +989,7 @@ METHOD WvgWindow:quit(xParam, xParam1)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_quit := xParam
       RETURN NIL
    ENDIF
@@ -1003,7 +1003,7 @@ METHOD WvgWindow:resize(xParam, xParam1)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) // .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) // .OR. xParam == NIL
       ::sl_resize := xParam
       RETURN NIL
    ENDIF
@@ -1013,12 +1013,12 @@ METHOD WvgWindow:resize(xParam, xParam1)
 METHOD WvgWindow:setDisplayFocus(xParam)
 
    if ::objType == objTypeCrt
-      IF HB_ISNIL(xParam) .AND. HB_IsBlock(::setDisplayFocus)
+      IF xParam == NIL .AND. HB_IsBlock(::setDisplayFocus)
          Eval(::setDisplayFocus, , , Self)
          RETURN Self
       ENDIF
 
-      IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+      IF HB_IsBlock(xParam) .OR. xParam == NIL
          ::setDisplayFocus := xParam
          RETURN NIL
       ENDIF
@@ -1028,12 +1028,12 @@ METHOD WvgWindow:setDisplayFocus(xParam)
 
 METHOD WvgWindow:setInputFocus(xParam)
 
-   IF HB_ISNIL(xParam) .AND. HB_IsBlock(::sl_setInputFocus)
+   IF xParam == NIL .AND. HB_IsBlock(::sl_setInputFocus)
       Eval(::sl_setInputFocus, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_setInputFocus := xParam
       RETURN NIL
    ENDIF
@@ -1047,7 +1047,7 @@ METHOD WvgWindow:dragEnter(xParam, xParam1)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragEnter := xParam
       RETURN NIL
    ENDIF
@@ -1061,7 +1061,7 @@ METHOD WvgWindow:dragMotion(xParam)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragMotion := xParam
       RETURN NIL
    ENDIF
@@ -1070,12 +1070,12 @@ METHOD WvgWindow:dragMotion(xParam)
 
 METHOD WvgWindow:dragLeave(xParam)
 
-   IF HB_ISNIL(xParam) .AND. HB_IsBlock(::sl_dragLeave)
+   IF xParam == NIL .AND. HB_IsBlock(::sl_dragLeave)
       Eval(::sl_dragLeave, , , Self)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragLeave := xParam
       RETURN NIL
    ENDIF
@@ -1089,7 +1089,7 @@ METHOD WvgWindow:dragDrop(xParam, xParam1)
       RETURN Self
    ENDIF
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_dragDrop := xParam
       RETURN NIL
    ENDIF

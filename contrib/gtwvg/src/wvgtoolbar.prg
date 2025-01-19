@@ -365,7 +365,7 @@ METHOD WvgToolBar:setSize()
 
 METHOD WvgToolBar:buttonClick(xParam)
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -373,7 +373,7 @@ METHOD WvgToolBar:buttonClick(xParam)
 
 METHOD WvgToolBar:change(xParam)
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_change := xParam
    ENDIF
 
@@ -381,7 +381,7 @@ METHOD WvgToolBar:change(xParam)
 
 METHOD WvgToolBar:buttonMenuClick(xParam)
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_buttonMenuClick := xParam
    ENDIF
 
@@ -389,7 +389,7 @@ METHOD WvgToolBar:buttonMenuClick(xParam)
 
 METHOD WvgToolBar:buttonDropDown(xParam)
 
-   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_buttonDropDown := xParam
    ENDIF
 

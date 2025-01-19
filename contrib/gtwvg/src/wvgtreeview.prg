@@ -97,7 +97,7 @@ CREATE CLASS WvgTreeView INHERIT WvgWindow, WvgDataRef
    METHOD setColorFG(nRGB) INLINE wvg_TreeView_SetTextColor(::hWnd, iif(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 0), nRGB))
    METHOD setColorBG(nRGB) INLINE wvg_TreeView_SetBkColor(::hWnd, iif(HB_IsString(nRGB), wvt_GetRGBColorByString(nRGB, 1), nRGB))
    METHOD setColorLines(nRGB) INLINE wvg_TreeView_SetLineColor(::hWnd, nRGB)
-   METHOD showExpanded(lExpanded, nLevels) INLINE wvg_TreeView_ShowExpanded(::hWnd, iif(HB_ISNIL(lExpanded), .F., lExpanded), nLevels)
+   METHOD showExpanded(lExpanded, nLevels) INLINE wvg_TreeView_ShowExpanded(::hWnd, iif(lExpanded == NIL, .F., lExpanded), nLevels)
 
 ENDCLASS
 
