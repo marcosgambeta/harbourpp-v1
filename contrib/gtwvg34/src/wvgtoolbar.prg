@@ -305,7 +305,7 @@ METHOD WvgToolBar:addItem( cCaption, xImage, xDisabledImage, xHotImage, cDLL, nS
       ELSE
          nBtn := wapi_ImageList_Add( ::hImageList, pBitmap )
       ENDIF
-      IF !HB_ISPOINTER( xImage )
+      IF !HB_IsPointer( xImage )
          wvg_DeleteObject( pBitmap )
       ENDIF
 

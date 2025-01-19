@@ -160,7 +160,7 @@ METHOD hdbcSQLTStatement:executeQuery(cSql)
 
    ::pRes := sqlite3_prepare(::pDB, cSql)
 
-   IF !HB_ISPOINTER(::pRes)
+   IF !HB_IsPointer(::pRes)
       raiseError(sqlite3_errmsg(::pDb))
    ELSE
       ::oRs := hdbcSQLTResultSet():new(::pDB, SELF)
