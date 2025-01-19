@@ -1,11 +1,10 @@
-/*
- * PostgreSQL RDBMS low-level (client API) interface code.
- *
- * Copyright 2016 P.Chornyj <myorg63@mail.ru>
- * Copyright 2014 Viktor Szakats (vsz.me/hb)
- * Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
- *
- */
+//
+// PostgreSQL RDBMS low-level (client API) interface code.
+//
+// Copyright 2016 P.Chornyj <myorg63@mail.ru>
+// Copyright 2014 Viktor Szakats (vsz.me/hb)
+// Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -51,7 +50,7 @@
 #ifndef HBPOSTGRES_CH_
 #define HBPOSTGRES_CH_
 
-/* PQstatus() */
+// PQstatus()
 #define CONNECTION_OK                   0
 #define CONNECTION_BAD                  1
 #define CONNECTION_STARTED              2
@@ -62,14 +61,14 @@
 #define CONNECTION_SSL_STARTUP          7
 #define CONNECTION_NEEDED               8
 
-/* PQconnectPoll(), PQresetPoll() */
+// PQconnectPoll(), PQresetPoll()
 #define PGRES_POLLING_FAILED            0
 #define PGRES_POLLING_READING           1
 #define PGRES_POLLING_WRITING           2
 #define PGRES_POLLING_OK                3
 #define PGRES_POLLING_ACTIVE            4
 
-/* PQresultStatus() */
+// PQresultStatus()
 #define PGRES_EMPTY_QUERY               0
 #define PGRES_COMMAND_OK                1
 #define PGRES_TUPLES_OK                 2
@@ -79,14 +78,14 @@
 #define PGRES_NONFATAL_ERROR            6
 #define PGRES_FATAL_ERROR               7
 
-/* PQtransactionStatus() */
+// PQtransactionStatus()
 #define PQTRANS_IDLE                    0
 #define PQTRANS_ACTIVE                  1
 #define PQTRANS_INTRANS                 2
 #define PQTRANS_INERROR                 3
 #define PQTRANS_UNKNOWN                 4
 
-/* PQmetadata() positions for array returned */
+// PQmetadata() positions for array returned 
 #define HBPG_META_FIELDNAME             1
 #define HBPG_META_FIELDTYPE             2
 #define HBPG_META_FIELDLEN              3
@@ -95,18 +94,18 @@
 #define HBPG_META_TABLECOL              6
 #define HBPG_META_LEN_                  6
 
-/* PQsetErrorVerbosity() */
+// PQsetErrorVerbosity()
 #define PQERRORS_TERSE                  0
 #define PQERRORS_DEFAULT                1
 #define PQERRORS_VERBOSE                2
 
-/* PQping() */
-#define PQPING_OK                       0  /* server is accepting connections */
-#define PQPING_REJECT                   1  /* server is alive but rejecting connections */
-#define PQPING_NO_RESPONSE              2  /* could not establish connection */
-#define PQPING_NO_ATTEMPT               3  /* connection not attempted (bad params) */
+// PQping()
+#define PQPING_OK                       0  // server is accepting connections
+#define PQPING_REJECT                   1  // server is alive but rejecting connections
+#define PQPING_NO_RESPONSE              2  // could not establish connection
+#define PQPING_NO_ATTEMPT               3  // connection not attempted (bad params)
 
-/* PQresultErrorField() fieldcode parameters */
+// PQresultErrorField() fieldcode parameters
 #define PG_DIAG_SEVERITY                hb_BCode( "S" )
 #define PG_DIAG_SQLSTATE                hb_BCode( "C" )
 #define PG_DIAG_MESSAGE_PRIMARY         hb_BCode( "M" )
@@ -125,4 +124,4 @@
 #define PG_DIAG_SOURCE_LINE             hb_BCode( "L" )
 #define PG_DIAG_SOURCE_FUNCTION         hb_BCode( "R" )
 
-#endif
+#endif // HBPOSTGRES_CH_

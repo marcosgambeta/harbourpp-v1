@@ -1,10 +1,9 @@
-/*
- * PostgreSQL RDBMS wrapper header.
- *
- * Copyright 2010 Viktor Szakats (vsz.me/hb) (GC support)
- * Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
- *
- */
+//
+// PostgreSQL RDBMS wrapper header.
+//
+// Copyright 2010 Viktor Szakats (vsz.me/hb) (GC support)
+// Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -93,4 +92,4 @@ extern HB_EXPORT PGresult * hb_PGresult_par( int iParam );
 
 HB_EXTERN_END
 
-#endif /* __HBPGSQL_H */
+#endif // __HBPGSQL_H

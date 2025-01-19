@@ -1,26 +1,27 @@
-/* IMPORTANT: Don't use these queries as sample, they are used for stress tests!!! */
+// IMPORTANT: Don't use these queries as sample, they are used for stress tests!!!
 
 #require "hbpgsql"
 
-PROCEDURE Main( cHost, cDatabase, cUser, cPass )
+PROCEDURE Main(cHost, cDatabase, cUser, cPass)
 
-   LOCAL conn, res, i, x
-
+   LOCAL conn
+   LOCAL res
+   LOCAL i
+   LOCAL x
    LOCAL cQuery
 
    CLS
 
    ? "Connecting..."
-   conn := PQconnectdb( ;
-      "dbname = '" + hb_defaultValue( cDatabase, "postgres" ) + "' " + ;
-      "host = '" + hb_defaultValue( cHost, "localhost" ) + "' " + ;
-      "user = '" + hb_defaultValue( cUser, hb_UserName() ) + "' " + ;
-      "password = '" + hb_defaultValue( cPass, "" ) + "' " + ;
-      "port = 5432")
+   conn := PQconnectdb("dbname = '" + hb_defaultValue(cDatabase, "postgres") + "' " + ;
+                       "host = '" + hb_defaultValue(cHost, "localhost") + "' " + ;
+                       "user = '" + hb_defaultValue(cUser, hb_UserName()) + "' " + ;
+                       "password = '" + hb_defaultValue(cPass, "") + "' " + ;
+                       "port = 5432")
 
-   ? PQstatus( conn ), PQerrorMessage( conn )
+   ? PQstatus(conn), PQerrorMessage(conn)
 
-   IF PQstatus( conn ) != CONNECTION_OK
+   IF PQstatus(conn) != CONNECTION_OK
       RETURN
    ENDIF
 
@@ -48,10 +49,10 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    ?
    FOR i := 1 TO 10000
-      @ 15, 0 SAY "Inserting values... " + hb_ntos( i )
+      @ 15, 0 SAY "Inserting values... " + hb_ntos(i)
 
       cQuery := "INSERT INTO test(code, dept, name, sales, salary, creation) " + ;
-         "VALUES( " + hb_ntos( i ) + "," + hb_ntos( i + 1 ) + ", 'DEPARTMENT NAME " + StrZero( i ) + "', 'y', " + hb_ntos( 300.49 + i ) + ", '2003-12-28' )"
+         "VALUES( " + hb_ntos(i) + "," + hb_ntos(i + 1) + ", 'DEPARTMENT NAME " + StrZero(i) + "', 'y', " + hb_ntos(300.49 + i) + ", '2003-12-28' )"
 
       PQexec(conn, cQuery)
 
@@ -62,9 +63,9 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
    NEXT
 
    FOR i := 5000 TO 7000
-      @ 16, 0 SAY "Deleting values... " + hb_ntos( i )
+      @ 16, 0 SAY "Deleting values... " + hb_ntos(i)
 
-      cQuery := "DELETE FROM test WHERE code = " + hb_ntos( i )
+      cQuery := "DELETE FROM test WHERE code = " + hb_ntos(i)
       PQexec(conn, cQuery)
 
       IF i % 100 == 0
@@ -74,9 +75,9 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
    NEXT
 
    FOR i := 2000 TO 3000
-      @ 17, 0 SAY "Updating values... " + hb_ntos( i )
+      @ 17, 0 SAY "Updating values... " + hb_ntos(i)
 
-      cQuery := "UPDATE FROM test SET salary = 400 WHERE code = " + hb_ntos( i )
+      cQuery := "UPDATE FROM test SET salary = 400 WHERE code = " + hb_ntos(i)
       PQexec(conn, cQuery)
 
       IF i % 100 == 0
@@ -87,18 +88,18 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    res := PQexec(conn, "SELECT sum(salary) as sum_salary FROM test WHERE code between 1 and 4000")
 
-   IF PQresultStatus( res ) == PGRES_TUPLES_OK
-      @ 18, 0 SAY "Sum values... " + PQgetvalue( res, 1, 1 )
+   IF PQresultStatus(res) == PGRES_TUPLES_OK
+      @ 18, 0 SAY "Sum values... " + PQgetvalue(res, 1, 1)
    ENDIF
 
    x := 0
    FOR i := 1 TO 4000
-      res := PQexec(conn, "SELECT salary FROM test WHERE code = " + hb_ntos( i ))
+      res := PQexec(conn, "SELECT salary FROM test WHERE code = " + hb_ntos(i))
 
-      IF PQresultStatus( res ) == PGRES_TUPLES_OK
-         x += Val( PQgetvalue( res, 1, 1 ) )
+      IF PQresultStatus(res) == PGRES_TUPLES_OK
+         x += Val(PQgetvalue(res, 1, 1))
 
-         @ 19, 0 SAY "Sum values... " + hb_ntos( x )
+         @ 19, 0 SAY "Sum values... " + hb_ntos(x)
       ENDIF
    NEXT
 

@@ -1,9 +1,8 @@
-/*
- * PostgreSQL RDBMS low-level (client API) interface code.
- *
- * Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
- *
- */
+//
+// PostgreSQL RDBMS low-level (client API) interface code.
+//
+// Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -140,7 +139,7 @@ static bool addStrnToContext(pgCopyContext *context, const char *str, HB_SIZE si
   return true;
 }
 
-/* Export field value into the buffer in PG accepted CSV format */
+// Export field value into the buffer in PG accepted CSV format
 static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char *szQuote, const char *szEsc)
 {
   switch (hb_itemType(pValue))
@@ -169,9 +168,9 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
     {
       if (static_cast<HB_UCHAR>(*szVal) >= 32)
       {
-        /* if( *szVal == *szDelim || *szVal == *szEsc || *szVal == *szQuote )
-           we don't need to escape delim in CSV mode,
-           only the quote and the escape itself */
+        // if( *szVal == *szDelim || *szVal == *szEsc || *szVal == *szQuote )
+        // we don't need to escape delim in CSV mode,
+        // only the quote and the escape itself
 
         if (*szVal == *szQuote || *szVal == *szEsc)
         {
@@ -280,7 +279,7 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
     }
     break;
   }
-  /* an "M" field or the other, might be a "V" in SixDriver */
+  // an "M" field or the other, might be a "V" in SixDriver
   default:
     return false;
   }
@@ -289,9 +288,7 @@ static bool exportBufSqlVar(pgCopyContext *context, PHB_ITEM pValue, const char 
 }
 #endif
 
-/*
-HB_PQCOPYFROMWA() -->
-*/
+// HB_PQCOPYFROMWA() -->
 HB_FUNC(HB_PQCOPYFROMWA)
 {
 #if PG_VERSION_NUM >= 80000
@@ -465,7 +462,7 @@ HB_FUNC(HB_PQCOPYFROMWA)
       }
     }
 
-    if (!bFail && !addStrnToContext(context, "\\.\n", 3)) /* end CSV transfer */
+    if (!bFail && !addStrnToContext(context, "\\.\n", 3)) // end CSV transfer
     {
       bFail = true;
     }

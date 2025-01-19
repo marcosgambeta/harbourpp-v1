@@ -1,9 +1,8 @@
-/*
- * PostgreSQL RDBMS low-level (client API) interface code.
- *
- * Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
- *
- */
+//
+// PostgreSQL RDBMS low-level (client API) interface code.
+//
+// Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -262,8 +261,8 @@ METHOD TPQserver:TableStruct(cTable)
 
          cField := PQgetvalue(res, i, 1)
          cType  := PQgetvalue(res, i, 2)
-         nSize  := PQgetvalue(res, i, 4)  /* string value */
-         nDec   := PQgetvalue(res, i, 5)  /* string value */
+         nSize  := PQgetvalue(res, i, 4)  // string value
+         nDec   := PQgetvalue(res, i, 5)  // string value
 
          DO CASE
          CASE "char" $ cType
@@ -299,10 +298,10 @@ METHOD TPQserver:TableStruct(cTable)
          CASE "decimal" $ cType .OR. "numeric" $ cType
             cType := "N"
             nDec  := Val(nDec)
-            /* Postgres doesn't store ".", but .dbf does, it can cause data width problem */
+            // Postgres doesn't store ".", but .dbf does, it can cause data width problem
             nSize := Val(nSize) + iif(nDec > 0, 1, 0)
 
-            /* Numeric/Decimal without scale/precision can generate big values, so, I limit this to 10,5 */
+            // Numeric/Decimal without scale/precision can generate big values, so, I limit this to 10,5
 
             IF nDec > 100
                nDec := 5
@@ -353,7 +352,7 @@ METHOD TPQserver:TableStruct(cTable)
             nDec  := 0
 
          OTHERWISE
-            /* Unsupported */
+            // Unsupported
             cType := "U"
             nSize := 0
             nDec  := -1
@@ -582,7 +581,7 @@ METHOD TPQquery:Refresh(lQuery, lMeta)
          ::aStruct := {}
          ::nFields := 0
 
-         /* Get some information about metadata */
+         // Get some information about metadata
          aTemp := PQmetadata(res)
 
          IF HB_ISARRAY(aTemp)
@@ -600,10 +599,10 @@ METHOD TPQquery:Refresh(lQuery, lMeta)
                CASE "numeric" $ cType .OR. "decimal" $ cType
                   cType := "N"
 
-                  /* Postgres don't store ".", but .dbf does, it can cause data width problem */
+                  // Postgres don't store ".", but .dbf does, it can cause data width problem
                   IF nDec > 0
                      nSize++
-                     /* Numeric/Decimal without scale/precision can generate big values, so, I limit this to 10,5 */
+                     // Numeric/Decimal without scale/precision can generate big values, so, I limit this to 10,5
                      IF nDec > 100
                         nDec := 5
                      ENDIF
@@ -668,7 +667,7 @@ METHOD TPQquery:Refresh(lQuery, lMeta)
                   nSize := 19
 
                OTHERWISE
-                  /* Unsupported */
+                  // Unsupported
                   cType := "K"
                ENDCASE
 
@@ -890,12 +889,10 @@ METHOD TPQquery:Append(oRow)
       NEXT
 
       IF lChanged .AND. Len(aParams) == 0
-         /*
-          * Edge case here, adding a row filled with NULL values only,
-          * should add at least one field to conform with SQL syntax.
-          * This is possible with no primary key and/or when default
-          * values provided in table schema.
-          */
+         // Edge case here, adding a row filled with NULL values only,
+         // should add at least one field to conform with SQL syntax.
+         // This is possible with no primary key and/or when default
+         // values provided in table schema.
          cQuery := cQuery + oRow:FieldName(1) + ") VALUES (NULL)"
       ELSE
          cQuery := hb_StrShrink(cQuery) + ") VALUES ("
@@ -1119,9 +1116,9 @@ METHOD PROCEDURE TPQquery:SetKey()
 
    IF ::nResultStatus == PGRES_TUPLES_OK
       IF ::Tablename == NIL
-         /* set the table name looking for table oid */
+         // set the table name looking for table oid
          FOR EACH i IN ::aStruct
-            /* Store table codes oid */
+            // Store table codes oid
             nTableId := i[_STRU_TABLE]
 
             IF nTableId != xTableId
@@ -1131,7 +1128,7 @@ METHOD PROCEDURE TPQquery:SetKey()
          NEXT
 
          IF nCount == 1
-            /* first, try get the table name from select, else get from pg_catalog */
+            // first, try get the table name from select, else get from pg_catalog
             IF (nPos := At("FROM ", Upper(::cQuery))) > 0
                cQuery := Lower(LTrim(SubStr(::cQuery, nPos + 5)))
 
@@ -1160,7 +1157,7 @@ METHOD PROCEDURE TPQquery:SetKey()
 
       IF ::aKeys == NIL .AND. !Empty(::Tablename)
 
-         /* Set the table primary keys */
+         // Set the table primary keys
          res := PQexec(::pDB, ;
             "SELECT c.attname" + ;
             "  FROM pg_class a, pg_class b, pg_attribute c, pg_index d, pg_namespace e" + ;

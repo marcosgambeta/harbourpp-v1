@@ -1,72 +1,76 @@
-/* This sample show howto use asynchronous/non-blocking queries */
+// This sample show howto use asynchronous/non-blocking queries
 
 #require "hbpgsql"
 
 #include "inkey.ch"
 
-PROCEDURE Main( cHost, cDatabase, cUser, cPass )
+PROCEDURE Main(cHost, cDatabase, cUser, cPass)
 
    LOCAL conn
 
    CLS
 
    ? "Connect", conn := PQconnectdb( ;
-      "dbname = '" + hb_defaultValue( cDatabase, "postgres" ) + "' " + ;
-      "host = '" + hb_defaultValue( cHost, "localhost" ) + "' " + ;
-      "user = '" + hb_defaultValue( cUser, hb_UserName() ) + "' " + ;
-      "password = '" + hb_defaultValue( cPass, "" ) + "' " + ;
+      "dbname = '" + hb_defaultValue(cDatabase, "postgres") + "' " + ;
+      "host = '" + hb_defaultValue(cHost, "localhost") + "' " + ;
+      "user = '" + hb_defaultValue(cUser, hb_UserName()) + "' " + ;
+      "password = '" + hb_defaultValue(cPass, "") + "' " + ;
       "port = 5432")
 
-   ? "Conection status", PQerrorMessage( conn ), PQstatus( conn )
+   ? "Conection status", PQerrorMessage(conn), PQstatus(conn)
 
-   Query( conn, "SELECT codigo, descri FROM client limit 100", .F. )
-   Query( conn, "SELECT codigo, descri FROM fornec limit 100", .F. )
-   Query( conn, "SELECT pedido, vlrped FROM pedido", .T. )
+   Query(conn, "SELECT codigo, descri FROM client limit 100", .F.)
+   Query(conn, "SELECT codigo, descri FROM fornec limit 100", .F.)
+   Query(conn, "SELECT pedido, vlrped FROM pedido", .T.)
 
    RETURN
 
-STATIC PROCEDURE Query( conn, cQuery, lCancel )
+STATIC PROCEDURE Query(conn, cQuery, lCancel)
 
-   LOCAL pCancel, cErrMsg := ""
-   LOCAL res, x, y, cTime
+   LOCAL pCancel
+   LOCAL cErrMsg := ""
+   LOCAL res
+   LOCAL x
+   LOCAL y
+   LOCAL cTime
 
-   ? "PQSendQuery", PQsendQuery( conn, cQuery )
+   ? "PQSendQuery", PQsendQuery(conn, cQuery)
 
    cTime := Time()
    CLEAR TYPEAHEAD
 
-   DO WHILE hb_keyStd( Inkey() ) != K_ESC
-      DevPos( Row(), 20 )
-      DevOut( "Processing:", ElapTime( cTime, Time() ) )
+   DO WHILE hb_keyStd(Inkey()) != K_ESC
+      DevPos(Row(), 20)
+      DevOut("Processing:", ElapTime(cTime, Time()))
 
       Inkey(1)
 
       IF lCancel
-         pCancel := PQgetCancel( conn )
-         ? "Canceled:", PQcancel( pCancel, @cErrMsg ), cErrMsg
+         pCancel := PQgetCancel(conn)
+         ? "Canceled:", PQcancel(pCancel, @cErrMsg), cErrMsg
          pCancel := NIL
       ENDIF
 
-      IF PQconsumeInput( conn )
-         IF !PQisBusy( conn )
+      IF PQconsumeInput(conn)
+         IF !PQisBusy(conn)
             EXIT
          ENDIF
       ENDIF
    ENDDO
 
-   IF hb_keyStd( Inkey() ) != K_ESC
-      ? "PQgetResult", hb_ValToExp( res := PQgetResult( conn ) )
+   IF hb_keyStd(Inkey()) != K_ESC
+      ? "PQgetResult", hb_ValToExp(res := PQgetResult(conn))
 
       IF !Empty(res)
          FOR x := 1 TO PQlastrec(res)
             ?
-            FOR y := 1 TO PQfcount( res )
-               ?? PQgetvalue( res, x, y ), " "
+            FOR y := 1 TO PQfcount(res)
+               ?? PQgetvalue(res, x, y), " "
             NEXT
          NEXT
       ENDIF
    ELSE
-      ? "Canceling Query", PQrequestCancel( conn )
+      ? "Canceling Query", PQrequestCancel(conn)
    ENDIF
 
    RETURN

@@ -1,10 +1,13 @@
 #require "hbpgsql"
 
-PROCEDURE Main( cHost, cDatabase, cUser, cPass )
+PROCEDURE Main(cHost, cDatabase, cUser, cPass)
 
-   LOCAL cQuery, oQuery, oRow, i, x
-
-   LOCAL oServer := TPQServer():New( cHost, hb_defaultValue( cDatabase, "postgres" ), cUser, cPass )
+   LOCAL cQuery
+   LOCAL oQuery
+   LOCAL oRow
+   LOCAL i
+   LOCAL x
+   LOCAL oServer := TPQServer():New(cHost, hb_defaultValue(cDatabase, "postgres"), cUser, cPass)
 
    IF oServer:NetErr()
       ? oServer:ErrorMsg()
@@ -12,7 +15,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
    ENDIF
 
    oServer:SetVerbosity(2)
-   oServer:traceon( "simple.log" )
+   oServer:traceon("simple.log")
 
    ? "Tables..."
 
@@ -20,8 +23,8 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       ? i
    NEXT
 
-   IF oServer:TableExists( "test" )
-      ? oQuery := oServer:Execute( "DROP TABLE test" )
+   IF oServer:TableExists("test")
+      ? oQuery := oServer:Execute("DROP TABLE test")
 
       oQuery:Destroy()
    ENDIF
@@ -40,7 +43,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       "   Creation Date," + ;
       "   Description text )"
 
-   oQuery := oServer:Query( cQuery )
+   oQuery := oServer:Query(cQuery)
 
    IF oQuery:NetErr()
       ? oQuery:ErrorMsg()
@@ -50,7 +53,7 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    ? "Structure of test table"
 
-   FOR EACH i IN oServer:TableStruct( "test" )
+   FOR EACH i IN oServer:TableStruct("test")
       ?
       FOR EACH x IN i
          ?? x, ""
@@ -62,9 +65,9 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    FOR i := 1 TO 10
       cQuery := "INSERT INTO test(code, dept, name, sales, tax, salary, budget, Discount, Creation, Description) " + ;
-         "VALUES( " + hb_ntos( i ) + ", 2, 'TEST', 'y', 5, 3000, 1500.2, 7.5, '2003-12-17', 'Short Description about what ?')"
+         "VALUES( " + hb_ntos(i) + ", 2, 'TEST', 'y', 5, 3000, 1500.2, 7.5, '2003-12-17', 'Short Description about what ?' )"
 
-      oQuery := oServer:Query( cQuery )
+      oQuery := oServer:Query(cQuery)
 
       IF oQuery:NetErr()
          ? oQuery:errorMsg()
@@ -75,10 +78,10 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    oServer:Commit()
 
-   oQuery := oServer:Query( "SELECT code, name, description, sales FROM test" )
+   oQuery := oServer:Query("SELECT code, name, description, sales FROM test")
 
    FOR EACH i IN oQuery:Struct()
-      ? i[ 1 ], i[ 2 ], i[ 3 ], i[ 4 ]
+      ? i[1], i[2], i[3], i[4]
    NEXT
 
    ? "Fields:", oQuery:FCount()
@@ -87,29 +90,29 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
 
    ? ;
       oRow:FCount(), ;
-      oRow:FieldPos( "sales" ), ;
+      oRow:FieldPos("sales"), ;
       oRow:FieldGet(1), ;
       oRow:FieldName(2), ;
       oRow:FieldType(1), ;
       oRow:FieldDec(1), ;
       oRow:FieldLen(1)
 
-   oRow:FieldPut( 1, 150 )
-   oRow:FieldPut( 2, "MY TEST" )
+   oRow:FieldPut(1, 150)
+   oRow:FieldPut(2, "MY TEST")
 
    ? oRow:FieldGet(1), oRow:FieldGet(2)
 
-   ? oRow:aRow[ 1 ], oRow:aRow[ 2 ], oRow:aOld[ 1 ], oRow:aOld[ 2 ]
+   ? oRow:aRow[1], oRow:aRow[2], oRow:aOld[1], oRow:aOld[2]
 
-   ? oQuery:Append( oRow )
+   ? oQuery:Append(oRow)
 
    ? oQuery:ErrorMsg()
 
-   DO WHILE ! oQuery:Eof()
+   DO WHILE !oQuery:Eof()
       ? ;
          oQuery:RecNo(), ;
-         oQuery:FieldPos( "code" ), ;
-         oQuery:FieldGet( oQuery:FieldPos( "code" ) ), ;
+         oQuery:FieldPos("code"), ;
+         oQuery:FieldGet(oQuery:FieldPos("code")), ;
          oQuery:FieldGet(4), ;
          oQuery:FieldGet(2), ;
          oQuery:FieldName(1), ;
@@ -121,13 +124,13 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
       IF oQuery:RecNo() == 50
          oRow := oQuery:getrow()
 
-         oRow:FieldPut( 2, "My Second test" )
-         ? "Update:", oQuery:Update( oRow )
+         oRow:FieldPut(2, "My Second test")
+         ? "Update:", oQuery:Update(oRow)
       ENDIF
 
       IF oQuery:RecNo() == 60
          oRow := oQuery:getrow()
-         ? "Delete:", oQuery:Delete( oRow )
+         ? "Delete:", oQuery:Delete(oRow)
       ENDIF
 
       oQuery:Skip()
@@ -137,17 +140,17 @@ PROCEDURE Main( cHost, cDatabase, cUser, cPass )
    oQuery:Refresh()
 
    FOR i := 1 TO oQuery:LastRec()
-      oRow := oQuery:getrow( i )
+      oRow := oQuery:getrow(i)
 
       ? i, ;
-         oRow:FieldGet( oRow:FieldPos( "code" ) ), ;
+         oRow:FieldGet(oRow:FieldPos("code")), ;
          oRow:FieldGet(4), ;
          oRow:FieldGet(2), ;
          oRow:FieldName(1), ;
          oRow:FieldType(1), ;
          oRow:FieldDec(1), ;
          oRow:FieldLen(1), ;
-         oRow:FieldGet( i, 3 )
+         oRow:FieldGet(i, 3)
 
    NEXT
 

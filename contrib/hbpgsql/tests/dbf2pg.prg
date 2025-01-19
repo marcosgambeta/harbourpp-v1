@@ -1,10 +1,9 @@
-/*
- * Converts a .dbf file into a Postgres table
- *
- * Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
- * (The original file was ported from mysql and changed by Rodrigo Moreno rodrigo_moreno@yahoo.com)
- *
- */
+//
+// Converts a .dbf file into a Postgres table
+//
+// Copyright 2000 Maurilio Longo <maurilio.longo@libero.it>
+// (The original file was ported from mysql and changed by Rodrigo Moreno rodrigo_moreno@yahoo.com)
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -59,10 +58,14 @@ PROCEDURE Main()
    LOCAL cHostName
    LOCAL cUser
    LOCAL cPassword
-   LOCAL cDatabase := "postgres", cTable, cFile
+   LOCAL cDatabase := "postgres"
+   LOCAL cTable
+   LOCAL cFile
    LOCAL i
    LOCAL lCreateTable := .F.
-   LOCAL oServer, oTable, oRecord
+   LOCAL oServer
+   LOCAL oTable
+   LOCAL oRecord
    LOCAL cField
    LOCAL cTypeDB
    LOCAL cTypePG
@@ -75,26 +78,26 @@ PROCEDURE Main()
    LOCAL lUseTrans := .F.
    LOCAL cPath := "public"
 
-   Set( _SET_DATEFORMAT, "yyyy-mm-dd" )
-   Set( _SET_DELETED, .T. )
+   Set(_SET_DATEFORMAT, "yyyy-mm-dd")
+   Set(_SET_DELETED, .T.)
 
-   /* Scan parameters and setup workings */
+   // Scan parameters and setup workings
    FOR i := 1 TO PCount()
 
-      SWITCH hb_PValue( i )
-      CASE "-h" ; cHostName := hb_PValue( ++i ) ; EXIT
-      CASE "-d" ; cDatabase := hb_PValue( ++i ) ; EXIT
-      CASE "-t" ; cTable := AllTrim(hb_PValue( ++i )) ; EXIT
-      CASE "-f" ; cFile := hb_PValue( ++i ) ; EXIT
-      CASE "-u" ; cUser := hb_PValue( ++i ) ; EXIT
-      CASE "-p" ; cPassword := hb_PValue( ++i ) ; EXIT
+      SWITCH hb_PValue(i)
+      CASE "-h" ; cHostName := hb_PValue(++i) ; EXIT
+      CASE "-d" ; cDatabase := hb_PValue(++i) ; EXIT
+      CASE "-t" ; cTable := AllTrim(hb_PValue(++i)) ; EXIT
+      CASE "-f" ; cFile := hb_PValue(++i) ; EXIT
+      CASE "-u" ; cUser := hb_PValue(++i) ; EXIT
+      CASE "-p" ; cPassword := hb_PValue(++i) ; EXIT
       CASE "-c" ; lCreateTable := .T. ; EXIT
       CASE "-x" ; lTruncate := .T. ; EXIT
       CASE "-s" ; lUseTrans := .T. ; EXIT
-      CASE "-m" ; nCommit := Val( hb_PValue( ++i ) ) ; EXIT
-      CASE "-r" ; nRecno := Val( hb_PValue( ++i ) ) ; EXIT
-      CASE "-e" ; cPath := hb_PValue( ++i ) ; EXIT
-      CASE "-cp" ; Set( _SET_DBCODEPAGE, hb_PValue( ++i ) ) ; EXIT
+      CASE "-m" ; nCommit := Val(hb_PValue(++i)) ; EXIT
+      CASE "-r" ; nRecno := Val(hb_PValue(++i)) ; EXIT
+      CASE "-e" ; cPath := hb_PValue(++i) ; EXIT
+      CASE "-cp" ; Set(_SET_DBCODEPAGE, hb_PValue(++i)) ; EXIT
       OTHERWISE
          help()
          RETURN
@@ -107,14 +110,14 @@ PROCEDURE Main()
    ENDIF
 
    // create log file
-   IF ( hFile := hb_vfOpen( cTable + ".log", FO_CREAT + FO_TRUNC + FO_WRITE ) ) == NIL
+   IF (hFile := hb_vfOpen(cTable + ".log", FO_CREAT + FO_TRUNC + FO_WRITE)) == NIL
       ? "Cannot create log file"
       RETURN
    ENDIF
 
-   USE ( cFile ) SHARED READONLY
+   USE (cFile) SHARED READONLY
 
-   oServer := TPQServer():New( cHostName, cDatabase, cUser, cPassword, , cPath )
+   oServer := TPQServer():New(cHostName, cDatabase, cUser, cPassword, , cPath)
    IF oServer:NetErr()
       ? oServer:ErrorMsg()
       RETURN
@@ -123,40 +126,40 @@ PROCEDURE Main()
    oServer:lallCols := .F.
 
    IF lCreateTable
-      IF oServer:TableExists( cTable )
-         oServer:DeleteTable( cTable )
+      IF oServer:TableExists(cTable)
+         oServer:DeleteTable(cTable)
          IF oServer:NetErr()
             ? oServer:ErrorMsg()
-            hb_vfWrite( hFile, "Error: " + oServer:ErrorMsg() + hb_eol() )
-            hb_vfClose( hFile )
+            hb_vfWrite(hFile, "Error: " + oServer:ErrorMsg() + hb_eol())
+            hb_vfClose(hFile)
             RETURN
          ENDIF
       ENDIF
 
-      oServer:CreateTable( cTable, dbStruct() )
+      oServer:CreateTable(cTable, dbStruct())
       IF oServer:NetErr()
          ? oServer:ErrorMsg()
-         hb_vfWrite( hFile, "Error: " + oServer:ErrorMsg() + hb_eol() )
-         hb_vfClose( hFile )
+         hb_vfWrite(hFile, "Error: " + oServer:ErrorMsg() + hb_eol())
+         hb_vfClose(hFile)
          RETURN
       ENDIF
    ENDIF
 
    IF lTruncate
-      oServer:Execute( "truncate table " + cTable )
+      oServer:Execute("truncate table " + cTable)
       IF oServer:NetErr()
          ? oServer:ErrorMsg()
-         hb_vfWrite( hFile, "Error: " + oServer:ErrorMsg() + hb_eol() )
-         hb_vfClose( hFile )
+         hb_vfWrite(hFile, "Error: " + oServer:ErrorMsg() + hb_eol())
+         hb_vfClose(hFile)
          RETURN
       ENDIF
    ENDIF
 
-   oTable := oServer:Query( "SELECT * FROM " + cTable + " LIMIT 1" )
+   oTable := oServer:Query("SELECT * FROM " + cTable + " LIMIT 1")
    IF oTable:NetErr()
       ? oTable:ErrorMsg()
-      hb_vfWrite( hFile, "Error: " + oTable:ErrorMsg() + hb_eol() )
-      hb_vfClose( hFile )
+      hb_vfWrite(hFile, "Error: " + oTable:ErrorMsg() + hb_eol())
+      hb_vfClose(hFile)
       RETURN
    ENDIF
 
@@ -164,58 +167,58 @@ PROCEDURE Main()
       oServer:StartTransaction()
    ENDIF
 
-   hb_vfWrite( hFile, "Start: " + Time() + hb_eol() )
+   hb_vfWrite(hFile, "Start: " + Time() + hb_eol())
 
    ? "Start:", Time()
    ?
 
    IF nRecno != 0
-      dbGoto( nRecno )
+      dbGoto(nRecno)
    ENDIF
 
-   DO WHILE ! Eof() .AND. hb_keyStd( Inkey() ) != K_ESC .AND. ( nRecno == 0 .OR. nRecno == RecNo() )
+   DO WHILE !Eof() .AND. hb_keyStd(Inkey()) != K_ESC .AND. (nRecno == 0 .OR. nRecno == RecNo())
       oRecord := oTable:GetBlankRow()
 
       FOR i := 1 TO oTable:FCount()
-         cField := Lower(oTable:FieldName( i ))
-         cTypeDB := Left(hb_FieldType( FieldPos( cField ) ), 1)
-         cTypePG := oRecord:FieldType( i )
-         cValue := FieldGet( FieldPos( cField ) )
+         cField := Lower(oTable:FieldName(i))
+         cTypeDB := Left(hb_FieldType(FieldPos(cField)), 1)
+         cTypePG := oRecord:FieldType(i)
+         cValue := FieldGet(FieldPos(cField))
 
          IF cValue != NIL
             IF cTypePG != cTypeDB
                DO CASE
-               CASE cTypePG == "C" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := hb_ntos( cValue )
+               CASE cTypePG == "C" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := hb_ntos(cValue)
                CASE cTypePG == "C" .AND. cTypeDB == "D" ; cValue := DToC(cValue)
                CASE cTypePG == "C" .AND. cTypeDB $ "T@" ; cValue := hb_TToC(cValue)
                CASE cTypePG == "C" .AND. cTypeDB == "L" ; cValue := iif(cValue, "S", "N")
-               CASE cTypePG == "N" .AND. cTypeDB $ "CQ" ; cValue := Val( cValue )
-               CASE cTypePG == "N" .AND. cTypeDB == "D" ; cValue := Val( DToS( cValue ) )
+               CASE cTypePG == "N" .AND. cTypeDB $ "CQ" ; cValue := Val(cValue)
+               CASE cTypePG == "N" .AND. cTypeDB == "D" ; cValue := Val(DToS(cValue))
                CASE cTypePG == "N" .AND. cTypeDB == "L" ; cValue := iif(cValue, 1, 0)
-               CASE cTypePG == "D" .AND. cTypeDB $ "CQ" ; cValue := CToD( cValue )
-               CASE cTypePG == "D" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := hb_SToD( hb_ntos( cValue ) )
-               CASE cTypePG == "L" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := ! Empty(cValue)
+               CASE cTypePG == "D" .AND. cTypeDB $ "CQ" ; cValue := CToD(cValue)
+               CASE cTypePG == "D" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := hb_SToD(hb_ntos(cValue))
+               CASE cTypePG == "L" .AND. cTypeDB $ "NIYF8BZ24" ; cValue := !Empty(cValue)
                CASE cTypePG == "L" .AND. cTypeDB $ "CQ" ; cValue := AllTrim(cValue) $ "YySs1"
                ENDCASE
             ENDIF
 
             IF cValue != NIL
-               IF oRecord:FieldType( i ) == "C" .OR. oRecord:FieldType( i ) == "M"
-                  oRecord:FieldPut( i, hb_StrToUTF8( cValue ) )
+               IF oRecord:FieldType(i) == "C" .OR. oRecord:FieldType(i) == "M"
+                  oRecord:FieldPut(i, hb_StrToUTF8(cValue))
                ELSE
-                  oRecord:FieldPut( i, cValue )
+                  oRecord:FieldPut(i, cValue)
                ENDIF
             ENDIF
          ENDIF
       NEXT
 
-      oTable:Append( oRecord )
+      oTable:Append(oRecord)
 
       IF oTable:NetErr()
          ?
          ? "Error Record:", RecNo(), Left(oTable:ErrorMsg(), 70)
          ?
-         hb_vfWrite( hFile, "Error at record: " + hb_ntos( RecNo() ) + " Description: " + oTable:ErrorMsg() + hb_eol() )
+         hb_vfWrite(hFile, "Error at record: " + hb_ntos(RecNo()) + " Description: " + oTable:ErrorMsg() + hb_eol())
       ELSE
          nCount++
       ENDIF
@@ -223,8 +226,8 @@ PROCEDURE Main()
       dbSkip()
 
       IF nCount % nCommit == 0
-         DevPos( Row(), 1 )
-         DevOut( "imported recs:", hb_ntos( nCount ) )
+         DevPos(Row(), 1)
+         DevOut("imported recs:", hb_ntos(nCount))
 
          IF lUseTrans
             oServer:commit()
@@ -237,11 +240,11 @@ PROCEDURE Main()
       oServer:commit()
    ENDIF
 
-   hb_vfWrite( hFile, "End: " + Time() + ", records in dbf: " + hb_ntos( RecNo() ) + ", imported recs: " + hb_ntos( nCount ) + hb_eol() )
+   hb_vfWrite(hFile, "End: " + Time() + ", records in dbf: " + hb_ntos(RecNo()) + ", imported recs: " + hb_ntos(nCount) + hb_eol())
 
    ? "End:", Time()
 
-   hb_vfClose( hFile )
+   hb_vfClose(hFile)
 
    dbCloseAll()
 

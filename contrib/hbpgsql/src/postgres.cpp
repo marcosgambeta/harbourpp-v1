@@ -1,11 +1,10 @@
-/*
- * PostgreSQL RDBMS low-level (client API) interface code.
- *
- * Copyright 2016 P.Chornyj <myorg63@mail.ru>
- * Copyright 2010-2016 Viktor Szakats (vsz.me/hb) (GC support, etc)
- * Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
- *
- */
+//
+// PostgreSQL RDBMS low-level (client API) interface code.
+//
+// Copyright 2016 P.Chornyj <myorg63@mail.ru>
+// Copyright 2010-2016 Viktor Szakats (vsz.me/hb) (GC support, etc)
+// Copyright 2003 Rodrigo Moreno rodrigo_moreno@yahoo.com
+//
 
 // $HB_BEGIN_LICENSE$
 // This program is free software; you can redistribute it and/or modify
@@ -56,13 +55,13 @@ static HB_GARBAGE_FUNC(PGconn_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     PQfinish(static_cast<PGconn *>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -93,13 +92,13 @@ static HB_GARBAGE_FUNC(PGresult_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     PQclear(static_cast<PGresult *>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -132,13 +131,13 @@ static HB_GARBAGE_FUNC(PGcancel_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     PQfreeCancel(static_cast<PGcancel *>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -173,13 +172,13 @@ static HB_GARBAGE_FUNC(FILE_release)
 {
   auto ph = static_cast<void **>(Cargo);
 
-  /* Check if pointer is not nullptr to avoid multiple freeing */
+  // Check if pointer is not nullptr to avoid multiple freeing
   if (ph && *ph)
   {
-    /* Destroy the object */
+    // Destroy the object
     fclose(static_cast<FILE *>(*ph));
 
-    /* set pointer to nullptr to avoid multiple freeing */
+    // set pointer to nullptr to avoid multiple freeing
     *ph = nullptr;
   }
 }
@@ -208,11 +207,9 @@ static FILE *hb_FILE_par(int iParam)
 
 #endif
 
-/* Get the version of the libpq library in use */
+// Get the version of the libpq library in use
 
-/*
-PQLIBVERSION() -->
-*/
+// PQLIBVERSION() -->
 HB_FUNC(PQLIBVERSION)
 {
 #if PG_VERSION_NUM >= 90100
@@ -222,14 +219,12 @@ HB_FUNC(PQLIBVERSION)
 #endif
 }
 
-/* Connection handling functions */
+// Connection handling functions
 
-/* 31.1. Database Connection Control Functions
-   The following functions deal with making a connection to a PostgreSQL backend server. */
+// 31.1. Database Connection Control Functions
+// The following functions deal with making a connection to a PostgreSQL backend server.
 
-/*
-PQCONNECTDBPARAMS() -->
-*/
+// PQCONNECTDBPARAMS() -->
 HB_FUNC(PQCONNECTDBPARAMS)
 {
   auto pParam = hb_param(1, Harbour::Item::HASH);
@@ -261,9 +256,7 @@ HB_FUNC(PQCONNECTDBPARAMS)
   }
 }
 
-/*
-PQCONNECTDB() -->
-*/
+// PQCONNECTDB() -->
 HB_FUNC(PQCONNECTDB)
 {
   if (HB_ISCHAR(1))
@@ -276,11 +269,9 @@ HB_FUNC(PQCONNECTDB)
   }
 }
 
-/* NOTE: Deprecated */
+// NOTE: Deprecated
 
-/*
-PQSETDBLOGIN() -->
-*/
+// PQSETDBLOGIN() -->
 HB_FUNC(PQSETDBLOGIN)
 {
   hb_PGconn_ret(PQsetdbLogin(hb_parcx(1) /* pghost */, hb_parcx(2) /* pgport */, hb_parcx(3) /* pgoptions */,
@@ -288,9 +279,7 @@ HB_FUNC(PQSETDBLOGIN)
                              hb_parcx(7) /* pwd */));
 }
 
-/*
-PQCONNECTSTARTPARAMS() -->
-*/
+// PQCONNECTSTARTPARAMS() -->
 HB_FUNC(PQCONNECTSTARTPARAMS)
 {
   auto pParam = hb_param(1, Harbour::Item::HASH);
@@ -322,9 +311,7 @@ HB_FUNC(PQCONNECTSTARTPARAMS)
   }
 }
 
-/*
-PQCONNECTSTART() -->
-*/
+// PQCONNECTSTART() -->
 HB_FUNC(PQCONNECTSTART)
 {
   if (HB_ISCHAR(1))
@@ -337,9 +324,7 @@ HB_FUNC(PQCONNECTSTART)
   }
 }
 
-/*
-PQCONNECTPOLL() -->
-*/
+// PQCONNECTPOLL() -->
 HB_FUNC(PQCONNECTPOLL)
 {
   auto conn = hb_PGconn_par(1);
@@ -354,9 +339,7 @@ HB_FUNC(PQCONNECTPOLL)
   }
 }
 
-/*
-PQRESET() -->
-*/
+// PQRESET() -->
 HB_FUNC(PQRESET)
 {
   auto conn = hb_PGconn_par(1);
@@ -371,9 +354,7 @@ HB_FUNC(PQRESET)
   }
 }
 
-/*
-PQRESETSTART() -->
-*/
+// PQRESETSTART() -->
 HB_FUNC(PQRESETSTART)
 {
   auto conn = hb_PGconn_par(1);
@@ -388,9 +369,7 @@ HB_FUNC(PQRESETSTART)
   }
 }
 
-/*
-PQRESETPOLL() -->
-*/
+// PQRESETPOLL() -->
 HB_FUNC(PQRESETPOLL)
 {
   auto conn = hb_PGconn_par(1);
@@ -405,9 +384,7 @@ HB_FUNC(PQRESETPOLL)
   }
 }
 
-/*
-PQPINGPARAMS() -->
-*/
+// PQPINGPARAMS() -->
 HB_FUNC(PQPINGPARAMS)
 {
   auto pParam = hb_param(1, Harbour::Item::HASH);
@@ -439,9 +416,7 @@ HB_FUNC(PQPINGPARAMS)
   }
 }
 
-/*
-PQPING() -->
-*/
+// PQPING() -->
 HB_FUNC(PQPING)
 {
   if (HB_ISCHAR(1))
@@ -458,12 +433,10 @@ HB_FUNC(PQPING)
   }
 }
 
-/* 31.2. Connection Status Functions.
-   These functions can be used to interrogate the status of an existing database connection object. */
+// 31.2. Connection Status Functions.
+// These functions can be used to interrogate the status of an existing database connection object.
 
-/*
-PQCLIENTENCODING() -->
-*/
+// PQCLIENTENCODING() -->
 HB_FUNC(PQCLIENTENCODING)
 {
   auto conn = hb_PGconn_par(1);
@@ -478,9 +451,7 @@ HB_FUNC(PQCLIENTENCODING)
   }
 }
 
-/*
-PQSETCLIENTENCODING() -->
-*/
+// PQSETCLIENTENCODING() -->
 HB_FUNC(PQSETCLIENTENCODING)
 {
   auto conn = hb_PGconn_par(1);
@@ -495,9 +466,7 @@ HB_FUNC(PQSETCLIENTENCODING)
   }
 }
 
-/*
-PQDB() -->
-*/
+// PQDB() -->
 HB_FUNC(PQDB)
 {
   auto conn = hb_PGconn_par(1);
@@ -512,9 +481,7 @@ HB_FUNC(PQDB)
   }
 }
 
-/*
-PQUSER() -->
-*/
+// PQUSER() -->
 HB_FUNC(PQUSER)
 {
   auto conn = hb_PGconn_par(1);
@@ -529,9 +496,7 @@ HB_FUNC(PQUSER)
   }
 }
 
-/*
-PQPASS() -->
-*/
+// PQPASS() -->
 HB_FUNC(PQPASS)
 {
   auto conn = hb_PGconn_par(1);
@@ -546,9 +511,7 @@ HB_FUNC(PQPASS)
   }
 }
 
-/*
-PQHOST() -->
-*/
+// PQHOST() -->
 HB_FUNC(PQHOST)
 {
   auto conn = hb_PGconn_par(1);
@@ -563,9 +526,7 @@ HB_FUNC(PQHOST)
   }
 }
 
-/*
-PQPORT() -->
-*/
+// PQPORT() -->
 HB_FUNC(PQPORT)
 {
   auto conn = hb_PGconn_par(1);
@@ -580,9 +541,7 @@ HB_FUNC(PQPORT)
   }
 }
 
-/*
-PQTTY() -->
-*/
+// PQTTY() -->
 HB_FUNC(PQTTY)
 {
   auto conn = hb_PGconn_par(1);
@@ -597,9 +556,7 @@ HB_FUNC(PQTTY)
   }
 }
 
-/*
-PQOPTIONS() -->
-*/
+// PQOPTIONS() -->
 HB_FUNC(PQOPTIONS)
 {
   auto conn = hb_PGconn_par(1);
@@ -614,9 +571,7 @@ HB_FUNC(PQOPTIONS)
   }
 }
 
-/*
-PQRESULTERRORFIELD() -->
-*/
+// PQRESULTERRORFIELD() -->
 HB_FUNC(PQRESULTERRORFIELD)
 {
   auto res = hb_PGresult_par(1);
@@ -635,20 +590,16 @@ HB_FUNC(PQRESULTERRORFIELD)
   }
 }
 
-/*
-PQRESSTATUS() -->
-*/
+// PQRESSTATUS() -->
 HB_FUNC(PQRESSTATUS)
 {
   hb_retc(PQresStatus(static_cast<ExecStatusType>(hb_parnl(1))));
 }
 
-/* 31.2. Connection Status Functions.
-   These functions can be used to interrogate the status of an existing database connection object. */
+// 31.2. Connection Status Functions.
+// These functions can be used to interrogate the status of an existing database connection object.
 
-/*
-PQSTATUS() -->
-*/
+// PQSTATUS() -->
 HB_FUNC(PQSTATUS)
 {
   auto conn = hb_PGconn_par(1);
@@ -663,9 +614,7 @@ HB_FUNC(PQSTATUS)
   }
 }
 
-/*
-PQTRANSACTIONSTATUS() -->
-*/
+// PQTRANSACTIONSTATUS() -->
 HB_FUNC(PQTRANSACTIONSTATUS)
 {
   auto conn = hb_PGconn_par(1);
@@ -680,9 +629,7 @@ HB_FUNC(PQTRANSACTIONSTATUS)
   }
 }
 
-/*
-PQPARAMETERSTATUS() -->
-*/
+// PQPARAMETERSTATUS() -->
 HB_FUNC(PQPARAMETERSTATUS)
 {
   auto conn = hb_PGconn_par(1);
@@ -697,9 +644,7 @@ HB_FUNC(PQPARAMETERSTATUS)
   }
 }
 
-/*
-PQPROTOCOLVERSION() -->
-*/
+// PQPROTOCOLVERSION() -->
 HB_FUNC(PQPROTOCOLVERSION)
 {
   auto conn = hb_PGconn_par(1);
@@ -714,9 +659,7 @@ HB_FUNC(PQPROTOCOLVERSION)
   }
 }
 
-/*
-PQSERVERVERSION() -->
-*/
+// PQSERVERVERSION() -->
 HB_FUNC(PQSERVERVERSION)
 {
   auto conn = hb_PGconn_par(1);
@@ -735,9 +678,7 @@ HB_FUNC(PQSERVERVERSION)
   }
 }
 
-/*
-PQERRORMESSAGE() -->
-*/
+// PQERRORMESSAGE() -->
 HB_FUNC(PQERRORMESSAGE)
 {
   auto conn = hb_PGconn_par(1);
@@ -752,9 +693,7 @@ HB_FUNC(PQERRORMESSAGE)
   }
 }
 
-/*
-PQSOCKET() -->
-*/
+// PQSOCKET() -->
 HB_FUNC(PQSOCKET)
 {
   auto conn = hb_PGconn_par(1);
@@ -769,9 +708,7 @@ HB_FUNC(PQSOCKET)
   }
 }
 
-/*
-PQBACKENDPID() -->
-*/
+// PQBACKENDPID() -->
 HB_FUNC(PQBACKENDPID)
 {
   auto conn = hb_PGconn_par(1);
@@ -786,9 +723,7 @@ HB_FUNC(PQBACKENDPID)
   }
 }
 
-/*
-PQCONNECTIONNEEDSPASSWORD() -->
-*/
+// PQCONNECTIONNEEDSPASSWORD() -->
 HB_FUNC(PQCONNECTIONNEEDSPASSWORD)
 {
   auto conn = hb_PGconn_par(1);
@@ -807,9 +742,7 @@ HB_FUNC(PQCONNECTIONNEEDSPASSWORD)
   }
 }
 
-/*
-PQCONNECTIONUSEDPASSWORD() -->
-*/
+// PQCONNECTIONUSEDPASSWORD() -->
 HB_FUNC(PQCONNECTIONUSEDPASSWORD)
 {
   auto conn = hb_PGconn_par(1);
@@ -828,9 +761,7 @@ HB_FUNC(PQCONNECTIONUSEDPASSWORD)
   }
 }
 
-/*
-PQSSLINUSE() -->
-*/
+// PQSSLINUSE() -->
 HB_FUNC(PQSSLINUSE)
 {
   auto conn = hb_PGconn_par(1);
@@ -849,9 +780,7 @@ HB_FUNC(PQSSLINUSE)
   }
 }
 
-/*
-PQSSLATTRIBUTE() -->
-*/
+// PQSSLATTRIBUTE() -->
 HB_FUNC(PQSSLATTRIBUTE)
 {
   auto conn = hb_PGconn_par(1);
@@ -870,11 +799,9 @@ HB_FUNC(PQSSLATTRIBUTE)
   }
 }
 
-/* Query handling functions */
+// Query handling functions
 
-/*
-PQEXEC() -->
-*/
+// PQEXEC() -->
 HB_FUNC(PQEXEC)
 {
   auto conn = hb_PGconn_par(1);
@@ -889,9 +816,7 @@ HB_FUNC(PQEXEC)
   }
 }
 
-/*
-PQEXECPARAMS() -->
-*/
+// PQEXECPARAMS() -->
 HB_FUNC(PQEXECPARAMS)
 {
   auto conn = hb_PGconn_par(1);
@@ -925,10 +850,8 @@ HB_FUNC(PQEXECPARAMS)
   }
 }
 
-/*
-PQFCOUNT() -->
-*/
-HB_FUNC(PQFCOUNT) /* not a direct wrapper */
+// PQFCOUNT() -->
+HB_FUNC(PQFCOUNT) // not a direct wrapper
 {
   auto res = hb_PGresult_par(1);
 
@@ -949,10 +872,8 @@ HB_FUNC(PQFCOUNT) /* not a direct wrapper */
   }
 }
 
-/*
-PQLASTREC() -->
-*/
-HB_FUNC(PQLASTREC) /* not a direct wrapper */
+// PQLASTREC() -->
+HB_FUNC(PQLASTREC) // not a direct wrapper
 {
   auto res = hb_PGresult_par(1);
 
@@ -973,9 +894,7 @@ HB_FUNC(PQLASTREC) /* not a direct wrapper */
   }
 }
 
-/*
-PQGETVALUE() -->
-*/
+// PQGETVALUE() -->
 HB_FUNC(PQGETVALUE)
 {
   auto res = hb_PGresult_par(1);
@@ -1007,9 +926,7 @@ HB_FUNC(PQGETVALUE)
   }
 }
 
-/*
-PQGETLENGTH() -->
-*/
+// PQGETLENGTH() -->
 HB_FUNC(PQGETLENGTH)
 {
   auto res = hb_PGresult_par(1);
@@ -1034,7 +951,7 @@ HB_FUNC(PQGETLENGTH)
   }
 }
 
-/* PQmetadata() positions for array returned */
+// PQmetadata() positions for array returned
 #define HBPG_META_FIELDNAME 1
 #define HBPG_META_FIELDTYPE 2
 #define HBPG_META_FIELDLEN 3
@@ -1043,10 +960,8 @@ HB_FUNC(PQGETLENGTH)
 #define HBPG_META_TABLECOL 6
 #define HBPG_META_LEN_ 6
 
-/*
-PQMETADATA() -->
-*/
-HB_FUNC(PQMETADATA) /* not a direct wrapper */
+// PQMETADATA() -->
+HB_FUNC(PQMETADATA) // not a direct wrapper
 {
   auto res = hb_PGresult_par(1);
 
@@ -1184,10 +1099,8 @@ HB_FUNC(PQMETADATA) /* not a direct wrapper */
   }
 }
 
-/*
-PQRESULT2ARRAY() -->
-*/
-HB_FUNC(PQRESULT2ARRAY) /* not a direct wrapper */
+// PQRESULT2ARRAY() -->
+HB_FUNC(PQRESULT2ARRAY) // not a direct wrapper
 {
   auto res = hb_PGresult_par(1);
 
@@ -1223,9 +1136,7 @@ HB_FUNC(PQRESULT2ARRAY) /* not a direct wrapper */
   }
 }
 
-/*
-PQRESULTERRORMESSAGE() -->
-*/
+// PQRESULTERRORMESSAGE() -->
 HB_FUNC(PQRESULTERRORMESSAGE)
 {
   auto res = hb_PGresult_par(1);
@@ -1240,9 +1151,7 @@ HB_FUNC(PQRESULTERRORMESSAGE)
   }
 }
 
-/*
-PQRESULTSTATUS() -->
-*/
+// PQRESULTSTATUS() -->
 HB_FUNC(PQRESULTSTATUS)
 {
   auto res = hb_PGresult_par(1);
@@ -1257,9 +1166,7 @@ HB_FUNC(PQRESULTSTATUS)
   }
 }
 
-/*
-PQCMDSTATUS() -->
-*/
+// PQCMDSTATUS() -->
 HB_FUNC(PQCMDSTATUS)
 {
   auto res = hb_PGresult_par(1);
@@ -1274,9 +1181,7 @@ HB_FUNC(PQCMDSTATUS)
   }
 }
 
-/*
-PQCMDTUPLES() -->
-*/
+// PQCMDTUPLES() -->
 HB_FUNC(PQCMDTUPLES)
 {
   auto res = hb_PGresult_par(1);
@@ -1291,9 +1196,7 @@ HB_FUNC(PQCMDTUPLES)
   }
 }
 
-/*
-PQESCAPESTRING() -->
-*/
+// PQESCAPESTRING() -->
 HB_FUNC(PQESCAPESTRING)
 {
   auto source = hb_parcx(1);
@@ -1303,10 +1206,8 @@ HB_FUNC(PQESCAPESTRING)
   hb_retc_buffer(dest);
 }
 
-/*
-PQESCAPEBYTEA() -->
-*/
-HB_FUNC(PQESCAPEBYTEA) /* deprecated */
+// PQESCAPEBYTEA() -->
+HB_FUNC(PQESCAPEBYTEA) // deprecated
 {
   if (HB_ISCHAR(1))
   {
@@ -1322,9 +1223,7 @@ HB_FUNC(PQESCAPEBYTEA) /* deprecated */
   }
 }
 
-/*
-PQUNESCAPEBYTEA() -->
-*/
+// PQUNESCAPEBYTEA() -->
 HB_FUNC(PQUNESCAPEBYTEA)
 {
   if (HB_ISCHAR(1))
@@ -1340,9 +1239,7 @@ HB_FUNC(PQUNESCAPEBYTEA)
   }
 }
 
-/*
-PQOIDVALUE() -->
-*/
+// PQOIDVALUE() -->
 HB_FUNC(PQOIDVALUE)
 {
   auto res = hb_PGresult_par(1);
@@ -1357,9 +1254,7 @@ HB_FUNC(PQOIDVALUE)
   }
 }
 
-/*
-PQOIDSTATUS() -->
-*/
+// PQOIDSTATUS() -->
 HB_FUNC(PQOIDSTATUS)
 {
   auto res = hb_PGresult_par(1);
@@ -1374,9 +1269,7 @@ HB_FUNC(PQOIDSTATUS)
   }
 }
 
-/*
-PQBINARYTUPLES() -->
-*/
+// PQBINARYTUPLES() -->
 HB_FUNC(PQBINARYTUPLES)
 {
   auto res = hb_PGresult_par(1);
@@ -1391,9 +1284,7 @@ HB_FUNC(PQBINARYTUPLES)
   }
 }
 
-/*
-PQFTABLE() -->
-*/
+// PQFTABLE() -->
 HB_FUNC(PQFTABLE)
 {
   auto res = hb_PGresult_par(1);
@@ -1408,9 +1299,7 @@ HB_FUNC(PQFTABLE)
   }
 }
 
-/*
-PQFTYPE() -->
-*/
+// PQFTYPE() -->
 HB_FUNC(PQFTYPE)
 {
   auto res = hb_PGresult_par(1);
@@ -1425,9 +1314,7 @@ HB_FUNC(PQFTYPE)
   }
 }
 
-/*
-PQFNAME() -->
-*/
+// PQFNAME() -->
 HB_FUNC(PQFNAME)
 {
   auto res = hb_PGresult_par(1);
@@ -1442,9 +1329,7 @@ HB_FUNC(PQFNAME)
   }
 }
 
-/*
-PQFMOD() -->
-*/
+// PQFMOD() -->
 HB_FUNC(PQFMOD)
 {
   auto res = hb_PGresult_par(1);
@@ -1459,9 +1344,7 @@ HB_FUNC(PQFMOD)
   }
 }
 
-/*
-PQFSIZE() -->
-*/
+// PQFSIZE() -->
 HB_FUNC(PQFSIZE)
 {
   auto res = hb_PGresult_par(1);
@@ -1476,9 +1359,7 @@ HB_FUNC(PQFSIZE)
   }
 }
 
-/*
-PQGETISNULL() -->
-*/
+// PQGETISNULL() -->
 HB_FUNC(PQGETISNULL)
 {
   auto res = hb_PGresult_par(1);
@@ -1493,9 +1374,7 @@ HB_FUNC(PQGETISNULL)
   }
 }
 
-/*
-PQFNUMBER() -->
-*/
+// PQFNUMBER() -->
 HB_FUNC(PQFNUMBER)
 {
   auto res = hb_PGresult_par(1);
@@ -1510,9 +1389,7 @@ HB_FUNC(PQFNUMBER)
   }
 }
 
-/*
-PQNTUPLES() -->
-*/
+// PQNTUPLES() -->
 HB_FUNC(PQNTUPLES)
 {
   auto res = hb_PGresult_par(1);
@@ -1527,9 +1404,7 @@ HB_FUNC(PQNTUPLES)
   }
 }
 
-/*
-PQNFIELDS() -->
-*/
+// PQNFIELDS() -->
 HB_FUNC(PQNFIELDS)
 {
   auto res = hb_PGresult_par(1);
@@ -1544,11 +1419,9 @@ HB_FUNC(PQNFIELDS)
   }
 }
 
-/* Asynchronous functions */
+// Asynchronous functions
 
-/*
-PQSENDQUERY() -->
-*/
+// PQSENDQUERY() -->
 HB_FUNC(PQSENDQUERY)
 {
   auto conn = hb_PGconn_par(1);
@@ -1563,9 +1436,7 @@ HB_FUNC(PQSENDQUERY)
   }
 }
 
-/*
-PQGETRESULT() -->
-*/
+// PQGETRESULT() -->
 HB_FUNC(PQGETRESULT)
 {
   auto conn = hb_PGconn_par(1);
@@ -1580,9 +1451,7 @@ HB_FUNC(PQGETRESULT)
   }
 }
 
-/*
-PQCONSUMEINPUT() -->
-*/
+// PQCONSUMEINPUT() -->
 HB_FUNC(PQCONSUMEINPUT)
 {
   auto conn = hb_PGconn_par(1);
@@ -1597,9 +1466,7 @@ HB_FUNC(PQCONSUMEINPUT)
   }
 }
 
-/*
-PQISBUSY() -->
-*/
+// PQISBUSY() -->
 HB_FUNC(PQISBUSY)
 {
   auto conn = hb_PGconn_par(1);
@@ -1614,10 +1481,8 @@ HB_FUNC(PQISBUSY)
   }
 }
 
-/*
-PQREQUESTCANCEL() -->
-*/
-HB_FUNC(PQREQUESTCANCEL) /* deprecated */
+// PQREQUESTCANCEL() -->
+HB_FUNC(PQREQUESTCANCEL) // deprecated
 {
   auto conn = hb_PGconn_par(1);
 
@@ -1631,9 +1496,7 @@ HB_FUNC(PQREQUESTCANCEL) /* deprecated */
   }
 }
 
-/*
-PQFLUSH() -->
-*/
+// PQFLUSH() -->
 HB_FUNC(PQFLUSH)
 {
   auto conn = hb_PGconn_par(1);
@@ -1648,11 +1511,9 @@ HB_FUNC(PQFLUSH)
   }
 }
 
-/* Set blocking/nonblocking connection to the backend */
+// Set blocking/nonblocking connection to the backend
 
-/*
-PQSETNONBLOCKING() -->
-*/
+// PQSETNONBLOCKING() -->
 HB_FUNC(PQSETNONBLOCKING)
 {
   auto conn = hb_PGconn_par(1);
@@ -1667,9 +1528,7 @@ HB_FUNC(PQSETNONBLOCKING)
   }
 }
 
-/*
-PQISNONBLOCKING() -->
-*/
+// PQISNONBLOCKING() -->
 HB_FUNC(PQISNONBLOCKING)
 {
   auto conn = hb_PGconn_par(1);
@@ -1684,12 +1543,10 @@ HB_FUNC(PQISNONBLOCKING)
   }
 }
 
-/* Trace Connection handling functions */
+// Trace Connection handling functions
 
-/*
-PQTRACECREATE() -->
-*/
-HB_FUNC(PQTRACECREATE) /* not a direct wrapper */
+// PQTRACECREATE() -->
+HB_FUNC(PQTRACECREATE) // not a direct wrapper
 {
 #ifdef NODLL
   hb_FILE_ret(hb_fopen(hb_parcx(1), "w+b"));
@@ -1698,9 +1555,7 @@ HB_FUNC(PQTRACECREATE) /* not a direct wrapper */
 #endif
 }
 
-/*
-PQTRACE() -->
-*/
+// PQTRACE() -->
 HB_FUNC(PQTRACE)
 {
 #ifdef NODLL
@@ -1718,9 +1573,7 @@ HB_FUNC(PQTRACE)
 #endif
 }
 
-/*
-PQUNTRACE() -->
-*/
+// PQUNTRACE() -->
 HB_FUNC(PQUNTRACE)
 {
   auto conn = hb_PGconn_par(1);
@@ -1735,14 +1588,11 @@ HB_FUNC(PQUNTRACE)
   }
 }
 
-/* PQERRORS_TERSE   0
-   PQERRORS_DEFAULT 1
-   PQERRORS_VERBOSE 2
- */
+// PQERRORS_TERSE   0
+// PQERRORS_DEFAULT 1
+// PQERRORS_VERBOSE 2
 
-/*
-PQSETERRORVERBOSITY() -->
-*/
+// PQSETERRORVERBOSITY() -->
 HB_FUNC(PQSETERRORVERBOSITY)
 {
   auto conn = hb_PGconn_par(1);
@@ -1757,11 +1607,9 @@ HB_FUNC(PQSETERRORVERBOSITY)
   }
 }
 
-/* Large Object functions */
+// Large Object functions
 
-/*
-LO_IMPORT() -->
-*/
+// LO_IMPORT() -->
 HB_FUNC(LO_IMPORT)
 {
   auto conn = hb_PGconn_par(1);
@@ -1776,9 +1624,7 @@ HB_FUNC(LO_IMPORT)
   }
 }
 
-/*
-LO_EXPORT() -->
-*/
+// LO_EXPORT() -->
 HB_FUNC(LO_EXPORT)
 {
   auto conn = hb_PGconn_par(1);
@@ -1793,9 +1639,7 @@ HB_FUNC(LO_EXPORT)
   }
 }
 
-/*
-LO_UNLINK() -->
-*/
+// LO_UNLINK() -->
 HB_FUNC(LO_UNLINK)
 {
   auto conn = hb_PGconn_par(1);
@@ -1810,9 +1654,7 @@ HB_FUNC(LO_UNLINK)
   }
 }
 
-/*
-PQGETCANCEL() -->
-*/
+// PQGETCANCEL() -->
 HB_FUNC(PQGETCANCEL)
 {
 #if PG_VERSION_NUM >= 80000
@@ -1831,9 +1673,7 @@ HB_FUNC(PQGETCANCEL)
 #endif
 }
 
-/*
-PQCANCEL() -->
-*/
+// PQCANCEL() -->
 HB_FUNC(PQCANCEL)
 {
 #if PG_VERSION_NUM >= 80000
@@ -1856,9 +1696,7 @@ HB_FUNC(PQCANCEL)
 #endif
 }
 
-/*
-PQESCAPEBYTEACONN() -->
-*/
+// PQESCAPEBYTEACONN() -->
 HB_FUNC(PQESCAPEBYTEACONN)
 {
 #if PG_VERSION_NUM >= 80000
@@ -1882,9 +1720,7 @@ HB_FUNC(PQESCAPEBYTEACONN)
 #endif
 }
 
-/*
-PQPREPARE() -->
-*/
+// PQPREPARE() -->
 HB_FUNC(PQPREPARE)
 {
   auto conn = hb_PGconn_par(1);
@@ -1899,9 +1735,7 @@ HB_FUNC(PQPREPARE)
   }
 }
 
-/*
-PQEXECPREPARED() -->
-*/
+// PQEXECPREPARED() -->
 HB_FUNC(PQEXECPREPARED)
 {
   auto conn = hb_PGconn_par(1);
@@ -1929,9 +1763,7 @@ HB_FUNC(PQEXECPREPARED)
   }
 }
 
-/*
-PQPUTCOPYDATA() -->
-*/
+// PQPUTCOPYDATA() -->
 HB_FUNC(PQPUTCOPYDATA)
 {
 #if PG_VERSION_NUM >= 80000
@@ -1950,9 +1782,7 @@ HB_FUNC(PQPUTCOPYDATA)
 #endif
 }
 
-/*
-PQPUTCOPYEND() -->
-*/
+// PQPUTCOPYEND() -->
 HB_FUNC(PQPUTCOPYEND)
 {
 #if PG_VERSION_NUM >= 80000
@@ -1971,19 +1801,15 @@ HB_FUNC(PQPUTCOPYEND)
 #endif
 }
 
-/*
-PG_ENCODING_TO_CHAR() -->
-*/
+// PG_ENCODING_TO_CHAR() -->
 HB_FUNC(PG_ENCODING_TO_CHAR)
 {
   hb_retc(pg_encoding_to_char(hb_parni(1)));
 }
 
-/* 31.19 Behavior in Threaded Programs */
+// 31.19 Behavior in Threaded Programs
 
-/*
-PQISTHREADSAFE() -->
-*/
+// PQISTHREADSAFE() -->
 HB_FUNC(PQISTHREADSAFE)
 {
 #if PG_VERSION_NUM >= 80200
