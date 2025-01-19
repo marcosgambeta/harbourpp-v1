@@ -164,22 +164,22 @@ METHOD WvgMLE:handleEvent(nMessage, aNM)
    CASE HB_GTE_COMMAND
       SWITCH aNM[NMH_code]
       CASE EN_KILLFOCUS
-         IF HB_ISBLOCK(::sl_killInputFocus)
+         IF HB_IsBlock(::sl_killInputFocus)
             Eval(::sl_killInputFocus, , , Self)
          ENDIF
          EXIT
       CASE EN_SETFOCUS
-         IF HB_ISBLOCK(::sl_setInputFocus)
+         IF HB_IsBlock(::sl_setInputFocus)
             Eval(::sl_setInputFocus, , , Self)
          ENDIF
          EXIT
       CASE EN_HSCROLL
-         IF HB_ISBLOCK(::sl_hScroll)
+         IF HB_IsBlock(::sl_hScroll)
             Eval(::sl_hScroll, , , Self)
          ENDIF
          EXIT
       CASE EN_VSCROLL
-         IF HB_ISBLOCK(::sl_vScroll)
+         IF HB_IsBlock(::sl_vScroll)
             Eval(::sl_vScroll, , , Self)
          ENDIF
          EXIT
@@ -213,22 +213,22 @@ METHOD WvgMLE:handleEvent(nMessage, aNM)
             ENDIF
             EXIT
          CASE WM_KILLFOCUS
-            IF HB_ISBLOCK(::sl_killInputFocus)
+            IF HB_IsBlock(::sl_killInputFocus)
                Eval(::sl_killInputFocus, , , Self)
             ENDIF
             EXIT
          CASE WM_SETFOCUS
-            IF HB_ISBLOCK(::sl_setInputFocus)
+            IF HB_IsBlock(::sl_setInputFocus)
                Eval(::sl_setInputFocus, , , Self)
             ENDIF
             EXIT
          CASE WM_HSCROLL
-            IF HB_ISBLOCK(::sl_hScroll)
+            IF HB_IsBlock(::sl_hScroll)
                Eval(::sl_hScroll, , , Self)
             ENDIF
             EXIT
          CASE WM_VSCROLL
-            IF HB_ISBLOCK(::sl_vScroll)
+            IF HB_IsBlock(::sl_vScroll)
                Eval(::sl_vScroll, , , Self)
             ENDIF
          ENDSWITCH

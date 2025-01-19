@@ -201,7 +201,7 @@ METHOD WvgToolBar:handleEvent(nMessage, aNM)
 
       CASE aNMMouse[NMH_code] == NM_CLICK
          IF (nObj := AScan(::aItems, {|e_|e_[1] == aNMMouse[NMH_dwItemSpec]})) > 0
-            IF HB_ISBLOCK(::sl_lbClick)
+            IF HB_IsBlock(::sl_lbClick)
                IF ::isParentCrt()
                   ::oParent:setFocus()
                ENDIF
@@ -365,7 +365,7 @@ METHOD WvgToolBar:setSize()
 
 METHOD WvgToolBar:buttonClick(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbClick := xParam
    ENDIF
 
@@ -373,7 +373,7 @@ METHOD WvgToolBar:buttonClick(xParam)
 
 METHOD WvgToolBar:change(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
       ::sl_change := xParam
    ENDIF
 
@@ -381,7 +381,7 @@ METHOD WvgToolBar:change(xParam)
 
 METHOD WvgToolBar:buttonMenuClick(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
       ::sl_buttonMenuClick := xParam
    ENDIF
 
@@ -389,7 +389,7 @@ METHOD WvgToolBar:buttonMenuClick(xParam)
 
 METHOD WvgToolBar:buttonDropDown(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
       ::sl_buttonDropDown := xParam
    ENDIF
 

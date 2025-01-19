@@ -300,9 +300,9 @@ METHOD WvgComboBox:itemMarked(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF Len(a_) == 1 .AND. HB_ISBLOCK(a_[1])
+   IF Len(a_) == 1 .AND. HB_IsBlock(a_[1])
       ::sl_itemMarked := a_[1]
-   ELSEIF Len(a_) >= 0 .AND. HB_ISBLOCK(::sl_itemMarked)
+   ELSEIF Len(a_) >= 0 .AND. HB_IsBlock(::sl_itemMarked)
       Eval(::sl_itemMarked, , , Self)
    ENDIF
 
@@ -312,9 +312,9 @@ METHOD WvgComboBox:itemSelected(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF Len(a_) == 1 .AND. HB_ISBLOCK(a_[1])
+   IF Len(a_) == 1 .AND. HB_IsBlock(a_[1])
       ::sl_itemSelected := a_[1]
-   ELSEIF Len(a_) >= 0 .AND. HB_ISBLOCK(::sl_itemSelected)
+   ELSEIF Len(a_) >= 0 .AND. HB_IsBlock(::sl_itemSelected)
       Eval(::sl_itemSelected, , , Self)
    ENDIF
 
@@ -324,9 +324,9 @@ METHOD WvgComboBox:drawItem(...)
 
    LOCAL a_ := hb_AParams()
 
-   IF Len(a_) == 1 .AND. HB_ISBLOCK(a_[1])
+   IF Len(a_) == 1 .AND. HB_IsBlock(a_[1])
       ::sl_xbePDrawItem := a_[1]
-   ELSEIF Len(a_) >= 2 .AND. HB_ISBLOCK(::sl_xbePDrawItem)
+   ELSEIF Len(a_) >= 2 .AND. HB_IsBlock(::sl_xbePDrawItem)
       Eval(::sl_xbePDrawItem, a_[1], a_[2], Self)
    ENDIF
 

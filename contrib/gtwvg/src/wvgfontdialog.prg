@@ -235,19 +235,19 @@ METHOD WvgFontDialog:wndProc(hWnd, nMessage, nwParam, nlParam)
 
       CASE IDOK
          ::ok := .T.
-         IF HB_ISBLOCK(::sl_activateOk)
+         IF HB_IsBlock(::sl_activateOk)
             Eval(::sl_activateOk, ::GetWvgFont(), , Self)
          ENDIF
          EXIT
 
       CASE IDCANCEL
-         IF HB_ISBLOCK(::sl_activateCancel)
+         IF HB_IsBlock(::sl_activateCancel)
             Eval(::sl_activateCancel, , , Self)
          ENDIF
          EXIT
 
       CASE 1026
-         IF HB_ISBLOCK(::sl_activateApply)
+         IF HB_IsBlock(::sl_activateApply)
             Eval(::sl_activateApply, ::GetWvgFont(), , Self)
          ENDIF
          EXIT

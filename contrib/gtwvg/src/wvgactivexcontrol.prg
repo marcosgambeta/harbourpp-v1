@@ -206,7 +206,7 @@ METHOD WvgActiveXControl:handleEvent(nEvent, aNM)
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      IF HB_ISBLOCK(::sl_resize)
+      IF HB_IsBlock(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
       EXIT
@@ -241,7 +241,7 @@ METHOD PROCEDURE WvgActiveXControl:Destroy()
 
 METHOD WvgActiveXControl:mapEvent(nEvent, bBlock)
 
-   IF HB_ISNUMERIC(nEvent) .AND. HB_ISBLOCK(bBlock)
+   IF HB_ISNUMERIC(nEvent) .AND. HB_IsBlock(bBlock)
       ::hEvents[nEvent] := bBlock
    ENDIF
 

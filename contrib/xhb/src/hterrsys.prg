@@ -76,7 +76,7 @@ STATIC FUNCTION xhb_cgi_DefError(e)
    ENDIF
 
    IF e:genCode == EG_CORRUPTION
-      IF HB_ISBLOCK(s_bFixCorrupt)
+      IF HB_IsBlock(s_bFixCorrupt)
          Eval(s_bFixCorrupt, e)
          RETURN .F.
       ELSE
@@ -176,7 +176,7 @@ STATIC FUNCTION xhb_cgi_DefError(e)
 
 FUNCTION SetCorruptFunc(bFunc)
 
-   IF HB_ISBLOCK(bFunc)
+   IF HB_IsBlock(bFunc)
       s_bFixCorrupt := bFunc
    ENDIF
 

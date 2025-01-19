@@ -300,7 +300,7 @@ FUNCTION ValToArray(xVal)
 
 FUNCTION ValToBlock(xVal)
 
-   IF HB_ISBLOCK(xVal)
+   IF HB_IsBlock(xVal)
       RETURN xVal
    ENDIF
 

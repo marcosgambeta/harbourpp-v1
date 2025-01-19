@@ -116,7 +116,7 @@ METHOD WvgRadioButton:handleEvent(nMessage, aNM)
       IF aNM[NMH_code] == BN_CLICKED
          ::editBuffer := (wvg_Button_GetCheck(::hWnd) == BST_CHECKED)
 
-         IF HB_ISBLOCK(::sl_lbClick)
+         IF HB_IsBlock(::sl_lbClick)
             Eval(::sl_lbClick, ::editBuffer, , Self)
             RETURN 0
          ENDIF

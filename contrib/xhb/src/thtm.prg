@@ -2306,7 +2306,7 @@ FUNCTION HtmlAny2Str(xVal)
    ELSEIF HB_ISLOGICAL(xVal)
       xRet := iif(xVal, "T", "F")
 
-   ELSEIF HB_ISBLOCK(xVal)
+   ELSEIF HB_IsBlock(xVal)
       xRet := "{||...}"
 
    ELSEIF ValType(xVal) == NIL

@@ -130,7 +130,7 @@ METHOD WvgCheckBox:handleEvent(nMessage, aNM)
    CASE HB_GTE_COMMAND
       IF aNM[NMH_code] == BN_CLICKED
          ::editBuffer := (wvg_Button_GetCheck(::hWnd) == BST_CHECKED)
-         IF HB_ISBLOCK(::sl_lbClick)
+         IF HB_IsBlock(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -158,7 +158,7 @@ METHOD WvgCheckBox:handleEvent(nMessage, aNM)
    CASE HB_GTE_ANY
       IF ::isParentCrt()
          IF aNM[1] == WM_LBUTTONUP
-            IF HB_ISBLOCK(::sl_lbClick)
+            IF HB_IsBlock(::sl_lbClick)
                ::oParent:setFocus()
                ::sendMessage(BM_SETCHECK, iif(wvg_Button_GetCheck(::hWnd) == BST_CHECKED, BST_UNCHECKED, BST_CHECKED), 0)
                ::editBuffer := (wvg_Button_GetCheck(::hWnd) == BST_CHECKED)

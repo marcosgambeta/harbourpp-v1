@@ -94,7 +94,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
       xValueToConvert := {xValueToConvert}
 
    CASE cTypeToConvertTo == "B" .AND. ; // They Want a Code Block
-      !HB_ISBLOCK(xValueToConvert)
+      !HB_IsBlock(xValueToConvert)
 
       xValueToConvert := {||xValueToConvert}
 

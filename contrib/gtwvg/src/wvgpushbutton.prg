@@ -144,14 +144,14 @@ METHOD WvgPushButton:handleEvent(nMessage, aNM)
          ::rePosition()
       ENDIF
       ::sendMessage(WM_SIZE, 0, 0)
-      IF HB_ISBLOCK(::sl_resize)
+      IF HB_IsBlock(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
       EXIT
 
    CASE HB_GTE_COMMAND
       IF aNM[1] == BN_CLICKED
-         IF HB_ISBLOCK(::sl_lbClick)
+         IF HB_IsBlock(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -181,7 +181,7 @@ METHOD WvgPushButton:handleEvent(nMessage, aNM)
 #if 0  // Must not reach here if WndProc is not installed
    CASE HB_GTE_ANY
       IF aNM[1] == WM_LBUTTONUP
-         IF HB_ISBLOCK(::sl_lbClick)
+         IF HB_IsBlock(::sl_lbClick)
             IF ::isParentCrt()
                ::oParent:setFocus()
             ENDIF
@@ -265,7 +265,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
 
 METHOD WvgPushButton:activate(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. xParam == NIL
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_lbClick := xParam
    ENDIF
 
@@ -273,7 +273,7 @@ METHOD WvgPushButton:activate(xParam)
 
 METHOD WvgPushButton:draw(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. xParam == NIL
+   IF HB_IsBlock(xParam) .OR. xParam == NIL
       ::sl_paint := xParam
    ENDIF
 

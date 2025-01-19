@@ -332,7 +332,7 @@ METHOD WvtObject:ShowPopup()
          IF (n := AScan(::aPopup, {|e_|e_[3] == nRet})) > 0
             lRet := .T.
 
-            IF HB_ISBLOCK(::aPopup[n][2])
+            IF HB_IsBlock(::aPopup[n][2])
                Eval(::aPopup[n][2])
             ENDIF
          ENDIF

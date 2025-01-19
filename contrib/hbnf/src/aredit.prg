@@ -142,7 +142,7 @@ FUNCTION ft_ArEdit(nTop, nLeft, nBot, nRight, ar, nElem, aHeadings, aBlocks, bGe
             exit_requested := .T.
 
             // Other exception handling ...
-         CASE HB_ISBLOCK(bGetFunc)
+         CASE HB_IsBlock(bGetFunc)
             IF nKey != K_ENTER
                // want last key to be part of GET edit so KEYBOARD it
                hb_keyPut(LastKey())

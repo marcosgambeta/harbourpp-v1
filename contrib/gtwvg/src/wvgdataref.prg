@@ -88,9 +88,9 @@ METHOD WvgDataRef:getData()
 
    DO CASE
    CASE ::className() == "COMBOBOX"
-      IF HB_ISOBJECT(::XbpListBox) .AND. HB_ISBLOCK(::XbpListBox:dataLink)
+      IF HB_ISOBJECT(::XbpListBox) .AND. HB_IsBlock(::XbpListBox:dataLink)
          ::sl_editBuffer := ::XbpListBox:getData()
-      ELSEIF HB_ISOBJECT(::XbpSLE) .AND. HB_ISBLOCK(::XbpSLE:dataLink)
+      ELSEIF HB_ISOBJECT(::XbpSLE) .AND. HB_IsBlock(::XbpSLE:dataLink)
          ::sl_editBuffer := ::XbpSLE:getData()
       ELSEIF HB_ISOBJECT(::XbpListBox)
          ::sl_editBuffer := ::XbpListBox:getData()
@@ -114,7 +114,7 @@ METHOD WvgDataRef:getData()
 #endif
    ENDCASE
 
-   IF HB_ISBLOCK(::dataLink)
+   IF HB_IsBlock(::dataLink)
       Eval(::dataLink, ::sl_editBuffer)
    ENDIF
 
@@ -126,7 +126,7 @@ METHOD WvgDataRef:setData(xValue, mp2)
 
    HB_SYMBOL_UNUSED(mp2)
 
-   IF HB_ISBLOCK(::dataLink)
+   IF HB_IsBlock(::dataLink)
       ::sl_editBuffer := Eval(::dataLink)
    ELSEIF xValue != NIL
       ::sl_editBuffer := xValue
@@ -180,9 +180,9 @@ METHOD WvgDataRef:undo()
 
 METHOD WvgDataRef:validate(xParam)
 
-   IF PCount() == 0 .AND. HB_ISBLOCK(::sl_validate)
+   IF PCount() == 0 .AND. HB_IsBlock(::sl_validate)
       RETURN Eval(::sl_validate, Self)
-   ELSEIF HB_ISBLOCK(xParam)
+   ELSEIF HB_IsBlock(xParam)
       ::sl_validate := xParam
    ENDIF
 

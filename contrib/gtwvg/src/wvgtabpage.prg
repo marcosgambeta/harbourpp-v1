@@ -133,7 +133,7 @@ METHOD WvgTabPage:handleEvent(nMessage, aNM)
    SWITCH nMessage
 
    CASE HB_GTE_SETFOCUS
-      IF HB_ISBLOCK(::sl_tabActivate)
+      IF HB_IsBlock(::sl_tabActivate)
          RETURN EVENT_HANDELLED
       ENDIF
       EXIT
@@ -161,7 +161,7 @@ METHOD WvgTabPage:handleEvent(nMessage, aNM)
 
 METHOD WvgTabPage:tabActivate(xParam)
 
-   IF HB_ISBLOCK(xParam)
+   IF HB_IsBlock(xParam)
       ::sl_tabActivate := xParam
    ENDIF
 

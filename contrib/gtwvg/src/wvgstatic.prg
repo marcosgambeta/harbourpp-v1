@@ -220,7 +220,7 @@ METHOD WvgStatic:handleEvent(nMessage, aNM)
       IF ::isParentCrt()
          ::rePosition()
       ENDIF
-      IF HB_ISBLOCK(::sl_resize)
+      IF HB_IsBlock(::sl_resize)
          Eval(::sl_resize, , , Self)
       ENDIF
       AEval(::aChildren, {|o|o:handleEvent(HB_GTE_RESIZED, {0, 0, 0, 0, 0})})

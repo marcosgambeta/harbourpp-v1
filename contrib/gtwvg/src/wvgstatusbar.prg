@@ -125,7 +125,7 @@ METHOD WvgStatusBar:handleEvent(nMessage, aNM)
       RETURN 0
 
    CASE HB_GTE_COMMAND
-      IF HB_ISBLOCK(::sl_lbClick)
+      IF HB_IsBlock(::sl_lbClick)
          Eval(::sl_lbClick, , , Self)
          RETURN 0
       ENDIF
@@ -137,7 +137,7 @@ METHOD WvgStatusBar:handleEvent(nMessage, aNM)
       DO CASE
       CASE aNMH[NMH_code] == NM_CLICK
 
-         IF HB_ISBLOCK(::sl_lbClick)
+         IF HB_IsBlock(::sl_lbClick)
             IF aNMH[NMH_dwItemSpec] >= 0
                nObj := aNMH[NMH_dwItemSpec] + 1
 
@@ -261,7 +261,7 @@ METHOD WvgStatusBar:clear()
 
 METHOD WvgStatusBar:panelClick(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbClick := xParam
    ENDIF
 
@@ -269,7 +269,7 @@ METHOD WvgStatusBar:panelClick(xParam)
 
 METHOD WvgStatusBar:panelDblClick(xParam)
 
-   IF HB_ISBLOCK(xParam) .OR. HB_ISNIL(xParam)
+   IF HB_IsBlock(xParam) .OR. HB_ISNIL(xParam)
       ::sl_lbDblClick := xParam
    ENDIF
 
