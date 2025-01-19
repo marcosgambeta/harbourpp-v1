@@ -33,7 +33,7 @@ FUNCTION ft_DayOfYr(dGivenDate, nDayNum, lIsAcct)
    ELSEIF HB_IsLogical(dGivenDate)
       lIsAcct    := dGivenDate
       dGivenDate := Date()
-   ELSEIF !HB_ISDATE(dGivenDate)
+   ELSEIF !HB_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

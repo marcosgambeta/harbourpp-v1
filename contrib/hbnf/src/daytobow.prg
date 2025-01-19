@@ -29,7 +29,7 @@ FUNCTION ft_DayToBoW(dGivenDate)
 
    nDOW_Start := ft_DateCnfg()[2]
 
-   IF !HB_ISDATE(dGivenDate)
+   IF !HB_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

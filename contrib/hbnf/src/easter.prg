@@ -36,7 +36,7 @@ FUNCTION ft_Easter(nYear)
       nYear := Val(nYear)
    ENDIF
 
-   IF HB_ISDATE(nYear)
+   IF HB_IsDate(nYear)
       nYear := Year(nYear)
    ENDIF
 

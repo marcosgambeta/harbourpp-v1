@@ -2300,7 +2300,7 @@ FUNCTION HtmlAny2Str(xVal)
    ELSEIF HB_IsObject(xVal)
       xRet := "<" + xVal:CLASSNAME() + ">"
 
-   ELSEIF HB_ISDATE(xVal)
+   ELSEIF HB_IsDate(xVal)
       xRet := DToC(xVal)
 
    ELSEIF HB_IsLogical(xVal)

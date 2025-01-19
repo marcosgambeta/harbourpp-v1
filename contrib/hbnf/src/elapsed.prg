@@ -33,14 +33,14 @@ FUNCTION ft_Elapsed(dStart, dEnd, cTimeStart, cTimeEnd)
    IF HB_IsString(dStart)
       cTimeStart := dStart
       dStart     := Date()
-   ELSEIF !HB_ISDATE(dStart)
+   ELSEIF !HB_IsDate(dStart)
       dStart     := Date()
    ENDIF
 
    IF HB_IsString(dEnd)
       cTimeEnd := dEnd
       dEnd     := Date()
-   ELSEIF !HB_ISDATE(dEnd)
+   ELSEIF !HB_IsDate(dEnd)
       dEnd     := Date()
    ENDIF
 

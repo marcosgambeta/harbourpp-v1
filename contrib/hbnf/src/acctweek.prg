@@ -30,7 +30,7 @@ FUNCTION ft_AcctWeek(dGivenDate, nWeekNum)
    IF HB_IsNumeric(dGivenDate)
       nWeekNum := dGivenDate
       dGivenDate := Date()
-   ELSEIF !HB_ISDATE(dGivenDate)
+   ELSEIF !HB_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

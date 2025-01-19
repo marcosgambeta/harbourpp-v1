@@ -72,7 +72,7 @@ PROCEDURE hb_BliVerNum( cString )
 
 PROCEDURE hb_BliDemDte( dDate )
 
-   IF HB_ISDATE( dDate )
+   IF HB_IsDate( dDate )
       s_cDemoDate := DToS( dDate )
    ENDIF
 

@@ -30,7 +30,7 @@ FUNCTION ft_Month(dGivenDate, nMonthNum)
    IF HB_IsNumeric(dGivenDate)
       nMonthNum  := dGivenDate
       dGivenDate := Date()
-   ELSEIF !HB_ISDATE(dGivenDate)
+   ELSEIF !HB_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

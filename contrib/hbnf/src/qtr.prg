@@ -30,7 +30,7 @@ FUNCTION ft_Qtr(dGivenDate, nQtrNum)
    IF HB_IsNumeric(dGivenDate)
       nQtrNum    := dGivenDate
       dGivenDate := Date()
-   ELSEIF !HB_ISDATE(dGivenDate)
+   ELSEIF !HB_IsDate(dGivenDate)
       dGivenDate := Date()
    ENDIF
 

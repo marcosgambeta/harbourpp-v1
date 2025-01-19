@@ -946,7 +946,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
    IF cPict != NIL                       // Use the picture they passed
       oNewGet:Picture := cPict
    ELSE                                  // Else setup default pictures
-      IF HB_ISDATE(xVarVal)
+      IF HB_IsDate(xVarVal)
          oNewGet:Picture   := "9999-99-99"
       ELSEIF HB_IsLogical(xVarVal)
          oNewGet:Picture   := "Y"

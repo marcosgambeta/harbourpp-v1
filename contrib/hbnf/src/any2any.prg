@@ -28,7 +28,7 @@
       {NULL, ;
       x, ;
       iif(HB_IsNumeric(x), hb_ntos(x), NULL), ;
-      iif(HB_ISDATE(x), DToC(x), NULL), ;
+      iif(HB_IsDate(x), DToC(x), NULL), ;
       iif(HB_IsLogical(x), iif(x, ".T.", ".F."), NULL), ;
       x})
 
@@ -44,7 +44,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
       xValueToConvert := _XTOC(xValueToConvert)
 
    CASE cTypeToConvertTo == "D" .AND. ; // They Want a Date
-      !HB_ISDATE(xValueToConvert)
+      !HB_IsDate(xValueToConvert)
 
       xValueToConvert := iif(HB_IsString(xValueToConvert), ;
          ; // Convert from a Character
@@ -64,7 +64,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
       xValueToConvert := iif(HB_IsString(xValueToConvert), ;
          ; // Convert from a Character
       Val(xValueToConvert), ;
-         iif(HB_ISDATE(xValueToConvert), ;
+         iif(HB_IsDate(xValueToConvert), ;
          ; // Convert from a Date
       xValueToConvert - EARLIEST_DATE, ;
          iif(HB_IsLogical(xValueToConvert), ;
@@ -79,7 +79,7 @@ FUNCTION ft_XToY(xValueToConvert, cTypeToConvertTo, lWantYesNo)
       xValueToConvert := iif(HB_IsString(xValueToConvert), ;
          ; // Convert from a Character
       Upper(xValueToConvert) == iif(lWantYesNo, "Y", ".T."), ;
-         iif(HB_ISDATE(xValueToConvert), ;
+         iif(HB_IsDate(xValueToConvert), ;
          ; // Convert from a Date
       !Empty(xValueToConvert), ;
          iif(HB_IsNumeric(xValueToConvert), ;
