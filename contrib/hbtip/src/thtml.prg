@@ -615,7 +615,7 @@ METHOD THtmlNode:new( oParent, cTagName, cAttrib, cContent )
       ::htmlTagType    := THtmlTagType( "_root_" )
       ::htmlContent    := {}
       ::parseHtml( P_PARSER( oParent ) )
-   ELSEIF HB_ISOBJECT( oParent )
+   ELSEIF HB_IsObject( oParent )
       // a HTML object is passed -> we are in the course of building an object tree
       ::root        := oParent:root
       ::parent      := oParent

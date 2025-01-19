@@ -158,7 +158,7 @@ METHOD WvgDialog:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible 
 
 METHOD WvgDialog:destroy()
 
-   IF HB_ISOBJECT( ::oMenu )
+   IF HB_IsObject( ::oMenu )
       ::oMenu:destroy()
    ENDIF
 
@@ -196,7 +196,7 @@ METHOD WvgDialog:getFrameState()
 
 METHOD WvgDialog:menuBar()
 
-   IF !HB_ISOBJECT( ::oMenu )
+   IF !HB_IsObject( ::oMenu )
       ::oMenu := WvgMenuBar():New( Self ):create()
    ENDIF
 

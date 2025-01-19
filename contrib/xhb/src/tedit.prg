@@ -442,7 +442,7 @@ CREATE CLASS THtmlForm
 
    METHOD setwidth(c) INLINE ::width := c
 
-   METHOD AddControl(o) INLINE iif(HB_ISOBJECT(o), (o:nH := ::nH, o:Form := Self), ), ;
+   METHOD AddControl(o) INLINE iif(HB_IsObject(o), (o:nH := ::nH, o:Form := Self), ), ;
       AAdd(::aControls, o)
 
    METHOD PutControls() INLINE AEval(::aControls, {|e|e:Put()})
@@ -625,7 +625,7 @@ METHOD THtmlForm:Put(lPutControls)
 // FWrite(::nH, ::cOutput)
    ::oHtm:cStr += ::cOutput
    IF lPutControls
-      AEval(::aControls, {|e|iif(HB_ISOBJECT(e), e:Put(), ::oHtm:cStr += e)})
+      AEval(::aControls, {|e|iif(HB_IsObject(e), e:Put(), ::oHtm:cStr += e)})
    ENDIF
 
    RETURN Self

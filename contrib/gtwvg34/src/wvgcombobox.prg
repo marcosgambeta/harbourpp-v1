@@ -161,10 +161,10 @@ METHOD WvgComboBox:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisibl
 METHOD PROCEDURE WvgComboBox:destroy()
 
 #if 0
-   IF HB_ISOBJECT( ::oSLE )
+   IF HB_IsObject( ::oSLE )
       ::oSLE:destroy()
    ENDIF
-   IF HB_ISOBJECT( ::oListBox )
+   IF HB_IsObject( ::oListBox )
       ::oListBox:destroy()
    ENDIF
 #endif
@@ -264,7 +264,7 @@ METHOD WvgComboBox:listBoxFocus( lFocus )
 
 METHOD WvgComboBox:sleSize()
 
-   IF HB_ISOBJECT( ::oSLE )
+   IF HB_IsObject( ::oSLE )
       RETURN ::oSLE:currentSize()
    ENDIF
 
@@ -272,7 +272,7 @@ METHOD WvgComboBox:sleSize()
 
 METHOD WvgComboBox:listBoxSize()
 
-   IF HB_ISOBJECT( ::oListBox )
+   IF HB_IsObject( ::oListBox )
       RETURN ::oListBox:currentSize()
    ENDIF
 

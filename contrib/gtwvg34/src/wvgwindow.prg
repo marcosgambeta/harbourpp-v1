@@ -551,7 +551,7 @@ METHOD WvgWindow:isDerivedFrom( cClassORoObject )
          lTrue := .T.
       ENDIF
 
-   ELSEIF HB_ISOBJECT( cClassORoObject )
+   ELSEIF HB_IsObject( cClassORoObject )
       IF Upper(SubStr(cClassORoObject:className(), 4)) == Upper(SubStr(cCls, 4))
          lTrue := .T.
       ENDIF

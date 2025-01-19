@@ -291,7 +291,7 @@ METHOD PROCEDURE TIPCgi:ErrHandler( xError )
       "<tr><td>SCRIPT NAME:</td><td>" + GetEnv( "SCRIPT_NAME" ) + "</td></tr>"
 
    DO CASE
-   CASE HB_ISOBJECT( xError )
+   CASE HB_IsObject( xError )
       cErrMsg += ;
          "<tr><td>CRITICAL ERROR:</td><td>" + xError:Description + "</td></tr>" + ;
          "<tr><td>OPERATION:</td><td>" + xError:Operation + "</td></tr>" + ;

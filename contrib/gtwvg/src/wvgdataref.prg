@@ -88,11 +88,11 @@ METHOD WvgDataRef:getData()
 
    DO CASE
    CASE ::className() == "COMBOBOX"
-      IF HB_ISOBJECT(::XbpListBox) .AND. HB_IsBlock(::XbpListBox:dataLink)
+      IF HB_IsObject(::XbpListBox) .AND. HB_IsBlock(::XbpListBox:dataLink)
          ::sl_editBuffer := ::XbpListBox:getData()
-      ELSEIF HB_ISOBJECT(::XbpSLE) .AND. HB_IsBlock(::XbpSLE:dataLink)
+      ELSEIF HB_IsObject(::XbpSLE) .AND. HB_IsBlock(::XbpSLE:dataLink)
          ::sl_editBuffer := ::XbpSLE:getData()
-      ELSEIF HB_ISOBJECT(::XbpListBox)
+      ELSEIF HB_IsObject(::XbpListBox)
          ::sl_editBuffer := ::XbpListBox:getData()
       ENDIF
 

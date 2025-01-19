@@ -1095,19 +1095,19 @@ STATIC FUNCTION cvt2str( xI, lLong )
       cI := ""
       IF __objHasMsg( xI, "ID" )
          xJ := xI:ID
-         IF !HB_ISOBJECT( xJ )
+         IF !HB_IsObject( xJ )
             cI += ",ID=" + cvt2str( xJ )
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "nID" )
          xJ := xI:nID
-         IF !HB_ISOBJECT( xJ )
+         IF !HB_IsObject( xJ )
             cI += ",NID=" + cvt2str( xJ )
          ENDIF
       ENDIF
       IF __objHasMsg( xI, "xValue" )
          xJ := xI:xValue
-         IF !HB_ISOBJECT( xJ )
+         IF !HB_IsObject( xJ )
             cI += ",XVALUE=" + cvt2str( xJ )
          ENDIF
       ENDIF
@@ -1554,7 +1554,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                   cRet += UHtmlEncode( DToC(xValue) )
                ELSEIF HB_ISTIMESTAMP( xValue )
                   cRet += UHtmlEncode( hb_TToC(xValue) )
-               ELSEIF HB_ISOBJECT( xValue )
+               ELSEIF HB_IsObject( xValue )
                   cRet += UHtmlEncode( xValue:Output() )
                ELSE
                   Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType( xValue ) ) )
@@ -1575,7 +1575,7 @@ STATIC FUNCTION parse_data(aData, aCode, hConfig)
                   cRet += DToC(xValue)
                ELSEIF HB_ISTIMESTAMP( xValue )
                   cRet += hb_TToC(xValue)
-               ELSEIF HB_ISOBJECT( xValue )
+               ELSEIF HB_IsObject( xValue )
                   cRet += xValue:Output()
                ELSE
                   Eval( hConfig[ "Trace" ], hb_StrFormat( "Template error: invalid type '%s'", ValType( xValue ) ) )

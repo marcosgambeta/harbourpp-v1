@@ -213,7 +213,7 @@ METHOD GenerateHTML:EndSection( cSection, cFilename )
 
 METHOD GenerateHTML:AddReference( oEntry, cReference, cSubReference )
 
-   IF HB_ISOBJECT( oEntry ) .AND. oEntry:ClassName() == "ENTRY"
+   IF HB_IsObject( oEntry ) .AND. oEntry:ClassName() == "ENTRY"
       ::OpenTag( "a", "href", ::TargetFilename + ::cExtension + "#" + oEntry:_filename ):Append( oEntry:fld[ "NAME" ] ):CloseTag( "a" ):Append( oEntry:fld[ "ONELINER" ] ):Newline()
    ELSE
       IF HB_IsString( cSubReference )

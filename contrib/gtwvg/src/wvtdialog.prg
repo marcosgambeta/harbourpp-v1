@@ -282,7 +282,7 @@ METHOD WvtDialog:Create()
 
    ::Update()
 
-   IF HB_ISOBJECT(::oMenu)
+   IF HB_IsObject(::oMenu)
       wvt_SetMenu(::oMenu:hMenu)
       wvt_DrawMenuBar()
       SetKey(wvt_SetMenuKeyEvent(), {||::ActivateMenu(::oMenu)})
@@ -292,7 +292,7 @@ METHOD WvtDialog:Create()
 
 METHOD PROCEDURE WvtDialog:Destroy()
 
-   IF HB_ISOBJECT(::oMenu)
+   IF HB_IsObject(::oMenu)
       ::oMenu:Destroy()
    ENDIF
 
@@ -664,7 +664,7 @@ METHOD WvtDialog:ActivateMenu()
    LOCAL aMenuItem
 
    IF !Empty(nMenu)
-      IF HB_ISOBJECT(::oMenu)
+      IF HB_IsObject(::oMenu)
          IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nMenu))
             IF HB_IsBlock(aMenuItem[WVT_MENU_ACTION])
                Eval(aMenuItem[WVT_MENU_ACTION])

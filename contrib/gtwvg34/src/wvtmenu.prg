@@ -113,7 +113,7 @@ METHOD wvtMenu:AddItem( cCaption, bAction )
    LOCAL aItem
 
    IF !Empty(::hMenu) .AND. ( ! Empty(cCaption) .OR. ! Empty(bAction) )
-      IF HB_ISOBJECT( bAction )
+      IF HB_IsObject( bAction )
          cCaption := iif(Empty(cCaption), bAction:Caption, cCaption)
          aItem := { WIN_MF_POPUP, bAction:hMenu, cCaption, bAction }   // bAction is a wvtMenu object reference
       ELSEIF HB_ISEVALITEM( bAction )

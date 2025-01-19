@@ -197,7 +197,7 @@ METHOD WvgPartHandler:setOwner(oWvg)
 
    LOCAL oOldXbp := ::oOwner
 
-   IF HB_ISOBJECT(oWvg)
+   IF HB_IsObject(oWvg)
       ::oOwner := oWvg
    ENDIF
 
@@ -207,7 +207,7 @@ METHOD WvgPartHandler:setParent(oWvg)
 
    LOCAL oOldXbp := ::oParent
 
-   IF HB_ISOBJECT(oWvg)
+   IF HB_IsObject(oWvg)
       ::oParent := oWvg
    ENDIF
 
@@ -368,7 +368,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
    CASE HB_GTE_MENU
       DO CASE
       CASE xParams[1] == 0                             // menu selected
-         IF HB_ISOBJECT(::oMenu)
+         IF HB_IsObject(::oMenu)
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(xParams[2]))
                DO CASE
                CASE HB_IsBlock(aMenuItem[2])
@@ -379,12 +379,12 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
             ENDIF
          ENDIF
 
-      CASE xParams[1] == 1 .AND. HB_ISOBJECT(::oMenu) // enter menu loop
+      CASE xParams[1] == 1 .AND. HB_IsObject(::oMenu) // enter menu loop
          IF HB_IsBlock(::oMenu:sl_beginMenu)
             Eval(::oMenu:sl_beginMenu, , , Self)
          ENDIF
 
-      CASE xParams[1] == 2 .AND. HB_ISOBJECT(::oMenu) // exit menu loop
+      CASE xParams[1] == 2 .AND. HB_IsObject(::oMenu) // exit menu loop
          IF HB_IsBlock(::oMenu:sl_endMenu)
             Eval(::oMenu:sl_endMenu, , , Self)
          ENDIF
@@ -408,7 +408,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
 
    CASE HB_GTE_CTLCOLOR
       oObj := ::findObjectByHandle(xParams[2])
-      IF HB_ISOBJECT(oObj)
+      IF HB_IsObject(oObj)
          RETURN oObj:handleEvent(HB_GTE_CTLCOLOR, xParams)
       ENDIF
       EXIT
@@ -418,7 +418,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          RETURN ::handleEvent(HB_GTE_VSCROLL, xParams)
       ELSE
          oObj := ::findObjectByHandle(xParams[3])
-         IF HB_ISOBJECT(oObj)
+         IF HB_IsObject(oObj)
             RETURN oObj:handleEvent(HB_GTE_VSCROLL, xParams)
          ENDIF
       ENDIF
@@ -429,7 +429,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          RETURN ::handleEvent(HB_GTE_VSCROLL, xParams)
       ELSE
          oObj := ::findObjectByHandle(xParams[3])
-         IF HB_ISOBJECT(oObj)
+         IF HB_IsObject(oObj)
             RETURN oObj:handleEvent(HB_GTE_VSCROLL, xParams)
          ENDIF
       ENDIF
@@ -452,7 +452,7 @@ METHOD WvgPartHandler:notifier(nEvent, xParams)
          RETURN ::handleEvent(HB_GTE_KEYTOITEM, xParams)
       ELSE
          oObj := ::findObjectByHandle(xParams[3])
-         IF HB_ISOBJECT(oObj)
+         IF HB_IsObject(oObj)
             RETURN oObj:handleEvent(HB_GTE_KEYTOITEM, xParams)
          ENDIF
       ENDIF
@@ -486,7 +486,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
       hWndCtrl := nlParam
 
       IF hWndCtrl == 0                            // It is menu
-         IF HB_ISOBJECT(::oMenu)
+         IF HB_IsObject(::oMenu)
             IF !Empty(aMenuItem := ::oMenu:FindMenuItemById(nCtrlID))
                DO CASE
                CASE HB_IsBlock(aMenuItem[2])
@@ -527,7 +527,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
    CASE WM_CTLCOLORSCROLLBAR
    CASE WM_CTLCOLORSTATIC
       oObj := ::findObjectByHandle(nlParam)
-      IF HB_ISOBJECT(oObj)
+      IF HB_IsObject(oObj)
          nReturn := oObj:handleEvent(HB_GTE_CTLCOLOR, {nwParam, nlParam})
          IF nReturn == EVENT_UNHANDELLED
             RETURN wvg_CallWindowProc(::nOldProc, hWnd, nMessage, nwParam, nlParam)

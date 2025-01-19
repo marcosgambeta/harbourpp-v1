@@ -2297,7 +2297,7 @@ FUNCTION HtmlAny2Str(xVal)
    ELSEIF HB_IsNumeric(xVal)
       xRet := hb_ntos(xVal)
 
-   ELSEIF HB_ISOBJECT(xVal)
+   ELSEIF HB_IsObject(xVal)
       xRet := "<" + xVal:CLASSNAME() + ">"
 
    ELSEIF HB_ISDATE(xVal)

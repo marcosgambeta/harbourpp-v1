@@ -282,7 +282,7 @@ METHOD TRPCFunction:New(cFname, cSerial, nAuthLevel, oExec, oMeth)
 METHOD TRPCFunction:SetCallable(oExec, oMeth)
 
    // If the callable is an object, we need to store the method
-   IF HB_ISOBJECT(oExec)
+   IF HB_IsObject(oExec)
       ::aCall := Array(Len(::aParameters) + 3)
       ::aCall[2] := oMeth
    ELSE
@@ -301,7 +301,7 @@ METHOD TRPCFunction:Run(aParams, oClient)
       RETURN NIL
    ENDIF
 
-   nStart := iif(HB_ISOBJECT(::aCall[1]), 3, 2)
+   nStart := iif(HB_IsObject(::aCall[1]), 3, 2)
 
    FOR nCount := 1 TO Len(aParams)
       ::aCall[nStart] := aParams[nCount]

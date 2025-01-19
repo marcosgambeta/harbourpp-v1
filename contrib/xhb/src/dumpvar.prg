@@ -163,7 +163,7 @@ STATIC FUNCTION DShowProperties(oVar, nScope, lRecursive, nIndent, nRecursionLev
 
    __defaultNIL(@nIndent, 0)
 
-   IF HB_ISOBJECT(oVar)
+   IF HB_IsObject(oVar)
 #if 0
       lOldScope := __SetClassScope(.F.)
 #endif
@@ -352,7 +352,7 @@ STATIC FUNCTION __objGetMsgFullList(oObject, lData, nRange, nScope, nNoScope)
    LOCAL aReturn
    LOCAL nFirstProperty, aMsg
 
-   IF !HB_ISOBJECT(oObject)
+   IF !HB_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName())
    ENDIF
 
@@ -393,7 +393,7 @@ STATIC FUNCTION __objGetValueFullList(oObject, aExcept, nScope, nNoScope)
    LOCAL aReturn
    LOCAL aVar
 
-   IF !HB_ISOBJECT(oObject)
+   IF !HB_IsObject(oObject)
       __errRT_BASE(EG_ARG, 3101, NIL, ProcName(0))
    ENDIF
 

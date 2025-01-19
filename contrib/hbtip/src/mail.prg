@@ -120,7 +120,7 @@ METHOD TIPMail:SetEncoder( xEncoder )
 
    ::oEncoder := iif(HB_IsString( xEncoder ), tip_GetEncoder( xEncoder ), xEncoder)
 
-   IF HB_ISOBJECT( ::oEncoder )
+   IF HB_IsObject( ::oEncoder )
       ::hHeaders[ "Content-Transfer-Encoding" ] := ::oEncoder:cName
       RETURN .T.
    ENDIF
@@ -129,7 +129,7 @@ METHOD TIPMail:SetEncoder( xEncoder )
 
 METHOD TIPMail:SetBody( cBody )
 
-   IF HB_ISOBJECT( ::oEncoder )
+   IF HB_IsObject( ::oEncoder )
       ::cBody := ::oEncoder:Encode( cBody )
       ::hHeaders[ "Content-Transfer-Encoding" ] := ::oEncoder:cName
       ::lBodyEncoded := .T.  // needed to prevent an extra CRLF from being appended [GD]
@@ -140,7 +140,7 @@ METHOD TIPMail:SetBody( cBody )
    RETURN .T.
 
 METHOD TIPMail:GetBody()
-   RETURN iif(HB_ISOBJECT( ::oEncoder ), ::oEncoder:Decode( ::cBody ), ::cBody)
+   RETURN iif(HB_IsObject( ::oEncoder ), ::oEncoder:Decode( ::cBody ), ::cBody)
 
 METHOD TIPMail:GetFieldPart( cPart )
 
@@ -206,7 +206,7 @@ METHOD TIPMail:SetFieldOption( cPart, cOption, cValue )
 
 METHOD TIPMail:Attach( oSubPart )
 
-   IF HB_ISOBJECT( oSubPart ) .AND. oSubPart:ClassName() == "TIPMAIL"
+   IF HB_IsObject( oSubPart ) .AND. oSubPart:ClassName() == "TIPMAIL"
       // reset wrong content-type
       IF !::isMultiPart()
          ::hHeaders[ "Content-Type" ] := "multipart/mixed"

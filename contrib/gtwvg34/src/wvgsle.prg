@@ -147,7 +147,7 @@ METHOD WvgSLE:create( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
    ENDIF
    ::setPosAndSize()
 
-   IF HB_ISOBJECT( ::datalink )
+   IF HB_IsObject( ::datalink )
       Eval( ::datalink )
    ENDIF
 

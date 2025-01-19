@@ -353,7 +353,7 @@ METHOD WvgCrt:configure( oParent, oOwner, aPos, aSize, aPresParams, lVisible )
 
 METHOD WvgCrt:destroy()
 
-   IF HB_ISOBJECT( ::oMenu )
+   IF HB_IsObject( ::oMenu )
       ::oMenu:destroy()
    ENDIF
 
@@ -449,7 +449,7 @@ METHOD WvgCrt:lockUpdate()
 
 METHOD WvgCrt:menuBar()
 
-   IF !HB_ISOBJECT( ::oMenu )
+   IF !HB_IsObject( ::oMenu )
       ::oMenu := WvgMenuBar():New( Self ):create()
    ENDIF
 

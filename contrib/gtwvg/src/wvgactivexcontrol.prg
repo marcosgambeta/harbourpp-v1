@@ -128,14 +128,14 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
 
    ::CLSID := cCLSID
    ::license := cLicense
-   ::hContainer := iif(HB_ISOBJECT(::oParent), ::oParent:getHWND(), ::oParent)
+   ::hContainer := iif(HB_IsObject(::oParent), ::oParent:getHWND(), ::oParent)
 
    IF !HB_IsNumeric(::hContainer) .OR. !HB_IsString(::CLSID)
       RETURN NIL
    ENDIF
 
    ::hWnd := NIL
-   ::nID := iif(HB_ISOBJECT(::oParent), ::oParent:GetControlId(), ::getControlID())
+   ::nID := iif(HB_IsObject(::oParent), ::oParent:GetControlId(), ::getControlID())
    ::oOLE := win_oleAuto()
 
    win_axInit()
@@ -162,7 +162,7 @@ METHOD WvgActiveXControl:Create(oParent, oOwner, aPos, aSize, aPresParams, lVisi
    ::SetWindowProcCallback()  // Is this needed to catch windowing events ? - NO
 #endif
 
-   IF HB_ISOBJECT(::oParent)
+   IF HB_IsObject(::oParent)
       ::oParent:addChild(Self)
    ENDIF
 
