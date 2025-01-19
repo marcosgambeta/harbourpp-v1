@@ -232,7 +232,7 @@ METHOD WvgPushButton:setCaption(xCaption, cDll)
 
    ELSEIF HB_IsArray(xCaption)
       ASize(xCaption, 4)
-      IF HB_ISCHAR(xCaption[1])
+      IF HB_IsChar(xCaption[1])
          wvg_SendMessageText(::hWnd, WM_SETTEXT, 0, xCaption[1])
       ENDIF
       IF !Empty(xCaption[2])

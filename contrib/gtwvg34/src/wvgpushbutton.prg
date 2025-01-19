@@ -245,7 +245,7 @@ METHOD WvgPushButton:setCaption( xCaption, cDll )
 
    CASE HB_IsArray( xCaption )
       ASize( xCaption, 4 )
-      IF HB_ISCHAR( xCaption[ 1 ] )
+      IF HB_IsChar( xCaption[ 1 ] )
          ::sendMessage( WIN_WM_SETTEXT, 0, xCaption[ 1 ] )
       ENDIF
       IF !Empty(xCaption[ 2 ])
