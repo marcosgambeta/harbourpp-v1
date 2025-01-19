@@ -82,7 +82,7 @@ FUNCTION SecToTime(nSec, lHundredth)
 
    n := iif(!HB_IsNumeric(nSec), Seconds(), nSec)
 
-   IF HB_ISLOGICAL(lHundredth) .AND. lHundredth
+   IF HB_IsLogical(lHundredth) .AND. lHundredth
       h := StrZero((nSec * 100) % 100, 2)
    ELSE
       h := ""

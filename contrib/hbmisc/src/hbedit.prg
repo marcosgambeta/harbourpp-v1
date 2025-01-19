@@ -113,7 +113,7 @@ FUNCTION EditorMode( oEdit, lMode )
 
    LOCAL _lMode := oEdit[ E_MODE ]
 
-   IF HB_ISLOGICAL( lMode )
+   IF HB_IsLogical( lMode )
       oEdit[ E_MODE ] := lMode
    ENDIF
 
@@ -282,7 +282,7 @@ FUNCTION EditorEdit( oEdit, lEdit, lFrame )
    SayInsert()
 #endif
    nCursor := SetCursor( iif(oEdit[ E_INSERT ], SC_NORMAL, SC_SPECIAL1) )
-   IF HB_ISLOGICAL( lEdit )
+   IF HB_IsLogical( lEdit )
       oEdit[ E_MODE ] := lEdit
    ENDIF
    lSaveAllowed := ( SetKey( K_F2 ) == NIL )

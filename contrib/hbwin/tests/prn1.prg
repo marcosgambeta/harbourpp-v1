@@ -38,7 +38,7 @@ STATIC PROCEDURE PrnTest( cPrinter, cBMPFile, lAsk )
    oPrinter:Landscape := .F.
    oPrinter:FormType  := WIN_DMPAPER_A4
    oPrinter:Copies    := 1
-   IF HB_ISLOGICAL( lAsk )
+   IF HB_IsLogical( lAsk )
       oPrinter:AskProperties := lAsk
    ENDIF
 

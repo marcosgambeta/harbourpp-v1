@@ -30,14 +30,14 @@ FUNCTION ft_DayOfYr(dGivenDate, nDayNum, lIsAcct)
    IF HB_IsNumeric(dGivenDate)
       nDayNum    := dGivenDate
       dGivenDate := Date()
-   ELSEIF HB_ISLOGICAL(dGivenDate)
+   ELSEIF HB_IsLogical(dGivenDate)
       lIsAcct    := dGivenDate
       dGivenDate := Date()
    ELSEIF !HB_ISDATE(dGivenDate)
       dGivenDate := Date()
    ENDIF
 
-   IF HB_ISLOGICAL(lIsAcct)
+   IF HB_IsLogical(lIsAcct)
       aRetVal := ft_AcctYear(dGivenDate)
    ELSE
       aRetVal := ft_Year(dGivenDate)

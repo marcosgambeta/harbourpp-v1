@@ -324,7 +324,7 @@ FUNCTION wvt_MakeDlgTemplate(nTop, nLeft, nRows, nCols, aOffSet, cTitle, nStyle,
    IF hb_bitAnd(nStyle, DS_SETFONT) == DS_SETFONT
       AAdd(aDlg[1], iif(HB_IsNumeric(nPointSize), nPointSize, 8))
       AAdd(aDlg[1], iif(HB_IsNumeric(nWeight), nWeight, 400))
-      AAdd(aDlg[1], iif(HB_ISLOGICAL(lItalic), lItalic, .F.))
+      AAdd(aDlg[1], iif(HB_IsLogical(lItalic), lItalic, .F.))
       AAdd(aDlg[1], iif(HB_IsString(cFaceName), cFaceName, "MS Sans Serif"))
    ENDIF
 

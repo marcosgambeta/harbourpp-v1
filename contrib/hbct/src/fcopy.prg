@@ -127,7 +127,7 @@ FUNCTION FileCDaTi(lNewMode)
 
    LOCAL lOldMode := t_lSetDaTi
 
-   IF HB_ISLOGICAL(lNewMode)
+   IF HB_IsLogical(lNewMode)
       t_lSetDaTi := lNewMode
    ENDIF
 

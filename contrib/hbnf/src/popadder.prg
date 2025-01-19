@@ -948,7 +948,7 @@ STATIC FUNCTION _ftQuest(cMessage, xVarVal, cPict, bValid, lNoESC, nWinColor, nT
    ELSE                                  // Else setup default pictures
       IF HB_ISDATE(xVarVal)
          oNewGet:Picture   := "9999-99-99"
-      ELSEIF HB_ISLOGICAL(xVarVal)
+      ELSEIF HB_IsLogical(xVarVal)
          oNewGet:Picture   := "Y"
       ELSEIF HB_IsNumeric(xVarVal)
          oNewGet:Picture   := "999999.99"  // Guess that they are inputting dollars

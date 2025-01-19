@@ -23,7 +23,7 @@ FUNCTION ft_NoOccur(cCheckFor, cCheckIn, lIgnoreCase)
 
    // Is Case Important?
 
-   IF !HB_ISLOGICAL(lIgnoreCase) .OR. lIgnoreCase
+   IF !HB_IsLogical(lIgnoreCase) .OR. lIgnoreCase
       cCheckFor := Upper(cCheckFor)
       cCheckIn  := Upper(cCheckIn)
    ENDIF

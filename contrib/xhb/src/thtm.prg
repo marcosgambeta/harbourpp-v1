@@ -2303,7 +2303,7 @@ FUNCTION HtmlAny2Str(xVal)
    ELSEIF HB_ISDATE(xVal)
       xRet := DToC(xVal)
 
-   ELSEIF HB_ISLOGICAL(xVal)
+   ELSEIF HB_IsLogical(xVal)
       xRet := iif(xVal, "T", "F")
 
    ELSEIF HB_IsBlock(xVal)

@@ -1556,7 +1556,7 @@ STATIC FUNCTION wvwm_SetKeyRepeater( lSet )
    // if lSet is supplied, KeyRepeater is enable/disable accordingly
    LOCAL lWasSet := ( s_nkeyrepeater != NIL )
 
-   IF HB_ISLOGICAL( lSet )
+   IF HB_IsLogical( lSet )
       IF lSet
          IF !lWasSet
             s_nkeyrepeater := hb_idleAdd( {|| xKeyRepeater() } )

@@ -256,7 +256,7 @@ METHOD WvgComboBox:listBoxFocus( lFocus )
 
    LOCAL lOldFocus := ::sendMessage( CB_GETDROPPEDSTATE, 0, 0 )
 
-   IF HB_ISLOGICAL( lFocus )
+   IF HB_IsLogical( lFocus )
       ::sendMessage( CB_SHOWDROPDOWN, lFocus, 0 )
    ENDIF
 

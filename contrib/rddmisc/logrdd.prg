@@ -290,7 +290,7 @@ FUNCTION hb_LogRddActive( lActive )
 
       lOldActive := aRDDData[ ARRAY_ACTIVE ]
 
-      IF HB_ISLOGICAL( lActive )
+      IF HB_IsLogical( lActive )
          aRDDData[ ARRAY_ACTIVE ] := lActive
       ENDIF
    ENDIF

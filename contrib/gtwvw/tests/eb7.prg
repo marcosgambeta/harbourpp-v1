@@ -209,7 +209,7 @@ FUNCTION AddEBGet( aEBGets, mnrow, mncol, mxValue, mcVarName, mbAssign, mcLabel,
 
    hb_default( @aEBGEts, {} )
 
-   IF !HB_ISLOGICAL( mlMultiline ) .OR. ;
+   IF !HB_IsLogical( mlMultiline ) .OR. ;
       ! HB_IsString( mxValue )
       mlMultiline := .F.
    ENDIF

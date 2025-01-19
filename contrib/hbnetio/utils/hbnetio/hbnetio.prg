@@ -528,7 +528,7 @@ STATIC FUNCTION netiomgm_rpc_regnotif( netiomgm, pConnSock, nStreamID, lRegister
       RETURN iif(cIndex $ netiomgm[ _NETIOSRV_hNotifStream ], netiomgm[ _NETIOSRV_hNotifStream ][ cIndex ][ _CLI_xCargo ], NIL)
 #endif
    CASE 4
-      IF !HB_ISLOGICAL( lRegister ) .OR. ! lRegister
+      IF !HB_IsLogical( lRegister ) .OR. ! lRegister
          hb_mutexLock( netiomgm[ _NETIOSRV_mtxNotifStream ] )
          IF cIndex $ netiomgm[ _NETIOSRV_hNotifStream ]
             hb_HDel( netiomgm[ _NETIOSRV_hNotifStream ], cIndex )
@@ -584,7 +584,7 @@ STATIC FUNCTION netiomgm_rpc_logconn( netiosrv, lValue )
 
    LOCAL lOldValue := netiosrv[ _NETIOSRV_lShowConn ]
 
-   IF HB_ISLOGICAL( lValue )
+   IF HB_IsLogical( lValue )
       netiosrv[ _NETIOSRV_lShowConn ] := lValue
    ENDIF
 
@@ -594,7 +594,7 @@ STATIC FUNCTION netiomgm_rpc_conn( netiosrv, lValue )
 
    LOCAL lOldValue := netiosrv[ _NETIOSRV_lAcceptConn ]
 
-   IF HB_ISLOGICAL( lValue )
+   IF HB_IsLogical( lValue )
       netiosrv[ _NETIOSRV_lAcceptConn ] := lValue
    ENDIF
 

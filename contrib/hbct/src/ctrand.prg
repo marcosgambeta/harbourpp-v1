@@ -46,7 +46,7 @@
 // $HB_END_LICENSE$
 
 FUNCTION Random(lMode)
-   RETURN iif(HB_ISLOGICAL(lMode) .AND. lMode, hb_RandomInt(-32768, 32767), hb_RandomInt(0, 65535))
+   RETURN iif(HB_IsLogical(lMode) .AND. lMode, hb_RandomInt(-32768, 32767), hb_RandomInt(0, 65535))
 
 FUNCTION Rand(nStart)
 

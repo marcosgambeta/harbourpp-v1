@@ -70,7 +70,7 @@ FUNCTION xpp_dbUseArea(lNewArea, cDriver, cName, xcAlias, lShared, lReadonly)
    LOCAL nOldArea
    LOCAL nArea
 
-   IF HB_ISLOGICAL( lNewArea ) .AND. lNewArea
+   IF HB_IsLogical( lNewArea ) .AND. lNewArea
 
       hb_default( @xcAlias, "" )
 

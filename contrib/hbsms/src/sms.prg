@@ -176,7 +176,7 @@ FUNCTION smsctx_Send( smsctx, cPhoneNo, cText, lNotification )
          port_send( smsctx[ _SMSCTX_xHnd ], "AT+CMGF=1" + Chr(13) )
          IF StripCRLF( port_rece( smsctx[ _SMSCTX_xHnd ] ) ) == "OK"
 
-            IF HB_ISLOGICAL( lNotification )
+            IF HB_IsLogical( lNotification )
                port_send( smsctx[ _SMSCTX_xHnd ], "AT+CSMP?" + Chr(13) )
                tmp := GetLines( port_rece( smsctx[ _SMSCTX_xHnd ] ) )
                IF Len(tmp) < 2

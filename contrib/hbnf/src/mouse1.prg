@@ -158,7 +158,7 @@ FUNCTION ft_MCursor(lState)
 
    LOCAL lSavState := t_lCrsState
 
-   IF HB_ISLOGICAL(lState)
+   IF HB_IsLogical(lState)
       IF (t_lCrsState := lState)
          MShow()
       ELSE

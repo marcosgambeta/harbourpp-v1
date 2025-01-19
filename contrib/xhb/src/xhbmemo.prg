@@ -445,10 +445,10 @@ FUNCTION xhb_MemoEdit( ;
    IF !HB_ISNIL(nBottom) .AND. !HB_IsNumeric(nBottom)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<nBottom> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(lEditMode) .AND. !HB_ISLOGICAL(lEditMode)
+   IF !HB_ISNIL(lEditMode) .AND. !HB_IsLogical(lEditMode)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<lEditMode> Argument type error", ProcName()))
    ENDIF
-   IF !HB_ISNIL(xUDF) .AND. !HB_IsString(xUDF) .AND. !HB_ISLOGICAL(xUDF)
+   IF !HB_ISNIL(xUDF) .AND. !HB_IsString(xUDF) .AND. !HB_IsLogical(xUDF)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cUserFunction> Argument type error", ProcName()))
    ENDIF
    IF !HB_ISNIL(nLineLength) .AND. !HB_IsNumeric(nLineLength)
@@ -501,7 +501,7 @@ FUNCTION xhb_MemoEdit( ;
 
    // 2006-08-06 - E.F. Clipper's  <cUserFunction> in .T. or. F. is samething.
    //
-   IF !HB_ISLOGICAL(xUDF) // .OR. cUserFunction
+   IF !HB_IsLogical(xUDF) // .OR. cUserFunction
 
       oEd:Edit()
 

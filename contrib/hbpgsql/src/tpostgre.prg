@@ -191,7 +191,7 @@ METHOD TPQserver:Rollback()
 
 METHOD TPQserver:Query(cQuery, lNull)
 
-   IF !HB_ISLOGICAL(lNull)
+   IF !HB_IsLogical(lNull)
       lNull := ::lNull
    ENDIF
 
@@ -447,7 +447,7 @@ METHOD TPQserver:SetNull(lValue)
 
    LOCAL lOldValue := ::lNull
 
-   IF HB_ISLOGICAL(lValue)
+   IF HB_IsLogical(lValue)
       ::lNull := lValue
    ENDIF
 
@@ -532,7 +532,7 @@ METHOD TPQquery:New(pDB, cQuery, lAllCols, cSchema, res, lNull)
       ::pQuery := res
    ENDIF
 
-   IF HB_ISLOGICAL(lNull)
+   IF HB_IsLogical(lNull)
       ::lNull := lNull
    ENDIF
 

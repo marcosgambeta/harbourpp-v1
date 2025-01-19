@@ -251,7 +251,7 @@ METHOD WvgCrt:new(oParent, oOwner, aPos, aSize, aPresParams, lVisible)
    IF HB_IsArray(aPresParams)
       ::aPresParams := aPresParams
    ENDIF
-   IF HB_ISLOGICAL(lVisible)
+   IF HB_IsLogical(lVisible)
       ::visible := lVisible
    ENDIF
 

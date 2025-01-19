@@ -157,7 +157,7 @@ PROCEDURE BliLibFre( pLib )
 
 PROCEDURE BliLibOvr( lValue )
 
-   IF HB_ISLOGICAL( lValue )
+   IF HB_IsLogical( lValue )
       s_lLibOverrides := lValue
    ENDIF
 

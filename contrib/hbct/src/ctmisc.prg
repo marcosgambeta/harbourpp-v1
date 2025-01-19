@@ -67,11 +67,11 @@ FUNCTION Center(c, n, p, lMode)
       c := ""
    ENDIF
 
-   IF HB_ISLOGICAL(p)
+   IF HB_IsLogical(p)
       lMode := p
       p := NIL
    ELSE
-      IF !HB_ISLOGICAL(lMode)
+      IF !HB_IsLogical(lMode)
          lMode := .F.
       ENDIF
    ENDIF
@@ -82,7 +82,7 @@ FUNCTION Center(c, n, p, lMode)
 
 FUNCTION CSetCurs(l)
 
-   IF !HB_ISLOGICAL(l)
+   IF !HB_IsLogical(l)
       RETURN SetCursor() != SC_NONE
    ENDIF
 

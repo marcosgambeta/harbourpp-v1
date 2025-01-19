@@ -60,7 +60,7 @@ FUNCTION xhb_SetTrace(xTrace)
    LOCAL lTrace := s_lSET_TRACE
 
    DO CASE
-   CASE HB_ISLOGICAL(xTrace)
+   CASE HB_IsLogical(xTrace)
       s_lSET_TRACE := xTrace
    CASE HB_IsString(xTrace)
       SWITCH Upper(xTrace)

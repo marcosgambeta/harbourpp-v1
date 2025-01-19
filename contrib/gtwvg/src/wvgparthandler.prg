@@ -513,7 +513,7 @@ METHOD WvgPartHandler:controlWndProc(hWnd, nMessage, nwParam, nlParam)
          DO CASE
          CASE HB_IsNumeric(nReturn) .AND. nReturn == EVENT_HANDELLED
             RETURN 0
-         CASE HB_ISLOGICAL(nReturn)
+         CASE HB_IsLogical(nReturn)
             RETURN nReturn
          ENDCASE
       ENDIF

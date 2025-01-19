@@ -66,7 +66,7 @@ FUNCTION xhb_ErrorLog(cErrorLog, lErrorLogAppend)
    IF HB_IsString(cErrorLog)
       s_cErrorLog := cErrorLog
    ENDIF
-   IF HB_ISLOGICAL(lErrorLogAppend)
+   IF HB_IsLogical(lErrorLogAppend)
       s_lErrorLogAppend := lErrorLogAppend
    ENDIF
 

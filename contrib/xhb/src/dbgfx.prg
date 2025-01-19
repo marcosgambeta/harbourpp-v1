@@ -55,7 +55,7 @@ FUNCTION hb_ToOutDebugOnOff(lOnOff)
 
    LOCAL lOld := s_lToOutDebug
 
-   IF HB_ISLOGICAL(lOnOff)
+   IF HB_IsLogical(lOnOff)
       s_lToOutDebug := lOnOff
    ENDIF
 
@@ -73,7 +73,7 @@ FUNCTION hb_ToLogFileOnOff(lOnOff)
 
    LOCAL lOld := s_lToLogFile
 
-   IF HB_ISLOGICAL(lOnOff)
+   IF HB_IsLogical(lOnOff)
       s_lToLogFile := lOnOff
    ENDIF
 
@@ -83,7 +83,7 @@ FUNCTION hb_EmptyLogFileOnOff(lOnOff)
 
    LOCAL lOld := s_lEmptyLogFile
 
-   IF HB_ISLOGICAL(lOnOff)
+   IF HB_IsLogical(lOnOff)
       s_lEmptyLogFile := lOnOff
    ENDIF
 

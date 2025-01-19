@@ -147,7 +147,7 @@ CREATE CLASS XHBEditor
    // ReadInsert(), ::lInsert must check in it.
    // VAR   lInsert        INIT .F.              // Is editor in Insert mode or in Overstrike one? Default : Overstrike - Clipper
    METHOD lInsert()            BLOCK {||Set(_SET_INSERT)}
-   METHOD _lInsert(lInsert)    BLOCK {|Self, lInsert|HB_SYMBOL_UNUSED(Self), iif(HB_ISLOGICAL(lInsert), Set(_SET_INSERT, lInsert), Set(_SET_INSERT))}
+   METHOD _lInsert(lInsert)    BLOCK {|Self, lInsert|HB_SYMBOL_UNUSED(Self), iif(HB_IsLogical(lInsert), Set(_SET_INSERT, lInsert), Set(_SET_INSERT))}
 
    METHOD  New(cString, nTop, nLeft, nBottom, ;             // Converts a string to an array of strings splitting input string at EOL boundaries
       nRight, lEditMode, nLineLength, nTabSize, nTextRow, nTextCol, nWndRow, nWndCol)
@@ -2047,7 +2047,7 @@ STATIC FUNCTION GetParagraph(oSelf, nRow)
    LOCAL cLine := ""
 
    // V@
-   DO WHILE nRow <= oSelf:LastRow() .AND. HB_ISLOGICAL(oSelf:aText[nRow]:lSoftCR) .AND. oSelf:aText[nRow]:lSoftCR
+   DO WHILE nRow <= oSelf:LastRow() .AND. HB_IsLogical(oSelf:aText[nRow]:lSoftCR) .AND. oSelf:aText[nRow]:lSoftCR
       cLine += oSelf:aText[nRow]:cText
       oSelf:RemoveLine(nRow)
       IF oSelf:LastRow() <= 0 // V@
@@ -2290,7 +2290,7 @@ METHOD XHBEditor:SetPos(nRow, nCol)
 METHOD XHBEditor:InsertState(lInsState)
 
    // 2006-07-22 - E.F. - Insert only in edit mode.
-   IF ::lEditAllow .AND. HB_ISLOGICAL(lInsState) .AND. ::lInsert != lInsState
+   IF ::lEditAllow .AND. HB_IsLogical(lInsState) .AND. ::lInsert != lInsState
 
       ::lInsert := lInsState
 

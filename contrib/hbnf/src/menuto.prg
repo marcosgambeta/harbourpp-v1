@@ -133,7 +133,7 @@ FUNCTION ft_MenuTo(bGetSet, cReadVar, lCold)
    LOCAL cScreen
    LOCAL nPrev
 
-   IF !HB_ISLOGICAL(lCold)
+   IF !HB_IsLogical(lCold)
       lCold := .F.
    ENDIF
 

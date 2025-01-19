@@ -469,10 +469,10 @@ METHOD win_Prn:SetFont(cFontName, nPointSize, xWidth, nBold, lUnderline, lItalic
    IF HB_IsNumeric(nBold)
       ::fBold := nBold
    ENDIF
-   IF HB_ISLOGICAL(lUnderLine)
+   IF HB_IsLogical(lUnderLine)
       ::fUnderline := lUnderLine
    ENDIF
-   IF HB_ISLOGICAL(lItalic)
+   IF HB_IsLogical(lItalic)
       ::fItalic := lItalic
    ENDIF
    IF HB_IsNumeric(nCharSet)
@@ -524,7 +524,7 @@ METHOD win_Prn:Underline(lUnderLine)
 
    LOCAL lOldValue := ::fUnderline
 
-   IF HB_ISLOGICAL(lUnderLine)
+   IF HB_IsLogical(lUnderLine)
       ::fUnderLine := lUnderLine
       IF ::Printing
          ::SetFont()
@@ -537,7 +537,7 @@ METHOD win_Prn:Italic(lItalic)
 
    LOCAL lOldValue := ::fItalic
 
-   IF HB_ISLOGICAL(lItalic)
+   IF HB_IsLogical(lItalic)
       ::fItalic := lItalic
       IF ::Printing
          ::SetFont()

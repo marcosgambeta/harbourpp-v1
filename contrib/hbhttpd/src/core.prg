@@ -1355,7 +1355,7 @@ PROCEDURE UProcFiles( cFileName, lIndex )
 
    LOCAL aDir, aF, nI, cI, tDate, tHDate
 
-   IF !HB_ISLOGICAL( lIndex )
+   IF !HB_IsLogical( lIndex )
       lIndex := .F.
    ENDIF
 

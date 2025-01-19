@@ -387,7 +387,7 @@ FUNCTION wvw_EnableMaximize(nWin, lEnable)
 
    lEnableOld := hb_bitAnd(nStyle, WIN_WS_MAXIMIZEBOX) != 0
 
-   IF HB_ISLOGICAL(lEnable) .AND. lEnable != lEnableOld
+   IF HB_IsLogical(lEnable) .AND. lEnable != lEnableOld
       wapi_SetWindowLongPtr(hWnd, WIN_GWL_STYLE, iif(lEnable, hb_bitOr(nStyle, WIN_WS_MAXIMIZEBOX), hb_bitAnd(nStyle, hb_bitNot(WIN_WS_MAXIMIZEBOX))))
       wapi_SetWindowPos(hWnd,,,,,, hb_bitOr(WIN_SWP_NOMOVE, WIN_SWP_NOSIZE, WIN_SWP_NOZORDER, WIN_SWP_FRAMECHANGED))
       wapi_ShowWindow(hWnd, WIN_SW_SHOW)
@@ -445,7 +445,7 @@ FUNCTION win_SetTimer(...)
    RETURN !Empty(wapi_SetTimer(...))
 
 FUNCTION win_InvalidateRect(w, e, l, t, r, b)
-   RETURN wapi_InvalidateRect(w, iif(PCount() > 2, {l, t, r, b}, NIL), iif(HB_ISLOGICAL(e), e, hb_defaultValue(e, 1) != 0))
+   RETURN wapi_InvalidateRect(w, iif(PCount() > 2, {l, t, r, b}, NIL), iif(HB_IsLogical(e), e, hb_defaultValue(e, 1) != 0))
 
 FUNCTION win_CreateBrush(...)
    RETURN wapi_CreateBrushIndirect({...})

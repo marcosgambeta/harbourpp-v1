@@ -25,7 +25,7 @@ FUNCTION ft_FindITh(cCheckFor, cCheckIn, nWhichOccurrence, lIgnoreCase)
 
    // Is Case Important??
 
-   IF !HB_ISLOGICAL(lIgnoreCase) .OR. lIgnoreCase
+   IF !HB_IsLogical(lIgnoreCase) .OR. lIgnoreCase
       cCheckFor := Upper(cCheckFor)
       cCheckIn  := Upper(cCheckIn)
    ENDIF

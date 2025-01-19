@@ -368,7 +368,7 @@ FUNCTION SQLPrepare(cQuery, ...)
          CASE HB_ISDATE(x)
             x := "'" + hb_DToC(x, "yyyy-mm-dd") + "'"
 
-         CASE HB_ISLOGICAL(x)
+         CASE HB_IsLogical(x)
             x := iif(x, "'t'", "'f'")
 
          CASE HB_IsString(x)
