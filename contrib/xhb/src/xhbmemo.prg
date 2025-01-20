@@ -430,7 +430,7 @@ FUNCTION xhb_MemoEdit( ;
 
    // 2006-07-22 - E.F. Check argument types.
    //
-   IF cString != NIL .AND. !HB_IsString(cString) .AND. !HB_ISMEMO(cString)
+   IF cString != NIL .AND. !HB_IsString(cString) .AND. !HB_IsMemo(cString)
       Throw(xhb_ErrorNew("BASE", 0, 1127, "<cString> Argument type error", ProcName()))
    ENDIF
    IF nTop != NIL .AND. !HB_IsNumeric(nTop)

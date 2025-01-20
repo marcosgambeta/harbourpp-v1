@@ -66,7 +66,7 @@ FUNCTION Sys( nValue, xPar1 )
    CASE 10
       RETURN DToC(CToD( "" ) + hb_defaultValue( xPar1, 0 ))
    CASE 11
-      RETURN hb_ntos( iif(HB_ISDATETIME( xPar1 ), xPar1, ;
+      RETURN hb_ntos( iif(HB_IsDateTime( xPar1 ), xPar1, ;
                            iif(HB_IsString( xPar1 ), CToD( xPar1 ), ;
                            Date())) - CToD( "" ) )
    CASE 100
