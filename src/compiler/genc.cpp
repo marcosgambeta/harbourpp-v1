@@ -212,9 +212,9 @@ void hb_compGenCCode(HB_COMP_DECL, PHB_FNAME pFileName) // generates the C++ lan
     char *szCmp = hb_verCompiler();
     char *szHrb = hb_verHarbour();
 
-    fprintf(yyc, "//\n// %s\n", szHrb);
+    fprintf(yyc, "// %s\n", szHrb);
     fprintf(yyc, "// %s\n", szCmp);
-    fprintf(yyc, "// Generated C++ source from \"%s\"\n//\n\n", HB_COMP_PARAM->szFile);
+    fprintf(yyc, "// Generated C++ source from \"%s\"\n\n", HB_COMP_PARAM->szFile);
 
     hb_xfree(szCmp);
     hb_xfree(szHrb);
