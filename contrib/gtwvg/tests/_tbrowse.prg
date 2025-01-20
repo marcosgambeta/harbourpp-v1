@@ -148,7 +148,7 @@ STATIC PROCEDURE ExecBrowser( oCrt )
 
    wvt_Keyboard( HB_K_RESIZE ) /* Refresh All GUI Controls */
 
-   WHILE ! lEnd
+   DO WHILE ! lEnd
       DispBegin()
       DO WHILE ( ( nKey := Inkey(NIL, INKEY_ALL + HB_INKEY_GTEVENT) ) == 0 .OR. nKey == K_MOVING ) .AND. ! oBrowse:stabilize()
       ENDDO

@@ -480,7 +480,7 @@ FUNCTION DEMO_Browse()
    RefreshHXB(oBrowse, nCurWindow, nHScrollBar) // 20040704
    RefreshVXB(oBrowse, nCurWindow, nVScrollBar) // 20040704
 
-   WHILE ! lEnd
+   DO WHILE ! lEnd
       nKey := Inkey(0)
 
       DO CASE

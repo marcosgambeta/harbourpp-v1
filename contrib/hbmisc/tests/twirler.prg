@@ -26,7 +26,7 @@ PROCEDURE Main()
    twirl6:show()
    twirl7:show()
    start_time := Seconds()
-   WHILE Inkey() == 0
+   DO WHILE Inkey() == 0
       counter++
       twirl1:twirl()
       twirl2:twirl()

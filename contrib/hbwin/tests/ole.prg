@@ -239,7 +239,7 @@ STATIC PROCEDURE Exm_IExplorer2()
       oIE:__hSink := __axRegisterHandler( oIE:__hObj, {| ... | QOut(...) } )
       oIE:Visible := .T.
       oIE:Navigate( "https://harbour.github.io" )
-      WHILE oIE:ReadyState != 4
+      DO WHILE oIE:ReadyState != 4
          hb_idleSleep(0)
       ENDDO
    ELSE

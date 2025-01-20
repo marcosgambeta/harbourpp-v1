@@ -271,7 +271,7 @@ STATIC FUNCTION TbSkipWhil(n, bWhileCond)
       dbSkip(0)  // significant on a network
 
    ELSEIF n > 0 .AND. RecNo() != LastRec() + 1
-      WHILE i < n
+      DO WHILE i < n
          dbSkip()
          IF Eof() .OR. !Eval(bWhileCond)
             dbSkip(-1)

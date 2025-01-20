@@ -87,7 +87,7 @@ PROCEDURE createdb(cName)
    ? "create neterr:", NetErr(), hb_osError()
    USE ( cName )
    ? "use neterr:", NetErr(), hb_osError()
-   WHILE LastRec() < 100
+   DO WHILE LastRec() < 100
       dbAppend()
       n := RecNo() - 1
       field->F1 := Chr(n % 26 + Asc("A")) + " " + Time()
@@ -119,7 +119,7 @@ PROCEDURE testdb(cName)
    NEXT
    ordSetFocus(1)
    dbGoTop()
-   WHILE ! Eof()
+   DO WHILE ! Eof()
       IF !field->F1 == field->F2
          ? "error at record:", RecNo()
          ? "  ! '" + field->F1 + "' == '" + field->F2 + "'"

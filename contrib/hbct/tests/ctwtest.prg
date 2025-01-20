@@ -58,7 +58,7 @@ PROCEDURE Main()
    NEXT
 
    dspcord()
-   WHILE .T.
+   DO WHILE .T.
       k := Inkey(0, INKEY_ALL)
       IF k == K_ESC
          EXIT

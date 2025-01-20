@@ -185,7 +185,7 @@ STATIC FUNCTION FT_CAL( dGivenDate, nType )
    NEXT
 
    ?
-   WHILE dTemp <= aTemp[ 3 ]
+   DO WHILE dTemp <= aTemp[ 3 ]
       FOR nTemp := 1 TO 7
          ?? " "
          IF nType == 0 .AND. ( dTemp < dStart .OR. dTemp > dEnd )

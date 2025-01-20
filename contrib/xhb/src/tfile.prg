@@ -320,7 +320,7 @@ METHOD TCgiFile:Goto(nLine)
       RETURN nPos
    ENDIF
 
-   WHILE !::Eof()
+   DO WHILE !::Eof()
 
       ::ReadLine()
 
@@ -353,7 +353,7 @@ METHOD TCgiFile:Skip(nLines)
 
    ENDIF
 
-   WHILE !::Eof()
+   DO WHILE !::Eof()
 
       IF nCount == nLines
          EXIT

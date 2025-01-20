@@ -23,7 +23,7 @@ PROCEDURE Main()
                Replicate( "0123456789" + hb_eol(), 1000 ) + ;
                "END" + hb_eol()
       nDone := 0
-      WHILE nDone < hb_BLen(cData) .AND. ;
+      DO WHILE nDone < hb_BLen(cData) .AND. ;
             ( nLen := hb_vfWrite( pFile, hb_BSubStr(cData, nDone + 1) ) ) > 0
          nDone += nLen
          ? "written: " + hb_ntos( nLen )
@@ -37,7 +37,7 @@ PROCEDURE Main()
       cResult := ""
       ? "reading..."
       cBuffer := Space( 1000 )
-      WHILE ( nLen := hb_vfRead( pFile, @cBuffer ) ) > 0
+      DO WHILE ( nLen := hb_vfRead( pFile, @cBuffer ) ) > 0
          cResult += hb_BLeft(cBuffer, nLen)
          ? "read: " + hb_ntos( nLen )
       ENDDO

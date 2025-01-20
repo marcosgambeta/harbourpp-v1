@@ -160,7 +160,7 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
 
    s_lNetOk := .F.
 
-   WHILE lContinue
+   DO WHILE lContinue
 
 #if 0
       IF (nKey := Inkey()) == K_ESC
@@ -169,7 +169,7 @@ FUNCTION NetLock(nType, lReleaseLocks, nSeconds)
       ENDIF
 #endif
 
-      WHILE nSeconds > 0 .AND. lContinue
+      DO WHILE nSeconds > 0 .AND. lContinue
          IF Eval(bOperation, xIdentifier)
             nSeconds  := 0
             lSuccess  := .T.

@@ -237,7 +237,7 @@ FUNCTION dbMerge(xSource, lAppend)
    nRecNo := ( nSource )->( RecNo() )
    ( nSource )->( dbGoTop() )
 
-   WHILE !( nSource )->( Eof() )
+   DO WHILE !( nSource )->( Eof() )
       APPEND BLANK
 
       FOR EACH aTranslation IN aTranslate
