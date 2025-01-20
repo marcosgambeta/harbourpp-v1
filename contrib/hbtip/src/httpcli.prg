@@ -138,7 +138,7 @@ METHOD TIPClientHTTP:PostByVerb(xPostData, cQuery, cVerb)
    LOCAL item
 
    DO CASE
-   CASE HB_ISHASH( xPostData )
+   CASE HB_IsHash( xPostData )
       cData := ""
       FOR EACH item IN xPostData
          cData += ;
@@ -508,7 +508,7 @@ METHOD TIPClientHTTP:PostMultiPart( xPostData, cQuery )
 
    DO CASE
    CASE Empty(xPostData)
-   CASE HB_ISHASH( xPostData )
+   CASE HB_IsHash( xPostData )
       FOR EACH item IN xPostData
          cData += ;
             cBound + cCrlf + "Content-Disposition: form-data; name=" + '"' + ;

@@ -98,7 +98,7 @@ METHOD GDChart:New( sx, sy )
 
 METHOD GDChart:AddData(hData)
 
-   IF HB_ISHASH( hData )
+   IF HB_IsHash( hData )
       AAdd( ::aDataOfHashes, hData )
    ENDIF
 
@@ -122,7 +122,7 @@ METHOD GDChart:AddDef( cDefKey, xDefVal )
 
 METHOD GDChart:SetDefs( hDefs )
 
-   IF HB_ISHASH( hDefs )
+   IF HB_IsHash( hDefs )
       ::hDefs := hDefs
    ENDIF
 
@@ -947,4 +947,4 @@ METHOD CloneDataFrom( oSrc )
 
 
 STATIC FUNCTION __HGetValue( hHash, cKey )
-   RETURN iif(HB_ISHASH( hHash ), hb_HGetDef( hHash, cKey ), NIL)
+   RETURN iif(HB_IsHash( hHash ), hb_HGetDef( hHash, cKey ), NIL)

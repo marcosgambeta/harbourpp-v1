@@ -333,7 +333,7 @@ STATIC FUNCTION netiosrv_ConfLoad( netiosrv, netiomgm )
 
    LOCAL hConf := hb_Deserialize( hb_MemoRead( netiosrv_ConfName() ) )
 
-   IF HB_ISHASH( hConf ) .AND. ;
+   IF HB_IsHash( hConf ) .AND. ;
       "__signature" $ hConf .AND. ;
       hConf[ "__signature" ] == _NETIOSRV_SIGNATURE
 
@@ -554,7 +554,7 @@ STATIC FUNCTION netiomgm_rpc_setclientinfo( netiosrv, hInfo )
 
    LOCAL nconn
 
-   IF HB_ISHASH( hInfo )
+   IF HB_IsHash( hInfo )
 
       hb_mutexLock( netiosrv[ _NETIOSRV_mtxConnection ] )
 

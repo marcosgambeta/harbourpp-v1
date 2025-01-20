@@ -84,7 +84,7 @@ FUNCTION hb_Decode(...)
       // like an array or an hash, so I can get it to decode values
       IF xDefault != NIL .AND. ;
          (HB_IsArray(xDefault) .OR. ;
-         HB_ISHASH(xDefault))
+         HB_IsHash(xDefault))
 
          // If it is an array I will restart this function creating a linear call
          IF HB_IsArray(xDefault) .AND. Len(xDefault) > 0
@@ -136,7 +136,7 @@ FUNCTION hb_Decode(...)
 
 
             // If it is an hash, translate it in an array
-         ELSEIF HB_ISHASH(xDefault)
+         ELSEIF HB_IsHash(xDefault)
 
             aParams := Array(Len(xDefault) * 2)
 

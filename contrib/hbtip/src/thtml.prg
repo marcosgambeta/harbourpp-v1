@@ -1169,7 +1169,7 @@ METHOD THtmlNode:getAttribute( cName )
    LOCAL hHash := ::getAttributes()
    LOCAL cValue
 
-   IF !HB_ISHASH( hHash )
+   IF !HB_IsHash( hHash )
       RETURN hHash
    ENDIF
 
@@ -1311,7 +1311,7 @@ METHOD THtmlNode:setAttribute( cName, cValue )
    LOCAL nPos
    LOCAL hHash := ::getAttributes()
 
-   IF !HB_ISHASH( hHash )
+   IF !HB_IsHash( hHash )
       // Tag doesn't have any attribute
       RETURN ::error( "Invalid HTML attribute for: <" + ::htmlTagName + ">", ::className(), cName, EG_ARG, { cName, cValue } )
    ENDIF

@@ -251,7 +251,7 @@ METHOD TIPCgi:SessionEncode()
    RETURN hb_Serialize( ::hSession )
 
 METHOD TIPCgi:SessionDecode( cData )
-   RETURN HB_ISHASH( ::hSession := hb_Deserialize( cData ) )
+   RETURN HB_IsHash( ::hSession := hb_Deserialize( cData ) )
 
 METHOD TIPCgi:DestroySession( cID )
 
@@ -349,7 +349,7 @@ STATIC FUNCTION HtmlTag( xVal, cKey, cDefault )
 
    LOCAL cVal
 
-   IF HB_ISHASH( xVal ) .AND. ! Empty(cKey) .AND. cKey $ xVal
+   IF HB_IsHash( xVal ) .AND. ! Empty(cKey) .AND. cKey $ xVal
       cVal := xVal[ cKey ]
       hb_HDel( xVal, cKey )
    ELSE
@@ -370,7 +370,7 @@ STATIC FUNCTION HtmlOption( xVal, cKey, cPre, cPost, lScan )
 
    LOCAL cVal := ""
 
-   IF HB_ISHASH( xVal )
+   IF HB_IsHash( xVal )
       IF Empty(cKey)
          cVal := xVal
       ELSEIF cKey $ xVal
@@ -394,7 +394,7 @@ STATIC FUNCTION HtmlAllOption( hOptions, cSep )
 
    LOCAL cVal := ""
 
-   IF HB_ISHASH( hOptions )
+   IF HB_IsHash( hOptions )
       hb_default( @cSep, " " )
 
       hb_HEval( hOptions, {| k | cVal += HtmlOption( hOptions, k,,, .T. ) + cSep } )

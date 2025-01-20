@@ -448,7 +448,7 @@ FUNCTION hbct_SetKXTab(hTrs)
 
    LOCAL lAccepted := .F.
 
-   IF HB_ISHASH(hTrs)
+   IF HB_IsHash(hTrs)
       IF hb_mutexLock(s_hMutex)
          IF hb_gtInfo(HB_GTI_INKEYFILTER) == NIL .OR. !Empty(s_hTrs)
             lAccepted := .T.

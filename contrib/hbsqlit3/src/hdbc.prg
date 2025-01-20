@@ -432,7 +432,7 @@ METHOD hdbcSQLTResultSet:findColumn(cField)
    LOCAL nCount
    LOCAL nMax
 
-   IF !HB_ISHASH(::hColNames)
+   IF !HB_IsHash(::hColNames)
       ::hColNames := {=>}
       nMax := sqlite3_column_count(::pRes)
       FOR nCount := 1 TO nMax

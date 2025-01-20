@@ -392,7 +392,7 @@ FUNCTION ValToTimeStamp(xVal)
 
 FUNCTION ValToHash(xVal)
 
-   IF HB_ISHASH(xVal)
+   IF HB_IsHash(xVal)
       RETURN xVal
    ENDIF
 

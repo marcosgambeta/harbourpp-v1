@@ -1760,7 +1760,7 @@ STATIC FUNCTION hb_Decode( ... )
       /* Ok because I have no other value than default, I will check if it is a complex value */
       /* like an array or an hash, so I can get it to decode values */
       IF xDefault != NIL .AND. ;
-         ( HB_IsArray( xDefault ) .OR. HB_ISHASH( xDefault ) )
+         ( HB_IsArray( xDefault ) .OR. HB_IsHash( xDefault ) )
 
          /* If it is an array I will restart this function creating a linear call */
          IF HB_IsArray( xDefault ) .AND. Len( xDefault ) > 0
@@ -1805,7 +1805,7 @@ STATIC FUNCTION hb_Decode( ... )
 
             ENDIF
 
-         ELSEIF HB_ISHASH( xDefault ) /* If it is an hash, translate it in an array */
+         ELSEIF HB_IsHash( xDefault ) /* If it is an hash, translate it in an array */
 
             aParams := Array( Len( xDefault ) * 2 )
 

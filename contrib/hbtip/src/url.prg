@@ -198,7 +198,7 @@ METHOD TUrl:AddGetForm( xPostData )
    LOCAL item
 
    DO CASE
-   CASE HB_ISHASH( xPostData )
+   CASE HB_IsHash( xPostData )
       FOR EACH item IN xPostData
          cData += ;
             tip_URLEncode( AllTrim(hb_CStr( item:__enumKey() )) ) + "=" + ;

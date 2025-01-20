@@ -107,7 +107,7 @@ METHOD TPQserver:New(cHost, cDatabase, cUser, cPass, nPort, cSchema, hCustom)
       iif(HB_IsString(cPass), " password = " + EscapeParam(cPass), "") + ;
       iif(HB_IsNumeric(nPort), " port = " + hb_ntos(nPort), "")
 
-   IF HB_ISHASH(hCustom)
+   IF HB_IsHash(hCustom)
       FOR EACH item IN hCustom
          cConnect += " " + item:__enumKey() + " = " + EscapeParam(item)
       NEXT

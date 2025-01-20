@@ -704,7 +704,7 @@ STATIC PROCEDURE ProcessRequest( oServer )
          xRet := Eval( bEval, cPath )
          IF HB_IsString( xRet )
             UWrite( xRet )
-         ELSEIF HB_ISHASH( xRet )
+         ELSEIF HB_IsHash( xRet )
             UWrite( UParse( xRet ) )
          ENDIF
       RECOVER
