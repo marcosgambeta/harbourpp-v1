@@ -209,7 +209,7 @@ METHOD HBFormatCode:Reformat( aFile )
       IF aFile[ i ] == NIL
          EXIT
       ENDIF
-      IF HB_ISNULL( aFile[ i ] )
+      IF HB_IsNull( aFile[ i ] )
          LOOP
       ENDIF
       IF ::bCallBack != NIL
@@ -847,7 +847,7 @@ METHOD HBFormatCode:ReadIni( cIniName )
       aIni := hb_ATokens( MemoRead( cIniName ), .T. )
       nLen := Len(aIni)
       FOR i := 1 TO nLen
-         IF !HB_ISNULL( aIni[ i ] := AllTrim(aIni[ i ]) ) .AND. ;
+         IF !HB_IsNull( aIni[ i ] := AllTrim(aIni[ i ]) ) .AND. ;
                !( ( c := Left(aIni[ i ], 1) ) == ";" ) .AND. !( c == "#" )
             IF !::SetOption( aIni[ i ], @i, aIni )
                EXIT
@@ -902,12 +902,12 @@ METHOD HBFormatCode:Array2File( cFileName, aSource )
 
    LOCAL cDir, cName, cExt
 
-   IF HB_ISNULL( ::cExtSave ) .AND. ;
+   IF HB_IsNull( ::cExtSave ) .AND. ;
       hb_vfCopyFile( cFileName, hb_FNameExtSet( cFileName, ::cExtBack ) ) == F_ERROR
       RETURN .F.
    ENDIF
 
-   IF !HB_ISNULL( ::cExtSave )
+   IF !HB_IsNull( ::cExtSave )
       cFileName := hb_FNameExtSet( cFileName, ::cExtSave )
    ENDIF
 

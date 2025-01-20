@@ -269,7 +269,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
       cTagClass := hb_HGetDef( s_class, cField, "d-it" )
 
-      IF !HB_ISNULL( cCaption := FieldCaption( cField ) )
+      IF !HB_IsNull( cCaption := FieldCaption( cField ) )
          ::Tagged( cCaption, "div", "class", "d-d" )
       ENDIF
 
@@ -286,7 +286,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
          lFirst := .T.
          FOR EACH tmp IN hb_ATokens( cContent, "," )
             tmp := AllTrim(tmp)
-            IF !HB_ISNULL( tmp )
+            IF !HB_IsNull( tmp )
                // TOFIX: for multi-file output
                tmp1 := Parse( tmp, "(" )
                IF lFirst
@@ -302,7 +302,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
       CASE cField == "SYNTAX"
 
          ::OpenTagInline( "div", "class", cTagClass )
-         DO WHILE ! HB_ISNULL( cContent )
+         DO WHILE ! HB_IsNull( cContent )
             ::OpenTagInline( "code" )
             ::AppendInline( Indent( Parse( @cContent, hb_eol() ), 0, -1,, .T. ),, .F. )
             ::CloseTagInline( "code" )
@@ -316,13 +316,13 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
          lTable := .F.
 
-         DO WHILE ! HB_ISNULL( cContent )
+         DO WHILE ! HB_IsNull( cContent )
 
             lCode := .F.
             lTablePrev := lTable
 
             tmp1 := ""
-            DO WHILE ! HB_ISNULL( cContent )
+            DO WHILE ! HB_IsNull( cContent )
 
                cLine := Parse( @cContent, hb_eol() )
 
@@ -358,7 +358,7 @@ METHOD PROCEDURE GenerateHTML:WriteEntry( cField, cContent, lPreformatted )
 
             IF lTable != lTablePrev
                IF lTable
-                  ::OpenTag( "div", "class", "d-t" + iif(HB_ISNULL( cHeaderClass ), "", " " + cHeaderClass) )
+                  ::OpenTag( "div", "class", "d-t" + iif(HB_IsNull( cHeaderClass ), "", " " + cHeaderClass) )
                ELSE
                   ::CloseTag( "div" )
                ENDIF
@@ -462,7 +462,7 @@ METHOD GenerateHTML:AppendInline( cText, cFormat, lCode )
    LOCAL nEM, nIT, nPR
    LOCAL cdp
 
-   IF !HB_ISNULL( cText )
+   IF !HB_IsNull( cText )
 
       hb_default( @lCode, .F. )
 

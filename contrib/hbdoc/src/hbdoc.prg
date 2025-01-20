@@ -531,7 +531,7 @@ STATIC PROCEDURE ProcessBlock( hEntry, aContent )
       ", " + hb_HGetDef( hEntry, "CATEGORY", "" ) + ;
       ", " + hb_HGetDef( hEntry, "SUBCATEGORY", "" ), "," )
 
-      IF !HB_ISNULL( item := AllTrim(item) )
+      IF !HB_IsNull( item := AllTrim(item) )
          o:_tags[ item ] := NIL
       ENDIF
    NEXT
@@ -684,7 +684,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "STATUS"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint[ "status" ]
          cResult := ""
-         DO WHILE ! HB_ISNULL( cCode )
+         DO WHILE ! HB_IsNull( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
          RETURN SubStr(cResult, Len(hb_eol()) + 1)
@@ -694,7 +694,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
          RETURN sc_hConstraint[ "status" ][ cCode ]
       ELSEIF Len(cCode) > 1
          RETURN cCode
-      ELSEIF ! HB_ISNULL( cCode )
+      ELSEIF ! HB_IsNull( cCode )
          RETURN "Unrecognized 'STATUS' code: '" + cCode + "'"
       ELSE
          RETURN sc_hConstraint[ "status" ][ "N" ]
@@ -703,7 +703,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "PLATFORMS"
       cResult := ""
       FOR EACH cCode IN hb_ATokens( cCode, "," )
-         IF !HB_ISNULL( cCode := AllTrim(cCode) )
+         IF !HB_IsNull( cCode := AllTrim(cCode) )
             cResult += hb_eol() + hb_HGetDef( sc_hConstraint[ "platforms" ], cCode, cCode )
          ENDIF
       NEXT
@@ -712,7 +712,7 @@ STATIC FUNCTION ExpandAbbrevs( cSectionName, cCode )
    CASE "COMPLIANCE"
       IF "," $ cCode .AND. Parse( cCode, "," ) $ sc_hConstraint[ "compliance" ]
          cResult := ""
-         DO WHILE ! HB_ISNULL( cCode )
+         DO WHILE ! HB_IsNull( cCode )
             cResult += hb_eol() + ExpandAbbrevs( cSectionName, Parse( @cCode, "," ) )
          ENDDO
          RETURN SubStr(cResult, Len(hb_eol()) + 1)
@@ -927,7 +927,7 @@ FUNCTION Indent( cText, nLeftMargin, nWidth, lRaw, lForceRaw )
                cLine := LTrim(SubStr(cLine, idx + 1))
             ENDDO
 
-            IF !HB_ISNULL( cLine )
+            IF !HB_IsNull( cLine )
                cResult += Space( nLeftMargin ) + cLine + hb_eol()
             ENDIF
 
@@ -1310,7 +1310,7 @@ STATIC FUNCTION LoadHBX( cFileName, hAll )
    LOCAL aDynamic := {}
    LOCAL cFilter
 
-   IF !HB_ISNULL( cFile := hb_MemoRead( cFileName ) )
+   IF !HB_IsNull( cFile := hb_MemoRead( cFileName ) )
 
       FOR EACH cFilter IN { ;
          "^DYNAMIC ([a-zA-Z0-9_]*)$", ;
